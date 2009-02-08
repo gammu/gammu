@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-08 22:18+0100\n"
+"POT-Creation-Date: 2009-02-08 22:46+0100\n"
 "PO-Revision-Date: 2009-02-08 22:23+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -2930,7 +2930,7 @@ msgstr "I</dev/ttyACM?>"
 # type: SH
 #: docs/user/gammu.1:2206 docs/user/gammurc.5:196 docs/user/gammu-smsdrc.5:286
 #: docs/user/gammu-smsd.1:68 docs/user/gammu-smsd-files.7:63
-#: docs/user/gammu-smsd-tables.7:363
+#: docs/user/gammu-smsd-tables.7:365
 #, no-wrap
 msgid "EXAMPLE"
 msgstr "PŘÍKLAD"
@@ -3025,7 +3025,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:100
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
-#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:380
+#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:382
 #, no-wrap
 msgid "COPYRIGHT"
 msgstr "COPYRIGHT"
@@ -3047,7 +3047,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:106
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
-#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:386
+#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:388
 msgid ""
 "This is free software: you are free to change and redistribute it.  There is "
 "NO WARRANTY, to the extent permitted by law."
@@ -3061,7 +3061,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:106
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
-#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:386
+#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:388
 #, no-wrap
 msgid "REPORTING BUGS"
 msgstr "HLÁŠENÍ CHYB"
@@ -3118,7 +3118,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:107
 #: docs/user/gammu-smsd-mysql.7:28 docs/user/gammu-smsd-pgsql.7:28
-#: docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:387
+#: docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:389
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr "Prosím hlašte chyby na E<lt>http://bugs.cihar.comE<gt>."
 
@@ -3127,7 +3127,7 @@ msgstr "Prosím hlašte chyby na E<lt>http://bugs.cihar.comE<gt>."
 #: docs/user/gammu-smsd.1:101 docs/user/gammu-smsd-inject.1:35
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:98
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
-#: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:378
+#: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:380
 #, no-wrap
 msgid "AUTHOR"
 msgstr "AUTOR"
@@ -3182,7 +3182,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:96
 #: docs/user/gammu-smsd-mysql.7:17 docs/user/gammu-smsd-pgsql.7:17
-#: docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:373
+#: docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:375
 #, no-wrap
 msgid "SEE ALSO"
 msgstr "DALŠÍ INFORMACE"
@@ -3844,7 +3844,7 @@ msgstr "gammu-smsd(1), gammu(1), gammurc(5)"
 #: docs/user/gammu-smsd.1:103 docs/user/gammu-smsd-inject.1:37
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:100
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
-#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:380
+#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:382
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
 "E<lt>michal@cihar.comE<gt>."
@@ -3857,7 +3857,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:106 docs/user/gammu-smsd-inject.1:40
 #: docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:103
 #: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24
-#: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:383
+#: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:385
 msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
 "version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
@@ -5492,7 +5492,7 @@ msgstr ""
 "MessageReference = 0\n"
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-tables.7:378
+#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-tables.7:380
 msgid "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 msgstr "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 
@@ -5719,7 +5719,7 @@ msgstr "kdy byla přijata SMS"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:58 docs/user/gammu-smsd-tables.7:119
-#: docs/user/gammu-smsd-tables.7:184 docs/user/gammu-smsd-tables.7:291
+#: docs/user/gammu-smsd-tables.7:184 docs/user/gammu-smsd-tables.7:293
 msgid "B<Text> (text)"
 msgstr "B<Text> (text)"
 
@@ -5740,7 +5740,7 @@ msgstr "číslo odesílatele SMS"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:66 docs/user/gammu-smsd-tables.7:127
-#: docs/user/gammu-smsd-tables.7:186 docs/user/gammu-smsd-tables.7:299
+#: docs/user/gammu-smsd-tables.7:186 docs/user/gammu-smsd-tables.7:301
 msgid ""
 "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', "
 "'Default_Compression', 'Unicode_Compression'))"
@@ -5750,13 +5750,13 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:68 docs/user/gammu-smsd-tables.7:129
-#: docs/user/gammu-smsd-tables.7:301
+#: docs/user/gammu-smsd-tables.7:303
 msgid "SMS text coding"
 msgstr "kódování textu SMS"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:70 docs/user/gammu-smsd-tables.7:131
-#: docs/user/gammu-smsd-tables.7:188 docs/user/gammu-smsd-tables.7:303
+#: docs/user/gammu-smsd-tables.7:188 docs/user/gammu-smsd-tables.7:305
 msgid "B<UDH> (text)"
 msgstr "B<UDH> (text)"
 
@@ -5766,7 +5766,7 @@ msgid "encoded User Data Header text"
 msgstr "zakódovaná hlavička uživatelských dat (UDH)"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:74 docs/user/gammu-smsd-tables.7:307
+#: docs/user/gammu-smsd-tables.7:74 docs/user/gammu-smsd-tables.7:309
 msgid "B<SMSCNumber> (varchar(20))"
 msgstr "B<SMSCNumber> (varchar(20))"
 
@@ -5777,19 +5777,19 @@ msgstr "číslo centra zpráv (SMSC)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:78 docs/user/gammu-smsd-tables.7:135
-#: docs/user/gammu-smsd-tables.7:190 docs/user/gammu-smsd-tables.7:311
+#: docs/user/gammu-smsd-tables.7:190 docs/user/gammu-smsd-tables.7:313
 msgid "B<Class> (integer)"
 msgstr "B<Class> (integer)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:80 docs/user/gammu-smsd-tables.7:137
-#: docs/user/gammu-smsd-tables.7:313
+#: docs/user/gammu-smsd-tables.7:315
 msgid "SMS class or -1"
 msgstr "třída SMS nebo -1"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:82 docs/user/gammu-smsd-tables.7:139
-#: docs/user/gammu-smsd-tables.7:192 docs/user/gammu-smsd-tables.7:315
+#: docs/user/gammu-smsd-tables.7:192 docs/user/gammu-smsd-tables.7:317
 msgid "B<TextDecoded> (varchar(160))"
 msgstr "B<TextDecoded> (varchar(160))"
 
@@ -5801,7 +5801,7 @@ msgstr "dekódovaný text (pro zprávy ve výchozí abecedě nebo unicode)"
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:86 docs/user/gammu-smsd-tables.7:143
 #: docs/user/gammu-smsd-tables.7:182 docs/user/gammu-smsd-tables.7:194
-#: docs/user/gammu-smsd-tables.7:319
+#: docs/user/gammu-smsd-tables.7:321
 msgid "B<ID> (integer unsigned)"
 msgstr "B<ID> (integer unsigned)"
 
@@ -5870,12 +5870,12 @@ msgstr ""
 "naplánovaném čase"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:121 docs/user/gammu-smsd-tables.7:293
+#: docs/user/gammu-smsd-tables.7:121 docs/user/gammu-smsd-tables.7:295
 msgid "SMS text encoded using hex values"
 msgstr "text SMS zprávy v šestnáctkovém formátu"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:123 docs/user/gammu-smsd-tables.7:295
+#: docs/user/gammu-smsd-tables.7:123 docs/user/gammu-smsd-tables.7:297
 msgid "B<DestinationNumber> (varchar(20))"
 msgstr "B<DestinationNumber> (varchar(20))"
 
@@ -5885,12 +5885,12 @@ msgid "recipient number"
 msgstr "číslo příjemce"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:133 docs/user/gammu-smsd-tables.7:305
+#: docs/user/gammu-smsd-tables.7:133 docs/user/gammu-smsd-tables.7:307
 msgid "User Data Header encoded using hex values"
 msgstr "hlavička uživatelských dat (UDH) v šestnáctkovém formátu"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:141 docs/user/gammu-smsd-tables.7:317
+#: docs/user/gammu-smsd-tables.7:141 docs/user/gammu-smsd-tables.7:319
 msgid "SMS text in \"human readable\" form"
 msgstr "text zprávy v lidsky čitelné podobě"
 
@@ -5912,17 +5912,17 @@ msgstr ""
 "zprávy"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:151 docs/user/gammu-smsd-tables.7:335
+#: docs/user/gammu-smsd-tables.7:151 docs/user/gammu-smsd-tables.7:337
 msgid "B<RelativeValidity> (integer)"
 msgstr "B<RelativeValidity> (integer)"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:153 docs/user/gammu-smsd-tables.7:337
+#: docs/user/gammu-smsd-tables.7:153 docs/user/gammu-smsd-tables.7:339
 msgid "SMS relative validity like encoded using GSM specs"
 msgstr "platnost SMS zakódovaná podle GSM specifikací"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:155 docs/user/gammu-smsd-tables.7:323
+#: docs/user/gammu-smsd-tables.7:155 docs/user/gammu-smsd-tables.7:325
 msgid "B<SenderID> (text)"
 msgstr "B<SenderID> (text)"
 
@@ -5956,7 +5956,7 @@ msgstr ""
 "yes se doručenka vynutí"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:167 docs/user/gammu-smsd-tables.7:339
+#: docs/user/gammu-smsd-tables.7:167 docs/user/gammu-smsd-tables.7:341
 msgid "B<CreatorID> (text)"
 msgstr "B<CreatorID> (text)"
 
@@ -5986,7 +5986,7 @@ msgid "the same meaning as values in outbox table"
 msgstr "mají stejný význam jako v tabulce outbox"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:198 docs/user/gammu-smsd-tables.7:327
+#: docs/user/gammu-smsd-tables.7:198 docs/user/gammu-smsd-tables.7:329
 msgid "B<SequencePosition> (integer)"
 msgstr "B<SequencePosition> (integer)"
 
@@ -6129,9 +6129,11 @@ msgstr "B<sentitems>"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:263
+#, fuzzy
 msgid ""
-"Log of sent messages, if delivery reports are configured, message state is "
-"updated here."
+"Log of sent messages (and unsent ones with error code). Also if delivery "
+"reports are enabled, message state is updated after receiving delivery "
+"report."
 msgstr ""
 "Informace o odeslaných zprávách a jejich stavu, pokud jsou zapnuty doručenky."
 
@@ -6147,12 +6149,8 @@ msgstr "B<DeliveryDateTime> (timestamp)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:281
-msgid ""
-"when Delivery Report was used for SMS, this entry contains time of receiving "
-"this report"
+msgid "Time of receiving delivery report (if it has been enabled)."
 msgstr ""
-"pokud byla pro tuto zprávu aktivní doručenka, tento záznam obsahuje čas "
-"jejího přijetí"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:283
@@ -6166,116 +6164,112 @@ msgstr ""
 "'Error'))"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:285
+#: docs/user/gammu-smsd-tables.7:286
 msgid ""
-"when Delivery Report was used for SMS, this entry contains human readable "
-"error code"
+"Status of message sending. SendingError mens that phone failed to send the "
+"message, Error indicates some other error while processing message."
 msgstr ""
-"pokud byla pro tuto zprávu aktivní doručenka, tato položka obsahuje chybový "
-"kód"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:287
+#: docs/user/gammu-smsd-tables.7:288
 msgid "B<StatusError> (integer)"
 msgstr "B<StatusError> (integer)"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:289
+#: docs/user/gammu-smsd-tables.7:291
 msgid ""
-"when Delivery Report was used for SMS, this entry contains error code like "
-"in GSM specs"
+"Status of delivery from delivery report message, codes are defined in GSM "
+"specification."
 msgstr ""
-"pokud byla pro tuto zprávu aktivní doručenka, tato položka obsahuje chybový "
-"kód jak je uveden ve specifikaci GSM"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:297
+#: docs/user/gammu-smsd-tables.7:299
 msgid "decoded destination number for SMS"
 msgstr "číslo adresáta SMS"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:309
+#: docs/user/gammu-smsd-tables.7:311
 msgid "decoded number of SMSC, which sent SMS"
 msgstr "číslo servisního centra (SMSC), které odeslalo zprávu"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:321
+#: docs/user/gammu-smsd-tables.7:323
 msgid "SMS ID"
 msgstr "SMS ID"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:325
+#: docs/user/gammu-smsd-tables.7:327
 msgid "which SMSD instance sent this one sequence"
 msgstr "která instance SMSD odeslala tuto sekvenci"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:329
+#: docs/user/gammu-smsd-tables.7:331
 msgid "SMS number in SMS sequence"
 msgstr "pořadí SMS v SMS sekvenci"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:331
+#: docs/user/gammu-smsd-tables.7:333
 msgid "B<TPMR> (integer)"
 msgstr "B<TPMR> (integer)"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:333
+#: docs/user/gammu-smsd-tables.7:335
 msgid "Message Reference like in GSM specs"
 msgstr "reference zprávy, podle specifikací GSM"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:341
+#: docs/user/gammu-smsd-tables.7:343
 msgid "copied from CreatorID from outbox table, matches PhoneID"
 msgstr "zkopírováno CreatorID z tabulky outbox, odpovídá PhoneID"
 
 # type: TP
-#: docs/user/gammu-smsd-tables.7:343
+#: docs/user/gammu-smsd-tables.7:345
 #, no-wrap
 msgid "B<pbk>"
 msgstr "B<pbk>"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:347 docs/user/gammu-smsd-tables.7:352
+#: docs/user/gammu-smsd-tables.7:349 docs/user/gammu-smsd-tables.7:354
 msgid "Not used by SMSD currently, included only for application usage."
 msgstr ""
 "SMSD tuto tabulku v současné době nepoužívá, je zde jen pro použití v "
 "aplikaci."
 
 # type: TP
-#: docs/user/gammu-smsd-tables.7:348
+#: docs/user/gammu-smsd-tables.7:350
 #, no-wrap
 msgid "B<pbk_groups>"
 msgstr "B<pbk_groups>"
 
 # type: SH
-#: docs/user/gammu-smsd-tables.7:353
+#: docs/user/gammu-smsd-tables.7:355
 #, no-wrap
 msgid "HISTORY"
 msgstr "HISTORIE"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:356
+#: docs/user/gammu-smsd-tables.7:358
 msgid "History of schema versions:"
 msgstr "Historie verzí schématu:"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:358
+#: docs/user/gammu-smsd-tables.7:360
 msgid "9 - added sent/received counters to phones table"
 msgstr "9 - přidána počítadla přijatých a odeslaných zpráv do tabulky phones"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:360
+#: docs/user/gammu-smsd-tables.7:362
 msgid "8 - introduced phones table"
 msgstr "8 - přidána tabulka phones"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:362
+#: docs/user/gammu-smsd-tables.7:364
 msgid "7 - added CreatorID to tables (it holds PhoneID if set)"
 msgstr ""
 "7 - do tabulek přidáno CreatorID (obsahuje PhoneID, pokud je nastaveno)"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:368
+#: docs/user/gammu-smsd-tables.7:370
 msgid ""
 "SQL scripts to create all needed tables for most databases are included in "
 "Gammu documentation (docs/sql). As well as some PHP scripts interacting with "
@@ -6286,24 +6280,48 @@ msgstr ""
 "práci s databází."
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:370
+#: docs/user/gammu-smsd-tables.7:372
 msgid "For example to create SQLite tables, issue following command:"
 msgstr "Například vytvoření tabulek pro SQLite vypadá následovně:"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:372
+#: docs/user/gammu-smsd-tables.7:374
 #, no-wrap
 msgid "    sqlite3 smsd.db E<lt> docs/sql/sqlite.sql\n"
 msgstr "    sqlite3 smsd.db E<lt> docs/sql/sqlite.sql\n"
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:376
+#: docs/user/gammu-smsd-tables.7:378
 msgid ""
 "Database backends: gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7)"
 msgstr ""
 "Databázové služby: gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7)"
+
+# type: Plain text
+#~ msgid ""
+#~ "when Delivery Report was used for SMS, this entry contains time of "
+#~ "receiving this report"
+#~ msgstr ""
+#~ "pokud byla pro tuto zprávu aktivní doručenka, tento záznam obsahuje čas "
+#~ "jejího přijetí"
+
+# type: Plain text
+#~ msgid ""
+#~ "when Delivery Report was used for SMS, this entry contains human readable "
+#~ "error code"
+#~ msgstr ""
+#~ "pokud byla pro tuto zprávu aktivní doručenka, tato položka obsahuje "
+#~ "chybový kód"
+
+# type: Plain text
+#~ msgid ""
+#~ "when Delivery Report was used for SMS, this entry contains error code "
+#~ "like in GSM specs"
+#~ msgstr ""
+#~ "pokud byla pro tuto zprávu aktivní doručenka, tato položka obsahuje "
+#~ "chybový kód jak je uveden ve specifikaci GSM"
 
 # type: TP
 #~ msgid "B<backupsms>I< file>"
