@@ -6034,7 +6034,7 @@ GSM_Error ATGEN_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine
             return ERR_NONE;
         case AT_Reply_Error:
             smprintf(s, "Can't get battery level\n");
-            return ERR_UNKNOWN;
+            return ERR_NOTSUPPORTED;
         case AT_Reply_CMSError:
             smprintf(s, "Can't get battery level\n");
             return ATGEN_HandleCMSError(s);
