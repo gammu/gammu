@@ -258,8 +258,8 @@ Number of received SMS messages (SMSD does not reset this counter, so it might o
 .TP
 .BI sentitems
 
-Log of sent messages, if delivery reports are configured, message state is
-updated here.
+Log of sent messages (and unsent ones with error code). Also if delivery
+reports are enabled, message state is updated after receiving delivery report.
 
 Fields description:
 
@@ -276,16 +276,18 @@ when message was inserted into database
 when message has been sent
 
 \fBDeliveryDateTime\fR (timestamp)
-.br
-when Delivery Report was used for SMS, this entry contains time of receiving this report
+.b
+Time of receiving delivery report (if it has been enabled).
 
 \fBStatus\fR (enum('SendingOK', 'SendingOKNoReport', 'SendingError', 'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', 'Error'))
 .br
-when Delivery Report was used for SMS, this entry contains human readable error code
+Status of message sending. SendingError mens that phone failed to send the
+message, Error indicates some other error while processing message.
 
 \fBStatusError\fR (integer)
 .br
-when Delivery Report was used for SMS, this entry contains error code like in GSM specs
+Status of delivery from delivery report message, codes are defined in GSM
+specification.
 
 \fBText\fR (text)
 .br
