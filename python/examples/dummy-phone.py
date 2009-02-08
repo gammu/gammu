@@ -101,7 +101,7 @@ def GetAllSMS():
 
     return sms
 
-def PrintAllSMS(sms):
+def PrintAllSMS(sms, folders):
     for m in sms:
         print
         print '%-15s: %s' % ('Number', m['Number'].encode('utf-8'))
@@ -109,7 +109,7 @@ def PrintAllSMS(sms):
         print '%-15s: %s' % ('State', m['State'].encode('utf-8'))
         print '\n%s' % m['Text'].encode('utf-8')
 
-def LinkAllSMS(sms):
+def LinkAllSMS(sms, folders):
     data = gammu.LinkSMS([[msg] for msg in sms])
 
     for x in data:
@@ -120,7 +120,10 @@ def LinkAllSMS(sms):
         print '%-15s: %s' % ('Number', m['Number'].encode('utf-8'))
         print '%-15s: %s' % ('Date', str(m['DateTime']))
         print '%-15s: %s' % ('State', m['State'])
-        print '%-15s: %s' % ('Folder', m['Folder'])
+        print '%-15s: %s %s (%d)' % ('Folder',
+            folders[m['Folder']]['Name'].encode('utf-8'),
+            folders[m['Folder']]['Memory'].encode('utf-8'),
+            m['Folder'])
         print '%-15s: %s' % ('Validity', m['SMSC']['Validity'])
         loc = []
         for m in x:
@@ -164,6 +167,15 @@ def GetAllTodo():
         for v in entry['Entries']:
             print '%-15s: %s' % (v['Type'], str(v['Value']).encode('utf-8'))
 
+def GetSMSFolders():
+    folders = sm.GetSMSFolders()
+    for i, folder in enumerate(folders):
+        print 'Folder %d: %s (%s)' % (i,
+            folder['Name'].encode('utf-8'),
+            folder['Memory'].encode('utf-8'))
+    return folders
+
+smsfolders = GetSMSFolders()
 GetAllMemory('ME')
 GetAllMemory('SM')
 GetAllMemory('MC')
@@ -173,5 +185,5 @@ Battery()
 GetAllCalendar()
 GetAllTodo()
 smslist = GetAllSMS()
-PrintAllSMS(smslist)
-LinkAllSMS(smslist)
+PrintAllSMS(smslist, smsfolders)
+LinkAllSMS(smslist, smsfolders)
