@@ -335,7 +335,15 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
  */
 GSM_Error DUMMY_Terminate(GSM_StateMachine *s)
 {
+	int i;
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
+
+	for (i = 0; i < DUMMY_MAX_FS_DEPTH; i++) {
+		if (Priv->dir[i] != NULL) {
+			closedir(Priv->dir[i]);
+			Priv->dir[i] = NULL;
+		}
+	}
 	fclose(Priv->log_file);
 	return ERR_NONE;
 }
@@ -875,8 +883,15 @@ GSM_Error DUMMY_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool star
 	char *path;
 	struct dirent *dp;
 	struct stat sb;
+	int i;
 
 	if (start) {
+		for (i = 0; i < DUMMY_MAX_FS_DEPTH; i++) {
+			if (Priv->dir[i] != NULL) {
+				closedir(Priv->dir[i]);
+				Priv->dir[i] = NULL;
+			}
+		}
 		path = DUMMY_GetFilePath(s, "fs");
 		strcpy(Priv->dirnames[0], path);
 		Priv->dir[0] = opendir(path);
