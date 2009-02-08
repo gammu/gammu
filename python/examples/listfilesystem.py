@@ -3,7 +3,7 @@
 # Example for usage of GetNextFileFolder, which is oriented at
 #
 # gammu --getfilesystem
-# 
+#
 # Without argument you get a hierarchical list, provide flat as
 # argument and get somethink like (not exactly!)
 #
@@ -14,25 +14,37 @@
 import gammu
 import locale
 import sys
+from optparse import OptionParser
+parser = OptionParser(usage = "usage: %prog [options]")
+
+parser.add_option("-c", "--config",
+                  action="store", type="string",
+                  dest="config", default=None,
+                  help="Config file path")
+parser.add_option("-f", "--flat",
+                  action="store_true",
+                  dest="flat", default=False,
+                  help="Flat listing")
+parser.add_option("-l", "--level",
+                  action="store_true",
+                  dest="level", default=False,
+                  help="Level listing")
+(options, args) = parser.parse_args()
 
 # Init gammu module
 sm = gammu.StateMachine();
-sm.ReadConfig()
+if options.config is not None:
+    sm.ReadConfig(Filename = options.config)
+else:
+    sm.ReadConfig()
 sm.Init()
 
 # Get wished listing from commandline (if provided - else asume level)
 # On commandline level or flat can be provided as parameters
-mode = "level"
-
-if len(sys.argv) > 2:
-	print 'Only one parameter is allowed here: flat or level'
-	sys.exit(1)
-elif len(sys.argv) == 2:
-	if(sys.argv[1] == "flat" or sys.argv[1] == "level"):
-		mode = sys.argv[1]
-	else:
-		print 'Only one parameter is allowed here: flat or level'
-		sys.exit(1)
+if options.flat:
+    mode = "flat"
+else:
+    mode = "level"
 
 # Set locale to default locale (here relevant for printing of date)
 locale.setlocale(locale.LC_ALL, '')
@@ -49,7 +61,7 @@ locale.setlocale(locale.LC_ALL, '')
 # 'Folder' => Entry is a Folder (Bool)
 # 'Level' => On which level of FS (Integer)
 # 'Buffer' => ?? (String)
-# File Attributes (Bool): 
+# File Attributes (Bool):
 # 'Protected'
 # 'ReadOnly'
 # 'Hidden'
@@ -90,7 +102,7 @@ while(file):
 			time = file["Modified"].strftime("%x %X") + ";"
 		except AttributeError:
 			time = ";"
-		
+
 		print file["ID_FullName"] + ";" \
 			+ file["Name"] + ";" \
 			+ file["Type"] + ";" \
@@ -101,7 +113,7 @@ while(file):
 		attrib = FileToAttributeString(file,1)
 		level = file["Level"]
 		spacer = ""
-		
+
 		for i in range(1, (level-1)):
 			spacer = spacer + " |   "
 		if(level > 1):
