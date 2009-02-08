@@ -11,13 +11,13 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-08 22:46+0100\n"
-"PO-Revision-Date: 2009-02-08 22:23+0100\n"
+"PO-Revision-Date: 2009-02-08 22:51+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
 
 # type: TH
 #: docs/user/gammu.1:1
@@ -6129,13 +6129,12 @@ msgstr "B<sentitems>"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:263
-#, fuzzy
 msgid ""
 "Log of sent messages (and unsent ones with error code). Also if delivery "
 "reports are enabled, message state is updated after receiving delivery "
 "report."
 msgstr ""
-"Informace o odeslaných zprávách a jejich stavu, pokud jsou zapnuty doručenky."
+"Informace o odeslaných (a neodeslaných) zprávách a jejich stavu. Při zapnutých doručenkách je stav zprávy aktualizován při jejím přijetí."
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:277
@@ -6150,7 +6149,7 @@ msgstr "B<DeliveryDateTime> (timestamp)"
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:281
 msgid "Time of receiving delivery report (if it has been enabled)."
-msgstr ""
+msgstr "Čas přijetí doručenky (pokud jsou zapnuty)."
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:283
@@ -6168,7 +6167,7 @@ msgstr ""
 msgid ""
 "Status of message sending. SendingError mens that phone failed to send the "
 "message, Error indicates some other error while processing message."
-msgstr ""
+msgstr "Stav odesílání zprávy. SendingError znamená, že telefonu se nepodařilo zprávu odeslat, Error indikuje jinou chybu při zpracovávání zprávy."
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:288
@@ -6180,7 +6179,7 @@ msgstr "B<StatusError> (integer)"
 msgid ""
 "Status of delivery from delivery report message, codes are defined in GSM "
 "specification."
-msgstr ""
+msgstr "Stav z doručenky, hodnoty jsou definovány ve specifikaci GSM."
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:299
