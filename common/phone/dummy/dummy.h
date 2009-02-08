@@ -37,8 +37,8 @@
 typedef struct {
 	FILE *log_file;
 	GSM_SMSC SMSC;
-	DIR *dir[DUMMY_MAX_FS_DEPTH];
-	char dirnames[DUMMY_MAX_FS_DEPTH][PATH_MAX];
+	DIR *dir[DUMMY_MAX_FS_DEPTH + 1];
+	char dirnames[DUMMY_MAX_FS_DEPTH + 1][PATH_MAX];
 	int fs_depth;
 	size_t devlen;
 } GSM_Phone_DUMMYData;

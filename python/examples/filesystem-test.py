@@ -27,9 +27,39 @@
 import gammu
 import os
 import datetime
+import sys
+from optparse import OptionParser
+
+parser = OptionParser(usage = "usage: %prog [options]")
+
+parser.add_option("-c", "--config",
+                  action="store", type="string",
+                  dest="config", default=None,
+                  help="Config file path")
+parser.add_option("-f", "--folder",
+                  action="store", type="string",
+                  dest="folder", default=None,
+                  help="Folder to be used for testing")
+parser.add_option("-t", "--test-file",
+                  action="store", type="string",
+                  dest="testfile", default="./data/cgi.jpg",
+                  help="Local file to be used for testing")
+(options, args) = parser.parse_args()
+
+if options.folder is None:
+    print "You have to select folder where testing will be done!"
+    print "And even better, you should read the script before you run it."
+    sys.exit(1)
+
+if not os.path.exists(options.testfile):
+    print "You have to select file which will be used for testing!"
+    sys.exit(1)
 
 sm = gammu.StateMachine()
-sm.ReadConfig()
+if options.config is not None:
+    sm.ReadConfig(Filename = options.config)
+else:
+    sm.ReadConfig()
 sm.Init()
 
 # Check GetFileSystemStatus
@@ -37,24 +67,24 @@ print "Expection: Info about filesystem usage"
 try:
 	fs_info = sm.GetFileSystemStatus()
 	fs_info["Total"] = fs_info["Free"] + fs_info["Used"]
-	print "Used: %(Used), Free: %(Free), Total: %(Total)" % fs_info
+	print "Used: %(Used)d, Free: %(Free)d, Total: %(Total)d" % fs_info
 except gammu.ERR_NOTSUPPORTED:
 	print "You will have to live without this knowledge"
 
 # Check DeleteFile
 print "\n\nExpection: Deleting cgi.jpg from memorycard"
 try:
-	sm.DeleteFile(u"b:/cgi.jpg")
+	sm.DeleteFile(unicode(options.folder + "/cgi.jpg"))
 except gammu.ERR_FILENOTEXIST:
 	print "Oh well - we copy it now ;-) (You SHOULD read this)"
 
 # Check AddFilePart
 print "\n\nExpection: Put cgi.jpg onto Memorycard on phone"
-file_handle = open("./data/cgi.jpg", "r")
-file_stat = os.stat("./data/cgi.jpg")
+file_handle = open(options.testfile, "r")
+file_stat = os.stat(options.testfile)
 ttime = datetime.datetime.fromtimestamp(file_stat[8])
 file_f = {
-"ID_FullName": "b:",
+"ID_FullName": options.folder,
 "Name": u"cgi.jpg",
 "Modified": ttime,
 "Folder": 0,
@@ -76,9 +106,9 @@ while (not file_f["Finished"]):
 
 # Check GetFilePart
 print "\n\nExpection: Get cgi.jpg from memorycard and write it as test.jpg"
-f = file('./data/test.jpg', 'w')
+f = file('./test.jpg', 'w')
 file_f = {
-	"ID_FullName": "b:/cgi.jpg",
+	"ID_FullName": options.folder + "/cgi.jpg",
 	"Finished": 0
 }
 while (not file_f["Finished"]):
@@ -88,24 +118,27 @@ f.flush();
 
 # Check correct transfer
 print "\n\nExpection: test.jpg and cgi.jpg to be the same"
-f1 = open("./data/cgi.jpg", "r")
-f2 = open("./data/test.jpg", "r")
+f1 = open(options.testfile, "r")
+f2 = open("./test.jpg", "r")
 if(f1.read() == f2.read()):
 	print "Same files"
 else:
 	print "Files differ!"
 
-os.remove("test.jpg")
+os.remove("./test.jpg")
 
 # Check GetNextRootFolder
 print "\n\nExpection: Root Folder List"
-file = sm.GetNextRootFolder(u"");
-while 1:
-	print file["ID_FullName"] + " - " + file["Name"]
-	try:
-		file = sm.GetNextRootFolder(file["ID_FullName"])
-	except gammu.ERR_EMPTY:
-		break
+try:
+    file = sm.GetNextRootFolder(u"");
+    while 1:
+        print file["ID_FullName"] + " - " + file["Name"]
+        try:
+            file = sm.GetNextRootFolder(file["ID_FullName"])
+        except gammu.ERR_EMPTY:
+            break
+except gammu.ERR_NOTSUPPORTED:
+    print "Not supported..."
 
 
 # Check GetNextFileFolder
@@ -138,14 +171,14 @@ while 1:
 # Check SetFileAttributes
 # Protected is spared, as my mobile nokia 6230i says it's unsupported
 print "\n\nExpection: Modifying attributes (readonly=1, protected=0, system=1, hidden=1)"
-sm.SetFileAttributes(u"b:/cgi.jpg",1,0,1,1)
+sm.SetFileAttributes(unicode(options.folder + "/cgi.jpg"),1,0,1,1)
 
 # Check GetFolderListing
 print "\n\nExpection: Listing of cgi.jpg's properties"
-file_f = sm.GetFolderListing(u"b:", 1)
+file_f = sm.GetFolderListing(unicode(options.folder), 1)
 while 1:
 	if(file_f["Name"] != "cgi.jpg"):
-		file_f = sm.GetFolderListing(u"b:", 0)
+		file_f = sm.GetFolderListing(unicode(options.folder), 0)
 	else:
 		attribute = ""
 		if file_f["Protected"]:
@@ -170,21 +203,21 @@ while 1:
 # Check DeleteFile
 print "\n\nExpection: Deletion of cgi.jpg from memorycard"
 try:
-	sm.DeleteFile(u"b:/cgi.jpg")
+	sm.DeleteFile(unicode(options.folder + "cgi.jpg"))
 	print "Deleted"
 except gammu.ERR_FILENOTEXIST:
 	print "Something is wrong ..."
 
 # Check AddFolder
 print "\n\nExpection: Creation of a folder on the memorycard \"42alpha\""
-file_f = sm.AddFolder(u"b:", u"42alpha")
+file_f = sm.AddFolder(unicode(options.folder), u"42alpha")
 
 # Check GetFolderListing again *wired*
 print "\n\nExpection: Print properties of newly created folder"
-file_f = sm.GetFolderListing(u"b:", 1)
+file_f = sm.GetFolderListing(unicode(options.folder), 1)
 while 1:
 	if(file_f["Name"] != "42alpha"):
-		file_f = sm.GetFolderListing(u"b:", 0)
+		file_f = sm.GetFolderListing(unicode(options.folder), 0)
 	else:
 		attribute = ""
 		if file_f["Protected"]:
@@ -208,4 +241,4 @@ while 1:
 
 # Check DeleteFolder
 print "\n\nExpection: Deletion of previously created folder \"42alpha\""
-sm.DeleteFolder(u"b:/42alpha")
+sm.DeleteFolder(unicode(options.folder + "/42alpha"))

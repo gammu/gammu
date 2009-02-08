@@ -41,6 +41,10 @@ set_tests_properties("py-listfilesystem" PROPERTIES PASS_REGULAR_EXPRESSION "   
 add_test("py-listfilesystem-f" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-listfilesystem.py" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" -f)
 set_tests_properties("py-listfilesystem-f" PROPERTIES PASS_REGULAR_EXPRESSION "dir2/dir2-5/file4")
 
+configure_file("examples/data/cgi.jpg" "${CMAKE_CURRENT_BINARY_DIR}/cgi.jpg" COPY_ONLY)
+configure_file("examples/filesystem-test.py" "${CMAKE_CURRENT_BINARY_DIR}/test-filesystem-test.py" COPY_ONLY)
+add_test("py-filesystem-test" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-filesystem-test.py" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" -f testdir -t "${CMAKE_CURRENT_BINARY_DIR}/cgi.jpg")
+
 configure_file("examples/dummy-phone.py" "${CMAKE_CURRENT_BINARY_DIR}/test-dummy-phone.py" COPY_ONLY)
 add_test("py-dummy-phone" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-dummy-phone.py" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
 #set_tests_properties("py-dummy-phone" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")

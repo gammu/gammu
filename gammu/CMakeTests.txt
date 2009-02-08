@@ -220,6 +220,7 @@ gammu_test(sendfile "ID of new file is \"incoming/test.vcf\"" test.vcf)
 gammu_test(deletefiles "" incoming/test.vcf dir2/dir2-5/file5)
 gammu_test(addfolder "" "/" "foobar")
 gammu_test(deletefolder "" "foobar")
+gammu_test(getfolderlisting "dir2/dir2-5" "dir2")
 
 if (ONLINE_TESTING AND CURL_FOUND)
     gammu_test(checkfirmware "")
