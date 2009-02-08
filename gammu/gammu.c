@@ -508,7 +508,7 @@ static GSM_Parameters Parameters[] = {
 	{"getrootfolders",		0, 0, GetRootFolders,		{H_Filesystem,0},		""},
 	{"setfileattrib",		1, 5, SetFileAttrib,		{H_Filesystem,0},		"folderID [-system] [-readonly] [-hidden] [-protected]"},
 	{"getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
-	{"addfile",			2, 6, AddSendFile,		{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
+	{"addfile",			2, 9, AddSendFile,		{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
 	{"sendfile",			1, 1, AddSendFile,		{H_Filesystem,0},		"name"},
 	{"deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
