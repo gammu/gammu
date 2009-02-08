@@ -120,7 +120,7 @@ def LinkAllSMS(sms):
         print '%-15s: %s' % ('Number', m['Number'].encode('utf-8'))
         print '%-15s: %s' % ('Date', str(m['DateTime']))
         print '%-15s: %s' % ('State', m['State'])
-        print '%-15s: %s' % ('Folder', m['Folder'].encode('utf-8'))
+        print '%-15s: %s' % ('Folder', m['Folder'])
         print '%-15s: %s' % ('Validity', m['SMSC']['Validity'])
         loc = []
         for m in x:
