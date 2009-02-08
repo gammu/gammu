@@ -617,6 +617,13 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos,
 			  GSM_MemoryEntry * Pbk, const GSM_VCardVersion Version);
 
+/**
+ * Frees any dynamically allocated memory inside memory
+ * entry structure.
+ *
+ * \param[in] Entry Pointer to memory entry to process.
+ */
+void GSM_FreeMemoryEntry(GSM_MemoryEntry *Entry);
 #endif
 
 /* Editor configuration

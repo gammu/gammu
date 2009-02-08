@@ -1879,6 +1879,7 @@ StateMachine_GetMemory(StateMachineObject *self, PyObject *args, PyObject *kwds)
     GSM_MemoryEntry     entry;
     static char         *kwlist[] = {"Type", "Location", NULL};
     char                *s;
+    PyObject            *result;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "si", kwlist,
                 &s, &(entry.Location)))
@@ -1893,7 +1894,9 @@ StateMachine_GetMemory(StateMachineObject *self, PyObject *args, PyObject *kwds)
 
     if (!checkError(self->s, error, "GetMemory")) return NULL;
 
-    return MemoryEntryToPython(&entry);
+    result = MemoryEntryToPython(&entry);
+    GSM_FreeMemoryEntry(&entry);
+    return result;
 }
 
 /*****************/
@@ -1920,6 +1923,7 @@ StateMachine_GetNextMemory(StateMachineObject *self, PyObject *args, PyObject *k
     static char         *kwlist[] = {"Type", "Start", "Location", NULL};
     char                *s = NULL;
     int                 start = false;
+    PyObject            *result;
 
     entry.Location = -1;
 
@@ -1941,7 +1945,9 @@ StateMachine_GetNextMemory(StateMachineObject *self, PyObject *args, PyObject *k
 
     if (!checkError(self->s, error, "GetNextMemory")) return NULL;
 
-    return MemoryEntryToPython(&entry);
+    result = MemoryEntryToPython(&entry);
+    GSM_FreeMemoryEntry(&entry);
+    return result;
 }
 
 /*************/
@@ -5606,6 +5612,7 @@ gammu_DecodeVCARD(PyObject *self, PyObject *args, PyObject *kwds)
     size_t                      pos = 0;
     GSM_MemoryEntry             entry;
     GSM_Error                   error;
+    PyObject                    *result;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "s", kwlist,
                 &buffer))
@@ -5614,7 +5621,10 @@ gammu_DecodeVCARD(PyObject *self, PyObject *args, PyObject *kwds)
     error = GSM_DecodeVCARD(GSM_GetGlobalDebug(), buffer, &pos, &entry, SonyEricsson_VCard21);
     if (!checkError(NULL, error, "DecodeVCARD")) return NULL;
 
-    return MemoryEntryToPython(&entry);
+    result = MemoryEntryToPython(&entry);
+    GSM_FreeMemoryEntry(&entry);
+    return result;
+
 }
 
 static char gammu_EncodeVCARD__doc__[] =
