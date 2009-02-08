@@ -1063,7 +1063,9 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			if (j>Config->sendtimeout) break;
 		}
 		if (Config->SendingSMSStatus != ERR_NONE) {
-			SMSD_Log(0, Config, "Error getting send status of %s (%i): %s", Config->SMSID, Config->SendingSMSStatus, GSM_ErrorString(Config->SendingSMSStatus));
+			SMSD_Log(0, Config, "Error getting send status of %s (%i): %s",
+				Config->SMSID,
+				Config->SendingSMSStatus, GSM_ErrorString(Config->SendingSMSStatus));
 			goto failure_unsent;
 		}
 		Config->Status->Sent++;
