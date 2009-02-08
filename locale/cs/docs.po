@@ -17,7 +17,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 # type: TH
 #: docs/user/gammu.1:1
@@ -6134,7 +6134,8 @@ msgid ""
 "reports are enabled, message state is updated after receiving delivery "
 "report."
 msgstr ""
-"Informace o odeslaných (a neodeslaných) zprávách a jejich stavu. Při zapnutých doručenkách je stav zprávy aktualizován při jejím přijetí."
+"Informace o odeslaných (a neodeslaných) zprávách a jejich stavu. Při "
+"zapnutých doručenkách je stav zprávy aktualizován při jejím přijetí."
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:277
@@ -6167,7 +6168,9 @@ msgstr ""
 msgid ""
 "Status of message sending. SendingError mens that phone failed to send the "
 "message, Error indicates some other error while processing message."
-msgstr "Stav odesílání zprávy. SendingError znamená, že telefonu se nepodařilo zprávu odeslat, Error indikuje jinou chybu při zpracovávání zprávy."
+msgstr ""
+"Stav odesílání zprávy. SendingError znamená, že telefonu se nepodařilo "
+"zprávu odeslat, Error indikuje jinou chybu při zpracovávání zprávy."
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:288
