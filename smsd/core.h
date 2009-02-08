@@ -28,8 +28,6 @@
 #define SMSD_DB_VERSION (9)
 #define SMSD_SQL_RETRIES (10)
 
-#define MAX_RETRIES 1
-
 #include "log.h"
 
 typedef enum {
@@ -51,6 +49,7 @@ struct _GSM_SMSDConfig {
 	const char	*PhoneID;
 	const char   *RunOnReceive;
 	bool checksecurity;
+	int maxretries;
 
 	/* options for FILES */
 	const char   *inboxpath, 	 *outboxpath, 	*sentsmspath;

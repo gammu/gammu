@@ -25,6 +25,7 @@ ChangeLog
 [-] * Dummy phone now supports phonebook, calendar, todo, filesystem.
 [-] * Experimental SMSD monitor support on Windows.
 [-] * Added ID for Nokia 2680 (bug #813).
+[-] * Number of retries of message send in SMSD can be configured.
 
 20090202 - 1.22.93
 
