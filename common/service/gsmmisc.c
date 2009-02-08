@@ -92,13 +92,19 @@ GSM_Error GSM_ReadFile(const char *FileName, GSM_File *File)
 	File->Buffer[File->Used] = 0;
 	fclose(file);
 
+	File->Level = 0;
+	File->Type = GSM_File_Other; /* @todo TODO we should somehow detect this? */
+	File->Protected = false;
+	File->Hidden = false;
+	File->System = false;
+	File->ReadOnly = false; /* @todo TODO get this from permissions? */
+
 	File->ModifiedEmpty = true;
 	if (stat(FileName,&fileinfo) == 0) {
 		File->ModifiedEmpty = false;
 		dbgprintf(NULL, "File info read correctly\n");
 		/* st_mtime is time of last modification of file */
 		Fill_GSM_DateTime(&File->Modified, fileinfo.st_mtime);
-		File->Modified.Year = File->Modified.Year + 1900;
 		dbgprintf(NULL, "FileTime: %02i-%02i-%04i %02i:%02i:%02i\n",
 			File->Modified.Day,File->Modified.Month,File->Modified.Year,
 			File->Modified.Hour,File->Modified.Minute,File->Modified.Second);
