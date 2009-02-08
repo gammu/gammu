@@ -16,6 +16,7 @@
 #define __phone_dummy_h__
 
 #include <stdio.h>
+#include <limits.h>
 #ifdef WIN32
 #include "../../../helper/win32-dirent.h"
 #else
