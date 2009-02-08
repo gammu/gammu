@@ -22,16 +22,11 @@
 
 void GSM_FreeBackup(GSM_Backup *backup)
 {
-	int i, j;
+	int i;
 
 	i=0;
 	while (backup->PhonePhonebook[i]!=NULL) {
-		for (j = 0; j < backup->PhonePhonebook[i]->EntriesNum; j++) {
-			if (backup->PhonePhonebook[i]->Entries[j].EntryType == PBK_Photo) {
-				free(backup->PhonePhonebook[i]->Entries[j].Picture.Buffer);
-			}
-		}
-
+		GSM_FreeMemoryEntry(backup->PhonePhonebook[i]);
 		free(backup->PhonePhonebook[i]);
 		backup->PhonePhonebook[i] = NULL;
 		i++;

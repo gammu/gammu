@@ -1009,6 +1009,23 @@ vcard_done:
 	return error;
 }
 
+void GSM_FreeMemoryEntry(GSM_MemoryEntry *Entry)
+{
+	int i;
+
+	for (i = 0; i < Entry->EntriesNum; i++) {
+		switch (Entry->Entries[i].EntryType) {
+			case PBK_Photo:
+				free(Entry->Entries[i].Picture.Buffer);
+				Entry->Entries[i].Picture.Buffer = NULL;
+				Entry->Entries[i].Picture.Length = 0;
+				break;
+			default:
+				break;
+		}
+	}
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=4 ts=4 sts=4 tw=79:
  */
