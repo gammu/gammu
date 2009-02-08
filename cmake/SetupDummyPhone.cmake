@@ -18,6 +18,7 @@ file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/note")
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/fs/dir1/dir1-2/dir1-2-3")
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/fs/dir2/dir2-4")
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/fs/dir2/dir2-5")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/fs/testdir")
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/fs/dir2/dir2-5/file1" "This is testing file1!")
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/fs/dir2/dir2-5/file2" "This is testing file2!")
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/fs/dir2/dir2-5/file3" "This is testing file3!")
@@ -43,6 +44,8 @@ model = dummy
 connection = none
 port = ${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy
 gammuloc = /dev/null
+logformat = textall
+logfile = ${CMAKE_CURRENT_BINARY_DIR}/gammu.log
 
 [gammu99]
 model = dummy

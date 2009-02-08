@@ -57,6 +57,8 @@ GSM_Error DUMMY_Error(GSM_StateMachine *s, const char *message)
 		return ERR_EMPTY;
 	} else if (i == EACCES) {
 		return ERR_PERMISSION;
+	} else if (i == EEXIST) {
+		return ERR_FILEALREADYEXIST;
 	} else {
 		return ERR_UNKNOWN;
 	}
@@ -93,14 +95,14 @@ char * DUMMY_GetFSFilePath(GSM_StateMachine *s, const unsigned char *fullname)
 	return path;
 }
 
-char * DUMMY_GetFSPath(GSM_StateMachine *s, const char *filename)
+char * DUMMY_GetFSPath(GSM_StateMachine *s, const char *filename, int depth)
 {
 	char *path;
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
-	path = (char *)malloc(strlen(filename) + strlen(Priv->dirnames[Priv->fs_depth]) + 2);
+	path = (char *)malloc(strlen(filename) + strlen(Priv->dirnames[depth]) + 2);
 
-	strcpy(path, Priv->dirnames[Priv->fs_depth]);
+	strcpy(path, Priv->dirnames[depth]);
 	strcat(path, "/");
 	strcat(path, filename);
 
@@ -297,7 +299,7 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 	mkdir(path, 0755);
 	free(path);
 
-	for (i = 0; i < DUMMY_MAX_FS_DEPTH; i++) {
+	for (i = 0; i <= DUMMY_MAX_FS_DEPTH; i++) {
 		Priv->dir[i] = NULL;
 	}
 	Priv->fs_depth = 0;
@@ -338,7 +340,7 @@ GSM_Error DUMMY_Terminate(GSM_StateMachine *s)
 	int i;
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
-	for (i = 0; i < DUMMY_MAX_FS_DEPTH; i++) {
+	for (i = 0; i <= DUMMY_MAX_FS_DEPTH; i++) {
 		if (Priv->dir[i] != NULL) {
 			closedir(Priv->dir[i]);
 			Priv->dir[i] = NULL;
@@ -803,6 +805,12 @@ GSM_Error DUMMY_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	return ERR_NOTIMPLEMENTED;
 }
 
+GSM_Error DUMMY_SetFileAttributes(GSM_StateMachine *s, GSM_File *File)
+{
+	/* We just ignore attributes */
+	return ERR_NONE;
+}
+
 GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
 	char *path;
@@ -877,6 +885,83 @@ GSM_Error DUMMY_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, in
 	return error;
 }
 
+GSM_Error DUMMY_GetFolderListing(GSM_StateMachine *s, GSM_File *File, bool start)
+{
+	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
+	char *path;
+	struct dirent *dp;
+	struct stat sb;
+
+	if (start) {
+		if (Priv->dir[DUMMY_MAX_FS_DEPTH] != NULL) {
+			closedir(Priv->dir[DUMMY_MAX_FS_DEPTH]);
+		}
+		path = DUMMY_GetFSFilePath(s, File->ID_FullName);
+		printf("listing %s\n", path);
+		strcpy(Priv->dirnames[DUMMY_MAX_FS_DEPTH], path);
+		Priv->dir[DUMMY_MAX_FS_DEPTH] = opendir(path);
+		free(path);
+		if (Priv->dir[DUMMY_MAX_FS_DEPTH] == NULL) {
+			return DUMMY_Error(s, "opendir failed");
+		}
+	}
+
+read_next_entry:
+	dp = readdir(Priv->dir[DUMMY_MAX_FS_DEPTH]);
+
+	if (dp == NULL) {
+		closedir(Priv->dir[DUMMY_MAX_FS_DEPTH]);
+		Priv->dir[DUMMY_MAX_FS_DEPTH] = NULL;
+		return ERR_EMPTY;
+	}
+
+	if (strcmp(dp->d_name, "..") == 0 || strcmp(dp->d_name, ".") == 0)
+		goto read_next_entry;
+
+	/* Stat file */
+	path = DUMMY_GetFSPath(s, dp->d_name, DUMMY_MAX_FS_DEPTH);
+	if (stat(path, &sb) < 0) {
+		free(path);
+		return DUMMY_Error(s, "stat failed");
+	}
+
+	/* Fill file structure */
+	File->Used = sb.st_size;
+	EncodeUnicode(File->Name, dp->d_name, strlen(dp->d_name));
+	File->Folder = false;
+	File->Level = 0; /*Priv->fs_depth + 1;*/
+	File->Type = GSM_File_Other; /* @todo TODO we should somehow detect this? */
+	/* We need to skip device prefix and /fs/ prefix */
+	EncodeUnicode(File->ID_FullName, path + Priv->devlen + 4, strlen(path + Priv->devlen + 4));
+	File->Buffer = NULL;
+	Fill_GSM_DateTime(&(File->Modified), sb.st_mtime);
+	File->ModifiedEmpty = false;
+	File->Protected = false;
+	File->Hidden = false;
+	File->System = false;
+	File->ReadOnly = false; /* @todo TODO get this from permissions? */
+
+	/* Open nested directory for next loop if needed */
+	if (S_ISDIR(sb.st_mode)) {
+		File->Folder = true;
+		if (Priv->fs_depth == DUMMY_MAX_FS_DEPTH - 1) {
+			smprintf(s, "We hit DUMMY_MAX_FS_DEPTH limit!\n");
+			free(path);
+			return ERR_MOREMEMORY;
+		}
+		Priv->fs_depth++;
+		Priv->dir[Priv->fs_depth] = opendir(path);
+		if (Priv->dir[Priv->fs_depth] == NULL) {
+			free(path);
+			return DUMMY_Error(s, "nested opendir failed");
+		}
+		strcpy(Priv->dirnames[Priv->fs_depth], path);
+	}
+	free(path);
+
+	return ERR_NONE;
+}
+
 GSM_Error DUMMY_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
 {
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
@@ -917,7 +1002,7 @@ read_next_entry:
 		goto read_next_entry;
 
 	/* Stat file */
-	path = DUMMY_GetFSPath(s, dp->d_name);
+	path = DUMMY_GetFSPath(s, dp->d_name, Priv->fs_depth);
 	if (stat(path, &sb) < 0) {
 		free(path);
 		return DUMMY_Error(s, "stat failed");
@@ -963,10 +1048,14 @@ read_next_entry:
 GSM_Error DUMMY_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 {
 	char *path;
+	GSM_Error error;
+
 	path = DUMMY_GetFSFilePath(s, ID);
 	if (unlink(path) != 0) {
 		free(path);
-		return DUMMY_Error(s, "unlink failed");
+		error = DUMMY_Error(s, "unlink failed");
+		if (error == ERR_EMPTY) return ERR_FILENOTEXIST;
+		return error;
 	}
 	free(path);
 	return ERR_NONE;
@@ -975,10 +1064,15 @@ GSM_Error DUMMY_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 GSM_Error DUMMY_DeleteFolder(GSM_StateMachine *s, unsigned char *ID)
 {
 	char *path;
+	GSM_Error error;
+
 	path = DUMMY_GetFSFilePath(s, ID);
+	smprintf(s, "Deleting directory %s\n", path);
 	if (rmdir(path) != 0) {
 		free(path);
-		return DUMMY_Error(s, "unlink failed");
+		error = DUMMY_Error(s, "rmdir failed");
+		if (error == ERR_EMPTY) return ERR_FILENOTEXIST;
+		return error;
 	}
 	free(path);
 	return ERR_NONE;
@@ -1590,9 +1684,9 @@ GSM_Phone_Functions DUMMYPhone = {
 	NOTSUPPORTED,			/* 	SetFMStation		*/
 	NOTSUPPORTED,			/* 	ClearFMStations		*/
 	DUMMY_GetNextFileFolder,
-	NOTSUPPORTED,			/*	GetFolderListing	*/
+	DUMMY_GetFolderListing,
 	NOTSUPPORTED,			/*	GetNextRootFolder	*/
-	NOTSUPPORTED,			/*	SetFileAttributes	*/
+	DUMMY_SetFileAttributes,
 	DUMMY_GetFilePart,
 	DUMMY_AddFilePart,
 	DUMMY_SendFilePart,
