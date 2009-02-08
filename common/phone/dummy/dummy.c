@@ -76,13 +76,13 @@ char * DUMMY_GetFilePath(GSM_StateMachine *s, const char *filename)
 	return log_file;
 }
 
-char * DUMMY_GetFSFilePath(GSM_StateMachine *s, GSM_File *File)
+char * DUMMY_GetFSFilePath(GSM_StateMachine *s, const unsigned char *fullname)
 {
 	char *path;
 	char *filename;
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
-	filename = DecodeUnicodeString(File->ID_FullName);
+	filename = DecodeUnicodeString(fullname);
 
 	path = (char *)malloc(strlen(filename) + Priv->devlen + 5);
 
@@ -812,7 +812,7 @@ GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *
 	}
 	CopyUnicodeString(File->ID_FullName + 2 * pos, File->Name);
 
-	path = DUMMY_GetFSFilePath(s, File);
+	path = DUMMY_GetFSFilePath(s, File->ID_FullName);
 
 	file = fopen(path, "w");
 	if (file == NULL) {
@@ -851,7 +851,7 @@ GSM_Error DUMMY_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, in
 
 	*Handle = 0;
 
-	path = DUMMY_GetFSFilePath(s, File);
+	path = DUMMY_GetFSFilePath(s, File->ID_FullName);
 
 	error = GSM_ReadFile(path, File);
 	*Size = File->Used;
@@ -947,12 +947,49 @@ read_next_entry:
 
 GSM_Error DUMMY_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 {
-	return ERR_NOTIMPLEMENTED;
+	char *path;
+	path = DUMMY_GetFSFilePath(s, ID);
+	if (unlink(path) != 0) {
+		free(path);
+		return DUMMY_Error(s, "unlink failed");
+	}
+	free(path);
+	return ERR_NONE;
+}
+
+GSM_Error DUMMY_DeleteFolder(GSM_StateMachine *s, unsigned char *ID)
+{
+	char *path;
+	path = DUMMY_GetFSFilePath(s, ID);
+	if (rmdir(path) != 0) {
+		free(path);
+		return DUMMY_Error(s, "unlink failed");
+	}
+	free(path);
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_AddFolder(GSM_StateMachine *s, GSM_File *File)
 {
-	return ERR_NOTIMPLEMENTED;
+	char *path;
+	size_t pos;
+
+	pos = UnicodeLength(File->ID_FullName);
+	if (pos > 0 && (File->ID_FullName[2*pos - 2] != 0 || File->ID_FullName[2*pos - 1] != '/')) {
+		File->ID_FullName[2*pos + 1] = '/';
+		File->ID_FullName[2*pos + 0] = 0;
+		pos++;
+	}
+	CopyUnicodeString(File->ID_FullName + 2 * pos, File->Name);
+
+	path = DUMMY_GetFSFilePath(s, File->ID_FullName);
+	if (mkdir(path, 0755) != 0) {
+		free(path);
+		return DUMMY_Error(s, "mkdir failed");
+	}
+	free(path);
+
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
@@ -1547,7 +1584,7 @@ GSM_Phone_Functions DUMMYPhone = {
 	DUMMY_GetFileSystemStatus,
 	DUMMY_DeleteFile,
 	DUMMY_AddFolder,
-	DUMMY_DeleteFile,	/* 	DeleteFolder		*/
+	DUMMY_DeleteFolder,
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };
