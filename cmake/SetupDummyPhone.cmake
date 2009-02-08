@@ -24,6 +24,7 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/fs/dir2/dir2-5/file2" "This
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/fs/dir2/dir2-5/file3" "This is testing file3!")
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/fs/dir2/dir2-5/file4" "This is testing file4!")
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/fs/file5" "This is testing file5!")
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/fs/dir2/file5" "This is testing file6!")
 configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/01.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/1/1" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/90.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/2/10" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/99.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/3/42" COPY_ONLY)
