@@ -25,6 +25,11 @@
 #include <dirent.h>
 #else
 
+#include <stdio.h>
+
+#ifdef __BORLANDC__
+#include <io.h>
+#else
 typedef unsigned long _fsize_t; /* Could be 64 bits for Win32 */
 
 struct _finddata_t {
@@ -35,6 +40,7 @@ struct _finddata_t {
     _fsize_t    size;
     char        name[260];
 };
+#endif
 
 struct dirent {
 	long d_ino;

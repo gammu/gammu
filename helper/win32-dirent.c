@@ -19,10 +19,12 @@
  */
 
 
+#include <io.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
-#include <dirent.h>
+#include "win32-dirent.h"
 
 DIR *
 opendir ( const char *name )
@@ -88,8 +90,8 @@ readdir( DIR *dir )
   xdirent = calloc ( 1, sizeof *xdirent);
   if (xdirent)
     {
-      strncpy (xdirent->d_name, fInfo.cFileName, FILENAME_MAX -1 );
-      xdirent->d_name[FILENAME_MAX-1] = 0;
+      strncpy (xdirent->d_name, fInfo.cFileName, FILENAME_MAX - 1 );
+      xdirent->d_name[FILENAME_MAX - 1] = 0;
       xdirent->d_namlen = strlen( xdirent->d_name );
     }
   return xdirent;
