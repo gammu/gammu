@@ -36,6 +36,7 @@
 #endif
 
 #include <ctype.h>
+#include <errno.h>
 
 /* Some systems let waitpid(2) tell callers about stopped children. */
 #if !defined (WCONTINUED)
@@ -125,10 +126,39 @@ void SMSD_CloseLog(GSM_SMSDConfig *Config)
 	Config->log_type = SMSD_LOG_NONE;
 }
 
+void SMSD_LogErrno(GSM_SMSDConfig *Config, const char *message)
+{
+#ifdef WIN32
+	char *lpMsgBuf;
+
+	FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
+		FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL,
+		GetLastError(),
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /* Default language */
+		(LPTSTR) &lpMsgBuf,
+		0,
+		NULL
+	);
+	SMSD_Log(-1, Config, "%s, Error %d: %s\n", message, (int)GetLastError(), lpMsgBuf);
+
+	LocalFree(lpMsgBuf);
+#else
+	SMSD_Log(-1, Config, "%s, Error %d: %s\n", message, errno, strerror(errno));
+#endif
+}
+
 void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bool exitprogram, int rc)
 {
 	int ret = ERR_NONE;
 
+	if (error != ERR_NONE && error != 0) {
+		SMSD_Log(-1, Config, "%s (%s:%i)", msg, GSM_ErrorString(error), error);
+	} else if (rc != 0) {
+		SMSD_LogErrno(Config, msg);
+	}
 	if (GSM_IsConnected(Config->gsm)) {
 		SMSD_Log(0, Config, "Terminating communication...");
 		ret=GSM_TerminateConnection(Config->gsm);
@@ -138,9 +168,6 @@ void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bo
 				GSM_TerminateConnection(Config->gsm);
 			}
 		}
-	}
-	if (error != ERR_NONE && error != 0) {
-		SMSD_Log(-1, Config, "%s (%s:%i)", msg, GSM_ErrorString(error), error);
 	}
 	if (exitprogram) {
 		if (rc == 0) {

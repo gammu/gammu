@@ -13,6 +13,11 @@
 PRINTF_STYLE(3, 4)
 void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...);
 
+/**
+ * Logs a message to SMSD log with description of OS specific error code.
+ */
+void SMSD_LogErrno(GSM_SMSDConfig *Config, const char *message);
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

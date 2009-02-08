@@ -103,7 +103,7 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 							   SMSDServiceCtrlHandler);
 	if (m_ServiceStatusHandle == (SERVICE_STATUS_HANDLE) 0) {
 		service_print_error("Failed to initiate service");
-		SMSD_Log(-1, config, "Failed to initiate service");
+		SMSD_LogErrno(config, "Failed to initiate service");
 		return;
 	}
 
@@ -115,7 +115,7 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 	error = SMSD_MainLoop(config, false);
 	if (error != ERR_NONE) {
 		report_service_status(SERVICE_STOPPED, error, 0);
-		SMSD_Log(-1, config, "Failed to start SMSD");
+		SMSD_LogErrno(config, "Failed to start SMSD");
 		return;
 	} else {
 		report_service_status(SERVICE_STOPPED, NO_ERROR, 0);
