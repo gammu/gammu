@@ -49,7 +49,7 @@ struct _GSM_SMSDConfig {
 	const char	*PhoneID;
 	const char   *RunOnReceive;
 	bool checksecurity;
-	int maxretries;
+	unsigned int maxretries;
 
 	/* options for FILES */
 	const char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
