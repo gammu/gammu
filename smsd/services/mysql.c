@@ -23,6 +23,7 @@
 /* Disconnects from a database */
 static GSM_Error SMSDMySQL_Free(GSM_SMSDConfig *Config)
 {
+	SMSD_Log(1, Config, "Disconnecting from MySQL");
 	mysql_close(&Config->DBConnMySQL);
 	return ERR_NONE;
 }

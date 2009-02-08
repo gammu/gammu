@@ -220,6 +220,7 @@ void SMSDDBI_Callback(dbi_conn Conn, void *Config)
 static GSM_Error SMSDDBI_Free(GSM_SMSDConfig *Config)
 {
 	if (Config->DBConnDBI != NULL) {
+		SMSD_Log(1, Config, "Disconnecting from DBI");
 		dbi_conn_close(Config->DBConnDBI);
 		dbi_shutdown();
 		Config->DBConnDBI = NULL;

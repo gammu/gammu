@@ -125,6 +125,7 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 static GSM_Error SMSDPgSQL_Free(GSM_SMSDConfig *Config)
 {
 	if (Config->DBConnPgSQL != NULL) {
+		SMSD_Log(1, Config, "Disconnecting from PostgreSQL");
 		PQfinish(Config->DBConnPgSQL);
 		Config->DBConnPgSQL = NULL;
 	}
