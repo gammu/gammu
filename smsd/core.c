@@ -524,6 +524,8 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	if (str) Config->checksecurity=atoi(str); else Config->checksecurity = 1;
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "resetfrequency", false);
 	if (str) Config->resetfrequency=atoi(str); else Config->resetfrequency = 0;
+	str = INI_GetValue(Config->smsdcfgfile, "smsd", "maxretries", false);
+	if (str) Config->maxretries=atoi(str); else Config->maxretries = 1;
 	SMSD_Log(1, Config, "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i, checksecurity=%i",
 			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency, Config->checksecurity);
 
@@ -993,7 +995,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	if (!Config->shutdown) {
 		if (strcmp(Config->prevSMSID, Config->SMSID) == 0) {
 			Config->retries++;
-			if (Config->retries > MAX_RETRIES) {
+			if (Config->retries > Config->maxretries) {
 				Config->retries = 0;
 				strcpy(Config->prevSMSID, "");
 				SMSD_Log(1, Config, "Moved to errorbox: %s", Config->SMSID);
