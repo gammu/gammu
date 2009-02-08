@@ -1041,7 +1041,8 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		Config->SendingSMSStatus = ERR_TIMEOUT;
 		error=GSM_SendSMS(Config->gsm, &sms.SMS[i]);
 		if (error!=ERR_NONE) {
-			SMSD_Log(0, Config, "Error sending SMS %s (%i): %s", Config->SMSID, error,GSM_ErrorString(error));
+			SMSD_Log(0, Config, "Error sending SMS %s (%i): %s",
+				Config->SMSID, error, GSM_ErrorString(error));
 			Config->TPMR = -1;
 			goto failure_unsent;
 		}
