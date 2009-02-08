@@ -420,7 +420,7 @@ read_config:
 		configure_daemon(&params);
 
 	reconfigure = false;
-	error = SMSD_MainLoop(config, true);
+	error = SMSD_MainLoop(config, false);
 	if (error != ERR_NONE) {
 		printf("Failed to run SMSD: %s\n", GSM_ErrorString(error));
 		SMSD_FreeConfig(config);
