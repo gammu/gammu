@@ -238,7 +238,7 @@ char * DUMMY_CalendarPath(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
-	char *log_file;
+	char *log_file, *path;
 	int i;
 
 	Priv->devlen = strlen(s->CurrentConfig->Device);
@@ -246,6 +246,56 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 	log_file = DUMMY_GetFilePath(s, "operations.log");
 
 	smprintf(s, "Log file %s\n", log_file);
+
+	/* Create some directories we might need */
+	path = DUMMY_GetFilePath(s, "fs");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "fs/incoming");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "sms");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "sms/1");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "sms/2");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "sms/3");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "sms/4");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "sms/5");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "pbk/ME");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "pbk/SM");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "pbk/MC");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "pbk/RC");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "pbk/DC");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "note");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "todo");
+	mkdir(path, 0755);
+	free(path);
+	path = DUMMY_GetFilePath(s, "calendar");
+	mkdir(path, 0755);
+	free(path);
 
 	for (i = 0; i < DUMMY_MAX_FS_DEPTH; i++) {
 		Priv->dir[i] = NULL;
@@ -750,11 +800,12 @@ GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *
 	char *path;
 	FILE *file;
 	size_t pos;
+	GSM_Error error;
 
 	*Handle = 0;
 
 	pos = UnicodeLength(File->ID_FullName);
-	if (pos > 0 && File->ID_FullName[2*pos - -1] != '/') {
+	if (pos > 0 && (File->ID_FullName[2*pos - 2] != 0 || File->ID_FullName[2*pos - 1] != '/')) {
 		File->ID_FullName[2*pos + 1] = '/';
 		File->ID_FullName[2*pos + 0] = 0;
 		pos++;
@@ -765,23 +816,32 @@ GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *
 
 	file = fopen(path, "w");
 	if (file == NULL) {
-		return DUMMY_Error(s, "fopen(w) failed");
+		error = DUMMY_Error(s, "fopen(w) failed");
+		if (error == ERR_EMPTY) return ERR_PERMISSION;
+		return error;
 	}
 	if (fwrite(File->Buffer, 1, File->Used, file) != File->Used) {
-		return DUMMY_Error(s, "fwrite failed");
+		error = DUMMY_Error(s, "fwrite failed");
+		if (error == ERR_EMPTY) return ERR_PERMISSION;
+		return error;
 	}
 	if (fclose(file) != 0) {
-		return DUMMY_Error(s, "fclose failed");
+		error = DUMMY_Error(s, "fclose failed");
+		if (error == ERR_EMPTY) return ERR_PERMISSION;
+		return error;
 	}
 
 	free(path);
+
+	*Pos = File->Used;
 
 	return ERR_EMPTY;
 }
 
 GSM_Error DUMMY_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
-	return ERR_NOTIMPLEMENTED;
+	EncodeUnicode(File->ID_FullName, "incoming/", 9);
+	return DUMMY_AddFilePart(s, File, Pos, Handle);
 }
 
 GSM_Error DUMMY_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
