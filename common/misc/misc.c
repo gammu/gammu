@@ -155,8 +155,8 @@ void Fill_GSM_DateTime(GSM_DateTime *Date, time_t timet)
 	struct tm *now;
 
 	now  		= localtime(&timet);
-	Date->Year	= now->tm_year;
-	Date->Month	= now->tm_mon+1;
+	Date->Year	= now->tm_year + 1900;
+	Date->Month	= now->tm_mon + 1;
 	Date->Day	= now->tm_mday;
 	Date->Hour	= now->tm_hour;
 	Date->Minute	= now->tm_min;
