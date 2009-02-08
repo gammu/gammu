@@ -27,7 +27,7 @@ this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 '''
 
-
+import sys
 import gammu
 import gammu.Worker
 
@@ -48,7 +48,11 @@ def read_config():
     Reads gammu configuration.
     '''
     sm = gammu.StateMachine()
-    sm.ReadConfig()
+    # This is hack and should be as parameter of this function
+    if len(sys.argv) == 2:
+        sm.ReadConfig(Filename = sys.argv[1])
+    else:
+        sm.ReadConfig()
     return sm.GetConfig()
 
 def main():
@@ -59,9 +63,16 @@ def main():
     worker.configure(read_config())
     # We can directly invoke commands
     worker.enqueue('GetManufacturer')
+    worker.enqueue('GetSIMIMSI')
+    worker.enqueue('GetIMEI')
+    worker.enqueue('GetOriginalIMEI')
+    worker.enqueue('GetManufactureMonth')
+    worker.enqueue('GetProductCode')
+    worker.enqueue('GetHardware')
+    worker.enqueue('GetDateTime')
     # We can create compound tasks
     worker.enqueue('CustomGetInfo', commands = [
-        'GetModel', 
+        'GetModel',
         'GetBatteryCharge'
         ])
     # We can pass parameters
