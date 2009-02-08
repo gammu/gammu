@@ -21,6 +21,11 @@ option (ONLINE_TESTING "Enable testing of parts which use remote servers" OFF)
 option (PSQL_TESTING "Enable testing of PostgreSQL SMSD backend" OFF)
 option (MYSQL_TESTING "Enable testing of MySQL SMSD backend" OFF)
 
+option (LARGE_FILES "Support for large files" ON)
+if (LARGE_FILES)
+    add_definitions(-D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64)
+endif (LARGE_FILES)
+
 if (CMAKE_CROSSCOMPILING AND MINGW)
     set (GAMMU_TEST_SUFFIX ".exe")
 else (CMAKE_CROSSCOMPILING AND MINGW)
