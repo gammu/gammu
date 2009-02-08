@@ -210,6 +210,10 @@ gammu_test(backup "" test.ics -yes)
 gammu_test(backup "" test.lmb -yes)
 gammu_test(backup "" test.ldif -yes)
 
+gammu_test(getfilesystem "     .    .-- Folder \"dir1-2-3\"")
+gammu_test(getfilesystem "" -flat)
+gammu_test(getfilesystem "dir2/dir2-5/file4" -flatall)
+
 if (ONLINE_TESTING AND CURL_FOUND)
     gammu_test(checkfirmware "")
     gammu_test(checkversion "")
