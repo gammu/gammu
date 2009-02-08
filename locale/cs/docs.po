@@ -17,7 +17,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 # type: TH
 #: docs/user/gammu.1:1
@@ -4026,7 +4026,9 @@ msgstr "B<MaxRetries>"
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:76
 msgid "How many times will SMSD try to resend message if sending fails."
-msgstr "Kolikrát se bude SMSD pokoušet znovu odeslat zprávu pokud se to na první pokus nepodaří."
+msgstr ""
+"Kolikrát se bude SMSD pokoušet znovu odeslat zprávu pokud se to na první "
+"pokus nepodaří."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:78
@@ -4193,7 +4195,10 @@ msgid ""
 "Please note, that you can not pass any parameters to your program here. "
 "Whole string will be taken and treated like program name, regardless spaces, "
 "quotes or other special characters."
-msgstr "Prosím uvědomte si, že není možné předat vašemu programu žádné parametry. Celý text bude považován za jméno programu bez ohledu na mezery, uvozovky či jiné speciální znaky."
+msgstr ""
+"Prosím uvědomte si, že není možné předat vašemu programu žádné parametry. "
+"Celý text bude považován za jméno programu bez ohledu na mezery, uvozovky či "
+"jiné speciální znaky."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:149
