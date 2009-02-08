@@ -11,13 +11,13 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-08 22:18+0100\n"
-"PO-Revision-Date: 2009-02-06 14:29+0100\n"
+"PO-Revision-Date: 2009-02-08 22:23+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
 
 # type: TH
 #: docs/user/gammu.1:1
@@ -27,9 +27,9 @@ msgstr "GAMMU"
 
 # type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Feb 8 2009"
-msgstr "Únor 6, 2009"
+msgstr "Únor 8, 2009"
 
 # type: TH
 #: docs/user/gammu.1:1
@@ -330,9 +330,9 @@ msgstr "B<addsmsfolder>I< name>"
 
 # type: TP
 #: docs/user/gammu.1:111 docs/user/gammu.1:1456
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<backupsms>I< file [-yes|-all]>"
-msgstr "B<backupsms>I< file [-yes]>"
+msgstr "B<backupsms>I< file [-yes|-all]>"
 
 # type: Plain text
 #: docs/user/gammu.1:114 docs/user/gammu.1:1459
@@ -4019,20 +4019,19 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:72
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<MaxRetries>"
-msgstr "B<features>"
+msgstr "B<MaxRetries>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:76
 msgid "How many times will SMSD try to resend message if sending fails."
-msgstr ""
+msgstr "Kolikrát se bude SMSD pokoušet znovu odeslat zprávu pokud se to na první pokus nepodaří."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:78
-#, fuzzy
 msgid "Default is 1."
-msgstr "Výchozí je 10."
+msgstr "Výchozí je 1."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:79
@@ -4194,7 +4193,7 @@ msgid ""
 "Please note, that you can not pass any parameters to your program here. "
 "Whole string will be taken and treated like program name, regardless spaces, "
 "quotes or other special characters."
-msgstr ""
+msgstr "Prosím uvědomte si, že není možné předat vašemu programu žádné parametry. Celý text bude považován za jméno programu bez ohledu na mezery, uvozovky či jiné speciální znaky."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:149
