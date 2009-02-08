@@ -142,7 +142,7 @@ for py in 2.4 2.5 ; do
     mkdir -p $tmp/$repo-$version/python/build/lib.win32-$py/gammu/
     cp python/gammu/*.py $tmp/$repo-$version/python/build/lib.win32-$py/gammu/
     cp python/gammu/*.pyd $tmp/$repo-$version/python/build/lib.win32-$py/gammu/
-    cp gammu/*.dll $tmp/$repo-$version/python/build/lib.win32-$py/gammu/
+    cp python/gammu/*.dll $tmp/$repo-$version/python/build/lib.win32-$py/gammu/
     cd ..
     cd $repo-$version/python
     rm -rf gammu/CMakeFiles
