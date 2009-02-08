@@ -269,8 +269,9 @@ Počet přijatých SMS zpráv (SMSD tento čítač nenuluje, takže může přet
 .TP 
 \fBsentitems\fP
 
-Informace o odeslaných zprávách a jejich stavu, pokud jsou zapnuty
-doručenky.
+Log of sent messages (and unsent ones with error code). Also if delivery
+reports are enabled, message state is updated after receiving delivery
+report.
 
 Popis sloupců:
 
@@ -288,20 +289,19 @@ kdy byla zpráva odeslána
 
 \fBDeliveryDateTime\fP (timestamp)
 .br
-pokud byla pro tuto zprávu aktivní doručenka, tento záznam obsahuje čas
-jejího přijetí
+Time of receiving delivery report (if it has been enabled).
 
 \fBStatus\fP (enum('SendingOK', 'SendingOKNoReport', 'SendingError',
 \&'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown',
 \&'Error'))
 .br
-pokud byla pro tuto zprávu aktivní doručenka, tato položka obsahuje chybový
-kód
+Status of message sending. SendingError mens that phone failed to send the
+message, Error indicates some other error while processing message.
 
 \fBStatusError\fP (integer)
 .br
-pokud byla pro tuto zprávu aktivní doručenka, tato položka obsahuje chybový
-kód jak je uveden ve specifikaci GSM
+Status of delivery from delivery report message, codes are defined in GSM
+specification.
 
 \fBText\fP (text)
 .br
