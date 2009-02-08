@@ -76,6 +76,23 @@ char * DUMMY_GetFilePath(GSM_StateMachine *s, const char *filename)
 	return log_file;
 }
 
+char * DUMMY_GetFSFilePath(GSM_StateMachine *s, GSM_File *File)
+{
+	char *path;
+	char *filename;
+	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
+
+	filename = DecodeUnicodeString(File->ID_FullName);
+
+	path = (char *)malloc(strlen(filename) + Priv->devlen + 5);
+
+	strcpy(path, s->CurrentConfig->Device);
+	strcat(path, "/fs/");
+	strcat(path, filename);
+
+	return path;
+}
+
 char * DUMMY_GetFSPath(GSM_StateMachine *s, const char *filename)
 {
 	char *path;
@@ -740,7 +757,20 @@ GSM_Error DUMMY_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int 
 
 GSM_Error DUMMY_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
 {
-	return ERR_NOTIMPLEMENTED;
+	char *path;
+	GSM_Error error;
+
+	*Handle = 0;
+
+	path = DUMMY_GetFSFilePath(s, File);
+
+	error = GSM_ReadFile(path, File);
+	*Size = File->Used;
+
+	free(path);
+
+	if (error == ERR_NONE) return ERR_EMPTY;
+	return error;
 }
 
 GSM_Error DUMMY_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
