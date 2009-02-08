@@ -444,6 +444,7 @@ void GetOneFile(GSM_File * File, bool newtime, int i)
 				printf_err(_("Error while writing file!\n"));
 			}
 			free(File->Buffer);
+			File->Buffer = NULL;
 			fclose(file);
 			if (!newtime && !File->ModifiedEmpty) {
 				/* access time */
