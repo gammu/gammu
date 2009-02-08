@@ -24,6 +24,7 @@ ChangeLog
 [-] * Support for passing received message ID in DBI.
 [-] * Dummy phone now supports phonebook, calendar, todo, filesystem.
 [-] * Experimental SMSD monitor support on Windows.
+[-] * Added ID for Nokia 2680 (bug #813).
 
 20090202 - 1.22.93
 
