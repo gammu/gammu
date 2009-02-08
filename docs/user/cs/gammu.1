@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Únor 6, 2009" "Gammu 1.22.94" "Dokumentace Gammu"
+.TH GAMMU 1 "Feb 8 2009" "Gammu 1.22.94" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -118,8 +118,13 @@ složky v telefonu.
 \fBaddsmsfolder\fP\fI name\fP
 
 .TP 
-\fBbackupsms\fP\fI file [\-yes]\fP
+\fBbackupsms\fP\fI file [\-yes|\-all]\fP
 Uloží všechny SMS z telefonu do souboru.
+
+Use \-yes for answering yes to all questions (backup all messages and delete
+them from phone), or \-all to just backup all folders while keeping messages
+in phone.
+
 .TP 
 \fBdeleteallsms\fP\fI folder\fP
 Odstraní všechny SMS ze zadané složky.
@@ -1494,8 +1499,13 @@ F: Type = NumberGeneral\enEntry\e([0\-9][0\-9]\e)Text =
 R: Type = NumberMobile\enEntry\e1Text = "\e+36\e2\e3"\en
 
 .TP 
-\fBbackupsms\fP\fI file [\-yes]\fP
+\fBbackupsms\fP\fI file [\-yes|\-all]\fP
 Uloží všechny SMS z telefonu do souboru.
+
+Use \-yes for answering yes to all questions (backup all messages and delete
+them from phone), or \-all to just backup all folders while keeping messages
+in phone.
+
 .TP 
 \fBrestore\fP\fI file [\-yes]\fP
 Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
