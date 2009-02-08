@@ -35,3 +35,8 @@ This file is probably not usable for anybody except me ;-).
         218459 ./common/phone/at/atgen.c
 
 - reading/saving vnote
+
+- when SMSD fails to send message
+    - SQL backend should store this state
+    - number of retries should be configurable
+    - the code needs review
