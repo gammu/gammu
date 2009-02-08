@@ -992,89 +992,89 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		return false;
 	}
 
-	if (!Config->shutdown) {
-		if (strcmp(Config->prevSMSID, Config->SMSID) == 0) {
-			Config->retries++;
-			if (Config->retries > Config->maxretries) {
-				Config->retries = 0;
-				strcpy(Config->prevSMSID, "");
-				SMSD_Log(1, Config, "Moved to errorbox: %s", Config->SMSID);
-				for (i=0;i<sms.Number;i++) {
-					Config->Status->Failed++;
-					Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
-				}
-				Service->MoveSMS(&sms,Config, Config->SMSID, true,false);
-				return false;
-			}
-		} else {
+	if (Config->shutdown) return true;
+
+	if (strcmp(Config->prevSMSID, Config->SMSID) == 0) {
+		Config->retries++;
+		if (Config->retries > Config->maxretries) {
 			Config->retries = 0;
-			strcpy(Config->prevSMSID, Config->SMSID);
+			strcpy(Config->prevSMSID, "");
+			SMSD_Log(1, Config, "Moved to errorbox: %s", Config->SMSID);
+			for (i=0;i<sms.Number;i++) {
+				Config->Status->Failed++;
+				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
+			}
+			Service->MoveSMS(&sms,Config, Config->SMSID, true,false);
+			return false;
 		}
-		for (i=0;i<sms.Number;i++) {
-			if (sms.SMS[i].SMSC.Location == 1) {
-			    	if (Config->SMSC.Location == 0) {
-					Config->SMSC.Location = 1;
-					error = GSM_GetSMSC(Config->gsm,&Config->SMSC);
-					if (error!=ERR_NONE) {
-						SMSD_Log(-1, Config, "Error getting SMSC from phone");
-						return false;
-					}
-
-			    	}
-			    	memcpy(&sms.SMS[i].SMSC,&Config->SMSC,sizeof(GSM_SMSC));
-			    	sms.SMS[i].SMSC.Location = 0;
-				if (Config->relativevalidity != -1) {
-					sms.SMS[i].SMSC.Validity.Format	  = SMS_Validity_RelativeFormat;
-					sms.SMS[i].SMSC.Validity.Relative = Config->relativevalidity;
+	} else {
+		Config->retries = 0;
+		strcpy(Config->prevSMSID, Config->SMSID);
+	}
+	for (i=0;i<sms.Number;i++) {
+		if (sms.SMS[i].SMSC.Location == 1) {
+			if (Config->SMSC.Location == 0) {
+				Config->SMSC.Location = 1;
+				error = GSM_GetSMSC(Config->gsm,&Config->SMSC);
+				if (error!=ERR_NONE) {
+					SMSD_Log(-1, Config, "Error getting SMSC from phone");
+					return false;
 				}
-			}
 
-			if (Config->currdeliveryreport == 1) {
-				sms.SMS[i].PDU = SMS_Status_Report;
-			} else {
-				if ((strcmp(Config->deliveryreport, "no") != 0 && (Config->currdeliveryreport == -1))) sms.SMS[i].PDU = SMS_Status_Report;
 			}
+			memcpy(&sms.SMS[i].SMSC,&Config->SMSC,sizeof(GSM_SMSC));
+			sms.SMS[i].SMSC.Location = 0;
+			if (Config->relativevalidity != -1) {
+				sms.SMS[i].SMSC.Validity.Format	  = SMS_Validity_RelativeFormat;
+				sms.SMS[i].SMSC.Validity.Relative = Config->relativevalidity;
+			}
+		}
 
-			SMSD_PhoneStatus(Config);
+		if (Config->currdeliveryreport == 1) {
+			sms.SMS[i].PDU = SMS_Status_Report;
+		} else {
+			if ((strcmp(Config->deliveryreport, "no") != 0 && (Config->currdeliveryreport == -1))) sms.SMS[i].PDU = SMS_Status_Report;
+		}
+
+		SMSD_PhoneStatus(Config);
+		Config->TPMR = -1;
+		Config->SendingSMSStatus = ERR_TIMEOUT;
+		error=GSM_SendSMS(Config->gsm, &sms.SMS[i]);
+		if (error!=ERR_NONE) {
+			SMSD_Log(0, Config, "Error sending SMS %s (%i): %s", Config->SMSID, error,GSM_ErrorString(error));
 			Config->TPMR = -1;
-			Config->SendingSMSStatus = ERR_TIMEOUT;
-			error=GSM_SendSMS(Config->gsm, &sms.SMS[i]);
-			if (error!=ERR_NONE) {
-				SMSD_Log(0, Config, "Error sending SMS %s (%i): %s", Config->SMSID, error,GSM_ErrorString(error));
-				Config->TPMR = -1;
-				goto failure_unsent;
-			}
-			Service->RefreshPhoneStatus(Config);
-			j    = 0;
-			while (!Config->shutdown) {
-				GSM_GetCurrentDateTime (&Date);
-				z=Date.Second;
-				while (z==Date.Second) {
-					usleep(10000);
-					GSM_GetCurrentDateTime(&Date);
-					GSM_ReadDevice(Config->gsm,true);
-					if (Config->SendingSMSStatus != ERR_TIMEOUT) break;
-				}
-				Service->RefreshSendStatus(Config, Config->SMSID);
-				Service->RefreshPhoneStatus(Config);
+			goto failure_unsent;
+		}
+		Service->RefreshPhoneStatus(Config);
+		j    = 0;
+		while (!Config->shutdown) {
+			GSM_GetCurrentDateTime (&Date);
+			z=Date.Second;
+			while (z==Date.Second) {
+				usleep(10000);
+				GSM_GetCurrentDateTime(&Date);
+				GSM_ReadDevice(Config->gsm,true);
 				if (Config->SendingSMSStatus != ERR_TIMEOUT) break;
-				j++;
-				if (j>Config->sendtimeout) break;
 			}
-			if (Config->SendingSMSStatus != ERR_NONE) {
-				SMSD_Log(0, Config, "Error getting send status of %s (%i): %s", Config->SMSID, Config->SendingSMSStatus, GSM_ErrorString(Config->SendingSMSStatus));
-				goto failure_unsent;
-			}
-			Config->Status->Sent++;
-			error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, Config->TPMR);
-			if (error!=ERR_NONE) {
-				goto failure_sent;
-			}
+			Service->RefreshSendStatus(Config, Config->SMSID);
+			Service->RefreshPhoneStatus(Config);
+			if (Config->SendingSMSStatus != ERR_TIMEOUT) break;
+			j++;
+			if (j>Config->sendtimeout) break;
 		}
-		strcpy(Config->prevSMSID, "");
-		if (Service->MoveSMS(&sms,Config, Config->SMSID, false, true) != ERR_NONE) {
-			Service->MoveSMS(&sms,Config, Config->SMSID, true, false);
+		if (Config->SendingSMSStatus != ERR_NONE) {
+			SMSD_Log(0, Config, "Error getting send status of %s (%i): %s", Config->SMSID, Config->SendingSMSStatus, GSM_ErrorString(Config->SendingSMSStatus));
+			goto failure_unsent;
 		}
+		Config->Status->Sent++;
+		error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, Config->TPMR);
+		if (error!=ERR_NONE) {
+			goto failure_sent;
+		}
+	}
+	strcpy(Config->prevSMSID, "");
+	if (Service->MoveSMS(&sms,Config, Config->SMSID, false, true) != ERR_NONE) {
+		Service->MoveSMS(&sms,Config, Config->SMSID, true, false);
 	}
 	return true;
 failure_unsent:
