@@ -443,6 +443,7 @@ void GetOneFile(GSM_File * File, bool newtime, int i)
 			if (fwrite(File->Buffer, 1, File->Used, file) != File->Used) {
 				printf_err(_("Error while writing file!\n"));
 			}
+			free(File->Buffer);
 			fclose(file);
 			if (!newtime && !File->ModifiedEmpty) {
 				/* access time */
@@ -479,7 +480,6 @@ void GetFiles(int argc, char *argv[])
 		GetOneFile(&File, newtime, i);
 	}
 
-	free(File.Buffer);
 	GSM_Terminate();
 }
 
