@@ -85,7 +85,7 @@ if __name__ == '__main__':
         message = {'Text': 'python-gammu second testing message', 'SMSC': {'Location': 1}, 'Number': '1234567890'}
         smsd.InjectSMS([message])
 
-        time.sleep(10)
+        time.sleep(20)
 
         # Show SMSD status
         status = smsd.GetStatus()
