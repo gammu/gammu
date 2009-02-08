@@ -142,7 +142,7 @@ endif (GETTEXTLIBS_FOUND)
 
 # dirent emulation layer
 if(WIN32 AND NOT CMAKE_COMPILER_IS_MINGW AND NOT CMAKE_COMPILER_IS_CYGWIN)
-    target_link_libraries (win32dirent)
+    target_link_libraries (libGammu win32dirent)
 endif(WIN32 AND NOT CMAKE_COMPILER_IS_MINGW AND NOT CMAKE_COMPILER_IS_CYGWIN)
 
 # Include search path
