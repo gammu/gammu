@@ -25,6 +25,17 @@
 #include <dirent.h>
 #else
 
+typedef unsigned long _fsize_t; /* Could be 64 bits for Win32 */
+
+struct _finddata_t {
+    unsigned    attrib;
+    time_t      time_create;    /* -1 for FAT file systems */
+    time_t      time_access;    /* -1 for FAT file systems */
+    time_t      time_write;
+    _fsize_t    size;
+    char        name[260];
+};
+
 struct dirent {
 	long d_ino;
 	unsigned short d_reclen;
