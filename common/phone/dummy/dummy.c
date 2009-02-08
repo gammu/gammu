@@ -757,7 +757,7 @@ GSM_Error DUMMY_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int 
 
 GSM_Error DUMMY_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
 {
-	char *path;
+	char *path, *name, *pos;
 	GSM_Error error;
 
 	*Handle = 0;
@@ -766,6 +766,13 @@ GSM_Error DUMMY_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, in
 
 	error = GSM_ReadFile(path, File);
 	*Size = File->Used;
+
+	name = strrchr(path, '/');
+	if (name == NULL) name = path;
+	else name++;
+	EncodeUnicode(File->Name, name, strlen(name));
+	pos = path;
+	while (*pos != 0 && (pos = strchr(pos + 1, '/')) != NULL) File->Level++;
 
 	free(path);
 

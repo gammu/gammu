@@ -98,6 +98,7 @@ GSM_Error GSM_ReadFile(const char *FileName, GSM_File *File)
 	File->Hidden = false;
 	File->System = false;
 	File->ReadOnly = false; /* @todo TODO get this from permissions? */
+	File->Folder = false;
 
 	File->ModifiedEmpty = true;
 	if (stat(FileName,&fileinfo) == 0) {
