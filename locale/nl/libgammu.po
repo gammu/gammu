@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-08 22:03+0100\n"
+"POT-Creation-Date: 2009-02-09 17:34+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -291,7 +291,7 @@ msgstr "Configuratie niet gevonden"
 msgid "Unknown error description."
 msgstr ""
 
-#: common/phone/dummy/dummy.c:547
+#: common/phone/dummy/dummy.c:549
 msgid "Templates"
 msgstr ""
 
