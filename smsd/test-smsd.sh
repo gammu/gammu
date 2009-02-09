@@ -42,10 +42,9 @@ logfile = stderr
 runonreceive = @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.sh
 EOT
 
-# Create database and add driver specific configuration
+# Add driver specific configuration
 case $SERVICE in
     dbi-sqlite3)
-        @SQLITE_BIN@ smsd.db < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/sqlite.sql
         cat >> .smsdrc <<EOT
 service = dbi
 driver = sqlite3
@@ -54,8 +53,6 @@ dbdir = @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/
 EOT
         ;;
     dbi-pgsql)
-        echo "DROP TABLE IF EXISTS daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@
-        PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/pgsql.sql
         cat >> .smsdrc <<EOT
 service = dbi
 driver = pgsql
@@ -66,8 +63,6 @@ password = @PSQL_PASSWORD@
 EOT
         ;;
     pgsql)
-        echo "DROP TABLE IF EXISTS daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@
-        PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/pgsql.sql
         cat >> .smsdrc <<EOT
 service = pgsql
 pc = @PSQL_HOST@
@@ -77,8 +72,6 @@ password = @PSQL_PASSWORD@
 EOT
         ;;
     dbi-mysql)
-        echo "DROP TABLE IF EXISTS  daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | @MYSQL_BIN@ -u@MYSQL_USER@ -h@MYSQL_HOST@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@
-        @MYSQL_BIN@ -h@MYSQL_HOST@ -u@MYSQL_USER@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/mysql.sql
         cat >> .smsdrc <<EOT
 service = dbi
 driver = mysql
@@ -89,8 +82,6 @@ password = @MYSQL_PASSWORD@
 EOT
         ;;
     mysql)
-        echo "DROP TABLE IF EXISTS  daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | @MYSQL_BIN@ -u@MYSQL_USER@ -h@MYSQL_HOST@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@
-        @MYSQL_BIN@ -h@MYSQL_HOST@ -u@MYSQL_USER@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/mysql.sql
         cat >> .smsdrc <<EOT
 service = mysql
 pc = @MYSQL_HOST@
@@ -98,6 +89,21 @@ database = @MYSQL_DATABASE@
 user = @MYSQL_USER@
 password = @MYSQL_PASSWORD@
 EOT
+        ;;
+esac
+
+# Create database structures
+case $SERVICE in
+    *sqlite3)
+        @SQLITE_BIN@ smsd.db < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/sqlite.sql
+        ;;
+    *pgsql)
+        echo "DROP TABLE IF EXISTS daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@
+        PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/pgsql.sql
+        ;;
+    *mysql)
+        echo "DROP TABLE IF EXISTS  daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | @MYSQL_BIN@ -u@MYSQL_USER@ -h@MYSQL_HOST@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@
+        @MYSQL_BIN@ -h@MYSQL_HOST@ -u@MYSQL_USER@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/mysql.sql
         ;;
 esac
 
