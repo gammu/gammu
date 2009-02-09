@@ -366,7 +366,7 @@ static GSM_Error SMSDDBI_CheckTable(GSM_SMSDConfig * Config, const char *table)
 	char buffer[200];
 	GSM_Error error;
 
-	sprintf(buffer, "SELECT id FROM %s", table);
+	sprintf(buffer, "SELECT id FROM %s LIMIT 1", table);
 	error = SMSDDBI_Query(Config, buffer, &res);
 	if (error != ERR_NONE) {
 		SMSD_Log(-1, Config, "Table %s not found!", table);
