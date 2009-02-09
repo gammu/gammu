@@ -31,7 +31,7 @@ configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/99.backup" "${CMAKE_CURR
 configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/80.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/4/15" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/vcards/private.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/ME/1" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/ME/101" COPY_ONLY)
-configure_file("${Gammu_SOURCE_DIR}/tests/vcards/photo-2.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/ME/103" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcards/photo.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/ME/103" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/vcards/many-lines.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/SM/1" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/vcal/rrule-1.0.vcs" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/calendar/2" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/vcal/dtstart.ics" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/calendar/22" COPY_ONLY)
