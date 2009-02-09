@@ -341,7 +341,7 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 				return ERR_BUG;
 			}
 			if (strstr(msg, "locked") != NULL) {
-				SMSD_Log(0, Config, "Retrying after %d seconds...", 5 * attempts);
+				SMSD_Log(0, Config, "Retrying after %d seconds...", attempts * attempts);
 				sleep(5 * attempts);
 				continue;
 			}
@@ -350,7 +350,7 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 		SMSD_Log(0, Config, "Failed to detect problem cause, reconnecting to database!");
 		error = ERR_UNKNOWN;
 		while (error != ERR_NONE) {
-			SMSD_Log(0, Config, "Reconnecting after %d seconds...", 5 * attempts);
+			SMSD_Log(0, Config, "Reconnecting after %d seconds...", attempts * attempts);
 			sleep(5 * attempts);
 			SMSDDBI_Free(Config);
 			error = SMSDDBI_Connect(Config);
