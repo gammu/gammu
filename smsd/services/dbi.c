@@ -342,7 +342,7 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 			}
 			if (strstr(msg, "locked") != NULL) {
 				SMSD_Log(0, Config, "Retrying after %d seconds...", attempts * attempts);
-				sleep(5 * attempts);
+				sleep(attempts * attempts);
 				continue;
 			}
 		}
@@ -351,7 +351,7 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 		error = ERR_UNKNOWN;
 		while (error != ERR_NONE) {
 			SMSD_Log(0, Config, "Reconnecting after %d seconds...", attempts * attempts);
-			sleep(5 * attempts);
+			sleep(attempts * attempts);
 			SMSDDBI_Free(Config);
 			error = SMSDDBI_Connect(Config);
 			if (error == ERR_NONE) {
