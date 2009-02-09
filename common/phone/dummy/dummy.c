@@ -43,8 +43,10 @@
 #include "dummy.h"
 
 #ifdef WIN32
+#define MKDIR(dir) mkdir(dir)
 #include "../../../helper/win32-dirent.h"
 #else
+#define MKDIR(dir) mkdir(dir, 0755)
 #include <dirent.h>
 #endif
 
@@ -251,52 +253,52 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 
 	/* Create some directories we might need */
 	path = DUMMY_GetFilePath(s, "fs");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "fs/incoming");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "sms");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "sms/1");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "sms/2");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "sms/3");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "sms/4");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "sms/5");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "pbk/ME");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "pbk/SM");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "pbk/MC");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "pbk/RC");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "pbk/DC");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "note");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "todo");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "calendar");
-	mkdir(path, 0755);
+	MKDIR(path);
 	free(path);
 
 	for (i = 0; i <= DUMMY_MAX_FS_DEPTH; i++) {
@@ -1092,7 +1094,7 @@ GSM_Error DUMMY_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	CopyUnicodeString(File->ID_FullName + 2 * pos, File->Name);
 
 	path = DUMMY_GetFSFilePath(s, File->ID_FullName);
-	if (mkdir(path, 0755) != 0) {
+	if (MKDIR(path) != 0) {
 		free(path);
 		return DUMMY_Error(s, "mkdir failed");
 	}
