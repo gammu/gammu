@@ -2395,6 +2395,7 @@ StateMachine_GetNextSMS(StateMachineObject *self, PyObject *args, PyObject *kwds
 
     sms.SMS[0].Location = -1;
     sms.SMS[0].Folder = -1;
+    sms.Number = 0;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "i|ii", kwlist,
                 &(sms.SMS[0].Folder), &start, &(sms.SMS[0].Location)))
