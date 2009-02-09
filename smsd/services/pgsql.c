@@ -403,7 +403,8 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 		}
 		PQclear(Res);
 
-		if (SMSDPgSQL_Query(Config, "UPDATE phones SET Received = Received + 1", &Res) != ERR_NONE) {
+		sprintf(buffer, "UPDATE phones SET Received = Received + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
+		if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
 			SMSD_Log(0, Config, "Error updating number of received messages (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
@@ -973,7 +974,8 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	}
 	PQclear(Res);
 
-	if (SMSDPgSQL_Query(Config, "UPDATE phones SET Sent = Sent + 1", &Res) != ERR_NONE) {
+	sprintf(buffer, "UPDATE phones SET Sent= Sent + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
+	if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error updating number of sent messages (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}

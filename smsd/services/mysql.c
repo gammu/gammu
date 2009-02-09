@@ -500,7 +500,8 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 			if (!strcmp(Row[7],"false")) break;
 
 		}
-		if (SMSDMySQL_Query(Config, "UPDATE `phones` SET `Received`= `Received` + 1") != ERR_NONE) {
+		sprintf(buf, "UPDATE phones SET Received = Received + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
+		if (SMSDMySQL_Query(Config, buf) != ERR_NONE) {
 			SMSD_Log(0, Config, "Error updating number of received messages (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
@@ -754,7 +755,8 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 		SMSD_Log(0, Config, "Error writing to database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
-	if (SMSDMySQL_Query(Config, "UPDATE `phones` SET `Sent`= `Sent` + 1") != ERR_NONE) {
+	sprintf(buffer, "UPDATE `phones` SET `Sent`= `Sent` + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
+	if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error updating number of sent messages (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
