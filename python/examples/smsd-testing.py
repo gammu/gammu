@@ -73,19 +73,18 @@ if __name__ == '__main__':
         # Load configuration
         smsd = gammu.SMSD(smsdrc)
 
-        # Start SMSD thread
-        smsd_thread = threading.Thread(target = smsd.MainLoop)
-        smsd_thread.start()
-
-        time.sleep(10)
-
         # Inject SMS messages
+        # Please note that SMSD is not thread safe, so you can not use inject and main loop from different threads
         message = {'Text': 'python-gammu testing message', 'SMSC': {'Location': 1}, 'Number': '1234567890'}
         smsd.InjectSMS([message])
         message = {'Text': 'python-gammu second testing message', 'SMSC': {'Location': 1}, 'Number': '1234567890'}
         smsd.InjectSMS([message])
 
-        time.sleep(20)
+        # Start SMSD thread
+        smsd_thread = threading.Thread(target = smsd.MainLoop)
+        smsd_thread.start()
+
+        time.sleep(30)
 
         # Show SMSD status
         status = smsd.GetStatus()
