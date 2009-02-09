@@ -88,12 +88,15 @@ CREATE TABLE `outbox` (
   `ID` integer unsigned NOT NULL auto_increment,
   `MultiPart` enum('false','true') default 'false',
   `RelativeValidity` integer default '-1',
-  `SenderID` text,
+  `SenderID` varchar(255),
   `SendingTimeOut` timestamp NULL default '0000-00-00 00:00:00',
   `DeliveryReport` enum('default','yes','no') default 'default',
   `CreatorID` text NOT NULL,
   PRIMARY KEY `ID` (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
+CREATE INDEX outbox_sender ON outbox(SenderID);
 
 -- 
 -- Dumping data for table `outbox`
@@ -201,7 +204,7 @@ CREATE TABLE `sentitems` (
   `Class` integer NOT NULL default '-1',
   `TextDecoded` varchar(160) NOT NULL default '',
   `ID` integer unsigned NOT NULL default '0',
-  `SenderID` text NOT NULL,
+  `SenderID` varchar(255) NOT NULL,
   `SequencePosition` integer NOT NULL default '1',
   `Status` enum('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending','DeliveryUnknown','Error') NOT NULL default 'SendingOK',
   `StatusError` integer NOT NULL default '-1',
@@ -210,6 +213,11 @@ CREATE TABLE `sentitems` (
   `CreatorID` text NOT NULL,
   PRIMARY KEY (`ID`, `SequencePosition`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE INDEX sentitems_date ON sentitems(DeliveryDateTime);
+CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
+CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
+CREATE INDEX sentitems_sender ON sentitems(SenderID);
 
 -- 
 -- Dumping data for table `sentitems`
