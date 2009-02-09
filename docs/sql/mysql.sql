@@ -40,7 +40,7 @@ CREATE TABLE `gammu` (
 -- Dumping data for table `gammu`
 -- 
 
-INSERT INTO `gammu` (`Version`) VALUES (9);
+INSERT INTO `gammu` (`Version`) VALUES (10);
 
 -- --------------------------------------------------------
 
@@ -61,7 +61,7 @@ CREATE TABLE `inbox` (
   `ID` integer unsigned NOT NULL auto_increment,
   `RecipientID` text NOT NULL,
   `Processed` enum('false','true') NOT NULL default 'false',
-  UNIQUE KEY `ID` (`ID`)
+  PRIMARY KEY `ID` (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- 
@@ -92,8 +92,8 @@ CREATE TABLE `outbox` (
   `SendingTimeOut` timestamp NULL default '0000-00-00 00:00:00',
   `DeliveryReport` enum('default','yes','no') default 'default',
   `CreatorID` text NOT NULL,
-  UNIQUE KEY `ID` (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+  PRIMARY KEY `ID` (`ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 
 -- Dumping data for table `outbox`
@@ -113,7 +113,8 @@ CREATE TABLE `outbox_multipart` (
   `Class` integer default '-1',
   `TextDecoded` varchar(160) default NULL,
   `ID` integer unsigned NOT NULL default '0',
-  `SequencePosition` integer NOT NULL default '1'
+  `SequencePosition` integer NOT NULL default '1',
+  PRIMARY KEY (`ID`, `SequencePosition`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 
@@ -147,7 +148,7 @@ CREATE TABLE `pbk` (
 CREATE TABLE `pbk_groups` (
   `Name` text NOT NULL,
   `ID` integer NOT NULL auto_increment,
-  UNIQUE KEY `ID` (`ID`)
+  PRIMARY KEY `ID` (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- 
@@ -168,12 +169,13 @@ CREATE TABLE `phones` (
   `TimeOut` timestamp NOT NULL default '0000-00-00 00:00:00',
   `Send` enum('yes','no') NOT NULL default 'no',
   `Receive` enum('yes','no') NOT NULL default 'no',
-  `IMEI` text NOT NULL,
+  `IMEI` varchar(35) NOT NULL,
   `Client` text NOT NULL,
   `Battery` integer NOT NULL DEFAULT 0,
   `Signal` integer NOT NULL DEFAULT 0,
   `Sent` int NOT NULL DEFAULT 0,
-  `Received` int NOT NULL DEFAULT 0
+  `Received` int NOT NULL DEFAULT 0,
+  PRIMARY KEY (`IMEI`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 
@@ -190,7 +192,7 @@ CREATE TABLE `sentitems` (
   `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   `InsertIntoDB` timestamp NOT NULL default '0000-00-00 00:00:00',
   `SendingDateTime` timestamp NOT NULL default '0000-00-00 00:00:00',
-  `DeliveryDateTime` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `DeliveryDateTime` timestamp NULL,
   `Text` text NOT NULL,
   `DestinationNumber` varchar(20) NOT NULL default '',
   `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default '8bit',
@@ -205,7 +207,8 @@ CREATE TABLE `sentitems` (
   `StatusError` integer NOT NULL default '-1',
   `TPMR` integer NOT NULL default '-1',
   `RelativeValidity` integer NOT NULL default '-1',
-  `CreatorID` text NOT NULL
+  `CreatorID` text NOT NULL,
+  PRIMARY KEY (`ID`, `SequencePosition`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 

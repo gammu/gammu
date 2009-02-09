@@ -226,7 +226,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			sprintf(buffer,
 				"SELECT ID, Status, EXTRACT(EPOCH FROM SendingDateTime), DeliveryDateTime, SMSCNumber "
                                         "FROM sentitems WHERE "
-					"DeliveryDateTime = 'epoch' AND "
+					"DeliveryDateTime IS NULL AND "
 					"SenderID = '%s' AND TPMR = '%i' AND DestinationNumber = '%s'",
 				Config->PhoneID, sms->SMS[i].MessageReference, buffer2);
 			if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {

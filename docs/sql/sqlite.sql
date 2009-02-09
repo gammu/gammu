@@ -7,7 +7,7 @@ CREATE TABLE gammu (
   Version INTEGER NOT NULL DEFAULT '0'
 );
 
-INSERT INTO gammu (Version) VALUES (9);
+INSERT INTO gammu (Version) VALUES (10);
 
 CREATE TABLE inbox (
   UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now')),
@@ -64,10 +64,11 @@ CREATE TABLE outbox_multipart (
   UDH TEXT,
   Class INTEGER DEFAULT '-1',
   TextDecoded TEXT DEFAULT NULL,
-  ID INTEGER PRIMARY KEY AUTOINCREMENT,
+  ID INTEGER,
   SequencePosition INTEGER NOT NULL DEFAULT '1',
   CHECK (Coding IN 
-  ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression'))
+  ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
+ PRIMARY KEY (ID, SequencePosition)
 );
 
 CREATE TABLE pbk (
@@ -105,7 +106,7 @@ CREATE TABLE sentitems (
   UpdatedInDB NUMERIC NOT NULL DEFAULT (datetime('now')),
   InsertIntoDB NUMERIC NOT NULL DEFAULT (datetime('now')),
   SendingDateTime NUMERIC NOT NULL DEFAULT (datetime('now')),
-  DeliveryDateTime NUMERIC NOT NULL DEFAULT (datetime('now')),
+  DeliveryDateTime NUMERIC NULL,
   Text TEXT NOT NULL,
   DestinationNumber TEXT NOT NULL DEFAULT '',
   Coding TEXT NOT NULL DEFAULT '8bit', 
@@ -113,7 +114,7 @@ CREATE TABLE sentitems (
   SMSCNumber TEXT NOT NULL DEFAULT '',
   Class INTEGER NOT NULL DEFAULT '-1',
   TextDecoded TEXT NOT NULL DEFAULT '',
-  ID INTEGER PRIMARY KEY AUTOINCREMENT,
+  ID INTEGER,
   SenderID TEXT NOT NULL,
   SequencePosition INTEGER NOT NULL DEFAULT '1',
   Status TEXT NOT NULL DEFAULT 'SendingOK',
@@ -125,7 +126,8 @@ CREATE TABLE sentitems (
   ('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending',
   'DeliveryUnknown','Error')),
   CHECK (Coding IN 
-  ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')) 
+  ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')) ,
+ PRIMARY KEY (ID, SequencePosition)
 );
 
 CREATE TRIGGER update_sentitems_time UPDATE ON sentitems 
