@@ -651,10 +651,11 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
-		dbi_result_free(Res);
 
 		new_id = dbi_conn_sequence_last(Config->DBConnDBI, NULL);
 		SMSD_Log(1, Config, "Inserted message id %llu", new_id);
+
+		dbi_result_free(Res);
 
 		if (new_id != 0) {
 			if (locations_pos + 10 >= locations_size) {
