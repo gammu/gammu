@@ -325,6 +325,9 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 			if (strstr(msg, "violation") != NULL) {
 				return ERR_BUG;
 			}
+			if (strstr(msg, "violates") != NULL) {
+				return ERR_BUG;
+			}
 			if (strstr(msg, "SQL error") != NULL) {
 				return ERR_BUG;
 			}
@@ -653,6 +656,13 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 		}
 
 		new_id = dbi_conn_sequence_last(Config->DBConnDBI, NULL);
+		if (new_id == 0) {
+			new_id = dbi_conn_sequence_last(Config->DBConnDBI, "inbox_id_seq");
+		}
+		if (new_id == 0) {
+			SMSD_Log(0, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
+			return ERR_UNKNOWN;
+		}
 		SMSD_Log(1, Config, "Inserted message id %llu", new_id);
 
 		dbi_result_free(Res);
@@ -897,43 +907,11 @@ static GSM_Error SMSDDBI_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 					   GSM_SMSDConfig * Config)
 {
-	char buffer[10000], buffer2[400], buffer4[10000];
+	char buffer[10000], buffer2[400];
 	int i;
-	unsigned int ID;
+	unsigned int ID = 0;
 	dbi_result Res;
 	char *encoded_text;
-
-	/* Finding next ID. */
-	/* @bug This way is safe as long as no one else writes to database... */
-
-	sprintf(buffer, "SELECT MAX(ID) AS ID FROM outbox");
-	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
-		return ERR_UNKNOWN;
-	}
-
-	if (dbi_result_get_numrows(Res) != 0) {
-		dbi_result_first_row(Res);
-		ID = SMSDDBI_GetNumber(Config, Res, "ID");
-	} else {
-		ID = 0;
-	}
-	dbi_result_free(Res);
-
-	sprintf(buffer, "SELECT MAX(ID) AS ID FROM sentitems");
-	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
-		return ERR_UNKNOWN;
-	}
-
-	if (dbi_result_get_numrows(Res) != 0) {
-		dbi_result_first_row(Res);
-		ID = MAX(SMSDDBI_GetNumber(Config, Res, "ID"), ID);
-	}
-	dbi_result_free(Res);
-
-	/* Get next ID */
-	ID++;
 
 	for (i = 0; i < sms->Number; i++) {
 		buffer[0] = 0;
@@ -952,8 +930,11 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 				"DestinationNumber, RelativeValidity, ");
 		}
 
-		sprintf(buffer + strlen(buffer), "Coding, UDH,  "
-			  "Class, TextDecoded, ID) VALUES (");
+		strcat(buffer, "Coding, UDH, Class, TextDecoded");
+		if (i != 0) {
+			strcat(buffer, ", ID");
+		}
+		strcat(buffer, ") VALUES (");
 
 		if (i == 0) {
 			sprintf(buffer + strlen(buffer), "'Gammu %s', ",
@@ -1063,12 +1044,23 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 				break;
 		}
 
-		sprintf(buffer + strlen(buffer), ", '");
-		strcpy(buffer4, buffer);
-		sprintf(buffer4 + strlen(buffer4), "%u')", ID);
-		if (SMSDDBI_Query(Config, buffer4, &Res) != ERR_NONE) {
+		if (i != 0) {
+			sprintf(buffer + strlen(buffer), ", %u", ID);
+		}
+		strcat(buffer, ")");
+		if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 			SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
+		}
+		if (i == 0) {
+			ID = dbi_conn_sequence_last(Config->DBConnDBI, NULL);
+			if (ID == 0) {
+				ID = dbi_conn_sequence_last(Config->DBConnDBI, "outbox_id_seq");
+			}
+			if (ID == 0) {
+				SMSD_Log(0, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
+				return ERR_UNKNOWN;
+			}
 		}
 		dbi_result_free(Res);
 	}
