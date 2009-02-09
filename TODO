@@ -15,8 +15,6 @@ This file is probably not usable for anybody except me ;-).
 
 - add support for acquiring number of messages in sending queue
 
-- *_CreateOutboxSMS are too fragile and can not be run concurrently
-
 - database driver should use EncodeUTF8 instead of DecodeUnicodeString
 
 - split a bit some huge source files

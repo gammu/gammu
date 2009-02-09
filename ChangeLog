@@ -27,6 +27,8 @@ ChangeLog
 [-] * Added ID for Nokia 2680 (bug #813).
 [-] * Number of retries of message send in SMSD can be configured.
 [-] * Updated SQL files to new version (mostly added useful indexes).
+[-] * Dropped own logic for generating IDs for SMS and rely on SQL
+      server (only in DBI driver for now).
 
 20090202 - 1.22.93
 
