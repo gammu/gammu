@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-08 22:03+0100\n"
-"PO-Revision-Date: 2009-02-02 15:59+0100\n"
+"POT-Creation-Date: 2009-02-09 17:34+0100\n"
+"PO-Revision-Date: 2009-02-09 17:34+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1205,7 +1205,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:961
 #, c-format
 msgid "What should I do (\"%s\") ?\n"
-msgstr ""
+msgstr "Co mám dělat (\"%s\") ?\n"
 
 #: gammu/depend/nokia/dct4.c:1013
 #, c-format
@@ -1421,7 +1421,7 @@ msgstr "Paměť telefonu"
 #: gammu/files.c:48
 #, c-format
 msgid "%i bytes (free %i bytes, used %i bytes)"
-msgstr ""
+msgstr "%i bajtů (volno %i bajtů, využito %i bajtů)"
 
 #: gammu/files.c:54
 msgid "Usage details"
@@ -1430,7 +1430,7 @@ msgstr "Podrobnosti o použití"
 #: gammu/files.c:55
 #, c-format
 msgid "images: %i, sounds: %i, themes: %i"
-msgstr ""
+msgstr "obrázky: %i, zvuky: %i, témata: %i"
 
 #. l10n: One char to indicate protected file
 #: gammu/files.c:118 gammu/files.c:207 gammu/files.c:328
@@ -1473,17 +1473,17 @@ msgstr "Soubor;"
 #: gammu/files.c:223
 #, c-format
 msgid "Used in phone: %li bytes"
-msgstr ""
+msgstr "Využito v telefonu: %li bajtů"
 
 #: gammu/files.c:225
 #, c-format
 msgid ", used in card: %li bytes"
-msgstr ""
+msgstr ", využito na kartě: %li bajtů"
 
 #: gammu/files.c:255
 #, c-format
 msgid "Unknown attribute (%s)\n"
-msgstr ""
+msgstr "Neznámý atribut (%s)\n"
 
 #: gammu/files.c:306
 msgid "Part of folder only"
@@ -1512,7 +1512,7 @@ msgstr ""
 #: gammu/files.c:442
 #, c-format
 msgid "  Saving to %s\n"
-msgstr ""
+msgstr "  Ukládám do %s\n"
 
 #: gammu/files.c:693 gammu/nokia.c:923
 #, c-format
@@ -1522,7 +1522,7 @@ msgstr "Parametr \"%s\" není známý\n"
 #: gammu/files.c:728
 #, c-format
 msgid "What file type (\"%s\") ?\n"
-msgstr ""
+msgstr "Jaký typ souboru (\"%s\") ?\n"
 
 #: gammu/files.c:737 gammu/misc.c:1148 gammu/nokia.c:932
 #: helper/message-cmdline.c:1267
@@ -1609,15 +1609,15 @@ msgstr "standardní vstup"
 #: gammu/gammu.c:403
 #, c-format
 msgid "Batch file could not be opened: %s\n"
-msgstr ""
+msgstr "Soubor s dávkou nemohl být otevřen: %s\n"
 
 #: gammu/gammu.c:414
 msgid "Error reading batch! Terminating.\n"
-msgstr ""
+msgstr "Chyba při načítání dávky! Končím.\n"
 
 #: gammu/gammu.c:416
 msgid "Batch processed, terminating.\n"
-msgstr ""
+msgstr "Dávka zpracována, končím.\n"
 
 #: gammu/gammu.c:453
 #, c-format
@@ -2058,7 +2058,7 @@ msgstr ""
 #: gammu/message.c:599
 #, c-format
 msgid "Saving SMS %i/%i\n"
-msgstr ""
+msgstr "Ukládám SMS %i/%i\n"
 
 #: gammu/message.c:602
 #, c-format
@@ -2137,7 +2137,7 @@ msgstr "Název v telefonu"
 
 #: gammu/misc.c:169
 msgid "Never version of firmware is available!\n"
-msgstr ""
+msgstr "Je dostupná novější verze firmware!\n"
 
 #: gammu/misc.c:170
 #, c-format
@@ -2240,7 +2240,7 @@ msgstr ""
 
 #: gammu/misc.c:331
 msgid "Entering monitor mode..."
-msgstr ""
+msgstr "Začínám monitorovací režim..."
 
 #: gammu/misc.c:341
 msgid "Enabling info about incoming SMS"
@@ -2419,7 +2419,7 @@ msgstr ""
 
 #: gammu/misc.c:516
 msgid "Leaving monitor mode..."
-msgstr ""
+msgstr "Ukončuji monitorovací režim..."
 
 #: gammu/misc.c:544
 #, c-format

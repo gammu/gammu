@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.22.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-08 22:03+0100\n"
-"PO-Revision-Date: 2009-02-02 10:30+0100\n"
+"POT-Creation-Date: 2009-02-09 17:34+0100\n"
+"PO-Revision-Date: 2009-02-09 17:29+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -300,15 +300,14 @@ msgid "Service is not runnig."
 msgstr "Služba není spuštěna."
 
 #: common/gsmcomon.c:148
-#, fuzzy
 msgid "Service configuration is missing."
-msgstr "Zvolte sekci konfigurace"
+msgstr "Chybí nastavení služby."
 
 #: common/gsmcomon.c:181
 msgid "Unknown error description."
 msgstr "Neznámý popis chyby."
 
-#: common/phone/dummy/dummy.c:547
+#: common/phone/dummy/dummy.c:549
 msgid "Templates"
 msgstr "Šablony"
 

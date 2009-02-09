@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.22.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-08 22:03+0100\n"
+"POT-Creation-Date: 2009-02-09 17:34+0100\n"
 "PO-Revision-Date: 2009-01-30 17:11+0100\n"
 "Last-Translator: Rafał Ślubowski <RafalSlubowski@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -332,7 +332,7 @@ msgstr "Wybierz sekcję konfiguracji"
 msgid "Unknown error description."
 msgstr "Nieznany błąd."
 
-#: common/phone/dummy/dummy.c:547
+#: common/phone/dummy/dummy.c:549
 msgid "Templates"
 msgstr ""
 
