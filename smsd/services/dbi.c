@@ -467,7 +467,9 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 	dbi_result Res = NULL;
 	char *encoded_text;
 
-	char buffer[10000], buffer2[400], buffer3[50];
+	char buffer[10000];
+	char destinationnumber[GSM_MAX_NUMBER_LENGTH + 1];
+	char smstext[3 *  GSM_MAX_SMS_LENGTH + 1];
 	int i;
 	time_t t_time1, t_time2;
 	bool found;
@@ -475,17 +477,17 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 	unsigned long long	new_id;
 	size_t			locations_size = 0, locations_pos = 0;
 	const char *state, *smsc;
+	time_t timestamp;
+	struct tm *timestruct;
 
 	*Locations = NULL;
 
 	for (i = 0; i < sms->Number; i++) {
+		EncodeUTF8(smstext, sms->SMS[i].Text);
 		if (sms->SMS[i].PDU == SMS_Status_Report) {
-			strcpy(buffer2, DecodeUnicodeString(sms->SMS[i].Number));
+			DecodeUnicode(sms->SMS[i].Number, destinationnumber);
 			if (strncasecmp(Config->deliveryreport, "log", 3) == 0) {
-				SMSD_Log(0, Config, "Delivery report: %s to %s",
-					     DecodeUnicodeString(sms->SMS[i].
-								 Text),
-					     buffer2);
+				SMSD_Log(0, Config, "Delivery report: %s to %s", smstext, destinationnumber);
 			}
 
 			sprintf(buffer,
@@ -493,7 +495,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
                                         "FROM sentitems WHERE "
 					"DeliveryDateTime IS NULL AND "
 					"SenderID = '%s' AND TPMR = '%i' AND DestinationNumber = '%s'",
-				Config->PhoneID, sms->SMS[i].MessageReference, buffer2);
+				Config->PhoneID, sms->SMS[i].MessageReference, destinationnumber);
 			if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 				SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
 				return ERR_UNKNOWN;
@@ -524,34 +526,32 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			}
 
 			if (found) {
-				sprintf(buffer, "UPDATE sentitems SET DeliveryDateTime = '%04i%02i%02i%02i%02i%02i', "
-                                          "Status = '",
-					sms->SMS[i].SMSCTime.Year, sms->SMS[i].SMSCTime.Month, sms->SMS[i].SMSCTime.Day, sms->SMS[i].SMSCTime.Hour, sms->SMS[i].SMSCTime.Minute,
-					sms->SMS[i].SMSCTime.Second);
+				strcpy(buffer, "UPDATE sentitems SET DeliveryDateTime = '");
+				timestamp = Fill_Time_T(sms->SMS[i].SMSCTime);
+				if (strcmp(dbi_driver_get_name(dbi_conn_get_driver(Config->DBConnDBI)), "pgsql") == 0) {
+					timestruct = gmtime(&timestamp);
+					strftime(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%Y-%m-%d %H:%M:%S GMT", timestruct);
+				} else {
+					sprintf(buffer + strlen(buffer), "%lld", (long long)timestamp);
+				}
+				strcat(buffer, "', Status = '");
 
-				sprintf(buffer3, "%s",
-					DecodeUnicodeString(sms->SMS[i].Text));
-				if (!strcmp(buffer3, "Delivered")) {
-					sprintf(buffer + strlen(buffer),
-						"DeliveryOK");
-				} else if (!strcmp(buffer3, "Failed")) {
-					sprintf(buffer + strlen(buffer),
-						"DeliveryFailed");
-				} else if (!strcmp(buffer3, "Pending")) {
-					sprintf(buffer + strlen(buffer),
-						"DeliveryPending");
-				} else if (!strcmp(buffer3, "Unknown")) {
-					sprintf(buffer + strlen(buffer),
-						"DeliveryUnknown");
+				if (!strcmp(smstext, "Delivered")) {
+					strcat(buffer, "DeliveryOK");
+				} else if (!strcmp(smstext, "Failed")) {
+					strcat(buffer, "DeliveryFailed");
+				} else if (!strcmp(smstext, "Pending")) {
+					strcat(buffer, "DeliveryPending");
+				} else if (!strcmp(smstext, "Unknown")) {
+					strcat(buffer, "DeliveryUnknown");
 				}
 
 				sprintf(buffer + strlen(buffer),
-					"', StatusError = '%i'",
-					sms->SMS[i].DeliveryStatus);
-				sprintf(buffer + strlen(buffer),
-					" WHERE ID = %lld AND `TPMR` = '%i'",
+					"', StatusError = %i WHERE ID = %lld AND `TPMR` = %i",
+					sms->SMS[i].DeliveryStatus,
 					SMSDDBI_GetNumber(Config, Res, "ID"),
 					sms->SMS[i].MessageReference);
+
 				if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 					SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
 					return ERR_UNKNOWN;
@@ -592,42 +592,36 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 
 		switch (sms->SMS[i].Coding) {
 			case SMS_Coding_Unicode_No_Compression:
-				sprintf(buffer + strlen(buffer),
-					"Unicode_No_Compression");
+				strcat(buffer, "Unicode_No_Compression");
 				break;
 
 			case SMS_Coding_Unicode_Compression:
-				sprintf(buffer + strlen(buffer),
-					"Unicode_Compression");
+				strcat(buffer, "Unicode_Compression");
 				break;
 
 			case SMS_Coding_Default_No_Compression:
-				sprintf(buffer + strlen(buffer),
-					"Default_No_Compression");
+				strcat(buffer, "Default_No_Compression");
 				break;
 
 			case SMS_Coding_Default_Compression:
-				sprintf(buffer + strlen(buffer),
-					"Default_Compression");
+				strcat(buffer, "Default_Compression");
 				break;
 
 			case SMS_Coding_8bit:
-				sprintf(buffer + strlen(buffer), "8bit");
+				strcat(buffer, "8bit");
 				break;
 		}
 
 		sprintf(buffer + strlen(buffer), "','%s'",
 			DecodeUnicodeString(sms->SMS[i].SMSC.Number));
 
-		if (sms->SMS[i].UDH.Type == UDH_NoUDH) {
-			sprintf(buffer + strlen(buffer), ",''");
-		} else {
-			sprintf(buffer + strlen(buffer), ",'");
+		strcat(buffer, ",'");
+		if (sms->SMS[i].UDH.Type != UDH_NoUDH) {
 			EncodeHexBin(buffer + strlen(buffer),
 				     sms->SMS[i].UDH.Text,
 				     sms->SMS[i].UDH.Length);
-			sprintf(buffer + strlen(buffer), "'");
 		}
+		strcat(buffer, "'");
 
 		sprintf(buffer + strlen(buffer), ",'%i',", sms->SMS[i].Class);
 
@@ -636,8 +630,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			case SMS_Coding_Unicode_No_Compression:
 
 			case SMS_Coding_Default_No_Compression:
-				EncodeUTF8(buffer2, sms->SMS[i].Text);
-				dbi_conn_quote_string_copy(Config->DBConnDBI, buffer2, &encoded_text);
+				dbi_conn_quote_string_copy(Config->DBConnDBI, smstext, &encoded_text);
 				strcat(buffer, encoded_text);
 				free(encoded_text);
 				break;
