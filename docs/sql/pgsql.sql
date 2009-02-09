@@ -80,7 +80,7 @@ CREATE TABLE gammu (
 -- Dumping data for table "gammu"
 -- 
 
-INSERT INTO gammu (Version) VALUES (9);
+INSERT INTO gammu (Version) VALUES (10);
 
 -- --------------------------------------------------------
 
@@ -169,8 +169,9 @@ CREATE TABLE outbox_multipart (
   UDH text,
   Class integer DEFAULT '-1',
   TextDecoded varchar(160) DEFAULT NULL,
-  ID serial PRIMARY KEY,
+  ID serial,
   SequencePosition integer NOT NULL DEFAULT '1',
+  PRIMARY KEY (ID, SequencePosition),
   CHECK (Coding IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression'))
 );
@@ -226,7 +227,7 @@ CREATE TABLE phones (
   TimeOut timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
   Send boolean NOT NULL DEFAULT 'no',
   Receive boolean NOT NULL DEFAULT 'no',
-  IMEI text NOT NULL,
+  IMEI varchar(35) PRIMARY KEY NOT NULL,
   Client text NOT NULL,
   Battery integer NOT NULL DEFAULT 0,
   Signal integer NOT NULL DEFAULT 0,
@@ -256,7 +257,7 @@ CREATE TABLE sentitems (
   UpdatedInDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT LOCALTIMESTAMP(0),
   InsertIntoDB timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
   SendingDateTime timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
-  DeliveryDateTime timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
+  DeliveryDateTime timestamp(0) WITHOUT time zone NULL,
   Text text NOT NULL,
   DestinationNumber varchar(20) NOT NULL DEFAULT '',
   Coding varchar(255) NOT NULL DEFAULT '8bit', 
@@ -264,7 +265,7 @@ CREATE TABLE sentitems (
   SMSCNumber varchar(20) NOT NULL DEFAULT '',
   Class integer NOT NULL DEFAULT '-1',
   TextDecoded varchar(160) NOT NULL DEFAULT '',
-  ID serial PRIMARY KEY,
+  ID serial,
   SenderID text NOT NULL,
   SequencePosition integer NOT NULL DEFAULT '1',
   Status varchar(255) NOT NULL DEFAULT 'SendingOK',
@@ -276,7 +277,8 @@ CREATE TABLE sentitems (
   ('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending',
   'DeliveryUnknown','Error')),
   CHECK (Coding IN 
-  ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')) 
+  ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
+  PRIMARY KEY (ID, SequencePosition)
 );
 
 -- 

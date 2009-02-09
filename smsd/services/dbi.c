@@ -488,7 +488,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			sprintf(buffer,
 				"SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber "
                                         "FROM sentitems WHERE "
-					"DeliveryDateTime = 'epoch' AND "
+					"DeliveryDateTime IS NULL AND "
 					"SenderID = '%s' AND TPMR = '%i' AND DestinationNumber = '%s'",
 				Config->PhoneID, sms->SMS[i].MessageReference, buffer2);
 			if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
