@@ -779,7 +779,7 @@ macro_gammu_option (CELLBROADCAST "Cell Broadcast messages support" ON ON ON)
 macro_gammu_option (BACKUP "Backup/Restore functions" ON ON ON)
 
 # Generate config.h
-configure_file ("${Gammu_SOURCE_DIR}/templates/gammu-config.h.cmake" "${Gammu_BINARY_DIR}/include/gammu-config.h" ESCAPE_QUOTES)
+configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu-config.h.cmake" "${Gammu_BINARY_DIR}/include/gammu-config.h" ESCAPE_QUOTES)
 
 # Fill in include dir for build
 foreach (HEADER ${PUBLIC_HEADERS})
@@ -802,10 +802,10 @@ else ("${DOXYGEN_DOT_EXECUTABLE}" STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
     # Strip binary name from variable
     string (REGEX REPLACE "/dot$" "" DOXYGEN_DOT_PATH "${DOXYGEN_DOT_EXECUTABLE}")
 endif ("${DOXYGEN_DOT_EXECUTABLE}" STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
-configure_file ("${Gammu_SOURCE_DIR}/templates/Doxyfile.cmake" "${Gammu_BINARY_DIR}/doxygen/Doxyfile")
-configure_file ("${Gammu_SOURCE_DIR}/templates/Doxyfile-internal.cmake" "${Gammu_BINARY_DIR}/doxygen/Doxyfile-internal")
-configure_file ("${Gammu_SOURCE_DIR}/templates/api.desc.cmake" "${Gammu_BINARY_DIR}/doxygen/api.desc")
-configure_file ("${Gammu_SOURCE_DIR}/templates/internals.desc.cmake" "${Gammu_BINARY_DIR}/doxygen/internals.desc")
+configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/Doxyfile.cmake" "${Gammu_BINARY_DIR}/doxygen/Doxyfile")
+configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/Doxyfile-internal.cmake" "${Gammu_BINARY_DIR}/doxygen/Doxyfile-internal")
+configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/api.desc.cmake" "${Gammu_BINARY_DIR}/doxygen/api.desc")
+configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/internals.desc.cmake" "${Gammu_BINARY_DIR}/doxygen/internals.desc")
 
 # Target for generating API documentation
 add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile
@@ -819,10 +819,10 @@ add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
     COMMENT "Generating internal documentation")
 
 # Generate pkgconfig file
-configure_file ("${Gammu_SOURCE_DIR}/templates/gammu.pc.cmake" "${Gammu_BINARY_DIR}/cfg/gammu.pc" @ONLY)
-configure_file ("${Gammu_SOURCE_DIR}/templates/gammu-smsd.pc.cmake" "${Gammu_BINARY_DIR}/cfg/gammu-smsd.pc" @ONLY)
-configure_file ("${Gammu_SOURCE_DIR}/templates/gammu-uninstalled.pc.cmake" "${Gammu_BINARY_DIR}/pkgconfig/gammu.pc" @ONLY)
-configure_file ("${Gammu_SOURCE_DIR}/templates/gammu-smsd-uninstalled.pc.cmake" "${Gammu_BINARY_DIR}/pkgconfig/gammu-smsd.pc" @ONLY)
+configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu.pc.cmake" "${Gammu_BINARY_DIR}/cfg/gammu.pc" @ONLY)
+configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu-smsd.pc.cmake" "${Gammu_BINARY_DIR}/cfg/gammu-smsd.pc" @ONLY)
+configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu-uninstalled.pc.cmake" "${Gammu_BINARY_DIR}/pkgconfig/gammu.pc" @ONLY)
+configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu-smsd-uninstalled.pc.cmake" "${Gammu_BINARY_DIR}/pkgconfig/gammu-smsd.pc" @ONLY)
 
 # Install instructions
 
