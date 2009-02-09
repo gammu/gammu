@@ -315,6 +315,7 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 	Config->log_handle = NULL;
 	Config->log_type = SMSD_LOG_NONE;
 	Config->debug_level = 0;
+	Config->Service = NULL;
 	if (name == NULL) {
 		Config->program_name = smsd_name;
 	} else {
@@ -329,6 +330,9 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
  */
 GSM_Error SMSGetService(GSM_SMSDConfig *Config, GSM_SMSDService **Service)
 {
+	if (Config->Service == NULL) {
+		return ERR_UNCONFIGURED;
+	}
 	if (strcasecmp(Config->Service, "FILES") == 0) {
 		*Service = &SMSDFiles;
 	} else if (strcasecmp(Config->Service, "DBI") == 0) {
