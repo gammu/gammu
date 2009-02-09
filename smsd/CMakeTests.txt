@@ -17,15 +17,24 @@ configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINA
 macro(smsd_testsuite _driver)
     # This test tests some functionality and setups environment
     add_test("smsd-${_driver}" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" "${_driver}")
-    # DBI error 5 from SQLITE is database locked, and the backend automatically retries
-    set_tests_properties("smsd-${_driver}" PROPERTIES
-        TIMEOUT 120
-        PASS_REGULAR_EXPRESSION ".999999999999999.1.6.0.100.42"
-        FAIL_REGULAR_EXPRESSION "DBI error ([^5]:|[0-9][^:]);Wrong"
-        )
+    if ("${_driver}" MATCHES "dbi-.*")
+        # DBI error 5 from SQLITE is database locked, and the backend automatically retries
+        set_tests_properties("smsd-${_driver}" PROPERTIES
+            TIMEOUT 120
+            PASS_REGULAR_EXPRESSION ".999999999999999.2.6.0.100.42"
+            FAIL_REGULAR_EXPRESSION "DBI error ([^5]:|[0-9][^:]);Wrong"
+            )
+    else ("${_driver}" MATCHES "dbi-.*")
+        set_tests_properties("smsd-${_driver}" PROPERTIES
+            TIMEOUT 120
+            PASS_REGULAR_EXPRESSION ".999999999999999.1.6.0.100.42"
+            FAIL_REGULAR_EXPRESSION "SQL failed;Wrong"
+            )
+    endif ("${_driver}" MATCHES "dbi-.*")
+
     add_test("smsd-inject-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" TEXT 123465 -text "Lorem ipsum.")
     set_tests_properties("smsd-inject-${_driver}" PROPERTIES
-        FAIL_REGULAR_EXPRESSION "DBI error"
+        FAIL_REGULAR_EXPRESSION "DBI error;SQL failed"
         )
     add_test("smsd-inject-long-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" EMS 123465 -text "Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbezy ucixh mqudemiywty nzihriduwlo yxylyujvghpv. Tiekoohunl dloijoda qelejocewu bfe bxuahadempivog. Ev mfegijox vleinley ewig qihopqu fafozmuvipc ernogtipeq acuoclzyv m poujhyerbjpipc vyq. Xty ljietenea ypep ti dik ela jozmyihipup xopujoqyjaw jojyuhietry mexykpih ysec yum zyhniet dezjiyup nuyryfsohnir Zeyoekemdoj tayqgh. Xvujuxy gysun dahyfecpetk uziyecz jogovxi fbypexsotn exymnomeatd ayiostiyvoxfy iqilo redvejf gfeypavlvaqu vfyjonytbug rgyxn siuybmulijub bxu xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.")
     set_tests_properties("smsd-inject-long-${_driver}" PROPERTIES
@@ -34,7 +43,7 @@ macro(smsd_testsuite _driver)
     if (HAVE_ALARM)
         add_test("smsd-daemon-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10)
         set_tests_properties("smsd-daemon-${_driver}" PROPERTIES
-            FAIL_REGULAR_EXPRESSION "DBI error"
+            FAIL_REGULAR_EXPRESSION "DBI error;SQL failed"
             )
     endif (HAVE_ALARM)
 endmacro(smsd_testsuite _driver)
