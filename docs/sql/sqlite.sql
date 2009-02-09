@@ -53,6 +53,9 @@ CREATE TABLE outbox (
   CHECK (DeliveryReport IN ('default','yes','no'))
 );
 
+CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
+CREATE INDEX outbox_sender ON outbox(SenderID);
+
 CREATE TRIGGER update_outbox_time UPDATE ON outbox 
   BEGIN
     UPDATE outbox SET UpdatedInDB = datetime('now') WHERE ID = old.ID;
@@ -127,8 +130,13 @@ CREATE TABLE sentitems (
   'DeliveryUnknown','Error')),
   CHECK (Coding IN 
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')) ,
- PRIMARY KEY (ID, SequencePosition)
+  PRIMARY KEY (ID, SequencePosition)
 );
+
+CREATE INDEX sentitems_date ON sentitems(DeliveryDateTime);
+CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
+CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
+CREATE INDEX sentitems_sender ON sentitems(SenderID);
 
 CREATE TRIGGER update_sentitems_time UPDATE ON sentitems 
   BEGIN

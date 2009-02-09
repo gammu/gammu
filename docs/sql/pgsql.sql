@@ -136,7 +136,7 @@ CREATE TABLE outbox (
   ID serial PRIMARY KEY,
   MultiPart boolean NOT NULL DEFAULT 'false',
   RelativeValidity integer DEFAULT '-1',
-  SenderID text,
+  SenderID varchar(255),
   SendingTimeOut timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
   DeliveryReport varchar(10) DEFAULT 'default',
   CreatorID text NOT NULL,
@@ -144,6 +144,9 @@ CREATE TABLE outbox (
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
   CHECK (DeliveryReport IN ('default','yes','no'))
 );
+
+CREATE INDEX outbox_date ON outbox(SendingDateTime, SendingTimeOut);
+CREATE INDEX outbox_sender ON outbox(SenderID);
 
 -- 
 -- Dumping data for table "outbox"
@@ -266,7 +269,7 @@ CREATE TABLE sentitems (
   Class integer NOT NULL DEFAULT '-1',
   TextDecoded varchar(160) NOT NULL DEFAULT '',
   ID serial,
-  SenderID text NOT NULL,
+  SenderID varchar(255) NOT NULL,
   SequencePosition integer NOT NULL DEFAULT '1',
   Status varchar(255) NOT NULL DEFAULT 'SendingOK',
   StatusError integer NOT NULL DEFAULT '-1',
@@ -280,6 +283,11 @@ CREATE TABLE sentitems (
   ('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression')),
   PRIMARY KEY (ID, SequencePosition)
 );
+
+CREATE INDEX sentitems_date ON sentitems(DeliveryDateTime);
+CREATE INDEX sentitems_tpmr ON sentitems(TPMR);
+CREATE INDEX sentitems_dest ON sentitems(DestinationNumber);
+CREATE INDEX sentitems_sender ON sentitems(SenderID);
 
 -- 
 -- Dumping data for table "sentitems"
