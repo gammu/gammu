@@ -669,7 +669,8 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			locations_pos += sprintf((*Locations) + locations_pos, "%llu ", new_id);
 		}
 
-		if (SMSDDBI_Query(Config, "UPDATE phones SET Received = Received + 1", &Res) != ERR_NONE) {
+		sprintf(buffer, "UPDATE phones SET Received = Received + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
+		if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 			SMSD_Log(0, Config, "Error updating number of received messages (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
@@ -1207,7 +1208,8 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	}
 	dbi_result_free(Res);
 
-	if (SMSDDBI_Query(Config, "UPDATE phones SET Sent = Sent + 1", &Res) != ERR_NONE) {
+	sprintf(buffer, "UPDATE phones SET Sent= Sent + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
+	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error updating number of sent messages (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
