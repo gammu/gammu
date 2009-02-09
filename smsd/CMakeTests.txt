@@ -27,6 +27,10 @@ macro(smsd_testsuite _driver)
     set_tests_properties("smsd-inject-${_driver}" PROPERTIES
         FAIL_REGULAR_EXPRESSION "DBI error"
         )
+    add_test("smsd-inject-long-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" EMS 123465 -text "Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbezy ucixh mqudemiywty nzihriduwlo yxylyujvghpv. Tiekoohunl dloijoda qelejocewu bfe bxuahadempivog. Ev mfegijox vleinley ewig qihopqu fafozmuvipc ernogtipeq acuoclzyv m poujhyerbjpipc vyq. Xty ljietenea ypep ti dik ela jozmyihipup xopujoqyjaw jojyuhietry mexykpih ysec yum zyhniet dezjiyup nuyryfsohnir Zeyoekemdoj tayqgh. Xvujuxy gysun dahyfecpetk uziyecz jogovxi fbypexsotn exymnomeatd ayiostiyvoxfy iqilo redvejf gfeypavlvaqu vfyjonytbug rgyxn siuybmulijub bxu xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.")
+    set_tests_properties("smsd-inject-long-${_driver}" PROPERTIES
+        FAIL_REGULAR_EXPRESSION "DBI error"
+        )
     if (HAVE_ALARM)
         add_test("smsd-daemon-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10)
         set_tests_properties("smsd-daemon-${_driver}" PROPERTIES
