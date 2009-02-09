@@ -1543,6 +1543,8 @@ void GSM_FreeStateMachine(GSM_StateMachine *s)
 {
 	int i;
 
+	if (s == NULL) return;
+
 	/* Free allocated memory */
 	for (i = 0; i <= MAX_CONFIG_NUM; i++) {
 		free(s->Config[i].Device);
