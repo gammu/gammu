@@ -494,7 +494,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 				"SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber "
                                         "FROM sentitems WHERE "
 					"DeliveryDateTime IS NULL AND "
-					"SenderID = '%s' AND TPMR = '%i' AND DestinationNumber = '%s'",
+					"SenderID = '%s' AND TPMR = %i AND DestinationNumber = '%s'",
 				Config->PhoneID, sms->SMS[i].MessageReference, destinationnumber);
 			if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 				SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
@@ -623,7 +623,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 		}
 		strcat(buffer, "'");
 
-		sprintf(buffer + strlen(buffer), ",'%i',", sms->SMS[i].Class);
+		sprintf(buffer + strlen(buffer), ",%i,", sms->SMS[i].Class);
 
 		switch (sms->SMS[i].Coding) {
 
@@ -787,7 +787,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 		} else {
 			sprintf(buf,
 				"SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition "
-				"FROM outbox_multipart WHERE ID='%s' AND SequencePosition='%i'",
+				"FROM outbox_multipart WHERE ID='%s' AND SequencePosition=%i",
 				ID, i);
 		}
 		if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
@@ -950,7 +950,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 			sprintf(buffer + strlen(buffer), "', %s",
 				SMSDDBI_Now(Config));
 		} else {
-			sprintf(buffer + strlen(buffer), "'%i'", i + 1);
+			sprintf(buffer + strlen(buffer), "%i", i + 1);
 		}
 		sprintf(buffer + strlen(buffer), ", '");
 
@@ -980,7 +980,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 			if (sms->SMS[i].SMSC.Validity.Format ==
 			    SMS_Validity_RelativeFormat) {
-				sprintf(buffer + strlen(buffer), "'%i', ",
+				sprintf(buffer + strlen(buffer), "%i, ",
 					sms->SMS[i].SMSC.Validity.Relative);
 			} else {
 				sprintf(buffer + strlen(buffer), "'-1', ");
@@ -1021,7 +1021,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 				     sms->SMS[i].UDH.Length);
 		}
 
-		sprintf(buffer + strlen(buffer), "', '%i', ",
+		sprintf(buffer + strlen(buffer), "', %i, ",
 			sms->SMS[i].Class);
 		switch (sms->SMS[i].Coding) {
 			case SMS_Coding_Unicode_No_Compression:
@@ -1098,7 +1098,7 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 		"SenderID, Text, DestinationNumber, Coding, UDH, Class, TextDecoded, InsertIntoDB, "
                 "RelativeValidity) VALUES (");
 	sprintf(buffer + strlen(buffer),
-		"'%s', '%s', '%i', '%s', %s, '%s', '%i', '%s', '",
+		"'%s', '%s', %i, '%s', %s, '%s', %i, '%s', '",
 		Config->PhoneID, ID, Part,
 		buff,
 		SMSDDBI_Now(Config),
@@ -1160,7 +1160,7 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 			     sms->SMS[Part - 1].UDH.Length);
 	}
 
-	sprintf(buffer + strlen(buffer), "', '%i', ",
+	sprintf(buffer + strlen(buffer), "', %i, ",
 		sms->SMS[Part - 1].Class);
 
 	switch (sms->SMS[Part - 1].Coding) {
@@ -1177,14 +1177,14 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 			break;
 	}
 
-	sprintf(buffer + strlen(buffer), ", '%s', '", Config->DT);
+	sprintf(buffer + strlen(buffer), ", '%s', ", Config->DT);
 
 	if (sms->SMS[Part - 1].SMSC.Validity.Format ==
 	    SMS_Validity_RelativeFormat) {
-		sprintf(buffer + strlen(buffer), "%i')",
+		sprintf(buffer + strlen(buffer), "%i)",
 			sms->SMS[Part - 1].SMSC.Validity.Relative);
 	} else {
-		sprintf(buffer + strlen(buffer), "-1')");
+		sprintf(buffer + strlen(buffer), "-1)");
 	}
 
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
