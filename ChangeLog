@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2009???? - 1.22.94
+20090209 - 1.22.94
 
 [-] * Fix some memory leaks found by cppcheck.
 [-] * Implemented reconnecting/retrying in DBI driver.
