@@ -139,6 +139,7 @@ macro_optional_find_package (Threads)
 
 # Used (optionally for testing)
 find_program(SH_BIN sh)
+find_program(BASH_BIN bash)
 find_program(SQLITE_BIN sqlite3)
 find_program(SED_BIN sed)
 find_program(MYSQL_BIN mysql)
@@ -512,21 +513,6 @@ set (EXAMPLES
     docs/examples/ppp/gprs
     docs/examples/ppp/startppp
     docs/examples/ppp/statsppp
-    other/php/class_gammu/class.gammu_nix_win32_v2.php
-    other/php/class_gammu/class.sms.gammu.php
-    other/php/class_gammu/example_gammu_text.php
-    other/php/class_gammu/README
-    other/php/smsd-mysql-admin/admin.php
-    other/php/smsd-mysql-linked/linked.php
-    other/php/smsd-mysql-linked/linked.sql
-    other/php/smsd-mysql-intergammu/config.php
-    other/php/smsd-mysql-intergammu/funcoes/func.gammu.php
-    other/php/smsd-mysql-intergammu/funcoes/func.sql.php
-    other/php/smsd-mysql-intergammu/index.php
-    other/php/smsd-mysql-intergammu/intergammu.txt
-    other/php/smsd-mysql-intergammu/proc/admin.php
-    other/php/smsd-mysql-intergammu/proclast.sql
-    other/php/smsd-mysql-list/sms.php
     )
 
 set (DEVELDOCS
@@ -560,12 +546,6 @@ set (DOCS
 set (UTILS
     utils/gammu-config
     utils/jadmaker
-    )
-
-set (SYMBIAN_FILES
-    other/symbian/readme.txt
-    other/symbian/gnapplet.ini
-    other/symbian/gnapplet.sis
     )
 
 set (PUBLIC_HEADERS
@@ -884,12 +864,6 @@ install (
     COMPONENT "docs"
     )
 
-install (
-    FILES ${SYMBIAN_FILES}
-    DESTINATION "${INSTALL_DOC_DIR}/symbian"
-    COMPONENT "gnapplet"
-    )
-
 foreach (DOC ${DEVELDOCS})
     string (REGEX REPLACE "docs/develop(.*)/[^/]*$" "\\1" DIRNAME ${DOC})
     install (
@@ -900,7 +874,7 @@ foreach (DOC ${DEVELDOCS})
 endforeach (DOC)
 
 foreach (EXAMPLE ${EXAMPLES})
-    string (REGEX REPLACE "(docs/examples|other|docs)(.*)/[^/]*$" "\\2" DIRNAME ${EXAMPLE})
+    string (REGEX REPLACE "(docs/examples|docs)(.*)/[^/]*$" "\\2" DIRNAME ${EXAMPLE})
     install (
         FILES ${EXAMPLE}
         DESTINATION "${INSTALL_DOC_DIR}/examples/${DIRNAME}"
@@ -1053,6 +1027,8 @@ add_subdirectory(gammu)
 add_subdirectory(locale)
 
 add_subdirectory(docs/user)
+
+add_subdirectory(contrib)
 
 if (ENABLE_PYTHON)
     add_subdirectory(python)
