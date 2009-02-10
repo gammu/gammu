@@ -12,11 +12,11 @@ set(MYSQL_DATABASE smsd CACHE STRING "Database to use for MySQL tests")
 set(MYSQL_USER smsd CACHE STRING "User to use for MySQL tests")
 set(MYSQL_PASSWORD smsd CACHE STRING "Password to use for MySQL tests")
 
-configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" ESCAPE_QUOTES)
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" ESCAPE_QUOTES)
 
 macro(smsd_testsuite _driver)
     # This test tests some functionality and setups environment
-    add_test("smsd-${_driver}" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" "${_driver}")
+    add_test("smsd-${_driver}" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" "${_driver}")
     if ("${_driver}" MATCHES "dbi-.*")
         # DBI error 5 from SQLITE is database locked, and the backend automatically retries
         set_tests_properties("smsd-${_driver}" PROPERTIES
