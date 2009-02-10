@@ -15,8 +15,8 @@ do_replace() {
 echo "Setting version to $version"
 
 # Packaging
-do_replace packaging/rpm/gammu.spec.in gammu.spec
-do_replace packaging/slackware/description-pak.in description-pak
+do_replace cmake/templates/gammu.spec.in gammu.spec
+do_replace cmake/templates/description-pak.in description-pak
 
 # CMakeLists.txt
 sed -i "
