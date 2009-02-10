@@ -1,3 +1,36 @@
+Gammu - Third Party Contributions
+=================================
+
 This directory contains various things which might be useful with Gammu.
+Please note that that code here might have different license terms than
+Gammu itself.
+
+bash-completion
+---------------
+
+Completion script for bash.
+
+conversion
+----------
+
+Various scripts for converting data.
+
+init
+----
+
+Init scripts for Gammu SMSD.
+
+linux-driver
+------------
+
+DKU-2 driver for Linux. This will be removed in future, please use
+fbususb connection type instead.
+
+packaging
+---------
+
+Support for creating packages on various distributions. Please note that
+support for RPM (gammu.spec) and Slackware (description-pak) is included
+in top level directory.
 
 # vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
