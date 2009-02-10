@@ -477,6 +477,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 	unsigned long long	new_id;
 	size_t			locations_size = 0, locations_pos = 0;
 	const char *state, *smsc;
+	char smsc_message[GSM_MAX_NUMBER_LENGTH + 1];
 	time_t timestamp;
 	struct tm *timestruct;
 
@@ -484,8 +485,9 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 
 	for (i = 0; i < sms->Number; i++) {
 		EncodeUTF8(smstext, sms->SMS[i].Text);
+		EncodeUTF8(smsc_message, sms->SMS[i].SMSC.Number);
+		EncodeUTF8(destinationnumber, sms->SMS[i].Number);
 		if (sms->SMS[i].PDU == SMS_Status_Report) {
-			DecodeUnicode(sms->SMS[i].Number, destinationnumber);
 			if (strncasecmp(Config->deliveryreport, "log", 3) == 0) {
 				SMSD_Log(0, Config, "Delivery report: %s to %s", smstext, destinationnumber);
 			}
@@ -506,7 +508,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 				smsc = dbi_result_get_string(Res, "SMSCNumber");
 				state = dbi_result_get_string(Res, "Status");
 
-				if (strcmp(smsc, DecodeUnicodeString(sms->SMS[i].SMSC.Number)) != 0) {
+				if (strcmp(smsc, smsc_message) != 0) {
 					if (Config->skipsmscnumber[0] == 0 ||
 							strcmp(Config->skipsmscnumber, smsc)) {
 						continue;
@@ -587,8 +589,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 				break;
 		}
 
-		sprintf(buffer + strlen(buffer), "','%s','",
-			DecodeUnicodeString(sms->SMS[i].Number));
+		sprintf(buffer + strlen(buffer), "','%s','", destinationnumber);
 
 		switch (sms->SMS[i].Coding) {
 			case SMS_Coding_Unicode_No_Compression:
@@ -612,8 +613,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 				break;
 		}
 
-		sprintf(buffer + strlen(buffer), "','%s'",
-			DecodeUnicodeString(sms->SMS[i].SMSC.Number));
+		sprintf(buffer + strlen(buffer), "','%s'", smsc_message);
 
 		strcat(buffer, ",'");
 		if (sms->SMS[i].UDH.Type != UDH_NoUDH) {
