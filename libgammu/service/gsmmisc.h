@@ -35,11 +35,12 @@ GSM_Error VC_StoreBase64(char *Buffer, const size_t buff_len, size_t *Pos, const
 /**
  * Stores text in vCalendar/vCard formatted buffer.
  *
- * \param Buffer Buffer where output will be stored.
- * \param Length Current position in output buffer (will be updated).
- * \param Text Value to be stored.
- * \param Start Name of field which is being stored.
- * \param UTF8 Whether text should be stored in UTF-8 without prefix.
+ * \param[out] Buffer Buffer where output will be stored.
+ * \param[in] buff_len Size of Buffer.
+ * \param[in,out] Length Current position in output buffer (will be updated).
+ * \param[in] Text Value to be stored.
+ * \param[in] Start Name of field which is being stored.
+ * \param[in] UTF8 Whether text should be stored in UTF-8 without prefix.
  */
 GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Length, const unsigned char *Text, const char *Start, const bool UTF8);
 
