@@ -5,6 +5,7 @@
 project (Gammu-contrib C)
 
 option(INSTALL_GNAPPLET "Install Gnapplet binaries" ON)
+option(INSTALL_MEDIA "Install sample media files" ON)
 option(INSTALL_PHP_EXAMPLES "Install PHP example scripts" ON)
 
 if (BASH_BIN)
@@ -20,6 +21,8 @@ set (SYMBIAN_FILES
     symbian/gnapplet.ini
     symbian/gnapplet.sis
     )
+
+file(GLOB MEDIA_FILES "media/*.txt" "media/*.nlm")
 
 set (PHP_EXAMPLES
     php/class_gammu/class.gammu_nix_win32_v2.php
@@ -46,6 +49,14 @@ if (INSTALL_GNAPPLET)
         COMPONENT "gnapplet"
         )
 endif (INSTALL_GNAPPLET)
+
+if (INSTALL_MEDIA)
+    install (
+        FILES ${MEDIA_FILES}
+        DESTINATION "${INSTALL_DOC_DIR}/examples/media"
+        COMPONENT "media"
+        )
+endif (INSTALL_MEDIA)
 
 
 if (INSTALL_PHP_EXAMPLES)

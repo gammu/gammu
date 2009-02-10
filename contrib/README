@@ -26,6 +26,11 @@ linux-driver
 DKU-2 driver for Linux. This will be removed in future, please use
 fbususb connection type instead.
 
+media
+-----
+
+Sample media files which can be used with Gammu.
+
 other
 -----
 

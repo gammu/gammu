@@ -503,10 +503,8 @@ set (EXAMPLES
     docs/sql/mysql.sql
     docs/sql/pgsql.sql
     docs/sql/sqlite.sql
-    docs/examples/config/smsdrc
-    docs/examples/config/gammurc
-    docs/examples/media/aliens.nlm
-    docs/examples/media/axelf.txt
+    docs/config/smsdrc
+    docs/config/gammurc
     )
 
 set (DEVELDOCS
