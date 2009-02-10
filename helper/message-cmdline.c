@@ -12,7 +12,7 @@
 
 #include <gammu.h>
 
-#include "../common/misc/locales.h"
+#include "locales.h"
 
 #include "formats.h"
 #include "printing.h"

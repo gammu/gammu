@@ -3,7 +3,7 @@
  */
 
 #include <gammu-misc.h>
-#include "../common/misc/locales.h"
+#include "locales.h"
 
 #include <stdarg.h>
 #include <stdio.h>

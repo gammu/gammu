@@ -6,7 +6,7 @@
 
 #include <gammu.h>
 
-#include "../common/misc/locales.h"
+#include "locales.h"
 
 #include "memory-display.h"
 #include "formats.h"

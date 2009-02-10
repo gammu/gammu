@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "../common/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../common/gsmstate.h" /* Needed for state machine internals */
-#include "../common/gsmphones.h" /* Phone data */
+#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
+#include "../libgammu/gsmphones.h" /* Phone data */
 
 #include "../helper/message-display.h"
 

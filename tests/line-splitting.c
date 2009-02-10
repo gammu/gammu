@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "../common/misc/misc.h"
+#include "../libgammu/misc/misc.h"
 
 #define LONGLINE "" \
 "1 - The American nation in the sixth ward is a fine people; they love theeagle -- on the back of a dollar.		-- Finlay Peter Dunne" \

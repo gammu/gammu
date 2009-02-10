@@ -1,6 +1,6 @@
 /* (c) 2002-2004 by Marcin Wiacek */
 
-#include "../../../common/gsmstate.h"
+#include "../../../libgammu/gsmstate.h"
 
 #ifdef GSM_ENABLE_NOKIA_DCT4
 
@@ -8,10 +8,10 @@
 
 #include "dct4.h"
 #include "../../gammu.h"
-#include "../../../common/phone/pfunc.h"
-#include "../../../common/phone/nokia/nfunc.h"
-#include "../../../common/phone/nokia/dct4s40/dct4func.h"
-#include "../../../common/misc/coding/coding.h"
+#include "../../../libgammu/phone/pfunc.h"
+#include "../../../libgammu/phone/nokia/nfunc.h"
+#include "../../../libgammu/phone/nokia/dct4s40/dct4func.h"
+#include "../../../libgammu/misc/coding/coding.h"
 #include "../../../helper/locales.h"
 
 #include "../../../helper/formats.h"

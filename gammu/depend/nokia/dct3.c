@@ -9,10 +9,10 @@
 #include <signal.h>
 #include <stdlib.h>
 
-#include "../../../common/gsmstate.h"
-#include "../../../common/phone/nokia/dct3/dct3func.h"
-#include "../../../common/phone/pfunc.h"
-#include "../../../common/service/gsmnet.h"
+#include "../../../libgammu/gsmstate.h"
+#include "../../../libgammu/phone/nokia/dct3/dct3func.h"
+#include "../../../libgammu/phone/pfunc.h"
+#include "../../../libgammu/service/gsmnet.h"
 #include "../../gammu.h"
 
 extern GSM_Reply_Function UserReplyFunctions3[];

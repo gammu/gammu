@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../common/gsmphones.h"
+#include "../libgammu/gsmphones.h"
 
 
 int single_test(const char *string, GSM_Error expected)

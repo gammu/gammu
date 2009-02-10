@@ -1,15 +1,15 @@
 /* (c) by Walek */
 
-#include "../../../common/gsmstate.h"
+#include "../../../libgammu/gsmstate.h"
 
 #ifdef GSM_ENABLE_ATGEN
 
 #include <string.h>
 
-#include "../../../common/misc/coding/coding.h"
-#include "../../../common/gsmcomon.h"
-#include "../../../common/service/gsmnet.h"
-#include "../../../common/phone/at/atgen.h"
+#include "../../../libgammu/misc/coding/coding.h"
+#include "../../../libgammu/gsmcomon.h"
+#include "../../../libgammu/service/gsmnet.h"
+#include "../../../libgammu/phone/at/atgen.h"
 #include "../../gammu.h"
 #include "dsiemens.h"
 #include "chiffre.h"
