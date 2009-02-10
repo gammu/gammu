@@ -1,7 +1,9 @@
 python-gammu
 ============
 
-Python bingings for Gammu library.
+Python bingings for Gammu library are now part of Gammu source package
+(in python subdirectory).  They are built automatically if you have
+installed Python with all needed tools.
 
 Homepage
 ========
