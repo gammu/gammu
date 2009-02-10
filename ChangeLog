@@ -18,6 +18,7 @@ ChangeLog
 2009???? - 1.22.95
 
 [!] * Reorganize directory structure to match current state of things.
+[-] * Completely switch DBI driver to utf-8.
     
 20090209 - 1.22.94
 
