@@ -44,7 +44,8 @@ connection = fbusblue
 ;    Connection "fbusdlr3"/"dlr3", port type serial 
 ; New Nokia protocol for DKU2 (and phone with USB converter on phone mainboard
 ;                              like 6230)
-;    Connection "dku2phonet"/"dku2", port type dku2
+;    Connection "dku2phonet"/"dku2", port type dku2 on Windows
+;    Connection "fbususb" on Linux
 ; New Nokia protocol for DKU5 (and phone without USB converter on phone
 ;                              mainboard like 5100)
 ;    Connection "dku5fbus"/"dku5", port type dku5
