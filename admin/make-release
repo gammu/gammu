@@ -90,6 +90,7 @@ cmake ../$repo-$version \
     -DMYSQL_INCLUDE_DIR=~/win-cross/mysql/include \
     -DMYSQL_LIBRARIES=~/win-cross/mysql/lib/libmysql.a \
     -DWITH_LibDBI=OFF \
+    -DINSTALL_BASH_COMPLETION=OFF \
     $CMAKE_EXTRA \
 
 make -j2
@@ -113,6 +114,7 @@ cmake ../$repo-$version \
     -DWITH_Iconv=OFF \
     -DWITH_CURL=OFF \
     -DWITH_LibDBI=OFF \
+    -DINSTALL_BASH_COMPLETION=OFF \
 
 make -j2
 checkexe gammu/gammu.exe
@@ -140,6 +142,7 @@ for py in 2.4 2.5 ; do
         -DPYTHON_LIBRARY=~/.wine/drive_c/Python$pynodot/libs/libpython$pynodot.a \
         -DPYTHON_INCLUDE_PATH=~/.wine/drive_c/Python$pynodot/include/ \
         -DPYTHON_EXECUTABLE=~/.wine/drive_c/Python$pynodot/python.exe \
+        -DINSTALL_BASH_COMPLETION=OFF \
 
     make -j2
     mkdir -p $tmp/$repo-$version/python/build/lib.win32-$py/gammu/
