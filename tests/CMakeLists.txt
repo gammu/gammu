@@ -347,10 +347,10 @@ set_tests_properties(sms-cmdline-EMS-misc PROPERTIES
     )
 
 add_test(sms-cmdline-EMS-ring "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    EMS 54654654 -protected 1 -toneSElong  ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt)
+    EMS 54654654 -protected 1 -toneSElong  ${RINGTONE_TEST_FILE})
 
 add_test(sms-cmdline-RINGTONE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    RINGTONE 54654654 ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt)
+    RINGTONE 54654654 ${RINGTONE_TEST_FILE})
 set_tests_properties(sms-cmdline-RINGTONE PROPERTIES
     PASS_REGULAR_EXPRESSION "Ringtone \"AxelF\"")
 
@@ -386,35 +386,35 @@ set_tests_properties(sms-cmdline-SMSTEMPLATE PROPERTIES
     PASS_REGULAR_EXPRESSION "User Data Header     : User UDH")
 
 add_test(sms-cmdline-PICTURE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    PICTURE 213 ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm)
+    PICTURE 213 ${LOGO_TEST_FILE})
 set_tests_properties(sms-cmdline-PICTURE PROPERTIES
     PASS_REGULAR_EXPRESSION "###################   ##    ##     #     #     ##   ## ### ##   ###   ##")
 
 add_test(sms-cmdline-OPERATOR "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    OPERATOR 213 ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm -netcode "230 03")
+    OPERATOR 213 ${LOGO_TEST_FILE} -netcode "230 03")
 set_tests_properties(sms-cmdline-OPERATOR PROPERTIES
     PASS_REGULAR_EXPRESSION "Operator logo for 230 03 network \\(Vodafone CZ, Czech Republic\\)")
 
 add_test(sms-cmdline-CALLER "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    CALLER 213 ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm)
+    CALLER 213 ${LOGO_TEST_FILE})
 set_tests_properties(sms-cmdline-CALLER PROPERTIES
     PASS_REGULAR_EXPRESSION "User Data Header     : Nokia caller logo")
 
 add_test(sms-cmdline-ANIMATION "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     ANIMATION 213 6
-        ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm
-        ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm
-        ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm
-        ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm
-        ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm
-        ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm)
+        ${LOGO_TEST_FILE}
+        ${LOGO_TEST_FILE}
+        ${LOGO_TEST_FILE}
+        ${LOGO_TEST_FILE}
+        ${LOGO_TEST_FILE}
+        ${LOGO_TEST_FILE})
 set_tests_properties(sms-cmdline-ANIMATION PROPERTIES
     PASS_REGULAR_EXPRESSION "Number of messages: 14")
 
 add_test(sms-cmdline-PROFILE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     PROFILE 213
-        -bitmap ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm
-        -ringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt)
+        -bitmap ${LOGO_TEST_FILE}
+        -ringtone ${RINGTONE_TEST_FILE})
 set_tests_properties(sms-cmdline-PROFILE PROPERTIES
     PASS_REGULAR_EXPRESSION "User Data Header     : Nokia profile, ID \\(8 bit\\) [0-9]*, 3 parts")
 

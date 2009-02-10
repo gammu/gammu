@@ -828,6 +828,10 @@ else (WIN32 AND NOT CYGWIN)
 endif (WIN32 AND NOT CYGWIN)
 include (CPack)
 
+# Test files for Gammu
+set (RINGTONE_TEST_FILE ${Gammu_SOURCE_DIR}/contrib/media/axelf.txt)
+set (LOGO_TEST_FILE ${Gammu_SOURCE_DIR}/contrib/media/aliens.nlm)
+
 # Transverse to dirs
 add_subdirectory(include)
 
