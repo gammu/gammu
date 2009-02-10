@@ -499,38 +499,11 @@ else (BUILD_SHARED_LIBS)
     set (SMSD_PRIVATE_LIBS "${S_LIB}" CACHE INTERNAL "Private libraries for gammu smsd library")
 endif (BUILD_SHARED_LIBS)
 
-set (DEVELDOCS
-    docs/develop/Gammu.htm
-    docs/develop/PORTING
-    docs/develop/develop.txt
-    docs/develop/gammu_hints.txt
-    docs/develop/protocol/TDMA_5120.txt
-    docs/develop/protocol/carkit.txt
-    docs/develop/protocol/n6110.txt
-    docs/develop/protocol/n6510.txt
-    docs/develop/protocol/n7110.txt
-    docs/develop/protocol/nokia.txt
-    docs/develop/protocol/readme
-    docs/develop/sms/charset.txt
-    docs/develop/sms/convert.txt
-    docs/develop/sms/readme
-    docs/develop/sounds/readme
-    docs/develop/sounds/ring2.txt
-    docs/develop/examples/Makefile
-    docs/develop/examples/phone-info.c
-    docs/develop/examples/sms-send.c
-    )
-
 set (DOCS
     README
     SUPPORTERS
     ChangeLog
     COPYING
-    )
-
-set (UTILS
-    utils/gammu-config
-    utils/jadmaker
     )
 
 set (PUBLIC_HEADERS
@@ -832,12 +805,6 @@ install (
     )
 
 install (
-    PROGRAMS ${UTILS}
-    DESTINATION "${INSTALL_BIN_DIR}"
-    COMPONENT "utils"
-    )
-
-install (
     FILES "${Gammu_BINARY_DIR}/cfg/gammu.pc" "${Gammu_BINARY_DIR}/cfg/gammu-smsd.pc"
     DESTINATION "${INSTALL_LIBDATA_DIR}/pkgconfig"
     COMPONENT "pkgconfig"
@@ -848,15 +815,6 @@ install (
     DESTINATION "${INSTALL_DOC_DIR}"
     COMPONENT "docs"
     )
-
-foreach (DOC ${DEVELDOCS})
-    string (REGEX REPLACE "docs/develop(.*)/[^/]*$" "\\1" DIRNAME ${DOC})
-    install (
-        FILES ${DOC}
-        DESTINATION "${INSTALL_DOC_DIR}/devel/${DIRNAME}"
-        COMPONENT "develdocs"
-        )
-endforeach (DOC)
 
 # We want some tests. Even when cross compiling for Windows tests can be
 # done in Wine. This is better than nothing, even though Wine is a bit
@@ -1005,6 +963,8 @@ add_subdirectory(smsd)
 add_subdirectory(gammu)
 
 add_subdirectory(locale)
+
+add_subdirectory(utils)
 
 add_subdirectory(docs/config)
 add_subdirectory(docs/develop)
