@@ -838,7 +838,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 
 		if (i == 1) {
 			destination = dbi_result_get_string(Res, "DestinationNumber");
-			EncodeUnicode(sms->SMS[sms->Number].Number, destination, strlen(destination));
+			DecodeUTF8(sms->SMS[sms->Number].Number, destination, strlen(destination));
 		} else {
 			CopyUnicodeString(sms->SMS[sms->Number].Number, sms->SMS[0].Number);
 		}
@@ -975,19 +975,20 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 		sprintf(buffer + strlen(buffer), "', ");
 		if (i == 0) {
-			sprintf(buffer + strlen(buffer), "'%s', ",
-				DecodeUnicodeString(sms->SMS[i].Number));
+			strcat(buffer, "'");
+			EncodeUTF8(buffer + strlen(buffer), sms->SMS[i].Number);
+			strcat(buffer, "', ");
 
 			if (sms->SMS[i].SMSC.Validity.Format ==
 			    SMS_Validity_RelativeFormat) {
 				sprintf(buffer + strlen(buffer), "%i, ",
 					sms->SMS[i].SMSC.Validity.Relative);
 			} else {
-				sprintf(buffer + strlen(buffer), "'-1', ");
+				strcat(buffer, "-1, ");
 			}
 		}
 
-		sprintf(buffer + strlen(buffer), "'");
+		strcat(buffer, "'");
 		switch (sms->SMS[i].Coding) {
 			case SMS_Coding_Unicode_No_Compression:
 				sprintf(buffer + strlen(buffer),
@@ -1014,7 +1015,8 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 				break;
 		}
 
-		sprintf(buffer + strlen(buffer), "', '");
+		strcat(buffer, "', '");
+
 		if (sms->SMS[i].UDH.Type != UDH_NoUDH) {
 			EncodeHexBin(buffer + strlen(buffer),
 				     sms->SMS[i].UDH.Text,
@@ -1068,43 +1070,44 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 {
 	dbi_result Res;
 
-	char buffer[10000], buffer2[400], buff[50];
+	char buffer[10000], buffer2[400];
 	char *encoded_text;
+	char message_state[50];
+	char smsc[GSM_MAX_NUMBER_LENGTH + 1];
+	char destination[GSM_MAX_NUMBER_LENGTH + 1];
+
+	EncodeUTF8(smsc, sms->SMS[Part - 1].SMSC.Number);
+	EncodeUTF8(destination, sms->SMS[Part - 1].Number);
 
 	if (err == SMSD_SEND_OK) {
 		SMSD_Log(1, Config, "Transmitted ID %s (%d/%d) to %s",
-			Config->SMSID,
-			Part, sms->Number,
-			DecodeUnicodeString(sms->SMS[0].Number));
+			Config->SMSID, Part, sms->Number, destination);
 	}
 
-	buff[0] = 0;
 	if (err == SMSD_SEND_OK) {
 		if (sms->SMS[Part - 1].PDU == SMS_Status_Report) {
-			sprintf(buff, "SendingOK");
+			strcpy(message_state, "SendingOK");
 		} else {
-			sprintf(buff, "SendingOKNoReport");
+			strcpy(message_state, "SendingOKNoReport");
 		}
+	} else if (err == SMSD_SEND_SENDING_ERROR) {
+		strcpy(message_state, "SendingError");
+	} else if (err == SMSD_SEND_ERROR) {
+		strcpy(message_state, "Error");
+	} else {
+		SMSD_Log(0, Config, "Unknown SMS state: %d, assuming Error", err);
+		strcpy(message_state, "Error");
 	}
 
-	if (err == SMSD_SEND_SENDING_ERROR)
-		sprintf(buff, "SendingError");
-	if (err == SMSD_SEND_ERROR)
-		sprintf(buff, "Error");
-
-	buffer[0] = 0;
-	sprintf(buffer + strlen(buffer), "INSERT INTO sentitems "
+	strcpy(buffer, "INSERT INTO sentitems "
 		"(CreatorID, ID, SequencePosition, Status, SendingDateTime,  SMSCNumber,  TPMR, "
 		"SenderID, Text, DestinationNumber, Coding, UDH, Class, TextDecoded, InsertIntoDB, "
                 "RelativeValidity) VALUES (");
 	sprintf(buffer + strlen(buffer),
 		"'%s', '%s', %i, '%s', %s, '%s', %i, '%s', '",
-		Config->PhoneID, ID, Part,
-		buff,
+		Config->PhoneID, ID, Part, message_state,
 		SMSDDBI_Now(Config),
-		DecodeUnicodeString(sms->SMS[Part - 1].SMSC.Number),
-		TPMR,
-		Config->PhoneID);
+		smsc, TPMR, Config->PhoneID);
 
 	switch (sms->SMS[Part - 1].Coding) {
 		case SMS_Coding_Unicode_No_Compression:
@@ -1125,8 +1128,7 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 			break;
 	}
 
-	sprintf(buffer + strlen(buffer), "', '%s', '",
-		DecodeUnicodeString(sms->SMS[Part - 1].Number));
+	sprintf(buffer + strlen(buffer), "', '%s', '", destination);
 
 	switch (sms->SMS[Part - 1].Coding) {
 		case SMS_Coding_Unicode_No_Compression:
