@@ -152,7 +152,7 @@ extern char *strcasestr(const char *s, const char *find);
  *
  * \ingroup Unicode
  */
-extern int strcasecmp (const char *s1, const char *s2);
+extern int strcasecmp(const char *s1, const char *s2);
 #endif
 
 /**

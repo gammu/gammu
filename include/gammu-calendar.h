@@ -239,7 +239,7 @@ typedef enum {
 	/**
 	 * Related contact id.
 	 */
-	CAL_CONTACTID, /* 10 */
+	CAL_CONTACTID,		/* 10 */
 	/**
 	 * Repeat each x'th day of week.
 	 */
@@ -279,7 +279,7 @@ typedef enum {
 	/**
 	 * IrMC LUID which can be used for synchronisation.
 	 */
-	CAL_LUID, /* 20 */
+	CAL_LUID,		/* 20 */
 	/**
 	 * Date and time of last modification.
 	 */
@@ -575,8 +575,9 @@ typedef enum {
  *
  * \ingroup Todo
  */
-GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, GSM_ToDoEntry * note,
-			  const bool header, const GSM_VToDoVersion Version);
+GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t * Length,
+			  GSM_ToDoEntry * note, const bool header,
+			  const GSM_VToDoVersion Version);
 
 /**
  * Encodes vCalendar to buffer.
@@ -592,8 +593,9 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, G
  *
  * \ingroup Calendar
  */
-GSM_Error GSM_EncodeVCALENDAR(char *Buffer, const size_t buff_len, size_t *Length,
-			      GSM_CalendarEntry * note, const bool header,
+GSM_Error GSM_EncodeVCALENDAR(char *Buffer, const size_t buff_len,
+			      size_t * Length, GSM_CalendarEntry * note,
+			      const bool header,
 			      const GSM_VCalendarVersion Version);
 
 /**
@@ -607,7 +609,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, const size_t buff_len, size_t *Lengt
  *
  * \ingroup Note
  */
-GSM_Error GSM_DecodeVNOTE(char *Buffer, size_t *Pos, GSM_NoteEntry *Note);
+GSM_Error GSM_DecodeVNOTE(char *Buffer, size_t * Pos, GSM_NoteEntry * Note);
 
 /**
  * Encodes vNote to buffer.
@@ -621,8 +623,8 @@ GSM_Error GSM_DecodeVNOTE(char *Buffer, size_t *Pos, GSM_NoteEntry *Note);
  *
  * \ingroup Note
  */
-GSM_Error GSM_EncodeVNTFile(char *Buffer, const size_t buff_len, size_t *Length,
-			    GSM_NoteEntry * Note);
+GSM_Error GSM_EncodeVNTFile(char *Buffer, const size_t buff_len,
+			    size_t * Length, GSM_NoteEntry * Note);
 
 /**
  * Decodes vCalendar and vTodo buffer.
@@ -639,8 +641,8 @@ GSM_Error GSM_EncodeVNTFile(char *Buffer, const size_t buff_len, size_t *Length,
  *
  * \ingroup Calendar
  */
-GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Pos,
-				    GSM_CalendarEntry * Calendar,
+GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info * di, char *Buffer,
+				    size_t * Pos, GSM_CalendarEntry * Calendar,
 				    GSM_ToDoEntry * ToDo,
 				    GSM_VCalendarVersion CalVer,
 				    GSM_VToDoVersion ToDoVer);

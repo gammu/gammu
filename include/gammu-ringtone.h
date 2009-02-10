@@ -219,12 +219,17 @@ GSM_Error GSM_PlayTone(GSM_StateMachine * s, int Herz, unsigned char Volume,
 GSM_Error GSM_RingtoneConvert(GSM_Ringtone * dest, GSM_Ringtone * src,
 			      GSM_RingtoneFormat Format);
 GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone * ringtone);
+
 GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone * ringtone);
 
 GSM_Error GSM_SaveRingtoneOtt(FILE * file, GSM_Ringtone * ringtone);
+
 GSM_Error GSM_SaveRingtoneMidi(FILE * file, GSM_Ringtone * ringtone);
+
 GSM_Error GSM_SaveRingtoneIMelody(FILE * file, GSM_Ringtone * ringtone);
+
 GSM_Error GSM_SaveRingtoneWav(FILE * file, GSM_Ringtone * ringtone);
+
 GSM_Error GSM_SaveRingtoneRttl(FILE * file, GSM_Ringtone * ringtone);
 
 char *GSM_GetRingtoneName(GSM_AllRingtonesInfo * Info, int ID);

@@ -21,21 +21,24 @@
  *
  * \ingroup Callback
  */
-typedef void (*IncomingCallCallback) (GSM_StateMachine * s, GSM_Call call, void *user_data);
+typedef void (*IncomingCallCallback) (GSM_StateMachine * s, GSM_Call call,
+				      void *user_data);
 
 /**
  * Callback for incoming SMS.
  *
  * \ingroup Callback
  */
-typedef void (*IncomingSMSCallback) (GSM_StateMachine * s, GSM_SMSMessage sms, void *user_data);
+typedef void (*IncomingSMSCallback) (GSM_StateMachine * s, GSM_SMSMessage sms,
+				     void *user_data);
 
 /**
  * Callback for incoming cell broadcast.
  *
  * \ingroup Callback
  */
-typedef void (*IncomingCBCallback) (GSM_StateMachine * s, GSM_CBMessage cb, void *user_data);
+typedef void (*IncomingCBCallback) (GSM_StateMachine * s, GSM_CBMessage cb,
+				    void *user_data);
 
 /**
  * Callback for icoming USSD.
@@ -63,7 +66,8 @@ typedef void (*SendSMSStatusCallback) (GSM_StateMachine * s, int status,
  * \ingroup Callback
  */
 void GSM_SetIncomingCallCallback(GSM_StateMachine * s,
-				 IncomingCallCallback callback, void *user_data);
+				 IncomingCallCallback callback,
+				 void *user_data);
 
 /**
  * Sets callback for incoming SMSes.
@@ -99,7 +103,8 @@ void GSM_SetIncomingCBCallback(GSM_StateMachine * s,
  * \ingroup Callback
  */
 void GSM_SetIncomingUSSDCallback(GSM_StateMachine * s,
-				 IncomingUSSDCallback callback, void *user_data);
+				 IncomingUSSDCallback callback,
+				 void *user_data);
 
 /**
  * Sets callback for sending SMS.
@@ -111,7 +116,8 @@ void GSM_SetIncomingUSSDCallback(GSM_StateMachine * s,
  * \ingroup Callback
  */
 void GSM_SetSendSMSStatusCallback(GSM_StateMachine * s,
-				  SendSMSStatusCallback callback, void *user_data);
+				  SendSMSStatusCallback callback,
+				  void *user_data);
 #endif
 
 /* Editor configuration

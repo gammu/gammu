@@ -146,7 +146,7 @@ typedef enum {
 	/**
 	 * Home number. (Text)
 	 */
-	PBK_Number_Home, /* 5 */
+	PBK_Number_Home,	/* 5 */
 	/**
 	 * Pager number. (Text)
 	 */
@@ -166,7 +166,7 @@ typedef enum {
 	/**
 	 * Email. (Text)
 	 */
-	PBK_Text_Email, /* 10 */
+	PBK_Text_Email,		/* 10 */
 	/*
 	 * Second email. (Text)
 	 */
@@ -186,7 +186,7 @@ typedef enum {
 	/**
 	 * Name (Text)
 	 */
-	PBK_Text_Name, /* 15 */
+	PBK_Text_Name,		/* 15 */
 	/**
 	 * Last name. (Text)
 	 */
@@ -206,7 +206,7 @@ typedef enum {
 	/**
 	 * Category. (Number, if -1 then text)
 	 */
-	PBK_Category, /* 20 */
+	PBK_Category,		/* 20 */
 	/**
 	 * Whether entry is private. (Number)
 	 */
@@ -226,7 +226,7 @@ typedef enum {
 	/**
 	 * Zip code. (Text)
 	 */
-	PBK_Text_Zip, /* 25 */
+	PBK_Text_Zip,		/* 25 */
 	/**
 	 * Country. (Text)
 	 */
@@ -246,7 +246,7 @@ typedef enum {
 	/**
 	 * Custom information 4. (Text)
 	 */
-	PBK_Text_Custom4, /* 30 */
+	PBK_Text_Custom4,	/* 30 */
 	/**
 	 * Ringtone ID. (Number)
 	 */
@@ -266,7 +266,7 @@ typedef enum {
 	/**
 	 * LUID - Unique Identifier used for synchronisation
 	 */
-	PBK_Text_LUID, /* 35 */
+	PBK_Text_LUID,		/* 35 */
 	/**
 	 * Date of last modification
 	 */
@@ -286,7 +286,7 @@ typedef enum {
 	/**
 	 * Work city. (Text)
 	 */
-	PBK_Text_WorkCity, /* 40 */
+	PBK_Text_WorkCity,	/* 40 */
 	/**
 	 * Work state. (Text)
 	 */
@@ -306,11 +306,11 @@ typedef enum {
 	/**
 	 * Picture name (on phone filesystem). (Text)
 	 */
-	PBK_Text_PictureName, /* 45 */
- 	/**
+	PBK_Text_PictureName,	/* 45 */
+	/**
  	 * Push-to-talk ID (Text)
  	 */
- 	PBK_PushToTalkID,
+	PBK_PushToTalkID,
 	/**
 	 * Favorite messaging number. (Text)
 	 */
@@ -548,8 +548,9 @@ unsigned char *GSM_PhonebookGetEntryName(const GSM_MemoryEntry * entry);
  *
  * \ingroup Memory
  */
-void GSM_PhonebookFindDefaultNameNumberGroup(const GSM_MemoryEntry * entry, int *Name,
-					     int *Number, int *Group);
+void GSM_PhonebookFindDefaultNameNumberGroup(const GSM_MemoryEntry * entry,
+					     int *Name, int *Number,
+					     int *Group);
 /**
  * Types of vCard.
  *
@@ -597,9 +598,10 @@ typedef enum {
  *
  * \ingroup Memory
  */
-GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_len, size_t *Pos,
-			GSM_MemoryEntry * pbk, const bool header,
-			const GSM_VCardVersion Version);
+GSM_Error GSM_EncodeVCARD(GSM_Debug_Info * di, char *Buffer,
+			  const size_t buff_len, size_t * Pos,
+			  GSM_MemoryEntry * pbk, const bool header,
+			  const GSM_VCardVersion Version);
 
 /**
  * Decodes memory entry from vCard.
@@ -614,8 +616,9 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
  *
  * \ingroup Memory
  */
-GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos,
-			  GSM_MemoryEntry * Pbk, const GSM_VCardVersion Version);
+GSM_Error GSM_DecodeVCARD(GSM_Debug_Info * di, char *Buffer, size_t * Pos,
+			  GSM_MemoryEntry * Pbk,
+			  const GSM_VCardVersion Version);
 
 /**
  * Frees any dynamically allocated memory inside memory
@@ -623,7 +626,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos,
  *
  * \param[in] Entry Pointer to memory entry to process.
  */
-void GSM_FreeMemoryEntry(GSM_MemoryEntry *Entry);
+void GSM_FreeMemoryEntry(GSM_MemoryEntry * Entry);
 #endif
 
 /* Editor configuration

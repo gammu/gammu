@@ -22,7 +22,7 @@
  * \param text Text to be printed, \n will be also sent (as a separate
  * message).
  */
-typedef void (*GSM_Log_Function)(const char *text, void *data);
+typedef void (*GSM_Log_Function) (const char *text, void *data);
 
 /**
  * Private structure holding information about phone connection. Should
@@ -144,7 +144,9 @@ typedef enum {
  * \return Error code
  * \see GSM_SetDebugFunction
  */
-GSM_Error GSM_InitConnection_Log(GSM_StateMachine *s, int ReplyNum, GSM_Log_Function log_function, void *user_data);
+GSM_Error GSM_InitConnection_Log(GSM_StateMachine * s, int ReplyNum,
+				 GSM_Log_Function log_function,
+				 void *user_data);
 
 /**
  * Initiates connection.
