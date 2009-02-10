@@ -506,37 +506,6 @@ set (DOCS
     COPYING
     )
 
-set (PUBLIC_HEADERS
-    include/gammu.h
-    include/gammu-info.h
-    include/gammu-callback.h
-    include/gammu-memory.h
-    include/gammu-security.h
-    include/gammu-datetime.h
-    include/gammu-limits.h
-    include/gammu-types.h
-    include/gammu-backup.h
-    include/gammu-unicode.h
-    include/gammu-misc.h
-    include/gammu-settings.h
-    include/gammu-error.h
-    include/gammu-wap.h
-    include/gammu-bitmap.h
-    include/gammu-category.h
-    include/gammu-debug.h
-    include/gammu-message.h
-    include/gammu-file.h
-    include/gammu-statemachine.h
-    include/gammu-keys.h
-    include/gammu-inifile.h
-    include/gammu-calendar.h
-    include/gammu-call.h
-    include/gammu-ringtone.h
-    include/gammu-nokia.h
-    include/gammu-smsd.h
-    ${Gammu_BINARY_DIR}/include/gammu-config.h
-    )
-
 if (CMAKE_USE_PTHREADS_INIT)
     set (HAVE_PTHREAD ON)
 endif (CMAKE_USE_PTHREADS_INIT)
@@ -643,17 +612,6 @@ macro_gammu_option (GNAPGEN "Gnapplet phones support" ON WITH_GNAPPLET_SUPPORT O
 macro_gammu_option (CELLBROADCAST "Cell Broadcast messages support" ON ON ON)
 macro_gammu_option (BACKUP "Backup/Restore functions" ON ON ON)
 
-# Generate config.h
-configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu-config.h.cmake" "${Gammu_BINARY_DIR}/include/gammu-config.h" ESCAPE_QUOTES)
-
-# Fill in include dir for build
-foreach (HEADER ${PUBLIC_HEADERS})
-    if (NOT ${HEADER} MATCHES "gammu-config.h")
-        get_filename_component(FILENAME "${HEADER}" NAME)
-        configure_file ("${Gammu_SOURCE_DIR}/${HEADER}" "${Gammu_BINARY_DIR}/include/${FILENAME}" COPY_ONLY)
-    endif (NOT ${HEADER} MATCHES "gammu-config.h")
-endforeach (HEADER)
-
 # Generate Doxygen file
 set (DOXYGEN_INPUT "${Gammu_BINARY_DIR}/include")
 set (DOXYGEN_INTERNAL_INPUT "${Gammu_SOURCE_DIR}/libgammu")
@@ -675,7 +633,6 @@ configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/internals.desc.cmake" "${Ga
 # Target for generating API documentation
 add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile
     COMMAND find ${DOXYGEN_OUTPUT}/html -name '*.html' -print0 | xargs -0 sed -i 's@text/html\;charset=iso-8859-1@text/html\;charset=utf-8@'
-    DEPENDS ${PUBLIC_HEADERS}
     COMMENT "Generating API documentation")
 
 add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
@@ -723,12 +680,6 @@ if (WIN32 AND NOT CYGWIN)
             COMPONENT dlls
             )
 endif (WIN32 AND NOT CYGWIN)
-
-install (
-    FILES ${PUBLIC_HEADERS}
-    DESTINATION "${INSTALL_INC_DIR}/${DIRNAME}"
-    COMPONENT "headers"
-    )
 
 install (
     FILES "${Gammu_BINARY_DIR}/cfg/gammu.pc" "${Gammu_BINARY_DIR}/cfg/gammu-smsd.pc"
@@ -878,6 +829,8 @@ endif (WIN32 AND NOT CYGWIN)
 include (CPack)
 
 # Transverse to dirs
+add_subdirectory(include)
+
 add_subdirectory(libgammu)
 
 add_subdirectory(helper)
