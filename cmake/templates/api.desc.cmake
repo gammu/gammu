@@ -7,6 +7,9 @@
  * You can interface to it by creating \ref GSM_StateMachine and then
  * using various functions on it.
  *
+ * If you want to interact with SMS daemon, set of functions is provided
+ * in \ref SMSD submodule.
+ *
  * This documentation is still not complete, however we try to complete
  * documentation to every code part we touch. If you don't userstand
  * something, please don't hesitate to ask on mailing list
