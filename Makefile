@@ -45,7 +45,7 @@ Nightly: $(BUILD_DIR)
 NightlyMemoryCheck: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) NightlyMemoryCheck
 
-TAGFILESFIND = find gammu common include smsd helper tests python -name '*.[ch]' -o -name '*.cpp'
+TAGFILESFIND = find gammu libgammu include smsd helper tests python -name '*.[ch]' -o -name '*.cpp'
 
 tags: $(shell $(TAGFILESFIND))
 	@echo Generating tags file...
