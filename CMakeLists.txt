@@ -505,14 +505,8 @@ set (EXAMPLES
     docs/sql/sqlite.sql
     docs/examples/config/smsdrc
     docs/examples/config/gammurc
-    docs/examples/fax/faxreceive
-    docs/examples/fax/faxsend
     docs/examples/media/aliens.nlm
     docs/examples/media/axelf.txt
-    docs/examples/ppp/data
-    docs/examples/ppp/gprs
-    docs/examples/ppp/startppp
-    docs/examples/ppp/statsppp
     )
 
 set (DEVELDOCS
@@ -534,6 +528,7 @@ set (DEVELDOCS
     docs/develop/sounds/ring2.txt
     docs/develop/examples/Makefile
     docs/develop/examples/phone-info.c
+    docs/develop/examples/sms-send.c
     )
 
 set (DOCS

@@ -26,6 +26,12 @@ linux-driver
 DKU-2 driver for Linux. This will be removed in future, please use
 fbususb connection type instead.
 
+other
+-----
+
+Some scripts not related directly to Gammu, but more to modems and GSM
+phones in general.
+
 packaging
 ---------
 
