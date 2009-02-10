@@ -1,6 +1,6 @@
 /* (c) 2002-2003 by Marcin Wiacek */
 
-#include "../common/gsmstate.h"
+#include "../libgammu/gsmstate.h"
 
 #ifdef DEBUG
 
@@ -8,12 +8,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../common/protocol/nokia/mbus2.h"
-#include "../common/protocol/nokia/phonet.h"
-#include "../common/phone/nokia/nfunc.h"
-#include "../common/misc/misc.h"
-#include "../common/gsmcomon.h"
-#include "../common/service/gsmcal.h"
+#include "../libgammu/protocol/nokia/mbus2.h"
+#include "../libgammu/protocol/nokia/phonet.h"
+#include "../libgammu/phone/nokia/nfunc.h"
+#include "../libgammu/misc/misc.h"
+#include "../libgammu/gsmcomon.h"
+#include "../libgammu/service/gsmcal.h"
 #include "gammu.h"
 
 static GSM_Protocol_MBUS2Data	MBUS2Data;
