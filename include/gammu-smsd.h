@@ -19,6 +19,8 @@
 /**
  * SMSD configuration data, these are not expected to be manipulated
  * directly by application.
+ *
+ * \ingroup SMSD
  */
 typedef struct _GSM_SMSDConfig GSM_SMSDConfig;
 
@@ -30,6 +32,8 @@ typedef struct _GSM_SMSDConfig GSM_SMSDConfig;
 /**
  * Status structure, which can be found in shared memory (if supported
  * on platform).
+ *
+ * \ingroup SMSD
  */
 typedef struct {
 	/**
@@ -77,6 +81,8 @@ typedef struct {
  * \param sms Message data to send.
  *
  * \return Error code
+ *
+ * \ingroup SMSD
  */
 GSM_Error SMSD_InjectSMS(GSM_SMSDConfig * Config, GSM_MultiSMSMessage * sms);
 
@@ -87,6 +93,8 @@ GSM_Error SMSD_InjectSMS(GSM_SMSDConfig * Config, GSM_MultiSMSMessage * sms);
  * \param status pointer where status will be copied
  *
  * \return Error code
+ *
+ * \ingroup SMSD
  */
 GSM_Error SMSD_GetStatus(GSM_SMSDConfig * Config, GSM_SMSDStatus * status);
 
@@ -96,6 +104,8 @@ GSM_Error SMSD_GetStatus(GSM_SMSDConfig * Config, GSM_SMSDStatus * status);
  * \param Config Pointer to SMSD configuration data.
  *
  * \return Error code
+ *
+ * \ingroup SMSD
  */
 GSM_Error SMSD_Shutdown(GSM_SMSDConfig * Config);
 
@@ -107,6 +117,8 @@ GSM_Error SMSD_Shutdown(GSM_SMSDConfig * Config);
  * \param uselog Whether to log errors to configured log.
  *
  * \return Error code
+ *
+ * \ingroup SMSD
  */
 GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig * Config,
 			  bool uselog);
@@ -122,6 +134,8 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig * Config,
  * program.
  *
  * \return Error code
+ *
+ * \ingroup SMSD
  */
 GSM_Error SMSD_MainLoop(GSM_SMSDConfig * Config, bool exit_on_failure);
 
@@ -132,6 +146,8 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig * Config, bool exit_on_failure);
  * gammu-smsd text is used.
  *
  * \return Pointer to SMSD configuration data block.
+ *
+ * \ingroup SMSD
  */
 GSM_SMSDConfig *SMSD_NewConfig(const char *name);
 
@@ -139,6 +155,8 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name);
  * Frees SMSD configuration.
  *
  * \param config Pointer to SMSD configuration data.
+ *
+ * \ingroup SMSD
  */
 void SMSD_FreeConfig(GSM_SMSDConfig * config);
 #endif
