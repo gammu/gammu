@@ -537,79 +537,6 @@ set (PUBLIC_HEADERS
     ${Gammu_BINARY_DIR}/include/gammu-config.h
     )
 
-set (HEADERS
-    libgammu/device/bluetoth/blue_fbsd.h
-    libgammu/device/bluetoth/blue_osx.h
-    libgammu/device/bluetoth/blue_w32.h
-    libgammu/device/bluetoth/bluetoth.h
-    libgammu/device/bluetoth/bluez.h
-    libgammu/device/devfunc.h
-    libgammu/device/irda/irda.h
-    libgammu/device/irda/irda_unx.h
-    libgammu/device/irda/irda_w32.h
-    libgammu/device/serial/ser_djg.h
-    libgammu/device/serial/ser_unx.h
-    libgammu/device/serial/ser_w32.h
-    libgammu/misc/coding/md5.h
-    libgammu/misc/coding/coding.h
-    libgammu/misc/misc.h
-    libgammu/phone/alcatel/alcatel.h
-    libgammu/phone/at/samsung.h
-    libgammu/phone/at/siemens.h
-    libgammu/phone/at/motorola.h
-    libgammu/phone/at/atfunc.h
-    libgammu/phone/at/atgen.h
-    libgammu/phone/nokia/dct3/dct3comm.h
-    libgammu/phone/nokia/dct3/dct3func.h
-    libgammu/phone/nokia/dct3/n0650.h
-    libgammu/phone/nokia/dct3/n6110.h
-    libgammu/phone/nokia/dct3/n7110.h
-    libgammu/phone/nokia/dct3/n9210.h
-    libgammu/phone/nokia/nfuncold.h
-    libgammu/phone/nokia/ncommon.h
-    libgammu/phone/nokia/nfunc.h
-    libgammu/phone/nokia/wd2/n3650.h
-    libgammu/phone/nokia/dct4s40/6510/6510cal.h
-    libgammu/phone/nokia/dct4s40/6510/6510file.h
-    libgammu/phone/nokia/dct4s40/6510/n6510.h
-    libgammu/phone/nokia/dct4s40/dct4func.h
-    libgammu/phone/nokia/dct4s40/n3320.h
-    libgammu/phone/obex/obexgen.h
-    libgammu/phone/obex/obexfunc.h
-    libgammu/phone/pfunc.h
-    libgammu/phone/symbian/gnapgen.h
-    libgammu/phone/atobex/atobexfunc.h
-    libgammu/phone/atobex/atobex.h
-    libgammu/protocol/alcatel/alcabus.h
-    libgammu/protocol/at/at.h
-    libgammu/protocol/nokia/fbus2.h
-    libgammu/protocol/nokia/mbus2.h
-    libgammu/protocol/nokia/phonet.h
-    libgammu/protocol/obex/obex.h
-    libgammu/protocol/protocol.h
-    libgammu/protocol/symbian/gnapbus.h
-    libgammu/service/backup/backics.h
-    libgammu/service/backup/backldif.h
-    libgammu/service/backup/backlmb.h
-    libgammu/service/backup/backtext.h
-    libgammu/service/backup/backvcf.h
-    libgammu/service/backup/backvcs.h
-    libgammu/service/backup/gsmback.h
-    libgammu/service/gsmnet.h
-    libgammu/service/sms/gsmems.h
-    libgammu/service/sms/gsmmulti.h
-    libgammu/service/gsmlogo.h
-    libgammu/service/gsmcal.h
-    libgammu/service/gsmring.h
-    libgammu/service/gsmpbk.h
-    libgammu/service/gsmcall.h
-    libgammu/service/gsmdata.h
-    libgammu/service/gsmmisc.h
-    libgammu/gsmstate.h
-    libgammu/gsmcomon.h
-    ${Gammu_BINARY_DIR}/include/gammu-config.h
-    )
-
 if (CMAKE_USE_PTHREADS_INIT)
     set (HAVE_PTHREAD ON)
 endif (CMAKE_USE_PTHREADS_INIT)
@@ -753,7 +680,6 @@ add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile
 
 add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
     COMMAND find ${DOXYGEN_INTERNAL_OUTPUT}/html -name '*.html' -print0 | xargs -0 sed -i 's@text/html\;charset=iso-8859-1@text/html\;charset=utf-8@'
-    DEPENDS ${LIBRARY_SRC} ${HEADERS}
     COMMENT "Generating internal documentation")
 
 # Generate pkgconfig file
