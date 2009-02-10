@@ -31,7 +31,8 @@ this program; if not, write to the Free Software Foundation, Inc.,
 __all__ = [
     'Data',
     'Worker',
-    '_gammu',
+    'SMSD',
+    'StateMachine'
     ]
 
 # Conveniency and backward compatibility import
