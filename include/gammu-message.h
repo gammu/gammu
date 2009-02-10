@@ -1091,6 +1091,7 @@ GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo * info);
  * Gets SMS Service Center number and SMS settings.
  *
  * \param s State machine pointer.
+ * \param[in,out] smsc SMSC structure, should contain location.
  *
  * \return Error code.
  *
@@ -1102,6 +1103,7 @@ GSM_Error GSM_GetSMSC(GSM_StateMachine * s, GSM_SMSC * smsc);
  * Sets SMS Service Center number and SMS settings.
  *
  * \param s State machine pointer.
+ * \param[in] smsc SMSC structure.
  *
  * \return Error code.
  *
@@ -1114,6 +1116,7 @@ GSM_Error GSM_SetSMSC(GSM_StateMachine * s, GSM_SMSC * smsc);
  * both SIM and phone).
  *
  * \param s State machine pointer.
+ * \param[out] status Pointer to SMS status structure.
  *
  * \return Error code.
  *
@@ -1125,6 +1128,8 @@ GSM_Error GSM_GetSMSStatus(GSM_StateMachine * s, GSM_SMSMemoryStatus * status);
  * Reads SMS message.
  *
  * \param s State machine pointer.
+ * \param[in,out] sms SMS message data read from phone, location and
+ * folder should be set.
  *
  * \return Error code.
  *
@@ -1140,6 +1145,10 @@ GSM_Error GSM_GetSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms);
  * in phone. To do so, you have to call \ref GSM_GetSMS.
  *
  * \param s State machine pointer.
+ * \param[in,out] sms SMS message data read from phone, for subsequent
+ * reads, location and folder might be used by phone driver to determine
+ * reading state.
+ * \param[in] start Whether we start reading from beginning.
  *
  * \return Error code.
  *
@@ -1151,6 +1160,7 @@ GSM_Error GSM_GetNextSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms,
  * Sets SMS.
  *
  * \param s State machine pointer.
+ * \param[in] sms SMS message data.
  *
  * \return Error code.
  *
@@ -1162,6 +1172,7 @@ GSM_Error GSM_SetSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
  * Adds SMS to specified folder.
  *
  * \param s State machine pointer.
+ * \param[in,out] sms SMS message data, location will be updated.
  *
  * \return Error code.
  *
@@ -1173,6 +1184,7 @@ GSM_Error GSM_AddSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
  * Deletes SMS.
  *
  * \param s State machine pointer.
+ * \param[in] sms SMS structure with SMS location and folder.
  *
  * \return Error code.
  *
@@ -1184,6 +1196,7 @@ GSM_Error GSM_DeleteSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
  * Sends SMS.
  *
  * \param s State machine pointer.
+ * \param[in] sms SMS structure with SMS data to send.
  *
  * \return Error code.
  *
@@ -1195,6 +1208,8 @@ GSM_Error GSM_SendSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
  * Sends SMS already saved in phone.
  *
  * \param s State machine pointer.
+ * \param[in] Folder Folder, where message is stored.
+ * \param[in] Location Location, where message is stored.
  *
  * \return Error code.
  *
@@ -1206,6 +1221,7 @@ GSM_Error GSM_SendSavedSMS(GSM_StateMachine * s, int Folder, int Location);
  * Configures fast SMS sending.
  *
  * \param s State machine pointer.
+ * \param[in] enable Whether to enable notifications.
  *
  * \return Error code.
  *
@@ -1217,6 +1233,7 @@ GSM_Error GSM_SetFastSMSSending(GSM_StateMachine * s, bool enable);
  * Enable/disable notification on incoming SMS.
  *
  * \param s State machine pointer.
+ * \param[in] enable Whether to enable notifications.
  *
  * \return Error code.
  *
@@ -1228,6 +1245,7 @@ GSM_Error GSM_SetIncomingSMS(GSM_StateMachine * s, bool enable);
  * Gets network information from phone.
  *
  * \param s State machine pointer.
+ * \param[in] enable Whether to enable notifications.
  *
  * \return Error code.
  *
@@ -1239,6 +1257,8 @@ GSM_Error GSM_SetIncomingCB(GSM_StateMachine * s, bool enable);
  * Returns SMS folders information.
  *
  * \param s State machine pointer.
+ * \param[out] folders folders Pointer to folders structure, which will be
+ * filled in.
  *
  * \return Error code.
  *
@@ -1250,6 +1270,7 @@ GSM_Error GSM_GetSMSFolders(GSM_StateMachine * s, GSM_SMSFolders * folders);
  * Creates SMS folder.
  *
  * \param s State machine pointer.
+ * \param[in] name Name of SMS folder which should be created.
  *
  * \return Error code.
  *
@@ -1261,6 +1282,7 @@ GSM_Error GSM_AddSMSFolder(GSM_StateMachine * s, unsigned char *name);
  * Deletes SMS folder.
  *
  * \param s State machine pointer.
+ * \param[in] ID ID of SMS folder to delete.
  *
  * \return Error code.
  *
@@ -1285,6 +1307,11 @@ GSM_Error GSM_GetMMSFolders(GSM_StateMachine * s, GSM_MMSFolders * folders);
  * Retrieves next part of MMS file information.
  *
  * \param s State machine pointer.
+ * \param[in,out] FileID File ID will be stored here, might be
+ * used for consequent reads.
+ * \param[in,out] MMSFolder MMS folder ID will be stored here, might be
+ * used for consequent reads.
+ * \param[in] start Whether to start reading.
  *
  * \return Error code.
  *
@@ -1296,6 +1323,7 @@ GSM_Error GSM_GetNextMMSFileInfo(GSM_StateMachine * s, unsigned char *FileID,
  * Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).
  *
  * \param s State machine pointer.
+ * \param[in] enable Whether to enable notifications.
  *
  * \return Error code.
  *

@@ -138,7 +138,7 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name);
 /**
  * Frees SMSD configuration.
  *
- * \param Config Pointer to SMSD configuration data.
+ * \param config Pointer to SMSD configuration data.
  */
 void SMSD_FreeConfig(GSM_SMSDConfig * config);
 #endif
