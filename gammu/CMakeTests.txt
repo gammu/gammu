@@ -38,7 +38,7 @@ set_tests_properties(gammu-nets-230 PROPERTIES
 
 foreach(EXT nlm ngg nol xpm nsl wbmp bmp)
     add_test(gammu-copybitmap-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
-        copybitmap ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm "${CMAKE_CURRENT_BINARY_DIR}/test-bmp.${EXT}" PICTURE)
+        copybitmap ${LOGO_TEST_FILE} "${CMAKE_CURRENT_BINARY_DIR}/test-bmp.${EXT}" PICTURE)
     add_test(gammu-displaybitmap-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
         copybitmap "${CMAKE_CURRENT_BINARY_DIR}/test-bmp.${EXT}")
     # Reading of xpm is not supported
@@ -50,7 +50,7 @@ foreach(EXT nlm ngg nol xpm nsl wbmp bmp)
 endforeach(EXT)
 
 add_test(gammu-copyringtone-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
-    copyringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt "${CMAKE_CURRENT_BINARY_DIR}/test-rng.bin" BINARY)
+    copyringtone ${RINGTONE_TEST_FILE} "${CMAKE_CURRENT_BINARY_DIR}/test-rng.bin" BINARY)
 add_test(gammu-copyringtone-binary-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
     copyringtone "${CMAKE_CURRENT_BINARY_DIR}/test-rng.bin" "${CMAKE_CURRENT_BINARY_DIR}/test-rng-bin.bin" BINARY)
 
@@ -58,11 +58,11 @@ add_test(gammu-copyringtone-binary-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${GA
 
 foreach(EXT ott rng mid imy ime wav rttl)
     add_test(gammu-copyringtone-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
-        copyringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}" RTTL)
+        copyringtone ${RINGTONE_TEST_FILE} "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}" RTTL)
     add_test(gammu-copyringtone-binary-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
         copyringtone "${CMAKE_CURRENT_BINARY_DIR}/test-rng.bin" "${CMAKE_CURRENT_BINARY_DIR}/test-rng-bin.${EXT}" RTTL)
     add_test(gammu-copyringtone-${EXT}-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
-        copyringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt "${CMAKE_CURRENT_BINARY_DIR}/test-rng-${EXT}.bin" BINARY)
+        copyringtone ${RINGTONE_TEST_FILE} "${CMAKE_CURRENT_BINARY_DIR}/test-rng-${EXT}.bin" BINARY)
 
     foreach(EXT2 ott rng mid imy ime wav rttl)
         add_test(gammu-copyringtone-${EXT}-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
