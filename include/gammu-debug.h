@@ -33,7 +33,8 @@ typedef struct _GSM_Debug_Info GSM_Debug_Info;
  *
  * \ingroup Debug
  */
-GSM_Error GSM_SetDebugFunction(GSM_Log_Function info, void *data, GSM_Debug_Info * privdi);
+GSM_Error GSM_SetDebugFunction(GSM_Log_Function info, void *data,
+			       GSM_Debug_Info * privdi);
 
 /**
  * Sets debug file.
@@ -58,7 +59,8 @@ GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info * privdi);
  *
  * \ingroup Debug
  */
-GSM_Error GSM_SetDebugFileDescriptor(FILE * fd, bool closable, GSM_Debug_Info * privdi);
+GSM_Error GSM_SetDebugFileDescriptor(FILE * fd, bool closable,
+				     GSM_Debug_Info * privdi);
 
 /**
  * Returns global debug settings.
@@ -89,7 +91,7 @@ GSM_Debug_Info *GSM_GetDebug(GSM_StateMachine * s);
  *
  * \ingroup StateMachine
  */
-GSM_Debug_Info *GSM_GetDI(GSM_StateMachine *s);
+GSM_Debug_Info *GSM_GetDI(GSM_StateMachine * s);
 
 /**
  * Sets debug level.
@@ -134,7 +136,8 @@ bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info * privdi);
  *
  * \ingroup Debug
  */
-void GSM_LogError(GSM_StateMachine * s, const char * message, const GSM_Error err);
+void GSM_LogError(GSM_StateMachine * s, const char *message,
+		  const GSM_Error err);
 
 /**
  * Prints string to defined debug log.

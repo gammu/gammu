@@ -388,7 +388,7 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup * Backup,
  * \return Backup format on success -1 on error.
  */
 GSM_BackupFormat GSM_GuessBackupFormat(const char *FileName,
-		const bool UseUnicode);
+				       const bool UseUnicode);
 
 /**
  * Reads data from backup file.
@@ -403,7 +403,7 @@ GSM_BackupFormat GSM_GuessBackupFormat(const char *FileName,
  * \return Error code
  */
 GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup * backup,
-		GSM_BackupFormat Format);
+			     GSM_BackupFormat Format);
 
 /**
  * Clears backup structure
@@ -461,7 +461,8 @@ typedef struct {
  *
  * \ingroup Backup
  */
-void GSM_GetBackupFormatFeatures(GSM_BackupFormat Format, GSM_Backup_Info * info);
+void GSM_GetBackupFormatFeatures(GSM_BackupFormat Format,
+				 GSM_Backup_Info * info);
 
 /**
  * Gets information about backup data features (resp. which data it contains).

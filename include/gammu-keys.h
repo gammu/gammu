@@ -16,7 +16,7 @@
 #include <gammu-statemachine.h>
 #include <gammu-types.h>
 
-#include <stdlib.h> /* Needed for size_t declaration */
+#include <stdlib.h>		/* Needed for size_t declaration */
 
 /**
  * Key event identifiers.
@@ -131,7 +131,7 @@ typedef enum {
  *
  * \ingroup Keys
  */
-GSM_Error MakeKeySequence(char *text, GSM_KeyCode * KeyCode, size_t *Length);
+GSM_Error MakeKeySequence(char *text, GSM_KeyCode * KeyCode, size_t * Length);
 
 /**
  * Emulates key press or key release.

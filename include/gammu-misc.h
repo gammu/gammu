@@ -68,7 +68,7 @@ extern void GSM_InitLocales(const char *path);
 #  if !defined(HAVE_UNISTD_H) || defined(__MINGW32__)
 #    define sleep(x) Sleep((x) * 1000)
 #    define usleep(x) Sleep(((x) < 1000) ? 1 : ((x) / 1000))
-#  endif /* HAVE_UNISTD_H */
+#  endif			/* HAVE_UNISTD_H */
 #endif
 
 /* Easy check for GCC */
@@ -164,7 +164,8 @@ void EncodeHexBin(unsigned char *dest, const unsigned char *src, int len);
  *
  * \return True if latest_version > current_version.
  */
-bool GSM_IsNewerVersion(const char *latest_version, const char *current_version);
+bool GSM_IsNewerVersion(const char *latest_version,
+			const char *current_version);
 #endif
 
 /* Editor configuration

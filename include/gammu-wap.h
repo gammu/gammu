@@ -16,7 +16,7 @@
 #include <gammu-error.h>
 #include <gammu-statemachine.h>
 
-#include <stdlib.h> /* Needed for size_t declaration */
+#include <stdlib.h>		/* Needed for size_t declaration */
 
 /**
  * WAP bookmark data.
@@ -207,7 +207,7 @@ typedef struct {
  *
  * \ingroup WAP
  */
-GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, size_t *Length,
+GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, size_t * Length,
 			    GSM_WAPBookmark * bookmark);
 
 /**

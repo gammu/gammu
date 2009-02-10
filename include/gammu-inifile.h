@@ -71,7 +71,8 @@ void INI_Free(INI_Section * head);
  *
  * \return Error code
  */
-GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section ** result);
+GSM_Error INI_ReadFile(const char *FileName, bool Unicode,
+		       INI_Section ** result);
 
 /**
  * Returns pointer to last INI entry of given section.
@@ -87,7 +88,8 @@ GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section ** result
  * \bug Unicode should be part of file_info.
  */
 INI_Entry *INI_FindLastSectionEntry(INI_Section * file_info,
-				    const unsigned char *section, const bool Unicode);
+				    const unsigned char *section,
+				    const bool Unicode);
 
 /**
  * Returns value of INI file entry.
@@ -103,7 +105,8 @@ INI_Entry *INI_FindLastSectionEntry(INI_Section * file_info,
  *
  * \bug Unicode should be part of file_info.
  */
-unsigned char *INI_GetValue(INI_Section * file_info, const unsigned char *section,
+unsigned char *INI_GetValue(INI_Section * file_info,
+			    const unsigned char *section,
 			    const unsigned char *key, const bool Unicode);
 #endif
 

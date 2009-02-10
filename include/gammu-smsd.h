@@ -47,11 +47,11 @@ typedef struct {
 	/**
 	 * Current phone battery state.
 	 */
-	GSM_BatteryCharge  Charge;
+	GSM_BatteryCharge Charge;
 	/**
 	 * Current network state.
 	 */
-	GSM_SignalQuality  Network;
+	GSM_SignalQuality Network;
 	/**
 	 * Number of received messages.
 	 */
@@ -70,7 +70,6 @@ typedef struct {
 	char IMEI[GSM_MAX_IMEI_LENGTH + 1];
 } GSM_SMSDStatus;
 
-
 /**
  * Enqueues SMS message in SMS daemon queue.
  *
@@ -79,7 +78,7 @@ typedef struct {
  *
  * \return Error code
  */
-GSM_Error SMSD_InjectSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms);
+GSM_Error SMSD_InjectSMS(GSM_SMSDConfig * Config, GSM_MultiSMSMessage * sms);
 
 /**
  * Gets SMSD status via shared memory.
@@ -89,7 +88,7 @@ GSM_Error SMSD_InjectSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms);
  *
  * \return Error code
  */
-GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status);
+GSM_Error SMSD_GetStatus(GSM_SMSDConfig * Config, GSM_SMSDStatus * status);
 
 /**
  * Flags SMSD daemon to terminate itself gracefully.
@@ -98,7 +97,7 @@ GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status);
  *
  * \return Error code
  */
-GSM_Error SMSD_Shutdown(GSM_SMSDConfig *Config);
+GSM_Error SMSD_Shutdown(GSM_SMSDConfig * Config);
 
 /**
  * Reads SMSD configuration.
@@ -109,7 +108,8 @@ GSM_Error SMSD_Shutdown(GSM_SMSDConfig *Config);
  *
  * \return Error code
  */
-GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool uselog);
+GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig * Config,
+			  bool uselog);
 
 /**
  * Main SMS daemon loop. It connects to phone, scans for messages and
@@ -123,7 +123,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
  *
  * \return Error code
  */
-GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure);
+GSM_Error SMSD_MainLoop(GSM_SMSDConfig * Config, bool exit_on_failure);
 
 /**
  * Creates new SMSD configuration.
@@ -140,7 +140,7 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name);
  *
  * \param Config Pointer to SMSD configuration data.
  */
-void SMSD_FreeConfig(GSM_SMSDConfig *config);
+void SMSD_FreeConfig(GSM_SMSDConfig * config);
 #endif
 
 /* Editor configuration
