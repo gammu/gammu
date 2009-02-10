@@ -5,10 +5,10 @@
 #include <stdio.h>
 #include <string.h>
 #include "common.h"
-#include "../common/phone/at/atgen.h"
-#include "../common/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../common/gsmstate.h" /* Needed for state machine internals */
-#include "../common/gsmphones.h" /* Phone data */
+#include "../libgammu/phone/at/atgen.h"
+#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
+#include "../libgammu/gsmphones.h" /* Phone data */
 
 #define BUFFER_SIZE ((size_t)16384)
 

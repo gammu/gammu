@@ -600,75 +600,75 @@ set (PUBLIC_HEADERS
     )
 
 set (HEADERS
-    common/device/bluetoth/blue_fbsd.h
-    common/device/bluetoth/blue_osx.h
-    common/device/bluetoth/blue_w32.h
-    common/device/bluetoth/bluetoth.h
-    common/device/bluetoth/bluez.h
-    common/device/devfunc.h
-    common/device/irda/irda.h
-    common/device/irda/irda_unx.h
-    common/device/irda/irda_w32.h
-    common/device/serial/ser_djg.h
-    common/device/serial/ser_unx.h
-    common/device/serial/ser_w32.h
-    common/misc/coding/md5.h
-    common/misc/coding/coding.h
-    common/misc/misc.h
-    common/phone/alcatel/alcatel.h
-    common/phone/at/samsung.h
-    common/phone/at/siemens.h
-    common/phone/at/motorola.h
-    common/phone/at/atfunc.h
-    common/phone/at/atgen.h
-    common/phone/nokia/dct3/dct3comm.h
-    common/phone/nokia/dct3/dct3func.h
-    common/phone/nokia/dct3/n0650.h
-    common/phone/nokia/dct3/n6110.h
-    common/phone/nokia/dct3/n7110.h
-    common/phone/nokia/dct3/n9210.h
-    common/phone/nokia/nfuncold.h
-    common/phone/nokia/ncommon.h
-    common/phone/nokia/nfunc.h
-    common/phone/nokia/wd2/n3650.h
-    common/phone/nokia/dct4s40/6510/6510cal.h
-    common/phone/nokia/dct4s40/6510/6510file.h
-    common/phone/nokia/dct4s40/6510/n6510.h
-    common/phone/nokia/dct4s40/dct4func.h
-    common/phone/nokia/dct4s40/n3320.h
-    common/phone/obex/obexgen.h
-    common/phone/obex/obexfunc.h
-    common/phone/pfunc.h
-    common/phone/symbian/gnapgen.h
-    common/phone/atobex/atobexfunc.h
-    common/phone/atobex/atobex.h
-    common/protocol/alcatel/alcabus.h
-    common/protocol/at/at.h
-    common/protocol/nokia/fbus2.h
-    common/protocol/nokia/mbus2.h
-    common/protocol/nokia/phonet.h
-    common/protocol/obex/obex.h
-    common/protocol/protocol.h
-    common/protocol/symbian/gnapbus.h
-    common/service/backup/backics.h
-    common/service/backup/backldif.h
-    common/service/backup/backlmb.h
-    common/service/backup/backtext.h
-    common/service/backup/backvcf.h
-    common/service/backup/backvcs.h
-    common/service/backup/gsmback.h
-    common/service/gsmnet.h
-    common/service/sms/gsmems.h
-    common/service/sms/gsmmulti.h
-    common/service/gsmlogo.h
-    common/service/gsmcal.h
-    common/service/gsmring.h
-    common/service/gsmpbk.h
-    common/service/gsmcall.h
-    common/service/gsmdata.h
-    common/service/gsmmisc.h
-    common/gsmstate.h
-    common/gsmcomon.h
+    libgammu/device/bluetoth/blue_fbsd.h
+    libgammu/device/bluetoth/blue_osx.h
+    libgammu/device/bluetoth/blue_w32.h
+    libgammu/device/bluetoth/bluetoth.h
+    libgammu/device/bluetoth/bluez.h
+    libgammu/device/devfunc.h
+    libgammu/device/irda/irda.h
+    libgammu/device/irda/irda_unx.h
+    libgammu/device/irda/irda_w32.h
+    libgammu/device/serial/ser_djg.h
+    libgammu/device/serial/ser_unx.h
+    libgammu/device/serial/ser_w32.h
+    libgammu/misc/coding/md5.h
+    libgammu/misc/coding/coding.h
+    libgammu/misc/misc.h
+    libgammu/phone/alcatel/alcatel.h
+    libgammu/phone/at/samsung.h
+    libgammu/phone/at/siemens.h
+    libgammu/phone/at/motorola.h
+    libgammu/phone/at/atfunc.h
+    libgammu/phone/at/atgen.h
+    libgammu/phone/nokia/dct3/dct3comm.h
+    libgammu/phone/nokia/dct3/dct3func.h
+    libgammu/phone/nokia/dct3/n0650.h
+    libgammu/phone/nokia/dct3/n6110.h
+    libgammu/phone/nokia/dct3/n7110.h
+    libgammu/phone/nokia/dct3/n9210.h
+    libgammu/phone/nokia/nfuncold.h
+    libgammu/phone/nokia/ncommon.h
+    libgammu/phone/nokia/nfunc.h
+    libgammu/phone/nokia/wd2/n3650.h
+    libgammu/phone/nokia/dct4s40/6510/6510cal.h
+    libgammu/phone/nokia/dct4s40/6510/6510file.h
+    libgammu/phone/nokia/dct4s40/6510/n6510.h
+    libgammu/phone/nokia/dct4s40/dct4func.h
+    libgammu/phone/nokia/dct4s40/n3320.h
+    libgammu/phone/obex/obexgen.h
+    libgammu/phone/obex/obexfunc.h
+    libgammu/phone/pfunc.h
+    libgammu/phone/symbian/gnapgen.h
+    libgammu/phone/atobex/atobexfunc.h
+    libgammu/phone/atobex/atobex.h
+    libgammu/protocol/alcatel/alcabus.h
+    libgammu/protocol/at/at.h
+    libgammu/protocol/nokia/fbus2.h
+    libgammu/protocol/nokia/mbus2.h
+    libgammu/protocol/nokia/phonet.h
+    libgammu/protocol/obex/obex.h
+    libgammu/protocol/protocol.h
+    libgammu/protocol/symbian/gnapbus.h
+    libgammu/service/backup/backics.h
+    libgammu/service/backup/backldif.h
+    libgammu/service/backup/backlmb.h
+    libgammu/service/backup/backtext.h
+    libgammu/service/backup/backvcf.h
+    libgammu/service/backup/backvcs.h
+    libgammu/service/backup/gsmback.h
+    libgammu/service/gsmnet.h
+    libgammu/service/sms/gsmems.h
+    libgammu/service/sms/gsmmulti.h
+    libgammu/service/gsmlogo.h
+    libgammu/service/gsmcal.h
+    libgammu/service/gsmring.h
+    libgammu/service/gsmpbk.h
+    libgammu/service/gsmcall.h
+    libgammu/service/gsmdata.h
+    libgammu/service/gsmmisc.h
+    libgammu/gsmstate.h
+    libgammu/gsmcomon.h
     ${Gammu_BINARY_DIR}/include/gammu-config.h
     )
 
@@ -791,7 +791,7 @@ endforeach (HEADER)
 
 # Generate Doxygen file
 set (DOXYGEN_INPUT "${Gammu_BINARY_DIR}/include")
-set (DOXYGEN_INTERNAL_INPUT "${Gammu_SOURCE_DIR}/common")
+set (DOXYGEN_INTERNAL_INPUT "${Gammu_SOURCE_DIR}/libgammu")
 set (DOXYGEN_OUTPUT "${Gammu_BINARY_DIR}/gammu-doc")
 set (DOXYGEN_INTERNAL_OUTPUT "${Gammu_BINARY_DIR}/gammu-internal-doc")
 if ("${DOXYGEN_DOT_EXECUTABLE}" STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
@@ -1040,7 +1040,7 @@ endif (WIN32 AND NOT CYGWIN)
 include (CPack)
 
 # Transverse to dirs
-add_subdirectory(common)
+add_subdirectory(libgammu)
 
 add_subdirectory(helper)
 

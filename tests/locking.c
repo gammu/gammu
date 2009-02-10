@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../common/device/devfunc.h"
+#include "../libgammu/device/devfunc.h"
 
 #include "common.h"
 

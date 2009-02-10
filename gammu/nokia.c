@@ -2,7 +2,6 @@
 #include <string.h>
 
 #include "../helper/locales.h"
-#include "../common/misc/coding/coding.h"
 
 #include <gammu.h>
 #include <stdlib.h>
