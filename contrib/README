@@ -33,4 +33,36 @@ Support for creating packages on various distributions. Please note that
 support for RPM (gammu.spec) and Slackware (description-pak) is included
 in top level directory.
 
+perl
+----
+
+Various perl scripts which interface to Gammu or SMSD.
+
+php
+---
+
+Various PHP frontends to SMSD or Gammu directly.
+
+smscgi
+------
+
+Simple cgi application gor handling SMS messages (a bit lighter version
+of SMSD).
+
+sqlreply
+--------
+
+System for automatic replying to SMS messages.
+
+symbian
+-------
+
+GNapplet sources and binaries. This comes from Gnokii project, but Gammu
+includes slightly modified version.
+
+win32
+-----
+
+Unsupported applications built on top of libGammu.dll on Windows.
+
 # vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
