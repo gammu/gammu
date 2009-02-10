@@ -74,7 +74,7 @@ if (INSTALL_BASH_COMPLETION)
     install (
         FILES bash-completion/gammu
         DESTINATION "/etc/bash_completion.d"
-        COMPONENT bash
+        COMPONENT "bash"
         )
 endif (INSTALL_BASH_COMPLETION)
 
@@ -83,6 +83,6 @@ if (INSTALL_LSB_INIT)
         FILES init/gammu-smsd.lsb
         DESTINATION "/etc/init.d"
         RENAME "gammu-smsd"
-        COMPONENT initscript
+        COMPONENT "initscript"
         )
 endif (INSTALL_LSB_INIT)

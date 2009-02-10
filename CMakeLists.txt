@@ -499,14 +499,6 @@ else (BUILD_SHARED_LIBS)
     set (SMSD_PRIVATE_LIBS "${S_LIB}" CACHE INTERNAL "Private libraries for gammu smsd library")
 endif (BUILD_SHARED_LIBS)
 
-set (EXAMPLES
-    docs/sql/mysql.sql
-    docs/sql/pgsql.sql
-    docs/sql/sqlite.sql
-    docs/config/smsdrc
-    docs/config/gammurc
-    )
-
 set (DEVELDOCS
     docs/develop/Gammu.htm
     docs/develop/PORTING
@@ -866,15 +858,6 @@ foreach (DOC ${DEVELDOCS})
         )
 endforeach (DOC)
 
-foreach (EXAMPLE ${EXAMPLES})
-    string (REGEX REPLACE "(docs/examples|docs)(.*)/[^/]*$" "\\2" DIRNAME ${EXAMPLE})
-    install (
-        FILES ${EXAMPLE}
-        DESTINATION "${INSTALL_DOC_DIR}/examples/${DIRNAME}"
-        COMPONENT "examples"
-        )
-endforeach (EXAMPLE)
-
 # We want some tests. Even when cross compiling for Windows tests can be
 # done in Wine. This is better than nothing, even though Wine is a bit
 # more fault tolerant when linking DLLs.
@@ -932,6 +915,7 @@ set (CPACK_COMPONENT_GNAPPLET_DISPLAY_NAME "Applet for Symbian Phones")
 set (CPACK_COMPONENT_EXAMPLES_DISPLAY_NAME "Examples Using Gammu")
 set (CPACK_COMPONENT_DEVELDOCS_DISPLAY_NAME "Developer Documentation")
 set (CPACK_COMPONENT_PYTHON_DISPLAY_NAME "Python Module")
+set (CPACK_COMPONENT_MEDIA_DISPLAY_NAME "Media Files")
 
 set (CPACK_COMPONENT_DLLS_HIDDEN TRUE)
 set (CPACK_COMPONENT_DLLS_REQUIRED TRUE)
@@ -948,7 +932,8 @@ set (CPACK_COMPONENT_PKGCONFIG_DESCRIPTION "Data for pkg-config program (automat
 set (CPACK_COMPONENT_GNAPPLET_DESCRIPTION "Applet for Symbian phones, install it to phone to communicate with them using Gammu.")
 set (CPACK_COMPONENT_EXAMPLES_DESCRIPTION "Examples showing how to use Gammu, in PHP, Perl or C.")
 set (CPACK_COMPONENT_DEVELDOCS_DESCRIPTION "Developer documentation.")
-set (CPACK_COMPONENT_PYTHON_DESCRIPTION "Python module for gammu.")
+set (CPACK_COMPONENT_PYTHON_DESCRIPTION "Python module for Gammu.")
+set (CPACK_COMPONENT_MEDIA_DESCRIPTION "Various media files which can be used with Gammu.")
 
 set (CPACK_COMPONENT_GROUP_RUNTIME_DESCRIPTION "Programs and libraries for general usage.")
 set (CPACK_COMPONENT_GROUP_DEVELOPMENT_DESCRIPTION "Headers and documentation used for development using Gammu.")
@@ -977,6 +962,7 @@ set (CPACK_COMPONENT_MANPAGES_GROUP "Documentation")
 set (CPACK_COMPONENT_DOCS_GROUP "Documentation")
 set (CPACK_COMPONENT_EXAMPLES_GROUP "Documentation")
 set (CPACK_COMPONENT_DEVELDOCS_GROUP "Documentation")
+set (CPACK_COMPONENT_MEDIA_GROUP "Documentation")
 
 set (CPACK_ALL_INSTALL_TYPES Standard Developer Full)
 
@@ -992,6 +978,7 @@ set (CPACK_COMPONENT_GNAPPLET_INSTALL_TYPES Standard Developer Full)
 set (CPACK_COMPONENT_EXAMPLES_INSTALL_TYPES Developer Full)
 set (CPACK_COMPONENT_DEVELDOCS_INSTALL_TYPES Developer Full)
 set (CPACK_COMPONENT_PYTHON_INSTALL_TYPES Developer Full)
+set (CPACK_COMPONENT_MEDIA_INSTALL_TYPES Full)
 
 if (WIN32 AND NOT CYGWIN)
   set (CPACK_PACKAGE_INSTALL_DIRECTORY "Gammu ${VERSION}")
@@ -1019,6 +1006,9 @@ add_subdirectory(gammu)
 
 add_subdirectory(locale)
 
+add_subdirectory(docs/config)
+add_subdirectory(docs/develop)
+add_subdirectory(docs/sql)
 add_subdirectory(docs/user)
 
 add_subdirectory(contrib)
