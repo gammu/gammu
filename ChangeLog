@@ -20,6 +20,7 @@ ChangeLog
 [!] * Reorganize directory structure to match current state of things.
 [-] * Completely switch DBI driver to utf-8.
 [-] * Fixed date by 1900 off error in some cases.
+[-] * Cleanup a bit phoned driver.
     
 20090209 - 1.22.94
 

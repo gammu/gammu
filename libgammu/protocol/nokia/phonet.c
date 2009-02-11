@@ -29,55 +29,39 @@ static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
 				      int 		MsgLength,
 				      unsigned char 	MsgType)
 {
-	unsigned char		*buffer2;
+	unsigned char		*buffer;
 	int			sent;
+	GSM_Protocol_PHONETData 	*d = &s->Protocol.Data.PHONET;
 
 	GSM_DumpMessageLevel3(s, MsgBuffer, MsgLength, MsgType);
 
-	buffer2 = (unsigned char *)malloc(MsgLength + 6);
-	if (buffer2 == NULL) return ERR_MOREMEMORY;
+	buffer = (unsigned char *)malloc(MsgLength + 6);
+	if (buffer == NULL) return ERR_MOREMEMORY;
 
-	switch (s->ConnectionType) {
-		case GCT_PHONETBLUE:
-		case GCT_BLUEPHONET:
-			buffer2[0] = PHONET_BLUE_FRAME_ID;
-			buffer2[1] = PHONET_DEVICE_PHONE;	/* destination */
-			buffer2[2] = PHONET_BLUE_DEVICE_PC;	/* source */
-			break;
-		case GCT_DKU2PHONET:
-		case GCT_FBUS2USB:
-			buffer2[0] = PHONET_DKU2_FRAME_ID;
-			buffer2[1] = PHONET_DEVICE_PHONE; 		/* destination */
-			buffer2[2] = PHONET_DEVICE_PC;    		/* source */
-			break;
-		default:
-			buffer2[0] = PHONET_FRAME_ID,
-			buffer2[1] = PHONET_DEVICE_PHONE; 		/* destination */
-			buffer2[2] = PHONET_DEVICE_PC;    		/* source */
-			break;
-	}
+	buffer[0] = d->frame_id;
+	buffer[1] = d->device_phone;
+	buffer[2] = d->device_pc;
+	buffer[3] = MsgType;
+	buffer[4] = MsgLength / 256;
+	buffer[5] = MsgLength % 256;
 
-	buffer2[3] = MsgType;
-	buffer2[4] = MsgLength / 256;
-	buffer2[5] = MsgLength % 256;
+	memcpy(buffer + 6, MsgBuffer, MsgLength);
 
-	memcpy(buffer2 + 6, MsgBuffer, MsgLength);
-
-	GSM_DumpMessageLevel2(s, buffer2+6, MsgLength, MsgType);
+	GSM_DumpMessageLevel2(s, buffer + 6, MsgLength, MsgType);
 
 	/* Sending to phone */
-	sent = s->Device.Functions->WriteDevice(s,buffer2,MsgLength+6);
+	sent = s->Device.Functions->WriteDevice(s, buffer, MsgLength + 6);
 
-	free(buffer2);
+	free(buffer);
 
-	if (sent!=MsgLength+6) return ERR_DEVICEWRITEERROR;
+	if (sent != MsgLength + 6)
+		return ERR_DEVICEWRITEERROR;
 	return ERR_NONE;
 }
 
 static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 {
 	GSM_Protocol_PHONETData 	*d = &s->Protocol.Data.PHONET;
-	bool				correct = false;
 
 	if (d->MsgRXState==RX_GetMessage) {
 		d->Msg.Buffer[d->Msg.Count] = rx_char;
@@ -116,9 +100,8 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		return ERR_NONE;
 	}
 	if (d->MsgRXState==RX_GetSource) {
-		if (rx_char != PHONET_DEVICE_PHONE) {
-			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n",
-					rx_char, PHONET_DEVICE_PHONE);
+		if (rx_char != d->device_phone) {
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect source ID - 0x%02x, not 0x%02x]\n", rx_char, d->device_phone);
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
 		}
@@ -128,21 +111,8 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		return ERR_NONE;
 	}
 	if (d->MsgRXState==RX_GetDestination) {
-		switch (s->ConnectionType) {
-		case GCT_DKU2PHONET:
-		case GCT_IRDAPHONET:
-		case GCT_FBUS2USB:
-			if (rx_char == PHONET_DEVICE_PC) correct = true;
-			break;
-		case GCT_PHONETBLUE:
-		case GCT_BLUEPHONET:
-			if (rx_char == PHONET_BLUE_DEVICE_PC) correct = true;
-			break;
-		default:
-			break;
-		}
-		if (!correct) {
-			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", rx_char, PHONET_DEVICE_PC);
+		if (rx_char != d->device_pc) {
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect destination ID - 0x%02x, not 0x%02x]\n", rx_char, d->device_pc);
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
 		}
@@ -152,23 +122,8 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		return ERR_NONE;
 	}
 	if (d->MsgRXState==RX_Sync) {
-		switch (s->ConnectionType) {
-		case GCT_IRDAPHONET:
-			if (rx_char == PHONET_FRAME_ID) correct = true;
-			break;
-		case GCT_PHONETBLUE:
-		case GCT_BLUEPHONET:
-			if (rx_char == PHONET_BLUE_FRAME_ID) correct = true;
-			break;
-		case GCT_DKU2PHONET:
-		case GCT_FBUS2USB:
-			if (rx_char == PHONET_DKU2_FRAME_ID) correct = true;
-			break;
-		default:
-			break;
-		}
-		if (!correct) {
-			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", rx_char, PHONET_FRAME_ID);
+		if (rx_char != d->frame_id) {
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect frame ID - 0x%02x, not 0x%02x]\n", rx_char, d->frame_id);
 			return ERR_NONE;
 		}
 		d->Msg.Count  = 0;
@@ -181,38 +136,77 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 static GSM_Error PHONET_Initialise(GSM_StateMachine *s)
 {
-	int 				total = 0, i, n;
+	int 				total = 0;
 	GSM_Protocol_PHONETData 	*d = &s->Protocol.Data.PHONET;
-	unsigned char			req[65536];
+	unsigned char			req[10];
 
 	d->Msg.Length	= 0;
 	d->Msg.Buffer	= NULL;
 	d->MsgRXState	= RX_Sync;
 
+	/* Connection type specific ids */
+	switch (s->ConnectionType) {
+		case GCT_PHONETBLUE:
+		case GCT_BLUEPHONET:
+			d->frame_id = PHONET_BLUE_FRAME_ID;
+			d->device_phone =  PHONET_DEVICE_PHONE;
+			d->device_pc = PHONET_BLUE_DEVICE_PC;
+			break;
+		case GCT_DKU2PHONET:
+		case GCT_FBUS2USB:
+			d->frame_id = PHONET_DKU2_FRAME_ID;
+			d->device_phone =  PHONET_DEVICE_PHONE;
+			d->device_pc = PHONET_DEVICE_PC;
+			break;
+		case GCT_IRDAPHONET:
+		default:
+			d->frame_id = PHONET_FRAME_ID;
+			d->device_phone =  PHONET_DEVICE_PHONE;
+			d->device_pc = PHONET_DEVICE_PC;
+			break;
+	}
+
 	if (s->ConnectionType == GCT_PHONETBLUE || s->ConnectionType == GCT_BLUEPHONET) {
 		/* Send frame in PHONET style */
-		req[0] = PHONET_BLUE_FRAME_ID;  req[1] = PHONET_DEVICE_PHONE;
-		req[2] = PHONET_BLUE_DEVICE_PC; req[3] = 0xD0;
-		req[4] = 0x00;			req[5] = 0x01;
+		req[0] = d->frame_id;
+		req[1] = d->device_phone;
+		req[2] = d->device_pc;
+		req[3] = 0xD0;
+		req[4] = 0x00;
+		req[5] = 0x01;
 		req[6] = 0x04;
 		if (s->Device.Functions->WriteDevice(s,req,7) != 7) return ERR_DEVICEWRITEERROR;
 
 		while (total < 7) {
-			n = s->Device.Functions->ReadDevice(s, req + total, sizeof(req) - total);
-			total += n;
+			total += s->Device.Functions->ReadDevice(s, req + total, sizeof(req) - total);
 		}
-
-		/* Answer frame in PHONET style */
-		req[10] = PHONET_BLUE_FRAME_ID; req[11] = PHONET_BLUE_DEVICE_PC;
-		req[12] = PHONET_DEVICE_PHONE;	req[13] = 0xD0;
-		req[14] = 0x00;			req[15] = 0x01;
-		req[16] = 0x05;
-
-		for (i = 0; i < 7; i++) {
-			if (req[i] != req[10+i]) {
-				smprintf(s,"Incorrect byte in the answer\n");
-				return ERR_UNKNOWN;
-			}
+		if (req[0] != d->frame_id) {
+			smprintf_level(s, D_ERROR, "Phonet_init: invalid frame id 0x%02x!\n", req[0]);
+			return ERR_UNKNOWN;
+		}
+		if (req[1] != d->device_pc) {
+			smprintf_level(s, D_ERROR, "Phonet_init: invalid destination id 0x%02x!\n", req[1]);
+			return ERR_UNKNOWN;
+		}
+		if (req[2] != d->device_phone) {
+			smprintf_level(s, D_ERROR, "Phonet_init: invalid source id 0x%02x!\n", req[2]);
+			return ERR_UNKNOWN;
+		}
+		if (req[3] != 0xD0) {
+			smprintf_level(s, D_ERROR, "Phonet_init: invalid char id 0x%02x!\n", req[3]);
+			return ERR_UNKNOWN;
+		}
+		if (req[4] != 0x00) {
+			smprintf_level(s, D_ERROR, "Phonet_init: invalid char id 0x%02x!\n", req[4]);
+			return ERR_UNKNOWN;
+		}
+		if (req[5] != 0x01) {
+			smprintf_level(s, D_ERROR, "Phonet_init: invalid char id 0x%02x!\n", req[5]);
+			return ERR_UNKNOWN;
+		}
+		if (req[6] != 0x05) {
+			smprintf_level(s, D_ERROR, "Phonet_init: invalid char id 0x%02x!\n", req[6]);
+			return ERR_UNKNOWN;
 		}
 	}
 

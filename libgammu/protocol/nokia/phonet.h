@@ -28,6 +28,7 @@
 typedef struct {
 	int			MsgRXState;
 	GSM_Protocol_Message	Msg;
+	unsigned char frame_id, device_pc, device_phone;
 } GSM_Protocol_PHONETData;
 
 #if defined(GSM_ENABLE_IRDAPHONET)
