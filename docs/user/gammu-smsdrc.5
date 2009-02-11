@@ -40,10 +40,22 @@ SMSD service to use, one of FILES, MYSQL, PGSQL, DBI (depends on compiled in
 support for backends).
 
 .TP
-.BI PIN         
+.BI PIN
 
 PIN for SIM card. This is optional, but you should set it if your phone after
 power on requires PIN.
+
+.TP
+.BI NetworkCode
+
+Network personalisation password. This is optional, but some phones require it
+after power on.
+
+.TP
+.BI PhoneCode
+
+Phone lock password. This is optional, but some phones require it after power
+on.
 
 .TP
 .BI LogFile

@@ -510,6 +510,16 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 		SMSD_Log(1, Config, "PIN code is \"%s\"",Config->PINCode);
 	}
 
+	Config->NetworkCode = INI_GetValue(Config->smsdcfgfile, "smsd", "NetworkCode", false);
+	if (Config->NetworkCode != NULL) {
+		SMSD_Log(1, Config, "Network code is \"%s\"",Config->NetworkCode);
+	}
+
+	Config->PhoneCode = INI_GetValue(Config->smsdcfgfile, "smsd", "PhoneCode", false);
+	if (Config->PhoneCode != NULL) {
+		SMSD_Log(1, Config, "Phone code is \"%s\"",Config->PhoneCode);
+	}
+
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "debuglevel", false);
 	if (str)
 		Config->debug_level = atoi(str);
@@ -663,6 +673,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 {
 	GSM_SecurityCode 	SecurityCode;
 	GSM_Error		error;
+	const char *code = NULL;
 
 	/* Need PIN ? */
 	error=GSM_GetSecurityStatus(Config->gsm,&SecurityCode.Type);
@@ -676,34 +687,38 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 
 	/* If PIN, try to enter */
 	switch (SecurityCode.Type) {
-	case SEC_Pin:
-		if (Config->PINCode==NULL) {
-			SMSD_Log(0, Config, "Warning: no PIN in config");
+		case SEC_Pin:
+			code = Config->PINCode;
+			break;
+		case SEC_Phone:
+			code = Config->PhoneCode;
+			break;
+		case SEC_Network:
+			code = Config->NetworkCode;
+			break;
+		case SEC_SecurityCode:
+		case SEC_Pin2:
+		case SEC_Puk:
+		case SEC_Puk2:
+			SMSD_Terminate(Config, "ERROR: phone requires not supported code type", ERR_UNKNOWN, true, -1);
 			return false;
-		} else {
-			SMSD_Log(1, Config, "Trying to enter PIN");
-			strcpy(SecurityCode.Code,Config->PINCode);
-			error=GSM_EnterSecurityCode(Config->gsm,SecurityCode);
-			if (error == ERR_SECURITYERROR) {
-				SMSD_Terminate(Config, "ERROR: incorrect PIN", error, true, -1);
-				return false;
-			}
-			if (error != ERR_NONE) {
-				SMSD_Log(-1, Config, "Error entering PIN (%s:%i)", GSM_ErrorString(error), error);
-				return false;
-		  	}
-		}
-		break;
-	case SEC_SecurityCode:
-	case SEC_Pin2:
-	case SEC_Puk:
-	case SEC_Puk2:
-	case SEC_Phone:
-	case SEC_Network:
-		SMSD_Terminate(Config, "ERROR: phone requires not supported code type", ERR_UNKNOWN, true, -1);
+		case SEC_None:
+			return true;
+	}
+	if (code == NULL) {
+		SMSD_Log(0, Config, "Warning: no code in config!");
 		return false;
-	case SEC_None:
-		break;
+	}
+	SMSD_Log(1, Config, "Trying to enter code");
+	strcpy(SecurityCode.Code, code);
+	error = GSM_EnterSecurityCode(Config->gsm, SecurityCode);
+	if (error == ERR_SECURITYERROR) {
+		SMSD_Terminate(Config, "ERROR: incorrect PIN", error, true, -1);
+		return false;
+	}
+	if (error != ERR_NONE) {
+		SMSD_Log(-1, Config, "Error entering PIN (%s:%i)", GSM_ErrorString(error), error);
+		return false;
 	}
 	return true;
 }
