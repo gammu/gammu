@@ -5331,18 +5331,11 @@ GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 	unsigned char req[50];
 	GSM_Error error;
 
-	switch (Code.Type) {
-	case SEC_Pin :
+	if (Code.Type == SEC_Pin2 &&
+			s->Phone.Data.Priv.ATGEN.Manufacturer == AT_Siemens) {
+		sprintf(req, "AT+CPIN2=\"%s\"\r", Code.Code);
+	} else {
 		sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
-		break;
-	case SEC_Pin2 :
-		if (s->Phone.Data.Priv.ATGEN.Manufacturer == AT_Siemens) {
-			sprintf(req, "AT+CPIN2=\"%s\"\r", Code.Code);
-		} else {
-			sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
-		}
-		break;
-	default : return ERR_NOTIMPLEMENTED;
 	}
 
 	smprintf(s, "Entering security code\n");
