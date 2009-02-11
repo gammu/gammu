@@ -1426,6 +1426,7 @@ StateMachine_EnterSecurityCode(StateMachineObject *self, PyObject *args, PyObjec
     else if (strcmp(s, "PIN2") == 0)    Code.Type = SEC_Pin2;
     else if (strcmp(s, "PUK2") == 0)    Code.Type = SEC_Puk2;
     else if (strcmp(s, "Phone") == 0)   Code.Type = SEC_Phone;
+    else if (strcmp(s, "Network") == 0)   Code.Type = SEC_Network;
     else {
         PyErr_Format(PyExc_ValueError, "Bad value for Type: '%s'", s);
         return NULL;
@@ -1474,6 +1475,7 @@ StateMachine_GetSecurityStatus(StateMachineObject *self, PyObject *args, PyObjec
         case SEC_Puk: return Py_BuildValue("s", "Puk");
         case SEC_Puk2: return Py_BuildValue("s", "Puk2");
         case SEC_Phone: return Py_BuildValue("s", "Phone");
+        case SEC_Network: return Py_BuildValue("s", "Network");
         case SEC_None: Py_RETURN_NONE;
     }
     Py_RETURN_NONE;

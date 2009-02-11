@@ -636,7 +636,7 @@ static GSM_Parameters Parameters[] = {
 	{"reset",			1, 1, Reset,			{H_Other,0},			"SOFT|HARD"},
 	{"getprofile",		1, 2, GetProfile,		{H_Settings,0},			"start [stop]"},
 	{"getsecuritystatus",		0, 0, GetSecurityStatus,	{H_Info,0},			""},
-	{"entersecuritycode",		2, 2, EnterSecurityCode,	{H_Other,0},			"PIN|PUK|PIN2|PUK2 code|-"},
+	{"entersecuritycode",		2, 2, EnterSecurityCode,	{H_Other,0},			"PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|-"},
 	{"deletewapbookmark", 	1, 2, DeleteWAPBookmark, 	{H_WAP,0},			"start [stop]"},
 	{"getwapbookmark",		1, 2, GetWAPBookmark,		{H_WAP,0},			"start [stop]"},
 	{"getwapsettings",		1, 2, GetWAPMMSSettings,	{H_WAP,0},			"start [stop]"},

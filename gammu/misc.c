@@ -1780,6 +1780,8 @@ void EnterSecurityCode(int argc UNUSED, char *argv[])
 	} else if (strcasecmp(argv[2],"PUK") == 0) {	Code.Type = SEC_Puk;
 	} else if (strcasecmp(argv[2],"PIN2") == 0) {	Code.Type = SEC_Pin2;
 	} else if (strcasecmp(argv[2],"PUK2") == 0) {	Code.Type = SEC_Puk2;
+	} else if (strcasecmp(argv[2],"PHONE") == 0) {	Code.Type = SEC_Phone;
+	} else if (strcasecmp(argv[2],"NETWORK") == 0) {	Code.Type = SEC_Network;
 	} else {
 		printf_err("%s: %s\n", _("Invalid security code type"), argv[2]);
 		Terminate(3);

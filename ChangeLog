@@ -21,6 +21,7 @@ ChangeLog
 [-] * Completely switch DBI driver to utf-8.
 [-] * Fixed date by 1900 off error in some cases.
 [-] * Cleanup a bit phoned driver.
+[-] * Handle properly requests for network code (bug #819).
     
 20090209 - 1.22.94
 
