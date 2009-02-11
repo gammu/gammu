@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-09 17:27+0100\n"
-"PO-Revision-Date: 2009-02-09 17:28+0100\n"
+"POT-Creation-Date: 2009-02-11 14:05+0100\n"
+"PO-Revision-Date: 2009-02-11 14:07+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,14 +28,14 @@ msgstr "GAMMU"
 # type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
-msgid "Feb 8 2009"
-msgstr "Únor 8, 2009"
+msgid "Feb 11 2009"
+msgstr "Únor 11, 2009"
 
 # type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
-msgid "Gammu 1.22.94"
-msgstr "Gammu 1.22.94"
+msgid "Gammu 1.22.95"
+msgstr "Gammu 1.22.95"
 
 # type: TH
 #: docs/user/gammu.1:1 docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1
@@ -2267,7 +2267,7 @@ msgstr "B<nokianetmonitor36>"
 # type: Plain text
 #: docs/user/gammu.1:1568
 msgid "Reset counters from netmonitor test 36 in Nokia DCT3 phones."
-msgstr ""
+msgstr "Vynuluje čítače z testu 16 v netmonitoru telefonů Nokia DCT3."
 
 # type: Plain text
 #: docs/user/gammu.1:1571
@@ -2285,7 +2285,7 @@ msgstr "B<nokiasecuritycode>"
 # type: Plain text
 #: docs/user/gammu.1:1575 docs/user/gammu.1:2018
 msgid "Get/reset to \"12345\" security code"
-msgstr ""
+msgstr "Přečte bezpečnostní kód nebo ho nastaví na \"12345\"."
 
 # type: TP
 #: docs/user/gammu.1:1576 docs/user/gammu.1:1870
@@ -2757,8 +2757,8 @@ msgstr "B<batch>I< [file]>"
 # type: TP
 #: docs/user/gammu.1:2095
 #, no-wrap
-msgid "B<entersecuritycode>I< PIN|PUK|PIN2|PUK2 code|->"
-msgstr "B<entersecuritycode>I< PIN|PUK|PIN2|PUK2 code|->"
+msgid "B<entersecuritycode>I< PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|->"
+msgstr "B<entersecuritycode>I< PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|->"
 
 # type: Plain text
 #: docs/user/gammu.1:2098
@@ -2929,7 +2929,7 @@ msgid "I</dev/ttyACM?>"
 msgstr "I</dev/ttyACM?>"
 
 # type: SH
-#: docs/user/gammu.1:2206 docs/user/gammurc.5:196 docs/user/gammu-smsdrc.5:286
+#: docs/user/gammu.1:2206 docs/user/gammurc.5:196 docs/user/gammu-smsdrc.5:298
 #: docs/user/gammu-smsd.1:68 docs/user/gammu-smsd-files.7:63
 #: docs/user/gammu-smsd-tables.7:370
 #, no-wrap
@@ -3021,7 +3021,7 @@ msgstr ""
 "txt -toneSE ring.txt"
 
 # type: SH
-#: docs/user/gammu.1:2246 docs/user/gammurc.5:262 docs/user/gammu-smsdrc.5:363
+#: docs/user/gammu.1:2246 docs/user/gammurc.5:262 docs/user/gammu-smsdrc.5:375
 #: docs/user/gammu-smsd.1:103 docs/user/gammu-smsd-inject.1:37
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:100
@@ -3043,7 +3043,7 @@ msgstr ""
 "gpl-2.0.htmlE<gt>"
 
 # type: Plain text
-#: docs/user/gammu.1:2253 docs/user/gammurc.5:268 docs/user/gammu-smsdrc.5:369
+#: docs/user/gammu.1:2253 docs/user/gammurc.5:268 docs/user/gammu-smsdrc.5:381
 #: docs/user/gammu-smsd.1:109 docs/user/gammu-smsd-inject.1:43
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:106
@@ -3057,7 +3057,7 @@ msgstr ""
 "poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem."
 
 # type: SH
-#: docs/user/gammu.1:2254 docs/user/gammurc.5:268 docs/user/gammu-smsdrc.5:369
+#: docs/user/gammu.1:2254 docs/user/gammurc.5:268 docs/user/gammu-smsdrc.5:381
 #: docs/user/gammu-smsd.1:109 docs/user/gammu-smsd-inject.1:43
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:106
@@ -3114,7 +3114,7 @@ msgstr ""
 "obsaženy rady pro vylepšení podpory pro váš telefon."
 
 # type: Plain text
-#: docs/user/gammu.1:2274 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:370
+#: docs/user/gammu.1:2274 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:382
 #: docs/user/gammu-smsd.1:111 docs/user/gammu-smsd-inject.1:45
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:107
@@ -3124,7 +3124,7 @@ msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr "Prosím hlašte chyby na E<lt>http://bugs.cihar.comE<gt>."
 
 # type: SH
-#: docs/user/gammu.1:2275 docs/user/gammurc.5:260 docs/user/gammu-smsdrc.5:361
+#: docs/user/gammu.1:2275 docs/user/gammurc.5:260 docs/user/gammu-smsdrc.5:373
 #: docs/user/gammu-smsd.1:101 docs/user/gammu-smsd-inject.1:35
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:98
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
@@ -3178,7 +3178,7 @@ msgstr ""
 "pro více podrobností."
 
 # type: SH
-#: docs/user/gammu.1:2301 docs/user/gammurc.5:258 docs/user/gammu-smsdrc.5:357
+#: docs/user/gammu.1:2301 docs/user/gammurc.5:258 docs/user/gammu-smsdrc.5:369
 #: docs/user/gammu-smsd.1:97 docs/user/gammu-smsd-inject.1:33
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:96
@@ -3639,7 +3639,7 @@ msgstr ""
 "najít automaticky."
 
 # type: TP
-#: docs/user/gammurc.5:151 docs/user/gammu-smsdrc.5:48
+#: docs/user/gammurc.5:151 docs/user/gammu-smsdrc.5:60
 #, no-wrap
 msgid "B<LogFile>"
 msgstr "B<LogFile>"
@@ -3836,12 +3836,12 @@ msgstr ""
 "connection = blueat\n"
 
 # type: Plain text
-#: docs/user/gammurc.5:260 docs/user/gammu-smsdrc.5:359
+#: docs/user/gammurc.5:260 docs/user/gammu-smsdrc.5:371
 msgid "gammu-smsd(1), gammu(1), gammurc(5)"
 msgstr "gammu-smsd(1), gammu(1), gammurc(5)"
 
 # type: Plain text
-#: docs/user/gammurc.5:262 docs/user/gammu-smsdrc.5:363
+#: docs/user/gammurc.5:262 docs/user/gammu-smsdrc.5:375
 #: docs/user/gammu-smsd.1:103 docs/user/gammu-smsd-inject.1:37
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:100
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
@@ -3854,7 +3854,7 @@ msgstr ""
 "comE<gt>."
 
 # type: Plain text
-#: docs/user/gammurc.5:265 docs/user/gammu-smsdrc.5:366
+#: docs/user/gammurc.5:265 docs/user/gammu-smsdrc.5:378
 #: docs/user/gammu-smsd.1:106 docs/user/gammu-smsd-inject.1:40
 #: docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:103
 #: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24
@@ -3969,8 +3969,38 @@ msgstr ""
 "PIN pro SIM kartu. Tento parametr je volitelný, ale měl by být zadán, pokud "
 "telefon po restartu vyžaduje PIN."
 
+# type: TP
+#: docs/user/gammu-smsdrc.5:48
+#, no-wrap
+msgid "B<NetworkCode>"
+msgstr "B<NetworkCode>"
+
 # type: Plain text
+#: docs/user/gammu-smsdrc.5:53
+msgid ""
+"Network personalisation password. This is optional, but some phones require "
+"it after power on."
+msgstr ""
+"Heslo nastavení sítě. Tento parametr je volitelný, ale měl by být zadán, "
+"pokud ho telefon po zapnutí vyžaduje."
+
+# type: TP
 #: docs/user/gammu-smsdrc.5:54
+#, no-wrap
+msgid "B<PhoneCode>"
+msgstr "B<PhoneCode>"
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:59
+msgid ""
+"Phone lock password. This is optional, but some phones require it after "
+"power on."
+msgstr ""
+"Heslo zámku telefonu. Tento parametr je volitelný, ale měl by být zadán, "
+"pokud ho telefon po zapnutí vyžaduje."
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:66
 msgid ""
 "File where SMSD actions are being logged. You can also use special value "
 "\"syslog\" which will send all messages to syslog daemon. On Windows another "
@@ -3983,34 +4013,34 @@ msgstr ""
 "Windows."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:56
+#: docs/user/gammu-smsdrc.5:68
 msgid "Default is to provide no logging."
 msgstr "Výchozí stav je vypnuté logování."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:57
+#: docs/user/gammu-smsdrc.5:69
 #, no-wrap
 msgid "B<CommTimeout>"
 msgstr "B<CommTimeout>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:61
+#: docs/user/gammu-smsdrc.5:73
 msgid "How many seconds should SMSD wait after each read/write loop."
 msgstr "Kolik sekund by měl SMSD čekat po každém cyklu čtení/zápis."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:63 docs/user/gammu-smsdrc.5:71
+#: docs/user/gammu-smsdrc.5:75 docs/user/gammu-smsdrc.5:83
 msgid "Default is 30."
 msgstr "Výchozí je 30."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:64
+#: docs/user/gammu-smsdrc.5:76
 #, no-wrap
 msgid "B<SendTimeout>"
 msgstr "B<SendTimeout>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:69
+#: docs/user/gammu-smsdrc.5:81
 msgid ""
 "Shows how many seconds SMSD should wait for network answer during sending "
 "sms.  If nothing happen during this time, sms will be resent."
@@ -4019,31 +4049,31 @@ msgstr ""
 "Pokud se během té doby nic nestane, zpráva bude odeslána znovu."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:72
+#: docs/user/gammu-smsdrc.5:84
 #, no-wrap
 msgid "B<MaxRetries>"
 msgstr "B<MaxRetries>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:76
+#: docs/user/gammu-smsdrc.5:88
 msgid "How many times will SMSD try to resend message if sending fails."
 msgstr ""
 "Kolikrát se bude SMSD pokoušet znovu odeslat zprávu pokud se to na první "
 "pokus nepodaří."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:78
+#: docs/user/gammu-smsdrc.5:90
 msgid "Default is 1."
 msgstr "Výchozí je 1."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:79
+#: docs/user/gammu-smsdrc.5:91
 #, no-wrap
 msgid "B<ReceiveFrequency>"
 msgstr "B<ReceiveFrequency>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:85
+#: docs/user/gammu-smsdrc.5:97
 msgid ""
 "The number of seconds between testing for received SMSes, when the phone is "
 "busy sending SMSes. Normally a test for received SMSes is done every "
@@ -4054,34 +4084,34 @@ msgstr ""
 "každých CommTimeout sekund a po každé odeslané SMS."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:87 docs/user/gammu-smsdrc.5:104
+#: docs/user/gammu-smsdrc.5:99 docs/user/gammu-smsdrc.5:116
 msgid "Default is 0 (not used)."
 msgstr "Výchozí je 0 (není použito)."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:88
+#: docs/user/gammu-smsdrc.5:100
 #, no-wrap
 msgid "B<CheckSecurity>"
 msgstr "B<CheckSecurity>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:92
+#: docs/user/gammu-smsdrc.5:104
 msgid "Whether to check if phone wants to enter PIN."
 msgstr "Jestli se má kontrolovat, zda telefon vyžaduje PIN."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:94
+#: docs/user/gammu-smsdrc.5:106
 msgid "Default is 1 (enabled)."
 msgstr "Výchozí je 1 (povoleno)."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:95
+#: docs/user/gammu-smsdrc.5:107
 #, no-wrap
 msgid "B<ResetFrequency>"
 msgstr "B<ResetFrequency>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:102
+#: docs/user/gammu-smsdrc.5:114
 msgid ""
 "The number of seconds between performing a preventive soft reset in order to "
 "minimize the cases of hanging phones e.g. Nokia 5110 will sometimes freeze "
@@ -4093,44 +4123,44 @@ msgstr ""
 "použivání přestanou reagovat a jen vyndání baterie je může oživit."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:105
+#: docs/user/gammu-smsdrc.5:117
 #, no-wrap
 msgid "B<DeliveryReport>"
 msgstr "B<DeliveryReport>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:109
+#: docs/user/gammu-smsdrc.5:121
 msgid "Whether delivery reports should be used, one of 'no', 'log', 'sms'."
 msgstr "Jak mají být používány doručenky, jedna z možností 'no', 'log', 'sms'."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:111
+#: docs/user/gammu-smsdrc.5:123
 msgid "B<log> - one line log entry,"
 msgstr "B<log> - logovat informace o doručenkách,"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:113
+#: docs/user/gammu-smsdrc.5:125
 msgid "B<sms> - store in inbox as a received SMS"
 msgstr "B<sms> - ukládat doručenky jako příchozí SMS."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:115
+#: docs/user/gammu-smsdrc.5:127
 msgid "B<no> - no delivery reports"
 msgstr "B<no> - nevyžadovat doručenky"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:117
+#: docs/user/gammu-smsdrc.5:129
 msgid "Default is 'no'."
 msgstr "Výchozí je 'no'."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:118
+#: docs/user/gammu-smsdrc.5:130
 #, no-wrap
 msgid "B<DeliveryReportDelay>"
 msgstr "B<DeliveryReportDelay>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:125
+#: docs/user/gammu-smsdrc.5:137
 msgid ""
 "Delay in seconds how long is still delivery report considered valid. This "
 "depends on brokeness of your network (delivery report should have same "
@@ -4143,18 +4173,18 @@ msgstr ""
 "spárovat doručenky s odeslanými zprávami."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:127
+#: docs/user/gammu-smsdrc.5:139
 msgid "Default is 10."
 msgstr "Výchozí je 10."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:128
+#: docs/user/gammu-smsdrc.5:140
 #, no-wrap
 msgid "B<PhoneID>"
 msgstr "B<PhoneID>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:133
+#: docs/user/gammu-smsdrc.5:145
 msgid ""
 "String with info about phone used for sending/receiving. This can be useful "
 "if you want to run several SMS daemons."
@@ -4163,7 +4193,7 @@ msgstr ""
 "může být užitečná, pokud chcete provozovat více SMS démonů."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:137
+#: docs/user/gammu-smsdrc.5:149
 msgid ""
 "When you set PhoneID, all messages (including injected ones) will be marked "
 "by this string and it allow more SMS daemons to share single database. This "
@@ -4175,13 +4205,13 @@ msgstr ""
 "zpráv do souborů (FILES)."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:138
+#: docs/user/gammu-smsdrc.5:150
 #, no-wrap
 msgid "B<RunOnReceive>"
 msgstr "B<RunOnReceive>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:144
+#: docs/user/gammu-smsdrc.5:156
 msgid ""
 "Executes a program after receiving message. The program will receive "
 "identifiers of received messages depending on used service backend (some "
@@ -4191,7 +4221,7 @@ msgstr ""
 "identifikátory nově přijatý zpráv (pokud to použitá služba podporuje)."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:148
+#: docs/user/gammu-smsdrc.5:160
 msgid ""
 "Please note, that you can not pass any parameters to your program here. "
 "Whole string will be taken and treated like program name, regardless spaces, "
@@ -4202,13 +4232,13 @@ msgstr ""
 "jiné speciální znaky."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:149
+#: docs/user/gammu-smsdrc.5:161
 #, no-wrap
 msgid "B<DebugLevel>"
 msgstr "B<DebugLevel>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:154
+#: docs/user/gammu-smsdrc.5:166
 msgid ""
 "Debug level for SMSD. The integer value should be sum of all flags you want "
 "to enable."
@@ -4216,17 +4246,17 @@ msgstr ""
 "Ladicí úroveň SMSD. Číslo je součtem všech hodnot, které chcete logovat."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:156
+#: docs/user/gammu-smsdrc.5:168
 msgid "B<1> - enables basic debugging information"
 msgstr "B<1> - základní ladicí informace"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:158
+#: docs/user/gammu-smsdrc.5:170
 msgid "B<2> - enables logging of SQL queries of service backends"
 msgstr "B<2> - logování SQL dotazů"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:161
+#: docs/user/gammu-smsdrc.5:173
 msgid ""
 "B<4> - enables logging of gammu debug information (has to be enabled also in "
 "gammu section)"
@@ -4235,23 +4265,23 @@ msgstr ""
 "sekci gammu)"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:163
+#: docs/user/gammu-smsdrc.5:175
 msgid "Generally to get as much debug information as possible, use 255."
 msgstr "Pro maximální množství ladicích informací nastavte 255."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:165
+#: docs/user/gammu-smsdrc.5:177
 msgid "Default is 0, what should mean no extra information."
 msgstr "Výchozí je 0, což znamená žádné ladicí informace."
 
 # type: SS
-#: docs/user/gammu-smsdrc.5:166
+#: docs/user/gammu-smsdrc.5:178
 #, no-wrap
 msgid "Database backends options"
 msgstr "Parametry pro služby používající databázi"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:171
+#: docs/user/gammu-smsdrc.5:183
 msgid ""
 "All DBI, MYSQL and PGSQL backends (see gammu-smsd-mysql(7), gammu-smsd-pgsql"
 "(7), gammu-smsd-dbi(7)) for their documentation) supports same options for "
@@ -4262,35 +4292,35 @@ msgstr ""
 "připojení k databázi:"
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:172
+#: docs/user/gammu-smsdrc.5:184
 #, no-wrap
 msgid "B<User>"
 msgstr "B<User>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:176
+#: docs/user/gammu-smsdrc.5:188
 msgid "User name used for connection to a database."
 msgstr "Uživatelské jméno pro připojení k databázi."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:177
+#: docs/user/gammu-smsdrc.5:189
 #, no-wrap
 msgid "B<Password>"
 msgstr "B<Password>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:181
+#: docs/user/gammu-smsdrc.5:193
 msgid "Password used for connection to a database."
 msgstr "Heslo použité pro připojení k databázi."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:182
+#: docs/user/gammu-smsdrc.5:194
 #, no-wrap
 msgid "B<PC>"
 msgstr "B<PC>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:187
+#: docs/user/gammu-smsdrc.5:199
 msgid ""
 "Database server address. It can also contain port or socket path after "
 "semicolon, for example localhost:/path/to/socket."
@@ -4299,13 +4329,13 @@ msgstr ""
 "cesta k socketu, například localhost:/path/to/socket."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:188
+#: docs/user/gammu-smsdrc.5:200
 #, no-wrap
 msgid "B<Database>"
 msgstr "B<Database>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:194
+#: docs/user/gammu-smsdrc.5:206
 msgid ""
 "Name of database to use. Please note that you should create tables in this "
 "database before using gammu-smsd. SQL files for creating needed tables are "
@@ -4316,13 +4346,13 @@ msgstr ""
 "obsažené v dokumentaci."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:195
+#: docs/user/gammu-smsdrc.5:207
 #, no-wrap
 msgid "B<SkipSMSCNumber>"
 msgstr "B<SkipSMSCNumber>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:201
+#: docs/user/gammu-smsdrc.5:213
 msgid ""
 "When you send sms from some SMS centere you can have delivery reports from "
 "other SMSC number. You can set here number of this SMSC used by you and "
@@ -4334,13 +4364,13 @@ msgstr ""
 "číslo tohoto SMS centra při přiřazování doručenek zprávám."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:202
+#: docs/user/gammu-smsdrc.5:214
 #, no-wrap
 msgid "B<Driver>"
 msgstr "B<Driver>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:209
+#: docs/user/gammu-smsdrc.5:221
 msgid ""
 "DBI driver to use. Depends on what DBI drivers you have installed, DBI "
 "supports: mysql, freetds (provides access to MS SQL Server and Sybase), "
@@ -4353,13 +4383,13 @@ msgstr ""
 "a oracle se vyvíjejí."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:210
+#: docs/user/gammu-smsdrc.5:222
 #, no-wrap
 msgid "B<DriversPath>"
 msgstr "B<DriversPath>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:215
+#: docs/user/gammu-smsdrc.5:227
 msgid ""
 "Path, where DBI drivers are stored, this usually does not have to be set if "
 "you have properly installed drivers."
@@ -4368,13 +4398,13 @@ msgstr ""
 "nastavovat, pokud jsou ovladače nainstalovány správně."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:216
+#: docs/user/gammu-smsdrc.5:228
 #, no-wrap
 msgid "B<DBDir>"
 msgstr "B<DBDir>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:221
+#: docs/user/gammu-smsdrc.5:233
 msgid ""
 "Database directory for some (currently only sqlite) DBI drivers. Set here "
 "path where sqlite database files are stored."
@@ -4383,13 +4413,13 @@ msgstr ""
 "ovladače DBI. Nastavte zde cestu. kde je uložen soubor se sqlite databází."
 
 # type: SS
-#: docs/user/gammu-smsdrc.5:222
+#: docs/user/gammu-smsdrc.5:234
 #, no-wrap
 msgid "Files backend options"
 msgstr "Parametry pro službu používající soubory"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:227
+#: docs/user/gammu-smsdrc.5:239
 msgid ""
 "The FILES backend accepts following configuration options. See gammu-smsd-"
 "files(7) for more detailed service backend description. Please note that all "
@@ -4400,40 +4430,40 @@ msgstr ""
 "končí oddělovačem cest (na Unixových systémech /):"
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:228
+#: docs/user/gammu-smsdrc.5:240
 #, no-wrap
 msgid "B<InboxPath>"
 msgstr "B<InboxPath>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:232
+#: docs/user/gammu-smsdrc.5:244
 msgid "Where the received SMSes are stored."
 msgstr "Kde jsou ukládány přijaté zprávy."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:234 docs/user/gammu-smsdrc.5:241
+#: docs/user/gammu-smsdrc.5:246 docs/user/gammu-smsdrc.5:253
 msgid "Default is current directory."
 msgstr "Výchozí je aktuální adresář."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:235
+#: docs/user/gammu-smsdrc.5:247
 #, no-wrap
 msgid "B<OutboxPath>"
 msgstr "B<OutboxPath>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:239
+#: docs/user/gammu-smsdrc.5:251
 msgid "Where SMSes to be sent should be placed."
 msgstr "Kde jsou umístěny zprávy ve frontě k odeslání."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:242
+#: docs/user/gammu-smsdrc.5:254
 #, no-wrap
 msgid "B<SentSMSPath>"
 msgstr "B<SentSMSPath>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:247
+#: docs/user/gammu-smsdrc.5:259
 msgid ""
 "Where the transmitted SMSes are placed, if same as OutBoxPath transmitted "
 "messages are deleted."
@@ -4442,82 +4472,82 @@ msgstr ""
 "zprávyjsou vymazány."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:249
+#: docs/user/gammu-smsdrc.5:261
 msgid "Default is to delete transmitted messages."
 msgstr "Výchozí je mazat přenesené zprávy."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:250
+#: docs/user/gammu-smsdrc.5:262
 #, no-wrap
 msgid "B<ErrorSMSPath>"
 msgstr "B<ErrorSMSPath>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:254
+#: docs/user/gammu-smsdrc.5:266
 msgid "Where SMSes with error in transmission is placed."
 msgstr "Kde jsou umístěny SMS po chybě při odesílání."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:256
+#: docs/user/gammu-smsdrc.5:268
 msgid "Default is same as SentSMSPath."
 msgstr "Výchozí je stejné jako SentSMSPath."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:257
+#: docs/user/gammu-smsdrc.5:269
 #, no-wrap
 msgid "B<InboxFormat>"
 msgstr "B<InboxFormat>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:261
+#: docs/user/gammu-smsdrc.5:273
 msgid ""
 "The format in which the SMS will be stored: 'detail', 'unicode', 'standard'."
 msgstr "Formát ukládání SMS: 'detail', 'unicode', 'standard'."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:263
+#: docs/user/gammu-smsdrc.5:275
 msgid "B<detail> - format used for message backup by gammu(1)"
 msgstr "B<detail> - formát používaný gammu(1) pro zálohy zpráv"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:265
+#: docs/user/gammu-smsdrc.5:277
 msgid "B<unicode> - message text stored in unicode (UTF-16)"
 msgstr "B<unicode> - text zprávy uložený v unicode (UTF-16)"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:267
+#: docs/user/gammu-smsdrc.5:279
 msgid "B<standard> - message text stored in system charset"
 msgstr "B<standard> - text zprávy uložený v systémovém kódování"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:269
+#: docs/user/gammu-smsdrc.5:281
 msgid "Default is 'unicode'."
 msgstr "Výchozí je 'unicode'."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:270
+#: docs/user/gammu-smsdrc.5:282
 #, no-wrap
 msgid "B<TransmitFormat>"
 msgstr "B<TransmitFormat>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:274
+#: docs/user/gammu-smsdrc.5:286
 msgid "The format for transmitting the SMS: 'auto', 'unicode', '7bit'."
 msgstr "Formát přenosu SMS: 'auto', 'unicode', '7bit'."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:276
+#: docs/user/gammu-smsdrc.5:288
 msgid "Default is 'auto'."
 msgstr "Výchozí je 'auto'."
 
 # type: SS
-#: docs/user/gammu-smsdrc.5:278
+#: docs/user/gammu-smsdrc.5:290
 #, no-wrap
 msgid "Message filtering"
 msgstr "Filtrování zpráv"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:285
+#: docs/user/gammu-smsdrc.5:297
 msgid ""
 "SMSD allows to process only limited subset of incoming messages. You can "
 "define filters in [include_numbers] and [exclude_numbers] sections. If "
@@ -4533,7 +4563,7 @@ msgstr ""
 "[exclude_numbers] můžete zadat jaká čísla chcete ignorovat."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:291
+#: docs/user/gammu-smsdrc.5:303
 msgid ""
 "There is more complete example available in Gammu documentation. Please note "
 "that for simplicity following examples do not include [gammu] section, you "
@@ -4544,13 +4574,13 @@ msgstr ""
 "podívat do gammurc(5)."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:293
+#: docs/user/gammu-smsdrc.5:305
 msgid "SMSD configuration file for FILES backend could look like:"
 msgstr ""
 "Konfigurační soubor pro SMSD používající službu FILES by mohl vypadat takto:"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:306
+#: docs/user/gammu-smsdrc.5:318
 #, no-wrap
 msgid ""
 "[smsd]\n"
@@ -4572,12 +4602,12 @@ msgstr ""
 "ErrorSMSPath = /var/spool/sms/error/\n"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:312
+#: docs/user/gammu-smsdrc.5:324
 msgid "If you want to use MYSQL backend, you will need something like this:"
 msgstr "Pokud chcete použít službu MYSQL, bute potřebovat přibližně toto:"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:325
+#: docs/user/gammu-smsdrc.5:337
 #, no-wrap
 msgid ""
 "[smsd]\n"
@@ -4599,12 +4629,12 @@ msgstr ""
 "Database = smsd\n"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:331
+#: docs/user/gammu-smsdrc.5:343
 msgid "Process only messages from 123456 number:"
 msgstr "Zpracovávat jen zprávy od čísla 123456:"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:338
+#: docs/user/gammu-smsdrc.5:350
 #, no-wrap
 msgid ""
 "[include_numbers]\n"
@@ -4614,12 +4644,12 @@ msgstr ""
 "number1 = 123456\n"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:344
+#: docs/user/gammu-smsdrc.5:356
 msgid "Do not process messages from evil number 666:"
 msgstr "Nezpracovávat zprávy od ďábelského čísla 666:"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:351
+#: docs/user/gammu-smsdrc.5:363
 #, no-wrap
 msgid ""
 "[exclude_numbers]\n"
@@ -4629,7 +4659,7 @@ msgstr ""
 "number1 = 666\n"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:361 docs/user/gammu-smsd.1:101
+#: docs/user/gammu-smsdrc.5:373 docs/user/gammu-smsd.1:101
 msgid ""
 "gammu-smsd-files(7), gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7), gammu-smsd-tables(7)"
