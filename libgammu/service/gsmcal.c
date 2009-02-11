@@ -310,7 +310,7 @@ GSM_DateTime	VCALTimeDiff ( GSM_DateTime *Alarm,  GSM_DateTime *Time)
 
 	talarm.tm_mday = Alarm->Day;
 	talarm.tm_mon  = Alarm->Month-1;
-	talarm.tm_year = Alarm->Year -1900;
+	talarm.tm_year = Alarm->Year - 1900;
 	talarm.tm_hour = Alarm->Hour;
 	talarm.tm_min  = Alarm->Minute;
 	talarm.tm_sec  = Alarm->Second;
@@ -318,7 +318,7 @@ GSM_DateTime	VCALTimeDiff ( GSM_DateTime *Alarm,  GSM_DateTime *Time)
 
 	ttime.tm_mday = Time->Day;
 	ttime.tm_mon  = Time->Month-1;
-	ttime.tm_year = Time->Year -1900;
+	ttime.tm_year = Time->Year - 1900;
 	ttime.tm_hour = Time->Hour;
 	ttime.tm_min  = Time->Minute;
 	ttime.tm_sec  = Time->Second;

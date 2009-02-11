@@ -167,18 +167,13 @@ void Fill_GSM_DateTime(GSM_DateTime *Date, time_t timet)
 void GSM_GetCurrentDateTime (GSM_DateTime *Date)
 {
 	Fill_GSM_DateTime(Date, time(NULL));
-	if (Date->Year<1900) {
-		if (Date->Year>90) Date->Year = Date->Year+1900;
-			      else Date->Year = Date->Year+2000;
-	}
 }
 
 time_t Fill_Time_T(GSM_DateTime DT)
 {
 	struct tm tm_starttime;
 
-	dbgprintf(NULL, "StartTime: %02i-%02i-%04i %02i:%02i:%02i\n",
-		DT.Day,DT.Month,DT.Year,DT.Hour,DT.Minute,DT.Second);
+	dbgprintf(NULL, "StartTime: %s\n", OSDate(DT));
 
 	memset(&tm_starttime, 0, sizeof(tm_starttime));
 	tm_starttime.tm_year 	= DT.Year - 1900;
@@ -213,7 +208,6 @@ GSM_DateTime GSM_AddTime (GSM_DateTime DT , GSM_DeltaTime delta)
 	t_time = t_time + delta.Second + 60* (delta.Minute + 60* (delta.Hour + 24*delta.Day));
 
 	Fill_GSM_DateTime ( &Date, t_time);
-	Date.Year += 1900;
 	return Date;
 }
 
@@ -230,7 +224,7 @@ void GetTimeDifference(unsigned long diff, GSM_DateTime *DT, bool Plus, int mult
 	}
 
 	Fill_GSM_DateTime(DT, t_time);
-	DT->Year = DT->Year + 1900;
+	DT->Year = DT->Year;
 	dbgprintf(NULL, "EndTime: %02i-%02i-%04i %02i:%02i:%02i\n",
 		DT->Day,DT->Month,DT->Year,DT->Hour,DT->Minute,DT->Second);
 }

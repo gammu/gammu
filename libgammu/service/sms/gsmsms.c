@@ -101,11 +101,7 @@ static GSM_Error GSM_DecodeSMSDateTime(GSM_Debug_Info *di, GSM_DateTime *DT, uns
 
 	if (req[6]&0x08) DT->Timezone = -DT->Timezone;
 
-	smfprintf(di, "Decoding date & time: ");
-	smfprintf(di, "%s %4d/%02d/%02d ", DayOfWeek(DT->Year, DT->Month, DT->Day),
-		DT->Year, DT->Month, DT->Day);
-	smfprintf(di, "%02d:%02d:%02d%+03i%02i\n", DT->Hour, DT->Minute, DT->Second,
-		DT->Timezone / 3600, abs((DT->Timezone % 3600) / 60));
+	smfprintf(di, "Decoding date & time: %s\n", OSDate(*DT));
 
 	return ERR_NONE;
 }
@@ -456,8 +452,7 @@ static GSM_Error GSM_EncodeSMSDateTime(GSM_Debug_Info *di, GSM_DateTime *DT, uns
 {
 	int Year;
 
-	smfprintf(di, "Encoding SMS datetime: %02i/%02i/%04i %02i:%02i:%02i\n",
-		DT->Day,DT->Month,DT->Year,DT->Hour,DT->Minute,DT->Second);
+	smfprintf(di, "Encoding SMS datetime: %s\n", OSDate(*DT));
 
 	/* We need to have only two last digits of year */
 	if (DT->Year>1900) {
