@@ -50,6 +50,10 @@ typedef enum {
 	 * Phone code needed.
 	 */
 	SEC_Phone,
+	/**
+	 * Network code needed.
+	 */
+	SEC_Network,
 } GSM_SecurityCodeType;
 
 /**

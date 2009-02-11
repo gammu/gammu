@@ -54,6 +54,9 @@ void PrintSecurityStatus(void)
 		case SEC_Phone:
 			printf("%s\n", _("Waiting for phone code."));
 			break;
+		case SEC_Network:
+			printf("%s\n", _("Waiting for network code."));
+			break;
 		case SEC_None:
 			printf("%s\n", _("Nothing to enter."));
 			break;

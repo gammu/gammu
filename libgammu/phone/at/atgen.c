@@ -302,6 +302,14 @@ GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 		case 16:
 		case 17:
 		case 18:
+		case 40:
+		case 41:
+		case 42:
+		case 43:
+		case 44:
+		case 45:
+		case 46:
+		case 47:
 			return ERR_SECURITYERROR;
 		case 10:
 		case 13:
@@ -5355,6 +5363,11 @@ GSM_Error ATGEN_ReplyGetSecurityStatus(GSM_Protocol_Message msg, GSM_StateMachin
 	if (strstr(msg.Buffer,"PH-SIM PIN")) {
 		*Status = SEC_Phone;
 		smprintf(s, "Phone code needed\n");
+		return ERR_NONE;
+	}
+	if (strstr(msg.Buffer,"PH-NET PIN")) {
+		*Status = SEC_Network;
+		smprintf(s, "Network code needed\n");
 		return ERR_NONE;
 	}
 	if (strstr(msg.Buffer,"PH_SIM PIN")) {
