@@ -106,9 +106,7 @@ GSM_Error GSM_ReadFile(const char *FileName, GSM_File *File)
 		dbgprintf(NULL, "File info read correctly\n");
 		/* st_mtime is time of last modification of file */
 		Fill_GSM_DateTime(&File->Modified, fileinfo.st_mtime);
-		dbgprintf(NULL, "FileTime: %02i-%02i-%04i %02i:%02i:%02i\n",
-			File->Modified.Day,File->Modified.Month,File->Modified.Year,
-			File->Modified.Hour,File->Modified.Minute,File->Modified.Second);
+		dbgprintf(NULL, "FillTime: %s\n", OSDate(File->Modified));
 	}
 
 	return ERR_NONE;
@@ -297,7 +295,6 @@ bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 	if (dt->Timezone != 0) {
 		timestamp = Fill_Time_T(*dt) + dt->Timezone;
 		Fill_GSM_DateTime(dt, timestamp);
-		dt->Year +=1900;
 	}
 
 	return true;
@@ -341,9 +338,7 @@ bool ReadVCALDate(char *Buffer, const char *Start, GSM_DateTime *Date, bool *is_
 	}
 
 	if (ReadVCALDateTime(DecodeUnicodeString(datestring), Date)) {
-		dbgprintf(NULL, "ReadVCALDateTime is \"%04d.%02d.%02d %02d:%02d:%02d\"\n",
-			Date->Year, Date->Month, Date->Day,
-			Date->Hour, Date->Minute, Date->Second);
+		dbgprintf(NULL, "ReadVCALDateTime is %s\n", OSDate(*Date));
 		*is_date_only = false;
 		return true;
 	}

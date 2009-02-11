@@ -547,7 +547,6 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 			}
 			timet = value;
 			Fill_GSM_DateTime(&Date, timet);
-			Date.Year = Date.Year + 1900;
 			smfprintf(di, "%s\n",OSDateTime(Date,0));
 			info->DateTimeAvailable = true;
 			memcpy(&info->DateTime,&Date,sizeof(GSM_DateTime));
