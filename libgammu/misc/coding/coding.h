@@ -35,9 +35,6 @@ typedef		int wint_t;
 
 /* ---------------------------- Unicode ------------------------------------ */
 bool 		myiswspace	  		(unsigned const char *src);
-#ifndef HAVE_TOWLOWER
-wchar_t		towlower			(wchar_t c);
-#endif
 
 int		EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
 int		DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);
@@ -129,18 +126,6 @@ int ClearBit (unsigned char *Buffer, size_t BitNum);
 /* ---------------------------- Other -------------------------------------- */
 
 void StringToDouble	(char *text, double *d);
-
-#ifndef HAVE_STRCHRNUL
-extern char *strchrnul(char *s, int find);
-#endif
-#ifndef HAVE_STRNCASECMP
-#define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
-extern int strncasecmp (const char *s1, const char *s2, size_t n);
-#endif
-#ifndef HAVE_STRCASECMP
-extern int strcasecmp (const char *s1, const char *s2);
-#endif
-
 
 /**
  * Gets VCS line from buffer.

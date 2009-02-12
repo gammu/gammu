@@ -22,7 +22,8 @@
 #include "../../service/gsmpbk.h"
 #include "atgen.h"
 #include <string.h>
-#include "../../misc/coding/coding.h"
+//#include "../../misc/coding/coding.h"
+#include "../../../helper/string.h"
 
 typedef struct {
 	char Command[20];

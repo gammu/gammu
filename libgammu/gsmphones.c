@@ -20,7 +20,8 @@
 #ifdef HAVE_WCTYPE_H
 #  include <wctype.h>
 #endif
-#include "misc/coding/coding.h"
+
+#include "../helper/string.h"
 
 #define MAX_FEATURE_NAME_LEN 20
 

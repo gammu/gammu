@@ -92,6 +92,7 @@ check_include_file (sys/utsname.h HAVE_SYS_UTSNAME_H)
 check_include_file (unistd.h HAVE_UNISTD_H)
 check_include_file (wchar.h HAVE_WCHAR_H)
 check_include_file (wctype.h HAVE_WCTYPE_H)
+check_include_file (strings.h HAVE_STRINGS_H)
 # These checks are required for check_type_size() on cmake < 2.6.0
 check_include_file (sys/types.h HAVE_SYS_TYPES_H)
 check_include_file (stdint.h HAVE_STDINT_H)

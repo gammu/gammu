@@ -26,6 +26,7 @@
 
 #include "../helper/locales.h"
 #include "../helper/printing.h"
+#include "../helper/string.h"
 
 #ifdef DEBUG
 #  include "sniff.h"

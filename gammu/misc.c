@@ -18,6 +18,7 @@
 
 #include "../helper/formats.h"
 #include "../helper/printing.h"
+#include "../helper/string.h"
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 #  include "depend/nokia/dct3.h"

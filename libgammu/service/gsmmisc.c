@@ -13,6 +13,8 @@
 #include "../debug.h"
 #include "gsmmisc.h"
 
+#include "../../helper/string.h"
+
 struct keys_table_position {
 	char 	whatchar;
 	int 	whatcode;

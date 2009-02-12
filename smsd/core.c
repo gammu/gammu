@@ -62,6 +62,8 @@
 #include "log-event.h"
 #endif
 
+#include "../helper/string.h"
+
 const char smsd_name[] = "gammu-smsd";
 
 GSM_SMSDConfig		SMSDaemon_Config;

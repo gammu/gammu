@@ -19,6 +19,8 @@
 
 #include "../core.h"
 
+#include "../../helper/string.h"
+
 /**
  * Helper define to check error code from fwrite.
  */

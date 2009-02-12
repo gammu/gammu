@@ -275,6 +275,9 @@
 #ifndef HAVE_UNISTD_H
 #cmakedefine HAVE_UNISTD_H
 #endif
+#ifndef HAVE_STRINGS_H
+#cmakedefine HAVE_STRINGS_H
+#endif
 
 #ifndef HAVE_SSIZE_T
 #cmakedefine HAVE_SSIZE_T

@@ -34,6 +34,9 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#ifdef WIN32
+#include <direct.h>
+#endif
 
 #include "../../gsmcomon.h"
 #include "../../misc/coding/coding.h"
@@ -41,6 +44,7 @@
 #include "../../misc/misc.h"
 #include "../pfunc.h"
 #include "dummy.h"
+#include "../../../helper/string.h"
 
 #ifdef WIN32
 #define MKDIR(dir) mkdir(dir)

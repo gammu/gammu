@@ -2,6 +2,7 @@
 #define _gammu_common_h
 
 #include <gammu.h>
+#include "../helper/string.h"
 
 extern volatile bool gshutdown;
 extern GSM_StateMachine *gsm;

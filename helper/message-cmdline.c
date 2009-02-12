@@ -16,6 +16,7 @@
 
 #include "formats.h"
 #include "printing.h"
+#include "string.h"
 #include "message-cmdline.h"
 
 typedef enum {

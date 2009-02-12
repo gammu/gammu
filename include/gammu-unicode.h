@@ -137,24 +137,6 @@ unsigned char *mywstrstr(unsigned const char *haystack,
  */
 bool mywstrncasecmp(unsigned const char *a, unsigned const char *b, int num);
 
-#ifndef HAVE_STRCASESTR
-/**
- * Case insensitive substring location, libc compatibility.
- *
- * \ingroup Unicode
- */
-extern char *strcasestr(const char *s, const char *find);
-#endif
-
-#ifndef HAVE_STRCASECMP
-/**
- * Case insensitive string comparing, libc compatibility.
- *
- * \ingroup Unicode
- */
-extern int strcasecmp(const char *s1, const char *s2);
-#endif
-
 /**
  * Encode text to UTF-8.
  *

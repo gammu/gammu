@@ -8,7 +8,7 @@
 #define _BSD_SOURCE
 #include <time.h>
 #else
-char *strptime(const char * __restrict, const char * __restrict, struct tm * __restrict);
+char * strptime(const char *buf, const char *fmt, struct tm *tm);
 #endif
 
 #endif

@@ -21,6 +21,7 @@
 
 #include "../helper/formats.h"
 #include "../helper/printing.h"
+#include "../helper/string.h"
 
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 void NokiaComposer(int argc UNUSED, char *argv[])

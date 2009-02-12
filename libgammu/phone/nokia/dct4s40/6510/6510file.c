@@ -16,6 +16,7 @@
 #include "../../../pfunc.h"
 #include "../dct4func.h"
 #include "n6510.h"
+#include "../../../../../helper/string.h"
 
 /* shared */
 

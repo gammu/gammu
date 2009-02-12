@@ -37,6 +37,8 @@
 #include "siemens.h"
 #include "motorola.h"
 
+#include "../../../helper/string.h"
+
 #ifdef GSM_ENABLE_ALCATEL
 GSM_Error ALCATEL_ProtocolVersionReply (GSM_Protocol_Message, GSM_StateMachine *);
 #endif
