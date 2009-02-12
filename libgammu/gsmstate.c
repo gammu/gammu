@@ -20,6 +20,8 @@
 #include "misc/coding/coding.h"
 #include "device/devfunc.h"
 
+#include "../helper/string.h"
+
 #if defined(WIN32) || defined(DJGPP)
 /* Needed for SHGFP_TYPE_CURRENT */
 #define _WIN32_IE 0x0500

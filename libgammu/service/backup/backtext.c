@@ -18,6 +18,8 @@
 #include "../../debug.h"
 #include "backtext.h"
 
+#include "../../../helper/string.h"
+
 #ifdef GSM_ENABLE_BACKUP
 
 /**

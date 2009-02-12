@@ -14,6 +14,7 @@
 #include "../helper/message-display.h"
 #include "../helper/memory-display.h"
 #include "../helper/printing.h"
+#include "../helper/string.h"
 
 void SaveFile(int argc, char *argv[])
 {

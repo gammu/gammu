@@ -11,6 +11,7 @@
 #include "../helper/formats.h"
 #include "../helper/memory-display.h"
 #include "../helper/printing.h"
+#include "../helper/string.h"
 
 #define GAMMU_CALLER_GROUPS	20
 

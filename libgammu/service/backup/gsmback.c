@@ -18,6 +18,8 @@
 #include "backvcf.h"
 #include "backics.h"
 
+#include "../../../helper/string.h"
+
 #ifdef GSM_ENABLE_BACKUP
 
 void GSM_FreeBackup(GSM_Backup *backup)

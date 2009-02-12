@@ -11,6 +11,7 @@
 
 #include "../helper/memory-display.h"
 #include "../helper/printing.h"
+#include "../helper/string.h"
 
 
 void GetMMSFolders(int argc UNUSED, char *argv[] UNUSED)

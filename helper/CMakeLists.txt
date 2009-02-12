@@ -10,6 +10,8 @@ include_directories (
     "${Gammu_BINARY_DIR}/include"
     )
 
+add_library(string STATIC string.c)
+
 add_library (printing STATIC printing.c)
 
 add_library (memorydisplay STATIC memory-display.c)
@@ -18,6 +20,7 @@ target_link_libraries (memorydisplay libGammu)
 add_library (messagecmdline STATIC message-cmdline.c)
 target_link_libraries (messagecmdline libGammu)
 target_link_libraries (messagecmdline printing)
+target_link_libraries (messagecmdline string)
 
 add_library (messagedisplay STATIC message-display.c)
 target_link_libraries (messagedisplay libGammu)
@@ -36,4 +39,5 @@ endif(WIN32 AND NOT CMAKE_COMPILER_IS_MINGW AND NOT CMAKE_COMPILER_IS_CYGWIN)
 
 if (NOT HAVE_STRPTIME)
     add_library(strptime STATIC strptime.c)
+    target_link_libraries (strptime string)
 endif (NOT HAVE_STRPTIME)

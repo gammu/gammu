@@ -23,6 +23,7 @@
 #include "../helper/memory-display.h"
 #include "../helper/message-cmdline.h"
 #include "../helper/printing.h"
+#include "../helper/string.h"
 
 volatile bool 			wasincomingsms 		= false;
 

@@ -26,6 +26,7 @@
 
 #include "../helper/formats.h"
 #include "../helper/printing.h"
+#include "../helper/string.h"
 
 /**
  * Displays status of filesystem (if available).

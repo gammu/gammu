@@ -13,6 +13,7 @@
 
 #include "../helper/message-display.h"
 #include "../helper/printing.h"
+#include "../helper/string.h"
 
 void BackupSMS(int argc UNUSED, char *argv[])
 {

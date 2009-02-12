@@ -33,6 +33,7 @@
 #include "../../service/gsmmisc.h"
 #include "../../protocol/obex/obex.h"
 #include "obexfunc.h"
+#include "../../../helper/string.h"
 
 #ifdef GSM_ENABLE_OBEXGEN
 

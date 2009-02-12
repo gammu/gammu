@@ -42,6 +42,8 @@
 #include <string.h>
 #include <time.h>
 #include "tzfile.h"
+#include "strptime.h"
+#include "string.h"
 
 static const struct {
         const char *abday[7];
@@ -89,7 +91,7 @@ static const struct {
 #define _LEGAL_ALT(x)           { if (alt_format & ~(x)) return (0); }
 
 
-static  int _conv_num(const unsigned char **, int *, int, int);
+static  int _conv_num(unsigned char **, int *, int, int);
 static  char *_strptime(const char *, const char *, struct tm *, int);
 
 
@@ -103,7 +105,7 @@ static char *
 _strptime(const char *buf, const char *fmt, struct tm *tm, int initialize)
 {
         unsigned char c;
-        const unsigned char *bp;
+        unsigned char *bp;
         size_t len;
         int alt_format, i;
         static int century, relyear;
@@ -158,43 +160,43 @@ literal:
                  */
                 case 'c':       /* Date and time, using the locale's format. */
                         _LEGAL_ALT(_ALT_E);
-                        if (!(bp = _strptime(bp, _ctloc(d_t_fmt), tm, 0)))
+                        if ((bp = _strptime(bp, _ctloc(d_t_fmt), tm, 0)) == 0)
                                 return (NULL);
                         break;
 
                 case 'D':       /* The date as "%m/%d/%y". */
                         _LEGAL_ALT(0);
-                        if (!(bp = _strptime(bp, "%m/%d/%y", tm, 0)))
+                        if ((bp = _strptime(bp, "%m/%d/%y", tm, 0)) == 0)
                                 return (NULL);
                         break;
 
                 case 'R':       /* The time as "%H:%M". */
                         _LEGAL_ALT(0);
-                        if (!(bp = _strptime(bp, "%H:%M", tm, 0)))
+                        if ((bp = _strptime(bp, "%H:%M", tm, 0)) == 0)
                                 return (NULL);
                         break;
 
                 case 'r':       /* The time as "%I:%M:%S %p". */
                         _LEGAL_ALT(0);
-                        if (!(bp = _strptime(bp, "%I:%M:%S %p", tm, 0)))
+                        if ((bp = _strptime(bp, "%I:%M:%S %p", tm, 0)) == 0)
                                 return (NULL);
                         break;
 
                 case 'T':       /* The time as "%H:%M:%S". */
                         _LEGAL_ALT(0);
-                        if (!(bp = _strptime(bp, "%H:%M:%S", tm, 0)))
+                        if ((bp = _strptime(bp, "%H:%M:%S", tm, 0)) == 0)
                                 return (NULL);
                         break;
 
                 case 'X':       /* The time, using the locale's format. */
                         _LEGAL_ALT(_ALT_E);
-                        if (!(bp = _strptime(bp, _ctloc(t_fmt), tm, 0)))
+                        if ((bp = _strptime(bp, _ctloc(t_fmt), tm, 0)) == 0)
                                 return (NULL);
                         break;
 
                 case 'x':       /* The date, using the locale's format. */
                         _LEGAL_ALT(_ALT_E);
-                        if (!(bp = _strptime(bp, _ctloc(d_fmt), tm, 0)))
+                        if ((bp = _strptime(bp, _ctloc(d_fmt), tm, 0)) == 0)
                                 return (NULL);
                         break;
 
@@ -407,7 +409,7 @@ literal:
 
 
 static int
-_conv_num(const unsigned char **buf, int *dest, int llim, int ulim)
+_conv_num(unsigned char **buf, int *dest, int llim, int ulim)
 {
         int result = 0;
         int rulim = ulim;

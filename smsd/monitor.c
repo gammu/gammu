@@ -169,7 +169,6 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 int main(int argc, char **argv)
 {
 	GSM_Error error;
-	int startarg;
 	GSM_SMSDConfig *config;
 	GSM_SMSDStatus status;
 	const char program_name[] = "gammu-smsd-monitor";
@@ -189,7 +188,7 @@ int main(int argc, char **argv)
 	};
 
 
-	startarg = process_commandline(argc, argv, &params);
+	process_commandline(argc, argv, &params);
 
 	if (params.config_file == NULL) {
 #ifdef HAVE_DEFAULT_CONFIG

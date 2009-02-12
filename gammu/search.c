@@ -23,6 +23,7 @@
 #include "common.h"
 
 #include "../helper/formats.h"
+#include "../helper/string.h"
 
 #if defined(WIN32) || defined(HAVE_PTHREAD)
 /**
