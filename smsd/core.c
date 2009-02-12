@@ -771,7 +771,7 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, c
 			&pi );           /* Pointer to PROCESS_INFORMATION structure*/
 	free(cmdline);
 	if (! ret) {
-		SMSD_Log(-1, Config, "CreateProcess failed (%d)", (int)GetLastError());
+		SMSD_LogErrno(Config, "CreateProcess failed");
 	} else {
 		/* We don't need handles at all */
 		CloseHandle(pi.hProcess);
@@ -818,7 +818,7 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, c
 	pid = fork();
 
 	if (pid == -1) {
-		SMSD_Log(-1, Config, "Error spawning new process");
+		SMSD_LogErrno(Config, "Error spawning new process");
 		return false;
 	}
 
@@ -833,10 +833,14 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, c
 			}
 
 			if (WIFEXITED(status)) {
-				SMSD_Log(0, Config, "Process exited, status=%d", WEXITSTATUS(status));
+				if (WEXITSTATUS(status) == 0) {
+					SMSD_Log(-1, Config, "Process exited, failed status=%d", WEXITSTATUS(status));
+				} else {
+					SMSD_Log(0, Config, "Process exited, status=%d", WEXITSTATUS(status));
+				}
 				return (WEXITSTATUS(status) == 0);
 			} else if (WIFSIGNALED(status)) {
-				SMSD_Log(0, Config, "Process killed by signal %d", WTERMSIG(status));
+				SMSD_Log(-1, Config, "Process killed by signal %d", WTERMSIG(status));
 				return false;
 			} else if (WIFSTOPPED(status)) {
 				SMSD_Log(0, Config, "Process stopped by signal %d", WSTOPSIG(status));
