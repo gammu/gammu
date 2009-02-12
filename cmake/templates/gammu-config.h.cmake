@@ -234,6 +234,10 @@
 #cmakedefine HAVE_SHM
 #endif
 
+#ifndef HAVE_STRPTIME
+#cmakedefine HAVE_STRPTIME
+#endif
+
 #ifndef HAVE_ISWSPACE
 #cmakedefine HAVE_ISWSPACE
 #endif

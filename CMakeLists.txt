@@ -117,6 +117,16 @@ check_symbol_exists (alarm "unistd.h" HAVE_ALARM)
 check_symbol_exists (dup "io.h" HAVE_DUP_IO_H)
 check_symbol_exists (shmget "sys/shm.h" HAVE_SHM)
 check_c_source_compiles ("
+#define _XOPEN_SOURCE
+#define _BSD_SOURCE
+#include <time.h>
+
+int main(void) {
+    struct tm timestruct;
+    strptime(\"11:22\", \"%H:%M\", &timestruct);
+    return 0;
+}" HAVE_STRPTIME)
+check_c_source_compiles ("
 #include <stdio.h>
 #include <syslog.h>
 #include <stdarg.h>
