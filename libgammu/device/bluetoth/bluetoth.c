@@ -16,7 +16,7 @@
 #include "../devfunc.h"
 #include "bluetoth.h"
 
-#include "../helper/string.h"
+#include "../../../helper/string.h"
 
 #ifdef BLUEZ_FOUND
 #  include "bluez.h"
