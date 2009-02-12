@@ -862,11 +862,16 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, c
 	}
 
 	/* we are the child */
+	cmdline = SMSD_RunOnReceiveCommand(Config, locations);
+	SMSD_Log(0, Config, "Starting run on receive: \"%s\" \"%s\"%s",
+		cmdline[0],
+		cmdline[1] != NULL ? cmdline[1] : "",
+		cmdline[1] != NULL && cmdline[2] != NULL ? "...": "");
+
 	for(i = 0; i < 255; i++) {
 		close(i);
 	}
 
-	cmdline = SMSD_RunOnReceiveCommand(Config, locations);
 	execvp(Config->RunOnReceive, cmdline);
 	exit(2);
 }
