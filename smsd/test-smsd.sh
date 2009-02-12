@@ -122,7 +122,7 @@ mkdir -p $sms $DUMMY_PATH/sms/3
 mkdir -p $sms $DUMMY_PATH/sms/4
 mkdir -p $sms $DUMMY_PATH/sms/5
 
-@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd -c "$CONFIG_PATH" &
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" &
 SMSD_PID=$!
 
 sleep 5
@@ -133,9 +133,9 @@ done
 
 # This works only with DBI backend
 if echo $SERVICE | grep -q dbi- ; then
-    @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
+    @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
 fi
-@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 
 sleep 25
 
@@ -145,7 +145,7 @@ done
 
 sleep 25
 
-@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor -C -c "$CONFIG_PATH" -l 1 -d 0
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0
 
 if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 6 ] ; then
     echo "Wrong number of messages received!"
