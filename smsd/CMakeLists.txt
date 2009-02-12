@@ -66,6 +66,9 @@ if (CMAKE_COMPILER_IS_GNUCC AND NOT CMAKE_COMPILER_IS_MINGW AND NOT CMAKE_COMPIL
 endif (CMAKE_COMPILER_IS_GNUCC AND NOT CMAKE_COMPILER_IS_MINGW AND NOT CMAKE_COMPILER_IS_CYGWIN)
 
 target_link_libraries (gsmsd libGammu)
+if (NOT HAVE_STRPTIME)
+    target_link_libraries (gsmsd strptime)
+endif (NOT HAVE_STRPTIME)
 
 # Gammu-smsd program
 add_executable (gammu-smsd ${DAEMON_SRC})
