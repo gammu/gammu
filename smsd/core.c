@@ -741,9 +741,9 @@ char *SMSD_RunOnReceiveCommand(GSM_SMSDConfig *Config, const char *locations)
 	assert(result != NULL);
 
 	result[0] = 0;
-	strcat(result, "\'");
+	strcat(result, "\"");
 	strcat(result, Config->RunOnReceive);
-	strcat(result, "\' ");
+	strcat(result, "\" ");
 	strcat(result, locations);
 	return result;
 }
@@ -760,6 +760,8 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, c
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
+
+	SMSD_Log(0, Config, "Starting run on receive: %s", cmdline);
 
 	ret = CreateProcess(NULL,     /* No module name (use command line) */
 			cmdline,	/* Command line */
