@@ -8,12 +8,13 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-11 14:05+0100\n"
-"PO-Revision-Date: 2009-01-27 14:27+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2009-02-14 21:49+0100\n"
+"Last-Translator: Alejandro Casas <acasasv@yahoo.es>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.1.0\n"
 
 # type: TH
 #: docs/user/gammu.1:1
@@ -42,7 +43,7 @@ msgstr ""
 #: docs/user/gammu-smsd-dbi.7:1 docs/user/gammu-smsd-tables.7:1
 #, no-wrap
 msgid "Gammu Documentation"
-msgstr ""
+msgstr "Documentación sobre Gammu"
 
 # type: SH
 #: docs/user/gammu.1:3 docs/user/gammurc.5:2 docs/user/gammu-smsdrc.5:2
@@ -53,12 +54,12 @@ msgstr ""
 #: docs/user/gammu-smsd-dbi.7:2 docs/user/gammu-smsd-tables.7:2
 #, no-wrap
 msgid "NAME"
-msgstr ""
+msgstr "Nome"
 
 # type: Plain text
 #: docs/user/gammu.1:7
 msgid "Gammu - Does some neat things with your cellular phone or modem."
-msgstr ""
+msgstr "Gammu - Fai algunhas cousas cotiás co seu teléfono mobil ou modem"
 
 # type: SH
 #: docs/user/gammu.1:8 docs/user/gammurc.5:7 docs/user/gammu-smsdrc.5:7
@@ -67,12 +68,12 @@ msgstr ""
 #: docs/user/gammu-config.1:4
 #, no-wrap
 msgid "SYNOPSIS"
-msgstr ""
+msgstr "Resumo"
 
 # type: Plain text
 #: docs/user/gammu.1:11
 msgid "Usage: gammu [I<parameters>] E<lt>commandE<gt> [I<options>]"
-msgstr ""
+msgstr "Uso: gammu [I<parametros>] E<lt>instruciónE<gt> [I<opciós>]"
 
 # type: SH
 #: docs/user/gammu.1:13 docs/user/gammurc.5:11 docs/user/gammu-smsdrc.5:9
@@ -83,7 +84,7 @@ msgstr ""
 #: docs/user/gammu-smsd-dbi.7:7 docs/user/gammu-smsd-tables.7:7
 #, no-wrap
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "Descrición"
 
 # type: Plain text
 #: docs/user/gammu.1:19
@@ -91,28 +92,37 @@ msgid ""
 "This program is a tool for mobile phones. Many vendors and phones are "
 "supported, for actual listing see E<lt>http://cihar.com/gammu/phonedb/E<gt>."
 msgstr ""
+"Este programa é unha ferramenta para teléfonos mobíles. Funciona con "
+"diferentes modelos de varios fabricantes. Para obter unha listaxe "
+"acutalizado E<lt>http://cihar.com/gammu/phonedb/E<gt>."
 
 # type: SH
 #: docs/user/gammu.1:21
 #, no-wrap
 msgid "OPTIONS"
-msgstr ""
+msgstr "OPCIÓNS"
 
 # type: Plain text
 #: docs/user/gammu.1:24
 msgid "Parameters before command configure gammu behaviour:"
 msgstr ""
+"Os parámetros antes do comando configuran o comportamento da aplicación "
+"gammu"
 
 # type: Plain text
 #: docs/user/gammu.1:26
 msgid "-c / --config E<lt>filenameE<gt> ... name of configuration file"
 msgstr ""
+"-c / --config E<lt>nome do ficheiroE<gt> ... nome do ficheiro de "
+"configuración"
 
 # type: Plain text
 #: docs/user/gammu.1:28
 msgid ""
 "-s / --section E<lt>confignE<gt> ... section of config file to use, eg. 42"
 msgstr ""
+"-s / --section E<lt>confignE<gt> ... sección do ficheiro de configuración  "
+"eg. 42"
 
 # type: Plain text
 #: docs/user/gammu.1:30
@@ -120,104 +130,110 @@ msgid ""
 "-d / --debug E<lt>levelE<gt> ... debug level (see gammurc(5) for possible "
 "values)"
 msgstr ""
+"-d / --debug E<lt>levelE<gt> ... nivel de depurado (vexa gammurc(5) para os "
+"valores posibles)"
 
 # type: Plain text
 #: docs/user/gammu.1:32
 msgid ""
 "-f / --debug-file E<lt>filenameE<gt> ... file for logging debug messages"
 msgstr ""
+"-f / --debug-file E<lt>filenameE<gt> ... ficheiro para almacenar as mensaxes "
+"de depurado."
 
 # type: SS
 #: docs/user/gammu.1:34
 #, no-wrap
 msgid "Commands"
-msgstr ""
+msgstr "Comandos"
 
 # type: Plain text
 #: docs/user/gammu.1:37
 msgid "Commands can be specified with or without leading --."
-msgstr ""
+msgstr "Os comandos ou instruccións especifícanse con ou sen poñer --"
 
 # type: SS
 #: docs/user/gammu.1:39
 #, no-wrap
 msgid "Calls"
-msgstr ""
+msgstr "Chamar"
 
 # type: TP
 #: docs/user/gammu.1:40
 #, no-wrap
 msgid "B<answercall>I< [ID]>"
-msgstr ""
+msgstr "B<answercall>I< [ID]>"
 
 # type: Plain text
 #: docs/user/gammu.1:43
 msgid "Answer incoming call."
-msgstr ""
+msgstr "Contestar unha chamada entrante"
 
 # type: TP
 #: docs/user/gammu.1:44
 #, no-wrap
 msgid "B<cancelcall>I< [ID]>"
-msgstr ""
+msgstr "B<cancelcall>I< [ID]>"
 
 # type: Plain text
 #: docs/user/gammu.1:47
 msgid "Cancel incoming call"
-msgstr ""
+msgstr "Cortar unha chamada entrante"
 
 # type: TP
 #: docs/user/gammu.1:48
 #, no-wrap
 msgid "B<canceldiverts>"
-msgstr ""
+msgstr "B<canceldiverts>"
 
 # type: TP
 #: docs/user/gammu.1:51
 #, no-wrap
 msgid "B<conferencecall>I< ID>"
-msgstr ""
+msgstr "B<conferencecall>I< ID>"
 
 # type: TP
 #: docs/user/gammu.1:54
 #, no-wrap
 msgid "B<dialvoice>I< number [show|hide]>"
-msgstr ""
+msgstr "B<dialvoice>I< number [show|hide]>"
 
 # type: Plain text
 #: docs/user/gammu.1:57
 msgid "Make voice call from SIM card line set in phone."
-msgstr ""
+msgstr "Facer unha chamada de voz utilizando a tarxeta SIM do teléfono"
 
 # type: TP
 #: docs/user/gammu.1:58
 #, no-wrap
 msgid "B<divert>I< get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]>"
 msgstr ""
+"B<divert>I< get|set all|busy|noans|outofreach all|voice|fax|data [number "
+"timeout]>"
 
 # type: TP
 #: docs/user/gammu.1:61 docs/user/gammu.1:573
 #, no-wrap
 msgid "B<getspeeddial>I< start [stop]>"
-msgstr ""
+msgstr "B<getspeeddial>I< start [stop]>"
 
 # type: TP
 #: docs/user/gammu.1:64
 #, no-wrap
 msgid "B<getussd>I< code>"
-msgstr ""
+msgstr "B<getussd>I< code>"
 
 # type: TP
 #: docs/user/gammu.1:67
 #, no-wrap
 msgid "B<holdcall>I< ID>"
-msgstr ""
+msgstr "B<holdcall>I< ID>"
 
 # type: TP
 #: docs/user/gammu.1:70
 #, no-wrap
 msgid "B<maketerminatedcall>I< number length [show|hide]>"
-msgstr ""
+msgstr "B<maketerminatedcall>I< number length [show|hide]>"
 
 # type: Plain text
 #: docs/user/gammu.1:74
@@ -225,12 +241,14 @@ msgid ""
 "Make voice call from SIM card line set in phone which will be terminated "
 "after B<length> seconds."
 msgstr ""
+"Fai unha chamada de voz utilizando a tarxeta SIM do teléfono que remata "
+"transcorridos B<length>  segundos"
 
 # type: TP
 #: docs/user/gammu.1:75 docs/user/gammu.1:1641 docs/user/gammu.1:2010
 #, no-wrap
 msgid "B<monitor>I< [times]>"
-msgstr ""
+msgstr "B<monitor>I< [times]>"
 
 # type: Plain text
 #: docs/user/gammu.1:79 docs/user/gammu.1:1645 docs/user/gammu.1:2014
@@ -238,12 +256,14 @@ msgid ""
 "Get phone status and writes continuously to standard output. Press Ctrl+C to "
 "break this state."
 msgstr ""
+"Obtén o estado do teléfono e o escrebe dun xeito continuo na saída estándar "
+"(standar output). Prema Ctrl+C para saír."
 
 # type: TP
 #: docs/user/gammu.1:80
 #, no-wrap
 msgid "B<senddtmf>I< sequence>"
-msgstr ""
+msgstr "B<senddtmf>I< sequence>"
 
 # type: Plain text
 #: docs/user/gammu.1:83
