@@ -1133,7 +1133,6 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure)
  	time_t			lastreceive, lastreset = 0;
 	int i;
 
-	Config->connected = false;
 	Config->failure = ERR_NONE;
 	Config->exit_on_failure = exit_on_failure;
 	error = SMSGetService(Config, &Service);
