@@ -20,7 +20,7 @@ ChangeLog
 [!] * Reorganize directory structure to match current state of things.
 [-] * Completely switch DBI driver to utf-8.
 [-] * Fixed date off by 1900 error in some cases.
-[-] * Cleanup a bit phoned driver.
+[-] * Cleanup a bit phonet driver.
 [-] * Handle properly requests for network code (bug #819).
 [-] * Allow to enter more security codes through SMSD (bug #819).
 [-] * Fixed restoring to specific folder on AT (bug #815).
