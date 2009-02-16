@@ -23,7 +23,7 @@
 #include <sys/types.h>
 #endif
 
-#define SMSD_SHM_KEY (0xb00bface)
+#define SMSD_SHM_KEY (0xface)
 #define SMSD_SHM_VERSION (1)
 #define SMSD_DB_VERSION (10)
 #define SMSD_SQL_RETRIES (10)
