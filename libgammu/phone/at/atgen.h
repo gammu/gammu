@@ -310,6 +310,10 @@ typedef struct {
 	 */
 	GSM_MemoryType		SMSMemory;
 	/**
+	 * Has the memory type been set for writing?
+	 */
+	bool			SMSMemoryWrite;
+	/**
 	 * PDU or TEXT mode for SMS ?
 	 */
 	GSM_AT_SMS_Modes	SMSMode;
