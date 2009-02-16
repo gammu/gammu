@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-16 11:30+0100\n"
-"PO-Revision-Date: 2009-02-11 14:07+0100\n"
+"POT-Creation-Date: 2009-02-16 13:16+0100\n"
+"PO-Revision-Date: 2009-02-16 13:18+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,8 +28,8 @@ msgstr "GAMMU"
 # type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
-msgid "Feb 11 2009"
-msgstr "Únor 11, 2009"
+msgid "Feb 12 2009"
+msgstr "Únor 12, 2009"
 
 # type: TH
 #: docs/user/gammu.1:1
@@ -5936,6 +5936,8 @@ msgid ""
 "Please note that this number has to be unique also for sentitems table, so "
 "reusing message IDs might not be a good idea."
 msgstr ""
+"Prosím uvědomte si, že toto číslo musí být unikátní i pro tabulku sentitems, "
+"takže opětovné používání ID zpráv nemusí být nutně dobrý nápad."
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:150
