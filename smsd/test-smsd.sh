@@ -156,6 +156,8 @@ while ! @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "
     fi
 done
 
+sleep 5
+
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0
 
 if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 6 ] ; then
