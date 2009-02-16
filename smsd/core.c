@@ -1028,11 +1028,12 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	if (Config->shutdown) return true;
 
 	if (strcmp(Config->prevSMSID, Config->SMSID) == 0) {
+		SMSD_Log(1, Config, "Same message as previous one: %s", Config->SMSID);
 		Config->retries++;
 		if (Config->retries > Config->maxretries) {
 			Config->retries = 0;
 			strcpy(Config->prevSMSID, "");
-			SMSD_Log(1, Config, "Moved to errorbox: %s", Config->SMSID);
+			SMSD_Log(0, Config, "Moved to errorbox: %s", Config->SMSID);
 			for (i=0;i<sms.Number;i++) {
 				Config->Status->Failed++;
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
@@ -1041,6 +1042,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			return false;
 		}
 	} else {
+		SMSD_Log(1, Config, "New messsage to send: %s", Config->SMSID);
 		Config->retries = 0;
 		strcpy(Config->prevSMSID, Config->SMSID);
 	}
