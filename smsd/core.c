@@ -1359,7 +1359,6 @@ GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
 
 #ifdef HAVE_SHM
 	shmdt(Config->Status);
-	shmctl(Config->shm_handle, IPC_RMID, NULL);
 #else
 	UnmapViewOfFile(Config->Status);
 	CloseHandle(Config->map_handle);
