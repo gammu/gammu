@@ -143,6 +143,9 @@ SMS text in "human readable" form
 .br
 SMS/SMS sequence ID
 
+Please note that this number has to be unique also for sentitems table, so
+reusing message IDs might not be a good idea.
+
 \fBMultiPart\fR (enum('false','true'))
 .br
 info, whether there are more SMS from this sequence in outbox_multipart
