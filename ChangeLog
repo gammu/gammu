@@ -23,6 +23,7 @@ ChangeLog
 [-] * Cleanup a bit phoned driver.
 [-] * Handle properly requests for network code (bug #819).
 [-] * Allow to enter more security codes through SMSD (bug #819).
+[-] * Fixed restoring to specific folder on AT (bug #815).
     
 20090209 - 1.22.94
 
