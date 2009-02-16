@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-16 11:30+0100\n"
-"PO-Revision-Date: 2009-02-14 21:49+0100\n"
+"PO-Revision-Date: 2009-02-14 23:34+0100\n"
 "Last-Translator: Alejandro Casas <acasasv@yahoo.es>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -266,36 +266,38 @@ msgstr "B<senddtmf>I< sequence>"
 #: docs/user/gammu.1:83
 msgid "Plays DTMF sequence. In some phones available only during calls"
 msgstr ""
+"Toca unha secuencia DTMF. Algúns teléfonos soamente é posible durante as "
+"chamadas."
 
 # type: TP
 #: docs/user/gammu.1:84
 #, no-wrap
 msgid "B<splitcall>I< ID>"
-msgstr ""
+msgstr "B<splitcall>I< ID>"
 
 # type: TP
 #: docs/user/gammu.1:87
 #, no-wrap
 msgid "B<switchcall>I< [ID]>"
-msgstr ""
+msgstr "B<switchcall>I< [ID]>"
 
 # type: TP
 #: docs/user/gammu.1:90
 #, no-wrap
 msgid "B<transfercall>I< [ID]>"
-msgstr ""
+msgstr "B<transfercall>I< [ID]>"
 
 # type: TP
 #: docs/user/gammu.1:93
 #, no-wrap
 msgid "B<unholdcall>I< ID>"
-msgstr ""
+msgstr "B<unholdcall>I< ID>"
 
 # type: SS
 #: docs/user/gammu.1:97
 #, no-wrap
 msgid "SMS and EMS"
-msgstr ""
+msgstr "SMS e EMS"
 
 # type: Plain text
 #: docs/user/gammu.1:103
@@ -304,12 +306,16 @@ msgid ""
 "be patient, the command line has been written in order to allow almost every "
 "usage. See EXAMPLE section for some hints on usage."
 msgstr ""
+"O envío de mensaxes pode semellar complicado os primeiros intentos de uso. "
+"Sexa paciente, cada liña de comando escribiuse coa finalidade de permitir "
+"todo o seu uso. Mire na sección EXEMPLOS para obter algunhas ideas ou trucos "
+"sobre o uso."
 
 # type: TP
 #: docs/user/gammu.1:104 docs/user/gammu.1:1376
 #, no-wrap
 msgid "B<addsms>I< folder file [-yes]>"
-msgstr ""
+msgstr "B<addsms>I< folder file [-yes]>"
 
 # type: Plain text
 #: docs/user/gammu.1:108 docs/user/gammu.1:1380
@@ -317,23 +323,25 @@ msgid ""
 "Adds SMSes from file (format like backupsms uses) to selected folder in "
 "phone."
 msgstr ""
+"Engada SMSs dende un ficheiro (formato similar ao usado nos backup de SMS)  "
+"a un cartafol no teléfono."
 
 # type: TP
 #: docs/user/gammu.1:108
 #, no-wrap
 msgid "B<addsmsfolder>I< name>"
-msgstr ""
+msgstr "B<addsmsfolder>I< name>"
 
 # type: TP
 #: docs/user/gammu.1:111 docs/user/gammu.1:1456
 #, no-wrap
 msgid "B<backupsms>I< file [-yes|-all]>"
-msgstr ""
+msgstr "B<backupsms>I< file [-yes|-all]>"
 
 # type: Plain text
 #: docs/user/gammu.1:114 docs/user/gammu.1:1459
 msgid "Stores all SMSes from phone to file."
-msgstr ""
+msgstr "Almacena todos os SMS do teléfono nun ficheiro."
 
 # type: Plain text
 #: docs/user/gammu.1:118 docs/user/gammu.1:1463
@@ -342,17 +350,20 @@ msgid ""
 "them from phone), or -all to just backup all folders while keeping messages "
 "in phone."
 msgstr ""
+"Empregue -yes para respostar si a todas as preguntas (facer copia de "
+"seguridade de todas as mensaxes e borrarlas do teléfono), ou -all para facer "
+"soamente a copia de seguridade e manter as mensaxes no teléfono."
 
 # type: TP
 #: docs/user/gammu.1:119
 #, no-wrap
 msgid "B<deleteallsms>I< folder>"
-msgstr ""
+msgstr "B<deleteallsms>I< folder>"
 
 # type: Plain text
 #: docs/user/gammu.1:122
 msgid "Delete all SMS from specified SMS folder."
-msgstr ""
+msgstr "Borrar todas as mensaxes dun cartafol específico para SMS."
 
 # type: TP
 #: docs/user/gammu.1:123
@@ -366,19 +377,21 @@ msgid ""
 "Delete SMS from phone. See description for B<getsms> for info about sms "
 "folders naming convention."
 msgstr ""
+"Borrar todas as mensaxes do teléfono.  Vexa a descrición de B<getsms> para "
+"ter mais información sobre a convención de nomes de cartafoles."
 
 # type: Plain text
 #: docs/user/gammu.1:129 docs/user/gammu.1:152 docs/user/gammu.1:169
 #: docs/user/gammu.1:554 docs/user/gammu.1:888 docs/user/gammu.1:1780
 #: docs/user/gammu.1:1792 docs/user/gammu.1:1798
 msgid "Locations are numerated from 1."
-msgstr ""
+msgstr "As localizacións están numeradas a partires do 1"
 
 # type: TP
 #: docs/user/gammu.1:130
 #, no-wrap
 msgid "B<displaysms>I< ... (options like in sendsms)>"
-msgstr ""
+msgstr "B<displaysms>I< ... (options like in sendsms)>"
 
 # type: Plain text
 #: docs/user/gammu.1:135
@@ -386,44 +399,54 @@ msgid ""
 "Displays PDU data of encoded SMS messages. It accepts same parameters and "
 "behaves same like sendsms."
 msgstr ""
+"Amosa os datos PDU das mensaxes SMS codificadas. Acepta os mesmos parámetros "
+"e ten un comportamento semellante a sendsms"
 
 # type: TP
 #: docs/user/gammu.1:136
 #, no-wrap
 msgid "B<getallsms>I< -pbk>"
-msgstr ""
+msgstr "B<getallsms>I< -pbk>"
 
 # type: Plain text
 #: docs/user/gammu.1:142
+#, fuzzy
 msgid ""
 "Get all SMS from phone. In some phones you will have also SMS templates and "
 "info about locations used to save Picture Images. With each sms you will see "
 "location. If you want to get such sms from phone alone, use B<gammu getsms 0 "
 "location>"
 msgstr ""
+"Obtén todos os SMS dende o teléfono. En algúns teléfonos, vostede dispón de "
+"patróns e información sobre onde gardar imáxenes. Con cada sns vostede "
+"poderá ver a localización. Si o único que quere é obter as mensaxes, use "
+"B<gammu getsms 0 location>"
 
 # type: TP
 #: docs/user/gammu.1:143
 #, no-wrap
 msgid "B<geteachsms>I< -pbk>"
-msgstr ""
+msgstr "B<geteachsms>I< -pbk>"
 
 # type: Plain text
 #: docs/user/gammu.1:146
+#, fuzzy
 msgid ""
 "Similiary to B<getallsms>. Difference is, that links all contacenated sms"
 msgstr ""
+"Semellante a B<getallsms>. A diferencia é que liga todas as mensaxes  SMS "
+"concatenadas"
 
 # type: TP
 #: docs/user/gammu.1:147
 #, no-wrap
 msgid "B<getsms>I< folder start [stop]>"
-msgstr ""
+msgstr "B<getsms>I< folder start [stop]>"
 
 # type: Plain text
 #: docs/user/gammu.1:150
 msgid "Get SMS."
-msgstr ""
+msgstr "Obter SMS"
 
 # type: Plain text
 #: docs/user/gammu.1:156
