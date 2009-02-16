@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.22.94\n"
+"Project-Id-Version: libGammu 1.22.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-09 17:34+0100\n"
+"POT-Creation-Date: 2009-02-16 11:48+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -16,72 +16,72 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Pootle 1.0.2\n"
 
-#: common/gsmcomon.c:84
+#: libgammu/gsmcomon.c:84
 msgid "No error."
 msgstr "Нет ошибки."
 
-#: common/gsmcomon.c:85
+#: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown/busy or no permissions."
 msgstr "Ошибка подключения к устройству: неизвестно, занято или нет доступа."
 
 # Make device error messages uniform
-#: common/gsmcomon.c:86
+#: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
 msgstr "Ошибка подключения к устройству: заблокировано."
 
-#: common/gsmcomon.c:87
+#: libgammu/gsmcomon.c:87
 #, fuzzy
 msgid "Error opening device, it doesn't exist."
 msgstr "Ошибка подключения к устройству: не существует."
 
-#: common/gsmcomon.c:88
+#: libgammu/gsmcomon.c:88
 #, fuzzy
 msgid "Error opening device, it is already opened by other application."
 msgstr "Ошибка подключения к устройству: используется другим приложением."
 
-#: common/gsmcomon.c:89
+#: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
 msgstr "Ошибка подключения к устройству: у вас нет прав доступа."
 
-#: common/gsmcomon.c:90
+#: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
 msgstr ""
 "Ошибка подключения к устройству: в операционной системе отсутствует "
 "необходимый драйвер."
 
-#: common/gsmcomon.c:91
+#: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrong configured."
 msgstr ""
 "Ошибка подключения к устройству: оборудование не подключено или неправильно "
 "настроено."
 
-#: common/gsmcomon.c:92
+#: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
 msgstr "Ошибка установки DTR или RTS для устройства."
 
-#: common/gsmcomon.c:93
+#: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
 "Ошибка установки скорости для устройства. Возможно, данная скорость не "
 "поддерживается."
 
-#: common/gsmcomon.c:94
+#: libgammu/gsmcomon.c:94
 msgid "Error writing device."
 msgstr "Ошибка записи в устройство."
 
-#: common/gsmcomon.c:95
+#: libgammu/gsmcomon.c:95
 msgid "Error during reading device."
 msgstr "Ошибка чтения из устройства."
 
-#: common/gsmcomon.c:96
+#: libgammu/gsmcomon.c:96
 msgid "Can't set parity on device."
 msgstr "Невозможно установить проверку чётности для устройства."
 
-#: common/gsmcomon.c:97
+#: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
 msgstr "Превышен тайм-аут ожидания ответа. Возможно, телефон не подключён."
 
-#: common/gsmcomon.c:98
+#: libgammu/gsmcomon.c:98
 #, fuzzy
 msgid ""
 "Frame not requested right now. See <http://cihar.com/gammu/report> for "
@@ -90,7 +90,7 @@ msgstr ""
 "Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "
 "рассказано как сообщить об этом."
 
-#: common/gsmcomon.c:99
+#: libgammu/gsmcomon.c:99
 msgid ""
 "Unknown response from phone. See <http://cihar.com/gammu/report> for "
 "information how to report it."
@@ -98,7 +98,7 @@ msgstr ""
 "Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "
 "рассказано как сообщить об этом."
 
-#: common/gsmcomon.c:100
+#: libgammu/gsmcomon.c:100
 #, fuzzy
 msgid ""
 "Unknown frame. See <http://cihar.com/gammu/report> for information how to "
@@ -107,15 +107,15 @@ msgstr ""
 "Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "
 "рассказано как сообщить об этом."
 
-#: common/gsmcomon.c:101
+#: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
 msgstr "Указан неизвестный тип подключения. Проверьте конфигурационный файл."
 
-#: common/gsmcomon.c:102
+#: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
 msgstr "Указана неизвестная модель. Проверьте конфигурационный файл."
 
-#: common/gsmcomon.c:103
+#: libgammu/gsmcomon.c:103
 #, fuzzy
 msgid ""
 "Some functions not available for your system (disabled in config or not "
@@ -124,81 +124,81 @@ msgstr ""
 "Некоторые функции недоступны для данной операционной системы (отключены в "
 "конфигурационном файле или ещё не написаны)."
 
-#: common/gsmcomon.c:104
+#: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
 msgstr "Функция не поддерживается телефоном."
 
-#: common/gsmcomon.c:105
+#: libgammu/gsmcomon.c:105
 #, fuzzy
 msgid "Entry is empty"
 msgstr "Запись пуста."
 
-#: common/gsmcomon.c:106
+#: libgammu/gsmcomon.c:106
 #, fuzzy
 msgid "Security error. Maybe no PIN?"
 msgstr "Ошибка защиты. Возможно, отсутствует PIN-код?"
 
-#: common/gsmcomon.c:107
+#: libgammu/gsmcomon.c:107
 #, fuzzy
 msgid "Invalid location. Maybe too high?"
 msgstr "Недопустимое размещение. Возможно, слишком высокое значение?"
 
-#: common/gsmcomon.c:108
+#: libgammu/gsmcomon.c:108
 msgid "Function not implemented. Help required."
 msgstr "Функция не реализована. Требуется помощь."
 
-#: common/gsmcomon.c:109
+#: libgammu/gsmcomon.c:109
 msgid "Memory full."
 msgstr "Память заполнена."
 
-#: common/gsmcomon.c:110
+#: libgammu/gsmcomon.c:110
 msgid "Unknown error."
 msgstr "Неизвестная ошибка."
 
-#: common/gsmcomon.c:111
+#: libgammu/gsmcomon.c:111
 #, fuzzy
 msgid "Can't open specified file. Read only?"
 msgstr "Невозможно открыть указанный файл. Доступен только для чтения?"
 
-#: common/gsmcomon.c:112
+#: libgammu/gsmcomon.c:112
 msgid "More memory required..."
 msgstr "Нехватка памяти..."
 
-#: common/gsmcomon.c:113
+#: libgammu/gsmcomon.c:113
 msgid "Permission to file/device required..."
 msgstr "Необходимы права доступа к файлу или устройству..."
 
-#: common/gsmcomon.c:114
+#: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
 msgstr ""
 "Не указан номер центра сообщений (SMSC). Настройте его в телефоне или "
 "воспользуйтесь параметром -smscnumber."
 
-#: common/gsmcomon.c:115
+#: libgammu/gsmcomon.c:115
 #, fuzzy
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
 "Вы находитесь внутри телефонного меню (в процессе редактирования?). Выйдите "
 "из него и попробуйте ещё раз."
 
-#: common/gsmcomon.c:116
+#: libgammu/gsmcomon.c:116
 #, fuzzy
 msgid "Phone is not connected."
 msgstr "аккумулятор не подключён"
 
-#: common/gsmcomon.c:117
+#: libgammu/gsmcomon.c:117
 msgid "Function is during writing. If want help, please contact with authors."
 msgstr "Функция ещё не написана. Если хотите помочь, то свяжитесь с авторами."
 
-#: common/gsmcomon.c:118
+#: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
 msgstr "Телефон недоступен и подключён к зарядному устройству."
 
-#: common/gsmcomon.c:119
+#: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
 msgstr "Данный формат файлов не поддерживается в Gammu."
 
-#: common/gsmcomon.c:120
+#: libgammu/gsmcomon.c:120
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
@@ -206,217 +206,217 @@ msgstr ""
 "Никто не совершенен - в реализации протокола обнаружилась ошибка. "
 "Пожалуйста, свяжитесь с авторами."
 
-#: common/gsmcomon.c:121
+#: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr "Передача прервана телефоном. Возможно, вы нажали клавишу \"отмена\"?"
 
-#: common/gsmcomon.c:122
+#: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
 msgstr ""
 
-#: common/gsmcomon.c:123
+#: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
 msgstr "В текущем типе соединения не поддерживается вызванная функция."
 
-#: common/gsmcomon.c:124
+#: libgammu/gsmcomon.c:124
 msgid "CRC error."
 msgstr "Ошибка CRC."
 
-#: common/gsmcomon.c:125
+#: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
 msgstr "Указано неправильное время или дата."
 
-#: common/gsmcomon.c:126
+#: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
 msgstr "Ошибка памяти телефона. Возможно, она доступна только для чтения."
 
-#: common/gsmcomon.c:127
+#: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
 msgstr "Телефону переданы неверные данные."
 
-#: common/gsmcomon.c:128
+#: libgammu/gsmcomon.c:128
 msgid "File with specified name already exist."
 msgstr "Файл с указанным именем уже существует."
 
-#: common/gsmcomon.c:129
+#: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
 msgstr "Файл с указанным именем не существует."
 
-#: common/gsmcomon.c:130
+#: libgammu/gsmcomon.c:130
 #, fuzzy
 msgid "You have to give folder name and not file name."
 msgstr "Необходимо указать имя каталога, а не файла."
 
-#: common/gsmcomon.c:131
+#: libgammu/gsmcomon.c:131
 #, fuzzy
 msgid "You have to give file name and not folder name."
 msgstr "Необходимо указать имя файла, а не каталога."
 
-#: common/gsmcomon.c:132
+#: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
 msgstr "Нет доступа к SIM-карте."
 
-#: common/gsmcomon.c:133
+#: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
 "В телефоне неверная версия GNAPPLET. Воспользуйтесь версией из пакета Gammu."
 
-#: common/gsmcomon.c:134
+#: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
 msgstr ""
 
-#: common/gsmcomon.c:135
+#: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
 msgstr "Каталог пуст."
 
-#: common/gsmcomon.c:136
+#: libgammu/gsmcomon.c:136
 msgid "Data were converted."
 msgstr "Данные были преобразованы."
 
-#: common/gsmcomon.c:137
+#: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
 msgstr "Gammu не настроена."
 
-#: common/gsmcomon.c:138
+#: libgammu/gsmcomon.c:138
 #, fuzzy
 msgid "Wrong folder used."
 msgstr ", папка Входящие"
 
-#: common/gsmcomon.c:139
+#: libgammu/gsmcomon.c:139
 #, fuzzy
 msgid "Internal phone error."
 msgstr "Неизвестная ошибка."
 
-#: common/gsmcomon.c:140
+#: libgammu/gsmcomon.c:140
 #, fuzzy
 msgid "Error writing file to disk."
 msgstr "Ошибка записи в устройство."
 
-#: common/gsmcomon.c:141
+#: libgammu/gsmcomon.c:141
 msgid "No such section exists."
 msgstr ""
 
-#: common/gsmcomon.c:142
+#: libgammu/gsmcomon.c:142
 #, fuzzy
 msgid "Using default values."
 msgstr " (имя по умолчанию)"
 
-#: common/gsmcomon.c:143
+#: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
 msgstr ""
 
-#: common/gsmcomon.c:144
+#: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
 msgstr ""
 
-#: common/gsmcomon.c:145
+#: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
 msgstr ""
 
-#: common/gsmcomon.c:146
+#: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
 msgstr ""
 
-#: common/gsmcomon.c:147
+#: libgammu/gsmcomon.c:147
 msgid "Service is not runnig."
 msgstr ""
 
-#: common/gsmcomon.c:148
+#: libgammu/gsmcomon.c:148
 #, fuzzy
 msgid "Service configuration is missing."
 msgstr "Пошаговая настройка"
 
-#: common/gsmcomon.c:181
+#: libgammu/gsmcomon.c:181
 #, fuzzy
 msgid "Unknown error description."
 msgstr "Неизвестная ошибка."
 
-#: common/phone/dummy/dummy.c:549
+#: libgammu/phone/dummy/dummy.c:553
 #, fuzzy
 msgid "Templates"
 msgstr ", %i шаблонов"
 
-#: common/phone/nokia/dct3/n6110.c:1958
+#: libgammu/phone/nokia/dct3/n6110.c:1958
 msgid "Personal"
 msgstr "Личный"
 
-#: common/phone/nokia/dct3/n6110.c:1960 common/phone/nokia/nfunc.c:1119
+#: libgammu/phone/nokia/dct3/n6110.c:1960 libgammu/phone/nokia/nfunc.c:1119
 msgid "Car"
 msgstr "Машина"
 
-#: common/phone/nokia/dct3/n6110.c:1962 common/phone/nokia/nfunc.c:1121
+#: libgammu/phone/nokia/dct3/n6110.c:1962 libgammu/phone/nokia/nfunc.c:1121
 msgid "Headset"
 msgstr "Гарнитура"
 
-#: common/phone/nokia/dct3/n6110.c:1968 common/phone/nokia/nfunc.c:1109
+#: libgammu/phone/nokia/dct3/n6110.c:1968 libgammu/phone/nokia/nfunc.c:1109
 msgid "General"
 msgstr "Основной"
 
-#: common/phone/nokia/dct3/n6110.c:1970 common/phone/nokia/nfunc.c:1111
+#: libgammu/phone/nokia/dct3/n6110.c:1970 libgammu/phone/nokia/nfunc.c:1111
 msgid "Silent"
 msgstr "Тихо"
 
-#: common/phone/nokia/dct3/n6110.c:1972
+#: libgammu/phone/nokia/dct3/n6110.c:1972
 msgid "Discreet"
 msgstr "Умеренно"
 
-#: common/phone/nokia/dct3/n6110.c:1974
+#: libgammu/phone/nokia/dct3/n6110.c:1974
 msgid "Loud"
 msgstr "Громко"
 
-#: common/phone/nokia/dct3/n6110.c:1976
+#: libgammu/phone/nokia/dct3/n6110.c:1976
 msgid "My style"
 msgstr "Мой стиль"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:536
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:536
 msgid "SIM"
 msgstr "SIM"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:537 common/phone/pfunc.c:41
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:537 libgammu/phone/pfunc.c:41
 msgid "Inbox"
 msgstr "Входящие"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:538
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:538
 msgid "Sent items"
 msgstr "Переданные"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:539
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:539
 msgid "Saved items"
 msgstr "Сохранённые"
 
-#: common/phone/nokia/nfunc.c:943
+#: libgammu/phone/nokia/nfunc.c:943
 msgid "Family"
 msgstr "Семья"
 
-#: common/phone/nokia/nfunc.c:945
+#: libgammu/phone/nokia/nfunc.c:945
 msgid "VIP"
 msgstr "VIP"
 
-#: common/phone/nokia/nfunc.c:947
+#: libgammu/phone/nokia/nfunc.c:947
 msgid "Friends"
 msgstr "Друзья"
 
-#: common/phone/nokia/nfunc.c:949
+#: libgammu/phone/nokia/nfunc.c:949
 msgid "Colleagues"
 msgstr "Коллеги"
 
-#: common/phone/nokia/nfunc.c:951
+#: libgammu/phone/nokia/nfunc.c:951
 msgid "Other"
 msgstr "Другие"
 
-#: common/phone/nokia/nfunc.c:1113
+#: libgammu/phone/nokia/nfunc.c:1113
 msgid "Meeting"
 msgstr "Встреча"
 
-#: common/phone/nokia/nfunc.c:1115
+#: libgammu/phone/nokia/nfunc.c:1115
 msgid "Outdoor"
 msgstr "На улице"
 
-#: common/phone/nokia/nfunc.c:1117
+#: libgammu/phone/nokia/nfunc.c:1117
 msgid "Pager"
 msgstr "Пейджер"
 
-#: common/phone/pfunc.c:42
+#: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Исходящие"
 

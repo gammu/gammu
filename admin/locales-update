@@ -30,7 +30,7 @@ xgettext \
     --copyright-holder "Michal Čihař <michal@cihar.com>" \
     --package-name libgammu \
     --package-version $ver \
-    `find common -name '*.c' -o -name '*.h' | sort`
+    `find libgammu -name '*.c' -o -name '*.h' | sort`
 
 for loc in $LOCS ; do
     cd locale/$loc
