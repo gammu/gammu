@@ -151,6 +151,9 @@ text zprávy v lidsky čitelné podobě
 .br
 číslo SMS/SMS sekvence
 
+Please note that this number has to be unique also for sentitems table, so
+reusing message IDs might not be a good idea.
+
 \fBMultiPart\fP (enum('false','true'))
 .br
 informace, zda se v tabulce outbox_multipart nacházejí další části této SMS
