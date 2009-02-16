@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.22.94\n"
+"Project-Id-Version: libGammu 1.22.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-09 17:34+0100\n"
+"POT-Creation-Date: 2009-02-16 11:48+0100\n"
 "PO-Revision-Date: 2009-02-09 17:29+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -17,67 +17,67 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: common/gsmcomon.c:84
+#: libgammu/gsmcomon.c:84
 msgid "No error."
 msgstr "Žadná chyba."
 
-#: common/gsmcomon.c:85
+#: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown/busy or no permissions."
 msgstr "Chyba při otevírání zařízení. Přístup odmítnut."
 
-#: common/gsmcomon.c:86
+#: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
 msgstr "Chyba při otevírání zařízení, je zamčené."
 
-#: common/gsmcomon.c:87
+#: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
 msgstr "Chyba při otevírání zařízení, neexistuje."
 
-#: common/gsmcomon.c:88
+#: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
 msgstr "Chyba při otevírání zařízení, je již používáno."
 
-#: common/gsmcomon.c:89
+#: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
 msgstr "Chyba při otevírání zařízení, přístup odmítnut."
 
-#: common/gsmcomon.c:90
+#: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
 msgstr "Chyba při otevírání zařízení. Chybí ovladač v operačním systému."
 
-#: common/gsmcomon.c:91
+#: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrong configured."
 msgstr ""
 "Chyba při otevírání zařízení. Hardware může být špatně připojen nebo "
 "nakonfigurován."
 
-#: common/gsmcomon.c:92
+#: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
 msgstr "Chyba při nastavování DTR nebo RTS."
 
-#: common/gsmcomon.c:93
+#: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
 "Chyba při nastavování rychlosti zařízení. Rychlost pravděpodobně není "
 "podporována."
 
-#: common/gsmcomon.c:94
+#: libgammu/gsmcomon.c:94
 msgid "Error writing device."
 msgstr "Chyba při zápisu."
 
-#: common/gsmcomon.c:95
+#: libgammu/gsmcomon.c:95
 msgid "Error during reading device."
 msgstr "Chyba při čtení."
 
-#: common/gsmcomon.c:96
+#: libgammu/gsmcomon.c:96
 msgid "Can't set parity on device."
 msgstr "Nepodařilo se nastavit paritu na zařízení."
 
-#: common/gsmcomon.c:97
+#: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
 msgstr "Žadná odpověď v očekaváné době. Telefon pravděpodobně není připojen."
 
-#: common/gsmcomon.c:98
+#: libgammu/gsmcomon.c:98
 msgid ""
 "Frame not requested right now. See <http://cihar.com/gammu/report> for "
 "information how to report it."
@@ -85,7 +85,7 @@ msgstr ""
 "Tato odpověď od telefonu nebyla očekávána. Podívejte se na stránku <http://"
 "cihar.com/gammu/report> pro informace jak tuto událost nahlásit."
 
-#: common/gsmcomon.c:99
+#: libgammu/gsmcomon.c:99
 msgid ""
 "Unknown response from phone. See <http://cihar.com/gammu/report> for "
 "information how to report it."
@@ -93,7 +93,7 @@ msgstr ""
 "Neznámá odpověď od telefonu. Podívejte se na stránku <http://cihar.com/gammu/"
 "report> pro informace jak tuto událost nahlásit."
 
-#: common/gsmcomon.c:100
+#: libgammu/gsmcomon.c:100
 msgid ""
 "Unknown frame. See <http://cihar.com/gammu/report> for information how to "
 "report it."
@@ -101,15 +101,15 @@ msgstr ""
 "Neznámý rámec. Podívejte se na stránku <http://cihar.com/gammu/report> pro "
 "informace jak tuto událost nahlásit."
 
-#: common/gsmcomon.c:101
+#: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
 msgstr "Zadán neznámý typ připojení. Zkontrolujte konfigurační soubor."
 
-#: common/gsmcomon.c:102
+#: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
 msgstr "Zadán neznámý model telefonu. Zkontrolujte konfigurační soubor."
 
-#: common/gsmcomon.c:103
+#: libgammu/gsmcomon.c:103
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "written)."
@@ -117,71 +117,71 @@ msgstr ""
 "Některé funkce nejsou dostupné pro váš systém (vypnuté při kompilaci nebo "
 "nejsou implementovány)."
 
-#: common/gsmcomon.c:104
+#: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
 msgstr "Funkce není podporována telefonem."
 
-#: common/gsmcomon.c:105
+#: libgammu/gsmcomon.c:105
 msgid "Entry is empty"
 msgstr "Záznam je prázdný"
 
-#: common/gsmcomon.c:106
+#: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
 msgstr "Bezpečnostní chyba. Možná nebyl zadán PIN?"
 
-#: common/gsmcomon.c:107
+#: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
 msgstr "Chybná pozice. Možná příliš vysoká?"
 
-#: common/gsmcomon.c:108
+#: libgammu/gsmcomon.c:108
 msgid "Function not implemented. Help required."
 msgstr "Funkce není implementována. Pomoc s implementací je vítána."
 
-#: common/gsmcomon.c:109
+#: libgammu/gsmcomon.c:109
 msgid "Memory full."
 msgstr "Paměť je plná."
 
-#: common/gsmcomon.c:110
+#: libgammu/gsmcomon.c:110
 msgid "Unknown error."
 msgstr "Neznámá chyba."
 
-#: common/gsmcomon.c:111
+#: libgammu/gsmcomon.c:111
 msgid "Can't open specified file. Read only?"
 msgstr "Soubor nelze otevřít. Není jen pro čtení?"
 
-#: common/gsmcomon.c:112
+#: libgammu/gsmcomon.c:112
 msgid "More memory required..."
 msgstr "Je potřeba více paměti..."
 
-#: common/gsmcomon.c:113
+#: libgammu/gsmcomon.c:113
 msgid "Permission to file/device required..."
 msgstr "Přístup k souboru nebo zařízení odmítnut..."
 
-#: common/gsmcomon.c:114
+#: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
 msgstr "Prázdné číslo SMSC. Nastavte ho v telefonu nebo použijte -smscnumber."
 
-#: common/gsmcomon.c:115
+#: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr "Jste v menu telefonu (upravujete záznam?). Opusťte ho a zkuste znovu."
 
-#: common/gsmcomon.c:116
+#: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
 msgstr "Telefon není připojen."
 
-#: common/gsmcomon.c:117
+#: libgammu/gsmcomon.c:117
 msgid "Function is during writing. If want help, please contact with authors."
 msgstr "Funkce je rozepsána. Pokud chcete pomoci, kontaktuje autory."
 
-#: common/gsmcomon.c:118
+#: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
 msgstr "Telefon je vypnutý a připojený k nabíječce."
 
-#: common/gsmcomon.c:119
+#: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
 msgstr "Gammu tento formát nepodporuje."
 
-#: common/gsmcomon.c:120
+#: libgammu/gsmcomon.c:120
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
@@ -189,209 +189,209 @@ msgstr ""
 "Nikdo není dokonalý, ani libGammu a nastala chyba v implementaci protokolu. "
 "Prosím kontaktujte autory."
 
-#: common/gsmcomon.c:121
+#: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr "Přenos zrušen telefonem, možná jste zadali zrušení přenosu v telefonu."
 
-#: common/gsmcomon.c:122
+#: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
 msgstr "Ovladač telefonu potřebuje odeslat ještě jeden rámec."
 
-#: common/gsmcomon.c:123
+#: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
 msgstr "Použité připojení nepodporuje požadovanou funkci."
 
-#: common/gsmcomon.c:124
+#: libgammu/gsmcomon.c:124
 msgid "CRC error."
 msgstr "Chyba CRC."
 
-#: common/gsmcomon.c:125
+#: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
 msgstr "Zadáno chybné datum nebo čas."
 
-#: common/gsmcomon.c:126
+#: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
 msgstr "Chyba při přístupu do paměti telefonu, možná je jen pro čtení."
 
-#: common/gsmcomon.c:127
+#: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
 msgstr "Zadána chybná data."
 
-#: common/gsmcomon.c:128
+#: libgammu/gsmcomon.c:128
 msgid "File with specified name already exist."
 msgstr "Soubor se zadaným jménem již existuje."
 
-#: common/gsmcomon.c:129
+#: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
 msgstr "Soubor se zadaným jménem neexistuje."
 
-#: common/gsmcomon.c:130
+#: libgammu/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
 msgstr "Musíte zadat jméno složky, ne souboru."
 
-#: common/gsmcomon.c:131
+#: libgammu/gsmcomon.c:131
 msgid "You have to give file name and not folder name."
 msgstr "Musíte zadat jméno souboru, ne složky."
 
-#: common/gsmcomon.c:132
+#: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
 msgstr "Nelze přistoupit na SIM kartu."
 
-#: common/gsmcomon.c:133
+#: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
 "Špatný verze programu GNAPPLET v telefonu. Prosím použijte verzi obsaženou v "
 "Gammu."
 
-#: common/gsmcomon.c:134
+#: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
 msgstr "Byla vypsána jen část složky."
 
-#: common/gsmcomon.c:135
+#: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
 msgstr "Složka musí být prázdná."
 
-#: common/gsmcomon.c:136
+#: libgammu/gsmcomon.c:136
 msgid "Data were converted."
 msgstr "Data byla převedena."
 
-#: common/gsmcomon.c:137
+#: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
 msgstr "Gammu není nastaveno."
 
-#: common/gsmcomon.c:138
+#: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
 msgstr "Byla použita chybná složka."
 
-#: common/gsmcomon.c:139
+#: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
 msgstr "Interní chyba telefonu."
 
-#: common/gsmcomon.c:140
+#: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
 msgstr "Chyba při zápisu souboru na disk."
 
-#: common/gsmcomon.c:141
+#: libgammu/gsmcomon.c:141
 msgid "No such section exists."
 msgstr "Požadovaná sekce neexistuje."
 
-#: common/gsmcomon.c:142
+#: libgammu/gsmcomon.c:142
 msgid "Using default values."
 msgstr "Používám výchozí hodnoty."
 
-#: common/gsmcomon.c:143
+#: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
 msgstr "Telefon vrátil poškozená data."
 
-#: common/gsmcomon.c:144
+#: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
 msgstr "Chybný název vlastnosti v konfiguraci."
 
-#: common/gsmcomon.c:145
+#: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
 msgstr "Požadovaná funkce byla vypnuta při kompilaci."
 
-#: common/gsmcomon.c:146
+#: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
 msgstr "Nastavení bluetooth potřebuje zadat kanál."
 
-#: common/gsmcomon.c:147
+#: libgammu/gsmcomon.c:147
 msgid "Service is not runnig."
 msgstr "Služba není spuštěna."
 
-#: common/gsmcomon.c:148
+#: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
 msgstr "Chybí nastavení služby."
 
-#: common/gsmcomon.c:181
+#: libgammu/gsmcomon.c:181
 msgid "Unknown error description."
 msgstr "Neznámý popis chyby."
 
-#: common/phone/dummy/dummy.c:549
+#: libgammu/phone/dummy/dummy.c:553
 msgid "Templates"
 msgstr "Šablony"
 
-#: common/phone/nokia/dct3/n6110.c:1958
+#: libgammu/phone/nokia/dct3/n6110.c:1958
 msgid "Personal"
 msgstr "Osobní"
 
-#: common/phone/nokia/dct3/n6110.c:1960 common/phone/nokia/nfunc.c:1119
+#: libgammu/phone/nokia/dct3/n6110.c:1960 libgammu/phone/nokia/nfunc.c:1119
 msgid "Car"
 msgstr "Auto"
 
-#: common/phone/nokia/dct3/n6110.c:1962 common/phone/nokia/nfunc.c:1121
+#: libgammu/phone/nokia/dct3/n6110.c:1962 libgammu/phone/nokia/nfunc.c:1121
 msgid "Headset"
 msgstr "Sluchátka"
 
-#: common/phone/nokia/dct3/n6110.c:1968 common/phone/nokia/nfunc.c:1109
+#: libgammu/phone/nokia/dct3/n6110.c:1968 libgammu/phone/nokia/nfunc.c:1109
 msgid "General"
 msgstr "Obecné"
 
-#: common/phone/nokia/dct3/n6110.c:1970 common/phone/nokia/nfunc.c:1111
+#: libgammu/phone/nokia/dct3/n6110.c:1970 libgammu/phone/nokia/nfunc.c:1111
 msgid "Silent"
 msgstr "Tiché"
 
-#: common/phone/nokia/dct3/n6110.c:1972
+#: libgammu/phone/nokia/dct3/n6110.c:1972
 msgid "Discreet"
 msgstr "Diskritní"
 
-#: common/phone/nokia/dct3/n6110.c:1974
+#: libgammu/phone/nokia/dct3/n6110.c:1974
 msgid "Loud"
 msgstr "Hlasité"
 
-#: common/phone/nokia/dct3/n6110.c:1976
+#: libgammu/phone/nokia/dct3/n6110.c:1976
 msgid "My style"
 msgstr "Můj styl"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:536
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:536
 msgid "SIM"
 msgstr "SIM"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:537 common/phone/pfunc.c:41
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:537 libgammu/phone/pfunc.c:41
 msgid "Inbox"
 msgstr "Příchozí"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:538
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:538
 msgid "Sent items"
 msgstr "Odeslané zprávy"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:539
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:539
 msgid "Saved items"
 msgstr "Uložené zprávy"
 
-#: common/phone/nokia/nfunc.c:943
+#: libgammu/phone/nokia/nfunc.c:943
 msgid "Family"
 msgstr "Rodina"
 
-#: common/phone/nokia/nfunc.c:945
+#: libgammu/phone/nokia/nfunc.c:945
 msgid "VIP"
 msgstr "VIP"
 
-#: common/phone/nokia/nfunc.c:947
+#: libgammu/phone/nokia/nfunc.c:947
 msgid "Friends"
 msgstr "Přatelé"
 
-#: common/phone/nokia/nfunc.c:949
+#: libgammu/phone/nokia/nfunc.c:949
 msgid "Colleagues"
 msgstr "Kolegové"
 
-#: common/phone/nokia/nfunc.c:951
+#: libgammu/phone/nokia/nfunc.c:951
 msgid "Other"
 msgstr "Ostatní"
 
-#: common/phone/nokia/nfunc.c:1113
+#: libgammu/phone/nokia/nfunc.c:1113
 msgid "Meeting"
 msgstr "Schůzka"
 
-#: common/phone/nokia/nfunc.c:1115
+#: libgammu/phone/nokia/nfunc.c:1115
 msgid "Outdoor"
 msgstr "Venkovní"
 
-#: common/phone/nokia/nfunc.c:1117
+#: libgammu/phone/nokia/nfunc.c:1117
 msgid "Pager"
 msgstr "Pager"
 
-#: common/phone/pfunc.c:42
+#: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Odchozí"
 
