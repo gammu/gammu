@@ -441,6 +441,12 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 		return ERR_CANTOPENFILE;
 	}
 
+	str = INI_GetValue(Config->smsdcfgfile, "smsd", "debuglevel", false);
+	if (str)
+		Config->debug_level = atoi(str);
+	else
+		Config->debug_level = 0;
+
 	Config->logfilename=INI_GetValue(Config->smsdcfgfile, "smsd", "logfile", false);
 	if (Config->logfilename != NULL) {
 		if (!uselog) {
@@ -493,6 +499,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	}
 
 	SMSD_Log(1, Config, "Configuring Gammu SMSD...");
+#ifdef HAVE_SHM
+	SMSD_Log(1, Config, "SHM token: 0x%x (%d)", Config->shm_key, Config->shm_key);
+#endif
 
 	/* Does our config file contain gammu section? */
 	if (INI_FindLastSectionEntry(Config->smsdcfgfile, "gammu", false) == NULL) {
@@ -521,12 +530,6 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	if (Config->PhoneCode != NULL) {
 		SMSD_Log(1, Config, "Phone code is \"%s\"",Config->PhoneCode);
 	}
-
-	str = INI_GetValue(Config->smsdcfgfile, "smsd", "debuglevel", false);
-	if (str)
-		Config->debug_level = atoi(str);
-	else
-		Config->debug_level = 0;
 
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "commtimeout", false);
 	if (str) Config->commtimeout=atoi(str); else Config->commtimeout = 30;
@@ -1326,12 +1329,14 @@ GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
 #if defined(HAVE_SHM) || defined(WIN32)
 	/* Get SHM segment */
 #ifdef HAVE_SHM
-	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), S_IRWXU | S_IRGRP | S_IROTH);
+	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), 0);
 	if (Config->shm_handle == -1) {
+		SMSD_LogErrno(Config, "Can not shmget");
 		return ERR_NOTRUNNING;
 	}
 	Config->Status = shmat(Config->shm_handle, NULL, 0);
 	if (Config->Status == (void *) -1) {
+		SMSD_LogErrno(Config, "Can not shmat");
 		return ERR_UNKNOWN;
 	}
 	if (Config->Status->Version != SMSD_SHM_VERSION) {
@@ -1341,10 +1346,12 @@ GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
 #else
 	Config->map_handle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READONLY, 0, sizeof(GSM_SMSDStatus), Config->map_key);
 	if (Config->map_handle == NULL) {
+		SMSD_LogErrno(Config, "Can not CreateFileMapping");
 		return ERR_NOTRUNNING;
 	}
 	Config->Status = MapViewOfFile(Config->map_handle, FILE_MAP_READ, 0, 0, sizeof(GSM_SMSDStatus));
 	if (Config->Status == NULL) {
+		SMSD_LogErrno(Config, "Can not CreateFileMapping");
 		return ERR_UNKNOWN;
 	}
 #endif
