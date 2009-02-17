@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-20090216 - 1.22.95
+20090217 - 1.22.95
 
 [!] * Reorganize directory structure to match current state of things.
 [-] * Completely switch DBI driver to utf-8.
