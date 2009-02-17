@@ -261,6 +261,7 @@ cat libgammu.lang >> %{name}.lang
 %doc %_mandir/man7/*
 %lang(cs) %doc %_mandir/cs
 %doc %gammu_docdir
+/etc/bash_completion.d/gammu
 
 %files devel
 %defattr(-,root,root)
@@ -271,7 +272,7 @@ cat libgammu.lang >> %{name}.lang
 
 %files -n python-gammu
 %defattr(-,root,root)
-%doc python/README python/AUTHORS python/COPYING python/examples
+%doc README.Python python/examples
 %python_sitearch/*
 
 %clean
