@@ -805,6 +805,93 @@
    fun:(below main)
 }
 
+{
+   1 bytes in 1 blocks are still reachable in loss record 1 of 31
+   Memcheck:Leak
+   fun:realloc
+   fun:list_resize
+   fun:listpop
+   fun:PyEval_EvalFrameEx
+}
+
+{
+   349 bytes in 1 blocks are still reachable in loss record 10 of 31
+   Memcheck:Leak
+   fun:realloc
+   fun:_PyString_Resize
+   fun:PyString_Format
+   fun:binary_op1
+   fun:PyNumber_Remainder
+   fun:PyEval_EvalFrameEx
+}
+{
+   333 bytes in 1 blocks are still reachable in loss record 10 of 29
+   Memcheck:Leak
+   fun:realloc
+   fun:_PyString_Resize
+   fun:PyString_Format
+   obj:/usr/bin/python2.5
+   fun:PyNumber_Remainder
+   fun:PyEval_EvalFrameEx
+}
+{
+   349 bytes in 1 blocks are still reachable in loss record 9 of 26
+   Memcheck:Leak
+   fun:realloc
+   fun:_PyString_Resize
+   fun:PyString_Format
+   obj:/usr/lib64/libpython2.5.so.1.0
+   obj:/usr/lib64/libpython2.5.so.1.0
+   fun:PyEval_EvalFrameEx
+}
+{
+   1 bytes in 1 blocks are still reachable in loss record 1 of 29
+   Memcheck:Leak
+   fun:realloc
+   obj:/usr/bin/python2.5
+   obj:/usr/bin/python2.5
+   fun:PyEval_EvalFrameEx
+}
+{
+   420 bytes in 1 blocks are still reachable in loss record 11 of 29
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python2.5
+   fun:PyEval_EvalFrameEx
+}
+
+{
+   464 bytes in 1 blocks are still reachable in loss record 11 of 31
+   Memcheck:Leak
+   fun:malloc
+   fun:_compile
+   fun:PyEval_EvalFrameEx
+}
+{
+   464 bytes in 1 blocks are still reachable in loss record 10 of 26
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib64/libpython2.5.so.1.0
+   fun:PyEval_EvalFrameEx
+}
+
+{
+   992 bytes in 1 blocks are still reachable in loss record 15 of 31
+   Memcheck:Leak
+   fun:malloc
+   fun:fill_free_list
+   fun:PyInt_FromLong
+   fun:PyModule_AddIntConstant
+   fun:init_locale
+}
+{
+   988 bytes in 1 blocks are still reachable in loss record 18 of 29
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python2.5
+   fun:PyInt_FromLong
+   obj:/usr/bin/python2.5
+}
 
 ### This is a CURL bug on SUSE 11.0
 {
@@ -954,4 +1041,33 @@
    fun:malloc
    fun:realloc
    obj:/bin/dash
+}
+
+{
+   Some curl leak
+   Memcheck:Leak
+   fun:malloc
+   fun:inet_ntoa
+   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   fun:GSM_ReadHTTPFile
+}
+
+{
+   Some curl leak
+   Memcheck:Leak
+   fun:malloc
+   fun:inet_ntoa
+   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   fun:curl_easy_perform
+   fun:GSM_ReadHTTPFile
 }
