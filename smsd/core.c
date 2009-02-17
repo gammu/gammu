@@ -500,7 +500,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 
 	SMSD_Log(1, Config, "Configuring Gammu SMSD...");
 #ifdef HAVE_SHM
-	SMSD_Log(1, Config, "SHM token: 0x%x (%d)", Config->shm_key, Config->shm_key);
+	SMSD_Log(1, Config, "SHM token: 0x%llx (%lld)", (long long)Config->shm_key, (long long)Config->shm_key);
 #endif
 
 	/* Does our config file contain gammu section? */
