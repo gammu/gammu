@@ -5522,20 +5522,26 @@ GSM_Error ATGEN_SetAutoNetworkLogin(GSM_StateMachine *s)
 
 GSM_Error ATGEN_SendDTMF(GSM_StateMachine *s, char *sequence)
 {
-	unsigned char 	req[80] = "AT+VTS=";
-	int 		n;
+	char req[80] = "AT+VTS=";
+	int n, len, pos;
 	GSM_Error error;
 
-	for (n = 0; n < 32; n++) {
-		if (sequence[n] == '\0') break;
-		if (n != 0) req[6 + 2 * n] = ',';
-		req[7 + 2 * n] = sequence[n];
+	len = strlen(sequence);
+
+	if (len > 32) return ERR_INVALIDDATA;
+
+	pos = strlen(req);
+
+	for (n = 0; n < len; n++) {
+		if (n != 0) req[pos++] = ',';
+		req[pos++] = sequence[n];
 	}
 
-	strcat(req, ";\r");
+	req[pos++] = '\r';
+	req[pos++] = 0;
 
 	smprintf(s, "Sending DTMF\n");
-	ATGEN_WaitFor(s, req, 7+2+2*strlen(sequence), 0x00, 4, ID_SendDTMF);
+	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_SendDTMF);
 
 	return error;
 }
