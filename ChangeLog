@@ -18,6 +18,7 @@ ChangeLog
 2009???? - 1.22.96
 
 [-] * Fix sending of DTMF tones over AT.
+[-] * Skip some unhandled replies on Huawei (bug #823).
     
 20090217 - 1.22.95
 

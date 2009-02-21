@@ -1168,6 +1168,11 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	return GSM_DispatchMessage(s);
 }
 
+GSM_Error ATGEN_GenericReplyIgnore(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s UNUSED)
+{
+	return ERR_NONE;
+}
+
 GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
@@ -6981,6 +6986,10 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 
 {SAMSUNG_ReplyGetRingtone,	"AT+MELR="		,0x00,0x00,ID_GetRingtone	 },
 {SAMSUNG_ReplySetRingtone,	"SDNDCRC ="		,0x00,0x00,ID_SetRingtone	 },
+
+{ATGEN_GenericReplyIgnore, 	"^RSSI:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore, 	"^BOOT:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReplyIgnore, 	"^DSFLOWRPT:"		,0x00,0x00,ID_IncomingFrame	 },
 
 #ifdef GSM_ENABLE_ATOBEX
 {ATGEN_GenericReply,		"AT*EOBEX=?"		,0x00,0x00,ID_SetOBEX		 },
