@@ -8,13 +8,14 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-16 11:48+0100\n"
-"PO-Revision-Date: 2009-01-27 14:28+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2009-02-19 00:16+0100\n"
+"Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.1.0\n"
 
 #: gammu/backup.c:31 gammu/backup.c:52 gammu/backup.c:73 gammu/backup.c:94
 #: helper/message-cmdline.c:368 helper/message-cmdline.c:392
@@ -501,23 +502,23 @@ msgstr "Samtal"
 
 #: gammu/calendar.c:44 gammu/calendar.c:695
 msgid "Meeting"
-msgstr ""
+msgstr "Möte"
 
 #: gammu/calendar.c:47 gammu/calendar.c:698
 msgid "Birthday (Anniversary)"
-msgstr ""
+msgstr "Födelsedag (årsdag)"
 
 #: gammu/calendar.c:50 gammu/calendar.c:701
 msgid "Memo (Miscellaneous)"
-msgstr ""
+msgstr "Memo (Diverse)"
 
 #: gammu/calendar.c:53 gammu/calendar.c:704
 msgid "Travel"
-msgstr ""
+msgstr "Resa"
 
 #: gammu/calendar.c:56 gammu/calendar.c:707
 msgid "Vacation"
-msgstr ""
+msgstr "Semester"
 
 #: gammu/calendar.c:59 gammu/calendar.c:710 gammu/calendar.c:815
 msgid "Alarm"
@@ -525,7 +526,7 @@ msgstr "Alarm"
 
 #: gammu/calendar.c:62 gammu/calendar.c:713
 msgid "Daily alarm"
-msgstr ""
+msgstr "Dagligt alarm"
 
 #: gammu/calendar.c:65 gammu/calendar.c:716
 msgid "Training/Athletism"
@@ -613,11 +614,11 @@ msgstr "Starta"
 
 #: gammu/calendar.c:148
 msgid "Stop"
-msgstr ""
+msgstr "Stoppa"
 
 #: gammu/calendar.c:155 gammu/calendar.c:825 helper/memory-display.c:35
 msgid "Last modified"
-msgstr ""
+msgstr "Senast ändrad"
 
 #: gammu/calendar.c:161 gammu/calendar.c:173
 msgid "Tone alarm"
@@ -630,7 +631,7 @@ msgstr ""
 
 #: gammu/calendar.c:182 gammu/calendar.c:194 gammu/calendar.c:820
 msgid "Silent alarm"
-msgstr ""
+msgstr "Tyst alarm"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:830
 #: gammu/calendar.c:1052 gammu/message.c:173 gammu/misc.c:947
@@ -641,11 +642,11 @@ msgstr "Text"
 
 #: gammu/calendar.c:207 gammu/calendar.c:884
 msgid "Description"
-msgstr ""
+msgstr "Beskrivning"
 
 #: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:129
 msgid "LUID"
-msgstr ""
+msgstr "LUID"
 
 #: gammu/calendar.c:217 gammu/calendar.c:573 gammu/calendar.c:617
 #: gammu/calendar.c:661 gammu/calendar.c:685 gammu/calendar.c:889
@@ -656,7 +657,7 @@ msgstr "Plats"
 
 #: gammu/calendar.c:227 gammu/calendar.c:835 helper/memory-display.c:56
 msgid "Private"
-msgstr ""
+msgstr "Privat"
 
 #: gammu/calendar.c:229
 msgid "Yes"
@@ -744,81 +745,81 @@ msgstr ""
 
 #: gammu/calendar.c:358
 msgid "Age"
-msgstr ""
+msgstr "Ålder"
 
 #: gammu/calendar.c:377
 msgid "Date and time not set in phone"
-msgstr ""
+msgstr "Datum och tid är inte inställt i telefonen"
 
 #: gammu/calendar.c:380
 #, c-format
 msgid "Phone time is %s\n"
-msgstr ""
+msgstr "Telefonens tid är %s\n"
 
 #: gammu/calendar.c:394
 #, c-format
 msgid "Time format is "
-msgstr ""
+msgstr "Tidsformatet är "
 
 #. l10n: AM/PM time
 #: gammu/calendar.c:397
 msgid "12 hours"
-msgstr ""
+msgstr "12-timmars"
 
 #. l10n: 24 hours time
 #: gammu/calendar.c:400
 msgid "24 hours"
-msgstr ""
+msgstr "24-timmars"
 
 #: gammu/calendar.c:402
 #, c-format
 msgid "Date format is "
-msgstr ""
+msgstr "Datumformatet är "
 
 #: gammu/calendar.c:405
 #, c-format
 msgid "DD MM YYYY"
-msgstr ""
+msgstr "DD MM ÅÅÅÅ"
 
 #: gammu/calendar.c:408
 #, c-format
 msgid "MM DD YYYY"
-msgstr ""
+msgstr "MM DD ÅÅÅÅ"
 
 #: gammu/calendar.c:411
 #, c-format
 msgid "YYYY MM DD"
-msgstr ""
+msgstr "ÅÅÅÅ MM DD"
 
 #: gammu/calendar.c:414
 #, c-format
 msgid "DD MMM YY"
-msgstr ""
+msgstr "DD MMM ÅÅ"
 
 #: gammu/calendar.c:417
 #, c-format
 msgid "MM DD YY"
-msgstr ""
+msgstr "MM DD ÅÅ"
 
 #: gammu/calendar.c:420
 #, c-format
 msgid "DD MM YY"
-msgstr ""
+msgstr "DD MM ÅÅ"
 
 #: gammu/calendar.c:423
 #, c-format
 msgid "YY MM DD"
-msgstr ""
+msgstr "ÅÅ MM DD"
 
 #: gammu/calendar.c:426
 #, c-format
 msgid "OFF"
-msgstr ""
+msgstr "AV"
 
 #: gammu/calendar.c:431
 #, c-format
 msgid ", date separator is %c\n"
-msgstr ""
+msgstr ", datumavgränsare är %c\n"
 
 #: gammu/calendar.c:448
 msgid "Setting time in phone to the time on PC."
@@ -844,12 +845,12 @@ msgstr "Datum"
 
 #: gammu/calendar.c:517
 msgid "Every day"
-msgstr ""
+msgstr "Varje dag"
 
 #: gammu/calendar.c:522
 #, c-format
 msgid "Time: %02d:%02d\n"
-msgstr ""
+msgstr "Tid: %02d.%02d\n"
 
 #: gammu/calendar.c:636
 #, c-format
@@ -864,7 +865,7 @@ msgstr ""
 #: gammu/calendar.c:642
 #, c-format
 msgid "Week starts on %s"
-msgstr ""
+msgstr "Veckan börjar på %s"
 
 #: gammu/calendar.c:667 gammu/memory.c:155
 msgid "Entry was empty"
@@ -885,15 +886,15 @@ msgstr "Prioritet"
 
 #: gammu/calendar.c:780
 msgid "Low"
-msgstr ""
+msgstr "Låg"
 
 #: gammu/calendar.c:783
 msgid "Medium"
-msgstr ""
+msgstr "Medel"
 
 #: gammu/calendar.c:786
 msgid "High"
-msgstr ""
+msgstr "Hög"
 
 #: gammu/calendar.c:789
 msgid "None"
@@ -914,44 +915,44 @@ msgstr "Färdig"
 #: gammu/calendar.c:845 gammu/calendar.c:850 helper/memory-display.c:39
 #: helper/memory-display.c:49 helper/memory-display.c:51
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: gammu/calendar.c:874
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #: gammu/calendar.c:959 gammu/memory.c:310 gammu/memory.c:387
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "Söktexten är för lång, kapar av till %d tecken!\n"
 
 #: gammu/common.c:40
 msgid "Waiting for Security Code."
-msgstr ""
+msgstr "Väntar på säkerhetskod."
 
 #: gammu/common.c:43
 msgid "Waiting for PIN."
-msgstr ""
+msgstr "Väntar på PIN-kod."
 
 #: gammu/common.c:46
 msgid "Waiting for PIN2."
-msgstr ""
+msgstr "Väntar på PIN2-kod."
 
 #: gammu/common.c:49
 msgid "Waiting for PUK."
-msgstr ""
+msgstr "Väntar på PUK-kod."
 
 #: gammu/common.c:52
 msgid "Waiting for PUK2."
-msgstr ""
+msgstr "Väntar på PUK2-kod."
 
 #: gammu/common.c:55
 msgid "Waiting for phone code."
-msgstr ""
+msgstr "Väntar på telefonkod."
 
 #: gammu/common.c:58
 msgid "Waiting for network code."
-msgstr ""
+msgstr "Väntar på nätverkskod."
 
 #: gammu/common.c:61
 msgid "Nothing to enter."
@@ -963,91 +964,91 @@ msgstr ""
 
 #: gammu/common.c:76
 msgid "January"
-msgstr ""
+msgstr "januari"
 
 #: gammu/common.c:79
 msgid "February"
-msgstr ""
+msgstr "februari"
 
 #: gammu/common.c:82
 msgid "March"
-msgstr ""
+msgstr "mars"
 
 #: gammu/common.c:85
 msgid "April"
-msgstr ""
+msgstr "april"
 
 #: gammu/common.c:88
 msgid "May"
-msgstr ""
+msgstr "maj"
 
 #: gammu/common.c:91
 msgid "June"
-msgstr ""
+msgstr "juni"
 
 #: gammu/common.c:94
 msgid "July"
-msgstr ""
+msgstr "juli"
 
 #: gammu/common.c:97
 msgid "August"
-msgstr ""
+msgstr "augusti"
 
 #: gammu/common.c:100
 msgid "September"
-msgstr ""
+msgstr "september"
 
 #: gammu/common.c:103
 msgid "October"
-msgstr ""
+msgstr "oktober"
 
 #: gammu/common.c:106
 msgid "November"
-msgstr ""
+msgstr "november"
 
 #: gammu/common.c:109
 msgid "December"
-msgstr ""
+msgstr "december"
 
 #: gammu/common.c:112
 msgid "Bad month!"
-msgstr ""
+msgstr "Felaktig månad!"
 
 #: gammu/common.c:124
 msgid "Monday"
-msgstr ""
+msgstr "Måndag"
 
 #: gammu/common.c:127
 msgid "Tuesday"
-msgstr ""
+msgstr "Tisdag"
 
 #: gammu/common.c:130
 msgid "Wednesday"
-msgstr ""
+msgstr "Onsdag"
 
 #: gammu/common.c:133
 msgid "Thursday"
-msgstr ""
+msgstr "Torsdag"
 
 #: gammu/common.c:136
 msgid "Friday"
-msgstr ""
+msgstr "Fredag"
 
 #: gammu/common.c:139
 msgid "Saturday"
-msgstr ""
+msgstr "Lördag"
 
 #: gammu/common.c:142
 msgid "Sunday"
-msgstr ""
+msgstr "Söndag"
 
 #: gammu/common.c:145
 msgid "Bad day!"
-msgstr ""
+msgstr "Felaktig dag!"
 
 #: gammu/common.c:192
 msgid "Security status"
-msgstr ""
+msgstr "Säkerhetsstatus"
 
 #: gammu/common.c:297 gammu/misc.c:978 gammu/misc.c:993 gammu/misc.c:1000
 #: gammu/misc.c:1007 gammu/misc.c:1037
@@ -1067,35 +1068,35 @@ msgstr ""
 #: gammu/common.c:340 gammu/common.c:369 gammu/depend/nokia/dct4.c:82
 #: gammu/misc.c:1541
 msgid "yes"
-msgstr ""
+msgstr "ja"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:340 gammu/common.c:372 gammu/depend/nokia/dct4.c:83
 msgid "no"
-msgstr ""
+msgstr "nej"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:341 gammu/common.c:364
 msgid "ALL"
-msgstr ""
+msgstr "ALLA"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:341 gammu/common.c:359
 msgid "ONLY"
-msgstr ""
+msgstr "ENDAST"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:341 gammu/common.c:354
 msgid "NONE"
-msgstr ""
+msgstr "INGEN"
 
 #: gammu/common.c:343
 msgid "YES (always)"
-msgstr ""
+msgstr "JA (alltid)"
 
 #: gammu/common.c:347
 msgid "NO (always)"
-msgstr ""
+msgstr "NEJ (alltid)"
 
 #: gammu/depend/nokia/dct4.c:65
 msgid "Can't do it with current phone protocol"
@@ -1104,7 +1105,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:79
 #, c-format
 msgid "%s (yes/no) ? "
-msgstr ""
+msgstr "%s (ja/nej) ? "
 
 #: gammu/depend/nokia/dct4.c:262
 msgid "Setting done"
@@ -1153,31 +1154,31 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:494 gammu/depend/nokia/dct4.c:1001
 msgid "Press any key to continue..."
-msgstr ""
+msgstr "Tryck på en tangent för att fortsätta..."
 
 #: gammu/depend/nokia/dct4.c:506
 #, c-format
 msgid "Security code set to \"12345\"\n"
-msgstr ""
+msgstr "Säkerhetskod inställd till \"12345\"\n"
 
 #: gammu/depend/nokia/dct4.c:509
 msgid "Unknown reason. Can't reset your security code"
-msgstr ""
+msgstr "Okänd anledning. Kan inte nollställa din säkerhetskod"
 
 #: gammu/depend/nokia/dct4.c:533
 #, c-format
 msgid "Trying %i\n"
-msgstr ""
+msgstr "Provar %i\n"
 
 #: gammu/depend/nokia/dct4.c:552
 #, c-format
 msgid "Security code is %s\n"
-msgstr ""
+msgstr "Säkerhetskoden är %s\n"
 
 #: gammu/depend/nokia/dct4.c:797
 #, c-format
 msgid "device address %02x%02x%02x%02x%02x%02x\n"
-msgstr ""
+msgstr "enhetsadress %02x%02x%02x%02x%02x%02x\n"
 
 #: gammu/depend/nokia/dct4.c:821
 msgid "Old simlock"
@@ -1540,16 +1541,16 @@ msgstr ""
 #: gammu/gammu.c:103
 #, c-format
 msgid "Networks for %s:"
-msgstr ""
+msgstr "Nätverk för %s:"
 
 #: gammu/gammu.c:111
 #, c-format
 msgid "Unknown country name: %s."
-msgstr ""
+msgstr "Okänt landsnamn: %s."
 
 #: gammu/gammu.c:116 gammu/gammu.c:747 gammu/misc.c:46
 msgid "Network"
-msgstr ""
+msgstr "Nätverk"
 
 #: gammu/gammu.c:116 gammu/misc.c:783 gammu/misc.c:950 gammu/misc.c:1683
 #: gammu/misc.c:1722 gammu/misc.c:1987 gammu/mms.c:112
@@ -1560,33 +1561,33 @@ msgstr "Namn"
 #: gammu/gammu.c:135
 #, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
-msgstr ""
+msgstr "[Gammu version %s, byggdes %s på %s med %s]"
 
 #: gammu/gammu.c:144
 msgid "Compiled in features:"
-msgstr ""
+msgstr "Funktioner inkompilerade:"
 
 #: gammu/gammu.c:146
 msgid "Protocols"
-msgstr ""
+msgstr "Protokoll"
 
 #: gammu/gammu.c:214
 msgid "Phones"
-msgstr ""
+msgstr "Telefoner"
 
 #: gammu/gammu.c:259
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Diverse"
 
 #: gammu/gammu.c:337
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
-msgstr ""
+msgstr "Det finns en nyare stabil version av Gammu tillgänglig! (%s istället för %s)\n"
 
 #: gammu/gammu.c:355
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
-msgstr ""
+msgstr "Det finns en nyare testversion av Gammu tillgänglig! (%s istället för %s)\n"
 
 #: gammu/gammu.c:368
 msgid ""
@@ -1595,10 +1596,13 @@ msgid ""
 "the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr ""
+"Detta är fri programvara.  Du kan distribuera kopior under villkoren för\n"
+"GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n"
+"Det finns INGEN GARANTI så långt som lagen tillåter.\n"
 
 #: gammu/gammu.c:393
 msgid "standard input"
-msgstr ""
+msgstr "standard in"
 
 #: gammu/gammu.c:404
 #, c-format
@@ -1640,15 +1644,15 @@ msgstr ""
 
 #: gammu/gammu.c:729
 msgid "Memory (phonebooks and calls)"
-msgstr ""
+msgstr "Minne (telefonböcker och samtal)"
 
 #: gammu/gammu.c:730
 msgid "Filesystem"
-msgstr ""
+msgstr "Filsystem"
 
 #: gammu/gammu.c:731
 msgid "Logo and pictures"
-msgstr ""
+msgstr "Logotyp och bilder"
 
 #: gammu/gammu.c:732
 msgid "Ringtones"
@@ -1664,15 +1668,15 @@ msgstr ""
 
 #: gammu/gammu.c:735
 msgid "Notes"
-msgstr ""
+msgstr "Anteckningar"
 
 #: gammu/gammu.c:736
 msgid "Date, time and alarms"
-msgstr ""
+msgstr "Datum, tid och alarm"
 
 #: gammu/gammu.c:737
 msgid "Categories"
-msgstr ""
+msgstr "Kategorier"
 
 #: gammu/gammu.c:739
 msgid "Backing up and restoring"
@@ -1708,7 +1712,7 @@ msgstr "Telefoninformation"
 
 #: gammu/gammu.c:753
 msgid "Phone settings"
-msgstr ""
+msgstr "Telefoninställningar"
 
 #: gammu/gammu.c:755
 msgid "Dumps decoding"
@@ -2489,7 +2493,7 @@ msgstr ""
 
 #: gammu/misc.c:924 gammu/misc.c:1450 gammu/misc.c:1453 gammu/mms.c:102
 msgid "enabled"
-msgstr ""
+msgstr "aktiverad"
 
 #: gammu/misc.c:926 gammu/misc.c:1451 gammu/misc.c:1454 gammu/mms.c:104
 msgid "disabled"
@@ -2505,7 +2509,7 @@ msgstr ""
 
 #: gammu/misc.c:948 gammu/mms.c:71
 msgid "Sender"
-msgstr ""
+msgstr "Avsändare"
 
 #: gammu/misc.c:954
 #, c-format
@@ -2585,20 +2589,20 @@ msgstr ""
 
 #: gammu/misc.c:1335 gammu/misc.c:1938
 msgid "On"
-msgstr ""
+msgstr "På"
 
 #: gammu/misc.c:1337 gammu/misc.c:1924
 msgid "Off"
-msgstr ""
+msgstr "Av"
 
 #: gammu/misc.c:1339
 msgid "Proxy"
-msgstr ""
+msgstr "Proxyserver"
 
 #: gammu/misc.c:1340 gammu/misc.c:1343
 #, c-format
 msgid "address \"%s\", port %i"
-msgstr ""
+msgstr "adress \"%s\", port %i"
 
 #: gammu/misc.c:1342
 msgid "Second proxy"
@@ -2606,11 +2610,11 @@ msgstr ""
 
 #: gammu/misc.c:1347 gammu/misc.c:1354 gammu/misc.c:1389 gammu/misc.c:1402
 msgid "Bearer"
-msgstr ""
+msgstr "Bärare"
 
 #: gammu/misc.c:1347
 msgid "SMS"
-msgstr ""
+msgstr "SMS"
 
 #: gammu/misc.c:1350
 msgid "Server number"
@@ -2630,23 +2634,23 @@ msgstr ""
 
 #: gammu/misc.c:1358 gammu/misc.c:1394 gammu/misc.c:1395 gammu/misc.c:1416
 msgid "IP address"
-msgstr ""
+msgstr "IP-adress"
 
 #: gammu/misc.c:1360 gammu/misc.c:1362 gammu/misc.c:1406 gammu/misc.c:1408
 msgid "Login type"
-msgstr ""
+msgstr "Inloggningstyp"
 
 #: gammu/misc.c:1360 gammu/misc.c:1406
 msgid "Manual"
-msgstr ""
+msgstr "Manuell"
 
 #: gammu/misc.c:1362 gammu/misc.c:1408
 msgid "Automatic"
-msgstr "Automatiskt"
+msgstr "Automatisk"
 
 #: gammu/misc.c:1365 gammu/misc.c:1367 gammu/misc.c:1411 gammu/misc.c:1413
 msgid "Authentication type"
-msgstr ""
+msgstr "Autentiseringstyp"
 
 #: gammu/misc.c:1365 gammu/misc.c:1411
 msgid "Normal"
@@ -2654,7 +2658,7 @@ msgstr "Normal"
 
 #: gammu/misc.c:1367 gammu/misc.c:1413
 msgid "Secure"
-msgstr ""
+msgstr "Säker"
 
 #: gammu/misc.c:1370 gammu/misc.c:1372
 msgid "Data call type"
@@ -2662,11 +2666,11 @@ msgstr ""
 
 #: gammu/misc.c:1370
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #: gammu/misc.c:1372
 msgid "Analogue"
-msgstr ""
+msgstr "Analog"
 
 #: gammu/misc.c:1376 gammu/misc.c:1379 gammu/misc.c:1382
 msgid "Data call speed"
@@ -2678,7 +2682,7 @@ msgstr ""
 
 #: gammu/misc.c:1385 gammu/misc.c:1417
 msgid "User name"
-msgstr ""
+msgstr "Användarnamn"
 
 #: gammu/misc.c:1386 gammu/misc.c:1418 gammu/misc.c:1445 gammu/misc.c:1495
 msgid "Password"
@@ -2891,23 +2895,23 @@ msgstr ""
 
 #: gammu/misc.c:1910
 msgid "Level 1"
-msgstr ""
+msgstr "Nivå 1"
 
 #: gammu/misc.c:1912
 msgid "Level 2"
-msgstr ""
+msgstr "Nivå 2"
 
 #: gammu/misc.c:1914
 msgid "Level 3"
-msgstr ""
+msgstr "Nivå 3"
 
 #: gammu/misc.c:1915
 msgid "Level 4"
-msgstr ""
+msgstr "Nivå 4"
 
 #: gammu/misc.c:1916
 msgid "Level 5"
-msgstr ""
+msgstr "Nivå 5"
 
 #: gammu/misc.c:1925
 msgid "Ringing"
@@ -2923,15 +2927,15 @@ msgstr ""
 
 #: gammu/misc.c:1929 gammu/misc.c:1933
 msgid "Ascending"
-msgstr ""
+msgstr "Stigande"
 
 #: gammu/misc.c:1930
 msgid "Caller groups"
-msgstr ""
+msgstr "Samtalsgrupper"
 
 #: gammu/misc.c:1931
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: gammu/misc.c:1932
 msgid "Special"
@@ -2943,7 +2947,7 @@ msgstr ""
 
 #: gammu/misc.c:1939
 msgid "Vibrate first"
-msgstr ""
+msgstr "Vibrera först"
 
 #: gammu/misc.c:1976
 msgid " speed dial not assigned"
@@ -2968,31 +2972,31 @@ msgstr ""
 
 #: gammu/misc.c:2047
 msgid "Voice call"
-msgstr ""
+msgstr "Röstsamtal"
 
 #: gammu/misc.c:2048
 msgid "Fax call"
-msgstr ""
+msgstr "Faxsamtal"
 
 #: gammu/misc.c:2049
 msgid "Data call"
-msgstr ""
+msgstr "Datasamtal"
 
 #: gammu/misc.c:2050
 msgid "Keypad locked"
-msgstr ""
+msgstr "Knappsats låst"
 
 #: gammu/misc.c:2051
 msgid "SMS memory full"
-msgstr ""
+msgstr "SMS-minnet är fullt"
 
 #: gammu/misc.c:2088
 msgid "Station name"
-msgstr ""
+msgstr "Stationsnamn"
 
 #: gammu/misc.c:2089
 msgid "Frequency"
-msgstr ""
+msgstr "Frekvens"
 
 #: gammu/misc.c:2107
 #, c-format
@@ -3279,57 +3283,57 @@ msgstr ""
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d sekund"
+msgstr[1] "%d sekunder"
 
 #: helper/formats.h:3
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d minut"
+msgstr[1] "%d minuter"
 
 #: helper/formats.h:4
 #, c-format
 msgid "%d hour"
 msgid_plural "%d hours"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d timme"
+msgstr[1] "%d timmar"
 
 #: helper/formats.h:5
 #, c-format
 msgid "%d day"
 msgid_plural "%d days"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d dag"
+msgstr[1] "%d dagar"
 
 #: helper/formats.h:6
 #, c-format
 msgid "%d week"
 msgid_plural "%d weeks"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d vecka"
+msgstr[1] "%d veckor"
 
 #: helper/formats.h:7
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d år"
+msgstr[1] "%d år"
 
 #: helper/memory-display.c:29
 #, c-format
 msgid "Call length      : %02i:%02i:%02i\n"
-msgstr ""
+msgstr "Samtalslängd     : %02i:%02i:%02i\n"
 
 #: helper/memory-display.c:32
 msgid "Date and time"
-msgstr ""
+msgstr "Datum och tid"
 
 #: helper/memory-display.c:60 helper/memory-display.c:64
 #: helper/memory-display.c:73 helper/memory-display.c:84
 msgid "Caller group"
-msgstr ""
+msgstr "Samtalsgrupp"
 
 #: helper/memory-display.c:65
 msgid "Caller group number too high, please increase buffer in sources!"
@@ -3401,43 +3405,43 @@ msgstr ""
 
 #: helper/memory-display.c:132
 msgid "First name"
-msgstr ""
+msgstr "Förnamn"
 
 #: helper/memory-display.c:133
 msgid "Formal name"
-msgstr ""
+msgstr "Tilltalsnamn"
 
 #: helper/memory-display.c:134
 msgid "Nick name"
-msgstr ""
+msgstr "Smeknamn"
 
 #: helper/memory-display.c:135
 msgid "Company"
-msgstr ""
+msgstr "Företag"
 
 #: helper/memory-display.c:136
 msgid "Job title"
-msgstr ""
+msgstr "Jobbtitel"
 
 #: helper/memory-display.c:137
 msgid "Street address"
-msgstr ""
+msgstr "Gatuadress"
 
 #: helper/memory-display.c:138
 msgid "City"
-msgstr ""
+msgstr "Stad"
 
 #: helper/memory-display.c:139
 msgid "State"
-msgstr "Tillstånd"
+msgstr ""
 
 #: helper/memory-display.c:140
 msgid "Zip code"
-msgstr ""
+msgstr "Postnummer"
 
 #: helper/memory-display.c:141
 msgid "Country"
-msgstr ""
+msgstr "Land"
 
 #: helper/memory-display.c:142
 msgid "Work street address"
@@ -3666,48 +3670,48 @@ msgstr "Lästa"
 #: helper/message-display.c:163 helper/message-display.c:280
 #, c-format
 msgid "UnRead"
-msgstr ""
+msgstr "Olästa"
 
 #: helper/message-display.c:164 helper/message-display.c:281
 #, c-format
 msgid "UnSent"
-msgstr ""
+msgstr "Ej skickade"
 
 #: helper/message-display.c:168 helper/message-display.c:268
 msgid "Remote number"
 msgid_plural "Remote numbers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Fjärrnummer"
+msgstr[1] "Fjärrnummer"
 
 #: helper/message-display.c:172 helper/message-display.c:238
 msgid "Reference number"
-msgstr ""
+msgstr "Referensnummer"
 
 #: helper/message-display.c:174 helper/message-display.c:222
 msgid "SMSC number"
-msgstr ""
+msgstr "SMSC-nummer"
 
 #: helper/message-display.c:175
 msgid "SMSC response"
-msgstr ""
+msgstr "SMSC-svar"
 
 #: helper/message-display.c:176
 msgid "Delivery status"
-msgstr ""
+msgstr "Leveransstatus"
 
 #: helper/message-display.c:177
 msgid "Details"
-msgstr ""
+msgstr "Detaljer"
 
 #: helper/message-display.c:180 helper/message-display.c:185
 #, c-format
 msgid "Temporary error, "
-msgstr ""
+msgstr "Temporärt fel, "
 
 #: helper/message-display.c:182
 #, c-format
 msgid "Permanent error, "
-msgstr ""
+msgstr "Permanent fel, "
 
 #: helper/message-display.c:188
 #, c-format
@@ -3812,7 +3816,7 @@ msgstr ""
 
 #: helper/message-display.c:218 helper/message-display.c:235
 msgid "SMS message"
-msgstr ""
+msgstr "SMS-meddelande"
 
 #: helper/message-display.c:220
 msgid "Saved"
@@ -4044,22 +4048,22 @@ msgstr ""
 
 #: helper/message-display.c:525
 msgid "Number of bits"
-msgstr ""
+msgstr "Antal bitar"
 
 #: helper/message-display.c:527
 msgid "UDH"
-msgstr ""
+msgstr "UDH"
 
 #: helper/message-display.c:543
 msgid "Whole PDU"
-msgstr ""
+msgstr "Hela PDU"
 
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
 msgid "Warning"
-msgstr ""
+msgstr "Varning"
 
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
 msgid "Information"
-msgstr ""
+msgstr "Information"
