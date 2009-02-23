@@ -38,7 +38,7 @@ if (MINGW)
 endif (MINGW)
 
 # Set version
-set (VERSION "1.22.96" CACHE INTERNAL "")
+set (VERSION "1.23.0" CACHE INTERNAL "")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\1" "VERSION_MAJOR" "${VERSION}")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\2" "VERSION_MINOR" "${VERSION}")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\3" "VERSION_PATCH" "${VERSION}")
