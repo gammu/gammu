@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-16 11:48+0100\n"
+"POT-Creation-Date: 2009-02-24 10:05+0100\n"
 "PO-Revision-Date: 2009-02-19 00:16+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: none\n"
@@ -1582,12 +1582,15 @@ msgstr "Diverse"
 #: gammu/gammu.c:337
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
-msgstr "Det finns en nyare stabil version av Gammu tillgänglig! (%s istället för %s)\n"
+msgstr ""
+"Det finns en nyare stabil version av Gammu tillgänglig! (%s istället för %"
+"s)\n"
 
 #: gammu/gammu.c:355
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
-msgstr "Det finns en nyare testversion av Gammu tillgänglig! (%s istället för %s)\n"
+msgstr ""
+"Det finns en nyare testversion av Gammu tillgänglig! (%s istället för %s)\n"
 
 #: gammu/gammu.c:368
 msgid ""
@@ -1860,7 +1863,7 @@ msgstr ""
 
 #: gammu/memory.c:109 gammu/misc.c:1720 gammu/misc.c:2085
 msgid "Entry is empty"
-msgstr ""
+msgstr "Posten är tom"
 
 #: gammu/memory.c:121
 #, c-format
@@ -1957,7 +1960,7 @@ msgstr ""
 #: gammu/message.c:176
 #, c-format
 msgid "Pager"
-msgstr ""
+msgstr "Personsökare"
 
 #: gammu/message.c:180
 msgid "Validity"
@@ -2943,7 +2946,7 @@ msgstr ""
 
 #: gammu/misc.c:1934
 msgid "Personal"
-msgstr ""
+msgstr "Personligt"
 
 #: gammu/misc.c:1939
 msgid "Vibrate first"
@@ -3433,7 +3436,7 @@ msgstr "Stad"
 
 #: helper/memory-display.c:139
 msgid "State"
-msgstr ""
+msgstr "Tillstånd"
 
 #: helper/memory-display.c:140
 msgid "Zip code"
