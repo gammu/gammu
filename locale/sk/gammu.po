@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-16 11:48+0100\n"
+"POT-Creation-Date: 2009-02-24 10:05+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -268,11 +268,11 @@ msgstr ""
 #: gammu/backup.c:943 gammu/backup.c:1548 gammu/calendar.c:222
 #: gammu/calendar.c:879
 msgid "Phone"
-msgstr ""
+msgstr "Telefón"
 
 #: gammu/backup.c:944 gammu/backup.c:1549 gammu/misc.c:217
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #: gammu/backup.c:945
 msgid "File created by"
@@ -497,7 +497,7 @@ msgstr ""
 
 #: gammu/calendar.c:41 gammu/calendar.c:692
 msgid "Call"
-msgstr ""
+msgstr "Volať"
 
 #: gammu/calendar.c:44 gammu/calendar.c:695
 msgid "Meeting"
@@ -521,7 +521,7 @@ msgstr ""
 
 #: gammu/calendar.c:59 gammu/calendar.c:710 gammu/calendar.c:815
 msgid "Alarm"
-msgstr ""
+msgstr "Upozornenie"
 
 #: gammu/calendar.c:62 gammu/calendar.c:713
 msgid "Daily alarm"
@@ -609,7 +609,7 @@ msgstr ""
 
 #: gammu/calendar.c:141
 msgid "Start"
-msgstr ""
+msgstr "Začiatok"
 
 #: gammu/calendar.c:148
 msgid "Stop"
@@ -637,7 +637,7 @@ msgstr ""
 #: helper/memory-display.c:123 helper/message-display.c:430
 #, c-format
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: gammu/calendar.c:207 gammu/calendar.c:884
 msgid "Description"
@@ -652,7 +652,7 @@ msgstr ""
 #: gammu/memory.c:146 gammu/misc.c:1679 gammu/misc.c:1712 gammu/misc.c:1973
 #: gammu/misc.c:2082
 msgid "Location"
-msgstr ""
+msgstr "Umiestnenie"
 
 #: gammu/calendar.c:227 gammu/calendar.c:835 helper/memory-display.c:56
 msgid "Private"
@@ -660,11 +660,11 @@ msgstr ""
 
 #: gammu/calendar.c:229
 msgid "Yes"
-msgstr ""
+msgstr "Áno"
 
 #: gammu/calendar.c:229
 msgid "No"
-msgstr ""
+msgstr "Nie"
 
 #: gammu/calendar.c:241 gammu/calendar.c:247 gammu/calendar.c:252
 #: gammu/calendar.c:864 gammu/calendar.c:870
@@ -841,7 +841,7 @@ msgstr ""
 
 #: gammu/calendar.c:516 gammu/calendar.c:519 gammu/mms.c:95
 msgid "Date"
-msgstr ""
+msgstr "Dátum"
 
 #: gammu/calendar.c:517
 msgid "Every day"
@@ -878,11 +878,11 @@ msgstr ""
 #: gammu/calendar.c:774 gammu/calendar.c:793 gammu/message.c:101
 #: gammu/misc.c:1904 gammu/misc.c:1947
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámy"
 
 #: gammu/calendar.c:777
 msgid "Priority"
-msgstr ""
+msgstr "Priorita"
 
 #: gammu/calendar.c:780
 msgid "Low"
@@ -898,7 +898,7 @@ msgstr ""
 
 #: gammu/calendar.c:789
 msgid "None"
-msgstr ""
+msgstr "Žiadne"
 
 #: gammu/calendar.c:800
 msgid "Due time"
@@ -910,7 +910,7 @@ msgstr ""
 
 #: gammu/calendar.c:810
 msgid "Completed"
-msgstr ""
+msgstr "Dokončené"
 
 #: gammu/calendar.c:845 gammu/calendar.c:850 helper/memory-display.c:39
 #: helper/memory-display.c:49 helper/memory-display.c:51
@@ -1190,7 +1190,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:867
 msgid "Bluetooth"
-msgstr ""
+msgstr "Bluetooth"
 
 #: gammu/depend/nokia/dct4.c:883
 msgid "UEM"
@@ -1462,7 +1462,7 @@ msgstr ""
 #: gammu/files.c:160 gammu/files.c:173 gammu/files.c:199 gammu/files.c:324
 #, c-format
 msgid "Folder"
-msgstr ""
+msgstr "Zložka"
 
 #: gammu/files.c:184 gammu/files.c:315
 #, c-format
@@ -1556,7 +1556,7 @@ msgstr ""
 #: gammu/misc.c:1722 gammu/misc.c:1987 gammu/mms.c:112
 #: helper/memory-display.c:130 helper/message-display.c:242
 msgid "Name"
-msgstr ""
+msgstr "Položka"
 
 #: gammu/gammu.c:135
 #, c-format
@@ -1633,7 +1633,7 @@ msgstr ""
 
 #: gammu/gammu.c:727
 msgid "Calls"
-msgstr ""
+msgstr "Hovory"
 
 #: gammu/gammu.c:728
 msgid "SMS and EMS"
@@ -1653,7 +1653,7 @@ msgstr ""
 
 #: gammu/gammu.c:732
 msgid "Ringtones"
-msgstr ""
+msgstr "Zvonenia"
 
 #: gammu/gammu.c:733
 msgid "Calendar notes"
@@ -1918,7 +1918,7 @@ msgstr ""
 
 #: gammu/message.c:92
 msgid "Not supported"
-msgstr ""
+msgstr "Nepodporované"
 
 #: gammu/message.c:104
 msgid "Service reply"
@@ -1931,7 +1931,7 @@ msgstr ""
 
 #: gammu/message.c:168 gammu/misc.c:1988 gammu/misc.c:2185
 msgid "Number"
-msgstr ""
+msgstr "Číslo"
 
 #: gammu/message.c:169
 msgid "Default number"
@@ -2046,7 +2046,7 @@ msgstr ""
 
 #: gammu/message.c:608
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: gammu/message.c:610
 msgid "phone"
@@ -2125,23 +2125,23 @@ msgstr ""
 
 #: gammu/misc.c:190 gammu/search.c:89
 msgid "Manufacturer"
-msgstr ""
+msgstr "Výrobca"
 
 #: gammu/misc.c:193 gammu/search.c:101
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #: gammu/misc.c:199
 msgid "Firmware"
-msgstr ""
+msgstr "Firmware"
 
 #: gammu/misc.c:211
 msgid "Hardware"
-msgstr ""
+msgstr "Hardvér"
 
 #: gammu/misc.c:222
 msgid "Original IMEI"
-msgstr ""
+msgstr "Pôvodné číslo IMEI"
 
 #: gammu/misc.c:229
 msgid "Manufactured"
@@ -2149,11 +2149,11 @@ msgstr ""
 
 #: gammu/misc.c:235
 msgid "Product code"
-msgstr ""
+msgstr "Kód produktu"
 
 #: gammu/misc.c:245
 msgid "SIM IMSI"
-msgstr ""
+msgstr "SIM IMSI"
 
 #: gammu/misc.c:275
 msgid "Call info"
@@ -2239,7 +2239,7 @@ msgstr ""
 
 #: gammu/misc.c:365
 msgid "Todos"
-msgstr ""
+msgstr "Úlohy"
 
 #: gammu/misc.c:369
 msgid "Calendar"
@@ -2494,7 +2494,7 @@ msgstr ""
 
 #: gammu/misc.c:926 gammu/misc.c:1451 gammu/misc.c:1454 gammu/mms.c:104
 msgid "disabled"
-msgstr ""
+msgstr "zakázané"
 
 #: gammu/misc.c:929
 msgid "Bitmap ID"
@@ -2644,7 +2644,7 @@ msgstr ""
 
 #: gammu/misc.c:1362 gammu/misc.c:1408
 msgid "Automatic"
-msgstr ""
+msgstr "Automatický"
 
 #: gammu/misc.c:1365 gammu/misc.c:1367 gammu/misc.c:1411 gammu/misc.c:1413
 msgid "Authentication type"
@@ -2652,7 +2652,7 @@ msgstr ""
 
 #: gammu/misc.c:1365 gammu/misc.c:1411
 msgid "Normal"
-msgstr ""
+msgstr "Normálna"
 
 #: gammu/misc.c:1367 gammu/misc.c:1413
 msgid "Secure"
@@ -2684,7 +2684,7 @@ msgstr ""
 
 #: gammu/misc.c:1386 gammu/misc.c:1418 gammu/misc.c:1445 gammu/misc.c:1495
 msgid "Password"
-msgstr ""
+msgstr "Heslo"
 
 #: gammu/misc.c:1389
 msgid "USSD"
@@ -3120,7 +3120,7 @@ msgstr ""
 
 #: gammu/mms.c:100
 msgid "Delivery report"
-msgstr ""
+msgstr "Potvrdenie o doručení"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
@@ -3437,7 +3437,7 @@ msgstr ""
 
 #: helper/memory-display.c:139
 msgid "State"
-msgstr ""
+msgstr "Stav"
 
 #: helper/memory-display.c:140
 msgid "Zip code"
@@ -3664,12 +3664,12 @@ msgstr ""
 #: helper/message-display.c:225 helper/message-display.c:278
 #, c-format
 msgid "Sent"
-msgstr ""
+msgstr "Odoslané"
 
 #: helper/message-display.c:162 helper/message-display.c:279
 #, c-format
 msgid "Read"
-msgstr ""
+msgstr "Prečítané"
 
 #: helper/message-display.c:163 helper/message-display.c:280
 #, c-format

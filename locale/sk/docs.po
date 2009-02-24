@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.22.95\n"
+"Project-Id-Version: Gammu-docs 1.23.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-16 14:49+0100\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
@@ -139,11 +139,10 @@ msgstr ""
 msgid "Commands can be specified with or without leading --."
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:39
 #, no-wrap
 msgid "Calls"
-msgstr ""
+msgstr "Hovory"
 
 # type: TP
 #: docs/user/gammu.1:40
@@ -1834,11 +1833,10 @@ msgstr ""
 msgid "B<setbitmap WALLPAPER>I< fileID>"
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:784
 #, no-wrap
 msgid "Ringtones"
-msgstr ""
+msgstr "Zvonenia"
 
 # type: TP
 #: docs/user/gammu.1:874

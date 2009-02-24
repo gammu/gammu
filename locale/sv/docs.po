@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.22.95\n"
+"Project-Id-Version: Gammu-docs 1.23.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-16 14:49+0100\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
@@ -1053,11 +1053,10 @@ msgstr ""
 msgid "B<sendsms WAPSETTINGS>I< destination file location DATA|GPRS [-report] [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [-save [-folder number]] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]>"
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:441
 #, no-wrap
 msgid "Memory (phonebooks and calls)"
-msgstr ""
+msgstr "Minne (telefonböcker och samtal)"
 
 # type: TP
 #: docs/user/gammu.1:442 docs/user/gammu.1:1091 docs/user/gammu.1:1250
@@ -1483,11 +1482,10 @@ msgstr ""
 msgid "B<searchmemory>I< text>"
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:608
 #, no-wrap
 msgid "Filesystem"
-msgstr ""
+msgstr "Filsystem"
 
 # type: TP
 #: docs/user/gammu.1:609
@@ -1676,11 +1674,10 @@ msgstr ""
 msgid "B<setfileattrib>I< folderID [-system] [-readonly] [-hidden] [-protected]>"
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:690
 #, no-wrap
 msgid "Logo and pictures"
-msgstr ""
+msgstr "Logotyp och bilder"
 
 # type: TP
 #: docs/user/gammu.1:691
@@ -2011,11 +2008,10 @@ msgstr ""
 msgid "B<savefile TODO>I< target.vcs file location>"
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:1221
 #, no-wrap
 msgid "Notes"
-msgstr ""
+msgstr "Anteckningar"
 
 # type: TP
 #: docs/user/gammu.1:1222
@@ -2023,11 +2019,10 @@ msgstr ""
 msgid "B<getallnotes>"
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:1226
 #, no-wrap
 msgid "Date, time and alarms"
-msgstr ""
+msgstr "Datum, tid och alarm"
 
 # type: TP
 #: docs/user/gammu.1:1227
@@ -2083,11 +2078,10 @@ msgid ""
 "phone and use Gammu. See gammurc(5) for details."
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:1249
 #, no-wrap
 msgid "Categories"
-msgstr ""
+msgstr "Kategorier"
 
 # type: SS
 #: docs/user/gammu.1:1365
@@ -2352,11 +2346,10 @@ msgstr ""
 msgid "B<siemenssatnetmon>"
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:1633
 #, no-wrap
 msgid "Network"
-msgstr ""
+msgstr "Nätverk"
 
 # type: TP
 #: docs/user/gammu.1:1634
@@ -2547,11 +2540,10 @@ msgstr ""
 msgid "Show the most important phone data."
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:2020
 #, no-wrap
 msgid "Phone settings"
-msgstr ""
+msgstr "Telefoninställningar"
 
 # type: TP
 #: docs/user/gammu.1:2024
