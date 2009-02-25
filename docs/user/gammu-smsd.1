@@ -67,6 +67,8 @@ differently. Default is "GammuSMSD".
 
 .SH EXAMPLE
 
+.SS Linux/Unix Examples
+
 .TP
 Start SMSD as a deamon on Linux:
 
@@ -76,6 +78,9 @@ gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-d
 Start SMSD as a deamon on Linux with reduced privileges:
 
 gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon \-\-user gammu \-\-group gammu
+
+
+.SS Windows Service Examples
 
 .TP
 Install Gammu SMSD Windows service:
@@ -93,6 +98,19 @@ gammu\-smsd.exe \-c c:\\Gammu\\smsdrc\-2 \-n Gammu\-second\-phone \-i
 To uninstall a Windows service:
 
 gammu\-smsd.exe \-u
+
+.SS Troubleshooting Windows Service
+
+If Gammu fails to start as a Windows service (you will usually get "Error
+1053: The service did not respond to the start or control request in a timely
+fashion"), first check your SMSD logs. If they do not contain any useful hint,
+try starting SMSD manually with exactly same parameters as you installed the
+service (without \-i), for example:
+
+    gammu-smsd.exe -c smsdrc
+
+You now should be able to get errors from SMSD even if it fails to start as a
+service.
 
 .SH SEE ALSO
 gammu\-smsdrc(5), gammu(1), gammu\-smsd\-inject(1), gammu\-smsd\-monitor(1)

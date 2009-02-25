@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.23.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-16 14:49+0100\n"
+"POT-Creation-Date: 2009-02-25 09:17+0100\n"
 "PO-Revision-Date: 2009-01-27 14:06+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2956,7 +2956,7 @@ msgstr ""
 
 # type: SH
 #: docs/user/gammu.1:2246 docs/user/gammurc.5:262 docs/user/gammu-smsdrc.5:375
-#: docs/user/gammu-smsd.1:103 docs/user/gammu-smsd-inject.1:37
+#: docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:37
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:100
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
@@ -2975,7 +2975,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu.1:2253 docs/user/gammurc.5:268 docs/user/gammu-smsdrc.5:381
-#: docs/user/gammu-smsd.1:109 docs/user/gammu-smsd-inject.1:43
+#: docs/user/gammu-smsd.1:127 docs/user/gammu-smsd-inject.1:43
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:106
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
@@ -2987,7 +2987,7 @@ msgstr ""
 
 # type: SH
 #: docs/user/gammu.1:2254 docs/user/gammurc.5:268 docs/user/gammu-smsdrc.5:381
-#: docs/user/gammu-smsd.1:109 docs/user/gammu-smsd-inject.1:43
+#: docs/user/gammu-smsd.1:127 docs/user/gammu-smsd-inject.1:43
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:106
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
@@ -3031,7 +3031,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu.1:2274 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:382
-#: docs/user/gammu-smsd.1:111 docs/user/gammu-smsd-inject.1:45
+#: docs/user/gammu-smsd.1:129 docs/user/gammu-smsd-inject.1:45
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:107
 #: docs/user/gammu-smsd-mysql.7:28 docs/user/gammu-smsd-pgsql.7:28
@@ -3041,7 +3041,7 @@ msgstr ""
 
 # type: SH
 #: docs/user/gammu.1:2275 docs/user/gammurc.5:260 docs/user/gammu-smsdrc.5:373
-#: docs/user/gammu-smsd.1:101 docs/user/gammu-smsd-inject.1:35
+#: docs/user/gammu-smsd.1:119 docs/user/gammu-smsd-inject.1:35
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:98
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
 #: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:388
@@ -3085,7 +3085,7 @@ msgstr ""
 
 # type: SH
 #: docs/user/gammu.1:2301 docs/user/gammurc.5:258 docs/user/gammu-smsdrc.5:369
-#: docs/user/gammu-smsd.1:97 docs/user/gammu-smsd-inject.1:33
+#: docs/user/gammu-smsd.1:115 docs/user/gammu-smsd-inject.1:33
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:96
 #: docs/user/gammu-smsd-mysql.7:17 docs/user/gammu-smsd-pgsql.7:17
@@ -3645,7 +3645,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:262 docs/user/gammu-smsdrc.5:375
-#: docs/user/gammu-smsd.1:103 docs/user/gammu-smsd-inject.1:37
+#: docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:37
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:100
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
 #: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:390
@@ -3656,7 +3656,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:265 docs/user/gammu-smsdrc.5:378
-#: docs/user/gammu-smsd.1:106 docs/user/gammu-smsd-inject.1:40
+#: docs/user/gammu-smsd.1:124 docs/user/gammu-smsd-inject.1:40
 #: docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:103
 #: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24
 #: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:393
@@ -4350,7 +4350,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:373 docs/user/gammu-smsd.1:101
+#: docs/user/gammu-smsdrc.5:373 docs/user/gammu-smsd.1:119
 msgid ""
 "gammu-smsd-files(7), gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7), gammu-smsd-tables(7)"
@@ -4574,83 +4574,124 @@ msgid ""
 "differently. Default is \"GammuSMSD\"."
 msgstr ""
 
-# type: TP
+# type: SS
 #: docs/user/gammu-smsd.1:70
+#, no-wrap
+msgid "Linux/Unix Examples"
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsd.1:72
 #, no-wrap
 msgid "Start SMSD as a deamon on Linux:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:74
+#: docs/user/gammu-smsd.1:76
 msgid ""
 "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon"
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsd.1:75
+#: docs/user/gammu-smsd.1:77
 #, no-wrap
 msgid "Start SMSD as a deamon on Linux with reduced privileges:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:79
+#: docs/user/gammu-smsd.1:81
 msgid ""
 "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon "
 "--user gammu --group gammu"
 msgstr ""
 
-# type: TP
-#: docs/user/gammu-smsd.1:80
+# type: SS
+#: docs/user/gammu-smsd.1:83
 #, no-wrap
-msgid "Install Gammu SMSD Windows service:"
-msgstr ""
-
-# type: Plain text
-#: docs/user/gammu-smsd.1:84
-msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc -i"
+msgid "Windows Service Examples"
 msgstr ""
 
 # type: TP
 #: docs/user/gammu-smsd.1:85
 #, no-wrap
-msgid "Install two instances of SMSD Windows service:"
+msgid "Install Gammu SMSD Windows service:"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:89
+msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc -i"
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsd.1:90
+#, no-wrap
+msgid "Install two instances of SMSD Windows service:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:94
 msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-1 -n Gammu-first-phone -i"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:91
+#: docs/user/gammu-smsd.1:96
 msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-2 -n Gammu-second-phone -i"
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsd.1:92
+#: docs/user/gammu-smsd.1:97
 #, no-wrap
 msgid "To uninstall a Windows service:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:96
+#: docs/user/gammu-smsd.1:101
 msgid "gammu-smsd.exe -u"
 msgstr ""
 
+# type: SS
+#: docs/user/gammu-smsd.1:102
+#, no-wrap
+msgid "Troubleshooting Windows Service"
+msgstr ""
+
 # type: Plain text
-#: docs/user/gammu-smsd.1:99
+#: docs/user/gammu-smsd.1:109
+msgid ""
+"If Gammu fails to start as a Windows service (you will usually get \"Error "
+"1053: The service did not respond to the start or control request in a "
+"timely fashion\"), first check your SMSD logs. If they do not contain any "
+"useful hint, try starting SMSD manually with exactly same parameters as you "
+"installed the service (without -i), for example:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:111
+#, no-wrap
+msgid "    gammu-smsd.exe -c smsdrc\n"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:114
+msgid ""
+"You now should be able to get errors from SMSD even if it fails to start as "
+"a service."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:117
 msgid "gammu-smsdrc(5), gammu(1), gammu-smsd-inject(1), gammu-smsd-monitor(1)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:113 docs/user/gammu-smsd-inject.1:47
+#: docs/user/gammu-smsd.1:131 docs/user/gammu-smsd-inject.1:47
 #: docs/user/gammu-smsd-monitor.1:55
 msgid ""
 "Before reporting a bug, please enable verbose logging in SMSD configuration:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:116 docs/user/gammu-smsd-inject.1:50
+#: docs/user/gammu-smsd.1:134 docs/user/gammu-smsd-inject.1:50
 #: docs/user/gammu-smsd-monitor.1:58
 #, no-wrap
 msgid ""
@@ -4659,7 +4700,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:119
+#: docs/user/gammu-smsd.1:137
 #, no-wrap
 msgid ""
 "    [smsd]\n"
@@ -4667,7 +4708,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:120 docs/user/gammu-smsd-inject.1:51
+#: docs/user/gammu-smsd.1:138 docs/user/gammu-smsd-inject.1:51
 #: docs/user/gammu-smsd-monitor.1:59
 msgid "and include this verbose log within bug report."
 msgstr ""
