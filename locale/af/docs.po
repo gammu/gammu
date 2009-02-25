@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.23.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-25 09:17+0100\n"
+"POT-Creation-Date: 2009-02-25 17:36+0100\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2872,7 +2872,7 @@ msgstr ""
 # type: SH
 #: docs/user/gammu.1:2206 docs/user/gammurc.5:196 docs/user/gammu-smsdrc.5:298
 #: docs/user/gammu-smsd.1:68 docs/user/gammu-smsd-files.7:63
-#: docs/user/gammu-smsd-tables.7:373
+#: docs/user/gammu-smsd-tables.7:374
 #, no-wrap
 msgid "EXAMPLE"
 msgstr ""
@@ -2959,7 +2959,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:100
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
-#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:390
+#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:391
 #, no-wrap
 msgid "COPYRIGHT"
 msgstr ""
@@ -2978,7 +2978,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:106
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
-#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:396
+#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:397
 msgid ""
 "This is free software: you are free to change and redistribute it.  There is "
 "NO WARRANTY, to the extent permitted by law."
@@ -2990,7 +2990,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:106
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
-#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:396
+#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:397
 #, no-wrap
 msgid "REPORTING BUGS"
 msgstr ""
@@ -3034,7 +3034,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:107
 #: docs/user/gammu-smsd-mysql.7:28 docs/user/gammu-smsd-pgsql.7:28
-#: docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:397
+#: docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:398
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr ""
 
@@ -3043,7 +3043,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:119 docs/user/gammu-smsd-inject.1:35
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:98
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
-#: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:388
+#: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:389
 #, no-wrap
 msgid "AUTHOR"
 msgstr ""
@@ -3088,7 +3088,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:96
 #: docs/user/gammu-smsd-mysql.7:17 docs/user/gammu-smsd-pgsql.7:17
-#: docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:383
+#: docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:384
 #, no-wrap
 msgid "SEE ALSO"
 msgstr ""
@@ -3647,7 +3647,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:37
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:100
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
-#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:390
+#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:391
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
 "E<lt>michal@cihar.comE<gt>."
@@ -3658,7 +3658,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:124 docs/user/gammu-smsd-inject.1:40
 #: docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:103
 #: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24
-#: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:393
+#: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:394
 msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
 "version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
@@ -5163,7 +5163,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-tables.7:388
+#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-tables.7:389
 msgid "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 msgstr ""
 
@@ -5334,20 +5334,20 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:48 docs/user/gammu-smsd-tables.7:105
-#: docs/user/gammu-smsd-tables.7:183 docs/user/gammu-smsd-tables.7:212
-#: docs/user/gammu-smsd-tables.7:270
+#: docs/user/gammu-smsd-tables.7:184 docs/user/gammu-smsd-tables.7:213
+#: docs/user/gammu-smsd-tables.7:271
 msgid "Fields description:"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:50 docs/user/gammu-smsd-tables.7:107
-#: docs/user/gammu-smsd-tables.7:218 docs/user/gammu-smsd-tables.7:272
+#: docs/user/gammu-smsd-tables.7:219 docs/user/gammu-smsd-tables.7:273
 msgid "B<UpdatedInDB> (timestamp)"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:52 docs/user/gammu-smsd-tables.7:109
-#: docs/user/gammu-smsd-tables.7:274
+#: docs/user/gammu-smsd-tables.7:275
 msgid "when somebody (daemon, user, etc.) updated it"
 msgstr ""
 
@@ -5363,7 +5363,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:58 docs/user/gammu-smsd-tables.7:119
-#: docs/user/gammu-smsd-tables.7:187 docs/user/gammu-smsd-tables.7:298
+#: docs/user/gammu-smsd-tables.7:188 docs/user/gammu-smsd-tables.7:299
 msgid "B<Text> (text)"
 msgstr ""
 
@@ -5383,22 +5383,22 @@ msgid "decoded SMS sender number"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:66 docs/user/gammu-smsd-tables.7:127
-#: docs/user/gammu-smsd-tables.7:189 docs/user/gammu-smsd-tables.7:306
+#: docs/user/gammu-smsd-tables.7:66 docs/user/gammu-smsd-tables.7:128
+#: docs/user/gammu-smsd-tables.7:190 docs/user/gammu-smsd-tables.7:307
 msgid ""
 "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', "
 "'Default_Compression', 'Unicode_Compression'))"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:68 docs/user/gammu-smsd-tables.7:129
-#: docs/user/gammu-smsd-tables.7:308
+#: docs/user/gammu-smsd-tables.7:68 docs/user/gammu-smsd-tables.7:130
+#: docs/user/gammu-smsd-tables.7:309
 msgid "SMS text coding"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:70 docs/user/gammu-smsd-tables.7:131
-#: docs/user/gammu-smsd-tables.7:191 docs/user/gammu-smsd-tables.7:310
+#: docs/user/gammu-smsd-tables.7:70 docs/user/gammu-smsd-tables.7:132
+#: docs/user/gammu-smsd-tables.7:192 docs/user/gammu-smsd-tables.7:311
 msgid "B<UDH> (text)"
 msgstr ""
 
@@ -5408,7 +5408,7 @@ msgid "encoded User Data Header text"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:74 docs/user/gammu-smsd-tables.7:314
+#: docs/user/gammu-smsd-tables.7:74 docs/user/gammu-smsd-tables.7:315
 msgid "B<SMSCNumber> (varchar(20))"
 msgstr ""
 
@@ -5418,20 +5418,20 @@ msgid "decoded SMSC number"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:78 docs/user/gammu-smsd-tables.7:135
-#: docs/user/gammu-smsd-tables.7:193 docs/user/gammu-smsd-tables.7:318
+#: docs/user/gammu-smsd-tables.7:78 docs/user/gammu-smsd-tables.7:136
+#: docs/user/gammu-smsd-tables.7:194 docs/user/gammu-smsd-tables.7:319
 msgid "B<Class> (integer)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:80 docs/user/gammu-smsd-tables.7:137
-#: docs/user/gammu-smsd-tables.7:320
+#: docs/user/gammu-smsd-tables.7:80 docs/user/gammu-smsd-tables.7:138
+#: docs/user/gammu-smsd-tables.7:321
 msgid "SMS class or -1"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:82 docs/user/gammu-smsd-tables.7:139
-#: docs/user/gammu-smsd-tables.7:195 docs/user/gammu-smsd-tables.7:322
+#: docs/user/gammu-smsd-tables.7:82 docs/user/gammu-smsd-tables.7:140
+#: docs/user/gammu-smsd-tables.7:196 docs/user/gammu-smsd-tables.7:323
 msgid "B<TextDecoded> (varchar(160))"
 msgstr ""
 
@@ -5441,9 +5441,9 @@ msgid "decoded SMS text (for Default Alphabet/Unicode SMS)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:86 docs/user/gammu-smsd-tables.7:143
-#: docs/user/gammu-smsd-tables.7:185 docs/user/gammu-smsd-tables.7:197
-#: docs/user/gammu-smsd-tables.7:326
+#: docs/user/gammu-smsd-tables.7:86 docs/user/gammu-smsd-tables.7:144
+#: docs/user/gammu-smsd-tables.7:186 docs/user/gammu-smsd-tables.7:198
+#: docs/user/gammu-smsd-tables.7:327
 msgid "B<ID> (integer unsigned)"
 msgstr ""
 
@@ -5486,18 +5486,18 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:111 docs/user/gammu-smsd-tables.7:222
-#: docs/user/gammu-smsd-tables.7:276
+#: docs/user/gammu-smsd-tables.7:111 docs/user/gammu-smsd-tables.7:223
+#: docs/user/gammu-smsd-tables.7:277
 msgid "B<InsertIntoDB> (timestamp)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:113 docs/user/gammu-smsd-tables.7:278
+#: docs/user/gammu-smsd-tables.7:113 docs/user/gammu-smsd-tables.7:279
 msgid "when message was inserted into database"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:115 docs/user/gammu-smsd-tables.7:280
+#: docs/user/gammu-smsd-tables.7:115 docs/user/gammu-smsd-tables.7:281
 msgid "B<SendingDateTime> (timestamp)"
 msgstr ""
 
@@ -5508,262 +5508,264 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:121 docs/user/gammu-smsd-tables.7:300
-msgid "SMS text encoded using hex values"
+#: docs/user/gammu-smsd-tables.7:122
+msgid ""
+"SMS text encoded using hex values in proper coding. If you want to use "
+"TextDecoded field, keep this NULL (or empty)."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:123 docs/user/gammu-smsd-tables.7:302
+#: docs/user/gammu-smsd-tables.7:124 docs/user/gammu-smsd-tables.7:303
 msgid "B<DestinationNumber> (varchar(20))"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:125
+#: docs/user/gammu-smsd-tables.7:126
 msgid "recipient number"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:133 docs/user/gammu-smsd-tables.7:312
+#: docs/user/gammu-smsd-tables.7:134 docs/user/gammu-smsd-tables.7:313
 msgid "User Data Header encoded using hex values"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:141 docs/user/gammu-smsd-tables.7:324
+#: docs/user/gammu-smsd-tables.7:142 docs/user/gammu-smsd-tables.7:325
 msgid "SMS text in \"human readable\" form"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:145
+#: docs/user/gammu-smsd-tables.7:146
 msgid "SMS/SMS sequence ID"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:148
+#: docs/user/gammu-smsd-tables.7:149
 msgid ""
 "Please note that this number has to be unique also for sentitems table, so "
 "reusing message IDs might not be a good idea."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:150
+#: docs/user/gammu-smsd-tables.7:151
 msgid "B<MultiPart> (enum('false','true'))"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:152
+#: docs/user/gammu-smsd-tables.7:153
 msgid "info, whether there are more SMS from this sequence in outbox_multipart"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:154 docs/user/gammu-smsd-tables.7:342
+#: docs/user/gammu-smsd-tables.7:155 docs/user/gammu-smsd-tables.7:343
 msgid "B<RelativeValidity> (integer)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:156 docs/user/gammu-smsd-tables.7:344
+#: docs/user/gammu-smsd-tables.7:157 docs/user/gammu-smsd-tables.7:345
 msgid "SMS relative validity like encoded using GSM specs"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:158 docs/user/gammu-smsd-tables.7:330
+#: docs/user/gammu-smsd-tables.7:159 docs/user/gammu-smsd-tables.7:331
 msgid "B<SenderID> (text)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:160
+#: docs/user/gammu-smsd-tables.7:161
 msgid "which SMSD instance should send this one sequence"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:162
+#: docs/user/gammu-smsd-tables.7:163
 msgid "B<SendingTimeOut> (timestamp)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:164
+#: docs/user/gammu-smsd-tables.7:165
 msgid "used by SMSD instance for own targets"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:166
+#: docs/user/gammu-smsd-tables.7:167
 msgid "B<DeliveryReport> (enum('default','yes','no'))"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:168
+#: docs/user/gammu-smsd-tables.7:169
 msgid ""
 "when default is used, Delivery Report is used or not according to SMSD "
 "instance settings; yes forces Delivery Report."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:170 docs/user/gammu-smsd-tables.7:346
+#: docs/user/gammu-smsd-tables.7:171 docs/user/gammu-smsd-tables.7:347
 msgid "B<CreatorID> (text)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:173
+#: docs/user/gammu-smsd-tables.7:174
 msgid ""
 "sender identification, it has to match PhoneID in SMSD configuration to make "
 "SMSD process this message"
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsd-tables.7:177
+#: docs/user/gammu-smsd-tables.7:178
 #, no-wrap
 msgid "B<outbox_multipart>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:181
+#: docs/user/gammu-smsd-tables.7:182
 msgid "Data for outgoing multipart messages."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:199
+#: docs/user/gammu-smsd-tables.7:200
 msgid "the same meaning as values in outbox table"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:201 docs/user/gammu-smsd-tables.7:334
+#: docs/user/gammu-smsd-tables.7:202 docs/user/gammu-smsd-tables.7:335
 msgid "B<SequencePosition> (integer)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:203
+#: docs/user/gammu-smsd-tables.7:204
 msgid "info, what is SMS number in SMS sequence"
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsd-tables.7:205
+#: docs/user/gammu-smsd-tables.7:206
 #, no-wrap
 msgid "B<phones>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:210
+#: docs/user/gammu-smsd-tables.7:211
 msgid ""
 "Information about connected phones. This table is periodically refreshed and "
 "you can get information such as battery or signal level from here."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:214
+#: docs/user/gammu-smsd-tables.7:215
 msgid "B<ID> (text)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:216
+#: docs/user/gammu-smsd-tables.7:217
 msgid "PhoneID value"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:220
+#: docs/user/gammu-smsd-tables.7:221
 msgid "when this record has been updated"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:224
+#: docs/user/gammu-smsd-tables.7:225
 msgid "when this record has been created (when phone has been connected)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:226
+#: docs/user/gammu-smsd-tables.7:227
 msgid "B<TimeOut> (timestamp)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:228
+#: docs/user/gammu-smsd-tables.7:229
 msgid "when this record expires"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:230
+#: docs/user/gammu-smsd-tables.7:231
 msgid "B<Send> (boolean)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:232 docs/user/gammu-smsd-tables.7:236
+#: docs/user/gammu-smsd-tables.7:233 docs/user/gammu-smsd-tables.7:237
 msgid "currently always true"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:234
+#: docs/user/gammu-smsd-tables.7:235
 msgid "B<Receive> (boolean)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:238
+#: docs/user/gammu-smsd-tables.7:239
 msgid "B<IMEI> (text)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:240
+#: docs/user/gammu-smsd-tables.7:241
 msgid "IMEI of phone"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:242
+#: docs/user/gammu-smsd-tables.7:243
 msgid "B<Client> (text)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:244
+#: docs/user/gammu-smsd-tables.7:245
 msgid "client name, usually string Gammu with version"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:246
+#: docs/user/gammu-smsd-tables.7:247
 msgid "B<Battery> (integer)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:248
+#: docs/user/gammu-smsd-tables.7:249
 msgid "battery level (or -1 if unknown)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:250
+#: docs/user/gammu-smsd-tables.7:251
 msgid "B<Signal> (integer)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:252
+#: docs/user/gammu-smsd-tables.7:253
 msgid "signal level (or -1 if unknown)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:254
+#: docs/user/gammu-smsd-tables.7:255
 msgid "B<Sent> (integer)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:257
+#: docs/user/gammu-smsd-tables.7:258
 msgid ""
 "Number of sent SMS messages (SMSD does not reset this counter, so it might "
 "overflow)."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:259
+#: docs/user/gammu-smsd-tables.7:260
 msgid "B<Received> (integer)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:262
+#: docs/user/gammu-smsd-tables.7:263
 msgid ""
 "Number of received SMS messages (SMSD does not reset this counter, so it "
 "might overflow)."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsd-tables.7:263
+#: docs/user/gammu-smsd-tables.7:264
 #, no-wrap
 msgid "B<sentitems>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:268
+#: docs/user/gammu-smsd-tables.7:269
 msgid ""
 "Log of sent messages (and unsent ones with error code). Also if delivery "
 "reports are enabled, message state is updated after receiving delivery "
@@ -5771,22 +5773,22 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:282
+#: docs/user/gammu-smsd-tables.7:283
 msgid "when message has been sent"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:284
+#: docs/user/gammu-smsd-tables.7:285
 msgid "B<DeliveryDateTime> (timestamp)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:286
+#: docs/user/gammu-smsd-tables.7:287
 msgid "Time of receiving delivery report (if it has been enabled)."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:288
+#: docs/user/gammu-smsd-tables.7:289
 msgid ""
 "B<Status> (enum('SendingOK', 'SendingOKNoReport', 'SendingError', "
 "'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', "
@@ -5794,116 +5796,121 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:291
+#: docs/user/gammu-smsd-tables.7:292
 msgid ""
 "Status of message sending. SendingError mens that phone failed to send the "
 "message, Error indicates some other error while processing message."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:293
+#: docs/user/gammu-smsd-tables.7:294
 msgid "B<StatusError> (integer)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:296
+#: docs/user/gammu-smsd-tables.7:297
 msgid ""
 "Status of delivery from delivery report message, codes are defined in GSM "
 "specification."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:304
+#: docs/user/gammu-smsd-tables.7:301
+msgid "SMS text encoded using hex values"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd-tables.7:305
 msgid "decoded destination number for SMS"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:316
+#: docs/user/gammu-smsd-tables.7:317
 msgid "decoded number of SMSC, which sent SMS"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:328
+#: docs/user/gammu-smsd-tables.7:329
 msgid "SMS ID"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:332
+#: docs/user/gammu-smsd-tables.7:333
 msgid "which SMSD instance sent this one sequence"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:336
+#: docs/user/gammu-smsd-tables.7:337
 msgid "SMS number in SMS sequence"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:338
+#: docs/user/gammu-smsd-tables.7:339
 msgid "B<TPMR> (integer)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:340
+#: docs/user/gammu-smsd-tables.7:341
 msgid "Message Reference like in GSM specs"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:348
+#: docs/user/gammu-smsd-tables.7:349
 msgid "copied from CreatorID from outbox table, matches PhoneID"
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsd-tables.7:350
+#: docs/user/gammu-smsd-tables.7:351
 #, no-wrap
 msgid "B<pbk>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:354 docs/user/gammu-smsd-tables.7:359
+#: docs/user/gammu-smsd-tables.7:355 docs/user/gammu-smsd-tables.7:360
 msgid "Not used by SMSD currently, included only for application usage."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsd-tables.7:355
+#: docs/user/gammu-smsd-tables.7:356
 #, no-wrap
 msgid "B<pbk_groups>"
 msgstr ""
 
 # type: SH
-#: docs/user/gammu-smsd-tables.7:360
+#: docs/user/gammu-smsd-tables.7:361
 #, no-wrap
 msgid "HISTORY"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:363
+#: docs/user/gammu-smsd-tables.7:364
 msgid "History of schema versions:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:366
+#: docs/user/gammu-smsd-tables.7:367
 msgid ""
 "10 - DeliveryDateTime is now NULL when message is not delivered, added "
 "several indexes"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:368
+#: docs/user/gammu-smsd-tables.7:369
 msgid "9 - added sent/received counters to phones table"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:370
+#: docs/user/gammu-smsd-tables.7:371
 msgid "8 - introduced phones table"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:372
+#: docs/user/gammu-smsd-tables.7:373
 msgid "7 - added CreatorID to tables (it holds PhoneID if set)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:378
+#: docs/user/gammu-smsd-tables.7:379
 msgid ""
 "SQL scripts to create all needed tables for most databases are included in "
 "Gammu documentation (docs/sql). As well as some PHP scripts interacting with "
@@ -5911,18 +5918,18 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:380
+#: docs/user/gammu-smsd-tables.7:381
 msgid "For example to create SQLite tables, issue following command:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:382
+#: docs/user/gammu-smsd-tables.7:383
 #, no-wrap
 msgid "    sqlite3 smsd.db E<lt> docs/sql/sqlite.sql\n"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-tables.7:386
+#: docs/user/gammu-smsd-tables.7:387
 msgid ""
 "Database backends: gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7)"
