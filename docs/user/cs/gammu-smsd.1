@@ -71,7 +71,7 @@ instanci jinak. Výchozí jméno je "GammuSMSD".
 
 .SH PŘÍKLAD
 
-.SS "Linux/Unix Examples"
+.SS "Příklady pro Linux/Unix"
 
 .TP 
 Spuštění SMSD jako démon na Linuxu:
@@ -85,7 +85,7 @@ gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-d
 \-\-user gammu \-\-group gammu
 
 
-.SS "Windows Service Examples"
+.SS "Příklady se službou pro Windows"
 
 .TP 
 Instalace SMSD jako služba ve Windows:
@@ -104,7 +104,7 @@ Odinstalace SMSD služby ve Windows.
 
 gammu\-smsd.exe \-u
 
-.SS "Troubleshooting Windows Service"
+.SS "Problémy se službou ve Windows"
 
 If Gammu fails to start as a Windows service (you will usually get "Error
 1053: The service did not respond to the start or control request in a
@@ -114,8 +114,8 @@ installed the service (without \-i), for example:
 
     gammu\-smsd.exe \-c smsdrc
 
-You now should be able to get errors from SMSD even if it fails to start as
-a service.
+Nyní by mělo být možné dostat popis chyb i když SMSD nejde spustit jako
+služba.
 
 .SH "DALŠÍ INFORMACE"
 gammu\-smsdrc(5), gammu(1), gammu\-smsd\-inject(1), gammu\-smsd\-monitor(1)

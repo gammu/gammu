@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.23.90\n"
+"Project-Id-Version: Gammu-docs 1.23.1\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-25 17:36+0100\n"
-"PO-Revision-Date: 2009-02-16 14:52+0100\n"
+"PO-Revision-Date: 2009-02-25 18:28+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4906,7 +4906,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:70
 #, no-wrap
 msgid "Linux/Unix Examples"
-msgstr ""
+msgstr "Příklady pro Linux/Unix"
 
 # type: TP
 #: docs/user/gammu-smsd.1:72
@@ -4940,7 +4940,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:83
 #, no-wrap
 msgid "Windows Service Examples"
-msgstr ""
+msgstr "Příklady se službou pro Windows"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:85
@@ -4982,9 +4982,9 @@ msgstr "gammu-smsd.exe -u"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:102
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Troubleshooting Windows Service"
-msgstr "Odinstalace SMSD služby ve Windows."
+msgstr "Problémy se službou ve Windows"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:109
@@ -4998,9 +4998,9 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:111
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "    gammu-smsd.exe -c smsdrc\n"
-msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc -i"
+msgstr "    gammu-smsd.exe -c smsdrc\n"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:114
@@ -5008,6 +5008,8 @@ msgid ""
 "You now should be able to get errors from SMSD even if it fails to start as "
 "a service."
 msgstr ""
+"Nyní by mělo být možné dostat popis chyb i když SMSD nejde spustit jako "
+"služba."
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:117
