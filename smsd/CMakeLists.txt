@@ -119,6 +119,16 @@ install (TARGETS gsmsd gammu-smsd gammu-smsd-inject
         ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
         COMPONENT smsd
         )
+if (HAVE_SHM OR WIN32)
+    install (TARGETS gammu-smsd-monitor
+            RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
+            COMPONENT smsd
+            LIBRARY DESTINATION "${INSTALL_LIB_DIR}"
+            COMPONENT smsd
+            ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
+            COMPONENT smsd
+            )
+endif (HAVE_SHM OR WIN32)
 
 # Testing
 include(CMakeTests.txt)
