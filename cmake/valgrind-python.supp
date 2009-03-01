@@ -1179,3 +1179,11 @@
    fun:calloc
    obj:/lib*/ld-2.9*.so*
 }
+{
+   another dl hack 3
+   Memcheck:Leak
+   fun:malloc
+   obj:/lib*/ld-2.9*.so*
+   obj:/lib*/ld-2.9*.so*
+   obj:/lib*/libdl-2.9*.so*
+}
