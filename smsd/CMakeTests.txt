@@ -20,13 +20,11 @@ macro(smsd_testsuite _driver)
     if ("${_driver}" MATCHES "dbi-.*")
         # DBI error 5 from SQLITE is database locked, and the backend automatically retries
         set_tests_properties("smsd-${_driver}" PROPERTIES
-            TIMEOUT 120
             PASS_REGULAR_EXPRESSION ".999999999999999.2.6.0.100.42"
             FAIL_REGULAR_EXPRESSION "DBI error ([^5]:|[0-9][^:]);Wrong"
             )
     else ("${_driver}" MATCHES "dbi-.*")
         set_tests_properties("smsd-${_driver}" PROPERTIES
-            TIMEOUT 120
             PASS_REGULAR_EXPRESSION ".999999999999999.1.6.0.100.42"
             FAIL_REGULAR_EXPRESSION "SQL failed;Wrong"
             )
