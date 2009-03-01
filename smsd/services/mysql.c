@@ -244,6 +244,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 	long 			diff;
 	my_ulonglong		new_id;
 	size_t			locations_size = 0, locations_pos = 0;
+	char			buf[400];
 
 	*Locations = NULL;
 
@@ -380,6 +381,13 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 			}
 		}
 		locations_pos += sprintf((*Locations) + locations_pos, "%llu ", new_id);
+
+		sprintf(buf, "UPDATE phones SET Received = Received + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
+		if (SMSDMySQL_Query(Config, buf) != ERR_NONE) {
+			SMSD_Log(0, Config, "Error updating number of received messages (%s)", __FUNCTION__);
+	    		mysql_free_result(Res);
+			return ERR_UNKNOWN;
+		}
 	}
 
 	return ERR_NONE;
@@ -502,12 +510,6 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 				break;
 			}
 
-		}
-		sprintf(buf, "UPDATE phones SET Received = Received + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
-		if (SMSDMySQL_Query(Config, buf) != ERR_NONE) {
-			SMSD_Log(0, Config, "Error updating number of received messages (%s)", __FUNCTION__);
-	    		mysql_free_result(Res);
-			return ERR_UNKNOWN;
 		}
 		mysql_free_result(Res);
 	}
