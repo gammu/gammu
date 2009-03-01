@@ -278,8 +278,11 @@ GSM_Error ALCATEL_ProtocolVersionReply	(GSM_Protocol_Message msg, GSM_StateMachi
 			}
 			return ERR_NONE;
 		case AT_Reply_Error:
+			return ERR_NOTSUPPORTED;
 		case AT_Reply_CMSError:
 			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
 		default:
 			return ERR_UNKNOWNRESPONSE;
 	}
