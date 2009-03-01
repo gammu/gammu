@@ -20,6 +20,7 @@ ChangeLog
 [-] * Documentation clarification.
 [-] * Translations update.
 [-] * Actually install gammu-smsd-monitor.
+[-] * Fix recording received messages count for MySQL.
     
 20090223 - 1.23.0
 
