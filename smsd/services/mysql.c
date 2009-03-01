@@ -497,12 +497,16 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 				Config->currdeliveryreport = 0;
 			}
 
-			if (!strcmp(Row[7],"false")) break;
+			if (!strcmp(Row[7],"false")) {
+				mysql_free_result(Res);
+				break;
+			}
 
 		}
 		sprintf(buf, "UPDATE phones SET Received = Received + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
 		if (SMSDMySQL_Query(Config, buf) != ERR_NONE) {
 			SMSD_Log(0, Config, "Error updating number of received messages (%s)", __FUNCTION__);
+	    		mysql_free_result(Res);
 			return ERR_UNKNOWN;
 		}
 		mysql_free_result(Res);
