@@ -22,6 +22,7 @@ ChangeLog
 [-] * Actually install gammu-smsd-monitor.
 [-] * Fix recording received messages count for MySQL.
 [-] * Fix SMS location handling for Huawei E160 (bug #825).
+[-] * Do not probe for MPBR support all the time.
     
 20090223 - 1.23.0
 

@@ -174,7 +174,7 @@ GSM_Error MOTOROLA_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
-	Priv->PBK_SPBR = AT_NOTAVAILABLE;
+	Priv->PBK_MPBR = AT_NOTAVAILABLE;
 
  	switch (Priv->ReplyState) {
  	case AT_Reply_OK:
