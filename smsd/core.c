@@ -1012,8 +1012,10 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		/* No outbox sms - wait few seconds and escape */
 		for (j = 0; j < Config->commtimeout && !Config->shutdown; j++) {
 			sleep(1);
-			SMSD_PhoneStatus(Config);
-			Service->RefreshPhoneStatus(Config);
+			if (j % 15 == 0) {
+				SMSD_PhoneStatus(Config);
+				Service->RefreshPhoneStatus(Config);
+			}
 		}
 		return true;
 	}
