@@ -169,9 +169,6 @@ done
 for bin in $tmp/Gammu*.exe ; do
     signexe $bin "Gammu installer"
 done
-for bin in $tmp/python-gammu*.msi ; do
-    signexe $bin "python-gammu installer"
-done
 
 # We're done
 echo "Release is in $tmp directory"
