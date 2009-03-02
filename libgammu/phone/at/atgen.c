@@ -4658,6 +4658,16 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 			return ERR_NONE;
 		}
 
+		/* Try cripled standard format */
+		error = ATGEN_ParseReply(s, str,
+					"+CPBR: (@i-@i)",
+					&Priv->FirstMemoryEntry,
+					&Priv->MemorySize);
+		if (error == ERR_NONE) {
+			/* Calculate memory size from last position we got from phone */
+			Priv->MemorySize = Priv->MemorySize + 1 - Priv->FirstMemoryEntry;
+			return ERR_NONE;
+		}
 
 		/* We don't get reply on first attempt on some Samsung phones */
 		if (Priv->Manufacturer == AT_Samsung) {
