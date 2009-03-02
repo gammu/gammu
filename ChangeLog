@@ -18,6 +18,7 @@ ChangeLog
 2009???? - 1.23.90
 
 [-] * Fixed decoding of Samsung memory entries.
+[-] * Properly handle corrupted messages from Nokia phones (bug #811).
     
 20090302 - 1.23.1
 
