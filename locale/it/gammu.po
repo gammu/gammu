@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.23.1\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-16 11:48+0100\n"
+"POT-Creation-Date: 2009-03-02 14:49+0100\n"
 "PO-Revision-Date: 2008-08-13 11:41+0200\n"
 "Last-Translator: Alessio Gaeta <alga777@libero.it>\n"
 "Language-Team: Language =it\n"
@@ -1377,9 +1377,9 @@ msgid " (Text: name (always the only one)"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1361
-#, c-format
-msgid " (Text: email adress)"
-msgstr ""
+#, fuzzy, c-format
+msgid " (Text: email address)"
+msgstr "Indirizzo WWW     "
 
 #: gammu/depend/nokia/dct4.c:1362
 #, c-format
