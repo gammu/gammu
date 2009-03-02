@@ -36,7 +36,7 @@ gammuloc = /dev/null
 loglevel = textall
 
 [smsd]
-commtimeout = 1
+commtimeout = 5
 debuglevel = 255
 logfile = stderr
 runonreceive = @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.sh
