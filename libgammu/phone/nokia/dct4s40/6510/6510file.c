@@ -2214,7 +2214,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	i = 176;
 	GSM_SetDefaultSMSData(&sms->SMS[0]);
 	Layout.TPDCS = 255;
-	smprintf(s,"file type %02x\n",FFF->Buffer[i]);
+	smprintf(s,"file type 0x%02x\n",FFF->Buffer[i]);
 	switch (FFF->Buffer[i]) {
 	case 0x00:
 	case 0x04:
@@ -2461,9 +2461,12 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		sms->SMS[0].State = SMS_Sent;
 		sms->Number = 1;
 		break;
+	case 0x8c:/* don't know */
+		smprintf(s, "broken message?\n");
+		return ERR_CORRUPTED;
 	default:
 		/* Fail if we don't know message type */
-		smprintf(s,"unknown sms file %02x\n",FFF->Buffer[i]);
+		smprintf(s,"unknown sms file 0x%02x\n",FFF->Buffer[i]);
 		free(FFF->Buffer);
 		FFF->Buffer = NULL;
 		return ERR_UNKNOWN;
