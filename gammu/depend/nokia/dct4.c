@@ -1358,7 +1358,7 @@ static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMac
 		switch (msg.Buffer[pos+4]) {
 		case N7110_PBK_SIM_SPEEDDIAL	: printf(_(" (Speed dial on SIM)")); 			break;
 		case N7110_PBK_NAME	    	: printf(_(" (Text: name (always the only one)"));		break;
-		case N7110_PBK_EMAIL	    	: printf(_(" (Text: email adress)"));			break;
+		case N7110_PBK_EMAIL	    	: printf(_(" (Text: email address)"));			break;
 		case N7110_PBK_POSTAL	    	: printf(_(" (Text: postal address)"));			break;
 		case N7110_PBK_NOTE	    	: printf(_(" (Text: note)"));				break;
 		case N7110_PBK_NUMBER 	    	: printf(_(" (Phone number)"));				break;
