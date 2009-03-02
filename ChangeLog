@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Fixed decoding of Samsung memory entries.
 [-] * Properly handle corrupted messages from Nokia phones (bug #811).
+[-] * Fix parsing of calls from Alcatel C701 (bug #831).
     
 20090302 - 1.23.1
 
