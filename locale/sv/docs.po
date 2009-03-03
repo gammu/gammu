@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.23.1\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-25 17:36+0100\n"
+"POT-Creation-Date: 2009-03-03 11:43+0100\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2863,7 +2863,7 @@ msgid "I</dev/ttyACM?>"
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2206 docs/user/gammurc.5:196 docs/user/gammu-smsdrc.5:298
+#: docs/user/gammu.1:2206 docs/user/gammurc.5:197 docs/user/gammu-smsdrc.5:298
 #: docs/user/gammu-smsd.1:68 docs/user/gammu-smsd-files.7:63
 #: docs/user/gammu-smsd-tables.7:374
 #, no-wrap
@@ -2947,7 +2947,7 @@ msgid ""
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2246 docs/user/gammurc.5:262 docs/user/gammu-smsdrc.5:375
+#: docs/user/gammu.1:2246 docs/user/gammurc.5:263 docs/user/gammu-smsdrc.5:375
 #: docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:37
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:100
@@ -2966,7 +2966,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu.1:2253 docs/user/gammurc.5:268 docs/user/gammu-smsdrc.5:381
+#: docs/user/gammu.1:2253 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:381
 #: docs/user/gammu-smsd.1:127 docs/user/gammu-smsd-inject.1:43
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:106
@@ -2978,7 +2978,7 @@ msgid ""
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2254 docs/user/gammurc.5:268 docs/user/gammu-smsdrc.5:381
+#: docs/user/gammu.1:2254 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:381
 #: docs/user/gammu-smsd.1:127 docs/user/gammu-smsd-inject.1:43
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:106
@@ -3022,7 +3022,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu.1:2274 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:382
+#: docs/user/gammu.1:2274 docs/user/gammurc.5:270 docs/user/gammu-smsdrc.5:382
 #: docs/user/gammu-smsd.1:129 docs/user/gammu-smsd-inject.1:45
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:107
@@ -3032,7 +3032,7 @@ msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2275 docs/user/gammurc.5:260 docs/user/gammu-smsdrc.5:373
+#: docs/user/gammu.1:2275 docs/user/gammurc.5:261 docs/user/gammu-smsdrc.5:373
 #: docs/user/gammu-smsd.1:119 docs/user/gammu-smsd-inject.1:35
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:98
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
@@ -3076,7 +3076,7 @@ msgid ""
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2301 docs/user/gammurc.5:258 docs/user/gammu-smsdrc.5:369
+#: docs/user/gammu.1:2301 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:369
 #: docs/user/gammu-smsd.1:115 docs/user/gammu-smsd-inject.1:33
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:96
@@ -3550,31 +3550,32 @@ msgid "B<Use_Locking>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:193
+#: docs/user/gammurc.5:194
 msgid ""
-"On Posix systems, you might want to lock serial device when it is being "
-"used.  Enabling this option (setting to yes) will make Gammu honor these "
-"locks and create it on startup. On most distributions you need additional "
-"privileges to use locking (eg. you need to be member of uucp group)."
+"On Posix systems, you might want to lock serial device when it is being used "
+"using UUCP-style lock files. Enabling this option (setting to yes) will make "
+"Gammu honor these locks and create it on startup. On most distributions you "
+"need additional privileges to use locking (eg. you need to be member of uucp "
+"group)."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:195
+#: docs/user/gammurc.5:196
 msgid "This option has no meaning on Windows."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:199
+#: docs/user/gammurc.5:200
 msgid "There is more complete example available in Gammu documentation."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:201
+#: docs/user/gammurc.5:202
 msgid "Gammu configuration for Nokia phone using DLR-3 cable:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:209
+#: docs/user/gammurc.5:210
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -3583,14 +3584,14 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:216
+#: docs/user/gammurc.5:217
 msgid ""
 "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
 "phone)  connected using USB cable:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:224
+#: docs/user/gammurc.5:225
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -3599,14 +3600,14 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:231
+#: docs/user/gammurc.5:232
 msgid ""
 "Gammu configuration for Sony-Ericsson (or any other AT compatible phone)  "
 "connected using bluetooth:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:239
+#: docs/user/gammurc.5:240
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -3615,14 +3616,14 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:245
+#: docs/user/gammurc.5:246
 msgid ""
 "Gammu configuration for phone which needs to manually adjust Bluetooth "
 "channel to use channel 42:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:253
+#: docs/user/gammurc.5:254
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -3631,12 +3632,12 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:260 docs/user/gammu-smsdrc.5:371
+#: docs/user/gammurc.5:261 docs/user/gammu-smsdrc.5:371
 msgid "gammu-smsd(1), gammu(1), gammurc(5)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:262 docs/user/gammu-smsdrc.5:375
+#: docs/user/gammurc.5:263 docs/user/gammu-smsdrc.5:375
 #: docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:37
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:100
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
@@ -3647,7 +3648,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:265 docs/user/gammu-smsdrc.5:378
+#: docs/user/gammurc.5:266 docs/user/gammu-smsdrc.5:378
 #: docs/user/gammu-smsd.1:124 docs/user/gammu-smsd-inject.1:40
 #: docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:103
 #: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24

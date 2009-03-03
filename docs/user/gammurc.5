@@ -186,10 +186,11 @@ report correct values to Gammu authors.
 .TP
 .BI Use_Locking
 
-On Posix systems, you might want to lock serial device when it is being used.
-Enabling this option (setting to yes) will make Gammu honor these locks and
-create it on startup. On most distributions you need additional privileges to
-use locking (eg. you need to be member of uucp group).
+On Posix systems, you might want to lock serial device when it is being used
+using UUCP-style lock files. Enabling this option (setting to yes) will make
+Gammu honor these locks and create it on startup. On most distributions you
+need additional privileges to use locking (eg. you need to be member of uucp
+group).
 
 This option has no meaning on Windows.
 
