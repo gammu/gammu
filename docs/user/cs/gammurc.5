@@ -198,11 +198,11 @@ prefixu F_). Prosím nahlašte správné hodnoty autorům Gammu.
 .TP 
 \fBUse_Locking\fP
 
-Na Posixových systémech můžete chtít použít zamykání zařízení, pokud je
-používáné. Zapnutím této volby (nastavením na "yes") bude Gammu dodržovat
-tyto zámky a vytvářet je při připojování. Na většině distribucí pro
-vytvoření zámku potřebujete dodatečná oprávnění (například být členem
-skupiny uucp).
+On Posix systems, you might want to lock serial device when it is being used
+using UUCP\-style lock files. Enabling this option (setting to yes) will make
+Gammu honor these locks and create it on startup. On most distributions you
+need additional privileges to use locking (eg. you need to be member of uucp
+group).
 
 Tento parametr nemá na Windows žádný význam.
 
