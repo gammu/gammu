@@ -67,6 +67,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Parse it */
 	error = N6510_DecodeFilesystemSMS(s, &sms, &file, 0);
+	free(file.Buffer);
 	if (error != ERR_CORRUPTED) return 1;
 
 	/* Free state machine */
