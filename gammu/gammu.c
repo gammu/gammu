@@ -365,8 +365,13 @@ static void Version(int argc UNUSED, char *argv[]UNUSED)
 {
 	PrintVersion();
 
-	printf("%s", _("This is free software.  You may redistribute copies of it under the terms of\nthe GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\nThere is NO WARRANTY, to the extent permitted by law.\n"));
-	printf("\n\n");
+	printf("%s\n", _("License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/GPL/2.0/>."));
+
+	printf("%s\n", _("This is free software: you are free to change and redistribute it."));
+
+	printf("%s\n", _("There is NO WARRANTY, to the extent permitted by law."));
+
+	printf("\n");
 }
 
 int ProcessParameters(int start, int argc, char *argv[]);
