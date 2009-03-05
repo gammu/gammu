@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.23.1\n"
+"Project-Id-Version: Gammu 1.23.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-02 14:52+0100\n"
-"PO-Revision-Date: 2009-03-02 14:51+0100\n"
+"POT-Creation-Date: 2009-03-05 11:46+0100\n"
+"PO-Revision-Date: 2009-03-05 11:50+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1553,7 +1553,7 @@ msgstr "Sítě pro %s:"
 msgid "Unknown country name: %s."
 msgstr "Neznámé jméno země: %s."
 
-#: gammu/gammu.c:116 gammu/gammu.c:747 gammu/misc.c:46
+#: gammu/gammu.c:116 gammu/gammu.c:752 gammu/misc.c:46
 msgid "Network"
 msgstr "Síť"
 
@@ -1596,39 +1596,46 @@ msgstr "Nová testovací verze Gammu je dostupná! (%s místo %s)\n"
 
 #: gammu/gammu.c:368
 msgid ""
-"This is free software.  You may redistribute copies of it under the terms "
-"of\n"
-"the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
+"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
+"GPL/2.0/>."
 msgstr ""
-"Tento program je volný software; můžete jej šířit a modifikovat podle\n"
-"ustanovení Obecné veřejné licence GNU <http://www.gnu.org/licenses/gpl."
-"html>.\n"
-"Není poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem.\n"
+"Licence GPLv2: GNU GPL verze 2 <http://creativecommons.org/licenses/GPL/2.0/"
+">."
 
-#: gammu/gammu.c:393
+# type: Plain text
+#: gammu/gammu.c:370
+msgid "This is free software: you are free to change and redistribute it."
+msgstr ""
+"Tento program je svobodný software: můžete jej volně šířit a modifikovat."
+
+# type: Plain text
+#: gammu/gammu.c:372
+msgid "There is NO WARRANTY, to the extent permitted by law."
+msgstr "Není poskytována ŽÁDNÁ ZÁRUKA, a to v míře povolené platným zákonem."
+
+#: gammu/gammu.c:398
 msgid "standard input"
 msgstr "standardní vstup"
 
-#: gammu/gammu.c:404
+#: gammu/gammu.c:409
 #, c-format
 msgid "Batch file could not be opened: %s\n"
 msgstr "Soubor s dávkou nemohl být otevřen: %s\n"
 
-#: gammu/gammu.c:415
+#: gammu/gammu.c:420
 msgid "Error reading batch! Terminating.\n"
 msgstr "Chyba při načítání dávky! Končím.\n"
 
-#: gammu/gammu.c:417
+#: gammu/gammu.c:422
 msgid "Batch processed, terminating.\n"
 msgstr "Dávka zpracována, končím.\n"
 
-#: gammu/gammu.c:454
+#: gammu/gammu.c:459
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
 msgstr "Spouštím dávku \"%s\" - příkaz %i: %s\n"
 
-#: gammu/gammu.c:477
+#: gammu/gammu.c:482
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
@@ -1636,7 +1643,7 @@ msgstr ""
 "SMS démon je teď samostaný program, prosím použijte gammu-smsd-inject místo "
 "gammu sendsmsdsms!"
 
-#: gammu/gammu.c:484
+#: gammu/gammu.c:489
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
@@ -1644,119 +1651,119 @@ msgstr ""
 "SMS démon je teď samostaný program, prosím použijte gammu-smsd místo gammu "
 "smsd!"
 
-#: gammu/gammu.c:727
+#: gammu/gammu.c:732
 msgid "Calls"
 msgstr "Hovory"
 
-#: gammu/gammu.c:728
+#: gammu/gammu.c:733
 msgid "SMS and EMS"
 msgstr "SMS a EMS"
 
-#: gammu/gammu.c:729
+#: gammu/gammu.c:734
 msgid "Memory (phonebooks and calls)"
 msgstr "Paměť (kontakty a hovory)"
 
-#: gammu/gammu.c:730
+#: gammu/gammu.c:735
 msgid "Filesystem"
 msgstr "Soubory"
 
-#: gammu/gammu.c:731
+#: gammu/gammu.c:736
 msgid "Logo and pictures"
 msgstr "Loga a obrázky"
 
-#: gammu/gammu.c:732
+#: gammu/gammu.c:737
 msgid "Ringtones"
 msgstr "Zvonění"
 
-#: gammu/gammu.c:733
+#: gammu/gammu.c:738
 msgid "Calendar notes"
 msgstr "Kalendář"
 
-#: gammu/gammu.c:734
+#: gammu/gammu.c:739
 msgid "To do lists"
 msgstr "Úkoly"
 
-#: gammu/gammu.c:735
+#: gammu/gammu.c:740
 msgid "Notes"
 msgstr "Poznámky"
 
-#: gammu/gammu.c:736
+#: gammu/gammu.c:741
 msgid "Date, time and alarms"
 msgstr "Čas, datum a budíky"
 
-#: gammu/gammu.c:737
+#: gammu/gammu.c:742
 msgid "Categories"
 msgstr "Kategorie"
 
-#: gammu/gammu.c:739
+#: gammu/gammu.c:744
 msgid "Backing up and restoring"
 msgstr "Záloha a obnovení"
 
-#: gammu/gammu.c:742
+#: gammu/gammu.c:747
 msgid "Nokia specific"
 msgstr "Specifické pro Nokii"
 
-#: gammu/gammu.c:745
+#: gammu/gammu.c:750
 msgid "Siemens specific"
 msgstr "Specifické pro Siemens"
 
-#: gammu/gammu.c:748
+#: gammu/gammu.c:753
 msgid "WAP settings and bookmarks"
 msgstr "Nastavení WAPu a záložky"
 
-#: gammu/gammu.c:749
+#: gammu/gammu.c:754
 msgid "MMS and MMS settings"
 msgstr "MMS a jejich nastavení"
 
-#: gammu/gammu.c:750
+#: gammu/gammu.c:755
 msgid "Phone tests"
 msgstr "Testy telefonu"
 
-#: gammu/gammu.c:751
+#: gammu/gammu.c:756
 msgid "FM radio"
 msgstr "FM rádio"
 
-#: gammu/gammu.c:752
+#: gammu/gammu.c:757
 msgid "Phone information"
 msgstr "Informace o telefonu"
 
-#: gammu/gammu.c:753
+#: gammu/gammu.c:758
 msgid "Phone settings"
 msgstr "Nastavení telefonu"
 
-#: gammu/gammu.c:755
+#: gammu/gammu.c:760
 msgid "Dumps decoding"
 msgstr "Dekódování výpisů"
 
-#: gammu/gammu.c:757
+#: gammu/gammu.c:762
 msgid "Functions that don't fit elsewhere"
 msgstr "Fuknce, které se nevešly jinam"
 
-#: gammu/gammu.c:758
+#: gammu/gammu.c:763
 msgid "Gammu information"
 msgstr "Informace o Gammu"
 
 # type: Plain text
-#: gammu/gammu.c:774
+#: gammu/gammu.c:779
 msgid "Usage: gammu [parameters] <command> [options]"
 msgstr "Použití: gammu [parametry] <příkaz> [volby]"
 
 # type: Plain text
-#: gammu/gammu.c:775
+#: gammu/gammu.c:780
 msgid "Parameters before command configure gammu behaviour:"
 msgstr "Parametry před příkazem upravují chování gammu:"
 
-#: gammu/gammu.c:776
+#: gammu/gammu.c:781
 msgid "-c / --config <filename> ... name of configuration file"
 msgstr "-c / --config <soubor> ... jméno konfiguračního souboru"
 
-#: gammu/gammu.c:777
+#: gammu/gammu.c:782
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
 msgstr ""
 "-s / --section <číslokonf> ... číslo konfigurace, která se má použít, např. "
 "42"
 
-#: gammu/gammu.c:778
+#: gammu/gammu.c:783
 msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
@@ -1764,15 +1771,15 @@ msgstr ""
 "-d / --debug <úroveň> ... ladicí úroveň (nothing|text|textall|textalldate|"
 "binary|errors)"
 
-#: gammu/gammu.c:779
+#: gammu/gammu.c:784
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
 msgstr "-f / --debug-file <soubor> ... soubor pro zapisování ladicích zpráv"
 
-#: gammu/gammu.c:781
+#: gammu/gammu.c:786
 msgid "Commands can be specified with or without leading --."
 msgstr "Příkazy mohou být zadány s i bez úvodního --."
 
-#: gammu/gammu.c:784
+#: gammu/gammu.c:789
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
@@ -1780,11 +1787,11 @@ msgstr ""
 "Více informací naleznete v jednotlivých tématech (gammu --help téma). Témata "
 "jsou:"
 
-#: gammu/gammu.c:882
+#: gammu/gammu.c:887
 msgid "Unknown help topic specified!"
 msgstr "Zadáno neznámé téma nápovědy!"
 
-#: gammu/gammu.c:886
+#: gammu/gammu.c:891
 #, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
@@ -1793,56 +1800,56 @@ msgstr ""
 "Příkazy Gammu, téma: %s\n"
 "\n"
 
-#: gammu/gammu.c:977
+#: gammu/gammu.c:982
 #, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "Příliš málo parametrů (funkce požaduje %d)\n"
 
-#: gammu/gammu.c:980
+#: gammu/gammu.c:985
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "Příliš málo parametrů (funkce požaduje %d až %d)\n"
 
-#: gammu/gammu.c:986 gammu/gammu.c:1007
+#: gammu/gammu.c:991 gammu/gammu.c:1012
 msgid "Parameters help"
 msgstr "Nápověda pro parametry"
 
-#: gammu/gammu.c:998
+#: gammu/gammu.c:1003
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "Příliš mnoho parametrů (funkce akceptuje %d)\n"
 
-#: gammu/gammu.c:1001
+#: gammu/gammu.c:1006
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "Příliš mnoho parametrů (funkce akceptuje %d až %d)\n"
 
-#: gammu/gammu.c:1028
+#: gammu/gammu.c:1033
 msgid "Bad option!"
 msgstr "Chybná volba!"
 
-#: gammu/gammu.c:1109
+#: gammu/gammu.c:1114
 msgid "Configuration could not be parsed!"
 msgstr "Nastavení nemohlo být zpracováno!"
 
-#: gammu/gammu.c:1111
+#: gammu/gammu.c:1116
 msgid "No configuration file found!"
 msgstr "Nebyl nalezen konfigurační soubor!"
 
-#: gammu/gammu.c:1158
+#: gammu/gammu.c:1163
 msgid "Too few parameters!"
 msgstr "Příliš málo parametrů!"
 
-#: gammu/gammu.c:1171
+#: gammu/gammu.c:1176
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr "Nepodařilo se načíst [gammu%d] z konfiguračního souboru (gammurc)!\n"
 
-#: gammu/gammu.c:1173 gammu/gammu.c:1184
+#: gammu/gammu.c:1178 gammu/gammu.c:1189
 msgid "No configuration read, using builtin defaults!"
 msgstr "Nebylo načteno žádné nastavení, používám výchozí hodnoty!"
 
-#: gammu/gammu.c:1227
+#: gammu/gammu.c:1232
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -4097,6 +4104,17 @@ msgstr "Varování"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Informace"
+
+#~ msgid ""
+#~ "This is free software.  You may redistribute copies of it under the terms "
+#~ "of\n"
+#~ "the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n"
+#~ "There is NO WARRANTY, to the extent permitted by law.\n"
+#~ msgstr ""
+#~ "Tento program je volný software; můžete jej šířit a modifikovat podle\n"
+#~ "ustanovení Obecné veřejné licence GNU <http://www.gnu.org/licenses/gpl."
+#~ "html>.\n"
+#~ "Není poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem.\n"
 
 #~ msgid ""
 #~ "Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> "
