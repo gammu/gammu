@@ -50,6 +50,15 @@ NORETURN void version(void)
 #ifdef LIBDBI_FOUND
 	printf("  - %s\n", "DBI");
 #endif
+	printf("\n");
+	printf("Copyright (C) 2003 - 2009 Michal Cihar <michal@cihar.com> and other authors.\n");
+	printf("\n");
+	printf("License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/GPL/2.0/>.\n");
+	printf("This is free software: you are free to change and redistribute it.\n");
+	printf("There is NO WARRANTY, to the extent permitted by law.\n");
+	printf("\n");
+	printf("Check <http://cihar.com/gammu/> for updates.\n");
+	printf("\n");
 	exit(0);
 }
 
