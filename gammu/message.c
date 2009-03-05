@@ -160,10 +160,9 @@ void GetSMSC(int argc, char *argv[])
 		error=GSM_GetSMSC(gsm, &smsc);
 		Print_Error(error);
 
-		if (!strcmp(DecodeUnicodeConsole(smsc.Name),"")) {
-			printf(_("%i. Set %i\n"),smsc.Location, smsc.Location);
-		} else {
-			printf("%i. \"%s\"\n",smsc.Location, DecodeUnicodeConsole(smsc.Name));
+		printf(LISTFORMAT "%d\n", _("Location"), smsc.Location);
+		if (UnicodeLength(smsc.Name) != 0) {
+			printf(LISTFORMAT "\"%s\"\n", _("Name"),DecodeUnicodeConsole(smsc.Name));
 		}
 		printf(LISTFORMAT "\"%s\"\n", _("Number"),DecodeUnicodeConsole(smsc.Number));
 		printf(LISTFORMAT "\"%s\"\n", _("Default number"),DecodeUnicodeConsole(smsc.DefaultNumber));
