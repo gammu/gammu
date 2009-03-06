@@ -120,6 +120,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	int				MaxSMS			= -1;
 	bool				EMS16Bit		= false;
 	int frames_num;
+	int param_value;
 
 	/* Parameters required only during saving */
 	int				Folder			= 1; /*Inbox by default */
@@ -1025,13 +1026,20 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong	= 0;
 			break;
 		case 5: /* Length of text SMS */
-			if (atoi(argv[i])<chars_read)
-			{
-				Buffer[0][atoi(argv[i])*2]	= 0x00;
-				Buffer[0][atoi(argv[i])*2+1]	= 0x00;
+			param_value = atoi(argv[i]);
+			if (param_value <= 0) {
+				printf(_("Wrong message length (\"%s\")\n"),argv[i]);
+				exit(-1);
+			}
+			printf("%d / %d\n", param_value, chars_read);
+			if (param_value < chars_read) {
+				Buffer[0][param_value * 2]	= 0x00;
+				Buffer[0][param_value * 2 + 1]	= 0x00;
 			}
 			SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
-			if (strcasecmp(argv[i-1],"-autolen") == 0) SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
+			if (strcasecmp(argv[i-1],"-autolen") == 0) {
+				SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
+			}
 			nextlong = 0;
 			break;
 		case 6:	/* Picture Images - text */
@@ -1258,7 +1266,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 26:/* text from parameter */
-			EncodeUnicode(Buffer[0],argv[i],strlen(argv[i]));
+			chars_read = strlen(argv[i]);
+			EncodeUnicode(Buffer[0], argv[i], chars_read);
 			HasText = true;
 			nextlong = 0;
 			break;
