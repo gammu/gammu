@@ -314,6 +314,28 @@ add_test(sms-cmdline-TEXT-16 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}
 set_tests_properties(sms-cmdline-TEXT-16 PROPERTIES
     PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(16 bit\\) [0-9]*, 2 parts")
 
+add_test(sms-cmdline-TEXT-autolen "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    TEXT 213
+        -text fdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasddfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasddfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdd
+        -autolen 200)
+set_tests_properties(sms-cmdline-TEXT-autolen PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(8 bit\\) [0-9]*, 2 parts")
+
+add_test(sms-cmdline-TEXT-len "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    TEXT 213
+        -text fdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdd
+        -len 100)
+set_tests_properties(sms-cmdline-TEXT-len PROPERTIES
+    FAIL_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message")
+
+add_test(sms-cmdline-TEXT-len-1 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    TEXT 213
+        -text fdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdd
+        -len -1)
+set_tests_properties(sms-cmdline-TEXT-len-1 PROPERTIES
+    FAIL_REGULAR_EXPRESSION "Wrong message length \\(\"-1\"\\)"
+    WILL_FAIL TRUE)
+
 add_test(sms-cmdline-TEXT-unicode "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     TEXT 213 -text aaafdsfdfasd -unicode)
 set_tests_properties(sms-cmdline-TEXT-unicode PROPERTIES
