@@ -290,7 +290,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					"', StatusError = '%i'",
 					sms->SMS[i].DeliveryStatus);
 				sprintf(buffer + strlen(buffer),
-					" WHERE ID = '%s' AND `TPMR` = '%i'",
+					" WHERE ID = '%s' AND TPMR = %i",
 					PQgetvalue(Res, j, 0),
 					sms->SMS[i].MessageReference);
 				if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
