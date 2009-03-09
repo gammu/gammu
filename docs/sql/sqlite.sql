@@ -37,7 +37,7 @@ CREATE TABLE outbox (
   SendingDateTime NUMERIC NOT NULL DEFAULT (datetime('now')),
   Text TEXT,
   DestinationNumber TEXT NOT NULL DEFAULT '',
-  Coding TEXT NOT NULL DEFAULT '8bit',
+  Coding TEXT NOT NULL DEFAULT 'Default_No_Compression',
   UDH TEXT,
   Class INTEGER DEFAULT '-1',
   TextDecoded TEXT NOT NULL DEFAULT '',
@@ -63,7 +63,7 @@ CREATE TRIGGER update_outbox_time UPDATE ON outbox
 
 CREATE TABLE outbox_multipart (
   Text TEXT,
-  Coding TEXT NOT NULL DEFAULT '8bit',
+  Coding TEXT NOT NULL DEFAULT 'Default_No_Compression',
   UDH TEXT,
   Class INTEGER DEFAULT '-1',
   TextDecoded TEXT DEFAULT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE sentitems (
   DeliveryDateTime NUMERIC NULL,
   Text TEXT NOT NULL,
   DestinationNumber TEXT NOT NULL DEFAULT '',
-  Coding TEXT NOT NULL DEFAULT '8bit', 
+  Coding TEXT NOT NULL DEFAULT 'Default_No_Compression',
   UDH TEXT NOT NULL,
   SMSCNumber TEXT NOT NULL DEFAULT '',
   Class INTEGER NOT NULL DEFAULT '-1',

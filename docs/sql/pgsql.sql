@@ -129,7 +129,7 @@ CREATE TABLE outbox (
   SendingDateTime timestamp NOT NULL DEFAULT 'epoch',
   Text text,
   DestinationNumber varchar(20) NOT NULL DEFAULT '',
-  Coding varchar(255) NOT NULL DEFAULT '8bit',
+  Coding varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
   UDH text,
   Class integer DEFAULT '-1',
   TextDecoded varchar(160) NOT NULL DEFAULT '',
@@ -168,7 +168,7 @@ CREATE TRIGGER update_timestamp BEFORE UPDATE ON outbox FOR EACH ROW EXECUTE PRO
 
 CREATE TABLE outbox_multipart (
   Text text,
-  Coding varchar(255) NOT NULL DEFAULT '8bit',
+  Coding varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
   UDH text,
   Class integer DEFAULT '-1',
   TextDecoded varchar(160) DEFAULT NULL,
@@ -263,7 +263,7 @@ CREATE TABLE sentitems (
   DeliveryDateTime timestamp(0) WITHOUT time zone NULL,
   Text text NOT NULL,
   DestinationNumber varchar(20) NOT NULL DEFAULT '',
-  Coding varchar(255) NOT NULL DEFAULT '8bit', 
+  Coding varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
   UDH text NOT NULL,
   SMSCNumber varchar(20) NOT NULL DEFAULT '',
   Class integer NOT NULL DEFAULT '-1',
