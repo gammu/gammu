@@ -81,7 +81,7 @@ CREATE TABLE `outbox` (
   `SendingDateTime` timestamp NOT NULL default '0000-00-00 00:00:00',
   `Text` text,
   `DestinationNumber` varchar(20) NOT NULL default '',
-  `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') default '8bit',
+  `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',
   `UDH` text,
   `Class` integer default '-1',
   `TextDecoded` varchar(160) NOT NULL default '',
@@ -111,7 +111,7 @@ CREATE INDEX outbox_sender ON outbox(SenderID);
 
 CREATE TABLE `outbox_multipart` (
   `Text` text,
-  `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') default '8bit',
+  `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',
   `UDH` text,
   `Class` integer default '-1',
   `TextDecoded` varchar(160) default NULL,
@@ -198,7 +198,7 @@ CREATE TABLE `sentitems` (
   `DeliveryDateTime` timestamp NULL,
   `Text` text NOT NULL,
   `DestinationNumber` varchar(20) NOT NULL default '',
-  `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default '8bit',
+  `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',
   `UDH` text NOT NULL,
   `SMSCNumber` varchar(20) NOT NULL default '',
   `Class` integer NOT NULL default '-1',
