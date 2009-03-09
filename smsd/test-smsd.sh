@@ -131,13 +131,27 @@ for sms in 62 68 74 ; do
     cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/$sms.backup $DUMMY_PATH/sms/1/$sms
 done
 
-MATCH=1
+MATCH=2
 # This works only with DBI backend
 if echo $SERVICE | grep -q dbi- ; then
-    MATCH=2
+    MATCH=3
     @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
 fi
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
+
+# Insert message manually
+case $SERVICE in
+    *sqlite3)
+        echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | @SQLITE_BIN@ smsd.db
+        ;;
+    *pgsql)
+        echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -h @PSQL_HOST@ -U @PSQL_USER@ @PSQL_DATABASE@
+        ;;
+    *mysql)
+        echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | @MYSQL_BIN@ -u@MYSQL_USER@ -h@MYSQL_HOST@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@
+        ;;
+esac
+
 
 sleep 5
 
@@ -151,7 +165,7 @@ while ! @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "
     sleep 1
     TIMEOUT=$(($TIMEOUT + 1))
     if [ $TIMEOUT -gt 60 ] ; then
-        echo "Wrong timeout!"
+        echo "ERROR: Wrong timeout!"
         exit 1
     fi
 done
@@ -161,6 +175,6 @@ sleep 5
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0
 
 if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 6 ] ; then
-    echo "Wrong number of messages received!"
+    echo "ERROR: Wrong number of messages received!"
     exit 1
 fi
