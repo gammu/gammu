@@ -395,6 +395,8 @@ několik indexů.
 
 .SH PŘÍKLAD
 
+.SS "Creating tables"
+
 SQL skripty potřebný pro vytvoření všech tabulek pro většinu databází je
 obsažen v dokumentaci Gammu (docs/sql). Ta také obsahuje pár PHP skriptů pro
 práci s databází.
@@ -402,6 +404,25 @@ práci s databází.
 Například vytvoření tabulek pro SQLite vypadá následovně:
     
     sqlite3 smsd.db < docs/sql/sqlite.sql
+
+.SS "Injecting a message using SQL"
+
+To send a message, you can either use gammu\-smsd\-inject(1), which does all
+the magic for you, or you can insert the message manually. The simplest
+example is short text message:
+
+    INSERT INTO outbox (
+        DestinationNumber,
+        TextDecoded,
+        CreatorID,
+        Coding
+    ) VALUES (
+        '800123465',
+        'This is a SQL test message',
+        'Program',
+        'Default_No_Compression'
+    );
+
 
 .SH "DALŠÍ INFORMACE"
 Databázové služby: gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7),
