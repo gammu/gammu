@@ -629,9 +629,9 @@ static GSM_Error SMSDPgSQL_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 					   GSM_SMSDConfig * Config)
 {
-	unsigned char buffer[10000], buffer2[400], buffer4[10000], buffer5[400];
+	unsigned char buffer[10000], buffer2[400], buffer5[400];
 	int i, ID;
-	int numb_rows, numb_tuples;
+	int numb_rows;
 	PGresult *Res;
 
 	sprintf(buffer, "SELECT ID FROM outbox ORDER BY ID DESC LIMIT 1");
@@ -666,8 +666,11 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 				"DestinationNumber, RelativeValidity, ");
 		}
 
-		sprintf(buffer + strlen(buffer), "Coding, UDH,  "
-			  "Class, TextDecoded, ID) VALUES (");
+		strcat(buffer, "Coding, UDH, Class, TextDecoded");
+		if (i != 0) {
+			strcat(buffer, ", ID");
+		}
+		strcat(buffer, ") VALUES (");
 
 		if (i == 0) {
 			sprintf(buffer + strlen(buffer), "'Gammu %s', ",
@@ -782,59 +785,32 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 				break;
 		}
 
-		sprintf(buffer + strlen(buffer), "', '");
+		sprintf(buffer + strlen(buffer), "'");
+
+		if (i != 0) {
+			sprintf(buffer + strlen(buffer), ", %u", ID);
+		}
+		strcat(buffer, ")");
+
+		if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
+			SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
+			return ERR_UNKNOWN;
+		}
+		PQclear(Res);
+
 		if (i == 0) {
-			while (true) {
-				ID++;
-				sprintf(buffer4,
-					"SELECT ID FROM sentitems WHERE ID='%i'",
-					ID);
-				if (SMSDPgSQL_Query(Config, buffer4, &Res) != ERR_NONE) {
-					SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
-					return ERR_UNKNOWN;
-				}
-
-				numb_rows = PQntuples(Res);
-				PQclear(Res);
-				if (numb_rows == 0) {
-					sprintf(buffer4,
-						"SELECT ID FROM outbox WHERE ID='%i'",
-						ID);
-					if (SMSDPgSQL_Query(Config, buffer4, &Res) != ERR_NONE) {
-						SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
-						return ERR_UNKNOWN;
-					}
-
-					numb_tuples = PQntuples(Res);
-					PQclear(Res);
-
-					if (numb_tuples > 0) {
-						SMSD_Log(0, Config, "Duplicated outgoing SMS ID");
-						continue;
-					} else {
-						buffer4[0] = 0;
-						strcpy(buffer4, buffer);
-						sprintf(buffer4 +
-							strlen(buffer4), "%i')",
-							ID);
-
-						if (SMSDPgSQL_Query(Config, buffer4, &Res) != ERR_NONE) {
-							SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
-							return ERR_UNKNOWN;
-						}
-						PQclear(Res);
-						break;
-					}
-				}
-			}
-		} else {
-			strcpy(buffer4, buffer);
-			sprintf(buffer4 + strlen(buffer4), "%i')", ID);
-			if (SMSDPgSQL_Query(Config, buffer4, &Res) != ERR_NONE) {
-				SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
+			if (SMSDPgSQL_Query(Config, "SELECT currval('outbox_id_seq')", &Res) != ERR_NONE) {
+				SMSD_Log(0, Config, "Error getting current ID (%s)", __FUNCTION__);
 				return ERR_UNKNOWN;
 			}
+			ID = atoi(PQgetvalue(Res, 0, 0));
 			PQclear(Res);
+
+			if (ID == 0) {
+				SMSD_Log(0, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
+				PQclear(Res);
+				return ERR_UNKNOWN;
+			}
 		}
 	}
 	SMSD_Log(0, Config, "Written message with ID %i", ID);
