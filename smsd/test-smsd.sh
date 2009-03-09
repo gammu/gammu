@@ -131,12 +131,7 @@ for sms in 62 68 74 ; do
     cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/$sms.backup $DUMMY_PATH/sms/1/$sms
 done
 
-MATCH=2
-# This works only with DBI backend
-if echo $SERVICE | grep -q dbi- ; then
-    MATCH=3
-    @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
-fi
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 
 # Insert message manually
@@ -160,7 +155,7 @@ for sms in 10 16 26 ; do
 done
 
 TIMEOUT=0
-while ! @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0 | grep -q ";999999999999999;$MATCH;6;0;100;42" ; do
+while ! @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0 | grep -q ";999999999999999;3;6;0;100;42" ; do
     @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0
     sleep 1
     TIMEOUT=$(($TIMEOUT + 1))
