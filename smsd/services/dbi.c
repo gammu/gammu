@@ -804,10 +804,18 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 
 		coding = dbi_result_get_string(Res, "Coding");
 		text = dbi_result_get_string(Res, "Text");
-		text_len = strlen(text);
+		if (text == NULL) {
+			text_len = 0;
+		} else {
+			text_len = strlen(text);
+		}
 		text_decoded = dbi_result_get_string(Res, "TextDecoded");
 		udh = dbi_result_get_string(Res, "UDH");
-		udh_len = strlen(udh);
+		if (udh == NULL) {
+			udh_len = 0;
+		} else {
+			udh_len = strlen(udh);
+		}
 
 		sms->SMS[sms->Number].Coding = SMS_Coding_8bit;
 		if (strcmp(coding, "Unicode_No_Compression") == 0) {
@@ -1176,7 +1184,13 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 			free(encoded_text);
 			break;
 
+		case SMS_Coding_8bit:
+			/* FIXME */
+			strcat(buffer, "''");
+			break;
+
 		default:
+			strcat(buffer, "''");
 			break;
 	}
 
