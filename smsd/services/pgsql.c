@@ -630,24 +630,8 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 					   GSM_SMSDConfig * Config)
 {
 	unsigned char buffer[10000], buffer2[400], buffer5[400];
-	int i, ID;
-	int numb_rows;
+	int i, ID = 0;
 	PGresult *Res;
-
-	sprintf(buffer, "SELECT ID FROM outbox ORDER BY ID DESC LIMIT 1");
-	if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
-		return ERR_UNKNOWN;
-	}
-
-	numb_rows = PQntuples(Res);
-	if (numb_rows != 0) {
-		sprintf(buffer, "%s", PQgetvalue(Res, 0, 0));
-		ID = atoi(buffer);
-	} else {
-		ID = 0;
-	}
-	PQclear(Res);
 
 	for (i = 0; i < sms->Number; i++) {
 		buffer[0] = 0;
