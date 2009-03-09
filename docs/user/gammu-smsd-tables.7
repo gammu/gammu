@@ -382,6 +382,8 @@ indexes
 
 .SH EXAMPLE
 
+.SS Creating tables
+
 SQL scripts to create all needed tables for most databases are included in
 Gammu documentation (docs/sql). As well as some PHP scripts interacting with
 the database.
@@ -389,6 +391,25 @@ the database.
 For example to create SQLite tables, issue following command:
     
     sqlite3 smsd.db < docs/sql/sqlite.sql
+
+.SS Injecting a message using SQL
+
+To send a message, you can either use gammu-smsd-inject(1), which does all the
+magic for you, or you can insert the message manually. The simplest example is
+short text message:
+
+    INSERT INTO outbox (
+        DestinationNumber,
+        TextDecoded,
+        CreatorID,
+        Coding
+    ) VALUES (
+        '800123465', 
+        'This is a SQL test message', 
+        'Program',
+        'Default_No_Compression'
+    );
+
 
 .SH SEE ALSO
 Database backends:
