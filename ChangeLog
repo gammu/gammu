@@ -23,6 +23,7 @@ ChangeLog
 [-] * Fixed handling of error states with -len and -autolen parameters.
 [-] * Fixed possible crash in DBI engine.
 [+] * PostgreSQL engine properly uses sequences instead of reinventing.
+[+] * MySQL engine properly uses auto increments instead of reinventing.
     
 20090302 - 1.23.1
 

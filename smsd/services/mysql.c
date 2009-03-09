@@ -539,23 +539,9 @@ static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 /* Adds SMS to Outbox */
 static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config)
 {
-	char			buffer[10000],buffer2[400],buffer4[10000],buffer5[400];
-	int 			i,ID;
-	MYSQL_RES 		*Res;
-	MYSQL_ROW 		Row;
+	char			buffer[10000],buffer2[400],buffer5[400];
+	int 			i,ID = 0;
 
-	sprintf(buffer,"SELECT ID FROM outbox ORDER BY ID DESC LIMIT 1");
-	if (SMSDMySQL_Store(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error reading from database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
-		return ERR_UNKNOWN;
-	}
-	if ((Row = mysql_fetch_row(Res))) {
-		sprintf(buffer,"%s",Row[0]);
-		ID = atoi(buffer);
-	} else {
-		ID = 0;
-	}
-	mysql_free_result(Res);
 
 	for (i=0;i<sms->Number;i++) {
 		buffer[0]=0;
@@ -568,7 +554,13 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		if (i==0) {
 			sprintf(buffer+strlen(buffer),"`DestinationNumber`,`RelativeValidity`,");
 		}
-		sprintf(buffer+strlen(buffer),"`Coding`,`UDH`, `Class`,`TextDecoded`,`ID`) VALUES (");
+
+		strcat(buffer, "`Coding`, `UDH`, `Class`, `TextDecoded`");
+		if (i != 0) {
+			strcat(buffer, ", `ID`");
+		}
+		strcat(buffer, ") VALUES (");
+
 		if (i==0) {
 			sprintf(buffer+strlen(buffer),"'Gammu %s',",VERSION);
 			sprintf(buffer+strlen(buffer),"'%s','", Config->PhoneID);
@@ -640,37 +632,19 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		default:
 			break;
 		}
-		sprintf(buffer+strlen(buffer),"','");
-		if (i==0) {
-			while (true) {
-				ID++;
-				sprintf(buffer4,"SELECT ID FROM sentitems WHERE ID='%i'",ID);
-				if (SMSDMySQL_Store(Config, buffer4, &Res) != ERR_NONE) {
-					SMSD_Log(0, Config, "Error reading from database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
-					return ERR_UNKNOWN;
-				}
-				if (!(Row = mysql_fetch_row(Res))) {
-					buffer4[0] = 0;
-					strcpy(buffer4,buffer);
-					sprintf(buffer4+strlen(buffer4),"%i')",ID);
-					if (SMSDMySQL_Query(Config, buffer4) != ERR_NONE) {
-						if (mysql_errno(&Config->DBConnMySQL) == ER_DUP_ENTRY) {
-							SMSD_Log(-1, Config, "Duplicated outgoing SMS ID");
-							continue;
-						}
-						SMSD_Log(0, Config, "Error writing to database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
-						return ERR_UNKNOWN;
-					}
-					mysql_free_result(Res);
-					break;
-				}
-				mysql_free_result(Res);
-			}
-		} else {
-			strcpy(buffer4,buffer);
-			sprintf(buffer4+strlen(buffer4),"%i')",ID);
-			if (SMSDMySQL_Query(Config, buffer4) != ERR_NONE) {
-				SMSD_Log(0, Config, "Error writing to database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+		sprintf(buffer+strlen(buffer),"'");
+		if (i != 0) {
+			sprintf(buffer + strlen(buffer), ", %u", ID);
+		}
+		strcat(buffer, ")");
+		if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
+			SMSD_Log(0, Config, "Error writing to database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+			return ERR_UNKNOWN;
+		}
+		if (i == 0) {
+			ID = mysql_insert_id(&Config->DBConnMySQL);
+			if (ID == 0) {
+				SMSD_Log(0, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
 				return ERR_UNKNOWN;
 			}
 		}
