@@ -652,6 +652,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					nextlong = 26;
 					break;
 				}
+				if (strcasecmp(argv[i],"-textutf8") == 0) {
+					nextlong = 27;
+					break;
+				}
 				if (strcasecmp(argv[i],"-inputunicode") == 0) {
 					ReadUnicodeFile(Buffer[0],InputBuffer);
 					break;
@@ -1268,6 +1272,12 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		case 26:/* text from parameter */
 			chars_read = strlen(argv[i]);
 			EncodeUnicode(Buffer[0], argv[i], chars_read);
+			HasText = true;
+			nextlong = 0;
+			break;
+		case 27:/* utf-8 text from parameter */
+			chars_read = strlen(argv[i]);
+			DecodeUTF8(Buffer[0], argv[i], chars_read);
 			HasText = true;
 			nextlong = 0;
 			break;

@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Únor 16, 2009" "Gammu 1.22.95" "Dokumentace Gammu"
+.TH GAMMU 1 "Mar 10 2009" "Gammu 1.23.90" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -330,7 +330,7 @@ edit it correctly later in phone composer (for example, in 33xx)
 \fBsavesms SMSTEMPLATE\fP\fI [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]\fP
 
 .TP 
-\fBsavesms TEXT\fP\fI [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext]\fP
+\fBsavesms TEXT\fP\fI [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]\fP
 Take text from stdin (or commandline if \-text specified)  and save as text
 SMS into SIM/phone memory.
 
@@ -381,6 +381,8 @@ beep, vibrate or turn on light. Text will be cut to 1 sms.
 \fB\-inputunicode\fP \- zadaný text je v Unicode.
 
 \fB\-text\fP \- načte text z příkazové řádky místo standardního vstupu.
+
+\fB\-textutf8\fP \- get text in UTF\-8 from command line instead of stdin.
 
 \fITIP:\fP You can create Unicode file using WordPad in Win32 (during saving
 select "Unicode Text Document" format). In Unix can use for example YUdit.
@@ -452,7 +454,7 @@ formátu Nokie jako SMS.
 \fBsendsms SMSTEMPLATE\fP\fI destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]\fP
 
 .TP 
-\fBsendsms TEXT\fP\fI destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext]\fP
+\fBsendsms TEXT\fP\fI destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]\fP
 
 .TP 
 \fBsendsms TODO\fP\fI destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
