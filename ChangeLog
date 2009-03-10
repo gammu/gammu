@@ -34,6 +34,7 @@ ChangeLog
 [-] * Fix crash when some lines in config are too long.
 [-] * Make smsdrc example better looking by removing obsolete docs.
 [-] * Make dku2 connection types work on Linux (alias to fbususb).
+[-] * Better calculation of signal percent.
     
 20090302 - 1.23.1
 
