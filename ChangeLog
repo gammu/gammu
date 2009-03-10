@@ -31,6 +31,7 @@ ChangeLog
 [-] * Fixed date formatting in PostgreSQL SMSD service.
 [+] * Add option to install without documentation.
 [+] * Add -textutf8 option for TEXT sms.
+[-] * Fix crash when some lines in config are too long.
     
 20090302 - 1.23.1
 

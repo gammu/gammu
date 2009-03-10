@@ -1227,6 +1227,8 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	if (!Temp || strcmp(Temp, "auto") == 0) {
 		strcpy(cfg->Model,DefaultModel);
 	} else {
+		if (strlen(Temp) >= sizeof(cfg->Model))
+			Temp[sizeof(cfg->Model) - 1] = 0;
 		strcpy(cfg->Model,Temp);
 	}
 
@@ -1235,6 +1237,8 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	if (!Temp) {
 		strcpy(cfg->DebugLevel,DefaultDebugLevel);
 	} else {
+		if (strlen(Temp) >= sizeof(cfg->DebugLevel))
+			Temp[sizeof(cfg->DebugLevel) - 1] = 0;
 		strcpy(cfg->DebugLevel,Temp);
 	}
 
@@ -1253,6 +1257,8 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	if (!Temp) {
 		strcpy(cfg->TextReminder,"Reminder");
 	} else {
+		if (strlen(Temp) >= sizeof(cfg->TextReminder))
+			Temp[sizeof(cfg->TextReminder) - 1] = 0;
 		strcpy(cfg->TextReminder,Temp);
 	}
 
@@ -1260,6 +1266,8 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	if (!Temp) {
 		strcpy(cfg->TextMeeting,"Meeting");
 	} else {
+		if (strlen(Temp) >= sizeof(cfg->TextMeeting))
+			Temp[sizeof(cfg->TextMeeting) - 1] = 0;
 		strcpy(cfg->TextMeeting,Temp);
 	}
 
@@ -1267,6 +1275,8 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	if (!Temp) {
 		strcpy(cfg->TextCall,"Call");
 	} else {
+		if (strlen(Temp) >= sizeof(cfg->TextCall))
+			Temp[sizeof(cfg->TextCall) - 1] = 0;
 		strcpy(cfg->TextCall,Temp);
 	}
 
@@ -1274,6 +1284,8 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	if (!Temp) {
 		strcpy(cfg->TextBirthday,"Birthday");
 	} else {
+		if (strlen(Temp) >= sizeof(cfg->TextBirthday))
+			Temp[sizeof(cfg->TextBirthday) - 1] = 0;
 		strcpy(cfg->TextBirthday,Temp);
 	}
 
@@ -1281,6 +1293,8 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	if (!Temp) {
 		strcpy(cfg->TextMemo,"Memo");
 	} else {
+		if (strlen(Temp) >= sizeof(cfg->TextMemo))
+			Temp[sizeof(cfg->TextMemo) - 1] = 0;
 		strcpy(cfg->TextMemo,Temp);
 	}
 
