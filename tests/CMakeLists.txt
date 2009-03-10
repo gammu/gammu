@@ -375,6 +375,11 @@ set_tests_properties(sms-cmdline-EMS-misc PROPERTIES
 add_test(sms-cmdline-EMS-ring "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     EMS 54654654 -protected 1 -toneSElong  ${RINGTONE_TEST_FILE})
 
+add_test(sms-cmdline-EMS-unicodefile "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    EMS 213 -unicodefiletext ${Gammu_SOURCE_DIR}/tests/text-unicode.txt -unicode)
+set_tests_properties(sms-cmdline-EMS-unicodefile PROPERTIES
+    PASS_REGULAR_EXPRESSION "Coding               : Unicode \\(no compression\\)")
+
 add_test(sms-cmdline-RINGTONE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     RINGTONE 54654654 ${RINGTONE_TEST_FILE})
 set_tests_properties(sms-cmdline-RINGTONE PROPERTIES
