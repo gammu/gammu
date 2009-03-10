@@ -35,5 +35,3 @@ This file is probably not usable for anybody except me ;-).
 - when SMSD fails to send message
     - SQL backend should store this state
     - the code needs review
-
-- add test case for SMSD files backend
