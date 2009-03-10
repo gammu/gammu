@@ -160,7 +160,7 @@ find_program(PSQL_BIN psql)
 set (BUILD_PYTHON "" CACHE FILEPATH "Path to python interpreter")
 
 if (BUILD_PYTHON)
-    set (ENABLE_PYTHON TRUE CACHE BOOL "Build Python bindings")
+    set (WITH_PYTHON TRUE CACHE BOOL "Build Python bindings")
     set (PYTHON_EXECUTABLE ${BUILD_PYTHON})
     execute_process(
         COMMAND
@@ -191,9 +191,9 @@ else (BUILD_PYTHON)
     find_package(PythonLibs)
 
     if (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
-        set (ENABLE_PYTHON TRUE CACHE BOOL "Build Python bindings")
+        set (WITH_PYTHON TRUE CACHE BOOL "Build Python bindings")
     else (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
-        set (ENABLE_PYTHON FALSE CACHE BOOL "Build Python bindings" FORCE)
+        set (WITH_PYTHON FALSE CACHE BOOL "Build Python bindings" FORCE)
     endif (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
 endif (BUILD_PYTHON)
 
@@ -736,9 +736,9 @@ endif (EXISTS "/etc/SuSE-release")
 
 # Components
 set (CPACK_COMPONENTS_ALL gammu library smsd headers utils manpages docs pkgconfig gnapplet examples develdocs)
-if (ENABLE_PYTHON)
+if (WITH_PYTHON)
     list (APPEND CPACK_COMPONENTS_ALL python)
-endif (ENABLE_PYTHON)
+endif (WITH_PYTHON)
 if (WIN32 AND NOT CYGWIN AND WIN32_INSTALL_DLL)
     list (APPEND CPACK_COMPONENTS_ALL dlls)
 endif (WIN32 AND NOT CYGWIN AND WIN32_INSTALL_DLL)
@@ -871,9 +871,9 @@ endif(INSTALL_DOC)
 
 add_subdirectory(contrib)
 
-if (ENABLE_PYTHON)
+if (WITH_PYTHON)
     add_subdirectory(python)
-else (ENABLE_PYTHON)
+else (WITH_PYTHON)
     message (STATUS "Python bindings are disabled!")
-endif (ENABLE_PYTHON)
+endif (WITH_PYTHON)
 
