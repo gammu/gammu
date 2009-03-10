@@ -25,6 +25,7 @@ ChangeLog
 [+] * PostgreSQL engine properly uses sequences instead of reinventing.
 [+] * MySQL engine properly uses auto increments instead of reinventing.
 [-] * Fix escaping of field name in PostgreSQL engine.
+[-] * Better SMSD files logging.
     
 20090302 - 1.23.1
 
