@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.23.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-10 15:21+0100\n"
+"POT-Creation-Date: 2009-03-10 16:30+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5706,7 +5706,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:249
-msgid "battery level (or -1 if unknown)"
+msgid "battery level in percent (or -1 if unknown)"
 msgstr ""
 
 # type: Plain text
@@ -5716,7 +5716,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:253
-msgid "signal level (or -1 if unknown)"
+msgid "signal level in percent (or -1 if unknown)"
 msgstr ""
 
 # type: Plain text
