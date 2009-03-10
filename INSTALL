@@ -114,6 +114,7 @@ Useful cmake parameters:
 against buffer overflows and similar attacks
 -DBUILD_PYTHON=/usr/bin/python2.6 changes Python used for build Python
 module
+-DWITH_PYTHON=OFF disables build of python-gammu
 
 You can also disable support for whole set of phones, e.g.:
 
