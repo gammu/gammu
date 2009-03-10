@@ -28,6 +28,7 @@ ChangeLog
 [-] * Better SMSD files logging.
 [-] * Added testing of SMSD files engine.
 [-] * Increase timeout for AT settings SIM card SMS storage.
+[-] * Fixed date formatting in PostgreSQL SMSD service.
     
 20090302 - 1.23.1
 
