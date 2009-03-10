@@ -32,6 +32,7 @@ ChangeLog
 [+] * Add option to install without documentation.
 [+] * Add -textutf8 option for TEXT sms.
 [-] * Fix crash when some lines in config are too long.
+[-] * Make smsdrc example better looking by removing obsolete docs.
     
 20090302 - 1.23.1
 

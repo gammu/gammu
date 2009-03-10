@@ -60,6 +60,14 @@ Other fields are same as for received messages.
 SMSes will be transmitted sequentially based on the file name. The contents of
 the file is the SMS to be transmitted (in Unicode or standard character set).
 
+The contents of the file is the SMS to be transmitted (in Unicode or standard
+character set), for WAP bookmarks it is split on as Name,URL, for text
+messages whole file content is used. 
+
+Please note that if file is not in Unicode, encoding is detected based on
+locales, which do not have to be configured if SMSD is running from init
+script. If this is your case, please add locales definition to init script.
+
 .SH EXAMPLE
 
 Example of the 'detail' inbox format:

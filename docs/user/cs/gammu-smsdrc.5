@@ -71,6 +71,22 @@ syslog démona. Na Windows je možné použít jinou speciální hodnotu
 Výchozí stav je vypnuté logování.
 
 .TP 
+\fBDebugLevel\fP
+
+Ladicí úroveň SMSD. Číslo je součtem všech hodnot, které chcete logovat.
+
+\fB1\fP \- základní ladicí informace
+.br
+\fB2\fP \- logování SQL dotazů
+.br
+\fB4\fP \- logování ladicích informací gammu (tyto musí být také povoleny v
+sekci gammu)
+
+Pro maximální množství ladicích informací nastavte 255.
+
+Výchozí je 0, což znamená žádné ladicí informace.
+
+.TP 
 \fBCommTimeout\fP
 
 Kolik sekund by měl SMSD čekat po každém cyklu čtení/zápis.
@@ -161,22 +177,6 @@ identifikátory nově přijatý zpráv (pokud to použitá služba podporuje).
 Prosím uvědomte si, že není možné předat vašemu programu žádné
 parametry. Celý text bude považován za jméno programu bez ohledu na mezery,
 uvozovky či jiné speciální znaky.
-
-.TP 
-\fBDebugLevel\fP
-
-Ladicí úroveň SMSD. Číslo je součtem všech hodnot, které chcete logovat.
-
-\fB1\fP \- základní ladicí informace
-.br
-\fB2\fP \- logování SQL dotazů
-.br
-\fB4\fP \- logování ladicích informací gammu (tyto musí být také povoleny v
-sekci gammu)
-
-Pro maximální množství ladicích informací nastavte 255.
-
-Výchozí je 0, což znamená žádné ladicí informace.
 
 .SS "Parametry pro služby používající databázi"
 
