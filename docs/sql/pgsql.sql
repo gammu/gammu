@@ -12,7 +12,7 @@
 -- Function declaration for updating timestamps
 --
 CREATE LANGUAGE plpgsql;
-CREATE FUNCTION update_timestamp() RETURNS trigger AS $update_timestamp$
+CREATE OR REPLACE FUNCTION update_timestamp() RETURNS trigger AS $update_timestamp$
   BEGIN
     NEW.UpdatedInDB := LOCALTIMESTAMP(0);
     RETURN NEW;
