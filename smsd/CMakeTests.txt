@@ -13,13 +13,14 @@ set(MYSQL_USER smsd CACHE STRING "User to use for MySQL tests")
 set(MYSQL_PASSWORD smsd CACHE STRING "Password to use for MySQL tests")
 
 configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" ESCAPE_QUOTES)
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd-files.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" ESCAPE_QUOTES)
 
 macro(smsd_testsuite _driver)
     # This test tests some functionality and setups environment
     add_test("smsd-${_driver}" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" "${_driver}")
     set_tests_properties("smsd-${_driver}" PROPERTIES
         PASS_REGULAR_EXPRESSION ".999999999999999.3.6.0.100.42"
-        FAIL_REGULAR_EXPRESSION "DBI error ([^5]:|[0-9][^:]);Wrong"
+        FAIL_REGULAR_EXPRESSION "ERROR: ;DBI error ([^5]:|[0-9][^:]);Wrong"
         )
 
     add_test("smsd-inject-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" TEXT 123465 -text "Lorem ipsum.")
@@ -56,4 +57,24 @@ if (PSQL_TESTING)
     endif (LIBDBI_FOUND)
 endif (PSQL_TESTING)
 
-#smsd_testsuite("files")
+add_test("smsd-files-unicode" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" unicode)
+set_tests_properties("smsd-files-unicode" PROPERTIES
+    PASS_REGULAR_EXPRESSION ".999999999999999.3.6.0.100.42"
+    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong"
+    )
+add_test("smsd-files-standard" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" standard)
+set_tests_properties("smsd-files-standard" PROPERTIES
+    PASS_REGULAR_EXPRESSION ".999999999999999.3.6.0.100.42"
+    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong"
+    )
+add_test("smsd-files-detail" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" detail)
+set_tests_properties("smsd-files-detail" PROPERTIES
+    PASS_REGULAR_EXPRESSION ".999999999999999.3.6.0.100.42"
+    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong"
+    )
+
+if (HAVE_ALARM)
+    add_test("smsd-daemon-files-unicode" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-unicode/.smsdrc" -X 10)
+    add_test("smsd-daemon-files-standard" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-standard/.smsdrc" -X 10)
+    add_test("smsd-daemon-files-detail" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-detail/.smsdrc" -X 10)
+endif (HAVE_ALARM)
