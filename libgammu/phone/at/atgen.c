@@ -6132,9 +6132,15 @@ GSM_Error ATGEN_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine
 			/* from GSM 07.07 section 8.5 */
 			Signal->SignalStrength = 2 * rssi - 113;
 
-			/* FIXME: this is wild guess and probably will be phone dependant */
-			Signal->SignalPercent = 15 * rssi;
-			if (Signal->SignalPercent > 100) Signal->SignalPercent = 100;
+			/* received signal strength indication is in range 0 - 31 */
+			if (rssi == 31) {
+				Signal->SignalPercent = 100;
+			} else {
+				Signal->SignalPercent = 3 * rssi;
+			}
+			if (Signal->SignalPercent > 100) {
+				Signal->SignalPercent = 100;
+			}
 		}
 
                 /* from GSM 05.08 section 8.2.4 */
