@@ -127,11 +127,11 @@ Limiting set of installed data
 By setting following flags you can control which additional parts will
 be installed:
 
-INSTALL_GNAPPLET - Install Gnapplet binariesg
-INSTALL_MEDIA - Install sample media filesg
-INSTALL_PHP_EXAMPLES - Install PHP example scriptsg
-INSTALL_BASH_COMPLETION - Install bash completion script for Gammug
-INSTALL_LSB_INIT - Install LSB compatible init script for Gammug
+INSTALL_GNAPPLET - Install Gnapplet binaries
+INSTALL_MEDIA - Install sample media files
+INSTALL_PHP_EXAMPLES - Install PHP example scripts
+INSTALL_BASH_COMPLETION - Install bash completion script for Gammu
+INSTALL_LSB_INIT - Install LSB compatible init script for Gammu
 INSTALL_DOC - Install documentation
 
 For example:
