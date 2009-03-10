@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.23.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-10 16:30+0100\n"
+"POT-Creation-Date: 2009-03-10 16:55+0100\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -5448,7 +5448,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:80 docs/user/gammu-smsd-tables.7:138
 #: docs/user/gammu-smsd-tables.7:330
-msgid "SMS class or -1"
+msgid "SMS class or -1 (0 is normal SMS, 1 is flash one)"
 msgstr ""
 
 # type: Plain text
