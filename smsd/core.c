@@ -841,9 +841,9 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, c
 
 			if (WIFEXITED(status)) {
 				if (WEXITSTATUS(status) == 0) {
-					SMSD_Log(-1, Config, "Process exited, failed status=%d", WEXITSTATUS(status));
-				} else {
 					SMSD_Log(0, Config, "Process exited, status=%d", WEXITSTATUS(status));
+				} else {
+					SMSD_Log(-1, Config, "Process exited, failed status=%d", WEXITSTATUS(status));
 				}
 				return (WEXITSTATUS(status) == 0);
 			} else if (WIFSIGNALED(status)) {
