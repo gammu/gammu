@@ -5460,7 +5460,7 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg UNUSED, GSM_StateMachin
 
 		return ERR_NONE;
     	case AT_Reply_CMSError:
-            return ATGEN_HandleCMSError(s);
+		return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
 		return ATGEN_HandleCMEError(s);
         default:
