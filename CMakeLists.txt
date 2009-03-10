@@ -698,12 +698,6 @@ install (
     COMPONENT "pkgconfig"
     )
 
-install (
-    FILES ${DOCS}
-    DESTINATION "${INSTALL_DOC_DIR}"
-    COMPONENT "docs"
-    )
-
 # We want some tests. Even when cross compiling for Windows tests can be
 # done in Wine. This is better than nothing, even though Wine is a bit
 # more fault tolerant when linking DLLs.
@@ -863,10 +857,16 @@ add_subdirectory(utils)
 option(INSTALL_DOC "Install documentation" ON)
 
 if(INSTALL_DOC)
-add_subdirectory(docs/config)
-add_subdirectory(docs/develop)
-add_subdirectory(docs/sql)
-add_subdirectory(docs/user)
+    install (
+        FILES ${DOCS}
+        DESTINATION "${INSTALL_DOC_DIR}"
+        COMPONENT "docs"
+        )
+
+    add_subdirectory(docs/config)
+    add_subdirectory(docs/develop)
+    add_subdirectory(docs/sql)
+    add_subdirectory(docs/user)
 endif(INSTALL_DOC)
 
 add_subdirectory(contrib)
