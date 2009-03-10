@@ -119,8 +119,10 @@ void SMSD_CloseLog(GSM_SMSDConfig *Config)
 			break;
 #endif
 		case SMSD_LOG_FILE:
-			fclose(Config->log_handle);
-			Config->log_handle = NULL;
+			if (Config->log_handle != NULL) {
+				fclose(Config->log_handle);
+				Config->log_handle = NULL;
+			}
 			break;
 		default:
 			break;
