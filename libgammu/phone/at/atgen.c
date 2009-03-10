@@ -2132,7 +2132,7 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	smprintf(s, "Getting available SMS memories\n");
-	ATGEN_WaitFor(s, "AT+CPMS=?\r", 10, 0x00, 4, ID_GetSMSMemories);
+	ATGEN_WaitFor(s, "AT+CPMS=?\r", 20, 0x00, 4, ID_GetSMSMemories);
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_SM)) {
 		smprintf(s, "Forcing support for SM storage!\n");
@@ -2192,7 +2192,7 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, bool SIM, bool for_write, bool
 		req[14] = 'S'; req[15] = 'M';
 
 		smprintf(s, "Setting SMS memory type to SM\n");
-		ATGEN_WaitFor(s, req, reqlen, 0x00, 3, ID_SetMemoryType);
+		ATGEN_WaitFor(s, req, reqlen, 0x00, 20, ID_SetMemoryType);
 		if (Priv->SIMSMSMemory == 0 && error == ERR_NONE) {
 			Priv->SIMSMSMemory = AT_AVAILABLE;
 		}
