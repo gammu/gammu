@@ -7,12 +7,13 @@ project(Gammu-Locales C)
 # We need gettext
 macro_optional_find_package(Gettext)
 
+option(INSTALL_LOC "Install locales data" ON)
 
-if(GETTEXT_FOUND AND GETTEXTLIBS_FOUND)
+if(GETTEXT_FOUND AND GETTEXTLIBS_FOUND AND INSTALL_LOC)
     # List of locales
     file(GLOB LOCALEFILES "*/gammu.po")
     file(GLOB LIBLOCALEFILES "*/libgammu.po")
     # Generate mo files
     GETTEXT_CREATE_TRANSLATIONS("gammu.pot" ALL ${LOCALEFILES})
     GETTEXT_CREATE_TRANSLATIONS("libgammu.pot" ALL ${LIBLOCALEFILES})
-endif(GETTEXT_FOUND AND GETTEXTLIBS_FOUND)
+endif(GETTEXT_FOUND AND GETTEXTLIBS_FOUND AND INSTALL_LOC)

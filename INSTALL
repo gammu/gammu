@@ -133,6 +133,7 @@ INSTALL_PHP_EXAMPLES - Install PHP example scripts
 INSTALL_BASH_COMPLETION - Install bash completion script for Gammu
 INSTALL_LSB_INIT - Install LSB compatible init script for Gammu
 INSTALL_DOC - Install documentation
+INSTALL_LOC - Install locales data
 
 For example:
 
