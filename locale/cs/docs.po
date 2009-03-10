@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.23.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-10 15:21+0100\n"
+"POT-Creation-Date: 2009-03-10 16:30+0100\n"
 "PO-Revision-Date: 2009-03-02 14:52+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -6193,7 +6193,8 @@ msgstr "B<Battery> (integer)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:249
-msgid "battery level (or -1 if unknown)"
+#, fuzzy
+msgid "battery level in percent (or -1 if unknown)"
 msgstr "stav baterie (nebo -1 pokud není znám)"
 
 # type: Plain text
@@ -6203,7 +6204,8 @@ msgstr "B<Signal> (integer)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:253
-msgid "signal level (or -1 if unknown)"
+#, fuzzy
+msgid "signal level in percent (or -1 if unknown)"
 msgstr "úrověň signálu (nebo -1 pokud není znám)"
 
 # type: Plain text
