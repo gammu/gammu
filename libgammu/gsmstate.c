@@ -82,8 +82,13 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 	{"dku5", GCT_DKU5FBUS2, false},
 	{"dku5fbus", GCT_DKU5FBUS2, false},
 	{"ark3116fbus", GCT_DKU5FBUS2, true},
+#ifdef WIN32
 	{"dku2", GCT_DKU2PHONET, false},
 	{"dku2phonet", GCT_DKU2PHONET, false},
+#else
+	{"dku2", GCT_FBUS2USB, false},
+	{"dku2phonet", GCT_FBUS2USB, false},
+#endif
 	{"dku2at", GCT_DKU2AT, false},
 
         /* for serial ports assigned by bt stack */
