@@ -26,9 +26,9 @@ GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section **result)
 	FILE		*f;
 	bool		FFEEUnicode=false;
 	int		level = -1, buffer1used, buffer2used;
-	size_t		bufferused, i, buffused=1000,buffread=1000, num;
+	size_t		bufferused, i, read_buffer_used=1000,read_buffer_pos=1000, num;
 	unsigned char	ch[3], *buffer = NULL;
-	unsigned char	*buffer2 = NULL, *buffer1 = NULL, buff[1001];
+	unsigned char	*buffer2 = NULL, *buffer1 = NULL, read_buffer[1001];
         INI_Section 	*INI_info = NULL, *INI_head = NULL, *heading;
         INI_Entry 	*entry;
 	GSM_Error	error = ERR_NONE;
@@ -43,23 +43,23 @@ GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section **result)
 		/* We read one line from file */
 		bufferused = 0;
 		while (1) {
-			if (buffused == buffread) {
-				buffused = fread(buff,1,1000,f);
-				buffread = 0;
-				if (buffused == 0) {
+			if (read_buffer_used == read_buffer_pos) {
+				read_buffer_used = fread(read_buffer,1,1000,f);
+				read_buffer_pos = 0;
+				if (read_buffer_used == 0) {
 					error = ERR_NONE;
 					goto done;
 				}
 			}
 			if (Unicode) {
 				if (num == 0) {
-					if (buffused == buffread) continue;
-					ch[0] = buff[buffread++];
+					if (read_buffer_used == read_buffer_pos) continue;
+					ch[0] = read_buffer[read_buffer_pos++];
 					num = 1;
 				}
 				if (num == 1) {
-					if (buffused == buffread) continue;
-					ch[1] = buff[buffread++];
+					if (read_buffer_used == read_buffer_pos) continue;
+					ch[1] = read_buffer[read_buffer_pos++];
 					num = 0;
 				}
 				if (level == -1) {
@@ -71,9 +71,9 @@ GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section **result)
 					ch[2] = ch[0]; ch[0] = ch[1]; ch[1] = ch[2];
 				}
 			} else {
-				if (buffused == buffread) continue;
+				if (read_buffer_used == read_buffer_pos) continue;
 				ch[0] = 0;
-				ch[1] = buff[buffread++];
+				ch[1] = read_buffer[read_buffer_pos++];
 				if (level == -1) level = 0;
 			}
 			if ((ch[0] == 0 && ch[1] == 13) ||
