@@ -867,7 +867,7 @@ add_subdirectory(docs/config)
 add_subdirectory(docs/develop)
 add_subdirectory(docs/sql)
 add_subdirectory(docs/user)
-endif(WITH_DOC)
+endif(INSTALL_DOC)
 
 add_subdirectory(contrib)
 
