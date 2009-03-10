@@ -550,6 +550,8 @@ only beep, vibrate or turn on light. Text will be cut to 1 sms.
 
 \\fB\\-text\\fR - get text from command line instead of stdin.
 
+\\fB\\-textutf8\\fR - get text in UTF-8 from command line instead of stdin.
+
 \\fITIP:\\fR
 You can create Unicode file using WordPad in Win32 (during saving select
 "Unicode Text Document" format). In Unix can use for example YUdit.

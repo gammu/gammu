@@ -306,6 +306,11 @@ add_test(sms-cmdline-TEXT-smsc "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFI
 set_tests_properties(sms-cmdline-TEXT-smsc PROPERTIES
 PASS_REGULAR_EXPRESSION "Remote number        : \"213\"")
 
+add_test(sms-cmdline-TEXT-textutf8 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    TEXT 213 -unicode -textutf8 "Zkouška šíleně žlutého koně.")
+set_tests_properties(sms-cmdline-TEXT-textutf8 PROPERTIES
+    PASS_REGULAR_EXPRESSION "Coding               : Unicode \\(no compression\\)")
+
 
 add_test(sms-cmdline-TEXT-16 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     TEXT 213

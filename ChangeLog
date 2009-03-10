@@ -30,6 +30,7 @@ ChangeLog
 [-] * Increase timeout for AT settings SIM card SMS storage.
 [-] * Fixed date formatting in PostgreSQL SMSD service.
 [+] * Add option to install without documentation.
+[+] * Add -textutf8 option for TEXT sms.
     
 20090302 - 1.23.1
 

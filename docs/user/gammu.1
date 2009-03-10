@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Feb 16 2009" "Gammu 1.22.95" "Gammu Documentation"
+.TH "GAMMU" "1" "Mar 10 2009" "Gammu 1.23.90" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -304,7 +304,7 @@ it correctly later in phone composer (for example, in 33xx)
 .BI "savesms SMSTEMPLATE" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]"
 
 .TP
-.BI "savesms TEXT" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext]"
+.BI "savesms TEXT" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]"
 Take text from stdin (or commandline if \-text specified) 
 and save as text SMS into SIM/phone memory.
 
@@ -355,6 +355,8 @@ only beep, vibrate or turn on light. Text will be cut to 1 sms.
 \fB\-inputunicode\fR - input text is in Unicode.
 
 \fB\-text\fR - get text from command line instead of stdin.
+
+\fB\-textutf8\fR - get text in UTF-8 from command line instead of stdin.
 
 \fITIP:\fR
 You can create Unicode file using WordPad in Win32 (during saving select
@@ -426,7 +428,7 @@ Read WAP settings from file created by \fBbackup\fR option and saves in Nokia fo
 .BI "sendsms SMSTEMPLATE" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]"
 
 .TP
-.BI "sendsms TEXT" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext]"
+.BI "sendsms TEXT" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]"
 
 .TP
 .BI "sendsms TODO" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
