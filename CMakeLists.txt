@@ -650,6 +650,13 @@ add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
     COMMAND find ${DOXYGEN_INTERNAL_OUTPUT}/html -name '*.html' -print0 | xargs -0 sed -i 's@text/html\;charset=iso-8859-1@text/html\;charset=utf-8@'
     COMMENT "Generating internal documentation")
 
+# CPP check
+find_program(CPPCHECK_EXECUTABLE NAMES cppcheck
+    DOC "cppcheck - code checking tool")
+add_custom_target (cppcheck ${CPPCHECK_EXECUTABLE} -a -f -q "${Gammu_SOURCE_DIR}/gammu" "${Gammu_SOURCE_DIR}/smsd" "${Gammu_SOURCE_DIR}/helper" "${Gammu_SOURCE_DIR}/libgammu" "${Gammu_SOURCE_DIR}/python/gammu/src"
+    COMMENT "Checking C code")
+
+
 # Generate pkgconfig file
 configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu.pc.cmake" "${Gammu_BINARY_DIR}/cfg/gammu.pc" @ONLY)
 configure_file ("${Gammu_SOURCE_DIR}/cmake/templates/gammu-smsd.pc.cmake" "${Gammu_BINARY_DIR}/cfg/gammu-smsd.pc" @ONLY)
