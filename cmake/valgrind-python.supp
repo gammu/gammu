@@ -917,10 +917,10 @@
    fun:malloc
    fun:CRYPTO_malloc
    fun:sk_new
-   obj:/usr/lib64/libssl.so.0.9.8
+   obj:/usr/lib*/libssl.so.*
    fun:SSL_COMP_get_compression_methods
    fun:SSL_library_init
-   obj:/usr/lib64/libcurl.so.4.1.0
+   obj:/usr/lib*/libcurl.so.*
    fun:curl_global_init
 }
 {
@@ -929,7 +929,7 @@
    fun:malloc
    fun:CRYPTO_malloc
    fun:sk_new
-   obj:/usr/lib64/libssl.so.0.9.8
+   obj:/usr/lib*/libssl.so.*
    fun:SSL_COMP_get_compression_methods
    fun:SSL_library_init
    fun:Curl_ossl_init
