@@ -24,6 +24,12 @@ apidoc: $(BUILD_DIR)
 pydoc: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) pydoc
 
+pydoc-html: $(BUILD_DIR)
+	$(MAKE) -C $(BUILD_DIR) pydoc-html
+
+cppcheck: $(BUILD_DIR)
+	$(MAKE) -C $(BUILD_DIR) cppcheck
+
 interndoc: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) interndoc
 
