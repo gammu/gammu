@@ -27,20 +27,8 @@
 
 #include <stdio.h>
 
-#ifdef __BORLANDC__
+/* For struct _finddata_t */
 #include <io.h>
-#else
-typedef unsigned long _fsize_t; /* Could be 64 bits for Win32 */
-
-struct _finddata_t {
-    unsigned    attrib;
-    time_t      time_create;    /* -1 for FAT file systems */
-    time_t      time_access;    /* -1 for FAT file systems */
-    time_t      time_write;
-    _fsize_t    size;
-    char        name[260];
-};
-#endif
 
 struct dirent {
 	long d_ino;
