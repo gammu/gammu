@@ -41,6 +41,7 @@ char *CallStatusToString(GSM_CallStatus ct) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for CallStatus from Gammu: '%d'", ct);
+        free(s);
         return NULL;
     }
 

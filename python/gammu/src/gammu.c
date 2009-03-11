@@ -5886,6 +5886,10 @@ gammu_SaveRingtone(PyObject *self, PyObject *args, PyObject *kwds)
                 &file, &PyDict_Type, &(value), &s))
         return NULL;
 
+    if (!RingtoneFromPython(value, &ringtone)) {
+        return NULL;
+    }
+
     if (PyFile_Check(file)) {
         f = PyFile_AsFile(file);
         if (f == NULL) return NULL;
@@ -5900,10 +5904,6 @@ gammu_SaveRingtone(PyObject *self, PyObject *args, PyObject *kwds)
         closefile = true;
     } else {
         PyErr_SetString(PyExc_TypeError, "Valid are only string or file parameters!");
-        return NULL;
-    }
-
-    if (!RingtoneFromPython(value, &ringtone)) {
         return NULL;
     }
 

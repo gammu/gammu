@@ -24,7 +24,7 @@
 #include "misc.h"
 
 char *TodoPriorityToString(GSM_ToDo_Priority p) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (p) {
@@ -36,6 +36,7 @@ char *TodoPriorityToString(GSM_ToDo_Priority p) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for TodoPriority from Gammu: '%d'", p);
+        free(s);
         return NULL;
     }
 

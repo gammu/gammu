@@ -145,7 +145,7 @@ GSM_SMSValidity StringToSMSValidity(char *s){
 }
 
 char *SMSFormatToString(GSM_SMSFormat f) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (f) {
@@ -157,6 +157,7 @@ char *SMSFormatToString(GSM_SMSFormat f) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for SMSFormat from Gammu: '%d'", f);
+        free(s);
         return NULL;
     }
 
@@ -316,7 +317,7 @@ GSM_UDH StringToUDHType(const char *s) {
 }
 
 char *UDHTypeToString(GSM_UDH type) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (type) {
@@ -390,6 +391,7 @@ char *UDHTypeToString(GSM_UDH type) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for UDHType from Gammu: '%d'", type);
+        free(s);
         return NULL;
     }
 
@@ -411,7 +413,7 @@ GSM_SMSMessageType StringToSMSType(const char *s) {
 }
 
 char *SMSTypeToString(GSM_SMSMessageType type) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (type) {
@@ -428,6 +430,7 @@ char *SMSTypeToString(GSM_SMSMessageType type) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for SMSMessageType from Gammu: '%d'", type);
+        free(s);
         return NULL;
     }
 
@@ -454,7 +457,7 @@ GSM_Coding_Type StringToSMSCoding(const char *s) {
 }
 
 char *SMSCodingToString(GSM_Coding_Type type) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (type) {
@@ -477,6 +480,7 @@ char *SMSCodingToString(GSM_Coding_Type type) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for Coding_Type from Gammu: '%d'", type);
+        free(s);
         return NULL;
     }
 
@@ -498,8 +502,8 @@ GSM_SMS_State StringToSMSState(const char *s){
 }
 
 char *SMSStateToString(GSM_SMS_State type) {
-    char *err = "Err";
-    char *s = NULL;
+    char *err = strdup("Err");
+    char *s = err;
 
     switch (type) {
         case SMS_Sent:
@@ -518,6 +522,7 @@ char *SMSStateToString(GSM_SMS_State type) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for SMS_State from Gammu: '%d'", type);
+        free(s);
         return NULL;
     }
 
@@ -1100,7 +1105,7 @@ PyObject *MultiSMSListToPython(GSM_MultiSMSMessage **sms) {
 
 
 char *MultiPartSMSIDToString(EncodeMultiPartSMSID type) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (type) {
@@ -1249,6 +1254,7 @@ char *MultiPartSMSIDToString(EncodeMultiPartSMSID type) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for MultiPartSMSID from Gammu: '%d'", type);
+        free(s);
         return NULL;
     }
 

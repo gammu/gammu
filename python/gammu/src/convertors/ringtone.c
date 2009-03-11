@@ -24,7 +24,7 @@
 #include "misc.h"
 
 char *RingNoteDurationToString(GSM_RingNoteDuration type) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (type) {
@@ -50,6 +50,7 @@ char *RingNoteDurationToString(GSM_RingNoteDuration type) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteDuration from Gammu: '%d'", type);
+        free(s);
         return NULL;
     }
 
@@ -74,7 +75,7 @@ GSM_RingNoteDuration StringToRingNoteDuration(char *s){
 }
 
 char *RingNoteDurationSpecToString(GSM_RingNoteDurationSpec type) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (type) {
@@ -94,6 +95,7 @@ char *RingNoteDurationSpecToString(GSM_RingNoteDurationSpec type) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteDurationSpec from Gammu: '%d'", type);
+        free(s);
         return NULL;
     }
 
@@ -116,7 +118,7 @@ GSM_RingNoteDurationSpec StringToRingNoteDurationSpec(char *s){
 }
 
 char *RingNoteNoteToString(GSM_RingNoteNote type) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (type) {
@@ -163,6 +165,7 @@ char *RingNoteNoteToString(GSM_RingNoteNote type) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteNote from Gammu: '%d'", type);
+        free(s);
         return NULL;
     }
 
@@ -194,7 +197,7 @@ GSM_RingNoteNote StringToRingNoteNote(char *s){
 }
 
 char *RingNoteStyleToString(GSM_RingNoteStyle type) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (type) {
@@ -211,6 +214,7 @@ char *RingNoteStyleToString(GSM_RingNoteStyle type) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteStyle from Gammu: '%d'", type);
+        free(s);
         return NULL;
     }
 
@@ -232,7 +236,7 @@ GSM_RingNoteStyle StringToRingNoteStyle(char *s){
 }
 
 char *RingCommandTypeToString(GSM_RingCommandType type) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (type) {
@@ -264,6 +268,7 @@ char *RingCommandTypeToString(GSM_RingCommandType type) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingCommandType from Gammu: '%d'", type);
+        free(s);
         return NULL;
     }
 
