@@ -24,7 +24,7 @@
 #include "misc.h"
 
 char *BitmapTypeToString(GSM_Bitmap_Types type) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (type) {
@@ -65,6 +65,7 @@ char *BitmapTypeToString(GSM_Bitmap_Types type) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for BitmapType from Gammu: '%d'", type);
+        free(s);
         return NULL;
     }
 

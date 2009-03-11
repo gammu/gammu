@@ -24,7 +24,7 @@
 #include "misc.h"
 
 char *CalendarTypeToString(GSM_CalendarNoteType p) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (p) {
@@ -60,6 +60,7 @@ char *CalendarTypeToString(GSM_CalendarNoteType p) {
 
     if (s == err) {
         PyErr_Format(PyExc_ValueError, "Bad value for CalendarType from Gammu: '%d'", p);
+        free(s);
         return NULL;
     }
 
