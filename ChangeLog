@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2009???? - 1.23.90
+20090311 - 1.23.90
 
 [-] * Fixed decoding of Samsung memory entries.
 [-] * Properly handle corrupted messages from Nokia phones (bug #811).
