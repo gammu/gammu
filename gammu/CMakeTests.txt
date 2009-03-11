@@ -162,7 +162,7 @@ set_tests_properties("gammu-dummy-99-identify" PROPERTIES
     PASS_REGULAR_EXPRESSION "DUMMY-001"
     )
 
-gammu_test(monitor NasraTel 1)
+gammu_test(monitor GammuTel 1)
 gammu_test(networkinfo "B00B.*FACE")
 gammu_test(identify DUMMY-001)
 gammu_test(getdatetime "[0-9][0-9][0-9][0-9]")
