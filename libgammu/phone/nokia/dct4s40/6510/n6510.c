@@ -105,13 +105,15 @@ static GSM_Error N6510_ReplyGetMemoryStatus(GSM_Protocol_Message msg, GSM_StateM
 	/* Quess ;-)) */
 	if (msg.Buffer[14]==0x10) {
 		Data->MemoryStatus->MemoryFree = msg.Buffer[18]*256 + msg.Buffer[19];
+		Data->MemoryStatus->MemoryUsed = msg.Buffer[20]*256 + msg.Buffer[21];
 	} else if (msg.Buffer[14]==0x02) {
 		Data->MemoryStatus->MemoryFree = msg.Buffer[22];
+		Data->MemoryStatus->MemoryUsed = msg.Buffer[21];
 	} else {
 		Data->MemoryStatus->MemoryFree = msg.Buffer[17];
+		Data->MemoryStatus->MemoryUsed = msg.Buffer[20]*256 + msg.Buffer[21];
 	}
 	smprintf(s, "Size       : %i\n",Data->MemoryStatus->MemoryFree);
-	Data->MemoryStatus->MemoryUsed = msg.Buffer[20]*256 + msg.Buffer[21];
 	smprintf(s, "Used       : %i\n",Data->MemoryStatus->MemoryUsed);
 	Data->MemoryStatus->MemoryFree -= Data->MemoryStatus->MemoryUsed;
 	smprintf(s, "Free       : %i\n",Data->MemoryStatus->MemoryFree);

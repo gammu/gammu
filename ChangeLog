@@ -35,6 +35,7 @@ ChangeLog
 [-] * Make smsdrc example better looking by removing obsolete docs.
 [-] * Make dku2 connection types work on Linux (alias to fbususb).
 [-] * Better calculation of signal percent.
+[-] * Fixed getting of memory status for some Nokias (bug #836).
     
 20090302 - 1.23.1
 
