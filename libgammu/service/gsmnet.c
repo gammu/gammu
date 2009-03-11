@@ -766,7 +766,7 @@ const char *GSM_Networks[] = {
 	"744 04", "Telecel Paraguay",
 	"746 02", "TELESUR.GSM",
 
-	"999 99", "NasraTel",
+	"999 99", "GammuTel",
 
 	NULL
 };
