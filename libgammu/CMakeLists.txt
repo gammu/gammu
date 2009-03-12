@@ -45,6 +45,7 @@ set (LIBRARY_SRC
     protocol/symbian/gnapbus.c
     phone/pfunc.c
     phone/at/atgen.c
+    phone/at/at-sms.c
     phone/at/siemens.c
     phone/at/samsung.c
     phone/at/motorola.c

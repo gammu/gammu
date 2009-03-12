@@ -17,18 +17,19 @@ This file is probably not usable for anybody except me ;-).
 
 - split a bit some huge source files
     find . -type f -name '*.c' -not -path '*.svn*' | xargs stat -c '%s %n' | sort -n
-        64582 ./gammu/misc.c
-        66741 ./tests/line-splitting.c
-        67588 ./common/service/gsmcal.c
-        82342 ./common/phone/nokia/dct4s40/6510/6510file.c
-        86313 ./common/phone/nokia/nfunc.c
-        101238 ./common/phone/obex/obexgen.c
-        133933 ./common/phone/alcatel/alcatel.c
-        136447 ./common/phone/nokia/dct3/n6110.c
-        148794 ./common/phone/nokia/dct4s40/6510/n6510.c
-        149573 ./common/service/backup/backtext.c
-        182397 ./python/gammu/src/gammu.c
-        218459 ./common/phone/at/atgen.c
+        64833 ./gammu/misc.c
+        66743 ./tests/line-splitting.c
+        67624 ./libgammu/service/gsmcal.c
+        69016 ./libgammu/phone/at/at-sms.c
+        82476 ./libgammu/phone/nokia/dct4s40/6510/6510file.c
+        86313 ./libgammu/phone/nokia/nfunc.c
+        101274 ./libgammu/phone/obex/obexgen.c
+        134022 ./libgammu/phone/alcatel/alcatel.c
+        136447 ./libgammu/phone/nokia/dct3/n6110.c
+        148923 ./libgammu/phone/nokia/dct4s40/6510/n6510.c
+        149421 ./libgammu/service/backup/backtext.c
+        151594 ./libgammu/phone/at/atgen.c
+        182944 ./python/gammu/src/gammu.c
 
 - reading/saving vnote
 

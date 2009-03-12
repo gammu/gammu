@@ -489,6 +489,17 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
  */
 GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer);
 
+int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output);
+
+/**
+ * This function parses datetime strings in the format:
+ * [YY[YY]/MM/DD,]hh:mm[:ss[+TZ]] , [] enclosed parts are optional
+ * (or the same hex/unicode encoded).
+ *
+ * @todo Too much static buffers are used here.
+ */
+GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned char *_input);
+
 #endif
 /*@}*/
 /*@}*/
