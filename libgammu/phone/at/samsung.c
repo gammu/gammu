@@ -489,6 +489,9 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Get line from reply */
 		str = GetLineString(msg.Buffer, &Priv->Lines, 2);
 
+		/* Empty entry */
+		if (strcmp(str, "OK") == 0) return ERR_EMPTY;
+
 		/*
 		 * Parse reply string
 		 *
