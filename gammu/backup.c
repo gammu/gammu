@@ -194,7 +194,7 @@ void DoBackup(int argc, char *argv[])
  	GSM_FMStation		FMStation;
  	GSM_GPRSAccessPoint	GPRSPoint;
 	bool			DoBackupPart;
-	bool			UseNext;
+	bool			UseNext = false;
 	char buffer[GSM_MAX_INFO_LENGTH];
 
 	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
