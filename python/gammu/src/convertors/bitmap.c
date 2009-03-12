@@ -24,8 +24,7 @@
 #include "misc.h"
 
 char *BitmapTypeToString(GSM_Bitmap_Types type) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (type) {
         case GSM_None:
@@ -63,14 +62,8 @@ char *BitmapTypeToString(GSM_Bitmap_Types type) {
             break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for BitmapType from Gammu: '%d'", type);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for BitmapType from Gammu: '%d'", type);
         return NULL;
     }
 

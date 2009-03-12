@@ -24,8 +24,7 @@
 #include "misc.h"
 
 char *FileTypeToString(GSM_FileType type) {
-    char *err = "Err";
-    char *s = err;
+    char *s = NULL;
 
     if (type == 0) {
         /* 0 can be valid for folders? If handled inside switch, gcc complains */
@@ -71,13 +70,8 @@ char *FileTypeToString(GSM_FileType type) {
         }
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for GSM_FileType from Gammu: '%d'", type);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for GSM_FileType from Gammu: '%d'", type);
         return NULL;
     }
 

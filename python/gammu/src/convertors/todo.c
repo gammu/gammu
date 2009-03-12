@@ -24,8 +24,7 @@
 #include "misc.h"
 
 char *TodoPriorityToString(GSM_ToDo_Priority p) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (p) {
         case GSM_Priority_High: s = strdup("High"); break;
@@ -34,14 +33,8 @@ char *TodoPriorityToString(GSM_ToDo_Priority p) {
         case GSM_Priority_None: s = strdup("None"); break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for TodoPriority from Gammu: '%d'", p);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for TodoPriority from Gammu: '%d'", p);
         return NULL;
     }
 

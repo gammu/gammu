@@ -24,8 +24,7 @@
 #include "misc.h"
 
 char *RingNoteDurationToString(GSM_RingNoteDuration type) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (type) {
         case Duration_Full:
@@ -48,14 +47,8 @@ char *RingNoteDurationToString(GSM_RingNoteDuration type) {
             break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteDuration from Gammu: '%d'", type);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteDuration from Gammu: '%d'", type);
         return NULL;
     }
 
@@ -75,8 +68,7 @@ GSM_RingNoteDuration StringToRingNoteDuration(char *s){
 }
 
 char *RingNoteDurationSpecToString(GSM_RingNoteDurationSpec type) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (type) {
         case NoSpecialDuration:
@@ -93,14 +85,8 @@ char *RingNoteDurationSpecToString(GSM_RingNoteDurationSpec type) {
             break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteDurationSpec from Gammu: '%d'", type);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteDurationSpec from Gammu: '%d'", type);
         return NULL;
     }
 
@@ -118,8 +104,7 @@ GSM_RingNoteDurationSpec StringToRingNoteDurationSpec(char *s){
 }
 
 char *RingNoteNoteToString(GSM_RingNoteNote type) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (type) {
         case Note_Pause:
@@ -163,14 +148,8 @@ char *RingNoteNoteToString(GSM_RingNoteNote type) {
             break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteNote from Gammu: '%d'", type);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteNote from Gammu: '%d'", type);
         return NULL;
     }
 
@@ -197,8 +176,7 @@ GSM_RingNoteNote StringToRingNoteNote(char *s){
 }
 
 char *RingNoteStyleToString(GSM_RingNoteStyle type) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (type) {
         case NaturalStyle:
@@ -212,14 +190,8 @@ char *RingNoteStyleToString(GSM_RingNoteStyle type) {
             break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteStyle from Gammu: '%d'", type);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingNoteStyle from Gammu: '%d'", type);
         return NULL;
     }
 
@@ -236,7 +208,6 @@ GSM_RingNoteStyle StringToRingNoteStyle(char *s){
 }
 
 char *RingCommandTypeToString(GSM_RingCommandType type) {
-    char *err = strdup("Err");
     char *s = err;
 
     switch (type) {
@@ -266,14 +237,8 @@ char *RingCommandTypeToString(GSM_RingCommandType type) {
             break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingCommandType from Gammu: '%d'", type);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for GSM_RingCommandType from Gammu: '%d'", type);
         return NULL;
     }
 

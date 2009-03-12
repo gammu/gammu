@@ -145,8 +145,7 @@ GSM_SMSValidity StringToSMSValidity(char *s){
 }
 
 char *SMSFormatToString(GSM_SMSFormat f) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (f) {
         case SMS_FORMAT_Pager: s = strdup("Pager"); break;
@@ -155,14 +154,8 @@ char *SMSFormatToString(GSM_SMSFormat f) {
         case SMS_FORMAT_Text: s = strdup("Text"); break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for SMSFormat from Gammu: '%d'", f);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for SMSFormat from Gammu: '%d'", f);
         return NULL;
     }
 
@@ -317,8 +310,7 @@ GSM_UDH StringToUDHType(const char *s) {
 }
 
 char *UDHTypeToString(GSM_UDH type) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (type) {
         case UDH_NoUDH:
@@ -389,14 +381,9 @@ char *UDHTypeToString(GSM_UDH type) {
             break;
     }
 
-    if (s == err) {
+    if (s == NULL) {
         PyErr_Format(PyExc_ValueError, "Bad value for UDHType from Gammu: '%d'", type);
         free(s);
-        return NULL;
-    }
-
-    if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
         return NULL;
     }
 
@@ -413,8 +400,7 @@ GSM_SMSMessageType StringToSMSType(const char *s) {
 }
 
 char *SMSTypeToString(GSM_SMSMessageType type) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (type) {
         case SMS_Deliver:
@@ -428,14 +414,8 @@ char *SMSTypeToString(GSM_SMSMessageType type) {
             break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for SMSMessageType from Gammu: '%d'", type);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for SMSMessageType from Gammu: '%d'", type);
         return NULL;
     }
 
@@ -457,8 +437,7 @@ GSM_Coding_Type StringToSMSCoding(const char *s) {
 }
 
 char *SMSCodingToString(GSM_Coding_Type type) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (type) {
         case SMS_Coding_Unicode_No_Compression:
@@ -478,14 +457,8 @@ char *SMSCodingToString(GSM_Coding_Type type) {
             break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for Coding_Type from Gammu: '%d'", type);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for Coding_Type from Gammu: '%d'", type);
         return NULL;
     }
 
@@ -502,8 +475,7 @@ GSM_SMS_State StringToSMSState(const char *s){
 }
 
 char *SMSStateToString(GSM_SMS_State type) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (type) {
         case SMS_Sent:
@@ -520,14 +492,8 @@ char *SMSStateToString(GSM_SMS_State type) {
             break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for SMS_State from Gammu: '%d'", type);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for SMS_State from Gammu: '%d'", type);
         return NULL;
     }
 
@@ -1105,8 +1071,7 @@ PyObject *MultiSMSListToPython(GSM_MultiSMSMessage **sms) {
 
 
 char *MultiPartSMSIDToString(EncodeMultiPartSMSID type) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (type) {
         case SMS_Text:
@@ -1252,14 +1217,8 @@ char *MultiPartSMSIDToString(EncodeMultiPartSMSID type) {
             break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for MultiPartSMSID from Gammu: '%d'", type);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for MultiPartSMSID from Gammu: '%d'", type);
         return NULL;
     }
 

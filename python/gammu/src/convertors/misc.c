@@ -90,7 +90,6 @@ GSM_USSDStatus StringToUSSDStatus(const char *s) {
 }
 
 char *USSDStatusToString(GSM_USSDStatus type) {
-    char *err = strdup("Err");
     char *s = err;
 
     switch (type) {
@@ -117,14 +116,8 @@ char *USSDStatusToString(GSM_USSDStatus type) {
 			break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for USSD Status from Gammu: '%d'", type);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for USSD Status from Gammu: '%d'", type);
         return NULL;
     }
 

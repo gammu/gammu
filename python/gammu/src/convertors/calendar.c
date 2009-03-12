@@ -24,8 +24,7 @@
 #include "misc.h"
 
 char *CalendarTypeToString(GSM_CalendarNoteType p) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (p) {
         case GSM_CAL_REMINDER: s = strdup("REMINDER"); break;
@@ -58,14 +57,8 @@ char *CalendarTypeToString(GSM_CalendarNoteType p) {
         case GSM_CAL_DAILY_ALARM: s = strdup("DAILY_ALARM"); break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for CalendarType from Gammu: '%d'", p);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for CalendarType from Gammu: '%d'", p);
         return NULL;
     }
 

@@ -23,8 +23,7 @@
 #include "convertors.h"
 
 char *CallStatusToString(GSM_CallStatus ct) {
-    char *err = strdup("Err");
-    char *s = err;
+    char *s = NULL;
 
     switch (ct) {
         case GSM_CALL_IncomingCall: s = strdup("IncomingCall"); break;
@@ -39,14 +38,8 @@ char *CallStatusToString(GSM_CallStatus ct) {
         case GSM_CALL_CallSwitched: s = strdup("CallSwitched"); break;
     }
 
-    if (s == err) {
-        PyErr_Format(PyExc_ValueError, "Bad value for CallStatus from Gammu: '%d'", ct);
-        free(s);
-        return NULL;
-    }
-
     if (s == NULL) {
-        PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate string");
+        PyErr_Format(PyExc_ValueError, "Bad value for CallStatus from Gammu: '%d'", ct);
         return NULL;
     }
 
