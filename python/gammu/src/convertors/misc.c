@@ -90,7 +90,7 @@ GSM_USSDStatus StringToUSSDStatus(const char *s) {
 }
 
 char *USSDStatusToString(GSM_USSDStatus type) {
-    char *s = err;
+    char *s = NULL;
 
     switch (type) {
 		case USSD_Unknown:
