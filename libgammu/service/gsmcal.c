@@ -2045,6 +2045,7 @@ GSM_Error GSM_DecodeVNOTE(char *Buffer, size_t *Pos, GSM_NoteEntry *Note)
 	unsigned char   Line[2000],Buff[2000];
 	int	     Level = 0;
 	GSM_Error	error;
+	bool	empty = true;
 
 	Note->Text[0] = 0;
 	Note->Text[1] = 0;
@@ -2056,6 +2057,7 @@ GSM_Error GSM_DecodeVNOTE(char *Buffer, size_t *Pos, GSM_NoteEntry *Note)
 		switch (Level) {
 		case 0:
 			if (strstr(Line,"BEGIN:VNOTE")) Level = 1;
+			empty = true;
 			break;
 		case 1:
 			if (strstr(Line,"END:VNOTE")) {
@@ -2064,12 +2066,14 @@ GSM_Error GSM_DecodeVNOTE(char *Buffer, size_t *Pos, GSM_NoteEntry *Note)
 			}
 			if (ReadVCALText(Line, "BODY",	      Buff, false)) {
 				CopyUnicodeString(Note->Text, Buff);
+				empty = false;
 			}
 			break;
 		}
 	}
+	if (empty) return ERR_EMPTY;
 
-	return ERR_BUG;
+	return ERR_NONE;
 }
 
 GSM_Error GSM_EncodeVNTFile(char *Buffer, const size_t buff_len, size_t *Length, GSM_NoteEntry *Note)

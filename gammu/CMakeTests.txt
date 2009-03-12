@@ -84,6 +84,12 @@ foreach(VCF ${VFORMATS})
     add_test(gammu-savefile-vcf2-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile VCARD21 ${TESTNAME}.2.vcf ${VCF} ME 1)
 endforeach(VCF)
 
+file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vnote/*.vnt")
+foreach(VNT ${VFORMATS})
+    get_filename_component(TESTNAME "${VNT}" NAME_WE)
+    add_test(gammu-savefile-vnt-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile NOTE ${TESTNAME}.2.vnt ${VNT} 1)
+endforeach(VNT)
+
 file(GLOB VFORMATS
     "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.ics"
     "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.vcs")

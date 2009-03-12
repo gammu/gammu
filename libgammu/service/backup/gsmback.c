@@ -17,6 +17,7 @@
 #include "backvcs.h"
 #include "backvcf.h"
 #include "backics.h"
+#include "backvnt.h"
 
 #include "../../../helper/string.h"
 
@@ -140,6 +141,8 @@ GSM_BackupFormat GSM_GuessBackupFormat(const char *FileName, const bool UseUnico
 		Format = GSM_Backup_LMB;
 	} else if (strcasestr(FileName,".vcs")) {
 		Format = GSM_Backup_VCalendar;
+	} else if (strcasestr(FileName,".vnt")) {
+		Format = GSM_Backup_VNote;
 	} else if (strcasestr(FileName,".vcf")) {
 		Format = GSM_Backup_VCard;
 	} else if (strcasestr(FileName,".ldif")) {
@@ -177,6 +180,8 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, GSM_BackupForma
 			return SaveBackup(FileName,backup, false);
 		case GSM_Backup_GammuUCS2:
 			return SaveBackup(FileName,backup, true);
+		case GSM_Backup_VNote:
+			return SaveVNT(FileName,backup);
 		default:
 			return ERR_FILENOTSUPPORTED;
 	}
@@ -197,6 +202,8 @@ GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup, GSM_BackupForma
 			return LoadVCalendar(FileName,backup);
 		case GSM_Backup_VCard:
 			return LoadVCard(FileName,backup);
+		case GSM_Backup_VNote:
+			return LoadVNT(FileName,backup);
 		case GSM_Backup_LDIF:
 			return LoadLDIF(FileName,backup);
 		case GSM_Backup_ICS:
@@ -277,6 +284,9 @@ void GSM_GetBackupFormatFeatures(GSM_BackupFormat Format, GSM_Backup_Info *info)
 			break;
 		case GSM_Backup_VCard:
 			info->PhonePhonebook	= true;
+			break;
+		case GSM_Backup_VNote:
+			info->Note		= true;
 			break;
 		case GSM_Backup_LDIF:
 			info->PhonePhonebook	= true;

@@ -21,6 +21,7 @@ ChangeLog
 [+] * RunOnReceive is started through shell not directly.
 [-] * Fixed reading of empty phonebook entries from Samsung (bug #809).
 [-] * Reread messages if CMGL shows them corrupted (bug #691).
+[+] * Added support for vNote files.
     
 20090311 - 1.23.90
 

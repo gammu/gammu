@@ -33,6 +33,7 @@ set (LIBRARY_SRC
     service/backup/backvcs.c
     service/backup/backvcf.c
     service/backup/backics.c
+    service/backup/backvnt.c
     device/bluetoth/bluetoth.c
     device/irda/irda.c
     device/devfunc.c

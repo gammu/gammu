@@ -31,8 +31,6 @@ This file is probably not usable for anybody except me ;-).
         151594 ./libgammu/phone/at/atgen.c
         182944 ./python/gammu/src/gammu.c
 
-- reading/saving vnote
-
 - when SMSD fails to send message
     - SQL backend should store this state
     - the code needs review
