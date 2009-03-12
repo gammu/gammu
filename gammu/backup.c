@@ -300,6 +300,7 @@ void DoBackup(int argc, char *argv[])
 				}
 			}
 			fprintf(stderr, "\n");
+			fflush(stderr);
 		} else {
 			Pbk.MemoryType  = MEM_ME;
 			i		= 1;
@@ -411,6 +412,7 @@ void DoBackup(int argc, char *argv[])
 			}
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	DoBackupPart = false;
 	if (Info.ToDo) {
@@ -482,6 +484,7 @@ void DoBackup(int argc, char *argv[])
 			}
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	DoBackupPart = false;
 	if (Info.CallerLogos) {
@@ -519,6 +522,7 @@ void DoBackup(int argc, char *argv[])
 			}
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	DoBackupPart = false;
 	if (Info.SMSC) {
@@ -547,6 +551,7 @@ void DoBackup(int argc, char *argv[])
 			fprintf(stderr, "*");
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	DoBackupPart = false;
 	if (Info.StartupLogo) {
@@ -618,6 +623,7 @@ void DoBackup(int argc, char *argv[])
 			}
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	DoBackupPart = false;
 	if (Info.WAPSettings) {
@@ -654,6 +660,7 @@ void DoBackup(int argc, char *argv[])
 			}
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	DoBackupPart = false;
 	if (Info.MMSSettings) {
@@ -690,6 +697,7 @@ void DoBackup(int argc, char *argv[])
 			}
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	DoBackupPart = false;
 	if (Info.ChatSettings) {
@@ -726,6 +734,7 @@ void DoBackup(int argc, char *argv[])
 			}
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	DoBackupPart = false;
 	if (Info.SyncMLSettings) {
@@ -761,6 +770,7 @@ void DoBackup(int argc, char *argv[])
 			}
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	DoBackupPart = false;
 	if (Info.Ringtone) {
@@ -803,6 +813,7 @@ void DoBackup(int argc, char *argv[])
 			}
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	DoBackupPart = false;
 	if (Info.Profiles) {
@@ -835,6 +846,7 @@ void DoBackup(int argc, char *argv[])
 			fprintf(stderr, "*");
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	DoBackupPart = false;
  	if (Info.FMStation) {
@@ -871,6 +883,7 @@ void DoBackup(int argc, char *argv[])
  			fprintf(stderr, "*");
  		}
  		fprintf(stderr, "\n");
+		fflush(stderr);
  	}
 	DoBackupPart = false;
  	if (Info.GPRSPoint) {
@@ -907,6 +920,7 @@ void DoBackup(int argc, char *argv[])
  			fprintf(stderr, "*");
  		}
  		fprintf(stderr, "\n");
+		fflush(stderr);
  	}
 
 	GSM_Terminate();

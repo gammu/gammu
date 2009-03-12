@@ -467,6 +467,7 @@ void GetEachSMS(int argc, char *argv[])
 		start=false;
 	}
 	fprintf(stderr,"\n");
+	fflush(stderr);
 
 #ifdef GSM_ENABLE_BEEP
 	GSM_PhoneBeep();
@@ -717,6 +718,7 @@ void DeleteAllSMS(int argc, char *argv[])
 	}
 
 	printf("\n");
+	fflush(stdout);
 
 	GSM_Terminate();
 }

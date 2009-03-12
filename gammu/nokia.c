@@ -168,6 +168,7 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 	}
 
 	printf("\n");
+	fflush(stdout);
 }
 
 void NokiaSecurityCode(int argc, char *argv[])
@@ -637,6 +638,7 @@ void NokiaAddFile(int argc, char *argv[])
 			Start = false;
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	if (!Found) {
 		printf("%s\n", _("Folder not found. Probably function not supported!"));

@@ -1240,6 +1240,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 				fprintf(stderr, "*");
 			}
 			fprintf(stderr, "\n");
+			fflush(stderr);
 		} else {
 			fprintf(stderr, "%s\n", _("Done"));
 			Print_Error(error);
@@ -1263,6 +1264,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 				fprintf(stderr, "*");
 			}
 			fprintf(stderr, "\n");
+			fflush(stderr);
 		} else {
 			fprintf(stderr, "%s\n", _("Done"));
 			Print_Error(error);
@@ -1284,6 +1286,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 			fprintf(stderr, "*");
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 
 	Bookmark.Location = 1;
@@ -1304,6 +1307,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 				fprintf(stderr, "*");
 			}
 			fprintf(stderr, "\n");
+			fflush(stderr);
 		}
 	}
 	if (answer_yes(_("Delete all phone user ringtones?"))) {

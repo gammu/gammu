@@ -381,7 +381,7 @@ void GetOneFile(GSM_File * File, bool newtime, int i)
 				Terminate(3);
 			}
 			if (Size == 0) {
-				printf("*");
+				fprintf(stderr, "*");
 			} else {
 				fprintf(stderr, "\r");
 				fprintf(stderr, _("%i percent"),
@@ -415,7 +415,8 @@ void GetOneFile(GSM_File * File, bool newtime, int i)
 		}
 		Print_Error(error);
 	}
-	printf("\n");
+	fprintf(stderr, "\n");
+	fflush(stderr);
 	if (error == ERR_NONE || error == ERR_EMPTY || error == ERR_WRONGCRC) {
 		if (File->Used != 0) {
 			sprintf(buffer, "%s", DecodeUnicodeConsole(File->Name));
