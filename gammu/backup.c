@@ -173,7 +173,7 @@ void SaveFile(int argc, char *argv[])
 
 void DoBackup(int argc, char *argv[])
 {
-	GSM_Error error;
+	GSM_Error error = ERR_NONE;
 	int			i, used;
 	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoEntry		ToDo;
@@ -278,6 +278,7 @@ void DoBackup(int argc, char *argv[])
 		if (UseNext) {
 			used 		= 0;
 			fprintf(stderr, LISTFORMAT, _("Reading"));
+			error = ERR_NONE;
 			while (error == ERR_NONE) {
 				if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
 					Backup.PhonePhonebook[used] = malloc(sizeof(GSM_MemoryEntry));
@@ -594,6 +595,7 @@ void DoBackup(int argc, char *argv[])
 	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
+		error = ERR_NONE;
 		while (error == ERR_NONE) {
 			if (used < GSM_BACKUP_MAX_WAPBOOKMARK) {
 				Backup.WAPBookmark[used] = malloc(sizeof(GSM_WAPBookmark));
@@ -629,6 +631,7 @@ void DoBackup(int argc, char *argv[])
 	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
+		error = ERR_NONE;
 		while (error == ERR_NONE) {
 			if (used < GSM_BACKUP_MAX_WAPSETTINGS) {
 				Backup.WAPSettings[used] = malloc(sizeof(GSM_MultiWAPSettings));
@@ -664,6 +667,7 @@ void DoBackup(int argc, char *argv[])
 	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
+		error = ERR_NONE;
 		while (error == ERR_NONE) {
 			if (used < GSM_BACKUP_MAX_MMSSETTINGS) {
 				Backup.MMSSettings[used] = malloc(sizeof(GSM_MultiWAPSettings));
@@ -699,6 +703,7 @@ void DoBackup(int argc, char *argv[])
 	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
+		error = ERR_NONE;
 		while (error == ERR_NONE) {
 			if (used < GSM_BACKUP_MAX_CHATSETTINGS) {
 				Backup.ChatSettings[used] = malloc(sizeof(GSM_ChatSettings));
@@ -771,6 +776,7 @@ void DoBackup(int argc, char *argv[])
 		used 	= 0;
 		i	= 1;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
+		error = ERR_NONE;
 		while (error == ERR_NONE || error == ERR_EMPTY) {
 			if (error == ERR_NONE) {
 				if (used < GSM_BACKUP_MAX_RINGTONES) {
@@ -843,6 +849,7 @@ void DoBackup(int argc, char *argv[])
 		used	= 0;
 		i	= 1;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
+		error = ERR_NONE;
 		while (error == ERR_NONE || error == ERR_EMPTY) {
 			error = GSM_GetFMStation(gsm,&FMStation);
 			if (error == ERR_NONE) {
@@ -878,6 +885,7 @@ void DoBackup(int argc, char *argv[])
 		used	= 0;
 		i	= 1;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
+		error = ERR_NONE;
 		while (error == ERR_NONE || error == ERR_EMPTY) {
 			error = GSM_GetGPRSAccessPoint(gsm,&GPRSPoint);
  			if (error == ERR_NONE) {
