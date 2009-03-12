@@ -119,7 +119,9 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 					    break;
 					}
 					fclose(file);
-				} else error = ERR_CANTOPENFILE;
+				} else {
+					error = ERR_CANTOPENFILE;
+				}
 			}
 			if (error == ERR_NONE) {
 				SMSD_Log(1, Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report": "Received"), FileName);
