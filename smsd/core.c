@@ -730,7 +730,6 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	return true;
 }
 
-#ifdef WIN32
 /**
  * Prepares a command line for RunOnReceive command.
  */
@@ -753,6 +752,7 @@ char *SMSD_RunOnReceiveCommand(GSM_SMSDConfig *Config, const char *locations)
 	return result;
 }
 
+#ifdef WIN32
 bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, char *locations)
 {
 	BOOL ret;
@@ -789,32 +789,6 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, c
 	return ret;
 }
 #else
-/**
- * Prepares a command line for RunOnReceive command.
- */
-char **SMSD_RunOnReceiveCommand(GSM_SMSDConfig *Config, char *locations)
-{
-	char **result;
-	char *saveptr;
-	char *token;
-	int i = 1;
-
-	assert(Config->RunOnReceive != NULL);
-
-	/* We're overacting, but it is simpler */
-	result = (char **)malloc((locations == NULL ? 0 : strlen(locations)) + 20);
-	assert(result != NULL);
-
-	result[0] = strdup(Config->RunOnReceive);
-
-	if (locations != NULL) {
-		for (token = strtok_r(locations, " ", &saveptr); token != NULL; token = strtok_r(NULL, " ", &saveptr)) {
-			result[i++] = strdup(token);
-		}
-	}
-	result[i] = NULL;
-	return result;
-}
 
 bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, char *locations)
 {
@@ -822,7 +796,7 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, c
 	int i;
 	pid_t w;
 	int status;
-	char **cmdline;
+	char *cmdline;
 
 	pid = fork();
 
@@ -868,17 +842,13 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, c
 
 	/* we are the child */
 	cmdline = SMSD_RunOnReceiveCommand(Config, locations);
-	SMSD_Log(0, Config, "Starting run on receive: \"%s\" \"%s\"%s",
-		cmdline[0],
-		cmdline[1] != NULL ? cmdline[1] : "",
-		cmdline[1] != NULL && cmdline[2] != NULL ? "...": "");
+	SMSD_Log(0, Config, "Starting run on receive: %s", cmdline);
 
 	for(i = 0; i < 255; i++) {
 		close(i);
 	}
 
-	execvp(Config->RunOnReceive, cmdline);
-	exit(2);
+	exit(system(cmdline));
 }
 #endif
 
