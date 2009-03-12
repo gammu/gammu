@@ -168,8 +168,9 @@ option has actually no effect of FILES backend service.
 .BI RunOnReceive
 
 Executes a program after receiving message. The program will receive
-identifiers of received messages depending on used service backend (some
-backends might not support this feature).
+identifiers of received messages depending on used service backend (typically
+ID of inserted row for database backends or file name for file based
+backends).
 
 Please note, that you can not pass any parameters to your program here. Whole
 string will be taken and treated like program name, regardless spaces, quotes

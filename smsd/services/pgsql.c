@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <time.h>
+#include <assert.h>
 #ifdef WIN32
 #  include <windows.h>
 #ifndef __GNUC__
@@ -210,6 +211,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 	time_t t_time1, t_time2;
 	bool found;
 	long diff;
+	size_t			locations_size = 0, locations_pos = 0;
 
 	*Locations = NULL;
 
@@ -405,6 +407,22 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
+		PQclear(Res);
+
+		if (locations_pos + 10 >= locations_size) {
+			locations_size += 40;
+			*Locations = (char *)realloc(*Locations, locations_size);
+			assert (*Locations != NULL);
+			if (locations_pos == 0) {
+				*Locations[0] = 0;
+			}
+		}
+
+		if (SMSDPgSQL_Query(Config, "SELECT currval('inbox_id_seq')", &Res) != ERR_NONE) {
+			SMSD_Log(0, Config, "Error getting current ID (%s)", __FUNCTION__);
+			return ERR_UNKNOWN;
+		}
+		locations_pos += sprintf((*Locations) + locations_pos, "%s ", PQgetvalue(Res, 0, 0));
 		PQclear(Res);
 
 		sprintf(buffer, "UPDATE phones SET Received = Received + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
