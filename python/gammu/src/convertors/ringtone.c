@@ -208,7 +208,7 @@ GSM_RingNoteStyle StringToRingNoteStyle(char *s){
 }
 
 char *RingCommandTypeToString(GSM_RingCommandType type) {
-    char *s = err;
+    char *s = NULL;
 
     switch (type) {
         case RING_Note:
