@@ -359,6 +359,9 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 				break;
 			}
 			attempts++;
+			if (attempts >= SMSD_SQL_RETRIES) {
+				return ERR_TIMEOUT;
+			}
 		}
 	}
 	return ERR_TIMEOUT;
