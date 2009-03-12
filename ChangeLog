@@ -20,6 +20,7 @@ ChangeLog
 [+] * PostgreSQL backend now supports IDs for RunOnReceive.
 [+] * RunOnReceive is started through shell not directly.
 [-] * Fixed reading of empty phonebook entries from Samsung (bug #809).
+[-] * Reread messages if CMGL shows them corrupted (bug #691).
     
 20090311 - 1.23.90
 

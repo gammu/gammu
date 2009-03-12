@@ -3136,14 +3136,21 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 				s->Phone.Data.GetSMSMessage = sms;
 				smprintf(s, "Getting message from cache\n");
 				smprintf(s, "%s\n", Priv->SMSCache[found].PDU);
-				return ATGEN_DecodePDUMessage(s,
+				error = ATGEN_DecodePDUMessage(s,
 						Priv->SMSCache[found].PDU,
 						Priv->SMSCache[found].State);
-			} else {
-				/* Finally read the message */
-				smprintf(s, "Reading next message on location %d\n", sms->SMS[0].Location);
-				return ATGEN_GetSMS(s, sms);
+				/* Is the entry corrupted? */
+				if (error != ERR_CORRUPTED) {
+					return error;
+				}
+				/* Mark it as invalid */
+				Priv->SMSCache[found].State = -1;
+				/* And fall back to normal reading */
 			}
+
+			/* Finally read the message */
+			smprintf(s, "Reading next message on location %d\n", sms->SMS[0].Location);
+			return ATGEN_GetSMS(s, sms);
 		}
 	}
 
