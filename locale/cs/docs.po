@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.23.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-03-12 11:19+0100\n"
-"PO-Revision-Date: 2009-03-02 14:52+0100\n"
+"PO-Revision-Date: 2009-03-12 12:11+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,15 +27,15 @@ msgstr "GAMMU"
 
 # type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Mar 10 2009"
-msgstr "Leden 15, 2009"
+msgstr "Březe 15, 2009"
 
 # type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu 1.23.90"
-msgstr "Gammu 1.23.0"
+msgstr "Gammu 1.23.90"
 
 # type: TH
 #: docs/user/gammu.1:1 docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1
@@ -844,9 +844,9 @@ msgstr "B<savesms SMSTEMPLATE>I< [-folder id] [-unread] [-read] [-unsent] [-sent
 
 # type: TP
 #: docs/user/gammu.1:306
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<savesms TEXT>I< [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num] [-inputunicode] [-16bit] [-flash] [-len len] [-autolen len] [-unicode] [-enablevoice] [-disablevoice] [-enablefax] [-disablefax] [-enableemail] [-disableemail] [-voidsms] [-replacemessages ID] [-replacefile file] [-text msgtext] [-textutf8 msgtext]>"
-msgstr "B<savesms TEXT>I< [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num] [-inputunicode] [-16bit] [-flash] [-len len] [-autolen len] [-unicode] [-enablevoice] [-disablevoice] [-enablefax] [-disablefax] [-enableemail] [-disableemail] [-voidsms] [-replacemessages ID] [-replacefile file] [-text msgtext]>"
+msgstr "B<savesms TEXT>I< [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num] [-inputunicode] [-16bit] [-flash] [-len len] [-autolen len] [-unicode] [-enablevoice] [-disablevoice] [-enablefax] [-disablefax] [-enableemail] [-disableemail] [-voidsms] [-replacemessages ID] [-replacefile file] [-text msgtext] [-textutf8 msgtext]>"
 
 # type: Plain text
 #: docs/user/gammu.1:310
@@ -937,9 +937,10 @@ msgstr "B<-text> - načte text z příkazové řádky místo standardního vstup
 
 # type: Plain text
 #: docs/user/gammu.1:360
-#, fuzzy
 msgid "B<-textutf8> - get text in UTF-8 from command line instead of stdin."
-msgstr "B<-text> - načte text z příkazové řádky místo standardního vstupu."
+msgstr ""
+"B<-textutf8> - načte text v UTF-8 z příkazové řádky místo standardního "
+"vstupu."
 
 # type: Plain text
 #: docs/user/gammu.1:364
@@ -1086,9 +1087,9 @@ msgstr "B<sendsms SMSTEMPLATE>I< destination [-report] [-validity HOUR|6HOURS|DA
 
 # type: TP
 #: docs/user/gammu.1:430
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<sendsms TEXT>I< destination [-report] [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [-save [-folder number]] [-smscset number] [-smscnumber number] [-reply] [-maxsms num] [-inputunicode] [-16bit] [-flash] [-len len] [-autolen len] [-unicode] [-enablevoice] [-disablevoice] [-enablefax] [-disablefax] [-enableemail] [-disableemail] [-voidsms] [-replacemessages ID] [-replacefile file] [-text msgtext] [-textutf8 msgtext]>"
-msgstr "B<sendsms TEXT>I< destination [-report] [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [-save [-folder number]] [-smscset number] [-smscnumber number] [-reply] [-maxsms num] [-inputunicode] [-16bit] [-flash] [-len len] [-autolen len] [-unicode] [-enablevoice] [-disablevoice] [-enablefax] [-disablefax] [-enableemail] [-disableemail] [-voidsms] [-replacemessages ID] [-replacefile file] [-text msgtext]>"
+msgstr "B<sendsms TEXT>I< destination [-report] [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [-save [-folder number]] [-smscset number] [-smscnumber number] [-reply] [-maxsms num] [-inputunicode] [-16bit] [-flash] [-len len] [-autolen len] [-unicode] [-enablevoice] [-disablevoice] [-enablefax] [-disablefax] [-enableemail] [-disableemail] [-voidsms] [-replacemessages ID] [-replacefile file] [-text msgtext] [-textutf8 msgtext]>"
 
 # type: TP
 #: docs/user/gammu.1:433 docs/user/gammu.1:1219
@@ -3739,7 +3740,6 @@ msgstr "B<Use_Locking>"
 
 # type: Plain text
 #: docs/user/gammurc.5:194
-#, fuzzy
 msgid ""
 "On Posix systems, you might want to lock serial device when it is being used "
 "using UUCP-style lock files. Enabling this option (setting to yes) will make "
@@ -3747,11 +3747,10 @@ msgid ""
 "need additional privileges to use locking (eg. you need to be member of uucp "
 "group)."
 msgstr ""
-"Na Posixových systémech můžete chtít použít zamykání zařízení, pokud je "
-"používáné. Zapnutím této volby (nastavením na \"yes\") bude Gammu dodržovat "
-"tyto zámky a vytvářet je při připojování. Na většině distribucí pro "
-"vytvoření zámku potřebujete dodatečná oprávnění (například být členem "
-"skupiny uucp)."
+"Na Posixových systémech můžete chtít použít zamykání zařízení pomocí UUCP "
+"zámků. Zapnutím této volby (nastavením na \"yes\") bude Gammu dodržovat tyto "
+"zámky a vytvářet je při připojování. Na většině distribucí pro vytvoření "
+"zámku potřebujete dodatečná oprávnění (například být členem skupiny uucp)."
 
 # type: Plain text
 #: docs/user/gammurc.5:196
@@ -5873,7 +5872,7 @@ msgstr "B<Class> (integer)"
 #: docs/user/gammu-smsd-tables.7:80 docs/user/gammu-smsd-tables.7:138
 #: docs/user/gammu-smsd-tables.7:330
 msgid "SMS class or -1 (0 is normal SMS, 1 is flash one)"
-msgstr ""
+msgstr "třída SMS nebo -1 (0 je normální SMS, 1 jen pro zobrazení na displej)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:82 docs/user/gammu-smsd-tables.7:140
@@ -6183,9 +6182,8 @@ msgstr "B<Battery> (integer)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:249
-#, fuzzy
 msgid "battery level in percent (or -1 if unknown)"
-msgstr "stav baterie (nebo -1 pokud není znám)"
+msgstr "stav baterie v procentech (nebo -1 pokud není znám)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:251
@@ -6194,9 +6192,8 @@ msgstr "B<Signal> (integer)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:253
-#, fuzzy
 msgid "signal level in percent (or -1 if unknown)"
-msgstr "úrověň signálu (nebo -1 pokud není znám)"
+msgstr "úrověň signálu v procentech (nebo -1 pokud není znám)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:255
@@ -6403,9 +6400,9 @@ msgstr ""
 
 # type: SS
 #: docs/user/gammu-smsd-tables.7:385
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Creating tables"
-msgstr "Popis tabulek"
+msgstr "Vytváření tabulek"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:390
@@ -6431,9 +6428,9 @@ msgstr "    sqlite3 smsd.db E<lt> docs/sql/sqlite.sql\n"
 
 # type: SS
 #: docs/user/gammu-smsd-tables.7:395
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Injecting a message using SQL"
-msgstr "Přijímání zpráv"
+msgstr "Vkládání zpráv pomocí SQL"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:400
@@ -6459,6 +6456,17 @@ msgid ""
 "        'Default_No_Compression'\n"
 "    );\n"
 msgstr ""
+"    INSERT INTO outbox (\n"
+"        DestinationNumber,\n"
+"        TextDecoded,\n"
+"        CreatorID,\n"
+"        Coding\n"
+"    ) VALUES (\n"
+"        '800123465', \n"
+"        'This is a SQL test message', \n"
+"        'Program',\n"
+"        'Default_No_Compression'\n"
+"    );\n"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:417

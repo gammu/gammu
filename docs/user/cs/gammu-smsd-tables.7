@@ -82,7 +82,7 @@ zakódovaná hlavička uživatelských dat (UDH)
 
 \fBClass\fP (integer)
 .br
-SMS class or \-1 (0 is normal SMS, 1 is flash one)
+třída SMS nebo \-1 (0 je normální SMS, 1 jen pro zobrazení na displej)
 
 \fBTextDecoded\fP (varchar(160))
 .br
@@ -142,7 +142,7 @@ hlavička uživatelských dat (UDH) v šestnáctkovém formátu
 
 \fBClass\fP (integer)
 .br
-SMS class or \-1 (0 is normal SMS, 1 is flash one)
+třída SMS nebo \-1 (0 je normální SMS, 1 jen pro zobrazení na displej)
 
 \fBTextDecoded\fP (varchar(160))
 .br
@@ -256,11 +256,11 @@ jméno klienta, obvykle text Gammu a verze
 
 \fBBattery\fP (integer)
 .br
-battery level in percent (or \-1 if unknown)
+stav baterie v procentech (nebo \-1 pokud není znám)
 
 \fBSignal\fP (integer)
 .br
-signal level in percent (or \-1 if unknown)
+úrověň signálu v procentech (nebo \-1 pokud není znám)
 
 \fBSent\fP (integer)
 .br
@@ -337,7 +337,7 @@ hlavička uživatelských dat (UDH) v šestnáctkovém formátu
 
 \fBClass\fP (integer)
 .br
-SMS class or \-1 (0 is normal SMS, 1 is flash one)
+třída SMS nebo \-1 (0 je normální SMS, 1 jen pro zobrazení na displej)
 
 \fBTextDecoded\fP (varchar(160))
 .br
@@ -395,7 +395,7 @@ několik indexů.
 
 .SH PŘÍKLAD
 
-.SS "Creating tables"
+.SS "Vytváření tabulek"
 
 SQL skripty potřebný pro vytvoření všech tabulek pro většinu databází je
 obsažen v dokumentaci Gammu (docs/sql). Ta také obsahuje pár PHP skriptů pro
@@ -405,7 +405,7 @@ Například vytvoření tabulek pro SQLite vypadá následovně:
     
     sqlite3 smsd.db < docs/sql/sqlite.sql
 
-.SS "Injecting a message using SQL"
+.SS "Vkládání zpráv pomocí SQL"
 
 To send a message, you can either use gammu\-smsd\-inject(1), which does all
 the magic for you, or you can insert the message manually. The simplest
