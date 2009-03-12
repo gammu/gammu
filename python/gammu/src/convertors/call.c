@@ -23,7 +23,7 @@
 #include "convertors.h"
 
 char *CallStatusToString(GSM_CallStatus ct) {
-    char *err = "Err";
+    char *err = strdup("Err");
     char *s = err;
 
     switch (ct) {
