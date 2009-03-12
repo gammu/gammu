@@ -23,7 +23,7 @@ void BackupSMS(int argc UNUSED, char *argv[])
 	GSM_SMSFolders		folders;
 	bool			BackupFromFolder[GSM_MAX_SMS_FOLDERS];
 	bool			start = true;
-	bool			DeleteAfter, askdelete = true;
+	bool			DeleteAfter = false, askdelete = true;
 	int			j, smsnum = 0;
 
 	if (argc == 4) {
