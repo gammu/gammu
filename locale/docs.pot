@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.23.90\n"
+"Project-Id-Version: Gammu-docs 1.23.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-10 16:55+0100\n"
+"POT-Creation-Date: 2009-03-12 11:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2918,7 +2918,7 @@ msgid "I</dev/ttyACM?>"
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2208 docs/user/gammurc.5:197 docs/user/gammu-smsdrc.5:298 docs/user/gammu-smsd.1:68 docs/user/gammu-smsd-files.7:71 docs/user/gammu-smsd-tables.7:383
+#: docs/user/gammu.1:2208 docs/user/gammurc.5:197 docs/user/gammu-smsdrc.5:297 docs/user/gammu-smsd.1:68 docs/user/gammu-smsd-files.7:71 docs/user/gammu-smsd-tables.7:383
 #, no-wrap
 msgid "EXAMPLE"
 msgstr ""
@@ -2999,7 +2999,7 @@ msgid ""
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2248 docs/user/gammurc.5:263 docs/user/gammu-smsdrc.5:375 docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:37 docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30 docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:108 docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21 docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:421
+#: docs/user/gammu.1:2248 docs/user/gammurc.5:263 docs/user/gammu-smsdrc.5:374 docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:37 docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30 docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:108 docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21 docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:421
 #, no-wrap
 msgid "COPYRIGHT"
 msgstr ""
@@ -3013,14 +3013,14 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu.1:2255 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:381 docs/user/gammu-smsd.1:127 docs/user/gammu-smsd-inject.1:43 docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35 docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:114 docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27 docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:427
+#: docs/user/gammu.1:2255 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:380 docs/user/gammu-smsd.1:127 docs/user/gammu-smsd-inject.1:43 docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35 docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:114 docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27 docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:427
 msgid ""
 "This is free software: you are free to change and redistribute it.  There is "
 "NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2256 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:381 docs/user/gammu-smsd.1:127 docs/user/gammu-smsd-inject.1:43 docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24 docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:114 docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27 docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:427
+#: docs/user/gammu.1:2256 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:380 docs/user/gammu-smsd.1:127 docs/user/gammu-smsd-inject.1:43 docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24 docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:114 docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27 docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:427
 #, no-wrap
 msgid "REPORTING BUGS"
 msgstr ""
@@ -3059,12 +3059,12 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu.1:2276 docs/user/gammurc.5:270 docs/user/gammu-smsdrc.5:382 docs/user/gammu-smsd.1:129 docs/user/gammu-smsd-inject.1:45 docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26 docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:115 docs/user/gammu-smsd-mysql.7:28 docs/user/gammu-smsd-pgsql.7:28 docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:428
+#: docs/user/gammu.1:2276 docs/user/gammurc.5:270 docs/user/gammu-smsdrc.5:381 docs/user/gammu-smsd.1:129 docs/user/gammu-smsd-inject.1:45 docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26 docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:115 docs/user/gammu-smsd-mysql.7:28 docs/user/gammu-smsd-pgsql.7:28 docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:428
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2277 docs/user/gammurc.5:261 docs/user/gammu-smsdrc.5:373 docs/user/gammu-smsd.1:119 docs/user/gammu-smsd-inject.1:35 docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19 docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:419
+#: docs/user/gammu.1:2277 docs/user/gammurc.5:261 docs/user/gammu-smsdrc.5:372 docs/user/gammu-smsd.1:119 docs/user/gammu-smsd-inject.1:35 docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19 docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:419
 #, no-wrap
 msgid "AUTHOR"
 msgstr ""
@@ -3104,7 +3104,7 @@ msgid ""
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2303 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:369 docs/user/gammu-smsd.1:115 docs/user/gammu-smsd-inject.1:33 docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27 docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:104 docs/user/gammu-smsd-mysql.7:17 docs/user/gammu-smsd-pgsql.7:17 docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:414
+#: docs/user/gammu.1:2303 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:368 docs/user/gammu-smsd.1:115 docs/user/gammu-smsd-inject.1:33 docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27 docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:104 docs/user/gammu-smsd-mysql.7:17 docs/user/gammu-smsd-pgsql.7:17 docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:414
 #, no-wrap
 msgid "SEE ALSO"
 msgstr ""
@@ -3647,19 +3647,19 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:261 docs/user/gammu-smsdrc.5:371
+#: docs/user/gammurc.5:261 docs/user/gammu-smsdrc.5:370
 msgid "gammu-smsd(1), gammu(1), gammurc(5)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:263 docs/user/gammu-smsdrc.5:375 docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:37 docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:108 docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21 docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:421
+#: docs/user/gammurc.5:263 docs/user/gammu-smsdrc.5:374 docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:37 docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:108 docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21 docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:421
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
 "E<lt>michal@cihar.comE<gt>."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:266 docs/user/gammu-smsdrc.5:378 docs/user/gammu-smsd.1:124 docs/user/gammu-smsd-inject.1:40 docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:111 docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24 docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:424
+#: docs/user/gammurc.5:266 docs/user/gammu-smsdrc.5:377 docs/user/gammu-smsd.1:124 docs/user/gammu-smsd-inject.1:40 docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:111 docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24 docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:424
 msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
 "version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
@@ -4005,29 +4005,24 @@ msgid "B<RunOnReceive>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:173
+#: docs/user/gammu-smsdrc.5:176
 msgid ""
-"Executes a program after receiving message. The program will receive "
-"identifiers of received messages depending on used service backend (some "
-"backends might not support this feature)."
-msgstr ""
-
-# type: Plain text
-#: docs/user/gammu-smsdrc.5:177
-msgid ""
-"Please note, that you can not pass any parameters to your program "
-"here. Whole string will be taken and treated like program name, regardless "
-"spaces, quotes or other special characters."
+"Executes a program after receiving message. This parameter is executed "
+"through shell, so you might need to escape some special characters and you "
+"can include any number of parameters. Additionally parameters with "
+"identifiers of received messages are appended to the command line. The "
+"identifiers depend on used service backend, typically it is ID of inserted "
+"row for database backends or file name for file based backends."
 msgstr ""
 
 # type: SS
-#: docs/user/gammu-smsdrc.5:178
+#: docs/user/gammu-smsdrc.5:177
 #, no-wrap
 msgid "Database backends options"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:183
+#: docs/user/gammu-smsdrc.5:182
 msgid ""
 "All DBI, MYSQL and PGSQL backends (see gammu-smsd-mysql(7), "
 "gammu-smsd-pgsql(7), gammu-smsd-dbi(7)) for their documentation) supports "
@@ -4035,48 +4030,48 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:184
+#: docs/user/gammu-smsdrc.5:183
 #, no-wrap
 msgid "B<User>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:188
+#: docs/user/gammu-smsdrc.5:187
 msgid "User name used for connection to a database."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:189
+#: docs/user/gammu-smsdrc.5:188
 #, no-wrap
 msgid "B<Password>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:193
+#: docs/user/gammu-smsdrc.5:192
 msgid "Password used for connection to a database."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:194
+#: docs/user/gammu-smsdrc.5:193
 #, no-wrap
 msgid "B<PC>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:199
+#: docs/user/gammu-smsdrc.5:198
 msgid ""
 "Database server address. It can also contain port or socket path after "
 "semicolon, for example localhost:/path/to/socket."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:200
+#: docs/user/gammu-smsdrc.5:199
 #, no-wrap
 msgid "B<Database>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:206
+#: docs/user/gammu-smsdrc.5:205
 msgid ""
 "Name of database to use. Please note that you should create tables in this "
 "database before using gammu-smsd. SQL files for creating needed tables are "
@@ -4084,13 +4079,13 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:207
+#: docs/user/gammu-smsdrc.5:206
 #, no-wrap
 msgid "B<SkipSMSCNumber>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:213
+#: docs/user/gammu-smsdrc.5:212
 msgid ""
 "When you send sms from some SMS centere you can have delivery reports from "
 "other SMSC number. You can set here number of this SMSC used by you and "
@@ -4098,13 +4093,13 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:214
+#: docs/user/gammu-smsdrc.5:213
 #, no-wrap
 msgid "B<Driver>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:221
+#: docs/user/gammu-smsdrc.5:220
 msgid ""
 "DBI driver to use. Depends on what DBI drivers you have installed, DBI "
 "supports: mysql, freetds (provides access to MS SQL Server and Sybase), "
@@ -4113,39 +4108,39 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:222
+#: docs/user/gammu-smsdrc.5:221
 #, no-wrap
 msgid "B<DriversPath>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:227
+#: docs/user/gammu-smsdrc.5:226
 msgid ""
 "Path, where DBI drivers are stored, this usually does not have to be set if "
 "you have properly installed drivers."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:228
+#: docs/user/gammu-smsdrc.5:227
 #, no-wrap
 msgid "B<DBDir>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:233
+#: docs/user/gammu-smsdrc.5:232
 msgid ""
 "Database directory for some (currently only sqlite) DBI drivers. Set here "
 "path where sqlite database files are stored."
 msgstr ""
 
 # type: SS
-#: docs/user/gammu-smsdrc.5:234
+#: docs/user/gammu-smsdrc.5:233
 #, no-wrap
 msgid "Files backend options"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:239
+#: docs/user/gammu-smsdrc.5:238
 msgid ""
 "The FILES backend accepts following configuration options. See "
 "gammu-smsd-files(7) for more detailed service backend description. Please "
@@ -4154,121 +4149,121 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:240
+#: docs/user/gammu-smsdrc.5:239
 #, no-wrap
 msgid "B<InboxPath>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:244
+#: docs/user/gammu-smsdrc.5:243
 msgid "Where the received SMSes are stored."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:246 docs/user/gammu-smsdrc.5:253
+#: docs/user/gammu-smsdrc.5:245 docs/user/gammu-smsdrc.5:252
 msgid "Default is current directory."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:247
+#: docs/user/gammu-smsdrc.5:246
 #, no-wrap
 msgid "B<OutboxPath>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:251
+#: docs/user/gammu-smsdrc.5:250
 msgid "Where SMSes to be sent should be placed."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:254
+#: docs/user/gammu-smsdrc.5:253
 #, no-wrap
 msgid "B<SentSMSPath>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:259
+#: docs/user/gammu-smsdrc.5:258
 msgid ""
 "Where the transmitted SMSes are placed, if same as OutBoxPath transmitted "
 "messages are deleted."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:261
+#: docs/user/gammu-smsdrc.5:260
 msgid "Default is to delete transmitted messages."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:262
+#: docs/user/gammu-smsdrc.5:261
 #, no-wrap
 msgid "B<ErrorSMSPath>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:266
+#: docs/user/gammu-smsdrc.5:265
 msgid "Where SMSes with error in transmission is placed."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:268
+#: docs/user/gammu-smsdrc.5:267
 msgid "Default is same as SentSMSPath."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:269
+#: docs/user/gammu-smsdrc.5:268
 #, no-wrap
 msgid "B<InboxFormat>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:273
+#: docs/user/gammu-smsdrc.5:272
 msgid "The format in which the SMS will be stored: 'detail', 'unicode', 'standard'."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:275
+#: docs/user/gammu-smsdrc.5:274
 msgid "B<detail> - format used for message backup by gammu(1)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:277
+#: docs/user/gammu-smsdrc.5:276
 msgid "B<unicode> - message text stored in unicode (UTF-16)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:279
+#: docs/user/gammu-smsdrc.5:278
 msgid "B<standard> - message text stored in system charset"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:281
+#: docs/user/gammu-smsdrc.5:280
 msgid "Default is 'unicode'."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:282
+#: docs/user/gammu-smsdrc.5:281
 #, no-wrap
 msgid "B<TransmitFormat>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:286
+#: docs/user/gammu-smsdrc.5:285
 msgid "The format for transmitting the SMS: 'auto', 'unicode', '7bit'."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:288
+#: docs/user/gammu-smsdrc.5:287
 msgid "Default is 'auto'."
 msgstr ""
 
 # type: SS
-#: docs/user/gammu-smsdrc.5:290
+#: docs/user/gammu-smsdrc.5:289
 #, no-wrap
 msgid "Message filtering"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:297
+#: docs/user/gammu-smsdrc.5:296
 msgid ""
 "SMSD allows to process only limited subset of incoming messages. You can "
 "define filters in [include_numbers] and [exclude_numbers] sections. If "
@@ -4279,7 +4274,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:303
+#: docs/user/gammu-smsdrc.5:302
 msgid ""
 "There is more complete example available in Gammu documentation. Please note "
 "that for simplicity following examples do not include [gammu] section, you "
@@ -4287,12 +4282,12 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:305
+#: docs/user/gammu-smsdrc.5:304
 msgid "SMSD configuration file for FILES backend could look like:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:318
+#: docs/user/gammu-smsdrc.5:317
 #, no-wrap
 msgid ""
 "[smsd]\n"
@@ -4306,12 +4301,12 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:324
+#: docs/user/gammu-smsdrc.5:323
 msgid "If you want to use MYSQL backend, you will need something like this:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:337
+#: docs/user/gammu-smsdrc.5:336
 #, no-wrap
 msgid ""
 "[smsd]\n"
@@ -4325,12 +4320,12 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:343
+#: docs/user/gammu-smsdrc.5:342
 msgid "Process only messages from 123456 number:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:350
+#: docs/user/gammu-smsdrc.5:349
 #, no-wrap
 msgid ""
 "[include_numbers]\n"
@@ -4338,12 +4333,12 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:356
+#: docs/user/gammu-smsdrc.5:355
 msgid "Do not process messages from evil number 666:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:363
+#: docs/user/gammu-smsdrc.5:362
 #, no-wrap
 msgid ""
 "[exclude_numbers]\n"
@@ -4351,7 +4346,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:373 docs/user/gammu-smsd.1:119
+#: docs/user/gammu-smsdrc.5:372 docs/user/gammu-smsd.1:119
 msgid ""
 "gammu-smsd-files(7), gammu-smsd-mysql(7), gammu-smsd-pgsql(7), "
 "gammu-smsd-dbi(7), gammu-smsd-tables(7)"

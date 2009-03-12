@@ -171,12 +171,12 @@ ukládání zpráv do souborů (FILES).
 .TP 
 \fBRunOnReceive\fP
 
-Spustí program při přijetí zprávy. Program dostane parametry obsahující
-identifikátory nově přijatý zpráv (pokud to použitá služba podporuje).
-
-Prosím uvědomte si, že není možné předat vašemu programu žádné
-parametry. Celý text bude považován za jméno programu bez ohledu na mezery,
-uvozovky či jiné speciální znaky.
+Executes a program after receiving message. This parameter is executed
+through shell, so you might need to escape some special characters and you
+can include any number of parameters. Additionally parameters with
+identifiers of received messages are appended to the command line. The
+identifiers depend on used service backend, typically it is ID of inserted
+row for database backends or file name for file based backends.
 
 .SS "Parametry pro služby používající databázi"
 
