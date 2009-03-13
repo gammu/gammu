@@ -734,6 +734,7 @@ GSM_PhoneModel allmodels[] = {
 	/* Motorola */
 	{"W5",		"W5", "",					   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, F_PBK_UNICODE, 0}},
 	{"V3",		"V3 Razr", "",					   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, F_PBK_UNICODE, 0}},
+	{"V8",		"V8", "",					   {F_PBK_UNICODE, 0}},
 	{"L6",		"L6", "",					   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, F_PBK_UNICODE, 0}},
 	{"Serias E",	"Serias E",	"",				   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, F_PBK_UNICODE, 0}},
 	{"E815m",	"E815m",	"",				   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, F_PBK_UNICODE, 0}},
