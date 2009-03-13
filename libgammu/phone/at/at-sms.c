@@ -33,6 +33,8 @@
 #include "atgen.h"
 #include "atfunc.h"
 
+#include "../../../helper/string.h"
+
 GSM_Error ATGEN_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
 	unsigned char req[50];
