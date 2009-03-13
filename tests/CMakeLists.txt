@@ -489,6 +489,9 @@ add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.
 target_link_libraries(phone-info libGammu)
 add_executable(sms-send "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-send.c")
 target_link_libraries(sms-send libGammu)
+add_executable(smsd "${Gammu_SOURCE_DIR}/docs/develop/examples/smsd.c")
+target_link_libraries(smsd libGammu)
+target_link_libraries(smsd gsmsd)
 
 
 # Auto generated include tests begin
