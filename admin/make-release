@@ -96,7 +96,8 @@ cmake ../$repo-$version \
 make -j2
 checkexe gammu/gammu.exe
 signexe gammu/gammu.exe "Gammu"
-cpack
+cpack -G NSIS
+cpack -G ZIP
 mv Gammu-*-Windows.* $tmp/
 cd ..
 
@@ -119,7 +120,8 @@ cmake ../$repo-$version \
 make -j2
 checkexe gammu/gammu.exe
 signexe gammu/gammu.exe "Gammu"
-cpack
+cpack -G NSIS
+cpack -G ZIP
 mv Gammu-*-Windows-Minimal.* $tmp/
 cd $tmp
 
