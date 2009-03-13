@@ -22,6 +22,7 @@ ChangeLog
 [-] * Fixed reading of empty phonebook entries from Samsung (bug #809).
 [-] * Reread messages if CMGL shows them corrupted (bug #691).
 [+] * Added support for vNote files.
+[-] * Properly detect Nokia 6220 Classic (bug #840).
     
 20090311 - 1.23.90
 
