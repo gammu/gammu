@@ -74,7 +74,7 @@ GSM_Error N6510_GetCalendarInfo3(GSM_StateMachine *s, GSM_NOKIACalToDoLocations 
 	while (1) {
 		i=0;
 		while (Last->Location[i] != 0x00) i++;
-		smprintf(s, "i = %i %i\n",i,Last->Number);
+		smprintf(s, "i = %i last_number = %i\n",i,Last->Number);
 		if (i == Last->Number) break;
 		if (i != Last->Number && error == ERR_EMPTY) {
 			smprintf(s, "Phone doesn't support some notes with this method. Workaround\n");
