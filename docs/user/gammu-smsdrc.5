@@ -379,3 +379,14 @@ This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 .SH REPORTING BUGS
 Please report bugs to <http://bugs.cihar.com>.
+
+Before reporting a bug, please enable verbose logging in SMSD configuration:
+
+    [gammu]
+    logformat = textall
+
+    [smsd]
+    debuglevel = 255
+    logfile = smsd.log
+
+and include this verbose log within bug report.

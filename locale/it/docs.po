@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.23.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-12 11:19+0100\n"
+"POT-Creation-Date: 2009-03-13 09:35+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -3031,7 +3031,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu.1:2276 docs/user/gammurc.5:270 docs/user/gammu-smsdrc.5:381
+#: docs/user/gammu.1:2276 docs/user/gammurc.5:270 docs/user/gammu-smsdrc.5:382
 #: docs/user/gammu-smsd.1:129 docs/user/gammu-smsd-inject.1:45
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:115
@@ -4352,6 +4352,37 @@ msgid ""
 "(7), gammu-smsd-tables(7)"
 msgstr ""
 
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:384 docs/user/gammu-smsd.1:131
+#: docs/user/gammu-smsd-inject.1:47 docs/user/gammu-smsd-monitor.1:55
+msgid ""
+"Before reporting a bug, please enable verbose logging in SMSD configuration:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:387 docs/user/gammu-smsd.1:134
+#: docs/user/gammu-smsd-inject.1:50 docs/user/gammu-smsd-monitor.1:58
+#, no-wrap
+msgid ""
+"    [gammu]\n"
+"    logformat = textall\n"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:391 docs/user/gammu-smsd.1:138
+#, no-wrap
+msgid ""
+"    [smsd]\n"
+"    debuglevel = 255\n"
+"    logfile = smsd.log\n"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:392 docs/user/gammu-smsd.1:139
+#: docs/user/gammu-smsd-inject.1:51 docs/user/gammu-smsd-monitor.1:59
+msgid "and include this verbose log within bug report."
+msgstr ""
+
 # type: TH
 #: docs/user/gammu-smsd.1:1
 #, no-wrap
@@ -4677,36 +4708,6 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsd.1:117
 msgid "gammu-smsdrc(5), gammu(1), gammu-smsd-inject(1), gammu-smsd-monitor(1)"
-msgstr ""
-
-# type: Plain text
-#: docs/user/gammu-smsd.1:131 docs/user/gammu-smsd-inject.1:47
-#: docs/user/gammu-smsd-monitor.1:55
-msgid ""
-"Before reporting a bug, please enable verbose logging in SMSD configuration:"
-msgstr ""
-
-# type: Plain text
-#: docs/user/gammu-smsd.1:134 docs/user/gammu-smsd-inject.1:50
-#: docs/user/gammu-smsd-monitor.1:58
-#, no-wrap
-msgid ""
-"    [gammu]\n"
-"    logformat = textall\n"
-msgstr ""
-
-# type: Plain text
-#: docs/user/gammu-smsd.1:137
-#, no-wrap
-msgid ""
-"    [smsd]\n"
-"    debuglevel = 255\n"
-msgstr ""
-
-# type: Plain text
-#: docs/user/gammu-smsd.1:138 docs/user/gammu-smsd-inject.1:51
-#: docs/user/gammu-smsd-monitor.1:59
-msgid "and include this verbose log within bug report."
 msgstr ""
 
 # type: TH
