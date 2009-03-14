@@ -292,7 +292,7 @@ GSM_Error DCT3_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Date & time received\n");
 	if (msg.Buffer[4]==0x01) {
-		NOKIA_DecodeDateTime(s, msg.Buffer+8, s->Phone.Data.DateTime);
+		NOKIA_DecodeDateTime(s, msg.Buffer+8, s->Phone.Data.DateTime, true, false);
 		return ERR_NONE;
 	}
 	smprintf(s, "Not set in phone\n");

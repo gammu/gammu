@@ -52,9 +52,6 @@ static GSM_Error N6510_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 	smprintf(s, "Phonebook entry received\n");
 	if (msg.Buffer[6] == 0x0f)
 		return N71_65_ReplyGetMemoryError(msg.Buffer[10], s);
-	/* Empty number ?? */
-	if (msg.Buffer[6] == 0x01)
-		return ERR_EMPTY;
 
 	if (msg.Length < 22) {
 		return ERR_UNKNOWN;
@@ -717,8 +714,7 @@ static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 	error = GSM_DecodeSMSFrame(&(s->di), sms,buffer,Layout);
 	if (SMSTemplateDateTime != 0) {
 		sms->PDU = SMS_Deliver;
-		NOKIA_DecodeDateTime(s, buffer+SMSTemplateDateTime, &sms->DateTime);
-		sms->DateTime.Timezone = 0;
+		NOKIA_DecodeDateTime(s, buffer+SMSTemplateDateTime, &sms->DateTime, true, false);
 	}
 	(*current2) = current;
 	return error;
@@ -2846,7 +2842,7 @@ static GSM_Error N6510_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachi
 {
 	smprintf(s, "Date & time received\n");
 	if (msg.Buffer[4]==0x01) {
-		NOKIA_DecodeDateTime(s, msg.Buffer+10, s->Phone.Data.DateTime);
+		NOKIA_DecodeDateTime(s, msg.Buffer+10, s->Phone.Data.DateTime, true, false);
 		return ERR_NONE;
 	}
 	smprintf(s, "Not set in phone\n");

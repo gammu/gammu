@@ -481,16 +481,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == N7110_PBK_DATETIME) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
-			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date);
-			/* some phones reverse it */
-			if (entry->Entries[entry->EntriesNum].Date.Year > 3000) {
-				entry->Entries[entry->EntriesNum].Date.Year = Block[7]*256+Block[6];
-			}
-			if (DayMonthReverse) {
-				i = entry->Entries[entry->EntriesNum].Date.Month;
-				entry->Entries[entry->EntriesNum].Date.Month = entry->Entries[entry->EntriesNum].Date.Day;
-				entry->Entries[entry->EntriesNum].Date.Day   = i;
-			}
+			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date, true, DayMonthReverse);
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -732,18 +723,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == S4030_PBK_BIRTHDAY) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
-			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date);
-			/* We don't have seconds available here */
-			entry->Entries[entry->EntriesNum].Date.Second = 0;
-			/* some phones reverse it */
-			if (entry->Entries[entry->EntriesNum].Date.Year > 3000) {
-				entry->Entries[entry->EntriesNum].Date.Year = Block[7]*256+Block[6];
-			}
-			if (DayMonthReverse) {
-				i = entry->Entries[entry->EntriesNum].Date.Month;
-				entry->Entries[entry->EntriesNum].Date.Month = entry->Entries[entry->EntriesNum].Date.Day;
-				entry->Entries[entry->EntriesNum].Date.Day   = i;
-			}
+			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date, false, DayMonthReverse);
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -954,15 +934,29 @@ void NOKIA_GetDefaultCallerGroupName(GSM_Bitmap *Bitmap)
 	}
 }
 
-void NOKIA_DecodeDateTime(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime)
+void NOKIA_DecodeDateTime(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime, bool seconds, bool DayMonthReverse)
 {
 	datetime->Year	= buffer[0] * 256 + buffer[1];
-	datetime->Month	= buffer[2];
-	datetime->Day	= buffer[3];
+	/* Sometimes reversed */
+	if (datetime->Year > 3000) {
+		datetime->Year	= buffer[1] * 256 + buffer[0];
+	}
+	if (DayMonthReverse) {
+		datetime->Month	= buffer[3];
+		datetime->Day	= buffer[2];
+	} else {
+		datetime->Month	= buffer[2];
+		datetime->Day	= buffer[3];
+	}
 
 	datetime->Hour	 = buffer[4];
 	datetime->Minute = buffer[5];
-	datetime->Second = buffer[6];
+	if (seconds) {
+		datetime->Second = buffer[6];
+	} else {
+		datetime->Second = 0;
+	}
+	datetime->Timezone = 0;
 
 	smprintf(s, "Decoding date and time\n");
 	smprintf(s, "   Time: %02d:%02d:%02d\n",

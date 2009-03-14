@@ -65,7 +65,7 @@ void 		NOKIA_GetUnicodeString		(GSM_StateMachine *s, int *current, unsigned char
 GSM_MemoryType 	NOKIA_GetMemoryType 		(GSM_StateMachine *s, GSM_MemoryType memory_type, unsigned char *ID);
 void 		NOKIA_DecodeSMSState		(GSM_StateMachine *s, unsigned char state, GSM_SMSMessage *sms);
 void		NOKIA_EncodeDateTime		(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime);
-void		NOKIA_DecodeDateTime		(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime);
+void NOKIA_DecodeDateTime(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime, bool seconds, bool DayMonthReverse);
 void 		NOKIA_SortSMSFolderStatus	(GSM_StateMachine *s, GSM_NOKIASMSFolder *Folder);
 void NOKIA_FindFeatureValue(GSM_StateMachine		*s,
 			    GSM_Profile_PhoneTableValue ProfileTable[],

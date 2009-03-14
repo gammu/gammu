@@ -365,7 +365,7 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
                 if (Data->Memory->MemoryType==MEM_DC ||
                     Data->Memory->MemoryType==MEM_RC ||
                     Data->Memory->MemoryType==MEM_MC) {
-                        NOKIA_DecodeDateTime(s, msg.Buffer+count+1,&Data->Memory->Entries[Data->Memory->EntriesNum].Date);
+                        NOKIA_DecodeDateTime(s, msg.Buffer+count+1,&Data->Memory->Entries[Data->Memory->EntriesNum].Date, true, false);
                         Data->Memory->Entries[Data->Memory->EntriesNum].EntryType=PBK_Date;
 
                         /* These values are set, when date and time unavailable in phone.
@@ -2356,14 +2356,14 @@ static GSM_Error N6110_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateM
 #endif
                 Entry->EntriesNum = 0;
 
-                NOKIA_DecodeDateTime(s, msg.Buffer+9, &Entry->Entries[0].Date);
+                NOKIA_DecodeDateTime(s, msg.Buffer+9, &Entry->Entries[0].Date, true, false);
                 smprintf(s, "Time        : %02i-%02i-%04i %02i:%02i:%02i\n",
                         Entry->Entries[0].Date.Day,Entry->Entries[0].Date.Month,Entry->Entries[0].Date.Year,
                         Entry->Entries[0].Date.Hour,Entry->Entries[0].Date.Minute,Entry->Entries[0].Date.Second);
                 Entry->Entries[0].EntryType = CAL_START_DATETIME;
                 Entry->EntriesNum++;
 
-                NOKIA_DecodeDateTime(s, msg.Buffer+16, &Entry->Entries[1].Date);
+                NOKIA_DecodeDateTime(s, msg.Buffer+16, &Entry->Entries[1].Date, true, false);
                 if (Entry->Entries[1].Date.Year!=0) {
                         smprintf(s, "Alarm       : %02i-%02i-%04i %02i:%02i:%02i\n",
                                 Entry->Entries[1].Date.Day,Entry->Entries[1].Date.Month,Entry->Entries[1].Date.Year,

@@ -123,7 +123,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 		if (msg.Buffer[i+6] == 0x01) File->System       = true;/* fixme */
 
 		File->ModifiedEmpty = false;
-		NOKIA_DecodeDateTime(s, msg.Buffer+i-22, &File->Modified);
+		NOKIA_DecodeDateTime(s, msg.Buffer+i-22, &File->Modified, true, false);
 		if (File->Modified.Year == 0x00) File->ModifiedEmpty = true;
 		if (File->Modified.Year == 0xffff) File->ModifiedEmpty = true;
 		smprintf(s, "%02x %02x %02x %02x\n",msg.Buffer[i-22],msg.Buffer[i-21],msg.Buffer[i-20],msg.Buffer[i-19]);
@@ -969,7 +969,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 			}
 
 			File->ModifiedEmpty = false;
-			NOKIA_DecodeDateTime(s, msg.Buffer+14, &File->Modified);
+			NOKIA_DecodeDateTime(s, msg.Buffer+14, &File->Modified, true, false);
 			if (File->Modified.Year == 0x00) File->ModifiedEmpty = true;
 			if (File->Modified.Year == 0xffff) File->ModifiedEmpty = true;
 

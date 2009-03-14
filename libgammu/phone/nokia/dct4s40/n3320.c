@@ -84,7 +84,7 @@ static GSM_Error N3320_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachi
 {
 	smprintf(s, "Date & time received\n");
 	if (msg.Buffer[4]==0x01) {
-		NOKIA_DecodeDateTime(s, msg.Buffer+10, s->Phone.Data.DateTime);
+		NOKIA_DecodeDateTime(s, msg.Buffer+10, s->Phone.Data.DateTime, true, false);
 		return ERR_NONE;
 	}
 	smprintf(s, "Not set in phone\n");

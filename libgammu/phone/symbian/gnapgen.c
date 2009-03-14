@@ -751,7 +751,7 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
                 /*  date */
 		case 0x13:
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
-			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date);
+			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date, true, false);
 			entry->EntriesNum++;
 			pos+=2+7;
 			break;
@@ -880,7 +880,7 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
                 /*  date */
 		case 0x13:
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
-			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date);
+			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date, true, false);
 			entry->EntriesNum++;
 			pos+=2+7;
 			break;
@@ -1267,7 +1267,7 @@ static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_Stat
 		pos = 9;
                 Entry->EntriesNum = 0;
 
-                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date);
+                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, true, false);
                 smprintf(s, "Time        : %02i-%02i-%04i %02i:%02i:%02i\n",
                         Entry->Entries[Entry->EntriesNum].Date.Day,Entry->Entries[Entry->EntriesNum].Date.Month,Entry->Entries[Entry->EntriesNum].Date.Year,
                         Entry->Entries[Entry->EntriesNum].Date.Hour,Entry->Entries[Entry->EntriesNum].Date.Minute,Entry->Entries[Entry->EntriesNum].Date.Second);
@@ -1275,7 +1275,7 @@ static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_Stat
                 Entry->EntriesNum++;
 		pos+=7;
 
-                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date);
+                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, true, false);
                 smprintf(s, "Time        : %02i-%02i-%04i %02i:%02i:%02i\n",
                         Entry->Entries[Entry->EntriesNum].Date.Day,Entry->Entries[Entry->EntriesNum].Date.Month,Entry->Entries[Entry->EntriesNum].Date.Year,
                         Entry->Entries[Entry->EntriesNum].Date.Hour,Entry->Entries[Entry->EntriesNum].Date.Minute,Entry->Entries[Entry->EntriesNum].Date.Second);
@@ -1283,7 +1283,7 @@ static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_Stat
                 Entry->EntriesNum++;
 		pos+=7;
 
-                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date);
+                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, true, false);
                 if (Entry->Entries[Entry->EntriesNum].Date.Year!=0) {
 	                smprintf(s, "Alarm       : %02i-%02i-%04i %02i:%02i:%02i\n",
 	                        Entry->Entries[Entry->EntriesNum].Date.Day,Entry->Entries[Entry->EntriesNum].Date.Month,Entry->Entries[Entry->EntriesNum].Date.Year,
@@ -1473,7 +1473,7 @@ static GSM_Error GNAPGEN_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachin
 	Data->Alarm->Repeating 		= false;
 	Data->Alarm->Text[0] 		= 0;
 	Data->Alarm->Text[1] 		= 0;
-	NOKIA_DecodeDateTime(s, msg.Buffer+5, &Data->Alarm->DateTime);
+	NOKIA_DecodeDateTime(s, msg.Buffer+5, &Data->Alarm->DateTime, true, false);
 	return ERR_NONE;
 }
 
@@ -1491,7 +1491,7 @@ static GSM_Error GNAPGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *timedelta)
 static GSM_Error GNAPGEN_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Date & time received\n");
-	NOKIA_DecodeDateTime(s, msg.Buffer+4, s->Phone.Data.DateTime);
+	NOKIA_DecodeDateTime(s, msg.Buffer+4, s->Phone.Data.DateTime, true, false);
 	return ERR_NONE;
 }
 
