@@ -7,7 +7,6 @@
 GSM_StateMachine *s;
 INI_Section *cfg;
 GSM_Error error;
-char buffer[100];
 volatile GSM_Error sms_send_status;
 volatile bool gshutdown = false;
 
@@ -91,8 +90,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SetDebugFileDescriptor(stderr, true, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
-	/* Find configuration file */
-	error = GSM_FindGammuRC(&cfg, NULL);
+	/*
+	 * Find configuration file (first command line parameter or
+	 * defaults)
+	 */
+	error = GSM_FindGammuRC(&cfg, argc == 2 ? argv[1] : NULL);
 	error_handler();
 
 	/* Read it */
@@ -119,12 +121,17 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Set SMSC number in message */
 	CopyUnicodeString(sms.SMSC.Number, PhoneSMSC.Number);
 
+	/*
+	 * Set flag before callind SendSMS, some phones might give
+	 * instant response
+	 */
+	sms_send_status = ERR_TIMEOUT;
+
 	/* Send message */
 	error = GSM_SendSMS(s, &sms);
 	error_handler();
 
 	/* Wait for network reply */
-	sms_send_status = ERR_TIMEOUT;
 	while (!gshutdown) {
 		GSM_ReadDevice(s, true);
 		if (sms_send_status == ERR_NONE) {
@@ -142,6 +149,10 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Terminate connection */
 	error = GSM_TerminateConnection(s);
 	error_handler();
+
+	/* Free up used memory */
+	GSM_FreeStateMachine(s);
+
 	return return_value;
 }
 

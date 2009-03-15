@@ -4,6 +4,8 @@
 
 project (gammu-tests C)
 
+include(SetupDummyPhone)
+
 include(GammuTuneCompiler)
 
 # Define path for cmake tests
@@ -487,8 +489,10 @@ add_test(line-splitting "${GAMMU_TEST_PATH}/line-splitting${GAMMU_TEST_SUFFIX}")
 # Just try to compile example whether it is still correct
 add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.c")
 target_link_libraries(phone-info libGammu)
+add_test(phone-info "${GAMMU_TEST_PATH}/phone-info${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
 add_executable(sms-send "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-send.c")
 target_link_libraries(sms-send libGammu)
+add_test(sms-send "${GAMMU_TEST_PATH}/sms-send${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
 add_executable(smsd "${Gammu_SOURCE_DIR}/docs/develop/examples/smsd.c")
 target_link_libraries(smsd libGammu)
 target_link_libraries(smsd gsmsd)

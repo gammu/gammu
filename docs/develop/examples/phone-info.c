@@ -41,8 +41,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
-	/* Find configuration file */
-	error = GSM_FindGammuRC(&cfg, NULL);
+	/*
+	 * Find configuration file (first command line parameter or
+	 * defaults)
+	 */
+	error = GSM_FindGammuRC(&cfg, argc == 2 ? argv[1] : NULL);
 	error_handler();
 
 	/* Read it */
@@ -76,6 +79,10 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Terminate connection */
 	error = GSM_TerminateConnection(s);
 	error_handler();
+
+	/* Free up used memory */
+	GSM_FreeStateMachine(s);
+
 	return 0;
 }
 
