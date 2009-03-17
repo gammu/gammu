@@ -359,7 +359,10 @@ static PyTypeObject SMSDType = {
 	0,                         /* tp_cache */
 	0,                         /* tp_subclasses */
 	0,                         /* tp_weaklist */
-	0                          /* tp_del */
+	0,                          /* tp_del */
+#if PY_MAJOR_VERSION >= 2 && PY_MINOR_VERSION >= 6
+    0,                          /* tp_version_tag */
+#endif
 };
 
 /* End of code for SMSD objects */
