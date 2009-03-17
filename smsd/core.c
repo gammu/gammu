@@ -900,6 +900,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				}
 			}
 			if (process) {
+				SMSD_Log(1, Config, "Received message from %s", buffer);
 				Config->Status->Received += sms.Number;
 	 			error = Service->SaveInboxSMS(&sms, Config, &locations);
 				if (Config->RunOnReceive != NULL && error == ERR_NONE) {
