@@ -101,6 +101,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = GSM_ReadConfig(cfg, GSM_GetConfig(s, 0), 0);
 	error_handler();
 
+	/* Free config file structures */
+	INI_Free(cfg);
+
 	/* We have one valid configuration */
 	GSM_SetConfigNum(s, 1);
 
