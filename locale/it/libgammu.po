@@ -8,13 +8,15 @@ msgstr ""
 "Project-Id-Version: libGammu 1.23.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-16 11:48+0100\n"
-"PO-Revision-Date: 2008-08-13 11:41+0200\n"
-"Last-Translator: Alessio Gaeta <alga777@libero.it>\n"
+"PO-Revision-Date: 2009-03-15 16:50+0200\n"
+"Last-Translator: soft developer <soft-developer@live.com>\n"
 "Language-Team: Language =it\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 1.1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.2.1\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -140,13 +142,12 @@ msgid "Security error. Maybe no PIN?"
 msgstr "Errore di sicurezza. Forse non c'è PIN?"
 
 #: libgammu/gsmcomon.c:107
-#, fuzzy
 msgid "Invalid location. Maybe too high?"
-msgstr "Locazione non valida. Forse troppo alta?"
+msgstr "Locazione non valida. Forse fuori range?"
 
 #: libgammu/gsmcomon.c:108
 msgid "Function not implemented. Help required."
-msgstr "Funzione non implementata. Serve aiuto."
+msgstr "Funzione non implementata. Si richiede aiuto."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -167,11 +168,12 @@ msgstr "Serve più memoria..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Permission to file/device required..."
-msgstr "Servono i permessi per il file/dispositivo.."
+msgstr "Servono i permessi per accedere al file/dispositivo.."
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
 msgstr ""
+"Il numero SMSC è vuoto, selezionarlo nel telefono oppure usare -smscnumber"
 
 #: libgammu/gsmcomon.c:115
 #, fuzzy
@@ -186,6 +188,8 @@ msgstr "Telefono non connesso"
 #: libgammu/gsmcomon.c:117
 msgid "Function is during writing. If want help, please contact with authors."
 msgstr ""
+"La funzione sta ancora elaborando. Se si necessita aiuto si prega di "
+"contattare gli autori"
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
@@ -211,20 +215,19 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "Il modulo telefono deve inviare un altra frame di risposta"
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
 msgstr "La connessione corrente non supporta la funzione richiesta."
 
 #: libgammu/gsmcomon.c:124
-#, fuzzy
 msgid "CRC error."
-msgstr "Nessun errore."
+msgstr "Errore CRC"
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
-msgstr "Data o ora non validi."
+msgstr "Data o ora specificati non validi."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
@@ -257,41 +260,39 @@ msgstr "Impossibile accedere alla carta SIM."
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
+"versione GNAPPLET nel telefono errata. Usare la versione corrente di Gammu"
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "Solo una parte delle cartelle sono state elencate"
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
-msgstr ""
+msgstr "La cartella deve essere vuota"
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
-msgstr ""
+msgstr "I dati sono stati convertiti"
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "Gammu non è configurato"
 
 #: libgammu/gsmcomon.c:138
-#, fuzzy
 msgid "Wrong folder used."
-msgstr ", cartella Ricevuti"
+msgstr "Cartella errata"
 
 #: libgammu/gsmcomon.c:139
-#, fuzzy
 msgid "Internal phone error."
-msgstr "Errore sconosciuto."
+msgstr "Errore sconosciuto"
 
 #: libgammu/gsmcomon.c:140
-#, fuzzy
 msgid "Error writing file to disk."
-msgstr "Errore durante la scrittura sul dispositivo."
+msgstr "Errore durante la scrittura sul dispositivo"
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
-msgstr ""
+msgstr "La sezione non esiste"
 
 #: libgammu/gsmcomon.c:142
 #, fuzzy
@@ -300,23 +301,23 @@ msgstr " (nome predefinito)"
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "Dati ricevuti dal telefono corrotti"
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "Stringa di configurazione mal formattata"
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
-msgstr ""
+msgstr "La funzionalita' richiesta è stata disabilitata durante la compilazione"
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
-msgstr ""
+msgstr "La configurazione Bluetooth richiede opzioni sui canali"
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not runnig."
-msgstr ""
+msgstr "Servizio non disponibile"
 
 #: libgammu/gsmcomon.c:148
 #, fuzzy
@@ -324,32 +325,28 @@ msgid "Service configuration is missing."
 msgstr "Configurazione non trovata"
 
 #: libgammu/gsmcomon.c:181
-#, fuzzy
 msgid "Unknown error description."
-msgstr "Errore sconosciuto."
+msgstr "Errore sconosciuto"
 
 #: libgammu/phone/dummy/dummy.c:553
-#, fuzzy
 msgid "Templates"
-msgstr ", %i modelli"
+msgstr "Modelli"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1958
-#, fuzzy
 msgid "Personal"
-msgstr "Personale\n"
+msgstr "Personale"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1960 libgammu/phone/nokia/nfunc.c:1119
 msgid "Car"
-msgstr ""
+msgstr "Auto"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1962 libgammu/phone/nokia/nfunc.c:1121
 msgid "Headset"
-msgstr ""
+msgstr "Auricolare"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1968 libgammu/phone/nokia/nfunc.c:1109
-#, fuzzy
 msgid "General"
-msgstr "Numero principale "
+msgstr "Generale"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1970 libgammu/phone/nokia/nfunc.c:1111
 msgid "Silent"
@@ -365,7 +362,7 @@ msgstr "Toni alti"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1976
 msgid "My style"
-msgstr ""
+msgstr "Personalizzato"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:536
 msgid "SIM"
@@ -377,11 +374,11 @@ msgstr "Ricevuti"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:538
 msgid "Sent items"
-msgstr ""
+msgstr "Inviato"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:539
 msgid "Saved items"
-msgstr ""
+msgstr "Salvato"
 
 #: libgammu/phone/nokia/nfunc.c:943
 msgid "Family"
@@ -389,7 +386,7 @@ msgstr "Famiglia"
 
 #: libgammu/phone/nokia/nfunc.c:945
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #: libgammu/phone/nokia/nfunc.c:947
 msgid "Friends"
@@ -404,9 +401,8 @@ msgid "Other"
 msgstr "Altri"
 
 #: libgammu/phone/nokia/nfunc.c:1113
-#, fuzzy
 msgid "Meeting"
-msgstr "Cancellazione delle vecchie stazioni FM: "
+msgstr "Riunione"
 
 #: libgammu/phone/nokia/nfunc.c:1115
 #, fuzzy

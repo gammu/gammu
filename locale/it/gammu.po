@@ -8,13 +8,15 @@ msgstr ""
 "Project-Id-Version: Gammu 1.23.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-03-05 11:58+0100\n"
-"PO-Revision-Date: 2008-08-13 11:41+0200\n"
-"Last-Translator: Alessio Gaeta <alga777@libero.it>\n"
+"PO-Revision-Date: 2009-03-14 15:31+0200\n"
+"Last-Translator: soft developer <soft-developer@live.com>\n"
 "Language-Team: Language =it\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 1.1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.2.1\n"
 
 #: gammu/backup.c:31 gammu/backup.c:52 gammu/backup.c:73 gammu/backup.c:94
 #: helper/message-cmdline.c:368 helper/message-cmdline.c:392
@@ -85,7 +87,7 @@ msgstr "Premere Ctrl+C per interrompere...\n"
 
 #: gammu/backup.c:221
 msgid "Use Unicode subformat of backup file?"
-msgstr ""
+msgstr "Usare il subformato unicode per il backup del file?"
 
 #: gammu/backup.c:254
 #, fuzzy
