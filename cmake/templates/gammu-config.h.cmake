@@ -197,8 +197,14 @@
 #ifndef HAVE_GETOPT_LONG
 #cmakedefine HAVE_GETOPT_LONG
 #endif
-#ifndef HAVE_DAEMON
-#cmakedefine HAVE_DAEMON
+#ifndef HAVE_DAEMON_UNISTD
+#cmakedefine HAVE_DAEMON_UNISTD
+#endif
+#ifndef HAVE_DAEMON_STDLIB
+#cmakedefine HAVE_DAEMON_STDLIB
+#endif
+#if defined(HAVE_DAEMON_STDLIB) || defined(HAVE_DAEMON_UNISTD)
+#define HAVE_DAEMON
 #endif
 #ifndef HAVE_KILL
 #cmakedefine HAVE_KILL

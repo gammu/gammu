@@ -24,6 +24,7 @@ ChangeLog
 [+] * Added support for vNote files.
 [-] * Properly detect Nokia 6220 Classic (bug #840).
 [-] * Fix writing of phonebook on Motorola V8 (bug #827).
+[-] * Detect daemon on FreeBSD.
     
 20090311 - 1.23.90
 
