@@ -1782,7 +1782,10 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	/* Get charset information and set normal charset */
 	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
-	if (error != ERR_NONE) return error;
+	/* Some phones might require PIN to set charset! */
+	if (error != ERR_NONE && error != ERR_SECURITYERROR) {
+		return error;
+	}
 
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = true;

@@ -25,6 +25,7 @@ ChangeLog
 [-] * Properly detect Nokia 6220 Classic (bug #840).
 [-] * Fix writing of phonebook on Motorola V8 (bug #827).
 [-] * Detect daemon on FreeBSD.
+[-] * Ignore charset errors on AT init as some phones might need PIN.
     
 20090311 - 1.23.90
 
