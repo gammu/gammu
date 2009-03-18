@@ -1487,6 +1487,10 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
 
 	/* Grab file with listing */
 	if (!Recalculate || *Data == NULL) {
+		/* We need IrMC service for this */
+		error = OBEXGEN_Connect(s, OBEX_IRMC);
+		if (error != ERR_NONE) return error;
+
 		error = OBEXGEN_GetTextFile(s, Name, Data);
 		if (error != ERR_NONE) return error;
 	}
