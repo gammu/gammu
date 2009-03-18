@@ -66,7 +66,12 @@ typedef enum {
 	/**
 	 * Sent SMS logs
 	 */
-	MEM_SL
+	MEM_SL,
+
+	/**
+	 * Quick dialing choices.
+	 */
+	MEM_QD
 } GSM_MemoryType;
 
 /**
@@ -88,6 +93,7 @@ typedef enum {
 	(x) == MEM_MT ? "MT" :			\
 	(x) == MEM_FD ? "FD" :			\
 	(x) == MEM_VM ? "VM" :			\
+	(x) == MEM_QD ? "QD" :			\
 	(x) == MEM_SL ? "SL" : "XX")
 
 /**

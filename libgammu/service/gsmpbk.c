@@ -24,6 +24,7 @@ GSM_MemoryType GSM_StringToMemoryType(const char *s) {
     else if (strcmp(s, "FD") == 0) return MEM_FD;
     else if (strcmp(s, "VM") == 0) return MEM_VM;
     else if (strcmp(s, "SL") == 0) return MEM_SL;
+    else if (strcmp(s, "QD") == 0) return MEM_QD;
     else {
 		return 0;
     }

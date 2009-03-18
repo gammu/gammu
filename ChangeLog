@@ -27,6 +27,7 @@ ChangeLog
 [-] * Detect daemon on FreeBSD.
 [-] * Ignore charset errors on AT init as some phones might need PIN.
 [-] * Optionally use MT for phone phonebook for AT phones.
+[+] * Added support for quick dial numbers on AT phones.
     
 20090311 - 1.23.90
 
