@@ -68,7 +68,8 @@ if(CMAKE_COMPILER_IS_MINGW AND BUILD_SHARED_LIBS)
     SET_TARGET_PROPERTIES(gsmsd PROPERTIES LINK_FLAGS
         "-Wl,--output-def,${CMAKE_CURRENT_BINARY_DIR}/libgsmsd.def")
     INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/libgsmsd.def
-            DESTINATION "${INSTALL_LIB_DIR}")
+            DESTINATION "${INSTALL_LIB_DIR}"
+            COMPONENT smsd)
 endif(CMAKE_COMPILER_IS_MINGW AND BUILD_SHARED_LIBS)
 
 target_link_libraries (gsmsd libGammu)
