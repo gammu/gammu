@@ -2667,9 +2667,15 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 			req[9] = 'S'; req[10] = 'M';
 			break;
 		case MEM_ME:
-		        if (strstr(Priv->PBKMemories,"ME")==NULL) return ERR_NOTSUPPORTED;
-			req[9] = 'M'; req[10] = 'E';
-			break;
+		        if (strstr(Priv->PBKMemories,"ME") != NULL) {
+				req[9] = 'M'; req[10] = 'E';
+				break;
+			}
+		        if (strstr(Priv->PBKMemories,"MT") != NULL) {
+				req[9] = 'M'; req[10] = 'T';
+				break;
+			}
+			return ERR_NOTSUPPORTED;
 		case MEM_RC:
 		        if (strstr(Priv->PBKMemories,"RC")==NULL) return ERR_NOTSUPPORTED;
 			req[9] = 'R'; req[10] = 'C';

@@ -26,6 +26,7 @@ ChangeLog
 [-] * Fix writing of phonebook on Motorola V8 (bug #827).
 [-] * Detect daemon on FreeBSD.
 [-] * Ignore charset errors on AT init as some phones might need PIN.
+[-] * Optionally use MT for phone phonebook for AT phones.
     
 20090311 - 1.23.90
 
