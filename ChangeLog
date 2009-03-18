@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2009???? - 1.23.91
+20090318 - 1.23.91
 
 [+] * PostgreSQL backend now supports IDs for RunOnReceive.
 [+] * RunOnReceive is started through shell not directly.
