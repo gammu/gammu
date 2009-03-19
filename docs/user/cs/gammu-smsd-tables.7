@@ -138,7 +138,8 @@ kódování textu SMS
 
 \fBUDH\fP (text)
 .br
-hlavička uživatelských dat (UDH) v šestnáctkovém formátu
+User Data Header encoded using hex values which will be used for
+constructing the message. Without this, message will be sent as plain text.
 
 \fBClass\fP (integer)
 .br
@@ -211,7 +212,8 @@ mají stejný význam jako v tabulce outbox
 
 \fBSequencePosition\fP (integer)
 .br
-kolikátá zpráva je tato v SMS sekvenci
+kolikátá zpráva je tato v SMS sekvenci (začíná se od 2, první část je
+uložena v tabulce outbox).
 
 
 .TP 
@@ -348,6 +350,8 @@ text zprávy v lidsky čitelné podobě
 SMS ID
 
 \fBSenderID\fP (text)
+.SS "Vkládání zpráv pomocí SQL"
+
 .br
 která instance SMSD odeslala tuto sekvenci
 
@@ -423,6 +427,42 @@ example is short text message:
         'Default_No_Compression'
     );
 
+.SS "Vkládání dlouhých zpráv pomocí SQL"
+
+Inserting multipart messages is a bit more tricky, you need to construct
+also UDH header. For example long text message would look like (please note
+that each UDH needs to contain sequence position):
+    
+    INSERT INTO outbox (
+        CreatorID,
+        MultiPart,
+        DestinationNumber,
+        UDH,
+        TextDecoded,
+        Coding
+    ) VALUES (
+        'Gammu 1.23.91',
+        true,
+        '123465',
+        '050003D30501',
+        'Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbez',
+        'Default_No_Compression'
+    )
+
+    INSERT INTO outbox_multipart (
+        SequencePosition,
+        UDH,
+        Class,
+        TextDecoded,
+        ID,
+        Coding
+    ) VALUES (
+        2,
+        '050003D30502',
+        'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.',
+        <ID_VLOŽENÉHO_ŘÁDKU_DO_TABULKY_OUTBOX>,
+        'Default_No_Compression'
+    )
 
 .SH "DALŠÍ INFORMACE"
 Databázové služby: gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7),

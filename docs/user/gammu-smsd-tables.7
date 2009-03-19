@@ -130,7 +130,8 @@ SMS text coding
 
 \fBUDH\fR (text)
 .br
-User Data Header encoded using hex values
+User Data Header encoded using hex values which will be used for constructing
+the message. Without this, message will be sent as plain text.
 
 \fBClass\fR (integer)
 .br
@@ -200,7 +201,8 @@ the same meaning as values in outbox table
 
 \fBSequencePosition\fR (integer)
 .br
-info, what is SMS number in SMS sequence
+info, what is SMS number in SMS sequence (start at 2, first part is in outbox
+table).
 
 
 .TP
@@ -337,6 +339,8 @@ SMS text in "human readable" form
 SMS ID
 
 \fBSenderID\fR (text)
+.SS Injecting a message using SQL
+
 .br
 which SMSD instance sent this one sequence
 
@@ -410,8 +414,11 @@ short text message:
         'Default_No_Compression'
     );
 
+.SS Injecting long message using SQL
+
 Inserting multipart messages is a bit more tricky, you need to construct also
-UDH header. For example long text message would look like:
+UDH header. For example long text message would look like (please note that
+each UDH needs to contain sequence position):
     
     INSERT INTO outbox (
         CreatorID,
