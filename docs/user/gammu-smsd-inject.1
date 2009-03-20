@@ -30,6 +30,46 @@ no default and configuration file path has to be always specified.
 For description of message types and their parameters, please check gammu(1).
 The options are identical to ones you can use for gammu sendsms.
 
+.SH "EXAMPLE"
+
+.P 
+To check it out, you need to have configuration file for SMSD, see
+gammu-smsdrc(5) for more details about it.
+
+.TP
+Inject text message up to standard 160 chars:
+
+echo "All your base are belong to us" | gammu-smsd-inject TEXT 123456
+
+or 
+
+gammu-smsd-inject TEXT 123456 \-text "All your base are belong to us"
+
+.TP
+Save long text message:
+
+echo "All your base are belong to us" | gammu-smsd-inject TEXT 123456 \-maxlen 400
+
+or 
+
+gammu-smsd-inject TEXT 123456 \-maxlen 400 \-text "All your base are belong to us"
+
+or
+
+gammu-smsd-inject EMS 123456 \-text "All your base are belong to us"
+
+.TP
+Save some funky message with predefined sound and animation from 2 bitmaps:
+
+gammu-smsd-inject EMS 123456 \-text "Greetings" \-defsound 1 \-text "from Gammu"
+\-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
+
+.TP
+Save protected message with ringtone:
+
+gammu-smsd-inject EMS 123456 \-protected 2 \-variablebitmaplong ala.bmp
+\-toneSElong axelf.txt \-toneSE ring.txt
+
 .SH SEE ALSO
 gammu\-smsdrc(5), gammu(1), gammu\-smsd(1)
 .SH AUTHOR
