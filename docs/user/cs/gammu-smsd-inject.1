@@ -32,6 +32,48 @@ musí být zadána vždy.
 Pro popis typů zpráv a jejich parametrů se prosím podívejte na gammu(1).
 Parametry jsou strjné jako používá gammu sendsms.
 
+.SH PŘÍKLAD
+
+.P
+Pro vyzkoušení potřebujete vytvořit konfigurační soubor pro SMSD, který je
+podrobně popsán v gammu\-smsdrc(5).
+
+.TP 
+Vložení standardní textové zprávy s maximální délkou 160 znaků:
+
+echo "All your base are belong to us" | gammu\-smsd\-inject TEXT 123456
+
+nebo
+
+gammu\-smsd\-inject TEXT 123456 \-text "All your base are belong to us"
+
+.TP 
+Vložení dlouhé textové zprávy:
+
+echo "All your base are belong to us" | gammu\-smsd\-inject TEXT 123456
+\-maxlen 400
+
+nebo
+
+gammu\-smsd\-inject TEXT 123456 \-maxlen 400 \-text "All your base are belong to
+us"
+
+nebo
+
+gammu\-smsd\-inject EMS 123456 \-text "All your base are belong to us"
+
+.TP 
+Vložení zprávy s předdefinovaným zvukem a animací ze dvou obrázků:
+
+gammu\-smsd\-inject EMS 123456 \-text "Greetings" \-defsound 1 \-text "from
+Gammu" \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
+
+.TP 
+Vložení chráněné zprávy s vyzváněním:
+
+gammu\-smsd\-inject EMS 123456 \-protected 2 \-variablebitmaplong ala.bmp
+\-toneSElong axelf.txt \-toneSE ring.txt
+
 .SH "DALŠÍ INFORMACE"
 gammu\-smsdrc(5), gammu(1), gammu\-smsd(1)
 .SH AUTOR
@@ -50,5 +92,9 @@ Před hlášením chyb prosím zapněte logovaní v nastavení SMSD:
 
     [gammu]
     logformat = textall
+
+    [smsd]
+    debuglevel = 255
+    logfile = smsd.log
 
 a přiložte tento log k hlášení chyby.

@@ -411,9 +411,9 @@ Například vytvoření tabulek pro SQLite vypadá následovně:
 
 .SS "Vkládání zpráv pomocí SQL"
 
-To send a message, you can either use gammu\-smsd\-inject(1), which does all
-the magic for you, or you can insert the message manually. The simplest
-example is short text message:
+Pro posílání zpráv buď použijte gammu\-smsd\-inject(1), které za vás udělá
+veškerou magii, nebo můžete vložit zprávy ručně. Nejjednodušší je vložit
+obyčejnou textovou zprávu:
 
     INSERT INTO outbox (
         DestinationNumber,
@@ -429,9 +429,9 @@ example is short text message:
 
 .SS "Vkládání dlouhých zpráv pomocí SQL"
 
-Inserting multipart messages is a bit more tricky, you need to construct
-also UDH header. For example long text message would look like (please note
-that each UDH needs to contain sequence position):
+Vkládání zprávy s více částmi je poněkud náročnější, musíte také vytvořit
+UDH hlavičku. Například dlouhá textová zpráva by vypadala následovně
+(povšimněte si, že UDH obsahuje číslo zprávy):
     
     INSERT INTO outbox (
         CreatorID,
