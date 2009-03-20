@@ -46,7 +46,7 @@ or
 gammu-smsd-inject TEXT 123456 \-text "All your base are belong to us"
 
 .TP
-Save long text message:
+Inject long text message:
 
 echo "All your base are belong to us" | gammu-smsd-inject TEXT 123456 \-maxlen 400
 
@@ -59,13 +59,13 @@ or
 gammu-smsd-inject EMS 123456 \-text "All your base are belong to us"
 
 .TP
-Save some funky message with predefined sound and animation from 2 bitmaps:
+Inject some funky message with predefined sound and animation from 2 bitmaps:
 
 gammu-smsd-inject EMS 123456 \-text "Greetings" \-defsound 1 \-text "from Gammu"
 \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
 
 .TP
-Save protected message with ringtone:
+Inject protected message with ringtone:
 
 gammu-smsd-inject EMS 123456 \-protected 2 \-variablebitmaplong ala.bmp
 \-toneSElong axelf.txt \-toneSE ring.txt
