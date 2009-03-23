@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-17 08:52+0100\n"
+"POT-Creation-Date: 2009-03-23 10:27+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -62,7 +62,7 @@ msgstr ""
 msgid "Error while opening file for writing!\n"
 msgstr ""
 
-#: gammu/backup.c:169 gammu/files.c:446 helper/message-cmdline.c:1090
+#: gammu/backup.c:169 gammu/files.c:446 helper/message-cmdline.c:1095
 msgid "Error while writing file!\n"
 msgstr ""
 
@@ -1523,7 +1523,7 @@ msgid "What file type (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/files.c:739 gammu/misc.c:1149 gammu/nokia.c:934
-#: helper/message-cmdline.c:1287
+#: helper/message-cmdline.c:1292
 msgid "Parameter missing!"
 msgstr ""
 
@@ -1854,7 +1854,7 @@ msgid "Memory %s, Location %i\n"
 msgstr ""
 
 #: gammu/memory.c:75 gammu/misc.c:588 gammu/misc.c:617
-#: helper/message-cmdline.c:1012
+#: helper/message-cmdline.c:1017
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
 msgstr ""
@@ -3554,77 +3554,77 @@ msgstr ""
 msgid "ToDo note not found in file"
 msgstr ""
 
-#: helper/message-cmdline.c:1035
+#: helper/message-cmdline.c:1040
 #, fuzzy, c-format
 msgid "Wrong message length (\"%s\")\n"
 msgstr "Schrijft bericht(en)..."
 
-#: helper/message-cmdline.c:1058
+#: helper/message-cmdline.c:1063
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1077
+#: helper/message-cmdline.c:1082
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1115
+#: helper/message-cmdline.c:1120
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1153
+#: helper/message-cmdline.c:1158
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1178
+#: helper/message-cmdline.c:1183
 #, c-format
 msgid "Can't open file \"%s\"\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1227
+#: helper/message-cmdline.c:1232
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1232
+#: helper/message-cmdline.c:1237
 msgid "Last parameter wasn't text"
 msgstr ""
 
-#: helper/message-cmdline.c:1266
+#: helper/message-cmdline.c:1271
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1306
+#: helper/message-cmdline.c:1311
 msgid "Enter message text and press ^D:"
 msgstr ""
 
-#: helper/message-cmdline.c:1318
+#: helper/message-cmdline.c:1323
 msgid "No chars read, assuming it is okay!"
 msgstr ""
 
-#: helper/message-cmdline.c:1338
+#: helper/message-cmdline.c:1343
 msgid "No network code"
 msgstr ""
 
-#: helper/message-cmdline.c:1344
+#: helper/message-cmdline.c:1349
 msgid "You have to set network code!"
 msgstr ""
 
-#: helper/message-cmdline.c:1383
+#: helper/message-cmdline.c:1388
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1394
+#: helper/message-cmdline.c:1399
 #, c-format
 msgid "There is %i SMS packed and %i limit. Exiting\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1404
+#: helper/message-cmdline.c:1409
 msgid "Use -smscnumber option to give SMSC number"
 msgstr ""
 
