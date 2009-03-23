@@ -673,6 +673,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					nextlong = 5;
 					break;
 				}
+				/* Backward compatibility with bad docs */
 				if (strcasecmp(argv[i],"-maxlen") == 0) {
 					nextlong = 5;
 					break;
