@@ -721,6 +721,7 @@ GSM_PhoneModel allmodels[] = {
 
 	/* Option devices */
 	{"GlobeTrotter HSDPA Modem",	"GlobeTrotter HSDPA Modem" ,"",	   {F_SMS_LOCATION_0, 0}},
+	{"GlobeTrotter 3G+", "GlobeTrotter 3G+" ,"",			   {F_SMS_LOCATION_0, 0}},
 
 	/* IrDA identifications for Sony-Ericsson */
 	/* At least my K750i reports itself as "Sony Ericss", so detect it for IrDA */
