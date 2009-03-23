@@ -50,12 +50,12 @@ gammu\-smsd\-inject TEXT 123456 \-text "All your base are belong to us"
 .TP 
 Vložení dlouhé textové zprávy:
 
-echo "All your base are belong to us" | gammu\-smsd\-inject TEXT 123456
-\-maxlen 400
+echo "All your base are belong to us" | gammu\-smsd\-inject TEXT 123456 \-len
+400
 
 nebo
 
-gammu\-smsd\-inject TEXT 123456 \-maxlen 400 \-text "All your base are belong to
+gammu\-smsd\-inject TEXT 123456 \-len 400 \-text "All your base are belong to
 us"
 
 nebo

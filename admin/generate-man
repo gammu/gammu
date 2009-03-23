@@ -119,11 +119,11 @@ gammu savesms TEXT \\-text "All your base are belong to us"
 .TP
 Save long text message:
 
-echo "All your base are belong to us" | gammu savesms TEXT \\-maxlen 400
+echo "All your base are belong to us" | gammu savesms TEXT \\-len 400
 
 or 
 
-gammu savesms TEXT \\-maxlen 400 \\-text "All your base are belong to us"
+gammu savesms TEXT \\-len 400 \\-text "All your base are belong to us"
 
 or
 
