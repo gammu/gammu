@@ -11,14 +11,15 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-03-24 16:08+0100\n"
-"PO-Revision-Date: 2008-12-02 18:38+0100\n"
-"Last-Translator: Daniel Campos <daniel.campos@juntaextremadura.net>\n"
+"PO-Revision-Date: 2009-03-23 19:32+0200\n"
+"Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 1.1.0\n"
+"X-Generator: Pootle 1.2.1\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -332,9 +333,8 @@ msgid "Unknown error description."
 msgstr "Descripción del error desconocida."
 
 #: libgammu/phone/dummy/dummy.c:553
-#, fuzzy
 msgid "Templates"
-msgstr "%i plantillas"
+msgstr "Plantillas"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1958
 msgid "Personal"
@@ -398,7 +398,7 @@ msgstr "Amigos"
 
 #: libgammu/phone/nokia/nfunc.c:929
 msgid "Colleagues"
-msgstr "Compañeros."
+msgstr "Compañeros"
 
 #: libgammu/phone/nokia/nfunc.c:931
 msgid "Other"
@@ -406,7 +406,7 @@ msgstr "Otros"
 
 #: libgammu/phone/nokia/nfunc.c:1107
 msgid "Meeting"
-msgstr "Citas"
+msgstr "Reunión"
 
 #: libgammu/phone/nokia/nfunc.c:1109
 msgid "Outdoor"
@@ -414,7 +414,7 @@ msgstr "Exterior"
 
 #: libgammu/phone/nokia/nfunc.c:1111
 msgid "Pager"
-msgstr "Paginador"
+msgstr "Mensáfono"
 
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
