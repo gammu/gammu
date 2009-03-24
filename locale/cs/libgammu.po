@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.23.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-17 08:52+0100\n"
+"POT-Creation-Date: 2009-03-24 16:08+0100\n"
 "PO-Revision-Date: 2009-02-09 17:29+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -22,7 +22,8 @@ msgid "No error."
 msgstr "Žadná chyba."
 
 #: libgammu/gsmcomon.c:85
-msgid "Error opening device. Unknown/busy or no permissions."
+#, fuzzy
+msgid "Error opening device. Unknown, busy or no permissions."
 msgstr "Chyba při otevírání zařízení. Přístup odmítnut."
 
 #: libgammu/gsmcomon.c:86
@@ -46,7 +47,8 @@ msgid "Error opening device. No required driver in operating system."
 msgstr "Chyba při otevírání zařízení. Chybí ovladač v operačním systému."
 
 #: libgammu/gsmcomon.c:91
-msgid "Error opening device. Some hardware not connected/wrong configured."
+#, fuzzy
+msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
 "Chyba při otevírání zařízení. Hardware může být špatně připojen nebo "
 "nakonfigurován."
@@ -62,15 +64,18 @@ msgstr ""
 "podporována."
 
 #: libgammu/gsmcomon.c:94
-msgid "Error writing device."
+#, fuzzy
+msgid "Error writing to the device."
 msgstr "Chyba při zápisu."
 
 #: libgammu/gsmcomon.c:95
-msgid "Error during reading device."
+#, fuzzy
+msgid "Error during reading from the device."
 msgstr "Chyba při čtení."
 
 #: libgammu/gsmcomon.c:96
-msgid "Can't set parity on device."
+#, fuzzy
+msgid "Can't set parity on the device."
 msgstr "Nepodařilo se nastavit paritu na zařízení."
 
 #: libgammu/gsmcomon.c:97
@@ -110,9 +115,10 @@ msgid "Unknown model type string. Check config file."
 msgstr "Zadán neznámý model telefonu. Zkontrolujte konfigurační soubor."
 
 #: libgammu/gsmcomon.c:103
+#, fuzzy
 msgid ""
 "Some functions not available for your system (disabled in config or not "
-"written)."
+"implemented)."
 msgstr ""
 "Některé funkce nejsou dostupné pro váš systém (vypnuté při kompilaci nebo "
 "nejsou implementovány)."
@@ -122,7 +128,8 @@ msgid "Function not supported by phone."
 msgstr "Funkce není podporována telefonem."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty"
+#, fuzzy
+msgid "Entry is empty."
 msgstr "Záznam je prázdný"
 
 #: libgammu/gsmcomon.c:106
@@ -146,7 +153,8 @@ msgid "Unknown error."
 msgstr "Neznámá chyba."
 
 #: libgammu/gsmcomon.c:111
-msgid "Can't open specified file. Read only?"
+#, fuzzy
+msgid "Ca not open specified file."
 msgstr "Soubor nelze otevřít. Není jen pro čtení?"
 
 #: libgammu/gsmcomon.c:112
@@ -170,7 +178,10 @@ msgid "Phone is not connected."
 msgstr "Telefon není připojen."
 
 #: libgammu/gsmcomon.c:117
-msgid "Function is during writing. If want help, please contact with authors."
+#, fuzzy
+msgid ""
+"Function is currently being implemented. If you want to help, please contact "
+"authors."
 msgstr "Funkce je rozepsána. Pokud chcete pomoci, kontaktuje autory."
 
 #: libgammu/gsmcomon.c:118

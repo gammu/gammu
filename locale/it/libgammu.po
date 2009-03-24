@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.23.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-17 08:52+0100\n"
+"POT-Creation-Date: 2009-03-24 16:08+0100\n"
 "PO-Revision-Date: 2009-03-15 16:50+0200\n"
 "Last-Translator: soft developer <soft-developer@live.com>\n"
 "Language-Team: Language =it\n"
@@ -23,7 +23,8 @@ msgid "No error."
 msgstr "Nessun errore."
 
 #: libgammu/gsmcomon.c:85
-msgid "Error opening device. Unknown/busy or no permissions."
+#, fuzzy
+msgid "Error opening device. Unknown, busy or no permissions."
 msgstr ""
 "Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
 "permessi."
@@ -53,7 +54,8 @@ msgstr ""
 "sistema operativo."
 
 #: libgammu/gsmcomon.c:91
-msgid "Error opening device. Some hardware not connected/wrong configured."
+#, fuzzy
+msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
 "Errore durante l'apertura del dispositivo. Una periferica non è connessa o è "
 "configurata male."
@@ -69,15 +71,18 @@ msgstr ""
 "supportata."
 
 #: libgammu/gsmcomon.c:94
-msgid "Error writing device."
+#, fuzzy
+msgid "Error writing to the device."
 msgstr "Errore durante la scrittura sul dispositivo."
 
 #: libgammu/gsmcomon.c:95
-msgid "Error during reading device."
+#, fuzzy
+msgid "Error during reading from the device."
 msgstr "Errore durante la lettura dal dispositivo."
 
 #: libgammu/gsmcomon.c:96
-msgid "Can't set parity on device."
+#, fuzzy
+msgid "Can't set parity on the device."
 msgstr "Impossibile impostare la parità sul dispositivo."
 
 #: libgammu/gsmcomon.c:97
@@ -122,9 +127,10 @@ msgid "Unknown model type string. Check config file."
 msgstr "Modello sconosciuto. Controllare il file di configurazione."
 
 #: libgammu/gsmcomon.c:103
+#, fuzzy
 msgid ""
 "Some functions not available for your system (disabled in config or not "
-"written)."
+"implemented)."
 msgstr ""
 "Alcune funzioni non sono disponibili per il tuo sistema (disabilitate nel "
 "file di configurazione o non specificate)."
@@ -134,7 +140,8 @@ msgid "Function not supported by phone."
 msgstr "Funzione non supportata dal telefono."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty"
+#, fuzzy
+msgid "Entry is empty."
 msgstr "Locazione vuota"
 
 #: libgammu/gsmcomon.c:106
@@ -159,7 +166,7 @@ msgstr "Errore sconosciuto."
 
 #: libgammu/gsmcomon.c:111
 #, fuzzy
-msgid "Can't open specified file. Read only?"
+msgid "Ca not open specified file."
 msgstr "Impossibile aprire il file specificato. E' a sola lettura?"
 
 #: libgammu/gsmcomon.c:112
@@ -186,7 +193,10 @@ msgid "Phone is not connected."
 msgstr "Telefono non connesso"
 
 #: libgammu/gsmcomon.c:117
-msgid "Function is during writing. If want help, please contact with authors."
+#, fuzzy
+msgid ""
+"Function is currently being implemented. If you want to help, please contact "
+"authors."
 msgstr ""
 "La funzione sta ancora elaborando. Se si necessita aiuto si prega di "
 "contattare gli autori"

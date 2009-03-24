@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.23.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-17 08:52+0100\n"
+"POT-Creation-Date: 2009-03-24 16:08+0100\n"
 "PO-Revision-Date: 2009-01-30 17:11+0100\n"
 "Last-Translator: Rafał Ślubowski <RafalSlubowski@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -23,7 +23,8 @@ msgid "No error."
 msgstr "Nie ma błędu."
 
 #: libgammu/gsmcomon.c:85
-msgid "Error opening device. Unknown/busy or no permissions."
+#, fuzzy
+msgid "Error opening device. Unknown, busy or no permissions."
 msgstr ""
 "Błąd podczas otwierania urządzenia. Nieznane/zajęte lub brak uprawnień."
 
@@ -54,7 +55,8 @@ msgstr ""
 "Błąd podczas otwierania urządzenia. Brak wymaganego sterownika w systemie."
 
 #: libgammu/gsmcomon.c:91
-msgid "Error opening device. Some hardware not connected/wrong configured."
+#, fuzzy
+msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
 "Błąd podczas otwierania urządzenia. Jakiś sprzęt nie podłączony/źle "
 "skonfigurowany."
@@ -69,15 +71,18 @@ msgstr ""
 "Błąd ustawienia szybkości urządzenia. Prawdopodobnie prędkość nieobsługiwana."
 
 #: libgammu/gsmcomon.c:94
-msgid "Error writing device."
+#, fuzzy
+msgid "Error writing to the device."
 msgstr "Błąd zapisu do urządzenia."
 
 #: libgammu/gsmcomon.c:95
-msgid "Error during reading device."
+#, fuzzy
+msgid "Error during reading from the device."
 msgstr "Błąd podczas odczytu urządzenia."
 
 #: libgammu/gsmcomon.c:96
-msgid "Can't set parity on device."
+#, fuzzy
+msgid "Can't set parity on the device."
 msgstr "Nie można ustawić parzystości w urządzeniu."
 
 #: libgammu/gsmcomon.c:97
@@ -121,9 +126,10 @@ msgid "Unknown model type string. Check config file."
 msgstr "Podano nieznany model telefonu. Sprawdź konfigurację."
 
 #: libgammu/gsmcomon.c:103
+#, fuzzy
 msgid ""
 "Some functions not available for your system (disabled in config or not "
-"written)."
+"implemented)."
 msgstr ""
 "Niektóre funkcje nie są dostępne dla Twojego systemu (zablokowane w "
 "konfiguracji lub nie zostały zaimplementowane)."
@@ -133,7 +139,8 @@ msgid "Function not supported by phone."
 msgstr "Funkcja nie obsługiwana przez telefon."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty"
+#, fuzzy
+msgid "Entry is empty."
 msgstr "Pozycja jest pusta"
 
 #: libgammu/gsmcomon.c:106
@@ -157,7 +164,8 @@ msgid "Unknown error."
 msgstr "Nieznany błąd."
 
 #: libgammu/gsmcomon.c:111
-msgid "Can't open specified file. Read only?"
+#, fuzzy
+msgid "Ca not open specified file."
 msgstr ""
 "Nie można otworzyć podanego pliku. Prawdopodobnie jest tylko do odczytu."
 
@@ -185,7 +193,10 @@ msgid "Phone is not connected."
 msgstr "Telefon jest zablokowany i podłączony do ładowarki."
 
 #: libgammu/gsmcomon.c:117
-msgid "Function is during writing. If want help, please contact with authors."
+#, fuzzy
+msgid ""
+"Function is currently being implemented. If you want to help, please contact "
+"authors."
 msgstr ""
 "Funkcja jest w trakcie implementowania. Jeżeli chcesz pomóc, proszę "
 "skontaktuj się z autorami."

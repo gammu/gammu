@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-17 08:52+0100\n"
+"POT-Creation-Date: 2009-03-24 16:08+0100\n"
 "PO-Revision-Date: 2009-02-18 23:31+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: none\n"
@@ -22,7 +22,8 @@ msgid "No error."
 msgstr "Inget fel."
 
 #: libgammu/gsmcomon.c:85
-msgid "Error opening device. Unknown/busy or no permissions."
+#, fuzzy
+msgid "Error opening device. Unknown, busy or no permissions."
 msgstr "Fel vid öppnade av enhet. Okänd/upptagen eller ingen behörighet."
 
 #: libgammu/gsmcomon.c:86
@@ -47,7 +48,8 @@ msgstr ""
 "Fel vid öppnade av enheten. Nödvändig drivrutin saknas i operativsystemet."
 
 #: libgammu/gsmcomon.c:91
-msgid "Error opening device. Some hardware not connected/wrong configured."
+#, fuzzy
+msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
 "Fel vid öppnade av enheten. Viss hårdvara är inte ansluten/felkonfigurerad."
 
@@ -60,15 +62,18 @@ msgid "Error setting device speed. Maybe speed not supported."
 msgstr "Fel vid inställning av enhetshastighet. Hastighet kanske inte stöds."
 
 #: libgammu/gsmcomon.c:94
-msgid "Error writing device."
+#, fuzzy
+msgid "Error writing to the device."
 msgstr "Fel vid skrivning till enheten."
 
 #: libgammu/gsmcomon.c:95
-msgid "Error during reading device."
+#, fuzzy
+msgid "Error during reading from the device."
 msgstr "Fel vid läsning från enheten."
 
 #: libgammu/gsmcomon.c:96
-msgid "Can't set parity on device."
+#, fuzzy
+msgid "Can't set parity on the device."
 msgstr "Kan inte ställa in paritet på enheten."
 
 #: libgammu/gsmcomon.c:97
@@ -105,9 +110,10 @@ msgid "Unknown model type string. Check config file."
 msgstr "Okänd modelltypssträng. Kontrollera konfigurationsfilen."
 
 #: libgammu/gsmcomon.c:103
+#, fuzzy
 msgid ""
 "Some functions not available for your system (disabled in config or not "
-"written)."
+"implemented)."
 msgstr ""
 "Vissa funktioner är inte tillgängliga för ditt system (inaktiverade i "
 "konfigurationen eller inte skrivna)."
@@ -117,7 +123,8 @@ msgid "Function not supported by phone."
 msgstr "Funktionen stöds inte av telefonen."
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty"
+#, fuzzy
+msgid "Entry is empty."
 msgstr "Posten är tom"
 
 #: libgammu/gsmcomon.c:106
@@ -141,7 +148,8 @@ msgid "Unknown error."
 msgstr "Okänt fel."
 
 #: libgammu/gsmcomon.c:111
-msgid "Can't open specified file. Read only?"
+#, fuzzy
+msgid "Ca not open specified file."
 msgstr "Kan inte öppna angiven fil. Skrivskyddad?"
 
 #: libgammu/gsmcomon.c:112
@@ -166,7 +174,10 @@ msgid "Phone is not connected."
 msgstr "Telefonen är inte ansluten."
 
 #: libgammu/gsmcomon.c:117
-msgid "Function is during writing. If want help, please contact with authors."
+#, fuzzy
+msgid ""
+"Function is currently being implemented. If you want to help, please contact "
+"authors."
 msgstr ""
 "Funktionen är under utveckling. Kontakta upphovsmännen om du vill hjälpa "
 "till."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-17 08:52+0100\n"
+"POT-Creation-Date: 2009-03-24 16:08+0100\n"
 "PO-Revision-Date: 2009-02-03 12:50+0100\n"
 "Last-Translator: Jakob Peterhänsel <jakob@hjemme.dk>\n"
 "Language-Team: none\n"
@@ -22,7 +22,8 @@ msgid "No error."
 msgstr "Ingen fejl."
 
 #: libgammu/gsmcomon.c:85
-msgid "Error opening device. Unknown/busy or no permissions."
+#, fuzzy
+msgid "Error opening device. Unknown, busy or no permissions."
 msgstr "Fejl ved åbning af enhed. Ukendt/optaget eller manglende tilladelser."
 
 #: libgammu/gsmcomon.c:86
@@ -46,7 +47,8 @@ msgid "Error opening device. No required driver in operating system."
 msgstr "Fejl ved åbning af enhed. Krævet driver mangler i systemet."
 
 #: libgammu/gsmcomon.c:91
-msgid "Error opening device. Some hardware not connected/wrong configured."
+#, fuzzy
+msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
 "Fejl ved åbning af enhed. Forbindelse til enhed mangler eller forkert "
 "konfigureret."
@@ -60,15 +62,16 @@ msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
 
 #: libgammu/gsmcomon.c:94
-msgid "Error writing device."
-msgstr ""
+#, fuzzy
+msgid "Error writing to the device."
+msgstr "Fejl under DTR eller RTS enhedsopsætning."
 
 #: libgammu/gsmcomon.c:95
-msgid "Error during reading device."
+msgid "Error during reading from the device."
 msgstr ""
 
 #: libgammu/gsmcomon.c:96
-msgid "Can't set parity on device."
+msgid "Can't set parity on the device."
 msgstr ""
 
 #: libgammu/gsmcomon.c:97
@@ -104,7 +107,7 @@ msgstr ""
 #: libgammu/gsmcomon.c:103
 msgid ""
 "Some functions not available for your system (disabled in config or not "
-"written)."
+"implemented)."
 msgstr ""
 
 #: libgammu/gsmcomon.c:104
@@ -112,7 +115,7 @@ msgid "Function not supported by phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:105
-msgid "Entry is empty"
+msgid "Entry is empty."
 msgstr ""
 
 #: libgammu/gsmcomon.c:106
@@ -136,7 +139,7 @@ msgid "Unknown error."
 msgstr ""
 
 #: libgammu/gsmcomon.c:111
-msgid "Can't open specified file. Read only?"
+msgid "Ca not open specified file."
 msgstr ""
 
 #: libgammu/gsmcomon.c:112
@@ -160,7 +163,9 @@ msgid "Phone is not connected."
 msgstr ""
 
 #: libgammu/gsmcomon.c:117
-msgid "Function is during writing. If want help, please contact with authors."
+msgid ""
+"Function is currently being implemented. If you want to help, please contact "
+"authors."
 msgstr ""
 
 #: libgammu/gsmcomon.c:118
