@@ -8,21 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.23.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-24 16:08+0100\n"
-"PO-Revision-Date: 2009-02-09 17:29+0100\n"
+"POT-Creation-Date: 2009-03-24 16:19+0100\n"
+"PO-Revision-Date: 2009-03-24 16:20+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
 msgstr "Žadná chyba."
 
 #: libgammu/gsmcomon.c:85
-#, fuzzy
 msgid "Error opening device. Unknown, busy or no permissions."
 msgstr "Chyba při otevírání zařízení. Přístup odmítnut."
 
@@ -47,11 +46,10 @@ msgid "Error opening device. No required driver in operating system."
 msgstr "Chyba při otevírání zařízení. Chybí ovladač v operačním systému."
 
 #: libgammu/gsmcomon.c:91
-#, fuzzy
 msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
 "Chyba při otevírání zařízení. Hardware může být špatně připojen nebo "
-"nakonfigurován."
+"nastaven."
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
@@ -64,17 +62,14 @@ msgstr ""
 "podporována."
 
 #: libgammu/gsmcomon.c:94
-#, fuzzy
 msgid "Error writing to the device."
 msgstr "Chyba při zápisu."
 
 #: libgammu/gsmcomon.c:95
-#, fuzzy
 msgid "Error during reading from the device."
 msgstr "Chyba při čtení."
 
 #: libgammu/gsmcomon.c:96
-#, fuzzy
 msgid "Can't set parity on the device."
 msgstr "Nepodařilo se nastavit paritu na zařízení."
 
@@ -115,7 +110,6 @@ msgid "Unknown model type string. Check config file."
 msgstr "Zadán neznámý model telefonu. Zkontrolujte konfigurační soubor."
 
 #: libgammu/gsmcomon.c:103
-#, fuzzy
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "implemented)."
@@ -128,9 +122,8 @@ msgid "Function not supported by phone."
 msgstr "Funkce není podporována telefonem."
 
 #: libgammu/gsmcomon.c:105
-#, fuzzy
 msgid "Entry is empty."
-msgstr "Záznam je prázdný"
+msgstr "Záznam je prázdný."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
@@ -153,9 +146,8 @@ msgid "Unknown error."
 msgstr "Neznámá chyba."
 
 #: libgammu/gsmcomon.c:111
-#, fuzzy
-msgid "Ca not open specified file."
-msgstr "Soubor nelze otevřít. Není jen pro čtení?"
+msgid "Can not open specified file."
+msgstr "Zvolený soubor nelze otevřít."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
@@ -178,11 +170,10 @@ msgid "Phone is not connected."
 msgstr "Telefon není připojen."
 
 #: libgammu/gsmcomon.c:117
-#, fuzzy
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
-msgstr "Funkce je rozepsána. Pokud chcete pomoci, kontaktuje autory."
+msgstr "Funkce je rozepsána. Pokud chcete pomoci, kontaktuje prosím autory."
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."

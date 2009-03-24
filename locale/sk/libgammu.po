@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-24 16:08+0100\n"
+"POT-Creation-Date: 2009-03-24 16:19+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -135,8 +135,9 @@ msgid "Unknown error."
 msgstr ""
 
 #: libgammu/gsmcomon.c:111
-msgid "Ca not open specified file."
-msgstr ""
+#, fuzzy
+msgid "Can not open specified file."
+msgstr "Nie je možné vytvoriť súbor!"
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."

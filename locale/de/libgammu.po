@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.23.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-24 16:08+0100\n"
+"POT-Creation-Date: 2009-03-24 16:19+0100\n"
 "PO-Revision-Date: 2009-02-01 16:32+0100\n"
 "Last-Translator: ObiWahn <obi-wahn@osnanet.de>\n"
 "Language-Team: Language =de\n"
@@ -162,7 +162,7 @@ msgstr "Unbekannter Fehler."
 
 #: libgammu/gsmcomon.c:111
 #, fuzzy
-msgid "Ca not open specified file."
+msgid "Can not open specified file."
 msgstr "Kann gewählte Datei nicht öffnen. Keine Schreibberechtigung?"
 
 #: libgammu/gsmcomon.c:112
