@@ -108,7 +108,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_NOTIMPLEMENTED, "NOTIMPLEMENTED",		N_("Function not implemented. Help required.")},
 	{ERR_FULL, "FULL",			N_("Memory full.")},
 	{ERR_UNKNOWN, "UNKNOWN",			N_("Unknown error.")},
-	{ERR_CANTOPENFILE, "CANTOPENFILE",		N_("Ca not open specified file.")},
+	{ERR_CANTOPENFILE, "CANTOPENFILE",		N_("Can not open specified file.")},
 	{ERR_MOREMEMORY, "MOREMEMORY",		N_("More memory required...")},
 	{ERR_PERMISSION, "PERMISSION",		N_("Permission to file/device required...")},
 	{ERR_EMPTYSMSC, "EMPTYSMSC",			N_("Empty SMSC number. Set in phone or use -smscnumber.")},
