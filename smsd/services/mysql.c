@@ -251,9 +251,8 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 	for (i=0;i<sms->Number;i++) {
 		if (sms->SMS[i].PDU == SMS_Status_Report) {
 			strcpy(buffer2, DecodeUnicodeString(sms->SMS[i].Number));
-			if (strncasecmp(Config->deliveryreport, "log", 3) == 0) {
-				SMSD_Log(0, Config, "Delivery report: %s to %s", DecodeUnicodeString(sms->SMS[i].Text), buffer2);
-			}
+
+			SMSD_Log(0, Config, "Delivery report: %s to %s", DecodeUnicodeString(sms->SMS[i].Text), buffer2);
 
 			sprintf(buffer, "SELECT ID,Status,UNIX_TIMESTAMP(SendingDateTime),DeliveryDateTime,SMSCNumber FROM `sentitems` WHERE "
 					"DeliveryDateTime IS NULL AND "
@@ -265,6 +264,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 			}
 			found = false;
 			while ((Row = mysql_fetch_row(Res))) {
+				SMSD_Log(4, Config, "Checking for delivery report, SMSC=%s, state=%s", Row[4], Row[1]);
 				if (strcmp(Row[4],DecodeUnicodeString(sms->SMS[i].SMSC.Number))) {
 					if (Config->skipsmscnumber[0] == 0) continue;
 					if (strcmp(Config->skipsmscnumber,Row[4])) continue;
@@ -277,6 +277,8 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 					if (diff > -Config->deliveryreportdelay && diff < Config->deliveryreportdelay) {
 						found = true;
 						break;
+					} else {
+						SMSD_Log(1, Config, "Delivery report would match, but time delta is too big (%ld), consider increasing DeliveryReportDelay", diff);
 					}
 				}
 			}

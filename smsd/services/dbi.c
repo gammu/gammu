@@ -492,9 +492,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 		EncodeUTF8(smsc_message, sms->SMS[i].SMSC.Number);
 		EncodeUTF8(destinationnumber, sms->SMS[i].Number);
 		if (sms->SMS[i].PDU == SMS_Status_Report) {
-			if (strncasecmp(Config->deliveryreport, "log", 3) == 0) {
-				SMSD_Log(0, Config, "Delivery report: %s to %s", smstext, destinationnumber);
-			}
+			SMSD_Log(0, Config, "Delivery report: %s to %s", smstext, destinationnumber);
 
 			sprintf(buffer,
 				"SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber "
@@ -511,6 +509,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			while (dbi_result_next_row(Res)) {
 				smsc = dbi_result_get_string(Res, "SMSCNumber");
 				state = dbi_result_get_string(Res, "Status");
+				SMSD_Log(4, Config, "Checking for delivery report, SMSC=%s, state=%s", smsc, state);
 
 				if (strcmp(smsc, smsc_message) != 0) {
 					if (Config->skipsmscnumber[0] == 0 ||
@@ -527,6 +526,8 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					if (diff > -Config->deliveryreportdelay && diff < Config->deliveryreportdelay) {
 						found = true;
 						break;
+					} else {
+						SMSD_Log(1, Config, "Delivery report would match, but time delta is too big (%ld), consider increasing DeliveryReportDelay", diff);
 					}
 				}
 			}

@@ -218,12 +218,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 	for (i = 0; i < sms->Number; i++) {
 		if (sms->SMS[i].PDU == SMS_Status_Report) {
 			strcpy(buffer2, DecodeUnicodeString(sms->SMS[i].Number));
-			if (strncasecmp(Config->deliveryreport, "log", 3) == 0) {
-				SMSD_Log(0, Config, "Delivery report: %s to %s",
-					     DecodeUnicodeString(sms->SMS[i].
-								 Text),
-					     buffer2);
-			}
+			SMSD_Log(0, Config, "Delivery report: %s to %s", DecodeUnicodeString(sms->SMS[i].  Text), buffer2);
 
 			sprintf(buffer,
 				"SELECT ID, Status, EXTRACT(EPOCH FROM SendingDateTime), DeliveryDateTime, SMSCNumber "
@@ -239,6 +234,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			found = false;
 			numb_rows = PQntuples(Res);
 			for (j = 0; j < numb_rows; j++) {
+				SMSD_Log(4, Config, "Checking for delivery report, SMSC=%s, state=%s", PQgetvalue(Res, j, 4), PQgetvalue(Res, j, 1));
 
 				if (strcmp
 				    (PQgetvalue(Res, j, 4),
@@ -262,6 +258,8 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					if (diff > -Config->deliveryreportdelay && diff < Config->deliveryreportdelay) {
 						found = true;
 						break;
+					} else {
+						SMSD_Log(1, Config, "Delivery report would match, but time delta is too big (%ld), consider increasing DeliveryReportDelay", diff);
 					}
 				}
 			}
