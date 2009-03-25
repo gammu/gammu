@@ -101,7 +101,7 @@ static GSM_Error GSM_DecodeSMSDateTime(GSM_Debug_Info *di, GSM_DateTime *DT, uns
 
 	if (req[6]&0x08) DT->Timezone = -DT->Timezone;
 
-	smfprintf(di, "Decoding date & time: %s\n", OSDate(*DT));
+	smfprintf(di, "Decoding date & time: %s\n", OSDateTime(*DT, true));
 
 	return ERR_NONE;
 }
