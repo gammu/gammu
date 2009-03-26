@@ -882,6 +882,6 @@ add_subdirectory(contrib)
 if (WITH_PYTHON)
     add_subdirectory(python)
 else (WITH_PYTHON)
-    message (STATUS "Python bindings are disabled!")
+    message ("Python bindings are disabled!")
 endif (WITH_PYTHON)
 
