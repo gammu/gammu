@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.23.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-23 10:21+0100\n"
-"PO-Revision-Date: 2009-03-20 10:28+0100\n"
+"POT-Creation-Date: 2009-03-26 14:58+0100\n"
+"PO-Revision-Date: 2009-03-26 15:04+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3169,6 +3169,9 @@ msgid ""
 "Option available only, if Gammu was compiled with debug. Allows to decode "
 "sniffs. See I</docs/develop/develop.txt> for more details."
 msgstr ""
+"Tato volba je dostupná jen pokud bylo Gammu zkompilováno s ladicím kódem a "
+"umožní dekódovat odposlechy komunikace s některými telefony. Více detailů "
+"naleznete v I<docs/develop/develop.txt>."
 
 # type: TP
 #. type: TP
@@ -3452,15 +3455,13 @@ msgstr "Uložení dlouhé textové zprávy:"
 #. type: Plain text
 #: docs/user/gammu.1:2227
 msgid "echo \"All your base are belong to us\" | gammu savesms TEXT -len 400"
-msgstr ""
-"echo \"All your base are belong to us\" | gammu savesms TEXT -len 400"
+msgstr "echo \"All your base are belong to us\" | gammu savesms TEXT -len 400"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2231
 msgid "gammu savesms TEXT -len 400 -text \"All your base are belong to us\""
-msgstr ""
-"gammu savesms TEXT -len 400 -text \"All your base are belong to us\""
+msgstr "gammu savesms TEXT -len 400 -text \"All your base are belong to us\""
 
 # type: Plain text
 #. type: Plain text
@@ -4855,8 +4856,8 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:156
-msgid "Default is 10."
-msgstr "Výchozí je 10."
+msgid "Default is 600 (10 minutes)."
+msgstr "Výchozí je 600 (10 minut)."
 
 # type: TP
 #. type: TP
@@ -5889,8 +5890,8 @@ msgid ""
 "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456 -len "
 "400"
 msgstr ""
-"echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456 -"
-"len 400"
+"echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456 -len "
+"400"
 
 # type: Plain text
 #. type: Plain text
@@ -5899,8 +5900,8 @@ msgid ""
 "gammu-smsd-inject TEXT 123456 -len 400 -text \"All your base are belong to us"
 "\""
 msgstr ""
-"gammu-smsd-inject TEXT 123456 -len 400 -text \"All your base are belong "
-"to us\""
+"gammu-smsd-inject TEXT 123456 -len 400 -text \"All your base are belong to us"
+"\""
 
 # type: Plain text
 #. type: Plain text
@@ -7638,6 +7639,10 @@ msgid ""
 msgstr ""
 "Databázové služby: gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7)"
+
+# type: Plain text
+#~ msgid "Default is 10."
+#~ msgstr "Výchozí je 10."
 
 # type: Plain text
 #~ msgid ""

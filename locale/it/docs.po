@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.23.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-23 10:21+0100\n"
+"POT-Creation-Date: 2009-03-26 14:58+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -4596,10 +4596,9 @@ msgid ""
 "with sent messages."
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:156
-msgid "Default is 10."
+msgid "Default is 600 (10 minutes)."
 msgstr ""
 
 # type: TP
