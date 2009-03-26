@@ -536,7 +536,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "commtimeout", false);
 	if (str) Config->commtimeout=atoi(str); else Config->commtimeout = 30;
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "deliveryreportdelay", false);
-	if (str) Config->deliveryreportdelay=atoi(str); else Config->deliveryreportdelay = 10;
+	if (str) Config->deliveryreportdelay=atoi(str); else Config->deliveryreportdelay = 600;
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "sendtimeout", false);
 	if (str) Config->sendtimeout=atoi(str); else Config->sendtimeout = 30;
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "receivefrequency", false);
