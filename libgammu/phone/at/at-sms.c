@@ -289,10 +289,10 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 	}
 	if (Priv->SIMSMSMemory == AT_AVAILABLE && Priv->PhoneSMSMemory == AT_AVAILABLE) {
 		/* Both available */
-		maxfolder = 2;
+		maxfolder = 4;
 	} else {
 		/* One available */
-		maxfolder = 1;
+		maxfolder = 2;
 	}
 
 	/* simulate flat SMS memory */

@@ -21,6 +21,7 @@ ChangeLog
 [-] * Locations for GlobeTrotter 3G+ start at 0 (bug #847).
 [-] * More verbose logging of delivery reports (bug #824).
 [-] * Increase default DeliveryReportDelay (bug #824).
+[-] * Fixed handling of SMS locations (bug #853).
     
 20090318 - 1.23.91
 
