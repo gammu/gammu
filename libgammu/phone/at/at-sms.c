@@ -67,6 +67,8 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 		 * available for everything. Then we need to find out whether
 		 * phone supports writing to memory. This is done by searching
 		 * for "), (", which will appear between lists.
+		 *
+		 * @todo: Add support for BM (broadcast messages) and SR (status reports).
 		 */
 		s->Phone.Data.Priv.ATGEN.PhoneSaveSMS = AT_NOTAVAILABLE;
 		s->Phone.Data.Priv.ATGEN.SIMSaveSMS = AT_NOTAVAILABLE;
