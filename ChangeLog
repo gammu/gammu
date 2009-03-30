@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2009???? - 1.23.92
+20090330 - 1.23.92
 
 [-] * LUID reading requires IrMC profile.
 [-] * Locations for GlobeTrotter 3G+ start at 0 (bug #847).
