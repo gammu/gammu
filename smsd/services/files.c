@@ -409,10 +409,10 @@ GSM_SMSDService SMSDFiles = {
 	SMSDFiles_SaveInboxSMS,
 	SMSDFiles_FindOutboxSMS,
 	SMSDFiles_MoveSMS,
-	NOTSUPPORTED,			/* CreateOutboxSMS	*/
+	NOTIMPLEMENTED,			/* CreateOutboxSMS	*/
 	SMSDFiles_AddSentSMSInfo,
-	NOTSUPPORTED,			/* RefreshSendStatus	*/
-	NOTSUPPORTED			/* RefreshPhoneStatus	*/
+	NOTIMPLEMENTED,			/* RefreshSendStatus	*/
+	NOTIMPLEMENTED			/* RefreshPhoneStatus	*/
 };
 
 /* How should editor handle tabs in this file? Add editor commands here.
