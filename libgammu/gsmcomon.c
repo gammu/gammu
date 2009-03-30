@@ -105,7 +105,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_EMPTY, "EMPTY",			N_("Entry is empty.")},
 	{ERR_SECURITYERROR, "SECURITYERROR",		N_("Security error. Maybe no PIN?")},
 	{ERR_INVALIDLOCATION, "INVALIDLOCATION",		N_("Invalid location. Maybe too high?")},
-	{ERR_NOTIMPLEMENTED, "NOTIMPLEMENTED",		N_("Function not implemented. Help required.")},
+	{ERR_NOTIMPLEMENTED, "NOTIMPLEMENTED",		N_("Functionality not implemented. You are welcome to help authors with it.")},
 	{ERR_FULL, "FULL",			N_("Memory full.")},
 	{ERR_UNKNOWN, "UNKNOWN",			N_("Unknown error.")},
 	{ERR_CANTOPENFILE, "CANTOPENFILE",		N_("Can not open specified file.")},
