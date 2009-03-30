@@ -31,6 +31,7 @@ Usage: ./configure [options]
 --enable-win32      enable mingw crosscomilation
 --enable-protection enable compile time protections
 --with-python=<path> path to Python interpreter
+--without-gnapplet  disable installation of gnapplet
 
 All enable params have their disable counterparts.
 
@@ -52,6 +53,7 @@ CMAKE_BACKUP=
 CMAKE_CROSS=
 CMAKE_PROTECTION=
 CMAKE_PYTHON=
+CMAKE_GNAP=
 
 # process command line
 while [ "$#" -gt 0 ] ; do
@@ -95,6 +97,9 @@ while [ "$#" -gt 0 ] ; do
         --disable-debug)
             CMAKE_DEBUG=
             ;;
+        --without-gnapplet)
+            CMAKE_GNAP="-DINSTALL_GNAPPLET=OFF"
+            ;;
         --build=*)
             ;;
         --disable-dependency-tracking)
@@ -131,4 +136,4 @@ fi
 cd "$BUILD_DIR"
 
 # invoke cmake to do configuration
-cmake $SOURCE_DIR $CMAKE_PREFIX $CMAKE_SHARED $CMAKE_DEBUG $CMAKE_BACKUP $CMAKE_CROSS $CMAKE_PROTECTION $CMAKE_PYTHON
+cmake $SOURCE_DIR $CMAKE_PREFIX $CMAKE_SHARED $CMAKE_DEBUG $CMAKE_BACKUP $CMAKE_CROSS $CMAKE_PROTECTION $CMAKE_PYTHON $CMAKE_GNAP
