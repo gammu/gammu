@@ -39,6 +39,18 @@ which control message filtering (see bellow).
 SMSD service to use, one of FILES, MYSQL, PGSQL, DBI (depends on compiled in
 support for backends).
 
+\fBFILES\fR - stores messages in files, see gammu-smsd-files(7) for details
+.br
+\fBMYSQL\fR - stores messages in MySQL database, see gammu-smsd-mysql(7) for
+details
+.br
+\fBPGSQL\fR - stores messages in PostgreSQL database, see gammu-smsd-pgsql(7)
+for details
+.br
+\fBDBI\fR - stores messages in any database supported by libdbi, this includes
+MSSQL, MySQL, PostgreSQL or SQLite databases, see gammu-smsd-dbi(7) for
+details
+
 .TP
 .BI PIN
 
