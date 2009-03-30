@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-24 16:19+0100\n"
+"POT-Creation-Date: 2009-03-30 13:57+0200\n"
 "PO-Revision-Date: 2009-02-18 23:31+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: none\n"
@@ -136,8 +136,11 @@ msgid "Invalid location. Maybe too high?"
 msgstr "Ogiltig plats. Kanske för hög?"
 
 #: libgammu/gsmcomon.c:108
-msgid "Function not implemented. Help required."
-msgstr "Funktionen är inte implementerad. Hjälp behövs."
+#, fuzzy
+msgid "Functionality not implemented. You are welcome to help authors with it."
+msgstr ""
+"Funktionen är under utveckling. Kontakta upphovsmännen om du vill hjälpa "
+"till."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -404,3 +407,6 @@ msgstr "Personsökare"
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Utkorg"
+
+#~ msgid "Function not implemented. Help required."
+#~ msgstr "Funktionen är inte implementerad. Hjälp behövs."

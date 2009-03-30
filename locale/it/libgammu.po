@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.23.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-24 16:19+0100\n"
+"POT-Creation-Date: 2009-03-30 13:57+0200\n"
 "PO-Revision-Date: 2009-03-15 16:50+0200\n"
 "Last-Translator: soft developer <soft-developer@live.com>\n"
 "Language-Team: Language =it\n"
@@ -153,8 +153,11 @@ msgid "Invalid location. Maybe too high?"
 msgstr "Locazione non valida. Forse fuori range?"
 
 #: libgammu/gsmcomon.c:108
-msgid "Function not implemented. Help required."
-msgstr "Funzione non implementata. Si richiede aiuto."
+#, fuzzy
+msgid "Functionality not implemented. You are welcome to help authors with it."
+msgstr ""
+"La funzione sta ancora elaborando. Se si necessita aiuto si prega di "
+"contattare gli autori"
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -427,6 +430,9 @@ msgstr ""
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Messaggi inviati"
+
+#~ msgid "Function not implemented. Help required."
+#~ msgstr "Funzione non implementata. Si richiede aiuto."
 
 #, fuzzy
 #~ msgid "Where is backup filename and location?"

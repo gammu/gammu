@@ -1,15 +1,15 @@
 # libGammu translation.
 # Copyright (C) 2003 - 2009 Michal Čihař
 # This file is distributed under the same license as the Gammu package.
-# Michal Čihař <michal@cihar.com>, 2007.
 #
 #
+# Michal Čihař <michal@cihar.com>, 20, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.23.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-26 08:38+0100\n"
-"PO-Revision-Date: 2009-03-24 16:20+0100\n"
+"POT-Creation-Date: 2009-03-30 13:57+0200\n"
+"PO-Revision-Date: 2009-03-30 14:00+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -134,8 +134,9 @@ msgid "Invalid location. Maybe too high?"
 msgstr "Chybná pozice. Možná příliš vysoká?"
 
 #: libgammu/gsmcomon.c:108
-msgid "Function not implemented. Help required."
-msgstr "Funkce není implementována. Pomoc s implementací je vítána."
+msgid "Functionality not implemented. You are welcome to help authors with it."
+msgstr ""
+"Funkcionalita není implementována. Pokud chcete pomoci, autoři pomoc uvítají."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -396,6 +397,9 @@ msgstr "Pager"
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Odchozí"
+
+#~ msgid "Function not implemented. Help required."
+#~ msgstr "Funkce není implementována. Pomoc s implementací je vítána."
 
 #~ msgid "Where is backup filename and location?"
 #~ msgstr "Kde je jméno souboru zálohy a umístění?"

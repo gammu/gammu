@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.23.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-26 15:04+0100\n"
+"POT-Creation-Date: 2009-03-30 13:57+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -121,7 +121,7 @@ msgid "Invalid location. Maybe too high?"
 msgstr ""
 
 #: libgammu/gsmcomon.c:108
-msgid "Function not implemented. Help required."
+msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
 
 #: libgammu/gsmcomon.c:109

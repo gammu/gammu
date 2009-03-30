@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.23.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-24 16:19+0100\n"
+"POT-Creation-Date: 2009-03-30 13:57+0200\n"
 "PO-Revision-Date: 2009-01-30 17:11+0100\n"
 "Last-Translator: Rafał Ślubowski <RafalSlubowski@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -152,8 +152,11 @@ msgid "Invalid location. Maybe too high?"
 msgstr "Nieznana lokalizacja. Może zbyt wysoko?"
 
 #: libgammu/gsmcomon.c:108
-msgid "Function not implemented. Help required."
-msgstr "Funkcja nie została zaimplementowana. Potrzebna pomoc."
+#, fuzzy
+msgid "Functionality not implemented. You are welcome to help authors with it."
+msgstr ""
+"Funkcja jest w trakcie implementowania. Jeżeli chcesz pomóc, proszę "
+"skontaktuj się z autorami."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -431,6 +434,9 @@ msgstr "Pager"
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Skrzynka nadawcza"
+
+#~ msgid "Function not implemented. Help required."
+#~ msgstr "Funkcja nie została zaimplementowana. Potrzebna pomoc."
 
 #, fuzzy
 #~ msgid "Calendar note not found in file"

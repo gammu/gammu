@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.23.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-24 16:19+0100\n"
+"POT-Creation-Date: 2009-03-30 13:57+0200\n"
 "PO-Revision-Date: 2009-02-01 16:32+0100\n"
 "Last-Translator: ObiWahn <obi-wahn@osnanet.de>\n"
 "Language-Team: Language =de\n"
@@ -149,8 +149,11 @@ msgid "Invalid location. Maybe too high?"
 msgstr "Ungültige Speicherstelle. Vielleicht zu hoch?"
 
 #: libgammu/gsmcomon.c:108
-msgid "Function not implemented. Help required."
-msgstr "Funktion nicht programmiert. Hilfe benötigt."
+#, fuzzy
+msgid "Functionality not implemented. You are welcome to help authors with it."
+msgstr ""
+"Die Funktion wird gerade geschrieben. Wenden Sie sich bitte an den Autor, "
+"wenn Sie Hilfe benötigen."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -425,6 +428,9 @@ msgstr "Pager"
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Ausgang"
+
+#~ msgid "Function not implemented. Help required."
+#~ msgstr "Funktion nicht programmiert. Hilfe benötigt."
 
 #~ msgid "Where is backup filename and location?"
 #~ msgstr "Wie lautet der Backupdateiname und der Speicherplatz?"

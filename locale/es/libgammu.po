@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-24 16:19+0100\n"
+"POT-Creation-Date: 2009-03-30 13:57+0200\n"
 "PO-Revision-Date: 2009-03-23 19:32+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -147,8 +147,11 @@ msgid "Invalid location. Maybe too high?"
 msgstr "Destino inválido. ¿Demasiado alto?"
 
 #: libgammu/gsmcomon.c:108
-msgid "Function not implemented. Help required."
-msgstr "Función no implementada. Ayudanos a implementarla."
+#, fuzzy
+msgid "Functionality not implemented. You are welcome to help authors with it."
+msgstr ""
+"La función está escribiendo, si necesita ayuda, por favor contacte con los "
+"Autores."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -419,6 +422,9 @@ msgstr "Mensáfono"
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Bandeja de salida"
+
+#~ msgid "Function not implemented. Help required."
+#~ msgstr "Función no implementada. Ayudanos a implementarla."
 
 #~ msgid "Where is backup filename and location?"
 #~ msgstr "¿Ruta y nombre del archivo de backup?"
