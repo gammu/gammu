@@ -104,6 +104,8 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 		if (strstr(name, "Serial port") != NULL) return 2;
 		/* Samsung */
 		if (strstr(name, "Dial-up Networking") != NULL) return 3;
+		if (strstr(name, "Dialup Networking") != NULL) return 3;
+		if (strstr(name, "Serial Server") != NULL) return 3;
 		/* Siemens, Thomas Eitzenberger */
 		if (strstr(name, "SerialPort1") != NULL) return 3;
 		if (strstr(name, "SerialPort") != NULL) return 2;

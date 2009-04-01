@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2009???? - 1.23.93
+
+[-] * Better detect Bluetooth ports on Samsung (bug #862).
     
 20090330 - 1.23.92
 
