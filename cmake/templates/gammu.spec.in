@@ -42,6 +42,7 @@ Vendor:         Michal Čihař <michal@cihar.com>
 # SUSE
 %if 0%{?suse_version}
 
+%define dist_usb_libs libusb-1_0-devel
 %define dist_dbi_libs libdbi-devel libdbi-drivers-dbd-sqlite3 sqlite
 
 # 11.1 changed name of devel package for Bluetooth
@@ -65,6 +66,7 @@ Vendor:         Michal Čihař <michal@cihar.com>
 # Mandriva
 %if 0%{?mandriva_version}
 
+%define dist_usb_libs libusb-1_0-devel
 %define dist_dbi_libs libdbi-devel libdbi-drivers-dbd-sqlite3 sqlite3-tools
 
 # 64-bit Mandriva has 64 in package name
@@ -101,7 +103,9 @@ Vendor:         Michal Čihař <michal@cihar.com>
 
 # Fedora / Redhat / Centos
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
-%define dist_dbi_libs libdbi-devel libdbi-drivers-dbd-sqlite3 sqlite
+
+%define dist_usb_libs libusb1-devel
+%define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
 
 # MySQL devela package has different name since Fedora 8 and in all RHEL/Centos
 %if 0%{?fedora_version} >= 8 || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} >= 8 || 0%{?rhel}
@@ -116,6 +120,8 @@ Vendor:         Michal Čihař <michal@cihar.com>
 %else
 
 #Defaults for not know distributions
+%define dist_usb_libs libusb1-devel
+%define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
 %define dist_mysql_libs libmysqlclient-devel 
 %define dist_bluez_libs bluez-libs >= 2.0 bluez-libs-devel >= 2.0
 %define dist_postgres_libs postgresql-devel
@@ -145,7 +151,7 @@ BuildRequires: python-devel
 BuildRequires: libcurl-devel
 
 %if %usb
-BuildRequires: libusb-1_0-devel
+BuildRequires: %{dist_usb_libs}
 %endif
 
 BuildRequires: gettext cmake pkgconfig
@@ -273,6 +279,7 @@ rm -rf %buildroot
 - do not define own %version, %name, %rel
 - always use pkgconfig, pkg-config provides it
 - do not delete build root on SUSE
+- fix some package names (DBI and libusb) for Fedora
 
 * Thu Jan 22 2009 Michal Čihař <michal@cihar.com> - 1.21.91-1
 - merged python-gammu packaging as upstream merged the code
