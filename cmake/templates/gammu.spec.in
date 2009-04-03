@@ -1,6 +1,3 @@
-%define ver         @VERSION@
-%define name        gammu
-%define rel         1
 # Set to 0 to disable bluetooth support
 %if 0%{?opensuse_bs} && 0%{?sles_version} == 9
 %define bluetooth   0
@@ -29,9 +26,9 @@
 %endif
 
 Summary:            Mobile phone management utility
-Name:               %name
-Version:            %ver
-Release:            %rel
+Name:               gammu
+Version:            @VERSION@
+Release:            1
 License:            GPLv2
 %if 0%{?suse_version}
 Group:              Hardware/Mobile
@@ -159,7 +156,7 @@ BuildRequires: libusb-1_0-devel
 
 BuildRequires: gettext cmake %{dist_pkgconfig}
 
-Source:         http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.%{extension}
+Source:         http://dl.cihar.com/gammu/releases/gammu-%{version}.tar.%{extension}
 URL:            http://cihar.com/gammu/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
@@ -187,7 +184,7 @@ Group:              Development/Libraries/C and C++
 Group:              Development/Libraries
 %endif
 Autoreqprov:  on
-Requires:           %name = %ver-%release %{dist_pkgconfig}
+Requires:           %name = %version-%release %{dist_pkgconfig}
 
 %description devel
 Gammu is command line utility and library to work with mobile phones
@@ -279,6 +276,9 @@ cat libgammu.lang >> %{name}.lang
 rm -rf %buildroot
 
 %changelog
+* Fri Apr  3 2009 Michal Čihař <michal@cihar.com> - 1.23.93-1
+- do not define own %version, %name, %rel
+
 * Thu Jan 22 2009 Michal Čihař <michal@cihar.com> - 1.21.91-1
 - merged python-gammu packaging as upstream merged the code
 
