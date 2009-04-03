@@ -106,14 +106,7 @@ Vendor:         Michal Čihař <michal@cihar.com>
 
 %define dist_usb_libs libusb1-devel
 %define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
-
-# MySQL devela package has different name since Fedora 8 and in all RHEL/Centos
-%if 0%{?fedora_version} >= 8 || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} >= 8 || 0%{?rhel}
-%define dist_mysql_libs mysql-devel 
-%else
 %define dist_mysql_libs mysqlclient14-devel
-%endif
-
 %define dist_bluez_libs bluez-libs >= 2.0 bluez-libs-devel >= 2.0
 %define dist_postgres_libs postgresql-devel
 
@@ -280,6 +273,7 @@ rm -rf %buildroot
 - always use pkgconfig, pkg-config provides it
 - do not delete build root on SUSE
 - fix some package names (DBI and libusb) for Fedora
+- drop support for Fedora 8
 
 * Thu Jan 22 2009 Michal Čihař <michal@cihar.com> - 1.21.91-1
 - merged python-gammu packaging as upstream merged the code
