@@ -106,7 +106,7 @@ Vendor:         Michal Čihař <michal@cihar.com>
 
 %define dist_usb_libs libusb1-devel
 %define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
-%define dist_mysql_libs mysqlclient14-devel
+%define dist_mysql_libs mysql-devel
 %define dist_bluez_libs bluez-libs >= 2.0 bluez-libs-devel >= 2.0
 %define dist_postgres_libs postgresql-devel
 
@@ -235,7 +235,8 @@ rm -rf %buildroot
 mkdir %buildroot
 make -C build-dir install DESTDIR=%buildroot
 %find_lang %{name}
-%find_lang libgammu %{name}.lang
+%find_lang libgammu
+cat libgammu.lang >> %{name}.lang
 
 %post -p /sbin/ldconfig
 
