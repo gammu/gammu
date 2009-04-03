@@ -1,3 +1,6 @@
+Name:               gammu
+Version:            @VERSION@
+Release:            1
 # Set to 0 to disable bluetooth support
 %if 0%{?opensuse_bs} && 0%{?sles_version} == 9
 %define bluetooth   0
@@ -20,15 +23,12 @@
 %{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
-%define gammu_docdir %_docdir/%name-%ver
+%define gammu_docdir %_docdir/%{name}-%{version}
 %else
-%define gammu_docdir %_docdir/%name
+%define gammu_docdir %_docdir/%{name}
 %endif
 
 Summary:            Mobile phone management utility
-Name:               gammu
-Version:            @VERSION@
-Release:            1
 License:            GPLv2
 %if 0%{?suse_version}
 Group:              Hardware/Mobile
@@ -53,10 +53,8 @@ Vendor:         Michal Čihař <michal@cihar.com>
 
 # 10.3 changed name of several packages
 %if 0%{?suse_version} >= 1030
-%define dist_pkgconfig pkg-config
 %define dist_mysql_libs libmysqlclient-devel 
 %else 
-%define dist_pkgconfig pkgconfig
 %define dist_mysql_libs mysql-devel 
 %endif
 
@@ -68,8 +66,6 @@ Vendor:         Michal Čihař <michal@cihar.com>
 %if 0%{?mandriva_version}
 
 %define dist_dbi_libs libdbi-devel libdbi-drivers-dbd-sqlite3 sqlite3-tools
-
-%define dist_pkgconfig pkgconfig
 
 # 64-bit Mandriva has 64 in package name
 %ifarch x86_64
@@ -105,7 +101,6 @@ Vendor:         Michal Čihař <michal@cihar.com>
 
 # Fedora / Redhat / Centos
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
-%define dist_pkgconfig pkgconfig
 %define dist_dbi_libs libdbi-devel libdbi-drivers-dbd-sqlite3 sqlite
 
 # MySQL devela package has different name since Fedora 8 and in all RHEL/Centos
@@ -121,7 +116,6 @@ Vendor:         Michal Čihař <michal@cihar.com>
 %else
 
 #Defaults for not know distributions
-%define dist_pkgconfig pkg-config
 %define dist_mysql_libs libmysqlclient-devel 
 %define dist_bluez_libs bluez-libs >= 2.0 bluez-libs-devel >= 2.0
 %define dist_postgres_libs postgresql-devel
@@ -154,7 +148,7 @@ BuildRequires: libcurl-devel
 BuildRequires: libusb-1_0-devel
 %endif
 
-BuildRequires: gettext cmake %{dist_pkgconfig}
+BuildRequires: gettext cmake pkgconfig
 
 Source:         http://dl.cihar.com/gammu/releases/gammu-%{version}.tar.%{extension}
 URL:            http://cihar.com/gammu/
@@ -184,7 +178,7 @@ Group:              Development/Libraries/C and C++
 Group:              Development/Libraries
 %endif
 Autoreqprov:  on
-Requires:           %name = %version-%release %{dist_pkgconfig}
+Requires:           %{name} = %{version}-%{release} pkgconfig
 
 %description devel
 Gammu is command line utility and library to work with mobile phones
@@ -242,8 +236,7 @@ rm -rf %buildroot
 mkdir %buildroot
 make -C build-dir install DESTDIR=%buildroot
 %find_lang %{name}
-%find_lang libgammu
-cat libgammu.lang >> %{name}.lang
+%find_lang libgammu %{name}.lang
 
 %post -p /sbin/ldconfig
 
@@ -253,10 +246,10 @@ cat libgammu.lang >> %{name}.lang
 %defattr(-,root,root)
 %_bindir/*
 %_libdir/*.so.*
-%doc %_mandir/man1/*
-%doc %_mandir/man5/*
-%doc %_mandir/man7/*
-%lang(cs) %doc %_mandir/cs
+%_mandir/man1/*
+%_mandir/man5/*
+%_mandir/man7/*
+%lang(cs) %_mandir/cs
 %doc %gammu_docdir
 /etc/bash_completion.d/gammu
 
@@ -278,6 +271,8 @@ rm -rf %buildroot
 %changelog
 * Fri Apr  3 2009 Michal Čihař <michal@cihar.com> - 1.23.93-1
 - do not define own %version, %name, %rel
+- always use pkgconfig, pkg-config provides it
+- do not delete build root on SUSE
 
 * Thu Jan 22 2009 Michal Čihař <michal@cihar.com> - 1.21.91-1
 - merged python-gammu packaging as upstream merged the code
