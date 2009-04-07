@@ -52,13 +52,6 @@ Vendor:         Michal Čihař <michal@cihar.com>
 %define dist_bluez_libs bluez-libs >= 2.0
 %endif
 
-# 10.3 changed name of several packages
-%if 0%{?suse_version} >= 1030
-%define dist_mysql_libs libmysqlclient-devel 
-%else 
-%define dist_mysql_libs mysql-devel 
-%endif
-
 %define dist_postgres_libs postgresql-devel
 
 %else
@@ -72,13 +65,6 @@ Vendor:         Michal Čihař <michal@cihar.com>
 # 64-bit Mandriva has 64 in package name
 %ifarch x86_64
 %define mandriva_hack 64
-%endif
-
-# MySQL devel packages got rename in 2007
-%if 0%{?mandriva_version} > 2007
-%define dist_mysql_libs lib%{?mandriva_hack}mysql-devel
-%else
-%define dist_mysql_libs lib%{?mandriva_hack}mysql15-devel
 %endif
 
 # Bluetooth things got renamed several times
@@ -106,7 +92,6 @@ Vendor:         Michal Čihař <michal@cihar.com>
 
 %define dist_usb_libs libusb1-devel
 %define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
-%define dist_mysql_libs mysql-devel
 %define dist_bluez_libs bluez-libs >= 2.0 bluez-libs-devel >= 2.0
 %define dist_postgres_libs postgresql-devel
 
@@ -115,7 +100,6 @@ Vendor:         Michal Čihař <michal@cihar.com>
 #Defaults for not know distributions
 %define dist_usb_libs libusb1-devel
 %define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
-%define dist_mysql_libs libmysqlclient-devel 
 %define dist_bluez_libs bluez-libs >= 2.0 bluez-libs-devel >= 2.0
 %define dist_postgres_libs postgresql-devel
 
@@ -132,7 +116,7 @@ BuildRequires: %{dist_postgres_libs}
 %endif
 
 %if %mysql
-BuildRequires: %{dist_mysql_libs}
+BuildRequires: mysql-devel
 %endif
 
 %if %dbi
