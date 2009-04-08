@@ -193,6 +193,7 @@ class build_ext_gammu(distutils.command.build_ext.build_ext, object):
     def check_libs(self):
         self.gammu_libs = os.path.expanduser(self.gammu_libs)
         self.linklibs.append('Gammu')
+        self.linklibs.append('gsmsd')
         if sys.platform == 'win32':
             self.linklibs.append('wsock32')
             self.linklibs.append('ws2_32')
