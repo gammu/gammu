@@ -188,7 +188,7 @@ static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char
 						(d->Msg.Type == ALCATEL_CONNECT_ACK) ? "connect" :
 						(d->Msg.Type == ALCATEL_DISCONNECT_ACK) ? "disconnect" :
 						"BUG");
-				smprintf(s, "0x%02x / 0x" SIZE_T_HEX4_FORMAT, d->Msg.Type, d->Msg.Length);
+				smprintf(s, "0x%02x / 0x%04lX", d->Msg.Type, (long)d->Msg.Length);
 				DumpMessage(&s->di, d->Msg.Buffer, d->Msg.Length);
 			}
 			if (s->di.dl==DL_BINARY) {

@@ -304,9 +304,10 @@ GSM_Error SAMSUNG_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		if (!strcmp(model, modres[i].model)) {
 			if (Bitmap->BitmapWidth != modres[i].width ||
 			    Bitmap->BitmapHeight != modres[i].height) {
-				smprintf(s, "Model %s must use " SIZE_T_FORMAT " x " SIZE_T_FORMAT " picture size\n",
-					modres[i].model, modres[i].width,
-					modres[i].height);
+				smprintf(s, "Model %s must use %ld x %ld picture size\n",
+					modres[i].model,
+					(long)modres[i].width,
+					(long)modres[i].height);
 				return ERR_INVALIDDATA;
 			}
 			break;
@@ -431,8 +432,8 @@ GSM_Error SAMSUNG_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *
 	if ((dot = strrchr(name, '.')) != NULL) *dot = 0;
 
 	crc = GetCRC(Ringtone->BinaryTone.Buffer, Ringtone->BinaryTone.Length);
-	sprintf(req, "AT+MELW=0,\"%s\",4," SIZE_T_FORMAT ",%u\r", name,
-		Ringtone->BinaryTone.Length, (unsigned int)crc);
+	sprintf(req, "AT+MELW=0,\"%s\",4,%ld,%u\r", name,
+		(long)Ringtone->BinaryTone.Length, (unsigned int)crc);
 
 	error = s->Protocol.Functions->WriteMessage(s, req, strlen(req), 0x00);
 	if (error!=ERR_NONE) return error;

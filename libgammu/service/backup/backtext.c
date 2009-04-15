@@ -248,7 +248,7 @@ static bool ReadBackupText(INI_Section *file_info, char *section, char *myname, 
 		strcat(paramname,"Unicode");
 		readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
-			dbgprintf(NULL, "%s " SIZE_T_FORMAT "\n",readvalue,strlen(readvalue));
+			dbgprintf(NULL, "%s %ld\n",readvalue,(long)strlen(readvalue));
 			DecodeHexBin (myvalue, readvalue, strlen(readvalue));
 			myvalue[strlen(readvalue)/2]=0;
 			myvalue[strlen(readvalue)/2+1]=0;
@@ -1046,10 +1046,10 @@ static GSM_Error SaveBitmapEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode
 	size_t		x,y;
 	GSM_Error error;
 
-	sprintf(buffer,"Width = " SIZE_T_FORMAT "%c%c",bitmap->BitmapWidth,13,10);
+	sprintf(buffer,"Width = %ld%c%c", (long)bitmap->BitmapWidth,13,10);
 	error = SaveBackupText(file, "", buffer, UseUnicode);
 	if (error != ERR_NONE) return error;
-	sprintf(buffer,"Height = " SIZE_T_FORMAT "%c%c",bitmap->BitmapHeight,13,10);
+	sprintf(buffer,"Height = %ld%c%c", (long)bitmap->BitmapHeight,13,10);
 	error = SaveBackupText(file, "", buffer, UseUnicode);
 	if (error != ERR_NONE) return error;
 	for (y=0;y<bitmap->BitmapHeight;y++) {

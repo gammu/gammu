@@ -382,12 +382,12 @@ GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 			}
 		}
 	}
-	dbgprintf(NULL, "Data size in BMP file: " SIZE_T_FORMAT "\n",sizeimage);
+	dbgprintf(NULL, "Data size in BMP file: %ld\n", (long)sizeimage);
 	division=div(sizeimage,256);
 	header[35]=division.quot;
 	header[34]=sizeimage-(division.quot*256);
   	sizeimage=sizeimage+sizeof(header);
-	dbgprintf(NULL, "Size of BMP file: " SIZE_T_FORMAT "\n",sizeimage);
+	dbgprintf(NULL, "Size of BMP file: %ld\n", (long)sizeimage);
 	division=div(sizeimage,256);
 	header[3]=division.quot;
 	header[2]=sizeimage-(division.quot*256);
@@ -613,9 +613,9 @@ static GSM_Error savexpm(FILE *file, GSM_MultiBitmap *bitmap)
 
 	fprintf(file,"/* XPM */\n");
 	fprintf(file,"static char * ala_xpm[] = {\n");
-	fprintf(file,"\"" SIZE_T_FORMAT " " SIZE_T_FORMAT " 2 1\",\n",
-		bitmap->Bitmap[0].BitmapWidth,
-		bitmap->Bitmap[0].BitmapHeight);
+	fprintf(file,"\"%ld %ld 2 1\",\n",
+		(long)bitmap->Bitmap[0].BitmapWidth,
+		(long)bitmap->Bitmap[0].BitmapHeight);
 	fprintf(file,"\".	s c	m #000000	g4 #000000	g #000000	c #000000\",\n");
 	fprintf(file,"\"#	s c	m #ffffff	g4 #ffffff	g #ffffff	c #ffffff\",\n");
 
@@ -724,12 +724,16 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 	/* height and width of image in the file */
 	h=buff[22]+256*buff[21];
 	w=buff[18]+256*buff[17];
-	dbgprintf(NULL, "Image Size in BMP file: " SIZE_T_FORMAT "x" SIZE_T_FORMAT "\n",w,h);
+	dbgprintf(NULL, "Image Size in BMP file: %ldx%ld\n", (long)w, (long)h);
 
 	GSM_GetMaxBitmapWidthHeight(bitmap->Type, &bitmap->BitmapWidth, &bitmap->BitmapHeight);
 	if (h<bitmap->BitmapHeight)	bitmap->BitmapHeight=h;
 	if (w<bitmap->BitmapWidth)	bitmap->BitmapWidth=w;
-	dbgprintf(NULL, "Height " SIZE_T_FORMAT " " SIZE_T_FORMAT ", width " SIZE_T_FORMAT " " SIZE_T_FORMAT "\n",h,bitmap->BitmapHeight,w,bitmap->BitmapWidth);
+	dbgprintf(NULL, "Height %ld %ld width %ld %ld\n",
+		(long)h,
+		(long)bitmap->BitmapHeight,
+		(long)w,
+		(long)bitmap->BitmapWidth);
 
 	GSM_ClearBitmap(bitmap);
 
@@ -985,7 +989,7 @@ static GSM_Error loadnsl(FILE *file, GSM_MultiBitmap *bitmap)
 
 	while (fread(block,1,6,file)==6) {
 		block_size = block[4]*256 + block[5];
-		dbgprintf(NULL, "Block %c%c%c%c, size " SIZE_T_FORMAT "\n",block[0],block[1],block[2],block[3],block_size);
+		dbgprintf(NULL, "Block %c%c%c%c, size %ld\n",block[0],block[1],block[2],block[3],(long)block_size);
 		if (!strncmp(block, "FORM", 4)) {
 			dbgprintf(NULL, "File ID\n");
 		} else {
@@ -1006,7 +1010,7 @@ static GSM_Error loadnsl(FILE *file, GSM_MultiBitmap *bitmap)
 					OldType = bitmap->Bitmap[0].Type;
 					PHONE_DecodeBitmap(GSM_NokiaStartupLogo, buffer, &bitmap->Bitmap[0]);
 					if (OldType != GSM_None) bitmap->Bitmap[0].Type = OldType;
-					dbgprintf(NULL, "Startup logo (size " SIZE_T_FORMAT  ")\n",block_size);
+					dbgprintf(NULL, "Startup logo (size %ld)\n",(long)block_size);
 				}
 			}
 		}
@@ -1050,7 +1054,7 @@ static GSM_Error loadgif(FILE *file, GSM_MultiBitmap *bitmap)
 
 	readbytes = fread(buffer, 1, length, file);
 	if (readbytes != length) return ERR_FILENOTSUPPORTED;
-        dbgprintf(NULL, "Length " SIZE_T_FORMAT  " name \"%s\"\n", length,
+        dbgprintf(NULL, "Length %ld name \"%s\"\n", (long)length,
 		DecodeUnicodeString(bmap->Name));
 
 	bmap->Type = GSM_PictureBinary;

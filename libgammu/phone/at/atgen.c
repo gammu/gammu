@@ -751,7 +751,7 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
 		(*output)[position - 2] = 0;
 	}
 
-	smprintf(s, "Grabbed string from reply: \"%s\" (parsed " SIZE_T_FORMAT " bytes)\n", *output, position);
+	smprintf(s, "Grabbed string from reply: \"%s\" (parsed %ld bytes)\n", *output, (long)position);
 	return position;
 }
 

@@ -191,7 +191,7 @@ void GetFileSystem(int argc, char *argv[])
 							  false));
 				} else
 					printf("\"%c\";", 0x20);
-				printf(SIZE_T_FORMAT ";", Files.Used);
+				printf("%ld;", (long)Files.Used);
 			} else {
 				if (error == ERR_FOLDERPART) {
 					printf("%s;", _("Part of folder"));
@@ -319,7 +319,7 @@ void GetFolderListing(int argc UNUSED, char *argv[])
 				       OSDateTime(Files.Modified, false));
 			} else
 				printf("\"%c\";", 0x20);
-			printf(SIZE_T_FORMAT ";", Files.Used);
+			printf("%ld;", (long)Files.Used);
 		} else {
 			printf(_("Folder"));
 			printf(";\"%s\";", DecodeUnicodeConsole(Files.Name));

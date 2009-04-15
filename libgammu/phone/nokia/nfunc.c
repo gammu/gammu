@@ -35,7 +35,10 @@ unsigned char N71_65_MEMORY_TYPES[] = {
 
 size_t N71_65_PackPBKBlock(GSM_StateMachine *s, int id, size_t size, int no, unsigned char *buf, unsigned char *block)
 {
-	smprintf(s, "Packing phonebook block with ID = %i, block number = %i, block length = " SIZE_T_FORMAT "\n",id,no+1,size+6);
+	smprintf(s, "Packing phonebook block with ID = %i, block number = %i, block length = %ld\n",
+		id,
+		no+1,
+		(long)size+6);
 
 	block[0] 	= id;
 	block[1] 	= 0;
@@ -2361,7 +2364,7 @@ GSM_Error N71_65_ReplyGetCalendarInfo1(GSM_Protocol_Message msg, GSM_StateMachin
 		smprintf(s, "%i ",LastCalendar->Location[j-1]);
 		i++;
 	}
-	smprintf(s, "\nNumber of Entries in frame: " SIZE_T_FORMAT "\n",i);
+	smprintf(s, "\nNumber of Entries in frame: %ld\n", (long)i);
 	smprintf(s, "\n");
 	LastCalendar->Location[j] = 0;
 	if (i == 1 && msg.Buffer[8+(0*2)]*256+msg.Buffer[9+(0*2)] == 0) return ERR_EMPTY;

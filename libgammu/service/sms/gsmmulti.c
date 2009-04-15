@@ -60,7 +60,12 @@ void GSM_Find_Free_Used_SMS2(GSM_Debug_Info *di, GSM_Coding_Type Coding,GSM_SMSM
 	default:
 		break;
 	}
-	smfprintf(di, "UDH len %i, UsedBytes " SIZE_T_FORMAT ", FreeText " SIZE_T_FORMAT ", UsedText " SIZE_T_FORMAT ", FreeBytes " SIZE_T_FORMAT "\n",SMS.UDH.Length,UsedBytes,*FreeText,*UsedText,*FreeBytes);
+	smfprintf(di, "UDH len %i, UsedBytes %ld, FreeText %ld, UsedText %ld, FreeBytes %ld\n",
+		SMS.UDH.Length,
+		(long)UsedBytes,
+		(long)*FreeText,
+		(long)*UsedText,
+		(long)*FreeBytes);
 }
 
 GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
@@ -93,7 +98,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 		SMS->SMS[SMS->Number].UDH.Length  	+= BufferLen;
 		SMS->SMS[SMS->Number].UDH.Text[0] 	+= BufferLen;
 		SMS->SMS[SMS->Number].UDH.Type 		=  UDH_UserUDH;
-		smfprintf(di, "UDH added " SIZE_T_FORMAT "\n",BufferLen);
+		smfprintf(di, "UDH added %ld\n", (long)BufferLen);
 	} else {
 		smfprintf(di, "Adding text\n");
 		if (FreeText == 0) {
@@ -103,14 +108,14 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 		}
 
 		Copy = FreeText;
-		smfprintf(di, "copy " SIZE_T_FORMAT "\n",Copy);
+		smfprintf(di, "copy %ld\n", (long)Copy);
 		if (BufferLen < Copy) Copy = BufferLen;
-		smfprintf(di, "copy " SIZE_T_FORMAT "\n",Copy);
+		smfprintf(di, "copy %ld\n", (long)Copy);
 
 		switch (Coding) {
 		case SMS_Coding_Default_No_Compression:
 			FindDefaultAlphabetLen(Buffer,&i,&j,FreeText);
-			smfprintf(di, "def length " SIZE_T_FORMAT " " SIZE_T_FORMAT "\n",i,j);
+			smfprintf(di, "def length %ld %ld\n", (long)i, (long)j);
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+i*2]   = 0;
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+i*2+1] = 0;
 			memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer,i*2);
@@ -170,7 +175,7 @@ void GSM_MakeMultiPartSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage	*SMS,
 			GSM_AddSMS_Text_UDH(di, SMS,Coding,MessageBuffer+Len*2,MessageLength - Len,false,&UsedText,&CopiedText,&CopiedSMSText);
 		}
 		Len += CopiedText;
-		smfprintf(di, SIZE_T_FORMAT " " SIZE_T_FORMAT "\n",Len,MessageLength);
+		smfprintf(di, "%ld %ld\n", (long)Len, (long)MessageLength);
 		if (Len == MessageLength) break;
 		if (SMS->Number == GSM_MAX_MULTI_SMS) break;
 		SMS->Number++;
@@ -691,7 +696,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		for (smslen = 0; smslen < UnicodeLength(Info->Entries[0].Buffer) * 2; smslen++) {
 			if (Info->Entries[0].Buffer[smslen] != Buffer[smslen]) {
 				Info->UnicodeCoding = true;
-				smfprintf(di, "Setting to Unicode " SIZE_T_FORMAT "\n",smslen);
+				smfprintf(di, "Setting to Unicode %ld\n", (long)smslen);
 				break;
 			}
 		}

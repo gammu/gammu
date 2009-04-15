@@ -108,17 +108,6 @@ extern void GSM_InitLocales(const char *path);
 #define INLINE
 #endif
 
-/* Printf string for size_t */
-#ifdef WIN32
-#define SIZE_T_FORMAT "%Id"
-#define SIZE_T_HEX_FORMAT "%02IX"
-#define SIZE_T_HEX4_FORMAT "%04IX"
-#else
-#define SIZE_T_FORMAT "%zd"
-#define SIZE_T_HEX_FORMAT "%02zX"
-#define SIZE_T_HEX4_FORMAT "%04zX"
-#endif
-
 /* Working snprintf on MSVC */
 #ifdef _MSC_VER
 #define snprintf _snprintf

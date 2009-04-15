@@ -311,7 +311,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 			CopyUnicodeString(Files3.ID_FullName,IDFolder);
 	        	CopyUnicodeString(Buffer2,Name);
 			if (i!=0) {
-				sprintf(Buffer, SIZE_T_FORMAT, i);
+				sprintf(Buffer, "%ld", (long)i);
 		        	EncodeUnicode(Buffer2+UnicodeLength(Buffer2)*2,Buffer,strlen(Buffer));
 			}
 	        	EncodeUnicode(Buffer2+UnicodeLength(Buffer2)*2,".m3u",4);

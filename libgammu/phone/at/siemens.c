@@ -85,7 +85,7 @@ GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	error = GetSiemensFrame(msg,s,"bmp",buffer,&length);
 	if (error!=ERR_NONE) return error;
-	smprintf(s, "Operator logo received lenght=" SIZE_T_FORMAT "\n",length);
+	smprintf(s, "Operator logo received lenght=%ld\n", (long)length);
 	error = BMP2Bitmap (buffer,NULL,s->Phone.Data.Bitmap);
 	if (error==ERR_NONE) return error;
 	else return ERR_UNKNOWN;
