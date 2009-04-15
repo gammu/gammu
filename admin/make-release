@@ -32,7 +32,7 @@ signexe() {
 }
 
 checkexe() {
-    if i586-mingw32msvc-objdump -x "$1" | grep -qi 'DLL Name.*msvcrt.dll' ; then
+    if /usr/i*mingw*/bin/objdump -x "$1" | grep -qi 'DLL Name.*msvcrt.dll' ; then
         echo "Program $1 is linked to msvcrt.dll!"
         exit 1
     fi
