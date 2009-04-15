@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2009???? - 1.23.93
+20090415 - 1.24.0
 
 [-] * Better detect Bluetooth ports on Samsung (bug #862).
 [-] * Ignore security errors on AT init (needed for Huawei).
