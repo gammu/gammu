@@ -1725,15 +1725,15 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	/* Switch to GSM charset */
 	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
-	if (error != ERR_NONE) return error;
+	if (error != ERR_NONE && error != ERR_SECURITYERROR) return error;
 
 	/* Get model, it is useful to know it now */
 	error = ATGEN_GetModel(s);
-	if (error != ERR_NONE) return error;
+	if (error != ERR_NONE && error != ERR_SECURITYERROR) return error;
 
 	/* Get manufacturer, needed for some detection */
 	error = ATGEN_GetManufacturer(s);
-	if (error != ERR_NONE) return error;
+	if (error != ERR_NONE && error != ERR_SECURITYERROR) return error;
 
 	/* Mode switching cabaple phones can switch using AT+MODE */
 	if (!Priv->Mode) {
@@ -1779,13 +1779,6 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		error = ERR_NONE;
 	}
 #endif
-
-	/* Get charset information and set normal charset */
-	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
-	/* Some phones might require PIN to set charset! */
-	if (error != ERR_NONE && error != ERR_SECURITYERROR) {
-		return error;
-	}
 
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = true;
