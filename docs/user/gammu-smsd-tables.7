@@ -418,8 +418,10 @@ short text message:
 
 Inserting multipart messages is a bit more tricky, you need to construct also
 UDH header. For example long text message would look like (please note that
-each UDH needs to contain sequence position):
-    
+each UDH needs to contain number of parts and sequence position as last two
+bytes, the D3 value in example is message reference number, it can be
+anything):
+
     INSERT INTO outbox (
         CreatorID,
         MultiPart,
@@ -431,7 +433,7 @@ each UDH needs to contain sequence position):
         'Gammu 1.23.91',
         true,
         '123465',
-        '050003D30501',
+        '050003D30201',
         'Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbez',
         'Default_No_Compression'
     )
@@ -445,7 +447,7 @@ each UDH needs to contain sequence position):
         Coding
     ) VALUES (
         2,
-        '050003D30502',
+        '050003D30202',
         'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.', 
         <ID_OF_INSERTED_RECORD_IN_OUBOX_TABLE>,
         'Default_No_Compression'

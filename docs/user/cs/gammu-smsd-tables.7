@@ -429,10 +429,12 @@ obyčejnou textovou zprávu:
 
 .SS "Vkládání dlouhých zpráv pomocí SQL"
 
-Vkládání zprávy s více částmi je poněkud náročnější, musíte také vytvořit
-UDH hlavičku. Například dlouhá textová zpráva by vypadala následovně
-(povšimněte si, že UDH obsahuje číslo zprávy):
-    
+Inserting multipart messages is a bit more tricky, you need to construct
+also UDH header. For example long text message would look like (please note
+that each UDH needs to contain number of parts and sequence position as last
+two bytes, the D3 value in example is message reference number, it can be
+anything):
+
     INSERT INTO outbox (
         CreatorID,
         MultiPart,
@@ -444,7 +446,7 @@ UDH hlavičku. Například dlouhá textová zpráva by vypadala následovně
         'Gammu 1.23.91',
         true,
         '123465',
-        '050003D30501',
+        '050003D30201',
         'Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbez',
         'Default_No_Compression'
     )
@@ -458,9 +460,9 @@ UDH hlavičku. Například dlouhá textová zpráva by vypadala následovně
         Coding
     ) VALUES (
         2,
-        '050003D30502',
+        '050003D30202',
         'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.',
-        <ID_VLOŽENÉHO_ŘÁDKU_DO_TABULKY_OUTBOX>,
+        <ID_OF_INSERTED_RECORD_IN_OUBOX_TABLE>,
         'Default_No_Compression'
     )
 
