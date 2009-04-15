@@ -200,7 +200,7 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \
 
 To be compatible with current Python on Windows, we need to build
 against MSVCR71, to achieve this, libmoldname71 library is needed. It
-will be hopefully part of next MinGW release, but for now you can build
+is part of current MinGW releases, but for older ones you can build
 it following way:
 
 1. Get moldname.def.in from MinGW-runtime sources.
@@ -214,12 +214,6 @@ i586-mingw32msvc-ar rc libmoldname71.a isascii.o iscsym.o iscsymf.o toascii.o st
 i586-mingw32msvc-ranlib libmoldname71.a
 
 Information taken from <http://www.pygame.org/wiki/PreparingMinGW>.
-
-Furthermore you need to change specs definition for GCC, on Debian you
-can do this by editing /usr/bin/i586-mingw32msvc-gcc and changing line
-where you can find -lmoldname (change -lmoldname to -lmoldname71 and
--lmsvcrt to -lmsvcrt71). Be careful not to change length of string!
-There are enough spaces to remove.
 
 
 Third party libraries
