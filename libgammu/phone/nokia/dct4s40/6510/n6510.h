@@ -76,6 +76,11 @@ typedef struct {
 	 * Size of memory when starting last free memory lookup.
 	 */
 	int				LastFreeMemorySize;
+	/**
+	 * Communication timeout. This needs to be higher for unreliable
+	 * links as IrDA.
+	 */
+	int				Timeout;
 } GSM_Phone_N6510Data;
 
 void N6510_EncodeFMFrequency(double freq, unsigned char *buff);

@@ -43,6 +43,15 @@ static GSM_Error N6510_Initialise (GSM_StateMachine *s)
 	s->Phone.Data.Priv.N6510.LastFreeMemoryLocation = 0;
 	s->Phone.Data.Priv.N6510.LastFreeMemoryType = 0;
 
+	/* Default timeout for cables */
+	s->Phone.Data.Priv.N6510.Timeout = 8;
+	if (s->ConnectionType == GCT_IRDAPHONET || s->ConnectionType == GCT_FBUS2IRDA) {
+		s->Phone.Data.Priv.N6510.Timeout = 40;
+	}
+	if (s->ConnectionType == GCT_BLUEPHONET || s->ConnectionType == GCT_BLUEFBUS2) {
+		s->Phone.Data.Priv.N6510.Timeout = 20;
+	}
+
 	/* Enables various things like incoming SMS, call info, etc. */
 	return N71_65_EnableFunctions (s, "\x01\x02\x06\x0A\x14\x17\x39", 7);
 }
@@ -84,11 +93,11 @@ static GSM_Error N6510_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
-	error = GSM_WaitFor (s, req, 19, 0x03, 4, ID_GetMemory);
+	error = GSM_WaitFor (s, req, 19, 0x03, s->Phone.Data.Priv.N6510.Timeout, ID_GetMemory);
 	if (error == ERR_WORKINPROGRESS) {
 		sleep(2);
 		smprintf(s, "Retrying to get phonebook entry\n");
-		error = GSM_WaitFor (s, req, 19, 0x03, 4, ID_GetMemory);
+		error = GSM_WaitFor (s, req, 19, 0x03, s->Phone.Data.Priv.N6510.Timeout, ID_GetMemory);
 	}
 	if (entry->MemoryType == MEM_DC || entry->MemoryType == MEM_RC || entry->MemoryType == MEM_MC) {
 		/* 6111 */
@@ -131,7 +140,7 @@ static GSM_Error N6510_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *St
 
 	s->Phone.Data.MemoryStatus=Status;
 	smprintf(s, "Getting memory status\n");
-	return GSM_WaitFor (s, req, 10, 0x03, 4, ID_GetMemoryStatus);
+	return GSM_WaitFor (s, req, 10, 0x03, s->Phone.Data.Priv.N6510.Timeout, ID_GetMemoryStatus);
 }
 
 static GSM_Error N6510_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -213,7 +222,7 @@ static GSM_Error N6510_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 
 	s->Phone.Data.SMSC=smsc;
 	smprintf(s, "Getting SMSC\n");
-	return GSM_WaitFor (s, req, 6, 0x02, 4, ID_GetSMSC);
+	return GSM_WaitFor (s, req, 6, 0x02, s->Phone.Data.Priv.N6510.Timeout, ID_GetSMSC);
 }
 
 static GSM_Error N6510_ReplySetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -297,7 +306,7 @@ static GSM_Error N6510_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	count += UnicodeLength(smsc->Name)*2 + 2;
 
 	smprintf(s, "Setting SMSC\n");
-	return GSM_WaitFor (s, req, count, 0x02, 4, ID_SetSMSC);
+	return GSM_WaitFor (s, req, count, 0x02, s->Phone.Data.Priv.N6510.Timeout, ID_SetSMSC);
 }
 
 static GSM_Error N6510_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -363,7 +372,7 @@ static GSM_Error N6510_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *neti
 
 	s->Phone.Data.NetworkInfo=netinfo;
 	smprintf(s, "Getting network info\n");
-	return GSM_WaitFor (s, req, 5, 0x0a, 4, ID_GetNetworkInfo);
+	return GSM_WaitFor (s, req, 5, 0x0a, s->Phone.Data.Priv.N6510.Timeout, ID_GetNetworkInfo);
 }
 
 static GSM_Error N6510_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *req, GSM_SMSMessageLayout *Layout, int *length)
@@ -565,7 +574,7 @@ static GSM_Error N6510_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folder
 
 	s->Phone.Data.SMSFolders=folders;
 	smprintf(s, "Getting SMS folders\n");
-	return GSM_WaitFor (s, req, 6, 0x14, 4, ID_GetSMSFolders);
+	return GSM_WaitFor (s, req, 6, 0x14, s->Phone.Data.Priv.N6510.Timeout, ID_GetSMSFolders);
 }
 
 static GSM_Error N6510_ReplyGetSMSFolderStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -607,7 +616,7 @@ static GSM_Error N6510_GetSMSFolderStatus(GSM_StateMachine *s, int folderid)
 	}
 
 	smprintf(s, "Getting SMS folder status\n");
-	return GSM_WaitFor (s, req, 10, 0x14, 4, ID_GetSMSFolderStatus);
+	return GSM_WaitFor (s, req, 10, 0x14, s->Phone.Data.Priv.N6510.Timeout, ID_GetSMSFolderStatus);
 }
 
 static void N6510_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *folderid, unsigned int *location)
@@ -844,13 +853,13 @@ static GSM_Error N6510_PrivGetSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 	s->Phone.Data.Bitmap 		= bitmap;
 	smprintf(s, "Getting sms message info\n");
 	req[3] = 0x0e; req[8] = 0x55; req[9] = 0x55;
-	error=GSM_WaitFor (s, req, 10, 0x14, 4, ID_GetSMSMessage);
+	error=GSM_WaitFor (s, req, 10, 0x14, s->Phone.Data.Priv.N6510.Timeout, ID_GetSMSMessage);
 	if (error!=ERR_NONE) return error;
 	CopyUnicodeString(namebuffer,sms->SMS[0].Name);
 
 	smprintf(s, "Getting sms\n");
 	req[3] = 0x02; req[8] = 0x01; req[9] = 0x00;
-	error=GSM_WaitFor (s, req, 10, 0x14, 4, ID_GetSMSMessage);
+	error=GSM_WaitFor (s, req, 10, 0x14, s->Phone.Data.Priv.N6510.Timeout, ID_GetSMSMessage);
 	if (error==ERR_NONE) {
 		for (i=0;i<sms->Number;i++) {
 			N6510_SetSMSLocation(s, &sms->SMS[i], folderid, location);
@@ -1035,14 +1044,14 @@ static GSM_Error N6510_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		Bitmap->BitmapHeight = 65;
 		GSM_ClearBitmap(Bitmap);
 		smprintf(s, "Getting startup logo\n");
-		return GSM_WaitFor (s, reqStartup, 5, 0x7A, 4, ID_GetBitmap);
+		return GSM_WaitFor (s, reqStartup, 5, 0x7A, s->Phone.Data.Priv.N6510.Timeout, ID_GetBitmap);
 	case GSM_DealerNote_Text:
 		reqNote[4] = 0x10;
 		smprintf(s, "Getting dealer note\n");
-		return GSM_WaitFor (s, reqNote, 6, 0x7A, 4, ID_GetBitmap);
+		return GSM_WaitFor (s, reqNote, 6, 0x7A, s->Phone.Data.Priv.N6510.Timeout, ID_GetBitmap);
 	case GSM_WelcomeNote_Text:
 		smprintf(s, "Getting welcome note\n");
-		return GSM_WaitFor (s, reqNote, 6, 0x7A, 4, ID_GetBitmap);
+		return GSM_WaitFor (s, reqNote, 6, 0x7A, s->Phone.Data.Priv.N6510.Timeout, ID_GetBitmap);
 	case GSM_CallerGroupLogo:
 		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) return ERR_NOTSUPPORTED;
 		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
@@ -1062,7 +1071,7 @@ static GSM_Error N6510_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		return error;
 	case GSM_OperatorLogo:
 		smprintf(s, "Getting operator logo\n");
-		return GSM_WaitFor (s, reqOp, 9, 0x0A, 4, ID_GetBitmap);
+		return GSM_WaitFor (s, reqOp, 9, 0x0A, s->Phone.Data.Priv.N6510.Timeout, ID_GetBitmap);
 	case GSM_PictureImage:
 		return N6510_GetPictureImage(s, Bitmap, &Location);
 	default:
@@ -1094,7 +1103,7 @@ static GSM_Error N6510_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *
 
 	s->Phone.Data.SignalQuality = sig;
 	smprintf(s, "Getting network level\n");
-	return GSM_WaitFor (s, req, 9, 0x0a, 4, ID_GetSignalQuality);
+	return GSM_WaitFor (s, req, 9, 0x0a, s->Phone.Data.Priv.N6510.Timeout, ID_GetSignalQuality);
 }
 
 static GSM_Error N6510_IncomingBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1124,7 +1133,7 @@ static GSM_Error N6510_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *
 	GSM_ClearBatteryCharge(bat);
 	s->Phone.Data.BatteryCharge = bat;
 	smprintf(s, "Getting battery level\n");
-	return GSM_WaitFor (s, req, 6, 0x17, 4, ID_GetBatteryCharge);
+	return GSM_WaitFor (s, req, 6, 0x17, s->Phone.Data.Priv.N6510.Timeout, ID_GetBatteryCharge);
 }
 
 static GSM_Error N6510_ReplyGetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1173,7 +1182,7 @@ GSM_Error N6510_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	if (req[18]==0xff) return ERR_NOTSUPPORTED;
 
 	smprintf(s, "Deleting phonebook entry\n");
-	return GSM_WaitFor (s, req, 22, 0x03, 4, ID_SetMemory);
+	return GSM_WaitFor (s, req, 22, 0x03, s->Phone.Data.Priv.N6510.Timeout, ID_SetMemory);
 }
 
 static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
@@ -1236,7 +1245,7 @@ static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	req[21] = blocks;
 
 	smprintf(s, "Writing phonebook entry\n");
-	return GSM_WaitFor (s, req, count, 0x03, 4, ID_SetMemory);
+	return GSM_WaitFor (s, req, count, 0x03, s->Phone.Data.Priv.N6510.Timeout, ID_SetMemory);
 }
 
 static GSM_Error N6510_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
@@ -1340,7 +1349,7 @@ static GSM_Error N6510_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 
 	req[21] = block;
 
-	return GSM_WaitFor (s, req, count, 0x03, 4, ID_SetBitmap);
+	return GSM_WaitFor (s, req, count, 0x03, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
 }
 
 static GSM_Error N6510_ReplySetPicture(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1404,7 +1413,7 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	case GSM_ColourWallPaper_ID:
 		reqColourWallPaper[21] = Bitmap->ID;
 		smprintf(s, "Setting colour wall paper\n");
-		return GSM_WaitFor (s, reqColourWallPaper, 22, 0x43, 4, ID_SetBitmap);
+		return GSM_WaitFor (s, reqColourWallPaper, 22, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
 	case GSM_StartupLogo:
 		Type = GSM_Nokia7110StartupLogo;
 		switch (Bitmap->Location) {
@@ -1416,20 +1425,20 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 			default: return ERR_NOTSUPPORTED;
 		}
 		smprintf(s, "Setting startup logo\n");
-		return GSM_WaitFor (s, reqStartup, 22+PHONE_GetBitmapSize(Type,0,0), 0x7A, 4, ID_SetBitmap);
+		return GSM_WaitFor (s, reqStartup, 22+PHONE_GetBitmapSize(Type,0,0), 0x7A, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
 	case GSM_DealerNote_Text:
 		reqNote[4] = 0x10;
 		CopyUnicodeString(reqNote + 5, Bitmap->Text);
 		i = 6 + UnicodeLength(Bitmap->Text) * 2;
 		reqNote[i++] 	= 0;
 		reqNote[i] 	= 0;
-		return GSM_WaitFor (s, reqNote, i, 0x7A, 4, ID_SetBitmap);
+		return GSM_WaitFor (s, reqNote, i, 0x7A, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
 	case GSM_WelcomeNote_Text:
 		CopyUnicodeString(reqNote + 5, Bitmap->Text);
 		i = 6 + UnicodeLength(Bitmap->Text) * 2;
 		reqNote[i++] 	= 0;
 		reqNote[i] 	= 0;
-		return GSM_WaitFor (s, reqNote, i, 0x7A, 4, ID_SetBitmap);
+		return GSM_WaitFor (s, reqNote, i, 0x7A, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
 	case GSM_OperatorLogo:
 		/* We want to set operator logo, not clear */
 		if (strcmp(Bitmap->NetworkCode,"000 00")) {
@@ -1448,13 +1457,13 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 			reqOp[25] = PHONE_GetBitmapSize(Type,0,0) + 29;
 			PHONE_EncodeBitmap(Type, reqOp + 26, Bitmap);
 			smprintf(s, "Setting operator logo\n");
-			return GSM_WaitFor (s, reqOp, reqOp[19]+reqOp[11]+10, 0x0A, 4, ID_SetBitmap);
+			return GSM_WaitFor (s, reqOp, reqOp[19]+reqOp[11]+10, 0x0A, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
 		} else {
 			error=N6510_GetNetworkInfo(s,&NetInfo);
 			if (error != ERR_NONE) return error;
 			NOKIA_EncodeNetworkCode(reqOp+12, NetInfo.NetworkCode);
 			smprintf(s, "Clearing operator logo\n");
-			return GSM_WaitFor (s, reqOp, 18, 0x0A, 4, ID_SetBitmap);
+			return GSM_WaitFor (s, reqOp, 18, 0x0A, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
 		}
 	case GSM_ColourOperatorLogo_ID:
 		/* We want to set operator logo, not clear */
@@ -1463,16 +1472,16 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 			reqColourOp[21] = Bitmap->ID;
 		}
 		smprintf(s, "Setting colour operator logo\n");
-		return GSM_WaitFor (s, reqColourOp, 26, 0x43, 4, ID_SetBitmap);
+		return GSM_WaitFor (s, reqColourOp, 26, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
 	case GSM_ColourStartupLogo_ID:
 		switch (Bitmap->Location) {
 			case 0: reqColourStartup[6] = 0x00;
 				reqColourStartup[8] = 0x00;
 				smprintf(s, "Setting colour startup logo\n");
-				return GSM_WaitFor (s, reqColourStartup, 9, 0x7A, 4, ID_SetBitmap);
+				return GSM_WaitFor (s, reqColourStartup, 9, 0x7A, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
 			case 1: reqColourStartup[8] = Bitmap->ID;
 				smprintf(s, "Setting colour startup logo\n");
-				return GSM_WaitFor (s, reqColourStartup, 9, 0x7A, 4, ID_SetBitmap);
+				return GSM_WaitFor (s, reqColourStartup, 9, 0x7A, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
 			default:return ERR_NOTSUPPORTED;
 		}
 	case GSM_CallerGroupLogo:
@@ -1495,7 +1504,7 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		PHONE_EncodeBitmap(Type, reqPicture + count, Bitmap);
 		count += PHONE_GetBitmapSize(Type,0,0);
 		smprintf(s, "Setting Picture Image\n");
-		return GSM_WaitFor (s, reqPicture, count, 0x14, 4, ID_SetBitmap);
+		return GSM_WaitFor (s, reqPicture, count, 0x14, s->Phone.Data.Priv.N6510.Timeout, ID_SetBitmap);
 	default:
 		break;
 	}
@@ -1538,7 +1547,7 @@ static GSM_Error N6510_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 	if (Ringtone->Format == RING_NOTETONE && Ringtone->Location==255)
 	{
 		smprintf(s, "Getting ringtone ID\n");
-		error=GSM_WaitFor (s, GetIDReq, 14, 0xDB, 4, ID_SetRingtone);
+		error=GSM_WaitFor (s, GetIDReq, 14, 0xDB, s->Phone.Data.Priv.N6510.Timeout, ID_SetRingtone);
 		if (error != ERR_NONE) return error;
 		*maxlength=GSM_EncodeNokiaRTTLRingtone(*Ringtone, SetPreviewReq+11, &size);
 		SetPreviewReq[0]  = Priv->RingtoneID;
@@ -1561,7 +1570,7 @@ static GSM_Error N6510_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		memcpy(AddBinaryReq+current,Ringtone->NokiaBinary.Frame,Ringtone->NokiaBinary.Length);
 		current += Ringtone->NokiaBinary.Length;
 		smprintf(s, "Adding binary ringtone\n");
-		return GSM_WaitFor (s, AddBinaryReq, current, 0x1F, 4, ID_SetRingtone);
+		return GSM_WaitFor (s, AddBinaryReq, current, 0x1F, s->Phone.Data.Priv.N6510.Timeout, ID_SetRingtone);
 	}
 	if (Ringtone->Format == RING_MIDI) {
 		AddBinaryReq[7] = UnicodeLength(Ringtone->Name);
@@ -1574,7 +1583,7 @@ static GSM_Error N6510_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		AddBinaryReq[current++] = 0x00;
 		AddBinaryReq[current++] = 0x00;
 		smprintf(s, "Adding binary or MIDI ringtone\n");
-		return GSM_WaitFor (s, AddBinaryReq, current, 0x1F, 4, ID_SetRingtone);
+		return GSM_WaitFor (s, AddBinaryReq, current, 0x1F, s->Phone.Data.Priv.N6510.Timeout, ID_SetRingtone);
 	}
 	return ERR_NOTSUPPORTED;
 }
@@ -1590,7 +1599,7 @@ static GSM_Error N6510_DeleteUserRingtones(GSM_StateMachine *s)
 	unsigned char DelAllRingtoneReq[] = {N7110_FRAME_HEADER, 0x10, 0x7F, 0xFE};
 
 	smprintf(s, "Deleting all user ringtones\n");
-	return GSM_WaitFor (s, DelAllRingtoneReq, 6, 0x1F, 4, ID_SetRingtone);
+	return GSM_WaitFor (s, DelAllRingtoneReq, 6, 0x1F, s->Phone.Data.Priv.N6510.Timeout, ID_SetRingtone);
 }
 
 static GSM_Error N6510_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
@@ -1609,7 +1618,7 @@ static GSM_Error N6510_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press
 		s->Phone.Data.PressKey = false;
 		smprintf(s, "Releasing key\n");
 	}
-	return GSM_WaitFor (s, req, 10, 0x0c, 4, ID_PressKey);
+	return GSM_WaitFor (s, req, 10, 0x0c, s->Phone.Data.Priv.N6510.Timeout, ID_PressKey);
 }
 
 static GSM_Error N6510_EnableConnectionFunctions(GSM_StateMachine *s, N6510_Connection_Settings Type)
@@ -1633,7 +1642,7 @@ static GSM_Error N6510_EnableConnectionFunctions(GSM_StateMachine *s, N6510_Conn
 		return DCT3DCT4_EnableWAPFunctions(s);
 	case N6510_MMS_SETTINGS:
 		smprintf(s, "Enabling MMS\n");
-		return GSM_WaitFor (s, req2, 5, 0x3f, 4, ID_EnableConnectFunc);
+		return GSM_WaitFor (s, req2, 5, 0x3f, s->Phone.Data.Priv.N6510.Timeout, ID_EnableConnectFunc);
 	case N6510_SYNCML_SETTINGS:
 		smprintf(s, "Enabling SyncML\n");
 		return GSM_WaitFor (s, req3, 5, 0x3f, 5, ID_EnableConnectFunc);
@@ -1935,7 +1944,7 @@ static GSM_Error N6510_GetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 		break;
 	}
 
-	error=GSM_WaitFor (s, req, 5, 0x3f, 4, ID_GetConnectSet);
+	error=GSM_WaitFor (s, req, 5, 0x3f, s->Phone.Data.Priv.N6510.Timeout, ID_GetConnectSet);
 	if (error != ERR_NONE) {
 		if (error == ERR_INVALIDLOCATION || error == ERR_INSIDEPHONEMENU) {
 			DCT3DCT4_DisableConnectionFunctions(s);
@@ -2014,12 +2023,12 @@ static GSM_Error N6510_GetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings
 	s->Phone.Data.SyncMLSettings  = settings;
 
 /* 	smprintf(s, "Getting SyncML settings name\n"); */
-/* 	error = GSM_WaitFor (s, NameReq, 16, 0x43, 4, ID_GetSyncMLName); */
+/* 	error = GSM_WaitFor (s, NameReq, 16, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_GetSyncMLName); */
 /* 	if (error != ERR_NONE) return error; */
 
 	req[9] = settings->Location - 1;
 	smprintf(s, "Getting additional SyncML settings\n");
-	return GSM_WaitFor (s, req, 16, 0x43, 4, ID_GetSyncMLSettings);
+	return GSM_WaitFor (s, req, 16, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_GetSyncMLSettings);
 }
 
 static GSM_Error N6510_ReplyGetChatSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2076,7 +2085,7 @@ static GSM_Error N6510_GetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *se
 	s->Phone.Data.ChatSettings  = settings;
 	req[4] 			    = settings->Location - 1;
 	smprintf(s, "Getting additional Chat settings\n");
-	return GSM_WaitFor (s, req, 7, 0x3f, 4, ID_GetChatSettings);
+	return GSM_WaitFor (s, req, 7, 0x3f, s->Phone.Data.Priv.N6510.Timeout, ID_GetChatSettings);
 }
 
 static GSM_Error N6510_ReplySetConnectionSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2364,7 +2373,7 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 
 	UnLock[4] = settings->Location-1;
 	smprintf(s, "Making Connection settings read-write\n");
-	error = GSM_WaitFor (s, UnLock, 5, 0x3f, 4, ID_SetConnectSet);
+	error = GSM_WaitFor (s, UnLock, 5, 0x3f, s->Phone.Data.Priv.N6510.Timeout, ID_SetConnectSet);
 	if (error != ERR_NONE) return error;
 
 	switch (Type) {
@@ -2381,7 +2390,7 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 		smprintf(s, "Setting SyncML settings\n");
 		break;
 	}
-	error = GSM_WaitFor (s, req, pos, 0x3f, 4, ID_SetConnectSet);
+	error = GSM_WaitFor (s, req, pos, 0x3f, s->Phone.Data.Priv.N6510.Timeout, ID_SetConnectSet);
 	if (error != ERR_NONE) {
 		if (error == ERR_INSIDEPHONEMENU || error == ERR_INVALIDLOCATION) {
 			DCT3DCT4_DisableConnectionFunctions(s);
@@ -2392,7 +2401,7 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 	if (settings->ReadOnly) {
 		Lock[4] = settings->Location-1;
 		smprintf(s, "Making Connection settings readonly\n");
-		error = GSM_WaitFor (s, Lock, 5, 0x3f, 4, ID_SetConnectSet);
+		error = GSM_WaitFor (s, Lock, 5, 0x3f, s->Phone.Data.Priv.N6510.Timeout, ID_SetConnectSet);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2538,7 +2547,7 @@ static GSM_Error N6510_DeleteSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms
 	req[7]=location % 256;
 
 	smprintf(s, "Deleting sms\n");
-	return GSM_WaitFor (s, req, 10, 0x14, 4, ID_DeleteSMSMessage);
+	return GSM_WaitFor (s, req, 10, 0x14, s->Phone.Data.Priv.N6510.Timeout, ID_DeleteSMSMessage);
 }
 
 static GSM_Error N6510_ReplySendSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2639,7 +2648,7 @@ static GSM_Error N6510_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode C
 	req[5+len]=0x00;
 
 	smprintf(s, "Entering security code\n");
-	return GSM_WaitFor (s, req, 6+len, 0x08, 4, ID_EnterSecurityCode);
+	return GSM_WaitFor (s, req, 6+len, 0x08, s->Phone.Data.Priv.N6510.Timeout, ID_EnterSecurityCode);
 }
 
 static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2782,7 +2791,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 
 	s->Phone.Data.SaveSMSMessage=sms;
 	smprintf(s, "Saving sms\n");
-	error=GSM_WaitFor (s, req, length+9, 0x14, 4, ID_SaveSMSMessage);
+	error=GSM_WaitFor (s, req, length+9, 0x14, s->Phone.Data.Priv.N6510.Timeout, ID_SaveSMSMessage);
 	if (error != ERR_NONE) return error;
 
 	/* no adding to SIM SMS */
@@ -2812,7 +2821,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 	length = length+UnicodeLength(sms->Name)*2;
 	NameReq[length++] = 0;
 	NameReq[length++] = 0;
-	error=GSM_WaitFor (s, NameReq, length, 0x14, 4, ID_SaveSMSMessage);
+	error=GSM_WaitFor (s, NameReq, length, 0x14, s->Phone.Data.Priv.N6510.Timeout, ID_SaveSMSMessage);
 	sms->Folder = folder;
 	return error;
 }
@@ -2855,7 +2864,7 @@ static GSM_Error N6510_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 	s->Phone.Data.DateTime=date_time;
 	smprintf(s, "Getting date & time\n");
-	return GSM_WaitFor (s, req, 6, 0x19, 4, ID_GetDateTime);
+	return GSM_WaitFor (s, req, 6, 0x19, s->Phone.Data.Priv.N6510.Timeout, ID_GetDateTime);
 }
 
 static GSM_Error N6510_ReplySetDateTime(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
@@ -2877,7 +2886,7 @@ static GSM_Error N6510_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 	NOKIA_EncodeDateTime(s, req+10, date_time);
 	req[16] = date_time->Second;
 	smprintf(s, "Setting date & time\n");
-	return GSM_WaitFor (s, req, 18, 0x19, 4, ID_SetDateTime);
+	return GSM_WaitFor (s, req, 18, 0x19, s->Phone.Data.Priv.N6510.Timeout, ID_SetDateTime);
 }
 
 static GSM_Error N6510_ReplyGetManufactureMonth(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2940,11 +2949,11 @@ static GSM_Error N6510_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 
 	s->Phone.Data.Alarm=Alarm;
 	smprintf(s, "Getting alarm state\n");
-	error = GSM_WaitFor (s, StateReq, 6, 0x19, 4, ID_GetAlarm);
+	error = GSM_WaitFor (s, StateReq, 6, 0x19, s->Phone.Data.Priv.N6510.Timeout, ID_GetAlarm);
 	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Getting alarm\n");
-	return GSM_WaitFor (s, GetReq, 6, 0x19, 4, ID_GetAlarm);
+	return GSM_WaitFor (s, GetReq, 6, 0x19, s->Phone.Data.Priv.N6510.Timeout, ID_GetAlarm);
 }
 
 static GSM_Error N6510_ReplySetAlarm(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
@@ -2967,7 +2976,7 @@ static GSM_Error N6510_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 	req[15] = Alarm->DateTime.Minute;
 
 	smprintf(s, "Setting alarm\n");
-	return GSM_WaitFor (s, req, 19, 0x19, 4, ID_SetAlarm);
+	return GSM_WaitFor (s, req, 19, 0x19, s->Phone.Data.Priv.N6510.Timeout, ID_SetAlarm);
 }
 
 static GSM_Error N6510_ReplyGetRingtonesInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -3005,12 +3014,12 @@ static GSM_Error N6510_PrivGetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtone
 	s->Phone.Data.RingtonesInfo=Info;
 	smprintf(s, "Getting binary ringtones ID\n");
 	if (AllRingtones) {
-/* 		error = GSM_WaitFor (s, All_Req, 9, 0x1f, 4, ID_GetRingtonesInfo); */
-		error = GSM_WaitFor (s, All_Req, 8, 0x1f, 4, ID_GetRingtonesInfo);
+/* 		error = GSM_WaitFor (s, All_Req, 9, 0x1f, s->Phone.Data.Priv.N6510.Timeout, ID_GetRingtonesInfo); */
+		error = GSM_WaitFor (s, All_Req, 8, 0x1f, s->Phone.Data.Priv.N6510.Timeout, ID_GetRingtonesInfo);
 		if (error == ERR_EMPTY && Info->Number == 0) return ERR_NOTSUPPORTED;
 		return error;
 	} else {
-		error = GSM_WaitFor (s, UserReq, 8, 0x1f, 4, ID_GetRingtonesInfo);
+		error = GSM_WaitFor (s, UserReq, 8, 0x1f, s->Phone.Data.Priv.N6510.Timeout, ID_GetRingtonesInfo);
 		if (error == ERR_EMPTY && Info->Number == 0) return ERR_NOTSUPPORTED;
 		return error;
 	}
@@ -3079,7 +3088,7 @@ static GSM_Error N6510_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		req2[4] = Info.Ringtone[Ringtone->Location-1].ID / 256;
 		req2[5] = Info.Ringtone[Ringtone->Location-1].ID % 256;
 		smprintf(s, "Getting binary ringtone\n");
- 		error = GSM_WaitFor (s, req2, 6, 0x1f, 4, ID_GetRingtone);
+ 		error = GSM_WaitFor (s, req2, 6, 0x1f, s->Phone.Data.Priv.N6510.Timeout, ID_GetRingtone);
  		if (Info.Ringtone) free(Info.Ringtone);
  		return error;
 	case RING_MIDI:
@@ -3114,10 +3123,10 @@ static GSM_Error N6510_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Vol
 
 	if (start) {
 		smprintf(s, "Enabling sound - part 1\n");
-		error=GSM_WaitFor (s, reqStart, 6, 0x0b, 4, ID_PlayTone);
+		error=GSM_WaitFor (s, reqStart, 6, 0x0b, s->Phone.Data.Priv.N6510.Timeout, ID_PlayTone);
 		if (error!=ERR_NONE) return error;
 		smprintf(s, "Enabling sound - part 2 (disabling sound command)\n");
-		error=GSM_WaitFor (s, reqOff, 18, 0x0b, 4, ID_PlayTone);
+		error=GSM_WaitFor (s, reqOff, 18, 0x0b, s->Phone.Data.Priv.N6510.Timeout, ID_PlayTone);
 		if (error!=ERR_NONE) return error;
 	}
 
@@ -3127,19 +3136,19 @@ static GSM_Error N6510_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Vol
 		reqPlay[22] = Herz/256;
 		reqPlay[31] = Volume;
 		smprintf(s, "Playing sound\n");
-		return GSM_WaitFor (s, reqPlay, 34, 0x0b, 4, ID_PlayTone);
+		return GSM_WaitFor (s, reqPlay, 34, 0x0b, s->Phone.Data.Priv.N6510.Timeout, ID_PlayTone);
 	} else {
 		reqPlay[23] = 0;
 		reqPlay[22] = 0;
 		reqPlay[31] = 0;
 		smprintf(s, "Playing silent sound\n");
-		return GSM_WaitFor (s, reqPlay, 34, 0x0b, 4, ID_PlayTone);
+		return GSM_WaitFor (s, reqPlay, 34, 0x0b, s->Phone.Data.Priv.N6510.Timeout, ID_PlayTone);
 
 /* 		smprintf(s, "Disabling sound - part 1\n"); */
-/* 		error=GSM_WaitFor (s, reqOff, 18, 0x0b, 4, ID_PlayTone); */
+/* 		error=GSM_WaitFor (s, reqOff, 18, 0x0b, s->Phone.Data.Priv.N6510.Timeout, ID_PlayTone); */
 /* 		if (error!=ERR_NONE) return error; */
 /* 		smprintf(s, "Disabling sound - part 2\n"); */
-/* 		return GSM_WaitFor (s, reqOff2, 18, 0x0b, 4, ID_PlayTone); */
+/* 		return GSM_WaitFor (s, reqOff2, 18, 0x0b, s->Phone.Data.Priv.N6510.Timeout, ID_PlayTone); */
 	}
 }
 
@@ -3326,11 +3335,11 @@ static GSM_Error N6510_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 
 	s->Phone.Data.Profile=Profile;
 	smprintf(s, "Getting profile\n");
-	error = GSM_WaitFor (s, req, length, 0x39, 4, ID_GetProfile);
+	error = GSM_WaitFor (s, req, length, 0x39, s->Phone.Data.Priv.N6510.Timeout, ID_GetProfile);
 	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Checking, which profile is active\n");
-	return GSM_WaitFor (s, reqActive, 4, 0x39, 4, ID_GetProfile);
+	return GSM_WaitFor (s, reqActive, 4, 0x39, s->Phone.Data.Priv.N6510.Timeout, ID_GetProfile);
 }
 
 static GSM_Error N6510_ReplySetProfile(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -3408,7 +3417,7 @@ static GSM_Error N6510_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 	}
 
 	smprintf(s, "Setting profile\n");
-	return GSM_WaitFor (s, req, length, 0x39, 4, ID_SetProfile);
+	return GSM_WaitFor (s, req, length, 0x39, s->Phone.Data.Priv.N6510.Timeout, ID_SetProfile);
 }
 
 static GSM_Error N6510_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -3492,7 +3501,7 @@ static GSM_Error N6510_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShow
 		break;
 	}
 	smprintf(s, "Making voice call\n");
-	error = GSM_WaitFor (s, req, pos, 0x01, 4, ID_DialVoice);
+	error = GSM_WaitFor (s, req, pos, 0x01, s->Phone.Data.Priv.N6510.Timeout, ID_DialVoice);
 	if (error != ERR_NOTSUPPORTED) return error;
 
 	if (ShowNumber != GSM_CALL_DefaultNumberPresence) return ERR_NOTSUPPORTED;
@@ -3503,7 +3512,7 @@ static GSM_Error N6510_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShow
 	pos2 += strlen(number)*2;
 
 	smprintf(s, "Making voice call\n");
-	error = GSM_WaitFor (s, req2, pos2, 0x01, 4, ID_DialVoice);
+	error = GSM_WaitFor (s, req2, pos2, 0x01, s->Phone.Data.Priv.N6510.Timeout, ID_DialVoice);
 	if (error == ERR_NOTSUPPORTED) return ERR_NONE;
 	return error;
 }
@@ -3689,7 +3698,7 @@ GSM_Error N6510_SetLight(GSM_StateMachine *s, N6510_PHONE_LIGHTS light, bool ena
 	req[4] = light;
 	if (!enable) req[5] = 0x02;
  	smprintf(s, "Setting light\n");
-	return GSM_WaitFor (s, req, 14, 0x3A, 4, ID_SetLight);
+	return GSM_WaitFor (s, req, 14, 0x3A, s->Phone.Data.Priv.N6510.Timeout, ID_SetLight);
 }
 
 static GSM_Error N6510_ShowStartInfo(GSM_StateMachine *s, bool enable)
@@ -3735,7 +3744,7 @@ static GSM_Error N6510_EnableGPRSAccessPoint(GSM_StateMachine *s)
 
 	for (i=0;i<3;i++) {
 		smprintf(s, "Activating full GPRS access point support\n");
-		error = GSM_WaitFor (s, req, 16, 0x43, 4, ID_EnableGPRSPoint);
+		error = GSM_WaitFor (s, req, 16, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_EnableGPRSPoint);
 		if (error != ERR_NONE) return error;
 	}
 	return error;
@@ -3792,15 +3801,15 @@ static GSM_Error N6510_GetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoi
 #endif
 
 	smprintf(s, "Getting GPRS access point name\n");
-	error=GSM_WaitFor (s, Name, 16, 0x43, 4, ID_GetGPRSPoint);
+	error=GSM_WaitFor (s, Name, 16, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_GetGPRSPoint);
 	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Getting GPRS access point URL\n");
-	error=GSM_WaitFor (s, URL, 16, 0x43, 4, ID_GetGPRSPoint);
+	error=GSM_WaitFor (s, URL, 16, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_GetGPRSPoint);
 	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Getting number of active GPRS access point\n");
-	error=GSM_WaitFor (s, Active, 16, 0x43, 4, ID_GetGPRSPoint);
+	error=GSM_WaitFor (s, Active, 16, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_GetGPRSPoint);
 	if (error != ERR_NONE) return error;
 
 	if (UnicodeLength(point->URL)==0 && UnicodeLength(point->Name)==0) return ERR_EMPTY;
@@ -3846,7 +3855,7 @@ static GSM_Error N6510_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoi
 #endif
 
 	smprintf(s, "Getting GPRS access point name\n");
-	error=GSM_WaitFor (s, Name, 16, 0x43, 4, ID_SetGPRSPoint);
+	error=GSM_WaitFor (s, Name, 16, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_SetGPRSPoint);
 	if (error != ERR_NONE) return error;
 	CopyUnicodeString(buff+18+(point->Location-1)*42,point->Name);
 	buff[0] = 0x00;
@@ -3854,11 +3863,11 @@ static GSM_Error N6510_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoi
 	buff[2] = 0x01;
 	buff[3] = 0x07;
 	smprintf(s, "Setting GPRS access point name\n");
-	error=GSM_WaitFor (s, buff, s->Phone.Data.Priv.N6510.GPRSPointsLength, 0x43, 4, ID_SetGPRSPoint);
+	error=GSM_WaitFor (s, buff, s->Phone.Data.Priv.N6510.GPRSPointsLength, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_SetGPRSPoint);
 	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Getting GPRS access point URL\n");
-	error=GSM_WaitFor (s, URL, 16, 0x43, 4, ID_SetGPRSPoint);
+	error=GSM_WaitFor (s, URL, 16, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_SetGPRSPoint);
 	if (error != ERR_NONE) return error;
 	CopyUnicodeString(buff+18+(point->Location-1)*42,point->URL);
 	buff[0] = 0x00;
@@ -3866,12 +3875,12 @@ static GSM_Error N6510_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoi
 	buff[2] = 0x01;
 	buff[3] = 0x07;
 	smprintf(s, "Setting GPRS access point URL\n");
-	error=GSM_WaitFor (s, buff, s->Phone.Data.Priv.N6510.GPRSPointsLength, 0x43, 4, ID_SetGPRSPoint);
+	error=GSM_WaitFor (s, buff, s->Phone.Data.Priv.N6510.GPRSPointsLength, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_SetGPRSPoint);
 	if (error != ERR_NONE) return error;
 
 	if (point->Active) {
 		smprintf(s, "Getting number of active GPRS access point\n");
-		error=GSM_WaitFor (s, Active, 16, 0x43, 4, ID_SetGPRSPoint);
+		error=GSM_WaitFor (s, Active, 16, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_SetGPRSPoint);
 		if (error != ERR_NONE) return error;
 		buff[0] = 0x00;
 		buff[1] = 0x01;
@@ -3879,7 +3888,7 @@ static GSM_Error N6510_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoi
 		buff[3] = 0x07;
 		buff[18]= point->Location;
 		smprintf(s, "Setting number of active GPRS access point\n");
-		error=GSM_WaitFor (s, buff, s->Phone.Data.Priv.N6510.GPRSPointsLength, 0x43, 4, ID_SetGPRSPoint);
+		error=GSM_WaitFor (s, buff, s->Phone.Data.Priv.N6510.GPRSPointsLength, 0x43, s->Phone.Data.Priv.N6510.Timeout, ID_SetGPRSPoint);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -3947,7 +3956,7 @@ static GSM_Error N6510_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 	s->Phone.Data.Locale = locale;
 
 	smprintf(s, "Getting date format\n");
-	return GSM_WaitFor (s, req, 4, 0x13, 4, ID_GetLocale);
+	return GSM_WaitFor (s, req, 4, 0x13, s->Phone.Data.Priv.N6510.Timeout, ID_GetLocale);
 }
 
 GSM_Error N6510_CancelCall(GSM_StateMachine *s, int ID, bool all)
@@ -3978,7 +3987,7 @@ GSM_Error N6510_AddSMSFolder(GSM_StateMachine *s, unsigned char *name)
 	req[7] = UnicodeLength(name)*2 + 6;
 
 	smprintf(s, "Adding SMS folder\n");
-	return GSM_WaitFor (s, req, req[7] + 6, 0x14, 4, ID_AddSMSFolder);
+	return GSM_WaitFor (s, req, req[7] + 6, 0x14, s->Phone.Data.Priv.N6510.Timeout, ID_AddSMSFolder);
 }
 
 static GSM_Error N6510_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
@@ -4005,7 +4014,7 @@ static GSM_Error N6510_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *book
 	req[count++] = 0x00;
 
 	smprintf(s, "Setting WAP bookmark\n");
-	error = GSM_WaitFor (s, req, count, 0x3f, 4, ID_SetWAPBookmark);
+	error = GSM_WaitFor (s, req, count, 0x3f, s->Phone.Data.Priv.N6510.Timeout, ID_SetWAPBookmark);
 	if (error != ERR_NONE) {
 		if (error == ERR_INSIDEPHONEMENU || error == ERR_EMPTY || error == ERR_FULL) {
 			DCT3DCT4_DisableConnectionFunctions(s);
