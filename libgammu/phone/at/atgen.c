@@ -3150,7 +3150,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			/* Set number of entries */
 			Memory->EntriesNum = 3;
 			/* Check whether date is correct */
-			if (!CheckTime(&Memory->Entries[2].Date)) {
+			if (!CheckTime(&Memory->Entries[2].Date) || !CheckDate(&Memory->Entries[2].Date)) {
 				smprintf(s, "Date looks invalid, ignoring!\n");
 				Memory->EntriesNum = 2;
 			}
