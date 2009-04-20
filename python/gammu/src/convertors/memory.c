@@ -411,7 +411,7 @@ int MemoryEntryFromPython(PyObject *dict, GSM_MemoryEntry *entry, int needs_loca
             valuetype = 'd';
             entry->Entries[i].EntryType = PBK_LastModified;
         } else if (strcmp("Caller_Group", type) == 0) {
-            valuetype = 't';
+            valuetype = 'n';
             entry->Entries[i].EntryType = PBK_Caller_Group;
         } else if (strcmp("Text_Name", type) == 0) {
             valuetype = 't';
