@@ -859,8 +859,11 @@ static GSM_Error N6510_PrivGetSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 
 	smprintf(s, "Getting sms\n");
 	req[3] = 0x02; req[8] = 0x01; req[9] = 0x00;
-	error=GSM_WaitFor (s, req, 10, 0x14, s->Phone.Data.Priv.N6510.Timeout, ID_GetSMSMessage);
-	if (error==ERR_NONE) {
+	error = GSM_WaitFor (s, req, 10, 0x14, s->Phone.Data.Priv.N6510.Timeout, ID_GetSMSMessage);
+	if (error == ERR_NONE) {
+		if (sms->Number == 0) {
+			return ERR_EMPTY;
+		}
 		for (i=0;i<sms->Number;i++) {
 			N6510_SetSMSLocation(s, &sms->SMS[i], folderid, location);
 			sms->SMS[i].Folder 	= folderid;
