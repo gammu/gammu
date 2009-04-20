@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2009???? - 1.24.90
+
+[-] * Fix checking for MPBR (bug #873).
     
 20090415 - 1.24.0
 

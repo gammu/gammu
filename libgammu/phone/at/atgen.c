@@ -3352,7 +3352,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 		ATGEN_CheckSPBR(s);
 	}
 	if (Priv->PBK_MPBR == 0) {
-		ATGEN_CheckSPBR(s);
+		ATGEN_CheckMPBR(s);
 	}
 
 	error = ATGEN_GetManufacturer(s);
@@ -3842,7 +3842,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		ATGEN_CheckSPBR(s);
 	}
 	if (Priv->PBK_MPBR == 0) {
-		ATGEN_CheckSPBR(s);
+		ATGEN_CheckMPBR(s);
 	}
 
 	if (Priv->PBK_SPBR == AT_AVAILABLE) {
