@@ -20,6 +20,7 @@ ChangeLog
 [-] * Fix checking for MPBR (bug #873).
 [-] * Fix reading of calls with wrong timestamp (bug #872).
 [-] * Increase timeout for IrDA phonet (bug #867).
+[-] * Better detect some weird phone states (bug #866).
     
 20090415 - 1.24.0
 

@@ -351,6 +351,9 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 	switch (Priv->ErrorCode) {
 		case 0xD3:
 			return ERR_FULL;
+		case 0:
+		case 300:
+			return ERR_PHONE_INTERNAL;
 		case 304:
 			return ERR_NOTSUPPORTED;
 		case 305:
