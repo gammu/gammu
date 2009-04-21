@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-23 10:27+0100\n"
+"POT-Creation-Date: 2009-04-21 12:36+0200\n"
 "PO-Revision-Date: 2009-01-27 17:27+0100\n"
 "Last-Translator: js <osmoze.linux@gmail.com>\n"
 "Language-Team: none\n"
@@ -502,7 +502,7 @@ msgstr "Appeler"
 
 #: gammu/calendar.c:44 gammu/calendar.c:695
 msgid "Meeting"
-msgstr ""
+msgstr "Réunion"
 
 #: gammu/calendar.c:47 gammu/calendar.c:698
 msgid "Birthday (Anniversary)"
@@ -1744,8 +1744,9 @@ msgstr ""
 
 # type: Plain text
 #: gammu/gammu.c:788
+#, fuzzy
 msgid "Parameters before command configure gammu behaviour:"
-msgstr ""
+msgstr "Les paramètres avant la commande modifie le comportement de gammu :"
 
 #: gammu/gammu.c:789
 msgid "-c / --config <filename> ... name of configuration file"
@@ -1765,9 +1766,10 @@ msgstr ""
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
 msgstr ""
 
+# type: Plain text
 #: gammu/gammu.c:794
 msgid "Commands can be specified with or without leading --."
-msgstr ""
+msgstr "Les commandes peuvent être spécifiées avec ou sans \"--\""
 
 #: gammu/gammu.c:797
 msgid ""
@@ -1963,7 +1965,7 @@ msgstr ""
 #: gammu/message.c:175
 #, c-format
 msgid "Pager"
-msgstr ""
+msgstr "Pager"
 
 #: gammu/message.c:179
 msgid "Validity"
@@ -2949,7 +2951,7 @@ msgstr ""
 
 #: gammu/misc.c:1938
 msgid "Personal"
-msgstr ""
+msgstr "Personnel"
 
 #: gammu/misc.c:1943
 msgid "Vibrate first"

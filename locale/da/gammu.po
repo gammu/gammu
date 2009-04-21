@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-03-23 10:27+0100\n"
+"POT-Creation-Date: 2009-04-21 12:36+0200\n"
 "PO-Revision-Date: 2009-02-02 18:24+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -497,7 +497,7 @@ msgstr ""
 
 #: gammu/calendar.c:41 gammu/calendar.c:692
 msgid "Call"
-msgstr ""
+msgstr "Opring"
 
 #: gammu/calendar.c:44 gammu/calendar.c:695
 msgid "Meeting"
@@ -521,7 +521,7 @@ msgstr ""
 
 #: gammu/calendar.c:59 gammu/calendar.c:710 gammu/calendar.c:815
 msgid "Alarm"
-msgstr ""
+msgstr "Alarm"
 
 #: gammu/calendar.c:62 gammu/calendar.c:713
 msgid "Daily alarm"
@@ -609,7 +609,7 @@ msgstr ""
 
 #: gammu/calendar.c:141
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #: gammu/calendar.c:148
 msgid "Stop"
@@ -637,7 +637,7 @@ msgstr ""
 #: helper/memory-display.c:123 helper/message-display.c:430
 #, c-format
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: gammu/calendar.c:207 gammu/calendar.c:884
 msgid "Description"
@@ -652,7 +652,7 @@ msgstr ""
 #: gammu/memory.c:146 gammu/message.c:163 gammu/misc.c:1683 gammu/misc.c:1716
 #: gammu/misc.c:1977 gammu/misc.c:2086
 msgid "Location"
-msgstr ""
+msgstr "Lokation"
 
 #: gammu/calendar.c:227 gammu/calendar.c:835 helper/memory-display.c:56
 msgid "Private"
@@ -840,7 +840,7 @@ msgstr ""
 
 #: gammu/calendar.c:516 gammu/calendar.c:519 gammu/mms.c:95
 msgid "Date"
-msgstr ""
+msgstr "Dato"
 
 #: gammu/calendar.c:517
 msgid "Every day"
@@ -877,11 +877,11 @@ msgstr ""
 #: gammu/calendar.c:774 gammu/calendar.c:793 gammu/message.c:101
 #: gammu/misc.c:1908 gammu/misc.c:1951
 msgid "Unknown"
-msgstr ""
+msgstr "Ukendt"
 
 #: gammu/calendar.c:777
 msgid "Priority"
-msgstr ""
+msgstr "Prioritet"
 
 #: gammu/calendar.c:780
 msgid "Low"
@@ -897,7 +897,7 @@ msgstr ""
 
 #: gammu/calendar.c:789
 msgid "None"
-msgstr ""
+msgstr "Ingen"
 
 #: gammu/calendar.c:800
 msgid "Due time"
@@ -909,7 +909,7 @@ msgstr ""
 
 #: gammu/calendar.c:810
 msgid "Completed"
-msgstr ""
+msgstr "Færdig"
 
 #: gammu/calendar.c:845 gammu/calendar.c:850 helper/memory-display.c:39
 #: helper/memory-display.c:49 helper/memory-display.c:51
@@ -1555,7 +1555,7 @@ msgstr ""
 #: gammu/misc.c:1687 gammu/misc.c:1726 gammu/misc.c:1991 gammu/mms.c:112
 #: helper/memory-display.c:130 helper/message-display.c:242
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #: gammu/gammu.c:135
 #, c-format
@@ -1938,7 +1938,7 @@ msgstr ""
 
 #: gammu/message.c:167 gammu/misc.c:1992 gammu/misc.c:2189
 msgid "Number"
-msgstr ""
+msgstr "Nummer"
 
 #: gammu/message.c:168
 msgid "Default number"
@@ -2658,7 +2658,7 @@ msgstr ""
 
 #: gammu/misc.c:1369 gammu/misc.c:1415
 msgid "Normal"
-msgstr ""
+msgstr "Normal"
 
 #: gammu/misc.c:1371 gammu/misc.c:1417
 msgid "Secure"
@@ -3126,7 +3126,7 @@ msgstr ""
 
 #: gammu/mms.c:100
 msgid "Delivery report"
-msgstr ""
+msgstr "Modtagelsesmeddelelse"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
@@ -3437,7 +3437,7 @@ msgstr ""
 
 #: helper/memory-display.c:139
 msgid "State"
-msgstr ""
+msgstr "Status"
 
 #: helper/memory-display.c:140
 msgid "Zip code"
@@ -3669,7 +3669,7 @@ msgstr ""
 #: helper/message-display.c:225 helper/message-display.c:278
 #, c-format
 msgid "Sent"
-msgstr ""
+msgstr "Sendt"
 
 #: helper/message-display.c:162 helper/message-display.c:279
 #, c-format

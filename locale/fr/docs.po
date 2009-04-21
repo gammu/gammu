@@ -5,16 +5,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.23.92\n"
+"Project-Id-Version: Gammu-docs 1.24.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-04-15 11:50+0300\n"
 "PO-Revision-Date: 2009-04-14 11:27+0200\n"
 "Last-Translator: FELICITE Lionel <deogracia@free.fr>\n"
 "Language-Team: none\n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 1.2.1\n"
 
