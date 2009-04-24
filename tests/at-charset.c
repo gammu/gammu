@@ -26,6 +26,22 @@ char latin1iso88591[] = { 0xed, 0xed, 0xed, 0xe1, 0xe1, 0xe1, 0xe1, 0xe1, 0xe9, 
 char latin2iso88592[] = { 0xed, 0xec, 0xe1, 0xb9, 0xfd, 0xf8, 0xe8, 0xfd, 0xed, 0xe8, 0xf8, 0xec, 0x00 };
 #endif
 
+#define strconv_test_result(expected, current, length) \
+{ \
+	int val;\
+	val = strncmp(expected, current, length); \
+	if (val != 0) {\
+		fprintf(stderr, "Test \"%s\" failed ('%s', '%s')!\n", ""#expected, expected, current); \
+		exit(2); \
+	} \
+	val = strcmp(expected, current); \
+	if (val != 0) {\
+		fprintf(stderr, "Test \"%s\" failed ('%s', '%s')!\n", ""#expected, expected, current); \
+		exit(2); \
+	} \
+}
+
+
 int main(int argc UNUSED, char **argv UNUSED)
 {
 	GSM_Debug_Info *debug_info;
@@ -60,8 +76,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	Priv->Charset = AT_CHARSET_UTF8;
 	error = ATGEN_EncodeText(s, latin2text, sizeof(latin2text) / 2, buffer, sizeof(buffer), &result);
 	gammu_test_result(error, "Encode - 1");
-	test_result(strcmp(latin2utf8, buffer) == 0);
-	test_result(strncmp(latin2utf8, buffer, result) == 0);
+	strconv_test_result(latin2utf8, buffer, result);
 
 	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
 	gammu_test_result(error, "Decode - 1");
@@ -70,8 +85,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	Priv->Charset = AT_CHARSET_UTF8;
 	error = ATGEN_EncodeText(s, latin1text, sizeof(latin1text) / 2, buffer, sizeof(buffer), &result);
 	gammu_test_result(error, "Encode - 2");
-	test_result(strncmp(latin1utf8, buffer, result) == 0);
-	test_result(strcmp(latin1utf8, buffer) == 0);
+	strconv_test_result(latin1utf8, buffer, result);
 
 	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
 	gammu_test_result(error, "Decode - 2");
@@ -81,8 +95,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	Priv->Charset = AT_CHARSET_PCCP437;
 	error = ATGEN_EncodeText(s, latin1text, sizeof(latin1text) / 2, buffer, sizeof(buffer), &result);
 	gammu_test_result(error, "Encode - 3");
-	test_result(strncmp(latin1cp437, buffer, result) == 0);
-	test_result(strcmp(latin1cp437, buffer) == 0);
+	strconv_test_result(latin1cp437, buffer, result);
 
 	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
 	gammu_test_result(error, "Decode - 3");
@@ -91,8 +104,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	Priv->Charset = AT_CHARSET_ISO88591;
 	error = ATGEN_EncodeText(s, latin1text, sizeof(latin1text) / 2, buffer, sizeof(buffer), &result);
 	gammu_test_result(error, "Encode - 4");
-	test_result(strncmp(latin1iso88591, buffer, result) == 0);
-	test_result(strcmp(latin1iso88591, buffer) == 0);
+	strconv_test_result(latin1iso88591, buffer, result);
 
 	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
 	gammu_test_result(error, "Decode - 4");
@@ -101,8 +113,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	Priv->Charset = AT_CHARSET_ISO88592;
 	error = ATGEN_EncodeText(s, latin2text, sizeof(latin2text) / 2, buffer, sizeof(buffer), &result);
 	gammu_test_result(error, "Encode - 5");
-	test_result(strncmp(latin2iso88592, buffer, result) == 0);
-	test_result(strcmp(latin2iso88592, buffer) == 0);
+	strconv_test_result(latin2iso88592, buffer, result);
 
 	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
 	gammu_test_result(error, "Decode - 5");
@@ -113,8 +124,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	Priv->Charset = AT_CHARSET_UCS2;
 	error = ATGEN_EncodeText(s, latin2text, sizeof(latin2text) / 2, buffer, sizeof(buffer), &result);
 	gammu_test_result(error, "Encode - 6");
-	test_result(strcmp(latin2ucs, buffer) == 0);
-	test_result(strncmp(latin2ucs, buffer, result) == 0);
+	strconv_test_result(latin2ucs, buffer, result);
 
 	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
 	gammu_test_result(error, "Decode - 6");
@@ -123,8 +133,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	Priv->Charset = AT_CHARSET_UCS2;
 	error = ATGEN_EncodeText(s, latin1text, sizeof(latin1text) / 2, buffer, sizeof(buffer), &result);
 	gammu_test_result(error, "Encode - 7");
-	test_result(strncmp(latin1ucs, buffer, result) == 0);
-	test_result(strcmp(latin1ucs, buffer) == 0);
+	strconv_test_result(latin1ucs, buffer, result);
 
 	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
 	gammu_test_result(error, "Decode - 7");

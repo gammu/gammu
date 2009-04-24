@@ -23,6 +23,7 @@ ChangeLog
 [-] * Better detect some weird phone states (bug #866).
 [-] * Fix handling of caller group in Python bindings (bug #870).
 [-] * Correctly detect empty entries from Motorola.
+[-] * Better error reporting from at-charset test.
     
 20090415 - 1.24.0
 
