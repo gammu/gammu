@@ -15,7 +15,6 @@ This file is probably not usable for anybody except me ;-).
 
 - add support for acquiring number of messages in sending queue
 
-
 - split a bit some huge source files
     find . -type f -name '*.c' -not -path '*.svn*' | xargs stat -c '%s %n' | sort -n
         64833 ./gammu/misc.c
