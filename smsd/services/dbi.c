@@ -911,7 +911,7 @@ static GSM_Error SMSDDBI_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 
 /* Adds SMS to Outbox */
 static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
-					   GSM_SMSDConfig * Config)
+					   GSM_SMSDConfig * Config, char *NewID)
 {
 	char buffer[10000], buffer2[400];
 	int i;
@@ -1073,6 +1073,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 		dbi_result_free(Res);
 	}
 	SMSD_Log(0, Config, "Written message with ID %u", ID);
+	if (NewID != NULL) sprintf(NewID, "%d", ID);
 	return ERR_NONE;
 }
 

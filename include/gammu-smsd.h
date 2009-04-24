@@ -79,12 +79,14 @@ typedef struct {
  *
  * \param Config SMSD configuration pointer.
  * \param sms Message data to send.
+ * \param NewID Pointer to string where ID of new message will be
+ * written. Can be NULL and then it is ignored.
  *
  * \return Error code
  *
  * \ingroup SMSD
  */
-GSM_Error SMSD_InjectSMS(GSM_SMSDConfig * Config, GSM_MultiSMSMessage * sms);
+GSM_Error SMSD_InjectSMS(GSM_SMSDConfig * Config, GSM_MultiSMSMessage * sms, char *NewID);
 
 /**
  * Gets SMSD status via shared memory.

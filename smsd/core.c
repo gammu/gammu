@@ -1280,7 +1280,7 @@ done:
 	return Config->failure;
 }
 
-GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms)
+GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms, char *NewID)
 {
 	GSM_SMSDService		*Service;
 	GSM_Error error;
@@ -1291,7 +1291,7 @@ GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms)
 	error = SMSD_Init(Config, Service);
 	if (error != ERR_NONE) return ERR_UNKNOWN;
 
-	error = Service->CreateOutboxSMS(sms, Config);
+	error = Service->CreateOutboxSMS(sms, Config, NewID);
 	return error;
 }
 

@@ -169,8 +169,8 @@ static char SMSD_InjectSMS__doc__[] =
 "Decodes multi part SMS message.\n\n"
 "@param Message: Nessage to inject (can be multipart)\n"
 "@type Message: list\n"
-"@return: None\n"
-"@rtype: None\n"
+"@return: ID of inserted message\n"
+"@rtype: string\n"
 ;
 
 static PyObject *
@@ -180,6 +180,7 @@ Py_SMSD_InjectSMS(SMSDObject *self, PyObject *args, PyObject *kwds)
     static char                 *kwlist[] = {"Message", NULL};
     PyObject                    *value;
     GSM_Error                   error;
+    char                        newid[200];
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!", kwlist,
                 &PyList_Type, &(value)))
@@ -188,12 +189,12 @@ Py_SMSD_InjectSMS(SMSDObject *self, PyObject *args, PyObject *kwds)
     if (!MultiSMSFromPython(value, &smsin)) return NULL;
 
     Py_BEGIN_ALLOW_THREADS
-    error = SMSD_InjectSMS(self->config, &smsin);
+    error = SMSD_InjectSMS(self->config, &smsin, newid);
     Py_END_ALLOW_THREADS
 
     if (!checkError(NULL, error, "SMSD_InjectSMS")) return NULL;
 
-    Py_RETURN_NONE;
+    return Py_BuildValue("s", newid);
 }
 
 static struct PyMethodDef SMSD_methods[] = {

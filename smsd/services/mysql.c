@@ -539,7 +539,7 @@ static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 }
 
 /* Adds SMS to Outbox */
-static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config)
+static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *NewID)
 {
 	char			buffer[10000],buffer2[400],buffer5[400];
 	int 			i,ID = 0;
@@ -652,6 +652,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		}
 	}
 	SMSD_Log(0, Config, "Written message with ID %i", ID);
+	if (NewID != NULL) sprintf(NewID, "%d", ID);
   	return ERR_NONE;
 }
 

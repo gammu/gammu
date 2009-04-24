@@ -161,6 +161,7 @@ int main(int argc, char **argv)
 	GSM_Message_Type type = SMS_SMSD;
 	GSM_SMSDConfig *config;
 	const char program_name[] = "gammu-smsd-inject";
+	char newid[200];
 
 	SMSD_Parameters params = {
 		NULL,
@@ -205,12 +206,13 @@ int main(int argc, char **argv)
 		return 2;
 	}
 
-	error = SMSD_InjectSMS(config, &sms);
+	error = SMSD_InjectSMS(config, &sms, newid);
 	if (error != ERR_NONE) {
 		printf("Failed to inject message: %s\n", GSM_ErrorString(error));
 		SMSD_FreeConfig(config);
 		return 3;
 	}
+	printf("Written message with ID %s\n", newid);
 
 	SMSD_FreeConfig(config);
 
