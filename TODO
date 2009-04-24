@@ -14,6 +14,7 @@ This file is probably not usable for anybody except me ;-).
     - add support for setting processed flag via API
 
 - add support for acquiring number of messages in sending queue
+    - this should not require database knowledge
 
 - split a bit some huge source files
     find . -type f -name '*.c' -not -path '*.svn*' | xargs stat -c '%s %n' | sort -n
