@@ -22,6 +22,7 @@ ChangeLog
 [-] * Increase timeout for IrDA phonet (bug #867).
 [-] * Better detect some weird phone states (bug #866).
 [-] * Fix handling of caller group in Python bindings (bug #870).
+[-] * Correctly detect empty entries from Motorola.
     
 20090415 - 1.24.0
 

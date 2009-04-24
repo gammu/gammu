@@ -210,6 +210,9 @@ GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Get line from reply */
 		str = GetLineString(msg.Buffer, &Priv->Lines, 2);
 
+		/* Detect empty entry */
+		if (strcmp(str, "OK") == 0) return ERR_EMPTY;
+
 		/*
 		 * Parse reply string
 		 *
