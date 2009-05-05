@@ -106,7 +106,7 @@ _strptime(const char *buf, const char *fmt, struct tm *tm, int initialize)
 {
         unsigned char c;
         unsigned char *bp;
-        size_t len;
+        size_t len = 0;
         int alt_format, i;
         static int century, relyear;
 
