@@ -485,7 +485,12 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		if (Block[0] == N7110_PBK_DATETIME) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
 			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date, true, DayMonthReverse);
-			entry->EntriesNum ++;
+			if (CheckDate(&entry->Entries[entry->EntriesNum].Date) &&
+					CheckDate(&entry->Entries[entry->EntriesNum].Date)) {
+				entry->EntriesNum ++;
+			} else {
+				smprintf(s, "Datetime seems to be invalid, ignoring!\n");
+			}
 			continue;
 		}
 		if (Block[0] == N6510_PBK_PICTURE_ID) {
