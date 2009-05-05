@@ -10,7 +10,7 @@
 
 #define _XOPEN_SOURCE
 #define _BSD_SOURCE
-#include "../../helper/strptime.c"
+#include "../../helper/strptime.h"
 #include <time.h>
 #include <gammu.h>
 
