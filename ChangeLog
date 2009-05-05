@@ -26,6 +26,7 @@ ChangeLog
 [-] * Better error reporting from at-charset test.
 [+] * smsd-inject now shows ID of injected message.
 [-] * Fix decoding of date in Nokia phonebooks (bug #876).
+[-] * Fix detection of SMS message memories in AT (bug #875).
     
 20090415 - 1.24.0
 

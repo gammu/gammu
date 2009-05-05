@@ -138,7 +138,7 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	smprintf(s, "Getting available SMS memories\n");
-	ATGEN_WaitFor(s, "AT+CPMS=?\r", 20, 0x00, 4, ID_GetSMSMemories);
+	ATGEN_WaitFor(s, "AT+CPMS=?\r", 10, 0x00, 4, ID_GetSMSMemories);
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_SM)) {
 		smprintf(s, "Forcing support for SM storage!\n");
