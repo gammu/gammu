@@ -14,6 +14,7 @@ if (NOT LIBUSB_FOUND)
     find_path(LIBUSB_INCLUDE_DIR NAMES libusb.h
        PATHS
        ${LIBUSB_PKG_INCLUDE_DIRS}
+       /usr/include/libusb-1.0
        /usr/include
        /usr/local/include
     )
