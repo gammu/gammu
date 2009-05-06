@@ -464,6 +464,7 @@ void GetEachSMS(int argc, char *argv[])
 			GetSMSNumber++;
 		}
 		fprintf(stderr,"*");
+		fflush(stderr);
 		start=false;
 	}
 	fprintf(stderr,"\n");
