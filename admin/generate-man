@@ -496,8 +496,26 @@ be written to stdout using ASCII art. When give output file and format, in
 some file formats (like NLM) will be set indicator informing about logo type
 to given.
 '''
-HELP['savefile CALENDAR'] = ''''''
-HELP['savefile TODO'] = ''''''
+HELP['savefile CALENDAR'] = '''Allows to convert between various backup formats which gammu
+supports for calendar events. The file type is guessed (for input file
+guess is based on extension and file content, for output solely on 
+extension).
+
+For example if you want to convert single entry from gammu native 
+backup to vCalendar, you need following command:
+
+    gammu savefile CALENDAR output.vcs myCalendar.backup 260
+'''
+HELP['savefile TODO'] = '''Allows to convert between various backup formats which gammu
+supports for todo events. The file type is guessed (for input file
+guess is based on extension and file content, for output solely on 
+extension).
+
+For example if you want to convert single entry from gammu native 
+backup to vCalendar, you need following command:
+
+    gammu savefile CALENDAR output.vcs myCalendar.backup 260
+'''
 HELP['savefile'] = '''''' 
 HELP['savesms TEXT'] = '''Take text from stdin (or commandline if \\-text specified) 
 and save as text SMS into SIM/phone memory.

@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Březen 23, 2009" "Gammu 1.23.92" "Dokumentace Gammu"
+.TH GAMMU 1 "May  5 2009" "Gammu 1.24.90" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -1123,6 +1123,14 @@ není nastaven čas a datum.
 
 .TP 
 \fBsavefile CALENDAR\fP\fI target.vcs file location\fP
+Allows to convert between various backup formats which gammu supports for
+calendar events. The file type is guessed (for input file guess is based on
+extension and file content, for output solely on extension).
+
+For example if you want to convert single entry from gammu native backup to
+vCalendar, you need following command:
+
+    gammu savefile CALENDAR output.vcs myCalendar.backup 260
 
 .TP 
 \fBsavesms CALENDAR\fP\fI file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
@@ -1257,6 +1265,14 @@ není nastaven čas a datum.
 
 .TP 
 \fBsavefile TODO\fP\fI target.vcs file location\fP
+Allows to convert between various backup formats which gammu supports for
+todo events. The file type is guessed (for input file guess is based on
+extension and file content, for output solely on extension).
+
+For example if you want to convert single entry from gammu native backup to
+vCalendar, you need following command:
+
+    gammu savefile CALENDAR output.vcs myCalendar.backup 260
 
 .TP 
 \fBsavesms TODO\fP\fI file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
@@ -1532,9 +1548,25 @@ supports it).
 
 .TP 
 \fBsavefile CALENDAR\fP\fI target.vcs file location\fP
+Allows to convert between various backup formats which gammu supports for
+calendar events. The file type is guessed (for input file guess is based on
+extension and file content, for output solely on extension).
+
+For example if you want to convert single entry from gammu native backup to
+vCalendar, you need following command:
+
+    gammu savefile CALENDAR output.vcs myCalendar.backup 260
 
 .TP 
 \fBsavefile TODO\fP\fI target.vcs file location\fP
+Allows to convert between various backup formats which gammu supports for
+todo events. The file type is guessed (for input file guess is based on
+extension and file content, for output solely on extension).
+
+For example if you want to convert single entry from gammu native backup to
+vCalendar, you need following command:
+
+    gammu savefile CALENDAR output.vcs myCalendar.backup 260
 
 
 .SS "Specifické pro Nokii"
