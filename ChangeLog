@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2009???? - 1.24.90
+20090512 - 1.24.90
 
 [-] * Fix checking for MPBR (bug #873).
 [-] * Fix reading of calls with wrong timestamp (bug #872).
