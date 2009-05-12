@@ -57,6 +57,7 @@ PostgreSQL
 
 libdbi
     - http://libdbi.sourceforge.net/
+    - required at least version 0.8.2
     - DBI support in SMSD.
         - For testing, please install libdbd-sqlite3
 
