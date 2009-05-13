@@ -951,12 +951,8 @@ void Restore(int argc, char *argv[])
 	bool			Past = true, First;
 	bool			Found, DoRestore;
 
-	error=GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], false));
-	if (error!=ERR_NOTIMPLEMENTED) {
-		Print_Error(error);
-	} else {
-		printf_warn("%s\n", _("Some data not read from file. It can be damaged or restoring some settings from this file format not implemented (maybe higher Gammu required ?)"));
-	}
+	error = GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], false));
+	Print_Error(error);
 
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
