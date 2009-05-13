@@ -254,7 +254,7 @@ rm -rf %buildroot
 
 %changelog
 * Fri Apr  3 2009 Michal Čihař <michal@cihar.com> - 1.23.93-1
-- do not define own %version, %name, %rel
+- do not define own %%version, %%name, %%rel
 - always use pkgconfig, pkg-config provides it
 - do not delete build root on SUSE
 - fix some package names (DBI and libusb) for Fedora
