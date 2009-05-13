@@ -235,7 +235,7 @@ cat libgammu.lang >> %{name}.lang
 %_mandir/man7/*
 %lang(cs) %_mandir/cs
 %doc %gammu_docdir
-/etc/bash_completion.d/gammu
+%config /etc/bash_completion.d/gammu
 
 %files devel
 %defattr(-,root,root)
