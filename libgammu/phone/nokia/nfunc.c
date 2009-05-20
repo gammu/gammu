@@ -328,6 +328,11 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 	return count;
 }
 
+/**
+ * Decodes nokia phonebook.
+ *
+ * \bug Type casting MemoryType to int is ugly.
+ */
 GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				 GSM_MemoryEntry 	*entry,
 				 GSM_Bitmap 		*bitmap,
@@ -344,14 +349,14 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 	entry->EntriesNum 	= 0;
 
-	if (entry->MemoryType==MEM7110_CG) {
+	if ((int)entry->MemoryType==MEM7110_CG) {
 		bitmap->Text[0] 		= 0x00;
 		bitmap->Text[1] 		= 0x00;
 		bitmap->DefaultBitmap 		= true;
 		bitmap->DefaultRingtone 	= true;
 		bitmap->FileSystemPicture 	= false;
 	}
-	if (entry->MemoryType==MEM6510_CG2 && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
+	if ((int)entry->MemoryType==MEM6510_CG2 && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
 		bitmap->DefaultName 		= false;
 		bitmap->DefaultBitmap 		= true;
 		bitmap->DefaultRingtone 	= true;
@@ -469,7 +474,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->Entries[entry->EntriesNum].EntryType=Type;
 			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			if (Block[0] == N7110_PBK_NAME) {
-				if (entry->MemoryType == MEM7110_CG || entry->MemoryType == MEM6510_CG2) {
+				if ((int)entry->MemoryType == MEM7110_CG || (int)entry->MemoryType == MEM6510_CG2) {
 					/* No text? */
 					if (Block[5] < 2) {
 						bitmap->Text[0] = 0;
@@ -494,7 +499,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			continue;
 		}
 		if (Block[0] == N6510_PBK_PICTURE_ID) {
-			if (entry->MemoryType==MEM6510_CG2) {
+			if ((int)entry->MemoryType==MEM6510_CG2) {
 				bitmap->FileSystemPicture = true;
 				smprintf(s, "Picture ID \"%i\"\n",Block[10]*256+Block[11]);
 				bitmap->PictureID = Block[10]*256+Block[11];
@@ -738,7 +743,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 
 		if (Block[0] == N7110_PBK_RINGTONE_ID) {
-			if (entry->MemoryType==MEM7110_CG) {
+			if ((int)entry->MemoryType==MEM7110_CG) {
 				bitmap->RingtoneID=Block[5];
 				if (Block[5] == 0x00) bitmap->RingtoneID=Block[7];
 				smprintf(s, "Ringtone ID : %i\n",bitmap->RingtoneID);
@@ -753,7 +758,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			continue;
 		}
 		if (Block[0] == N7110_PBK_LOGOON) {
-			if (entry->MemoryType==MEM7110_CG) {
+			if ((int)entry->MemoryType==MEM7110_CG) {
 				bitmap->BitmapEnabled=(Block[5]==0x00 ? false : true);
 				smprintf(s, "Logo : %s\n", bitmap->BitmapEnabled==true ? "enabled":"disabled");
 			} else {
@@ -762,7 +767,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			continue;
 		}
 		if (Block[0] == N7110_PBK_GROUPLOGO) {
-			if (entry->MemoryType==MEM7110_CG) {
+			if ((int)entry->MemoryType==MEM7110_CG) {
 				smprintf(s, "Caller logo\n");
 				PHONE_DecodeBitmap(GSM_NokiaCallerLogo, Block+10, bitmap);
 				bitmap->DefaultBitmap = false;
@@ -786,7 +791,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 		/* 6210 5.56, SIM speed dials or ME with 1 number */
 		if (Block[0] == N7110_PBK_SIM_SPEEDDIAL) {
-			if (entry->MemoryType==MEM7110_SP) {
+			if ((int)entry->MemoryType==MEM7110_SP) {
 #ifdef DEBUG
 				smprintf(s, "location %i\n",(Block[6]*256+Block[7]));
 #endif
@@ -801,7 +806,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 
 		if (Block[0] == N7110_PBK_SPEEDDIAL) {
-			if (entry->MemoryType==MEM7110_SP) {
+			if ((int)entry->MemoryType==MEM7110_SP) {
 #ifdef DEBUG
 				switch (Block[12]) {
 					case 0x05: smprintf(s, "ME\n"); break;
@@ -824,7 +829,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == N6510_PBK_RINGTONEFILE_ID) {
 			smprintf(s, "Ringtone ID with possibility of using filesystem\n");
-			if (entry->MemoryType==MEM7110_CG) {
+			if ((int)entry->MemoryType==MEM7110_CG) {
 				if (Block[9] == 0x01) {
 					smprintf(s, "Filesystem ringtone ID: %02x\n",Block[10]*256+Block[11]);
 					bitmap->FileSystemRingtone = true;
@@ -834,7 +839,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				}
 				bitmap->RingtoneID	= Block[10]*256+Block[11];
 				bitmap->DefaultRingtone = false;
-			} else if (entry->MemoryType==MEM6510_CG2) {
+			} else if ((int)entry->MemoryType==MEM6510_CG2) {
 				/* FIXME */
 				smprintf(s, "Internal ringtone ID: %02x\n",Block[10]*256+Block[11]);
 				bitmap->FileSystemRingtone 	= false;
