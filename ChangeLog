@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2009???? - 1.24.91
+
+[-] * Fix code problems caught by GCC 4.5.
     
 20090512 - 1.24.90
 

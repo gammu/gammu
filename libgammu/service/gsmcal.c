@@ -1048,7 +1048,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, G
 	error = VC_StoreLine(Buffer, buff_len, Length,  "BEGIN:VTODO");
 	if (error != ERR_NONE) return error;
 
-	if (Version == Mozilla_iCalendar) {
+	if (Version == Mozilla_VToDo) {
 		/* Mozilla Calendar needs UIDs. http://www.innerjoin.org/iCalendar/events-and-uids.html */
 		error = VC_StoreLine(Buffer, buff_len, Length,  "UID:calendar-%i",note->Location);
 		if (error != ERR_NONE) return error;
@@ -1115,14 +1115,14 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, G
 				break;
 			case TODO_ALARM_DATETIME :
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
-				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
+				if (Version != Mozilla_VToDo || note->Type != GSM_CAL_BIRTHDAY) {
 					error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "AALARM");
 					if (error != ERR_NONE) return error;
 				}
 				break;
 			case TODO_SILENT_ALARM_DATETIME:
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
-				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
+				if (Version != Mozilla_VToDo || note->Type != GSM_CAL_BIRTHDAY) {
 					error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "DALARM");
 					if (error != ERR_NONE) return error;
 				}
@@ -1136,24 +1136,24 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, G
 				if (error != ERR_NONE) return error;
 				break;
 			case TODO_TEXT:
-				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "SUMMARY", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "SUMMARY", Version == Mozilla_VToDo);
 				if (error != ERR_NONE) return error;
 				break;
 			case TODO_DESCRIPTION:
-				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "DESCRIPTION", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "DESCRIPTION", Version == Mozilla_VToDo);
 				if (error != ERR_NONE) return error;
 				break;
 			case TODO_PHONE:
 				/* There is no specific field for phone number, use description */
-				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "DESCRIPTION", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "DESCRIPTION", Version == Mozilla_VToDo);
 				if (error != ERR_NONE) return error;
 				break;
 			case TODO_LOCATION:
-				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "LOCATION", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "LOCATION", Version == Mozilla_VToDo);
 				if (error != ERR_NONE) return error;
 				break;
 			case TODO_LUID:
-				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "X-IRMC-LUID", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "X-IRMC-LUID", Version == Mozilla_VToDo);
 				if (error != ERR_NONE) return error;
 				break;
 			case TODO_PRIVATE:
@@ -1932,12 +1932,12 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 			}
 
 			if (strncmp(Line, "UID:", 4) == 0) {
-				ReadVCALText(Line, "UID", Buff, ToDoVer == Mozilla_iCalendar);  /*  Any use for UIDs? */
+				ReadVCALText(Line, "UID", Buff, ToDoVer == Mozilla_VToDo);  /*  Any use for UIDs? */
 				break;
 			}
 #if 0
 			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-UNITS:")) {
-				if (ReadVCALText(Line, "X-MOZILLA-ALARM-DEFAULT-UNITS", Buff, ToDoVer == Mozilla_iCalendar)) {
+				if (ReadVCALText(Line, "X-MOZILLA-ALARM-DEFAULT-UNITS", Buff, ToDoVer == Mozilla_VToDo)) {
 					unit = ReadVCALTimeUnits(DecodeUnicodeString(Buff));
 					break;
 				}
@@ -1988,25 +1988,25 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				ToDo->EntriesNum++;
 			}
 
-			if ((ReadVCALText(Line, "SUMMARY", Buff, ToDoVer == Mozilla_iCalendar))) {
+			if ((ReadVCALText(Line, "SUMMARY", Buff, ToDoVer == Mozilla_VToDo))) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
 				ToDo->EntriesNum++;
 			}
-			if ((ReadVCALText(Line, "DESCRIPTION", Buff, ToDoVer == Mozilla_iCalendar))) {
+			if ((ReadVCALText(Line, "DESCRIPTION", Buff, ToDoVer == Mozilla_VToDo))) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_DESCRIPTION;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
 				ToDo->EntriesNum++;
 			}
-			if ((ReadVCALText(Line, "LOCATION", Buff, ToDoVer == Mozilla_iCalendar))) {
+			if ((ReadVCALText(Line, "LOCATION", Buff, ToDoVer == Mozilla_VToDo))) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LOCATION;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
 				ToDo->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "PRIORITY", Buff, ToDoVer == Mozilla_iCalendar)) {
+			if (ReadVCALText(Line, "PRIORITY", Buff, ToDoVer == Mozilla_VToDo)) {
 				if (atoi(DecodeUnicodeString(Buff))==3) ToDo->Priority = GSM_Priority_Low;
 				else if (atoi(DecodeUnicodeString(Buff))==2) ToDo->Priority = GSM_Priority_Medium;
 				else if (atoi(DecodeUnicodeString(Buff))==1) ToDo->Priority = GSM_Priority_High;
@@ -2017,13 +2017,13 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				ToDo->Entries[ToDo->EntriesNum].Number	  = 1;
 				ToDo->EntriesNum++;
 			}
-			if ((ReadVCALText(Line, "X-IRMC-LUID", Buff, ToDoVer == Mozilla_iCalendar))) {
+			if ((ReadVCALText(Line, "X-IRMC-LUID", Buff, ToDoVer == Mozilla_VToDo))) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LUID;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
 				ToDo->EntriesNum++;
 			}
-			if ((ReadVCALText(Line, "CLASS", Buff, ToDoVer == Mozilla_iCalendar))) {
+			if ((ReadVCALText(Line, "CLASS", Buff, ToDoVer == Mozilla_VToDo))) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_PRIVATE;
 				if (mywstrncasecmp(Buff, "\0P\0U\0B\0L\0I\0C\0", 0)) {
 					ToDo->Entries[ToDo->EntriesNum].Number = 0;
