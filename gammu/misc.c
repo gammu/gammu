@@ -70,7 +70,7 @@ GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone)
 
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (gshutdown) break;
-		if (ringtone.NoteTone.Commands[i].Type != RING_NOTETONE) continue;
+		if (ringtone.NoteTone.Commands[i].Type != RING_Note) continue;
 		error=PHONE_RTTLPlayOneNote(gsm,ringtone.NoteTone.Commands[i].Note,first);
 		if (error!=ERR_NONE) return error;
 		first = false;
