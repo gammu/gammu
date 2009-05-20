@@ -1255,7 +1255,7 @@ static GSM_Error N6510_AddToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	req[39]	= DT.Minute;
 
 	if (Alarm != -1) {
-		if (ToDo->Entries[Alarm].EntryType == CAL_SILENT_ALARM_DATETIME)
+		if (ToDo->Entries[Alarm].EntryType == TODO_SILENT_ALARM_DATETIME)
 		{
 			req[22] = 0x00; req[23] = 0x00; req[24] = 0x00; req[25] = 0x00;
 		}
