@@ -607,6 +607,15 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 			&& strchr(input, '@') != NULL) {
 			charset = AT_CHARSET_UTF8;
 		}
+		/*
+		 * Phone number are unusally not that long
+		 */
+		if  (charset == AT_CHARSET_GSM
+			&& phone
+			&& length >= 16
+			&& ATGEN_IsUCS2(input, length)) {
+			charset = AT_CHARSET_UCS2;
+		}
 	}
 
 	/* Check for broken phones */

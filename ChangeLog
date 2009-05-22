@@ -24,6 +24,7 @@ ChangeLog
 [-] * Add ID for Nokia 5220 (bug #910).
 [-] * Handle SMSC error code in 6510 driver (bug #910).
 [-] * Disable gcc warnings about non literal format strings (bug #901).
+[-] * Add more fuzzy logic to detect bad encoding from phone (bug #874).
     
 20090512 - 1.24.90
 
