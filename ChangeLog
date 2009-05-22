@@ -18,6 +18,8 @@ ChangeLog
 2009???? - 1.24.91
 
 [-] * Fix code problems caught by GCC 4.5.
+[-] * Compile static libraries with -fPIC (they might be later linked
+      into shared ones) (bug #909).
     
 20090512 - 1.24.90
 
