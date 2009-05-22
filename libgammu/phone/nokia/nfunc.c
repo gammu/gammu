@@ -1570,6 +1570,9 @@ GSM_Error N71_65_ReplyGetMemoryError(unsigned char error, GSM_StateMachine *s)
 	case 0x21:
 		smprintf(s, "Wait for synchronisation???\n");
 		return ERR_WORKINPROGRESS;
+	case 0x24:
+		smprintf(s, "No own number???\n");
+		return ERR_NOTSUPPORTED;
 	case 0x27:
 		smprintf(s, "No PIN\n");
 		return ERR_SECURITYERROR;
