@@ -155,6 +155,9 @@ static GSM_Error N6510_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *
 		case 0x02:
 			smprintf(s, "SMSC empty\n");
 			return ERR_INVALIDLOCATION;
+		case 0x09:
+			smprintf(s, "SMSC empty???\n");
+			return ERR_INVALIDLOCATION;
 		default:
 			smprintf(s, "Unknown SMSC state: %02x\n",msg.Buffer[4]);
 			return ERR_UNKNOWNRESPONSE;

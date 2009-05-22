@@ -22,6 +22,7 @@ ChangeLog
       into shared ones) (bug #909).
 [-] * Handle own number error code in 6510 driver (bug #910).
 [-] * Add ID for Nokia 5220 (bug #910).
+[-] * Handle SMSC error code in 6510 driver (bug #910).
     
 20090512 - 1.24.90
 
