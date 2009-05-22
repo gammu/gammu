@@ -439,6 +439,7 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     MACRO_TUNE_COMPILER("-Wshadow")
     MACRO_TUNE_COMPILER("-Wformat=2")
     MACRO_TUNE_COMPILER("-Wno-format-y2k")
+    MACRO_TUNE_COMPILER("-Wno-format-nonliteral")
     # Win32 implementation of gettext does not allow us to use so strict warnings
     if (WIN32 AND NOT CYGWIN)
         MACRO_TUNE_COMPILER("-Wno-format-nonliteral")
