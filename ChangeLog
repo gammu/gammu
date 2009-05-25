@@ -27,6 +27,7 @@ ChangeLog
 [-] * Add more fuzzy logic to detect bad encoding from phone (bug #874).
 [-] * Add ID for Nokia 7500 and Nokia 7210s.
 [-] * Improve searching for Bluetooth stack on OS X.
+[-] * Fix ctype compile time warnings on NetBSD (bug #908).
     
 20090512 - 1.24.90
 

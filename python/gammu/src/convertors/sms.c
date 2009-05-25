@@ -76,7 +76,7 @@ GSM_SMSValidity StringToSMSValidity(char *s){
     }
     len = strlen(s);
     type = s[len - 1];
-    if (isdigit(type)) type = 'M';
+    if (isdigit((int)type)) type = 'M';
     val = atoi(s);
 
     if (val <= 0) {

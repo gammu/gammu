@@ -327,7 +327,7 @@ static void CheckVersion(int argc, char *argv[])
 		if (pos != NULL) {
 			pos += strlen(RSS_STABLE_STRING);
 
-			for (i = 0; i < sizeof(new_version) - 1 && (isdigit(pos[i]) || pos[i] == '.'); i++) {
+			for (i = 0; i < sizeof(new_version) - 1 && (isdigit((int)pos[i]) || pos[i] == '.'); i++) {
 				new_version[i] = pos[i];
 			}
 
@@ -345,7 +345,7 @@ static void CheckVersion(int argc, char *argv[])
 		if (pos != NULL) {
 			pos += strlen(RSS_TESTING_STRING);
 
-			for (i = 0; i < sizeof(new_version) - 1 && (isdigit(pos[i]) || pos[i] == '.'); i++) {
+			for (i = 0; i < sizeof(new_version) - 1 && (isdigit((int)pos[i]) || pos[i] == '.'); i++) {
 				new_version[i] = pos[i];
 			}
 
@@ -434,7 +434,7 @@ static void RunBatch(int argc, char *argv[])
 
 		/* Skip all traling whitespace */
 		for (pos = strlen(ln) - 1; pos >= 0; pos--) {
-			if (isspace(ln[pos])) {
+			if (isspace((int)ln[pos])) {
 				ln[pos] = 0;
 			} else {
 				break;
@@ -1099,7 +1099,7 @@ int main(int argc, char *argv[])
 			Print_Error(error);
 			debug_file_set = true;
 			start += 2;
-		} else if (isdigit(argv[i][0])) {
+		} else if (isdigit((int)argv[i][0])) {
 			/* Compatibilitty: config file section */
 			only_config = atoi(argv[i]);
 			if (only_config >= 0)

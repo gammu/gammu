@@ -700,7 +700,7 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 				case 32: Note->Duration = Duration_1_32	 ; break;
 			}
 			/* We skip all numbers from duration specification */
-			while(isdigit(buffer[i])) i++;
+			while(isdigit((int)buffer[i])) i++;
 
 			/* Some files can have special duration here */
 			if (buffer[i]=='.') {
@@ -745,7 +745,7 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 			}
 
 			/* Scale */
-			if (Note->Note!=Note_Pause && isdigit(buffer[i])) {
+			if (Note->Note!=Note_Pause && isdigit((int)buffer[i])) {
 				switch (atoi(buffer+i)) {
 					case  4: Note->Scale = Scale_440 ; break;
 					case  5: Note->Scale = Scale_880 ; break;

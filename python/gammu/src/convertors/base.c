@@ -42,7 +42,7 @@ bool GetBoolFromDict(PyObject *dict, const char *key) {
         }
         if (PyString_Check(o)) {
             s = PyString_AsString(o);
-            if (isdigit(s[0])) {
+            if (isdigit((int)s[0])) {
                 i = atoi(s);
                 if (i == 0) return false;
                 else return true;
@@ -85,7 +85,7 @@ int GetIntFromDict(PyObject *dict, const char *key) {
 
     if (PyString_Check(o)) {
         s = PyString_AsString(o);
-        if (isdigit(s[0])) {
+        if (isdigit((int)s[0])) {
             i = atoi(s);
             return i;
         } else {

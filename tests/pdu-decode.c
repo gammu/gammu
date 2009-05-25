@@ -71,7 +71,7 @@ int pdu_get_number(const char *buffer, const int semioctet) {
 	memset(out, 0, 2 * length);
 
 	for (i = 0; i < (length - 1) * 2; i++) {
-		if (!isxdigit(buffer[4 + i])) {
+		if (!isxdigit((int)buffer[4 + i])) {
 			printf("Non hex digit in PDU (%s)!\n",
 					buffer + 4 +  i);
 			free(out);
@@ -101,7 +101,7 @@ int pdu_get_timestamp(const char *buffer) {
 
 
 	for (i = 0; i < 14; i++) {
-		if (!isxdigit(buffer[i])) return -1;
+		if (!isxdigit((int)buffer[i])) return -1;
 	}
 
 	printf("Date: %d-%d-%d %d:%d:%d TZ=%d\n",

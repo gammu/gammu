@@ -1260,25 +1260,25 @@ int GSM_Make_VCAL_Lines (unsigned char *Buffer, int *lBuffer)
  */
 GSM_Error GSM_DecodeVCAL_DOW(const char *Buffer, int *Output)
 {
-	if (toupper(Buffer[0])== 'M' && toupper(Buffer[1]) == 'O') {
+	if (toupper((int)Buffer[0])== 'M' && toupper((int)Buffer[1]) == 'O') {
 		*Output = 1;
 		return ERR_NONE;
-	} else if (toupper(Buffer[0])== 'T' && toupper(Buffer[1]) == 'U') {
+	} else if (toupper((int)Buffer[0])== 'T' && toupper((int)Buffer[1]) == 'U') {
 		*Output = 2;
 		return ERR_NONE;
-	} else if (toupper(Buffer[0])== 'W' && toupper(Buffer[1]) == 'E') {
+	} else if (toupper((int)Buffer[0])== 'W' && toupper((int)Buffer[1]) == 'E') {
 		*Output = 3;
 		return ERR_NONE;
-	} else if (toupper(Buffer[0])== 'T' && toupper(Buffer[1]) == 'H') {
+	} else if (toupper((int)Buffer[0])== 'T' && toupper((int)Buffer[1]) == 'H') {
 		*Output = 4;
 		return ERR_NONE;
-	} else if (toupper(Buffer[0])== 'F' && toupper(Buffer[1]) == 'R') {
+	} else if (toupper((int)Buffer[0])== 'F' && toupper((int)Buffer[1]) == 'R') {
 		*Output = 5;
 		return ERR_NONE;
-	} else if (toupper(Buffer[0])== 'S' && toupper(Buffer[1]) == 'A') {
+	} else if (toupper((int)Buffer[0])== 'S' && toupper((int)Buffer[1]) == 'A') {
 		*Output = 6;
 		return ERR_NONE;
-	} else if (toupper(Buffer[0])== 'S' && toupper(Buffer[1]) == 'U') {
+	} else if (toupper((int)Buffer[0])== 'S' && toupper((int)Buffer[1]) == 'U') {
 		*Output = 7;
 		return ERR_NONE;
 	}
@@ -1408,11 +1408,11 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 
 /* Skip spaces */
 #define NEXT_NOSPACE(terminate) \
-	while (isspace(*pos) && *pos) pos++; \
+	while (isspace((int)*pos) && *pos) pos++; \
 	if (terminate && *pos == 0) return ERR_NONE;
 /* Skip numbers */
 #define NEXT_NONUMBER(terminate) \
-	while (isdigit(*pos) && *pos) pos++; \
+	while (isdigit((int)*pos) && *pos) pos++; \
 	if (terminate && *pos == 0) return ERR_NONE;
 /* Go to next char */
 #define NEXT_CHAR(terminate) \
@@ -1463,7 +1463,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 			/* There might be now list of months, if there is none, we use date */
 			have_info = false;
 
-			while (isalpha(*pos)) {
+			while (isalpha((int)*pos)) {
 				have_info = true;
 				GET_DOW(CAL_REPEAT_DAYOFWEEK, 1);
 				NEXT_NOSPACE(0);
@@ -1492,7 +1492,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 					NEXT_CHAR(1);
 					GET_FREQUENCY(0);
 					NEXT_NOSPACE(0);
-					if (isdigit(*pos)) {
+					if (isdigit((int)*pos)) {
 						GET_NUMBER(CAL_REPEAT_WEEKOFMONTH, 0);
 						if (*pos == '+') {
 							pos++;
@@ -1502,7 +1502,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 						}
 						NEXT_NOSPACE(0);
 
-						while (isalpha(*pos)) {
+						while (isalpha((int)*pos)) {
 							have_info = true;
 							GET_DOW(CAL_REPEAT_DAYOFWEEK, 0);
 							NEXT_NOSPACE(0);
@@ -1536,8 +1536,8 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 					NEXT_CHAR(1);
 					GET_FREQUENCY(0);
 					NEXT_NOSPACE(0);
-					if (isdigit(*pos)) {
-						while (isdigit(*pos)) {
+					if (isdigit((int)*pos)) {
+						while (isdigit((int)*pos)) {
 							GET_NUMBER(CAL_REPEAT_DAY, 0);
 							if (*pos == '+') {
 								pos++;
@@ -1579,7 +1579,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 					/* There might be now list of months, if there is none, we use date */
 					have_info = false;
 
-					while (isdigit(*pos)) {
+					while (isdigit((int)*pos)) {
 						have_info = true;
 						GET_NUMBER(CAL_REPEAT_MONTH, 0);
 						NEXT_NOSPACE(0);
@@ -1601,7 +1601,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 					/* There might be now list of days, if there is none, we use date */
 					have_info = false;
 
-					while (isdigit(*pos)) {
+					while (isdigit((int)*pos)) {
 						have_info = true;
 						GET_NUMBER(CAL_REPEAT_DAYOFYEAR, 0);
 						NEXT_NOSPACE(0);

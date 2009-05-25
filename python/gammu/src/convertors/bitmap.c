@@ -235,7 +235,7 @@ int BitmapFromPython(PyObject *dict, GSM_Bitmap *entry) {
 
         j = 0;
         while (buffer[j] != 0) {
-            buffer[j] = tolower(buffer[j]);
+            buffer[j] = tolower((int)buffer[j]);
             j++;
         }
 

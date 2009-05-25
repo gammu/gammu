@@ -1402,7 +1402,7 @@ void StringToDouble(char *text, double *d)
 
 	*d = 0;
 	for (i=0;i<strlen(text);i++) {
-		if (isdigit(text[i])) {
+		if (isdigit((int)text[i])) {
 			if (before) {
 				(*d)=(*d)*10+(text[i]-'0');
 			} else {

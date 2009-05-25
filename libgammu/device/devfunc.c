@@ -241,10 +241,10 @@ GSM_Error lock_device(GSM_StateMachine *s, const char* port, char **lock_name)
 		}
 		if (n == 4 && 4 == sizeof(int) &&
 			! (
-				isdigit(buf[0]) &&
-				isdigit(buf[1]) &&
-				isdigit(buf[2]) &&
-				isdigit(buf[3])
+				isdigit((int)buf[0]) &&
+				isdigit((int)buf[1]) &&
+				isdigit((int)buf[2]) &&
+				isdigit((int)buf[3])
 				)) {
 			/* Rewind */
 			lseek(fd, 0, SEEK_SET);

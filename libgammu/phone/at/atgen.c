@@ -391,7 +391,7 @@ INLINE bool ATGEN_HasOnlyHexChars(const char *text, const size_t length)
 	size_t i;
 
 	for (i = 0; i < length; i++) {
-		if (!isxdigit(text[i])) return false;
+		if (!isxdigit((int)text[i])) return false;
 	}
 
 	return true;
@@ -956,7 +956,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						storage_size = va_arg(ap, size_t);
 						length = ATGEN_GrabString(s, inp, &buffer);
 						smprintf(s, "Parsed string with length \"%s\"\n", buffer);
-						if (!isdigit(buffer[0])) {
+						if (!isdigit((int)buffer[0])) {
 							free(buffer);
 							error = ERR_UNKNOWNRESPONSE;
 							goto end;
@@ -1066,7 +1066,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 				}
 				break;
 			case ' ':
-				while (isspace(*inp)) inp++;
+				while (isspace((int)*inp)) inp++;
 				break;
 			default:
 				if (*inp++ != *(fmt - 1)) {
@@ -1078,7 +1078,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 	}
 
 	/* Ignore trailing spaces */
-	while (isspace(*inp)) inp++;
+	while (isspace((int)*inp)) inp++;
 
 	if (*inp != 0) {
 		smprintf(s, "String do not end same!\n");
@@ -1146,8 +1146,8 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	        j = 0;
 		/* One char behind +CM[SE] ERROR */
 		err = line + 11;
-		while (err[j] && !isalnum(err[j])) j++;
-		if (isdigit(err[j])) {
+		while (err[j] && !isalnum((int)err[j])) j++;
+		if (isdigit((int)err[j])) {
 			Priv->ErrorCode = atoi(&(err[j]));
 			k = 0;
 			while (ErrorCodes[k].Number != -1) {
@@ -1157,7 +1157,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 				}
 				k++;
 			}
-		} else if (isalpha(err[j])) {
+		} else if (isalpha((int)err[j])) {
 			k = 0;
 			while (ErrorCodes[k].Number != -1) {
 				if (!strncmp(err + j, ErrorCodes[k].Text, strlen(ErrorCodes[k].Text))) {
@@ -1363,7 +1363,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 
 	/* Skip white spaces */
-	while (iswspace(*pos)) {
+	while (iswspace((int)*pos)) {
 		pos++;
 	}
 	if (pos2 == NULL) {
@@ -1371,7 +1371,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 	/* Go before last char */
 	pos2--;
-	while(isspace(*pos2) && pos2 > pos) {
+	while(isspace((int)*pos2) && pos2 > pos) {
 		pos2--;
 	}
 
@@ -4616,7 +4616,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	buffer = strchr(msg.Buffer, '\n');
 	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
-	while (isspace(*buffer)) buffer++;
+	while (isspace((int)*buffer)) buffer++;
 
 	if (strncmp(buffer, "+CNMI:", 6) != 0) return ERR_UNKNOWNRESPONSE;
 	buffer += 7;

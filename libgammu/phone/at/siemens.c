@@ -401,14 +401,14 @@ GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 		pos = strchr(pos + 1, '(');
 		if (!pos) return ERR_UNKNOWNRESPONSE;
 		pos++;
-		if (!isdigit(*pos)) return ERR_UNKNOWNRESPONSE;
+		if (!isdigit((int)*pos)) return ERR_UNKNOWNRESPONSE;
 		Priv->FirstMemoryEntry = atoi(pos);
 
 		/* Parse last location*/
 		pos = strchr(pos, '-');
 		if (!pos) return ERR_UNKNOWNRESPONSE;
 		pos++;
-		if (!isdigit(*pos)) return ERR_UNKNOWNRESPONSE;
+		if (!isdigit((int)*pos)) return ERR_UNKNOWNRESPONSE;
 		Priv->MemorySize = atoi(pos) + 1 - Priv->FirstMemoryEntry;
 
 		Priv->PBKSBNR = AT_AVAILABLE;

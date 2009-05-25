@@ -670,7 +670,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				s = strchr(Line, ':');
 				s++;
 				/* Skip whitespace */
-				while (isspace(*s) && *s) s++;
+				while (isspace((int)*s) && *s) s++;
 
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Photo;
 				Pbk->Entries[Pbk->EntriesNum].Picture.Type = PICTURE_JPG;

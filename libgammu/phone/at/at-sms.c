@@ -1968,7 +1968,7 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		buffer = strchr(msg.Buffer, ':');
 		if (buffer == NULL) return ERR_UNKNOWNRESPONSE;
 		buffer++;
-		while (isspace(*buffer)) buffer++;
+		while (isspace((int)*buffer)) buffer++;
 
 		if (strncmp(buffer, "ME", 2) == 0 || strncmp(buffer, "\"ME\"", 4) == 0) {
 			if (Priv->SIMSMSMemory == AT_AVAILABLE) sms.Folder = 3;
@@ -1982,7 +1982,7 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		buffer = strchr(msg.Buffer, ',');
 		if (buffer == NULL) return ERR_UNKNOWNRESPONSE;
 		buffer++;
-		while (isspace(*buffer)) buffer++;
+		while (isspace((int)*buffer)) buffer++;
 
 		sms.Location = atoi(buffer);
 

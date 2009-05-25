@@ -371,7 +371,7 @@ void ListMemoryCategory(int argc UNUSED, char *argv[])
 
 	Length = strlen(argv[2]);
 	for (j = 0; j < Length; j++) {
-		if (!isdigit(argv[2][j])) {
+		if (!isdigit((int)argv[2][j])) {
 			Number = false;
 			break;
 		}
