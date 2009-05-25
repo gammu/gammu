@@ -81,15 +81,15 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Parse it */
 	error = N6510_DecodeFilesystemSMS(s, &sms, &file, 0);
 
-	/* Check expected text */
-	test_result(strcmp(smsc, DecodeUnicodeString(sms.SMS[0].SMSC.Number)) == 0);
-
 	/* Display message */
 	DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);
 	DisplayMultiSMSInfo(&sms, true, true, NULL, NULL);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
+
+	/* Check expected text */
+	test_result(strcmp(smsc, DecodeUnicodeString(sms.SMS[0].SMSC.Number)) == 0);
 
 	gammu_test_result(error, "N6510_DecodeFilesystemSMS");
 
