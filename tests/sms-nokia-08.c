@@ -45,6 +45,8 @@ unsigned char data[] = {
 	0x00, 0x01, 0x00, 0x22, 0x00, 0x01, 0x00
 	};
 
+const char smsc[] = "+491760000443";
+
 
 /* This is not part of API! */
 extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF, int location);
@@ -80,9 +82,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = N6510_DecodeFilesystemSMS(s, &sms, &file, 0);
 
 	/* Check expected text */
-//	len = UnicodeLength(sms.SMS[0].Text);
-//	if (len > (sizeof(message) / 2) - 1) len = (sizeof(message) / 2) - 1;
-//	test_result(mywstrncmp(sms.SMS[0].Text, message, len) == true);
+	test_result(strcmp(smsc, DecodeUnicodeString(sms.SMS[0].SMSC.Number)) == 0);
 
 	/* Display message */
 	DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);
