@@ -8,32 +8,34 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.24.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-05-11 11:04+0300\n"
-"PO-Revision-Date: 2009-01-27 14:27+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2009-05-25 12:11+0200\n"
+"Last-Translator: Joop van der Linden <joopjrvdlinden@hotmail.com>\n"
 "Language-Team: none\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.2.1\n"
 
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
 msgid "GAMMU"
-msgstr ""
+msgstr "Gammu"
 
 #. type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
 msgid "May  5 2009"
-msgstr ""
+msgstr "5 Mei 2009"
 
 #. type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
 msgid "Gammu 1.24.90"
-msgstr ""
+msgstr "Gammu 1.24.90"
 
 # type: TH
 #. type: TH
@@ -45,7 +47,7 @@ msgstr ""
 #: docs/user/gammu-smsd-dbi.7:1 docs/user/gammu-smsd-tables.7:1
 #, no-wrap
 msgid "Gammu Documentation"
-msgstr ""
+msgstr "Gammu Documentatie"
 
 # type: SH
 #. type: SH
@@ -57,7 +59,7 @@ msgstr ""
 #: docs/user/gammu-smsd-dbi.7:2 docs/user/gammu-smsd-tables.7:2
 #, no-wrap
 msgid "NAME"
-msgstr ""
+msgstr "NAAM"
 
 # type: Plain text
 #. type: Plain text
@@ -91,7 +93,7 @@ msgstr ""
 #: docs/user/gammu-smsd-dbi.7:7 docs/user/gammu-smsd-tables.7:7
 #, no-wrap
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "OMSCHRIJVING"
 
 # type: Plain text
 #. type: Plain text
@@ -106,7 +108,7 @@ msgstr ""
 #: docs/user/gammu.1:21
 #, no-wrap
 msgid "OPTIONS"
-msgstr ""
+msgstr "OPTIES"
 
 # type: Plain text
 #. type: Plain text
