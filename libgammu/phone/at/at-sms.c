@@ -389,6 +389,10 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 	length /= 2; /* We decoded hex -> binary */
 	error = GSM_DecodePDUFrame(&(s->di), sms,  buffer, length, &parse_len, true);
 	if (error != ERR_NONE) return error;
+	if (parse_len != length) {
+		smprintf(s, "Did not parse all PDU data (%d, %d)!\n", (int)parse_len, (int)length);
+		return ERR_UNKNOWN;
+	}
 
 	switch (sms->PDU) {
 		case SMS_Deliver:
