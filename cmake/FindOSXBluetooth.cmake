@@ -10,9 +10,15 @@
 
 if (NOT DEFINED OSX_BLUE_FOUND)
     if (NOT CROSS_MINGW)
-        find_path(OSX_BLUE_INCLUDE_DIR NAMES IOBluetooth/IOBluetoothUserLib.h)
+        find_path(OSX_BLUE_INCLUDE_DIR NAMES IOBluetooth/IOBluetoothUserLib.h
+            PATHS
+            /System/Library/Frameworks/IOBluetooth.framework/Headers/
+            )
 
-        find_library(OSX_BLUETOOTH_LIB NAMES IOBluetooth)
+        find_library(OSX_BLUETOOTH_LIB NAMES IOBluetooth
+            PATHS
+            /System/Library/Frameworks/IOBluetooth.framework/
+            )
 
         INCLUDE(CMakeFindFrameworks)
 
