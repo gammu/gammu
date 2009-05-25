@@ -29,6 +29,7 @@ ChangeLog
 [-] * Improve searching for Bluetooth stack on OS X.
 [-] * Fix ctype compile time warnings on NetBSD (bug #908).
 [-] * Nokia 3110c has SMS on filesystem (bug #904).
+[-] * Add ID for Nokia 5130 (bug #911).
     
 20090512 - 1.24.90
 
