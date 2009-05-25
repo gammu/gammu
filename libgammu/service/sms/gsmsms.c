@@ -537,7 +537,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 			return ERR_CORRUPTED;
 		}
 		if (final_pos != NULL) {
-			*final_pos = pos + datalength;
+			*final_pos = pos + datalength + 1;
 		}
 		SMS->UDH.Length = 0;
 		/* UDH header available */
@@ -590,6 +590,10 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 			default:
 				SMS->Length=0;
 				break;
+		}
+	} else {
+		if (final_pos != NULL) {
+			*final_pos = pos;
 		}
 	}
 
