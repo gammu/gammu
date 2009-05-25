@@ -358,10 +358,10 @@ void ATGEN_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned cha
 GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int state)
 {
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
+	GSM_Error error;
 	GSM_SMSMessage		*sms	= &s->Phone.Data.GetSMSMessage->SMS[0];
-	int 			current = 0, current2, i, length;
-	int			datalength;
-	unsigned char 		buffer[300],smsframe[800];
+	unsigned char 		buffer[300];
+	size_t			parse_len, length;
 
 	length = strlen(PDU);
 	if (!DecodeHexBin (
@@ -387,202 +387,36 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 			break;
 	}
 	length /= 2; /* We decoded hex -> binary */
-	/* Siemens M20 */
-	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
-		/* we check for the most often visible */
-		if (buffer[1]!=NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN && buffer[1]!=NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN &&
-		    buffer[1]!=NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN) {
-			/* Seems to be Delivery Report */
-			smprintf(s, "SMS type - status report (M20 style)\n");
+	error = GSM_DecodePDUFrame(&(s->di), sms,  buffer, length, &parse_len, true);
+	if (error != ERR_NONE) return error;
+
+	switch (sms->PDU) {
+		case SMS_Deliver:
+			/* @bug Broken when MEM_SM is not available */
+			if (Priv->SMSMemory == MEM_SM) {
+				sms->Folder = 1; /*INBOX SIM*/
+			} else {
+				sms->Folder = 3; /*INBOX ME*/
+			}
+			sms->InboxFolder = true;
+			break;
+		case SMS_Submit:
+			/* @bug Broken when MEM_SM is not available */
+			if (Priv->SMSMemory == MEM_SM) {
+				sms->Folder = 2; /*OUTBOX SIM*/
+				smprintf(s, "Outbox SIM\n");
+			} else {
+				sms->Folder = 4; /*OUTBOX ME*/
+			}
+			sms->InboxFolder = false;
+			break;
+		case SMS_Status_Report:
 			sms->PDU 	 = SMS_Status_Report;
 			sms->Folder 	 = 1;	/*INBOX SIM*/
 			sms->InboxFolder = true;
-
-			smsframe[12]=buffer[current++];
-			if (current >= length) return ERR_CORRUPTED;
-			smsframe[PHONE_SMSStatusReport.TPMR]=buffer[current++];
-			if (current >= length) return ERR_CORRUPTED;
-			current2=((buffer[current])+1)/2+1;
-			for (i = 0; i < current2 + 1; i++) {
-				smsframe[PHONE_SMSStatusReport.Number+i]=buffer[current++];
-				if (current >= length) return ERR_CORRUPTED;
-			}
-			for (i = 0; i < 7; i++) {
-				smsframe[PHONE_SMSStatusReport.DateTime+i]=buffer[current++];
-				if (current >= length) return ERR_CORRUPTED;
-			}
-			smsframe[0] = 0;
-			for (i = 0; i < 7; i++) {
-				smsframe[PHONE_SMSStatusReport.SMSCTime+i]=buffer[current++];
-				if (current >= length) return ERR_CORRUPTED;
-			}
-			smsframe[PHONE_SMSStatusReport.TPStatus]=buffer[current];
-			GSM_DecodeSMSFrame(&(s->di), sms,smsframe,PHONE_SMSStatusReport);
-			return ERR_NONE;
-		}
+			break;
 	}
-	/* We use locations from SMS layouts like in ../phone2.c(h) */
-	for(i = 0; i < buffer[0] + 1; i++) {
-		smsframe[i]=buffer[current++];
-		if (current >= length) return ERR_CORRUPTED;
-	}
-	smsframe[12]=buffer[current++];
-	if (current >= length) return ERR_CORRUPTED;
-	/* See GSM 03.40 section 9.2.3.1 */
-	switch (smsframe[12] & 0x03) {
-	case 0x00:
-		smprintf(s, "SMS type - deliver\n");
-		sms->PDU 	 = SMS_Deliver;
-		/* @bug Broken when MEM_SM is not available */
-		if (Priv->SMSMemory == MEM_SM) {
-			sms->Folder = 1; /*INBOX SIM*/
-		} else {
-			sms->Folder = 3; /*INBOX ME*/
-		}
-		sms->InboxFolder = true;
-		current2 = buffer[current];
-		if (current2 % 2) current2++;
-		current2 = current2 / 2 + 1;
-		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
-			if (buffer[current+1]==NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN) {
-				smprintf(s, "Trying to read alphanumeric number\n");
-				for (i = 0; i < 4; i++) {
-					if (current >= length) return ERR_CORRUPTED;
-					smsframe[PHONE_SMSDeliver.Number+i]=buffer[current++];
-				}
-				current+=6;
-				for (i = 0; i < current2 - 3; i++) {
-					if (current >= length) return ERR_CORRUPTED;
-					smsframe[PHONE_SMSDeliver.Number+i+4]=buffer[current++];
-				}
-			} else {
-				for (i = 0; i < current2 + 1; i++) {
-					if (current >= length) return ERR_CORRUPTED;
-					smsframe[PHONE_SMSDeliver.Number+i]=buffer[current++];
-				}
-			}
-		} else {
-			for (i = 0; i < current2 + 1; i++) {
-				if (current >= length) return ERR_CORRUPTED;
-				smsframe[PHONE_SMSDeliver.Number+i]=buffer[current++];
-			}
-		}
-		smsframe[PHONE_SMSDeliver.TPPID] = buffer[current++];
-		if (current >= length) return ERR_CORRUPTED;
-		smsframe[PHONE_SMSDeliver.TPDCS] = buffer[current++];
-		for (i = 0; i < 7; i++) {
-			if (current >= length) return ERR_CORRUPTED;
-			smsframe[PHONE_SMSDeliver.DateTime+i]=buffer[current++];
-		}
-		smsframe[PHONE_SMSDeliver.TPUDL] = buffer[current++];
-		if (current > length) return ERR_CORRUPTED;
-		datalength = smsframe[PHONE_SMSDeliver.TPUDL];
-		if (GSM_GetMessageCoding(&(s->di), smsframe[PHONE_SMSDeliver.TPDCS]) == SMS_Coding_Default_No_Compression) {
-			datalength = (datalength * 7) / 8;
-			if ((smsframe[PHONE_SMSDeliver.TPUDL] * 7) % 8 != 0) {
-				datalength++;
-			}
-		}
-		for (i = 0; i < datalength; i++) {
-			if (current >= length) return ERR_CORRUPTED;
-			smsframe[i+PHONE_SMSDeliver.Text]=buffer[current++];
-		}
-		if (current != length) {
-			smprintf(s, "Did not reach message end! (current = %d, length = %d)\n", current, length);
-		}
-		return GSM_DecodeSMSFrame(&(s->di), sms,smsframe,PHONE_SMSDeliver);
-	case 0x01:
-		smprintf(s, "SMS type - submit\n");
-		sms->PDU 	 = SMS_Submit;
-		/* @bug Broken when MEM_SM is not available */
-		if (Priv->SMSMemory == MEM_SM) {
-			sms->Folder = 2; /*OUTBOX SIM*/
-			smprintf(s, "Outbox SIM\n");
-		} else {
-			sms->Folder = 4; /*OUTBOX ME*/
-		}
-		sms->InboxFolder = false;
-		if (current >= length) return ERR_CORRUPTED;
-		smsframe[PHONE_SMSSubmit.TPMR] = buffer[current++];
-		if (current >= length) return ERR_CORRUPTED;
-		current2 = buffer[current];
-		if (current2 % 2) current2++;
-		current2 = current2 / 2 + 1;
-		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
-			if (buffer[current+1]==NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN) {
-				smprintf(s, "Trying to read alphanumeric number\n");
-				for (i = 0; i < 4; i++) {
-					if (current >= length) return ERR_CORRUPTED;
-					smsframe[PHONE_SMSSubmit.Number+i]=buffer[current++];
-				}
-				current+=6;
-				if (current >= length) return ERR_CORRUPTED;
-				for (i = 0; i < current2 - 3; i++) {
-					if (current >= length) return ERR_CORRUPTED;
-					smsframe[PHONE_SMSSubmit.Number+i+4]=buffer[current++];
-				}
-			} else {
-				for (i = 0; i < current2 + 1; i++) {
-					if (current >= length) return ERR_CORRUPTED;
-					smsframe[PHONE_SMSSubmit.Number+i]=buffer[current++];
-				}
-			}
-		} else {
-			for (i = 0; i < current2 + 1; i++) {
-				if (current >= length) return ERR_CORRUPTED;
-				smsframe[PHONE_SMSSubmit.Number+i]=buffer[current++];
-			}
-		}
-		smsframe[PHONE_SMSSubmit.TPPID] = buffer[current++];
-		if (current >= length) return ERR_CORRUPTED;
-		smsframe[PHONE_SMSSubmit.TPDCS] = buffer[current++];
-		if (current >= length) return ERR_CORRUPTED;
-		/* See GSM 03.40 9.2.3.3 - TPVP can not exist in frame */
-		if ((smsframe[12] & 0x18)!=0) current++; /* TPVP is ignored now */
-		if (current > length) return ERR_CORRUPTED;
-		smsframe[PHONE_SMSSubmit.TPUDL] = buffer[current++];
-		datalength = smsframe[PHONE_SMSSubmit.TPUDL];
-		if (GSM_GetMessageCoding(&(s->di), smsframe[PHONE_SMSSubmit.TPDCS]) == SMS_Coding_Default_No_Compression) {
-			datalength = (datalength * 7) / 8;
-			if ((smsframe[PHONE_SMSSubmit.TPUDL] * 7) % 8 != 0) {
-				datalength++;
-			}
-		}
-		for (i = 0; i < datalength; i++) {
-			if (current >= length) return ERR_CORRUPTED;
-			smsframe[i+PHONE_SMSSubmit.Text]=buffer[current++];
-		}
-		if (current != length) {
-			smprintf(s, "Did not reach message end! (current = %d, length = %d)\n", current, length);
-		}
-		return GSM_DecodeSMSFrame(&(s->di), sms,smsframe,PHONE_SMSSubmit);
-	case 0x02:
-		smprintf(s, "SMS type - status report\n");
-		sms->PDU 	 = SMS_Status_Report;
-		sms->Folder 	 = 1;	/*INBOX SIM*/
-		sms->InboxFolder = true;
-		smprintf(s, "TPMR is %d\n",buffer[current]);
-		smsframe[PHONE_SMSStatusReport.TPMR] = buffer[current++];
-		if (current >= length) return ERR_CORRUPTED;
-		current2=((buffer[current])+1)/2+1;
-		for (i = 0; i < current2 + 1; i++) {
-			if (current >= length) return ERR_CORRUPTED;
-			smsframe[PHONE_SMSStatusReport.Number+i]=buffer[current++];
-		}
-		for (i = 0; i < 7; i++) {
-			if (current >= length) return ERR_CORRUPTED;
-			smsframe[PHONE_SMSStatusReport.DateTime+i]=buffer[current++];
-		}
-		for (i = 0; i < 7; i++) {
-			if (current >= length) return ERR_CORRUPTED;
-			smsframe[PHONE_SMSStatusReport.SMSCTime+i]=buffer[current++];
-		}
-		smsframe[PHONE_SMSStatusReport.TPStatus]=buffer[current];
-		return GSM_DecodeSMSFrame(&(s->di), sms,smsframe,PHONE_SMSStatusReport);
-	case 0x03:
-		smprintf(s, "SMS type - reserved, don't know what to do\n");
-	}
-	return ERR_UNKNOWN;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
