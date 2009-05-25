@@ -2241,7 +2241,8 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 
 	/* First master block - 0x01 0x00 <LENGTH> */
 	if (FFF->Buffer[pos] != 0x01) {
-		smprintf(s, "Uknown block in SMS data after PDU: 0x%02x\n", FFF->Buffer[pos]);
+		smprintf(s, "Unknown block in SMS data after PDU: 0x%02x\n", FFF->Buffer[pos]);
+		DumpMessage(&(s->di), FFF->Buffer + pos, FFF->Used - pos);
 		return ERR_UNKNOWN;
 	}
 	pos += 3;
