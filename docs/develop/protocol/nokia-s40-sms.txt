@@ -5,6 +5,12 @@ This text is work in progress and does not claim to be correct or accurate. It
 is solely based on Gammu dumps received from users.
 
 
+- 176 bytes header
+    @94 is Number
+- PDU data (without SMSC)
+- structured data header: 0x01 0x00 <LEN>, where <LEN> is length of rest
+- structured blocks:
+
 Block: <TYPE> <0x00> <LENGTH> <DATA>
 
 Blocks
