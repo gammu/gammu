@@ -104,7 +104,7 @@ typedef enum {
 	/* specification give also other values */
 } GSM_NumberType;
 
-void GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, bool semioctet);
+int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, bool semioctet);
 int		GSM_PackSemiOctetNumber		(unsigned char *Number, unsigned char *Output, bool semioctet);
 
 /* ---------------------------- Bits --------------------------------------- */

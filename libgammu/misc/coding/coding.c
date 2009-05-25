@@ -739,7 +739,7 @@ int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *ou
         return (OUTPUT - output);
 }
 
-void GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, bool semioctet)
+int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, bool semioctet)
 {
 	unsigned char	Buffer[GSM_MAX_NUMBER_LENGTH + 1];
 	int		length		= Number[0];
@@ -792,6 +792,11 @@ void GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsign
 	smfprintf(di, "Len %i\n",length);
 out:
 	EncodeUnicode(retval,Buffer,strlen(Buffer));
+	if (semioctet) {
+		return 2 + ((Number[0] + 1) / 2);
+	} else {
+		return 1 + Number[0];
+	}
 }
 
 /**
