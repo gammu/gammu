@@ -32,6 +32,8 @@ ChangeLog
 [-] * Add ID for Nokia 5130 (bug #911).
 [!] * New PDU decoder which properly parses PDU data.
 [!] * AT driver uses new PDU decoder.
+[!] * 6510 driver uses new PDU decoder and understands most formats of
+      filesystem Nokia SMS messages (bug #911).
     
 20090512 - 1.24.90
 
