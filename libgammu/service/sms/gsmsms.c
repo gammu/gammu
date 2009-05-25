@@ -290,18 +290,18 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsign
 	return ERR_NONE;
 }
 
-GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
+GSM_Error GSM_DecodeSMSStatusReportData(GSM_Debug_Info *di, GSM_SMSMessage *SMS, int TP_ST)
 {
-	SMS->DeliveryStatus 	= buffer[Layout.TPStatus];
+	SMS->DeliveryStatus 	= TP_ST;
 	SMS->Coding 		= SMS_Coding_Unicode_No_Compression;
 
-	if (buffer[Layout.TPStatus] < 0x03) {
+	if (TP_ST < 0x03) {
 		EncodeUnicode(SMS->Text,"Delivered",9);
 		SMS->Length = 9;
-	} else if (buffer[Layout.TPStatus] & 0x40) {
+	} else if (TP_ST & 0x40) {
 		EncodeUnicode(SMS->Text,"Failed",6);
 		SMS->Length = 6;
-	} else if (buffer[Layout.TPStatus] & 0x20) {
+	} else if (TP_ST & 0x20) {
 		EncodeUnicode(SMS->Text,"Pending",7);
 		SMS->Length = 7;
 	} else {
@@ -311,19 +311,19 @@ GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_Debug_Info *di, GSM_SMSMessage 
 
 #ifdef DEBUG
 	/* See GSM 03.40 section 9.2.3.15 (TP-Status) */
-	if (buffer[Layout.TPStatus] & 0x40) {
-		if (buffer[Layout.TPStatus] & 0x20) {
+	if (TP_ST & 0x40) {
+		if (TP_ST & 0x20) {
 			/* 0x60, 0x61, ... */
 			smfprintf(di, "Temporary error, SC is not making any more transfer attempts\n");
 		} else {
 			/* 0x40, 0x41, ... */
      			smfprintf(di, "Permanent error, SC is not making any more transfer attempts\n");
 		}
-    	} else if (buffer[Layout.TPStatus] & 0x20) {
+    	} else if (TP_ST & 0x20) {
 		/* 0x20, 0x21, ... */
 		smfprintf(di, "Temporary error, SC still trying to transfer SM\n");
 	}
-	switch (buffer[Layout.TPStatus]) {
+	switch (TP_ST) {
 	case 0x00: smfprintf(di, "SM received by the SME");					break;
 	case 0x01: smfprintf(di, "SM forwarded by the SC to the SME but the SC is unable to confirm delivery");break;
 	case 0x02: smfprintf(di, "SM replaced by the SC");					break;
@@ -349,10 +349,249 @@ GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_Debug_Info *di, GSM_SMSMessage 
         case 0x63: smfprintf(di, "Service rejected");					break;
         case 0x64: smfprintf(di, "Quality of service not available");			break;
         case 0x65: smfprintf(di, "Error in SME");						break;
-        default  : smfprintf(di, "Reserved/Specific to SC: %x",buffer[Layout.TPStatus]);	break;
+        default  : smfprintf(di, "Reserved/Specific to SC: %x",TP_ST);	break;
 	}
 	smfprintf(di, "\n");
 #endif
+
+	return ERR_NONE;
+}
+
+GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
+{
+	return GSM_DecodeSMSStatusReportData(di, SMS, buffer[Layout.TPStatus]);
+}
+
+GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, size_t length, size_t *final_pos, bool SMSC)
+{
+	size_t pos = 0;
+	int type;
+	int vpf = 0;
+	int rp = 0;
+	int udh = 0;
+	int i,w;
+	unsigned char	output[161];
+	int			datalength;
+
+	/* Set some sane data */
+	GSM_SetDefaultReceivedSMSData(SMS);
+
+	/* Parse SMSC if it is included */
+	if (SMSC) {
+		pos += GSM_UnpackSemiOctetNumber(di, SMS->SMSC.Number, buffer + pos, false);
+		smfprintf(di, "SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
+	}
+
+	/* Message type */
+	type = buffer[pos];
+	pos++;
+	switch (type & 0x3) {
+		case 0:
+			smfprintf(di, "SMS type: Deliver");
+			SMS->PDU = SMS_Deliver;
+			break;
+		case 1:
+			smfprintf(di, "SMS type: Submit");
+			SMS->PDU = SMS_Submit;
+			break;
+		case 2:
+			smfprintf(di, "SMS type: Status report");
+			SMS->PDU = SMS_Status_Report;
+			break;
+		case 3:
+			smfprintf(di, "SMS type: Reserverd, aborting!\n");
+			return ERR_UNKNOWN;;
+	}
+
+	if (SMS->PDU == SMS_Submit || SMS->PDU == SMS_Deliver) {
+		if (type & (1 << 7)) {
+			smfprintf(di, ", Reply path set");
+			rp = 1;
+		}
+		if (type & (1 << 6)) {
+			smfprintf(di, ", UDH included");
+			udh = 1;
+		}
+	}
+	if (SMS->PDU == SMS_Submit) {
+		vpf = (type & (0x3 << 3)) >> 3;
+		switch (vpf) {
+			case 0:
+				smfprintf(di, ", No VP");
+				break;
+			case 1:
+				smfprintf(di, ", Reserved VP!\n");
+				return ERR_UNKNOWN;
+			case 2:
+				smfprintf(di, ", Relative VP");
+				break;
+			case 3:
+				smfprintf(di, ", Absolute VP");
+				break;
+		}
+	}
+	smfprintf(di, "\n");
+
+	/* Message reference */
+	if (SMS->PDU == SMS_Submit || SMS->PDU == SMS_Status_Report) {
+		SMS->MessageReference = buffer[pos];
+		smfprintf(di, "SMS MR: 0x%02X\n", SMS->MessageReference);
+		pos++;
+		if (pos >= length) {
+			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
+			return ERR_CORRUPTED;
+		}
+	}
+
+	/* Remote number */
+	pos += GSM_UnpackSemiOctetNumber(di, SMS->Number, buffer + pos, true);
+	if (pos >= length) {
+		smfprintf(di, "Ran out of buffer when parsing PDU!\n");
+		return ERR_CORRUPTED;
+	}
+
+
+	if (SMS->PDU == SMS_Submit || SMS->PDU == SMS_Deliver) {
+		/* Protocol identifier */
+		smfprintf(di, "SMS PID: 0x%02X\n", buffer[pos]);
+		if (buffer[pos] > 0x40 && buffer[pos] < 0x48) {
+			SMS->ReplaceMessage = buffer[pos];
+		}
+		pos++;
+		if (pos >= length) {
+			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
+			return ERR_CORRUPTED;
+		}
+
+		/* Data coding scheme */
+		smfprintf(di, "SMS DCS: 0x%02X\n", buffer[pos]);
+		SMS->Coding = GSM_GetMessageCoding(di, buffer[pos]);
+		pos++;
+		if (pos >= length) {
+			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
+			return ERR_CORRUPTED;
+		}
+	}
+
+	/* SMSC time stamp */
+	if (SMS->PDU == SMS_Status_Report || SMS->PDU == SMS_Deliver) {
+		GSM_DecodeSMSDateTime(di, &SMS->SMSCTime, buffer + pos);
+		pos += 7;
+		if (pos >= length) {
+			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
+			return ERR_CORRUPTED;
+		}
+	}
+
+	if (SMS->PDU == SMS_Status_Report) {
+		/* Discharge Time */
+		GSM_DecodeSMSDateTime(di, &SMS->DateTime, buffer + pos);
+		pos += 7;
+		if (pos >= length) {
+			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
+			return ERR_CORRUPTED;
+		}
+
+		/* Status */
+		GSM_DecodeSMSStatusReportData(di, SMS, buffer[pos]);
+		pos++;
+		if (pos >= length) {
+			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
+			return ERR_CORRUPTED;
+		}
+	}
+
+	/* Validity period */
+	if (SMS->PDU == SMS_Submit) {
+		if (vpf == 2) {
+			SMS->SMSC.Validity.Format = SMS_Validity_RelativeFormat;
+			SMS->SMSC.Validity.Relative = buffer[pos];
+			smfprintf(di, "Relative validity: 0x%02X\n", buffer[pos]);
+			pos++;
+			if (pos >= length) {
+				smfprintf(di, "Ran out of buffer when parsing PDU!\n");
+				return ERR_CORRUPTED;
+			}
+		} else if (vpf == 3) {
+			/* @todo TODO: handle absolute validity */
+			smfprintf(di, "Absolute validity not handled!\n");
+			pos += 7;
+			if (pos >= length) {
+				smfprintf(di, "Ran out of buffer when parsing PDU!\n");
+				return ERR_CORRUPTED;
+			}
+		}
+	}
+
+	/* Data */
+	if (SMS->PDU == SMS_Submit || SMS->PDU == SMS_Deliver) {
+		datalength = buffer[pos];
+		if (SMS->Coding == SMS_Coding_Default_No_Compression) {
+			datalength = (datalength * 7) / 8;
+			if ((buffer[pos] * 7) % 8 != 0) {
+				datalength++;
+			}
+		}
+		if (pos + datalength >= length) {
+			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
+			return ERR_CORRUPTED;
+		}
+		if (final_pos != NULL) {
+			*final_pos = pos + datalength;
+		}
+		SMS->UDH.Length = 0;
+		/* UDH header available */
+		if (udh) {
+			/* Length of UDH header */
+			SMS->UDH.Length = (buffer[pos + 1] + 1);
+			smfprintf(di, "UDH header available (length %i)\n",SMS->UDH.Length);
+
+			/* Copy UDH header into SMS->UDH */
+			for (i = 0; i < SMS->UDH.Length; i++) SMS->UDH.Text[i] = buffer[pos + 1 + i];
+
+			GSM_DecodeUDHHeader(di, &SMS->UDH);
+		}
+
+		switch (SMS->Coding) {
+			case SMS_Coding_Default_No_Compression:
+				i = 0;
+				do {
+					i+=7;
+					w=(i-SMS->UDH.Length)%i;
+				} while (w<0);
+				SMS->Length=buffer[pos] - (SMS->UDH.Length*8 + w) / 7;
+				if (SMS->Length < 0) {
+					smfprintf(di, "No SMS text!\n");
+					SMS->Length = 0;
+					break;
+				}
+				GSM_UnpackEightBitsToSeven(w, buffer[pos]-SMS->UDH.Length, SMS->Length, buffer+(pos + 1+SMS->UDH.Length), output);
+				smfprintf(di, "7 bit SMS, length %i\n",SMS->Length);
+				DecodeDefault (SMS->Text, output, SMS->Length, true, NULL);
+				smfprintf(di, "%s\n",DecodeUnicodeString(SMS->Text));
+				break;
+			case SMS_Coding_8bit:
+				SMS->Length=buffer[pos] - SMS->UDH.Length;
+				memcpy(SMS->Text,buffer+(pos + 1+SMS->UDH.Length),SMS->Length);
+#ifdef DEBUG
+				smfprintf(di, "8 bit SMS, length %i\n",SMS->Length);
+				DumpMessageText(di, SMS->Text, SMS->Length);
+#endif
+				break;
+			case SMS_Coding_Unicode_No_Compression:
+				SMS->Length=(buffer[pos] - SMS->UDH.Length) / 2;
+				DecodeUnicodeSpecialNOKIAChars(SMS->Text,buffer+(pos + 1+SMS->UDH.Length), SMS->Length);
+#ifdef DEBUG
+				smfprintf(di, "Unicode SMS, length %i\n",SMS->Length);
+				DumpMessageText(di, buffer+(pos + 1+SMS->UDH.Length), SMS->Length*2);
+				smfprintf(di, "%s\n",DecodeUnicodeString(SMS->Text));
+#endif
+				break;
+			default:
+				SMS->Length=0;
+				break;
+		}
+	}
 
 	return ERR_NONE;
 }

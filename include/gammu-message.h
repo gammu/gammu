@@ -545,6 +545,22 @@ typedef struct {
 } GSM_SMSMessageLayout;
 
 /**
+ * Decodes PDU data.
+ *
+ * \param di Debug information structure.
+ * \param SMS Pointer where to store parsed message.
+ * \param buffer PDU data.
+ * \param length Length of PDU data.
+ * \param final_pos Optional pointer where end position will be stored.
+ * \param SMSC Whether PDU includes SMSC data.
+ *
+ * \ingroup SMS
+ */
+GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS,
+			unsigned char *buffer, size_t length,
+			size_t *final_pos, bool SMSC);
+
+/**
  * Decodes SMS frame.
  *
  * \ingroup SMS
