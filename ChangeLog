@@ -25,7 +25,7 @@ ChangeLog
 [-] * Handle SMSC error code in 6510 driver (bug #910).
 [-] * Disable gcc warnings about non literal format strings (bug #901).
 [-] * Add more fuzzy logic to detect bad encoding from phone (bug #874).
-[-] * Add ID for Nokia 7500.
+[-] * Add ID for Nokia 7500 and Nokia 7210s.
     
 20090512 - 1.24.90
 
