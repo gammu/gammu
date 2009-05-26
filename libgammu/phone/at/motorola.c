@@ -132,7 +132,7 @@ GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command)
 	/* Switch mode */
 	smprintf(s, "Switching to mode %d\n", cmd->Mode);
 	sprintf(buffer, "AT+MODE=%d\r", cmd->Mode);
-	error = GSM_WaitFor(s, buffer, strlen(buffer), 0x00, 20, ID_ModeSwitch);
+	error = GSM_WaitFor(s, buffer, strlen(buffer), 0x00, 100, ID_ModeSwitch);
 
 	/* On succes we remember it */
 	if (error == ERR_NONE) {
