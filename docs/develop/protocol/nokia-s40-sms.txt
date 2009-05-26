@@ -18,7 +18,7 @@ Block: <TYPE = byte> <LENGTH = word> <DATA ...>
 Blocks
 ------
 
-0x01 - Unknown \x00
+0x01 - Unknown \x00 / \x01 (maybe received / sent)
 0x02 - SMSC number, ASCII
 0x03 - Text, unicode
 0x04 - Sender, unicode
@@ -29,7 +29,7 @@ Blocks
 0x09 - Unknown \x00\x00\x00\x00
 0x0a
 0x0b - Unknown \x00
-0x0c - Unknown \x00
+0x0c - Unknown, several values (maybe message reference per number)
 0x0d
 0x0e
 0x0f - Unknown \x00\x00

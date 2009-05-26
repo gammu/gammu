@@ -2292,9 +2292,17 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 				break;
 
 			case 0x01:
+				/* This is probably 0 = received, 1 = sent */
+				if (FFF->Buffer[pos + 2] != 1 ||
+					(FFF->Buffer[pos + 3] != 0x00 && FFF->Buffer[pos + 3] != 0x01)) {
+					unknown = true;
+				}
+				break;
+			case 0x0c:
+				/* This seems to be message ID (per number) */
+				break;
 			case 0x07:
 			case 0x0b:
-			case 0x0c:
 			case 0x0e:
 			case 0x22:
 			case 0x24:
