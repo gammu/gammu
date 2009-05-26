@@ -40,6 +40,7 @@ Connections = [
     'fbusirda',
     'fbusdlr3',
     'fbusdku5',
+    'fbususb',
     'dku2phonet',
     'dku5fbus2',
     'fbuspl2303',
