@@ -915,8 +915,8 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 					return ERR_MOREMEMORY;
 				}
 
-				for (i=Priv->FilesLocationsUsed+1;i>0;i--) {
-					memcpy(&Priv->Files[i],&Priv->Files[i-1],sizeof(GSM_File));
+				for (i = Priv->FilesLocationsUsed + 1; i > 0; i--) {
+					memcpy(&Priv->Files[i], &Priv->Files[i-1], sizeof(GSM_File));
 				}
 
 				File = &Priv->Files[1];
@@ -1080,19 +1080,25 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, b
 	smprintf(s, "Currently %i locations\n",Priv->FilesLocationsUsed);
 	if (Priv->FilesLocationsUsed == 0) return ERR_EMPTY;
 
+
+	if (!Priv->Files[0].Folder) {
+		memcpy(File,&Priv->Files[0],sizeof(GSM_File));
+		for (i=0;i<Priv->FilesLocationsUsed-1;i++) {
+			memcpy(&Priv->Files[i],&Priv->Files[i+1],sizeof(GSM_File));
+		}
+		Priv->FilesLocationsUsed--;
+		smprintf(s, "Returning file %s, level %d\n", DecodeUnicodeString(File->ID_FullName), File->Level);
+		return ERR_NONE;
+	}
+
+	error = N6510_PrivGetFolderListing2(s, &Priv->Files[0]);
+	if (error != ERR_NONE) return error;
+
 	memcpy(File,&Priv->Files[0],sizeof(GSM_File));
 	for (i=0;i<Priv->FilesLocationsUsed-1;i++) {
 		memcpy(&Priv->Files[i],&Priv->Files[i+1],sizeof(GSM_File));
 	}
 	Priv->FilesLocationsUsed--;
-
-	if (!File->Folder) {
-		smprintf(s, "Returning file %s, level %d\n", DecodeUnicodeString(File->ID_FullName), File->Level);
-		return ERR_NONE;
-	}
-
-	error = N6510_PrivGetFolderListing2(s, File);
-	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Returning folder %s, level %d\n", DecodeUnicodeString(File->ID_FullName), File->Level);
 
