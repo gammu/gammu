@@ -13,7 +13,7 @@ is solely based on Gammu dumps received from users. Analysed by Michal Cihar
 - structured data header: 0x01 0x00 <LEN>, where <LEN> is length of rest
 - structured blocks:
 
-Block: <TYPE> <0x00> <LENGTH> <DATA>
+Block: <TYPE = byte> <LENGTH = word> <DATA ...>
 
 Blocks
 ------
