@@ -2144,7 +2144,7 @@ GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders 
 			folders->Folder[folders->Number].InboxFolder = true;
 		}
 		folders->Folder[folders->Number].OutboxFolder = false;
-		if (!strcmp(DecodeUnicodeString(Files.Name),"6")) {
+		if (!strcmp(DecodeUnicodeString(Files.Name),"2")) {
 			folders->Folder[folders->Number].OutboxFolder = true;
 		}
 		if (real) {
@@ -2152,6 +2152,8 @@ GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders 
 		} else {
 			if (!strcmp(DecodeUnicodeString(Files.Name),"1")) {
 				EncodeUnicode(folders->Folder[folders->Number].Name,"Inbox",5);
+			} else if (!strcmp(DecodeUnicodeString(Files.Name),"2")) {
+				EncodeUnicode(folders->Folder[folders->Number].Name,"Outbox",6);
 			} else if (!strcmp(DecodeUnicodeString(Files.Name),"3")) {
 				EncodeUnicode(folders->Folder[folders->Number].Name,"Sent items",10);
 			} else if (!strcmp(DecodeUnicodeString(Files.Name),"4")) {
@@ -2161,7 +2163,8 @@ GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders 
 			} else if (!strcmp(DecodeUnicodeString(Files.Name),"6")) {
 				EncodeUnicode(folders->Folder[folders->Number].Name,"Templates",9);
 			} else {
-				CopyUnicodeString(folders->Folder[folders->Number].Name,Files.Name);
+				EncodeUnicode(folders->Folder[folders->Number].Name,"User folder ",12);
+				CopyUnicodeString(folders->Folder[folders->Number].Name + 24, Files.Name);
 			}
 		}
 		folders->Folder[folders->Number].Memory      = MEM_ME;
@@ -2209,17 +2212,23 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	size_t parse_len, pos;
 	int loc;
 	GSM_Error error;
-	bool unknown;
+	bool unknown, has_number;
 
 	sms->Number = 1;
-
-	/* Copy recipient/sender number */
-	CopyUnicodeString(sms->SMS[0].Number, FFF->Buffer + 94);
+	sms->SMS[0].OtherNumbersNum = 0;
 
 	loc = sms->SMS[0].Location;
 	/* Parse PDU data */
 	error = GSM_DecodePDUFrame(&(s->di), &(sms->SMS[0]),  FFF->Buffer + 176, FFF->Used - 176, &parse_len, false);
 	if (error != ERR_NONE) return error;
+
+	/* Copy recipient/sender number */
+	/* Data we get from PDU seem to be bogus */
+	/* This might be later overwriten using tags at the end of file */
+	CopyUnicodeString(sms->SMS[0].Number, FFF->Buffer + 94);
+	smprintf(s, "SMS number: %s\n", DecodeUnicodeString(sms->SMS[0].Number));
+	has_number = false;
+
 	sms->SMS[0].Location = loc;
 
 	switch (sms->SMS[0].PDU) {
@@ -2273,7 +2282,12 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 				if (FFF->Buffer[pos + 2]/2 - 1 > GSM_MAX_NUMBER_LENGTH) {
 					smprintf(s, "WARNING: Too long SMS number, ignoring!\n");
 				} else {
-					CopyUnicodeString(sms->SMS[0].Number, FFF->Buffer + pos + 3);
+					if (!has_number) {
+						CopyUnicodeString(sms->SMS[0].Number, FFF->Buffer + pos + 3);
+						has_number = true;
+					} else {
+						CopyUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum++], FFF->Buffer + pos + 3);
+					}
 				}
 				break;
 
@@ -2319,9 +2333,9 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		}
 		if (unknown) {
 			smprintf(s, "WARNING: Unknown block, see <http://cihar.com/gammu/report> how to report\n");
-			DumpMessage(&(s->di), FFF->Buffer + pos, 3 + FFF->Buffer[pos + 2]);
+			DumpMessage(&(s->di), FFF->Buffer + pos, 3 + (FFF->Buffer[pos + 1] << 8) + FFF->Buffer[pos + 2]);
 		}
-		pos += 3 + FFF->Buffer[pos + 2];
+		pos += 3 + (FFF->Buffer[pos + 1] << 8) + FFF->Buffer[pos + 2];
 	}
 
 	sms->SMS[0].DateTime = FFF->Modified;
