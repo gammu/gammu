@@ -46,7 +46,7 @@ typedef struct {
 	int				ParentID;
 	int				FileCheckSum;
 	bool				FilesEnd;
-	bool				Use2;
+	bool				UseFs1;
 	GSM_Error			filesystem2error;
 
 	unsigned char			FMStatus[4000];

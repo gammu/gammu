@@ -1077,23 +1077,24 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, b
 		EncodeUnicode(Priv->Files[1].Name,"A (Memory card)",15);
 	}
 
-	smprintf(s, "entering %i\n",Priv->FilesLocationsUsed);
+	smprintf(s, "Currently %i locations\n",Priv->FilesLocationsUsed);
 	if (Priv->FilesLocationsUsed == 0) return ERR_EMPTY;
-
-	if (!Priv->Files[Priv->FilesLocationsUsed - 1].Folder) {
-		memcpy(File,&Priv->Files[Priv->FilesLocationsUsed - 1],sizeof(GSM_File));
-		Priv->FilesLocationsUsed--;
-		return ERR_NONE;
-	}
-
-	error = N6510_PrivGetFolderListing2(s, &Priv->Files[0]);
-	if (error != ERR_NONE) return error;
 
 	memcpy(File,&Priv->Files[0],sizeof(GSM_File));
 	for (i=0;i<Priv->FilesLocationsUsed-1;i++) {
 		memcpy(&Priv->Files[i],&Priv->Files[i+1],sizeof(GSM_File));
 	}
 	Priv->FilesLocationsUsed--;
+
+	if (!File->Folder) {
+		smprintf(s, "Returning file %s, level %d\n", DecodeUnicodeString(File->ID_FullName), File->Level);
+		return ERR_NONE;
+	}
+
+	error = N6510_PrivGetFolderListing2(s, File);
+	if (error != ERR_NONE) return error;
+
+	smprintf(s, "Returning folder %s, level %d\n", DecodeUnicodeString(File->ID_FullName), File->Level);
 
 	if (Priv->filesystem2error == ERR_FOLDERPART) return ERR_FOLDERPART;
 
@@ -1557,22 +1558,22 @@ GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool star
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
 	if (start) {
-		Priv->Use2 = true;
+		Priv->UseFs1 = true;
 		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 			/* series 40 3.0 don't have filesystem 1 */
-			Priv->Use2 = false;
+			Priv->UseFs1 = false;
 		}
 		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILE1)) {
-			Priv->Use2 = false;
+			Priv->UseFs1 = false;
 		}
 	}
-	if (Priv->Use2) {
+	if (Priv->UseFs1) {
 		error = N6510_GetNextFileFolder1(s,File,start);
 		if (error == ERR_EMPTY) {
 			if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FILES2)) {
 				return error;
 			}
-			Priv->Use2      = false;
+			Priv->UseFs1      = false;
 			start	   	= true;
 		} else {
 			if (error == ERR_NONE) {
