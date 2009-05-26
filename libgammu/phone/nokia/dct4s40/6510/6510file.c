@@ -1080,11 +1080,8 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, b
 	smprintf(s, "entering %i\n",Priv->FilesLocationsUsed);
 	if (Priv->FilesLocationsUsed == 0) return ERR_EMPTY;
 
-	if (!Priv->Files[0].Folder) {
-		memcpy(File,&Priv->Files[0],sizeof(GSM_File));
-		for (i=0;i<Priv->FilesLocationsUsed-1;i++) {
-			memcpy(&Priv->Files[i],&Priv->Files[i+1],sizeof(GSM_File));
-		}
+	if (!Priv->Files[Priv->FilesLocationsUsed - 1].Folder) {
+		memcpy(File,&Priv->Files[Priv->FilesLocationsUsed - 1],sizeof(GSM_File));
 		Priv->FilesLocationsUsed--;
 		return ERR_NONE;
 	}
