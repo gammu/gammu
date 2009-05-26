@@ -4,10 +4,11 @@ Nokia S40 filesystem SMS format
 This text is work in progress and does not claim to be correct or accurate. It
 is solely based on Gammu dumps received from users.
 
-
 - 176 bytes header
-    @94 is Number
+    - at offset 94 is stored remote number in unicode
+    - rest is not known
 - PDU data (without SMSC)
+    - here can be sometimes also some failure block, which is not known yet
 - structured data header: 0x01 0x00 <LEN>, where <LEN> is length of rest
 - structured blocks:
 
