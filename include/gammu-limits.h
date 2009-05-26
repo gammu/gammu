@@ -274,14 +274,14 @@
  *
  * \ingroup Limits
  */
-#define GSM_MAX_FILENAME_LENGTH 149
+#define GSM_MAX_FILENAME_LENGTH 256
 
 /**
  * Maximal length of full file name (including path).
  *
  * \ingroup Limits
  */
-#define GSM_MAX_FILENAME_ID_LENGTH 399
+#define GSM_MAX_FILENAME_ID_LENGTH 4096
 
 /**
  * Maximal number of features per phone.
