@@ -445,6 +445,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 
 	/* Remote number */
 	pos += GSM_UnpackSemiOctetNumber(di, SMS->Number, buffer + pos, true);
+	smfprintf(di, "Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	if (pos >= length) {
 		smfprintf(di, "Ran out of buffer when parsing PDU!\n");
 		return ERR_CORRUPTED;
