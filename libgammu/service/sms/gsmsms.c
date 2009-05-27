@@ -485,22 +485,22 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 
 	/* SMSC time stamp */
 	if (SMS->PDU == SMS_Status_Report || SMS->PDU == SMS_Deliver) {
-		GSM_DecodeSMSDateTime(di, &SMS->DateTime, buffer + pos);
-		pos += 7;
-		if (pos >= length) {
+		if (pos + 7 >= length) {
 			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
 			return ERR_CORRUPTED;
 		}
+		GSM_DecodeSMSDateTime(di, &SMS->DateTime, buffer + pos);
+		pos += 7;
 	}
 
 	if (SMS->PDU == SMS_Status_Report) {
 		/* Discharge Time */
-		GSM_DecodeSMSDateTime(di, &SMS->SMSCTime, buffer + pos);
-		pos += 7;
-		if (pos >= length) {
+		if (pos + 7 >= length) {
 			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
 			return ERR_CORRUPTED;
 		}
+		GSM_DecodeSMSDateTime(di, &SMS->SMSCTime, buffer + pos);
+		pos += 7;
 
 		/* Status */
 		GSM_DecodeSMSStatusReportData(di, SMS, buffer[pos]);
