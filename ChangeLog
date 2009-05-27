@@ -30,6 +30,7 @@ ChangeLog
 [-] * Fix ctype compile time warnings on NetBSD (bug #908).
 [-] * Nokia 3110c has SMS on filesystem (bug #904).
 [-] * Add ID for Nokia 5130 (bug #911).
+[-] * Faster reading of Nokia filesystem.
 [!] * New PDU decoder which properly parses PDU data.
 [!] * AT driver uses new PDU decoder.
 [!] * 6510 driver uses new PDU decoder and understands most formats of
