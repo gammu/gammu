@@ -2271,6 +2271,14 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 
 	while (pos < FFF->Used) {
 		unknown = false;
+		if (pos + 2 >= FFF->Used) {
+			smprintf(s, "ERROR: Reach end of file before end of block!\n");
+			return ERR_BUG;
+		}
+		if (FFF->Buffer[pos]) {
+			smprintf(s, "WARNING: 0x00 block, assuming rest is just junk!\n");
+			break;
+		}
 		switch (FFF->Buffer[pos]) {
 			case 0x02: /* SMSC number, ASCII */
 				if (FFF->Buffer[pos + 2] <= 1) break;
@@ -2353,8 +2361,13 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 				break;
 		}
 		if (unknown) {
-			smprintf(s, "WARNING: Unknown block, see <http://cihar.com/gammu/report> how to report\n");
+			smprintf(s, "WARNING: Unknown block 0x%02x, see <http://cihar.com/gammu/report> how to report\n", FFF->Buffer[pos]);
 			DumpMessage(&(s->di), FFF->Buffer + pos, 3 + (FFF->Buffer[pos + 1] << 8) + FFF->Buffer[pos + 2]);
+#ifdef DEBUG
+		} else {
+			smprintf(s, "Decoded block 0x%02x\n", FFF->Buffer[pos]);
+			DumpMessage(&(s->di), FFF->Buffer + pos, 3 + (FFF->Buffer[pos + 1] << 8) + FFF->Buffer[pos + 2]);
+#endif
 		}
 		pos += 3 + (FFF->Buffer[pos + 1] << 8) + FFF->Buffer[pos + 2];
 	}
