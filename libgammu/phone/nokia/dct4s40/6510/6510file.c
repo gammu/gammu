@@ -2251,8 +2251,13 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 			break;
 	}
 
+	if (parse_len != FFF->Buffer[7]) {
+		smprintf(s, "ERROR: Parsed PDU data have different length than header says!\n");
+		return ERR_CORRUPTED;
+	}
+
 	/* Process structured data */
-	pos = 176 + parse_len;
+	pos = 176 + FFF->Buffer[7];
 
 	if (pos >= FFF->Used) return ERR_NONE;
 
