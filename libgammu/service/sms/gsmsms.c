@@ -485,7 +485,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 
 	/* SMSC time stamp */
 	if (SMS->PDU == SMS_Status_Report || SMS->PDU == SMS_Deliver) {
-		GSM_DecodeSMSDateTime(di, &SMS->SMSCTime, buffer + pos);
+		GSM_DecodeSMSDateTime(di, &SMS->DateTime, buffer + pos);
 		pos += 7;
 		if (pos >= length) {
 			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
@@ -495,7 +495,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 
 	if (SMS->PDU == SMS_Status_Report) {
 		/* Discharge Time */
-		GSM_DecodeSMSDateTime(di, &SMS->DateTime, buffer + pos);
+		GSM_DecodeSMSDateTime(di, &SMS->SMSCTime, buffer + pos);
 		pos += 7;
 		if (pos >= length) {
 			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
@@ -917,6 +917,7 @@ void GSM_SetDefaultReceivedSMSData(GSM_SMSMessage *SMS)
 	SMS->MessageReference		= 0;
 	SMS->ReplaceMessage		= 0;
 	SMS->DeliveryStatus		= 0;
+	SMS->DateTime.Year = 0;
 }
 
 void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
