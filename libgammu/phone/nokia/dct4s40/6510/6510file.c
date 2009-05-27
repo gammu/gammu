@@ -2261,7 +2261,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 
 	if (pos >= FFF->Used) return ERR_NONE;
 
-	/* First master block - 0x01 0x00 <LENGTH> */
+	/* First master block - 0x01 <WORD LENGTH> */
 	if (FFF->Buffer[pos] != 0x01) {
 		smprintf(s, "Unknown block in SMS data after PDU: 0x%02x\n", FFF->Buffer[pos]);
 		DumpMessage(&(s->di), FFF->Buffer + pos, FFF->Used - pos);
@@ -2275,7 +2275,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 			smprintf(s, "ERROR: Reach end of file before end of block!\n");
 			return ERR_BUG;
 		}
-		if (FFF->Buffer[pos]) {
+		if (FFF->Buffer[pos] == 0x00) {
 			smprintf(s, "WARNING: 0x00 block, assuming rest is just junk!\n");
 			break;
 		}
