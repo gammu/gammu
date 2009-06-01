@@ -282,6 +282,7 @@ gammumodule = Extension('gammu._gammu',
         'gammu/src/convertors/call.c',
         'gammu/src/convertors/wap.c',
         'gammu/src/gammu.c',
+        'gammu/src/smsd.c',
         ])
 
 setup (name = 'python-gammu',
