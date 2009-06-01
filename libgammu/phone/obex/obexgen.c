@@ -129,8 +129,11 @@ static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine
  */
 GSM_Error OBEXGEN_Disconnect(GSM_StateMachine *s)
 {
+	GSM_Error error;
 	smprintf(s, "Disconnecting\n");
-	return GSM_WaitFor (s, NULL, 0, 0x81, OBEX_TIMEOUT, ID_Initialise);
+	error = GSM_WaitFor (s, NULL, 0, 0x81, OBEX_TIMEOUT, ID_Initialise);
+	if (error == ERR_BUG) return ERR_NONE;
+	return error;
 }
 
 /**
