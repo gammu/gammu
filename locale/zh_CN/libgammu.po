@@ -8,12 +8,15 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-05-25 13:36+0200\n"
-"PO-Revision-Date: 2009-01-27 14:20+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2009-05-29 13:29+0200\n"
+"Last-Translator: Alexey Kotlyarov <koterpillar+pootle@gmail.com>\n"
 "Language-Team: none\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 1.2.1\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -130,7 +133,7 @@ msgstr "这个功能不支持你的手机，如果你想提供帮助，请联系
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
-msgstr ""
+msgstr "内存没有空。"
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
