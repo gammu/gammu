@@ -3789,13 +3789,47 @@ GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 	fclose(file);
 
 	return GSM_ReadSMSBackupTextFile(FileName, backup);
+
+}
+
+/**
+ * Saves text as a comment split to text lines (max 78 chars long).
+ */
+static GSM_Error SaveTextComment(FILE *file, unsigned char *comment)
+{
+	char buffer[10000];
+	size_t i, len, pos = 0;
+	bool newline = false;
+	sprintf(buffer, "%s", DecodeUnicodeString(comment));
+
+	fprintf(file, "; ");
+
+	len = strlen(buffer);
+
+	for (i = 0; i < len; i++) {
+		if (buffer[i] == 13 || buffer[i] == 10) {
+			if (!newline) {
+				fprintf(file,"\n; ");
+			}
+			newline = true;
+			pos = 0;
+		} else {
+			if (pos > 75) {
+				fprintf(file,"\n; ");
+				pos = 0;
+			}
+			fprintf(file, "%c", buffer[i]);
+			pos++;
+		}
+	}
+	fprintf(file,"\n");
+	return ERR_NONE;
 }
 
 static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 {
 	int 		i;
 	unsigned char 	buffer[10000];
-	char *pos;
 	GSM_DateTime	DT;
 	GSM_Error error;
 
@@ -3814,14 +3848,8 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 		switch (backup->SMS[i]->Coding) {
 			case SMS_Coding_Unicode_No_Compression:
 			case SMS_Coding_Default_No_Compression:
-				/* Save first line, maximum 75 chars as a comment */
-				sprintf(buffer,"%s",DecodeUnicodeString(backup->SMS[i]->Text));
-				buffer[75] = 0;
-				pos = strchr(buffer, 13);
-				if (pos != NULL) *pos = 0;
-				pos = strchr(buffer, 10);
-				if (pos != NULL) *pos = 0;
-				fprintf(file,"; %s\n", buffer);
+				error = SaveTextComment(file, backup->SMS[i]->Text);
+				if (error != ERR_NONE) return error;
 				break;
 			default:
 				break;
