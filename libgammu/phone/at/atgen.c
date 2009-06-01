@@ -1710,7 +1710,10 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		if (error != ERR_NONE) return error;
 		error = GSM_WaitFor(s, "ATE1\r", 5, 0x00, 3, ID_EnableEcho);
 	}
-	if (error != ERR_NONE) return error;
+	if (error != ERR_NONE) {
+		smprintf(s, "Phone does not support enabled echo, it can not work with Gammu!\n");
+		return error;
+	}
 
 	/* Try whether phone supports mode switching as Motorola phones. */
 	smprintf(s, "Trying Motorola mode switch\n");
@@ -4755,6 +4758,7 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,		"ATE1" 	 		,0x00,0x00,ID_EnableEcho	 },
+{ATGEN_GenericReply,		"ERROR" 	 		,0x00,0x00,ID_EnableEcho	 },
 {ATGEN_GenericReply,		"AT+CMEE=" 		,0x00,0x00,ID_EnableErrorInfo	 },
 {ATGEN_GenericReply,		"AT+CKPD="		,0x00,0x00,ID_PressKey		 },
 {ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
