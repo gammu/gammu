@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-05-25 13:36+0200\n"
-"PO-Revision-Date: 2009-04-14 17:40+0200\n"
-"Last-Translator: FELICITE Lionel <deogracia@free.fr>\n"
+"PO-Revision-Date: 2009-06-01 14:02+0200\n"
+"Last-Translator: Cédric Corazza <cedric.corazza@wanadoo.fr>\n"
 "Language-Team: none\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -87,20 +87,20 @@ msgstr ""
 "être pas connecté."
 
 #: libgammu/gsmcomon.c:98
-#, fuzzy
 msgid ""
 "Frame not requested right now. See <http://cihar.com/gammu/report> for "
 "information how to report it."
 msgstr ""
-"Frame n'était pas demandée maintenant. cf. <http://cihar.com/gammu/report> "
-"pour savoir comment rapporter cette information."
+"Frame n'est pas demandée pour le moment. Consulter "
+"<http://cihar.com/gammu/report> pour savoir comment rapporter cette "
+"information."
 
 #: libgammu/gsmcomon.c:99
 msgid ""
 "Unknown response from phone. See <http://cihar.com/gammu/report> for "
 "information how to report it."
 msgstr ""
-"Réponse inconnu du téléphone. cf. <http://cihar.com/gammu/report> pour "
+"Réponse inconnu du téléphone. Consulter <http://cihar.com/gammu/report> pour "
 "savoir comment rapporter cette information."
 
 #: libgammu/gsmcomon.c:100
@@ -108,17 +108,17 @@ msgid ""
 "Unknown frame. See <http://cihar.com/gammu/report> for information how to "
 "report it."
 msgstr ""
-"Frame inconnue. cf. <http://cihar.com/gammu/report> pour savoir comment "
-"rapporter cette information."
+"Frame inconnue. Consulter <http://cihar.com/gammu/report> pour savoir "
+"comment rapporter cette information."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
 msgstr ""
-"Type de chaine de connexion inconnue. Vérifiez le fichier de configuration."
+"Type de chaîne de connexion inconnue. Vérifiez le fichier de configuration."
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr "Chaine de modèle inconnue. Vérifiez le fichier de configuration."
+msgstr "Type de modèle de chaîne inconnu. Vérifiez le fichier de configuration."
 
 #: libgammu/gsmcomon.c:103
 msgid ""
@@ -134,15 +134,15 @@ msgstr "Fonctionnalités non supportées par votre téléphone."
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
-msgstr "Aucune donnée en entrée."
+msgstr "L'entrée est vide."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
-msgstr "Erreur de sécurité : le code PIN est-il correct?"
+msgstr "Erreur de sécurité : le code PIN est-il correct ?"
 
 #: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
-msgstr ""
+msgstr "L'emplacement est invalide. Peut-être est-il trop élevé ?"
 
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
@@ -152,7 +152,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
-msgstr "Mémoire pleine."
+msgstr "Mémoire saturée."
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
@@ -164,22 +164,22 @@ msgstr "Impossible d'ouvrir le fichier spécifié."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
-msgstr "Plus de mémoire nécessaire..."
+msgstr "Il faut plus de mémoire..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Permission to file/device required..."
-msgstr "Les permissions sur le fichier/périphérique requises"
+msgstr "Les permissions sur le fichier/périphérique sont nécessaires..."
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
 msgstr ""
-"La chaine SMSC est vide. Configurez-la  sur le téléphone ou via -smscnumber."
+"La chaîne SMSC est vide. Configurez-la  sur le téléphone ou via -smscnumber."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
 "Vous êtes en train de manipuler la configuration du téléphone. Quittez ce "
-"mode et essayer de nouveau."
+"mode et essayer à nouveau."
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
@@ -191,12 +191,11 @@ msgid ""
 "authors."
 msgstr ""
 "Cette fonctionnalité est en cours d'implémentation pour votre téléphone. Si "
-"vous voulez aider , contactez les auteurs."
+"vous voulez aider, contactez les auteurs."
 
 #: libgammu/gsmcomon.c:118
-#, fuzzy
 msgid "Phone is disabled and connected to charger."
-msgstr "Le téléphone est désactivé et est connecté au chargeur."
+msgstr "Le téléphone est désactivé et connecté au chargeur."
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
@@ -207,8 +206,8 @@ msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
-"Nul n'est parfait. Il semble qu'un bug s'est glissé dans l'implémentation du "
-"protocole. Contactez les auteurs."
+"Nul n'est parfait. Il semble qu'un bogue s'est glissé dans l'implémentation "
+"du protocole. Contactez les auteurs."
 
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
@@ -223,7 +222,7 @@ msgstr "Le téléphone doit envoyer une autre trame de réponse."
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
 msgstr ""
-"La fonction appelée  n'est pas supporté par le type actuel de connexion. "
+"La fonction appelée n'est pas supporté par le type actuel de connexion. "
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
@@ -239,7 +238,7 @@ msgstr "Erreur liée à la mémoire du téléphone (en lecture seule ?)."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
-msgstr ""
+msgstr "Données invalides envoyées au téléphone."
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exist."
@@ -277,7 +276,7 @@ msgstr "Le répertoire doit être vide."
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
-msgstr "Donnée(s) convertie(s)."
+msgstr "Données converties."
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
@@ -301,7 +300,7 @@ msgstr "Cette version n'existe pas."
 
 #: libgammu/gsmcomon.c:142
 msgid "Using default values."
-msgstr "Utilisation des valeurs par défauts."
+msgstr "Utilisation des valeurs par défaut."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
@@ -309,7 +308,7 @@ msgstr "Le téléphone a envoyé des données corrompues."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "Mauvaise chaîne dans la configuration."
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
@@ -333,7 +332,7 @@ msgstr "La description de l'erreur est inconnue."
 
 #: libgammu/phone/dummy/dummy.c:553
 msgid "Templates"
-msgstr "Modeles"
+msgstr "Modèles"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1958
 msgid "Personal"
@@ -345,7 +344,7 @@ msgstr "Voiture"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1962 libgammu/phone/nokia/nfunc.c:1128
 msgid "Headset"
-msgstr "écouteurs"
+msgstr "Écouteurs"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1968 libgammu/phone/nokia/nfunc.c:1116
 msgid "General"
@@ -365,15 +364,15 @@ msgstr "Fort"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1976
 msgid "My style"
-msgstr "My style"
+msgstr "Personnalisé"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:550
 msgid "SIM"
-msgstr "carte SIM"
+msgstr "Carte SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:551 libgammu/phone/pfunc.c:41
 msgid "Inbox"
-msgstr "Boite de réception"
+msgstr "Boîte de réception"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:552
 msgid "Sent items"
@@ -409,7 +408,7 @@ msgstr "Réunion"
 
 #: libgammu/phone/nokia/nfunc.c:1122
 msgid "Outdoor"
-msgstr "A l'exterieur"
+msgstr "À l'extérieur"
 
 #: libgammu/phone/nokia/nfunc.c:1124
 msgid "Pager"
@@ -417,4 +416,4 @@ msgstr "Pager"
 
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
-msgstr "Boite d'envoi"
+msgstr "Boîte d'envoi"
