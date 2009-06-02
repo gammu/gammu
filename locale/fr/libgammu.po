@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-05-25 13:36+0200\n"
+"POT-Creation-Date: 2009-06-02 15:31+0200\n"
 "PO-Revision-Date: 2009-06-01 14:02+0200\n"
 "Last-Translator: Cédric Corazza <cedric.corazza@wanadoo.fr>\n"
 "Language-Team: none\n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -91,9 +91,8 @@ msgid ""
 "Frame not requested right now. See <http://cihar.com/gammu/report> for "
 "information how to report it."
 msgstr ""
-"Frame n'est pas demandée pour le moment. Consulter "
-"<http://cihar.com/gammu/report> pour savoir comment rapporter cette "
-"information."
+"Frame n'est pas demandée pour le moment. Consulter <http://cihar.com/gammu/"
+"report> pour savoir comment rapporter cette information."
 
 #: libgammu/gsmcomon.c:99
 msgid ""
@@ -118,7 +117,8 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr "Type de modèle de chaîne inconnu. Vérifiez le fichier de configuration."
+msgstr ""
+"Type de modèle de chaîne inconnu. Vérifiez le fichier de configuration."
 
 #: libgammu/gsmcomon.c:103
 msgid ""

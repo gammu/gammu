@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-05-13 13:32+0200\n"
+"POT-Creation-Date: 2009-06-02 15:31+0200\n"
 "PO-Revision-Date: 2009-01-27 17:27+0100\n"
 "Last-Translator: js <osmoze.linux@gmail.com>\n"
 "Language-Team: none\n"
@@ -1644,9 +1644,10 @@ msgstr ""
 msgid "Calls"
 msgstr "Appels"
 
+# type: SS
 #: gammu/gammu.c:741
 msgid "SMS and EMS"
-msgstr ""
+msgstr "SMS et MMS"
 
 #: gammu/gammu.c:742
 msgid "Memory (phonebooks and calls)"
@@ -2648,7 +2649,7 @@ msgstr ""
 
 #: gammu/misc.c:1366 gammu/misc.c:1412
 msgid "Automatic"
-msgstr ""
+msgstr "Automatique"
 
 #: gammu/misc.c:1369 gammu/misc.c:1371 gammu/misc.c:1415 gammu/misc.c:1417
 msgid "Authentication type"
