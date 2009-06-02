@@ -21,6 +21,7 @@ ChangeLog
 [-] * Detect when phone does not support ATE1 (bug #918).
 [-] * Do not use OBEX on Motorola L7 (bug #912).
 [-] * Reinclude full SMS text in comments in backup (bug #905).
+[-] * Disable AT OBEX for Samsung J750 and J700 (bug #856).
     
 20090527 - 1.24.91
 
