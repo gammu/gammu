@@ -53,7 +53,7 @@ static GSM_Error N7110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 	if (msg.Buffer[6] == 0x0f)
 		return N71_65_ReplyGetMemoryError(msg.Buffer[10], s);
 
-	return N71_65_DecodePhonebook(s, Data->Memory,Data->Bitmap,Data->SpeedDial,msg.Buffer+18,msg.Length-18,false);
+	return N71_65_DecodePhonebook(s, Data->Memory,Data->Bitmap,Data->SpeedDial,msg.Buffer+18,msg.Length-18,FALSE);
 }
 
 static GSM_Error N7110_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
@@ -155,9 +155,9 @@ static GSM_Error N7110_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMac
 			CopyUnicodeString(Data->SMSFolders->Folder[j].Name,buffer);
 			smprintf(s, "%s\"\n",DecodeUnicodeString(buffer));
 			current=current+2+UnicodeLength(buffer)*2;
-			Data->SMSFolders->Folder[j].InboxFolder = false;
-			if (j==0) Data->SMSFolders->Folder[j].InboxFolder = true;
-			Data->SMSFolders->Folder[j].OutboxFolder = false;
+			Data->SMSFolders->Folder[j].InboxFolder = FALSE;
+			if (j==0) Data->SMSFolders->Folder[j].InboxFolder = TRUE;
+			Data->SMSFolders->Folder[j].OutboxFolder = FALSE;
 			/**
 			 * @todo We should detect outbox here.
 			 */
@@ -283,16 +283,16 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 				Data->Bitmap->BitmapWidth	= Width;
 				Data->Bitmap->BitmapHeight	= Height;
 				PHONE_DecodeBitmap(GSM_NokiaPictureImage, msg.Buffer + 51, Data->Bitmap);
-				GSM_UnpackSemiOctetNumber(&(s->di), Data->Bitmap->Sender,msg.Buffer+22,true);
+				GSM_UnpackSemiOctetNumber(&(s->di), Data->Bitmap->Sender,msg.Buffer+22,TRUE);
 #ifdef DEBUG
-				GSM_UnpackSemiOctetNumber(&(s->di), output,msg.Buffer+9,true);
+				GSM_UnpackSemiOctetNumber(&(s->di), output,msg.Buffer+9,TRUE);
 				smprintf(s, "SMSC : %s\n",DecodeUnicodeString(output));
 #endif
 				Data->Bitmap->Text[0] = 0;
 				Data->Bitmap->Text[1] = 0;
 				if (msg.Length!=304) {
 					GSM_UnpackEightBitsToSeven(0, msg.Length-304, msg.Length-304, msg.Buffer+52+PHONE_GetBitmapSize(GSM_NokiaPictureImage,0,0),output);
-					DecodeDefault(Data->Bitmap->Text, output, msg.Length - 304, true, NULL);
+					DecodeDefault(Data->Bitmap->Text, output, msg.Length - 304, TRUE, NULL);
 				}
 				return ERR_NONE;
 			case ID_GetSMSMessage:
@@ -314,7 +314,7 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 					output[i++] = 0;
 					output[i++] = 0; /* Length - later changed */
 					GSM_UnpackEightBitsToSeven(0, msg.Length-304, msg.Length-304, msg.Buffer+52+PHONE_GetBitmapSize(GSM_NokiaPictureImage,0,0),output2);
-					DecodeDefault(output+i, output2, msg.Length - 304, true, NULL);
+					DecodeDefault(output+i, output2, msg.Length - 304, TRUE, NULL);
 					output[i - 1] = UnicodeLength(output+i) * 2;
 					i = i + output[i-1];
 				}
@@ -390,8 +390,8 @@ static GSM_Error N7110_PrivGetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 		for (i=0;i<sms->Number;i++) {
 			N7110_SetSMSLocation(s, &sms->SMS[i], folderid, location);
 			sms->SMS[i].Folder  	= folderid/0x08;
-			sms->SMS[i].InboxFolder = true;
-			if (folderid/0x08 != 0x01) sms->SMS[i].InboxFolder = false;
+			sms->SMS[i].InboxFolder = TRUE;
+			if (folderid/0x08 != 0x01) sms->SMS[i].InboxFolder = FALSE;
 			CopyUnicodeString(sms->SMS[i].Name,sms->SMS[0].Name);
 			sms->SMS[i].Memory = MEM_ME;
 			if (folderid/0x08 == 0x01 || folderid/0x08 == 0x02) {
@@ -421,14 +421,14 @@ static GSM_Error N7110_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 	unsigned int		location;
 	GSM_Phone_N7110Data	*Priv = &s->Phone.Data.Priv.N7110;
 	int			i;
-	bool			found = false;
+	gboolean			found = FALSE;
 
 	N7110_GetSMSLocation(s, &(sms->SMS[0]), &folderid, &location);
 	error=N7110_GetSMSFolderStatus(s, folderid);
 	if (error!=ERR_NONE) return error;
 	for (i=0;i<Priv->LastSMSFolder.Number;i++) {
 		if (Priv->LastSMSFolder.Location[i]==location) {
-			found = true;
+			found = TRUE;
 			break;
 		}
 	}
@@ -436,18 +436,18 @@ static GSM_Error N7110_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 	return N7110_PrivGetSMSMessage(s,sms);
 }
 
-static GSM_Error N7110_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
+static GSM_Error N7110_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean start)
 {
 	GSM_Phone_N7110Data	*Priv = &s->Phone.Data.Priv.N7110;
 	unsigned char		folderid;
 	unsigned int		location;
 	GSM_Error		error;
 	int			i;
-	bool			findnextfolder = false;
+	gboolean			findnextfolder = FALSE;
 
 	if (start) {
 		folderid=0x00;
-		findnextfolder=true;
+		findnextfolder=TRUE;
 		error=N7110_GetSMSFolders(s,&Priv->LastSMSFolders);
 		if (error!=ERR_NONE) return error;
 	} else {
@@ -457,7 +457,7 @@ static GSM_Error N7110_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 		}
 		/* Is this last location in this folder ? */
 		if (i==Priv->LastSMSFolder.Number-1) {
-			findnextfolder=true;
+			findnextfolder=TRUE;
 		} else {
 			location=Priv->LastSMSFolder.Location[i+1];
 		}
@@ -507,7 +507,7 @@ static GSM_Error N7110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachi
 		smprintf(s, "Name \"%s\"\n",DecodeUnicodeString(Data->Ringtone->Name));
 		/* Looking for end */
 		i=37;
-		while (true) {
+		while (TRUE) {
 			if (msg.Buffer[i]==0x07 && msg.Buffer[i+1]==0x0b) {
 				i=i+2; break;
 			}
@@ -528,7 +528,7 @@ static GSM_Error N7110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachi
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N7110_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
+static GSM_Error N7110_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gboolean PhoneRingtone)
 {
 	unsigned char req[] = {N7110_FRAME_HEADER, 0x22, 0x00, 0x00};
 
@@ -791,11 +791,11 @@ static GSM_Error N7110_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 
 	switch (sms->PDU) {
 	case SMS_Deliver:
-		error = PHONE_EncodeSMSFrame(s,sms,req+9,PHONE_SMSDeliver,&length,true);
+		error = PHONE_EncodeSMSFrame(s,sms,req+9,PHONE_SMSDeliver,&length,TRUE);
 		break;
 	case SMS_Submit:
 		smprintf(s, "Saving SMS template\n");
-		error  = PHONE_EncodeSMSFrame(s,sms,req+9,N7110_SMSTemplate,&length,true);
+		error  = PHONE_EncodeSMSFrame(s,sms,req+9,N7110_SMSTemplate,&length,TRUE);
 		req[8] = 0x02;	/* SMS Template info */
 		break;
 	default:
@@ -1125,7 +1125,7 @@ static GSM_Error N7110_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	req[12] = entry->Location >> 8;
 	req[13] = entry->Location & 0xff;
 
-	count   = count + N71_65_EncodePhonebookFrame(s, req+18, entry, &blocks, false, GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_VOICETAGS));
+	count   = count + N71_65_EncodePhonebookFrame(s, req+18, entry, &blocks, FALSE, GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_VOICETAGS));
 	req[17] = blocks;
 
 	smprintf(s, "Writing phonebook entry\n");
@@ -1209,20 +1209,20 @@ static GSM_Error N7110_ReplyGetProfileFeature(GSM_Protocol_Message msg, GSM_Stat
 			Data->Profile->FeaturesNumber++;
 			break;
 		case 0x08:	/* Caller groups */
-			NOKIA_FindFeatureValue(s, Profile71_65,msg.Buffer[6],msg.Buffer[10],Data,true);
+			NOKIA_FindFeatureValue(s, Profile71_65,msg.Buffer[6],msg.Buffer[10],Data,TRUE);
 			break;
 		case 0x09:	/* Autoanswer */
 			if (Data->Profile->CarKitProfile || Data->Profile->HeadSetProfile) {
-				NOKIA_FindFeatureValue(s, Profile71_65,msg.Buffer[6],msg.Buffer[10],Data,false);
+				NOKIA_FindFeatureValue(s, Profile71_65,msg.Buffer[6],msg.Buffer[10],Data,FALSE);
 			}
 			break;
 		case 0xff :
 			CopyUnicodeString(Data->Profile->Name, msg.Buffer+10);
 			smprintf(s, "profile Name: \"%s\"\n", DecodeUnicodeString(Data->Profile->Name));
-			Data->Profile->DefaultName = false;
+			Data->Profile->DefaultName = FALSE;
 			break;
 		default:
-			NOKIA_FindFeatureValue(s, Profile71_65,msg.Buffer[6],msg.Buffer[10],Data,false);
+			NOKIA_FindFeatureValue(s, Profile71_65,msg.Buffer[6],msg.Buffer[10],Data,FALSE);
 		}
 		return ERR_NONE;
 	}
@@ -1242,10 +1242,10 @@ static GSM_Error N7110_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 
 	if (Profile->Location > 7) return ERR_INVALIDLOCATION;
 
-	Profile->CarKitProfile		= false;
-	Profile->HeadSetProfile		= false;
-	if (Profile->Location == 6) Profile->CarKitProfile  = true;
-	if (Profile->Location == 7) Profile->HeadSetProfile = true;
+	Profile->CarKitProfile		= FALSE;
+	Profile->HeadSetProfile		= FALSE;
+	if (Profile->Location == 6) Profile->CarKitProfile  = TRUE;
+	if (Profile->Location == 7) Profile->HeadSetProfile = TRUE;
 
 	Profile->FeaturesNumber = 0;
 
@@ -1258,7 +1258,7 @@ static GSM_Error N7110_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 		if (error!=ERR_NONE) return error;
 	}
 	NOKIA_GetDefaultProfileName(Profile);
-	Profile->Active = false;
+	Profile->Active = FALSE;
 	return error;
 }
 
@@ -1271,7 +1271,7 @@ static GSM_Error N7110_ReplySetProfileFeature(GSM_Protocol_Message msg UNUSED, G
 static GSM_Error N7110_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 {
 	int 		i;
-	bool		found;
+	gboolean		found;
 	GSM_Error	error;
 	unsigned char	ID,Value;
 	unsigned char 	req[] = {N6110_FRAME_HEADER, 0x03, 0x01, 0x01, 0x03,
@@ -1281,12 +1281,12 @@ static GSM_Error N7110_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 				 0xff};	 /* Value 		*/
 
 	for (i=0;i<Profile->FeaturesNumber;i++) {
-		found = false;
+		found = FALSE;
 		switch (Profile->FeatureID[i]) {
 		case Profile_RingtoneID:
 			ID 	= 0x03;
 			Value 	= Profile->FeatureValue[i];
-			found 	= true;
+			found 	= TRUE;
 			break;
 		default:
 			found=NOKIA_FindPhoneFeatureValue(
@@ -1342,12 +1342,12 @@ static GSM_Error N7110_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachi
 #ifdef DEBUG
 	smprintf(s, "SMS message received\n");
 	sms.State 	= SMS_UnRead;
-	sms.InboxFolder = true;
+	sms.InboxFolder = TRUE;
 	DCT3_DecodeSMSFrame(s, &sms,msg.Buffer+8);
 #endif
 	if (Data->EnableIncomingSMS && s->User.IncomingSMS!=NULL) {
 		sms.State 	= SMS_UnRead;
-		sms.InboxFolder = true;
+		sms.InboxFolder = TRUE;
 		DCT3_DecodeSMSFrame(s, &sms,msg.Buffer+8);
 
 		s->User.IncomingSMS(s,sms, s->User.IncomingSMSUserData);
@@ -1358,7 +1358,7 @@ static GSM_Error N7110_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachi
 static GSM_Error N7110_Initialise (GSM_StateMachine *s)
 {
 #ifdef DEBUG
-	DCT3_SetIncomingCB(s,true);
+	DCT3_SetIncomingCB(s,TRUE);
 #endif
 #ifdef GSM_ENABLE_N71_92INCOMINGINFO
 	/* Enables various things like incoming SMS, call info, etc. */
@@ -1381,7 +1381,7 @@ static GSM_Error N7110_ReplyGetCalendarNotePos(GSM_Protocol_Message msg, GSM_Sta
 }
 #endif
 
-static GSM_Error N7110_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, bool start)
+static GSM_Error N7110_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, gboolean start)
 {
 	return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N7110.LastCalendar,&s->Phone.Data.Priv.N7110.LastCalendarYear,&s->Phone.Data.Priv.N7110.LastCalendarPos);
 /* 	return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N7110.LastCalendarYear,&s->Phone.Data.Priv.N7110.LastCalendarPos); */
@@ -1417,7 +1417,7 @@ static GSM_Error N7110_ReplyGetNetworkInfoError(GSM_Protocol_Message msg UNUSED,
 	return ERR_SECURITYERROR;
 }
 
-static GSM_Error N7110_SetIncomingCall(GSM_StateMachine *s, bool enable)
+static GSM_Error N7110_SetIncomingCall(GSM_StateMachine *s, gboolean enable)
 {
 #ifndef GSM_ENABLE_N71_92INCOMINGINFO
 	return ERR_SOURCENOTAVAILABLE;
@@ -1426,7 +1426,7 @@ static GSM_Error N7110_SetIncomingCall(GSM_StateMachine *s, bool enable)
 #endif
 }
 
-static GSM_Error N7110_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
+static GSM_Error N7110_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)
 {
 #ifndef GSM_ENABLE_N71_92INCOMINGINFO
 	return ERR_SOURCENOTAVAILABLE;
@@ -1435,7 +1435,7 @@ static GSM_Error N7110_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
 #endif
 }
 
-static GSM_Error N7110_SetIncomingSMS(GSM_StateMachine *s, bool enable)
+static GSM_Error N7110_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 {
 #ifndef GSM_ENABLE_N71_92INCOMINGINFO
 	return ERR_SOURCENOTAVAILABLE;
@@ -1444,7 +1444,7 @@ static GSM_Error N7110_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 #endif
 }
 
-GSM_Error N7110_AnswerCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error N7110_AnswerCall(GSM_StateMachine *s, int ID, gboolean all)
 {
 	if (!all) return DCT3DCT4_AnswerCall(s,ID);
 	return DCT3_AnswerAllCalls(s);

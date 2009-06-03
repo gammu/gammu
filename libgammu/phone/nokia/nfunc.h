@@ -25,7 +25,7 @@ GSM_Error N71_65_ReplyUSSDInfo			(GSM_Protocol_Message msg, GSM_StateMachine *s)
 GSM_Error DCT3DCT4_ReplyCallDivert		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3DCT4_ReplyGetActiveConnectSet	(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3DCT4_ReplySetActiveConnectSet	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3DCT4_ReplyGetWAPBookmark		(GSM_Protocol_Message msg, GSM_StateMachine *s, bool FullLength);
+GSM_Error DCT3DCT4_ReplyGetWAPBookmark		(GSM_Protocol_Message msg, GSM_StateMachine *s, gboolean FullLength);
 GSM_Error DCT3DCT4_ReplySetWAPBookmark		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3DCT4_ReplyDelWAPBookmark		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3DCT4_ReplyEnableConnectFunc	(GSM_Protocol_Message msg, GSM_StateMachine *s);
@@ -35,11 +35,11 @@ GSM_Error N71_65_ReplySendDTMF			(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 GSM_Error NOKIA_GetManufacturer			(GSM_StateMachine *s);
 GSM_Error NOKIA_GetPhoneString			(GSM_StateMachine *s, const unsigned char *msgframe, int msglen, unsigned char msgtype, char *retvalue, GSM_Phone_RequestID request, int startresponse);
-GSM_Error NOKIA_SetIncomingSMS			(GSM_StateMachine *s, bool enable);
-GSM_Error NOKIA_SetIncomingCall			(GSM_StateMachine *s, bool enable);
-GSM_Error NOKIA_SetIncomingUSSD			(GSM_StateMachine *s, bool enable);
+GSM_Error NOKIA_SetIncomingSMS			(GSM_StateMachine *s, gboolean enable);
+GSM_Error NOKIA_SetIncomingCall			(GSM_StateMachine *s, gboolean enable);
+GSM_Error NOKIA_SetIncomingUSSD			(GSM_StateMachine *s, gboolean enable);
 GSM_Error N71_65_EnableFunctions		(GSM_StateMachine *s, const char *buff,int len);
-GSM_Error N71_65_GetNextCalendar1		(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, GSM_NOKIACalToDoLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos);
+GSM_Error N71_65_GetNextCalendar1		(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start, GSM_NOKIACalToDoLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos);
 GSM_Error N71_65_AddCalendar2			(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 GSM_Error N71_65_AddCalendar1			(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *FirstCalendarPos);
 GSM_Error N71_65_DelCalendar			(GSM_StateMachine *s, GSM_CalendarEntry *Note);
@@ -60,20 +60,20 @@ GSM_Error DCT3DCT4_SetCallDivert		(GSM_StateMachine *s, GSM_MultiCallDivert *div
 GSM_Error DCT3DCT4_GetCallDivert		(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
 
 GSM_CalendarNoteType N71_65_FindCalendarType(GSM_CalendarNoteType Type, GSM_PhoneModel *model);
-int 		NOKIA_SetUnicodeString		(GSM_StateMachine *s, unsigned char *dest, unsigned char *string, bool FullLength);
-void 		NOKIA_GetUnicodeString		(GSM_StateMachine *s, int *current, unsigned char *input, unsigned char *output, bool FullLength);
+int 		NOKIA_SetUnicodeString		(GSM_StateMachine *s, unsigned char *dest, unsigned char *string, gboolean FullLength);
+void 		NOKIA_GetUnicodeString		(GSM_StateMachine *s, int *current, unsigned char *input, unsigned char *output, gboolean FullLength);
 GSM_MemoryType 	NOKIA_GetMemoryType 		(GSM_StateMachine *s, GSM_MemoryType memory_type, unsigned char *ID);
 void 		NOKIA_DecodeSMSState		(GSM_StateMachine *s, unsigned char state, GSM_SMSMessage *sms);
 void		NOKIA_EncodeDateTime		(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime);
-void NOKIA_DecodeDateTime(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime, bool seconds, bool DayMonthReverse);
+void NOKIA_DecodeDateTime(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime, gboolean seconds, gboolean DayMonthReverse);
 void 		NOKIA_SortSMSFolderStatus	(GSM_StateMachine *s, GSM_NOKIASMSFolder *Folder);
 void NOKIA_FindFeatureValue(GSM_StateMachine		*s,
 			    GSM_Profile_PhoneTableValue ProfileTable[],
   			    unsigned char 		ID,
   			    unsigned char 		Value,
   			    GSM_Phone_Data 		*Data,
-  			    bool			CallerGroups);
-bool NOKIA_FindPhoneFeatureValue(GSM_StateMachine		*s,
+  			    gboolean			CallerGroups);
+gboolean NOKIA_FindPhoneFeatureValue(GSM_StateMachine		*s,
 				 GSM_Profile_PhoneTableValue 	ProfileTable[],
   				 GSM_Profile_Feat_ID		FeatureID,
   				 GSM_Profile_Feat_Value		FeatureValue,
@@ -86,8 +86,8 @@ GSM_Error N71_65_DecodePhonebook		(GSM_StateMachine	*s,
   				 		 GSM_SpeedDial 		*speed,
   				 		 unsigned char 		*MessageBuffer,
   				 		 int 			MessageLength,
-						 bool			DayMonthReverse);
-size_t 		N71_65_EncodePhonebookFrame	(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry *entry, size_t *block2, bool DCT4, bool VoiceTag);
+						 gboolean			DayMonthReverse);
+size_t 		N71_65_EncodePhonebookFrame	(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry *entry, size_t *block2, gboolean DCT4, gboolean VoiceTag);
 size_t 		N71_65_PackPBKBlock		(GSM_StateMachine *s, int id, size_t size, int no, unsigned char *buf, unsigned char *block);
 
 #endif

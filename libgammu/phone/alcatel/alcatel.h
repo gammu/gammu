@@ -200,7 +200,7 @@ typedef struct {
 	 * Used for detecting end of large data data, that don't fit in one
 	 * message.
 	 */
-	bool			TransferCompleted;
+	gboolean			TransferCompleted;
 	/**
 	 * Type of currently received field.
 	 */

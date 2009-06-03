@@ -15,8 +15,8 @@
 
 static GSM_Bitmap		caller[GAMMU_CALLER_GROUPS];
 GSM_AllRingtonesInfo 	ringtones_info = {0, NULL};
-static bool			callerinit[GAMMU_CALLER_GROUPS] = {false, false, false, false, false};
-static bool			ringinit = false;
+static gboolean			callerinit[GAMMU_CALLER_GROUPS] = {FALSE, FALSE, FALSE, FALSE, FALSE};
+static gboolean			ringinit = FALSE;
 
 GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 {
@@ -29,10 +29,10 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 		printf(_("Call length      : %02i:%02i:%02i\n"),entry->CallLength/(60*60),entry->CallLength/60,entry->CallLength%60);
 		return ERR_NONE;
 	case PBK_Date:
-		printf(LISTFORMAT "%s\n", _("Date and time"),OSDateTime(entry->Date,false));
+		printf(LISTFORMAT "%s\n", _("Date and time"),OSDateTime(entry->Date,FALSE));
 		return ERR_NONE;
 	case PBK_LastModified:
-		printf(LISTFORMAT "%s\n", _("Last modified"), OSDateTime(entry->Date,false));
+		printf(LISTFORMAT "%s\n", _("Last modified"), OSDateTime(entry->Date,FALSE));
 		return ERR_NONE;
 	case PBK_Category:
 		if (entry->Number == -1) {
@@ -79,7 +79,7 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 			if (caller[entry->Number-1].DefaultName) {
 				NOKIA_GetDefaultCallerGroupName(&caller[entry->Number-1]);
 			}
-			callerinit[entry->Number-1]=true;
+			callerinit[entry->Number-1]=TRUE;
 		}
 		printf(LISTFORMAT "\"%s\"\n", _("Caller group"),DecodeUnicodeConsole(caller[entry->Number-1].Text));
 		return ERR_NONE;
@@ -87,7 +87,7 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 		if (!ringinit && sm != NULL) {
 			error=GSM_GetRingtonesInfo(sm,&ringtones_info);
 			if (error != ERR_NOTSUPPORTED) return error;
-			if (error == ERR_NONE) ringinit = true;
+			if (error == ERR_NONE) ringinit = TRUE;
 		}
 		if (ringinit) {
 			for (z=0;z<ringtones_info.Number;z++) {

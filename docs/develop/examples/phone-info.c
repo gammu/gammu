@@ -24,7 +24,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Enable global debugging to stderr */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Allocates state machine */
@@ -37,8 +37,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Same could be achieved by just using global debug config.
 	 */
 	debug_info = GSM_GetDebug(s);
-	GSM_SetDebugGlobal(false, debug_info);
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugGlobal(FALSE, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/*

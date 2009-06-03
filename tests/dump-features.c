@@ -8,12 +8,12 @@
 int main(int argc, char **argv)
 {
 	GSM_Feature feature;
-	bool numeric = false;
+	gboolean numeric = FALSE;
 	int rc = 0;
 	const char *featurestring;
 
 	if (argc >= 2 && strcmp(argv[1], "-n") == 0) {
-		numeric = true;
+		numeric = TRUE;
 	}
 
 	for (feature = F_CAL33; feature < F_LAST_VALUE; feature++) {

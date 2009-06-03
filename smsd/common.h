@@ -13,12 +13,12 @@ typedef struct {
 	int gid;
 	char *user;
 	char *group;
-	bool daemonize;
-	bool start_service;
-	bool stop_service;
-	bool run_service;
-	bool install_service;
-	bool uninstall_service;
+	gboolean daemonize;
+	gboolean start_service;
+	gboolean stop_service;
+	gboolean run_service;
+	gboolean install_service;
+	gboolean uninstall_service;
 } SMSD_Parameters;
 #endif
 

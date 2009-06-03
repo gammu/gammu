@@ -1,7 +1,7 @@
 /**
  * \file gammu-types.h
  * \author Michal Čihař
- * 
+ *
  * Various types definitions
  */
 #ifndef __gammu_types_h
@@ -12,38 +12,18 @@
  * Definition of various useful types.
  */
 
-/* 
- * Need to be hidden behind ifndef, because some other code might 
- * define this also
- */
-
-#ifndef __cplusplus
-
-#  ifndef false
+#if !defined(GLIB_MAJOR_VERSION) && !defined(USE_GLIB)
 /**
- * False value for \ref bool.
- *
- * \ingroup Type
+ * gboolean definition, compatible with glib.
  */
-#    define false (0)
-#  endif
-#  ifndef true
-/**
- * True value for \ref bool.
- *
- * \ingroup Type
- */
-#    define true (1)
-#  endif
-#  ifndef bool
-/**
- * Boolean type.
- *
- * \ingroup Type
- */
-#    define bool int
-#  endif
-#endif				/* __cplusplus */
+typedef int gboolean;
+#ifndef FALSE
+#define	FALSE	(0)
+#endif
+#ifndef TRUE
+#define	TRUE	(!FALSE)
+#endif
+#endif
 
 #endif
 

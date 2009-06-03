@@ -45,7 +45,7 @@ typedef struct {
 /**
  * Calculates string cut points to split it to lines.
  */
-void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const char *whitespaces, int spaceslen, bool eot);
+void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const char *whitespaces, int spaceslen, gboolean eot);
 
 /**
  * Returns pointer to static buffer containing line.
@@ -79,7 +79,7 @@ void FreeLines(GSM_CutLines *lines);
  */
 void CopyLineString(char *dest, const char *src, const GSM_CutLines * lines, int start);
 
-void GetTimeDifference(unsigned long diff, GSM_DateTime * DT, bool Plus,
+void GetTimeDifference(unsigned long diff, GSM_DateTime * DT, gboolean Plus,
 		       int multi);
 
 GSM_DateTime GSM_AddTime(GSM_DateTime DT, GSM_DeltaTime delta);

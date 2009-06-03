@@ -29,20 +29,20 @@ static void N71_65_GetCalendarAlarm(GSM_StateMachine *s, unsigned char *buffer, 
 
 		switch (entry->Type) {
 		case GSM_CAL_MEETING:
-			GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
+			GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, FALSE, 60);
 			break;
 		case GSM_CAL_MEMO:
 			if (!GSM_IsPhoneFeatureAvailable(Data->ModelInfo, F_CAL35)) {
-				GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
+				GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, FALSE, 60);
 				break;
 			}
 		case GSM_CAL_CALL:
 			if (!GSM_IsPhoneFeatureAvailable(Data->ModelInfo, F_CAL35)) {
-				GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
+				GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, FALSE, 60);
 				break;
 			}
 		default:
-			GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 1);
+			GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, FALSE, 1);
 		}
 		smprintf(s, "Alarm date   : %02i-%02i-%04i %02i:%02i:%02i\n",
 			entry->Entries[entry->EntriesNum].Date.Day,   entry->Entries[entry->EntriesNum].Date.Month,
@@ -88,7 +88,7 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 	diff += ((unsigned int)msg.Buffer[14]) << 8;
 	diff += msg.Buffer[15];
 	smprintf(s, "  Difference : %li seconds\n", diff);
-	GetTimeDifference(diff, &Date, true, 1);
+	GetTimeDifference(diff, &Date, TRUE, 1);
 	Date.Year += 20;
 	entry->Entries[0].EntryType = CAL_START_DATETIME;
 
@@ -178,7 +178,7 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 
 /* method 2 */
 /* Note: in known phones texts of notes cut to 50 chars */
-GSM_Error N71_65_GetNextCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, int *LastCalendarYear, int *LastCalendarPos)
+GSM_Error N71_65_GetNextCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start, int *LastCalendarYear, int *LastCalendarPos)
 {
 	GSM_Error		error;
 	GSM_DateTime		date_time;

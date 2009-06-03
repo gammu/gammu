@@ -448,7 +448,7 @@ GSM_Error GSM_GetMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
  *
  * \param s State machine pointer.
  * \param entry Storage for retrieved entry. MemoryType has to be set
- * for first call (with start set to true), for subsequent calls
+ * for first call (with start set to TRUE), for subsequent calls
  * Location has to stay intact from previous reading.
  * \param start Whether we should start from beginning.
  *
@@ -457,7 +457,7 @@ GSM_Error GSM_GetMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
  * \ingroup Memory
  */
 GSM_Error GSM_GetNextMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry,
-			    bool start);
+			    gboolean start);
 
 /**
  * Sets memory (phonebooks or calls) entry.
@@ -606,7 +606,7 @@ typedef enum {
  */
 GSM_Error GSM_EncodeVCARD(GSM_Debug_Info * di, char *Buffer,
 			  const size_t buff_len, size_t * Pos,
-			  GSM_MemoryEntry * pbk, const bool header,
+			  GSM_MemoryEntry * pbk, const gboolean header,
 			  const GSM_VCardVersion Version);
 
 /**

@@ -8,7 +8,7 @@ GSM_StateMachine *s;
 INI_Section *cfg;
 GSM_Error error;
 volatile GSM_Error sms_send_status;
-volatile bool gshutdown = false;
+volatile gboolean gshutdown = FALSE;
 
 /* Handler for SMS send reply */
 void send_sms_callback (GSM_StateMachine *sm, int status, int MessageReference, void * user_data)
@@ -39,7 +39,7 @@ void error_handler(void)
 void interrupt(int sign)
 {
 	signal(sign, SIG_IGN);
-	gshutdown = true;
+	gshutdown = TRUE;
 }
 
 int main(int argc UNUSED, char **argv UNUSED)
@@ -57,7 +57,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Enable global debugging to stderr */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, true, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, TRUE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Prepare message */
@@ -86,8 +86,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Same could be achieved by just using global debug config.
 	 */
 	debug_info = GSM_GetDebug(s);
-	GSM_SetDebugGlobal(false, debug_info);
-	GSM_SetDebugFileDescriptor(stderr, true, debug_info);
+	GSM_SetDebugGlobal(FALSE, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, TRUE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/*
@@ -136,7 +136,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Wait for network reply */
 	while (!gshutdown) {
-		GSM_ReadDevice(s, true);
+		GSM_ReadDevice(s, TRUE);
 		if (sms_send_status == ERR_NONE) {
 			/* Message sent OK */
 			return_value = 0;

@@ -51,7 +51,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	size_t len;
 
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Allocates state machine */
@@ -59,8 +59,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result (s != NULL);
 
 	debug_info = GSM_GetDebug(s);
-	GSM_SetDebugGlobal(true, debug_info);
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugGlobal(TRUE, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Init file */
@@ -77,11 +77,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Check expected text */
 	len = UnicodeLength(sms.SMS[0].Text);
 	if (len > (sizeof(message) / 2) - 1) len = (sizeof(message) / 2) - 1;
-	test_result(mywstrncmp(sms.SMS[0].Text, message, len) == true);
+	test_result(mywstrncmp(sms.SMS[0].Text, message, len) == TRUE);
 
 	/* Display message */
-	DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);
-	DisplayMultiSMSInfo(&sms, true, true, NULL, NULL);
+	DisplayMultiSMSInfo(&sms, FALSE, TRUE, NULL, NULL);
+	DisplayMultiSMSInfo(&sms, TRUE, TRUE, NULL, NULL);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);

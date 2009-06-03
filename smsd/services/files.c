@@ -33,7 +33,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 	GSM_Error	error = ERR_NONE;
 	int 		i,j;
 	unsigned char 	FileName[100], FullName[400], ext[4], buffer[64],buffer2[400];
-	bool		done;
+	gboolean		done;
 	FILE 		*file;
 	size_t		locations_size = 0, locations_pos = 0;
 #ifdef GSM_ENABLE_BACKUP
@@ -42,7 +42,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 	*Locations = NULL;
 
 	j 	= 0;
-	done 	= false;
+	done 	= FALSE;
 	for (i=0;i<sms->Number && !done;i++) {
 		strcpy(ext, "txt");
 		if (sms->SMS[i].Coding == SMS_Coding_8bit) strcpy(ext, "bin");
@@ -95,7 +95,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				for (j=0;j<sms->Number;j++) backup.SMS[j] = &sms->SMS[j];
 				backup.SMS[sms->Number] = NULL;
 				error = GSM_AddSMSBackupFile(FullName, &backup);
-				done = true;
+				done = TRUE;
 #endif
 			} else {
 				file = fopen(FullName, "wb");
@@ -232,10 +232,10 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 
  	if (strcasecmp(Config->transmitformat, "unicode") == 0) {
  		SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
- 		SMSInfo.UnicodeCoding = true;
+ 		SMSInfo.UnicodeCoding = TRUE;
  	} else if (strcasecmp(Config->transmitformat, "7bit") == 0) {
  		SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
- 		SMSInfo.UnicodeCoding = false;
+ 		SMSInfo.UnicodeCoding = FALSE;
  	} else {
 		/* auto */
  		SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
@@ -338,7 +338,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 /* After sending SMS is moved to Sent Items or Error Items. */
 static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 		GSM_SMSDConfig *Config, char *ID,
-		bool alwaysDelete, bool sent)
+		gboolean alwaysDelete, gboolean sent)
 {
 	FILE 	*oFile,*iFile;
 	size_t	ilen = 0, olen = 0;

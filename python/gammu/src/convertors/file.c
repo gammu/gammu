@@ -166,7 +166,7 @@ PyObject *FileToPython(GSM_File *file) {
     return val;
 }
 
-int FileFromPython(PyObject *dict, GSM_File *file, bool check) {
+int FileFromPython(PyObject *dict, GSM_File *file, gboolean check) {
     char            *s;
     GSM_DateTime    nulldt = {0,0,0,0,0,0,0};
     Py_ssize_t      i;
@@ -257,10 +257,10 @@ int FileFromPython(PyObject *dict, GSM_File *file, bool check) {
     file->Modified = GetDateTimeFromDict(dict, "Modified");
     if (file->Modified.Year == -1) {
         file->Modified = nulldt;
-        file->ModifiedEmpty = true;
+        file->ModifiedEmpty = TRUE;
         PyErr_Clear();
     } else {
-        file->ModifiedEmpty = false;
+        file->ModifiedEmpty = FALSE;
     }
 
     if ((i = GetIntFromDict(dict, "Protected")) == INT_INVALID) {

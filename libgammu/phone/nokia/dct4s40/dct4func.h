@@ -20,7 +20,7 @@ GSM_Error DCT4_SetPhoneMode	 (GSM_StateMachine *s, DCT4_PHONE_MODE mode);
 GSM_Error DCT4_GetIMEI		 (GSM_StateMachine *s);
 GSM_Error DCT4_GetHardware	 (GSM_StateMachine *s, char *value);
 GSM_Error DCT4_GetProductCode	 (GSM_StateMachine *s, char *value);
-GSM_Error DCT4_Reset		 (GSM_StateMachine *s, bool hard);
+GSM_Error DCT4_Reset		 (GSM_StateMachine *s, gboolean hard);
 
 #endif
 

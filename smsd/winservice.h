@@ -15,27 +15,27 @@ extern char smsd_service_name[SERVICE_NAME_LENGTH];
 /**
  * Starts service dispatcher.
  */
-extern bool start_smsd_service_dispatcher(void);
+extern gboolean start_smsd_service_dispatcher(void);
 
 /**
  * Stops service.
  */
-extern bool stop_smsd_service(void);
+extern gboolean stop_smsd_service(void);
 
 /**
  * Starts service.
  */
-extern bool start_smsd_service(void);
+extern gboolean start_smsd_service(void);
 
 /**
  * Installs service.
  */
-extern bool uninstall_smsd_service(void);
+extern gboolean uninstall_smsd_service(void);
 
 /**
  * Uninstalls service.
  */
-extern bool install_smsd_service(SMSD_Parameters * params);
+extern gboolean install_smsd_service(SMSD_Parameters * params);
 
 /**
  * Prints information about service error code.

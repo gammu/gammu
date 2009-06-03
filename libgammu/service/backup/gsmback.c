@@ -134,7 +134,7 @@ void GSM_FreeBackup(GSM_Backup *backup)
 	}
 }
 
-GSM_BackupFormat GSM_GuessBackupFormat(const char *FileName, const bool UseUnicode) {
+GSM_BackupFormat GSM_GuessBackupFormat(const char *FileName, const gboolean UseUnicode) {
 	GSM_BackupFormat Format = -1;
 
 	if (strcasestr(FileName,".lmb")) {
@@ -177,9 +177,9 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, GSM_BackupForma
 		case GSM_Backup_ICS:
 			return SaveICS(FileName,backup);
 		case GSM_Backup_Gammu:
-			return SaveBackup(FileName,backup, false);
+			return SaveBackup(FileName,backup, FALSE);
 		case GSM_Backup_GammuUCS2:
-			return SaveBackup(FileName,backup, true);
+			return SaveBackup(FileName,backup, TRUE);
 		case GSM_Backup_VNote:
 			return SaveVNT(FileName,backup);
 		default:
@@ -241,84 +241,84 @@ void GSM_ClearBackup(GSM_Backup *backup)
 	backup->Creator		[0] = 0;
 	backup->IMEI		[0] = 0;
 	backup->Model		[0] = 0;
-	backup->DateTimeAvailable   = false;
+	backup->DateTimeAvailable   = FALSE;
 	backup->MD5Original	[0] = 0;
 	backup->MD5Calculated	[0] = 0;
 }
 
 void GSM_GetBackupFormatFeatures(GSM_BackupFormat Format, GSM_Backup_Info *info)
 {
-	info->UseUnicode	= false;
-	info->IMEI 		= false;
-	info->Model 		= false;
-	info->DateTime 		= false;
-	info->PhonePhonebook 	= false;
-	info->SIMPhonebook 	= false;
-	info->ToDo		= false;
-	info->Calendar 		= false;
-	info->CallerLogos 	= false;
-	info->SMSC 		= false;
-	info->WAPBookmark 	= false;
-	info->WAPSettings 	= false;
-	info->MMSSettings 	= false;
-	info->SyncMLSettings 	= false;
-	info->ChatSettings 	= false;
-	info->Ringtone 		= false;
-	info->StartupLogo 	= false;
-	info->OperatorLogo 	= false;
-	info->Profiles 		= false;
-	info->FMStation 	= false;
-	info->GPRSPoint		= false;
-	info->Note		= false;
+	info->UseUnicode	= FALSE;
+	info->IMEI 		= FALSE;
+	info->Model 		= FALSE;
+	info->DateTime 		= FALSE;
+	info->PhonePhonebook 	= FALSE;
+	info->SIMPhonebook 	= FALSE;
+	info->ToDo		= FALSE;
+	info->Calendar 		= FALSE;
+	info->CallerLogos 	= FALSE;
+	info->SMSC 		= FALSE;
+	info->WAPBookmark 	= FALSE;
+	info->WAPSettings 	= FALSE;
+	info->MMSSettings 	= FALSE;
+	info->SyncMLSettings 	= FALSE;
+	info->ChatSettings 	= FALSE;
+	info->Ringtone 		= FALSE;
+	info->StartupLogo 	= FALSE;
+	info->OperatorLogo 	= FALSE;
+	info->Profiles 		= FALSE;
+	info->FMStation 	= FALSE;
+	info->GPRSPoint		= FALSE;
+	info->Note		= FALSE;
 
 	switch (Format) {
 		case GSM_Backup_LMB:
-			info->PhonePhonebook 	= true;
-			info->SIMPhonebook 	= true;
-			info->CallerLogos 	= true;
-			info->StartupLogo 	= true;
+			info->PhonePhonebook 	= TRUE;
+			info->SIMPhonebook 	= TRUE;
+			info->CallerLogos 	= TRUE;
+			info->StartupLogo 	= TRUE;
 			break;
 		case GSM_Backup_VCalendar:
-			info->ToDo		= true;
-			info->Calendar 		= true;
+			info->ToDo		= TRUE;
+			info->Calendar 		= TRUE;
 			break;
 		case GSM_Backup_VCard:
-			info->PhonePhonebook	= true;
+			info->PhonePhonebook	= TRUE;
 			break;
 		case GSM_Backup_VNote:
-			info->Note		= true;
+			info->Note		= TRUE;
 			break;
 		case GSM_Backup_LDIF:
-			info->PhonePhonebook	= true;
+			info->PhonePhonebook	= TRUE;
 			break;
 		case GSM_Backup_ICS:
-			info->ToDo		= true;
-			info->Calendar 		= true;
+			info->ToDo		= TRUE;
+			info->Calendar 		= TRUE;
 			break;
 		case GSM_Backup_Gammu:
 		case GSM_Backup_GammuUCS2:
-			info->UseUnicode	= true;
-			info->IMEI 		= true;
-			info->Model 		= true;
-			info->DateTime 		= true;
-			info->PhonePhonebook 	= true;
-			info->SIMPhonebook 	= true;
-			info->ToDo		= true;
-			info->Calendar 		= true;
-			info->CallerLogos 	= true;
-			info->SMSC 		= true;
-			info->WAPBookmark 	= true;
-			info->WAPSettings 	= true;
-			info->MMSSettings 	= true;
-			info->SyncMLSettings 	= true;
-			info->ChatSettings 	= true;
-			info->Ringtone 		= true;
-			info->StartupLogo 	= true;
-			info->OperatorLogo 	= true;
-			info->Profiles 		= true;
-			info->FMStation 	= true;
-			info->GPRSPoint		= true;
-			info->Note		= true;
+			info->UseUnicode	= TRUE;
+			info->IMEI 		= TRUE;
+			info->Model 		= TRUE;
+			info->DateTime 		= TRUE;
+			info->PhonePhonebook 	= TRUE;
+			info->SIMPhonebook 	= TRUE;
+			info->ToDo		= TRUE;
+			info->Calendar 		= TRUE;
+			info->CallerLogos 	= TRUE;
+			info->SMSC 		= TRUE;
+			info->WAPBookmark 	= TRUE;
+			info->WAPSettings 	= TRUE;
+			info->MMSSettings 	= TRUE;
+			info->SyncMLSettings 	= TRUE;
+			info->ChatSettings 	= TRUE;
+			info->Ringtone 		= TRUE;
+			info->StartupLogo 	= TRUE;
+			info->OperatorLogo 	= TRUE;
+			info->Profiles 		= TRUE;
+			info->FMStation 	= TRUE;
+			info->GPRSPoint		= TRUE;
+			info->Note		= TRUE;
 			break;
 		default:
 			break;
@@ -329,16 +329,16 @@ void GSM_GetBackupFileFeatures(GSM_BackupFormat Format, GSM_Backup_Info *info, G
 {
 	GSM_GetBackupFormatFeatures(Format, info);
 
-	if (info->PhonePhonebook && backup->PhonePhonebook[0] == NULL) info->PhonePhonebook = false;
-	if (info->SIMPhonebook   && backup->SIMPhonebook[0]   == NULL) info->SIMPhonebook   = false;
-	if (info->Calendar	 && backup->Calendar[0]       == NULL) info->Calendar       = false;
-	if (info->ToDo		 && backup->ToDo[0]  	      == NULL) info->ToDo	    = false;
-	if (info->WAPBookmark	 && backup->WAPBookmark[0]    == NULL) info->WAPBookmark    = false;
-	if (info->WAPSettings    && backup->WAPSettings[0]    == NULL) info->WAPSettings    = false;
-	if (info->MMSSettings    && backup->MMSSettings[0]    == NULL) info->MMSSettings    = false;
-	if (info->FMStation      && backup->FMStation[0]      == NULL) info->FMStation      = false;
-	if (info->GPRSPoint      && backup->GPRSPoint[0]      == NULL) info->GPRSPoint      = false;
-	if (info->Profiles       && backup->Profiles[0]       == NULL) info->Profiles       = false;
+	if (info->PhonePhonebook && backup->PhonePhonebook[0] == NULL) info->PhonePhonebook = FALSE;
+	if (info->SIMPhonebook   && backup->SIMPhonebook[0]   == NULL) info->SIMPhonebook   = FALSE;
+	if (info->Calendar	 && backup->Calendar[0]       == NULL) info->Calendar       = FALSE;
+	if (info->ToDo		 && backup->ToDo[0]  	      == NULL) info->ToDo	    = FALSE;
+	if (info->WAPBookmark	 && backup->WAPBookmark[0]    == NULL) info->WAPBookmark    = FALSE;
+	if (info->WAPSettings    && backup->WAPSettings[0]    == NULL) info->WAPSettings    = FALSE;
+	if (info->MMSSettings    && backup->MMSSettings[0]    == NULL) info->MMSSettings    = FALSE;
+	if (info->FMStation      && backup->FMStation[0]      == NULL) info->FMStation      = FALSE;
+	if (info->GPRSPoint      && backup->GPRSPoint[0]      == NULL) info->GPRSPoint      = FALSE;
+	if (info->Profiles       && backup->Profiles[0]       == NULL) info->Profiles       = FALSE;
 	/* .... */
 }
 

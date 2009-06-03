@@ -33,7 +33,7 @@ GSM_Error SaveVCard(char *FileName, GSM_Backup *backup)
 	i=0;
 	while (backup->PhonePhonebook[i]!=NULL) {
 		Length = 0;
-		error = GSM_EncodeVCARD(NULL, Buffer, sizeof(Buffer), &Length,backup->PhonePhonebook[i],true,Nokia_VCard21);
+		error = GSM_EncodeVCARD(NULL, Buffer, sizeof(Buffer), &Length,backup->PhonePhonebook[i],TRUE,Nokia_VCard21);
 		if (error != ERR_NONE) return error;
 		chk_fwrite(Buffer,1,Length,file);
 		sprintf(Buffer, "%c%c",13,10);

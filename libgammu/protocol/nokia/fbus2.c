@@ -123,7 +123,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 {
 	GSM_Protocol_FBUS2Data 	*d = &s->Protocol.Data.FBUS2;
 	unsigned char 		frm_num, seq_num;
-	bool			correct = false;
+	gboolean			correct = FALSE;
 
 	/* XOR the byte with the earlier checksum */
 	d->Msg.CheckSum[d->Msg.Count & 1] ^= rx_char;
@@ -270,10 +270,10 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			case GCT_FBUS2PL2303:
 			case GCT_FBUS2BLUE:
 			case GCT_BLUEFBUS2:
-				if (rx_char == FBUS2_FRAME_ID) correct = true;
+				if (rx_char == FBUS2_FRAME_ID) correct = TRUE;
 				break;
 			case GCT_FBUS2IRDA:
-				if (rx_char == FBUS2_IRDA_FRAME_ID) correct = true;
+				if (rx_char == FBUS2_IRDA_FRAME_ID) correct = TRUE;
 				break;
 			default:
 				break;
@@ -310,7 +310,7 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length
 {
 	unsigned char		buff[300];
 	int			w = 0;
-	bool			wassomething = false;
+	gboolean			wassomething = FALSE;
 	int recvlen;
 
 
@@ -323,7 +323,7 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length
 			return;
 		} else if (recvlen > 0) {
 			GSM_DumpMessageLevel2Recv(s, buff, recvlen, 0xff);
-			wassomething = true;
+			wassomething = TRUE;
 		}
 		usleep(50000);
 	}
@@ -353,7 +353,7 @@ static GSM_Error FBUS2_ATSwitch(GSM_StateMachine *s)
 /**
  * Performs initial synchronisation of FBUS2.
  */
-static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s, const int repeats, const int delays, const bool terminate)
+static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s, const int repeats, const int delays, const gboolean terminate)
 {
 	int count;
 	static const unsigned char init_char = 0x55;
@@ -396,7 +396,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	d->FramesToGo		= 0;
 	d->MsgRXState		= RX_Sync;
 
-	error = Device->DeviceSetParity(s, false);
+	error = Device->DeviceSetParity(s, FALSE);
 	if (error != ERR_NONE) return error;
 
 	switch (s->ConnectionType) {
@@ -411,12 +411,12 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	case GCT_DKU5FBUS2:
 	case GCT_FBUS2PL2303:
 	case GCT_FBUS2DLR3:
-		error = Device->DeviceSetDtrRts(s,false,false);
+		error = Device->DeviceSetDtrRts(s,FALSE,FALSE);
 		if (error != ERR_NONE) return error;
 		sleep(1);
 
 		if (! s->NoPowerCable) {
-			error = Device->DeviceSetDtrRts(s,true,true);
+			error = Device->DeviceSetDtrRts(s,TRUE,TRUE);
 			if (error != ERR_NONE) return error;
 			sleep(1);
 		}
@@ -430,7 +430,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		error = Device->DeviceSetSpeed(s,115200);
 		if (error != ERR_NONE) return error;
 
-		error = FBUS2_InitSequence(s, 32, 0, true);
+		error = FBUS2_InitSequence(s, 32, 0, TRUE);
 		if (error != ERR_NONE) return error;
 
 		break;
@@ -440,10 +440,10 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		if (error != ERR_NONE) return error;
 
 		/* Set DTR as power supply if needed, RTS is always low */
-		error = Device->DeviceSetDtrRts(s, !(s->NoPowerCable), false);
+		error = Device->DeviceSetDtrRts(s, !(s->NoPowerCable), FALSE);
 		if (error != ERR_NONE) return error;
 
-		error = FBUS2_InitSequence(s, 32, 0, true);
+		error = FBUS2_InitSequence(s, 32, 0, TRUE);
 		if (error != ERR_NONE) return error;
 
 		break;
@@ -452,7 +452,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		error = Device->DeviceSetSpeed(s,9600);
 		if (error != ERR_NONE) return error;
 
-		error = FBUS2_InitSequence(s, 32, 0, true);
+		error = FBUS2_InitSequence(s, 32, 0, TRUE);
 		if (error != ERR_NONE) return error;
 
 		error = Device->DeviceSetSpeed(s,115200);
@@ -466,7 +466,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 
 	/* A bit more of synchronisation could be needed here */
 	if (s->ConnectionType != GCT_FBUS2BLUE && s->ConnectionType != GCT_BLUEFBUS2) {
-		error = FBUS2_InitSequence(s, 250, 100, false);
+		error = FBUS2_InitSequence(s, 250, 100, FALSE);
 		if (error != ERR_NONE) return error;
 	}
 

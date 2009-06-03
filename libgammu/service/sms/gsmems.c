@@ -80,11 +80,11 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				    	if (Entry->Italic) 		Buffer[4] |= 32;
 					if (Entry->Underlined) 		Buffer[4] |= 64;
 				    	if (Entry->Strikethrough) 	Buffer[4] |= 128;
-					GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,5,true,&UsedText,&CopiedText,&CopiedSMSText);
+					GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,5,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 					GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
 					if (FreeText == 0) continue;
 				}
-				GSM_AddSMS_Text_UDH(di, SMS,Coding,Entry->Buffer+Len*2,UnicodeLength(Entry->Buffer) - Len,false,&UsedText,&CopiedText,&CopiedSMSText);
+				GSM_AddSMS_Text_UDH(di, SMS,Coding,Entry->Buffer+Len*2,UnicodeLength(Entry->Buffer) - Len,FALSE,&UsedText,&CopiedText,&CopiedSMSText);
 				if (Entry->Left   || Entry->Right      ||
 				    Entry->Center || Entry->Large      ||
 				    Entry->Small  || Entry->Bold       ||
@@ -108,7 +108,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			Buffer[1] = 0x02; 		/* Length of rest 	*/
 			Buffer[2] = 0x00; 		/* Position in EMS msg	*/
 			Buffer[3] = Entry->Number; 	/* Number of anim.	*/
-			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
+			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-2] = UsedText;
 			break;
 		case SMS_EMSSonyEricssonSound:
@@ -119,19 +119,19 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				Buffer[1] = 2;	  /* Length of rest 		 */
 				Buffer[2] = 1;	  /* Number of protected objects */
 				Buffer[3] = 1;	  /* 1=Protected,0=Not protected */
-				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
+				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
 			EncodeLength = 128; /* 128 bytes is maximal length from specs */
 			switch (Entry->ID) {
 			case SMS_EMSSound10:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, TRUE);
 				break;
 			case SMS_EMSSound12:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, GSM_Ring_IMelody12, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, GSM_Ring_IMelody12, TRUE);
 				break;
 			case SMS_EMSSonyEricssonSound:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, GSM_Ring_NoHeader, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, GSM_Ring_NoHeader, TRUE);
 				break;
 			default:
 				break;
@@ -140,7 +140,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			Buffer[0] = 0x0C;	/* ID for EMS sound 	*/
 			Buffer[1] = EncodeLength+1;	/* Length of rest 	*/
 			Buffer[2] = 0x00; 	/* Position in EMS msg 	*/
-			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,EncodeLength+3,true,&UsedText,&CopiedText,&CopiedSMSText);
+			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,EncodeLength+3,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-EncodeLength-1] = UsedText;
 			break;
 		case SMS_EMSSonyEricssonSoundLong:
@@ -152,13 +152,13 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			EncodeLength = 128; /* 128 bytes is maximal length from specs */
 			switch (Entry->ID) {
 			case SMS_EMSSound10Long:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, TRUE);
 				break;
 			case SMS_EMSSound12Long:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody12, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody12, TRUE);
 				break;
 			case SMS_EMSSonyEricssonSoundLong:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_NoHeader, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_NoHeader, TRUE);
 				break;
 			default:
 				break;
@@ -169,13 +169,13 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 					Buffer[1] = 2;	  /* Length of rest 		 */
 					Buffer[2] = 1;	  /* Number of protected objects */
 					Buffer[3] = 1;	  /* 1=Protected,0=Not protected */
-					GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
+					GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 				}
 
 				Buffer[0] = 0x0C;	/* ID for EMS sound 	*/
 				Buffer[1] = EncodeLength+1;	/* Length of rest 	*/
 				Buffer[2] = 0x00; 	/* Position in EMS msg 	*/
-				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,EncodeLength+3,true,&UsedText,&CopiedText,&CopiedSMSText);
+				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,EncodeLength+3,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-EncodeLength-1] = UsedText;
 				break;
 			}
@@ -206,13 +206,13 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				}
 				switch (Entry->ID) {
 				case SMS_EMSSound10Long:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, true);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, TRUE);
 					break;
 				case SMS_EMSSound12Long:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody12, true);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody12, TRUE);
 					break;
 				case SMS_EMSSonyEricssonSoundLong:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_NoHeader, true);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_NoHeader, TRUE);
 					break;
 				default:
 					break;
@@ -226,14 +226,14 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				Buffer[1] = 2;	    /* Length of rest 		   */
 				Buffer[2] = Used+1; /* Number of protected objects */
 				Buffer[3] = 1;	    /* 1=Protected,0=Not protected */
-				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
+				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
 			/* Save UPI UDH */
 			Buffer[0] = 0x13;	/* ID for UPI		*/
 			Buffer[1] = 1;		/* Length of rest 	*/
 			Buffer[2] = Used; 	/* Number of used parts	*/
-			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,3,true,&UsedText,&CopiedText,&CopiedSMSText);
+			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,3,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 
 			/* Find free place in first SMS */
 			GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
@@ -259,13 +259,13 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				}
 				switch (Entry->ID) {
 				case SMS_EMSSound10Long:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, true);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, TRUE);
 					break;
 				case SMS_EMSSound12Long:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody12, true);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody12, TRUE);
 					break;
 				case SMS_EMSSonyEricssonSoundLong:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_NoHeader, true);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_NoHeader, TRUE);
 					break;
 				default:
 					break;
@@ -273,7 +273,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				Buffer[0] = 0x0C;	/* ID for EMS sound 	*/
 				Buffer[1] = EncodeLength+1;	/* Length of rest 	*/
 				Buffer[2] = 0x00; 	/* Position in EMS msg 	*/
-				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,EncodeLength+3,true,&UsedText,&CopiedText,&CopiedSMSText);
+				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,EncodeLength+3,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-EncodeLength-1] = UsedText;
 			}
 
@@ -286,7 +286,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				Buffer[1] = 2;	  /* Length of rest 		 */
 				Buffer[2] = 1;	  /* Number of protected objects */
 				Buffer[3] = 1;	  /* 1=Protected,0=Not protected */
-				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
+				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
 			if (Entry->Bitmap->Bitmap[0].BitmapWidth > 8 || Entry->Bitmap->Bitmap[0].BitmapHeight > 8) {
@@ -303,7 +303,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			for (j=0;j<Entry->Bitmap->Number;j++) {
 				PHONE_EncodeBitmap(BitmapType, Buffer+3+j*Length, &Entry->Bitmap->Bitmap[j]);
 			}
-			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,3+Length*Entry->Bitmap->Number,true,&UsedText,&CopiedText,&CopiedSMSText);
+			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,3+Length*Entry->Bitmap->Number,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-1-Length*Entry->Bitmap->Number] = UsedText;
 			break;
 		case SMS_EMSFixedBitmap:
@@ -312,7 +312,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				Buffer[1] = 2;	  /* Length of rest 		 */
 				Buffer[2] = 1;	  /* Number of protected objects */
 				Buffer[3] = 1;	  /* 1=Protected,0=Not protected */
-				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
+				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
 			if (Entry->Bitmap->Bitmap[0].BitmapWidth > 16 || Entry->Bitmap->Bitmap[0].BitmapHeight > 16) {
@@ -328,7 +328,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			Buffer[1] = Length + 1;		/* Length of rest 	*/
 			Buffer[2] = 0x00; 		/* Position in EMS msg	*/
 			PHONE_EncodeBitmap(BitmapType,Buffer+3, &Entry->Bitmap->Bitmap[0]);
-			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,3+Length,true,&UsedText,&CopiedText,&CopiedSMSText);
+			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,3+Length,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-1-Length] = UsedText;
 			break;
 		case SMS_EMSVariableBitmapLong:
@@ -354,7 +354,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 					Buffer[1] = 2;	  /* Length of rest 		 */
 					Buffer[2] = 1;	  /* Number of protected objects */
 					Buffer[3] = 1;    /* 1=Protected,0=Not protected */
-					GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
+					GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 				}
 
 				Buffer[0] = 0x12;		/* ID for EMS bitmap	*/
@@ -369,7 +369,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 					GSM_PrintBitmap(GSM_global_debug.df,&Bitmap);
 #endif
 				PHONE_EncodeBitmap(BitmapType,Buffer+5, &Bitmap);
-				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,5+Length,true,&UsedText,&CopiedText,&CopiedSMSText);
+				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,5+Length,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-3-Length] = UsedText;
 				break;
 			}
@@ -402,7 +402,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				Buffer[1] = 2;	    /* Length of rest 		   */
 				Buffer[2] = Used+1; /* Number of protected objects */
 				Buffer[3] = 1;	    /* 1=Protected,0=Not protected */
-				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
+				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
 			/* Save UPI UDH */
@@ -411,7 +411,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			Buffer[2] = Used; 	/* Number of used parts	*/
 
 			/* Find free place in first SMS */
-			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,3,true,&UsedText,&CopiedText,&CopiedSMSText);
+			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,3,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
 			Length 	= FreeBytes - 3;
 			if (Length < 0) 	Length = 128;
@@ -456,7 +456,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				Buffer[3] = Width2/8;		/* Bitmap width/8 	*/
 				Buffer[4] = Height;		/* Bitmap height  	*/
 				PHONE_EncodeBitmap(BitmapType,Buffer+5, &Bitmap2);
-				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,5+Length,true,&UsedText,&CopiedText,&CopiedSMSText);
+				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,5+Length,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-3-Length] = UsedText;
 
 				FreeBytes 	= FreeBytes + Width2;
@@ -469,7 +469,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				Buffer[1] = 2;	  /* Length of rest 		 */
 				Buffer[2] = 1;	  /* Number of protected objects */
 				Buffer[3] = 1;	  /* 1=Protected,0=Not protected */
-				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
+				GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,4,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
 			BitmapType 	= GSM_EMSVariablePicture;
@@ -500,7 +500,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				GSM_PrintBitmap(GSM_global_debug.df,&Bitmap);
 #endif
 			PHONE_EncodeBitmap(BitmapType,Buffer+5, &Bitmap);
-			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,5+Length,true,&UsedText,&CopiedText,&CopiedSMSText);
+			GSM_AddSMS_Text_UDH(di, SMS,Coding,Buffer,5+Length,TRUE,&UsedText,&CopiedText,&CopiedSMSText);
 			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-3-Length] = UsedText;
 			break;
 		default:
@@ -541,11 +541,11 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 	return ERR_NONE;
 }
 
-static bool AddEMSText(GSM_SMSMessage *SMS, GSM_MultiPartSMSInfo *Info, int *Pos, int Len)
+static gboolean AddEMSText(GSM_SMSMessage *SMS, GSM_MultiPartSMSInfo *Info, int *Pos, int Len)
 {
 	int BufferLen;
 
-	if (Len==0) return true;
+	if (Len==0) return TRUE;
 
 	if (Info->Entries[Info->EntriesNum].ID!=SMS_ConcatenatedTextLong &&
 	    Info->Entries[Info->EntriesNum].ID!=0) {
@@ -558,14 +558,14 @@ static bool AddEMSText(GSM_SMSMessage *SMS, GSM_MultiPartSMSInfo *Info, int *Pos
 		SMS->Coding = SMS_Coding_Default_No_Compression;
 	case SMS_Coding_8bit:
 		Info->Entries[Info->EntriesNum].Buffer = realloc(Info->Entries[Info->EntriesNum].Buffer, BufferLen + (Len * 2));
-		if (Info->Entries[Info->EntriesNum].Buffer == NULL) return false;
+		if (Info->Entries[Info->EntriesNum].Buffer == NULL) return FALSE;
 		EncodeUnicode(Info->Entries[Info->EntriesNum].Buffer + BufferLen - 2, SMS->Text + (*Pos) *2, Len);
 		BufferLen += Len * 2;
 		break;
 	case SMS_Coding_Unicode_No_Compression:
 	case SMS_Coding_Default_No_Compression:
 		Info->Entries[Info->EntriesNum].Buffer = realloc(Info->Entries[Info->EntriesNum].Buffer, BufferLen + (Len * 2));
-		if (Info->Entries[Info->EntriesNum].Buffer == NULL) return false;
+		if (Info->Entries[Info->EntriesNum].Buffer == NULL) return FALSE;
 		memcpy(Info->Entries[Info->EntriesNum].Buffer + BufferLen - 2, SMS->Text + (*Pos) *2, Len * 2);
 		BufferLen += Len * 2;
 		break;
@@ -578,17 +578,17 @@ static bool AddEMSText(GSM_SMSMessage *SMS, GSM_MultiPartSMSInfo *Info, int *Pos
 		Info->Entries[Info->EntriesNum].Buffer[BufferLen - 1]	= 0;
 		Info->Entries[Info->EntriesNum].ID			= SMS_ConcatenatedTextLong;
 	}
-	return true;
+	return TRUE;
 }
 
-bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
+gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			       GSM_MultiPartSMSInfo 	*Info,
 			       GSM_MultiSMSMessage 	*SMS)
 {
 	int  			i, w, Pos, UPI = 1, fmt;
 	size_t			width, height;
 	size_t			z;
- 	bool 			RetVal = false, NewPicture = true;
+ 	gboolean 			RetVal = FALSE, NewPicture = TRUE;
 	GSM_Phone_Bitmap_Types 	BitmapType;
 	GSM_Bitmap		Bitmap,Bitmap2;
 
@@ -602,7 +602,7 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 		while (w < SMS->SMS[i].UDH.Length) {
 			if (Info->EntriesNum + 1 == GSM_MAX_MULTI_SMS) {
 				smfprintf(di, "Couldn't parse SMS, contains too many EMS parts!\n");
-				return false;
+				return FALSE;
 			}
 			switch(SMS->SMS[i].UDH.Text[w]) {
 			case 0x00:
@@ -611,7 +611,7 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			case 0x05:
 				/* Application data */
 				SMS->SMS[i].Coding = -1;
-				if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].Length-Pos)) return false;
+				if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].Length-Pos)) return FALSE;
 				Info->Entries[Info->EntriesNum].Number =
 					((0x00ff & SMS->SMS[i].UDH.Text[w + 2]) << 8) | ( 0x00ff &SMS->SMS[i].UDH.Text[w + 3]);
 				switch (Info->Entries[Info->EntriesNum].Number) {
@@ -624,7 +624,7 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 					default:
 						smfprintf(di, "UDH part - unknown application data - 0x%04x", Info->Entries[Info->EntriesNum].Number);
 				}
-				RetVal = true;
+				RetVal = TRUE;
 				break;
 			case 0x08:
 				smfprintf(di, "UDH part - linked SMS with 16 bit ID\n");
@@ -634,55 +634,55 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				if (SMS->SMS[i].UDH.Text[w+2] > Pos) {
 					z = Pos;
 					if (Info->Entries[Info->EntriesNum].ID != 0) (Info->EntriesNum)++;
-					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return false;
+					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return FALSE;
 				}
 				fmt = SMS->SMS[i].UDH.Text[w+4];
 				switch (fmt & 3) {
 					case 0:
-						Info->Entries[Info->EntriesNum].Left = true;
+						Info->Entries[Info->EntriesNum].Left = TRUE;
 						break;
 					case 1:
-						Info->Entries[Info->EntriesNum].Right = true;
+						Info->Entries[Info->EntriesNum].Right = TRUE;
 						break;
 					case 2:
-						Info->Entries[Info->EntriesNum].Center = true;
+						Info->Entries[Info->EntriesNum].Center = TRUE;
 						break;
 					case 3:
 						break;
 
 				}
 				if ((fmt & 4) == 4) {
-					Info->Entries[Info->EntriesNum].Large = true;
+					Info->Entries[Info->EntriesNum].Large = TRUE;
 				}
 				if ((fmt & 8) == 8) {
-					Info->Entries[Info->EntriesNum].Small = true;
+					Info->Entries[Info->EntriesNum].Small = TRUE;
 				}
 				if ((fmt & 16) == 16) {
-					Info->Entries[Info->EntriesNum].Bold = true;
+					Info->Entries[Info->EntriesNum].Bold = TRUE;
 				}
 				if ((fmt & 32) == 32) {
-					Info->Entries[Info->EntriesNum].Italic= true;
+					Info->Entries[Info->EntriesNum].Italic= TRUE;
 				}
 				if ((fmt & 64) == 64) {
-					Info->Entries[Info->EntriesNum].Underlined = true;
+					Info->Entries[Info->EntriesNum].Underlined = TRUE;
 				}
 				if ((fmt & 128) == 128) {
-					Info->Entries[Info->EntriesNum].Strikethrough = true;
+					Info->Entries[Info->EntriesNum].Strikethrough = TRUE;
 				}
 				Info->Entries[Info->EntriesNum].Number 	= SMS->SMS[i].UDH.Text[w+3];
 				Info->Entries[Info->EntriesNum].ID 	= SMS_ConcatenatedTextLong;
-				RetVal = true;
+				RetVal = TRUE;
 				break;
 			case 0x0B:
 				smfprintf(di, "UDH part - default EMS sound\n");
 				if (SMS->SMS[i].UDH.Text[w+2] > Pos) {
 					z = Pos;
-					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return false;
+					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return FALSE;
 				}
 				if (Info->Entries[Info->EntriesNum].ID != 0) (Info->EntriesNum)++;
 				Info->Entries[Info->EntriesNum].Number 	= SMS->SMS[i].UDH.Text[w+3];
 				Info->Entries[Info->EntriesNum].ID 	= SMS_EMSPredefinedSound;
-				RetVal = true;
+				RetVal = TRUE;
 				break;
 #if 0
 			case 0x0C:
@@ -693,12 +693,12 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				smfprintf(di, "UDH part - default EMS animation\n");
 				if (SMS->SMS[i].UDH.Text[w+2] > Pos) {
 					z = Pos;
-					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return false;
+					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return FALSE;
 				}
 				if (Info->Entries[Info->EntriesNum].ID != 0) (Info->EntriesNum)++;
 				Info->Entries[Info->EntriesNum].Number 	= SMS->SMS[i].UDH.Text[w+3];
 				Info->Entries[Info->EntriesNum].ID 	= SMS_EMSPredefinedAnimation;
-				RetVal = true;
+				RetVal = TRUE;
 				break;
 			case 0x0E:
 			case 0x0F:
@@ -712,12 +712,12 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				smfprintf(di, "Position - %i\n",SMS->SMS[i].UDH.Text[w+2]);
 				if (SMS->SMS[i].UDH.Text[w+2] > Pos) {
 					z = Pos;
-					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return false;
+					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return FALSE;
 				}
 				(Info->EntriesNum)++;
 				Info->Entries[Info->EntriesNum].ID 		= SMS_EMSAnimation;
 				Info->Entries[Info->EntriesNum].Bitmap = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap));
-				if (Info->Entries[Info->EntriesNum].Bitmap == NULL) return false;
+				if (Info->Entries[Info->EntriesNum].Bitmap == NULL) return FALSE;
 				Info->Entries[Info->EntriesNum].Bitmap->Number 	= 0;
 				for (z=0;z<((SMS->SMS[i].UDH.Text[w+1]-1)/PHONE_GetBitmapSize(BitmapType,0,0));z++) {
 					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[z].Type = GSM_PictureImage;
@@ -726,7 +726,7 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 						&Info->Entries[Info->EntriesNum].Bitmap->Bitmap[z]);
 					Info->Entries[Info->EntriesNum].Bitmap->Number++;
 				}
-				RetVal = true;
+				RetVal = TRUE;
 				break;
 			case 0x10:
 			case 0x11:
@@ -740,11 +740,11 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				smfprintf(di, "Position - %i\n",SMS->SMS[i].UDH.Text[w+2]);
 				if (SMS->SMS[i].UDH.Text[w+2] > Pos) {
 					z = Pos;
-					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return false;
+					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return FALSE;
 				}
 				if (Info->Entries[Info->EntriesNum].ID != 0) (Info->EntriesNum)++;
 				Info->Entries[Info->EntriesNum].Bitmap = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap));
-				if (Info->Entries[Info->EntriesNum].Bitmap == NULL) return false;
+				if (Info->Entries[Info->EntriesNum].Bitmap == NULL) return FALSE;
 				PHONE_DecodeBitmap(BitmapType,
 					SMS->SMS[i].UDH.Text + w + 3,
 					&Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0]);
@@ -752,18 +752,18 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].Text[0] = 0;
 				Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].Text[1] = 0;
 				Info->Entries[Info->EntriesNum].ID = SMS_EMSFixedBitmap;
-				RetVal = true;
+				RetVal = TRUE;
 				break;
 			case 0x12:
 				smfprintf(di, "UDH part - EMS variable width bitmap\n");
 				if (SMS->SMS[i].UDH.Text[w+2] > Pos) {
 					z = Pos;
-					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return false;
+					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return FALSE;
 				}
 				Bitmap.BitmapWidth  = SMS->SMS[i].UDH.Text[w+3]*8;
 				Bitmap.BitmapHeight = SMS->SMS[i].UDH.Text[w+4];
 				Info->Entries[Info->EntriesNum].Bitmap = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap));
-				if (Info->Entries[Info->EntriesNum].Bitmap == NULL) return false;
+				if (Info->Entries[Info->EntriesNum].Bitmap == NULL) return FALSE;
 				if (NewPicture) {
 					Info->Entries[Info->EntriesNum].Bitmap->Number = 0;
 					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].BitmapWidth  = Bitmap.BitmapWidth;
@@ -802,11 +802,11 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].Text[0] = 0;
 					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].Text[1] = 0;
 					Info->Entries[Info->EntriesNum].ID = SMS_EMSVariableBitmap;
-					RetVal 		= true;
-					NewPicture 	= true;
+					RetVal 		= TRUE;
+					NewPicture 	= TRUE;
 					smfprintf(di, "New variable picture\n");
 				} else {
-					NewPicture = false;
+					NewPicture = FALSE;
 					UPI--;
 				}
 				break;
@@ -820,12 +820,12 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				break;
 			default:
 				smfprintf(di, "UDH part - unknown block %02x\n",SMS->SMS[i].UDH.Text[w]);
-				Info->Unknown = true;
+				Info->Unknown = TRUE;
 			} /* switch */
 			w=w+SMS->SMS[i].UDH.Text[w+1]+2;
 		} /* while */
-		if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].Length-Pos)) return false;
-		RetVal = true;
+		if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].Length-Pos)) return FALSE;
+		RetVal = TRUE;
 	}
 	if (RetVal) (Info->EntriesNum)++;
 	return RetVal;

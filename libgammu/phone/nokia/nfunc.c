@@ -51,18 +51,18 @@ size_t N71_65_PackPBKBlock(GSM_StateMachine *s, int id, size_t size, int no, uns
 	return (size + 6);
 }
 
-size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry *entry, size_t *block2, bool DCT4, bool VoiceTag)
+size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry *entry, size_t *block2, gboolean DCT4, gboolean VoiceTag)
 {
 	int		count=0, len, i, block=0, j;
 	unsigned char	string[500];
 	unsigned char	type;
-	bool		found;
+	gboolean		found;
 
 	for (i = 0; i < entry->EntriesNum; i++) {
 		entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 	}
 	memset(string,0,sizeof(string));
-	found = false;
+	found = FALSE;
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
  		for (i = 0; i < entry->EntriesNum; i++) {
 			if (entry->Entries[i].EntryType == PBK_Text_LastName ||
@@ -72,7 +72,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 				} else {
 					type = S4030_PBK_FIRSTNAME;
 				}
-				found = true;
+				found = TRUE;
 				entry->Entries[i].AddError = ERR_NONE;
 				len = MIN(UnicodeLength(entry->Entries[i].Text), 126);
 				string[0] = len*2+2;
@@ -91,7 +91,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 					CopyUnicodeString(string+1,entry->Entries[i].Text);
 					string[len*2+1] = 0;
 					count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
-					found = true;
+					found = TRUE;
 				} else {
 					entry->Entries[i].AddError = ERR_INVALIDDATA;
 				}
@@ -106,7 +106,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 				}
 				CopyUnicodeString(string+UnicodeLength(string+1)*2+1,entry->Entries[i].Text);
 				entry->Entries[i].AddError = ERR_DATACONVERTED;
-				found=true;
+				found=TRUE;
 			}
 		}
 		if (UnicodeLength(string+1) != 0) {
@@ -126,7 +126,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 					CopyUnicodeString(string+1,entry->Entries[i].Text);
 					string[len*2+1] = 0;
 					count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
-					found = true;
+					found = TRUE;
 				} else {
 					entry->Entries[i].AddError = ERR_INVALIDDATA;
 				}
@@ -339,32 +339,32 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				 GSM_SpeedDial 		*speed,
 				 unsigned char 		*MessageBuffer,
 				 int 			MessageLength,
-				 bool			DayMonthReverse)
+				 gboolean			DayMonthReverse)
 {
 	unsigned char 				*Block;
 	int					length = 0, i, bs = 0;
 	GSM_71_65_Phonebook_Entries_Types	Type;
-	bool					found=false;
-	bool					foundbb5add=false;
+	gboolean					found=FALSE;
+	gboolean					foundbb5add=FALSE;
 
 	entry->EntriesNum 	= 0;
 
 	if ((int)entry->MemoryType==MEM7110_CG) {
 		bitmap->Text[0] 		= 0x00;
 		bitmap->Text[1] 		= 0x00;
-		bitmap->DefaultBitmap 		= true;
-		bitmap->DefaultRingtone 	= true;
-		bitmap->FileSystemPicture 	= false;
+		bitmap->DefaultBitmap 		= TRUE;
+		bitmap->DefaultRingtone 	= TRUE;
+		bitmap->FileSystemPicture 	= FALSE;
 	}
 	if ((int)entry->MemoryType==MEM6510_CG2 && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
-		bitmap->DefaultName 		= false;
-		bitmap->DefaultBitmap 		= true;
-		bitmap->DefaultRingtone 	= true;
-		bitmap->FileSystemPicture 	= false;
+		bitmap->DefaultName 		= FALSE;
+		bitmap->DefaultBitmap 		= TRUE;
+		bitmap->DefaultRingtone 	= TRUE;
+		bitmap->FileSystemPicture 	= FALSE;
 	}
 
 	Block = &MessageBuffer[0];
-	while (true) {
+	while (TRUE) {
 		entry->Entries[entry->EntriesNum].AddError = ERR_NONE;
 		entry->Entries[entry->EntriesNum].SMSList[0] = 0;
 		entry->Entries[entry->EntriesNum].VoiceTag = 0;
@@ -394,7 +394,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			Type = PBK_Text_LastName;   smprintf(s,"Last name ");
 		}
 		if (Type != 0) {
-			found=true;
+			found=TRUE;
 			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
 				smprintf(s, "Too long text\n");
 				return ERR_UNKNOWNRESPONSE;
@@ -415,7 +415,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	Block = &MessageBuffer[0];
 	bs=0;
 	length=0;
-	while (true) {
+	while (TRUE) {
 		entry->Entries[entry->EntriesNum].AddError = ERR_NONE;
 		entry->Entries[entry->EntriesNum].SMSList[0] = 0;
 		entry->Entries[entry->EntriesNum].VoiceTag = 0;
@@ -489,7 +489,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == N7110_PBK_DATETIME) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
-			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date, true, DayMonthReverse);
+			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date, TRUE, DayMonthReverse);
 			if (CheckDate(&entry->Entries[entry->EntriesNum].Date) &&
 					CheckDate(&entry->Entries[entry->EntriesNum].Date)) {
 				entry->EntriesNum ++;
@@ -500,7 +500,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == N6510_PBK_PICTURE_ID) {
 			if ((int)entry->MemoryType==MEM6510_CG2) {
-				bitmap->FileSystemPicture = true;
+				bitmap->FileSystemPicture = TRUE;
 				smprintf(s, "Picture ID \"%i\"\n",Block[10]*256+Block[11]);
 				bitmap->PictureID = Block[10]*256+Block[11];
 			} else {
@@ -595,7 +595,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			}
 			if ((Type == 0x00) && (Block[7]>0)) {
 				smprintf(s, "Found new bb5 style address\n");
-				foundbb5add=true;
+				foundbb5add=TRUE;
 				continue;
 			}
 			if (Type == 0x00) {
@@ -614,7 +614,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 
 
-		if ((Block[0] == S4030_PBK_POSTAL_EXTADDRESS) && (foundbb5add==true)) {
+		if ((Block[0] == S4030_PBK_POSTAL_EXTADDRESS) && (foundbb5add==TRUE)) {
 			Type = PBK_Text_Custom1;    	smprintf(s,"Address extension ? ");
 			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
 				smprintf(s, "Too long text\n");
@@ -626,7 +626,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->EntriesNum ++;
 			continue;
 		}
-		if ((Block[0] == S4030_PBK_POSTAL_STREET) && (foundbb5add==true)) {
+		if ((Block[0] == S4030_PBK_POSTAL_STREET) && (foundbb5add==TRUE)) {
 			Type = PBK_Text_StreetAddress;  smprintf(s,"Street ");
 			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
 				smprintf(s, "Too long text\n");
@@ -638,7 +638,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->EntriesNum ++;
 			continue;
 		}
-		if ((Block[0] == S4030_PBK_POSTAL_CITY) && (foundbb5add==true)) {
+		if ((Block[0] == S4030_PBK_POSTAL_CITY) && (foundbb5add==TRUE)) {
 			Type = PBK_Text_City;    	smprintf(s,"City ");
 			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
 				smprintf(s, "Too long text\n");
@@ -650,7 +650,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->EntriesNum ++;
 			continue;
 		}
-		if ((Block[0] == S4030_PBK_POSTAL_STATE) && (foundbb5add==true)) {
+		if ((Block[0] == S4030_PBK_POSTAL_STATE) && (foundbb5add==TRUE)) {
 			Type = PBK_Text_State;    	smprintf(s,"State ");
 			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
 				smprintf(s, "Too long text\n");
@@ -662,7 +662,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->EntriesNum ++;
 			continue;
 		}
-		if ((Block[0] == S4030_PBK_POSTAL_POSTAL) && (foundbb5add==true)) {
+		if ((Block[0] == S4030_PBK_POSTAL_POSTAL) && (foundbb5add==TRUE)) {
 			Type = PBK_Text_Postal;    	smprintf(s,"Postal ");
 			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
 				smprintf(s, "Too long text\n");
@@ -674,7 +674,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->EntriesNum ++;
 			continue;
 		}
-		if ((Block[0] == S4030_PBK_POSTAL_COUNTRY) && (foundbb5add==true)) {
+		if ((Block[0] == S4030_PBK_POSTAL_COUNTRY) && (foundbb5add==TRUE)) {
 			Type = PBK_Text_Country;    	smprintf(s,"Country ");
 			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
 				smprintf(s, "Too long text\n");
@@ -736,7 +736,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == S4030_PBK_BIRTHDAY) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
-			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date, false, DayMonthReverse);
+			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date, FALSE, DayMonthReverse);
 			entry->EntriesNum ++;
 			continue;
 		}
@@ -747,8 +747,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				bitmap->RingtoneID=Block[5];
 				if (Block[5] == 0x00) bitmap->RingtoneID=Block[7];
 				smprintf(s, "Ringtone ID : %i\n",bitmap->RingtoneID);
-				bitmap->DefaultRingtone 	= false;
-				bitmap->FileSystemRingtone 	= false;
+				bitmap->DefaultRingtone 	= FALSE;
+				bitmap->FileSystemRingtone 	= FALSE;
 			} else {
 				entry->Entries[entry->EntriesNum].EntryType=PBK_RingtoneID;
 				smprintf(s, "Ringtone ID \"%i\"\n",Block[7]);
@@ -759,8 +759,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == N7110_PBK_LOGOON) {
 			if ((int)entry->MemoryType==MEM7110_CG) {
-				bitmap->BitmapEnabled=(Block[5]==0x00 ? false : true);
-				smprintf(s, "Logo : %s\n", bitmap->BitmapEnabled==true ? "enabled":"disabled");
+				bitmap->BitmapEnabled=(Block[5]==0x00 ? FALSE : TRUE);
+				smprintf(s, "Logo : %s\n", bitmap->BitmapEnabled==TRUE ? "enabled":"disabled");
 			} else {
 				return ERR_UNKNOWNRESPONSE;
 			}
@@ -770,7 +770,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if ((int)entry->MemoryType==MEM7110_CG) {
 				smprintf(s, "Caller logo\n");
 				PHONE_DecodeBitmap(GSM_NokiaCallerLogo, Block+10, bitmap);
-				bitmap->DefaultBitmap = false;
+				bitmap->DefaultBitmap = FALSE;
 			} else {
 				return ERR_UNKNOWNRESPONSE;
 			}
@@ -832,19 +832,19 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if ((int)entry->MemoryType==MEM7110_CG) {
 				if (Block[9] == 0x01) {
 					smprintf(s, "Filesystem ringtone ID: %02x\n",Block[10]*256+Block[11]);
-					bitmap->FileSystemRingtone = true;
+					bitmap->FileSystemRingtone = TRUE;
 				} else {
 					smprintf(s, "Internal ringtone ID: %02x\n",Block[10]*256+Block[11]);
-					bitmap->FileSystemRingtone = false;
+					bitmap->FileSystemRingtone = FALSE;
 				}
 				bitmap->RingtoneID	= Block[10]*256+Block[11];
-				bitmap->DefaultRingtone = false;
+				bitmap->DefaultRingtone = FALSE;
 			} else if ((int)entry->MemoryType==MEM6510_CG2) {
 				/* FIXME */
 				smprintf(s, "Internal ringtone ID: %02x\n",Block[10]*256+Block[11]);
-				bitmap->FileSystemRingtone 	= false;
+				bitmap->FileSystemRingtone 	= FALSE;
 				bitmap->RingtoneID		= Block[10]*256+Block[11];
-				bitmap->DefaultRingtone 	= false;
+				bitmap->DefaultRingtone 	= FALSE;
 			} else {
 				/* series 40 3.0 */
 				smprintf(s, "Filesystem ringtone ID: %02x\n",Block[10]*256+Block[11]);
@@ -929,9 +929,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 void NOKIA_GetDefaultCallerGroupName(GSM_Bitmap *Bitmap)
 {
-	Bitmap->DefaultName = false;
+	Bitmap->DefaultName = FALSE;
 	if (Bitmap->Text[0]==0x00 && Bitmap->Text[1]==0x00) {
-		Bitmap->DefaultName = true;
+		Bitmap->DefaultName = TRUE;
 		switch(Bitmap->Location) {
 		case 1: EncodeUnicode(Bitmap->Text,_("Family"),strlen(_("Family")));
 			break;
@@ -947,7 +947,7 @@ void NOKIA_GetDefaultCallerGroupName(GSM_Bitmap *Bitmap)
 	}
 }
 
-void NOKIA_DecodeDateTime(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime, bool seconds, bool DayMonthReverse)
+void NOKIA_DecodeDateTime(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime, gboolean seconds, gboolean DayMonthReverse)
 {
 	datetime->Year	= buffer[0] * 256 + buffer[1];
 	/* Sometimes reversed */
@@ -1024,7 +1024,7 @@ GSM_Error NOKIA_GetManufacturer(GSM_StateMachine *s)
  * 3. string (unicode, no termination)
  * This function read string to output and increases counter
  */
-void NOKIA_GetUnicodeString(GSM_StateMachine *s UNUSED, int *current, unsigned char *input, unsigned char *output, bool FullLength)
+void NOKIA_GetUnicodeString(GSM_StateMachine *s UNUSED, int *current, unsigned char *input, unsigned char *output, gboolean FullLength)
 {
 	int length;
 
@@ -1042,7 +1042,7 @@ void NOKIA_GetUnicodeString(GSM_StateMachine *s UNUSED, int *current, unsigned c
 	output[length+1] = 0;
 }
 
-int NOKIA_SetUnicodeString(GSM_StateMachine *s UNUSED, unsigned char *dest, unsigned char *string, bool FullLength)
+int NOKIA_SetUnicodeString(GSM_StateMachine *s UNUSED, unsigned char *dest, unsigned char *string, gboolean FullLength)
 {
 	int length;
 
@@ -1180,7 +1180,7 @@ GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message msg, GSM_StateMachine *s
 			j = pos + 2;
 			while (msg.Buffer[j] != 0x00) j++;
 			msg.Buffer[pos+1] = j - pos - 2;
-			GSM_UnpackSemiOctetNumber(&(s->di), cd->Response.Entries[i].Number,msg.Buffer+(pos+1),false);
+			GSM_UnpackSemiOctetNumber(&(s->di), cd->Response.Entries[i].Number,msg.Buffer+(pos+1),FALSE);
 	      		smprintf(s,"   Number     : %s\n",DecodeUnicodeString(cd->Response.Entries[i].Number));
 	        	cd->Response.Entries[i].Timeout = msg.Buffer[pos+34];
 	 	     	smprintf(s,"   Timeout    : %i seconds\n",msg.Buffer[pos+34]);
@@ -1194,7 +1194,7 @@ GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message msg, GSM_StateMachine *s
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error DCT3DCT4_CallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert, bool get)
+static GSM_Error DCT3DCT4_CallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert, gboolean get)
 {
 	int 		length = 0x09;
 	unsigned char 	req[55] = {N6110_FRAME_HEADER, 0x01,
@@ -1210,7 +1210,7 @@ static GSM_Error DCT3DCT4_CallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *d
 		} else {
 			req[4]  = 0x03;
 			req[8]  = 0x01;
-			req[29] = GSM_PackSemiOctetNumber(divert->Request.Number, req + 9, false);
+			req[29] = GSM_PackSemiOctetNumber(divert->Request.Number, req + 9, FALSE);
 			req[52] = divert->Request.Timeout;
 			length  = 55;
 		}
@@ -1238,12 +1238,12 @@ static GSM_Error DCT3DCT4_CallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *d
 
 GSM_Error DCT3DCT4_GetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
 {
-	return DCT3DCT4_CallDivert(s,divert,true);
+	return DCT3DCT4_CallDivert(s,divert,TRUE);
 }
 
 GSM_Error DCT3DCT4_SetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
 {
-	return DCT3DCT4_CallDivert(s,divert,false);
+	return DCT3DCT4_CallDivert(s,divert,FALSE);
 }
 
 GSM_Error DCT3DCT4_CancelAllDiverts(GSM_StateMachine *s)
@@ -1265,9 +1265,9 @@ GSM_Error DCT3DCT4_ReplyGetActiveConnectSet(GSM_Protocol_Message msg, GSM_StateM
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
-	Data->WAPSettings->Active = false;
+	Data->WAPSettings->Active = FALSE;
 	if (Data->WAPSettings->Location - 1 == msg.Buffer[4]) {
-		Data->WAPSettings->Active = true;
+		Data->WAPSettings->Active = TRUE;
 	}
 	return ERR_NONE;
 }
@@ -1316,7 +1316,7 @@ GSM_Error DCT3DCT4_SendDTMF(GSM_StateMachine *s, char *DTMFSequence)
 	return GSM_WaitFor (s, req, 5+strlen(DTMFSequence), 0x01, 4, ID_SendDTMF);
 }
 
-GSM_Error DCT3DCT4_ReplyGetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachine *s, bool FullLength)
+GSM_Error DCT3DCT4_ReplyGetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachine *s, gboolean FullLength)
 {
 	int 			tmp;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
@@ -1504,7 +1504,7 @@ GSM_Error DCT3DCT4_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMach
 
 	InitLines(&lines);
 
-	SplitLines(msg.Buffer, msg.Length, &lines, "\x20\x0A", 2, false);
+	SplitLines(msg.Buffer, msg.Length, &lines, "\x20\x0A", 2, FALSE);
 
 	strcpy(Data->Model,GetLineString(msg.Buffer, &lines, 4));
 	smprintf(s, "Received model %s\n",Data->Model);
@@ -1655,7 +1655,7 @@ GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine 
 	}
 }
 
-bool NOKIA_FindPhoneFeatureValue(GSM_StateMachine *s,
+gboolean NOKIA_FindPhoneFeatureValue(GSM_StateMachine *s,
 				 GSM_Profile_PhoneTableValue 	ProfileTable[],
 				 GSM_Profile_Feat_ID		FeatureID,
 				 GSM_Profile_Feat_Value		FeatureValue,
@@ -1670,11 +1670,11 @@ bool NOKIA_FindPhoneFeatureValue(GSM_StateMachine *s,
 		    ProfileTable[i].Value == FeatureValue) {
 			*PhoneID	= ProfileTable[i].PhoneID;
 			*PhoneValue	= ProfileTable[i].PhoneValue;
-			return true;
+			return TRUE;
 		}
 		i++;
 	}
-	return false;
+	return FALSE;
 }
 
 #define PROFILE_CALLERGROUPS_GROUP1      0x01
@@ -1688,7 +1688,7 @@ void NOKIA_FindFeatureValue(GSM_StateMachine		*s,
 			    unsigned char 		ID,
 			    unsigned char 		Value,
 			    GSM_Phone_Data 		*Data,
-			    bool			CallerGroups)
+			    gboolean			CallerGroups)
 {
 	int i;
 
@@ -1696,12 +1696,12 @@ void NOKIA_FindFeatureValue(GSM_StateMachine		*s,
 		smprintf(s, "Caller groups: %i\n", Value);
 		Data->Profile->FeatureID [Data->Profile->FeaturesNumber] = Profile_CallerGroups;
 		Data->Profile->FeaturesNumber++;
-		for (i=0;i<5;i++) Data->Profile->CallerGroups[i] = false;
-		if ((Value & PROFILE_CALLERGROUPS_GROUP1)==PROFILE_CALLERGROUPS_GROUP1) Data->Profile->CallerGroups[0] = true;
-		if ((Value & PROFILE_CALLERGROUPS_GROUP2)==PROFILE_CALLERGROUPS_GROUP2) Data->Profile->CallerGroups[1] = true;
-		if ((Value & PROFILE_CALLERGROUPS_GROUP3)==PROFILE_CALLERGROUPS_GROUP3) Data->Profile->CallerGroups[2] = true;
-		if ((Value & PROFILE_CALLERGROUPS_GROUP4)==PROFILE_CALLERGROUPS_GROUP4) Data->Profile->CallerGroups[3] = true;
-		if ((Value & PROFILE_CALLERGROUPS_GROUP5)==PROFILE_CALLERGROUPS_GROUP5) Data->Profile->CallerGroups[4] = true;
+		for (i=0;i<5;i++) Data->Profile->CallerGroups[i] = FALSE;
+		if ((Value & PROFILE_CALLERGROUPS_GROUP1)==PROFILE_CALLERGROUPS_GROUP1) Data->Profile->CallerGroups[0] = TRUE;
+		if ((Value & PROFILE_CALLERGROUPS_GROUP2)==PROFILE_CALLERGROUPS_GROUP2) Data->Profile->CallerGroups[1] = TRUE;
+		if ((Value & PROFILE_CALLERGROUPS_GROUP3)==PROFILE_CALLERGROUPS_GROUP3) Data->Profile->CallerGroups[2] = TRUE;
+		if ((Value & PROFILE_CALLERGROUPS_GROUP4)==PROFILE_CALLERGROUPS_GROUP4) Data->Profile->CallerGroups[3] = TRUE;
+		if ((Value & PROFILE_CALLERGROUPS_GROUP5)==PROFILE_CALLERGROUPS_GROUP5) Data->Profile->CallerGroups[4] = TRUE;
 		return;
 	}
 
@@ -1766,7 +1766,7 @@ GSM_Profile_PhoneTableValue Profile71_65[] = {
 	{0x00,			 0x00,				0x00,0x00}
 };
 
-GSM_Error NOKIA_SetIncomingSMS(GSM_StateMachine *s, bool enable)
+GSM_Error NOKIA_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 {
 	s->Phone.Data.EnableIncomingSMS = enable;
 #ifdef DEBUG
@@ -1803,7 +1803,7 @@ GSM_Error N71_65_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-GSM_Error NOKIA_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
+GSM_Error NOKIA_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)
 {
 	s->Phone.Data.EnableIncomingUSSD = enable;
 #ifdef DEBUG
@@ -1816,7 +1816,7 @@ GSM_Error NOKIA_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
 	return ERR_NONE;
 }
 
-GSM_Error NOKIA_SetIncomingCall(GSM_StateMachine *s, bool enable)
+GSM_Error NOKIA_SetIncomingCall(GSM_StateMachine *s, gboolean enable)
 {
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_NOCALLINFO)) return ERR_NOTSUPPORTED;
 
@@ -1839,7 +1839,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	call.Status 		= 0;
 	call.StatusCode		= 0;
-	call.CallIDAvailable 	= true;
+	call.CallIDAvailable 	= TRUE;
 	call.PhoneNumber[0] = 0;
 	call.PhoneNumber[1] = 0;
 	smprintf(s, "Call info, ");
@@ -1875,7 +1875,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		} else {
 			tmp = 6;
 		}
-		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,false);
+		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,FALSE);
 		smprintf(s, "Number     : \"%s\"\n",DecodeUnicodeString(call.PhoneNumber));
 		/* FIXME: read name from frame */
 
@@ -1901,13 +1901,13 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		break;
 	case 0x0b:
 		smprintf(s, "Meaning not known\n");
-		call.CallIDAvailable = false;
+		call.CallIDAvailable = FALSE;
 		break;
 	case 0x0c:
 		smprintf(s, "Audio status\n");
 		if (msg.Buffer[4] == 0x01) smprintf(s, "Audio enabled\n");
 				      else smprintf(s, "Audio disabled\n");
-		call.CallIDAvailable = false;
+		call.CallIDAvailable = FALSE;
 		break;
 	case 0x0f: /* 6111 */
 		if (msg.Buffer[8]==0x01) {
@@ -1916,16 +1916,16 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				tmp = 19;
 			} else {
 				tmp = 21;
-				NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,false);
+				NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,FALSE);
 				smprintf(s, "Name       : \"%s\"\n",DecodeUnicodeString(buffer));
 				tmp+=7;
 			}
 			if (msg.Buffer[tmp-3]==0x11) {
 				call.PhoneNumber[0]=0;
 				call.PhoneNumber[1]='+';
-				NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber+2,false);
+				NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber+2,FALSE);
 			} else {
-				NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,false);
+				NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,FALSE);
 			}
 			call.Status = GSM_CALL_OutgoingCall;
 		}
@@ -1936,7 +1936,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		break;
 	case 0x10:
 		smprintf(s, "Meaning not known\n");
-		call.CallIDAvailable = false;
+		call.CallIDAvailable = FALSE;
 		break;
 	case 0x23:
 		smprintf(s, "Call held\n");
@@ -1954,7 +1954,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case 0xD2:
 	case 0xD3:
 		smprintf(s, "Meaning not known\n");
-		call.CallIDAvailable = false;
+		call.CallIDAvailable = FALSE;
 		break;
 	}
 	if (call.CallIDAvailable) smprintf(s, "Call ID    : %d\n",msg.Buffer[4]);
@@ -2448,7 +2448,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		if (timedelta != 0xffff) {
 			smprintf(s, "  Difference : %i seconds\n", timedelta);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
-			GetTimeDifference(timedelta, &entry->Entries[1].Date, false, 60);
+			GetTimeDifference(timedelta, &entry->Entries[1].Date, FALSE, 60);
 			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			entry->EntriesNum++;
 		}
@@ -2469,7 +2469,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		if (timedelta != 0xffff) {
 			smprintf(s, "  Difference : %i seconds\n", timedelta);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
-			GetTimeDifference(timedelta, &entry->Entries[1].Date, false, 60);
+			GetTimeDifference(timedelta, &entry->Entries[1].Date, FALSE, 60);
 			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			entry->EntriesNum++;
 		}
@@ -2507,7 +2507,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		if (timedelta != 0xffff) {
 			smprintf(s, "  Difference : %i seconds\n", timedelta);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
-			GetTimeDifference(timedelta, &entry->Entries[1].Date, false, 1);
+			GetTimeDifference(timedelta, &entry->Entries[1].Date, FALSE, 1);
 			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			if (msg.Buffer[20]!=0x00) {
 				entry->Entries[1].EntryType = CAL_SILENT_ALARM_DATETIME;
@@ -2561,7 +2561,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 }
 
 /* method 1 */
-GSM_Error N71_65_GetNextCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, GSM_NOKIACalToDoLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos)
+GSM_Error N71_65_GetNextCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start, GSM_NOKIACalToDoLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos)
 {
 	GSM_Error		error;
 	GSM_DateTime		date_time;

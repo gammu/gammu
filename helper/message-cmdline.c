@@ -116,9 +116,9 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	unsigned char			Buffer		[GSM_MAX_MULTI_SMS][SEND_SAVE_SMS_BUFFER_SIZE];
 	int				chars_read		= 0;
 	int 				nextlong		= 0;
-	bool				ReplyViaSameSMSC 	= false;
+	gboolean				ReplyViaSameSMSC 	= FALSE;
 	int				MaxSMS			= -1;
-	bool				EMS16Bit		= false;
+	gboolean				EMS16Bit		= FALSE;
 	int frames_num;
 	int param_value;
 
@@ -129,9 +129,9 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	/* Required only during sending */
 	GSM_SMSValidity			Validity;
 	GSM_SMSC		    	PhoneSMSC;
-	bool				DeliveryReport		= false;
+	gboolean				DeliveryReport		= FALSE;
 	/* Whether we already got text for TEXT message */
-	bool HasText = false;
+	gboolean HasText = FALSE;
 	ComposeType compose_type = 0;
 	/**
 	 * Recipient or sender.
@@ -212,10 +212,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		/* Text is fed to the buffer later! */
 		SMSInfo.Entries[0].Buffer  		= Buffer[0];
 		SMSInfo.Entries[0].ID			= SMS_Text;
-		SMSInfo.UnicodeCoding   		= false;
+		SMSInfo.UnicodeCoding   		= FALSE;
 		break;
 	case COMPOSE_SMSTEMPLATE:
-		SMSInfo.UnicodeCoding   		= false;
+		SMSInfo.UnicodeCoding   		= FALSE;
 		SMSInfo.EntriesNum 			= 1;
 		Buffer[0][0]				= 0x00;
 		Buffer[0][1]				= 0x00;
@@ -223,7 +223,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		SMSInfo.Entries[0].ID			= SMS_AlcatelSMSTemplateName;
 		break;
 	case COMPOSE_EMS:
-		SMSInfo.UnicodeCoding   		= false;
+		SMSInfo.UnicodeCoding   		= FALSE;
 		SMSInfo.EntriesNum 			= 0;
 		break;
 	case COMPOSE_MMSINDICATOR:
@@ -308,7 +308,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		startarg += 1;
 		break;
 	case COMPOSE_ANIMATION:
-		SMSInfo.UnicodeCoding   		= false;
+		SMSInfo.UnicodeCoding   		= FALSE;
 		SMSInfo.EntriesNum 			= 1;
 		if (argc < 1 + startarg) {
 			printf("%s\n", _("Where is number of frames?"));
@@ -354,7 +354,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		if (error != ERR_NONE) goto end_compose;
 		SMSInfo.Entries[0].ID 	 	= SMS_NokiaPictureImageLong;
 		SMSInfo.Entries[0].Bitmap   	= bitmap[0];
-		SMSInfo.UnicodeCoding 		= false;
+		SMSInfo.UnicodeCoding 		= FALSE;
 		bitmap[0]->Bitmap[0].Text[0]	= 0;
 		bitmap[0]->Bitmap[0].Text[1]	= 0;
 		if (*type == SMS_Save) {
@@ -369,7 +369,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
+		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], FALSE));
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.WAPBookmark[i]!=NULL) {
@@ -393,7 +393,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
+		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], FALSE));
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.WAPSettings[i]!=NULL) {
@@ -437,7 +437,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
+		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], FALSE));
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.MMSSettings[i]!=NULL) {
@@ -474,7 +474,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
+		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], FALSE));
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.Calendar[i]!=NULL) {
@@ -497,7 +497,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
+		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], FALSE));
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.ToDo[i]!=NULL) {
@@ -521,7 +521,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf("%s\n", _("Where is backup filename and location and memory type?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
+		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], FALSE));
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		if (strcasecmp(argv[1 + startarg],"SM") == 0) {
@@ -608,7 +608,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					continue;
 				}
 				if (strcasecmp(argv[i],"-report") == 0) {
-					DeliveryReport=true;
+					DeliveryReport=TRUE;
 					continue;
 				}
 				if (strcasecmp(argv[i],"-validity") == 0) {
@@ -629,7 +629,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				continue;
 			}
 			if (strcasecmp(argv[i],"-reply") == 0) {
-				ReplyViaSameSMSC=true;
+				ReplyViaSameSMSC=TRUE;
 				continue;
 			}
 			if (strcasecmp(argv[i],"-maxsms") == 0) {
@@ -643,7 +643,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				}
 				if (strcasecmp(argv[i],"-scale") == 0) {
 					RNG_AUTO_ALLOC(0);
-					ringtone[0]->NoteTone.AllNotesScale=true;
+					ringtone[0]->NoteTone.AllNotesScale=TRUE;
 					break;
 				}
 			}
@@ -683,7 +683,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					break;
 				}
 				if (strcasecmp(argv[i],"-unicode") == 0) {
-					SMSInfo.UnicodeCoding = true;
+					SMSInfo.UnicodeCoding = TRUE;
 					break;
 				}
 				if (strcasecmp(argv[i],"-enablevoice") == 0) {
@@ -730,7 +730,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					break;
 				}
 				if (strcasecmp(argv[i],"-unicode") == 0) {
-					SMSInfo.UnicodeCoding = true;
+					SMSInfo.UnicodeCoding = TRUE;
 					break;
 				}
 				if (strcasecmp(argv[i],"-alcatelbmmi") == 0) {
@@ -738,7 +738,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					bitmap[0]->Bitmap[0].Type = GSM_StartupLogo;
 					error = GSM_ReadBitmapFile(argv[startarg-1], bitmap[0]);
 					if (error != ERR_NONE) goto end_compose;
-					SMSInfo.UnicodeCoding = true;
+					SMSInfo.UnicodeCoding = TRUE;
 					SMSInfo.Entries[0].ID = SMS_AlcatelMonoBitmapLong;
 					break;
 				}
@@ -774,7 +774,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			}
 			if (compose_type == COMPOSE_SMSTEMPLATE) {
 				if (strcasecmp(argv[i],"-unicode") == 0) {
-					SMSInfo.UnicodeCoding = true;
+					SMSInfo.UnicodeCoding = TRUE;
 					break;
 				}
 				if (strcasecmp(argv[i],"-text") == 0) {
@@ -798,7 +798,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-tone10") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound10;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 14;
@@ -807,7 +807,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-tone10long") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound10Long;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 14;
@@ -816,7 +816,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-tone12") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound12;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 14;
@@ -825,7 +825,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-tone12long") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound12Long;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 14;
@@ -834,7 +834,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-toneSE") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSonyEricssonSound;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 14;
@@ -843,7 +843,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-toneSElong") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSonyEricssonSoundLong;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 14;
@@ -852,7 +852,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-variablebitmap") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSVariableBitmap;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 15;
@@ -861,7 +861,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-variablebitmaplong") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSVariableBitmapLong;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 15;
@@ -870,7 +870,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-animation") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID  = SMS_EMSAnimation;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					BMP_AUTO_ALLOC(SMSInfo.EntriesNum);
@@ -881,11 +881,11 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			}
 			if (compose_type == COMPOSE_EMS) {
 				if (strcasecmp(argv[i],"-unicode") == 0) {
-					SMSInfo.UnicodeCoding = true;
+					SMSInfo.UnicodeCoding = TRUE;
 					break;
 				}
 				if (strcasecmp(argv[i],"-16bit") == 0) {
-					EMS16Bit = true;
+					EMS16Bit = TRUE;
 					break;
 				}
 				if (strcasecmp(argv[i],"-format") == 0) {
@@ -913,7 +913,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-tone10") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound10;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 14;
@@ -922,7 +922,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-tone10long") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound10Long;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 14;
@@ -931,7 +931,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-tone12") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound12;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 14;
@@ -940,7 +940,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-tone12long") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound12Long;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 14;
@@ -949,7 +949,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-toneSE") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSonyEricssonSound;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 14;
@@ -958,7 +958,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-toneSElong") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSonyEricssonSoundLong;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 14;
@@ -967,7 +967,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-fixedbitmap") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSFixedBitmap;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 15;
@@ -976,7 +976,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-variablebitmap") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSVariableBitmap;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 15;
@@ -985,7 +985,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-variablebitmaplong") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSVariableBitmapLong;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					nextlong = 15;
@@ -994,7 +994,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (strcasecmp(argv[i],"-animation") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID  = SMS_EMSAnimation;
 					if (Protected != 0) {
-						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = TRUE;
 						Protected --;
 					}
 					BMP_AUTO_ALLOC(SMSInfo.EntriesNum);
@@ -1202,31 +1202,31 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				for(j=0;j<(int)strlen(argv[i]);j++) {
 				switch(argv[i][j]) {
 				case 'l': case 'L':
-					SMSInfo.Entries[SMSInfo.EntriesNum-1].Left = true;
+					SMSInfo.Entries[SMSInfo.EntriesNum-1].Left = TRUE;
 					break;
 				case 'c': case 'C':
-					SMSInfo.Entries[SMSInfo.EntriesNum-1].Center = true;
+					SMSInfo.Entries[SMSInfo.EntriesNum-1].Center = TRUE;
 					break;
 				case 'r': case 'R':
-					SMSInfo.Entries[SMSInfo.EntriesNum-1].Right = true;
+					SMSInfo.Entries[SMSInfo.EntriesNum-1].Right = TRUE;
 					break;
 				case 'a': case 'A':
-					SMSInfo.Entries[SMSInfo.EntriesNum-1].Large = true;
+					SMSInfo.Entries[SMSInfo.EntriesNum-1].Large = TRUE;
 					break;
 				case 's': case 'S':
-					SMSInfo.Entries[SMSInfo.EntriesNum-1].Small = true;
+					SMSInfo.Entries[SMSInfo.EntriesNum-1].Small = TRUE;
 					break;
 				case 'b': case 'B':
-					SMSInfo.Entries[SMSInfo.EntriesNum-1].Bold = true;
+					SMSInfo.Entries[SMSInfo.EntriesNum-1].Bold = TRUE;
 					break;
 				case 'i': case 'I':
-					SMSInfo.Entries[SMSInfo.EntriesNum-1].Italic = true;
+					SMSInfo.Entries[SMSInfo.EntriesNum-1].Italic = TRUE;
 					break;
 				case 'u': case 'U':
-					SMSInfo.Entries[SMSInfo.EntriesNum-1].Underlined = true;
+					SMSInfo.Entries[SMSInfo.EntriesNum-1].Underlined = TRUE;
 					break;
 				case 't': case 'T':
-					SMSInfo.Entries[SMSInfo.EntriesNum-1].Strikethrough = true;
+					SMSInfo.Entries[SMSInfo.EntriesNum-1].Strikethrough = TRUE;
 					break;
 				default:
 					printf(_("Unknown parameter (\"%c\")\n"),argv[i][j]);
@@ -1277,13 +1277,13 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		case 26:/* text from parameter */
 			chars_read = strlen(argv[i]);
 			EncodeUnicode(Buffer[0], argv[i], chars_read);
-			HasText = true;
+			HasText = TRUE;
 			nextlong = 0;
 			break;
 		case 27:/* utf-8 text from parameter */
 			chars_read = strlen(argv[i]);
 			DecodeUTF8(Buffer[0], argv[i], chars_read);
-			HasText = true;
+			HasText = TRUE;
 			nextlong = 0;
 			break;
 		}

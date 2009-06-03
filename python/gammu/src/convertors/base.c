@@ -23,7 +23,7 @@
 #include "convertors.h"
 #include "misc.h"
 
-bool GetBoolFromDict(PyObject *dict, const char *key) {
+gboolean GetBoolFromDict(PyObject *dict, const char *key) {
     PyObject        *o;
     char            *s;
     int             i;
@@ -37,29 +37,29 @@ bool GetBoolFromDict(PyObject *dict, const char *key) {
     if (!PyBool_Check(o)) {
         if (PyInt_Check(o)) {
             i = PyInt_AsLong(o);
-            if (i == 0) return false;
-            else return true;
+            if (i == 0) return FALSE;
+            else return TRUE;
         }
         if (PyString_Check(o)) {
             s = PyString_AsString(o);
             if (isdigit((int)s[0])) {
                 i = atoi(s);
-                if (i == 0) return false;
-                else return true;
+                if (i == 0) return FALSE;
+                else return TRUE;
             } else {
-                PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be bool", key);
+                PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be gboolean", key);
                 return BOOL_INVALID;
             }
         }
 
-        PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be bool", key);
+        PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be gboolean", key);
         return BOOL_INVALID;
     }
 
-    if (Py_False == o) return false;
-    else if (Py_True == o) return true;
+    if (Py_False == o) return FALSE;
+    else if (Py_True == o) return TRUE;
 
-    PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be bool", key);
+    PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be gboolean", key);
     return BOOL_INVALID;
 }
 

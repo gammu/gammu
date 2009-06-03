@@ -20,7 +20,7 @@ void GetMMSFolders(int argc UNUSED, char *argv[] UNUSED)
 	GSM_MMSFolders folders;
 	int i;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_GetMMSFolders(gsm,&folders);
 	Print_Error(error);
@@ -147,14 +147,14 @@ void GetEachMMS(int argc, char *argv[])
 {
 	int FileFolder;
 	GSM_File		File;
-	bool			start = true;
+	gboolean			start = TRUE;
 	GSM_MMSFolders 		folders;
 	int			Handle,Size,num = -1;
 	GSM_Error error;
 
 	if (argc>2 && strcasecmp(argv[2],"-save") == 0) num=0;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_GetMMSFolders(gsm,&folders);
 	Print_Error(error);
@@ -165,7 +165,7 @@ void GetEachMMS(int argc, char *argv[])
 		error = GSM_GetNextMMSFileInfo(gsm,File.ID_FullName,&FileFolder,start);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
-		start = false;
+		start = FALSE;
 
 		printf(_("Folder %s\n"),DecodeUnicodeConsole(folders.Folder[FileFolder-1].Name));
 		printf(LISTFORMAT "\"%s\"\n", _("  File filesystem ID"),DecodeUnicodeConsole(File.ID_FullName));
@@ -174,7 +174,7 @@ void GetEachMMS(int argc, char *argv[])
 			File.Buffer = NULL;
 		}
 		File.Used = 0;
-		while (true) {
+		while (TRUE) {
 			error = GSM_GetFilePart(gsm,&File,&Handle,&Size);
 			if (error == ERR_EMPTY) break;
 			Print_Error(error);

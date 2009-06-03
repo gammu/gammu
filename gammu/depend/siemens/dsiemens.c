@@ -19,7 +19,7 @@ extern GSM_Error  ATGEN_GetMemoryStatus (GSM_StateMachine *sm, GSM_MemoryStatus 
 extern GSM_Error  ATGEN_SetMemory (GSM_StateMachine *sm, GSM_MemoryEntry *pbk);
 extern GSM_Reply_Function UserReplyFunctionsAtS[];
 
-bool 	new_variable;
+gboolean 	new_variable;
 GSM_Error CheckSiemens(void)
 {
 	if (gsm->Phone.Data.Priv.ATGEN.Manufacturer != AT_Siemens) return ERR_NOTSUPPORTED;
@@ -37,12 +37,12 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *sm)
    	GSM_NetworkInfo			Network;
 
     	if (Priv->ReplyState!=AT_Reply_OK) return ERR_UNKNOWN;
-    	if (sm->Protocol.Data.AT.EditMode) sm->Protocol.Data.AT.EditMode = false;
+    	if (sm->Protocol.Data.AT.EditMode) sm->Protocol.Data.AT.EditMode = FALSE;
 	if (strstr(GetLineString(msg.Buffer,&Priv->Lines,2),"SSTK")) {
     	    length = strlen(GetLineString(msg.Buffer,&Priv->Lines,2))-7;
     	    DecodeHexBin(buf, GetLineString(msg.Buffer,&Priv->Lines,2)+7,length);
 	    if (buf[0]==0x7f) {
-		new_variable=true;
+		new_variable=TRUE;
 		return ERR_NONE;
 	    }
 	    else return ERR_UNKNOWN;
@@ -138,13 +138,13 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 	j	= 0;
 	result	= 0;
 	GetBufferI(buf+14,&j,&result,1);
-	if (result) 	MeasureResult.BA_used=true;
-	else		MeasureResult.BA_used=false;
+	if (result) 	MeasureResult.BA_used=TRUE;
+	else		MeasureResult.BA_used=FALSE;
 
 	result	= 0;
 	GetBufferI(buf+14,&j,&result,1);
-	if (result) 	MeasureResult.DTX_used=true;
-	else		MeasureResult.DTX_used=false;
+	if (result) 	MeasureResult.DTX_used=TRUE;
+	else		MeasureResult.DTX_used=FALSE;
 
 	result	= 0;
 	GetBufferI(buf+14,&j,&result,6);
@@ -153,8 +153,8 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 	j++;	//skip spare bit
 	result	= 0;
 	GetBufferI(buf+14,&j,&result,1);
-	if (result) 	MeasureResult.MeasValid=true;
-	else		MeasureResult.MeasValid=false;
+	if (result) 	MeasureResult.MeasValid=TRUE;
+	else		MeasureResult.MeasValid=FALSE;
 
 	result	= 0;
 	GetBufferI(buf+14,&j,&result,6);
@@ -245,7 +245,7 @@ GSM_Error ATSIEMENS_GetSAT(GSM_StateMachine *sm)
 
     	for (i=0;i<3;i++){
 		len				= strlen(reqSAT[i]);
-		sm->Protocol.Data.AT.EditMode 	= true;
+		sm->Protocol.Data.AT.EditMode 	= TRUE;
         	sprintf(req, "AT^SSTK=%i,1\r",len/2);
         	error = GSM_WaitFor (sm, req, strlen(req), 0x00, 3, ID_User1);
 		sm->Phone.Data.DispatchError	= ERR_TIMEOUT;
@@ -293,7 +293,7 @@ void ATSIEMENSActivateNetmon(int argc, char *argv[])
 	int 		 netmon_type, pbk_maxlocation;
 	char 		 imsi[15], NetMonCode[32];
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 	if (CheckSiemens()==ERR_NOTSUPPORTED) Print_Error(ERR_NOTSUPPORTED);
 	gsm->User.UserReplyFunctions=UserReplyFunctionsAtS;
 
@@ -329,7 +329,7 @@ void ATSIEMENSActivateNetmon(int argc, char *argv[])
 void ATSIEMENSSATNetmon(int argc, char *argv[])
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 	if (CheckSiemens()==ERR_NOTSUPPORTED) Print_Error(ERR_NOTSUPPORTED);
 	gsm->User.UserReplyFunctions=UserReplyFunctionsAtS;
 
@@ -345,7 +345,7 @@ void ATSIEMENSNetmonitor(int argc, char *argv[])
 	int test_no;
 	GSM_Error error;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 	if (CheckSiemens()==ERR_NOTSUPPORTED) Print_Error(ERR_NOTSUPPORTED);
 	gsm->User.UserReplyFunctions=UserReplyFunctionsAtS;
 

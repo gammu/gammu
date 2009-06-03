@@ -8,13 +8,13 @@
 int main(int argc, char **argv)
 {
 	GSM_Error error;
-	bool numeric = false;
+	gboolean numeric = FALSE;
 	int rc = 0;
 	const char *errorstring;
 	const char *errorname;
 
 	if (argc >= 2 && strcmp(argv[1], "-n") == 0) {
-		numeric = true;
+		numeric = TRUE;
 	}
 
 	for (error = ERR_NONE; error < ERR_LAST_VALUE; error++) {

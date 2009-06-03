@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 	GSM_Debug_Info *debug_info;
 
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	rc |= single_test("CAL33, CAL52,SQWE", ERR_NONE);

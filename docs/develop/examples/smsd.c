@@ -13,7 +13,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	assert(config != NULL);
 
     /* Read configuration file */
-	error = SMSD_ReadConfig(config_file, config, true);
+	error = SMSD_ReadConfig(config_file, config, TRUE);
 	if (error != ERR_NONE) {
 		printf("Failed to read config!\n");
 		SMSD_FreeConfig(config);
@@ -26,7 +26,7 @@ int main(int argc UNUSED, char **argv UNUSED)
      * by SMSD_Shutdown(config); (for example from signal handler)
      * to make it stop.
      */
-	error = SMSD_MainLoop(config, false);
+	error = SMSD_MainLoop(config, FALSE);
 	if (error != ERR_NONE) {
 		printf("Failed to run SMSD!\n");
 		SMSD_FreeConfig(config);

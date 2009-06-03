@@ -808,33 +808,33 @@ GSM_PhoneModel *GetModelData(GSM_StateMachine *s, const char *model, const char 
 	return (&allmodels[i]);
 }
 
-bool GSM_IsPhoneFeatureAvailable(GSM_PhoneModel *model, GSM_Feature feature)
+gboolean GSM_IsPhoneFeatureAvailable(GSM_PhoneModel *model, GSM_Feature feature)
 {
 	int	i	= 0;
 
 	while (model->features[i] != 0) {
 		if (model->features[i] == feature) {
-			return true;
+			return TRUE;
 		}
 		i++;
 	}
-	return false;
+	return FALSE;
 }
 
-bool GSM_AddPhoneFeature(GSM_PhoneModel *model, GSM_Feature feature)
+gboolean GSM_AddPhoneFeature(GSM_PhoneModel *model, GSM_Feature feature)
 {
 	int	i	= 0;
 
 	while (model->features[i] != 0) {
 		if (model->features[i] == feature) {
-			return true;
+			return TRUE;
 		}
 		i++;
 	}
-	if (i == GSM_MAX_PHONE_FEATURES) return false;
+	if (i == GSM_MAX_PHONE_FEATURES) return FALSE;
 	model->features[i++] = feature;
 	model->features[i++] = 0;
-	return true;
+	return TRUE;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

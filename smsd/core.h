@@ -48,7 +48,7 @@ struct _GSM_SMSDConfig {
 	const char   *deliveryreport, *logfilename,  *PINCode, *NetworkCode, *PhoneCode;
 	const char	*PhoneID;
 	const char   *RunOnReceive;
-	bool checksecurity;
+	gboolean checksecurity;
 	unsigned int maxretries;
 
 	/* options for FILES */
@@ -86,16 +86,16 @@ struct _GSM_SMSDConfig {
 #endif
 
 	INI_Section 		*smsdcfgfile;
-	volatile bool	shutdown;
+	volatile gboolean	shutdown;
 	/**
 	 * Whether SMSD daemon itself is running.
 	 */
-	bool running;
+	gboolean running;
 	/**
 	 * Whether we're connected to the database.
 	 */
-	bool connected;
-	bool exit_on_failure;
+	gboolean connected;
+	gboolean exit_on_failure;
 	GSM_Error failure;
 	GSM_StateMachine *gsm;
 	char *gammu_log_buffer;
@@ -103,11 +103,11 @@ struct _GSM_SMSDConfig {
 	/**
 	 * Log critical messages to stderr?
 	 */
-	bool use_stderr;
+	gboolean use_stderr;
 	/**
 	 * Log with timestamps (not applicable for syslog).
 	 */
-	bool use_timestamps;
+	gboolean use_timestamps;
 	int debug_level;
 	/**
 	 * Where to send log messages.
@@ -145,7 +145,7 @@ typedef struct {
 	GSM_Error	(*InitAfterConnect)   (GSM_SMSDConfig *Config);
 	GSM_Error	(*SaveInboxSMS)       (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char **Locations);
 	GSM_Error	(*FindOutboxSMS)      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID);
-	GSM_Error	(*MoveSMS)  	      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, bool alwaysDelete, bool sent);
+	GSM_Error	(*MoveSMS)  	      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, gboolean alwaysDelete, gboolean sent);
 	GSM_Error	(*CreateOutboxSMS)    (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *NewID);
 	GSM_Error	(*AddSentSMSInfo)     (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, int Part, GSM_SMSDSendingError err, int TPMR);
 	GSM_Error	(*RefreshSendStatus)  (GSM_SMSDConfig *Config, char *ID);
@@ -179,7 +179,7 @@ GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version);
  * \param error GSM error code, if applicable.
  * \param rc Program return code, will be passed to exit (if enabled).
  */
-void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bool exitprogram, int rc);
+void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, gboolean exitprogram, int rc);
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

@@ -325,7 +325,7 @@ void DecodeBCD (unsigned char *dest, const unsigned char *src, int len)
 	dest[current++]=0;
 }
 
-void EncodeBCD (unsigned char *dest, const unsigned char *src, int len, bool fill)
+void EncodeBCD (unsigned char *dest, const unsigned char *src, int len, gboolean fill)
 {
 	int i,current=0;
 
@@ -394,18 +394,18 @@ void EncodeHexUnicode (char *dest, const unsigned char *src, size_t len)
 	dest[current++] = 0;
 }
 
-bool DecodeHexBin (unsigned char *dest, const unsigned char *src, int len)
+gboolean DecodeHexBin (unsigned char *dest, const unsigned char *src, int len)
 {
 	int i,current=0, low, high;
 
 	for (i = 0; i < len/2 ; i++) {
 		low = DecodeWithHexBinAlphabet(src[i*2+1]);
 		high = DecodeWithHexBinAlphabet(src[i*2]);
-		if (low < 0 || high < 0) return false;
+		if (low < 0 || high < 0) return FALSE;
 		dest[current++] = (high << 4) | low;
 	}
 	dest[current++] = 0;
-	return true;
+	return TRUE;
 }
 
 void EncodeHexBin (unsigned char *dest, const unsigned char *src, int len)
@@ -479,23 +479,23 @@ static unsigned char GSM_DefaultAlphabetCharsExtension[][4] =
 	{0x00,0x00,0x00,0x00}
 };
 
-void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, bool UseExtensions, unsigned char *ExtraAlphabet)
+void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, gboolean UseExtensions, unsigned char *ExtraAlphabet)
 {
 	size_t 	i,current=0,j;
-	bool	FoundSpecial = false;
+	gboolean	FoundSpecial = FALSE;
 
 #ifdef DEBUG
 	DumpMessageText(&GSM_global_debug, src, len);
 #endif
 
 	for (i = 0; i < len; i++) {
-		FoundSpecial = false;
+		FoundSpecial = FALSE;
 		if ((i < (len-1)) && UseExtensions) {
 			j=0;
 			while (GSM_DefaultAlphabetCharsExtension[j][0]!=0x00) {
 				if (GSM_DefaultAlphabetCharsExtension[j][0]==src[i] &&
 				    GSM_DefaultAlphabetCharsExtension[j][1]==src[i+1]) {
-					FoundSpecial = true;
+					FoundSpecial = TRUE;
 					dest[current++] = GSM_DefaultAlphabetCharsExtension[j][2];
 					dest[current++] = GSM_DefaultAlphabetCharsExtension[j][3];
 					i++;
@@ -510,7 +510,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, b
 				if (ExtraAlphabet[j] == src[i]) {
 					dest[current++] = ExtraAlphabet[j+1];
 					dest[current++] = ExtraAlphabet[j+2];
-					FoundSpecial 	= true;
+					FoundSpecial 	= TRUE;
                             		break;
                         	}
                         	j=j+3;
@@ -543,38 +543,38 @@ static unsigned char ConvertTable[] =
 "\x00\x74\x01\x66\x00\x54\x01\x67\x00\x74\x00\xd9\x00\x55\x00\xda\x00\x55\x00\xfa\x00\x75\x00\xdb\x00\x55\x00\xfb\x00\x75\x01\x68\x00\x55\x01\x69\x00\x75\x01\x6a\x00\x55\x01\x6b\x00\x75\x01\x6c\x00\x55\x01\x6d\x00\x75\x01\x6e\x00\x55\x01\x6f\x00\x75\x01\x70\x00\x55\x01\x71\x00\x75\x01\x72\x00\x55\x01\x73\x00\x75\x01\xaf\x00\x55\x01\xb0\x00\x75\x01\xd3\x00\x55\x01\xd4\x00\x75\x01\xd5\x00\x55\x01\xd6\x00\x75\x01\xd7\x00\x55\x01\xd8\x00\x75\x01\xd9\x00\x55\x01\xda\x00\x75\x01\xdb\x00\x55\x01\xdc\x00\x75\x1e\xe4\x00\x55\x1e\xe5\x00\x75\x1e\xe6\x00\x55\x1e\xe7\x00\x75\x1e\xe8\x00\x55\x1e\xe9\x00\x75\x1e\xea\x00\x55\x1e\xeb\x00\x75\x1e\xec\x00\x55\x1e\xed\x00\x75\x1e\xee\x00\x55\x1e\xef\x00\x75\x1e\xf0\x00\x55\x1e\xf1\x00\x75\x01\x74\x00\x57\x01\x75\x00\x77\x1e\x80\x00\x57\x1e\x81\x00\x77\x1e\x82"\
 "\x00\x57\x1e\x83\x00\x77\x1e\x84\x00\x57\x1e\x85\x00\x77\x00\xdd\x00\x59\x00\xfd\x00\x79\x00\xff\x00\x79\x01\x76\x00\x59\x01\x77\x00\x79\x01\x78\x00\x59\x1e\xf2\x00\x59\x1e\xf3\x00\x75\x1e\xf4\x00\x59\x1e\xf5\x00\x79\x1e\xf6\x00\x59\x1e\xf7\x00\x79\x1e\xf8\x00\x59\x1e\xf9\x00\x79\x01\x79\x00\x5a\x01\x7a\x00\x7a\x01\x7b\x00\x5a\x01\x7c\x00\x7a\x01\x7d\x00\x5a\x01\x7e\x00\x7a\x01\xfc\x00\xc6\x01\xfd\x00\xe6\x01\xfe\x00\xd8\x01\xff\x00\xf8\x00\x00";
 
-void EncodeDefault(unsigned char *dest, const unsigned char *src, size_t *len, bool UseExtensions, unsigned char *ExtraAlphabet)
+void EncodeDefault(unsigned char *dest, const unsigned char *src, size_t *len, gboolean UseExtensions, unsigned char *ExtraAlphabet)
 {
 	size_t 	i,current=0,j,z;
 	char 	ret;
-	bool	FoundSpecial,FoundNormal;
+	gboolean	FoundSpecial,FoundNormal;
 
 #ifdef DEBUG
 	DumpMessageText(&GSM_global_debug, src, (*len)*2);
 #endif
 
 	for (i = 0; i < *len; i++) {
-		FoundSpecial = false;
+		FoundSpecial = FALSE;
 		j = 0;
 		while (GSM_DefaultAlphabetCharsExtension[j][0]!=0x00 && UseExtensions) {
 			if (src[i*2] 	== GSM_DefaultAlphabetCharsExtension[j][2] &&
 			    src[i*2+1] 	== GSM_DefaultAlphabetCharsExtension[j][3]) {
 				dest[current++] = GSM_DefaultAlphabetCharsExtension[j][0];
 				dest[current++] = GSM_DefaultAlphabetCharsExtension[j][1];
-				FoundSpecial 	= true;
+				FoundSpecial 	= TRUE;
 				break;
 			}
 			j++;
 		}
 		if (!FoundSpecial) {
 			ret 		= '?';
-			FoundNormal 	= false;
+			FoundNormal 	= FALSE;
 			j 		= 0;
 			while (GSM_DefaultAlphabetUnicode[j][1]!=0x00) {
 				if (src[i*2]	== GSM_DefaultAlphabetUnicode[j][0] &&
 				    src[i*2+1]	== GSM_DefaultAlphabetUnicode[j][1]) {
 					ret 		= j;
-					FoundNormal 	= true;
+					FoundNormal 	= TRUE;
 					break;
 				}
 				j++;
@@ -585,7 +585,7 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, size_t *len, b
 					if (ExtraAlphabet[j+1] == src[i*2] &&
 					    ExtraAlphabet[j+2] == src[i*2 + 1]) {
 						ret		= ExtraAlphabet[j];
-						FoundSpecial	= true;
+						FoundSpecial	= TRUE;
 						break;
 					}
 					j=j+3;
@@ -593,7 +593,7 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, size_t *len, b
 			}
 			if (!FoundNormal && !FoundSpecial) {
 				j = 0;
-				FoundNormal = false;
+				FoundNormal = FALSE;
 				while (ConvertTable[j*4]   != 0x00 ||
 				       ConvertTable[j*4+1] != 0x00) {
 					if (src[i*2]   == ConvertTable[j*4] &&
@@ -603,7 +603,7 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, size_t *len, b
 							if (ConvertTable[j*4+2]	== GSM_DefaultAlphabetUnicode[z][0] &&
 							    ConvertTable[j*4+3]	== GSM_DefaultAlphabetUnicode[z][1]) {
 								ret 		= z;
-								FoundNormal 	= true;
+								FoundNormal 	= TRUE;
 								break;
 							}
 							z++;
@@ -628,16 +628,16 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, size_t *len, b
 void FindDefaultAlphabetLen(const unsigned char *src, size_t *srclen, size_t *smslen, size_t maxlen)
 {
 	size_t 	current=0,j,i;
-	bool	FoundSpecial;
+	gboolean	FoundSpecial;
 
 	i = 0;
 	while (src[i*2] != 0x00 || src[i*2+1] != 0x00) {
-		FoundSpecial = false;
+		FoundSpecial = FALSE;
 		j = 0;
 		while (GSM_DefaultAlphabetCharsExtension[j][0]!=0x00) {
 			if (src[i*2] 	== GSM_DefaultAlphabetCharsExtension[j][2] &&
 			    src[i*2+1] 	== GSM_DefaultAlphabetCharsExtension[j][3]) {
-				FoundSpecial = true;
+				FoundSpecial = TRUE;
 				if (current+2 > maxlen) {
 					*srclen = i;
 					*smslen = current;
@@ -739,7 +739,7 @@ int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *ou
         return (OUTPUT - output);
 }
 
-int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, bool semioctet)
+int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, gboolean semioctet)
 {
 	unsigned char	Buffer[GSM_MAX_NUMBER_LENGTH + 1];
 	int		length		= Number[0];
@@ -805,7 +805,7 @@ out:
  * See GSM 03.40 9.1.1:
  * 1 byte  - length of number given in semioctets or bytes (when given in
  *           bytes, includes one byte for byte with number format).
- *           Returned by function (set semioctet to true, if want result
+ *           Returned by function (set semioctet to TRUE, if want result
  *           in semioctets).
  * 1 byte  - format of number (see GSM_NumberType in coding.h). Returned
  *           in unsigned char *Output.
@@ -814,7 +814,7 @@ out:
  *
  * 1 semioctet = 4 bits = half of byte
  */
-int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool semioctet)
+int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, gboolean semioctet)
 {
 	unsigned char	format, buffer[GSM_MAX_NUMBER_LENGTH + 1];
 	int		length, i;
@@ -850,10 +850,10 @@ int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool s
 		break;
 	case NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN:
 		length--;
-		EncodeBCD (Output+1, buffer+1, length, true);
+		EncodeBCD (Output+1, buffer+1, length, TRUE);
 		break;
 	default:
-		EncodeBCD (Output+1, buffer, length, true);
+		EncodeBCD (Output+1, buffer, length, TRUE);
 		break;
 	}
 
@@ -1047,7 +1047,7 @@ void GetBufferI(unsigned char 	*Source,
 void EncodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *src, int len)
 {
 	int 	i,current = 0;
-	bool 	special=false;
+	gboolean 	special=FALSE;
 
 	for (i = 0; i < len; i++) {
 		if (special) {
@@ -1060,10 +1060,10 @@ void EncodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 				dest[current++]	= src[i*2];
 				dest[current++]	= src[i*2+1];
 			}
-			special = false;
+			special = FALSE;
 		} else {
 			if (src[i*2] == 0x00 && src[i*2+1] == '~') {
-				special = true;
+				special = TRUE;
 			} else {
 				dest[current++]	= src[i*2];
 				dest[current++]	= src[i*2+1];
@@ -1112,42 +1112,42 @@ void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 
 
 /* Compares two Unicode strings without regarding to case.
- * Return true, when they're equal
+ * Return TRUE, when they're equal
  */
-bool mywstrncasecmp(unsigned const  char *a, unsigned const  char *b, int num)
+gboolean mywstrncasecmp(unsigned const  char *a, unsigned const  char *b, int num)
 {
  	int 		i;
   	wchar_t 	wc,wc2;
 
-        if (a == NULL || b == NULL) return false;
+        if (a == NULL || b == NULL) return FALSE;
 
 	if (num == 0) num = -1;
 
 	for (i = 0; i != num; i++) {
-		if ((a[i*2] == 0x00 && a[i*2+1] == 0x00) && (b[i*2] == 0x00 && b[i*2+1] == 0x00)) return true;
-		if ((a[i*2] == 0x00 && a[i*2+1] == 0x00) || (b[i*2] == 0x00 && b[i*2+1] == 0x00)) return false;
+		if ((a[i*2] == 0x00 && a[i*2+1] == 0x00) && (b[i*2] == 0x00 && b[i*2+1] == 0x00)) return TRUE;
+		if ((a[i*2] == 0x00 && a[i*2+1] == 0x00) || (b[i*2] == 0x00 && b[i*2+1] == 0x00)) return FALSE;
  		wc  = a[i*2+1] | (a[i*2] << 8);
  		wc2 = b[i*2+1] | (b[i*2] << 8);
- 		if (towlower(wc) != towlower(wc2)) return false;
+ 		if (towlower(wc) != towlower(wc2)) return FALSE;
  	}
-	return true;
+	return TRUE;
 }
 
 /* wcscmp in Mandrake 9.0 is wrong */
-bool mywstrncmp(unsigned const  char *a, unsigned const  char *b, int num)
+gboolean mywstrncmp(unsigned const  char *a, unsigned const  char *b, int num)
 {
 	int i=0;
 
 	while (1) {
-		if (a[i*2] != b[i*2] || a[i*2+1] != b[i*2+1]) return false;
-		if (a[i*2] == 0x00 && a[i*2+1] == 0x00) return true;
+		if (a[i*2] != b[i*2] || a[i*2+1] != b[i*2+1]) return FALSE;
+		if (a[i*2] == 0x00 && a[i*2+1] == 0x00) return TRUE;
 		i++;
-		if (num == i) return true;
+		if (num == i) return TRUE;
 	}
 }
 
 /* FreeBSD boxes 4.7-STABLE does't have it, although it's ANSI standard */
-bool myiswspace(unsigned const char *src)
+gboolean myiswspace(unsigned const char *src)
 {
 #ifndef HAVE_ISWSPACE
  	int 		o;
@@ -1160,13 +1160,13 @@ bool myiswspace(unsigned const char *src)
 #ifndef HAVE_ISWSPACE
 	o = DecodeWithUnicodeAlphabet(wc, dest);
 	if (o == 1) {
-		if (isspace(((int)dest[0]))!=0) return true;
-		return false;
+		if (isspace(((int)dest[0]))!=0) return TRUE;
+		return FALSE;
 	}
-	return false;
+	return FALSE;
 #else
-	if (iswspace(wc)) return true;
-	return false;
+	if (iswspace(wc)) return TRUE;
+	return FALSE;
 #endif
 }
 
@@ -1257,11 +1257,11 @@ ret0:
 #undef tolowerwchar
 }
 
-GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, size_t MaxOutLen, bool MergeLines)
+GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, size_t MaxOutLen, gboolean MergeLines)
 {
-	bool skip = false;
-	bool quoted_printable = false;
-	bool was_cr = false, was_lf = false;
+	gboolean skip = FALSE;
+	gboolean quoted_printable = FALSE;
+	gboolean was_cr = FALSE, was_lf = FALSE;
 	size_t pos;
 	int tmp;
 
@@ -1277,10 +1277,10 @@ GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, s
 			if (skip) {
 				if (Buffer[*Pos] == 0x0d) {
 					if (was_cr && skip) return ERR_NONE;
-					was_cr = true;
+					was_cr = TRUE;
 				} else {
 					if (was_lf && skip) return ERR_NONE;
-					was_lf = true;
+					was_lf = TRUE;
 				}
 			}
 			if (pos != 0 && !skip) {
@@ -1289,7 +1289,7 @@ GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, s
 					if (OutBuffer[pos - 1] == '=' && quoted_printable) {
 						pos--;
 						OutBuffer[pos] = 0;
-						skip = true;
+						skip = TRUE;
 						was_cr = (Buffer[*Pos] == 0x0d);
 						was_lf = (Buffer[*Pos] == 0x0a);
 						break;
@@ -1311,9 +1311,9 @@ GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, s
 			/* Detect quoted printable for possible escaping */
 			if (Buffer[*Pos] == ':' &&
 					strstr(OutBuffer, ";ENCODING=QUOTED-PRINTABLE") != NULL) {
-				quoted_printable = true;
+				quoted_printable = TRUE;
 			}
-			skip = false;
+			skip = FALSE;
 			OutBuffer[pos]     = Buffer[*Pos];
 			pos++;
 			OutBuffer[pos] = 0;
@@ -1324,11 +1324,11 @@ GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, s
 	return ERR_NONE;
 }
 
-GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t MaxLen, bool MergeLines)
+GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t MaxLen, gboolean MergeLines)
 {
-	bool skip = false;
-	bool quoted_printable = false;
-	bool was_cr = false, was_lf = false;
+	gboolean skip = FALSE;
+	gboolean quoted_printable = FALSE;
+	gboolean was_cr = FALSE, was_lf = FALSE;
 	size_t pos;
 	int tmp;
 	size_t OutLen = 200;
@@ -1347,10 +1347,10 @@ GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t Max
 			if (skip) {
 				if (Buffer[*Pos] == 0x0d) {
 					if (was_cr && skip) return ERR_NONE;
-					was_cr = true;
+					was_cr = TRUE;
 				} else {
 					if (was_lf && skip) return ERR_NONE;
-					was_lf = true;
+					was_lf = TRUE;
 				}
 			}
 			if (pos != 0 && !skip) {
@@ -1359,7 +1359,7 @@ GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t Max
 					if ((*OutBuffer)[pos - 1] == '=' && quoted_printable) {
 						pos--;
 						(*OutBuffer)[pos] = 0;
-						skip = true;
+						skip = TRUE;
 						was_cr = (Buffer[*Pos] == 0x0d);
 						was_lf = (Buffer[*Pos] == 0x0a);
 						break;
@@ -1381,9 +1381,9 @@ GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t Max
 			/* Detect quoted printable for possible escaping */
 			if (Buffer[*Pos] == ':' &&
 					strstr(*OutBuffer, ";ENCODING=QUOTED-PRINTABLE") != NULL) {
-				quoted_printable = true;
+				quoted_printable = TRUE;
 			}
-			skip = false;
+			skip = FALSE;
 			(*OutBuffer)[pos]     = Buffer[*Pos];
 			pos++;
 			(*OutBuffer)[pos] = 0;
@@ -1401,7 +1401,7 @@ GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t Max
 
 void StringToDouble(char *text, double *d)
 {
-	bool 		before=true;
+	gboolean 		before=TRUE;
 	double		multiply = 1;
 	unsigned int 	i;
 
@@ -1415,7 +1415,7 @@ void StringToDouble(char *text, double *d)
 				(*d)=(*d)+(text[i]-'0')*multiply;
 			}
 		}
-		if (text[i]=='.' || text[i]==',') before=false;
+		if (text[i]=='.' || text[i]==',') before=FALSE;
 	}
 }
 
@@ -1444,11 +1444,11 @@ int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsigne
 }
 
 /* Make UTF8 string from Unicode input string */
-bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
+gboolean EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 {
 	int		i,j=0,z,w;
 	unsigned char	mychar[3];
-	bool		retval = false;
+	gboolean		retval = FALSE;
 	int len;
 	len = UnicodeLength(src);
 
@@ -1459,7 +1459,7 @@ bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 				sprintf(dest+j, "=%02X",mychar[w]);
 				j = j+3;
 			}
-			retval  = true;
+			retval  = TRUE;
 		} else {
 			/* Encode low ASCII chars */
 			if (src[i*2]*256 + src[i*2+1] < 32) {
@@ -1474,18 +1474,18 @@ bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 	return retval;
 }
 
-bool EncodeUTF8(unsigned char *dest, const unsigned char *src)
+gboolean EncodeUTF8(unsigned char *dest, const unsigned char *src)
 {
 	int		i,j=0,z;
 	unsigned char	mychar[3];
-	bool		retval = false;
+	gboolean		retval = FALSE;
 
 	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
 		z = EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],mychar);
 		if (z>1) {
 			memcpy(dest+j,mychar,z);
 			j+=z;
-			retval = true;
+			retval = TRUE;
 		} else {
 			j+= DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
 	    	}
@@ -1548,7 +1548,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, in
 
 	while (i<=len) {
 		z=0;
-		while (true) {
+		while (TRUE) {
 			if (src[z*3+i] != '=' || z*3+i+3>len ||
 			    DecodeWithHexBinAlphabet(src[z*3+i+1])==-1 ||
 			    DecodeWithHexBinAlphabet(src[z*3+i+2])==-1) {
@@ -1812,7 +1812,7 @@ int DecodeBASE64(const char *Input, unsigned char *Output, const size_t Length)
 #  define SECOND_ICONV_ARG char *
 #endif
 
-bool IconvDecode(const char *charset, const char *input, const size_t inlen, unsigned char *output, size_t outlen)
+gboolean IconvDecode(const char *charset, const char *input, const size_t inlen, unsigned char *output, size_t outlen)
 {
 	iconv_t ic;
 	/* Add one to convert also trailing zero, this is broken for
@@ -1822,7 +1822,7 @@ bool IconvDecode(const char *charset, const char *input, const size_t inlen, uns
 	char *out;
 
 	ic = iconv_open("UCS-2BE", charset);
-	if (ic == (iconv_t)(-1)) return false;
+	if (ic == (iconv_t)(-1)) return FALSE;
 
 	/* I know I loose const here, but it's iconv choice... */
 	in = (SECOND_ICONV_ARG)input;
@@ -1834,7 +1834,7 @@ bool IconvDecode(const char *charset, const char *input, const size_t inlen, uns
 	return (rest == 0);
 }
 
-bool IconvEncode(const char *charset, const unsigned char *input, const size_t inlen, char *output, size_t outlen)
+gboolean IconvEncode(const char *charset, const unsigned char *input, const size_t inlen, char *output, size_t outlen)
 {
 	iconv_t ic;
 	size_t rest = inlen;
@@ -1842,7 +1842,7 @@ bool IconvEncode(const char *charset, const unsigned char *input, const size_t i
 	char *out;
 
 	ic = iconv_open(charset, "UCS-2BE");
-	if (ic == (iconv_t)(-1)) return false;
+	if (ic == (iconv_t)(-1)) return FALSE;
 
 	/* I know I loose const here, but it's iconv choice... */
 	in = (SECOND_ICONV_ARG)input;

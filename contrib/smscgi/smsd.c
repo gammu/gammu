@@ -58,7 +58,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Enable state machine debugging to stderr */
 	debug_info = GSM_GetDebug(s);
-	GSM_SetDebugGlobal(false, debug_info);
+	GSM_SetDebugGlobal(FALSE, debug_info);
 	GSM_SetDebugFileDescriptor(stderr, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
@@ -89,7 +89,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 		
 		/* ---------------------------------------------------- continuously read */
 		if(error == ERR_NONE) {
-			GSM_ReadDevice(s, true);
+			GSM_ReadDevice(s, TRUE);
 			cgi_process(s);
 			continue; /* go on */
 		}

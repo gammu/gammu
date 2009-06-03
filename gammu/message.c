@@ -25,7 +25,7 @@
 #include "../helper/printing.h"
 #include "../helper/string.h"
 
-volatile bool 			wasincomingsms 		= false;
+volatile gboolean 			wasincomingsms 		= FALSE;
 
 GSM_MultiSMSMessage		IncomingSMSData;
 
@@ -36,7 +36,7 @@ void IncomingSMS(GSM_StateMachine *sm UNUSED, GSM_SMSMessage sms, void *user_dat
  		printf("%s\n", _("We already have one pending, ignoring this one!"));
  		return;
  	}
- 	wasincomingsms = true;
+ 	wasincomingsms = TRUE;
  	memcpy(&IncomingSMSData.SMS[0],&sms,sizeof(GSM_SMSMessage));
  	IncomingSMSData.Number = 1;
 }
@@ -61,8 +61,8 @@ void DisplayIncomingSMS(void)
 			PrintSMSLocation(&IncomingSMSData.SMS[0], &folders);
  		}
  	}
- 	DisplayMultiSMSInfo(&IncomingSMSData,false,false,NULL, gsm);
- 	wasincomingsms = false;
+ 	DisplayMultiSMSInfo(&IncomingSMSData,FALSE,FALSE,NULL, gsm);
+ 	wasincomingsms = FALSE;
 }
 
 void IncomingCB(GSM_StateMachine *sm UNUSED, GSM_CBMessage CB, void *user_data)
@@ -108,20 +108,20 @@ void IncomingUSSD2(GSM_StateMachine *sm, GSM_USSDMessage ussd, void * user_data)
 {
 	IncomingUSSD(sm, ussd, user_data);
 
-	gshutdown = true;
+	gshutdown = TRUE;
 }
 
 void GetUSSD(int argc UNUSED, char *argv[])
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	GSM_SetIncomingUSSDCallback(gsm, IncomingUSSD2, NULL);
 
-	error=GSM_SetIncomingUSSD(gsm,true);
+	error=GSM_SetIncomingUSSD(gsm,TRUE);
 	Print_Error(error);
 
 	error=GSM_DialService(gsm, argv[2]);
@@ -131,9 +131,9 @@ void GetUSSD(int argc UNUSED, char *argv[])
 	}
 	Print_Error(error);
 
-	while (!gshutdown) GSM_ReadDevice(gsm, false);
+	while (!gshutdown) GSM_ReadDevice(gsm, FALSE);
 
-	error=GSM_SetIncomingUSSD(gsm, false);
+	error=GSM_SetIncomingUSSD(gsm, FALSE);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -152,7 +152,7 @@ void GetSMSC(int argc, char *argv[])
 		GetStartStop(&start, &stop, 2, argc, argv);
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i=start;i<=stop;i++) {
 		smsc.Location=i;
@@ -226,7 +226,7 @@ void GetSMS(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 3, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_GetSMSFolders(gsm, &folders);
 	Print_Error(error);
@@ -244,7 +244,7 @@ void GetSMS(int argc, char *argv[])
 		default:
 			Print_Error(error);
 			PrintSMSLocation(&sms.SMS[0], &folders);
-			DisplayMultiSMSInfo(&sms,false,false,NULL, gsm);
+			DisplayMultiSMSInfo(&sms,FALSE,FALSE,NULL, gsm);
 		}
 	}
 
@@ -261,7 +261,7 @@ void DeleteSMS(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 3, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i=start;i<=stop;i++) {
 		sms.Location	= i;
@@ -279,7 +279,7 @@ void GetAllSMS(int argc, char *argv[])
 	GSM_Error error;
 	GSM_MultiSMSMessage 	sms;
 	GSM_SMSFolders		folders;
-	bool			start = true;
+	gboolean			start = TRUE;
 	int			smsnum=0,smspos=0;
 	GSM_Backup		*BackupPtr = NULL;
 #ifdef GSM_ENABLE_BACKUP
@@ -295,7 +295,7 @@ void GetAllSMS(int argc, char *argv[])
 	sms.Number = 0;
 	sms.SMS[0].Location = 0;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_BACKUP
 	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
@@ -356,9 +356,9 @@ void GetAllSMS(int argc, char *argv[])
 			PrintSMSLocation(&sms.SMS[0], &folders);
 			smspos++;
 			smsnum+=sms.Number;
-			DisplayMultiSMSInfo(&sms, false, false, BackupPtr, gsm);
+			DisplayMultiSMSInfo(&sms, FALSE, FALSE, BackupPtr, gsm);
 		}
-		start=false;
+		start=FALSE;
 	}
 	printf("\n\n");
 	printf(_("%i SMS parts in %i SMS sequences"),smsnum,smspos);
@@ -377,7 +377,7 @@ void GetEachSMS(int argc, char *argv[])
 	int			GetSMSNumber = 0,i,j;
 	int			smsnum=0,smspos=0;
 	GSM_SMSFolders		folders;
-	bool			start = true, ems = true;
+	gboolean			start = TRUE, ems = TRUE;
 	GSM_Backup		*BackupPtr = NULL;
 #ifdef GSM_ENABLE_BACKUP
 	GSM_MemoryStatus	MemStatus;
@@ -394,7 +394,7 @@ void GetEachSMS(int argc, char *argv[])
 
 	GetSMSData[0] = NULL;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_BACKUP
 	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
@@ -465,7 +465,7 @@ void GetEachSMS(int argc, char *argv[])
 		}
 		fprintf(stderr,"*");
 		fflush(stderr);
-		start=false;
+		start=FALSE;
 	}
 	fprintf(stderr,"\n");
 	fflush(stderr);
@@ -493,7 +493,7 @@ void GetEachSMS(int argc, char *argv[])
 				PrintSMSLocation(&SortedSMS[i]->SMS[j], &folders);
 			}
 		}
-		DisplayMultiSMSInfo(SortedSMS[i], true, ems, BackupPtr, gsm);
+		DisplayMultiSMSInfo(SortedSMS[i], TRUE, ems, BackupPtr, gsm);
 
 		free(SortedSMS[i]);
 		SortedSMS[i] = NULL;
@@ -513,7 +513,7 @@ void GetSMSFolders(int argc UNUSED, char *argv[] UNUSED)
 	GSM_SMSFolders folders;
 	int i;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_GetSMSFolders(gsm,&folders);
 	Print_Error(error);
@@ -571,7 +571,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 		return;
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error = CreateMessage(&type, &sms, argc, 2, argv, gsm);
 	Print_Error(error);
@@ -619,7 +619,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 					Print_Error(error);
 					printf(_("....waiting for network answer"));
 					while (!gshutdown) {
-						GSM_ReadDevice(gsm,true);
+						GSM_ReadDevice(gsm,TRUE);
 						if (SMSStatus == ERR_UNKNOWN) {
 							GSM_Terminate();
 							Terminate(3);
@@ -644,7 +644,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 				printf(_("....waiting for network answer"));
 				fflush(stdout);
 				while (!gshutdown) {
-					GSM_ReadDevice(gsm,true);
+					GSM_ReadDevice(gsm,TRUE);
 					if (SMSStatus == ERR_UNKNOWN) {
 						GSM_Terminate();
 						Terminate(3);
@@ -665,7 +665,7 @@ void AddSMSFolder(int argc UNUSED, char *argv[])
 	unsigned char buffer[200];
 	GSM_Error error;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	EncodeUnicode(buffer,argv[2],strlen(argv[2]));
 	error=GSM_AddSMSFolder(gsm,buffer);
@@ -679,10 +679,10 @@ void DeleteAllSMS(int argc, char *argv[])
 	GSM_MultiSMSMessage 	sms;
 	GSM_SMSFolders		folders;
 	int			foldernum;
-	bool			start = true;
+	gboolean			start = TRUE;
 	GSM_Error error;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_GetSMSFolders(gsm, &folders);
 	Print_Error(error);
@@ -715,7 +715,7 @@ void DeleteAllSMS(int argc, char *argv[])
 				printf("*");
 			}
 		}
-		start=false;
+		start=FALSE;
 	}
 
 	printf("\n");

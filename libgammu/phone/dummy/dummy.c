@@ -200,7 +200,7 @@ int DUMMY_GetNext(GSM_StateMachine *s, const char *dirname, int current)
 char * DUMMY_GetSMSPath(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	char smspath[100];
-	bool setfolder = (sms->Folder == 0);
+	gboolean setfolder = (sms->Folder == 0);
 	while (sms->Location >= DUMMY_MAX_SMS) {
 		sms->Location -= DUMMY_MAX_SMS;
 		if (setfolder) {
@@ -452,23 +452,23 @@ GSM_Error DUMMY_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 		sms->SMS[i].Folder = folder;
 		switch (folder) {
 			case 1:
-				sms->SMS[i].InboxFolder = true;
+				sms->SMS[i].InboxFolder = TRUE;
 				sms->SMS[i].Memory = MEM_SM;
 				break;
 			case 2:
-				sms->SMS[i].InboxFolder = false;
+				sms->SMS[i].InboxFolder = FALSE;
 				sms->SMS[i].Memory = MEM_SM;
 				break;
 			case 3:
-				sms->SMS[i].InboxFolder = true;
+				sms->SMS[i].InboxFolder = TRUE;
 				sms->SMS[i].Memory = MEM_ME;
 				break;
 			case 4:
-				sms->SMS[i].InboxFolder = false;
+				sms->SMS[i].InboxFolder = FALSE;
 				sms->SMS[i].Memory = MEM_ME;
 				break;
 			case 5:
-				sms->SMS[i].InboxFolder = false;
+				sms->SMS[i].InboxFolder = FALSE;
 				sms->SMS[i].Memory = MEM_ME;
 				break;
 		}
@@ -551,13 +551,13 @@ GSM_Error DUMMY_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 	folders->Folder[3].Memory = MEM_ME;
 
 	EncodeUnicode(folders->Folder[4].Name,_("Templates"),strlen(_("Templates")));
-	folders->Folder[4].InboxFolder = false;
-	folders->Folder[4].OutboxFolder = false;
+	folders->Folder[4].InboxFolder = FALSE;
+	folders->Folder[4].OutboxFolder = FALSE;
 	folders->Folder[4].Memory = MEM_ME;
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
+GSM_Error DUMMY_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean start)
 {
 	char dirname[20];
 
@@ -624,7 +624,7 @@ GSM_Error DUMMY_DialService(GSM_StateMachine *s, char *number)
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_AnswerCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error DUMMY_AnswerCall(GSM_StateMachine *s, int ID, gboolean all)
 {
 	return ERR_NOTIMPLEMENTED;
 }
@@ -650,7 +650,7 @@ GSM_Error DUMMY_SetAutoNetworkLogin(GSM_StateMachine *s)
 	return ERR_NOTIMPLEMENTED;
 }
 
-GSM_Error DUMMY_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
+GSM_Error DUMMY_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press)
 {
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
@@ -663,7 +663,7 @@ GSM_Error DUMMY_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_Reset(GSM_StateMachine *s, bool hard)
+GSM_Error DUMMY_Reset(GSM_StateMachine *s, gboolean hard)
 {
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
@@ -676,7 +676,7 @@ GSM_Error DUMMY_Reset(GSM_StateMachine *s, bool hard)
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_CancelCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error DUMMY_CancelCall(GSM_StateMachine *s, int ID, gboolean all)
 {
 	return ERR_NOTIMPLEMENTED;
 }
@@ -750,22 +750,22 @@ GSM_Error DUMMY_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_SetIncomingCall (GSM_StateMachine *s, bool enable)
+GSM_Error DUMMY_SetIncomingCall (GSM_StateMachine *s, gboolean enable)
 {
 	return ERR_NOTIMPLEMENTED;
 }
 
-GSM_Error DUMMY_SetIncomingCB (GSM_StateMachine *s, bool enable)
+GSM_Error DUMMY_SetIncomingCB (GSM_StateMachine *s, gboolean enable)
 {
 	return ERR_NOTIMPLEMENTED;
 }
 
-GSM_Error DUMMY_SetIncomingSMS (GSM_StateMachine *s, bool enable)
+GSM_Error DUMMY_SetIncomingSMS (GSM_StateMachine *s, gboolean enable)
 {
 	return ERR_NOTIMPLEMENTED;
 }
 
-GSM_Error DUMMY_SetFastSMSSending(GSM_StateMachine *s, bool enable)
+GSM_Error DUMMY_SetFastSMSSending(GSM_StateMachine *s, gboolean enable)
 {
 	return ERR_NONE;
 }
@@ -786,12 +786,12 @@ GSM_Error DUMMY_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 	return ERR_NOTIMPLEMENTED;
 }
 
-GSM_Error DUMMY_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
+GSM_Error DUMMY_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)
 {
 	return ERR_NOTIMPLEMENTED;
 }
 
-GSM_Error DUMMY_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
+GSM_Error DUMMY_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gboolean PhoneRingtone)
 {
 	return ERR_NOTIMPLEMENTED;
 }
@@ -891,7 +891,7 @@ GSM_Error DUMMY_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, in
 	return error;
 }
 
-GSM_Error DUMMY_GetFolderListing(GSM_StateMachine *s, GSM_File *File, bool start)
+GSM_Error DUMMY_GetFolderListing(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 	char *path;
@@ -934,22 +934,22 @@ read_next_entry:
 	/* Fill file structure */
 	File->Used = sb.st_size;
 	EncodeUnicode(File->Name, dp->d_name, strlen(dp->d_name));
-	File->Folder = false;
+	File->Folder = FALSE;
 	File->Level = 0; /*Priv->fs_depth + 1;*/
 	File->Type = GSM_File_Other; /* @todo TODO we should somehow detect this? */
 	/* We need to skip device prefix and /fs/ prefix */
 	EncodeUnicode(File->ID_FullName, path + Priv->devlen + 4, strlen(path + Priv->devlen + 4));
 	File->Buffer = NULL;
 	Fill_GSM_DateTime(&(File->Modified), sb.st_mtime);
-	File->ModifiedEmpty = false;
-	File->Protected = false;
-	File->Hidden = false;
-	File->System = false;
-	File->ReadOnly = false; /* @todo TODO get this from permissions? */
+	File->ModifiedEmpty = FALSE;
+	File->Protected = FALSE;
+	File->Hidden = FALSE;
+	File->System = FALSE;
+	File->ReadOnly = FALSE; /* @todo TODO get this from permissions? */
 
 	/* Open nested directory for next loop if needed */
 	if (S_ISDIR(sb.st_mode)) {
-		File->Folder = true;
+		File->Folder = TRUE;
 		if (Priv->fs_depth == DUMMY_MAX_FS_DEPTH - 1) {
 			smprintf(s, "We hit DUMMY_MAX_FS_DEPTH limit!\n");
 			free(path);
@@ -968,7 +968,7 @@ read_next_entry:
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
+GSM_Error DUMMY_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 	char *path;
@@ -1017,22 +1017,22 @@ read_next_entry:
 	/* Fill file structure */
 	File->Used = 0;
 	EncodeUnicode(File->Name, dp->d_name, strlen(dp->d_name));
-	File->Folder = false;
+	File->Folder = FALSE;
 	File->Level = Priv->fs_depth + 1;
 	File->Type = GSM_File_Other; /* @todo TODO we should somehow detect this? */
 	/* We need to skip device prefix and /fs/ prefix */
 	EncodeUnicode(File->ID_FullName, path + Priv->devlen + 4, strlen(path + Priv->devlen + 4));
 	File->Buffer = NULL;
 	Fill_GSM_DateTime(&(File->Modified), sb.st_mtime);
-	File->ModifiedEmpty = false;
-	File->Protected = false;
-	File->Hidden = false;
-	File->System = false;
-	File->ReadOnly = false; /* @todo TODO get this from permissions? */
+	File->ModifiedEmpty = FALSE;
+	File->Protected = FALSE;
+	File->Hidden = FALSE;
+	File->System = FALSE;
+	File->ReadOnly = FALSE; /* @todo TODO get this from permissions? */
 
 	/* Open nested directory for next loop if needed */
 	if (S_ISDIR(sb.st_mode)) {
-		File->Folder = true;
+		File->Folder = TRUE;
 		if (Priv->fs_depth == DUMMY_MAX_FS_DEPTH - 1) {
 			smprintf(s, "We hit DUMMY_MAX_FS_DEPTH limit!\n");
 			free(path);
@@ -1153,7 +1153,7 @@ GSM_Error DUMMY_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
+GSM_Error DUMMY_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, gboolean start)
 {
 	char dirname[20];
 
@@ -1262,7 +1262,7 @@ GSM_Error DUMMY_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry, bool start)
+GSM_Error DUMMY_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry, gboolean start)
 {
 	if (start) {
 		entry->Location = 0;
@@ -1360,7 +1360,7 @@ GSM_Error DUMMY_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry, bool start)
+GSM_Error DUMMY_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry, gboolean start)
 {
 	if (start) {
 		entry->Location = 0;
@@ -1458,7 +1458,7 @@ GSM_Error DUMMY_GetNote(GSM_StateMachine *s, GSM_NoteEntry *entry)
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *entry, bool start)
+GSM_Error DUMMY_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *entry, gboolean start)
 {
 	if (start) {
 		entry->Location = 0;

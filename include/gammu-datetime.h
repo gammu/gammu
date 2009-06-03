@@ -155,7 +155,7 @@ void Fill_GSM_DateTime(GSM_DateTime * Date, time_t timet);
  *
  * \ingroup DateTime
  */
-char *OSDateTime(GSM_DateTime dt, bool TimeZone);
+char *OSDateTime(GSM_DateTime dt, gboolean TimeZone);
 
 /**
  * Converts date from timestamp to string according to OS settings.
@@ -178,7 +178,7 @@ char *OSDate(GSM_DateTime dt);
  *
  * \ingroup DateTime
  */
-bool CheckDate(GSM_DateTime * date);
+gboolean CheckDate(GSM_DateTime * date);
 
 /**
  * Checks whether time is valid. This does not check date, see
@@ -190,7 +190,7 @@ bool CheckDate(GSM_DateTime * date);
  *
  * \ingroup DateTime
  */
-bool CheckTime(GSM_DateTime * date);
+gboolean CheckTime(GSM_DateTime * date);
 
 /**
  * Reads date and time from phone.

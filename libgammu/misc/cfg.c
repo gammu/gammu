@@ -21,10 +21,10 @@
 /**
  * Read information from file in Windows INI format style
  */
-GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section **result)
+GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **result)
 {
 	FILE		*f;
-	bool		FFEEUnicode=false;
+	gboolean		FFEEUnicode=FALSE;
 	int		level = -1, buffer1used, buffer2used;
 	size_t		bufferused, i, read_buffer_used=1000,read_buffer_pos=1000, num;
 	unsigned char	ch[3], *buffer = NULL;
@@ -63,7 +63,7 @@ GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section **result)
 					num = 0;
 				}
 				if (level == -1) {
-					if (ch[0] == 0xFF && ch[1] == 0xFE) FFEEUnicode = true;
+					if (ch[0] == 0xFF && ch[1] == 0xFE) FFEEUnicode = TRUE;
 					level = 0;
 					continue;
 				}
@@ -272,7 +272,7 @@ done:
  * Search for key value in file in Windows INI format style
  * Returns found value or NULL
  */
-unsigned char *INI_GetValue(INI_Section *cfg, const unsigned char *section, const unsigned char *key, const bool Unicode)
+unsigned char *INI_GetValue(INI_Section *cfg, const unsigned char *section, const unsigned char *key, const gboolean Unicode)
 {
         INI_Section 	*sec;
         INI_Entry  	*ent;
@@ -316,7 +316,7 @@ unsigned char *INI_GetValue(INI_Section *cfg, const unsigned char *section, cons
 }
 
 /* Return last value in specified section */
-INI_Entry *INI_FindLastSectionEntry(INI_Section *file_info, const unsigned char *section, const bool Unicode)
+INI_Entry *INI_FindLastSectionEntry(INI_Section *file_info, const unsigned char *section, const gboolean Unicode)
 {
 	INI_Section 	*h;
 	INI_Entry	*e;

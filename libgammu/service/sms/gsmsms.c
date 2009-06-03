@@ -101,7 +101,7 @@ static GSM_Error GSM_DecodeSMSDateTime(GSM_Debug_Info *di, GSM_DateTime *DT, uns
 
 	if (req[6]&0x08) DT->Timezone = -DT->Timezone;
 
-	smfprintf(di, "Decoding date & time: %s\n", OSDateTime(*DT, true));
+	smfprintf(di, "Decoding date & time: %s\n", OSDateTime(*DT, TRUE));
 
 	return ERR_NONE;
 }
@@ -109,7 +109,7 @@ static GSM_Error GSM_DecodeSMSDateTime(GSM_Debug_Info *di, GSM_DateTime *DT, uns
 void GSM_DecodeUDHHeader(GSM_Debug_Info *di, GSM_UDHHeader *UDH)
 {
 	int	i, tmp, w;
-	bool	UDHOK;
+	gboolean	UDHOK;
 
 	UDH->Type 	= UDH_UserUDH;
 	UDH->ID8bit	= -1;
@@ -128,10 +128,10 @@ void GSM_DecodeUDHHeader(GSM_Debug_Info *di, GSM_UDHHeader *UDH)
 			if (tmp==0x0b) tmp=tmp-3;/*three last bytes can be different for such UDH*/
 			if (tmp==0x06 && UDH->Text[1] == 0x08) tmp=tmp-4;
 
-			UDHOK=true;
+			UDHOK=TRUE;
 			for (w=0;w<tmp;w++) {
 				if (UDHHeaders[i].Text[w]!=UDH->Text[w+1]) {
-					UDHOK=false;
+					UDHOK=FALSE;
 					break;
 				}
 			}
@@ -262,7 +262,7 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsign
 			}
 			GSM_UnpackEightBitsToSeven(w, buffer[Layout.TPUDL]-off, SMS->Length, buffer+(Layout.Text+off), output);
 			smfprintf(di, "7 bit SMS, length %i\n",SMS->Length);
-			DecodeDefault (SMS->Text, output, SMS->Length, true, NULL);
+			DecodeDefault (SMS->Text, output, SMS->Length, TRUE, NULL);
 			smfprintf(di, "%s\n",DecodeUnicodeString(SMS->Text));
 			break;
 		case SMS_Coding_8bit:
@@ -362,7 +362,7 @@ GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_Debug_Info *di, GSM_SMSMessage 
 	return GSM_DecodeSMSStatusReportData(di, SMS, buffer[Layout.TPStatus]);
 }
 
-GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, size_t length, size_t *final_pos, bool SMSC)
+GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, size_t length, size_t *final_pos, gboolean SMSC)
 {
 	size_t pos = 0;
 	int type;
@@ -378,7 +378,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 
 	/* Parse SMSC if it is included */
 	if (SMSC) {
-		pos += GSM_UnpackSemiOctetNumber(di, SMS->SMSC.Number, buffer + pos, false);
+		pos += GSM_UnpackSemiOctetNumber(di, SMS->SMSC.Number, buffer + pos, FALSE);
 		smfprintf(di, "SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
 	}
 
@@ -444,7 +444,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 	}
 
 	/* Remote number */
-	pos += GSM_UnpackSemiOctetNumber(di, SMS->Number, buffer + pos, true);
+	pos += GSM_UnpackSemiOctetNumber(di, SMS->Number, buffer + pos, TRUE);
 	smfprintf(di, "Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	if (pos >= length) {
 		smfprintf(di, "Ran out of buffer when parsing PDU!\n");
@@ -577,7 +577,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 				}
 				GSM_UnpackEightBitsToSeven(w, buffer[pos]-SMS->UDH.Length, SMS->Length, buffer+(pos + 1+SMS->UDH.Length), output);
 				smfprintf(di, "7 bit SMS, length %i\n",SMS->Length);
-				DecodeDefault (SMS->Text, output, SMS->Length, true, NULL);
+				DecodeDefault (SMS->Text, output, SMS->Length, TRUE, NULL);
 				smfprintf(di, "%s\n",DecodeUnicodeString(SMS->Text));
 				break;
 			case SMS_Coding_8bit:
@@ -631,15 +631,15 @@ GSM_Error GSM_DecodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 	GSM_SetDefaultReceivedSMSData(SMS);
 
 	if (Layout.SMSCNumber!=255) {
-		GSM_UnpackSemiOctetNumber(di, SMS->SMSC.Number,buffer+Layout.SMSCNumber,false);
+		GSM_UnpackSemiOctetNumber(di, SMS->SMSC.Number,buffer+Layout.SMSCNumber,FALSE);
 		smfprintf(di, "SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
 	}
-	if ((buffer[Layout.firstbyte] & 0x80)!=0) SMS->ReplyViaSameSMSC=true;
+	if ((buffer[Layout.firstbyte] & 0x80)!=0) SMS->ReplyViaSameSMSC=TRUE;
 #ifdef DEBUG
 	if (SMS->ReplyViaSameSMSC) smfprintf(di, "SMS centre set for reply\n");
 #endif
 	if (Layout.Number!=255) {
-		GSM_UnpackSemiOctetNumber(di, SMS->Number,buffer+Layout.Number,true);
+		GSM_UnpackSemiOctetNumber(di, SMS->Number,buffer+Layout.Number,TRUE);
 		smfprintf(di, "Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	}
 	if (Layout.TPDCS != 255) {
@@ -692,8 +692,8 @@ GSM_Error GSM_DecodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 			SMS->ReplaceMessage = buffer[Layout.TPPID] - 0x40;
 		}
 	}
-	SMS->RejectDuplicates = false;
-	if ((buffer[Layout.firstbyte] & 0x04)==0x04) SMS->RejectDuplicates = true;
+	SMS->RejectDuplicates = FALSE;
+	if ((buffer[Layout.firstbyte] & 0x04)==0x04) SMS->RejectDuplicates = TRUE;
 
 	return ERR_NONE;
 }
@@ -762,7 +762,7 @@ static int GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsig
 				w=(p-off)%p;
 			} while (w<0);
 			p = UnicodeLength(SMS->Text);
-			EncodeDefault(buff, SMS->Text, &p, true, NULL);
+			EncodeDefault(buff, SMS->Text, &p, TRUE, NULL);
 			size = GSM_PackSevenBitsToEight(w, buff, buffer+(Layout.Text+off), p);
 			size += off;
 			size2 = (off*8 + w) / 7 + p;
@@ -799,7 +799,7 @@ static int GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsig
 	return size;
 }
 
-GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear)
+GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, gboolean clear)
 {
 	int i;
 
@@ -829,11 +829,11 @@ GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 	if (SMS->ReplyViaSameSMSC) buffer[Layout.firstbyte] |= 0x80;
 
 	if (Layout.Number!=255) {
-		buffer[Layout.Number] = GSM_PackSemiOctetNumber(SMS->Number,buffer+(Layout.Number+1),true);
+		buffer[Layout.Number] = GSM_PackSemiOctetNumber(SMS->Number,buffer+(Layout.Number+1),TRUE);
 		smfprintf(di, "Recipient number \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	}
 	if (Layout.SMSCNumber!=255) {
-		buffer[Layout.SMSCNumber]=GSM_PackSemiOctetNumber(SMS->SMSC.Number,buffer+(Layout.SMSCNumber+1), false);
+		buffer[Layout.SMSCNumber]=GSM_PackSemiOctetNumber(SMS->SMSC.Number,buffer+(Layout.SMSCNumber+1), FALSE);
 		smfprintf(di, "SMSC number \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
 	}
 
@@ -909,11 +909,11 @@ void GSM_SetDefaultReceivedSMSData(GSM_SMSMessage *SMS)
 	SMS->OtherNumbersNum		= 0;
 	SMS->Name[0]			= 0;
 	SMS->Name[1]			= 0;
-	SMS->ReplyViaSameSMSC		= false;
+	SMS->ReplyViaSameSMSC		= FALSE;
 	SMS->Class			= 0;
 	SMS->Text[0] 			= 0;
 	SMS->Text[1] 			= 0;
-	SMS->RejectDuplicates		= false;
+	SMS->RejectDuplicates		= FALSE;
 	SMS->MessageReference		= 0;
 	SMS->ReplaceMessage		= 0;
 	SMS->DeliveryStatus		= 0;
@@ -934,7 +934,7 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 	SMS->Location			= 0;
 	SMS->Memory			= 0;
 	SMS->Folder			= 0x02;	/*Outbox*/
-	SMS->InboxFolder		= false;
+	SMS->InboxFolder		= FALSE;
 	GSM_GetCurrentDateTime (&SMS->DateTime);
 	GSM_GetCurrentDateTime (&SMS->SMSCTime);
 }
@@ -954,7 +954,7 @@ void GSM_EncodeUDHHeader(GSM_Debug_Info *di, GSM_UDHHeader *UDH)
 		UDH->Length = UDH->Text[0] + 1;
 		return;
 	}
-	while (true) {
+	while (TRUE) {
 		if (UDHHeaders[i].Type==UDH_NoUDH) {
 			smfprintf(di, "Not supported UDH type\n");
 			break;
@@ -993,19 +993,19 @@ void GSM_EncodeUDHHeader(GSM_Debug_Info *di, GSM_UDHHeader *UDH)
 	}
 }
 
-bool GSM_DecodeSiemensOTASMS(GSM_Debug_Info *di, GSM_SiemensOTASMSInfo	*Info,
+gboolean GSM_DecodeSiemensOTASMS(GSM_Debug_Info *di, GSM_SiemensOTASMSInfo	*Info,
 			     GSM_SMSMessage 		*SMS)
 {
 	int current;
 
-	if (SMS->PDU != SMS_Deliver) 		return false;
-	if (SMS->Coding != SMS_Coding_8bit) 	return false;
-	if (SMS->Class != 1) 			return false;
-	if (SMS->UDH.Type != UDH_NoUDH) 	return false;
-	if (SMS->Length < 22) 			return false;
+	if (SMS->PDU != SMS_Deliver) 		return FALSE;
+	if (SMS->Coding != SMS_Coding_8bit) 	return FALSE;
+	if (SMS->Class != 1) 			return FALSE;
+	if (SMS->UDH.Type != UDH_NoUDH) 	return FALSE;
+	if (SMS->Length < 22) 			return FALSE;
 
-	if (strncmp(SMS->Text,"//SEO",5)!=0) return false; /* Siemens Exchange Object */
-	if (SMS->Text[5]!=1) return false; /* version 1 */
+	if (strncmp(SMS->Text,"//SEO",5)!=0) return FALSE; /* Siemens Exchange Object */
+	if (SMS->Text[5]!=1) return FALSE; /* version 1 */
 	Info->DataLen = SMS->Text[6] + SMS->Text[7]*256;
 	Info->SequenceID = SMS->Text[8] + SMS->Text[9]*256 +
 			 SMS->Text[10]*256*256 + SMS->Text[11]*256*256*256;
@@ -1016,13 +1016,13 @@ bool GSM_DecodeSiemensOTASMS(GSM_Debug_Info *di, GSM_SiemensOTASMSInfo	*Info,
 			 SMS->Text[18]*256*256 + SMS->Text[19]*256*256*256;
 	smfprintf(di, "DataLen %i/%lu\n",Info->DataLen,Info->AllDataLen);
 
-	if (SMS->Text[20] > 9) return false;
+	if (SMS->Text[20] > 9) return FALSE;
 	memcpy(Info->DataType,SMS->Text+21,SMS->Text[20]);
 	Info->DataType[SMS->Text[20]] = 0;
 	smfprintf(di, "DataType '%s'\n",Info->DataType);
 
 	current = 21+SMS->Text[20];
-	if (SMS->Text[current] > 39) return false;
+	if (SMS->Text[current] > 39) return FALSE;
 	memcpy(Info->DataName,SMS->Text+current+1,SMS->Text[current]);
 	Info->DataName[SMS->Text[current]] = 0;
 	smfprintf(di, "DataName '%s'\n",Info->DataName);
@@ -1030,7 +1030,7 @@ bool GSM_DecodeSiemensOTASMS(GSM_Debug_Info *di, GSM_SiemensOTASMSInfo	*Info,
 	current += SMS->Text[current]+1;
 	memcpy(Info->Data,SMS->Text+current,Info->DataLen);
 
-	return true;
+	return TRUE;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

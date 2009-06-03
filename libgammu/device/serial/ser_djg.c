@@ -349,14 +349,14 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	}
 
 	d->Control 	= BITS_8 | STOP_1;
-	d->Parity 	= false;
+	d->Parity 	= FALSE;
 	d->Speed 	= 9600;
 	SVAsyncSet(d->Speed,d->Control | NO_PARITY);
 
 	return ERR_NONE;
 }
 
-static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
+static GSM_Error serial_setparity(GSM_StateMachine *s, gboolean parity)
 {
     	GSM_Device_SerialData *d = &s->Device.Data.Serial;
 
@@ -371,7 +371,7 @@ static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
 	return ERR_NONE;
 }
 
-static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
+static GSM_Error serial_setdtrrts(GSM_StateMachine *s, gboolean dtr, gboolean rts)
 {
 	if (dtr && rts) {
 		SVAsyncHand(DTR | RTS);

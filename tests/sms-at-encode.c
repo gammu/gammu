@@ -27,11 +27,11 @@ int main(int argc, char **argv)
 	int			current, current2;
 	unsigned char		hexreq[1000];
 	GSM_SMS_Backup		Backup;
-	bool generate = false;
+	gboolean generate = FALSE;
 
 	/* Enable debugging */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Check parameters */
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 
 	/* Check for generating option */
 	if (argc == 4 && strcmp(argv[3], "generate") == 0) {
-		generate = true;
+		generate = TRUE;
 	}
 
 	/* Read message */
@@ -78,8 +78,8 @@ int main(int argc, char **argv)
 		return 1;
 	}
 	debug_info = GSM_GetDebug(s);
-	GSM_SetDebugGlobal(true, debug_info);
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugGlobal(TRUE, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Initialize AT engine */

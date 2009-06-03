@@ -64,7 +64,7 @@ GSM_Error PrintFileSystemStatus(void)
 void GetFileSystemStatus(int argc UNUSED, char *argv[]UNUSED)
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error = PrintFileSystemStatus();
 	Print_Error(error);
@@ -75,13 +75,13 @@ void GetFileSystemStatus(int argc UNUSED, char *argv[]UNUSED)
 void GetFileSystem(int argc, char *argv[])
 {
 	GSM_Error error;
-	bool Start = true, MemoryCard = false;
+	gboolean Start = TRUE, MemoryCard = FALSE;
 	GSM_File Files;
 	int j;
 	long usedphone = 0, usedcard = 0;
 	char FolderName[256], IDUTF[200];
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	while (1) {
 		error = GSM_GetNextFileFolder(gsm, &Files, Start);
@@ -95,7 +95,7 @@ void GetFileSystem(int argc, char *argv[])
 			    (GSM_GetModelInfo(gsm), F_FILES2)) {
 				if (DecodeUnicodeString(Files.ID_FullName)[0] ==
 				    'a') {
-					MemoryCard = true;
+					MemoryCard = TRUE;
 					usedcard += Files.Used;
 				} else {
 					usedphone += Files.Used;
@@ -146,7 +146,7 @@ void GetFileSystem(int argc, char *argv[])
 							printf(" %30s",
 							       OSDateTime(Files.
 									  Modified,
-									  false));
+									  FALSE));
 						} else
 							printf(" %30c", 0x20);
 						printf(" %9li", (long)Files.Used);
@@ -188,7 +188,7 @@ void GetFileSystem(int argc, char *argv[])
 				if (!Files.ModifiedEmpty) {
 					printf("\"%s\";",
 					       OSDateTime(Files.Modified,
-							  false));
+							  FALSE));
 				} else
 					printf("\"%c\";", 0x20);
 				printf("%ld;", (long)Files.Used);
@@ -214,7 +214,7 @@ void GetFileSystem(int argc, char *argv[])
 				printf(_("S"));
 			printf("\n");
 		}
-		Start = false;
+		Start = FALSE;
 	}
 
 	error = PrintFileSystemStatus();
@@ -236,28 +236,28 @@ void SetFileAttrib(int argc, char *argv[])
 	GSM_Error error;
 	int i;
 
-	Files.ReadOnly = false;
-	Files.Protected = false;
-	Files.System = false;
-	Files.Hidden = false;
+	Files.ReadOnly = FALSE;
+	Files.Protected = FALSE;
+	Files.System = FALSE;
+	Files.Hidden = FALSE;
 
 	DecodeUTF8QuotedPrintable(Files.ID_FullName, argv[2], strlen(argv[2]));
 
 	for (i = 3; i < argc; i++) {
 		if (strcasecmp(argv[i], "-readonly") == 0) {
-			Files.ReadOnly = true;
+			Files.ReadOnly = TRUE;
 		} else if (strcasecmp(argv[i], "-protected") == 0) {
-			Files.Protected = true;
+			Files.Protected = TRUE;
 		} else if (strcasecmp(argv[i], "-system") == 0) {
-			Files.System = true;
+			Files.System = TRUE;
 		} else if (strcasecmp(argv[i], "-hidden") == 0) {
-			Files.Hidden = true;
+			Files.Hidden = TRUE;
 		} else {
 			fprintf(stderr, _("Unknown attribute (%s)\n"), argv[i]);
 		}
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error = GSM_SetFileAttributes(gsm, &Files);
 	Print_Error(error);
@@ -270,7 +270,7 @@ void GetRootFolders(int argc UNUSED, char *argv[]UNUSED)
 	GSM_File File;
 	char IDUTF[200];
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	File.ID_FullName[0] = 0;
 	File.ID_FullName[1] = 0;
@@ -289,11 +289,11 @@ void GetRootFolders(int argc UNUSED, char *argv[]UNUSED)
 void GetFolderListing(int argc UNUSED, char *argv[])
 {
 	GSM_Error error;
-	bool Start = true;
+	gboolean Start = TRUE;
 	GSM_File Files;
 	char IDUTF[200];
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	DecodeUTF8QuotedPrintable(Files.ID_FullName, argv[2], strlen(argv[2]));
 
@@ -316,7 +316,7 @@ void GetFolderListing(int argc UNUSED, char *argv[])
 			printf("\"%s\";", DecodeUnicodeConsole(Files.Name));
 			if (!Files.ModifiedEmpty) {
 				printf("\"%s\";",
-				       OSDateTime(Files.Modified, false));
+				       OSDateTime(Files.Modified, FALSE));
 			} else
 				printf("\"%c\";", 0x20);
 			printf("%ld;", (long)Files.Used);
@@ -335,17 +335,17 @@ void GetFolderListing(int argc UNUSED, char *argv[])
 			printf(_("S"));
 		printf("\n");
 
-		Start = false;
+		Start = FALSE;
 	}
 
 	GSM_Terminate();
 }
 
-void GetOneFile(GSM_File * File, bool newtime, int i)
+void GetOneFile(GSM_File * File, gboolean newtime, int i)
 {
 	GSM_Error error;
 	FILE *file;
-	bool start;
+	gboolean start;
 	unsigned char buffer[5000];
 	struct utimbuf filedate;
 	int Handle, Size, p, q, j, old1;
@@ -357,7 +357,7 @@ void GetOneFile(GSM_File * File, bool newtime, int i)
 		File->Buffer = NULL;
 	}
 	File->Used = 0;
-	start = true;
+	start = TRUE;
 
 	t_time1 = time(NULL);
 	old1 = 65536;
@@ -370,7 +370,7 @@ void GetOneFile(GSM_File * File, bool newtime, int i)
 			if (start) {
 				printf(_("Getting \"%s\"\n"),
 				       DecodeUnicodeConsole(File->Name));
-				start = false;
+				start = FALSE;
 			}
 			if (File->Folder) {
 				free(File->Buffer);
@@ -464,15 +464,15 @@ void GetFiles(int argc, char *argv[])
 {
 	GSM_File File;
 	int i;
-	bool newtime = false;
+	gboolean newtime = FALSE;
 
 	File.Buffer = NULL;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i = 2; i < argc; i++) {
 		if (strcasecmp(argv[i], "-newtime") == 0) {
-			newtime = true;
+			newtime = TRUE;
 			continue;
 		}
 
@@ -489,19 +489,19 @@ void GetFiles(int argc, char *argv[])
 void GetFileFolder(int argc, char *argv[])
 {
 	GSM_Error error;
-	bool Start = true;
+	gboolean Start = TRUE;
 	GSM_File File;
 	int level = 0, allnum = 0, num = 0, filelevel = 0, i = 0;
-	bool newtime = false, found;
+	gboolean newtime = FALSE, found;
 	unsigned char IDUTF[200];
 
 	File.Buffer = NULL;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i = 2; i < argc; i++) {
 		if (strcasecmp(argv[i], "-newtime") == 0) {
-			newtime = true;
+			newtime = TRUE;
 			continue;
 		}
 		allnum++;
@@ -515,7 +515,7 @@ void GetFileFolder(int argc, char *argv[])
 
 		if (level == 0) {
 			/* We search for file or folder */
-			found = false;
+			found = FALSE;
 			for (i = 2; i < argc; i++) {
 				if (strcasecmp(argv[i], "-newtime") == 0) {
 					continue;
@@ -527,11 +527,11 @@ void GetFileFolder(int argc, char *argv[])
 							  strlen(argv[i]));
 				if (mywstrncasecmp(File.ID_FullName, IDUTF, 0)) {
 					smprintf(gsm, "found folder");
-					found = true;
+					found = TRUE;
 					if (File.Folder) {
 						level = 1;
 						filelevel = File.Level + 1;
-						Start = false;
+						Start = FALSE;
 					} else {
 						level = 2;
 					}
@@ -560,14 +560,14 @@ void GetFileFolder(int argc, char *argv[])
 			num++;
 		}
 
-		Start = false;
+		Start = FALSE;
 	}
 
 	free(File.Buffer);
 	GSM_Terminate();
 }
 
-void AddOneFile(GSM_File * File, const char *text, const bool send)
+void AddOneFile(GSM_File * File, const char *text, const gboolean send)
 {
 	GSM_Error error;
 	int Pos, Handle, i, j, old1;
@@ -627,11 +627,11 @@ void AddSendFile(int argc, char *argv[])
 	GSM_File File;
 	int i, nextlong;
 	char IDUTF[200];
-	bool sendfile = false;
+	gboolean sendfile = FALSE;
 	int optint = 2;
 
 	if (strcasestr(argv[1], "sendfile") != NULL) {
-		sendfile = true;
+		sendfile = TRUE;
 	}
 
 	File.Buffer = NULL;
@@ -655,10 +655,10 @@ void AddSendFile(int argc, char *argv[])
 
 	GSM_IdentifyFileFormat(&File);
 
-	File.Protected = false;
-	File.ReadOnly = false;
-	File.Hidden = false;
-	File.System = false;
+	File.Protected = FALSE;
+	File.ReadOnly = FALSE;
+	File.Hidden = FALSE;
+	File.System = FALSE;
 
 	if (argc > optint) {
 		nextlong = 0;
@@ -671,25 +671,25 @@ void AddSendFile(int argc, char *argv[])
 					}
 					if (strcasecmp(argv[i], "-protected") ==
 					    0) {
-						File.Protected = true;
+						File.Protected = TRUE;
 						continue;
 					}
 					if (strcasecmp(argv[i], "-readonly") ==
 					    0) {
-						File.ReadOnly = true;
+						File.ReadOnly = TRUE;
 						continue;
 					}
 					if (strcasecmp(argv[i], "-hidden") == 0) {
-						File.Hidden = true;
+						File.Hidden = TRUE;
 						continue;
 					}
 					if (strcasecmp(argv[i], "-system") == 0) {
-						File.System = true;
+						File.System = TRUE;
 						continue;
 					}
 					if (strcasecmp(argv[i], "-newtime") ==
 					    0) {
-						File.ModifiedEmpty = true;
+						File.ModifiedEmpty = TRUE;
 						continue;
 					}
 					printf(_("Parameter \"%s\" unknown\n"),
@@ -741,7 +741,7 @@ void AddSendFile(int argc, char *argv[])
 		}
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	AddOneFile(&File, _("Writing:"), sendfile);
 	EncodeUTF8QuotedPrintable(IDUTF, File.ID_FullName);
@@ -759,9 +759,9 @@ void AddFolder(int argc UNUSED, char *argv[])
 
 	DecodeUTF8QuotedPrintable(File.ID_FullName, argv[2], strlen(argv[2]));
 	EncodeUnicode(File.Name, argv[3], strlen(argv[3]));
-	File.ReadOnly = false;
+	File.ReadOnly = FALSE;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error = GSM_AddFolder(gsm, &File);
 	Print_Error(error);
@@ -776,7 +776,7 @@ void DeleteFolder(int argc UNUSED, char *argv[]UNUSED)
 	GSM_Error error;
 	unsigned char buffer[500];
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	DecodeUTF8QuotedPrintable(buffer, argv[2], strlen(argv[2]));
 
@@ -792,7 +792,7 @@ void DeleteFiles(int argc, char *argv[])
 	int i;
 	unsigned char buffer[500];
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i = 2; i < argc; i++) {
 		DecodeUTF8QuotedPrintable(buffer, argv[i], strlen(argv[i]));

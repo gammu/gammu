@@ -118,7 +118,7 @@ typedef struct {
 
 typedef struct {
 	int NrCommands;
-	bool AllNotesScale;
+	gboolean AllNotesScale;
 	GSM_RingCommand Commands[GSM_MAX_RINGTONE_NOTES];
 } GSM_NoteRingtone;
 
@@ -183,7 +183,7 @@ typedef struct {
  * Play one note using state machine interface.
  */
 GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine * s, GSM_RingNote note,
-				bool first);
+				gboolean first);
 
 /**
  * Makes phone beek using state machine interface.
@@ -194,7 +194,7 @@ GSM_Error PHONE_Beep(GSM_StateMachine * s);
  * Gets ringtone from phone.
  */
 GSM_Error GSM_GetRingtone(GSM_StateMachine * s, GSM_Ringtone * Ringtone,
-			  bool PhoneRingtone);
+			  gboolean PhoneRingtone);
 /**
  * Sets ringtone in phone.
  */
@@ -214,7 +214,7 @@ GSM_Error GSM_DeleteUserRingtones(GSM_StateMachine * s);
  * Plays tone.
  */
 GSM_Error GSM_PlayTone(GSM_StateMachine * s, int Herz, unsigned char Volume,
-		       bool start);
+		       gboolean start);
 
 GSM_Error GSM_RingtoneConvert(GSM_Ringtone * dest, GSM_Ringtone * src,
 			      GSM_RingtoneFormat Format);

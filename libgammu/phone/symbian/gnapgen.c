@@ -223,17 +223,17 @@ GSM_Error GNAPGEN_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsig
 	SMS->OtherNumbersNum		= 0;
 	SMS->Name[0]			= 0;
 	SMS->Name[1]			= 0;
-	SMS->ReplyViaSameSMSC		= false;
+	SMS->ReplyViaSameSMSC		= FALSE;
 	if (Layout->SMSCNumber!=255) {
-		GSM_UnpackSemiOctetNumber(&(s->di), SMS->SMSC.Number,buffer+Layout->SMSCNumber,true);
+		GSM_UnpackSemiOctetNumber(&(s->di), SMS->SMSC.Number,buffer+Layout->SMSCNumber,TRUE);
 		smprintf(s, "SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
 	}
-	if ((buffer[Layout->firstbyte] & 0x80)!=0) SMS->ReplyViaSameSMSC=true;
+	if ((buffer[Layout->firstbyte] & 0x80)!=0) SMS->ReplyViaSameSMSC=TRUE;
 #ifdef DEBUG
 	if (SMS->ReplyViaSameSMSC) smprintf(s, "SMS centre set for reply\n");
 #endif
 	if (Layout->Number!=255) {
-		GSM_UnpackSemiOctetNumber(&(s->di), SMS->Number,buffer+Layout->Number,true);
+		GSM_UnpackSemiOctetNumber(&(s->di), SMS->Number,buffer+Layout->Number,TRUE);
 		smprintf(s, "Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	}
 	if (Layout->Text != 255 && Layout->TPDCS!=255 && Layout->TPUDL!=255) {
@@ -286,8 +286,8 @@ GSM_Error GNAPGEN_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsig
 			SMS->ReplaceMessage = buffer[Layout->TPPID] - 0x40;
 		}
 	}
-	SMS->RejectDuplicates = false;
-	if ((buffer[Layout->firstbyte] & 0x04)==0x04) SMS->RejectDuplicates = true;
+	SMS->RejectDuplicates = FALSE;
+	if ((buffer[Layout->firstbyte] & 0x04)==0x04) SMS->RejectDuplicates = TRUE;
 
 	return ERR_NONE;
 }
@@ -338,7 +338,7 @@ static GSM_Error GNAPGEN_ReplyGetSMS(GSM_Protocol_Message msg, GSM_StateMachine 
 	return ERR_NONE;
 }
 
-static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
+static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean start)
 {
 	GSM_Phone_GNAPGENData           *Priv = &s->Phone.Data.Priv.GNAPGEN;
 	GSM_Phone_Data			*Data = &s->Phone.Data;
@@ -349,7 +349,7 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 				 0x00,0x0c, 		/* folder */
 				 0x00,0x10,0x00,0x3F};	/* location */
 	int i;
-	bool skipfolder;
+	gboolean skipfolder;
 	GSM_Error error;
 
 	if( start ) {
@@ -374,9 +374,9 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 				Priv->CurrentFolderNumber++;
 			}
 			GNAPGEN_PrivGetSMSFolderStatus(s,Priv->SMSFolderID[Priv->CurrentFolderNumber]);
-			skipfolder  = true;
+			skipfolder  = TRUE;
 		} else
-			skipfolder = false;
+			skipfolder = FALSE;
 	} while( skipfolder );
 
 	/*  set location */
@@ -387,7 +387,7 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 
 	sms->SMS[0].Folder = Priv->SMSFolderID[Priv->CurrentFolderNumber];
 	if( Priv->CurrentFolderNumber == 0 )
-		sms->SMS[0].InboxFolder = true;
+		sms->SMS[0].InboxFolder = TRUE;
 
 	sms->SMS[0].Location = ( req[4] * (256*256*256) ) + req[5] * 256 * 256 + req[6] * 256 + req[7];
 
@@ -479,7 +479,7 @@ static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms
 	Layout->Text 		 = count;
 	smprintf(s, "Text: %d\n", count);
 
-	error = PHONE_EncodeSMSFrame(s,sms,req,*Layout,length,false);
+	error = PHONE_EncodeSMSFrame(s,sms,req,*Layout,length,FALSE);
 	if (error != ERR_NONE) return error;
 
 
@@ -751,7 +751,7 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
                 /*  date */
 		case 0x13:
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
-			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date, true, false);
+			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date, TRUE, FALSE);
 			entry->EntriesNum++;
 			pos+=2+7;
 			break;
@@ -776,7 +776,7 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 			pos+=2+len*2;
 			break;
 		default:
-			Priv->LastContactArrived = true;
+			Priv->LastContactArrived = TRUE;
 			return ERR_UNKNOWN;
 		}
 	}
@@ -786,15 +786,15 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 }
 
 
-static GSM_Error GNAPGEN_GetNextMemory( GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start ) {
+static GSM_Error GNAPGEN_GetNextMemory( GSM_StateMachine *s, GSM_MemoryEntry *entry, gboolean start ) {
 	GSM_Phone_GNAPGENData           *Priv = &s->Phone.Data.Priv.GNAPGEN;
 
 	unsigned char req[] = {0x00, 11,
 			       0x00, 0x00,	/* memory type */
-			       0x00, 0x00};	/* start (bool) */
+			       0x00, 0x00};	/* start (gboolean) */
 
 	if( start ) {
-		Priv->LastContactArrived = false;
+		Priv->LastContactArrived = FALSE;
 		req[5] = 0x01;
 	} else
 		req[5] = 0x00;
@@ -880,7 +880,7 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
                 /*  date */
 		case 0x13:
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
-			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date, true, false);
+			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date, TRUE, FALSE);
 			entry->EntriesNum++;
 			pos+=2+7;
 			break;
@@ -1123,7 +1123,7 @@ GSM_Error GNAPGEN_ReplyGetToDo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-static GSM_Error GNAPGEN_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refresh)
+static GSM_Error GNAPGEN_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, gboolean refresh)
 {
 	GSM_Error 		error;
 	unsigned char           req[] = {0x00, 0x07,
@@ -1267,7 +1267,7 @@ static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_Stat
 		pos = 9;
                 Entry->EntriesNum = 0;
 
-                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, true, false);
+                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, TRUE, FALSE);
                 smprintf(s, "Time        : %02i-%02i-%04i %02i:%02i:%02i\n",
                         Entry->Entries[Entry->EntriesNum].Date.Day,Entry->Entries[Entry->EntriesNum].Date.Month,Entry->Entries[Entry->EntriesNum].Date.Year,
                         Entry->Entries[Entry->EntriesNum].Date.Hour,Entry->Entries[Entry->EntriesNum].Date.Minute,Entry->Entries[Entry->EntriesNum].Date.Second);
@@ -1275,7 +1275,7 @@ static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_Stat
                 Entry->EntriesNum++;
 		pos+=7;
 
-                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, true, false);
+                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, TRUE, FALSE);
                 smprintf(s, "Time        : %02i-%02i-%04i %02i:%02i:%02i\n",
                         Entry->Entries[Entry->EntriesNum].Date.Day,Entry->Entries[Entry->EntriesNum].Date.Month,Entry->Entries[Entry->EntriesNum].Date.Year,
                         Entry->Entries[Entry->EntriesNum].Date.Hour,Entry->Entries[Entry->EntriesNum].Date.Minute,Entry->Entries[Entry->EntriesNum].Date.Second);
@@ -1283,7 +1283,7 @@ static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_Stat
                 Entry->EntriesNum++;
 		pos+=7;
 
-                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, true, false);
+                NOKIA_DecodeDateTime(s, msg.Buffer+pos, &Entry->Entries[Entry->EntriesNum].Date, TRUE, FALSE);
                 if (Entry->Entries[Entry->EntriesNum].Date.Year!=0) {
 	                smprintf(s, "Alarm       : %02i-%02i-%04i %02i:%02i:%02i\n",
 	                        Entry->Entries[Entry->EntriesNum].Date.Day,Entry->Entries[Entry->EntriesNum].Date.Month,Entry->Entries[Entry->EntriesNum].Date.Year,
@@ -1327,7 +1327,7 @@ static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_Stat
         return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error GNAPGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+static GSM_Error GNAPGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
 	GSM_Error 			error;
 	GSM_Phone_GNAPGENData           *Priv = &s->Phone.Data.Priv.GNAPGEN;
@@ -1396,10 +1396,10 @@ static GSM_Error GNAPGEN_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateM
 		smprintf(s, "id: %d, folder name: \"%s\"\n",msg.Buffer[pos+1], DecodeUnicodeString(Data->SMSFolders->Folder[j].Name));
 
 		if( msg.Buffer[pos+1] == 12 )
-			Data->SMSFolders->Folder[j].InboxFolder = true;
+			Data->SMSFolders->Folder[j].InboxFolder = TRUE;
 		else
-			Data->SMSFolders->Folder[j].InboxFolder = false;
-		Data->SMSFolders->Folder[j].OutboxFolder = false;
+			Data->SMSFolders->Folder[j].InboxFolder = FALSE;
+		Data->SMSFolders->Folder[j].OutboxFolder = FALSE;
 		/**
 		 * @todo Need to detect outbox folder somehow.
 		 */
@@ -1470,10 +1470,10 @@ static GSM_Error GNAPGEN_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachin
 
 	smprintf(s, "Alarm received\n");
 	if (msg.Buffer[4] == 0x00) return ERR_EMPTY;
-	Data->Alarm->Repeating 		= false;
+	Data->Alarm->Repeating 		= FALSE;
 	Data->Alarm->Text[0] 		= 0;
 	Data->Alarm->Text[1] 		= 0;
-	NOKIA_DecodeDateTime(s, msg.Buffer+5, &Data->Alarm->DateTime, true, false);
+	NOKIA_DecodeDateTime(s, msg.Buffer+5, &Data->Alarm->DateTime, TRUE, FALSE);
 	return ERR_NONE;
 }
 
@@ -1491,7 +1491,7 @@ static GSM_Error GNAPGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *timedelta)
 static GSM_Error GNAPGEN_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Date & time received\n");
-	NOKIA_DecodeDateTime(s, msg.Buffer+4, s->Phone.Data.DateTime, true, false);
+	NOKIA_DecodeDateTime(s, msg.Buffer+4, s->Phone.Data.DateTime, TRUE, FALSE);
 	return ERR_NONE;
 }
 
@@ -1629,7 +1629,7 @@ GSM_Error GNAPGEN_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMachi
 	if (Data->RequestID!=ID_GetManufacturer && Data->RequestID!=ID_GetModel) return ERR_NONE;
 
 	InitLines(&lines);
-	SplitLines(DecodeUnicodeString(msg.Buffer+6), msg.Length-6, &lines, "\x0A", 1, false);
+	SplitLines(DecodeUnicodeString(msg.Buffer+6), msg.Length-6, &lines, "\x0A", 1, FALSE);
 
 	strcpy(Data->Model,GetLineString(DecodeUnicodeString(msg.Buffer+6), &lines, 4));
 	smprintf(s, "Received model %s\n",Data->Model);

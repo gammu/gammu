@@ -74,11 +74,11 @@ size_t PHONE_GetBitmapSize(GSM_Phone_Bitmap_Types Type, size_t Width, size_t Hei
 	return 0;
 }
 
-static bool PHONE_IsPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x, int y, int width, int height)
+static gboolean PHONE_IsPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x, int y, int width, int height)
 {
 	int i=0, pixel;
 
-	if (x > width || y > height) return false;
+	if (x > width || y > height) return FALSE;
 
 	switch (Type) {
 	case GSM_NokiaStartupLogo:
@@ -103,7 +103,7 @@ static bool PHONE_IsPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x
 	case GSM_AlcatelBMMIPicture:
 		break;
 	}
-	if (i) return true; else return false;
+	if (i) return TRUE; else return FALSE;
 }
 
 static void PHONE_SetPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x, int y, int width, int height)
@@ -166,10 +166,10 @@ void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 	Bitmap->Location		= 0;
 	Bitmap->Text[0]			= 0;
 	Bitmap->Text[1]			= 0;
-	Bitmap->BitmapEnabled		= false;
-	Bitmap->DefaultName		= false;
-	Bitmap->DefaultBitmap		= false;
-	Bitmap->DefaultRingtone		= false;
+	Bitmap->BitmapEnabled		= FALSE;
+	Bitmap->DefaultName		= FALSE;
+	Bitmap->DefaultBitmap		= FALSE;
+	Bitmap->DefaultRingtone		= FALSE;
 	Bitmap->RingtoneID		= 0;
 	Bitmap->NetworkCode[0]		= 0;
 	Bitmap->Sender[0]		= 0;
@@ -234,12 +234,12 @@ void GSM_ClearPointBitmap(GSM_Bitmap *bmp, int x, int y)
 	ClearBit(bmp->BitmapPoints,y*bmp->BitmapWidth+x);
 }
 
-bool GSM_IsPointBitmap(GSM_Bitmap *bmp, int x, int y)
+gboolean GSM_IsPointBitmap(GSM_Bitmap *bmp, int x, int y)
 {
 	if (GetBit(bmp->BitmapPoints, (y * bmp->BitmapWidth) + x)) {
-		return true;
+		return TRUE;
 	} else {
-		return false;
+		return FALSE;
 	}
 }
 
@@ -323,7 +323,7 @@ GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 	ssize_t		y, pos;
 	unsigned char	buff[1];
 	div_t		division;
-	bool		isfile=false;
+	gboolean		isfile=FALSE;
 
 	unsigned char header[]={
 /*1'st header*/   'B','M',             /* BMP file ID */
@@ -349,7 +349,7 @@ GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
                    102, 204, 102,      /* Second color in palette in Blue, Green, Red. Here green */
 		  0x00};               /* Each color in palette is end by 4'th byte */
 
-	if (file!=NULL) isfile=true;
+	if (file!=NULL) isfile=TRUE;
 
 	header[22]=bitmap->BitmapHeight;
 	header[18]=bitmap->BitmapWidth;
@@ -701,7 +701,7 @@ GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 
 GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 {
-	bool		first_white,isfile=false;
+	gboolean		first_white,isfile=FALSE;
 	unsigned char 	buff[60];
 	size_t		w,h,x,i,buffpos=0;
 	ssize_t		y, pos;
@@ -711,7 +711,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 #endif
 
 	if (bitmap->Type == GSM_None) bitmap->Type = GSM_StartupLogo;
-	if (file!=NULL) isfile=true;
+	if (file!=NULL) isfile=TRUE;
 
 	/* Read the header */
 	if (isfile) {
@@ -926,7 +926,7 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 	return (ERR_NONE);
 }
 
-static GSM_Error loadnolngg(FILE *file, GSM_MultiBitmap *bitmap, bool nolformat)
+static GSM_Error loadnolngg(FILE *file, GSM_MultiBitmap *bitmap, gboolean nolformat)
 {
 	unsigned char 	buffer[2000];
 	size_t		i,h,w,x,y;
@@ -1103,7 +1103,7 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	}
 	rewind(file);
 
-	bitmap->Bitmap[0].DefaultBitmap = false;
+	bitmap->Bitmap[0].DefaultBitmap = FALSE;
 
 	/* Attempt to identify filetype */
 	if (memcmp(buffer, "BM",2)==0) {
@@ -1113,9 +1113,9 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	} else if (memcmp(buffer, "NLM",3)==0) {
 		error = loadnlm(file,bitmap);
 	} else if (memcmp(buffer, "NOL",3)==0) {
-		error = loadnolngg(file,bitmap,true);
+		error = loadnolngg(file,bitmap,TRUE);
 	} else if (memcmp(buffer, "NGG",3)==0) {
-		error = loadnolngg(file,bitmap,false);
+		error = loadnolngg(file,bitmap,FALSE);
 	} else if (memcmp(buffer, "FORM",4)==0) {
 		error = loadnsl(file,bitmap);
 	} else if (memcmp(buffer, "GIF",3)==0) {

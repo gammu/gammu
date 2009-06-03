@@ -241,12 +241,12 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		dcb.StopBits 	 = ONESTOPBIT;
 
 		/* No Xon/Xof flow control */
-	/* 	dcb.fOutX 	 = false; */
-	/* 	dcb.fInX 	 = false; */
+	/* 	dcb.fOutX 	 = FALSE; */
+	/* 	dcb.fInX 	 = FALSE; */
 
 		/* Hardware flow control */
-	/* 	dcb.fOutxDsrFlow = true; */
-	/* 	dcb.fOutxCtsFlow = true; */
+	/* 	dcb.fOutxDsrFlow = TRUE; */
+	/* 	dcb.fOutxCtsFlow = TRUE; */
 	/* 	dcb.fDtrControl  = DTR_CONTROL_HANDSHAKE; */
 	/* 	dcb.fRtsControl  = RTS_CONTROL_HANDSHAKE; */
 
@@ -260,7 +260,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-static GSM_Error serial_setparity (GSM_StateMachine *s, bool parity)
+static GSM_Error serial_setparity (GSM_StateMachine *s, gboolean parity)
 {
 	DCB 			dcb;
 	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
@@ -285,7 +285,7 @@ static GSM_Error serial_setparity (GSM_StateMachine *s, bool parity)
 	return ERR_NONE;
 }
 
-static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
+static GSM_Error serial_setdtrrts(GSM_StateMachine *s, gboolean dtr, gboolean rts)
 {
 	DCB        		dcb;
 	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;

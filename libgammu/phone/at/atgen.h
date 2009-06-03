@@ -260,7 +260,7 @@ typedef struct {
 	/**
 	 * True if phone encodes also commands and not only values
 	 */
-	bool			EncodedCommands;
+	gboolean			EncodedCommands;
 	/**
 	 * Charset to use for unicode mode
 	 */
@@ -300,7 +300,7 @@ typedef struct {
 	/**
 	 * Whether to use Motorola like SMS folders.
 	 */
-	bool			MotorolaSMS;
+	gboolean			MotorolaSMS;
 	/**
 	 * Is SIM SMS memory available ?
 	 */
@@ -312,7 +312,7 @@ typedef struct {
 	/**
 	 * Has the memory type been set for writing?
 	 */
-	bool			SMSMemoryWrite;
+	gboolean			SMSMemoryWrite;
 	/**
 	 * PDU or TEXT mode for SMS ?
 	 */
@@ -321,7 +321,7 @@ typedef struct {
 	 * Does phone provide enhanced text mode readout of SMS flags
 	 * in text mode?
 	 */
-	bool			SMSTextDetails;
+	gboolean			SMSTextDetails;
 
 	/**
 	 * Mode used for incoming message notification.
@@ -345,7 +345,7 @@ typedef struct {
 	/**
 	 * Whether phone support Motorola like mode switching.
 	 */
-	bool			Mode;
+	gboolean			Mode;
 	/**
 	 * Current Motorola mode.
 	 */
@@ -476,8 +476,8 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 		const size_t length,
 		unsigned char *output,
 		const size_t outlength,
-		const bool guess,
-		const bool phone);
+		const gboolean guess,
+		const gboolean phone);
 
 /**
  * Sets charset in phone according to preference.

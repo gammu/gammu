@@ -9,7 +9,7 @@
 
 #ifdef GSM_ENABLE_BACKUP
 GSM_Error LoadBackup(char *FileName, GSM_Backup *backup);
-GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode);
+GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, gboolean UseUnicode);
 #endif
 
 #endif

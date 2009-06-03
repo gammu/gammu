@@ -21,10 +21,10 @@ GSM_Error VC_StoreLine(char *Buffer, const size_t buff_len, size_t *Pos, const c
  */
 GSM_Error VC_Store(char *Buffer, const size_t buff_len, size_t *Pos, const char *format, ...);
 
-bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt);
+gboolean ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt);
 GSM_Error VC_StoreDateTime(char *Buffer, const size_t buff_len, size_t *Length, const GSM_DateTime *Date, const char *Start);
 
-bool ReadVCALDate(char *Buffer, const char *Start, GSM_DateTime *Date, bool *is_date_only);
+gboolean ReadVCALDate(char *Buffer, const char *Start, GSM_DateTime *Date, gboolean *is_date_only);
 GSM_Error VC_StoreDate(char *Buffer, const size_t buff_len, size_t *Length, const GSM_DateTime *Date, const char *Start);
 
 /**
@@ -42,7 +42,7 @@ GSM_Error VC_StoreBase64(char *Buffer, const size_t buff_len, size_t *Pos, const
  * \param[in] Start Name of field which is being stored.
  * \param[in] UTF8 Whether text should be stored in UTF-8 without prefix.
  */
-GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Length, const unsigned char *Text, const char *Start, const bool UTF8);
+GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Length, const unsigned char *Text, const char *Start, const gboolean UTF8);
 
 /**
  * Reads text for vCalendar/vCard formatted line.
@@ -54,9 +54,9 @@ GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Length, cons
  * \param Value Storage for value.
  * \param UTF8 Whether string should be treated as utf-8.
  */
-bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const bool UTF8);
+gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const gboolean UTF8);
 
-bool ReadVCALInt(char *Buffer, const char *Start, int *Value);
+gboolean ReadVCALInt(char *Buffer, const char *Start, int *Value);
 
 unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos);
 

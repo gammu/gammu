@@ -16,14 +16,14 @@ int main(int argc, char **argv)
 
 	/* Configure debugging */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	error = CreateMessage(&type, &sms, argc, 1, argv, NULL);
 	gammu_test_result(error, "CreateMessage");
 
-	DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);
-	DisplayMultiSMSInfo(&sms, true, true, NULL, NULL);
+	DisplayMultiSMSInfo(&sms, FALSE, TRUE, NULL, NULL);
+	DisplayMultiSMSInfo(&sms, TRUE, TRUE, NULL, NULL);
 
 	for (i = 0; i < sms.Number; i++) {
 		printf("Message number: %i\n", i);

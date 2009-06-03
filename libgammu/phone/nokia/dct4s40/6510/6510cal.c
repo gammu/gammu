@@ -104,7 +104,7 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_CalendarEntry 		*entry = s->Phone.Data.Cal;
 	unsigned long			diff;
 	int				i;
-	bool				found = false;
+	gboolean				found = FALSE;
 	GSM_Phone_N6510Data		*Priv = &s->Phone.Data.Priv.N6510;
 	int len;
 
@@ -164,7 +164,7 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	smprintf(s, "Note icon: %02x\n",msg.Buffer[21]);
 	for(i=0;i<Priv->CalendarIconsNum;i++) {
 		if (Priv->CalendarIconsTypes[i] == entry->Type) {
-			found = true;
+			found = TRUE;
 		}
 	}
 	if (!found) {
@@ -182,7 +182,7 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		diff += msg.Buffer[17];
 
 		memcpy(&entry->Entries[entry->EntriesNum].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
-		GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
+		GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, FALSE, 60);
 		smprintf(s, "Alarm date   : %02i-%02i-%04i %02i:%02i:%02i\n",
 			entry->Entries[entry->EntriesNum].Date.Day,   entry->Entries[entry->EntriesNum].Date.Month,
 			entry->Entries[entry->EntriesNum].Date.Year,  entry->Entries[entry->EntriesNum].Date.Hour,
@@ -249,7 +249,7 @@ static GSM_Error N6510_PrivGetGenericCalendar3(GSM_StateMachine *s, int Location
 	return GSM_WaitFor (s, req, 14, 0x13, 4, ID);
 }
 
-static GSM_Error N6510_PrivGetCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, int *LastCalendarYear)
+static GSM_Error N6510_PrivGetCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start, int *LastCalendarYear)
 {
 	GSM_Error		error;
 	GSM_DateTime		date_time;
@@ -281,10 +281,10 @@ static GSM_Error N6510_PrivGetCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *
 }
 
 /* method 3 */
-static GSM_Error N6510_GetNextCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, GSM_NOKIACalToDoLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos)
+static GSM_Error N6510_GetNextCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start, GSM_NOKIACalToDoLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos)
 {
 	GSM_Error error;
-	bool	  start2;
+	gboolean	  start2;
 
 	if (start) {
 		error=N6510_GetCalendarInfo3(s,LastCalendar,0);
@@ -305,7 +305,7 @@ static GSM_Error N6510_GetNextCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *
 		error=N6510_PrivGetCalendar3(s, Note, start2, LastCalendarYear);
 		if (error == ERR_EMPTY) (*LastCalendarPos)++;
 
-		start2 = false;
+		start2 = FALSE;
 	}
 	return error;
 }
@@ -359,7 +359,7 @@ static GSM_Error N6510_FindCalendarIconID3(GSM_StateMachine *s, GSM_CalendarEntr
 	GSM_CalendarEntry 		Note;
 	GSM_NOKIACalToDoLocations	LastCalendar1,LastCalendar2;
 	GSM_Error			error;
-	bool				found;
+	gboolean				found;
 
 	for(i=0;i<Priv->CalendarIconsNum;i++) {
 		if (Priv->CalendarIconsTypes[i] == Entry->Type) {
@@ -402,16 +402,16 @@ static GSM_Error N6510_FindCalendarIconID3(GSM_StateMachine *s, GSM_CalendarEntr
 	smprintf(s,"Number of entries: %i %i\n",LastCalendar1.Number,LastCalendar2.Number);
 
 	for(i=0;i<LastCalendar2.Number;i++) {
-		found = true;
+		found = TRUE;
 		for(j=0;j<LastCalendar1.Number;j++) {
 			if (LastCalendar1.Location[j] == LastCalendar2.Location[i]) {
-				found = false;
+				found = FALSE;
 				break;
 			}
 		}
 		if (found) {
 			Note.Location = LastCalendar2.Location[i];
-			error=N6510_PrivGetCalendar3(s, &Note, true, &LastCalendarYear);
+			error=N6510_PrivGetCalendar3(s, &Note, TRUE, &LastCalendarYear);
 			if (error != ERR_NONE) return error;
 
 			error=N71_65_DelCalendar(s, &Note);
@@ -595,7 +595,7 @@ static GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note
 	return GSM_WaitFor (s, req, count, 0x13, 4, ID_SetCalendarNote);
 }
 
-GSM_Error N6510_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, bool start)
+GSM_Error N6510_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, gboolean start)
 {
 #ifdef GSM_FORCE_DCT4_CALENDAR_6210
     	/* Method 1. Some features missed. Not working with some notes in 3510 */
@@ -687,7 +687,7 @@ GSM_Error N6510_ReplyGetNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-GSM_Error N6510_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start)
+GSM_Error N6510_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, gboolean start)
 {
 	GSM_Error 			error;
 	GSM_NOKIACalToDoLocations	*LastNote = &s->Phone.Data.Priv.N6510.LastNote;
@@ -901,7 +901,7 @@ GSM_Error N6510_ReplyGetToDo1(GSM_Protocol_Message msg, GSM_StateMachine *s)
 }
 
 /* ToDo support - 6310 style */
-static GSM_Error N6510_GetNextToDo1(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refresh)
+static GSM_Error N6510_GetNextToDo1(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, gboolean refresh)
 {
 	GSM_Error 			error;
 	GSM_ToDoStatus 			status;
@@ -1009,7 +1009,7 @@ GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		diff += msg.Buffer[17];
 
 		memcpy(&Last->Entries[Last->EntriesNum].Date,&Date,sizeof(GSM_DateTime));
-		GetTimeDifference(diff, &Last->Entries[Last->EntriesNum].Date, false, 60);
+		GetTimeDifference(diff, &Last->Entries[Last->EntriesNum].Date, FALSE, 60);
 		smprintf(s, "Alarm date   : %02i-%02i-%04i %02i:%02i:%02i\n",
 			Last->Entries[Last->EntriesNum].Date.Day,   Last->Entries[Last->EntriesNum].Date.Month,
 			Last->Entries[Last->EntriesNum].Date.Year,  Last->Entries[Last->EntriesNum].Date.Hour,
@@ -1029,7 +1029,7 @@ GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 }
 
 /* ToDo support - 6610 style */
-static GSM_Error N6510_GetNextToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refresh)
+static GSM_Error N6510_GetNextToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, gboolean refresh)
 {
 	GSM_Error 			error;
 	GSM_NOKIACalToDoLocations	*LastToDo = &s->Phone.Data.Priv.N6510.LastToDo;
@@ -1049,7 +1049,7 @@ static GSM_Error N6510_GetNextToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bo
 	return N6510_PrivGetGenericCalendar3(s, LastToDo->Location[ToDo->Location-1], ID_GetToDo);
 }
 
-GSM_Error N6510_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refresh)
+GSM_Error N6510_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, gboolean refresh)
 {
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO63)) {
 		return N6510_GetNextToDo1(s, ToDo, refresh);

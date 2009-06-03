@@ -209,7 +209,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 	int i, j;
 	int numb_rows;
 	time_t t_time1, t_time2;
-	bool found;
+	gboolean found;
 	long diff;
 	size_t			locations_size = 0, locations_pos = 0;
 
@@ -231,7 +231,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 				return ERR_UNKNOWN;
 			}
 
-			found = false;
+			found = FALSE;
 			numb_rows = PQntuples(Res);
 			for (j = 0; j < numb_rows; j++) {
 				SMSD_Log(4, Config, "Checking for delivery report, SMSC=%s, state=%s", PQgetvalue(Res, j, 4), PQgetvalue(Res, j, 1));
@@ -256,7 +256,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					diff = t_time2 - t_time1;
 
 					if (diff > -Config->deliveryreportdelay && diff < Config->deliveryreportdelay) {
-						found = true;
+						found = TRUE;
 						break;
 					} else {
 						SMSD_Log(1, Config, "Delivery report would match, but time delta is too big (%ld), consider increasing DeliveryReportDelay", diff);
@@ -469,7 +469,7 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 	PGresult *Res;
 	int i, j;
 	int numb_rows;
-	bool found = false;
+	gboolean found = FALSE;
 
 	sprintf(buf,
 		"SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox "
@@ -490,7 +490,7 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 		    || !strcmp(PQgetvalue(Res, j, 3), Config->PhoneID)) {
 
 			if (SMSDPgSQL_RefreshSendStatus(Config, ID) == ERR_NONE) {
-				found = true;
+				found = TRUE;
 				break;
 			}
 		}
@@ -623,7 +623,7 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 /* After sending SMS is moved to Sent Items or Error Items. */
 static GSM_Error SMSDPgSQL_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 				   GSM_SMSDConfig * Config, char *ID,
-				   bool alwaysDelete UNUSED, bool sent UNUSED)
+				   gboolean alwaysDelete UNUSED, gboolean sent UNUSED)
 {
 	unsigned char buffer[10000];
 	PGresult *Res;
@@ -689,9 +689,9 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 			}
 
 			if (sms->Number == 1) {
-				sprintf(buffer + strlen(buffer), "false");
+				sprintf(buffer + strlen(buffer), "FALSE");
 			} else {
-				sprintf(buffer + strlen(buffer), "true");
+				sprintf(buffer + strlen(buffer), "TRUE");
 			}
 
 			sprintf(buffer + strlen(buffer), "', now()");

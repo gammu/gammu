@@ -144,7 +144,7 @@ static void SMSDMySQL_LogError(GSM_SMSDConfig *Config)
 	SMSD_Log(0, Config, "Error code: %d, Error: %s", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
 }
 
-static GSM_Error SMSDMySQL_Query_Real(GSM_SMSDConfig *Config, const char *query, bool retry)
+static GSM_Error SMSDMySQL_Query_Real(GSM_SMSDConfig *Config, const char *query, gboolean retry)
 {
 	SMSD_Log(2, Config, "Execute SQL: %s", query);
 
@@ -158,7 +158,7 @@ static GSM_Error SMSDMySQL_Query_Real(GSM_SMSDConfig *Config, const char *query,
 			sleep(30);
 			SMSDMySQL_Init(Config);
 			SMSD_Log(0, Config, "Retrying query...");
-			return SMSDMySQL_Query_Real(Config, query, false);
+			return SMSDMySQL_Query_Real(Config, query, FALSE);
 		}
 
 	}
@@ -167,14 +167,14 @@ static GSM_Error SMSDMySQL_Query_Real(GSM_SMSDConfig *Config, const char *query,
 
 static GSM_Error SMSDMySQL_Query(GSM_SMSDConfig *Config, const char *query)
 {
-	return SMSDMySQL_Query_Real(Config, query, true);
+	return SMSDMySQL_Query_Real(Config, query, TRUE);
 }
 
-static GSM_Error SMSDMySQL_Store_Real(GSM_SMSDConfig *Config, const char *query, MYSQL_RES **result, bool retry)
+static GSM_Error SMSDMySQL_Store_Real(GSM_SMSDConfig *Config, const char *query, MYSQL_RES **result, gboolean retry)
 {
 	GSM_Error error;
 
-	error = SMSDMySQL_Query_Real(Config, query, true);
+	error = SMSDMySQL_Query_Real(Config, query, TRUE);
 	if (error != ERR_NONE) return error;
 
 	*result = mysql_store_result(&Config->DBConnMySQL);
@@ -189,7 +189,7 @@ static GSM_Error SMSDMySQL_Store_Real(GSM_SMSDConfig *Config, const char *query,
 			sleep(30);
 			SMSDMySQL_Init(Config);
 			SMSD_Log(0, Config, "Retrying query...");
-			return SMSDMySQL_Store_Real(Config, query, result, false);
+			return SMSDMySQL_Store_Real(Config, query, result, FALSE);
 		}
 	}
 
@@ -198,7 +198,7 @@ static GSM_Error SMSDMySQL_Store_Real(GSM_SMSDConfig *Config, const char *query,
 
 static GSM_Error SMSDMySQL_Store(GSM_SMSDConfig *Config, const char *query, MYSQL_RES **result)
 {
-	return SMSDMySQL_Store_Real(Config, query, result, true);
+	return SMSDMySQL_Store_Real(Config, query, result, TRUE);
 }
 
 static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
@@ -240,7 +240,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 	unsigned char		buffer[10000],buffer2[400],buffer3[50],buffer4[800];
 	int 			i;
 	time_t     		t_time1,t_time2;
-	bool			found;
+	gboolean			found;
 	long 			diff;
 	my_ulonglong		new_id;
 	size_t			locations_size = 0, locations_pos = 0;
@@ -262,7 +262,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				SMSD_Log(0, Config, "Error reading from database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 				return ERR_UNKNOWN;
 			}
-			found = false;
+			found = FALSE;
 			while ((Row = mysql_fetch_row(Res))) {
 				SMSD_Log(4, Config, "Checking for delivery report, SMSC=%s, state=%s", Row[4], Row[1]);
 				if (strcmp(Row[4],DecodeUnicodeString(sms->SMS[i].SMSC.Number))) {
@@ -275,7 +275,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 					diff = t_time2 - t_time1;
 
 					if (diff > -Config->deliveryreportdelay && diff < Config->deliveryreportdelay) {
-						found = true;
+						found = TRUE;
 						break;
 					} else {
 						SMSD_Log(1, Config, "Delivery report would match, but time delta is too big (%ld), consider increasing DeliveryReportDelay", diff);
@@ -417,7 +417,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	MYSQL_RES 		*Res;
 	MYSQL_ROW 		Row;
 	int 			i;
-	bool			found = false;
+	gboolean			found = FALSE;
 
 	sprintf(buf, "SELECT ID,InsertIntoDB,SendingDateTime,SenderID FROM `outbox` WHERE SendingDateTime < NOW() AND SendingTimeOut < NOW()");
 	if (SMSDMySQL_Store(Config, buf, &Res) != ERR_NONE) {
@@ -429,7 +429,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		sprintf(Config->DT,"%s",Row[1]);
 		if (Row[3] == NULL || strlen(Row[3]) == 0 || !strcmp(Row[3],Config->PhoneID)) {
 			if (SMSDMySQL_RefreshSendStatus(Config, ID)==ERR_NONE) {
-				found = true;
+				found = TRUE;
 				break;
 			}
 		}
@@ -507,7 +507,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 				Config->currdeliveryreport = 0;
 			}
 
-			if (!strcmp(Row[7],"false")) {
+			if (!strcmp(Row[7],"FALSE")) {
 				mysql_free_result(Res);
 				break;
 			}
@@ -521,7 +521,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 /* After sending SMS is moved to Sent Items or Error Items. */
 static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 		GSM_SMSDConfig *Config, char *ID,
-		bool alwaysDelete UNUSED, bool sent UNUSED)
+		gboolean alwaysDelete UNUSED, gboolean sent UNUSED)
 {
 	unsigned char buffer[10000];
 
@@ -572,9 +572,9 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 				sprintf(buffer+strlen(buffer),"default','");
 			}
 			if (sms->Number == 1) {
-				sprintf(buffer+strlen(buffer),"false");
+				sprintf(buffer+strlen(buffer),"FALSE");
 			} else {
-				sprintf(buffer+strlen(buffer),"true");
+				sprintf(buffer+strlen(buffer),"TRUE");
 			}
 			sprintf(buffer+strlen(buffer),"',NOW()");
 		} else {

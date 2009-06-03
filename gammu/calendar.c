@@ -21,7 +21,7 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 	GSM_MemoryEntry entry;
 	unsigned char *name;
 
-	bool repeating = false;
+	gboolean repeating = FALSE;
 	int repeat_dayofweek = -1;
 	int repeat_day = -1;
 	int repeat_dayofyear = -1;
@@ -125,7 +125,7 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 	}
 	Alarm.Year = 0;
 
-	repeating = false;
+	repeating = FALSE;
 	repeat_dayofweek = -1;
 	repeat_day = -1;
 	repeat_dayofyear = -1;
@@ -140,21 +140,21 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 			case CAL_START_DATETIME:
 				printf(LISTFORMAT "%s\n", _("Start"),
 				       OSDateTime(Note->Entries[i].Date,
-						  false));
+						  FALSE));
 				memcpy(&DateTime, &Note->Entries[i].Date,
 				       sizeof(GSM_DateTime));
 				break;
 			case CAL_END_DATETIME:
 				printf(LISTFORMAT "%s\n", _("Stop"),
 				       OSDateTime(Note->Entries[i].Date,
-						  false));
+						  FALSE));
 				memcpy(&DateTime, &Note->Entries[i].Date,
 				       sizeof(GSM_DateTime));
 				break;
 			case CAL_LAST_MODIFIED:
 				printf(LISTFORMAT "%s\n", _("Last modified"),
 				       OSDateTime(Note->Entries[i].Date,
-						  false));
+						  FALSE));
 				break;
 			case CAL_TONE_ALARM_DATETIME:
 				if (Note->Type == GSM_CAL_BIRTHDAY) {
@@ -172,7 +172,7 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 					printf(LISTFORMAT "%s\n",
 					       _("Tone alarm"),
 					       OSDateTime(Note->Entries[i].Date,
-							  false));
+							  FALSE));
 				}
 				memcpy(&Alarm, &Note->Entries[i].Date,
 				       sizeof(GSM_DateTime));
@@ -193,7 +193,7 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 					printf(LISTFORMAT "%s\n",
 					       _("Silent alarm"),
 					       OSDateTime(Note->Entries[i].Date,
-							  false));
+							  FALSE));
 				}
 				memcpy(&Alarm, &Note->Entries[i].Date,
 				       sizeof(GSM_DateTime));
@@ -255,39 +255,39 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 				break;
 			case CAL_REPEAT_DAYOFWEEK:
 				repeat_dayofweek = Note->Entries[i].Number;
-				repeating = true;
+				repeating = TRUE;
 				break;
 			case CAL_REPEAT_DAY:
 				repeat_day = Note->Entries[i].Number;
-				repeating = true;
+				repeating = TRUE;
 				break;
 			case CAL_REPEAT_DAYOFYEAR:
 				repeat_dayofyear = Note->Entries[i].Number;
-				repeating = true;
+				repeating = TRUE;
 				break;
 			case CAL_REPEAT_WEEKOFMONTH:
 				repeat_weekofmonth = Note->Entries[i].Number;
-				repeating = true;
+				repeating = TRUE;
 				break;
 			case CAL_REPEAT_MONTH:
 				repeat_month = Note->Entries[i].Number;
-				repeating = true;
+				repeating = TRUE;
 				break;
 			case CAL_REPEAT_FREQUENCY:
 				repeat_frequency = Note->Entries[i].Number;
-				repeating = true;
+				repeating = TRUE;
 				break;
 			case CAL_REPEAT_COUNT:
 				repeat_count = Note->Entries[i].Number;
-				repeating = true;
+				repeating = TRUE;
 				break;
 			case CAL_REPEAT_STARTDATE:
 				repeat_startdate = Note->Entries[i].Date;
-				repeating = true;
+				repeating = TRUE;
 				break;
 			case CAL_REPEAT_STOPDATE:
 				repeat_stopdate = Note->Entries[i].Date;
-				repeating = true;
+				repeating = TRUE;
 				break;
 		}
 	}
@@ -369,7 +369,7 @@ void GetDateTime(int argc UNUSED, char *argv[]UNUSED)
 	GSM_DateTime date_time;
 	GSM_Locale locale;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error = GSM_GetDateTime(gsm, &date_time);
 	switch (error) {
@@ -378,7 +378,7 @@ void GetDateTime(int argc UNUSED, char *argv[]UNUSED)
 			break;
 		case ERR_NONE:
 			printf(_("Phone time is %s\n"),
-			       OSDateTime(date_time, false));
+			       OSDateTime(date_time, FALSE));
 			break;
 		default:
 			Print_Error(error);
@@ -441,7 +441,7 @@ void SetDateTime(int argc, char *argv[])
 	char shift, *parse;
 	GSM_Error error;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 	error = ERR_NONE;
 	if (argc < 3) {
 		/* set datetime to the current datetime in the PC */
@@ -497,7 +497,7 @@ void GetAlarm(int argc, char *argv[])
 	GSM_Alarm Alarm;
 	GSM_Error error;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (argc < 3) {
 		Alarm.Location = 1;
@@ -542,11 +542,11 @@ void SetAlarm(int argc UNUSED, char *argv[])
 	Alarm.DateTime.Minute = atoi(argv[3]);
 	Alarm.DateTime.Second = 0;
 	Alarm.Location = 1;
-	Alarm.Repeating = true;
+	Alarm.Repeating = TRUE;
 	Alarm.Text[0] = 0;
 	Alarm.Text[1] = 0;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error = GSM_SetAlarm(gsm, &Alarm);
 	Print_Error(error);
@@ -562,7 +562,7 @@ void GetCalendar(int argc UNUSED, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i = start; i <= stop; i++) {
 		Note.Location = i;
@@ -585,7 +585,7 @@ void DeleteCalendar(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i = start; i <= stop; i++) {
 		Note.Location = i;
@@ -600,12 +600,12 @@ void GetAllCalendar(int argc UNUSED, char *argv[]UNUSED)
 {
 	GSM_Error error;
 	GSM_CalendarEntry Note;
-	bool refresh = true;
+	gboolean refresh = TRUE;
 
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	Note.Location = 0;
 
@@ -616,7 +616,7 @@ void GetAllCalendar(int argc UNUSED, char *argv[]UNUSED)
 		Print_Error(error);
 		printf(LISTFORMAT "%d\n", _("Location"), Note.Location);
 		PrintCalendar(&Note);
-		refresh = false;
+		refresh = FALSE;
 	}
 
 	GSM_Terminate();
@@ -627,7 +627,7 @@ void GetCalendarSettings(int argc UNUSED, char *argv[]UNUSED)
 	GSM_Error error;
 	GSM_CalendarSettings settings;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error = GSM_GetCalendarSettings(gsm, &settings);
 	Print_Error(error);
@@ -654,7 +654,7 @@ void DeleteToDo(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i = start; i <= stop; i++) {
 		ToDo.Location = i;
@@ -799,12 +799,12 @@ void PrintToDo(GSM_ToDoEntry * ToDo)
 			case TODO_END_DATETIME:
 				printf(LISTFORMAT "%s\n", _("Due time"),
 				       OSDateTime(ToDo->Entries[j].Date,
-						  false));
+						  FALSE));
 				break;
 			case TODO_START_DATETIME:
 				printf(LISTFORMAT "%s\n", _("Start time"),
 				       OSDateTime(ToDo->Entries[j].Date,
-						  false));
+						  FALSE));
 				break;
 			case TODO_COMPLETED:
 				printf(LISTFORMAT "%s\n", _("Completed"),
@@ -814,17 +814,17 @@ void PrintToDo(GSM_ToDoEntry * ToDo)
 			case TODO_ALARM_DATETIME:
 				printf(LISTFORMAT "%s\n", _("Alarm"),
 				       OSDateTime(ToDo->Entries[j].Date,
-						  false));
+						  FALSE));
 				break;
 			case TODO_SILENT_ALARM_DATETIME:
 				printf(LISTFORMAT "%s\n", _("Silent alarm"),
 				       OSDateTime(ToDo->Entries[j].Date,
-						  false));
+						  FALSE));
 				break;
 			case TODO_LAST_MODIFIED:
 				printf(LISTFORMAT "%s\n", _("Last modified"),
 				       OSDateTime(ToDo->Entries[j].Date,
-						  false));
+						  FALSE));
 				break;
 			case TODO_TEXT:
 				printf(LISTFORMAT "\"%s\"\n", _("Text"),
@@ -904,7 +904,7 @@ void ListToDoCategoryEntries(int Category)
 {
 	GSM_Error error;
 	GSM_ToDoEntry Entry;
-	bool start = true;
+	gboolean start = TRUE;
 	int j;
 
 	Entry.Location = 0;
@@ -920,7 +920,7 @@ void ListToDoCategoryEntries(int Category)
 			    (unsigned int)Category)
 				PrintToDo(&Entry);
 		}
-		start = false;
+		start = FALSE;
 	}
 }
 
@@ -933,9 +933,9 @@ void ListToDoCategory(int argc UNUSED, char *argv[])
 
 	unsigned char Text[(GSM_MAX_CATEGORY_NAME_LENGTH + 1) * 2];
 	int Length;
-	bool Number = true;;
+	gboolean Number = TRUE;;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
@@ -943,7 +943,7 @@ void ListToDoCategory(int argc UNUSED, char *argv[])
 	Length = strlen(argv[2]);
 	for (j = 0; j < Length; j++) {
 		if (!isdigit((int)argv[2][j])) {
-			Number = false;
+			Number = FALSE;
 			break;
 		}
 	}
@@ -992,7 +992,7 @@ void GetToDo(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i = start; i <= stop; i++) {
 		ToDo.Location = i;
@@ -1010,12 +1010,12 @@ void GetAllToDo(int argc UNUSED, char *argv[]UNUSED)
 {
 	GSM_Error error;
 	GSM_ToDoEntry ToDo;
-	bool start = true;
+	gboolean start = TRUE;
 
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	ToDo.Location = 0;
 
@@ -1025,7 +1025,7 @@ void GetAllToDo(int argc UNUSED, char *argv[]UNUSED)
 			break;
 		Print_Error(error);
 		PrintToDo(&ToDo);
-		start = false;
+		start = FALSE;
 	}
 
 	GSM_Terminate();
@@ -1035,12 +1035,12 @@ void GetAllNotes(int argc UNUSED, char *argv[]UNUSED)
 {
 	GSM_Error error;
 	GSM_NoteEntry Note;
-	bool start = true;
+	gboolean start = TRUE;
 
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	Note.Location = 0;
 
@@ -1052,7 +1052,7 @@ void GetAllNotes(int argc UNUSED, char *argv[]UNUSED)
 		printf(LISTFORMAT "\"%s\"\n", _("Text"),
 		       DecodeUnicodeConsole(Note.Text));
 		printf("\n");
-		start = false;
+		start = FALSE;
 	}
 	GSM_Terminate();
 }

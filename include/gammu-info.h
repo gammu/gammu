@@ -635,7 +635,7 @@ typedef struct {
  *
  * \ingroup Info
  */
-bool GSM_IsPhoneFeatureAvailable(GSM_PhoneModel * model, GSM_Feature feature);
+gboolean GSM_IsPhoneFeatureAvailable(GSM_PhoneModel * model, GSM_Feature feature);
 
 /**
  * Adds feature to phone configuration.
@@ -647,7 +647,7 @@ bool GSM_IsPhoneFeatureAvailable(GSM_PhoneModel * model, GSM_Feature feature);
  *
  * \ingroup Info
  */
-bool GSM_AddPhoneFeature(GSM_PhoneModel * model, GSM_Feature feature);
+gboolean GSM_AddPhoneFeature(GSM_PhoneModel * model, GSM_Feature feature);
 
 #include <gammu-statemachine.h>
 

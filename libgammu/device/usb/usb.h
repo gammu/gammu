@@ -36,5 +36,5 @@ typedef struct {
     unsigned char ep_write;
 } GSM_Device_USBData;
 
-typedef bool (*GSM_USB_Match_Function)(GSM_StateMachine *s, libusb_device *dev, struct_libusb_device_descriptor *desc);
+typedef gboolean (*GSM_USB_Match_Function)(GSM_StateMachine *s, libusb_device *dev, struct_libusb_device_descriptor *desc);
 #endif

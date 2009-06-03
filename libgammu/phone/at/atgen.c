@@ -51,8 +51,8 @@ GSM_Error ALCATEL_ProtocolVersionReply (GSM_Protocol_Message, GSM_StateMachine *
 typedef struct {
 	const GSM_AT_Charset	charset;
 	const char		*text;
-	const bool		unicode;
-	const bool		ira;
+	const gboolean		unicode;
+	const gboolean		ira;
 } GSM_AT_Charset_Info;
 
 /**
@@ -60,24 +60,24 @@ typedef struct {
  * defines their preferences, so if first is found it is used.
  */
 static GSM_AT_Charset_Info AT_Charsets[] = {
-	{AT_CHARSET_HEX,	"HEX",		false,	false},
-	{AT_CHARSET_GSM,	"GSM",		false,	false},
-	{AT_CHARSET_PCCP437,	"PCCP437",	false,	false},
-	{AT_CHARSET_UTF_8,	"UTF-8",	true,	false},
-	{AT_CHARSET_UTF8,	"UTF8",		true,	false},
-	{AT_CHARSET_UCS_2,	"UCS-2",	true,	false},
-	{AT_CHARSET_UCS2,	"UCS2",		true,	false},
-	{AT_CHARSET_IRA,	"IRA",		false,	true},
-	{AT_CHARSET_ASCII,	"ASCII",	false,	true},
+	{AT_CHARSET_HEX,	"HEX",		FALSE,	FALSE},
+	{AT_CHARSET_GSM,	"GSM",		FALSE,	FALSE},
+	{AT_CHARSET_PCCP437,	"PCCP437",	FALSE,	FALSE},
+	{AT_CHARSET_UTF_8,	"UTF-8",	TRUE,	FALSE},
+	{AT_CHARSET_UTF8,	"UTF8",		TRUE,	FALSE},
+	{AT_CHARSET_UCS_2,	"UCS-2",	TRUE,	FALSE},
+	{AT_CHARSET_UCS2,	"UCS2",		TRUE,	FALSE},
+	{AT_CHARSET_IRA,	"IRA",		FALSE,	TRUE},
+	{AT_CHARSET_ASCII,	"ASCII",	FALSE,	TRUE},
 #ifdef ICONV_FOUND
-	{AT_CHARSET_ISO88591,	"8859-1",	false,	false},
-	{AT_CHARSET_ISO88592,	"8859-2",	false,	false},
-	{AT_CHARSET_ISO88593,	"8859-3",	false,	false},
-	{AT_CHARSET_ISO88594,	"8859-4",	false,	false},
-	{AT_CHARSET_ISO88595,	"8859-5",	false,	false},
-	{AT_CHARSET_ISO88596,	"8859-6",	false,	false},
+	{AT_CHARSET_ISO88591,	"8859-1",	FALSE,	FALSE},
+	{AT_CHARSET_ISO88592,	"8859-2",	FALSE,	FALSE},
+	{AT_CHARSET_ISO88593,	"8859-3",	FALSE,	FALSE},
+	{AT_CHARSET_ISO88594,	"8859-4",	FALSE,	FALSE},
+	{AT_CHARSET_ISO88595,	"8859-5",	FALSE,	FALSE},
+	{AT_CHARSET_ISO88596,	"8859-6",	FALSE,	FALSE},
 #endif
-	{0,			NULL,		false,	false}
+	{0,			NULL,		FALSE,	FALSE}
 };
 
 typedef struct {
@@ -386,15 +386,15 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
  *
  * \return True when text does not contain non hex chars.
  */
-INLINE bool ATGEN_HasOnlyHexChars(const char *text, const size_t length)
+INLINE gboolean ATGEN_HasOnlyHexChars(const char *text, const size_t length)
 {
 	size_t i;
 
 	for (i = 0; i < length; i++) {
-		if (!isxdigit((int)text[i])) return false;
+		if (!isxdigit((int)text[i])) return FALSE;
 	}
 
-	return true;
+	return TRUE;
 }
 
 /**
@@ -405,7 +405,7 @@ INLINE bool ATGEN_HasOnlyHexChars(const char *text, const size_t length)
  * \param text Text.
  * \return True when text can be UCS2.
  */
-INLINE bool ATGEN_IsUCS2(const char *text, const size_t length)
+INLINE gboolean ATGEN_IsUCS2(const char *text, const size_t length)
 {
 	return (length > 8) &&
 		(length % 4 == 0) &&
@@ -420,7 +420,7 @@ INLINE bool ATGEN_IsUCS2(const char *text, const size_t length)
  * \param text Text.
  * \return True when text can be HEX.
  */
-INLINE bool ATGEN_IsHex(const char *text, const size_t length)
+INLINE gboolean ATGEN_IsHex(const char *text, const size_t length)
 {
 	return (length > 4) &&
 		(length % 2 == 0) &&
@@ -456,13 +456,13 @@ GSM_Error ATGEN_EncodeText(GSM_StateMachine *s,
 
 	switch (Priv->Charset) {
 		case AT_CHARSET_HEX:
-			EncodeDefault(uname, input, &len, true, NULL);
+			EncodeDefault(uname, input, &len, TRUE, NULL);
 			EncodeHexBin(output, uname, len);
 			len = strlen(output);
 			break;
 		case AT_CHARSET_GSM:
 			smprintf(s, "str: %s\n", DecodeUnicodeString(input));
-			EncodeDefault(output, input, &len, true, NULL);
+			EncodeDefault(output, input, &len, TRUE, NULL);
 			break;
 		case AT_CHARSET_UCS2:
 		case AT_CHARSET_UCS_2:
@@ -510,7 +510,7 @@ GSM_Error ATGEN_EncodeText(GSM_StateMachine *s,
 		case AT_CHARSET_PCCP437:
 			/* FIXME: correctly encode to PCCP437 */
 			smprintf(s, "str: %s\n", DecodeUnicodeString(input));
-			EncodeDefault(output, input, &len, true, NULL);
+			EncodeDefault(output, input, &len, TRUE, NULL);
 			break;
 #endif
 		default:
@@ -542,8 +542,8 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 		const size_t length,
 		unsigned char *output,
 		const size_t outlength,
-		const bool guess,
-		const bool phone)
+		const gboolean guess,
+		const gboolean phone)
 {
 	unsigned char *buffer;
 	GSM_AT_Charset charset;
@@ -634,12 +634,12 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 			}
  			DecodeHexBin(buffer, input, length);
 			if (2 * strlen(buffer) >= outlength) return ERR_MOREMEMORY;
-   			DecodeDefault(output, buffer, strlen(buffer), false, NULL);
+   			DecodeDefault(output, buffer, strlen(buffer), FALSE, NULL);
 			free(buffer);
   			break;
   		case AT_CHARSET_GSM:
 			if (2 * length >= outlength) return ERR_MOREMEMORY;
-  			DecodeDefault(output, input, length, false, NULL);
+  			DecodeDefault(output, input, length, FALSE, NULL);
   			break;
   		case AT_CHARSET_UCS2:
   		case AT_CHARSET_UCS_2:
@@ -679,7 +679,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
   		case AT_CHARSET_PCCP437:
   			/* FIXME: correctly decode PCCP437 */
 			if (2 * length >= outlength) return ERR_MOREMEMORY;
-  			DecodeDefault(output, input, length, false, NULL);
+  			DecodeDefault(output, input, length, FALSE, NULL);
 			break;
 #endif
 		default:
@@ -693,7 +693,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
 {
 	int	position=0;
-	bool	inside_quotes = false;
+	gboolean	inside_quotes = FALSE;
 
 	while ((*input!=',' || inside_quotes) && *input!=0x0d && *input!=0x00) {
 		if (*input == '"') inside_quotes = ! inside_quotes;
@@ -719,7 +719,7 @@ int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
 size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigned char **output)
 {
 	size_t size = 4, position = 0;
-	bool inside_quotes = false;
+	gboolean inside_quotes = FALSE;
 
 	/* Allocate initial buffer in case string is empty */
 	*output = (unsigned char *)malloc(size);
@@ -794,7 +794,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	error = ATGEN_DecodeText(s,
 			pos, strlen(pos),
 			buffer_unicode, sizeof(buffer_unicode),
-			true, false);
+			TRUE, FALSE);
 	if (error != ERR_NONE) return error;
 	DecodeUnicode(buffer_unicode, buffer);
 
@@ -923,7 +923,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						error = ATGEN_DecodeText(s,
 								buffer, strlen(buffer),
 								out_s, storage_size,
-								true, true);
+								TRUE, TRUE);
 						if (error == ERR_NONE) {
 							smprintf(s, "Phone string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						}
@@ -941,7 +941,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						error = ATGEN_DecodeText(s,
 								buffer, strlen(buffer),
 								out_s, storage_size,
-								true, false);
+								TRUE, FALSE);
 						if (error == ERR_NONE) {
 							smprintf(s, "Generic string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						}
@@ -971,7 +971,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						error = ATGEN_DecodeText(s,
 								search_pos, strlen(search_pos),
 								out_s, storage_size,
-								true, false);
+								TRUE, FALSE);
 						if (error == ERR_NONE) {
 							smprintf(s, "String with length decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						}
@@ -989,7 +989,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						error = ATGEN_DecodeText(s,
 								buffer, strlen(buffer),
 								out_s, storage_size,
-								false, false);
+								FALSE, FALSE);
 						if (error == ERR_NONE) {
 							smprintf(s, "Generic string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						}
@@ -1098,7 +1098,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	const char		*err, *line;
 	ATErrorCode		*ErrorCodes = NULL;
 
-	SplitLines(msg->Buffer, msg->Length, &Priv->Lines, "\x0D\x0A", 2, true);
+	SplitLines(msg->Buffer, msg->Length, &Priv->Lines, "\x0D\x0A", 2, TRUE);
 
 	/* Find number of lines */
 	while (Priv->Lines.numbers[i*2+1] != 0) {
@@ -1296,7 +1296,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-GSM_Error ATGEN_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
+GSM_Error ATGEN_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error;
 
@@ -1521,7 +1521,7 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 		 */
 		if (strstr(msg.Buffer, "www.soft-switch.org")) {
 			/* It replies OK to anything, but this just clutters output */
-			Priv->Mode = false;
+			Priv->Mode = FALSE;
 		}
 		smprintf(s, "[Manufacturer: %s]\n", s->Phone.Data.Manufacturer);
 		return ERR_NONE;
@@ -1635,21 +1635,21 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	Priv->SMSMode			= 0;
 	Priv->SQWEMode			= -1;
-	Priv->SMSTextDetails		= false;
+	Priv->SMSTextDetails		= FALSE;
 	Priv->Manufacturer		= 0;
-	Priv->MotorolaSMS		= false;
+	Priv->MotorolaSMS		= FALSE;
 	Priv->PhoneSMSMemory		= 0;
 	Priv->PhoneSaveSMS		= 0;
 	Priv->SIMSaveSMS		= 0;
 	Priv->SIMSMSMemory		= 0;
 	Priv->SMSMemory			= 0;
-	Priv->SMSMemoryWrite		= false;
+	Priv->SMSMemoryWrite		= FALSE;
 	Priv->PBKMemory			= 0;
 	Priv->PBKSBNR			= 0;
 	Priv->PBK_SPBR			= 0;
 	Priv->PBK_MPBR			= 0;
 	Priv->Charset			= 0;
-	Priv->EncodedCommands		= false;
+	Priv->EncodedCommands		= FALSE;
 	Priv->NormalCharset		= 0;
 	Priv->IRACharset		= 0;
 	Priv->UnicodeCharset		= 0;
@@ -1660,7 +1660,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->FirstMemoryEntry		= -1;
 	Priv->file.Used 		= 0;
 	Priv->file.Buffer 		= NULL;
-	Priv->Mode			= false;
+	Priv->Mode			= FALSE;
 	Priv->MemorySize		= 0;
 	Priv->MemoryUsed		= 0;
 	Priv->TextLength		= 0;
@@ -1720,10 +1720,10 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	error = GSM_WaitFor(s, "AT+MODE=2\r", 10, 0x00, 3, ID_ModeSwitch);
 	if (error != ERR_NONE) {
 		smprintf(s, "Seems not to be supported\n");
-		Priv->Mode = false;
+		Priv->Mode = FALSE;
 	} else {
 		smprintf(s, "Works, will use it\n");
-		Priv->Mode = true;
+		Priv->Mode = TRUE;
 		Priv->CurrentMode = 2;
 	}
 
@@ -1796,7 +1796,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 #endif
 
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
-		s->Protocol.Data.AT.FastWrite = true;
+		s->Protocol.Data.AT.FastWrite = TRUE;
 	}
 
 	return error;
@@ -1837,7 +1837,7 @@ GSM_Error ATGEN_ReplyGetCharset(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				/* We detect encoded UCS2 reply here so that we can handle encoding of values later. */
 				if (strstr(line, "0055004300530032") != NULL) {
 					Priv->Charset = AT_CHARSET_UCS2;
-					Priv->EncodedCommands = true;
+					Priv->EncodedCommands = TRUE;
 					break;
 				}
 				i++;
@@ -1869,7 +1869,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	const char	*line;
 	int			i = 0;
-	bool			IgnoredUTF8 = false;
+	gboolean			IgnoredUTF8 = FALSE;
 
 	switch (Priv->ReplyState) {
 		case AT_Reply_OK:
@@ -1903,7 +1903,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					if ((AT_Charsets[i].charset == AT_CHARSET_UTF8 ||
 						AT_Charsets[i].charset == AT_CHARSET_UTF_8) &&
 							Priv->Manufacturer == AT_Motorola) {
-						IgnoredUTF8 = true;
+						IgnoredUTF8 = TRUE;
 						smprintf(s, "Skipped %s because it is usually wrongly implemented on Motorola phones\n", AT_Charsets[i].text);
 					} else if ((AT_Charsets[i].charset != AT_CHARSET_UCS2 &&
 							AT_Charsets[i].charset != AT_CHARSET_UCS_2) ||
@@ -2141,9 +2141,9 @@ GSM_Error ATGEN_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				 * set of days (eg. "4,5,6").
 				 */
 				if (!strcmp(buffer, "\"1,2,3,4,5,6,7\"")) {
-					Data->Alarm->Repeating = true;
+					Data->Alarm->Repeating = TRUE;
 				} else {
-					Data->Alarm->Repeating = false;
+					Data->Alarm->Repeating = FALSE;
 				}
 				return ERR_NONE;
 			}
@@ -2180,7 +2180,7 @@ GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 	return error;
 }
 
-GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, bool set_timezone)
+GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, gboolean set_timezone)
 {
 	char			tz[4] = "";
 	char			req[128];
@@ -2218,7 +2218,7 @@ GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, bo
 		 * exists for MC75
 		 */
 		smprintf(s, "Retrying without timezone suffix\n");
-		error = ATGEN_PrivSetDateTime(s, date_time, false);
+		error = ATGEN_PrivSetDateTime(s, date_time, FALSE);
 	}
 	return error;
 }
@@ -2233,7 +2233,7 @@ GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
-	return ATGEN_PrivSetDateTime(s, date_time, true);
+	return ATGEN_PrivSetDateTime(s, date_time, TRUE);
 }
 
 GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
@@ -2306,7 +2306,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	InitLines(&Lines);
 	SplitLines(GetLineString(msg.Buffer,&Priv->Lines,2),
 		GetLineLength(msg.Buffer,&Priv->Lines,2),
-		&Lines, ",", 1, true);
+		&Lines, ",", 1, TRUE);
 
 	/* Find number of lines */
 	while (Lines.numbers[i*2+1] != 0) {
@@ -2662,7 +2662,7 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 		if (error != ERR_NONE) {
 			/*
 			 * We weren't able to read available memories, let's
-			 * guess that phone supports all. This is true at least
+			 * guess that phone supports all. This is TRUE at least
 			 * for Samsung.
 			 */
 			strcpy(s->Phone.Data.Priv.ATGEN.PBKMemories, "\"ME\",\"SM\",\"DC\",\"ON\",\"LD\",\"FD\",\"MC\",\"RC\"");
@@ -2964,7 +2964,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	int			end;
 	int			memory_end;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	bool			free_read = false;
+	gboolean			free_read = FALSE;
 
 	/* This can be NULL at this point */
 	if (Status != NULL) {
@@ -2995,7 +2995,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKENCPBS) || (Priv->PBKMemory == MEM_SM)) {
 		smprintf(s, "Getting memory status\n");
 		ATGEN_WaitFor(s, "AT+CPBS?\r", 9, 0x00, 4, ID_GetMemoryStatus);
-		if (error == ERR_NONE) free_read = true;
+		if (error == ERR_NONE) free_read = TRUE;
 	}
 
 	/**
@@ -3409,7 +3409,7 @@ GSM_Error ATGEN_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	return ATGEN_PrivGetMemory(s, entry, 0);
 }
 
-GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
+GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, gboolean start)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
@@ -3656,7 +3656,7 @@ GSM_Error ATGEN_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Sta
 	return error;
 }
 
-GSM_Error ATGEN_AnswerCall(GSM_StateMachine *s, int ID UNUSED, bool all)
+GSM_Error ATGEN_AnswerCall(GSM_StateMachine *s, int ID UNUSED, gboolean all)
 {
 	GSM_Error error;
 
@@ -3675,7 +3675,7 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg UNUSED, GSM_StateMachin
 	switch(s->Phone.Data.Priv.ATGEN.ReplyState) {
         case AT_Reply_OK:
 		smprintf(s, "Calls canceled\n");
-		call.CallIDAvailable = false;
+		call.CallIDAvailable = FALSE;
 		call.Status 	 = GSM_CALL_CallLocalEnd;
 		if (s->User.IncomingCall) {
 			s->User.IncomingCall(s, call, s->User.IncomingCallUserData);
@@ -3691,7 +3691,7 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg UNUSED, GSM_StateMachin
 	}
 }
 
-GSM_Error ATGEN_CancelCall(GSM_StateMachine *s, int ID UNUSED, bool all)
+GSM_Error ATGEN_CancelCall(GSM_StateMachine *s, int ID UNUSED, gboolean all)
 {
 	GSM_Error error, error_ath;
 
@@ -3713,7 +3713,7 @@ GSM_Error ATGEN_ReplyReset(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-GSM_Error ATGEN_Reset(GSM_StateMachine *s, bool hard)
+GSM_Error ATGEN_Reset(GSM_StateMachine *s, gboolean hard)
 {
 	GSM_Error error;
 
@@ -3883,8 +3883,8 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		} else {
 			/* Compare if we would loose some information when not using
 			 * unicode */
-			EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
-			DecodeDefault(uname, name, len, true, NULL);
+			EncodeDefault(name, entry->Entries[Name].Text, &len, TRUE, NULL);
+			DecodeDefault(uname, name, len, TRUE, NULL);
 			if (!mywstrncmp(uname, entry->Entries[Name].Text, len)) {
 				/* Get maximal text length */
 				if (Priv->TextLength == 0) {
@@ -3919,7 +3919,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	}
 
 	if (Number != -1) {
-		GSM_PackSemiOctetNumber(entry->Entries[Number].Text, number, false);
+		GSM_PackSemiOctetNumber(entry->Entries[Number].Text, number, FALSE);
 		NumberType = number[0];
 		/* We need to encode number, however
 		 *  - it is not encoded in UCS2
@@ -3928,7 +3928,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		if (Priv->Charset == AT_CHARSET_HEX &&
 				GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK_ENCODENUMBER)) {
 			len = UnicodeLength(entry->Entries[Number].Text);
-			EncodeDefault(unumber, entry->Entries[Number].Text, &len, true, NULL);
+			EncodeDefault(unumber, entry->Entries[Number].Text, &len, TRUE, NULL);
 			EncodeHexBin(number, unumber, len);
 		} else {
 			sprintf(number, "%s", DecodeUnicodeString(entry->Entries[Number].Text));
@@ -4002,7 +4002,7 @@ GSM_Error ATGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	return ATGEN_PrivSetMemory(s, entry);
 }
 
-GSM_Error ATGEN_SetIncomingCall(GSM_StateMachine *s, bool enable)
+GSM_Error ATGEN_SetIncomingCall(GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error;
 	if (enable) {
@@ -4054,7 +4054,7 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL) {
 		call.Status 		= 0;
 		call.StatusCode		= 0;
-		call.CallIDAvailable 	= false;
+		call.CallIDAvailable 	= FALSE;
 		if (strstr(msg.Buffer, "RING")) {
 			smprintf(s, "Ring detected - ");
 			/* We ignore RING for most phones, see ATGEN_SetIncomingCall */
@@ -4064,26 +4064,26 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 			}
 			smprintf(s, "generating event\n");
 			call.Status = GSM_CALL_IncomingCall;
-			call.CallIDAvailable 	= true;
+			call.CallIDAvailable 	= TRUE;
 			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
 		} else if (strstr(msg.Buffer, "CLIP:")) {
 			smprintf(s, "CLIP detected\n");
 			call.Status = GSM_CALL_IncomingCall;
-			call.CallIDAvailable 	= true;
+			call.CallIDAvailable 	= TRUE;
 			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
 		} else if (strstr(msg.Buffer, "CCWA:")) {
 			smprintf(s, "CCWA detected\n");
 			call.Status = GSM_CALL_IncomingCall;
 			ATGEN_Extract_CCWA_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
-			call.CallIDAvailable 	= true;
+			call.CallIDAvailable 	= TRUE;
 		} else if (strstr(msg.Buffer, "NO CARRIER")) {
 			smprintf(s, "Call end detected\n");
 			call.Status = GSM_CALL_CallEnd;
-			call.CallIDAvailable 	= true;
+			call.CallIDAvailable 	= TRUE;
 		} else if (strstr(msg.Buffer, "COLP:")) {
 			smprintf(s, "CLIP detected\n");
 			call.Status = GSM_CALL_CallStart;
-			call.CallIDAvailable 	= true;
+			call.CallIDAvailable 	= TRUE;
 			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
 		} else {
 			smprintf(s, "Incoming call error\n");
@@ -4326,7 +4326,7 @@ GSM_Error ATGEN_ReplyIgnore(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s
 	return ERR_NONE;
 }
 
-static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
@@ -4397,7 +4397,7 @@ GSM_Error ATGEN_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	return ERR_NOTSUPPORTED;
 }
 
-GSM_Error ATGEN_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
+GSM_Error ATGEN_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gboolean PhoneRingtone)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
@@ -4415,7 +4415,7 @@ GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *ma
 	return ERR_NOTSUPPORTED;
 }
 
-GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
+GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press)
 {
 	GSM_Error	error;
 	unsigned char 	frame[40];
@@ -4487,7 +4487,7 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 	switch (Priv->Charset) {
 		case AT_CHARSET_GSM:
 			/* No extensions here */
-			EncodeDefault(key, unicode_key, &len, false, NULL);
+			EncodeDefault(key, unicode_key, &len, FALSE, NULL);
 			if (strcmp(key, "?") == 0) {
 				smprintf(s, "Could not encode key to GSM charset!\n");
 				return ERR_NOTSUPPORTED;
@@ -4521,12 +4521,12 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 	return error;
 }
 
-bool InRange(int *range, int i) {
+gboolean InRange(int *range, int i) {
 	while (*range != -1) {
-		if (*range == i) return true;
+		if (*range == i) return TRUE;
 		range++;
 	}
-	return false;
+	return FALSE;
 }
 
 int *GetRange(char *buffer)

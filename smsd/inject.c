@@ -170,12 +170,12 @@ int main(int argc, char **argv)
 		-1,
 		NULL,
 		NULL,
-		false,
-		false,
-		false,
-		false,
-		false,
-		false
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE
 	};
 
 	startarg = process_commandline(argc, argv, &params);
@@ -199,7 +199,7 @@ int main(int argc, char **argv)
 	config = SMSD_NewConfig(program_name);
 	assert(config != NULL);
 
-	error = SMSD_ReadConfig(params.config_file, config, true);
+	error = SMSD_ReadConfig(params.config_file, config, TRUE);
 	if (error != ERR_NONE) {
 		printf("Failed to read config: %s\n", GSM_ErrorString(error));
 		SMSD_FreeConfig(config);

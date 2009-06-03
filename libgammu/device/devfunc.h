@@ -23,7 +23,7 @@ GSM_Error socket_close(GSM_StateMachine *s, socket_type hPhone);
 #endif
 
 GSM_Error 	lock_device	(GSM_StateMachine *s, const char* port, char **lock_device);
-bool 		unlock_device	(GSM_StateMachine *s, char **lock_file);
+gboolean 		unlock_device	(GSM_StateMachine *s, char **lock_file);
 
 int FindSerialSpeed(const char *buffer);
 

@@ -280,7 +280,7 @@ GSM_Error GSM_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 /**
  * Emulates key press or key release.
  */
-GSM_Error GSM_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
+GSM_Error GSM_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press)
 {
 	GSM_Error err;
 
@@ -293,7 +293,7 @@ GSM_Error GSM_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 /**
  * Performs phone reset.
  */
-GSM_Error GSM_Reset(GSM_StateMachine *s, bool hard)
+GSM_Error GSM_Reset(GSM_StateMachine *s, gboolean hard)
 {
 	GSM_Error err;
 
@@ -481,7 +481,7 @@ GSM_Error GSM_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
  * Reads entry from memory (phonebooks or calls). Which entry should
  * be read is defined in entry. This can be easily used for reading all entries.
  */
-GSM_Error GSM_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
+GSM_Error GSM_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, gboolean start)
 {
 	GSM_Error err;
 
@@ -632,7 +632,7 @@ GSM_Error GSM_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
  * Reads next (or first if start set) SMS message. This might be
  * faster for some phones than using @ref GSM_GetSMS for each message.
  */
-GSM_Error GSM_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
+GSM_Error GSM_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean start)
 {
 	GSM_Error err;
 
@@ -716,7 +716,7 @@ GSM_Error GSM_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 /**
  * Configures fast SMS sending.
  */
-GSM_Error GSM_SetFastSMSSending(GSM_StateMachine *s, bool enable)
+GSM_Error GSM_SetFastSMSSending(GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error err;
 
@@ -729,7 +729,7 @@ GSM_Error GSM_SetFastSMSSending(GSM_StateMachine *s, bool enable)
 /**
  * Enable/disable notification on incoming SMS.
  */
-GSM_Error GSM_SetIncomingSMS(GSM_StateMachine *s, bool enable)
+GSM_Error GSM_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error err;
 
@@ -742,7 +742,7 @@ GSM_Error GSM_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 /**
  * Gets network information from phone.
  */
-GSM_Error GSM_SetIncomingCB(GSM_StateMachine *s, bool enable)
+GSM_Error GSM_SetIncomingCB(GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error err;
 
@@ -820,7 +820,7 @@ GSM_Error GSM_DialService(GSM_StateMachine *s, char *Number)
 /**
  * Accept current incoming call.
  */
-GSM_Error GSM_AnswerCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error GSM_AnswerCall(GSM_StateMachine *s, int ID, gboolean all)
 {
 	GSM_Error err;
 
@@ -833,7 +833,7 @@ GSM_Error GSM_AnswerCall(GSM_StateMachine *s, int ID, bool all)
 /**
  * Deny current incoming call.
  */
-GSM_Error GSM_CancelCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error GSM_CancelCall(GSM_StateMachine *s, int ID, gboolean all)
 {
 	GSM_Error err;
 
@@ -898,7 +898,7 @@ GSM_Error GSM_SplitCall(GSM_StateMachine *s, int ID)
 /**
  * Transfers call.
  */
-GSM_Error GSM_TransferCall(GSM_StateMachine *s, int ID, bool next)
+GSM_Error GSM_TransferCall(GSM_StateMachine *s, int ID, gboolean next)
 {
 	GSM_Error err;
 
@@ -911,7 +911,7 @@ GSM_Error GSM_TransferCall(GSM_StateMachine *s, int ID, bool next)
 /**
  * Switches call.
  */
-GSM_Error GSM_SwitchCall(GSM_StateMachine *s, int ID, bool next)
+GSM_Error GSM_SwitchCall(GSM_StateMachine *s, int ID, gboolean next)
 {
 	GSM_Error err;
 
@@ -963,7 +963,7 @@ GSM_Error GSM_CancelAllDiverts(GSM_StateMachine *s)
 /**
  * Activates/deactivates noticing about incoming calls.
  */
-GSM_Error GSM_SetIncomingCall(GSM_StateMachine *s, bool enable)
+GSM_Error GSM_SetIncomingCall(GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error err;
 
@@ -976,7 +976,7 @@ GSM_Error GSM_SetIncomingCall(GSM_StateMachine *s, bool enable)
 /**
  * Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).
  */
-GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
+GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error err;
 
@@ -1002,7 +1002,7 @@ GSM_Error GSM_SendDTMF(GSM_StateMachine *s, char *sequence)
 /**
  * Gets ringtone from phone.
  */
-GSM_Error GSM_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
+GSM_Error GSM_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gboolean PhoneRingtone)
 {
 	GSM_Error err;
 
@@ -1054,7 +1054,7 @@ GSM_Error GSM_DeleteUserRingtones(GSM_StateMachine *s)
 /**
  * Plays tone.
  */
-GSM_Error GSM_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, bool start)
+GSM_Error GSM_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, gboolean start)
 {
 	GSM_Error err;
 
@@ -1223,7 +1223,7 @@ GSM_Error GSM_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 /**
  * Retrieves next part of MMS file information.
  */
-GSM_Error GSM_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start)
+GSM_Error GSM_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, gboolean start)
 {
 	GSM_Error err;
 
@@ -1290,7 +1290,7 @@ GSM_Error GSM_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 /**
  * Reads ToDo from phone.
  */
-GSM_Error GSM_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
+GSM_Error GSM_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, gboolean start)
 {
 	GSM_Error err;
 
@@ -1388,7 +1388,7 @@ GSM_Error GSM_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
  * Retrieves calendar entry. This is useful for continuous reading of all
  * calendar entries.
  */
-GSM_Error GSM_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+GSM_Error GSM_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
 	GSM_Error err;
 
@@ -1512,7 +1512,7 @@ GSM_Error GSM_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
  * Retrieves note entry. This is useful for continuous reading of all
  * notes entries.
  */
-GSM_Error GSM_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start)
+GSM_Error GSM_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, gboolean start)
 {
 	GSM_Error err;
 
@@ -1647,7 +1647,7 @@ GSM_Error GSM_ClearFMStations(GSM_StateMachine *s)
 /**
  * Gets next filename from filesystem.
  */
-GSM_Error GSM_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
+GSM_Error GSM_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Error err;
 
@@ -1661,7 +1661,7 @@ GSM_Error GSM_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
 /**
  * Gets file part from filesystem.
  */
-GSM_Error GSM_GetFolderListing(GSM_StateMachine *s, GSM_File *File, bool start)
+GSM_Error GSM_GetFolderListing(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Error err;
 

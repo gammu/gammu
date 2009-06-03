@@ -184,7 +184,7 @@ GSM_Error SaveLDIF(const char *FileName, GSM_Backup *backup)
 	return ERR_NONE;
 }
 
-static bool ReadLDIFText(const char *Buffer, const char *Start, char *Value)
+static gboolean ReadLDIFText(const char *Buffer, const char *Start, char *Value)
 {
 	unsigned char 	Buffer2[1000],buff[200];
 	int 		i;
@@ -198,16 +198,16 @@ static bool ReadLDIFText(const char *Buffer, const char *Start, char *Value)
 		dbgprintf(NULL, "Text after DecodeBASE64 is \"%s\"\n",Buffer2);
 		DecodeUTF8(Value, Buffer2, i);
 		dbgprintf(NULL, "Text after DecodeUTF8 is \"%s\"\n",DecodeUnicodeString(Value));
-		return true;
+		return TRUE;
 	}
 	strcpy(buff,Start);
 	strcat(buff,": ");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		EncodeUnicode(Value,Buffer+strlen(Start)+2,strlen(Buffer)-(strlen(Start)+2));
 		dbgprintf(NULL, "Text after EncodeUnicode is \"%s\"\n",DecodeUnicodeString(Value));
-		return true;
+		return TRUE;
 	}
-	return false;
+	return FALSE;
 }
 
 static GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk)
@@ -220,7 +220,7 @@ static GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry 
 	Pbk->EntriesNum = 0;
 
 	while (1) {
-		error = MyGetLine(Buffer, Pos, Line, strlen(Buffer), sizeof(Line), false);
+		error = MyGetLine(Buffer, Pos, Line, strlen(Buffer), sizeof(Line), FALSE);
 		if (error != ERR_NONE) return error;
 		if (strlen(Line) == 0) break;
 		Pbk->Entries[Pbk->EntriesNum].AddError = ERR_NONE;

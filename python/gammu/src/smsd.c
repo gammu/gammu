@@ -99,7 +99,7 @@ Py_SMSD_MainLoop(SMSDObject *self, PyObject *args, PyObject *kwds)
         return NULL;
 
     Py_BEGIN_ALLOW_THREADS
-    error = SMSD_MainLoop(self->config, false);
+    error = SMSD_MainLoop(self->config, FALSE);
     Py_END_ALLOW_THREADS
 
     if (!checkError(NULL, error, "SMSD_MainLoop")) return NULL;
@@ -284,7 +284,7 @@ SMSD_init(SMSDObject *self, PyObject *args, PyObject *kwds)
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "s", kwlist, &s))
         return 0;
 
-    error = SMSD_ReadConfig(s, self->config, true);
+    error = SMSD_ReadConfig(s, self->config, TRUE);
     if (!checkError(NULL, error, "SMSD_ReadConfig"))
         return 0;
 
@@ -369,16 +369,16 @@ static PyTypeObject SMSDType = {
 /* End of code for SMSD objects */
 /* -------------------------------------------------------- */
 
-bool gammu_smsd_init(PyObject *m) {
+gboolean gammu_smsd_init(PyObject *m) {
 
     if (PyType_Ready(&SMSDType) < 0)
-        return false;
+        return FALSE;
     Py_INCREF(&SMSDType);
 
     if (PyModule_AddObject(m, "SMSD", (PyObject *)&SMSDType) < 0)
-        return false;
+        return FALSE;
 
-    return true;
+    return TRUE;
 }
 /*
  * vim: expandtab sw=4 ts=4 sts=4:

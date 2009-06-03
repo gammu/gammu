@@ -45,8 +45,8 @@ typedef struct {
 	int				FileToken;
 	int				ParentID;
 	int				FileCheckSum;
-	bool				FilesEnd;
-	bool				UseFs1;
+	gboolean				FilesEnd;
+	gboolean				UseFs1;
 	GSM_Error			filesystem2error;
 
 	unsigned char			FMStatus[4000];

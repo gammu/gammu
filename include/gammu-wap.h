@@ -84,20 +84,20 @@ typedef struct {
 	/**
 	 * Secure connection?
 	 */
-	bool IsSecurity;
+	gboolean IsSecurity;
 	/**
 	 * Is this connectin continuous?
 	 */
-	bool IsContinuous;
+	gboolean IsContinuous;
 
 	/**
 	 * Whether is ISDN for data bearer
 	 */
-	bool IsISDNCall;
+	gboolean IsISDNCall;
 	/**
 	 * Whether is normal auth for data bearer
 	 */
-	bool IsNormalAuthentication;
+	gboolean IsNormalAuthentication;
 
 	/**
 	 * Server for sms bearer.
@@ -111,7 +111,7 @@ typedef struct {
 	/**
 	 * Whether is IP, for sms or ussd bearer.
 	 */
-	bool IsIP;
+	gboolean IsIP;
 
 	/**
 	 * Code for ussd bearer.
@@ -125,7 +125,7 @@ typedef struct {
 	/**
 	 * Login for data or gprs.
 	 */
-	bool ManualLogin;
+	gboolean ManualLogin;
 	/**
 	 * Dial up number for data or gprs.
 	 */
@@ -169,11 +169,11 @@ typedef struct {
 	/**
 	 * Whether this configuration is active.
 	 */
-	bool Active;
+	gboolean Active;
 	/**
 	 * Whether this configuration is read only.
 	 */
-	bool ReadOnly;
+	gboolean ReadOnly;
 	/**
 	 * Proxy server.
 	 */

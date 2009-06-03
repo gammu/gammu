@@ -34,10 +34,10 @@ typedef enum {
 struct _GSM_Debug_Info {
 	Debug_Level	dl; /**< Level of messages to display */
 	FILE		*df; /**< File used for debug messages output */
-	bool        	use_global; /**< Whether to use global debug structure instead of this one. */
+	gboolean        	use_global; /**< Whether to use global debug structure instead of this one. */
 	const char	*coding; /**< Encoding used in console */
-	bool		was_lf; /**< Has there already been new line */
-	bool		closable; /**< Whether Gammu can close the file when it is no longer needed for debug output. */
+	gboolean		was_lf; /**< Has there already been new line */
+	gboolean		closable; /**< Whether Gammu can close the file when it is no longer needed for debug output. */
     /**
      * Function which performs logging, in case it is set, no file logging happens.
      */

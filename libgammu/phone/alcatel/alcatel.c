@@ -704,7 +704,7 @@ static GSM_Error ALCATEL_ReplyGetIds(GSM_Protocol_Message msg, GSM_StateMachine 
 /**
  * Lists available ids from phone.
  */
-static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s, bool refresh)
+static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s, gboolean refresh)
 {
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	GSM_Error		error;
@@ -742,7 +742,7 @@ static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s, bool refresh)
 	smprintf(s,"Reading items list\n");
 
 	*Priv->CurrentCount = 0;
-	Priv->TransferCompleted = false;
+	Priv->TransferCompleted = FALSE;
 
 	error=GSM_WaitFor (s, buffer, 5, 0x02, ALCATEL_TIMEOUT, ID_AlcatelGetIds1);
 	if (error != ERR_NONE) return error;
@@ -854,7 +854,7 @@ static void ALCATEL_DecodeString(GSM_StateMachine *s, unsigned const char *buffe
 			smprintf(s, "WARNING: Text truncated, to %d from %d\n", maxlen, len + 1);
 			len = GSM_PHONEBOOK_TEXT_LENGTH;
 		}
-		DecodeDefault(target, buffer + 1, len, false, GSM_AlcatelAlphabet);
+		DecodeDefault(target, buffer + 1, len, FALSE, GSM_AlcatelAlphabet);
 	}
 }
 
@@ -863,7 +863,7 @@ static GSM_Error ALCATEL_EncodeString(GSM_StateMachine *s, unsigned const char *
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	size_t			len;
 	size_t			maxlen = 0;
-	bool			unicode = false;
+	gboolean			unicode = FALSE;
 	unsigned char		text[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 	unsigned char		utext[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 
@@ -890,8 +890,8 @@ static GSM_Error ALCATEL_EncodeString(GSM_StateMachine *s, unsigned const char *
 
 		/* Compare if we would loose some information when not using
 		 * unicode */
-		EncodeDefault(text, buffer, &len, true, GSM_AlcatelAlphabet);
-		DecodeDefault(utext, text, len, true, GSM_AlcatelAlphabet);
+		EncodeDefault(text, buffer, &len, TRUE, GSM_AlcatelAlphabet);
+		DecodeDefault(utext, text, len, TRUE, GSM_AlcatelAlphabet);
 		if (!mywstrncmp(utext, buffer, len)) {
 			/* Use unicode only when we have enough space */
 			unicode = ((len * 2) < maxlen);
@@ -905,7 +905,7 @@ static GSM_Error ALCATEL_EncodeString(GSM_StateMachine *s, unsigned const char *
 		memcpy(target + 2, buffer, len * 2 + 2);
 	} else {
 		/* Alcatel alphabet string */
-		EncodeDefault(target + 1, buffer, &len, true, GSM_AlcatelAlphabet);
+		EncodeDefault(target + 1, buffer, &len, TRUE, GSM_AlcatelAlphabet);
 		target[0] = len;
 		target[len + 1] = 0;
 	}
@@ -1476,7 +1476,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 	if (entry->MemoryType == MEM_ME) {
 		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= ERR_NONE) return error;
-		if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+		if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 		if ((error = ALCATEL_IsIdAvailable(s, entry->Location))!= ERR_NONE) {
 			entry->EntriesNum = 0;
 			return error;
@@ -1787,14 +1787,14 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	}
 }
 
-static GSM_Error ALCATEL_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
+static GSM_Error ALCATEL_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, gboolean start)
 {
 	GSM_Error 		error;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
 	if (entry->MemoryType == MEM_ME) {
 		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= ERR_NONE) return error;
-		if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+		if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 		if (Priv->ContactsItemsCount == 0) return ERR_EMPTY;
 
 		if (start) entry->Location = 0;
@@ -1812,7 +1812,7 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error		error;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int			NamePosition = -1;
-	bool			NameSet = false;
+	gboolean			NameSet = FALSE;
 	int			i;
 
 
@@ -1854,11 +1854,11 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 					break;
 				case PBK_Text_LastName:
 					if ((error = ALCATEL_CreateField(s, Alcatel_string, 0, entry->Entries[i].Text)) != ERR_NONE) return error;
-					NameSet = true;
+					NameSet = TRUE;
 					break;
 				case PBK_Text_FirstName:
 					if ((error = ALCATEL_CreateField(s, Alcatel_string, 1, entry->Entries[i].Text)) != ERR_NONE) return error;
-					NameSet = true;
+					NameSet = TRUE;
 					break;
 				case PBK_Text_Company:
 					if ((error = ALCATEL_CreateField(s, Alcatel_string, 2, entry->Entries[i].Text)) != ERR_NONE) return error;
@@ -1947,7 +1947,7 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= ERR_NONE) return error;
 		entry->Location = Priv->CommitedRecord;
 		/* Refresh list */
-		if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
+		if ((error = ALCATEL_GetAvailableIds(s, TRUE))!= ERR_NONE) return error;
 		return ERR_NONE;
 	} else {
 		if ((error = ALCATEL_SetATMode(s))!= ERR_NONE) return error;
@@ -1960,16 +1960,16 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error		error;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int			NamePosition = -1;
-	bool			NameSet = false;
+	gboolean			NameSet = FALSE;
 	int			i;
-	bool			UpdatedFields[26];
+	gboolean			UpdatedFields[26];
 
 	if (entry->Location == 0) return ERR_INVALIDLOCATION;
 
 	if (entry->MemoryType == MEM_ME) {
 		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= ERR_NONE) return error;
 		/* Save modified entry */
-		if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+		if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 		if ((error = ALCATEL_IsIdAvailable(s, entry->Location))!= ERR_NONE) {
 			/* Entry doesn't exist, we will create new one */
 			return ALCATEL_AddMemory(s, entry);
@@ -1977,115 +1977,115 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		/* Get fields for current item */
 		if ((error = ALCATEL_GetFields(s, entry->Location))!= ERR_NONE) return error;
 
-		for (i = 0; i < 26; i++) { UpdatedFields[i] = false; }
+		for (i = 0; i < 26; i++) { UpdatedFields[i] = FALSE; }
 
 		if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeContacts, entry->Location))!= ERR_NONE) return error;
 		for (i = 0; i < entry->EntriesNum; i++) {
 			entry->Entries[i].AddError = ERR_NONE;
 			switch (entry->Entries[i].EntryType) {
 				case PBK_Number_General:
-					UpdatedFields[8] = true;
+					UpdatedFields[8] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 8, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Number_Mobile:
-					UpdatedFields[12] = true;
+					UpdatedFields[12] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 12, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Number_Work:
-					UpdatedFields[7] = true;
+					UpdatedFields[7] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 7, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Number_Fax:
-					UpdatedFields[9] = true;
+					UpdatedFields[9] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 9, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Number_Home:
-					UpdatedFields[13] = true;
+					UpdatedFields[13] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 13, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Number_Pager:
-					UpdatedFields[11] = true;
+					UpdatedFields[11] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 11, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Number_Other:
-					UpdatedFields[10] = true;
+					UpdatedFields[10] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 10, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_Note:
-					UpdatedFields[4] = true;
+					UpdatedFields[4] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 4, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_Email:
-					UpdatedFields[14] = true;
+					UpdatedFields[14] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 14, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_Email2:
-					UpdatedFields[15] = true;
+					UpdatedFields[15] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 15, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_LastName:
-					UpdatedFields[0] = true;
-					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 0, entry->Entries[i].Text)) != ERR_NONE) return error; NameSet = true;
+					UpdatedFields[0] = TRUE;
+					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 0, entry->Entries[i].Text)) != ERR_NONE) return error; NameSet = TRUE;
 					break;
 				case PBK_Text_FirstName:
-					UpdatedFields[1] = true;
-					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 1, entry->Entries[i].Text)) != ERR_NONE) return error; NameSet = true;
+					UpdatedFields[1] = TRUE;
+					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 1, entry->Entries[i].Text)) != ERR_NONE) return error; NameSet = TRUE;
 					break;
 				case PBK_Text_Company:
-					UpdatedFields[2] = true;
+					UpdatedFields[2] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 2, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_JobTitle:
-					UpdatedFields[3] = true;
+					UpdatedFields[3] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 3, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Category:
-					UpdatedFields[5] = true;
+					UpdatedFields[5] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_byte, entry->Location, 5, &(entry->Entries[i].Number))) != ERR_NONE) return error;
 					break;
 				case PBK_Private:
-					UpdatedFields[6] = true;
+					UpdatedFields[6] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_bool, entry->Location, 6, &(entry->Entries[i].Number))) != ERR_NONE) return error;
 					break;
 				case PBK_Text_StreetAddress:
-					UpdatedFields[16] = true;
+					UpdatedFields[16] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 16, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_City:
-					UpdatedFields[17] = true;
+					UpdatedFields[17] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 17, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_State:
-					UpdatedFields[18] = true;
+					UpdatedFields[18] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 18, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_Zip:
-					UpdatedFields[19] = true;
+					UpdatedFields[19] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 19, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_Country:
-					UpdatedFields[20] = true;
+					UpdatedFields[20] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 20, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_Custom1:
-					UpdatedFields[21] = true;
+					UpdatedFields[21] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 21, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_Custom2:
-					UpdatedFields[22] = true;
+					UpdatedFields[22] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 22, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_Custom3:
-					UpdatedFields[23] = true;
+					UpdatedFields[23] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 23, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_Text_Custom4:
-					UpdatedFields[24] = true;
+					UpdatedFields[24] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 24, entry->Entries[i].Text)) != ERR_NONE) return error;
 					break;
 				case PBK_PictureID:
 					if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
-					       UpdatedFields[25] = true;
+					       UpdatedFields[25] = TRUE;
 					       if ((error = ALCATEL_UpdateField(s, Alcatel_int, entry->Location, 25, &(entry->Entries[i].Number))) != ERR_NONE) return error;
 					} else {
 						smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
@@ -2126,7 +2126,7 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				smprintf(s,"WARNING: Ignoring name, not supported by phone\n");
 			} else {
 				/* mw: fixme ? */
-				UpdatedFields[1] = true;
+				UpdatedFields[1] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 1, entry->Entries[i].Text)) != ERR_NONE) return error;
 			}
 		}
@@ -2149,7 +2149,7 @@ static GSM_Error ALCATEL_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entr
 
 	if (entry->MemoryType == MEM_ME) {
 		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= ERR_NONE) return error;
-		if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+		if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 		if ((error = ALCATEL_IsIdAvailable(s, entry->Location))!= ERR_NONE) {
 			/* Entry was empty => no error */
 			return ERR_NONE;
@@ -2160,7 +2160,7 @@ static GSM_Error ALCATEL_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entr
 
 		/* Refresh list */
 		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= ERR_NONE) return error;
-		if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
+		if ((error = ALCATEL_GetAvailableIds(s, TRUE))!= ERR_NONE) return error;
 
 		return ERR_NONE;
 	} else {
@@ -2177,7 +2177,7 @@ static GSM_Error ALCATEL_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType typ
 
 	if (type == MEM_ME) {
 		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= ERR_NONE) return error;
-		if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+		if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 
 		for (i=0; i<Priv->ContactsItemsCount; i++) {
 			error =  ALCATEL_DeleteItem(s, Priv->ContactsItems[i]);
@@ -2186,7 +2186,7 @@ static GSM_Error ALCATEL_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType typ
 
 		/* Refresh list */
 		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= ERR_NONE) return error;
-		if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
+		if ((error = ALCATEL_GetAvailableIds(s, TRUE))!= ERR_NONE) return error;
 
 		return ERR_NONE;
 	} else {
@@ -2211,7 +2211,7 @@ static GSM_Error ALCATEL_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *
 
 	if (Status->MemoryType == MEM_ME) {
 		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= ERR_NONE) return error;
-		if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
+		if ((error = ALCATEL_GetAvailableIds(s, TRUE))!= ERR_NONE) return error;
 		Status->MemoryUsed = Priv->ContactsItemsCount;
 		Status->MemoryFree = ALCATEL_FREE_MEMORY;
 		return ERR_NONE;
@@ -2269,7 +2269,7 @@ static GSM_Error ALCATEL_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *fold
 	return ATGEN_GetSMSFolders(s, folders);
 }
 
-static GSM_Error ALCATEL_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
+static GSM_Error ALCATEL_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean start)
 {
 	GSM_Error error;
 
@@ -2301,7 +2301,7 @@ static GSM_Error ALCATEL_DialService(GSM_StateMachine *s, char *number)
 	return ATGEN_DialService(s, number);
 }
 
-static GSM_Error ALCATEL_AnswerCall(GSM_StateMachine *s, int ID, bool all)
+static GSM_Error ALCATEL_AnswerCall(GSM_StateMachine *s, int ID, gboolean all)
 {
 	GSM_Error error;
 
@@ -2333,7 +2333,7 @@ static GSM_Error ALCATEL_SetAutoNetworkLogin(GSM_StateMachine *s)
 	return ATGEN_SetAutoNetworkLogin(s);
 }
 
-static GSM_Error ALCATEL_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
+static GSM_Error ALCATEL_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press)
 {
 	GSM_Error error;
 
@@ -2341,7 +2341,7 @@ static GSM_Error ALCATEL_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Pre
 	return ATGEN_PressKey(s, Key, Press);
 }
 
-static GSM_Error ALCATEL_Reset(GSM_StateMachine *s, bool hard)
+static GSM_Error ALCATEL_Reset(GSM_StateMachine *s, gboolean hard)
 {
 	GSM_Error error;
 
@@ -2349,7 +2349,7 @@ static GSM_Error ALCATEL_Reset(GSM_StateMachine *s, bool hard)
 	return ATGEN_Reset(s, hard);
 }
 
-static GSM_Error ALCATEL_CancelCall(GSM_StateMachine *s, int ID, bool all)
+static GSM_Error ALCATEL_CancelCall(GSM_StateMachine *s, int ID, gboolean all)
 {
 	GSM_Error error;
 
@@ -2438,7 +2438,7 @@ static GSM_Error ALCATEL_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStat
 	status->Free = ALCATEL_FREE_MEMORY;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, TRUE))!= ERR_NONE) return error;
 
 	status->Used = Priv->CalendarItemsCount;
 	return ERR_NONE;
@@ -2451,15 +2451,15 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 	GSM_DateTime		EventDate = {0,0,0,0,0,0,0};
 	GSM_DateTime		EventStart = {0,0,0,0,0,0,0};
 	GSM_DateTime		EventEnd = {0,0,0,0,0,0,0};
-	bool			EventDateSet = false;
-	bool			EventStartSet = false;
-	bool			EventEndSet = false;
+	gboolean			EventDateSet = FALSE;
+	gboolean			EventStartSet = FALSE;
+	gboolean			EventEndSet = FALSE;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int			i;
 	int			j=0;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 	if ((error = ALCATEL_IsIdAvailable(s, Note->Location))!= ERR_NONE) {
 		Note->EntriesNum = 0;
 		return error;
@@ -2488,7 +2488,7 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				j++;
 				Note->EntriesNum--;
 				EventDate = Priv->ReturnDateTime;
-				EventDateSet = true;
+				EventDateSet = TRUE;
 				break;
 			case 1:
 				if (Priv->ReturnType != Alcatel_time) {
@@ -2507,7 +2507,7 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				j++;
 				Note->EntriesNum--;
 				EventStart = Priv->ReturnDateTime;
-				EventStartSet = true;
+				EventStartSet = TRUE;
 				break;
 			case 2:
 				if (Priv->ReturnType != Alcatel_time) {
@@ -2526,7 +2526,7 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				j++;
 				Note->EntriesNum--;
 				EventEnd = Priv->ReturnDateTime;
-				EventEndSet = true;
+				EventEndSet = TRUE;
 				break;
 			case 3:
 				if (Priv->ReturnType != Alcatel_date) {
@@ -2840,13 +2840,13 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 	return ERR_NONE;
 }
 
-static GSM_Error ALCATEL_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+static GSM_Error ALCATEL_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
 	GSM_Error 		error;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 	if (Priv->CalendarItemsCount == 0) return ERR_EMPTY;
 
 	if (start) Note->Location = 0;
@@ -2862,7 +2862,7 @@ static GSM_Error ALCATEL_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
 	/* Delete Calendar */
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 	if ((error = ALCATEL_IsIdAvailable(s, Note->Location))!= ERR_NONE) {
 		/* Entry was empty => no error */
 		return ERR_NONE;
@@ -2871,7 +2871,7 @@ static GSM_Error ALCATEL_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *
 	if (error != ERR_NONE) return error;
 	/* Refresh list */
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, TRUE))!= ERR_NONE) return error;
 	return ERR_NONE;
 }
 
@@ -2880,10 +2880,10 @@ static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 {
 	GSM_Error		error;
 	unsigned int		val;
-	bool			contact_set = false;
-	bool			phone_set = false;
-	bool			date_set = false;
-	bool			repeating = false;
+	gboolean			contact_set = FALSE;
+	gboolean			phone_set = FALSE;
+	gboolean			date_set = FALSE;
+	gboolean			repeating = FALSE;
 	int			i;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
@@ -2895,14 +2895,14 @@ static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 			case CAL_START_DATETIME:
 				if (!date_set) {
 					if ((error = ALCATEL_CreateField(s, Alcatel_date, 0, &(Note->Entries[i].Date))) != ERR_NONE) return error;
-					date_set = true;
+					date_set = TRUE;
 				}
 				if ((error = ALCATEL_CreateField(s, Alcatel_time, 1, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				break;
 			case CAL_END_DATETIME:
 				if (!date_set) {
 					if ((error = ALCATEL_CreateField(s, Alcatel_date, 0, &(Note->Entries[i].Date))) != ERR_NONE) return error;
-					date_set = true;
+					date_set = TRUE;
 				}
 				if ((error = ALCATEL_CreateField(s, Alcatel_time, 2, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				break;
@@ -2922,39 +2922,39 @@ static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				break;
 			case CAL_CONTACTID:
 				if ((error = ALCATEL_CreateField(s, Alcatel_int, 8, &(Note->Entries[i].Number))) != ERR_NONE) return error;
-				contact_set = true;
+				contact_set = TRUE;
 				break;
 			case CAL_PHONE:
 				if ((error = ALCATEL_CreateField(s, Alcatel_phone, 9, Note->Entries[i].Text)) != ERR_NONE) return error;
-				phone_set = true;
+				phone_set = TRUE;
 				break;
 			case CAL_REPEAT_DAYOFWEEK:
 				if ((error = ALCATEL_CreateField(s, Alcatel_byte, 10, &(Note->Entries[i].Number))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_DAY:
 				if ((error = ALCATEL_CreateField(s, Alcatel_byte, 11, &(Note->Entries[i].Number))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_WEEKOFMONTH:
 				if ((error = ALCATEL_CreateField(s, Alcatel_byte, 12, &(Note->Entries[i].Number))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_MONTH:
 				if ((error = ALCATEL_CreateField(s, Alcatel_byte, 13, &(Note->Entries[i].Number))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_FREQUENCY:
 				if ((error = ALCATEL_CreateField(s, Alcatel_byte, 17, &(Note->Entries[i].Number))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			 case CAL_REPEAT_STARTDATE:
 				if ((error = ALCATEL_CreateField(s, Alcatel_date, 18, &(Note->Entries[i].Date))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_STOPDATE:
 				if ((error = ALCATEL_CreateField(s, Alcatel_date, 19, &(Note->Entries[i].Date))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_COUNT:
 			case CAL_REPEAT_DAYOFYEAR:
@@ -3001,7 +3001,7 @@ static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
 	Note->Location = Priv->CommitedRecord;
 	/* Refresh list */
-	if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, TRUE))!= ERR_NONE) return error;
 	return ERR_NONE;
 }
 
@@ -3009,16 +3009,16 @@ static GSM_Error ALCATEL_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 {
 	GSM_Error		error;
 	unsigned int		val;
-	bool			contact_set = false;
-	bool			phone_set = false;
-	bool			date_set = false;
-	bool			repeating = false;
+	gboolean			contact_set = FALSE;
+	gboolean			phone_set = FALSE;
+	gboolean			date_set = FALSE;
+	gboolean			repeating = FALSE;
 	int			i;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
-	bool			UpdatedFields[22];
+	gboolean			UpdatedFields[22];
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 	if ((error = ALCATEL_IsIdAvailable(s, Note->Location))!= ERR_NONE) {
 		/* Entry doesn't exist, we will create new one */
 		return ALCATEL_AddCalendar(s, Note);
@@ -3026,7 +3026,7 @@ static GSM_Error ALCATEL_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 	/* Get fields for current item */
 	if ((error = ALCATEL_GetFields(s, Note->Location))!= ERR_NONE) return error;
 
-	for (i = 0; i < 22; i++) { UpdatedFields[i] = false; }
+	for (i = 0; i < 22; i++) { UpdatedFields[i] = FALSE; }
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeCalendar, Note->Location))!= ERR_NONE) return error;
 
@@ -3034,85 +3034,85 @@ static GSM_Error ALCATEL_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 		switch (Note->Entries[i].EntryType) {
 			case CAL_START_DATETIME:
 				if (!date_set) {
-					UpdatedFields[0] = true;
+					UpdatedFields[0] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_date, Note->Location, 0, &(Note->Entries[i].Date))) != ERR_NONE) return error;
-					date_set = true;
+					date_set = TRUE;
 				}
-				UpdatedFields[1] = true;
+				UpdatedFields[1] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_time, Note->Location, 1, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				break;
 			case CAL_END_DATETIME:
 				if (!date_set) {
-					UpdatedFields[0] = true;
+					UpdatedFields[0] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_date, Note->Location, 0, &(Note->Entries[i].Date))) != ERR_NONE) return error;
-					date_set = true;
+					date_set = TRUE;
 				}
-				UpdatedFields[2] = true; if ((error = ALCATEL_UpdateField(s, Alcatel_time, Note->Location, 2, &(Note->Entries[i].Date))) != ERR_NONE) return error;
+				UpdatedFields[2] = TRUE; if ((error = ALCATEL_UpdateField(s, Alcatel_time, Note->Location, 2, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				break;
 			case CAL_TONE_ALARM_DATETIME:
-				UpdatedFields[3] = true;
+				UpdatedFields[3] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_date, Note->Location, 3, &(Note->Entries[i].Date))) != ERR_NONE) return error;
-				UpdatedFields[4] = true;
+				UpdatedFields[4] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_time, Note->Location, 4, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				if (Note->Type == GSM_CAL_ALARM || Note->Type == GSM_CAL_DAILY_ALARM) {
-					UpdatedFields[20] = true;
+					UpdatedFields[20] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_date, Note->Location, 20, &(Note->Entries[i].Date))) != ERR_NONE) return error;
-					UpdatedFields[21] = true;
+					UpdatedFields[21] = TRUE;
 					if ((error = ALCATEL_UpdateField(s, Alcatel_time, Note->Location, 21, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				}
 				break;
 			case CAL_TEXT:
-				UpdatedFields[5] = true;
+				UpdatedFields[5] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_string, Note->Location, 5, Note->Entries[i].Text)) != ERR_NONE) return error;
 				break;
 			case CAL_PRIVATE:
-				UpdatedFields[6] = true;
+				UpdatedFields[6] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_bool, Note->Location, 6, &(Note->Entries[i].Number))) != ERR_NONE) return error;
 				break;
 			case CAL_CONTACTID:
-				UpdatedFields[8] = true;
+				UpdatedFields[8] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_int, Note->Location, 8, &(Note->Entries[i].Number))) != ERR_NONE) return error;
-				contact_set = true;
+				contact_set = TRUE;
 				break;
 			case CAL_PHONE:
-				UpdatedFields[9] = true;
+				UpdatedFields[9] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_phone, Note->Location, 9, Note->Entries[i].Text)) != ERR_NONE) return error;
-				phone_set = true;
+				phone_set = TRUE;
 				break;
 			case CAL_REPEAT_DAYOFWEEK:
-				UpdatedFields[10] = true;
+				UpdatedFields[10] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_byte, Note->Location, 10, &(Note->Entries[i].Number))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_DAY:
-				UpdatedFields[11] = true;
+				UpdatedFields[11] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_byte, Note->Location, 11, &(Note->Entries[i].Number))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_WEEKOFMONTH:
-				UpdatedFields[12] = true;
+				UpdatedFields[12] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_byte, Note->Location, 12, &(Note->Entries[i].Number))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_MONTH:
-				UpdatedFields[13] = true;
+				UpdatedFields[13] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_byte, Note->Location, 13, &(Note->Entries[i].Number))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_FREQUENCY:
-				UpdatedFields[17] = true;
+				UpdatedFields[17] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_byte, Note->Location, 17, &(Note->Entries[i].Number))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			 case CAL_REPEAT_STARTDATE:
-				UpdatedFields[18] = true;
+				UpdatedFields[18] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_date, Note->Location, 18, &(Note->Entries[i].Date))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_STOPDATE:
-				UpdatedFields[19] = true;
+				UpdatedFields[19] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_date, Note->Location, 19, &(Note->Entries[i].Date))) != ERR_NONE) return error;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_COUNT:
 			case CAL_REPEAT_DAYOFYEAR:
@@ -3146,7 +3146,7 @@ static GSM_Error ALCATEL_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				val = 0;
 			}
 	}
-	UpdatedFields[7] = true;
+	UpdatedFields[7] = TRUE;
 	if ((error = ALCATEL_UpdateField(s, Alcatel_enum, Note->Location, 7, &val)) != ERR_NONE) return error;
 
 	if (!contact_set) {
@@ -3155,7 +3155,7 @@ static GSM_Error ALCATEL_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 		} else {
 			val = 0;
 		}
-		UpdatedFields[8] = true;
+		UpdatedFields[8] = TRUE;
 		if ((error = ALCATEL_UpdateField(s, Alcatel_int, Note->Location, 8, &val)) != ERR_NONE) return error;
 	}
 	/* If we didn't update some field, we have to delete it... */
@@ -3173,7 +3173,7 @@ static GSM_Error ALCATEL_DeleteAllCalendar (GSM_StateMachine *s)
 	int			i;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 
 	for (i=0; i<Priv->CalendarItemsCount; i++) {
 		error =  ALCATEL_DeleteItem(s, Priv->CalendarItems[i]);
@@ -3182,7 +3182,7 @@ static GSM_Error ALCATEL_DeleteAllCalendar (GSM_StateMachine *s)
 
 	/* Refresh list */
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, TRUE))!= ERR_NONE) return error;
 
 	return ERR_NONE;
 }
@@ -3194,13 +3194,13 @@ static GSM_Error ALCATEL_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 	GSM_CalendarEntry	Note;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int			i;
-	bool			Found = false;
-	bool			DateSet = false;
+	gboolean			Found = FALSE;
+	gboolean			DateSet = FALSE;
 	int			alarm_number = Alarm->Location;
 	static GSM_DateTime	nulldt = {0,0,0,0,0,0,0};
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 
 	for (i=0; i<Priv->CalendarItemsCount; i++) {
 		if ((error = ALCATEL_GetFieldValue(s, Priv->CalendarItems[i], 7))!= ERR_NONE) return error;
@@ -3211,7 +3211,7 @@ static GSM_Error ALCATEL_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 		if (Priv->ReturnInt == 4 || Priv->ReturnInt == 5) {
 			alarm_number--;
 			if (alarm_number == 0) {
-				Found = true;
+				Found = TRUE;
 				break;
 			}
 		}
@@ -3224,9 +3224,9 @@ static GSM_Error ALCATEL_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 	if ((error = ALCATEL_GetCalendar(s, &Note))!= ERR_NONE) return error;
 
 	if (Note.Type == GSM_CAL_ALARM) {
-		Alarm->Repeating = false;
+		Alarm->Repeating = FALSE;
 	} else {
-		Alarm->Repeating = true;
+		Alarm->Repeating = TRUE;
 	}
 
 	Alarm->Text[0] = 0; Alarm->Text[1] = 0;
@@ -3237,7 +3237,7 @@ static GSM_Error ALCATEL_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 			CopyUnicodeString(Alarm->Text, Note.Entries[i].Text);
 		} else if (Note.Entries[i].EntryType == CAL_TONE_ALARM_DATETIME) {
 			Alarm->DateTime = Note.Entries[i].Date;
-			DateSet = false;
+			DateSet = FALSE;
 		}
 	}
 	if (!DateSet) {
@@ -3255,11 +3255,11 @@ static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_Alarm *Alarm)
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	GSM_DateTime		dt;
 	int			i;
-	bool			Found = false;
+	gboolean			Found = FALSE;
 	int			alarm_number = Alarm->Location;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 
 	for (i=0; i<Priv->CalendarItemsCount; i++) {
 		if ((error = ALCATEL_GetFieldValue(s, Priv->CalendarItems[i], 7))!= ERR_NONE) return error;
@@ -3270,7 +3270,7 @@ static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_Alarm *Alarm)
 		if (Priv->ReturnInt == 4 || Priv->ReturnInt == 5) {
 			alarm_number--;
 			if (alarm_number == 0) {
-				Found = true;
+				Found = TRUE;
 				break;
 			}
 		}
@@ -3318,7 +3318,7 @@ static GSM_Error ALCATEL_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *stat
 	status->Free = ALCATEL_FREE_MEMORY;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, TRUE))!= ERR_NONE) return error;
 
 	status->Used = Priv->ToDoItemsCount;
 	return ERR_NONE;
@@ -3333,7 +3333,7 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	int			j=0;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 	if ((error = ALCATEL_IsIdAvailable(s, ToDo->Location))!= ERR_NONE) {
 		ToDo->EntriesNum = 0;
 		return error;
@@ -3576,13 +3576,13 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	return ERR_NONE;
 }
 
-static GSM_Error ALCATEL_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
+static GSM_Error ALCATEL_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, gboolean start)
 {
 	GSM_Error 		error;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 	if (Priv->ToDoItemsCount == 0) return ERR_EMPTY;
 
 	if (start) ToDo->Location = 0;
@@ -3598,7 +3598,7 @@ static GSM_Error ALCATEL_DeleteAllToDo (GSM_StateMachine *s)
 	int			i;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 
 	for (i=0; i<Priv->ToDoItemsCount; i++) {
 		error =  ALCATEL_DeleteItem(s, Priv->ToDoItems[i]);
@@ -3607,7 +3607,7 @@ static GSM_Error ALCATEL_DeleteAllToDo (GSM_StateMachine *s)
 
 	/* Refresh list */
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, TRUE))!= ERR_NONE) return error;
 
 	return ERR_NONE;
 }
@@ -3616,8 +3616,8 @@ static GSM_Error ALCATEL_AddToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error		error;
 	unsigned int		val;
-	bool			contact_set = false;
-	bool			phone_set = false;
+	gboolean			contact_set = FALSE;
+	gboolean			phone_set = FALSE;
 	int			i;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
@@ -3675,11 +3675,11 @@ static GSM_Error ALCATEL_AddToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 				break;
 			case TODO_CONTACTID:
 				if ((error = ALCATEL_CreateField(s, Alcatel_int, 8, &(ToDo->Entries[i].Number))) != ERR_NONE) return error;
-				contact_set = true;
+				contact_set = TRUE;
 				break;
 			case TODO_PHONE:
 				if ((error = ALCATEL_CreateField(s, Alcatel_phone, 9, ToDo->Entries[i].Text)) != ERR_NONE) return error;
-				phone_set = true;
+				phone_set = TRUE;
 				break;
 			default:
 				break;
@@ -3696,7 +3696,7 @@ static GSM_Error ALCATEL_AddToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= ERR_NONE) return error;
 	ToDo->Location = Priv->CommitedRecord;
 	/* Refresh list */
-	if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, TRUE))!= ERR_NONE) return error;
 	return ERR_NONE;
 }
 
@@ -3704,15 +3704,15 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error		error;
 	unsigned int		val;
-	bool			contact_set = false;
-	bool			phone_set = false;
-	bool			UpdatedFields[12];
+	gboolean			contact_set = FALSE;
+	gboolean			phone_set = FALSE;
+	gboolean			UpdatedFields[12];
 	int			i;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= ERR_NONE) return error;
 	/* Save modified ToDo */
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 	if ((error = ALCATEL_IsIdAvailable(s, ToDo->Location))!= ERR_NONE) {
 		/* Entry doesn't exist, we will create new one */
 		return ALCATEL_AddToDo(s, ToDo);
@@ -3720,7 +3720,7 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	/* Get fields for current item */
 	if ((error = ALCATEL_GetFields(s, ToDo->Location))!= ERR_NONE) return error;
 
-	for (i = 0; i < 12; i++) { UpdatedFields[i] = false; }
+	for (i = 0; i < 12; i++) { UpdatedFields[i] = FALSE; }
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeToDo, ToDo->Location))!= ERR_NONE) return error;
 
@@ -3748,50 +3748,50 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 		} else {
 		       if ((error = ALCATEL_UpdateField(s, Alcatel_enum, ToDo->Location, 7, &val)) != ERR_NONE) return error;
 		}
-		UpdatedFields[7] = true;
+		UpdatedFields[7] = TRUE;
 	}
 
 	for (i = 0; i < ToDo->EntriesNum; i++) {
 		switch (ToDo->Entries[i].EntryType) {
 			case TODO_END_DATETIME:
 				if ((error = ALCATEL_UpdateField(s, Alcatel_date, ToDo->Location, 0, &(ToDo->Entries[i].Date))) != ERR_NONE) return error;
-				UpdatedFields[0] = true;
+				UpdatedFields[0] = TRUE;
 				break;
 			case TODO_COMPLETED:
 				if ((error = ALCATEL_UpdateField(s, Alcatel_bool, ToDo->Location, 1, &(ToDo->Entries[i].Number))) != ERR_NONE) return error;
-				UpdatedFields[1] = true;
+				UpdatedFields[1] = TRUE;
 				break;
 			case TODO_ALARM_DATETIME:
 				if ((error = ALCATEL_UpdateField(s, Alcatel_date, ToDo->Location, 2, &(ToDo->Entries[i].Date))) != ERR_NONE) return error;
-				UpdatedFields[2] = true;
+				UpdatedFields[2] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_time, ToDo->Location, 3, &(ToDo->Entries[i].Date))) != ERR_NONE) return error;
-				UpdatedFields[3] = true;
+				UpdatedFields[3] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_date, ToDo->Location, 10, &(ToDo->Entries[i].Date))) != ERR_NONE) return error;
-				UpdatedFields[10] = true;
+				UpdatedFields[10] = TRUE;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_time, ToDo->Location, 11, &(ToDo->Entries[i].Date))) != ERR_NONE) return error;
-				UpdatedFields[11] = true;
+				UpdatedFields[11] = TRUE;
 				break;
 			case TODO_TEXT:
 				if ((error = ALCATEL_UpdateField(s, Alcatel_string, ToDo->Location, 4, ToDo->Entries[i].Text)) != ERR_NONE) return error;
-				UpdatedFields[4] = true;
+				UpdatedFields[4] = TRUE;
 				break;
 			case TODO_PRIVATE:
 				if ((error = ALCATEL_UpdateField(s, Alcatel_bool, ToDo->Location, 5, &(ToDo->Entries[i].Number))) != ERR_NONE) return error;
-				UpdatedFields[5] = true;
+				UpdatedFields[5] = TRUE;
 				break;
 			case TODO_CATEGORY:
 				if ((error = ALCATEL_UpdateField(s, Alcatel_byte, ToDo->Location, 6, &(ToDo->Entries[i].Number))) != ERR_NONE) return error;
-				UpdatedFields[6] = true;
+				UpdatedFields[6] = TRUE;
 				break;
 			case TODO_CONTACTID:
 				if ((error = ALCATEL_UpdateField(s, Alcatel_int, ToDo->Location, 8, &(ToDo->Entries[i].Number))) != ERR_NONE) return error;
-				UpdatedFields[8] = true;
-				contact_set = true;
+				UpdatedFields[8] = TRUE;
+				contact_set = TRUE;
 				break;
 			case TODO_PHONE:
 				if ((error = ALCATEL_UpdateField(s, Alcatel_phone, ToDo->Location, 9, ToDo->Entries[i].Text)) != ERR_NONE) return error;
-				UpdatedFields[9] = true;
-				phone_set = true;
+				UpdatedFields[9] = TRUE;
+				phone_set = TRUE;
 				break;
 			default:
 				break;
@@ -3804,7 +3804,7 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 			val = 0;
 		}
 		if ((error = ALCATEL_UpdateField(s, Alcatel_int, ToDo->Location, 8, &val)) != ERR_NONE) return error;
-		UpdatedFields[8] = true;
+		UpdatedFields[8] = TRUE;
 	}
 
 
@@ -3822,7 +3822,7 @@ static GSM_Error ALCATEL_DeleteToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= ERR_NONE) return error;
 	/* Delete ToDo */
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, FALSE))!= ERR_NONE) return error;
 	if ((error = ALCATEL_IsIdAvailable(s, ToDo->Location))!= ERR_NONE) {
 		/* Entry was empty => no error */
 		return ERR_NONE;
@@ -3831,7 +3831,7 @@ static GSM_Error ALCATEL_DeleteToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	if (error != ERR_NONE) return error;
 	/* Refresh list */
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= ERR_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, TRUE))!= ERR_NONE) return error;
 	return ERR_NONE;
 }
 
@@ -3956,7 +3956,7 @@ static GSM_Error ALCATEL_ReplyCommit(GSM_Protocol_Message msg, GSM_StateMachine 
 	return ERR_NONE;
 }
 
-static GSM_Error ALCATEL_SetIncomingCB (GSM_StateMachine *s, bool enable)
+static GSM_Error ALCATEL_SetIncomingCB (GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error;
 
@@ -3964,7 +3964,7 @@ static GSM_Error ALCATEL_SetIncomingCB (GSM_StateMachine *s, bool enable)
 	return ATGEN_SetIncomingCB(s, enable);
 }
 
-static GSM_Error ALCATEL_SetIncomingSMS (GSM_StateMachine *s, bool enable)
+static GSM_Error ALCATEL_SetIncomingSMS (GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error;
 
@@ -3972,7 +3972,7 @@ static GSM_Error ALCATEL_SetIncomingSMS (GSM_StateMachine *s, bool enable)
 	return ATGEN_SetIncomingSMS(s, enable);
 }
 
-static GSM_Error ALCATEL_SetFastSMSSending(GSM_StateMachine *s, bool enable)
+static GSM_Error ALCATEL_SetFastSMSSending(GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error;
 

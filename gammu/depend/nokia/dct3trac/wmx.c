@@ -414,7 +414,7 @@ void DCT3SetDebug(int argc, char *argv[])
 	//ENABLE_BIT(0x22, 1);  /* SIM commands (literal) */
 	//ENABLE_BIT(0x3B, 1);	/* PHCTRL state */
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	/* We Need DCT3 */
 	if (CheckDCT3Only()!=ERR_NONE) return;
@@ -455,7 +455,7 @@ void DCT3SetDebug(int argc, char *argv[])
 
 	/* todo: wait and dump for some time */
 	while (!gshutdown) {
-		GSM_ReadDevice(gsm,true);
+		GSM_ReadDevice(gsm,TRUE);
 		usleep(10000);
 	}
 	signal(SIGINT, SIG_DFL);

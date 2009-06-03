@@ -46,7 +46,7 @@
 #include "../devfunc.h"
 #include "irda.h"
 
-static bool irda_discover_device(GSM_StateMachine *state, int *fd)
+static gboolean irda_discover_device(GSM_StateMachine *state, int *fd)
 {
 	GSM_Device_IrdaData 	*d = &state->Device.Data.Irda;
 	struct irda_device_list	*list;
@@ -54,7 +54,7 @@ static bool irda_discover_device(GSM_StateMachine *state, int *fd)
     	int			sec;
     	int			s, z, len, i;
     	GSM_DateTime		Date;
-    	bool			founddevice = false;
+    	gboolean			founddevice = FALSE;
 	int deviceid;
 #ifdef WIN32
 	int			index;
@@ -91,7 +91,7 @@ static bool irda_discover_device(GSM_StateMachine *state, int *fd)
 							deviceid
 							);
 					if (strcmp(GetModelData(state, NULL,NULL,list->Device[i].irdaDeviceName)->number,"") != 0) {
-						founddevice = true;
+						founddevice = TRUE;
 						/* Model AUTO */
 						if (state->CurrentConfig->Model[0]==0)
 							strcpy(state->Phone.Data.Model,GetModelData(state, NULL,NULL,list->Device[i].irdaDeviceName)->number);
@@ -131,7 +131,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 {
     	GSM_Device_IrdaData 	*d = &s->Device.Data.Irda;
     	int			fd = -1;
-	bool			failed;
+	gboolean			failed;
 #ifdef WIN32
     	int 			Enable9WireMode = 1;
     	WSADATA			wsaData;
@@ -149,7 +149,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 #endif
 
     	/* discovering devices */
-    	if (irda_discover_device(s,&fd) == false) {
+    	if (irda_discover_device(s,&fd) == FALSE) {
 		smprintf(s, "Can not find any IrDA device!\n");
 		return ERR_TIMEOUT;
 	}
@@ -180,7 +180,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
     	/* Connecting to service */
     	if (connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
 		smprintf(s, "Can't connect to service %s\n",d->peer.irdaServiceName);
-		failed = true;
+		failed = TRUE;
 		/* Try alternatives if we failed */
 		if (s->ConnectionType == GCT_IRDAOBEX) {
 			smprintf(s, "Trying alternate config: IrDA:OBEX\n");
@@ -190,10 +190,10 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 				smprintf(s, "Trying alternate config: OBEX:IrXfer\n");
 				strcpy(d->peer.irdaServiceName, "OBEX:IrXfer");
 				if (!connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
-					failed = false;
+					failed = FALSE;
 				}
 			} else {
-				failed = false;
+				failed = FALSE;
 			}
 		}
 		if (failed) {

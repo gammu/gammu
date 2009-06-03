@@ -31,14 +31,14 @@ int main(int argc UNUSED, char **argv UNUSED)
 	sprintf(pids, "%d", pid);
 
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Non existing PID, ASCII */
 	create_lock(TEST_LOCK, "1234567890", 10);
 	test_result(lock_device(NULL, TEST_DEVICE, &lock) == ERR_NONE);
 	test_result(lock != NULL);
-	test_result(unlock_device(NULL, &lock) == true);
+	test_result(unlock_device(NULL, &lock) == TRUE);
 
 	unlink(TEST_LOCK);
 
@@ -46,7 +46,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	create_lock(TEST_LOCK, pids, strlen(pids));
 	test_result(lock_device(NULL, TEST_DEVICE, &lock) == ERR_DEVICELOCKED);
 	test_result(lock == NULL);
-	test_result(unlock_device(NULL, &lock) == false);
+	test_result(unlock_device(NULL, &lock) == FALSE);
 
 	unlink(TEST_LOCK);
 
@@ -54,7 +54,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	create_lock(TEST_LOCK, &pid, sizeof(int));
 	test_result(lock_device(NULL, TEST_DEVICE, &lock) == ERR_DEVICELOCKED);
 	test_result(lock == NULL);
-	test_result(unlock_device(NULL, &lock) == false);
+	test_result(unlock_device(NULL, &lock) == FALSE);
 
 	unlink(TEST_LOCK);
 
@@ -63,14 +63,14 @@ int main(int argc UNUSED, char **argv UNUSED)
 	create_lock(TEST_LOCK, &pid, sizeof(int));
 	test_result(lock_device(NULL, TEST_DEVICE, &lock) == ERR_NONE);
 	test_result(lock != NULL);
-	test_result(unlock_device(NULL, &lock) == true);
+	test_result(unlock_device(NULL, &lock) == TRUE);
 
 	unlink(TEST_LOCK);
 
 	/* No existing lock */
 	test_result(lock_device(NULL, TEST_DEVICE, &lock) == ERR_NONE);
 	test_result(lock != NULL);
-	test_result(unlock_device(NULL, &lock) == true);
+	test_result(unlock_device(NULL, &lock) == TRUE);
 
 	return 0;
 }

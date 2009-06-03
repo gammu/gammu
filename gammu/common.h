@@ -4,17 +4,17 @@
 #include <gammu.h>
 #include "../helper/string.h"
 
-extern volatile bool gshutdown;
+extern volatile gboolean gshutdown;
 extern GSM_StateMachine *gsm;
 extern INI_Section *cfg;
-extern bool batch;
-extern bool batchConn;
-extern bool always_answer_yes;
+extern gboolean batch;
+extern gboolean batchConn;
+extern gboolean always_answer_yes;
 
 const char *GetMonthName(const int month);
 const char *GetDayName(const int day);
 void Print_Error(GSM_Error error);
-void GSM_Init(bool checkerror);
+void GSM_Init(gboolean checkerror);
 void GSM_Terminate(void);
 void GetStartStop(int *start, int *stop, int num, int argc, char *argv[]);
 
@@ -22,7 +22,7 @@ void GetStartStop(int *start, int *stop, int num, int argc, char *argv[]);
  * Requests response from user on single question.
  */
 PRINTF_STYLE(1, 2)
-bool answer_yes(const char *format, ...);
+gboolean answer_yes(const char *format, ...);
 
 /**
  * Prints information about security status.
@@ -45,9 +45,9 @@ void interrupt(int sign);
  * \param url URL to download.
  * \param file Storage for data.
  *
- * \returns true on success.
+ * \returns TRUE on success.
  */
-bool GSM_ReadHTTPFile(const char *url, GSM_File *file);
+gboolean GSM_ReadHTTPFile(const char *url, GSM_File *file);
 
 /**
  * Cleanup performed at program termination.

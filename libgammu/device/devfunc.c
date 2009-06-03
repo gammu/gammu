@@ -324,13 +324,13 @@ GSM_Error lock_device(GSM_StateMachine *s UNUSED, const char* port UNUSED, char 
 
 /* Removes lock and frees memory */
 #if !defined(WIN32) && !defined(DJGPP)
-bool unlock_device(GSM_StateMachine *s, char **lock_file)
+gboolean unlock_device(GSM_StateMachine *s, char **lock_file)
 {
 	int err;
 
 	if (lock_file == NULL || *lock_file == NULL) {
 		smprintf(s, "Cannot unlock device\n");
-		return false;
+		return FALSE;
 	}
 	err = unlink(*lock_file);
 	free(*lock_file);
@@ -338,9 +338,9 @@ bool unlock_device(GSM_StateMachine *s, char **lock_file)
 	return (err + 1);
 }
 #else
-bool unlock_device(GSM_StateMachine *s UNUSED, char **lock_file UNUSED)
+gboolean unlock_device(GSM_StateMachine *s UNUSED, char **lock_file UNUSED)
 {
-	return true;
+	return TRUE;
 }
 #endif
 

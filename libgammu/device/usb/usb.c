@@ -370,7 +370,7 @@ int GSM_USB_Write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 /**
  * Find parameters for FBUS connection over USB.
  */
-bool FBUSUSB_Match(GSM_StateMachine *s, libusb_device *dev, struct libusb_device_descriptor *desc)
+gboolean FBUSUSB_Match(GSM_StateMachine *s, libusb_device *dev, struct libusb_device_descriptor *desc)
 {
 	int c, i, a;
 	int rc;
@@ -383,14 +383,14 @@ bool FBUSUSB_Match(GSM_StateMachine *s, libusb_device *dev, struct libusb_device
 	const struct libusb_endpoint_descriptor *ep1, *ep2;
 
 	/* We care only about Nokia */
-	if (desc->idVendor != NOKIA_VENDOR_ID) return false;
+	if (desc->idVendor != NOKIA_VENDOR_ID) return FALSE;
 
 	/* Find configuration we want */
 	for (c = 0; c < desc->bNumConfigurations; c++) {
 		rc = libusb_get_config_descriptor(dev, c, &config);
 		if (rc != 0) {
 			GSM_USB_Error(s, rc);
-			return false;
+			return FALSE;
 		}
 		/* Find interface we want */
 		for (i = 0; i < config->bNumInterfaces; i++) {
@@ -406,7 +406,7 @@ bool FBUSUSB_Match(GSM_StateMachine *s, libusb_device *dev, struct libusb_device
 		}
 		libusb_free_config_descriptor(config);
 	}
-	return false;
+	return FALSE;
 found_control:
 	/* Remember configuration which is interesting */
 	d->configuration = config->bConfigurationValue;
@@ -449,7 +449,7 @@ next_el:
 	if (union_desc == NULL) {
 		smprintf(s, "Failed to find data end points!\n");
 		libusb_free_config_descriptor(config);
-		return false;
+		return FALSE;
 	}
 	d->data_iface = union_desc->bSlaveInterface0;
 	d->data_altsetting = -1;
@@ -492,12 +492,12 @@ next_el:
 	if (d->data_altsetting == -1 || d->data_idlesetting == -1) {
 		smprintf(s, "Failed to find data interface (%d)\n", d->data_iface);
 		libusb_free_config_descriptor(config);
-		return true;
+		return TRUE;
 	}
 
 	/* Free config descriptor */
 	libusb_free_config_descriptor(config);
-	return true;
+	return TRUE;
 }
 
 GSM_Error FBUSUSB_Open(GSM_StateMachine *s)

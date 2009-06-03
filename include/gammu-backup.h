@@ -219,7 +219,7 @@ typedef struct {
 	/**
 	 * Whether timestamp is present
 	 */
-	bool DateTimeAvailable;
+	gboolean DateTimeAvailable;
 	/**
 	 * Original MD5 of backup from file
 	 */
@@ -309,14 +309,14 @@ typedef struct {
  */
 typedef enum {
 	/**
-	 * Compatibility with old bool used instead of format.
+	 * Compatibility with old gboolean used instead of format.
 	 *
 	 * File type is guessed for extension, non unicode format used
 	 * for Gammu backup.
 	 */
 	GSM_Backup_Auto = 0,
 	/**
-	 * Compatibility with old bool used instead of format.
+	 * Compatibility with old gboolean used instead of format.
 	 *
 	 * File type is guessed for extension, unicode format used
 	 * for Gammu backup.
@@ -388,7 +388,7 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup * Backup,
  * \return Backup format on success -1 on error.
  */
 GSM_BackupFormat GSM_GuessBackupFormat(const char *FileName,
-				       const bool UseUnicode);
+				       const gboolean UseUnicode);
 
 /**
  * Reads data from backup file.
@@ -429,28 +429,28 @@ void GSM_FreeBackup(GSM_Backup * backup);
  * \ingroup Backup
  */
 typedef struct {
-	bool UseUnicode;
-	bool IMEI;
-	bool Model;
-	bool DateTime;
-	bool ToDo;
-	bool PhonePhonebook;
-	bool SIMPhonebook;
-	bool Calendar;
-	bool CallerLogos;
-	bool SMSC;
-	bool WAPBookmark;
-	bool Profiles;
-	bool WAPSettings;
-	bool MMSSettings;
-	bool SyncMLSettings;
-	bool ChatSettings;
-	bool Ringtone;
-	bool StartupLogo;
-	bool OperatorLogo;
-	bool FMStation;
-	bool GPRSPoint;
-	bool Note;
+	gboolean UseUnicode;
+	gboolean IMEI;
+	gboolean Model;
+	gboolean DateTime;
+	gboolean ToDo;
+	gboolean PhonePhonebook;
+	gboolean SIMPhonebook;
+	gboolean Calendar;
+	gboolean CallerLogos;
+	gboolean SMSC;
+	gboolean WAPBookmark;
+	gboolean Profiles;
+	gboolean WAPSettings;
+	gboolean MMSSettings;
+	gboolean SyncMLSettings;
+	gboolean ChatSettings;
+	gboolean Ringtone;
+	gboolean StartupLogo;
+	gboolean OperatorLogo;
+	gboolean FMStation;
+	gboolean GPRSPoint;
+	gboolean Note;
 } GSM_Backup_Info;
 
 /**

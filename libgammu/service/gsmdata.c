@@ -38,7 +38,7 @@ static void AddWAPSMSParameterInt(unsigned char *Buffer, size_t *Length, unsigne
 /* http://forum.nokia.com  : OTA MMS Settings 1.0, OTA Settings 7.0
  * http://www.wapforum.org : Wireless Datagram Protocol
  */
-void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, size_t *Length, GSM_WAPSettings *settings, bool MMS)
+void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, size_t *Length, GSM_WAPSettings *settings, gboolean MMS)
 {
 	int 		i;
 	unsigned char 	buffer[400];
@@ -380,7 +380,7 @@ GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo *info)
 	memset(info,0,sizeof(GSM_EncodedMultiPartMMSInfo));
 
 	for (i=0;i<GSM_MAX_MULTI_MMS;i++) info->Entries[i].File.Buffer = NULL;
-	info->DateTimeAvailable = false;
+	info->DateTimeAvailable = FALSE;
 
 	return ERR_NONE;
 }
@@ -548,20 +548,20 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 			timet = value;
 			Fill_GSM_DateTime(&Date, timet);
 			smfprintf(di, "%s\n",OSDateTime(Date,0));
-			info->DateTimeAvailable = true;
+			info->DateTimeAvailable = TRUE;
 			memcpy(&info->DateTime,&Date,sizeof(GSM_DateTime));
 			break;
 		case 0x06:
 			smfprintf(di, "  Delivery report   : ");
-			info->MMSReportAvailable = true;
+			info->MMSReportAvailable = TRUE;
 			switch(file->Buffer[pos++]) {
 				case 0x80:
 					smfprintf(di, "yes\n");
-					info->MMSReport = true;
+					info->MMSReport = TRUE;
 					break;
 				case 0x81:
 					smfprintf(di, "no\n");
-					info->MMSReport = false;
+					info->MMSReport = FALSE;
 					break;
 				default:
 					smfprintf(di, "unknown\n");
@@ -737,7 +737,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 	if (type != 35 && type != 51) return ERR_NONE;
 
 	value = 0;
-	while (true) {
+	while (TRUE) {
 		value = value << 7;
 		value |= file->Buffer[pos] & 0x7F;
 		pos++;
@@ -749,7 +749,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 
 	for (j=0;j<parts;j++) {
 		value = 0;
-		while (true) {
+		while (TRUE) {
 			value = value << 7;
 			value |= file->Buffer[pos] & 0x7F;
 			pos++;
@@ -759,7 +759,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 		len2 = value;
 
 		value = 0;
-		while (true) {
+		while (TRUE) {
 			value = value << 7;
 			value |= file->Buffer[pos] & 0x7F;
 			pos++;

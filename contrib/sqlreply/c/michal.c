@@ -15,8 +15,8 @@
 #  include <unistd.h>
 #endif
 
-#define true 1
-#define false 0
+#define TRUE 1
+#define FALSE 0
 
 MYSQL 		DB,DB2;
 unsigned char 	Pass[50];
@@ -35,8 +35,8 @@ void connect_to_db(unsigned char *U,unsigned char *P,unsigned char *S,unsigned c
 		strcpy(User,U);
 		strcpy(Pass,P);
 		strcpy(DBName,D);
-		if (first_connect==true) {
-			first_connect=false;
+		if (first_connect==TRUE) {
+			first_connect=FALSE;
 			mysql_close(&DB2);
 		}
 		if (!mysql_real_connect(&DB2,PC,User,Pass,DBName,0,NULL,0)) return;
@@ -48,25 +48,25 @@ int check_if_avail(unsigned char *buf)
 	int found;
 
 	if (mysql_real_query(&DB,buf,strlen(buf))) {
-		return false;
+		return FALSE;
 	}
 	if (!(Res2 = mysql_store_result(&DB))) {
-		return false;
+		return FALSE;
 	}
-	found = true;
+	found = TRUE;
 	while ((Row2 = mysql_fetch_row(Res2))) {
 		connect_to_db(Row2[4],Row2[5],Row2[6],Row2[2]);//user,pass,pc,db
 		if (mysql_real_query(&DB2,Row2[3],strlen(Row2[3]))) {
 			mysql_free_result(Res2);
-			return false;
+			return FALSE;
 		}
 		if (!(Res3 = mysql_store_result(&DB2))) {
 			mysql_free_result(Res2);
-			return false;
+			return FALSE;
 		}
 		Row3 = mysql_fetch_row(Res3);
 		if (Row3 == NULL) {
-			found=false;
+			found=FALSE;
 			break;
 		}
 
@@ -228,7 +228,7 @@ void main(int argc, char *argv[])
 {
 	unsigned char buf[5000];
 
-	first_connect 	= true;
+	first_connect 	= TRUE;
 	DBName[0] 	= 0;
 	Pass[0] 	= 0;
 	User[0] 	= 0;
@@ -247,7 +247,7 @@ void main(int argc, char *argv[])
 		return;
 	}
 
-	while (true) {
+	while (TRUE) {
 		//search for rules ID
 		sprintf(buf, "select ID from rules group by ID");
 		if (mysql_real_query(&DB,buf,strlen(buf))) {
@@ -259,7 +259,7 @@ void main(int argc, char *argv[])
 		while ((Row = mysql_fetch_row(Res))) {
 			//search for all rules with some ID and check them inside
 			sprintf(buf, "SELECT ID,RuleID,DB,SQL,User,Pass,PC FROM `rules` WHERE ID='%s'",Row[0]);
-			if (check_if_avail(buf)==false) continue;
+			if (check_if_avail(buf)==FALSE) continue;
 
 			//yes, we execute actions
 			sprintf(buf, "SELECT ID,ActionID,User,User2,Pass,Pass2,DB,DB2,PC,PC2,SQL,User3,Pass3,DB3,PC3 FROM `actions` WHERE ID='%s'",Row[0]);

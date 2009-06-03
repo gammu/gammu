@@ -69,7 +69,7 @@ GSM_Error DCT3_ReplyPressKey(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error DCT3_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
+GSM_Error DCT3_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press)
 {
 	unsigned char PressReq[]   = {0x00, 0x01, 0x46, 0x00, 0x01,
 				      0x0a};		/* Key code */
@@ -77,11 +77,11 @@ GSM_Error DCT3_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 
 	if (Press) {
 		PressReq[5] = Key;
-		s->Phone.Data.PressKey = true;
+		s->Phone.Data.PressKey = TRUE;
 		smprintf(s, "Pressing key\n");
 		return GSM_WaitFor (s, PressReq, 6, 0xd1, 4, ID_PressKey);
 	} else {
-		s->Phone.Data.PressKey = false;
+		s->Phone.Data.PressKey = FALSE;
 		smprintf(s, "Releasing key\n");
 		return GSM_WaitFor (s, ReleaseReq, 6, 0xd1, 4, ID_PressKey);
 	}
@@ -93,7 +93,7 @@ GSM_Error DCT3_ReplyPlayTone(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *
 	return ERR_NONE;
 }
 
-GSM_Error DCT3_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, bool start)
+GSM_Error DCT3_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, gboolean start)
 {
 	GSM_Error 	error;
 	unsigned char 	req[] = {0x00,0x01,0x8f,
@@ -135,7 +135,7 @@ GSM_Error DCT3_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	while (i!=0) {
 		if (Buffer[i] == 13) i = i - 1; else break;
 	}
-	DecodeDefault(CB.Text, Buffer, i + 1, false, NULL);
+	DecodeDefault(CB.Text, Buffer, i + 1, FALSE, NULL);
 	smprintf(s, "Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
 	if (s->Phone.Data.EnableIncomingCB && s->User.IncomingCB!=NULL) {
 		s->User.IncomingCB(s,CB, s->User.IncomingCBUserData);
@@ -161,7 +161,7 @@ GSM_Error DCT3_ReplySetIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 #endif
 
-GSM_Error DCT3_SetIncomingCB(GSM_StateMachine *s, bool enable)
+GSM_Error DCT3_SetIncomingCB(GSM_StateMachine *s, gboolean enable)
 {
 #ifdef GSM_ENABLE_CELLBROADCAST
 	unsigned char reqOn[]  = {N6110_FRAME_HEADER, 0x20, 0x01,
@@ -212,10 +212,10 @@ GSM_Error DCT3_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	req[9] = smsc->Validity.Relative;
 
 	/* Default number for SMS messages */
-	req[10] = GSM_PackSemiOctetNumber(smsc->DefaultNumber, req+11, true);
+	req[10] = GSM_PackSemiOctetNumber(smsc->DefaultNumber, req+11, TRUE);
 
 	/* SMSC number */
-	req[22] = GSM_PackSemiOctetNumber(smsc->Number, req+23, false);
+	req[22] = GSM_PackSemiOctetNumber(smsc->Number, req+23, FALSE);
 
 	/* SMSC name */
 	memcpy(req + 34, DecodeUnicodeString(smsc->Name),UnicodeLength(smsc->Name));
@@ -292,7 +292,7 @@ GSM_Error DCT3_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Date & time received\n");
 	if (msg.Buffer[4]==0x01) {
-		NOKIA_DecodeDateTime(s, msg.Buffer+8, s->Phone.Data.DateTime, true, false);
+		NOKIA_DecodeDateTime(s, msg.Buffer+8, s->Phone.Data.DateTime, TRUE, FALSE);
 		return ERR_NONE;
 	}
 	smprintf(s, "Not set in phone\n");
@@ -315,7 +315,7 @@ GSM_Error DCT3_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	smprintf(s, "Alarm: ");
 	if (msg.Buffer[8]==0x02) {
 		smprintf(s, "set to %02i:%02i\n", msg.Buffer[9], msg.Buffer[10]);
-		Data->Alarm->Repeating 		= true;
+		Data->Alarm->Repeating 		= TRUE;
 		Data->Alarm->Text[0] 		= 0;
 		Data->Alarm->Text[1] 		= 0;
 		Data->Alarm->DateTime.Hour	= msg.Buffer[9];
@@ -427,10 +427,10 @@ GSM_Error DCT3_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		EncodeUnicode(Data->SMSC->Name,msg.Buffer+33,i);
 		smprintf(s, "Name \"%s\"\n", DecodeUnicodeString(Data->SMSC->Name));
 
-		GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->DefaultNumber,msg.Buffer+9,true);
+		GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->DefaultNumber,msg.Buffer+9,TRUE);
 		smprintf(s, "Default number \"%s\"\n", DecodeUnicodeString(Data->SMSC->DefaultNumber));
 
-		GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->Number,msg.Buffer+21,false);
+		GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->Number,msg.Buffer+21,FALSE);
 		smprintf(s, "Number \"%s\"\n", DecodeUnicodeString(Data->SMSC->Number));
 
 		return ERR_NONE;
@@ -603,7 +603,7 @@ static GSM_Error DCT3_CancelAllCalls(GSM_StateMachine *s)
 	return GSM_WaitFor (s, req, 4, 0x40, 4, ID_CancelCall);
 }
 
-GSM_Error DCT3_CancelCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error DCT3_CancelCall(GSM_StateMachine *s, int ID, gboolean all)
 {
 	if (!all) return DCT3DCT4_CancelCall(s,ID);
 	return DCT3_CancelAllCalls(s);
@@ -622,7 +622,7 @@ GSM_Error DCT3_AnswerAllCalls(GSM_StateMachine *s)
 	return GSM_WaitFor (s, req, 4, 0x40, 4, ID_AnswerCall);
 }
 
-GSM_Error DCT3_Reset(GSM_StateMachine *s, bool hard)
+GSM_Error DCT3_Reset(GSM_StateMachine *s, gboolean hard)
 {
 	GSM_Error error;
 
@@ -632,15 +632,15 @@ GSM_Error DCT3_Reset(GSM_StateMachine *s, bool hard)
 		error=DCT3_EnableSecurity(s, 0x03);
 	}
 	if (error == ERR_NONE) {
-		s->Phone.Data.EnableIncomingSMS = false;
-		s->Phone.Data.EnableIncomingCB  = false;
+		s->Phone.Data.EnableIncomingSMS = FALSE;
+		s->Phone.Data.EnableIncomingCB  = FALSE;
 	}
 	return error;
 }
 
 GSM_Error DCT3_ReplyGetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return DCT3DCT4_ReplyGetWAPBookmark (msg,s,false);
+	return DCT3DCT4_ReplyGetWAPBookmark (msg,s,FALSE);
 }
 
 GSM_Error DCT3_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
@@ -658,8 +658,8 @@ GSM_Error DCT3_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 	req[count++] = (location & 0xff00) >> 8;
 	req[count++] = location & 0x00ff;
 
-	count += NOKIA_SetUnicodeString(s, req+count, bookmark->Title,   false);
-	count += NOKIA_SetUnicodeString(s, req+count, bookmark->Address, false);
+	count += NOKIA_SetUnicodeString(s, req+count, bookmark->Title,   FALSE);
+	count += NOKIA_SetUnicodeString(s, req+count, bookmark->Address, FALSE);
 
 	/* unknown */
 	req[count++] = 0x01; req[count++] = 0x80; req[count++] = 0x00;
@@ -696,10 +696,10 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 		tmp = 4;
 
-		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[0].Title,false);
+		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[0].Title,FALSE);
 		smprintf(s, "Title: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[0].Title));
 
-		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[0].HomePage,false);
+		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[0].HomePage,FALSE);
 		smprintf(s, "Homepage: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[0].HomePage));
 #ifdef DEBUG
 		smprintf(s, "Connection type: ");
@@ -715,10 +715,10 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 			default:   smprintf(s, "unknown\n");
 		}
 #endif
-		Data->WAPSettings->Settings[0].IsContinuous = false;
-		if (msg.Buffer[tmp] == 0x01) Data->WAPSettings->Settings[0].IsContinuous = true;
-		Data->WAPSettings->Settings[0].IsSecurity = false;
-		if (msg.Buffer[tmp+13] == 0x01) Data->WAPSettings->Settings[0].IsSecurity = true;
+		Data->WAPSettings->Settings[0].IsContinuous = FALSE;
+		if (msg.Buffer[tmp] == 0x01) Data->WAPSettings->Settings[0].IsContinuous = TRUE;
+		Data->WAPSettings->Settings[0].IsSecurity = FALSE;
+		if (msg.Buffer[tmp+13] == 0x01) Data->WAPSettings->Settings[0].IsSecurity = TRUE;
 
 		/* I'm not sure here. Experimental values from 6210 5.56 */
 /* 		tmp2 = DecodeUnicodeLength(Data->WAPSettings->Settings[0].Title); */
@@ -784,28 +784,28 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 			smprintf(s, "Settings for SMS bearer:\n");
 			tmp = 6;
 
-			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Service,false);
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Service,FALSE);
 			smprintf(s, "Service number: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Service));
 
-			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Server,false);
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Server,FALSE);
 			smprintf(s, "Server number: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Server));
 			break;
 		case 0x01:
 			Data->WAPSettings->Settings[Number].Bearer = WAPSETTINGS_BEARER_DATA;
 			smprintf(s, "Settings for data bearer:\n");
-			Data->WAPSettings->Settings[Number].ManualLogin = false;
+			Data->WAPSettings->Settings[Number].ManualLogin = FALSE;
 			tmp = 10;
 
-			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].IPAddress,false);
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].IPAddress,FALSE);
 			smprintf(s, "IP address: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].IPAddress));
 
-			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].DialUp,false);
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].DialUp,FALSE);
 			smprintf(s, "Dial-up number: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].DialUp));
 
-			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].User,false);
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].User,FALSE);
 			smprintf(s, "User name: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].User));
 
-			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Password,false);
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Password,FALSE);
 			smprintf(s, "Password: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Password));
 #ifdef DEBUG
 			smprintf(s, "Authentication type: ");
@@ -827,10 +827,10 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 				default:   smprintf(s, "unknown\n"); 	 break;
 			}
 #endif
-			Data->WAPSettings->Settings[Number].IsNormalAuthentication=true;
-			if (msg.Buffer[6]==0x01) Data->WAPSettings->Settings[Number].IsNormalAuthentication=false;
-			Data->WAPSettings->Settings[Number].IsISDNCall=false;
-			if (msg.Buffer[7]==0x01) Data->WAPSettings->Settings[Number].IsISDNCall=true;
+			Data->WAPSettings->Settings[Number].IsNormalAuthentication=TRUE;
+			if (msg.Buffer[6]==0x01) Data->WAPSettings->Settings[Number].IsNormalAuthentication=FALSE;
+			Data->WAPSettings->Settings[Number].IsISDNCall=FALSE;
+			if (msg.Buffer[7]==0x01) Data->WAPSettings->Settings[Number].IsISDNCall=TRUE;
 			Data->WAPSettings->Settings[Number].Speed = WAPSETTINGS_SPEED_9600;
 			if (msg.Buffer[9]==0x02) Data->WAPSettings->Settings[Number].Speed = WAPSETTINGS_SPEED_14400;
 			break;
@@ -838,16 +838,16 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 			Data->WAPSettings->Settings[Number].Bearer=WAPSETTINGS_BEARER_USSD;
 			smprintf(s, "Settings for USSD bearer:\n");
 			tmp = 7;
-			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Service,false);
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Service,FALSE);
 #ifdef DEBUG
 			if (msg.Buffer[6]==0x01)
 				smprintf(s, "Service number: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Service));
 			else
 				smprintf(s, "IP address: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Service));
 #endif
-			Data->WAPSettings->Settings[Number].IsIP=true;
-			if (msg.Buffer[6]==0x01) Data->WAPSettings->Settings[Number].IsIP=false;
-			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Code,false);
+			Data->WAPSettings->Settings[Number].IsIP=TRUE;
+			if (msg.Buffer[6]==0x01) Data->WAPSettings->Settings[Number].IsIP=FALSE;
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Code,FALSE);
 			smprintf(s, "Service code: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Code));
 		}
 		Data->WAPSettings->Number++;
@@ -880,7 +880,7 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 
 	s->Phone.Data.WAPSettings = settings;
 	settings->Number   = 0;
-	settings->ReadOnly = false;
+	settings->ReadOnly = FALSE;
 
 	req[4] = settings->Location-1;
 	smprintf(s, "Getting WAP settings part 1\n");
@@ -1047,9 +1047,9 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 	SetReq[4] = settings->Location - 1;
 	if (loc1 != -1) {
 		/* Name */
-		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc1].Title, false);
+		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc1].Title, FALSE);
 		/* HomePage */
-		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc1].HomePage, false);
+		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc1].HomePage, FALSE);
 		if (settings->Settings[loc1].IsContinuous) SetReq[pos] = 0x01;
 		pos++;
 		SetReq[pos++] = ID;
@@ -1073,9 +1073,9 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		pos++;
 	} else if (loc2 != -1) {
 		/* Name */
-		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc2].Title, false);
+		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc2].Title, FALSE);
 		/* HomePage */
-		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc2].HomePage, false);
+		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc2].HomePage, FALSE);
 		if (settings->Settings[loc2].IsContinuous) SetReq[pos] = 0x01;
 		pos++;
 		SetReq[pos++] = ID;
@@ -1099,9 +1099,9 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		pos++;
 	} else if (loc3 != -1) {
 		/* Name */
-		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc3].Title, false);
+		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc3].Title, FALSE);
 		/* HomePage */
-		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc3].HomePage, false);
+		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc3].HomePage, FALSE);
 		if (settings->Settings[loc3].IsContinuous) SetReq[pos] = 0x01;
 		pos++;
 		SetReq[pos++] = ID;
@@ -1162,13 +1162,13 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		} else pos+=2;
 		if (loc1 != -1) {
 			/* IP */
-			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc1].IPAddress, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc1].IPAddress, FALSE);
 			/* Number */
-			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc1].DialUp, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc1].DialUp, FALSE);
 			/* Username  */
-			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc1].User, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc1].User, FALSE);
 			/* Password */
-			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc1].Password, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc1].Password, FALSE);
 		} else pos+=5;
 		memcpy(SetReq2 + pos, "\x80\x00\x00\x00\x00\x00\x00\x00", 8);
 		pos += 8;
@@ -1185,9 +1185,9 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		SetReq2[pos++] = 0x00; /* SMS */
 		if (loc2 != -1) {
 			/* Service number */
-			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc2].Service, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc2].Service, FALSE);
 			/* Server number */
-			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc2].Server, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc2].Server, FALSE);
 		} else pos += 2;
 		memcpy(SetReq2 + pos, "\x80\x00\x00\x00\x00\x00\x00\x00", 8);
 		pos += 8;
@@ -1208,9 +1208,9 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		pos++;
 		if (loc3 != -1) {
 			/* Service number or IP address */
-			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc3].Service, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc3].Service, FALSE);
 			/* Code number */
-			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc3].Code, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc3].Code, FALSE);
 		} else pos+=2;
 		memcpy(SetReq2 + pos, "\x80\x00\x00\x00\x00\x00\x00\x00", 8);
 		pos += 8;
@@ -1245,7 +1245,7 @@ GSM_Error DCT3_SendSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	GSM_Error		error;
 	unsigned char 		req[256] = {N6110_FRAME_HEADER, 0x01, 0x02, 0x00};
 
-	error=PHONE_EncodeSMSFrame(s,sms,req+6,PHONE_SMSSubmit,&length, true);
+	error=PHONE_EncodeSMSFrame(s,sms,req+6,PHONE_SMSSubmit,&length, TRUE);
 	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Sending sms\n");

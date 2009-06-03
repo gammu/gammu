@@ -76,7 +76,7 @@ typedef struct {
 	/**
 	 * Should we use global debug file?
 	 */
-	bool UseGlobalDebugFile;
+	gboolean UseGlobalDebugFile;
 	/**
 	 * Text for reminder calendar entry category in local language
 	 */
@@ -180,7 +180,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine * s);
  * \param waitforreply Whether to wait for some event
  * \return Number of read bytes
  */
-int GSM_ReadDevice(GSM_StateMachine * s, bool waitforreply);
+int GSM_ReadDevice(GSM_StateMachine * s, gboolean waitforreply);
 
 /**
  * Detects whether state machine is connected.
@@ -190,7 +190,7 @@ int GSM_ReadDevice(GSM_StateMachine * s, bool waitforreply);
  * \param s State machine data
  * \return Whether phone is connected.
  */
-bool GSM_IsConnected(GSM_StateMachine * s);
+gboolean GSM_IsConnected(GSM_StateMachine * s);
 
 /**
  * Finds and reads gammu configuration file. The search order depends on

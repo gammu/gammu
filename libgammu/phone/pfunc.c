@@ -40,10 +40,10 @@ GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s UNUSED, GSM_SMSFolders *folder
 	folders->Number=2;
 	EncodeUnicode(folders->Folder[0].Name,_("Inbox"),strlen(_("Inbox")));
 	EncodeUnicode(folders->Folder[1].Name,_("Outbox"),strlen(_("Outbox")));
-	folders->Folder[0].InboxFolder = true;
-	folders->Folder[1].InboxFolder = false;
-	folders->Folder[0].OutboxFolder 	= false;
-	folders->Folder[1].OutboxFolder 	= true;
+	folders->Folder[0].InboxFolder = TRUE;
+	folders->Folder[1].InboxFolder = FALSE;
+	folders->Folder[0].OutboxFolder 	= FALSE;
+	folders->Folder[1].OutboxFolder 	= TRUE;
 	folders->Folder[0].Memory      = MEM_SM;
 	folders->Folder[1].Memory      = MEM_SM;
 	return ERR_NONE;
@@ -55,7 +55,7 @@ void GSM_CreateFirmwareNumber(GSM_StateMachine *s)
 	smprintf(s, "Number version is \"%f\"\n", s->Phone.Data.VerNum);
 }
 
-GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear)
+GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, gboolean clear)
 {
 	GSM_Error error;
 
@@ -77,18 +77,18 @@ GSM_Error PHONE_Terminate(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	if (s->Phone.Data.EnableIncomingCB==true) {
-		error=s->Phone.Functions->SetIncomingCB(s,false);
+	if (s->Phone.Data.EnableIncomingCB==TRUE) {
+		error=s->Phone.Functions->SetIncomingCB(s,FALSE);
 		if (error!=ERR_NONE) return error;
 	}
-	if (s->Phone.Data.EnableIncomingSMS==true) {
-		error=s->Phone.Functions->SetIncomingSMS(s,false);
+	if (s->Phone.Data.EnableIncomingSMS==TRUE) {
+		error=s->Phone.Functions->SetIncomingSMS(s,FALSE);
 		if (error!=ERR_NONE) return error;
 	}
 	return ERR_NONE;
 }
 
-GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool first)
+GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, gboolean first)
 {
 	int 		duration, Hz;
 	GSM_Error 	error;
@@ -104,7 +104,7 @@ GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool fir
 	switch (note.Style) {
 		case StaccatoStyle:
 			usleep(7500000);
-			error=s->Phone.Functions->PlayTone(s,0,0,false);
+			error=s->Phone.Functions->PlayTone(s,0,0,FALSE);
 			if (error != ERR_NONE) return error;
 			usleep ((1400000000L/note.Tempo*duration)-(7500000));
 			break;
@@ -113,7 +113,7 @@ GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool fir
 			break;
 		case NaturalStyle:
 			usleep(1400000000L/note.Tempo*duration-50000);
-			error=s->Phone.Functions->PlayTone(s,0,0,false);
+			error=s->Phone.Functions->PlayTone(s,0,0,FALSE);
 			if (error != ERR_NONE) return error;
 			usleep(50000);
 			break;
@@ -125,12 +125,12 @@ GSM_Error PHONE_Beep(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	error=s->Phone.Functions->PlayTone(s, 4000, 5,true);
+	error=s->Phone.Functions->PlayTone(s, 4000, 5,TRUE);
 	if (error!=ERR_NONE) return error;
 
 	usleep(500000);
 
-	return s->Phone.Functions->PlayTone(s,255*255,0,false);
+	return s->Phone.Functions->PlayTone(s,255*255,0,FALSE);
 }
 
 GSM_Error NoneReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)

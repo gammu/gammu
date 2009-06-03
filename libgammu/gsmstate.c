@@ -45,7 +45,7 @@ GSM_Debug_Info *GSM_GetDI(GSM_StateMachine *s)
 	GSM_Debug_Info *curdi;
 
 	curdi = &GSM_global_debug;
-	if (s != NULL && s->di.use_global == false) {
+	if (s != NULL && s->di.use_global == FALSE) {
 		curdi = &(s->di);
 	}
 	return curdi;
@@ -63,62 +63,62 @@ static void GSM_RegisterConnection(GSM_StateMachine *s, unsigned int connection,
 typedef struct {
 	const char *Name;
 	const GSM_ConnectionType Connection;
-	bool SkipDtrRts;
+	gboolean SkipDtrRts;
 } GSM_ConnectionInfo;
 
 /**
  * Mapping of connection names to internal identifications.
  */
 static const GSM_ConnectionInfo GSM_Connections[] = {
-	{"at", GCT_AT, false},
+	{"at", GCT_AT, FALSE},
 
 	/* cables */
-	{"mbus", GCT_MBUS2, false},
-	{"fbus", GCT_FBUS2, false},
-	{"fbususb", GCT_FBUS2USB, false},
-	{"fbuspl2303", GCT_FBUS2PL2303, false},
-	{"dlr3", GCT_FBUS2DLR3, false},
-	{"fbusdlr3", GCT_FBUS2DLR3, false},
-	{"dku5", GCT_DKU5FBUS2, false},
-	{"dku5fbus", GCT_DKU5FBUS2, false},
-	{"ark3116fbus", GCT_DKU5FBUS2, true},
+	{"mbus", GCT_MBUS2, FALSE},
+	{"fbus", GCT_FBUS2, FALSE},
+	{"fbususb", GCT_FBUS2USB, FALSE},
+	{"fbuspl2303", GCT_FBUS2PL2303, FALSE},
+	{"dlr3", GCT_FBUS2DLR3, FALSE},
+	{"fbusdlr3", GCT_FBUS2DLR3, FALSE},
+	{"dku5", GCT_DKU5FBUS2, FALSE},
+	{"dku5fbus", GCT_DKU5FBUS2, FALSE},
+	{"ark3116fbus", GCT_DKU5FBUS2, TRUE},
 #ifdef WIN32
-	{"dku2", GCT_DKU2PHONET, false},
-	{"dku2phonet", GCT_DKU2PHONET, false},
+	{"dku2", GCT_DKU2PHONET, FALSE},
+	{"dku2phonet", GCT_DKU2PHONET, FALSE},
 #else
-	{"dku2", GCT_FBUS2USB, false},
-	{"dku2phonet", GCT_FBUS2USB, false},
+	{"dku2", GCT_FBUS2USB, FALSE},
+	{"dku2phonet", GCT_FBUS2USB, FALSE},
 #endif
-	{"dku2at", GCT_DKU2AT, false},
+	{"dku2at", GCT_DKU2AT, FALSE},
 
         /* for serial ports assigned by bt stack */
-	{"fbusblue", GCT_FBUS2BLUE, false},
-	{"phonetblue", GCT_PHONETBLUE, false},
+	{"fbusblue", GCT_FBUS2BLUE, FALSE},
+	{"phonetblue", GCT_PHONETBLUE, FALSE},
 
 	/* bt */
-	{"blueobex", GCT_BLUEOBEX, false},
-	{"bluephonet", GCT_BLUEPHONET, false},
-	{"blueat", GCT_BLUEAT, false},
-	{"bluerfobex", GCT_BLUEOBEX, false},
-	{"bluefbus", GCT_BLUEFBUS2, false},
-	{"bluerffbus", GCT_BLUEFBUS2, false},
-	{"bluerfphonet", GCT_BLUEPHONET, false},
-	{"bluerfat", GCT_BLUEAT, false},
-	{"bluerfgnapbus", GCT_BLUEGNAPBUS, false},
+	{"blueobex", GCT_BLUEOBEX, FALSE},
+	{"bluephonet", GCT_BLUEPHONET, FALSE},
+	{"blueat", GCT_BLUEAT, FALSE},
+	{"bluerfobex", GCT_BLUEOBEX, FALSE},
+	{"bluefbus", GCT_BLUEFBUS2, FALSE},
+	{"bluerffbus", GCT_BLUEFBUS2, FALSE},
+	{"bluerfphonet", GCT_BLUEPHONET, FALSE},
+	{"bluerfat", GCT_BLUEAT, FALSE},
+	{"bluerfgnapbus", GCT_BLUEGNAPBUS, FALSE},
 
 	/* old "serial" irda */
-	{"infrared", GCT_FBUS2IRDA, false},
-	{"fbusirda", GCT_FBUS2IRDA, false},
+	{"infrared", GCT_FBUS2IRDA, FALSE},
+	{"fbusirda", GCT_FBUS2IRDA, FALSE},
 
 	/* socket irda */
-	{"irda", GCT_IRDAPHONET, false},
-	{"irdaphonet", GCT_IRDAPHONET, false},
-	{"irdaat", GCT_IRDAAT, false},
-	{"irdaobex", GCT_IRDAOBEX, false},
-	{"irdagnapbus", GCT_IRDAGNAPBUS, false},
+	{"irda", GCT_IRDAPHONET, FALSE},
+	{"irdaphonet", GCT_IRDAPHONET, FALSE},
+	{"irdaat", GCT_IRDAAT, FALSE},
+	{"irdaobex", GCT_IRDAOBEX, FALSE},
+	{"irdagnapbus", GCT_IRDAGNAPBUS, FALSE},
 
 	/* testing purposes */
-	{"none", GCT_NONE, false},
+	{"none", GCT_NONE, FALSE},
 };
 
 GSM_Device_Functions NoneDevice = {
@@ -153,8 +153,8 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 	 * OS. If not, we return with error, that string is incorrect at all
 	 */
 	s->ConnectionType = 0;
-	s->SkipDtrRts = false;
-	s->NoPowerCable = false;
+	s->SkipDtrRts = FALSE;
+	s->NoPowerCable = FALSE;
 
 	/* Are we asked for connection using stupid cable? */
 	nodtr_pos = strcasestr(buff, "-nodtr");
@@ -167,7 +167,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 	nopower_pos = strcasestr(buff, "-nopower");
 	if (nopower_pos != NULL) {
 		*nopower_pos = 0;
-		s->NoPowerCable = true;
+		s->NoPowerCable = TRUE;
 	}
 
 	/* Compare known connections to what we got */
@@ -182,7 +182,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 
 	/* If we were forced, set this flag */
 	if (nodtr_pos != NULL) {
-		s->SkipDtrRts = true;
+		s->SkipDtrRts = TRUE;
 	}
 
 	/* Special case - at can contains speed */
@@ -466,7 +466,7 @@ GSM_Error GSM_OpenConnection(GSM_StateMachine *s)
 		return error;
 	}
 
-	s->opened = true;
+	s->opened = TRUE;
 
 	error=s->Protocol.Functions->Initialise(s);
 	if (error!=ERR_NONE) return error;
@@ -604,10 +604,10 @@ GSM_Error GSM_InitConnection_Log(GSM_StateMachine *s, int ReplyNum, GSM_Log_Func
 
 		s->Phone.Data.HardwareCache[0]	  = 0;
 		s->Phone.Data.ProductCodeCache[0] = 0;
-		s->Phone.Data.EnableIncomingCall  = false;
-		s->Phone.Data.EnableIncomingSMS	  = false;
-		s->Phone.Data.EnableIncomingCB	  = false;
-		s->Phone.Data.EnableIncomingUSSD  = false;
+		s->Phone.Data.EnableIncomingCall  = FALSE;
+		s->Phone.Data.EnableIncomingSMS	  = FALSE;
+		s->Phone.Data.EnableIncomingCB	  = FALSE;
+		s->Phone.Data.EnableIncomingUSSD  = FALSE;
 		s->User.UserReplyFunctions	  = NULL;
 		s->User.IncomingCall		  = NULL;
 		s->User.IncomingSMS		  = NULL;
@@ -615,7 +615,7 @@ GSM_Error GSM_InitConnection_Log(GSM_StateMachine *s, int ReplyNum, GSM_Log_Func
 		s->User.IncomingUSSD		  = NULL;
 		s->User.SendSMSStatus		  = NULL;
 		s->LockFile			  = NULL;
-		s->opened			  = false;
+		s->opened			  = FALSE;
 		s->Phone.Functions		  = NULL;
 
 		s->di 				  = GSM_none_debug;
@@ -729,7 +729,7 @@ autodetect:
 		}
 
 		if (strcasecmp(s->CurrentConfig->StartInfo,"yes") == 0) {
-			s->Phone.Functions->ShowStartInfo(s,true);
+			s->Phone.Functions->ShowStartInfo(s,TRUE);
 			s->Phone.Data.StartInfoCounter = 30;
 		}
 
@@ -772,7 +772,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	return GSM_InitConnection_Log(s, ReplyNum, GSM_none_debug.log_function, GSM_none_debug.user_data);
 }
 
-int GSM_ReadDevice (GSM_StateMachine *s, bool waitforreply)
+int GSM_ReadDevice (GSM_StateMachine *s, gboolean waitforreply)
 {
 	unsigned char	buff[65536];
 	int		res = 0, count;
@@ -809,7 +809,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 	smprintf(s,"[Terminating]\n");
 
 	if (strcasecmp(s->CurrentConfig->StartInfo,"yes") == 0) {
-		if (s->Phone.Data.StartInfoCounter > 0) s->Phone.Functions->ShowStartInfo(s,false);
+		if (s->Phone.Data.StartInfoCounter > 0) s->Phone.Functions->ShowStartInfo(s,FALSE);
 	}
 
 	if (s->Phone.Functions != NULL) {
@@ -820,14 +820,14 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 	error = GSM_CloseConnection(s);
 	if (error != ERR_NONE) return error;
 
-	GSM_SetDebugFileDescriptor(NULL, false, &(s->di));
+	GSM_SetDebugFileDescriptor(NULL, FALSE, &(s->di));
 
-	s->opened = false;
+	s->opened = FALSE;
 
 	return ERR_NONE;
 }
 
-bool GSM_IsConnected(GSM_StateMachine *s) {
+gboolean GSM_IsConnected(GSM_StateMachine *s) {
 	return (s != NULL) && s->Phone.Functions != NULL && s->opened;
 }
 
@@ -849,7 +849,7 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 		}
 
 		/* Some data received. Reset timer */
-		if (GSM_ReadDevice(s, true) != 0) {
+		if (GSM_ReadDevice(s, TRUE) != 0) {
 			i = 0;
 		} else {
 			usleep(10000);
@@ -880,7 +880,7 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
 	if (strcasecmp(s->CurrentConfig->StartInfo,"yes") == 0) {
 		if (Phone->StartInfoCounter > 0) {
 			Phone->StartInfoCounter--;
-			if (Phone->StartInfoCounter == 0) s->Phone.Functions->ShowStartInfo(s,false);
+			if (Phone->StartInfoCounter == 0) s->Phone.Functions->ShowStartInfo(s,FALSE);
 		}
 	}
 
@@ -905,26 +905,26 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 {
 	GSM_Phone_Data			*Data	  = &s->Phone.Data;
 	GSM_Protocol_Message		*msg	  = s->Phone.Data.RequestMsg;
-	bool				execute;
-	bool				available = false;
+	gboolean				execute;
+	gboolean				available = FALSE;
 	int				i	  = 0;
 
 	while (Reply[i].requestID!=ID_None) {
-		execute=false;
+		execute=FALSE;
 		/* Binary frames like in Nokia */
 		if (strlen(Reply[i].msgtype) < 2) {
 			if (Reply[i].msgtype[0]==msg->Type) {
 				if (Reply[i].subtypechar!=0) {
 					if (Reply[i].subtypechar<=msg->Length) {
 						if (msg->Buffer[Reply[i].subtypechar]==Reply[i].subtype)
-							execute=true;
+							execute=TRUE;
 					}
-				} else execute=true;
+				} else execute=TRUE;
 			}
 		} else {
 			if (strlen(Reply[i].msgtype) < msg->Length) {
 				if (strncmp(Reply[i].msgtype,msg->Buffer,strlen(Reply[i].msgtype))==0) {
-					execute=true;
+					execute=TRUE;
 				}
 			}
 		}
@@ -936,7 +936,7 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 			    Data->RequestID    == ID_EachFrame) {
 				return ERR_NONE;
 			}
-			available=true;
+			available=TRUE;
 		}
 		i++;
 	}
@@ -953,7 +953,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	GSM_Error		error	= ERR_UNKNOWNFRAME;
 	GSM_Protocol_Message	*msg 	= s->Phone.Data.RequestMsg;
 	GSM_Phone_Data 		*Phone	= &s->Phone.Data;
-	bool			disp    = false;
+	gboolean			disp    = FALSE;
 	GSM_Reply_Function	*Reply;
 	int			reply;
 
@@ -980,7 +980,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	}
 
 	if (strcmp(s->Phone.Functions->models,"NAUTO")) {
-		disp = true;
+		disp = TRUE;
 		switch (error) {
 		case ERR_UNKNOWNRESPONSE:
 			smprintf_level(s, D_ERROR, "\nUNKNOWN response");
@@ -992,7 +992,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 			smprintf_level(s, D_ERROR, "\nFrame not request now");
 			break;
 		default:
-			disp = false;
+			disp = FALSE;
 		}
 
 		if (error == ERR_UNKNOWNFRAME || error == ERR_FRAMENOTREQUESTED) {
@@ -1019,7 +1019,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 GSM_Error GSM_TryReadGammuRC (const char *path, INI_Section **result)
 {
 	dbgprintf(NULL, "Open config: \"%s\"\n", path);
-	return  INI_ReadFile(path, false, result);
+	return  INI_ReadFile(path, FALSE, result);
 }
 
 GSM_Error GSM_FindGammuRC (INI_Section **result, const char *force_config)
@@ -1134,7 +1134,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 {
 	INI_Section 	*h;
 	unsigned char 	section[50];
-	bool		found = false;
+	gboolean		found = FALSE;
 	char *Temp;
 
 #if defined(WIN32) || defined(DJGPP)
@@ -1151,7 +1151,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	static const char *DefaultStartInfo		= "no";
 
 	/* By default all debug output will go to one filedescriptor */
-	static const bool DefaultUseGlobalDebugFile 	= true;
+	static const gboolean DefaultUseGlobalDebugFile 	= TRUE;
 	GSM_Error error = ERR_UNKNOWN;
 
 	cfg->UseGlobalDebugFile	 = DefaultUseGlobalDebugFile;
@@ -1172,7 +1172,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	/* Scan for section */
         for (h = cfg_info; h != NULL; h = h->Next) {
                 if (strncasecmp(section, h->SectionName, strlen(section)) == 0) {
-			found = true;
+			found = TRUE;
 			break;
 		}
         }
@@ -1183,7 +1183,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* Set device name */
 	free(cfg->Device);
-	cfg->Device 	 = INI_GetValue(cfg_info, section, "port", 		false);
+	cfg->Device 	 = INI_GetValue(cfg_info, section, "port", 		FALSE);
 	if (!cfg->Device) {
 		cfg->Device		 	 = strdup(DefaultPort);
 	} else {
@@ -1192,7 +1192,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* Set connection type */
 	free(cfg->Connection);
-	cfg->Connection  = INI_GetValue(cfg_info, section, "connection", 	false);
+	cfg->Connection  = INI_GetValue(cfg_info, section, "connection", 	FALSE);
 	if (cfg->Connection == NULL) {
 		cfg->Connection	 		 = strdup(DefaultConnection);
 	} else {
@@ -1201,7 +1201,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* Set time sync */
 	free(cfg->SyncTime);
-	cfg->SyncTime 	 = INI_GetValue(cfg_info, section, "synchronizetime",	false);
+	cfg->SyncTime 	 = INI_GetValue(cfg_info, section, "synchronizetime",	FALSE);
 	if (!cfg->SyncTime) {
 		cfg->SyncTime		 	 = strdup(DefaultSynchronizeTime);
 	} else {
@@ -1210,7 +1210,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* Set debug file */
 	free(cfg->DebugFile);
-	cfg->DebugFile   = INI_GetValue(cfg_info, section, "logfile", 		false);
+	cfg->DebugFile   = INI_GetValue(cfg_info, section, "logfile", 		FALSE);
 	if (!cfg->DebugFile) {
 		cfg->DebugFile		 	 = strdup(DefaultDebugFile);
 	} else {
@@ -1220,7 +1220,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* Set file locking */
 	free(cfg->LockDevice);
-	cfg->LockDevice  = INI_GetValue(cfg_info, section, "use_locking", 	false);
+	cfg->LockDevice  = INI_GetValue(cfg_info, section, "use_locking", 	FALSE);
 	if (!cfg->LockDevice) {
 		cfg->LockDevice	 		 = strdup(DefaultLockDevice);
 	} else {
@@ -1228,7 +1228,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	}
 
 	/* Set model */
-	Temp		 = INI_GetValue(cfg_info, section, "model", 		false);
+	Temp		 = INI_GetValue(cfg_info, section, "model", 		FALSE);
 	if (!Temp || strcmp(Temp, "auto") == 0) {
 		strcpy(cfg->Model,DefaultModel);
 	} else {
@@ -1238,7 +1238,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	}
 
 	/* Set Log format */
-	Temp		 = INI_GetValue(cfg_info, section, "logformat", 	false);
+	Temp		 = INI_GetValue(cfg_info, section, "logformat", 	FALSE);
 	if (!Temp) {
 		strcpy(cfg->DebugLevel,DefaultDebugLevel);
 	} else {
@@ -1249,7 +1249,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* Set startup info */
 	free(cfg->StartInfo);
-	cfg->StartInfo   = INI_GetValue(cfg_info, section, "startinfo", 	false);
+	cfg->StartInfo   = INI_GetValue(cfg_info, section, "startinfo", 	FALSE);
 	if (!cfg->StartInfo) {
 		cfg->StartInfo	 		 = strdup(DefaultStartInfo);
 	} else {
@@ -1258,7 +1258,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* Read localised strings for some phones */
 
-	Temp		 = INI_GetValue(cfg_info, section, "reminder", 		false);
+	Temp		 = INI_GetValue(cfg_info, section, "reminder", 		FALSE);
 	if (!Temp) {
 		strcpy(cfg->TextReminder,"Reminder");
 	} else {
@@ -1267,7 +1267,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		strcpy(cfg->TextReminder,Temp);
 	}
 
-	Temp		 = INI_GetValue(cfg_info, section, "meeting", 		false);
+	Temp		 = INI_GetValue(cfg_info, section, "meeting", 		FALSE);
 	if (!Temp) {
 		strcpy(cfg->TextMeeting,"Meeting");
 	} else {
@@ -1276,7 +1276,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		strcpy(cfg->TextMeeting,Temp);
 	}
 
-	Temp		 = INI_GetValue(cfg_info, section, "call", 		false);
+	Temp		 = INI_GetValue(cfg_info, section, "call", 		FALSE);
 	if (!Temp) {
 		strcpy(cfg->TextCall,"Call");
 	} else {
@@ -1285,7 +1285,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		strcpy(cfg->TextCall,Temp);
 	}
 
-	Temp		 = INI_GetValue(cfg_info, section, "birthday", 		false);
+	Temp		 = INI_GetValue(cfg_info, section, "birthday", 		FALSE);
 	if (!Temp) {
 		strcpy(cfg->TextBirthday,"Birthday");
 	} else {
@@ -1294,7 +1294,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		strcpy(cfg->TextBirthday,Temp);
 	}
 
-	Temp		 = INI_GetValue(cfg_info, section, "memo", 		false);
+	Temp		 = INI_GetValue(cfg_info, section, "memo", 		FALSE);
 	if (!Temp) {
 		strcpy(cfg->TextMemo,"Memo");
 	} else {
@@ -1304,7 +1304,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	}
 
 	/* Phone features */
-	Temp		 = INI_GetValue(cfg_info, section, "features", 		false);
+	Temp		 = INI_GetValue(cfg_info, section, "features", 		FALSE);
 	if (!Temp) {
 		cfg->PhoneFeatures[0] = 0;
 	} else {
@@ -1460,7 +1460,7 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
                 error=s->Phone.Functions->GetMemoryStatus(s, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
 		} else {
-			info->PhonePhonebook = false;
+			info->PhonePhonebook = FALSE;
 		}
 	}
 	if (info->SIMPhonebook) {
@@ -1468,18 +1468,18 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
                 error=s->Phone.Functions->GetMemoryStatus(s, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
 		} else {
-			info->SIMPhonebook = false;
+			info->SIMPhonebook = FALSE;
 		}
 	}
 	if (info->Calendar) {
-		error=s->Phone.Functions->GetNextCalendar(s,&Note,true);
-		if (error!=ERR_NONE) info->Calendar = false;
+		error=s->Phone.Functions->GetNextCalendar(s,&Note,TRUE);
+		if (error!=ERR_NONE) info->Calendar = FALSE;
 	}
 	if (info->ToDo) {
 		error=s->Phone.Functions->GetToDoStatus(s,&ToDoStatus);
 		if (error == ERR_NONE && ToDoStatus.Used != 0) {
 		} else {
-			info->ToDo = false;
+			info->ToDo = FALSE;
 		}
 	}
 	if (info->WAPBookmark) {
@@ -1487,7 +1487,7 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
 		error=s->Phone.Functions->GetWAPBookmark(s,&Bookmark);
 		if (error == ERR_NONE) {
 		} else {
-			info->WAPBookmark = false;
+			info->WAPBookmark = FALSE;
 		}
 	}
 	if (info->WAPSettings) {
@@ -1495,7 +1495,7 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
 		error=s->Phone.Functions->GetWAPSettings(s,&WAPSettings);
 		if (error == ERR_NONE) {
 		} else {
-			info->WAPSettings = false;
+			info->WAPSettings = FALSE;
 		}
 	}
 	if (info->MMSSettings) {
@@ -1503,7 +1503,7 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
 		error=s->Phone.Functions->GetMMSSettings(s,&WAPSettings);
 		if (error == ERR_NONE) {
 		} else {
-			info->WAPSettings = false;
+			info->WAPSettings = FALSE;
 		}
 	}
 	if (info->FMStation) {
@@ -1511,7 +1511,7 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
  		error = s->Phone.Functions->GetFMStation(s,&FMStation);
  	        if (error == ERR_NONE || error == ERR_EMPTY) {
 		} else {
-			info->FMStation = false;
+			info->FMStation = FALSE;
 		}
 	}
 	if (info->GPRSPoint) {
@@ -1519,7 +1519,7 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
  		error = s->Phone.Functions->GetGPRSAccessPoint(s,&GPRSPoint);
  	        if (error == ERR_NONE || error == ERR_EMPTY) {
 		} else {
-			info->GPRSPoint = false;
+			info->GPRSPoint = FALSE;
 		}
 	}
 }

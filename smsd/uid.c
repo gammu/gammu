@@ -10,32 +10,32 @@
 /**
  * Sets UID.
  */
-bool set_uid_gid(SMSD_Parameters *params)
+gboolean set_uid_gid(SMSD_Parameters *params)
 {
     /* gid is set allways (either through fill_uid or by user */
     if (setgid(params->gid) != 0)
-        return false;
+        return FALSE;
 
     /* Only set group */
     if (params->uid == -1)
-        return true;
+        return TRUE;
 
     if (initgroups(params->user, params->gid) != 0)
-        return false;
+        return FALSE;
 
     if (setuid(params->uid) != 0)
-        return false;
+        return FALSE;
 
     if (seteuid(params->uid) != 0)
-        return false;
+        return FALSE;
 
-    return true;
+    return TRUE;
 }
 
 /**
  * Sets GID.
  */
-bool set_gid(int gid)
+gboolean set_gid(int gid)
 {
     return setgid(gid) == 0;
 }
@@ -43,7 +43,7 @@ bool set_gid(int gid)
 /**
  * Gets UID from string.
  */
-bool fill_uid(SMSD_Parameters *params, const char *name)
+gboolean fill_uid(SMSD_Parameters *params, const char *name)
 {
     struct passwd *pwd;
     char *endptr;
@@ -65,16 +65,16 @@ bool fill_uid(SMSD_Parameters *params, const char *name)
         if (params->gid == -1) {
             params->gid = pwd->pw_gid;
         }
-        return true;
+        return TRUE;
     }
 
-    return false;
+    return FALSE;
 }
 
 /**
  * Gets GID from string.
  */
-bool fill_gid(SMSD_Parameters *params, const char *name)
+gboolean fill_gid(SMSD_Parameters *params, const char *name)
 {
     struct group *grp;
     char *endptr;
@@ -93,9 +93,9 @@ bool fill_gid(SMSD_Parameters *params, const char *name)
     if (grp != NULL) {
         params->gid = grp->gr_gid;
         params->group = strdup(grp->gr_name);
-        return true;
+        return TRUE;
     }
 
-    return false;
+    return FALSE;
 }
 

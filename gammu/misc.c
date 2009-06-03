@@ -62,7 +62,7 @@ void PrintNetworkInfo(GSM_NetworkInfo NetInfo)
 GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone)
 {
 	int 		i;
-	bool 		first=true;
+	gboolean 		first=TRUE;
 	GSM_Error 	error;
 
 	signal(SIGINT, interrupt);
@@ -73,11 +73,11 @@ GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone)
 		if (ringtone.NoteTone.Commands[i].Type != RING_Note) continue;
 		error=PHONE_RTTLPlayOneNote(gsm,ringtone.NoteTone.Commands[i].Note,first);
 		if (error!=ERR_NONE) return error;
-		first = false;
+		first = FALSE;
 	}
 
 	/* Disables buzzer */
-	return GSM_PlayTone(gsm,255*255,0,false);
+	return GSM_PlayTone(gsm,255*255,0,FALSE);
 }
 
 void PlayRingtone(int argc UNUSED, char *argv[])
@@ -92,7 +92,7 @@ void PlayRingtone(int argc UNUSED, char *argv[])
 	error=GSM_RingtoneConvert(&ringtone2,&ringtone,RING_NOTETONE);
 	Print_Error(error);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_PlayRingtone(ringtone2);
 	Print_Error(error);
@@ -113,7 +113,7 @@ void CheckFirmware(int argc UNUSED, char *argv[]UNUSED)
 	size_t pos = 0, oldpos = 0, i;
 	GSM_Error error;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	/* Get model information */
 	error = GSM_GetModel(gsm, model);
@@ -183,7 +183,7 @@ void Identify(int argc, char *argv[])
 	double num;
 	GSM_Error error;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_GetManufacturer(gsm, buffer);
 	Print_Error(error);
@@ -262,7 +262,7 @@ void NetworkInfo(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_NetworkInfo		NetInfo;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (GSM_GetNetworkInfo(gsm,&NetInfo)==ERR_NONE) {
 		PrintNetworkInfo(NetInfo);
@@ -331,20 +331,20 @@ void Monitor(int argc, char *argv[])
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 	printf("%s\n\n", _("Entering monitor mode..."));
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	GSM_SetIncomingSMSCallback(gsm, IncomingSMS, NULL);
 	GSM_SetIncomingCBCallback(gsm, IncomingCB, NULL);
 	GSM_SetIncomingCallCallback(gsm, IncomingCall, NULL);
 	GSM_SetIncomingUSSDCallback(gsm, IncomingUSSD, NULL);
 
-	error=GSM_SetIncomingSMS  		(gsm,true);
+	error=GSM_SetIncomingSMS  		(gsm,TRUE);
 	printf("%-35s : %s\n", _("Enabling info about incoming SMS"), GSM_ErrorString(error));
-	error=GSM_SetIncomingCB   		(gsm,true);
+	error=GSM_SetIncomingCB   		(gsm,TRUE);
 	printf("%-35s : %s\n", _("Enabling info about incoming CB"), GSM_ErrorString(error));
-	error=GSM_SetIncomingCall 		(gsm,true);
+	error=GSM_SetIncomingCall 		(gsm,TRUE);
 	printf("%-35s : %s\n", _("Enabling info about calls"), GSM_ErrorString(error));
-	error=GSM_SetIncomingUSSD 		(gsm,true);
+	error=GSM_SetIncomingUSSD 		(gsm,TRUE);
 	printf("%-35s : %s\n", _("Enabling info about USSD"), GSM_ErrorString(error));
 
 	while (!gshutdown && count != 0) {
@@ -525,16 +525,16 @@ void Monitor(int argc, char *argv[])
 void GetRingtone(int argc, char *argv[])
 {
 	GSM_Ringtone 	ringtone;
-	bool		PhoneRingtone = false;
+	gboolean		PhoneRingtone = FALSE;
 	GSM_Error error;
 
 	if (strcasestr(argv[1], "getphoneringtone") != NULL) {
-		PhoneRingtone = true;
+		PhoneRingtone = TRUE;
 	}
 
 	GetStartStop(&ringtone.Location, NULL, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	ringtone.Format=0;
 
@@ -563,7 +563,7 @@ void GetRingtonesList(int argc UNUSED, char *argv[] UNUSED)
 	GSM_Error error;
 	int			i;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_GetRingtonesInfo(gsm,&Info);
  	if (error != ERR_NONE && Info.Ringtone) free(Info.Ringtone);
@@ -590,7 +590,7 @@ void DialVoice(int argc, char *argv[])
 		}
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_DialVoice(gsm, argv[2], ShowNumber);
 	Print_Error(error);
@@ -619,22 +619,22 @@ void MakeTerminatedCall(int argc, char *argv[])
 		}
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	TerminateID = -1;
 	GSM_SetIncomingCallCallback(gsm, IncomingCall0, NULL);
 
-	error=GSM_SetIncomingCall(gsm,true);
+	error=GSM_SetIncomingCall(gsm,TRUE);
 	Print_Error(error);
 
 	error=GSM_DialVoice(gsm, argv[2], ShowNumber);
 	Print_Error(error);
 
 	sleep(atoi(argv[3]));
-	GSM_ReadDevice(gsm,true);
+	GSM_ReadDevice(gsm,TRUE);
 
 	if (TerminateID != -1) {
-		error=GSM_CancelCall(gsm,TerminateID,false);
+		error=GSM_CancelCall(gsm,TerminateID,FALSE);
 		Print_Error(error);
 	}
 
@@ -645,12 +645,12 @@ void MakeTerminatedCall(int argc, char *argv[])
 void CancelCall(int argc, char *argv[])
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (argc>2) {
-		error=GSM_CancelCall(gsm,atoi(argv[2]),false);
+		error=GSM_CancelCall(gsm,atoi(argv[2]),FALSE);
 	} else {
-		error=GSM_CancelCall(gsm,0,true);
+		error=GSM_CancelCall(gsm,0,TRUE);
 	}
 	Print_Error(error);
 
@@ -660,12 +660,12 @@ void CancelCall(int argc, char *argv[])
 void AnswerCall(int argc, char *argv[])
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (argc>2) {
-		error=GSM_AnswerCall(gsm,atoi(argv[2]),false);
+		error=GSM_AnswerCall(gsm,atoi(argv[2]),FALSE);
 	} else {
-		error=GSM_AnswerCall(gsm,0,true);
+		error=GSM_AnswerCall(gsm,0,TRUE);
 	}
 	Print_Error(error);
 
@@ -675,7 +675,7 @@ void AnswerCall(int argc, char *argv[])
 void UnholdCall(int argc UNUSED, char *argv[])
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_UnholdCall(gsm,atoi(argv[2]));
 	Print_Error(error);
@@ -686,7 +686,7 @@ void UnholdCall(int argc UNUSED, char *argv[])
 void HoldCall(int argc UNUSED, char *argv[])
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_HoldCall(gsm,atoi(argv[2]));
 	Print_Error(error);
@@ -697,7 +697,7 @@ void HoldCall(int argc UNUSED, char *argv[])
 void ConferenceCall(int argc UNUSED, char *argv[])
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_ConferenceCall(gsm,atoi(argv[2]));
 	Print_Error(error);
@@ -708,7 +708,7 @@ void ConferenceCall(int argc UNUSED, char *argv[])
 void SplitCall(int argc UNUSED, char *argv[])
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_SplitCall(gsm,atoi(argv[2]));
 	Print_Error(error);
@@ -719,12 +719,12 @@ void SplitCall(int argc UNUSED, char *argv[])
 void SwitchCall(int argc, char *argv[])
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (argc > 2) {
-		error=GSM_SwitchCall(gsm,atoi(argv[2]),false);
+		error=GSM_SwitchCall(gsm,atoi(argv[2]),FALSE);
 	} else {
-		error=GSM_SwitchCall(gsm,0,true);
+		error=GSM_SwitchCall(gsm,0,TRUE);
 	}
 	Print_Error(error);
 
@@ -734,12 +734,12 @@ void SwitchCall(int argc, char *argv[])
 void TransferCall(int argc, char *argv[])
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (argc > 2) {
-		error=GSM_TransferCall(gsm,atoi(argv[2]),false);
+		error=GSM_TransferCall(gsm,atoi(argv[2]),FALSE);
 	} else {
-		error=GSM_TransferCall(gsm,0,true);
+		error=GSM_TransferCall(gsm,0,TRUE);
 	}
 	Print_Error(error);
 
@@ -748,17 +748,17 @@ void TransferCall(int argc, char *argv[])
 
 void Reset(int argc UNUSED, char *argv[])
 {
-	bool hard;
+	gboolean hard;
 	GSM_Error error;
 
-	if (strcasecmp(argv[2],"SOFT") == 0) {		hard=false;
-	} else if (strcasecmp(argv[2],"HARD") == 0) {	hard=true;
+	if (strcasecmp(argv[2],"SOFT") == 0) {		hard=FALSE;
+	} else if (strcasecmp(argv[2],"HARD") == 0) {	hard=TRUE;
 	} else {
 		printf(_("What type of reset do you want (\"%s\") ?\n"),argv[2]);
 		Terminate(3);
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_Reset(gsm, hard);
 	Print_Error(error);
@@ -774,7 +774,7 @@ void GetWAPBookmark(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i=start;i<=stop;i++) {
 		bookmark.Location=i;
@@ -795,7 +795,7 @@ void DeleteWAPBookmark(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i=start;i<=stop;i++) {
 		bookmark.Location=i;
@@ -814,7 +814,7 @@ void GetGPRSPoint(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i=start;i<=stop;i++) {
 		point.Location=i;
@@ -870,7 +870,7 @@ void GetBitmap(int argc, char *argv[])
 	}
 	MultiBitmap.Bitmap[0].Location=location;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_GetBitmap(gsm,&MultiBitmap.Bitmap[0]);
 	Print_Error(error);
@@ -969,7 +969,7 @@ void SetBitmap(int argc, char *argv[])
 	GSM_Bitmap		Bitmap, NewBitmap;
 	GSM_MultiBitmap		MultiBitmap;
 	GSM_NetworkInfo		NetInfo;
-	bool			init = true;
+	gboolean			init = TRUE;
 	int			i;
 	GSM_Error error;
 
@@ -1020,15 +1020,15 @@ void SetBitmap(int argc, char *argv[])
 		}
 		memcpy(&Bitmap,&MultiBitmap.Bitmap[0],sizeof(GSM_Bitmap));
 		if (i!=255) {
-			GSM_Init(true);
-			init = false;
+			GSM_Init(TRUE);
+			init = FALSE;
 			NewBitmap.Type 	   = GSM_CallerGroupLogo;
 			NewBitmap.Location = i;
 			error=GSM_GetBitmap(gsm,&NewBitmap);
 			Print_Error(error);
 			Bitmap.RingtoneID	  = NewBitmap.RingtoneID;
 			Bitmap.DefaultRingtone 	  = NewBitmap.DefaultRingtone;
-			Bitmap.FileSystemRingtone = false;
+			Bitmap.FileSystemRingtone = FALSE;
 			CopyUnicodeString(Bitmap.Text, NewBitmap.Text);
 			Bitmap.DefaultName	  = NewBitmap.DefaultName;
 		}
@@ -1055,8 +1055,8 @@ void SetBitmap(int argc, char *argv[])
 			if (argc>4) {
 				strncpy(Bitmap.NetworkCode,argv[4],6);
 			} else {
-				GSM_Init(true);
-				init = false;
+				GSM_Init(TRUE);
+				init = FALSE;
 				error=GSM_GetNetworkInfo(gsm,&NetInfo);
 				Print_Error(error);
 				strcpy(Bitmap.NetworkCode,NetInfo.NetworkCode);
@@ -1083,8 +1083,8 @@ void SetBitmap(int argc, char *argv[])
 			if (argc>4) {
 				strncpy(MultiBitmap.Bitmap[0].NetworkCode,argv[4],6);
 			} else {
-				GSM_Init(true);
-				init = false;
+				GSM_Init(TRUE);
+				init = FALSE;
 				error=GSM_GetNetworkInfo(gsm,&NetInfo);
 				Print_Error(error);
 				strcpy(MultiBitmap.Bitmap[0].NetworkCode,NetInfo.NetworkCode);
@@ -1096,7 +1096,7 @@ void SetBitmap(int argc, char *argv[])
 		Terminate(3);
 	}
 
-	if (init) GSM_Init(true);
+	if (init) GSM_Init(TRUE);
 
 	error=GSM_SetBitmap(gsm,&Bitmap);
 	Print_Error(error);
@@ -1122,7 +1122,7 @@ void SetRingtone(int argc, char *argv[])
 		switch (nextlong) {
 		case 0:
 			if (strcasecmp(argv[i],"-scale") == 0) {
-				ringtone.NoteTone.AllNotesScale = true;
+				ringtone.NoteTone.AllNotesScale = TRUE;
 				break;
 			}
 			if (strcasecmp(argv[i],"-location") == 0) {
@@ -1154,7 +1154,7 @@ void SetRingtone(int argc, char *argv[])
 		exit (-1);
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 	error=GSM_SetRingtone(gsm, &ringtone, &i);
 	Print_Error(error);
 #ifdef GSM_ENABLE_BEEP
@@ -1168,14 +1168,14 @@ void ClearMemory(GSM_MemoryType type, const char *question)
 	GSM_Error error;
 	GSM_MemoryStatus	MemStatus;
 	GSM_MemoryEntry		Pbk;
-	bool			DoClear;
+	gboolean			DoClear;
 	int			i;
 
-	DoClear = false;
+	DoClear = FALSE;
 	MemStatus.MemoryType = type;
 	error = GSM_GetMemoryStatus(gsm, &MemStatus);
 	if (error == ERR_NONE && MemStatus.MemoryUsed !=0) {
-		if (answer_yes("%s", question)) DoClear = true;
+		if (answer_yes("%s", question)) DoClear = TRUE;
 	}
 	if (DoClear) {
 		error = GSM_DeleteAllMemory(gsm, type);
@@ -1212,10 +1212,10 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	GSM_NoteEntry		Note;
 	GSM_WAPBookmark		Bookmark;
 	GSM_FMStation 		Station;
-	bool			DoClear;
+	gboolean			DoClear;
 	GSM_Error error;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	ClearMemory(MEM_ME, _("Delete phone phonebook?"));
 	ClearMemory(MEM_SM, _("Delete SIM phonebook?"));
@@ -1223,17 +1223,17 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	ClearMemory(MEM_DC, _("Delete dialled calls?"));
 	ClearMemory(MEM_RC, _("Delete received calls?"));
 
-	DoClear = false;
-	error = GSM_GetNextCalendar(gsm,&Calendar,true);
+	DoClear = FALSE;
+	error = GSM_GetNextCalendar(gsm,&Calendar,TRUE);
 	if (error == ERR_NONE) {
- 		if (answer_yes(_("Delete phone calendar notes?"))) DoClear = true;
+ 		if (answer_yes(_("Delete phone calendar notes?"))) DoClear = TRUE;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
 		error=GSM_DeleteAllCalendar(gsm);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
  			while (1) {
-				error = GSM_GetNextCalendar(gsm,&Calendar,true);
+				error = GSM_GetNextCalendar(gsm,&Calendar,TRUE);
 				if (error != ERR_NONE) break;
 				error = GSM_DeleteCalendar(gsm,&Calendar);
  				Print_Error(error);
@@ -1247,17 +1247,17 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 		}
 	}
 
-	DoClear = false;
+	DoClear = FALSE;
 	error = GSM_GetToDoStatus(gsm,&ToDoStatus);
 	if (error == ERR_NONE && ToDoStatus.Used != 0) {
-		if (answer_yes(_("Delete phone todos?"))) DoClear = true;
+		if (answer_yes(_("Delete phone todos?"))) DoClear = TRUE;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
 		error=GSM_DeleteAllToDo(gsm);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
  			while (1) {
-				error = GSM_GetNextToDo(gsm,&ToDo,true);
+				error = GSM_GetNextToDo(gsm,&ToDo,TRUE);
 				if (error != ERR_NONE) break;
 				error = GSM_DeleteToDo(gsm,&ToDo);
  				Print_Error(error);
@@ -1271,15 +1271,15 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 		}
 	}
 
-	DoClear = false;
+	DoClear = FALSE;
 	error = GSM_GetNotesStatus(gsm,&ToDoStatus);
 	if (error == ERR_NONE && ToDoStatus.Used != 0) {
-		if (answer_yes(_("Delete phone notes?"))) DoClear = true;
+		if (answer_yes(_("Delete phone notes?"))) DoClear = TRUE;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
 		while (1) {
-			error = GSM_GetNextNote(gsm,&Note,true);
+			error = GSM_GetNextNote(gsm,&Note,TRUE);
 			if (error != ERR_NONE) break;
 			error = GSM_DeleteNote(gsm,&Note);
 			Print_Error(error);
@@ -1431,7 +1431,7 @@ void GetSyncMLSettings(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i=start;i<=stop;i++) {
 		settings.Location=i;
@@ -1480,7 +1480,7 @@ void GetChatSettings(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i=start;i<=stop;i++) {
 		settings.Location=i;
@@ -1520,7 +1520,7 @@ void GetWAPMMSSettings(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i=start;i<=stop;i++) {
 		settings.Location=i;
@@ -1639,12 +1639,12 @@ void PressKeySequence(int argc UNUSED, char *argv[])
 		Terminate(3);
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i=0;i<Length;i++) {
-		error=GSM_PressKey(gsm, KeyCode[i], true);
+		error=GSM_PressKey(gsm, KeyCode[i], TRUE);
 		Print_Error(error);
-		error=GSM_PressKey(gsm, KeyCode[i], false);
+		error=GSM_PressKey(gsm, KeyCode[i], FALSE);
 		Print_Error(error);
 	}
 
@@ -1669,7 +1669,7 @@ void GetAllCategories(int argc UNUSED, char *argv[])
 		Terminate(3);
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_GetCategoryStatus(gsm, &Status);
 	Print_Error(error);
@@ -1709,7 +1709,7 @@ void GetCategory(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc - 1, argv + 1);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (j=start;j<=stop;j++)
 	{
@@ -1745,7 +1745,7 @@ void AddCategory(int argc UNUSED, char *argv[])
 		Terminate(3);
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	Length = strlen(argv[3]);
 	if (Length > GSM_MAX_CATEGORY_NAME_LENGTH) {
@@ -1765,7 +1765,7 @@ void AddCategory(int argc UNUSED, char *argv[])
 
 void GetSecurityStatus(int argc UNUSED, char *argv[] UNUSED)
 {
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	PrintSecurityStatus();
 
@@ -1813,7 +1813,7 @@ void EnterSecurityCode(int argc UNUSED, char *argv[])
 		strcpy(Code.Code,argv[3]);
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_EnterSecurityCode(gsm,Code);
 	Print_Error(error);
@@ -1826,15 +1826,15 @@ void GetProfile(int argc, char *argv[])
 	GSM_Profile 		Profile;
 	int			start,stop,i,j,k;
 	GSM_Bitmap		caller[5];
-	bool			callerinit[5],special;
+	gboolean			callerinit[5],special;
  	GSM_AllRingtonesInfo 	Info = {0, NULL};
 	GSM_Error error;
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	for (i=0;i<5;i++) callerinit[i] = false;
+	for (i=0;i<5;i++) callerinit[i] = FALSE;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_GetRingtonesInfo(gsm,&Info);
 	if (error != ERR_NONE) Info.Number = 0;
@@ -1852,11 +1852,11 @@ void GetProfile(int argc, char *argv[])
 		if (Profile.CarKitProfile) 	printf(_(" (Car kit profile)"));
 		printf("\n");
 		for (j=0;j<Profile.FeaturesNumber;j++) {
-			special = false;
+			special = FALSE;
 			switch (Profile.FeatureID[j]) {
 			case Profile_MessageToneID:
 			case Profile_RingtoneID:
-				special = true;
+				special = TRUE;
 				if (Profile.FeatureID[j] == Profile_RingtoneID) {
 					printf(LISTFORMAT, _("Ringtone ID"));
 				} else {
@@ -1869,7 +1869,7 @@ void GetProfile(int argc, char *argv[])
 				}
 				break;
 			case Profile_CallerGroups:
-				special = true;
+				special = TRUE;
 				printf(LISTFORMAT, _("Call alert for"));
 				for (k=0;k<5;k++) {
 					if (Profile.CallerGroups[k]) {
@@ -1882,7 +1882,7 @@ void GetProfile(int argc, char *argv[])
 							} else {
 								Print_Error(error);
 							}
-							callerinit[k]	= true;
+							callerinit[k]	= TRUE;
 						}
 						printf(" \"%s\"",DecodeUnicodeConsole(caller[k].Text));
 					}
@@ -1890,7 +1890,7 @@ void GetProfile(int argc, char *argv[])
 				printf("\n");
 				break;
 			case Profile_ScreenSaverNumber:
-				special = true;
+				special = TRUE;
 				printf(LISTFORMAT, _("Screen saver number"));
 				printf("%i\n",Profile.FeatureValue[j]);
 				break;
@@ -1906,7 +1906,7 @@ void GetProfile(int argc, char *argv[])
 			case Profile_Lights		: printf(LISTFORMAT, _("Lights")); break;
 			default:
 				printf("%s\n", _("Unknown"));
-				special = true;
+				special = TRUE;
 			}
 			if (!special) {
 				switch (Profile.FeatureValue[j]) {
@@ -1969,7 +1969,7 @@ void GetSpeedDial(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i=start;i<=stop;i++) {
 		SpeedDial.Location=i;
@@ -2012,7 +2012,7 @@ void ResetPhoneSettings(int argc UNUSED, char *argv[])
 		Terminate(3);
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_ResetPhoneSettings(gsm,Type);
 	Print_Error(error);
@@ -2023,7 +2023,7 @@ void ResetPhoneSettings(int argc UNUSED, char *argv[])
 void SendDTMF(int argc UNUSED, char *argv[])
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_SendDTMF(gsm,argv[2]);
 	Print_Error(error);
@@ -2037,7 +2037,7 @@ void GetDisplayStatus(int argc UNUSED, char *argv[] UNUSED)
 	GSM_DisplayFeatures 	Features;
 	int			i;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_GetDisplayStatus(gsm,&Features);
 	Print_Error(error);
@@ -2062,7 +2062,7 @@ void GetDisplayStatus(int argc UNUSED, char *argv[] UNUSED)
 void SetAutoNetworkLogin(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error=GSM_SetAutoNetworkLogin(gsm);
 	Print_Error(error);
@@ -2078,7 +2078,7 @@ void GetFMStation(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (i=start;i<=stop;i++) {
 		Station.Location=i;
@@ -2130,7 +2130,7 @@ void CallDivert(int argc, char *argv[])
 		Terminate(3);
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (strcasecmp("get", argv[2]) == 0) {
 		error = GSM_GetCallDivert(gsm,&cd);
@@ -2196,7 +2196,7 @@ void CallDivert(int argc, char *argv[])
 void CancelAllDiverts(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_Error error;
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error = GSM_CancelAllDiverts(gsm);
     	Print_Error(error);

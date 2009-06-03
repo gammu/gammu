@@ -1,7 +1,7 @@
 
 GSM_Error N6510_GetFileSystemStatus		(GSM_StateMachine *s, GSM_FileSystemStatus *status);
-GSM_Error N6510_GetNextFileFolder		(GSM_StateMachine *s, GSM_File *File, bool start);
-GSM_Error N6510_GetFolderListing		(GSM_StateMachine *s, GSM_File *File, bool start);
+GSM_Error N6510_GetNextFileFolder		(GSM_StateMachine *s, GSM_File *File, gboolean start);
+GSM_Error N6510_GetFolderListing		(GSM_StateMachine *s, GSM_File *File, gboolean start);
 GSM_Error N6510_AddFolder			(GSM_StateMachine *s, GSM_File *File);
 GSM_Error N6510_DeleteFolder			(GSM_StateMachine *s, unsigned char *ID);
 GSM_Error N6510_GetFilePart			(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size);
@@ -10,9 +10,9 @@ GSM_Error N6510_DeleteFile			(GSM_StateMachine *s, unsigned char *ID);
 GSM_Error N6510_SetFileAttributes		(GSM_StateMachine *s, GSM_File *File);
 GSM_Error N6510_GetNextRootFolder		(GSM_StateMachine *s, GSM_File *File);
 GSM_Error N6510_GetMMSFolders			(GSM_StateMachine *s, GSM_MMSFolders *folders);
-GSM_Error N6510_GetNextMMSFileInfo		(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start);
+GSM_Error N6510_GetNextMMSFileInfo		(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, gboolean start);
 GSM_Error N6510_GetFilesystemSMSFolders		(GSM_StateMachine *s, GSM_SMSFolders *folders);
-GSM_Error N6510_GetNextFilesystemSMS		(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start);
+GSM_Error N6510_GetNextFilesystemSMS		(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean start);
 
 GSM_Error N6510_ReplyGetFileCRC12		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N6510_ReplySetAttrib2			(GSM_Protocol_Message msg, GSM_StateMachine *s);

@@ -10,9 +10,9 @@ typedef struct {
 } GSM_SAT_ChInfo;
 
 typedef struct {
-	bool		BA_used;
-	bool		DTX_used;
-	bool		MeasValid;
+	gboolean		BA_used;
+	gboolean		DTX_used;
+	gboolean		MeasValid;
 	int		RXLEV_FullServicingCell;
 	int		RXLEV_SubServicingCell;
 	unsigned char	RXQUAL_FullServicingCell;

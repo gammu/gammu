@@ -35,7 +35,7 @@ const char default_config[] = "/etc/gammu-smsdrc";
 #endif
 
 GSM_SMSDConfig *config;
-volatile bool reconfigure = false;
+volatile gboolean reconfigure = FALSE;
 
 void smsd_interrupt(int signum)
 {
@@ -45,7 +45,7 @@ void smsd_interrupt(int signum)
 
 void smsd_reconfigure(int signum)
 {
-	reconfigure = true;
+	reconfigure = TRUE;
 	SMSD_Shutdown(config);
 }
 
@@ -229,24 +229,24 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 #endif
 #ifdef HAVE_DAEMON
 			case 'd':
-				params->daemonize = true;
+				params->daemonize = TRUE;
 				break;
 #endif
 #ifdef HAVE_WINDOWS_SERVICE
 			case 'i':
-				params->install_service = true;
+				params->install_service = TRUE;
 				break;
 			case 'u':
-				params->uninstall_service = true;
+				params->uninstall_service = TRUE;
 				break;
 			case 's':
-				params->start_service = true;
+				params->start_service = TRUE;
 				break;
 			case 'k':
-				params->stop_service = true;
+				params->stop_service = TRUE;
 				break;
 			case 'S':
-				params->run_service = true;
+				params->run_service = TRUE;
 				break;
 			case 'n':
 				strncpy(smsd_service_name, optarg, SERVICE_NAME_LENGTH);
@@ -341,12 +341,12 @@ int main(int argc, char **argv)
 		-1,
 		NULL,
 		NULL,
-		false,
-		false,
-		false,
-		false,
-		false,
-		false
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE
 	};
 
 	process_commandline(argc, argv, &params);
@@ -418,7 +418,7 @@ read_config:
 	config = SMSD_NewConfig(program_name);
 	assert(config != NULL);
 
-	error = SMSD_ReadConfig(params.config_file, config, true);
+	error = SMSD_ReadConfig(params.config_file, config, TRUE);
 	if (error != ERR_NONE) {
 		printf("Failed to read config: %s\n", GSM_ErrorString(error));
 		SMSD_FreeConfig(config);
@@ -428,8 +428,8 @@ read_config:
 	if (!reconfigure)
 		configure_daemon(&params);
 
-	reconfigure = false;
-	error = SMSD_MainLoop(config, false);
+	reconfigure = FALSE;
+	error = SMSD_MainLoop(config, FALSE);
 	if (error != ERR_NONE) {
 		printf("Failed to run SMSD: %s\n", GSM_ErrorString(error));
 		SMSD_FreeConfig(config);

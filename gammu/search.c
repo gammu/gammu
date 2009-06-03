@@ -50,7 +50,7 @@ typedef struct {
 	OneConnectionInfo Connections[5];
 } OneDeviceInfo;
 
-bool SearchOutput;
+gboolean SearchOutput;
 
 /**
  * Like printf, but only when output from searching is enabled.
@@ -200,9 +200,9 @@ void SearchPhone(int argc, char *argv[])
 #endif
 
 
-	SearchOutput = false;
+	SearchOutput = FALSE;
 	if (argc == 3 && strcasecmp(argv[2], "-debug") == 0)
-		SearchOutput = true;
+		SearchOutput = TRUE;
 
 #ifdef WIN32
 	SearchDevices[dev].Device[0] = 0;

@@ -125,10 +125,10 @@ GSM_Error SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 		00};
 
 	fake_sm = GSM_AllocStateMachine();
-	fake_sm->di.use_global = true;
+	fake_sm->di.use_global = TRUE;
 	fake_sm->Phone.Data.ModelInfo = GetModelData(NULL, "unknown", NULL, NULL);
 
-	count=count+N71_65_EncodePhonebookFrame(fake_sm, req+16, entry, &blocks, true, true);
+	count=count+N71_65_EncodePhonebookFrame(fake_sm, req+16, entry, &blocks, TRUE, TRUE);
 
 	req[4]=(count-12)%256;
 	req[5]=(count-12)/256;
@@ -229,20 +229,20 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer UNUSED, unsigned char 
 
   	bitmap.Location		= buffer2[0] + 1;
 	bitmap.Type		= GSM_CallerGroupLogo;
-	bitmap.DefaultRingtone 	= false;
+	bitmap.DefaultRingtone 	= FALSE;
 	bitmap.RingtoneID		= buffer2[buffer2[1]+2];
 
 	EncodeUnicode(bitmap.Text,buffer2+2,buffer2[1]);
 	if (bitmap.Text[0] == 0x00 && bitmap.Text[1] == 0x00) {
-		bitmap.DefaultName = true;
+		bitmap.DefaultName = TRUE;
 	} else {
-		bitmap.DefaultName = false;
+		bitmap.DefaultName = FALSE;
 	}
 
-	bitmap.BitmapEnabled = false;
-	if (buffer2[buffer2[1]+3]==1) bitmap.BitmapEnabled=true;
+	bitmap.BitmapEnabled = FALSE;
+	if (buffer2[buffer2[1]+3]==1) bitmap.BitmapEnabled=TRUE;
 
-	bitmap.DefaultBitmap = false;
+	bitmap.DefaultBitmap = FALSE;
 	PHONE_DecodeBitmap(GSM_NokiaCallerLogo, buffer2+(buffer2[1]+10), &bitmap);
 
 #ifdef DEBUG
@@ -325,7 +325,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	GSM_StateMachine	*fake_sm;
 
 	fake_sm = GSM_AllocStateMachine();
-	fake_sm->di.use_global = true;
+	fake_sm->di.use_global = TRUE;
 	fake_sm->Phone.Data.ModelInfo = GetModelData(NULL, "unknown", NULL, NULL);
 
 	dbgprintf(NULL, "Memory : ");
@@ -346,7 +346,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	pbk.Location = buffer2[0] + buffer2[1] * 256;
 	dbgprintf(NULL, "Location : %i\n", pbk.Location);
 
-	N71_65_DecodePhonebook(fake_sm, &pbk, NULL,NULL,buffer2+4,(buffer[4]+buffer[5]*256)-4,false);
+	N71_65_DecodePhonebook(fake_sm, &pbk, NULL,NULL,buffer2+4,(buffer[4]+buffer[5]*256)-4,FALSE);
 
 	pbk.MemoryType=MEM_SM;
 	if (buffer[10]==2) pbk.MemoryType=MEM_ME;

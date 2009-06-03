@@ -28,7 +28,7 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 {
 	GSM_Error error;
 	GSM_Ringtone 		ringtone;
-	bool			started;
+	gboolean			started;
 	int 			i,j;
 	GSM_RingNote 		*Note;
 	GSM_RingNoteDuration 	Duration;
@@ -44,7 +44,7 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 		Terminate(3);
 	}
 
-	started = false;
+	started = FALSE;
 	j	= 0;
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
@@ -53,7 +53,7 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 				if (Note->Note != Note_Pause) {
 					printf(_("Ringtone \"%s\" (tempo = %i Beats Per Minute)"),DecodeUnicodeConsole(ringtone.Name),GSM_RTTLGetTempo(Note->Tempo));
 					printf("\n\n");
-					started = true;
+					started = TRUE;
 				}
 			}
 			if (started) j++;
@@ -64,12 +64,12 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 	}
 
 	printf("\n\n%s ", _("This ringtone in Nokia Composer in phone should look:"));
-	started = false;
+	started = FALSE;
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
 			Note = &ringtone.NoteTone.Commands[i].Note;
 			if (!started) {
-				if (Note->Note != Note_Pause) started = true;
+				if (Note->Note != Note_Pause) started = TRUE;
 			}
 			if (started) {
 				switch (Note->Duration) {
@@ -103,12 +103,12 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 	}
 
 	printf("\n\n%s ", _("To enter it please press:"));
-	started = false;
+	started = FALSE;
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
 			Note = &ringtone.NoteTone.Commands[i].Note;
 			if (!started) {
-				if (Note->Note != Note_Pause) started = true;
+				if (Note->Note != Note_Pause) started = TRUE;
 			}
 			if (started) {
 				switch (Note->Note) {
@@ -173,7 +173,7 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 
 void NokiaSecurityCode(int argc, char *argv[])
 {
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 	DCT3GetSecurityCode(argc,argv);
@@ -188,7 +188,7 @@ void NokiaSecurityCode(int argc, char *argv[])
 
 void NokiaSetPhoneMenus(int argc, char *argv[])
 {
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 	DCT3SetPhoneMenus (argc, argv);
@@ -202,7 +202,7 @@ void NokiaSetPhoneMenus(int argc, char *argv[])
 
 void NokiaSelfTests(int argc, char *argv[])
 {
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 	DCT3SelfTests(argc, argv);
@@ -225,7 +225,7 @@ struct _PlayListEntry {
 void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDFolder)
 {
 	GSM_Error error;
-	bool 			Start = true, Available = false;
+	gboolean 			Start = TRUE, Available = FALSE;
 	GSM_File	 	Files,Files2,Files3;
 	int 			j,NamesPos2=0;
 	size_t i, NamesPos = 0;
@@ -284,7 +284,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 			NamesPos2+=UnicodeLength(Files.Name)*2+2;
 		}
 
-		Start = false;
+		Start = FALSE;
 	}
 	if (First!=NULL) {
 		/* sorting songs names */
@@ -316,8 +316,8 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 			}
 	        	EncodeUnicode(Buffer2+UnicodeLength(Buffer2)*2,".m3u",4);
 
-			Start = true;
-			Available = false;
+			Start = TRUE;
+			Available = FALSE;
 			while (1) {
 				error = GSM_GetFolderListing(gsm,&Files3,Start);
 				if (error == ERR_FOLDERPART) {
@@ -329,23 +329,23 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 
 				if (!Files3.Folder) {
 					if (mywstrncasecmp(Buffer2,Files3.Name,-1)) {
-						Available = true;
+						Available = TRUE;
 						break;
 					}
 				}
-				Start = false;
+				Start = FALSE;
 			}
 			if (!Available) break;
 			i++;
 		}
 
 		/* preparing new playlist file date */
-		Files2.System	 = false;
-		Files2.Folder 	 = false;
-		Files2.ReadOnly	 = false;
-		Files2.Hidden	 = false;
-		Files2.Protected = false;
-		Files2.ModifiedEmpty = false;
+		Files2.System	 = FALSE;
+		Files2.Folder 	 = FALSE;
+		Files2.ReadOnly	 = FALSE;
+		Files2.Hidden	 = FALSE;
+		Files2.Protected = FALSE;
+		Files2.ModifiedEmpty = FALSE;
 		GSM_GetCurrentDateTime (&Files2.Modified);
 		CopyUnicodeString(Files2.ID_FullName,IDFolder);
 	        CopyUnicodeString(Files2.Name,Buffer2);
@@ -369,7 +369,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 
 		/* adding new playlist file */
 		sprintf(Buffer2, _("Writing file %s:"), DecodeUnicodeString(Files2.Name));
-		AddOneFile(&Files2, Buffer2, false);
+		AddOneFile(&Files2, Buffer2, FALSE);
 
 		/* cleaning buffers */
 		free(Files2.Buffer);
@@ -405,11 +405,11 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_Error error;
-	bool 			Start = true;
+	gboolean 			Start = TRUE;
 	GSM_File	 	Files;
 	unsigned char		buffer[20],buffer2[20],IDFolder[100];
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	/* delete old playlists */
 	EncodeUnicode(IDFolder,"d:\\predefplaylist",17);
@@ -436,7 +436,7 @@ void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
 			    	Print_Error(error);
 			}
 		}
-		Start = false;
+		Start = FALSE;
 		error = GSM_GetFolderListing(gsm,&Files,Start);
 		if (error == ERR_FOLDERPART) {
 			printf("%s\n", _("Problem with deleting playlist"));
@@ -519,15 +519,15 @@ void NokiaAddFile(int argc, char *argv[])
 	GSM_File		File, Files, File2;
 	FILE			*file;
 	unsigned char 		buffer[10000],JAR[500],Vendor[500],Name[500],Version[500],FileID[400];
-	bool 			Start = true, Found = false, wasclr;
-	bool			ModEmpty = false, Overwrite = false, OverwriteAll = false;
+	gboolean 			Start = TRUE, Found = FALSE, wasclr;
+	gboolean			ModEmpty = FALSE, Overwrite = FALSE, OverwriteAll = FALSE;
 	size_t i = 0, Pos;
 	int Size, Size2;
 	int nextlong, j;
 
 	while (Folder[i].parameter[0] != 0) {
 		if (strcasecmp(argv[2],Folder[i].parameter) == 0) {
-			Found = true;
+			Found = TRUE;
 			break;
 		}
 		i++;
@@ -552,16 +552,16 @@ void NokiaAddFile(int argc, char *argv[])
 		fclose(file);
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
-	Found = false;
+	Found = FALSE;
     	if (GSM_GetUsedConnection(gsm) == GCT_IRDAOBEX || GSM_GetUsedConnection(gsm) == GCT_BLUEOBEX) {
 		i = 0;
 		while (Folder[i].parameter[0] != 0) {
 			if (!strcmp("obex",Folder[i].model) &&
 			     strcasecmp(argv[2],Folder[i].parameter) == 0) {
 				EncodeUnicode(Files.ID_FullName,Folder[i].folder,strlen(Folder[i].folder));
-				Found = true;
+				Found = TRUE;
 				break;
 			}
 			i++;
@@ -583,7 +583,7 @@ void NokiaAddFile(int argc, char *argv[])
 					continue;
 				}
 				EncodeUnicode(Files.ID_FullName,Folder[i].folder,strlen(Folder[i].folder));
-				Found = true;
+				Found = TRUE;
 				break;
 			}
 			i++;
@@ -598,7 +598,7 @@ void NokiaAddFile(int argc, char *argv[])
 
 			if (Files.Folder) {
 				smprintf(gsm, "folder %s level %i\n",DecodeUnicodeConsole(Files.Name),Files.Level);
-				Found 	= false;
+				Found 	= FALSE;
 				i 	= 0;
 				while (Folder[i].parameter[0] != 0) {
 					EncodeUnicode(buffer,Folder[i].folder,strlen(Folder[i].folder));
@@ -607,13 +607,13 @@ void NokiaAddFile(int argc, char *argv[])
 					    mywstrncasecmp(Files.Name,buffer,0) &&
 					    Files.Level == atoi(Folder[i].level)) {
 						smprintf(gsm, "found 1\n");
-						Found = true;
+						Found = TRUE;
 						break;
 					}
 					if (strcasecmp(argv[2],Folder[i].parameter) == 0 &&
 					    !strcmp(DecodeUnicodeString(Files.ID_FullName),Folder[i].folder) &&
 					    Folder[i].level[0] == 0x00) {
-						Found = true;
+						Found = TRUE;
 						smprintf(gsm, "found 2\n");
 						break;
 					}
@@ -624,7 +624,7 @@ void NokiaAddFile(int argc, char *argv[])
 						if (strcasecmp(argv[2],Folder[i].parameter) == 0  &&
 						    mywstrncasecmp(Files.Name,buffer,0) &&
 						    Files.Level == atoi(Folder[i].level)) {
-							Found = true;
+							Found = TRUE;
 							smprintf(gsm, "found 3\n");
 							break;
 						}
@@ -635,7 +635,7 @@ void NokiaAddFile(int argc, char *argv[])
 			}
 			fprintf(stderr, "*");
 
-			Start = false;
+			Start = FALSE;
 		}
 		fprintf(stderr, "\n");
 		fflush(stderr);
@@ -646,10 +646,10 @@ void NokiaAddFile(int argc, char *argv[])
 		Terminate(3);
 	}
 	File.Buffer 	= NULL;
-	File.Protected  = false;
-	File.ReadOnly   = false;
-	File.Hidden	= false;
-	File.System	= false;
+	File.Protected  = FALSE;
+	File.ReadOnly   = FALSE;
+	File.Hidden	= FALSE;
+	File.System	= FALSE;
 
 	if (strcasecmp(argv[2],"Application") == 0 || strcasecmp(argv[2],"Game") == 0) {
 		/* reading jar file */
@@ -690,12 +690,12 @@ void NokiaAddFile(int argc, char *argv[])
 				}
 			}
 			Pos = i;
-			while (true) {
+			while (TRUE) {
 				if (Pos ==0 || File.Buffer[Pos] == 13 || File.Buffer[Pos] == 10) break;
 				Pos--;
 			}
 			i+= 15;
-			while (true) {
+			while (TRUE) {
 				if (i == File.Used || File.Buffer[i] == 13 || File.Buffer[i] == 10) break;
 				i++;
 			}
@@ -731,7 +731,7 @@ void NokiaAddFile(int argc, char *argv[])
 
 		/* Changing all #13 or #10 to #13#10 in JAD */
 		Pos    = 0;
-		wasclr = false;
+		wasclr = FALSE;
 		for (i=0;i<File.Used;i++) {
 			switch (File.Buffer[i]) {
 			case 0x0D:
@@ -739,12 +739,12 @@ void NokiaAddFile(int argc, char *argv[])
 				if (!wasclr) {
 					buffer[Pos++] = 0x0D;
 					buffer[Pos++] = 0x0A;
-					wasclr = true;
-				} else wasclr = false;
+					wasclr = TRUE;
+				} else wasclr = FALSE;
 				break;
 			default:
 				buffer[Pos++] 	= File.Buffer[i];
-				wasclr		= false;
+				wasclr		= FALSE;
 			}
 		}
 		File.Buffer = realloc(File.Buffer, Pos);
@@ -753,10 +753,10 @@ void NokiaAddFile(int argc, char *argv[])
 
 		if (argc > 4) {
 			for (j = 4; j < argc; j++) {
-				if (strcasecmp(argv[j],"-overwrite") == 0) Overwrite = true;
+				if (strcasecmp(argv[j],"-overwrite") == 0) Overwrite = TRUE;
 				if (strcasecmp(argv[j],"-overwriteall") == 0) {
-					Overwrite = true;
-					OverwriteAll = true;
+					Overwrite = TRUE;
+					OverwriteAll = TRUE;
 				}
 			}
 		}
@@ -771,7 +771,7 @@ void NokiaAddFile(int argc, char *argv[])
 			if (Overwrite && (error == ERR_FILEALREADYEXIST)) {
 				printf_info("%s\n", _("Application already exists. Deleting by Gammu."));
 
-				Start = true;
+				Start = TRUE;
 				CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
 				while (1) {
 					error = GSM_GetFolderListing(gsm,&File2,Start);
@@ -782,10 +782,10 @@ void NokiaAddFile(int argc, char *argv[])
 						break;
 					}
 
-					Start = false;
+					Start = FALSE;
 				}
 
-				Start = true;
+				Start = TRUE;
 				CopyUnicodeString(File.ID_FullName,File2.ID_FullName);
 				while (1) {
 					error = GSM_GetFolderListing(gsm,&File2,Start);
@@ -807,9 +807,9 @@ void NokiaAddFile(int argc, char *argv[])
 					Print_Error(error);
 
 						CopyUnicodeString(File2.ID_FullName,File.ID_FullName);
-						Start = true;
+						Start = TRUE;
 					} else {
-						Start = false;
+						Start = FALSE;
 					}
 				}
 			} else {
@@ -818,12 +818,12 @@ void NokiaAddFile(int argc, char *argv[])
 			CopyUnicodeString(FileID,File.ID_FullName);
 		} else {
 			if (Overwrite) {
-				Start = true;
+				Start = TRUE;
 				CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
 
 				printf_info("%s\n", _("Application already exists. Deleting by Gammu."));
 
-				while (true) {
+				while (TRUE) {
 					error = GSM_GetFolderListing(gsm,&File2,Start);
 					if (error == ERR_EMPTY) break;
 					Print_Error(error);
@@ -840,9 +840,9 @@ void NokiaAddFile(int argc, char *argv[])
 						Print_Error(error);
 
 						CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
-						Start = true;
+						Start = TRUE;
 					} else {
-						Start = false;
+						Start = FALSE;
 					}
 				}
 			}
@@ -856,13 +856,13 @@ void NokiaAddFile(int argc, char *argv[])
 		buffer[strlen(buffer) - 1] = 'd';
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		File.Type 	   = GSM_File_Other;
-		File.ModifiedEmpty = true;
+		File.ModifiedEmpty = TRUE;
 		smprintf(gsm, "file id is \"%s\"\n",DecodeUnicodeString(File.ID_FullName));
-		AddOneFile(&File, _("Writing JAD file:"), false);
+		AddOneFile(&File, _("Writing JAD file:"), FALSE);
 
 		if (argc > 4) {
 			for (j = 4; j < argc; j++) {
-				if (strcasecmp(argv[j],"-readonly") == 0) File.ReadOnly = true;
+				if (strcasecmp(argv[j],"-readonly") == 0) File.ReadOnly = TRUE;
 			}
 		}
 
@@ -876,8 +876,8 @@ void NokiaAddFile(int argc, char *argv[])
 		strcpy(buffer,JAR);
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		File.Type 	   = GSM_File_Java_JAR;
-		File.ModifiedEmpty = true;
-		AddOneFile(&File, _("Writing JAR file:"), false);
+		File.ModifiedEmpty = TRUE;
+		AddOneFile(&File, _("Writing JAR file:"), FALSE);
 		free(File.Buffer);
 		GSM_Terminate();
 		return;
@@ -903,23 +903,23 @@ void NokiaAddFile(int argc, char *argv[])
 						continue;
 					}
 					if (strcasecmp(argv[j],"-protected") == 0) {
-						File.Protected = true;
+						File.Protected = TRUE;
 						continue;
 					}
 					if (strcasecmp(argv[j],"-readonly") == 0) {
-						File.ReadOnly = true;
+						File.ReadOnly = TRUE;
 						continue;
 					}
 					if (strcasecmp(argv[j],"-hidden") == 0) {
-						File.Hidden = true;
+						File.Hidden = TRUE;
 						continue;
 					}
 					if (strcasecmp(argv[j],"-system") == 0) {
-						File.System = true;
+						File.System = TRUE;
 						continue;
 					}
 					if (strcasecmp(argv[j],"-newtime") == 0) {
-						ModEmpty = true;
+						ModEmpty = TRUE;
 						continue;
 					}
 					printf(_("Parameter \"%s\" unknown\n"),argv[j]);
@@ -939,7 +939,7 @@ void NokiaAddFile(int argc, char *argv[])
 
 	error = GSM_ReadFile(argv[3], &File);
 	Print_Error(error);
-	if (ModEmpty) File.ModifiedEmpty = true;
+	if (ModEmpty) File.ModifiedEmpty = TRUE;
 
 	CopyUnicodeString(File.ID_FullName,Files.ID_FullName);
 	EncodeUnicode(File.Name,buffer,strlen(buffer));
@@ -952,14 +952,14 @@ void NokiaAddFile(int argc, char *argv[])
 
 	GSM_IdentifyFileFormat(&File);
 
-	AddOneFile(&File, _("Writing file:"), false);
+	AddOneFile(&File, _("Writing file:"), FALSE);
 	free(File.Buffer);
 	GSM_Terminate();
 }
 
 void NokiaGetADC(int argc, char *argv[])
 {
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 	DCT3GetADC(argc,argv);
@@ -973,7 +973,7 @@ void NokiaGetADC(int argc, char *argv[])
 
 void NokiaDisplayTest(int argc, char *argv[])
 {
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 	DCT3DisplayTest(argc,argv);
@@ -987,7 +987,7 @@ void NokiaDisplayTest(int argc, char *argv[])
 
 void NokiaGetT9(int argc, char *argv[])
 {
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 	DCT3GetT9(argc,argv);
@@ -1001,7 +1001,7 @@ void NokiaGetT9(int argc, char *argv[])
 
 void NokiaVibraTest(int argc, char *argv[])
 {
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 	DCT3VibraTest(argc,argv);

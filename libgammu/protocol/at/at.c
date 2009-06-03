@@ -107,7 +107,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	case 10:
 	case 13:
 		if (!d->wascrlf) d->LineEnd = d->Msg.Length-1;
-		d->wascrlf = true;
+		d->wascrlf = TRUE;
 		if (d->Msg.Length > 0 && rx_char == 10 && d->Msg.Buffer[d->Msg.Length-2]==13) {
 			i = 0;
 			while (StartStrings[i] != NULL) {
@@ -163,7 +163,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 				if (d->Msg.Length != 0) d->Msg.Length = d->Msg.Length - 2;
 
 				/* We need to find earlier values of all variables */
-				d->wascrlf 			= false;
+				d->wascrlf 			= FALSE;
 				d->LineStart			= 0;
 				for (i=0;i<d->Msg.Length;i++) {
 					switch(d->Msg.Buffer[i]) {
@@ -172,12 +172,12 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 					case 10:
 					case 13:
 						if (!d->wascrlf) d->LineEnd = d->Msg.Length-1;
-						d->wascrlf = true;
+						d->wascrlf = TRUE;
 						break;
 					default:
 						if (d->wascrlf) {
 							d->LineStart	= d->Msg.Length-1;
-							d->wascrlf 	= false;
+							d->wascrlf 	= FALSE;
 						}
 					}
 				}
@@ -201,7 +201,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	default:
 		if (d->wascrlf) {
 			d->LineStart	= d->Msg.Length-1;
-			d->wascrlf 	= false;
+			d->wascrlf 	= FALSE;
 		}
 		if (d->EditMode) {
 			if (strlen(d->Msg.Buffer+d->LineStart) == 2 && strncmp(d->Msg.Buffer+d->LineStart,"> ",2)==0) {
@@ -226,14 +226,14 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 	d->SpecialAnswerLines	= 0;
 	d->LineStart		= -1;
 	d->LineEnd		= -1;
-	d->wascrlf 		= false;
-	d->EditMode		= false;
-	d->FastWrite		= false;
+	d->wascrlf 		= FALSE;
+	d->EditMode		= FALSE;
+	d->FastWrite		= FALSE;
 
-	error = s->Device.Functions->DeviceSetParity(s, false);
+	error = s->Device.Functions->DeviceSetParity(s, FALSE);
 	if (error != ERR_NONE) return error;
 
-	error = s->Device.Functions->DeviceSetDtrRts(s,true,true);
+	error = s->Device.Functions->DeviceSetDtrRts(s,TRUE,TRUE);
 	if (error != ERR_NONE) return error;
 
 	return s->Device.Functions->DeviceSetSpeed(s,s->Speed);

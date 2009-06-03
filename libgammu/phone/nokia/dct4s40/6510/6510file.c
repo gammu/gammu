@@ -110,22 +110,22 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 			msg.Buffer[i-2],msg.Buffer[i-1],msg.Buffer[i],
 			msg.Buffer[i+1],msg.Buffer[i+2],msg.Buffer[i+3]);
 
-		File->Folder = false;
-		if (msg.Buffer[i-5] == 0x00 && msg.Buffer[i-3]==0x02) File->Folder = true;
+		File->Folder = FALSE;
+		if (msg.Buffer[i-5] == 0x00 && msg.Buffer[i-3]==0x02) File->Folder = TRUE;
 
-		File->ReadOnly  = false;
-		File->Protected = false;
-		File->System    = false;
-		File->Hidden    = false;
-		if (msg.Buffer[i+2] == 0x01) File->Protected    = true;
-		if (msg.Buffer[i+4] == 0x01) File->ReadOnly     = true;
-		if (msg.Buffer[i+5] == 0x01) File->Hidden       = true;
-		if (msg.Buffer[i+6] == 0x01) File->System       = true;/* fixme */
+		File->ReadOnly  = FALSE;
+		File->Protected = FALSE;
+		File->System    = FALSE;
+		File->Hidden    = FALSE;
+		if (msg.Buffer[i+2] == 0x01) File->Protected    = TRUE;
+		if (msg.Buffer[i+4] == 0x01) File->ReadOnly     = TRUE;
+		if (msg.Buffer[i+5] == 0x01) File->Hidden       = TRUE;
+		if (msg.Buffer[i+6] == 0x01) File->System       = TRUE;/* fixme */
 
-		File->ModifiedEmpty = false;
-		NOKIA_DecodeDateTime(s, msg.Buffer+i-22, &File->Modified, true, false);
-		if (File->Modified.Year == 0x00) File->ModifiedEmpty = true;
-		if (File->Modified.Year == 0xffff) File->ModifiedEmpty = true;
+		File->ModifiedEmpty = FALSE;
+		NOKIA_DecodeDateTime(s, msg.Buffer+i-22, &File->Modified, TRUE, FALSE);
+		if (File->Modified.Year == 0x00) File->ModifiedEmpty = TRUE;
+		if (File->Modified.Year == 0xffff) File->ModifiedEmpty = TRUE;
 		smprintf(s, "%02x %02x %02x %02x\n",msg.Buffer[i-22],msg.Buffer[i-21],msg.Buffer[i-20],msg.Buffer[i-19]);
 
 		Priv->FileToken = msg.Buffer[i-10]*256+msg.Buffer[i-9];
@@ -183,7 +183,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 			if (Priv->FilesLocationsUsed + (msg.Buffer[8]*256+msg.Buffer[9]) >= GSM_PHONE_MAXSMSINFOLDER) {
 				smprintf(s,"Too small buffer for folder data\n");
 				Priv->filesystem2error  = ERR_MOREMEMORY;
-				Priv->FilesEnd 		= true;
+				Priv->FilesEnd 		= TRUE;
 				return ERR_MOREMEMORY;
 			}
 			Priv->FilesLocationsUsed += (msg.Buffer[8]*256+msg.Buffer[9]);
@@ -195,13 +195,13 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 			}
 			smprintf(s, "\n");
 		}
-		if ((msg.Buffer[8]*256+msg.Buffer[9]) != 0x00) File->Folder = true;
+		if ((msg.Buffer[8]*256+msg.Buffer[9]) != 0x00) File->Folder = TRUE;
 		return ERR_NONE;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6510_GetFileFolderInfo1(GSM_StateMachine *s, GSM_File *File, bool full)
+static GSM_Error N6510_GetFileFolderInfo1(GSM_StateMachine *s, GSM_File *File, gboolean full)
 {
 	GSM_Error	       	error;
 	unsigned char	   	req[10] = {
@@ -239,7 +239,7 @@ static GSM_Error N6510_GetFileFolderInfo1(GSM_StateMachine *s, GSM_File *File, b
 	return error;
 }
 
-static GSM_Error N6510_GetNextFileFolder1(GSM_StateMachine *s, GSM_File *File, bool start)
+static GSM_Error N6510_GetNextFileFolder1(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	GSM_Error	       	error;
@@ -265,7 +265,7 @@ static GSM_Error N6510_GetNextFileFolder1(GSM_StateMachine *s, GSM_File *File, b
 		}
 		Priv->FilesLocationsUsed--;
 
-		error = N6510_GetFileFolderInfo1(s, File, true);
+		error = N6510_GetFileFolderInfo1(s, File, TRUE);
 		if (error == ERR_EMPTY) continue;
 		return error;
 	}
@@ -344,7 +344,7 @@ static GSM_Error N6510_GetFilePart1(GSM_StateMachine *s, GSM_File *File, int *Ha
 		0x03, 0xE8};	    	/* Read xxx bytes */
 
 	if (File->Used == 0x00) {
-		error = N6510_GetFileFolderInfo1(s, File, false);
+		error = N6510_GetFileFolderInfo1(s, File, FALSE);
 		if (error != ERR_NONE) return error;
 
 		if (File->Folder) return ERR_SHOULDBEFILE;
@@ -378,7 +378,7 @@ static GSM_Error N6510_GetFilePart1(GSM_StateMachine *s, GSM_File *File, int *Ha
 	return ERR_NONE;
 }
 
-static GSM_Error N6510_SetReadOnly1(GSM_StateMachine *s, unsigned char *ID, bool enable)
+static GSM_Error N6510_SetReadOnly1(GSM_StateMachine *s, unsigned char *ID, gboolean enable)
 {
 	unsigned char SetAttr[] = {
 		N7110_FRAME_HEADER, 0x18,
@@ -402,7 +402,7 @@ static GSM_Error N6510_SetFileAttributes1(GSM_StateMachine *s, GSM_File *File)
 	memset(&file2, 0, sizeof(file2));
 
 	CopyUnicodeString(file2.ID_FullName,File->ID_FullName);
-	error = N6510_GetFileFolderInfo1(s, &file2, false);
+	error = N6510_GetFileFolderInfo1(s, &file2, FALSE);
 	if (error != ERR_NONE) return error;
 
 	/*  setting folder attrib works, but we block it */
@@ -426,7 +426,7 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 	int		     	FilesLocationsUsed,FilesLocationsUsed2,i;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 
-	File->Folder = false;
+	File->Folder = FALSE;
 
 	/* making backup */
 	if (Priv->FilesLocationsUsed > 400) return ERR_MOREMEMORY;
@@ -439,7 +439,7 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 	CopyUnicodeString(Priv->Files[0].ID_FullName,File->ID_FullName);
 
 	/* checking */
-	error = N6510_GetFileFolderInfo1(s, &Priv->Files[0], true);
+	error = N6510_GetFileFolderInfo1(s, &Priv->Files[0], TRUE);
 
 	/* backuping new data */
 	if (Priv->FilesLocationsUsed > 400) return ERR_MOREMEMORY;
@@ -454,7 +454,7 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 
 	for (i=0;i<FilesLocationsUsed2-1;i++) {
 		smprintf(s, "ID is %s\n",DecodeUnicodeString(Files2[i].ID_FullName));
-		error = N6510_GetFileFolderInfo1(s, &Files2[i], false);
+		error = N6510_GetFileFolderInfo1(s, &Files2[i], FALSE);
 		if (error == ERR_EMPTY) continue;
 		if (error != ERR_NONE) return error;
 		smprintf(s, "%s",DecodeUnicodeString(File->Name));
@@ -583,7 +583,7 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 		if (error != ERR_NONE) return error;
 
 		CopyUnicodeString(File2.ID_FullName,File->ID_FullName);
-		error = N6510_GetFileFolderInfo1(s, &File2, false);
+		error = N6510_GetFileFolderInfo1(s, &File2, FALSE);
 		if (error != ERR_NONE) return error;
 
 		if (!File->ModifiedEmpty) {
@@ -640,7 +640,7 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 
 		/* Can't delete from phone menu */
 		if (File->ReadOnly) {
-			error = N6510_SetReadOnly1(s, File->ID_FullName, true);
+			error = N6510_SetReadOnly1(s, File->ID_FullName, TRUE);
 			if (error != ERR_NONE) return error;
 		}
 
@@ -668,7 +668,7 @@ GSM_Error N6510_ReplyDeleteFileFolder1(GSM_Protocol_Message msg, GSM_StateMachin
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6510_PrivDeleteFileFolder1(GSM_StateMachine *s, unsigned char *ID, bool file)
+static GSM_Error N6510_PrivDeleteFileFolder1(GSM_StateMachine *s, unsigned char *ID, gboolean file)
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	GSM_File		File;
@@ -681,7 +681,7 @@ static GSM_Error N6510_PrivDeleteFileFolder1(GSM_StateMachine *s, unsigned char 
 
 	Priv->FilesLocationsUsed = 0;
 	CopyUnicodeString(File.ID_FullName,ID);
-	error = N6510_GetFileFolderInfo1(s, &File, true);
+	error = N6510_GetFileFolderInfo1(s, &File, TRUE);
 	if (error != ERR_NONE) return error;
 	if (file) {
 		if (File.Folder) return ERR_SHOULDBEFILE;
@@ -691,7 +691,7 @@ static GSM_Error N6510_PrivDeleteFileFolder1(GSM_StateMachine *s, unsigned char 
 		if (Priv->FilesLocationsUsed != 0) return ERR_FOLDERNOTEMPTY;
 	}
 
-	error = N6510_SetReadOnly1(s, ID, false);
+	error = N6510_SetReadOnly1(s, ID, FALSE);
 	if (error != ERR_NONE) return error;
 
 	/* FIXME: This looks wrong */
@@ -703,12 +703,12 @@ static GSM_Error N6510_PrivDeleteFileFolder1(GSM_StateMachine *s, unsigned char 
 
 static GSM_Error N6510_DeleteFile1(GSM_StateMachine *s, unsigned char *ID)
 {
-	return N6510_PrivDeleteFileFolder1(s,ID,true);
+	return N6510_PrivDeleteFileFolder1(s,ID,TRUE);
 }
 
 static GSM_Error N6510_DeleteFolder1(GSM_StateMachine *s, unsigned char *ID)
 {
-	return N6510_PrivDeleteFileFolder1(s,ID,false);
+	return N6510_PrivDeleteFileFolder1(s,ID,FALSE);
 }
 
 GSM_Error N6510_ReplyAddFolder1(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -732,7 +732,7 @@ static GSM_Error N6510_AddFolder1(GSM_StateMachine *s, GSM_File *File)
 	memset(&File2, 0, sizeof(File2));
 
 	CopyUnicodeString(File2.ID_FullName,File->ID_FullName);
-	error = N6510_GetFileFolderInfo1(s, &File2, false);
+	error = N6510_GetFileFolderInfo1(s, &File2, FALSE);
 	if (error != ERR_NONE) return error;
 	if (!File2.Folder) return ERR_SHOULDBEFOLDER;
 
@@ -754,14 +754,14 @@ static GSM_Error N6510_AddFolder1(GSM_StateMachine *s, GSM_File *File)
 
 	/* Can't delete from phone menu */
 	if (File->ReadOnly) {
-		error = N6510_SetReadOnly1(s, File->ID_FullName, true);
+		error = N6510_SetReadOnly1(s, File->ID_FullName, TRUE);
 		if (error != ERR_NONE) return error;
 	}
 
 	return error;
 }
 
-static GSM_Error N6510_GetFolderListing1(GSM_StateMachine *s, GSM_File *File, bool start)
+static GSM_Error N6510_GetFolderListing1(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Error	       	error;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
@@ -770,17 +770,17 @@ static GSM_Error N6510_GetFolderListing1(GSM_StateMachine *s, GSM_File *File, bo
 	if (start) {
 		Priv->FilesLocationsUsed = 0;
 
-		error = N6510_GetFileFolderInfo1(s, File, true);
+		error = N6510_GetFileFolderInfo1(s, File, TRUE);
 		if (error != ERR_NONE) return error;
 
 		if (!File->Folder) return ERR_SHOULDBEFOLDER;
 	}
 
-	while (true) {
+	while (TRUE) {
 		if (Priv->FilesLocationsUsed == 0) return ERR_EMPTY;
 
 		memcpy(File,&Priv->Files[0],sizeof(GSM_File));
-		error = N6510_GetFileFolderInfo1(s, File, false);
+		error = N6510_GetFileFolderInfo1(s, File, FALSE);
 
 		for(i=1;i<Priv->FilesLocationsUsed;i++) {
 			memcpy(&Priv->Files[i-1],&Priv->Files[i],sizeof(GSM_File));
@@ -821,7 +821,7 @@ GSM_Error N6510_ReplyOpenFile2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6510_OpenFile2(GSM_StateMachine *s, char *Name, int *Handle, bool Create)
+static GSM_Error N6510_OpenFile2(GSM_StateMachine *s, char *Name, int *Handle, gboolean Create)
 {
 	unsigned char	 req[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))] =
 		{N6110_FRAME_HEADER, 0x72,
@@ -888,7 +888,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 		case 0x0C:
 			smprintf(s,"Probably no MMC card\n");
 			Priv->filesystem2error  = ERR_MEMORY;
-			Priv->FilesEnd 		= true;
+			Priv->FilesEnd 		= TRUE;
 			return ERR_MEMORY;
 		case 0x00:
 		case 0x0D:
@@ -911,7 +911,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 				if (Priv->FilesLocationsUsed + 1 >= GSM_PHONE_MAXSMSINFOLDER) {
 					smprintf(s,"Too small buffer for folder data\n");
 					Priv->filesystem2error  = ERR_MOREMEMORY;
-					Priv->FilesEnd 		= true;
+					Priv->FilesEnd 		= TRUE;
 					return ERR_MOREMEMORY;
 				}
 
@@ -936,10 +936,10 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 			}
 
 			if ((msg.Buffer[29] & 0x10) == 0x10) {
-				File->Folder = true;
+				File->Folder = TRUE;
 				smprintf(s,"Folder\n");
 			} else {
-				File->Folder = false;
+				File->Folder = FALSE;
 				smprintf(s,"File\n");
 				File->Used = msg.Buffer[10]*256*256*256+
 					    msg.Buffer[11]*256*256+
@@ -947,43 +947,43 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 					    msg.Buffer[13];
 				smprintf(s,"Size %ld bytes\n", (long)File->Used);
 			}
-			File->ReadOnly = false;
+			File->ReadOnly = FALSE;
 			if ((msg.Buffer[29] & 1) == 1) {
-				File->ReadOnly = true;
+				File->ReadOnly = TRUE;
 				smprintf(s,"Readonly\n");
 			}
-			File->Hidden = false;
+			File->Hidden = FALSE;
 			if ((msg.Buffer[29] & 2) == 2) {
-				File->Hidden = true;
+				File->Hidden = TRUE;
 				smprintf(s,"Hidden\n");
 			}
-			File->System = false;
+			File->System = FALSE;
 			if ((msg.Buffer[29] & 4) == 4) {
-				File->System = true;
+				File->System = TRUE;
 				smprintf(s,"System\n");
 			}
-			File->Protected = false;
+			File->Protected = FALSE;
 			if ((msg.Buffer[29] & 0x40) == 0x40) {
-				File->Protected = true;
+				File->Protected = TRUE;
 				smprintf(s,"Protected\n");
 			}
 
-			File->ModifiedEmpty = false;
-			NOKIA_DecodeDateTime(s, msg.Buffer+14, &File->Modified, true, false);
-			if (File->Modified.Year == 0x00) File->ModifiedEmpty = true;
-			if (File->Modified.Year == 0xffff) File->ModifiedEmpty = true;
+			File->ModifiedEmpty = FALSE;
+			NOKIA_DecodeDateTime(s, msg.Buffer+14, &File->Modified, TRUE, FALSE);
+			if (File->Modified.Year == 0x00) File->ModifiedEmpty = TRUE;
+			if (File->Modified.Year == 0xffff) File->ModifiedEmpty = TRUE;
 
-			if (msg.Buffer[3] == 0x69 && msg.Buffer[4] == 0) Priv->FilesEnd = true;
+			if (msg.Buffer[3] == 0x69 && msg.Buffer[4] == 0) Priv->FilesEnd = TRUE;
 
 			return ERR_NONE;
 		case 0x06:
 			smprintf(s,"File or folder details received - not available ?\n");
 			Priv->filesystem2error  = ERR_FILENOTEXIST;
-			Priv->FilesEnd 		= true;
+			Priv->FilesEnd 		= TRUE;
 			return ERR_FILENOTEXIST;
 		case 0x0E:
 			smprintf(s,"File or folder details received - empty\n");
-			Priv->FilesEnd = true;
+			Priv->FilesEnd = TRUE;
 			return ERR_NONE;
 		}
 	}
@@ -1038,13 +1038,13 @@ static GSM_Error N6510_PrivGetFolderListing2(GSM_StateMachine *s, GSM_File *File
 
 	Priv->filesystem2error  = ERR_NONE;
 	s->Phone.Data.FileInfo  = File;
-	Priv->FilesEnd 		= false;
+	Priv->FilesEnd 		= FALSE;
 	error = s->Protocol.Functions->WriteMessage(s, req, Pos, 0x6D);
 	if (error!=ERR_NONE) return error;
 
 	while (!Priv->FilesEnd) {
 		usleep(1000);
-		if (GSM_ReadDevice(s,true)==0) {
+		if (GSM_ReadDevice(s,TRUE)==0) {
 			i++;
 		} else {
 			i=0;
@@ -1059,7 +1059,7 @@ static GSM_Error N6510_PrivGetFolderListing2(GSM_StateMachine *s, GSM_File *File
 	return ERR_NONE;
 }
 
-static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, bool start)
+static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	GSM_Error	       	error;
@@ -1069,13 +1069,13 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, b
 		Priv->FilesLocationsUsed = 2;
 
 		Priv->Files[0].Level	= 1;
-		Priv->Files[0].Folder	= true;
+		Priv->Files[0].Folder	= TRUE;
 		Priv->Files[0].Level	= 1;
 		EncodeUnicode(Priv->Files[0].ID_FullName,"d:",2);
 		EncodeUnicode(Priv->Files[0].Name,"D (Permanent_memory 2)",22);
 
 		Priv->Files[1].Level	= 1;
-		Priv->Files[1].Folder	= true;
+		Priv->Files[1].Folder	= TRUE;
 		Priv->Files[1].Level	= 1;
 		EncodeUnicode(Priv->Files[1].ID_FullName,"a:",2);
 		EncodeUnicode(Priv->Files[1].Name,"A (Memory card)",15);
@@ -1129,7 +1129,7 @@ static GSM_Error N6510_GetFilePart2(GSM_StateMachine *s, GSM_File *File, int *Ha
 
 		if (File->Folder) return ERR_SHOULDBEFILE;
 
-		error = N6510_OpenFile2(s, File->ID_FullName, Handle, false);
+		error = N6510_OpenFile2(s, File->ID_FullName, Handle, FALSE);
 		if (error != ERR_NONE) return error;
 
 		for (j=UnicodeLength(File->ID_FullName)-1;j>0;j--) {
@@ -1273,7 +1273,7 @@ static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, int *Po
 			return error;
 		}
 
-		error = N6510_OpenFile2(s, File->ID_FullName, Handle, true);
+		error = N6510_OpenFile2(s, File->ID_FullName, Handle, TRUE);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -1323,10 +1323,10 @@ static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, int *Po
 		error = N6510_SetFileAttributes2(s,File);
 		if (error != ERR_NONE) return error;
 
-/* 		error = N6510_OpenFile2(s, File->ID_FullName, Handle, false); */
+/* 		error = N6510_OpenFile2(s, File->ID_FullName, Handle, FALSE); */
 /* 		if (error != ERR_NONE) return error; */
 /* 		if ((*Handle) == 0) { */
-/* 			error = N6510_OpenFile2(s, File->ID_FullName, Handle, false); */
+/* 			error = N6510_OpenFile2(s, File->ID_FullName, Handle, FALSE); */
 /* 			if (error != ERR_NONE) return error; */
 /* 		} */
 /* 		error = N6510_GetFileCRC2(s, Handle); */
@@ -1344,7 +1344,7 @@ static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, int *Po
 	return ERR_NONE;
 }
 
-static GSM_Error N6510_GetFolderListing2(GSM_StateMachine *s, GSM_File *File, bool start)
+static GSM_Error N6510_GetFolderListing2(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	GSM_Error 		error;
@@ -1410,10 +1410,10 @@ static GSM_Error N6510_DeleteFile2(GSM_StateMachine *s, unsigned char *ID)
 	GSM_Error	error;
 
 	/* first remove readonly */
-	file.ReadOnly  = false;
-	file.Hidden    = false;
-	file.System    = false;
-	file.Protected = false;
+	file.ReadOnly  = FALSE;
+	file.Hidden    = FALSE;
+	file.System    = FALSE;
+	file.Protected = FALSE;
 
 	CopyUnicodeString(file.ID_FullName,ID);
 	error = N6510_SetFileAttributes2(s,&file);
@@ -1503,7 +1503,7 @@ static GSM_Error N6510_DeleteFolder2(GSM_StateMachine *s, unsigned char *ID)
 
 	/* we don't want to allow deleting non empty folders */
 	CopyUnicodeString(File2.ID_FullName,ID);
-	error = N6510_GetFolderListing2(s, &File2, true);
+	error = N6510_GetFolderListing2(s, &File2, TRUE);
 	switch (error) {
 		case ERR_EMPTY:
 			break;
@@ -1528,7 +1528,7 @@ static GSM_Error N6510_DeleteFolder2(GSM_StateMachine *s, unsigned char *ID)
 
 /* shared */
 
-GSM_Error N6510_GetFolderListing(GSM_StateMachine *s, GSM_File *File, bool start)
+GSM_Error N6510_GetFolderListing(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Error	error;
 	GSM_File	File2;
@@ -1559,7 +1559,7 @@ GSM_Error N6510_GetFolderListing(GSM_StateMachine *s, GSM_File *File, bool start
 	}
 }
 
-GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
+GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Error	       	error;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
@@ -1568,13 +1568,13 @@ GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool star
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
 	if (start) {
-		Priv->UseFs1 = true;
+		Priv->UseFs1 = TRUE;
 		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 			/* series 40 3.0 don't have filesystem 1 */
-			Priv->UseFs1 = false;
+			Priv->UseFs1 = FALSE;
 		}
 		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILE1)) {
-			Priv->UseFs1 = false;
+			Priv->UseFs1 = FALSE;
 		}
 	}
 	if (Priv->UseFs1) {
@@ -1583,8 +1583,8 @@ GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool star
 			if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FILES2)) {
 				return error;
 			}
-			Priv->UseFs1      = false;
-			start	   	= true;
+			Priv->UseFs1      = FALSE;
+			start	   	= TRUE;
 		} else {
 			if (error == ERR_NONE) {
 				sprintf(buf,"c:/%s",DecodeUnicodeString(File->ID_FullName));
@@ -1799,7 +1799,7 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 			EncodeUnicode(File->Name,"D (Permanent_memory 2)",22);
 		} else if (!strcmp(DecodeUnicodeString(File->ID_FullName),"d:")) {
 			EncodeUnicode(File->ID_FullName,"a:",2);
-			error = N6510_GetFolderListing2(s, File, true);
+			error = N6510_GetFolderListing2(s, File, TRUE);
 			if (error != ERR_NONE && error != ERR_EMPTY) return ERR_EMPTY;
 			EncodeUnicode(File->Name,"A (Memory card)",15);
 			EncodeUnicode(File->ID_FullName,"a:",2);
@@ -1814,7 +1814,7 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 		EncodeUnicode(File2.ID_FullName,buffer,strlen(buffer));
 		File2.Level = 1;
 
-		error = N6510_GetFileFolderInfo1(s, &File2, false);
+		error = N6510_GetFileFolderInfo1(s, &File2, FALSE);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -1831,7 +1831,7 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 			EncodeUnicode(File->Name,"D (Permanent_memory 2)",22);
 		} else if (!strcmp(DecodeUnicodeString(File->ID_FullName),"d:")) {
 			EncodeUnicode(File->ID_FullName,"a:",2);
-			error = N6510_GetFolderListing2(s, File, true);
+			error = N6510_GetFolderListing2(s, File, TRUE);
 			if (error != ERR_NONE && error != ERR_EMPTY) return ERR_EMPTY;
 			EncodeUnicode(File->Name,"A (Memory card)",15);
 			EncodeUnicode(File->ID_FullName,"a:",2);
@@ -1856,7 +1856,7 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 GSM_Error N6510_PrivGet3220FilesystemMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
-	bool 			Start = true;
+	gboolean 			Start = TRUE;
 	GSM_File	 	Files;
 	GSM_Error		error;
 
@@ -1872,11 +1872,11 @@ GSM_Error N6510_PrivGet3220FilesystemMMSFolders(GSM_StateMachine *s, GSM_MMSFold
 		if (error == ERR_EMPTY) return ERR_NONE;
 		if (error != ERR_NONE) return error;
 
-		Start = false;
+		Start = FALSE;
 
-		folders->Folder[folders->Number].InboxFolder = false;
+		folders->Folder[folders->Number].InboxFolder = FALSE;
 		if (!strcmp(DecodeUnicodeString(Files.Name),"predefinbox")) {
-			folders->Folder[folders->Number].InboxFolder = true;
+			folders->Folder[folders->Number].InboxFolder = TRUE;
 		}
 
 		CopyUnicodeString(Priv->MMSFoldersID2[folders->Number],Files.ID_FullName);
@@ -1901,7 +1901,7 @@ GSM_Error N6510_PrivGet3220FilesystemMMSFolders(GSM_StateMachine *s, GSM_MMSFold
 GSM_Error N6510_PrivGetFilesystemMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
-	bool 			Start = true;
+	gboolean 			Start = TRUE;
 	GSM_File	 	Files;
 	GSM_Error		error;
 
@@ -1917,7 +1917,7 @@ GSM_Error N6510_PrivGetFilesystemMMSFolders(GSM_StateMachine *s, GSM_MMSFolders 
 		if (error == ERR_EMPTY) return ERR_NONE;
 		if (error != ERR_NONE) return error;
 
-		Start = false;
+		Start = FALSE;
 
 		if (!strcmp(DecodeUnicodeString(Files.Name),"exchange")) {
 			continue;
@@ -1931,9 +1931,9 @@ GSM_Error N6510_PrivGetFilesystemMMSFolders(GSM_StateMachine *s, GSM_MMSFolders 
 			continue;
 		}
 
-		folders->Folder[folders->Number].InboxFolder = false;
+		folders->Folder[folders->Number].InboxFolder = FALSE;
 		if (!strcmp(DecodeUnicodeString(Files.Name),"1")) {
-			folders->Folder[folders->Number].InboxFolder = true;
+			folders->Folder[folders->Number].InboxFolder = TRUE;
 		}
 
 		CopyUnicodeString(Priv->MMSFoldersID2[folders->Number],Files.ID_FullName);
@@ -1960,7 +1960,7 @@ GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 {
 	GSM_Error 		error;
 	GSM_File  		Files;
-	bool			Start = true;
+	gboolean			Start = TRUE;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	int			i;
 
@@ -1987,24 +1987,24 @@ GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 		error = N6510_GetFolderListing(s,&Files,Start);
 		if (error == ERR_EMPTY) break;
 		if (error != ERR_NONE) return error;
-		Start = false;
+		Start = FALSE;
 		if (!Files.Folder || strcmp(DecodeUnicodeConsole(Files.Name),"Messages")) {
 			continue;
 		}
-		Start 		= true;
+		Start 		= TRUE;
 		folders->Number = 0;
 
 		while (1) {
 			error = N6510_GetFolderListing(s,&Files,Start);
 			if (error == ERR_EMPTY) return ERR_NONE;
 			if (error != ERR_NONE) return error;
-			Start = false;
+			Start = FALSE;
 			if (!Files.Folder) continue;
 			CopyUnicodeString(folders->Folder[folders->Number].Name,Files.Name);
 			CopyUnicodeString(Priv->MMSFoldersID2[folders->Number],Files.ID_FullName);
-			folders->Folder[folders->Number].InboxFolder = false;
+			folders->Folder[folders->Number].InboxFolder = FALSE;
 			if (!strcmp(DecodeUnicodeString(Files.Name),"Inbox")) {
-				folders->Folder[folders->Number].InboxFolder = true;
+				folders->Folder[folders->Number].InboxFolder = TRUE;
 			}
 			folders->Number++;
 		}
@@ -2014,17 +2014,17 @@ GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FILES2)) {
 		EncodeUnicode(Files.ID_FullName,"d:/predefmessages",17);
 		folders->Number = 0;
-		Start 		= true;
+		Start 		= TRUE;
 		while (1) {
 			error = N6510_GetFolderListing(s,&Files,Start);
 			if (error == ERR_EMPTY) break;
 			if (error != ERR_NONE) return error;
-			Start = false;
+			Start = FALSE;
 			if (!Files.Folder) continue;
-			folders->Folder[folders->Number].InboxFolder = false;
+			folders->Folder[folders->Number].InboxFolder = FALSE;
 			if (!strcmp(DecodeUnicodeString(Files.Name),"predefinbox")) {
 				EncodeUnicode(folders->Folder[folders->Number].Name,"Inbox",5);
-				folders->Folder[folders->Number].InboxFolder = true;
+				folders->Folder[folders->Number].InboxFolder = TRUE;
 			} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefoutbox")) {
 				EncodeUnicode(folders->Folder[folders->Number].Name,"Outbox",6);
 			} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefsent")) {
@@ -2044,7 +2044,7 @@ GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 	return ERR_NOTSUPPORTED;
 }
 
-GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start)
+GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, gboolean start)
 {
 	GSM_MMSFolders 		folders;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
@@ -2061,9 +2061,9 @@ GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, i
 		Priv->MMSFolderError 	= ERR_EMPTY;
 	}
 
-	while(true) {
+	while(TRUE) {
 		if (Priv->MMSFolderError == ERR_NONE) {
-			Priv->MMSFolderError = N6510_GetFolderListing(s,&Priv->MMSFile,false);
+			Priv->MMSFolderError = N6510_GetFolderListing(s,&Priv->MMSFile,FALSE);
 			if (Priv->MMSFolderError != ERR_EMPTY && Priv->MMSFolderError != ERR_NONE)
 				return Priv->MMSFolderError;
 		}
@@ -2076,7 +2076,7 @@ GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, i
 				CopyUnicodeString(Priv->MMSFile.ID_FullName,Priv->MMSFoldersID2[Priv->MMSFolderNum]);
 				Priv->MMSFolderNum++;
 
-				Priv->MMSFolderError = N6510_GetFolderListing(s,&Priv->MMSFile,true);
+				Priv->MMSFolderError = N6510_GetFolderListing(s,&Priv->MMSFile,TRUE);
 				if (Priv->MMSFolderError == ERR_EMPTY)
 					continue;
 				if (Priv->MMSFolderError != ERR_NONE)
@@ -2117,9 +2117,9 @@ GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, i
 }
 
 /* Series 40 3.0 */
-GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders, bool real)
+GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders, gboolean real)
 {
-	bool 			Start = true;
+	gboolean 			Start = TRUE;
 	GSM_File	 	Files;
 	GSM_Error		error;
 
@@ -2133,7 +2133,7 @@ GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders 
 		if (error == ERR_EMPTY) return ERR_NONE;
 		if (error != ERR_NONE) return error;
 
-		Start = false;
+		Start = FALSE;
 
 		if (!strcmp(DecodeUnicodeString(Files.Name),"exchange")) {
 			continue;
@@ -2147,13 +2147,13 @@ GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders 
 			continue;
 		}
 
-		folders->Folder[folders->Number].InboxFolder = false;
+		folders->Folder[folders->Number].InboxFolder = FALSE;
 		if (!strcmp(DecodeUnicodeString(Files.Name),"1")) {
-			folders->Folder[folders->Number].InboxFolder = true;
+			folders->Folder[folders->Number].InboxFolder = TRUE;
 		}
-		folders->Folder[folders->Number].OutboxFolder = false;
+		folders->Folder[folders->Number].OutboxFolder = FALSE;
 		if (!strcmp(DecodeUnicodeString(Files.Name),"2")) {
-			folders->Folder[folders->Number].OutboxFolder = true;
+			folders->Folder[folders->Number].OutboxFolder = TRUE;
 		}
 		if (real) {
 			CopyUnicodeString(folders->Folder[folders->Number].Name,Files.Name);
@@ -2183,7 +2183,7 @@ GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders 
 /* Series 40 3.0 */
 GSM_Error N6510_GetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 {
-	return N6510_PrivGetFilesystemSMSFolders(s, folders, false);
+	return N6510_PrivGetFilesystemSMSFolders(s, folders, FALSE);
 }
 
 /* Series 40 3.0 */
@@ -2220,14 +2220,14 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	size_t parse_len, pos;
 	int loc;
 	GSM_Error error;
-	bool unknown, has_number;
+	gboolean unknown, has_number;
 
 	sms->Number = 1;
 	sms->SMS[0].OtherNumbersNum = 0;
 
 	loc = sms->SMS[0].Location;
 	/* Parse PDU data */
-	error = GSM_DecodePDUFrame(&(s->di), &(sms->SMS[0]),  FFF->Buffer + 176, FFF->Used - 176, &parse_len, false);
+	error = GSM_DecodePDUFrame(&(s->di), &(sms->SMS[0]),  FFF->Buffer + 176, FFF->Used - 176, &parse_len, FALSE);
 	if (error != ERR_NONE) return error;
 
 	/* Copy recipient/sender number */
@@ -2235,7 +2235,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	/* This might be later overwriten using tags at the end of file */
 	CopyUnicodeString(sms->SMS[0].Number, FFF->Buffer + 94);
 	smprintf(s, "SMS number: %s\n", DecodeUnicodeString(sms->SMS[0].Number));
-	has_number = false;
+	has_number = FALSE;
 
 	sms->SMS[0].Location = loc;
 
@@ -2270,7 +2270,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	pos += 3;
 
 	while (pos < FFF->Used) {
-		unknown = false;
+		unknown = FALSE;
 		if (pos + 2 >= FFF->Used) {
 			smprintf(s, "ERROR: Reach end of file before end of block!\n");
 			return ERR_BUG;
@@ -2305,7 +2305,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 				} else {
 					if (!has_number) {
 						CopyUnicodeString(sms->SMS[0].Number, FFF->Buffer + pos + 3);
-						has_number = true;
+						has_number = TRUE;
 					} else {
 						CopyUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum++], FFF->Buffer + pos + 3);
 					}
@@ -2316,7 +2316,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 				/* This is probably 0 = received, 1 = sent */
 				if (FFF->Buffer[pos + 2] != 1 ||
 					(FFF->Buffer[pos + 3] != 0x00 && FFF->Buffer[pos + 3] != 0x01)) {
-					unknown = true;
+					unknown = TRUE;
 				}
 				break;
 			case 0x0c:
@@ -2332,7 +2332,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 			case 0x2a:
 			case 0x08:
 				if (FFF->Buffer[pos + 2] != 1 || FFF->Buffer[pos + 3] != 0x00) {
-					unknown = true;
+					unknown = TRUE;
 				}
 				break;
 			case 0x06:
@@ -2345,7 +2345,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 					FFF->Buffer[pos + 5] != 0x00 ||
 					FFF->Buffer[pos + 6] != 0x00
 					) {
-					unknown = true;
+					unknown = TRUE;
 				}
 				break;
 			case 0x0f:
@@ -2353,11 +2353,11 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 					FFF->Buffer[pos + 3] != 0x00 ||
 					FFF->Buffer[pos + 4] != 0x00
 					) {
-					unknown = true;
+					unknown = TRUE;
 				}
 				break;
 			default:
-				unknown = true;
+				unknown = TRUE;
 				break;
 		}
 		if (unknown) {
@@ -2386,33 +2386,33 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	return ERR_NONE;
 }
 
-GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
+GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean start)
 {
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	unsigned char		folderid;
 	int			location,Size,Handle;
 	GSM_Error		error;
 	GSM_File		FFF;
-	bool			start2=start;
+	gboolean			start2=start;
 
 	GSM_SetDefaultReceivedSMSData(&sms->SMS[0]);
 
-	while (true) {
+	while (TRUE) {
 		if (start2) {
 			Priv->SMSFileError = ERR_EMPTY;
 			Priv->SMSFileFolder = 0;
 			location = 1;
-			error=N6510_PrivGetFilesystemSMSFolders(s,&Priv->LastSMSFolders,true);
+			error=N6510_PrivGetFilesystemSMSFolders(s,&Priv->LastSMSFolders,TRUE);
 			if (error!=ERR_NONE) return error;
 		} else {
 			sms->SMS[0].Folder = 0;
 			N26510_GetSMSLocation(s, &sms->SMS[0], &folderid, &location);
 			location++;
 			if (Priv->SMSFileError != ERR_EMPTY) {
-				Priv->SMSFileError = N6510_GetFolderListing(s,&Priv->SMSFile,false);
+				Priv->SMSFileError = N6510_GetFolderListing(s,&Priv->SMSFile,FALSE);
 			}
 		}
-		start2 = false;
+		start2 = FALSE;
 		while (Priv->SMSFileError == ERR_EMPTY) {
 			Priv->SMSFileFolder++;
 			/* Too high folder number */
@@ -2422,7 +2422,7 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 			CopyUnicodeString(Priv->SMSFile.ID_FullName+36,Priv->LastSMSFolders.Folder[Priv->SMSFileFolder-1].Name);
 			smprintf(s,"folder name is %s\n",DecodeUnicodeString(Priv->SMSFile.ID_FullName));
 
-			Priv->SMSFileError = N6510_GetFolderListing(s,&Priv->SMSFile,true);
+			Priv->SMSFileError = N6510_GetFolderListing(s,&Priv->SMSFile,TRUE);
 		}
 
 		/* readfile */

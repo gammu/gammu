@@ -17,9 +17,9 @@
 
 typedef struct {
 	int Location;
-	bool Active;
-	bool SyncPhonebook;
-	bool SyncCalendar;
+	gboolean Active;
+	gboolean SyncPhonebook;
+	gboolean SyncCalendar;
 	char Name[(20 + 1) * 2];
 	char PhonebookDataBase[(50 + 1) * 2];
 	char CalendarDataBase[(50 + 1) * 2];
@@ -45,7 +45,7 @@ typedef struct {
 	char User[(50 + 1) * 2];
 	char Password[(50 + 1) * 2];
 	int Location;
-	bool Active;
+	gboolean Active;
 	GSM_MultiWAPSettings Connection;
 } GSM_ChatSettings;
 
@@ -112,7 +112,7 @@ typedef enum {
  * It contains phone profiles
  */
 typedef struct {
-	bool Active;
+	gboolean Active;
 
 	/**
 	 * Profile number
@@ -125,15 +125,15 @@ typedef struct {
 	/**
 	 * Is it default name for profile ?
 	 */
-	bool DefaultName;
-	bool HeadSetProfile;
-	bool CarKitProfile;
+	gboolean DefaultName;
+	gboolean HeadSetProfile;
+	gboolean CarKitProfile;
 
 	int FeaturesNumber;
 	GSM_Profile_Feat_Value FeatureValue[15];
 	GSM_Profile_Feat_ID FeatureID[15];
 
-	bool CallerGroups[5];
+	gboolean CallerGroups[5];
 } GSM_Profile;
 
 typedef struct {
@@ -144,7 +144,7 @@ typedef struct {
 
 typedef struct {
 	int Location;
-	bool Active;
+	gboolean Active;
 	unsigned char Name[300];
 	unsigned char URL[500];
 } GSM_GPRSAccessPoint;
@@ -163,7 +163,7 @@ typedef enum {
 typedef struct {
 	unsigned char DateSeparator;
 	GSM_DateFormat DateFormat;
-	bool AMPMTime;
+	gboolean AMPMTime;
 } GSM_Locale;
 
 typedef struct {
@@ -221,7 +221,7 @@ GSM_Error GSM_SetAutoNetworkLogin(GSM_StateMachine * s);
 /**
  * Performs phone reset.
  */
-GSM_Error GSM_Reset(GSM_StateMachine * s, bool hard);
+GSM_Error GSM_Reset(GSM_StateMachine * s, gboolean hard);
 
 /**
  * Resets phone settings.

@@ -578,7 +578,7 @@ StateMachine_ReadConfig(StateMachineObject *self, PyObject *args, PyObject *kwds
         INI_Free(cfg);
         return NULL;
     }
-    Config->UseGlobalDebugFile = false;
+    Config->UseGlobalDebugFile = FALSE;
 
     /* Tell Gammu we have configured another section */
     GSM_SetConfigNum(self->s, dst + 1);
@@ -645,10 +645,10 @@ StateMachine_Terminate(StateMachineObject *self, PyObject *args, PyObject *kwds)
 
     /* Disable any possible incoming notifications */
     BEGIN_PHONE_COMM
-    GSM_SetIncomingSMS(self->s, false);
-    GSM_SetIncomingCall(self->s, false);
-    GSM_SetIncomingCB(self->s, false);
-    GSM_SetIncomingUSSD(self->s, false);
+    GSM_SetIncomingSMS(self->s, FALSE);
+    GSM_SetIncomingCall(self->s, FALSE);
+    GSM_SetIncomingCB(self->s, FALSE);
+    GSM_SetIncomingUSSD(self->s, FALSE);
     END_PHONE_COMM
 
     /* Remove callbacks */
@@ -675,7 +675,7 @@ static char StateMachine_ReadDevice__doc__[] =
 "ReadDevice(Wait)\n\n"
 "Reads data from device.\n\n"
 "@param Wait: Whether to wait, default is not to wait.\n"
-"@type Wait: bool\n"
+"@type Wait: boolean\n"
 "@return: Number of bytes read\n"
 "@rtype: int\n"
 ;
@@ -685,20 +685,20 @@ StateMachine_ReadDevice(StateMachineObject *self, PyObject *args, PyObject *kwds
 {
     static char         *kwlist[] = {"Wait", NULL};
     PyObject            *o = Py_None;
-    bool                waiting;
+    gboolean                waiting;
     long int            result;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|O", kwlist, &o))
         return NULL;
 
     if (o == Py_None) {
-        waiting = false;
+        waiting = FALSE;
     } else if (o == Py_False) {
-        waiting = false;
+        waiting = FALSE;
     } else if (o == Py_True) {
-        waiting = true;
+        waiting = TRUE;
     } else {
-        PyErr_SetString(PyExc_TypeError, "use None or bool as Wait!");
+        PyErr_SetString(PyExc_TypeError, "use None or gboolean as Wait!");
         return NULL;
     }
 
@@ -1130,7 +1130,7 @@ static char StateMachine_SetAlarm__doc__[] =
 "@param Location: Location of alarm to set. Defaults to 1.\n"
 "@type Location: int\n"
 "@param Repeating: Whether alarm should be repeating. Defaults to True.\n"
-"@type Repeating: bool\n"
+"@type Repeating: boolean\n"
 "@param Text: Text to be displayed on alarm. Defaults to empty.\n"
 "@type Text: string\n"
 "@return: None\n"
@@ -1148,7 +1148,7 @@ StateMachine_SetAlarm(StateMachineObject *self, PyObject *args, PyObject *kwds) 
 
     gsm_alarm.Location = 1;
     gsm_alarm.Text[0] = 0;
-    gsm_alarm.Repeating = true;
+    gsm_alarm.Repeating = TRUE;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "O|IIO", kwlist,
                 &pydt, &(gsm_alarm.Location), &(gsm_alarm.Repeating), &(s)))
@@ -1233,7 +1233,7 @@ static char StateMachine_SetLocale__doc__[] =
 "@param DateFormat: Date format, one of 'DDMMYYYY', 'MMDDYYYY', 'YYYYMMDD'\n"
 "@type DateFormat: string\n"
 "@param AMPMTime: Whether to use AM/PM time.\n"
-"@type AMPMTime: bool\n"
+"@type AMPMTime: boolean\n"
 "@return: None\n"
 "@rtype: None\n"
 ;
@@ -1284,7 +1284,7 @@ static char StateMachine_PressKey__doc__[] =
 "@param Key: What key to press\n"
 "@type Key: string\n"
 "@param Press: Whether to emulate press or release.\n"
-"@type Press: bool\n"
+"@type Press: boolean\n"
 "@return: None\n"
 "@rtype: None\n"
 ;
@@ -1327,7 +1327,7 @@ static char StateMachine_Reset__doc__[] =
 "Reset(Hard)\n\n"
 "Performs phone reset.\n\n"
 "@param Hard: Whether to make hard reset\n"
-"@type Hard: bool\n"
+"@type Hard: boolean\n"
 "@return: None\n"
 "@rtype: None\n"
 ;
@@ -1911,7 +1911,7 @@ static char StateMachine_GetNextMemory__doc__[] =
 "@param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'\n"
 "@type Type: string\n"
 "@param Start: Whether to start. This can not be used together with Location\n"
-"@type Start: bool\n"
+"@type Start: boolean\n"
 "@param Location: Last read location. This can not be used together with Start\n"
 "@type Location: int\n"
 "@return: Memory entry as hash\n"
@@ -1924,7 +1924,7 @@ StateMachine_GetNextMemory(StateMachineObject *self, PyObject *args, PyObject *k
     GSM_MemoryEntry     entry;
     static char         *kwlist[] = {"Type", "Start", "Location", NULL};
     char                *s = NULL;
-    int                 start = false;
+    int                 start = FALSE;
     PyObject            *result;
 
     entry.Location = -1;
@@ -2279,7 +2279,7 @@ StateMachine_SetSMSC(StateMachineObject *self, PyObject *args, PyObject *kwds) {
                 &PyDict_Type, &(value)))
         return NULL;
 
-    if (!SMSCFromPython(value, &smsc, true)) return NULL;
+    if (!SMSCFromPython(value, &smsc, TRUE)) return NULL;
 
     BEGIN_PHONE_COMM
     error = GSM_SetSMSC(self->s, &smsc);
@@ -2375,7 +2375,7 @@ static char StateMachine_GetNextSMS__doc__[] =
 "@param Folder: Folder where to read entry (0 is emulated flat memory)\n"
 "@type Folder: int\n"
 "@param Start: Whether to start. This can not be used together with Location\n"
-"@type Start: bool\n"
+"@type Start: boolean\n"
 "@param Location: Location last read entry. This can not be used together with Start\n"
 "@type Location: int\n"
 "@return: Hash with SMS data\n"
@@ -2388,7 +2388,7 @@ StateMachine_GetNextSMS(StateMachineObject *self, PyObject *args, PyObject *kwds
     GSM_MultiSMSMessage sms;
     int                 i;
     static char         *kwlist[] = {"Folder", "Start", "Location", NULL};
-    int                 start = false;
+    int                 start = FALSE;
 
     /* Clear SMS structure */
     for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
@@ -2559,7 +2559,7 @@ StateMachine_SendSMS(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     while (self->SMSStatus != ERR_NONE) {
         i++;
         BEGIN_PHONE_COMM
-        GSM_ReadDevice(self->s, true);
+        GSM_ReadDevice(self->s, TRUE);
         END_PHONE_COMM
         if (self->SMSStatus == ERR_FULL || self->SMSStatus == ERR_UNKNOWN || i == 100) {
             if (!checkError(self->s, self->SMSStatus, "SendSMS")) {
@@ -2606,7 +2606,7 @@ StateMachine_SendSavedSMS(StateMachineObject *self, PyObject *args, PyObject *kw
     while (self->SMSStatus != ERR_NONE) {
         i++;
         BEGIN_PHONE_COMM
-        GSM_ReadDevice(self->s,true);
+        GSM_ReadDevice(self->s,TRUE);
         END_PHONE_COMM
         if (self->SMSStatus == ERR_FULL || self->SMSStatus == ERR_UNKNOWN || i == 100) {
             if (!checkError(self->s, self->SMSStatus, "SendSavedSMS")) {
@@ -2635,7 +2635,7 @@ static char StateMachine_SetIncomingSMS__doc__[] =
 static PyObject *
 StateMachine_SetIncomingSMS(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
-    int                 enable = true;
+    int                 enable = TRUE;
     static char         *kwlist[] = {"Enable", NULL};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|I", kwlist, &enable))
@@ -2666,7 +2666,7 @@ static char StateMachine_SetIncomingCB__doc__[] =
 static PyObject *
 StateMachine_SetIncomingCB(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
-    int                 enable = true;
+    int                 enable = TRUE;
     static char         *kwlist[] = {"Enable", NULL};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|I", kwlist, &enable))
@@ -2697,7 +2697,7 @@ static char StateMachine_SetIncomingCall__doc__[] =
 static PyObject *
 StateMachine_SetIncomingCall(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
-    int                 enable = true;
+    int                 enable = TRUE;
     static char         *kwlist[] = {"Enable", NULL};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|I", kwlist, &enable))
@@ -2728,7 +2728,7 @@ static char StateMachine_SetIncomingUSSD__doc__[] =
 static PyObject *
 StateMachine_SetIncomingUSSD(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
-    int                 enable = true;
+    int                 enable = TRUE;
     static char         *kwlist[] = {"Enable", NULL};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|I", kwlist, &enable))
@@ -2856,7 +2856,7 @@ static char StateMachine_DialVoice__doc__[] =
 "@param Number: Number to dial\n"
 "@type Number: string\n"
 "@param ShowNumber: Identifies whether to enable CLIR (None = keep default phone settings). Default is None\n"
-"@type ShowNumber: bool or None\n"
+"@type ShowNumber: boolean or None\n"
 "@return: None\n"
 "@rtype: None\n"
 ;
@@ -2880,7 +2880,7 @@ StateMachine_DialVoice(StateMachineObject *self, PyObject *args, PyObject *kwds)
     } else if (o == Py_True) {
         ShowNumber = GSM_CALL_ShowNumber;
     } else {
-        PyErr_SetString(PyExc_TypeError, "use None or bool as ShowNumber!");
+        PyErr_SetString(PyExc_TypeError, "use None or gboolean as ShowNumber!");
         return NULL;
     }
 
@@ -2935,7 +2935,7 @@ static char StateMachine_AnswerCall__doc__[] =
 "@param ID: ID of call\n"
 "@type ID: integer\n"
 "@param All: Answer all calls?\n"
-"@type All: bool\n"
+"@type All: boolean\n"
 "@return: None\n"
 "@rtype: None\n"
 ;
@@ -2945,7 +2945,7 @@ StateMachine_AnswerCall(StateMachineObject *self, PyObject *args, PyObject *kwds
     GSM_Error           error;
     static char         *kwlist[] = {"ID", "All", NULL};
     int                 id;
-    bool                all;
+    gboolean                all;
     PyObject            *o = Py_None;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "iO", kwlist,
@@ -2953,11 +2953,11 @@ StateMachine_AnswerCall(StateMachineObject *self, PyObject *args, PyObject *kwds
         return NULL;
 
     if (o == Py_False) {
-        all = false;
+        all = FALSE;
     } else if (o == Py_True) {
-        all = true;
+        all = TRUE;
     } else {
-        PyErr_SetString(PyExc_TypeError, "use bool as All!");
+        PyErr_SetString(PyExc_TypeError, "use gboolean as All!");
         return NULL;
     }
 
@@ -2980,7 +2980,7 @@ static char StateMachine_CancelCall__doc__[] =
 "@param ID: ID of call\n"
 "@type ID: integer\n"
 "@param All: Cancel all calls?\n"
-"@type All: bool\n"
+"@type All: boolean\n"
 "@return: None\n"
 "@rtype: None\n"
 ;
@@ -2990,7 +2990,7 @@ StateMachine_CancelCall(StateMachineObject *self, PyObject *args, PyObject *kwds
     GSM_Error           error;
     static char         *kwlist[] = {"ID", "All", NULL};
     int                 id;
-    bool                all;
+    gboolean                all;
     PyObject            *o = Py_None;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "iO", kwlist,
@@ -2998,11 +2998,11 @@ StateMachine_CancelCall(StateMachineObject *self, PyObject *args, PyObject *kwds
         return NULL;
 
     if (o == Py_False) {
-        all = false;
+        all = FALSE;
     } else if (o == Py_True) {
-        all = true;
+        all = TRUE;
     } else {
-        PyErr_SetString(PyExc_TypeError, "use bool as All!");
+        PyErr_SetString(PyExc_TypeError, "use gboolean as All!");
         return NULL;
     }
 
@@ -3164,7 +3164,7 @@ StateMachine_TransferCall(StateMachineObject *self, PyObject *args, PyObject *kw
     GSM_Error           error;
     static char         *kwlist[] = {"ID", "Next", NULL};
     int                 id;
-    bool                next;
+    gboolean                next;
     PyObject            *o = Py_None;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "iO", kwlist,
@@ -3172,11 +3172,11 @@ StateMachine_TransferCall(StateMachineObject *self, PyObject *args, PyObject *kw
         return NULL;
 
     if (o == Py_False) {
-        next = false;
+        next = FALSE;
     } else if (o == Py_True) {
-        next = true;
+        next = TRUE;
     } else {
-        PyErr_SetString(PyExc_TypeError, "use bool as Next!");
+        PyErr_SetString(PyExc_TypeError, "use gboolean as Next!");
         return NULL;
     }
 
@@ -3207,7 +3207,7 @@ StateMachine_SwitchCall(StateMachineObject *self, PyObject *args, PyObject *kwds
     GSM_Error           error;
     static char         *kwlist[] = {"ID", "Next", NULL};
     int                 id;
-    bool                next;
+    gboolean                next;
     PyObject            *o = Py_None;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "iO", kwlist,
@@ -3215,11 +3215,11 @@ StateMachine_SwitchCall(StateMachineObject *self, PyObject *args, PyObject *kwds
         return NULL;
 
     if (o == Py_False) {
-        next = false;
+        next = FALSE;
     } else if (o == Py_True) {
-        next = true;
+        next = TRUE;
     } else {
-        PyErr_SetString(PyExc_TypeError, "use bool as Next!");
+        PyErr_SetString(PyExc_TypeError, "use gboolean as Next!");
         return NULL;
     }
 
@@ -3679,7 +3679,7 @@ static char StateMachine_GetNextToDo__doc__[] =
 "GetNextToDo(Start, Location)\n\n"
 "Reads ToDo from phone.\n\n"
 "@param Start: Whether to start. This can not be used together with Location\n"
-"@type Start: bool\n"
+"@type Start: boolean\n"
 "@param Location: Last read location. This can not be used together with Start\n"
 "@type Location: int\n"
 "@return: Hash with ToDo values\n"
@@ -3691,7 +3691,7 @@ StateMachine_GetNextToDo(StateMachineObject *self, PyObject *args, PyObject *kwd
     GSM_Error           error;
     static char         *kwlist[] = {"Start", "Location", NULL};
     GSM_ToDoEntry       todo;
-    int                 start = false;
+    int                 start = FALSE;
 
     todo.Location = -1;
 
@@ -3939,7 +3939,7 @@ static char StateMachine_GetNextCalendar__doc__[] =
 "GetNextCalendar(Start, Location)\n\n"
 "Retrieves calendar entry. This is useful for continuous reading of all calendar entries.\n\n"
 "@param Start: Whether to start. This can not be used together with Location\n"
-"@type Start: bool\n"
+"@type Start: boolean\n"
 "@param Location: Last read location. This can not be used together with Start\n"
 "@type Location: int\n"
 "@return: Hash with calendar values\n"
@@ -3950,7 +3950,7 @@ static PyObject *
 StateMachine_GetNextCalendar(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
     GSM_CalendarEntry   entry;
-    int                 start = false;
+    int                 start = FALSE;
     static char         *kwlist[] = {"Start", "Location", NULL};
 
     entry.Location = -1;
@@ -4309,7 +4309,7 @@ static char StateMachine_GetNextFileFolder__doc__[] =
 "GetNextFileFolder(Start)\n\n"
 "Gets next filename from filesystem.\n\n"
 "@param Start: Whether we're starting listing. Defaults to False.\n"
-"@type Start: bool\n"
+"@type Start: boolean\n"
 "@return: File data as hash\n"
 "@rtype: hash\n"
 ;
@@ -4318,7 +4318,7 @@ static PyObject *
 StateMachine_GetNextFileFolder(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
     static char         *kwlist[] = {"Start", NULL};
-    int                 start = false;
+    int                 start = FALSE;
     GSM_File            File;
 
     memset(&File, 0, sizeof(File));
@@ -4346,7 +4346,7 @@ static char StateMachine_GetFolderListing__doc__[] =
 "@param Folder: Folder to list\n"
 "@type Folder: string\n"
 "@param Start: Whether we're starting listing. Defaults to False.\n"
-"@type Start: bool\n"
+"@type Start: boolean\n"
 "@return: File data as hash\n"
 "@rtype: hash\n"
 ;
@@ -4357,7 +4357,7 @@ StateMachine_GetFolderListing(StateMachineObject *self, PyObject *args, PyObject
     static char         *kwlist[] = {"Folder", "Start", NULL};
     PyObject            *folder_p;
     unsigned char       *folder_g;
-    int                 start = false;
+    int                 start = FALSE;
     GSM_File            File;
 
     memset(&File, 0, sizeof(File));
@@ -4370,7 +4370,7 @@ StateMachine_GetFolderListing(StateMachineObject *self, PyObject *args, PyObject
     CopyUnicodeString(File.ID_FullName, folder_g);
     free(folder_g);
 
-    File.Folder = true;
+    File.Folder = TRUE;
 
     BEGIN_PHONE_COMM
     error = GSM_GetFolderListing(self->s, &File, start);
@@ -4412,7 +4412,7 @@ StateMachine_GetNextRootFolder(StateMachineObject *self, PyObject *args, PyObjec
     CopyUnicodeString(File.ID_FullName, folder_g);
     free(folder_g);
 
-    File.Folder = true;
+    File.Folder = TRUE;
 
     BEGIN_PHONE_COMM
     error = GSM_GetNextRootFolder(self->s, &File);
@@ -4433,13 +4433,13 @@ static char StateMachine_SetFileAttributes__doc__[] =
 "@param Filename: File to modify\n"
 "@type Filename: string\n"
 "@param ReadOnly: Whether file is read only. Default to False.\n"
-"@type ReadOnly: bool\n"
+"@type ReadOnly: boolean\n"
 "@param Protected: Whether file is protected. Default to False.\n"
-"@type Protected: bool\n"
+"@type Protected: boolean\n"
 "@param System: Whether file is system. Default to False.\n"
-"@type System: bool\n"
+"@type System: boolean\n"
 "@param Hidden: Whether file is hidden. Default to False.\n"
-"@type Hidden: bool\n"
+"@type Hidden: boolean\n"
 "@return: None\n"
 "@rtype: None\n"
 ;
@@ -4455,19 +4455,19 @@ StateMachine_SetFileAttributes(StateMachineObject *self, PyObject *args, PyObjec
 
     memset(&File, 0, sizeof(File));
 
-    File.ReadOnly  = false;
-    File.Protected = false;
-    File.System    = false;
-    File.Hidden    = false;
+    File.ReadOnly  = FALSE;
+    File.Protected = FALSE;
+    File.System    = FALSE;
+    File.Hidden    = FALSE;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "U|iiii", kwlist,
                 &folder_p, &readonly_attr, &protected_attr, &system_attr, &hidden_attr))
         return NULL;
 
-    if (readonly_attr  > 0) File.ReadOnly  = true;
-    if (protected_attr > 0) File.Protected = true;
-    if (system_attr    > 0) File.System    = true;
-    if (hidden_attr    > 0) File.Hidden    = true;
+    if (readonly_attr  > 0) File.ReadOnly  = TRUE;
+    if (protected_attr > 0) File.Protected = TRUE;
+    if (system_attr    > 0) File.System    = TRUE;
+    if (hidden_attr    > 0) File.Hidden    = TRUE;
 
     folder_g = StringPythonToGammu(folder_p);
     CopyUnicodeString(File.ID_FullName, folder_g);
@@ -4507,7 +4507,7 @@ StateMachine_GetFilePart(StateMachineObject *self, PyObject *args, PyObject *kwd
                 &PyDict_Type, &(value)))
         return NULL;
 
-    if (!FileFromPython(value, &File, false)) return NULL;
+    if (!FileFromPython(value, &File, FALSE)) return NULL;
 
     handle = GetIntFromDict(value, "Handle");
     if (handle == INT_INVALID) {
@@ -4582,7 +4582,7 @@ StateMachine_AddFilePart(StateMachineObject *self, PyObject *args, PyObject *kwd
                 &PyDict_Type, &(value)))
         return NULL;
 
-    if (!FileFromPython(value, &File, true)) return NULL;
+    if (!FileFromPython(value, &File, TRUE)) return NULL;
 
     handle = GetIntFromDict(value, "Handle");
     if (handle == INT_INVALID) {
@@ -4657,7 +4657,7 @@ StateMachine_SendFilePart(StateMachineObject *self, PyObject *args, PyObject *kw
                 &PyDict_Type, &(value)))
         return NULL;
 
-    if (!FileFromPython(value, &File, true)) return NULL;
+    if (!FileFromPython(value, &File, TRUE)) return NULL;
 
     handle = GetIntFromDict(value, "Handle");
     if (handle == INT_INVALID) {
@@ -4806,10 +4806,10 @@ StateMachine_AddFolder(StateMachineObject *self, PyObject *args, PyObject *kwds)
                 &folder_p, &name_p))
         return NULL;
 
-    File.ReadOnly  = false;
-    File.Protected = false;
-    File.System    = false;
-    File.Hidden    = false;
+    File.ReadOnly  = FALSE;
+    File.Protected = FALSE;
+    File.System    = FALSE;
+    File.Hidden    = FALSE;
 
     folder_g = StringPythonToGammu(folder_p);
     name_g = StringPythonToGammu(name_p);
@@ -4914,7 +4914,7 @@ static char StateMachine_SetDebugFile__doc__[] =
 "@param File: File where to write debug stuff (as configured by L{SetDebugLevel}). Can be either None for no file, Python file object or filename.\n"
 "@type File: mixed\n"
 "@param Global: Whether to use global debug structure (overrides File)\n"
-"@type Global: bool\n"
+"@type Global: boolean\n"
 "@return: None\n"
 "@rtype: None\n"
 ;
@@ -4944,7 +4944,7 @@ StateMachine_SetDebugFile(StateMachineObject *self, PyObject *args, PyObject *kw
     GSM_SetDebugGlobal(global, di);
 
     if (value == Py_None) {
-        error = GSM_SetDebugFileDescriptor(NULL, true, di);
+        error = GSM_SetDebugFileDescriptor(NULL, TRUE, di);
         if (!checkError(NULL, error, "SetDebugFileDescriptor")) return NULL;
     } else if (PyFile_Check(value)) {
         f = PyFile_AsFile(value);
@@ -4952,7 +4952,7 @@ StateMachine_SetDebugFile(StateMachineObject *self, PyObject *args, PyObject *kw
         self->DebugFile = value;
         Py_INCREF(value);
 
-        error = GSM_SetDebugFileDescriptor(f, false, di);
+        error = GSM_SetDebugFileDescriptor(f, FALSE, di);
         if (!checkError(NULL, error, "SetDebugFileDescriptor")) return NULL;
     } else if (PyString_Check(value)) {
         s = PyString_AsString(value);
@@ -5226,10 +5226,10 @@ StateMachine_dealloc(StateMachineObject *self)
     BEGIN_PHONE_COMM
     if (GSM_IsConnected(self->s)) {
         /* Disable any possible incoming notifications */
-        GSM_SetIncomingSMS(self->s, false);
-        GSM_SetIncomingCall(self->s, false);
-        GSM_SetIncomingCB(self->s, false);
-        GSM_SetIncomingUSSD(self->s, false);
+        GSM_SetIncomingSMS(self->s, FALSE);
+        GSM_SetIncomingCall(self->s, FALSE);
+        GSM_SetIncomingCB(self->s, FALSE);
+        GSM_SetIncomingUSSD(self->s, FALSE);
         /* Terminate the connection */
         GSM_TerminateConnection(self->s);
     }
@@ -5409,7 +5409,7 @@ gammu_SetDebugFile(PyObject *self, PyObject *args, PyObject *kwds)
             Py_DECREF(DebugFile);
             DebugFile = NULL;
         }
-        error = GSM_SetDebugFileDescriptor(NULL, false, GSM_GetGlobalDebug());
+        error = GSM_SetDebugFileDescriptor(NULL, FALSE, GSM_GetGlobalDebug());
         if (!checkError(NULL, error, "SetDebugFileDescriptor")) return NULL;
     } else if (PyFile_Check(value)) {
         if (DebugFile != NULL) {
@@ -5420,7 +5420,7 @@ gammu_SetDebugFile(PyObject *self, PyObject *args, PyObject *kwds)
         if (f == NULL) return NULL;
         DebugFile = value;
         Py_INCREF(DebugFile);
-        error = GSM_SetDebugFileDescriptor(f, false, GSM_GetGlobalDebug());
+        error = GSM_SetDebugFileDescriptor(f, FALSE, GSM_GetGlobalDebug());
         if (!checkError(NULL, error, "SetDebugFileDescriptor")) return NULL;
     } else if (PyString_Check(value)) {
         if (DebugFile != NULL) {
@@ -5477,7 +5477,7 @@ static char gammu_LinkSMS__doc__[] =
 "LinkSMS(Messages, EMS)\n\n"
 "Links multi part SMS messages.\n\n"
 "@type Messages: list\n"
-"@type EMS: bool\n"
+"@type EMS: boolean\n"
 "@param Messages: List of messages to link\n"
 "@param EMS: Whether to detect ems, defauls to True\n"
 "@return: List of linked messages\n"
@@ -5535,7 +5535,7 @@ static char gammu_DecodeSMS__doc__[] =
 "@param Messages: Nessages to decode\n"
 "@type Messages: list\n"
 "@param EMS: Whether to use EMS, defalt to True\n"
-"@type EMS: bool\n"
+"@type EMS: boolean\n"
 "@return: Multi part message information\n"
 "@rtype: hash\n"
 ;
@@ -5658,7 +5658,7 @@ gammu_EncodeVCARD(PyObject *self, PyObject *args, PyObject *kwds)
 
     if (!MemoryEntryFromPython(value, &entry, 1)) return NULL;
 
-    error = GSM_EncodeVCARD(GSM_GetGlobalDebug(), buffer, sizeof(buffer), &pos, &entry, true, SonyEricsson_VCard21);
+    error = GSM_EncodeVCARD(GSM_GetGlobalDebug(), buffer, sizeof(buffer), &pos, &entry, TRUE, SonyEricsson_VCard21);
     if (!checkError(NULL, error, "EncodeVCARD")) return NULL;
 
     return PyString_FromString(buffer);
@@ -5761,7 +5761,7 @@ gammu_EncodeVCALENDAR(PyObject *self, PyObject *args, PyObject *kwds)
 
     if (!CalendarFromPython(value, &entry, 1)) return NULL;
 
-    error = GSM_EncodeVCALENDAR(buffer, sizeof(buffer), &pos, &entry, true, SonyEricsson_VCalendar);
+    error = GSM_EncodeVCALENDAR(buffer, sizeof(buffer), &pos, &entry, TRUE, SonyEricsson_VCalendar);
     if (!checkError(NULL, error, "EncodeVCALENDAR")) return NULL;
 
     return PyString_FromString(buffer);
@@ -5792,7 +5792,7 @@ gammu_EncodeICALENDAR(PyObject *self, PyObject *args, PyObject *kwds)
 
     if (!CalendarFromPython(value, &entry, 1)) return NULL;
 
-    error = GSM_EncodeVCALENDAR(buffer, sizeof(buffer), &pos, &entry, true, Mozilla_iCalendar);
+    error = GSM_EncodeVCALENDAR(buffer, sizeof(buffer), &pos, &entry, TRUE, Mozilla_iCalendar);
     if (!checkError(NULL, error, "EncodeICALENDAR")) return NULL;
 
     return PyString_FromString(buffer);
@@ -5823,7 +5823,7 @@ gammu_EncodeVTODO(PyObject *self, PyObject *args, PyObject *kwds)
 
     if (!TodoFromPython(value, &entry, 1)) return NULL;
 
-    error = GSM_EncodeVTODO(buffer, sizeof(buffer), &pos, &entry, true, SonyEricsson_VToDo);
+    error = GSM_EncodeVTODO(buffer, sizeof(buffer), &pos, &entry, TRUE, SonyEricsson_VToDo);
     if (!checkError(NULL, error, "EncodeVTODO")) return NULL;
 
     return PyString_FromString(buffer);
@@ -5854,7 +5854,7 @@ gammu_EncodeITODO(PyObject *self, PyObject *args, PyObject *kwds)
 
     if (!TodoFromPython(value, &entry, 1)) return NULL;
 
-    error = GSM_EncodeVTODO(buffer, sizeof(buffer), &pos, &entry, true, Mozilla_VToDo);
+    error = GSM_EncodeVTODO(buffer, sizeof(buffer), &pos, &entry, TRUE, Mozilla_VToDo);
     if (!checkError(NULL, error, "EncodeITODO")) return NULL;
 
     return PyString_FromString(buffer);
@@ -5883,7 +5883,7 @@ gammu_SaveRingtone(PyObject *self, PyObject *args, PyObject *kwds)
     char                        *name;
     FILE                        *f;
     GSM_Ringtone                ringtone;
-    bool                        closefile = false;
+    gboolean                        closefile = FALSE;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "OO!s", kwlist,
                 &file, &PyDict_Type, &(value), &s))
@@ -5904,7 +5904,7 @@ gammu_SaveRingtone(PyObject *self, PyObject *args, PyObject *kwds)
             PyErr_SetString(PyExc_IOError, "Can not open file for writing!");
             return NULL;
         }
-        closefile = true;
+        closefile = TRUE;
     } else {
         PyErr_SetString(PyExc_TypeError, "Valid are only string or file parameters!");
         return NULL;
@@ -5974,7 +5974,7 @@ gammu_SaveBackup(PyObject *self, PyObject *args, PyObject *kwds)
         return NULL;
 
     GSM_GetCurrentDateTime(&backup.DateTime);
-    backup.DateTimeAvailable = true;
+    backup.DateTimeAvailable = TRUE;
 
     error = GSM_SaveBackupFile(filename, &backup, format);
     if (!checkError(NULL, error, "SaveBackup")) return NULL;
@@ -6188,7 +6188,7 @@ PyMODINIT_FUNC init_gammu(void) {
 
     /* Reset debugging setup */
     di = GSM_GetGlobalDebug();
-    GSM_SetDebugFileDescriptor(NULL, false, di);
+    GSM_SetDebugFileDescriptor(NULL, FALSE, di);
     GSM_SetDebugLevel("none", di);
 }
 /*

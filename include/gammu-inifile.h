@@ -71,7 +71,7 @@ void INI_Free(INI_Section * head);
  *
  * \return Error code
  */
-GSM_Error INI_ReadFile(const char *FileName, bool Unicode,
+GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode,
 		       INI_Section ** result);
 
 /**
@@ -89,7 +89,7 @@ GSM_Error INI_ReadFile(const char *FileName, bool Unicode,
  */
 INI_Entry *INI_FindLastSectionEntry(INI_Section * file_info,
 				    const unsigned char *section,
-				    const bool Unicode);
+				    const gboolean Unicode);
 
 /**
  * Returns value of INI file entry.
@@ -107,7 +107,7 @@ INI_Entry *INI_FindLastSectionEntry(INI_Section * file_info,
  */
 unsigned char *INI_GetValue(INI_Section * file_info,
 			    const unsigned char *section,
-			    const unsigned char *key, const bool Unicode);
+			    const unsigned char *key, const gboolean Unicode);
 #endif
 
 /* Editor configuration

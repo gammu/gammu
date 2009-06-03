@@ -40,7 +40,7 @@ GSM_Error SaveICS(char *FileName, GSM_Backup *backup)
 		sprintf(Buffer, "%c%c",13,10);
 		chk_fwrite(Buffer,1,2,file);
 		Length = 0;
-		error = GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer),&Length,backup->Calendar[i],false,Mozilla_iCalendar);
+		error = GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer),&Length,backup->Calendar[i],FALSE,Mozilla_iCalendar);
 		if (error != ERR_NONE) return error;
 		chk_fwrite(Buffer,1,Length,file);
 		i++;
@@ -50,7 +50,7 @@ GSM_Error SaveICS(char *FileName, GSM_Backup *backup)
 		sprintf(Buffer, "%c%c",13,10);
 		chk_fwrite(Buffer,1,2,file);
 		Length = 0;
-		error = GSM_EncodeVTODO(Buffer, sizeof(Buffer), &Length,backup->ToDo[i],false,Mozilla_VToDo);
+		error = GSM_EncodeVTODO(Buffer, sizeof(Buffer), &Length,backup->ToDo[i],FALSE,Mozilla_VToDo);
 		if (error != ERR_NONE) return error;
 		chk_fwrite(Buffer,1,Length,file);
 		i++;

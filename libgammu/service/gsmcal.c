@@ -193,7 +193,7 @@ void GSM_GetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 		case 24:
 		case 24*7:
 		case 24*14:
-			GetTimeDifference(60*60*Recurrance*(endday[0]*256+endday[1]-1), &entry->Entries[entry->EntriesNum].Date, true, 1);
+			GetTimeDifference(60*60*Recurrance*(endday[0]*256+endday[1]-1), &entry->Entries[entry->EntriesNum].Date, TRUE, 1);
 			entry->EntriesNum++;
 			break;
 		case 24*30:
@@ -221,9 +221,9 @@ void GSM_GetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 		entry->Entries[entry->EntriesNum-1].Date.Second);
 }
 
-bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
+gboolean GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 {
-	bool 		Past = true;
+	gboolean 		Past = TRUE;
 	int		i,End=-1;
 	GSM_DateTime	DT;
 	char		rec[20],endday[20];
@@ -232,12 +232,12 @@ bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 	for (i = 0; i < note->EntriesNum; i++) {
 		switch (note->Entries[i].EntryType) {
 		case CAL_START_DATETIME :
-			if (note->Entries[i].Date.Year > DT.Year) Past = false;
+			if (note->Entries[i].Date.Year > DT.Year) Past = FALSE;
 			if (note->Entries[i].Date.Year == DT.Year &&
-			    note->Entries[i].Date.Month > DT.Month) Past = false;
+			    note->Entries[i].Date.Month > DT.Month) Past = FALSE;
 			if (note->Entries[i].Date.Year == DT.Year &&
 			    note->Entries[i].Date.Month == DT.Month &&
-			    note->Entries[i].Date.Day >= DT.Day) Past = false;
+			    note->Entries[i].Date.Day >= DT.Day) Past = FALSE;
 			break;
 		case CAL_REPEAT_STOPDATE:
 			if (End == -1) End = i;
@@ -246,18 +246,18 @@ bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 		}
 		if (!Past) break;
 	}
-	if (note->Type == GSM_CAL_BIRTHDAY) Past = false;
+	if (note->Type == GSM_CAL_BIRTHDAY) Past = FALSE;
 	GSM_SetCalendarRecurranceRepeat(NULL, rec, endday, note);
 	if (rec[0] != 0 || rec[1] != 0) {
 		if (End == -1) {
-			Past = false;
+			Past = FALSE;
 		} else {
-			if (note->Entries[End].Date.Year > DT.Year) Past = false;
+			if (note->Entries[End].Date.Year > DT.Year) Past = FALSE;
 			if (note->Entries[End].Date.Year == DT.Year &&
-			    note->Entries[End].Date.Month > DT.Month) Past = false;
+			    note->Entries[End].Date.Month > DT.Month) Past = FALSE;
 			if (note->Entries[End].Date.Year == DT.Year &&
 			    note->Entries[End].Date.Month == DT.Month &&
-			    note->Entries[End].Date.Day >= DT.Day) Past = false;
+			    note->Entries[End].Date.Day >= DT.Day) Past = FALSE;
 		}
 	}
 	return Past;
@@ -441,7 +441,7 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, const size_t buff_len, size_t *Leng
 	int i;
 	int j;
 	const char *DaysOfWeek[8] = {"SU", "MO", "TU", "WE", "TH", "FR", "SA", "SU"};
-	bool repeating = false;
+	gboolean repeating = FALSE;
 	int repeat_dayofweek = -1;
 	int repeat_day = -1;
 	int repeat_dayofyear = -1;
@@ -449,7 +449,7 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, const size_t buff_len, size_t *Leng
 	int repeat_month = -1;
 	int repeat_count = -1;
 	int repeat_frequency = -1;
-	bool header;
+	gboolean header;
 #if 0
 	GSM_DateTime repeat_startdate = {0,0,0,0,0,0,0};
 #endif
@@ -475,41 +475,41 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, const size_t buff_len, size_t *Leng
 				break;
 			case CAL_REPEAT_DAYOFWEEK:
 				repeat_dayofweek 	= note->Entries[i].Number;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_DAY:
 				repeat_day 		= note->Entries[i].Number;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_DAYOFYEAR:
 				repeat_dayofyear	= note->Entries[i].Number;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_WEEKOFMONTH:
 				repeat_weekofmonth 	= note->Entries[i].Number;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_MONTH:
 				repeat_month 		= note->Entries[i].Number;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_FREQUENCY:
 				repeat_frequency 	= note->Entries[i].Number;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_COUNT:
 				repeat_count	 	= note->Entries[i].Number;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 			case CAL_REPEAT_STARTDATE:
 #if 0
 				repeat_startdate 	= note->Entries[i].Date;
-				repeating 		= true;
+				repeating 		= TRUE;
 #endif
 				break;
 			case CAL_REPEAT_STOPDATE:
 				repeat_stopdate 	= note->Entries[i].Date;
-				repeating 		= true;
+				repeating 		= TRUE;
 				break;
 		}
 	}
@@ -534,14 +534,14 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, const size_t buff_len, size_t *Leng
 			}
 
 			/* Store month numbers */
-			header = false;
+			header = FALSE;
 			for (i = 0; i < note->EntriesNum; i++) {
 				if (note->Entries[i].EntryType == CAL_REPEAT_DAYOFYEAR) {
 					if (Version == Mozilla_iCalendar) {
 						if (!header) {
 							error = VC_Store(Buffer, buff_len, Length,  ";BYYEARDAY=%d", note->Entries[i].Number);
 							if (error != ERR_NONE) return error;
-							header = true;
+							header = TRUE;
 						} else {
 							error = VC_Store(Buffer, buff_len, Length,  ",%d", note->Entries[i].Number);
 							if (error != ERR_NONE) return error;
@@ -563,14 +563,14 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, const size_t buff_len, size_t *Leng
 			}
 
 			/* Store month numbers */
-			header = false;
+			header = FALSE;
 			for (i = 0; i < note->EntriesNum; i++) {
 				if (note->Entries[i].EntryType == CAL_REPEAT_MONTH) {
 					if (Version == Mozilla_iCalendar) {
 						if (!header) {
 							error = VC_Store(Buffer, buff_len, Length,  ";BYMONTH=%d", note->Entries[i].Number);
 							if (error != ERR_NONE) return error;
-							header = true;
+							header = TRUE;
 						} else {
 							error = VC_Store(Buffer, buff_len, Length,  ",%d", note->Entries[i].Number);
 							if (error != ERR_NONE) return error;
@@ -592,14 +592,14 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, const size_t buff_len, size_t *Leng
 			}
 
 			/* Store day numbers */
-			header = false;
+			header = FALSE;
 			for (i = 0; i < note->EntriesNum; i++) {
 				if (note->Entries[i].EntryType == CAL_REPEAT_DAY) {
 					if (Version == Mozilla_iCalendar) {
 						if (!header) {
 							error = VC_Store(Buffer, buff_len, Length,  ";BYMONTHDAY=%d", note->Entries[i].Number);
 							if (error != ERR_NONE) return error;
-							header = true;
+							header = TRUE;
 						} else {
 							error = VC_Store(Buffer, buff_len, Length,  ",%d", note->Entries[i].Number);
 							if (error != ERR_NONE) return error;
@@ -635,26 +635,26 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, const size_t buff_len, size_t *Leng
 					}
 				}
 			} else {
-				header = false;
+				header = FALSE;
 				for (i = 0; i < note->EntriesNum; i++) {
 					if (note->Entries[i].EntryType == CAL_REPEAT_WEEKOFMONTH) {
 						if (!header) {
 							error = VC_Store(Buffer, buff_len, Length,  ";BYSETPOS=%d", note->Entries[i].Number);
 							if (error != ERR_NONE) return error;
-							header = true;
+							header = TRUE;
 						} else {
 							error = VC_Store(Buffer, buff_len, Length,  ",%d", note->Entries[i].Number);
 							if (error != ERR_NONE) return error;
 						}
 					}
 				}
-				header = false;
+				header = FALSE;
 				for (j = 0; j < note->EntriesNum; j++) {
 					if (note->Entries[j].EntryType == CAL_REPEAT_DAYOFWEEK) {
 						if (!header) {
 							error = VC_Store(Buffer, buff_len, Length,  ";BYDAY=%s", DaysOfWeek[note->Entries[j].Number]);
 							if (error != ERR_NONE) return error;
-							header = true;
+							header = TRUE;
 						} else {
 							error = VC_Store(Buffer, buff_len, Length,  ",%s", DaysOfWeek[note->Entries[j].Number]);
 							if (error != ERR_NONE) return error;
@@ -673,14 +673,14 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, const size_t buff_len, size_t *Leng
 			}
 
 			/* Store week days */
-			header = false;
+			header = FALSE;
 			for (i = 0; i < note->EntriesNum; i++) {
 				if (note->Entries[i].EntryType == CAL_REPEAT_DAYOFWEEK) {
 					if (Version == Mozilla_iCalendar) {
 						if (!header) {
 							error = VC_Store(Buffer, buff_len, Length,  ";BYDAY=%s", DaysOfWeek[note->Entries[i].Number]);
 							if (error != ERR_NONE) return error;
-							header = true;
+							header = TRUE;
 						} else {
 							error = VC_Store(Buffer, buff_len, Length,  ",%s", DaysOfWeek[note->Entries[i].Number]);
 							if (error != ERR_NONE) return error;
@@ -808,7 +808,7 @@ void GSM_ToDo_AdjustDate(GSM_ToDoEntry *note, GSM_DeltaTime *delta)
 	}
 }
 
-GSM_Error GSM_EncodeVCALENDAR(char *Buffer, const size_t buff_len, size_t *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version)
+GSM_Error GSM_EncodeVCALENDAR(char *Buffer, const size_t buff_len, size_t *Length, GSM_CalendarEntry *note, gboolean header, GSM_VCalendarVersion Version)
 {
 	GSM_DateTime 	deltatime;
 	char 		dtstr[20];
@@ -1032,7 +1032,7 @@ void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, 
 	}
 }
 
-GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version)
+GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, GSM_ToDoEntry *note, gboolean header, GSM_VToDoVersion Version)
 {
 	char		category[100];
 	int		i;
@@ -1404,7 +1404,7 @@ GSM_Error GSM_DecodeVCAL_DOW(const char *Buffer, int *Output)
 GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_CalendarEntry *Calendar, int TimePos)
 {
 	const char *pos = Buffer;
-	bool have_info;
+	gboolean have_info;
 
 /* Skip spaces */
 #define NEXT_NOSPACE(terminate) \
@@ -1461,10 +1461,10 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 			GET_FREQUENCY(0);
 			NEXT_NOSPACE(0);
 			/* There might be now list of months, if there is none, we use date */
-			have_info = false;
+			have_info = FALSE;
 
 			while (isalpha((int)*pos)) {
-				have_info = true;
+				have_info = TRUE;
 				GET_DOW(CAL_REPEAT_DAYOFWEEK, 1);
 				NEXT_NOSPACE(0);
 			}
@@ -1503,7 +1503,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 						NEXT_NOSPACE(0);
 
 						while (isalpha((int)*pos)) {
-							have_info = true;
+							have_info = TRUE;
 							GET_DOW(CAL_REPEAT_DAYOFWEEK, 0);
 							NEXT_NOSPACE(0);
 						}
@@ -1577,10 +1577,10 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 						Calendar->Entries[TimePos].Date.Day;
 					Calendar->EntriesNum++;
 					/* There might be now list of months, if there is none, we use date */
-					have_info = false;
+					have_info = FALSE;
 
 					while (isdigit((int)*pos)) {
-						have_info = true;
+						have_info = TRUE;
 						GET_NUMBER(CAL_REPEAT_MONTH, 0);
 						NEXT_NOSPACE(0);
 					}
@@ -1599,10 +1599,10 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 					GET_FREQUENCY(0);
 					NEXT_NOSPACE(0);
 					/* There might be now list of days, if there is none, we use date */
-					have_info = false;
+					have_info = FALSE;
 
 					while (isdigit((int)*pos)) {
-						have_info = true;
+						have_info = TRUE;
 						GET_NUMBER(CAL_REPEAT_DAYOFYEAR, 0);
 						NEXT_NOSPACE(0);
 					}
@@ -1682,8 +1682,8 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 	GSM_Error	error;
 	int		deltatime = 0;
 	int		dstflag = 0;
-	bool		is_date_only;
-	bool		date_only = false;
+	gboolean		is_date_only;
+	gboolean		date_only = FALSE;
 	int		lBuffer;
  	int 		Time=-1, Alarm=-1;
 	char		*rrule = NULL;
@@ -1701,7 +1701,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 	}
 
 	while (1) {
-		error = MyGetLine(Buffer, Pos, Line, lBuffer, sizeof(Line), true);
+		error = MyGetLine(Buffer, Pos, Line, lBuffer, sizeof(Line), TRUE);
 		if (error != ERR_NONE) return error;
 		if (strlen(Line) == 0) break;
 
@@ -1709,7 +1709,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 		case 0:
 			if (strstr(Line,"BEGIN:VEVENT")) {
 				Calendar->Type = 0;
-				date_only = true;
+				date_only = TRUE;
 				dstflag = 0;
 				Time=-1; Alarm=-1;
 				Level 		= 1;
@@ -1797,7 +1797,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 			}
 
 			if (strstr(Line,"BEGIN:VALARM")) {
-				error = MyGetLine(Buffer, Pos, Line, lBuffer, sizeof(Line), true);
+				error = MyGetLine(Buffer, Pos, Line, lBuffer, sizeof(Line), TRUE);
 				if (error != ERR_NONE) return error;
 				if (strlen(Line) == 0) break;
 				if (ReadVCALText(Line, "TRIGGER;VALUE=DURATION", Buff, CalVer == Mozilla_iCalendar)) {
@@ -1867,14 +1867,14 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				Time = Calendar->EntriesNum;
 				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
-				if (!is_date_only) date_only = false;
+				if (!is_date_only) date_only = FALSE;
 			}
 			if (ReadVCALDate(Line, "DTEND", &Date, &is_date_only)) {
 				Calendar->Entries[Calendar->EntriesNum].Date = Date;
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_END_DATETIME;
 				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
-				if (!is_date_only) date_only = false;
+				if (!is_date_only) date_only = FALSE;
 			}
 			if (ReadVCALDate(Line, "DALARM", &Date, &is_date_only)) {
 				Calendar->Entries[Calendar->EntriesNum].Date = Date;
@@ -2045,28 +2045,28 @@ GSM_Error GSM_DecodeVNOTE(char *Buffer, size_t *Pos, GSM_NoteEntry *Note)
 	unsigned char   Line[2000],Buff[2000];
 	int	     Level = 0;
 	GSM_Error	error;
-	bool	empty = true;
+	gboolean	empty = TRUE;
 
 	Note->Text[0] = 0;
 	Note->Text[1] = 0;
 
 	while (1) {
-		error = MyGetLine(Buffer, Pos, Line, strlen(Buffer), sizeof(Line), true);
+		error = MyGetLine(Buffer, Pos, Line, strlen(Buffer), sizeof(Line), TRUE);
 		if (error != ERR_NONE) return error;
 		if (strlen(Line) == 0) break;
 		switch (Level) {
 		case 0:
 			if (strstr(Line,"BEGIN:VNOTE")) Level = 1;
-			empty = true;
+			empty = TRUE;
 			break;
 		case 1:
 			if (strstr(Line,"END:VNOTE")) {
 				if (UnicodeLength(Note->Text) == 0) return ERR_EMPTY;
 				return ERR_NONE;
 			}
-			if (ReadVCALText(Line, "BODY",	      Buff, false)) {
+			if (ReadVCALText(Line, "BODY",	      Buff, FALSE)) {
 				CopyUnicodeString(Note->Text, Buff);
-				empty = false;
+				empty = FALSE;
 			}
 			break;
 		}
@@ -2084,7 +2084,7 @@ GSM_Error GSM_EncodeVNTFile(char *Buffer, const size_t buff_len, size_t *Length,
 	if (error != ERR_NONE) return error;
 	error = VC_StoreLine(Buffer, buff_len, Length,  "VERSION:1.1");
 	if (error != ERR_NONE) return error;
-	error = VC_StoreText(Buffer, buff_len, Length, Note->Text, "BODY", false);
+	error = VC_StoreText(Buffer, buff_len, Length, Note->Text, "BODY", FALSE);
 	if (error != ERR_NONE) return error;
 	error = VC_StoreLine(Buffer, buff_len, Length,  "END:VNOTE");
 	if (error != ERR_NONE) return error;

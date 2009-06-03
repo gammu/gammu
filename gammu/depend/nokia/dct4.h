@@ -86,7 +86,7 @@ typedef struct {
 		char			Name[100];
 		unsigned char		ID;
 		unsigned char		Value;
-		bool			Startup;
+		gboolean			Startup;
 	} Tests[50];
 	int				Num;
 } DCT4_Phone_Tests;

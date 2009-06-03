@@ -23,15 +23,15 @@ int main(int argc, char **argv)
 	char buffer[65536];
 	FILE *f;
 	size_t len;
-	bool generate = false;
+	gboolean generate = FALSE;
 	GSM_Backup backup;
 	int i;
 	GSM_Debug_Info *debug_info;
-	bool skipcal, skiptodo;
+	gboolean skipcal, skiptodo;
 
 	/* Configure debugging */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Check parameters */
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 
 	/* Check for generating option */
 	if (argc == 4 && strcmp(argv[3], "generate") == 0) {
-		generate = true;
+		generate = TRUE;
 	}
 
 	/* Open file */
@@ -90,7 +90,7 @@ int main(int argc, char **argv)
 		} else {
 			backup.ToDo[0] = NULL;
 		}
-		error = GSM_SaveBackupFile(argv[2], &backup, true);
+		error = GSM_SaveBackupFile(argv[2], &backup, TRUE);
 		gammu_test_result(error, "GSM_SaveBackupFile");
 	}
 
@@ -100,13 +100,13 @@ int main(int argc, char **argv)
 	gammu_test_result(error, "GSM_ReadBackupFile");
 
 	/* Did we read something? */
-	skipcal = false;
+	skipcal = FALSE;
 	if (cal.EntriesNum == 0 && backup.Calendar[0] == NULL) {
-		skipcal = true;
+		skipcal = TRUE;
 	}
-	skiptodo = false;
+	skiptodo = FALSE;
 	if (todo.EntriesNum == 0 && backup.ToDo[0] == NULL) {
-		skiptodo = true;
+		skiptodo = TRUE;
 	}
 
 	/* Compare size */

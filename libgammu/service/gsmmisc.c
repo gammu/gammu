@@ -96,15 +96,15 @@ GSM_Error GSM_ReadFile(const char *FileName, GSM_File *File)
 
 	File->Level = 0;
 	GSM_IdentifyFileFormat(File);
-	File->Protected = false;
-	File->Hidden = false;
-	File->System = false;
-	File->ReadOnly = false; /* @todo TODO get this from permissions? */
-	File->Folder = false;
+	File->Protected = FALSE;
+	File->Hidden = FALSE;
+	File->System = FALSE;
+	File->ReadOnly = FALSE; /* @todo TODO get this from permissions? */
+	File->Folder = FALSE;
 
-	File->ModifiedEmpty = true;
+	File->ModifiedEmpty = TRUE;
 	if (stat(FileName,&fileinfo) == 0) {
-		File->ModifiedEmpty = false;
+		File->ModifiedEmpty = FALSE;
 		dbgprintf(NULL, "File info read correctly\n");
 		/* st_mtime is time of last modification of file */
 		Fill_GSM_DateTime(&File->Modified, fileinfo.st_mtime);
@@ -122,7 +122,7 @@ static void GSM_JADFindLine(GSM_File File, const char *Name, char *Value)
 	Value[0] = 0;
 
 	while (1) {
-		if (MyGetLine(File.Buffer, &Pos, Line, File.Used, sizeof(Line), false) != ERR_NONE) break;
+		if (MyGetLine(File.Buffer, &Pos, Line, File.Used, sizeof(Line), FALSE) != ERR_NONE) break;
 		if (strlen(Line) == 0) break;
 		if (!strncmp(Line,Name,strlen(Name))) {
 			Pos = strlen(Name);
@@ -251,14 +251,14 @@ GSM_Error VC_StoreDate(char *Buffer, const size_t buff_len, size_t *Pos, const G
 	return error;
 }
 
-bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
+gboolean ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 {
 	time_t timestamp;
 	char year[5]="", month[3]="", day[3]="", hour[3]="", minute[3]="", second[3]="";
 
 	memset(dt,0,sizeof(GSM_DateTime));
 
-	if (strlen(Buffer) < 8) return false;
+	if (strlen(Buffer) < 8) return FALSE;
 
 	strncpy(year, 	Buffer, 	4);
 	strncpy(month, 	Buffer+4, 	2);
@@ -268,7 +268,7 @@ bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 	dt->Day		= atoi(day);
 
 	if (Buffer[8] == 'T') {
-		if (strlen(Buffer + 9) < 6) return false;
+		if (strlen(Buffer + 9) < 6) return FALSE;
 
 		strncpy(hour, 	Buffer+9,	2);
 		strncpy(minute, Buffer+11,	2);
@@ -285,12 +285,12 @@ bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 
 	if (!CheckTime(dt)) {
 		dbgprintf(NULL, "incorrect date %d-%d-%d %d:%d:%d\n",dt->Day,dt->Month,dt->Year,dt->Hour,dt->Minute,dt->Second);
-		return false;
+		return FALSE;
 	}
 	if (dt->Year!=0) {
 		if (!CheckDate(dt)) {
 			dbgprintf(NULL, "incorrect date %d-%d-%d %d:%d:%d\n",dt->Day,dt->Month,dt->Year,dt->Hour,dt->Minute,dt->Second);
-			return false;
+			return FALSE;
 		}
 	}
 
@@ -299,10 +299,10 @@ bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 		Fill_GSM_DateTime(dt, timestamp);
 	}
 
-	return true;
+	return TRUE;
 }
 
-bool ReadVCALInt(char *Buffer, const char *Start, int *Value)
+gboolean ReadVCALInt(char *Buffer, const char *Start, int *Value)
 {
 	unsigned char buff[200];
 
@@ -317,39 +317,39 @@ bool ReadVCALInt(char *Buffer, const char *Start, int *Value)
 		strncpy(buff+lvalue,"\0",1);
 		if (sscanf(buff,"%i",Value)) {
 			dbgprintf(NULL, "ReadVCalInt is \"%i\"\n",*Value);
-			return true;
+			return TRUE;
 		}
 	}
-	return false;
+	return FALSE;
 }
 
 
-bool ReadVCALDate(char *Buffer, const char *Start, GSM_DateTime *Date, bool *is_date_only)
+gboolean ReadVCALDate(char *Buffer, const char *Start, GSM_DateTime *Date, gboolean *is_date_only)
 {
 	char fullstart[200];
 	unsigned char datestring[200];
 
-	if (!ReadVCALText(Buffer, Start, datestring, false)) {
+	if (!ReadVCALText(Buffer, Start, datestring, FALSE)) {
 		fullstart[0] = 0;
 		strcat(fullstart, Start);
 		strcat(fullstart, ";VALUE=DATE");
-		if (!ReadVCALText(Buffer, fullstart, datestring, false)) {
-			return false;
+		if (!ReadVCALText(Buffer, fullstart, datestring, FALSE)) {
+			return FALSE;
 		}
-		*is_date_only = true;
+		*is_date_only = TRUE;
 	}
 
 	if (ReadVCALDateTime(DecodeUnicodeString(datestring), Date)) {
 		dbgprintf(NULL, "ReadVCALDateTime is %s\n", OSDate(*Date));
-		*is_date_only = false;
-		return true;
+		*is_date_only = FALSE;
+		return TRUE;
 	}
 
-	return false;
+	return FALSE;
 }
 
 
-GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Pos, const unsigned char *Text, const char *Start, const bool UTF8)
+GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Pos, const unsigned char *Text, const char *Start, const gboolean UTF8)
 {
 	char *buffer;
 	size_t len;
@@ -449,17 +449,17 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
  *
  * When all tokens are matched we found matching line.
  */
-bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const bool UTF8)
+gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const gboolean UTF8)
 {
 	char *line = NULL;
 	char **tokens = NULL;
 	char *charset = NULL;
 	char *begin, *pos, *end, *end2;
-	bool quoted_printable = false;
+	gboolean quoted_printable = FALSE;
 	size_t numtokens, token;
 	size_t i, j, len;
-	bool found;
-	bool ret = false;
+	gboolean found;
+	gboolean ret = FALSE;
 
 	/* Initialize output */
 	Value[0] = 0x00;
@@ -518,7 +518,7 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 			dbgprintf(NULL, "Could not parse!\n");
 			goto fail;
 		}
-		found = false;
+		found = FALSE;
 		for (token = 0; token < numtokens; token++) {
 			len = strlen(tokens[token]);
 			/* Skip already matched tokens */
@@ -531,16 +531,16 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 				pos += len;
 				/* We need to check one token less */
 				tokens[token][0] = 0;
-				found = true;
+				found = TRUE;
 				break;
 			}
 		}
 		if (!found) {
 			if (strncmp(pos, "ENCODING=QUOTED-PRINTABLE", 25) == 0) {
-				quoted_printable = true;
+				quoted_printable = TRUE;
 				/* Advance position */
 				pos += 25;
-				found = true;
+				found = TRUE;
 			} else if (strncmp(pos, "CHARSET=", 8) == 0) {
 				/* Advance position */
 				pos += 8;
@@ -564,7 +564,7 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 				charset[end - pos] = 0;
 
 				pos = end;
-				found = true;
+				found = TRUE;
 			} else if (strncmp(pos, "TZID=", 5) == 0) {
 				/* @todo: We ignore time zone for now */
 				/* Advance position */
@@ -581,15 +581,15 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 					end = end2;
 				}
 				pos = end;
-				found = true;
+				found = TRUE;
 			} else if (strncmp(pos, "TYPE=PREF", 9) == 0) {
 				/* We ignore pref token */
 				pos += 9;
-				found = true;
+				found = TRUE;
 			} else if (strncmp(pos, "PREF", 4) == 0) {
 				/* We ignore pref token */
 				pos += 4;
-				found = true;
+				found = TRUE;
 			}
 			if (!found) {
 				dbgprintf(NULL, "%s not found!\n", Start);
@@ -675,7 +675,7 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 		}
 	}
 
-	ret = true;
+	ret = TRUE;
 	dbgprintf(NULL, "ReadVCalText(%s) is \"%s\"\n", Start, DecodeUnicodeConsole(Value));
 fail:
 	free(line);

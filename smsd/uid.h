@@ -10,17 +10,17 @@
 /**
  * Sets UID and GID.
  */
-extern bool set_uid_gid(SMSD_Parameters *params);
+extern gboolean set_uid_gid(SMSD_Parameters *params);
 
 /**
  * Gets UID from string.
  */
-extern bool fill_uid(SMSD_Parameters *params, const char *name);
+extern gboolean fill_uid(SMSD_Parameters *params, const char *name);
 
 /**
  * Gets GID from string.
  */
-extern bool fill_gid(SMSD_Parameters *params, const char *name);
+extern gboolean fill_gid(SMSD_Parameters *params, const char *name);
 
 
 #endif

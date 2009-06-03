@@ -78,7 +78,7 @@ void CopyUnicodeString(unsigned char *Dest, const unsigned char *Source);
  *
  * \ingroup Unicode
  */
-bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src);
+gboolean EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src);
 
 /**
  * Decodes UTF-8 quoted printable string.
@@ -120,7 +120,7 @@ void EncodeHexUnicode(char *dest, const unsigned char *src, size_t len);
  *
  * \ingroup Unicode
  */
-bool mywstrncmp(unsigned const char *a, unsigned const char *b, int num);
+gboolean mywstrncmp(unsigned const char *a, unsigned const char *b, int num);
 
 /**
  * Locates unicode substring.
@@ -135,14 +135,14 @@ unsigned char *mywstrstr(unsigned const char *haystack,
  *
  * \ingroup Unicode
  */
-bool mywstrncasecmp(unsigned const char *a, unsigned const char *b, int num);
+gboolean mywstrncasecmp(unsigned const char *a, unsigned const char *b, int num);
 
 /**
  * Encode text to UTF-8.
  *
  * \ingroup Unicode
  */
-bool EncodeUTF8(unsigned char *dest, const unsigned char *src);
+gboolean EncodeUTF8(unsigned char *dest, const unsigned char *src);
 
 /**
  * Decode text from UTF-8.
@@ -156,7 +156,7 @@ void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len);
  *
  * \ingroup Unicode
  */
-bool DecodeHexBin(unsigned char *dest, const unsigned char *src, int len);
+gboolean DecodeHexBin(unsigned char *dest, const unsigned char *src, int len);
 
 #endif
 

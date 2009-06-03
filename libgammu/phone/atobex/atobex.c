@@ -179,7 +179,7 @@ GSM_Error ATOBEX_Initialise(GSM_StateMachine *s)
 	GSM_Error		error;
 
 	Priv->Mode				= ATOBEX_ModeAT;
-	Priv->EBCAFailed = false;
+	Priv->EBCAFailed = FALSE;
 
 	/* We might receive incoming event */
 	s->Phone.Data.BatteryCharge = NULL;
@@ -338,7 +338,7 @@ GSM_Error ATOBEX_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 	return ATGEN_GetSMSFolders(s, folders);
 }
 
-GSM_Error ATOBEX_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
+GSM_Error ATOBEX_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean start)
 {
 	GSM_Error error;
 
@@ -370,7 +370,7 @@ GSM_Error ATOBEX_DialService(GSM_StateMachine *s, char *number)
 	return ATGEN_DialService(s, number);
 }
 
-GSM_Error ATOBEX_AnswerCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error ATOBEX_AnswerCall(GSM_StateMachine *s, int ID, gboolean all)
 {
 	GSM_Error error;
 
@@ -402,7 +402,7 @@ GSM_Error ATOBEX_SetAutoNetworkLogin(GSM_StateMachine *s)
 	return ATGEN_SetAutoNetworkLogin(s);
 }
 
-GSM_Error ATOBEX_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
+GSM_Error ATOBEX_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press)
 {
 	GSM_Error error;
 
@@ -413,7 +413,7 @@ GSM_Error ATOBEX_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 	return ATGEN_PressKey(s, Key, Press);
 }
 
-GSM_Error ATOBEX_Reset(GSM_StateMachine *s, bool hard)
+GSM_Error ATOBEX_Reset(GSM_StateMachine *s, gboolean hard)
 {
 	GSM_Error error;
 
@@ -421,7 +421,7 @@ GSM_Error ATOBEX_Reset(GSM_StateMachine *s, bool hard)
 	return ATGEN_Reset(s, hard);
 }
 
-GSM_Error ATOBEX_CancelCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error ATOBEX_CancelCall(GSM_StateMachine *s, int ID, gboolean all)
 {
 	GSM_Error error;
 
@@ -509,7 +509,7 @@ GSM_Error ATOBEX_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 	return ATGEN_GetSIMIMSI(s, IMSI);
 }
 
-GSM_Error ATOBEX_SetIncomingCall (GSM_StateMachine *s, bool enable)
+GSM_Error ATOBEX_SetIncomingCall (GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error;
 
@@ -517,7 +517,7 @@ GSM_Error ATOBEX_SetIncomingCall (GSM_StateMachine *s, bool enable)
 	return ATGEN_SetIncomingCall(s, enable);
 }
 
-GSM_Error ATOBEX_SetIncomingCB (GSM_StateMachine *s, bool enable)
+GSM_Error ATOBEX_SetIncomingCB (GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error;
 
@@ -525,7 +525,7 @@ GSM_Error ATOBEX_SetIncomingCB (GSM_StateMachine *s, bool enable)
 	return ATGEN_SetIncomingCB(s, enable);
 }
 
-GSM_Error ATOBEX_SetIncomingSMS (GSM_StateMachine *s, bool enable)
+GSM_Error ATOBEX_SetIncomingSMS (GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error;
 
@@ -533,7 +533,7 @@ GSM_Error ATOBEX_SetIncomingSMS (GSM_StateMachine *s, bool enable)
 	return ATGEN_SetIncomingSMS(s, enable);
 }
 
-GSM_Error ATOBEX_SetFastSMSSending(GSM_StateMachine *s, bool enable)
+GSM_Error ATOBEX_SetFastSMSSending(GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error;
 
@@ -565,7 +565,7 @@ GSM_Error ATOBEX_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 	return ATGEN_SetAlarm(s, Alarm);
 }
 
-GSM_Error ATOBEX_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
+GSM_Error ATOBEX_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)
 {
 	GSM_Error error;
 
@@ -573,7 +573,7 @@ GSM_Error ATOBEX_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
 	return ATGEN_SetIncomingUSSD(s, enable);
 }
 
-GSM_Error ATOBEX_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
+GSM_Error ATOBEX_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gboolean PhoneRingtone)
 {
 	GSM_Error error;
 
@@ -636,7 +636,7 @@ GSM_Error ATOBEX_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, i
 	return OBEXGEN_GetFilePart(s, File, Handle, Size);
 }
 
-GSM_Error ATOBEX_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
+GSM_Error ATOBEX_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Error error;
 
@@ -697,7 +697,7 @@ atgen:
 	return ATGEN_GetMemory(s, entry);
 }
 
-GSM_Error ATOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
+GSM_Error ATOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, gboolean start)
 {
 	GSM_Error 		error;
 
@@ -795,7 +795,7 @@ GSM_Error ATOBEX_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	return OBEXGEN_GetTodo(s, ToDo);
 }
 
-GSM_Error ATOBEX_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
+GSM_Error ATOBEX_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, gboolean start)
 {
 	GSM_Error 		error;
 
@@ -851,7 +851,7 @@ GSM_Error ATOBEX_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return OBEXGEN_GetCalendar(s, Note);
 }
 
-GSM_Error ATOBEX_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+GSM_Error ATOBEX_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
 	GSM_Error 		error;
 
@@ -907,7 +907,7 @@ GSM_Error ATOBEX_GetNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
 	return OBEXGEN_GetNote(s, Note);
 }
 
-GSM_Error ATOBEX_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start)
+GSM_Error ATOBEX_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, gboolean start)
 {
 	GSM_Error 		error;
 
@@ -1311,7 +1311,7 @@ GSM_Error ATOBEX_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 	/* Now try ericsson extended reporting */
 	error = GSM_WaitFor (s, "AT*EBCA=1\r", 10, 0x00, 3, ID_GetBatteryCharge);
 	if (error != ERR_NONE) {
-		Priv->EBCAFailed = true;
+		Priv->EBCAFailed = TRUE;
 		/* Ty ATGEN state */
 		return ATGEN_GetBatteryCharge(s, bat);
 	}

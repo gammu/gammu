@@ -146,14 +146,14 @@ typedef int intptr_t;
 void EncodeHexBin(unsigned char *dest, const unsigned char *src, int len);
 
 /**
- * Returns true if firmware version is newer.
+ * Returns TRUE if firmware version is newer.
  *
  * \param latest_version String containing version (eg. latest available).
  * \param current_version String containing version (eg. current one).
  *
  * \return True if latest_version > current_version.
  */
-bool GSM_IsNewerVersion(const char *latest_version,
+gboolean GSM_IsNewerVersion(const char *latest_version,
 			const char *current_version);
 #endif
 

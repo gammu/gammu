@@ -24,7 +24,7 @@ static GSM_Protocol_PHONETData	PHONETData;
 static void DecodeInputMBUS2(unsigned char rx_byte)
 {
 	GSM_Protocol_MBUS2Data *d = &MBUS2Data;
-	GSM_Debug_Info	ldi = {DL_TEXTALL, stdout, false, NULL, true, false, NULL, NULL};
+	GSM_Debug_Info	ldi = {DL_TEXTALL, stdout, FALSE, NULL, TRUE, FALSE, NULL, NULL};
 
 	d->Msg.CheckSum[0] = d->Msg.CheckSum[1];
 	d->Msg.CheckSum[1] ^= rx_byte;
@@ -116,7 +116,7 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 static void DecodeInputIRDA(unsigned char rx_byte)
 {
 	GSM_Protocol_PHONETData *d = &PHONETData;
-	GSM_Debug_Info		ldi = {DL_TEXTALL, stdout, false, NULL, true, false, NULL, NULL};
+	GSM_Debug_Info		ldi = {DL_TEXTALL, stdout, FALSE, NULL, TRUE, FALSE, NULL, NULL};
 
 	if (d->MsgRXState == RX_GetMessage) {
 		d->Msg.Buffer[d->Msg.Count] = rx_byte;
@@ -234,8 +234,8 @@ static void prepareStateMachine(void)
 	Phone->PhoneString		= PhoneString;
 	Phone->StartPhoneString 	= 0;
 
-	Phone->EnableIncomingSMS 	= false;
-	Phone->EnableIncomingCB 	= false;
+	Phone->EnableIncomingSMS 	= FALSE;
+	Phone->EnableIncomingCB 	= FALSE;
 	Model[0]			= 0;
 	Phone->VerNum			= VersionNum;
 	Version[0]			= 0;
@@ -350,9 +350,9 @@ void decodebinarydump(int argc, char *argv[])
 	FILE			*file;
 	int			len, len2, i;
 	unsigned char		type;
-	bool			sent;
+	gboolean			sent;
 	GSM_Protocol_Message	msg;
-	GSM_Debug_Info		ldi = {DL_TEXTALL, stdout, false, NULL, true, false, NULL, NULL};
+	GSM_Debug_Info		ldi = {DL_TEXTALL, stdout, FALSE, NULL, TRUE, FALSE, NULL, NULL};
 	GSM_Error error;
 
 	prepareStateMachine();
@@ -374,10 +374,10 @@ void decodebinarydump(int argc, char *argv[])
 		while (i!=len2) {
 			if (Buffer[i++]==0x01) {
 				smprintf(gsm, "Sending frame ");
-				sent = true;
+				sent = TRUE;
 			} else {
 				smprintf(gsm, "Receiving frame ");
-				sent = false;
+				sent = FALSE;
 			}
 			type 	= Buffer[i++];
 			len 	= Buffer[i++] * 256;

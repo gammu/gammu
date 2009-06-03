@@ -24,12 +24,12 @@ void single_check(const char *device, const char *connection, const char *model,
 	test_result(s != NULL);
 
 	debug_info = GSM_GetDebug(s);
-	GSM_SetDebugGlobal(true, debug_info);
+	GSM_SetDebugGlobal(TRUE, debug_info);
 
 	smcfg = GSM_GetConfig(s, 0);
 	strcpy(smcfg->Model, model);
 	smcfg->Device = strdup(device);
-	smcfg->UseGlobalDebugFile = true;
+	smcfg->UseGlobalDebugFile = TRUE;
 	smcfg->Connection = strdup(connection);
 	smcfg->PhoneFeatures[0] = F_PBK_ENCODENUMBER;
 	smcfg->PhoneFeatures[1] = 0;
@@ -47,7 +47,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_Debug_Info *debug_info;
 
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	single_check("/NONEXISTING/DEVICE/NODE", "NONSENSE", "", ERR_UNKNOWNCONNECTIONTYPESTRING);

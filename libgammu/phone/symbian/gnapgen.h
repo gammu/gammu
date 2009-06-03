@@ -30,7 +30,7 @@ typedef struct {
 	GSM_CalendarNoteType		CalendarIconsTypes[10];
 	int				CalendarIconsNum;
 
-	bool				LastContactArrived;
+	gboolean				LastContactArrived;
 
 	GSM_SMSFolders			CurrentSMSFolders;
 	int				SMSFolderID[100];

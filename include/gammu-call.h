@@ -87,7 +87,7 @@ typedef struct {
 	/**
 	 * Whether Call ID is available.
 	 */
-	bool CallIDAvailable;
+	gboolean CallIDAvailable;
 	/**
 	 * Status code.
 	 */
@@ -240,7 +240,7 @@ GSM_Error GSM_DialService(GSM_StateMachine * s, char *Number);
  *
  * \ingroup Call
  */
-GSM_Error GSM_AnswerCall(GSM_StateMachine * s, int ID, bool all);
+GSM_Error GSM_AnswerCall(GSM_StateMachine * s, int ID, gboolean all);
 
 /**
  * Deny current incoming call.
@@ -254,7 +254,7 @@ GSM_Error GSM_AnswerCall(GSM_StateMachine * s, int ID, bool all);
  *
  * \ingroup Call
  */
-GSM_Error GSM_CancelCall(GSM_StateMachine * s, int ID, bool all);
+GSM_Error GSM_CancelCall(GSM_StateMachine * s, int ID, gboolean all);
 
 /**
  * Holds call.
@@ -315,7 +315,7 @@ GSM_Error GSM_SplitCall(GSM_StateMachine * s, int ID);
  *
  * \ingroup Call
  */
-GSM_Error GSM_TransferCall(GSM_StateMachine * s, int ID, bool next);
+GSM_Error GSM_TransferCall(GSM_StateMachine * s, int ID, gboolean next);
 
 /**
  * Switches call.
@@ -328,7 +328,7 @@ GSM_Error GSM_TransferCall(GSM_StateMachine * s, int ID, bool next);
  *
  * \ingroup Call
  */
-GSM_Error GSM_SwitchCall(GSM_StateMachine * s, int ID, bool next);
+GSM_Error GSM_SwitchCall(GSM_StateMachine * s, int ID, gboolean next);
 
 /**
  * Gets call diverts.
@@ -375,7 +375,7 @@ GSM_Error GSM_CancelAllDiverts(GSM_StateMachine * s);
  *
  * \ingroup Call
  */
-GSM_Error GSM_SetIncomingCall(GSM_StateMachine * s, bool enable);
+GSM_Error GSM_SetIncomingCall(GSM_StateMachine * s, gboolean enable);
 
 /**
  * Sends DTMF (Dual Tone Multi Frequency) tone.

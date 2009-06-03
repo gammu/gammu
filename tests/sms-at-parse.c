@@ -56,7 +56,7 @@ int main(int argc, char **argv)
 
 	/* Configure state machine */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Allocates state machine */
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 	test_result (s != NULL);
 
 	debug_info = GSM_GetDebug(s);
-	GSM_SetDebugGlobal(true, debug_info);
+	GSM_SetDebugGlobal(TRUE, debug_info);
 
 	/* Initialize AT engine */
 	Data = &s->Phone.Data;
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
 	msg.Type = 0;
 	msg.Length = len;
 	msg.Buffer = buffer;
-	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, true);
+	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, TRUE);
 
 	/* Pointer to store message */
 	s->Phone.Data.GetSMSMessage = &sms;
@@ -88,8 +88,8 @@ int main(int argc, char **argv)
 
 	/* Display message */
 	if (error == ERR_NONE) {
-		DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);
-		DisplayMultiSMSInfo(&sms, true, true, NULL, NULL);
+		DisplayMultiSMSInfo(&sms, FALSE, TRUE, NULL, NULL);
+		DisplayMultiSMSInfo(&sms, TRUE, TRUE, NULL, NULL);
 	}
 
 	/* This is normally done by ATGEN_Terminate */

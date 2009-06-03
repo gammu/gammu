@@ -53,14 +53,14 @@ int main(int argc, char **argv)
 
 	/* Configure state machine */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
 	test_result(s != NULL);
 	debug_info = GSM_GetDebug(s);
-	GSM_SetDebugGlobal(true, debug_info);
+	GSM_SetDebugGlobal(TRUE, debug_info);
 
 	/* Initialize AT engine */
 	Data = &s->Phone.Data;
@@ -74,7 +74,7 @@ int main(int argc, char **argv)
 	msg.Type = 0;
 	msg.Length = len;
 	msg.Buffer = buffer;
-	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, true);
+	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, TRUE);
 
 	/* Parse it */
 	error = ATGEN_ReplyGetModel(msg, s);

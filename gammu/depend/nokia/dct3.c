@@ -22,17 +22,17 @@ extern GSM_Reply_Function UserReplyFunctions3[];
 
 GSM_Error CheckDCT3Only(void)
 {
-bool found = false;
+gboolean found = FALSE;
 
 /* Checking if phone is DCT3 */
 #ifdef GSM_ENABLE_NOKIA6110
-if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = true;
+if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = TRUE;
 #endif
 #ifdef GSM_ENABLE_NOKIA7110
-	if (strstr(N7110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = true;
+	if (strstr(N7110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = TRUE;
 #endif
 #ifdef GSM_ENABLE_NOKIA9210
-	if (strstr(N9210Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = true;
+	if (strstr(N9210Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = TRUE;
 #endif
 	if (!found) return ERR_NOTSUPPORTED;
 
@@ -63,7 +63,7 @@ static void CheckDCT3(void)
 	}
 }
 
-static bool answer_yes3(const char *text)
+static gboolean answer_yes3(const char *text)
 {
     	int         len;
     	char        ans[99];
@@ -72,8 +72,8 @@ static bool answer_yes3(const char *text)
 		printf("%s (yes/no) ? ",text);
 		len=GetLine(stdin, ans, 99);
 		if (len==-1) Terminate(3);
-		if (strcasecmp(ans, "yes") == 0) return true;
-		if (strcasecmp(ans, "no" ) == 0) return false;
+		if (strcasecmp(ans, "yes") == 0) return TRUE;
+		if (strcasecmp(ans, "no" ) == 0) return FALSE;
 	}
 }
 
@@ -203,8 +203,8 @@ void DCT3SelfTests(int argc, char *argv[])
 
 		GSM_Terminate();
 
-		while (!false) {
-			GSM_Init(false);
+		while (!FALSE) {
+			GSM_Init(FALSE);
 			if (error==ERR_NONE) break;
 			GSM_Terminate();
 		}
@@ -335,7 +335,7 @@ void DCT3netmonitor(int argc, char *argv[])
 	GSM_Error error;
 	char value[100];
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
         CheckDCT3();
 
@@ -482,7 +482,7 @@ void DCT3ResetTest36(int argc, char *argv[])
 	unsigned char req[]  = {0x00, 0x01, 0x65, 0x40, 0x00}; /* Reset test 36 in netmon */
 	GSM_Error error;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
         CheckDCT3();
 
@@ -677,7 +677,7 @@ void DCT3GetOperatorName(int argc, char *argv[])
 	unsigned char req[] = {0x00,0x01,0x8c,0x00};
 	GSM_Error error;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) == NULL) Print_Error(ERR_NOTSUPPORTED);
 	CheckDCT3();
@@ -707,7 +707,7 @@ void DCT3SetOperatorName(int argc, char *argv[])
 				    0x00,0x00, /* MCC */
 				    0x00};     /* MNC */
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) == NULL) Print_Error(ERR_NOTSUPPORTED);
 	CheckDCT3();
@@ -759,7 +759,7 @@ void DCT3DisplayOutput(int argc, char *argv[])
 			       0x01}; /* 1 = enable, 2 = disable */
 	GSM_Error error;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) == NULL) Print_Error(ERR_NOTSUPPORTED);
 	CheckDCT3();
@@ -774,7 +774,7 @@ void DCT3DisplayOutput(int argc, char *argv[])
 	printf("Entering monitor mode...\n\n");
 
 	while (!gshutdown) {
-		GSM_ReadDevice(gsm,true);
+		GSM_ReadDevice(gsm,TRUE);
 		usleep(10000);
 	}
 

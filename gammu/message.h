@@ -1,6 +1,6 @@
 #include <gammu.h>
 
-extern volatile bool wasincomingsms;
+extern volatile gboolean wasincomingsms;
 extern void IncomingSMS(GSM_StateMachine * s, GSM_SMSMessage sms, void *user_data);
 extern void IncomingCB(GSM_StateMachine * s, GSM_CBMessage CB, void *user_data);
 extern void IncomingUSSD(GSM_StateMachine * s, GSM_USSDMessage ussd, void *user_data);

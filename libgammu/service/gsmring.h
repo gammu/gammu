@@ -49,7 +49,7 @@ typedef enum {
 
 
 unsigned char	GSM_EncodeNokiaRTTLRingtone	(GSM_Ringtone ringtone, unsigned char *package, size_t *maxlength);
-unsigned char 	GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *package, size_t *maxlength, GSM_RingtoneVersion version, bool start);
+unsigned char 	GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *package, size_t *maxlength, GSM_RingtoneVersion version, gboolean start);
 
 GSM_Error	GSM_DecodeNokiaRTTLRingtone	(GSM_Ringtone *ringtone, unsigned char *package, size_t maxlength);
 

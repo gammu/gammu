@@ -54,7 +54,7 @@ void PrintSMSLocation(const GSM_SMSMessage *sms, const GSM_SMSFolders *folders)
  */
 void PrintPhoneNumber(unsigned char *number, const GSM_Backup *Info)
 {
-	bool 	found=false,found2=false;
+	gboolean 	found=FALSE,found2=FALSE;
 	int 	i,j,z;
 
 	printf("\"%s\"",DecodeUnicodeConsole(number));
@@ -73,7 +73,7 @@ void PrintPhoneNumber(unsigned char *number, const GSM_Backup *Info)
 			case PBK_Number_Pager:
 			case PBK_Number_Other:
 				if (mywstrncmp(Info->PhonePhonebook[i]->Entries[j].Text,number,-1)) {
-					found2=true;
+					found2=TRUE;
 					switch (Info->PhonePhonebook[i]->Entries[j].EntryType) {
 					case PBK_Number_Mobile:
 						printf(" (%s", _("mobile"));
@@ -91,10 +91,10 @@ void PrintPhoneNumber(unsigned char *number, const GSM_Backup *Info)
 						printf(" (%s", _("pager"));
 						break;
 					default:
-						found2=false;
+						found2=FALSE;
 						break;
 					}
-					found=true;
+					found=TRUE;
 				}
 			default:
 				break;
@@ -105,14 +105,14 @@ void PrintPhoneNumber(unsigned char *number, const GSM_Backup *Info)
 			i++;
 			continue;
 		}
-		found=false;
+		found=FALSE;
 		for (z=0;z<Info->PhonePhonebook[i]->EntriesNum;z++) {
 			switch (Info->PhonePhonebook[i]->Entries[z].EntryType) {
 			case PBK_Text_LastName:
 			case PBK_Text_FirstName:
 				if (!found2) {
 					printf(" (");
-					found2=true;
+					found2=TRUE;
 				} else {
 					if (!found) {
 						printf(", ");
@@ -121,7 +121,7 @@ void PrintPhoneNumber(unsigned char *number, const GSM_Backup *Info)
 					}
 				}
 				printf("%s",DecodeUnicodeConsole(Info->PhonePhonebook[i]->Entries[z].Text));
-				found=true;
+				found=TRUE;
 				break;
 			default:
 				break;
@@ -132,7 +132,7 @@ void PrintPhoneNumber(unsigned char *number, const GSM_Backup *Info)
 			case PBK_Text_Name:
 				if (!found2) {
 					printf(" (");
-					found2=true;
+					found2=TRUE;
 				} else {
 					printf(", ");
 				}
@@ -147,7 +147,7 @@ void PrintPhoneNumber(unsigned char *number, const GSM_Backup *Info)
 	}
 }
 
-void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh, const GSM_Backup *Info)
+void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean displayudh, const GSM_Backup *Info)
 {
 	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	int			i;
@@ -170,9 +170,9 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 		printf("\n");
 
 		printf(LISTFORMAT "%d\n", _("Reference number"),sms.MessageReference);
-		printf(LISTFORMAT "%s\n", _("Sent"),OSDateTime(sms.DateTime,true));
+		printf(LISTFORMAT "%s\n", _("Sent"),OSDateTime(sms.DateTime,TRUE));
 		printf(LISTFORMAT "\"%s\"\n", _("SMSC number"),DecodeUnicodeConsole(sms.SMSC.Number));
-		printf(LISTFORMAT "%s\n", _("SMSC response"),OSDateTime(sms.SMSCTime,true));
+		printf(LISTFORMAT "%s\n", _("SMSC response"),OSDateTime(sms.SMSCTime,TRUE));
 		printf(LISTFORMAT "%s\n", _("Delivery status"),DecodeUnicodeConsole(sms.Text));
 		printf(LISTFORMAT, _("Details"));
 		if (sms.DeliveryStatus & 0x40) {
@@ -217,12 +217,12 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 	case SMS_Deliver:
 		printf("%s\n", _("SMS message"));
 		if (sms.State==SMS_UnSent && sms.Memory==MEM_ME) {
-			printf(LISTFORMAT "%s\n", _("Saved"), OSDateTime(sms.DateTime,true));
+			printf(LISTFORMAT "%s\n", _("Saved"), OSDateTime(sms.DateTime,TRUE));
 		} else {
 			printf(LISTFORMAT "\"%s\"", _("SMSC number"), DecodeUnicodeConsole(sms.SMSC.Number));
 			if (sms.ReplyViaSameSMSC) printf(_(" (set for reply)"));
 			printf("\n");
-			printf(LISTFORMAT "%s\n", _("Sent"), OSDateTime(sms.DateTime,true));
+			printf(LISTFORMAT "%s\n", _("Sent"), OSDateTime(sms.DateTime,TRUE));
 		}
 		/* No break. The only difference for SMS_Deliver and SMS_Submit is,
 		 * that SMS_Deliver contains additional data. We wrote them and then go
@@ -340,11 +340,11 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 	}
 }
 
-void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, const GSM_Backup *Info, GSM_StateMachine *sm)
+void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean ems, const GSM_Backup *Info, GSM_StateMachine *sm)
 {
 	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	GSM_MultiPartSMSInfo	SMSInfo;
-	bool			RetVal,udhinfo=true;
+	gboolean			RetVal,udhinfo=TRUE;
 	int			j,i;
 	size_t Pos;
 	GSM_MemoryEntry		pbk;
@@ -354,10 +354,10 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, cons
 	RetVal = GSM_DecodeMultiPartSMS(GSM_GetGlobalDebug(), &SMSInfo,sms,ems);
 
 	if (eachsms) {
-		if (GSM_DecodeSiemensOTASMS(GSM_GetGlobalDebug(), &SiemensOTA,&sms->SMS[0])) udhinfo = false;
-		if (sms->SMS[0].UDH.Type != UDH_NoUDH && sms->SMS[0].UDH.AllParts == sms->Number) udhinfo = false;
+		if (GSM_DecodeSiemensOTASMS(GSM_GetGlobalDebug(), &SiemensOTA,&sms->SMS[0])) udhinfo = FALSE;
+		if (sms->SMS[0].UDH.Type != UDH_NoUDH && sms->SMS[0].UDH.AllParts == sms->Number) udhinfo = FALSE;
 		if (RetVal && !udhinfo) {
-			DisplaySingleSMSInfo(sms->SMS[0],false,false,Info);
+			DisplaySingleSMSInfo(sms->SMS[0],FALSE,FALSE,Info);
 			printf("\n");
 		} else {
 			for (j=0;j<sms->Number;j++) {
@@ -367,7 +367,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, cons
 		}
 	} else {
 		for (j=0;j<sms->Number;j++) {
-			DisplaySingleSMSInfo(sms->SMS[j],!RetVal,true,Info);
+			DisplaySingleSMSInfo(sms->SMS[j],!RetVal,TRUE,Info);
 			printf("\n");
 		}
 	}
@@ -504,7 +504,7 @@ void DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *sm)
 	unsigned char		req[1000], buffer[1000], hexreq[1000];
         unsigned char           hexmsg[1000], hexudh[1000];
 
-	error=PHONE_EncodeSMSFrame(sm,SMS,buffer,PHONE_SMSSubmit,&length,true);
+	error=PHONE_EncodeSMSFrame(sm,SMS,buffer,PHONE_SMSSubmit,&length,TRUE);
 	if (error != ERR_NONE) {
 		printf("%s\n", _("Error"));
 		exit(-1);

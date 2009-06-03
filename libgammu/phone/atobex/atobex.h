@@ -66,7 +66,7 @@ typedef struct {
 	/***
 	 * Whether AT*EBCA failed.
 	 */
-	bool EBCAFailed;
+	gboolean EBCAFailed;
 } GSM_Phone_ATOBEXData;
 #endif
 /*@}*/

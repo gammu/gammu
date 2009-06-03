@@ -209,7 +209,7 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 void IRMC_InitCapabilities(IRMC_Capability *Cap)
 {
 	Cap->IEL = -1;
-	Cap->HD = false;
+	Cap->HD = FALSE;
 }
 
 /**
@@ -241,10 +241,10 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->TodoCount = -1;
 	Priv->CalOffsets = NULL;
 	Priv->TodoOffsets = NULL;
-	Priv->UpdateCalLUID = false;
-	Priv->UpdatePbLUID = false;
-	Priv->UpdateTodoLUID = false;
-	Priv->UpdateNoteLUID = false;
+	Priv->UpdateCalLUID = FALSE;
+	Priv->UpdatePbLUID = FALSE;
+	Priv->UpdateTodoLUID = FALSE;
+	Priv->UpdateNoteLUID = FALSE;
 	Priv->OBEXCapability = NULL;
 	Priv->OBEXDevinfo = NULL;
 	Priv->NoteLUID = NULL;
@@ -270,7 +270,7 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 {
 	GSM_Error	error = ERR_NONE;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	bool service_forced = false;
+	gboolean service_forced = FALSE;
 
 	/* Init variables */
 	error = OBEXGEN_InitialiseVars(s);
@@ -286,19 +286,19 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 	smprintf(s, "Connected using model %s\n", s->CurrentConfig->Model);
 	if (strcmp(s->CurrentConfig->Model, "obex") == 0) {
 		Priv->InitialService = OBEX_BrowsingFolders;
-		service_forced = true;
+		service_forced = TRUE;
 	} else if (strcmp(s->CurrentConfig->Model, "obexfs") == 0) {
 		Priv->InitialService = OBEX_BrowsingFolders;
-		service_forced = true;
+		service_forced = TRUE;
 	} else if (strcmp(s->CurrentConfig->Model, "obexirmc") == 0) {
 		Priv->InitialService = OBEX_IRMC;
-		service_forced = true;
+		service_forced = TRUE;
 	} else if (strcmp(s->CurrentConfig->Model, "seobex") == 0) {
 		Priv->InitialService = OBEX_IRMC;
-		service_forced = true;
+		service_forced = TRUE;
 	} else if (strcmp(s->CurrentConfig->Model, "obexnone") == 0) {
 		Priv->InitialService = OBEX_None;
-		service_forced = true;
+		service_forced = TRUE;
 	}
 
 	/* Grab OBEX capability */
@@ -484,7 +484,7 @@ static GSM_Error OBEXGEN_ChangePath(GSM_StateMachine *s, char *Name, unsigned ch
  * @param DirOnly Whether to descend only do directory name of path or full path (/foo or /foo/bar.png)
  * @param Buffer Optional buffer for storing last path part. Not used if NULL.
  */
-static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, char *File, bool DirOnly, unsigned char *Buffer)
+static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, char *File, gboolean DirOnly, unsigned char *Buffer)
 {
 	GSM_Error		error;
 	size_t			Pos;
@@ -525,15 +525,15 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	char *NewLUID = NULL;
 	char *timestamp = NULL;
 	char *CC = NULL;
-	bool UpdatePbLUID, UpdateCalLUID, UpdateTodoLUID;
+	gboolean UpdatePbLUID, UpdateCalLUID, UpdateTodoLUID;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	UpdatePbLUID = Priv->UpdatePbLUID;
-	Priv->UpdatePbLUID = false;
+	Priv->UpdatePbLUID = FALSE;
 	UpdateCalLUID = Priv->UpdateCalLUID;
-	Priv->UpdateCalLUID = false;
+	Priv->UpdateCalLUID = FALSE;
 	UpdateTodoLUID = Priv->UpdateTodoLUID;
-	Priv->UpdateTodoLUID = false;
+	Priv->UpdateTodoLUID = FALSE;
 
 	if ((msg.Type & 0x7f) >= 0x40) {
 		return OBEXGEN_HandleError(msg, s);
@@ -632,7 +632,7 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle UNUSED, bool HardDelete)
+GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle UNUSED, gboolean HardDelete)
 {
 	GSM_Error		error;
 	size_t			j;
@@ -648,7 +648,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 			if (error != ERR_NONE) return error;
 		} else {
 			if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
-				error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, false, NULL);
+				error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, FALSE, NULL);
 				if (error != ERR_NONE) return error;
 			}
 		}
@@ -708,7 +708,7 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int
 
 	/* Add file */
 	smprintf(s,"Adding file\n");
-	error = OBEXGEN_PrivAddFilePart(s, File, Pos, Handle, false);
+	error = OBEXGEN_PrivAddFilePart(s, File, Pos, Handle, FALSE);
 
 	/* Calculate path of added file if we're done */
 	if (error == ERR_EMPTY) {
@@ -730,7 +730,7 @@ GSM_Error OBEXGEN_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, in
 	smprintf(s,"Sending file\n");
 	File->ID_FullName[0] = 0;
 	File->ID_FullName[1] = 0;
-	error = OBEXGEN_PrivAddFilePart(s, File, Pos, Handle, false);
+	error = OBEXGEN_PrivAddFilePart(s, File, Pos, Handle, FALSE);
 	if (error != ERR_NONE) return error;
 
 	/* Calculate path of added file */
@@ -758,7 +758,7 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	switch (msg.Type) {
 	case 0xA0:
 		smprintf(s,"Last file part received\n");
-		s->Phone.Data.Priv.OBEXGEN.FileLastPart = true;
+		s->Phone.Data.Priv.OBEXGEN.FileLastPart = TRUE;
 		if (msg.Length == 0) return ERR_NONE;
 		/* Fallthrough */
 	case 0x90:
@@ -796,7 +796,7 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bool FolderList)
+static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, gboolean FolderList)
 {
 	int 		Current = 0;
 	GSM_Error		error;
@@ -804,11 +804,11 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 	int			retries;
 
 	s->Phone.Data.File 	= File;
-	File->ReadOnly 		= false;
-	File->Protected 	= false;
-	File->Hidden		= false;
-	File->System		= false;
-	File->ModifiedEmpty	= true;
+	File->ReadOnly 		= FALSE;
+	File->Protected 	= FALSE;
+	File->Hidden		= FALSE;
+	File->System		= FALSE;
+	File->ModifiedEmpty	= TRUE;
 
 	if (File->Used == 0x00) {
 		if (FolderList) {
@@ -819,7 +819,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 			/* Name block should be empty, we're already in this folder */
 			OBEXAddBlock(req, &Current, 0x01, NULL, 0);
 		} else {
-			File->Folder = false;
+			File->Folder = FALSE;
 
 			if (File->ID_FullName[0] == 0x00 && File->ID_FullName[1] == 0x00) {
 				if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
@@ -843,7 +843,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 				}
 			} else {
 				if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
-					error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, true, req2);
+					error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, TRUE, req2);
 					if (error != ERR_NONE) return error;
 				} else {
 					CopyUnicodeString(req2,File->ID_FullName);
@@ -859,7 +859,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 		}
 	}
 
-	s->Phone.Data.Priv.OBEXGEN.FileLastPart = false;
+	s->Phone.Data.Priv.OBEXGEN.FileLastPart = FALSE;
 
 	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
 		/* connection ID block */
@@ -915,7 +915,7 @@ GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, 
 	if (error != ERR_NONE) return error;
 
 	(*Handle) = 0;
-	error = OBEXGEN_PrivGetFilePart(s, File, false);
+	error = OBEXGEN_PrivGetFilePart(s, File, FALSE);
 	(*Size) = File->Used;
 	return error;
 }
@@ -925,9 +925,9 @@ GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, 
  * List OBEX folder.
  */
 /**
- * @todo We assume XML reply is in UTF-8, but this doesn't have to be true.
+ * @todo We assume XML reply is in UTF-8, but this doesn't have to be TRUE.
  */
-GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
+GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error		error;
@@ -945,7 +945,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 	}
 
 	if (start) {
-		Priv->Files[0].Folder		= true;
+		Priv->Files[0].Folder		= TRUE;
 		Priv->Files[0].Level		= 1;
 		Priv->Files[0].Name[0]		= 0;
 		Priv->Files[0].Name[1]		= 0;
@@ -969,21 +969,21 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 		Priv->FilesLocationsCurrent++;
 
 		if (File->Folder) {
-			error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, false, NULL);
+			error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, FALSE, NULL);
 			if (error != ERR_NONE) return error;
 
 			File->Buffer		= NULL;
 			File->Used		= 0;
-			File->ModifiedEmpty	= true;
+			File->ModifiedEmpty	= TRUE;
 
-			error = OBEXGEN_PrivGetFilePart(s, File, true);
+			error = OBEXGEN_PrivGetFilePart(s, File, TRUE);
 			if (error != ERR_NONE && error != ERR_EMPTY) return error;
 
 			num = 0;
 			Pos = 0;
 			/* Calculate number of files */
 			while (1) {
-				error = MyGetLine(File->Buffer, &Pos, Line, File->Used, sizeof(Line), false);
+				error = MyGetLine(File->Buffer, &Pos, Line, File->Used, sizeof(Line), FALSE);
 				if (error != ERR_NONE) return error;
 				if (strlen(Line) == 0) break;
 				name = strstr(Line,"folder name=\"");
@@ -1015,7 +1015,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 			Pos 	= 0;
 			pos2 	= 0;
 			while (1) {
-				error = MyGetLine(File->Buffer, &Pos, Line, File->Used, sizeof(Line), false);
+				error = MyGetLine(File->Buffer, &Pos, Line, File->Used, sizeof(Line), FALSE);
 				if (error != ERR_NONE) return error;
 				if (strlen(Line) == 0) break;
 				strcpy(Line2,Line);
@@ -1039,7 +1039,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 							Priv->Files[Priv->FilesLocationsCurrent+pos2].Name
 							);
 						Priv->Files[Priv->FilesLocationsCurrent+pos2].Level  = File->Level+1;
-						Priv->Files[Priv->FilesLocationsCurrent+pos2].Folder = true;
+						Priv->Files[Priv->FilesLocationsCurrent+pos2].Folder = TRUE;
 						Priv->FilesLocationsUsed++;
 						pos2++;
 					}
@@ -1065,17 +1065,17 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 						);
 
 					Priv->Files[Priv->FilesLocationsCurrent+pos2].Level	= File->Level+1;
-					Priv->Files[Priv->FilesLocationsCurrent+pos2].Folder 	= false;
+					Priv->Files[Priv->FilesLocationsCurrent+pos2].Folder 	= FALSE;
 					Priv->Files[Priv->FilesLocationsCurrent+pos2].Used 	= 0;
 					strcpy(Line2,Line);
 					size = strstr(Line2,"size=\"");
 					if (size != NULL) Priv->Files[Priv->FilesLocationsCurrent+pos2].Used = atoi(size+6);
 
-					Priv->Files[Priv->FilesLocationsCurrent+pos2].ModifiedEmpty = true;
+					Priv->Files[Priv->FilesLocationsCurrent+pos2].ModifiedEmpty = TRUE;
 					strcpy(Line2,Line);
 					size = strstr(Line2,"modified=\"");
 					if (size != NULL) {
-						Priv->Files[Priv->FilesLocationsCurrent+pos2].ModifiedEmpty = false;
+						Priv->Files[Priv->FilesLocationsCurrent+pos2].ModifiedEmpty = FALSE;
 						ReadVCALDateTime(size+10, &Priv->Files[Priv->FilesLocationsCurrent+pos2].Modified);
 					}
 					Priv->FilesLocationsUsed++;
@@ -1091,10 +1091,10 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 			if (!File->ModifiedEmpty) {
 				memcpy(&File->Modified,&Priv->Files[Priv->FilesLocationsCurrent-1].Modified,sizeof(GSM_DateTime));
 			}
-			File->ReadOnly 		= false;
-			File->Protected 	= false;
-			File->Hidden		= false;
-			File->System		= false;
+			File->ReadOnly 		= FALSE;
+			File->Protected 	= FALSE;
+			File->Hidden		= FALSE;
+			File->System		= FALSE;
 
 		}
 		return ERR_NONE;
@@ -1116,7 +1116,7 @@ GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 	}
 
 	/* Go to file directory */
-	error = OBEXGEN_ChangeToFilePath(s, ID, true, req2);
+	error = OBEXGEN_ChangeToFilePath(s, ID, TRUE, req2);
 	if (error != ERR_NONE) return error;
 
 	/* Name block */
@@ -1143,7 +1143,7 @@ GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	}
 
 	/* Go to file directory */
-	error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, false, NULL);
+	error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, FALSE, NULL);
 	if (error != ERR_NONE) return error;
 
 	/* Add folder */
@@ -1180,7 +1180,7 @@ GSM_Error OBEXGEN_GetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 
 	/* Grab complete file */
 	while (error == ERR_NONE) {
-		error = OBEXGEN_PrivGetFilePart(s, &File, false);
+		error = OBEXGEN_PrivGetFilePart(s, &File, FALSE);
 	}
 
 	/* We should get ERR_EMPTY at the end of file */
@@ -1222,7 +1222,7 @@ GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char **
 /**
  * Sets single file on filesystem, file can be created or updated.
  */
-GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, const unsigned char *Buffer, size_t Length, bool HardDelete)
+GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, const unsigned char *Buffer, size_t Length, gboolean HardDelete)
 {
 	GSM_Error	error = ERR_NONE;
 	GSM_File 	File;
@@ -1329,7 +1329,7 @@ GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_
 		if (strncasecmp("YES", pos, 3) == 0) {
 			smprintf(s, "HD is supported\n");
 			if (Cap != NULL) {
-				Cap->HD = true;
+				Cap->HD = TRUE;
 			}
 		} else if (strncasecmp("NO", pos, 2) == 0) {
 			smprintf(s, "HD is not supported\n");
@@ -1465,7 +1465,7 @@ int OBEXGEN_GetFirstFreeLocation(int **IndexStorage, int *IndexCount) {
  * Initialises LUID database, which is used for LUID - Location mapping.
  */
 GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
-		const bool Recalculate,
+		const gboolean Recalculate,
 		const char *Header,
 		char **Data, int **Offsets, int *Count,
 		char ***LUIDStorage, int *LUIDCount,
@@ -1513,7 +1513,7 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
         while (1) {
 		/* Remember line start position */
 		prevpos = linepos;
-                error = MyGetLine(*Data, &linepos, line, len, sizeof(line), false);
+                error = MyGetLine(*Data, &linepos, line, len, sizeof(line), FALSE);
 		if (error != ERR_NONE) return error;
                 if (strlen(line) == 0) break;
                 switch (level) {
@@ -1626,7 +1626,7 @@ GSM_Error OBEXGEN_InitPbLUID(GSM_StateMachine *s)
 	/* We might do validation here using telecom/pb/luid/cc.log fir IEL 4, but not on each request */
 	if (Priv->PbData != NULL) return ERR_NONE;
 
-	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", false, "BEGIN:VCARD",
+	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", FALSE, "BEGIN:VCARD",
 			&(Priv->PbData), &(Priv->PbOffsets), &(Priv->PbCount),
 			&(Priv->PbLUID), &(Priv->PbLUIDCount),
 			&(Priv->PbIndex), &(Priv->PbIndexCount));
@@ -1759,7 +1759,7 @@ GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	}
 }
 
-GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, bool start)
+GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, gboolean start)
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error 	error = ERR_EMPTY;;
@@ -1813,7 +1813,7 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	}
 
 	/* Encode vCard */
-	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req), &size, Entry, true, SonyEricsson_VCard21);
+	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCard21);
 	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
@@ -1823,8 +1823,8 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		if (error != ERR_NONE) return error;
 
 		smprintf(s,"Adding phonebook entry %ld:\n%s\n", (long)size, req);
-		Priv->UpdatePbLUID = true;
-		error = OBEXGEN_SetFile(s, "telecom/pb/luid/.vcf", req, size, false);
+		Priv->UpdatePbLUID = TRUE;
+		error = OBEXGEN_SetFile(s, "telecom/pb/luid/.vcf", req, size, FALSE);
 		Entry->Location = Priv->PbLUIDCount;
 		if (error == ERR_NONE) Priv->PbCount++;
 		return error;
@@ -1836,14 +1836,14 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->PbIndex, &Priv->PbIndexCount);
 		smprintf(s,"Adding phonebook entry %ld at location %d:\n%s\n", (long)size, Entry->Location, req);
 		sprintf(path, "telecom/pb/%d.vcf", Entry->Location);
-		error = OBEXGEN_SetFile(s, path, req, size, false);
+		error = OBEXGEN_SetFile(s, path, req, size, FALSE);
 		if (error == ERR_NONE) Priv->PbCount++;
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCard */
 		Entry->Location = 0;
 		smprintf(s,"Sending phonebook entry\n");
-		return OBEXGEN_SetFile(s, "gammu.vcf", req, size, false);
+		return OBEXGEN_SetFile(s, "gammu.vcf", req, size, FALSE);
 	}
 }
 
@@ -1881,7 +1881,7 @@ GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, con
 	}
 
 	/* Store vCard */
-	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->PbCap.HD : false);
+	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->PbCap.HD : FALSE);
 }
 
 GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, const char *Data, int Size)
@@ -1903,7 +1903,7 @@ GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, co
 	smprintf(s, "Seting vCard %s\n", path);
 
 	/* Store vCard */
-	return OBEXGEN_SetFile(s, path, Data, Size, false);
+	return OBEXGEN_SetFile(s, path, Data, Size, FALSE);
 }
 
 GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
@@ -1926,7 +1926,7 @@ GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	}
 
 	/* Encode vCard */
-	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req), &size, Entry, true, SonyEricsson_VCard21);
+	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCard21);
 	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
@@ -2030,12 +2030,12 @@ GSM_Error OBEXGEN_InitCalLUID(GSM_StateMachine *s)
 	/* We might do validation here using telecom/cal/luid/cc.log fir IEL 4, but not on each request */
 	if (Priv->CalData != NULL) return ERR_NONE;
 
-	error = OBEXGEN_InitLUID(s, "telecom/cal.vcs", false, "BEGIN:VEVENT",
+	error = OBEXGEN_InitLUID(s, "telecom/cal.vcs", FALSE, "BEGIN:VEVENT",
 			&(Priv->CalData), &(Priv->CalOffsets), &(Priv->CalCount),
 			&(Priv->CalLUID), &(Priv->CalLUIDCount),
 			&(Priv->CalIndex), &(Priv->CalIndexCount));
 	if (error != ERR_NONE) return error;
-	return OBEXGEN_InitLUID(s, "telecom/cal.vcs", true, "BEGIN:VTODO",
+	return OBEXGEN_InitLUID(s, "telecom/cal.vcs", TRUE, "BEGIN:VTODO",
 			&(Priv->CalData), &(Priv->TodoOffsets), &(Priv->TodoCount),
 			&(Priv->TodoLUID), &(Priv->TodoLUIDCount),
 			&(Priv->TodoIndex), &(Priv->TodoIndexCount));
@@ -2194,7 +2194,7 @@ GSM_Error OBEXGEN_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	}
 }
 
-GSM_Error OBEXGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, bool start)
+GSM_Error OBEXGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, gboolean start)
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error 	error = ERR_EMPTY;;
@@ -2246,7 +2246,7 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	}
 
 	/* Encode vCalendar */
-	error = GSM_EncodeVCALENDAR(req, sizeof(req), &size, Entry, true, SonyEricsson_VCalendar);
+	error = GSM_EncodeVCALENDAR(req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCalendar);
 	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
@@ -2256,8 +2256,8 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 		if (error != ERR_NONE) return error;
 
 		smprintf(s,"Adding calendar entry %ld:\n%s\n", (long)size, req);
-		Priv->UpdateCalLUID = true;
-		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size, false);
+		Priv->UpdateCalLUID = TRUE;
+		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size, FALSE);
 		Entry->Location = Priv->CalLUIDCount;
 		if (error == ERR_NONE) Priv->CalCount++;
 		return error;
@@ -2269,14 +2269,14 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->CalIndex, &Priv->CalIndexCount);
 		smprintf(s,"Adding calendar entry %ld at location %d:\n%s\n", (long)size, Entry->Location, req);
 		sprintf(path, "telecom/cal/%d.vcf", Entry->Location);
-		error = OBEXGEN_SetFile(s, path, req, size, false);
+		error = OBEXGEN_SetFile(s, path, req, size, FALSE);
 		if (error == ERR_NONE) Priv->CalCount++;
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCalendar */
 		Entry->Location = 0;
 		smprintf(s,"Sending calendar entry\n");
-		return OBEXGEN_SetFile(s, "gammu.vcs", req, size, false);
+		return OBEXGEN_SetFile(s, "gammu.vcs", req, size, FALSE);
 	}
 }
 
@@ -2314,7 +2314,7 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 	}
 
 	/* Store vCalendar */
-	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->CalCap.HD : false);
+	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->CalCap.HD : FALSE);
 }
 
 GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry, const char *Data, int Size)
@@ -2336,7 +2336,7 @@ GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	smprintf(s, "Seting vCalendar %s\n", path);
 
 	/* Store vCalendar */
-	return OBEXGEN_SetFile(s, path, Data, Size, false);
+	return OBEXGEN_SetFile(s, path, Data, Size, FALSE);
 }
 
 GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
@@ -2357,7 +2357,7 @@ GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	}
 
 	/* Encode vCalendar */
-	error = GSM_EncodeVCALENDAR(req, sizeof(req), &size, Entry, true, SonyEricsson_VCalendar);
+	error = GSM_EncodeVCALENDAR(req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VCalendar);
 	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
@@ -2575,7 +2575,7 @@ GSM_Error OBEXGEN_GetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	}
 }
 
-GSM_Error OBEXGEN_GetNextTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, bool start)
+GSM_Error OBEXGEN_GetNextTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, gboolean start)
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error 	error = ERR_EMPTY;;
@@ -2627,7 +2627,7 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	}
 
 	/* Encode vTodo */
-	error = GSM_EncodeVTODO(req, sizeof(req), &size, Entry, true, SonyEricsson_VToDo);
+	error = GSM_EncodeVTODO(req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VToDo);
 	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
@@ -2637,8 +2637,8 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 		if (error != ERR_NONE) return error;
 
 		smprintf(s,"Adding todo entry %ld:\n%s\n", (long)size, req);
-		Priv->UpdateTodoLUID = true;
-		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size, false);
+		Priv->UpdateTodoLUID = TRUE;
+		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size, FALSE);
 		Entry->Location = Priv->TodoLUIDCount;
 		if (error == ERR_NONE) Priv->TodoCount++;
 		return error;
@@ -2650,14 +2650,14 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->TodoIndex, &Priv->TodoIndexCount);
 		smprintf(s,"Adding todo entry %ld at location %d:\n%s\n", (long)size, Entry->Location, req);
 		sprintf(path, "telecom/cal/%d.vcf", Entry->Location);
-		error = OBEXGEN_SetFile(s, path, req, size, false);
+		error = OBEXGEN_SetFile(s, path, req, size, FALSE);
 		if (error == ERR_NONE) Priv->TodoCount++;
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vTodo */
 		Entry->Location = 0;
 		smprintf(s,"Sending todo entry\n");
-		return OBEXGEN_SetFile(s, "gammu.vcs", req, size, false);
+		return OBEXGEN_SetFile(s, "gammu.vcs", req, size, FALSE);
 	}
 }
 
@@ -2695,7 +2695,7 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const c
 	}
 
 	/* Store vTodo */
-	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->CalCap.HD : false);
+	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->CalCap.HD : FALSE);
 }
 
 GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const char *Data, int Size)
@@ -2717,7 +2717,7 @@ GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const 
 	smprintf(s, "Seting vTodo %s\n", path);
 
 	/* Store vTodo */
-	return OBEXGEN_SetFile(s, path, Data, Size, false);
+	return OBEXGEN_SetFile(s, path, Data, Size, FALSE);
 }
 
 GSM_Error OBEXGEN_SetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
@@ -2738,7 +2738,7 @@ GSM_Error OBEXGEN_SetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	}
 
 	/* Encode vTodo */
-	error = GSM_EncodeVTODO(req, sizeof(req), &size, Entry, true, SonyEricsson_VToDo);
+	error = GSM_EncodeVTODO(req, sizeof(req), &size, Entry, TRUE, SonyEricsson_VToDo);
 	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
@@ -2844,7 +2844,7 @@ GSM_Error OBEXGEN_InitNoteLUID(GSM_StateMachine *s)
 	/* We might do validation here using telecom/nt/luid/cc.log fir IEL 4, but not on each request */
 	if (Priv->NoteData != NULL) return ERR_NONE;
 
-	return OBEXGEN_InitLUID(s, "telecom/nt.vcf", false, "BEGIN:VNOTE",
+	return OBEXGEN_InitLUID(s, "telecom/nt.vcf", FALSE, "BEGIN:VNOTE",
 			&(Priv->NoteData), &(Priv->NoteOffsets), &(Priv->NoteCount),
 			&(Priv->NoteLUID), &(Priv->NoteLUIDCount),
 			&(Priv->NoteIndex), &(Priv->NoteIndexCount));
@@ -2975,7 +2975,7 @@ GSM_Error OBEXGEN_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	}
 }
 
-GSM_Error OBEXGEN_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Entry, bool start)
+GSM_Error OBEXGEN_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Entry, gboolean start)
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error 	error = ERR_EMPTY;;
@@ -3037,8 +3037,8 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 		if (error != ERR_NONE) return error;
 
 		smprintf(s,"Adding note entry %ld:\n%s\n", (long)size, req);
-		Priv->UpdateNoteLUID = true;
-		error = OBEXGEN_SetFile(s, "telecom/nt/luid/.vnt", req, size, false);
+		Priv->UpdateNoteLUID = TRUE;
+		error = OBEXGEN_SetFile(s, "telecom/nt/luid/.vnt", req, size, FALSE);
 		Entry->Location = Priv->NoteLUIDCount;
 		if (error == ERR_NONE) Priv->NoteCount++;
 		return error;
@@ -3050,14 +3050,14 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->NoteIndex, &Priv->NoteIndexCount);
 		smprintf(s,"Adding note entry %ld at location %d:\n%s\n", (long)size, Entry->Location, req);
 		sprintf(path, "telecom/nt/%d.vcf", Entry->Location);
-		error = OBEXGEN_SetFile(s, path, req, size, false);
+		error = OBEXGEN_SetFile(s, path, req, size, FALSE);
 		if (error == ERR_NONE) Priv->NoteCount++;
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCard */
 		Entry->Location = 0;
 		smprintf(s,"Sending note entry\n");
-		return OBEXGEN_SetFile(s, "gammu.vnt", req, size, false);
+		return OBEXGEN_SetFile(s, "gammu.vnt", req, size, FALSE);
 	}
 }
 
@@ -3095,7 +3095,7 @@ GSM_Error OBEXGEN_SetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry, const c
 	}
 
 	/* Store vCard */
-	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->NoteCap.HD : false);
+	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->NoteCap.HD : FALSE);
 }
 
 GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, const char *Data, int Size)
@@ -3117,7 +3117,7 @@ GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, const 
 	smprintf(s, "Seting vNote %s\n", path);
 
 	/* Store vCard */
-	return OBEXGEN_SetFile(s, path, Data, Size, false);
+	return OBEXGEN_SetFile(s, path, Data, Size, FALSE);
 }
 
 GSM_Error OBEXGEN_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)

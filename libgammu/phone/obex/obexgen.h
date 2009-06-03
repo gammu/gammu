@@ -53,14 +53,14 @@ typedef struct {
 	/**
 	 * Support for hard deletes?
 	 */
-	bool HD;
+	gboolean HD;
 } IRMC_Capability;
 
 typedef struct {
 	int				FilesLocationsUsed;
 	int				FilesLocationsCurrent;
 	GSM_File			Files[500];
-	bool				FileLastPart;
+	gboolean				FileLastPart;
 
 	int				FrameSize;
 	OBEX_Service			Service;
@@ -96,7 +96,7 @@ typedef struct {
 	/**
 	 * Whether to update PbLUID after this request.
 	 */
-	bool				UpdatePbLUID;
+	gboolean				UpdatePbLUID;
 	/**
 	 * Capabilities for phonebook.
 	 */
@@ -136,7 +136,7 @@ typedef struct {
 	/**
 	 * Whether to update TodoLUID after this request.
 	 */
-	bool				UpdateTodoLUID;
+	gboolean				UpdateTodoLUID;
 	/**
 	 * Number of read todo entries.
 	 */
@@ -168,7 +168,7 @@ typedef struct {
 	/**
 	 * Whether to update CalLUID after this request.
 	 */
-	bool				UpdateCalLUID;
+	gboolean				UpdateCalLUID;
 	/**
 	 * Capabilities for calendar.
 	 */
@@ -208,7 +208,7 @@ typedef struct {
 	/**
 	 * Whether to update NoteLUID after this request.
 	 */
-	bool				UpdateNoteLUID;
+	gboolean				UpdateNoteLUID;
 	/**
 	 * Capabilities for note.
 	 */

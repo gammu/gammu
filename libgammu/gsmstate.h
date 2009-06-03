@@ -225,11 +225,11 @@ typedef struct {
 	/**
 	 * Sets parity for device.
 	 */
-	GSM_Error (*DeviceSetParity)   (GSM_StateMachine *s, bool parity);
+	GSM_Error (*DeviceSetParity)   (GSM_StateMachine *s, gboolean parity);
 	/**
 	 * Sets dtr (data to read) and rts (ready to send) flags.
 	 */
-	GSM_Error (*DeviceSetDtrRts)   (GSM_StateMachine *s, bool dtr, bool rts);
+	GSM_Error (*DeviceSetDtrRts)   (GSM_StateMachine *s, gboolean dtr, gboolean rts);
 	/**
 	 * Sets device speed.
 	 */
@@ -552,7 +552,7 @@ typedef struct {
 	/**
 	 * Used internally by phone drivers.
 	 */
-	bool			PressKey;
+	gboolean			PressKey;
 	/**
 	 * Pointer to structure used internally by phone drivers.
 	 */
@@ -614,19 +614,19 @@ typedef struct {
 	/**
 	 * Should phone notify about incoming calls?
 	 */
-	bool			EnableIncomingCall;
+	gboolean			EnableIncomingCall;
 	/**
 	 * Should phone notify about incoming SMSes?
 	 */
-	bool			EnableIncomingSMS;
+	gboolean			EnableIncomingSMS;
 	/**
 	 * Should phone notify about incoming CBs?
 	 */
-	bool			EnableIncomingCB;
+	gboolean			EnableIncomingCB;
 	/**
 	 * Should phone notify about incoming USSDs?
 	 */
-	bool			EnableIncomingUSSD;
+	gboolean			EnableIncomingUSSD;
 
 	/**
 	 * Last message received from phone.
@@ -717,7 +717,7 @@ typedef struct {
 	/**
 	 * Enables showing information on phone display.
 	 */
-	GSM_Error (*ShowStartInfo)      (GSM_StateMachine *s, bool enable);
+	GSM_Error (*ShowStartInfo)      (GSM_StateMachine *s, gboolean enable);
 	/**
 	 * Reads manufacturer from phone.
 	 */
@@ -786,11 +786,11 @@ typedef struct {
 	/**
 	 * Emulates key press or key release.
 	 */
-	GSM_Error (*PressKey)	   	(GSM_StateMachine *s, GSM_KeyCode Key, bool Press);
+	GSM_Error (*PressKey)	   	(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press);
 	/**
 	 * Performs phone reset.
 	 */
-	GSM_Error (*Reset)	      	(GSM_StateMachine *s, bool hard);
+	GSM_Error (*Reset)	      	(GSM_StateMachine *s, gboolean hard);
 	/**
 	 * Resets phone settings.
 	 */
@@ -849,7 +849,7 @@ typedef struct {
 	 * Reads entry from memory (phonebooks or calls). Which entry should
 	 * be read is defined in entry. This can be easily used for reading all entries.
 	 */
-	GSM_Error (*GetNextMemory)      (GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start);
+	GSM_Error (*GetNextMemory)      (GSM_StateMachine *s, GSM_MemoryEntry *entry, gboolean start);
 	/**
 	 * Sets memory (phonebooks or calls) entry.
 	 */
@@ -895,7 +895,7 @@ typedef struct {
 	 * Reads next (or first if start set) SMS message. This might be
 	 * faster for some phones than using @ref GetSMS for each message.
 	 */
-	GSM_Error (*GetNextSMS)	 	(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start);
+	GSM_Error (*GetNextSMS)	 	(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean start);
 	/**
 	 * Sets SMS.
 	 */
@@ -919,15 +919,15 @@ typedef struct {
 	/**
 	 * Configures fast SMS sending.
 	 */
-	GSM_Error (*SetFastSMSSending)  (GSM_StateMachine *s, bool enable);
+	GSM_Error (*SetFastSMSSending)  (GSM_StateMachine *s, gboolean enable);
 	/**
 	 * Enable/disable notification on incoming SMS.
 	 */
-	GSM_Error (*SetIncomingSMS)     (GSM_StateMachine *s, bool enable);
+	GSM_Error (*SetIncomingSMS)     (GSM_StateMachine *s, gboolean enable);
 	/**
 	 * Gets network information from phone.
 	 */
-	GSM_Error (*SetIncomingCB)      (GSM_StateMachine *s, bool enable);
+	GSM_Error (*SetIncomingCB)      (GSM_StateMachine *s, gboolean enable);
 	/**
 	 * Returns SMS folders information.
 	 */
@@ -951,11 +951,11 @@ typedef struct {
 	/**
 	 * Accept current incoming call.
 	 */
-	GSM_Error (*AnswerCall)	 	(GSM_StateMachine *s, int ID, bool all);
+	GSM_Error (*AnswerCall)	 	(GSM_StateMachine *s, int ID, gboolean all);
 	/**
 	 * Deny current incoming call.
 	 */
-	GSM_Error (*CancelCall)	 	(GSM_StateMachine *s, int ID, bool all);
+	GSM_Error (*CancelCall)	 	(GSM_StateMachine *s, int ID, gboolean all);
 	/**
 	 * Holds call.
 	 */
@@ -975,11 +975,11 @@ typedef struct {
 	/**
 	 * Transfers call.
 	 */
-	GSM_Error (*TransferCall)       (GSM_StateMachine *s, int ID, bool next);
+	GSM_Error (*TransferCall)       (GSM_StateMachine *s, int ID, gboolean next);
 	/**
 	 * Switches call.
 	 */
-	GSM_Error (*SwitchCall)	 	(GSM_StateMachine *s, int ID, bool next);
+	GSM_Error (*SwitchCall)	 	(GSM_StateMachine *s, int ID, gboolean next);
 	/**
 	 * Gets call diverts.
 	 */
@@ -995,11 +995,11 @@ typedef struct {
 	/**
 	 * Activates/deactivates noticing about incoming calls.
 	 */
-	GSM_Error (*SetIncomingCall)    (GSM_StateMachine *s, bool enable);
+	GSM_Error (*SetIncomingCall)    (GSM_StateMachine *s, gboolean enable);
 	/**
 	 * Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).
 	 */
-	GSM_Error (*SetIncomingUSSD)    (GSM_StateMachine *s, bool enable);
+	GSM_Error (*SetIncomingUSSD)    (GSM_StateMachine *s, gboolean enable);
 	/**
 	 * Sends DTMF (Dual Tone Multi Frequency) tone.
 	 */
@@ -1007,7 +1007,7 @@ typedef struct {
 	/**
 	 * Gets ringtone from phone.
 	 */
-	GSM_Error (*GetRingtone)	(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone);
+	GSM_Error (*GetRingtone)	(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gboolean PhoneRingtone);
 	/**
 	 * Sets ringtone in phone.
 	 */
@@ -1023,7 +1023,7 @@ typedef struct {
 	/**
 	 * Plays tone.
 	 */
-	GSM_Error (*PlayTone)	   	(GSM_StateMachine *s, int Herz, unsigned char Volume, bool start);
+	GSM_Error (*PlayTone)	   	(GSM_StateMachine *s, int Herz, unsigned char Volume, gboolean start);
 	/**
 	 * Reads WAP bookmark.
 	 */
@@ -1075,7 +1075,7 @@ typedef struct {
 	/**
 	 * Retrieves next part of MMS file information.
 	 */
-	GSM_Error (*GetNextMMSFileInfo)	(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start);
+	GSM_Error (*GetNextMMSFileInfo)	(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, gboolean start);
 	/**
 	 * Gets bitmap.
 	 */
@@ -1095,7 +1095,7 @@ typedef struct {
 	/**
 	 * Reads ToDo from phone.
 	 */
-	GSM_Error (*GetNextToDo)	(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start);
+	GSM_Error (*GetNextToDo)	(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, gboolean start);
 	/**
 	 * Sets ToDo in phone.
 	 */
@@ -1124,7 +1124,7 @@ typedef struct {
 	 * Retrieves calendar entry. This is useful for continuous reading of all
 	 * calendar entries.
 	 */
-	GSM_Error (*GetNextCalendar)    (GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start);
+	GSM_Error (*GetNextCalendar)    (GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start);
 	/**
 	 * Sets calendar entry
 	 */
@@ -1161,7 +1161,7 @@ typedef struct {
 	 * Retrieves note entry. This is useful for continuous reading of all
 	 * notes entries.
 	 */
-	GSM_Error (*GetNextNote)    	(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start);
+	GSM_Error (*GetNextNote)    	(GSM_StateMachine *s, GSM_NoteEntry *Note, gboolean start);
 	/**
 	 * Sets note entry
 	 */
@@ -1201,11 +1201,11 @@ typedef struct {
 	/**
 	 * Gets next filename from filesystem.
 	 */
-	GSM_Error (*GetNextFileFolder)  (GSM_StateMachine *s, GSM_File *File, bool start);
+	GSM_Error (*GetNextFileFolder)  (GSM_StateMachine *s, GSM_File *File, gboolean start);
 	/**
 	 * Gets file part from filesystem.
 	 */
-	GSM_Error (*GetFolderListing)   (GSM_StateMachine *s, GSM_File *File, bool start);
+	GSM_Error (*GetFolderListing)   (GSM_StateMachine *s, GSM_File *File, gboolean start);
 	/**
 	 * Gets next root folder.
 	 */
@@ -1335,14 +1335,14 @@ struct _GSM_StateMachine {
 	/**
 	 * Skip lowlevel serial handling, cable is known to be broken.
 	 */
-	bool			SkipDtrRts;
+	gboolean			SkipDtrRts;
 	/**
 	 * Do not give power supply to cable on DTR/RTS signals.
 	 */
-	bool			NoPowerCable;
+	gboolean			NoPowerCable;
 	char			*LockFile;				/**< Lock file name for Unix 			*/
 	GSM_Debug_Info		di;					/**< Debug information				*/
-	bool			opened;					/**< Is connection opened ?			*/
+	gboolean			opened;					/**< Is connection opened ?			*/
 	GSM_Config		Config[MAX_CONFIG_NUM + 1];		/**< Configuration data */
 	GSM_Config		*CurrentConfig;				/**< Config file (or Registry or...) variables 	*/
 	int			ConfigNum;				/**< Number of actual configurations */

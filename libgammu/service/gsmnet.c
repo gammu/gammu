@@ -813,7 +813,7 @@ const unsigned char *GSM_GetCountryName(const char *CountryCode)
 
 void NOKIA_EncodeNetworkCode(unsigned char* buffer, const char* input)
 {
-	EncodeBCD(buffer, input, 6, false);
+	EncodeBCD(buffer, input, 6, FALSE);
 	buffer[1] = buffer[1] | 0xf0;
 }
 

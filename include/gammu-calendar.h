@@ -510,7 +510,7 @@ typedef struct {
 	/**
 	 * Whether it repeats each day.
 	 */
-	bool Repeating;
+	gboolean Repeating;
 	/**
 	 * Text that is shown on display.
 	 */
@@ -576,7 +576,7 @@ typedef enum {
  * \ingroup Todo
  */
 GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t * Length,
-			  GSM_ToDoEntry * note, const bool header,
+			  GSM_ToDoEntry * note, const gboolean header,
 			  const GSM_VToDoVersion Version);
 
 /**
@@ -595,7 +595,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t * Length,
  */
 GSM_Error GSM_EncodeVCALENDAR(char *Buffer, const size_t buff_len,
 			      size_t * Length, GSM_CalendarEntry * note,
-			      const bool header,
+			      const gboolean header,
 			      const GSM_VCalendarVersion Version);
 
 /**
@@ -656,7 +656,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info * di, char *Buffer,
  *
  * \ingroup Calendar
  */
-bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry * note);
+gboolean GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry * note);
 
 /**
  * Reads alarm set in phone.
@@ -710,7 +710,7 @@ GSM_Error GSM_GetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
  * Reads ToDo from phone.
  *
  * \param s State machine pointer.
- * \param ToDo Storage for note, if start is false, should contain
+ * \param ToDo Storage for note, if start is FALSE, should contain
  * data from previous read (at least position).
  * \param start Whether we're doing initial read or continue in reading.
  *
@@ -719,7 +719,7 @@ GSM_Error GSM_GetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
  * \ingroup Todo
  */
 GSM_Error GSM_GetNextToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo,
-			  bool start);
+			  gboolean start);
 /**
  * Sets ToDo in phone.
  *
@@ -796,7 +796,7 @@ GSM_Error GSM_GetCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
  * calendar entries.
  *
  * \param s State machine pointer.
- * \param Note Storage for note, if start is false, should contain
+ * \param Note Storage for note, if start is FALSE, should contain
  * data from previous read (at least position).
  * \param start Whether we're doing initial read or continue in reading.
  *
@@ -805,7 +805,7 @@ GSM_Error GSM_GetCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
  * \ingroup Calendar
  */
 GSM_Error GSM_GetNextCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note,
-			      bool start);
+			      gboolean start);
 /**
  * Sets calendar entry
  *
@@ -906,7 +906,7 @@ GSM_Error GSM_GetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
  * notes entries.
  *
  * \param s State machine pointer.
- * \param Note Storage for note, if start is false, should contain
+ * \param Note Storage for note, if start is FALSE, should contain
  * data from previous read (at least position).
  * \param start Whether we're doing initial read or continue in reading.
  *
@@ -915,7 +915,7 @@ GSM_Error GSM_GetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
  * \ingroup Note
  */
 GSM_Error GSM_GetNextNote(GSM_StateMachine * s, GSM_NoteEntry * Note,
-			  bool start);
+			  gboolean start);
 /**
  * Sets note entry
  *

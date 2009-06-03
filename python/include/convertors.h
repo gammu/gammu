@@ -37,9 +37,9 @@
 #endif
 
 /**
- * Invalid value for bool.
+ * Invalid value for gboolean.
  */
-#define BOOL_INVALID ((bool)-1)
+#define BOOL_INVALID ((gboolean)-1)
 
 /**
  * Invalid value for integer (possibly signed).
@@ -142,9 +142,9 @@ int MemoryEntryFromPython(PyObject *dict, GSM_MemoryEntry *entry, int needs_loca
 int GetIntFromDict(PyObject *dict, const char *key);
 
 /**
- * Gets bool from dictionary dict with key key.
+ * Gets gboolean from dictionary dict with key key.
  */
-bool GetBoolFromDict(PyObject *dict, const char *key);
+gboolean GetBoolFromDict(PyObject *dict, const char *key);
 
 /**
  * Returns C string with length from dictionary dict with key key.
@@ -231,7 +231,7 @@ PyObject *SMSCToPython(GSM_SMSC *smsc);
 /**
  * Parses python object into GMS_SMSC.
  */
-int SMSCFromPython(PyObject* dict, GSM_SMSC *smsc, bool complete);
+int SMSCFromPython(PyObject* dict, GSM_SMSC *smsc, gboolean complete);
 
 /**
  * Converts SMS to python object.
@@ -371,7 +371,7 @@ PyObject *FileToPython(GSM_File *file);
 /**
  * Converts file from Python object.
  */
-int FileFromPython(PyObject *dict, GSM_File *file, bool check);
+int FileFromPython(PyObject *dict, GSM_File *file, gboolean check);
 
 /**
  * Converts call to Python object.

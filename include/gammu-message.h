@@ -387,7 +387,7 @@ typedef struct {
 	/**
 	 * Whether to reject duplicates.
 	 */
-	bool RejectDuplicates;
+	gboolean RejectDuplicates;
 	/**
 	 * UDH (User Data Header)
 	 */
@@ -420,7 +420,7 @@ typedef struct {
 	/**
 	 * For saved SMS: whether SMS is really in Inbox.
 	 */
-	bool InboxFolder;
+	gboolean InboxFolder;
 	/**
 	 * Length of the SMS message.
 	 */
@@ -460,7 +460,7 @@ typedef struct {
 	/**
 	 * Indicates whether "Reply via same center" is set.
 	 */
-	bool ReplyViaSameSMSC;
+	gboolean ReplyViaSameSMSC;
 	/**
 	 * SMS class.
 	 */
@@ -558,7 +558,7 @@ typedef struct {
  */
 GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS,
 			unsigned char *buffer, size_t length,
-			size_t *final_pos, bool SMSC);
+			size_t *final_pos, gboolean SMSC);
 
 /**
  * Decodes SMS frame.
@@ -582,7 +582,7 @@ GSM_Coding_Type GSM_GetMessageCoding(GSM_Debug_Info * di, const char TPDCS);
  */
 GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info * di, GSM_SMSMessage * SMS,
 			     unsigned char *buffer, GSM_SMSMessageLayout Layout,
-			     int *length, bool clear);
+			     int *length, gboolean clear);
 
 /**
  * Decodes SMS frame for status report.
@@ -645,11 +645,11 @@ typedef struct {
 	/**
 	 * Whether it is inbox.
 	 */
-	bool InboxFolder;
+	gboolean InboxFolder;
 	/**
 	 * Whether it is outbox.
 	 */
-	bool OutboxFolder;
+	gboolean OutboxFolder;
 	/**
 	 * Where exactly it's saved.
 	 */
@@ -698,7 +698,7 @@ typedef struct {
  *
  * \ingroup SMS
  */
-bool GSM_DecodeSiemensOTASMS(GSM_Debug_Info * di,
+gboolean GSM_DecodeSiemensOTASMS(GSM_Debug_Info * di,
 			     GSM_SiemensOTASMSInfo * Info,
 			     GSM_SMSMessage * SMS);
 
@@ -727,7 +727,7 @@ typedef struct {
 	/**
 	 * Whether it is really inbox.
 	 */
-	bool InboxFolder;
+	gboolean InboxFolder;
 	/**
   	 * Name for MMS folder.
 	 */
@@ -925,18 +925,18 @@ typedef struct {
 	GSM_CalendarEntry *Calendar;
 	GSM_ToDoEntry *ToDo;
 	GSM_File *File;
-	bool Protected;
+	gboolean Protected;
 
 	unsigned char *Buffer;
-	bool Left;
-	bool Right;
-	bool Center;
-	bool Large;
-	bool Small;
-	bool Bold;
-	bool Italic;
-	bool Underlined;
-	bool Strikethrough;
+	gboolean Left;
+	gboolean Right;
+	gboolean Center;
+	gboolean Large;
+	gboolean Small;
+	gboolean Bold;
+	gboolean Italic;
+	gboolean Underlined;
+	gboolean Strikethrough;
 
 	/* Return values */
 	int RingtoneNotes;
@@ -949,10 +949,10 @@ typedef struct {
  */
 typedef struct {
 	int EntriesNum;
-	bool UnicodeCoding;
+	gboolean UnicodeCoding;
 	int Class;
 	unsigned char ReplaceMessage;
-	bool Unknown;
+	gboolean Unknown;
 	GSM_MultiPartSMSEntry Entries[GSM_MAX_MULTI_SMS];
 } GSM_MultiPartSMSInfo;
 
@@ -966,7 +966,7 @@ typedef struct {
 GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine * s, GSM_SMSMessage * SMS,
 			       unsigned char *buffer,
 			       GSM_SMSMessageLayout Layout, int *length,
-			       bool clear);
+			       gboolean clear);
 
 /**
  * Encodes multi part SMS from "readable" format.
@@ -984,9 +984,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info * di,
  *
  * \ingroup SMS
  */
-bool GSM_DecodeMultiPartSMS(GSM_Debug_Info * di,
+gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info * di,
 			    GSM_MultiPartSMSInfo * Info,
-			    GSM_MultiSMSMessage * SMS, bool ems);
+			    GSM_MultiSMSMessage * SMS, gboolean ems);
 
 /**
  * Clears @ref GSM_MultiPartSMSInfo to default values.
@@ -1011,7 +1011,7 @@ void GSM_FreeMultiPartSMSInfo(GSM_MultiPartSMSInfo * Info);
  */
 GSM_Error GSM_LinkSMS(GSM_Debug_Info * di,
 		      GSM_MultiSMSMessage ** INPUT,
-		      GSM_MultiSMSMessage ** OUTPUT, bool ems);
+		      GSM_MultiSMSMessage ** OUTPUT, gboolean ems);
 
 /**
  * MMS address type.
@@ -1077,11 +1077,11 @@ typedef struct {
 	 */
 	unsigned char MSGType[50];
 
-	bool DateTimeAvailable;
+	gboolean DateTimeAvailable;
 	GSM_DateTime DateTime;
 
-	bool MMSReportAvailable;
-	bool MMSReport;
+	gboolean MMSReportAvailable;
+	gboolean MMSReport;
 	/**
 	 * Subparts.
 	 */
@@ -1171,7 +1171,7 @@ GSM_Error GSM_GetSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms);
  * \ingroup SMS
  */
 GSM_Error GSM_GetNextSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms,
-			 bool start);
+			 gboolean start);
 /**
  * Sets SMS.
  *
@@ -1243,7 +1243,7 @@ GSM_Error GSM_SendSavedSMS(GSM_StateMachine * s, int Folder, int Location);
  *
  * \ingroup SMS
  */
-GSM_Error GSM_SetFastSMSSending(GSM_StateMachine * s, bool enable);
+GSM_Error GSM_SetFastSMSSending(GSM_StateMachine * s, gboolean enable);
 
 /**
  * Enable/disable notification on incoming SMS.
@@ -1255,7 +1255,7 @@ GSM_Error GSM_SetFastSMSSending(GSM_StateMachine * s, bool enable);
  *
  * \ingroup SMS
  */
-GSM_Error GSM_SetIncomingSMS(GSM_StateMachine * s, bool enable);
+GSM_Error GSM_SetIncomingSMS(GSM_StateMachine * s, gboolean enable);
 
 /**
  * Gets network information from phone.
@@ -1267,7 +1267,7 @@ GSM_Error GSM_SetIncomingSMS(GSM_StateMachine * s, bool enable);
  *
  * \ingroup CB
  */
-GSM_Error GSM_SetIncomingCB(GSM_StateMachine * s, bool enable);
+GSM_Error GSM_SetIncomingCB(GSM_StateMachine * s, gboolean enable);
 
 /**
  * Returns SMS folders information.
@@ -1334,7 +1334,7 @@ GSM_Error GSM_GetMMSFolders(GSM_StateMachine * s, GSM_MMSFolders * folders);
  * \ingroup MMS
  */
 GSM_Error GSM_GetNextMMSFileInfo(GSM_StateMachine * s, unsigned char *FileID,
-				 int *MMSFolder, bool start);
+				 int *MMSFolder, gboolean start);
 /**
  * Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).
  *
@@ -1345,7 +1345,7 @@ GSM_Error GSM_GetNextMMSFileInfo(GSM_StateMachine * s, unsigned char *FileID,
  *
  * \ingroup USSD
  */
-GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine * s, bool enable);
+GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine * s, gboolean enable);
 #endif
 
 /* Editor configuration

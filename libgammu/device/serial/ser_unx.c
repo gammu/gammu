@@ -221,7 +221,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
     	return ERR_NONE;
 }
 
-static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
+static GSM_Error serial_setparity(GSM_StateMachine *s, gboolean parity)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
     	struct termios	  	t;
@@ -249,7 +249,7 @@ static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
     	return ERR_NONE;
 }
 
-static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
+static GSM_Error serial_setdtrrts(GSM_StateMachine *s, gboolean dtr, gboolean rts)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
     	struct termios	  	t;
@@ -300,12 +300,12 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
 
     	if (((flags & TIOCM_DTR) == TIOCM_DTR) != dtr) {
 		smprintf(s, "Setting DTR failed, disabling setting of DTR/RTS signals.\n");
-		s->SkipDtrRts = true;
+		s->SkipDtrRts = TRUE;
 	}
 
     	if (((flags & TIOCM_RTS) == TIOCM_RTS) != rts) {
 		smprintf(s, "Setting RTS failed, disabling setting of DTR/RTS signals.\n");
-		s->SkipDtrRts = true;
+		s->SkipDtrRts = TRUE;
 	}
 
     	return ERR_NONE;

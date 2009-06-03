@@ -19,7 +19,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 		      300);
 	SMSInfo.Entries[0].Buffer = Buffer;
 	SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
-	SMSInfo.UnicodeCoding = false;
+	SMSInfo.UnicodeCoding = FALSE;
 	error = GSM_EncodeMultiPartSMS(NULL, &SMSInfo, &sms);
 
 	gammu_test_result(error, "GSM_EncodeMultiPartSMS");
@@ -29,8 +29,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	EncodeUnicode(sms.SMS[1].Number, "321", GSM_MAX_NUMBER_LENGTH);
 
 	/* Display message */
-	DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);
-	DisplayMultiSMSInfo(&sms, true, true, NULL, NULL);
+	DisplayMultiSMSInfo(&sms, FALSE, TRUE, NULL, NULL);
+	DisplayMultiSMSInfo(&sms, TRUE, TRUE, NULL, NULL);
 
 	return 0;
 }

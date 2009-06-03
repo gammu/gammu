@@ -29,17 +29,17 @@ extern GSM_Reply_Function UserReplyFunctions4[];
 
 GSM_Error CheckDCT4Only(void)
 {
-	bool found = false;
+	gboolean found = FALSE;
 
 	/* Checking if phone is DCT4 */
 #ifdef GSM_ENABLE_NOKIA3650
- 	if (strstr(N3650Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = true;
+ 	if (strstr(N3650Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = TRUE;
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
- 	if (strstr(N6510Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = true;
+ 	if (strstr(N6510Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = TRUE;
 #endif
 #ifdef GSM_ENABLE_NOKIA3320
- 	if (strstr(N3320Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = true;
+ 	if (strstr(N3320Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = TRUE;
 #endif
 	if (!found) return ERR_NOTSUPPORTED;
 
@@ -70,7 +70,7 @@ static void CheckDCT4(void)
 	}
 }
 
-static bool answer_yes2(const char *text)
+static gboolean answer_yes2(const char *text)
 {
     	int         len;
     	char        ans[99];
@@ -79,8 +79,8 @@ static bool answer_yes2(const char *text)
 		printf(_("%s (yes/no) ? "),text);
 		len=GetLine(stdin, ans, 99);
 		if (len==-1) Terminate(3);
-		if (strcasecmp(ans, _("yes")) == 0) return true;
-		if (strcasecmp(ans, _("no")) == 0) return false;
+		if (strcasecmp(ans, _("yes")) == 0) return TRUE;
+		if (strcasecmp(ans, _("no")) == 0) return FALSE;
 	}
 }
 
@@ -331,16 +331,16 @@ static GSM_Error DCT4_ReplyTestsNames(GSM_Protocol_Message msg, GSM_StateMachine
 static GSM_Error DCT4_ReplyTestsStartup(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	int 	 i,pos,j;
-	bool	 found;
+	gboolean	 found;
 
 	pos = 10;
 
 	for (i=0;i<msg.Buffer[8];i++) {
-		found = false;
+		found = FALSE;
 		for (j=0;j<DCT4Tests.Num;j++) {
 			if (DCT4Tests.Tests[j].ID == msg.Buffer[pos]) {
-				DCT4Tests.Tests[j].Startup 	= true;
-				found 				= true;
+				DCT4Tests.Tests[j].Startup 	= TRUE;
+				found 				= TRUE;
 				break;
 			}
 		}
@@ -406,7 +406,7 @@ void DCT4SelfTests(int argc, char *argv[])
 	error=GSM_WaitFor (gsm, GetNames, 6, 0x35, 4, ID_User1);
 	Print_Error(error);
 
-	for (j=0;j<DCT4Tests.Num;j++) DCT4Tests.Tests[j].Startup = false;
+	for (j=0;j<DCT4Tests.Num;j++) DCT4Tests.Tests[j].Startup = FALSE;
 
 	error=GSM_WaitFor (gsm, GetDoneST, 6, 0x35, 4, ID_User3);
 	Print_Error(error);
@@ -429,7 +429,7 @@ static GSM_Error DCT4_ReplyVibra(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 	return ERR_NONE;
 }
 
-static GSM_Error DCT4EnableVibra(GSM_StateMachine *sm, bool enable)
+static GSM_Error DCT4EnableVibra(GSM_StateMachine *sm, gboolean enable)
 {
 	/* Enables or disables vibra */
 	unsigned char 	Control[6] = {N7110_FRAME_HEADER,0x0C,
@@ -451,7 +451,7 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 				       0x64,	/* Vibra power (in percent) */
 				       0x00};
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
         CheckDCT4();
 
@@ -461,7 +461,7 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 	error=GSM_WaitFor (gsm, SetLevel, 6, 0x1C, 4, ID_User3);
 	Print_Error(error);
 
-	error=DCT4EnableVibra(gsm, true);
+	error=DCT4EnableVibra(gsm, TRUE);
 	Print_Error(error);
 
 	for (i=0;i<3;i++) {
@@ -473,7 +473,7 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 		}
 	}
 
-	error=DCT4EnableVibra(gsm, false);
+	error=DCT4EnableVibra(gsm, FALSE);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -488,13 +488,13 @@ void DCT4VibraTest(int argc, char *argv[])
 
 	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
-	error=DCT4EnableVibra(gsm, true);
+	error=DCT4EnableVibra(gsm, TRUE);
 	Print_Error(error);
 
 	printf("%s\n", _("Press any key to continue..."));
 	GetLine(stdin, ans, 99);
 
-	error=DCT4EnableVibra(gsm, false);
+	error=DCT4EnableVibra(gsm, FALSE);
 	Print_Error(error);
 }
 
@@ -686,7 +686,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	}
 	Location--;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
         CheckDCT4();
 
@@ -939,13 +939,13 @@ void DCT4GetT9(int argc, char *argv[])
 
 #ifdef GSM_ENABLE_NOKIA6510
 
-extern GSM_Error N6510_SetLight(GSM_StateMachine *sm, N6510_PHONE_LIGHTS light, bool enable);
+extern GSM_Error N6510_SetLight(GSM_StateMachine *sm, N6510_PHONE_LIGHTS light, gboolean enable);
 
 void DCT4SetLight(int argc, char *argv[])
 {
 	int			i;
 	N6510_PHONE_LIGHTS 	type;
-	bool			enable;
+	gboolean			enable;
 	GSM_Error error;
 
 	if (strcasecmp(argv[2],"display") == 0) { 	type = N6510_LIGHT_DISPLAY;
@@ -956,8 +956,8 @@ void DCT4SetLight(int argc, char *argv[])
 		Terminate(3);
 	}
 
-	if (strcasecmp(argv[3],"on") == 0) { 		enable = true;
-	} else if (strcasecmp(argv[3],"off") == 0) {	enable = false;
+	if (strcasecmp(argv[3],"on") == 0) { 		enable = TRUE;
+	} else if (strcasecmp(argv[3],"off") == 0) {	enable = FALSE;
 	} else {
 		printf(_("What should I do (\"%s\") ?\n"),argv[3]);
 		Terminate(3);
@@ -965,10 +965,10 @@ void DCT4SetLight(int argc, char *argv[])
 
 	for (i=0;i<gsm->ConfigNum;i++) {
 		free(gsm->Config[i].StartInfo);
-		gsm->Config[i].StartInfo = strdup("false");
+		gsm->Config[i].StartInfo = strdup("FALSE");
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
         CheckDCT4();
 
@@ -1119,7 +1119,7 @@ void DCT4TuneRadio(int argc, char *argv[])
 	GSM_Error error;
  	GSM_FMStation 	FMStation[50],FMStat;
 	int		i, j, num;
-	bool		found;
+	gboolean		found;
 
 	unsigned char Enable[]     = {N6110_FRAME_HEADER, 0x00, 0x00, 0x00};
 	unsigned char Disable[]    = {N6110_FRAME_HEADER, 0x01, 0x0E, 0x00};
@@ -1141,7 +1141,7 @@ void DCT4TuneRadio(int argc, char *argv[])
 //	unsigned char SetMono[]    = {N6110_FRAME_HEADER, 0x19,
 //				      0x09, 0x00, 0x96};
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
         CheckDCT4();
 
@@ -1173,7 +1173,7 @@ void DCT4TuneRadio(int argc, char *argv[])
 
 		error=GSM_WaitFor (gsm, Find2, 10, 0x3E, 4, ID_User3);
 		Print_Error(error);
-		found = false;
+		found = FALSE;
 		for (j=0;j<num;j++) {
 			if (FMStation[j].Frequency > RadioFreq) {
 				diff = FMStation[j].Frequency - RadioFreq;
@@ -1182,7 +1182,7 @@ void DCT4TuneRadio(int argc, char *argv[])
 			}
 			if (diff <= 0.2) {
 				smprintf(gsm, "diff is %f\n",diff);
-				found = true;
+				found = TRUE;
 				break;
 			}
 		}
@@ -1250,7 +1250,7 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 	GSM_Error error;
 //	int i;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
         CheckDCT4();
 
@@ -1294,7 +1294,7 @@ void DCT4MakeCameraShoot(int argc, char *argv[])
 	unsigned char CameraOFF[] = {N6110_FRAME_HEADER, 0x04, 0x01, 0x00};
 	GSM_Error error;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
         CheckDCT4();
 
@@ -1333,7 +1333,7 @@ void DCT4GetScreenDump(int argc, char *argv[])
 	GSM_Error error;
 	//n6110_frameheader 06//screen info
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
         CheckDCT4();
 
@@ -1342,7 +1342,7 @@ void DCT4GetScreenDump(int argc, char *argv[])
 	error=GSM_WaitFor (gsm, req, 6, 0x0E, 4, ID_User3);
 	Print_Error(error);
 	len = 2000;
-	while (len >= 200) GSM_ReadDevice(gsm,true);
+	while (len >= 200) GSM_ReadDevice(gsm,TRUE);
 
 	GSM_Terminate();
 }
@@ -1434,7 +1434,7 @@ void DCT4GetPBKFeatures(int argc, char *argv[])
 	req[4] = NOKIA_GetMemoryType(gsm, MemoryType,N71_65_MEMORY_TYPES);
 	if (req[4]==0xff) Terminate(3);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
         CheckDCT4();
 

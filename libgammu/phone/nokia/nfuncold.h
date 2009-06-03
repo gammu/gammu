@@ -8,7 +8,7 @@
 
 #ifdef DEBUG
 GSM_Error N71_65_ReplyGetNextCalendar2		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error N71_65_GetNextCalendar2		(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, int *LastCalendarYear, int *LastCalendarPos);
+GSM_Error N71_65_GetNextCalendar2		(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start, int *LastCalendarYear, int *LastCalendarPos);
 #endif
 
 #endif

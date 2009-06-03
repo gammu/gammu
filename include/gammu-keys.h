@@ -138,7 +138,7 @@ GSM_Error MakeKeySequence(char *text, GSM_KeyCode * KeyCode, size_t * Length);
  *
  * \ingroup Keys
  */
-GSM_Error GSM_PressKey(GSM_StateMachine * s, GSM_KeyCode Key, bool Press);
+GSM_Error GSM_PressKey(GSM_StateMachine * s, GSM_KeyCode Key, gboolean Press);
 #endif
 
 /* Editor configuration

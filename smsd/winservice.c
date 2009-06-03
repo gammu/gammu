@@ -112,7 +112,7 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 	if (!report_service_status(SERVICE_RUNNING, NO_ERROR, 0))
 		service_print_error("Failed to report state started");
 
-	error = SMSD_MainLoop(config, false);
+	error = SMSD_MainLoop(config, FALSE);
 	if (error != ERR_NONE) {
 		report_service_status(SERVICE_STOPPED, error, 0);
 		SMSD_LogErrno(config, "Failed to start SMSD");
@@ -123,7 +123,7 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 	return;
 }
 
-bool install_smsd_service(SMSD_Parameters * params)
+gboolean install_smsd_service(SMSD_Parameters * params)
 {
 	char config_name[MAX_PATH], program_name[MAX_PATH], commandline[3 * MAX_PATH];
 	char service_display_name[MAX_PATH];
@@ -135,10 +135,10 @@ bool install_smsd_service(SMSD_Parameters * params)
 	strcpy(commandline, "\"");
 
 	if (GetModuleFileName(NULL, program_name, sizeof(program_name)) == 0)
-		return false;
+		return FALSE;
 
 	if (GetFullPathName(params->config_file, sizeof(config_name), config_name, NULL) == 0)
-		return false;
+		return FALSE;
 
 	sprintf(commandline, "\"%s\" -S -c \"%s\" -n \"%s\"",
 		program_name, config_name, smsd_service_name);
@@ -148,7 +148,7 @@ bool install_smsd_service(SMSD_Parameters * params)
 	schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
 
 	if (schSCManager == NULL)
-		return false;
+		return FALSE;
 
 	schService = CreateService(schSCManager,
 				   smsd_service_name,
@@ -165,17 +165,17 @@ bool install_smsd_service(SMSD_Parameters * params)
 				   NULL);	// no password
 
 	if (schService == NULL)
-		return false;
+		return FALSE;
 
 	service_description.lpDescription = description;
 	if (ChangeServiceConfig2(schService, SERVICE_CONFIG_DESCRIPTION, &service_description) == 0)
-		return false;
+		return FALSE;
 
 	CloseServiceHandle(schService);
-	return true;
+	return TRUE;
 }
 
-bool uninstall_smsd_service(void)
+gboolean uninstall_smsd_service(void)
 {
 	HANDLE schSCManager;
 
@@ -184,20 +184,20 @@ bool uninstall_smsd_service(void)
 	schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
 
 	if (schSCManager == NULL)
-		return false;
+		return FALSE;
 	hService =
 	    OpenService(schSCManager, smsd_service_name, SERVICE_ALL_ACCESS);
 	if (hService == NULL)
-		return false;
+		return FALSE;
 	if (DeleteService(hService) == 0)
-		return false;
+		return FALSE;
 	if (CloseServiceHandle(hService) == 0)
-		return false;
+		return FALSE;
 
-	return true;
+	return TRUE;
 }
 
-bool stop_smsd_service(void)
+gboolean stop_smsd_service(void)
 {
 	HANDLE schSCManager;
 
@@ -207,20 +207,20 @@ bool stop_smsd_service(void)
 	schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
 
 	if (schSCManager == NULL)
-		return false;
+		return FALSE;
 	hService =
 	    OpenService(schSCManager, smsd_service_name, SERVICE_ALL_ACCESS);
 	if (hService == NULL)
-		return false;
+		return FALSE;
 	if (ControlService(hService, SERVICE_CONTROL_STOP, &sstatus) == 0)
-		return false;
+		return FALSE;
 	if (CloseServiceHandle(hService) == 0)
-		return false;
+		return FALSE;
 
-	return true;
+	return TRUE;
 }
 
-bool start_smsd_service(void)
+gboolean start_smsd_service(void)
 {
 	HANDLE schSCManager;
 
@@ -229,20 +229,20 @@ bool start_smsd_service(void)
 	schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
 
 	if (schSCManager == NULL)
-		return false;
+		return FALSE;
 	hService =
 	    OpenService(schSCManager, smsd_service_name, SERVICE_ALL_ACCESS);
 	if (hService == NULL)
-		return false;
+		return FALSE;
 	if (StartService(hService, 0, NULL) == 0)
-		return false;
+		return FALSE;
 	if (CloseServiceHandle(hService) == 0)
-		return false;
+		return FALSE;
 
-	return true;
+	return TRUE;
 }
 
-bool start_smsd_service_dispatcher(void)
+gboolean start_smsd_service_dispatcher(void)
 {
 	SERVICE_TABLE_ENTRY DispatchTable[] = {
 		{smsd_service_name, ServiceMain},

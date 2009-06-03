@@ -61,7 +61,7 @@ static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, cons
 		pos=CurrentFrame*352;
 	 	if (pos+352 < size) sz = 352; else sz = size - pos;
 		sprintf(req, "AT^SBNW=\"%s\",%i,%i,%i\r",templ,Location,CurrentFrame+1,MaxFrame);
-		s->Protocol.Data.AT.EditMode = true;
+		s->Protocol.Data.AT.EditMode = TRUE;
 		error = GSM_WaitFor (s, req, strlen(req), 0x00, 3, RequestID);
 		s->Phone.Data.DispatchError=ERR_TIMEOUT;
 		s->Phone.Data.RequestID=RequestID;
@@ -94,7 +94,7 @@ GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 GSM_Error SIEMENS_ReplySetFunction (GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s, const char *function)
 {
 	if (s->Protocol.Data.AT.EditMode) {
-	    s->Protocol.Data.AT.EditMode = false;
+	    s->Protocol.Data.AT.EditMode = FALSE;
 	    return ERR_NONE;
 	}
 	smprintf(s, "Written %s",function);
@@ -159,7 +159,7 @@ GSM_Error SIEMENS_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
 	return ERR_NONE;
 }
 
-GSM_Error SIEMENS_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone UNUSED)
+GSM_Error SIEMENS_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gboolean PhoneRingtone UNUSED)
 {
 	unsigned char req[32];
 
@@ -221,7 +221,7 @@ GSM_Error SIEMENS_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
@@ -311,7 +311,7 @@ GSM_Error SIEMENS_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
 	s->Phone.Data.Cal = Note;
-	error=GSM_EncodeVCALENDAR(req, sizeof(req) ,&size,Note,true,Siemens_VCalendar);
+	error=GSM_EncodeVCALENDAR(req, sizeof(req) ,&size,Note,TRUE,Siemens_VCalendar);
 	if (error != ERR_NONE) return error;
 
 	return SetSiemensFrame (s,req,"vcs",Note->Location,ID_SetCalendarNote,size);
@@ -327,7 +327,7 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
-	error=GSM_EncodeVCALENDAR(req, sizeof(req),&size,Note,true,Siemens_VCalendar);
+	error=GSM_EncodeVCALENDAR(req, sizeof(req),&size,Note,TRUE,Siemens_VCalendar);
 
 	Note->Location		= Priv->FirstFreeCalendarPos;
 	s->Phone.Data.Cal 	= Note;

@@ -6,7 +6,7 @@
 #include <gammu-wap.h>
 #include <gammu-message.h>
 
-void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, size_t *Length, GSM_WAPSettings *settings, bool MMS);
+void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, size_t *Length, GSM_WAPSettings *settings, gboolean MMS);
 
 /* -------------------------------- WAP Bookmark --------------------------- */
 

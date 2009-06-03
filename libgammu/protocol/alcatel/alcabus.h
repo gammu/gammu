@@ -46,8 +46,8 @@ typedef struct {
 	/* What is type of frame we expect next */
 	unsigned char		next_frame;
 	/* State of mobile, if we expect something (generally some ack) we set
-	 * this to true and no other action can be performed until it is false. */
-	bool			busy;
+	 * this to TRUE and no other action can be performed until it is FALSE. */
+	gboolean			busy;
 } GSM_Protocol_ALCABUSData;
 
 #ifndef GSM_USED_SERIALDEVICE

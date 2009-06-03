@@ -208,10 +208,10 @@ static GSM_Error MBUS2_Initialise(GSM_StateMachine *s)
 	error=Device->DeviceSetSpeed(s,9600);
 	if (error!=ERR_NONE) return error;
 
-	error=Device->DeviceSetParity(s,true);
+	error=Device->DeviceSetParity(s,TRUE);
 	if (error!=ERR_NONE) return error;
 
-	error=Device->DeviceSetDtrRts(s,false,true); /*DTR low,RTS high*/
+	error=Device->DeviceSetDtrRts(s,FALSE,TRUE); /*DTR low,RTS high*/
 	if (error!=ERR_NONE) return error;
         usleep(200000);
 

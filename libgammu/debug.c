@@ -19,10 +19,10 @@
 GSM_Debug_Info GSM_none_debug = {
 	0,
 	NULL,
-	false,
+	FALSE,
 	"",
-	false,
-	false,
+	FALSE,
+	FALSE,
     NULL,
     NULL
 	};
@@ -30,10 +30,10 @@ GSM_Debug_Info GSM_none_debug = {
 GSM_Debug_Info GSM_global_debug = {
 	0,
 	NULL,
-	false,
+	FALSE,
 	"",
-	false,
-	false,
+	FALSE,
+	FALSE,
     NULL,
     NULL
 	};
@@ -85,7 +85,7 @@ int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)
 		                        date_time.Hour, date_time.Minute, date_time.Second);
                 dbg_write(d, timestamp);
 			}
-			d->was_lf = false;
+			d->was_lf = FALSE;
 		}
 
 		/* Remember end char */
@@ -100,7 +100,7 @@ int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)
 		if (end != NULL) {
 			/* We had new line */
 			dbg_write(d, "\n");
-			d->was_lf = true;
+			d->was_lf = TRUE;
 
 			/* Restore saved char */
 			*end = save;
@@ -121,9 +121,9 @@ int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)
 	return result;
 }
 
-GSM_Error GSM_SetDebugFileDescriptor(FILE *fd, bool closable, GSM_Debug_Info *privdi)
+GSM_Error GSM_SetDebugFileDescriptor(FILE *fd, gboolean closable, GSM_Debug_Info *privdi)
 {
-	privdi->was_lf = true;
+	privdi->was_lf = TRUE;
 
 	if (privdi->df != NULL
 			&& fileno(privdi->df) != fileno(stderr)
@@ -143,7 +143,7 @@ GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info *privdi)
 	FILE *testfile;
 
 	if (info == NULL || strlen(info) == 0) {
-		return GSM_SetDebugFileDescriptor(NULL, false, privdi);
+		return GSM_SetDebugFileDescriptor(NULL, FALSE, privdi);
 	}
 
 	switch (privdi->dl) {
@@ -171,7 +171,7 @@ GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info *privdi)
 		dbgprintf(privdi, "Can't open debug file\n");
 		return ERR_CANTOPENFILE;
 	} else {
-		return GSM_SetDebugFileDescriptor(testfile, true, privdi);
+		return GSM_SetDebugFileDescriptor(testfile, TRUE, privdi);
 	}
 }
 
@@ -182,30 +182,30 @@ GSM_Error GSM_SetDebugFunction(GSM_Log_Function info, void *data, GSM_Debug_Info
     return ERR_NONE;
 }
 
-bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info *privdi)
+gboolean GSM_SetDebugLevel(const char *info, GSM_Debug_Info *privdi)
 {
-	if (info == NULL)			{privdi->dl = DL_NONE;	 	return true;}
-	if (!strcmp(info,"nothing")) 		{privdi->dl = DL_NONE;	 	return true;}
-	if (!strcmp(info,"text")) 		{privdi->dl = DL_TEXT;	 	return true;}
-	if (!strcmp(info,"textall")) 		{privdi->dl = DL_TEXTALL;    	return true;}
-	if (!strcmp(info,"binary"))  		{privdi->dl = DL_BINARY;     	return true;}
-	if (!strcmp(info,"errors"))  		{privdi->dl = DL_TEXTERROR;  	return true;}
-	if (!strcmp(info,"textdate")) 		{privdi->dl = DL_TEXTDATE;	 	return true;}
-	if (!strcmp(info,"textalldate")) 	{privdi->dl = DL_TEXTALLDATE;    	return true;}
-	if (!strcmp(info,"errorsdate"))  	{privdi->dl = DL_TEXTERRORDATE;  	return true;}
-	return false;
+	if (info == NULL)			{privdi->dl = DL_NONE;	 	return TRUE;}
+	if (!strcmp(info,"nothing")) 		{privdi->dl = DL_NONE;	 	return TRUE;}
+	if (!strcmp(info,"text")) 		{privdi->dl = DL_TEXT;	 	return TRUE;}
+	if (!strcmp(info,"textall")) 		{privdi->dl = DL_TEXTALL;    	return TRUE;}
+	if (!strcmp(info,"binary"))  		{privdi->dl = DL_BINARY;     	return TRUE;}
+	if (!strcmp(info,"errors"))  		{privdi->dl = DL_TEXTERROR;  	return TRUE;}
+	if (!strcmp(info,"textdate")) 		{privdi->dl = DL_TEXTDATE;	 	return TRUE;}
+	if (!strcmp(info,"textalldate")) 	{privdi->dl = DL_TEXTALLDATE;    	return TRUE;}
+	if (!strcmp(info,"errorsdate"))  	{privdi->dl = DL_TEXTERRORDATE;  	return TRUE;}
+	return FALSE;
 }
 
-bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info *privdi)
+gboolean GSM_SetDebugCoding(const char *info, GSM_Debug_Info *privdi)
 {
 	privdi->coding = info;
-	return true;
+	return TRUE;
 }
 
-bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info *privdi)
+gboolean GSM_SetDebugGlobal(gboolean info, GSM_Debug_Info *privdi)
 {
 	privdi->use_global = info;
-	return true;
+	return TRUE;
 }
 
 PRINTF_STYLE(2, 3)

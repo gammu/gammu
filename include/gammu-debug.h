@@ -59,7 +59,7 @@ GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info * privdi);
  *
  * \ingroup Debug
  */
-GSM_Error GSM_SetDebugFileDescriptor(FILE * fd, bool closable,
+GSM_Error GSM_SetDebugFileDescriptor(FILE * fd, gboolean closable,
 				     GSM_Debug_Info * privdi);
 
 /**
@@ -102,7 +102,7 @@ GSM_Debug_Info *GSM_GetDI(GSM_StateMachine * s);
  *
  * \ingroup Debug
  */
-bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info * privdi);
+gboolean GSM_SetDebugLevel(const char *info, GSM_Debug_Info * privdi);
 
 /**
  * Sets debug encoding.
@@ -113,7 +113,7 @@ bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info * privdi);
  *
  * \ingroup Debug
  */
-bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info * privdi);
+gboolean GSM_SetDebugCoding(const char *info, GSM_Debug_Info * privdi);
 
 /**
  * Enables using of global debugging configuration. Makes no effect on
@@ -125,7 +125,7 @@ bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info * privdi);
  *
  * \ingroup Debug
  */
-bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info * privdi);
+gboolean GSM_SetDebugGlobal(gboolean info, GSM_Debug_Info * privdi);
 
 /**
  * Logs error to debug log with additional message.

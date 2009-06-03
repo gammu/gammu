@@ -211,7 +211,7 @@ PyObject *SMSCToPython(GSM_SMSC *smsc) {
     return ret;
 }
 
-int SMSCFromPython(PyObject* dict, GSM_SMSC *smsc, bool complete) {
+int SMSCFromPython(PyObject* dict, GSM_SMSC *smsc, gboolean complete) {
     char    *s;
 
     if (!PyDict_Check(dict)) {
@@ -601,7 +601,7 @@ int SMSFromPython(PyObject *dict, GSM_SMSMessage *sms, int needslocation, int ne
         return 0;
     }
 
-    if (!SMSCFromPython(o, &(sms->SMSC), false)) {
+    if (!SMSCFromPython(o, &(sms->SMSC), FALSE)) {
         return 0;
     }
 
@@ -673,7 +673,7 @@ int SMSFromPython(PyObject *dict, GSM_SMSMessage *sms, int needslocation, int ne
         }
     }
     if ((sms->InboxFolder = GetBoolFromDict(dict, "InboxFolder")) == BOOL_INVALID) {
-        sms->InboxFolder = false;
+        sms->InboxFolder = FALSE;
         PyErr_Clear();
     }
     if ((i = GetIntFromDict(dict, "DeliveryStatus")) == INT_INVALID) {
@@ -684,7 +684,7 @@ int SMSFromPython(PyObject *dict, GSM_SMSMessage *sms, int needslocation, int ne
     }
 
     if ((i = GetIntFromDict(dict, "ReplyViaSameSMSC")) == INT_INVALID) {
-        sms->ReplyViaSameSMSC = false;
+        sms->ReplyViaSameSMSC = FALSE;
         PyErr_Clear();
     } else {
         sms->ReplyViaSameSMSC = i;
@@ -708,7 +708,7 @@ int SMSFromPython(PyObject *dict, GSM_SMSMessage *sms, int needslocation, int ne
         sms->ReplaceMessage = i;
     }
     if ((sms->RejectDuplicates = GetBoolFromDict(dict, "RejectDuplicates")) == BOOL_INVALID) {
-        sms->RejectDuplicates = false;
+        sms->RejectDuplicates = FALSE;
         PyErr_Clear();
     }
 
@@ -1642,7 +1642,7 @@ int SMSPartFromPython(PyObject *dict, GSM_MultiPartSMSEntry *entry) {
             PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate structure");
             return 0;
         }
-        if (!MemoryEntryFromPython(o, entry->Phonebook, false)) {
+        if (!MemoryEntryFromPython(o, entry->Phonebook, FALSE)) {
             return 0;
         }
     }
@@ -1654,7 +1654,7 @@ int SMSPartFromPython(PyObject *dict, GSM_MultiPartSMSEntry *entry) {
             PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate structure");
             return 0;
         }
-        if (!CalendarFromPython(o, entry->Calendar, false)) {
+        if (!CalendarFromPython(o, entry->Calendar, FALSE)) {
             return 0;
         }
     }
@@ -1666,7 +1666,7 @@ int SMSPartFromPython(PyObject *dict, GSM_MultiPartSMSEntry *entry) {
             PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate structure");
             return 0;
         }
-        if (!TodoFromPython(o, entry->ToDo, false)) {
+        if (!TodoFromPython(o, entry->ToDo, FALSE)) {
             return 0;
         }
     }
@@ -1678,7 +1678,7 @@ int SMSPartFromPython(PyObject *dict, GSM_MultiPartSMSEntry *entry) {
             PyErr_SetString(PyExc_MemoryError, "Not enough memory to allocate structure");
             return 0;
         }
-        if (!FileFromPython(o, entry->File, false)) {
+        if (!FileFromPython(o, entry->File, FALSE)) {
             return 0;
         }
     }
@@ -1721,7 +1721,7 @@ int SMSInfoFromPython(PyObject *dict, GSM_MultiPartSMSInfo *entry) {
     entry->Unknown = GetBoolFromDict(dict, "Unknown");
     if (entry->Unknown == BOOL_INVALID) {
         PyErr_Clear();
-        entry->Unknown = false;
+        entry->Unknown = FALSE;
     }
 
     i = GetIntFromDict(dict, "Class");

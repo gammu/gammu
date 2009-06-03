@@ -211,7 +211,7 @@ GSM_DateTime GSM_AddTime (GSM_DateTime DT , GSM_DeltaTime delta)
 	return Date;
 }
 
-void GetTimeDifference(unsigned long diff, GSM_DateTime *DT, bool Plus, int multi)
+void GetTimeDifference(unsigned long diff, GSM_DateTime *DT, gboolean Plus, int multi)
 {
 	time_t t_time;
 
@@ -229,7 +229,7 @@ void GetTimeDifference(unsigned long diff, GSM_DateTime *DT, bool Plus, int mult
 		DT->Day,DT->Month,DT->Year,DT->Hour,DT->Minute,DT->Second);
 }
 
-char *OSDateTime (GSM_DateTime dt, bool TimeZone)
+char *OSDateTime (GSM_DateTime dt, gboolean TimeZone)
 {
 	struct tm 	timeptr;
 	static char 	retval[200],retval2[200];
@@ -314,7 +314,7 @@ char *OSDate (GSM_DateTime dt)
 	return retval2;
 }
 
-bool CheckDate(GSM_DateTime *date)
+gboolean CheckDate(GSM_DateTime *date)
 {
 	const int days[]={31,28,31,30,31,30,31,31,30,31,30,31};
 
@@ -328,7 +328,7 @@ bool CheckDate(GSM_DateTime *date)
 	       date->Day >= 1 && date->Day <= days[date->Month-1];
 }
 
-bool CheckTime(GSM_DateTime *date)
+gboolean CheckTime(GSM_DateTime *date)
 {
 	return date->Hour <= 23 &&
 		date->Minute <= 59 &&
@@ -363,10 +363,10 @@ void FreeLines(GSM_CutLines *lines)
 	lines->allocated = 0;
 }
 
-void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const char *whitespaces, int spaceslen, bool eot)
+void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const char *whitespaces, int spaceslen, gboolean eot)
 {
 	int 	i,number=0,j;
-	bool 	whitespace=true, nowwhite;
+	gboolean 	whitespace=TRUE, nowwhite;
 
 	for (i = 0; i < lines->allocated; i++)
 		lines->numbers[i]=0;
@@ -381,10 +381,10 @@ void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const
 				lines->numbers[j] = 0;
 		}
 
-		nowwhite = false;
+		nowwhite = FALSE;
 		for (j = 0; j < spaceslen; j++) {
 			if (whitespaces[j] == message[i]) {
-				nowwhite = true;
+				nowwhite = TRUE;
 				break;
 			}
 		}
@@ -392,13 +392,13 @@ void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const
 			if (!nowwhite) {
 				lines->numbers[number]=i;
 				number++;
-				whitespace=false;
+				whitespace=FALSE;
 			}
 		} else {
 			if (nowwhite) {
 				lines->numbers[number]=i;
 				number++;
-				whitespace=true;
+				whitespace=TRUE;
 			}
 
 		}
@@ -448,7 +448,7 @@ const char *GetOS(void)
 {
 #ifdef WIN32
 	OSVERSIONINFOEX Ver;
-	bool		Extended = true;
+	gboolean		Extended = TRUE;
 #else
 #  ifdef HAVE_SYS_UTSNAME_H
 	struct utsname	Ver;
@@ -461,7 +461,7 @@ const char *GetOS(void)
 	Ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 
    	if (!GetVersionEx((OSVERSIONINFO *)&Ver)) {
-		Extended 		= false;
+		Extended 		= FALSE;
 	      	Ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	        if (!GetVersionEx((OSVERSIONINFO *)&Ver)) {
 			snprintf(Buffer, sizeof(Buffer) - 1, "Windows");
@@ -598,18 +598,18 @@ const char *GetCompiler(void)
 	return Buffer;
 }
 
-bool GSM_IsNewerVersion(const char *latest_version, const char *current_version)
+gboolean GSM_IsNewerVersion(const char *latest_version, const char *current_version)
 {
 	size_t i;
 	size_t len = strlen(latest_version);
 
 	for (i = 0; i < len ; i++) {
 		if (latest_version[i] > current_version[i]) {
-			return true;
+			return TRUE;
 		}
 	}
 
-	return false;
+	return FALSE;
 }
 
 void StripSpaces(char *buff)

@@ -25,14 +25,14 @@ int main(int argc, char **argv)
 	char vcard_buffer[65536];
 	FILE *f;
 	size_t len;
-	bool generate = false;
+	gboolean generate = FALSE;
 	GSM_Backup backup;
 	int i;
 	GSM_Debug_Info *debug_info;
 
 	/* Configure debugging */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Check parameters */
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 
 	/* Check for generating option */
 	if (argc == 4 && strcmp(argv[3], "generate") == 0) {
-		generate = true;
+		generate = TRUE;
 	}
 
 	/* Open file */
@@ -66,7 +66,7 @@ int main(int argc, char **argv)
 
 	/* Encode vCard back */
 	pos = 0;
-	error = GSM_EncodeVCARD(NULL, vcard_buffer, sizeof(vcard_buffer), &pos, &pbk, true, SonyEricsson_VCard21);
+	error = GSM_EncodeVCARD(NULL, vcard_buffer, sizeof(vcard_buffer), &pos, &pbk, TRUE, SonyEricsson_VCard21);
 	gammu_test_result(error, "GSM_EncodeVCARD");
 
 	/*
@@ -82,7 +82,7 @@ int main(int argc, char **argv)
 		pbk.Location = 0;
 		backup.PhonePhonebook[0] = &pbk;
 		backup.PhonePhonebook[1] = NULL;
-		error = GSM_SaveBackupFile(argv[2], &backup, true);
+		error = GSM_SaveBackupFile(argv[2], &backup, TRUE);
 		gammu_test_result(error, "GSM_SaveBackupFile");
 	}
 
@@ -141,7 +141,7 @@ int main(int argc, char **argv)
 				test_result(mywstrncmp(
 					pbk.Entries[i].Text,
 					backup.PhonePhonebook[0]->Entries[i].Text,
-					0) == true);
+					0) == TRUE);
 				break;
 			case PBK_Photo       :
 				test_result((pbk.Entries[i].Picture.Length ==

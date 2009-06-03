@@ -138,12 +138,12 @@ static GSM_Error N9210_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachi
 #ifdef DEBUG
 	smprintf(s, "SMS message received\n");
 	sms.State 	= SMS_UnRead;
-	sms.InboxFolder = true;
+	sms.InboxFolder = TRUE;
 	DCT3_DecodeSMSFrame(s, &sms,msg.Buffer+5);
 #endif
 	if (Data->EnableIncomingSMS && s->User.IncomingSMS!=NULL) {
 		sms.State 	= SMS_UnRead;
-		sms.InboxFolder = true;
+		sms.InboxFolder = TRUE;
 		DCT3_DecodeSMSFrame(s, &sms,msg.Buffer+5);
 
 		s->User.IncomingSMS(s,sms, s->User.IncomingSMSUserData);
@@ -156,7 +156,7 @@ static GSM_Error N9210_ReplySetIncomingSMS(GSM_Protocol_Message msg, GSM_StateMa
 {
 	switch (msg.Buffer[3]) {
 	case 0x0e:
-		s->Phone.Data.EnableIncomingSMS = true;
+		s->Phone.Data.EnableIncomingSMS = TRUE;
 		smprintf(s, "Incoming SMS enabled\n");
 		return ERR_NONE;
 	case 0x0f:
@@ -172,7 +172,7 @@ static GSM_Error N9210_ReplySetIncomingSMS(GSM_Protocol_Message msg, GSM_StateMa
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N9210_SetIncomingSMS(GSM_StateMachine *s, bool enable)
+static GSM_Error N9210_SetIncomingSMS(GSM_StateMachine *s, gboolean enable)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x0d, 0x00, 0x00, 0x02};
 
@@ -181,14 +181,14 @@ static GSM_Error N9210_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 			smprintf(s, "Enabling incoming SMS\n");
 			return GSM_WaitFor (s, req, 7, 0x02, 4, ID_SetIncomingSMS);
 		} else {
-			s->Phone.Data.EnableIncomingSMS = false;
+			s->Phone.Data.EnableIncomingSMS = FALSE;
 			smprintf(s, "Disabling incoming SMS\n");
 		}
 	}
 	return ERR_NONE;
 }
 #else
-static GSM_Error N9210_SetIncomingSMS(GSM_StateMachine *s UNUSED, bool enable UNUSED)
+static GSM_Error N9210_SetIncomingSMS(GSM_StateMachine *s UNUSED, gboolean enable UNUSED)
 {
 	return ERR_SOURCENOTAVAILABLE;
 }
@@ -197,17 +197,17 @@ static GSM_Error N9210_SetIncomingSMS(GSM_StateMachine *s UNUSED, bool enable UN
 static GSM_Error N9210_Initialise (GSM_StateMachine *s)
 {
 #ifdef DEBUG
-	DCT3_SetIncomingCB(s,true);
+	DCT3_SetIncomingCB(s,TRUE);
 
 #ifdef GSM_ENABLE_N71_92INCOMINGINFO
-	N9210_SetIncomingSMS(s,true);
+	N9210_SetIncomingSMS(s,TRUE);
 #endif
 
 #endif
 	return ERR_NONE;
 }
 
-GSM_Error N9210_AnswerCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error N9210_AnswerCall(GSM_StateMachine *s, int ID, gboolean all)
 {
 	if (!all) return DCT3DCT4_AnswerCall(s,ID);
 	return DCT3_AnswerAllCalls(s);

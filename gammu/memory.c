@@ -18,7 +18,7 @@
 void GetAllMemory(int argc UNUSED, char *argv[])
 {
 	GSM_MemoryEntry		Entry;
-	bool			start = true;
+	gboolean			start = TRUE;
 	GSM_Error error;
 
 	signal(SIGINT, interrupt);
@@ -32,7 +32,7 @@ void GetAllMemory(int argc UNUSED, char *argv[])
 		exit (-1);
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	while (!gshutdown) {
 		error = GSM_GetNextMemory(gsm, &Entry, start);
@@ -43,7 +43,7 @@ void GetAllMemory(int argc UNUSED, char *argv[])
 		error = PrintMemoryEntry(&Entry, gsm);
 		GSM_FreeMemoryEntry(&Entry);
 		Print_Error(error);
- 		start = false;
+ 		start = FALSE;
 	}
 
  	if (ringtones_info.Ringtone) free(ringtones_info.Ringtone);
@@ -55,7 +55,7 @@ void GetMemory(int argc, char *argv[])
 {
 	int			j, start, stop, emptynum = 0, fillednum = 0;
 	GSM_MemoryEntry		entry;
-	bool			empty = true;
+	gboolean			empty = TRUE;
 	double version;
 	GSM_Error error;
 
@@ -70,14 +70,14 @@ void GetMemory(int argc, char *argv[])
 
 	if (argc > 5 && strcmp(argv[5],"")) {
 		if (strcasecmp(argv[5],"-nonempty") == 0) {
-			empty = false;
+			empty = FALSE;
 		} else {
 			printf_err(_("Unknown parameter (\"%s\")\n"),argv[5]);
 			exit (-1);
 		}
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (strcmp(GSM_GetModelInfo(gsm)->model, "3310") == 0) {
 		error = GSM_GetFirmware(gsm, NULL, NULL, &version);
@@ -140,7 +140,7 @@ void DeleteMemory(int argc, char *argv[])
 
 	GetStartStop(&start, &stop, 3, argc, argv);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	for (j=start;j<=stop;j++) {
 		printf(LISTFORMAT "%i\n", _("Location"), j);
@@ -174,7 +174,7 @@ void DeleteAllMemory(int argc, char *argv[])
 		exit (-1);
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	error = GSM_DeleteAllMemory(gsm, MemoryType);
 
@@ -267,7 +267,7 @@ void SearchOneMemory(GSM_MemoryType MemoryType, const char *Title, const unsigne
 
 	if (GSM_GetMemoryStatus(gsm, &Status) == ERR_NONE) {
 		fprintf(stderr,"%c%s: %i%%", 13, Title, (i+1)*100/(Status.MemoryUsed+1));
-		error = GSM_GetNextMemory(gsm, &Entry, true);
+		error = GSM_GetNextMemory(gsm, &Entry, TRUE);
 		if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
 			while (i < Status.MemoryUsed) {
 				if (error == ERR_EMPTY) break;
@@ -277,7 +277,7 @@ void SearchOneMemory(GSM_MemoryType MemoryType, const char *Title, const unsigne
 				if (gshutdown) return;
 				i++;
 				fprintf(stderr,"\r%s: %i%%", Title, (i+1)*100/(Status.MemoryUsed+1));
-				error = GSM_GetNextMemory(gsm, &Entry, false);
+				error = GSM_GetNextMemory(gsm, &Entry, FALSE);
 			}
 		} else {
 			while (i < Status.MemoryUsed) {
@@ -312,7 +312,7 @@ void SearchMemory(int argc UNUSED, char *argv[])
 	}
 	EncodeUnicode(Text, argv[2], Length);
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (!gshutdown) SearchOneMemory(MEM_ME, "Phone phonebook", 	Text);
 	if (!gshutdown) SearchOneMemory(MEM_SM, "SIM phonebook", 	Text);
@@ -330,7 +330,7 @@ void SearchMemory(int argc UNUSED, char *argv[])
 void ListMemoryCategoryEntries(int Category)
 {
 	GSM_MemoryEntry		Entry;
-	bool			start = true;
+	gboolean			start = TRUE;
 	int			j;
 	GSM_Error error;
 
@@ -349,7 +349,7 @@ void ListMemoryCategoryEntries(int Category)
 			}
 		}
 		GSM_FreeMemoryEntry(&Entry);
- 		start = false;
+ 		start = FALSE;
 	}
 }
 
@@ -362,9 +362,9 @@ void ListMemoryCategory(int argc UNUSED, char *argv[])
 
 	unsigned char		Text[(GSM_MAX_CATEGORY_NAME_LENGTH+1)*2];
 	int			Length;
-	bool			Number = true;;
+	gboolean			Number = TRUE;;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
@@ -372,7 +372,7 @@ void ListMemoryCategory(int argc UNUSED, char *argv[])
 	Length = strlen(argv[2]);
 	for (j = 0; j < Length; j++) {
 		if (!isdigit((int)argv[2][j])) {
-			Number = false;
+			Number = FALSE;
 			break;
 		}
 	}

@@ -67,9 +67,9 @@ public:
 
 	// gnapplet specific
 	Device *current_device;
-	bool irda_support;
-	bool bt_support;
-	bool tcp_support;
+	gboolean irda_support;
+	gboolean bt_support;
+	gboolean tcp_support;
 	int bt_rfchannel;
 	TUint16 tcp_port;
 	int init_timeout;

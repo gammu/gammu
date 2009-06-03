@@ -86,7 +86,7 @@ GSM_Error DCT4_GetProductCode(GSM_StateMachine *s, char *value)
 	return NOKIA_GetPhoneString(s,"\x00\x03\x04\x0b\x00\x02",6,0x1b,value,ID_GetProductCode,10);
 }
 
-GSM_Error DCT4_Reset(GSM_StateMachine *s, bool hard)
+GSM_Error DCT4_Reset(GSM_StateMachine *s, gboolean hard)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x05,
 			       0x80,		/* 0x80 - reset, 0x00 - off */
@@ -100,8 +100,8 @@ GSM_Error DCT4_Reset(GSM_StateMachine *s, bool hard)
 /* 	error = DCT4_SetPhoneMode(s, DCT4_MODE_NORMAL); */
 /* 	if (error != ERR_NONE) return error; */
 
-	s->Phone.Data.EnableIncomingSMS = false;
-	s->Phone.Data.EnableIncomingCB  = false;
+	s->Phone.Data.EnableIncomingSMS = FALSE;
+	s->Phone.Data.EnableIncomingCB  = FALSE;
 
 	return GSM_WaitFor (s, req, 6, 0x15, 2, ID_Reset);
 }

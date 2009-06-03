@@ -21,7 +21,7 @@ static GSM_Error N3320_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 	if (msg.Buffer[6] == 0x0f)
 		return N71_65_ReplyGetMemoryError(msg.Buffer[10], s);
 
-	return N71_65_DecodePhonebook(s, s->Phone.Data.Memory, s->Phone.Data.Bitmap, s->Phone.Data.SpeedDial, msg.Buffer+22, msg.Length-22,true);
+	return N71_65_DecodePhonebook(s, s->Phone.Data.Memory, s->Phone.Data.Bitmap, s->Phone.Data.SpeedDial, msg.Buffer+22, msg.Length-22,TRUE);
 }
 
 static GSM_Error N3320_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
@@ -84,7 +84,7 @@ static GSM_Error N3320_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachi
 {
 	smprintf(s, "Date & time received\n");
 	if (msg.Buffer[4]==0x01) {
-		NOKIA_DecodeDateTime(s, msg.Buffer+10, s->Phone.Data.DateTime, true, false);
+		NOKIA_DecodeDateTime(s, msg.Buffer+10, s->Phone.Data.DateTime, TRUE, FALSE);
 		return ERR_NONE;
 	}
 	smprintf(s, "Not set in phone\n");
@@ -100,7 +100,7 @@ static GSM_Error N3320_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 	return GSM_WaitFor (s, req, 6, 0x19, 4, ID_GetDateTime);
 }
 
-static GSM_Error N3320_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, bool start)
+static GSM_Error N3320_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, gboolean start)
 {
 	return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N3320.LastCalendar,&s->Phone.Data.Priv.N3320.LastCalendarYear,&s->Phone.Data.Priv.N3320.LastCalendarPos);
 }

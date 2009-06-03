@@ -7,12 +7,12 @@
 
 typedef struct {
 	GSM_Protocol_Message 	Msg;
-	bool 			wascrlf;
+	gboolean 			wascrlf;
 	int			LineStart,LineEnd;
 	int			SpecialAnswerLines,SpecialAnswerStart;
 
-	bool			EditMode;	/* wait for modem answer or not */
-	bool			FastWrite;
+	gboolean			EditMode;	/* wait for modem answer or not */
+	gboolean			FastWrite;
 } GSM_Protocol_ATData;
 
 #ifndef GSM_USED_SERIALDEVICE

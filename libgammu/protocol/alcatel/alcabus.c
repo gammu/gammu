@@ -34,12 +34,12 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 			buffer[4] 	= 0x00;
 			size 		= 5;
 			d->next_frame 	= ALCATEL_CONNECT_ACK;
-			d->busy 	= true;
+			d->busy 	= TRUE;
 			break;
 		case ALCATEL_DISCONNECT:
 			size 		= 2;
 			d->next_frame 	= ALCATEL_DISCONNECT_ACK;
-			d->busy 	= true;
+			d->busy 	= TRUE;
 			break;
 		case ALCATEL_DATA:
 			buffer[2] = d->out_counter;
@@ -53,7 +53,7 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 			memcpy(buffer+5, data, len);
 			size 		= 5 + len;
 			d->next_frame 	= ALCATEL_ACK;
-			d->busy 	= true;
+			d->busy 	= TRUE;
 			break;
 		case ALCATEL_ACK:
 			buffer[2] = d->in_counter;
@@ -85,7 +85,7 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 	if (type == ALCATEL_CONNECT || type == ALCATEL_DISCONNECT) {
 		/* For connect and disconnect we need a bit larger delay */
 		while (d->busy) {
-			GSM_ReadDevice(s,true);
+			GSM_ReadDevice(s,TRUE);
 			usleep(1000);
 			i++;
 			if (i == 10) return ERR_TIMEOUT;
@@ -200,7 +200,7 @@ static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char
 			}
 			if (d->Msg.Type != ALCATEL_CONTROL) {
 				d->next_frame 	= ALCATEL_DATA;
-				d->busy 	= false;
+				d->busy 	= FALSE;
 			}
 			/* Reset message length */
 			d->Msg.Length = 0;
@@ -226,7 +226,7 @@ static GSM_Error ALCABUS_Initialise(GSM_StateMachine *s)
 	d->Msg.Type		= 0;
 	d->in_counter		= 1;
 	d->out_counter		= 0;
-	d->busy			= false;
+	d->busy			= FALSE;
 
 	/* Initialise protocol */
 	smprintf(s, "Initializing binary mode\n");

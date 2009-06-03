@@ -304,15 +304,15 @@ int VersionToInt(const char *Buffer)
 static void CheckVersion(int argc, char *argv[])
 {
 	GSM_File RSS;
-	bool checkstable = true;
-	bool checktest = true;
+	gboolean checkstable = TRUE;
+	gboolean checktest = TRUE;
 	const char *pos;
 	char new_version[20];
 	size_t i;
 
 	if (argc >= 3) {
 		if (strcasecmp(argv[2], "stable") == 0) {
-			checktest = false;
+			checktest = FALSE;
 		}
 	}
 
@@ -401,7 +401,7 @@ static void RunBatch(int argc, char *argv[])
 	ssize_t pos;
 	int j, c = 0, argsc;
 	char *argsv[20];
-	bool origbatch;
+	gboolean origbatch;
 	char *name;
 	char std_name[] = N_("standard input");
 
@@ -420,7 +420,7 @@ static void RunBatch(int argc, char *argv[])
 
 	argsv[0] = argv[0];
 	origbatch = batch;
-	batch = true;
+	batch = TRUE;
 	while (!feof(bf)) {
 		ln[0] = 0;
 		if (fgets(ln, sizeof(ln) - 2, bf) == NULL) {
@@ -476,7 +476,7 @@ static void RunBatch(int argc, char *argv[])
 	}
 	if (!origbatch) {
 		/* only close the batch if we are not in a nested batch */
-		batch = false;
+		batch = FALSE;
 		if (batchConn) {
 			GSM_Terminate();
 		}
@@ -807,7 +807,7 @@ void HelpGeneral(void)
 void HelpSplit(int cols, int len, const char *buff)
 {
 	int l, len2, pos, split;
-	bool in_opt, first = true;
+	gboolean in_opt, first = TRUE;
 	const char *remain;
 	char spaces[50], buffer[500];
 
@@ -828,15 +828,15 @@ void HelpSplit(int cols, int len, const char *buff)
 			while (strlen(remain) > 0) {
 				split = 0;
 				pos = 0;
-				in_opt = false;
+				in_opt = FALSE;
 				if (!first)
 					printf("%s", spaces);
 				while (pos < cols - len && remain[pos] != 0) {
 					if (in_opt && remain[pos] == ']') {
-						in_opt = false;
+						in_opt = FALSE;
 						split = pos;
 					} else if (remain[pos] == '[') {
-						in_opt = true;
+						in_opt = TRUE;
 					} else if (!in_opt
 						   && remain[pos] == ' ') {
 						split = pos - 1;
@@ -848,7 +848,7 @@ void HelpSplit(int cols, int len, const char *buff)
 					printf("%s\n", remain);
 					remain += strlen(remain);
 				} else {
-					first = false;
+					first = FALSE;
 					split++;
 					strncpy(buffer, remain, split);
 					buffer[split] = 0;
@@ -865,7 +865,7 @@ void HelpSplit(int cols, int len, const char *buff)
 void Help(int argc, char *argv[])
 {
 	int i = 0, j = 0, k, cols;
-	bool disp;
+	gboolean disp;
 
 #ifdef TIOCGWINSZ
 	struct winsize w;
@@ -930,20 +930,20 @@ void Help(int argc, char *argv[])
 
 	while (Parameters[j].Function != NULL) {
 		k = 0;
-		disp = false;
+		disp = FALSE;
 		if (!strcmp(argv[1], "all")) {
 			if (j == 0)
-				disp = true;
+				disp = TRUE;
 			if (j != 0) {
 				if (strcmp
 				    (Parameters[j].help,
 				     Parameters[j - 1].help)) {
-					disp = true;
+					disp = TRUE;
 				} else {
 					if (strcmp
 					    (Parameters[j].parameter,
 					     Parameters[j - 1].parameter)) {
-						disp = true;
+						disp = TRUE;
 					}
 				}
 			}
@@ -951,7 +951,7 @@ void Help(int argc, char *argv[])
 			while (Parameters[j].help_cat[k] != 0) {
 				if (Parameters[j].help_cat[k] ==
 				    HelpDescriptions[i].category) {
-					disp = true;
+					disp = TRUE;
 					break;
 				}
 				k++;
@@ -974,7 +974,7 @@ void Help(int argc, char *argv[])
 int ProcessParameters(int start, int argc, char *argv[])
 {
 	int z = 0;
-	bool count_failed = false;
+	gboolean count_failed = FALSE;
 
 	/* Check parameters */
 	while (Parameters[z].Function != NULL) {
@@ -1003,7 +1003,7 @@ int ProcessParameters(int start, int argc, char *argv[])
 					printf("%s\n",
 					       gettext(Parameters[z].help));
 				}
-				count_failed = true;
+				count_failed = TRUE;
 			} else if (argc - 2 - start > Parameters[z].max_arg) {
 				if (!count_failed) {
 					if (Parameters[z].min_arg ==
@@ -1024,7 +1024,7 @@ int ProcessParameters(int start, int argc, char *argv[])
 					printf("%s\n",
 					       gettext(Parameters[z].help));
 				}
-				count_failed = true;
+				count_failed = TRUE;
 			} else {
 				Parameters[z].Function(argc - start,
 						       argv + start);
@@ -1056,9 +1056,9 @@ int main(int argc, char *argv[])
 	GSM_Debug_Info *di;
 	GSM_Error error;
 
-	bool help = false;
-	bool debug_level_set = false;
-	bool debug_file_set = false;
+	gboolean help = FALSE;
+	gboolean debug_level_set = FALSE;
+	gboolean debug_file_set = FALSE;
 	const char *config_file = NULL;
 	int only_config = -1;
 
@@ -1069,7 +1069,7 @@ int main(int argc, char *argv[])
 		if (strcasecmp(argv[i], "--help") == 0 ||
 		    strcasecmp(argv[i], "-h") == 0 ||
 		    strcasecmp(argv[i], "help") == 0) {
-			help = true;
+			help = TRUE;
 			start++;
 		} else if ((strcasecmp(argv[i], "--config") == 0 ||
 		    strcasecmp(argv[i], "-c") == 0) &&
@@ -1087,9 +1087,9 @@ int main(int argc, char *argv[])
 		    strcasecmp(argv[i], "-d") == 0) &&
 		    i + 1 < argc) {
 			i++;
-			GSM_SetDebugFileDescriptor(stderr, false, di);
+			GSM_SetDebugFileDescriptor(stderr, FALSE, di);
 			GSM_SetDebugLevel(argv[i], di);
-			debug_level_set = true;
+			debug_level_set = TRUE;
 			start += 2;
 		} else if ((strcasecmp(argv[i], "--debug-file") == 0 ||
 		    strcasecmp(argv[i], "-f") == 0) &&
@@ -1097,7 +1097,7 @@ int main(int argc, char *argv[])
 			i++;
 			error = GSM_SetDebugFile(argv[i], di);
 			Print_Error(error);
-			debug_file_set = true;
+			debug_file_set = TRUE;
 			start += 2;
 		} else if (isdigit((int)argv[i][0])) {
 			/* Compatibilitty: config file section */
@@ -1109,7 +1109,7 @@ int main(int argc, char *argv[])
 		} else if (GSM_SetDebugLevel(argv[i], di)) {
 			/* Compatibility: debug level */
 			start++;
-			debug_level_set = true;
+			debug_level_set = TRUE;
 		} else {
 			break;
 		}
@@ -1124,7 +1124,7 @@ int main(int argc, char *argv[])
 			printf_warn("%s\n", _("No configuration file found!"));
 		}
 	}
-	locales_path = INI_GetValue(cfg, "gammu", "gammuloc", false);
+	locales_path = INI_GetValue(cfg, "gammu", "gammuloc", FALSE);
 	GSM_InitLocales(locales_path);
 #ifdef GETTEXTLIBS_FOUND
 	if (locales_path != NULL) {
@@ -1150,11 +1150,11 @@ int main(int argc, char *argv[])
 		GSM_SetDebugLevel("textall", di);
 	}
 	if (!debug_file_set) {
-		GSM_SetDebugFileDescriptor(stdout, false, di);
+		GSM_SetDebugFileDescriptor(stdout, FALSE, di);
 	}
 #endif
 
-	cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
+	cp = INI_GetValue(cfg, "gammu", "gammucoding", FALSE);
 	if (cp) {
 		GSM_SetDebugCoding(cp, di);
 	}
@@ -1201,7 +1201,7 @@ int main(int argc, char *argv[])
 		GSM_SetConfigNum(gsm, GSM_GetConfigNum(gsm) + 1);
 
 		/* We want to use only one file descriptor for global and state machine debug output */
-		smcfg->UseGlobalDebugFile = true;
+		smcfg->UseGlobalDebugFile = TRUE;
 
 		/* It makes no sense to open several debug logs... */
 		if (i == 0) {
@@ -1219,11 +1219,11 @@ int main(int argc, char *argv[])
 		}
 
 		if (i == 0) {
-			rss = INI_GetValue(cfg, "gammu", "rsslevel", false);
+			rss = INI_GetValue(cfg, "gammu", "rsslevel", FALSE);
 			if (rss) {
 				printf_warn("Configuration option rsslevel is ignored, use '%s' instead\n", "gammu checkversion");
 			}
-			rss = INI_GetValue(cfg, "gammu", "usephonedb", false);
+			rss = INI_GetValue(cfg, "gammu", "usephonedb", FALSE);
 			if (rss) {
 				printf_warn("Configuration option usephonedb is ignored, use '%s' instead\n", "gammu checkfirmware");
 			}

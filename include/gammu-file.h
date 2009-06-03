@@ -69,7 +69,7 @@ typedef struct {
 	/**
 	 * True, when folder
 	 */
-	bool Folder;
+	gboolean Folder;
 	/**
 	 * How much file is nested on filesystem.
 	 */
@@ -93,24 +93,24 @@ typedef struct {
 	/**
 	 * Whether modification date is empty.
 	 */
-	bool ModifiedEmpty;
+	gboolean ModifiedEmpty;
 
 	/**
 	 * Protected file attribute.
 	 */
-	bool Protected;
+	gboolean Protected;
 	/**
 	 * Read only file attribute.
 	 */
-	bool ReadOnly;
+	gboolean ReadOnly;
 	/**
 	 * Hidden file attribute.
 	 */
-	bool Hidden;
+	gboolean Hidden;
 	/**
 	 * System file attribute.
 	 */
-	bool System;
+	gboolean System;
 } GSM_File;
 
 /**
@@ -156,7 +156,7 @@ void GSM_IdentifyFileFormat(GSM_File * File);
  *
  * \param s State machine pointer.
  * \param File File structure where path will be stored, if start is
- * false, it should contain data from previous reading (at least ID).
+ * FALSE, it should contain data from previous reading (at least ID).
  * \param start Whether we're starting transfer.
  *
  * \return Error code.
@@ -164,13 +164,13 @@ void GSM_IdentifyFileFormat(GSM_File * File);
  * \ingroup File
  */
 GSM_Error GSM_GetNextFileFolder(GSM_StateMachine * s, GSM_File * File,
-				bool start);
+				gboolean start);
 /**
  * Gets listing of folder.
  *
  * \param s State machine pointer.
  * \param File File structure where path will be stored, if start is
- * false, it should contain data from previous reading (at least ID). On
+ * FALSE, it should contain data from previous reading (at least ID). On
  * start it should contain path to directory.
  * \param start Whether we're starting transfer.
  *
@@ -179,7 +179,7 @@ GSM_Error GSM_GetNextFileFolder(GSM_StateMachine * s, GSM_File * File,
  * \ingroup File
  */
 GSM_Error GSM_GetFolderListing(GSM_StateMachine * s, GSM_File * File,
-			       bool start);
+			       gboolean start);
 /**
  * Gets next root folder.
  *

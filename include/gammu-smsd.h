@@ -123,7 +123,7 @@ GSM_Error SMSD_Shutdown(GSM_SMSDConfig * Config);
  * \ingroup SMSD
  */
 GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig * Config,
-			  bool uselog);
+			  gboolean uselog);
 
 /**
  * Main SMS daemon loop. It connects to phone, scans for messages and
@@ -139,7 +139,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig * Config,
  *
  * \ingroup SMSD
  */
-GSM_Error SMSD_MainLoop(GSM_SMSDConfig * Config, bool exit_on_failure);
+GSM_Error SMSD_MainLoop(GSM_SMSDConfig * Config, gboolean exit_on_failure);
 
 /**
  * Creates new SMSD configuration.

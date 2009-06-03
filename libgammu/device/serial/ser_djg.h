@@ -11,7 +11,7 @@ typedef struct {
 	int 		hPhone;
 	int 		Speed;
 	unsigned int 	Control;
-	bool		Parity;
+	gboolean		Parity;
 } GSM_Device_SerialData;
 
 /* Defines for Com Port Paramaters, the second paramater to SVAsyncSet() */

@@ -31,7 +31,7 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			Terminate(3);
 		}
-		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], false));
+		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.Calendar[i]!=NULL) {
@@ -44,7 +44,7 @@ void SaveFile(int argc, char *argv[])
 			Terminate(3);
 		}
 		j = 0;
-		error = GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer), &j, Backup.Calendar[i],true,Nokia_VCalendar);
+		error = GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer), &j, Backup.Calendar[i],TRUE,Nokia_VCalendar);
 		GSM_FreeBackup(&Backup);
 		Print_Error(error);
 	} else if (strcasecmp(argv[2],"BOOKMARK") == 0) {
@@ -52,7 +52,7 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			Terminate(3);
 		}
-		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], false));
+		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.WAPBookmark[i]!=NULL) {
@@ -73,7 +73,7 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			Terminate(3);
 		}
-		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], false));
+		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.Note[i]!=NULL) {
@@ -94,7 +94,7 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			Terminate(3);
 		}
-		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], false));
+		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.ToDo[i]!=NULL) {
@@ -107,7 +107,7 @@ void SaveFile(int argc, char *argv[])
 			Terminate(3);
 		}
 		j = 0;
-		error = GSM_EncodeVTODO(Buffer, sizeof(Buffer), &j, Backup.ToDo[i], true, Nokia_VToDo);
+		error = GSM_EncodeVTODO(Buffer, sizeof(Buffer), &j, Backup.ToDo[i], TRUE, Nokia_VToDo);
 		GSM_FreeBackup(&Backup);
 		Print_Error(error);
 	} else if (strcasecmp(argv[2],"VCARD10") == 0 || strcasecmp(argv[2],"VCARD21") == 0) {
@@ -115,7 +115,7 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location and memory type?"));
 			Terminate(3);
 		}
-		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], false));
+		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		if (strcasecmp(argv[5],"SM") == 0) {
@@ -147,11 +147,11 @@ void SaveFile(int argc, char *argv[])
 		}
 		j = 0;
 		if (strcasecmp(argv[2],"VCARD10") == 0) {
-			error = GSM_EncodeVCARD(GSM_GetDebug(gsm), Buffer, sizeof(Buffer), &j, pbk, true, Nokia_VCard10);
+			error = GSM_EncodeVCARD(GSM_GetDebug(gsm), Buffer, sizeof(Buffer), &j, pbk, TRUE, Nokia_VCard10);
 			GSM_FreeBackup(&Backup);
 			Print_Error(error);
 		} else {
-			error = GSM_EncodeVCARD(GSM_GetDebug(gsm), Buffer, sizeof(Buffer), &j, pbk, true, Nokia_VCard21);
+			error = GSM_EncodeVCARD(GSM_GetDebug(gsm), Buffer, sizeof(Buffer), &j, pbk, TRUE, Nokia_VCard21);
 			GSM_FreeBackup(&Backup);
 			Print_Error(error);
 		}
@@ -193,14 +193,14 @@ void DoBackup(int argc, char *argv[])
 	GSM_Backup_Info		Info;
  	GSM_FMStation		FMStation;
  	GSM_GPRSAccessPoint	GPRSPoint;
-	bool			DoBackupPart;
-	bool			UseNext = false;
+	gboolean			DoBackupPart;
+	gboolean			UseNext = FALSE;
 	char buffer[GSM_MAX_INFO_LENGTH];
 
-	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
+	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = TRUE;
 
 	GSM_ClearBackup(&Backup);
-	GSM_GetBackupFormatFeatures(GSM_GuessBackupFormat(argv[2], false),&Info);
+	GSM_GetBackupFormatFeatures(GSM_GuessBackupFormat(argv[2], FALSE),&Info);
 
 	sprintf(Backup.Creator,"Gammu %s",VERSION);
 	if (strlen(GetOS()) != 0) {
@@ -215,14 +215,14 @@ void DoBackup(int argc, char *argv[])
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (Info.UseUnicode) {
 		Info.UseUnicode=answer_yes(_("Use Unicode subformat of backup file?"));
 	}
 	if (Info.DateTime) {
 		GSM_GetCurrentDateTime (&Backup.DateTime);
-		Backup.DateTimeAvailable=true;
+		Backup.DateTimeAvailable=TRUE;
 	}
 	if (Info.Model) {
 		error=GSM_GetManufacturer(gsm, Backup.Model);
@@ -249,29 +249,29 @@ void DoBackup(int argc, char *argv[])
 	}
 	printf("\n");
 
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.PhonePhonebook) {
 		printf("%s\n", _("Checking phone phonebook"));
 		MemStatus.MemoryType = MEM_ME;
 		Pbk.MemoryType  = MEM_ME;
 		Pbk.Location = 0;
-		UseNext = false;
+		UseNext = FALSE;
 		error = GSM_GetMemoryStatus(gsm, &MemStatus);
 		if (error == ERR_NONE) {
 			if (MemStatus.MemoryUsed != 0) {
-				DoBackupPart = true;
+				DoBackupPart = TRUE;
 			}
 		} else {
-			UseNext = true;
-			error = GSM_GetNextMemory(gsm, &Pbk, true);
+			UseNext = TRUE;
+			error = GSM_GetNextMemory(gsm, &Pbk, TRUE);
 			if (error == ERR_NONE) {
-				DoBackupPart = true;
+				DoBackupPart = TRUE;
 			}
 
 		}
 		if (DoBackupPart) {
-			if (answer_yes("   %s", _("Backup phone phonebook?"))) DoBackupPart = true;
-			else DoBackupPart = false;
+			if (answer_yes("   %s", _("Backup phone phonebook?"))) DoBackupPart = TRUE;
+			else DoBackupPart = FALSE;
 		}
 	}
 	if (DoBackupPart) {
@@ -292,7 +292,7 @@ void DoBackup(int argc, char *argv[])
 				}
 				*Backup.PhonePhonebook[used]=Pbk;
 				used++;
-				error = GSM_GetNextMemory(gsm, &Pbk, false);
+				error = GSM_GetNextMemory(gsm, &Pbk, FALSE);
 				fprintf(stderr, "*");
 				if (gshutdown) {
 					GSM_Terminate();
@@ -336,13 +336,13 @@ void DoBackup(int argc, char *argv[])
 			fprintf(stderr, "\n");
 		}
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.SIMPhonebook) {
 		printf("%s\n", _("Checking SIM phonebook"));
 		MemStatus.MemoryType = MEM_SM;
 		error=GSM_GetMemoryStatus(gsm, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
-			if (answer_yes("   %s", _("Backup SIM phonebook?"))) DoBackupPart=true;
+			if (answer_yes("   %s", _("Backup SIM phonebook?"))) DoBackupPart=TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -379,13 +379,13 @@ void DoBackup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.Calendar) {
 		printf("%s\n", _("Checking phone calendar"));
 		Calendar.Location = 0;
-		error=GSM_GetNextCalendar(gsm,&Calendar,true);
+		error=GSM_GetNextCalendar(gsm,&Calendar,TRUE);
 		if (error==ERR_NONE) {
-			if (answer_yes("   %s", _("Backup phone calendar notes?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone calendar notes?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -404,7 +404,7 @@ void DoBackup(int argc, char *argv[])
 			}
 			*Backup.Calendar[used]=Calendar;
 			used ++;
-			error=GSM_GetNextCalendar(gsm,&Calendar,false);
+			error=GSM_GetNextCalendar(gsm,&Calendar,FALSE);
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -414,18 +414,18 @@ void DoBackup(int argc, char *argv[])
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.ToDo) {
 		printf("%s\n", _("Checking phone todos"));
 		error=GSM_GetToDoStatus(gsm,&ToDoStatus);
 		if (error == ERR_NONE && ToDoStatus.Used != 0) {
-			if (answer_yes("   %s", _("Backup phone todos?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone todos?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
 		used = 0;
 		ToDo.Location = 0;
-		error=GSM_GetNextToDo(gsm,&ToDo,true);
+		error=GSM_GetNextToDo(gsm,&ToDo,TRUE);
 		while (error == ERR_NONE) {
 			if (used < GSM_MAXCALENDARTODONOTES) {
 				Backup.ToDo[used] = malloc(sizeof(GSM_ToDoEntry));
@@ -439,7 +439,7 @@ void DoBackup(int argc, char *argv[])
 			}
 			*Backup.ToDo[used]=ToDo;
 			used ++;
-			error=GSM_GetNextToDo(gsm,&ToDo,false);
+			error=GSM_GetNextToDo(gsm,&ToDo,FALSE);
 			fprintf(stderr, "\r   ");
 			fprintf(stderr, "%s ", _("Reading:"));
 			fprintf(stderr, _("%i percent"),
@@ -451,13 +451,13 @@ void DoBackup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.Note) {
 		printf("%s\n", _("Checking phone notes"));
 		Note.Location = 0;
-		error=GSM_GetNextNote(gsm,&Note,true);
+		error=GSM_GetNextNote(gsm,&Note,TRUE);
 		if (error==ERR_NONE) {
-			if (answer_yes("   %s", _("Backup phone notes?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone notes?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -476,7 +476,7 @@ void DoBackup(int argc, char *argv[])
 			}
 			*Backup.Note[used]=Note;
 			used ++;
-			error=GSM_GetNextNote(gsm,&Note,false);
+			error=GSM_GetNextNote(gsm,&Note,FALSE);
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -486,14 +486,14 @@ void DoBackup(int argc, char *argv[])
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.CallerLogos) {
 		printf("%s\n", _("Checking phone caller logos"));
 		Bitmap.Type 	= GSM_CallerGroupLogo;
 		Bitmap.Location = 1;
 		error=GSM_GetBitmap(gsm,&Bitmap);
 		if (error == ERR_NONE) {
-			if (answer_yes("   %s", _("Backup phone caller groups and logos?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone caller groups and logos?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -524,15 +524,15 @@ void DoBackup(int argc, char *argv[])
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.SMSC) {
 		printf("%s\n", _("Checking SIM SMS profiles"));
-		if (answer_yes("   %s", _("Backup SIM SMS profiles?"))) DoBackupPart = true;
+		if (answer_yes("   %s", _("Backup SIM SMS profiles?"))) DoBackupPart = TRUE;
 	}
 	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
-		while (true) {
+		while (TRUE) {
 			SMSC.Location = used + 1;
 			error = GSM_GetSMSC(gsm,&SMSC);
 			if (error != ERR_NONE) break;
@@ -553,13 +553,13 @@ void DoBackup(int argc, char *argv[])
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.StartupLogo) {
 		printf("%s\n", _("Checking phone startup text"));
 		Bitmap.Type = GSM_WelcomeNote_Text;
 		error = GSM_GetBitmap(gsm,&Bitmap);
 		if (error == ERR_NONE) {
-			if (answer_yes("   %s", _("Backup phone startup logo/text?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone startup logo/text?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -572,14 +572,14 @@ void DoBackup(int argc, char *argv[])
 			if (error == ERR_NONE) *Backup.StartupLogo = Bitmap;
 		}
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.OperatorLogo) {
 		printf("%s\n", _("Checking phone operator logo"));
 		Bitmap.Type = GSM_OperatorLogo;
 		error=GSM_GetBitmap(gsm,&Bitmap);
 		if (error == ERR_NONE) {
 			if (strcmp(Bitmap.NetworkCode,"000 00")!=0) {
-				if (answer_yes("   %s", _("Backup phone operator logo?"))) DoBackupPart = true;
+				if (answer_yes("   %s", _("Backup phone operator logo?"))) DoBackupPart = TRUE;
 			}
 		}
 	}
@@ -588,13 +588,13 @@ void DoBackup(int argc, char *argv[])
 	        if (Backup.OperatorLogo == NULL) Print_Error(ERR_MOREMEMORY);
 		*Backup.OperatorLogo = Bitmap;
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.WAPBookmark) {
 		printf("%s\n", _("Checking phone WAP bookmarks"));
 		Bookmark.Location = 1;
 		error=GSM_GetWAPBookmark(gsm,&Bookmark);
 		if (error==ERR_NONE) {
-			if (answer_yes("   %s", _("Backup phone WAP bookmarks?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone WAP bookmarks?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -625,13 +625,13 @@ void DoBackup(int argc, char *argv[])
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.WAPSettings) {
 		printf("%s\n", _("Checking phone WAP settings"));
 		Settings.Location = 1;
 		error=GSM_GetWAPSettings(gsm,&Settings);
 		if (error==ERR_NONE) {
-			if (answer_yes("   %s", _("Backup phone WAP settings?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone WAP settings?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -662,13 +662,13 @@ void DoBackup(int argc, char *argv[])
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.MMSSettings) {
 		printf("%s\n", _("Checking phone MMS settings"));
 		Settings.Location = 1;
 		error=GSM_GetMMSSettings(gsm,&Settings);
 		if (error==ERR_NONE) {
-			if (answer_yes("   %s", _("Backup phone MMS settings?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone MMS settings?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -699,13 +699,13 @@ void DoBackup(int argc, char *argv[])
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.ChatSettings) {
 		printf("%s\n", _("Checking phone Chat settings"));
 		Chat.Location = 1;
 		error=GSM_GetChatSettings(gsm,&Chat);
 		if (error==ERR_NONE) {
-			if (answer_yes("   %s", _("Backup phone Chat settings?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone Chat settings?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -736,13 +736,13 @@ void DoBackup(int argc, char *argv[])
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.SyncMLSettings) {
 		printf("%s\n", _("Checking phone SyncML settings"));
 		SyncML.Location = 1;
 		error=GSM_GetSyncMLSettings(gsm,&SyncML);
 		if (error==ERR_NONE) {
-			if (answer_yes("   %s", _("Backup phone SyncML settings?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone SyncML settings?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -772,14 +772,14 @@ void DoBackup(int argc, char *argv[])
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.Ringtone) {
 		printf("%s\n", _("Checking phone user ringtones"));
 		Ringtone.Location 	= 1;
 		Ringtone.Format		= 0;
-		error=GSM_GetRingtone(gsm,&Ringtone,false);
+		error=GSM_GetRingtone(gsm,&Ringtone,FALSE);
 		if (error==ERR_EMPTY || error == ERR_NONE) {
-			if (answer_yes("   %s", _("Backup phone user ringtones?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone user ringtones?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -805,7 +805,7 @@ void DoBackup(int argc, char *argv[])
 			i++;
 			Ringtone.Location = i;
 			Ringtone.Format	  = 0;
-			error=GSM_GetRingtone(gsm,&Ringtone,false);
+			error=GSM_GetRingtone(gsm,&Ringtone,FALSE);
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -815,19 +815,19 @@ void DoBackup(int argc, char *argv[])
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
 	if (Info.Profiles) {
 		printf("%s\n", _("Checking phone profiles"));
 		Profile.Location = 1;
 		error = GSM_GetProfile(gsm,&Profile);
 	        if (error == ERR_NONE) {
-			if (answer_yes("   %s", _("Backup phone profiles?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone profiles?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
-		while (true) {
+		while (TRUE) {
 			Profile.Location = used + 1;
 			error = GSM_GetProfile(gsm,&Profile);
 			if (error != ERR_NONE) break;
@@ -848,13 +848,13 @@ void DoBackup(int argc, char *argv[])
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
  	if (Info.FMStation) {
 		printf("%s\n", _("Checking phone FM radio stations"));
  		FMStation.Location = 1;
  		error = GSM_GetFMStation(gsm,&FMStation);
  	        if (error == ERR_NONE || error == ERR_EMPTY) {
- 			if (answer_yes("   %s", _("Backup phone FM radio stations?"))) DoBackupPart=true;
+ 			if (answer_yes("   %s", _("Backup phone FM radio stations?"))) DoBackupPart=TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -885,13 +885,13 @@ void DoBackup(int argc, char *argv[])
  		fprintf(stderr, "\n");
 		fflush(stderr);
  	}
-	DoBackupPart = false;
+	DoBackupPart = FALSE;
  	if (Info.GPRSPoint) {
 		printf("%s\n", _("Checking phone GPRS access points"));
  		GPRSPoint.Location = 1;
  		error = GSM_GetGPRSAccessPoint(gsm,&GPRSPoint);
  	        if (error == ERR_NONE || error == ERR_EMPTY) {
- 			if (answer_yes("   %s", _("Backup phone GPRS access points?"))) DoBackupPart = true;
+ 			if (answer_yes("   %s", _("Backup phone GPRS access points?"))) DoBackupPart = TRUE;
 		}
 	}
 	if (DoBackupPart) {
@@ -948,21 +948,21 @@ void Restore(int argc, char *argv[])
 	GSM_GPRSAccessPoint	GPRSPoint;
 	GSM_WAPBookmark		Bookmark;
 	int			i, j, used, max = 0;
-	bool			Past = true, First;
-	bool			Found, DoRestore;
+	gboolean			Past = TRUE, First;
+	gboolean			Found, DoRestore;
 
-	error = GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], false));
+	error = GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], FALSE));
 	Print_Error(error);
 
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
-	if (Backup.DateTimeAvailable) 	fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"),OSDateTime(Backup.DateTime,false));
+	if (Backup.DateTimeAvailable) 	fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"),OSDateTime(Backup.DateTime,FALSE));
 	if (Backup.Model[0]!=0) 	fprintf(stderr, LISTFORMAT "%s\n", _("Phone"),Backup.Model);
 	if (Backup.IMEI[0]!=0) 		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"),Backup.IMEI);
 	if (Backup.Creator[0]!=0) 	fprintf(stderr, LISTFORMAT "%s\n", _("File created by"),Backup.Creator);
 
-	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
+	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = TRUE;
 
 	if (Backup.MD5Calculated[0]!=0) {
 		if (strcmp(Backup.MD5Original,Backup.MD5Calculated)) {
@@ -970,17 +970,17 @@ void Restore(int argc, char *argv[])
 		}
 	}
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	printf("%s\n", _("Please note that restoring data will cause existing data in phone to be deleted."));
 
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.CallerLogos[0] != NULL) {
 		Bitmap.Type 	= GSM_CallerGroupLogo;
 		Bitmap.Location = 1;
 		error=GSM_GetBitmap(gsm,&Bitmap);
 		if (error == ERR_NONE) {
-			if (answer_yes(_("Restore phone caller groups and logos?"))) DoRestore = true;
+			if (answer_yes(_("Restore phone caller groups and logos?"))) DoRestore = TRUE;
 		}
 	}
 	if (DoRestore) {
@@ -1001,7 +1001,7 @@ void Restore(int argc, char *argv[])
 		fprintf(stderr, "\n");
 	}
 
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.PhonePhonebook[0] != NULL) {
 		MemStatus.MemoryType = MEM_ME;
 		error=GSM_GetMemoryStatus(gsm, &MemStatus);
@@ -1009,7 +1009,7 @@ void Restore(int argc, char *argv[])
 			max = 0;
 			while (Backup.PhonePhonebook[max]!=NULL) max++;
 			fprintf(stderr, _("%i entries in backup file\n"),max);
-			if (answer_yes(_("Restore phone phonebook?"))) DoRestore = true;
+			if (answer_yes(_("Restore phone phonebook?"))) DoRestore = TRUE;
 		}
 	}
 	if (DoRestore) {
@@ -1033,14 +1033,14 @@ void Restore(int argc, char *argv[])
 					exit (-1);
 				}
 				if (Pbk.EntriesNum != 0 && error==ERR_NONE) {
-					First = true;
+					First = TRUE;
 					for (j=0;j<Pbk.EntriesNum;j++) {
 			 			if (Pbk.Entries[j].AddError == ERR_NONE) continue;
 						if (First) {
 							printf("\r");
 							printf(_("Location %d"), Pbk.Location);
 							printf("%20s\n    ", " ");
-							First = false;
+							First = FALSE;
 						}
 						PrintMemorySubEntry(&Pbk.Entries[j], gsm);
 						printf("    %s\n", GSM_ErrorString(Pbk.Entries[j].AddError));
@@ -1066,7 +1066,7 @@ void Restore(int argc, char *argv[])
 		fprintf(stderr, "\n");
 	}
 
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.SIMPhonebook[0] != NULL) {
 		MemStatus.MemoryType = MEM_SM;
 		error=GSM_GetMemoryStatus(gsm, &MemStatus);
@@ -1074,7 +1074,7 @@ void Restore(int argc, char *argv[])
 			max = 0;
 			while (Backup.SIMPhonebook[max]!=NULL) max++;
 			fprintf(stderr, _("%i entries in backup file\n"),max);
-			if (answer_yes(_("Restore SIM phonebook?"))) DoRestore = true;
+			if (answer_yes(_("Restore SIM phonebook?"))) DoRestore = TRUE;
 		}
 	}
 	if (DoRestore) {
@@ -1089,14 +1089,14 @@ void Restore(int argc, char *argv[])
 				if (Pbk.EntriesNum != 0) {
 					error=GSM_SetMemory(gsm, &Pbk);
 					if (error==ERR_NONE) {
-						First = true;
+						First = TRUE;
 						for (j=0;j<Pbk.EntriesNum;j++) {
 					 		if (Pbk.Entries[j].AddError == ERR_NONE) continue;
 							if (First) {
 								printf("\r");
 								printf(_("Location %d"), Pbk.Location);
 								printf("%20s\n    ", " ");
-								First = false;
+								First = FALSE;
 							}
 							PrintMemorySubEntry(&Pbk.Entries[j], gsm);
 							printf("    %s\n",GSM_ErrorString(Pbk.Entries[j].AddError));
@@ -1126,18 +1126,18 @@ void Restore(int argc, char *argv[])
 			Print_Error(error);
 		}
 	}
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.Calendar[0] != NULL) {
 		Calendar.Location = 0;
 		/* N6110 doesn't support getting calendar status */
-		error = GSM_GetNextCalendar(gsm,&Calendar,true);
+		error = GSM_GetNextCalendar(gsm,&Calendar,TRUE);
 		if (error == ERR_NONE || error == ERR_INVALIDLOCATION || error == ERR_EMPTY) {
 			max = 0;
 			while (Backup.Calendar[max] != NULL) max++;
 			fprintf(stderr, _("%i entries in backup file\n"),max);
 			if (answer_yes(_("Restore phone calendar notes?"))) {
 				Past    = answer_yes("   %s", _("Restore notes from the past?"));
-				DoRestore = true;
+				DoRestore = TRUE;
 			}
 		}
 	}
@@ -1146,7 +1146,7 @@ void Restore(int argc, char *argv[])
 		error = GSM_DeleteAllCalendar(gsm);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
  			while (1) {
-				error = GSM_GetNextCalendar(gsm,&Calendar,true);
+				error = GSM_GetNextCalendar(gsm,&Calendar,TRUE);
 				if (error != ERR_NONE) break;
 				error = GSM_DeleteCalendar(gsm,&Calendar);
  				Print_Error(error);
@@ -1176,7 +1176,7 @@ void Restore(int argc, char *argv[])
 		fprintf(stderr, "\n");
 	}
 
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.ToDo[0] != NULL) {
 		error = GSM_GetToDoStatus(gsm,&ToDoStatus);
 		if (error == ERR_NONE) {
@@ -1184,7 +1184,7 @@ void Restore(int argc, char *argv[])
 			while (Backup.ToDo[max]!=NULL) max++;
 			fprintf(stderr, _("%i entries in backup file\n"),max);
 
-			if (answer_yes(_("Restore phone todo?"))) DoRestore = true;
+			if (answer_yes(_("Restore phone todo?"))) DoRestore = TRUE;
 		}
 	}
 	if (DoRestore) {
@@ -1196,7 +1196,7 @@ void Restore(int argc, char *argv[])
 		error=GSM_DeleteAllToDo(gsm);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
 			while (1) {
-				error = GSM_GetNextToDo(gsm,&ToDo,true);
+				error = GSM_GetNextToDo(gsm,&ToDo,TRUE);
 				if (error != ERR_NONE) break;
 				error = GSM_DeleteToDo(gsm,&ToDo);
  				Print_Error(error);
@@ -1226,13 +1226,13 @@ void Restore(int argc, char *argv[])
 	} else if (DoRestore) {
 		/* At first delete entries, that were deleted */
 		used  = 0;
-		error = GSM_GetNextToDo(gsm,&ToDo,true);
+		error = GSM_GetNextToDo(gsm,&ToDo,TRUE);
 		while (error == ERR_NONE) {
 			used++;
-			Found = false;
+			Found = FALSE;
 			for (i=0;i<max;i++) {
 				if (Backup.ToDo[i]->Location == ToDo.Location) {
-					Found = true;
+					Found = TRUE;
 					break;
 				}
 			}
@@ -1240,7 +1240,7 @@ void Restore(int argc, char *argv[])
 				error=GSM_DeleteToDo(gsm,&ToDo);
 				Print_Error(error);
 			}
-			error = GSM_GetNextToDo(gsm,&ToDo,false);
+			error = GSM_GetNextToDo(gsm,&ToDo,FALSE);
 			fprintf(stderr, "\r");
 			fprintf(stderr, "%s ", _("Writing:"));
 			fprintf(stderr, _("%i percent"),
@@ -1269,7 +1269,7 @@ void Restore(int argc, char *argv[])
 		fprintf(stderr, "\n");
  	}
 
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.Note[0] != NULL) {
 		error = GSM_GetNotesStatus(gsm,&ToDoStatus);
 		if (error == ERR_NONE) {
@@ -1277,13 +1277,13 @@ void Restore(int argc, char *argv[])
 			while (Backup.Note[max]!=NULL) max++;
 			fprintf(stderr, _("%i entries in backup file\n"),max);
 
-			if (answer_yes(_("Restore phone notes?"))) DoRestore = true;
+			if (answer_yes(_("Restore phone notes?"))) DoRestore = TRUE;
 		}
 	}
 	if (DoRestore) {
 		fprintf(stderr, "%s ", _("Deleting old notes:"));
 		while (1) {
-			error = GSM_GetNextNote(gsm,&Note,true);
+			error = GSM_GetNextNote(gsm,&Note,TRUE);
 			if (error != ERR_NONE) break;
 			error = GSM_DeleteNote(gsm,&Note);
  			Print_Error(error);
@@ -1333,12 +1333,12 @@ void Restore(int argc, char *argv[])
 		error=GSM_SetBitmap(gsm,Backup.OperatorLogo);
 		Print_Error(error);
 	}
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.WAPBookmark[0] != NULL) {
 		Bookmark.Location = 1;
 		error = GSM_GetWAPBookmark(gsm,&Bookmark);
 		if (error == ERR_NONE || error == ERR_INVALIDLOCATION) {
-			if (answer_yes(_("Restore phone WAP bookmarks?"))) DoRestore = true;
+			if (answer_yes(_("Restore phone WAP bookmarks?"))) DoRestore = TRUE;
 		}
 	}
 	if (DoRestore) {
@@ -1374,12 +1374,12 @@ void Restore(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.WAPSettings[0] != NULL) {
 		Settings.Location = 1;
 		error = GSM_GetWAPSettings(gsm,&Settings);
 		if (error == ERR_NONE) {
-			if (answer_yes(_("Restore phone WAP settings?"))) DoRestore = true;
+			if (answer_yes(_("Restore phone WAP settings?"))) DoRestore = TRUE;
 		}
 	}
 	if (DoRestore) {
@@ -1399,12 +1399,12 @@ void Restore(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.MMSSettings[0] != NULL) {
 		Settings.Location = 1;
 		error = GSM_GetMMSSettings(gsm,&Settings);
 		if (error == ERR_NONE) {
-			if (answer_yes(_("Restore phone MMS settings?"))) DoRestore = true;
+			if (answer_yes(_("Restore phone MMS settings?"))) DoRestore = TRUE;
 		}
 	}
 	if (DoRestore) {
@@ -1424,13 +1424,13 @@ void Restore(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.Ringtone[0] != NULL) {
 		Ringtone.Location 	= 1;
 		Ringtone.Format		= 0;
-		error = GSM_GetRingtone(gsm,&Ringtone,false);
+		error = GSM_GetRingtone(gsm,&Ringtone,FALSE);
 		if (error == ERR_NONE || error ==ERR_EMPTY) {
-			if (answer_yes(_("Delete all phone user ringtones?"))) DoRestore = true;
+			if (answer_yes(_("Delete all phone user ringtones?"))) DoRestore = TRUE;
 		}
 	}
 	if (DoRestore) {
@@ -1438,8 +1438,8 @@ void Restore(int argc, char *argv[])
 		error=GSM_DeleteUserRingtones(gsm);
 		Print_Error(error);
 		fprintf(stderr, "%s\n", _("Done"));
-		DoRestore = false;
-		if (answer_yes(_("Restore user ringtones?"))) DoRestore = true;
+		DoRestore = FALSE;
+		if (answer_yes(_("Restore user ringtones?"))) DoRestore = TRUE;
 	}
 	if (DoRestore) {
 		max = 0;
@@ -1460,12 +1460,12 @@ void Restore(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.Profiles[0] != NULL) {
 		Profile.Location = 1;
 		error = GSM_GetProfile(gsm,&Profile);
 		if (error == ERR_NONE) {
-			if (answer_yes(_("Restore phone profiles?"))) DoRestore = true;
+			if (answer_yes(_("Restore phone profiles?"))) DoRestore = TRUE;
 		}
 	}
 	if (DoRestore) {
@@ -1483,12 +1483,12 @@ void Restore(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.FMStation[0] != NULL) {
 		FMStation.Location = 1;
 		error = GSM_GetFMStation(gsm,&FMStation);
 		if (error == ERR_NONE || error == ERR_EMPTY) {
-			if (answer_yes(_("Restore phone FM radio stations?"))) DoRestore = true;
+			if (answer_yes(_("Restore phone FM radio stations?"))) DoRestore = TRUE;
 		}
 	}
 	if (DoRestore) {
@@ -1513,12 +1513,12 @@ void Restore(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoRestore = false;
+	DoRestore = FALSE;
 	if (Backup.GPRSPoint[0] != NULL) {
 		GPRSPoint.Location = 1;
 		error = GSM_GetGPRSAccessPoint(gsm,&GPRSPoint);
 		if (error == ERR_NONE || error == ERR_EMPTY) {
-			if (answer_yes(_("Restore phone GPRS Points?"))) DoRestore = true;
+			if (answer_yes(_("Restore phone GPRS Points?"))) DoRestore = TRUE;
 		}
 	}
 	if (DoRestore) {
@@ -1556,19 +1556,19 @@ void AddNew(int argc, char *argv[])
 	GSM_WAPBookmark		Bookmark;
 	int			i, max;
 
-	error=GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], false));
+	error=GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], FALSE));
 	if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
-	if (Backup.DateTimeAvailable) 	fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"),OSDateTime(Backup.DateTime,false));
+	if (Backup.DateTimeAvailable) 	fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"),OSDateTime(Backup.DateTime,FALSE));
 	if (Backup.Model[0]!=0) 	fprintf(stderr, LISTFORMAT "%s\n", _("Phone"),Backup.Model);
 	if (Backup.IMEI[0]!=0) 		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"),Backup.IMEI);
 
-	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
+	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = TRUE;
 
-	GSM_Init(true);
+	GSM_Init(TRUE);
 
 	if (Backup.PhonePhonebook[0] != NULL) {
 		MemStatus.MemoryType = MEM_ME;
@@ -1636,7 +1636,7 @@ void AddNew(int argc, char *argv[])
 		}
 	}
 	if (Backup.Calendar[0] != NULL) {
-		error = GSM_GetNextCalendar(gsm,&Calendar,true);
+		error = GSM_GetNextCalendar(gsm,&Calendar,TRUE);
 		if (error == ERR_NONE || error == ERR_INVALIDLOCATION || error == ERR_EMPTY) {
 			if (answer_yes(_("Add phone calendar notes?"))) {
 				max = 0;

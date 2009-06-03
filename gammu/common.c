@@ -16,16 +16,16 @@
 GSM_StateMachine *gsm = NULL;
 INI_Section *cfg = NULL;
 
-bool always_answer_yes = false;
-bool always_answer_no = false;
-volatile bool gshutdown = false;
-bool batch = false;
-bool batchConn = false;
+gboolean always_answer_yes = FALSE;
+gboolean always_answer_no = FALSE;
+volatile gboolean gshutdown = FALSE;
+gboolean batch = FALSE;
+gboolean batchConn = FALSE;
 
 void interrupt(int sign)
 {
 	signal(sign, SIG_IGN);
-	gshutdown = true;
+	gshutdown = TRUE;
 }
 
 void PrintSecurityStatus(void)
@@ -172,7 +172,7 @@ void Cleanup(void)
 
 	/* Close debug output if opened */
 	di = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(NULL, false, di);
+	GSM_SetDebugFileDescriptor(NULL, FALSE, di);
 
 #ifdef CURL_FOUND
 	/* Free CURL memory */
@@ -223,14 +223,14 @@ size_t write_mem(void *ptr, size_t size, size_t nmemb, void *data) {
  *
  * \returns True on success.
  */
-bool GSM_ReadHTTPFile(const char *url, GSM_File *file)
+gboolean GSM_ReadHTTPFile(const char *url, GSM_File *file)
 {
 #ifdef CURL_FOUND
 	CURL *dl_handle = NULL;
 	CURLcode result;
 
 	dl_handle = curl_easy_init();
-	if (dl_handle == NULL) return false;
+	if (dl_handle == NULL) return FALSE;
 
 	curl_easy_setopt(dl_handle, CURLOPT_URL, url);
 	curl_easy_setopt(dl_handle, CURLOPT_USERAGENT, "Gammu/" VERSION);
@@ -247,9 +247,9 @@ bool GSM_ReadHTTPFile(const char *url, GSM_File *file)
 
 	curl_easy_cleanup(dl_handle);
 
-	return (result == 0) ? true : false;
+	return (result == 0) ? TRUE : FALSE;
 #else
-	return false;
+	return FALSE;
 #endif
 }
 
@@ -258,7 +258,7 @@ bool GSM_ReadHTTPFile(const char *url, GSM_File *file)
  *
  * \param checkerror Whether we should check for error.
  */
-void GSM_Init(bool checkerror)
+void GSM_Init(gboolean checkerror)
 {
 	GSM_Error error;
 
@@ -274,7 +274,7 @@ void GSM_Init(bool checkerror)
 	/* Check for batch mode */
 	if (batch) {
 		if (error == ERR_NONE) {
-			batchConn = true;
+			batchConn = TRUE;
 		}
 	}
 }
@@ -324,7 +324,7 @@ void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 }
 
 PRINTF_STYLE(1, 2)
-bool answer_yes(const char *format, ...)
+gboolean answer_yes(const char *format, ...)
 {
 	int len;
 	char ans[99];
@@ -341,36 +341,36 @@ bool answer_yes(const char *format, ...)
 			_("ALL"), _("ONLY"), _("NONE"));
 		if (always_answer_yes) {
 			fprintf(stderr, "%s\n", _("YES (always)"));
-			return true;
+			return TRUE;
 		}
 		if (always_answer_no) {
 			fprintf(stderr, "%s\n", _("NO (always)"));
-			return false;
+			return FALSE;
 		}
 		len = GetLine(stdin, ans, 99);
 		if (len == -1)
 			Terminate(3);
 		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (!strcmp(ans, _("NONE"))) {
-			always_answer_no = true;
-			return false;
+			always_answer_no = TRUE;
+			return FALSE;
 		}
 		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (!strcmp(ans, _("ONLY"))) {
-			always_answer_no = true;
-			return true;
+			always_answer_no = TRUE;
+			return TRUE;
 		}
 		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (!strcmp(ans, _("ALL"))) {
-			always_answer_yes = true;
-			return true;
+			always_answer_yes = TRUE;
+			return TRUE;
 		}
 		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (strcasecmp(ans, _("yes")) == 0)
-			return true;
+			return TRUE;
 		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (strcasecmp(ans, _("no")) == 0)
-			return false;
+			return FALSE;
 	}
 }
 

@@ -37,7 +37,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di, GSM_MultiSMSMessage       *SMS
 				GSM_Coding_Type	 	Coding,
 				char		    	*Buffer,
 				size_t		     	BufferLen,
-				bool		    	UDH,
+				gboolean		    	UDH,
 				size_t		     	*UsedText,
 				size_t		     	*CopiedText,
 				size_t		     	*CopiedSMSText);

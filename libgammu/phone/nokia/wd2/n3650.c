@@ -76,7 +76,7 @@ static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Han
 		StartReq[9]--;
 
 		EncodeUnicode(File->Name,File->ID_FullName+StartReq[8]+1,StartReq[9]);
-		File->Folder = false;
+		File->Folder = FALSE;
 
 		error = DCT4_SetPhoneMode(s, DCT4_MODE_TEST);
 		if (error != ERR_NONE) return error;
@@ -117,9 +117,9 @@ static GSM_Error N3650_ReplyGetFolderInfo(GSM_Protocol_Message msg, GSM_StateMac
 	Priv->FileEntries	  = msg.Buffer[5];
 	Priv->FilesLocationsUsed += msg.Buffer[5];
 	for (i=0;i<msg.Buffer[5];i++) {
-		Priv->Files[Priv->FilesLocationsCurrent+i]->Folder = true;
+		Priv->Files[Priv->FilesLocationsCurrent+i]->Folder = TRUE;
 		if (msg.Buffer[pos+2] == 0x01) {
-			Priv->Files[Priv->FilesLocationsCurrent+i]->Folder = false;
+			Priv->Files[Priv->FilesLocationsCurrent+i]->Folder = FALSE;
 			smprintf(s,"File ");
 		}
 		EncodeUnicode(Priv->Files[Priv->FilesLocationsCurrent+i]->Name,msg.Buffer+pos+9,msg.Buffer[pos+8]);
@@ -154,7 +154,7 @@ static GSM_Error N3650_GetFolderInfo(GSM_StateMachine *s, GSM_File *File)
 	return GSM_WaitFor (s, req, len, 0x58, 4, ID_GetFile);
 }
 
-static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
+static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolean start)
 {
 	GSM_Error		error;
 	GSM_Phone_N3650Data	*Priv = &s->Phone.Data.Priv.N3650;
@@ -163,7 +163,7 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bo
 		error = DCT4_SetPhoneMode(s, DCT4_MODE_LOCAL);
 		if (error != ERR_NONE) return error;
 
-		Priv->Files[0]->Folder		= true;
+		Priv->Files[0]->Folder		= TRUE;
 		Priv->Files[0]->Level		= 1;
 		Priv->Files[0]->Name[0]		= 0;
 		Priv->Files[0]->Name[1]		= 0;
@@ -171,7 +171,7 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bo
 		Priv->Files[0]->ID_FullName[1]	= ':';
 		Priv->Files[0]->ID_FullName[2]	= 0;
 
-		Priv->Files[1]->Folder		= true;
+		Priv->Files[1]->Folder		= TRUE;
 		Priv->Files[1]->Level		= 1;
 		Priv->Files[1]->Name[0]		= 0;
 		Priv->Files[1]->Name[1]		= 0;
@@ -179,7 +179,7 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bo
 		Priv->Files[1]->ID_FullName[1]	= ':';
 		Priv->Files[1]->ID_FullName[2]	= 0;
 
-		Priv->Files[2]->Folder		= true;
+		Priv->Files[2]->Folder		= TRUE;
 		Priv->Files[2]->Level		= 1;
 		Priv->Files[2]->Name[0]		= 0;
 		Priv->Files[2]->Name[1]		= 0;
@@ -225,10 +225,10 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bo
 		}
 	}
 
-	File->ReadOnly  = false;
-	File->System    = false;
-	File->Protected = false;
-	File->Hidden    = false;
+	File->ReadOnly  = FALSE;
+	File->System    = FALSE;
+	File->Protected = FALSE;
+	File->Hidden    = FALSE;
 
 	return N3650_GetFolderInfo(s, File);
 }

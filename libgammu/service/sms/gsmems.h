@@ -10,7 +10,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				    GSM_MultiSMSMessage 	*SMS,
 				    GSM_UDH			UDHType);
 
-bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
+gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			       GSM_MultiPartSMSInfo 		*Info,
 			       GSM_MultiSMSMessage 		*SMS);
 

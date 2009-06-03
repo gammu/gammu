@@ -111,7 +111,7 @@ time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, dbi_result res, const char *fiel
 	}
 }
 
-bool SMSDDBI_GetBool(GSM_SMSDConfig * Config, dbi_result res, const char *field)
+gboolean SMSDDBI_GetBool(GSM_SMSDConfig * Config, dbi_result res, const char *field)
 {
 	unsigned int type;
 	const char *value;
@@ -123,33 +123,33 @@ bool SMSDDBI_GetBool(GSM_SMSDConfig * Config, dbi_result res, const char *field)
 		case DBI_TYPE_INTEGER:
 		case DBI_TYPE_DECIMAL:
 			num = SMSDDBI_GetNumber(Config, res, field);
-			SMSD_Log(-1, Config, "Got bool as %d (Field = %s, type = %d)", num, field, type);
+			SMSD_Log(-1, Config, "Got gboolean as %d (Field = %s, type = %d)", num, field, type);
 			if (num == -1) {
 				return -1;
 			} else if (num == 0) {
-				return false;
+				return FALSE;
 			} else {
-				return true;
+				return TRUE;
 			}
 		case DBI_TYPE_STRING:
 			value= dbi_result_get_string(res, field);
-			SMSD_Log(-1, Config, "Got bool as %s (Field = %s, type = %d)", value, field, type);
-			if (strcasecmp(value, "yes") == 0 || strcasecmp(value, "true") == 0 ||
+			SMSD_Log(-1, Config, "Got gboolean as %s (Field = %s, type = %d)", value, field, type);
+			if (strcasecmp(value, "yes") == 0 || strcasecmp(value, "TRUE") == 0 ||
 					strcasecmp(value, "y") == 0 || strcasecmp(value, "t") == 0) {
-				return true;
+				return TRUE;
 			}
-			if (strcasecmp(value, "no") == 0 || strcasecmp(value, "false") == 0 ||
+			if (strcasecmp(value, "no") == 0 || strcasecmp(value, "FALSE") == 0 ||
 					strcasecmp(value, "n") == 0 || strcasecmp(value, "f") == 0) {
-				return true;
+				return TRUE;
 			}
 			if (strcasecmp(value, "default") == 0) {
 				return -1;
 			}
-			SMSD_Log(-1, Config, "DBI error: 9999 Failed to process bool %s (Field = %s, type = %d)", value, field, type);
+			SMSD_Log(-1, Config, "DBI error: 9999 Failed to process gboolean %s (Field = %s, type = %d)", value, field, type);
 			return -1;
 		case DBI_TYPE_ERROR:
 		default:
-			SMSD_Log(-1, Config, "Wrong bool field type! (Field = %s, type = %d)", field, type);
+			SMSD_Log(-1, Config, "Wrong gboolean field type! (Field = %s, type = %d)", field, type);
 			return -1;
 	}
 }
@@ -476,7 +476,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 	char smstext[3 *  GSM_MAX_SMS_LENGTH + 1];
 	int i;
 	time_t t_time1, t_time2;
-	bool found;
+	gboolean found;
 	long diff;
 	unsigned long long	new_id;
 	size_t			locations_size = 0, locations_pos = 0;
@@ -505,7 +505,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 				return ERR_UNKNOWN;
 			}
 
-			found = false;
+			found = FALSE;
 			while (dbi_result_next_row(Res)) {
 				smsc = dbi_result_get_string(Res, "SMSCNumber");
 				state = dbi_result_get_string(Res, "Status");
@@ -524,7 +524,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					diff = t_time2 - t_time1;
 
 					if (diff > -Config->deliveryreportdelay && diff < Config->deliveryreportdelay) {
-						found = true;
+						found = TRUE;
 						break;
 					} else {
 						SMSD_Log(1, Config, "Delivery report would match, but time delta is too big (%ld), consider increasing DeliveryReportDelay", diff);
@@ -724,7 +724,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 	char buf[400];
 	dbi_result Res;
 	int i;
-	bool found = false;
+	gboolean found = FALSE;
 	time_t timestamp;
 	const char *coding;
 	const char *text;
@@ -765,7 +765,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 		}
 
 		if (SMSDDBI_RefreshSendStatus(Config, ID) == ERR_NONE) {
-			found = true;
+			found = TRUE;
 			break;
 		}
 	}
@@ -887,7 +887,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 /* After sending SMS is moved to Sent Items or Error Items. */
 static GSM_Error SMSDDBI_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 				   GSM_SMSDConfig * Config, char *ID,
-				   bool alwaysDelete UNUSED, bool sent UNUSED)
+				   gboolean alwaysDelete UNUSED, gboolean sent UNUSED)
 {
 	char buffer[10000];
 	dbi_result Res;
@@ -955,9 +955,9 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 			}
 
 			if (sms->Number == 1) {
-				sprintf(buffer + strlen(buffer), "false");
+				sprintf(buffer + strlen(buffer), "FALSE");
 			} else {
-				sprintf(buffer + strlen(buffer), "true");
+				sprintf(buffer + strlen(buffer), "TRUE");
 			}
 
 			sprintf(buffer + strlen(buffer), "', %s",

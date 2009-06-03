@@ -113,31 +113,31 @@ typedef struct {
 	 */
 	unsigned char Text[2 * (GSM_BITMAP_TEXT_LENGTH + 1)];
 	/**
-	 * For caller group logo: true, when logo is enabled in group
+	 * For caller group logo: TRUE, when logo is enabled in group
 	 */
-	bool BitmapEnabled;
+	gboolean BitmapEnabled;
 	/**
-	 * For caller group logo: true, when group has default name
+	 * For caller group logo: TRUE, when group has default name
 	 */
-	bool DefaultName;
+	gboolean DefaultName;
 	/**
-	 * For caller group logo: true, when group has default bitmap
+	 * For caller group logo: TRUE, when group has default bitmap
 	 */
-	bool DefaultBitmap;
+	gboolean DefaultBitmap;
 	/**
-	 * For caller group logo: true, when group has default ringtone
+	 * For caller group logo: TRUE, when group has default ringtone
 	 */
-	bool DefaultRingtone;
+	gboolean DefaultRingtone;
 	/**
 	 * For caller group logo: ringtone ID. Phone model specific
 	 */
 	unsigned char RingtoneID;
-	bool FileSystemRingtone;
+	gboolean FileSystemRingtone;
 	/**
 	 * For caller group logo: picture ID. Phone model specific
 	 */
 	int PictureID;
-	bool FileSystemPicture;
+	gboolean FileSystemPicture;
 	/**
 	 * For mono bitmaps: body of bitmap
 	 */
@@ -246,7 +246,7 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap * bitmap);
  *
  * \ingroup Bitmap
  */
-bool GSM_IsPointBitmap(GSM_Bitmap * bmp, int x, int y);
+gboolean GSM_IsPointBitmap(GSM_Bitmap * bmp, int x, int y);
 
 /**
  * Sets point in bitmap.

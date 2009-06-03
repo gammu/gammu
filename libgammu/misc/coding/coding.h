@@ -34,7 +34,7 @@ typedef		int wint_t;
 #endif
 
 /* ---------------------------- Unicode ------------------------------------ */
-bool 		myiswspace	  		(unsigned const char *src);
+gboolean 		myiswspace	  		(unsigned const char *src);
 
 int		EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
 int		DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);
@@ -53,7 +53,7 @@ unsigned char	EncodeWithBCDAlphabet		(int value);
 int		DecodeWithBCDAlphabet		(unsigned char value);
 
 void		DecodeBCD			(unsigned char *dest, const unsigned char *src, int len);
-void		EncodeBCD			(unsigned char *dest, const unsigned char *src, int len, bool fill);
+void		EncodeBCD			(unsigned char *dest, const unsigned char *src, int len, gboolean fill);
 
 /* ------------------------------ UTF7 ------------------------------------- */
 void 		DecodeUTF7			(unsigned char *dest, const unsigned char *src, int len);
@@ -73,8 +73,8 @@ void 		EncodeBASE64			(const unsigned char *Input, char *Output, const size_t Le
 int 		DecodeBASE64			(const char *Input, unsigned char *Output, const size_t Length);
 
 /* ---------------------- DefaultAlphabet for SMS -------------------------- */
-void 		EncodeDefault			(unsigned char *dest, const unsigned char *src, size_t *len, bool UseExtensions, unsigned char *ExtraAlphabet);
-void		DecodeDefault			(unsigned char *dest, const unsigned char *src, size_t len, bool UseExtensions,  unsigned char *ExtraAlphabet);
+void 		EncodeDefault			(unsigned char *dest, const unsigned char *src, size_t *len, gboolean UseExtensions, unsigned char *ExtraAlphabet);
+void		DecodeDefault			(unsigned char *dest, const unsigned char *src, size_t len, gboolean UseExtensions,  unsigned char *ExtraAlphabet);
 void 		FindDefaultAlphabetLen		(const unsigned char *src, size_t *srclen, size_t *smslen, size_t maxlen);
 
 int GSM_PackSevenBitsToEight	(int offset, unsigned char *input, unsigned char *output, int length);
@@ -104,8 +104,8 @@ typedef enum {
 	/* specification give also other values */
 } GSM_NumberType;
 
-int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, bool semioctet);
-int		GSM_PackSemiOctetNumber		(unsigned char *Number, unsigned char *Output, bool semioctet);
+int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, gboolean semioctet);
+int		GSM_PackSemiOctetNumber		(unsigned char *Number, unsigned char *Output, gboolean semioctet);
 
 /* ---------------------------- Bits --------------------------------------- */
 
@@ -139,7 +139,7 @@ void StringToDouble	(char *text, double *d);
  *
  * \return ERR_NONE on success, ERR_MOREMEMORY if buffer is too small.
  */
-GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t MaxLen, bool MergeLines);
+GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t MaxLen, gboolean MergeLines);
 
 /**
  * Gets line from buffer.
@@ -154,15 +154,15 @@ GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t Max
  *
  * \return ERR_NONE on success, ERR_MOREMEMORY if buffer is too small.
  */
-GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, size_t MaxOutLen, bool MergeLines);
+GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, size_t MaxOutLen, gboolean MergeLines);
 
 char *EncodeSpecialChars(const char *buffer);
 char *DecodeSpecialChars(const char *buffer);
 
 #ifdef ICONV_FOUND
 
-bool IconvDecode(const char *charset, const char *input, const size_t inlen, unsigned char *output, size_t outlen);
-bool IconvEncode(const char *charset, const unsigned char *input, const size_t inlen, char *output, size_t outlen);
+gboolean IconvDecode(const char *charset, const char *input, const size_t inlen, unsigned char *output, size_t outlen);
+gboolean IconvEncode(const char *charset, const unsigned char *input, const size_t inlen, char *output, size_t outlen);
 #endif
 
 #if defined(_MSC_VER) && defined(__cplusplus)
