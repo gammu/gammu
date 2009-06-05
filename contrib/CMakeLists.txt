@@ -86,3 +86,7 @@ if (INSTALL_LSB_INIT)
         COMPONENT "initscript"
         )
 endif (INSTALL_LSB_INIT)
+
+# Build some examples
+# We do not install them intentionally, just check whether they still compile
+add_subdirectory(smscgi)
