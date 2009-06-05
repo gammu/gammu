@@ -30,7 +30,7 @@ static GSM_StateMachine *s;
 static INI_Section *cfg;
 
 /* Function to handle errors */
-void error_handler()
+void error_handler(void)
 {
 	if (error != ERR_NONE) {
 		printf("ERROR: %s\n", GSM_ErrorString(error));

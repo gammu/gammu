@@ -40,7 +40,7 @@ void cgi_process(GSM_StateMachine *s);
 /**
  * Reset the processing queue
  */
-void cgi_reset();
+void cgi_reset(void);
 
 #endif        //  #ifndef SMS_CGI_H
 

@@ -63,7 +63,7 @@ static int cgi_get_error_fd(GSM_StateMachine *s, const char*script_name) {
 	return errfd;
 }
 
-static void cgi_child(GSM_StateMachine *s) {
+static void NORETURN cgi_child(GSM_StateMachine *s) {
 	int x;
 	int errfd;
 	char script_name[300];
@@ -142,7 +142,7 @@ static void cgi_child(GSM_StateMachine *s) {
 	_exit(1);
 }
 
-static int cgi_write_helper(GSM_StateMachine *s, int fd, char*data, int size) {
+static int cgi_write_helper(GSM_StateMachine *s, int fd, const char*data, const int size) {
 	int ret,offset = 0;
 	while(size > offset) {
 		if((ret = write(fd, data+offset, size - offset) ) <= 0) {
@@ -154,7 +154,7 @@ static int cgi_write_helper(GSM_StateMachine *s, int fd, char*data, int size) {
 	return 0;
 }
 
-static int cgi_write_header(GSM_StateMachine *s, int fd, char*key, char*value) {
+static int cgi_write_header(GSM_StateMachine *s, int fd, const char*key, const char*value) {
 	strcpy(buffer3, key);
 	strcat(buffer3, ":");
 	strcat(buffer3, value);
@@ -313,13 +313,13 @@ void cgi_enqueue(GSM_StateMachine *s, GSM_SMSMessage sms, void *user_data) {
 	}
 }
 
-static void cgi_signal_handler(int signal) {
-	if(signal == SIGPIPE) {
+static void cgi_signal_handler(int signum) {
+	if(signum == SIGPIPE) {
 		printf("Cought SIGPIPE!\n");
-	} else if(signal == SIGCHLD) {
+	} else if(signum == SIGCHLD) {
 		printf("Child exited!\n");
 	} else {
-		printf("issued %d", signal);
+		printf("issued %d", signum);
 	}
 }
 
