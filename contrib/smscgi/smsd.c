@@ -48,7 +48,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Enable global debugging to stderr */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Allocates state machine */
@@ -59,46 +59,46 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Enable state machine debugging to stderr */
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(FALSE, debug_info);
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Find configuration file */
-	error = GSM_FindGammuRC(&cfg);
+	error = GSM_FindGammuRC(&cfg, NULL);
 	error_handler();
 
 	/* Read it */
 	error = GSM_ReadConfig(cfg, GSM_GetConfig(s, 0), 0);
 	error_handler();
-	
+
 	/* We have one valid configuration */
 	GSM_SetConfigNum(s, 1);
-	
-	
+
+
 	/* ---------------------------------------- get cgi script search directory */
-	tmp = (const char*)INI_GetValue(cfg, (const char*)cfg->SectionName, "cgi-bin", 0);
+	tmp = (const char*)INI_GetValue(cfg, (const unsigned char*)cfg->SectionName, (const unsigned char *)"cgi-bin", 0);
 	if(!tmp) {
 		printf("could not get the cgi_path, try to add \"cgi-bin=/your/cgi-bin/path\" in .gammurc file \n");
 		return -1;
 	}
 	strcpy(cgi_path, tmp);
-	smprintf_level(s, D_TEXT, "CGI search path : %s\n", cgi_path);
+	smprintf(s, "CGI search path : %s\n", cgi_path);
 	strcat(cgi_path, "/");
 
 	error = -1;
 	while(1) {
-		
+
 		/* ---------------------------------------------------- continuously read */
 		if(error == ERR_NONE) {
 			GSM_ReadDevice(s, TRUE);
 			cgi_process(s);
 			continue; /* go on */
 		}
-		
+
 		/* ------------------------------------------ when error close connection */
 		sleep(3); /* wait 30 seconds before retry */
 		GSM_TerminateConnection(s); /* we do not care if shutdown fails */
 		cgi_reset();
-		
+
 		/* ------------------------------------------------------------ reconnect */
 		sleep(3); /* wait 30 seconds before retry */
 		/* try to reconnect */
@@ -106,17 +106,17 @@ int main(int argc UNUSED, char **argv UNUSED)
 		if(error != ERR_NONE) {
 			continue; /* retry */
 		}
-		
-		
+
+
 		/* ---------------------------------------------- enable sms notification */
 		GSM_SetIncomingSMS(s, 1	);
 		if(error != ERR_NONE) {
 			continue; /* retry */
 		}
-		
+
 		/* ---------------------------------------- set the SMS callback function */
-		GSM_SetIncomingSMSCallback(s, cgi_enqueue);
-		smprintf_level(s, D_TEXT, "registered sms callback\n");
+		GSM_SetIncomingSMSCallback(s, cgi_enqueue, NULL);
+		smprintf(s, "registered sms callback\n");
 	}
 
 	/* Terminate connection */

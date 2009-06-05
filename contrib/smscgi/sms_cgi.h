@@ -30,7 +30,7 @@ extern char cgi_path[200];
 /**
  * Implementation of GSM_SMSCallback function.
  */
-void cgi_enqueue(GSM_StateMachine *s, GSM_SMSMessage sms);
+void cgi_enqueue(GSM_StateMachine *s, GSM_SMSMessage sms, void *user_data);
 
 /**
  * Process the SMSs
