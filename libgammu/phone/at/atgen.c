@@ -1612,7 +1612,7 @@ GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Getting firmware versions\n");
-	ATGEN_WaitFor(s, "AT+CGMR\r", 8, 0x00, 3, ID_GetFirmware);
+	ATGEN_WaitFor(s, "AT+CGMR\r", 16, 0x00, 3, ID_GetFirmware);
 
 	if (error != ERR_NONE) {
 		ATGEN_WaitFor(s, "ATI5\r", 5, 0x00, 3, ID_GetFirmware);
