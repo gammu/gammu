@@ -28,6 +28,14 @@
 
 #include "sms_cgi.h"
 
+/* Some systems let waitpid(2) tell callers about stopped children. */
+#if !defined (WCONTINUED)
+#  define WCONTINUED 0
+#endif
+#if !defined (WIFCONTINUED)
+#  define WIFCONTINUED(s)	(0)
+#endif
+
 GSM_Error error;
 char cgi_path[200];
 static char buffer[400]; /**<                                   decode buffer */
