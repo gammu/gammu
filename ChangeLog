@@ -23,6 +23,7 @@ ChangeLog
 [-] * Reinclude full SMS text in comments in backup (bug #905).
 [-] * Disable AT OBEX for Samsung J750 and J700 (bug #856).
 [-] * Avoid shadowing C++ bool definition (bug #920).
+[-] * Do not disable CLIP for all SE phones.
     
 20090527 - 1.24.91
 

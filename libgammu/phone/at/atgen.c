@@ -4007,8 +4007,9 @@ GSM_Error ATGEN_SetIncomingCall(GSM_StateMachine *s, gboolean enable)
 	GSM_Error error;
 	if (enable) {
 		smprintf(s, "Enabling incoming call\n");
-		/* SE phones are fucked up when we want to see CLIP information */
-		if (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Ericsson) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_CLIP)) {
+			/* Some (especiall SE) phones are fucked up when we want to
+			 * see CLIP information */
 			ATGEN_WaitFor(s, "AT+CLIP=1\r", 10, 0x00, 3, ID_SetIncomingCall);
 			if (error != ERR_NONE) return error;
 			ATGEN_WaitFor(s, "AT+CRC=1\r", 9, 0x00, 3, ID_SetIncomingCall);

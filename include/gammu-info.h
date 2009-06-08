@@ -571,6 +571,10 @@ typedef enum {
 	 * Encode number in HEX charset.
 	 */
 	F_PBK_ENCODENUMBER,
+	/**
+	 * Do not use CLIP (phone hangs on it).
+	 */
+	F_NO_CLIP,
 
 	/**
 	 * Just marker of highest feature code, should not be used.
