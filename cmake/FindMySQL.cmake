@@ -30,7 +30,7 @@ if(UNIX)
             ARGS --include
             OUTPUT_VARIABLE MY_TMP)
 
-        string(REGEX REPLACE "-I([^ ]*)( .*)?" "\\1" MY_TMP "${MY_TMP}")
+        string(REGEX REPLACE "-I([^ ]+)( .*)?" "\\1" MY_TMP "${MY_TMP}")
 
         set(MYSQL_ADD_INCLUDE_DIR ${MY_TMP} CACHE FILEPATH INTERNAL)
 
@@ -41,7 +41,7 @@ if(UNIX)
 
         set(MYSQL_ADD_LIBRARIES "")
 
-        string(REGEX MATCHALL "-l[^ ]*" MYSQL_LIB_LIST "${MY_TMP}")
+        string(REGEX MATCHALL "(^| )-l[^ ]+" MYSQL_LIB_LIST "${MY_TMP}")
         foreach(LIB ${MYSQL_LIB_LIST})
             string(REGEX REPLACE "[ ]*-l([^ ]*)" "\\1" LIB "${LIB}")
             list(APPEND MYSQL_ADD_LIBRARIES "${LIB}")
@@ -49,7 +49,7 @@ if(UNIX)
 
         set(MYSQL_ADD_LIBRARY_PATH "")
 
-        string(REGEX MATCHALL "-L[^ ]*" MYSQL_LIBDIR_LIST "${MY_TMP}")
+        string(REGEX MATCHALL "-L[^ ]+" MYSQL_LIBDIR_LIST "${MY_TMP}")
         foreach(LIB ${MYSQL_LIBDIR_LIST})
             string(REGEX REPLACE "[ ]*-L([^ ]*)" "\\1" LIB "${LIB}")
             list(APPEND MYSQL_ADD_LIBRARY_PATH "${LIB}")
