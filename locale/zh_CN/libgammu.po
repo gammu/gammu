@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-06-01 11:57+0200\n"
-"PO-Revision-Date: 2009-05-29 13:29+0200\n"
-"Last-Translator: Alexey Kotlyarov <koterpillar+pootle@gmail.com>\n"
+"PO-Revision-Date: 2009-06-11 09:24+0200\n"
+"Last-Translator: reficul <warrentzm@21cn.com>\n"
 "Language-Team: none\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -58,15 +58,15 @@ msgstr ""
 msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
 
-#  msgid "Connect the device"
+# <span class="translation-space"> </span>
+# msgid "Connect the device"
 #: libgammu/gsmcomon.c:94
-#, fuzzy
 msgid "Error writing to the device."
-msgstr "连接手机设备"
+msgstr "写入设备错误"
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
-msgstr ""
+msgstr "读设备错误"
 
 #  msgid "Connect the device"
 #: libgammu/gsmcomon.c:96
