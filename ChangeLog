@@ -24,6 +24,7 @@ ChangeLog
 [-] * Disable AT OBEX for Samsung J750 and J700 (bug #856).
 [-] * Avoid shadowing C++ bool definition (bug #920).
 [-] * Do not disable CLIP for all SE phones.
+[-] * Add ID for Nokia 1209.
     
 20090527 - 1.24.91
 
