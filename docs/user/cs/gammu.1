@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "May  5 2009" "Gammu 1.24.90" "Dokumentace Gammu"
+.TH GAMMU 1 "Jun  8 2009" "Gammu 1.24.92" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -435,6 +435,11 @@ formátu Nokie jako SMS.
 
 .TP 
 \fBsendsms MMSINDICATOR\fP\fI destination URL Title Sender [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
+
+Sends a message with MMS indication. The recipient phone will then download
+MMS from given URL and display it.
+
+Please note that you should provide valid smil data on that URL.
 
 .TP 
 \fBsendsms MMSSETTINGS\fP\fI destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
@@ -1941,6 +1946,11 @@ formátu Nokie jako SMS.
 
 .TP 
 \fBsendsms MMSINDICATOR\fP\fI destination URL Title Sender [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
+
+Sends a message with MMS indication. The recipient phone will then download
+MMS from given URL and display it.
+
+Please note that you should provide valid smil data on that URL.
 
 .TP 
 \fBsendsms MMSSETTINGS\fP\fI destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP

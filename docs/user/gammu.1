@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "May  5 2009" "Gammu 1.24.90" "Gammu Documentation"
+.TH "GAMMU" "1" "Jun  8 2009" "Gammu 1.24.92" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -408,6 +408,11 @@ Read WAP settings from file created by \fBbackup\fR option and saves in Nokia fo
 
 .TP
 .BI "sendsms MMSINDICATOR" " destination URL Title Sender [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+
+Sends a message with MMS indication. The recipient phone will then download
+MMS from given URL and display it.
+
+Please note that you should provide valid smil data on that URL.
 
 .TP
 .BI "sendsms MMSSETTINGS" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
@@ -1893,6 +1898,11 @@ Read WAP settings from file created by \fBbackup\fR option and saves in Nokia fo
 
 .TP
 .BI "sendsms MMSINDICATOR" " destination URL Title Sender [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+
+Sends a message with MMS indication. The recipient phone will then download
+MMS from given URL and display it.
+
+Please note that you should provide valid smil data on that URL.
 
 .TP
 .BI "sendsms MMSSETTINGS" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"

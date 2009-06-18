@@ -697,6 +697,12 @@ HELP['sendsms PICTURE'] = ''''''
 HELP['sendsms BOOKMARK'] = ''''''
 HELP['sendsms WAPSETTINGS'] = ''''''
 HELP['sendsms MMSSETTINGS'] = '''''' 
+HELP['sendsms MMSINDICATOR'] = '''
+Sends a message with MMS indication. The recipient phone will then download
+MMS from given URL and display it.
+
+Please note that you should provide valid smil data on that URL.
+''' 
 HELP['sendsms CALENDAR'] = ''''''
 HELP['sendsms TODO'] = ''''''
 HELP['sendsms'] = '''''' 
