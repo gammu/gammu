@@ -553,9 +553,11 @@ static gboolean AddEMSText(GSM_SMSMessage *SMS, GSM_MultiPartSMSInfo *Info, int 
 	}
 	BufferLen = UnicodeLength(Info->Entries[Info->EntriesNum].Buffer) * 2 + 2;
 	switch (SMS->Coding) {
+#if 0
 	case -1:
 		/* We will convert the text */
 		SMS->Coding = SMS_Coding_Default_No_Compression;
+#endif
 	case SMS_Coding_8bit:
 		Info->Entries[Info->EntriesNum].Buffer = realloc(Info->Entries[Info->EntriesNum].Buffer, BufferLen + (Len * 2));
 		if (Info->Entries[Info->EntriesNum].Buffer == NULL) return FALSE;
