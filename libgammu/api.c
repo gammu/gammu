@@ -43,6 +43,23 @@
 }
 
 /**
+ * Tries the command a couple of times to see if it can complete
+ * without an ERR_BUSY return.
+ */
+#define RUN_RESTARTABLE(return_value, function_call) \
+{ \
+	int restarts; \
+	for (restarts = 0; restarts < 10; ++restarts) { \
+		unsigned useconds = 10000 << restarts; \
+		return_value = (function_call); \
+		if (return_value != ERR_BUSY) \
+			break; \
+		smprintf(s, "Sleeping %d ms before retrying the last command\n", useconds / 1000); \
+		usleep(useconds); \
+	} \
+}
+
+/**
  * Reads manufacturer from phone.
  */
 GSM_Error GSM_GetManufacturer(GSM_StateMachine *s, char *value)
@@ -503,7 +520,7 @@ GSM_Error GSM_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	CHECK_PHONE_CONNECTION();
 	PRINT_MEMORY_INFO();
 
-	err = s->Phone.Functions->SetMemory(s, entry);
+	RUN_RESTARTABLE(err, s->Phone.Functions->SetMemory(s, entry));
 	PRINT_LOG_ERROR(err);
 	return err;
 }
@@ -531,7 +548,7 @@ GSM_Error GSM_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	CHECK_PHONE_CONNECTION();
 	PRINT_MEMORY_INFO();
 
-	err = s->Phone.Functions->DeleteMemory(s, entry);
+	RUN_RESTARTABLE(err, s->Phone.Functions->DeleteMemory(s, entry));
 	PRINT_LOG_ERROR(err);
 	return err;
 }

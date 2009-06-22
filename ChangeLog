@@ -25,6 +25,7 @@ ChangeLog
 [-] * Avoid shadowing C++ bool definition (bug #920).
 [-] * Do not disable CLIP for all SE phones.
 [-] * Add ID for Nokia 1209.
+[-] * Catch busy error from Nokia phones (bug #932, thanks to Walter Doekes).
     
 20090527 - 1.24.91
 

@@ -1166,8 +1166,24 @@ static GSM_Error N6510_ReplyGetOperatorLogo(GSM_Protocol_Message msg, GSM_StateM
 	return ERR_NONE;
 }
 
-GSM_Error N6510_ReplyDeleteMemory(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error N6510_ReplyDeleteMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	if (msg.Buffer[5] == 0x1) {
+		switch (msg.Buffer[6]) {
+		case 0x0f:
+			switch (msg.Buffer[10]) {
+			case 0x21:
+				smprintf(s, "Still busy processing the last command\n");
+				return ERR_BUSY;
+			case 0x3B:
+				smprintf(s, "Nothing to delete\n");
+				return ERR_NONE;
+	                default:
+		                smprintf(s, "ERROR: unknown %i\n",msg.Buffer[10]);
+			        return ERR_UNKNOWNRESPONSE;
+			}
+		}
+	}
 	smprintf(s, "Phonebook entry deleted\n");
 	return ERR_NONE;
 }

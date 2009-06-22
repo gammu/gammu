@@ -146,6 +146,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_SPECIFYCHANNEL, "SPECIFYCHANNEL", N_("Bluetooth configuration requires channel option.")},
 	{ERR_NOTRUNNING, "NOTRUNNING", N_("Service is not runnig.")},
 	{ERR_NOSERVICE, "NOSERVICE", N_("Service configuration is missing.")},
+	{ERR_BUSY, "BUSY", N_("Command rejected because device was busy. Wait and restart.")},
 
 	{0,	"",				""}
 };

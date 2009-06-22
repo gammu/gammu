@@ -289,6 +289,10 @@ typedef enum {
 	 * Service setup is missing.
 	 */
 	ERR_NOSERVICE,
+	/**
+	 * Command failed. Try again.
+	 */
+	ERR_BUSY,
 
 	/**
 	 * Just marker of highest error code, should not be used.

@@ -1618,6 +1618,9 @@ GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine 
 		case 0xf:
 			smprintf(s, "Invalid block sent\n");
 			return ERR_BUG;
+		case 0x21:
+			smprintf(s, "Still busy processing the last command\n");
+			return ERR_BUSY;
 		case 0x23:
 			smprintf(s, "Block size does not match a definition\n");
 			return ERR_BUG;
