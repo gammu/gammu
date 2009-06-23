@@ -29,7 +29,9 @@ char *SMSValidityToString(GSM_SMSValidity Validity) {
 
     switch (Validity.Format) {
         case SMS_Validity_NotAvailable:
+#if 0
         case 0:
+#endif
             strcpy(s, "NA");
             break;
         case SMS_Validity_RelativeFormat:
