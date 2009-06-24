@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.24.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-05-13 13:32+0200\n"
+"POT-Creation-Date: 2009-06-24 14:44+0200\n"
 "PO-Revision-Date: 2009-03-14 15:31+0200\n"
 "Last-Translator: soft developer <soft-developer@live.com>\n"
 "Language-Team: Language =it\n"
@@ -1433,18 +1433,18 @@ msgid " (Text: URL address)"
 msgstr "Indirizzo WWW     "
 
 #: gammu/depend/nokia/dct4.c:1375
-#, c-format
-msgid " (SMS list assigment)"
-msgstr ""
+#, fuzzy, c-format
+msgid " (SMS list assignment)"
+msgstr "Messaggio con disegno"
 
 #: gammu/depend/nokia/dct4.c:1376
-#, c-format
-msgid " (Voice tag assigment)"
-msgstr ""
+#, fuzzy, c-format
+msgid " (Voice tag assignment)"
+msgstr "Messaggio con disegno"
 
 #: gammu/depend/nokia/dct4.c:1377
 #, fuzzy, c-format
-msgid " (Picture ID assigment)"
+msgid " (Picture ID assignment)"
 msgstr "Messaggio con disegno"
 
 #: gammu/depend/nokia/dct4.c:1378

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-05-25 13:36+0200\n"
+"POT-Creation-Date: 2009-06-24 14:44+0200\n"
 "PO-Revision-Date: 2009-02-18 23:31+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: none\n"
@@ -316,7 +316,11 @@ msgstr "Tjänsten är inte igång."
 msgid "Service configuration is missing."
 msgstr "Tjänstekonfigurationen saknas."
 
-#: libgammu/gsmcomon.c:181
+#: libgammu/gsmcomon.c:149
+msgid "Command rejected because device was busy. Wait and restart."
+msgstr ""
+
+#: libgammu/gsmcomon.c:182
 msgid "Unknown error description."
 msgstr "Okänd felbeskrivning."
 

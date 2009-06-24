@@ -1372,9 +1372,9 @@ static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMac
 
 		/* DCT4 only */
 		case N6510_PBK_URL		: printf(_(" (Text: URL address)"));			break;
-		case N6510_PBK_SMSLIST_ID	: printf(_(" (SMS list assigment)"));			break;
-		case N6510_PBK_VOICETAG_ID	: printf(_(" (Voice tag assigment)"));			break;
-		case N6510_PBK_PICTURE_ID	: printf(_(" (Picture ID assigment)"));			break;
+		case N6510_PBK_SMSLIST_ID	: printf(_(" (SMS list assignment)"));			break;
+		case N6510_PBK_VOICETAG_ID	: printf(_(" (Voice tag assignment)"));			break;
+		case N6510_PBK_PICTURE_ID	: printf(_(" (Picture ID assignment)"));			break;
 		case N6510_PBK_RINGTONEFILE_ID  : printf(_(" (Ringtone ID from filesystem/internal)"));	break;
 		case N6510_PBK_USER_ID          : printf(_(" (Text: user ID)"));				break;
 		case N6510_PBK_UNKNOWN2	        : printf(_(" (conversation list ID)"));			break;

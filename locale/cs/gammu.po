@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.24.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-05-14 17:22+0200\n"
+"POT-Creation-Date: 2009-06-24 14:44+0200\n"
 "PO-Revision-Date: 2009-05-13 13:38+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -1307,18 +1307,18 @@ msgstr " (Text: URL adresa)"
 
 #: gammu/depend/nokia/dct4.c:1375
 #, c-format
-msgid " (SMS list assigment)"
+msgid " (SMS list assignment)"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1376
 #, c-format
-msgid " (Voice tag assigment)"
+msgid " (Voice tag assignment)"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1377
-#, c-format
-msgid " (Picture ID assigment)"
-msgstr ""
+#, fuzzy, c-format
+msgid " (Picture ID assignment)"
+msgstr "Jméno obrázku"
 
 #: gammu/depend/nokia/dct4.c:1378
 #, c-format
