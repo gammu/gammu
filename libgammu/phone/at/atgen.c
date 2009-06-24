@@ -2598,7 +2598,7 @@ GSM_Error ATGEN_CheckSBNR(GSM_StateMachine *s)
 	char		req[20];
 
 	sprintf(req, "AT^SBNR=?\r");
-	smprintf(s, "Checking availablity of SBNR\n");
+	smprintf(s, "Checking availability of SBNR\n");
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
 	return error;
 }
@@ -2609,7 +2609,7 @@ GSM_Error ATGEN_CheckSPBR(GSM_StateMachine *s)
 	char		req[20];
 
 	sprintf(req, "AT+SPBR=?\r");
-	smprintf(s, "Checking availablity of SPBR\n");
+	smprintf(s, "Checking availability of SPBR\n");
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
 	return error;
 }
@@ -2620,7 +2620,7 @@ GSM_Error ATGEN_CheckMPBR(GSM_StateMachine *s)
 	char		req[20];
 
 	sprintf(req, "AT+MPBR=?\r");
-	smprintf(s, "Checking availablity of MPBR\n");
+	smprintf(s, "Checking availability of MPBR\n");
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
 	return error;
 }

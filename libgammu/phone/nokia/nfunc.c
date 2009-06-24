@@ -1625,7 +1625,7 @@ GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine 
 			smprintf(s, "Block size does not match a definition\n");
 			return ERR_BUG;
 		case 0x25:
-			smprintf(s, "when you try to save into entry with caller group assigment in phone with caller groups standard 2 (like in 6230i)\n");
+			smprintf(s, "when you try to save into entry with caller group assignment in phone with caller groups standard 2 (like in 6230i)\n");
 			return ERR_PERMISSION;
 		case 0x29:
 			smprintf(s, "no caller group with given number (6230i)\n");

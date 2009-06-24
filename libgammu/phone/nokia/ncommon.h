@@ -33,9 +33,9 @@ typedef enum {
 
 	/* DCT4 only */
 	N6510_PBK_URL		 = 0x2C, /* Text: URL address 			*/
-	N6510_PBK_SMSLIST_ID	 = 0x2E, /* SMS list assigment			*/
-	N6510_PBK_VOICETAG_ID	 = 0x2F, /* Voice tag assigment			*/
-	N6510_PBK_PICTURE_ID	 = 0x33, /* Picture ID assigment		*/
+	N6510_PBK_SMSLIST_ID	 = 0x2E, /* SMS list assignment			*/
+	N6510_PBK_VOICETAG_ID	 = 0x2F, /* Voice tag assignment			*/
+	N6510_PBK_PICTURE_ID	 = 0x33, /* Picture ID assignment		*/
 	N6510_PBK_RINGTONEFILE_ID= 0x37, /* Ringtone ID from filesystem/internal*/
 	N6510_PBK_USER_ID        = 0x38, /* Text: user ID                       */
 	N6510_PBK_UNKNOWN2	 = 0x3B, /* conversation list ID ?		*/
