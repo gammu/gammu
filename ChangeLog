@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2009???? - 1.24.92
+20090624 - 1.24.92
 
 [-] * Fix distutils build (bug #916).
 [-] * Detect when phone does not support ATE1 (bug #918).
