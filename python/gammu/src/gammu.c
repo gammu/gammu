@@ -1568,7 +1568,7 @@ StateMachine_SetAutoNetworkLogin(StateMachineObject *self, PyObject *args, PyObj
 
 static char StateMachine_GetBatteryCharge__doc__[] =
 "GetBatteryCharge()\n\n"
-"Gets information about batery charge and phone charging state.\n\n"
+"Gets information about battery charge and phone charging state.\n\n"
 "@return: Hash containing information about battery state (BatteryPercent and ChargeState)\n"
 "@rtype: hash\n"
 ;
