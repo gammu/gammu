@@ -392,7 +392,7 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
 				commit_buffer[2] = ALCATEL_SYNC_TYPE_TODO;
 				break;
 		}
-		smprintf(s, "Commiting edited record\n");
+		smprintf(s, "Committing edited record\n");
 		error=GSM_WaitFor (s, commit_buffer, 5, 0x02, ALCATEL_TIMEOUT, ID_AlcatelCommit);
 		if (error != ERR_NONE) return error;
 		error=GSM_WaitFor (s, 0, 0, 0x00, ALCATEL_TIMEOUT, ID_AlcatelCommit2);
