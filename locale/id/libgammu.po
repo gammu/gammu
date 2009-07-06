@@ -7,378 +7,402 @@ msgstr ""
 "Project-Id-Version: libGammu 1.24.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-06-24 14:44+0200\n"
-"PO-Revision-Date: 2009-01-07 18:00+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2009-07-03 20:54+0200\n"
+"Last-Translator: winawang <winawangz@yahoo.co.id>\n"
 "Language-Team: none\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 1.1.1\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootle 1.2.1\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
-msgstr ""
+msgstr "Tidak ada Kesalahan"
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr ""
+msgstr "Kesalahan membuka perangkat. Tidak dikenali, sibuk atau tidak diijinkan"
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr ""
+msgstr "Kesalahan membuka perangkat, terkunci"
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
-msgstr ""
+msgstr "Kesalahan membuka perangkat, tidak tersedia."
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
-msgstr ""
+msgstr "Kesalahan membuka perangkat, sudah dibuka oleh aplikasi lain."
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
-msgstr ""
+msgstr "Kesalahan membuka perangkat, anda tidak punya ijin."
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
 msgstr ""
+"Kesalahan membuka perangkat, Tidak dibutuhkan driver dalam sistem operasi."
 
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
 msgstr ""
+"Kesalahan membuka perangkat, Perangkat keras tidak terhubung/salah "
+"pengaturan."
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
-msgstr ""
+msgstr "Kesalahan pengaturan perangakat DTR atau RTS"
 
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
+"Kesalahan pengaturan kecepatan perangkat. Mungkin kecepatan tidak mendukung."
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
-msgstr ""
+msgstr "Kesalahan menulis ke perangkat."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
-msgstr ""
+msgstr "Kesalahan ketika membaca perangkat."
 
 #: libgammu/gsmcomon.c:96
 msgid "Can't set parity on the device."
-msgstr ""
+msgstr "Tidak dapat mengatur paritas perangkat."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
 msgstr ""
+"Tidak ada tanggapan dalam waktu yang ditentukan. Mungkin telepon tidak "
+"tersambung."
 
 #: libgammu/gsmcomon.c:98
 msgid ""
 "Frame not requested right now. See <http://cihar.com/gammu/report> for "
 "information how to report it."
 msgstr ""
+"Bingkai tidak diminta sekarang. Lihat <http://cihar.com/gammu/report> untuk "
+"informasi bagaimana melaporkannya."
 
 #: libgammu/gsmcomon.c:99
 msgid ""
 "Unknown response from phone. See <http://cihar.com/gammu/report> for "
 "information how to report it."
 msgstr ""
+"Tanggapan dari telepon tidak diketahui. Lihat "
+"<http://cihar.com/gammu/report> untuk informasi bagaimana melaporkannya."
 
 #: libgammu/gsmcomon.c:100
 msgid ""
 "Unknown frame. See <http://cihar.com/gammu/report> for information how to "
 "report it."
 msgstr ""
+"Bingkai tidak diketahui. Lihat <http://cihar.com/gammu/report> untuk "
+"informasi bagaimana melaporkannya."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
-msgstr ""
+msgstr "Tidak diketahui jenis koneksi string. Periksa config file."
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr ""
+msgstr "Tidak diketahui jenis model string. Periksa config file."
 
 #: libgammu/gsmcomon.c:103
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "implemented)."
 msgstr ""
+"Beberapa fungsi tidak tersedia untuk sistem anda (matikan di config atau "
+"jangan laksanakan)"
 
 #: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
-msgstr ""
+msgstr "Fungsi tidak didukung oleh telepon"
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
-msgstr ""
+msgstr "Masukan kosong."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
-msgstr ""
+msgstr "Kesalahan keamanan. Mungkin tidak ada PIN."
 
 #: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
-msgstr ""
+msgstr "Kesalahan lokasi. Mungkin terlalu tinggi?"
 
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
-msgstr ""
+msgstr "Fungsi tidak dilaksanakan. Anda dapat membantu pembuatnya."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
-msgstr ""
+msgstr "Memori penuh."
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
-msgstr ""
+msgstr "Kesalahan tidak diketahui."
 
 #: libgammu/gsmcomon.c:111
 msgid "Can not open specified file."
-msgstr ""
+msgstr "Tidak dapat membuka file yang ditentukan."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
-msgstr ""
+msgstr "Diperlukan memori lebih..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Permission to file/device required..."
-msgstr ""
+msgstr "Ijin ke file/perangkat dibutuhkan..."
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
-msgstr ""
+msgstr "angka SMSC kosong. Atur telepon atau gunakan -smscnumber"
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
+"Anda di dalam menu telepon (mungkin sedang mengubah?). Tinggalkan dan coba "
+"lagi."
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
-msgstr ""
+msgstr "Telepon tidak terhubung."
 
 #: libgammu/gsmcomon.c:117
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
 msgstr ""
+"Fungsi sedang dilaksanakan. Jika Anda ingin membantu, silahkan hubungi "
+"pembuatnya."
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
-msgstr ""
+msgstr "Telepon dinonaktifkan dan terhubung ke pengisi daya."
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
-msgstr ""
+msgstr "Format file tidak didukung oleh Gammu."
 
 #: libgammu/gsmcomon.c:120
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
+"Tidak ada yang sempurna, beberapa kesalahan yang muncul dalam pelaksanaan "
+"protokol. Silahkan hubungi pembuatnya."
 
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
+"Pengiriman dibatalkan oleh telepon, mungkin anda menekan pembatalan pada "
+"telepon."
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "Modul telepon dibutuhkan untuk mengirim bingkai jawaban."
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
-msgstr ""
+msgstr "Jenis sambungan yang ada tidak mendukung fungsi panggilan."
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
-msgstr ""
+msgstr "Kesalahan CRC."
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
-msgstr ""
+msgstr "Tanggal salah atau waktu tidak ditentukan."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr ""
+msgstr "Memori telepon salah, mungkin cuma bisa dibaca saja."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
-msgstr ""
+msgstr "Data tidak valid diberikan ke telepon"
 
 #: libgammu/gsmcomon.c:128
 msgid "File with specified name already exist."
-msgstr ""
+msgstr "File dengan nama yang ditentukan sudah tersedia."
 
 #: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
-msgstr ""
+msgstr "File dengan nama yang ditentukan tidak tersedia."
 
 #: libgammu/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
-msgstr ""
+msgstr "Anda harus memberi nama folder dan bukan nama file."
 
 #: libgammu/gsmcomon.c:131
 msgid "You have to give file name and not folder name."
-msgstr ""
+msgstr "Anda harus memberi nama file dan bukan nama folder."
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "Tidak dapat mengakses kartu SIM."
 
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
-msgstr ""
+msgstr "Versi GNAPPLET salah dalam telepon. Gunakan versi Gammu pada saat ini."
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "Hanya bagian dari folder yang telah terdaftar."
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
-msgstr ""
+msgstr "Folder harus kosong."
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
-msgstr ""
+msgstr "Data telah diubah."
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "Gammu tidak dikonfigurasi."
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
-msgstr ""
+msgstr "Folder yang digunakan salah."
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
-msgstr ""
+msgstr "Telepon internal salah."
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
-msgstr ""
+msgstr "Kesalahan penulisan file ke disk."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
-msgstr ""
+msgstr "Tidak ada bagian yang ada."
 
 #: libgammu/gsmcomon.c:142
 msgid "Using default values."
-msgstr ""
+msgstr "Gunakan nilai default."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "Data rusak dikembalikan oleh telepon."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "Fitur string buruk dalam konfigurasi."
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
-msgstr ""
+msgstr "Fungsi yang dikehendaki telah dinonaktifkan pada waktu kompilasi."
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
-msgstr ""
+msgstr "Konfigurasi bluetooth memerlukan pilihan channel."
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not runnig."
-msgstr ""
+msgstr "Layanan tidak berjalan."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
-msgstr ""
+msgstr "Layanan konfigurasi hilang."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
-msgstr ""
+msgstr "Perintah ditolak karena perangkat sibuk. Tunggu dan restart."
 
 #: libgammu/gsmcomon.c:182
 msgid "Unknown error description."
-msgstr ""
+msgstr "Kesalahan pengartian tidak diketahui."
 
 #: libgammu/phone/dummy/dummy.c:553
 msgid "Templates"
-msgstr ""
+msgstr "Template-template"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1958
 msgid "Personal"
-msgstr ""
+msgstr "Pribadi"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1960 libgammu/phone/nokia/nfunc.c:1126
 msgid "Car"
-msgstr ""
+msgstr "Mobil"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1962 libgammu/phone/nokia/nfunc.c:1128
 msgid "Headset"
-msgstr ""
+msgstr "Headset"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1968 libgammu/phone/nokia/nfunc.c:1116
 msgid "General"
-msgstr ""
+msgstr "Umum"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1970 libgammu/phone/nokia/nfunc.c:1118
 msgid "Silent"
-msgstr ""
+msgstr "Diam"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1972
 msgid "Discreet"
-msgstr ""
+msgstr "Bijaksana"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1974
 msgid "Loud"
-msgstr ""
+msgstr "Keras"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1976
 msgid "My style"
-msgstr ""
+msgstr "Gayaku"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:550
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:551 libgammu/phone/pfunc.c:41
 msgid "Inbox"
-msgstr ""
+msgstr "Kotak masuk"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:552
 msgid "Sent items"
-msgstr ""
+msgstr "Terkirim."
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:553
 msgid "Saved items"
-msgstr ""
+msgstr "Tersimpan"
 
 #: libgammu/phone/nokia/nfunc.c:936
 msgid "Family"
-msgstr ""
+msgstr "Keluarga."
 
 #: libgammu/phone/nokia/nfunc.c:938
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #: libgammu/phone/nokia/nfunc.c:940
 msgid "Friends"
-msgstr ""
+msgstr "Teman-teman"
 
 #: libgammu/phone/nokia/nfunc.c:942
 msgid "Colleagues"
-msgstr ""
+msgstr "Kolega"
 
 #: libgammu/phone/nokia/nfunc.c:944
 msgid "Other"
-msgstr ""
+msgstr "Lain"
 
 #: libgammu/phone/nokia/nfunc.c:1120
 msgid "Meeting"
-msgstr ""
+msgstr "rapat"
 
 #: libgammu/phone/nokia/nfunc.c:1122
 msgid "Outdoor"
-msgstr ""
+msgstr "Luar ruangan."
 
 #: libgammu/phone/nokia/nfunc.c:1124
 msgid "Pager"
-msgstr ""
+msgstr "Pager"
 
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
-msgstr ""
+msgstr "Kotak Keluar"
