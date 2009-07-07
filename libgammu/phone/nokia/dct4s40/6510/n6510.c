@@ -2505,7 +2505,7 @@ static GSM_Error N6510_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *st
 
 	s->Phone.Data.SMSStatus=status;
 	smprintf(s, "Getting SMS status\n");
-	error = GSM_WaitFor (s, req, 6, 0x14, 2, ID_GetSMSStatus);
+	error = GSM_WaitFor (s, req, 6, 0x14, 20, ID_GetSMSStatus);
 	if (error != ERR_NONE) return error;
 
 	/* DCT4 family doesn't show in frame with SMS status info
