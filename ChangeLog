@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2009???? - 1.24.93
+
+[-] * Retry on timeout of usb transfer (bug #940).
     
 20090624 - 1.24.92
 
