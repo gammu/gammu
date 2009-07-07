@@ -2032,7 +2032,7 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 	} else {
 		sprintf(buffer, "AT+CSCS=\"%s\"\r", AT_Charsets[i].text);
 	}
-	ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 3, ID_SetMemoryCharset);
+	ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 20, ID_SetMemoryCharset);
 	if (error == ERR_NONE) Priv->Charset = cset;
 	else return error;
 
