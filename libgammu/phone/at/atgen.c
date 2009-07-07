@@ -1754,7 +1754,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	if (!Priv->Mode) {
 		smprintf(s, "Checking for OBEX support\n");
 		/* We don't care about error here */
-		ATGEN_WaitFor(s, "AT+CPROT=?\r", 11, 0x00, 3, ID_SetOBEX);
+		ATGEN_WaitFor(s, "AT+CPROT=?\r", 11, 0x00, 20, ID_SetOBEX);
 		error = ERR_NONE;
 	} else {
 		/*
