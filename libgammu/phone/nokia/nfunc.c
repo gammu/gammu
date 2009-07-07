@@ -1606,10 +1606,6 @@ GSM_Error N71_65_ReplyGetMemoryError(unsigned char error, GSM_StateMachine *s)
 	case 0x3d: /* Seen on RH-105 for own number */
 		smprintf(s, "Empty location\n");
 		s->Phone.Data.Memory->EntriesNum = 0;
-		/*
-		 * This is really empty, but this entry is calculated to
-		 * entries count, so we must return something.
-		 */
 		return ERR_NONE;
 	default:
 		smprintf(s, "ERROR: unknown status code 0x%x\n", error);
