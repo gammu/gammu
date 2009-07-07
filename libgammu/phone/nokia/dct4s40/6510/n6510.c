@@ -2491,6 +2491,10 @@ static GSM_Error N6510_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMach
 	case 0x1a:
 		smprintf(s, "Wait a moment. Phone is during power on and busy now\n");
 		return ERR_SECURITYERROR;
+	case 0xf0:
+		/* 01 |00 |00 |F0ð|01 |12 |00 |00 |00 */
+		smprintf(s, "Handling of this reply is not known, please help!\n");
+		return ERR_NOTIMPLEMENTED;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
@@ -4177,6 +4181,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetSMSFolders,	  "\x14",0x03,0x13,ID_GetSMSFolders	  },
 	{N6510_ReplySaveSMSMessage,	  "\x14",0x03,0x17,ID_SaveSMSMessage	  },
 	{N6510_ReplyGetSMSStatus,	  "\x14",0x03,0x1a,ID_GetSMSStatus	  },
+	{N6510_ReplyGetSMSStatus,	  "\x14",0x03,0xf0,ID_GetSMSStatus	  },
 
 	{DCT4_ReplySetPhoneMode,	  "\x15",0x03,0x64,ID_Reset		  },
 	{DCT4_ReplyGetPhoneMode,	  "\x15",0x03,0x65,ID_Reset		  },
