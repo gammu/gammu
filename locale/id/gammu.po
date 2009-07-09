@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: Gammu 1.24.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-07-07 14:27+0200\n"
-"PO-Revision-Date: 2009-07-07 10:56+0200\n"
+"PO-Revision-Date: 2009-07-08 02:30+0200\n"
 "Last-Translator: winawang <winawangz@yahoo.co.id>\n"
 "Language-Team: none\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -608,854 +608,855 @@ msgstr "Pelatihan / Permainan Musim dingin"
 
 #: gammu/calendar.c:123
 msgid "unknown type!"
-msgstr ""
+msgstr "Tipe tidak diketahui!"
 
 #: gammu/calendar.c:141
 msgid "Start"
-msgstr ""
+msgstr "Mulai"
 
 #: gammu/calendar.c:148
 msgid "Stop"
-msgstr ""
+msgstr "Berhenti"
 
 #: gammu/calendar.c:155 gammu/calendar.c:825 helper/memory-display.c:35
 msgid "Last modified"
-msgstr ""
+msgstr "Diubah terakhir"
 
 #: gammu/calendar.c:161 gammu/calendar.c:173
 msgid "Tone alarm"
-msgstr ""
+msgstr "Alarm nada"
 
 #: gammu/calendar.c:163 gammu/calendar.c:184
 #, c-format
 msgid "forever on each %i. day of %s"
-msgstr ""
+msgstr "selamanya pada setiap % i. hari dari % s"
 
 #: gammu/calendar.c:182 gammu/calendar.c:194 gammu/calendar.c:820
 msgid "Silent alarm"
-msgstr ""
+msgstr "Alarm diam"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:830
 #: gammu/calendar.c:1052 gammu/message.c:172 gammu/misc.c:947
 #: helper/memory-display.c:123 helper/message-display.c:430
 #, c-format
 msgid "Text"
-msgstr ""
+msgstr "Teks"
 
 #: gammu/calendar.c:207 gammu/calendar.c:884
 msgid "Description"
-msgstr ""
+msgstr "Pengertian"
 
 #: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:129
 msgid "LUID"
-msgstr ""
+msgstr "LUID"
 
 #: gammu/calendar.c:217 gammu/calendar.c:573 gammu/calendar.c:617
 #: gammu/calendar.c:661 gammu/calendar.c:685 gammu/calendar.c:889
 #: gammu/memory.c:146 gammu/message.c:163 gammu/misc.c:1683 gammu/misc.c:1716
 #: gammu/misc.c:1977 gammu/misc.c:2086
 msgid "Location"
-msgstr ""
+msgstr "Lokasi"
 
 #: gammu/calendar.c:227 gammu/calendar.c:835 helper/memory-display.c:56
 msgid "Private"
-msgstr ""
+msgstr "Pribadi"
 
 #: gammu/calendar.c:229
 msgid "Yes"
-msgstr ""
+msgstr "Ya"
 
 #: gammu/calendar.c:229
 msgid "No"
-msgstr ""
+msgstr "Tidak"
 
 #: gammu/calendar.c:241 gammu/calendar.c:247 gammu/calendar.c:252
 #: gammu/calendar.c:864 gammu/calendar.c:870
 msgid "Contact ID"
-msgstr ""
+msgstr "ID kontak"
 
 #: gammu/calendar.c:295
 msgid "Repeating"
-msgstr ""
+msgstr "Mengulangi"
 
 #: gammu/calendar.c:298
 #, c-format
 msgid "for %d time "
 msgid_plural "for %d times "
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tunggaluntuk %d waktuJamakuntuk %d waktu"
 
 #: gammu/calendar.c:302
 #, c-format
 msgid "forever"
-msgstr ""
+msgstr "selamanya"
 
 #: gammu/calendar.c:304
 #, c-format
 msgid "till %s"
-msgstr ""
+msgstr "sampai %s"
 
 #: gammu/calendar.c:306
 #, c-format
 msgid "since %s"
-msgstr ""
+msgstr "sejak %s"
 
 #: gammu/calendar.c:308
 #, c-format
 msgid "since %s till %s"
-msgstr ""
+msgstr "sejak %s sampai %s"
 
 #: gammu/calendar.c:313
 #, c-format
 msgid " on each "
-msgstr ""
+msgstr "pada tiap-tiap"
 
 #: gammu/calendar.c:315
 #, c-format
 msgid " on each %d. "
-msgstr ""
+msgstr "pada tiap-tiap %d."
 
 #: gammu/calendar.c:320
 #, c-format
 msgid " in %d. week of "
-msgstr ""
+msgstr "dalam %d. minggu dari"
 
 #: gammu/calendar.c:323
 #, c-format
 msgid " in "
-msgstr ""
+msgstr "dalam"
 
 #: gammu/calendar.c:329 gammu/calendar.c:337
 #, c-format
 msgid "each month"
-msgstr ""
+msgstr "setiap bulan"
 
 #: gammu/calendar.c:332
 #, c-format
 msgid "%d. day of "
-msgstr ""
+msgstr "%d. hari"
 
 #: gammu/calendar.c:340
 #, c-format
 msgid "%d. day of year"
-msgstr ""
+msgstr "%d. hari dari tahun"
 
 #: gammu/calendar.c:342
 #, c-format
 msgid "day"
-msgstr ""
+msgstr "hari"
 
 #: gammu/calendar.c:358
 msgid "Age"
-msgstr ""
+msgstr "Umur"
 
 #: gammu/calendar.c:377
 msgid "Date and time not set in phone"
-msgstr ""
+msgstr "tanggal dan waktu tidak diatur dalam telepon"
 
 #: gammu/calendar.c:380
 #, c-format
 msgid "Phone time is %s\n"
-msgstr ""
+msgstr "Waktu telepon adalah %s\n"
 
 #: gammu/calendar.c:394
 #, c-format
 msgid "Time format is "
-msgstr ""
+msgstr "Format waktu adalah"
 
 #. l10n: AM/PM time
 #: gammu/calendar.c:397
 msgid "12 hours"
-msgstr ""
+msgstr "12 jam"
 
 #. l10n: 24 hours time
 #: gammu/calendar.c:400
 msgid "24 hours"
-msgstr ""
+msgstr "24 jam"
 
 #: gammu/calendar.c:402
 #, c-format
 msgid "Date format is "
-msgstr ""
+msgstr "Format tanggal adalah"
 
 #: gammu/calendar.c:405
 #, c-format
 msgid "DD MM YYYY"
-msgstr ""
+msgstr "DD MM YYYY"
 
 #: gammu/calendar.c:408
 #, c-format
 msgid "MM DD YYYY"
-msgstr ""
+msgstr "MM DD YYYY"
 
 #: gammu/calendar.c:411
 #, c-format
 msgid "YYYY MM DD"
-msgstr ""
+msgstr "YYYY MM DD"
 
 #: gammu/calendar.c:414
 #, c-format
 msgid "DD MMM YY"
-msgstr ""
+msgstr "DD MMM YY"
 
 #: gammu/calendar.c:417
 #, c-format
 msgid "MM DD YY"
-msgstr ""
+msgstr "MM DD YY"
 
 #: gammu/calendar.c:420
 #, c-format
 msgid "DD MM YY"
-msgstr ""
+msgstr "DD MM YY"
 
 #: gammu/calendar.c:423
 #, c-format
 msgid "YY MM DD"
-msgstr ""
+msgstr "YY MM DD"
 
 #: gammu/calendar.c:426
 #, c-format
 msgid "OFF"
-msgstr ""
+msgstr "mati"
 
 #: gammu/calendar.c:431
 #, c-format
 msgid ", date separator is %c\n"
-msgstr ""
+msgstr ", pemisah waktu adalah %c\n"
 
 #: gammu/calendar.c:448
 msgid "Setting time in phone to the time on PC."
-msgstr ""
+msgstr "Pengaturan waktu dalam telepon ke waktu dalam PC"
 
 #: gammu/calendar.c:459
 msgid "Updating specified parts of date and time in phone."
-msgstr ""
+msgstr "memperbarui bagian-bagian tertentu dari tanggal dan waktu dalam telepon"
 
 #: gammu/calendar.c:510
 #, c-format
 msgid "Alarm (%i) not set in phone\n"
-msgstr ""
+msgstr "Alarm (%i) tidak diatur pada telepon \n"
 
 #: gammu/calendar.c:514
 #, c-format
 msgid "Alarm in location %i:\n"
-msgstr ""
+msgstr "Alarm di lokasi %i:\n"
 
 #: gammu/calendar.c:516 gammu/calendar.c:519 gammu/mms.c:95
 msgid "Date"
-msgstr ""
+msgstr "Tanggal"
 
 #: gammu/calendar.c:517
 msgid "Every day"
-msgstr ""
+msgstr "Setiap hari"
 
 #: gammu/calendar.c:522
 #, c-format
 msgid "Time: %02d:%02d\n"
-msgstr ""
+msgstr "Waktu: %02d:%02d\n"
 
 #: gammu/calendar.c:636
 #, c-format
 msgid "Auto deleting disabled"
-msgstr ""
+msgstr "Hapus otomatis dinonaktifkan"
 
 #: gammu/calendar.c:638
 #, c-format
 msgid "Auto deleting notes after %i day(s)"
-msgstr ""
+msgstr "Menghapus otomatis catatan setelah %i hari"
 
 #: gammu/calendar.c:642
 #, c-format
 msgid "Week starts on %s"
-msgstr ""
+msgstr "Minggu dimulai pada %s"
 
 #: gammu/calendar.c:667 gammu/memory.c:155
 msgid "Entry was empty"
-msgstr ""
+msgstr "Masukan telah dikosongkan"
 
 #: gammu/calendar.c:669 gammu/memory.c:157
 msgid "Entry was deleted"
-msgstr ""
+msgstr "Masukan telah dihapus"
 
 #: gammu/calendar.c:774 gammu/calendar.c:793 gammu/message.c:101
 #: gammu/misc.c:1908 gammu/misc.c:1951
 msgid "Unknown"
-msgstr ""
+msgstr "Tidak diketahui"
 
 #: gammu/calendar.c:777
 msgid "Priority"
-msgstr ""
+msgstr "Prioritas"
 
 #: gammu/calendar.c:780
 msgid "Low"
-msgstr ""
+msgstr "Rendah"
 
 #: gammu/calendar.c:783
 msgid "Medium"
-msgstr ""
+msgstr "Sedang"
 
 #: gammu/calendar.c:786
 msgid "High"
-msgstr ""
+msgstr "Tinggi"
 
 #: gammu/calendar.c:789
 msgid "None"
-msgstr ""
+msgstr "Tidak satupun"
 
 #: gammu/calendar.c:800
 msgid "Due time"
-msgstr ""
+msgstr "Karena waktu"
 
 #: gammu/calendar.c:805
 msgid "Start time"
-msgstr ""
+msgstr "Waktu mulai"
 
 #: gammu/calendar.c:810
 msgid "Completed"
-msgstr ""
+msgstr "Selesai"
 
 #: gammu/calendar.c:845 gammu/calendar.c:850 helper/memory-display.c:39
 #: helper/memory-display.c:49 helper/memory-display.c:51
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: gammu/calendar.c:874
 msgid "Contact"
-msgstr ""
+msgstr "Kontak"
 
 #: gammu/calendar.c:959 gammu/memory.c:310 gammu/memory.c:387
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "Cari teks terlalu panjang, truncating ke %d karakter!\n"
 
 #: gammu/common.c:40
 msgid "Waiting for Security Code."
-msgstr ""
+msgstr "Menunggu untuk Kode Keamanan."
 
 #: gammu/common.c:43
 msgid "Waiting for PIN."
-msgstr ""
+msgstr "Menunggu PIN"
 
 #: gammu/common.c:46
 msgid "Waiting for PIN2."
-msgstr ""
+msgstr "Menunggu PIN2"
 
 #: gammu/common.c:49
 msgid "Waiting for PUK."
-msgstr ""
+msgstr "Menunggu PUK"
 
 #: gammu/common.c:52
 msgid "Waiting for PUK2."
-msgstr ""
+msgstr "Menunggu PUK2"
 
 #: gammu/common.c:55
 msgid "Waiting for phone code."
-msgstr ""
+msgstr "Menunggu kode telepon."
 
 #: gammu/common.c:58
 msgid "Waiting for network code."
-msgstr ""
+msgstr "Menunggu kode jaringan."
 
 #: gammu/common.c:61
 msgid "Nothing to enter."
-msgstr ""
+msgstr "Tidak ada sesuatu untuk dimasukkan."
 
 #: gammu/common.c:65
 msgid "Unknown security status."
-msgstr ""
+msgstr "Status keamanan tidak diketahui."
 
 #: gammu/common.c:76
 msgid "January"
-msgstr ""
+msgstr "Januari"
 
 #: gammu/common.c:79
 msgid "February"
-msgstr ""
+msgstr "Februari"
 
 #: gammu/common.c:82
 msgid "March"
-msgstr ""
+msgstr "Maret"
 
 #: gammu/common.c:85
 msgid "April"
-msgstr ""
+msgstr "April"
 
 #: gammu/common.c:88
 msgid "May"
-msgstr ""
+msgstr "Mei"
 
 #: gammu/common.c:91
 msgid "June"
-msgstr ""
+msgstr "Juni"
 
 #: gammu/common.c:94
 msgid "July"
-msgstr ""
+msgstr "Juli"
 
 #: gammu/common.c:97
 msgid "August"
-msgstr ""
+msgstr "Agustus"
 
 #: gammu/common.c:100
 msgid "September"
-msgstr ""
+msgstr "September"
 
 #: gammu/common.c:103
 msgid "October"
-msgstr ""
+msgstr "Oktober"
 
 #: gammu/common.c:106
 msgid "November"
-msgstr ""
+msgstr "November"
 
 #: gammu/common.c:109
 msgid "December"
-msgstr ""
+msgstr "Desember"
 
 #: gammu/common.c:112
 msgid "Bad month!"
-msgstr ""
+msgstr "Bulan salah!"
 
 #: gammu/common.c:124
 msgid "Monday"
-msgstr ""
+msgstr "Senin"
 
 #: gammu/common.c:127
 msgid "Tuesday"
-msgstr ""
+msgstr "Selasa"
 
 #: gammu/common.c:130
 msgid "Wednesday"
-msgstr ""
+msgstr "Rabu"
 
 #: gammu/common.c:133
 msgid "Thursday"
-msgstr ""
+msgstr "kamis"
 
 #: gammu/common.c:136
 msgid "Friday"
-msgstr ""
+msgstr "Friday"
 
 #: gammu/common.c:139
 msgid "Saturday"
-msgstr ""
+msgstr "Sabtu"
 
 #: gammu/common.c:142
 msgid "Sunday"
-msgstr ""
+msgstr "Minggu"
 
 #: gammu/common.c:145
 msgid "Bad day!"
-msgstr ""
+msgstr "Hari salah!"
 
 #: gammu/common.c:192
 msgid "Security status"
-msgstr ""
+msgstr "Status keamanan"
 
 #: gammu/common.c:297 gammu/misc.c:978 gammu/misc.c:993 gammu/misc.c:1000
 #: gammu/misc.c:1007 gammu/misc.c:1037
 msgid "More parameters required!"
-msgstr ""
+msgstr "Parameter lain dibutuhkan"
 
 #: gammu/common.c:303 gammu/common.c:313 gammu/depend/nokia/dct4.c:684
 #: gammu/misc.c:1153
 msgid "Please enumerate locations from 1"
-msgstr ""
+msgstr "Silakan menghitung lokasi dari 1"
 
 #: gammu/common.c:318
 msgid "Swapping start and end location"
-msgstr ""
+msgstr "Swapping lokasi awal dan akhir"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:340 gammu/common.c:369 gammu/depend/nokia/dct4.c:82
 #: gammu/misc.c:1545
 msgid "yes"
-msgstr ""
+msgstr "ya"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:340 gammu/common.c:372 gammu/depend/nokia/dct4.c:83
 msgid "no"
-msgstr ""
+msgstr "tidak"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:341 gammu/common.c:364
 msgid "ALL"
-msgstr ""
+msgstr "SEMUA"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:341 gammu/common.c:359
 msgid "ONLY"
-msgstr ""
+msgstr "HANYA"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:341 gammu/common.c:354
 msgid "NONE"
-msgstr ""
+msgstr "TIDAK ADA"
 
 #: gammu/common.c:343
 msgid "YES (always)"
-msgstr ""
+msgstr "YA (selalu)"
 
 #: gammu/common.c:347
 msgid "NO (always)"
-msgstr ""
+msgstr "TIDAK (selalu)"
 
 #: gammu/depend/nokia/dct4.c:65
 msgid "Can't do it with current phone protocol"
-msgstr ""
+msgstr "Tidak dapat dilakukan dengan protokol telepon sat ini"
 
 #: gammu/depend/nokia/dct4.c:79
 #, c-format
 msgid "%s (yes/no) ? "
-msgstr ""
+msgstr "%s (ya/tidak) ?"
 
 #: gammu/depend/nokia/dct4.c:262
 msgid "Setting done"
-msgstr ""
+msgstr "Pengaturan selesai"
 
 #: gammu/depend/nokia/dct4.c:300
 msgid ""
 "Sorry, but configuration matrix for this model is not added yet. Please "
 "report"
 msgstr ""
+"Maaf, tapi konfigurasi matriks untuk model ini belum ditambahkan. Silakan "
+"laporkan"
 
 #: gammu/depend/nokia/dct4.c:366
 #, c-format
 msgid "Passed"
-msgstr ""
+msgstr "lewatkan"
 
 #: gammu/depend/nokia/dct4.c:367
 #, c-format
 msgid "Fail"
-msgstr ""
+msgstr "gagal"
 
 #: gammu/depend/nokia/dct4.c:368
 #, c-format
 msgid "Not executed"
-msgstr ""
+msgstr "Tidak dijalankan"
 
 #: gammu/depend/nokia/dct4.c:369
 #, c-format
 msgid "No signal"
-msgstr ""
+msgstr "Tidak ada sinyal"
 
 #: gammu/depend/nokia/dct4.c:370 gammu/message.c:95 gammu/misc.c:2186
 #, c-format
 msgid "Timeout"
-msgstr ""
+msgstr "Waktu habis"
 
 #: gammu/depend/nokia/dct4.c:371
 #, c-format
 msgid "Unknown (%x)"
-msgstr ""
+msgstr "Tidak diketahui (%x)"
 
 #: gammu/depend/nokia/dct4.c:373
 #, c-format
 msgid " (startup)"
-msgstr ""
+msgstr "(startup)"
 
 #: gammu/depend/nokia/dct4.c:494 gammu/depend/nokia/dct4.c:1001
 msgid "Press any key to continue..."
-msgstr ""
+msgstr "Tekan sembarang tombol untuk melanjutkan..."
 
 #: gammu/depend/nokia/dct4.c:506
 #, c-format
 msgid "Security code set to \"12345\"\n"
-msgstr ""
+msgstr "Kode keamanan diatur ke \"12345\"\n"
 
 #: gammu/depend/nokia/dct4.c:509
 msgid "Unknown reason. Can't reset your security code"
-msgstr ""
+msgstr "Alasan tidak diketahui. Tidak dapat mereset kode keamanan anda."
 
 #: gammu/depend/nokia/dct4.c:533
 #, c-format
 msgid "Trying %i\n"
-msgstr ""
+msgstr "Mencoba %i\n"
 
 #: gammu/depend/nokia/dct4.c:552
 #, c-format
 msgid "Security code is %s\n"
-msgstr ""
+msgstr "Kode keamana adalah %s\n"
 
 #: gammu/depend/nokia/dct4.c:797
 #, c-format
 msgid "device address %02x%02x%02x%02x%02x%02x\n"
-msgstr ""
+msgstr "Alamat perangkat %02x%02x%02x%02x%02x%02x\n"
 
 #: gammu/depend/nokia/dct4.c:821
 msgid "Old simlock"
-msgstr ""
+msgstr "kunci sim lama"
 
 #: gammu/depend/nokia/dct4.c:842
 msgid "Simlock data"
-msgstr ""
+msgstr "Kunci sim data"
 
 #: gammu/depend/nokia/dct4.c:867
 msgid "Bluetooth"
-msgstr ""
+msgstr "Bluetooth"
 
 #: gammu/depend/nokia/dct4.c:883
 msgid "UEM"
-msgstr ""
+msgstr "UEM"
 
 #: gammu/depend/nokia/dct4.c:955
 #, c-format
 msgid "What lights should I enable (\"%s\") ?\n"
-msgstr ""
+msgstr "Lampu apa yang harus saya aktifkan (\"%s\") ? \n"
 
 #: gammu/depend/nokia/dct4.c:962
 #, c-format
 msgid "What should I do (\"%s\") ?\n"
-msgstr ""
+msgstr "Apa yang harus saya lakukan (\"%s\") ?\n"
 
 #: gammu/depend/nokia/dct4.c:1014
 #, c-format
 msgid "raw "
-msgstr ""
+msgstr "mentah"
 
 #: gammu/depend/nokia/dct4.c:1018
 #, c-format
 msgid "unit result "
-msgstr ""
+msgstr "unit hasil"
 
 #: gammu/depend/nokia/dct4.c:1153
 msgid "Phone seems not to support radio"
-msgstr ""
+msgstr "Telepon sepertinya tidak mendukung radio"
 
 #: gammu/depend/nokia/dct4.c:1160
 msgid "Please connect headset. Required as antenna"
-msgstr ""
+msgstr "Silahkan hubungkan headset. Dibutuhkan sebagai antena"
 
 #: gammu/depend/nokia/dct4.c:1354
 #, c-format
 msgid "%i entries types\n"
-msgstr ""
+msgstr "%i tipe-tipe masukan-masukan\n"
 
 #: gammu/depend/nokia/dct4.c:1357
 #, c-format
 msgid "  entry ID %02X"
-msgstr ""
+msgstr "masukan ID %02X"
 
 #: gammu/depend/nokia/dct4.c:1359
 #, c-format
 msgid " (Speed dial on SIM)"
-msgstr ""
+msgstr "(Kecepataan panggil pada SIM)"
 
 #: gammu/depend/nokia/dct4.c:1360
 #, c-format
 msgid " (Text: name (always the only one)"
-msgstr ""
+msgstr "(teks: nama (selalu hanya satu)"
 
 #: gammu/depend/nokia/dct4.c:1361
 #, c-format
 msgid " (Text: email address)"
-msgstr ""
+msgstr "(teks: alamat email)"
 
 #: gammu/depend/nokia/dct4.c:1362
 #, c-format
 msgid " (Text: postal address)"
-msgstr ""
+msgstr "(teks: alamat post)"
 
 #: gammu/depend/nokia/dct4.c:1363
 #, c-format
 msgid " (Text: note)"
-msgstr ""
+msgstr "(teks: catatan)"
 
 #: gammu/depend/nokia/dct4.c:1364
 #, c-format
 msgid " (Phone number)"
-msgstr ""
+msgstr "(Nomor telepon)"
 
 #: gammu/depend/nokia/dct4.c:1365
 #, c-format
 msgid " (Ringtone ID)"
-msgstr ""
+msgstr "(ID nada dering)"
 
 #: gammu/depend/nokia/dct4.c:1366
 #, c-format
 msgid " (Call register: date and time)"
-msgstr ""
+msgstr "(Register panggilan: tanggal dan waktu)"
 
 #: gammu/depend/nokia/dct4.c:1367
 #, c-format
 msgid " (Call register: with missed calls)"
-msgstr ""
+msgstr "(Register panggilan: dengan panggilan tak terjawab)"
 
 #: gammu/depend/nokia/dct4.c:1368
 #, c-format
 msgid " (Speed dial)"
-msgstr ""
+msgstr "(panggilan cepat)"
 
 #: gammu/depend/nokia/dct4.c:1369
 #, c-format
 msgid " (Caller group: logo)"
-msgstr ""
+msgstr "(Grup pemanggil: logo)"
 
 #: gammu/depend/nokia/dct4.c:1370
 #, c-format
 msgid " (Caller group: is logo on ?)"
-msgstr ""
+msgstr "(Grup pemanggil: apakah logo dipasang?)"
 
 #: gammu/depend/nokia/dct4.c:1371
 #, c-format
 msgid " (Caller group number in pbk entry)"
-msgstr ""
+msgstr "(Nomor grup pemanggil dalam pbk entry)"
 
 #: gammu/depend/nokia/dct4.c:1374
 #, c-format
 msgid " (Text: URL address)"
-msgstr ""
+msgstr "(Teks: alamat URL)"
 
 #: gammu/depend/nokia/dct4.c:1375
 #, c-format
 msgid " (SMS list assignment)"
-msgstr ""
+msgstr "(Penugasan tugas SMS)"
 
 #: gammu/depend/nokia/dct4.c:1376
 #, c-format
 msgid " (Voice tag assignment)"
-msgstr ""
+msgstr "(Penugasan tag suara)"
 
 #: gammu/depend/nokia/dct4.c:1377
 #, c-format
 msgid " (Picture ID assignment)"
-msgstr ""
+msgstr "(Penugasan gambar ID)"
 
 #: gammu/depend/nokia/dct4.c:1378
 #, c-format
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr ""
+msgstr "(ID nada dering dari file sistem/internal)"
 
 #: gammu/depend/nokia/dct4.c:1379
 #, c-format
 msgid " (Text: user ID)"
-msgstr ""
+msgstr "(teks: ID pengguna)"
 
 #: gammu/depend/nokia/dct4.c:1380
 #, c-format
 msgid " (conversation list ID)"
-msgstr ""
+msgstr "(ID daftar percakapan)"
 
 #: gammu/depend/nokia/dct4.c:1381
 #, c-format
 msgid " (Instant Messaging service list ID ?)"
-msgstr ""
+msgstr "(ID daftar layanan pesan instan)"
 
 #: gammu/depend/nokia/dct4.c:1382
 #, c-format
 msgid " (presence list ID ?)"
-msgstr ""
+msgstr "(ID daftar kehadiran)"
 
 #: gammu/depend/nokia/dct4.c:1383
 #, c-format
 msgid " (SIP Address (Push to Talk address))"
-msgstr ""
+msgstr "(Alamat SIP (Alamat Tekan untuk Bicara))"
 
 #: gammu/depend/nokia/dct4.c:1384
 #, c-format
 msgid " (Group ID (6230i or later))"
-msgstr ""
+msgstr "(ID Grup (6230i atau lebih baru)"
 
 #: gammu/depend/nokia/dct4.c:1386
 #, c-format
 msgid ", type "
-msgstr ""
+msgstr ", tipe"
 
 #: gammu/depend/nokia/dct4.c:1388
 #, c-format
 msgid "string"
-msgstr ""
+msgstr "string"
 
 #: gammu/depend/nokia/dct4.c:1389
 #, c-format
 msgid "byte"
-msgstr ""
+msgstr "byte"
 
 #: gammu/depend/nokia/dct4.c:1390
 #, c-format
 msgid "2 bytes"
-msgstr ""
+msgstr "2 bytes"
 
 #: gammu/depend/nokia/dct4.c:1391
 #, c-format
 msgid "4 bytes"
-msgstr ""
+msgstr "4 bytes"
 
 #: gammu/depend/nokia/dct4.c:1398
 #, c-format
 msgid "%i phone number types\n"
-msgstr ""
+msgstr "%i tipe-tipe nomor telepon\n"
 
 #: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:120
 msgid "Home number"
-msgstr ""
+msgstr "Nomor rumah"
 
 #: gammu/depend/nokia/dct4.c:1402 helper/memory-display.c:117
 msgid "Mobile number"
-msgstr ""
+msgstr "Nomor ponsel"
 
 #: gammu/depend/nokia/dct4.c:1403 helper/memory-display.c:119
 msgid "Fax number"
-msgstr ""
+msgstr "Nomor fax"
 
 #: gammu/depend/nokia/dct4.c:1404
 msgid "Office number"
-msgstr ""
+msgstr "Nomor kantor"
 
 #: gammu/depend/nokia/dct4.c:1405
 msgid "Standard number"
-msgstr ""
+msgstr "Nomor standar"
 
 #: gammu/depend/nokia/dct4.c:1406
 msgid "Unknown number"
-msgstr ""
+msgstr "Nomor tidak diketahui"
 
 #: gammu/depend/nokia/dct4.c:1430
 #, c-format
 msgid "ERROR: unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "KESALAHAN: tipe memori tidak diketahui (\"%s\")\n"
 
 #: gammu/files.c:48
 msgid "Phone memory"
-msgstr ""
+msgstr "Memori telepon"
 
 #: gammu/files.c:49
 #, c-format
 msgid "%i bytes (free %i bytes, used %i bytes)"
-msgstr ""
+msgstr "%i bytes (bebas %i bytes, digunakan %i bytes)"
 
 #: gammu/files.c:55
 msgid "Usage details"
-msgstr ""
+msgstr "Detail penggunaan"
 
 #: gammu/files.c:56
 #, c-format
 msgid "images: %i, sounds: %i, themes: %i"
-msgstr ""
+msgstr "gambar: %i, suara: %i, tema: %i"
 
 #. l10n: One char to indicate protected file
 #: gammu/files.c:119 gammu/files.c:208 gammu/files.c:329
 #, c-format
 msgid "P"
-msgstr ""
+msgstr "p"
 
 #. l10n: One char to indicate read only file
 #: gammu/files.c:125 gammu/files.c:210 gammu/files.c:331
 #, c-format
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #. l10n: One char to indicate hidden file
 #: gammu/files.c:131 gammu/files.c:212 gammu/files.c:333
 #, c-format
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #. l10n: One char to indicate system file
 #: gammu/files.c:137 gammu/files.c:214 gammu/files.c:335
 #, c-format
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: gammu/files.c:158 gammu/files.c:171 gammu/files.c:197
 msgid "Part of folder"
