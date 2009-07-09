@@ -3094,6 +3094,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		smprintf(s, "Phonebook entry received\n");
 		/* Check for empty entries */
 		if (strcmp("OK", GetLineString(msg.Buffer, &Priv->Lines, 2)) == 0) {
+			Memory->EntriesNum = 0;
 			return ERR_EMPTY;
 		}
 
