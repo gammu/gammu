@@ -21,6 +21,7 @@ ChangeLog
 [-] * Disable AT OBEX for Motorola PEBL U6 (bug #939).
 [-] * Disable AT OBEX for Samsung J700 (bug #948).
 [-] * Empty memory entry has length 0 (bug #947).
+[-] * Handle some more fields from Nokia phonebook (bug #946), thanks to Will Sowerbutts.
     
 20090624 - 1.24.92
 

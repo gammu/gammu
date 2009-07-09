@@ -30,6 +30,8 @@ typedef enum {
 	N7110_PBK_GROUPLOGO	 = 0x1B, /* Caller group: logo 			*/
 	N7110_PBK_LOGOON	 = 0x1C, /* Caller group: is logo on ?		*/
 	N7110_PBK_GROUP		 = 0x1E, /* Caller group number in pbk entry	*/
+	N7110_PBK_UNKNOWN2       = 0x1F, /* Mystery entry on Nokia 6700         */
+	N7110_PBK_UNKNOWN3       = 0x7E, /* Mystery entry on Nokia 6700         */
 
 	/* DCT4 only */
 	N6510_PBK_URL		 = 0x2C, /* Text: URL address 			*/

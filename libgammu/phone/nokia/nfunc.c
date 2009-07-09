@@ -862,8 +862,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->Entries[Block[5]-1].SMSList[i]   = Block[9];
 			continue;
 		}
-		if (Block[0] == N7110_PBK_UNKNOWN1) {
-			smprintf(s,"Unknown entry\n");
+		if (Block[0] == N7110_PBK_UNKNOWN1 || Block[0] == N7110_PBK_UNKNOWN2 || Block[0] == N7110_PBK_UNKNOWN3) {
+			smprintf(s,"Unknown entry type 0x%02x data length %d\n", Block[0], bs-6);
 			continue;
 		}
 		if (Block[0] == N6510_PBK_UNKNOWN2) {
