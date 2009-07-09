@@ -402,6 +402,7 @@ GSM_PhoneModel allmodels[] = {
 	{"D357",	  "SGH-D357" ,	  "",				   {F_EXTRA_PBK_FIELD, 0}},
 	{"J750",	  "SGH-J750" ,	  "",				   {F_NO_ATOBEX, 0}},
 	{"J700",	  "SGH-J700" ,	  "",				   {F_NO_ATOBEX, 0}},
+	{"J700",	  "SAMSUNG SGH-J700" , "",			   {F_NO_ATOBEX, 0}},
 
 	/* Ericsson/Sony Ericsson */
 	{"T28s",	"1101101-BVT28s","",				   {F_OBEX, 0}},
