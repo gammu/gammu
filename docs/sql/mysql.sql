@@ -132,6 +132,7 @@ CREATE TABLE `outbox_multipart` (
 -- 
 
 CREATE TABLE `pbk` (
+  `ID` integer NOT NULL auto_increment,
   `GroupID` integer NOT NULL default '-1',
   `Name` text NOT NULL,
   `Number` text NOT NULL

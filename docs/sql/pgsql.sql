@@ -191,6 +191,7 @@ CREATE TABLE outbox_multipart (
 -- 
 
 CREATE TABLE pbk (
+  ID serial PRIMARY KEY,
   GroupID integer NOT NULL DEFAULT '-1',
   Name text NOT NULL,
   Number text NOT NULL
