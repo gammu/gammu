@@ -135,7 +135,8 @@ CREATE TABLE `pbk` (
   `ID` integer NOT NULL auto_increment,
   `GroupID` integer NOT NULL default '-1',
   `Name` text NOT NULL,
-  `Number` text NOT NULL
+  `Number` text NOT NULL,
+  PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 
