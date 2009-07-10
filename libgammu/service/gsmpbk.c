@@ -247,6 +247,8 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 				case PBK_Number_Fax     :
 				case PBK_Number_Home    :
 				case PBK_Number_Messaging    :
+				case PBK_Number_Mobile_Work:
+				case PBK_Number_Mobile_Home:
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
 						ignore = TRUE;
 						break;
@@ -269,6 +271,14 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 							break;
 						case PBK_Number_Mobile:
 							error = VC_Store(Buffer, buff_len, Length, ";CELL");
+							if (error != ERR_NONE) return error;
+							break;
+						case PBK_Number_Mobile_Home:
+							error = VC_Store(Buffer, buff_len, Length, ";HOME;CELL");
+							if (error != ERR_NONE) return error;
+							break;
+						case PBK_Number_Mobile_Work:
+							error = VC_Store(Buffer, buff_len, Length, ";WORK;CELL");
 							if (error != ERR_NONE) return error;
 							break;
 						case PBK_Number_Work:

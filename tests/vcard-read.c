@@ -101,6 +101,8 @@ int main(int argc, char **argv)
 		switch (pbk.Entries[i].EntryType) {
 			case PBK_Number_General     :
 			case PBK_Number_Mobile      :
+			case PBK_Number_Mobile_Work      :
+			case PBK_Number_Mobile_Home      :
 			case PBK_Number_Work        :
 			case PBK_Number_Fax         :
 			case PBK_Number_Home        :

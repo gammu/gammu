@@ -115,6 +115,8 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 	case PBK_Number_Messaging   : printf(LISTFORMAT, _("Favorite messaging number")); break;
 	case PBK_Number_General     : printf(LISTFORMAT, _("General number")); break;
 	case PBK_Number_Mobile      : printf(LISTFORMAT, _("Mobile number")); break;
+	case PBK_Number_Mobile_Work : printf(LISTFORMAT, _("Mobile number (work)")); break;
+	case PBK_Number_Mobile_Home : printf(LISTFORMAT, _("Mobile number (home)")); break;
 	case PBK_Number_Work        : printf(LISTFORMAT, _("Work number")); break;
 	case PBK_Number_Fax         : printf(LISTFORMAT, _("Fax number")); break;
 	case PBK_Number_Home        : printf(LISTFORMAT, _("Home number")); break;

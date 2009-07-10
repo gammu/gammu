@@ -108,6 +108,9 @@ MemoryValueTypes = [
     'Text_NickName',
     'Text_FormalName',
     'PushToTalkID',
+    'Photo',
+    'Number_Mobile_Home',
+    'Number_Mobile_Work',
     ]
 
 CalendarTypes = [

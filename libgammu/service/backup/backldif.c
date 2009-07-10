@@ -74,6 +74,12 @@ GSM_Error SaveLDIF(const char *FileName, GSM_Backup *backup)
 			case PBK_Number_Mobile:
 				SaveLDIFText(file, "mobile", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
+			case PBK_Number_Mobile_Home:
+				SaveLDIFText(file, "mobile", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
+			case PBK_Number_Mobile_Work:
+				SaveLDIFText(file, "mobile", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
 			case PBK_Number_Pager:
 				SaveLDIFText(file, "pager", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;

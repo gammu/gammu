@@ -313,6 +313,16 @@ static GSM_Error SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, gboolean UseUnic
 				error = SaveBackupText(file, "", buffer, UseUnicode);
 				if (error != ERR_NONE) return error;
 				break;
+			case PBK_Number_Mobile_Home:
+				sprintf(buffer,"Entry%02iType = NumberMobileHome%c%c",j,13,10);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
+				break;
+			case PBK_Number_Mobile_Work:
+				sprintf(buffer,"Entry%02iType = NumberMobileWork%c%c",j,13,10);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
+				break;
 			case PBK_Number_Work:
 				sprintf(buffer,"Entry%02iType = NumberWork%c%c",j,13,10);
 				error = SaveBackupText(file, "", buffer, UseUnicode);
@@ -1806,6 +1816,10 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 			if (strcasecmp(readvalue,"NumberGeneral") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
+			} else if (strcasecmp(readvalue,"NumberMobileWork") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile_Work;
+			} else if (strcasecmp(readvalue,"NumberMobileHome") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile_Home;
 			} else if (strcasecmp(readvalue,"NumberMobile") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile;
 			} else if (strcasecmp(readvalue,"NumberWork") == 0) {

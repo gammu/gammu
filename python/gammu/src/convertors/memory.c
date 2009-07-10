@@ -72,6 +72,12 @@ PyObject *MemoryEntryToPython(const GSM_MemoryEntry *entry) {
             case PBK_Number_Mobile:
                 convert_number("Mobile");
                 break;
+            case PBK_Number_Mobile_Work:
+                convert_number("Mobile_Work");
+                break;
+            case PBK_Number_Mobile_Home:
+                convert_number("Mobile_Home");
+                break;
             case PBK_Number_Work:
                 convert_number("Work");
                 break;
@@ -365,6 +371,12 @@ int MemoryEntryFromPython(PyObject *dict, GSM_MemoryEntry *entry, int needs_loca
         if (strcmp("Number_General", type) == 0) {
             valuetype = 't';
             entry->Entries[i].EntryType = PBK_Number_General;
+        } else if (strcmp("Number_Mobile_Work", type) == 0) {
+            valuetype = 't';
+            entry->Entries[i].EntryType = PBK_Number_Mobile_Work;
+        } else if (strcmp("Number_Mobile_Home", type) == 0) {
+            valuetype = 't';
+            entry->Entries[i].EntryType = PBK_Number_Mobile_Home;
         } else if (strcmp("Number_Mobile", type) == 0) {
             valuetype = 't';
             entry->Entries[i].EntryType = PBK_Number_Mobile;
