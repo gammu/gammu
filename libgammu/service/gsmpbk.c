@@ -715,6 +715,36 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				Pbk->EntriesNum++;
 				continue;
 			}
+			if (ReadVCALText(Line, "TEL;CELL;WORK",	      Buff, FALSE) ||
+			    ReadVCALText(Line, "TEL;CELL;WORK;VOICE",	Buff, FALSE) ||
+			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=WORK",	 Buff, FALSE) ||
+			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=WORK;TYPE=VOICE",   Buff, FALSE) ||
+			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=WORK;VOICE",   Buff, FALSE)) {
+				if (Buff[1] == '+') {
+					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
+				}
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile_Work;
+				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
+				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
+				Pbk->EntriesNum++;
+				continue;
+			}
+			if (ReadVCALText(Line, "TEL;CELL;HOME",	      Buff, FALSE) ||
+			    ReadVCALText(Line, "TEL;CELL;HOME;VOICE",	Buff, FALSE) ||
+			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=HOME",	 Buff, FALSE) ||
+			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=HOME;TYPE=VOICE",   Buff, FALSE) ||
+			    ReadVCALText(Line, "TEL;TYPE=CELL;TYPE=HOME;VOICE",   Buff, FALSE)) {
+				if (Buff[1] == '+') {
+					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
+				}
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile_Home;
+				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
+				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
+				Pbk->EntriesNum++;
+				continue;
+			}
 			if (ReadVCALText(Line, "TEL;WORK",	      Buff, FALSE) ||
 			    ReadVCALText(Line, "TEL;TYPE=WORK",	 Buff, FALSE) ||
 			    ReadVCALText(Line, "TEL;WORK;VOICE",	Buff, FALSE) ||

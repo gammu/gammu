@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2009???? - 1.25.90
+
+[-] * Fixed getting firmware revision on AT phones (bug #951).
     
 20090709 - 1.25.0
 

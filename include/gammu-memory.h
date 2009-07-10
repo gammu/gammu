@@ -325,6 +325,14 @@ typedef enum {
 	 * Photo (Picture).
 	 */
 	PBK_Photo,
+	/**
+	 * Home mobile number. (Text)
+	 */
+	PBK_Number_Mobile_Home,
+	/**
+	 * Work mobile number. (Text)
+	 */
+	PBK_Number_Mobile_Work,
 } GSM_EntryType;
 
 /**
