@@ -4,10 +4,10 @@
 # Automatically generated, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.24.93\n"
+"Project-Id-Version: Gammu 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-09 09:01+0200\n"
-"PO-Revision-Date: 2009-07-08 02:30+0200\n"
+"POT-Creation-Date: 2009-07-23 20:52+0200\n"
+"PO-Revision-Date: 2009-07-13 08:41+0200\n"
 "Last-Translator: winawang <winawangz@yahoo.co.id>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -69,8 +69,8 @@ msgstr "Kesalahan ketika menulis !\n"
 
 #: gammu/backup.c:216 gammu/backup.c:958 gammu/backup.c:1563
 #: gammu/calendar.c:606 gammu/calendar.c:941 gammu/calendar.c:1016
-#: gammu/calendar.c:1041 gammu/memory.c:25 gammu/memory.c:306
-#: gammu/memory.c:370 gammu/message.c:120 gammu/misc.c:69 gammu/misc.c:331
+#: gammu/calendar.c:1041 gammu/memory.c:25 gammu/memory.c:308
+#: gammu/memory.c:372 gammu/message.c:120 gammu/misc.c:69 gammu/misc.c:331
 msgid "Press Ctrl+C to break..."
 msgstr "Tekan Ctrl + C untuk berhenti..."
 
@@ -637,7 +637,7 @@ msgstr "Alarm diam"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:830
 #: gammu/calendar.c:1052 gammu/message.c:172 gammu/misc.c:947
-#: helper/memory-display.c:123 helper/message-display.c:430
+#: helper/memory-display.c:125 helper/message-display.c:430
 #, c-format
 msgid "Text"
 msgstr "Teks"
@@ -646,7 +646,7 @@ msgstr "Teks"
 msgid "Description"
 msgstr "Pengertian"
 
-#: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:129
+#: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:131
 msgid "LUID"
 msgstr "LUID"
 
@@ -923,7 +923,7 @@ msgstr "Kategori"
 msgid "Contact"
 msgstr "Kontak"
 
-#: gammu/calendar.c:959 gammu/memory.c:310 gammu/memory.c:387
+#: gammu/calendar.c:959 gammu/memory.c:312 gammu/memory.c:389
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Cari teks terlalu panjang, truncating ke %d karakter!\n"
@@ -1388,7 +1388,7 @@ msgstr "4 bytes"
 msgid "%i phone number types\n"
 msgstr "%i tipe-tipe nomor telepon\n"
 
-#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:120
+#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:122
 msgid "Home number"
 msgstr "Nomor rumah"
 
@@ -1396,7 +1396,7 @@ msgstr "Nomor rumah"
 msgid "Mobile number"
 msgstr "Nomor ponsel"
 
-#: gammu/depend/nokia/dct4.c:1403 helper/memory-display.c:119
+#: gammu/depend/nokia/dct4.c:1403 helper/memory-display.c:121
 msgid "Fax number"
 msgstr "Nomor fax"
 
@@ -1461,177 +1461,185 @@ msgstr "S"
 
 #: gammu/files.c:158 gammu/files.c:171 gammu/files.c:197
 msgid "Part of folder"
-msgstr ""
+msgstr "Bagian dari folder"
 
 #: gammu/files.c:160 gammu/files.c:173 gammu/files.c:199 gammu/files.c:324
 #, c-format
 msgid "Folder"
-msgstr ""
+msgstr "Folder"
 
 #: gammu/files.c:184 gammu/files.c:315
 #, c-format
 msgid "File;"
-msgstr ""
+msgstr "File;"
 
 #: gammu/files.c:224
 #, c-format
 msgid "Used in phone: %li bytes"
-msgstr ""
+msgstr "Gunakan di telepon : %li bytes"
 
 #: gammu/files.c:226
 #, c-format
 msgid ", used in card: %li bytes"
-msgstr ""
+msgstr ", digunakan di kartu : %li bytes"
 
 #: gammu/files.c:256
 #, c-format
 msgid "Unknown attribute (%s)\n"
-msgstr ""
+msgstr "Atribut idak diketahui (%s)\n"
 
 #: gammu/files.c:307
 msgid "Part of folder only"
-msgstr ""
+msgstr "bagian dari folder saja"
 
 #: gammu/files.c:371
 #, c-format
 msgid "Getting \"%s\"\n"
-msgstr ""
+msgstr "Mendapatkan \"%s\"\n"
 
 #: gammu/files.c:380
 msgid "it's folder. Please give only file names"
-msgstr ""
+msgstr "Itu adalah folder. Silahkan berikan nama file saja."
 
 #: gammu/files.c:400 gammu/files.c:608
 #, c-format
 msgid " (%02i:%02i minutes left)"
-msgstr ""
+msgstr " (%02i:%02i menit tersisa)"
 
 #: gammu/files.c:412 gammu/files.c:620
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File damaged or error in Gammu"
 msgstr ""
+"checksum file dikalkulasikan oleh telepon tidak cocok dengan nilai kalkulasi "
+"oleh gammu. File rusak atau kesalahan dalam Gammu"
 
 #: gammu/files.c:444
 #, c-format
 msgid "  Saving to %s\n"
-msgstr ""
+msgstr "Menyimpan ke %s\n"
 
 #: gammu/files.c:695 gammu/nokia.c:925
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
-msgstr ""
+msgstr "Parameter \"%s\" tidak diketahui\n"
 
 #: gammu/files.c:730
 #, c-format
 msgid "What file type (\"%s\") ?\n"
-msgstr ""
+msgstr "Apa tipe filenya (\"%s\") ?\n"
 
 #: gammu/files.c:739 gammu/misc.c:1149 gammu/nokia.c:934
 #: helper/message-cmdline.c:1292
 msgid "Parameter missing!"
-msgstr ""
+msgstr "Parameter tidak ditemukan!"
 
 #: gammu/files.c:748
 #, c-format
 msgid "ID of new file is \"%s\"\n"
-msgstr ""
+msgstr "ID file baru adalah \"%s\"\n"
 
 #: gammu/files.c:769
 #, c-format
 msgid "ID of new folder is \"%s\"\n"
-msgstr ""
+msgstr "ID folder baru adalah \"%s\"\n"
 
 #: gammu/gammu.c:103
 #, c-format
 msgid "Networks for %s:"
-msgstr ""
+msgstr "Jaringan untuk %s:"
 
 #: gammu/gammu.c:111
 #, c-format
 msgid "Unknown country name: %s."
-msgstr ""
+msgstr "Nama negara tidak diketahui: %s."
 
 #: gammu/gammu.c:116 gammu/gammu.c:760 gammu/misc.c:46
 msgid "Network"
-msgstr ""
+msgstr "Jaringan"
 
 #: gammu/gammu.c:116 gammu/message.c:165 gammu/misc.c:783 gammu/misc.c:950
 #: gammu/misc.c:1687 gammu/misc.c:1726 gammu/misc.c:1991 gammu/mms.c:112
-#: helper/memory-display.c:130 helper/message-display.c:242
+#: helper/memory-display.c:132 helper/message-display.c:242
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
 #: gammu/gammu.c:135
 #, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
-msgstr ""
+msgstr "[Versi Gammu %s dibangun %s pada %s menggunakan %s]"
 
 #: gammu/gammu.c:144
 msgid "Compiled in features:"
-msgstr ""
+msgstr "Dikompilasi dalam fitur:"
 
 #: gammu/gammu.c:146
 msgid "Protocols"
-msgstr ""
+msgstr "Protokol"
 
 #: gammu/gammu.c:214
 msgid "Phones"
-msgstr ""
+msgstr "Telepon"
 
 #: gammu/gammu.c:259
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Miscellaneous"
 
 #: gammu/gammu.c:337
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
-msgstr ""
+msgstr "Telah tersedia versi stabil Gammu terbaru!(%s selain dari %s)\n"
 
 #: gammu/gammu.c:355
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
-msgstr ""
+msgstr "Telah tersedia versi pengujian Gammu terbaru!(%s selain dari %s)\n"
 
 #: gammu/gammu.c:368
 msgid ""
 "Copyright (C) 2003 - 2009 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
+"Copyright (C) 2003 - 2009 Michal Cihar <michal@cihar.com> dan penulis "
+"lainnya."
 
 #: gammu/gammu.c:372
 msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
 msgstr ""
+"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
+"GPL/2.0/>."
 
 #: gammu/gammu.c:374
 msgid "This is free software: you are free to change and redistribute it."
 msgstr ""
+"Ini adalah perangkat lunak bebas: anda bebas untuk mengubah dan "
+"mendistribusikannya."
 
 #: gammu/gammu.c:376
 msgid "There is NO WARRANTY, to the extent permitted by law."
-msgstr ""
+msgstr "TIDAK ADA JAMINAN, sampai batas-batas yang diijinkan oleh hukum. "
 
 #: gammu/gammu.c:380
 msgid "Check <http://cihar.com/gammu/> for updates."
-msgstr ""
+msgstr "Cek <http://cihar.com/gammu/> untuk pembaharuan."
 
 #: gammu/gammu.c:406
 msgid "standard input"
-msgstr ""
+msgstr "masukan standar"
 
 #: gammu/gammu.c:417
 #, c-format
 msgid "Batch file could not be opened: %s\n"
-msgstr ""
+msgstr "File batch tidak dapat dibuka: %s\n"
 
 #: gammu/gammu.c:428
 msgid "Error reading batch! Terminating.\n"
-msgstr ""
+msgstr "Kesalahan membaca batch! Menghentikan.\n"
 
 #: gammu/gammu.c:430
 msgid "Batch processed, terminating.\n"
-msgstr ""
+msgstr "Batch diproses, terminating.\n"
 
 #: gammu/gammu.c:467
 #, c-format
@@ -1850,8 +1858,8 @@ msgstr ""
 msgid "Unknown memory type (\"%s\")\n"
 msgstr ""
 
-#: gammu/memory.c:42 gammu/memory.c:96 gammu/memory.c:114 gammu/memory.c:234
-#: gammu/memory.c:346
+#: gammu/memory.c:42 gammu/memory.c:96 gammu/memory.c:114 gammu/memory.c:236
+#: gammu/memory.c:348
 #, c-format
 msgid "Memory %s, Location %i\n"
 msgstr ""
@@ -3378,122 +3386,132 @@ msgid "General number"
 msgstr ""
 
 #: helper/memory-display.c:118
+#, fuzzy
+msgid "Mobile number (work)"
+msgstr "Nomor ponsel"
+
+#: helper/memory-display.c:119
+#, fuzzy
+msgid "Mobile number (home)"
+msgstr "Nomor ponsel"
+
+#: helper/memory-display.c:120
 msgid "Work number"
 msgstr ""
 
-#: helper/memory-display.c:121
+#: helper/memory-display.c:123
 msgid "Pager number"
 msgstr ""
 
-#: helper/memory-display.c:122
+#: helper/memory-display.c:124
 msgid "Other number"
 msgstr ""
 
-#: helper/memory-display.c:124
+#: helper/memory-display.c:126
 msgid "Snail address"
 msgstr ""
 
-#: helper/memory-display.c:125
+#: helper/memory-display.c:127
 msgid "Work snail address"
 msgstr ""
 
-#: helper/memory-display.c:126
+#: helper/memory-display.c:128
 msgid "Email address 1"
 msgstr ""
 
-#: helper/memory-display.c:127
+#: helper/memory-display.c:129
 msgid "Email address 2"
 msgstr ""
 
-#: helper/memory-display.c:128
+#: helper/memory-display.c:130
 msgid "URL address"
 msgstr ""
 
-#: helper/memory-display.c:131
+#: helper/memory-display.c:133
 msgid "Last name"
 msgstr ""
 
-#: helper/memory-display.c:132
+#: helper/memory-display.c:134
 msgid "First name"
 msgstr ""
 
-#: helper/memory-display.c:133
+#: helper/memory-display.c:135
 msgid "Formal name"
 msgstr ""
 
-#: helper/memory-display.c:134
+#: helper/memory-display.c:136
 msgid "Nick name"
 msgstr ""
 
-#: helper/memory-display.c:135
+#: helper/memory-display.c:137
 msgid "Company"
 msgstr ""
 
-#: helper/memory-display.c:136
+#: helper/memory-display.c:138
 msgid "Job title"
 msgstr ""
 
-#: helper/memory-display.c:137
+#: helper/memory-display.c:139
 msgid "Street address"
 msgstr ""
 
-#: helper/memory-display.c:138
+#: helper/memory-display.c:140
 msgid "City"
 msgstr ""
 
-#: helper/memory-display.c:139
+#: helper/memory-display.c:141
 msgid "State"
 msgstr ""
 
-#: helper/memory-display.c:140
+#: helper/memory-display.c:142
 msgid "Zip code"
 msgstr ""
 
-#: helper/memory-display.c:141
+#: helper/memory-display.c:143
 msgid "Country"
 msgstr ""
 
-#: helper/memory-display.c:142
+#: helper/memory-display.c:144
 msgid "Work street address"
 msgstr ""
 
-#: helper/memory-display.c:143
+#: helper/memory-display.c:145
 msgid "Work city"
 msgstr ""
 
-#: helper/memory-display.c:144
+#: helper/memory-display.c:146
 msgid "Work state"
 msgstr ""
 
-#: helper/memory-display.c:145
+#: helper/memory-display.c:147
 msgid "Work zip code"
 msgstr ""
 
-#: helper/memory-display.c:146
+#: helper/memory-display.c:148
 msgid "Work country"
 msgstr ""
 
-#: helper/memory-display.c:147
+#: helper/memory-display.c:149
 msgid "Custom text 1"
 msgstr ""
 
-#: helper/memory-display.c:148
+#: helper/memory-display.c:150
 msgid "Custom text 2"
 msgstr ""
 
-#: helper/memory-display.c:149
+#: helper/memory-display.c:151
 msgid "Custom text 3"
 msgstr ""
 
-#: helper/memory-display.c:150
+#: helper/memory-display.c:152
 msgid "Custom text 4"
 msgstr ""
 
-#: helper/memory-display.c:151
+#: helper/memory-display.c:153
 msgid "Push to talk ID"
 msgstr ""
 
-#: helper/memory-display.c:154
+#: helper/memory-display.c:156
 msgid "unknown field type"
 msgstr ""
 

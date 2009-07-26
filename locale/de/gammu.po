@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.24.93\n"
+"Project-Id-Version: Gammu 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-07 14:27+0200\n"
+"POT-Creation-Date: 2009-07-23 20:52+0200\n"
 "PO-Revision-Date: 2009-07-06 14:14+0200\n"
 "Last-Translator: Benedikt Sauer <filmor@gmail.com>\n"
 "Language-Team: Language =de\n"
@@ -71,8 +71,8 @@ msgstr "Fehler beim Schreiben der Datei!\n"
 
 #: gammu/backup.c:216 gammu/backup.c:958 gammu/backup.c:1563
 #: gammu/calendar.c:606 gammu/calendar.c:941 gammu/calendar.c:1016
-#: gammu/calendar.c:1041 gammu/memory.c:25 gammu/memory.c:306
-#: gammu/memory.c:370 gammu/message.c:120 gammu/misc.c:69 gammu/misc.c:331
+#: gammu/calendar.c:1041 gammu/memory.c:25 gammu/memory.c:308
+#: gammu/memory.c:372 gammu/message.c:120 gammu/misc.c:69 gammu/misc.c:331
 msgid "Press Ctrl+C to break..."
 msgstr "Strg+C drücken, um zu unterbrechen..."
 
@@ -667,7 +667,7 @@ msgstr "Lautloser Alarm"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:830
 #: gammu/calendar.c:1052 gammu/message.c:172 gammu/misc.c:947
-#: helper/memory-display.c:123 helper/message-display.c:430
+#: helper/memory-display.c:125 helper/message-display.c:430
 #, c-format
 msgid "Text"
 msgstr "Text"
@@ -676,7 +676,7 @@ msgstr "Text"
 msgid "Description"
 msgstr "Beschreibung"
 
-#: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:129
+#: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:131
 msgid "LUID"
 msgstr "LUID"
 
@@ -956,7 +956,7 @@ msgstr "Kategorie"
 msgid "Contact"
 msgstr "Kontakt-ID"
 
-#: gammu/calendar.c:959 gammu/memory.c:310 gammu/memory.c:387
+#: gammu/calendar.c:959 gammu/memory.c:312 gammu/memory.c:389
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Der Suchtext ist zu lang, schneide ihn auf %d Zeichen ab!\n"
@@ -1427,7 +1427,7 @@ msgstr "4 Bytes"
 msgid "%i phone number types\n"
 msgstr "%i Arten von Telefonnummern\n"
 
-#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:120
+#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:122
 msgid "Home number"
 msgstr "Privatnummer   "
 
@@ -1435,7 +1435,7 @@ msgstr "Privatnummer   "
 msgid "Mobile number"
 msgstr "Handynummer       "
 
-#: gammu/depend/nokia/dct4.c:1403 helper/memory-display.c:119
+#: gammu/depend/nokia/dct4.c:1403 helper/memory-display.c:121
 msgid "Fax number"
 msgstr "Faxnummer"
 
@@ -1603,7 +1603,7 @@ msgstr "Netzname"
 
 #: gammu/gammu.c:116 gammu/message.c:165 gammu/misc.c:783 gammu/misc.c:950
 #: gammu/misc.c:1687 gammu/misc.c:1726 gammu/misc.c:1991 gammu/mms.c:112
-#: helper/memory-display.c:130 helper/message-display.c:242
+#: helper/memory-display.c:132 helper/message-display.c:242
 msgid "Name"
 msgstr "Name"
 
@@ -1908,8 +1908,8 @@ msgstr ""
 msgid "Unknown memory type (\"%s\")\n"
 msgstr "Unbekannter Speichertyp: (\"%s\")\n"
 
-#: gammu/memory.c:42 gammu/memory.c:96 gammu/memory.c:114 gammu/memory.c:234
-#: gammu/memory.c:346
+#: gammu/memory.c:42 gammu/memory.c:96 gammu/memory.c:114 gammu/memory.c:236
+#: gammu/memory.c:348
 #, c-format
 msgid "Memory %s, Location %i\n"
 msgstr "Speicher %s, Speicherplatz %i\n"
@@ -3506,122 +3506,132 @@ msgid "General number"
 msgstr "Allgemeine Nummer "
 
 #: helper/memory-display.c:118
+#, fuzzy
+msgid "Mobile number (work)"
+msgstr "Handynummer       "
+
+#: helper/memory-display.c:119
+#, fuzzy
+msgid "Mobile number (home)"
+msgstr "Handynummer       "
+
+#: helper/memory-display.c:120
 msgid "Work number"
 msgstr "Geschäftsnummer"
 
-#: helper/memory-display.c:121
+#: helper/memory-display.c:123
 msgid "Pager number"
 msgstr "Pagernummer      "
 
-#: helper/memory-display.c:122
+#: helper/memory-display.c:124
 msgid "Other number"
 msgstr "Andere Nummer     "
 
-#: helper/memory-display.c:124
+#: helper/memory-display.c:126
 msgid "Snail address"
 msgstr "Postanschrift"
 
-#: helper/memory-display.c:125
+#: helper/memory-display.c:127
 msgid "Work snail address"
 msgstr "Dienstliche Postanschrift"
 
-#: helper/memory-display.c:126
+#: helper/memory-display.c:128
 msgid "Email address 1"
 msgstr "E-Mail-Adresse 1  "
 
-#: helper/memory-display.c:127
+#: helper/memory-display.c:129
 msgid "Email address 2"
 msgstr "E-Mail-Adresse 2  "
 
-#: helper/memory-display.c:128
+#: helper/memory-display.c:130
 msgid "URL address"
 msgstr "Webadresse        "
 
-#: helper/memory-display.c:131
+#: helper/memory-display.c:133
 msgid "Last name"
 msgstr "Familienname      "
 
-#: helper/memory-display.c:132
+#: helper/memory-display.c:134
 msgid "First name"
 msgstr "Vorname           "
 
-#: helper/memory-display.c:133
+#: helper/memory-display.c:135
 msgid "Formal name"
 msgstr "Name (förmlich)"
 
-#: helper/memory-display.c:134
+#: helper/memory-display.c:136
 msgid "Nick name"
 msgstr "Nickname"
 
-#: helper/memory-display.c:135
+#: helper/memory-display.c:137
 msgid "Company"
 msgstr "Firma             "
 
-#: helper/memory-display.c:136
+#: helper/memory-display.c:138
 msgid "Job title"
 msgstr "Tätigkeit         "
 
-#: helper/memory-display.c:137
+#: helper/memory-display.c:139
 msgid "Street address"
 msgstr "Straße            "
 
-#: helper/memory-display.c:138
+#: helper/memory-display.c:140
 msgid "City"
 msgstr "Ort"
 
-#: helper/memory-display.c:139
+#: helper/memory-display.c:141
 msgid "State"
 msgstr "Bundesland / Kanton"
 
-#: helper/memory-display.c:140
+#: helper/memory-display.c:142
 msgid "Zip code"
 msgstr "Postleitzahl      "
 
-#: helper/memory-display.c:141
+#: helper/memory-display.c:143
 msgid "Country"
 msgstr "Land              "
 
-#: helper/memory-display.c:142
+#: helper/memory-display.c:144
 msgid "Work street address"
 msgstr "Dienstlicher Straßenname"
 
-#: helper/memory-display.c:143
+#: helper/memory-display.c:145
 msgid "Work city"
 msgstr "Dienstliche Stadt"
 
-#: helper/memory-display.c:144
+#: helper/memory-display.c:146
 msgid "Work state"
 msgstr "Dienstliches Bundesland"
 
-#: helper/memory-display.c:145
+#: helper/memory-display.c:147
 msgid "Work zip code"
 msgstr "Dienstliche Postleitzahl"
 
-#: helper/memory-display.c:146
+#: helper/memory-display.c:148
 msgid "Work country"
 msgstr "Dienstlicher Staat     "
 
-#: helper/memory-display.c:147
+#: helper/memory-display.c:149
 msgid "Custom text 1"
 msgstr "Benutzer-Text 1   "
 
-#: helper/memory-display.c:148
+#: helper/memory-display.c:150
 msgid "Custom text 2"
 msgstr "Benutzer-Text 2   "
 
-#: helper/memory-display.c:149
+#: helper/memory-display.c:151
 msgid "Custom text 3"
 msgstr "Benutzer-Text 3   "
 
-#: helper/memory-display.c:150
+#: helper/memory-display.c:152
 msgid "Custom text 4"
 msgstr "Benutzer-Text 4   "
 
-#: helper/memory-display.c:151
+#: helper/memory-display.c:153
 msgid "Push to talk ID"
 msgstr ""
 
-#: helper/memory-display.c:154
+#: helper/memory-display.c:156
 msgid "unknown field type"
 msgstr "unbekannter Feldtyp"
 

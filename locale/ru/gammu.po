@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.24.93\n"
+"Project-Id-Version: Gammu 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-06-24 14:44+0200\n"
+"POT-Creation-Date: 2009-07-23 20:52+0200\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -71,8 +71,8 @@ msgstr "Ошибка записи в устройство."
 
 #: gammu/backup.c:216 gammu/backup.c:958 gammu/backup.c:1563
 #: gammu/calendar.c:606 gammu/calendar.c:941 gammu/calendar.c:1016
-#: gammu/calendar.c:1041 gammu/memory.c:25 gammu/memory.c:306
-#: gammu/memory.c:370 gammu/message.c:120 gammu/misc.c:69 gammu/misc.c:331
+#: gammu/calendar.c:1041 gammu/memory.c:25 gammu/memory.c:308
+#: gammu/memory.c:372 gammu/message.c:120 gammu/misc.c:69 gammu/misc.c:331
 msgid "Press Ctrl+C to break..."
 msgstr "Чтобы прервать, нажмите Ctrl+C..."
 
@@ -723,7 +723,7 @@ msgstr "Тихий сигнал     : %s\n"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:830
 #: gammu/calendar.c:1052 gammu/message.c:172 gammu/misc.c:947
-#: helper/memory-display.c:123 helper/message-display.c:430
+#: helper/memory-display.c:125 helper/message-display.c:430
 #, c-format
 msgid "Text"
 msgstr "Текст"
@@ -733,7 +733,7 @@ msgstr "Текст"
 msgid "Description"
 msgstr "Описание         : \"%s\"\n"
 
-#: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:129
+#: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:131
 msgid "LUID"
 msgstr ""
 
@@ -1034,7 +1034,7 @@ msgstr "Категория    : %i\n"
 msgid "Contact"
 msgstr "ID контакта      : %d\n"
 
-#: gammu/calendar.c:959 gammu/memory.c:310 gammu/memory.c:387
+#: gammu/calendar.c:959 gammu/memory.c:312 gammu/memory.c:389
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Искомый текст слишком длинный; усечён до %d символов!\n"
@@ -1517,7 +1517,7 @@ msgstr ""
 msgid "%i phone number types\n"
 msgstr "Проверяются пользовательские рингтоны телефона\n"
 
-#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:120
+#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:122
 #, fuzzy
 msgid "Home number"
 msgstr "Домашний        "
@@ -1527,7 +1527,7 @@ msgstr "Домашний        "
 msgid "Mobile number"
 msgstr "Мобильный       "
 
-#: gammu/depend/nokia/dct4.c:1403 helper/memory-display.c:119
+#: gammu/depend/nokia/dct4.c:1403 helper/memory-display.c:121
 #, fuzzy
 msgid "Fax number"
 msgstr "   Номер      : %s\n"
@@ -1709,7 +1709,7 @@ msgstr "Название сети\n"
 
 #: gammu/gammu.c:116 gammu/message.c:165 gammu/misc.c:783 gammu/misc.c:950
 #: gammu/misc.c:1687 gammu/misc.c:1726 gammu/misc.c:1991 gammu/mms.c:112
-#: helper/memory-display.c:130 helper/message-display.c:242
+#: helper/memory-display.c:132 helper/message-display.c:242
 msgid "Name"
 msgstr "Имя"
 
@@ -2035,8 +2035,8 @@ msgstr ""
 msgid "Unknown memory type (\"%s\")\n"
 msgstr "Неизвестный тип памяти: \"%s\"\n"
 
-#: gammu/memory.c:42 gammu/memory.c:96 gammu/memory.c:114 gammu/memory.c:234
-#: gammu/memory.c:346
+#: gammu/memory.c:42 gammu/memory.c:96 gammu/memory.c:114 gammu/memory.c:236
+#: gammu/memory.c:348
 #, c-format
 msgid "Memory %s, Location %i\n"
 msgstr "Память %s, адрес %i\n"
@@ -3763,148 +3763,158 @@ msgstr "Основной        "
 
 #: helper/memory-display.c:118
 #, fuzzy
+msgid "Mobile number (work)"
+msgstr "Мобильный       "
+
+#: helper/memory-display.c:119
+#, fuzzy
+msgid "Mobile number (home)"
+msgstr "Мобильный       "
+
+#: helper/memory-display.c:120
+#, fuzzy
 msgid "Work number"
 msgstr "Мобильный       "
 
-#: helper/memory-display.c:121
+#: helper/memory-display.c:123
 #, fuzzy
 msgid "Pager number"
 msgstr "Пейджер         "
 
-#: helper/memory-display.c:122
+#: helper/memory-display.c:124
 #, fuzzy
 msgid "Other number"
 msgstr "Другой          "
 
-#: helper/memory-display.c:124
+#: helper/memory-display.c:126
 #, fuzzy
 msgid "Snail address"
 msgstr "Адрес Snail     "
 
-#: helper/memory-display.c:125
+#: helper/memory-display.c:127
 #, fuzzy
 msgid "Work snail address"
 msgstr "Адрес Snail     "
 
-#: helper/memory-display.c:126
+#: helper/memory-display.c:128
 #, fuzzy
 msgid "Email address 1"
 msgstr "Адрес E-mail  1 "
 
-#: helper/memory-display.c:127
+#: helper/memory-display.c:129
 #, fuzzy
 msgid "Email address 2"
 msgstr "Адрес E-mail  2 "
 
-#: helper/memory-display.c:128
+#: helper/memory-display.c:130
 #, fuzzy
 msgid "URL address"
 msgstr "URL             "
 
-#: helper/memory-display.c:131
+#: helper/memory-display.c:133
 #, fuzzy
 msgid "Last name"
 msgstr "Фамилия         "
 
-#: helper/memory-display.c:132
+#: helper/memory-display.c:134
 #, fuzzy
 msgid "First name"
 msgstr "Имя             "
 
-#: helper/memory-display.c:133
+#: helper/memory-display.c:135
 #, fuzzy
 msgid "Formal name"
 msgstr "Имя             "
 
-#: helper/memory-display.c:134
+#: helper/memory-display.c:136
 #, fuzzy
 msgid "Nick name"
 msgstr "Имя             "
 
-#: helper/memory-display.c:135
+#: helper/memory-display.c:137
 #, fuzzy
 msgid "Company"
 msgstr "Организация     "
 
-#: helper/memory-display.c:136
+#: helper/memory-display.c:138
 #, fuzzy
 msgid "Job title"
 msgstr "Должность       "
 
-#: helper/memory-display.c:137
+#: helper/memory-display.c:139
 #, fuzzy
 msgid "Street address"
 msgstr "Улица           "
 
-#: helper/memory-display.c:138
+#: helper/memory-display.c:140
 msgid "City"
 msgstr ""
 
-#: helper/memory-display.c:139
+#: helper/memory-display.c:141
 #, fuzzy
 msgid "State"
 msgstr "Стандартный\n"
 
-#: helper/memory-display.c:140
+#: helper/memory-display.c:142
 #, fuzzy
 msgid "Zip code"
 msgstr "Почтовый индекс "
 
-#: helper/memory-display.c:141
+#: helper/memory-display.c:143
 #, fuzzy
 msgid "Country"
 msgstr "Страна          "
 
-#: helper/memory-display.c:142
+#: helper/memory-display.c:144
 #, fuzzy
 msgid "Work street address"
 msgstr "Улица           "
 
-#: helper/memory-display.c:143
+#: helper/memory-display.c:145
 #, fuzzy
 msgid "Work city"
 msgstr "Страна          "
 
-#: helper/memory-display.c:144
+#: helper/memory-display.c:146
 #, fuzzy
 msgid "Work state"
 msgstr "Состояние сети     : "
 
-#: helper/memory-display.c:145
+#: helper/memory-display.c:147
 #, fuzzy
 msgid "Work zip code"
 msgstr "Почтовый индекс "
 
-#: helper/memory-display.c:146
+#: helper/memory-display.c:148
 #, fuzzy
 msgid "Work country"
 msgstr "Страна          "
 
-#: helper/memory-display.c:147
+#: helper/memory-display.c:149
 #, fuzzy
 msgid "Custom text 1"
 msgstr "Свой текст 1    "
 
-#: helper/memory-display.c:148
+#: helper/memory-display.c:150
 #, fuzzy
 msgid "Custom text 2"
 msgstr "Свой текст 2    "
 
-#: helper/memory-display.c:149
+#: helper/memory-display.c:151
 #, fuzzy
 msgid "Custom text 3"
 msgstr "Свой текст 3    "
 
-#: helper/memory-display.c:150
+#: helper/memory-display.c:152
 #, fuzzy
 msgid "Custom text 4"
 msgstr "Свой текст 4    "
 
-#: helper/memory-display.c:151
+#: helper/memory-display.c:153
 msgid "Push to talk ID"
 msgstr ""
 
-#: helper/memory-display.c:154
+#: helper/memory-display.c:156
 #, fuzzy
 msgid "unknown field type"
 msgstr "неизвестный %i"

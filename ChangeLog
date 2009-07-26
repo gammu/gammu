@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Fixed getting firmware revision on AT phones (bug #951).
 [+] * Added support for home/work mobile number (bug #952).
+[-] * Fixed handling of error response for security status in AT.
     
 20090709 - 1.25.0
 

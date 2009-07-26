@@ -3595,43 +3595,51 @@ GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 GSM_Error ATGEN_ReplyGetSecurityStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_SecurityCodeType *Status = s->Phone.Data.SecurityStatus;
+	const char *statustext;
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (Priv->ReplyState != AT_Reply_OK) {
+		return ERR_NOTSUPPORTED;
+	}
+
+	statustext = GetLineString(msg.Buffer, &Priv->Lines, 2);
 
 	smprintf(s, "Security status received - ");
-	if (strstr(msg.Buffer,"READY")) {
+	if (strstr(statustext,"READY")) {
 		*Status = SEC_None;
 		smprintf(s, "nothing to enter\n");
 		return ERR_NONE;
 	}
-	if (strstr(msg.Buffer,"PH-SIM PIN")) {
+	if (strstr(statustext,"PH-SIM PIN")) {
 		*Status = SEC_Phone;
 		smprintf(s, "Phone code needed\n");
 		return ERR_NONE;
 	}
-	if (strstr(msg.Buffer,"PH-NET PIN")) {
+	if (strstr(statustext,"PH-NET PIN")) {
 		*Status = SEC_Network;
 		smprintf(s, "Network code needed\n");
 		return ERR_NONE;
 	}
-	if (strstr(msg.Buffer,"PH_SIM PIN")) {
+	if (strstr(statustext,"PH_SIM PIN")) {
 		smprintf(s, "no SIM inside or other error\n");
 		return ERR_UNKNOWN;
 	}
-	if (strstr(msg.Buffer,"SIM PIN2")) {
+	if (strstr(statustext,"SIM PIN2")) {
 		*Status = SEC_Pin2;
 		smprintf(s, "waiting for PIN2\n");
 		return ERR_NONE;
 	}
-	if (strstr(msg.Buffer,"SIM PUK2")) {
+	if (strstr(statustext,"SIM PUK2")) {
 		*Status = SEC_Puk2;
 		smprintf(s, "waiting for PUK2\n");
 		return ERR_NONE;
 	}
-	if (strstr(msg.Buffer,"SIM PIN")) {
+	if (strstr(statustext,"SIM PIN")) {
 		*Status = SEC_Pin;
 		smprintf(s, "waiting for PIN\n");
 		return ERR_NONE;
 	}
-	if (strstr(msg.Buffer,"SIM PUK")) {
+	if (strstr(statustext,"SIM PUK")) {
 		*Status = SEC_Puk;
 		smprintf(s, "waiting for PUK\n");
 		return ERR_NONE;

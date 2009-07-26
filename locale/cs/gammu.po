@@ -6,16 +6,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.24.93\n"
+"Project-Id-Version: Gammu 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-06-24 14:44+0200\n"
+"POT-Creation-Date: 2009-07-23 20:52+0200\n"
 "PO-Revision-Date: 2009-07-09 11:28+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -71,8 +71,8 @@ msgstr "Chyba při zápisu do souboru!\n"
 
 #: gammu/backup.c:216 gammu/backup.c:958 gammu/backup.c:1563
 #: gammu/calendar.c:606 gammu/calendar.c:941 gammu/calendar.c:1016
-#: gammu/calendar.c:1041 gammu/memory.c:25 gammu/memory.c:306
-#: gammu/memory.c:370 gammu/message.c:120 gammu/misc.c:69 gammu/misc.c:331
+#: gammu/calendar.c:1041 gammu/memory.c:25 gammu/memory.c:308
+#: gammu/memory.c:372 gammu/message.c:120 gammu/misc.c:69 gammu/misc.c:331
 msgid "Press Ctrl+C to break..."
 msgstr "Stiskněte Ctrl+C pro přerušení..."
 
@@ -637,7 +637,7 @@ msgstr "Tiché upozornění"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:830
 #: gammu/calendar.c:1052 gammu/message.c:172 gammu/misc.c:947
-#: helper/memory-display.c:123 helper/message-display.c:430
+#: helper/memory-display.c:125 helper/message-display.c:430
 #, c-format
 msgid "Text"
 msgstr "Text"
@@ -646,7 +646,7 @@ msgstr "Text"
 msgid "Description"
 msgstr "Popis"
 
-#: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:129
+#: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:131
 msgid "LUID"
 msgstr "LUID"
 
@@ -924,7 +924,7 @@ msgstr "Kategorie"
 msgid "Contact"
 msgstr "Kontakt"
 
-#: gammu/calendar.c:959 gammu/memory.c:310 gammu/memory.c:387
+#: gammu/calendar.c:959 gammu/memory.c:312 gammu/memory.c:389
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Text pro vyhledávání je příliš dlouhý, zkracuji na %d znaků!\n"
@@ -1387,7 +1387,7 @@ msgstr ""
 msgid "%i phone number types\n"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:120
+#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:122
 msgid "Home number"
 msgstr "Číslo domů"
 
@@ -1395,7 +1395,7 @@ msgstr "Číslo domů"
 msgid "Mobile number"
 msgstr "Číslo na mobil"
 
-#: gammu/depend/nokia/dct4.c:1403 helper/memory-display.c:119
+#: gammu/depend/nokia/dct4.c:1403 helper/memory-display.c:121
 msgid "Fax number"
 msgstr "Faxové číslo"
 
@@ -1557,7 +1557,7 @@ msgstr "Síť"
 
 #: gammu/gammu.c:116 gammu/message.c:165 gammu/misc.c:783 gammu/misc.c:950
 #: gammu/misc.c:1687 gammu/misc.c:1726 gammu/misc.c:1991 gammu/mms.c:112
-#: helper/memory-display.c:130 helper/message-display.c:242
+#: helper/memory-display.c:132 helper/message-display.c:242
 msgid "Name"
 msgstr "Jméno"
 
@@ -1869,8 +1869,8 @@ msgstr "Verze instalované libGammu.so (%s) se liší od verze Gammu (%s)\n"
 msgid "Unknown memory type (\"%s\")\n"
 msgstr "Neznámý typ paměti (\"%s\")\n"
 
-#: gammu/memory.c:42 gammu/memory.c:96 gammu/memory.c:114 gammu/memory.c:234
-#: gammu/memory.c:346
+#: gammu/memory.c:42 gammu/memory.c:96 gammu/memory.c:114 gammu/memory.c:236
+#: gammu/memory.c:348
 #, c-format
 msgid "Memory %s, Location %i\n"
 msgstr "Paměť %s, pozice %i\n"
@@ -3407,122 +3407,132 @@ msgid "General number"
 msgstr "Obecné číslo"
 
 #: helper/memory-display.c:118
+#, fuzzy
+msgid "Mobile number (work)"
+msgstr "Číslo na mobil"
+
+#: helper/memory-display.c:119
+#, fuzzy
+msgid "Mobile number (home)"
+msgstr "Číslo na mobil"
+
+#: helper/memory-display.c:120
 msgid "Work number"
 msgstr "Číslo do práce"
 
-#: helper/memory-display.c:121
+#: helper/memory-display.c:123
 msgid "Pager number"
 msgstr "Číslo na pager"
 
-#: helper/memory-display.c:122
+#: helper/memory-display.c:124
 msgid "Other number"
 msgstr "Další číslo"
 
-#: helper/memory-display.c:124
+#: helper/memory-display.c:126
 msgid "Snail address"
 msgstr "Poštovní adresa"
 
-#: helper/memory-display.c:125
+#: helper/memory-display.c:127
 msgid "Work snail address"
 msgstr "Pracovní poštovní adresa"
 
-#: helper/memory-display.c:126
+#: helper/memory-display.c:128
 msgid "Email address 1"
 msgstr "Email 1"
 
-#: helper/memory-display.c:127
+#: helper/memory-display.c:129
 msgid "Email address 2"
 msgstr "Email 2"
 
-#: helper/memory-display.c:128
+#: helper/memory-display.c:130
 msgid "URL address"
 msgstr "URL adresa"
 
-#: helper/memory-display.c:131
+#: helper/memory-display.c:133
 msgid "Last name"
 msgstr "Příjmení"
 
-#: helper/memory-display.c:132
+#: helper/memory-display.c:134
 msgid "First name"
 msgstr "Křestní jméno"
 
-#: helper/memory-display.c:133
+#: helper/memory-display.c:135
 msgid "Formal name"
 msgstr "Formální jméno"
 
-#: helper/memory-display.c:134
+#: helper/memory-display.c:136
 msgid "Nick name"
 msgstr "Přezdívka"
 
-#: helper/memory-display.c:135
+#: helper/memory-display.c:137
 msgid "Company"
 msgstr "Firma"
 
-#: helper/memory-display.c:136
+#: helper/memory-display.c:138
 msgid "Job title"
 msgstr "Funkce"
 
-#: helper/memory-display.c:137
+#: helper/memory-display.c:139
 msgid "Street address"
 msgstr "Adresa"
 
-#: helper/memory-display.c:138
+#: helper/memory-display.c:140
 msgid "City"
 msgstr "Město"
 
-#: helper/memory-display.c:139
+#: helper/memory-display.c:141
 msgid "State"
 msgstr "Stát"
 
-#: helper/memory-display.c:140
+#: helper/memory-display.c:142
 msgid "Zip code"
 msgstr "Směrovací číslo"
 
-#: helper/memory-display.c:141
+#: helper/memory-display.c:143
 msgid "Country"
 msgstr "Země"
 
-#: helper/memory-display.c:142
+#: helper/memory-display.c:144
 msgid "Work street address"
 msgstr "Pracovní adresa"
 
-#: helper/memory-display.c:143
+#: helper/memory-display.c:145
 msgid "Work city"
 msgstr "Město práce"
 
-#: helper/memory-display.c:144
+#: helper/memory-display.c:146
 msgid "Work state"
 msgstr "Stát pracoviště"
 
-#: helper/memory-display.c:145
+#: helper/memory-display.c:147
 msgid "Work zip code"
 msgstr "Směrovací číslo pracoviště"
 
-#: helper/memory-display.c:146
+#: helper/memory-display.c:148
 msgid "Work country"
 msgstr "Země pracoviště"
 
-#: helper/memory-display.c:147
+#: helper/memory-display.c:149
 msgid "Custom text 1"
 msgstr "Osobní info 1"
 
-#: helper/memory-display.c:148
+#: helper/memory-display.c:150
 msgid "Custom text 2"
 msgstr "Osobní info 2"
 
-#: helper/memory-display.c:149
+#: helper/memory-display.c:151
 msgid "Custom text 3"
 msgstr "Osobní info 3"
 
-#: helper/memory-display.c:150
+#: helper/memory-display.c:152
 msgid "Custom text 4"
 msgstr "Osobní info 4"
 
-#: helper/memory-display.c:151
+#: helper/memory-display.c:153
 msgid "Push to talk ID"
 msgstr ""
 
-#: helper/memory-display.c:154
+#: helper/memory-display.c:156
 msgid "unknown field type"
 msgstr "neznámý typ položky"
 
