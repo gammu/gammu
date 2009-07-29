@@ -68,5 +68,6 @@ int main(int argc UNUSED, char **argv UNUSED)
     SIZE(GSM_Phone_GNAPGENData);
 #endif
     SIZE(GSM_Phone_DUMMYData);
+    SIZE(GSM_File);
     return 0;
 }
