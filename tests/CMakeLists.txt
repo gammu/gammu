@@ -27,7 +27,7 @@ add_test(statemachine-alloc "${GAMMU_TEST_PATH}/statemachine-alloc${GAMMU_TEST_S
 add_executable(sizes sizes.c)
 add_test(sizes "${GAMMU_TEST_PATH}/sizes${GAMMU_TEST_SUFFIX}")
 set_tests_properties(sizes PROPERTIES
-    FAIL_REGULAR_EXPRESSION "[1-9][0-9][0-9] MiB")
+    FAIL_REGULAR_EXPRESSION "[0-9][0-9] MiB")
 
 # Basic check for statemachine functionality
 add_executable(statemachine-init statemachine-init.c)
