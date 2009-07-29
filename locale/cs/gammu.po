@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-07-23 20:52+0200\n"
-"PO-Revision-Date: 2009-07-29 19:29+0200\n"
+"PO-Revision-Date: 2009-07-29 19:47+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "Language: cs\n"
@@ -858,17 +858,17 @@ msgstr "Čas: %02d:%02d\n"
 #: gammu/calendar.c:636
 #, c-format
 msgid "Auto deleting disabled"
-msgstr ""
+msgstr "Automatické mazání vypnuto"
 
 #: gammu/calendar.c:638
 #, c-format
 msgid "Auto deleting notes after %i day(s)"
-msgstr ""
+msgstr "Automatické mazání poznámek po %i dnech"
 
 #: gammu/calendar.c:642
 #, c-format
 msgid "Week starts on %s"
-msgstr ""
+msgstr "Týden začíná v %s"
 
 #: gammu/calendar.c:667 gammu/memory.c:155
 msgid "Entry was empty"
@@ -1162,11 +1162,11 @@ msgstr "Stiskněte libobolnou klávesu pro pokračování..."
 #: gammu/depend/nokia/dct4.c:506
 #, c-format
 msgid "Security code set to \"12345\"\n"
-msgstr ""
+msgstr "Bezpečnostní kód nastaven na \"12345\"\n"
 
 #: gammu/depend/nokia/dct4.c:509
 msgid "Unknown reason. Can't reset your security code"
-msgstr ""
+msgstr "Neznámá příčina. Nepodařilo se obnovit váš bezpečnostní kód"
 
 #: gammu/depend/nokia/dct4.c:533
 #, c-format
@@ -1181,11 +1181,11 @@ msgstr "Bezpečnostní kód je %s\n"
 #: gammu/depend/nokia/dct4.c:797
 #, c-format
 msgid "device address %02x%02x%02x%02x%02x%02x\n"
-msgstr ""
+msgstr "adresa zařízení je %02x%02x%02x%02x%02x%02x\n"
 
 #: gammu/depend/nokia/dct4.c:821
 msgid "Old simlock"
-msgstr ""
+msgstr "Starý simlock"
 
 #: gammu/depend/nokia/dct4.c:842
 msgid "Simlock data"
