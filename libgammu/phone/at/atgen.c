@@ -4539,58 +4539,68 @@ gboolean InRange(int *range, int i) {
 	return FALSE;
 }
 
-int *GetRange(GSM_StateMachine *s, char *buffer)
+int *GetRange(GSM_StateMachine *s, const char *buffer)
 {
-	int	*result;
-	int	commas = 0, dashes = 0, i1, i2, i;
-	char	*c = buffer, *c2;
+	int	*result = NULL;
+	size_t	allocated = 0, pos = 0;
+	const char *chr = buffer;
+	char *endptr;
+	gboolean in_range = FALSE;
+	int	current, diff, i;
 
-	if (c[0] != '(') return NULL;
-	c++;
-	c2 = c;
+	smprintf(s, "Parsing range: %s\n", chr);
+	if (*chr != '(') return NULL;
+	chr++;
 
-	while (*c2 != ')') {
-		if (*c2 == ',') commas++;
-		else if (*c2 == '-') dashes++;
-		c2++;
-	}
-
-	if ((commas != 0 && dashes != 0) || dashes > 1) {
-		return NULL;
-	} else if (commas == 0 && dashes == 0) {
-		result = calloc(2, sizeof(int));
-		if (result == NULL) return NULL;
-		result[0] = atoi(c);
-		result[1] = -1;
-	} else if (dashes == 1) {
-		i1 = atoi(c);
-		c2 = c;
-		while (*c2 != '-') c2++;
-		c2++;
-		i2  = atoi(c2);
-		if (i2 < i1) return NULL;
-		result = calloc(2 + i2 - i1, sizeof(int));
-		if (result == NULL) return NULL;
-		for (i = i1; i <= i2; i++) {
-			result[i - i1] = i;
+	while (*chr != ')' && *chr != 0) {
+		/* Read current number */
+		current = strtol(chr, &endptr, 10);
+		/* Detect how much numbers we have to store */
+		if (in_range) {
+			diff = current - result[pos - 1];
+		} else {
+			diff = 1;
 		}
-		result[1 + i2 - i1] = -1;
-	} else {
-		result = calloc(2 + commas, sizeof(int));
-		if (result == NULL) return NULL;
-		i = 1;
-		c2 = c;
-		result[0] = atoi(c2);
-		while (*c2 != ')') {
-			if (*c2 == ',') {
-				result[i] = atoi(c2 + 1);
-				i++;
+		/* Did we parse anything? */
+		if (endptr == chr) {
+			smprintf(s, "Failed to find number in range!\n");
+			return NULL;
+		}
+		/* Allocate more memory if needed */
+		if (allocated < pos + diff + 1) {
+			result = realloc(result, sizeof(int) * (pos + diff + 10));
+			if (result == NULL) {
+				smprintf(s, "Not enough memory to parse range!\n");
+				return NULL;
 			}
-			c2++;
+			allocated = pos + 10 + diff;
 		}
-		result[i] = -1;
+		/* Store number is memory */
+		if (!in_range) {
+			result[pos++] = current;
+		} else {
+			for (i = result[pos - 1] + 1; i <= current; i++) {
+				result[pos++] = i;
+			}
+			in_range = FALSE;
+		}
+		/* Skip to next char after number */
+		chr = endptr;
+		/* Check for character after number */
+		if (*chr == '-') {
+			in_range = TRUE;
+			chr++;
+		} else if (*chr == ',') {
+			chr++;
+		} else if (*chr == ')') {
+			result[pos++] = -1;
+			break;
+		} else if (*chr != ',') {
+			smprintf(s, "Bad character in range: %c\n", *chr);
+			return NULL;
+		}
 	}
-	i = 0;
+
 	smprintf(s, "Returning range: ");
 	for (i = 0; result[i] != -1; i++) {
 		smprintf(s, "%d, ", result[i]);
@@ -4602,7 +4612,7 @@ int *GetRange(GSM_StateMachine *s, char *buffer)
 GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
-	char			*buffer;
+	const char		*buffer;
 	int			*range;
 
 	switch (Priv->ReplyState) {
@@ -4635,7 +4645,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	Priv->CNMIBroadcastProcedure	= 0;
 #endif
 
-	buffer = strchr(msg.Buffer, '\n');
+	buffer = GetLineString(msg.Buffer, &Priv->Lines, 2);
 	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
 	while (isspace((int)*buffer)) buffer++;
 

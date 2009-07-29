@@ -25,6 +25,7 @@ ChangeLog
 [!] * 6510 driver now dynamically allocates memory for file caches, what
       reduces Gammu memory usage by 800 MiB.
 [-] * Added testcases for AT+CNMI replies.
+[-] * Fixed range parsing in AT engine.
     
 20090709 - 1.25.0
 
