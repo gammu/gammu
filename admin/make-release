@@ -38,15 +38,6 @@ checkexe() {
     fi
 }
 
-# Pre release checks
-if [ "x$1" = "xbranch" ] ; then
-    if grep -q '^200[0-9]???? - ' ChangeLog ; then
-        echo 'ChangeLog does not seem to be finalised, aborting!'
-        exit 1
-    fi
-fi
-
-tmp=`mktemp -dt $repo-build-XXXXXX`
 
 CMAKE_EXTRA=""
 if [ "x$1" = "x--debug" ] ; then
@@ -54,27 +45,33 @@ if [ "x$1" = "x--debug" ] ; then
     CMAKE_EXTRA="$CMAKE_EXTRA -DCMAKE_BUILD_TYPE=Debug"
 fi
 
-cd $tmp
-echo Working in $tmp
+dotag=0
 if [ "x$1" = "xbranch" ] ; then
+    checkout=HEAD
+    dotag=1
+    # Pre release checks
+    if grep -q '^200[0-9]???? - ' ChangeLog ; then
+        echo 'ChangeLog does not seem to be finalised, aborting!'
+        exit 1
+    fi
     shift
-    rel=RELEASE_`echo -n $version|tr . _`
-    svn cp -m "Tag release $version" svn+ssh://mort/home/svn/$repo/trunk svn+ssh://mort/home/svn/$repo/tags/$rel
-    svn export svn+ssh://mort/home/svn/$repo/tags/$rel $repo-$version
-    # Submit to PyPi
-    $tmp/$repo-$version/python/setup.py register
 elif [ "x$1" = "x" ] ; then
-    rel=trunk
-    svn export svn+ssh://mort/home/svn/$repo/trunk $repo-$version
-else
-    version="$1"
+    checkout=HEAD
+else 
+    checkout=$1
+    version=$1
     shift
-    rel=RELEASE_`echo -n $version|tr . _`
-    svn export svn+ssh://mort/home/svn/$repo/tags/$rel $repo-$version
 fi
 
-echo "Creating release $version from $rel"
-
+tmp=`mktemp -dt $repo-build-XXXXXX`
+cd $tmp
+echo Working in $tmp
+echo "Creating release $version from $checkout"
+git clone -l $srcdir $repo-$version
+cd $repo-$version
+git checkout $checkout
+rm -rf .git
+cd ..
 
 echo 'Creating source tarballs...'
 tar cfz $repo-$version.tar.gz $repo-$version
@@ -175,3 +172,12 @@ done
 # We're done
 echo "Release is in $tmp directory"
 ls -lh $tmp
+
+cd "$srcdir"
+
+if [ $dotag -eq 1 ] ; then
+    # Tag the release
+    git tag -m "Tag release $version" "$version"
+    # Submit to PyPi
+    $tmp/$repo-$version/python/setup.py register
+fi
