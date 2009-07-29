@@ -4539,7 +4539,7 @@ gboolean InRange(int *range, int i) {
 	return FALSE;
 }
 
-int *GetRange(char *buffer)
+int *GetRange(GSM_StateMachine *s, char *buffer)
 {
 	int	*result;
 	int	commas = 0, dashes = 0, i1, i2, i;
@@ -4591,6 +4591,11 @@ int *GetRange(char *buffer)
 		result[i] = -1;
 	}
 	i = 0;
+	smprintf(s, "Returning range: ");
+	for (i = 0; result[i] != -1; i++) {
+		smprintf(s, "%d, ", result[i]);
+	}
+	smprintf(s, "-1\n");
 	return result;
 }
 
@@ -4639,7 +4644,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	buffer = strchr(buffer, '(');
 	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
-	range = GetRange(buffer);
+	range = GetRange(s, buffer);
 	if (range == NULL) return  ERR_UNKNOWNRESPONSE;
 	if (InRange(range, 2)) Priv->CNMIMode = 2; 	/* 2 = buffer messages and send them when link is free */
 	else if (InRange(range, 3)) Priv->CNMIMode = 3; /* 3 = send messages directly */
@@ -4649,7 +4654,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	buffer++;
 	buffer = strchr(buffer, '(');
 	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
-	range = GetRange(buffer);
+	range = GetRange(s, buffer);
 	if (range == NULL) return  ERR_UNKNOWNRESPONSE;
 	if (InRange(range, 1)) Priv->CNMIProcedure = 1; 	/* 1 = store message and send where it is stored */
 	else if (InRange(range, 2)) Priv->CNMIProcedure = 2; 	/* 2 = route message to TE */
@@ -4661,7 +4666,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	buffer = strchr(buffer, '(');
 #ifdef GSM_ENABLE_CELLBROADCAST
 	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
-	range = GetRange(buffer);
+	range = GetRange(s, buffer);
 	if (range == NULL) return  ERR_UNKNOWNRESPONSE;
 	if (InRange(range, 2)) Priv->CNMIBroadcastProcedure = 2; /* 2 = route message to TE */
 	else if (InRange(range, 1)) Priv->CNMIBroadcastProcedure = 1; /* 1 = store message and send where it is stored */
@@ -4673,7 +4678,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	buffer++;
 	buffer = strchr(buffer, '(');
 	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
-	range = GetRange(buffer);
+	range = GetRange(s, buffer);
 	if (range == NULL) return  ERR_UNKNOWNRESPONSE;
 	if (InRange(range, 1)) Priv->CNMIDeliverProcedure = 1; /* 1 = route message to TE */
 	else if (InRange(range, 2)) Priv->CNMIDeliverProcedure = 2; /* 1 = store message and send where it is stored */
