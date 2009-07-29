@@ -1140,6 +1140,10 @@ int main(int argc, char *argv[])
 #endif
 
 	gsm = GSM_AllocStateMachine();
+	if (gsm == NULL) {
+		printf_err(_("Failed to allocate memory, aborting!\n"));
+		exit(1);
+	}
 
 #ifdef CURL_FOUND
 	curl_global_init(CURL_GLOBAL_ALL);
