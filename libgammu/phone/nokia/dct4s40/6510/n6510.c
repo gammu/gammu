@@ -42,6 +42,9 @@ static GSM_Error N6510_Initialise (GSM_StateMachine *s)
 	s->Phone.Data.Priv.N6510.CalendarIconsNum  = 0;
 	s->Phone.Data.Priv.N6510.LastFreeMemoryLocation = 0;
 	s->Phone.Data.Priv.N6510.LastFreeMemoryType = 0;
+	s->Phone.Data.Priv.N6510.FilesLocationsAvail = 0;
+	s->Phone.Data.Priv.N6510.FilesLocationsUsed = 0;
+	s->Phone.Data.Priv.N6510.FilesCache = NULL;
 
 	/* Default timeout for cables */
 	s->Phone.Data.Priv.N6510.Timeout = 8;

@@ -40,8 +40,9 @@ typedef struct {
 
 	unsigned char			RingtoneID;	/* When set with preview */
 
-	GSM_File			Files[GSM_PHONE_MAXSMSINFOLDER];
+	GSM_File			*FilesCache; //[GSM_PHONE_MAXSMSINFOLDER];
 	int				FilesLocationsUsed;
+	int				FilesLocationsAvail;
 	int				FileToken;
 	int				ParentID;
 	int				FileCheckSum;
