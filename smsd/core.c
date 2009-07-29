@@ -406,6 +406,10 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->failure = ERR_NONE;
 	Config->exit_on_failure = TRUE;
 	Config->gsm = GSM_AllocStateMachine();
+	if (Config->gsm == NULL) {
+		fprintf(stderr, "Failed to allocate memory for state machine!\n");
+		return ERR_MOREMEMORY;
+	}
 	Config->gammu_log_buffer = NULL;
 	Config->gammu_log_buffer_size = 0;
 	Config->logfilename = NULL;
