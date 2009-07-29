@@ -251,6 +251,23 @@ foreach(TESTMESSAGE ${MESSAGES})
         "${Gammu_SOURCE_DIR}/tests/at-model/${TESTMESSAGE}")
 endforeach(TESTMESSAGE $MESSAGES)
 
+# AT CNMI parsing
+add_executable(at-cnmi-reply at-cnmi-reply.c)
+target_link_libraries(at-cnmi-reply libGammu)
+
+# List test cases
+file(GLOB MESSAGES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-cnmi"
+    "${Gammu_SOURCE_DIR}/tests/at-cnmi/*.dump")
+list(SORT MESSAGES)
+
+foreach(TESTMESSAGE ${MESSAGES})
+    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+    add_test("at-cnmi-reply-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/at-cnmi-reply${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-cnmi/${TESTMESSAGE}")
+endforeach(TESTMESSAGE $MESSAGES)
+
 # AT SMSC parsing
 add_executable(get-smsc-at get-smsc-at.c)
 target_link_libraries(get-smsc-at libGammu)

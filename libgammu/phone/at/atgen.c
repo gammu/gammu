@@ -4619,6 +4619,9 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	Or:
 	+CNMI:(0-3),(0-3),(0-3),(0,1),(0,1)
+
+	Or:
+	+CNMI: (2),(0-1,3),(0,2),(0-1),(0)"
 	*/
 	Priv->CNMIMode			= 0;
 	Priv->CNMIProcedure		= 0;
