@@ -30,8 +30,9 @@ Developers might be interested in snapshot or version control system
 (Subversion is being used), information about accessing these is
 available at <http://cihar.com/gammu/>.
 
-Anonymous Subversion is available using <svn://svn.cihar.com/gammu>,
-there is also web browser for it - <http://viewsvn.cihar.com/gammu>.
+The development goes on in Git, main development branch is
+<git://gitorious.org/gammu/mainline.git>, you can browse it using
+<http://gitorious.org/gammu/mainline/trees>.
 
 
 Versions
