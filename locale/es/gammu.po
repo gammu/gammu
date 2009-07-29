@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-23 20:52+0200\n"
+"POT-Creation-Date: 2009-07-29 20:26+0200\n"
 "PO-Revision-Date: 2009-03-23 19:23+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -1853,20 +1853,24 @@ msgstr "Advertencia: ¡El archivo de configuración es incorrecto!"
 msgid "No configuration file found!"
 msgstr "Advertencia: ¡No se encontró el archivo de configuración!"
 
-#: gammu/gammu.c:1171
+#: gammu/gammu.c:1144
+msgid "Failed to allocate memory, aborting!\n"
+msgstr ""
+
+#: gammu/gammu.c:1175
 msgid "Too few parameters!"
 msgstr "¡Muy pocos parámetros!"
 
-#: gammu/gammu.c:1184
+#: gammu/gammu.c:1188
 #, fuzzy, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr "Fallo al leer [gammu%d] de gammurc\n"
 
-#: gammu/gammu.c:1186 gammu/gammu.c:1197
+#: gammu/gammu.c:1190 gammu/gammu.c:1201
 msgid "No configuration read, using builtin defaults!"
 msgstr "No se pudo leer la configuración, utilizando parámetros por defecto."
 
-#: gammu/gammu.c:1240
+#: gammu/gammu.c:1244
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-06-24 14:44+0200\n"
+"POT-Creation-Date: 2009-07-29 20:26+0200\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -381,19 +381,19 @@ msgstr "Громко"
 msgid "My style"
 msgstr "Мой стиль"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:550
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:553
 msgid "SIM"
 msgstr "SIM"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:551 libgammu/phone/pfunc.c:41
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:554 libgammu/phone/pfunc.c:41
 msgid "Inbox"
 msgstr "Входящие"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:552
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:555
 msgid "Sent items"
 msgstr "Переданные"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:553
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:556
 msgid "Saved items"
 msgstr "Сохранённые"
 
