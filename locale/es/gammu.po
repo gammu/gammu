@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-30 15:02+0200\n"
+"POT-Creation-Date: 2009-07-30 15:10+0200\n"
 "PO-Revision-Date: 2009-03-23 19:23+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -1220,15 +1220,117 @@ msgstr "¿ Qué luces debo habilitar (\"%s\") ?\n"
 msgid "What should I do (\"%s\") ?\n"
 msgstr "¿ Qué debo hacer (\"%s\") ?\n"
 
-#: gammu/depend/nokia/dct4.c:1014
+#. l10n: Raw data for A/D convertor
+#: gammu/depend/nokia/dct4.c:1015
 #, c-format
-msgid "raw "
-msgstr "en crudo"
+msgid "raw result %10i "
+msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1018
-#, c-format
-msgid "unit result "
+#. l10n: Processed data for A/D convertor
+#: gammu/depend/nokia/dct4.c:1019
+#, fuzzy, c-format
+msgid "unit result %10i "
 msgstr "resultado unitario/de la unidad"
+
+#: gammu/depend/nokia/dct4.c:1032
+#, fuzzy
+msgid "Battery voltage, divided:"
+msgstr "Voltaje de la batería"
+
+#: gammu/depend/nokia/dct4.c:1032 gammu/depend/nokia/dct4.c:1033
+#: gammu/depend/nokia/dct4.c:1034 gammu/depend/nokia/dct4.c:1038
+#: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1040
+#: gammu/depend/nokia/dct4.c:1043 gammu/depend/nokia/dct4.c:1044
+#: gammu/depend/nokia/dct4.c:1045
+msgid "mV"
+msgstr ""
+
+#: gammu/depend/nokia/dct4.c:1033
+#, fuzzy
+msgid "Battery voltage, scaled:"
+msgstr "Voltaje de la batería"
+
+#: gammu/depend/nokia/dct4.c:1034
+#, fuzzy
+msgid "Charger voltage:"
+msgstr "Voltaje de carga"
+
+#: gammu/depend/nokia/dct4.c:1035
+#, fuzzy
+msgid "Charger current:"
+msgstr "Carga actual"
+
+#: gammu/depend/nokia/dct4.c:1035 gammu/depend/nokia/dct4.c:1046
+#: gammu/depend/nokia/dct4.c:1047
+msgid "mA"
+msgstr ""
+
+#: gammu/depend/nokia/dct4.c:1036
+#, fuzzy
+msgid "Battery size indicator:"
+msgstr "Habilita indicador de voz"
+
+#: gammu/depend/nokia/dct4.c:1036
+msgid "Ohms"
+msgstr ""
+
+#: gammu/depend/nokia/dct4.c:1037
+#, fuzzy
+msgid "Battery temperature:"
+msgstr "Temperatura de la batería"
+
+#: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1041
+#: gammu/depend/nokia/dct4.c:1042
+#, fuzzy
+msgid "K"
+msgstr "Aceptar"
+
+#: gammu/depend/nokia/dct4.c:1038
+#, fuzzy
+msgid "Headset interconnection:"
+msgstr "Conexión del teléfono"
+
+#: gammu/depend/nokia/dct4.c:1039
+#, fuzzy
+msgid "Hook interconnection:"
+msgstr "Conexión del teléfono"
+
+#: gammu/depend/nokia/dct4.c:1040
+#, fuzzy
+msgid "Light sensor:"
+msgstr "Luces"
+
+#: gammu/depend/nokia/dct4.c:1041
+#, fuzzy
+msgid "Power amplifier temperature:"
+msgstr "Temperatura del teléfono"
+
+#: gammu/depend/nokia/dct4.c:1042
+#, fuzzy
+msgid "VCXO temperature:"
+msgstr "Temperatura del teléfono"
+
+#: gammu/depend/nokia/dct4.c:1043
+msgid "Resistive keyboard 1/headint2:"
+msgstr ""
+
+#: gammu/depend/nokia/dct4.c:1044
+msgid "Resistive keyboard 1/auxdet:"
+msgstr ""
+
+#: gammu/depend/nokia/dct4.c:1045
+#, fuzzy
+msgid "Initial battery voltage:"
+msgstr "Voltaje de la batería"
+
+#: gammu/depend/nokia/dct4.c:1046
+#, fuzzy
+msgid "Battery Current:"
+msgstr "Tipo de batería"
+
+#: gammu/depend/nokia/dct4.c:1047
+msgid "Battery Current Fast:"
+msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1153
 msgid "Phone seems not to support radio"
@@ -4192,6 +4294,9 @@ msgstr "Advertencia"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Información"
+
+#~ msgid "raw "
+#~ msgstr "en crudo"
 
 #~ msgid ""
 #~ "Sorry, but configuration matrix for this model is not added yet. Please "

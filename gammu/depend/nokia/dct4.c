@@ -1011,12 +1011,12 @@ static GSM_Error DCT4_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *sm
 	if (msg.Buffer[6] == 0xff && msg.Buffer[7] == 0xff) return ERR_NONE;
 	switch (msg.Buffer[3]) {
 	case 0x10:
-		printf(_("raw "));
-		printf("%10i ",msg.Buffer[8]*256+msg.Buffer[9]);
+		/* l10n: Raw data for A/D convertor */
+		printf(_("raw result %10i "),msg.Buffer[8]*256+msg.Buffer[9]);
 		break;
 	case 0x12:
-		printf(_("unit result "));
-		printf("%10i ",(msg.Buffer[8]*256+msg.Buffer[9])*ADC);
+		/* l10n: Processed data for A/D convertor */
+		printf(_("unit result %10i "),(msg.Buffer[8]*256+msg.Buffer[9])*ADC);
 		break;
 	}
 	return ERR_NONE;
@@ -1029,22 +1029,22 @@ struct DCT4ADCInfo {
 };
 
 static struct DCT4ADCInfo DCT4ADC[] = {
-	{"Battery voltage, divided:",		"mV",  1},
-	{"Battery voltage, scaled:",		"mV",  1},
-	{"Charger voltage:",			"mV",  1},
-	{"Charger current:",			"mA",  1},
-	{"Battery size indicator:",		"Ohms",100},
-	{"Battery temperature:",		"K",   1},
-	{"Headset interconnection:",		"mV",  1},
-	{"Hook interconnection:",		"mV",  1},
-	{"Light sensor:",			"mV",  1},
-	{"Power amplifier temperature:",	"K",   1},
-	{"VCXO temperature:",			"K",   1},
-	{"Resistive keyboard 1/headint2:",	"mV",  1},
-	{"Resistive keyboard 1/auxdet:",	"mV",  1},
-	{"Initial battery voltage:",		"mV",  1},
-	{"Battery Current:",			"mA",  1},
-	{"Battery Current Fast:",		"mA",  1},
+	{N_("Battery voltage, divided:"),	N_("mV"),  1},
+	{N_("Battery voltage, scaled:"),	N_("mV"),  1},
+	{N_("Charger voltage:"),		N_("mV"),  1},
+	{N_("Charger current:"),		N_("mA"),  1},
+	{N_("Battery size indicator:"),		N_("Ohms"),100},
+	{N_("Battery temperature:"),		N_("K"),   1},
+	{N_("Headset interconnection:"),	N_("mV"),  1},
+	{N_("Hook interconnection:"),		N_("mV"),  1},
+	{N_("Light sensor:"),			N_("mV"),  1},
+	{N_("Power amplifier temperature:"),	N_("K"),   1},
+	{N_("VCXO temperature:"),		N_("K"),   1},
+	{N_("Resistive keyboard 1/headint2:"),	N_("mV"),  1},
+	{N_("Resistive keyboard 1/auxdet:"),	N_("mV"),  1},
+	{N_("Initial battery voltage:"),	N_("mV"),  1},
+	{N_("Battery Current:"),		N_("mA"),  1},
+	{N_("Battery Current Fast:"),		N_("mA"),  1},
 
 	{"", "", 1}
 };
@@ -1065,7 +1065,7 @@ void DCT4GetADC(int argc, char *argv[])
 	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
 	while (1) {
-		printf(" %30s ",DCT4ADC[i].name);
+		printf(" %30s ", gettext(DCT4ADC[i].name));
 		GetRaw[4] = i;
 		error=GSM_WaitFor (gsm, GetRaw, 6, 0x17, 4, ID_User3);
 		Print_Error(error);
@@ -1073,7 +1073,7 @@ void DCT4GetADC(int argc, char *argv[])
 		ADC		= DCT4ADC[i].x;
 		error=GSM_WaitFor (gsm, GetUnit, 6, 0x17, 4, ID_User3);
 		Print_Error(error);
-		printf("%s\n",DCT4ADC[i].unit);
+		printf("%s\n", gettext(DCT4ADC[i].unit));
 		i++;
 		if (DCT4ADC[i].name[0] == 0x00) break;
 	}
