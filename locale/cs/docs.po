@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-07-07 14:27+0300\n"
-"PO-Revision-Date: 2009-07-09 11:30+0200\n"
+"PO-Revision-Date: 2009-07-30 15:22+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1216,7 +1216,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:416 docs/user/gammu.1:1906
 msgid "Please note that you should provide valid smil data on that URL."
-msgstr ""
+msgstr "Prosím uvědomte si, že na zadaném URL by měla být platná smil data."
 
 # type: TP
 #. type: TP

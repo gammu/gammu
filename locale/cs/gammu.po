@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-07-30 15:10+0200\n"
-"PO-Revision-Date: 2009-07-30 15:09+0200\n"
+"PO-Revision-Date: 2009-07-30 15:20+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1951,7 +1951,7 @@ msgstr "Nebyl nalezen konfigurační soubor!"
 
 #: gammu/gammu.c:1144
 msgid "Failed to allocate memory, aborting!\n"
-msgstr ""
+msgstr "Nepodařilo se naalokovat paměť, končím!\n"
 
 #: gammu/gammu.c:1175
 msgid "Too few parameters!"
@@ -2012,7 +2012,7 @@ msgstr "Záznam je prázdný"
 #: gammu/memory.c:121
 #, c-format
 msgid "%i entries empty, %i entries filled\n"
-msgstr ""
+msgstr "%i záznamů prázdných, %i záznamů obsazených\n"
 
 #: gammu/message.c:34
 msgid "SMS message received"
@@ -2033,12 +2033,12 @@ msgstr "Prázdné"
 
 #: gammu/message.c:70
 msgid "CB message received"
-msgstr ""
+msgstr "Přijata CB zpráva"
 
 #: gammu/message.c:71
 #, c-format
 msgid "Channel %i, text \"%s\"\n"
-msgstr ""
+msgstr "Kanál %i, text \"%s\"\n"
 
 #: gammu/message.c:76
 msgid "USSD received"
@@ -2120,7 +2120,7 @@ msgstr "Poškozená zpráva, přeskakuji"
 #: gammu/message.c:364 gammu/message.c:504
 #, c-format
 msgid "%i SMS parts in %i SMS sequences"
-msgstr ""
+msgstr "%i SMS částí v %i SMS sekvencích"
 
 #: gammu/message.c:446
 msgid "SMS counter overflow"
@@ -2149,7 +2149,7 @@ msgstr ", příchozí zprávy"
 #: gammu/message.c:530
 #, c-format
 msgid ", Outbox folder"
-msgstr ""
+msgstr ", složka s odchozími zprávami"
 
 #: gammu/message.c:545
 #, c-format
@@ -2164,7 +2164,7 @@ msgstr "..chyba %i"
 #: gammu/message.c:551
 #, c-format
 msgid ", message reference=%d\n"
-msgstr ""
+msgstr ", referenční číslo zprávy=%d\n"
 
 #: gammu/message.c:582
 msgid "Message number"
@@ -2176,7 +2176,7 @@ msgstr "Počet zpráv"
 
 #: gammu/message.c:597 gammu/message.c:634
 msgid "If you want break, press Ctrl+C..."
-msgstr ""
+msgstr "Pro přerušení stiskněte Ctrl+C..."
 
 #: gammu/message.c:601
 #, c-format
@@ -2587,7 +2587,7 @@ msgstr ""
 #: gammu/misc.c:1407 gammu/misc.c:1446 gammu/misc.c:1495 gammu/misc.c:1849
 #, c-format
 msgid " (active)"
-msgstr ""
+msgstr " (aktivní)"
 
 #: gammu/misc.c:855 gammu/misc.c:1012
 msgid "Maximal location for caller logo can be 5"
@@ -2620,13 +2620,13 @@ msgstr "(soubor ID %i)\n"
 #: gammu/misc.c:913
 #, c-format
 msgid "\"%s\" (ID %i)\n"
-msgstr ""
+msgstr "\"%s\" (ID %i)\n"
 
 #. l10n: Ringtone ID format
 #: gammu/misc.c:918
 #, c-format
 msgid "ID %i\n"
-msgstr ""
+msgstr "ID %i\n"
 
 #: gammu/misc.c:924 gammu/misc.c:926
 msgid "Bitmap"
@@ -2646,7 +2646,7 @@ msgstr "ID bitmapy"
 
 #: gammu/misc.c:942
 msgid "No operator logo in phone"
-msgstr ""
+msgstr "V telefonu není žádné logo operátora"
 
 #: gammu/misc.c:948 gammu/mms.c:71
 msgid "Sender"
@@ -3229,12 +3229,12 @@ msgstr ""
 #: gammu/mms.c:53 gammu/mms.c:134
 #, c-format
 msgid "Error while saving to file %s!\n"
-msgstr ""
+msgstr "Chyba při ukládání do souboru %s!\n"
 
 #: gammu/mms.c:55 gammu/mms.c:136
 #, c-format
 msgid "Saved to file %s\n"
-msgstr ""
+msgstr "Uloženo do souboru %s\n"
 
 #: gammu/mms.c:65
 msgid "Some MMS file features unknown for Gammu decoder"
@@ -3373,6 +3373,7 @@ msgstr ""
 #: gammu/nokia.c:710
 msgid "No JAR size info in JAD file. Added by Gammu."
 msgstr ""
+"V JAD souboru chybí velikost JAD souboru. Přidávám chybějící informace."
 
 #: gammu/nokia.c:719
 #, c-format
@@ -3391,7 +3392,7 @@ msgstr ""
 
 #: gammu/nokia.c:772 gammu/nokia.c:824
 msgid "Application already exists. Deleting by Gammu."
-msgstr ""
+msgstr "Aplikace již existuje. Mažu ji"
 
 #: gammu/nokia.c:805 gammu/nokia.c:838
 #, c-format
@@ -3508,21 +3509,19 @@ msgstr "Zobrazení není podporováno"
 
 #: helper/memory-display.c:115
 msgid "Favorite messaging number"
-msgstr ""
+msgstr "Oblíbené číslo pro zprávy"
 
 #: helper/memory-display.c:116
 msgid "General number"
 msgstr "Obecné číslo"
 
 #: helper/memory-display.c:118
-#, fuzzy
 msgid "Mobile number (work)"
-msgstr "Číslo na mobil"
+msgstr "Číslo na mobil (práce)"
 
 #: helper/memory-display.c:119
-#, fuzzy
 msgid "Mobile number (home)"
-msgstr "Číslo na mobil"
+msgstr "Číslo na mobil (domů)"
 
 #: helper/memory-display.c:120
 msgid "Work number"
@@ -3651,7 +3650,7 @@ msgstr "Příliš málo parametrů!"
 #: helper/message-cmdline.c:206
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
-msgstr ""
+msgstr "Jaký je formát sms (\"%s\") ?\n"
 
 #: helper/message-cmdline.c:231 helper/message-cmdline.c:246
 msgid "Where are parameters?"
@@ -3672,7 +3671,7 @@ msgstr "Kde je počet rámců?"
 
 #: helper/message-cmdline.c:322
 msgid "Too many animation frames!"
-msgstr ""
+msgstr "Přiliš mnoho obrázků v animaci!"
 
 #: helper/message-cmdline.c:353
 #, c-format
@@ -3740,16 +3739,16 @@ msgstr "Neznámý parametr (\"%c\")\n"
 
 #: helper/message-cmdline.c:1237
 msgid "Last parameter wasn't text"
-msgstr ""
+msgstr "Poslední parametr nebyl text"
 
 #: helper/message-cmdline.c:1271
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
-msgstr ""
+msgstr "Příliš dlouhé jméno SMS zprávy (\"%s\"), ignoruji\n"
 
 #: helper/message-cmdline.c:1311
 msgid "Enter message text and press ^D:"
-msgstr ""
+msgstr "Zadejte zprávu a stiskněte ^D:"
 
 #: helper/message-cmdline.c:1323
 msgid "No chars read, assuming it is okay!"
@@ -4025,42 +4024,42 @@ msgstr "8-bitové"
 
 #: helper/message-display.c:284
 msgid "User Data Header"
-msgstr ""
+msgstr "Uživatelská hlavička dat"
 
 #: helper/message-display.c:286 helper/message-display.c:287
 #, c-format
 msgid "Concatenated (linked) message"
-msgstr ""
+msgstr "Dlouhá (spojená) zpráva"
 
 #: helper/message-display.c:288
 #, c-format
 msgid "Disables voice indicator"
-msgstr ""
+msgstr "Vypne indikaci hlasové schránky"
 
 #: helper/message-display.c:289
 #, c-format
 msgid "Enables voice indicator"
-msgstr ""
+msgstr "Zapne indikaci hlasové schránky"
 
 #: helper/message-display.c:290
 #, c-format
 msgid "Disables fax indicator"
-msgstr ""
+msgstr "Vypne indikaci faxu"
 
 #: helper/message-display.c:291
 #, c-format
 msgid "Enables fax indicator"
-msgstr ""
+msgstr "Vypne indikaci faxu"
 
 #: helper/message-display.c:292
 #, c-format
 msgid "Disables email indicator"
-msgstr ""
+msgstr "Vypne indikaci emailu"
 
 #: helper/message-display.c:293
 #, c-format
 msgid "Enables email indicator"
-msgstr ""
+msgstr "Zapne indikaci emailu"
 
 #: helper/message-display.c:294
 #, c-format
@@ -4125,17 +4124,17 @@ msgstr "Indikátor MMS"
 #: helper/message-display.c:310
 #, c-format
 msgid ", ID (8 bit) %i"
-msgstr ""
+msgstr ", ID (8 bitové) %i"
 
 #: helper/message-display.c:311
 #, c-format
 msgid ", ID (16 bit) %i"
-msgstr ""
+msgstr ", ID (16 bitové) %i"
 
 #: helper/message-display.c:314
 #, c-format
 msgid ", part %i of %i"
-msgstr ""
+msgstr ", část %i z %i"
 
 #: helper/message-display.c:316
 #, c-format
@@ -4194,11 +4193,11 @@ msgstr "Profil"
 
 #: helper/message-display.c:454
 msgid "EMS sound ID"
-msgstr ""
+msgstr "ID EMS zvuku"
 
 #: helper/message-display.c:457
 msgid "EMS animation ID"
-msgstr ""
+msgstr "ID EMS animace"
 
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:491 helper/message-display.c:509
