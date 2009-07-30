@@ -1,15 +1,15 @@
 # Gammu translation.
 # Copyright (C) 2003 - 2009 Michal Čihař
 # This file is distributed under the same license as the Gammu package.
-# Michal Čihař <michal@cihar.com>, 2007.
 #
 #
+# Michal Čihař <michal@cihar.com>, 20, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-07-29 20:26+0200\n"
-"PO-Revision-Date: 2009-07-29 20:11+0200\n"
+"PO-Revision-Date: 2009-07-30 14:59+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -428,7 +428,7 @@ msgstr "Obnovit přístupové body GPRS?"
 #: gammu/backup.c:1581 gammu/backup.c:1609
 #, c-format
 msgid "Memory has only %i free locations.Exiting\n"
-msgstr ""
+msgstr "Paměť má jen %i volných pozic. Končím\n"
 
 #: gammu/backup.c:1582
 msgid "Add phone phonebook entries?"
@@ -483,7 +483,7 @@ msgstr "Chcete obnovit binární SMS?"
 #: gammu/backupsms.c:179
 #, c-format
 msgid "Restore %03i sms to folder \"%s\"%s?"
-msgstr ""
+msgstr "Obnovit %03i sms do složky \"%s\"%s?"
 
 #: gammu/backupsms.c:183
 #, c-format
@@ -1119,6 +1119,8 @@ msgid ""
 "Sorry, but configuration matrix for this model is not added yet. Please "
 "report"
 msgstr ""
+"Omlouváme se, ale konfigurační matice pro tento model ještě nebyla přidána. "
+"Prosím nahlašte"
 
 #: gammu/depend/nokia/dct4.c:366
 #, c-format
