@@ -22,11 +22,7 @@
 
 static GSM_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config);
 static GSM_Error SMSDPgSQL_Free(GSM_SMSDConfig *Config);
-#ifdef __GNUC__
-static GSM_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, PGresult **Res, const char *fmt, ...) __attribute__((format(printf,3,4)));
-#else
-static GSM_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, PGresult **Res, const char *fmt, ...);
-#endif
+static GSM_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, PGresult **Res, const char *fmt, ...) PRINTF_STYLE(3, 4);
 
 struct _TableCheck
 {
@@ -34,7 +30,7 @@ struct _TableCheck
 	const char *msg;
 } TableCheck;
 
-static struct _TableCheck	tc[] = 
+static struct _TableCheck	tc[] =
 {
 	{ "SELECT id FROM outbox", "No table for outbox sms" },
 	{ "SELECT id FROM outbox_multipart", "No table for outbox sms" },
@@ -129,8 +125,8 @@ static GSM_Error SMSDPgSQL_Connect(GSM_SMSDConfig * Config)
 
 	Res = PQexec(Config->DBConnPgSQL, "SET NAMES UTF8");
 	PQclear(Res);
-	SMSD_Log(0, Config, "Connected to database: %s on %s. Server version: %d Protocol: %d", 
-			PQdb(Config->DBConnPgSQL), PQhost(Config->DBConnPgSQL), 
+	SMSD_Log(0, Config, "Connected to database: %s on %s. Server version: %d Protocol: %d",
+			PQdb(Config->DBConnPgSQL), PQhost(Config->DBConnPgSQL),
 			PQserverVersion(Config->DBConnPgSQL), PQprotocolVersion(Config->DBConnPgSQL));
 
 	return ERR_NONE;
@@ -249,7 +245,7 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 		strcat(buf2 + strlen(buf2), GetCompiler());
 	}
 
-	if (SMSDPgSQL_Query(Config, &Res, 
+	if (SMSDPgSQL_Query(Config, &Res,
 		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) "
 		"VALUES ('%s', '%s', 'yes', 'yes', now(), now() + interval '10 seconds', '%s', -1, -1)",
 		Config->Status->IMEI, Config->PhoneID, buf2) != ERR_NONE) {
