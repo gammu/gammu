@@ -67,7 +67,7 @@ tmp=`mktemp -dt $repo-build-XXXXXX`
 cd $tmp
 echo Working in $tmp
 echo "Creating release $version from $checkout"
-git clone -l $srcdir $repo-$version
+git clone $srcdir $repo-$version
 cd $repo-$version
 git checkout $checkout
 rm -rf .git
