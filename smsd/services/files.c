@@ -65,7 +65,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 		if (file) {
 			fclose(file);
 			if (i == 0) {
-				SMSD_Log(-1, Config, "Cannot save %s. No available file names", FileName);
+				SMSD_Log(DEBUG_ERROR, Config, "Cannot save %s. No available file names", FileName);
 				return ERR_CANTOPENFILE;
 			}
 		}
@@ -73,7 +73,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 
 		if ((sms->SMS[i].PDU == SMS_Status_Report) && strcasecmp(Config->deliveryreport, "log") == 0) {
 			strcpy(buffer, DecodeUnicodeString(sms->SMS[i].Number));
-			SMSD_Log(1, Config, "Delivery report: %s to %s", DecodeUnicodeString(sms->SMS[i].Text), buffer);
+			SMSD_Log(DEBUG_NOTICE, Config, "Delivery report: %s to %s", DecodeUnicodeString(sms->SMS[i].Text), buffer);
 		} else {
 			if (locations_pos + strlen(FileName) + 2 >= locations_size) {
 				locations_size += strlen(FileName) + 30;
@@ -89,7 +89,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 
 			if (strcasecmp(Config->inboxformat, "detail") == 0) {
 #ifndef GSM_ENABLE_BACKUP
-				SMSD_Log(-1, Config, "Saving in detail format not compiled in!");
+				SMSD_Log(DEBUG_ERROR, Config, "Saving in detail format not compiled in!");
 
 #else
 				for (j=0;j<sms->Number;j++) backup.SMS[j] = &sms->SMS[j];
@@ -124,9 +124,9 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				}
 			}
 			if (error == ERR_NONE) {
-				SMSD_Log(1, Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report": "Received"), FileName);
+				SMSD_Log(DEBUG_NOTICE, Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report": "Received"), FileName);
 			} else {
-				SMSD_Log(0, Config, "Cannot save %s (%i)", FileName, errno);
+				SMSD_Log(DEBUG_INFO, Config, "Cannot save %s (%i)", FileName, errno);
 				return ERR_CANTOPENFILE;
 			}
 		}
@@ -306,7 +306,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	if (sms->Number != 0) {
 		DecodeUnicode(sms->SMS[0].Number,Buffer);
 		if (strchr(options, 'b')) { // WAP bookmark as title,URL
-			SMSD_Log(1, Config, "Found %i sms to \"%s\" with bookmark \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
+			SMSD_Log(DEBUG_NOTICE, Config, "Found %i sms to \"%s\" with bookmark \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
 				sms->Number,
 				Buffer,
 				DecodeUnicodeString(SMSInfo.Entries[0].Bookmark->Address),
@@ -317,7 +317,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 				Config->currdeliveryreport,
 				SMSInfo.Class);
 		} else {
-			SMSD_Log(1, Config, "Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
+			SMSD_Log(DEBUG_NOTICE, Config, "Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
 				sms->Number,
 				Buffer,
 				DecodeUnicodeString(sms->SMS[0].Text),
@@ -329,7 +329,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 				SMSInfo.Class);
 		}
 	} else {
-		SMSD_Log(1, Config, "error: SMS-count = 0");
+		SMSD_Log(DEBUG_NOTICE, Config, "error: SMS-count = 0");
 	}
 
   	return ERR_NONE;
@@ -373,15 +373,15 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 	}
 	if (ilen == olen) {
 		if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0)) {
-			SMSD_Log(0, Config, "Could not delete %s (%i)", ifilename, errno);
+			SMSD_Log(DEBUG_INFO, Config, "Could not delete %s (%i)", ifilename, errno);
 			return ERR_UNKNOWN;
 		}
 		return ERR_NONE;
 	} else {
-		SMSD_Log(0, Config, "Error copying SMS %s -> %s", ifilename, ofilename);
+		SMSD_Log(DEBUG_INFO, Config, "Error copying SMS %s -> %s", ifilename, ofilename);
 		if (alwaysDelete) {
 			if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0))
-				SMSD_Log(0, Config, "Could not delete %s (%i)", ifilename, errno);
+				SMSD_Log(DEBUG_INFO, Config, "Could not delete %s (%i)", ifilename, errno);
 		}
 		return ERR_UNKNOWN;
 	}
@@ -392,7 +392,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms UNUSED,
 		int Part, GSM_SMSDSendingError err, int TPMR UNUSED)
 {
 	if (err == SMSD_SEND_OK) {
-		SMSD_Log(0, Config, "Transmitted %s (%s: %i) to %s",
+		SMSD_Log(DEBUG_INFO, Config, "Transmitted %s (%s: %i) to %s",
 				Config->SMSID,
 				(Part == sms->Number ? "total" : "part"),
 				Part,

@@ -57,7 +57,7 @@ long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, dbi_result res, const char 
 			} else if ((type & DBI_INTEGER_SIZEMASK) == DBI_INTEGER_SIZE8) {
 				return dbi_result_get_longlong(res, field);
 			}
-			SMSD_Log(-1, Config, "Wrong integer field subtype! (Field = %s, type = %d)", field, type);
+			SMSD_Log(DEBUG_ERROR, Config, "Wrong integer field subtype! (Field = %s, type = %d)", field, type);
 			return -1;
 		case DBI_TYPE_DECIMAL:
 			type = dbi_result_get_field_attribs(res, field);
@@ -66,11 +66,11 @@ long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, dbi_result res, const char 
 			} else if ((type & DBI_DECIMAL_SIZEMASK) == DBI_DECIMAL_SIZE8) {
 				return dbi_result_get_longlong(res, field);
 			}
-			SMSD_Log(-1, Config, "Wrong decimal field subtype! (Field = %s, type = %d)", field, type);
+			SMSD_Log(DEBUG_ERROR, Config, "Wrong decimal field subtype! (Field = %s, type = %d)", field, type);
 			return -1;
 		case DBI_TYPE_ERROR:
 		default:
-			SMSD_Log(-1, Config, "Wrong field type! (Field = %s, type = %d)", field, type);
+			SMSD_Log(DEBUG_ERROR, Config, "Wrong field type! (Field = %s, type = %d)", field, type);
 			return -1;
 	}
 }
@@ -90,7 +90,7 @@ time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, dbi_result res, const char *fiel
 			return SMSDDBI_GetNumber(Config, res, field);
 		case DBI_TYPE_STRING:
 			date = dbi_result_get_string(res, field);
-			SMSD_Log(-1, Config, "Got date as %s (Field = %s, type = %d)", date, field, type);
+			SMSD_Log(DEBUG_ERROR, Config, "Got date as %s (Field = %s, type = %d)", date, field, type);
 			parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &timestruct);
 			timestruct.tm_isdst = 0;
 #ifdef HAVE_STRUCT_TM_TM_ZONE
@@ -100,13 +100,13 @@ time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, dbi_result res, const char *fiel
 			if (parse_res != NULL && *parse_res == 0) {
 				return mktime(&timestruct);
 			}
-			SMSD_Log(-1, Config, "DBI error: 9999 Failed to process date %s (Field = %s, type = %d)", date, field, type);
+			SMSD_Log(DEBUG_ERROR, Config, "DBI error: 9999 Failed to process date %s (Field = %s, type = %d)", date, field, type);
 			return -1;
 		case DBI_TYPE_DATETIME:
 			return dbi_result_get_datetime(res, field);
 		case DBI_TYPE_ERROR:
 		default:
-			SMSD_Log(-1, Config, "Wrong date field type! (Field = %s, type = %d)", field, type);
+			SMSD_Log(DEBUG_ERROR, Config, "Wrong date field type! (Field = %s, type = %d)", field, type);
 			return -1;
 	}
 }
@@ -123,7 +123,7 @@ gboolean SMSDDBI_GetBool(GSM_SMSDConfig * Config, dbi_result res, const char *fi
 		case DBI_TYPE_INTEGER:
 		case DBI_TYPE_DECIMAL:
 			num = SMSDDBI_GetNumber(Config, res, field);
-			SMSD_Log(-1, Config, "Got gboolean as %d (Field = %s, type = %d)", num, field, type);
+			SMSD_Log(DEBUG_ERROR, Config, "Got gboolean as %d (Field = %s, type = %d)", num, field, type);
 			if (num == -1) {
 				return -1;
 			} else if (num == 0) {
@@ -133,7 +133,7 @@ gboolean SMSDDBI_GetBool(GSM_SMSDConfig * Config, dbi_result res, const char *fi
 			}
 		case DBI_TYPE_STRING:
 			value= dbi_result_get_string(res, field);
-			SMSD_Log(-1, Config, "Got gboolean as %s (Field = %s, type = %d)", value, field, type);
+			SMSD_Log(DEBUG_ERROR, Config, "Got gboolean as %s (Field = %s, type = %d)", value, field, type);
 			if (strcasecmp(value, "yes") == 0 || strcasecmp(value, "TRUE") == 0 ||
 					strcasecmp(value, "y") == 0 || strcasecmp(value, "t") == 0) {
 				return TRUE;
@@ -145,11 +145,11 @@ gboolean SMSDDBI_GetBool(GSM_SMSDConfig * Config, dbi_result res, const char *fi
 			if (strcasecmp(value, "default") == 0) {
 				return -1;
 			}
-			SMSD_Log(-1, Config, "DBI error: 9999 Failed to process gboolean %s (Field = %s, type = %d)", value, field, type);
+			SMSD_Log(DEBUG_ERROR, Config, "DBI error: 9999 Failed to process gboolean %s (Field = %s, type = %d)", value, field, type);
 			return -1;
 		case DBI_TYPE_ERROR:
 		default:
-			SMSD_Log(-1, Config, "Wrong gboolean field type! (Field = %s, type = %d)", field, type);
+			SMSD_Log(DEBUG_ERROR, Config, "Wrong gboolean field type! (Field = %s, type = %d)", field, type);
 			return -1;
 	}
 }
@@ -206,9 +206,9 @@ static void SMSDDBI_LogError(GSM_SMSDConfig * Config)
 	const char *msg;
 	rc = dbi_conn_error(Config->DBConnDBI, &msg);
 	if (rc == -1) {
-		SMSD_Log(-1, Config, "Unknown DBI error!");
+		SMSD_Log(DEBUG_ERROR, Config, "Unknown DBI error!");
 	} else {
-		SMSD_Log(-1, Config, "DBI error %d: %s", rc, msg);
+		SMSD_Log(DEBUG_ERROR, Config, "DBI error %d: %s", rc, msg);
 	}
 }
 
@@ -221,7 +221,7 @@ void SMSDDBI_Callback(dbi_conn Conn, void *Config)
 static GSM_Error SMSDDBI_Free(GSM_SMSDConfig *Config)
 {
 	if (Config->DBConnDBI != NULL) {
-		SMSD_Log(1, Config, "Disconnecting from DBI");
+		SMSD_Log(DEBUG_NOTICE, Config, "Disconnecting from DBI");
 		dbi_conn_close(Config->DBConnDBI);
 		dbi_shutdown();
 		Config->DBConnDBI = NULL;
@@ -237,17 +237,17 @@ static GSM_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 	rc = dbi_initialize(Config->driverspath);
 
 	if (rc == 0) {
-		SMSD_Log(-1, Config, "DBI did not find any drivers, try using DriversPath option");
+		SMSD_Log(DEBUG_ERROR, Config, "DBI did not find any drivers, try using DriversPath option");
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	} else if (rc < 0) {
-		SMSD_Log(-1, Config, "DBI failed to initialize!");
+		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to initialize!");
 		return ERR_UNKNOWN;
 	}
 
 	Config->DBConnDBI = dbi_conn_new(Config->driver);
 	if (Config->DBConnDBI == NULL) {
-		SMSD_Log(-1, Config, "DBI failed to init %s driver!", Config->driver);
+		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to init %s driver!", Config->driver);
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	}
@@ -255,43 +255,43 @@ static GSM_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 	dbi_conn_error_handler(Config->DBConnDBI, SMSDDBI_Callback, Config);
 
 	if (dbi_conn_set_option(Config->DBConnDBI, "sqlite_dbdir", Config->dbdir) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set sqlite_dbdir!");
+		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set sqlite_dbdir!");
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "sqlite3_dbdir", Config->dbdir) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set sqlite3_dbdir!");
+		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set sqlite3_dbdir!");
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "host", Config->PC) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set host!");
+		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set host!");
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "username", Config->user) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set username!");
+		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set username!");
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "password", Config->password) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set password!");
+		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set password!");
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "dbname", Config->database) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set dbname!");
+		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set dbname!");
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "encoding", "UTF-8") != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set encoding!");
+		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to set encoding!");
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 
 	if (dbi_conn_connect(Config->DBConnDBI) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to connect!");
+		SMSD_Log(DEBUG_ERROR, Config, "DBI failed to connect!");
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
@@ -308,18 +308,18 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 	*res = NULL;
 
 	for (attempts = 1; attempts < SMSD_SQL_RETRIES; attempts++) {
-		SMSD_Log(2, Config, "Execute SQL: %s", query);
+		SMSD_Log(DEBUG_SQL, Config, "Execute SQL: %s", query);
 		*res = dbi_conn_query(Config->DBConnDBI, query);
 		if (*res != NULL) return ERR_NONE;
 
-		SMSD_Log(0, Config, "SQL failed: %s", query);
+		SMSD_Log(DEBUG_INFO, Config, "SQL failed: %s", query);
 		if (attempts >= SMSD_SQL_RETRIES) {
 			return ERR_TIMEOUT;
 		}
 		/* Black magic to decide whether we should bail out or attempt to retry */
 		rc = dbi_conn_error(Config->DBConnDBI, &msg);
 		if (rc != -1) {
-			SMSD_Log(0, Config, "SQL failure: %s", msg);
+			SMSD_Log(DEBUG_INFO, Config, "SQL failure: %s", msg);
 			if (strstr(msg, "syntax") != NULL) {
 				return ERR_BUG;
 			}
@@ -342,16 +342,16 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 				return ERR_BUG;
 			}
 			if (strstr(msg, "locked") != NULL) {
-				SMSD_Log(0, Config, "Retrying after %d seconds...", attempts * attempts);
+				SMSD_Log(DEBUG_INFO, Config, "Retrying after %d seconds...", attempts * attempts);
 				sleep(attempts * attempts);
 				continue;
 			}
 		}
 		/* We will try to reconnect */
-		SMSD_Log(0, Config, "Failed to detect problem cause, reconnecting to database!");
+		SMSD_Log(DEBUG_INFO, Config, "Failed to detect problem cause, reconnecting to database!");
 		error = ERR_UNKNOWN;
 		while (error != ERR_NONE) {
-			SMSD_Log(0, Config, "Reconnecting after %d seconds...", attempts * attempts);
+			SMSD_Log(DEBUG_INFO, Config, "Reconnecting after %d seconds...", attempts * attempts);
 			sleep(attempts * attempts);
 			SMSDDBI_Free(Config);
 			error = SMSDDBI_Connect(Config);
@@ -376,7 +376,7 @@ static GSM_Error SMSDDBI_CheckTable(GSM_SMSDConfig * Config, const char *table)
 	sprintf(buffer, "SELECT id FROM %s LIMIT 1", table);
 	error = SMSDDBI_Query(Config, buffer, &res);
 	if (error != ERR_NONE) {
-		SMSD_Log(-1, Config, "Table %s not found!", table);
+		SMSD_Log(DEBUG_ERROR, Config, "Table %s not found!", table);
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
@@ -408,13 +408,13 @@ static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
 		return ERR_UNKNOWN;
 	}
 	if (dbi_result_get_numrows(res) != 1) {
-		SMSD_Log(-1, Config, "No Version information in table gammu!");
+		SMSD_Log(DEBUG_ERROR, Config, "No Version information in table gammu!");
 		dbi_result_free(res);
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_result_first_row(res) != 1) {
-		SMSD_Log(-1, Config, "Failed to seek to first row!");
+		SMSD_Log(DEBUG_ERROR, Config, "Failed to seek to first row!");
 		dbi_result_free(res);
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
@@ -426,7 +426,7 @@ static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
 		return ERR_UNKNOWN;
 	}
 
-	SMSD_Log(0, Config, "Connected to Database %s: %s on %s", Config->driver, Config->database, Config->PC);
+	SMSD_Log(DEBUG_INFO, Config, "Connected to Database %s: %s on %s", Config->driver, Config->database, Config->PC);
 
 	return ERR_NONE;
 }
@@ -441,7 +441,7 @@ static GSM_Error SMSDDBI_InitAfterConnect(GSM_SMSDConfig * Config)
 	sprintf(buf, "DELETE FROM phones WHERE IMEI = '%s'", Config->Status->IMEI);
 
 	if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error deleting from database (%s)", __FUNCTION__);
+		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
@@ -454,7 +454,7 @@ static GSM_Error SMSDDBI_InitAfterConnect(GSM_SMSDConfig * Config)
 		Config->Status->Client);
 
 	if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error inserting into database (%s)", __FUNCTION__);
+		SMSD_Log(DEBUG_INFO, Config, "Error inserting into database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
@@ -492,7 +492,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 		EncodeUTF8(smsc_message, sms->SMS[i].SMSC.Number);
 		EncodeUTF8(destinationnumber, sms->SMS[i].Number);
 		if (sms->SMS[i].PDU == SMS_Status_Report) {
-			SMSD_Log(0, Config, "Delivery report: %s to %s", smstext, destinationnumber);
+			SMSD_Log(DEBUG_INFO, Config, "Delivery report: %s to %s", smstext, destinationnumber);
 
 			sprintf(buffer,
 				"SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber "
@@ -501,7 +501,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					"SenderID = '%s' AND TPMR = %i AND DestinationNumber = '%s'",
 				Config->PhoneID, sms->SMS[i].MessageReference, destinationnumber);
 			if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-				SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
+				SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s)", __FUNCTION__);
 				return ERR_UNKNOWN;
 			}
 
@@ -509,7 +509,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			while (dbi_result_next_row(Res)) {
 				smsc = dbi_result_get_string(Res, "SMSCNumber");
 				state = dbi_result_get_string(Res, "Status");
-				SMSD_Log(4, Config, "Checking for delivery report, SMSC=%s, state=%s", smsc, state);
+				SMSD_Log(DEBUG_NOTICE, Config, "Checking for delivery report, SMSC=%s, state=%s", smsc, state);
 
 				if (strcmp(smsc, smsc_message) != 0) {
 					if (Config->skipsmscnumber[0] == 0 ||
@@ -527,7 +527,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 						found = TRUE;
 						break;
 					} else {
-						SMSD_Log(1, Config, "Delivery report would match, but time delta is too big (%ld), consider increasing DeliveryReportDelay", diff);
+						SMSD_Log(DEBUG_NOTICE, Config, "Delivery report would match, but time delta is too big (%ld), consider increasing DeliveryReportDelay", diff);
 					}
 				}
 			}
@@ -560,7 +560,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					sms->SMS[i].MessageReference);
 
 				if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-					SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
+					SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 					return ERR_UNKNOWN;
 				}
 			}
@@ -649,7 +649,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 
 		sprintf(buffer + strlen(buffer), ",'%s')", Config->PhoneID);
 		if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-			SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
+			SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 
@@ -658,10 +658,10 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			new_id = dbi_conn_sequence_last(Config->DBConnDBI, "inbox_id_seq");
 		}
 		if (new_id == 0) {
-			SMSD_Log(0, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
+			SMSD_Log(DEBUG_INFO, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
-		SMSD_Log(1, Config, "Inserted message id %llu", new_id);
+		SMSD_Log(DEBUG_NOTICE, Config, "Inserted message id %llu", new_id);
 
 		dbi_result_free(Res);
 
@@ -679,7 +679,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 
 		sprintf(buffer, "UPDATE phones SET Received = Received + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
 		if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-			SMSD_Log(0, Config, "Error updating number of received messages (%s)", __FUNCTION__);
+			SMSD_Log(DEBUG_INFO, Config, "Error updating number of received messages (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 		dbi_result_free(Res);
@@ -701,7 +701,7 @@ static GSM_Error SMSDDBI_RefreshSendStatus(GSM_SMSDConfig * Config,
 		ID,
 		SMSDDBI_Now(Config));
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
+		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
@@ -750,7 +750,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 	free(encoded_text);
 
 	if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
+		SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
@@ -796,7 +796,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 				ID, i);
 		}
 		if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
-			SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
+			SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 
@@ -829,7 +829,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 		}
 
 		if (text == NULL || text_len == 0) {
-			SMSD_Log(1, Config, "Message: %s", text_decoded);
+			SMSD_Log(DEBUG_NOTICE, Config, "Message: %s", text_decoded);
 			DecodeUTF8(sms->SMS[sms->Number].Text, text_decoded, strlen(text_decoded));
 		} else {
 			switch (sms->SMS[sms->Number].Coding) {
@@ -894,14 +894,14 @@ static GSM_Error SMSDDBI_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 
 	sprintf(buffer, "DELETE FROM outbox WHERE ID = '%s'", ID);
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error deleting from database (%s)", __FUNCTION__);
+		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
 
 	sprintf(buffer, "DELETE FROM outbox_multipart WHERE ID = '%s'", ID);
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error deleting from database (%s)", __FUNCTION__);
+		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
@@ -1057,7 +1057,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 		}
 		strcat(buffer, ")");
 		if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-			SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
+			SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 		if (i == 0) {
@@ -1066,13 +1066,13 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 				ID = dbi_conn_sequence_last(Config->DBConnDBI, "outbox_id_seq");
 			}
 			if (ID == 0) {
-				SMSD_Log(0, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
+				SMSD_Log(DEBUG_INFO, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
 				return ERR_UNKNOWN;
 			}
 		}
 		dbi_result_free(Res);
 	}
-	SMSD_Log(0, Config, "Written message with ID %u", ID);
+	SMSD_Log(DEBUG_INFO, Config, "Written message with ID %u", ID);
 	if (NewID != NULL) sprintf(NewID, "%d", ID);
 	return ERR_NONE;
 }
@@ -1094,7 +1094,7 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	EncodeUTF8(destination, sms->SMS[Part - 1].Number);
 
 	if (err == SMSD_SEND_OK) {
-		SMSD_Log(1, Config, "Transmitted ID %s (%d/%d) to %s",
+		SMSD_Log(DEBUG_NOTICE, Config, "Transmitted ID %s (%d/%d) to %s",
 			Config->SMSID, Part, sms->Number, destination);
 	}
 
@@ -1109,7 +1109,7 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	} else if (err == SMSD_SEND_ERROR) {
 		strcpy(message_state, "Error");
 	} else {
-		SMSD_Log(0, Config, "Unknown SMS state: %d, assuming Error", err);
+		SMSD_Log(DEBUG_INFO, Config, "Unknown SMS state: %d, assuming Error", err);
 		strcpy(message_state, "Error");
 	}
 
@@ -1210,14 +1210,14 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	}
 
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
+		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
 
 	sprintf(buffer, "UPDATE phones SET Sent= Sent + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error updating number of sent messages (%s)", __FUNCTION__);
+		SMSD_Log(DEBUG_INFO, Config, "Error updating number of sent messages (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
@@ -1236,7 +1236,7 @@ static GSM_Error SMSDDBI_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 		SMSDDBI_NowPlus(Config, 10),
 		Config->Status->Charge.BatteryPercent, Config->Status->Network.SignalPercent, Config->Status->IMEI);
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
+		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
