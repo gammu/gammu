@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-29 20:26+0200\n"
+"POT-Creation-Date: 2009-07-30 15:02+0200\n"
 "PO-Revision-Date: 2009-07-13 08:41+0200\n"
 "Last-Translator: winawang <winawangz@yahoo.co.id>\n"
 "Language-Team: none\n"
@@ -63,7 +63,7 @@ msgstr "format backup tidak diketahui : %s\"\n"
 msgid "Error while opening file for writing!\n"
 msgstr "Kesalahan ketika membuka file untuk menulis !\n"
 
-#: gammu/backup.c:169 gammu/files.c:446 helper/message-cmdline.c:1095
+#: gammu/backup.c:169 gammu/files.c:444 helper/message-cmdline.c:1095
 msgid "Error while writing file!\n"
 msgstr "Kesalahan ketika menulis !\n"
 
@@ -113,8 +113,8 @@ msgstr "Membaca:"
 #: gammu/backup.c:1393 gammu/backup.c:1418 gammu/backup.c:1454
 #: gammu/backup.c:1507 gammu/backup.c:1532 gammu/backup.c:1590
 #: gammu/backup.c:1618 gammu/backup.c:1650 gammu/backup.c:1674
-#: gammu/backup.c:1699 gammu/backupsms.c:107 gammu/files.c:387
-#: gammu/files.c:596 gammu/message.c:328 gammu/message.c:427 gammu/misc.c:375
+#: gammu/backup.c:1699 gammu/backupsms.c:107 gammu/files.c:386
+#: gammu/files.c:594 gammu/message.c:328 gammu/message.c:427 gammu/misc.c:375
 #: gammu/misc.c:474 gammu/misc.c:479 gammu/misc.c:1191 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
@@ -297,7 +297,7 @@ msgstr "Pulihkan grup pemanggil telepon dan logo?"
 #: gammu/backup.c:1367 gammu/backup.c:1392 gammu/backup.c:1417
 #: gammu/backup.c:1453 gammu/backup.c:1506 gammu/backup.c:1531
 #: gammu/backup.c:1589 gammu/backup.c:1617 gammu/backup.c:1649
-#: gammu/backup.c:1673 gammu/backup.c:1698 gammu/files.c:746
+#: gammu/backup.c:1673 gammu/backup.c:1698 gammu/files.c:743
 msgid "Writing:"
 msgstr "Menulis:"
 
@@ -313,9 +313,10 @@ msgid "Restore phone phonebook?"
 msgstr "Pulihkan buku telepon?"
 
 #: gammu/backup.c:1031
+#, fuzzy
 msgid ""
-"Error - try to (1) add enough number of/restore caller groups and (2) use --"
-"restore again"
+"Error - try to add enough number of/restore caller groups and use --restore "
+"again"
 msgstr ""
 "Kesalahan - coba ke (1) tambahkan angka yang cukup / pulihkan grup dan (2) "
 "gunakan -- pulihkan kembali"
@@ -679,7 +680,7 @@ msgid "Repeating"
 msgstr "Mengulangi"
 
 #: gammu/calendar.c:298
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid "for %d time "
 msgid_plural "for %d times "
 msgstr[0] "Tunggaluntuk %d waktuJamakuntuk %d waktu"
@@ -1114,12 +1115,13 @@ msgid "Setting done"
 msgstr "Pengaturan selesai"
 
 #: gammu/depend/nokia/dct4.c:300
+#, fuzzy
 msgid ""
-"Sorry, but configuration matrix for this model is not added yet. Please "
-"report"
+"Sorry, but configuration matrix for this model has not yet been added. See "
+"<http://cihar.com/gammu/report> for information how to report it."
 msgstr ""
-"Maaf, tapi konfigurasi matriks untuk model ini belum ditambahkan. Silakan "
-"laporkan"
+"Tanggapan dari telepon tidak diketahui. Lihat <http://cihar.com/gammu/"
+"report> untuk informasi bagaimana melaporkannya."
 
 #: gammu/depend/nokia/dct4.c:366
 #, c-format
@@ -1497,49 +1499,51 @@ msgstr "bagian dari folder saja"
 msgid "Getting \"%s\"\n"
 msgstr "Mendapatkan \"%s\"\n"
 
-#: gammu/files.c:380
-msgid "it's folder. Please give only file names"
+#: gammu/files.c:379
+#, fuzzy
+msgid "Is a folder. Please give only file names."
 msgstr "Itu adalah folder. Silahkan berikan nama file saja."
 
-#: gammu/files.c:400 gammu/files.c:608
+#: gammu/files.c:399 gammu/files.c:606
 #, c-format
 msgid " (%02i:%02i minutes left)"
 msgstr " (%02i:%02i menit tersisa)"
 
-#: gammu/files.c:412 gammu/files.c:620
+#: gammu/files.c:410 gammu/files.c:617
+#, fuzzy
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
-"Gammu. File damaged or error in Gammu"
+"Gammu. File is damaged or there is a error in Gammu"
 msgstr ""
 "checksum file dikalkulasikan oleh telepon tidak cocok dengan nilai kalkulasi "
 "oleh gammu. File rusak atau kesalahan dalam Gammu"
 
-#: gammu/files.c:444
+#: gammu/files.c:442
 #, c-format
 msgid "  Saving to %s\n"
 msgstr "Menyimpan ke %s\n"
 
-#: gammu/files.c:695 gammu/nokia.c:925
+#: gammu/files.c:692 gammu/nokia.c:925
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr "Parameter \"%s\" tidak diketahui\n"
 
-#: gammu/files.c:730
+#: gammu/files.c:727
 #, c-format
 msgid "What file type (\"%s\") ?\n"
 msgstr "Apa tipe filenya (\"%s\") ?\n"
 
-#: gammu/files.c:739 gammu/misc.c:1149 gammu/nokia.c:934
+#: gammu/files.c:736 gammu/misc.c:1149 gammu/nokia.c:934
 #: helper/message-cmdline.c:1292
 msgid "Parameter missing!"
 msgstr "Parameter tidak ditemukan!"
 
-#: gammu/files.c:748
+#: gammu/files.c:745
 #, c-format
 msgid "ID of new file is \"%s\"\n"
 msgstr "ID file baru adalah \"%s\"\n"
 
-#: gammu/files.c:769
+#: gammu/files.c:766
 #, c-format
 msgid "ID of new folder is \"%s\"\n"
 msgstr "ID folder baru adalah \"%s\"\n"
@@ -4104,3 +4108,10 @@ msgstr ""
 #: helper/printing.c:50
 msgid "Information"
 msgstr ""
+
+#~ msgid ""
+#~ "Sorry, but configuration matrix for this model is not added yet. Please "
+#~ "report"
+#~ msgstr ""
+#~ "Maaf, tapi konfigurasi matriks untuk model ini belum ditambahkan. Silakan "
+#~ "laporkan"

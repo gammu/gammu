@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-29 20:26+0200\n"
+"POT-Creation-Date: 2009-07-30 15:02+0200\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -64,7 +64,7 @@ msgstr "Неизвестный параметр \"%s\""
 msgid "Error while opening file for writing!\n"
 msgstr "Ошибка записи в устройство."
 
-#: gammu/backup.c:169 gammu/files.c:446 helper/message-cmdline.c:1095
+#: gammu/backup.c:169 gammu/files.c:444 helper/message-cmdline.c:1095
 #, fuzzy
 msgid "Error while writing file!\n"
 msgstr "Ошибка записи в устройство."
@@ -120,8 +120,8 @@ msgstr "Чтение"
 #: gammu/backup.c:1393 gammu/backup.c:1418 gammu/backup.c:1454
 #: gammu/backup.c:1507 gammu/backup.c:1532 gammu/backup.c:1590
 #: gammu/backup.c:1618 gammu/backup.c:1650 gammu/backup.c:1674
-#: gammu/backup.c:1699 gammu/backupsms.c:107 gammu/files.c:387
-#: gammu/files.c:596 gammu/message.c:328 gammu/message.c:427 gammu/misc.c:375
+#: gammu/backup.c:1699 gammu/backupsms.c:107 gammu/files.c:386
+#: gammu/files.c:594 gammu/message.c:328 gammu/message.c:427 gammu/misc.c:375
 #: gammu/misc.c:474 gammu/misc.c:479 gammu/misc.c:1191 gammu/mms.c:183
 #, fuzzy, c-format
 msgid "%i percent"
@@ -325,7 +325,7 @@ msgstr "Восстановление групп и логотипов абоне
 #: gammu/backup.c:1367 gammu/backup.c:1392 gammu/backup.c:1417
 #: gammu/backup.c:1453 gammu/backup.c:1506 gammu/backup.c:1531
 #: gammu/backup.c:1589 gammu/backup.c:1617 gammu/backup.c:1649
-#: gammu/backup.c:1673 gammu/backup.c:1698 gammu/files.c:746
+#: gammu/backup.c:1673 gammu/backup.c:1698 gammu/files.c:743
 #, fuzzy
 msgid "Writing:"
 msgstr "Встреча"
@@ -344,8 +344,8 @@ msgstr "Восстановление телефонной книги телеф�
 
 #: gammu/backup.c:1031
 msgid ""
-"Error - try to (1) add enough number of/restore caller groups and (2) use --"
-"restore again"
+"Error - try to add enough number of/restore caller groups and use --restore "
+"again"
 msgstr ""
 
 #: gammu/backup.c:1041 gammu/backup.c:1097
@@ -1243,10 +1243,13 @@ msgid "Setting done"
 msgstr "Один звонок\n"
 
 #: gammu/depend/nokia/dct4.c:300
+#, fuzzy
 msgid ""
-"Sorry, but configuration matrix for this model is not added yet. Please "
-"report"
+"Sorry, but configuration matrix for this model has not yet been added. See "
+"<http://cihar.com/gammu/report> for information how to report it."
 msgstr ""
+"Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "
+"рассказано как сообщить об этом."
 
 #: gammu/depend/nokia/dct4.c:366
 #, c-format
@@ -1639,53 +1642,53 @@ msgstr ", папка Входящие"
 msgid "Getting \"%s\"\n"
 msgstr "Загружается \"%s\"\n"
 
-#: gammu/files.c:380
+#: gammu/files.c:379
 #, fuzzy
-msgid "it's folder. Please give only file names"
+msgid "Is a folder. Please give only file names."
 msgstr "это каталог. Вводите только имена файлов\n"
 
-#: gammu/files.c:400 gammu/files.c:608
+#: gammu/files.c:399 gammu/files.c:606
 #, c-format
 msgid " (%02i:%02i minutes left)"
 msgstr " (осталось %02i:%02i минут)"
 
-#: gammu/files.c:412 gammu/files.c:620
+#: gammu/files.c:410 gammu/files.c:617
 #, fuzzy
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
-"Gammu. File damaged or error in Gammu"
+"Gammu. File is damaged or there is a error in Gammu"
 msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: Контрольные суммы файлов, вычисленные телефоном, не "
 "совпадают с суммами, вычисленными в Gammu. Файл повреждён, или это ошибка "
 "Gammu\n"
 
-#: gammu/files.c:444
+#: gammu/files.c:442
 #, c-format
 msgid "  Saving to %s\n"
 msgstr "  Сохранение в %s\n"
 
-#: gammu/files.c:695 gammu/nokia.c:925
+#: gammu/files.c:692 gammu/nokia.c:925
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr "Параметр \"%s\" неизвестен\n"
 
-#: gammu/files.c:730
+#: gammu/files.c:727
 #, c-format
 msgid "What file type (\"%s\") ?\n"
 msgstr "Тип файла (\"%s\")?\n"
 
-#: gammu/files.c:739 gammu/misc.c:1149 gammu/nokia.c:934
+#: gammu/files.c:736 gammu/misc.c:1149 gammu/nokia.c:934
 #: helper/message-cmdline.c:1292
 #, fuzzy
 msgid "Parameter missing!"
 msgstr "Отсутствует параметр ...\n"
 
-#: gammu/files.c:748
+#: gammu/files.c:745
 #, fuzzy, c-format
 msgid "ID of new file is \"%s\"\n"
 msgstr "Время телефона - %s\n"
 
-#: gammu/files.c:769
+#: gammu/files.c:766
 #, fuzzy, c-format
 msgid "ID of new folder is \"%s\"\n"
 msgstr "Заметки продавца \"%s\"\n"
@@ -4798,13 +4801,6 @@ msgstr "Местонахождение %i\n"
 #, fuzzy
 #~ msgid ""
 #~ "Frame not requested right now. See <http://cihar.com/gammu/report> for "
-#~ "information how to report it."
-#~ msgstr ""
-#~ "Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/"
-#~ "report> рассказано как сообщить об этом."
-
-#~ msgid ""
-#~ "Unknown response from phone. See <http://cihar.com/gammu/report> for "
 #~ "information how to report it."
 #~ msgstr ""
 #~ "Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/"
