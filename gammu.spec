@@ -1,5 +1,5 @@
 Name:               gammu
-Version:            1.25.90
+Version:            1.25.91
 Release:            1
 # Set to 0 to disable bluetooth support
 %if 0%{?opensuse_bs} && 0%{?sles_version} == 9
@@ -154,13 +154,13 @@ Currently supported phones include:
 * Symbian phones through gnapplet.
 
 %package devel
+License:      GPL v2
 Summary:      Development files for Gammu
 %if 0%{?suse_version}
 Group:              Development/Libraries/C and C++
 %else
 Group:              Development/Libraries
 %endif
-Autoreqprov:  on
 Requires:           %{name} = %{version}-%{release} pkgconfig
 
 %description devel
@@ -182,6 +182,7 @@ Currently supported phones include:
 This package contain files needed for development.
 
 %package -n python-gammu
+License:    GPL v2
 Summary:    Python module to communicate with mobile phones
 %if 0%{?suse_version}
 Group:      Development/Libraries/Python
@@ -215,8 +216,10 @@ cd build-dir
 ctest -V
 
 %install
+%if 0%{?suse_version} == 0
 rm -rf %buildroot
 mkdir %buildroot
+%endif
 make -C build-dir install DESTDIR=%buildroot
 %find_lang %{name}
 %find_lang libgammu
