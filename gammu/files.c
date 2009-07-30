@@ -407,7 +407,7 @@ void GetOneFile(GSM_File * File, gboolean newtime, int i)
 				break;
 			if (error == ERR_WRONGCRC) {
 				printf_warn("%s\n",
-				    _("File checksum calculated by phone doesn't match with value calculated by Gammu. File is damaged or there is a error in Gammu".));
+				    _("File checksum calculated by phone doesn't match with value calculated by Gammu. File is damaged or there is a error in Gammu."));
 				break;
 			}
 		}
@@ -614,7 +614,7 @@ void AddOneFile(GSM_File * File, const char *text, const gboolean send)
 	fprintf(stderr, "\n");
 	if (error == ERR_WRONGCRC) {
 		printf_warn("%s\n",
-		    _("File checksum calculated by phone doesn't match with value calculated by Gammu. File is damaged or there is a error in Gammu".));
+		    _("File checksum calculated by phone doesn't match with value calculated by Gammu. File is damaged or there is a error in Gammu."));
 	}
 }
 
