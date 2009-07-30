@@ -679,7 +679,7 @@ msgid "Repeating"
 msgstr "Mengulangi"
 
 #: gammu/calendar.c:298
-#, c-format
+#, c-format, fuzzy
 msgid "for %d time "
 msgid_plural "for %d times "
 msgstr[0] "Tunggaluntuk %d waktuJamakuntuk %d waktu"
