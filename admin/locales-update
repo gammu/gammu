@@ -38,7 +38,9 @@ for loc in $LOCS ; do
     cd ../..
 done
 
-./admin/po4a
+if [ "x$1" != "x--nopo4a" ] ; then
+    ./admin/po4a
+fi
 
 sed -i '
     s/SOME DESCRIPTIVE TITLE/Gammu translation/;
