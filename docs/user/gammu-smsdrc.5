@@ -88,8 +88,7 @@ want to enable.
 .br
 \fB2\fR - enables logging of SQL queries of service backends
 .br
-\fB4\fR - enables logging of gammu debug information (has to be enabled also in
-gammu section)
+\fB4\fR - enables logging of gammu debug information
 
 Generally to get as much debug information as possible, use 255.
 
@@ -393,9 +392,6 @@ There is NO WARRANTY, to the extent permitted by law.
 Please report bugs to <http://bugs.cihar.com>.
 
 Before reporting a bug, please enable verbose logging in SMSD configuration:
-
-    [gammu]
-    logformat = textall
 
     [smsd]
     debuglevel = 255

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-30 15:10+0200\n"
+"POT-Creation-Date: 2009-07-30 16:28+0200\n"
 "PO-Revision-Date: 2009-06-03 16:35+0200\n"
 "Last-Translator: Potwór Jaworny <sklep@szybkieczytanie.net>\n"
 "Language-Team: Language =pl\n"
@@ -1611,7 +1611,7 @@ msgstr ""
 #: gammu/files.c:410 gammu/files.c:617
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
-"Gammu. File is damaged or there is a error in Gammu"
+"Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
 
 #: gammu/files.c:442
