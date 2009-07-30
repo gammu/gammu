@@ -28,6 +28,7 @@ ChangeLog
 [-] * Fixed range parsing in AT engine.
 [+] * Added reconnect support in PostgreSQL driver in SMSD.
 [!] * Gammu debug level no longer can be controlled separately in SMSD.
+[-] * Fix loop when Nokia phone does not allow to access files (bug #954).
     
 20090709 - 1.25.0
 

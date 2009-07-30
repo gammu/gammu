@@ -228,6 +228,9 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 		}
 		if ((msg.Buffer[8]*256+msg.Buffer[9]) != 0x00) File->Folder = TRUE;
 		return ERR_NONE;
+	case 0xf0:
+		smprintf(s, "File system is not supported\n");
+		return ERR_NOTSUPPORTED;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }

@@ -4284,6 +4284,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x2F,ID_GetFileInfo	  },
 	{N6510_ReplyGetFileSystemStatus1, "\x6D",0x03,0x2F,ID_FileSystemStatus	  },
 	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x33,ID_GetFileInfo	  },
+	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0xF0,ID_GetFileInfo	  },
 	{N6510_ReplyAddFilePart1,	  "\x6D",0x03,0x41,ID_AddFile		  },
 	{N6510_ReplyGetFileCRC12,	  "\x6D",0x03,0x43,ID_GetCRC		  },
 	{NoneReply,			  "\x6D",0x03,0x59,ID_AddFile		  },/* filesystem2 */
