@@ -27,6 +27,7 @@ ChangeLog
 [-] * Added testcases for AT+CNMI replies.
 [-] * Fixed range parsing in AT engine.
 [+] * Added reconnect support in PostgreSQL driver in SMSD.
+[!] * Gammu debug level no longer can be controlled separately in SMSD.
     
 20090709 - 1.25.0
 

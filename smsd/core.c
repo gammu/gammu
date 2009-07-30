@@ -522,6 +522,11 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	GSM_SetConfigNum(Config->gsm, 1);
 	gammucfg->UseGlobalDebugFile = FALSE;
 
+	/* Force debug level in Gammu */
+	if ((DEBUG_GAMMU & Config->debug_level) != 0) {
+		strcpy(gammucfg->DebugLevel, "textall");
+	}
+
 	Config->PINCode=INI_GetValue(Config->smsdcfgfile, "smsd", "PIN", FALSE);
 	if (Config->PINCode == NULL) {
  		SMSD_Log(DEBUG_INFO, Config, "Warning: No PIN code in %s file",filename);
