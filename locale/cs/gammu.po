@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.25.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-07-30 16:28+0200\n"
-"PO-Revision-Date: 2009-07-30 15:20+0200\n"
+"PO-Revision-Date: 2009-07-31 07:55+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1225,9 +1225,8 @@ msgid "unit result %10i "
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1032
-#, fuzzy
 msgid "Battery voltage, divided:"
-msgstr "Napětí baterie"
+msgstr "Napětí baterie, rozdělené:"
 
 #: gammu/depend/nokia/dct4.c:1032 gammu/depend/nokia/dct4.c:1033
 #: gammu/depend/nokia/dct4.c:1034 gammu/depend/nokia/dct4.c:1038
@@ -1235,51 +1234,45 @@ msgstr "Napětí baterie"
 #: gammu/depend/nokia/dct4.c:1043 gammu/depend/nokia/dct4.c:1044
 #: gammu/depend/nokia/dct4.c:1045
 msgid "mV"
-msgstr ""
+msgstr "mV"
 
 #: gammu/depend/nokia/dct4.c:1033
-#, fuzzy
 msgid "Battery voltage, scaled:"
-msgstr "Napětí baterie"
+msgstr "Napětí baterie, zvětšené:"
 
 #: gammu/depend/nokia/dct4.c:1034
-#, fuzzy
 msgid "Charger voltage:"
-msgstr "Nabíjecí napětí"
+msgstr "Nabíjecí napětí:"
 
 #: gammu/depend/nokia/dct4.c:1035
-#, fuzzy
 msgid "Charger current:"
-msgstr "Nabíjecí proud"
+msgstr "Nabíjecí proud:"
 
 #: gammu/depend/nokia/dct4.c:1035 gammu/depend/nokia/dct4.c:1046
 #: gammu/depend/nokia/dct4.c:1047
 msgid "mA"
-msgstr ""
+msgstr "mA"
 
 #: gammu/depend/nokia/dct4.c:1036
 msgid "Battery size indicator:"
-msgstr ""
+msgstr "Indikátor velikosti baterie:"
 
 #: gammu/depend/nokia/dct4.c:1036
 msgid "Ohms"
-msgstr ""
+msgstr "Ohmů"
 
 #: gammu/depend/nokia/dct4.c:1037
-#, fuzzy
 msgid "Battery temperature:"
-msgstr "Teplota baterie"
+msgstr "Teplota baterie:"
 
 #: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1041
 #: gammu/depend/nokia/dct4.c:1042
-#, fuzzy
 msgid "K"
-msgstr "OK"
+msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1038
-#, fuzzy
 msgid "Headset interconnection:"
-msgstr "Prosím zvolte typ připojení"
+msgstr "Připojení headsetu:"
 
 #: gammu/depend/nokia/dct4.c:1039
 #, fuzzy
@@ -1287,19 +1280,16 @@ msgid "Hook interconnection:"
 msgstr "Připojení telefonu"
 
 #: gammu/depend/nokia/dct4.c:1040
-#, fuzzy
 msgid "Light sensor:"
-msgstr "Světla"
+msgstr "Světelný senzor:"
 
 #: gammu/depend/nokia/dct4.c:1041
-#, fuzzy
 msgid "Power amplifier temperature:"
-msgstr "Teplota telefonu"
+msgstr "Teplota zesilovače:"
 
 #: gammu/depend/nokia/dct4.c:1042
-#, fuzzy
 msgid "VCXO temperature:"
-msgstr "Teplota telefonu"
+msgstr "Teplota VCXO:"
 
 #: gammu/depend/nokia/dct4.c:1043
 msgid "Resistive keyboard 1/headint2:"
@@ -1310,18 +1300,16 @@ msgid "Resistive keyboard 1/auxdet:"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1045
-#, fuzzy
 msgid "Initial battery voltage:"
-msgstr "Napětí baterie"
+msgstr "Původní napětí baterie:"
 
 #: gammu/depend/nokia/dct4.c:1046
-#, fuzzy
 msgid "Battery Current:"
-msgstr "Typ baterie"
+msgstr "Nabíjecí proud baterie:"
 
 #: gammu/depend/nokia/dct4.c:1047
 msgid "Battery Current Fast:"
-msgstr ""
+msgstr "Nabíjecí proud baterie pro rychlé nabíjení:"
 
 #: gammu/depend/nokia/dct4.c:1153
 msgid "Phone seems not to support radio"
@@ -1329,7 +1317,7 @@ msgstr "Telefon pravděpodobně nepodporuje rádio"
 
 #: gammu/depend/nokia/dct4.c:1160
 msgid "Please connect headset. Required as antenna"
-msgstr ""
+msgstr "Prosím připojte headset. Je vyžadován jako anténa"
 
 #: gammu/depend/nokia/dct4.c:1354
 #, c-format
@@ -1339,12 +1327,12 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1357
 #, c-format
 msgid "  entry ID %02X"
-msgstr ""
+msgstr "  ID položky %02X"
 
 #: gammu/depend/nokia/dct4.c:1359
 #, c-format
 msgid " (Speed dial on SIM)"
-msgstr ""
+msgstr " (Rychlá volba na SIM)"
 
 #: gammu/depend/nokia/dct4.c:1360
 #, c-format
@@ -1359,7 +1347,7 @@ msgstr " (Text: emailová adresa)"
 #: gammu/depend/nokia/dct4.c:1362
 #, c-format
 msgid " (Text: postal address)"
-msgstr ""
+msgstr " (Text: poštovní adresa)"
 
 #: gammu/depend/nokia/dct4.c:1363
 #, c-format
@@ -1464,7 +1452,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1386
 #, c-format
 msgid ", type "
-msgstr ""
+msgstr ", typ "
 
 #: gammu/depend/nokia/dct4.c:1388
 #, c-format
@@ -1474,17 +1462,17 @@ msgstr "text"
 #: gammu/depend/nokia/dct4.c:1389
 #, c-format
 msgid "byte"
-msgstr ""
+msgstr "bajt"
 
 #: gammu/depend/nokia/dct4.c:1390
 #, c-format
 msgid "2 bytes"
-msgstr ""
+msgstr "2 bajty"
 
 #: gammu/depend/nokia/dct4.c:1391
 #, c-format
 msgid "4 bytes"
-msgstr ""
+msgstr "4 bajty"
 
 #: gammu/depend/nokia/dct4.c:1398
 #, c-format
@@ -1602,7 +1590,7 @@ msgstr "Stahuji \"%s\"\n"
 
 #: gammu/files.c:379
 msgid "Is a folder. Please give only file names."
-msgstr ""
+msgstr "Je složka. Zadejte prosím jméno souboru."
 
 #: gammu/files.c:399 gammu/files.c:606
 #, c-format
@@ -2124,7 +2112,7 @@ msgstr "%i SMS částí v %i SMS sekvencích"
 
 #: gammu/message.c:446
 msgid "SMS counter overflow"
-msgstr ""
+msgstr "Přetekl čítač SMS"
 
 #: gammu/message.c:524
 #, c-format
@@ -2213,7 +2201,7 @@ msgstr "Odesílám SMS %i/%i"
 
 #: gammu/message.c:657
 msgid "Something went wrong, uknown message operation!\n"
-msgstr ""
+msgstr "Něco se stalo špatně, chybná operace se zprávou!\n"
 
 #: gammu/message.c:692
 #, c-format
@@ -2223,7 +2211,7 @@ msgstr ""
 #: gammu/message.c:697
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
-msgstr ""
+msgstr "Odstraňuji SMS ze složky \"%s\": "
 
 #: gammu/misc.c:33
 msgid "Network state"
@@ -2265,7 +2253,7 @@ msgstr "Je dostupná novější verze firmware!\n"
 #: gammu/misc.c:171
 #, c-format
 msgid "Latest version is %s and you run %s.\n"
-msgstr ""
+msgstr "Poslední verze je %s a vy používáte %s.\n"
 
 #: gammu/misc.c:190 gammu/search.c:89
 msgid "Manufacturer"
@@ -2311,12 +2299,12 @@ msgstr "ID %i, "
 #: gammu/misc.c:278
 #, c-format
 msgid "incoming call from \"%s\"\n"
-msgstr ""
+msgstr "Příchozí hovor od \"%s\"\n"
 
 #: gammu/misc.c:279
 #, c-format
 msgid "outgoing call to \"%s\"\n"
-msgstr ""
+msgstr "odchozí hovor pro \"%s\"\n"
 
 #: gammu/misc.c:280
 msgid "call started"
@@ -2324,20 +2312,20 @@ msgstr "hovor probíhá"
 
 #: gammu/misc.c:281
 msgid "end of call (unknown side)"
-msgstr ""
+msgstr "konec hovoru (neznámá příčina)"
 
 #: gammu/misc.c:282
 msgid "call end from our side"
-msgstr ""
+msgstr "hovor ukončen z naší strany"
 
 #: gammu/misc.c:283
 #, c-format
 msgid "call end from remote side (code %i)\n"
-msgstr ""
+msgstr "hovor ukončen z druhé strany (kód %i)\n"
 
 #: gammu/misc.c:284
 msgid "call established. Waiting for answer"
-msgstr ""
+msgstr "hovor spojen. Čekám na odpověď"
 
 #: gammu/misc.c:285
 msgid "call held"
@@ -2510,7 +2498,7 @@ msgstr "Úroveň sítě"
 
 #: gammu/misc.c:478
 msgid "Bit error rate"
-msgstr ""
+msgstr "Bitová četnost chyb"
 
 #: gammu/misc.c:486
 msgid "SIM SMS status"
@@ -2538,7 +2526,7 @@ msgstr "Stav SMS v telefonu"
 #: gammu/misc.c:504
 #, c-format
 msgid "%i templates"
-msgstr ""
+msgstr "%i šablon"
 
 #: gammu/misc.c:517
 msgid "Leaving monitor mode..."
@@ -2547,12 +2535,12 @@ msgstr "Ukončuji monitorovací režim..."
 #: gammu/misc.c:545
 #, c-format
 msgid "Smart Messaging"
-msgstr ""
+msgstr "Chytré zprávy"
 
 #: gammu/misc.c:546
 #, c-format
 msgid "Nokia binary"
-msgstr ""
+msgstr "Nokia binární"
 
 #: gammu/misc.c:547
 #, c-format
@@ -2567,12 +2555,12 @@ msgstr "SMAF (MMF)"
 #: gammu/misc.c:550
 #, c-format
 msgid " format, ringtone \"%s\"\n"
-msgstr ""
+msgstr " formát, vyzvánění \"%s\"\n"
 
 #: gammu/misc.c:757
 #, c-format
 msgid "What type of reset do you want (\"%s\") ?\n"
-msgstr ""
+msgstr "Který typ resetu chcete provést (\"%s\") ?\n"
 
 #: gammu/misc.c:784 gammu/misc.c:831
 msgid "Address"
@@ -2660,7 +2648,7 @@ msgstr "Uvítací zpráva je \"%s\"\n"
 #: gammu/misc.c:957
 #, c-format
 msgid "Dealer note text is \"%s\"\n"
-msgstr ""
+msgstr "Text poznámky distributora je \"%s\"\n"
 
 #: gammu/misc.c:1095
 #, c-format
@@ -2743,7 +2731,7 @@ msgstr "Proxy"
 #: gammu/misc.c:1344 gammu/misc.c:1347
 #, c-format
 msgid "address \"%s\", port %i"
-msgstr ""
+msgstr "adresa \"%s\", port %i"
 
 #: gammu/misc.c:1346
 msgid "Second proxy"
@@ -2767,7 +2755,7 @@ msgstr "Servisní středisko"
 
 #: gammu/misc.c:1358
 msgid "Data (CSD)"
-msgstr ""
+msgstr "Data (CSD)"
 
 #: gammu/misc.c:1361
 msgid "Dial-up number"
@@ -2861,7 +2849,7 @@ msgstr "Uživatel"
 
 #: gammu/misc.c:1450
 msgid "Phonebook database"
-msgstr ""
+msgstr "Databáze kontaktů"
 
 #: gammu/misc.c:1451
 msgid "Calendar database"
@@ -2952,12 +2940,12 @@ msgstr "Text je příliš dlouhý, zkracuji na %d znaků!\n"
 
 #: gammu/misc.c:1791
 msgid "Invalid security code type"
-msgstr ""
+msgstr "Chybný typ bezpečnostního kódu"
 
 #: gammu/misc.c:1796
 #, c-format
 msgid "Enter %s code: "
-msgstr ""
+msgstr "Zadejte %s kód: "
 
 #: gammu/misc.c:1808
 msgid "No PIN code entered!"
@@ -3276,7 +3264,7 @@ msgstr ""
 
 #: gammu/mms.c:130
 msgid "Do you want to save this attachment?"
-msgstr ""
+msgstr "Chcete uložit tuto přílohu?"
 
 #: gammu/mms.c:170
 #, c-format
