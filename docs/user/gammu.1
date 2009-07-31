@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Jun  8 2009" "Gammu 1.24.92" "Gammu Documentation"
+.TH "GAMMU" "1" "Jul 29 2009" "Gammu 1.25.90" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -47,16 +47,32 @@ Cancel incoming call
 
 .TP
 .BI "canceldiverts"
+Cancel all existing call diverts.
 
 .TP
 .BI "conferencecall" " ID"
+Initiates a conference call.
 
 .TP
 .BI "dialvoice" " number [show|hide]"
 Make voice call from SIM card line set in phone.
 
+\fBshow|hide\fR - optional parameter whether to disable call number indication.
+
 .TP
 .BI "divert" " get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]"
+Manage or display call diverts.
+
+\fBget|set\fR - whether to get divert information or to set it.
+
+\fBall|busy|noans|outofreach\fR - condition when apply divert
+
+\fBall|voice|fax|data\fR - call type when apply divert
+
+number - number where to divert
+
+timeout - timeout when the diversion will happen
+
 
 .TP
 .BI "getspeeddial" " start [stop]"

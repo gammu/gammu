@@ -432,6 +432,8 @@ HELP['nokiacomposer'] = '''Show, how to enter RTTL ringtone in composer existing
 (and how should it look like).
 ''' 
 HELP['dialvoice'] = '''Make voice call from SIM card line set in phone.
+
+\\fBshow|hide\\fR - optional parameter whether to disable call number indication.
 ''' 
 HELP['maketerminatedcall'] = '''Make voice call from SIM card line set in phone which will 
 be terminated after \\fBlength\\fR seconds.
@@ -439,6 +441,23 @@ be terminated after \\fBlength\\fR seconds.
 HELP['answercall'] = '''Answer incoming call.
 '''
 HELP['cancelcall'] = '''Cancel incoming call
+'''
+HELP['canceldiverts'] = '''Cancel all existing call diverts.
+'''
+HELP['divert'] = '''Manage or display call diverts.
+
+\\fBget|set\\fR - whether to get divert information or to set it.
+
+\\fBall|busy|noans|outofreach\\fR - condition when apply divert
+
+\\fBall|voice|fax|data\\fR - call type when apply divert
+
+number - number where to divert
+
+timeout - timeout when the diversion will happen
+
+'''
+HELP['conferencecall'] = '''Initiates a conference call.
 '''
 HELP['gettodo'] = ''''''
 HELP['deletetodo'] = ''''''
