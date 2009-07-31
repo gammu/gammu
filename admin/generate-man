@@ -481,6 +481,9 @@ timeout - timeout when the diversion will happen
 '''
 HELP['conferencecall'] = '''Initiates a conference call.
 '''
+HELP['getcalendar'] = '''Retrieves selected calendar entries from phone.'''
+HELP['getallcalendar'] = '''Retrieves all calendar entries from phone.'''
+HELP['deletecalendar'] = '''Deletes selected calendar entries in phone. '''
 HELP['gettodo'] = '''Retrieves selected todo entries from phone.'''
 HELP['getalltodo'] = '''Retrieves all todo entries from phone.'''
 HELP['deletetodo'] = '''Deletes selected todo entries in phone. '''
