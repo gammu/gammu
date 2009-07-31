@@ -887,7 +887,7 @@ GSM_Error GSM_UnholdCall(GSM_StateMachine *s, int ID)
 	return err;
 }
 /**
- * Initiates conference call.
+ * Initiates a conference call.
  */
 GSM_Error GSM_ConferenceCall(GSM_StateMachine *s, int ID)
 {
