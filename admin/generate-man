@@ -939,6 +939,14 @@ HELP['searchphone'] = '''Attempts to search for a connected phone. Please note
 that this can take a very long time, but in case you have no clue how to
 configure phone connection, this is a convenient way to find working setup for
 Gammu.'''
+HELP['batch'] = '''Starts Gammu in a batch mode. In this mode you can issue
+several commands each on one line. Lines starting with # are treated as a
+comments.
+
+By default, commands are read from standard input, but you can optionally
+specify a file from where they would be read (special case - means standard
+input).
+'''
 
 SECTION_HELP = {}
 SECTION_HELP['sms'] = '''

@@ -2209,6 +2209,13 @@ sniffs. See \fI/docs/develop/develop.txt\fR for more details.
 .SS "Functions that don't fit elsewhere"
 .TP
 .BI "batch" " [file]"
+Starts Gammu in a batch mode. In this mode you can issue
+several commands each on one line. Lines starting with # are treated as a
+comments.
+
+By default, commands are read from standard input, but you can optionally
+specify a file from where they would be read (special case - means standard
+input).
 
 .TP
 .BI "entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK" " code|\-"
