@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-30 16:28+0200\n"
+"POT-Creation-Date: 2009-07-31 15:46+0200\n"
 "PO-Revision-Date: 2009-07-06 14:14+0200\n"
 "Last-Translator: Benedikt Sauer <filmor@gmail.com>\n"
 "Language-Team: Language =de\n"
@@ -3425,7 +3425,10 @@ msgid "Writing file %s:"
 msgstr "Fehler beim Schreiben auf Gerät."
 
 #: gammu/nokia.c:426
-msgid "Your phone model is not supported. Please report"
+#, fuzzy
+msgid ""
+"Your phone model is not supported. Please report it to authors (see <http://"
+"cihar.com/gammu/report>). Thank you."
 msgstr ""
 "Ihr Telefonmodell wird nicht unterstützt. Bitte melden Sie das den Autoren"
 
@@ -3872,8 +3875,8 @@ msgid "Ringtone too long. %i percent part cut\n"
 msgstr "Warnung: der Klingelton ist zu lang. %i Prozent werden abgeschnitten\n"
 
 #: helper/message-cmdline.c:1399
-#, c-format
-msgid "There is %i SMS packed and %i limit. Exiting\n"
+#, fuzzy, c-format
+msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr "Es gibt %i gepackte SMS, Obergrenze ist %i. Abbruch\n"
 
 #: helper/message-cmdline.c:1409

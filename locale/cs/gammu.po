@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-30 16:28+0200\n"
-"PO-Revision-Date: 2009-07-31 07:55+0200\n"
+"POT-Creation-Date: 2009-07-31 15:46+0200\n"
+"PO-Revision-Date: 2009-07-31 15:45+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3321,42 +3321,45 @@ msgid "Writing file %s:"
 msgstr "Zapisuji souboru %s:"
 
 #: gammu/nokia.c:426
-msgid "Your phone model is not supported. Please report"
-msgstr ""
+#, fuzzy
+msgid ""
+"Your phone model is not supported. Please report it to authors (see <http://"
+"cihar.com/gammu/report>). Thank you."
+msgstr "Váš telefon není podporovaný. Prosíme nahlašte tuto chybu vývojářům."
 
 #: gammu/nokia.c:442
 msgid "Problem with deleting playlist"
-msgstr ""
+msgstr "Chyba při mazání seznamu skladeb"
 
 #: gammu/nokia.c:536
 #, c-format
 msgid "What folder type (\"%s\") ?\n"
-msgstr ""
+msgstr "Jaký typ složky (\"%s)?\n"
 
 #: gammu/nokia.c:570 gammu/nokia.c:644
 msgid "Folder not found. Probably function not supported!"
-msgstr ""
+msgstr "Složna nebyla nalezena. Pravděpodobně tatko funkce není podporována!"
 
 #: gammu/nokia.c:593
 #, c-format
 msgid "Searching for phone folder: "
-msgstr ""
+msgstr "Hledám složku v telefonu: "
 
 #: gammu/nokia.c:670
 msgid "No vendor info in JAD file"
-msgstr ""
+msgstr "V JAD souboru chybí jméno výrobce."
 
 #: gammu/nokia.c:675
 msgid "No name info in JAD file"
-msgstr ""
+msgstr "V JAD souboru chybí jméno."
 
 #: gammu/nokia.c:680
 msgid "No JAR URL info in JAD file"
-msgstr ""
+msgstr "V JAD souboru chybí URL pro JAR."
 
 #: gammu/nokia.c:686
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
-msgstr ""
+msgstr "Udaná velikost JAR souboru je chybná. Opraveno."
 
 #: gammu/nokia.c:710
 msgid "No JAR size info in JAD file. Added by Gammu."
@@ -3376,7 +3379,7 @@ msgstr " verze %s"
 #: gammu/nokia.c:721
 #, c-format
 msgid " created by %s\n"
-msgstr ""
+msgstr " vytvořil %s\n"
 
 #: gammu/nokia.c:772 gammu/nokia.c:824
 msgid "Application already exists. Deleting by Gammu."
@@ -3402,7 +3405,7 @@ msgstr "Zapisuji soubor:"
 #: gammu/search.c:145
 #, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
-msgstr ""
+msgstr "Připojení \"%s\" na zařízení \"%s\"\n"
 
 #: gammu/search.c:182 gammu/search.c:189
 #, c-format
@@ -3703,7 +3706,7 @@ msgstr "Neznámý kód GSM sítě (\"%s\")\n"
 #: helper/message-cmdline.c:1082
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
-msgstr ""
+msgstr "Musíte zadat číslo mezi 1 a 7 (\"%s\")\n"
 
 #: helper/message-cmdline.c:1120
 #, c-format
@@ -3740,7 +3743,7 @@ msgstr "Zadejte zprávu a stiskněte ^D:"
 
 #: helper/message-cmdline.c:1323
 msgid "No chars read, assuming it is okay!"
-msgstr ""
+msgstr "Nebyly načteny žádné znaky, předpokládám, že to je v pořádku!"
 
 #: helper/message-cmdline.c:1343
 msgid "No network code"
@@ -3757,7 +3760,7 @@ msgstr ""
 
 #: helper/message-cmdline.c:1399
 #, c-format
-msgid "There is %i SMS packed and %i limit. Exiting\n"
+msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr ""
 
 #: helper/message-cmdline.c:1409
@@ -3962,7 +3965,7 @@ msgstr ""
 #: helper/message-display.c:213
 #, c-format
 msgid "Reserved/Specific to SC: %x"
-msgstr ""
+msgstr "Rezervováno/Závislé na SC: %x"
 
 #: helper/message-display.c:218 helper/message-display.c:235
 msgid "SMS message"
@@ -3975,7 +3978,7 @@ msgstr "Uložena"
 #: helper/message-display.c:223
 #, c-format
 msgid " (set for reply)"
-msgstr ""
+msgstr " (nastaveno pro odpověď)"
 
 #: helper/message-display.c:232
 msgid "SMS replacing ID"
@@ -4057,7 +4060,7 @@ msgstr "Prázdná SMS"
 #: helper/message-display.c:295
 #, c-format
 msgid "Nokia WAP bookmark"
-msgstr ""
+msgstr "Nokia WAP záložka"
 
 #: helper/message-display.c:296
 #, c-format
@@ -4067,7 +4070,7 @@ msgstr "Logo operátora Nokia"
 #: helper/message-display.c:297
 #, c-format
 msgid "Nokia WAP bookmark or WAP/MMS settings"
-msgstr ""
+msgstr "Nokia WAP záložka nebo nastavení WAP/MMS"
 
 #: helper/message-display.c:298 helper/message-display.c:299
 #, c-format

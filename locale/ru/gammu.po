@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-30 16:28+0200\n"
+"POT-Creation-Date: 2009-07-31 15:46+0200\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -3673,7 +3673,9 @@ msgid "Writing file %s:"
 msgstr "Ошибка записи в устройство."
 
 #: gammu/nokia.c:426
-msgid "Your phone model is not supported. Please report"
+msgid ""
+"Your phone model is not supported. Please report it to authors (see <http://"
+"cihar.com/gammu/report>). Thank you."
 msgstr ""
 
 #: gammu/nokia.c:442
@@ -4169,8 +4171,8 @@ msgstr ""
 "Предупреждение: рингтон слишком длинный. Укоротите его на %i процентов\n"
 
 #: helper/message-cmdline.c:1399
-#, c-format
-msgid "There is %i SMS packed and %i limit. Exiting\n"
+#, fuzzy, c-format
+msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr "Упаковано %i SMS, а предел - %i. Выполняется выход\n"
 
 #: helper/message-cmdline.c:1409
