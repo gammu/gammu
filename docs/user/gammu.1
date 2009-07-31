@@ -250,20 +250,39 @@ selected folder in phone. Please note that this overwrites existing
 messages in phone (if it supports it).
 .TP
 .BI "savesms ANIMATION" " frames file1 file2... [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Save an animation as a SMS. You need to give
+number of frames and picture for each frame. Each picture can be in any
+picture format which Gammu supports (B/W bmp, gif, wbmp, nol, nlm...).
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "savesms BOOKMARK" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Read WAP bookmark from file created by \fBbackup\fR option and saves in
 Nokia format as SMS
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "savesms CALENDAR" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Read calendar note from file created by \fBbackup\fR option and saves in
 VCALENDAR 1.0 format as SMS
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "savesms CALLER" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Save caller logo as sms (Nokia format - size 72x14).
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "savesms EMS" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-16bit] [\-format lcrasbiut] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-fixedbitmap file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...] [\-protected number]"
@@ -308,25 +327,55 @@ will create EMS sequence with text "Greetings" and default sound 1 and text "fro
 
 ala.bmp and axelf.txt will be "protected"
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "savesms MMSINDICATOR" " URL Title Sender [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 
+Saves a message with MMS indication. The recipient phone will then download
+MMS from given URL and display it.
+
+Please note that you should provide valid smil data on that URL.
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "savesms MMSSETTINGS" " file location  [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Saves a message with MMS configuration. The
+configuration will be read from Gammu backup file from given location.
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "savesms OPERATOR" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-netcode netcode] [\-biglogo]"
 Save operator logo as sms (Nokia format - size 72x14 or 78x21 after
 using \fB\-biglogo\fR).
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "savesms PICTURE" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-text text] [\-unicode] [\-alcatelbmmi]"
 Save Picture Image as sms (Nokia format - size 72x28).
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "savesms PROFILE" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-name name] [\-bitmap bitmap] [\-ringtone ringtone]"
 Read ringtone (RTTL) format and bitmap (Picture Image size) and name and save
 as Nokia profile.
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "savesms RINGTONE" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]"
@@ -339,8 +388,17 @@ in 2 SMS), but decoded only by newer phones (like 33xx)
 \fB\-scale\fR - ringtone will have Scale info for each note. It will allow to edit
 it correctly later in phone composer (for example, in 33xx)
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "savesms SMSTEMPLATE" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]"
+Saves a SMS template (for Alcatel phones).
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "savesms TEXT" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]"
@@ -393,8 +451,17 @@ there is example file (\fIreplace.txt\fR), which will change all "a" chars to "1
 
 \fIExample:\fR echo some_text | gammu savesms TEXT
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "savesms TODO" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Saves a message with a todo entry. The content will
+be read from any backup format which Gammu supports and from given location.
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "savesms VCARD10|VCARD21" " file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
@@ -402,68 +469,179 @@ Read phonebook entry from file created by \fBbackup\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
 all numbers, text and name) format as SMS
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "savesms WAPINDICATOR" " URL Title [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Saves a SMS with a WAP indication for given
+URL and title.
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "savesms WAPSETTINGS" " file location DATA|GPRS [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Read WAP settings from file created by \fBbackup\fR option and saves in Nokia format as SMS
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "sendsms ANIMATION" " destination frames file1 file2... [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms ANIMATION\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms BOOKMARK" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms BOOKMARK\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms CALENDAR" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms CALENDAR\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms CALLER" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms CALLER\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms EMS" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-16bit] [\-format lcrasbiut] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-fixedbitmap file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...] [\-protected number]"
+Sends a message, for description of message specific parameters see \fBsavesms EMS\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms MMSINDICATOR" " destination URL Title Sender [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms MMSINDICATOR\fR.
 
-Sends a message with MMS indication. The recipient phone will then download
-MMS from given URL and display it.
 
-Please note that you should provide valid smil data on that URL.
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms MMSSETTINGS" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms MMSSETTINGS\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms OPERATOR" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-netcode netcode] [\-biglogo]"
+Sends a message, for description of message specific parameters see \fBsavesms OPERATOR\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms PICTURE" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-text text] [\-unicode] [\-alcatelbmmi]"
+Sends a message, for description of message specific parameters see \fBsavesms PICTURE\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms PROFILE" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-name name] [\-bitmap bitmap] [\-ringtone ringtone]"
+Sends a message, for description of message specific parameters see \fBsavesms PROFILE\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms RINGTONE" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]"
+Sends a message, for description of message specific parameters see \fBsavesms RINGTONE\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms SMSTEMPLATE" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]"
+Sends a message, for description of message specific parameters see \fBsavesms SMSTEMPLATE\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms TEXT" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]"
+Sends a message, for description of message specific parameters see \fBsavesms TEXT\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms TODO" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms TODO\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms VCARD10|VCARD21" " destination file SM|ME location [\-nokia] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms VCARD10|VCARD21\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms WAPINDICATOR" " destination URL Title [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms WAPINDICATOR\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms WAPSETTINGS" " destination file location DATA|GPRS [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms WAPSETTINGS\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 
 .SS "Memory (phonebooks and calls)"
@@ -637,6 +815,10 @@ Read phonebook entry from file created by \fBbackup\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
 all numbers, text and name) format as SMS
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "searchmemory" " text"
 Scans all memory entries for given text. It performs
@@ -644,6 +826,12 @@ case insensitive substring lookup. You can interrupt searching by pressing
 Ctrl+C.
 .TP
 .BI "sendsms VCARD10|VCARD21" " destination file SM|ME location [\-nokia] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms VCARD10|VCARD21\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 
 .SS "Filesystem"
@@ -766,31 +954,74 @@ Get static startup logo from phone. Allow to save it in file.
 
 .TP
 .BI "savesms ANIMATION" " frames file1 file2... [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Save an animation as a SMS. You need to give
+number of frames and picture for each frame. Each picture can be in any
+picture format which Gammu supports (B/W bmp, gif, wbmp, nol, nlm...).
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "savesms CALLER" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Save caller logo as sms (Nokia format - size 72x14).
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "savesms OPERATOR" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-netcode netcode] [\-biglogo]"
 Save operator logo as sms (Nokia format - size 72x14 or 78x21 after
 using \fB\-biglogo\fR).
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "savesms PICTURE" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-text text] [\-unicode] [\-alcatelbmmi]"
 Save Picture Image as sms (Nokia format - size 72x28).
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "sendsms ANIMATION" " destination frames file1 file2... [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms ANIMATION\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms CALLER" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms CALLER\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms OPERATOR" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-netcode netcode] [\-biglogo]"
+Sends a message, for description of message specific parameters see \fBsavesms OPERATOR\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms PICTURE" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-text text] [\-unicode] [\-alcatelbmmi]"
+Sends a message, for description of message specific parameters see \fBsavesms PICTURE\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "setbitmap CALLER" " location [file]"
@@ -977,8 +1208,18 @@ in 2 SMS), but decoded only by newer phones (like 33xx)
 \fB\-scale\fR - ringtone will have Scale info for each note. It will allow to edit
 it correctly later in phone composer (for example, in 33xx)
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "sendsms RINGTONE" " destination file [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]"
+Sends a message, for description of message specific parameters see \fBsavesms RINGTONE\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "setringtone" " file [\-location location] [\-scale] [\-name name]"
@@ -1124,8 +1365,18 @@ backup to vCalendar, you need following command:
 Read calendar note from file created by \fBbackup\fR option and saves in
 VCALENDAR 1.0 format as SMS
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "sendsms CALENDAR" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms CALENDAR\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 
 .SS "To do lists"
@@ -1264,9 +1515,20 @@ backup to vCalendar, you need following command:
 
 .TP
 .BI "savesms TODO" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Saves a message with a todo entry. The content will
+be read from any backup format which Gammu supports and from given location.
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms TODO" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms TODO\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 
 .SS "Notes"
@@ -1895,21 +2157,53 @@ be done, when phone doesn't have set clock inside.
 Read WAP bookmark from file created by \fBbackup\fR option and saves in
 Nokia format as SMS
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "savesms WAPINDICATOR" " URL Title [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Saves a SMS with a WAP indication for given
+URL and title.
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "savesms WAPSETTINGS" " file location DATA|GPRS [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Read WAP settings from file created by \fBbackup\fR option and saves in Nokia format as SMS
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "sendsms BOOKMARK" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms BOOKMARK\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms WAPINDICATOR" " destination URL Title [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms WAPINDICATOR\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 .TP
 .BI "sendsms WAPSETTINGS" " destination file location DATA|GPRS [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms WAPSETTINGS\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 
 .SS "MMS and MMS settings"
@@ -1931,19 +2225,40 @@ Read WAP settings from file created by \fBbackup\fR option and saves in Nokia fo
 .TP
 .BI "savesms MMSINDICATOR" " URL Title Sender [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 
-.TP
-.BI "savesms MMSSETTINGS" " file location  [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-
-.TP
-.BI "sendsms MMSINDICATOR" " destination URL Title Sender [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-
-Sends a message with MMS indication. The recipient phone will then download
+Saves a message with MMS indication. The recipient phone will then download
 MMS from given URL and display it.
 
 Please note that you should provide valid smil data on that URL.
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
+.TP
+.BI "savesms MMSSETTINGS" " file location  [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Saves a message with MMS configuration. The
+configuration will be read from Gammu backup file from given location.
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
+.TP
+.BI "sendsms MMSINDICATOR" " destination URL Title Sender [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms MMSINDICATOR\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "sendsms MMSSETTINGS" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Sends a message, for description of message specific parameters see \fBsavesms MMSSETTINGS\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 
 .SS "Phone tests"
@@ -2156,8 +2471,18 @@ Clear user settings
 Read ringtone (RTTL) format and bitmap (Picture Image size) and name and save
 as Nokia profile.
 
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
+
 .TP
 .BI "sendsms PROFILE" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-name name] [\-bitmap bitmap] [\-ringtone ringtone]"
+Sends a message, for description of message specific parameters see \fBsavesms PROFILE\fR.
+
+
+
+For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
+
 
 
 .SS "Dumps decoding"

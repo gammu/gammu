@@ -182,6 +182,9 @@ hints for improving support for your phone in this log.
 Please report bugs to <http://bugs.cihar.com>.
 '''
 
+SMS_SEND_HELP = 'Sends a message, for description of message specific parameters see \\fB%s\\fR.\n\n'
+SMS_COMMON_HELP = '\n\nFor description of shared parameters see \\fBCommon parameters for sendsms and savesms\\fR.\n\n'
+
 # Commands help, initially generated from original gammu man page
 
 HELP = {}
@@ -634,23 +637,39 @@ HELP['savesms CALLER'] = '''Save caller logo as sms (Nokia format - size 72x14).
 '''
 HELP['savesms PICTURE'] = '''Save Picture Image as sms (Nokia format - size 72x28).
 '''
-HELP['savesms MMSINDICATOR'] = ''''''
+HELP['savesms ANIMATION'] = '''Save an animation as a SMS. You need to give
+number of frames and picture for each frame. Each picture can be in any
+picture format which Gammu supports (B/W bmp, gif, wbmp, nol, nlm...).
+'''
+HELP['savesms MMSINDICATOR'] = '''
+Saves a message with MMS indication. The recipient phone will then download
+MMS from given URL and display it.
+
+Please note that you should provide valid smil data on that URL.
+'''
 HELP['savesms BOOKMARK'] = '''Read WAP bookmark from file created by \\fBbackup\\fR option and saves in
 Nokia format as SMS
 '''
 HELP['savesms WAPSETTINGS'] = '''Read WAP settings from file created by \\fBbackup\\fR option and saves in Nokia format as SMS
 '''
-HELP['savesms MMSSETTINGS'] = '''''' 
+HELP['savesms MMSSETTINGS'] = '''Saves a message with MMS configuration. The
+configuration will be read from Gammu backup file from given location.''' 
 HELP['savesms CALENDAR'] = '''Read calendar note from file created by \\fBbackup\\fR option and saves in
 VCALENDAR 1.0 format as SMS
 '''
-HELP['savesms TODO'] = ''''''
+HELP['savesms TODO'] = '''Saves a message with a todo entry. The content will
+be read from any backup format which Gammu supports and from given location.'''
 HELP['savesms VCARD10|VCARD21'] = '''Read phonebook entry from file created by \\fBbackup\\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
 all numbers, text and name) format as SMS
 '''
 HELP['savesms PROFILE'] = '''Read ringtone (RTTL) format and bitmap (Picture Image size) and name and save
 as Nokia profile.
+'''
+HELP['savesms SMSTEMPLATE'] = '''Saves a SMS template (for Alcatel phones).
+'''
+HELP['savesms WAPINDICATOR'] = '''Saves a SMS with a WAP indication for given
+URL and title.
 '''
 HELP['savesms EMS'] = '''
 Saves EMS sequence. All parameters after \\fB\\-unread\\fR (like \\fB\\-defsound\\fR) can be used few times.
@@ -693,25 +712,6 @@ will create EMS sequence with text "Greetings" and default sound 1 and text "fro
 
 ala.bmp and axelf.txt will be "protected"
 '''
-HELP['sendsms TEXT'] = ''''''
-HELP['sendsms RINGTONE'] = ''''''
-HELP['sendsms OPERATOR'] = ''''''
-HELP['sendsms CALLER'] = '''''' 
-HELP['sendsms PICTURE'] = ''''''
-HELP['sendsms BOOKMARK'] = ''''''
-HELP['sendsms WAPSETTINGS'] = ''''''
-HELP['sendsms MMSSETTINGS'] = '''''' 
-HELP['sendsms MMSINDICATOR'] = '''
-Sends a message with MMS indication. The recipient phone will then download
-MMS from given URL and display it.
-
-Please note that you should provide valid smil data on that URL.
-''' 
-HELP['sendsms CALENDAR'] = ''''''
-HELP['sendsms TODO'] = ''''''
-HELP['sendsms'] = '''''' 
-HELP['sendsms PROFILE'] = '''''' 
-HELP['sendsms EMS'] = '''''' 
 HELP['displaysms'] = '''
 Displays PDU data of encoded SMS messages. It accepts same parameters and 
 behaves same like sendsms.
@@ -902,6 +902,14 @@ By default, commands are read from standard input, but you can optionally
 specify a file from where they would be read (special case - means standard
 input).
 '''
+
+# Generate help for savesms
+for k in HELP.keys():
+    if k[:7] == 'savesms':
+        send_key = 'sendsms' + k[7:]
+        HELP[send_key] = SMS_SEND_HELP % k 
+        HELP[send_key] += SMS_COMMON_HELP
+        HELP[k] += SMS_COMMON_HELP
 
 SECTION_HELP = {}
 SECTION_HELP['sms'] = '''
