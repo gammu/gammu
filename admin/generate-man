@@ -359,7 +359,9 @@ Locations are numerated from 1.
 .br
 \\fBSL\\fR = sent SMS log
 '''
-HELP['searchmemory'] = ''''''
+HELP['searchmemory'] = '''Scans all memory entries for given text. It performs
+case insensitive substring lookup. You can interrupt searching by pressing
+Ctrl+C.'''
 HELP['deleteallmemory'] = '''Deletes all entries from specified memory type.'''
 HELP['deletememory'] = '''Deletes entries in specified range from specified memory type.'''
 HELP['listmemorycategory'] = ''''''
@@ -933,6 +935,10 @@ this option. It's available only, if Gammu was compiled with debug.
 ''' 
 HELP['getallnotes'] = '''Reads all notes from the phone.
 '''
+HELP['searchphone'] = '''Attempts to search for a connected phone. Please note
+that this can take a very long time, but in case you have no clue how to
+configure phone connection, this is a convenient way to find working setup for
+Gammu.'''
 
 SECTION_HELP = {}
 SECTION_HELP['sms'] = '''

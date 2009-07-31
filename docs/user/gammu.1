@@ -644,7 +644,9 @@ all numbers, text and name) format as SMS
 
 .TP
 .BI "searchmemory" " text"
-
+Scans all memory entries for given text. It performs
+case insensitive substring lookup. You can interrupt searching by pressing
+Ctrl+C.
 .TP
 .BI "sendsms VCARD10|VCARD21" " destination file SM|ME location [\-nokia] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 
@@ -2285,7 +2287,10 @@ Make phone reset: soft (without asking for PIN) or hard (with PIN).
 
 .TP
 .BI "searchphone" " [\-debug]"
-
+Attempts to search for a connected phone. Please note
+that this can take a very long time, but in case you have no clue how to
+configure phone connection, this is a convenient way to find working setup for
+Gammu.
 
 .SS "Gammu information"
 .TP
