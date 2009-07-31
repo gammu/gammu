@@ -688,7 +688,7 @@ HELP['savesms CALENDAR'] = '''Read calendar note from file created by \\fBbackup
 VCALENDAR 1.0 format as SMS
 '''
 HELP['savesms TODO'] = ''''''
-HELP['savesms'] = '''Read phonebook entry from file created by \\fBbackup\\fR option and saves in
+HELP['savesms VCARD10|VCARD21'] = '''Read phonebook entry from file created by \\fBbackup\\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
 all numbers, text and name) format as SMS
 '''
@@ -1002,11 +1002,16 @@ def parse_section_help(lines):
 
 def get_command_help(command):
     try:
-        return HELP[command]
+        ret = HELP[command]
+        if ret == '':
+            raise KeyError()
+        return ret
     except KeyError:
         try:
             maincommand = command.split(' ')[0]
             ret = HELP[maincommand]
+            if ret == '':
+                raise KeyError()
             print 'Fallback to %s from %s' % (maincommand, command)
             return ret
         except:
