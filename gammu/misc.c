@@ -2042,7 +2042,7 @@ void GetDisplayStatus(int argc UNUSED, char *argv[] UNUSED)
 	error=GSM_GetDisplayStatus(gsm,&Features);
 	Print_Error(error);
 
-	printf(LISTFORMAT "\n", _("Current show on display"));
+	printf(LISTFORMAT "\n", _("Currently shown on the display"));
 
 	for (i=0;i<Features.Number;i++) {
 		switch(Features.Feature[i]) {
