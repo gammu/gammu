@@ -206,13 +206,10 @@ Restores SMSes from file (format like backupsms uses) to
 selected folder in phone. Please note that this overwrites existing
 messages in phone (if it supports it).
 .TP
-.BI "savesms" " VCARD10|VCARD21 file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+.BI "savesms ANIMATION" " frames file1 file2... [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Read phonebook entry from file created by \fBbackup\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
 all numbers, text and name) format as SMS
-
-.TP
-.BI "savesms ANIMATION" " frames file1 file2... [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 
 .TP
 .BI "savesms BOOKMARK" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
@@ -328,6 +325,9 @@ it correctly later in phone composer (for example, in 33xx)
 
 .TP
 .BI "savesms SMSTEMPLATE" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]"
+Read phonebook entry from file created by \fBbackup\fR option and saves in
+VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
+all numbers, text and name) format as SMS
 
 .TP
 .BI "savesms TEXT" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]"
@@ -408,14 +408,20 @@ there is example file (\fIreplace.txt\fR), which will change all "a" chars to "1
 .BI "savesms TODO" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 
 .TP
+.BI "savesms VCARD10|VCARD21" " file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Read phonebook entry from file created by \fBbackup\fR option and saves in
+VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
+all numbers, text and name) format as SMS
+
+.TP
 .BI "savesms WAPINDICATOR" " URL Title [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Read phonebook entry from file created by \fBbackup\fR option and saves in
+VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
+all numbers, text and name) format as SMS
 
 .TP
 .BI "savesms WAPSETTINGS" " file location DATA|GPRS [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Read WAP settings from file created by \fBbackup\fR option and saves in Nokia format as SMS
-
-.TP
-.BI "sendsms" " VCARD10|VCARD21 destination file SM|ME location [\-nokia] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 
 .TP
 .BI "sendsms ANIMATION" " destination frames file1 file2... [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
@@ -465,6 +471,9 @@ Please note that you should provide valid smil data on that URL.
 .BI "sendsms TODO" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 
 .TP
+.BI "sendsms VCARD10|VCARD21" " destination file SM|ME location [\-nokia] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+
+.TP
 .BI "sendsms WAPINDICATOR" " destination URL Title [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 
 .TP
@@ -473,7 +482,7 @@ Please note that you should provide valid smil data on that URL.
 
 .SS "Memory (phonebooks and calls)"
 .TP
-.BI "addcategory" " TODO|PHONEBOOK text"
+.BI "addcategory TODO|PHONEBOOK" " text"
 
 .TP
 .BI "addnew" " file [\-yes]"
@@ -563,12 +572,13 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 
 .TP
 .BI "clearall"
+Deletes all private data from the phone.
 
 .TP
 .BI "deleteallmemory" " DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 Deletes all entries from specified memory type.
 .TP
-.BI "deletememory" " DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop]"
+.BI "deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL" " start [stop]"
 Deletes entries in specified range from specified memory type.
 .TP
 .BI "getallcategory" " TODO|PHONEBOOK"
@@ -577,10 +587,10 @@ Deletes entries in specified range from specified memory type.
 .BI "getallmemory" " DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 
 .TP
-.BI "getcategory" " TODO|PHONEBOOK start [stop]"
+.BI "getcategory TODO|PHONEBOOK" " start [stop]"
 
 .TP
-.BI "getmemory" " DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [\-nonempty]]"
+.BI "getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL" " start [stop [\-nonempty]]"
 Get memory location from phone. 
 
 Locations are numerated from 1.
@@ -624,10 +634,19 @@ In some phones restoring calendar notes will not show error, but won't
 be done, when phone doesn't have set clock inside.
 
 .TP
-.BI "savefile" " VCARD10|VCARD21 target.vcf file SM|ME location"
+.BI "savefile VCARD10|VCARD21" " target.vcf file SM|ME location"
+Allows to convert between various backup formats which gammu
+supports for phonebook events. The file type is guessed (for input file
+guess is based on extension and file content, for output solely on 
+extension).
+
+For example if you want to convert single entry from gammu native 
+backup to vCard, you need following command:
+
+    gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42
 
 .TP
-.BI "savesms" " VCARD10|VCARD21 file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+.BI "savesms VCARD10|VCARD21" " file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Read phonebook entry from file created by \fBbackup\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
 all numbers, text and name) format as SMS
@@ -636,7 +655,7 @@ all numbers, text and name) format as SMS
 .BI "searchmemory" " text"
 
 .TP
-.BI "sendsms" " VCARD10|VCARD21 destination file SM|ME location [\-nokia] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+.BI "sendsms VCARD10|VCARD21" " destination file SM|ME location [\-nokia] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 
 
 .SS "Filesystem"
@@ -759,6 +778,9 @@ Get static startup logo from phone. Allow to save it in file.
 
 .TP
 .BI "savesms ANIMATION" " frames file1 file2... [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Read phonebook entry from file created by \fBbackup\fR option and saves in
+VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
+all numbers, text and name) format as SMS
 
 .TP
 .BI "savesms CALLER" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
@@ -915,6 +937,7 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 
 .TP
 .BI "clearall"
+Deletes all private data from the phone.
 
 .TP
 .BI "copyringtone" " source destination [RTTL|BINARY]"
@@ -1097,6 +1120,7 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 
 .TP
 .BI "clearall"
+Deletes all private data from the phone.
 
 .TP
 .BI "deletecalendar" " start [stop]"
@@ -1109,6 +1133,8 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 
 .TP
 .BI "getcalendarsettings"
+Displays calendar settings like first day of
+week or automatic deleting of old entries.
 
 .TP
 .BI "restore" " file [\-yes]"
@@ -1143,7 +1169,7 @@ VCALENDAR 1.0 format as SMS
 
 .SS "To do lists"
 .TP
-.BI "addcategory" " TODO|PHONEBOOK text"
+.BI "addcategory TODO|PHONEBOOK" " text"
 
 .TP
 .BI "addnew" " file [\-yes]"
@@ -1233,22 +1259,23 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 
 .TP
 .BI "clearall"
+Deletes all private data from the phone.
 
 .TP
 .BI "deletetodo" " start [stop]"
-
+Deletes selected todo entries in phone. 
 .TP
 .BI "getallcategory" " TODO|PHONEBOOK"
 
 .TP
 .BI "getalltodo"
-
+Retrieves all todo entries from phone.
 .TP
-.BI "getcategory" " TODO|PHONEBOOK start [stop]"
+.BI "getcategory TODO|PHONEBOOK" " start [stop]"
 
 .TP
 .BI "gettodo" " start [stop]"
-
+Retrieves selected todo entries from phone.
 .TP
 .BI "listtodocategory" " text|number"
 
@@ -1284,6 +1311,7 @@ backup to vCalendar, you need following command:
 .SS "Notes"
 .TP
 .BI "getallnotes"
+Reads all notes from the phone.
 
 
 .SS "Date, time and alarms"
@@ -1311,7 +1339,7 @@ your phone and use Gammu. See gammurc(5) for details.
 
 .SS "Categories"
 .TP
-.BI "addcategory" " TODO|PHONEBOOK text"
+.BI "addcategory TODO|PHONEBOOK" " text"
 
 .TP
 .BI "addnew" " file [\-yes]"
@@ -1401,12 +1429,13 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 
 .TP
 .BI "clearall"
+Deletes all private data from the phone.
 
 .TP
 .BI "getallcategory" " TODO|PHONEBOOK"
 
 .TP
-.BI "getcategory" " TODO|PHONEBOOK start [stop]"
+.BI "getcategory TODO|PHONEBOOK" " start [stop]"
 
 .TP
 .BI "listmemorycategory" " text|number"
@@ -1540,9 +1569,6 @@ Restores SMSes from file (format like backupsms uses) to
 selected folder in phone. Please note that this overwrites existing
 messages in phone (if it supports it).
 .TP
-.BI "savefile" " VCARD10|VCARD21 target.vcf file SM|ME location"
-
-.TP
 .BI "savefile BOOKMARK" " target.url file location"
 
 .TP
@@ -1568,6 +1594,18 @@ For example if you want to convert single entry from gammu native
 backup to vCalendar, you need following command:
 
     gammu savefile CALENDAR output.vcs myCalendar.backup 260
+
+.TP
+.BI "savefile VCARD10|VCARD21" " target.vcf file SM|ME location"
+Allows to convert between various backup formats which gammu
+supports for phonebook events. The file type is guessed (for input file
+guess is based on extension and file content, for output solely on 
+extension).
+
+For example if you want to convert single entry from gammu native 
+backup to vCard, you need following command:
+
+    gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42
 
 
 .SS "Nokia specific"
@@ -1852,6 +1890,7 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 
 .TP
 .BI "clearall"
+Deletes all private data from the phone.
 
 .TP
 .BI "deletewapbookmark" " start [stop]"
@@ -1897,6 +1936,9 @@ Nokia format as SMS
 
 .TP
 .BI "savesms WAPINDICATOR" " URL Title [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
+Read phonebook entry from file created by \fBbackup\fR option and saves in
+VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
+all numbers, text and name) format as SMS
 
 .TP
 .BI "savesms WAPSETTINGS" " file location DATA|GPRS [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
@@ -2052,6 +2094,7 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 
 .TP
 .BI "clearall"
+Deletes all private data from the phone.
 
 .TP
 .BI "getfmstation" " start [stop]"
@@ -2106,6 +2149,8 @@ Get/reset to "12345" security code
 .SS "Phone settings"
 .TP
 .BI "getcalendarsettings"
+Displays calendar settings like first day of
+week or automatic deleting of old entries.
 
 .TP
 .BI "getprofile" " start [stop]"
@@ -2166,7 +2211,7 @@ this option. It's available only, if Gammu was compiled with debug.
 
 
 .TP
-.BI "decodesniff" " MBUS2|IRDA file [phonemodel]"
+.BI "decodesniff MBUS2|IRDA" " file [phonemodel]"
 Option available only, if Gammu was compiled with debug. Allows to decode
 sniffs. See \fI/docs/develop/develop.txt\fR for more details.
 
@@ -2179,7 +2224,7 @@ sniffs. See \fI/docs/develop/develop.txt\fR for more details.
 .BI "batch" " [file]"
 
 .TP
-.BI "entersecuritycode" " PIN|PUK|PIN2|PUK2|PHONE|NETWORK code|\-"
+.BI "entersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK" " code|\-"
 Allow to enter security code from PC. When code is \-, it is read from stdin.
 
 .TP

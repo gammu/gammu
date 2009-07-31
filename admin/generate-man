@@ -473,8 +473,12 @@ timeout - timeout when the diversion will happen
 '''
 HELP['conferencecall'] = '''Initiates a conference call.
 '''
-HELP['gettodo'] = ''''''
-HELP['deletetodo'] = ''''''
+HELP['gettodo'] = '''Retrieves selected todo entries from phone.'''
+HELP['getalltodo'] = '''Retrieves all todo entries from phone.'''
+HELP['deletetodo'] = '''Deletes selected todo entries in phone. '''
+HELP['getcalendarsettings'] = '''Displays calendar settings like first day of
+week or automatic deleting of old entries.
+'''
 HELP['getcalendarnotes'] = '''Get calendar notes from phone. In Nokia 3310 and 3330 they're named
 "Reminders" and have some limitations (they depends on phone firmware version).
 '''
@@ -548,6 +552,16 @@ For example if you want to convert single entry from gammu native
 backup to vCalendar, you need following command:
 
     gammu savefile CALENDAR output.vcs myCalendar.backup 260
+'''
+HELP['savefile VCARD10|VCARD21'] = '''Allows to convert between various backup formats which gammu
+supports for phonebook events. The file type is guessed (for input file
+guess is based on extension and file content, for output solely on 
+extension).
+
+For example if you want to convert single entry from gammu native 
+backup to vCard, you need following command:
+
+    gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42
 '''
 HELP['savefile'] = '''''' 
 HELP['savesms TEXT'] = '''Take text from stdin (or commandline if \\-text specified) 
@@ -907,7 +921,8 @@ Please note that this adds all content of backup file to phone and
 does not care about current data in the phone (no duplicates are 
 detected).
 '''
-HELP['clearall'] = '''''' 
+HELP['clearall'] = '''Deletes all private data from the phone.
+''' 
 HELP['decodesniff'] = '''Option available only, if Gammu was compiled with debug. Allows to decode
 sniffs. See \\fI/docs/develop/develop.txt\\fR for more details.
 ''' 
@@ -916,6 +931,8 @@ info about this method of reporting bugs) created file can be decoded using
 this option. It's available only, if Gammu was compiled with debug.
 
 ''' 
+HELP['getallnotes'] = '''Reads all notes from the phone.
+'''
 
 SECTION_HELP = {}
 SECTION_HELP['sms'] = '''
@@ -943,7 +960,7 @@ import re
 
 SECTION_MATCHER = re.compile(' *([^ ]*) - (.*)')
 COMMAND_MATCHER = re.compile('^([^ \n]*) (.*)')
-COMMAND_SUBCOMMAND_MATCHER = re.compile('^([^ \n]*) ([A-Z0-9]*) (.*)')
+COMMAND_SUBCOMMAND_MATCHER = re.compile('^([^ \n]*) ([A-Z0-9|]*) (.*)')
 COMMAND_MATCHER_NOPARAM = re.compile('^([^ \n]*)')
 
 def read_help(section):
@@ -987,7 +1004,14 @@ def get_command_help(command):
     try:
         return HELP[command]
     except KeyError:
-        return ''
+        try:
+            maincommand = command.split(' ')[0]
+            ret = HELP[maincommand]
+            print 'Fallback to %s from %s' % (maincommand, command)
+            return ret
+        except:
+            print 'No help for %s' % command
+            return ''
 
 def write_section(output, name):
     output.write(SECTION % name)
