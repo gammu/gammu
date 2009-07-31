@@ -124,6 +124,9 @@ Sending messages might look a bit complicated on first attempt to use.
 But be patient, the command line has been written in order to allow
 almost every usage. See EXAMPLE section for some hints on usage.
 
+There is also an option to use gammu-smsd(1) when you want to send or 
+receive more messages and process them automatically.
+
 .TP
 .BI "addsms" " folder file [\-yes]"
 Adds SMSes from file (format like backupsms uses) to
@@ -637,6 +640,12 @@ all numbers, text and name) format as SMS
 
 
 .SS "Filesystem"
+.P
+
+Gammu allows to access phones using native protocol (Nokias) or OBEX. Your
+phone can also support usb storage, which is handled on the operating system
+level and Gammu does not use that.
+
 .TP
 .BI "addfile" " folderID name [\-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT] [\-readonly] [\-protected] [\-system] [\-hidden] [\-newtime]"
 Add file with specified name to folder with specified folder ID.
@@ -813,6 +822,11 @@ supports it)
 
 
 .SS "Ringtones"
+.P
+
+Ringtones are mostly supported only for older phones. For recent phones you
+usually just upload them to some folder in phone filesystem.
+
 .TP
 .BI "addnew" " file [\-yes]"
 Adds data written in file created using \fBbackup option\fR. All things

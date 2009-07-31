@@ -922,6 +922,18 @@ SECTION_HELP['sms'] = '''
 Sending messages might look a bit complicated on first attempt to use.
 But be patient, the command line has been written in order to allow
 almost every usage. See EXAMPLE section for some hints on usage.
+
+There is also an option to use gammu-smsd(1) when you want to send or 
+receive more messages and process them automatically.
+'''
+SECTION_HELP['filesystem'] = '''
+Gammu allows to access phones using native protocol (Nokias) or OBEX. Your
+phone can also support usb storage, which is handled on the operating system
+level and Gammu does not use that.
+'''
+SECTION_HELP['ringtone'] = '''
+Ringtones are mostly supported only for older phones. For recent phones you
+usually just upload them to some folder in phone filesystem.
 '''
 
 # Code
