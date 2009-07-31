@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Jul 29 2009" "Gammu 1.25.90" "Gammu Documentation"
+.TH "GAMMU" "1" "Jul 31 2009" "Gammu 1.25.91" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -2301,21 +2301,23 @@ Gammu.
 
 .SS "Gammu information"
 .TP
-.BI "checkversion" " [stable]"
-Checks whether there is newer Gammu version available online 
-(if Gammu has been compiled with CURL). If you pass additional parameter stable, only
-stable versions will be checked.
+.BI "checkversion" " [STABLE]"
+Checks whether there is newer Gammu version
+available online (if Gammu has been compiled with CURL). If you pass
+additional parameter \fBSTABLE\fR, only stable versions will be checked.
 
 .TP
 .BI "features"
+Print information about compiled in features.
 
 .TP
-.BI "help"
-Output help information and exit.
+.BI "help" " [topic]"
+Print help. By default general help is printed, but you can
+also specify a help category to get more detailed help on some topic.
 
 .TP
 .BI "version"
-Output version information and exit.
+Print version information and license.
 
 
 .SH "FILES"

@@ -311,7 +311,7 @@ static void CheckVersion(int argc, char *argv[])
 	size_t i;
 
 	if (argc >= 3) {
-		if (strcasecmp(argv[2], "stable") == 0) {
+		if (strcasecmp(argv[2], "STABLE") == 0) {
 			checktest = FALSE;
 		}
 	}
@@ -502,11 +502,11 @@ void Help(int argc, char *argv[]);
 
 static GSM_Parameters Parameters[] = {
 /* *INDENT-OFF* */
-	{"help",			0, 1, Help,			{H_Gammu,0},			""},
+	{"help",			0, 1, Help,			{H_Gammu,0},			"[topic]"},
 	{"identify",			0, 0, Identify,			{H_Info,0},			""},
 	{"version",			0, 0, Version,			{H_Gammu,0},			""},
 	{"features",			0, 0, Features,			{H_Gammu,0},			""},
-	{"checkversion",		0, 1, CheckVersion,		{H_Gammu,0},			"[stable]"},
+	{"checkversion",		0, 1, CheckVersion,		{H_Gammu,0},			"[STABLE]"},
 	{"checkfirmware",		0, 0, CheckFirmware,		{H_Info,0},			""},
 	{"getdisplaystatus",		0, 0, GetDisplayStatus,		{H_Info,0},			""},
 	{"monitor",			0, 1, Monitor,			{H_Info,H_Network,H_Call,0},	"[times]"},

@@ -185,13 +185,16 @@ Please report bugs to <http://bugs.cihar.com>.
 # Commands help, initially generated from original gammu man page
 
 HELP = {}
-HELP['help'] = '''Output help information and exit.
+HELP['help'] = '''Print help. By default general help is printed, but you can
+also specify a help category to get more detailed help on some topic.
 ''' 
-HELP['version'] = '''Output version information and exit.
+HELP['version'] = '''Print version information and license.
 '''
-HELP['checkversion'] = '''Checks whether there is newer Gammu version available online 
-(if Gammu has been compiled with CURL). If you pass additional parameter stable, only
-stable versions will be checked.
+HELP['features'] = '''Print information about compiled in features.
+'''
+HELP['checkversion'] = '''Checks whether there is newer Gammu version
+available online (if Gammu has been compiled with CURL). If you pass
+additional parameter \\fBSTABLE\\fR, only stable versions will be checked.
 '''
 HELP['checkfirmware'] = '''
 Gammu connects to www.gammu.org and checks for latest firmware versions
