@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-07-31 12:34+0300\n"
-"PO-Revision-Date: 2009-07-30 15:22+0200\n"
+"PO-Revision-Date: 2009-07-31 12:39+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,16 +31,16 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Jul 31 2009"
-msgstr "Leden 31, 2009"
+msgstr "Červenec 31 2009"
 
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu 1.25.91"
-msgstr "Gammu 1.24.92"
+msgstr "Gammu 1.25.91"
 
 # type: TH
 #. type: TH
@@ -212,9 +212,8 @@ msgstr "B<canceldiverts>"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:51
-#, fuzzy
 msgid "Cancel all existing call diverts."
-msgstr "Zrušit příchozí hovor."
+msgstr "Zruší všechna přesměrování hovorů."
 
 # type: TP
 #. type: TP
@@ -226,7 +225,7 @@ msgstr "B<conferencecall>I< ID>"
 #. type: Plain text
 #: docs/user/gammu.1:55
 msgid "Initiates a conference call."
-msgstr ""
+msgstr "Začne konferenční hovor."
 
 # type: TP
 #. type: TP
@@ -257,7 +256,7 @@ msgstr "B<divert>I< get|set all|busy|noans|outofreach all|voice|fax|data [number
 #. type: Plain text
 #: docs/user/gammu.1:65
 msgid "Manage or display call diverts."
-msgstr ""
+msgstr "Upraví nebo zobrazí přesměrování hovorů."
 
 #. type: Plain text
 #: docs/user/gammu.1:67
@@ -318,7 +317,7 @@ msgstr "B<holdcall>I< ID>"
 #. type: Plain text
 #: docs/user/gammu.1:88
 msgid "Holds call."
-msgstr ""
+msgstr "Přidrží hovor."
 
 # type: TP
 #. type: TP
@@ -379,7 +378,7 @@ msgstr "B<splitcall>I< ID>"
 #. type: Plain text
 #: docs/user/gammu.1:106
 msgid "Splits call."
-msgstr ""
+msgstr "Rozdělí hovor."
 
 # type: TP
 #. type: TP
@@ -391,7 +390,7 @@ msgstr "B<switchcall>I< [ID]>"
 #. type: Plain text
 #: docs/user/gammu.1:110
 msgid "Switches call."
-msgstr ""
+msgstr "Přepne hovor."
 
 # type: TP
 #. type: TP
@@ -403,7 +402,7 @@ msgstr "B<transfercall>I< [ID]>"
 #. type: Plain text
 #: docs/user/gammu.1:114
 msgid "Transfers call."
-msgstr ""
+msgstr "Přenese hovor."
 
 # type: TP
 #. type: TP
@@ -415,7 +414,7 @@ msgstr "B<unholdcall>I< ID>"
 #. type: Plain text
 #: docs/user/gammu.1:118
 msgid "Unholds call."
-msgstr ""
+msgstr "Zruší přdržení hovoru."
 
 #. type: SS
 #: docs/user/gammu.1:120
@@ -446,7 +445,7 @@ msgstr ""
 #: docs/user/gammu.1:130
 #, no-wrap
 msgid "B<Common parameters for sendsms and savesms>"
-msgstr ""
+msgstr "B<Společné parametry pro sendsms a savesms>"
 
 # type: Plain text
 #. type: Plain text
@@ -822,6 +821,8 @@ msgid ""
 "For description of shared parameters see B<Common parameters for sendsms and "
 "savesms>."
 msgstr ""
+"Popis společných parametrů naleznete v sekci B<Společné parametry pro "
+"sendsms a savesms>."
 
 # type: TP
 #. type: TP
@@ -1297,9 +1298,9 @@ msgstr ""
 # type: TP
 #. type: TP
 #: docs/user/gammu.1:466 docs/user/gammu.1:813
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<savesms VCARD10|VCARD21>I< file SM|ME location [-nokia] [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]>"
-msgstr "B<savesms>I< VCARD10|VCARD21 file SM|ME location [-nokia] [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]>"
+msgstr "B<savesms VCARD10|VCARD21>I< file SM|ME location [-nokia] [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]>"
 
 # type: Plain text
 #. type: Plain text
