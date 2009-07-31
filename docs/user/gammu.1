@@ -858,19 +858,20 @@ Add file with specified name to folder with specified folder ID.
 
 .TP
 .BI "addfolder" " parentfolderID name"
-
+Create a folder in phone with specified name in a
+folder with specified folder ID.
 .TP
 .BI "deletefiles" " fileID"
-
+Delete files with given IDs.
 .TP
 .BI "deletefolder" " name"
-
+Delete folder with given ID.
 .TP
 .BI "getfilefolder" " ID1, ID2, ..."
-
+Retrieve files or all files from folder with given IDs from a phone filesytem.
 .TP
 .BI "getfiles" " ID1, ID2, ..."
-
+Retrieve files with given IDs from a phone filesytem.
 .TP
 .BI "getfilesystem" " [\-flatall|\-flat]"
 Display info about all folders and files in phone memory/memory card. By default there is tree displayed, you can change it:
@@ -884,7 +885,8 @@ Please note, that in some phones (like N6230) content of some folders (with more
 
 .TP
 .BI "getfilesystemstatus"
-
+Display info filesystem status - number of
+bytes available, used or used by some specific content.
 .TP
 .BI "getfolderlisting" " folderID"
 
@@ -918,6 +920,9 @@ You can use jadmaker(1) to generate a .jad file from a .jar file.
 
 .TP
 .BI "sendfile" " name"
+Sends file to a phone. It's up to phone to decide where
+to store this file and how to handle it (for example when you send vCard or
+vCalendar, most of phones will offer you to import it.
 
 .TP
 .BI "setfileattrib" " folderID [\-system] [\-readonly] [\-hidden] [\-protected]"

@@ -286,7 +286,10 @@ HELP['listnetworks'] = '''Show names/codes of GSM networks known for Gammu
 HELP['getfmstation'] = '''Show info about FM stations in phone
 '''
 HELP['getgprspoint'] = ''''''
-HELP['getfiles'] = ''''''
+HELP['getfiles'] = '''Retrieve files with given IDs from a phone filesytem.'''
+HELP['getfilefolder'] = '''Retrieve files or all files from folder with given IDs from a phone filesytem.'''
+HELP['getfilesystemstatus'] = '''Display info filesystem status - number of
+bytes available, used or used by some specific content.'''
 HELP['getfilesystem'] = '''Display info about all folders and files in phone memory/memory card. By default there is tree displayed, you can change it:
 
 .B \\-flatall
@@ -304,8 +307,14 @@ Please note, that in some phones (like N6230) content of some folders (with more
 HELP['getrootfolders'] = '''
 Display info about drives available in phone/memory card.
 '''
-HELP['deletefiles'] = ''''''
-HELP['addfolder'] = ''''''
+HELP['deletefolder'] = '''Delete folder with given ID.'''
+HELP['deletefiles'] = '''Delete files with given IDs.'''
+HELP['addfolder'] = '''Create a folder in phone with specified name in a
+folder with specified folder ID.'''
+HELP['sendfile'] = '''Sends file to a phone. It's up to phone to decide where
+to store this file and how to handle it (for example when you send vCard or
+vCalendar, most of phones will offer you to import it.
+'''
 HELP['addfile'] = '''Add file with specified name to folder with specified folder ID.
 
 .B \\-type 
