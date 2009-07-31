@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-31 16:04+0200\n"
+"POT-Creation-Date: 2009-07-31 16:25+0200\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1326,7 +1326,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1360
 #, c-format
-msgid " (Text: name (always the only one)"
+msgid " (Text: name (always the only one))"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1361
@@ -2865,7 +2865,7 @@ msgstr ""
 
 #: gammu/misc.c:1572 helper/message-display.c:428
 #, c-format
-msgid "Picture Image"
+msgid "Picture"
 msgstr ""
 
 #: gammu/misc.c:1573
@@ -3058,7 +3058,7 @@ msgid "What type of reset phone settings (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/misc.c:2045
-msgid "Current display features"
+msgid "Current show on display"
 msgstr ""
 
 #: gammu/misc.c:2049

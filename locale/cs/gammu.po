@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-31 16:04+0200\n"
-"PO-Revision-Date: 2009-07-31 16:02+0200\n"
+"POT-Creation-Date: 2009-07-31 16:25+0200\n"
+"PO-Revision-Date: 2009-07-31 16:23+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -320,6 +320,8 @@ msgid ""
 "Probably caller group is missing from your backup, add it and use --restore "
 "again."
 msgstr ""
+"Pravděpodobně vám v záloze chybí skupina volajících, přidejte ji a použite "
+"znovu --restore."
 
 #: gammu/backup.c:1041 gammu/backup.c:1097
 #, c-format
@@ -709,42 +711,42 @@ msgstr "od %s do %s"
 #: gammu/calendar.c:313
 #, c-format
 msgid " on each "
-msgstr ""
+msgstr " každý "
 
 #: gammu/calendar.c:315
 #, c-format
 msgid " on each %d. "
-msgstr ""
+msgstr " každý %d. "
 
 #: gammu/calendar.c:320
 #, c-format
 msgid " in %d. week of "
-msgstr ""
+msgstr " v %d. týdnu"
 
 #: gammu/calendar.c:323
 #, c-format
 msgid " in "
-msgstr ""
+msgstr " v "
 
 #: gammu/calendar.c:329 gammu/calendar.c:337
 #, c-format
 msgid "each month"
-msgstr ""
+msgstr "každém měsíci"
 
 #: gammu/calendar.c:332
 #, c-format
 msgid "%d. day of "
-msgstr ""
+msgstr "%d. den v "
 
 #: gammu/calendar.c:340
 #, c-format
 msgid "%d. day of year"
-msgstr ""
+msgstr "%d. den roku"
 
 #: gammu/calendar.c:342
 #, c-format
 msgid "day"
-msgstr ""
+msgstr "den"
 
 #: gammu/calendar.c:358
 msgid "Age"
@@ -1156,7 +1158,7 @@ msgstr "Neznámý (%x)"
 #: gammu/depend/nokia/dct4.c:373
 #, c-format
 msgid " (startup)"
-msgstr ""
+msgstr " (úvodní)"
 
 #: gammu/depend/nokia/dct4.c:494 gammu/depend/nokia/dct4.c:1001
 msgid "Press any key to continue..."
@@ -1216,13 +1218,13 @@ msgstr "Co mám dělat (\"%s\") ?\n"
 #: gammu/depend/nokia/dct4.c:1015
 #, c-format
 msgid "raw result %10i "
-msgstr ""
+msgstr "nezpracovaný výsledek %10i"
 
 #. l10n: Processed data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1019
 #, c-format
 msgid "unit result %10i "
-msgstr ""
+msgstr "zpracovaný výsledek %10i"
 
 #: gammu/depend/nokia/dct4.c:1032
 msgid "Battery voltage, divided:"
@@ -1275,9 +1277,8 @@ msgid "Headset interconnection:"
 msgstr "Připojení headsetu:"
 
 #: gammu/depend/nokia/dct4.c:1039
-#, fuzzy
 msgid "Hook interconnection:"
-msgstr "Připojení telefonu"
+msgstr "Připojení zavěšení"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Light sensor:"
@@ -1293,11 +1294,11 @@ msgstr "Teplota VCXO:"
 
 #: gammu/depend/nokia/dct4.c:1043
 msgid "Resistive keyboard 1/headint2:"
-msgstr ""
+msgstr "Odporová klávesnice 1/headint2:"
 
 #: gammu/depend/nokia/dct4.c:1044
 msgid "Resistive keyboard 1/auxdet:"
-msgstr ""
+msgstr "Odporová klávesnice 1/auxdet:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Initial battery voltage:"
@@ -1322,7 +1323,7 @@ msgstr "Prosím připojte headset. Je vyžadován jako anténa"
 #: gammu/depend/nokia/dct4.c:1354
 #, c-format
 msgid "%i entries types\n"
-msgstr ""
+msgstr "%i typů položek\n"
 
 #: gammu/depend/nokia/dct4.c:1357
 #, c-format
@@ -1336,8 +1337,8 @@ msgstr " (Rychlá volba na SIM)"
 
 #: gammu/depend/nokia/dct4.c:1360
 #, c-format
-msgid " (Text: name (always the only one)"
-msgstr ""
+msgid " (Text: name (always the only one))"
+msgstr " (Text: jméno (vždy jen jedno))"
 
 #: gammu/depend/nokia/dct4.c:1361
 #, c-format
@@ -1367,12 +1368,12 @@ msgstr " (ID vyzvánění)"
 #: gammu/depend/nokia/dct4.c:1366
 #, c-format
 msgid " (Call register: date and time)"
-msgstr ""
+msgstr " (Historie hovorů: čas a datum)"
 
 #: gammu/depend/nokia/dct4.c:1367
 #, c-format
 msgid " (Call register: with missed calls)"
-msgstr ""
+msgstr " (Historie hovorů: se zmeškanými hovory)"
 
 #: gammu/depend/nokia/dct4.c:1368
 #, c-format
@@ -1392,7 +1393,7 @@ msgstr " (Skupina: logo zapnuto?)"
 #: gammu/depend/nokia/dct4.c:1371
 #, c-format
 msgid " (Caller group number in pbk entry)"
-msgstr ""
+msgstr " (Skupina volajících v položce seznamu)"
 
 #: gammu/depend/nokia/dct4.c:1374
 #, c-format
@@ -1402,12 +1403,12 @@ msgstr " (Text: URL adresa)"
 #: gammu/depend/nokia/dct4.c:1375
 #, c-format
 msgid " (SMS list assignment)"
-msgstr ""
+msgstr " (Přiřazení SMS seznamu)"
 
 #: gammu/depend/nokia/dct4.c:1376
 #, c-format
 msgid " (Voice tag assignment)"
-msgstr ""
+msgstr " (Přiřazení hlasového vytáčení)"
 
 #: gammu/depend/nokia/dct4.c:1377
 #, c-format
@@ -1417,37 +1418,37 @@ msgstr " (přiřazené ID obrázku)"
 #: gammu/depend/nokia/dct4.c:1378
 #, c-format
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr ""
+msgstr " (ID vyzvánění buď interní nebo ze souboru)"
 
 #: gammu/depend/nokia/dct4.c:1379
 #, c-format
 msgid " (Text: user ID)"
-msgstr ""
+msgstr " (Text: ID uživatele)"
 
 #: gammu/depend/nokia/dct4.c:1380
 #, c-format
 msgid " (conversation list ID)"
-msgstr ""
+msgstr " (ID seznamu konverzací)"
 
 #: gammu/depend/nokia/dct4.c:1381
 #, c-format
 msgid " (Instant Messaging service list ID ?)"
-msgstr ""
+msgstr " (ID servisního seznamu kecálka)"
 
 #: gammu/depend/nokia/dct4.c:1382
 #, c-format
 msgid " (presence list ID ?)"
-msgstr ""
+msgstr " (ID seznamu prezence)"
 
 #: gammu/depend/nokia/dct4.c:1383
 #, c-format
 msgid " (SIP Address (Push to Talk address))"
-msgstr ""
+msgstr " (SIP addressa (adresa Push to Talk))"
 
 #: gammu/depend/nokia/dct4.c:1384
 #, c-format
 msgid " (Group ID (6230i or later))"
-msgstr ""
+msgstr " (ID skupiny (6230i a starší))"
 
 #: gammu/depend/nokia/dct4.c:1386
 #, c-format
@@ -1477,7 +1478,7 @@ msgstr "4 bajty"
 #: gammu/depend/nokia/dct4.c:1398
 #, c-format
 msgid "%i phone number types\n"
-msgstr ""
+msgstr "%i typů telefonních čísel\n"
 
 #: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:122
 msgid "Home number"
@@ -1602,6 +1603,8 @@ msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
+"Kontrolní součet souboru zpočítaný Gammu neodpovídá hodnotě z telefonu. Buď "
+"je soubor poškozený, nebo jste právě nalezli chybu v Gammu."
 
 #: gammu/files.c:442
 #, c-format
@@ -2206,7 +2209,7 @@ msgstr "Něco se stalo špatně, chybná operace se zprávou!\n"
 #: gammu/message.c:692
 #, c-format
 msgid "Too high folder number (max. %i)\n"
-msgstr ""
+msgstr "Příliš vysoké číslo složky (maximálně. %i)\n"
 
 #: gammu/message.c:697
 #, c-format
@@ -2584,7 +2587,7 @@ msgstr "Nejvyšší umístění loga volajícího je 5"
 #: gammu/misc.c:868
 #, c-format
 msgid "What type of logo do you want to get (\"%s\") ?\n"
-msgstr ""
+msgstr "Jaký typ loga chcete načíst (\"%s\") ?\n"
 
 #: gammu/misc.c:884
 msgid "Group name"
@@ -2653,7 +2656,7 @@ msgstr "Text poznámky distributora je \"%s\"\n"
 #: gammu/misc.c:1095
 #, c-format
 msgid "What type of logo do you want to set (\"%s\") ?\n"
-msgstr ""
+msgstr "Jaký typ loga chcete nastavit (\"%s\") ?\n"
 
 #: gammu/misc.c:1136
 #, c-format
@@ -2894,9 +2897,9 @@ msgid "Operator logo"
 msgstr "Logo operátora"
 
 #: gammu/misc.c:1572 helper/message-display.c:428
-#, c-format
-msgid "Picture Image"
-msgstr ""
+#, fuzzy, c-format
+msgid "Picture"
+msgstr "ID obrázku"
 
 #: gammu/misc.c:1573
 #, c-format
@@ -2911,12 +2914,12 @@ msgstr ", šířka %i, výška %i\n"
 #: gammu/misc.c:1593
 #, c-format
 msgid "What format of output file logo (\"%s\") ?\n"
-msgstr ""
+msgstr "V jakém formátu se má logo uložit (\"%s\") ?\n"
 
 #: gammu/misc.c:1618
 #, c-format
 msgid "What format of output ringtone file (\"%s\") ?\n"
-msgstr ""
+msgstr "V jakém formátu se má vyzvánění uložit (\"%s\") ?\n"
 
 #: gammu/misc.c:1638
 #, c-format
@@ -2926,12 +2929,12 @@ msgstr "Chybné jméno klávesy nebo funkce: \"%c\"\n"
 #: gammu/misc.c:1668 gammu/misc.c:1706
 #, c-format
 msgid "What type of categories do you want to get (\"%s\") ?\n"
-msgstr ""
+msgstr "Jaký typ kategorií chcete načíst (\"%s\") ?\n"
 
 #: gammu/misc.c:1744
 #, c-format
 msgid "What type of category do you want to add (\"%s\") ?\n"
-msgstr ""
+msgstr "Jaký typ kategorie chcete přidat (\"%s\") ?\n"
 
 #: gammu/misc.c:1752
 #, c-format
@@ -2959,12 +2962,12 @@ msgstr " (výchozí jméno)"
 #: gammu/misc.c:1851
 #, c-format
 msgid " (Head set profile)"
-msgstr ""
+msgstr " (profil pro head set)"
 
 #: gammu/misc.c:1852
 #, c-format
 msgid " (Car kit profile)"
-msgstr ""
+msgstr " (profil do auta)"
 
 #: gammu/misc.c:1861 helper/memory-display.c:100
 msgid "Ringtone ID"
@@ -2972,7 +2975,7 @@ msgstr "ID vyzvánění"
 
 #: gammu/misc.c:1863
 msgid "Message alert tone ID"
-msgstr ""
+msgstr "ID tónu oznámení zprávy"
 
 #: gammu/misc.c:1873
 msgid "Call alert for"
@@ -2984,7 +2987,7 @@ msgstr "Číslo spořiče obrazovky"
 
 #: gammu/misc.c:1897
 msgid "Incoming call alert"
-msgstr ""
+msgstr "Upozornění na příchozí hovor"
 
 #: gammu/misc.c:1898
 msgid "Ringtone volume"
@@ -2996,7 +2999,7 @@ msgstr "Vibrační upozornění"
 
 #: gammu/misc.c:1900
 msgid "Message alert tone"
-msgstr ""
+msgstr "Zvuk upozornění na zprávu"
 
 #: gammu/misc.c:1901
 msgid "Keypad tones"
@@ -3004,7 +3007,7 @@ msgstr "Zvuky klávesnice"
 
 #: gammu/misc.c:1902
 msgid "Warning (games) tones"
-msgstr ""
+msgstr "Varovací tón (např. pro hry)"
 
 #: gammu/misc.c:1903 helper/message-display.c:424
 msgid "Screen saver"
@@ -3080,15 +3083,15 @@ msgstr "Nejdříve vibrovat"
 
 #: gammu/misc.c:1980
 msgid " speed dial not assigned"
-msgstr ""
+msgstr " rychlé vytáčení není přiřazeno"
 
 #: gammu/misc.c:2011
 #, c-format
 msgid "What type of reset phone settings (\"%s\") ?\n"
-msgstr ""
+msgstr "Jaký typ resetu chcete provést (\"%s\") ?\n"
 
 #: gammu/misc.c:2045
-msgid "Current display features"
+msgid "Current show on display"
 msgstr ""
 
 #: gammu/misc.c:2049
@@ -3226,7 +3229,7 @@ msgstr "Uloženo do souboru %s\n"
 
 #: gammu/mms.c:65
 msgid "Some MMS file features unknown for Gammu decoder"
-msgstr ""
+msgstr "Některé vlastnosti MMS souboru nejsou podporovány dekodérem Gammu"
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
 #, c-format
@@ -3260,7 +3263,7 @@ msgstr "Typ obsahu"
 #: gammu/mms.c:114
 #, c-format
 msgid " (%s in SMIL)"
-msgstr ""
+msgstr " (%s ve SMIL)"
 
 #: gammu/mms.c:130
 msgid "Do you want to save this attachment?"
@@ -3277,30 +3280,30 @@ msgstr "  ID souboru"
 
 #: gammu/nokia.c:43
 msgid "It can be RTTL ringtone only used with this option"
-msgstr ""
+msgstr "Jen vyzvánění typu RTTL může být použito s tímto příkazem"
 
 #: gammu/nokia.c:54
 #, c-format
 msgid "Ringtone \"%s\" (tempo = %i Beats Per Minute)"
-msgstr ""
+msgstr "Vyzvánění \"%s\" (tempo = %i Beats Per Minute)"
 
 #: gammu/nokia.c:63
 #, c-format
 msgid "length=%i notes, but you will enter only first 50 tones."
-msgstr ""
+msgstr "délka=%i not, ale vy zadáte jen prvnách 50 tónů"
 
 #: gammu/nokia.c:66
 msgid "This ringtone in Nokia Composer in phone should look:"
-msgstr ""
+msgstr "Toto vyzvánení by v Nokia Composeru v telefonu mělo vypadat:"
 
 #: gammu/nokia.c:105
 msgid "To enter it please press:"
-msgstr ""
+msgstr "Pro zadání prosím stiskněte:"
 
 #: gammu/nokia.c:124
 #, c-format
 msgid "(longer)"
-msgstr ""
+msgstr "(delší)"
 
 #: gammu/nokia.c:240
 #, c-format
@@ -3309,11 +3312,11 @@ msgstr "Kontroluji %s\n"
 
 #: gammu/nokia.c:245
 msgid "  Only part handled!"
-msgstr ""
+msgstr "  Zpracována jen část!"
 
 #: gammu/nokia.c:324
 msgid "  Problem with adding playlist"
-msgstr ""
+msgstr "  Chyba při přidávání seznamu skladeb"
 
 #: gammu/nokia.c:371
 #, c-format
@@ -3630,7 +3633,7 @@ msgstr "Osobní info 4"
 
 #: helper/memory-display.c:153
 msgid "Push to talk ID"
-msgstr ""
+msgstr "ID pro Push to talk"
 
 #: helper/memory-display.c:156
 msgid "unknown field type"
