@@ -572,31 +572,7 @@ HELP['savefile'] = ''''''
 HELP['savesms TEXT'] = '''Take text from stdin (or commandline if \\-text specified) 
 and save as text SMS into SIM/phone memory.
 
-\\fB\\-folder number\\fR - save to specified folder. 
-
-Folders are numerated from 1.
-
-The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use \\fBgetsmsfolders\\fR to get folder list.
-
-\\fB\\-unread\\fR - makes message unread. In some phones (like 6210)
-you won't see unread sms envelope after saving such
-sms. In some phones with internal SMS memory (like
-6210) after using it with folder 1 SIM SMS memory will be used
-
-\\fB\\-read\\fR - makes message read. In some phones with internal
-SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
-
-\\fB\\-unsent\\fR - makes message unsent
-
-\\fB\\-reply\\fR - reply SMSC is set
-
-\\fB\\-sender number\\fR - set sender number (default: "Gammu")
-
 \\fB\\-flash\\fR - Class 0 SMS
-
-\\fB\\-smscset number\\fR - SMSC will be taken from set \\fBnumber\\fR. Default set: 1
-
-\\fB\\-smscnumber number\\fR - SMSC number
 
 \\fB\\-len len\\fR - specify, how many chars will be read. When use this
 option and text will be longer than 1 SMS, will be splitted into more
@@ -644,30 +620,6 @@ there is example file (\\fIreplace.txt\\fR), which will change all "a" chars to 
 '''
 HELP['savesms RINGTONE'] = '''Read RTTL ringtone from file and save as SMS into SIM/phone memory.
 Ringtone is saved in Nokia format.
-
-\\fB\\-folder number\\fR - save to specified folder. 
-
-Folders are numerated from 1.
-
-The most often folder 1 = "Inbox", 2 = "Outbox", etc.
-
-\\fB\\-unread\\fR - makes message unread. In some phones (like 6210) you won't see 
-unread sms envelope after saving such sms. In some phones with internal 
-SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
-
-\\fB\\-read\\fR - makes message read. In some phones with internal
-SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
-\\fB\\-unsent\\fR - makes message unsent
-
-\\fB\\-reply\\fR - reply SMSC is set
-
-\\fB\\-sender number\\fR - set sender number
-
-\\fB\\-flash\\fR - Class 0 SMS
-
-\\fB\\-smscset number\\fR - SMSC will be taken from set \\fBnumber\\fR. Default set: 1
-
-\\fB\\-smscnumber number\\fR - SMSC number
 
 \\fB\\-long\\fR - ringtone is saved using Profile style. It can be longer (and saved
 in 2 SMS), but decoded only by newer phones (like 33xx)
@@ -959,6 +911,49 @@ almost every usage. See EXAMPLE section for some hints on usage.
 
 There is also an option to use gammu-smsd(1) when you want to send or 
 receive more messages and process them automatically.
+
+.TP
+\\fBCommon parameters for sendsms and savesms\\fR
+
+\\fB\\-smscset number\\fR - SMSC will be taken from set \\fBnumber\\fR. Default set: 1
+
+\\fB\\-smscnumber number\\fR - SMSC number
+
+\\fB\\-reply\\fR - reply SMSC is set
+
+\\fB\\-maxnum number\\fR - Limit maximal number of messages which will be
+created. If there are more messages, Gammu will terminate with failure.
+
+\\fB\\-folder number\\fR - save to specified folder. 
+
+Folders are numerated from 1.
+
+The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use \\fBgetsmsfolders\\fR to get folder list.
+
+\\fB\\-unread\\fR - makes message unread. In some phones (like 6210) you won't see 
+unread sms envelope after saving such sms. In some phones with internal 
+SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
+
+\\fB\\-read\\fR - makes message read. In some phones with internal
+SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
+
+\\fB\\-unsent\\fR - makes message unsent
+
+\\fB\\-sent\\fR - makes message sent
+
+\\fB\\-sender number\\fR - set sender number
+
+\\fB\\-smsname name\\fR - set message name
+
+\\fB\\-sender number\\fR - set sender number (default: "Gammu")
+
+\\fB\\-report\\fR - request delivery report for message
+
+\\fB\\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX\\fR - sets how long will be the
+message valid (SMSC will the discard the message after this time if it could
+not deliver it).
+
+\\fB\\-save\\fR - will also save message which is being sent
 '''
 SECTION_HELP['filesystem'] = '''
 Gammu allows to access phones using native protocol (Nokias) or OBEX. Your
