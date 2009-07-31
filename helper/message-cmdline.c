@@ -1396,7 +1396,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 
 	/* Check whether we did not reach user limit of messages */
 	if (MaxSMS != -1 && sms->Number > MaxSMS) {
-		printf_err(_("There is %i SMS packed and %i limit. Exiting\n"),sms->Number,MaxSMS);
+		printf_err(_("There are %i SMS messages packed and the limit is %i. Exiting\n"),sms->Number,MaxSMS);
 		error = ERR_MOREMEMORY;
 		goto end_compose;
 	}
