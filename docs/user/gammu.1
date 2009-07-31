@@ -76,12 +76,15 @@ timeout - timeout when the diversion will happen
 
 .TP
 .BI "getspeeddial" " start [stop]"
+Gets speed dial choices.
 
 .TP
 .BI "getussd" " code"
+Retrieves USSD information - dials a service number and reads response.
 
 .TP
 .BI "holdcall" " ID"
+Holds call.
 
 .TP
 .BI "maketerminatedcall" " number length [show|hide]"
@@ -99,15 +102,19 @@ Plays DTMF sequence. In some phones available only during calls
 
 .TP
 .BI "splitcall" " ID"
+Splits call.
 
 .TP
 .BI "switchcall" " [ID]"
+Switches call.
 
 .TP
 .BI "transfercall" " [ID]"
+Transfers call.
 
 .TP
 .BI "unholdcall" " ID"
+Unholds call.
 
 
 .SS "SMS and EMS"
@@ -595,6 +602,7 @@ Locations are numerated from 1.
 
 .TP
 .BI "getspeeddial" " start [stop]"
+Gets speed dial choices.
 
 .TP
 .BI "listmemorycategory" " text|number"

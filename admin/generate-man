@@ -442,6 +442,20 @@ HELP['answercall'] = '''Answer incoming call.
 '''
 HELP['cancelcall'] = '''Cancel incoming call
 '''
+HELP['splitcall'] = '''Splits call.
+'''
+HELP['switchcall'] = '''Switches call.
+'''
+HELP['transfercall'] = '''Transfers call.
+'''
+HELP['unholdcall'] = '''Unholds call.
+'''
+HELP['holdcall'] = '''Holds call.
+'''
+HELP['getussd'] = '''Retrieves USSD information - dials a service number and reads response.
+'''
+HELP['getspeeddial'] = '''Gets speed dial choices.
+'''
 HELP['canceldiverts'] = '''Cancel all existing call diverts.
 '''
 HELP['divert'] = '''Manage or display call diverts.
