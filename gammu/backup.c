@@ -1028,7 +1028,7 @@ void Restore(int argc, char *argv[])
 					error=GSM_SetMemory(gsm, &Pbk);
 				}
 				if (error == ERR_MEMORY && GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_6230iCALLER)) {
-					printf("\n%s\n", _("Error - try to add enough number of/restore caller groups and use --restore again"));
+					printf_err("%s\n", _("Probably caller group is missing from your backup, add it and use --restore again."));
 					GSM_TerminateConnection(gsm);
 					exit (-1);
 				}

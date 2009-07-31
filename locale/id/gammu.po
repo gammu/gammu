@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-31 15:46+0200\n"
+"POT-Creation-Date: 2009-07-31 16:04+0200\n"
 "PO-Revision-Date: 2009-07-13 08:41+0200\n"
 "Last-Translator: winawang <winawangz@yahoo.co.id>\n"
 "Language-Team: none\n"
@@ -313,13 +313,10 @@ msgid "Restore phone phonebook?"
 msgstr "Pulihkan buku telepon?"
 
 #: gammu/backup.c:1031
-#, fuzzy
 msgid ""
-"Error - try to add enough number of/restore caller groups and use --restore "
-"again"
+"Probably caller group is missing from your backup, add it and use --restore "
+"again."
 msgstr ""
-"Kesalahan - coba ke (1) tambahkan angka yang cukup / pulihkan grup dan (2) "
-"gunakan -- pulihkan kembali"
 
 #: gammu/backup.c:1041 gammu/backup.c:1097
 #, c-format
@@ -4198,6 +4195,14 @@ msgstr ""
 #: helper/printing.c:50
 msgid "Information"
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "Error - try to add enough number of/restore caller groups and use --"
+#~ "restore again"
+#~ msgstr ""
+#~ "Kesalahan - coba ke (1) tambahkan angka yang cukup / pulihkan grup dan "
+#~ "(2) gunakan -- pulihkan kembali"
 
 #~ msgid "raw "
 #~ msgstr "mentah"
