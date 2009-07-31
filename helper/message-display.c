@@ -425,7 +425,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
 			break;
 		case SMS_NokiaPictureImageLong:
-			printf("%s\n", _("Picture Image"));
+			printf("%s\n", _("Picture"));
 			if (UnicodeLength(SMSInfo.Entries[i].Bitmap->Bitmap[0].Text) != 0)
 				printf(LISTFORMAT "\"%s\"\n\n", _("Text"),DecodeUnicodeConsole(SMSInfo.Entries[i].Bitmap->Bitmap[0].Text));
 			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);

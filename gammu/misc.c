@@ -1569,7 +1569,7 @@ void CopyBitmap(int argc, char *argv[])
 			switch (Bitmap.Bitmap[i].Type) {
 				case GSM_StartupLogo :	printf(_("Startup logo"));		break;
 				case GSM_OperatorLogo:	printf(_("Operator logo")); 	break;
-				case GSM_PictureImage:	printf(_("Picture Image")); 	break;
+				case GSM_PictureImage:	printf(_("Picture")); 	break;
 				case GSM_CallerGroupLogo  :	printf(_("Caller group logo")); 	break;
 				default		     : 					break;
 			}
@@ -2042,7 +2042,7 @@ void GetDisplayStatus(int argc UNUSED, char *argv[] UNUSED)
 	error=GSM_GetDisplayStatus(gsm,&Features);
 	Print_Error(error);
 
-	printf(LISTFORMAT "\n", _("Current display features"));
+	printf(LISTFORMAT "\n", _("Current show on display"));
 
 	for (i=0;i<Features.Number;i++) {
 		switch(Features.Feature[i]) {
