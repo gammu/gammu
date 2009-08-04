@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-31 16:27+0200\n"
-"PO-Revision-Date: 2009-07-31 16:27+0200\n"
+"POT-Creation-Date: 2009-08-04 11:38+0200\n"
+"PO-Revision-Date: 2009-08-04 11:38+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3482,6 +3482,8 @@ msgstr "Skupina"
 #: helper/memory-display.c:65
 msgid "Caller group number too high, please increase buffer in sources!"
 msgstr ""
+"Počet skupin volajících je příliš vysoký, prosím zvyště velikost vyrovnávací "
+"paměti v kódu!"
 
 #: helper/memory-display.c:104
 msgid "User ID"
@@ -3684,7 +3686,7 @@ msgstr "V souboru nebylo nalezena žádné nastavení pro WAP"
 
 #: helper/message-cmdline.c:425
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
-msgstr ""
+msgstr "Omlouváme se, ale podporovány jsou pouze GPRS a DATA přenosy"
 
 #: helper/message-cmdline.c:448
 msgid "MMS settings not found in file"
@@ -3692,7 +3694,7 @@ msgstr "V souboru nebylo nalezena žádné nastavení pro MMS"
 
 #: helper/message-cmdline.c:462
 msgid "Sorry. No GPRS bearer found in MMS settings"
-msgstr ""
+msgstr "Omlouváme se, ale nebyl nalezen žádný GPRS přenos v nastaveních MMS"
 
 #: helper/message-cmdline.c:508
 msgid "ToDo note not found in file"
@@ -3721,7 +3723,7 @@ msgstr "Neznámý text platnosti (\"%s\")\n"
 #: helper/message-cmdline.c:1158
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
-msgstr ""
+msgstr "Musíte zadat počet EMS snímků mezi 1 a 4 (\"%s\")\n"
 
 #: helper/message-cmdline.c:1183
 #, c-format
@@ -3761,16 +3763,16 @@ msgstr "Musíte nastavit kód sítě!"
 #: helper/message-cmdline.c:1388
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
-msgstr ""
+msgstr "Vyzvánění je příliš dlouhé. Zkráceno o %i procent\n"
 
 #: helper/message-cmdline.c:1399
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
-msgstr ""
+msgstr "Bylo vytvořeno  %i SMS zpráv a limit je %i. Končím\n"
 
 #: helper/message-cmdline.c:1409
 msgid "Use -smscnumber option to give SMSC number"
-msgstr ""
+msgstr "Pro zadání čísla SMSC použijte parametr -smscnumber"
 
 #: helper/message-display.c:26
 #, c-format
@@ -3874,18 +3876,18 @@ msgstr "Trvalá chyba, "
 #: helper/message-display.c:188
 #, c-format
 msgid "SM received by the SME"
-msgstr ""
+msgstr "SM byla přijata SME"
 
 #: helper/message-display.c:189
 #, c-format
 msgid ""
 "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
-msgstr ""
+msgstr "SM předána SC k SME, ale SC není schopné potvrdit doručení"
 
 #: helper/message-display.c:190
 #, c-format
 msgid "SM replaced by the SC"
-msgstr ""
+msgstr "SM nahrazena SC"
 
 #: helper/message-display.c:191 helper/message-display.c:207
 #, c-format
@@ -3895,77 +3897,73 @@ msgstr "Zahlcení"
 #: helper/message-display.c:192 helper/message-display.c:208
 #, c-format
 msgid "SME busy"
-msgstr ""
+msgstr "SME je zaneprázděno"
 
 #: helper/message-display.c:193 helper/message-display.c:209
 #, c-format
 msgid "No response from SME"
-msgstr ""
+msgstr "Žádná odpověď od SME"
 
 #: helper/message-display.c:194 helper/message-display.c:210
 #, c-format
 msgid "Service rejected"
 msgstr "Služba odmítnuta"
 
-#: helper/message-display.c:195
+#: helper/message-display.c:195 helper/message-display.c:201
+#: helper/message-display.c:211
 #, c-format
-msgid "Quality of service not aviable"
-msgstr ""
+msgid "Quality of service not available"
+msgstr "Kvalita služby není dostupná"
 
 #: helper/message-display.c:196 helper/message-display.c:212
 #, c-format
 msgid "Error in SME"
-msgstr ""
+msgstr "Chyba na straně SME"
 
 #: helper/message-display.c:197
 #, c-format
 msgid "Remote procedure error"
-msgstr ""
+msgstr "Chyba při volání vzdálené procedury"
 
 #: helper/message-display.c:198
 #, c-format
 msgid "Incompatibile destination"
-msgstr ""
+msgstr "Nekompatibilní destinace"
 
 #: helper/message-display.c:199
 #, c-format
 msgid "Connection rejected by SME"
-msgstr ""
+msgstr "SME odmítlo připojení"
 
 #: helper/message-display.c:200
 #, c-format
 msgid "Not obtainable"
 msgstr "Nelze získat"
 
-#: helper/message-display.c:201 helper/message-display.c:211
-#, c-format
-msgid "Quality of service not available"
-msgstr ""
-
 #: helper/message-display.c:202
 #, c-format
 msgid "No internetworking available"
-msgstr ""
+msgstr "Není dostupné připojení k síti"
 
 #: helper/message-display.c:203
 #, c-format
 msgid "SM Validity Period Expired"
-msgstr ""
+msgstr "Vypršela doba platnosti SM"
 
 #: helper/message-display.c:204
 #, c-format
 msgid "SM deleted by originating SME"
-msgstr ""
+msgstr "SM vymazána odesílajícím SME"
 
 #: helper/message-display.c:205
 #, c-format
 msgid "SM Deleted by SC Administration"
-msgstr ""
+msgstr "SM vymazána správci SC"
 
 #: helper/message-display.c:206
 #, c-format
 msgid "SM does not exist"
-msgstr ""
+msgstr "SM neexistuje"
 
 #: helper/message-display.c:213
 #, c-format
@@ -4226,6 +4224,9 @@ msgstr "Varování"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Informace"
+
+#~ msgid "Quality of service not aviable"
+#~ msgstr "Kvalita služby není dostupná"
 
 #~ msgid ""
 #~ "Sorry, but configuration matrix for this model is not added yet. Please "

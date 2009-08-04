@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-31 16:27+0200\n"
+"POT-Creation-Date: 2009-08-04 11:38+0200\n"
 "PO-Revision-Date: 2009-07-06 14:14+0200\n"
 "Last-Translator: Benedikt Sauer <filmor@gmail.com>\n"
 "Language-Team: Language =de\n"
@@ -4021,9 +4021,10 @@ msgstr "Keie Rückmeldung von der SME"
 msgid "Service rejected"
 msgstr "Dienst abgelehnt"
 
-#: helper/message-display.c:195
+#: helper/message-display.c:195 helper/message-display.c:201
+#: helper/message-display.c:211
 #, c-format
-msgid "Quality of service not aviable"
+msgid "Quality of service not available"
 msgstr "Dienstgüte (QoS) nicht verfügbar"
 
 #: helper/message-display.c:196 helper/message-display.c:212
@@ -4050,11 +4051,6 @@ msgstr "Verbindung von SME abgelhnt"
 #, c-format
 msgid "Not obtainable"
 msgstr "Nicht erhältlich"
-
-#: helper/message-display.c:201 helper/message-display.c:211
-#, c-format
-msgid "Quality of service not available"
-msgstr "Dienstgüte (QoS) nicht verfügbar"
 
 #: helper/message-display.c:202
 #, c-format
@@ -4355,6 +4351,9 @@ msgstr "Warnung"
 #, fuzzy
 msgid "Information"
 msgstr "Telefoninformationen"
+
+#~ msgid "Quality of service not aviable"
+#~ msgstr "Dienstgüte (QoS) nicht verfügbar"
 
 #~ msgid "Picture Image"
 #~ msgstr "Bild"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-31 16:27+0200\n"
+"POT-Creation-Date: 2009-08-04 11:38+0200\n"
 "PO-Revision-Date: 2009-06-03 16:35+0200\n"
 "Last-Translator: Potwór Jaworny <sklep@szybkieczytanie.net>\n"
 "Language-Team: Language =pl\n"
@@ -3993,9 +3993,10 @@ msgstr ""
 msgid "Service rejected"
 msgstr "   Numer      : %s\n"
 
-#: helper/message-display.c:195
+#: helper/message-display.c:195 helper/message-display.c:201
+#: helper/message-display.c:211
 #, c-format
-msgid "Quality of service not aviable"
+msgid "Quality of service not available"
 msgstr ""
 
 #: helper/message-display.c:196 helper/message-display.c:212
@@ -4022,11 +4023,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Not obtainable"
 msgstr "Brak sygnału"
-
-#: helper/message-display.c:201 helper/message-display.c:211
-#, c-format
-msgid "Quality of service not available"
-msgstr ""
 
 #: helper/message-display.c:202
 #, c-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-31 16:27+0200\n"
+"POT-Creation-Date: 2009-08-04 11:38+0200\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -4332,9 +4332,10 @@ msgstr "SME не отвечает"
 msgid "Service rejected"
 msgstr "В услуге отказано"
 
-#: helper/message-display.c:195
+#: helper/message-display.c:195 helper/message-display.c:201
+#: helper/message-display.c:211
 #, c-format
-msgid "Quality of service not aviable"
+msgid "Quality of service not available"
 msgstr "Качество обслуживания недоступно"
 
 #: helper/message-display.c:196 helper/message-display.c:212
@@ -4361,11 +4362,6 @@ msgstr "Соединение разорвано SME"
 #, c-format
 msgid "Not obtainable"
 msgstr "Неприменимо"
-
-#: helper/message-display.c:201 helper/message-display.c:211
-#, c-format
-msgid "Quality of service not available"
-msgstr "Качество обслуживания недоступно"
 
 #: helper/message-display.c:202
 #, c-format
@@ -4686,6 +4682,9 @@ msgstr "Встреча"
 #, fuzzy
 msgid "Information"
 msgstr "Местонахождение %i\n"
+
+#~ msgid "Quality of service not aviable"
+#~ msgstr "Качество обслуживания недоступно"
 
 #~ msgid "Picture Image"
 #~ msgstr "Рисунок"

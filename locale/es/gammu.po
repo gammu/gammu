@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-07-31 16:27+0200\n"
+"POT-Creation-Date: 2009-08-04 11:38+0200\n"
 "PO-Revision-Date: 2009-03-23 19:23+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -3974,9 +3974,10 @@ msgstr "Sin respuesta del SME"
 msgid "Service rejected"
 msgstr "Servicio rechazado"
 
-#: helper/message-display.c:195
+#: helper/message-display.c:195 helper/message-display.c:201
+#: helper/message-display.c:211
 #, c-format
-msgid "Quality of service not aviable"
+msgid "Quality of service not available"
 msgstr "Calidad del servicio no disponible"
 
 #: helper/message-display.c:196 helper/message-display.c:212
@@ -4003,11 +4004,6 @@ msgstr "Conexión rechazada por el SME"
 #, c-format
 msgid "Not obtainable"
 msgstr "No obtenible"
-
-#: helper/message-display.c:201 helper/message-display.c:211
-#, c-format
-msgid "Quality of service not available"
-msgstr "Calidad del servicio no disponible"
 
 #: helper/message-display.c:202
 #, c-format
@@ -4295,6 +4291,9 @@ msgstr "Advertencia"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Información"
+
+#~ msgid "Quality of service not aviable"
+#~ msgstr "Calidad del servicio no disponible"
 
 #~ msgid "Picture Image"
 #~ msgstr "Imagen"
