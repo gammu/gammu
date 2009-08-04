@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-07-31 15:15+0300\n"
-"PO-Revision-Date: 2009-08-04 12:03+0200\n"
+"PO-Revision-Date: 2009-08-04 12:19+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -441,6 +441,8 @@ msgid ""
 "There is also an option to use gammu-smsd(1) when you want to send or "
 "receive more messages and process them automatically."
 msgstr ""
+"Pokud chcete posílat nebo přijímat více zpráv a zpracovávat je automaticky, "
+"máte také možnost použít gammu-smsd(1)."
 
 #. type: TP
 #: docs/user/gammu.1:130
@@ -475,6 +477,8 @@ msgid ""
 "B<-maxnum number> - Limit maximal number of messages which will be created. "
 "If there are more messages, Gammu will terminate with failure."
 msgstr ""
+"B<-maxnum number> - Omezí maximální počet zpráv, které budou vytvořeny. "
+"Pokud by jich bylo více, Gammu skončí s chybou."
 
 # type: Plain text
 #. type: Plain text
@@ -543,7 +547,7 @@ msgstr "B<-smsname name> - nastaví jméno zprávy"
 #. type: Plain text
 #: docs/user/gammu.1:164
 msgid "B<-sender number> - set sender number (default: \"Gammu\")"
-msgstr ""
+msgstr "B<-sender number> - nastaví odesílatele na number (výchozí: \"Gammu\")"
 
 # type: Plain text
 #. type: Plain text
@@ -558,6 +562,8 @@ msgid ""
 "message valid (SMSC will the discard the message after this time if it could "
 "not deliver it)."
 msgstr ""
+"B<-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX> - nastaví jak dlouho bude zpráva "
+"platná (SMSC zruší zprávu po této době pokud se jí nepodařilo doručit)."
 
 #. type: Plain text
 #: docs/user/gammu.1:172
@@ -609,6 +615,9 @@ msgid ""
 "them from phone), or -all to just backup all folders while keeping messages "
 "in phone."
 msgstr ""
+"Použijte -yes pro odpověď ano na všechny otázky (zazálohovat všechny zprávy "
+"a odstranit je z telefonu) nebo -all pro zálohu všech zpráv a ponechání jich "
+"v telefonu."
 
 # type: TP
 #. type: TP
@@ -2023,7 +2032,7 @@ msgstr ""
 #: docs/user/gammu.1:777 docs/user/gammu.1:1628
 #, no-wrap
 msgid "    gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42\n"
-msgstr ""
+msgstr "    gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42\n"
 
 # type: TP
 #. type: TP
@@ -3611,6 +3620,9 @@ msgid ""
 "specify a file from where they would be read (special case - means standard "
 "input)."
 msgstr ""
+"Pokud nezadáte jméno souboru, jsou příkazy čteny ze standardního vstupu. "
+"Jinak jsou čteny z tohoto souboru, speciální případ - znamená čtení ze "
+"standardního vstupu."
 
 # type: TP
 #. type: TP
@@ -3707,12 +3719,16 @@ msgstr "B<reset>I< SOFT|HARD>"
 #: docs/user/gammu.1:2315
 msgid "Make phone reset: soft (without asking for PIN) or hard (with PIN)."
 msgstr ""
+"Provede reset telefonu, buď rychlý (SOFT, bez ptaní na PIN) nebo trvdý "
+"(HARD, s požadavkem na PIN)."
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2317
 msgid "I<Note:> some phones will make hard reset even with B<SOFT> option."
 msgstr ""
+"I<Poznámka:> některé telefony provedou tvrdý reset i při zadání parametru "
+"B<SOFT>."
 
 # type: TP
 #. type: TP
