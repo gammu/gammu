@@ -85,6 +85,8 @@ if (INSTALL_LSB_INIT)
         RENAME "gammu-smsd"
         COMPONENT "initscript"
         )
+else (INSTALL_LSB_INIT)
+    message (STATUS "Init script not being installed, install it by -DINSTALL_LSB_INIT=ON")
 endif (INSTALL_LSB_INIT)
 
 # Build some examples
