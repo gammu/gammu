@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-04 14:28+0300\n"
-"PO-Revision-Date: 2009-08-04 14:28+0200\n"
+"PO-Revision-Date: 2009-08-04 16:56+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1010,7 +1010,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:313
 msgid "B<-variablebitmap> - bitmap in any size saved in one SMS"
-msgstr ""
+msgstr "B<-variablebitmap> - obrázek libovolné velikosti uložený v jedné SMS"
 
 # type: Plain text
 #. type: Plain text
@@ -1019,12 +1019,14 @@ msgid ""
 "B<-variablebitmaplong> - bitmap with maximal size 96x128 saved in one or few "
 "sms"
 msgstr ""
+"B<-variablebitmaplong> - obrázek o maximální velikosti 96x128 uložený v "
+"jedné nebo více zpráv"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:317
 msgid "B<-fixedbitmap > - bitmap 16x16 or 32x32"
-msgstr ""
+msgstr "B<-fixedbitmap > - obrázek o velikosti 16x16 nebo 32x32"
 
 # type: Plain text
 #. type: Plain text
@@ -1125,6 +1127,8 @@ msgid ""
 "Save operator logo as sms (Nokia format - size 72x14 or 78x21 after using B<-"
 "biglogo>)."
 msgstr ""
+"Uloži logo operátora jako SMS (formát pro Nokie - velikost 72x14 nebo 78x21 "
+"po použití B<-biglogo>)."
 
 # type: TP
 #. type: TP
@@ -1137,7 +1141,7 @@ msgstr "B<savesms PICTURE>I< file [-folder id] [-unread] [-read] [-unsent] [-sen
 #. type: Plain text
 #: docs/user/gammu.1:364 docs/user/gammu.1:954
 msgid "Save Picture Image as sms (Nokia format - size 72x28)."
-msgstr ""
+msgstr "Uloží obrázek jako SMS (formát Nokie - velikost 72x28)."
 
 # type: TP
 #. type: TP
@@ -1153,6 +1157,7 @@ msgid ""
 "Read ringtone (RTTL) format and bitmap (Picture Image size) and name and "
 "save as Nokia profile."
 msgstr ""
+"Načte vyzvánění (RTTL), obrázek a jméno a uloží je jako profil pro Nokii."
 
 # type: TP
 #. type: TP
@@ -1168,6 +1173,8 @@ msgid ""
 "Read RTTL ringtone from file and save as SMS into SIM/phone memory.  "
 "Ringtone is saved in Nokia format."
 msgstr ""
+"Našte RTTL vyzvánění ze souboru a uloží ho jako SMS. Vyzvánění je uloženo ve "
+"formátu pro Nokii."
 
 # type: Plain text
 #. type: Plain text
@@ -1176,6 +1183,8 @@ msgid ""
 "B<-long> - ringtone is saved using Profile style. It can be longer (and "
 "saved in 2 SMS), but decoded only by newer phones (like 33xx)"
 msgstr ""
+"B<-long> - vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo "
+"do dvou SMS), ale umí s ním pracovat jen novější telefony (jako 33xx)."
 
 # type: Plain text
 #. type: Plain text
@@ -1290,6 +1299,9 @@ msgid ""
 "I<TIP:> You can create Unicode file using WordPad in Win32 (during saving "
 "select \"Unicode Text Document\" format). In Unix can use for example YUdit."
 msgstr ""
+"I<TIP:> Soubor v Unicode můžete na Windows vytvořit například pomocí "
+"WordPadu (zvolte volbu \"Uložit jako unicode text\"). Na Linuxu můžete "
+"použít třeba YUdit nebo Vim."
 
 # type: Plain text
 #. type: Plain text
@@ -1339,6 +1351,8 @@ msgid ""
 "Saves a message with a todo entry. The content will be read from any backup "
 "format which Gammu supports and from given location."
 msgstr ""
+"Uloží zprávu s úkolem. Obsah bude načten ze souboru v některém z formátů "
+"podporovaných Gammu a ze zadaného umístění."
 
 # type: TP
 #. type: TP
@@ -2056,6 +2070,9 @@ msgid ""
 "phonebook events. The file type is guessed (for input file guess is based on "
 "extension and file content, for output solely on extension)."
 msgstr ""
+"Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro "
+"kontakty. Typ souboru je odhadnut (pro vstupní soubor podle přípony a "
+"obsahu, pro výstupní jen podle přípony)."
 
 #. type: Plain text
 #: docs/user/gammu.1:773 docs/user/gammu.1:1624
@@ -2762,6 +2779,9 @@ msgid ""
 "calendar events. The file type is guessed (for input file guess is based on "
 "extension and file content, for output solely on extension)."
 msgstr ""
+"Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro "
+"kalendář. Typ souboru je odhadnut (pro vstupní soubor podle přípony a "
+"obsahu, pro výstupní jen podle přípony)."
 
 #. type: Plain text
 #: docs/user/gammu.1:1259 docs/user/gammu.1:1377 docs/user/gammu.1:1600
@@ -2843,6 +2863,9 @@ msgid ""
 "todo events. The file type is guessed (for input file guess is based on "
 "extension and file content, for output solely on extension)."
 msgstr ""
+"Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro "
+"úkoly. Typ souboru je odhadnut (pro vstupní soubor podle přípony a obsahu, "
+"pro výstupní jen podle přípony)."
 
 #. type: SS
 #: docs/user/gammu.1:1398
@@ -2933,6 +2956,8 @@ msgid ""
 "I<TIP:> you can make such synchronization each time, when will connect your "
 "phone and use Gammu. See gammurc(5) for details."
 msgstr ""
+"I<TIP:> můžete si také nastavit tuto synchronizaci při každém připojení "
+"telefonu ke Gammu. Více podrobností naleznete v gammurc(5)."
 
 #. type: SS
 #: docs/user/gammu.1:1427
