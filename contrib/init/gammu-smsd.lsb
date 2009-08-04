@@ -28,6 +28,9 @@
 # Description:       Daemon for automatically sending and receiving messages using GSM phone.
 ### END INIT INFO
 
+# Uncommend and adjust following line if you need to set locales in init script:
+# export LANG=cs_CS.UTF-8
+
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/usr/bin/gammu-smsd
 NAME=gammu-smsd
