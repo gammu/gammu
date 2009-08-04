@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-07-31 15:15+0300\n"
-"PO-Revision-Date: 2009-08-04 12:19+0200\n"
+"PO-Revision-Date: 2009-08-04 12:28+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -306,7 +306,7 @@ msgstr "B<getussd>I< code>"
 #. type: Plain text
 #: docs/user/gammu.1:84
 msgid "Retrieves USSD information - dials a service number and reads response."
-msgstr ""
+msgstr "Načte USSD informace - vytvočí servisní číslo a načtě odpověď."
 
 # type: TP
 #. type: TP
@@ -2217,6 +2217,8 @@ msgid ""
 "Display info filesystem status - number of bytes available, used or used by "
 "some specific content."
 msgstr ""
+"Zobrazí informace o stavu systému souborů - volné a obsazené místo a místo "
+"obsazené různými druhy obsahu."
 
 # type: TP
 #. type: TP
@@ -2521,6 +2523,8 @@ msgid ""
 "Ringtones are mostly supported only for older phones. For recent phones you "
 "usually just upload them to some folder in phone filesystem."
 msgstr ""
+"Vyzvánění jsou většinou podporována jen pro starší telefony. Pro novější je "
+"obvykle jen musíte nahrát do správné složky v telefonu."
 
 # type: TP
 #. type: TP
@@ -2582,6 +2586,8 @@ msgid ""
 "Show, how to enter RTTL ringtone in composer existing in many Nokia phones "
 "(and how should it look like)."
 msgstr ""
+"Zobrazí jak zadat RTTL vyzvánění ve skladateli dostupném v mnoha telefonech "
+"Nokia (a jak by mělo vypadat)."
 
 # type: TP
 #. type: TP
@@ -2597,6 +2603,8 @@ msgid ""
 "Play aproximation of ringtone over phone buzzer. File can be in RTTL or "
 "BINARY (Nokia DCT3) format."
 msgstr ""
+"Přehraje vyzvánění přes reproduktor telefonu. Soubor může být buď ve formátu "
+"RTTL nebo BINARY (Nokia DCT3)."
 
 # type: TP
 #. type: TP
@@ -2612,6 +2620,9 @@ msgid ""
 "Play one of \"built\" ringtones. This option is available for DCT4 phones. "
 "For getting ringtones list use getringtoneslist."
 msgstr ""
+"Přehraje jedno z vestavěných vyzvánění. Tento příkaz je dostupný pro "
+"telefonu DCT4. Pro získání seznamu vyzvánění použijte příkaz "
+"getringtoneslist."
 
 # type: TP
 #. type: TP
@@ -2696,6 +2707,8 @@ msgid ""
 "Displays calendar settings like first day of week or automatic deleting of "
 "old entries."
 msgstr ""
+"Zobrazí nastavení kalendáře jako první den v týdnu nebo odstraňování starých "
+"položek."
 
 # type: TP
 #. type: TP
@@ -2872,6 +2885,8 @@ msgid ""
 "that this option doesn't show clock on phone screen. It only set date and "
 "time."
 msgstr ""
+"Nastaví datum a čas v telefonu podle času v počítači. Tato volba nezobrazí "
+"hodiny na displeji mobilu, jen nastaví datum a čas."
 
 # type: Plain text
 #. type: Plain text
@@ -3144,13 +3159,13 @@ msgstr "..."
 #: docs/user/gammu.1:1749 docs/user/gammu.1:2286
 #, no-wrap
 msgid "B<nokiasetvibralevel>I< level>"
-msgstr ""
+msgstr "B<nokiasetvibralevel>I< level>"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:1752 docs/user/gammu.1:2289
 msgid "Set vibra power to \"level\" (given in percent)"
-msgstr ""
+msgstr "Nastaví úrověň vibrací na zadanou úroveň (v procentech)"
 
 # type: TP
 #. type: TP
