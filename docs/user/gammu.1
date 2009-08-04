@@ -309,8 +309,6 @@ Saves EMS sequence. All parameters after \fB\-unread\fR (like \fB\-defsound\fR) 
 
 \fB\-toneSE\fR - adds IMelody in "short" form supported by SonyEricsson phones
 
-\fB\-tone10long\fR - SonyEricsson IMelody saved in one or few SMS with UPI
-
 \fB\-variablebitmap\fR - bitmap in any size saved in one SMS
 
 \fB\-variablebitmaplong\fR - bitmap with maximal size 96x128 saved in one or few sms
@@ -1705,7 +1703,7 @@ reboot them to see netmonitor menu)
 Reset counters from netmonitor test 36 in Nokia DCT3 phones.
 
 \fITIP:\fR For more info about this option, please visit
-\fIwww.mwiacek.com\fR and read netmonitor manual.
+\fIhttp://www.mwiacek.com\fR and read netmonitor manual.
 
 .TP
 .BI "nokiasecuritycode"
@@ -2121,8 +2119,7 @@ be done, when phone doesn't have set clock inside.
 Gammu connects to www.gammu.org and checks for latest firmware versions
 available for the device. The file
 <http://www.gammu.org/support/phones/phonedbxml.php?model=x> will be
-downloaded, all phone details will be read from it and (if any higher firmware
-exist) displayed info to user on each application startup. No private data are
+downloaded and all phone details will be read from it. No private data are
 sent to server. Internet connection to www.gammu.org on port 80 required.
 
 .TP
@@ -2215,9 +2212,11 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 .SS "Dumps decoding"
 .TP
 .BI "decodebinarydump" " file [phonemodel]"
-After using option \fBlogfile\fR with name \fBbinary\fR (see \fI/readme.txt\fR for
-info about this method of reporting bugs) created file can be decoded using
-this option. It's available only, if Gammu was compiled with debug.
+Decodes a dump made by Gammu with 
+\fBlogformat\fR se to \fBbinary\fR (see \fIREADME\fR for
+info about this method of reporting bugs).
+
+This option is available only if Gammu was compiled with debuging options.
 
 
 .TP

@@ -156,12 +156,14 @@ Složky číslujte od 1.
 Nejčastěji jsou složky 1 = "Příchozí", 2 = "Odchozí",atd. Použijte
 \fBgetsmsfolders\fP pro zjištění skutečného seznamu složek pro váš telefon.
 
-\fB\-unread\fP \- makes message unread. In some phones (like 6210) you won't see
-unread sms envelope after saving such sms. In some phones with internal SMS
-memory (like 6210) after using it with folder 1 SIM SMS memory will be used
+\fB\-unread\fP \- označí zprávu jako nepřečtenou. U některých telefonů (jako
+6210) však neuvidíte indikaci nepřečtené zprávy v telefonu. U některých
+telefonů s interní pamětí na SMS (jako 6210) bude po použití složky 1
+uložena zpráva na SIM kartu.
 
-\fB\-read\fP \- makes message read. In some phones with internal SMS memory (like
-6210) after using it with folder 1 SIM SMS memory will be used
+\fB\-read\fP \- označí zprávu jako přečtenou. U některých telefonů s interní
+pamětí na SMS (jako 6210) bude po použití složky 1 uložena zpráva na SIM
+kartu.
 
 \fB\-unsent\fP \- označí zprávu jako neodeslanou
 
@@ -214,10 +216,9 @@ stejně jako sendsms.
 
 .TP 
 \fBgetallsms\fP\fI \-pbk\fP
-Get all SMS from phone. In some phones you will have also SMS templates and
-info about locations used to save Picture Images. With each sms you will see
-location. If you want to get such sms from phone alone, use \fBgammu getsms 0
-location\fP
+Načte všechny zprávy z telefonu. U některých telefonu načte také šablony
+zpráv a informace o uložených obrázcích. U každé zprávy uvidíte umístění,
+pokud chcete získat jednotlivou zprávu, použijte \fBgammu getsms 0 location\fP
 
 .TP 
 \fBgeteachsms\fP\fI \-pbk\fP
@@ -230,9 +231,9 @@ Načte SMS.
 
 Umístění číslujte od 1.
 
-When give folder 0, sms is given from "flat" memory (all sms from all
-folders have unique numbers). It's sometimes emulated by Gammu.  You can use
-it with all phones.
+Pokud zadáte složku 0, sms bude načtena z "jednolité" paměti (všechny SMS ze
+všech složek mají unikátní čísla). V některých případech je toto chování
+emulováno Gammu. Můžete ho proto použít se všemi telefony.
 
 When give folder 1, 2, etc. sms are taken from Inbox, Outbox, etc.  and each
 sms has unique number in his folder. Name of folders can depend on your
@@ -255,14 +256,14 @@ Načte s telefonu názvy složek se zprávami.
 
 .TP 
 \fBrestoresms\fP\fI file [\-yes]\fP
-Restores SMSes from file (format like backupsms uses) to selected folder in
-phone. Please note that this overwrites existing messages in phone (if it
-supports it).
+Obnoví SMS zprávy ze souboru (z formátu který používá příkaz backupsms) do
+zvolené složky v telefonu. Pokud to telefon podporuje, budou stávající
+zprávy ve složce přepsány!
 .TP 
 \fBsavesms ANIMATION\fP\fI frames file1 file2... [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
-Save an animation as a SMS. You need to give number of frames and picture
-for each frame. Each picture can be in any picture format which Gammu
-supports (B/W bmp, gif, wbmp, nol, nlm...).
+Uloží animaci jako SMS. Musíte zadat počet snímků a obrázek pro každý
+snímek. Každý obrázek může být v libovolném formátu, který Gammu podporuje
+(ČB bmp, gif, wbmp, nol, nlm,...).
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -308,31 +309,31 @@ Uloží EMS zprávu. Všechny parametry uvedené za \fB\-unread\fP (například
 
 \fB\-unicodefiletext\fP \- přidá text ze souboru v unicode
 
-\fB\-defanimation\fP \- adds default animation with ID specified by user.ID for
-different phones are different.
+\fB\-defanimation\fP \- přidá předdefinovanou animaci podle zadaného ID. Některé
+telefony mohou podporovat více ID a ty nemusí odpovídat jiným značkám
+telefonů.
 
-\fB\-animation\fP \- adds "frames" frames read from file1, file2, etc.
+\fB\-animation\fP \- přidá snámky animace načtené ze souborů
 
-\fB\-defsound\fP \- adds default sound with ID specified by user. ID for
-different phones are different.
+\fB\-defsound\fP \- přidá předdefinovaný zvuk podle zadaného ID. Některé telefony
+mohou podporovat více ID a ty nemusí odpovídat jiným značkám telefonů.
 
-\fB\-tone10\fP \- adds IMelody version 1.0 read from RTTL or other compatible
-file
+\fB\-tone10\fP \- přidá vyzvánění ve formátu iMelody verze 1.0 načtené z RTTL
+nebo komatibilního souboru.
 
-\fB\-tone10long\fP \- IMelody version 1.0 saved in one of few SMS with
-UPI. Phones compatible with UPI (like SonyEricsson phones) will read such
-ringtone as one
+\fB\-tone10long\fP \- přidá vyzvánění ve formátu iMelody verze 1.0 ve formátu s
+UPI v několika SMS zprávách. Telefony podporující UPI (například
+Sony\-Ericsson) načtou takové vyzvánění jako jedno.
 
-\fB\-tone12\fP \- adds IMelody version 1.2 read from RTTL or other compatible
-file
+\fB\-tone12\fP \- přidá vyzvánění ve formátu iMelody verze 1.2s načtené z RTTL
+nebo komatibilního souboru.
 
-\fB\-tone12long\fP \- IMelody version 1.0 saved in one of few SMS with
-UPI. Phones compatible with UPI (like SonyEricsson phones) will read such
-ringtone as one
+\fB\-tone12long\fP \- přidá vyzvánění ve formátu iMelody verze 1.2 ve formátu s
+UPI v několika SMS zprávách. Telefony podporující UPI (například
+Sony\-Ericsson) načtou takové vyzvánění jako jedno.
 
-\fB\-toneSE\fP \- adds IMelody in "short" form supported by SonyEricsson phones
-
-\fB\-tone10long\fP \- SonyEricsson IMelody saved in one or few SMS with UPI
+\fB\-toneSE\fP \- přidá vyzvánění ve formátu iMelody v krátké formě jak je
+podporováno telefony Sony\-Ericssonn.
 
 \fB\-variablebitmap\fP \- bitmap in any size saved in one SMS
 
@@ -366,8 +367,8 @@ sendsms a savesms\fP.
 .TP 
 \fBsavesms MMSINDICATOR\fP\fI URL Title Sender [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
 
-Saves a message with MMS indication. The recipient phone will then download
-MMS from given URL and display it.
+Uloží zprávu s indikací MMS zprávy. Příjemcův telefon poté stáhe MMS se
+zadané adresy a zobrazí ji.
 
 Prosím uvědomte si, že na zadaném URL by měla být platná smil data.
 
@@ -378,8 +379,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms MMSSETTINGS\fP\fI file location  [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
-Saves a message with MMS configuration. The configuration will be read from
-Gammu backup file from given location.
+Uloží zprávu s nastavením MMS. Nastavení bude načteno ze zálohy Gammu ze
+zadaného umístění.
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
 sendsms a savesms\fP.
@@ -441,8 +442,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms TEXT\fP\fI [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]\fP
-Take text from stdin (or commandline if \-text specified)  and save as text
-SMS into SIM/phone memory.
+Načte text ze standardního vstupu (nebo příkazové řádky, pokud je použito
+\-text) a uloží ho jako textovou zprávu do telefonu nebo na SIM kartu.
 
 \fB\-flash\fP \- SMS třídy 0 (zobrazení jen na displej)
 
@@ -845,8 +846,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsearchmemory\fP\fI text\fP
-Scans all memory entries for given text. It performs case insensitive
-substring lookup. You can interrupt searching by pressing Ctrl+C.
+Projde všechny kontakty v telefonu a hledá zadaný text (bez rozlišení
+velikosti písmen). Vyhledávání můžete kdykoliv přerušit pomocí Ctrl+C.
 .TP 
 \fBsendsms VCARD10|VCARD21\fP\fI destination file SM|ME location [\-nokia] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
 Odešle zprávu, pro popis parametrů se podívejte na \fBsavesms
@@ -995,9 +996,9 @@ Načte statické startovací logo z telefonu. Umožní jeho uložení do souboru
 
 .TP 
 \fBsavesms ANIMATION\fP\fI frames file1 file2... [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
-Save an animation as a SMS. You need to give number of frames and picture
-for each frame. Each picture can be in any picture format which Gammu
-supports (B/W bmp, gif, wbmp, nol, nlm...).
+Uloží animaci jako SMS. Musíte zadat počet snímků a obrázek pro každý
+snímek. Každý obrázek může být v libovolném formátu, který Gammu podporuje
+(ČB bmp, gif, wbmp, nol, nlm,...).
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -1663,9 +1664,9 @@ není nastaven čas a datum.
 
 .TP 
 \fBrestoresms\fP\fI file [\-yes]\fP
-Restores SMSes from file (format like backupsms uses) to selected folder in
-phone. Please note that this overwrites existing messages in phone (if it
-supports it).
+Obnoví SMS zprávy ze souboru (z formátu který používá příkaz backupsms) do
+zvolené složky v telefonu. Pokud to telefon podporuje, budou stávající
+zprávy ve složce přepsány!
 .TP 
 \fBsavefile BOOKMARK\fP\fI target.url file location\fP
 
@@ -1771,10 +1772,10 @@ voice record in phone.
 
 .TP 
 \fBnokianetmonitor\fP\fI test\fP
-Takes output or set netmonitor for Nokia DCT3 phones.
+Zobrazí výstup nebo nastaví netmonitor na telefonech Nokia DCT3.
 
-\fITIP:\fP For more info about this option, please visit
-\fIhttp://www.mwiacek.com\fP and read netmonitor manual.
+\fITIP:\fP Pro více informací se podívejte na stránky
+\fIhttp://www.mwiacek.com\fP, kde naleznete manuál k netmonitoru.
 
 \fITIP:\fP test \fB243\fP enables all tests (after using command \fBgammu
 nokianetmonitor 243\fP in some phones like 6210 or 9210 have to reboot them to
@@ -1784,8 +1785,8 @@ see netmonitor menu)
 \fBnokianetmonitor36\fP
 Vynuluje čítače z testu 16 v netmonitoru telefonů Nokia DCT3.
 
-\fITIP:\fP For more info about this option, please visit \fIwww.mwiacek.com\fP and
-read netmonitor manual.
+\fITIP:\fP Pro více informací se podívejte na stránky
+\fIhttp://www.mwiacek.com\fP, kde naleznete manuál k netmonitoru.
 
 .TP 
 \fBnokiasecuritycode\fP
@@ -1802,27 +1803,27 @@ Přečte bezpečnostní kód nebo ho nastaví na "12345".
 
 .TP 
 \fBnokiasetphonemenus\fP
-Enable all (?) possible menus for DCT3 Nokia phones:
+Zapne všechny (?) dostupné nabídky na telefonech Nokia DCT3.
 
-1. ALS (Alternative Line Service) option menu
+1. Nabídka nastavení ALS (Alternative Line Service)
 .br
-2. vibra menu for 3210
+2. Nastavení vibračního vyzvánění pro 3210
 .br
-3. 3315 features in 3310 5.45 and higher
+3. vlastnosti 3315 v 3310 5.45 a novějších
 .br
-4. two additional games (React and Logic) for 3210 5.31 and higher
+4. dvě další hry (React a Logic) pro 3210 5.31 a novější
 .br
-5. WellMate menu for 6150
+5. Nabídka WellMate 6150
 .br
 6. NetMonitor
 
-and for DCT4:
+a pro DCT4:
 
-1. ALS (Alternative Line Service) option menu
+1. Nabídka nastavení ALS (Alternative Line Service)
 .br
-2. Bluetooth, WAP bookmarks and settings menu, ... (6310i)
+2. Nabídka Bluetooth, záložky WAP a nastavení, ... (6310i)
 .br
-3. GPRS Always Online
+3. GPRS vždy zapnuté
 .br
 \&...
 
@@ -1876,10 +1877,10 @@ flashing it's possible to change all names, but Gammu is not flasher
 
 .TP 
 \fBnokianetmonitor\fP\fI test\fP
-Takes output or set netmonitor for Nokia DCT3 phones.
+Zobrazí výstup nebo nastaví netmonitor na telefonech Nokia DCT3.
 
-\fITIP:\fP For more info about this option, please visit
-\fIhttp://www.mwiacek.com\fP and read netmonitor manual.
+\fITIP:\fP Pro více informací se podívejte na stránky
+\fIhttp://www.mwiacek.com\fP, kde naleznete manuál k netmonitoru.
 
 \fITIP:\fP test \fB243\fP enables all tests (after using command \fBgammu
 nokianetmonitor 243\fP in some phones like 6210 or 9210 have to reboot them to
@@ -2072,8 +2073,8 @@ sendsms a savesms\fP.
 .TP 
 \fBsavesms MMSINDICATOR\fP\fI URL Title Sender [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
 
-Saves a message with MMS indication. The recipient phone will then download
-MMS from given URL and display it.
+Uloží zprávu s indikací MMS zprávy. Příjemcův telefon poté stáhe MMS se
+zadané adresy a zobrazí ji.
 
 Prosím uvědomte si, že na zadaném URL by měla být platná smil data.
 
@@ -2084,8 +2085,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms MMSSETTINGS\fP\fI file location  [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
-Saves a message with MMS configuration. The configuration will be read from
-Gammu backup file from given location.
+Uloží zprávu s nastavením MMS. Nastavení bude načteno ze zálohy Gammu ze
+zadaného umístění.
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
 sendsms a savesms\fP.
@@ -2206,13 +2207,11 @@ není nastaven čas a datum.
 .TP 
 \fBcheckfirmware\fP
 
-Gammu connects to www.gammu.org and checks for latest firmware versions
-available for the device. The file
-<http://www.gammu.org/support/phones/phonedbxml.php?model=x> will be
-downloaded, all phone details will be read from it and (if any higher
-firmware exist) displayed info to user on each application startup. No
-private data are sent to server. Internet connection to www.gammu.org on
-port 80 required.
+Gammu se připojí na www.gammu.org a zkontroluje poslední dostupnou verzi
+firmware pro váš telefon. Stáhne se soubor
+<http://www.gammu.org/support/phones/phonedbxml.php?model=x> a
+načtou se z něj informace o telefonu. Nejsou odesílána žádná soukromá
+data. Musí být povolen přístup na www.gammu.org na portu 80.
 
 .TP 
 \fBgetdisplaystatus\fP
@@ -2306,9 +2305,11 @@ sendsms a savesms\fP.
 .SS "Dekódování výpisů"
 .TP 
 \fBdecodebinarydump\fP\fI file [phonemodel]\fP
-After using option \fBlogfile\fP with name \fBbinary\fP (see \fI/readme.txt\fP for
-info about this method of reporting bugs) created file can be decoded using
-this option. It's available only, if Gammu was compiled with debug.
+Dekóduje dump vytvořený Gammu s \fBlogformat\fP nastaveným na \fBbinary\fP (více
+informací o tomto způsobu hlášení chyb naleznete v \fIREADME\fP).
+
+Tento příkaz je dostupný jen pokud bylo Gammu kompilováno s ladicími
+volbami.
 
 
 .TP 
@@ -2351,27 +2352,27 @@ voice record in phone.
 
 .TP 
 \fBnokiasetphonemenus\fP
-Enable all (?) possible menus for DCT3 Nokia phones:
+Zapne všechny (?) dostupné nabídky na telefonech Nokia DCT3.
 
-1. ALS (Alternative Line Service) option menu
+1. Nabídka nastavení ALS (Alternative Line Service)
 .br
-2. vibra menu for 3210
+2. Nastavení vibračního vyzvánění pro 3210
 .br
-3. 3315 features in 3310 5.45 and higher
+3. vlastnosti 3315 v 3310 5.45 a novějších
 .br
-4. two additional games (React and Logic) for 3210 5.31 and higher
+4. dvě další hry (React a Logic) pro 3210 5.31 a novější
 .br
-5. WellMate menu for 6150
+5. Nabídka WellMate 6150
 .br
 6. NetMonitor
 
-and for DCT4:
+a pro DCT4:
 
-1. ALS (Alternative Line Service) option menu
+1. Nabídka nastavení ALS (Alternative Line Service)
 .br
-2. Bluetooth, WAP bookmarks and settings menu, ... (6310i)
+2. Nabídka Bluetooth, záložky WAP a nastavení, ... (6310i)
 .br
-3. GPRS Always Online
+3. GPRS vždy zapnuté
 .br
 \&...
 
