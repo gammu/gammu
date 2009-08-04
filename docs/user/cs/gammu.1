@@ -88,7 +88,7 @@ Načte seznam rychlého vytáčení.
 
 .TP 
 \fBgetussd\fP\fI code\fP
-Retrieves USSD information \- dials a service number and reads response.
+Načte USSD informace \- vytvočí servisní číslo a načtě odpověď.
 
 .TP 
 \fBholdcall\fP\fI ID\fP
@@ -133,8 +133,8 @@ Posílání zpráv může na první pohled vypadat komplikovaně.  Ale buďte
 trpěliví, parametry byly navrženy tak, aby umožňovaly téměř libovolné
 použití. V části PŘÍKLAD naleznete některé ukázky posílání zpráv.
 
-There is also an option to use gammu\-smsd(1) when you want to send or
-receive more messages and process them automatically.
+Pokud chcete posílat nebo přijímat více zpráv a zpracovávat je automaticky,
+máte také možnost použít gammu\-smsd(1).
 
 .TP 
 \fBSpolečné parametry pro sendsms a savesms\fP
@@ -146,8 +146,8 @@ v telefonu. Výchozí je 1
 
 \fB\-reply\fP \- vynutit odpověď přes stejné SMSC
 
-\fB\-maxnum number\fP \- Limit maximal number of messages which will be
-created. If there are more messages, Gammu will terminate with failure.
+\fB\-maxnum number\fP \- Omezí maximální počet zpráv, které budou
+vytvořeny. Pokud by jich bylo více, Gammu skončí s chybou.
 
 \fB\-folder number\fP \- uloží do zadané složky
 
@@ -171,13 +171,12 @@ memory (like 6210) after using it with folder 1 SIM SMS memory will be used
 
 \fB\-smsname name\fP \- nastaví jméno zprávy
 
-\fB\-sender number\fP \- set sender number (default: "Gammu")
+\fB\-sender number\fP \- nastaví odesílatele na number (výchozí: "Gammu")
 
 \fB\-report\fP \- vyžadovat doručenku pro zprávu
 
-\fB\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX\fP \- sets how long will be the
-message valid (SMSC will the discard the message after this time if it could
-not deliver it).
+\fB\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX\fP \- nastaví jak dlouho bude zpráva
+platná (SMSC zruší zprávu po této době pokud se jí nepodařilo doručit).
 
 \fB\-save\fP \- zpráva bude před odesláním uložena do telefonu
 
@@ -192,9 +191,9 @@ složky v telefonu.
 \fBbackupsms\fP\fI file [\-yes|\-all]\fP
 Uloží všechny SMS z telefonu do souboru.
 
-Use \-yes for answering yes to all questions (backup all messages and delete
-them from phone), or \-all to just backup all folders while keeping messages
-in phone.
+Použijte \-yes pro odpověď ano na všechny otázky (zazálohovat všechny zprávy
+a odstranit je z telefonu) nebo \-all pro zálohu všech zpráv a ponechání jich
+v telefonu.
 
 .TP 
 \fBdeleteallsms\fP\fI folder\fP
@@ -914,8 +913,8 @@ infrared connection. This is not Gammu issue, but phone firmware problem.
 
 .TP 
 \fBgetfilesystemstatus\fP
-Display info filesystem status \- number of bytes available, used or used by
-some specific content.
+Zobrazí informace o stavu systému souborů \- volné a obsazené místo a místo
+obsazené různými druhy obsahu.
 .TP 
 \fBgetfolderlisting\fP\fI folderID\fP
 
@@ -1113,8 +1112,8 @@ name) or one of predefined animated (only some phones like Nokia 3310 or
 .SS Zvonění
 .P
 
-Ringtones are mostly supported only for older phones. For recent phones you
-usually just upload them to some folder in phone filesystem.
+Vyzvánění jsou většinou podporována jen pro starší telefony. Pro novější je
+obvykle jen musíte nahrát do správné složky v telefonu.
 
 .TP 
 \fBaddnew\fP\fI file [\-yes]\fP
@@ -1190,19 +1189,20 @@ Umístění číslujte od 1.
 
 .TP 
 \fBnokiacomposer\fP\fI file\fP
-Show, how to enter RTTL ringtone in composer existing in many Nokia phones
-(and how should it look like).
+Zobrazí jak zadat RTTL vyzvánění ve skladateli dostupném v mnoha telefonech
+Nokia (a jak by mělo vypadat).
 
 .TP 
 \fBplayringtone\fP\fI file\fP
-Play aproximation of ringtone over phone buzzer. File can be in RTTL or
-BINARY (Nokia DCT3) format.
+Přehraje vyzvánění přes reproduktor telefonu. Soubor může být buď ve formátu
+RTTL nebo BINARY (Nokia DCT3).
 
 .TP 
 \fBplaysavedringtone\fP\fI number\fP
 
-Play one of "built" ringtones. This option is available for DCT4 phones. For
-getting ringtones list use getringtoneslist.
+Přehraje jedno z vestavěných vyzvánění. Tento příkaz je dostupný pro
+telefonu DCT4. Pro získání seznamu vyzvánění použijte příkaz
+getringtoneslist.
 
 .TP 
 \fBrestore\fP\fI file [\-yes]\fP
@@ -1318,8 +1318,8 @@ Načte všechny poznámky v kalendáři z telefonu.
 Načte vybrané poznámky v kalendáři z telefonu.
 .TP 
 \fBgetcalendarsettings\fP
-Displays calendar settings like first day of week or automatic deleting of
-old entries.
+Zobrazí nastavení kalendáře jako první den v týdnu nebo odstraňování starých
+položek.
 
 .TP 
 \fBrestore\fP\fI file [\-yes]\fP
@@ -1500,9 +1500,8 @@ Načte datum a čas z telefonu.
 Nastaví opakující se budík v telefonu na zadaný čas.
 .TP 
 \fBsetdatetime\fP\fI [HH:MM[:SS]] [YYYY/MM/DD]\fP
-Set date and time in phone to date and time set in computer. Please note,
-that this option doesn't show clock on phone screen. It only set date and
-time.
+Nastaví datum a čas v telefonu podle času v počítači. Tato volba nezobrazí
+hodiny na displeji mobilu, jen nastaví datum a čas.
 
 \fITIP:\fP you can make such synchronization each time, when will connect your
 phone and use Gammu. See gammurc(5) for details.
@@ -1648,9 +1647,9 @@ V části \fBPŘÍKLAD\fP naleznete nějaké tipy pro práci se souborem záloh 
 \fBbackupsms\fP\fI file [\-yes|\-all]\fP
 Uloží všechny SMS z telefonu do souboru.
 
-Use \-yes for answering yes to all questions (backup all messages and delete
-them from phone), or \-all to just backup all folders while keeping messages
-in phone.
+Použijte \-yes pro odpověď ano na všechny otázky (zazálohovat všechny zprávy
+a odstranit je z telefonu) nebo \-all pro zálohu všech zpráv a ponechání jich
+v telefonu.
 
 .TP 
 \fBrestore\fP\fI file [\-yes]\fP
@@ -1730,8 +1729,8 @@ Pro vygenerování jad souboru z jar souboru můžete použít jadmaker(1).
 
 .TP 
 \fBnokiacomposer\fP\fI file\fP
-Show, how to enter RTTL ringtone in composer existing in many Nokia phones
-(and how should it look like).
+Zobrazí jak zadat RTTL vyzvánění ve skladateli dostupném v mnoha telefonech
+Nokia (a jak by mělo vypadat).
 
 .TP 
 \fBnokiadebug\fP\fI filename [[v11\-22] [,v33\-44]...]\fP
@@ -1829,7 +1828,7 @@ and for DCT4:
 
 .TP 
 \fBnokiasetvibralevel\fP\fI level\fP
-Set vibra power to "level" (given in percent)
+Nastaví úrověň vibrací na zadanou úroveň (v procentech)
 
 .TP 
 \fBnokiatuneradio\fP
@@ -2239,8 +2238,8 @@ Přečte bezpečnostní kód nebo ho nastaví na "12345".
 .SS "Nastavení telefonu"
 .TP 
 \fBgetcalendarsettings\fP
-Displays calendar settings like first day of week or automatic deleting of
-old entries.
+Zobrazí nastavení kalendáře jako první den v týdnu nebo odstraňování starých
+položek.
 
 .TP 
 \fBgetprofile\fP\fI start [stop]\fP
@@ -2328,9 +2327,9 @@ naleznete v \fIdocs/develop/develop.txt\fP.
 Spustí Gammu v dávkovém režimu, kdy můžete provést více příkazů, každý na
 jedné řádce. Řádky začínající # jsou považovány za komentáře.
 
-By default, commands are read from standard input, but you can optionally
-specify a file from where they would be read (special case \- means standard
-input).
+Pokud nezadáte jméno souboru, jsou příkazy čteny ze standardního
+vstupu. Jinak jsou čteny z tohoto souboru, speciální případ \- znamená čtení
+ze standardního vstupu.
 
 .TP 
 \fBentersecuritycode PIN|PUK|PIN2|PUK2|PHONE|NETWORK\fP\fI code|\-\fP
@@ -2378,7 +2377,7 @@ and for DCT4:
 
 .TP 
 \fBnokiasetvibralevel\fP\fI level\fP
-Set vibra power to "level" (given in percent)
+Nastaví úrověň vibrací na zadanou úroveň (v procentech)
 
 .TP 
 \fBpresskeysequence\fP\fI mMnNpPuUdD+\-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@\fP
@@ -2404,9 +2403,11 @@ Simuluje stisk kláves na klávesnici telefonu
 
 .TP 
 \fBreset\fP\fI SOFT|HARD\fP
-Make phone reset: soft (without asking for PIN) or hard (with PIN).
+Provede reset telefonu, buď rychlý (SOFT, bez ptaní na PIN) nebo trvdý
+(HARD, s požadavkem na PIN).
 
-\fINote:\fP some phones will make hard reset even with \fBSOFT\fP option.
+\fIPoznámka:\fP některé telefony provedou tvrdý reset i při zadání parametru
+\fBSOFT\fP.
 
 .TP 
 \fBsearchphone\fP\fI [\-debug]\fP
