@@ -516,7 +516,7 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms WAPINDICATOR\fP\fI URL Title [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
-Saves a SMS with a WAP indication for given URL and title.
+Uloží SMS s indikací WAP pro zadané URL a titulek.
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -761,7 +761,7 @@ V části \fBPŘÍKLAD\fP naleznete nějaké tipy pro práci se souborem záloh 
 
 .TP 
 \fBclearall\fP
-Deletes all private data from the phone.
+Odstraní všechna uživatelská data z telefonu.
 
 .TP 
 \fBdeleteallmemory\fP\fI DC|MC|RC|ON|VM|SM|ME|MT|FD|SL\fP
@@ -774,7 +774,8 @@ Odstraní položky v zadaném rozsahu ze zadané paměti.
 
 .TP 
 \fBgetallmemory\fP\fI DC|MC|RC|ON|VM|SM|ME|MT|FD|SL\fP
-Get all memory locations from phone. For memory types see \fBgetmemory\fP.
+Načte všechny položky paměti (kontakt nebo hovor) z telefonu.. Pro popis
+typů paměti se podívejte na \fBgetmemory\fP.
 .TP 
 \fBgetcategory TODO|PHONEBOOK\fP\fI start [stop]\fP
 
@@ -883,21 +884,20 @@ moment of uploading
 
 .TP 
 \fBaddfolder\fP\fI parentfolderID name\fP
-Create a folder in phone with specified name in a folder with specified
-folder ID.
+Vytvoří složku v telefonu se zadaným jménem ve složce se zadaným ID.
 .TP 
 \fBdeletefiles\fP\fI fileID\fP
-Delete files with given IDs.
+Vymaže soubory se zadanými ID.
 .TP 
 \fBdeletefolder\fP\fI name\fP
-Delete folder with given ID.
+Vymaže složku se zadaným ID.
 .TP 
 \fBgetfilefolder\fP\fI ID1, ID2, ...\fP
-Retrieve files or all files from folder with given IDs from a phone
-filesytem.
+Načte ze souborového systému telefonu soubory nebo všechny soubory ze složky
+se zadaným ID.
 .TP 
 \fBgetfiles\fP\fI ID1, ID2, ...\fP
-Retrieve files with given IDs from a phone filesytem.
+Načte ze souborového systému telefonu soubory se zadanými ID.
 .TP 
 \fBgetfilesystem\fP\fI [\-flatall|\-flat]\fP
 Display info about all folders and files in phone memory/memory card. By
@@ -929,7 +929,7 @@ infrared connection. This is not Gammu issue, but phone firmware problem.
 .TP 
 \fBgetrootfolders\fP
 
-Display info about drives available in phone/memory card.
+Zobrazí informace o kořenových složkách dostupných v telefonu.
 
 .TP 
 \fBnokiaaddfile\fP\fI Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]\fP
@@ -1168,7 +1168,7 @@ V části \fBPŘÍKLAD\fP naleznete nějaké tipy pro práci se souborem záloh 
 
 .TP 
 \fBclearall\fP
-Deletes all private data from the phone.
+Odstraní všechna uživatelská data z telefonu.
 
 .TP 
 \fBcopyringtone\fP\fI source destination [RTTL|BINARY]\fP
@@ -1305,7 +1305,7 @@ V části \fBPŘÍKLAD\fP naleznete nějaké tipy pro práci se souborem záloh 
 
 .TP 
 \fBclearall\fP
-Deletes all private data from the phone.
+Odstraní všechna uživatelská data z telefonu.
 
 .TP 
 \fBdeletecalendar\fP\fI start [stop]\fP
@@ -1419,7 +1419,7 @@ V části \fBPŘÍKLAD\fP naleznete nějaké tipy pro práci se souborem záloh 
 
 .TP 
 \fBclearall\fP
-Deletes all private data from the phone.
+Odstraní všechna uživatelská data z telefonu.
 
 .TP 
 \fBdeletetodo\fP\fI start [stop]\fP
@@ -1564,7 +1564,7 @@ V části \fBPŘÍKLAD\fP naleznete nějaké tipy pro práci se souborem záloh 
 
 .TP 
 \fBclearall\fP
-Deletes all private data from the phone.
+Odstraní všechna uživatelská data z telefonu.
 
 .TP 
 \fBgetallcategory\fP\fI TODO|PHONEBOOK\fP
@@ -1955,7 +1955,7 @@ V části \fBPŘÍKLAD\fP naleznete nějaké tipy pro práci se souborem záloh 
 
 .TP 
 \fBclearall\fP
-Deletes all private data from the phone.
+Odstraní všechna uživatelská data z telefonu.
 
 .TP 
 \fBdeletewapbookmark\fP\fI start [stop]\fP
@@ -2006,7 +2006,7 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms WAPINDICATOR\fP\fI URL Title [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
-Saves a SMS with a WAP indication for given URL and title.
+Uloží SMS s indikací WAP pro zadané URL a titulek.
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -2183,7 +2183,7 @@ V části \fBPŘÍKLAD\fP naleznete nějaké tipy pro práci se souborem záloh 
 
 .TP 
 \fBclearall\fP
-Deletes all private data from the phone.
+Odstraní všechna uživatelská data z telefonu.
 
 .TP 
 \fBgetfmstation\fP\fI start [stop]\fP

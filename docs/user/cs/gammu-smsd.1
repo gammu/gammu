@@ -106,11 +106,11 @@ gammu\-smsd.exe \-u
 
 .SS "Problémy se službou ve Windows"
 
-If Gammu fails to start as a Windows service (you will usually get "Error
-1053: The service did not respond to the start or control request in a
-timely fashion"), first check your SMSD logs. If they do not contain any
-useful hint, try starting SMSD manually with exactly same parameters as you
-installed the service (without \-i), for example:
+Pokud se Gammu nepodaří spustit jako služba ve Windows (obvykle dostanete
+chybu 1053, říkající, že služba neodpověděla včas), zkontrolujte logy
+SMSD. Pokud neobsahují žádné informace, zkuste SMSD spustit ručně s přesně
+stejnými parametry jako jste nainstalovali službu (bez parametru \-i),
+například:
 
     gammu\-smsd.exe \-c smsdrc
 

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-07-31 15:15+0300\n"
-"PO-Revision-Date: 2009-07-31 15:33+0200\n"
+"PO-Revision-Date: 2009-08-04 12:03+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1323,7 +1323,7 @@ msgstr "B<savesms WAPINDICATOR>I< URL Title [-folder id] [-unread] [-read] [-uns
 #. type: Plain text
 #: docs/user/gammu.1:480 docs/user/gammu.1:1930
 msgid "Saves a SMS with a WAP indication for given URL and title."
-msgstr ""
+msgstr "Uloží SMS s indikací WAP pro zadané URL a titulek."
 
 # type: TP
 #. type: TP
@@ -1818,7 +1818,7 @@ msgstr "B<clearall>"
 #: docs/user/gammu.1:1341 docs/user/gammu.1:1487 docs/user/gammu.1:1879
 #: docs/user/gammu.1:2098
 msgid "Deletes all private data from the phone."
-msgstr ""
+msgstr "Odstraní všechna uživatelská data z telefonu."
 
 # type: TP
 #. type: TP
@@ -1836,9 +1836,9 @@ msgstr "Odstraní všechny položky ze zadané paměti."
 # type: TP
 #. type: TP
 #: docs/user/gammu.1:709
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>I< start [stop]>"
-msgstr "B<deletememory>I< DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop]>"
+msgstr "B<deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>I< start [stop]>"
 
 # type: Plain text
 #. type: Plain text
@@ -1863,23 +1863,24 @@ msgstr "B<getallmemory>I< DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:719
-#, fuzzy
 msgid "Get all memory locations from phone. For memory types see B<getmemory>."
-msgstr "Načte položku paměti (kontakt nebo hovor) z telefonu."
+msgstr ""
+"Načte všechny položky paměti (kontakt nebo hovor) z telefonu.. Pro popis "
+"typů paměti se podívejte na B<getmemory>."
 
 # type: TP
 #. type: TP
 #: docs/user/gammu.1:719 docs/user/gammu.1:1351 docs/user/gammu.1:1491
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<getcategory TODO|PHONEBOOK>I< start [stop]>"
-msgstr "B<getcategory>I< TODO|PHONEBOOK start [stop]>"
+msgstr "B<getcategory TODO|PHONEBOOK>I< start [stop]>"
 
 # type: TP
 #. type: TP
 #: docs/user/gammu.1:722
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>I< start [stop [-nonempty]]>"
-msgstr "B<getmemory>I< DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [-nonempty]]>"
+msgstr "B<getmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL>I< start [stop [-nonempty]]>"
 
 # type: Plain text
 #. type: Plain text
@@ -1999,9 +2000,9 @@ msgstr ""
 # type: TP
 #. type: TP
 #: docs/user/gammu.1:766 docs/user/gammu.1:1617
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<savefile VCARD10|VCARD21>I< target.vcf file SM|ME location>"
-msgstr "B<savefile>I< VCARD10|VCARD21 target.vcf file SM|ME location>"
+msgstr "B<savefile VCARD10|VCARD21>I< target.vcf file SM|ME location>"
 
 #. type: Plain text
 #: docs/user/gammu.1:772 docs/user/gammu.1:1623
@@ -2102,7 +2103,7 @@ msgstr "B<addfolder>I< parentfolderID name>"
 msgid ""
 "Create a folder in phone with specified name in a folder with specified "
 "folder ID."
-msgstr ""
+msgstr "Vytvoří složku v telefonu se zadaným jménem ve složce se zadaným ID."
 
 # type: TP
 #. type: TP
@@ -2114,7 +2115,7 @@ msgstr "B<deletefiles>I< fileID>"
 #. type: Plain text
 #: docs/user/gammu.1:831
 msgid "Delete files with given IDs."
-msgstr ""
+msgstr "Vymaže soubory se zadanými ID."
 
 # type: TP
 #. type: TP
@@ -2126,7 +2127,7 @@ msgstr "B<deletefolder>I< name>"
 #. type: Plain text
 #: docs/user/gammu.1:834
 msgid "Delete folder with given ID."
-msgstr ""
+msgstr "Vymaže složku se zadaným ID."
 
 # type: TP
 #. type: TP
@@ -2141,6 +2142,8 @@ msgid ""
 "Retrieve files or all files from folder with given IDs from a phone "
 "filesytem."
 msgstr ""
+"Načte ze souborového systému telefonu soubory nebo všechny soubory ze složky "
+"se zadaným ID."
 
 # type: TP
 #. type: TP
@@ -2152,7 +2155,7 @@ msgstr "B<getfiles>I< ID1, ID2, ...>"
 #. type: Plain text
 #: docs/user/gammu.1:840
 msgid "Retrieve files with given IDs from a phone filesytem."
-msgstr ""
+msgstr "Načte ze souborového systému telefonu soubory se zadanými ID."
 
 # type: TP
 #. type: TP
@@ -2232,7 +2235,7 @@ msgstr "B<getrootfolders>"
 #. type: Plain text
 #: docs/user/gammu.1:866
 msgid "Display info about drives available in phone/memory card."
-msgstr ""
+msgstr "Zobrazí informace o kořenových složkách dostupných v telefonu."
 
 # type: TP
 #. type: TP
@@ -5100,6 +5103,7 @@ msgstr ""
 msgid ""
 "B<FILES> - stores messages in files, see gammu-smsd-files(7) for details"
 msgstr ""
+"B<FILES> - ukládá zprávy v souborech, pro podrobnosti viz gammu-smsd-files(7)"
 
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:46
@@ -5107,6 +5111,8 @@ msgid ""
 "B<MYSQL> - stores messages in MySQL database, see gammu-smsd-mysql(7) for "
 "details"
 msgstr ""
+"B<MYSQL> - ukládá zprávy v MySQL databázi, pro podrobnosti viz  gammu-smsd-"
+"mysql(7)"
 
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:49
@@ -5114,6 +5120,8 @@ msgid ""
 "B<PGSQL> - stores messages in PostgreSQL database, see gammu-smsd-pgsql(7)  "
 "for details"
 msgstr ""
+"B<PGSQL> - ukládá zprávy v databázi PostgreSQL, pro podrobnosti viz  gammu-"
+"smsd-pgsql(7)"
 
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:53
@@ -5122,6 +5130,8 @@ msgid ""
 "MSSQL, MySQL, PostgreSQL or SQLite databases, see gammu-smsd-dbi(7) for "
 "details"
 msgstr ""
+"B<DBI> - ukládá zprávy v jakékoliv databázi podporované libdbi, toto zahrnje "
+"MSSQL, MySQL, PostgreSQL nebo SQLite , pro podrobnosti viz gammu-smsd-dbi(7)"
 
 # type: TP
 #. type: TP
@@ -5473,6 +5483,11 @@ msgid ""
 "identifiers depend on used service backend, typically it is ID of inserted "
 "row for database backends or file name for file based backends."
 msgstr ""
+"Spustí program po přijetí zprávy. Tento prarametr je spuštěn přes shell, "
+"takže možná budete potřebovat escapovat některé znaky a můžete použít "
+"jakékoliv množství parametrů. SMSD dále přidá parametry s identifikátory "
+"přijatých zpráv. Typ identifikátorů záleží na použité službě, pro databázové "
+"služby je to obvykle ID vloženého řádku, pro souborové pak jméno souboru."
 
 # type: SS
 #. type: SS
@@ -6327,6 +6342,11 @@ msgid ""
 "useful hint, try starting SMSD manually with exactly same parameters as you "
 "installed the service (without -i), for example:"
 msgstr ""
+"Pokud se Gammu nepodaří spustit jako služba ve Windows (obvykle dostanete "
+"chybu 1053, říkající, že služba neodpověděla včas), zkontrolujte logy SMSD. "
+"Pokud neobsahují žádné informace, zkuste SMSD spustit ručně s přesně "
+"stejnými parametry jako jste nainstalovali službu (bez parametru -i), "
+"například:"
 
 # type: Plain text
 #. type: Plain text
@@ -7015,6 +7035,9 @@ msgid ""
 "standard character set), for WAP bookmarks it is split on as Name,URL, for "
 "text messages whole file content is used."
 msgstr ""
+"Obsah tohoto souboru bude přenesen jako SMS zpráva (v Unicode nebo jako "
+"standardní textová zpráva), pro WAP záložky bude obsah rozdělen na Název,"
+"URL, pro textové zprávy je použit celý obsah."
 
 # type: Plain text
 #. type: Plain text
@@ -7024,6 +7047,10 @@ msgid ""
 "locales, which do not have to be configured if SMSD is running from init "
 "script. If this is your case, please add locales definition to init script."
 msgstr ""
+"Prosím uvědomte si, že pokud soubor není v Univode, je jeho kódování "
+"zjištěno pomocí locales, které nemusí být správně nastaveny, pokud SMSD běží "
+"z init skriptu. Pokud s tím máte problémy, přidejte nastavení locales do "
+"init skriptu SMSD."
 
 # type: Plain text
 #. type: Plain text
@@ -7541,6 +7568,9 @@ msgid ""
 "User Data Header encoded using hex values which will be used for "
 "constructing the message. Without this, message will be sent as plain text."
 msgstr ""
+"User Data Header ((hlavička uživatelských dat) zapsaná v šestnáckové "
+"soustavě, která bude použita při vytváření zprávy. Pokud není uvedena, "
+"zpráva bude odeslána jako čistě textová."
 
 # type: Plain text
 #. type: Plain text
@@ -7891,7 +7921,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:296
 msgid "- B<SendingOK> - Message has been sent, waiting for delivery report."
-msgstr ""
+msgstr "- B<SendingOK> - Zpráva byla odeslána, čeká se na doručenku."
 
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:298
@@ -7899,37 +7929,44 @@ msgid ""
 "- B<SendingOKNoReport> - Message has been sent without asking for delivery "
 "report."
 msgstr ""
+"- B<SendingOKNoReport> - Zpráva byla odeslána bez požadavku na doručenku."
 
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:300
 msgid "- B<SendingError> - Sending has failed."
-msgstr ""
+msgstr "- B<SendingError> - Odesílání selhalo."
 
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:302
 msgid "- B<DeliveryOK> - Delivery report arrived and reported success."
-msgstr ""
+msgstr "- B<DeliveryOK> - Doručenka dorazila a potvrdila úspěšné doručení."
 
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:304
 msgid "- B<DeliveryFailed> - Delivery report arrived and reports failure."
 msgstr ""
+"- B<DeliveryFailed> - Doručenka dorazila a nahlásila chybu při doručování."
 
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:306
 msgid "- B<DeliveryPending> - Delivery report announced pending deliver."
 msgstr ""
+"- B<DeliveryPending> - Doručenka dorazila a obsahuje informaci o zpořděném "
+"doručení."
 
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:308
 msgid "- B<DeliveryUnknown> - Delivery report reported unknown status."
 msgstr ""
+"- B<DeliveryUnknown> - Doručenka dorazila, ale informuje o neznámém stavu."
 
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:310
 msgid ""
 "- B<Error> - Some other error happened during sending (usually bug in SMSD)."
 msgstr ""
+"- B<Error> - Došlo k nějaké chybě při odesílání (obvykle se jedná o chybu "
+"SMSD)."
 
 # type: Plain text
 #. type: Plain text

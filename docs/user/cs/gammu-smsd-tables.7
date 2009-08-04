@@ -138,8 +138,9 @@ kódování textu SMS
 
 \fBUDH\fP (text)
 .br
-User Data Header encoded using hex values which will be used for
-constructing the message. Without this, message will be sent as plain text.
+User Data Header ((hlavička uživatelských dat) zapsaná v šestnáckové
+soustavě, která bude použita při vytváření zprávy. Pokud není uvedena,
+zpráva bude odeslána jako čistě textová.
 
 \fBClass\fP (integer)
 .br
@@ -303,22 +304,23 @@ kdy byla zpráva odeslána
 Stav odesílání zprávy. SendingError znamená, že telefonu se nepodařilo
 zprávu odeslat, Error indikuje jinou chybu při zpracovávání zprávy.
 
-\- \fBSendingOK\fP \- Message has been sent, waiting for delivery report.
+\- \fBSendingOK\fP \- Zpráva byla odeslána, čeká se na doručenku.
 .br
-\- \fBSendingOKNoReport\fP \- Message has been sent without asking for delivery
-report.
+\- \fBSendingOKNoReport\fP \- Zpráva byla odeslána bez požadavku na doručenku.
 .br
-\- \fBSendingError\fP \- Sending has failed.
+\- \fBSendingError\fP \- Odesílání selhalo.
 .br
-\- \fBDeliveryOK\fP \- Delivery report arrived and reported success.
+\- \fBDeliveryOK\fP \- Doručenka dorazila a potvrdila úspěšné doručení.
 .br
-\- \fBDeliveryFailed\fP \- Delivery report arrived and reports failure.
+\- \fBDeliveryFailed\fP \- Doručenka dorazila a nahlásila chybu při doručování.
 .br
-\- \fBDeliveryPending\fP \- Delivery report announced pending deliver.
+\- \fBDeliveryPending\fP \- Doručenka dorazila a obsahuje informaci o zpořděném
+doručení.
 .br
-\- \fBDeliveryUnknown\fP \- Delivery report reported unknown status.
+\- \fBDeliveryUnknown\fP \- Doručenka dorazila, ale informuje o neznámém stavu.
 .br
-\- \fBError\fP \- Some other error happened during sending (usually bug in SMSD).
+\- \fBError\fP \- Došlo k nějaké chybě při odesílání (obvykle se jedná o chybu
+SMSD).
 
 \fBStatusError\fP (integer)
 .br

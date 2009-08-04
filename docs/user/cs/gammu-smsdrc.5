@@ -42,17 +42,17 @@ ovládají filtrování zpráv (viz dále).
 Jakou službu SMSM použít, jedna z FILES, MYSQL, PGSQL, DBI (záleží na
 zakompilovaných knihovnách).
 
-\fBFILES\fP \- stores messages in files, see gammu\-smsd\-files(7) for details
+\fBFILES\fP \- ukládá zprávy v souborech, pro podrobnosti viz
+gammu\-smsd\-files(7)
 .br
-\fBMYSQL\fP \- stores messages in MySQL database, see gammu\-smsd\-mysql(7) for
-details
+\fBMYSQL\fP \- ukládá zprávy v MySQL databázi, pro podrobnosti viz
+gammu\-smsd\-mysql(7)
 .br
-\fBPGSQL\fP \- stores messages in PostgreSQL database, see gammu\-smsd\-pgsql(7)
-for details
+\fBPGSQL\fP \- ukládá zprávy v databázi PostgreSQL, pro podrobnosti viz
+gammu\-smsd\-pgsql(7)
 .br
-\fBDBI\fP \- stores messages in any database supported by libdbi, this includes
-MSSQL, MySQL, PostgreSQL or SQLite databases, see gammu\-smsd\-dbi(7) for
-details
+\fBDBI\fP \- ukládá zprávy v jakékoliv databázi podporované libdbi, toto zahrnje
+MSSQL, MySQL, PostgreSQL nebo SQLite , pro podrobnosti viz gammu\-smsd\-dbi(7)
 
 .TP 
 \fBPIN\fP
@@ -182,12 +182,11 @@ ukládání zpráv do souborů (FILES).
 .TP 
 \fBRunOnReceive\fP
 
-Executes a program after receiving message. This parameter is executed
-through shell, so you might need to escape some special characters and you
-can include any number of parameters. Additionally parameters with
-identifiers of received messages are appended to the command line. The
-identifiers depend on used service backend, typically it is ID of inserted
-row for database backends or file name for file based backends.
+Spustí program po přijetí zprávy. Tento prarametr je spuštěn přes shell,
+takže možná budete potřebovat escapovat některé znaky a můžete použít
+jakékoliv množství parametrů. SMSD dále přidá parametry s identifikátory
+přijatých zpráv. Typ identifikátorů záleží na použité službě, pro databázové
+služby je to obvykle ID vloženého řádku, pro souborové pak jméno souboru.
 
 .SS "Parametry pro služby používající databázi"
 
