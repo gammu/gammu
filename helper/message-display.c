@@ -192,7 +192,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 			case 0x21: printf(_("SME busy"));					break;
 			case 0x22: printf(_("No response from SME"));				break;
 			case 0x23: printf(_("Service rejected"));				break;
-			case 0x24: printf(_("Quality of service not aviable"));			break;
+			case 0x24: printf(_("Quality of service not available"));		break;
 			case 0x25: printf(_("Error in SME"));					break;
 		        case 0x40: printf(_("Remote procedure error"));				break;
 		        case 0x41: printf(_("Incompatibile destination"));			break;
