@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-04 14:28+0300\n"
-"PO-Revision-Date: 2009-08-04 16:56+0200\n"
+"PO-Revision-Date: 2009-08-04 17:00+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1331,6 +1331,8 @@ msgid ""
 "I<TIP:> when use ~ char in sms text and B<-unicode> option (Unicode coding "
 "required), text of sms after ~ char will blink in some phones (like N33xx)"
 msgstr ""
+"I<TIP:> pokud použijete ve textu zprávy znak ~ a přepínač B<-unicode>, bude "
+"text za znakem ~ u některých telefonů blikat (například 33xx) "
 
 # type: Plain text
 #. type: Plain text
@@ -2704,6 +2706,8 @@ msgid ""
 "I<TIP:> when use ~ char in ringtone name, in some phones (like 33xx)  name "
 "will blink later in phone menus"
 msgstr ""
+"I<TIP:> pokud použijete ve názvu vyzvánění znak ~, bude tento název v menu "
+"některých telefonů blikat (například 33xx)"
 
 #. type: SS
 #: docs/user/gammu.1:1170
