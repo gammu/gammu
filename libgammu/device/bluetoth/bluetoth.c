@@ -21,8 +21,8 @@
 #ifdef BLUEZ_FOUND
 #  include "bluez.h"
 #endif
-#ifdef FBSD_BLUE_FOUND
-#  include "blue_fbsd.h"
+#ifdef BSD_BLUE_FOUND
+#  include "blue_bsd.h"
 #endif
 #ifdef OSX_BLUE_FOUND
 #  include "blue_osx.h"

@@ -322,8 +322,8 @@
 /* Do we have libusb-1.0 ? */
 #cmakedefine LIBUSB_FOUND
 
-/* Will be used FreeBSD Bluetooth stack ? */
-#cmakedefine FBSD_BLUE_FOUND
+/* Will be used BSD Bluetooth stack ? */
+#cmakedefine BSD_BLUE_FOUND
 
 /* Will be used OSX Bluetooth stack ? */
 #cmakedefine OSX_BLUE_FOUND
