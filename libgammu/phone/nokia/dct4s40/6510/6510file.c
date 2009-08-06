@@ -2276,18 +2276,18 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 
 	loc = sms->SMS[0].Location;
 
+	/* Copy recipient/sender number */
+	/* Data we get from PDU seem to be bogus */
+	/* This might be later overwriten using tags at the end of file */
+	CopyUnicodeString(sms->SMS[0].Number, FFF->Buffer + 94);
+	smprintf(s, "SMS number: %s\n", DecodeUnicodeString(sms->SMS[0].Number));
+	has_number = FALSE;
+
 	/* Do we have any PDU data? */
 	if (FFF->Buffer[7] > 0) {
 		/* Parse PDU data */
 		error = GSM_DecodePDUFrame(&(s->di), &(sms->SMS[0]),  FFF->Buffer + 176, FFF->Used - 176, &parse_len, FALSE);
 		if (error != ERR_NONE) return error;
-
-		/* Copy recipient/sender number */
-		/* Data we get from PDU seem to be bogus */
-		/* This might be later overwriten using tags at the end of file */
-		CopyUnicodeString(sms->SMS[0].Number, FFF->Buffer + 94);
-		smprintf(s, "SMS number: %s\n", DecodeUnicodeString(sms->SMS[0].Number));
-		has_number = FALSE;
 
 		sms->SMS[0].Location = loc;
 
@@ -2366,7 +2366,10 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 					}
 				}
 				break;
-
+			case 0x25: /* Some unicode text (Name?) */
+			case 0x20: /* Some ascii text (GmailId) */
+				unknown = TRUE;
+				break;
 			case 0x01:
 				/* This is probably 0 = received, 1 = sent */
 				if (FFF->Buffer[pos + 2] != 1 ||
@@ -2381,7 +2384,9 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 			case 0x0b:
 			case 0x0e:
 			case 0x22:
+				/* 22"|00 |01 |84 */
 			case 0x24:
+				/* 24$|00 |01 |01 */
 			case 0x26:
 			case 0x27:
 			case 0x2a:
@@ -2393,7 +2398,9 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 			case 0x06:
 			case 0x09:
 			case 0x12:
+				/* Some ID: 12 |00 |04 |355|EA |6En|D2 */
 			case 0x23:
+				/* Some ID: 23#|00 |04 |00 |00 |09 |A6 */
 				if (FFF->Buffer[pos + 2] != 4 ||
 					FFF->Buffer[pos + 3] != 0x00 ||
 					FFF->Buffer[pos + 4] != 0x00 ||
@@ -2500,8 +2507,10 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		if (FFF.Buffer != NULL)  {
 			DumpMessage(&s->di, FFF.Buffer, FFF.Used);
 
-			/* 0x00 = SMS, 0x01,0x03 = MMS */
-			if (FFF.Buffer[6] == 0x00) break;
+			/* 0x00 = SMS, 0x01,0x03 = MMS
+			 * We care only messages with PDU */
+			if (FFF.Buffer[6] == 0x00 && FFF.Buffer[7] != 0) break;
+
 
 			smprintf(s,"mms file");
 			free(FFF.Buffer);
