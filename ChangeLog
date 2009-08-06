@@ -19,6 +19,7 @@ ChangeLog
 
 [+] * Documented most commands in man page.
 [+] * Much improved Czech translation.
+[-] * Avoid crash on some Nokia smses (bug #959).
     
 20090730 - 1.25.90
 

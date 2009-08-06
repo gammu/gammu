@@ -2275,34 +2275,40 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	sms->SMS[0].OtherNumbersNum = 0;
 
 	loc = sms->SMS[0].Location;
-	/* Parse PDU data */
-	error = GSM_DecodePDUFrame(&(s->di), &(sms->SMS[0]),  FFF->Buffer + 176, FFF->Used - 176, &parse_len, FALSE);
-	if (error != ERR_NONE) return error;
 
-	/* Copy recipient/sender number */
-	/* Data we get from PDU seem to be bogus */
-	/* This might be later overwriten using tags at the end of file */
-	CopyUnicodeString(sms->SMS[0].Number, FFF->Buffer + 94);
-	smprintf(s, "SMS number: %s\n", DecodeUnicodeString(sms->SMS[0].Number));
-	has_number = FALSE;
+	/* Do we have any PDU data? */
+	if (FFF->Buffer[7] > 0) {
+		/* Parse PDU data */
+		error = GSM_DecodePDUFrame(&(s->di), &(sms->SMS[0]),  FFF->Buffer + 176, FFF->Used - 176, &parse_len, FALSE);
+		if (error != ERR_NONE) return error;
 
-	sms->SMS[0].Location = loc;
+		/* Copy recipient/sender number */
+		/* Data we get from PDU seem to be bogus */
+		/* This might be later overwriten using tags at the end of file */
+		CopyUnicodeString(sms->SMS[0].Number, FFF->Buffer + 94);
+		smprintf(s, "SMS number: %s\n", DecodeUnicodeString(sms->SMS[0].Number));
+		has_number = FALSE;
 
-	switch (sms->SMS[0].PDU) {
-		case SMS_Deliver:
-			sms->SMS[0].State = SMS_Read; /* @bug FIXME: this is wrong */
-			break;
-		case SMS_Submit:
-			sms->SMS[0].State = SMS_Sent; /* @bug FIXME: this is wrong */
-			break;
-		case SMS_Status_Report:
-			sms->SMS[0].State = SMS_Read; /* @bug FIXME: this is wrong */
-			break;
-	}
+		sms->SMS[0].Location = loc;
 
-	if (parse_len != FFF->Buffer[7]) {
-		smprintf(s, "ERROR: Parsed PDU data have different length than header says!\n");
-		return ERR_CORRUPTED;
+		switch (sms->SMS[0].PDU) {
+			case SMS_Deliver:
+				sms->SMS[0].State = SMS_Read; /* @bug FIXME: this is wrong */
+				break;
+			case SMS_Submit:
+				sms->SMS[0].State = SMS_Sent; /* @bug FIXME: this is wrong */
+				break;
+			case SMS_Status_Report:
+				sms->SMS[0].State = SMS_Read; /* @bug FIXME: this is wrong */
+				break;
+		}
+
+		if (parse_len != FFF->Buffer[7]) {
+			smprintf(s, "ERROR: Parsed PDU data have different length than header says!\n");
+			return ERR_CORRUPTED;
+		}
+	} else {
+		sms->SMS[0].PDU = SMS_Submit;
 	}
 
 	/* Process structured data */
