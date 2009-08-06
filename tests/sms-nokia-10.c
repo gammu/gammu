@@ -41,7 +41,7 @@ unsigned char data[] = {
 	0x37,
 	};
 
-const char text[] = "Orthop. KH Gersthof\nWielemansg. 28, 1180\nstation A, Zi. 110\nwerde voraussichtl. Morgen Op. & freu mich, wenn ihr Zeit habt.";
+const char text[] = "";
 
 /* This is not part of API! */
 extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF, int location);
