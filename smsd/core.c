@@ -525,6 +525,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	/* Force debug level in Gammu */
 	if ((DEBUG_GAMMU & Config->debug_level) != 0) {
 		strcpy(gammucfg->DebugLevel, "textall");
+		GSM_SetDebugLevel("textall", GSM_GetGlobalDebug());
 	}
 
 	Config->PINCode=INI_GetValue(Config->smsdcfgfile, "smsd", "PIN", FALSE);
@@ -724,7 +725,7 @@ gboolean SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 			return TRUE;
 	}
 	if (code == NULL) {
-		SMSD_Log(DEBUG_INFO, Config, "Warning: no code in config!");
+		SMSD_Log(DEBUG_INFO, Config, "Warning: no code in config when phone might want one!");
 		return FALSE;
 	}
 	SMSD_Log(DEBUG_NOTICE, Config, "Trying to enter code");
