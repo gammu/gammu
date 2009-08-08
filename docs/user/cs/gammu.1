@@ -335,12 +335,12 @@ Sony\-Ericsson) načtou takové vyzvánění jako jedno.
 \fB\-toneSE\fP \- přidá vyzvánění ve formátu iMelody v krátké formě jak je
 podporováno telefony Sony\-Ericssonn.
 
-\fB\-variablebitmap\fP \- bitmap in any size saved in one SMS
+\fB\-variablebitmap\fP \- obrázek libovolné velikosti uložený v jedné SMS
 
-\fB\-variablebitmaplong\fP \- bitmap with maximal size 96x128 saved in one or few
-sms
+\fB\-variablebitmaplong\fP \- obrázek o maximální velikosti 96x128 uložený v
+jedné nebo více zpráv
 
-\fB\-fixedbitmap \fP \- bitmap 16x16 or 32x32
+\fB\-fixedbitmap \fP \- obrázek o velikosti 16x16 nebo 32x32
 
 \fB\-protected\fP \- all ringtones and bitmaps after this parameter (excluding
 default ringtones and logos) will be "protected" (in phones compatible with
@@ -388,8 +388,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms OPERATOR\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-netcode netcode] [\-biglogo]\fP
-Save operator logo as sms (Nokia format \- size 72x14 or 78x21 after using
-\fB\-biglogo\fP).
+Uloži logo operátora jako SMS (formát pro Nokie \- velikost 72x14 nebo 78x21
+po použití \fB\-biglogo\fP).
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -398,7 +398,7 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms PICTURE\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-text text] [\-unicode] [\-alcatelbmmi]\fP
-Save Picture Image as sms (Nokia format \- size 72x28).
+Uloží obrázek jako SMS (formát Nokie \- velikost 72x28).
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -407,8 +407,7 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms PROFILE\fP\fI [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-name name] [\-bitmap bitmap] [\-ringtone ringtone]\fP
-Read ringtone (RTTL) format and bitmap (Picture Image size) and name and
-save as Nokia profile.
+Načte vyzvánění (RTTL), obrázek a jméno a uloží je jako profil pro Nokii.
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -417,11 +416,11 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms RINGTONE\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]\fP
-Read RTTL ringtone from file and save as SMS into SIM/phone memory.
-Ringtone is saved in Nokia format.
+Našte RTTL vyzvánění ze souboru a uloží ho jako SMS. Vyzvánění je uloženo ve
+formátu pro Nokii.
 
-\fB\-long\fP \- ringtone is saved using Profile style. It can be longer (and
-saved in 2 SMS), but decoded only by newer phones (like 33xx)
+\fB\-long\fP \- vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo
+do dvou SMS), ale umí s ním pracovat jen novější telefony (jako 33xx).
 
 \fB\-scale\fP \- ringtone will have Scale info for each note. It will allow to
 edit it correctly later in phone composer (for example, in 33xx)
@@ -471,8 +470,9 @@ beep, vibrate or turn on light. Text will be cut to 1 sms.
 \fB\-textutf8\fP \- načte text v UTF\-8 z příkazové řádky místo standardního
 vstupu.
 
-\fITIP:\fP You can create Unicode file using WordPad in Win32 (during saving
-select "Unicode Text Document" format). In Unix can use for example YUdit.
+\fITIP:\fP Soubor v Unicode můžete na Windows vytvořit například pomocí
+WordPadu (zvolte volbu "Uložit jako unicode text"). Na Linuxu můžete použít
+třeba YUdit nebo Vim.
 
 \fB\-replacemessages ID\fP \- \fBID\fP can be 1..7. When you will use option and
 send more single SMS to one recipient with the same ID, each another SMS
@@ -485,8 +485,8 @@ from stdin there will be made translation and each src char will be
 converted to dest char. In docs there is example file (\fIreplace.txt\fP),
 which will change all "a" chars to "1"
 
-\fITIP:\fP when use ~ char in sms text and \fB\-unicode\fP option (Unicode coding
-required), text of sms after ~ char will blink in some phones (like N33xx)
+\fITIP:\fP pokud použijete ve textu zprávy znak ~ a přepínač \fB\-unicode\fP, bude
+text za znakem ~ u některých telefonů blikat (například 33xx)
 
 \fIPříklad:\fP echo some_text | gammu savesms TEXT
 
@@ -497,8 +497,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms TODO\fP\fI file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
-Saves a message with a todo entry. The content will be read from any backup
-format which Gammu supports and from given location.
+Uloží zprávu s úkolem. Obsah bude načten ze souboru v některém z formátů
+podporovaných Gammu a ze zadaného umístění.
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
 sendsms a savesms\fP.
@@ -825,9 +825,9 @@ není nastaven čas a datum.
 
 .TP 
 \fBsavefile VCARD10|VCARD21\fP\fI target.vcf file SM|ME location\fP
-Allows to convert between various backup formats which gammu supports for
-phonebook events. The file type is guessed (for input file guess is based on
-extension and file content, for output solely on extension).
+Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro
+kontakty. Typ souboru je odhadnut (pro vstupní soubor podle přípony a
+obsahu, pro výstupní jen podle přípony).
 
 For example if you want to convert single entry from gammu native backup to
 vCard, you need following command:
@@ -1016,8 +1016,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms OPERATOR\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-netcode netcode] [\-biglogo]\fP
-Save operator logo as sms (Nokia format \- size 72x14 or 78x21 after using
-\fB\-biglogo\fP).
+Uloži logo operátora jako SMS (formát pro Nokie \- velikost 72x14 nebo 78x21
+po použití \fB\-biglogo\fP).
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -1026,7 +1026,7 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms PICTURE\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-text text] [\-unicode] [\-alcatelbmmi]\fP
-Save Picture Image as sms (Nokia format \- size 72x28).
+Uloží obrázek jako SMS (formát Nokie \- velikost 72x28).
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -1217,11 +1217,11 @@ není nastaven čas a datum.
 
 .TP 
 \fBsavesms RINGTONE\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]\fP
-Read RTTL ringtone from file and save as SMS into SIM/phone memory.
-Ringtone is saved in Nokia format.
+Našte RTTL vyzvánění ze souboru a uloží ho jako SMS. Vyzvánění je uloženo ve
+formátu pro Nokii.
 
-\fB\-long\fP \- ringtone is saved using Profile style. It can be longer (and
-saved in 2 SMS), but decoded only by newer phones (like 33xx)
+\fB\-long\fP \- vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo
+do dvou SMS), ale umí s ním pracovat jen novější telefony (jako 33xx).
 
 \fB\-scale\fP \- ringtone will have Scale info for each note. It will allow to
 edit it correctly later in phone composer (for example, in 33xx)
@@ -1249,8 +1249,8 @@ RTTL ringtones, give location and use \fB\-scale\fP, there will be written scale
 info with each note. It will avoid scale problems available during editing
 ringtone in composer from phone menu (for example, in N33xx).
 
-\fITIP:\fP when use ~ char in ringtone name, in some phones (like 33xx)  name
-will blink later in phone menus
+\fITIP:\fP pokud použijete ve názvu vyzvánění znak ~, bude tento název v menu
+některých telefonů blikat (například 33xx)
 
 
 .SS Kalendář
@@ -1334,9 +1334,9 @@ není nastaven čas a datum.
 
 .TP 
 \fBsavefile CALENDAR\fP\fI target.vcs file location\fP
-Allows to convert between various backup formats which gammu supports for
-calendar events. The file type is guessed (for input file guess is based on
-extension and file content, for output solely on extension).
+Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro
+kalendář. Typ souboru je odhadnut (pro vstupní soubor podle přípony a
+obsahu, pro výstupní jen podle přípony).
 
 For example if you want to convert single entry from gammu native backup to
 vCalendar, you need following command:
@@ -1452,9 +1452,9 @@ není nastaven čas a datum.
 
 .TP 
 \fBsavefile TODO\fP\fI target.vcs file location\fP
-Allows to convert between various backup formats which gammu supports for
-todo events. The file type is guessed (for input file guess is based on
-extension and file content, for output solely on extension).
+Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro
+úkoly. Typ souboru je odhadnut (pro vstupní soubor podle přípony a obsahu,
+pro výstupní jen podle přípony).
 
 For example if you want to convert single entry from gammu native backup to
 vCalendar, you need following command:
@@ -1463,8 +1463,8 @@ vCalendar, you need following command:
 
 .TP 
 \fBsavesms TODO\fP\fI file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
-Saves a message with a todo entry. The content will be read from any backup
-format which Gammu supports and from given location.
+Uloží zprávu s úkolem. Obsah bude načten ze souboru v některém z formátů
+podporovaných Gammu a ze zadaného umístění.
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
 sendsms a savesms\fP.
@@ -1504,8 +1504,8 @@ Nastaví opakující se budík v telefonu na zadaný čas.
 Nastaví datum a čas v telefonu podle času v počítači. Tato volba nezobrazí
 hodiny na displeji mobilu, jen nastaví datum a čas.
 
-\fITIP:\fP you can make such synchronization each time, when will connect your
-phone and use Gammu. See gammurc(5) for details.
+\fITIP:\fP můžete si také nastavit tuto synchronizaci při každém připojení
+telefonu ke Gammu. Více podrobností naleznete v gammurc(5).
 
 
 .SS Kategorie
@@ -1672,9 +1672,9 @@ zprávy ve složce přepsány!
 
 .TP 
 \fBsavefile CALENDAR\fP\fI target.vcs file location\fP
-Allows to convert between various backup formats which gammu supports for
-calendar events. The file type is guessed (for input file guess is based on
-extension and file content, for output solely on extension).
+Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro
+kalendář. Typ souboru je odhadnut (pro vstupní soubor podle přípony a
+obsahu, pro výstupní jen podle přípony).
 
 For example if you want to convert single entry from gammu native backup to
 vCalendar, you need following command:
@@ -1683,9 +1683,9 @@ vCalendar, you need following command:
 
 .TP 
 \fBsavefile TODO\fP\fI target.vcs file location\fP
-Allows to convert between various backup formats which gammu supports for
-todo events. The file type is guessed (for input file guess is based on
-extension and file content, for output solely on extension).
+Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro
+úkoly. Typ souboru je odhadnut (pro vstupní soubor podle přípony a obsahu,
+pro výstupní jen podle přípony).
 
 For example if you want to convert single entry from gammu native backup to
 vCalendar, you need following command:
@@ -1694,9 +1694,9 @@ vCalendar, you need following command:
 
 .TP 
 \fBsavefile VCARD10|VCARD21\fP\fI target.vcf file SM|ME location\fP
-Allows to convert between various backup formats which gammu supports for
-phonebook events. The file type is guessed (for input file guess is based on
-extension and file content, for output solely on extension).
+Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro
+kontakty. Typ souboru je odhadnut (pro vstupní soubor podle přípony a
+obsahu, pro výstupní jen podle přípony).
 
 For example if you want to convert single entry from gammu native backup to
 vCard, you need following command:
@@ -2283,8 +2283,7 @@ Odstraní uživatelská nastavení
 
 .TP 
 \fBsavesms PROFILE\fP\fI [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-name name] [\-bitmap bitmap] [\-ringtone ringtone]\fP
-Read ringtone (RTTL) format and bitmap (Picture Image size) and name and
-save as Nokia profile.
+Načte vyzvánění (RTTL), obrázek a jméno a uloží je jako profil pro Nokii.
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
