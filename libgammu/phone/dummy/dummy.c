@@ -332,6 +332,7 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 	Priv->SMSC.DefaultNumber[0] = 0;
 	Priv->SMSC.DefaultNumber[1] = 0;
 	Priv->SMSC.Format = SMS_FORMAT_Text;
+	Priv->SMSC.Location = 1;
 
 	s->Phone.Data.VerNum = VERSION_NUM;
 
