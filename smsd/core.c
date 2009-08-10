@@ -1064,8 +1064,8 @@ gboolean SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		SMSD_PhoneStatus(Config);
 		Config->TPMR = -1;
 		Config->SendingSMSStatus = ERR_TIMEOUT;
-		error=GSM_SendSMS(Config->gsm, &sms.SMS[i]);
-		if (error!=ERR_NONE) {
+		error = GSM_SendSMS(Config->gsm, &sms.SMS[i]);
+		if (error != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error sending SMS %s (%i): %s",
 				Config->SMSID, error, GSM_ErrorString(error));
 			Config->TPMR = -1;
