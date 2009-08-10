@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-04 14:28+0300\n"
-"PO-Revision-Date: 2009-08-10 14:37+0200\n"
+"PO-Revision-Date: 2009-08-10 14:40+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2339,6 +2339,8 @@ msgid ""
 "I<Example:> gammu nokiaaddfile Application Alien will read Alien.JAD and "
 "Alien.JAR and add to Applications"
 msgstr ""
+"I<Example:> gammu nokiaaddfile Application Alien načte  Alien.JAD a Alien."
+"JAR a přidá ho do složky Applications"
 
 # type: Plain text
 #. type: Plain text
