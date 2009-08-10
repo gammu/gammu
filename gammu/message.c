@@ -139,6 +139,29 @@ void GetUSSD(int argc UNUSED, char *argv[])
 	GSM_Terminate();
 }
 
+void SetSMSC(int argc, char *argv[])
+{
+	GSM_Error error;
+	GSM_SMSC smsc;
+
+	smsc.Location = atoi(argv[2]);
+	if (smsc.Location < 1) {
+		printf_err(_("Invalid SMSC location: %s\n"), argv[2]);
+		return;
+	}
+	GSM_Init(TRUE);
+
+	error = GSM_GetSMSC(gsm, &smsc);
+	Print_Error(error);
+
+	EncodeUnicode(smsc.Number, argv[3], strlen(argv[3]));
+
+	error = GSM_SetSMSC(gsm, &smsc);
+	Print_Error(error);
+
+	GSM_Terminate();
+}
+
 void GetSMSC(int argc, char *argv[])
 {
 	GSM_SMSC 	smsc;

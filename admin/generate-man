@@ -461,6 +461,11 @@ HELP['getsmsc'] = '''Get SMSC settings from SIM card.
 
 Locations are numerated from 1.
 ''' 
+HELP['setsmsc'] = '''Set SMSC settings on SIM card. This keeps all SMSC configuration
+intact, it just changes the SMSC number.
+
+Locations are numerated from 1.
+''' 
 HELP['getsmsfolders'] = '''Get names for SMS folders in phone
 '''
 HELP['getphoneringtone'] = '''

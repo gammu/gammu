@@ -21,6 +21,7 @@ ChangeLog
 [+] * Completed Czech translation of Gammu.
 [-] * Avoid crash on some Nokia smses (bug #959).
 [+] * Added support for Bluetooth on more BSD systems, thanks to Iain Hibbert.
+[+] * Added new command setsmsc.
     
 20090730 - 1.25.90
 

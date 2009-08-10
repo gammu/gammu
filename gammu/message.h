@@ -7,6 +7,7 @@ extern void IncomingUSSD(GSM_StateMachine * s, GSM_USSDMessage ussd, void *user_
 extern void IncomingUSSD2(GSM_StateMachine * s, GSM_USSDMessage ussd, void *user_data);
 extern void DisplayIncomingSMS(void);
 extern void GetSMSC(int argc, char *argv[]);
+extern void SetSMSC(int argc, char *argv[]);
 extern void GetSMS(int argc, char *argv[]);
 extern void DeleteSMS(int argc, char *argv[]);
 extern void GetAllSMS(int argc, char *argv[]);

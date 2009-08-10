@@ -545,6 +545,7 @@ static GSM_Parameters Parameters[] = {
 	{"listmemorycategory",	1, 1, ListMemoryCategory,	{H_Memory, H_Category,0},	"text|number"},
 	{"getfmstation",		1, 2, GetFMStation,		{H_FM,0},			"start [stop]"},
 	{"getsmsc",			0, 2, GetSMSC,			{H_SMS,0},			"[start [stop]]"},
+	{"setsmsc",			2, 2, SetSMSC,			{H_SMS,0},			"location number"},
 	{"getsms",			2, 3, GetSMS,			{H_SMS,0},			"folder start [stop]"},
 	{"deletesms",			2, 3, DeleteSMS,		{H_SMS,0},			"folder start [stop]"},
 	{"deleteallsms",		1, 1, DeleteAllSMS,		{H_SMS,0},			"folder"},
