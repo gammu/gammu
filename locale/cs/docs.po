@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-04 14:28+0300\n"
-"PO-Revision-Date: 2009-08-04 17:00+0200\n"
+"PO-Revision-Date: 2009-08-10 14:37+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2130,7 +2130,7 @@ msgstr "B<addfile>I< folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|
 #. type: Plain text
 #: docs/user/gammu.1:811
 msgid "Add file with specified name to folder with specified folder ID."
-msgstr ""
+msgstr "Přidá soubor se zadaným jménem do adresáře se zvoleným ID."
 
 # type: Plain text
 #. type: Plain text
