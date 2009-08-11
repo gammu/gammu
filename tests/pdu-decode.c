@@ -264,12 +264,10 @@ int pdu_decode(const char *buffer) {
 		if (udhl < 0) return udhl;
 		pos += 2;
 		printf("UDL = 0x%02X\n", udhl);
-		if ((dcs == 0) ||
-			(((dcs & 0xC0) == 0xc0) && ((dcs & 4) != 4)) ||
-			(((dcs & 0xf0) == 0xd0) && ((dcs & 4) != 4)) ||
-			(((dcs & 0xf0) == 0xe0) && ((dcs & 4) != 4)) ||
-			(((dcs & 0xf0) == 0xf0) && ((dcs & 4) != 4))
-			) {
+		/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
+		if ((((dcs & 0xC0) == 0) && ((dcs == 0) || ((dcs & 0x2C) == 0x00) || ((dcs & 0x2C) == 0x20))) ||
+			((((dcs & 0xF0) == 0xC0) || ((dcs & 0xF0) == 0xD0)) && ((dcs & 4) != 4)) ||
+			(((dcs & 0xF0) == 0xF0) && ((dcs & 8) != 8) && ((dcs & 4) == 0))) {
 			if ((udhl * 7) % 8 != 0) {
 				udhl = (udhl * 7) / 8;
 				udhl++;
