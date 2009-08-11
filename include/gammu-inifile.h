@@ -108,6 +108,20 @@ INI_Entry *INI_FindLastSectionEntry(INI_Section * file_info,
 unsigned char *INI_GetValue(INI_Section * file_info,
 			    const unsigned char *section,
 			    const unsigned char *key, const gboolean Unicode);
+
+/**
+ * Checks whether value can be evaluated as true.
+ *
+ * It just takes the string and checks whether there is true/yes/1.
+ *
+ * \ingroup INI
+ *
+ * \param value String to parse.
+ *
+ * \return Boolean value.
+ */
+gboolean INI_IsTrue(const char *value);
+
 #endif
 
 /* Editor configuration

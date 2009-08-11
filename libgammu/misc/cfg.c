@@ -372,6 +372,14 @@ void INI_Free(INI_Section *head)
 	}
 }
 
+gboolean INI_IsTrue(const char *value)
+{
+	if (strcasecmp(value, "true") == 0) return TRUE;
+	if (strcasecmp(value, "yes") == 0) return TRUE;
+	if (strcasecmp(value, "1") == 0) return TRUE;
+	return FALSE;
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

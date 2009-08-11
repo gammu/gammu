@@ -57,6 +57,8 @@ struct _GSM_SMSDConfig {
 	const char	*PhoneID;
 	const char   *RunOnReceive;
 	gboolean checksecurity;
+	gboolean checkbattery;
+	gboolean checksignal;
 	unsigned int maxretries;
 
 	/* options for FILES */

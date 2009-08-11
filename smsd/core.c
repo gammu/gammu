@@ -554,13 +554,19 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "receivefrequency", FALSE);
 	if (str) Config->receivefrequency=atoi(str); else Config->receivefrequency = 0;
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "checksecurity", FALSE);
-	if (str) Config->checksecurity=atoi(str); else Config->checksecurity = 1;
+	if (str) Config->checksecurity = INI_IsTrue(str); else Config->checksecurity = TRUE;
+	str = INI_GetValue(Config->smsdcfgfile, "smsd", "checksignal", FALSE);
+	if (str) Config->checksignal = INI_IsTrue(str); else Config->checksignal = TRUE;
+	str = INI_GetValue(Config->smsdcfgfile, "smsd", "checkbattery", FALSE);
+	if (str) Config->checkbattery = INI_IsTrue(str); else Config->checkbattery = TRUE;
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "resetfrequency", FALSE);
 	if (str) Config->resetfrequency=atoi(str); else Config->resetfrequency = 0;
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "maxretries", FALSE);
 	if (str) Config->maxretries=atoi(str); else Config->maxretries = 1;
-	SMSD_Log(DEBUG_NOTICE, Config, "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i, checksecurity=%i",
-			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency, Config->checksecurity);
+	SMSD_Log(DEBUG_NOTICE, Config, "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i",
+			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency);
+	SMSD_Log(DEBUG_NOTICE, Config, "checks: security=%d, battery=%d, signal=%d",
+			Config->checksecurity, Config->checkbattery, Config->checksignal);
 
 	Config->deliveryreport = INI_GetValue(Config->smsdcfgfile, "smsd", "deliveryreport", FALSE);
 	if (Config->deliveryreport == NULL || (strcasecmp(Config->deliveryreport, "log") != 0 && strcasecmp(Config->deliveryreport, "sms") != 0)) {
@@ -967,11 +973,19 @@ gboolean SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 void SMSD_PhoneStatus(GSM_SMSDConfig *Config) {
 	GSM_Error error;
 
-	error = GSM_GetBatteryCharge(Config->gsm, &Config->Status->Charge);
+	if (Config->checkbattery) {
+		error = GSM_GetBatteryCharge(Config->gsm, &Config->Status->Charge);
+	} else {
+		error = ERR_UNKNOWN;
+	}
 	if (error != ERR_NONE) {
 		memset(&(Config->Status->Charge), 0, sizeof(Config->Status->Charge));
 	}
-	error = GSM_GetSignalQuality(Config->gsm, &Config->Status->Network);
+	if (Config->checksignal) {
+		error = GSM_GetSignalQuality(Config->gsm, &Config->Status->Network);
+	} else {
+		error = ERR_UNKNOWN;
+	}
 	if (error != ERR_NONE) {
 		memset(&(Config->Status->Network), 0, sizeof(Config->Status->Network));
 	}
