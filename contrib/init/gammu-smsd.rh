@@ -1,0 +1,78 @@
+#! /bin/bash  
+#
+# chkconfig: 345 65 35
+# description: starts/stops Gammu
+# written by Frank Vestergaard Pedersen <fvp@linuxhouse.dk>
+#
+
+###################################################
+# change these values to fit yur installation
+user="gammu"
+group="gammu"
+bin="/usr/local/gammu/bin/gammu-smsd"
+configfile="/etc/gammu-smsdrc"
+pidfile="/var/run/gammu.pid"
+
+####################################################
+# It should not be nesserry to edit below this line
+####################################################
+
+proc_name=`basename $0`
+PID=`cat $pidfile`
+
+function START_CMD {
+
+  $bin -c $configfile -p $pidfile -U $user -G $group -d
+  if [ "$?" != "0" ];then
+    echo "ERROR - gammu did not start!"
+  fi
+}
+
+function STATUS {
+  PID=`cat $pidfile`
+  if [ -n "$PID" ] ; then
+    echo "$proc_name running PID: $PID"
+  else
+    echo "$proc_name not running"
+  fi
+}
+
+# See how we were called.
+case "$1" in
+  start)
+    if [ -n "$PID" ]; then  
+      if [ "`ps -p "$PID" -o comm=`" = "" ]; then
+        START_CMD
+        STATUS
+      else
+        echo "Error - $proc_name already running!"
+        STATUS
+      fi
+    else
+      START_CMD
+      STATUS
+    fi
+  ;;
+  status)
+    STATUS
+  ;;
+
+  stop)
+    if [ -n "$PID" ] ; then
+      echo "$proc_name stopping PID: $PID"
+      kill $PID
+      sleep 1
+      echo "" > $pidfile
+      echo "$proc_name stopped"
+    fi
+  ;;
+  restart|reload)
+    $0 stop
+    $0 start
+  ;;
+  *)
+       echo $"Usage: $0 {start|stop|restart|reload|status}"
+        exit 1
+esac
+
+exit 0
