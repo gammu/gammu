@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-11 09:21+0300\n"
+"POT-Creation-Date: 2009-08-12 12:30+0300\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -3914,7 +3914,7 @@ msgstr ""
 # type: SH
 #. type: SH
 #: docs/user/gammu.1:2447 docs/user/gammurc.5:263 docs/user/gammu-smsdrc.5:399
-#: docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:81
+#: docs/user/gammu-smsd.1:127 docs/user/gammu-smsd-inject.1:81
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:113
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
@@ -3935,7 +3935,7 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2454 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:405
-#: docs/user/gammu-smsd.1:127 docs/user/gammu-smsd-inject.1:87
+#: docs/user/gammu-smsd.1:133 docs/user/gammu-smsd-inject.1:87
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:119
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
@@ -3948,7 +3948,7 @@ msgstr ""
 # type: SH
 #. type: SH
 #: docs/user/gammu.1:2455 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:405
-#: docs/user/gammu-smsd.1:127 docs/user/gammu-smsd-inject.1:87
+#: docs/user/gammu-smsd.1:133 docs/user/gammu-smsd-inject.1:87
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:119
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
@@ -3997,7 +3997,7 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2475 docs/user/gammurc.5:270 docs/user/gammu-smsdrc.5:407
-#: docs/user/gammu-smsd.1:129 docs/user/gammu-smsd-inject.1:89
+#: docs/user/gammu-smsd.1:135 docs/user/gammu-smsd-inject.1:89
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:120
 #: docs/user/gammu-smsd-mysql.7:28 docs/user/gammu-smsd-pgsql.7:28
@@ -4008,7 +4008,7 @@ msgstr ""
 # type: SH
 #. type: SH
 #: docs/user/gammu.1:2476 docs/user/gammurc.5:261 docs/user/gammu-smsdrc.5:397
-#: docs/user/gammu-smsd.1:119 docs/user/gammu-smsd-inject.1:79
+#: docs/user/gammu-smsd.1:125 docs/user/gammu-smsd-inject.1:79
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:111
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
 #: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:468
@@ -4058,7 +4058,7 @@ msgstr ""
 # type: SH
 #. type: SH
 #: docs/user/gammu.1:2502 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:393
-#: docs/user/gammu-smsd.1:115 docs/user/gammu-smsd-inject.1:77
+#: docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:77
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:109
 #: docs/user/gammu-smsd-mysql.7:17 docs/user/gammu-smsd-pgsql.7:17
@@ -4706,7 +4706,7 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:263 docs/user/gammu-smsdrc.5:399
-#: docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:81
+#: docs/user/gammu-smsd.1:127 docs/user/gammu-smsd-inject.1:81
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:113
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
 #: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:470
@@ -4718,7 +4718,7 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:266 docs/user/gammu-smsdrc.5:402
-#: docs/user/gammu-smsd.1:124 docs/user/gammu-smsd-inject.1:84
+#: docs/user/gammu-smsd.1:130 docs/user/gammu-smsd-inject.1:84
 #: docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:116
 #: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24
 #: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:473
@@ -5562,7 +5562,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsdrc.5:397 docs/user/gammu-smsd.1:119
+#: docs/user/gammu-smsdrc.5:397 docs/user/gammu-smsd.1:125
 msgid ""
 "gammu-smsd-files(7), gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7), gammu-smsd-tables(7)"
@@ -5570,7 +5570,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsdrc.5:409 docs/user/gammu-smsd.1:131
+#: docs/user/gammu-smsdrc.5:409 docs/user/gammu-smsd.1:137
 #: docs/user/gammu-smsd-inject.1:91 docs/user/gammu-smsd-monitor.1:55
 msgid ""
 "Before reporting a bug, please enable verbose logging in SMSD configuration:"
@@ -5578,7 +5578,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsdrc.5:413 docs/user/gammu-smsd.1:135
+#: docs/user/gammu-smsdrc.5:413 docs/user/gammu-smsd.1:141
 #: docs/user/gammu-smsd-inject.1:95 docs/user/gammu-smsd-monitor.1:59
 #, no-wrap
 msgid ""
@@ -5589,7 +5589,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsdrc.5:414 docs/user/gammu-smsd.1:136
+#: docs/user/gammu-smsdrc.5:414 docs/user/gammu-smsd.1:142
 #: docs/user/gammu-smsd-inject.1:96 docs/user/gammu-smsd-monitor.1:60
 msgid "and include this verbose log within bug report."
 msgstr ""
@@ -5883,68 +5883,82 @@ msgid ""
 "--user gammu --group gammu"
 msgstr ""
 
+#. type: TP
+#: docs/user/gammu-smsd.1:82
+#, no-wrap
+msgid "SMSD as a system wide daemon"
+msgstr ""
+
+#. type: Plain text
+#: docs/user/gammu-smsd.1:88
+msgid ""
+"To use SMSD as a daemon, you might want to use init script which is shipped "
+"with Gammu in contrib/init directory. It is not installed by default, either "
+"install it manually or check INSTALL file for instructions."
+msgstr ""
+
 # type: SS
 #. type: SS
-#: docs/user/gammu-smsd.1:83
+#: docs/user/gammu-smsd.1:89
 #, no-wrap
 msgid "Windows Service Examples"
 msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammu-smsd.1:85
+#: docs/user/gammu-smsd.1:91
 #, no-wrap
 msgid "Install Gammu SMSD Windows service:"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd.1:89
+#: docs/user/gammu-smsd.1:95
 msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc -i"
 msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammu-smsd.1:90
+#: docs/user/gammu-smsd.1:96
 #, no-wrap
 msgid "Install two instances of SMSD Windows service:"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd.1:94
+#: docs/user/gammu-smsd.1:100
 msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-1 -n Gammu-first-phone -i"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd.1:96
+#: docs/user/gammu-smsd.1:102
 msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-2 -n Gammu-second-phone -i"
 msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammu-smsd.1:97
+#: docs/user/gammu-smsd.1:103
 #, no-wrap
 msgid "To uninstall a Windows service:"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd.1:101
+#: docs/user/gammu-smsd.1:107
 msgid "gammu-smsd.exe -u"
 msgstr ""
 
 # type: SS
 #. type: SS
-#: docs/user/gammu-smsd.1:102
+#: docs/user/gammu-smsd.1:108
 #, no-wrap
 msgid "Troubleshooting Windows Service"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd.1:109
+#: docs/user/gammu-smsd.1:115
 msgid ""
 "If Gammu fails to start as a Windows service (you will usually get \"Error "
 "1053: The service did not respond to the start or control request in a "
@@ -5955,14 +5969,14 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd.1:111
+#: docs/user/gammu-smsd.1:117
 #, no-wrap
 msgid "    gammu-smsd.exe -c smsdrc\n"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd.1:114
+#: docs/user/gammu-smsd.1:120
 msgid ""
 "You now should be able to get errors from SMSD even if it fails to start as "
 "a service."
@@ -5970,7 +5984,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd.1:117
+#: docs/user/gammu-smsd.1:123
 msgid "gammu-smsdrc(5), gammu(1), gammu-smsd-inject(1), gammu-smsd-monitor(1)"
 msgstr ""
 
@@ -7662,4 +7676,863 @@ msgstr ""
 msgid ""
 "Database backends: gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7)"
+msgstr ""
+
+#. type: Plain text
+#: README:2
+#, no-wrap
+msgid ""
+"Gammu All Mobile Management Utilities\n"
+"=====================================\n"
+msgstr ""
+
+#. type: Plain text
+#: README:6
+msgid ""
+"Gammu is library and command line utility for mobile phones. It is released "
+"under GNU GPL version 2."
+msgstr ""
+
+#. type: Plain text
+#: README:11
+msgid ""
+"It has been initiated by Marcin Wiacek and other people. Originally the code "
+"was based on Gnokii <http://www.gnokii.org> and later MyGnokii <http://www."
+"mwiacek.com> projects. Gammu was former (up to version 0.58) called "
+"MyGnokii2."
+msgstr ""
+
+#. type: Plain text
+#: README:14
+msgid ""
+"Currently the project is lead by Michal Cihar <michal@cihar.com> with help "
+"of many contributors."
+msgstr ""
+
+#. type: Plain text
+#: README:17
+#, no-wrap
+msgid ""
+"More information\n"
+"================\n"
+msgstr ""
+
+#. type: Plain text
+#: README:21
+msgid ""
+"On <http://www.gammu.org/> there is wiki and bug tracker, current Gammu "
+"maintainer keeps information available on <http://cihar.com/gammu/>."
+msgstr ""
+
+#. type: Plain text
+#: README:24
+#, no-wrap
+msgid ""
+"Downloading\n"
+"===========\n"
+msgstr ""
+
+#. type: Plain text
+#: README:28
+msgid ""
+"Current releases can be downloaded from several mirrors, primary download "
+"site currently is <http://dl.cihar.com/gammu/releases/>."
+msgstr ""
+
+#. type: Plain text
+#: README:32
+msgid ""
+"Developers might be interested in snapshot or version control system "
+"(Subversion is being used), information about accessing these is available "
+"at <http://cihar.com/gammu/>."
+msgstr ""
+
+#. type: Plain text
+#: README:36
+msgid ""
+"The development goes on in Git, main development branch is <git://gitorious."
+"org/gammu/mainline.git>, you can browse it using <http://gitorious.org/gammu/"
+"mainline/trees>."
+msgstr ""
+
+#. type: Plain text
+#: README:39
+#, no-wrap
+msgid ""
+"Versions\n"
+"========\n"
+msgstr ""
+
+#. type: Plain text
+#: README:45
+msgid ""
+"There are two types of releases - testing and stable, both having version x."
+"y.z. Stable releases have usually z = 0 or some small number, while testing "
+"ones have z >= 90. Testing releases usually provide latest features, but "
+"everything does not have to be stabilized yet."
+msgstr ""
+
+#. type: Plain text
+#: README:48
+#, fuzzy, no-wrap
+msgid ""
+"Configuration\n"
+"=============\n"
+msgstr "&Telefón"
+
+#. type: Plain text
+#: README:55
+msgid ""
+"Gammu requires configuration to be able to properly talk to your phone.  You "
+"can create own by starting from example in docs/examples/config/gammurc, "
+"where parameters are described, or use utils/gammu-config script (installed "
+"to bin), which can help you to generate valid configuration."
+msgstr ""
+
+#. type: Plain text
+#: README:59
+msgid ""
+"Alternatively you might want to try GUI for Gammu called Wammu (see <http://"
+"wammu.eu/>), which can automatically generate configuration for you."
+msgstr ""
+
+#. type: Plain text
+#: README:63
+msgid ""
+"The configuration file should be placed in ~/.gammurc or /etc/gammurc on "
+"Unixes. On Windoes you can place gammurc in Application Data folder in yout "
+"profile or in same directory as is binary being executed from."
+msgstr ""
+
+#. type: Plain text
+#: README:67
+msgid ""
+"For hints about configuring your phone, you can check Gammu Phone Database "
+"<http://cihar.com/gammu/phonedb/> to see what user users experienced."
+msgstr ""
+
+#. type: Plain text
+#: README:70
+#, no-wrap
+msgid ""
+"Problems\n"
+"========\n"
+msgstr ""
+
+#. type: Plain text
+#: README:75
+msgid ""
+"Use <http://bugs.cihar.com/> or mailing list for reporting problems.  It "
+"useful to send logs of Gammu executed with enabled debugging. You can to it "
+"by adding \"textall\" as first parameter, e.g.:"
+msgstr ""
+
+#. type: Plain text
+#: README:77
+#, no-wrap
+msgid "   gammu textall --identify\n"
+msgstr ""
+
+#. type: Plain text
+#: README:80
+#, no-wrap
+msgid ""
+"Developers\n"
+"==========\n"
+msgstr ""
+
+#. type: Plain text
+#: README:88
+msgid ""
+"Some information is available on wiki and in docs/develop/ folder. You can "
+"also generate documentation using Doxygen. API documentation can be "
+"generated by make apidoc in build, you can also view it online at <http://"
+"cihar.com/gammu/api/>. Similarly internal documentation can be generated by "
+"make interndoc and is available on <http://cihar.com/gammu/docs/>."
+msgstr ""
+
+#. type: Plain text
+#: README:92
+msgid ""
+"If you intend to use libGammu in your application, all you should need is to "
+"#include <gammu.h> and then use Gammu functions. You can check docs/develop/"
+"examples/ for some small example applications."
+msgstr ""
+
+#. type: Plain text
+#: README:95
+#, no-wrap
+msgid ""
+"Localization\n"
+"============\n"
+msgstr ""
+
+#. type: Plain text
+#: README:100
+msgid ""
+"Localization uses Gettext. You can set locales you want to use by specifying "
+"LANG or LC_* environment variables (on Linux you usually don't care about "
+"this, on Windows just export e.g. LANG=cs_CZ."
+msgstr ""
+
+#. type: Plain text
+#: README:105
+msgid ""
+"If you want to improve existing translation, please visit <http://l10n.cihar."
+"com/projects/gammu/>. For adding new one, you need to contact <michal@cihar."
+"com> and then you will be able to edit it on former mentioned URL."
+msgstr ""
+
+#. type: Plain text
+#: README:108
+msgid ""
+"You can also go ahead with traditional way of creating/updating po files in "
+"locale/ folder and then sending updated ones to bug tracker."
+msgstr ""
+
+#. type: Plain text
+#: README:111
+#, no-wrap
+msgid ""
+"Note\n"
+"====\n"
+msgstr ""
+
+#. type: Plain text
+#: README:115
+msgid ""
+"Name Gammu is not connected with Gammu from \"Heretics of Dune\" written by "
+"Frank Herbert."
+msgstr ""
+
+#. type: Plain text
+#: README:118
+#, no-wrap
+msgid ""
+"Feedback\n"
+"========\n"
+msgstr ""
+
+#. type: Plain text
+#: README:124
+msgid ""
+"Any feedback is welcome, if you found bug, please follow description in "
+"section \"Problems\". You can contact developers and users on <gammu-"
+"users@lists.sourceforge.net> mailing list or directly current maintainer at "
+"<michal@cihar.com>."
+msgstr ""
+
+#. type: Plain text
+#: README:125 INSTALL:304
+msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:2
+#, no-wrap
+msgid ""
+"Gammu All Mobile Management Utilities - Installation\n"
+"====================================================\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:6
+#, no-wrap
+msgid ""
+"Binaries - Linux\n"
+"================\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:12
+msgid ""
+"Many distributions come with prebuilt Gammu binaries, if you can use them, "
+"it is definitely the easiest thing. There are also binary packages of latest "
+"release built for many distributions available on Gammu home page <http://"
+"cihar.com/gammu/>."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:15
+#, no-wrap
+msgid ""
+"Binaries - Windows\n"
+"==================\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:20
+msgid ""
+"You can download Windows binaries from <http://cihar.com/gammu/>. For "
+"Windows 95, 98 and NT 4.0 you will also need ShFolder DLL, which can be "
+"downloaded from Microsoft:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:22
+msgid ""
+"http://www.microsoft.com/downloads/details.aspx?"
+"displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:25
+#, no-wrap
+msgid ""
+"From Sources - Requirements\n"
+"===========================\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:29
+msgid ""
+"Gammu does not require anything at all to build, but you might miss some "
+"features. Optional dependencies include:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:33
+#, no-wrap
+msgid ""
+"Bluez-libs \n"
+"    - http://www.bluez.org/\n"
+"    - Bluetooth support on Linux.\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:37
+#, no-wrap
+msgid ""
+"libusb-1.0\n"
+"    - http://libusb.sourceforge.net/\n"
+"    - fbususb connection support\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:41
+#, no-wrap
+msgid ""
+"libCURL\n"
+"    - http://curl.haxx.se/libcurl/\n"
+"    - New versions notification and phonedb access.\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:45
+#, no-wrap
+msgid ""
+"libiconv\n"
+"    - http://www.gnu.org/software/libiconv/\n"
+"    - Support for more charsets in AT engine.\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:49
+#, no-wrap
+msgid ""
+"Gettext\n"
+"    - http://www.gnu.org/software/gettext/\n"
+"    - Localization of strings.\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:53
+#, no-wrap
+msgid ""
+"MySQL\n"
+"    - http://mysql.com/\n"
+"    - MySQL support in SMSD.\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:57
+#, no-wrap
+msgid ""
+"PostgreSQL\n"
+"    - http://www.postgresql.org/\n"
+"    - PostgreSQL support in SMSD.\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:63
+#, no-wrap
+msgid ""
+"libdbi\n"
+"    - http://libdbi.sourceforge.net/\n"
+"    - required at least version 0.8.2\n"
+"    - DBI support in SMSD.\n"
+"        - For testing, please install libdbd-sqlite3\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:67
+#, no-wrap
+msgid ""
+"Python\n"
+"    - http://www.python.org/\n"
+"    - Gammu has a Python bindings\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:71
+#, no-wrap
+msgid ""
+"SQLite + libdbi-drivers with SQLite\n"
+"    - http://www.sqlite.org/\n"
+"    - needed for testing of SMSD using libdbi driver\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:74
+#, no-wrap
+msgid ""
+"From Sources - Linux\n"
+"====================\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:77
+msgid "You need CMake from <http://www.cmake.org> for configuring Gammu."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:84
+msgid ""
+"For compatibility reasons, configure like wrapper is provided, if you don't "
+"need much specific tuning, you can use general \"./configure; make; sudo "
+"make install\" set of commands. The configure wrapper will create directory "
+"build-configure and build all binaries there (nothing is changed in source "
+"tree), for example gammu binary is in build-configure/gammu directory."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:88
+msgid ""
+"If you need/want to tweak build a bit more than configure wrapper provides, "
+"you have to use CMake directly. For now, only out of source build is "
+"supported, so you have to create separate directory for build:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:91
+msgid "> mkdir build > cd build"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:93
+msgid "Then just configure project:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:95
+msgid "> cmake .."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:97
+msgid "Build it:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:99
+msgid "> make"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:101
+msgid "Test that everything is okay:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:103
+msgid "> make test"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:105
+msgid "And finally install it:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:107
+msgid "> sudo make install"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:110
+msgid ""
+"You can configure build parameters either by command line (see parameters "
+"bellow), or using TUI - ccmake."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:112
+msgid "Useful cmake parameters:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:121
+msgid ""
+"-DBUILD_SHARED_LIBS=ON enables shared library -DCMAKE_BUILD_TYPE=\"Debug\" "
+"enables debug build -DCMAKE_INSTALL_PREFIX=\"/usr\" change installation "
+"prefix -DENABLE_PROTECTION=OFF disables various compile time protections "
+"against buffer overflows and similar attacks -DBUILD_PYTHON=/usr/bin/"
+"python2.6 changes Python used for build Python module -DWITH_PYTHON=OFF "
+"disables build of python-gammu"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:123
+msgid "You can also disable support for whole set of phones, e.g.:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:127
+msgid ""
+"-DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support -DWITH_BLUETOOTH=OFF "
+"disables Bluetooth support -DWITH_IRDA=OFF disables IrDA support"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:129
+#, no-wrap
+msgid ""
+"Limiting set of installed data\n"
+"==============================\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:133
+msgid ""
+"By setting following flags you can control which additional parts will be "
+"installed:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:141
+msgid ""
+"INSTALL_GNAPPLET - Install Gnapplet binaries INSTALL_MEDIA - Install sample "
+"media files INSTALL_PHP_EXAMPLES - Install PHP example scripts "
+"INSTALL_BASH_COMPLETION - Install bash completion script for Gammu "
+"INSTALL_LSB_INIT - Install LSB compatible init script for Gammu INSTALL_DOC "
+"- Install documentation INSTALL_LOC - Install locales data"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:143
+msgid "For example:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:145
+msgid "-DINSTALL_DOC=OFF"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:148
+#, no-wrap
+msgid ""
+"From Sources - Windows\n"
+"======================\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:157
+msgid ""
+"You need CMake from <http://www.cmake.org> for configuring Gammu. CMake is "
+"able to generate projects for various tools including Microsoft Visual "
+"Studio, Borland toolchains, Cygwin or Mingw32. Just click on CMakeLists.txt "
+"in project sources and configure CMake to be able to find optional libraries "
+"(see cross compilation section for more information about getting those). "
+"The result should be project for your compiler where you should be able to "
+"work with it as with any other project."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:160
+msgid ""
+"More detailed and up to date information is maintained on the wiki: http://"
+"www.gammu.org/wiki/index.php?title=Gammu:Compiling/installing_in_Windows"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:167
+msgid ""
+"Borland toolchain - you can download compiler at <http://www.codegear.com/"
+"downloads/free/cppbuilder>. You need to add c:/Borland/BCC55/Bin to system "
+"path (or manually set it when running CMake) and add -Lc:/Borland/BCC55/Lib -"
+"Ic:/Borland/BCC55/Include -Lc:/Borland/BCC55/Lib/PSDK to CMAKE_C_FLAGS in "
+"CMake (otherwise compilation fails)."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:169
+#, no-wrap
+msgid ""
+"From Sources - Mac OS X\n"
+"=======================\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:173
+msgid ""
+"Gammu should be compilable on Mac OS X, see wiki for up to date instrucitons:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:175
+msgid ""
+"http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/"
+"installing_on_Mac_OS_X"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:178
+#, no-wrap
+msgid ""
+"Cross compilation for Windows on Linux\n"
+"======================================\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:183
+msgid ""
+"Only cross compilation using CMake has been tested. You need to install "
+"MinGW cross tool chain and run time. On Debian you can do it by apt-get "
+"install mingw32. Build is then quite simple:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:188
+msgid ""
+"mkdir build-win32 cd build-win32 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/"
+"Toolchain-mingw32.cmake make"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:191
+msgid ""
+"If your MinGW cross compiler binaries are not found automatically, you can "
+"specify their different names in cmake/Toolchain-mingw32.cmake."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:193
+msgid "To build just bare static library without any dependencies, use:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:201
+#, no-wrap
+msgid ""
+"cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \\\n"
+"    -DBUILD_SHARED_LIBS=OFF \\\n"
+"    -DWITH_MySQL=OFF \\\n"
+"    -DWITH_Postgres=OFF \\\n"
+"    -DWITH_GettextLibs=OFF \\\n"
+"    -DWITH_Iconv=OFF \\\n"
+"    -DWITH_CURL=OFF \\\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:206
+msgid ""
+"To be compatible with current Python on Windows, we need to build against "
+"MSVCR71, to achieve this, libmoldname71 library is needed. It is part of "
+"current MinGW releases, but for older ones you can build it following way:"
+msgstr ""
+
+#. type: Bullet: '1. '
+#: INSTALL:210
+msgid "Get moldname.def.in from MinGW-runtime sources."
+msgstr ""
+
+#. type: Bullet: '2. '
+#: INSTALL:210
+msgid "Get MinGW-runtime."
+msgstr ""
+
+#. type: Bullet: '3. '
+#: INSTALL:210
+msgid "Execute following commands (crafted for Debian):"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:216
+msgid ""
+"i586-mingw32msvc-ar x /usr/i586-mingw32msvc/lib/libmoldname.a isascii.o "
+"iscsym.o iscsymf.o toascii.o strcasecmp.o strncasecmp.o wcscmpi.o i586-"
+"mingw32msvc-gcc -DRUNTIME=71 -D__FILENAME__=moldname-71.def -D__MSVCRT__ -C -"
+"E -P -xc-header moldname.def.in >moldname-71.def i586-mingw32msvc-dlltool -k "
+"-U --dllname msvcr71.dll --def moldname-71.def --output-lib libmoldname71.a "
+"i586-mingw32msvc-ar rc libmoldname71.a isascii.o iscsym.o iscsymf.o toascii."
+"o strcasecmp.o strncasecmp.o wcscmpi.o i586-mingw32msvc-ranlib libmoldname71."
+"a"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:218
+msgid "Information taken from <http://www.pygame.org/wiki/PreparingMinGW>."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:221
+#, no-wrap
+msgid ""
+"Third party libraries\n"
+"---------------------\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:226
+msgid ""
+"The easies way to link with third party libraries is to add path to their "
+"installation to cmake/Toolchain-mingw32.cmake or to list these paths in "
+"CMAKE_FIND_ROOT_PATH when invoking cmake."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:229
+#, no-wrap
+msgid ""
+"MySQL\n"
+"-----\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:233
+msgid ""
+"You can download MySQL binaries from <http://dev.mysql.com/>, but then need "
+"some tweaks:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:238
+#, no-wrap
+msgid ""
+"cd mysql/lib/opt\n"
+"reimp.exe -d libmysql.lib\n"
+"i586-mingw32msvc-dlltool --kill-at --input-def libmysql.def \\\n"
+"    --dllname libmysql.dll --output-lib libmysql.a\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:241
+msgid ""
+"reimp.exe is part of mingw-utils and can be run through wine, I didn't try "
+"to compile native binary from it."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:244
+#, no-wrap
+msgid ""
+"PostgreSQL\n"
+"----------\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:248
+msgid ""
+"You can download PostgreSQL binaries from <http://www.postgresql.org/>, but "
+"then you need to add wldap32.dll library to bin."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:251
+#, no-wrap
+msgid ""
+"Gettext\n"
+"-------\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:256
+msgid ""
+"For Gettext (internationalization support), you need gettext-0.14.4-bin.zip, "
+"gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from <http://gnuwin32."
+"sourceforge.net/>. Unpack these to same directory."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:259
+#, no-wrap
+msgid ""
+"CURL\n"
+"----\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:263
+msgid ""
+"For CURL support, you need curl-7.19.0-devel-mingw32.zip from <http://curl."
+"haxx.se/>."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:266
+#, no-wrap
+msgid ""
+"Testing\n"
+"=======\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:274
+msgid ""
+"Gammu comes with testsuite which should be run after build. You can do this "
+"using 'make test'. CMake build system uses for testing CTest, which also "
+"includes option to connect to dashboard and submit test results there, so "
+"that they can be reviewed and fixed by others. To participate in this "
+"testing, you need just to run 'make Experimental'. It will compile current "
+"version, run tests and submit data to dashboard:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:276
+msgid "http://cdash.cihar.com/index.php?project=Gammu"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:278
+msgid "There are some more options for testing:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:296
+#, no-wrap
+msgid ""
+"- make ExperimentalMemCheck\n"
+"    This checks memory accesses using valgrind during tests and submits\n"
+"    report. You need to do this after 'make Experimental' and you can\n"
+"    submit results using 'make ExperimentalSubmit'.\n"
+"- coverage reports\n"
+"    To get test coverage reports, you need to configure project using \n"
+"    'cmake -DCOVERAGE=ON'\n"
+"- nightly testing\n"
+"    Currently several machines do compile and test Gammu every night. If\n"
+"    you want to tak part of this, just ensure that your machine executes\n"
+"    test suite every night (preferably after 3:00 CET). You can select\n"
+"    either 'make Nightly' to do regullar testing or 'make\n"
+"    NightlyMemoryCheck' to test with valgrind. Also you can enable\n"
+"    coverage tests as described above.\n"
+"- special cases:\n"
+"    You can enable some additional tests, which require some external\n"
+"    components to be setup and are disabled by default:\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:299
+#, no-wrap
+msgid ""
+"    MYSQL_TESTING - you need to have setup MySQL server with database\n"
+"    where SMSD can plat.\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:302
+#, no-wrap
+msgid ""
+"    PSQL_TESTING - you need to have setup PostgreSQL server with\n"
+"    database where SMSD can plat.\n"
 msgstr ""
