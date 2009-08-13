@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-13 11:30+0300\n"
-"PO-Revision-Date: 2009-08-13 11:33+0200\n"
+"PO-Revision-Date: 2009-08-13 11:34+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -1374,7 +1374,8 @@ msgid ""
 "with all numbers, text and name) format as SMS"
 msgstr ""
 "Načte kontakt ze zálohy (formáty jaké vytváří funkce B<backup>) a uloží ho "
-"do telefonu jako SMS ve formátu VCARD 1.0."
+"do telefonu jako SMS ve formátu VCARD 1.0 (jen jméno a výchozí číslo) nebo "
+"VCARD 2.1 (všechny informace o kontaktu)."
 
 # type: TP
 #. type: TP
