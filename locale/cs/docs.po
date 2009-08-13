@@ -2359,8 +2359,8 @@ msgid ""
 "I<Example:> gammu nokiaaddfile Application Alien will read Alien.JAD and "
 "Alien.JAR and add to Applications"
 msgstr ""
-"I<Example:> gammu nokiaaddfile Application Alien načte  Alien.JAD a Alien."
-"JAR a přidá ho do složky Applications"
+"I<Example:> gammu nokiaaddfile Application Alien načte Alien.JAD a Alien.JAR "
+"a přidá ho do složky Applications"
 
 # type: Plain text
 #. type: Plain text
