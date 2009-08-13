@@ -4050,7 +4050,7 @@ msgstr "gammu savesms EMS -text \"All your base are belong to us\""
 #: docs/user/gammu.1:2398
 #, no-wrap
 msgid "Save some funky message with predefined sound and animation from 2 bitmaps:"
-msgstr "Uložení zprávy s předdefinovaným zvukem a animací ze dvou obrázků:"
+msgstr "Uložení zprávy s předdefinovaným zvukem a animací ze 2 obrázků:"
 
 # type: Plain text
 #. type: Plain text
