@@ -27,8 +27,8 @@ Current releases can be downloaded from several mirrors, primary
 download site currently is <http://dl.cihar.com/gammu/releases/>. 
 
 Developers might be interested in snapshot or version control system
-(Subversion is being used), information about accessing these is
-available at <http://cihar.com/gammu/>.
+(Git is being used), information about accessing these is available at
+<http://cihar.com/gammu/>.
 
 The development goes on in Git, main development branch is
 <git://gitorious.org/gammu/mainline.git>, you can browse it using
@@ -71,9 +71,9 @@ Problems
 
 Use <http://bugs.cihar.com/> or mailing list for reporting problems.  It
 useful to send logs of Gammu executed with enabled debugging. You can to
-it by adding "textall" as first parameter, e.g.:
+it by adding parameters --debug textall, e.g.:
 
-   gammu textall --identify
+   gammu --debug textall --identify
 
 
 Developers
