@@ -4817,7 +4817,6 @@ msgstr "B<StartInfo>"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:136
-#, fuzzy
 msgid ""
 "This option allow to set, that you want (setting \"yes\") to see message on "
 "the phone screen or phone should enable light for a moment during starting "
