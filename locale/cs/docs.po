@@ -5814,8 +5814,8 @@ msgid ""
 "path should contain trailing path separator (/ on Unix systems):"
 msgstr ""
 "Služba FILES používá následující konfigurační volby. Podrobnější popis této "
-"služby je v gammu-smsd-files(7). Prosím ujistěte se, že  všechny cestky "
-"končí oddělovačem cest (na Unixových systémech /):"
+"služby je v gammu-smsd-files(7). Prosím ujistěte se, že všechny cestky končí "
+"oddělovačem cest (na Unixových systémech /):"
 
 # type: TP
 #. type: TP
