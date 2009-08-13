@@ -26,7 +26,12 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 
 	switch (entry->EntryType) {
 	case PBK_CallLength:
-		printf(_("Call length      : %02i:%02i:%02i\n"),entry->CallLength/(60*60),entry->CallLength/60,entry->CallLength%60);
+		printf(LISTFORMAT, _("Call length"));
+		/* l10n: Call length format string hour:minute:second*/
+		printf(_("%02i:%02i:%02i\n"),
+			entry->CallLength / (60 * 60),
+			entry->CallLength / 60,
+			entry->CallLength % 60);
 		return ERR_NONE;
 	case PBK_Date:
 		printf(LISTFORMAT "%s\n", _("Date and time"),OSDateTime(entry->Date,FALSE));

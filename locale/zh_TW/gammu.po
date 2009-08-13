@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-10 15:19+0200\n"
+"POT-Creation-Date: 2009-08-13 11:24+0200\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -608,7 +608,7 @@ msgstr "開始"
 msgid "Stop"
 msgstr ""
 
-#: gammu/calendar.c:155 gammu/calendar.c:825 helper/memory-display.c:35
+#: gammu/calendar.c:155 gammu/calendar.c:825 helper/memory-display.c:40
 msgid "Last modified"
 msgstr ""
 
@@ -627,7 +627,7 @@ msgstr ""
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:830
 #: gammu/calendar.c:1052 gammu/message.c:195 gammu/misc.c:947
-#: helper/memory-display.c:125 helper/message-display.c:430
+#: helper/memory-display.c:130 helper/message-display.c:430
 #, c-format
 msgid "Text"
 msgstr "文字"
@@ -636,7 +636,7 @@ msgstr "文字"
 msgid "Description"
 msgstr ""
 
-#: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:131
+#: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:136
 msgid "LUID"
 msgstr ""
 
@@ -647,7 +647,7 @@ msgstr ""
 msgid "Location"
 msgstr "位置"
 
-#: gammu/calendar.c:227 gammu/calendar.c:835 helper/memory-display.c:56
+#: gammu/calendar.c:227 gammu/calendar.c:835 helper/memory-display.c:61
 msgid "Private"
 msgstr ""
 
@@ -904,8 +904,8 @@ msgstr ""
 msgid "Completed"
 msgstr "已完成"
 
-#: gammu/calendar.c:845 gammu/calendar.c:850 helper/memory-display.c:39
-#: helper/memory-display.c:49 helper/memory-display.c:51
+#: gammu/calendar.c:845 gammu/calendar.c:850 helper/memory-display.c:44
+#: helper/memory-display.c:54 helper/memory-display.c:56
 msgid "Category"
 msgstr ""
 
@@ -1468,15 +1468,15 @@ msgstr ""
 msgid "%i phone number types\n"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:122
+#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:127
 msgid "Home number"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1402 helper/memory-display.c:117
+#: gammu/depend/nokia/dct4.c:1402 helper/memory-display.c:122
 msgid "Mobile number"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1403 helper/memory-display.c:121
+#: gammu/depend/nokia/dct4.c:1403 helper/memory-display.c:126
 msgid "Fax number"
 msgstr ""
 
@@ -1638,7 +1638,7 @@ msgstr ""
 
 #: gammu/gammu.c:116 gammu/message.c:188 gammu/misc.c:783 gammu/misc.c:950
 #: gammu/misc.c:1687 gammu/misc.c:1726 gammu/misc.c:1991 gammu/mms.c:112
-#: helper/memory-display.c:132 helper/message-display.c:242
+#: helper/memory-display.c:137 helper/message-display.c:242
 msgid "Name"
 msgstr "名稱"
 
@@ -2566,7 +2566,7 @@ msgid "default"
 msgstr ""
 
 #: gammu/misc.c:888 gammu/misc.c:890 gammu/misc.c:903 gammu/misc.c:910
-#: helper/memory-display.c:95
+#: helper/memory-display.c:100
 msgid "Ringtone"
 msgstr ""
 
@@ -2937,7 +2937,7 @@ msgstr ""
 msgid " (Car kit profile)"
 msgstr ""
 
-#: gammu/misc.c:1861 helper/memory-display.c:100
+#: gammu/misc.c:1861 helper/memory-display.c:105
 msgid "Ringtone ID"
 msgstr ""
 
@@ -3424,178 +3424,183 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: helper/memory-display.c:29
-#, c-format
-msgid "Call length      : %02i:%02i:%02i\n"
+msgid "Call length"
 msgstr ""
 
-#: helper/memory-display.c:32
+#. l10n: Call length format string hour:minute:second
+#: helper/memory-display.c:31
+#, c-format
+msgid "%02i:%02i:%02i\n"
+msgstr ""
+
+#: helper/memory-display.c:37
 msgid "Date and time"
 msgstr ""
 
-#: helper/memory-display.c:60 helper/memory-display.c:64
-#: helper/memory-display.c:73 helper/memory-display.c:84
+#: helper/memory-display.c:65 helper/memory-display.c:69
+#: helper/memory-display.c:78 helper/memory-display.c:89
 msgid "Caller group"
 msgstr ""
 
-#: helper/memory-display.c:65
+#: helper/memory-display.c:70
 msgid "Caller group number too high, please increase buffer in sources!"
 msgstr ""
 
-#: helper/memory-display.c:104
+#: helper/memory-display.c:109
 msgid "User ID"
 msgstr ""
 
-#: helper/memory-display.c:107
+#: helper/memory-display.c:112
 msgid "Picture name"
 msgstr ""
 
-#: helper/memory-display.c:110
+#: helper/memory-display.c:115
 msgid "Picture ID"
 msgstr ""
 
-#: helper/memory-display.c:113
+#: helper/memory-display.c:118
 msgid "Photo"
 msgstr ""
 
-#: helper/memory-display.c:113
+#: helper/memory-display.c:118
 msgid "Displaying not supported"
 msgstr ""
 
-#: helper/memory-display.c:115
+#: helper/memory-display.c:120
 msgid "Favorite messaging number"
 msgstr ""
 
-#: helper/memory-display.c:116
+#: helper/memory-display.c:121
 msgid "General number"
 msgstr ""
 
-#: helper/memory-display.c:118
+#: helper/memory-display.c:123
 #, fuzzy
 msgid "Mobile number (work)"
 msgstr "串號(IMEI)"
 
-#: helper/memory-display.c:119
+#: helper/memory-display.c:124
 #, fuzzy
 msgid "Mobile number (home)"
 msgstr "串號(IMEI)"
 
-#: helper/memory-display.c:120
+#: helper/memory-display.c:125
 msgid "Work number"
 msgstr ""
 
-#: helper/memory-display.c:123
+#: helper/memory-display.c:128
 msgid "Pager number"
 msgstr ""
 
-#: helper/memory-display.c:124
+#: helper/memory-display.c:129
 msgid "Other number"
 msgstr ""
 
-#: helper/memory-display.c:126
+#: helper/memory-display.c:131
 msgid "Snail address"
 msgstr ""
 
-#: helper/memory-display.c:127
+#: helper/memory-display.c:132
 msgid "Work snail address"
 msgstr ""
 
-#: helper/memory-display.c:128
+#: helper/memory-display.c:133
 msgid "Email address 1"
 msgstr ""
 
-#: helper/memory-display.c:129
+#: helper/memory-display.c:134
 msgid "Email address 2"
 msgstr ""
 
-#: helper/memory-display.c:130
+#: helper/memory-display.c:135
 msgid "URL address"
 msgstr ""
 
-#: helper/memory-display.c:133
+#: helper/memory-display.c:138
 msgid "Last name"
 msgstr ""
 
-#: helper/memory-display.c:134
+#: helper/memory-display.c:139
 msgid "First name"
 msgstr ""
 
-#: helper/memory-display.c:135
+#: helper/memory-display.c:140
 msgid "Formal name"
 msgstr ""
 
-#: helper/memory-display.c:136
+#: helper/memory-display.c:141
 msgid "Nick name"
 msgstr ""
 
-#: helper/memory-display.c:137
+#: helper/memory-display.c:142
 msgid "Company"
 msgstr ""
 
-#: helper/memory-display.c:138
+#: helper/memory-display.c:143
 msgid "Job title"
 msgstr ""
 
-#: helper/memory-display.c:139
+#: helper/memory-display.c:144
 msgid "Street address"
 msgstr ""
 
-#: helper/memory-display.c:140
+#: helper/memory-display.c:145
 msgid "City"
 msgstr ""
 
-#: helper/memory-display.c:141
+#: helper/memory-display.c:146
 msgid "State"
 msgstr "狀態"
 
-#: helper/memory-display.c:142
+#: helper/memory-display.c:147
 msgid "Zip code"
 msgstr ""
 
-#: helper/memory-display.c:143
+#: helper/memory-display.c:148
 msgid "Country"
 msgstr ""
 
-#: helper/memory-display.c:144
+#: helper/memory-display.c:149
 msgid "Work street address"
 msgstr ""
 
-#: helper/memory-display.c:145
+#: helper/memory-display.c:150
 msgid "Work city"
 msgstr ""
 
-#: helper/memory-display.c:146
+#: helper/memory-display.c:151
 msgid "Work state"
 msgstr ""
 
-#: helper/memory-display.c:147
+#: helper/memory-display.c:152
 msgid "Work zip code"
 msgstr ""
 
-#: helper/memory-display.c:148
+#: helper/memory-display.c:153
 msgid "Work country"
 msgstr ""
 
-#: helper/memory-display.c:149
+#: helper/memory-display.c:154
 msgid "Custom text 1"
 msgstr ""
 
-#: helper/memory-display.c:150
+#: helper/memory-display.c:155
 msgid "Custom text 2"
 msgstr ""
 
-#: helper/memory-display.c:151
+#: helper/memory-display.c:156
 msgid "Custom text 3"
 msgstr ""
 
-#: helper/memory-display.c:152
+#: helper/memory-display.c:157
 msgid "Custom text 4"
 msgstr ""
 
-#: helper/memory-display.c:153
+#: helper/memory-display.c:158
 msgid "Push to talk ID"
 msgstr ""
 
-#: helper/memory-display.c:156
+#: helper/memory-display.c:161
 msgid "unknown field type"
 msgstr ""
 
