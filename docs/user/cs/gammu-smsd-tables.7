@@ -19,7 +19,7 @@ manuálová stránka popisuje strukturu databáze a potřebné tabulky.
 Několik SMS démonů může sdílet jedinou databázi. Pokud v jejich nastavení
 nezadáte PhoneID, všechny jsou brány jako rovnocenné a kterýkoliv z nich
 může odeslat odchozí zprávu. Pokud nastavíte PhoneID a použijete ho při
-vkládání zprávy to tabulky outbox (gammu\-smsd\-inject(1)  to dělá), každý SMS
+vkládání zprávy to tabulky outbox (gammu\-smsd\-inject(1) to dělá), každý SMS
 démon bude mít vlastní frontu odchozích zpráv.
 
 .SS "Přijímání zpráv"
@@ -148,7 +148,7 @@ třída SMS nebo \-1 (0 je normální SMS, 1 jen pro zobrazení na displej)
 
 \fBTextDecoded\fP (varchar(160))
 .br
-text zprávy v lidsky čitelné podobě
+text zprávy v "člověkem čitelné" podobě
 
 \fBID\fP (integer unsigned)
 .br
@@ -353,7 +353,7 @@ třída SMS nebo \-1 (0 je normální SMS, 1 jen pro zobrazení na displej)
 
 \fBTextDecoded\fP (varchar(160))
 .br
-text zprávy v lidsky čitelné podobě
+text zprávy v "člověkem čitelné" podobě
 
 \fBID\fP (integer unsigned)
 .br

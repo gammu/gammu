@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-13 11:30+0300\n"
+"POT-Creation-Date: 2009-08-13 11:46+0300\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -672,12 +672,11 @@ msgstr ""
 msgid "Get SMS."
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:225
 msgid ""
 "When give folder 0, sms is given from \"flat\" memory (all sms from all "
-"folders have unique numbers). It's sometimes emulated by Gammu.  You can use "
+"folders have unique numbers). It's sometimes emulated by Gammu. You can use "
 "it with all phones."
 msgstr ""
 
@@ -1056,12 +1055,11 @@ msgstr ""
 msgid "B<savesms RINGTONE>I< file [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num] [-long] [-scale]>"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:382 docs/user/gammu.1:1145
 msgid ""
-"Read RTTL ringtone from file and save as SMS into SIM/phone memory.  "
-"Ringtone is saved in Nokia format."
+"Read RTTL ringtone from file and save as SMS into SIM/phone memory. Ringtone "
+"is saved in Nokia format."
 msgstr ""
 
 # type: Plain text
@@ -1171,11 +1169,10 @@ msgstr ""
 msgid "B<-textutf8> - get text in UTF-8 from command line instead of stdin."
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:435
 msgid ""
-"I<TIP:> You can create Unicode file using WordPad in Win32 (during saving "
+"I<TIP:> You can create Unicode file using WordPad in Windows (during saving "
 "select \"Unicode Text Document\" format). In Unix can use for example YUdit."
 msgstr ""
 
@@ -2525,11 +2522,10 @@ msgid ""
 "ringtone in composer from phone menu (for example, in N33xx)."
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:1175
 msgid ""
-"I<TIP:> when use ~ char in ringtone name, in some phones (like 33xx)  name "
+"I<TIP:> when use ~ char in ringtone name, in some phones (like 33xx) name "
 "will blink later in phone menus"
 msgstr ""
 
@@ -3729,12 +3725,11 @@ msgstr ""
 msgid "Configuration"
 msgstr "Информация о телефоне"
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2373
 msgid ""
 "To check it out, you need to have configuration file for gammu, see gammurc"
-"(5)  for more details about it."
+"(5) for more details about it."
 msgstr ""
 
 #. type: SS
@@ -4152,13 +4147,12 @@ msgid ""
 "and then gammu falls back to current directory (./gammurc)."
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:22 docs/user/gammu-smsdrc.5:18
+#: docs/user/gammurc.5:22
 msgid ""
-"This file use ini file syntax, with comments being marked with both ; and "
-"#.  Sections of config file are identified in square brackets line [this]. "
-"All key values are case insensitive."
+"This file use ini file syntax, with comment parts being marked with both ; "
+"and #. Sections of config file are identified in square brackets line "
+"[this]. All key values are case insensitive."
 msgstr ""
 
 # type: Plain text
@@ -4455,14 +4449,13 @@ msgstr ""
 msgid "B<StartInfo>"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:136
 msgid ""
 "This option allow to set, that you want (setting \"yes\") to see message on "
 "the phone screen or phone should enable light for a moment during starting "
-"connection. Phone will not beep during starting connection with this "
-"option.  This works only with some Nokia phones."
+"connection. Phone will not beep during starting connection with this option. "
+"This works only with some Nokia phones."
 msgstr ""
 
 # type: TP
@@ -4636,12 +4629,11 @@ msgid ""
 "connection = dlr3\n"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:217
 msgid ""
 "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
-"phone)  connected using USB cable:"
+"phone) connected using USB cable:"
 msgstr ""
 
 # type: Plain text
@@ -4654,11 +4646,10 @@ msgid ""
 "connection = at\n"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:232
 msgid ""
-"Gammu configuration for Sony-Ericsson (or any other AT compatible phone)  "
+"Gammu configuration for Sony-Ericsson (or any other AT compatible phone) "
 "connected using bluetooth:"
 msgstr ""
 
@@ -4745,6 +4736,15 @@ msgstr ""
 msgid ""
 "gammu-smsd(1) reads configuration from a config file. It's location can be "
 "specified on command line, otherwise default path /etc/gammu-smsdrc is used."
+msgstr ""
+
+# type: Plain text
+#. type: Plain text
+#: docs/user/gammu-smsdrc.5:18
+msgid ""
+"This file use ini file syntax, with comments being marked with both ; and "
+"#.  Sections of config file are identified in square brackets line [this]. "
+"All key values are case insensitive."
 msgstr ""
 
 # type: Plain text
@@ -4961,12 +4961,11 @@ msgstr ""
 msgid "B<SendTimeout>"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:109
 msgid ""
 "Shows how many seconds SMSD should wait for network answer during sending "
-"sms.  If nothing happen during this time, sms will be resent."
+"sms. If nothing happen during this time, sms will be resent."
 msgstr ""
 
 # type: TP
@@ -5626,12 +5625,11 @@ msgid ""
 "this storage."
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd.1:18
 msgid ""
 "The daemon can reload configuration file after sending hangup signal "
-"(SIGHUP)  and properly terminates itself on SIGINT and SIGTERM."
+"(SIGHUP) and properly terminates itself on SIGINT and SIGTERM."
 msgstr ""
 
 # type: Plain text

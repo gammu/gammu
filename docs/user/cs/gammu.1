@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Aug 11 2009" "Gammu 1.25.91" "Dokumentace Gammu"
+.TH GAMMU 1 "Srpen 11 2009" "Gammu 1.25.91" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -231,9 +231,9 @@ Načte SMS.
 
 Umístění číslujte od 1.
 
-Pokud zadáte složku 0, sms bude načtena z "jednolité" paměti (všechny SMS ze
-všech složek mají unikátní čísla). V některých případech je toto chování
-emulováno Gammu. Můžete ho proto použít se všemi telefony.
+When give folder 0, sms is given from "flat" memory (all sms from all
+folders have unique numbers). It's sometimes emulated by Gammu. You can use
+it with all phones.
 
 When give folder 1, 2, etc. sms are taken from Inbox, Outbox, etc.  and each
 sms has unique number in his folder. Name of folders can depend on your
@@ -313,7 +313,8 @@ Uloží EMS zprávu. Všechny parametry uvedené za \fB\-unread\fP (například
 telefony mohou podporovat více ID a ty nemusí odpovídat jiným značkám
 telefonů.
 
-\fB\-animation\fP \- přidá snámky animace načtené ze souborů file1, file2, atd.
+\fB\-animation\fP \- přidá "frames" snímků animace načtených ze souborů file1,
+file2, atd.
 
 \fB\-defsound\fP \- přidá předdefinovaný zvuk podle zadaného ID. Některé telefony
 mohou podporovat více ID a ty nemusí odpovídat jiným značkám telefonů.
@@ -332,7 +333,7 @@ nebo komatibilního souboru.
 UPI. Phones compatible with UPI (like SonyEricsson phones) will read such
 ringtone as one
 
-\fB\-toneSE\fP \- přidá vyzvánění ve formátu iMelody v krátké formě jak je
+\fB\-toneSE\fP \- přidá vyzvánění ve formátu iMelody v "krátké" formě jak je
 podporováno telefony Sony\-Ericssonn.
 
 \fB\-variablebitmap\fP \- obrázek libovolné velikosti uložený v jedné SMS
@@ -352,7 +353,7 @@ phone menu)
 
 vytvoří EMS zprávu s textem "Pozdrav", předdefinovaným zvukem 1, textem "od
 Gammu", vyzvánění axelf.txt a animací o dvou obrázcích složených ze souborů
-1.bmp a 2.bmp
+(1. snímek) 1.bmp a (2. snímek) 2.bmp
 
 \fIPříklad:\fP gammu savesms EMS \-protected 2 \-variablebitmaplong ala.bmp
 \-toneSElong axelf.txt \-toneSE ring.txt
@@ -416,11 +417,11 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms RINGTONE\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]\fP
-Našte RTTL vyzvánění ze souboru a uloží ho jako SMS. Vyzvánění je uloženo ve
-formátu pro Nokii.
+Read RTTL ringtone from file and save as SMS into SIM/phone memory. Ringtone
+is saved in Nokia format.
 
 \fB\-long\fP \- vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo
-do dvou SMS), ale umí s ním pracovat jen novější telefony (jako 33xx).
+do 2 SMS), ale umí s ním pracovat jen novější telefony (jako 33xx).
 
 \fB\-scale\fP \- ringtone will have Scale info for each note. It will allow to
 edit it correctly later in phone composer (for example, in 33xx)
@@ -456,7 +457,7 @@ text
 
 \fB\-enablevoice\fP | \fB\-disablevoice\fP | \fB\-enablefax \fP | \fB\-disablefax \fP |
 \fB\-enableemail \fP | \fB\-disableemail \fP \- nastaví tyto indikátory. Text bude
-zkrácen na jednu SMS.
+zkrácen na 1 SMS.
 
 \fB\-voidsms\fP \- many phones after receiving it won't display anything, only
 beep, vibrate or turn on light. Text will be cut to 1 sms.
@@ -470,9 +471,8 @@ beep, vibrate or turn on light. Text will be cut to 1 sms.
 \fB\-textutf8\fP \- načte text v UTF\-8 z příkazové řádky místo standardního
 vstupu.
 
-\fITIP:\fP Soubor v Unicode můžete na Windows vytvořit například pomocí
-WordPadu (zvolte volbu "Uložit jako unicode text"). Na Linuxu můžete použít
-třeba YUdit nebo Vim.
+\fITIP:\fP You can create Unicode file using WordPad in Windows (during saving
+select "Unicode Text Document" format). In Unix can use for example YUdit.
 
 \fB\-replacemessages ID\fP \- \fBID\fP can be 1..7. When you will use option and
 send more single SMS to one recipient with the same ID, each another SMS
@@ -507,7 +507,8 @@ sendsms a savesms\fP.
 .TP 
 \fBsavesms VCARD10|VCARD21\fP\fI file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
 Načte kontakt ze zálohy (formáty jaké vytváří funkce \fBbackup\fP) a uloží ho
-do telefonu jako SMS ve formátu VCARD 1.0.
+do telefonu jako SMS ve formátu VCARD 1.0 (jen jméno a výchozí číslo) nebo
+VCARD 2.1 (všechny informace o kontaktu).
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -844,7 +845,8 @@ vCard, you need following command:
 .TP 
 \fBsavesms VCARD10|VCARD21\fP\fI file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
 Načte kontakt ze zálohy (formáty jaké vytváří funkce \fBbackup\fP) a uloží ho
-do telefonu jako SMS ve formátu VCARD 1.0.
+do telefonu jako SMS ve formátu VCARD 1.0 (jen jméno a výchozí číslo) nebo
+VCARD 2.1 (všechny informace o kontaktu).
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -950,8 +952,8 @@ installing, but doesn't delete the application data. Option \fI\-overwriteall\fP
 will also delete all data. Both these options work only for Application or
 Game upload.
 
-\fIExample:\fP gammu nokiaaddfile Application Alien načte  Alien.JAD a
-Alien.JAR a přidá ho do složky Applications
+\fIExample:\fP gammu nokiaaddfile Application Alien načte Alien.JAD a Alien.JAR
+a přidá ho do složky Applications
 
 \fIPříklad:\fP gammu nokiaaddfile Tones file.mid načte soubor file.mid a přidá
 ho do složky Tones
@@ -1208,7 +1210,7 @@ RTTL nebo BINARY (Nokia DCT3).
 .TP 
 \fBplaysavedringtone\fP\fI number\fP
 
-Přehraje jedno z vestavěných vyzvánění. Tento příkaz je dostupný pro
+Přehraje jedno z "vestavěných" vyzvánění. Tento příkaz je dostupný pro
 telefonu DCT4. Pro získání seznamu vyzvánění použijte příkaz
 getringtoneslist.
 
@@ -1224,11 +1226,11 @@ není nastaven čas a datum.
 
 .TP 
 \fBsavesms RINGTONE\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]\fP
-Našte RTTL vyzvánění ze souboru a uloží ho jako SMS. Vyzvánění je uloženo ve
-formátu pro Nokii.
+Read RTTL ringtone from file and save as SMS into SIM/phone memory. Ringtone
+is saved in Nokia format.
 
 \fB\-long\fP \- vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo
-do dvou SMS), ale umí s ním pracovat jen novější telefony (jako 33xx).
+do 2 SMS), ale umí s ním pracovat jen novější telefony (jako 33xx).
 
 \fB\-scale\fP \- ringtone will have Scale info for each note. It will allow to
 edit it correctly later in phone composer (for example, in 33xx)
@@ -1256,8 +1258,8 @@ RTTL ringtones, give location and use \fB\-scale\fP, there will be written scale
 info with each note. It will avoid scale problems available during editing
 ringtone in composer from phone menu (for example, in N33xx).
 
-\fITIP:\fP pokud použijete ve názvu vyzvánění znak ~, bude tento název v menu
-některých telefonů blikat (například 33xx)
+\fITIP:\fP when use ~ char in ringtone name, in some phones (like 33xx) name
+will blink later in phone menus
 
 
 .SS Kalendář
@@ -1724,8 +1726,8 @@ installing, but doesn't delete the application data. Option \fI\-overwriteall\fP
 will also delete all data. Both these options work only for Application or
 Game upload.
 
-\fIExample:\fP gammu nokiaaddfile Application Alien načte  Alien.JAD a
-Alien.JAR a přidá ho do složky Applications
+\fIExample:\fP gammu nokiaaddfile Application Alien načte Alien.JAD a Alien.JAR
+a přidá ho do složky Applications
 
 \fIPříklad:\fP gammu nokiaaddfile Tones file.mid načte soubor file.mid a přidá
 ho do složky Tones
@@ -1790,7 +1792,7 @@ see netmonitor menu)
 
 .TP 
 \fBnokianetmonitor36\fP
-Vynuluje čítače z testu 16 v netmonitoru telefonů Nokia DCT3.
+Vynuluje čítače z testu 36 v netmonitoru telefonů Nokia DCT3.
 
 \fITIP:\fP Pro více informací se podívejte na stránky
 \fIhttp://www.mwiacek.com\fP, kde naleznete manuál k netmonitoru.
@@ -1836,7 +1838,7 @@ a pro DCT4:
 
 .TP 
 \fBnokiasetvibralevel\fP\fI level\fP
-Nastaví úrověň vibrací na zadanou úroveň (v procentech)
+Nastaví úrověň vibrací na úroveň "level" (v procentech)
 
 .TP 
 \fBnokiatuneradio\fP
@@ -2280,7 +2282,7 @@ Odstraní uživatelská nastavení
 .br
 * změny jako \fBALL\fP
 .br
-* vypne netmonitori a další skrytá menu
+* vypne netmonitor a PPS (všechna "skrytá" menu)
 
 \fBFACTORY:\fP
 .br
@@ -2384,7 +2386,7 @@ a pro DCT4:
 
 .TP 
 \fBnokiasetvibralevel\fP\fI level\fP
-Nastaví úrověň vibrací na zadanou úroveň (v procentech)
+Nastaví úrověň vibrací na úroveň "level" (v procentech)
 
 .TP 
 \fBpresskeysequence\fP\fI mMnNpPuUdD+\-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@\fP
@@ -2462,8 +2464,8 @@ Zobrazí informace o verzi a licenci
 .SS Nastavení
 
 .P
-Pro vyzkoušení potřebujete vytvořit konfigurační soubor pro gammu, který je
-podrobně popsán v gammurc(5).
+To check it out, you need to have configuration file for gammu, see
+gammurc(5) for more details about it.
 
 .SS "Posílání zpráv"
 
@@ -2490,7 +2492,7 @@ nebo
 gammu savesms EMS \-text "All your base are belong to us"
 
 .TP 
-Uložení zprávy s předdefinovaným zvukem a animací ze dvou obrázků:
+Uložení zprávy s předdefinovaným zvukem a animací ze 2 obrázků:
 
 gammu savesms EMS \-text "Greetings" \-defsound 1 \-text "from Gammu" \-tone10
 axelf.txt \-animation 2 file1.bmp file2.bmp
@@ -2533,7 +2535,7 @@ Hledat: Type = NumberGeneral\enEntry\e([0\-9][0\-9]\e)Text =
 Nahradit: Replace: Type = NumberMobile\enEntry\e1Text = "\e+3620
 
 .TP 
-Změnit typ čísla na mobilní pro čísla začínající na  +3620, +3630,... a odstranit odpovídající řádku TextUnicode
+Změnit typ čísla na mobilní pro čísla začínající na +3620, +3630,... a odstranit odpovídající řádku TextUnicode
 
 Hledat: Type = NumberGeneral\enEntry\e([0\-9][0\-9]\e)Text =
 "\e+36\e([2367]0\e)\e([^\e"]*\e)"\enEntry\e([0\-9][0\-9]\e)TextUnicode =

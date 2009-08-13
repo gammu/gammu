@@ -20,14 +20,14 @@ Na Windows uživatelská konfigurace je hledána jako profil/Data
 Aplikací/gammurc a poku není nelezen, použije Gammu aktuální adresář
 (./gammurc).
 
-Tento soubor používá syntaxi ini souborů, komentáře mohou být značeny buď ;
-nebo #. Sekce souboru jsou zapsány v hranatých závorkách jako [toto].Všechny
-hodnoty klíčů nerozlišují velikost písmen.
+This file use ini file syntax, with comment parts being marked with both ;
+and #. Sections of config file are identified in square brackets line
+[this]. All key values are case insensitive.
 
 Konfigurační soubor pro gammu může obsahovat několik sekcí \- [gammu],
 [gammu1], [gammuN], ... Každá sekce definuje jedno připojení a ve výchozím
 režime gammu postupně zkouší všechny podle čísel. Můžete také zadat
-parametrem pro gammu(1), které číslo sekce ([gammu] je číslo 0) má  použít a
+parametrem pro gammu(1), které číslo sekce ([gammu] je číslo 0) má použít a
 pak se použije jen tato sekce.
 
 .TP 
@@ -140,10 +140,10 @@ Určí, zda chcete nastavit čas v telefonu při připojení.
 .TP 
 \fBStartInfo\fP
 
-Tato volba umožní nastavit (při nastavení na "yes") zobrazení zprávy na
-displeji telefonu nebo rozsvítit jeho podsvícení při připojení. Telefon
-nebude během připojení vydávat žádné zvuky. Tato volba funguje jen s
-některými telefony Nokia.
+This option allow to set, that you want (setting "yes") to see message on
+the phone screen or phone should enable light for a moment during starting
+connection. Phone will not beep during starting connection with this
+option. This works only with some Nokia phones.
 
 .TP 
 \fBGammuCoding\fP
@@ -199,7 +199,7 @@ prefixu F_). Prosím nahlašte správné hodnoty autorům Gammu.
 \fBUse_Locking\fP
 
 Na Posixových systémech můžete chtít použít zamykání zařízení pomocí UUCP
-zámků. Zapnutím této volby (nastavením na "yes") bude Gammu dodržovat tyto
+zámků. Zapnutím této volby (nastavením na yes) bude Gammu dodržovat tyto
 zámky a vytvářet je při připojování. Na většině distribucí pro vytvoření
 zámku potřebujete dodatečná oprávnění (například být členem skupiny uucp).
 
@@ -223,8 +223,8 @@ connection = dlr3
 .RE
 .PP
 
-Konfigurace Gammu pro telefon Sony\-Ericsson (nebo jiný používající AT
-příkazy) připojený pomocí USB kabelu:
+Gammu configuration for Sony\-Ericsson phone (or any other AT compatible
+phone) connected using USB cable:
 
 .RS
 .sp
@@ -238,8 +238,8 @@ connection = at
 .RE
 .PP
 
-Konfigurace Gammu pro telefon Sony\-Ericsson (nebo jiný používající AT
-příkazy) připojený pomocí Bluetooth:
+Gammu configuration for Sony\-Ericsson (or any other AT compatible phone)
+connected using bluetooth:
 
 .RS
 .sp

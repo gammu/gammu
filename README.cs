@@ -76,7 +76,7 @@ přidáním parametrů --debug textall, např.:
 Vývojáři
 ========
 
-Nějaké informace jsou dostupné na wiki a v  docs/develop/ folder. Můžete si
+Nějaké informace jsou dostupné na wiki a v docs/develop/ folder. Můžete si
 také vygenerovat dokumentaci pomocí Doxygenu. Dokumentaci API vytvoříte
 pomocí make apidoc v adresáři s buildem, můžete si jí prohlédnout na
 <http://cihar.com/gammu/api/>. Podobně interní dokumentace může být
@@ -107,7 +107,7 @@ adresáři locale/ a poslání změn do bug trackeru.
 Poznámka
 ========
 
-Jméno Gammu nemá nic společného s Gammu z knihy Kacíři Duny od Franka
+Jméno Gammu nemá nic společného s Gammu z knihy "Kacíři Duny" od Franka
 Herberta.
 
 

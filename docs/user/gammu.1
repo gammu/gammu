@@ -220,8 +220,8 @@ Get SMS.
 Locations are numerated from 1.
 
 When give folder 0, sms is given from "flat" memory (all sms from all
-folders have unique numbers). It's sometimes emulated by Gammu.
-You can use it with all phones.
+folders have unique numbers). It's sometimes emulated by Gammu. You 
+can use it with all phones.
 
 When give folder 1, 2, etc. sms are taken from Inbox, Outbox, etc.
 and each sms has unique number in his folder. Name of folders can
@@ -377,8 +377,8 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 
 .TP
 .BI "savesms RINGTONE" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]"
-Read RTTL ringtone from file and save as SMS into SIM/phone memory.
-Ringtone is saved in Nokia format.
+Read RTTL ringtone from file and save as SMS into SIM/phone 
+memory. Ringtone is saved in Nokia format.
 
 \fB\-long\fR - ringtone is saved using Profile style. It can be longer (and saved
 in 2 SMS), but decoded only by newer phones (like 33xx)
@@ -400,7 +400,7 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 
 .TP
 .BI "savesms TEXT" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]"
-Take text from stdin (or commandline if \-text specified) 
+Take text from stdin (or commandline if \-text specified)
 and save as text SMS into SIM/phone memory.
 
 \fB\-flash\fR - Class 0 SMS
@@ -430,7 +430,7 @@ only beep, vibrate or turn on light. Text will be cut to 1 sms.
 \fB\-textutf8\fR - get text in UTF-8 from command line instead of stdin.
 
 \fITIP:\fR
-You can create Unicode file using WordPad in Win32 (during saving select
+You can create Unicode file using WordPad in Windows (during saving select
 "Unicode Text Document" format). In Unix can use for example YUdit.
 
 \fB\-replacemessages ID\fR - \fBID\fR can be 1..7. When you will use option and
@@ -1140,8 +1140,8 @@ be done, when phone doesn't have set clock inside.
 
 .TP
 .BI "savesms RINGTONE" " file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]"
-Read RTTL ringtone from file and save as SMS into SIM/phone memory.
-Ringtone is saved in Nokia format.
+Read RTTL ringtone from file and save as SMS into SIM/phone 
+memory. Ringtone is saved in Nokia format.
 
 \fB\-long\fR - ringtone is saved using Profile style. It can be longer (and saved
 in 2 SMS), but decoded only by newer phones (like 33xx)
@@ -1170,8 +1170,8 @@ When use RTTL ringtones, give location and use \fB\-scale\fR, there will be writ
 scale info with each note. It will avoid scale problems available during
 editing ringtone in composer from phone menu (for example, in N33xx).
 
-\fITIP:\fR when use ~ char in ringtone name, in some phones (like 33xx)
-name will blink later in phone menus
+\fITIP:\fR when use ~ char in ringtone name, in some phones (like 
+33xx) name will blink later in phone menus
 
 
 .SS "Calendar notes"
@@ -2368,8 +2368,8 @@ Print version information and license.
 .SS Configuration
 
 .P 
-To check it out, you need to have configuration file for gammu, see gammurc(5)
-for more details about it.
+To check it out, you need to have configuration file for gammu, see 
+gammurc(5) for more details about it.
 
 .SS Sending messages
 
