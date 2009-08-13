@@ -1297,14 +1297,13 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:435
-#, fuzzy
 msgid ""
 "I<TIP:> You can create Unicode file using WordPad in Windows (during saving "
 "select \"Unicode Text Document\" format). In Unix can use for example YUdit."
 msgstr ""
 "I<TIP:> Soubor v Unicode můžete na Windows vytvořit například pomocí "
-"WordPadu (zvolte volbu \"Uložit jako unicode text\"). Na Linuxu můžete "
-"použít třeba YUdit nebo Vim."
+"WordPadu (zvolte volbu \"Uložit jako unicode text\"). Na Linuxu můžete použít "
+"třeba YUdit nebo Vim."
 
 # type: Plain text
 #. type: Plain text
