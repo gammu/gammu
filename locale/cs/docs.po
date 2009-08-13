@@ -5023,7 +5023,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:217
-#, fuzzy
 msgid ""
 "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
 "phone) connected using USB cable:"
