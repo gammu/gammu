@@ -1332,7 +1332,7 @@ msgid ""
 "required), text of sms after ~ char will blink in some phones (like N33xx)"
 msgstr ""
 "I<TIP:> pokud použijete ve textu zprávy znak ~ a přepínač B<-unicode>, bude "
-"text za znakem ~ u některých telefonů blikat (například 33xx) "
+"text za znakem ~ u některých telefonů blikat (například 33xx)"
 
 # type: Plain text
 #. type: Plain text
