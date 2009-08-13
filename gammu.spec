@@ -20,7 +20,8 @@ Release:            1
 
 # Python name
 %{!?__python: %define __python python}
-%{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
+%define g_python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")
+%define g_python_major_version %(%{__python} -c 'import sys; print sys.version.split(" ")[0][:3]')
 
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
 %define gammu_docdir %_docdir/%{name}-%{version}
@@ -153,14 +154,16 @@ Currently supported phones include:
 * OBEX and IrMC capable phones (Sony-Ericsson, Motorola).
 * Symbian phones through gnapplet.
 
+This package contains Gammu binary as well as some examples.
+
 %package devel
-License:      GPL v2
 Summary:      Development files for Gammu
 %if 0%{?suse_version}
 Group:              Development/Libraries/C and C++
 %else
 Group:              Development/Libraries
 %endif
+Autoreqprov:  on
 Requires:           %{name} = %{version}-%{release} pkgconfig
 
 %description devel
@@ -182,19 +185,90 @@ Currently supported phones include:
 This package contain files needed for development.
 
 %package -n python-gammu
-License:    GPL v2
 Summary:    Python module to communicate with mobile phones
 %if 0%{?suse_version}
 Group:      Development/Libraries/Python
 %else
 Group:      Development/Languages
 %endif
-Requires: python
+Requires: python >= %{g_python_major_version}, python < %{g_python_major_version}.99
 %{?py_requires}
 
 %description -n python-gammu
 This provides gammu module, that can work with any phone Gammu
 supports - many Nokias, Siemens, Alcatel, ...
+
+%package smsd
+Summary:    SMS message daemon
+%if 0%{?suse_version}
+Group:              Hardware/Mobile
+%else
+Group:              Applications/Communications
+%endif
+PreReq: %insserv_prereq  %fillup_prereq
+
+%description smsd
+Gammu is command line utility and library to work with mobile phones
+from many vendors. Support for different models differs, but basic
+functions should work with majority of them. Program can work with
+contacts, messages (SMS, EMS and MMS), calendar, todos, filesystem,
+integrated radio, camera, etc. It also supports daemon mode to send and
+receive SMSes.
+
+Currently supported phones include:
+
+* Many Nokia models.
+* Alcatel BE5 (501/701), BF5 (715), BH4 (535/735).
+* AT capable phones (Siemens, Nokia, Alcatel, IPAQ).
+* OBEX and IrMC capable phones (Sony-Ericsson, Motorola).
+* Symbian phones through gnapplet.
+
+This package contains Gammu SMS Daemon and tool to inject messages 
+into the queue.
+
+%package -n libGammu6
+Summary:    Mobile phone management library
+Group:      System/Libraries
+
+%description -n libGammu6
+Gammu is command line utility and library to work with mobile phones
+from many vendors. Support for different models differs, but basic
+functions should work with majority of them. Program can work with
+contacts, messages (SMS, EMS and MMS), calendar, todos, filesystem,
+integrated radio, camera, etc. It also supports daemon mode to send and
+receive SMSes.
+
+Currently supported phones include:
+
+* Many Nokia models.
+* Alcatel BE5 (501/701), BF5 (715), BH4 (535/735).
+* AT capable phones (Siemens, Nokia, Alcatel, IPAQ).
+* OBEX and IrMC capable phones (Sony-Ericsson, Motorola).
+* Symbian phones through gnapplet.
+
+This package contains Gammu shared library.
+
+%package -n libgsmsd6
+Summary:    SMS daemon helper library
+Group:      System/Libraries
+
+%description -n libgsmsd6
+Gammu is command line utility and library to work with mobile phones
+from many vendors. Support for different models differs, but basic
+functions should work with majority of them. Program can work with
+contacts, messages (SMS, EMS and MMS), calendar, todos, filesystem,
+integrated radio, camera, etc. It also supports daemon mode to send and
+receive SMSes.
+
+Currently supported phones include:
+
+* Many Nokia models.
+* Alcatel BE5 (501/701), BF5 (715), BH4 (535/735).
+* AT capable phones (Siemens, Nokia, Alcatel, IPAQ).
+* OBEX and IrMC capable phones (Sony-Ericsson, Motorola).
+* Symbian phones through gnapplet.
+
+This package contains Gammu SMS daemon shared library.
 
 %prep
 %setup -q
@@ -204,6 +278,7 @@ mkdir build-dir
 cd build-dir
 cmake ../ \
     -DBUILD_SHARED_LIBS=ON \
+    -DINSTALL_LSB_INIT=ON \
     -DBUILD_PYTHON=/usr/bin/python \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DINSTALL_DOC_DIR=%gammu_docdir \
@@ -216,29 +291,77 @@ cd build-dir
 ctest -V
 
 %install
-%if 0%{?suse_version} == 0
 rm -rf %buildroot
 mkdir %buildroot
-%endif
 make -C build-dir install DESTDIR=%buildroot
 %find_lang %{name}
 %find_lang libgammu
 cat libgammu.lang >> %{name}.lang
+install -m644 docs/config/smsdrc %buildroot/etc/gammu-smsdrc
 
-%post -p /sbin/ldconfig
+%post -n libGammu6 -p /sbin/ldconfig
 
-%postun -p /sbin/ldconfig
+%post -n libgsmsd6 -p /sbin/ldconfig
+
+%postun -n libGammu6 -p /sbin/ldconfig
+
+%postun -n libgsmsd6 -p /sbin/ldconfig
+
+%post smsd
+%fillup_and_insserv gammu-smsd
+
+%preun smsd
+%stop_on_removal gammu-smsd
+
+%postun smsd
+%restart_on_update gammu-smsd
+%insserv_cleanup
+
 
 %files -f %name.lang
 %defattr(-,root,root)
-%_bindir/*
-%_libdir/*.so.*
-%_mandir/man1/*
-%_mandir/man5/*
-%_mandir/man7/*
-%lang(cs) %_mandir/cs
 %doc %gammu_docdir
 %config /etc/bash_completion.d/gammu
+%_bindir/gammu
+%_bindir/gammu-config
+%_bindir/jadmaker
+%_mandir/man1/gammu.1*
+%_mandir/man1/gammu-config.1*
+%_mandir/man1/jadmaker.1*
+%_mandir/man5/gammurc.5*
+%lang(cs) %dir %_mandir/cs
+%lang(cs) %dir %_mandir/cs/man5
+%lang(cs) %dir %_mandir/cs/man1
+%lang(cs) %_mandir/cs/man1/gammu.1*
+%lang(cs) %_mandir/cs/man1/gammu-config.1*
+%lang(cs) %_mandir/cs/man1/jadmaker.1*
+%lang(cs) %_mandir/cs/man5/gammurc.5*
+
+%files smsd
+%defattr(-,root,root)
+%_bindir/gammu-smsd
+%_bindir/gammu-smsd-inject
+%_bindir/gammu-smsd-monitor
+%_mandir/man1/gammu-smsd*
+%_mandir/man7/gammu-smsd*
+%_mandir/man5/gammu-smsd*
+%lang(cs) %dir %_mandir/cs
+%lang(cs) %dir %_mandir/cs/man7
+%lang(cs) %dir %_mandir/cs/man5
+%lang(cs) %dir %_mandir/cs/man1
+%lang(cs) %_mandir/cs/man1/gammu-smsd*
+%lang(cs) %_mandir/cs/man7/gammu-smsd*
+%lang(cs) %_mandir/cs/man5/gammu-smsd*
+%attr(755,root,root) %config /etc/init.d/gammu-smsd
+%config /etc/gammu-smsdrc
+
+%files -n libGammu6
+%defattr(-,root,root)
+%_libdir/libGammu*.so.*
+
+%files -n libgsmsd6
+%defattr(-,root,root)
+%_libdir/libgsmsd*.so.*
 
 %files devel
 %defattr(-,root,root)
@@ -250,7 +373,7 @@ cat libgammu.lang >> %{name}.lang
 %files -n python-gammu
 %defattr(-,root,root)
 %doc README.Python python/examples
-%python_sitearch/*
+%g_python_sitearch/*
 
 %clean
 rm -rf %buildroot

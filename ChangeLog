@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2009???? - 1.25.92
+
+[+] * Reworked RPM packages (separate libraries and SMSD).
     
 20090813 - 1.25.91
 
