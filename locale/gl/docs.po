@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-13 10:57+0300\n"
+"POT-Creation-Date: 2009-08-13 11:18+0300\n"
 "PO-Revision-Date: 2009-02-14 23:34+0100\n"
 "Last-Translator: Alejandro Casas <acasasv@yahoo.es>\n"
 "Language-Team: none\n"
@@ -7831,38 +7831,38 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:55
+#: README:54
 msgid ""
 "Gammu requires configuration to be able to properly talk to your phone.  You "
-"can create own by starting from example in docs/examples/config/gammurc, "
-"where parameters are described, or use utils/gammu-config script (installed "
-"to bin), which can help you to generate valid configuration."
+"can create own by starting from example in docs/config/gammurc, where "
+"parameters are described, or use utils/gammu-config script (installed to "
+"bin), which can help you to generate valid configuration."
 msgstr ""
 
 #. type: Plain text
-#: README:59
+#: README:58
 msgid ""
 "Alternatively you might want to try GUI for Gammu called Wammu (see <http://"
 "wammu.eu/>), which can automatically generate configuration for you."
 msgstr ""
 
 #. type: Plain text
-#: README:63
+#: README:62
 msgid ""
 "The configuration file should be placed in ~/.gammurc or /etc/gammurc on "
-"Unixes. On Windoes you can place gammurc in Application Data folder in yout "
+"Unixes. On Windows you can place gammurc in Application Data folder in your "
 "profile or in same directory as is binary being executed from."
 msgstr ""
 
 #. type: Plain text
-#: README:67
+#: README:66
 msgid ""
 "For hints about configuring your phone, you can check Gammu Phone Database "
 "<http://cihar.com/gammu/phonedb/> to see what user users experienced."
 msgstr ""
 
 #. type: Plain text
-#: README:70
+#: README:69
 #, no-wrap
 msgid ""
 "Problems\n"
@@ -7870,7 +7870,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:75
+#: README:74
 msgid ""
 "Use <http://bugs.cihar.com/> or mailing list for reporting problems.  It "
 "useful to send logs of Gammu executed with enabled debugging. You can to it "
@@ -7878,13 +7878,13 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:77
+#: README:76
 #, no-wrap
 msgid "   gammu --debug textall --identify\n"
 msgstr ""
 
 #. type: Plain text
-#: README:80
+#: README:79
 #, no-wrap
 msgid ""
 "Developers\n"
@@ -7892,7 +7892,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:88
+#: README:87
 msgid ""
 "Some information is available on wiki and in docs/develop/ folder. You can "
 "also generate documentation using Doxygen. API documentation can be "
@@ -7902,7 +7902,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:92
+#: README:91
 msgid ""
 "If you intend to use libGammu in your application, all you should need is to "
 "#include <gammu.h> and then use Gammu functions. You can check docs/develop/"
@@ -7910,7 +7910,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:95
+#: README:94
 #, no-wrap
 msgid ""
 "Localization\n"
@@ -7918,15 +7918,15 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:100
+#: README:99
 msgid ""
 "Localization uses Gettext. You can set locales you want to use by specifying "
 "LANG or LC_* environment variables (on Linux you usually don't care about "
-"this, on Windows just export e.g. LANG=cs_CZ."
+"this, on Windows just export e.g. LANG=cs_CZ)."
 msgstr ""
 
 #. type: Plain text
-#: README:105
+#: README:104
 msgid ""
 "If you want to improve existing translation, please visit <http://l10n.cihar."
 "com/projects/gammu/>. For adding new one, you need to contact <michal@cihar."
@@ -7934,14 +7934,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:108
+#: README:107
 msgid ""
 "You can also go ahead with traditional way of creating/updating po files in "
 "locale/ folder and then sending updated ones to bug tracker."
 msgstr ""
 
 #. type: Plain text
-#: README:111
+#: README:110
 #, no-wrap
 msgid ""
 "Note\n"
@@ -7949,14 +7949,14 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:115
+#: README:114
 msgid ""
 "Name Gammu is not connected with Gammu from \"Heretics of Dune\" written by "
 "Frank Herbert."
 msgstr ""
 
 #. type: Plain text
-#: README:118
+#: README:117
 #, no-wrap
 msgid ""
 "Feedback\n"
@@ -7964,16 +7964,15 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:124
+#: README:122
 msgid ""
 "Any feedback is welcome, if you found bug, please follow description in "
 "section \"Problems\". You can contact developers and users on <gammu-"
-"users@lists.sourceforge.net> mailing list or directly current maintainer at "
-"<michal@cihar.com>."
+"users@lists.sourceforge.net> mailing list."
 msgstr ""
 
 #. type: Plain text
-#: README:125 INSTALL:304
+#: README:123 INSTALL:304
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 msgstr ""
 

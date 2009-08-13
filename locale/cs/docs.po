@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-13 10:57+0300\n"
-"PO-Revision-Date: 2009-08-13 10:57+0200\n"
+"POT-Creation-Date: 2009-08-13 11:18+0300\n"
+"PO-Revision-Date: 2009-08-13 11:18+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -8481,6 +8481,9 @@ msgid ""
 "mwiacek.com> projects. Gammu was former (up to version 0.58) called "
 "MyGnokii2."
 msgstr ""
+"Projekt byl původně veden Marcinem Wiackem. Byl založen na zdrojových kódech "
+"projektů Gnokii <http://www.gnokii.org> a pozdějí MyGnokii <http://www."
+"mwiacek.com>. Gammu bylo (až do verze 0.58) nazýváno MyGnokii2."
 
 #. type: Plain text
 #: README:14
@@ -8536,6 +8539,9 @@ msgid ""
 "being used), information about accessing these is available at <http://cihar."
 "com/gammu/>."
 msgstr ""
+"Vývojáře by mohl snajímat aktuální snímek kódu nebo systém správy verzí (v "
+"současné době je používán Git). Informace o nich naleznete na <http://cihar."
+"com/gammu/>."
 
 #. type: Plain text
 #: README:36
@@ -8566,6 +8572,10 @@ msgid ""
 "ones have z >= 90. Testing releases usually provide latest features, but "
 "everything does not have to be stabilized yet."
 msgstr ""
+"Existují dva typy vydání - testovací a stabilní, oba mají verzi ve formátu x."
+"y.z. Stabilní vydání mají obvykle z = 0 nebo nějaké malé číslo a testovací "
+"naopak mají z >= 90. Testovací vydání obvykle poskytují poslední novinky, "
+"ale všechno ještě nemusí být stabilní a plně funkční."
 
 #. type: Plain text
 #: README:48
@@ -8578,16 +8588,22 @@ msgstr ""
 "=========\n"
 
 #. type: Plain text
-#: README:55
+#: README:54
+#, fuzzy
 msgid ""
 "Gammu requires configuration to be able to properly talk to your phone.  You "
-"can create own by starting from example in docs/examples/config/gammurc, "
-"where parameters are described, or use utils/gammu-config script (installed "
-"to bin), which can help you to generate valid configuration."
+"can create own by starting from example in docs/config/gammurc, where "
+"parameters are described, or use utils/gammu-config script (installed to "
+"bin), which can help you to generate valid configuration."
 msgstr ""
+"Gammu potřebuje konfigurační soubor aby bylo schopné komunikovat s vaším "
+"telefonem.  Můžete ho vytvořit třeba tím, že vyjdete z příkadů v docs/config/"
+"gammurc, ve kterém jsou popsány všechny parametry, nebo můžete použít skript "
+"utils/gammu-config (nainstalovaný do adresáře bin), který vám může pomoci "
+"vytvořit správné nastavení."
 
 #. type: Plain text
-#: README:59
+#: README:58
 msgid ""
 "Alternatively you might want to try GUI for Gammu called Wammu (see <http://"
 "wammu.eu/>), which can automatically generate configuration for you."
@@ -8596,15 +8612,18 @@ msgstr ""
 "které umí automaticky vytvořit konfiguraci pro váš telefon."
 
 #. type: Plain text
-#: README:63
+#: README:62
 msgid ""
 "The configuration file should be placed in ~/.gammurc or /etc/gammurc on "
-"Unixes. On Windoes you can place gammurc in Application Data folder in yout "
+"Unixes. On Windows you can place gammurc in Application Data folder in your "
 "profile or in same directory as is binary being executed from."
 msgstr ""
+"Konfigurační soubor by měl být umístěn v ~/.gammurc nebo /etc/gammurc na "
+"Unixech. Na Windows můžete gammurc umístit do složky Data aplikací ve vašem "
+"profilu nebo ve stejném adresáři z jakého je Gammu spuštěno."
 
 #. type: Plain text
-#: README:67
+#: README:66
 msgid ""
 "For hints about configuring your phone, you can check Gammu Phone Database "
 "<http://cihar.com/gammu/phonedb/> to see what user users experienced."
@@ -8613,7 +8632,7 @@ msgstr ""
 "<http://cihar.com/gammu/phonedb/>, kam uživatelé zapisují svoje zkušenosti."
 
 #. type: Plain text
-#: README:70
+#: README:69
 #, no-wrap
 msgid ""
 "Problems\n"
@@ -8623,8 +8642,7 @@ msgstr ""
 "========\n"
 
 #. type: Plain text
-#: README:75
-#, fuzzy
+#: README:74
 msgid ""
 "Use <http://bugs.cihar.com/> or mailing list for reporting problems.  It "
 "useful to send logs of Gammu executed with enabled debugging. You can to it "
@@ -8635,13 +8653,13 @@ msgstr ""
 "přidáním parametrů --debug textall, např.:"
 
 #. type: Plain text
-#: README:77
-#, fuzzy, no-wrap
+#: README:76
+#, no-wrap
 msgid "   gammu --debug textall --identify\n"
-msgstr "   gammu textall --identify\n"
+msgstr "   gammu --debug textall --identify\n"
 
 #. type: Plain text
-#: README:80
+#: README:79
 #, no-wrap
 msgid ""
 "Developers\n"
@@ -8651,7 +8669,7 @@ msgstr ""
 "========\n"
 
 #. type: Plain text
-#: README:88
+#: README:87
 msgid ""
 "Some information is available on wiki and in docs/develop/ folder. You can "
 "also generate documentation using Doxygen. API documentation can be "
@@ -8659,9 +8677,14 @@ msgid ""
 "cihar.com/gammu/api/>. Similarly internal documentation can be generated by "
 "make interndoc and is available on <http://cihar.com/gammu/docs/>."
 msgstr ""
+"Nějaké informace jsou dostupné na wiki a v  docs/develop/ folder. Můžete si "
+"také vygenerovat dokumentaci pomocí Doxygenu. Dokumentaci API vytvoříte "
+"pomocí make apidoc v adresáři s buildem, můžete si jí prohlédnout na <http://"
+"cihar.com/gammu/api/>. Podobně interní dokumentace může být vygenerována "
+"spuštěním make interndoc a je dostupná na <http://cihar.com/gammu/docs/>."
 
 #. type: Plain text
-#: README:92
+#: README:91
 msgid ""
 "If you intend to use libGammu in your application, all you should need is to "
 "#include <gammu.h> and then use Gammu functions. You can check docs/develop/"
@@ -8669,7 +8692,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:95
+#: README:94
 #, no-wrap
 msgid ""
 "Localization\n"
@@ -8679,30 +8702,38 @@ msgstr ""
 "========\n"
 
 #. type: Plain text
-#: README:100
+#: README:99
 msgid ""
 "Localization uses Gettext. You can set locales you want to use by specifying "
 "LANG or LC_* environment variables (on Linux you usually don't care about "
-"this, on Windows just export e.g. LANG=cs_CZ."
+"this, on Windows just export e.g. LANG=cs_CZ)."
 msgstr ""
+"Pro překlad programu je používánGettext. Jazyk můžete vybrat pomocí "
+"proměnných prostředí LANG nebo LC_* (na Linuxu se o to obvykle nestaráte, na "
+"Windows stačí exportovat např. LANG=cs_CZ)."
 
 #. type: Plain text
-#: README:105
+#: README:104
 msgid ""
 "If you want to improve existing translation, please visit <http://l10n.cihar."
 "com/projects/gammu/>. For adding new one, you need to contact <michal@cihar."
 "com> and then you will be able to edit it on former mentioned URL."
 msgstr ""
+"Pokud chcete vylepšit stávající překlady, prosím navštivte <http://l10n."
+"cihar.com/projects/gammu/>. Pro přidání překladu prosím kontaktujte "
+"<michal@cihar.com> a poté již ho budete moci upravovat na zadaném URL."
 
 #. type: Plain text
-#: README:108
+#: README:107
 msgid ""
 "You can also go ahead with traditional way of creating/updating po files in "
 "locale/ folder and then sending updated ones to bug tracker."
 msgstr ""
+"Můžete také překládat tradiční cestou vytváření/aktualizací po souborů v "
+"adresáři locale/ a poslání změn do bug trackeru."
 
 #. type: Plain text
-#: README:111
+#: README:110
 #, no-wrap
 msgid ""
 "Note\n"
@@ -8712,14 +8743,16 @@ msgstr ""
 "========\n"
 
 #. type: Plain text
-#: README:115
+#: README:114
 msgid ""
 "Name Gammu is not connected with Gammu from \"Heretics of Dune\" written by "
 "Frank Herbert."
 msgstr ""
+"Jméno Gammu nemá nic společného s Gammu z knihy Kacíři Duny od Franka "
+"Herberta."
 
 #. type: Plain text
-#: README:118
+#: README:117
 #, no-wrap
 msgid ""
 "Feedback\n"
@@ -8729,16 +8762,18 @@ msgstr ""
 "==========\n"
 
 #. type: Plain text
-#: README:124
+#: README:122
 msgid ""
 "Any feedback is welcome, if you found bug, please follow description in "
 "section \"Problems\". You can contact developers and users on <gammu-"
-"users@lists.sourceforge.net> mailing list or directly current maintainer at "
-"<michal@cihar.com>."
+"users@lists.sourceforge.net> mailing list."
 msgstr ""
+"Jakékoliv připomínky jsou vítány, pokud jste našli chybu, prosím řiďte se "
+"instrukcemi v sekci \"Problémy\". Vývojáře můžete kontaktovat na mailing "
+"listu <gammu-users@lists.sourceforge.net>."
 
 #. type: Plain text
-#: README:125 INSTALL:304
+#: README:123 INSTALL:304
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 
