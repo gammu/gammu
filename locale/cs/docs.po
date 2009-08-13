@@ -1186,7 +1186,7 @@ msgid ""
 "saved in 2 SMS), but decoded only by newer phones (like 33xx)"
 msgstr ""
 "B<-long> - vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo "
-"do dvou SMS), ale umí s ním pracovat jen novější telefony (jako 33xx)."
+"do 2 SMS), ale umí s ním pracovat jen novější telefony (jako 33xx)."
 
 # type: Plain text
 #. type: Plain text
