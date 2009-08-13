@@ -6667,7 +6667,7 @@ msgstr "gammu-smsd-inject EMS 123456 -text \"All your base are belong to us\""
 #: docs/user/gammu-smsd-inject.1:65
 #, no-wrap
 msgid "Inject some funky message with predefined sound and animation from 2 bitmaps:"
-msgstr "Vložení zprávy s předdefinovaným zvukem a animací ze dvou obrázků:"
+msgstr "Vložení zprávy s předdefinovaným zvukem a animací ze 2 obrázků:"
 
 # type: Plain text
 #. type: Plain text
