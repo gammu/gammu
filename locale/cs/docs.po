@@ -9276,6 +9276,8 @@ msgid ""
 "For CURL support, you need curl-7.19.0-devel-mingw32.zip from <http://curl."
 "haxx.se/>."
 msgstr ""
+"Pro podporu CURL potřebujete curl-7.19.0-devel-mingw32.zip z "
+"<http://curl.haxx.se/>."
 
 #. type: Plain text
 #: INSTALL:266
