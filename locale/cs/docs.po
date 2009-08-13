@@ -3979,7 +3979,6 @@ msgstr "Nastavení"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2373
-#, fuzzy
 msgid ""
 "To check it out, you need to have configuration file for gammu, see gammurc"
 "(5) for more details about it."
