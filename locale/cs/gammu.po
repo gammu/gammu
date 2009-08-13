@@ -3779,7 +3779,7 @@ msgstr "Vyzvánění je příliš dlouhé. Zkráceno o %i procent\n"
 #: helper/message-cmdline.c:1399
 #, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
-msgstr "Bylo vytvořeno  %i SMS zpráv a limit je %i. Končím\n"
+msgstr "Bylo vytvořeno %i SMS zpráv a limit je %i. Končím\n"
 
 #: helper/message-cmdline.c:1409
 msgid "Use -smscnumber option to give SMSC number"
