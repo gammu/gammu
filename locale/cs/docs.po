@@ -11,13 +11,13 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-13 11:46+0300\n"
-"PO-Revision-Date: 2009-08-13 11:45+0200\n"
+"PO-Revision-Date: 2009-08-13 11:50+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -733,14 +733,13 @@ msgstr "Načte SMS."
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:225
-#, fuzzy
 msgid ""
 "When give folder 0, sms is given from \"flat\" memory (all sms from all "
 "folders have unique numbers). It's sometimes emulated by Gammu. You can use "
 "it with all phones."
 msgstr ""
-"Pokud zadáte složku 0, sms bude načtena z \"jednolité\" paměti (všechny SMS "
-"ze všech složek mají unikátní čísla). V některých případech je toto chování "
+"Pokud zadáte složku 0, sms bude načtena z \"jednolité\" paměti (všechny SMS ze "
+"všech složek mají unikátní čísla). V některých případech je toto chování "
 "emulováno Gammu. Můžete ho proto použít se všemi telefony."
 
 # type: Plain text
@@ -991,7 +990,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:309
-#, fuzzy
 msgid ""
 "B<-tone12long> - IMelody version 1.2 saved in one of few SMS with UPI. "
 "Phones compatible with UPI (like SonyEricsson phones) will read such "
@@ -1173,7 +1171,6 @@ msgstr "B<savesms RINGTONE>I< file [-folder id] [-unread] [-read] [-unsent] [-se
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:382 docs/user/gammu.1:1145
-#, fuzzy
 msgid ""
 "Read RTTL ringtone from file and save as SMS into SIM/phone memory. Ringtone "
 "is saved in Nokia format."
@@ -1300,14 +1297,13 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:435
-#, fuzzy
 msgid ""
 "I<TIP:> You can create Unicode file using WordPad in Windows (during saving "
 "select \"Unicode Text Document\" format). In Unix can use for example YUdit."
 msgstr ""
 "I<TIP:> Soubor v Unicode můžete na Windows vytvořit například pomocí "
-"WordPadu (zvolte volbu \"Uložit jako unicode text\"). Na Linuxu můžete "
-"použít třeba YUdit nebo Vim."
+"WordPadu (zvolte volbu \"Uložit jako unicode text\"). Na Linuxu můžete použít "
+"třeba YUdit nebo Vim."
 
 # type: Plain text
 #. type: Plain text
@@ -2727,7 +2723,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:1175
-#, fuzzy
 msgid ""
 "I<TIP:> when use ~ char in ringtone name, in some phones (like 33xx) name "
 "will blink later in phone menus"
@@ -3984,7 +3979,6 @@ msgstr "Nastavení"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2373
-#, fuzzy
 msgid ""
 "To check it out, you need to have configuration file for gammu, see gammurc"
 "(5) for more details about it."
@@ -4465,7 +4459,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:22
-#, fuzzy
 msgid ""
 "This file use ini file syntax, with comment parts being marked with both ; "
 "and #. Sections of config file are identified in square brackets line "
@@ -4824,7 +4817,6 @@ msgstr "B<StartInfo>"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:136
-#, fuzzy
 msgid ""
 "This option allow to set, that you want (setting \"yes\") to see message on "
 "the phone screen or phone should enable light for a moment during starting "
@@ -5031,7 +5023,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:217
-#, fuzzy
 msgid ""
 "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
 "phone) connected using USB cable:"
@@ -5055,7 +5046,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:232
-#, fuzzy
 msgid ""
 "Gammu configuration for Sony-Ericsson (or any other AT compatible phone) "
 "connected using bluetooth:"
@@ -5425,7 +5415,6 @@ msgstr "B<SendTimeout>"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:109
-#, fuzzy
 msgid ""
 "Shows how many seconds SMSD should wait for network answer during sending "
 "sms. If nothing happen during this time, sms will be resent."
@@ -6183,7 +6172,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd.1:18
-#, fuzzy
 msgid ""
 "The daemon can reload configuration file after sending hangup signal "
 "(SIGHUP) and properly terminates itself on SIGINT and SIGTERM."
