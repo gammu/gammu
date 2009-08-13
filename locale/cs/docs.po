@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-13 11:30+0300\n"
-"PO-Revision-Date: 2009-08-13 11:34+0200\n"
+"PO-Revision-Date: 2009-08-13 11:45+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -944,7 +944,8 @@ msgstr ""
 #: docs/user/gammu.1:299
 msgid "B<-animation> - adds \"frames\" frames read from file1, file2, etc."
 msgstr ""
-"B<-animation> - přidá snámky animace načtené ze souborů file1, file2, atd."
+"B<-animation> - přidá \"frames\" snímků animace načtených ze souborů file1, "
+"file2, atd."
 
 # type: Plain text
 #. type: Plain text
@@ -1005,7 +1006,7 @@ msgstr ""
 msgid ""
 "B<-toneSE> - adds IMelody in \"short\" form supported by SonyEricsson phones"
 msgstr ""
-"B<-toneSE> - přidá vyzvánění ve formátu iMelody v krátké formě jak je "
+"B<-toneSE> - přidá vyzvánění ve formátu iMelody v \"krátké\" formě jak je "
 "podporováno telefony Sony-Ericssonn."
 
 # type: Plain text
@@ -1258,7 +1259,7 @@ msgid ""
 msgstr ""
 "B<-enablevoice> | B<-disablevoice> | B<-enablefax > | B<-disablefax > | "
 "B<-enableemail > | B<-disableemail > - nastaví tyto indikátory. Text bude "
-"zkrácen na 1  SMS."
+"zkrácen na 1 SMS."
 
 # type: Plain text
 #. type: Plain text
@@ -2358,8 +2359,8 @@ msgid ""
 "I<Example:> gammu nokiaaddfile Application Alien will read Alien.JAD and "
 "Alien.JAR and add to Applications"
 msgstr ""
-"I<Example:> gammu nokiaaddfile Application Alien načte  Alien.JAD a Alien."
-"JAR a přidá ho do složky Applications"
+"I<Example:> gammu nokiaaddfile Application Alien načte Alien.JAD a Alien.JAR "
+"a přidá ho do složky Applications"
 
 # type: Plain text
 #. type: Plain text
@@ -2698,7 +2699,7 @@ msgid ""
 "Play one of \"built\" ringtones. This option is available for DCT4 phones. "
 "For getting ringtones list use getringtoneslist."
 msgstr ""
-"Přehraje jedno z vestavěných vyzvánění. Tento příkaz je dostupný pro "
+"Přehraje jedno z \"vestavěných\" vyzvánění. Tento příkaz je dostupný pro "
 "telefonu DCT4. Pro získání seznamu vyzvánění použijte příkaz "
 "getringtoneslist."
 
@@ -3247,7 +3248,7 @@ msgstr "B<nokiasetvibralevel>I< level>"
 #. type: Plain text
 #: docs/user/gammu.1:1757 docs/user/gammu.1:2295
 msgid "Set vibra power to \"level\" (given in percent)"
-msgstr "Nastaví úrověň vibrací na zadanou úroveň (v procentech)"
+msgstr "Nastaví úrověň vibrací na úroveň \"level\" (v procentech)"
 
 # type: TP
 #. type: TP
@@ -3625,7 +3626,7 @@ msgstr "* změny jako B<ALL>"
 #. type: Plain text
 #: docs/user/gammu.1:2193
 msgid "* disables netmon and PPS (all \"hidden\" menus)"
-msgstr "* vypne netmonitori a další skrytá menu"
+msgstr "* vypne netmonitor a PPS (všechna \"skrytá\" menu)"
 
 # type: Plain text
 #. type: Plain text
@@ -4150,7 +4151,9 @@ msgstr "Nahradit: Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+3620"
 #: docs/user/gammu.1:2439
 #, no-wrap
 msgid "Change phone numbers type to mobile for numbers starting from +3620, +3630,... and removing the corresponding TextUnicode line"
-msgstr "Změnit typ čísla na mobilní pro čísla začínající na  +3620, +3630,... a odstranit odpovídající řádku TextUnicode"
+msgstr ""
+"Změnit typ čísla na mobilní pro čísla začínající na +3620, +3630,... a "
+"odstranit odpovídající řádku TextUnicode"
 
 # type: Plain text
 #. type: Plain text
@@ -4482,7 +4485,7 @@ msgstr ""
 "Konfigurační soubor pro gammu může obsahovat několik sekcí - [gammu], "
 "[gammu1], [gammuN], ... Každá sekce definuje jedno připojení a ve výchozím "
 "režime gammu postupně zkouší všechny podle čísel. Můžete také zadat "
-"parametrem pro gammu(1), které číslo sekce ([gammu] je číslo 0) má  použít a "
+"parametrem pro gammu(1), které číslo sekce ([gammu] je číslo 0) má použít a "
 "pak se použije jen tato sekce."
 
 # type: TP
@@ -4680,8 +4683,8 @@ msgid ""
 "cables on Windows, where the device is automatically detected from driver "
 "information and this parameters is ignored."
 msgstr ""
-"Pro kabely nebo emulovaný sériový port zadejte jméno zařízení (například /"
-"dev/ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 na Linuxu, /dev/cuad0  "
+"Pro kabely nebo emulovaný sériový port zadejte jméno zařízení (například "
+"/dev/ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 na Linuxu, /dev/cuad0 "
 "na FreeBSD nebo COM1: na Windows). Speciální výjjímkou jsou DKU-2 a DKU-5 "
 "kabely na Windows, kde je zařízení automaticky zjištěno z informací ovladače "
 "a tento parametr je ignorován."
@@ -4985,7 +4988,7 @@ msgid ""
 "group)."
 msgstr ""
 "Na Posixových systémech můžete chtít použít zamykání zařízení pomocí UUCP "
-"zámků. Zapnutím této volby (nastavením na \"yes\") bude Gammu dodržovat tyto "
+"zámků. Zapnutím této volby (nastavením na yes) bude Gammu dodržovat tyto "
 "zámky a vytvářet je při připojování. Na většině distribucí pro vytvoření "
 "zámku potřebujete dodatečná oprávnění (například být členem skupiny uucp)."
 
@@ -5235,7 +5238,7 @@ msgid ""
 "B<MYSQL> - stores messages in MySQL database, see gammu-smsd-mysql(7) for "
 "details"
 msgstr ""
-"B<MYSQL> - ukládá zprávy v MySQL databázi, pro podrobnosti viz  gammu-smsd-"
+"B<MYSQL> - ukládá zprávy v MySQL databázi, pro podrobnosti viz gammu-smsd-"
 "mysql(7)"
 
 #. type: Plain text
@@ -5811,8 +5814,8 @@ msgid ""
 "path should contain trailing path separator (/ on Unix systems):"
 msgstr ""
 "Služba FILES používá následující konfigurační volby. Podrobnější popis této "
-"služby je v gammu-smsd-files(7). Prosím ujistěte se, že  všechny cestky "
-"končí oddělovačem cest (na Unixových systémech /):"
+"služby je v gammu-smsd-files(7). Prosím ujistěte se, že všechny cestky končí "
+"oddělovačem cest (na Unixových systémech /):"
 
 # type: TP
 #. type: TP
@@ -6575,7 +6578,7 @@ msgid ""
 "B<gammu-smsd-inject> is a program that enqueues message in Gammu SMS daemon, "
 "which will be later sent by the deamon using connected GSM modem."
 msgstr ""
-"B<gammu-smsd-inject> je program, který přidá zprávy do fronty  Gammu SMS "
+"B<gammu-smsd-inject> je program, který přidá zprávy do fronty Gammu SMS "
 "démona, který je později odešle pomocí připojeného GSM modemu."
 
 #. type: Plain text
@@ -7009,7 +7012,7 @@ msgid ""
 "configuration (see gammu-smsdrc(5) for description of configuration options)."
 msgstr ""
 "Služba FILES ukládá všechna data na souborovém systému v adresářích zadaných "
-"v konfiguračním souboru (viz gammu-smsdrc(5)  pro popis těchto parametrů)."
+"v konfiguračním souboru (viz gammu-smsdrc(5) pro popis těchto parametrů)."
 
 #. type: SS
 #: docs/user/gammu-smsd-files.7:13
@@ -7305,8 +7308,8 @@ msgid ""
 "configuration options)."
 msgstr ""
 "Služba MYSQL ukládá všechna data na databázovém serveru MySQL, jehož "
-"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)  pro "
-"popis těchto parametrů)."
+"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5) pro popis "
+"těchto parametrů)."
 
 # type: Plain text
 #. type: Plain text
@@ -7350,8 +7353,8 @@ msgid ""
 "of configuration options)."
 msgstr ""
 "Služba PGSQL ukládá všechna data na databázovém serveru PostgreSQL, jehož "
-"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)  pro "
-"popis těchto parametrů)."
+"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5) pro popis "
+"těchto parametrů)."
 
 # type: TH
 #. type: TH
@@ -7386,8 +7389,8 @@ msgid ""
 "of configuration options)."
 msgstr ""
 "Služba DBI ukládá všechna data v jakékoliv databázi podporvané DBI, jejíž "
-"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)  pro "
-"popis těchto parametrů)."
+"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5) pro popis "
+"těchto parametrů)."
 
 # type: TH
 #. type: TH
@@ -7427,7 +7430,7 @@ msgstr ""
 "Několik SMS démonů může sdílet jedinou databázi. Pokud v jejich nastavení "
 "nezadáte PhoneID, všechny jsou brány jako rovnocenné a kterýkoliv z nich "
 "může odeslat odchozí zprávu. Pokud nastavíte PhoneID a použijete ho při "
-"vkládání zprávy to tabulky outbox (gammu-smsd-inject(1)  to dělá), každý SMS "
+"vkládání zprávy to tabulky outbox (gammu-smsd-inject(1) to dělá), každý SMS "
 "démon bude mít vlastní frontu odchozích zpráv."
 
 # type: Plain text
@@ -7744,7 +7747,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:143 docs/user/gammu-smsd-tables.7:343
 msgid "SMS text in \"human readable\" form"
-msgstr "text zprávy v lidsky čitelné podobě"
+msgstr "text zprávy v \"člověkem čitelné\" podobě"
 
 # type: Plain text
 #. type: Plain text
@@ -8679,11 +8682,12 @@ msgid ""
 "cihar.com/gammu/api/>. Similarly internal documentation can be generated by "
 "make interndoc and is available on <http://cihar.com/gammu/docs/>."
 msgstr ""
-"Nějaké informace jsou dostupné na wiki a v  docs/develop/ folder. Můžete si "
+"Nějaké informace jsou dostupné na wiki a v docs/develop/ folder. Můžete si "
 "také vygenerovat dokumentaci pomocí Doxygenu. Dokumentaci API vytvoříte "
-"pomocí make apidoc v adresáři s buildem, můžete si jí prohlédnout na <http://"
-"cihar.com/gammu/api/>. Podobně interní dokumentace může být vygenerována "
-"spuštěním make interndoc a je dostupná na <http://cihar.com/gammu/docs/>."
+"pomocí make apidoc v adresáři s buildem, můžete si jí prohlédnout na "
+"<http://cihar.com/gammu/api/>. Podobně interní dokumentace může být "
+"vygenerována spuštěním make interndoc a je dostupná na "
+"<http://cihar.com/gammu/docs/>."
 
 #. type: Plain text
 #: README:91
@@ -8750,7 +8754,7 @@ msgid ""
 "Name Gammu is not connected with Gammu from \"Heretics of Dune\" written by "
 "Frank Herbert."
 msgstr ""
-"Jméno Gammu nemá nic společného s Gammu z knihy Kacíři Duny od Franka "
+"Jméno Gammu nemá nic společného s Gammu z knihy \"Kacíři Duny\" od Franka "
 "Herberta."
 
 #. type: Plain text
