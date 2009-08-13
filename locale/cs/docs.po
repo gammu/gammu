@@ -5415,7 +5415,6 @@ msgstr "B<SendTimeout>"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:109
-#, fuzzy
 msgid ""
 "Shows how many seconds SMSD should wait for network answer during sending "
 "sms. If nothing happen during this time, sms will be resent."
