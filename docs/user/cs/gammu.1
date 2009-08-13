@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Srpen 10 2009" "Gammu 1.25.91" "Dokumentace Gammu"
+.TH GAMMU 1 "Aug 11 2009" "Gammu 1.25.91" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -313,7 +313,7 @@ Uloží EMS zprávu. Všechny parametry uvedené za \fB\-unread\fP (například
 telefony mohou podporovat více ID a ty nemusí odpovídat jiným značkám
 telefonů.
 
-\fB\-animation\fP \- přidá snámky animace načtené ze souborů
+\fB\-animation\fP \- přidá snámky animace načtené ze souborů file1, file2, atd.
 
 \fB\-defsound\fP \- přidá předdefinovaný zvuk podle zadaného ID. Některé telefony
 mohou podporovat více ID a ty nemusí odpovídat jiným značkám telefonů.
@@ -328,9 +328,9 @@ Sony\-Ericsson) načtou takové vyzvánění jako jedno.
 \fB\-tone12\fP \- přidá vyzvánění ve formátu iMelody verze 1.2s načtené z RTTL
 nebo komatibilního souboru.
 
-\fB\-tone12long\fP \- přidá vyzvánění ve formátu iMelody verze 1.2 ve formátu s
-UPI v několika SMS zprávách. Telefony podporující UPI (například
-Sony\-Ericsson) načtou takové vyzvánění jako jedno.
+\fB\-tone12long\fP \- IMelody version 1.2 saved in one of few SMS with
+UPI. Phones compatible with UPI (like SonyEricsson phones) will read such
+ringtone as one
 
 \fB\-toneSE\fP \- přidá vyzvánění ve formátu iMelody v krátké formě jak je
 podporováno telefony Sony\-Ericssonn.
@@ -2533,7 +2533,7 @@ Hledat: Type = NumberGeneral\enEntry\e([0\-9][0\-9]\e)Text =
 Nahradit: Replace: Type = NumberMobile\enEntry\e1Text = "\e+3620
 
 .TP 
-Změnit typ čísla na mobilní pro čísla začínající na  +3620, +3630,... a odstranit odpovídající řádku TextUnicode 
+Změnit typ čísla na mobilní pro čísla začínající na  +3620, +3630,... a odstranit odpovídající řádku TextUnicode
 
 Hledat: Type = NumberGeneral\enEntry\e([0\-9][0\-9]\e)Text =
 "\e+36\e([2367]0\e)\e([^\e"]*\e)"\enEntry\e([0\-9][0\-9]\e)TextUnicode =

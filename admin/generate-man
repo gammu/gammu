@@ -752,7 +752,7 @@ Saves EMS sequence. All parameters after \\fB\\-unread\\fR (like \\fB\\-defsound
 
 \\fB\\-tone12\\fR - adds IMelody version 1.2 read from RTTL or other compatible file
 
-\\fB\\-tone12long\\fR - IMelody version 1.0 saved in one of few SMS with UPI. Phones compatible with UPI (like SonyEricsson phones) will read such ringtone as one
+\\fB\\-tone12long\\fR - IMelody version 1.2 saved in one of few SMS with UPI. Phones compatible with UPI (like SonyEricsson phones) will read such ringtone as one
 
 \\fB\\-toneSE\\fR - adds IMelody in "short" form supported by SonyEricsson phones
 

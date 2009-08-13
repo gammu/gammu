@@ -46,10 +46,11 @@ ale všechno ještě nemusí být stabilní a plně funkční.
 Nastavení
 =========
 
-Gammu requires configuration to be able to properly talk to your phone.  You
-can create own by starting from example in docs/config/gammurc, where
-parameters are described, or use utils/gammu-config script (installed to
-bin), which can help you to generate valid configuration.
+Gammu potřebuje konfigurační soubor aby bylo schopné komunikovat s vaším
+telefonem.  Můžete ho vytvořit třeba tím, že vyjdete z příkadů v
+docs/config/gammurc, ve kterém jsou popsány všechny parametry, nebo můžete
+použít skript utils/gammu-config (nainstalovaný do adresáře bin), který vám
+může pomoci vytvořit správné nastavení.
 
 Také můžete zkusit GUI pro Gammu nazývané Wammu (viz <http://wammu.eu/>),
 které umí automaticky vytvořit konfiguraci pro váš telefon.
