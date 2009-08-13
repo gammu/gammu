@@ -11,13 +11,13 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-13 11:46+0300\n"
-"PO-Revision-Date: 2009-08-13 11:45+0200\n"
+"PO-Revision-Date: 2009-08-13 11:49+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -733,14 +733,13 @@ msgstr "Načte SMS."
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:225
-#, fuzzy
 msgid ""
 "When give folder 0, sms is given from \"flat\" memory (all sms from all "
 "folders have unique numbers). It's sometimes emulated by Gammu. You can use "
 "it with all phones."
 msgstr ""
-"Pokud zadáte složku 0, sms bude načtena z \"jednolité\" paměti (všechny SMS "
-"ze všech složek mají unikátní čísla). V některých případech je toto chování "
+"Pokud zadáte složku 0, sms bude načtena z \"jednolité\" paměti (všechny SMS ze "
+"všech složek mají unikátní čísla). V některých případech je toto chování "
 "emulováno Gammu. Můžete ho proto použít se všemi telefony."
 
 # type: Plain text
