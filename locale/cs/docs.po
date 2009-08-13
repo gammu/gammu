@@ -8751,7 +8751,7 @@ msgid ""
 "Name Gammu is not connected with Gammu from \"Heretics of Dune\" written by "
 "Frank Herbert."
 msgstr ""
-"Jméno Gammu nemá nic společného s Gammu z knihy Kacíři Duny od Franka "
+"Jméno Gammu nemá nic společného s Gammu z knihy \"Kacíři Duny\" od Franka "
 "Herberta."
 
 #. type: Plain text
