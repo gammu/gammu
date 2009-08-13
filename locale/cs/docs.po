@@ -2699,7 +2699,7 @@ msgid ""
 "Play one of \"built\" ringtones. This option is available for DCT4 phones. "
 "For getting ringtones list use getringtoneslist."
 msgstr ""
-"Přehraje jedno z vestavěných vyzvánění. Tento příkaz je dostupný pro "
+"Přehraje jedno z \"vestavěných\" vyzvánění. Tento příkaz je dostupný pro "
 "telefonu DCT4. Pro získání seznamu vyzvánění použijte příkaz "
 "getringtoneslist."
 
