@@ -231,9 +231,9 @@ Načte SMS.
 
 Umístění číslujte od 1.
 
-When give folder 0, sms is given from "flat" memory (all sms from all
-folders have unique numbers). It's sometimes emulated by Gammu. You can use
-it with all phones.
+Pokud zadáte složku 0, sms bude načtena z "jednolité" paměti (všechny SMS ze
+všech složek mají unikátní čísla). V některých případech je toto chování
+emulováno Gammu. Můžete ho proto použít se všemi telefony.
 
 When give folder 1, 2, etc. sms are taken from Inbox, Outbox, etc.  and each
 sms has unique number in his folder. Name of folders can depend on your
@@ -329,9 +329,9 @@ Sony\-Ericsson) načtou takové vyzvánění jako jedno.
 \fB\-tone12\fP \- přidá vyzvánění ve formátu iMelody verze 1.2s načtené z RTTL
 nebo komatibilního souboru.
 
-\fB\-tone12long\fP \- IMelody version 1.2 saved in one of few SMS with
-UPI. Phones compatible with UPI (like SonyEricsson phones) will read such
-ringtone as one
+\fB\-tone12long\fP \- přidá vyzvánění ve formátu iMelody verze 1.2 ve formátu s
+UPI v několika SMS zprávách. Telefony podporující UPI (například
+Sony\-Ericsson) načtou takové vyzvánění jako jedno.
 
 \fB\-toneSE\fP \- přidá vyzvánění ve formátu iMelody v "krátké" formě jak je
 podporováno telefony Sony\-Ericssonn.
@@ -417,8 +417,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms RINGTONE\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]\fP
-Read RTTL ringtone from file and save as SMS into SIM/phone memory. Ringtone
-is saved in Nokia format.
+Našte RTTL vyzvánění ze souboru a uloží ho jako SMS. Vyzvánění je uloženo ve
+formátu pro Nokii.
 
 \fB\-long\fP \- vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo
 do 2 SMS), ale umí s ním pracovat jen novější telefony (jako 33xx).
@@ -442,8 +442,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms TEXT\fP\fI [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext] [\-textutf8 msgtext]\fP
-Načte text ze standardního vstupu (nebo příkazové řádky, pokud je použito
-\-text) a uloží ho jako textovou zprávu do telefonu nebo na SIM kartu.
+Take text from stdin (or commandline if \-text specified) and save as text
+SMS into SIM/phone memory.
 
 \fB\-flash\fP \- SMS třídy 0 (zobrazení jen na displej)
 
@@ -471,8 +471,9 @@ beep, vibrate or turn on light. Text will be cut to 1 sms.
 \fB\-textutf8\fP \- načte text v UTF\-8 z příkazové řádky místo standardního
 vstupu.
 
-\fITIP:\fP You can create Unicode file using WordPad in Windows (during saving
-select "Unicode Text Document" format). In Unix can use for example YUdit.
+\fITIP:\fP Soubor v Unicode můžete na Windows vytvořit například pomocí
+WordPadu (zvolte volbu "Uložit jako unicode text"). Na Linuxu můžete použít
+třeba YUdit nebo Vim.
 
 \fB\-replacemessages ID\fP \- \fBID\fP can be 1..7. When you will use option and
 send more single SMS to one recipient with the same ID, each another SMS
@@ -1226,8 +1227,8 @@ není nastaven čas a datum.
 
 .TP 
 \fBsavesms RINGTONE\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]\fP
-Read RTTL ringtone from file and save as SMS into SIM/phone memory. Ringtone
-is saved in Nokia format.
+Našte RTTL vyzvánění ze souboru a uloží ho jako SMS. Vyzvánění je uloženo ve
+formátu pro Nokii.
 
 \fB\-long\fP \- vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo
 do 2 SMS), ale umí s ním pracovat jen novější telefony (jako 33xx).
@@ -1258,8 +1259,8 @@ RTTL ringtones, give location and use \fB\-scale\fP, there will be written scale
 info with each note. It will avoid scale problems available during editing
 ringtone in composer from phone menu (for example, in N33xx).
 
-\fITIP:\fP when use ~ char in ringtone name, in some phones (like 33xx) name
-will blink later in phone menus
+\fITIP:\fP pokud použijete ve názvu vyzvánění znak ~, bude tento název v menu
+některých telefonů blikat (například 33xx)
 
 
 .SS Kalendář
@@ -2464,8 +2465,8 @@ Zobrazí informace o verzi a licenci
 .SS Nastavení
 
 .P
-To check it out, you need to have configuration file for gammu, see
-gammurc(5) for more details about it.
+Pro vyzkoušení potřebujete vytvořit konfigurační soubor pro gammu, který je
+podrobně popsán v gammurc(5).
 
 .SS "Posílání zpráv"
 

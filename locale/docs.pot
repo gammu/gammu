@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-13 11:46+0300\n"
+"POT-Creation-Date: 2009-08-13 11:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -991,7 +991,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:405
 msgid ""
-"Take text from stdin (or commandline if -text specified)  and save as text "
+"Take text from stdin (or commandline if -text specified) and save as text "
 "SMS into SIM/phone memory."
 msgstr ""
 
@@ -3694,7 +3694,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammurc.5:22
+#: docs/user/gammurc.5:22 docs/user/gammu-smsdrc.5:18
 msgid ""
 "This file use ini file syntax, with comment parts being marked with both ; "
 "and #. Sections of config file are identified in square brackets line "
@@ -4195,14 +4195,6 @@ msgstr ""
 msgid ""
 "gammu-smsd(1) reads configuration from a config file. It's location can be "
 "specified on command line, otherwise default path /etc/gammu-smsdrc is used."
-msgstr ""
-
-#. type: Plain text
-#: docs/user/gammu-smsdrc.5:18
-msgid ""
-"This file use ini file syntax, with comments being marked with both ; and "
-"#.  Sections of config file are identified in square brackets line "
-"[this]. All key values are case insensitive."
 msgstr ""
 
 #. type: Plain text
