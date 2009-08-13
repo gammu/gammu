@@ -11,13 +11,13 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-13 11:18+0300\n"
-"PO-Revision-Date: 2009-08-13 11:18+0200\n"
+"PO-Revision-Date: 2009-08-13 11:27+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -8589,7 +8589,6 @@ msgstr ""
 
 #. type: Plain text
 #: README:54
-#, fuzzy
 msgid ""
 "Gammu requires configuration to be able to properly talk to your phone.  You "
 "can create own by starting from example in docs/config/gammurc, where "
@@ -8597,10 +8596,10 @@ msgid ""
 "bin), which can help you to generate valid configuration."
 msgstr ""
 "Gammu potřebuje konfigurační soubor aby bylo schopné komunikovat s vaším "
-"telefonem.  Můžete ho vytvořit třeba tím, že vyjdete z příkadů v docs/config/"
-"gammurc, ve kterém jsou popsány všechny parametry, nebo můžete použít skript "
-"utils/gammu-config (nainstalovaný do adresáře bin), který vám může pomoci "
-"vytvořit správné nastavení."
+"telefonem.  Můžete ho vytvořit třeba tím, že vyjdete z příkadů v "
+"docs/config/gammurc, ve kterém jsou popsány všechny parametry, nebo můžete "
+"použít skript utils/gammu-config (nainstalovaný do adresáře bin), který vám "
+"může pomoci vytvořit správné nastavení."
 
 #. type: Plain text
 #: README:58
