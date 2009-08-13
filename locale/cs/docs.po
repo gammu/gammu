@@ -4119,7 +4119,7 @@ msgstr "Hledat: ^Entry\\e([0-9][0-9]\\e)VoiceTag = \\e(.*\\e)\\en"
 #. type: Plain text
 #: docs/user/gammu.1:2431
 msgid "Replace:"
-msgstr "Nahradit: "
+msgstr "Nahradit:"
 
 #. type: TP
 #: docs/user/gammu.1:2432
