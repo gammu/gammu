@@ -4986,7 +4986,7 @@ msgid ""
 "group)."
 msgstr ""
 "Na Posixových systémech můžete chtít použít zamykání zařízení pomocí UUCP "
-"zámků. Zapnutím této volby (nastavením na \"yes\") bude Gammu dodržovat tyto "
+"zámků. Zapnutím této volby (nastavením na yes) bude Gammu dodržovat tyto "
 "zámky a vytvářet je při připojování. Na většině distribucí pro vytvoření "
 "zámku potřebujete dodatečná oprávnění (například být členem skupiny uucp)."
 
