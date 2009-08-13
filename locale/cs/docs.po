@@ -4151,7 +4151,9 @@ msgstr "Nahradit: Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+3620"
 #: docs/user/gammu.1:2439
 #, no-wrap
 msgid "Change phone numbers type to mobile for numbers starting from +3620, +3630,... and removing the corresponding TextUnicode line"
-msgstr "Změnit typ čísla na mobilní pro čísla začínající na  +3620, +3630,... a odstranit odpovídající řádku TextUnicode"
+msgstr ""
+"Změnit typ čísla na mobilní pro čísla začínající na +3620, +3630,... a "
+"odstranit odpovídající řádku TextUnicode"
 
 # type: Plain text
 #. type: Plain text
