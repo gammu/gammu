@@ -7012,7 +7012,7 @@ msgid ""
 "configuration (see gammu-smsdrc(5) for description of configuration options)."
 msgstr ""
 "Služba FILES ukládá všechna data na souborovém systému v adresářích zadaných "
-"v konfiguračním souboru (viz gammu-smsdrc(5)  pro popis těchto parametrů)."
+"v konfiguračním souboru (viz gammu-smsdrc(5) pro popis těchto parametrů)."
 
 #. type: SS
 #: docs/user/gammu-smsd-files.7:13
