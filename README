@@ -48,18 +48,17 @@ Configuration
 =============
 
 Gammu requires configuration to be able to properly talk to your phone.
-You can create own by starting from example in
-docs/examples/config/gammurc, where parameters are described, or use
-utils/gammu-config script (installed to bin), which can help you to
-generate valid configuration.
+You can create own by starting from example in docs/config/gammurc,
+where parameters are described, or use utils/gammu-config script
+(installed to bin), which can help you to generate valid configuration.
 
 Alternatively you might want to try GUI for Gammu called Wammu (see
 <http://wammu.eu/>), which can automatically generate configuration for
 you.
 
 The configuration file should be placed in ~/.gammurc or /etc/gammurc on
-Unixes. On Windoes you can place gammurc in Application Data folder in
-yout profile or in same directory as is binary being executed from.
+Unixes. On Windows you can place gammurc in Application Data folder in
+your profile or in same directory as is binary being executed from.
 
 For hints about configuring your phone, you can check Gammu Phone
 Database <http://cihar.com/gammu/phonedb/> to see what user users
@@ -96,7 +95,7 @@ Localization
 
 Localization uses Gettext. You can set locales you want to use by
 specifying LANG or LC_* environment variables (on Linux you usually
-don't care about this, on Windows just export e.g. LANG=cs_CZ.
+don't care about this, on Windows just export e.g. LANG=cs_CZ).
 
 If you want to improve existing translation, please visit
 <http://l10n.cihar.com/projects/gammu/>. For adding new one, you need to
@@ -119,7 +118,6 @@ Feedback
 
 Any feedback is welcome, if you found bug, please follow description in
 section "Problems". You can contact developers and users on
-<gammu-users@lists.sourceforge.net> mailing list or directly current
-maintainer at <michal@cihar.com>.
+<gammu-users@lists.sourceforge.net> mailing list.
 
 # vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
