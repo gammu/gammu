@@ -634,8 +634,8 @@ backup to vCard, you need following command:
     gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42
 '''
 HELP['savefile'] = '''''' 
-HELP['savesms TEXT'] = '''Take text from stdin (or commandline if \\-text specified)
-and save as text SMS into SIM/phone memory.
+HELP['savesms TEXT'] = '''Take text from stdin (or commandline if \\-text 
+specified) and save as text SMS into SIM/phone memory.
 
 \\fB\\-flash\\fR - Class 0 SMS
 
