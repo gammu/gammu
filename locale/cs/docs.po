@@ -7745,7 +7745,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:143 docs/user/gammu-smsd-tables.7:343
 msgid "SMS text in \"human readable\" form"
-msgstr "text zprávy v lidsky čitelné podobě"
+msgstr "text zprávy v \"člověkem čitelné\" podobě"
 
 # type: Plain text
 #. type: Plain text
