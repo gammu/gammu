@@ -1171,7 +1171,6 @@ msgstr "B<savesms RINGTONE>I< file [-folder id] [-unread] [-read] [-unsent] [-se
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:382 docs/user/gammu.1:1145
-#, fuzzy
 msgid ""
 "Read RTTL ringtone from file and save as SMS into SIM/phone memory. Ringtone "
 "is saved in Nokia format."
