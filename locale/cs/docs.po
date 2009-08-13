@@ -9282,6 +9282,8 @@ msgid ""
 "Testing\n"
 "=======\n"
 msgstr ""
+"Testování\n"
+"=========\n"
 
 #. type: Plain text
 #: INSTALL:274
