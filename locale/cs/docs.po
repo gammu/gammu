@@ -9267,6 +9267,8 @@ msgid ""
 "CURL\n"
 "----\n"
 msgstr ""
+"CURL\n"
+"----\n"
 
 #. type: Plain text
 #: INSTALL:263
