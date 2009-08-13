@@ -2723,7 +2723,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:1175
-#, fuzzy
 msgid ""
 "I<TIP:> when use ~ char in ringtone name, in some phones (like 33xx) name "
 "will blink later in phone menus"
