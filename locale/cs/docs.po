@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-13 11:46+0300\n"
-"PO-Revision-Date: 2009-08-13 11:49+0200\n"
+"PO-Revision-Date: 2009-08-13 11:50+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -4459,7 +4459,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:22
-#, fuzzy
 msgid ""
 "This file use ini file syntax, with comment parts being marked with both ; "
 "and #. Sections of config file are identified in square brackets line "
