@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-13 11:30+0300\n"
-"PO-Revision-Date: 2009-08-13 11:37+0200\n"
+"PO-Revision-Date: 2009-08-13 11:38+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -3626,7 +3626,7 @@ msgstr "* změny jako B<ALL>"
 #. type: Plain text
 #: docs/user/gammu.1:2193
 msgid "* disables netmon and PPS (all \"hidden\" menus)"
-msgstr "* vypne netmonitori a další skrytá menu"
+msgstr "* vypne netmonitor a PPS (všechna \"skrytá\" menu)"
 
 # type: Plain text
 #. type: Plain text
