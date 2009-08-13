@@ -6172,7 +6172,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd.1:18
-#, fuzzy
 msgid ""
 "The daemon can reload configuration file after sending hangup signal "
 "(SIGHUP) and properly terminates itself on SIGINT and SIGTERM."
