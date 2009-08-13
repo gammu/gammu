@@ -3126,7 +3126,7 @@ msgstr "B<nokianetmonitor36>"
 #. type: Plain text
 #: docs/user/gammu.1:1711
 msgid "Reset counters from netmonitor test 36 in Nokia DCT3 phones."
-msgstr "Vynuluje čítače z testu 16 v netmonitoru telefonů Nokia DCT3."
+msgstr "Vynuluje čítače z testu 36 v netmonitoru telefonů Nokia DCT3."
 
 # type: TP
 #. type: TP
