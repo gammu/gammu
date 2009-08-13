@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-13 11:52+0300\n"
+"POT-Creation-Date: 2009-08-13 11:57+0300\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -802,12 +802,11 @@ msgstr ""
 msgid "B<savesms CALENDAR>I< file location [-folder id] [-unread] [-read] [-unsent] [-sent] [-sender number] [-smsname name] [-smscset number] [-smscnumber number] [-reply] [-maxsms num]>"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:274 docs/user/gammu.1:1273
 msgid ""
 "Read calendar note from file created by B<backup> option and saves in "
-"VCALENDAR 1.0 format as SMS"
+"VCALENDAR 1.0 format as SMS."
 msgstr ""
 
 # type: TP

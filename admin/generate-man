@@ -717,7 +717,7 @@ HELP['savesms WAPSETTINGS'] = '''Read WAP settings from file created by \\fBback
 HELP['savesms MMSSETTINGS'] = '''Saves a message with MMS configuration. The
 configuration will be read from Gammu backup file from given location.''' 
 HELP['savesms CALENDAR'] = '''Read calendar note from file created by \\fBbackup\\fR option and saves in
-VCALENDAR 1.0 format as SMS
+VCALENDAR 1.0 format as SMS.
 '''
 HELP['savesms TODO'] = '''Saves a message with a todo entry. The content will
 be read from any backup format which Gammu supports and from given location.'''
