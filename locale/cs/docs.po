@@ -7353,8 +7353,8 @@ msgid ""
 "of configuration options)."
 msgstr ""
 "Služba PGSQL ukládá všechna data na databázovém serveru PostgreSQL, jehož "
-"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)  pro "
-"popis těchto parametrů)."
+"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5) pro popis "
+"těchto parametrů)."
 
 # type: TH
 #. type: TH
