@@ -10,14 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-12 12:30+0300\n"
-"PO-Revision-Date: 2009-08-13 10:41+0200\n"
+"POT-Creation-Date: 2009-08-13 10:57+0300\n"
+"PO-Revision-Date: 2009-08-13 10:57+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -8532,9 +8532,9 @@ msgstr ""
 #. type: Plain text
 #: README:32
 msgid ""
-"Developers might be interested in snapshot or version control system "
-"(Subversion is being used), information about accessing these is available "
-"at <http://cihar.com/gammu/>."
+"Developers might be interested in snapshot or version control system (Git is "
+"being used), information about accessing these is available at <http://cihar."
+"com/gammu/>."
 msgstr ""
 
 #. type: Plain text
@@ -8544,6 +8544,9 @@ msgid ""
 "org/gammu/mainline.git>, you can browse it using <http://gitorious.org/gammu/"
 "mainline/trees>."
 msgstr ""
+"Vývoj probíhá v Gitu, hlavní vývojovou větev naleznete na <git://gitorious."
+"org/gammu/mainline.git> a prohlížet si jí můžete na stránkách <http://"
+"gitorious.org/gammu/mainline/trees>."
 
 #. type: Plain text
 #: README:39
@@ -8589,6 +8592,8 @@ msgid ""
 "Alternatively you might want to try GUI for Gammu called Wammu (see <http://"
 "wammu.eu/>), which can automatically generate configuration for you."
 msgstr ""
+"Také můžete zkusit GUI pro Gammu nazývané Wammu (viz <http://wammu.eu/>), "
+"které umí automaticky vytvořit konfiguraci pro váš telefon."
 
 #. type: Plain text
 #: README:63
@@ -8604,6 +8609,8 @@ msgid ""
 "For hints about configuring your phone, you can check Gammu Phone Database "
 "<http://cihar.com/gammu/phonedb/> to see what user users experienced."
 msgstr ""
+"Nějaké rady jak nastavit telefon můžete nalézt v Databázi telefonů Gammu "
+"<http://cihar.com/gammu/phonedb/>, kam uživatelé zapisují svoje zkušenosti."
 
 #. type: Plain text
 #: README:70
@@ -8617,17 +8624,21 @@ msgstr ""
 
 #. type: Plain text
 #: README:75
+#, fuzzy
 msgid ""
 "Use <http://bugs.cihar.com/> or mailing list for reporting problems.  It "
 "useful to send logs of Gammu executed with enabled debugging. You can to it "
-"by adding \"textall\" as first parameter, e.g.:"
+"by adding parameters --debug textall, e.g.:"
 msgstr ""
+"Pro hlášení chyb používejte <http://bugs.cihar.com/> ne mailing list.  Je "
+"užitečné k hlášení připojit log Gammu se zapnutým laděním. Můžete to provés "
+"přidáním parametrů --debug textall, např.:"
 
 #. type: Plain text
 #: README:77
-#, no-wrap
-msgid "   gammu textall --identify\n"
-msgstr ""
+#, fuzzy, no-wrap
+msgid "   gammu --debug textall --identify\n"
+msgstr "   gammu textall --identify\n"
 
 #. type: Plain text
 #: README:80
@@ -8780,6 +8791,8 @@ msgid ""
 "http://www.microsoft.com/downloads/details.aspx?"
 "displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F"
 msgstr ""
+"http://www.microsoft.com/downloads/details.aspx?"
+"displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F"
 
 #. type: Plain text
 #: INSTALL:25
@@ -8804,6 +8817,9 @@ msgid ""
 "    - http://www.bluez.org/\n"
 "    - Bluetooth support on Linux.\n"
 msgstr ""
+"Bluez-libs \n"
+"    - http://www.bluez.org/\n"
+"    - Podpora Bluetooth na Linuxu.\n"
 
 #. type: Plain text
 #: INSTALL:37
@@ -8813,6 +8829,9 @@ msgid ""
 "    - http://libusb.sourceforge.net/\n"
 "    - fbususb connection support\n"
 msgstr ""
+"libusb-1.0\n"
+"    - http://libusb.sourceforge.net/\n"
+"    - připojení fbususb\n"
 
 #. type: Plain text
 #: INSTALL:41
@@ -8822,6 +8841,9 @@ msgid ""
 "    - http://curl.haxx.se/libcurl/\n"
 "    - New versions notification and phonedb access.\n"
 msgstr ""
+"libCURL\n"
+"    - http://curl.haxx.se/libcurl/\n"
+"    - Notifikace o nových verzích a přístup do databáze telefonů.\n"
 
 #. type: Plain text
 #: INSTALL:45
@@ -8831,6 +8853,9 @@ msgid ""
 "    - http://www.gnu.org/software/libiconv/\n"
 "    - Support for more charsets in AT engine.\n"
 msgstr ""
+"libiconv\n"
+"    - http://www.gnu.org/software/libiconv/\n"
+"    - Podpora pro víc kódování v AT subsystému.\n"
 
 #. type: Plain text
 #: INSTALL:49
@@ -8840,6 +8865,9 @@ msgid ""
 "    - http://www.gnu.org/software/gettext/\n"
 "    - Localization of strings.\n"
 msgstr ""
+"Gettext\n"
+"    - http://www.gnu.org/software/gettext/\n"
+"    - Překlady textů.\n"
 
 #. type: Plain text
 #: INSTALL:53
@@ -8849,6 +8877,9 @@ msgid ""
 "    - http://mysql.com/\n"
 "    - MySQL support in SMSD.\n"
 msgstr ""
+"MySQL\n"
+"    - http://mysql.com/\n"
+"    - podpora MySQL v SMSD.\n"
 
 #. type: Plain text
 #: INSTALL:57
@@ -8858,6 +8889,9 @@ msgid ""
 "    - http://www.postgresql.org/\n"
 "    - PostgreSQL support in SMSD.\n"
 msgstr ""
+"PostgreSQL\n"
+"    - http://www.postgresql.org/\n"
+"    - podpora PostgreSQL v SMSD.\n"
 
 #. type: Plain text
 #: INSTALL:63
@@ -8869,6 +8903,11 @@ msgid ""
 "    - DBI support in SMSD.\n"
 "        - For testing, please install libdbd-sqlite3\n"
 msgstr ""
+"libdbi\n"
+"    - http://libdbi.sourceforge.net/\n"
+"    - je nutná alespoň verze 0.8.2\n"
+"    - podpora DBI v SMSD.\n"
+"        - pro testování prosím nainstalujte libdbd-sqlite3\n"
 
 #. type: Plain text
 #: INSTALL:67
@@ -8878,6 +8917,9 @@ msgid ""
 "    - http://www.python.org/\n"
 "    - Gammu has a Python bindings\n"
 msgstr ""
+"Python\n"
+"    - http://www.python.org/\n"
+"    - Gammu poskytuje rozhraní v Pythonu\n"
 
 #. type: Plain text
 #: INSTALL:71
@@ -8887,6 +8929,9 @@ msgid ""
 "    - http://www.sqlite.org/\n"
 "    - needed for testing of SMSD using libdbi driver\n"
 msgstr ""
+"SQLite + libdbi-drivers se SQLite\n"
+"    - http://www.sqlite.org/\n"
+"    - potřeba pro testování SMSD s ovladačem libdbi\n"
 
 #. type: Plain text
 #: INSTALL:74
@@ -8900,6 +8945,7 @@ msgstr ""
 #: INSTALL:77
 msgid "You need CMake from <http://www.cmake.org> for configuring Gammu."
 msgstr ""
+"Pro kompilaci Gammu potřebujete CMake ze stránek <http://www.cmake.org>."
 
 #. type: Plain text
 #: INSTALL:84
@@ -8922,7 +8968,7 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:91
 msgid "> mkdir build > cd build"
-msgstr ""
+msgstr "> mkdir build > cd build"
 
 #. type: Plain text
 #: INSTALL:93
@@ -8932,7 +8978,7 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:95
 msgid "> cmake .."
-msgstr ""
+msgstr "> cmake .."
 
 #. type: Plain text
 #: INSTALL:97
@@ -8942,7 +8988,7 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:99
 msgid "> make"
-msgstr ""
+msgstr "> make"
 
 #. type: Plain text
 #: INSTALL:101
@@ -8952,7 +8998,7 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:103
 msgid "> make test"
-msgstr ""
+msgstr "> make test"
 
 #. type: Plain text
 #: INSTALL:105
@@ -8962,7 +9008,7 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:107
 msgid "> sudo make install"
-msgstr ""
+msgstr "> sudo make install"
 
 #. type: Plain text
 #: INSTALL:110
@@ -9032,7 +9078,7 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:145
 msgid "-DINSTALL_DOC=OFF"
-msgstr ""
+msgstr "-DINSTALL_DOC=OFF"
 
 #. type: Plain text
 #: INSTALL:148
@@ -9139,6 +9185,13 @@ msgid ""
 "    -DWITH_Iconv=OFF \\\n"
 "    -DWITH_CURL=OFF \\\n"
 msgstr ""
+"cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \\\n"
+"    -DBUILD_SHARED_LIBS=OFF \\\n"
+"    -DWITH_MySQL=OFF \\\n"
+"    -DWITH_Postgres=OFF \\\n"
+"    -DWITH_GettextLibs=OFF \\\n"
+"    -DWITH_Iconv=OFF \\\n"
+"    -DWITH_CURL=OFF \\\n"
 
 #. type: Plain text
 #: INSTALL:206
@@ -9188,6 +9241,8 @@ msgid ""
 "Third party libraries\n"
 "---------------------\n"
 msgstr ""
+"Externí knihovny\n"
+"----------------\n"
 
 #. type: Plain text
 #: INSTALL:226
@@ -9204,6 +9259,8 @@ msgid ""
 "MySQL\n"
 "-----\n"
 msgstr ""
+"MySQL\n"
+"-----\n"
 
 #. type: Plain text
 #: INSTALL:233
@@ -9236,6 +9293,8 @@ msgid ""
 "PostgreSQL\n"
 "----------\n"
 msgstr ""
+"PostgreSQL\n"
+"----------\n"
 
 #. type: Plain text
 #: INSTALL:248
@@ -9251,6 +9310,8 @@ msgid ""
 "Gettext\n"
 "-------\n"
 msgstr ""
+"Gettext\n"
+"-------\n"
 
 #. type: Plain text
 #: INSTALL:256
@@ -9276,8 +9337,8 @@ msgid ""
 "For CURL support, you need curl-7.19.0-devel-mingw32.zip from <http://curl."
 "haxx.se/>."
 msgstr ""
-"Pro podporu CURL potřebujete curl-7.19.0-devel-mingw32.zip z "
-"<http://curl.haxx.se/>."
+"Pro podporu CURL potřebujete curl-7.19.0-devel-mingw32.zip z <http://curl."
+"haxx.se/>."
 
 #. type: Plain text
 #: INSTALL:266

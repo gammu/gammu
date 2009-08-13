@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-12 12:30+0300\n"
+"POT-Creation-Date: 2009-08-13 10:57+0300\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -7741,9 +7741,9 @@ msgstr ""
 #. type: Plain text
 #: README:32
 msgid ""
-"Developers might be interested in snapshot or version control system "
-"(Subversion is being used), information about accessing these is available "
-"at <http://cihar.com/gammu/>."
+"Developers might be interested in snapshot or version control system (Git is "
+"being used), information about accessing these is available at <http://cihar."
+"com/gammu/>."
 msgstr ""
 
 #. type: Plain text
@@ -7823,13 +7823,13 @@ msgstr ""
 msgid ""
 "Use <http://bugs.cihar.com/> or mailing list for reporting problems.  It "
 "useful to send logs of Gammu executed with enabled debugging. You can to it "
-"by adding \"textall\" as first parameter, e.g.:"
+"by adding parameters --debug textall, e.g.:"
 msgstr ""
 
 #. type: Plain text
 #: README:77
 #, no-wrap
-msgid "   gammu textall --identify\n"
+msgid "   gammu --debug textall --identify\n"
 msgstr ""
 
 #. type: Plain text
