@@ -990,7 +990,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:309
-#, fuzzy
 msgid ""
 "B<-tone12long> - IMelody version 1.2 saved in one of few SMS with UPI. "
 "Phones compatible with UPI (like SonyEricsson phones) will read such "
