@@ -1256,9 +1256,9 @@ msgid ""
 "enableemail > | B<-disableemail > - sms will set such indicators. Text will "
 "be cut to 1 sms."
 msgstr ""
-"B<-enablevoice> | B<-disablevoice> | B<-enablefax > | B<-disablefax > | B<-"
-"enableemail > | B<-disableemail > - nastaví tyto indikátory. Text bude "
-"zkrácen na jednu SMS."
+"B<-enablevoice> | B<-disablevoice> | B<-enablefax > | B<-disablefax > | "
+"B<-enableemail > | B<-disableemail > - nastaví tyto indikátory. Text bude "
+"zkrácen na 1  SMS."
 
 # type: Plain text
 #. type: Plain text
