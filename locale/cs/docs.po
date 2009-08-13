@@ -3248,7 +3248,7 @@ msgstr "B<nokiasetvibralevel>I< level>"
 #. type: Plain text
 #: docs/user/gammu.1:1757 docs/user/gammu.1:2295
 msgid "Set vibra power to \"level\" (given in percent)"
-msgstr "Nastaví úrověň vibrací na zadanou úroveň (v procentech)"
+msgstr "Nastaví úrověň vibrací na úroveň \"level\" (v procentech)"
 
 # type: TP
 #. type: TP
