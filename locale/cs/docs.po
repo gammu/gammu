@@ -7389,8 +7389,8 @@ msgid ""
 "of configuration options)."
 msgstr ""
 "Služba DBI ukládá všechna data v jakékoliv databázi podporvané DBI, jejíž "
-"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)  pro "
-"popis těchto parametrů)."
+"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5) pro popis "
+"těchto parametrů)."
 
 # type: TH
 #. type: TH
