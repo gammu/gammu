@@ -201,11 +201,18 @@ supports - many Nokias, Siemens, Alcatel, ...
 %package smsd
 Summary:    SMS message daemon
 %if 0%{?suse_version}
+PreReq: %insserv_prereq  %fillup_prereq
+%endif
+%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
+Requires(post): chkconfig
+Requires(preun): chkconfig
+Requires(preun): initscripts
+%endif
+%if 0%{?suse_version}
 Group:              Hardware/Mobile
 %else
 Group:              Applications/Communications
 %endif
-PreReq: %insserv_prereq  %fillup_prereq
 
 %description smsd
 Gammu is command line utility and library to work with mobile phones
@@ -308,14 +315,36 @@ install -m644 docs/config/smsdrc %buildroot/etc/gammu-smsdrc
 %postun -n libgsmsd6 -p /sbin/ldconfig
 
 %post smsd
+%if 0%{?mandriva_version}
+%_post_service gammu-smsd
+%endif
+%if 0%{?suse_version}
 %fillup_and_insserv gammu-smsd
+%endif
+%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
+/sbin/chkconfig --add gammu-smsd
+%endif
 
 %preun smsd
+%if 0%{?suse_version}
 %stop_on_removal gammu-smsd
+%endif
+%if 0%{?mandriva_version}
+%_preun_service gammu-smsd
+%endif
+%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
+if [ $1 = 0 ] ; then
+    /sbin/service gammu-smsd stop >/dev/null 2>&1
+    /sbin/chkconfig --del <script>
+fi
+%endif
+
 
 %postun smsd
+%if 0%{?suse_version}
 %restart_on_update gammu-smsd
 %insserv_cleanup
+%endif
 
 
 %files -f %name.lang
