@@ -786,6 +786,10 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	input[99] = '\0';
 	pos = input;
 
+	/* Strip possible leading comma */
+	if (*pos == ',') pos++;
+	if (input[strlen(pos) - 1] == '"') input[strlen(pos) - 1] = 0;
+
 	/* Strip possible quotes */
 	if (*pos == '"') pos++;
 	if (input[strlen(pos) - 1] == '"') input[strlen(pos) - 1] = 0;
@@ -1042,13 +1046,16 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 							strcat(buffer, buffer2);
 							free(buffer2);
 						}
-						smprintf(s, "Parsed string for date \"%s\"\n", buffer);
-						error = ATGEN_DecodeDateTime(s, out_dt, buffer);
-						free(buffer);
-						if (error != ERR_NONE) {
-							goto end;
+						/* Ignore missing date */
+						if (strlen(buffer) != 0) {
+							smprintf(s, "Parsed string for date \"%s\"\n", buffer);
+							error = ATGEN_DecodeDateTime(s, out_dt, buffer);
+							free(buffer);
+							if (error != ERR_NONE) {
+								goto end;
+							}
+							inp += length;
 						}
-						inp += length;
 						break;
 					case '@':
 						if (*inp++ != '@') {
