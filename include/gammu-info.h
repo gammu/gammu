@@ -575,6 +575,10 @@ typedef enum {
 	 * Do not use CLIP (phone hangs on it).
 	 */
 	F_NO_CLIP,
+	/**
+	 * Phone has better support for SMS text mode (rather than PDU mode)
+	 */
+	F_USE_SMSTEXTMODE,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

@@ -245,11 +245,14 @@ GSM_Error ATGEN_GetSMSMode(GSM_StateMachine *s)
 
 	if (Priv->SMSMode != 0) return ERR_NONE;
 
-	smprintf(s, "Trying SMS PDU mode\n");
-	ATGEN_WaitFor(s, "AT+CMGF=0\r", 10, 0x00, 9, ID_GetSMSMode);
-	if (error==ERR_NONE) {
-		Priv->SMSMode = SMS_AT_PDU;
-		return ERR_NONE;
+	/* Prefer PDU mode for most phones */
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_USE_SMSTEXTMODE)) {
+		smprintf(s, "Trying SMS PDU mode\n");
+		ATGEN_WaitFor(s, "AT+CMGF=0\r", 10, 0x00, 9, ID_GetSMSMode);
+		if (error==ERR_NONE) {
+			Priv->SMSMode = SMS_AT_PDU;
+			return ERR_NONE;
+		}
 	}
 
 	smprintf(s, "Trying SMS text mode\n");
