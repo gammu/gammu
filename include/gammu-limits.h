@@ -70,7 +70,7 @@
  *
  * \ingroup Limits
  */
-#define GSM_MAX_NUMBER_LENGTH 150
+#define GSM_MAX_NUMBER_LENGTH 200
 
 /**
  * Maximal count of todo and calendar notes.
@@ -169,7 +169,7 @@
  *
  * \ingroup Limits
  */
-#define GSM_MAX_SMS_LENGTH 160
+#define GSM_MAX_SMS_LENGTH 650
 
 /**
  * Maximal length of 8-bit text in SMS.
