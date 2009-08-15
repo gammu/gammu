@@ -453,8 +453,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 		case SMS_AT_TXT:
 			error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, &Priv->Lines, 2),
-					"+CMGL: @i, @r, @p, @0",
-					&current, buffer, sizeof(buffer), sms->Number, sizeof(sms->Number));
+					"+CMGR: @r, @p @d",
+					buffer, sizeof(buffer), sms->Number, sizeof(sms->Number),
+					&sms->DateTime, sizeof(sms->DateTime));
 			if (error != ERR_NONE) return error;
 
 			if (!strcmp(buffer,"0") || !strcmp(buffer,"REC UNREAD")) {
@@ -509,7 +510,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				sms->SMSC.Number[1]=0;
 				sms->ReplyViaSameSMSC=FALSE;
 				return ATGEN_DecodeText(s, GetLineString(msg.Buffer, &Priv->Lines, 3), sms->Length,
-					sms->Text, sizeof(sms->Text), FALSE, FALSE);
+					sms->Text, sizeof(sms->Text), TRUE, FALSE);
 			}
 
 			/*
