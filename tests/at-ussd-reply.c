@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 	Priv = &s->Phone.Data.Priv.ATGEN;
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
-	Priv->Charset = AT_CHARSET_UCS2;
+	Priv->Charset = AT_CHARSET_GSM;
     s->User.IncomingUSSD = NULL;
 	s->Phone.Data.EnableIncomingUSSD = TRUE;
 
