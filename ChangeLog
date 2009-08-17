@@ -18,6 +18,7 @@ ChangeLog
 2009???? - 1.25.92
 
 [+] * Reworked RPM packages (separate libraries and SMSD).
+[-] * Huawei E160 uses encoded USSD requests.
     
 20090813 - 1.25.91
 

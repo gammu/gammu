@@ -3512,8 +3512,11 @@ GSM_Error ATGEN_ReplyDialVoice(GSM_Protocol_Message msg UNUSED, GSM_StateMachine
 GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 {
 	char *req;
+	unsigned char *tmp;
+	char *encoded;
 	const char format[] = "AT+CUSD=%d,\"%s\"\r";
 	GSM_Error error;
+	size_t len, sevenlen;
 
 	req = (char *)malloc(strlen(format) + strlen(number) + 1);
 	if (req == NULL) {
@@ -3526,7 +3529,23 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 		return error;
 	}
 
-	sprintf(req, format, s->Phone.Data.EnableIncomingUSSD ? 1 : 0, number);
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
+		len = strlen(number);
+		encoded = malloc(2 * (len + 1));
+		tmp = malloc(len + 1);
+		if (encoded == NULL || tmp == NULL) {
+			return ERR_MOREMEMORY;
+		}
+		sevenlen = GSM_PackSevenBitsToEight(0, number, tmp, len);
+		EncodeHexBin(encoded, tmp, sevenlen);
+		free(tmp);
+	} else {
+		encoded = number;
+	}
+	sprintf(req, format, s->Phone.Data.EnableIncomingUSSD ? 1 : 0, encoded);
+	if (encoded != number) {
+		free(encoded);
+	}
 
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 30, ID_GetUSSD);
 
