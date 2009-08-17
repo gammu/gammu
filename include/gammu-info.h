@@ -575,6 +575,11 @@ typedef enum {
 	 * Do not use CLIP (phone hangs on it).
 	 */
 	F_NO_CLIP,
+	/**
+	 * USSD propmts and responses are encoded like PDU in SMS
+	 * (packed 7-bit GSM encoding).
+	 */
+	F_ENCODED_USSD,
 
 	/**
 	 * Just marker of highest feature code, should not be used.
