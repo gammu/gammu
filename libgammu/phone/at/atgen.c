@@ -1226,6 +1226,9 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_Error error;
 	unsigned char *pos;
 	int code;
+	char hex_encoded[2 * (GSM_MAX_USSD_LENGTH + 1)];
+	char packed[GSM_MAX_USSD_LENGTH + 1];
+	char decoded[GSM_MAX_USSD_LENGTH + 1];
 
 	/*
 	 * Reply format:
@@ -1282,10 +1285,21 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Try to parse text here, we ignore error code intentionally */
 		ussd.Text[0] = 0;
 		ussd.Text[1] = 0;
-		ATGEN_ParseReply(s, pos,
-				"+CUSD: @i, @s @0",
-				&code,
-				ussd.Text, sizeof(ussd.Text));
+
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
+			ATGEN_ParseReply(s, pos,
+					"+CUSD: @i, @r @0",
+					&code,
+					hex_encoded, sizeof(hex_encoded));
+ 			DecodeHexBin(packed, hex_encoded, strlen(hex_encoded));
+			GSM_UnpackEightBitsToSeven(0, strlen(hex_encoded), sizeof(decoded), packed, decoded);
+   			DecodeDefault(ussd.Text, decoded, strlen(decoded), FALSE, NULL);
+		} else {
+			ATGEN_ParseReply(s, pos,
+					"+CUSD: @i, @s @0",
+					&code,
+					ussd.Text, sizeof(ussd.Text));
+		}
 
 		/* Notify application */
 		if (s->User.IncomingUSSD!=NULL) {
