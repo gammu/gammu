@@ -118,7 +118,7 @@ typedef struct {
 	/**
 	 * Message text.
 	 */
-	unsigned char Text[2000];
+	unsigned char Text[2 * (GSM_MAX_USSD_LENGTH + 1)];
 	/**
 	 * Message status.
 	 */

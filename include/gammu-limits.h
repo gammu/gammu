@@ -290,6 +290,13 @@
  */
 #define GSM_MAX_PHONE_FEATURES 20
 
+/**
+ * Maximal length of USSD text.
+ *
+ * \ingroup Limits
+ */
+#define GSM_MAX_USSD_LENGTH 999
+
 #endif
 
 /* Editor configuration
