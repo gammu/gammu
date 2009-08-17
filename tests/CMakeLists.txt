@@ -273,6 +273,24 @@ foreach(TESTMESSAGE ${MESSAGES})
         "${Gammu_SOURCE_DIR}/tests/at-cnmi/${TESTMESSAGE}")
 endforeach(TESTMESSAGE $MESSAGES)
 
+# AT CNMI parsing
+add_executable(at-ussd-reply at-ussd-reply.c)
+target_link_libraries(at-ussd-reply libGammu)
+
+# List test cases
+file(GLOB MESSAGES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-ussd"
+    "${Gammu_SOURCE_DIR}/tests/at-ussd/*.dump")
+list(SORT MESSAGES)
+
+foreach(TESTMESSAGE ${MESSAGES})
+    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+    string(REGEX REPLACE ".*-(.*)\\.dump" "\\1" PHONE_MODEL ${TESTMESSAGE})
+    add_test("at-ussd-reply-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/at-ussd-reply${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-ussd/${TESTMESSAGE}" "${PHONE_MODEL}")
+endforeach(TESTMESSAGE $MESSAGES)
+
 # AT SMSC parsing
 add_executable(get-smsc-at get-smsc-at.c)
 target_link_libraries(get-smsc-at libGammu)
