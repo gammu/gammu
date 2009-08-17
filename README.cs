@@ -83,9 +83,9 @@ pomocí make apidoc v adresáři s buildem, můžete si jí prohlédnout na
 vygenerována spuštěním make interndoc a je dostupná na
 <http://cihar.com/gammu/docs/>.
 
-If you intend to use libGammu in your application, all you should need is to
-#include <gammu.h> and then use Gammu functions. You can check
-docs/develop/examples/ for some small example applications.
+Pokud chcete použít libGammu ve vaší aplikaci, vše co musíte udělat je
+#include <gammu.h> a pak používat funkce Gammu. V adresáři
+docs/develop/examples/ můžete nalézt jednoduché ukázkové aplikace.
 
 
 Překlady

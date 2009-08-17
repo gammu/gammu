@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-13 11:57+0300\n"
+"POT-Creation-Date: 2009-08-17 10:38+0300\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -6903,11 +6903,9 @@ msgstr ""
 msgid "B<Class> (integer)"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:80 docs/user/gammu-smsd-tables.7:139
-#: docs/user/gammu-smsd-tables.7:339
-msgid "SMS class or -1 (0 is normal SMS, 1 is flash one)"
+#: docs/user/gammu-smsd-tables.7:80
+msgid "SMS class or -1 (0 is flash SMS, 1 is normal one)"
 msgstr ""
 
 # type: Plain text
@@ -7027,6 +7025,12 @@ msgstr ""
 msgid ""
 "User Data Header encoded using hex values which will be used for "
 "constructing the message. Without this, message will be sent as plain text."
+msgstr ""
+
+# type: Plain text
+#. type: Plain text
+#: docs/user/gammu-smsd-tables.7:139 docs/user/gammu-smsd-tables.7:339
+msgid "SMS class or -1 (0 is normal SMS, 1 is flash one)"
 msgstr ""
 
 # type: Plain text
@@ -7901,7 +7905,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:123 INSTALL:304
+#: README:123 INSTALL:311
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 msgstr ""
 
@@ -8477,30 +8481,64 @@ msgid "There are some more options for testing:"
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:296
+#: INSTALL:280
+msgid "- make ExperimentalMemCheck"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:284
 #, no-wrap
 msgid ""
-"- make ExperimentalMemCheck\n"
 "    This checks memory accesses using valgrind during tests and submits\n"
 "    report. You need to do this after 'make Experimental' and you can\n"
 "    submit results using 'make ExperimentalSubmit'.\n"
-"- coverage reports\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:286
+msgid "- coverage reports"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:289
+#, no-wrap
+msgid ""
 "    To get test coverage reports, you need to configure project using \n"
 "    'cmake -DCOVERAGE=ON'\n"
-"- nightly testing\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:291
+msgid "- nightly testing"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:298
+#, no-wrap
+msgid ""
 "    Currently several machines do compile and test Gammu every night. If\n"
 "    you want to tak part of this, just ensure that your machine executes\n"
 "    test suite every night (preferably after 3:00 CET). You can select\n"
 "    either 'make Nightly' to do regullar testing or 'make\n"
 "    NightlyMemoryCheck' to test with valgrind. Also you can enable\n"
 "    coverage tests as described above.\n"
-"- special cases:\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:300
+msgid "- special cases:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:303
+#, no-wrap
+msgid ""
 "    You can enable some additional tests, which require some external\n"
 "    components to be setup and are disabled by default:\n"
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:299
+#: INSTALL:306
 #, no-wrap
 msgid ""
 "    MYSQL_TESTING - you need to have setup MySQL server with database\n"
@@ -8508,7 +8546,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:302
+#: INSTALL:309
 #, no-wrap
 msgid ""
 "    PSQL_TESTING - you need to have setup PostgreSQL server with\n"

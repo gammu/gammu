@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-13 11:57+0300\n"
-"PO-Revision-Date: 2009-08-13 11:58+0200\n"
+"POT-Creation-Date: 2009-08-17 10:38+0300\n"
+"PO-Revision-Date: 2009-08-17 10:38+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -7607,10 +7607,10 @@ msgstr "B<Class> (integer)"
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:80 docs/user/gammu-smsd-tables.7:139
-#: docs/user/gammu-smsd-tables.7:339
-msgid "SMS class or -1 (0 is normal SMS, 1 is flash one)"
-msgstr "třída SMS nebo -1 (0 je normální SMS, 1 jen pro zobrazení na displej)"
+#: docs/user/gammu-smsd-tables.7:80
+msgid "SMS class or -1 (0 is flash SMS, 1 is normal one)"
+msgstr ""
+"třída SMS nebo -1 (0 je jen pro zobrazení na displej, 1 je normální SMS)"
 
 # type: Plain text
 #. type: Plain text
@@ -7739,6 +7739,12 @@ msgstr ""
 "User Data Header ((hlavička uživatelských dat) zapsaná v šestnáckové "
 "soustavě, která bude použita při vytváření zprávy. Pokud není uvedena, "
 "zpráva bude odeslána jako čistě textová."
+
+# type: Plain text
+#. type: Plain text
+#: docs/user/gammu-smsd-tables.7:139 docs/user/gammu-smsd-tables.7:339
+msgid "SMS class or -1 (0 is normal SMS, 1 is flash one)"
+msgstr "třída SMS nebo -1 (0 je normální SMS, 1 jen pro zobrazení na displej)"
 
 # type: Plain text
 #. type: Plain text
@@ -8692,6 +8698,9 @@ msgid ""
 "#include <gammu.h> and then use Gammu functions. You can check docs/develop/"
 "examples/ for some small example applications."
 msgstr ""
+"Pokud chcete použít libGammu ve vaší aplikaci, vše co musíte udělat je "
+"#include <gammu.h> a pak používat funkce Gammu. V adresáři docs/develop/"
+"examples/ můžete nalézt jednoduché ukázkové aplikace."
 
 #. type: Plain text
 #: README:94
@@ -8775,7 +8784,7 @@ msgstr ""
 "listu <gammu-users@lists.sourceforge.net>."
 
 #. type: Plain text
-#: README:123 INSTALL:304
+#: README:123 INSTALL:311
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 
@@ -9010,7 +9019,7 @@ msgstr "> mkdir build > cd build"
 #. type: Plain text
 #: INSTALL:93
 msgid "Then just configure project:"
-msgstr ""
+msgstr "Poté zkonfigurujte projekt:"
 
 #. type: Plain text
 #: INSTALL:95
@@ -9020,7 +9029,7 @@ msgstr "> cmake .."
 #. type: Plain text
 #: INSTALL:97
 msgid "Build it:"
-msgstr ""
+msgstr "Zkompilujte ho:"
 
 #. type: Plain text
 #: INSTALL:99
@@ -9030,7 +9039,7 @@ msgstr "> make"
 #. type: Plain text
 #: INSTALL:101
 msgid "Test that everything is okay:"
-msgstr ""
+msgstr "Otestujte jestli je všechno v pořádku:"
 
 #. type: Plain text
 #: INSTALL:103
@@ -9040,7 +9049,7 @@ msgstr "> make test"
 #. type: Plain text
 #: INSTALL:105
 msgid "And finally install it:"
-msgstr ""
+msgstr "A nakonec ho nainstalujte:"
 
 #. type: Plain text
 #: INSTALL:107
@@ -9057,7 +9066,7 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:112
 msgid "Useful cmake parameters:"
-msgstr ""
+msgstr "Užitečné parametry cmake:"
 
 #. type: Plain text
 #: INSTALL:121
@@ -9110,7 +9119,7 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:143
 msgid "For example:"
-msgstr ""
+msgstr "Například:"
 
 #. type: Plain text
 #: INSTALL:145
@@ -9315,6 +9324,10 @@ msgid ""
 "i586-mingw32msvc-dlltool --kill-at --input-def libmysql.def \\\n"
 "    --dllname libmysql.dll --output-lib libmysql.a\n"
 msgstr ""
+"cd mysql/lib/opt\n"
+"reimp.exe -d libmysql.lib\n"
+"i586-mingw32msvc-dlltool --kill-at --input-def libmysql.def \\\n"
+"    --dllname libmysql.dll --output-lib libmysql.a\n"
 
 #. type: Plain text
 #: INSTALL:241
@@ -9322,6 +9335,8 @@ msgid ""
 "reimp.exe is part of mingw-utils and can be run through wine, I didn't try "
 "to compile native binary from it."
 msgstr ""
+"reimp.exe is part of mingw-utils and can be run through wine, I didn't try "
+"to compile native binary from it."
 
 #. type: Plain text
 #: INSTALL:244
@@ -9409,30 +9424,66 @@ msgid "There are some more options for testing:"
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:296
+#: INSTALL:280
+msgid "- make ExperimentalMemCheck"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:284
 #, no-wrap
 msgid ""
-"- make ExperimentalMemCheck\n"
 "    This checks memory accesses using valgrind during tests and submits\n"
 "    report. You need to do this after 'make Experimental' and you can\n"
 "    submit results using 'make ExperimentalSubmit'.\n"
-"- coverage reports\n"
+msgstr ""
+
+# type: Plain text
+#. type: Plain text
+#: INSTALL:286
+#, fuzzy
+msgid "- coverage reports"
+msgstr "B<no> - nevyžadovat doručenky"
+
+#. type: Plain text
+#: INSTALL:289
+#, no-wrap
+msgid ""
 "    To get test coverage reports, you need to configure project using \n"
 "    'cmake -DCOVERAGE=ON'\n"
-"- nightly testing\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:291
+msgid "- nightly testing"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:298
+#, no-wrap
+msgid ""
 "    Currently several machines do compile and test Gammu every night. If\n"
 "    you want to tak part of this, just ensure that your machine executes\n"
 "    test suite every night (preferably after 3:00 CET). You can select\n"
 "    either 'make Nightly' to do regullar testing or 'make\n"
 "    NightlyMemoryCheck' to test with valgrind. Also you can enable\n"
 "    coverage tests as described above.\n"
-"- special cases:\n"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:300
+msgid "- special cases:"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:303
+#, no-wrap
+msgid ""
 "    You can enable some additional tests, which require some external\n"
 "    components to be setup and are disabled by default:\n"
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:299
+#: INSTALL:306
 #, no-wrap
 msgid ""
 "    MYSQL_TESTING - you need to have setup MySQL server with database\n"
@@ -9440,7 +9491,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:302
+#: INSTALL:309
 #, no-wrap
 msgid ""
 "    PSQL_TESTING - you need to have setup PostgreSQL server with\n"

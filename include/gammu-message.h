@@ -462,7 +462,7 @@ typedef struct {
 	 */
 	gboolean ReplyViaSameSMSC;
 	/**
-	 * SMS class.
+	 * SMS class (0 is flash SMS, 1 is normal one).
 	 */
 	signed char Class;
 	/**

@@ -277,20 +277,27 @@ http://cdash.cihar.com/index.php?project=Gammu
 There are some more options for testing:
 
 - make ExperimentalMemCheck
+
     This checks memory accesses using valgrind during tests and submits
     report. You need to do this after 'make Experimental' and you can
     submit results using 'make ExperimentalSubmit'.
+
 - coverage reports
+
     To get test coverage reports, you need to configure project using 
     'cmake -DCOVERAGE=ON'
+
 - nightly testing
+
     Currently several machines do compile and test Gammu every night. If
     you want to tak part of this, just ensure that your machine executes
     test suite every night (preferably after 3:00 CET). You can select
     either 'make Nightly' to do regullar testing or 'make
     NightlyMemoryCheck' to test with valgrind. Also you can enable
     coverage tests as described above.
+
 - special cases:
+
     You can enable some additional tests, which require some external
     components to be setup and are disabled by default:
 
