@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-17 10:38+0300\n"
+"POT-Creation-Date: 2009-08-17 10:57+0300\n"
 "PO-Revision-Date: 2009-01-28 17:24+0100\n"
 "Last-Translator: hawshinka manson <hawshinka@gmail.com>\n"
 "Language-Team: none\n"
@@ -4125,7 +4125,6 @@ msgstr "27 de Janeiro de 2009"
 #: docs/user/gammu-smsd-inject.1:1 docs/user/gammu-smsd-monitor.1:1
 #: docs/user/gammu-smsd-files.7:1 docs/user/gammu-smsd-mysql.7:1
 #: docs/user/gammu-smsd-pgsql.7:1 docs/user/gammu-smsd-dbi.7:1
-#: docs/user/gammu-smsd-tables.7:1
 #, no-wrap
 msgid "Gammu 1.23.0"
 msgstr ""
@@ -6695,7 +6694,7 @@ msgstr ""
 
 # type: TH
 #. type: TH
-#: docs/user/gammu-smsd-dbi.7:1 docs/user/gammu-smsd-tables.7:1
+#: docs/user/gammu-smsd-dbi.7:1
 #, fuzzy, no-wrap
 msgid "January 31, 2009"
 msgstr "27 de Janeiro de 2009"
@@ -6722,6 +6721,19 @@ msgstr ""
 #: docs/user/gammu-smsd-tables.7:1
 #, no-wrap
 msgid "GAMMU-SMSD-TABLES"
+msgstr ""
+
+# type: TH
+#. type: TH
+#: docs/user/gammu-smsd-tables.7:1
+#, fuzzy, no-wrap
+msgid "August 17, 2009"
+msgstr "27 de Janeiro de 2009"
+
+#. type: TH
+#: docs/user/gammu-smsd-tables.7:1
+#, no-wrap
+msgid "Gammu 1.26.0"
 msgstr ""
 
 # type: Plain text
@@ -8169,15 +8181,37 @@ msgstr ""
 msgid "Useful cmake parameters:"
 msgstr ""
 
-#. type: Plain text
+#. type: Bullet: '* '
+#: INSTALL:121
+msgid "-DBUILD_SHARED_LIBS=ON enables shared library"
+msgstr ""
+
+#. type: Bullet: '* '
+#: INSTALL:121
+msgid "-DCMAKE_BUILD_TYPE=\"Debug\" enables debug build"
+msgstr ""
+
+#. type: Bullet: '* '
+#: INSTALL:121
+msgid "-DCMAKE_INSTALL_PREFIX=\"/usr\" change installation prefix"
+msgstr ""
+
+#. type: Bullet: '* '
 #: INSTALL:121
 msgid ""
-"-DBUILD_SHARED_LIBS=ON enables shared library -DCMAKE_BUILD_TYPE=\"Debug\" "
-"enables debug build -DCMAKE_INSTALL_PREFIX=\"/usr\" change installation "
-"prefix -DENABLE_PROTECTION=OFF disables various compile time protections "
-"against buffer overflows and similar attacks -DBUILD_PYTHON=/usr/bin/"
-"python2.6 changes Python used for build Python module -DWITH_PYTHON=OFF "
-"disables build of python-gammu"
+"-DENABLE_PROTECTION=OFF disables various compile time protections against "
+"buffer overflows and similar attacks"
+msgstr ""
+
+#. type: Bullet: '* '
+#: INSTALL:121
+msgid ""
+"-DBUILD_PYTHON=/usr/bin/python2.6 changes Python used for build Python module"
+msgstr ""
+
+#. type: Bullet: '* '
+#: INSTALL:121
+msgid "-DWITH_PYTHON=OFF disables build of python-gammu"
 msgstr ""
 
 #. type: Plain text
@@ -8185,11 +8219,19 @@ msgstr ""
 msgid "You can also disable support for whole set of phones, e.g.:"
 msgstr ""
 
-#. type: Plain text
+#. type: Bullet: '* '
 #: INSTALL:127
-msgid ""
-"-DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support -DWITH_BLUETOOTH=OFF "
-"disables Bluetooth support -DWITH_IRDA=OFF disables IrDA support"
+msgid "-DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support"
+msgstr ""
+
+#. type: Bullet: '* '
+#: INSTALL:127
+msgid "-DWITH_BLUETOOTH=OFF disables Bluetooth support"
+msgstr ""
+
+#. type: Bullet: '* '
+#: INSTALL:127
+msgid "-DWITH_IRDA=OFF disables IrDA support"
 msgstr ""
 
 #. type: Plain text
@@ -8207,14 +8249,39 @@ msgid ""
 "installed:"
 msgstr ""
 
-#. type: Plain text
+#. type: Bullet: '* '
 #: INSTALL:141
-msgid ""
-"INSTALL_GNAPPLET - Install Gnapplet binaries INSTALL_MEDIA - Install sample "
-"media files INSTALL_PHP_EXAMPLES - Install PHP example scripts "
-"INSTALL_BASH_COMPLETION - Install bash completion script for Gammu "
-"INSTALL_LSB_INIT - Install LSB compatible init script for Gammu INSTALL_DOC "
-"- Install documentation INSTALL_LOC - Install locales data"
+msgid "INSTALL_GNAPPLET - Install Gnapplet binaries"
+msgstr ""
+
+#. type: Bullet: '* '
+#: INSTALL:141
+msgid "INSTALL_MEDIA - Install sample media files"
+msgstr ""
+
+#. type: Bullet: '* '
+#: INSTALL:141
+msgid "INSTALL_PHP_EXAMPLES - Install PHP example scripts"
+msgstr ""
+
+#. type: Bullet: '* '
+#: INSTALL:141
+msgid "INSTALL_BASH_COMPLETION - Install bash completion script for Gammu"
+msgstr ""
+
+#. type: Bullet: '* '
+#: INSTALL:141
+msgid "INSTALL_LSB_INIT - Install LSB compatible init script for Gammu"
+msgstr ""
+
+#. type: Bullet: '* '
+#: INSTALL:141
+msgid "INSTALL_DOC - Install documentation"
+msgstr ""
+
+#. type: Bullet: '* '
+#: INSTALL:141
+msgid "INSTALL_LOC - Install locales data"
 msgstr ""
 
 #. type: Plain text
@@ -8559,7 +8626,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "    MYSQL_TESTING - you need to have setup MySQL server with database\n"
-"    where SMSD can plat.\n"
+"    where SMSD can play.\n"
 msgstr ""
 
 #. type: Plain text
@@ -8567,7 +8634,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "    PSQL_TESTING - you need to have setup PostgreSQL server with\n"
-"    database where SMSD can plat.\n"
+"    database where SMSD can play.\n"
 msgstr ""
 
 # type: TH

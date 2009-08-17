@@ -110,20 +110,20 @@ parameters bellow), or using TUI - ccmake.
 
 Useful cmake parameters:
 
--DBUILD_SHARED_LIBS=ON enables shared library
--DCMAKE_BUILD_TYPE="Debug" enables debug build
--DCMAKE_INSTALL_PREFIX="/usr" change installation prefix
--DENABLE_PROTECTION=OFF disables various compile time protections
-against buffer overflows and similar attacks
--DBUILD_PYTHON=/usr/bin/python2.6 changes Python used for build Python
-module
--DWITH_PYTHON=OFF disables build of python-gammu
+* -DBUILD_SHARED_LIBS=ON enables shared library
+* -DCMAKE_BUILD_TYPE="Debug" enables debug build
+* -DCMAKE_INSTALL_PREFIX="/usr" change installation prefix
+* -DENABLE_PROTECTION=OFF disables various compile time protections
+  against buffer overflows and similar attacks
+* -DBUILD_PYTHON=/usr/bin/python2.6 changes Python used for build Python
+  module
+* -DWITH_PYTHON=OFF disables build of python-gammu
 
 You can also disable support for whole set of phones, e.g.:
 
--DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support
--DWITH_BLUETOOTH=OFF disables Bluetooth support
--DWITH_IRDA=OFF disables IrDA support
+* -DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support
+* -DWITH_BLUETOOTH=OFF disables Bluetooth support
+* -DWITH_IRDA=OFF disables IrDA support
 
 Limiting set of installed data
 ==============================
@@ -131,13 +131,13 @@ Limiting set of installed data
 By setting following flags you can control which additional parts will
 be installed:
 
-INSTALL_GNAPPLET - Install Gnapplet binaries
-INSTALL_MEDIA - Install sample media files
-INSTALL_PHP_EXAMPLES - Install PHP example scripts
-INSTALL_BASH_COMPLETION - Install bash completion script for Gammu
-INSTALL_LSB_INIT - Install LSB compatible init script for Gammu
-INSTALL_DOC - Install documentation
-INSTALL_LOC - Install locales data
+* INSTALL_GNAPPLET - Install Gnapplet binaries
+* INSTALL_MEDIA - Install sample media files
+* INSTALL_PHP_EXAMPLES - Install PHP example scripts
+* INSTALL_BASH_COMPLETION - Install bash completion script for Gammu
+* INSTALL_LSB_INIT - Install LSB compatible init script for Gammu
+* INSTALL_DOC - Install documentation
+* INSTALL_LOC - Install locales data
 
 For example:
 
@@ -302,10 +302,10 @@ There are some more options for testing:
     components to be setup and are disabled by default:
 
     MYSQL_TESTING - you need to have setup MySQL server with database
-    where SMSD can plat.
+    where SMSD can play.
 
     PSQL_TESTING - you need to have setup PostgreSQL server with
-    database where SMSD can plat.
+    database where SMSD can play.
 
 
 # vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us

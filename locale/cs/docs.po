@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-17 10:38+0300\n"
-"PO-Revision-Date: 2009-08-17 10:38+0200\n"
+"POT-Creation-Date: 2009-08-17 10:57+0300\n"
+"PO-Revision-Date: 2009-08-17 11:03+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4417,7 +4417,6 @@ msgstr "Leden  4, 2009"
 #: docs/user/gammu-smsd-inject.1:1 docs/user/gammu-smsd-monitor.1:1
 #: docs/user/gammu-smsd-files.7:1 docs/user/gammu-smsd-mysql.7:1
 #: docs/user/gammu-smsd-pgsql.7:1 docs/user/gammu-smsd-dbi.7:1
-#: docs/user/gammu-smsd-tables.7:1
 #, no-wrap
 msgid "Gammu 1.23.0"
 msgstr "Gammu 1.23.0"
@@ -7362,7 +7361,7 @@ msgstr "GAMMU-SMSD-DBI"
 
 # type: TH
 #. type: TH
-#: docs/user/gammu-smsd-dbi.7:1 docs/user/gammu-smsd-tables.7:1
+#: docs/user/gammu-smsd-dbi.7:1
 #, no-wrap
 msgid "January 31, 2009"
 msgstr "Leden 31, 2009"
@@ -7395,6 +7394,20 @@ msgstr ""
 #, no-wrap
 msgid "GAMMU-SMSD-TABLES"
 msgstr "GAMMU-SMSD-TABLES"
+
+# type: TH
+#. type: TH
+#: docs/user/gammu-smsd-tables.7:1
+#, no-wrap
+msgid "August 17, 2009"
+msgstr "Srpen 17, 2009"
+
+# type: TH
+#. type: TH
+#: docs/user/gammu-smsd-tables.7:1
+#, no-wrap
+msgid "Gammu 1.26.0"
+msgstr "Gammu 1.26.0"
 
 # type: Plain text
 #. type: Plain text
@@ -8805,6 +8818,8 @@ msgid ""
 "Binaries - Linux\n"
 "================\n"
 msgstr ""
+"Binárky - Linux\n"
+"===============\n"
 
 #. type: Plain text
 #: INSTALL:12
@@ -8814,6 +8829,9 @@ msgid ""
 "release built for many distributions available on Gammu home page <http://"
 "cihar.com/gammu/>."
 msgstr ""
+"Mnoho distribucí již obsahuje Gammu, takže pokud můžete použít tuto verzi, "
+"bude to pro vás nejjednodušší. Binární balíčky posledních verzí pro mnoho "
+"distribucí naleznete také na stránkách Gammu - <http://cz.cihar.com/gammu/>."
 
 #. type: Plain text
 #: INSTALL:15
@@ -8822,6 +8840,8 @@ msgid ""
 "Binaries - Windows\n"
 "==================\n"
 msgstr ""
+"Binárky - Windows\n"
+"=================\n"
 
 #. type: Plain text
 #: INSTALL:20
@@ -8830,6 +8850,9 @@ msgid ""
 "Windows 95, 98 and NT 4.0 you will also need ShFolder DLL, which can be "
 "downloaded from Microsoft:"
 msgstr ""
+"Binárky pro Windows si můžete stáhnout z <http://cz.cihar.com/gammu/>. Pro "
+"Windows 95, 98 a NT 4.0 budete také potřebovat ShFolder DLL, která může být "
+"stažena od Microsoftu:"
 
 #. type: Plain text
 #: INSTALL:22
@@ -8847,6 +8870,8 @@ msgid ""
 "From Sources - Requirements\n"
 "===========================\n"
 msgstr ""
+"Ze zdrojového kódu - požadavky\n"
+"==============================\n"
 
 #. type: Plain text
 #: INSTALL:29
@@ -8854,6 +8879,8 @@ msgid ""
 "Gammu does not require anything at all to build, but you might miss some "
 "features. Optional dependencies include:"
 msgstr ""
+"Gammu je možné zkompilovat bez jakýchkoliv dalších knihoven, ale můžete "
+"postrádat některé funkce. Volitelné závislosti jsou:"
 
 #. type: Plain text
 #: INSTALL:33
@@ -8986,6 +9013,8 @@ msgid ""
 "From Sources - Linux\n"
 "====================\n"
 msgstr ""
+"Ze zdrojového kódu - Linux\n"
+"==========================\n"
 
 #. type: Plain text
 #: INSTALL:77
@@ -9062,34 +9091,70 @@ msgid ""
 "You can configure build parameters either by command line (see parameters "
 "bellow), or using TUI - ccmake."
 msgstr ""
+"Parametry můžete měnit na příkazové řádce (jak je popsáno níže), nebo pomocí "
+"textového rozhraní ccmake."
 
 #. type: Plain text
 #: INSTALL:112
 msgid "Useful cmake parameters:"
 msgstr "Užitečné parametry cmake:"
 
-#. type: Plain text
+#. type: Bullet: '* '
+#: INSTALL:121
+msgid "-DBUILD_SHARED_LIBS=ON enables shared library"
+msgstr "-DBUILD_SHARED_LIBS=ON povolí sdílenou knihovnu"
+
+#. type: Bullet: '* '
+#: INSTALL:121
+msgid "-DCMAKE_BUILD_TYPE=\"Debug\" enables debug build"
+msgstr "-DCMAKE_BUILD_TYPE=\"Debug\" zapne ladicí build"
+
+#. type: Bullet: '* '
+#: INSTALL:121
+msgid "-DCMAKE_INSTALL_PREFIX=\"/usr\" change installation prefix"
+msgstr "-DCMAKE_INSTALL_PREFIX=\"/usr\" změní prefix pro instalaci"
+
+#. type: Bullet: '* '
 #: INSTALL:121
 msgid ""
-"-DBUILD_SHARED_LIBS=ON enables shared library -DCMAKE_BUILD_TYPE=\"Debug\" "
-"enables debug build -DCMAKE_INSTALL_PREFIX=\"/usr\" change installation "
-"prefix -DENABLE_PROTECTION=OFF disables various compile time protections "
-"against buffer overflows and similar attacks -DBUILD_PYTHON=/usr/bin/"
-"python2.6 changes Python used for build Python module -DWITH_PYTHON=OFF "
-"disables build of python-gammu"
+"-DENABLE_PROTECTION=OFF disables various compile time protections against "
+"buffer overflows and similar attacks"
 msgstr ""
+"-DENABLE_PROTECTION=OFF vypne různé ochrany proti přetečení bufferu a "
+"podobným útokům"
+
+#. type: Bullet: '* '
+#: INSTALL:121
+msgid ""
+"-DBUILD_PYTHON=/usr/bin/python2.6 changes Python used for build Python module"
+msgstr ""
+"-DBUILD_PYTHON=/usr/bin/python2.6 změní Python, který bude použit pro "
+"kompilaci modulu pro Python"
+
+#. type: Bullet: '* '
+#: INSTALL:121
+msgid "-DWITH_PYTHON=OFF disables build of python-gammu"
+msgstr "-DWITH_PYTHON=OFF vypne kompilaci python-gammu"
 
 #. type: Plain text
 #: INSTALL:123
 msgid "You can also disable support for whole set of phones, e.g.:"
-msgstr ""
+msgstr "Můžete také vypnout podporu pro různé druhy telefonů, např.:"
 
-#. type: Plain text
+#. type: Bullet: '* '
 #: INSTALL:127
-msgid ""
-"-DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support -DWITH_BLUETOOTH=OFF "
-"disables Bluetooth support -DWITH_IRDA=OFF disables IrDA support"
-msgstr ""
+msgid "-DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support"
+msgstr "-DWITH_NOKIA_SUPPORT=OFF vypne podporu pro Nokie"
+
+#. type: Bullet: '* '
+#: INSTALL:127
+msgid "-DWITH_BLUETOOTH=OFF disables Bluetooth support"
+msgstr "-DWITH_BLUETOOTH=OFF vypne podporu pro Bluetooth"
+
+#. type: Bullet: '* '
+#: INSTALL:127
+msgid "-DWITH_IRDA=OFF disables IrDA support"
+msgstr "-DWITH_IRDA=OFF vypne podporu pro IrDA"
 
 #. type: Plain text
 #: INSTALL:129
@@ -9098,6 +9163,8 @@ msgid ""
 "Limiting set of installed data\n"
 "==============================\n"
 msgstr ""
+"Omezení nainstalovaných věcí\n"
+"============================\n"
 
 #. type: Plain text
 #: INSTALL:133
@@ -9106,15 +9173,42 @@ msgid ""
 "installed:"
 msgstr ""
 
-#. type: Plain text
+#. type: Bullet: '* '
 #: INSTALL:141
-msgid ""
-"INSTALL_GNAPPLET - Install Gnapplet binaries INSTALL_MEDIA - Install sample "
-"media files INSTALL_PHP_EXAMPLES - Install PHP example scripts "
-"INSTALL_BASH_COMPLETION - Install bash completion script for Gammu "
-"INSTALL_LSB_INIT - Install LSB compatible init script for Gammu INSTALL_DOC "
-"- Install documentation INSTALL_LOC - Install locales data"
+msgid "INSTALL_GNAPPLET - Install Gnapplet binaries"
+msgstr "INSTALL_GNAPPLET - instalovat binárky Gnappletu"
+
+#. type: Bullet: '* '
+#: INSTALL:141
+msgid "INSTALL_MEDIA - Install sample media files"
+msgstr "INSTALL_MEDIA - instalovat ukázkové soubory s logy a vyzváněními"
+
+#. type: Bullet: '* '
+#: INSTALL:141
+msgid "INSTALL_PHP_EXAMPLES - Install PHP example scripts"
+msgstr "INSTALL_PHP_EXAMPLES - instalovat ukázkové skripty v PHP"
+
+#. type: Bullet: '* '
+#: INSTALL:141
+msgid "INSTALL_BASH_COMPLETION - Install bash completion script for Gammu"
 msgstr ""
+"INSTALL_BASH_COMPLETION - instalovat skript na doplňování parametrů Gammu v "
+"bashi"
+
+#. type: Bullet: '* '
+#: INSTALL:141
+msgid "INSTALL_LSB_INIT - Install LSB compatible init script for Gammu"
+msgstr "INSTALL_LSB_INIT - instalovat LSB kompatibilní init skript pro Gammu"
+
+#. type: Bullet: '* '
+#: INSTALL:141
+msgid "INSTALL_DOC - Install documentation"
+msgstr "INSTALL_DOC - instalovat dokumentaci"
+
+#. type: Bullet: '* '
+#: INSTALL:141
+msgid "INSTALL_LOC - Install locales data"
+msgstr "INSTALL_LOC - instalovat data překladu aplikace"
 
 #. type: Plain text
 #: INSTALL:143
@@ -9274,6 +9368,14 @@ msgid ""
 "o strcasecmp.o strncasecmp.o wcscmpi.o i586-mingw32msvc-ranlib libmoldname71."
 "a"
 msgstr ""
+"i586-mingw32msvc-ar x /usr/i586-mingw32msvc/lib/libmoldname.a isascii.o "
+"iscsym.o iscsymf.o toascii.o strcasecmp.o strncasecmp.o wcscmpi.o i586-"
+"mingw32msvc-gcc -DRUNTIME=71 -D__FILENAME__=moldname-71.def -D__MSVCRT__ -C -"
+"E -P -xc-header moldname.def.in >moldname-71.def i586-mingw32msvc-dlltool -k "
+"-U --dllname msvcr71.dll --def moldname-71.def --output-lib libmoldname71.a "
+"i586-mingw32msvc-ar rc libmoldname71.a isascii.o iscsym.o iscsymf.o toascii."
+"o strcasecmp.o strncasecmp.o wcscmpi.o i586-mingw32msvc-ranlib libmoldname71."
+"a"
 
 #. type: Plain text
 #: INSTALL:218
@@ -9426,7 +9528,7 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:280
 msgid "- make ExperimentalMemCheck"
-msgstr ""
+msgstr "- make ExperimentalMemCheck"
 
 #. type: Plain text
 #: INSTALL:284
@@ -9440,9 +9542,8 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: INSTALL:286
-#, fuzzy
 msgid "- coverage reports"
-msgstr "B<no> - nevyžadovat doručenky"
+msgstr "- pokrytí testy"
 
 #. type: Plain text
 #: INSTALL:289
@@ -9455,7 +9556,7 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:291
 msgid "- nightly testing"
-msgstr ""
+msgstr "- noční testování"
 
 #. type: Plain text
 #: INSTALL:298
@@ -9472,7 +9573,7 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:300
 msgid "- special cases:"
-msgstr ""
+msgstr "- zvláštní případy:"
 
 #. type: Plain text
 #: INSTALL:303
@@ -9487,7 +9588,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "    MYSQL_TESTING - you need to have setup MySQL server with database\n"
-"    where SMSD can plat.\n"
+"    where SMSD can play.\n"
 msgstr ""
 
 #. type: Plain text
@@ -9495,7 +9596,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "    PSQL_TESTING - you need to have setup PostgreSQL server with\n"
-"    database where SMSD can plat.\n"
+"    database where SMSD can play.\n"
 msgstr ""
 
 # type: Plain text
