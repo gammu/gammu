@@ -902,7 +902,8 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, gboolean first)
 		Priv->SMSCache = (GSM_AT_SMS_Cache *)realloc(Priv->SMSCache, sizeof(GSM_AT_SMS_Cache));
 	}
 	if (used != Priv->SMSCount && error == ERR_NONE) {
-		smprintf(s, "Used messages according to CPMS %d, but CMGL returned %d. Expect problems!\n", used, Priv->SMSCount);
+		smprintf(s, "WARNING: Used messages according to CPMS %d, but CMGL returned %d. Expect problems!\n", used, Priv->SMSCount);
+		smprintf(s, "HINT: Your might want to use F_USE_SMSTEXTMODE flag\n");
 	}
 	return error;
 }
