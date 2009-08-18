@@ -618,13 +618,16 @@ gboolean GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 					((0x00ff & SMS->SMS[i].UDH.Text[w + 2]) << 8) | ( 0x00ff &SMS->SMS[i].UDH.Text[w + 3]);
 				switch (Info->Entries[Info->EntriesNum].Number) {
 					case 0x23f4:
-						smfprintf(di, "UDH part - vCard");
+						smfprintf(di, "UDH part - vCard\n");
 						Info->Entries[Info->EntriesNum].ID 	= SMS_NokiaVCARD21Long;
+						break;
 					case 0x23f5:
-						smfprintf(di, "UDH part - vCalendar");
+						smfprintf(di, "UDH part - vCalendar\n");
 						Info->Entries[Info->EntriesNum].ID 	= SMS_NokiaVCALENDAR10Long;
+						break;
 					default:
-						smfprintf(di, "UDH part - unknown application data - 0x%04x", Info->Entries[Info->EntriesNum].Number);
+						smfprintf(di, "UDH part - unknown application data - 0x%04x\n", Info->Entries[Info->EntriesNum].Number);
+						break;
 				}
 				RetVal = TRUE;
 				break;
