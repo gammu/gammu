@@ -247,22 +247,23 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 		printf(LISTFORMAT, _("Coding"));
 		switch (sms.Coding) {
 			case SMS_Coding_Unicode_No_Compression 	:
-				printf("%s\n", _("Unicode (no compression)"));
+				printf(_("Unicode (no compression)"));
 				break;
 			case SMS_Coding_Unicode_Compression 	:
-				printf("%s\n", _("Unicode (compression)"));
+				printf(_("Unicode (compression)"));
 				break;
 			case SMS_Coding_Default_No_Compression 	:
-				printf("%s\n", _("Default GSM alphabet (no compression)"));
+				printf(_("Default GSM alphabet (no compression)"));
 				break;
 			case SMS_Coding_Default_Compression 	:
-				printf("%s\n", _("Default GSM alphabet (compression)"));
+				printf(_("Default GSM alphabet (compression)"));
 				break;
 			case SMS_Coding_8bit			:
 				/* l10n: 8-bit message coding */
-				printf("%s\n", _("8-bit"));
+				printf(_("8-bit"));
 				break;
 		}
+		printf("\n");
 		if (sms.State==SMS_UnSent && sms.Memory==MEM_ME) {
 		} else {
 			printf(LISTFORMAT, ngettext("Remote number", "Remote numbers", sms.OtherNumbersNum + 1));
@@ -275,11 +276,12 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 		}
 		printf(LISTFORMAT, _("Status"));
 		switch (sms.State) {
-			case SMS_Sent	:	printf("%s\n", _("Sent"));	break;
-			case SMS_Read	:	printf("%s\n", _("Read"));	break;
-			case SMS_UnRead	:	printf("%s\n", _("UnRead"));	break;
-			case SMS_UnSent	:	printf("%s\n", _("UnSent"));	break;
+			case SMS_Sent	:	printf(_("Sent"));	break;
+			case SMS_Read	:	printf(_("Read"));	break;
+			case SMS_UnRead	:	printf(_("UnRead"));	break;
+			case SMS_UnSent	:	printf(_("UnSent"));	break;
 		}
+		printf("\n");
 		if (sms.UDH.Type != UDH_NoUDH) {
 			printf(LISTFORMAT, _("User Data Header"));
 			switch (sms.UDH.Type) {
@@ -440,7 +442,8 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 		case SMS_ConcatenatedAutoTextLong16bit:
 		case SMS_NokiaVCARD21Long:
 		case SMS_NokiaVCALENDAR10Long:
-			printf("%s\n",DecodeUnicodeConsole(SMSInfo.Entries[i].Buffer));
+			if (SMSInfo.Entries[i].Buffer == NULL) printf("\n");
+			else printf("%s\n",DecodeUnicodeConsole(SMSInfo.Entries[i].Buffer));
 			break;
 		case SMS_EMSFixedBitmap:
 		case SMS_EMSVariableBitmap:
