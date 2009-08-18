@@ -1777,6 +1777,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		/* We don't care about error here */
 		ATGEN_WaitFor(s, "AT+CPROT=?\r", 11, 0x00, 20, ID_SetOBEX);
 		error = ERR_NONE;
+	/* Disabled by default as it usually fails to work */
 	} else {
 		/*
 		 * Enable OBEX for Motorolas, they usually support this and
@@ -1785,6 +1786,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		 * This usually does not work on Bluetooth and IrDA, as there
 		 * you can access OBEX another way.
 		 */
+#ifdef GSM_ENABLE_ATOBEX_AUTO_MODE
 		if (s->ConnectionType != GCT_IRDAAT &&
 				s->ConnectionType != GCT_BLUEAT &&
 				!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_ATOBEX) &&
@@ -1795,6 +1797,9 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 			GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_MODE22);
 			GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_IRMC_LEVEL_2);
 		}
+#else
+		smprintf(s, "There is a chance that phone supports F_OBEX,F_MODE22, please report bug if it works\n");
+#endif
 	}
 
 #ifdef GSM_ENABLE_ATOBEX

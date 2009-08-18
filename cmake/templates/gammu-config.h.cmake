@@ -108,6 +108,9 @@
 /* AT with OBEX support */
 #cmakedefine GSM_ENABLE_ATOBEX
 
+/* Automatic switching to OBEX for AT+MODE capable phones */
+#cmakedefine GSM_ENABLE_ATOBEX_AUTO_MODE
+
 /* OBEX generic models */
 #cmakedefine GSM_ENABLE_OBEXGEN
 
