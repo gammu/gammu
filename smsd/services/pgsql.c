@@ -493,7 +493,7 @@ static GSM_Error SMSDPgSQL_RefreshSendStatus(GSM_SMSDConfig * Config,
 	PGresult *Res;
 
 	if (SMSDPgSQL_Query(Config, &Res, "UPDATE outbox SET SendingTimeOut = now() + INTERVAL '15 seconds' "
-		"WHERE ID = '%s' AND SendingTimeOut < now()", ID) != ERR_NONE) {
+		"WHERE ID = '%s' AND (SendingTimeOut < now() OR SendingTimeOut IS NULL)", ID) != ERR_NONE) {
 			SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 	}

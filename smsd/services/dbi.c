@@ -696,7 +696,7 @@ static GSM_Error SMSDDBI_RefreshSendStatus(GSM_SMSDConfig * Config,
 	dbi_result Res;
 
 	sprintf(buffer, "UPDATE outbox SET SendingTimeOut = %s "
-                        "WHERE ID = '%s' AND SendingTimeOut < %s",
+                        "WHERE ID = '%s' AND (SendingTimeOut < %s OR SendingTimeOut IS NULL)",
 		SMSDDBI_NowPlus(Config, 15),
 		ID,
 		SMSDDBI_Now(Config));
