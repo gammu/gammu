@@ -4230,30 +4230,48 @@ GSM_Error ATGEN_GetDisplayStatus(GSM_StateMachine *s UNUSED, GSM_DisplayFeatures
 
 GSM_Error ATGEN_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-    GSM_Phone_Data		*Data = &s->Phone.Data;
-    int 			i;
+	GSM_BatteryCharge *BatteryCharge = s->Phone.Data.BatteryCharge;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	int bcs, bcl;
+	GSM_Error error;
 
-    switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
-        case AT_Reply_OK:
-            smprintf(s, "Battery level received\n");
-            Data->BatteryCharge->BatteryPercent = atoi(msg.Buffer+17);
-            i = atoi(msg.Buffer+14);
-            if (i >= 0 && i <= 3) {
-                Data->BatteryCharge->ChargeState = i + 1;
-            }
-            return ERR_NONE;
-        case AT_Reply_Error:
-            smprintf(s, "Can't get battery level\n");
-            return ERR_NOTSUPPORTED;
-        case AT_Reply_CMSError:
-            smprintf(s, "Can't get battery level\n");
-            return ATGEN_HandleCMSError(s);
-	case AT_Reply_CMEError:
-	        return ATGEN_HandleCMEError(s);
-        default:
-            break;
-    }
-    return ERR_UNKNOWNRESPONSE;
+	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+		case AT_Reply_OK:
+			smprintf(s, "Battery level received\n");
+			error = ATGEN_ParseReply(s,
+				GetLineString(msg.Buffer, &Priv->Lines, 2),
+				"+CBC: @i, @i",
+				&bcs,
+				&bcl);
+			if (error != ERR_NONE) return error;
+			BatteryCharge->BatteryPercent = bcl;
+			switch (bcs) {
+				case 0:
+					BatteryCharge->ChargeState = GSM_BatteryPowered;
+					break;
+				case 1:
+					BatteryCharge->ChargeState = GSM_BatteryConnected;
+					break;
+				case 2:
+					BatteryCharge->ChargeState = GSM_BatteryCharging;
+					break;
+				default:
+					BatteryCharge->ChargeState = 0;
+					smprintf(s, "WARNING: Unknown battery state: %d\n", bcs);
+					break;
+			}
+			return ERR_NONE;
+		case AT_Reply_Error:
+			smprintf(s, "Can't get battery level\n");
+			return ERR_NOTSUPPORTED;
+		case AT_Reply_CMSError:
+			smprintf(s, "Can't get battery level\n");
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+		    return ERR_UNKNOWNRESPONSE;
+	}
 }
 
 GSM_Error ATGEN_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
