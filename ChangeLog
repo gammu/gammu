@@ -4,15 +4,17 @@ ChangeLog for Gammu project <http://www.gammu.org/>
 Description
 ===========
 
-In brackets names of people, who told about error/problem or helped in fixing
-or inspired me to make it.
-
 More detailed log can be obtained from Git repository.
+
+Following types of entries are listed:
 
 [!] Important change
 [+] New functionality
 [*] Changes in existing functionality
 [-] Fixed error
+
+Each entry might list referenced bug or people who helped with fixing
+the issue.
 
 ChangeLog
 =========
