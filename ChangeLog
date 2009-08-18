@@ -20,6 +20,7 @@ ChangeLog
 [+] * Reworked RPM packages (separate libraries and SMSD).
 [-] * Huawei E160 uses encoded USSD requests.
 [+] * Better support for messages on Motorola, thanks to Quintin Hill.
+[-] * Fix reading of SMS backups without text (bug #963).
     
 20090813 - 1.25.91
 

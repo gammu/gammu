@@ -3716,18 +3716,21 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	}
 	readbuffer = ReadLinkedBackupText(file_info, section, "Text", FALSE);
 	if (readbuffer == NULL) {
-		dbgprintf(NULL, "Error reading text!\n");
-		return ERR_UNKNOWN;
+		dbgprintf(NULL, "No text found, assuming empty!\n");
+		SMS->Length = 0;
+		SMS->Text[0] = 0;
+		SMS->Text[1] = 0;
+	} else {
+		/* This is hex encoded unicode, need to multiply by 4 */
+		if (strlen(readbuffer) > 4 * GSM_MAX_SMS_LENGTH) {
+			dbgprintf(NULL, "Message text too long, truncating!\n");
+			readbuffer[4 * GSM_MAX_SMS_LENGTH] = 0;
+		}
+		if (!DecodeHexBin (SMS->Text, readbuffer, strlen(readbuffer))) {
+			dbgprintf(NULL, "Failed decoding binary field!\n");
+		}
+		SMS->Length = strlen(readbuffer)/4;
 	}
-	/* This is hex encoded unicode, need to multiply by 4 */
-	if (strlen(readbuffer) > 4 * GSM_MAX_SMS_LENGTH) {
-		dbgprintf(NULL, "Message text too long, truncating!\n");
-		readbuffer[4 * GSM_MAX_SMS_LENGTH] = 0;
-	}
-	if (!DecodeHexBin (SMS->Text, readbuffer, strlen(readbuffer))) {
-		dbgprintf(NULL, "Failed decoding binary field!\n");
-	}
-	SMS->Length = strlen(readbuffer)/4;
 	SMS->Text[SMS->Length * 2]	= 0;
 	SMS->Text[SMS->Length * 2 + 1] 	= 0;
 	free(readbuffer);
