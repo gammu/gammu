@@ -245,11 +245,14 @@ GSM_Error ATGEN_GetSMSMode(GSM_StateMachine *s)
 
 	if (Priv->SMSMode != 0) return ERR_NONE;
 
-	smprintf(s, "Trying SMS PDU mode\n");
-	ATGEN_WaitFor(s, "AT+CMGF=0\r", 10, 0x00, 9, ID_GetSMSMode);
-	if (error==ERR_NONE) {
-		Priv->SMSMode = SMS_AT_PDU;
-		return ERR_NONE;
+	/* Prefer PDU mode for most phones */
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_USE_SMSTEXTMODE)) {
+		smprintf(s, "Trying SMS PDU mode\n");
+		ATGEN_WaitFor(s, "AT+CMGF=0\r", 10, 0x00, 9, ID_GetSMSMode);
+		if (error==ERR_NONE) {
+			Priv->SMSMode = SMS_AT_PDU;
+			return ERR_NONE;
+		}
 	}
 
 	smprintf(s, "Trying SMS text mode\n");
@@ -450,8 +453,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 		case SMS_AT_TXT:
 			error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, &Priv->Lines, 2),
-					"+CMGL: @i, @r, @p, @0",
-					&current, buffer, sizeof(buffer), sms->Number, sizeof(sms->Number));
+					"+CMGR: @r, @p @d",
+					buffer, sizeof(buffer), sms->Number, sizeof(sms->Number),
+					&sms->DateTime, sizeof(sms->DateTime));
 			if (error != ERR_NONE) return error;
 
 			if (!strcmp(buffer,"0") || !strcmp(buffer,"REC UNREAD")) {
@@ -506,7 +510,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				sms->SMSC.Number[1]=0;
 				sms->ReplyViaSameSMSC=FALSE;
 				return ATGEN_DecodeText(s, GetLineString(msg.Buffer, &Priv->Lines, 3), sms->Length,
-					sms->Text, sizeof(sms->Text), FALSE, FALSE);
+					sms->Text, sizeof(sms->Text), TRUE, FALSE);
 			}
 
 			/*
@@ -764,37 +768,44 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 		 */
 		str = strstr(str, "+CMGL:");
 		if (str == NULL) {
-			smprintf(s, "Can not find +CMGL:!\n");
-			return ERR_UNKNOWN;
-		}
-
-		/* Parse reply */
-		error = ATGEN_ParseReply(s, str, "+CMGL: @i, @0", &cur);
-		if (error != ERR_NONE) {
-			return error;
-		}
-		Priv->SMSCount++;
-
-		/* Reallocate buffer if needed */
-		if (allocsize <= Priv->SMSCount) {
-			allocsize += 20;
-			Priv->SMSCache = (GSM_AT_SMS_Cache *)realloc(Priv->SMSCache, allocsize * sizeof(GSM_AT_SMS_Cache));
-			if (Priv->SMSCache == NULL) {
-				return ERR_MOREMEMORY;
+			/*
+			 * Sometimes an SMS message will contain a line break. In SMS text
+                         * mode we skip to the next line and try again to find +CMGL.
+			 * FIXME: Can we do the same for SMS PDU mode?
+			 */
+			if (Priv->SMSMode == SMS_AT_PDU) {
+				smprintf(s, "Can not find +CMGL:!\n");
+				return ERR_UNKNOWN;
 			}
-		}
-
-		/* Should we use index instead of location? Samsung P900 needs this hack. */
-		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKEN_CMGL)) {
-			ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, Priv->SMSCount);
 		} else {
-			ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, cur);
-		}
-		Priv->SMSCache[Priv->SMSCount - 1].Location = sms.Location;
-		Priv->SMSCache[Priv->SMSCount - 1].State = -1;
+			/* Parse reply */
+			error = ATGEN_ParseReply(s, str, "+CMGL: @i, @0", &cur);
+			if (error != ERR_NONE) {
+				return error;
+			}
+			Priv->SMSCount++;
 
-		/* Go to PDU/Text data */
-		line++;
+			/* Reallocate buffer if needed */
+			if (allocsize <= Priv->SMSCount) {
+				allocsize += 20;
+				Priv->SMSCache = (GSM_AT_SMS_Cache *)realloc(Priv->SMSCache, allocsize * sizeof(GSM_AT_SMS_Cache));
+				if (Priv->SMSCache == NULL) {
+					return ERR_MOREMEMORY;
+				}
+			}
+
+			/* Should we use index instead of location? Samsung P900 needs this hack. */
+			if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKEN_CMGL)) {
+				ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, Priv->SMSCount);
+			} else {
+				ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, cur);
+			}
+			Priv->SMSCache[Priv->SMSCount - 1].Location = sms.Location;
+			Priv->SMSCache[Priv->SMSCount - 1].State = -1;
+
+			/* Go to PDU/Text data */
+			line++;
+		}
 
 		/* Fill in cache of PDU data */
 		if (Priv->SMSMode == SMS_AT_PDU) {

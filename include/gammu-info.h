@@ -580,6 +580,10 @@ typedef enum {
 	 * (packed 7-bit GSM encoding).
 	 */
 	F_ENCODED_USSD,
+	/**
+	 * Phone has better support for SMS text mode (rather than PDU mode)
+	 */
+	F_USE_SMSTEXTMODE,
 
 	/**
 	 * Just marker of highest feature code, should not be used.
