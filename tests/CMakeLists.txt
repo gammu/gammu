@@ -59,6 +59,25 @@ add_executable(network-codes network-codes.c)
 target_link_libraries(network-codes libGammu)
 add_test(network-codes "${GAMMU_TEST_PATH}/network-codes${GAMMU_TEST_SUFFIX}" "-n")
 
+# smsbackup parsing
+add_executable(smsbackup smsbackup.c)
+target_link_libraries(smsbackup messagedisplay)
+target_link_libraries(smsbackup libGammu)
+
+# List test cases
+file(GLOB VCARDS
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/smsbackups"
+    "${Gammu_SOURCE_DIR}/tests/smsbackups/*.smsbackup")
+list(SORT VCARDS)
+
+foreach(TESTVCARD ${VCARDS})
+    string(REPLACE .smsbackup "" TESTNAME ${TESTVCARD})
+    add_test("smsbackup-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/smsbackup${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/smsbackups/${TESTVCARD}")
+endforeach(TESTVCARD $VCARDS)
+
+
 # vCard parsing
 add_executable(vcard-read vcard-read.c)
 target_link_libraries(vcard-read memorydisplay)
