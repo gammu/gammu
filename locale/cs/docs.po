@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-18 08:46+0300\n"
-"PO-Revision-Date: 2009-08-17 11:03+0200\n"
+"PO-Revision-Date: 2009-08-18 08:50+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5925,6 +5925,8 @@ msgid ""
 "The 'standard' and 'unicode' settings do not apply for 8-bit messages, which "
 "are always written raw as they are received with extension .bin."
 msgstr ""
+"Nastavení 'standard' a 'unicode' nemají vliv na 8-bitové zprávy, které jsou "
+"vždy zapsány tak jak přišly s příponou bin."
 
 # type: Plain text
 #. type: Plain text
@@ -7107,6 +7109,8 @@ msgid ""
 "The content of the file is content of the message and the format is defined "
 "by configuration directive InboxFormat (see gammu-smsdrc(5))."
 msgstr ""
+"Souboru obsahuje připatou zprávu ve formátu definovaném nastavením "
+"InboxFormat (viz gammu-smsdrc(5))."
 
 # type: SS
 #. type: SS
@@ -9186,6 +9190,8 @@ msgid ""
 "By setting following flags you can control which additional parts will be "
 "installed:"
 msgstr ""
+"Nastavením následujících parametrů můžete ovlivnit které volitelné části "
+"budou nainstalovány:"
 
 #. type: Bullet: '* '
 #: INSTALL:141
