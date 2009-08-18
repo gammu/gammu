@@ -301,6 +301,9 @@ The format in which the SMS will be stored: 'detail', 'unicode', 'standard'.
 .br
 \fBstandard\fR - message text stored in system charset
 
+The 'standard' and 'unicode' settings do not apply for 8-bit messages, which
+are always written raw as they are received with extension .bin.
+
 Default is 'unicode'.
 
 .TP
