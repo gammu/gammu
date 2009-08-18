@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-13 11:24+0200\n"
+"POT-Creation-Date: 2009-08-18 16:24+0200\n"
 "PO-Revision-Date: 2009-03-23 19:23+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -642,7 +642,7 @@ msgstr "Alarma silenciosa"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:830
 #: gammu/calendar.c:1052 gammu/message.c:195 gammu/misc.c:947
-#: helper/memory-display.c:130 helper/message-display.c:430
+#: helper/memory-display.c:130 helper/message-display.c:432
 #, c-format
 msgid "Text"
 msgstr "Texto"
@@ -2054,7 +2054,7 @@ msgid "USSD received"
 msgstr "USSD recibido"
 
 #: gammu/message.c:77 helper/message-display.c:159
-#: helper/message-display.c:276
+#: helper/message-display.c:277
 msgid "Status"
 msgstr "Estado"
 
@@ -2943,7 +2943,7 @@ msgstr "Logo de inicio"
 msgid "Operator logo"
 msgstr "Logo de operador"
 
-#: gammu/misc.c:1572 helper/message-display.c:428
+#: gammu/misc.c:1572 helper/message-display.c:430
 #, fuzzy, c-format
 msgid "Picture"
 msgstr "ID imagen"
@@ -3056,7 +3056,7 @@ msgstr "Tonos del teclado"
 msgid "Warning (games) tones"
 msgstr "Tonos de aviso (juegos)"
 
-#: gammu/misc.c:1903 helper/message-display.c:424
+#: gammu/misc.c:1903 helper/message-display.c:426
 msgid "Screen saver"
 msgstr "Salvapantallas"
 
@@ -3892,27 +3892,27 @@ msgid "SMS status report"
 msgstr "Informe de estado de SMS"
 
 #: helper/message-display.c:161 helper/message-display.c:173
-#: helper/message-display.c:225 helper/message-display.c:278
+#: helper/message-display.c:225 helper/message-display.c:279
 #, c-format
 msgid "Sent"
 msgstr "Enviados"
 
-#: helper/message-display.c:162 helper/message-display.c:279
+#: helper/message-display.c:162 helper/message-display.c:280
 #, c-format
 msgid "Read"
 msgstr "Leídos"
 
-#: helper/message-display.c:163 helper/message-display.c:280
+#: helper/message-display.c:163 helper/message-display.c:281
 #, c-format
 msgid "UnRead"
 msgstr "No leídos"
 
-#: helper/message-display.c:164 helper/message-display.c:281
+#: helper/message-display.c:164 helper/message-display.c:282
 #, c-format
 msgid "UnSent"
 msgstr "No enviados"
 
-#: helper/message-display.c:168 helper/message-display.c:268
+#: helper/message-display.c:168 helper/message-display.c:269
 msgid "Remote number"
 msgid_plural "Remote numbers"
 msgstr[0] "Número remoto"
@@ -4072,224 +4072,229 @@ msgid "Coding"
 msgstr "Codificación"
 
 #: helper/message-display.c:250
+#, c-format
 msgid "Unicode (no compression)"
 msgstr "Unicode (sin compresión)"
 
 #: helper/message-display.c:253
+#, c-format
 msgid "Unicode (compression)"
 msgstr "Unicode (comprimido)"
 
 #: helper/message-display.c:256
+#, c-format
 msgid "Default GSM alphabet (no compression)"
 msgstr "Alfabeto GSM por defecto (sin compresión)"
 
 #: helper/message-display.c:259
+#, c-format
 msgid "Default GSM alphabet (compression)"
 msgstr "Alfabeto GSM por defecto (comprimido)"
 
 #. l10n: 8-bit message coding
 #: helper/message-display.c:263
+#, c-format
 msgid "8-bit"
 msgstr "8-bit"
 
-#: helper/message-display.c:284
+#: helper/message-display.c:286
 msgid "User Data Header"
 msgstr "Encabezado de datos de usuario"
 
-#: helper/message-display.c:286 helper/message-display.c:287
+#: helper/message-display.c:288 helper/message-display.c:289
 #, c-format
 msgid "Concatenated (linked) message"
 msgstr "Mensaje concatenado (enlazado)"
 
-#: helper/message-display.c:288
+#: helper/message-display.c:290
 #, c-format
 msgid "Disables voice indicator"
 msgstr "Deshabilita indicador de voz"
 
-#: helper/message-display.c:289
+#: helper/message-display.c:291
 #, c-format
 msgid "Enables voice indicator"
 msgstr "Habilita indicador de voz"
 
-#: helper/message-display.c:290
+#: helper/message-display.c:292
 #, c-format
 msgid "Disables fax indicator"
 msgstr "Deshabilita indicador de fax"
 
-#: helper/message-display.c:291
+#: helper/message-display.c:293
 #, c-format
 msgid "Enables fax indicator"
 msgstr "Habilita indicador de fax"
 
-#: helper/message-display.c:292
+#: helper/message-display.c:294
 #, c-format
 msgid "Disables email indicator"
 msgstr "Deshabilita indicador de email"
 
-#: helper/message-display.c:293
+#: helper/message-display.c:295
 #, c-format
 msgid "Enables email indicator"
 msgstr "habilita indicador de email"
 
-#: helper/message-display.c:294
+#: helper/message-display.c:296
 #, c-format
 msgid "Void SMS"
 msgstr "SMS vacío"
 
-#: helper/message-display.c:295
+#: helper/message-display.c:297
 #, c-format
 msgid "Nokia WAP bookmark"
 msgstr "Marcadores WAP de Nokia"
 
-#: helper/message-display.c:296
+#: helper/message-display.c:298
 #, c-format
 msgid "Nokia operator logo"
 msgstr "Logo de operador Nokia"
 
-#: helper/message-display.c:297
+#: helper/message-display.c:299
 #, c-format
 msgid "Nokia WAP bookmark or WAP/MMS settings"
 msgstr "Marcador WAP Nokia o configuración WAP/MMS"
 
-#: helper/message-display.c:298 helper/message-display.c:299
+#: helper/message-display.c:300 helper/message-display.c:301
 #, c-format
 msgid "Nokia ringtone"
 msgstr "Tono de llamada Nokia"
 
-#: helper/message-display.c:300
+#: helper/message-display.c:302
 #, c-format
 msgid "Nokia GSM operator logo"
 msgstr "Logo de operador GSM Nokia"
 
-#: helper/message-display.c:301
+#: helper/message-display.c:303
 #, c-format
 msgid "Nokia caller logo"
 msgstr "Logo de llamadas Nokia"
 
-#: helper/message-display.c:302
+#: helper/message-display.c:304
 #, c-format
 msgid "Nokia profile"
 msgstr "Perfil Nokia"
 
-#: helper/message-display.c:303
+#: helper/message-display.c:305
 #, c-format
 msgid "Nokia calendar note"
 msgstr "Nota de calendario Nokia"
 
-#: helper/message-display.c:304
+#: helper/message-display.c:306
 #, c-format
 msgid "Nokia phonebook entry"
 msgstr "Entrada de listín telefónico Nokia"
 
-#: helper/message-display.c:305
+#: helper/message-display.c:307
 #, c-format
 msgid "User UDH"
 msgstr "UDH de usuario"
 
-#: helper/message-display.c:306
+#: helper/message-display.c:308
 #, c-format
 msgid "MMS indicator"
 msgstr "Indicador MMS"
 
-#: helper/message-display.c:310
+#: helper/message-display.c:312
 #, c-format
 msgid ", ID (8 bit) %i"
 msgstr ", ID (8 bit) %i"
 
-#: helper/message-display.c:311
+#: helper/message-display.c:313
 #, c-format
 msgid ", ID (16 bit) %i"
 msgstr ", ID (16 bit) %i"
 
-#: helper/message-display.c:314
+#: helper/message-display.c:316
 #, c-format
 msgid ", part %i of %i"
 msgstr ", parte %i de %i"
 
-#: helper/message-display.c:316
+#: helper/message-display.c:318
 #, c-format
 msgid ", %i parts"
 msgstr ", %i partes"
 
-#: helper/message-display.c:328
+#: helper/message-display.c:330
 msgid "Siemens file"
 msgstr "Archivo de Siemens"
 
-#: helper/message-display.c:331
+#: helper/message-display.c:333
 msgid "8 bit SMS, cannot be displayed here"
 msgstr "SMS de 8 bits, no se puede mostrar aquí"
 
-#: helper/message-display.c:337
+#: helper/message-display.c:339
 #, c-format
 msgid "Unknown PDU type: 0x%x\n"
 msgstr "Tipo de PDU deconocido: 0x%x\n"
 
-#: helper/message-display.c:379
+#: helper/message-display.c:381
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
 msgstr ""
 "Algunos detalles han sido ignorados (funciones de decodificación "
 "desconocidas o no implementadas)"
 
-#: helper/message-display.c:384
+#: helper/message-display.c:386
 #, c-format
 msgid "Siemens OTA file"
 msgstr "Archivo OTA Siemens"
 
-#: helper/message-display.c:386
+#: helper/message-display.c:388
 msgid " - VCARD"
 msgstr "- VCARD"
 
-#: helper/message-display.c:400
+#: helper/message-display.c:402
 #, c-format
 msgid "Ringtone \"%s\"\n"
 msgstr "Tono \"%s\"\n"
 
-#: helper/message-display.c:405
+#: helper/message-display.c:407
 msgid "Do you want to play it?"
 msgstr "¿Quiere reproducirlo?"
 
-#: helper/message-display.c:410
+#: helper/message-display.c:412
 msgid "Caller logo"
 msgstr "Logo de llamada"
 
-#: helper/message-display.c:414
+#: helper/message-display.c:416
 #, c-format
 msgid "Operator logo for %s network"
 msgstr "Logo de operador para la red %s"
 
-#: helper/message-display.c:434
+#: helper/message-display.c:436
 msgid "Profile"
 msgstr "Perfil"
 
-#: helper/message-display.c:454
+#: helper/message-display.c:457
 msgid "EMS sound ID"
 msgstr "ID de sonido EMS"
 
-#: helper/message-display.c:457
+#: helper/message-display.c:460
 msgid "EMS animation ID"
 msgstr "ID de animación EMS"
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:491 helper/message-display.c:509
+#: helper/message-display.c:494 helper/message-display.c:512
 #: helper/printing.c:18
 msgid "Error"
 msgstr "Error"
 
-#: helper/message-display.c:524
+#: helper/message-display.c:527
 #, fuzzy
 msgid "Data PDU"
 msgstr "datos (CSD)"
 
-#: helper/message-display.c:525
+#: helper/message-display.c:528
 msgid "Number of bits"
 msgstr "Número de bits"
 
-#: helper/message-display.c:527
+#: helper/message-display.c:530
 msgid "UDH"
 msgstr ""
 
-#: helper/message-display.c:543
+#: helper/message-display.c:546
 msgid "Whole PDU"
 msgstr ""
 

@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.25.91\n"
+"Project-Id-Version: Gammu 1.25.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-13 11:24+0200\n"
+"POT-Creation-Date: 2009-08-18 16:24+0200\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -723,7 +723,7 @@ msgstr "Тихий сигнал     : %s\n"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:830
 #: gammu/calendar.c:1052 gammu/message.c:195 gammu/misc.c:947
-#: helper/memory-display.c:130 helper/message-display.c:430
+#: helper/memory-display.c:130 helper/message-display.c:432
 #, c-format
 msgid "Text"
 msgstr "Текст"
@@ -2219,7 +2219,7 @@ msgid "USSD received"
 msgstr "Получено SMS\n"
 
 #: gammu/message.c:77 helper/message-display.c:159
-#: helper/message-display.c:276
+#: helper/message-display.c:277
 #, fuzzy
 msgid "Status"
 msgstr "Стандартный\n"
@@ -3192,7 +3192,7 @@ msgstr "Заставка"
 msgid "Operator logo"
 msgstr "Логотип оператора"
 
-#: gammu/misc.c:1572 helper/message-display.c:428
+#: gammu/misc.c:1572 helper/message-display.c:430
 #, fuzzy, c-format
 msgid "Picture"
 msgstr "Рисунок"
@@ -3315,7 +3315,7 @@ msgstr "Клавиатура заблокирована\n"
 msgid "Warning (games) tones"
 msgstr "Предупреждающие (игровые) звуки : "
 
-#: gammu/misc.c:1903 helper/message-display.c:424
+#: gammu/misc.c:1903 helper/message-display.c:426
 #, fuzzy
 msgid "Screen saver"
 msgstr "Хранитель экрана\n"
@@ -4242,27 +4242,27 @@ msgid "SMS status report"
 msgstr "Отчёт о состоянии SMS\n"
 
 #: helper/message-display.c:161 helper/message-display.c:173
-#: helper/message-display.c:225 helper/message-display.c:278
+#: helper/message-display.c:225 helper/message-display.c:279
 #, c-format
 msgid "Sent"
 msgstr "Отправлено"
 
-#: helper/message-display.c:162 helper/message-display.c:279
+#: helper/message-display.c:162 helper/message-display.c:280
 #, c-format
 msgid "Read"
 msgstr "Прочитано"
 
-#: helper/message-display.c:163 helper/message-display.c:280
+#: helper/message-display.c:163 helper/message-display.c:281
 #, c-format
 msgid "UnRead"
 msgstr "Не прочитано"
 
-#: helper/message-display.c:164 helper/message-display.c:281
+#: helper/message-display.c:164 helper/message-display.c:282
 #, c-format
 msgid "UnSent"
 msgstr "Не отправлено"
 
-#: helper/message-display.c:168 helper/message-display.c:268
+#: helper/message-display.c:168 helper/message-display.c:269
 #, fuzzy
 msgid "Remote number"
 msgid_plural "Remote numbers"
@@ -4435,167 +4435,167 @@ msgid "Coding"
 msgstr "Чтение"
 
 #: helper/message-display.c:250
-#, fuzzy
+#, fuzzy, c-format
 msgid "Unicode (no compression)"
 msgstr "Уникод (без сжатия)\n"
 
 #: helper/message-display.c:253
-#, fuzzy
+#, fuzzy, c-format
 msgid "Unicode (compression)"
 msgstr "Уникод (со сжатием)\n"
 
 #: helper/message-display.c:256
-#, fuzzy
+#, fuzzy, c-format
 msgid "Default GSM alphabet (no compression)"
 msgstr "Стандартный алфавит GSM (без сжатия)\n"
 
 #: helper/message-display.c:259
-#, fuzzy
+#, fuzzy, c-format
 msgid "Default GSM alphabet (compression)"
 msgstr "Стандартный алфавит GSM (со сжатием)\n"
 
 #. l10n: 8-bit message coding
 #: helper/message-display.c:263
-#, fuzzy
+#, fuzzy, c-format
 msgid "8-bit"
 msgstr "8 бит\n"
 
-#: helper/message-display.c:284
+#: helper/message-display.c:286
 #, fuzzy
 msgid "User Data Header"
 msgstr "Заголовок пользовательских данных : "
 
-#: helper/message-display.c:286 helper/message-display.c:287
+#: helper/message-display.c:288 helper/message-display.c:289
 #, c-format
 msgid "Concatenated (linked) message"
 msgstr "Связанное сообщение"
 
-#: helper/message-display.c:288
+#: helper/message-display.c:290
 #, c-format
 msgid "Disables voice indicator"
 msgstr "Отключает голосовой индикатор"
 
-#: helper/message-display.c:289
+#: helper/message-display.c:291
 #, c-format
 msgid "Enables voice indicator"
 msgstr "Включает голосовой индикатор"
 
-#: helper/message-display.c:290
+#: helper/message-display.c:292
 #, c-format
 msgid "Disables fax indicator"
 msgstr "Отключает индикатор факса"
 
-#: helper/message-display.c:291
+#: helper/message-display.c:293
 #, c-format
 msgid "Enables fax indicator"
 msgstr "Включает индикатор факса"
 
-#: helper/message-display.c:292
+#: helper/message-display.c:294
 #, c-format
 msgid "Disables email indicator"
 msgstr "Отключает индикатор e-mail"
 
-#: helper/message-display.c:293
+#: helper/message-display.c:295
 #, c-format
 msgid "Enables email indicator"
 msgstr "Включает индикатор e-mail"
 
-#: helper/message-display.c:294
+#: helper/message-display.c:296
 #, c-format
 msgid "Void SMS"
 msgstr "Пустое SMS"
 
-#: helper/message-display.c:295
+#: helper/message-display.c:297
 #, c-format
 msgid "Nokia WAP bookmark"
 msgstr "Nokia: WAP-закладка"
 
-#: helper/message-display.c:296
+#: helper/message-display.c:298
 #, c-format
 msgid "Nokia operator logo"
 msgstr "Nokia: логотип оператора"
 
-#: helper/message-display.c:297
+#: helper/message-display.c:299
 #, c-format
 msgid "Nokia WAP bookmark or WAP/MMS settings"
 msgstr "Nokia: WAP-закладка или параметры WAP/MMS"
 
-#: helper/message-display.c:298 helper/message-display.c:299
+#: helper/message-display.c:300 helper/message-display.c:301
 #, c-format
 msgid "Nokia ringtone"
 msgstr "Nokia: рингтон"
 
-#: helper/message-display.c:300
+#: helper/message-display.c:302
 #, c-format
 msgid "Nokia GSM operator logo"
 msgstr "Nokia: логотип оператора GSM"
 
-#: helper/message-display.c:301
+#: helper/message-display.c:303
 #, c-format
 msgid "Nokia caller logo"
 msgstr "Nokia: логотип абонента"
 
-#: helper/message-display.c:302
+#: helper/message-display.c:304
 #, c-format
 msgid "Nokia profile"
 msgstr "Nokia: профиль"
 
-#: helper/message-display.c:303
+#: helper/message-display.c:305
 #, c-format
 msgid "Nokia calendar note"
 msgstr "Nokia: заметка в календаре"
 
-#: helper/message-display.c:304
+#: helper/message-display.c:306
 #, c-format
 msgid "Nokia phonebook entry"
 msgstr "Nokia: запись в телефонной книге"
 
-#: helper/message-display.c:305
+#: helper/message-display.c:307
 #, c-format
 msgid "User UDH"
 msgstr "Пользовательский UDH"
 
-#: helper/message-display.c:306
+#: helper/message-display.c:308
 #, c-format
 msgid "MMS indicator"
 msgstr "Индикатор MMS"
 
-#: helper/message-display.c:310
+#: helper/message-display.c:312
 #, c-format
 msgid ", ID (8 bit) %i"
 msgstr ", ID (8 бит) %i"
 
-#: helper/message-display.c:311
+#: helper/message-display.c:313
 #, c-format
 msgid ", ID (16 bit) %i"
 msgstr ", ID (16 бит) %i"
 
-#: helper/message-display.c:314
+#: helper/message-display.c:316
 #, c-format
 msgid ", part %i of %i"
 msgstr ", часть %i из %i"
 
-#: helper/message-display.c:316
+#: helper/message-display.c:318
 #, c-format
 msgid ", %i parts"
 msgstr ", %i частей"
 
-#: helper/message-display.c:328
+#: helper/message-display.c:330
 #, fuzzy
 msgid "Siemens file"
 msgstr "Файл Siemens\n"
 
-#: helper/message-display.c:331
+#: helper/message-display.c:333
 #, fuzzy
 msgid "8 bit SMS, cannot be displayed here"
 msgstr "8 бит SMS не могут быть отображены\n"
 
-#: helper/message-display.c:337
+#: helper/message-display.c:339
 #, fuzzy, c-format
 msgid "Unknown PDU type: 0x%x\n"
 msgstr "Неизвестный тип памяти: \"%s\"\n"
 
-#: helper/message-display.c:379
+#: helper/message-display.c:381
 #, fuzzy
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
@@ -4604,52 +4604,52 @@ msgstr ""
 "декодирования)\n"
 "\n"
 
-#: helper/message-display.c:384
+#: helper/message-display.c:386
 #, c-format
 msgid "Siemens OTA file"
 msgstr "OTA-файл Siemens"
 
-#: helper/message-display.c:386
+#: helper/message-display.c:388
 #, fuzzy
 msgid " - VCARD"
 msgstr " - визитка\n"
 
-#: helper/message-display.c:400
+#: helper/message-display.c:402
 #, c-format
 msgid "Ringtone \"%s\"\n"
 msgstr "Рингтон \"%s\"\n"
 
-#: helper/message-display.c:405
+#: helper/message-display.c:407
 msgid "Do you want to play it?"
 msgstr ""
 
-#: helper/message-display.c:410
+#: helper/message-display.c:412
 #, fuzzy
 msgid "Caller logo"
 msgstr ""
 "Логотип абонента\n"
 "\n"
 
-#: helper/message-display.c:414
+#: helper/message-display.c:416
 #, fuzzy, c-format
 msgid "Operator logo for %s network"
 msgstr ""
 "Логотип оператора для сети %s (%s, %s)\n"
 "\n"
 
-#: helper/message-display.c:434
+#: helper/message-display.c:436
 #, fuzzy
 msgid "Profile"
 msgstr "Профиль\n"
 
-#: helper/message-display.c:454
+#: helper/message-display.c:457
 #, fuzzy
 msgid "EMS sound ID"
 msgstr ""
 "\n"
 "ID EMS-звука: %i\n"
 
-#: helper/message-display.c:457
+#: helper/message-display.c:460
 #, fuzzy
 msgid "EMS animation ID"
 msgstr ""
@@ -4657,28 +4657,28 @@ msgstr ""
 "ID EMS-анимации: %i\n"
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:491 helper/message-display.c:509
+#: helper/message-display.c:494 helper/message-display.c:512
 #: helper/printing.c:18
 #, fuzzy
 msgid "Error"
 msgstr "Ошибка\n"
 
-#: helper/message-display.c:524
+#: helper/message-display.c:527
 msgid "Data PDU"
 msgstr ""
 
-#: helper/message-display.c:525
+#: helper/message-display.c:528
 #, fuzzy
 msgid "Number of bits"
 msgstr ""
 "\n"
 "Количество SMS: %i\n"
 
-#: helper/message-display.c:527
+#: helper/message-display.c:530
 msgid "UDH"
 msgstr ""
 
-#: helper/message-display.c:543
+#: helper/message-display.c:546
 msgid "Whole PDU"
 msgstr ""
 
