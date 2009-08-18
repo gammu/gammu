@@ -342,7 +342,7 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const int mess
 
 void DumpMessageText(GSM_Debug_Info *d, const unsigned char *message, const int messagesize)
 {
-	if (d->dl != DL_TEXTALL && d->dl == DL_TEXTALLDATE) return;
+	if (d == NULL || (d->dl != DL_TEXTALL && d->dl == DL_TEXTALLDATE)) return;
 	DumpMessage(d, message, messagesize);
 
 }
