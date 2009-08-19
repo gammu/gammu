@@ -52,7 +52,6 @@ static struct _TableCheck	tc[] =
 /* Connects to database */
 static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 {
-	unsigned char		buf[400];
 	MYSQL_RES 		*Res;
 	MYSQL_ROW 		Row;
 	struct _TableCheck *T;
@@ -102,7 +101,6 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 		mysql_free_result(Res);
 	}
 
-	sprintf(buf, );
 	if (mysql_query(&Config->DBConnMySQL, "SELECT Version FROM `gammu` WHERE 1")) {
 		SMSD_Log(DEBUG_ERROR, Config, "No Gammu table");
 		SMSDMySQL_LogError(Config);
@@ -192,28 +190,22 @@ static GSM_Error SMSDMySQL_Store(GSM_SMSDConfig *Config, const char *query, MYSQ
 
 static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 {
-	unsigned char buf[400],buf2[200];
+	char query[400];
+	char client_name[200];
 
-	sprintf(buf,"DELETE FROM `phones` WHERE `IMEI` = '%s'", Config->Status->IMEI);
-	if (SMSDMySQL_Query(Config, buf) != ERR_NONE) {
+	snprintf(query, sizeof(query), "DELETE FROM `phones` WHERE `IMEI` = '%s'", Config->Status->IMEI);
+	if (SMSDMySQL_Query(Config, query) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 
-	sprintf(buf2,"Gammu %s",VERSION);
-	if (strlen(GetOS()) != 0) {
-		strcat(buf2+strlen(buf2),", ");
-		strcat(buf2+strlen(buf2),GetOS());
-	}
-	if (strlen(GetCompiler()) != 0) {
-		strcat(buf2+strlen(buf2),", ");
-		strcat(buf2+strlen(buf2),GetCompiler());
-	}
+	snprintf(client_name, sizeof(client_name), "Gammu %s, %s, %s", VERSION, GetOS(), GetCompiler());
 
 	SMSD_Log(DEBUG_INFO, Config, "Communication established");
-	sprintf(buf,"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`, `Battery`, `Signal`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0,'%s', -1, -1)",
-		Config->Status->IMEI, Config->PhoneID, buf2);
-	if (SMSDMySQL_Query(Config, buf) != ERR_NONE) {
+	snprintf(query, sizeof(query),
+		"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`, `Battery`, `Signal`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0,'%s', -1, -1)",
+		Config->Status->IMEI, Config->PhoneID, client_name);
+	if (SMSDMySQL_Query(Config, query) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error inserting into database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
@@ -408,8 +400,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	int 			i;
 	gboolean			found = FALSE;
 
-	sprintf(buf, "SELECT ID,InsertIntoDB,SendingDateTime,SenderID FROM `outbox` WHERE SendingDateTime < NOW() AND SendingTimeOut < NOW()");
-	if (SMSDMySQL_Store(Config, buf, &Res) != ERR_NONE) {
+	if (SMSDMySQL_Store(Config, "SELECT ID,InsertIntoDB,SendingDateTime,SenderID FROM `outbox` WHERE SendingDateTime < NOW() AND SendingTimeOut < NOW()", &Res) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
@@ -512,7 +503,7 @@ static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 		GSM_SMSDConfig *Config, char *ID,
 		gboolean alwaysDelete UNUSED, gboolean sent UNUSED)
 {
-	unsigned char buffer[10000];
+	char buffer[100];
 
 	sprintf(buffer,"DELETE FROM `outbox` WHERE `ID` = '%s'",ID);
 	if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
@@ -648,7 +639,10 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 
 static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, int Part, GSM_SMSDSendingError err, int TPMR)
 {
-	unsigned char	buffer[10000],buffer2[400],buff[50],buffer5[400];
+	char send_state[100];
+	char query[10000];
+	char utf_text[2 * GSM_MAX_SMS_LENGTH], escaped_text[2 * GSM_MAX_SMS_LENGTH];
+	int query_pos;
 
 	if (err == SMSD_SEND_OK) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Transmitted %s (%s: %i) to %s", Config->SMSID,
@@ -656,79 +650,109 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 			     DecodeUnicodeString(sms->SMS[0].Number));
 	}
 
-	buff[0] = 0;
+	send_state[0] = 0;
 	if (err == SMSD_SEND_OK) {
 		if (sms->SMS[Part-1].PDU == SMS_Status_Report) {
-			sprintf(buff,"SendingOK");
+			strcpy(send_state, "SendingOK");
 		} else {
-			sprintf(buff,"SendingOKNoReport");
+			strcpy(send_state, "SendingOKNoReport");
 		}
 	}
 	if (err == SMSD_SEND_SENDING_ERROR)
-		sprintf(buff,"SendingError");
+		strcpy(send_state, "SendingError");
 	if (err == SMSD_SEND_ERROR)
-		sprintf(buff,"Error");
+		strcpy(send_state, "Error");
 
-	buffer[0] = 0;
-	sprintf(buffer+strlen(buffer),"INSERT INTO `sentitems` "
+	query[0] = 0;
+	query_pos = 0;
+	query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+		"INSERT INTO `sentitems` "
 		"(`CreatorID`,`ID`,`SequencePosition`,`Status`,`SendingDateTime`, `SMSCNumber`, `TPMR`, "
 		"`SenderID`,`Text`,`DestinationNumber`,`Coding`,`UDH`,`Class`,`TextDecoded`,`InsertIntoDB`,`RelativeValidity`) VALUES (");
-	sprintf(buffer+strlen(buffer),"'%s','%s','%i','%s',NOW(),'%s','%i','%s','",Config->CreatorID,ID,Part,buff,DecodeUnicodeString(sms->SMS[Part-1].SMSC.Number),TPMR,Config->PhoneID);
+	query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+		"'%s','%s','%i','%s',NOW(),'%s','%i','%s','",
+		Config->CreatorID, ID, Part, send_state, DecodeUnicodeString(sms->SMS[Part-1].SMSC.Number), TPMR, Config->PhoneID);
 	switch (sms->SMS[Part-1].Coding) {
-	case SMS_Coding_Unicode_No_Compression:
-    	case SMS_Coding_Default_No_Compression:
-		EncodeHexUnicode(buffer+strlen(buffer),sms->SMS[Part-1].Text,UnicodeLength(sms->SMS[Part-1].Text));
-		break;
-	case SMS_Coding_8bit:
-		EncodeHexBin(buffer+strlen(buffer),sms->SMS[Part-1].Text,sms->SMS[Part-1].Length);
-	default:
-		break;
+		case SMS_Coding_Unicode_No_Compression:
+		case SMS_Coding_Default_No_Compression:
+			EncodeHexUnicode(query + query_pos,
+				sms->SMS[Part-1].Text,
+				UnicodeLength(sms->SMS[Part-1].Text));
+			query_pos = strlen(query);
+			break;
+		case SMS_Coding_8bit:
+			EncodeHexBin(query + query_pos,
+				sms->SMS[Part-1].Text,
+				sms->SMS[Part-1].Length);
+			query_pos = strlen(query);
+		default:
+			break;
 	}
-	sprintf(buffer+strlen(buffer),"','%s','",DecodeUnicodeString(sms->SMS[Part-1].Number));
+	query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+		"','%s','",
+		DecodeUnicodeString(sms->SMS[Part-1].Number));
 	switch (sms->SMS[Part-1].Coding) {
-	case SMS_Coding_Unicode_No_Compression:
-		sprintf(buffer+strlen(buffer),"Unicode_No_Compression");
-		break;
-	case SMS_Coding_Unicode_Compression:
-		sprintf(buffer+strlen(buffer),"Unicode_Compression");
-		break;
-	case SMS_Coding_Default_No_Compression:
-		sprintf(buffer+strlen(buffer),"Default_No_Compression");
-		break;
-	case SMS_Coding_Default_Compression:
-		sprintf(buffer+strlen(buffer),"Default_Compression");
-		break;
-	case SMS_Coding_8bit:
-		sprintf(buffer+strlen(buffer),"8bit");
-		break;
+		case SMS_Coding_Unicode_No_Compression:
+			query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+				"Unicode_No_Compression");
+			break;
+		case SMS_Coding_Unicode_Compression:
+			query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+				"Unicode_Compression");
+			break;
+		case SMS_Coding_Default_No_Compression:
+			query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+				"Default_No_Compression");
+			break;
+		case SMS_Coding_Default_Compression:
+			query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+				"Default_Compression");
+			break;
+		case SMS_Coding_8bit:
+			query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+				"8bit");
+			break;
 	}
-	sprintf(buffer+strlen(buffer),"','");
+	query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+		"','");
 	if (sms->SMS[Part-1].UDH.Type != UDH_NoUDH) {
-		EncodeHexBin(buffer+strlen(buffer),sms->SMS[Part-1].UDH.Text,sms->SMS[Part-1].UDH.Length);
+		EncodeHexBin(query + query_pos,
+			sms->SMS[Part-1].UDH.Text,
+			sms->SMS[Part-1].UDH.Length);
+		query_pos = strlen(query);
 	}
-	sprintf(buffer+strlen(buffer),"','%i','",sms->SMS[Part-1].Class);
+	query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+		"','%i','",
+		sms->SMS[Part-1].Class);
 	switch (sms->SMS[Part-1].Coding) {
-	case SMS_Coding_Unicode_No_Compression:
-	case SMS_Coding_Default_No_Compression:
-		EncodeUTF8(buffer2, sms->SMS[Part-1].Text);
-		mysql_real_escape_string(&Config->DBConnMySQL,buffer5,buffer2,strlen(buffer2));
-		memcpy(buffer+strlen(buffer),buffer5,strlen(buffer5)+1);
-		break;
-	default:
-		break;
+		case SMS_Coding_Unicode_No_Compression:
+		case SMS_Coding_Default_No_Compression:
+			EncodeUTF8(utf_text, sms->SMS[Part-1].Text);
+			mysql_real_escape_string(&Config->DBConnMySQL, escaped_text, utf_text, strlen(utf_text));
+			query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+				"%s",
+				escaped_text);
+			break;
+		default:
+			break;
 	}
-	sprintf(buffer+strlen(buffer),"','%s','",Config->DT);
+	query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+		"','%s','",
+		Config->DT);
 	if (sms->SMS[Part-1].SMSC.Validity.Format == SMS_Validity_RelativeFormat) {
-		sprintf(buffer+strlen(buffer),"%i')",sms->SMS[Part-1].SMSC.Validity.Relative);
+		query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+			"%i')",
+			sms->SMS[Part-1].SMSC.Validity.Relative);
 	} else {
-		sprintf(buffer+strlen(buffer),"-1')");
+		query_pos += snprintf(query + query_pos, sizeof(query) - query_pos,
+			"-1')");
 	}
-	if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
+	if (SMSDMySQL_Query(Config, query) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
-	sprintf(buffer, "UPDATE `phones` SET `Sent`= `Sent` + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
-	if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
+	snprintf(query, sizeof(query), "UPDATE `phones` SET `Sent`= `Sent` + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
+	if (SMSDMySQL_Query(Config, query) != ERR_NONE) {
 		SMSD_Log(DEBUG_INFO, Config, "Error updating number of sent messages (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
