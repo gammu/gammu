@@ -144,7 +144,7 @@ GSM_Error SIEMENS_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 
 GSM_Error SIEMENS_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	unsigned char 		buffer[32];
+	char 		buffer[] = "Individual";
 	size_t			length;
 	GSM_Error		error;
 
@@ -154,7 +154,6 @@ GSM_Error SIEMENS_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 	s->Phone.Data.Ringtone->Format			= RING_MIDI;
 	s->Phone.Data.Ringtone->NokiaBinary.Length	= length;
-	sprintf(buffer,"Individual");
 	EncodeUnicode (s->Phone.Data.Ringtone->Name,buffer,strlen(buffer));
 	return ERR_NONE;
 }
