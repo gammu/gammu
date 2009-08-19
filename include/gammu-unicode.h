@@ -78,14 +78,14 @@ void CopyUnicodeString(unsigned char *Dest, const unsigned char *Source);
  *
  * \ingroup Unicode
  */
-gboolean EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src);
+gboolean EncodeUTF8QuotedPrintable(char *dest, const unsigned char *src);
 
 /**
  * Decodes UTF-8 quoted printable string.
  *
  * \ingroup Unicode
  */
-void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src,
+void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src,
 			       int len);
 /**
  * Encodes string to UTF-8.
@@ -93,7 +93,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src,
  * \ingroup Unicode
  */
 int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2,
-			   unsigned char *ret);
+			   char *ret);
 /**
  * Decodes string from UTF-8.
  *
@@ -142,14 +142,14 @@ gboolean mywstrncasecmp(unsigned const char *a, unsigned const char *b, int num)
  *
  * \ingroup Unicode
  */
-gboolean EncodeUTF8(unsigned char *dest, const unsigned char *src);
+gboolean EncodeUTF8(char *dest, const unsigned char *src);
 
 /**
  * Decode text from UTF-8.
  *
  * \ingroup Unicode
  */
-void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len);
+void DecodeUTF8(unsigned char *dest, const char *src, int len);
 
 /**
  * Decode hex encoded binary text.

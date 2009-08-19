@@ -1426,7 +1426,7 @@ void StringToDouble(char *text, double *d)
 }
 
 /* When char can be converted, convert it from Unicode to UTF8 */
-int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsigned char *ret)
+int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, char *ret)
 {
 	int src = mychar1*256+mychar2;
 
@@ -1450,7 +1450,7 @@ int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsigne
 }
 
 /* Make UTF8 string from Unicode input string */
-gboolean EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
+gboolean EncodeUTF8QuotedPrintable(char *dest, const unsigned char *src)
 {
 	int		i,j=0,z,w;
 	unsigned char	mychar[3];
@@ -1480,7 +1480,7 @@ gboolean EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src
 	return retval;
 }
 
-gboolean EncodeUTF8(unsigned char *dest, const unsigned char *src)
+gboolean EncodeUTF8(char *dest, const unsigned char *src)
 {
 	int		i,j=0,z;
 	unsigned char	mychar[3];
@@ -1546,7 +1546,7 @@ void DecodeISO88591QuotedPrintable(unsigned char *dest, const unsigned char *src
 }
 
 /* Make Unicode string from UTF8 string */
-void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, int len)
+void DecodeUTF8QuotedPrintable(unsigned char *dest, const char *src, int len)
 {
 	int 		i=0,j=0,z;
 	unsigned char	mychar[10];
@@ -1581,7 +1581,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, in
 	dest[j++] = 0;
 }
 
-void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len)
+void DecodeUTF8(unsigned char *dest, const char *src, int len)
 {
 	int 		i=0,j=0,z;
 	wchar_t		ret;
@@ -1600,7 +1600,7 @@ void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len)
 	dest[j++] = 0;
 }
 
-void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len)
+void DecodeXMLUTF8(unsigned char *dest, const char *src, int len)
 {
 	char *tmp;
 	char *pos, *pos_end;
