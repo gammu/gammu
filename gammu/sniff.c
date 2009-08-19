@@ -396,6 +396,7 @@ void decodebinarydump(int argc, char *argv[])
 			i = i + len;
 		}
 	}
+	fclose(file);
 
 }
 
