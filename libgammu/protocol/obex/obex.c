@@ -111,7 +111,7 @@ void OBEXAddBlock(char *Buffer, int *Pos, unsigned char ID, const char *AddData,
 	Buffer[(*Pos)++] = ID;
 	Buffer[(*Pos)++] = (AddLength+3)/256;
 	Buffer[(*Pos)++] = (AddLength+3)%256;
-	if (AddBuffer != NULL) {
+	if (AddData != NULL) {
 		memcpy(Buffer+(*Pos),AddData,AddLength);
 		(*Pos) += AddLength;
 	}
