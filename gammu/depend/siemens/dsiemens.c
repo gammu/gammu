@@ -240,7 +240,7 @@ GSM_Error ATSIEMENS_GetSAT(GSM_StateMachine *sm)
 
     	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
-        sprintf(req, "AT^SSTK=?\r");
+        strcpy(req, "AT^SSTK=?\r");
         error = GSM_WaitFor (sm, req, strlen(req), 0x00, 3, ID_User1);
 
     	for (i=0;i<3;i++){
@@ -274,11 +274,11 @@ GSM_Error ATSIEMENS_GetNetmon(GSM_StateMachine *sm,int test_no)
 GSM_Error ATSIEMENS_ActivateNetmon (GSM_StateMachine *sm,int netmon_type)
 {
 	GSM_Phone_ATGENData	*Priv = &(sm->Phone.Data.Priv.ATGEN);
-	unsigned char		req[32];
+	char		req[32];
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
-	sprintf(req, "AT\r");
+	strcpy(req, "AT\r");
 	printf ("Activate Siemens NetMonitor\n");
 	siemens_code (req,req,2);
 
@@ -316,7 +316,7 @@ void ATSIEMENSActivateNetmon(int argc, char *argv[])
 	    pbk.Entries[0].EntryType = PBK_Number_General;
 	    EncodeUnicode (pbk.Entries[0].Text,NetMonCode,strlen(NetMonCode));
 	    pbk.Entries[1].EntryType = PBK_Text_Name;
-	    sprintf (NetMonCode,"Net Monitor");
+	    strcpy(NetMonCode, "Net Monitor");
 	    EncodeUnicode (pbk.Entries[1].Text,NetMonCode,strlen(NetMonCode));
 	    error = ATGEN_SetMemory (gsm, &pbk);
 	    Print_Error(error);
