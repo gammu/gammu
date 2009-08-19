@@ -3562,7 +3562,7 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 		tmp = malloc(len + 1);
 		if (tmp == NULL) {
 			free(req);
-			free(encoded):
+			free(encoded);
 			return ERR_MOREMEMORY;
 		}
 		sevenlen = GSM_PackSevenBitsToEight(0, number, tmp, len);
