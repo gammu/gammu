@@ -43,7 +43,7 @@ static struct _TableCheck	tc[] =
 /* Connects to database */
 static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 {
-	unsigned char buf[400];
+	char buf[400];
 	PGresult *Res;
 	int s;
 	struct _TableCheck *T;
@@ -66,7 +66,7 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 		PQclear(Res);
 	}
 
-	sprintf(buf, "SELECT Version FROM gammu WHERE TRUE");
+	snprintf(buf, sizeof(buf), "SELECT Version FROM gammu WHERE TRUE");
 	Res = PQexec(Config->DBConnPgSQL, buf);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
 		SMSD_Log(DEBUG_ERROR, Config, "No Gammu table: %s",
@@ -877,16 +877,16 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	buff[0] = 0;
 	if (err == SMSD_SEND_OK) {
 		if (sms->SMS[Part - 1].PDU == SMS_Status_Report) {
-			sprintf(buff, "SendingOK");
+			snprintf(buff, sizeof(buff), "SendingOK");
 		} else {
-			sprintf(buff, "SendingOKNoReport");
+			snprintf(buff, sizeof(buff), "SendingOKNoReport");
 		}
 	}
 
 	if (err == SMSD_SEND_SENDING_ERROR)
-		sprintf(buff, "SendingError");
+		snprintf(buff, sizeof(buff), "SendingError");
 	if (err == SMSD_SEND_ERROR)
-		sprintf(buff, "Error");
+		snprintf(buff, sizeof(buff), "Error");
 
 	buffer[0] = 0;
 	sprintf(buffer + strlen(buffer), "INSERT INTO sentitems "
