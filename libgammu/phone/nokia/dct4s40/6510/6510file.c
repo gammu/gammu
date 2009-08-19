@@ -493,21 +493,29 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 	free(BackupCache);
 	Priv->FilesLocationsUsed = FilesLocationsUsed;
 
-	if (error != ERR_NONE) return error;
+	if (error != ERR_NONE) {
+		free(NewFiles);
+		return error;
+	}
 
 	for (i=0;i<FilesLocationsUsed2-1;i++) {
 		smprintf(s, "ID is %s\n",DecodeUnicodeString(NewFiles[i].ID_FullName));
 		error = N6510_GetFileFolderInfo1(s, &NewFiles[i], FALSE);
 		if (error == ERR_EMPTY) continue;
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			free(NewFiles);
+			return error;
+		}
 		smprintf(s, "%s",DecodeUnicodeString(File->Name));
 		smprintf(s, "%s \n",DecodeUnicodeString(NewFiles[i].Name));
 		if (mywstrncasecmp(NewFiles[i].Name,File->Name,0)) {
 			smprintf(s, "the same\n");
 			File->Folder = NewFiles[i].Folder;
+			free(NewFiles);
 			return ERR_NONE;
 		}
 	}
+	free(NewFiles);
 	return ERR_EMPTY;
 }
 
