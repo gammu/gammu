@@ -30,7 +30,7 @@ static GSM_Error SMSDMySQL_Free(GSM_SMSDConfig *Config)
 
 static void SMSDMySQL_LogError(GSM_SMSDConfig *Config)
 {
-	SMSD_Log(DEBUG_INFO, Config, "Error code: %d, Error: %s", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
+	SMSD_Log(DEBUG_ERROR, Config, "Error code: %d, Error: %s", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
 }
 
 
@@ -81,7 +81,8 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 				port,
 				socketname,
 				0)) {
-	    	SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database: %s", mysql_error(&Config->DBConnMySQL));
+	    	SMSD_Log(DEBUG_ERROR, Config, "Error connecting to database!");
+		SMSDMySQL_LogError(Config);
 	    	return ERR_UNKNOWN;
 	}
 
@@ -195,7 +196,7 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 
 	snprintf(query, sizeof(query), "DELETE FROM `phones` WHERE `IMEI` = '%s'", Config->Status->IMEI);
 	if (SMSDMySQL_Query(Config, query) != ERR_NONE) {
-		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+		SMSD_Log(DEBUG_INFO, Config, "Error deleting phone info from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
@@ -206,7 +207,7 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 		"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`, `Battery`, `Signal`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0,'%s', -1, -1)",
 		Config->Status->IMEI, Config->PhoneID, client_name);
 	if (SMSDMySQL_Query(Config, query) != ERR_NONE) {
-		SMSD_Log(DEBUG_INFO, Config, "Error inserting into database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+		SMSD_Log(DEBUG_INFO, Config, "Error inserting phone info into database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
@@ -240,7 +241,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 					"SenderID='%s' AND TPMR='%i' AND DestinationNumber='%s'",
 					Config->PhoneID, sms->SMS[i].MessageReference, buffer2);
 			if (SMSDMySQL_Store(Config, buffer, &Res) != ERR_NONE) {
-				SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+				SMSD_Log(DEBUG_INFO, Config, "Error reading sent items from database (%s)", __FUNCTION__);
 				return ERR_UNKNOWN;
 			}
 			found = FALSE;
@@ -280,7 +281,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				sprintf(buffer+strlen(buffer),"', `StatusError` = '%i'",sms->SMS[i].DeliveryStatus);
 				sprintf(buffer+strlen(buffer)," WHERE `ID` = '%s' AND `TPMR` = '%i'",Row[0],sms->SMS[i].MessageReference);
 				if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
-					SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+					SMSD_Log(DEBUG_INFO, Config, "Error updating sent item i ndatabase (%s)", __FUNCTION__);
 					return ERR_UNKNOWN;
 				}
 			}
@@ -345,12 +346,12 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 		}
 		sprintf(buffer+strlen(buffer),"','%s')",Config->PhoneID);
 		if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
-			SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+			SMSD_Log(DEBUG_INFO, Config, "Error writing inbox message to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 		new_id = mysql_insert_id(&Config->DBConnMySQL);
 		if (new_id == 0) {
-			SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s): %s, new id is zero!", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+			SMSD_Log(DEBUG_INFO, Config, "Error writing inbox message to database (%s), new id is zero!", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 		SMSD_Log(DEBUG_NOTICE, Config, "Inserted message id %llu", new_id);
@@ -382,7 +383,7 @@ static GSM_Error SMSDMySQL_RefreshSendStatus(GSM_SMSDConfig *Config, char *ID)
 
 	sprintf(buffer,"UPDATE `outbox` SET `SendingTimeOut`=(now() + INTERVAL 15 SECOND)+0 WHERE `ID` = '%s' AND (`SendingTimeOut` < now() OR SendingTimeOut IS NULL)",ID);
 	if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
-		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+		SMSD_Log(DEBUG_INFO, Config, "Error updating send timestamp in database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	if (mysql_affected_rows(&Config->DBConnMySQL) == 0) return ERR_UNKNOWN;
@@ -401,7 +402,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	gboolean			found = FALSE;
 
 	if (SMSDMySQL_Store(Config, "SELECT ID,InsertIntoDB,SendingDateTime,SenderID FROM `outbox` WHERE SendingDateTime < NOW() AND SendingTimeOut < NOW()", &Res) != ERR_NONE) {
-		SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+		SMSD_Log(DEBUG_INFO, Config, "Error reading message to send from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	while ((Row = mysql_fetch_row(Res))) {
@@ -433,7 +434,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 			sprintf(buf, "SELECT Text,Coding,UDH,Class,TextDecoded,ID,SequencePosition FROM `outbox_multipart` WHERE ID='%s' AND SequencePosition='%i'",ID,i);
 		}
 		if (SMSDMySQL_Store(Config, buf, &Res) != ERR_NONE) {
-			SMSD_Log(DEBUG_INFO, Config, "Error reading from database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+			SMSD_Log(DEBUG_INFO, Config, "Error reading outbox message from database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 		if (!(Row = mysql_fetch_row(Res))) {
@@ -507,12 +508,12 @@ static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 
 	sprintf(buffer,"DELETE FROM `outbox` WHERE `ID` = '%s'",ID);
 	if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
-		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+		SMSD_Log(DEBUG_INFO, Config, "Error deleting outbox message from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	sprintf(buffer,"DELETE FROM `outbox_multipart` WHERE `ID` = '%s'",ID);
 	if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
-		SMSD_Log(DEBUG_INFO, Config, "Error deleting from database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+		SMSD_Log(DEBUG_INFO, Config, "Error deleting multipart outbox message from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
   	return ERR_NONE;
@@ -620,7 +621,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		}
 		strcat(buffer, ")");
 		if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
-			SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+			SMSD_Log(DEBUG_INFO, Config, "Error writing outbox record to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 		if (i == 0) {
@@ -748,7 +749,7 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 			"-1')");
 	}
 	if (SMSDMySQL_Query(Config, query) != ERR_NONE) {
-		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+		SMSD_Log(DEBUG_INFO, Config, "Error writing sent item to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	snprintf(query, sizeof(query), "UPDATE `phones` SET `Sent`= `Sent` + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
@@ -767,7 +768,7 @@ static GSM_Error SMSDMySQL_RefreshPhoneStatus(GSM_SMSDConfig *Config)
 		"UPDATE `phones` SET `TimeOut`= (NOW() + INTERVAL 10 SECOND)+0, `Battery`= %d, `Signal`= %d WHERE `IMEI` = '%s'",
 		Config->Status->Charge.BatteryPercent, Config->Status->Network.SignalPercent, Config->Status->IMEI);
 	if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
-		SMSD_Log(DEBUG_INFO, Config, "Error writing to database (%s): %s", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+		SMSD_Log(DEBUG_INFO, Config, "Error writing phone information to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	return ERR_NONE;
