@@ -3555,9 +3555,14 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
 		len = strlen(number);
 		encoded = malloc(2 * (len + 1));
-		tmp = malloc(len + 1);
-		if (encoded == NULL || tmp == NULL) {
+		if (encoded == NULL) {
 			free(req);
+			return ERR_MOREMEMORY;
+		}
+		tmp = malloc(len + 1);
+		if (tmp == NULL) {
+			free(req);
+			free(encoded):
 			return ERR_MOREMEMORY;
 		}
 		sevenlen = GSM_PackSevenBitsToEight(0, number, tmp, len);
