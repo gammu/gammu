@@ -670,7 +670,7 @@ add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
 # CPP check
 find_program(CPPCHECK_EXECUTABLE NAMES cppcheck
     DOC "cppcheck - code checking tool")
-add_custom_target (cppcheck ${CPPCHECK_EXECUTABLE} -a -f -q "${Gammu_SOURCE_DIR}/gammu" "${Gammu_SOURCE_DIR}/smsd" "${Gammu_SOURCE_DIR}/helper" "${Gammu_SOURCE_DIR}/libgammu" "${Gammu_SOURCE_DIR}/python/gammu/src"
+add_custom_target (cppcheck ${CPPCHECK_EXECUTABLE} -a -f -q "${Gammu_SOURCE_DIR}/gammu" "${Gammu_SOURCE_DIR}/smsd" "${Gammu_SOURCE_DIR}/helper" "${Gammu_SOURCE_DIR}/libgammu" "${Gammu_SOURCE_DIR}/python/gammu/src" "${Gammu_SOURCE_DIR}/tests" "${Gammu_SOURCE_DIR}/docs/develop/examples"
     COMMENT "Checking C code")
 
 
