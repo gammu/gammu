@@ -33,7 +33,7 @@ struct _TableCheck
 static struct _TableCheck	tc[] =
 {
 	{ "SELECT id FROM outbox", "No table for outbox sms" },
-	{ "SELECT id FROM outbox_multipart", "No table for outbox sms" },
+	{ "SELECT id FROM outbox_multipart", "No table for outbox multipart sms" },
 	{ "SELECT id FROM sentitems", "No table for sent sms" },
 	{ "SELECT id FROM inbox", "No table for inbox sms" },
 /*	{ "SELECT Version FROM gammu", "No Gammu table" }, */
