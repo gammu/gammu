@@ -2,17 +2,22 @@
 # vim: expandtab sw=4 ts=4 sts=4:
 
 if [ -z "$1" ] ; then
-    echo "Usage: set-version VERSION"
+    echo "Usage: set-version VERSION [SOVERSION]"
     exit 1
 fi
 
 version=$1
+if [ -z "$2" ] ; then
+    soversion=`sed -n 's/set (SOVERSION "\([^"]*\)".*/\1/p' < CMakeLists.txt`
+else
+    soversion=$2
+fi
 
 do_replace() {
-    sed "s/@VERSION@/$version/;" < $1 > $2
+    sed "s/@VERSION@/$version/; s/@SOVERSION@/$soversion/;" < $1 > $2
 }
 
-echo "Setting version to $version"
+echo "Setting version to $version (soversion=$soversion)"
 
 # Packaging
 do_replace cmake/templates/gammu.spec.in gammu.spec
@@ -21,6 +26,7 @@ do_replace cmake/templates/description-pak.in description-pak
 # CMakeLists.txt
 sed -i "
     s/set (VERSION \"[^\"]*\"\\(.*\\))/set (VERSION \"$version\"\1)/; 
+    s/set (SOVERSION \"[^\"]*\"\\(.*\\))/set (SOVERSION \"$soversion\"\1)/; 
     " CMakeLists.txt
 # python/setup.py
 sed -i "s/VERSION = '[0-9.]*'/VERSION = '$version'/" python/setup.py
