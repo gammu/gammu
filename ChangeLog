@@ -27,6 +27,8 @@ ChangeLog
 [-] * Fix reading of SMS backups without text (bug #963).
 [-] * Send message even if SendingTimeOut is null (bug #977).
 [-] * Disabled automatic OBEX for Motorola phones.
+[!] * Increased limits for message length, bump soname to 7 because of
+      this.
     
 20090813 - 1.25.91
 
