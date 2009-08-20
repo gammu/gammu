@@ -184,7 +184,7 @@ cd "$srcdir"
 
 if [ $dotag -eq 1 ] ; then
     # Tag the release
-    git tag -m "Tag release $version" "$version"
+    git tag -s -m "Tag release $version" "$version"
     # Submit to PyPi
     $tmp/$repo-$version/python/setup.py register
 fi
