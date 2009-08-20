@@ -628,7 +628,7 @@ macro_gammu_option (IRDAOBEX "OBEX protocol over IrDA" ON WITH_OBEX_SUPPORT IRDA
 
 macro_gammu_option (OBEXGEN "Generic OBEX phones support" ON WITH_OBEX_SUPPORT ON)
 macro_gammu_option (ATOBEX "AT with OBEX phones support" ON WITH_OBEX_SUPPORT WITH_AT_SUPPORT)
-macro_gammu_option (ATOBEX "Automatic switching to OBEX for AT+MODE capable phones" OFF WITH_ATOBEX_SUPPORT ON)
+macro_gammu_option (ATOBEX_AUTO_MODE "Automatic switching to OBEX for AT+MODE capable phones" OFF WITH_ATOBEX_SUPPORT ON)
 
 macro_gammu_option (GNAPPLET_SUPPORT "Symbian phones support (gnapplet)" ON WITH_NOKIA_SUPPORT ON)
 macro_gammu_option (BLUEGNAPBUS "GNAPBUS protocol over Bluetooth" ON WITH_GNAPPLET_SUPPORT BLUETOOTH_FOUND)
