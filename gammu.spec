@@ -233,11 +233,11 @@ Currently supported phones include:
 This package contains Gammu SMS Daemon and tool to inject messages 
 into the queue.
 
-%package -n libGammu6
+%package -n libGammu7
 Summary:    Mobile phone management library
 Group:      System/Libraries
 
-%description -n libGammu6
+%description -n libGammu7
 Gammu is command line utility and library to work with mobile phones
 from many vendors. Support for different models differs, but basic
 functions should work with majority of them. Program can work with
@@ -255,11 +255,11 @@ Currently supported phones include:
 
 This package contains Gammu shared library.
 
-%package -n libgsmsd6
+%package -n libgsmsd7
 Summary:    SMS daemon helper library
 Group:      System/Libraries
 
-%description -n libgsmsd6
+%description -n libgsmsd7
 Gammu is command line utility and library to work with mobile phones
 from many vendors. Support for different models differs, but basic
 functions should work with majority of them. Program can work with
@@ -306,13 +306,13 @@ make -C build-dir install DESTDIR=%buildroot
 cat libgammu.lang >> %{name}.lang
 install -m644 docs/config/smsdrc %buildroot/etc/gammu-smsdrc
 
-%post -n libGammu6 -p /sbin/ldconfig
+%post -n libGammu7 -p /sbin/ldconfig
 
-%post -n libgsmsd6 -p /sbin/ldconfig
+%post -n libgsmsd7 -p /sbin/ldconfig
 
-%postun -n libGammu6 -p /sbin/ldconfig
+%postun -n libGammu7 -p /sbin/ldconfig
 
-%postun -n libgsmsd6 -p /sbin/ldconfig
+%postun -n libgsmsd7 -p /sbin/ldconfig
 
 %post smsd
 %if 0%{?mandriva_version}
@@ -384,11 +384,11 @@ fi
 %attr(755,root,root) %config /etc/init.d/gammu-smsd
 %config /etc/gammu-smsdrc
 
-%files -n libGammu6
+%files -n libGammu7
 %defattr(-,root,root)
 %_libdir/libGammu*.so.*
 
-%files -n libgsmsd6
+%files -n libgsmsd7
 %defattr(-,root,root)
 %_libdir/libgsmsd*.so.*
 
