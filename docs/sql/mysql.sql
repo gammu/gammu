@@ -40,7 +40,7 @@ CREATE TABLE `gammu` (
 -- Dumping data for table `gammu`
 -- 
 
-INSERT INTO `gammu` (`Version`) VALUES (10);
+INSERT INTO `gammu` (`Version`) VALUES (11);
 
 -- --------------------------------------------------------
 
@@ -57,7 +57,7 @@ CREATE TABLE `inbox` (
   `UDH` text NOT NULL,
   `SMSCNumber` varchar(20) NOT NULL default '',
   `Class` integer NOT NULL default '-1',
-  `TextDecoded` varchar(160) NOT NULL default '',
+  `TextDecoded` text NOT NULL default '',
   `ID` integer unsigned NOT NULL auto_increment,
   `RecipientID` text NOT NULL,
   `Processed` enum('false','true') NOT NULL default 'false',
@@ -84,7 +84,7 @@ CREATE TABLE `outbox` (
   `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',
   `UDH` text,
   `Class` integer default '-1',
-  `TextDecoded` varchar(160) NOT NULL default '',
+  `TextDecoded` text NOT NULL default '',
   `ID` integer unsigned NOT NULL auto_increment,
   `MultiPart` enum('false','true') default 'false',
   `RelativeValidity` integer default '-1',
@@ -114,7 +114,7 @@ CREATE TABLE `outbox_multipart` (
   `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',
   `UDH` text,
   `Class` integer default '-1',
-  `TextDecoded` varchar(160) default NULL,
+  `TextDecoded` text default NULL,
   `ID` integer unsigned NOT NULL default '0',
   `SequencePosition` integer NOT NULL default '1',
   PRIMARY KEY (`ID`, `SequencePosition`)
@@ -204,7 +204,7 @@ CREATE TABLE `sentitems` (
   `UDH` text NOT NULL,
   `SMSCNumber` varchar(20) NOT NULL default '',
   `Class` integer NOT NULL default '-1',
-  `TextDecoded` varchar(160) NOT NULL default '',
+  `TextDecoded` text NOT NULL default '',
   `ID` integer unsigned NOT NULL default '0',
   `SenderID` varchar(255) NOT NULL,
   `SequencePosition` integer NOT NULL default '1',

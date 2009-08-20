@@ -29,6 +29,8 @@ ChangeLog
 [-] * Disabled automatic OBEX for Motorola phones.
 [!] * Increased limits for message length, bump soname to 7 because of
       this.
+[!] * Changed SMSD tables to be able to handle longer messages from
+      Motorola phones.
     
 20090813 - 1.25.91
 

@@ -25,7 +25,7 @@
 
 #define SMSD_SHM_KEY (0xface)
 #define SMSD_SHM_VERSION (1)
-#define SMSD_DB_VERSION (10)
+#define SMSD_DB_VERSION (11)
 #define SMSD_SQL_RETRIES (10)
 
 #include "log.h"

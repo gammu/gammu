@@ -80,7 +80,7 @@ CREATE TABLE gammu (
 -- Dumping data for table "gammu"
 -- 
 
-INSERT INTO gammu (Version) VALUES (10);
+INSERT INTO gammu (Version) VALUES (11);
 
 -- --------------------------------------------------------
 
@@ -97,7 +97,7 @@ CREATE TABLE inbox (
   UDH text NOT NULL,
   SMSCNumber varchar(20) NOT NULL DEFAULT '',
   Class integer NOT NULL DEFAULT '-1',
-  TextDecoded varchar(160) NOT NULL DEFAULT '',
+  TextDecoded text NOT NULL DEFAULT '',
   ID serial PRIMARY KEY,
   RecipientID text NOT NULL,
   Processed boolean NOT NULL DEFAULT 'false',
@@ -132,7 +132,7 @@ CREATE TABLE outbox (
   Coding varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
   UDH text,
   Class integer DEFAULT '-1',
-  TextDecoded varchar(160) NOT NULL DEFAULT '',
+  TextDecoded text NOT NULL DEFAULT '',
   ID serial PRIMARY KEY,
   MultiPart boolean NOT NULL DEFAULT 'false',
   RelativeValidity integer DEFAULT '-1',
@@ -171,7 +171,7 @@ CREATE TABLE outbox_multipart (
   Coding varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
   UDH text,
   Class integer DEFAULT '-1',
-  TextDecoded varchar(160) DEFAULT NULL,
+  TextDecoded text DEFAULT NULL,
   ID serial,
   SequencePosition integer NOT NULL DEFAULT '1',
   PRIMARY KEY (ID, SequencePosition),
@@ -268,7 +268,7 @@ CREATE TABLE sentitems (
   UDH text NOT NULL,
   SMSCNumber varchar(20) NOT NULL DEFAULT '',
   Class integer NOT NULL DEFAULT '-1',
-  TextDecoded varchar(160) NOT NULL DEFAULT '',
+  TextDecoded text NOT NULL DEFAULT '',
   ID serial,
   SenderID varchar(255) NOT NULL,
   SequencePosition integer NOT NULL DEFAULT '1',
