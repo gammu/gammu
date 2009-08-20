@@ -2621,9 +2621,8 @@ GSM_Error ATGEN_ReplySetPBKMemory(GSM_Protocol_Message msg UNUSED, GSM_StateMach
 GSM_Error ATGEN_CheckSBNR(GSM_StateMachine *s)
 {
 	GSM_Error 	error;
-	char		req[20];
+	char		req[] = "AT^SBNR=?\r";
 
-	sprintf(req, "AT^SBNR=?\r");
 	smprintf(s, "Checking availability of SBNR\n");
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
 	return error;
@@ -2632,9 +2631,8 @@ GSM_Error ATGEN_CheckSBNR(GSM_StateMachine *s)
 GSM_Error ATGEN_CheckSPBR(GSM_StateMachine *s)
 {
 	GSM_Error 	error;
-	char		req[20];
+	char		req[] = "AT+SPBR=?\r";
 
-	sprintf(req, "AT+SPBR=?\r");
 	smprintf(s, "Checking availability of SPBR\n");
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
 	return error;
@@ -2643,9 +2641,8 @@ GSM_Error ATGEN_CheckSPBR(GSM_StateMachine *s)
 GSM_Error ATGEN_CheckMPBR(GSM_StateMachine *s)
 {
 	GSM_Error 	error;
-	char		req[20];
+	char		req[] = "AT+MPBR=?\r";
 
-	sprintf(req, "AT+MPBR=?\r");
 	smprintf(s, "Checking availability of MPBR\n");
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
 	return error;
@@ -3558,8 +3555,14 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
 		len = strlen(number);
 		encoded = malloc(2 * (len + 1));
+		if (encoded == NULL) {
+			free(req);
+			return ERR_MOREMEMORY;
+		}
 		tmp = malloc(len + 1);
-		if (encoded == NULL || tmp == NULL) {
+		if (tmp == NULL) {
+			free(req);
+			free(encoded);
 			return ERR_MOREMEMORY;
 		}
 		sevenlen = GSM_PackSevenBitsToEight(0, number, tmp, len);

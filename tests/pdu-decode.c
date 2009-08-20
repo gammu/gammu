@@ -321,6 +321,7 @@ int main(int argc, char **argv) {
 	len = fread(buffer, 1, sizeof(buffer) - 1, f);
 	if (!feof(f)) {
 		printf("Could not read whole file %s\n", argv[1]);
+		fclose(f);
 		return 1;
 	}
 	/* Zero terminate data */

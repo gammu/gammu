@@ -557,6 +557,8 @@ const char *GetOS(void)
 	snprintf(Buffer, sizeof(Buffer) - 1, "DG Unix");
 #elif defined(__QNX__)
 	snprintf(Buffer, sizeof(Buffer) - 1, "QNX");
+#else
+	snprintf(Buffer, sizeof(Buffer) - 1, "unknown OS");
 #endif
 	return Buffer;
 }

@@ -403,7 +403,10 @@ GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
 	if (file == NULL) return(ERR_CANTOPENFILE);
 
 	/* Read the header of the file. */
-	if (fread(buffer, 1, 4, file) != 4) return ERR_FILENOTSUPPORTED;
+	if (fread(buffer, 1, 4, file) != 4) {
+		fclose(file);
+		return ERR_FILENOTSUPPORTED;
+	}
 
 	/* while we have something to read */
 	while (fread(buffer, 1, 12, file) == 12) {

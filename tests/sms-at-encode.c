@@ -61,6 +61,7 @@ int main(int argc, char **argv)
 		len = fread(dumpbuffer, 1, sizeof(dumpbuffer) - 1, f);
 		if (!feof(f)) {
 			printf("Could not read whole file %s\n", argv[2]);
+			fclose(f);
 			return 1;
 		}
 
