@@ -574,7 +574,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard10);
 		if (error != ERR_NONE) return error;
 		/* is 1 SMS ? 8 = length of ..SCKE2 */
-		if (Length<=GSM_MAX_SMS_LENGTH-8) {
+		if (Length<=GSM_MAX_SMS_CHARS_LENGTH-8) {
 			sprintf(Buffer,"//SCKE2 ");
 			Length = 8;
 			error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard10);
@@ -591,7 +591,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard21);
 		if (error != ERR_NONE) return error;
 		/* Is 1 SMS ? 12 = length of ..SCKL23F4 */
-		if (Length<=GSM_MAX_SMS_LENGTH-12) {
+		if (Length<=GSM_MAX_SMS_CHARS_LENGTH-12) {
 			sprintf(Buffer,"//SCKL23F4%c%c",13,10);
 			Length = 12;
 			error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard21);
@@ -607,7 +607,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 	case SMS_VCARD10Long:
 		error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard10);
 		if (error != ERR_NONE) return error;
-		if (Length>GSM_MAX_SMS_LENGTH) UDH = UDH_ConcatenatedMessages;
+		if (Length>GSM_MAX_SMS_CHARS_LENGTH) UDH = UDH_ConcatenatedMessages;
 		Coding = SMS_Coding_Default_No_Compression;
 		memcpy(Buffer2,Buffer,Length);
 		EncodeUnicode(Buffer,Buffer2,Length);
@@ -615,7 +615,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 	case SMS_VCARD21Long:
 		error = GSM_EncodeVCARD(di, Buffer, sizeof(Buffer), &Length,Info->Entries[0].Phonebook,TRUE,Nokia_VCard21);
 		if (error != ERR_NONE) return error;
-		if (Length>GSM_MAX_SMS_LENGTH) UDH = UDH_ConcatenatedMessages;
+		if (Length>GSM_MAX_SMS_CHARS_LENGTH) UDH = UDH_ConcatenatedMessages;
 		Coding = SMS_Coding_Default_No_Compression;
 		memcpy(Buffer2,Buffer,Length);
 		EncodeUnicode(Buffer,Buffer2,Length);
@@ -624,7 +624,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		error=GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer),&Length,Info->Entries[0].Calendar,TRUE,Nokia_VCalendar);
 		if (error != ERR_NONE) return error;
 		/* Is 1 SMS ? 8 = length of ..SCKE4 */
-		if (Length<=GSM_MAX_SMS_LENGTH-8) {
+		if (Length<=GSM_MAX_SMS_CHARS_LENGTH-8) {
 			sprintf(Buffer,"//SCKE4 ");
 			Length = 8;
 			GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer),&Length,Info->Entries[0].Calendar,TRUE,Nokia_VCalendar);
@@ -720,9 +720,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			FindDefaultAlphabetLen(Info->Entries[0].Buffer,&Length,&smslen,5000);
 			if (Info->Entries[0].ID == SMS_ConcatenatedTextLong16bit ||
 			    Info->Entries[0].ID == SMS_ConcatenatedAutoTextLong16bit) {
-				if (smslen>GSM_MAX_SMS_LENGTH) UDH=UDH_ConcatenatedMessages16bit;
+				if (smslen>GSM_MAX_SMS_CHARS_LENGTH) UDH=UDH_ConcatenatedMessages16bit;
 			} else {
-				if (smslen>GSM_MAX_SMS_LENGTH) UDH=UDH_ConcatenatedMessages;
+				if (smslen>GSM_MAX_SMS_CHARS_LENGTH) UDH=UDH_ConcatenatedMessages;
 			}
 		}
 	default:

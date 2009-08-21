@@ -3722,9 +3722,9 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 		SMS->Text[1] = 0;
 	} else {
 		/* This is hex encoded unicode, need to multiply by 4 */
-		if (strlen(readbuffer) > 4 * GSM_MAX_SMS_LENGTH) {
+		if (strlen(readbuffer) > 4 * GSM_MAX_SMS_CHARS_LENGTH) {
 			dbgprintf(NULL, "Message text too long, truncating!\n");
-			readbuffer[4 * GSM_MAX_SMS_LENGTH] = 0;
+			readbuffer[4 * GSM_MAX_SMS_CHARS_LENGTH] = 0;
 		}
 		if (!DecodeHexBin (SMS->Text, readbuffer, strlen(readbuffer))) {
 			dbgprintf(NULL, "Failed decoding binary field!\n");

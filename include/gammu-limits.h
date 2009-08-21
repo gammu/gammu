@@ -165,11 +165,18 @@
 #define GSM_MAX_UDH_LENGTH 140
 
 /**
- * Maximal length of text in standard SMS.
+ * Maximal length of text in SMS.
  *
  * \ingroup Limits
  */
 #define GSM_MAX_SMS_LENGTH 650
+
+/**
+ * Maximal length of text in standard 7-bit SMS.
+ *
+ * \ingroup Limits
+ */
+#define GSM_MAX_SMS_CHARS_LENGTH 160
 
 /**
  * Maximal length of 8-bit text in SMS.

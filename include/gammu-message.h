@@ -436,7 +436,7 @@ typedef struct {
 	/**
 	 * Text for SMS.
 	 */
-	unsigned char Text[(GSM_MAX_SMS_LENGTH + 1) * 2];
+	unsigned char Text[(160 + 1) * 2];
 	/**
 	 * Type of message.
 	 */
