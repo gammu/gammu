@@ -19,6 +19,8 @@ the issue.
 ChangeLog
 =========
     
+2009???? - 1.25.93
+    
 20090821 - 1.25.92
 
 [+] * Reworked RPM packages (separate libraries and SMSD).
