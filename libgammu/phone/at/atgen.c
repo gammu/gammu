@@ -985,6 +985,28 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						}
 						inp += length;
 						break;
+					case 'T':
+						out_s = va_arg(ap, char *);
+						storage_size = va_arg(ap, size_t);
+						length = ATGEN_GrabString(s, inp, &buffer);
+						smprintf(s, "Parsed utf-8 string with length \"%s\"\n", buffer);
+						if (!isdigit((int)buffer[0])) {
+							free(buffer);
+							error = ERR_UNKNOWNRESPONSE;
+							goto end;
+						}
+						search_pos = strchr(buffer, ',');
+						if (search_pos == NULL) {
+							free(buffer);
+							error = ERR_UNKNOWNRESPONSE;
+							goto end;
+						}
+						search_pos++;
+						DecodeUTF8(out_s, search_pos, strlen(search_pos));
+						smprintf(s, "utf-8 string with length decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						free(buffer);
+						inp += length;
+						break;
 					case 'e':
 						out_s = va_arg(ap, char *);
 						storage_size = va_arg(ap, size_t);

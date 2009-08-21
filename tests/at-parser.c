@@ -23,6 +23,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_StateMachine *s;
 	GSM_Error error;
 
+	/* Init locales to get proper encoding */
+	GSM_InitLocales(NULL);
+
 	/* Configure state machine */
 	debug_info = GSM_GetGlobalDebug();
 	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
@@ -128,6 +131,23 @@ int main(int argc UNUSED, char **argv UNUSED)
 			buffer, BUFFER_SIZE
 			);
 	gammu_test_result(error, "+SPBR: @i, @p, @p, @p, @p, @p, @s, @t, @t, @t, @t");
+
+	error = ATGEN_ParseReply(s,
+				"+SPBR: 2,\"+79217962807\",\"+78125313912\",\"\",\"\",\"\",\"\",\"16,Абакумов\",\"18,Александр\",\"0,\",\"0,\"",
+				"+SPBR: @i, @p, @p, @p, @p, @p, @s, @T, @T, @T, @T",
+			&i,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE
+			);
+	gammu_test_result(error, "+SPBR: @i, @p, @p, @p, @p, @p, @s, @T, @T, @T, @T");
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);

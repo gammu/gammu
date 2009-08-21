@@ -20,6 +20,8 @@ ChangeLog
 =========
     
 2009???? - 1.25.93
+
+[-] * Fixed reading of phonebook from Samsung (bug #980).
     
 20090821 - 1.25.92
 

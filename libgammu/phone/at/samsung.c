@@ -500,7 +500,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		 * not handlet in rest of the code.
 		 */
 		error = ATGEN_ParseReply(s, str,
-					"+SPBR: @i, @p, @p, @p, @p, @p, @s, @t, @t, @t, @t",
+					"+SPBR: @i, @p, @p, @p, @p, @p, @s, @T, @T, @T, @T",
 					&Memory->Location,
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),

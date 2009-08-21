@@ -413,6 +413,8 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *s);
  *   converted from phone encoding, stripping quotes, expects pointer to
  *   unsigned char and size of storage.
  *   Encoding is somehow guessed.
+ * - \b \@T - String with length as first element (eg. "5,test1"), same
+ *   as \@t, just with utf-8 encoding.
  * - \b \@e - String, will be converted from phone encoding, stripping
  *   quotes, expects pointer to unsigned char and size of storage.
  *   No encoding guessing.
