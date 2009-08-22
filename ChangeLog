@@ -23,6 +23,7 @@ ChangeLog
 
 [-] * Fixed reading of phonebook from Samsung (bug #980).
 [-] * Add ID for Nokia 3390b (bug #982).
+[-] * DCT3 dependent code reports error when phone is not DCT3 (bug #982).
     
 20090821 - 1.25.92
 

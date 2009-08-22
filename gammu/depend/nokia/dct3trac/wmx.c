@@ -417,7 +417,7 @@ void DCT3SetDebug(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 	/* We Need DCT3 */
-	if (CheckDCT3Only()!=ERR_NONE) return;
+	CheckDCT3();
 
 	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);

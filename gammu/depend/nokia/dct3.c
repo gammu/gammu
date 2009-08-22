@@ -45,21 +45,21 @@ if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found =
 	return ERR_NONE;
 }
 
-static void CheckDCT3(void)
+void CheckDCT3(void)
 {
 	GSM_Error error;
 
 	error = CheckDCT3Only();
 	switch (error) {
-	case ERR_NOTSUPPORTED:
-		Print_Error(ERR_NOTSUPPORTED);
-		break;
-	case ERR_OTHERCONNECTIONREQUIRED:
-		printf("Can't do it with current phone protocol\n");
-		GSM_TerminateConnection(gsm);
-		Terminate(3);
-	default:
-		break;
+		case ERR_OTHERCONNECTIONREQUIRED:
+			printf("Can't do it with current phone protocol\n");
+			GSM_TerminateConnection(gsm);
+			Terminate(3);
+		case ERR_NONE:
+			break;
+		default:
+			Print_Error(error);
+			break;
 	}
 }
 
@@ -101,7 +101,7 @@ void DCT3GetT9(int argc, char *argv[])
 
 /* "00 01 AE 00" gets some control values */
 
-	if (CheckDCT3Only()!=ERR_NONE) return;
+	CheckDCT3();
 
 	DCT3T9File = fopen("T9", "w");
 	if (DCT3T9File == NULL) return;
@@ -124,7 +124,7 @@ void DCT3VibraTest(int argc, char *argv[])
 				     0xff};	/* Level */
 	GSM_Error error;
 
-	if (CheckDCT3Only()!=ERR_NONE) return;
+	CheckDCT3();
 
 	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
@@ -191,7 +191,7 @@ void DCT3SelfTests(int argc, char *argv[])
 	int		i;
 	GSM_Error error;
 
-	if (CheckDCT3Only()!=ERR_NONE) return;
+	CheckDCT3();
 
 	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);
@@ -266,7 +266,7 @@ void DCT3GetADC(int argc, char *argv[])
 	unsigned char	GetUnit[] = {0x00, 0x01, 0x91,
 				     0x02};		/* Test number */
 
-	if (CheckDCT3Only()!=ERR_NONE) return;
+	CheckDCT3();
 
 	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
@@ -308,7 +308,7 @@ void DCT3DisplayTest(int argc, char *argv[])
 				0x03,          	/* 3=set, 2=clear */
 				0x03};	 	/* test number */
 
-	if (CheckDCT3Only()!=ERR_NONE) return;
+	CheckDCT3();
 
 	if (atoi(argv[2]) != 1 && atoi(argv[2]) != 2) {
 		printf("Give 1 or 2 as test number\n");
@@ -449,7 +449,7 @@ void DCT3Info(int argc, char *argv[])
 	unsigned char 		req4[]  = {0x00, 0x01, 0xc8, 0x09}; 	  /* Get DSP ROM */
 	GSM_Error error;
 
-        if (CheckDCT3Only()!=ERR_NONE) return;
+	CheckDCT3();
 
 	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
@@ -544,7 +544,7 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 		0x00, 0x01, 0x6b,
 		0x00, 0x00, 0x00, 0x00 }; /* bytes with Product Profile Setings */
 
-	if (CheckDCT3Only()!=ERR_NONE) return;
+	CheckDCT3();
 
 	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);
@@ -632,7 +632,7 @@ void DCT3GetSecurityCode(int argc, char *argv[])
 #endif
 	GSM_Error error;
 
-	if (CheckDCT3Only()!=ERR_NONE) return;
+	CheckDCT3();
 
 	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);
