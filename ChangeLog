@@ -22,6 +22,7 @@ ChangeLog
 2009???? - 1.25.93
 
 [-] * Fixed reading of phonebook from Samsung (bug #980).
+[-] * Add ID for Nokia 3390b (bug #982).
     
 20090821 - 1.25.92
 
