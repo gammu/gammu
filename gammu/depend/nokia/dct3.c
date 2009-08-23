@@ -441,7 +441,7 @@ GSM_Error DCT3_ReplyEnableSecurity2(GSM_Protocol_Message msg, GSM_StateMachine *
 	return ERR_NONE;
 }
 
-void DCT3Info(int argc, char *argv[])
+GSM_Error DCT3Info(void)
 {
 	unsigned char 		req[]  	= {0x00, 0x01, 0x8A, 0x00}; 	  /* Get simlock info */
 	unsigned char 		req2[]  = {0x00, 0x01, 0xb4, 0x00, 0x00}; /* Get MSID */
@@ -449,7 +449,8 @@ void DCT3Info(int argc, char *argv[])
 	unsigned char 		req4[]  = {0x00, 0x01, 0xc8, 0x09}; 	  /* Get DSP ROM */
 	GSM_Error error;
 
-	CheckDCT3();
+	error = CheckDCT3Only();
+	if (error != ERR_NONE) return error;
 
 	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
@@ -469,6 +470,7 @@ void DCT3Info(int argc, char *argv[])
 
 	error=GSM_WaitFor (gsm, req4, 4, 0x40, 4, ID_User10);
 	Print_Error(error);
+	return ERR_NONE;
 }
 
 static GSM_Error DCT3_ReplyResetTest36(GSM_Protocol_Message msg, GSM_StateMachine *sm)

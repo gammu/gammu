@@ -249,10 +249,10 @@ void Identify(int argc, char *argv[])
 	}
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
-	DCT3Info(argc, argv);
+	DCT3Info();
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-	DCT4Info(argc, argv);
+	DCT4Info();
 #endif
 
 	GSM_Terminate();

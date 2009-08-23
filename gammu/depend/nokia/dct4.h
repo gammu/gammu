@@ -5,7 +5,7 @@ void DCT4SelfTests	   (int argc, char *argv[]);
 void DCT4SetVibraLevel	   (int argc, char *argv[]);
 void DCT4GetSecurityCode   (int argc, char *argv[]);
 void DCT4GetVoiceRecord	   (int argc, char *argv[]);
-void DCT4Info		   (int argc, char *argv[]);
+GSM_Error DCT4Info(void);
 void DCT4GetT9		   (int argc, char *argv[]);
 void DCT4DisplayTest	   (int argc, char *argv[]);
 void DCT4GetADC		   (int argc, char *argv[]);

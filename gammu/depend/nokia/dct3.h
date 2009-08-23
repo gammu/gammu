@@ -2,7 +2,7 @@
 
 void DCT3SelfTests	 (int argc, char *argv[]);
 void DCT3netmonitor	 (int argc, char *argv[]);
-void DCT3Info		 (int argc, char *argv[]);
+GSM_Error DCT3Info(void);
 void DCT3ResetTest36	 (int argc, char *argv[]);
 void DCT3SetPhoneMenus	 (int argc, char *argv[]);
 void DCT3GetSecurityCode (int argc, char *argv[]);

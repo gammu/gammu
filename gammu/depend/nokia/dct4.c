@@ -850,16 +850,18 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 	return ERR_UNKNOWNRESPONSE;
 }
 
-void DCT4Info(int argc, char *argv[])
+GSM_Error DCT4Info(void)
 {
 	unsigned char GetBTAddress[8] = {N6110_FRAME_HEADER, 0x09, 0x19, 0x01, 0x03, 0x06};
 	unsigned char GetSimlock[5] = {N6110_FRAME_HEADER, 0x12, 0x0D};
 	unsigned char value[10];
 	GSM_Error error;
 
-        if (CheckDCT4Only()!=ERR_NONE) return;
+	error = CheckDCT4Only();
+	if (error != ERR_NONE) return error;
 
-	if (GSM_IsPhoneFeatureAvailable(gsm->Phone.Data.ModelInfo, F_SERIES40_30)) return;
+	if (GSM_IsPhoneFeatureAvailable(gsm->Phone.Data.ModelInfo, F_SERIES40_30))
+		return ERR_NOTSUPPORTED;
 
 	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
@@ -881,6 +883,7 @@ void DCT4Info(int argc, char *argv[])
 	error=NOKIA_GetPhoneString(gsm,"\x00\x03\x02\x07\x00\x08",6,0x1b,value,ID_User6,10);
 	Print_Error(error);
 	printf(LISTFORMAT "%s\n", _("UEM"), value);
+	return ERR_NONE;
 }
 
 static FILE *T9File;
