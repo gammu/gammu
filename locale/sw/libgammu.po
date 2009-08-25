@@ -1,0 +1,384 @@
+# libGammu translation.
+# Copyright (C) 2003 - 2009 Michal Čihař <michal@cihar.com>
+# This file is distributed under the same license as the libGammu package.
+# Automatically generated, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libgammu 1.25.93\n"
+"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"POT-Creation-Date: 2009-08-25 17:27+0200\n"
+"PO-Revision-Date: 2009-08-25 17:27+0200\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: libgammu/gsmcomon.c:84
+msgid "No error."
+msgstr ""
+
+#: libgammu/gsmcomon.c:85
+msgid "Error opening device. Unknown, busy or no permissions."
+msgstr ""
+
+#: libgammu/gsmcomon.c:86
+msgid "Error opening device, it is locked."
+msgstr ""
+
+#: libgammu/gsmcomon.c:87
+msgid "Error opening device, it doesn't exist."
+msgstr ""
+
+#: libgammu/gsmcomon.c:88
+msgid "Error opening device, it is already opened by other application."
+msgstr ""
+
+#: libgammu/gsmcomon.c:89
+msgid "Error opening device, you don't have permissions."
+msgstr ""
+
+#: libgammu/gsmcomon.c:90
+msgid "Error opening device. No required driver in operating system."
+msgstr ""
+
+#: libgammu/gsmcomon.c:91
+msgid "Error opening device. Some hardware not connected/wrongly configured."
+msgstr ""
+
+#: libgammu/gsmcomon.c:92
+msgid "Error setting device DTR or RTS."
+msgstr ""
+
+#: libgammu/gsmcomon.c:93
+msgid "Error setting device speed. Maybe speed not supported."
+msgstr ""
+
+#: libgammu/gsmcomon.c:94
+msgid "Error writing to the device."
+msgstr ""
+
+#: libgammu/gsmcomon.c:95
+msgid "Error during reading from the device."
+msgstr ""
+
+#: libgammu/gsmcomon.c:96
+msgid "Can't set parity on the device."
+msgstr ""
+
+#: libgammu/gsmcomon.c:97
+msgid "No response in specified timeout. Probably phone not connected."
+msgstr ""
+
+#: libgammu/gsmcomon.c:98
+msgid ""
+"Frame not requested right now. See <http://cihar.com/gammu/report> for "
+"information how to report it."
+msgstr ""
+
+#: libgammu/gsmcomon.c:99
+msgid ""
+"Unknown response from phone. See <http://cihar.com/gammu/report> for "
+"information how to report it."
+msgstr ""
+
+#: libgammu/gsmcomon.c:100
+msgid ""
+"Unknown frame. See <http://cihar.com/gammu/report> for information how to "
+"report it."
+msgstr ""
+
+#: libgammu/gsmcomon.c:101
+msgid "Unknown connection type string. Check config file."
+msgstr ""
+
+#: libgammu/gsmcomon.c:102
+msgid "Unknown model type string. Check config file."
+msgstr ""
+
+#: libgammu/gsmcomon.c:103
+msgid ""
+"Some functions not available for your system (disabled in config or not "
+"implemented)."
+msgstr ""
+
+#: libgammu/gsmcomon.c:104
+msgid "Function not supported by phone."
+msgstr ""
+
+#: libgammu/gsmcomon.c:105
+msgid "Entry is empty."
+msgstr ""
+
+#: libgammu/gsmcomon.c:106
+msgid "Security error. Maybe no PIN?"
+msgstr ""
+
+#: libgammu/gsmcomon.c:107
+msgid "Invalid location. Maybe too high?"
+msgstr ""
+
+#: libgammu/gsmcomon.c:108
+msgid "Functionality not implemented. You are welcome to help authors with it."
+msgstr ""
+
+#: libgammu/gsmcomon.c:109
+msgid "Memory full."
+msgstr ""
+
+#: libgammu/gsmcomon.c:110
+msgid "Unknown error."
+msgstr ""
+
+#: libgammu/gsmcomon.c:111
+msgid "Can not open specified file."
+msgstr ""
+
+#: libgammu/gsmcomon.c:112
+msgid "More memory required..."
+msgstr ""
+
+#: libgammu/gsmcomon.c:113
+msgid "Permission to file/device required..."
+msgstr ""
+
+#: libgammu/gsmcomon.c:114
+msgid "Empty SMSC number. Set in phone or use -smscnumber."
+msgstr ""
+
+#: libgammu/gsmcomon.c:115
+msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+msgstr ""
+
+#: libgammu/gsmcomon.c:116
+msgid "Phone is not connected."
+msgstr ""
+
+#: libgammu/gsmcomon.c:117
+msgid ""
+"Function is currently being implemented. If you want to help, please contact "
+"authors."
+msgstr ""
+
+#: libgammu/gsmcomon.c:118
+msgid "Phone is disabled and connected to charger."
+msgstr ""
+
+#: libgammu/gsmcomon.c:119
+msgid "File format not supported by Gammu."
+msgstr ""
+
+#: libgammu/gsmcomon.c:120
+msgid ""
+"Nobody is perfect, some bug appeared in protocol implementation. Please "
+"contact authors."
+msgstr ""
+
+#: libgammu/gsmcomon.c:121
+msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+msgstr ""
+
+#: libgammu/gsmcomon.c:122
+msgid "Phone module need to send another answer frame."
+msgstr ""
+
+#: libgammu/gsmcomon.c:123
+msgid "Current connection type doesn't support called function."
+msgstr ""
+
+#: libgammu/gsmcomon.c:124
+msgid "CRC error."
+msgstr ""
+
+#: libgammu/gsmcomon.c:125
+msgid "Invalid date or time specified."
+msgstr ""
+
+#: libgammu/gsmcomon.c:126
+msgid "Phone memory error, maybe it is read only."
+msgstr ""
+
+#: libgammu/gsmcomon.c:127
+msgid "Invalid data given to phone."
+msgstr ""
+
+#: libgammu/gsmcomon.c:128
+msgid "File with specified name already exist."
+msgstr ""
+
+#: libgammu/gsmcomon.c:129
+msgid "File with specified name doesn't exist."
+msgstr ""
+
+#: libgammu/gsmcomon.c:130
+msgid "You have to give folder name and not file name."
+msgstr ""
+
+#: libgammu/gsmcomon.c:131
+msgid "You have to give file name and not folder name."
+msgstr ""
+
+#: libgammu/gsmcomon.c:132
+msgid "Can not access SIM card."
+msgstr ""
+
+#: libgammu/gsmcomon.c:133
+msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+msgstr ""
+
+#: libgammu/gsmcomon.c:134
+msgid "Only part of folder has been listed."
+msgstr ""
+
+#: libgammu/gsmcomon.c:135
+msgid "Folder must be empty."
+msgstr ""
+
+#: libgammu/gsmcomon.c:136
+msgid "Data were converted."
+msgstr ""
+
+#: libgammu/gsmcomon.c:137
+msgid "Gammu is not configured."
+msgstr ""
+
+#: libgammu/gsmcomon.c:138
+msgid "Wrong folder used."
+msgstr ""
+
+#: libgammu/gsmcomon.c:139
+msgid "Internal phone error."
+msgstr ""
+
+#: libgammu/gsmcomon.c:140
+msgid "Error writing file to disk."
+msgstr ""
+
+#: libgammu/gsmcomon.c:141
+msgid "No such section exists."
+msgstr ""
+
+#: libgammu/gsmcomon.c:142
+msgid "Using default values."
+msgstr ""
+
+#: libgammu/gsmcomon.c:143
+msgid "Corrupted data returned by phone."
+msgstr ""
+
+#: libgammu/gsmcomon.c:144
+msgid "Bad feature string in configuration."
+msgstr ""
+
+#: libgammu/gsmcomon.c:145
+msgid "Desired functionality has been disabled on compile time."
+msgstr ""
+
+#: libgammu/gsmcomon.c:146
+msgid "Bluetooth configuration requires channel option."
+msgstr ""
+
+#: libgammu/gsmcomon.c:147
+msgid "Service is not runnig."
+msgstr ""
+
+#: libgammu/gsmcomon.c:148
+msgid "Service configuration is missing."
+msgstr ""
+
+#: libgammu/gsmcomon.c:149
+msgid "Command rejected because device was busy. Wait and restart."
+msgstr ""
+
+#: libgammu/gsmcomon.c:182
+msgid "Unknown error description."
+msgstr ""
+
+#: libgammu/phone/dummy/dummy.c:554
+msgid "Templates"
+msgstr ""
+
+#: libgammu/phone/nokia/dct3/n6110.c:1958
+msgid "Personal"
+msgstr ""
+
+#: libgammu/phone/nokia/dct3/n6110.c:1960 libgammu/phone/nokia/nfunc.c:1126
+msgid "Car"
+msgstr ""
+
+#: libgammu/phone/nokia/dct3/n6110.c:1962 libgammu/phone/nokia/nfunc.c:1128
+msgid "Headset"
+msgstr ""
+
+#: libgammu/phone/nokia/dct3/n6110.c:1968 libgammu/phone/nokia/nfunc.c:1116
+msgid "General"
+msgstr ""
+
+#: libgammu/phone/nokia/dct3/n6110.c:1970 libgammu/phone/nokia/nfunc.c:1118
+msgid "Silent"
+msgstr ""
+
+#: libgammu/phone/nokia/dct3/n6110.c:1972
+msgid "Discreet"
+msgstr ""
+
+#: libgammu/phone/nokia/dct3/n6110.c:1974
+msgid "Loud"
+msgstr ""
+
+#: libgammu/phone/nokia/dct3/n6110.c:1976
+msgid "My style"
+msgstr ""
+
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:553
+msgid "SIM"
+msgstr ""
+
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:554 libgammu/phone/pfunc.c:41
+msgid "Inbox"
+msgstr ""
+
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:555
+msgid "Sent items"
+msgstr ""
+
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:556
+msgid "Saved items"
+msgstr ""
+
+#: libgammu/phone/nokia/nfunc.c:936
+msgid "Family"
+msgstr ""
+
+#: libgammu/phone/nokia/nfunc.c:938
+msgid "VIP"
+msgstr ""
+
+#: libgammu/phone/nokia/nfunc.c:940
+msgid "Friends"
+msgstr ""
+
+#: libgammu/phone/nokia/nfunc.c:942
+msgid "Colleagues"
+msgstr ""
+
+#: libgammu/phone/nokia/nfunc.c:944
+msgid "Other"
+msgstr ""
+
+#: libgammu/phone/nokia/nfunc.c:1120
+msgid "Meeting"
+msgstr ""
+
+#: libgammu/phone/nokia/nfunc.c:1122
+msgid "Outdoor"
+msgstr ""
+
+#: libgammu/phone/nokia/nfunc.c:1124
+msgid "Pager"
+msgstr ""
+
+#: libgammu/phone/pfunc.c:42
+msgid "Outbox"
+msgstr ""
