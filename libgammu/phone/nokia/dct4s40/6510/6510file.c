@@ -1152,7 +1152,8 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, g
 		return ERR_NONE;
 	}
 
-	error = N6510_PrivGetFolderListing2(s, &Priv->FilesCache[0]);
+	memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
+	error = N6510_PrivGetFolderListing2(s, File);
 	if (error != ERR_NONE) return error;
 
 	memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
