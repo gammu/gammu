@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-25 23:32+0200\n"
+"POT-Creation-Date: 2009-08-26 07:36+0200\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -491,7 +491,7 @@ msgstr ""
 
 #: gammu/calendar.c:41 gammu/calendar.c:692
 msgid "Call"
-msgstr ""
+msgstr "Helista"
 
 #: gammu/calendar.c:44 gammu/calendar.c:695
 msgid "Meeting"
@@ -515,7 +515,7 @@ msgstr ""
 
 #: gammu/calendar.c:59 gammu/calendar.c:710 gammu/calendar.c:815
 msgid "Alarm"
-msgstr ""
+msgstr "Alarm"
 
 #: gammu/calendar.c:62 gammu/calendar.c:713
 msgid "Daily alarm"
@@ -603,7 +603,7 @@ msgstr ""
 
 #: gammu/calendar.c:141
 msgid "Start"
-msgstr ""
+msgstr "Algus"
 
 #: gammu/calendar.c:148
 msgid "Stop"
@@ -631,7 +631,7 @@ msgstr ""
 #: helper/memory-display.c:130 helper/message-display.c:432
 #, c-format
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: gammu/calendar.c:207 gammu/calendar.c:884
 msgid "Description"
@@ -646,7 +646,7 @@ msgstr ""
 #: gammu/memory.c:146 gammu/message.c:186 gammu/misc.c:1683 gammu/misc.c:1716
 #: gammu/misc.c:1977 gammu/misc.c:2086
 msgid "Location"
-msgstr ""
+msgstr "Asukoht"
 
 #: gammu/calendar.c:227 gammu/calendar.c:835 helper/memory-display.c:61
 msgid "Private"
@@ -834,7 +834,7 @@ msgstr ""
 
 #: gammu/calendar.c:516 gammu/calendar.c:519 gammu/mms.c:95
 msgid "Date"
-msgstr ""
+msgstr "Kuupäev"
 
 #: gammu/calendar.c:517
 msgid "Every day"
@@ -875,7 +875,7 @@ msgstr ""
 
 #: gammu/calendar.c:777
 msgid "Priority"
-msgstr ""
+msgstr "Prioriteet"
 
 #: gammu/calendar.c:780
 msgid "Low"
@@ -903,7 +903,7 @@ msgstr ""
 
 #: gammu/calendar.c:810
 msgid "Completed"
-msgstr ""
+msgstr "Valmis"
 
 #: gammu/calendar.c:845 gammu/calendar.c:850 helper/memory-display.c:44
 #: helper/memory-display.c:54 helper/memory-display.c:56
@@ -1637,7 +1637,7 @@ msgstr ""
 #: gammu/misc.c:1687 gammu/misc.c:1726 gammu/misc.c:1991 gammu/mms.c:112
 #: helper/memory-display.c:137 helper/message-display.c:242
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: gammu/gammu.c:135
 #, c-format
@@ -2030,7 +2030,7 @@ msgstr ""
 
 #: gammu/message.c:190 gammu/misc.c:1992 gammu/misc.c:2189
 msgid "Number"
-msgstr ""
+msgstr "Number"
 
 #: gammu/message.c:191
 msgid "Default number"
@@ -3544,7 +3544,7 @@ msgstr ""
 
 #: helper/memory-display.c:146
 msgid "State"
-msgstr ""
+msgstr "Olek"
 
 #: helper/memory-display.c:147
 msgid "Zip code"

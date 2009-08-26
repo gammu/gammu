@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-25 23:32+0200\n"
+"POT-Creation-Date: 2009-08-26 07:36+0200\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -2502,7 +2502,7 @@ msgstr "Код продукта  : %s\n"
 
 #: gammu/misc.c:245
 msgid "SIM IMSI"
-msgstr ""
+msgstr "Номер SIM (IMSI)"
 
 #: gammu/misc.c:275
 #, fuzzy
