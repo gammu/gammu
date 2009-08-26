@@ -31,7 +31,7 @@ static GSM_Error N6510_AllocFileCache(GSM_StateMachine *s, int requested)
 	int newsize;
 
 	/* Maybe there is already enough allocated */
-	if (Priv->FilesLocationsAvail < requested) return ERR_NONE;
+	if (Priv->FilesLocationsAvail >= requested) return ERR_NONE;
 
 	/* Do not allocate one by one */
 	newsize = requested + 10;
@@ -113,7 +113,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 {
 	GSM_File		*File = s->Phone.Data.FileInfo;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
-	int		     	i;
+	int		     	i, newsize;
 	unsigned		char buffer[500];
 	GSM_Error		error;
 
@@ -198,27 +198,19 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 	case 0x33:
 		if (s->Phone.Data.RequestID == ID_GetFileInfo) {
 
-			error = N6510_AllocFileCache(s, Priv->FilesLocationsUsed + msg.Buffer[8] * 256 + msg.Buffer[9]);
+			newsize = msg.Buffer[8] * 256 + msg.Buffer[9];
+
+			error = N6510_AllocFileCache(s, Priv->FilesLocationsUsed + newsize);
 			if (error != ERR_NONE) return error;
 
-			i = Priv->FilesLocationsUsed-1;
-			while (1) {
-				if (i==-1) break;
-				smprintf(s, "Copying %i to %i, max %i\n",
-					i,i+(msg.Buffer[8]*256+msg.Buffer[9]),
-					Priv->FilesLocationsUsed);
-				memcpy(&Priv->FilesCache[i+(msg.Buffer[8]*256+msg.Buffer[9])],
-					&Priv->FilesCache[i], sizeof(GSM_File));
-				i--;
+			for (i = Priv->FilesLocationsUsed - 1; i >= 0; i--) {
+				memcpy(&Priv->FilesCache[i + newsize], &Priv->FilesCache[i], sizeof(GSM_File));
+				smprintf(s, "Copying %i to %i\n", i, i + newsize);
 			}
-			if (Priv->FilesLocationsUsed + (msg.Buffer[8]*256+msg.Buffer[9]) >= GSM_PHONE_MAXSMSINFOLDER) {
-				smprintf(s,"Too small buffer for folder data\n");
-				Priv->filesystem2error  = ERR_MOREMEMORY;
-				Priv->FilesEnd 		= TRUE;
-				return ERR_MOREMEMORY;
-			}
-			Priv->FilesLocationsUsed += (msg.Buffer[8]*256+msg.Buffer[9]);
-			for (i=0;i<(msg.Buffer[8]*256+msg.Buffer[9]);i++) {
+
+			Priv->FilesLocationsUsed += newsize;
+
+			for (i = 0; i < newsize; i++) {
 				sprintf(buffer,"%i",msg.Buffer[13+i*4-1]*256 + msg.Buffer[13+i*4]);
 				EncodeUnicode(Priv->FilesCache[i].ID_FullName,buffer,strlen(buffer));
 				Priv->FilesCache[i].Level = File->Level+1;
@@ -297,7 +289,7 @@ static GSM_Error N6510_GetNextFileFolder1(GSM_StateMachine *s, GSM_File *File, g
 		CopyUnicodeString(File->ID_FullName,Priv->FilesCache[0].ID_FullName);
 		File->Level = Priv->FilesCache[0].Level;
 
-		for (i=0;i<Priv->FilesLocationsUsed;i++) {
+		for (i = 0; i < Priv->FilesLocationsUsed; i++) {
 			memcpy(&Priv->FilesCache[i],&Priv->FilesCache[i+1],sizeof(GSM_File));
 		}
 		Priv->FilesLocationsUsed--;
@@ -498,7 +490,7 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 		return error;
 	}
 
-	for (i=0;i<FilesLocationsUsed2-1;i++) {
+	for (i = 0; i < FilesLocationsUsed2; i++) {
 		smprintf(s, "ID is %s\n",DecodeUnicodeString(NewFiles[i].ID_FullName));
 		error = N6510_GetFileFolderInfo1(s, &NewFiles[i], FALSE);
 		if (error == ERR_EMPTY) continue;
@@ -833,7 +825,7 @@ static GSM_Error N6510_GetFolderListing1(GSM_StateMachine *s, GSM_File *File, gb
 		memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
 		error = N6510_GetFileFolderInfo1(s, File, FALSE);
 
-		for(i=1;i<Priv->FilesLocationsUsed;i++) {
+		for(i = 1; i < Priv->FilesLocationsUsed; i++) {
 			memcpy(&Priv->FilesCache[i-1],&Priv->FilesCache[i],sizeof(GSM_File));
 		}
 		Priv->FilesLocationsUsed--;
@@ -931,6 +923,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 	GSM_File		*FileInfo = s->Phone.Data.FileInfo;
 	GSM_File		*File;
 	int		     	i;
+	GSM_Error error;
 
 	switch (msg.Buffer[3]) {
 	case 0x69:
@@ -959,14 +952,12 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 			smprintf(s,"File or folder details received\n");
 
 			if (msg.Buffer[3] == 0x69) {
-				if (Priv->FilesLocationsUsed + 1 >= GSM_PHONE_MAXSMSINFOLDER) {
-					smprintf(s,"Too small buffer for folder data\n");
-					Priv->filesystem2error  = ERR_MOREMEMORY;
-					Priv->FilesEnd 		= TRUE;
-					return ERR_MOREMEMORY;
+				error = N6510_AllocFileCache(s, Priv->FilesLocationsUsed + 1);
+				if (error != ERR_NONE) {
+					return error;
 				}
 
-				for (i = Priv->FilesLocationsUsed + 1; i > 0; i--) {
+				for (i = Priv->FilesLocationsUsed; i >= 1; i--) {
 					memcpy(&Priv->FilesCache[i], &Priv->FilesCache[i-1], sizeof(GSM_File));
 				}
 
@@ -1141,7 +1132,7 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, g
 
 	if (!Priv->FilesCache[0].Folder) {
 		memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
-		for (i=0;i<Priv->FilesLocationsUsed-1;i++) {
+		for (i = 0; i < Priv->FilesLocationsUsed; i++) {
 			memcpy(&Priv->FilesCache[i],&Priv->FilesCache[i+1],sizeof(GSM_File));
 		}
 		Priv->FilesLocationsUsed--;
@@ -1153,7 +1144,7 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, g
 	if (error != ERR_NONE) return error;
 
 	memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
-	for (i=0;i<Priv->FilesLocationsUsed-1;i++) {
+	for (i = 0; i < Priv->FilesLocationsUsed; i++) {
 		memcpy(&Priv->FilesCache[i],&Priv->FilesCache[i+1],sizeof(GSM_File));
 	}
 	Priv->FilesLocationsUsed--;
@@ -1425,7 +1416,8 @@ static GSM_Error N6510_GetFolderListing2(GSM_StateMachine *s, GSM_File *File, gb
 		if (error != ERR_NONE) return error;
 
 		memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
-		for (i=0;i<Priv->FilesLocationsUsed-1;i++) {
+
+		for (i = 0 ; i < Priv->FilesLocationsUsed; i++) {
 			memcpy(&Priv->FilesCache[i],&Priv->FilesCache[i+1],sizeof(GSM_File));
 		}
 		Priv->FilesLocationsUsed--;
@@ -1434,7 +1426,8 @@ static GSM_Error N6510_GetFolderListing2(GSM_StateMachine *s, GSM_File *File, gb
 	if (Priv->FilesLocationsUsed == 0) return ERR_EMPTY;
 
 	memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
-	for (i=0;i<Priv->FilesLocationsUsed-1;i++) {
+
+	for (i = 0; i < Priv->FilesLocationsUsed; i++) {
 		memcpy(&Priv->FilesCache[i],&Priv->FilesCache[i+1],sizeof(GSM_File));
 	}
 	Priv->FilesLocationsUsed--;
