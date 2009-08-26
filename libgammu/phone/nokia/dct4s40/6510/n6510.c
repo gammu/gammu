@@ -59,6 +59,13 @@ static GSM_Error N6510_Initialise (GSM_StateMachine *s)
 	return N71_65_EnableFunctions (s, "\x01\x02\x06\x0A\x14\x17\x39", 7);
 }
 
+static GSM_Error N6510_Terminate (GSM_StateMachine *s)
+{
+	free(s->Phone.Data.Priv.N6510.FilesCache);
+	s->Phone.Data.Priv.N6510.FilesCache = NULL;
+	return ERR_NONE;
+}
+
 static GSM_Error N6510_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Phonebook entry received\n");
@@ -4322,7 +4329,7 @@ GSM_Phone_Functions N6510Phone = {
 	"1100|1100a|1100b|1112|1200|1209|1600|1680|2600|2610|2630|2650|2680|2760|3100|3100b|3105|3108|3109c|3200|3200a|3205|3220|3300|3510|3510i|3530|3589i|3590|3595|5000|5100|5140|5140i|5200|5220|5300|5310|6020|6021|6030|6060|6070|6085|6086|6100|6101|6103|6111|6125|6131|6151|6170|6200|6220|6220c|6230|6230i|6233|6234|6270|6280|6300|6310|6310i|6385|6500c|6500s|6510|6610|6610i|6800|6810|6820|6822|7200|7210|7210s|7250|7250i|7260|7270|7360|7370|7500|7600|7900|8310|8390|8800|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
-	NONEFUNCTION,			/*	Terminate 		*/
+	N6510_Terminate,
 	GSM_DispatchMessage,
 	N6510_ShowStartInfo,
 	NOKIA_GetManufacturer,
