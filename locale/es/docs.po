@@ -68,7 +68,7 @@ msgstr "NOMBRE"
 #: docs/user/gammu.1:7
 msgid "Gammu - Does some neat things with your cellular phone or modem."
 msgstr ""
-"Gammu - Hace algunas cosas interesantes con su teléfono celular o modem."
+"Gammu - Hace algunas cosas interesantes con su teléfono celular o módem."
 
 # type: SH
 #. type: SH
