@@ -30,7 +30,7 @@ msgstr "GAMMU"
 #: docs/user/gammu.1:1
 #, no-wrap
 msgid "Aug 11 2009"
-msgstr "27 de Enero de 2009"
+msgstr "27 de enero de 2009"
 
 # type: TH
 #. type: TH
