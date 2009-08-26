@@ -89,6 +89,10 @@ If you intend to use libGammu in your application, all you should need
 is to #include <gammu.h> and then use Gammu functions. You can check
 docs/develop/examples/ for some small example applications.
 
+To debug, you might want to build Gammu with -DENABLE_PROTECTION=OFF,
+otherwise debugging tools are somehow confused with protections GCC
+makes and produce bogus back traces.
+
 
 Localization
 ============
