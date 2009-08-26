@@ -33,7 +33,7 @@ static GSM_Error N6510_ShiftFileCache(GSM_StateMachine *s, int move)
 	int i;
 
 	if (move < 0) {
-		for (i = 0; i <= Priv->FilesLocationsUsed + move; i++) {
+		for (i = 0; i < Priv->FilesLocationsUsed + move; i++) {
 			memcpy(&Priv->FilesCache[i], &Priv->FilesCache[i - move], sizeof(GSM_File));
 			smprintf(s, "Copying %i to %i\n", i - move, i);
 		}
