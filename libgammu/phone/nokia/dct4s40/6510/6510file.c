@@ -1130,12 +1130,20 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, g
 		Priv->FilesCache[0].Level	= 1;
 		Priv->FilesCache[0].Folder	= TRUE;
 		Priv->FilesCache[0].Level	= 1;
+		Priv->FilesCache[0].ReadOnly = FALSE;
+		Priv->FilesCache[0].System = FALSE;
+		Priv->FilesCache[0].Hidden = FALSE;
+		Priv->FilesCache[0].Protected = FALSE;
 		EncodeUnicode(Priv->FilesCache[0].ID_FullName,"d:",2);
 		EncodeUnicode(Priv->FilesCache[0].Name,"D (Permanent_memory 2)",22);
 
 		Priv->FilesCache[1].Level	= 1;
 		Priv->FilesCache[1].Folder	= TRUE;
 		Priv->FilesCache[1].Level	= 1;
+		Priv->FilesCache[1].ReadOnly = FALSE;
+		Priv->FilesCache[1].System = FALSE;
+		Priv->FilesCache[1].Hidden = FALSE;
+		Priv->FilesCache[1].Protected = FALSE;
 		EncodeUnicode(Priv->FilesCache[1].ID_FullName,"a:",2);
 		EncodeUnicode(Priv->FilesCache[1].Name,"A (Memory card)",15);
 	}
