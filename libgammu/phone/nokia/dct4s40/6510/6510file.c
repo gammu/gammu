@@ -21,6 +21,34 @@
 /* shared */
 
 /**
+ * Shifts data in file cache by defined count.
+ *
+ * \param move How to move entries. +10 means that i entry will become
+ * i + 10, while -10 means that entries will be moved backwards. Of
+ * course starting at the beginning of the list. So 10 entry will become 0.
+ */
+static GSM_Error N6510_ShiftFileCache(GSM_StateMachine *s, int move)
+{
+	GSM_Phone_N6510Data *Priv = &s->Phone.Data.Priv.N6510;
+	int i;
+
+	if (move < 0) {
+		for (i = 0; i <= Priv->FilesLocationsUsed + move; i++) {
+			memcpy(&Priv->FilesCache[i], &Priv->FilesCache[i - move], sizeof(GSM_File));
+			smprintf(s, "Copying %i to %i\n", i - move, i);
+		}
+	} else {
+		for (i = Priv->FilesLocationsUsed - 1; i >= 0; i--) {
+			memcpy(&Priv->FilesCache[i + move], &Priv->FilesCache[i], sizeof(GSM_File));
+			smprintf(s, "Copying %i to %i\n", i, i + move);
+		}
+	}
+
+	Priv->FilesLocationsUsed += move;
+
+	return ERR_NONE;
+}
+/**
  * Allocates enough entries in file cache.
  *
  * \param requested Number of files which are requested.
@@ -203,12 +231,8 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 			error = N6510_AllocFileCache(s, Priv->FilesLocationsUsed + newsize);
 			if (error != ERR_NONE) return error;
 
-			for (i = Priv->FilesLocationsUsed - 1; i >= 0; i--) {
-				memcpy(&Priv->FilesCache[i + newsize], &Priv->FilesCache[i], sizeof(GSM_File));
-				smprintf(s, "Copying %i to %i\n", i, i + newsize);
-			}
-
-			Priv->FilesLocationsUsed += newsize;
+			error = N6510_ShiftFileCache(s, newsize);
+			if (error != ERR_NONE) return error;
 
 			for (i = 0; i < newsize; i++) {
 				sprintf(buffer,"%i",msg.Buffer[13+i*4-1]*256 + msg.Buffer[13+i*4]);
@@ -269,7 +293,6 @@ static GSM_Error N6510_GetNextFileFolder1(GSM_StateMachine *s, GSM_File *File, g
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	GSM_Error	       	error;
-	int			i;
 	unsigned char		buffer[5];
 
 	if (start) {
@@ -289,10 +312,8 @@ static GSM_Error N6510_GetNextFileFolder1(GSM_StateMachine *s, GSM_File *File, g
 		CopyUnicodeString(File->ID_FullName,Priv->FilesCache[0].ID_FullName);
 		File->Level = Priv->FilesCache[0].Level;
 
-		for (i = 0; i < Priv->FilesLocationsUsed; i++) {
-			memcpy(&Priv->FilesCache[i],&Priv->FilesCache[i+1],sizeof(GSM_File));
-		}
-		Priv->FilesLocationsUsed--;
+		error = N6510_ShiftFileCache(s, -1);
+		if (error != ERR_NONE) return error;
 
 		error = N6510_GetFileFolderInfo1(s, File, TRUE);
 		if (error == ERR_EMPTY) continue;
@@ -808,7 +829,6 @@ static GSM_Error N6510_GetFolderListing1(GSM_StateMachine *s, GSM_File *File, gb
 {
 	GSM_Error	       	error;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
-	int			i;
 
 	if (start) {
 		Priv->FilesLocationsUsed = 0;
@@ -825,10 +845,8 @@ static GSM_Error N6510_GetFolderListing1(GSM_StateMachine *s, GSM_File *File, gb
 		memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
 		error = N6510_GetFileFolderInfo1(s, File, FALSE);
 
-		for(i = 1; i < Priv->FilesLocationsUsed; i++) {
-			memcpy(&Priv->FilesCache[i-1],&Priv->FilesCache[i],sizeof(GSM_File));
-		}
-		Priv->FilesLocationsUsed--;
+		error = N6510_ShiftFileCache(s, -1);
+		if (error != ERR_NONE) return error;
 
 		/* 3510 for example */
 		if (error == ERR_EMPTY) continue;
@@ -922,7 +940,6 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	GSM_File		*FileInfo = s->Phone.Data.FileInfo;
 	GSM_File		*File;
-	int		     	i;
 	GSM_Error error;
 
 	switch (msg.Buffer[3]) {
@@ -957,14 +974,12 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 					return error;
 				}
 
-				for (i = Priv->FilesLocationsUsed; i >= 1; i--) {
-					memcpy(&Priv->FilesCache[i], &Priv->FilesCache[i-1], sizeof(GSM_File));
-				}
+				error = N6510_ShiftFileCache(s, 1);
+				if (error != ERR_NONE) return error;
 
 				File = &Priv->FilesCache[1];
 
 				File->Level = Priv->FilesCache[0].Level + 1;
-				Priv->FilesLocationsUsed++;
 
 				CopyUnicodeString(File->Name,msg.Buffer+32);
 				smprintf(s,"\"%s\"\n",DecodeUnicodeString(File->Name));
@@ -1105,7 +1120,6 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, g
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	GSM_Error	       	error;
-	int		     	i;
 
 	if (start) {
 		error = N6510_AllocFileCache(s, 2);
@@ -1132,10 +1146,8 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, g
 
 	if (!Priv->FilesCache[0].Folder) {
 		memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
-		for (i = 0; i < Priv->FilesLocationsUsed; i++) {
-			memcpy(&Priv->FilesCache[i],&Priv->FilesCache[i+1],sizeof(GSM_File));
-		}
-		Priv->FilesLocationsUsed--;
+		error = N6510_ShiftFileCache(s, -1);
+		if (error != ERR_NONE) return error;
 		smprintf(s, "Returning file %s, level %d\n", DecodeUnicodeString(File->ID_FullName), File->Level);
 		return ERR_NONE;
 	}
@@ -1144,10 +1156,8 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, g
 	if (error != ERR_NONE) return error;
 
 	memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
-	for (i = 0; i < Priv->FilesLocationsUsed; i++) {
-		memcpy(&Priv->FilesCache[i],&Priv->FilesCache[i+1],sizeof(GSM_File));
-	}
-	Priv->FilesLocationsUsed--;
+	error = N6510_ShiftFileCache(s, -1);
+	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Returning folder %s, level %d\n", DecodeUnicodeString(File->ID_FullName), File->Level);
 
@@ -1393,7 +1403,6 @@ static GSM_Error N6510_GetFolderListing2(GSM_StateMachine *s, GSM_File *File, gb
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	GSM_Error 		error;
-	int			i;
 
 	if (start) {
 		if (strcasecmp(DecodeUnicodeString(File->ID_FullName),"a:") == 0   ||
@@ -1417,20 +1426,17 @@ static GSM_Error N6510_GetFolderListing2(GSM_StateMachine *s, GSM_File *File, gb
 
 		memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
 
-		for (i = 0 ; i < Priv->FilesLocationsUsed; i++) {
-			memcpy(&Priv->FilesCache[i],&Priv->FilesCache[i+1],sizeof(GSM_File));
-		}
-		Priv->FilesLocationsUsed--;
+		error = N6510_ShiftFileCache(s, -1);
+		if (error != ERR_NONE) return error;
 	}
 
 	if (Priv->FilesLocationsUsed == 0) return ERR_EMPTY;
 
 	memcpy(File,&Priv->FilesCache[0],sizeof(GSM_File));
 
-	for (i = 0; i < Priv->FilesLocationsUsed; i++) {
-		memcpy(&Priv->FilesCache[i],&Priv->FilesCache[i+1],sizeof(GSM_File));
-	}
-	Priv->FilesLocationsUsed--;
+	error = N6510_ShiftFileCache(s, -1);
+	if (error != ERR_NONE) return error;
+
 	if (start) {
 		if (Priv->filesystem2error == ERR_FOLDERPART) return ERR_FOLDERPART;
 	}
