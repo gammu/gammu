@@ -969,6 +969,11 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 			smprintf(s,"File or folder details received\n");
 
 			if (msg.Buffer[3] == 0x69) {
+				/* File/Folder without can not be handled */
+				if (UnicodeLength(msg.Buffer+32) == 0) {
+					smprintf(s, "Ignoring file without name!\n");
+					return ERR_NONE;
+				}
 				error = N6510_AllocFileCache(s, Priv->FilesLocationsUsed + 1);
 				if (error != ERR_NONE) {
 					return error;
@@ -992,6 +997,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 				File = FileInfo;
 			}
 
+			smprintf(s, "File type: 0x%02X\n", msg.Buffer[29]);
 			if ((msg.Buffer[29] & 0x10) == 0x10) {
 				File->Folder = TRUE;
 				smprintf(s,"Folder\n");
