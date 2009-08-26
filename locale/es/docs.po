@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-20 11:53+0300\n"
-"PO-Revision-Date: 2009-03-23 19:14+0200\n"
-"Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
+"PO-Revision-Date: 2009-08-26 18:12+0200\n"
+"Last-Translator: Nacho Carretero <albucasis@gmail.com>\n"
 "Language-Team: none\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -28,9 +28,9 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Aug 11 2009"
-msgstr "27 de Enero del 2009"
+msgstr "27 de Enero de 2009"
 
 # type: TH
 #. type: TH
