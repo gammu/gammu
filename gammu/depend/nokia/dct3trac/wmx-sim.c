@@ -217,7 +217,9 @@ void simAnswer_Process(unsigned char type, unsigned char *buffer, size_t length)
 		 * too much??
 		 */
 		printf("SIM answer: ");
-		for(x=length-2;x<length;x++) printf("%02x ", buffer[x]&0xFF);
+		for(x = MAX(0, length - 2); x < length; x++) {
+			printf("%02x ", buffer[x]&0xFF);
+		}
 		//printf("\n");
 		break;
 	case 0x01:
