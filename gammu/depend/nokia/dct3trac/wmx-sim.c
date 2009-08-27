@@ -7,6 +7,8 @@
 #include <string.h>
 #include <signal.h>
 
+#include <gammu-misc.h>
+
 #include "wmx-util.h"
 #include "wmx-sim.h"
 
@@ -217,7 +219,7 @@ void simAnswer_Process(unsigned char type, unsigned char *buffer, size_t length)
 		 * too much??
 		 */
 		printf("SIM answer: ");
-		for(x = MAX(0, length - 2); x < length; x++) {
+		for(x = MAX(2, length) - 2; x < length; x++) {
 			printf("%02x ", buffer[x]&0xFF);
 		}
 		//printf("\n");
