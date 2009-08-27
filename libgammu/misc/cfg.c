@@ -211,6 +211,15 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 			}
 		}
 		if (level == 5) {
+			if (Unicode) {
+				while (myiswspace(buffer2 + buffer2used - 2) && buffer2used > 0) {
+					buffer2used -= 2;
+				}
+			} else {
+				while (isspace(buffer2[buffer2used - 1]) && buffer2used > 0) {
+					buffer2used -= 1;
+				}
+			}
 			if (buffer2used == 0) continue;
 
 			entry = (INI_Entry *)malloc(sizeof(*entry));

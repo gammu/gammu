@@ -564,9 +564,17 @@ add_test(line-splitting "${GAMMU_TEST_PATH}/line-splitting${GAMMU_TEST_SUFFIX}")
 # Config file parsing
 add_executable(config config.c)
 target_link_libraries(config libGammu)
-add_test(config-tabs "${GAMMU_TEST_PATH}/config${GAMMU_TEST_SUFFIX}" "${Gammu_SOURCE_DIR}/tests/configs/tabs")
-set_tests_properties(config-tabs PROPERTIES
-    PASS_REGULAR_EXPRESSION "DEBUG_LEVEL: 'textall'")
+file(GLOB CONFIGS
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/configs"
+    "${Gammu_SOURCE_DIR}/tests/configs/tabs-*")
+list(SORT CONFIGS)
+
+foreach(TESTCONFIG ${CONFIGS})
+    add_test(config-${TESTCONFIG} "${GAMMU_TEST_PATH}/config${GAMMU_TEST_SUFFIX}" "${Gammu_SOURCE_DIR}/tests/configs/${TESTCONFIG}")
+    set_tests_properties(config-${TESTCONFIG} PROPERTIES
+        PASS_REGULAR_EXPRESSION "DEBUG_LEVEL: 'textall'")
+endforeach(TESTCONFIG $CONFIGS)
+
 
 # Just try to compile example whether it is still correct
 add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.c")
