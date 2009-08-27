@@ -561,6 +561,13 @@ add_executable(line-splitting line-splitting.c)
 target_link_libraries(line-splitting libGammu)
 add_test(line-splitting "${GAMMU_TEST_PATH}/line-splitting${GAMMU_TEST_SUFFIX}")
 
+# Config file parsing
+add_executable(config config.c)
+target_link_libraries(config libGammu)
+add_test(config-tabs "${GAMMU_TEST_PATH}/config${GAMMU_TEST_SUFFIX}" "${Gammu_SOURCE_DIR}/tests/configs/tabs")
+set_tests_properties(config-tabs PROPERTIES
+    PASS_REGULAR_EXPRESSION "DEBUG_LEVEL: 'textall'")
+
 # Just try to compile example whether it is still correct
 add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.c")
 target_link_libraries(phone-info libGammu)
