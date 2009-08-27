@@ -87,6 +87,10 @@ Pokud chcete použít libGammu ve vaší aplikaci, vše co musíte udělat je
 #include <gammu.h> a pak používat funkce Gammu. V adresáři
 docs/develop/examples/ můžete nalézt jednoduché ukázkové aplikace.
 
+To debug, you might want to build Gammu with -DENABLE_PROTECTION=OFF,
+otherwise debugging tools are somehow confused with protections GCC makes
+and produce bogus back traces.
+
 
 Překlady
 ========
