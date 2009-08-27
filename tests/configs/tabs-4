@@ -1,0 +1,7 @@
+[gammu]
+port=/dev/ttyUSB0
+connection=fbus
+name=gammu0
+model=1112
+logfile=/home/kaklik/gammu.log
+logformat=	textall 	
