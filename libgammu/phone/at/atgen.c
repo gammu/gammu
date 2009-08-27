@@ -2253,12 +2253,11 @@ GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, gb
 	if (error == ERR_UNKNOWN) error = ERR_NOTSUPPORTED;
 
 	if (set_timezone && (
-		(error == ERR_INVALIDDATA
-		&& s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_CMEError
+		s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_CMEError
+		&& ((error == ERR_INVALIDDATA
 		&& s->Phone.Data.Priv.ATGEN.ErrorCode == 24) ||
 		(error == ERR_INVALIDLOCATION
-		&& s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_CMEError
-		&& s->Phone.Data.Priv.ATGEN.ErrorCode == 21)
+		&& s->Phone.Data.Priv.ATGEN.ErrorCode == 21))
 		)) {
 		/*
 		 * Some firmwares of Ericsson R320s don't like the timezone part,
