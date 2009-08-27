@@ -22,11 +22,11 @@ extern GSM_Reply_Function UserReplyFunctions3[];
 
 GSM_Error CheckDCT3Only(void)
 {
-gboolean found = FALSE;
+	gboolean found = FALSE;
 
 /* Checking if phone is DCT3 */
 #ifdef GSM_ENABLE_NOKIA6110
-if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = TRUE;
+	if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = TRUE;
 #endif
 #ifdef GSM_ENABLE_NOKIA7110
 	if (strstr(N7110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = TRUE;
