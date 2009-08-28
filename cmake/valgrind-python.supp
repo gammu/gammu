@@ -951,6 +951,15 @@
    fun:curl_global_init
 }
 
+# libdbi
+{
+   Leak from dbi/dlopen
+   Memcheck:Leak
+   fun:calloc
+   obj:/lib/libdl-*.so
+   fun:dlopen
+   fun:dbi_initialize
+}
 
 # Shell suppressions, /bin/sh is used for smsd testing
 {
