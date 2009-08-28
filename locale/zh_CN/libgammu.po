@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-27 08:40+0200\n"
-"PO-Revision-Date: 2009-08-28 04:11+0200\n"
+"PO-Revision-Date: 2009-08-28 04:13+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -68,11 +68,11 @@ msgstr "写入设备出错。"
 msgid "Error during reading from the device."
 msgstr "读取设备时出错。"
 
-#  msgid "Connect the device"
+# <span class="translation-space"> </span>
+# msgid "Connect the device"
 #: libgammu/gsmcomon.c:96
-#, fuzzy
 msgid "Can't set parity on the device."
-msgstr "连接手机设备"
+msgstr "无法设置奇偶校验。"
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
