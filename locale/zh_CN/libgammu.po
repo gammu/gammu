@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-27 08:40+0200\n"
-"PO-Revision-Date: 2009-08-28 04:38+0200\n"
+"PO-Revision-Date: 2009-08-28 04:39+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -137,7 +137,7 @@ msgstr "内存已满。"
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
-msgstr ""
+msgstr "未知错误。"
 
 #: libgammu/gsmcomon.c:111
 #, fuzzy
