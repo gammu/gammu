@@ -58,11 +58,11 @@ msgstr "设置设备 DTR 或 RTS 时出错。"
 msgid "Error setting device speed. Maybe speed not supported."
 msgstr "设置设备速度出错，可能不支持速度设置。"
 
-# <span class="translation-space"> </span>
+# &lt;span class="translation-space"&gt; &lt;/span&gt;<br />
 # msgid "Connect the device"
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
-msgstr "写入设备错误"
+msgstr "写入设备出错。"
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
