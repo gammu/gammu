@@ -27,7 +27,17 @@ int main(int argc, char **argv)
 	error = GSM_ReadConfig(ini, &cfg, 0);
 	gammu_test_result(error, "GSM_ReadConfig");
 
+	/* Free config file structures */
+	INI_Free(ini);
+
     printf("DEBUG_LEVEL: '%s'\n", cfg.DebugLevel);
+
+    free(cfg.Device);
+    free(cfg.Connection);
+    free(cfg.SyncTime);
+    free(cfg.DebugFile);
+    free(cfg.LockDevice);
+    free(cfg.StartInfo);
 
     return 0;
 }
