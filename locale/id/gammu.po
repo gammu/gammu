@@ -4,9 +4,9 @@
 # Automatically generated, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.25.93\n"
+"Project-Id-Version: Gammu 1.25.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-25 23:32+0200\n"
+"POT-Creation-Date: 2009-08-28 13:15+0200\n"
 "PO-Revision-Date: 2009-07-13 08:41+0200\n"
 "Last-Translator: winawang <winawangz@yahoo.co.id>\n"
 "Language-Team: none\n"
@@ -67,7 +67,7 @@ msgstr "Kesalahan ketika membuka file untuk menulis !\n"
 msgid "Error while writing file!\n"
 msgstr "Kesalahan ketika menulis !\n"
 
-#: gammu/backup.c:216 gammu/backup.c:958 gammu/backup.c:1563
+#: gammu/backup.c:216 gammu/backup.c:958 gammu/backup.c:1566
 #: gammu/calendar.c:606 gammu/calendar.c:941 gammu/calendar.c:1016
 #: gammu/calendar.c:1041 gammu/memory.c:25 gammu/memory.c:308
 #: gammu/memory.c:372 gammu/message.c:120 gammu/misc.c:69 gammu/misc.c:331
@@ -107,13 +107,13 @@ msgid "Reading:"
 msgstr "Membaca:"
 
 #: gammu/backup.c:328 gammu/backup.c:372 gammu/backup.c:445 gammu/backup.c:994
-#: gammu/backup.c:1058 gammu/backup.c:1111 gammu/backup.c:1169
-#: gammu/backup.c:1218 gammu/backup.c:1246 gammu/backup.c:1262
-#: gammu/backup.c:1301 gammu/backup.c:1319 gammu/backup.c:1368
-#: gammu/backup.c:1393 gammu/backup.c:1418 gammu/backup.c:1454
-#: gammu/backup.c:1507 gammu/backup.c:1532 gammu/backup.c:1590
-#: gammu/backup.c:1618 gammu/backup.c:1650 gammu/backup.c:1674
-#: gammu/backup.c:1699 gammu/backupsms.c:107 gammu/files.c:386
+#: gammu/backup.c:1061 gammu/backup.c:1114 gammu/backup.c:1172
+#: gammu/backup.c:1221 gammu/backup.c:1249 gammu/backup.c:1265
+#: gammu/backup.c:1304 gammu/backup.c:1322 gammu/backup.c:1371
+#: gammu/backup.c:1396 gammu/backup.c:1421 gammu/backup.c:1457
+#: gammu/backup.c:1510 gammu/backup.c:1535 gammu/backup.c:1593
+#: gammu/backup.c:1621 gammu/backup.c:1653 gammu/backup.c:1677
+#: gammu/backup.c:1702 gammu/backupsms.c:107 gammu/files.c:386
 #: gammu/files.c:594 gammu/message.c:351 gammu/message.c:450 gammu/misc.c:375
 #: gammu/misc.c:474 gammu/misc.c:479 gammu/misc.c:1191 gammu/mms.c:183
 #, c-format
@@ -256,16 +256,16 @@ msgstr "Memeriksa jalur akses GPRS telepon"
 msgid "Backup phone GPRS access points?"
 msgstr "Buat cadangan jalur akses GPRS telepon"
 
-#: gammu/backup.c:960 gammu/backup.c:1565
+#: gammu/backup.c:960 gammu/backup.c:1568
 msgid "Time of backup"
 msgstr "Waktu cadangan"
 
-#: gammu/backup.c:961 gammu/backup.c:1566 gammu/calendar.c:222
+#: gammu/backup.c:961 gammu/backup.c:1569 gammu/calendar.c:222
 #: gammu/calendar.c:879
 msgid "Phone"
 msgstr "Telepon"
 
-#: gammu/backup.c:962 gammu/backup.c:1567 gammu/misc.c:217
+#: gammu/backup.c:962 gammu/backup.c:1570 gammu/misc.c:217
 msgid "IMEI"
 msgstr "IMEI"
 
@@ -291,19 +291,19 @@ msgstr ""
 msgid "Restore phone caller groups and logos?"
 msgstr "Pulihkan grup pemanggil telepon dan logo?"
 
-#: gammu/backup.c:993 gammu/backup.c:1057 gammu/backup.c:1110
-#: gammu/backup.c:1168 gammu/backup.c:1217 gammu/backup.c:1245
-#: gammu/backup.c:1261 gammu/backup.c:1300 gammu/backup.c:1318
-#: gammu/backup.c:1367 gammu/backup.c:1392 gammu/backup.c:1417
-#: gammu/backup.c:1453 gammu/backup.c:1506 gammu/backup.c:1531
-#: gammu/backup.c:1589 gammu/backup.c:1617 gammu/backup.c:1649
-#: gammu/backup.c:1673 gammu/backup.c:1698 gammu/files.c:743
+#: gammu/backup.c:993 gammu/backup.c:1060 gammu/backup.c:1113
+#: gammu/backup.c:1171 gammu/backup.c:1220 gammu/backup.c:1248
+#: gammu/backup.c:1264 gammu/backup.c:1303 gammu/backup.c:1321
+#: gammu/backup.c:1370 gammu/backup.c:1395 gammu/backup.c:1420
+#: gammu/backup.c:1456 gammu/backup.c:1509 gammu/backup.c:1534
+#: gammu/backup.c:1592 gammu/backup.c:1620 gammu/backup.c:1652
+#: gammu/backup.c:1676 gammu/backup.c:1701 gammu/files.c:743
 msgid "Writing:"
 msgstr "Menulis:"
 
-#: gammu/backup.c:1011 gammu/backup.c:1076 gammu/backup.c:1137
-#: gammu/backup.c:1185 gammu/backup.c:1278 gammu/backup.c:1579
-#: gammu/backup.c:1607
+#: gammu/backup.c:1011 gammu/backup.c:1079 gammu/backup.c:1140
+#: gammu/backup.c:1188 gammu/backup.c:1281 gammu/backup.c:1582
+#: gammu/backup.c:1610
 #, c-format
 msgid "%i entries in backup file\n"
 msgstr "%i masukan dalam file cadangan \n"
@@ -318,16 +318,16 @@ msgid ""
 "again."
 msgstr ""
 
-#: gammu/backup.c:1041 gammu/backup.c:1097
+#: gammu/backup.c:1041 gammu/backup.c:1100
 #, c-format
 msgid "Location %d"
 msgstr "Lokasi %d"
 
-#: gammu/backup.c:1077
+#: gammu/backup.c:1080
 msgid "Restore SIM phonebook?"
 msgstr "Pulihkan bukutelepon SIM?"
 
-#: gammu/backup.c:1122 gammu/backup.c:1631
+#: gammu/backup.c:1125 gammu/backup.c:1634
 msgid ""
 "Do you want to set phone date/time? (NOTE: in some phones it's required to "
 "correctly restore calendar notes and other items)"
@@ -336,115 +336,115 @@ msgstr ""
 "ponsel dibutuhkan untuk membenarkan pemulihan catatan kalender dan item "
 "lainnya)"
 
-#: gammu/backup.c:1138
+#: gammu/backup.c:1141
 msgid "Restore phone calendar notes?"
 msgstr "Pulihkan catatan kalender telepon?"
 
-#: gammu/backup.c:1139
+#: gammu/backup.c:1142
 msgid "Restore notes from the past?"
 msgstr "Pulihkan catatan dari yang lampau?"
 
-#: gammu/backup.c:1145 gammu/backup.c:1284
+#: gammu/backup.c:1148 gammu/backup.c:1287
 msgid "Deleting old notes:"
 msgstr "Hapus catatan lama:"
 
-#: gammu/backup.c:1157 gammu/backup.c:1207 gammu/backup.c:1440
-#: gammu/backup.c:1498 gammu/misc.c:1200 gammu/misc.c:1245 gammu/misc.c:1269
+#: gammu/backup.c:1160 gammu/backup.c:1210 gammu/backup.c:1443
+#: gammu/backup.c:1501 gammu/misc.c:1200 gammu/misc.c:1245 gammu/misc.c:1269
 #: gammu/misc.c:1317
 msgid "Done"
 msgstr "selesai"
 
-#: gammu/backup.c:1187
+#: gammu/backup.c:1190
 msgid "Restore phone todo?"
 msgstr "Pulihkan agenda telepon?"
 
-#: gammu/backup.c:1195
+#: gammu/backup.c:1198
 msgid "Deleting old todos:"
 msgstr "Hapus agenda lama:"
 
-#: gammu/backup.c:1280
+#: gammu/backup.c:1283
 msgid "Restore phone notes?"
 msgstr "Pulihkan catatan telepon?"
 
-#: gammu/backup.c:1311
+#: gammu/backup.c:1314
 msgid "Restore SIM SMSC profiles?"
 msgstr "Pulihkan profil SMSC SIM?"
 
-#: gammu/backup.c:1328
+#: gammu/backup.c:1331
 msgid "Restore phone startup logo/text?"
 msgstr "Pulihkan logo/teks startup telepon?"
 
-#: gammu/backup.c:1332
+#: gammu/backup.c:1335
 msgid "Restore phone operator logo?"
 msgstr "Pulihkan logo operator telepon?"
 
-#: gammu/backup.c:1341
+#: gammu/backup.c:1344
 msgid "Restore phone WAP bookmarks?"
 msgstr "Pulihkan bookmark WAP telepon?"
 
-#: gammu/backup.c:1345
+#: gammu/backup.c:1348
 msgid "Deleting old bookmarks:"
 msgstr "Hapus bookmark telepon?"
 
-#: gammu/backup.c:1382
+#: gammu/backup.c:1385
 msgid "Restore phone WAP settings?"
 msgstr "Pulihkan setting WAP telepon?"
 
-#: gammu/backup.c:1407
+#: gammu/backup.c:1410
 msgid "Restore phone MMS settings?"
 msgstr "Pulihkan setting MMS telepon?"
 
-#: gammu/backup.c:1433 gammu/misc.c:1313
+#: gammu/backup.c:1436 gammu/misc.c:1313
 msgid "Delete all phone user ringtones?"
 msgstr "Hapus semua nada dering pengguna telepon?"
 
-#: gammu/backup.c:1437 gammu/misc.c:1232 gammu/misc.c:1256 gammu/misc.c:1280
+#: gammu/backup.c:1440 gammu/misc.c:1232 gammu/misc.c:1256 gammu/misc.c:1280
 #: gammu/misc.c:1296 gammu/misc.c:1314
 msgid "Deleting"
 msgstr "Menghapus"
 
-#: gammu/backup.c:1442
+#: gammu/backup.c:1445
 msgid "Restore user ringtones?"
 msgstr "Pulihkan nada dering pengguna?"
 
-#: gammu/backup.c:1468
+#: gammu/backup.c:1471
 msgid "Restore phone profiles?"
 msgstr "Pulihkan profil telepon?"
 
-#: gammu/backup.c:1491
+#: gammu/backup.c:1494
 msgid "Restore phone FM radio stations?"
 msgstr "Pulihkan statiun radio FM telepon?"
 
-#: gammu/backup.c:1495
+#: gammu/backup.c:1498
 msgid "Deleting old FM stations:"
 msgstr "Menghapus statiun FM lama:"
 
-#: gammu/backup.c:1521
+#: gammu/backup.c:1524
 msgid "Restore phone GPRS Points?"
 msgstr "Pulihkan titik GPRS telepon?"
 
-#: gammu/backup.c:1581 gammu/backup.c:1609
+#: gammu/backup.c:1584 gammu/backup.c:1612
 #, c-format
 msgid "Memory has only %i free locations.Exiting\n"
 msgstr "Memori hanya %i bebas lokasi. Tersedia \n"
 
-#: gammu/backup.c:1582
+#: gammu/backup.c:1585
 msgid "Add phone phonebook entries?"
 msgstr "Tambahkan masukan bukutelepon telepon?"
 
-#: gammu/backup.c:1610
+#: gammu/backup.c:1613
 msgid "Add SIM phonebook entries?"
 msgstr "Tambahkan masukan buku telepon SIM?"
 
-#: gammu/backup.c:1641
+#: gammu/backup.c:1644
 msgid "Add phone calendar notes?"
 msgstr "Tambahkan catatan kalender telepon?"
 
-#: gammu/backup.c:1665
+#: gammu/backup.c:1668
 msgid "Add phone ToDo?"
 msgstr "Tambahkan agenda telepon?"
 
-#: gammu/backup.c:1689
+#: gammu/backup.c:1692
 msgid "Add phone WAP bookmarks?"
 msgstr "Tambahkan bookmark WAP telepon?"
 
