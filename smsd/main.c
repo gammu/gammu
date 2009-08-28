@@ -190,7 +190,6 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 #else
 	/* Poor mans getopt replacement */
 	int i;
-	int opterr = 0;
 
 #define optarg argv[++i]
 
@@ -200,9 +199,6 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 		}
 		opt = argv[i][1];
 #endif
-		if (opterr != 0) {
-			wrong_params();
-		}
 		switch (opt) {
 			case 'c':
 				params->config_file = optarg;
