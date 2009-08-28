@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-27 08:40+0200\n"
-"PO-Revision-Date: 2009-08-28 04:04+0200\n"
+"PO-Revision-Date: 2009-08-28 04:06+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -24,7 +24,7 @@ msgstr "没有错误。"
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr ""
+msgstr "打开设备出错。未知，繁忙或没有权限。"
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
