@@ -20,7 +20,7 @@ macro(smsd_testsuite _driver)
     add_test("smsd-${_driver}" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" "${_driver}")
     set_tests_properties("smsd-${_driver}" PROPERTIES
         PASS_REGULAR_EXPRESSION ".999999999999999.3.6.0.100.42"
-        FAIL_REGULAR_EXPRESSION "ERROR: ;DBI error ([^5]:|[0-9][^:]);Wrong"
+        FAIL_REGULAR_EXPRESSION "ERROR: ;DBI error ([^5]:|[0-9][^:]);Wrong;Process finished successfully;Process failed with exit status [^4]"
         )
 
     add_test("smsd-inject-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" TEXT 123465 -text "Lorem ipsum.")
@@ -60,17 +60,17 @@ endif (PSQL_TESTING)
 add_test("smsd-files-unicode" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" unicode)
 set_tests_properties("smsd-files-unicode" PROPERTIES
     PASS_REGULAR_EXPRESSION ".999999999999999.3.6.0.100.42"
-    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong"
+    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
     )
 add_test("smsd-files-standard" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" standard)
 set_tests_properties("smsd-files-standard" PROPERTIES
     PASS_REGULAR_EXPRESSION ".999999999999999.3.6.0.100.42"
-    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong"
+    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
     )
 add_test("smsd-files-detail" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" detail)
 set_tests_properties("smsd-files-detail" PROPERTIES
     PASS_REGULAR_EXPRESSION ".999999999999999.3.6.0.100.42"
-    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong"
+    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
     )
 
 if (HAVE_ALARM)
