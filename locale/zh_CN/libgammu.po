@@ -140,9 +140,8 @@ msgid "Unknown error."
 msgstr "未知错误。"
 
 #: libgammu/gsmcomon.c:111
-#, fuzzy
 msgid "Can not open specified file."
-msgstr "无法创建文件！"
+msgstr "无法打开文件。"
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
