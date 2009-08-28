@@ -859,14 +859,25 @@ gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Confi
 	}
 
 	/* we are the child */
+
+	/* Calculate command line */
 	cmdline = SMSD_RunOnReceiveCommand(Config, locations);
 	SMSD_Log(DEBUG_INFO, Config, "Starting run on receive: %s", cmdline);
 
-	for(i = 0; i < 255; i++) {
+	/* Close all file descriptors */
+	for (i = 0; i < 255; i++) {
 		close(i);
 	}
 
-	exit(system(cmdline));
+	/* Run the program */
+	status = system(cmdline);
+
+	/* Propagate error code */
+	if (WIFEXITED(status)) {
+		exit(WEXITSTATUS(status));
+	} else {
+		exit(127);
+	}
 }
 #endif
 
