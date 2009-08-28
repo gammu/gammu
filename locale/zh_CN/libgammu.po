@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-27 08:40+0200\n"
-"PO-Revision-Date: 2009-08-28 04:06+0200\n"
+"PO-Revision-Date: 2009-08-28 04:07+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -32,7 +32,7 @@ msgstr "打开设备出错，设备已锁定。"
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
-msgstr ""
+msgstr "打开设备出错，设备不存在。"
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
