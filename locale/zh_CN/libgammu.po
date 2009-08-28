@@ -28,7 +28,7 @@ msgstr "打开设备出错。未知，繁忙或没有权限。"
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr ""
+msgstr "打开设备出错，设备已锁定。"
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
