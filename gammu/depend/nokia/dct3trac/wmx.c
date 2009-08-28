@@ -262,7 +262,7 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
  	case 0x22: /* 0x27 SIM answer to command (error/ok/etc..) */
  		if(msg.Length < 10 || msg.Length < length + 8) {
  		    	// Unknown response
- 		    	for(x=0;x<msg.Length-10;x++) printf("%02x ", msg.Buffer[x]&0xFF);
+ 		    	for(x=0;x<msg.Length;x++) printf("%02x ", msg.Buffer[x]&0xFF);
 			printf(" (Unknown 0x27 packet ? ? )\n");
  		} else {
  		    	simAnswer_Process((unsigned char)(id&0xFF), (unsigned char*)&msg.Buffer[8], length);
@@ -271,7 +271,7 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
  	case 0x23:  /* 0x28 SIM response data to commands */
  		if(msg.Length < 10 || msg.Length < length + 8) {
  		    	// Unknown response
- 		    	for(x=0;x<msg.Length-10;x++) printf("%02x ", msg.Buffer[x]&0xFF);
+ 		    	for(x=0;x<msg.Length;x++) printf("%02x ", msg.Buffer[x]&0xFF);
  		    	printf(" (Unknown 0x28 packet)\n");
  		} else {
  		    	simResponse_Process((unsigned char)(id&0xFF), (unsigned char*)&msg.Buffer[8], length);
