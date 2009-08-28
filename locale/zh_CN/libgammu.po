@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-27 08:40+0200\n"
-"PO-Revision-Date: 2009-08-28 04:10+0200\n"
+"PO-Revision-Date: 2009-08-28 04:11+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -66,7 +66,7 @@ msgstr "写入设备出错。"
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
-msgstr "读设备错误"
+msgstr "读取设备时出错。"
 
 #  msgid "Connect the device"
 #: libgammu/gsmcomon.c:96
