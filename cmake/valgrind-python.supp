@@ -935,6 +935,21 @@
    fun:Curl_ossl_init
    fun:curl_global_init
 }
+{
+   Leak from crypt
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   fun:gnutls_global_init
+   obj:/usr/lib/libcurl*.so.*
+   fun:curl_global_init
+}
 
 
 # Shell suppressions, /bin/sh is used for smsd testing
