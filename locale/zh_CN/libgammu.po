@@ -36,7 +36,7 @@ msgstr "打开设备出错，设备不存在。"
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
-msgstr ""
+msgstr "打开设备出错，设备已被其它应用程序打开。"
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
