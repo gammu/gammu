@@ -294,10 +294,9 @@ GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 	switch (Priv->ErrorCode) {
 		case -1:
 			return ERR_EMPTY;
-		case 3:
-			return ERR_PERMISSION;
 		case 4:
 			return ERR_NOTSUPPORTED;
+		case 3:
 		case 5:
 		case 11:
 		case 12:

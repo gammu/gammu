@@ -1049,10 +1049,13 @@ void Restore(int argc, char *argv[])
 			}
 			if (Pbk.EntriesNum == 0) {
 				/* Delete only when there was some content in phone */
-				if (MemStatus.MemoryUsed > 0)
-					error=GSM_DeleteMemory(gsm, &Pbk);
+				if (MemStatus.MemoryUsed > 0) {
+					error = GSM_DeleteMemory(gsm, &Pbk);
+					if (error != ERR_EMPTY && error != ERR_NONE) {
+						Print_Error(error);
+					}
+				}
 			}
-			Print_Error(error);
 			fprintf(stderr, "\r");
 			fprintf(stderr, "%s ", _("Writing:"));
 			fprintf(stderr, _("%i percent"),
