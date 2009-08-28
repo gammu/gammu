@@ -2330,7 +2330,9 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 			return ERR_CORRUPTED;
 		}
 	} else {
+		GSM_SetDefaultReceivedSMSData(&sms->SMS[0]);
 		sms->SMS[0].PDU = SMS_Submit;
+		sms->SMS[0].State = SMS_Read; /* @bug FIXME: this is wrong */
 	}
 
 	/* Process structured data */
