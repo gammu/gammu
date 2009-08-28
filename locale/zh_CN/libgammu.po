@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-27 08:40+0200\n"
-"PO-Revision-Date: 2009-08-28 04:07+0200\n"
+"PO-Revision-Date: 2009-08-28 04:08+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -48,7 +48,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
-msgstr ""
+msgstr "打开设备出错，硬件尚未连接或配置有错。"
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
