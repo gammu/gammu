@@ -78,3 +78,16 @@ if (HAVE_ALARM)
     add_test("smsd-daemon-files-standard" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-standard/.smsdrc" -X 10)
     add_test("smsd-daemon-files-detail" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-detail/.smsdrc" -X 10)
 endif (HAVE_ALARM)
+
+
+foreach (PROGRAM gammu-smsd gammu-smsd-monitor gammu-smsd-inject)
+    add_test(${PROGRAM}-help "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --help)
+    add_test(${PROGRAM}-version "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --version)
+    set_tests_properties(${PROGRAM}-version PROPERTIES
+        PASS_REGULAR_EXPRESSION "${VERSION}"
+        )
+    add_test(${PROGRAM}-fail "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --nonsense)
+    set_tests_properties(
+        ${PROGRAM}-fail
+        PROPERTIES WILL_FAIL TRUE)
+endforeach (PROGRAM gammu-smsd gammu-smsd-monitor gammu-smsd-inject)
