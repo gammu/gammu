@@ -183,10 +183,10 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 	int option_index;
 
 	while ((opt =
-		getopt_long(argc, argv, "hv?dc:p:iusSkU:G:n:X:", long_options,
+		getopt_long(argc, argv, "hvdc:p:iusSkU:G:n:X:", long_options,
 			    &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
-	while ((opt = getopt(argc, argv, "hv?dc:p:iusSkU:G:n:X:")) != -1) {
+	while ((opt = getopt(argc, argv, "hvdc:p:iusSkU:G:n:X:")) != -1) {
 #else
 	/* Poor mans getopt replacement */
 	int i;
@@ -257,6 +257,7 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				version();
 				break;
 			case '?':
+				wrong_params();
 			case 'h':
 				help();
 				exit(0);
