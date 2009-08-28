@@ -1639,6 +1639,7 @@ void AddNew(int argc, char *argv[])
 		}
 	}
 	if (Backup.Calendar[0] != NULL) {
+		Calendar.Location = 1;
 		error = GSM_GetNextCalendar(gsm,&Calendar,TRUE);
 		if (error == ERR_NONE || error == ERR_INVALIDLOCATION || error == ERR_EMPTY) {
 			if (answer_yes(_("Add phone calendar notes?"))) {
