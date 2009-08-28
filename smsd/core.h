@@ -77,7 +77,7 @@ struct _GSM_SMSDConfig {
 	const char	*database,	 *user,		*password;
 	const char	*driver, *driverspath, *dbdir;
 	const char	*PC,		 *skipsmscnumber;
-        char 		DT[20];
+        char 		DT[25];
 	char		CreatorID[200];
 #endif
 
