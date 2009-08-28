@@ -1107,7 +1107,7 @@
    dyload
    Memcheck:Leak
    fun:calloc
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
 }
@@ -1130,9 +1130,9 @@
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
 }
@@ -1148,9 +1148,9 @@
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
 }
@@ -1168,9 +1168,9 @@
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/*libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/*libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
 }
@@ -1182,9 +1182,9 @@
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
 }
@@ -1198,9 +1198,9 @@
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
 }
@@ -1212,9 +1212,9 @@
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
 }
@@ -1228,9 +1228,9 @@
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    obj:/lib/ld-2.9.so
-   obj:/lib/libdl-2.9.so
+   obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
 }
