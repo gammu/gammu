@@ -1351,3 +1351,25 @@
    fun:Py_Main
 }
 
+
+{
+    mysql init
+    Memcheck:Leak
+    fun:malloc
+    fun:my_malloc
+    fun:my_error_register
+    fun:mysql_server_init
+    fun:mysql_init
+}
+
+{
+    mysql init
+    Memcheck:Leak
+    fun:malloc
+    fun:my_once_alloc
+    obj:/usr/lib/libmysqlclient.so*
+    obj:/usr/lib/libmysqlclient.so*
+    fun:get_charset_by_csname
+    fun:mysql_init_character_set
+    fun:mysql_real_connect
+}
