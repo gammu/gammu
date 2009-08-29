@@ -820,6 +820,14 @@
    fun:listpop
    fun:PyEval_EvalFrameEx
 }
+{
+   1 bytes in 1 blocks are still reachable in loss record 1 of 31
+   Memcheck:Leak
+   fun:realloc
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   fun:PyEval_EvalFrameEx
+}
 
 {
    349 bytes in 1 blocks are still reachable in loss record 10 of 31
@@ -827,29 +835,6 @@
    fun:realloc
    fun:_PyString_Resize
    fun:PyString_Format
-   fun:binary_op1
-   fun:PyNumber_Remainder
-   fun:PyEval_EvalFrameEx
-}
-{
-   333 bytes in 1 blocks are still reachable in loss record 10 of 29
-   Memcheck:Leak
-   fun:realloc
-   fun:_PyString_Resize
-   fun:PyString_Format
-   obj:/usr/bin/python2.5
-   fun:PyNumber_Remainder
-   fun:PyEval_EvalFrameEx
-}
-{
-   349 bytes in 1 blocks are still reachable in loss record 9 of 26
-   Memcheck:Leak
-   fun:realloc
-   fun:_PyString_Resize
-   fun:PyString_Format
-   obj:/usr/lib64/libpython2.5.so.1.0
-   obj:/usr/lib64/libpython2.5.so.1.0
-   fun:PyEval_EvalFrameEx
 }
 {
    1 bytes in 1 blocks are still reachable in loss record 1 of 29
