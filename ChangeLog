@@ -23,8 +23,8 @@ ChangeLog
 
 [-] * Fixed handling of RunOnReceive error code.
 [-] * Fixed crash when encoding USSD dials.
-[-] * Fixed decoding of phonebook entries on Motorola.
-[-] * Fixed decoding of long text messages.
+[-] * Fixed decoding of phonebook entries on Motorola (bug #988).
+[-] * Fixed decoding of long text messages (bug #990).
 [-] * Fixed location of saved message (bug #989).
     
 20090827 - 1.25.93
