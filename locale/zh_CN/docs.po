@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-27 08:41+0300\n"
+"POT-Creation-Date: 2009-08-31 12:53+0300\n"
 "PO-Revision-Date: 2009-01-27 14:06+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -8360,7 +8360,7 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:173
 msgid ""
-"Gammu should be compilable on Mac OS X, see wiki for up to date instrucitons:"
+"Gammu should be compilable on Mac OS X, see wiki for up to date instructions:"
 msgstr ""
 
 #. type: Plain text

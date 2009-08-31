@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.25.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-27 08:41+0300\n"
-"PO-Revision-Date: 2009-08-18 08:50+0200\n"
+"POT-Creation-Date: 2009-08-31 12:53+0300\n"
+"PO-Revision-Date: 2009-08-31 13:00+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -8295,6 +8295,8 @@ msgid ""
 "11 - all fields for storing message text are no longer limited to 160 chars, "
 "but are arbitrary length text fields (1.25.92)"
 msgstr ""
+"11 - položky pro ukládání textu zpráv již nejsou omezeny na 160 znaků, ale "
+"může se jednat o libovolně dlouhé texty (1.25.92)"
 
 # type: Plain text
 #. type: Plain text
@@ -8747,6 +8749,9 @@ msgid ""
 "otherwise debugging tools are somehow confused with protections GCC makes "
 "and produce bogus back traces."
 msgstr ""
+"Pro ladění může být potřeba zkompilovat Gammu s -DENABLE_PROTECTION=OFF, "
+"jinak jsou ladicí nástroje zmatené z ochran, které GCC do kódu vloží a "
+"backtrace obsahuje nesmyslné informace."
 
 #. type: Plain text
 #: README:98
@@ -9064,6 +9069,11 @@ msgid ""
 "build-configure and build all binaries there (nothing is changed in source "
 "tree), for example gammu binary is in build-configure/gammu directory."
 msgstr ""
+"Kvůli kompatibilitě Gammu obsahuje jednoduchý wrapper který se chová jako "
+"configure skript, takže můžete použít obvyklou sadu příkazů \"./configure; "
+"make; sudo make install\". Kompilace probíhá v adresáži build-configure  (ve "
+"stromu se zdrojovými kódy se nic nemění), například program gammu je "
+"kompilován v adresáři build-configure/gammu."
 
 #. type: Plain text
 #: INSTALL:88
@@ -9072,6 +9082,10 @@ msgid ""
 "you have to use CMake directly. For now, only out of source build is "
 "supported, so you have to create separate directory for build:"
 msgstr ""
+"Pokud chcete nebo potřebujete nastavit kompilaci víc než umožňuje wrapper "
+"pro configure, musíte použít přímo CMake. V současné době je podporována jen "
+"kompilace mimo zdrojový strom, takže musíte vytvořit samostatný adresář pro "
+"kompilaci:"
 
 #. type: Plain text
 #: INSTALL:91
@@ -9262,6 +9276,8 @@ msgid ""
 "From Sources - Windows\n"
 "======================\n"
 msgstr ""
+"Ze zdrojového kódu - Windows\n"
+"============================\n"
 
 #. type: Plain text
 #: INSTALL:157
@@ -9281,6 +9297,8 @@ msgid ""
 "More detailed and up to date information is maintained on the wiki: http://"
 "www.gammu.org/wiki/index.php?title=Gammu:Compiling/installing_in_Windows"
 msgstr ""
+"Podrobnější informace naleznete na wiki: http://www.gammu.org/wiki/index.php?"
+"title=Gammu:Compiling/installing_in_Windows"
 
 #. type: Plain text
 #: INSTALL:167
@@ -9299,12 +9317,16 @@ msgid ""
 "From Sources - Mac OS X\n"
 "=======================\n"
 msgstr ""
+"Ze zdrojového kódu - Mac OS X\n"
+"=============================\n"
 
 #. type: Plain text
 #: INSTALL:173
 msgid ""
-"Gammu should be compilable on Mac OS X, see wiki for up to date instrucitons:"
+"Gammu should be compilable on Mac OS X, see wiki for up to date instructions:"
 msgstr ""
+"Gammu by mělo jít zkompilovat na Mac OS X, aktuální informace by měly být na "
+"wiki:"
 
 #. type: Plain text
 #: INSTALL:175
@@ -9312,6 +9334,8 @@ msgid ""
 "http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/"
 "installing_on_Mac_OS_X"
 msgstr ""
+"http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/"
+"installing_on_Mac_OS_X"
 
 #. type: Plain text
 #: INSTALL:178
@@ -9320,6 +9344,8 @@ msgid ""
 "Cross compilation for Windows on Linux\n"
 "======================================\n"
 msgstr ""
+"Křížová kompilace pro Windows na Linuxu\n"
+"=======================================\n"
 
 #. type: Plain text
 #: INSTALL:183
@@ -9335,6 +9361,8 @@ msgid ""
 "mkdir build-win32 cd build-win32 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/"
 "Toolchain-mingw32.cmake make"
 msgstr ""
+"mkdir build-win32 cd build-win32 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/"
+"Toolchain-mingw32.cmake make"
 
 #. type: Plain text
 #: INSTALL:191
@@ -9451,6 +9479,8 @@ msgid ""
 "You can download MySQL binaries from <http://dev.mysql.com/>, but then need "
 "some tweaks:"
 msgstr ""
+"Binární balíčky MySQL můžete stáhnout z <http://dev.mysql.com/>, po "
+"rozbalení je potřeba provést pár úprav:"
 
 #. type: Plain text
 #: INSTALL:238
@@ -9491,6 +9521,8 @@ msgid ""
 "You can download PostgreSQL binaries from <http://www.postgresql.org/>, but "
 "then you need to add wldap32.dll library to bin."
 msgstr ""
+"Můžete si stáhnout binární balíčky PostgreSQL z <http://www.postgresql.org/"
+">, ale budete muset odjinud přidat knihovnu wldap32.dll do adresáře bin."
 
 #. type: Plain text
 #: INSTALL:251
@@ -9509,6 +9541,9 @@ msgid ""
 "gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from <http://gnuwin32."
 "sourceforge.net/>. Unpack these to same directory."
 msgstr ""
+"Pro podporu překladu programu potřebujete gettext-0.14.4-bin.zip, gettext-"
+"0.14.4-dep.zip, gettext-0.14.4-lib.zip z <http://gnuwin32.sourceforge.net/>. "
+"Rozbalte je všechny do jednoho adresáře."
 
 #. type: Plain text
 #: INSTALL:259

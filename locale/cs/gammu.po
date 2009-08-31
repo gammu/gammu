@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.25.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-28 13:15+0200\n"
+"POT-Creation-Date: 2009-08-31 12:53+0200\n"
 "PO-Revision-Date: 2009-08-13 11:38+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -114,8 +114,8 @@ msgstr "Načítám:"
 #: gammu/backup.c:1304 gammu/backup.c:1322 gammu/backup.c:1371
 #: gammu/backup.c:1396 gammu/backup.c:1421 gammu/backup.c:1457
 #: gammu/backup.c:1510 gammu/backup.c:1535 gammu/backup.c:1593
-#: gammu/backup.c:1621 gammu/backup.c:1653 gammu/backup.c:1677
-#: gammu/backup.c:1702 gammu/backupsms.c:107 gammu/files.c:386
+#: gammu/backup.c:1621 gammu/backup.c:1654 gammu/backup.c:1678
+#: gammu/backup.c:1703 gammu/backupsms.c:107 gammu/files.c:386
 #: gammu/files.c:594 gammu/message.c:351 gammu/message.c:450 gammu/misc.c:375
 #: gammu/misc.c:474 gammu/misc.c:479 gammu/misc.c:1191 gammu/mms.c:183
 #, c-format
@@ -299,8 +299,8 @@ msgstr "Obnovit skupiny a loga volajících?"
 #: gammu/backup.c:1264 gammu/backup.c:1303 gammu/backup.c:1321
 #: gammu/backup.c:1370 gammu/backup.c:1395 gammu/backup.c:1420
 #: gammu/backup.c:1456 gammu/backup.c:1509 gammu/backup.c:1534
-#: gammu/backup.c:1592 gammu/backup.c:1620 gammu/backup.c:1652
-#: gammu/backup.c:1676 gammu/backup.c:1701 gammu/files.c:743
+#: gammu/backup.c:1592 gammu/backup.c:1620 gammu/backup.c:1653
+#: gammu/backup.c:1677 gammu/backup.c:1702 gammu/files.c:743
 msgid "Writing:"
 msgstr "Zapisuji:"
 
@@ -440,15 +440,15 @@ msgstr "Přidat položky telefonního seznamu?"
 msgid "Add SIM phonebook entries?"
 msgstr "Přidat kontakty na SIM kartu?"
 
-#: gammu/backup.c:1644
+#: gammu/backup.c:1645
 msgid "Add phone calendar notes?"
 msgstr "Přidat položky do kalendáře?"
 
-#: gammu/backup.c:1668
+#: gammu/backup.c:1669
 msgid "Add phone ToDo?"
 msgstr "Přidat úkoly?"
 
-#: gammu/backup.c:1692
+#: gammu/backup.c:1693
 msgid "Add phone WAP bookmarks?"
 msgstr "Přidat záložky WAP?"
 
