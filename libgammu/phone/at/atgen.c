@@ -3561,7 +3561,11 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 	GSM_Error error;
 	size_t len, sevenlen;
 
-	req = (char *)malloc(strlen(format) + strlen(number) + 1);
+	/*
+	 * We need to allocate twice more memory for number here, because it
+	 * might be encoded later.
+	 */
+	req = (char *)malloc(strlen(format) + (strlen(number) * 2) + 1);
 	if (req == NULL) {
 		return ERR_MOREMEMORY;
 	}
