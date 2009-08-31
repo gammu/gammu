@@ -23,6 +23,7 @@ ChangeLog
 
 [-] * Fixed handling of RunOnReceive error code.
 [-] * Fixed crash when encoding USSD dials.
+[-] * Fixed decoding of phonebook entries on Motorola.
     
 20090827 - 1.25.93
 

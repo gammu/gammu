@@ -219,7 +219,7 @@ GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		 * +MPBR: 18,"user@domain.net",128,"Contact Name",6,0,255,0,0,1,255,255,0,"",0,0,"","","","","","","",""
 		 */
 		error = ATGEN_ParseReply(s, str,
-					"+MPBR: @i, @s, @i, @s, @i, @0",
+					"+MPBR: @i, @p, @i, @s, @i, @0",
 					&Memory->Location,
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					&number_type,

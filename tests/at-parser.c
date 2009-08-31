@@ -149,6 +149,19 @@ int main(int argc UNUSED, char **argv UNUSED)
 			);
 	gammu_test_result(error, "+SPBR: @i, @p, @p, @p, @p, @p, @s, @T, @T, @T, @T");
 
+	Priv->Charset = AT_CHARSET_UCS2;
+	Priv->Manufacturer = AT_Motorola;
+
+	error = ATGEN_ParseReply(s,
+		"+MPBR: 253,\"069912158732\",129,005700650067006C006500690074006E0065007200200053006100620069006E00650020004D0065006E00730061,3,0,255,0,1,1,255,255,0,,0,0,,,,,,,,\"\",\"\"",
+		"+MPBR: @i, @p, @i, @s, @i, @0",
+		&i,
+		buffer, BUFFER_SIZE,
+		&i,
+		buffer, BUFFER_SIZE,
+		&i);
+	gammu_test_result(error, "+MPBR: @i, @p, @i, @s, @i, @0");
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
