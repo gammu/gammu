@@ -1210,7 +1210,7 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 		/* Adjust location */
 		folder = s->Phone.Data.SaveSMSMessage->Folder;
 		ATGEN_SetSMSLocation(s, s->Phone.Data.SaveSMSMessage,
-				1 + (folder / 2), /* We care only about SIM/Phone */
+				(folder / 2), /* We care only about SIM/Phone */
 				s->Phone.Data.SaveSMSMessage->Location);
 		s->Phone.Data.SaveSMSMessage->Folder = folder;
 		return ERR_NONE;
