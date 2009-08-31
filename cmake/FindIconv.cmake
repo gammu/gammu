@@ -6,6 +6,7 @@
 #  ICONV_LIBRARIES - Link these to use Iconv 
 #  ICONV_SECOND_ARGUMENT_IS_CONST - the second argument for iconv() is const
 # 
+include(CheckCCompilerFlag)
 include(CheckCXXSourceCompiles)
 
 IF (ICONV_INCLUDE_DIR AND ICONV_LIBRARIES)
