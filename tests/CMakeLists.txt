@@ -228,6 +228,20 @@ foreach(TESTMESSAGE ${MESSAGES})
         "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
 endforeach(TESTMESSAGE $MESSAGES)
 
+# List test cases for TXT mode
+file(GLOB MESSAGES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-txt"
+    "${Gammu_SOURCE_DIR}/tests/at-sms-txt/*.dump")
+list(SORT MESSAGES)
+
+foreach(TESTMESSAGE ${MESSAGES})
+    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+    add_test("sms-at-parse-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-sms-txt/${TESTMESSAGE}"
+        "TXT")
+endforeach(TESTMESSAGE $MESSAGES)
+
 # List test cases for failure
 file(GLOB MESSAGES
     RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-failing"

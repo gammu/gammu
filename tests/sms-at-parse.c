@@ -30,8 +30,8 @@ int main(int argc, char **argv)
 	GSM_MultiSMSMessage sms;
 
 	/* Check parameters */
-	if (argc != 2) {
-		printf("Not enough parameters!\nUsage: sms-at-parse comm.dump\n");
+	if (argc != 2 && argc != 3) {
+		printf("Not enough parameters!\nUsage: sms-at-parse comm.dump [PDU|TXT]\n");
 		return 1;
 	}
 
@@ -72,7 +72,12 @@ int main(int argc, char **argv)
 	Data->ModelInfo = GetModelData(NULL, NULL, "unknown", NULL);
 	Priv = &s->Phone.Data.Priv.ATGEN;
 	Priv->ReplyState = AT_Reply_OK;
-	Priv->SMSMode = SMS_AT_PDU;
+	Priv->Charset = AT_CHARSET_GSM;
+	if (argc == 3 && strcmp(argv[2], "TXT") == 0) {
+		Priv->SMSMode = SMS_AT_TXT;
+	} else {
+		Priv->SMSMode = SMS_AT_PDU;
+	}
 
 	/* Init message */
 	msg.Type = 0;
