@@ -26,7 +26,8 @@ ChangeLog
 [-] * Fixed decoding of phonebook entries on Motorola (bug #988).
 [-] * Fixed decoding of long text messages (bug #990).
 [-] * Fixed location of saved message (bug #989).
-    
+[-] * Added ID for Nokia 1681c.
+
 20090827 - 1.25.93
 
 [-] * Fixed reading of phonebook from Samsung (bug #980).
