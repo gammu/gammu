@@ -340,23 +340,30 @@ GSM_Error SMSGetService(GSM_SMSDConfig *Config, GSM_SMSDService **Service)
 		return ERR_UNCONFIGURED;
 	}
 	if (strcasecmp(Config->Service, "FILES") == 0) {
+		SMSD_Log(DEBUG_NOTICE, Config, "Using FILES service");
 		*Service = &SMSDFiles;
 	} else if (strcasecmp(Config->Service, "DBI") == 0) {
 #ifdef LIBDBI_FOUND
+		SMSD_Log(DEBUG_NOTICE, Config, "Using DBI service");
 		*Service = &SMSDDBI;
 #else
+		SMSD_Log(DEBUG_ERROR, Config, "DBI service was not compiled in!");
 		return ERR_DISABLED;
 #endif
 	} else if (strcasecmp(Config->Service, "MYSQL") == 0) {
 #ifdef HAVE_MYSQL_MYSQL_H
+		SMSD_Log(DEBUG_NOTICE, Config, "Using MYSQL service");
 		*Service = &SMSDMySQL;
 #else
+		SMSD_Log(DEBUG_ERROR, Config, "MYSQL service was not compiled in!");
 		return ERR_DISABLED;
 #endif
 	} else if (strcasecmp(Config->Service, "PGSQL") == 0) {
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+		SMSD_Log(DEBUG_NOTICE, Config, "Using PGSQL service");
 		*Service = &SMSDPgSQL;
 #else
+		SMSD_Log(DEBUG_ERROR, Config, "PGSQL service was not compiled in!");
 		return ERR_DISABLED;
 #endif
 	} else {
