@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2009???? - 1.25.94
+20090904 - 1.26.0
 
 [-] * Fixed handling of RunOnReceive error code.
 [-] * Fixed crash when encoding USSD dials.
