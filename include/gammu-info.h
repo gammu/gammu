@@ -584,6 +584,10 @@ typedef enum {
 	 * Phone has better support for SMS text mode (rather than PDU mode)
 	 */
 	F_USE_SMSTEXTMODE,
+	/**
+	 * Phone does not end CPIN reply with OK/ERROR.
+	 */
+	F_CPIN_NO_OK,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

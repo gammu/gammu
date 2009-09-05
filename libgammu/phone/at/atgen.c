@@ -1845,6 +1845,10 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = TRUE;
 	}
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CPIN_NO_OK)) {
+		s->Protocol.Data.AT.CPINNoOK = TRUE;
+	}
+
 
 	return error;
 }
@@ -3667,51 +3671,66 @@ GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 GSM_Error ATGEN_ReplyGetSecurityStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_SecurityCodeType *Status = s->Phone.Data.SecurityStatus;
-	const char *statustext;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	char status[100];
+	GSM_Error error;
 
 	if (Priv->ReplyState != AT_Reply_OK) {
-		return ERR_NOTSUPPORTED;
+		switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+		case AT_Reply_Error:
+			return ERR_NOTSUPPORTED;
+		case AT_Reply_CMSError:
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+			return ERR_UNKNOWNRESPONSE;
+		}
 	}
 
-	statustext = GetLineString(msg.Buffer, &Priv->Lines, 2);
+	error = ATGEN_ParseReply(s,
+		GetLineString(msg.Buffer, &Priv->Lines, 2),
+		"+CPIN: @s",
+		status,
+		sizeof(status));
+	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Security status received - ");
-	if (strstr(statustext,"READY")) {
+	if (strstr(status, "READY")) {
 		*Status = SEC_None;
 		smprintf(s, "nothing to enter\n");
 		return ERR_NONE;
 	}
-	if (strstr(statustext,"PH-SIM PIN")) {
+	if (strstr(status, "PH-SIM PIN")) {
 		*Status = SEC_Phone;
 		smprintf(s, "Phone code needed\n");
 		return ERR_NONE;
 	}
-	if (strstr(statustext,"PH-NET PIN")) {
+	if (strstr(status, "PH-NET PIN")) {
 		*Status = SEC_Network;
 		smprintf(s, "Network code needed\n");
 		return ERR_NONE;
 	}
-	if (strstr(statustext,"PH_SIM PIN")) {
+	if (strstr(status, "PH_SIM PIN")) {
 		smprintf(s, "no SIM inside or other error\n");
 		return ERR_UNKNOWN;
 	}
-	if (strstr(statustext,"SIM PIN2")) {
+	if (strstr(status, "SIM PIN2")) {
 		*Status = SEC_Pin2;
 		smprintf(s, "waiting for PIN2\n");
 		return ERR_NONE;
 	}
-	if (strstr(statustext,"SIM PUK2")) {
+	if (strstr(status, "SIM PUK2")) {
 		*Status = SEC_Puk2;
 		smprintf(s, "waiting for PUK2\n");
 		return ERR_NONE;
 	}
-	if (strstr(statustext,"SIM PIN")) {
+	if (strstr(status, "SIM PIN")) {
 		*Status = SEC_Pin;
 		smprintf(s, "waiting for PIN\n");
 		return ERR_NONE;
 	}
-	if (strstr(statustext,"SIM PUK")) {
+	if (strstr(status, "SIM PUK")) {
 		*Status = SEC_Puk;
 		smprintf(s, "waiting for PUK\n");
 		return ERR_NONE;
@@ -4408,16 +4427,6 @@ GSM_Error ATGEN_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
 	return error;
 }
 
-/* When use AT+CPIN?, A2D returns it without OK and because of it Gammu
-   parses answer without it.
-   MC35 and other return OK after answer for AT+CPIN?. Here we handle it.
-   Any better idea ?
- */
-GSM_Error ATGEN_ReplyOK(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s UNUSED)
-{
-	return ERR_NONE;
-}
-
 /**
  * Just ignores reply we got.
  */
@@ -4971,7 +4980,6 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyEnterSecurityCode,	"AT+CPIN="		,0x00,0x00,ID_EnterSecurityCode	 },
 {ATGEN_ReplyEnterSecurityCode,	"AT+CPIN2="		,0x00,0x00,ID_EnterSecurityCode	 },
 {ATGEN_ReplyGetSecurityStatus,	"AT+CPIN?"		,0x00,0x00,ID_GetSecurityStatus	 },
-{ATGEN_ReplyOK,			"OK"			,0x00,0x00,ID_IncomingFrame	 },
 
 /* No need to take care about this, we just need to ignore it */
 {MOTOROLA_Banner,		"+MBAN:"		,0x00,0x00,ID_IncomingFrame	 },

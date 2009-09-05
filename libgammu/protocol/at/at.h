@@ -13,6 +13,10 @@ typedef struct {
 
 	gboolean			EditMode;	/* wait for modem answer or not */
 	gboolean			FastWrite;
+	/**
+	 * CPIN reply does not end with OK/ERROR.
+	 */
+	gboolean CPINNoOK;
 } GSM_Protocol_ATData;
 
 #ifndef GSM_USED_SERIALDEVICE

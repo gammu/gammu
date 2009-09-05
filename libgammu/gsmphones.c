@@ -112,6 +112,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"NO_CLIP", F_NO_CLIP},
 	{"ENCODED_USSD", F_ENCODED_USSD},
 	{"USE_SMSTEXTMODE", F_USE_SMSTEXTMODE},
+	{"CPIN_NO_OK", F_CPIN_NO_OK},
 	{"", 0},
 };
 

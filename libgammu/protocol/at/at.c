@@ -55,7 +55,6 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		"OK"		, 	"ERROR"	 	,
 		"+CME ERROR:"	,	"+CMS ERROR:"	,
 
-		"+CPIN: "	,	/*A2D issue*/
 		"COMMAND NOT SUPPORT" /* HUAWEI */	,
 
 		NULL};
@@ -121,6 +120,16 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 					break;
 				}
 				i++;
+			}
+			/* Generally hack for A2D */
+			if (d->CPINNoOK) {
+				if (strncmp("+CPIN: ",
+						d->Msg.Buffer + d->LineStart,
+						7) == 0) {
+					s->Phone.Data.RequestMsg	= &d->Msg;
+					s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
+					d->Msg.Length			= 0;
+				}
 			}
 			if (d->Msg.Length == 0) break;
 
@@ -230,6 +239,7 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 	d->wascrlf 		= FALSE;
 	d->EditMode		= FALSE;
 	d->FastWrite		= FALSE;
+	d->CPINNoOK		= FALSE;
 
 	error = s->Device.Functions->DeviceSetParity(s, FALSE);
 	if (error != ERR_NONE) return error;

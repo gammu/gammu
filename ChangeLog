@@ -20,6 +20,8 @@ ChangeLog
 =========
     
 2009???? - 1.26.1
+
+[-] * CPIN reply is handled like regular one except in A2D case (bug #994).
     
 20090904 - 1.26.0
 
