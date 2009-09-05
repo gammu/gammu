@@ -3079,7 +3079,11 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 		/* Read next interval */
 		sprintf(req, "AT+CPBR=%i,%i\r", start, end);
 		ATGEN_WaitFor(s, req, strlen(req), 0x00, 20, ID_GetMemoryStatus);
-		if (error != ERR_NONE) return error;
+		if (error == ERR_EMPTY) {
+			Priv->NextMemoryEntry = start;
+		} else if (error != ERR_NONE) {
+			return error;
+		}
 
 		/* Do we already have first empty record? */
 		if (NeededInfo == AT_NextEmpty &&

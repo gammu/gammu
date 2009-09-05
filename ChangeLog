@@ -22,6 +22,7 @@ ChangeLog
 2009???? - 1.26.1
 
 [-] * CPIN reply is handled like regular one except in A2D case (bug #994).
+[-] * Fix finding first empty position when memory is empty (bug #996).
     
 20090904 - 1.26.0
 
