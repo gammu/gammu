@@ -505,10 +505,6 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned c
 		/* Status */
 		GSM_DecodeSMSStatusReportData(di, SMS, buffer[pos]);
 		pos++;
-		if (pos >= length) {
-			smfprintf(di, "Ran out of buffer when parsing PDU!\n");
-			return ERR_CORRUPTED;
-		}
 	}
 
 	/* Validity period */

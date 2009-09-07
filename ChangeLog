@@ -23,6 +23,7 @@ ChangeLog
 
 [-] * CPIN reply is handled like regular one except in A2D case (bug #994).
 [-] * Fix finding first empty position when memory is empty (bug #996).
+[-] * Fixed parsing of SMS status reports.
     
 20090904 - 1.26.0
 
