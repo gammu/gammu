@@ -781,7 +781,9 @@ GSM_PhoneModel allmodels[] = {
 	/* Huawei */
 	{"E220",	"E220",		"",		{0}},
 	{"E160",	"E160",		"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, 0}},
+	{"E162",	"E162",		"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, 0}},
 	{"E160G",	"E160G",	"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, 0}},
+	{"E162G",	"E162G",	"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, 0}},
 
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)
