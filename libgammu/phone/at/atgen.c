@@ -3694,7 +3694,7 @@ GSM_Error ATGEN_ReplyGetSecurityStatus(GSM_Protocol_Message msg, GSM_StateMachin
 
 	error = ATGEN_ParseReply(s,
 		GetLineString(msg.Buffer, &Priv->Lines, 2),
-		"+CPIN: @s",
+		"+CPIN: @r",
 		status,
 		sizeof(status));
 	if (error != ERR_NONE) return error;

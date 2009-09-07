@@ -164,7 +164,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	error = ATGEN_ParseReply(s,
 		"+CPIN: SIM PIN",
-		"+CPIN: @s",
+		"+CPIN: @r",
 		buffer, BUFFER_SIZE);
 	gammu_test_result(error, "+CPIN: @s");
 
