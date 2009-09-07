@@ -162,6 +162,12 @@ int main(int argc UNUSED, char **argv UNUSED)
 		&i);
 	gammu_test_result(error, "+MPBR: @i, @p, @i, @s, @i, @0");
 
+	error = ATGEN_ParseReply(s,
+		"+CPIN: SIM PIN",
+		"+CPIN: @s",
+		buffer, BUFFER_SIZE);
+	gammu_test_result(error, "+CPIN: @s");
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
