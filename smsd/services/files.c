@@ -124,7 +124,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				}
 			}
 			if (error == ERR_NONE) {
-				SMSD_Log(DEBUG_NOTICE, Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report": "Received"), FileName);
+				SMSD_Log(DEBUG_INFO, Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report": "Received"), FileName);
 			} else {
 				SMSD_Log(DEBUG_INFO, Config, "Cannot save %s (%i)", FileName, errno);
 				return ERR_CANTOPENFILE;
