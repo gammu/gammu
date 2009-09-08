@@ -431,8 +431,10 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 	GSM_SMSMessage		*sms	= &s->Phone.Data.GetSMSMessage->SMS[0];
 	int 			current = 0, i;
+	size_t			length;
 	unsigned char 		buffer[300];
 	unsigned char		firstbyte, TPDCS, TPUDL, TPStatus;
+	const char		*line;
 	GSM_Error		error=ERR_UNKNOWN;
 
 	switch (Priv->ReplyState) {
@@ -505,12 +507,30 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				sms->Class = 1;
 				sms->Coding = SMS_Coding_Default_No_Compression;
 				sms->UDH.Type	= UDH_NoUDH;
-				sms->Length	= GetLineLength(msg.Buffer, &Priv->Lines, 3);
+				sms->Length	= 0;
 				sms->SMSC.Number[0]=0;
 				sms->SMSC.Number[1]=0;
 				sms->ReplyViaSameSMSC=FALSE;
-				return ATGEN_DecodeText(s, GetLineString(msg.Buffer, &Priv->Lines, 3), sms->Length,
-					sms->Text, sizeof(sms->Text), TRUE, FALSE);
+				/* Go trough all lines till OK */
+				for (i = 3; strcmp(line = GetLineString(msg.Buffer, &Priv->Lines, i), "OK") != 0; i++) {
+					if (i > 3) {
+						/* Include new line */
+						sms->Text[(2 * sms->Length) + 0] = 0;
+						sms->Text[(2 * sms->Length) + 1] = '\n';
+						sms->Text[(2 * sms->Length) + 2] = 0;
+						sms->Text[(2 * sms->Length) + 3] = 0;
+						sms->Length++;
+					}
+					length = GetLineLength(msg.Buffer, &Priv->Lines, i);
+					error = ATGEN_DecodeText(s, line, length,
+						sms->Text + (2 * sms->Length),
+						sizeof(sms->Text) - (2 * sms->Length),
+						TRUE, FALSE);
+					if (error != ERR_NONE)
+						return error;
+					sms->Length += length;
+				}
+				return ERR_NONE;
 			}
 
 			/*
