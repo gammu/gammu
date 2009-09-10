@@ -224,7 +224,7 @@ GSM_Coding_Type GSM_GetMessageCoding(GSM_Debug_Info *di, const char TPDCS) {
 			if ((TPDCS & 4) == 0) return SMS_Coding_Default_No_Compression;
 		}
 	}
-	return 0;
+	return SMS_Coding_8bit;
 }
 
 GSM_Error GSM_DecodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
