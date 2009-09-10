@@ -22,6 +22,7 @@ ChangeLog
 2009???? - 1.26.90
 
 [-] * Fixed parsing of SMS with empty recipient (bug #998).
+[-] * Correct setting of time on Huawei phones.
     
 20090908 - 1.26.1
 

@@ -2241,14 +2241,25 @@ GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, gb
 		sprintf(tz, "%+03i", date_time->Timezone / 3600);
 	}
 
-	sprintf(req, "AT+CCLK=\"%02i/%02i/%02i,%02i:%02i:%02i%s\"\r",
-		     (date_time->Year > 2000 ? date_time->Year-2000 : date_time->Year-1900),
-		     date_time->Month ,
-		     date_time->Day,
-		     date_time->Hour,
-		     date_time->Minute,
-		     date_time->Second,
-		     tz);
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FOUR_DIGIT_YEAR)) {
+		sprintf(req, "AT+CCLK=\"%04i/%02i/%02i,%02i:%02i:%02i%s\"\r",
+			     date_time->Year,
+			     date_time->Month ,
+			     date_time->Day,
+			     date_time->Hour,
+			     date_time->Minute,
+			     date_time->Second,
+			     tz);
+	} else {
+		sprintf(req, "AT+CCLK=\"%02i/%02i/%02i,%02i:%02i:%02i%s\"\r",
+			     (date_time->Year > 2000 ? date_time->Year-2000 : date_time->Year-1900),
+			     date_time->Month ,
+			     date_time->Day,
+			     date_time->Hour,
+			     date_time->Minute,
+			     date_time->Second,
+			     tz);
+	}
 
 	smprintf(s, "Setting date & time\n");
 

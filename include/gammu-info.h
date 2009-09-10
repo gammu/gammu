@@ -588,6 +588,10 @@ typedef enum {
 	 * Phone does not end CPIN reply with OK/ERROR.
 	 */
 	F_CPIN_NO_OK,
+	/**
+	 * Phone require four digit year in time.
+	 */
+	F_FOUR_DIGIT_YEAR,
 
 	/**
 	 * Just marker of highest feature code, should not be used.
