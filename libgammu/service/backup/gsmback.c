@@ -284,6 +284,7 @@ void GSM_GetBackupFormatFeatures(GSM_BackupFormat Format, GSM_Backup_Info *info)
 			break;
 		case GSM_Backup_VCard:
 			info->PhonePhonebook	= TRUE;
+			info->SIMPhonebook	= TRUE;
 			break;
 		case GSM_Backup_VNote:
 			info->Note		= TRUE;

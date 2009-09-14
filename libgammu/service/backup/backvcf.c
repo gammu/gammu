@@ -53,7 +53,7 @@ GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
 	GSM_File 		File;
 	GSM_Error		error;
 	GSM_MemoryEntry		Pbk;
-	int			numPbk = 0;
+	int			numPbk = 0, numSIM = 0;
 	size_t Pos = 0;
 
 	File.Buffer = NULL;
@@ -67,22 +67,44 @@ GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
 			break;
 		}
 		if (error != ERR_NONE) break;
-		if (numPbk < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
-			backup->PhonePhonebook[numPbk] = malloc(sizeof(GSM_MemoryEntry));
-		        if (backup->PhonePhonebook[numPbk] == NULL) {
+		if (Pbk.MemoryType == MEM_SM) {
+			if (numSIM < GSM_BACKUP_MAX_SIMPHONEBOOK) {
+				backup->SIMPhonebook[numSIM] = malloc(sizeof(GSM_MemoryEntry));
+				if (backup->SIMPhonebook[numSIM] == NULL) {
+					error = ERR_MOREMEMORY;
+					break;
+				}
+				backup->SIMPhonebook[numSIM + 1] = NULL;
+			} else {
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
 				error = ERR_MOREMEMORY;
 				break;
 			}
-			backup->PhonePhonebook[numPbk + 1] = NULL;
+			memcpy(backup->SIMPhonebook[numSIM],&Pbk,sizeof(GSM_MemoryEntry));
+			if (backup->SIMPhonebook[numSIM]->Location == 0) {
+				backup->SIMPhonebook[numSIM]->Location 	= numSIM + 1;
+			}
+			numSIM++;
 		} else {
-			dbgprintf(NULL, "Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
-			error = ERR_MOREMEMORY;
-			break;
+			if (numPbk < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
+				backup->PhonePhonebook[numPbk] = malloc(sizeof(GSM_MemoryEntry));
+				if (backup->PhonePhonebook[numPbk] == NULL) {
+					error = ERR_MOREMEMORY;
+					break;
+				}
+				backup->PhonePhonebook[numPbk + 1] = NULL;
+			} else {
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
+				error = ERR_MOREMEMORY;
+				break;
+			}
+			memcpy(backup->PhonePhonebook[numPbk],&Pbk,sizeof(GSM_MemoryEntry));
+			if (backup->PhonePhonebook[numPbk]->Location == 0) {
+				backup->PhonePhonebook[numPbk]->Location 	= numPbk + 1;
+			}
+			backup->PhonePhonebook[numPbk]->MemoryType 	= MEM_ME;
+			numPbk++;
 		}
-		memcpy(backup->PhonePhonebook[numPbk],&Pbk,sizeof(GSM_MemoryEntry));
-		backup->PhonePhonebook[numPbk]->Location 	= numPbk + 1;
-		backup->PhonePhonebook[numPbk]->MemoryType 	= MEM_ME;
-		numPbk++;
 	}
 
 	free(File.Buffer);

@@ -24,6 +24,7 @@ ChangeLog
 [-] * Fixed parsing of SMS with empty recipient (bug #998).
 [-] * Correct setting of time on Huawei phones.
 [+] * Addnew command can now change memory type being used.
+[-] * Proper handling of locations and memory type in vCards.
     
 20090908 - 1.26.1
 
