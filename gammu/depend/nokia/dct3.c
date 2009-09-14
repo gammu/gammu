@@ -53,7 +53,7 @@ void CheckDCT3(void)
 	switch (error) {
 		case ERR_OTHERCONNECTIONREQUIRED:
 			printf("Can't do it with current phone protocol\n");
-			GSM_TerminateConnection(gsm);
+			GSM_Terminate();
 			Terminate(3);
 		case ERR_NONE:
 			break;

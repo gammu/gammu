@@ -63,7 +63,7 @@ static void CheckDCT4(void)
 		break;
 	case ERR_OTHERCONNECTIONREQUIRED:
 		printf("%s\n", _("Can't do it with current phone protocol"));
-		GSM_TerminateConnection(gsm);
+		GSM_Terminate();
 		Terminate(3);
 	default:
 		break;
