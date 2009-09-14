@@ -218,6 +218,7 @@ gammu_test(backup "" test.lmb -yes)
 gammu_test(backup "" test.ldif -yes)
 
 gammu_test(addnew "" ${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf -yes)
+gammu_test(addnew "" ${Gammu_SOURCE_DIR}/tests/vcards/photo-2.vcf -memory SM -yes)
 gammu_test(addnew "" ${Gammu_SOURCE_DIR}/tests/vcal/UK32Holidays.ics -yes)
 
 gammu_test(restore "" ${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf -yes)

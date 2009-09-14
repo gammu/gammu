@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Aug 11 2009" "Gammu 1.25.91" "Gammu Documentation"
+.TH "GAMMU" "1" "Sep 14 2009" "Gammu 1.26.90" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -654,7 +654,7 @@ Locations are numerated from 1.
 .BI "addcategory TODO|PHONEBOOK" " text"
 
 .TP
-.BI "addnew" " file [\-yes]"
+.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
 Adds data written in file created using \fBbackup option\fR. All things
 backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
 file).
@@ -662,6 +662,12 @@ file).
 Please note that this adds all content of backup file to phone and
 does not care about current data in the phone (no duplicates are 
 detected).
+
+Use -yes parameter to answer yes to all questions (you want to automatically 
+restore all data).
+
+Use -memory parameter to force usage of defined memory type for storing entries 
+regardless what backu format says.
 
 .TP
 .BI "backup" " file [\-yes]"
@@ -1042,7 +1048,7 @@ Ringtones are mostly supported only for older phones. For recent phones you
 usually just upload them to some folder in phone filesystem.
 
 .TP
-.BI "addnew" " file [\-yes]"
+.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
 Adds data written in file created using \fBbackup option\fR. All things
 backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
 file).
@@ -1050,6 +1056,12 @@ file).
 Please note that this adds all content of backup file to phone and
 does not care about current data in the phone (no duplicates are 
 detected).
+
+Use -yes parameter to answer yes to all questions (you want to automatically 
+restore all data).
+
+Use -memory parameter to force usage of defined memory type for storing entries 
+regardless what backu format says.
 
 .TP
 .BI "backup" " file [\-yes]"
@@ -1176,7 +1188,7 @@ editing ringtone in composer from phone menu (for example, in N33xx).
 
 .SS "Calendar notes"
 .TP
-.BI "addnew" " file [\-yes]"
+.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
 Adds data written in file created using \fBbackup option\fR. All things
 backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
 file).
@@ -1184,6 +1196,12 @@ file).
 Please note that this adds all content of backup file to phone and
 does not care about current data in the phone (no duplicates are 
 detected).
+
+Use -yes parameter to answer yes to all questions (you want to automatically 
+restore all data).
+
+Use -memory parameter to force usage of defined memory type for storing entries 
+regardless what backu format says.
 
 .TP
 .BI "backup" " file [\-yes]"
@@ -1290,7 +1308,7 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 .BI "addcategory TODO|PHONEBOOK" " text"
 
 .TP
-.BI "addnew" " file [\-yes]"
+.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
 Adds data written in file created using \fBbackup option\fR. All things
 backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
 file).
@@ -1298,6 +1316,12 @@ file).
 Please note that this adds all content of backup file to phone and
 does not care about current data in the phone (no duplicates are 
 detected).
+
+Use -yes parameter to answer yes to all questions (you want to automatically 
+restore all data).
+
+Use -memory parameter to force usage of defined memory type for storing entries 
+regardless what backu format says.
 
 .TP
 .BI "backup" " file [\-yes]"
@@ -1436,7 +1460,7 @@ your phone and use Gammu. See gammurc(5) for details.
 .BI "addcategory TODO|PHONEBOOK" " text"
 
 .TP
-.BI "addnew" " file [\-yes]"
+.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
 Adds data written in file created using \fBbackup option\fR. All things
 backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
 file).
@@ -1444,6 +1468,12 @@ file).
 Please note that this adds all content of backup file to phone and
 does not care about current data in the phone (no duplicates are 
 detected).
+
+Use -yes parameter to answer yes to all questions (you want to automatically 
+restore all data).
+
+Use -memory parameter to force usage of defined memory type for storing entries 
+regardless what backu format says.
 
 .TP
 .BI "backup" " file [\-yes]"
@@ -1515,7 +1545,7 @@ be done, when phone doesn't have set clock inside.
 
 .SS "Backing up and restoring"
 .TP
-.BI "addnew" " file [\-yes]"
+.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
 Adds data written in file created using \fBbackup option\fR. All things
 backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
 file).
@@ -1523,6 +1553,12 @@ file).
 Please note that this adds all content of backup file to phone and
 does not care about current data in the phone (no duplicates are 
 detected).
+
+Use -yes parameter to answer yes to all questions (you want to automatically 
+restore all data).
+
+Use -memory parameter to force usage of defined memory type for storing entries 
+regardless what backu format says.
 
 .TP
 .BI "addsms" " folder file [\-yes]"
@@ -1828,7 +1864,7 @@ reboot them to see netmonitor menu)
 
 .SS "WAP settings and bookmarks"
 .TP
-.BI "addnew" " file [\-yes]"
+.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
 Adds data written in file created using \fBbackup option\fR. All things
 backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
 file).
@@ -1836,6 +1872,12 @@ file).
 Please note that this adds all content of backup file to phone and
 does not care about current data in the phone (no duplicates are 
 detected).
+
+Use -yes parameter to answer yes to all questions (you want to automatically 
+restore all data).
+
+Use -memory parameter to force usage of defined memory type for storing entries 
+regardless what backu format says.
 
 .TP
 .BI "backup" " file [\-yes]"
@@ -2047,7 +2089,7 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 
 .SS "FM radio"
 .TP
-.BI "addnew" " file [\-yes]"
+.BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
 Adds data written in file created using \fBbackup option\fR. All things
 backup'ed by \fBbackup\fR can be restored (when made backup to Gammu text
 file).
@@ -2055,6 +2097,12 @@ file).
 Please note that this adds all content of backup file to phone and
 does not care about current data in the phone (no duplicates are 
 detected).
+
+Use -yes parameter to answer yes to all questions (you want to automatically 
+restore all data).
+
+Use -memory parameter to force usage of defined memory type for storing entries 
+regardless what backu format says.
 
 .TP
 .BI "backup" " file [\-yes]"

@@ -1557,24 +1557,40 @@ void AddNew(int argc, char *argv[])
 	GSM_ToDoStatus		ToDoStatus;
 	GSM_CalendarEntry	Calendar;
 	GSM_WAPBookmark		Bookmark;
+	GSM_MemoryType		MemoryType = 0;
 	int			i, max;
 
 	error=GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], FALSE));
 	if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 
-	signal(SIGINT, interrupt);
-	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
-
 	if (Backup.DateTimeAvailable) 	fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"),OSDateTime(Backup.DateTime,FALSE));
 	if (Backup.Model[0]!=0) 	fprintf(stderr, LISTFORMAT "%s\n", _("Phone"),Backup.Model);
 	if (Backup.IMEI[0]!=0) 		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"),Backup.IMEI);
 
-	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = TRUE;
+	for (i = 3; i < argc; i++) {
+		if (strcasecmp(argv[i],"-yes") == 0) {
+			always_answer_yes = TRUE;
+		} else if (strcasecmp(argv[i],"-memory") == 0 && i + 1 < argc) {
+			i++;
+			MemoryType = GSM_StringToMemoryType(argv[i]);
+			if (MemoryType == 0) {
+				printf_err(_("Unknown memory type (\"%s\")\n"),argv[i]);
+				Terminate(2);
+			}
+		} else {
+			printf_err(_("Unknown parameter (\"%s\")\n"), argv[i]);
+			Terminate(2);
+		}
+	}
+
+	signal(SIGINT, interrupt);
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+
 
 	GSM_Init(TRUE);
 
 	if (Backup.PhonePhonebook[0] != NULL) {
-		MemStatus.MemoryType = MEM_ME;
+		MemStatus.MemoryType = (MemoryType == 0 ? MEM_ME : MemoryType);
 		error=GSM_GetMemoryStatus(gsm, &MemStatus);
 		if (error==ERR_NONE) {
 			max = 0;
@@ -1585,7 +1601,7 @@ void AddNew(int argc, char *argv[])
 			} else if (answer_yes(_("Add phone phonebook entries?"))) {
 				for (i=0;i<max;i++) {
 					Pbk 		= *Backup.PhonePhonebook[i];
-					Pbk.MemoryType 	= MEM_ME;
+					Pbk.MemoryType 	= (MemoryType == 0 ? MEM_ME : MemoryType);
 					error=GSM_AddMemory(gsm, &Pbk);
 					Print_Error(error);
 					fprintf(stderr, "\r");
@@ -1602,7 +1618,7 @@ void AddNew(int argc, char *argv[])
 		}
 	}
 	if (Backup.SIMPhonebook[0] != NULL) {
-		MemStatus.MemoryType = MEM_SM;
+		MemStatus.MemoryType = (MemoryType == 0 ? MEM_SM : MemoryType);
 		error=GSM_GetMemoryStatus(gsm, &MemStatus);
 		if (error==ERR_NONE) {
 			max = 0;
@@ -1613,7 +1629,7 @@ void AddNew(int argc, char *argv[])
 			} else if (answer_yes(_("Add SIM phonebook entries?"))) {
 				for (i=0;i<max;i++) {
 					Pbk 		= *Backup.SIMPhonebook[i];
-					Pbk.MemoryType 	= MEM_SM;
+					Pbk.MemoryType 	= (MemoryType == 0 ? MEM_SM : MemoryType);
 					error=GSM_AddMemory(gsm, &Pbk);
 					Print_Error(error);
 					fprintf(stderr, "\r");
