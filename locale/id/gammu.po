@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: Gammu 1.26.0\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-08-31 12:53+0200\n"
-"PO-Revision-Date: 2009-07-13 08:41+0200\n"
+"PO-Revision-Date: 2009-09-07 07:24+0200\n"
 "Last-Translator: winawang <winawangz@yahoo.co.id>\n"
 "Language-Team: none\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -1213,7 +1213,7 @@ msgstr "Apa yang harus saya lakukan (\"%s\") ?\n"
 #: gammu/depend/nokia/dct4.c:1018
 #, c-format
 msgid "raw result %10i "
-msgstr ""
+msgstr "hasil mentah %10i"
 
 #. l10n: Processed data for A/D convertor
 #: gammu/depend/nokia/dct4.c:1022
@@ -1223,7 +1223,7 @@ msgstr "unit hasil"
 
 #: gammu/depend/nokia/dct4.c:1035
 msgid "Battery voltage, divided:"
-msgstr ""
+msgstr "Tegangan baterai, dibagi:"
 
 #: gammu/depend/nokia/dct4.c:1035 gammu/depend/nokia/dct4.c:1036
 #: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1041
@@ -1231,45 +1231,45 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1046 gammu/depend/nokia/dct4.c:1047
 #: gammu/depend/nokia/dct4.c:1048
 msgid "mV"
-msgstr ""
+msgstr "mV"
 
 #: gammu/depend/nokia/dct4.c:1036
 msgid "Battery voltage, scaled:"
-msgstr ""
+msgstr "Tegangan baterai, diskala:"
 
 #: gammu/depend/nokia/dct4.c:1037
 msgid "Charger voltage:"
-msgstr ""
+msgstr "Charger tegangan:"
 
 #: gammu/depend/nokia/dct4.c:1038
 msgid "Charger current:"
-msgstr ""
+msgstr "Charger saat ini:"
 
 #: gammu/depend/nokia/dct4.c:1038 gammu/depend/nokia/dct4.c:1049
 #: gammu/depend/nokia/dct4.c:1050
 msgid "mA"
-msgstr ""
+msgstr "mA"
 
 #: gammu/depend/nokia/dct4.c:1039
 msgid "Battery size indicator:"
-msgstr ""
+msgstr "Ukuran baterai indikator:"
 
 #: gammu/depend/nokia/dct4.c:1039
 msgid "Ohms"
-msgstr ""
+msgstr "Ohms"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Battery temperature:"
-msgstr ""
+msgstr "Suhu temperatur:"
 
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1044
 #: gammu/depend/nokia/dct4.c:1045
 msgid "K"
-msgstr ""
+msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Headset interconnection:"
-msgstr ""
+msgstr "Headset interkoneksi:"
 
 #: gammu/depend/nokia/dct4.c:1042
 msgid "Hook interconnection:"
