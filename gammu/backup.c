@@ -1563,9 +1563,15 @@ void AddNew(int argc, char *argv[])
 	error=GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], FALSE));
 	if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 
-	if (Backup.DateTimeAvailable) 	fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"),OSDateTime(Backup.DateTime,FALSE));
-	if (Backup.Model[0]!=0) 	fprintf(stderr, LISTFORMAT "%s\n", _("Phone"),Backup.Model);
-	if (Backup.IMEI[0]!=0) 		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"),Backup.IMEI);
+	if (Backup.DateTimeAvailable) {
+		fprintf(stderr, LISTFORMAT "%s\n", _("Time of backup"),OSDateTime(Backup.DateTime,FALSE));
+	}
+	if (Backup.Model[0]!=0) {
+		fprintf(stderr, LISTFORMAT "%s\n", _("Phone"),Backup.Model);
+	}
+	if (Backup.IMEI[0]!=0) {
+		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"),Backup.IMEI);
+	}
 
 	for (i = 3; i < argc; i++) {
 		if (strcasecmp(argv[i],"-yes") == 0) {
