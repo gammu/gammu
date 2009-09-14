@@ -853,7 +853,7 @@ void GetBitmap(int argc, char *argv[])
 		GetStartStop(&location, NULL, 3, argc, argv);
 		if (location>5) {
 			printf("%s\n", _("Maximal location for caller logo can be 5"));
-			exit (-1);
+			Terminate(2);
 		}
 	} else if (strcasecmp(argv[2],"PICTURE") == 0) {
 		MultiBitmap.Bitmap[0].Type=GSM_PictureImage;
@@ -1010,7 +1010,7 @@ void SetBitmap(int argc, char *argv[])
 		GetStartStop(&i, NULL, 3, argc, argv);
 		if (i>5 && i!=255) {
 			printf("%s\n", _("Maximal location for caller logo can be 5"));
-			exit (-1);
+			Terminate(2);
 		}
 		MultiBitmap.Bitmap[0].Type 	= GSM_CallerGroupLogo;
 		MultiBitmap.Bitmap[0].Location	= i;
@@ -1151,7 +1151,7 @@ void SetRingtone(int argc, char *argv[])
 	}
 	if (ringtone.Location==0) {
 		printf_err("%s\n", _("Please enumerate locations from 1"));
-		exit (-1);
+		Terminate(2);
 	}
 
 	GSM_Init(TRUE);

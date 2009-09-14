@@ -29,7 +29,7 @@ void GetAllMemory(int argc UNUSED, char *argv[])
 
 	if (Entry.MemoryType == 0) {
 		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
-		exit (-1);
+		Terminate(2);
 	}
 
 	GSM_Init(TRUE);
@@ -63,7 +63,7 @@ void GetMemory(int argc, char *argv[])
 
 	if (entry.MemoryType==0) {
 		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
-		exit (-1);
+		Terminate(2);
 	}
 
 	GetStartStop(&start, &stop, 3, argc, argv);
@@ -73,7 +73,7 @@ void GetMemory(int argc, char *argv[])
 			empty = FALSE;
 		} else {
 			printf_err(_("Unknown parameter (\"%s\")\n"),argv[5]);
-			exit (-1);
+			Terminate(2);
 		}
 	}
 
@@ -135,7 +135,7 @@ void DeleteMemory(int argc, char *argv[])
 
 	if (entry.MemoryType==0) {
 		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
-		exit (-1);
+		Terminate(2);
 	}
 
 	GetStartStop(&start, &stop, 3, argc, argv);
@@ -171,7 +171,7 @@ void DeleteAllMemory(int argc, char *argv[])
 
 	if (MemoryType == 0) {
 		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
-		exit (-1);
+		Terminate(2);
 	}
 
 	GSM_Init(TRUE);

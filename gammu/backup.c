@@ -1029,8 +1029,8 @@ void Restore(int argc, char *argv[])
 				}
 				if (error == ERR_MEMORY && GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_6230iCALLER)) {
 					printf_err("%s\n", _("Probably caller group is missing from your backup, add it and use --restore again."));
-					GSM_TerminateConnection(gsm);
-					exit (-1);
+					GSM_Terminate();
+					Terminate(2);
 				}
 				if (Pbk.EntriesNum != 0 && error==ERR_NONE) {
 					First = TRUE;

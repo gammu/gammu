@@ -1431,7 +1431,7 @@ void DCT4GetPBKFeatures(int argc, char *argv[])
 	if (strcasecmp(argv[2],"FD") == 0) MemoryType=MEM_FD;
 	if (MemoryType==0) {
 		printf(_("ERROR: unknown memory type (\"%s\")\n"),argv[2]);
-		exit (-1);
+		Terminate(2);
 	}
 
 	req[4] = NOKIA_GetMemoryType(gsm, MemoryType,N71_65_MEMORY_TYPES);
