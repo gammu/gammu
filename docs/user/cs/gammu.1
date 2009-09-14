@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Srpen 11 2009" "Gammu 1.25.91" "Dokumentace Gammu"
+.TH GAMMU 1 "Sep 14 2009" "Gammu 1.26.90" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -719,11 +719,17 @@ Umístění číslujte od 1.
 \fBaddcategory TODO|PHONEBOOK\fP\fI text\fP
 
 .TP 
-\fBaddnew\fP\fI file [\-yes]\fP
+\fBaddnew\fP\fI file [\-yes] [\-memory ME|SM|..]\fP
 Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
+
+Use \-yes parameter to answer yes to all questions (you want to automatically
+restore all data).
+
+Use \-memory parameter to force usage of defined memory type for storing
+entries regardless what backu format says.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP
@@ -838,8 +844,8 @@ Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje
 kontakty. Typ souboru je odhadnut (pro vstupní soubor podle přípony a
 obsahu, pro výstupní jen podle přípony).
 
-For example if you want to convert single entry from gammu native backup to
-vCard, you need following command:
+Například převod jednoho záznamu ze zálohy Gammu do vCardu provedete
+následujícím příkazem:
 
     gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42
 
@@ -910,8 +916,8 @@ se zadaným ID.
 Načte ze souborového systému telefonu soubory se zadanými ID.
 .TP 
 \fBgetfilesystem\fP\fI [\-flatall|\-flat]\fP
-Display info about all folders and files in phone memory/memory card. By
-default there is tree displayed, you can change it:
+Zobrazí informace o všech souborech a složkách v telefonu a/nebo na paměťové
+kartě. Výchozí je stromové zobrazení, ale můžete ho změnit:
 
 \fB\-flatall\fP there are displayed full file/folder details like ID (first
 parameter in line)
@@ -1127,11 +1133,17 @@ Vyzvánění jsou většinou podporována jen pro starší telefony. Pro nověj�
 obvykle jen musíte nahrát do správné složky v telefonu.
 
 .TP 
-\fBaddnew\fP\fI file [\-yes]\fP
+\fBaddnew\fP\fI file [\-yes] [\-memory ME|SM|..]\fP
 Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
+
+Use \-yes parameter to answer yes to all questions (you want to automatically
+restore all data).
+
+Use \-memory parameter to force usage of defined memory type for storing
+entries regardless what backu format says.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP
@@ -1265,11 +1277,17 @@ některých telefonů blikat (například 33xx)
 
 .SS Kalendář
 .TP 
-\fBaddnew\fP\fI file [\-yes]\fP
+\fBaddnew\fP\fI file [\-yes] [\-memory ME|SM|..]\fP
 Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
+
+Use \-yes parameter to answer yes to all questions (you want to automatically
+restore all data).
+
+Use \-memory parameter to force usage of defined memory type for storing
+entries regardless what backu format says.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP
@@ -1379,11 +1397,17 @@ sendsms a savesms\fP.
 \fBaddcategory TODO|PHONEBOOK\fP\fI text\fP
 
 .TP 
-\fBaddnew\fP\fI file [\-yes]\fP
+\fBaddnew\fP\fI file [\-yes] [\-memory ME|SM|..]\fP
 Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
+
+Use \-yes parameter to answer yes to all questions (you want to automatically
+restore all data).
+
+Use \-memory parameter to force usage of defined memory type for storing
+entries regardless what backu format says.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP
@@ -1523,11 +1547,17 @@ telefonu ke Gammu. Více podrobností naleznete v gammurc(5).
 \fBaddcategory TODO|PHONEBOOK\fP\fI text\fP
 
 .TP 
-\fBaddnew\fP\fI file [\-yes]\fP
+\fBaddnew\fP\fI file [\-yes] [\-memory ME|SM|..]\fP
 Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
+
+Use \-yes parameter to answer yes to all questions (you want to automatically
+restore all data).
+
+Use \-memory parameter to force usage of defined memory type for storing
+entries regardless what backu format says.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP
@@ -1601,11 +1631,17 @@ není nastaven čas a datum.
 
 .SS "Záloha a obnovení"
 .TP 
-\fBaddnew\fP\fI file [\-yes]\fP
+\fBaddnew\fP\fI file [\-yes] [\-memory ME|SM|..]\fP
 Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
+
+Use \-yes parameter to answer yes to all questions (you want to automatically
+restore all data).
+
+Use \-memory parameter to force usage of defined memory type for storing
+entries regardless what backu format says.
 
 .TP 
 \fBaddsms\fP\fI folder file [\-yes]\fP
@@ -1708,8 +1744,8 @@ Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje
 kontakty. Typ souboru je odhadnut (pro vstupní soubor podle přípony a
 obsahu, pro výstupní jen podle přípony).
 
-For example if you want to convert single entry from gammu native backup to
-vCard, you need following command:
+Například převod jednoho záznamu ze zálohy Gammu do vCardu provedete
+následujícím příkazem:
 
     gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42
 
@@ -1914,11 +1950,17 @@ see netmonitor menu)
 
 .SS "Nastavení WAPu a záložky"
 .TP 
-\fBaddnew\fP\fI file [\-yes]\fP
+\fBaddnew\fP\fI file [\-yes] [\-memory ME|SM|..]\fP
 Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
+
+Use \-yes parameter to answer yes to all questions (you want to automatically
+restore all data).
+
+Use \-memory parameter to force usage of defined memory type for storing
+entries regardless what backu format says.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP
@@ -2142,11 +2184,17 @@ sendsms a savesms\fP.
 
 .SS "FM rádio"
 .TP 
-\fBaddnew\fP\fI file [\-yes]\fP
+\fBaddnew\fP\fI file [\-yes] [\-memory ME|SM|..]\fP
 Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
+
+Use \-yes parameter to answer yes to all questions (you want to automatically
+restore all data).
+
+Use \-memory parameter to force usage of defined memory type for storing
+entries regardless what backu format says.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP

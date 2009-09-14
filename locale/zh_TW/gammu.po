@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-31 12:53+0200\n"
+"POT-Creation-Date: 2009-09-14 16:04+0200\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -65,7 +65,7 @@ msgstr ""
 msgid "Error while writing file!\n"
 msgstr ""
 
-#: gammu/backup.c:216 gammu/backup.c:958 gammu/backup.c:1566
+#: gammu/backup.c:216 gammu/backup.c:958 gammu/backup.c:1593
 #: gammu/calendar.c:606 gammu/calendar.c:941 gammu/calendar.c:1016
 #: gammu/calendar.c:1041 gammu/memory.c:25 gammu/memory.c:308
 #: gammu/memory.c:372 gammu/message.c:120 gammu/misc.c:69 gammu/misc.c:331
@@ -109,9 +109,9 @@ msgstr ""
 #: gammu/backup.c:1221 gammu/backup.c:1249 gammu/backup.c:1265
 #: gammu/backup.c:1304 gammu/backup.c:1322 gammu/backup.c:1371
 #: gammu/backup.c:1396 gammu/backup.c:1421 gammu/backup.c:1457
-#: gammu/backup.c:1510 gammu/backup.c:1535 gammu/backup.c:1593
-#: gammu/backup.c:1621 gammu/backup.c:1654 gammu/backup.c:1678
-#: gammu/backup.c:1703 gammu/backupsms.c:107 gammu/files.c:386
+#: gammu/backup.c:1510 gammu/backup.c:1535 gammu/backup.c:1615
+#: gammu/backup.c:1643 gammu/backup.c:1676 gammu/backup.c:1700
+#: gammu/backup.c:1725 gammu/backupsms.c:107 gammu/files.c:386
 #: gammu/files.c:594 gammu/message.c:351 gammu/message.c:450 gammu/misc.c:375
 #: gammu/misc.c:474 gammu/misc.c:479 gammu/misc.c:1191 gammu/mms.c:183
 #, c-format
@@ -254,16 +254,16 @@ msgstr ""
 msgid "Backup phone GPRS access points?"
 msgstr ""
 
-#: gammu/backup.c:960 gammu/backup.c:1568
+#: gammu/backup.c:960 gammu/backup.c:1567
 msgid "Time of backup"
 msgstr ""
 
-#: gammu/backup.c:961 gammu/backup.c:1569 gammu/calendar.c:222
+#: gammu/backup.c:961 gammu/backup.c:1570 gammu/calendar.c:222
 #: gammu/calendar.c:879
 msgid "Phone"
 msgstr "手機"
 
-#: gammu/backup.c:962 gammu/backup.c:1570 gammu/misc.c:217
+#: gammu/backup.c:962 gammu/backup.c:1573 gammu/misc.c:217
 msgid "IMEI"
 msgstr ""
 
@@ -291,14 +291,14 @@ msgstr ""
 #: gammu/backup.c:1264 gammu/backup.c:1303 gammu/backup.c:1321
 #: gammu/backup.c:1370 gammu/backup.c:1395 gammu/backup.c:1420
 #: gammu/backup.c:1456 gammu/backup.c:1509 gammu/backup.c:1534
-#: gammu/backup.c:1592 gammu/backup.c:1620 gammu/backup.c:1653
-#: gammu/backup.c:1677 gammu/backup.c:1702 gammu/files.c:743
+#: gammu/backup.c:1614 gammu/backup.c:1642 gammu/backup.c:1675
+#: gammu/backup.c:1699 gammu/backup.c:1724 gammu/files.c:743
 msgid "Writing:"
 msgstr ""
 
 #: gammu/backup.c:1011 gammu/backup.c:1079 gammu/backup.c:1140
-#: gammu/backup.c:1188 gammu/backup.c:1281 gammu/backup.c:1582
-#: gammu/backup.c:1610
+#: gammu/backup.c:1188 gammu/backup.c:1281 gammu/backup.c:1604
+#: gammu/backup.c:1632
 #, c-format
 msgid "%i entries in backup file\n"
 msgstr ""
@@ -322,7 +322,7 @@ msgstr ""
 msgid "Restore SIM phonebook?"
 msgstr ""
 
-#: gammu/backup.c:1125 gammu/backup.c:1634
+#: gammu/backup.c:1125 gammu/backup.c:1656
 msgid ""
 "Do you want to set phone date/time? (NOTE: in some phones it's required to "
 "correctly restore calendar notes and other items)"
@@ -415,28 +415,40 @@ msgstr ""
 msgid "Restore phone GPRS Points?"
 msgstr ""
 
-#: gammu/backup.c:1584 gammu/backup.c:1612
+#: gammu/backup.c:1583 gammu/memory.c:31 gammu/memory.c:65 gammu/memory.c:137
+#: gammu/memory.c:173
+#, c-format
+msgid "Unknown memory type (\"%s\")\n"
+msgstr ""
+
+#: gammu/backup.c:1587 gammu/memory.c:75 gammu/misc.c:588 gammu/misc.c:617
+#: helper/message-cmdline.c:1017
+#, c-format
+msgid "Unknown parameter (\"%s\")\n"
+msgstr ""
+
+#: gammu/backup.c:1606 gammu/backup.c:1634
 #, c-format
 msgid "Memory has only %i free locations.Exiting\n"
 msgstr ""
 
-#: gammu/backup.c:1585
+#: gammu/backup.c:1607
 msgid "Add phone phonebook entries?"
 msgstr ""
 
-#: gammu/backup.c:1613
+#: gammu/backup.c:1635
 msgid "Add SIM phonebook entries?"
 msgstr ""
 
-#: gammu/backup.c:1645
+#: gammu/backup.c:1667
 msgid "Add phone calendar notes?"
 msgstr ""
 
-#: gammu/backup.c:1669
+#: gammu/backup.c:1691
 msgid "Add phone ToDo?"
 msgstr ""
 
-#: gammu/backup.c:1693
+#: gammu/backup.c:1715
 msgid "Add phone WAP bookmarks?"
 msgstr ""
 
@@ -1929,21 +1941,10 @@ msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
 msgstr ""
 
-#: gammu/memory.c:31 gammu/memory.c:65 gammu/memory.c:137 gammu/memory.c:173
-#, c-format
-msgid "Unknown memory type (\"%s\")\n"
-msgstr ""
-
 #: gammu/memory.c:42 gammu/memory.c:96 gammu/memory.c:114 gammu/memory.c:236
 #: gammu/memory.c:348
 #, c-format
 msgid "Memory %s, Location %i\n"
-msgstr ""
-
-#: gammu/memory.c:75 gammu/misc.c:588 gammu/misc.c:617
-#: helper/message-cmdline.c:1017
-#, c-format
-msgid "Unknown parameter (\"%s\")\n"
 msgstr ""
 
 #: gammu/memory.c:85
