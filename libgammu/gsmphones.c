@@ -815,6 +815,7 @@ GSM_PhoneModel allmodels[] = {
 	{"KG800", "KG800", "", {F_NO_UCS2, 0}},
 
 	/* Huawei */
+	{"E17X",	"E17X",		"",		{F_NO_UCS2, 0}},
 	{"E220",	"E220",		"",		{0}},
 	{"E160",	"E160",		"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, F_FOUR_DIGIT_YEAR, 0}},
 	{"E162",	"E162",		"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, F_FOUR_DIGIT_YEAR, 0}},

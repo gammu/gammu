@@ -89,6 +89,15 @@ int main(int argc UNUSED, char **argv UNUSED)
 			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE);
 	gammu_test_result(error, "+CPBR: @i, @p, @I, @s");
 
+	Priv->Charset = AT_CHARSET_UCS2;
+	Priv->Manufacturer = AT_Motorola;
+	error = ATGEN_ParseReply(s,
+			"+CPBR: 1,\"+33616918685\",145,\"68506C6970696570\"",
+			"+CPBR: @i, @p, @I, @s",
+			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE);
+	gammu_test_result(error, "+CPBR: @i, @p, @I, @s");
+
+
 	Priv->Charset = AT_CHARSET_HEX;
 	Priv->Manufacturer = AT_Motorola;
 	error = ATGEN_ParseReply(s,

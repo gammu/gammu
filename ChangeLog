@@ -28,7 +28,7 @@ ChangeLog
 [-] * Added IDs for several recent Sony-Ericsson phones.
 [-] * Fix decoding of phone numbers in some cases (bug #999).
 [-] * Replace MD5 implementation with public domain one (bug #964).
-
+[-] * Huawei E17X has broken UCS-2, do not use it (bug #962).
     
 20090908 - 1.26.1
 
