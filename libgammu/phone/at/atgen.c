@@ -575,18 +575,6 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 			charset = AT_CHARSET_UCS2;
 		}
 		/*
-		 * Motorola sometimes criples HEX reply while UCS-2 is chosen.
-		 * It seems to be identified by trailing zero.
-		 */
-		if  (charset == AT_CHARSET_UCS2
-			&& is_hex
-			&& Priv->Manufacturer == AT_Motorola
-			&& input[length - 1] == '0'
-			&& input[length - 2] == '0'
-			) {
-			charset = AT_CHARSET_HEX;
-		}
-		/*
 		 * For phone numbers, we can assume all unicode chars
 		 * will be < 256, so they will fit one byte.
 		 */
@@ -617,6 +605,18 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 			&& length >= 16
 			&& is_ucs) {
 			charset = AT_CHARSET_UCS2;
+		}
+		/*
+		 * Motorola sometimes criples HEX reply while UCS-2 is chosen.
+		 * It seems to be identified by trailing zero.
+		 */
+		if  (charset == AT_CHARSET_UCS2
+			&& is_hex
+			&& Priv->Manufacturer == AT_Motorola
+			&& input[length - 1] == '0'
+			&& input[length - 2] == '0'
+			) {
+			charset = AT_CHARSET_HEX;
 		}
 	}
 

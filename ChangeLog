@@ -26,6 +26,8 @@ ChangeLog
 [+] * Addnew command can now change memory type being used.
 [-] * Proper handling of locations and memory type in vCards.
 [-] * Added IDs for several recent Sony-Ericsson phones.
+[-] * Fix decoding of phone numbers in some cases (bug #999).
+
     
 20090908 - 1.26.1
 
