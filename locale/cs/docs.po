@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-09-16 15:45+0300\n"
-"PO-Revision-Date: 2009-09-14 16:01+0200\n"
+"PO-Revision-Date: 2009-09-16 15:48+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,16 +31,16 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Sep 14 2009"
-msgstr "Únor 16, 2009"
+msgstr "Září 14, 2009"
 
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu 1.26.90"
-msgstr "Gammu 1.26.0"
+msgstr "Gammu 1.26.90"
 
 # type: TH
 #. type: TH
@@ -5669,6 +5669,10 @@ msgid ""
 "minutes. After this time SMSD will continue in normal operation and might "
 "execute your script again."
 msgstr ""
+"Gammu SMSD čeká na ukončení skriptu. Pokud budete provádět nějaké časově "
+"náročné operace, zastavíte přijímání nových zpráv. Aby se zabránilo větším "
+"komplikacím, čeká SMSD maximálně dvě minuty. Po této době bude pokračovat v "
+"normálním běhu a může spustit váš skript znovu."
 
 # type: SS
 #. type: SS
