@@ -547,15 +547,18 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 	unsigned char *buffer;
 	GSM_AT_Charset charset;
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
+	gboolean is_hex, is_ucs;
 
 	/* Default to charset from state machine */
 	charset = s->Phone.Data.Priv.ATGEN.Charset;
 
 	/* Can we do guesses? */
 	if (guess) {
+		is_hex = ATGEN_IsHex(input, length);
+		is_ucs = ATGEN_IsUCS2(input, length);
 		/* Are there HEX only chars? */
 		if  (charset == AT_CHARSET_HEX
-			&& ! ATGEN_IsHex(input, length)) {
+			&& ! is_hex) {
 			charset = AT_CHARSET_GSM;
 		}
 		/*
@@ -563,7 +566,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 		 * If string starts with two zeroes, it is definitely not HEX.
 		 */
 		if  (charset == AT_CHARSET_HEX
-			&& ATGEN_IsUCS2(input, length)
+			&& is_ucs
 			&& input[0] == '0'
 			&& input[1] == '0'
 			&& input[4] == '0'
@@ -576,7 +579,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 		 * It seems to be identified by trailing zero.
 		 */
 		if  (charset == AT_CHARSET_UCS2
-			&& ATGEN_IsHex(input, length)
+			&& is_hex
 			&& Priv->Manufacturer == AT_Motorola
 			&& input[length - 1] == '0'
 			&& input[length - 2] == '0'
@@ -588,7 +591,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 		 * will be < 256, so they will fit one byte.
 		 */
 		if  (charset == AT_CHARSET_UCS2
-			&& (! ATGEN_IsUCS2(input, length) ||
+			&& (! is_ucs ||
 				(phone &&
 				(input[0] != '0' ||
 				 input[1] != '0' ||
@@ -602,7 +605,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 		 */
 		if  (charset == AT_CHARSET_GSM
 			&& phone
-			&& (! ATGEN_IsUCS2(input, length))
+			&& (! is_ucs)
 			&& strchr(input, '@') != NULL) {
 			charset = AT_CHARSET_UTF8;
 		}
@@ -612,7 +615,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 		if  (charset == AT_CHARSET_GSM
 			&& phone
 			&& length >= 16
-			&& ATGEN_IsUCS2(input, length)) {
+			&& is_ucs) {
 			charset = AT_CHARSET_UCS2;
 		}
 	}
