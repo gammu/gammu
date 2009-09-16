@@ -163,6 +163,16 @@ int main(int argc UNUSED, char **argv UNUSED)
 	gammu_test_result(error, "+MPBR: @i, @p, @i, @s, @i, @0");
 
 	error = ATGEN_ParseReply(s,
+		"+MPBR: 181,\"0800886600\",129,004400440055006600440055006600770044,0,0,255,70,1,1,255,255,0,,0,0,,,,,,,,\"\",\"\"",
+		"+MPBR: @i, @p, @i, @s, @i, @0",
+		&i,
+		buffer, BUFFER_SIZE,
+		&i,
+		buffer, BUFFER_SIZE,
+		&i);
+	gammu_test_result(error, "+MPBR: @i, @p, @i, @s, @i, @0");
+
+	error = ATGEN_ParseReply(s,
 		"+CPIN: SIM PIN",
 		"+CPIN: @r",
 		buffer, BUFFER_SIZE);
