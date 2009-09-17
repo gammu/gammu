@@ -560,6 +560,11 @@ add_test(sms-cmdline-MMSSETTINGS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUF
 set_tests_properties(sms-cmdline-MMSSETTINGS PROPERTIES
     PASS_REGULAR_EXPRESSION "User Data Header     : Nokia WAP bookmark or WAP/MMS settings, ID \\(8 bit\\) [0-9]*, 2 parts")
 
+# Samsung parser tests
+add_executable(at-samsung at-samsung.c)
+target_link_libraries(at-samsung libGammu)
+add_test(at-samsung "${GAMMU_TEST_PATH}/at-samsung${GAMMU_TEST_SUFFIX}")
+
 # AT parser tests
 add_executable(at-parser at-parser.c)
 target_link_libraries(at-parser libGammu)
