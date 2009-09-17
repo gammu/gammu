@@ -615,11 +615,17 @@ par22: Repeat until day
 par23: Repeat until month
 par24: Repeat until year
 */
+
+
 	return ERR_NOTIMPLEMENTED;
 }
 
 GSM_Error SAMSUNG_ParseAniversary(GSM_StateMachine *s, const char *line)
 {
+	GSM_Error error;
+	int ignore, alarm_flag, alarm_time, alarm_quantity, alarm_repeat;
+	char ignorestring[10];
+	GSM_CalendarEntry *Note = s->Phone.Data.Cal;
 	/*
 par03: Empty
 par04: Ocassion name
@@ -644,7 +650,36 @@ par22: Empty
 par23: Empty
 par24: Empty
 */
-	return ERR_NOTIMPLEMENTED;
+	Note->Entries[0].EntryType = CAL_TEXT;
+	Note->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
+	Note->Entries[1].Date.Timezone = 0;
+	Note->Entries[1].Date.Second = 0;
+	Note->EntriesNum = 2;
+	error = ATGEN_ParseReply(s,
+		line,
+		"+ORGR: @i, @i, @s, @s, @i, @i, @i, @i, @i, @s, @s, @s, @s, @s, @s, @i, @i, @i, @i, @0",
+		&ignore,
+		&ignore,
+		ignorestring, sizeof(ignorestring),
+		Note->Entries[0].Text, sizeof(Note->Entries[0].Text),
+		&(Note->Entries[1].Date.Day),
+		&(Note->Entries[1].Date.Month),
+		&(Note->Entries[1].Date.Year),
+		&(Note->Entries[1].Date.Hour),
+		&(Note->Entries[1].Date.Minute),
+		ignorestring, sizeof(ignorestring),
+		ignorestring, sizeof(ignorestring),
+		ignorestring, sizeof(ignorestring),
+		ignorestring, sizeof(ignorestring),
+		ignorestring, sizeof(ignorestring),
+		ignorestring, sizeof(ignorestring),
+		&alarm_flag,
+		&alarm_time,
+		&alarm_quantity,
+		&alarm_repeat
+		);
+	if (error != ERR_NONE) return error;
+	return ERR_NONE;
 }
 
 GSM_Error SAMSUNG_ParseTask(GSM_StateMachine *s, const char *line)

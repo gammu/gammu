@@ -25,4 +25,7 @@ GSM_Error SAMSUNG_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 GSM_Error SAMSUNG_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 GSM_Error SAMSUNG_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 
+GSM_Error SAMSUNG_ParseAniversary(GSM_StateMachine *s, const char *line);
+GSM_Error SAMSUNG_ParseTask(GSM_StateMachine *s, const char *line);
+GSM_Error SAMSUNG_ParseAppointment(GSM_StateMachine *s, const char *line);
 #endif
