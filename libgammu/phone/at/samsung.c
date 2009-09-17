@@ -591,6 +591,10 @@ GSM_Error SAMSUNG_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Sta
 
 GSM_Error SAMSUNG_ParseAppointment(GSM_StateMachine *s, const char *line)
 {
+	GSM_Error error;
+	int ignore, alarm_flag, alarm_time, alarm_quantity, alarm_repeat;
+	char ignorestring[10];
+	GSM_CalendarEntry *Note = s->Phone.Data.Cal;
 	/*
 par03: Organizer entry short name
 par04: Organizer entry detailed description
@@ -615,9 +619,46 @@ par22: Repeat until day
 par23: Repeat until month
 par24: Repeat until year
 */
-
-
-	return ERR_NOTIMPLEMENTED;
+	Note->Entries[0].EntryType = CAL_TEXT;
+	Note->Entries[1].EntryType = CAL_DESCRIPTION;
+	Note->Entries[2].EntryType = CAL_START_DATETIME;
+	Note->Entries[2].Date.Timezone = 0;
+	Note->Entries[2].Date.Second = 0;
+	Note->Entries[3].EntryType = CAL_END_DATETIME;
+	Note->Entries[3].Date.Timezone = 0;
+	Note->Entries[3].Date.Second = 0;
+	Note->Entries[4].EntryType = CAL_LOCATION;
+	Note->EntriesNum = 4;
+	error = ATGEN_ParseReply(s,
+		line,
+		"+ORGR: @i, @i, @s, @s, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @s, @I, @I, @I, @I, @s, @s, @I, @I, @I",
+		&ignore,
+		&ignore,
+		Note->Entries[0].Text, sizeof(Note->Entries[0].Text),
+		Note->Entries[1].Text, sizeof(Note->Entries[1].Text),
+		&(Note->Entries[2].Date.Day),
+		&(Note->Entries[2].Date.Month),
+		&(Note->Entries[2].Date.Year),
+		&(Note->Entries[2].Date.Hour),
+		&(Note->Entries[2].Date.Minute),
+		&(Note->Entries[3].Date.Day),
+		&(Note->Entries[3].Date.Month),
+		&(Note->Entries[3].Date.Year),
+		&(Note->Entries[3].Date.Hour),
+		&(Note->Entries[3].Date.Minute),
+		Note->Entries[4].Text, sizeof(Note->Entries[4].Text),
+		&alarm_flag,
+		&alarm_time,
+		&alarm_quantity,
+		&alarm_repeat,
+		ignorestring, sizeof(ignorestring),
+		ignorestring, sizeof(ignorestring),
+		&(Note->Entries[5].Date.Day),
+		&(Note->Entries[5].Date.Month),
+		&(Note->Entries[5].Date.Year)
+		);
+	if (error != ERR_NONE) return error;
+	return ERR_NONE;
 }
 
 GSM_Error SAMSUNG_ParseAniversary(GSM_StateMachine *s, const char *line)
