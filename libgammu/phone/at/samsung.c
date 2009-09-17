@@ -844,7 +844,20 @@ GSM_Error SAMSUNG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 GSM_Error SAMSUNG_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
-	return ERR_NOTSUPPORTED;
+	GSM_Error error;
+	if (start) {
+		/* One bellow actual first position */
+		Note->Location = 0;
+	}
+	s->Phone.Data.Cal 	= Note;
+	Note->EntriesNum 	= 0;
+	smprintf(s, "Getting calendar entry\n");
+	error = ERR_EMPTY;
+	while (error == ERR_EMPTY) {
+		Note->Location++;
+		error = SAMSUNG_GetCalendar(s, Note);
+	}
+	return error;
 }
 
 GSM_Error SAMSUNG_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
