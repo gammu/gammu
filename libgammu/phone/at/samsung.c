@@ -814,6 +814,10 @@ GSM_Error SAMSUNG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 	line = GetLineString(msg.Buffer, &Priv->Lines, 2);
 
+	if (strcmp("OK", line) == 0) {
+		return ERR_EMPTY;
+	}
+
 	error = ATGEN_ParseReply(s,
 		line,
 		"+ORGR: @i, @i, @0",
