@@ -4458,6 +4458,15 @@ static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *N
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->Manufacturer==AT_Siemens ) return SIEMENS_GetNextCalendar(s,Note,start);
+	if (Priv->Manufacturer==AT_Samsung ) return SAMSUNG_GetNextCalendar(s,Note,start);
+	return ERR_NOTSUPPORTED;
+}
+
+GSM_Error ATGEN_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (Priv->Manufacturer==AT_Samsung)  return SAMSUNG_GetCalendarStatus(s, Status);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -4466,6 +4475,7 @@ GSM_Error ATGEN_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_GetCalendar(s, Note);
+	if (Priv->Manufacturer==AT_Samsung)  return SAMSUNG_GetCalendar(s, Note);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -4486,6 +4496,7 @@ GSM_Error ATGEN_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_SetCalendarNote(s, Note);
+	if (Priv->Manufacturer==AT_Samsung)  return SAMSUNG_SetCalendarNote(s, Note);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -4494,6 +4505,7 @@ GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_AddCalendarNote(s, Note);
+	if (Priv->Manufacturer==AT_Samsung)  return SAMSUNG_AddCalendarNote(s, Note);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -4502,6 +4514,7 @@ GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_DelCalendarNote(s, Note);
+	if (Priv->Manufacturer==AT_Samsung)  return SAMSUNG_DelCalendarNote(s, Note);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -5176,7 +5189,7 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/*	AddToDo			*/
 	NOTSUPPORTED,			/*	DeleteToDo		*/
 	NOTSUPPORTED,			/*	DeleteAllToDo		*/
-	NOTSUPPORTED,			/*	GetCalendarStatus	*/
+	ATGEN_GetCalendarStatus,
 	ATGEN_GetCalendar,
 	ATGEN_GetNextCalendar,
 	ATGEN_SetCalendarNote,
