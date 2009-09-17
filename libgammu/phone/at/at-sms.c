@@ -1318,15 +1318,15 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 		if (error != ERR_NONE) return error;
 		CopyUnicodeString(SMSC.Number,message->SMSC.Number);
 		SMSC.Location=1;
-		error=ATGEN_SetSMSC(s,&SMSC);
-		if (error!=ERR_NONE) return error;
+		error = ATGEN_SetSMSC(s,&SMSC);
+		if (error != ERR_NONE) return error;
 		sprintf(buffer, "AT+CSMP=%i,%i,%i,%i\r",
 			req[PHONE_SMSDeliver.firstbyte],
 			req[PHONE_SMSDeliver.TPVP],
 			req[PHONE_SMSDeliver.TPPID],
 			req[PHONE_SMSDeliver.TPDCS]);
 		ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 4, ID_SetSMSParameters);
-		if (error==ERR_NOTSUPPORTED) {
+		if (error == ERR_NOTSUPPORTED) {
 			/* Nokia Communicator 9000i doesn't support <vp> parameter */
 			sprintf(buffer, "AT+CSMP=%i,,%i,%i\r",
 				req[PHONE_SMSDeliver.firstbyte],
@@ -1334,7 +1334,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 				req[PHONE_SMSDeliver.TPDCS]);
 			ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 4, ID_SetSMSParameters);
 		}
-		if (error!=ERR_NONE) return error;
+		if (error != ERR_NONE) return error;
 		switch (message->Coding) {
 		case SMS_Coding_Default_No_Compression:
 			/* If not SMS with UDH, it's as normal text */
