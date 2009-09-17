@@ -1,4 +1,4 @@
-/* Test for decoding SMS on AT driver */
+/* Test for decoding replies in AT driver */
 
 #include <gammu.h>
 #include <stdlib.h>
