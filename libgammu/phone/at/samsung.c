@@ -591,11 +591,88 @@ GSM_Error SAMSUNG_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Sta
 
 GSM_Error SAMSUNG_ParseAppointment(GSM_StateMachine *s, const char *line)
 {
+	/*
+par03: Organizer entry short name
+par04: Organizer entry detailed description
+par05: Start day
+par06: Start month
+par07: Start year
+par08: Start hour
+par09: Start minute
+par10: End day
+par11: End month
+par12: End year
+par13: End hour
+par14: End minute
+par15: Location
+par16: Alarm flag (0=no, 1=yes)
+par17: Alarm time unit (1=minutes, 2=hours, days, 4=weeks)
+par18: Alarm items quantity
+par19: Alarm repeat flag (0 or empty=no, 2=yes)
+par20: Empty
+par21: Empty
+par22: Repeat until day
+par23: Repeat until month
+par24: Repeat until year
+*/
 	return ERR_NOTIMPLEMENTED;
 }
 
 GSM_Error SAMSUNG_ParseAniversary(GSM_StateMachine *s, const char *line)
 {
+	/*
+par03: Empty
+par04: Ocassion name
+par05: Alarm day
+par06: Alarm month
+par07: Alarm year
+par08: Alarm hour
+par09: Alarm minutes
+par10: Empty
+par11: Empty
+par12: Empty
+par13: Empty
+par14: Empty
+par15: Empty
+par16: Alarm flag (0=no, 1=yes)
+par17: Alarm time unit (1=minutes, 2=hours, days, 4=weeks)
+par18: Alarm items quantity
+par19: Repeat each year (0=no, 4=yes)
+par20: Empty
+par21: Empty
+par22: Empty
+par23: Empty
+par24: Empty
+*/
+	return ERR_NOTIMPLEMENTED;
+}
+
+GSM_Error SAMSUNG_ParseTask(GSM_StateMachine *s, const char *line)
+{
+	/*
+par03: Empty
+par04: Task name
+par05: Start day
+par06: Start month
+par07: Start year
+par08: Alarm hour
+par09: Alarm minute
+par10: Due day
+par11: Due month
+par12: Due year
+par13: Empty
+par14: Empty
+par15: Empty
+par16: Alarm flag (0=no, 1=yes)
+par17: Alarm time unit (1=minutes, 2=hours, days, 4=weeks)
+par18: Alarm items quantity
+par19: Empty
+par20: Task priority (1=high, 2=normal, 3=low)
+par21: Task status (0=undone, 1=done)
+par22: Empty
+par23: Empty
+par24: Empty
+*/
 	return ERR_NOTIMPLEMENTED;
 }
 
@@ -636,8 +713,9 @@ GSM_Error SAMSUNG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s
 			s->Phone.Data.Cal->Type = GSM_CAL_BIRTHDAY;
 			return SAMSUNG_ParseAniversary(s, line);
 		case 3:
+			/* TODO: This should be rather turned into todo entry */
 			s->Phone.Data.Cal->Type = GSM_CAL_REMINDER;
-			return SAMSUNG_ParseAppointment(s, line);
+			return SAMSUNG_ParseTask(s, line);
 		case 4:
 			s->Phone.Data.Cal->Type = GSM_CAL_MEMO;
 			return SAMSUNG_ParseAppointment(s, line);
