@@ -684,6 +684,10 @@ par24: Empty
 
 GSM_Error SAMSUNG_ParseTask(GSM_StateMachine *s, const char *line)
 {
+	GSM_Error error;
+	int ignore, alarm_flag, alarm_time, alarm_quantity, priority, status;
+	char ignorestring[10];
+	GSM_CalendarEntry *Note = s->Phone.Data.Cal;
 	/*
 par03: Empty
 par04: Task name
@@ -708,7 +712,43 @@ par22: Empty
 par23: Empty
 par24: Empty
 */
-	return ERR_NOTIMPLEMENTED;
+	Note->Entries[0].EntryType = CAL_TEXT;
+	Note->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
+	Note->Entries[1].Date.Timezone = 0;
+	Note->Entries[1].Date.Second = 0;
+	Note->Entries[2].EntryType = CAL_END_DATETIME;
+	Note->Entries[2].Date.Timezone = 0;
+	Note->Entries[2].Date.Second = 0;
+	Note->Entries[2].Date.Hour = 0;
+	Note->Entries[2].Date.Minute = 0;
+	Note->EntriesNum = 3;
+	error = ATGEN_ParseReply(s,
+		line,
+		"+ORGR: @i, @i, @s, @s, @i, @i, @i, @i, @i, @i, @i, @i, @s, @s, @s, @i, @i, @i, @s, @i, @i, @0",
+		&ignore,
+		&ignore,
+		ignorestring, sizeof(ignorestring),
+		Note->Entries[0].Text, sizeof(Note->Entries[0].Text),
+		&(Note->Entries[1].Date.Day),
+		&(Note->Entries[1].Date.Month),
+		&(Note->Entries[1].Date.Year),
+		&(Note->Entries[1].Date.Hour),
+		&(Note->Entries[1].Date.Minute),
+		&(Note->Entries[2].Date.Day),
+		&(Note->Entries[2].Date.Month),
+		&(Note->Entries[2].Date.Year),
+		ignorestring, sizeof(ignorestring),
+		ignorestring, sizeof(ignorestring),
+		ignorestring, sizeof(ignorestring),
+		&alarm_flag,
+		&alarm_time,
+		&alarm_quantity,
+		ignorestring, sizeof(ignorestring),
+		&priority,
+		&status
+		);
+	if (error != ERR_NONE) return error;
+	return ERR_NONE;
 }
 
 GSM_Error SAMSUNG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
