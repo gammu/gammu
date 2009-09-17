@@ -518,6 +518,10 @@ typedef struct {
 	 */
 	GSM_CalendarEntry	*Cal;
 	/**
+	 * Calendar status.
+	 */
+	GSM_CalendarStatus	*CalStatus;
+	/**
 	 * Used internally by phone drivers.
 	 */
 	unsigned char		*SecurityCode;

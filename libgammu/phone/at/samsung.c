@@ -549,12 +549,44 @@ GSM_Error SAMSUNG_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 GSM_Error SAMSUNG_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return ERR_NOTSUPPORTED;
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error error;
+	int ignore;
+
+	if (Priv->ReplyState != AT_Reply_OK) {
+		switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+		case AT_Reply_Error:
+			return ERR_NOTSUPPORTED;
+		case AT_Reply_CMSError:
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+			return ERR_UNKNOWNRESPONSE;
+		}
+	}
+
+	error = ATGEN_ParseReply(s,
+		GetLineString(msg.Buffer, &Priv->Lines, 2),
+		"+ORGI: @i, @i, @i, @i",
+		&s->Phone.Data.CalStatus->Used,
+		&s->Phone.Data.CalStatus->Free,
+		&ignore,
+		&ignore);
+	if (error != ERR_NONE) return error;
+	s->Phone.Data.CalStatus->Free += s->Phone.Data.CalStatus->Used;
+	return ERR_NONE;
 }
 
 GSM_Error SAMSUNG_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
 {
-	return ERR_NOTSUPPORTED;
+	GSM_Error error;
+
+	s->Phone.Data.CalStatus = Status;
+
+	ATGEN_WaitFor(s, "AT+ORGI?\r", 9, 0x00, 4, ID_GetCalendarNotesInfo);
+
+	return error;
 }
 
 GSM_Error SAMSUNG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
