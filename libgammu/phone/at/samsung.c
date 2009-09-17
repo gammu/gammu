@@ -589,9 +589,63 @@ GSM_Error SAMSUNG_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Sta
 	return error;
 }
 
+GSM_Error SAMSUNG_ParseAppointment(GSM_StateMachine *s, const char *line)
+{
+	return ERR_NOTIMPLEMENTED;
+}
+
+GSM_Error SAMSUNG_ParseAniversary(GSM_StateMachine *s, const char *line)
+{
+	return ERR_NOTIMPLEMENTED;
+}
+
 GSM_Error SAMSUNG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return ERR_NOTSUPPORTED;
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error error;
+	int ignore, type;
+	const char *line;
+
+	if (Priv->ReplyState != AT_Reply_OK) {
+		switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+		case AT_Reply_Error:
+			return ERR_NOTSUPPORTED;
+		case AT_Reply_CMSError:
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+			return ERR_UNKNOWNRESPONSE;
+		}
+	}
+
+	line = GetLineString(msg.Buffer, &Priv->Lines, 2);
+
+	error = ATGEN_ParseReply(s,
+		line,
+		"+ORGR: @i, @i, @0",
+		&ignore,
+		&type);
+	if (error != ERR_NONE) return error;
+
+	switch (type) {
+		case 1:
+			s->Phone.Data.Cal->Type = GSM_CAL_MEETING;
+			return SAMSUNG_ParseAppointment(s, line);
+		case 2:
+			s->Phone.Data.Cal->Type = GSM_CAL_BIRTHDAY;
+			return SAMSUNG_ParseAniversary(s, line);
+		case 3:
+			s->Phone.Data.Cal->Type = GSM_CAL_REMINDER;
+			return SAMSUNG_ParseAppointment(s, line);
+		case 4:
+			s->Phone.Data.Cal->Type = GSM_CAL_MEMO;
+			return SAMSUNG_ParseAppointment(s, line);
+		default:
+			smprintf(s, "WARNING: Unknown entry type %d, treating as memo!\n", type);
+			s->Phone.Data.Cal->Type = GSM_CAL_MEMO;
+			return SAMSUNG_ParseAppointment(s, line);
+	}
 }
 
 GSM_Error SAMSUNG_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
@@ -601,7 +655,15 @@ GSM_Error SAMSUNG_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 
 GSM_Error SAMSUNG_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return ERR_NOTSUPPORTED;
+	char req[50];
+	GSM_Error error;
+
+	s->Phone.Data.Cal = Note;
+
+	sprintf(req, "AT+ORGR=%d\r", Note->Location);
+
+	ATGEN_WaitFor(s, req, strlen(req), 0x00, 10, ID_GetCalendarNote);
+	return error;
 }
 
 GSM_Error SAMSUNG_ReplySetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
