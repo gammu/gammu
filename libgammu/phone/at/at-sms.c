@@ -1334,7 +1334,9 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 				req[PHONE_SMSDeliver.TPDCS]);
 			ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 4, ID_SetSMSParameters);
 		}
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			smprintf(s, "WARNING: Failed to set message parameters, continuing without them!\n");
+		}
 		switch (message->Coding) {
 		case SMS_Coding_Default_No_Compression:
 			/* If not SMS with UDH, it's as normal text */
