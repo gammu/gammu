@@ -5047,7 +5047,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 
 {SAMSUNG_ReplyGetCalendarStatus,"AT+ORGI?"		,0x00,0x00,ID_GetCalendarNotesInfo },
 {SAMSUNG_ReplyGetCalendar,	"AT+ORG="		,0x00,0x00,ID_GetCalendarNote },
-{SAMSUNG_ReplyDelCalendar,	"AT+ORGD="		,0x00,0x00,ID_DeleteCalendarNote },
+{ATGEN_GenericReply,		"AT+ORGD="		,0x00,0x00,ID_DeleteCalendarNote },
 {SAMSUNG_ReplySetCalendar,	"AT+ORGW="		,0x00,0x00,ID_SetCalendarNote },
 
 {ATGEN_GenericReplyIgnore, 	"^RSSI:"		,0x00,0x00,ID_IncomingFrame	 },
