@@ -547,12 +547,17 @@ GSM_Error SAMSUNG_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	return ERR_NOTIMPLEMENTED;
 }
 
+GSM_Error SAMSUNG_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	return ERR_NOTSUPPORTED;
+}
+
 GSM_Error SAMSUNG_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
 {
 	return ERR_NOTSUPPORTED;
 }
 
-GSM_Error SAMSUNG_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	return ERR_NOTSUPPORTED;
 }
@@ -567,27 +572,27 @@ GSM_Error SAMSUNG_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return ERR_NOTSUPPORTED;
 }
 
-GSM_Error SAMSUNG_ReplyAddCalendarNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ReplySetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	return ERR_NOTSUPPORTED;
 }
 
-GSM_Error SAMSUNG_ReplyDelCalendarNote(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ReplyDelCalendar(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	return ERR_NOTSUPPORTED;
 }
 
-GSM_Error SAMSUNG_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error SAMSUNG_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	return ERR_NOTSUPPORTED;
 }
 
-GSM_Error SAMSUNG_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error SAMSUNG_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	return ERR_NOTSUPPORTED;
 }
 
-GSM_Error SAMSUNG_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error SAMSUNG_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	return ERR_NOTSUPPORTED;
 }
