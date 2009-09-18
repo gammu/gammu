@@ -631,7 +631,7 @@ par24: Repeat until year
 	Note->EntriesNum = 4;
 	error = ATGEN_ParseReply(s,
 		line,
-		"+ORGR: @i, @i, @s, @s, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @s, @I, @I, @I, @I, @s, @s, @I, @I, @I",
+		"+ORGR: @i, @i, @S, @S, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @s, @I, @I, @I, @I, @s, @s, @I, @I, @I",
 		&ignore,
 		&ignore,
 		Note->Entries[0].Text, sizeof(Note->Entries[0].Text),
@@ -698,7 +698,7 @@ par24: Empty
 	Note->EntriesNum = 2;
 	error = ATGEN_ParseReply(s,
 		line,
-		"+ORGR: @i, @i, @s, @s, @i, @i, @i, @i, @i, @s, @s, @s, @s, @s, @s, @i, @i, @i, @i, @0",
+		"+ORGR: @i, @i, @S, @S, @i, @i, @i, @i, @i, @s, @s, @s, @s, @s, @s, @i, @i, @i, @i, @0",
 		&ignore,
 		&ignore,
 		ignorestring, sizeof(ignorestring),
@@ -765,7 +765,7 @@ par24: Empty
 	Note->EntriesNum = 3;
 	error = ATGEN_ParseReply(s,
 		line,
-		"+ORGR: @i, @i, @s, @s, @i, @i, @i, @i, @i, @i, @i, @i, @s, @s, @s, @i, @i, @i, @s, @i, @i, @0",
+		"+ORGR: @i, @i, @S, @S, @i, @i, @i, @i, @i, @i, @i, @i, @s, @s, @s, @i, @i, @i, @s, @i, @i, @0",
 		&ignore,
 		&ignore,
 		ignorestring, sizeof(ignorestring),
