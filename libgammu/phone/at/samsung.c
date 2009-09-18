@@ -879,7 +879,7 @@ GSM_Error SAMSUNG_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 GSM_Error SAMSUNG_ReplySetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return ERR_IMPLEMENTED;
+	return ERR_NOTIMPLEMENTED;
 }
 
 GSM_Error SAMSUNG_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
@@ -895,12 +895,12 @@ GSM_Error SAMSUNG_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 GSM_Error SAMSUNG_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return ERR_IMPLEMENTED;
+	return ERR_NOTIMPLEMENTED;
 }
 
 GSM_Error SAMSUNG_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return ERR_IMPLEMENTED;
+	return ERR_NOTIMPLEMENTED;
 }
 #endif
 
