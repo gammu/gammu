@@ -849,9 +849,15 @@ GSM_Error SAMSUNG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s
 GSM_Error SAMSUNG_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
 	GSM_Error error;
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	if (start) {
 		/* One bellow actual first position */
 		Note->Location = 0;
+		error = SAMSUNG_GetCalendarStatus(s, &Priv->CalendarStatus);
+		if (error != ERR_NONE) {
+			return error;
+		}
+		Priv->CalendarRead = 0;
 	}
 	s->Phone.Data.Cal 	= Note;
 	Note->EntriesNum 	= 0;
@@ -859,7 +865,18 @@ GSM_Error SAMSUNG_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 	error = ERR_EMPTY;
 	while (error == ERR_EMPTY) {
 		Note->Location++;
+		if (Note->Location > Priv->CalendarStatus.Used + Priv->CalendarStatus.Free) {
+			/* We're at the end */
+			return ERR_EMPTY;
+		}
+		if (Priv->CalendarRead > Priv->CalendarStatus.Used) {
+			/* We've read all entries */
+			return ERR_EMPTY;
+		}
 		error = SAMSUNG_GetCalendar(s, Note);
+		if (error == ERR_NONE) {
+			Priv->CalendarRead++;
+		}
 	}
 	return error;
 }
