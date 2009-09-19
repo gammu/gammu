@@ -871,7 +871,7 @@ GSM_Error SAMSUNG_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	s->Phone.Data.Cal = Note;
 
-	sprintf(req, "AT+ORGR=%d\r", Note->Location);
+	sprintf(req, "AT+ORGR=%d\r", Note->Location - 1);
 
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 10, ID_GetCalendarNote);
 	return error;
