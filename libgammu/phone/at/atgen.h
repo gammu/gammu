@@ -285,6 +285,8 @@ typedef struct {
 	int			LastSMSRead;
 	int			FirstCalendarPos;
 	int			FirstFreeCalendarPos;
+	GSM_CalendarStatus	CalendarStatus;
+	int			CalendarRead;
 	/**
 	 * Can we write messages to SIM memory?
 	 */

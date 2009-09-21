@@ -47,17 +47,20 @@ int main(int argc UNUSED, char **argv UNUSED)
 	Priv->Manufacturer = AT_Samsung;
 
 	/* Perform real tests */
-	error = SAMSUNG_ParseAniversary(s, "+ORGR: 67,2,,\"Laura Santiesteban Cabrera\",3,11,2009,9,0,,,,,,,1,3,0,4,,,,,");
+	error = SAMSUNG_ParseAniversary(s, "+ORGR: 67,2,,\"\002Laura Santiesteban Cabrera\003\",3,11,2009,9,0,,,,,,,1,3,0,4,,,,,");
 	gammu_test_result(error, "Aniversary 1");
 
-	error = SAMSUNG_ParseTask(s, "+ORGR: 205,3,,\"Cemento\",13,3,2009,10,35,13,3,2009,,,,1,3,0,0,1,0,,,");
+	error = SAMSUNG_ParseTask(s, "+ORGR: 205,3,,\"\002Cemento\003\",13,3,2009,10,35,13,3,2009,,,,1,3,0,0,1,0,,,");
 	gammu_test_result(error, "Task 1");
 
-	error = SAMSUNG_ParseAppointment(s, "+ORGR: 161,1,\"Comprar lagrimas artificiales\",\"Farmacia\",2,4,2009,9,0,2,4,2009,9,10,\"Farmacia\",1,1,0,3,,,29,1,2010");
+	error = SAMSUNG_ParseAppointment(s, "+ORGR: 161,1,\"\002Comprar lagrimas artificiales\003\",\"\002Farmacia\003\",2,4,2009,9,0,2,4,2009,9,10,\"Farmacia\",1,1,0,3,,,29,1,2010");
 	gammu_test_result(error, "Appointment 1");
 
-	error = SAMSUNG_ParseAppointment(s, "+ORGR: 235,4,\"Curso\",\"Averiguar\",13,3,2009,9,50,13,3,2009,9,59,,1,1,0,,,,,,");
+	error = SAMSUNG_ParseAppointment(s, "+ORGR: 235,4,\"\002Curso\003\",\"\002Averiguar\003\",13,3,2009,9,50,13,3,2009,9,59,,1,1,0,,,,,,");
 	gammu_test_result(error, "Appointment 2");
+
+	error = SAMSUNG_ParseAppointment(s, "+ORGR: 235,4,\"\002Curso\003\",\"\002\003\",13,3,2009,9,50,13,3,2009,9,59,,1,1,0,,,,,,");
+	gammu_test_result(error, "Appointment 3");
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);

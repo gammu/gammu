@@ -631,7 +631,7 @@ par24: Repeat until year
 	Note->EntriesNum = 4;
 	error = ATGEN_ParseReply(s,
 		line,
-		"+ORGR: @i, @i, @s, @s, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @s, @I, @I, @I, @I, @s, @s, @I, @I, @I",
+		"+ORGR: @i, @i, @S, @S, @i, @i, @i, @i, @i, @i, @i, @i, @i, @i, @s, @I, @I, @I, @I, @s, @s, @I, @I, @I",
 		&ignore,
 		&ignore,
 		Note->Entries[0].Text, sizeof(Note->Entries[0].Text),
@@ -698,7 +698,7 @@ par24: Empty
 	Note->EntriesNum = 2;
 	error = ATGEN_ParseReply(s,
 		line,
-		"+ORGR: @i, @i, @s, @s, @i, @i, @i, @i, @i, @s, @s, @s, @s, @s, @s, @i, @i, @i, @i, @0",
+		"+ORGR: @i, @i, @S, @S, @i, @i, @i, @i, @i, @s, @s, @s, @s, @s, @s, @i, @i, @i, @i, @0",
 		&ignore,
 		&ignore,
 		ignorestring, sizeof(ignorestring),
@@ -765,7 +765,7 @@ par24: Empty
 	Note->EntriesNum = 3;
 	error = ATGEN_ParseReply(s,
 		line,
-		"+ORGR: @i, @i, @s, @s, @i, @i, @i, @i, @i, @i, @i, @i, @s, @s, @s, @i, @i, @i, @s, @i, @i, @0",
+		"+ORGR: @i, @i, @S, @S, @i, @i, @i, @i, @i, @i, @i, @i, @s, @s, @s, @i, @i, @i, @s, @i, @i, @0",
 		&ignore,
 		&ignore,
 		ignorestring, sizeof(ignorestring),
@@ -849,9 +849,15 @@ GSM_Error SAMSUNG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s
 GSM_Error SAMSUNG_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
 	GSM_Error error;
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	if (start) {
 		/* One bellow actual first position */
 		Note->Location = 0;
+		error = SAMSUNG_GetCalendarStatus(s, &Priv->CalendarStatus);
+		if (error != ERR_NONE) {
+			return error;
+		}
+		Priv->CalendarRead = 0;
 	}
 	s->Phone.Data.Cal 	= Note;
 	Note->EntriesNum 	= 0;
@@ -859,7 +865,18 @@ GSM_Error SAMSUNG_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 	error = ERR_EMPTY;
 	while (error == ERR_EMPTY) {
 		Note->Location++;
+		if (Note->Location > Priv->CalendarStatus.Used + Priv->CalendarStatus.Free) {
+			/* We're at the end */
+			return ERR_EMPTY;
+		}
+		if (Priv->CalendarRead > Priv->CalendarStatus.Used) {
+			/* We've read all entries */
+			return ERR_EMPTY;
+		}
 		error = SAMSUNG_GetCalendar(s, Note);
+		if (error == ERR_NONE) {
+			Priv->CalendarRead++;
+		}
 	}
 	return error;
 }
@@ -871,7 +888,7 @@ GSM_Error SAMSUNG_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	s->Phone.Data.Cal = Note;
 
-	sprintf(req, "AT+ORGR=%d\r", Note->Location);
+	sprintf(req, "AT+ORGR=%d\r", Note->Location - 1);
 
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 10, ID_GetCalendarNote);
 	return error;
@@ -879,7 +896,7 @@ GSM_Error SAMSUNG_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 GSM_Error SAMSUNG_ReplySetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return ERR_IMPLEMENTED;
+	return ERR_NOTIMPLEMENTED;
 }
 
 GSM_Error SAMSUNG_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
@@ -895,12 +912,12 @@ GSM_Error SAMSUNG_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 GSM_Error SAMSUNG_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return ERR_IMPLEMENTED;
+	return ERR_NOTIMPLEMENTED;
 }
 
 GSM_Error SAMSUNG_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return ERR_IMPLEMENTED;
+	return ERR_NOTIMPLEMENTED;
 }
 #endif
 
