@@ -568,9 +568,10 @@ GSM_Error SAMSUNG_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMach
 
 	error = ATGEN_ParseReply(s,
 		GetLineString(msg.Buffer, &Priv->Lines, 2),
-		"+ORGI: @i, @i, @i, @i",
+		"+ORGI: @i, @i, @i, @i, @i",
 		&s->Phone.Data.CalStatus->Used,
 		&s->Phone.Data.CalStatus->Free,
+		&ignore,
 		&ignore,
 		&ignore);
 	if (error != ERR_NONE) return error;
