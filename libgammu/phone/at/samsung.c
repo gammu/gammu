@@ -575,7 +575,7 @@ GSM_Error SAMSUNG_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMach
 		&ignore,
 		&ignore);
 	if (error != ERR_NONE) return error;
-	s->Phone.Data.CalStatus->Free += s->Phone.Data.CalStatus->Used;
+	s->Phone.Data.CalStatus->Free -= s->Phone.Data.CalStatus->Used;
 	return ERR_NONE;
 }
 
