@@ -866,11 +866,11 @@ GSM_Error SAMSUNG_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 	error = ERR_EMPTY;
 	while (error == ERR_EMPTY) {
 		Note->Location++;
-		if (Note->Location > Priv->CalendarStatus.Used + Priv->CalendarStatus.Free) {
+		if (Note->Location >= Priv->CalendarStatus.Used + Priv->CalendarStatus.Free) {
 			/* We're at the end */
 			return ERR_EMPTY;
 		}
-		if (Priv->CalendarRead > Priv->CalendarStatus.Used) {
+		if (Priv->CalendarRead >= Priv->CalendarStatus.Used) {
 			/* We've read all entries */
 			return ERR_EMPTY;
 		}
