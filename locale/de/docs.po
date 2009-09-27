@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-09-16 15:45+0300\n"
-"PO-Revision-Date: 2009-09-27 21:47+0200\n"
+"PO-Revision-Date: 2009-09-27 21:49+0200\n"
 "Last-Translator: samuel jost <samuel.jost@gmx.at>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -108,7 +108,7 @@ msgstr ""
 #: docs/user/gammu.1:21
 #, no-wrap
 msgid "OPTIONS"
-msgstr ""
+msgstr "Optionen"
 
 # type: Plain text
 #. type: Plain text
