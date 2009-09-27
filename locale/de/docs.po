@@ -149,7 +149,7 @@ msgstr ""
 #: docs/user/gammu.1:34
 #, no-wrap
 msgid "Commands"
-msgstr ""
+msgstr "Komandos"
 
 #. type: Plain text
 #: docs/user/gammu.1:37
