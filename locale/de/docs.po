@@ -59,7 +59,7 @@ msgstr "Gammu Dokumentation"
 #: docs/user/gammu-smsd-dbi.7:2 docs/user/gammu-smsd-tables.7:2
 #, no-wrap
 msgid "NAME"
-msgstr ""
+msgstr "NAME"
 
 # type: Plain text
 #. type: Plain text
