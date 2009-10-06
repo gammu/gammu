@@ -31,6 +31,7 @@ ChangeLog
 [-] * Huawei E17X has broken UCS-2, do not use it (bug #962).
 [-] * Do not fail if phone does not support extended SMS params (bug #927).
 [+] * Added support for Samsung calendar (bug #839).
+[-] * Do not choke on OK in message text.
     
 20090908 - 1.26.1
 
