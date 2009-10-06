@@ -52,8 +52,10 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 	/* These are lines with end of "normal" answers */
 	static const char 		*StartStrings[] = {
-		"OK"		, 	"ERROR"	 	,
-		"+CME ERROR:"	,	"+CMS ERROR:"	,
+		"OK"		,
+		"ERROR"	 	,
+		"+CME ERROR:"	,
+		"+CMS ERROR:"	,
 
 		"COMMAND NOT SUPPORT" /* HUAWEI */	,
 
