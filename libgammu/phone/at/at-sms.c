@@ -797,35 +797,36 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 				smprintf(s, "Can not find +CMGL:!\n");
 				return ERR_UNKNOWN;
 			}
-		} else {
-			/* Parse reply */
-			error = ATGEN_ParseReply(s, str, "+CMGL: @i, @0", &cur);
-			if (error != ERR_NONE) {
-				return error;
-			}
-			Priv->SMSCount++;
-
-			/* Reallocate buffer if needed */
-			if (allocsize <= Priv->SMSCount) {
-				allocsize += 20;
-				Priv->SMSCache = (GSM_AT_SMS_Cache *)realloc(Priv->SMSCache, allocsize * sizeof(GSM_AT_SMS_Cache));
-				if (Priv->SMSCache == NULL) {
-					return ERR_MOREMEMORY;
-				}
-			}
-
-			/* Should we use index instead of location? Samsung P900 needs this hack. */
-			if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKEN_CMGL)) {
-				ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, Priv->SMSCount);
-			} else {
-				ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, cur);
-			}
-			Priv->SMSCache[Priv->SMSCount - 1].Location = sms.Location;
-			Priv->SMSCache[Priv->SMSCount - 1].State = -1;
-
-			/* Go to PDU/Text data */
-			line++;
+			continue;
 		}
+
+		/* Parse reply */
+		error = ATGEN_ParseReply(s, str, "+CMGL: @i, @0", &cur);
+		if (error != ERR_NONE) {
+			return error;
+		}
+		Priv->SMSCount++;
+
+		/* Reallocate buffer if needed */
+		if (allocsize <= Priv->SMSCount) {
+			allocsize += 20;
+			Priv->SMSCache = (GSM_AT_SMS_Cache *)realloc(Priv->SMSCache, allocsize * sizeof(GSM_AT_SMS_Cache));
+			if (Priv->SMSCache == NULL) {
+				return ERR_MOREMEMORY;
+			}
+		}
+
+		/* Should we use index instead of location? Samsung P900 needs this hack. */
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKEN_CMGL)) {
+			ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, Priv->SMSCount);
+		} else {
+			ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, cur);
+		}
+		Priv->SMSCache[Priv->SMSCount - 1].Location = sms.Location;
+		Priv->SMSCache[Priv->SMSCount - 1].State = -1;
+
+		/* Go to PDU/Text data */
+		line++;
 
 		/* Fill in cache of PDU data */
 		if (Priv->SMSMode == SMS_AT_PDU) {
