@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-09-16 15:45+0300\n"
+"POT-Creation-Date: 2009-10-06 14:29+0300\n"
 "PO-Revision-Date: 2009-02-02 18:24+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -675,20 +675,20 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:225
 msgid ""
-"When give folder 0, sms is given from \"flat\" memory (all sms from all "
+"Folder 0 means that sms is being read from \"flat\" memory (all sms from all "
 "folders have unique numbers). It's sometimes emulated by Gammu. You can use "
 "it with all phones."
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:232
 msgid ""
-"When give folder 1, 2, etc. sms are taken from Inbox, Outbox, etc.  and each "
-"sms has unique number in his folder. Name of folders can depend on your "
-"phone (the most often 1=\"Inbox\", 2=\"Outbox\", etc.).  This method is not "
-"supported by all phones (for example, not supported by Nokia 3310, 5110, "
-"6110). If work with your phone, use B<getsmsfolders> to get folders list."
+"Other folders like 1, 2, etc. match folders in phone such as Inbox, Outbox, "
+"etc.  and each sms has unique number in his folder. Name of folders can "
+"depend on your phone (the most often 1=\"Inbox\", 2=\"Outbox\", etc.).  This "
+"method is not supported by all phones (for example, not supported by Nokia "
+"3310, 5110, 6110). If work with your phone, use B<getsmsfolders> to get "
+"folders list."
 msgstr ""
 
 # type: TP

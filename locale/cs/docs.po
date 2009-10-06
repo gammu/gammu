@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-09-16 15:45+0300\n"
-"PO-Revision-Date: 2009-09-16 15:48+0200\n"
+"POT-Creation-Date: 2009-10-06 14:29+0300\n"
+"PO-Revision-Date: 2009-10-06 14:33+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -734,7 +734,7 @@ msgstr "Načte SMS."
 #. type: Plain text
 #: docs/user/gammu.1:225
 msgid ""
-"When give folder 0, sms is given from \"flat\" memory (all sms from all "
+"Folder 0 means that sms is being read from \"flat\" memory (all sms from all "
 "folders have unique numbers). It's sometimes emulated by Gammu. You can use "
 "it with all phones."
 msgstr ""
@@ -742,16 +742,22 @@ msgstr ""
 "ze všech složek mají unikátní čísla). V některých případech je toto chování "
 "emulováno Gammu. Můžete ho proto použít se všemi telefony."
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:232
 msgid ""
-"When give folder 1, 2, etc. sms are taken from Inbox, Outbox, etc.  and each "
-"sms has unique number in his folder. Name of folders can depend on your "
-"phone (the most often 1=\"Inbox\", 2=\"Outbox\", etc.).  This method is not "
-"supported by all phones (for example, not supported by Nokia 3310, 5110, "
-"6110). If work with your phone, use B<getsmsfolders> to get folders list."
+"Other folders like 1, 2, etc. match folders in phone such as Inbox, Outbox, "
+"etc.  and each sms has unique number in his folder. Name of folders can "
+"depend on your phone (the most often 1=\"Inbox\", 2=\"Outbox\", etc.).  This "
+"method is not supported by all phones (for example, not supported by Nokia "
+"3310, 5110, 6110). If work with your phone, use B<getsmsfolders> to get "
+"folders list."
 msgstr ""
+"Jiné složky jako 1, 2, atd. odpovídají složkám v telefonu jako Přijaté, "
+"Odeslané, atd. a každá SMS má unikátní číslo v dané složce. Jména složek "
+"závisí na použitém telefonu (většinou 1=\"Přijaté\", 2=\"Odeslané\", atd.). "
+"Tato metoda není podporována všemi telefony (například Noka 3310, 5110 a "
+"6110 jí nepodporují). Pokud s vaším telefonem funguje, můžete seznam složek "
+"získat příkazem B<getsmsfolders>."
 
 # type: TP
 #. type: TP
@@ -1690,9 +1696,9 @@ msgstr "B<addcategory TODO|PHONEBOOK>I< text>"
 #: docs/user/gammu.1:656 docs/user/gammu.1:1050 docs/user/gammu.1:1190
 #: docs/user/gammu.1:1310 docs/user/gammu.1:1462 docs/user/gammu.1:1547
 #: docs/user/gammu.1:1866 docs/user/gammu.1:2091
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<addnew>I< file [-yes] [-memory ME|SM|..]>"
-msgstr "B<addnew>I< file [-yes]>"
+msgstr "B<addnew>I< file [-yes] [-memory ME|SM|..]>"
 
 # type: Plain text
 #. type: Plain text

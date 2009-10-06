@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-09-14 16:04+0200\n"
+"POT-Creation-Date: 2009-10-06 14:33+0200\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2749,7 +2749,7 @@ msgstr ""
 
 #: gammu/misc.c:1366 gammu/misc.c:1412
 msgid "Automatic"
-msgstr ""
+msgstr "Automàtic"
 
 #: gammu/misc.c:1369 gammu/misc.c:1371 gammu/misc.c:1415 gammu/misc.c:1417
 msgid "Authentication type"
