@@ -32,6 +32,7 @@ ChangeLog
 [-] * Do not fail if phone does not support extended SMS params (bug #927).
 [+] * Added support for Samsung calendar (bug #839).
 [-] * Do not choke on OK in message text.
+[-] * Add ID of Nokia 6020b (bug #1004).
     
 20090908 - 1.26.1
 
