@@ -108,7 +108,9 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		break;
 	case 10:
 	case 13:
-		if (!d->wascrlf) d->LineEnd = d->Msg.Length-1;
+		if (!d->wascrlf) {
+			d->LineEnd = d->Msg.Length - 1;
+		}
 		d->wascrlf = TRUE;
 		if (d->Msg.Length > 0 && rx_char == 10 && d->Msg.Buffer[d->Msg.Length-2]==13) {
 			i = 0;
@@ -133,7 +135,8 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 					d->Msg.Length			= 0;
 				}
 			}
-			if (d->Msg.Length == 0) break;
+			if (d->Msg.Length == 0)
+				break;
 
 			i = 0;
 			while (SpecialAnswers[i].text != NULL) {
