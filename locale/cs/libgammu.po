@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.26.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-27 08:40+0200\n"
-"PO-Revision-Date: 2009-07-09 11:27+0200\n"
+"POT-Creation-Date: 2009-10-10 20:15+0200\n"
+"PO-Revision-Date: 2009-10-10 20:21+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -81,27 +81,27 @@ msgstr "Žadná odpověď v očekaváné době. Telefon pravděpodobně není p�
 
 #: libgammu/gsmcomon.c:98
 msgid ""
-"Frame not requested right now. See <http://cihar.com/gammu/report> for "
+"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Tato odpověď od telefonu nebyla očekávána. Podívejte se na stránku <http://"
-"cihar.com/gammu/report> pro informace jak tuto událost nahlásit."
+"cs.wammu.eu/support/bugs/> pro informace jak tuto událost nahlásit."
 
 #: libgammu/gsmcomon.c:99
 msgid ""
-"Unknown response from phone. See <http://cihar.com/gammu/report> for "
+"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Neznámá odpověď od telefonu. Podívejte se na stránku <http://cihar.com/gammu/"
-"report> pro informace jak tuto událost nahlásit."
+"Neznámá odpověď od telefonu. Podívejte se na stránku <http://cs.wammu.eu/"
+"support/bugs/> pro informace jak tuto událost nahlásit."
 
 #: libgammu/gsmcomon.c:100
 msgid ""
-"Unknown frame. See <http://cihar.com/gammu/report> for information how to "
+"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Neznámý rámec. Podívejte se na stránku <http://cihar.com/gammu/report> pro "
-"informace jak tuto událost nahlásit."
+"Neznámý rámec. Podívejte se na stránku <http://cs.wammu.eu/support/bugs/> "
+"pro informace jak tuto událost nahlásit."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."

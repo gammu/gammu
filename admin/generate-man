@@ -192,7 +192,7 @@ Gammu - Does some neat things with your cellular phone or modem.
 DESCRIPTION = '''
 .P
 This program is a tool for mobile phones. Many vendors and phones
-are supported, for actual listing see <http://cihar.com/gammu/phonedb/>.
+are supported, for actual listing see <http://wammu.eu/phones/>.
 '''
 
 COPYRIGHT = '''
@@ -220,6 +220,8 @@ do it on command line using \\-d textall \\-f /tmp/gammu.log):
 With this settings, Gammu generates /tmp/gammu.log on each connection to
 phone and stores dump of communication there. You can also find some
 hints for improving support for your phone in this log.
+
+See <http://wammu.eu/support/bugs/> for more information on reporting bugs.
 
 Please report bugs to <http://bugs.cihar.com>.
 '''

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-27 08:40+0200\n"
+"POT-Creation-Date: 2009-10-10 20:15+0200\n"
 "PO-Revision-Date: 2009-06-01 14:02+0200\n"
 "Last-Translator: Cédric Corazza <cedric.corazza@wanadoo.fr>\n"
 "Language-Team: none\n"
@@ -87,24 +87,27 @@ msgstr ""
 "être pas connecté."
 
 #: libgammu/gsmcomon.c:98
+#, fuzzy
 msgid ""
-"Frame not requested right now. See <http://cihar.com/gammu/report> for "
+"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Frame n'est pas demandée pour le moment. Consulter <http://cihar.com/gammu/"
 "report> pour savoir comment rapporter cette information."
 
 #: libgammu/gsmcomon.c:99
+#, fuzzy
 msgid ""
-"Unknown response from phone. See <http://cihar.com/gammu/report> for "
+"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Réponse inconnu du téléphone. Consulter <http://cihar.com/gammu/report> pour "
 "savoir comment rapporter cette information."
 
 #: libgammu/gsmcomon.c:100
+#, fuzzy
 msgid ""
-"Unknown frame. See <http://cihar.com/gammu/report> for information how to "
+"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
 "Frame inconnue. Consulter <http://cihar.com/gammu/report> pour savoir "

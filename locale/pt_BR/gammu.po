@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-09-14 16:04+0200\n"
+"POT-Creation-Date: 2009-10-10 20:15+0200\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1119,7 +1119,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:300
 msgid ""
 "Sorry, but configuration matrix for this model has not yet been added. See "
-"<http://cihar.com/gammu/report> for information how to report it."
+"<http://wammu.eu/support/bugs/> for information how to report it."
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:366
@@ -1611,7 +1611,7 @@ msgstr ""
 msgid "  Saving to %s\n"
 msgstr ""
 
-#: gammu/files.c:692 gammu/nokia.c:925
+#: gammu/files.c:692 gammu/nokia.c:937
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr ""
@@ -1621,7 +1621,7 @@ msgstr ""
 msgid "What file type (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/files.c:736 gammu/misc.c:1149 gammu/nokia.c:934
+#: gammu/files.c:736 gammu/misc.c:1149 gammu/nokia.c:946
 #: helper/message-cmdline.c:1292
 msgid "Parameter missing!"
 msgstr ""
@@ -1707,7 +1707,7 @@ msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
 #: gammu/gammu.c:380
-msgid "Check <http://cihar.com/gammu/> for updates."
+msgid "Check <http://wammu.eu/gammu/> for updates."
 msgstr ""
 
 #: gammu/gammu.c:406
@@ -3279,101 +3279,101 @@ msgstr ""
 msgid "(longer)"
 msgstr ""
 
-#: gammu/nokia.c:240
+#: gammu/nokia.c:252
 #, c-format
 msgid "Checking %s\n"
 msgstr ""
 
-#: gammu/nokia.c:245
+#: gammu/nokia.c:257
 msgid "  Only part handled!"
 msgstr ""
 
-#: gammu/nokia.c:324
+#: gammu/nokia.c:336
 msgid "  Problem with adding playlist"
 msgstr ""
 
-#: gammu/nokia.c:371
+#: gammu/nokia.c:383
 #, c-format
 msgid "Writing file %s:"
 msgstr ""
 
-#: gammu/nokia.c:426
+#: gammu/nokia.c:438
 msgid ""
 "Your phone model is not supported. Please report it to authors (see <http://"
-"cihar.com/gammu/report>). Thank you."
+"wammu.eu/support/bugs/>). Thank you."
 msgstr ""
 
-#: gammu/nokia.c:442
+#: gammu/nokia.c:454
 msgid "Problem with deleting playlist"
 msgstr ""
 
-#: gammu/nokia.c:536
+#: gammu/nokia.c:548
 #, c-format
 msgid "What folder type (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/nokia.c:570 gammu/nokia.c:644
+#: gammu/nokia.c:582 gammu/nokia.c:656
 msgid "Folder not found. Probably function not supported!"
 msgstr ""
 
-#: gammu/nokia.c:593
+#: gammu/nokia.c:605
 #, c-format
 msgid "Searching for phone folder: "
 msgstr ""
 
-#: gammu/nokia.c:670
+#: gammu/nokia.c:682
 msgid "No vendor info in JAD file"
 msgstr ""
 
-#: gammu/nokia.c:675
+#: gammu/nokia.c:687
 msgid "No name info in JAD file"
 msgstr ""
 
-#: gammu/nokia.c:680
+#: gammu/nokia.c:692
 msgid "No JAR URL info in JAD file"
 msgstr ""
 
-#: gammu/nokia.c:686
+#: gammu/nokia.c:698
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
 msgstr ""
 
-#: gammu/nokia.c:710
+#: gammu/nokia.c:722
 msgid "No JAR size info in JAD file. Added by Gammu."
 msgstr ""
 
-#: gammu/nokia.c:719
+#: gammu/nokia.c:731
 #, c-format
 msgid "Adding \"%s\""
 msgstr ""
 
-#: gammu/nokia.c:720
+#: gammu/nokia.c:732
 #, c-format
 msgid " version %s"
 msgstr ""
 
-#: gammu/nokia.c:721
+#: gammu/nokia.c:733
 #, c-format
 msgid " created by %s\n"
 msgstr ""
 
-#: gammu/nokia.c:772 gammu/nokia.c:824
+#: gammu/nokia.c:784 gammu/nokia.c:836
 msgid "Application already exists. Deleting by Gammu."
 msgstr ""
 
-#: gammu/nokia.c:805 gammu/nokia.c:838
+#: gammu/nokia.c:817 gammu/nokia.c:850
 #, c-format
 msgid "  Deleting %s\n"
 msgstr ""
 
-#: gammu/nokia.c:861
+#: gammu/nokia.c:873
 msgid "Writing JAD file:"
 msgstr ""
 
-#: gammu/nokia.c:880
+#: gammu/nokia.c:892
 msgid "Writing JAR file:"
 msgstr ""
 
-#: gammu/nokia.c:955
+#: gammu/nokia.c:967
 msgid "Writing file:"
 msgstr ""
 

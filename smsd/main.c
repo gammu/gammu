@@ -102,7 +102,7 @@ NORETURN void version(void)
 	printf("This is free software: you are free to change and redistribute it.\n");
 	printf("There is NO WARRANTY, to the extent permitted by law.\n");
 	printf("\n");
-	printf("Check <http://cihar.com/gammu/> for updates.\n");
+	printf("Check <http://wammu.eu/gammu/> for updates.\n");
 	printf("\n");
 	exit(0);
 }
