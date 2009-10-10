@@ -176,11 +176,15 @@ void NokiaSecurityCode(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
-	DCT3GetSecurityCode(argc,argv);
+	if (CheckDCT3Only() != ERR_NOTSUPPORTED) {
+		DCT3GetSecurityCode(argc,argv);
+	}
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-/* 	DCT4ResetSecurityCode(argc, argv); */
-	DCT4GetSecurityCode(argc,argv);
+	if (CheckDCT4Only() != ERR_NOTSUPPORTED) {
+	/* 	DCT4ResetSecurityCode(argc, argv); */
+		DCT4GetSecurityCode(argc,argv);
+	}
 #endif
 
 	GSM_Terminate();
@@ -191,10 +195,14 @@ void NokiaSetPhoneMenus(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
-	DCT3SetPhoneMenus (argc, argv);
+	if (CheckDCT3Only() != ERR_NOTSUPPORTED) {
+		DCT3SetPhoneMenus (argc, argv);
+	}
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-	DCT4SetPhoneMenus (argc, argv);
+	if (CheckDCT4Only() != ERR_NOTSUPPORTED) {
+		DCT4SetPhoneMenus (argc, argv);
+	}
 #endif
 
 	GSM_Terminate();
@@ -205,10 +213,14 @@ void NokiaSelfTests(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
-	DCT3SelfTests(argc, argv);
+	if (CheckDCT3Only() != ERR_NOTSUPPORTED) {
+		DCT3SelfTests(argc, argv);
+	}
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-	DCT4SelfTests(argc, argv);
+	if (CheckDCT4Only() != ERR_NOTSUPPORTED) {
+		DCT4SelfTests(argc, argv);
+	}
 #endif
 
 	GSM_Terminate();
@@ -962,10 +974,14 @@ void NokiaGetADC(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
-	DCT3GetADC(argc,argv);
+	if (CheckDCT3Only() != ERR_NOTSUPPORTED) {
+		DCT3GetADC(argc,argv);
+	}
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-	DCT4GetADC(argc, argv);
+	if (CheckDCT4Only() != ERR_NOTSUPPORTED) {
+		DCT4GetADC(argc, argv);
+	}
 #endif
 
 	GSM_Terminate();
@@ -976,10 +992,14 @@ void NokiaDisplayTest(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
-	DCT3DisplayTest(argc,argv);
+	if (CheckDCT3Only() != ERR_NOTSUPPORTED) {
+		DCT3DisplayTest(argc,argv);
+	}
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-	DCT4DisplayTest(argc, argv);
+	if (CheckDCT4Only() != ERR_NOTSUPPORTED) {
+		DCT4DisplayTest(argc, argv);
+	}
 #endif
 
 	GSM_Terminate();
@@ -990,10 +1010,14 @@ void NokiaGetT9(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
-	DCT3GetT9(argc,argv);
+	if (CheckDCT3Only() != ERR_NOTSUPPORTED) {
+		DCT3GetT9(argc,argv);
+	}
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-	DCT4GetT9(argc, argv);
+	if (CheckDCT4Only() != ERR_NOTSUPPORTED) {
+		DCT4GetT9(argc, argv);
+	}
 #endif
 
 	GSM_Terminate();
@@ -1004,10 +1028,14 @@ void NokiaVibraTest(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
-	DCT3VibraTest(argc,argv);
+	if (CheckDCT3Only() != ERR_NOTSUPPORTED) {
+		DCT3VibraTest(argc,argv);
+	}
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-	DCT4VibraTest(argc, argv);
+	if (CheckDCT4Only() != ERR_NOTSUPPORTED) {
+		DCT4VibraTest(argc, argv);
+	}
 #endif
 
 	GSM_Terminate();

@@ -52,7 +52,7 @@ GSM_Error CheckDCT4Only(void)
 	return ERR_NONE;
 }
 
-static void CheckDCT4(void)
+void CheckDCT4(void)
 {
 	GSM_Error error;
 

@@ -15,6 +15,9 @@ void DCT4MakeCameraShoot   (int argc, char *argv[]);
 void DCT4GetScreenDump	   (int argc, char *argv[]);
 void DCT4GetPBKFeatures	   (int argc, char *argv[]);
 
+GSM_Error CheckDCT4Only(void);
+void CheckDCT4(void);
+
 #ifdef DEBUG
 	void DCT4ResetSecurityCode (int argc, char *argv[]);
 #endif
