@@ -297,7 +297,7 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 	}
 
 	if (current == 10) {
-		printf("%s\n", _("Sorry, but configuration matrix for this model has not yet been added. See <http://cihar.com/gammu/report> for information how to report it."));
+		printf("%s\n", _("Sorry, but configuration matrix for this model has not yet been added. See <http://wammu.eu/support/bugs/> for information how to report it."));
 		return;
 	}
 

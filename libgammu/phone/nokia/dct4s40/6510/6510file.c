@@ -2447,7 +2447,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 				break;
 		}
 		if (unknown) {
-			smprintf(s, "WARNING: Unknown block 0x%02x, see <http://cihar.com/gammu/report> how to report\n", FFF->Buffer[pos]);
+			smprintf(s, "WARNING: Unknown block 0x%02x, see <http://wammu.eu/support/bugs/> how to report\n", FFF->Buffer[pos]);
 			DumpMessage(&(s->di), FFF->Buffer + pos, 3 + (FFF->Buffer[pos + 1] << 8) + FFF->Buffer[pos + 2]);
 #ifdef DEBUG
 		} else {

@@ -371,7 +371,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 				s->ConnectionType ==  GCT_BLUEPHONET) {
 			/* Try to detect phone type */
 			if (strcmp(model->model, "unknown") == 0 && model->features[0] == 0) {
-				smprintf(s, "WARNING: phone not known, please report it to authors (see <http://cihar.com/gammu/report>). Thank you.\n");
+				smprintf(s, "WARNING: phone not known, please report it to authors (see <http://wammu.eu/support/bugs/>). Thank you.\n");
 				if (strncmp(s->Phone.Data.Model, "RM-", 3) == 0) {
 					/* 167 is really a wild guess */
 					if (atoi(s->Phone.Data.Model + 3) > 167) {
@@ -1013,7 +1013,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	}
 
 	if (disp) {
-		smprintf(s,". If you can, please report it (see <http://cihar.com/gammu/report>). Thank you\n");
+		smprintf(s,". If you can, please report it (see <http://wammu.eu/support/bugs/>). Thank you\n");
 		if (Phone->SentMsg != NULL) {
 			smprintf(s,"LAST SENT frame ");
 			smprintf(s, "type 0x%02X/length %ld", Phone->SentMsg->Type, (long)Phone->SentMsg->Length);

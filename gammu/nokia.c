@@ -435,7 +435,7 @@ void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
 	    	Print_Error(error);
 	}
 	if (error == ERR_FILENOTEXIST) {
-		printf("%s\n", _("Your phone model is not supported. Please report it to authors (see <http://cihar.com/gammu/report>). Thank you."));
+		printf("%s\n", _("Your phone model is not supported. Please report it to authors (see <http://wammu.eu/support/bugs/>). Thank you."));
 		GSM_Terminate();
 		Terminate(3);
 	} else if (error != ERR_EMPTY) {
