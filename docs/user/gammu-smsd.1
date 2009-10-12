@@ -111,10 +111,14 @@ If Gammu fails to start as a Windows service (you will usually get "Error
 1053: The service did not respond to the start or control request in a timely
 fashion"), first check your SMSD logs. If they do not contain any useful hint,
 try starting SMSD manually with exactly same parameters as you installed the
-service (without \-i), for example:
+service (without \-i).
+
+.TP
+For example the command line can look like:
 
 gammu\-smsd.exe \-c smsdrc
 
+.PP
 You now should be able to get errors from SMSD even if it fails to start as a
 service.
 
