@@ -592,6 +592,14 @@ typedef enum {
 	 * Phone require four digit year in time.
 	 */
 	F_FOUR_DIGIT_YEAR,
+	/**
+	 * Phone does not have a phone SMS memory even if it reports so.
+	 */
+	F_SMS_NO_ME,
+	/**
+	 * Phone does not have a SIM SMS memory even if it reports so.
+	 */
+	F_SMS_NO_SM,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

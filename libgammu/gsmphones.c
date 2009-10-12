@@ -114,6 +114,8 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"USE_SMSTEXTMODE", F_USE_SMSTEXTMODE},
 	{"CPIN_NO_OK", F_CPIN_NO_OK},
 	{"FOUR_DIGIT_YEAR", F_FOUR_DIGIT_YEAR},
+	{"SMS_NO_ME", F_SMS_NO_ME},
+	{"SMS_NO_SM", F_SMS_NO_SM},
 	{"", 0},
 };
 
@@ -827,6 +829,9 @@ GSM_PhoneModel allmodels[] = {
 	{"E162",	"E162",		"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, F_FOUR_DIGIT_YEAR, 0}},
 	{"E160G",	"E160G",	"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, F_FOUR_DIGIT_YEAR, 0}},
 	{"E162G",	"E162G",	"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, F_FOUR_DIGIT_YEAR, 0}},
+
+	/* Ubinetics */
+	{"GDC201",	"GDC201",	"",		{F_SMS_NO_ME, 0}},
 
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)

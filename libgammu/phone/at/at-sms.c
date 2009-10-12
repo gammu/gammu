@@ -152,6 +152,19 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 		Priv->PhoneSaveSMS = AT_AVAILABLE;
 	}
 
+
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_NO_ME)) {
+		smprintf(s, "Forcing to disable ME storage!\n");
+		s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_NOTAVAILABLE;
+		s->Phone.Data.Priv.ATGEN.PhoneSaveSMS = AT_NOTAVAILABLE;
+	}
+
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_NO_SM)) {
+		smprintf(s, "Forcing to disable SM storage!\n");
+		s->Phone.Data.Priv.ATGEN.SIMSMSMemory = AT_NOTAVAILABLE;
+		s->Phone.Data.Priv.ATGEN.SIMSaveSMS = AT_NOTAVAILABLE;
+	}
+
 	return error;
 }
 

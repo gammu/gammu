@@ -35,6 +35,7 @@ ChangeLog
 [-] * Add ID of Nokia 6020b (bug #1004).
 [-] * Fix decoding of SMS with extended characters.
 [-] * Fixed handling of DCT4 specific functions.
+[-] * Add workaround for especially broken Ubinetics GDC201.
     
 20090908 - 1.26.1
 
