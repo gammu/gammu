@@ -636,12 +636,12 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 			}
  			DecodeHexBin(buffer, input, length);
 			if (2 * strlen(buffer) >= outlength) return ERR_MOREMEMORY;
-   			DecodeDefault(output, buffer, strlen(buffer), FALSE, NULL);
+			DecodeDefault(output, buffer, strlen(buffer), TRUE, NULL);
 			free(buffer);
   			break;
   		case AT_CHARSET_GSM:
 			if (2 * length >= outlength) return ERR_MOREMEMORY;
-  			DecodeDefault(output, input, length, FALSE, NULL);
+			DecodeDefault(output, input, length, TRUE, NULL);
   			break;
   		case AT_CHARSET_UCS2:
   		case AT_CHARSET_UCS_2:
