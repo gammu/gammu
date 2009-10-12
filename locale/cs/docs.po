@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-12 14:40+0300\n"
-"PO-Revision-Date: 2009-10-10 20:15+0200\n"
+"PO-Revision-Date: 2009-10-12 14:43+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4306,6 +4306,8 @@ msgid ""
 "See E<lt>http://wammu.eu/support/bugs/E<gt> for more information on "
 "reporting bugs."
 msgstr ""
+"Na stránce E<lt>http://wammu.eu/support/bugs/E<gt> naleznete více informací "
+"o hlášení chyb."
 
 # type: Plain text
 #. type: Plain text
@@ -6287,7 +6289,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu-smsd.1:33
 msgid "See gammu-smsdrc(5) for config file documentation."
-msgstr ""
+msgstr "Dokumentace konfiguračního souboru je v gammu-smsdrc(5)."
 
 # type: TP
 #. type: TP
@@ -6564,7 +6566,6 @@ msgstr "Problémy se službou ve Windows"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd.1:117
-#, fuzzy
 msgid ""
 "If Gammu fails to start as a Windows service (you will usually get \"Error "
 "1053: The service did not respond to the start or control request in a "
@@ -6575,21 +6576,19 @@ msgstr ""
 "Pokud se Gammu nepodaří spustit jako služba ve Windows (obvykle dostanete "
 "chybu 1053, říkající, že služba neodpověděla včas), zkontrolujte logy SMSD. "
 "Pokud neobsahují žádné informace, zkuste SMSD spustit ručně s přesně "
-"stejnými parametry jako jste nainstalovali službu (bez parametru -i), "
-"například:"
+"stejnými parametry jako jste nainstalovali službu (bez parametru -i)."
 
 #. type: TP
 #: docs/user/gammu-smsd.1:118
 #, no-wrap
 msgid "For example the command line can look like:"
-msgstr ""
+msgstr "Příkazová řádka například může vypadat takto:"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd.1:122
-#, fuzzy
 msgid "gammu-smsd.exe -c smsdrc"
-msgstr "    gammu-smsd.exe -c smsdrc\n"
+msgstr "gammu-smsd.exe -c smsdrc"
 
 # type: Plain text
 #. type: Plain text
