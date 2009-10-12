@@ -19,6 +19,8 @@ the issue.
 ChangeLog
 =========
     
+2009???? - 1.26.91
+    
 20091012 - 1.26.90
 
 [-] * Fixed parsing of SMS with empty recipient (bug #998).
