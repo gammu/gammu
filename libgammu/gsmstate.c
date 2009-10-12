@@ -24,7 +24,7 @@
 
 #if defined(WIN32) || defined(DJGPP)
 /* Needed for SHGFP_TYPE_CURRENT */
-#define _WIN32_IE 0x0500
+#define _WIN32_IE 0x0501
 #include <shlobj.h>
 
 #define FALLBACK_GAMMURC "gammurc"
