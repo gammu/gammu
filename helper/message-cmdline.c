@@ -110,7 +110,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	GSM_MultiPartSMSInfo		SMSInfo;
 	GSM_NetworkInfo			NetInfo;
 	GSM_MMSIndicator		MMSInfo;
-	FILE 				*ReplaceFile,*f;
+	FILE 				*ReplaceFileHadle,*f;
 	char				ReplaceBuffer2	[200],ReplaceBuffer[200];
 	char				InputBuffer	[SEND_SAVE_SMS_BUFFER_SIZE/2+1];
 	unsigned char			Buffer		[GSM_MAX_MULTI_SMS][SEND_SAVE_SMS_BUFFER_SIZE];
@@ -1085,16 +1085,16 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 9:/* Replace file for text SMS */
-			ReplaceFile = fopen(argv[i], "rb");
-			if (ReplaceFile == NULL) {
+			ReplaceFileHadle = fopen(argv[i], "rb");
+			if (ReplaceFileHadle == NULL) {
 				error = ERR_CANTOPENFILE;
 				goto end_compose;
 			}
 			memset(ReplaceBuffer,0,sizeof(ReplaceBuffer));
-			if (fread(ReplaceBuffer,1,sizeof(ReplaceBuffer),ReplaceFile) != sizeof(ReplaceBuffer)) {
+			if (fread(ReplaceBuffer,1,sizeof(ReplaceBuffer),ReplaceFileHadle) != sizeof(ReplaceBuffer)) {
 				printf_err(_("Error while writing file!\n"));
 			}
-			fclose(ReplaceFile);
+			fclose(ReplaceFileHadle);
 			ReadUnicodeFile(ReplaceBuffer2,ReplaceBuffer);
 			for(j=0;j<(int)(UnicodeLength(Buffer[0]));j++) {
 				for (z=0;z<(int)(UnicodeLength(ReplaceBuffer2)/2);z++) {
