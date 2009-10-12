@@ -669,31 +669,31 @@ int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
 {
 	/* (c) by Pavel Janik and Pawel Kot */
 
-        unsigned char *OUTPUT 	= output; /* Current pointer to the output buffer */
-        unsigned char *INPUT  	= input;  /* Current pointer to the input buffer */
+        unsigned char *output_pos 	= output; /* Current pointer to the output buffer */
+        unsigned char *input_pos  	= input;  /* Current pointer to the input buffer */
         unsigned char Rest 	= 0x00;
         int	      Bits;
 
         Bits = offset ? offset : 7;
 
-        while ((INPUT - input) < in_length) {
+        while ((input_pos - input) < in_length) {
 
-                *OUTPUT = ((*INPUT & ByteMask) << (7 - Bits)) | Rest;
-                Rest = *INPUT >> Bits;
+                *output_pos = ((*input_pos & ByteMask) << (7 - Bits)) | Rest;
+                Rest = *input_pos >> Bits;
 
                 /* If we don't start from 0th bit, we shouldn't go to the
-                   next char. Under *OUTPUT we have now 0 and under Rest -
+                   next char. Under *output_pos we have now 0 and under Rest -
                    _first_ part of the char. */
-                if ((INPUT != input) || (Bits == 7)) OUTPUT++;
-                INPUT++;
+                if ((input_pos != input) || (Bits == 7)) output_pos++;
+                input_pos++;
 
-                if ((OUTPUT - output) >= out_length) break;
+                if ((output_pos - output) >= out_length) break;
 
                 /* After reading 7 octets we have read 7 full characters but
                    we have 7 bits as well. This is the next character */
                 if (Bits == 1) {
-                        *OUTPUT = Rest;
-                        OUTPUT++;
+                        *output_pos = Rest;
+                        output_pos++;
                         Bits = 7;
                         Rest = 0x00;
                 } else {
@@ -701,15 +701,15 @@ int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
                 }
         }
 
-        return OUTPUT - output;
+        return output_pos - output;
 }
 
 int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *output, int length)
 {
 	/* (c) by Pavel Janik and Pawel Kot */
 
-        unsigned char 	*OUTPUT = output; /* Current pointer to the output buffer */
-        unsigned char 	*INPUT  = input;  /* Current pointer to the input buffer */
+        unsigned char 	*output_pos = output; /* Current pointer to the output buffer */
+        unsigned char 	*input_pos  = input;  /* Current pointer to the input buffer */
         int		Bits;             /* Number of bits directly copied to
                                            * the output buffer */
         Bits = (7 + offset) % 8;
@@ -717,26 +717,26 @@ int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *ou
         /* If we don't begin with 0th bit, we will write only a part of the
            first octet */
         if (offset) {
-                *OUTPUT = 0x00;
-                OUTPUT++;
+                *output_pos = 0x00;
+                output_pos++;
         }
 
-        while ((INPUT - input) < length) {
-                unsigned char Byte = *INPUT;
+        while ((input_pos - input) < length) {
+                unsigned char Byte = *input_pos;
 
-                *OUTPUT = Byte >> (7 - Bits);
+                *output_pos = Byte >> (7 - Bits);
                 /* If we don't write at 0th bit of the octet, we should write
                    a second part of the previous octet */
                 if (Bits != 7)
-                        *(OUTPUT-1) |= (Byte & ((1 << (7-Bits)) - 1)) << (Bits+1);
+                        *(output_pos-1) |= (Byte & ((1 << (7-Bits)) - 1)) << (Bits+1);
 
                 Bits--;
 
-                if (Bits == -1) Bits = 7; else OUTPUT++;
+                if (Bits == -1) Bits = 7; else output_pos++;
 
-                INPUT++;
+                input_pos++;
         }
-        return (OUTPUT - output);
+        return (output_pos - output);
 }
 
 int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, gboolean semioctet)
