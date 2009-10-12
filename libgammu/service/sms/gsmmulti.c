@@ -1018,52 +1018,52 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 	return FALSE;
 }
 
-GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT, gboolean ems)
+GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, GSM_MultiSMSMessage **OutputMessages, gboolean ems)
 {
-	gboolean			*INPUTSorted, copyit,OtherNumbers[GSM_SMS_OTHER_NUMBERS+1],wrong=FALSE;
-	int			i,OUTPUTNum,z,w,m,p;
+	gboolean			*InputMessagesSorted, copyit,OtherNumbers[GSM_SMS_OTHER_NUMBERS+1],wrong=FALSE;
+	int			i,OutputMessagesNum,z,w,m,p;
 	int			j;
 	GSM_SiemensOTASMSInfo	SiemensOTA,SiemensOTA2;
 
 	i = 0;
-	while (INPUT[i] != NULL) i++;
+	while (InputMessages[i] != NULL) i++;
 
-	INPUTSorted = calloc(i, sizeof(gboolean));
-	if (INPUTSorted == NULL) return ERR_MOREMEMORY;
+	InputMessagesSorted = calloc(i, sizeof(gboolean));
+	if (InputMessagesSorted == NULL) return ERR_MOREMEMORY;
 
-	OUTPUTNum = 0;
-	OUTPUT[0] = NULL;
+	OutputMessagesNum = 0;
+	OutputMessages[0] = NULL;
 
 	if (ems) {
 		i=0;
-		while (INPUT[i] != NULL) {
-			if (INPUT[i]->SMS[0].UDH.Type == UDH_UserUDH) {
+		while (InputMessages[i] != NULL) {
+			if (InputMessages[i]->SMS[0].UDH.Type == UDH_UserUDH) {
 				w=1;
-				while (w < INPUT[i]->SMS[0].UDH.Length) {
-					switch(INPUT[i]->SMS[0].UDH.Text[w]) {
+				while (w < InputMessages[i]->SMS[0].UDH.Length) {
+					switch(InputMessages[i]->SMS[0].UDH.Text[w]) {
 					case 0x00:
 						smfprintf(di, "Adding ID to user UDH - linked SMS with 8 bit ID\n");
-						INPUT[i]->SMS[0].UDH.ID8bit	= INPUT[i]->SMS[0].UDH.Text[w+2];
-						INPUT[i]->SMS[0].UDH.ID16bit	= -1;
-						INPUT[i]->SMS[0].UDH.AllParts	= INPUT[i]->SMS[0].UDH.Text[w+3];
-						INPUT[i]->SMS[0].UDH.PartNumber	= INPUT[i]->SMS[0].UDH.Text[w+4];
+						InputMessages[i]->SMS[0].UDH.ID8bit	= InputMessages[i]->SMS[0].UDH.Text[w+2];
+						InputMessages[i]->SMS[0].UDH.ID16bit	= -1;
+						InputMessages[i]->SMS[0].UDH.AllParts	= InputMessages[i]->SMS[0].UDH.Text[w+3];
+						InputMessages[i]->SMS[0].UDH.PartNumber	= InputMessages[i]->SMS[0].UDH.Text[w+4];
 						break;
 					case 0x08:
 						smfprintf(di, "Adding ID to user UDH - linked SMS with 16 bit ID\n");
-						INPUT[i]->SMS[0].UDH.ID8bit	= -1;
-						INPUT[i]->SMS[0].UDH.ID16bit	= INPUT[i]->SMS[0].UDH.Text[w+2]*256+INPUT[i]->SMS[0].UDH.Text[w+3];
-						INPUT[i]->SMS[0].UDH.AllParts	= INPUT[i]->SMS[0].UDH.Text[w+4];
-						INPUT[i]->SMS[0].UDH.PartNumber	= INPUT[i]->SMS[0].UDH.Text[w+5];
+						InputMessages[i]->SMS[0].UDH.ID8bit	= -1;
+						InputMessages[i]->SMS[0].UDH.ID16bit	= InputMessages[i]->SMS[0].UDH.Text[w+2]*256+InputMessages[i]->SMS[0].UDH.Text[w+3];
+						InputMessages[i]->SMS[0].UDH.AllParts	= InputMessages[i]->SMS[0].UDH.Text[w+4];
+						InputMessages[i]->SMS[0].UDH.PartNumber	= InputMessages[i]->SMS[0].UDH.Text[w+5];
 						break;
 					default:
-						smfprintf(di, "Block %02x\n",INPUT[i]->SMS[0].UDH.Text[w]);
+						smfprintf(di, "Block %02x\n",InputMessages[i]->SMS[0].UDH.Text[w]);
 					}
 					smfprintf(di, "%i %i %i %i\n",
-						INPUT[i]->SMS[0].UDH.ID8bit,
-						INPUT[i]->SMS[0].UDH.ID16bit,
-						INPUT[i]->SMS[0].UDH.PartNumber,
-						INPUT[i]->SMS[0].UDH.AllParts);
-					w=w+INPUT[i]->SMS[0].UDH.Text[w+1]+2;
+						InputMessages[i]->SMS[0].UDH.ID8bit,
+						InputMessages[i]->SMS[0].UDH.ID16bit,
+						InputMessages[i]->SMS[0].UDH.PartNumber,
+						InputMessages[i]->SMS[0].UDH.AllParts);
+					w=w+InputMessages[i]->SMS[0].UDH.Text[w+1]+2;
 				}
 			}
 			i++;
@@ -1071,38 +1071,38 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **INPUT, GSM_Multi
 	}
 
 	i=0;
-	while (INPUT[i]!=NULL) {
+	while (InputMessages[i]!=NULL) {
 		/* If this one SMS was sorted earlier, do not touch */
-		if (INPUTSorted[i]) {
+		if (InputMessagesSorted[i]) {
 			i++;
 			continue;
 		}
 		/* We have 1'st part of SIEMENS sms. It's single.
 		 * We will try to find other parts
 		 */
-		if (GSM_DecodeSiemensOTASMS(di, &SiemensOTA,&INPUT[i]->SMS[0]) &&
+		if (GSM_DecodeSiemensOTASMS(di, &SiemensOTA,&InputMessages[i]->SMS[0]) &&
 		    SiemensOTA.PacketNum == 1) {
-			OUTPUT[OUTPUTNum] = malloc(sizeof(GSM_MultiSMSMessage));
-			if (OUTPUT[OUTPUTNum] == NULL) {
-				free(INPUTSorted);
+			OutputMessages[OutputMessagesNum] = malloc(sizeof(GSM_MultiSMSMessage));
+			if (OutputMessages[OutputMessagesNum] == NULL) {
+				free(InputMessagesSorted);
 				return ERR_MOREMEMORY;
 			}
-			OUTPUT[OUTPUTNum+1] = NULL;
+			OutputMessages[OutputMessagesNum+1] = NULL;
 
-			memcpy(&OUTPUT[OUTPUTNum]->SMS[0],&INPUT[i]->SMS[0],sizeof(GSM_SMSMessage));
-			OUTPUT[OUTPUTNum]->Number = 1;
-			INPUTSorted[i]	= TRUE;
+			memcpy(&OutputMessages[OutputMessagesNum]->SMS[0],&InputMessages[i]->SMS[0],sizeof(GSM_SMSMessage));
+			OutputMessages[OutputMessagesNum]->Number = 1;
+			InputMessagesSorted[i]	= TRUE;
 			j		= 1;
 			/* We're searching for other parts in sequence */
 			while (j!=(int)SiemensOTA.PacketsNum) {
 				z=0;
-				while(INPUT[z]!=NULL) {
+				while(InputMessages[z]!=NULL) {
 					/* This was sorted earlier or is not single */
-					if (INPUTSorted[z] || INPUT[z]->Number != 1) {
+					if (InputMessagesSorted[z] || InputMessages[z]->Number != 1) {
 						z++;
 						continue;
 					}
-					if (!GSM_DecodeSiemensOTASMS(di, &SiemensOTA2,&INPUT[z]->SMS[0])) {
+					if (!GSM_DecodeSiemensOTASMS(di, &SiemensOTA2,&InputMessages[z]->SMS[0])) {
 						z++;
 						continue;
 					}
@@ -1115,40 +1115,40 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **INPUT, GSM_Multi
 						continue;
 					}
 					/* For SMS_Deliver compare also SMSC and Sender numbers */
-					if (INPUT[z]->SMS[0].PDU == SMS_Deliver &&
-					    strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].SMSC.Number),DecodeUnicodeString(INPUT[i]->SMS[0].SMSC.Number))) {
+					if (InputMessages[z]->SMS[0].PDU == SMS_Deliver &&
+					    strcmp(DecodeUnicodeString(InputMessages[z]->SMS[0].SMSC.Number),DecodeUnicodeString(InputMessages[i]->SMS[0].SMSC.Number))) {
 						z++;
 						continue;
 					}
-					if (INPUT[z]->SMS[0].PDU == SMS_Deliver &&
-					    INPUT[z]->SMS[0].OtherNumbersNum!=INPUT[i]->SMS[0].OtherNumbersNum) {
+					if (InputMessages[z]->SMS[0].PDU == SMS_Deliver &&
+					    InputMessages[z]->SMS[0].OtherNumbersNum!=InputMessages[i]->SMS[0].OtherNumbersNum) {
 						z++;
 						continue;
 					}
-					if (INPUT[z]->SMS[0].PDU == SMS_Deliver) {
+					if (InputMessages[z]->SMS[0].PDU == SMS_Deliver) {
 						for (m=0;m<GSM_SMS_OTHER_NUMBERS+1;m++) {
 							OtherNumbers[m]=FALSE;
 						}
-						for (m=0;m<INPUT[z]->SMS[0].OtherNumbersNum+1;m++) {
+						for (m=0;m<InputMessages[z]->SMS[0].OtherNumbersNum+1;m++) {
 							wrong=TRUE;
-							for (p=0;p<INPUT[i]->SMS[0].OtherNumbersNum+1;p++) {
+							for (p=0;p<InputMessages[i]->SMS[0].OtherNumbersNum+1;p++) {
 								if (OtherNumbers[p]) continue;
-								if (m==0 && p==0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].Number),DecodeUnicodeString(INPUT[i]->SMS[0].Number))) {
+								if (m==0 && p==0 && !strcmp(DecodeUnicodeString(InputMessages[z]->SMS[0].Number),DecodeUnicodeString(InputMessages[i]->SMS[0].Number))) {
 									OtherNumbers[0]=TRUE;
 									wrong=FALSE;
 									break;
 								}
-								if (m==0 && p!=0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].Number),DecodeUnicodeString(INPUT[i]->SMS[0].OtherNumbers[p-1]))) {
+								if (m==0 && p!=0 && !strcmp(DecodeUnicodeString(InputMessages[z]->SMS[0].Number),DecodeUnicodeString(InputMessages[i]->SMS[0].OtherNumbers[p-1]))) {
 									OtherNumbers[p]=TRUE;
 									wrong=FALSE;
 									break;
 								}
-								if (m!=0 && p==0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].OtherNumbers[m-1]),DecodeUnicodeString(INPUT[i]->SMS[0].Number))) {
+								if (m!=0 && p==0 && !strcmp(DecodeUnicodeString(InputMessages[z]->SMS[0].OtherNumbers[m-1]),DecodeUnicodeString(InputMessages[i]->SMS[0].Number))) {
 									OtherNumbers[0]=TRUE;
 									wrong=FALSE;
 									break;
 								}
-								if (m!=0 && p!=0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].OtherNumbers[m-1]),DecodeUnicodeString(INPUT[i]->SMS[0].OtherNumbers[p-1]))) {
+								if (m!=0 && p!=0 && !strcmp(DecodeUnicodeString(InputMessages[z]->SMS[0].OtherNumbers[m-1]),DecodeUnicodeString(InputMessages[i]->SMS[0].OtherNumbers[p-1]))) {
 									OtherNumbers[p]=TRUE;
 									wrong=FALSE;
 									break;
@@ -1162,65 +1162,65 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **INPUT, GSM_Multi
 						}
 					}
 					/* DCT4 Outbox: SMS Deliver. Empty number and SMSC. We compare dates */
-					if (INPUT[z]->SMS[0].PDU == SMS_Deliver 		&&
-					    UnicodeLength(INPUT[z]->SMS[0].SMSC.Number)==0 	&&
-					    UnicodeLength(INPUT[z]->SMS[0].Number)==0 		&&
-					    (INPUT[z]->SMS[0].DateTime.Day    != INPUT[i]->SMS[0].DateTime.Day 	  ||
-	   				     INPUT[z]->SMS[0].DateTime.Month  != INPUT[i]->SMS[0].DateTime.Month  ||
-					     INPUT[z]->SMS[0].DateTime.Year   != INPUT[i]->SMS[0].DateTime.Year   ||
-					     INPUT[z]->SMS[0].DateTime.Hour   != INPUT[i]->SMS[0].DateTime.Hour   ||
-					     INPUT[z]->SMS[0].DateTime.Minute != INPUT[i]->SMS[0].DateTime.Minute ||
-					     INPUT[z]->SMS[0].DateTime.Second != INPUT[i]->SMS[0].DateTime.Second)) {
+					if (InputMessages[z]->SMS[0].PDU == SMS_Deliver 		&&
+					    UnicodeLength(InputMessages[z]->SMS[0].SMSC.Number)==0 	&&
+					    UnicodeLength(InputMessages[z]->SMS[0].Number)==0 		&&
+					    (InputMessages[z]->SMS[0].DateTime.Day    != InputMessages[i]->SMS[0].DateTime.Day 	  ||
+	   				     InputMessages[z]->SMS[0].DateTime.Month  != InputMessages[i]->SMS[0].DateTime.Month  ||
+					     InputMessages[z]->SMS[0].DateTime.Year   != InputMessages[i]->SMS[0].DateTime.Year   ||
+					     InputMessages[z]->SMS[0].DateTime.Hour   != InputMessages[i]->SMS[0].DateTime.Hour   ||
+					     InputMessages[z]->SMS[0].DateTime.Minute != InputMessages[i]->SMS[0].DateTime.Minute ||
+					     InputMessages[z]->SMS[0].DateTime.Second != InputMessages[i]->SMS[0].DateTime.Second)) {
 						z++;
 						continue;
 					}
 					smfprintf(di, "Found Siemens SMS %i\n",j);
 					/* We found correct sms. Copy it */
-					memcpy(&OUTPUT[OUTPUTNum]->SMS[j],&INPUT[z]->SMS[0],sizeof(GSM_SMSMessage));
-					OUTPUT[OUTPUTNum]->Number++;
-					INPUTSorted[z]=TRUE;
+					memcpy(&OutputMessages[OutputMessagesNum]->SMS[j],&InputMessages[z]->SMS[0],sizeof(GSM_SMSMessage));
+					OutputMessages[OutputMessagesNum]->Number++;
+					InputMessagesSorted[z]=TRUE;
 					break;
 				}
 				/* Incomplete sequence */
-				if (OUTPUT[OUTPUTNum]->Number==j) {
+				if (OutputMessages[OutputMessagesNum]->Number==j) {
 					smfprintf(di, "Incomplete sequence\n");
 					break;
 				}
 				j++;
 			}
-			OUTPUTNum++;
+			OutputMessagesNum++;
 			i = 0;
 			continue;
 		}
 		/* We have some next Siemens sms from sequence */
-		if (GSM_DecodeSiemensOTASMS(di, &SiemensOTA,&INPUT[i]->SMS[0]) &&
+		if (GSM_DecodeSiemensOTASMS(di, &SiemensOTA,&InputMessages[i]->SMS[0]) &&
 		    SiemensOTA.PacketNum > 1) {
 			j = 0;
-			while (INPUT[j]!=NULL) {
-				if (INPUTSorted[j]) {
+			while (InputMessages[j]!=NULL) {
+				if (InputMessagesSorted[j]) {
 					j++;
 					continue;
 				}
 				/* We have some not unassigned first sms from sequence.
 				 * We can't touch other sms from sequences
 				 */
-				if (GSM_DecodeSiemensOTASMS(di, &SiemensOTA,&INPUT[j]->SMS[0]) &&
+				if (GSM_DecodeSiemensOTASMS(di, &SiemensOTA,&InputMessages[j]->SMS[0]) &&
 				    SiemensOTA.PacketNum == 1) {
 					break;
 				}
 				j++;
 			}
-			if (INPUT[j]==NULL) {
-				OUTPUT[OUTPUTNum] = malloc(sizeof(GSM_MultiSMSMessage));
-				if (OUTPUT[OUTPUTNum] == NULL) {
-					free(INPUTSorted);
+			if (InputMessages[j]==NULL) {
+				OutputMessages[OutputMessagesNum] = malloc(sizeof(GSM_MultiSMSMessage));
+				if (OutputMessages[OutputMessagesNum] == NULL) {
+					free(InputMessagesSorted);
 					return ERR_MOREMEMORY;
 				}
-				OUTPUT[OUTPUTNum+1] = NULL;
+				OutputMessages[OutputMessagesNum+1] = NULL;
 
-				memcpy(OUTPUT[OUTPUTNum],INPUT[i],sizeof(GSM_MultiSMSMessage));
-				INPUTSorted[i]=TRUE;
-				OUTPUTNum++;
+				memcpy(OutputMessages[OutputMessagesNum],InputMessages[i],sizeof(GSM_MultiSMSMessage));
+				InputMessagesSorted[i]=TRUE;
+				OutputMessagesNum++;
 				i = 0;
 				continue;
 			} else i++;
@@ -1229,124 +1229,124 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **INPUT, GSM_Multi
 		/* If we have:
 		 * - linked sms returned by phone driver
 		 * - sms without linking
-		 * we copy it to OUTPUT
+		 * we copy it to OutputMessages
 		 */
-		if (INPUT[i]->Number 			!= 1 	       	||
-		    INPUT[i]->SMS[0].UDH.Type 		== UDH_NoUDH   	||
-                    INPUT[i]->SMS[0].UDH.PartNumber 	== -1) {
+		if (InputMessages[i]->Number 			!= 1 	       	||
+		    InputMessages[i]->SMS[0].UDH.Type 		== UDH_NoUDH   	||
+                    InputMessages[i]->SMS[0].UDH.PartNumber 	== -1) {
 			copyit = TRUE;
 		}
-		/* If we have unknown UDH, we copy it to OUTPUT */
-		if (INPUT[i]->SMS[0].UDH.Type == UDH_UserUDH) {
+		/* If we have unknown UDH, we copy it to OutputMessages */
+		if (InputMessages[i]->SMS[0].UDH.Type == UDH_UserUDH) {
 			if (!ems) copyit = TRUE;
-			if (ems && INPUT[i]->SMS[0].UDH.PartNumber == -1) copyit = TRUE;
+			if (ems && InputMessages[i]->SMS[0].UDH.PartNumber == -1) copyit = TRUE;
 		}
 		if (copyit) {
-			OUTPUT[OUTPUTNum] = malloc(sizeof(GSM_MultiSMSMessage));
-			if (OUTPUT[OUTPUTNum] == NULL) {
-				free(INPUTSorted);
+			OutputMessages[OutputMessagesNum] = malloc(sizeof(GSM_MultiSMSMessage));
+			if (OutputMessages[OutputMessagesNum] == NULL) {
+				free(InputMessagesSorted);
 				return ERR_MOREMEMORY;
 			}
-			OUTPUT[OUTPUTNum+1] = NULL;
+			OutputMessages[OutputMessagesNum+1] = NULL;
 
-			memcpy(OUTPUT[OUTPUTNum],INPUT[i],sizeof(GSM_MultiSMSMessage));
-			INPUTSorted[i]=TRUE;
-			OUTPUTNum++;
+			memcpy(OutputMessages[OutputMessagesNum],InputMessages[i],sizeof(GSM_MultiSMSMessage));
+			InputMessagesSorted[i]=TRUE;
+			OutputMessagesNum++;
 			i = 0;
 			continue;
 		}
 		/* We have 1'st part of linked sms. It's single.
 		 * We will try to find other parts
 		 */
-		if (INPUT[i]->SMS[0].UDH.PartNumber == 1) {
-			OUTPUT[OUTPUTNum] = malloc(sizeof(GSM_MultiSMSMessage));
-			if (OUTPUT[OUTPUTNum] == NULL) {
-				free(INPUTSorted);
+		if (InputMessages[i]->SMS[0].UDH.PartNumber == 1) {
+			OutputMessages[OutputMessagesNum] = malloc(sizeof(GSM_MultiSMSMessage));
+			if (OutputMessages[OutputMessagesNum] == NULL) {
+				free(InputMessagesSorted);
 				return ERR_MOREMEMORY;
 			}
-			OUTPUT[OUTPUTNum+1] = NULL;
+			OutputMessages[OutputMessagesNum+1] = NULL;
 
-			memcpy(&OUTPUT[OUTPUTNum]->SMS[0],&INPUT[i]->SMS[0],sizeof(GSM_SMSMessage));
-			OUTPUT[OUTPUTNum]->Number = 1;
-			INPUTSorted[i]	= TRUE;
+			memcpy(&OutputMessages[OutputMessagesNum]->SMS[0],&InputMessages[i]->SMS[0],sizeof(GSM_SMSMessage));
+			OutputMessages[OutputMessagesNum]->Number = 1;
+			InputMessagesSorted[i]	= TRUE;
 			j		= 1;
 			/* We're searching for other parts in sequence */
-			while (j != INPUT[i]->SMS[0].UDH.AllParts) {
+			while (j != InputMessages[i]->SMS[0].UDH.AllParts) {
 				z=0;
-				while(INPUT[z]!=NULL) {
+				while(InputMessages[z]!=NULL) {
 					/* This was sorted earlier or is not single */
-					if (INPUTSorted[z] || INPUT[z]->Number != 1) {
+					if (InputMessagesSorted[z] || InputMessages[z]->Number != 1) {
 						z++;
 						continue;
 					}
-					if (ems && INPUT[i]->SMS[0].UDH.Type != UDH_ConcatenatedMessages &&
-					    INPUT[i]->SMS[0].UDH.Type != UDH_ConcatenatedMessages16bit   &&
-					    INPUT[i]->SMS[0].UDH.Type != UDH_UserUDH 			 &&
-					    INPUT[z]->SMS[0].UDH.Type != UDH_ConcatenatedMessages 	 &&
-					    INPUT[z]->SMS[0].UDH.Type != UDH_ConcatenatedMessages16bit   &&
-					    INPUT[z]->SMS[0].UDH.Type != UDH_UserUDH) {
-						if (INPUT[z]->SMS[0].UDH.Type != INPUT[i]->SMS[0].UDH.Type) {
+					if (ems && InputMessages[i]->SMS[0].UDH.Type != UDH_ConcatenatedMessages &&
+					    InputMessages[i]->SMS[0].UDH.Type != UDH_ConcatenatedMessages16bit   &&
+					    InputMessages[i]->SMS[0].UDH.Type != UDH_UserUDH 			 &&
+					    InputMessages[z]->SMS[0].UDH.Type != UDH_ConcatenatedMessages 	 &&
+					    InputMessages[z]->SMS[0].UDH.Type != UDH_ConcatenatedMessages16bit   &&
+					    InputMessages[z]->SMS[0].UDH.Type != UDH_UserUDH) {
+						if (InputMessages[z]->SMS[0].UDH.Type != InputMessages[i]->SMS[0].UDH.Type) {
 							z++;
 							continue;
 						}
 					}
-					if (!ems && INPUT[z]->SMS[0].UDH.Type != INPUT[i]->SMS[0].UDH.Type) {
+					if (!ems && InputMessages[z]->SMS[0].UDH.Type != InputMessages[i]->SMS[0].UDH.Type) {
 						z++;
 						continue;
 					}
 					smfprintf(di, "compare %i         %i %i %i %i",
 						j+1,
-						INPUT[i]->SMS[0].UDH.ID8bit,
-						INPUT[i]->SMS[0].UDH.ID16bit,
-						INPUT[i]->SMS[0].UDH.PartNumber,
-						INPUT[i]->SMS[0].UDH.AllParts);
+						InputMessages[i]->SMS[0].UDH.ID8bit,
+						InputMessages[i]->SMS[0].UDH.ID16bit,
+						InputMessages[i]->SMS[0].UDH.PartNumber,
+						InputMessages[i]->SMS[0].UDH.AllParts);
 					smfprintf(di, "         %i %i %i %i\n",
-						INPUT[z]->SMS[0].UDH.ID8bit,
-						INPUT[z]->SMS[0].UDH.ID16bit,
-						INPUT[z]->SMS[0].UDH.PartNumber,
-						INPUT[z]->SMS[0].UDH.AllParts);
-					if (INPUT[z]->SMS[0].UDH.ID8bit      != INPUT[i]->SMS[0].UDH.ID8bit	||
-							INPUT[z]->SMS[0].UDH.ID16bit     != INPUT[i]->SMS[0].UDH.ID16bit	||
-							INPUT[z]->SMS[0].UDH.AllParts    != INPUT[i]->SMS[0].UDH.AllParts 	||
-							(INPUT[z]->SMS[0].UDH.PartNumber) != j + 1) {
+						InputMessages[z]->SMS[0].UDH.ID8bit,
+						InputMessages[z]->SMS[0].UDH.ID16bit,
+						InputMessages[z]->SMS[0].UDH.PartNumber,
+						InputMessages[z]->SMS[0].UDH.AllParts);
+					if (InputMessages[z]->SMS[0].UDH.ID8bit      != InputMessages[i]->SMS[0].UDH.ID8bit	||
+							InputMessages[z]->SMS[0].UDH.ID16bit     != InputMessages[i]->SMS[0].UDH.ID16bit	||
+							InputMessages[z]->SMS[0].UDH.AllParts    != InputMessages[i]->SMS[0].UDH.AllParts 	||
+							(InputMessages[z]->SMS[0].UDH.PartNumber) != j + 1) {
 						z++;
 						continue;
 					}
 					/* For SMS_Deliver compare also SMSC and Sender numbers */
-					if (INPUT[z]->SMS[0].PDU == SMS_Deliver &&
-					    strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].SMSC.Number),DecodeUnicodeString(INPUT[i]->SMS[0].SMSC.Number))) {
+					if (InputMessages[z]->SMS[0].PDU == SMS_Deliver &&
+					    strcmp(DecodeUnicodeString(InputMessages[z]->SMS[0].SMSC.Number),DecodeUnicodeString(InputMessages[i]->SMS[0].SMSC.Number))) {
 						z++;
 						continue;
 					}
-					if (INPUT[z]->SMS[0].PDU == SMS_Deliver &&
-					    INPUT[z]->SMS[0].OtherNumbersNum!=INPUT[i]->SMS[0].OtherNumbersNum) {
+					if (InputMessages[z]->SMS[0].PDU == SMS_Deliver &&
+					    InputMessages[z]->SMS[0].OtherNumbersNum!=InputMessages[i]->SMS[0].OtherNumbersNum) {
 						z++;
 						continue;
 					}
-					if (INPUT[z]->SMS[0].PDU == SMS_Deliver) {
+					if (InputMessages[z]->SMS[0].PDU == SMS_Deliver) {
 						for (m=0;m<GSM_SMS_OTHER_NUMBERS+1;m++) {
 							OtherNumbers[m]=FALSE;
 						}
-						for (m=0;m<INPUT[z]->SMS[0].OtherNumbersNum+1;m++) {
+						for (m=0;m<InputMessages[z]->SMS[0].OtherNumbersNum+1;m++) {
 							wrong=TRUE;
-							for (p=0;p<INPUT[i]->SMS[0].OtherNumbersNum+1;p++) {
+							for (p=0;p<InputMessages[i]->SMS[0].OtherNumbersNum+1;p++) {
 								if (OtherNumbers[p]) continue;
-								if (m==0 && p==0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].Number),DecodeUnicodeString(INPUT[i]->SMS[0].Number))) {
+								if (m==0 && p==0 && !strcmp(DecodeUnicodeString(InputMessages[z]->SMS[0].Number),DecodeUnicodeString(InputMessages[i]->SMS[0].Number))) {
 									OtherNumbers[0]=TRUE;
 									wrong=FALSE;
 									break;
 								}
-								if (m==0 && p!=0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].Number),DecodeUnicodeString(INPUT[i]->SMS[0].OtherNumbers[p-1]))) {
+								if (m==0 && p!=0 && !strcmp(DecodeUnicodeString(InputMessages[z]->SMS[0].Number),DecodeUnicodeString(InputMessages[i]->SMS[0].OtherNumbers[p-1]))) {
 									OtherNumbers[p]=TRUE;
 									wrong=FALSE;
 									break;
 								}
-								if (m!=0 && p==0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].OtherNumbers[m-1]),DecodeUnicodeString(INPUT[i]->SMS[0].Number))) {
+								if (m!=0 && p==0 && !strcmp(DecodeUnicodeString(InputMessages[z]->SMS[0].OtherNumbers[m-1]),DecodeUnicodeString(InputMessages[i]->SMS[0].Number))) {
 									OtherNumbers[0]=TRUE;
 									wrong=FALSE;
 									break;
 								}
-								if (m!=0 && p!=0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].OtherNumbers[m-1]),DecodeUnicodeString(INPUT[i]->SMS[0].OtherNumbers[p-1]))) {
+								if (m!=0 && p!=0 && !strcmp(DecodeUnicodeString(InputMessages[z]->SMS[0].OtherNumbers[m-1]),DecodeUnicodeString(InputMessages[i]->SMS[0].OtherNumbers[p-1]))) {
 									OtherNumbers[p]=TRUE;
 									wrong=FALSE;
 									break;
@@ -1360,66 +1360,66 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **INPUT, GSM_Multi
 						}
 					}
 					/* DCT4 Outbox: SMS Deliver. Empty number and SMSC. We compare dates */
-					if (INPUT[z]->SMS[0].PDU == SMS_Deliver 		&&
-					    UnicodeLength(INPUT[z]->SMS[0].SMSC.Number)==0 	&&
-					    UnicodeLength(INPUT[z]->SMS[0].Number)==0 		&&
-					    (INPUT[z]->SMS[0].DateTime.Day    != INPUT[i]->SMS[0].DateTime.Day 	  ||
-	   				     INPUT[z]->SMS[0].DateTime.Month  != INPUT[i]->SMS[0].DateTime.Month  ||
-					     INPUT[z]->SMS[0].DateTime.Year   != INPUT[i]->SMS[0].DateTime.Year   ||
-					     INPUT[z]->SMS[0].DateTime.Hour   != INPUT[i]->SMS[0].DateTime.Hour   ||
-					     INPUT[z]->SMS[0].DateTime.Minute != INPUT[i]->SMS[0].DateTime.Minute ||
-					     INPUT[z]->SMS[0].DateTime.Second != INPUT[i]->SMS[0].DateTime.Second)) {
+					if (InputMessages[z]->SMS[0].PDU == SMS_Deliver 		&&
+					    UnicodeLength(InputMessages[z]->SMS[0].SMSC.Number)==0 	&&
+					    UnicodeLength(InputMessages[z]->SMS[0].Number)==0 		&&
+					    (InputMessages[z]->SMS[0].DateTime.Day    != InputMessages[i]->SMS[0].DateTime.Day 	  ||
+	   				     InputMessages[z]->SMS[0].DateTime.Month  != InputMessages[i]->SMS[0].DateTime.Month  ||
+					     InputMessages[z]->SMS[0].DateTime.Year   != InputMessages[i]->SMS[0].DateTime.Year   ||
+					     InputMessages[z]->SMS[0].DateTime.Hour   != InputMessages[i]->SMS[0].DateTime.Hour   ||
+					     InputMessages[z]->SMS[0].DateTime.Minute != InputMessages[i]->SMS[0].DateTime.Minute ||
+					     InputMessages[z]->SMS[0].DateTime.Second != InputMessages[i]->SMS[0].DateTime.Second)) {
 						z++;
 						continue;
 					}
 					/* We found correct sms. Copy it */
-					memcpy(&OUTPUT[OUTPUTNum]->SMS[j],&INPUT[z]->SMS[0],sizeof(GSM_SMSMessage));
-					OUTPUT[OUTPUTNum]->Number++;
-					INPUTSorted[z]=TRUE;
+					memcpy(&OutputMessages[OutputMessagesNum]->SMS[j],&InputMessages[z]->SMS[0],sizeof(GSM_SMSMessage));
+					OutputMessages[OutputMessagesNum]->Number++;
+					InputMessagesSorted[z]=TRUE;
 					break;
 				}
 				/* Incomplete sequence */
-				if (OUTPUT[OUTPUTNum]->Number==j) {
+				if (OutputMessages[OutputMessagesNum]->Number==j) {
 					smfprintf(di, "Incomplete sequence\n");
 					break;
 				}
 				j++;
 			}
-			OUTPUTNum++;
+			OutputMessagesNum++;
 			i = 0;
 			continue;
 		}
 		/* We have some next linked sms from sequence */
-		if (INPUT[i]->SMS[0].UDH.PartNumber > 1) {
+		if (InputMessages[i]->SMS[0].UDH.PartNumber > 1) {
 			j = 0;
-			while (INPUT[j]!=NULL) {
-				if (INPUTSorted[j]) {
+			while (InputMessages[j]!=NULL) {
+				if (InputMessagesSorted[j]) {
 					j++;
 					continue;
 				}
 				/* We have some not unassigned first sms from sequence.
 				 * We can't touch other sms from sequences
 				 */
-				if (INPUT[j]->SMS[0].UDH.PartNumber == 1) break;
+				if (InputMessages[j]->SMS[0].UDH.PartNumber == 1) break;
 				j++;
 			}
-			if (INPUT[j]==NULL) {
-				OUTPUT[OUTPUTNum] = malloc(sizeof(GSM_MultiSMSMessage));
-				if (OUTPUT[OUTPUTNum] == NULL) {
-					free(INPUTSorted);
+			if (InputMessages[j]==NULL) {
+				OutputMessages[OutputMessagesNum] = malloc(sizeof(GSM_MultiSMSMessage));
+				if (OutputMessages[OutputMessagesNum] == NULL) {
+					free(InputMessagesSorted);
 					return ERR_MOREMEMORY;
 				}
-				OUTPUT[OUTPUTNum+1] = NULL;
+				OutputMessages[OutputMessagesNum+1] = NULL;
 
-				memcpy(OUTPUT[OUTPUTNum],INPUT[i],sizeof(GSM_MultiSMSMessage));
-				INPUTSorted[i]=TRUE;
-				OUTPUTNum++;
+				memcpy(OutputMessages[OutputMessagesNum],InputMessages[i],sizeof(GSM_MultiSMSMessage));
+				InputMessagesSorted[i]=TRUE;
+				OutputMessagesNum++;
 				i = 0;
 				continue;
 			} else i++;
 		}
 	}
-	free(INPUTSorted);
+	free(InputMessagesSorted);
 	return ERR_NONE;
 }
 
