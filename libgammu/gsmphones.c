@@ -382,6 +382,7 @@ GSM_PhoneModel allmodels[] = {
 	/* Siemens */
 	{"M20"  ,	  "M20",	  "",				   {F_M20SMS,F_SLOWWRITE,0}},
 	{"MC35" ,	  "MC35",	  "",				   {0}},
+	{"MC35i" ,	  "MC35i",	  "",				   {0}},
 	{"TC35" ,	  "TC35",	  "",				   {0}},
 	{"S25",		  "S25",  	  "SIEMENS S25",		   {0}},
 	{"C35i" ,	  "C35i",	  "",				   {0}},
