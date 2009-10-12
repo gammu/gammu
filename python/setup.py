@@ -296,7 +296,7 @@ setup (name = 'python-gammu',
     platforms = ['Linux','Mac OSX','Windows XP/2000/NT','Windows 95/98/ME'],
     keywords = ['mobile', 'phone', 'SMS', 'contact', 'gammu', 'calendar', 'todo'],
     license = 'GPL',
-    url = 'http://wammu.eu/python-gammu/'
+    url = 'http://wammu.eu/python-gammu/',
     download_url = 'http://wammu.eu/download/gammu/',
     classifiers = [
         'Development Status :: 5 - Production/Stable',
