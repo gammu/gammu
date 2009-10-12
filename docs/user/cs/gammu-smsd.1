@@ -31,6 +31,8 @@ Zobrazí informace o verzi a zakompilované funkcionalitě.
 Jaký konfigurační soubor se má použít, výchozí je /etc/gammu\-smsdrc, na
 systému Windows není žádná výchozí cesta a cesta ke konfiguračnímu souboru
 musí být zadána vždy.
+
+See gammu\-smsdrc(5) for config file documentation.
 .TP 
 \fB\-p\fP, \fB\-\-pid\fP=\fIsoubor\fP
 Zamykací soubor, kde bude uložený PID (id procesu), prázdná cesta vypne tuto
@@ -113,14 +115,18 @@ gammu\-smsd.exe \-u
 
 .SS "Problémy se službou ve Windows"
 
-Pokud se Gammu nepodaří spustit jako služba ve Windows (obvykle dostanete
-chybu 1053, říkající, že služba neodpověděla včas), zkontrolujte logy
-SMSD. Pokud neobsahují žádné informace, zkuste SMSD spustit ručně s přesně
-stejnými parametry jako jste nainstalovali službu (bez parametru \-i),
-například:
+If Gammu fails to start as a Windows service (you will usually get "Error
+1053: The service did not respond to the start or control request in a
+timely fashion"), first check your SMSD logs. If they do not contain any
+useful hint, try starting SMSD manually with exactly same parameters as you
+installed the service (without \-i).
 
-    gammu\-smsd.exe \-c smsdrc
+.TP 
+For example the command line can look like:
 
+gammu\-smsd.exe \-c smsdrc
+
+.PP
 Nyní by mělo být možné dostat popis chyb i když SMSD nejde spustit jako
 služba.
 
