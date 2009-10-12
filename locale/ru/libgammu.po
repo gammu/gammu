@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.26.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-27 08:40+0200\n"
+"POT-Creation-Date: 2009-10-10 20:15+0200\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -89,15 +89,16 @@ msgstr "Превышен тайм-аут ожидания ответа. Возм
 #: libgammu/gsmcomon.c:98
 #, fuzzy
 msgid ""
-"Frame not requested right now. See <http://cihar.com/gammu/report> for "
+"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "
 "рассказано как сообщить об этом."
 
 #: libgammu/gsmcomon.c:99
+#, fuzzy
 msgid ""
-"Unknown response from phone. See <http://cihar.com/gammu/report> for "
+"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "
@@ -106,7 +107,7 @@ msgstr ""
 #: libgammu/gsmcomon.c:100
 #, fuzzy
 msgid ""
-"Unknown frame. See <http://cihar.com/gammu/report> for information how to "
+"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
 "Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-27 08:40+0200\n"
+"POT-Creation-Date: 2009-10-10 20:15+0200\n"
 "PO-Revision-Date: 2009-02-18 23:31+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: none\n"
@@ -82,24 +82,31 @@ msgstr ""
 "Inget svar inom angiven tidsgräns. Antagligen är inte telefonen ansluten."
 
 #: libgammu/gsmcomon.c:98
+#, fuzzy
 msgid ""
-"Frame not requested right now. See <http://cihar.com/gammu/report> for "
+"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
+"Okänt svar från telefonen. Se <http://cihar.com/gammu/report> för "
+"information om hur man rapporterar det."
 
 #: libgammu/gsmcomon.c:99
+#, fuzzy
 msgid ""
-"Unknown response from phone. See <http://cihar.com/gammu/report> for "
+"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Okänt svar från telefonen. Se <http://cihar.com/gammu/report> för "
 "information om hur man rapporterar det."
 
 #: libgammu/gsmcomon.c:100
+#, fuzzy
 msgid ""
-"Unknown frame. See <http://cihar.com/gammu/report> for information how to "
+"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
+"Okänt svar från telefonen. Se <http://cihar.com/gammu/report> för "
+"information om hur man rapporterar det."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."

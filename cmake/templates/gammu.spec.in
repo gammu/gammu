@@ -135,7 +135,7 @@ BuildRequires: %{dist_usb_libs}
 BuildRequires: gettext cmake pkgconfig
 
 Source:         http://dl.cihar.com/gammu/releases/gammu-%{version}.tar.%{extension}
-URL:            http://cihar.com/gammu/
+URL:            http://wammu.eu/gammu/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description

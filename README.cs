@@ -16,7 +16,7 @@ Více informací
 ==============
 
 Na stránkách <http://www.gammu.org/> naleznete wiki a systém pro hlášení
-chyb, současný správce Gammu udržuje infromace na <http://cihar.com/gammu/>.
+chyb, současný správce Gammu udržuje infromace na <http://wammu.eu/gammu/>.
 
 
 Stáhnutí
@@ -27,7 +27,7 @@ jsou v současné době na <http://dl.cihar.com/gammu/releases/>.
 
 Vývojáře by mohl snajímat aktuální snímek kódu nebo systém správy verzí (v
 současné době je používán Git). Informace o nich naleznete na
-<http://cihar.com/gammu/>.
+<http://wammu.eu/gammu/>.
 
 Vývoj probíhá v Gitu, hlavní vývojovou větev naleznete na
 <git://gitorious.org/gammu/mainline.git> a prohlížet si jí můžete na
@@ -60,7 +60,7 @@ Unixech. Na Windows můžete gammurc umístit do složky Data aplikací ve vaše
 profilu nebo ve stejném adresáři z jakého je Gammu spuštěno.
 
 Nějaké rady jak nastavit telefon můžete nalézt v Databázi telefonů Gammu
-<http://cihar.com/gammu/phonedb/>, kam uživatelé zapisují svoje zkušenosti.
+<http://wammu.eu/phones/>, kam uživatelé zapisují svoje zkušenosti.
 
 
 Problémy
@@ -79,9 +79,9 @@ Vývojáři
 Nějaké informace jsou dostupné na wiki a v docs/develop/ folder. Můžete si
 také vygenerovat dokumentaci pomocí Doxygenu. Dokumentaci API vytvoříte
 pomocí make apidoc v adresáři s buildem, můžete si jí prohlédnout na
-<http://cihar.com/gammu/api/>. Podobně interní dokumentace může být
+<http://wammu.eu/docs/devel/api/>. Podobně interní dokumentace může být
 vygenerována spuštěním make interndoc a je dostupná na
-<http://cihar.com/gammu/docs/>.
+<http://wammu.eu/docs/devel/itenrnals/>.
 
 Pokud chcete použít libGammu ve vaší aplikaci, vše co musíte udělat je
 #include <gammu.h> a pak používat funkce Gammu. V adresáři

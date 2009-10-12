@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-10-06 14:29+0300\n"
+"POT-Creation-Date: 2009-10-10 20:12+0300\n"
 "PO-Revision-Date: 2009-02-02 18:24+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -26,7 +26,7 @@ msgstr ""
 #. type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
-msgid "Sep 14 2009"
+msgid "Oct 10 2009"
 msgstr ""
 
 #. type: TH
@@ -93,12 +93,11 @@ msgstr ""
 msgid "DESCRIPTION"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:19
 msgid ""
 "This program is a tool for mobile phones. Many vendors and phones are "
-"supported, for actual listing see E<lt>http://cihar.com/gammu/phonedb/E<gt>."
+"supported, for actual listing see E<lt>http://wammu.eu/phones/E<gt>."
 msgstr ""
 
 # type: SH
@@ -4007,9 +4006,16 @@ msgid ""
 "for improving support for your phone in this log."
 msgstr ""
 
+#. type: Plain text
+#: docs/user/gammu.1:2523
+msgid ""
+"See E<lt>http://wammu.eu/support/bugs/E<gt> for more information on "
+"reporting bugs."
+msgstr ""
+
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2523 docs/user/gammurc.5:270 docs/user/gammu-smsdrc.5:416
+#: docs/user/gammu.1:2525 docs/user/gammurc.5:270 docs/user/gammu-smsdrc.5:416
 #: docs/user/gammu-smsd.1:135 docs/user/gammu-smsd-inject.1:89
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:123
@@ -4020,7 +4026,7 @@ msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu.1:2524 docs/user/gammurc.5:261 docs/user/gammu-smsdrc.5:406
+#: docs/user/gammu.1:2526 docs/user/gammurc.5:261 docs/user/gammu-smsdrc.5:406
 #: docs/user/gammu-smsd.1:125 docs/user/gammu-smsd-inject.1:79
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:114
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
@@ -4031,13 +4037,13 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2528
+#: docs/user/gammu.1:2530
 msgid "You can contact authors on E<lt>gammu-users@lists.sourceforge.netE<gt>."
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2534
+#: docs/user/gammu.1:2536
 msgid ""
 "I<Michal Cihar> E<lt>michal@cihar.comE<gt> is current project maintainer and "
 "contributor of most of AT and OBEX code."
@@ -4045,7 +4051,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2539
+#: docs/user/gammu.1:2541
 msgid ""
 "I<Marcin Wiacek> E<lt>marcin@mwiacek.comE<gt> is project iniciator and "
 "contributor of most Nokia code."
@@ -4053,7 +4059,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2545
+#: docs/user/gammu.1:2547
 msgid ""
 "As this project grew from Gnokii, we would like to thanks all Gnokii "
 "developers, especially I<Pavel Janik>, I<Pawel Kot> and I<Manfred Jonsson> "
@@ -4062,7 +4068,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2549
+#: docs/user/gammu.1:2551
 msgid ""
 "Many other people have helped with various features, check ChangeLog for "
 "more details."
@@ -4070,7 +4076,7 @@ msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu.1:2550 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:402
+#: docs/user/gammu.1:2552 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:402
 #: docs/user/gammu-smsd.1:121 docs/user/gammu-smsd-inject.1:77
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:112
@@ -4082,13 +4088,13 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2554
+#: docs/user/gammu.1:2556
 msgid "gammu-smsd(1), gammu-smsd-inject(1), gammurc(5), jadmaker(1)"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2556
+#: docs/user/gammu.1:2558
 msgid ""
 "Some more hints can be found in README file or on wiki E<lt>http://www.gammu."
 "org/E<gt>."
@@ -4096,25 +4102,25 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2558
+#: docs/user/gammu.1:2560
 msgid "Related programs which can be used with GSM modem:"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2560
+#: docs/user/gammu.1:2562
 msgid "cu(1), gnokii(1), minicom(1)"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2562
+#: docs/user/gammu.1:2564
 msgid "Graphical interfaces for Gammu:"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2564
+#: docs/user/gammu.1:2566
 msgid "wammu(1), gmobilemedia(1)"
 msgstr ""
 
@@ -7774,7 +7780,7 @@ msgstr ""
 #: README:21
 msgid ""
 "On <http://www.gammu.org/> there is wiki and bug tracker, current Gammu "
-"maintainer keeps information available on <http://cihar.com/gammu/>."
+"maintainer keeps information available on <http://wammu.eu/gammu/>."
 msgstr ""
 
 #. type: Plain text
@@ -7796,8 +7802,8 @@ msgstr ""
 #: README:32
 msgid ""
 "Developers might be interested in snapshot or version control system (Git is "
-"being used), information about accessing these is available at <http://cihar."
-"com/gammu/>."
+"being used), information about accessing these is available at <http://wammu."
+"eu/gammu/>."
 msgstr ""
 
 #. type: Plain text
@@ -7861,7 +7867,7 @@ msgstr ""
 #: README:66
 msgid ""
 "For hints about configuring your phone, you can check Gammu Phone Database "
-"<http://cihar.com/gammu/phonedb/> to see what user users experienced."
+"<http://wammu.eu/phones/> to see what user users experienced."
 msgstr ""
 
 #. type: Plain text
@@ -7900,8 +7906,9 @@ msgid ""
 "Some information is available on wiki and in docs/develop/ folder. You can "
 "also generate documentation using Doxygen. API documentation can be "
 "generated by make apidoc in build, you can also view it online at <http://"
-"cihar.com/gammu/api/>. Similarly internal documentation can be generated by "
-"make interndoc and is available on <http://cihar.com/gammu/docs/>."
+"wammu.eu/docs/devel/api/>. Similarly internal documentation can be generated "
+"by make interndoc and is available on <http://wammu.eu/docs/devel/itenrnals/"
+">."
 msgstr ""
 
 #. type: Plain text
@@ -8009,7 +8016,7 @@ msgid ""
 "Many distributions come with prebuilt Gammu binaries, if you can use them, "
 "it is definitely the easiest thing. There are also binary packages of latest "
 "release built for many distributions available on Gammu home page <http://"
-"cihar.com/gammu/>."
+"wammu.eu/gammu/>."
 msgstr ""
 
 #. type: Plain text
@@ -8023,9 +8030,9 @@ msgstr ""
 #. type: Plain text
 #: INSTALL:20
 msgid ""
-"You can download Windows binaries from <http://cihar.com/gammu/>. For "
-"Windows 95, 98 and NT 4.0 you will also need ShFolder DLL, which can be "
-"downloaded from Microsoft:"
+"You can download Windows binaries from <http://wammu.eu/gammu/>. For Windows "
+"95, 98 and NT 4.0 you will also need ShFolder DLL, which can be downloaded "
+"from Microsoft:"
 msgstr ""
 
 #. type: Plain text

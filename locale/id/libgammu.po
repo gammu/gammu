@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.26.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-08-27 08:40+0200\n"
+"POT-Creation-Date: 2009-10-10 20:15+0200\n"
 "PO-Revision-Date: 2009-07-03 20:54+0200\n"
 "Last-Translator: winawang <winawangz@yahoo.co.id>\n"
 "Language-Team: none\n"
@@ -81,24 +81,27 @@ msgstr ""
 "tersambung."
 
 #: libgammu/gsmcomon.c:98
+#, fuzzy
 msgid ""
-"Frame not requested right now. See <http://cihar.com/gammu/report> for "
+"Frame not requested right now. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Bingkai tidak diminta sekarang. Lihat <http://cihar.com/gammu/report> untuk "
 "informasi bagaimana melaporkannya."
 
 #: libgammu/gsmcomon.c:99
+#, fuzzy
 msgid ""
-"Unknown response from phone. See <http://cihar.com/gammu/report> for "
+"Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
 "Tanggapan dari telepon tidak diketahui. Lihat <http://cihar.com/gammu/"
 "report> untuk informasi bagaimana melaporkannya."
 
 #: libgammu/gsmcomon.c:100
+#, fuzzy
 msgid ""
-"Unknown frame. See <http://cihar.com/gammu/report> for information how to "
+"Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
 "Bingkai tidak diketahui. Lihat <http://cihar.com/gammu/report> untuk "

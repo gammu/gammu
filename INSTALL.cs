@@ -7,13 +7,13 @@ Binárky - Linux
 
 Mnoho distribucí již obsahuje Gammu, takže pokud můžete použít tuto verzi,
 bude to pro vás nejjednodušší. Binární balíčky posledních verzí pro mnoho
-distribucí naleznete také na stránkách Gammu - <http://cz.cihar.com/gammu/>.
+distribucí naleznete také na stránkách Gammu - <http://cs.wammu.eu/gammu/>.
 
 
 Binárky - Windows
 =================
 
-Binárky pro Windows si můžete stáhnout z <http://cz.cihar.com/gammu/>. Pro
+Binárky pro Windows si můžete stáhnout z <http://cs.wammu.eu/gammu/>. Pro
 Windows 95, 98 a NT 4.0 budete také potřebovat ShFolder DLL, která může být
 stažena od Microsoftu:
 

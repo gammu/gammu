@@ -43,6 +43,6 @@ As there might be some functions still missing from new API, don't
 hesitate to contact author or ask on mailing list if you miss something.
 
 API documentation can be generated using Doxygen (make apidoc in build
-tree), you can also view it online at <http://cihar.com/gammu/api/>.
+tree), you can also view it online at <http://wammu.eu/docs/devel/api/>.
 
 # vim: et ts=4 sw=4 sts=4 tw=72
