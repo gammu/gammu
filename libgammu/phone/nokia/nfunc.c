@@ -907,11 +907,11 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			/* The phone sends an entry id. We store it as phone number because
 			 * entry->Entries doesn't retain order. */
 			int num = (int)Block[5];
-			entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Messaging;
 			if (num >= entry->EntriesNum) {
 				smprintf(s, "ERROR: Number_Messaging references future entry\n");
 				return ERR_UNKNOWNRESPONSE;
 			}
+			entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Messaging;
 			CopyUnicodeString(entry->Entries[entry->EntriesNum].Text,entry->Entries[num-1].Text);
 			smprintf(s,"Marked entry #%i (%s) as favorite messaging number\n",
 				num,DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
