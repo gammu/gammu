@@ -346,6 +346,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	GSM_71_65_Phonebook_Entries_Types	Type;
 	gboolean					found=FALSE;
 	gboolean					foundbb5add=FALSE;
+	int favorite_messaging_numbers[10];
+	size_t used_favorite_messaging_numbers = 0;
 
 	entry->EntriesNum 	= 0;
 
@@ -429,9 +431,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		smprintf(s, "Phonebook entry block - length %i\n", bs-6);
 		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Block+0, bs-1);
 #endif
-		if (entry->EntriesNum==GSM_PHONEBOOK_ENTRIES) {
+		if (entry->EntriesNum >= GSM_PHONEBOOK_ENTRIES) {
 			smprintf(s, "Too many entries\n");
-			return ERR_UNKNOWNRESPONSE;
+			return ERR_MOREMEMORY;
 		}
 
 		Type = 0;
@@ -904,18 +906,13 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			continue;
 		}
 		if (Block[0] == N2630_PBK_FAVMESSAGING) {
-			/* The phone sends an entry id. We store it as phone number because
-			 * entry->Entries doesn't retain order. */
-			int num = (int)Block[5];
-			if (num >= entry->EntriesNum) {
-				smprintf(s, "ERROR: Number_Messaging references future entry\n");
-				return ERR_UNKNOWNRESPONSE;
+			if (used_favorite_messaging_numbers >= sizeof(favorite_messaging_numbers) / sizeof(int)) {
+				smprintf(s, "Too much favorite messaging numbers!\n");
+				return ERR_MOREMEMORY;
 			}
-			entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Messaging;
-			CopyUnicodeString(entry->Entries[entry->EntriesNum].Text,entry->Entries[num-1].Text);
-			smprintf(s,"Marked entry #%i (%s) as favorite messaging number\n",
-				num,DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
-			entry->EntriesNum ++;
+			used_favorite_messaging_numbers++;
+			favorite_messaging_numbers[used_favorite_messaging_numbers] = (int)Block[5];
+
 			continue;
 		}
 		smprintf(s, "ERROR: unknown pbk entry 0x%02x\n",Block[0]);
@@ -924,6 +921,23 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 	if (entry->EntriesNum == 0) return ERR_EMPTY;
 
+	/* Process favorite messaging numbers */
+	for (i = 0; i < (int)used_favorite_messaging_numbers; i++) {
+		if (entry->EntriesNum >= GSM_PHONEBOOK_ENTRIES) {
+			smprintf(s, "Too many entries\n");
+			return ERR_MOREMEMORY;
+		}
+
+		/* The phone sends an entry id. We store it as phone number because
+		 * entry->Entries doesn't retain order. */
+
+		entry->Entries[entry->EntriesNum].EntryType = PBK_Number_Messaging;
+		CopyUnicodeString(entry->Entries[entry->EntriesNum].Text,entry->Entries[favorite_messaging_numbers[i] - 1].Text);
+		smprintf(s,"Marked entry #%i (%s) as favorite messaging number\n",
+			favorite_messaging_numbers[i],
+			DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+		entry->EntriesNum ++;
+	}
 	return ERR_NONE;
 }
 
