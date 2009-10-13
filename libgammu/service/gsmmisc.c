@@ -502,7 +502,7 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 	/* Compare first token, it must be in place */
 	pos = Buffer;
 	len = strlen(tokens[0]);
-	if (strncmp(pos, tokens[0], len) != 0) {
+	if (strncasecmp(pos, tokens[0], len) != 0) {
 		goto fail;
 	}
 	/* Advance position */
@@ -525,7 +525,7 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 			if (len == 0) {
 				continue;
 			}
-			if (strncmp(pos, tokens[token], len) == 0) {
+			if (strncasecmp(pos, tokens[token], len) == 0) {
 				dbgprintf(NULL, "Found %s\n", tokens[token]);
 				/* Advance position */
 				pos += len;
@@ -536,12 +536,12 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 			}
 		}
 		if (!found) {
-			if (strncmp(pos, "ENCODING=QUOTED-PRINTABLE", 25) == 0) {
+			if (strncasecmp(pos, "ENCODING=QUOTED-PRINTABLE", 25) == 0) {
 				quoted_printable = TRUE;
 				/* Advance position */
 				pos += 25;
 				found = TRUE;
-			} else if (strncmp(pos, "CHARSET=", 8) == 0) {
+			} else if (strncasecmp(pos, "CHARSET=", 8) == 0) {
 				/* Advance position */
 				pos += 8;
 				/* Grab charset */
@@ -565,7 +565,7 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 
 				pos = end;
 				found = TRUE;
-			} else if (strncmp(pos, "TZID=", 5) == 0) {
+			} else if (strncasecmp(pos, "TZID=", 5) == 0) {
 				/* @todo: We ignore time zone for now */
 				/* Advance position */
 				pos += 5;
@@ -582,11 +582,11 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 				}
 				pos = end;
 				found = TRUE;
-			} else if (strncmp(pos, "TYPE=PREF", 9) == 0) {
+			} else if (strncasecmp(pos, "TYPE=PREF", 9) == 0) {
 				/* We ignore pref token */
 				pos += 9;
 				found = TRUE;
-			} else if (strncmp(pos, "PREF", 4) == 0) {
+			} else if (strncasecmp(pos, "PREF", 4) == 0) {
 				/* We ignore pref token */
 				pos += 4;
 				found = TRUE;
