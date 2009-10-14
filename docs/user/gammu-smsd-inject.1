@@ -43,36 +43,92 @@ gammu-smsdrc(5) for more details about it.
 .TP
 Inject text message up to standard 160 chars:
 
+.RS
+.sp
+.nf
+.ne 7
 echo "All your base are belong to us" | gammu-smsd-inject TEXT 123456
+.fi
+.sp
+.RE
+.PP
 
 or 
 
+.RS
+.sp
+.nf
+.ne 7
 gammu-smsd-inject TEXT 123456 \-text "All your base are belong to us"
+.fi
+.sp
+.RE
+.PP
 
 .TP
 Inject long text message:
 
+.RS
+.sp
+.nf
+.ne 7
 echo "All your base are belong to us" | gammu-smsd-inject TEXT 123456 \-len 400
+.fi
+.sp
+.RE
+.PP
 
 or 
 
+.RS
+.sp
+.nf
+.ne 7
 gammu-smsd-inject TEXT 123456 \-len 400 \-text "All your base are belong to us"
+.fi
+.sp
+.RE
+.PP
 
 or
 
+.RS
+.sp
+.nf
+.ne 7
 gammu-smsd-inject EMS 123456 \-text "All your base are belong to us"
+.fi
+.sp
+.RE
+.PP
 
 .TP
 Inject some funky message with predefined sound and animation from 2 bitmaps:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu-smsd-inject EMS 123456 \-text "Greetings" \-defsound 1 \-text "from Gammu"
 \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
+.fi
+.sp
+.RE
+.PP
 
 .TP
 Inject protected message with ringtone:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu-smsd-inject EMS 123456 \-protected 2 \-variablebitmaplong ala.bmp
 \-toneSElong axelf.txt \-toneSE ring.txt
+.fi
+.sp
+.RE
+.PP
 
 .SH SEE ALSO
 gammu\-smsdrc(5), gammu(1), gammu\-smsd(1)

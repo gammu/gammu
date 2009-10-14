@@ -74,12 +74,28 @@ differently. Default is "GammuSMSD".
 .TP
 Start SMSD as a deamon on Linux:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon
+.fi
+.sp
+.RE
+.PP
 
 .TP
 Start SMSD as a deamon on Linux with reduced privileges:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon \-\-user gammu \-\-group gammu
+.fi
+.sp
+.RE
+.PP
 
 .TP
 SMSD as a system wide daemon
@@ -93,19 +109,43 @@ install it manually or check INSTALL file for instructions.
 .TP
 Install Gammu SMSD Windows service:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd.exe \-c c:\\Gammu\\smsdrc \-i
+.fi
+.sp
+.RE
+.PP
 
 .TP
 Install two instances of SMSD Windows service:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd.exe \-c c:\\Gammu\\smsdrc\-1 \-n Gammu\-first\-phone \-i
 
 gammu\-smsd.exe \-c c:\\Gammu\\smsdrc\-2 \-n Gammu\-second\-phone \-i
+.fi
+.sp
+.RE
+.PP
 
 .TP
 To uninstall a Windows service:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd.exe \-u
+.fi
+.sp
+.RE
+.PP
 
 .SS Troubleshooting Windows Service
 
@@ -118,7 +158,15 @@ service (without \-i).
 .TP
 For example the command line can look like:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd.exe \-c smsdrc
+.fi
+.sp
+.RE
+.PP
 
 .PP
 You now should be able to get errors from SMSD even if it fails to start as a
@@ -126,6 +174,8 @@ service.
 
 .SH SEE ALSO
 gammu\-smsdrc(5), gammu(1), gammu\-smsd\-inject(1), gammu\-smsd\-monitor(1)
+
+Documentation for different backends:
 
 gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7), gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7)
 .SH AUTHOR

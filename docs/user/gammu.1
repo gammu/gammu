@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Oct 12 2009" "Gammu 1.26.90" "Gammu Documentation"
+.TH "GAMMU" "1" "Oct 13 2009" "Gammu 1.26.91" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -2424,36 +2424,92 @@ gammurc(5) for more details about it.
 .TP
 Save text message up to standard 160 chars:
 
+.RS
+.sp
+.nf
+.ne 7
 echo "All your base are belong to us" | gammu savesms TEXT
+.fi
+.sp
+.RE
+.PP
 
 or 
 
+.RS
+.sp
+.nf
+.ne 7
 gammu savesms TEXT \-text "All your base are belong to us"
+.fi
+.sp
+.RE
+.PP
 
 .TP
 Save long text message:
 
+.RS
+.sp
+.nf
+.ne 7
 echo "All your base are belong to us" | gammu savesms TEXT \-len 400
+.fi
+.sp
+.RE
+.PP
 
 or 
 
+.RS
+.sp
+.nf
+.ne 7
 gammu savesms TEXT \-len 400 \-text "All your base are belong to us"
+.fi
+.sp
+.RE
+.PP
 
 or
 
+.RS
+.sp
+.nf
+.ne 7
 gammu savesms EMS \-text "All your base are belong to us"
+.fi
+.sp
+.RE
+.PP
 
 .TP
 Save some funky message with predefined sound and animation from 2 bitmaps:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu savesms EMS \-text "Greetings" \-defsound 1 \-text "from Gammu"
 \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
+.fi
+.sp
+.RE
+.PP
 
 .TP
 Save protected message with ringtone:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu savesms EMS \-protected 2 \-variablebitmaplong ala.bmp
 \-toneSElong axelf.txt \-toneSE ring.txt
+.fi
+.sp
+.RE
+.PP
 
 .SS Backups
 
@@ -2510,10 +2566,18 @@ operating system, it's version and phone information are needed).
 To generate debug log, enable it in gammurc (alternatively you can
 do it on command line using \-d textall \-f /tmp/gammu.log):
 
-    [gammu]
-    ...your connection settings...
-    logfile = /tmp/gammu.log
-    logformat = textall
+.RS
+.sp
+.nf
+.ne 7
+[gammu]
+...your connection settings...
+logfile = /tmp/gammu.log
+logformat = textall
+.fi
+.sp
+.RE
+.PP
 
 With this settings, Gammu generates /tmp/gammu.log on each connection to
 phone and stores dump of communication there. You can also find some
