@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-10-14 15:45+0300\n"
+"POT-Creation-Date: 2009-10-14 15:59+0300\n"
 "PO-Revision-Date: 2009-08-26 18:12+0200\n"
 "Last-Translator: Nacho Carretero <albucasis@gmail.com>\n"
 "Language-Team: none\n"
@@ -5629,19 +5629,19 @@ msgid ""
 "Before reporting a bug, please enable verbose logging in SMSD configuration:"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsdrc.5:422
+#: docs/user/gammu-smsdrc.5:426 docs/user/gammu-smsd.1:201
+#: docs/user/gammu-smsd-inject.1:155 docs/user/gammu-smsd-monitor.1:63
 #, no-wrap
 msgid ""
-"    [smsd]\n"
-"    debuglevel = 255\n"
-"    logfile = smsd.log\n"
+"[smsd]\n"
+"debuglevel = 255\n"
+"logfile = smsd.log\n"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsdrc.5:423 docs/user/gammu-smsd.1:206
+#: docs/user/gammu-smsdrc.5:431 docs/user/gammu-smsd.1:206
 #: docs/user/gammu-smsd-inject.1:160 docs/user/gammu-smsd-monitor.1:68
 msgid "and include this verbose log within bug report."
 msgstr ""
@@ -6049,16 +6049,6 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu-smsd.1:179
 msgid "Documentation for different backends:"
-msgstr ""
-
-#. type: Plain text
-#: docs/user/gammu-smsd.1:201 docs/user/gammu-smsd-inject.1:155
-#: docs/user/gammu-smsd-monitor.1:63
-#, no-wrap
-msgid ""
-"[smsd]\n"
-"debuglevel = 255\n"
-"logfile = smsd.log\n"
 msgstr ""
 
 # type: TH
