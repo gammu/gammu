@@ -45,38 +45,92 @@ podrobně popsán v gammu\-smsdrc(5).
 .TP 
 Vložení standardní textové zprávy s maximální délkou 160 znaků:
 
+.RS
+.sp
+.nf
+.ne 7
 echo "All your base are belong to us" | gammu\-smsd\-inject TEXT 123456
+.fi
+.sp
+.RE
+.PP
 
 nebo
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd\-inject TEXT 123456 \-text "All your base are belong to us"
+.fi
+.sp
+.RE
+.PP
 
 .TP 
 Vložení dlouhé textové zprávy:
 
-echo "All your base are belong to us" | gammu\-smsd\-inject TEXT 123456 \-len
-400
+.RS
+.sp
+.nf
+.ne 7
+echo "All your base are belong to us" | gammu\-smsd\-inject TEXT 123456 \-len 400
+.fi
+.sp
+.RE
+.PP
 
 nebo
 
-gammu\-smsd\-inject TEXT 123456 \-len 400 \-text "All your base are belong to
-us"
+.RS
+.sp
+.nf
+.ne 7
+gammu\-smsd\-inject TEXT 123456 \-len 400 \-text "All your base are belong to us"
+.fi
+.sp
+.RE
+.PP
 
 nebo
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd\-inject EMS 123456 \-text "All your base are belong to us"
+.fi
+.sp
+.RE
+.PP
 
 .TP 
 Vložení zprávy s předdefinovaným zvukem a animací ze 2 obrázků:
 
-gammu\-smsd\-inject EMS 123456 \-text "Greetings" \-defsound 1 \-text "from
-Gammu" \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
+.RS
+.sp
+.nf
+.ne 7
+gammu\-smsd\-inject EMS 123456 \-text "Greetings" \-defsound 1 \-text "from Gammu"
+\-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
+.fi
+.sp
+.RE
+.PP
 
 .TP 
 Vložení chráněné zprávy s vyzváněním:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd\-inject EMS 123456 \-protected 2 \-variablebitmaplong ala.bmp
 \-toneSElong axelf.txt \-toneSE ring.txt
+.fi
+.sp
+.RE
+.PP
 
 .SH "DALŠÍ INFORMACE"
 gammu\-smsdrc(5), gammu(1), gammu\-smsd(1)
@@ -94,8 +148,16 @@ Prosím hlašte chyby na <http://bugs.cihar.com>.
 
 Před hlášením chyb prosím zapněte logovaní v nastavení SMSD:
 
-    [smsd]
-    debuglevel = 255
-    logfile = smsd.log
+.RS
+.sp
+.nf
+.ne 7
+[smsd]
+debuglevel = 255
+logfile = smsd.log
+.fi
+.sp
+.RE
+.PP
 
 a přiložte tento log k hlášení chyby.

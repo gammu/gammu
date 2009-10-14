@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Říjen 12, 2009" "Gammu 1.26.90" "Dokumentace Gammu"
+.TH GAMMU 1 "Oct 13 2009" "Gammu 1.26.91" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -725,8 +725,8 @@ Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
 
-Use \-yes parameter to answer yes to all questions (you want to automatically
-restore all data).
+Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
+jestli chcete vymazat všechna svoje data).
 
 Use \-memory parameter to force usage of defined memory type for storing
 entries regardless what backu format says.
@@ -1139,8 +1139,8 @@ Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
 
-Use \-yes parameter to answer yes to all questions (you want to automatically
-restore all data).
+Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
+jestli chcete vymazat všechna svoje data).
 
 Use \-memory parameter to force usage of defined memory type for storing
 entries regardless what backu format says.
@@ -1283,8 +1283,8 @@ Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
 
-Use \-yes parameter to answer yes to all questions (you want to automatically
-restore all data).
+Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
+jestli chcete vymazat všechna svoje data).
 
 Use \-memory parameter to force usage of defined memory type for storing
 entries regardless what backu format says.
@@ -1403,8 +1403,8 @@ Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
 
-Use \-yes parameter to answer yes to all questions (you want to automatically
-restore all data).
+Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
+jestli chcete vymazat všechna svoje data).
 
 Use \-memory parameter to force usage of defined memory type for storing
 entries regardless what backu format says.
@@ -1553,8 +1553,8 @@ Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
 
-Use \-yes parameter to answer yes to all questions (you want to automatically
-restore all data).
+Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
+jestli chcete vymazat všechna svoje data).
 
 Use \-memory parameter to force usage of defined memory type for storing
 entries regardless what backu format says.
@@ -1637,8 +1637,8 @@ Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
 
-Use \-yes parameter to answer yes to all questions (you want to automatically
-restore all data).
+Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
+jestli chcete vymazat všechna svoje data).
 
 Use \-memory parameter to force usage of defined memory type for storing
 entries regardless what backu format says.
@@ -1956,8 +1956,8 @@ Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
 
-Use \-yes parameter to answer yes to all questions (you want to automatically
-restore all data).
+Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
+jestli chcete vymazat všechna svoje data).
 
 Use \-memory parameter to force usage of defined memory type for storing
 entries regardless what backu format says.
@@ -2190,8 +2190,8 @@ Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
 Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stávající
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
 
-Use \-yes parameter to answer yes to all questions (you want to automatically
-restore all data).
+Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
+jestli chcete vymazat všechna svoje data).
 
 Use \-memory parameter to force usage of defined memory type for storing
 entries regardless what backu format says.
@@ -2521,36 +2521,92 @@ podrobně popsán v gammurc(5).
 .TP 
 Uložení standardní textové zprávy s maximální délkou 160 znaků:
 
+.RS
+.sp
+.nf
+.ne 7
 echo "All your base are belong to us" | gammu savesms TEXT
+.fi
+.sp
+.RE
+.PP
 
 nebo
 
+.RS
+.sp
+.nf
+.ne 7
 gammu savesms TEXT \-text "All your base are belong to us"
+.fi
+.sp
+.RE
+.PP
 
 .TP 
 Uložení dlouhé textové zprávy:
 
+.RS
+.sp
+.nf
+.ne 7
 echo "All your base are belong to us" | gammu savesms TEXT \-len 400
+.fi
+.sp
+.RE
+.PP
 
 nebo
 
+.RS
+.sp
+.nf
+.ne 7
 gammu savesms TEXT \-len 400 \-text "All your base are belong to us"
+.fi
+.sp
+.RE
+.PP
 
 nebo
 
+.RS
+.sp
+.nf
+.ne 7
 gammu savesms EMS \-text "All your base are belong to us"
+.fi
+.sp
+.RE
+.PP
 
 .TP 
 Uložení zprávy s předdefinovaným zvukem a animací ze 2 obrázků:
 
-gammu savesms EMS \-text "Greetings" \-defsound 1 \-text "from Gammu" \-tone10
-axelf.txt \-animation 2 file1.bmp file2.bmp
+.RS
+.sp
+.nf
+.ne 7
+gammu savesms EMS \-text "Greetings" \-defsound 1 \-text "from Gammu"
+\-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
+.fi
+.sp
+.RE
+.PP
 
 .TP 
 Uložení chráněné zprávy s vyzváněním:
 
-gammu savesms EMS \-protected 2 \-variablebitmaplong ala.bmp \-toneSElong
-axelf.txt \-toneSE ring.txt
+.RS
+.sp
+.nf
+.ne 7
+gammu savesms EMS \-protected 2 \-variablebitmaplong ala.bmp
+\-toneSElong axelf.txt \-toneSE ring.txt
+.fi
+.sp
+.RE
+.PP
 
 .SS Zálohy
 
@@ -2613,10 +2669,19 @@ telefonu).
 Pro vytvoření ladicího logu zapněte logování v gammurc (můžete ho také
 zapnout na příkazové řádce pomocí \-d textall \-f /tmp/gammu.log):
 
-    [gammu]
-    ...vaše nastavení připojení...
-    logfile = /tmp/gammu.log
-    logformat = textall
+.RS
+.sp
+.nf
+.ne 7
+[gammu]
+connection = your connection settings
+port = your port settings
+logfile = /tmp/gammu.log
+logformat = textall
+.fi
+.sp
+.RE
+.PP
 
 S tímto nastavení Gammu vytvoří /tmp/gammu.log při každém připojení k
 telefonu a uloží do něj obsah komunikace. V tomto logu také mohou být

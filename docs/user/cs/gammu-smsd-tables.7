@@ -420,7 +420,15 @@ práci s databází.
 
 Například vytvoření tabulek pro SQLite vypadá následovně:
     
-    sqlite3 smsd.db < docs/sql/sqlite.sql
+.RS
+.sp
+.nf
+.ne 7
+sqlite3 smsd.db < docs/sql/sqlite.sql
+.fi
+.sp
+.RE
+.PP
 
 .SS "Vkládání zpráv pomocí SQL"
 
@@ -428,17 +436,25 @@ Pro posílání zpráv buď použijte gammu\-smsd\-inject(1), které za vás ud�
 veškerou magii, nebo můžete vložit zprávy ručně. Nejjednodušší je vložit
 obyčejnou textovou zprávu:
 
-    INSERT INTO outbox (
-        DestinationNumber,
-        TextDecoded,
-        CreatorID,
-        Coding
-    ) VALUES (
-        '800123465',
-        'This is a SQL test message',
-        'Program',
-        'Default_No_Compression'
-    );
+.RS
+.sp
+.nf
+.ne 7
+INSERT INTO outbox (
+    DestinationNumber,
+    TextDecoded,
+    CreatorID,
+    Coding
+) VALUES (
+    '800123465',
+    'This is a SQL test message',
+    'Program',
+    'Default_No_Compression'
+);
+.fi
+.sp
+.RE
+.PP
 
 .SS "Vkládání dlouhých zpráv pomocí SQL"
 
@@ -448,36 +464,44 @@ UDH hlavičku. Například dlouhá textová zpráva by vypadala následovně
 dvou bajtech, hodnota D3 v příkladu je identifikace zprávy a může být
 libovolná):
 
-    INSERT INTO outbox (
-        CreatorID,
-        MultiPart,
-        DestinationNumber,
-        UDH,
-        TextDecoded,
-        Coding
-    ) VALUES (
-        'Gammu 1.23.91',
-        'true',
-        '123465',
-        '050003D30201',
-        'Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbez',
-        'Default_No_Compression'
-    )
+.RS
+.sp
+.nf
+.ne 7
+INSERT INTO outbox (
+    CreatorID,
+    MultiPart,
+    DestinationNumber,
+    UDH,
+    TextDecoded,
+    Coding
+) VALUES (
+    'Gammu 1.23.91',
+    'true',
+    '123465',
+    '050003D30201',
+    'Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbez',
+    'Default_No_Compression'
+)
 
-    INSERT INTO outbox_multipart (
-        SequencePosition,
-        UDH,
-        Class,
-        TextDecoded,
-        ID,
-        Coding
-    ) VALUES (
-        2,
-        '050003D30202',
-        'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.',
-        <ID_OF_INSERTED_RECORD_IN_OUBOX_TABLE>,
-        'Default_No_Compression'
-    )
+INSERT INTO outbox_multipart (
+    SequencePosition,
+    UDH,
+    Class,
+    TextDecoded,
+    ID,
+    Coding
+) VALUES (
+    2,
+    '050003D30202',
+    'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.',
+    <ID_OF_INSERTED_RECORD_IN_OUBOX_TABLE>,
+    'Default_No_Compression'
+)
+.fi
+.sp
+.RE
+.PP
 
 .SH "DALŠÍ INFORMACE"
 Databázové služby: gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7),

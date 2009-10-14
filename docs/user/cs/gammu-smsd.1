@@ -78,13 +78,28 @@ instanci jinak. Výchozí jméno je "GammuSMSD".
 .TP 
 Spuštění SMSD jako démon na Linuxu:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon
+.fi
+.sp
+.RE
+.PP
 
 .TP 
 Spuštění SMSD jako démon s omezenými právy na Linuxu:
 
-gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon
-\-\-user gammu \-\-group gammu
+.RS
+.sp
+.nf
+.ne 7
+gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon \-\-user gammu \-\-group gammu
+.fi
+.sp
+.RE
+.PP
 
 .TP 
 SMSD jako systémový démon
@@ -99,19 +114,43 @@ INSTALL.cs.
 .TP 
 Instalace SMSD jako služba ve Windows:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd.exe \-c c:\eGammu\esmsdrc \-i
+.fi
+.sp
+.RE
+.PP
 
 .TP 
 Instalace dvou SMSD jako služby ve Windows.
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd.exe \-c c:\eGammu\esmsdrc\-1 \-n Gammu\-first\-phone \-i
 
 gammu\-smsd.exe \-c c:\eGammu\esmsdrc\-2 \-n Gammu\-second\-phone \-i
+.fi
+.sp
+.RE
+.PP
 
 .TP 
 Odinstalace SMSD služby ve Windows.
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd.exe \-u
+.fi
+.sp
+.RE
+.PP
 
 .SS "Problémy se službou ve Windows"
 
@@ -123,7 +162,15 @@ stejnými parametry jako jste nainstalovali službu (bez parametru \-i).
 .TP 
 Příkazová řádka například může vypadat takto:
 
+.RS
+.sp
+.nf
+.ne 7
 gammu\-smsd.exe \-c smsdrc
+.fi
+.sp
+.RE
+.PP
 
 .PP
 Nyní by mělo být možné dostat popis chyb i když SMSD nejde spustit jako
@@ -131,6 +178,8 @@ služba.
 
 .SH "DALŠÍ INFORMACE"
 gammu\-smsdrc(5), gammu(1), gammu\-smsd\-inject(1), gammu\-smsd\-monitor(1)
+
+Documentation for different backends:
 
 gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7),
 gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7)
@@ -148,8 +197,16 @@ Prosím hlašte chyby na <http://bugs.cihar.com>.
 
 Před hlášením chyb prosím zapněte logovaní v nastavení SMSD:
 
-    [smsd]
-    debuglevel = 255
-    logfile = smsd.log
+.RS
+.sp
+.nf
+.ne 7
+[smsd]
+debuglevel = 255
+logfile = smsd.log
+.fi
+.sp
+.RE
+.PP
 
 a přiložte tento log k hlášení chyby.
