@@ -5,7 +5,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.26.90\n"
+"Project-Id-Version: Gammu-docs 1.26.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-12 16:21+0300\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
