@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-14 15:45+0300\n"
-"PO-Revision-Date: 2009-10-14 15:44+0200\n"
+"PO-Revision-Date: 2009-10-14 15:50+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,16 +31,16 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Oct 13 2009"
-msgstr "Říjen 12, 2009"
+msgstr "Říjen 13, 2009"
 
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu 1.26.91"
-msgstr "Gammu 1.26.90"
+msgstr "Gammu 1.26.91"
 
 # type: TH
 #. type: TH
@@ -4032,9 +4032,9 @@ msgstr "Uložení standardní textové zprávy s maximální délkou 160 znaků:
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2432
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "echo \"All your base are belong to us\" | gammu savesms TEXT\n"
-msgstr "echo \"All your base are belong to us\" | gammu savesms TEXT"
+msgstr "echo \"All your base are belong to us\" | gammu savesms TEXT\n"
 
 # type: Plain text
 #. type: Plain text
@@ -4047,9 +4047,9 @@ msgstr "nebo"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2444
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu savesms TEXT -text \"All your base are belong to us\"\n"
-msgstr "gammu savesms TEXT -text \"All your base are belong to us\""
+msgstr "gammu savesms TEXT -text \"All your base are belong to us\"\n"
 
 # type: TP
 #. type: TP
@@ -4061,23 +4061,23 @@ msgstr "Uložení dlouhé textové zprávy:"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2457
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "echo \"All your base are belong to us\" | gammu savesms TEXT -len 400\n"
-msgstr "echo \"All your base are belong to us\" | gammu savesms TEXT -len 400"
+msgstr "echo \"All your base are belong to us\" | gammu savesms TEXT -len 400\n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2469
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu savesms TEXT -len 400 -text \"All your base are belong to us\"\n"
-msgstr "gammu savesms TEXT -len 400 -text \"All your base are belong to us\""
+msgstr "gammu savesms TEXT -len 400 -text \"All your base are belong to us\"\n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2481
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu savesms EMS -text \"All your base are belong to us\"\n"
-msgstr "gammu savesms EMS -text \"All your base are belong to us\""
+msgstr "gammu savesms EMS -text \"All your base are belong to us\"\n"
 
 # type: TP
 #. type: TP
@@ -4089,11 +4089,13 @@ msgstr "Uložení zprávy s předdefinovaným zvukem a animací ze 2 obrázků:"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2495
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "gammu savesms EMS -text \"Greetings\" -defsound 1 -text \"from Gammu\"\n"
 "-tone10 axelf.txt -animation 2 file1.bmp file2.bmp\n"
-msgstr "gammu savesms EMS -text \"Greetings\" -defsound 1 -text \"from Gammu\" -tone10 axelf.txt -animation 2 file1.bmp file2.bmp"
+msgstr ""
+"gammu savesms EMS -text \"Greetings\" -defsound 1 -text \"from Gammu\"\n"
+"-tone10 axelf.txt -animation 2 file1.bmp file2.bmp\n"
 
 # type: TP
 #. type: TP
@@ -4105,11 +4107,13 @@ msgstr "Uložení chráněné zprávy s vyzváněním:"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2509
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp\n"
 "-toneSElong axelf.txt -toneSE ring.txt\n"
-msgstr "gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf.txt -toneSE ring.txt"
+msgstr ""
+"gammu savesms EMS -protected 2 -variablebitmaplong ala.bmp\n"
+"-toneSElong axelf.txt -toneSE ring.txt\n"
 
 #. type: SS
 #: docs/user/gammu.1:2514
@@ -4281,7 +4285,7 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2578
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "[gammu]\n"
 "connection = your connection settings\n"
@@ -4289,10 +4293,11 @@ msgid ""
 "logfile = /tmp/gammu.log\n"
 "logformat = textall\n"
 msgstr ""
-"    [gammu]\n"
-"    ...vaše nastavení připojení...\n"
-"    logfile = /tmp/gammu.log\n"
-"    logformat = textall\n"
+"[gammu]\n"
+"connection = vaše nastavení připojení\n"
+"port = vaše nastavení portu\n"
+"logfile = /tmp/gammu.log\n"
+"logformat = textall\n"
 
 # type: Plain text
 #. type: Plain text
@@ -6469,9 +6474,9 @@ msgstr "Spuštění SMSD jako démon na Linuxu:"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd.1:82
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon\n"
-msgstr "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon"
+msgstr "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon\n"
 
 # type: TP
 #. type: TP
@@ -6483,9 +6488,9 @@ msgstr "Spuštění SMSD jako démon s omezenými právy na Linuxu:"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd.1:95
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon --user gammu --group gammu\n"
-msgstr "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon --user gammu --group gammu"
+msgstr "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon --user gammu --group gammu\n"
 
 #. type: TP
 #: docs/user/gammu-smsd.1:100
@@ -6522,9 +6527,9 @@ msgstr "Instalace SMSD jako služba ve Windows:"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd.1:117
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc -i\n"
-msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc -i"
+msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc -i\n"
 
 # type: Plain text
 #. type: TP
@@ -6536,16 +6541,16 @@ msgstr "Instalace dvou SMSD jako služby ve Windows."
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd.1:130
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-1 -n Gammu-first-phone -i\n"
-msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-1 -n Gammu-first-phone -i"
+msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-1 -n Gammu-first-phone -i\n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd.1:132
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-2 -n Gammu-second-phone -i\n"
-msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-2 -n Gammu-second-phone -i"
+msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-2 -n Gammu-second-phone -i\n"
 
 # type: Plain text
 #. type: TP
@@ -6557,9 +6562,9 @@ msgstr "Odinstalace SMSD služby ve Windows."
 # type: TP
 #. type: Plain text
 #: docs/user/gammu-smsd.1:145
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu-smsd.exe -u\n"
-msgstr "gammu-smsd.exe -u"
+msgstr "gammu-smsd.exe -u\n"
 
 # type: Plain text
 #. type: SS
@@ -6592,9 +6597,9 @@ msgstr "Příkazová řádka například může vypadat takto:"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd.1:166
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu-smsd.exe -c smsdrc\n"
-msgstr "gammu-smsd.exe -c smsdrc"
+msgstr "gammu-smsd.exe -c smsdrc\n"
 
 # type: Plain text
 #. type: Plain text
@@ -6621,15 +6626,15 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu-smsd.1:201 docs/user/gammu-smsd-inject.1:155
 #: docs/user/gammu-smsd-monitor.1:63
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "[smsd]\n"
 "debuglevel = 255\n"
 "logfile = smsd.log\n"
 msgstr ""
-"    [smsd]\n"
-"    debuglevel = 255\n"
-"    logfile = smsd.log\n"
+"[smsd]\n"
+"debuglevel = 255\n"
+"logfile = smsd.log\n"
 
 # type: TH
 #. type: TH
@@ -6711,16 +6716,16 @@ msgstr "Vložení standardní textové zprávy s maximální délkou 160 znaků:
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-inject.1:51
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456\n"
-msgstr "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456"
+msgstr "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456\n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-inject.1:63
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu-smsd-inject TEXT 123456 -text \"All your base are belong to us\"\n"
-msgstr "gammu-smsd-inject TEXT 123456 -text \"All your base are belong to us\""
+msgstr "gammu-smsd-inject TEXT 123456 -text \"All your base are belong to us\"\n"
 
 # type: TP
 #. type: TP
@@ -6732,23 +6737,23 @@ msgstr "Vložení dlouhé textové zprávy:"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-inject.1:76
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456 -len 400\n"
-msgstr "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456 -len 400"
+msgstr "echo \"All your base are belong to us\" | gammu-smsd-inject TEXT 123456 -len 400\n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-inject.1:88
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu-smsd-inject TEXT 123456 -len 400 -text \"All your base are belong to us\"\n"
-msgstr "gammu-smsd-inject TEXT 123456 -len 400 -text \"All your base are belong to us\""
+msgstr "gammu-smsd-inject TEXT 123456 -len 400 -text \"All your base are belong to us\"\n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-inject.1:100
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "gammu-smsd-inject EMS 123456 -text \"All your base are belong to us\"\n"
-msgstr "gammu-smsd-inject EMS 123456 -text \"All your base are belong to us\""
+msgstr "gammu-smsd-inject EMS 123456 -text \"All your base are belong to us\"\n"
 
 # type: TP
 #. type: TP
@@ -6760,11 +6765,13 @@ msgstr "Vložení zprávy s předdefinovaným zvukem a animací ze 2 obrázků:"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-inject.1:114
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "gammu-smsd-inject EMS 123456 -text \"Greetings\" -defsound 1 -text \"from Gammu\"\n"
 "-tone10 axelf.txt -animation 2 file1.bmp file2.bmp\n"
-msgstr "gammu-smsd-inject EMS 123456 -text \"Greetings\" -defsound 1 -text \"from Gammu\" -tone10 axelf.txt -animation 2 file1.bmp file2.bmp"
+msgstr ""
+"gammu-smsd-inject EMS 123456 -text \"Greetings\" -defsound 1 -text \"from Gammu\"\n"
+"-tone10 axelf.txt -animation 2 file1.bmp file2.bmp\n"
 
 # type: TP
 #. type: TP
@@ -6776,11 +6783,13 @@ msgstr "Vložení chráněné zprávy s vyzváněním:"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-inject.1:128
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "gammu-smsd-inject EMS 123456 -protected 2 -variablebitmaplong ala.bmp\n"
 "-toneSElong axelf.txt -toneSE ring.txt\n"
-msgstr "gammu-smsd-inject EMS 123456 -protected 2 -variablebitmaplong ala.bmp -toneSElong axelf.txt -toneSE ring.txt"
+msgstr ""
+"gammu-smsd-inject EMS 123456 -protected 2 -variablebitmaplong ala.bmp\n"
+"-toneSElong axelf.txt -toneSE ring.txt\n"
 
 # type: Plain text
 #. type: Plain text
@@ -8433,9 +8442,9 @@ msgstr "Například vytvoření tabulek pro SQLite vypadá následovně:"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:412
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "sqlite3 smsd.db E<lt> docs/sql/sqlite.sql\n"
-msgstr "    sqlite3 smsd.db E<lt> docs/sql/sqlite.sql\n"
+msgstr "sqlite3 smsd.db E<lt> docs/sql/sqlite.sql\n"
 
 # type: Plain text
 #. type: Plain text
@@ -8452,7 +8461,7 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:438
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "INSERT INTO outbox (\n"
 "    DestinationNumber,\n"
@@ -8466,17 +8475,17 @@ msgid ""
 "    'Default_No_Compression'\n"
 ");\n"
 msgstr ""
-"    INSERT INTO outbox (\n"
-"        DestinationNumber,\n"
-"        TextDecoded,\n"
-"        CreatorID,\n"
-"        Coding\n"
-"    ) VALUES (\n"
-"        '800123465', \n"
-"        'This is a SQL test message', \n"
-"        'Program',\n"
-"        'Default_No_Compression'\n"
-"    );\n"
+"INSERT INTO outbox (\n"
+"    DestinationNumber,\n"
+"    TextDecoded,\n"
+"    CreatorID,\n"
+"    Coding\n"
+") VALUES (\n"
+"    '800123465', \n"
+"    'This is a SQL test message', \n"
+"    'Program',\n"
+"    'Default_No_Compression'\n"
+");\n"
 
 # type: SS
 #. type: SS
@@ -8502,7 +8511,7 @@ msgstr ""
 
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:470
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "INSERT INTO outbox (\n"
 "    CreatorID,\n"
@@ -8520,26 +8529,26 @@ msgid ""
 "    'Default_No_Compression'\n"
 ")\n"
 msgstr ""
-"    INSERT INTO outbox (\n"
-"        CreatorID,\n"
-"        MultiPart,\n"
-"        DestinationNumber,\n"
-"        UDH,\n"
-"        TextDecoded,\n"
-"        Coding\n"
-"    ) VALUES (\n"
-"        'Gammu 1.23.91',\n"
-"        'true',\n"
-"        '123465',\n"
-"        '050003D30201',\n"
-"        'Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbez',\n"
-"        'Default_No_Compression'\n"
-"    )\n"
+"INSERT INTO outbox (\n"
+"    CreatorID,\n"
+"    MultiPart,\n"
+"    DestinationNumber,\n"
+"    UDH,\n"
+"    TextDecoded,\n"
+"    Coding\n"
+") VALUES (\n"
+"    'Gammu 1.23.91',\n"
+"    'true',\n"
+"    '123465',\n"
+"    '050003D30201',\n"
+"    'Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbez',\n"
+"    'Default_No_Compression'\n"
+")\n"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:485
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "INSERT INTO outbox_multipart (\n"
 "    SequencePosition,\n"
@@ -8556,20 +8565,20 @@ msgid ""
 "    'Default_No_Compression'\n"
 ")\n"
 msgstr ""
-"    INSERT INTO outbox_multipart (\n"
-"        SequencePosition,\n"
-"        UDH,\n"
-"        Class,\n"
-"        TextDecoded,\n"
-"        ID,\n"
-"        Coding\n"
-"    ) VALUES (\n"
-"        2,\n"
-"        '050003D30202',\n"
-"        'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.', \n"
-"        E<lt>ID_OF_INSERTED_RECORD_IN_OUBOX_TABLEE<gt>,\n"
-"        'Default_No_Compression'\n"
-"    )\n"
+"INSERT INTO outbox_multipart (\n"
+"    SequencePosition,\n"
+"    UDH,\n"
+"    Class,\n"
+"    TextDecoded,\n"
+"    ID,\n"
+"    Coding\n"
+") VALUES (\n"
+"     2,\n"
+"    '050003D30202',\n"
+"    'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.', \n"
+"    E<lt>ID_OF_INSERTED_RECORD_IN_OUBOX_TABLEE<gt>,\n"
+"    'Default_No_Compression'\n"
+")\n"
 
 # type: Plain text
 #. type: Plain text
