@@ -404,7 +404,15 @@ the database.
 
 For example to create SQLite tables, issue following command:
     
-    sqlite3 smsd.db < docs/sql/sqlite.sql
+.RS
+.sp
+.nf
+.ne 7
+sqlite3 smsd.db < docs/sql/sqlite.sql
+.fi
+.sp
+.RE
+.PP
 
 .SS Injecting a message using SQL
 
@@ -412,17 +420,25 @@ To send a message, you can either use gammu-smsd-inject(1), which does all the
 magic for you, or you can insert the message manually. The simplest example is
 short text message:
 
-    INSERT INTO outbox (
-        DestinationNumber,
-        TextDecoded,
-        CreatorID,
-        Coding
-    ) VALUES (
-        '800123465', 
-        'This is a SQL test message', 
-        'Program',
-        'Default_No_Compression'
-    );
+.RS
+.sp
+.nf
+.ne 7
+INSERT INTO outbox (
+    DestinationNumber,
+    TextDecoded,
+    CreatorID,
+    Coding
+) VALUES (
+    '800123465', 
+    'This is a SQL test message', 
+    'Program',
+    'Default_No_Compression'
+);
+.fi
+.sp
+.RE
+.PP
 
 .SS Injecting long message using SQL
 
@@ -432,36 +448,44 @@ each UDH needs to contain number of parts and sequence position as last two
 bytes, the D3 value in example is message reference number, it can be
 anything):
 
-    INSERT INTO outbox (
-        CreatorID,
-        MultiPart,
-        DestinationNumber,
-        UDH,
-        TextDecoded,
-        Coding
-    ) VALUES (
-        'Gammu 1.23.91',
-        'true',
-        '123465',
-        '050003D30201',
-        'Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbez',
-        'Default_No_Compression'
-    )
+.RS
+.sp
+.nf
+.ne 7
+INSERT INTO outbox (
+    CreatorID,
+    MultiPart,
+    DestinationNumber,
+    UDH,
+    TextDecoded,
+    Coding
+) VALUES (
+    'Gammu 1.23.91',
+    'true',
+    '123465',
+    '050003D30201',
+    'Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbez',
+    'Default_No_Compression'
+)
 
-    INSERT INTO outbox_multipart (
-        SequencePosition,
-        UDH,
-        Class,
-        TextDecoded,
-        ID,
-        Coding
-    ) VALUES (
-        2,
-        '050003D30202',
-        'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.', 
-        <ID_OF_INSERTED_RECORD_IN_OUBOX_TABLE>,
-        'Default_No_Compression'
-    )
+INSERT INTO outbox_multipart (
+    SequencePosition,
+    UDH,
+    Class,
+    TextDecoded,
+    ID,
+    Coding
+) VALUES (
+    2,
+    '050003D30202',
+    'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.', 
+    <ID_OF_INSERTED_RECORD_IN_OUBOX_TABLE>,
+    'Default_No_Compression'
+)
+.fi
+.sp
+.RE
+.PP
 
 .SH SEE ALSO
 Database backends:
