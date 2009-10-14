@@ -24,6 +24,7 @@ ChangeLog
 [-] * Fixed parsing of vCards with lowercase types (bug #1006).
 [-] * Handle forward references in Nokia phonebook (bug #1009).
 [-] * Save timestamp to SMS backup for all messages.
+[-] * Store PDU type in SMS backup.
     
 20091012 - 1.26.90
 

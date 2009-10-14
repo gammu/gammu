@@ -3674,6 +3674,16 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &SMS->DateTime)) {
 		SMS->PDU = SMS_Deliver;
 	}
+	readvalue = ReadCFGText(file_info, buffer, "PDU", FALSE);
+	if (readvalue != NULL) {
+		if (strcmp(readvalue, "Deliver") == 0) {
+			SMS->PDU = SMS_Deliver;
+		} else if (strcmp(readvalue, "Submit" ) == 0) {
+			SMS->PDU = SMS_Submit;
+		} else if (strcmp(readvalue, "Status_Report" ) == 0) {
+			SMS->PDU = SMS_Status_Report;
+		}
+	}
 	sprintf(buffer,"DateTime");
 	readvalue = ReadCFGText(file_info, section, buffer, FALSE);
 	if (readvalue != NULL) {
@@ -3882,6 +3892,11 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 			if (backup->SMS[i]->ReplyViaSameSMSC) {
 				fprintf(file,"SMSCReply = TRUE\n");
 			}
+			fprintf(file,"PDU = Deliver\n");
+		} else if (backup->SMS[i]->PDU == SMS_Submit) {
+			fprintf(file,"PDU = Submit\n");
+		} else if (backup->SMS[i]->PDU == SMS_Status_Report) {
+			fprintf(file,"PDU = Status_Report\n");
 		}
 		if (backup->SMS[i]->DateTime.Year != 0) {
 			fprintf(file,"DateTime");
