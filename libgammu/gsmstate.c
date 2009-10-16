@@ -861,7 +861,7 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 		}
 
 		/* Some data received. Reset timer */
-		if (GSM_ReadDevice(s, TRUE) != 0) {
+		if (GSM_ReadDevice(s, TRUE) > 0) {
 			i = 0;
 		} else {
 			usleep(10000);
