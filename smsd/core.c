@@ -897,26 +897,18 @@ gboolean SMSD_CheckRemoteNumber(GSM_SMSDConfig *Config, GSM_SMSDService *Service
 	INI_Entry		*e;
 
 	if (Config->IncludeNumbers != NULL) {
-		e=Config->IncludeNumbers;
-		process=FALSE;
-		while (1) {
-			if (e == NULL) break;
-			if (strcmp(number,e->EntryValue)==0) {
-				process=TRUE;
-				break;
+		process = FALSE;
+		for (e = Config->IncludeNumbers; e != NULL; e = e->Prev) {
+			if (strcmp(number,e->EntryValue) == 0) {
+				return TRUE;
 			}
-			e = e->Prev;
 		}
 	} else if (Config->ExcludeNumbers != NULL) {
-		e=Config->ExcludeNumbers;
-		process=TRUE;
-		while (1) {
-			if (e == NULL) break;
-			if (strcmp(number,e->EntryValue)==0) {
-				process=FALSE;
-				break;
+		process = TRUE;
+		for (e = Config->ExcludeNumbers; e != NULL; e = e->Prev) {
+			if (strcmp(number, e->EntryValue) == 0) {
+				return FALSE;
 			}
-			e = e->Prev;
 		}
 	}
 	return process;
