@@ -478,14 +478,23 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		smprintf(s, "Phonebook entry received\n");
 		Memory->EntriesNum = 9;
 		Memory->Entries[0].EntryType = PBK_Number_Mobile;
+		Memory->Entries[0].AddError = ERR_NONE;
 		Memory->Entries[1].EntryType = PBK_Number_Home;
+		Memory->Entries[1].AddError = ERR_NONE;
 		Memory->Entries[2].EntryType = PBK_Number_Work;
+		Memory->Entries[2].AddError = ERR_NONE;
 		Memory->Entries[3].EntryType = PBK_Number_Fax;
+		Memory->Entries[3].AddError = ERR_NONE;
 		Memory->Entries[4].EntryType = PBK_Number_General;
+		Memory->Entries[4].AddError = ERR_NONE;
 		Memory->Entries[5].EntryType = PBK_Text_Email;
+		Memory->Entries[5].AddError = ERR_NONE;
 		Memory->Entries[6].EntryType = PBK_Text_FirstName;
+		Memory->Entries[6].AddError = ERR_NONE;
 		Memory->Entries[7].EntryType = PBK_Text_LastName;
+		Memory->Entries[7].AddError = ERR_NONE;
 		Memory->Entries[8].EntryType = PBK_Text_Note;
+		Memory->Entries[8].AddError = ERR_NONE;
 
 		/* Get line from reply */
 		str = GetLineString(msg.Buffer, &Priv->Lines, 2);

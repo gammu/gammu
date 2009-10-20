@@ -205,7 +205,9 @@ GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case AT_Reply_OK:
  		smprintf(s, "Phonebook entry received\n");
 		Memory->EntriesNum = 2;
+		Memory->Entries[0].AddError = ERR_NONE;
 		Memory->Entries[1].EntryType = PBK_Text_Name;
+		Memory->Entries[1].AddError = ERR_NONE;
 
 		/* Get line from reply */
 		str = GetLineString(msg.Buffer, &Priv->Lines, 2);
