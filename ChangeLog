@@ -25,6 +25,7 @@ ChangeLog
 [-] * Handle forward references in Nokia phonebook (bug #1009).
 [-] * Save timestamp to SMS backup for all messages.
 [-] * Store PDU type in SMS backup.
+[+] * More flexible handling of exclude/include lists in SMSD.
     
 20091012 - 1.26.90
 

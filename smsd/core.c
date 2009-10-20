@@ -406,6 +406,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 #ifdef WIN32
 	size_t i, len;
 #endif
+	INI_Entry               *e;
 
 	memset(&smsdcfg, 0, sizeof(smsdcfg));
 
@@ -680,13 +681,28 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	}
 #endif
 
-	Config->IncludeNumbers=INI_FindLastSectionEntry(Config->smsdcfgfile, "include_numbers", FALSE);
-	Config->ExcludeNumbers=INI_FindLastSectionEntry(Config->smsdcfgfile, "exclude_numbers", FALSE);
-	if (Config->IncludeNumbers != NULL) {
+	/* Prepare lists */
+	GSM_StringArray_New(&(Config->IncludeNumbersList));
+	GSM_StringArray_New(&(Config->ExcludeNumbersList));
+
+	/* Process include section in config file */
+	for (e = INI_FindLastSectionEntry(Config->smsdcfgfile, "include_numbers", FALSE); e != NULL; e = e->Prev) {
+		if (!GSM_StringArray_Add(&(Config->IncludeNumbersList), e->EntryValue)) {
+			return ERR_MOREMEMORY;
+		}
+	}
+	/* Process exclude section in config file */
+	for (e = INI_FindLastSectionEntry(Config->smsdcfgfile, "exclude_numbers", FALSE); e != NULL; e = e->Prev) {
+		if (!GSM_StringArray_Add(&(Config->ExcludeNumbersList), e->EntryValue)) {
+			return ERR_MOREMEMORY;
+		}
+	}
+
+	if (Config->IncludeNumbersList.used > 0) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Include numbers available");
 	}
-	if (Config->ExcludeNumbers != NULL) {
-		if (Config->IncludeNumbers == NULL) {
+	if (Config->ExcludeNumbersList.used > 0) {
+		if (Config->IncludeNumbersList.used == 0) {
 			SMSD_Log(DEBUG_NOTICE, Config, "Exclude numbers available");
 		} else {
 			SMSD_Log(DEBUG_INFO, Config, "Exclude numbers available, but IGNORED");
@@ -893,27 +909,21 @@ gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Confi
  */
 gboolean SMSD_CheckRemoteNumber(GSM_SMSDConfig *Config, GSM_SMSDService *Service, const char *number)
 {
-	gboolean process = TRUE;
-	INI_Entry		*e;
-
-	if (Config->IncludeNumbers != NULL) {
-		process = FALSE;
-		for (e = Config->IncludeNumbers; e != NULL; e = e->Prev) {
-			if (strcmp(number,e->EntryValue) == 0) {
-				SMSD_Log(DEBUG_NOTICE, Config, "Number %s matched IncludeNumbers", number);
-				return TRUE;
-			}
+	if (Config->IncludeNumbersList.used > 0) {
+		if (GSM_StringArray_Find(&(Config->IncludeNumbersList), number)) {
+			SMSD_Log(DEBUG_NOTICE, Config, "Number %s matched IncludeNumbers", number);
+			return TRUE;
 		}
-	} else if (Config->ExcludeNumbers != NULL) {
-		process = TRUE;
-		for (e = Config->ExcludeNumbers; e != NULL; e = e->Prev) {
-			if (strcmp(number, e->EntryValue) == 0) {
-				SMSD_Log(DEBUG_NOTICE, Config, "Number %s matched ExcludeNumbers", number);
-				return FALSE;
-			}
+		return FALSE;
+	} else if (Config->ExcludeNumbersList.used > 0) {
+		if (GSM_StringArray_Find(&(Config->ExcludeNumbersList), number)) {
+			SMSD_Log(DEBUG_NOTICE, Config, "Number %s matched ExcludeNumbers", number);
+			return FALSE;
 		}
+		return TRUE;
 	}
-	return process;
+
+	return TRUE;
 }
 
 gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)

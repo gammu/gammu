@@ -30,6 +30,8 @@
 
 #include "log.h"
 
+#include "../helper/array.h"
+
 typedef enum {
 	DEBUG_ERROR = -1,
 	DEBUG_INFO = 0,
@@ -49,7 +51,7 @@ struct _GSM_SMSDConfig {
 	const char	*Service;
 	const char *program_name;
 	/* general options */
-	INI_Entry       *IncludeNumbers, *ExcludeNumbers;
+	GSM_StringArray IncludeNumbersList, ExcludeNumbersList;
 	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency;
 	int deliveryreportdelay;
 	unsigned int	resetfrequency;
