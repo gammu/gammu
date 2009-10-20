@@ -29,6 +29,11 @@ add_test(sizes "${GAMMU_TEST_PATH}/sizes${GAMMU_TEST_SUFFIX}")
 set_tests_properties(sizes PROPERTIES
     FAIL_REGULAR_EXPRESSION "[0-9][0-9] MiB")
 
+# Array manipulation tests
+add_executable(array-test array-test.c)
+target_link_libraries (array-test array)
+add_test(array "${GAMMU_TEST_PATH}/array-test${GAMMU_TEST_SUFFIX}")
+
 # Basic check for statemachine functionality
 add_executable(statemachine-init statemachine-init.c)
 target_link_libraries(statemachine-init libGammu)
