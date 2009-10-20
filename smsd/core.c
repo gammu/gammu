@@ -900,6 +900,7 @@ gboolean SMSD_CheckRemoteNumber(GSM_SMSDConfig *Config, GSM_SMSDService *Service
 		process = FALSE;
 		for (e = Config->IncludeNumbers; e != NULL; e = e->Prev) {
 			if (strcmp(number,e->EntryValue) == 0) {
+				SMSD_Log(DEBUG_NOTICE, Config, "Number %s matched IncludeNumbers", number);
 				return TRUE;
 			}
 		}
@@ -907,6 +908,7 @@ gboolean SMSD_CheckRemoteNumber(GSM_SMSDConfig *Config, GSM_SMSDService *Service
 		process = TRUE;
 		for (e = Config->ExcludeNumbers; e != NULL; e = e->Prev) {
 			if (strcmp(number, e->EntryValue) == 0) {
+				SMSD_Log(DEBUG_NOTICE, Config, "Number %s matched ExcludeNumbers", number);
 				return FALSE;
 			}
 		}
