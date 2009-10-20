@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU\-SMSDRC 5 "Leden  4, 2009" "Gammu 1.23.0" "Dokumentace Gammu"
+.TH GAMMU\-SMSDRC 5 "Říjen 20, 2009" "Gammu 1.27.0" "Dokumentace Gammu"
 .SH JMÉNO
 
 .P
@@ -207,6 +207,22 @@ náročné operace, zastavíte přijímání nových zpráv. Aby se zabránilo v
 komplikacím, čeká SMSD maximálně dvě minuty. Po této době bude pokračovat v
 normálním běhu a může spustit váš skript znovu.
 
+.TP 
+\fBIncludeNumbersFile\fP
+
+Soubor se seznamem čísel, která bude SMSD přijímat. Soubor obsahuje na
+každém řádku jedno číslo, prázdné řádky jsou ignorovány. Soubor je načten
+při startu a znovu načten je jen při znovunačtení konfigurace. Více
+podrobností v sekci Filtrování zpráv.
+
+.TP 
+\fBExcludeNumbersFile\fP
+
+Soubor se seznamem čísel, která nebude SMSD přijímat. Soubor obsahuje na
+každém řádku jedno číslo, prázdné řádky jsou ignorovány. Soubor je načten
+při startu a znovu načten je jen při znovunačtení konfigurace. Více
+podrobností v sekci Filtrování zpráv.
+
 .SS "Parametry pro služby používající databázi"
 
 Všechny ze služeb DBI, MYSQL a PGSQL (viz gammu\-smsd\-mysql(7),
@@ -326,10 +342,19 @@ Výchozí je 'auto'.
 .SS "Filtrování zpráv"
 
 SMSD umožňuje zpracovat jen část přijatých zpráv. Filtry můžete definovat v
-sekcích [include_numbers] a [exclude_numbers]. Pokud existuje sekce
-[include_numbers], všechny hodnoty z ní (klíče jsou ignorovány) jsou použity
-jako povolená čísla a jiné zprávy nejsou zpracovány. Naopak v
-[exclude_numbers] můžete zadat jaká čísla chcete ignorovat.
+sekcích [include_numbers] a [exclude_numbers] nebo pomocí parametrů
+IncludeNumbersFile a ExcludeNumbersFile.
+
+Pokud existuje sekce [include_numbers], všechny hodnoty z ní (klíče jsou
+ignorovány) jsou použity jako povolená čísla a jiné zprávy nejsou
+zpracovány. Naopak v [exclude_numbers] můžete zadat jaká čísla chcete
+ignorovat.
+
+Seznamy z obou zdrojů jsou sloučeny. Pokud je v seznamu povolených čísel
+alespoň jedno číslo, použije se jen tento seznam a budou zpracovány jen
+zprávy od čísel v tomto seznamu. Pokud je tento seznam prázný a v seznamu
+zakázaných čísel je nějaké číslo, nebudou zpracovány zprávy z čísel v tomto
+seznamu. Pokud jsou oba seznamy prázdné, jsou zpracovány všechny zprávy.
 
 .SH PŘÍKLAD
 
