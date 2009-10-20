@@ -14,6 +14,9 @@ include_directories (
 add_library(string STATIC string.c)
 GAMMU_TUNE_SHARED(string)
 
+add_library(array STATIC array.c)
+GAMMU_TUNE_SHARED(array)
+
 add_library (printing STATIC printing.c)
 GAMMU_TUNE_SHARED(printing)
 
