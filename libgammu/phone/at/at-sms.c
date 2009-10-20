@@ -407,7 +407,11 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 	if (error != ERR_NONE) return error;
 	if (parse_len != length) {
 		smprintf(s, "Did not parse all PDU data (%d, %d)!\n", (int)parse_len, (int)length);
-		return ERR_UNKNOWN;
+		if (buffer[parse_len] == 0xff) {
+			smprintf(s, "Assuming broken phone which pads SMS data with FF\n");
+		} else {
+			return ERR_UNKNOWN;
+		}
 	}
 
 	switch (sms->PDU) {

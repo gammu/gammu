@@ -27,6 +27,7 @@ ChangeLog
 [-] * Store PDU type in SMS backup.
 [+] * More flexible handling of exclude/include lists in SMSD.
 [+] * Add support for external list of exclude/include numbers (bug#1008).
+[-] * Workaround decoding of messages padded by 0xFF by phone.
 
     
 20091012 - 1.26.90
