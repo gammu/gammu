@@ -888,13 +888,46 @@ gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Confi
 }
 #endif
 
+/**
+ * Checks whether we are allowed to accept a message from number.
+ */
+gboolean SMSD_CheckRemoteNumber(GSM_SMSDConfig *Config, GSM_SMSDService *Service, const char *number)
+{
+	gboolean process = TRUE;
+	INI_Entry		*e;
+
+	if (Config->IncludeNumbers != NULL) {
+		e=Config->IncludeNumbers;
+		process=FALSE;
+		while (1) {
+			if (e == NULL) break;
+			if (strcmp(number,e->EntryValue)==0) {
+				process=TRUE;
+				break;
+			}
+			e = e->Prev;
+		}
+	} else if (Config->ExcludeNumbers != NULL) {
+		e=Config->ExcludeNumbers;
+		process=TRUE;
+		while (1) {
+			if (e == NULL) break;
+			if (strcmp(number,e->EntryValue)==0) {
+				process=FALSE;
+				break;
+			}
+			e = e->Prev;
+		}
+	}
+	return process;
+}
+
 gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 {
-	gboolean			start,process;
+	gboolean			start;
 	GSM_MultiSMSMessage 	sms;
-	unsigned char 		buffer[100];
+	char 		buffer[100];
 	GSM_Error		error=ERR_NONE;
-	INI_Entry		*e;
 	int			i;
 	char			*locations;
 
@@ -910,32 +943,8 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		case ERR_NONE:
 			/* Not Inbox SMS - exit */
 			if (!sms.SMS[0].InboxFolder) break;
-			process=TRUE;
 			DecodeUnicode(sms.SMS[0].Number,buffer);
-			if (Config->IncludeNumbers != NULL) {
-				e=Config->IncludeNumbers;
-				process=FALSE;
-				while (1) {
-					if (e == NULL) break;
-					if (strcmp(buffer,e->EntryValue)==0) {
-						process=TRUE;
-						break;
-					}
-					e = e->Prev;
-				}
-			} else if (Config->ExcludeNumbers != NULL) {
-				e=Config->ExcludeNumbers;
-				process=TRUE;
-				while (1) {
-					if (e == NULL) break;
-					if (strcmp(buffer,e->EntryValue)==0) {
-						process=FALSE;
-						break;
-					}
-					e = e->Prev;
-				}
-			}
-			if (process) {
+			if (SMSD_CheckRemoteNumber(Config, Service, buffer)) {
 				SMSD_Log(DEBUG_NOTICE, Config, "Received message from %s", buffer);
 				Config->Status->Received += sms.Number;
 	 			error = Service->SaveInboxSMS(&sms, Config, &locations);
