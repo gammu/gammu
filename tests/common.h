@@ -1,6 +1,8 @@
 #ifndef _test_common_h_
 #define _test_common_h_
 
+#include <stdlib.h>
+
 /**
  * Common functions for test.
  */
