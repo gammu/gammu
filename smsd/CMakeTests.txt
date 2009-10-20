@@ -14,6 +14,7 @@ set(MYSQL_PASSWORD smsd CACHE STRING "Password to use for MySQL tests")
 
 configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" ESCAPE_QUOTES)
 configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd-files.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" ESCAPE_QUOTES)
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd-files-include.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files-include.sh" ESCAPE_QUOTES)
 
 macro(smsd_testsuite _driver)
     # This test tests some functionality and setups environment
@@ -70,6 +71,12 @@ set_tests_properties("smsd-files-standard" PROPERTIES
 add_test("smsd-files-detail" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" detail)
 set_tests_properties("smsd-files-detail" PROPERTIES
     PASS_REGULAR_EXPRESSION ".999999999999999.3.6.0.100.42"
+    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
+    )
+
+add_test("smsd-files-include-unicode" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files-include.sh" unicode)
+set_tests_properties("smsd-files-include-unicode" PROPERTIES
+    PASS_REGULAR_EXPRESSION ".999999999999999.3.3.0.100.42"
     FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
     )
 
