@@ -385,6 +385,8 @@ void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 		Config->connected = FALSE;
 	}
 	SMSD_CloseLog(Config);
+	GSM_StringArray_Free(&(Config->IncludeNumbersList));
+	GSM_StringArray_Free(&(Config->ExcludeNumbersList));
 	free(Config->gammu_log_buffer);
 	INI_Free(Config->smsdcfgfile);
 	GSM_FreeStateMachine(Config->gsm);
@@ -404,9 +406,13 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	char			fullpath[PATH_MAX + 1];
 #endif
 #ifdef WIN32
-	size_t i, len;
+	size_t i;
 #endif
+	size_t len;
 	INI_Entry               *e;
+	char *listfilename;
+	FILE *listfd;
+	char buffer[GSM_MAX_NUMBER_LENGTH + 1];
 
 	memset(&smsdcfg, 0, sizeof(smsdcfg));
 
@@ -696,6 +702,56 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		if (!GSM_StringArray_Add(&(Config->ExcludeNumbersList), e->EntryValue)) {
 			return ERR_MOREMEMORY;
 		}
+	}
+
+	/* Load include numbers from external file */
+	listfilename = INI_GetValue(Config->smsdcfgfile, "smsd", "includenumbersfile", FALSE);
+	if (listfilename != NULL) {
+		listfd = fopen(listfilename, "r");
+		if (listfd == NULL) {
+			SMSD_LogErrno(Config, "Failed to open IncludeNumbersFile");
+			return ERR_CANTOPENFILE;
+		}
+		while (fgets(buffer, sizeof(buffer) - 1, listfd)) {
+			len = strlen(buffer);
+			/* Remove trailing whitespace */
+			while (len > 0 && isspace(buffer[len - 1])) {
+				buffer[len - 1] = 0;
+				len--;
+			}
+			/* Ignore empty lines */
+			if (len == 0) continue;
+			/* Add line to array */
+			if (!GSM_StringArray_Add(&(Config->IncludeNumbersList), buffer)) {
+				return ERR_MOREMEMORY;
+			}
+		}
+		fclose(listfd);
+	}
+
+	/* Load exclude numbers from external file */
+	listfilename = INI_GetValue(Config->smsdcfgfile, "smsd", "excludenumbersfile", FALSE);
+	if (listfilename != NULL) {
+		listfd = fopen(listfilename, "r");
+		if (listfd == NULL) {
+			SMSD_LogErrno(Config, "Failed to open ExcludeNumbersFile");
+			return ERR_CANTOPENFILE;
+		}
+		while (fgets(buffer, sizeof(buffer) - 1, listfd)) {
+			len = strlen(buffer);
+			/* Remove trailing whitespace */
+			while (len > 0 && isspace(buffer[len - 1])) {
+				buffer[len - 1] = 0;
+				len--;
+			}
+			/* Ignore empty lines */
+			if (len == 0) continue;
+			/* Add line to array */
+			if (!GSM_StringArray_Add(&(Config->ExcludeNumbersList), buffer)) {
+				return ERR_MOREMEMORY;
+			}
+		}
+		fclose(listfd);
 	}
 
 	if (Config->IncludeNumbersList.used > 0) {

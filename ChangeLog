@@ -26,6 +26,8 @@ ChangeLog
 [-] * Save timestamp to SMS backup for all messages.
 [-] * Store PDU type in SMS backup.
 [+] * More flexible handling of exclude/include lists in SMSD.
+[+] * Add support for external list of exclude/include numbers (bug#1008).
+
     
 20091012 - 1.26.90
 

@@ -205,6 +205,22 @@ from this situation, the waiting time is limited to two minutes. After this
 time SMSD will continue in normal operation and might execute your script
 again.
 
+.TP
+.BI IncludeNumbersFile
+
+File with list of numbers which are accepted by SMSD. The file contains one
+number per line, blank lines are ignored. The file is read at startup and is
+reread only when configuration is being reread. See Message filtering for
+details.
+
+.TP
+.BI ExcludeNumbersFile
+
+File with list of numbers which are not accepted by SMSD. The file contains
+one number per line, blank lines are ignored. The file is read at startup and
+is reread only when configuration is being reread. See Message filtering for
+details.
+
 .SS Database backends options
 
 All DBI, MYSQL and PGSQL backends (see  gammu\-smsd\-mysql(7),
@@ -323,10 +339,18 @@ Default is 'auto'.
 .SS Message filtering
 
 SMSD allows to process only limited subset of incoming messages. You can
-define filters in [include_numbers] and [exclude_numbers] sections. If
-[include_numbers] section exists, all values (keys are ignored) from it are
+define filters in [include_numbers] and [exclude_numbers] sections or using
+IncludeNumbersFile and ExcludeNumbersFile directives. 
+
+If [include_numbers] section exists, all values (keys are ignored) from it are
 used as allowed phone numbers and no other message is processed. On the other
 side, in [exclude_numbers] you can specify numbers which you want to skip.
+
+Lists from both sources are merged together. If there is any number in include
+list, only include list is used and only messages in this list are being
+accepted. If include list is empty, exclude list can be used to ignore
+messages from some numbers. If both lists are empty, all messages are
+accepted.
 
 .SH EXAMPLE
 
