@@ -622,7 +622,7 @@ GSM_PhoneModel allmodels[] = {
 	{"T303a",	"AAB-1032091-BV" ,"",				   {F_OBEX, F_SUBMIT_SIM_ONLY, 0}},
 	{"W205",	"AAB-1880010-BV" ,"",				   {F_OBEX, F_SUBMIT_SIM_ONLY, 0}},
 	{"W205a",	"AAB-1880011-BV" ,"",				   {F_OBEX, F_SUBMIT_SIM_ONLY, 0}},
-	{"S312",	"AAB-1880013-BV" ,"",				   {F_OBEX, F_SUBMIT_SIM_ONLY, 0}},
+	{"S312",	"AAB-1880013-BV" ,"S312",			   {F_OBEX, F_IRMC_LEVEL_2, F_SUBMIT_SIM_ONLY, 0}},
 	{"W395/W395c",	"AAB-1880014-BV" ,"",				   {F_OBEX, F_SUBMIT_SIM_ONLY, 0}},
 	{"Z520i/Z520c",	"AAC-1052011-BV" ,"",				   {F_OBEX, F_SUBMIT_SIM_ONLY, 0}},
 	{"Z520a",	"AAC-1052012-BV" ,"",				   {F_OBEX, F_SUBMIT_SIM_ONLY, 0}},
