@@ -29,6 +29,7 @@ ChangeLog
 [+] * Add support for external list of exclude/include numbers (bug#1008).
 [-] * Workaround decoding of messages padded by 0xFF by phone.
 [-] * Recognize Motorola A1200 error replies (bug#1019).
+[-] * Disable AT/Obex for Motorola A1200e (bug#1019).
 
     
 20091012 - 1.26.90
