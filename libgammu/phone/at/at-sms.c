@@ -1597,7 +1597,7 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	Replies 			= s->ReplyNum;
 	s->ReplyNum			= 1;
 	smprintf(s,"Waiting for modem prompt\n");
-	ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 300, ID_IncomingFrame);
+	ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 30, ID_IncomingFrame);
 	s->ReplyNum			 = Replies;
 	if (error == ERR_NONE) {
 		usleep(100000);
