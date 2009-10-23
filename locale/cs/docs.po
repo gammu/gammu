@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-23 09:57+0300\n"
-"PO-Revision-Date: 2009-10-23 10:15+0200\n"
+"PO-Revision-Date: 2009-10-23 10:16+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -6113,15 +6113,14 @@ msgstr "Filtrování zpráv"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:360
-#, fuzzy
 msgid ""
 "SMSD allows to process only limited subset of incoming messages. You can "
 "define filters for sender number in [include_numbers] and [exclude_numbers] "
 "sections or using IncludeNumbersFile and ExcludeNumbersFile directives."
 msgstr ""
-"SMSD umožňuje zpracovat jen část přijatých zpráv. Filtry můžete definovat v "
-"sekcích [include_numbers] a [exclude_numbers] nebo pomocí parametrů "
-"IncludeNumbersFile a ExcludeNumbersFile."
+"SMSD umožňuje zpracovat jen část přijatých zpráv. Filtry pro číslo "
+"odesílatele můžete definovat v sekcích [include_numbers] a [exclude_numbers] "
+"nebo pomocí parametrů IncludeNumbersFile a ExcludeNumbersFile."
 
 # type: Plain text
 #. type: Plain text
