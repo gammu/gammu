@@ -5752,9 +5752,9 @@ msgstr ""
 
 #. type: TP
 #: docs/user/gammu-smsdrc.5:224
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<IncludeSMSCFile>"
-msgstr "B<IncludeNumbersFile>"
+msgstr "B<IncludeSMSCFile>"
 
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:231
