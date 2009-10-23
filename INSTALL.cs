@@ -76,7 +76,7 @@ Pro kompilaci Gammu potřebujete CMake ze stránek <http://www.cmake.org>.
 
 Kvůli kompatibilitě Gammu obsahuje jednoduchý wrapper který se chová jako
 configure skript, takže můžete použít obvyklou sadu příkazů "./configure;
-make; sudo make install". Kompilace probíhá v adresáži build-configure  (ve
+make; sudo make install". Kompilace probíhá v adresáži build-configure (ve
 stromu se zdrojovými kódy se nic nemění), například program gammu je
 kompilován v adresáři build-configure/gammu.
 
