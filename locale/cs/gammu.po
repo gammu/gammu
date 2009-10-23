@@ -9,13 +9,13 @@ msgstr ""
 "Project-Id-Version: Gammu 1.26.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-10 20:15+0200\n"
-"PO-Revision-Date: 2009-10-10 20:22+0200\n"
+"PO-Revision-Date: 2009-10-23 10:14+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -2201,7 +2201,7 @@ msgstr "Odesílám zprávu ze složky \"%s\", pozice %i\n"
 #: gammu/message.c:643 gammu/message.c:667
 #, c-format
 msgid "....waiting for network answer"
-msgstr "...čekám na odpověď sítě"
+msgstr "....čekám na odpověď sítě"
 
 #: gammu/message.c:662
 #, c-format
