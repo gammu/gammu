@@ -59,6 +59,8 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		"+CME ERROR:"	,
 		"+CMS ERROR:"	,
 
+		"MODEM ERROR:"	, /* Motorola A1200 */
+
 		"COMMAND NOT SUPPORT" /* HUAWEI */	,
 
 		NULL};

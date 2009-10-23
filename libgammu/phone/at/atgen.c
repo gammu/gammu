@@ -1162,6 +1162,11 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 		Priv->ReplyState = AT_Reply_Error;
 	}
 
+	/* Motorola A1200 */
+	if (!strncmp(line, "MODEM ERROR:", 12)) {
+		Priv->ReplyState = AT_Reply_Error;
+	}
+
 	/* FIXME: Samsung phones can answer +CME ERROR:-1 meaning empty location */
 	if (Priv->ReplyState == AT_Reply_CMEError && Priv->Manufacturer == AT_Samsung) {
 		err = line + 11;
