@@ -1594,13 +1594,19 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		sprintf(buffer, "AT+CMGS=\"%s\"\r",DecodeUnicodeString(sms->Number));
 	}
 
-	s->Protocol.Data.AT.EditMode 	= TRUE;
-	Replies 			= s->ReplyNum;
+	/* We will be SMS edit mode */
+	s->Protocol.Data.AT.EditMode = TRUE;
+	/*
+	 * We handle retries on our own, because we need to escape after
+	 * failure to avoid sending message with AT commands.
+	 */
+	Replies = s->ReplyNum;
+	s->ReplyNum = 1;
 	while (retries < s->ReplyNum) {
-		s->ReplyNum			= 1;
 		smprintf(s,"Waiting for modem prompt\n");
 		ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 30, ID_IncomingFrame);
-		s->ReplyNum			 = Replies;
+		/* Restore original value */
+		s->ReplyNum = Replies;
 		if (error == ERR_NONE) {
 			usleep(100000);
 			smprintf(s, "Sending SMS\n");
@@ -1608,13 +1614,13 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 			if (error!=ERR_NONE) return error;
 			usleep(500000);
 			/* CTRL+Z ends entering */
-			error=s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
+			error = s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
 			usleep(100000);
 			return error;
 		}
 
 		smprintf(s, "Escaping SMS mode\n");
-		error2=s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
+		error2 = s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
 		if (error2 != ERR_NONE) return error2;
 		retries++;
 	}
