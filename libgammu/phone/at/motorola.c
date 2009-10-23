@@ -93,6 +93,29 @@ MOTOROLA_CommandInfo Commands[] = {
 	{"", 0},
 };
 
+GSM_Error MOTOROLA_SetModeReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+		case AT_Reply_OK:
+		case AT_Reply_Connect:
+			if (strstr(GetLineString(msg.Buffer, &Priv->Lines, 2), "Unkown mode value") != NULL) {
+				return ERR_NOTSUPPORTED;
+			}
+			return ERR_NONE;
+		case AT_Reply_Error:
+			return ERR_UNKNOWN;
+		case AT_Reply_CMSError:
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+			break;
+	}
+	return ERR_UNKNOWNRESPONSE;
+}
+
 GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;

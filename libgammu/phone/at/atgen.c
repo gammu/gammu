@@ -5038,7 +5038,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyIncomingCallInfo,	"+CRING"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_ReplyIncomingCallInfo,	"NO CARRIER"		,0x00,0x00,ID_IncomingFrame	 },
 
-{ATGEN_GenericReply, 		"AT+MODE"		,0x00,0x00,ID_ModeSwitch	 },
+{MOTOROLA_SetModeReply,		"AT+MODE"		,0x00,0x00,ID_ModeSwitch	 },
 
 {ATGEN_ReplyReset,		"AT^SRESET"		,0x00,0x00,ID_Reset		 },
 {ATGEN_ReplyReset,		"AT+CFUN=1,1"		,0x00,0x00,ID_Reset		 },

@@ -32,6 +32,11 @@
 GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command);
 
 /**
+ * Reply handler for AT+MODE command.
+ */
+GSM_Error MOTOROLA_SetModeReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s);
+
+/**
  * Catches +MBAN: reply and sets Mode according to it.
  */
 GSM_Error MOTOROLA_Banner(GSM_Protocol_Message msg, GSM_StateMachine *s);
