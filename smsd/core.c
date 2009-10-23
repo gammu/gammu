@@ -387,6 +387,8 @@ void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 	SMSD_CloseLog(Config);
 	GSM_StringArray_Free(&(Config->IncludeNumbersList));
 	GSM_StringArray_Free(&(Config->ExcludeNumbersList));
+	GSM_StringArray_Free(&(Config->IncludeSMSCList));
+	GSM_StringArray_Free(&(Config->ExcludeSMSCList));
 	free(Config->gammu_log_buffer);
 	INI_Free(Config->smsdcfgfile);
 	GSM_FreeStateMachine(Config->gsm);
@@ -738,6 +740,8 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	/* Prepare lists */
 	GSM_StringArray_New(&(Config->IncludeNumbersList));
 	GSM_StringArray_New(&(Config->ExcludeNumbersList));
+	GSM_StringArray_New(&(Config->IncludeSMSCList));
+	GSM_StringArray_New(&(Config->ExcludeSMSCList));
 
 	/* Process include section in config file */
 	error = SMSD_LoadIniNumbersList(Config, &(Config->IncludeNumbersList), "include_numbers");
@@ -761,6 +765,31 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 			SMSD_Log(DEBUG_NOTICE, Config, "Exclude numbers available");
 		} else {
 			SMSD_Log(DEBUG_INFO, Config, "Exclude numbers available, but IGNORED");
+		}
+	}
+
+	/* Process include section in config file */
+	error = SMSD_LoadIniNumbersList(Config, &(Config->IncludeSMSCList), "include_smsc");
+	if (error != ERR_NONE) return error;
+	/* Process exclude section in config file */
+	error = SMSD_LoadIniNumbersList(Config, &(Config->ExcludeSMSCList), "exclude_smsc");
+	if (error != ERR_NONE) return error;
+
+	/* Load include smsc from external file */
+	error = SMSD_LoadNumbersFile(Config, &(Config->IncludeSMSCList), "includesmscfile");
+	if (error != ERR_NONE) return error;
+
+	/* Load exclude smsc from external file */
+	error = SMSD_LoadNumbersFile(Config, &(Config->ExcludeSMSCList), "excludesmscfile");
+
+	if (Config->IncludeSMSCList.used > 0) {
+		SMSD_Log(DEBUG_NOTICE, Config, "Include smsc available");
+	}
+	if (Config->ExcludeSMSCList.used > 0) {
+		if (Config->IncludeSMSCList.used == 0) {
+			SMSD_Log(DEBUG_NOTICE, Config, "Exclude smsc available");
+		} else {
+			SMSD_Log(DEBUG_INFO, Config, "Exclude smsc available, but IGNORED");
 		}
 	}
 
@@ -981,6 +1010,28 @@ gboolean SMSD_CheckRemoteNumber(GSM_SMSDConfig *Config, GSM_SMSDService *Service
 	return TRUE;
 }
 
+/**
+ * Checks whether we are allowed to accept a message from number.
+ */
+gboolean SMSD_CheckSMSCNumber(GSM_SMSDConfig *Config, GSM_SMSDService *Service, const char *number)
+{
+	if (Config->IncludeSMSCList.used > 0) {
+		if (GSM_StringArray_Find(&(Config->IncludeSMSCList), number)) {
+			SMSD_Log(DEBUG_NOTICE, Config, "Number %s matched IncludeSMSC", number);
+			return TRUE;
+		}
+		return FALSE;
+	} else if (Config->ExcludeSMSCList.used > 0) {
+		if (GSM_StringArray_Find(&(Config->ExcludeSMSCList), number)) {
+			SMSD_Log(DEBUG_NOTICE, Config, "Number %s matched ExcludeSMSC", number);
+			return FALSE;
+		}
+		return TRUE;
+	}
+
+	return TRUE;
+}
+
 gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 {
 	gboolean			start;
@@ -1002,6 +1053,10 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		case ERR_NONE:
 			/* Not Inbox SMS - exit */
 			if (!sms.SMS[0].InboxFolder) break;
+			DecodeUnicode(sms.SMS[0].SMSC.Number,buffer);
+			if (!SMSD_CheckSMSCNumber(Config, Service, buffer)) {
+				SMSD_Log(DEBUG_NOTICE, Config, "Message excluded because of SMSC: %s", buffer);
+			}
 			DecodeUnicode(sms.SMS[0].Number,buffer);
 			if (SMSD_CheckRemoteNumber(Config, Service, buffer)) {
 				SMSD_Log(DEBUG_NOTICE, Config, "Received message from %s", buffer);

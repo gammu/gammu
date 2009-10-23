@@ -33,6 +33,7 @@ ChangeLog
 [-] * Disable AT/Obex for Motorola A1200e (bug#1019).
 [-] * Properly detect if phone does not support AT+MODE (bug#1019).
 [-] * Disable AT/Obex for Motorola E790 (bug#1018).
+[+] * Add option to filter messages by SMSC (bug#1020).
     
 20091012 - 1.26.90
 

@@ -223,6 +223,22 @@ každém řádku jedno číslo, prázdné řádky jsou ignorovány. Soubor je na
 při startu a znovu načten je jen při znovunačtení konfigurace. Více
 podrobností v sekci Filtrování zpráv.
 
+.TP 
+\fBIncludeSMSCFile\fP
+
+File with list of SMSC numbers which are accepted by SMSD. The file contains
+one number per line, blank lines are ignored. The file is read at startup
+and is reread only when configuration is being reread. See Message filtering
+for details.
+
+.TP 
+\fBExcludeSMSCFile\fP
+
+File with list of SMSC numbers which are not accepted by SMSD. The file
+contains one number per line, blank lines are ignored. The file is read at
+startup and is reread only when configuration is being reread. See Message
+filtering for details.
+
 .SS "Parametry pro služby používající databázi"
 
 Všechny ze služeb DBI, MYSQL a PGSQL (viz gammu\-smsd\-mysql(7),
@@ -341,9 +357,9 @@ Výchozí je 'auto'.
 
 .SS "Filtrování zpráv"
 
-SMSD umožňuje zpracovat jen část přijatých zpráv. Filtry můžete definovat v
-sekcích [include_numbers] a [exclude_numbers] nebo pomocí parametrů
-IncludeNumbersFile a ExcludeNumbersFile.
+SMSD allows to process only limited subset of incoming messages. You can
+define filters for sender number in [include_numbers] and [exclude_numbers]
+sections or using IncludeNumbersFile and ExcludeNumbersFile directives.
 
 Pokud existuje sekce [include_numbers], všechny hodnoty z ní (klíče jsou
 ignorovány) jsou použity jako povolená čísla a jiné zprávy nejsou
@@ -355,6 +371,10 @@ alespoň jedno číslo, použije se jen tento seznam a budou zpracovány jen
 zprávy od čísel v tomto seznamu. Pokud je tento seznam prázný a v seznamu
 zakázaných čísel je nějaké číslo, nebudou zpracovány zprávy z čísel v tomto
 seznamu. Pokud jsou oba seznamy prázdné, jsou zpracovány všechny zprávy.
+
+Similar filtering rules can be used for SMSC number filtering, they just use
+different set of configuration options \- [include_smsc] and [exclude_smsc]
+sections or IncludeSMSCFile and ExcludeSMSCFile directives.
 
 .SH PŘÍKLAD
 

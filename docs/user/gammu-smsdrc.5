@@ -221,6 +221,22 @@ one number per line, blank lines are ignored. The file is read at startup and
 is reread only when configuration is being reread. See Message filtering for
 details.
 
+.TP
+.BI IncludeSMSCFile
+
+File with list of SMSC numbers which are accepted by SMSD. The file contains
+one number per line, blank lines are ignored. The file is read at startup and
+is reread only when configuration is being reread. See Message filtering for
+details.
+
+.TP
+.BI ExcludeSMSCFile
+
+File with list of SMSC numbers which are not accepted by SMSD. The file
+contains one number per line, blank lines are ignored. The file is read at
+startup and is reread only when configuration is being reread. See Message
+filtering for details.
+
 .SS Database backends options
 
 All DBI, MYSQL and PGSQL backends (see  gammu\-smsd\-mysql(7),
@@ -339,8 +355,8 @@ Default is 'auto'.
 .SS Message filtering
 
 SMSD allows to process only limited subset of incoming messages. You can
-define filters in [include_numbers] and [exclude_numbers] sections or using
-IncludeNumbersFile and ExcludeNumbersFile directives. 
+define filters for sender number in [include_numbers] and [exclude_numbers]
+sections or using IncludeNumbersFile and ExcludeNumbersFile directives. 
 
 If [include_numbers] section exists, all values (keys are ignored) from it are
 used as allowed phone numbers and no other message is processed. On the other
@@ -351,6 +367,10 @@ list, only include list is used and only messages in this list are being
 accepted. If include list is empty, exclude list can be used to ignore
 messages from some numbers. If both lists are empty, all messages are
 accepted.
+
+Similar filtering rules can be used for SMSC number filtering, they just use
+different set of configuration options - [include_smsc] and [exclude_smsc]
+sections or IncludeSMSCFile and ExcludeSMSCFile directives.
 
 .SH EXAMPLE
 
