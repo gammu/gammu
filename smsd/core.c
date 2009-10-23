@@ -423,7 +423,7 @@ GSM_Error SMSD_LoadNumbersFile(GSM_SMSDConfig *Config, GSM_StringArray *Array, c
 	if (listfilename != NULL) {
 		listfd = fopen(listfilename, "r");
 		if (listfd == NULL) {
-			SMSD_LogErrno(Config, "Failed to open IncludeNumbersFile");
+			SMSD_LogErrno(Config, "Failed to open numbers file");
 			return ERR_CANTOPENFILE;
 		}
 		while (fgets(buffer, sizeof(buffer) - 1, listfd)) {
