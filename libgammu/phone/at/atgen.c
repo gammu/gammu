@@ -4876,6 +4876,17 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					&protocol_level);
 			}
 
+			/*
+			 * As last resort try simple +CPROT: (0).
+			 */
+			if (error != ERR_NONE) {
+				protocol_level = 0;
+				strcpy(protocol_version, "0");
+				error = ATGEN_ParseReply(s, string,
+					"+CPROT: (@i)",
+					&protocol_id);
+			}
+
 			/* Check for OBEX */
 			if (error == ERR_NONE && protocol_id == 0) {
 				smprintf(s, "OBEX seems to be supported, version %s, level %d!\n", protocol_version, protocol_level);
