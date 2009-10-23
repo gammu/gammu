@@ -409,6 +409,42 @@ GSM_Error SMSD_LoadIniNumbersList(GSM_SMSDConfig *Config, GSM_StringArray *Array
 	return ERR_NONE;
 }
 
+/**
+ * Loads lines from file defined by configuration key.
+ */
+GSM_Error SMSD_LoadNumbersFile(GSM_SMSDConfig *Config, GSM_StringArray *Array, const char *configkey)
+{
+	size_t len;
+	char *listfilename;
+	FILE *listfd;
+	char buffer[GSM_MAX_NUMBER_LENGTH + 1];
+
+	listfilename = INI_GetValue(Config->smsdcfgfile, "smsd", configkey, FALSE);
+	if (listfilename != NULL) {
+		listfd = fopen(listfilename, "r");
+		if (listfd == NULL) {
+			SMSD_LogErrno(Config, "Failed to open IncludeNumbersFile");
+			return ERR_CANTOPENFILE;
+		}
+		while (fgets(buffer, sizeof(buffer) - 1, listfd)) {
+			len = strlen(buffer);
+			/* Remove trailing whitespace */
+			while (len > 0 && isspace(buffer[len - 1])) {
+				buffer[len - 1] = 0;
+				len--;
+			}
+			/* Ignore empty lines */
+			if (len == 0) continue;
+			/* Add line to array */
+			if (!GSM_StringArray_Add(Array, buffer)) {
+				return ERR_MOREMEMORY;
+			}
+		}
+		fclose(listfd);
+	}
+	return ERR_NONE;
+}
+
 
 GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean uselog)
 {
@@ -714,54 +750,11 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	if (error != ERR_NONE) return error;
 
 	/* Load include numbers from external file */
-	listfilename = INI_GetValue(Config->smsdcfgfile, "smsd", "includenumbersfile", FALSE);
-	if (listfilename != NULL) {
-		listfd = fopen(listfilename, "r");
-		if (listfd == NULL) {
-			SMSD_LogErrno(Config, "Failed to open IncludeNumbersFile");
-			return ERR_CANTOPENFILE;
-		}
-		while (fgets(buffer, sizeof(buffer) - 1, listfd)) {
-			len = strlen(buffer);
-			/* Remove trailing whitespace */
-			while (len > 0 && isspace(buffer[len - 1])) {
-				buffer[len - 1] = 0;
-				len--;
-			}
-			/* Ignore empty lines */
-			if (len == 0) continue;
-			/* Add line to array */
-			if (!GSM_StringArray_Add(&(Config->IncludeNumbersList), buffer)) {
-				return ERR_MOREMEMORY;
-			}
-		}
-		fclose(listfd);
-	}
+	error = SMSD_LoadNumbersFile(Config, &(Config->IncludeNumbersList), "includenumbersfile");
+	if (error != ERR_NONE) return error;
 
 	/* Load exclude numbers from external file */
-	listfilename = INI_GetValue(Config->smsdcfgfile, "smsd", "excludenumbersfile", FALSE);
-	if (listfilename != NULL) {
-		listfd = fopen(listfilename, "r");
-		if (listfd == NULL) {
-			SMSD_LogErrno(Config, "Failed to open ExcludeNumbersFile");
-			return ERR_CANTOPENFILE;
-		}
-		while (fgets(buffer, sizeof(buffer) - 1, listfd)) {
-			len = strlen(buffer);
-			/* Remove trailing whitespace */
-			while (len > 0 && isspace(buffer[len - 1])) {
-				buffer[len - 1] = 0;
-				len--;
-			}
-			/* Ignore empty lines */
-			if (len == 0) continue;
-			/* Add line to array */
-			if (!GSM_StringArray_Add(&(Config->ExcludeNumbersList), buffer)) {
-				return ERR_MOREMEMORY;
-			}
-		}
-		fclose(listfd);
-	}
+	error = SMSD_LoadNumbersFile(Config, &(Config->ExcludeNumbersList), "excludenumbersfile");
 
 	if (Config->IncludeNumbersList.used > 0) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Include numbers available");
