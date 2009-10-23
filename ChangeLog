@@ -32,6 +32,7 @@ ChangeLog
 [-] * Recognize Motorola A1200 error replies (bug#1019).
 [-] * Disable AT/Obex for Motorola A1200e (bug#1019).
 [-] * Properly detect if phone does not support AT+MODE (bug#1019).
+[-] * Disable AT/Obex for Motorola E790 (bug#1018).
     
 20091012 - 1.26.90
 
