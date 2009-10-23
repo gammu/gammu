@@ -393,6 +393,9 @@ void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 	free(Config);
 }
 
+/**
+ * Loads list of numbers from defined config file section.
+ */
 GSM_Error SMSD_LoadIniNumbersList(GSM_SMSDConfig *Config, GSM_StringArray *Array, const char *section)
 {
 	INI_Entry               *e;
