@@ -459,11 +459,8 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 #endif
 #ifdef WIN32
 	size_t i;
-#endif
 	size_t len;
-	char *listfilename;
-	FILE *listfd;
-	char buffer[GSM_MAX_NUMBER_LENGTH + 1];
+#endif
 
 	memset(&smsdcfg, 0, sizeof(smsdcfg));
 
