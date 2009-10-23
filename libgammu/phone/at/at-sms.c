@@ -1579,6 +1579,7 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	int			current, current2, Replies;
 	unsigned char		buffer[1000], hexreq[1000];
 	GSM_Phone_Data		*Phone = &s->Phone.Data;
+	int retries = 0;
 
 	if (sms->PDU == SMS_Deliver) sms->PDU = SMS_Submit;
 
@@ -1595,24 +1596,27 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 	s->Protocol.Data.AT.EditMode 	= TRUE;
 	Replies 			= s->ReplyNum;
-	s->ReplyNum			= 1;
-	smprintf(s,"Waiting for modem prompt\n");
-	ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 30, ID_IncomingFrame);
-	s->ReplyNum			 = Replies;
-	if (error == ERR_NONE) {
-		usleep(100000);
-		smprintf(s, "Sending SMS\n");
-		error = s->Protocol.Functions->WriteMessage(s, hexreq, current2, 0x00);
-		if (error!=ERR_NONE) return error;
-		usleep(500000);
-		/* CTRL+Z ends entering */
-		error=s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
-		usleep(100000);
-		return error;
-	} else {
+	while (retries < s->ReplyNum) {
+		s->ReplyNum			= 1;
+		smprintf(s,"Waiting for modem prompt\n");
+		ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 30, ID_IncomingFrame);
+		s->ReplyNum			 = Replies;
+		if (error == ERR_NONE) {
+			usleep(100000);
+			smprintf(s, "Sending SMS\n");
+			error = s->Protocol.Functions->WriteMessage(s, hexreq, current2, 0x00);
+			if (error!=ERR_NONE) return error;
+			usleep(500000);
+			/* CTRL+Z ends entering */
+			error=s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
+			usleep(100000);
+			return error;
+		}
+
 		smprintf(s, "Escaping SMS mode\n");
 		error2=s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
 		if (error2 != ERR_NONE) return error2;
+		retries++;
 	}
 	return error;
 }
