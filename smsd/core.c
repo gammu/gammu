@@ -393,6 +393,19 @@ void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 	free(Config);
 }
 
+GSM_Error SMSD_LoadIniNumbersList(GSM_SMSDConfig *Config, GSM_StringArray *Array, const char *section)
+{
+	INI_Entry               *e;
+
+	for (e = INI_FindLastSectionEntry(Config->smsdcfgfile, section, FALSE); e != NULL; e = e->Prev) {
+		if (!GSM_StringArray_Add(Array, e->EntryValue)) {
+			return ERR_MOREMEMORY;
+		}
+	}
+
+	return ERR_NONE;
+}
+
 
 GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean uselog)
 {
@@ -409,7 +422,6 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	size_t i;
 #endif
 	size_t len;
-	INI_Entry               *e;
 	char *listfilename;
 	FILE *listfd;
 	char buffer[GSM_MAX_NUMBER_LENGTH + 1];
@@ -692,17 +704,11 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	GSM_StringArray_New(&(Config->ExcludeNumbersList));
 
 	/* Process include section in config file */
-	for (e = INI_FindLastSectionEntry(Config->smsdcfgfile, "include_numbers", FALSE); e != NULL; e = e->Prev) {
-		if (!GSM_StringArray_Add(&(Config->IncludeNumbersList), e->EntryValue)) {
-			return ERR_MOREMEMORY;
-		}
-	}
+	error = SMSD_LoadIniNumbersList(Config, &(Config->IncludeNumbersList), "include_numbers");
+	if (error != ERR_NONE) return error;
 	/* Process exclude section in config file */
-	for (e = INI_FindLastSectionEntry(Config->smsdcfgfile, "exclude_numbers", FALSE); e != NULL; e = e->Prev) {
-		if (!GSM_StringArray_Add(&(Config->ExcludeNumbersList), e->EntryValue)) {
-			return ERR_MOREMEMORY;
-		}
-	}
+	error = SMSD_LoadIniNumbersList(Config, &(Config->ExcludeNumbersList), "exclude_numbers");
+	if (error != ERR_NONE) return error;
 
 	/* Load include numbers from external file */
 	listfilename = INI_GetValue(Config->smsdcfgfile, "smsd", "includenumbersfile", FALSE);
