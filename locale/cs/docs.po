@@ -6154,15 +6154,14 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:374
-#, fuzzy
 msgid ""
 "Similar filtering rules can be used for SMSC number filtering, they just use "
 "different set of configuration options - [include_smsc] and [exclude_smsc] "
 "sections or IncludeSMSCFile and ExcludeSMSCFile directives."
 msgstr ""
-"SMSD umožňuje zpracovat jen část přijatých zpráv. Filtry můžete definovat v "
-"sekcích [include_numbers] a [exclude_numbers] nebo pomocí parametrů "
-"IncludeNumbersFile a ExcludeNumbersFile."
+"Podobná pravidla mohou být použita pro filtrování čísel centra zpráv SMSC, "
+"jen používají jiné konfigurační parametry - [include_smsc] a [exclude_smsc] "
+"nebo pomocí parametrů IncludeSMSCFile a ExcludeSMSCFile."
 
 # type: Plain text
 #. type: Plain text
