@@ -165,7 +165,7 @@ msgstr "Fazer cópia de segurança de todos os registos do telemóvel?"
 
 #: gammu/backup.c:529
 msgid "Checking SIM SMS profiles"
-msgstr ""
+msgstr "A analisar perfis SMS do cartão SIM"
 
 #: gammu/backup.c:530
 msgid "Backup SIM SMS profiles?"
