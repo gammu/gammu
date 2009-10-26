@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-10 20:15+0200\n"
-"PO-Revision-Date: 2009-10-26 17:51+0200\n"
+"PO-Revision-Date: 2009-10-26 17:52+0200\n"
 "Last-Translator: Filipe Domingues <fseverense@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt\n"
@@ -67,7 +67,7 @@ msgstr "Erro ao abrir ficheiro para escrita!\n"
 
 #: gammu/backup.c:169 gammu/files.c:444 helper/message-cmdline.c:1095
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "Erro ao escrever ficheiro!\n"
 
 #: gammu/backup.c:216 gammu/backup.c:958 gammu/backup.c:1593
 #: gammu/calendar.c:606 gammu/calendar.c:941 gammu/calendar.c:1016
