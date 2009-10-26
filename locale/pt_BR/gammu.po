@@ -74,7 +74,7 @@ msgstr "Erro ao escrever ficheiro!\n"
 #: gammu/calendar.c:1041 gammu/memory.c:25 gammu/memory.c:308
 #: gammu/memory.c:372 gammu/message.c:120 gammu/misc.c:69 gammu/misc.c:331
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "Pressionar Ctrl+C para interromper..."
 
 #: gammu/backup.c:221
 msgid "Use Unicode subformat of backup file?"
