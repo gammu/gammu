@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-10 20:15+0200\n"
-"PO-Revision-Date: 2009-10-26 17:47+0200\n"
+"PO-Revision-Date: 2009-10-26 17:49+0200\n"
 "Last-Translator: Filipe Domingues <fseverense@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt\n"
@@ -39,7 +39,7 @@ msgstr "Nota não encontrada no ficheiro"
 
 #: gammu/backup.c:105
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "Nota \"todo\" não encontrada no ficheiro"
 
 #: gammu/backup.c:115 helper/message-cmdline.c:521
 msgid "Where is backup filename and location and memory type?"
