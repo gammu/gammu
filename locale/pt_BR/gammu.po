@@ -157,7 +157,7 @@ msgstr "Fazer cópia de segurança das notas do telemóvel?"
 
 #: gammu/backup.c:491
 msgid "Checking phone caller logos"
-msgstr ""
+msgstr "A analisar registos de chamadas"
 
 #: gammu/backup.c:496
 msgid "Backup phone caller groups and logos?"
