@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-10 20:15+0200\n"
-"PO-Revision-Date: 2009-10-26 17:57+0200\n"
+"PO-Revision-Date: 2009-10-26 17:58+0200\n"
 "Last-Translator: Filipe Domingues <fseverense@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt\n"
@@ -141,7 +141,7 @@ msgstr ""
 
 #: gammu/backup.c:419
 msgid "Checking phone todos"
-msgstr ""
+msgstr "A analisar \"todos\" de telemóvel"
 
 #: gammu/backup.c:422
 msgid "Backup phone todos?"
