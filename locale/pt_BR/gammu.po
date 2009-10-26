@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-10 20:15+0200\n"
-"PO-Revision-Date: 2009-10-26 18:07+0200\n"
+"PO-Revision-Date: 2009-10-26 18:08+0200\n"
 "Last-Translator: Filipe Domingues <fseverense@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt\n"
@@ -189,7 +189,7 @@ msgstr "Fazer cópia de segurança do logo do operador?"
 
 #: gammu/backup.c:593
 msgid "Checking phone WAP bookmarks"
-msgstr ""
+msgstr "A analisar marcadores WAP do telemóvel"
 
 #: gammu/backup.c:597
 msgid "Backup phone WAP bookmarks?"
