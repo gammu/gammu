@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-10 20:15+0200\n"
-"PO-Revision-Date: 2009-10-26 17:52+0200\n"
+"PO-Revision-Date: 2009-10-26 17:53+0200\n"
 "Last-Translator: Filipe Domingues <fseverense@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt\n"
@@ -78,7 +78,7 @@ msgstr "Pressionar Ctrl+C para interromper..."
 
 #: gammu/backup.c:221
 msgid "Use Unicode subformat of backup file?"
-msgstr ""
+msgstr "Usar sub-formato Unicode do ficheiro da cópia de segurança?"
 
 #: gammu/backup.c:254
 msgid "Checking phone phonebook"
