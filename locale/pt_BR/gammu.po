@@ -93,7 +93,7 @@ msgstr "Fazer cópia de segurança da agenda do telemóvel?"
 #: gammu/backup.c:713 gammu/backup.c:750 gammu/backup.c:788 gammu/backup.c:829
 #: gammu/backup.c:863 gammu/backup.c:900 gammu/message.c:466
 msgid "Reading"
-msgstr ""
+msgstr "A ler"
 
 #: gammu/backup.c:289 gammu/backup.c:319 gammu/backup.c:363 gammu/backup.c:401
 #: gammu/backup.c:436 gammu/backup.c:473 gammu/backup.c:510 gammu/backup.c:545
