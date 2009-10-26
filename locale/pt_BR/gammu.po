@@ -35,7 +35,7 @@ msgstr "Marca WAP não encontrada no ficheiro"
 
 #: gammu/backup.c:84
 msgid "Note not found in file"
-msgstr ""
+msgstr "Nota não encontrada no ficheiro"
 
 #: gammu/backup.c:105
 msgid "Todo note not found in file"
