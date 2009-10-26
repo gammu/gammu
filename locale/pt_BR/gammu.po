@@ -145,7 +145,7 @@ msgstr "A analisar \"todos\" de telemóvel"
 
 #: gammu/backup.c:422
 msgid "Backup phone todos?"
-msgstr ""
+msgstr "Fazer cópia de segurança de \"todos\" do telemóvel?"
 
 #: gammu/backup.c:456
 msgid "Checking phone notes"
