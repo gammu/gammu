@@ -49,7 +49,7 @@ msgstr ""
 #: gammu/backup.c:127 gammu/backup.c:138 helper/message-cmdline.c:533
 #: helper/message-cmdline.c:543
 msgid "Phonebook entry not found in file"
-msgstr ""
+msgstr "Entrada da agenda não encontrada no ficheiro"
 
 #: gammu/backup.c:144 helper/message-cmdline.c:548
 #, c-format
