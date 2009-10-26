@@ -59,7 +59,7 @@ msgstr "Tipode memória desconhecido: \"%s\"\n"
 #: gammu/backup.c:159
 #, c-format
 msgid "Unknown backup format: \"%s\"\n"
-msgstr ""
+msgstr "Formato de cópia de segurança desconhecido: \"%s\"\n"
 
 #: gammu/backup.c:165
 msgid "Error while opening file for writing!\n"
