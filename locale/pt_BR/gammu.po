@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-10 20:15+0200\n"
-"PO-Revision-Date: 2009-10-26 17:49+0200\n"
+"PO-Revision-Date: 2009-10-26 17:50+0200\n"
 "Last-Translator: Filipe Domingues <fseverense@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt\n"
@@ -44,6 +44,7 @@ msgstr "Nota \"todo\" não encontrada no ficheiro"
 #: gammu/backup.c:115 helper/message-cmdline.c:521
 msgid "Where is backup filename and location and memory type?"
 msgstr ""
+"Onde está o nome e a localização da cópia de segurança e o tipo de memória?"
 
 #: gammu/backup.c:127 gammu/backup.c:138 helper/message-cmdline.c:533
 #: helper/message-cmdline.c:543
