@@ -181,7 +181,7 @@ msgstr "Fazer cópia de segurança do texto/logo de início de sessão?"
 
 #: gammu/backup.c:577
 msgid "Checking phone operator logo"
-msgstr ""
+msgstr "A analisar logo do operador"
 
 #: gammu/backup.c:582
 msgid "Backup phone operator logo?"
