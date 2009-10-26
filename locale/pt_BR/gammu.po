@@ -213,7 +213,7 @@ msgstr "Fazer cópia de segurança das definições MMS do telemóvel?"
 
 #: gammu/backup.c:704
 msgid "Checking phone Chat settings"
-msgstr ""
+msgstr "A analisar definições de Chat do telemóvel"
 
 #: gammu/backup.c:708
 msgid "Backup phone Chat settings?"
