@@ -193,7 +193,7 @@ msgstr "A analisar marcadores WAP do telemóvel"
 
 #: gammu/backup.c:597
 msgid "Backup phone WAP bookmarks?"
-msgstr ""
+msgstr "Fazer cópia de segurança de marcadores WAP do telemóvel?"
 
 #: gammu/backup.c:630
 msgid "Checking phone WAP settings"
