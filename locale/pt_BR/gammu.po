@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-10 20:15+0200\n"
-"PO-Revision-Date: 2009-10-26 17:54+0200\n"
+"PO-Revision-Date: 2009-10-26 17:55+0200\n"
 "Last-Translator: Filipe Domingues <fseverense@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt\n"
@@ -102,7 +102,7 @@ msgstr "A ler"
 #: gammu/backup.c:911 gammu/message.c:342 gammu/message.c:441
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr ""
+msgstr "Dados parcialmente guardados, por favor aumentar %s."
 
 #: gammu/backup.c:327 gammu/backup.c:371 gammu/backup.c:444 gammu/mms.c:182
 msgid "Reading:"
