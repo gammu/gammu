@@ -169,7 +169,7 @@ msgstr "A analisar perfis SMS do cartão SIM"
 
 #: gammu/backup.c:530
 msgid "Backup SIM SMS profiles?"
-msgstr ""
+msgstr "Fazer cópia de segurança de perfis SMS do cartão SIM?"
 
 #: gammu/backup.c:558
 msgid "Checking phone startup text"
