@@ -31,7 +31,7 @@ msgstr "Nota do calendário não encontrada no ficheiro"
 
 #: gammu/backup.c:63
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "Marca WAP não encontrada no ficheiro"
 
 #: gammu/backup.c:84
 msgid "Note not found in file"
