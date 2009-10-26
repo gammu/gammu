@@ -205,7 +205,7 @@ msgstr "Fazer cópia de segurança das definições WAP do telemóvel?"
 
 #: gammu/backup.c:667
 msgid "Checking phone MMS settings"
-msgstr ""
+msgstr "A analisar definições MMS do telemóvel"
 
 #: gammu/backup.c:671
 msgid "Backup phone MMS settings?"
