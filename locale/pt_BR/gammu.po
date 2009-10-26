@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-10 20:15+0200\n"
-"PO-Revision-Date: 2009-10-26 18:01+0200\n"
+"PO-Revision-Date: 2009-10-26 18:07+0200\n"
 "Last-Translator: Filipe Domingues <fseverense@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt\n"
@@ -177,7 +177,7 @@ msgstr "A analisar texto de início de sessão do telemóvel"
 
 #: gammu/backup.c:562
 msgid "Backup phone startup logo/text?"
-msgstr ""
+msgstr "Fazer cópia de segurança do texto/logo de início de sessão?"
 
 #: gammu/backup.c:577
 msgid "Checking phone operator logo"
