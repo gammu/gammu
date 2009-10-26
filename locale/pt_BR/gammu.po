@@ -120,7 +120,7 @@ msgstr "A ler:"
 #: gammu/misc.c:474 gammu/misc.c:479 gammu/misc.c:1191 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i por cento"
 
 #: gammu/backup.c:341
 msgid "Checking SIM phonebook"
