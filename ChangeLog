@@ -35,6 +35,7 @@ ChangeLog
 [-] * Disable AT/Obex for Motorola E790 (bug#1018).
 [+] * Add option to filter messages by SMSC (bug#1020).
 [-] * Implement retries when waiting for message prompt.
+[-] * Fixed logic of detecting incoming calls.
     
 20091012 - 1.26.90
 

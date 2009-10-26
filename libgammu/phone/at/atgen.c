@@ -4182,7 +4182,7 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 		if (strstr(msg.Buffer, "RING")) {
 			smprintf(s, "Ring detected - ");
 			/* We ignore RING for most phones, see ATGEN_SetIncomingCall */
-			if (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Ericsson) {
+			if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_CLIP)) {
 				smprintf(s, "ignoring\n");
 				return ERR_NONE;
 			}
