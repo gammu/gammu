@@ -132,7 +132,7 @@ msgstr "Fazer cópia de segurança do cartão SIM?"
 
 #: gammu/backup.c:384
 msgid "Checking phone calendar"
-msgstr ""
+msgstr "A analisar calendário do telemóvel"
 
 #: gammu/backup.c:388
 msgid "Backup phone calendar notes?"
