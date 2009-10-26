@@ -149,7 +149,7 @@ msgstr "Fazer cópia de segurança de \"todos\" do telemóvel?"
 
 #: gammu/backup.c:456
 msgid "Checking phone notes"
-msgstr ""
+msgstr "A analisar as notas do telemóvel"
 
 #: gammu/backup.c:460
 msgid "Backup phone notes?"
