@@ -86,7 +86,7 @@ msgstr "A analisar agenda do telemóvel"
 
 #: gammu/backup.c:273
 msgid "Backup phone phonebook?"
-msgstr ""
+msgstr "Fazer cópia de segurança da agenda do telemóvel?"
 
 #: gammu/backup.c:280 gammu/backup.c:393 gammu/backup.c:465 gammu/backup.c:500
 #: gammu/backup.c:534 gammu/backup.c:602 gammu/backup.c:639 gammu/backup.c:676
