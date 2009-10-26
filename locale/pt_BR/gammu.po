@@ -221,7 +221,7 @@ msgstr "Fazer cópia de segurança das definições de Chat do telemóvel?"
 
 #: gammu/backup.c:741
 msgid "Checking phone SyncML settings"
-msgstr ""
+msgstr "A analisar definições SyncML do telemóvel"
 
 #: gammu/backup.c:745
 msgid "Backup phone SyncML settings?"
