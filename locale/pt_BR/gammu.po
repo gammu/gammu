@@ -106,7 +106,7 @@ msgstr "Dados parcialmente guardados, por favor aumentar %s."
 
 #: gammu/backup.c:327 gammu/backup.c:371 gammu/backup.c:444 gammu/mms.c:182
 msgid "Reading:"
-msgstr ""
+msgstr "A ler:"
 
 #: gammu/backup.c:328 gammu/backup.c:372 gammu/backup.c:445 gammu/backup.c:994
 #: gammu/backup.c:1061 gammu/backup.c:1114 gammu/backup.c:1172
