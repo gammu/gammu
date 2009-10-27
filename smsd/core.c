@@ -707,48 +707,25 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		SMSD_Log(DEBUG_NOTICE, Config, "SMS with errors moved to \"%s\"",Config->errorsmspath);
 	}
 
+#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
+	Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
+	if (Config->user == NULL) Config->user="root";
+	Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", FALSE);
+	if (Config->password == NULL) Config->password="";
+	Config->PC = INI_GetValue(Config->smsdcfgfile, "smsd", "pc", FALSE);
+	if (Config->PC == NULL) Config->PC="localhost";
+	Config->database = INI_GetValue(Config->smsdcfgfile, "smsd", "database", FALSE);
+	if (Config->database == NULL) Config->database="sms";
+#endif
+
 #ifdef LIBDBI_FOUND
 	if (!strcasecmp(Config->Service,"DBI")) {
-		Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
-		if (Config->user == NULL) Config->user="root";
-		Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", FALSE);
-		if (Config->password == NULL) Config->password="";
-		Config->PC = INI_GetValue(Config->smsdcfgfile, "smsd", "pc", FALSE);
-		if (Config->PC == NULL) Config->PC="localhost";
-		Config->database = INI_GetValue(Config->smsdcfgfile, "smsd", "database", FALSE);
-		if (Config->database == NULL) Config->database="sms";
 		Config->driver = INI_GetValue(Config->smsdcfgfile, "smsd", "driver", FALSE);
 		if (Config->driver == NULL) Config->driver="mysql";
 		Config->dbdir = INI_GetValue(Config->smsdcfgfile, "smsd", "dbdir", FALSE);
 		if (Config->dbdir == NULL) Config->dbdir="./";
 		Config->driverspath = INI_GetValue(Config->smsdcfgfile, "smsd", "driverspath", FALSE);
 		/* This one can be NULL */
-	}
-#endif
-
-#ifdef HAVE_MYSQL_MYSQL_H
-	if (!strcasecmp(Config->Service,"MYSQL")) {
-		Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
-		if (Config->user == NULL) Config->user="root";
-		Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", FALSE);
-		if (Config->password == NULL) Config->password="";
-		Config->PC = INI_GetValue(Config->smsdcfgfile, "smsd", "pc", FALSE);
-		if (Config->PC == NULL) Config->PC="localhost";
-		Config->database = INI_GetValue(Config->smsdcfgfile, "smsd", "database", FALSE);
-		if (Config->database == NULL) Config->database="sms";
-	}
-#endif
-
-#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-	if (!strcasecmp(Config->Service,"PGSQL")) {
-		Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
-		if (Config->user == NULL) Config->user="root";
-		Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", FALSE);
-		if (Config->password == NULL) Config->password="";
-		Config->PC = INI_GetValue(Config->smsdcfgfile, "smsd", "pc", FALSE);
-		if (Config->PC == NULL) Config->PC="localhost";
-		Config->database = INI_GetValue(Config->smsdcfgfile, "smsd", "database", FALSE);
-		if (Config->database == NULL) Config->database="sms";
 	}
 #endif
 
