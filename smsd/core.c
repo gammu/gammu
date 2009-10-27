@@ -650,6 +650,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	SMSD_Log(DEBUG_NOTICE, Config, "checks: security=%d, battery=%d, signal=%d",
 			Config->checksecurity, Config->checkbattery, Config->checksignal);
 
+	Config->skipsmscnumber = INI_GetValue(Config->smsdcfgfile, "smsd", "skipsmscnumber", FALSE);
+	if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
+
 	Config->deliveryreport = INI_GetValue(Config->smsdcfgfile, "smsd", "deliveryreport", FALSE);
 	if (Config->deliveryreport == NULL || (strcasecmp(Config->deliveryreport, "log") != 0 && strcasecmp(Config->deliveryreport, "sms") != 0)) {
 		Config->deliveryreport = "no";
@@ -706,8 +709,6 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 
 #ifdef LIBDBI_FOUND
 	if (!strcasecmp(Config->Service,"DBI")) {
-		Config->skipsmscnumber = INI_GetValue(Config->smsdcfgfile, "smsd", "skipsmscnumber", FALSE);
-		if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
 		Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
 		if (Config->user == NULL) Config->user="root";
 		Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", FALSE);
@@ -727,8 +728,6 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 
 #ifdef HAVE_MYSQL_MYSQL_H
 	if (!strcasecmp(Config->Service,"MYSQL")) {
-		Config->skipsmscnumber = INI_GetValue(Config->smsdcfgfile, "smsd", "skipsmscnumber", FALSE);
-		if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
 		Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
 		if (Config->user == NULL) Config->user="root";
 		Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", FALSE);
@@ -742,8 +741,6 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 	if (!strcasecmp(Config->Service,"PGSQL")) {
-		Config->skipsmscnumber = INI_GetValue(Config->smsdcfgfile, "smsd", "skipsmscnumber", FALSE);
-		if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
 		Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", FALSE);
 		if (Config->user == NULL) Config->user="root";
 		Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", FALSE);
