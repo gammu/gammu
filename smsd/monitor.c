@@ -198,6 +198,12 @@ int main(int argc, char **argv)
 	};
 
 
+	/*
+	 * We don't need gettext, but need to set locales so that
+	 * charset conversion works.
+	 */
+	GSM_InitLocales(NULL);
+
 	process_commandline(argc, argv, &params);
 
 	if (params.config_file == NULL) {
