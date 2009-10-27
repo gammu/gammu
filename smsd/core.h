@@ -129,6 +129,9 @@ struct _GSM_SMSDConfig {
 	void *log_handle;
 
 	volatile GSM_Error SendingSMSStatus;
+	/**
+	 * Message reference set by callback from libGammu.
+	 */
 	volatile int TPMR;
 
 #ifdef HAVE_SHM
