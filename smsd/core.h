@@ -78,8 +78,33 @@ struct _GSM_SMSDConfig {
 
 #if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
 	/* options for SQL database */
-	const char	*database,	 *user,		*password;
-	const char	*driver, *driverspath, *dbdir;
+	/**
+	 * Database name.
+	 */
+	const char	*database;
+	/**
+	 * User name to connect to database.
+	 */
+	const char	*user;
+	/**
+	 * User password to connect to database.
+	 */
+	const char	*password;
+	/**
+	 * Database driver to use.
+	 */
+	const char	*driver;
+	/**
+	 * Path to database drivers.
+	 */
+	const char	*driverspath;
+	/**
+	 * Path to database directory.
+	 */
+	const char	*dbdir;
+	/**
+	 * Address of the database (eg. hostname).
+	 */
 	const char	*PC;
         char 		DT[25];
 	char		CreatorID[200];
