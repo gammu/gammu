@@ -34,7 +34,7 @@ xgettext \
 
 for loc in $LOCS ; do
     cd locale/$loc
-    msgmerge -U -C ../../../wammu/locale/$loc/wammu.po -C gammu.po -C libgammu.po docs.po ../docs.pot
+    msgmerge -U -C ../../../wammu/locale/$loc/docs.po -C ../../../wammu/locale/$loc/wammu.po -C gammu.po -C libgammu.po docs.po ../docs.pot
     cd ../..
 done
 
@@ -62,14 +62,14 @@ for loc in $LOCS ; do
         s/VERSION/'$ver'/;
         s/Project-Id-Version: Gammu [0-9.]*/Project-Id-Version: Gammu '$ver'/;
         ' locale/$loc/gammu.po
-    msgmerge -C ../wammu/locale/$loc/wammu.po -C locale/$loc/libgammu.po -C locale/$loc/docs.po -U locale/$loc/gammu.po locale/gammu.pot
+    msgmerge -C ../wammu/locale/$loc/docs.po -C ../wammu/locale/$loc/wammu.po -C locale/$loc/libgammu.po -C locale/$loc/docs.po -U locale/$loc/gammu.po locale/gammu.pot
     sed -i '
         s/SOME DESCRIPTIVE TITLE/libGammu translation/;
         s/PACKAGE/libGammu/;
         s/VERSION/'$ver'/;
         s/Project-Id-Version: libGammu [0-9.]*/Project-Id-Version: libGammu '$ver'/;
         ' locale/$loc/libgammu.po
-    msgmerge -C ../wammu/locale/$loc/wammu.po -C locale/$loc/gammu.po -C locale/$loc/docs.po -U locale/$loc/libgammu.po locale/libgammu.pot
+    msgmerge -C ../wammu/locale/$loc/docs.po -C ../wammu/locale/$loc/wammu.po -C locale/$loc/gammu.po -C locale/$loc/docs.po -U locale/$loc/libgammu.po locale/libgammu.pot
     sed -i '
         s/SOME DESCRIPTIVE TITLE/Gammu documentation translation/;
         s/PACKAGE/Gammu-docs/;
