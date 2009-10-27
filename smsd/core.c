@@ -96,6 +96,9 @@ GSM_Error SMSD_Shutdown(GSM_SMSDConfig *Config)
 	return ERR_NONE;
 }
 
+/**
+ * Callback from libGammu on sending message.
+ */
 void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr, void *user_data)
 {
 	GSM_SMSDConfig *Config = (GSM_SMSDConfig *)user_data;
@@ -104,8 +107,10 @@ void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr, void *user_d
 			GSM_GetConfig(sm, -1)->Device,
 			status,
 			mr);
+	/* Remember message reference */
 	Config->TPMR = mr;
-	if (status==0) {
+	/* Was message sent okay? */
+	if (status == 0) {
 		Config->SendingSMSStatus = ERR_NONE;
 	} else {
 		Config->SendingSMSStatus = ERR_UNKNOWN;
