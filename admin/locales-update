@@ -32,15 +32,15 @@ xgettext \
     --package-version $ver \
     `find libgammu -name '*.c' -o -name '*.h' | sort`
 
+if [ "x$1" != "x--nopo4a" ] ; then
+    ./admin/po4a
+fi
+
 for loc in $LOCS ; do
     cd locale/$loc
     msgmerge -U -C ../../../wammu/locale/$loc/docs.po -C ../../../wammu/locale/$loc/wammu.po -C gammu.po -C libgammu.po docs.po ../docs.pot
     cd ../..
 done
-
-if [ "x$1" != "x--nopo4a" ] ; then
-    ./admin/po4a
-fi
 
 sed -i '
     s/SOME DESCRIPTIVE TITLE/Gammu translation/;
