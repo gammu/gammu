@@ -71,6 +71,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 		}
 	}
 
+	/* FIXME: This format causes warning in MinGW */
 	smprintf(s, "Remote Bluetooth device is %04llx%08llx\n",
 	  		GET_NAP(sab.btAddr), GET_SAP(sab.btAddr));
 

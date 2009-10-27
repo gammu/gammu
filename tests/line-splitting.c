@@ -1042,7 +1042,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 		goto end; \
 	} \
 	if (strlen(GetLineString(input, &lines, num)) != (size_t)GetLineLength(input, &lines, num)) { \
-		printf("DIFFERENT LENGTH[%d]: %zd %d\n", num, strlen(GetLineString(input, &lines, num)), GetLineLength(input, &lines, num)); \
+		printf("DIFFERENT LENGTH[%d]: %ld %d\n", num, (long)strlen(GetLineString(input, &lines, num)), GetLineLength(input, &lines, num)); \
 		ret = 2; \
 		goto end; \
 	}
