@@ -74,12 +74,13 @@ struct _GSM_SMSDConfig {
 	int		currdeliveryreport;
 	unsigned char 	SMSID[200],	 prevSMSID[200];
 	GSM_SMSC	SMSC;
+	const char	*skipsmscnumber;
 
 #if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
 	/* options for SQL database */
 	const char	*database,	 *user,		*password;
 	const char	*driver, *driverspath, *dbdir;
-	const char	*PC,		 *skipsmscnumber;
+	const char	*PC;
         char 		DT[25];
 	char		CreatorID[200];
 #endif
