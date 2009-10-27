@@ -68,18 +68,21 @@ const char smsd_name[] = "gammu-smsd";
 
 GSM_SMSDConfig		SMSDaemon_Config;
 
+/**
+ * Checks whether database schema version matches current one.
+ */
 GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version)
 {
 	SMSD_Log(DEBUG_NOTICE, Config, "Database structures version: %d, SMSD current version: %d", version, SMSD_DB_VERSION);
 
 	if (version < SMSD_DB_VERSION) {
-		SMSD_Log(DEBUG_ERROR, Config, "Database structures are from older Gammu version");
-		SMSD_Log(DEBUG_INFO, Config, "Please update DataBase, if you want to use this client application");
+		SMSD_Log(DEBUG_ERROR, Config, "Database structure is from older Gammu version");
+		SMSD_Log(DEBUG_INFO, Config, "Please update database, you can find SQL scripts in documentation");
 		return ERR_UNKNOWN;
 	}
 	if (version > SMSD_DB_VERSION) {
-		SMSD_Log(DEBUG_ERROR, Config, "DataBase structures are from higher Gammu version");
-		SMSD_Log(DEBUG_INFO, Config, "Please update this client application");
+		SMSD_Log(DEBUG_ERROR, Config, "Database structure is from newer Gammu version");
+		SMSD_Log(DEBUG_INFO, Config, "Please update Gammu to use this database");
 		return ERR_UNKNOWN;
 	}
 	return ERR_NONE;
