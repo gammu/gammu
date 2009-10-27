@@ -88,10 +88,14 @@ GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version)
 	return ERR_NONE;
 }
 
-
+/**
+ * Signals SMSD to shutdown.
+ */
 GSM_Error SMSD_Shutdown(GSM_SMSDConfig *Config)
 {
-	if (!Config->running) return ERR_NOTRUNNING;
+	if (!Config->running) {
+		return ERR_NOTRUNNING;
+	}
 	Config->shutdown = TRUE;
 	return ERR_NONE;
 }
