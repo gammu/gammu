@@ -121,6 +121,9 @@ void SMSD_SendSMSStatusCallback (GSM_StateMachine *sm, int status, int mr, void 
 	}
 }
 
+/**
+ * Closes logging output for SMSD.
+ */
 void SMSD_CloseLog(GSM_SMSDConfig *Config)
 {
 	switch (Config->log_type) {
@@ -142,6 +145,9 @@ void SMSD_CloseLog(GSM_SMSDConfig *Config)
 	Config->log_type = SMSD_LOG_NONE;
 }
 
+/**
+ * Logs current errno (or equivalent) details.
+ */
 void SMSD_LogErrno(GSM_SMSDConfig *Config, const char *message)
 {
 #ifdef WIN32
