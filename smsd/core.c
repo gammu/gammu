@@ -99,7 +99,7 @@ GSM_Error SMSD_Shutdown(GSM_SMSDConfig *Config)
 /**
  * Callback from libGammu on sending message.
  */
-void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr, void *user_data)
+void SMSD_SendSMSStatusCallback (GSM_StateMachine *sm, int status, int mr, void *user_data)
 {
 	GSM_SMSDConfig *Config = (GSM_SMSDConfig *)user_data;
 
@@ -1366,7 +1366,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure)
 			error=GSM_InitConnection_Log(Config->gsm, 2, SMSD_Log_Function, Config);
 			switch (error) {
 			case ERR_NONE:
-				GSM_SetSendSMSStatusCallback(Config->gsm, SMSSendingSMSStatus, Config);
+				GSM_SetSendSMSStatusCallback(Config->gsm, SMSD_SendSMSStatusCallback, Config);
 				if (errors == -1) {
 					errors = 0;
 					if (GSM_GetIMEI(Config->gsm, Config->Status->IMEI) != ERR_NONE) {
