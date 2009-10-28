@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-10-14 15:41+0200\n"
-"PO-Revision-Date: 2009-10-28 10:21+0200\n"
+"PO-Revision-Date: 2009-10-28 10:23+0200\n"
 "Last-Translator: chongchaochen <iechongchao@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -124,7 +124,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
-msgstr ""
+msgstr "无效的位置，可能超出范围了？"
 
 #: libgammu/gsmcomon.c:108
 #, fuzzy
