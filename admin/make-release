@@ -130,7 +130,7 @@ mv Gammu-*-Windows-Minimal.* $tmp/
 cd $tmp
 
 mkdir build-win-python
-for py in 2.4 2.5 ; do
+for py in 2.6 ; do
     pynodot=`echo $py | tr -d '.'`
     echo "Building minimal Windows version with Python $py..."
     cd $tmp/build-win-python

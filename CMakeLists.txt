@@ -33,8 +33,8 @@ else (CMAKE_CROSSCOMPILING AND MINGW)
 endif (CMAKE_CROSSCOMPILING AND MINGW)
 
 if (MINGW)
-    # My MinGW is hacked to use msvcr70.dll, to work with Python
-    add_definitions(-D_MSVCRT_VERSION__=0x070)
+    # My MinGW is hacked to use msvcr90.dll, to work with Python
+    add_definitions(-D_MSVCRT_VERSION__=0x090)
 endif (MINGW)
 
 # Set version
