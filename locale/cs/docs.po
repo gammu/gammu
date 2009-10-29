@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-10-23 09:57+0300\n"
+"POT-Creation-Date: 2009-10-29 15:29+0100\n"
 "PO-Revision-Date: 2009-10-23 10:16+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -9037,7 +9037,7 @@ msgstr ""
 "listu <gammu-users@lists.sourceforge.net>."
 
 #. type: Plain text
-#: README:127 INSTALL:311
+#: README:127 INSTALL:300
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 
@@ -9599,56 +9599,18 @@ msgstr ""
 "    -DWITH_CURL=OFF \\\n"
 
 #. type: Plain text
-#: INSTALL:206
+#: INSTALL:208
 msgid ""
 "To be compatible with current Python on Windows, we need to build against "
-"MSVCR71, to achieve this, libmoldname71 library is needed. It is part of "
-"current MinGW releases, but for older ones you can build it following way:"
-msgstr ""
-
-#. type: Bullet: '1. '
-#: INSTALL:210
-msgid "Get moldname.def.in from MinGW-runtime sources."
-msgstr ""
-
-#. type: Bullet: '2. '
-#: INSTALL:210
-msgid "Get MinGW-runtime."
-msgstr ""
-
-#. type: Bullet: '3. '
-#: INSTALL:210
-msgid "Execute following commands (crafted for Debian):"
+"matching Microsoft C Runtime library. For Python 2.4 and 2.5 MSVCR71 was "
+"used, for Python 2.6 the right one is MSVCR90. To achieve building against "
+"different MSVCRT, you need to adjust compiler specifications, example is "
+"shown in cmake/mingw.spec, which is used by CMakeLists.txt. You might need "
+"to tune it for your environment."
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:216
-msgid ""
-"i586-mingw32msvc-ar x /usr/i586-mingw32msvc/lib/libmoldname.a isascii.o "
-"iscsym.o iscsymf.o toascii.o strcasecmp.o strncasecmp.o wcscmpi.o i586-"
-"mingw32msvc-gcc -DRUNTIME=71 -D__FILENAME__=moldname-71.def -D__MSVCRT__ -C -"
-"E -P -xc-header moldname.def.in >moldname-71.def i586-mingw32msvc-dlltool -k "
-"-U --dllname msvcr71.dll --def moldname-71.def --output-lib libmoldname71.a "
-"i586-mingw32msvc-ar rc libmoldname71.a isascii.o iscsym.o iscsymf.o toascii."
-"o strcasecmp.o strncasecmp.o wcscmpi.o i586-mingw32msvc-ranlib libmoldname71."
-"a"
-msgstr ""
-"i586-mingw32msvc-ar x /usr/i586-mingw32msvc/lib/libmoldname.a isascii.o "
-"iscsym.o iscsymf.o toascii.o strcasecmp.o strncasecmp.o wcscmpi.o i586-"
-"mingw32msvc-gcc -DRUNTIME=71 -D__FILENAME__=moldname-71.def -D__MSVCRT__ -C -"
-"E -P -xc-header moldname.def.in >moldname-71.def i586-mingw32msvc-dlltool -k "
-"-U --dllname msvcr71.dll --def moldname-71.def --output-lib libmoldname71.a "
-"i586-mingw32msvc-ar rc libmoldname71.a isascii.o iscsym.o iscsymf.o toascii."
-"o strcasecmp.o strncasecmp.o wcscmpi.o i586-mingw32msvc-ranlib libmoldname71."
-"a"
-
-#. type: Plain text
-#: INSTALL:218
-msgid "Information taken from <http://www.pygame.org/wiki/PreparingMinGW>."
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:221
+#: INSTALL:210
 #, no-wrap
 msgid ""
 "Third party libraries\n"
@@ -9658,7 +9620,7 @@ msgstr ""
 "----------------\n"
 
 #. type: Plain text
-#: INSTALL:226
+#: INSTALL:215
 msgid ""
 "The easies way to link with third party libraries is to add path to their "
 "installation to cmake/Toolchain-mingw32.cmake or to list these paths in "
@@ -9666,7 +9628,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:229
+#: INSTALL:218
 #, no-wrap
 msgid ""
 "MySQL\n"
@@ -9676,7 +9638,7 @@ msgstr ""
 "-----\n"
 
 #. type: Plain text
-#: INSTALL:233
+#: INSTALL:222
 msgid ""
 "You can download MySQL binaries from <http://dev.mysql.com/>, but then need "
 "some tweaks:"
@@ -9685,7 +9647,7 @@ msgstr ""
 "rozbalení je potřeba provést pár úprav:"
 
 #. type: Plain text
-#: INSTALL:238
+#: INSTALL:227
 #, no-wrap
 msgid ""
 "cd mysql/lib/opt\n"
@@ -9699,7 +9661,7 @@ msgstr ""
 "    --dllname libmysql.dll --output-lib libmysql.a\n"
 
 #. type: Plain text
-#: INSTALL:241
+#: INSTALL:230
 msgid ""
 "reimp.exe is part of mingw-utils and can be run through wine, I didn't try "
 "to compile native binary from it."
@@ -9708,7 +9670,7 @@ msgstr ""
 "to compile native binary from it."
 
 #. type: Plain text
-#: INSTALL:244
+#: INSTALL:233
 #, no-wrap
 msgid ""
 "PostgreSQL\n"
@@ -9718,7 +9680,7 @@ msgstr ""
 "----------\n"
 
 #. type: Plain text
-#: INSTALL:248
+#: INSTALL:237
 msgid ""
 "You can download PostgreSQL binaries from <http://www.postgresql.org/>, but "
 "then you need to add wldap32.dll library to bin."
@@ -9727,7 +9689,7 @@ msgstr ""
 ">, ale budete muset odjinud přidat knihovnu wldap32.dll do adresáře bin."
 
 #. type: Plain text
-#: INSTALL:251
+#: INSTALL:240
 #, no-wrap
 msgid ""
 "Gettext\n"
@@ -9737,7 +9699,7 @@ msgstr ""
 "-------\n"
 
 #. type: Plain text
-#: INSTALL:256
+#: INSTALL:245
 msgid ""
 "For Gettext (internationalization support), you need gettext-0.14.4-bin.zip, "
 "gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from <http://gnuwin32."
@@ -9748,7 +9710,7 @@ msgstr ""
 "Rozbalte je všechny do jednoho adresáře."
 
 #. type: Plain text
-#: INSTALL:259
+#: INSTALL:248
 #, no-wrap
 msgid ""
 "CURL\n"
@@ -9758,7 +9720,7 @@ msgstr ""
 "----\n"
 
 #. type: Plain text
-#: INSTALL:263
+#: INSTALL:252
 msgid ""
 "For CURL support, you need curl-7.19.0-devel-mingw32.zip from <http://curl."
 "haxx.se/>."
@@ -9767,7 +9729,7 @@ msgstr ""
 "haxx.se/>."
 
 #. type: Plain text
-#: INSTALL:266
+#: INSTALL:255
 #, no-wrap
 msgid ""
 "Testing\n"
@@ -9777,7 +9739,7 @@ msgstr ""
 "=========\n"
 
 #. type: Plain text
-#: INSTALL:274
+#: INSTALL:263
 msgid ""
 "Gammu comes with testsuite which should be run after build. You can do this "
 "using 'make test'. CMake build system uses for testing CTest, which also "
@@ -9788,22 +9750,22 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:276
+#: INSTALL:265
 msgid "http://cdash.cihar.com/index.php?project=Gammu"
 msgstr "http://cdash.cihar.com/index.php?project=Gammu"
 
 #. type: Plain text
-#: INSTALL:278
+#: INSTALL:267
 msgid "There are some more options for testing:"
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:280
+#: INSTALL:269
 msgid "- make ExperimentalMemCheck"
 msgstr "- make ExperimentalMemCheck"
 
 #. type: Plain text
-#: INSTALL:284
+#: INSTALL:273
 #, no-wrap
 msgid ""
 "    This checks memory accesses using valgrind during tests and submits\n"
@@ -9813,12 +9775,12 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: INSTALL:286
+#: INSTALL:275
 msgid "- coverage reports"
 msgstr "- pokrytí testy"
 
 #. type: Plain text
-#: INSTALL:289
+#: INSTALL:278
 #, no-wrap
 msgid ""
 "    To get test coverage reports, you need to configure project using \n"
@@ -9826,12 +9788,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:291
+#: INSTALL:280
 msgid "- nightly testing"
 msgstr "- noční testování"
 
 #. type: Plain text
-#: INSTALL:298
+#: INSTALL:287
 #, no-wrap
 msgid ""
 "    Currently several machines do compile and test Gammu every night. If\n"
@@ -9843,12 +9805,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:300
+#: INSTALL:289
 msgid "- special cases:"
 msgstr "- zvláštní případy:"
 
 #. type: Plain text
-#: INSTALL:303
+#: INSTALL:292
 #, no-wrap
 msgid ""
 "    You can enable some additional tests, which require some external\n"
@@ -9856,7 +9818,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:306
+#: INSTALL:295
 #, no-wrap
 msgid ""
 "    MYSQL_TESTING - you need to have setup MySQL server with database\n"
@@ -9864,12 +9826,31 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: INSTALL:309
+#: INSTALL:298
 #, no-wrap
 msgid ""
 "    PSQL_TESTING - you need to have setup PostgreSQL server with\n"
 "    database where SMSD can play.\n"
 msgstr ""
+
+#~ msgid ""
+#~ "i586-mingw32msvc-ar x /usr/i586-mingw32msvc/lib/libmoldname.a isascii.o "
+#~ "iscsym.o iscsymf.o toascii.o strcasecmp.o strncasecmp.o wcscmpi.o i586-"
+#~ "mingw32msvc-gcc -DRUNTIME=71 -D__FILENAME__=moldname-71.def -D__MSVCRT__ -"
+#~ "C -E -P -xc-header moldname.def.in >moldname-71.def i586-mingw32msvc-"
+#~ "dlltool -k -U --dllname msvcr71.dll --def moldname-71.def --output-lib "
+#~ "libmoldname71.a i586-mingw32msvc-ar rc libmoldname71.a isascii.o iscsym.o "
+#~ "iscsymf.o toascii.o strcasecmp.o strncasecmp.o wcscmpi.o i586-mingw32msvc-"
+#~ "ranlib libmoldname71.a"
+#~ msgstr ""
+#~ "i586-mingw32msvc-ar x /usr/i586-mingw32msvc/lib/libmoldname.a isascii.o "
+#~ "iscsym.o iscsymf.o toascii.o strcasecmp.o strncasecmp.o wcscmpi.o i586-"
+#~ "mingw32msvc-gcc -DRUNTIME=71 -D__FILENAME__=moldname-71.def -D__MSVCRT__ -"
+#~ "C -E -P -xc-header moldname.def.in >moldname-71.def i586-mingw32msvc-"
+#~ "dlltool -k -U --dllname msvcr71.dll --def moldname-71.def --output-lib "
+#~ "libmoldname71.a i586-mingw32msvc-ar rc libmoldname71.a isascii.o iscsym.o "
+#~ "iscsymf.o toascii.o strcasecmp.o strncasecmp.o wcscmpi.o i586-mingw32msvc-"
+#~ "ranlib libmoldname71.a"
 
 # type: Plain text
 #~ msgid ""
