@@ -37,6 +37,7 @@ ChangeLog
 [-] * Implement retries when waiting for message prompt.
 [-] * Fixed logic of detecting incoming calls.
 [-] * Fixed loading of non ASCII messages from files in SMSD (bug#1011).
+[+] * Added example showing reading of messages.
     
 20091012 - 1.26.90
 
