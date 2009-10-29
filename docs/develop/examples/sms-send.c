@@ -55,6 +55,12 @@ int main(int argc UNUSED, char **argv UNUSED)
 	signal(SIGINT, interrupt);
 	signal(SIGTERM, interrupt);
 
+	/*
+	 * We don't need gettext, but need to set locales so that
+	 * charset conversion works.
+	 */
+	GSM_InitLocales(NULL);
+
 	/* Enable global debugging to stderr */
 	debug_info = GSM_GetGlobalDebug();
 	GSM_SetDebugFileDescriptor(stderr, TRUE, debug_info);

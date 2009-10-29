@@ -8,6 +8,12 @@ int main(int argc UNUSED, char **argv UNUSED)
     GSM_Error error;
     char *config_file = NULL; /* Use default compiled in path */
 
+	/*
+	 * We don't need gettext, but need to set locales so that
+	 * charset conversion works.
+	 */
+	GSM_InitLocales(NULL);
+
     /* Initalize configuration with program name */
 	config = SMSD_NewConfig("smsd-example");
 	assert(config != NULL);
