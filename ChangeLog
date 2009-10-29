@@ -39,6 +39,7 @@ ChangeLog
 [-] * Fixed loading of non ASCII messages from files in SMSD (bug#1011).
 [+] * Added example showing reading of messages.
 [-] * Build Windows release with Python 2.6.
+[-] * Fixed compilation in MSVC because of missing S_ISDIR.
     
 20091012 - 1.26.90
 
