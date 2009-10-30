@@ -1940,6 +1940,174 @@ GSM_Error ATGEN_IncomingSMSReport(GSM_Protocol_Message msg UNUSED, GSM_StateMach
 	return ERR_NONE;
 }
 
+gboolean InRange(int *range, int i) {
+	while (*range != -1) {
+		if (*range == i) return TRUE;
+		range++;
+	}
+	return FALSE;
+}
+
+int *GetRange(GSM_StateMachine *s, const char *buffer)
+{
+	int	*result = NULL;
+	size_t	allocated = 0, pos = 0;
+	const char *chr = buffer;
+	char *endptr;
+	gboolean in_range = FALSE;
+	int	current, diff, i;
+
+	smprintf(s, "Parsing range: %s\n", chr);
+	if (*chr != '(') return NULL;
+	chr++;
+
+	while (*chr != ')' && *chr != 0) {
+		/* Read current number */
+		current = strtol(chr, &endptr, 10);
+		/* Detect how much numbers we have to store */
+		if (in_range) {
+			diff = current - result[pos - 1];
+		} else {
+			diff = 1;
+		}
+		/* Did we parse anything? */
+		if (endptr == chr) {
+			smprintf(s, "Failed to find number in range!\n");
+			return NULL;
+		}
+		/* Allocate more memory if needed */
+		if (allocated < pos + diff + 1) {
+			result = realloc(result, sizeof(int) * (pos + diff + 10));
+			if (result == NULL) {
+				smprintf(s, "Not enough memory to parse range!\n");
+				return NULL;
+			}
+			allocated = pos + 10 + diff;
+		}
+		/* Store number is memory */
+		if (!in_range) {
+			result[pos++] = current;
+		} else {
+			for (i = result[pos - 1] + 1; i <= current; i++) {
+				result[pos++] = i;
+			}
+			in_range = FALSE;
+		}
+		/* Skip to next char after number */
+		chr = endptr;
+		/* Check for character after number */
+		if (*chr == '-') {
+			in_range = TRUE;
+			chr++;
+		} else if (*chr == ',') {
+			chr++;
+		} else if (*chr == ')') {
+			result[pos++] = -1;
+			break;
+		} else if (*chr != ',') {
+			smprintf(s, "Bad character in range: %c\n", *chr);
+			return NULL;
+		}
+	}
+
+	smprintf(s, "Returning range: ");
+	for (i = 0; result[i] != -1; i++) {
+		smprintf(s, "%d, ", result[i]);
+	}
+	smprintf(s, "-1\n");
+	return result;
+}
+
+GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	const char		*buffer;
+	int			*range;
+
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+		break;
+	case AT_Reply_Error:
+		return ERR_NOTSUPPORTED;
+	case AT_Reply_CMSError:
+	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
+	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+
+	/* Sample resposne we get here:
+	AT+CNMI=?
+	+CNMI: (0-2),(0,1,3),(0),(0,1),(0,1)
+
+	Or:
+	+CNMI:(0-3),(0-3),(0-3),(0,1),(0,1)
+
+	Or:
+	+CNMI: (2),(0-1,3),(0,2),(0-1),(0)"
+	*/
+	Priv->CNMIMode			= 0;
+	Priv->CNMIProcedure		= 0;
+	Priv->CNMIDeliverProcedure	= 0;
+#ifdef GSM_ENABLE_CELLBROADCAST
+	Priv->CNMIBroadcastProcedure	= 0;
+#endif
+
+	buffer = GetLineString(msg.Buffer, &Priv->Lines, 2);
+	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
+	while (isspace((int)*buffer)) buffer++;
+
+	if (strncmp(buffer, "+CNMI:", 6) != 0) return ERR_UNKNOWNRESPONSE;
+	buffer += 7;
+
+	buffer = strchr(buffer, '(');
+	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
+	range = GetRange(s, buffer);
+	if (range == NULL) return  ERR_UNKNOWNRESPONSE;
+	if (InRange(range, 2)) Priv->CNMIMode = 2; 	/* 2 = buffer messages and send them when link is free */
+	else if (InRange(range, 3)) Priv->CNMIMode = 3; /* 3 = send messages directly */
+	else return ERR_NONE; /* we don't want: 1 = ignore new messages, 0 = store messages and no indication */
+	free(range);
+
+	buffer++;
+	buffer = strchr(buffer, '(');
+	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
+	range = GetRange(s, buffer);
+	if (range == NULL) return  ERR_UNKNOWNRESPONSE;
+	if (InRange(range, 1)) Priv->CNMIProcedure = 1; 	/* 1 = store message and send where it is stored */
+	else if (InRange(range, 2)) Priv->CNMIProcedure = 2; 	/* 2 = route message to TE */
+	else if (InRange(range, 3)) Priv->CNMIProcedure = 3; 	/* 3 = 1 + route class 3 to TE */
+	/* we don't want: 0 = just store to memory */
+	free(range);
+
+	buffer++;
+	buffer = strchr(buffer, '(');
+#ifdef GSM_ENABLE_CELLBROADCAST
+	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
+	range = GetRange(s, buffer);
+	if (range == NULL) return  ERR_UNKNOWNRESPONSE;
+	if (InRange(range, 2)) Priv->CNMIBroadcastProcedure = 2; /* 2 = route message to TE */
+	else if (InRange(range, 1)) Priv->CNMIBroadcastProcedure = 1; /* 1 = store message and send where it is stored */
+	else if (InRange(range, 3)) Priv->CNMIBroadcastProcedure = 3; /* 3 = 1 + route class 3 to TE */
+	/* we don't want: 0 = just store to memory */
+	free(range);
+#endif
+
+	buffer++;
+	buffer = strchr(buffer, '(');
+	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
+	range = GetRange(s, buffer);
+	if (range == NULL) return  ERR_UNKNOWNRESPONSE;
+	if (InRange(range, 1)) Priv->CNMIDeliverProcedure = 1; /* 1 = route message to TE */
+	else if (InRange(range, 2)) Priv->CNMIDeliverProcedure = 2; /* 1 = store message and send where it is stored */
+	/* we don't want: 0 = no routing */
+	free(range);
+
+	return ERR_NONE;
+
+}
+
 GSM_Error ATGEN_GetCNMIMode(GSM_StateMachine *s)
 {
 	GSM_Error 		error;
