@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-10-14 15:41+0200\n"
+"POT-Creation-Date: 2009-10-30 16:05+0100\n"
 "PO-Revision-Date: 2009-03-23 19:32+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -342,7 +342,7 @@ msgstr ""
 msgid "Unknown error description."
 msgstr "Descripción del error desconocida."
 
-#: libgammu/phone/dummy/dummy.c:554
+#: libgammu/phone/dummy/dummy.c:555
 msgid "Templates"
 msgstr "Plantillas"
 
