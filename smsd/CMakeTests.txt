@@ -81,10 +81,10 @@ set_tests_properties("smsd-files-include-unicode" PROPERTIES
     )
 
 if (HAVE_ALARM)
-    add_test("smsd-daemon-files-unicode" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-unicode/.smsdrc" -X 10)
-    add_test("smsd-daemon-files-standard" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-standard/.smsdrc" -X 10)
-    add_test("smsd-daemon-files-detail" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-detail/.smsdrc" -X 10)
-    add_test("smsd-daemon-files-include-unicode" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-include-unicode/.smsdrc" -X 10)
+    add_test("smsd-daemon-files-unicode" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-unicode/.smsdrc" -X 10 -p "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-unicode/smsd.pid")
+    add_test("smsd-daemon-files-standard" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-standard/.smsdrc" -X 10 -p "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-standard/smsd.pid")
+    add_test("smsd-daemon-files-detail" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-detail/.smsdrc" -X 10 -p "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-detail/smsd.pid")
+    add_test("smsd-daemon-files-include-unicode" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-include-unicode/.smsdrc" -X 10 -p "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-include-unicode/smsd.pid")
 endif (HAVE_ALARM)
 
 
