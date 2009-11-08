@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-10-29 15:29+0100\n"
+"POT-Creation-Date: 2009-11-08 22:00+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -3928,7 +3928,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:116
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
-#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:497
+#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:501
 #, no-wrap
 msgid "COPYRIGHT"
 msgstr ""
@@ -3949,7 +3949,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:122
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
-#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:503
+#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:507
 msgid ""
 "This is free software: you are free to change and redistribute it.  There is "
 "NO WARRANTY, to the extent permitted by law."
@@ -3962,7 +3962,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:122
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
-#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:503
+#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:507
 #, no-wrap
 msgid "REPORTING BUGS"
 msgstr ""
@@ -4018,7 +4018,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:123
 #: docs/user/gammu-smsd-mysql.7:28 docs/user/gammu-smsd-pgsql.7:28
-#: docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:504
+#: docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:508
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr ""
 
@@ -4028,7 +4028,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:181 docs/user/gammu-smsd-inject.1:135
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:114
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
-#: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:495
+#: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:499
 #, no-wrap
 msgid "AUTHOR"
 msgstr ""
@@ -4079,7 +4079,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:112
 #: docs/user/gammu-smsd-mysql.7:17 docs/user/gammu-smsd-pgsql.7:17
-#: docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:490
+#: docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:494
 #, no-wrap
 msgid "SEE ALSO"
 msgstr ""
@@ -4720,7 +4720,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:183 docs/user/gammu-smsd-inject.1:137
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:116
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
-#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:497
+#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:501
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
 "E<lt>michal@cihar.comE<gt>."
@@ -4732,7 +4732,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:186 docs/user/gammu-smsd-inject.1:140
 #: docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:119
 #: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24
-#: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:500
+#: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:504
 msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
 "version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
@@ -6763,7 +6763,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-files.7:114 docs/user/gammu-smsd-tables.7:495
+#: docs/user/gammu-smsd-files.7:114 docs/user/gammu-smsd-tables.7:499
 msgid "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 msgstr ""
 
@@ -7781,17 +7781,28 @@ msgid "Injecting long message using SQL"
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:450
+#: docs/user/gammu-smsd-tables.7:447
 msgid ""
 "Inserting multipart messages is a bit more tricky, you need to construct "
-"also UDH header. For example long text message would look like (please note "
-"that each UDH needs to contain number of parts and sequence position as last "
-"two bytes, the D3 value in example is message reference number, it can be "
-"anything):"
+"also UDH header and store it hexadecimally written into UDF field."
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:470
+#: docs/user/gammu-smsd-tables.7:452
+msgid ""
+"For long text message, the UDH starts with 050003 followed by byte as a "
+"message reference (you can put anything there, but it should be different "
+"for each message), byte for number of messages and byte for number of "
+"current message."
+msgstr ""
+
+#. type: Plain text
+#: docs/user/gammu-smsd-tables.7:454
+msgid "For example long text message of two parts could look like following:"
+msgstr ""
+
+#. type: Plain text
+#: docs/user/gammu-smsd-tables.7:474
 #, no-wrap
 msgid ""
 "INSERT INTO outbox (\n"
@@ -7812,7 +7823,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:485
+#: docs/user/gammu-smsd-tables.7:489
 #, no-wrap
 msgid ""
 "INSERT INTO outbox_multipart (\n"
@@ -7833,7 +7844,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:493
+#: docs/user/gammu-smsd-tables.7:497
 msgid ""
 "Database backends: gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7)"
