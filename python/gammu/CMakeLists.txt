@@ -27,6 +27,13 @@ if (MINGW)
     endif (HAVE_LOG1P)
 endif (MINGW)
 
+# Python headers include pragma comments for linking, but
+# these are broken for debug builds and we do add library
+# anyway, so it's safer to disable that.
+if(MSVC)
+    add_definitions(-DPy_NO_ENABLE_SHARED)
+endif(MSVC)
+
 execute_process(
     COMMAND
         ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print sysconfig.get_python_lib(plat_specific=1,prefix='${CMAKE_INSTALL_EXEC_PREFIX}')"

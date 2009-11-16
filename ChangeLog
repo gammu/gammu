@@ -42,6 +42,7 @@ ChangeLog
 [-] * Fixed compilation in MSVC because of missing S_ISDIR.
 [-] * Fixed parsing of different Samsung reply (bug#1038).
 [-] * Proper error code when SMSC is empty (bug#1032).
+[-] * Fixed compilation of python-gammu in MSVC.
     
 20091012 - 1.26.90
 
