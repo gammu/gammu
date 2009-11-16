@@ -333,7 +333,7 @@ void ATSIEMENSSATNetmon(int argc, char *argv[])
 	if (CheckSiemens()==ERR_NOTSUPPORTED) Print_Error(ERR_NOTSUPPORTED);
 	gsm->User.UserReplyFunctions=UserReplyFunctionsAtS;
 
-	printf ("Getting Siemens Sim Aplication Toolkit NetMonitor...\n");
+	printf ("Getting Siemens Sim Application Toolkit NetMonitor...\n");
 
 	error=ATSIEMENS_GetSAT(gsm);
 	Print_Error(error);
