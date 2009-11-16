@@ -524,7 +524,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		 * Parse reply string
 		 *
 		 * The last string seems to be always empty, so it is
-		 * not handlet in rest of the code.
+		 * not handled in rest of the code.
 		 */
 		error = ATGEN_ParseReply(s, str,
 					"+SPBR: @i, @p, @p, @p, @p, @p, @s, @T, @T, @T, @T",
