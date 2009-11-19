@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.26.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-10-30 16:05+0100\n"
+"POT-Creation-Date: 2009-11-19 14:59+0100\n"
 "PO-Revision-Date: 2009-03-15 16:50+0200\n"
 "Last-Translator: soft developer <soft-developer@live.com>\n"
 "Language-Team: Language =it\n"
@@ -347,7 +347,7 @@ msgstr ""
 msgid "Unknown error description."
 msgstr "Errore sconosciuto"
 
-#: libgammu/phone/dummy/dummy.c:555
+#: libgammu/phone/dummy/dummy.c:557
 msgid "Templates"
 msgstr "Modelli"
 
