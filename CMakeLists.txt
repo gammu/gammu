@@ -415,9 +415,9 @@ endif(MSVC)
 if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     CMAKE_COMPILER_IS_CYGWIN OR CMAKE_COMPILER_IS_GNUCXX)
     # Check for extra compiler flags we want to use
-    if (VERSION_PATCH LESS 90)
+    if (NOT VERSION_PATCH LESS 90)
         MACRO_TUNE_COMPILER("-Werror")
-    endif (VERSION_PATCH LESS 90)
+    endif (NOT VERSION_PATCH LESS 90)
 
     #
     # Warnings related flags
