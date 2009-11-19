@@ -19,6 +19,8 @@ the issue.
 ChangeLog
 =========
     
+2009???? - 1.26.92
+    
 20091119 - 1.26.91
 
 [-] * Fixed parsing of vCards with lowercase types (bug #1006).
