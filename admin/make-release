@@ -129,6 +129,7 @@ cpack -G ZIP
 mv Gammu-*-Windows-Minimal.* $tmp/
 cd $tmp
 
+if false ; then
 mkdir build-win-python
 for py in 2.6 ; do
     pynodot=`echo $py | tr -d '.'`
@@ -170,6 +171,7 @@ for py in 2.6 ; do
     fi
     cd $tmp
 done
+fi
 
 # Sign binaries (not for python-gammu, it breaks some code underneath)
 for bin in $tmp/Gammu*.exe ; do
