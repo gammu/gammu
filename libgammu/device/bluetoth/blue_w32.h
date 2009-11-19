@@ -10,6 +10,7 @@ typedef ULONGLONG 		BTH_ADDR, *PBTH_ADDR;
 
 #define NAP_BIT_OFFSET          (8 * 4)
 #define SAP_BIT_OFFSET          (0)
+#define	GET_BYTE(num, byte)	(unsigned int)((num  >> (8 * byte)) && 0xff)
 
 #ifdef __BORLANDC__
 #define NAP_MASK                0xFFFF00000000LL
