@@ -39,6 +39,8 @@ signexe() {
 }
 
 checkexe() {
+    # Disabled for now because we don't build Python binaries
+    return
     if /usr/i*mingw*/bin/objdump -x "$1" | grep -qi 'DLL Name.*msvcrt.dll' ; then
         echo "Program $1 is linked to msvcrt.dll!"
         exit 1
