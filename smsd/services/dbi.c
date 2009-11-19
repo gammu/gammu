@@ -539,7 +539,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					timestruct = gmtime(&timestamp);
 					strftime(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%Y-%m-%d %H:%M:%S GMT", timestruct);
 				} else {
-					sprintf(buffer + strlen(buffer), "%lld", (long long)timestamp);
+					sprintf(buffer + strlen(buffer), "%ld", (long)timestamp);
 				}
 				strcat(buffer, "', Status = '");
 
