@@ -1,6 +1,6 @@
 /* Samsung-specific functions
  * Copyright (C) 2004 Claudio Matsuoka <cmatsuoka@gmail.com>
- * Tested with S300 only!
+ * Copyright (c) 2009 Michal Cihar <michal@cihar.com>
  */
 
 #include <gammu-config.h>
