@@ -354,7 +354,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 			SMSD_Log(DEBUG_INFO, Config, "Error writing inbox message to database (%s), new id is zero!", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
-		SMSD_Log(DEBUG_NOTICE, Config, "Inserted message id %llu", new_id);
+		SMSD_Log(DEBUG_NOTICE, Config, "Inserted message id %lu", (long)new_id);
 
 		if (locations_pos + 10 >= locations_size) {
 			locations_size += 40;
@@ -364,7 +364,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				*Locations[0] = 0;
 			}
 		}
-		locations_pos += sprintf((*Locations) + locations_pos, "%llu ", new_id);
+		locations_pos += sprintf((*Locations) + locations_pos, "%lu ", (long)new_id);
 
 		sprintf(buf, "UPDATE phones SET Received = Received + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
 		if (SMSDMySQL_Query(Config, buf) != ERR_NONE) {
