@@ -1163,7 +1163,7 @@ StateMachine_SetAlarm(StateMachineObject *self, PyObject *args, PyObject *kwds) 
         if (gs == NULL) return NULL;
 
         if (UnicodeLength(gs) > GSM_MAX_CALENDAR_TEXT_LENGTH) {
-            pyg_warning("Alarm text too long, truncating to %d (from %zd)\n", GSM_MAX_CALENDAR_TEXT_LENGTH, UnicodeLength(gs));
+            pyg_warning("Alarm text too long, truncating to %d (from %ld)\n", GSM_MAX_CALENDAR_TEXT_LENGTH, (long)UnicodeLength(gs));
         }
         CopyUnicodeString(gsm_alarm.Text, gs);
         free(gs);
@@ -1773,7 +1773,7 @@ StateMachine_AddCategory(StateMachineObject *self, PyObject *args, PyObject *kwd
     if (name == NULL) return NULL;
 
     if (UnicodeLength(name) > GSM_MAX_CATEGORY_NAME_LENGTH) {
-        pyg_warning("Category name too long, truncating to %d (from %zd)\n", GSM_MAX_CATEGORY_NAME_LENGTH, UnicodeLength(name));
+        pyg_warning("Category name too long, truncating to %d (from %ld)\n", GSM_MAX_CATEGORY_NAME_LENGTH, (long)UnicodeLength(name));
         name[2*GSM_MAX_CATEGORY_NAME_LENGTH] = 0;
         name[2*GSM_MAX_CATEGORY_NAME_LENGTH + 1] = 0;
     }

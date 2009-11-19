@@ -243,12 +243,12 @@ int FileFromPython(PyObject *dict, GSM_File *file, gboolean check) {
         if (file->Used == INT_INVALID) {
             file->Used = i;
         } else if (file->Used != (size_t)i) {
-            PyErr_Format(PyExc_ValueError, "Used and Buffer size mismatch in File (%zi != %" PY_FORMAT_SIZE_T "i)!", file->Used, i);
+            PyErr_Format(PyExc_ValueError, "Used and Buffer size mismatch in File (%li != %" PY_FORMAT_SIZE_T "i)!", (long)file->Used, i);
             return 0;
         }
         file->Buffer = (unsigned char *)malloc(i * sizeof(unsigned char));
         if (file->Buffer == NULL) {
-            PyErr_Format(PyExc_MemoryError, "Not enough memory to allocate buffer (wanted %zi bytes)", i * sizeof(unsigned char));
+            PyErr_Format(PyExc_MemoryError, "Not enough memory to allocate buffer (wanted %li bytes)", (long)(i * sizeof(unsigned char)));
             return 0;
         }
         memcpy(file->Buffer, s, i);
