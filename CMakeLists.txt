@@ -498,9 +498,11 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
         MACRO_TUNE_LINKER("-Wl,--enable-auto-import")
     endif (WIN32 AND NOT CYGWIN AND BUILD_SHARED_LIBS)
 
-    if (CMAKE_COMPILER_IS_MINGW)
-        MACRO_TUNE_COMPILER("-specs=${Gammu_SOURCE_DIR}/cmake/mingw.spec")
-    endif (CMAKE_COMPILER_IS_MINGW)
+    # Specs for MinGW to change msvcrt
+    # This is not supported by MinGW and is broken currently
+#    if (CMAKE_COMPILER_IS_MINGW)
+#        MACRO_TUNE_COMPILER("-specs=${Gammu_SOURCE_DIR}/cmake/mingw.spec")
+#    endif (CMAKE_COMPILER_IS_MINGW)
 endif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     CMAKE_COMPILER_IS_CYGWIN OR CMAKE_COMPILER_IS_GNUCXX)
 
