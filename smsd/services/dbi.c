@@ -554,9 +554,9 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 				}
 
 				sprintf(buffer + strlen(buffer),
-					"', StatusError = %i WHERE ID = %lld AND `TPMR` = %i",
+					"', StatusError = %i WHERE ID = %ld AND `TPMR` = %i",
 					sms->SMS[i].DeliveryStatus,
-					SMSDDBI_GetNumber(Config, Res, "ID"),
+					(long)SMSDDBI_GetNumber(Config, Res, "ID"),
 					sms->SMS[i].MessageReference);
 
 				if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
@@ -661,7 +661,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			SMSD_Log(DEBUG_INFO, Config, "Failed to get inserted row ID (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
-		SMSD_Log(DEBUG_NOTICE, Config, "Inserted message id %llu", new_id);
+		SMSD_Log(DEBUG_NOTICE, Config, "Inserted message id %lu", (long)new_id);
 
 		dbi_result_free(Res);
 
@@ -674,7 +674,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					*Locations[0] = 0;
 				}
 			}
-			locations_pos += sprintf((*Locations) + locations_pos, "%llu ", new_id);
+			locations_pos += sprintf((*Locations) + locations_pos, "%lu ", (long)new_id);
 		}
 
 		sprintf(buffer, "UPDATE phones SET Received = Received + 1 WHERE IMEI = '%s'", Config->Status->IMEI);
@@ -756,12 +756,12 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 
 	while (dbi_result_next_row(Res)) {
 		timestamp = SMSDDBI_GetDate(Config, Res, "InsertIntoDB");
-		sprintf(ID, "%lld", SMSDDBI_GetNumber(Config, Res, "ID"));
+		sprintf(ID, "%ld", (long)SMSDDBI_GetNumber(Config, Res, "ID"));
 		if (strcmp(dbi_driver_get_name(dbi_conn_get_driver(Config->DBConnDBI)), "pgsql") == 0) {
 			timestruct = gmtime(&timestamp);
 			strftime(Config->DT, sizeof(Config->DT), "%Y-%m-%d %H:%M:%S GMT", timestruct);
 		} else {
-			sprintf(Config->DT, "%lld", (long long)timestamp);
+			sprintf(Config->DT, "%ld", (long)timestamp);
 		}
 
 		if (SMSDDBI_RefreshSendStatus(Config, ID) == ERR_NONE) {

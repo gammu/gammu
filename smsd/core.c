@@ -272,7 +272,7 @@ void SMSD_Log(SMSD_DebugLevel level, GSM_SMSDConfig *Config, const char *format,
 					date_time.Hour, date_time.Minute, date_time.Second);
 			}
 #ifdef HAVE_GETPID
-			fprintf(Config->log_handle, "%s[%lld]: ", Config->program_name, (long long)getpid());
+			fprintf(Config->log_handle, "%s[%ld]: ", Config->program_name, (long)getpid());
 #else
 			fprintf(Config->log_handle, "%s: ", Config->program_name);
 #endif
@@ -285,7 +285,7 @@ void SMSD_Log(SMSD_DebugLevel level, GSM_SMSDConfig *Config, const char *format,
 
 	if (Config->use_stderr && level == -1) {
 #ifdef HAVE_GETPID
-		fprintf(stderr, "%s[%lld]: ", Config->program_name, (long long)getpid());
+		fprintf(stderr, "%s[%ld]: ", Config->program_name, (long)getpid());
 #else
 		fprintf(stderr, "%s: ", Config->program_name);
 #endif
