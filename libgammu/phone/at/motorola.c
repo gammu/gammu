@@ -100,6 +100,10 @@ GSM_Error MOTOROLA_SetModeReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachin
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 		case AT_Reply_OK:
 		case AT_Reply_Connect:
+			/*
+			 * The typo in next line (Unkown) is intentional,
+			 * phone returns it this way.
+			 */
 			if (strstr(GetLineString(msg.Buffer, &Priv->Lines, 2), "Unkown mode value") != NULL) {
 				return ERR_NOTSUPPORTED;
 			}
