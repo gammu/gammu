@@ -1183,7 +1183,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* Scan for section */
         for (h = cfg_info; h != NULL; h = h->Next) {
-                if (strncasecmp(section, h->SectionName, strlen(section)) == 0) {
+                if (strcasecmp(section, h->SectionName) == 0) {
 			found = TRUE;
 			break;
 		}
