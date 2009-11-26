@@ -2569,6 +2569,43 @@ GSM_Error ATGEN_ReplyGetNetworkName(GSM_Protocol_Message msg, GSM_StateMachine *
 	return ERR_UNKNOWNRESPONSE;
 }
 
+GSM_Error ATGEN_ReplyGetGPRSState(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_NetworkInfo		*NetworkInfo = s->Phone.Data.NetworkInfo;
+	int i;
+	GSM_Error error;
+
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+		smprintf(s, "GPRS state received\n");
+		error = ATGEN_ParseReply(s,
+				GetLineString(msg.Buffer, &Priv->Lines, 2),
+				"+CGATT: @i",
+				&i);
+
+		if (error == ERR_NONE) {
+			if (i == 1) {
+				NetworkInfo->GPRS = GSM_GPRS_Attached;
+			} else if (i == 0) {
+				NetworkInfo->GPRS = GSM_GPRS_Detached;
+			} else {
+				smprintf(s, "WARNING: Unknown GPRS state %d\n", i);
+				error = ERR_UNKNOWN;
+			}
+		}
+
+		return error;
+	case AT_Reply_CMSError:
+		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
+	default:
+		break;
+	}
+	return ERR_UNKNOWNRESPONSE;
+}
+
 GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 {
 	GSM_Error error;
@@ -2578,12 +2615,17 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	netinfo->NetworkName[0] = 0;
 	netinfo->NetworkName[1] = 0;
 	netinfo->NetworkCode[0] = 0;
+	netinfo->GPRS = 0;
 
 	smprintf(s, "Enable full network info\n");
 	ATGEN_WaitFor(s, "AT+CREG=2\r", 10, 0x00, 4, ID_GetNetworkInfo);
 	if ((error != ERR_NONE) &&
 	    (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Siemens) &&
 	    (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Ericsson)) return error;
+
+	smprintf(s, "Getting GPRS state\n");
+	ATGEN_WaitFor(s, "AT+CGATT?\r", 10, 0x00, 4, ID_GetNetworkInfo);
+	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Getting network LAC and CID and state\n");
 	ATGEN_WaitFor(s, "AT+CREG?\r", 9, 0x00, 4, ID_GetNetworkInfo);
@@ -4818,6 +4860,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetAlarm,		"AT+CALA?"		,0x00,0x00,ID_GetAlarm		 },
 
 {ATGEN_ReplyGetNetworkLAC_CID,	"AT+CREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
+{ATGEN_ReplyGetGPRSState,	"AT+CGATT?"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+CREG=2"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_SetAutoNetworkLogin},

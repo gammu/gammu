@@ -383,6 +383,7 @@ static GSM_Error N6510_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *neti
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x00, 0x00};
 
+	netinfo->GPRS = 0;
 	s->Phone.Data.NetworkInfo=netinfo;
 	smprintf(s, "Getting network info\n");
 	return GSM_WaitFor (s, req, 5, 0x0a, s->Phone.Data.Priv.N6510.Timeout, ID_GetNetworkInfo);

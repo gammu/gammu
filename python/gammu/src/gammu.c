@@ -1686,6 +1686,7 @@ StateMachine_GetNetworkInfo(StateMachineObject *self, PyObject *args, PyObject *
             "State", buffer,
             "NetworkCode", netinfo.NetworkCode,
             "CID", netinfo.CID,
+            "GPRS", netinfo.GPRS == 0 ? "Unknown" : (netinfo.GPRS == GSM_GPRS_Attached ? "Attached" : "Detached"),
             "LAC", netinfo.LAC);
 }
 

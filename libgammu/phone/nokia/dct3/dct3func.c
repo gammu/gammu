@@ -463,6 +463,7 @@ GSM_Error DCT3_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 	GSM_NetworkInfo NetInfo;
 	char		name[100];
 
+	NetInfo.GPRS = 0;
 	smprintf(s, "Network info received\n");
 	smprintf(s, "Status                 : ");
 	switch (msg.Buffer[8]) {
@@ -560,6 +561,7 @@ GSM_Error DCT3_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x70};
 
+	netinfo->GPRS = 0;
 	s->Phone.Data.NetworkInfo=netinfo;
 	smprintf(s, "Getting network info\n");
 	return GSM_WaitFor (s, req, 4, 0x0a, 4, ID_GetNetworkInfo);

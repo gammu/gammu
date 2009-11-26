@@ -25,6 +25,7 @@ ChangeLog
 [-] * Add ID for Nokia 6111 (bug#1045).
 [-] * Handle CME error 601 (bug#1044).
 [+] * Support for reading birthday from Samsung phonebook (bug#1038).
+[+] * Report GPRS state when getting network status (bug#1024).
     
 20091119 - 1.26.91
 

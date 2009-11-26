@@ -641,6 +641,7 @@ static GSM_Error GNAPGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *ne
 {
 	unsigned char req[] = {0x00, 0x01};
 
+	netinfo->GPRS = 0;
 	s->Phone.Data.NetworkInfo=netinfo;
 	smprintf(s, "Getting network info\n");
 	return GSM_WaitFor (s, req, 2, 0x03, 4, ID_GetNetworkInfo);

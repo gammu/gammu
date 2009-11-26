@@ -63,6 +63,22 @@ typedef enum {
 } GSM_NetworkInfo_State;
 
 /**
+ * Status of GPRS connection.
+ *
+ * \ingroup Info
+ */
+typedef enum {
+	/**
+	 * GRPS is detached.
+	 */
+	GSM_GPRS_Detached = 1,
+	/**
+	 * GRPS is attached.
+	 */
+	GSM_GPRS_Attached
+} GSM_GPRS_State;
+
+/**
  * Structure for getting the current network info.
  *
  * \ingroup Info
@@ -89,6 +105,10 @@ typedef struct {
 	 * Name of current network like returned from phone (or empty).
 	 */
 	unsigned char NetworkName[15 * 2];
+	/**
+	 * GPRS state.
+	 */
+	GSM_GPRS_State GPRS;
 } GSM_NetworkInfo;
 
 /**

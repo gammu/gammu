@@ -57,6 +57,18 @@ void PrintNetworkInfo(GSM_NetworkInfo NetInfo)
 				DecodeUnicodeConsole(NetInfo.NetworkName));
 		}
 	}
+	if (NetInfo.GPRS != 0) {
+		printf(LISTFORMAT, _("GPRS"));
+		switch (NetInfo.GPRS) {
+			case GSM_GPRS_Attached:
+				printf("%s", _("attached"));
+				break;
+			case GSM_GPRS_Detached:
+				printf("%s", _("detached"));
+				break;
+		}
+		printf("\n");
+	}
 }
 
 GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone)
