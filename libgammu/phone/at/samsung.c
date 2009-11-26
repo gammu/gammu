@@ -471,7 +471,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
 	GSM_Error error;
 	const char *str;
-	int i, j;
+	int i, j, year = 1900, month, day;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -542,10 +542,10 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		if (error != ERR_NONE) {
 			/*
 			 * Some phones have different string:
-			 * +SPBR: 1,"+919821485060","","","","","apsengupta@gmail.com","6,Aditya","8,Sengupta",1900,1,1,"0,","0,"
+			 * +SPBR: 1,"+919821485060","","","","","apsengupta@gmail.com","6,Aditya","8,Sengupta",1985,2,31,"2,Me","0,"
 			 */
 			error = ATGEN_ParseReply(s, str,
-						"+SPBR: @i, @p, @p, @p, @p, @p, @s, @T, @T, @0",
+						"+SPBR: @i, @p, @p, @p, @p, @p, @s, @T, @T, @i, @i, @i, @T",
 						&Memory->Location,
 						Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 						Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
@@ -554,9 +554,10 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 						Memory->Entries[4].Text, sizeof(Memory->Entries[4].Text),
 						Memory->Entries[5].Text, sizeof(Memory->Entries[5].Text),
 						Memory->Entries[6].Text, sizeof(Memory->Entries[6].Text),
-						Memory->Entries[7].Text, sizeof(Memory->Entries[7].Text));
-			Memory->Entries[8].Text[0] = 0;
-			Memory->Entries[8].Text[1] = 0;
+						Memory->Entries[7].Text, sizeof(Memory->Entries[7].Text),
+						year, month, day,
+						Memory->Entries[8].Text, sizeof(Memory->Entries[8].Text),
+						Memory->Entries[9].Text, sizeof(Memory->Entries[9].Text));
 		}
 		if (error != ERR_NONE) {
 			return error;
@@ -570,6 +571,18 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				}
 				Memory->EntriesNum--;
 			}
+		}
+		/* Was there stored birthday? */
+		if (year > 1900) {
+			Memory->Entries[Memory->EntriesNum].EntryType = PBK_Date;
+			Memory->Entries[Memory->EntriesNum].Date.Year = year;
+			Memory->Entries[Memory->EntriesNum].Date.Month = month;
+			Memory->Entries[Memory->EntriesNum].Date.Day = day;
+			Memory->Entries[Memory->EntriesNum].Date.Hour = 0;
+			Memory->Entries[Memory->EntriesNum].Date.Minute = 0;
+			Memory->Entries[Memory->EntriesNum].Date.Second = 0;
+			Memory->Entries[Memory->EntriesNum].Date.Timezone = 0;
+			Memory->EntriesNum++;
 		}
 		if (Memory->EntriesNum == 0) {
 			return ERR_EMPTY;
