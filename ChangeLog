@@ -22,6 +22,7 @@ ChangeLog
 2009???? - 1.26.92
 
 [-] * Compare full name of config section.
+[-] * Add ID for Nokia 6111 (bug#1045).
     
 20091119 - 1.26.91
 
