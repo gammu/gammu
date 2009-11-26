@@ -295,6 +295,7 @@ GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 		case -1:
 			return ERR_EMPTY;
 		case 4:
+		case 601: /* This seems to be returned by SE P1i when writing to pbk */
 			return ERR_NOTSUPPORTED;
 		case 3:
 		case 5:

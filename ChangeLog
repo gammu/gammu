@@ -23,6 +23,7 @@ ChangeLog
 
 [-] * Compare full name of config section.
 [-] * Add ID for Nokia 6111 (bug#1045).
+[-] * Handle CME error 601 (bug#1044).
     
 20091119 - 1.26.91
 
