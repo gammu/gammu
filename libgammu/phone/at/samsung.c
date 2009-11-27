@@ -471,7 +471,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
 	GSM_Error error;
 	const char *str;
-	int i, j, year = 1900, month, day;
+	int i, j, year = 1900, month = 0, day = 0;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
