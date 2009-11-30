@@ -29,7 +29,7 @@ void SaveFile(int argc, char *argv[])
 	if (strcasecmp(argv[2],"CALENDAR") == 0) {
 		if (argc<5) {
 			printf("%s\n", _("Where is backup filename and location?"));
-			Terminate(3);
+			Terminate(2);
 		}
 		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
@@ -41,7 +41,7 @@ void SaveFile(int argc, char *argv[])
 		if (i != atoi(argv[5])-1 || Backup.Calendar[i] == NULL) {
 			printf("%s\n", _("Calendar note not found in file"));
 			GSM_FreeBackup(&Backup);
-			Terminate(3);
+			Terminate(2);
 		}
 		j = 0;
 		error = GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer), &j, Backup.Calendar[i],TRUE,Nokia_VCalendar);
@@ -50,7 +50,7 @@ void SaveFile(int argc, char *argv[])
 	} else if (strcasecmp(argv[2],"BOOKMARK") == 0) {
 		if (argc<5) {
 			printf("%s\n", _("Where is backup filename and location?"));
-			Terminate(3);
+			Terminate(2);
 		}
 		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
@@ -62,7 +62,7 @@ void SaveFile(int argc, char *argv[])
 		if (i != atoi(argv[5])-1 || Backup.WAPBookmark[i] == NULL) {
 			printf("%s\n", _("WAP bookmark not found in file"));
 			GSM_FreeBackup(&Backup);
-			Terminate(3);
+			Terminate(2);
 		}
 		j = 0;
 		error = GSM_EncodeURLFile(Buffer, &j, Backup.WAPBookmark[i]);
@@ -71,7 +71,7 @@ void SaveFile(int argc, char *argv[])
 	} else if (strcasecmp(argv[2],"NOTE") == 0) {
 		if (argc<5) {
 			printf("%s\n", _("Where is backup filename and location?"));
-			Terminate(3);
+			Terminate(2);
 		}
 		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
@@ -83,7 +83,7 @@ void SaveFile(int argc, char *argv[])
 		if (i != atoi(argv[5])-1 || Backup.Note[i] == NULL) {
 			printf("%s\n", _("Note not found in file"));
 			GSM_FreeBackup(&Backup);
-			Terminate(3);
+			Terminate(2);
 		}
 		j = 0;
 		error = GSM_EncodeVNTFile(Buffer, sizeof(Buffer), &j, Backup.Note[i]);
@@ -92,7 +92,7 @@ void SaveFile(int argc, char *argv[])
 	} else if (strcasecmp(argv[2],"TODO") == 0) {
 		if (argc<5) {
 			printf("%s\n", _("Where is backup filename and location?"));
-			Terminate(3);
+			Terminate(2);
 		}
 		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
@@ -104,7 +104,7 @@ void SaveFile(int argc, char *argv[])
 		if (i != atoi(argv[5])-1 || Backup.ToDo[i] == NULL) {
 			printf("%s\n", _("Todo note not found in file"));
 			GSM_FreeBackup(&Backup);
-			Terminate(3);
+			Terminate(2);
 		}
 		j = 0;
 		error = GSM_EncodeVTODO(Buffer, sizeof(Buffer), &j, Backup.ToDo[i], TRUE, Nokia_VToDo);
@@ -113,7 +113,7 @@ void SaveFile(int argc, char *argv[])
 	} else if (strcasecmp(argv[2],"VCARD10") == 0 || strcasecmp(argv[2],"VCARD21") == 0) {
 		if (argc<6) {
 			printf("%s\n", _("Where is backup filename and location and memory type?"));
-			Terminate(3);
+			Terminate(2);
 		}
 		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
@@ -126,7 +126,7 @@ void SaveFile(int argc, char *argv[])
 			if (i != atoi(argv[6])-1 || Backup.SIMPhonebook[i] == NULL) {
 				printf("%s\n", _("Phonebook entry not found in file"));
 				GSM_FreeBackup(&Backup);
-				Terminate(3);
+				Terminate(2);
 			}
 			pbk = Backup.SIMPhonebook[i];
 		} else if (strcasecmp(argv[5],"ME") == 0) {
@@ -137,13 +137,13 @@ void SaveFile(int argc, char *argv[])
 			if (i != atoi(argv[6])-1 || Backup.PhonePhonebook[i] == NULL) {
 				printf("%s\n", _("Phonebook entry not found in file"));
 				GSM_FreeBackup(&Backup);
-				Terminate(3);
+				Terminate(2);
 			}
 			pbk = Backup.PhonePhonebook[i];
 		} else {
 			printf(_("Unknown memory type: \"%s\"\n"),argv[5]);
 			GSM_FreeBackup(&Backup);
-			Terminate(3);
+			Terminate(2);
 		}
 		j = 0;
 		if (strcasecmp(argv[2],"VCARD10") == 0) {
@@ -157,7 +157,7 @@ void SaveFile(int argc, char *argv[])
 		}
 	} else {
 		printf(_("Unknown backup format: \"%s\"\n"), argv[2]);
-		Terminate(3);
+		Terminate(2);
 	}
 
 	file = fopen(argv[3],"wb");
@@ -296,7 +296,7 @@ void DoBackup(int argc, char *argv[])
 				fprintf(stderr, "*");
 				if (gshutdown) {
 					GSM_Terminate();
-					Terminate(0);
+					Terminate(4);
 				}
 			}
 			fprintf(stderr, "\n");
@@ -330,7 +330,7 @@ void DoBackup(int argc, char *argv[])
 				i++;
 				if (gshutdown) {
 					GSM_Terminate();
-					Terminate(0);
+					Terminate(4);
 				}
 			}
 			fprintf(stderr, "\n");
@@ -374,7 +374,7 @@ void DoBackup(int argc, char *argv[])
 			i++;
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -408,7 +408,7 @@ void DoBackup(int argc, char *argv[])
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -446,7 +446,7 @@ void DoBackup(int argc, char *argv[])
 				used * 100 / ToDoStatus.Used);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -480,7 +480,7 @@ void DoBackup(int argc, char *argv[])
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -518,7 +518,7 @@ void DoBackup(int argc, char *argv[])
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -619,7 +619,7 @@ void DoBackup(int argc, char *argv[])
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -656,7 +656,7 @@ void DoBackup(int argc, char *argv[])
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -693,7 +693,7 @@ void DoBackup(int argc, char *argv[])
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -730,7 +730,7 @@ void DoBackup(int argc, char *argv[])
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -766,7 +766,7 @@ void DoBackup(int argc, char *argv[])
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -809,7 +809,7 @@ void DoBackup(int argc, char *argv[])
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -995,7 +995,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1063,7 +1063,7 @@ void Restore(int argc, char *argv[])
 					);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1115,7 +1115,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / (MemStatus.MemoryUsed + MemStatus.MemoryFree));
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1173,7 +1173,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1222,7 +1222,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1250,7 +1250,7 @@ void Restore(int argc, char *argv[])
 				used * 100 / ToDoStatus.Used);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1266,7 +1266,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1305,7 +1305,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1323,7 +1323,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1372,7 +1372,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1397,7 +1397,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1422,7 +1422,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1458,7 +1458,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1481,7 +1481,7 @@ void Restore(int argc, char *argv[])
 			Print_Error(error);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1511,7 +1511,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1536,7 +1536,7 @@ void Restore(int argc, char *argv[])
 				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
-				Terminate(0);
+				Terminate(4);
 			}
 		}
 		fprintf(stderr, "\n");
@@ -1616,7 +1616,7 @@ void AddNew(int argc, char *argv[])
 						(i + 1) * 100 / max);
 					if (gshutdown) {
 						GSM_Terminate();
-						Terminate(0);
+						Terminate(4);
 					}
 				}
 				fprintf(stderr, "\n");
@@ -1644,7 +1644,7 @@ void AddNew(int argc, char *argv[])
 						(i + 1) * 100 / max);
 					if (gshutdown) {
 						GSM_Terminate();
-						Terminate(0);
+						Terminate(4);
 					}
 				}
 				fprintf(stderr, "\n");
@@ -1677,7 +1677,7 @@ void AddNew(int argc, char *argv[])
 						(i + 1) * 100 / max);
 					if (gshutdown) {
 						GSM_Terminate();
-						Terminate(0);
+						Terminate(4);
 					}
 				}
 				fprintf(stderr, "\n");
@@ -1701,7 +1701,7 @@ void AddNew(int argc, char *argv[])
 						(i + 1) * 100 / max);
 					if (gshutdown) {
 						GSM_Terminate();
-						Terminate(0);
+						Terminate(4);
 					}
 				}
 				fprintf(stderr, "\n");
@@ -1726,7 +1726,7 @@ void AddNew(int argc, char *argv[])
 						(i + 1) * 100 / max);
 					if (gshutdown) {
 						GSM_Terminate();
-						Terminate(0);
+						Terminate(4);
 					}
 				}
 				fprintf(stderr, "\n");

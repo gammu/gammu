@@ -53,8 +53,8 @@ void CheckDCT3(void)
 	switch (error) {
 		case ERR_OTHERCONNECTIONREQUIRED:
 			printf("Can't do it with current phone protocol\n");
-			GSM_Terminate();
-			Terminate(3);
+			Print_Error(error);
+			break;
 		case ERR_NONE:
 			break;
 		default:
@@ -71,7 +71,9 @@ static gboolean answer_yes3(const char *text)
 	while (1) {
 		printf("%s (yes/no) ? ",text);
 		len=GetLine(stdin, ans, 99);
-		if (len==-1) Terminate(3);
+		if (len==-1) {
+			Terminate(2);
+		}
 		if (strcasecmp(ans, "yes") == 0) return TRUE;
 		if (strcasecmp(ans, "no" ) == 0) return FALSE;
 	}

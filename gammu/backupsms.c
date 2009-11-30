@@ -82,7 +82,7 @@ void BackupSMS(int argc UNUSED, char *argv[])
 						} else {
 							printf(_("   Increase %s\n") , "GSM_BACKUP_MAX_SMS");
 							GSM_Terminate();
-							Terminate(3);
+							Terminate(1);
 						}
 						*Backup.SMS[smsnum] = sms.SMS[j];
 						smsnum++;

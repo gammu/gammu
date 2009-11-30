@@ -295,13 +295,13 @@ void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 
 	if (argc <= num) {
 		printf_err("%s\n", _("More parameters required!"));
-		Terminate(3);
+		Terminate(2);
 	}
 
 	*start = atoi(argv[num]);
 	if (*start == 0) {
 		printf_err("%s\n", _("Please enumerate locations from 1"));
-		Terminate(3);
+		Terminate(2);
 	}
 
 	if (stop != NULL) {
@@ -311,7 +311,7 @@ void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 		if (*stop == 0) {
 			printf_err("%s\n",
 				   _("Please enumerate locations from 1"));
-			Terminate(3);
+			Terminate(2);
 		}
 		if (*stop < *start) {
 			printf_warn("%s\n",

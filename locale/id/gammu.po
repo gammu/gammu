@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.26.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-11-30 15:49+0100\n"
+"POT-Creation-Date: 2009-11-30 16:25+0100\n"
 "PO-Revision-Date: 2009-09-07 07:24+0200\n"
 "Last-Translator: winawang <winawangz@yahoo.co.id>\n"
 "Language-Team: none\n"
@@ -1067,7 +1067,7 @@ msgstr "Status keamanan"
 msgid "More parameters required!"
 msgstr "Parameter lain dibutuhkan"
 
-#: gammu/common.c:303 gammu/common.c:313 gammu/depend/nokia/dct4.c:684
+#: gammu/common.c:303 gammu/common.c:313 gammu/depend/nokia/dct4.c:686
 #: gammu/misc.c:1165
 msgid "Please enumerate locations from 1"
 msgstr "Silakan menghitung lokasi dari 1"
@@ -1077,13 +1077,13 @@ msgid "Swapping start and end location"
 msgstr "Swapping lokasi awal dan akhir"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:340 gammu/common.c:369 gammu/depend/nokia/dct4.c:82
+#: gammu/common.c:340 gammu/common.c:369 gammu/depend/nokia/dct4.c:84
 #: gammu/misc.c:1557
 msgid "yes"
 msgstr "ya"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:340 gammu/common.c:372 gammu/depend/nokia/dct4.c:83
+#: gammu/common.c:340 gammu/common.c:372 gammu/depend/nokia/dct4.c:85
 msgid "no"
 msgstr "tidak"
 
@@ -1119,11 +1119,11 @@ msgstr "Tidak dapat dilakukan dengan protokol telepon sat ini"
 msgid "%s (yes/no) ? "
 msgstr "%s (ya/tidak) ?"
 
-#: gammu/depend/nokia/dct4.c:262
+#: gammu/depend/nokia/dct4.c:264
 msgid "Setting done"
 msgstr "Pengaturan selesai"
 
-#: gammu/depend/nokia/dct4.c:300
+#: gammu/depend/nokia/dct4.c:302
 #, fuzzy
 msgid ""
 "Sorry, but configuration matrix for this model has not yet been added. See "
@@ -1132,386 +1132,386 @@ msgstr ""
 "Tanggapan dari telepon tidak diketahui. Lihat <http://cihar.com/gammu/"
 "report> untuk informasi bagaimana melaporkannya."
 
-#: gammu/depend/nokia/dct4.c:366
+#: gammu/depend/nokia/dct4.c:368
 #, c-format
 msgid "Passed"
 msgstr "lewatkan"
 
-#: gammu/depend/nokia/dct4.c:367
+#: gammu/depend/nokia/dct4.c:369
 #, c-format
 msgid "Fail"
 msgstr "gagal"
 
-#: gammu/depend/nokia/dct4.c:368
+#: gammu/depend/nokia/dct4.c:370
 #, c-format
 msgid "Not executed"
 msgstr "Tidak dijalankan"
 
-#: gammu/depend/nokia/dct4.c:369
+#: gammu/depend/nokia/dct4.c:371
 #, c-format
 msgid "No signal"
 msgstr "Tidak ada sinyal"
 
-#: gammu/depend/nokia/dct4.c:370 gammu/message.c:95 gammu/misc.c:2198
+#: gammu/depend/nokia/dct4.c:372 gammu/message.c:95 gammu/misc.c:2198
 #, c-format
 msgid "Timeout"
 msgstr "Waktu habis"
 
-#: gammu/depend/nokia/dct4.c:371
+#: gammu/depend/nokia/dct4.c:373
 #, c-format
 msgid "Unknown (%x)"
 msgstr "Tidak diketahui (%x)"
 
-#: gammu/depend/nokia/dct4.c:373
+#: gammu/depend/nokia/dct4.c:375
 #, c-format
 msgid " (startup)"
 msgstr "(startup)"
 
-#: gammu/depend/nokia/dct4.c:494 gammu/depend/nokia/dct4.c:1004
+#: gammu/depend/nokia/dct4.c:496 gammu/depend/nokia/dct4.c:1006
 msgid "Press any key to continue..."
 msgstr "Tekan sembarang tombol untuk melanjutkan..."
 
-#: gammu/depend/nokia/dct4.c:506
+#: gammu/depend/nokia/dct4.c:508
 #, c-format
 msgid "Security code set to \"12345\"\n"
 msgstr "Kode keamanan diatur ke \"12345\"\n"
 
-#: gammu/depend/nokia/dct4.c:509
+#: gammu/depend/nokia/dct4.c:511
 msgid "Unknown reason. Can't reset your security code"
 msgstr "Alasan tidak diketahui. Tidak dapat mereset kode keamanan anda."
 
-#: gammu/depend/nokia/dct4.c:533
+#: gammu/depend/nokia/dct4.c:535
 #, c-format
 msgid "Trying %i\n"
 msgstr "Mencoba %i\n"
 
-#: gammu/depend/nokia/dct4.c:552
+#: gammu/depend/nokia/dct4.c:554
 #, c-format
 msgid "Security code is %s\n"
 msgstr "Kode keamana adalah %s\n"
 
-#: gammu/depend/nokia/dct4.c:797
+#: gammu/depend/nokia/dct4.c:799
 #, c-format
 msgid "device address %02x%02x%02x%02x%02x%02x\n"
 msgstr "Alamat perangkat %02x%02x%02x%02x%02x%02x\n"
 
-#: gammu/depend/nokia/dct4.c:821
+#: gammu/depend/nokia/dct4.c:823
 msgid "Old simlock"
 msgstr "kunci sim lama"
 
-#: gammu/depend/nokia/dct4.c:842
+#: gammu/depend/nokia/dct4.c:844
 msgid "Simlock data"
 msgstr "Kunci sim data"
 
-#: gammu/depend/nokia/dct4.c:869
+#: gammu/depend/nokia/dct4.c:871
 msgid "Bluetooth"
 msgstr "Bluetooth"
 
-#: gammu/depend/nokia/dct4.c:885
+#: gammu/depend/nokia/dct4.c:887
 msgid "UEM"
 msgstr "UEM"
 
-#: gammu/depend/nokia/dct4.c:958
+#: gammu/depend/nokia/dct4.c:960
 #, c-format
 msgid "What lights should I enable (\"%s\") ?\n"
 msgstr "Lampu apa yang harus saya aktifkan (\"%s\") ? \n"
 
-#: gammu/depend/nokia/dct4.c:965
+#: gammu/depend/nokia/dct4.c:967
 #, c-format
 msgid "What should I do (\"%s\") ?\n"
 msgstr "Apa yang harus saya lakukan (\"%s\") ?\n"
 
 #. l10n: Raw data for A/D convertor
-#: gammu/depend/nokia/dct4.c:1018
+#: gammu/depend/nokia/dct4.c:1020
 #, c-format
 msgid "raw result %10i "
 msgstr "hasil mentah %10i"
 
 #. l10n: Processed data for A/D convertor
-#: gammu/depend/nokia/dct4.c:1022
+#: gammu/depend/nokia/dct4.c:1024
 #, fuzzy, c-format
 msgid "unit result %10i "
 msgstr "unit hasil"
 
-#: gammu/depend/nokia/dct4.c:1035
+#: gammu/depend/nokia/dct4.c:1037
 msgid "Battery voltage, divided:"
 msgstr "Tegangan baterai, dibagi:"
 
-#: gammu/depend/nokia/dct4.c:1035 gammu/depend/nokia/dct4.c:1036
-#: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1041
-#: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1043
-#: gammu/depend/nokia/dct4.c:1046 gammu/depend/nokia/dct4.c:1047
-#: gammu/depend/nokia/dct4.c:1048
+#: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1038
+#: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1043
+#: gammu/depend/nokia/dct4.c:1044 gammu/depend/nokia/dct4.c:1045
+#: gammu/depend/nokia/dct4.c:1048 gammu/depend/nokia/dct4.c:1049
+#: gammu/depend/nokia/dct4.c:1050
 msgid "mV"
 msgstr "mV"
 
-#: gammu/depend/nokia/dct4.c:1036
+#: gammu/depend/nokia/dct4.c:1038
 msgid "Battery voltage, scaled:"
 msgstr "Tegangan baterai, diskala:"
 
-#: gammu/depend/nokia/dct4.c:1037
+#: gammu/depend/nokia/dct4.c:1039
 msgid "Charger voltage:"
 msgstr "Charger tegangan:"
 
-#: gammu/depend/nokia/dct4.c:1038
+#: gammu/depend/nokia/dct4.c:1040
 msgid "Charger current:"
 msgstr "Charger saat ini:"
 
-#: gammu/depend/nokia/dct4.c:1038 gammu/depend/nokia/dct4.c:1049
-#: gammu/depend/nokia/dct4.c:1050
+#: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
+#: gammu/depend/nokia/dct4.c:1052
 msgid "mA"
 msgstr "mA"
 
-#: gammu/depend/nokia/dct4.c:1039
+#: gammu/depend/nokia/dct4.c:1041
 msgid "Battery size indicator:"
 msgstr "Ukuran baterai indikator:"
 
-#: gammu/depend/nokia/dct4.c:1039
+#: gammu/depend/nokia/dct4.c:1041
 msgid "Ohms"
 msgstr "Ohms"
 
-#: gammu/depend/nokia/dct4.c:1040
+#: gammu/depend/nokia/dct4.c:1042
 msgid "Battery temperature:"
 msgstr "Suhu temperatur:"
 
-#: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1044
-#: gammu/depend/nokia/dct4.c:1045
+#: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
+#: gammu/depend/nokia/dct4.c:1047
 msgid "K"
 msgstr "K"
 
-#: gammu/depend/nokia/dct4.c:1041
+#: gammu/depend/nokia/dct4.c:1043
 msgid "Headset interconnection:"
 msgstr "Headset interkoneksi:"
 
-#: gammu/depend/nokia/dct4.c:1042
+#: gammu/depend/nokia/dct4.c:1044
 msgid "Hook interconnection:"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1043
+#: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1044
+#: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1045
+#: gammu/depend/nokia/dct4.c:1047
 msgid "VCXO temperature:"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1046
+#: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/headint2:"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1047
+#: gammu/depend/nokia/dct4.c:1049
 msgid "Resistive keyboard 1/auxdet:"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1048
+#: gammu/depend/nokia/dct4.c:1050
 msgid "Initial battery voltage:"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1049
+#: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current:"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1050
+#: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1156
+#: gammu/depend/nokia/dct4.c:1158
 msgid "Phone seems not to support radio"
 msgstr "Telepon sepertinya tidak mendukung radio"
 
-#: gammu/depend/nokia/dct4.c:1163
+#: gammu/depend/nokia/dct4.c:1165
 msgid "Please connect headset. Required as antenna"
 msgstr "Silahkan hubungkan headset. Dibutuhkan sebagai antena"
 
-#: gammu/depend/nokia/dct4.c:1357
+#: gammu/depend/nokia/dct4.c:1359
 #, c-format
 msgid "%i entries types\n"
 msgstr "%i tipe-tipe masukan-masukan\n"
 
-#: gammu/depend/nokia/dct4.c:1360
+#: gammu/depend/nokia/dct4.c:1362
 #, c-format
 msgid "  entry ID %02X"
 msgstr "masukan ID %02X"
 
-#: gammu/depend/nokia/dct4.c:1362
+#: gammu/depend/nokia/dct4.c:1364
 #, c-format
 msgid " (Speed dial on SIM)"
 msgstr "(Kecepataan panggil pada SIM)"
 
-#: gammu/depend/nokia/dct4.c:1363
+#: gammu/depend/nokia/dct4.c:1365
 #, fuzzy, c-format
 msgid " (Text: name (always the only one))"
 msgstr "(teks: nama (selalu hanya satu)"
 
-#: gammu/depend/nokia/dct4.c:1364
+#: gammu/depend/nokia/dct4.c:1366
 #, c-format
 msgid " (Text: email address)"
 msgstr "(teks: alamat email)"
 
-#: gammu/depend/nokia/dct4.c:1365
+#: gammu/depend/nokia/dct4.c:1367
 #, c-format
 msgid " (Text: postal address)"
 msgstr "(teks: alamat post)"
 
-#: gammu/depend/nokia/dct4.c:1366
+#: gammu/depend/nokia/dct4.c:1368
 #, c-format
 msgid " (Text: note)"
 msgstr "(teks: catatan)"
 
-#: gammu/depend/nokia/dct4.c:1367
+#: gammu/depend/nokia/dct4.c:1369
 #, c-format
 msgid " (Phone number)"
 msgstr "(Nomor telepon)"
 
-#: gammu/depend/nokia/dct4.c:1368
+#: gammu/depend/nokia/dct4.c:1370
 #, c-format
 msgid " (Ringtone ID)"
 msgstr "(ID nada dering)"
 
-#: gammu/depend/nokia/dct4.c:1369
+#: gammu/depend/nokia/dct4.c:1371
 #, c-format
 msgid " (Call register: date and time)"
 msgstr "(Register panggilan: tanggal dan waktu)"
 
-#: gammu/depend/nokia/dct4.c:1370
+#: gammu/depend/nokia/dct4.c:1372
 #, c-format
 msgid " (Call register: with missed calls)"
 msgstr "(Register panggilan: dengan panggilan tak terjawab)"
 
-#: gammu/depend/nokia/dct4.c:1371
+#: gammu/depend/nokia/dct4.c:1373
 #, c-format
 msgid " (Speed dial)"
 msgstr "(panggilan cepat)"
 
-#: gammu/depend/nokia/dct4.c:1372
+#: gammu/depend/nokia/dct4.c:1374
 #, c-format
 msgid " (Caller group: logo)"
 msgstr "(Grup pemanggil: logo)"
 
-#: gammu/depend/nokia/dct4.c:1373
+#: gammu/depend/nokia/dct4.c:1375
 #, c-format
 msgid " (Caller group: is logo on ?)"
 msgstr "(Grup pemanggil: apakah logo dipasang?)"
 
-#: gammu/depend/nokia/dct4.c:1374
+#: gammu/depend/nokia/dct4.c:1376
 #, c-format
 msgid " (Caller group number in pbk entry)"
 msgstr "(Nomor grup pemanggil dalam pbk entry)"
 
-#: gammu/depend/nokia/dct4.c:1377
+#: gammu/depend/nokia/dct4.c:1379
 #, c-format
 msgid " (Text: URL address)"
 msgstr "(Teks: alamat URL)"
 
-#: gammu/depend/nokia/dct4.c:1378
+#: gammu/depend/nokia/dct4.c:1380
 #, c-format
 msgid " (SMS list assignment)"
 msgstr "(Penugasan tugas SMS)"
 
-#: gammu/depend/nokia/dct4.c:1379
+#: gammu/depend/nokia/dct4.c:1381
 #, c-format
 msgid " (Voice tag assignment)"
 msgstr "(Penugasan tag suara)"
 
-#: gammu/depend/nokia/dct4.c:1380
+#: gammu/depend/nokia/dct4.c:1382
 #, c-format
 msgid " (Picture ID assignment)"
 msgstr "(Penugasan gambar ID)"
 
-#: gammu/depend/nokia/dct4.c:1381
+#: gammu/depend/nokia/dct4.c:1383
 #, c-format
 msgid " (Ringtone ID from filesystem/internal)"
 msgstr "(ID nada dering dari file sistem/internal)"
 
-#: gammu/depend/nokia/dct4.c:1382
+#: gammu/depend/nokia/dct4.c:1384
 #, c-format
 msgid " (Text: user ID)"
 msgstr "(teks: ID pengguna)"
 
-#: gammu/depend/nokia/dct4.c:1383
+#: gammu/depend/nokia/dct4.c:1385
 #, c-format
 msgid " (conversation list ID)"
 msgstr "(ID daftar percakapan)"
 
-#: gammu/depend/nokia/dct4.c:1384
+#: gammu/depend/nokia/dct4.c:1386
 #, c-format
 msgid " (Instant Messaging service list ID ?)"
 msgstr "(ID daftar layanan pesan instan)"
 
-#: gammu/depend/nokia/dct4.c:1385
+#: gammu/depend/nokia/dct4.c:1387
 #, c-format
 msgid " (presence list ID ?)"
 msgstr "(ID daftar kehadiran)"
 
-#: gammu/depend/nokia/dct4.c:1386
+#: gammu/depend/nokia/dct4.c:1388
 #, c-format
 msgid " (SIP Address (Push to Talk address))"
 msgstr "(Alamat SIP (Alamat Tekan untuk Bicara))"
 
-#: gammu/depend/nokia/dct4.c:1387
+#: gammu/depend/nokia/dct4.c:1389
 #, c-format
 msgid " (Group ID (6230i or later))"
 msgstr "(ID Grup (6230i atau lebih baru)"
 
-#: gammu/depend/nokia/dct4.c:1389
+#: gammu/depend/nokia/dct4.c:1391
 #, c-format
 msgid ", type "
 msgstr ", tipe"
 
-#: gammu/depend/nokia/dct4.c:1391
+#: gammu/depend/nokia/dct4.c:1393
 #, c-format
 msgid "string"
 msgstr "string"
 
-#: gammu/depend/nokia/dct4.c:1392
+#: gammu/depend/nokia/dct4.c:1394
 #, c-format
 msgid "byte"
 msgstr "byte"
 
-#: gammu/depend/nokia/dct4.c:1393
+#: gammu/depend/nokia/dct4.c:1395
 #, c-format
 msgid "2 bytes"
 msgstr "2 bytes"
 
-#: gammu/depend/nokia/dct4.c:1394
+#: gammu/depend/nokia/dct4.c:1396
 #, c-format
 msgid "4 bytes"
 msgstr "4 bytes"
 
-#: gammu/depend/nokia/dct4.c:1401
+#: gammu/depend/nokia/dct4.c:1403
 #, c-format
 msgid "%i phone number types\n"
 msgstr "%i tipe-tipe nomor telepon\n"
 
-#: gammu/depend/nokia/dct4.c:1404 helper/memory-display.c:127
+#: gammu/depend/nokia/dct4.c:1406 helper/memory-display.c:127
 msgid "Home number"
 msgstr "Nomor rumah"
 
-#: gammu/depend/nokia/dct4.c:1405 helper/memory-display.c:122
+#: gammu/depend/nokia/dct4.c:1407 helper/memory-display.c:122
 msgid "Mobile number"
 msgstr "Nomor ponsel"
 
-#: gammu/depend/nokia/dct4.c:1406 helper/memory-display.c:126
+#: gammu/depend/nokia/dct4.c:1408 helper/memory-display.c:126
 msgid "Fax number"
 msgstr "Nomor fax"
 
-#: gammu/depend/nokia/dct4.c:1407
+#: gammu/depend/nokia/dct4.c:1409
 msgid "Office number"
 msgstr "Nomor kantor"
 
-#: gammu/depend/nokia/dct4.c:1408
+#: gammu/depend/nokia/dct4.c:1410
 msgid "Standard number"
 msgstr "Nomor standar"
 
-#: gammu/depend/nokia/dct4.c:1409
+#: gammu/depend/nokia/dct4.c:1411
 msgid "Unknown number"
 msgstr "Nomor tidak diketahui"
 
-#: gammu/depend/nokia/dct4.c:1433
+#: gammu/depend/nokia/dct4.c:1435
 #, c-format
 msgid "ERROR: unknown memory type (\"%s\")\n"
 msgstr "KESALAHAN: tipe memori tidak diketahui (\"%s\")\n"
@@ -2090,7 +2090,7 @@ msgstr ""
 msgid "Reading phone phonebook:"
 msgstr ""
 
-#: gammu/message.c:374 gammu/message.c:478 gammu/message.c:729
+#: gammu/message.c:374 gammu/message.c:478 gammu/message.c:727
 msgid "Corrupted message, skipping"
 msgstr ""
 
@@ -2151,7 +2151,7 @@ msgstr ""
 msgid "Number of messages"
 msgstr ""
 
-#: gammu/message.c:620 gammu/message.c:657
+#: gammu/message.c:620 gammu/message.c:656
 msgid "If you want break, press Ctrl+C..."
 msgstr ""
 
@@ -2178,26 +2178,26 @@ msgstr ""
 msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr ""
 
-#: gammu/message.c:643 gammu/message.c:667
+#: gammu/message.c:643 gammu/message.c:666
 #, c-format
 msgid "....waiting for network answer"
 msgstr ""
 
-#: gammu/message.c:662
+#: gammu/message.c:661
 #, c-format
 msgid "Sending SMS %i/%i"
 msgstr ""
 
-#: gammu/message.c:680
+#: gammu/message.c:678
 msgid "Something went wrong, uknown message operation!\n"
 msgstr ""
 
-#: gammu/message.c:715
+#: gammu/message.c:713
 #, c-format
 msgid "Too high folder number (max. %i)\n"
 msgstr ""
 
-#: gammu/message.c:720
+#: gammu/message.c:718
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
 msgstr ""

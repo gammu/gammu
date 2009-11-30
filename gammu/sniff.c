@@ -262,12 +262,12 @@ void decodesniff(int argc, char *argv[])
 		Protocol = GCT_IRDAPHONET;
 	} else {
 		printf("What protocol (\"%s\") ?\n",argv[2]);
-		Terminate(3);
+		Terminate(2);
 	}
 	file = fopen(argv[3], "rb");
 	if (file == NULL) {
 		printf("Can not open file \"%s\"\n",argv[3]);
-		Terminate(3);
+		Terminate(2);
 	}
 	prepareStateMachine();
 	if (argc > 4) {

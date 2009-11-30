@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Listopad 26, 2009" "Gammu 1.26.92" "Dokumentace Gammu"
+.TH GAMMU 1 "Listopad 30, 2009" "Gammu 1.26.92" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -2510,9 +2510,25 @@ Zobrazí informace o verzi a licenci
 .SH "NÁVRATOVÉ KÓDY"
 
 .P
-gammu při úspěchu vrací 0. V případě chyby je vrácen nenulový chybový
-kód. Chyby 2 a 3 znamenenají chybné parametry nebo chybu při otevírání
-souboru jenž byl zadán na příkazové řádce.
+gammu při úspěchu vrací 0. V případě chyby je vrácen nenulový chybový kód.
+
+.SS 1
+Nedostatek paměti nebo jiná kritická chyba.
+
+.SS 2
+Chybné parametry na příkazové řádce.
+
+.SS 3
+Nepodařilo se otevřít soubor zadaný na příkazové řádce.
+
+.SS 4
+Program byl přerušen.
+
+.SS 98
+Verze knihovny Gammu neodpovídá programu.
+
+.SS 99
+Požadovaná funkce byla přesunuta. Například do gammu\-smsd(1).
 
 Chyby větší než 100 odpovídají hodnotám GSM_Error zvětšeným o 100:
 

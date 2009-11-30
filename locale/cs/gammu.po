@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.26.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-11-30 10:51+0100\n"
+"POT-Creation-Date: 2009-11-30 16:25+0100\n"
 "PO-Revision-Date: 2009-11-30 15:59+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1072,7 +1072,7 @@ msgstr "Stav bezpečnosti"
 msgid "More parameters required!"
 msgstr "Je potřeba více parametrů!"
 
-#: gammu/common.c:303 gammu/common.c:313 gammu/depend/nokia/dct4.c:684
+#: gammu/common.c:303 gammu/common.c:313 gammu/depend/nokia/dct4.c:686
 #: gammu/misc.c:1165
 msgid "Please enumerate locations from 1"
 msgstr "Prosím číslujte pozice od 1"
@@ -1082,13 +1082,13 @@ msgid "Swapping start and end location"
 msgstr "Prohazuji začátek a konec"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:340 gammu/common.c:369 gammu/depend/nokia/dct4.c:82
+#: gammu/common.c:340 gammu/common.c:369 gammu/depend/nokia/dct4.c:84
 #: gammu/misc.c:1557
 msgid "yes"
 msgstr "ano"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:340 gammu/common.c:372 gammu/depend/nokia/dct4.c:83
+#: gammu/common.c:340 gammu/common.c:372 gammu/depend/nokia/dct4.c:85
 msgid "no"
 msgstr "ne"
 
@@ -1124,11 +1124,11 @@ msgstr "Operaci nelze provést se současným protokolem"
 msgid "%s (yes/no) ? "
 msgstr "%s (ano/ne) ? "
 
-#: gammu/depend/nokia/dct4.c:262
+#: gammu/depend/nokia/dct4.c:264
 msgid "Setting done"
 msgstr "Nastavení provedeno"
 
-#: gammu/depend/nokia/dct4.c:300
+#: gammu/depend/nokia/dct4.c:302
 msgid ""
 "Sorry, but configuration matrix for this model has not yet been added. See "
 "<http://wammu.eu/support/bugs/> for information how to report it."
@@ -1137,386 +1137,386 @@ msgstr ""
 "Podívejte se na stránku <http://cs.wammu.eu/support/bugs/> pro informace jak "
 "tuto událost nahlásit."
 
-#: gammu/depend/nokia/dct4.c:366
+#: gammu/depend/nokia/dct4.c:368
 #, c-format
 msgid "Passed"
 msgstr "Prošlo"
 
-#: gammu/depend/nokia/dct4.c:367
+#: gammu/depend/nokia/dct4.c:369
 #, c-format
 msgid "Fail"
 msgstr "Selhalo"
 
-#: gammu/depend/nokia/dct4.c:368
+#: gammu/depend/nokia/dct4.c:370
 #, c-format
 msgid "Not executed"
 msgstr "Nespuštěno"
 
-#: gammu/depend/nokia/dct4.c:369
+#: gammu/depend/nokia/dct4.c:371
 #, c-format
 msgid "No signal"
 msgstr "Žádný signál"
 
-#: gammu/depend/nokia/dct4.c:370 gammu/message.c:95 gammu/misc.c:2198
+#: gammu/depend/nokia/dct4.c:372 gammu/message.c:95 gammu/misc.c:2198
 #, c-format
 msgid "Timeout"
 msgstr "Vypršel čas"
 
-#: gammu/depend/nokia/dct4.c:371
+#: gammu/depend/nokia/dct4.c:373
 #, c-format
 msgid "Unknown (%x)"
 msgstr "Neznámý (%x)"
 
-#: gammu/depend/nokia/dct4.c:373
+#: gammu/depend/nokia/dct4.c:375
 #, c-format
 msgid " (startup)"
 msgstr " (úvodní)"
 
-#: gammu/depend/nokia/dct4.c:494 gammu/depend/nokia/dct4.c:1004
+#: gammu/depend/nokia/dct4.c:496 gammu/depend/nokia/dct4.c:1006
 msgid "Press any key to continue..."
 msgstr "Stiskněte libobolnou klávesu pro pokračování..."
 
-#: gammu/depend/nokia/dct4.c:506
+#: gammu/depend/nokia/dct4.c:508
 #, c-format
 msgid "Security code set to \"12345\"\n"
 msgstr "Bezpečnostní kód nastaven na \"12345\"\n"
 
-#: gammu/depend/nokia/dct4.c:509
+#: gammu/depend/nokia/dct4.c:511
 msgid "Unknown reason. Can't reset your security code"
 msgstr "Neznámá příčina. Nepodařilo se obnovit váš bezpečnostní kód"
 
-#: gammu/depend/nokia/dct4.c:533
+#: gammu/depend/nokia/dct4.c:535
 #, c-format
 msgid "Trying %i\n"
 msgstr "Zkouším %i\n"
 
-#: gammu/depend/nokia/dct4.c:552
+#: gammu/depend/nokia/dct4.c:554
 #, c-format
 msgid "Security code is %s\n"
 msgstr "Bezpečnostní kód je %s\n"
 
-#: gammu/depend/nokia/dct4.c:797
+#: gammu/depend/nokia/dct4.c:799
 #, c-format
 msgid "device address %02x%02x%02x%02x%02x%02x\n"
 msgstr "adresa zařízení je %02x%02x%02x%02x%02x%02x\n"
 
-#: gammu/depend/nokia/dct4.c:821
+#: gammu/depend/nokia/dct4.c:823
 msgid "Old simlock"
 msgstr "Starý simlock"
 
-#: gammu/depend/nokia/dct4.c:842
+#: gammu/depend/nokia/dct4.c:844
 msgid "Simlock data"
 msgstr "Data simlocku"
 
-#: gammu/depend/nokia/dct4.c:869
+#: gammu/depend/nokia/dct4.c:871
 msgid "Bluetooth"
 msgstr "Bluetooth"
 
-#: gammu/depend/nokia/dct4.c:885
+#: gammu/depend/nokia/dct4.c:887
 msgid "UEM"
 msgstr "UEM"
 
-#: gammu/depend/nokia/dct4.c:958
+#: gammu/depend/nokia/dct4.c:960
 #, c-format
 msgid "What lights should I enable (\"%s\") ?\n"
 msgstr "Které světlo mám zapnouts (\"%s\") ?\n"
 
-#: gammu/depend/nokia/dct4.c:965
+#: gammu/depend/nokia/dct4.c:967
 #, c-format
 msgid "What should I do (\"%s\") ?\n"
 msgstr "Co mám dělat (\"%s\") ?\n"
 
 #. l10n: Raw data for A/D convertor
-#: gammu/depend/nokia/dct4.c:1018
+#: gammu/depend/nokia/dct4.c:1020
 #, c-format
 msgid "raw result %10i "
 msgstr "nezpracovaný výsledek %10i "
 
 #. l10n: Processed data for A/D convertor
-#: gammu/depend/nokia/dct4.c:1022
+#: gammu/depend/nokia/dct4.c:1024
 #, c-format
 msgid "unit result %10i "
 msgstr "zpracovaný výsledek %10i "
 
-#: gammu/depend/nokia/dct4.c:1035
+#: gammu/depend/nokia/dct4.c:1037
 msgid "Battery voltage, divided:"
 msgstr "Napětí baterie, rozdělené:"
 
-#: gammu/depend/nokia/dct4.c:1035 gammu/depend/nokia/dct4.c:1036
-#: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1041
-#: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1043
-#: gammu/depend/nokia/dct4.c:1046 gammu/depend/nokia/dct4.c:1047
-#: gammu/depend/nokia/dct4.c:1048
+#: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1038
+#: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1043
+#: gammu/depend/nokia/dct4.c:1044 gammu/depend/nokia/dct4.c:1045
+#: gammu/depend/nokia/dct4.c:1048 gammu/depend/nokia/dct4.c:1049
+#: gammu/depend/nokia/dct4.c:1050
 msgid "mV"
 msgstr "mV"
 
-#: gammu/depend/nokia/dct4.c:1036
+#: gammu/depend/nokia/dct4.c:1038
 msgid "Battery voltage, scaled:"
 msgstr "Napětí baterie, zvětšené:"
 
-#: gammu/depend/nokia/dct4.c:1037
+#: gammu/depend/nokia/dct4.c:1039
 msgid "Charger voltage:"
 msgstr "Nabíjecí napětí:"
 
-#: gammu/depend/nokia/dct4.c:1038
+#: gammu/depend/nokia/dct4.c:1040
 msgid "Charger current:"
 msgstr "Nabíjecí proud:"
 
-#: gammu/depend/nokia/dct4.c:1038 gammu/depend/nokia/dct4.c:1049
-#: gammu/depend/nokia/dct4.c:1050
+#: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
+#: gammu/depend/nokia/dct4.c:1052
 msgid "mA"
 msgstr "mA"
 
-#: gammu/depend/nokia/dct4.c:1039
+#: gammu/depend/nokia/dct4.c:1041
 msgid "Battery size indicator:"
 msgstr "Indikátor velikosti baterie:"
 
-#: gammu/depend/nokia/dct4.c:1039
+#: gammu/depend/nokia/dct4.c:1041
 msgid "Ohms"
 msgstr "Ohmů"
 
-#: gammu/depend/nokia/dct4.c:1040
+#: gammu/depend/nokia/dct4.c:1042
 msgid "Battery temperature:"
 msgstr "Teplota baterie:"
 
-#: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1044
-#: gammu/depend/nokia/dct4.c:1045
+#: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
+#: gammu/depend/nokia/dct4.c:1047
 msgid "K"
 msgstr "K"
 
-#: gammu/depend/nokia/dct4.c:1041
+#: gammu/depend/nokia/dct4.c:1043
 msgid "Headset interconnection:"
 msgstr "Připojení headsetu:"
 
-#: gammu/depend/nokia/dct4.c:1042
+#: gammu/depend/nokia/dct4.c:1044
 msgid "Hook interconnection:"
 msgstr "Připojení zavěšení"
 
-#: gammu/depend/nokia/dct4.c:1043
+#: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
 msgstr "Světelný senzor:"
 
-#: gammu/depend/nokia/dct4.c:1044
+#: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
 msgstr "Teplota zesilovače:"
 
-#: gammu/depend/nokia/dct4.c:1045
+#: gammu/depend/nokia/dct4.c:1047
 msgid "VCXO temperature:"
 msgstr "Teplota VCXO:"
 
-#: gammu/depend/nokia/dct4.c:1046
+#: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/headint2:"
 msgstr "Odporová klávesnice 1/headint2:"
 
-#: gammu/depend/nokia/dct4.c:1047
+#: gammu/depend/nokia/dct4.c:1049
 msgid "Resistive keyboard 1/auxdet:"
 msgstr "Odporová klávesnice 1/auxdet:"
 
-#: gammu/depend/nokia/dct4.c:1048
+#: gammu/depend/nokia/dct4.c:1050
 msgid "Initial battery voltage:"
 msgstr "Původní napětí baterie:"
 
-#: gammu/depend/nokia/dct4.c:1049
+#: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current:"
 msgstr "Nabíjecí proud baterie:"
 
-#: gammu/depend/nokia/dct4.c:1050
+#: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
 msgstr "Nabíjecí proud baterie pro rychlé nabíjení:"
 
-#: gammu/depend/nokia/dct4.c:1156
+#: gammu/depend/nokia/dct4.c:1158
 msgid "Phone seems not to support radio"
 msgstr "Telefon pravděpodobně nepodporuje rádio"
 
-#: gammu/depend/nokia/dct4.c:1163
+#: gammu/depend/nokia/dct4.c:1165
 msgid "Please connect headset. Required as antenna"
 msgstr "Prosím připojte headset. Je vyžadován jako anténa"
 
-#: gammu/depend/nokia/dct4.c:1357
+#: gammu/depend/nokia/dct4.c:1359
 #, c-format
 msgid "%i entries types\n"
 msgstr "%i typů položek\n"
 
-#: gammu/depend/nokia/dct4.c:1360
+#: gammu/depend/nokia/dct4.c:1362
 #, c-format
 msgid "  entry ID %02X"
 msgstr "  ID položky %02X"
 
-#: gammu/depend/nokia/dct4.c:1362
+#: gammu/depend/nokia/dct4.c:1364
 #, c-format
 msgid " (Speed dial on SIM)"
 msgstr " (Rychlá volba na SIM)"
 
-#: gammu/depend/nokia/dct4.c:1363
+#: gammu/depend/nokia/dct4.c:1365
 #, c-format
 msgid " (Text: name (always the only one))"
 msgstr " (Text: jméno (vždy jen jedno))"
 
-#: gammu/depend/nokia/dct4.c:1364
+#: gammu/depend/nokia/dct4.c:1366
 #, c-format
 msgid " (Text: email address)"
 msgstr " (Text: emailová adresa)"
 
-#: gammu/depend/nokia/dct4.c:1365
+#: gammu/depend/nokia/dct4.c:1367
 #, c-format
 msgid " (Text: postal address)"
 msgstr " (Text: poštovní adresa)"
 
-#: gammu/depend/nokia/dct4.c:1366
+#: gammu/depend/nokia/dct4.c:1368
 #, c-format
 msgid " (Text: note)"
 msgstr " (Text: poznámka)"
 
-#: gammu/depend/nokia/dct4.c:1367
+#: gammu/depend/nokia/dct4.c:1369
 #, c-format
 msgid " (Phone number)"
 msgstr " (Telefonní číslo)"
 
-#: gammu/depend/nokia/dct4.c:1368
+#: gammu/depend/nokia/dct4.c:1370
 #, c-format
 msgid " (Ringtone ID)"
 msgstr " (ID vyzvánění)"
 
-#: gammu/depend/nokia/dct4.c:1369
+#: gammu/depend/nokia/dct4.c:1371
 #, c-format
 msgid " (Call register: date and time)"
 msgstr " (Historie hovorů: čas a datum)"
 
-#: gammu/depend/nokia/dct4.c:1370
+#: gammu/depend/nokia/dct4.c:1372
 #, c-format
 msgid " (Call register: with missed calls)"
 msgstr " (Historie hovorů: se zmeškanými hovory)"
 
-#: gammu/depend/nokia/dct4.c:1371
+#: gammu/depend/nokia/dct4.c:1373
 #, c-format
 msgid " (Speed dial)"
 msgstr " (Rychlá volba)"
 
-#: gammu/depend/nokia/dct4.c:1372
+#: gammu/depend/nokia/dct4.c:1374
 #, c-format
 msgid " (Caller group: logo)"
 msgstr " (Skupina: logo)"
 
-#: gammu/depend/nokia/dct4.c:1373
+#: gammu/depend/nokia/dct4.c:1375
 #, c-format
 msgid " (Caller group: is logo on ?)"
 msgstr " (Skupina: logo zapnuto?)"
 
-#: gammu/depend/nokia/dct4.c:1374
+#: gammu/depend/nokia/dct4.c:1376
 #, c-format
 msgid " (Caller group number in pbk entry)"
 msgstr " (Skupina volajících v položce seznamu)"
 
-#: gammu/depend/nokia/dct4.c:1377
+#: gammu/depend/nokia/dct4.c:1379
 #, c-format
 msgid " (Text: URL address)"
 msgstr " (Text: URL adresa)"
 
-#: gammu/depend/nokia/dct4.c:1378
+#: gammu/depend/nokia/dct4.c:1380
 #, c-format
 msgid " (SMS list assignment)"
 msgstr " (Přiřazení SMS seznamu)"
 
-#: gammu/depend/nokia/dct4.c:1379
+#: gammu/depend/nokia/dct4.c:1381
 #, c-format
 msgid " (Voice tag assignment)"
 msgstr " (Přiřazení hlasového vytáčení)"
 
-#: gammu/depend/nokia/dct4.c:1380
+#: gammu/depend/nokia/dct4.c:1382
 #, c-format
 msgid " (Picture ID assignment)"
 msgstr " (přiřazené ID obrázku)"
 
-#: gammu/depend/nokia/dct4.c:1381
+#: gammu/depend/nokia/dct4.c:1383
 #, c-format
 msgid " (Ringtone ID from filesystem/internal)"
 msgstr " (ID vyzvánění buď interní nebo ze souboru)"
 
-#: gammu/depend/nokia/dct4.c:1382
+#: gammu/depend/nokia/dct4.c:1384
 #, c-format
 msgid " (Text: user ID)"
 msgstr " (Text: ID uživatele)"
 
-#: gammu/depend/nokia/dct4.c:1383
+#: gammu/depend/nokia/dct4.c:1385
 #, c-format
 msgid " (conversation list ID)"
 msgstr " (ID seznamu konverzací)"
 
-#: gammu/depend/nokia/dct4.c:1384
+#: gammu/depend/nokia/dct4.c:1386
 #, c-format
 msgid " (Instant Messaging service list ID ?)"
 msgstr " (ID servisního seznamu kecálka)"
 
-#: gammu/depend/nokia/dct4.c:1385
+#: gammu/depend/nokia/dct4.c:1387
 #, c-format
 msgid " (presence list ID ?)"
 msgstr " (ID seznamu prezence)"
 
-#: gammu/depend/nokia/dct4.c:1386
+#: gammu/depend/nokia/dct4.c:1388
 #, c-format
 msgid " (SIP Address (Push to Talk address))"
 msgstr " (SIP addressa (adresa Push to Talk))"
 
-#: gammu/depend/nokia/dct4.c:1387
+#: gammu/depend/nokia/dct4.c:1389
 #, c-format
 msgid " (Group ID (6230i or later))"
 msgstr " (ID skupiny (6230i a starší))"
 
-#: gammu/depend/nokia/dct4.c:1389
+#: gammu/depend/nokia/dct4.c:1391
 #, c-format
 msgid ", type "
 msgstr ", typ "
 
-#: gammu/depend/nokia/dct4.c:1391
+#: gammu/depend/nokia/dct4.c:1393
 #, c-format
 msgid "string"
 msgstr "text"
 
-#: gammu/depend/nokia/dct4.c:1392
+#: gammu/depend/nokia/dct4.c:1394
 #, c-format
 msgid "byte"
 msgstr "bajt"
 
-#: gammu/depend/nokia/dct4.c:1393
+#: gammu/depend/nokia/dct4.c:1395
 #, c-format
 msgid "2 bytes"
 msgstr "2 bajty"
 
-#: gammu/depend/nokia/dct4.c:1394
+#: gammu/depend/nokia/dct4.c:1396
 #, c-format
 msgid "4 bytes"
 msgstr "4 bajty"
 
-#: gammu/depend/nokia/dct4.c:1401
+#: gammu/depend/nokia/dct4.c:1403
 #, c-format
 msgid "%i phone number types\n"
 msgstr "%i typů telefonních čísel\n"
 
-#: gammu/depend/nokia/dct4.c:1404 helper/memory-display.c:127
+#: gammu/depend/nokia/dct4.c:1406 helper/memory-display.c:127
 msgid "Home number"
 msgstr "Číslo domů"
 
-#: gammu/depend/nokia/dct4.c:1405 helper/memory-display.c:122
+#: gammu/depend/nokia/dct4.c:1407 helper/memory-display.c:122
 msgid "Mobile number"
 msgstr "Číslo na mobil"
 
-#: gammu/depend/nokia/dct4.c:1406 helper/memory-display.c:126
+#: gammu/depend/nokia/dct4.c:1408 helper/memory-display.c:126
 msgid "Fax number"
 msgstr "Faxové číslo"
 
-#: gammu/depend/nokia/dct4.c:1407
+#: gammu/depend/nokia/dct4.c:1409
 msgid "Office number"
 msgstr "Číslo do kanceláře"
 
-#: gammu/depend/nokia/dct4.c:1408
+#: gammu/depend/nokia/dct4.c:1410
 msgid "Standard number"
 msgstr "Standardní číslo"
 
-#: gammu/depend/nokia/dct4.c:1409
+#: gammu/depend/nokia/dct4.c:1411
 msgid "Unknown number"
 msgstr "Neznámé číslo"
 
-#: gammu/depend/nokia/dct4.c:1433
+#: gammu/depend/nokia/dct4.c:1435
 #, c-format
 msgid "ERROR: unknown memory type (\"%s\")\n"
 msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
@@ -2110,7 +2110,7 @@ msgstr "Maximální čas"
 msgid "Reading phone phonebook:"
 msgstr "Načítám telefonní seznam:"
 
-#: gammu/message.c:374 gammu/message.c:478 gammu/message.c:729
+#: gammu/message.c:374 gammu/message.c:478 gammu/message.c:727
 msgid "Corrupted message, skipping"
 msgstr "Poškozená zpráva, přeskakuji"
 
@@ -2171,7 +2171,7 @@ msgstr "Číslo zprávy"
 msgid "Number of messages"
 msgstr "Počet zpráv"
 
-#: gammu/message.c:620 gammu/message.c:657
+#: gammu/message.c:620 gammu/message.c:656
 msgid "If you want break, press Ctrl+C..."
 msgstr "Pro přerušení stiskněte Ctrl+C..."
 
@@ -2198,26 +2198,26 @@ msgstr "telefon"
 msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr "Odesílám zprávu ze složky \"%s\", pozice %i\n"
 
-#: gammu/message.c:643 gammu/message.c:667
+#: gammu/message.c:643 gammu/message.c:666
 #, c-format
 msgid "....waiting for network answer"
 msgstr "....čekám na odpověď sítě"
 
-#: gammu/message.c:662
+#: gammu/message.c:661
 #, c-format
 msgid "Sending SMS %i/%i"
 msgstr "Odesílám SMS %i/%i"
 
-#: gammu/message.c:680
+#: gammu/message.c:678
 msgid "Something went wrong, uknown message operation!\n"
 msgstr "Něco se stalo špatně, chybná operace se zprávou!\n"
 
-#: gammu/message.c:715
+#: gammu/message.c:713
 #, c-format
 msgid "Too high folder number (max. %i)\n"
 msgstr "Příliš vysoké číslo složky (maximálně. %i)\n"
 
-#: gammu/message.c:720
+#: gammu/message.c:718
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
 msgstr "Odstraňuji SMS ze složky \"%s\": "

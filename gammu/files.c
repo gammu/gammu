@@ -377,7 +377,7 @@ void GetOneFile(GSM_File * File, gboolean newtime, int i)
 				GSM_Terminate();
 				printf("%s\n",
 				       _ ("Is a folder. Please give only file names."));
-				Terminate(3);
+				Terminate(2);
 			}
 			if (Size == 0) {
 				fprintf(stderr, "*");
@@ -691,7 +691,7 @@ void AddSendFile(int argc, char *argv[])
 					}
 					printf(_("Parameter \"%s\" unknown\n"),
 					       argv[i]);
-					Terminate(3);
+					Terminate(2);
 				case 1:
 					if (strcasecmp(argv[i], "JAR") == 0) {
 						File.Type = GSM_File_Java_JAR;
@@ -726,7 +726,7 @@ void AddSendFile(int argc, char *argv[])
 						printf(_
 						       ("What file type (\"%s\") ?\n"),
 						       argv[i]);
-						Terminate(3);
+						Terminate(2);
 					}
 					nextlong = 0;
 					break;
@@ -734,7 +734,7 @@ void AddSendFile(int argc, char *argv[])
 		}
 		if (nextlong != 0) {
 			printf_err("%s\n", _("Parameter missing!"));
-			Terminate(3);
+			Terminate(2);
 		}
 	}
 

@@ -109,8 +109,25 @@ FILES = '''
 RETURN_VALUES = '''
 .P 
 gammu returns 0 on success. In case of failure non zero code is 
-returned. Errors 2 and 3 mean wrong parameters or failure when 
-opening file given on command line.
+returned. 
+
+.SS 1
+Out of memory or other critical error.
+
+.SS 2
+Invalid command line parameters.
+
+.SS 3
+Failed to open file specified on command line.
+
+.SS 4
+Program was interrupted.
+
+.SS 98
+Gammu library version mismatch.
+
+.SS 99
+Functionality has been moved. For example to gammu-smsd(1).
 
 Errors codes greater than 100 map to the GSM_Error 
 values increased by 100:

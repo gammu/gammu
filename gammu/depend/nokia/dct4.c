@@ -63,8 +63,8 @@ void CheckDCT4(void)
 		break;
 	case ERR_OTHERCONNECTIONREQUIRED:
 		printf("%s\n", _("Can't do it with current phone protocol"));
-		GSM_Terminate();
-		Terminate(3);
+		Print_Error(ERR_NOTSUPPORTED);
+		break;
 	default:
 		break;
 	}
@@ -78,7 +78,9 @@ static gboolean answer_yes2(const char *text)
 	while (1) {
 		printf(_("%s (yes/no) ? "),text);
 		len=GetLine(stdin, ans, 99);
-		if (len==-1) Terminate(3);
+		if (len==-1) {
+			Terminate(2);
+		}
 		if (strcasecmp(ans, _("yes")) == 0) return TRUE;
 		if (strcasecmp(ans, _("no")) == 0) return FALSE;
 	}
@@ -956,14 +958,14 @@ void DCT4SetLight(int argc, char *argv[])
 	} else if (strcasecmp(argv[2],"torch") == 0) {	type = N6510_LIGHT_TORCH;
 	} else {
 		printf(_("What lights should I enable (\"%s\") ?\n"),argv[2]);
-		Terminate(3);
+		Terminate(2);
 	}
 
 	if (strcasecmp(argv[3],"on") == 0) { 		enable = TRUE;
 	} else if (strcasecmp(argv[3],"off") == 0) {	enable = FALSE;
 	} else {
 		printf(_("What should I do (\"%s\") ?\n"),argv[3]);
-		Terminate(3);
+		Terminate(2);
 	}
 
 	for (i=0;i<gsm->ConfigNum;i++) {

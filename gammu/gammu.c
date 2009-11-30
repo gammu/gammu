@@ -110,7 +110,7 @@ static void ListNetworks(int argc, char *argv[])
 		if (!*country) {
 			printf(_("Unknown country name: %s."), argv[2]);
 			printf("\n");
-			Terminate(3);
+			Terminate(2);
 		}
 	}
 	printf("%-10s %s\n", _("Network"), _("Name"));
@@ -488,14 +488,14 @@ NORETURN
 void SendSMSDSMSObsolete(int argc, char *argv[])
 {
 	printf_err("%s\n", _("SMS daemon is now in separate binary, please use gammu-smsd-inject instead of gammu sendsmsdsms!"));
-	Terminate(100);
+	Terminate(99);
 }
 
 NORETURN
 void SMSDaemonObsolete(int argc, char *argv[])
 {
 	printf_err("%s\n", _("SMS daemon is now in separate binary, please use gammu-smsd instead of gammu smsd!"));
-	Terminate(100);
+	Terminate(99);
 }
 
 void Help(int argc, char *argv[]);
@@ -1042,7 +1042,7 @@ int ProcessParameters(int start, int argc, char *argv[])
 			printf("%s\n", _("Bad option!"));
 			return 2;
 		}
-		return 1;
+		return 2;
 	}
 	return 0;
 }
@@ -1174,7 +1174,7 @@ int main(int argc, char *argv[])
 	if (argc <= start + 1) {
 		HelpGeneral();
 		printf("%s\n", _("Too few parameters!"));
-		Terminate(3);
+		Terminate(2);
 	}
 
 	smcfg0 = GSM_GetConfig(gsm, 0);
@@ -1244,7 +1244,7 @@ int main(int argc, char *argv[])
 	if (!strcasecmp(GetGammuVersion(), VERSION) == 0) {
 		printf_err(_("Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"),
 			   GetGammuVersion(), VERSION);
-		Terminate(4);
+		Terminate(98);
 	}
 
 	ret = ProcessParameters(start, argc, argv);
