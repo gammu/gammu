@@ -193,7 +193,7 @@ void Print_Error(GSM_Error error)
 			PrintSecurityStatus();
 		}
 
-		Terminate(3);
+		Terminate(100 + error);
 	}
 }
 

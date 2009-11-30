@@ -29,6 +29,10 @@ this program; if not, write to the Free Software Foundation, Inc.,
 Path to gammu binary.
 '''
 BIN_PATH = 'build/gammu/gammu'
+'''
+Error listing binary.
+'''
+ERROR_LIST_PATH = 'build/tests/dump-error-codes'
 
 '''
 Output path where man page will be stored.
@@ -100,6 +104,17 @@ FILES = '''
 \\fI/dev/ttyS?\\fP
 .br
 \\fI/dev/ttyACM?\\fP
+'''
+
+RETURN_VALUES = '''
+.P 
+gammu returns 0 on success. In case of failure non zero code is 
+returned. Errors 2 and 3 mean wrong parameters or failure when 
+opening file given on command line.
+
+Errors codes greater than 100 map to the GSM_Error 
+values increased by 100:
+
 '''
 
 EXAMPLE = '''
@@ -1082,6 +1097,12 @@ COMMAND_MATCHER = re.compile('^([^ \n]*) (.*)')
 COMMAND_SUBCOMMAND_MATCHER = re.compile('^([^ \n]*) ([A-Z0-9|]*) (.*)')
 COMMAND_MATCHER_NOPARAM = re.compile('^([^ \n]*)')
 
+def read_errors():
+    pipe = os.popen('LANG=C %s -m' % ERROR_LIST_PATH)
+    data = pipe.read()
+    pipe.close()
+    return data
+
 def read_help(section):
     pipe = os.popen('LANG=C %s help %s' % (BIN_PATH, section))
     data = pipe.readlines()
@@ -1203,6 +1224,10 @@ def main():
 
     write_section(output, 'FILES')
     output.write(FILES)
+
+    write_section(output, 'RETURN VALUES')
+    output.write(RETURN_VALUES)
+    output.write(read_errors())
 
     write_section(output, 'EXAMPLE')
     output.write(EXAMPLE)

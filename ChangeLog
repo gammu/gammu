@@ -27,6 +27,7 @@ ChangeLog
 [+] * Support for reading birthday from Samsung phonebook (bug#1038).
 [+] * Report GPRS state when getting network status (bug#1023).
 [-] * Fix reading of Siemens phonebook (bug#1046).
+[+] * Make gammu error codes map to GSM_Error.
     
 20091119 - 1.26.91
 

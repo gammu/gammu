@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Oct 13 2009" "Gammu 1.26.91" "Gammu Documentation"
+.TH "GAMMU" "1" "Nov 26 2009" "Gammu 1.26.92" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -2410,6 +2410,149 @@ Print version information and license.
 .br
 \fI/dev/ttyACM?\fP
 
+.SH "RETURN VALUES"
+
+.P 
+gammu returns 0 on success. In case of failure non zero code is 
+returned. Errors 2 and 3 mean wrong parameters or failure when 
+opening file given on command line.
+
+Errors codes greater than 100 map to the GSM_Error 
+values increased by 100:
+
+.SS 101
+No error.
+.SS 102
+Error opening device. Unknown, busy or no permissions.
+.SS 103
+Error opening device, it is locked.
+.SS 104
+Error opening device, it doesn't exist.
+.SS 105
+Error opening device, it is already opened by other application.
+.SS 106
+Error opening device, you don't have permissions.
+.SS 107
+Error opening device. No required driver in operating system.
+.SS 108
+Error opening device. Some hardware not connected/wrongly configured.
+.SS 109
+Error setting device DTR or RTS.
+.SS 110
+Error setting device speed. Maybe speed not supported.
+.SS 111
+Error writing to the device.
+.SS 112
+Error during reading from the device.
+.SS 113
+Can't set parity on the device.
+.SS 114
+No response in specified timeout. Probably phone not connected.
+.SS 115
+Frame not requested right now. See <http://wammu.eu/support/bugs/> for information how to report it.
+.SS 116
+Unknown response from phone. See <http://wammu.eu/support/bugs/> for information how to report it.
+.SS 117
+Unknown frame. See <http://wammu.eu/support/bugs/> for information how to report it.
+.SS 118
+Unknown connection type string. Check config file.
+.SS 119
+Unknown model type string. Check config file.
+.SS 120
+Some functions not available for your system (disabled in config or not implemented).
+.SS 121
+Function not supported by phone.
+.SS 122
+Entry is empty.
+.SS 123
+Security error. Maybe no PIN?
+.SS 124
+Invalid location. Maybe too high?
+.SS 125
+Functionality not implemented. You are welcome to help authors with it.
+.SS 126
+Memory full.
+.SS 127
+Unknown error.
+.SS 128
+Can not open specified file.
+.SS 129
+More memory required...
+.SS 130
+Permission to file/device required...
+.SS 131
+Empty SMSC number. Set in phone or use -smscnumber.
+.SS 132
+You're inside phone menu (maybe editing?). Leave it and try again.
+.SS 133
+Phone is not connected.
+.SS 134
+Function is currently being implemented. If you want to help, please contact authors.
+.SS 135
+Phone is disabled and connected to charger.
+.SS 136
+File format not supported by Gammu.
+.SS 137
+Nobody is perfect, some bug appeared in protocol implementation. Please contact authors.
+.SS 138
+Transfer was canceled by phone, maybe you pressed cancel on phone.
+.SS 139
+Phone module need to send another answer frame.
+.SS 140
+Current connection type doesn't support called function.
+.SS 141
+CRC error.
+.SS 142
+Invalid date or time specified.
+.SS 143
+Phone memory error, maybe it is read only.
+.SS 144
+Invalid data given to phone.
+.SS 145
+File with specified name already exist.
+.SS 146
+File with specified name doesn't exist.
+.SS 147
+You have to give folder name and not file name.
+.SS 148
+You have to give file name and not folder name.
+.SS 149
+Can not access SIM card.
+.SS 150
+Wrong GNAPPLET version in phone. Use version from currently used Gammu.
+.SS 151
+Only part of folder has been listed.
+.SS 152
+Folder must be empty.
+.SS 153
+Data were converted.
+.SS 154
+Gammu is not configured.
+.SS 155
+Wrong folder used.
+.SS 156
+Internal phone error.
+.SS 157
+Error writing file to disk.
+.SS 158
+No such section exists.
+.SS 159
+Using default values.
+.SS 160
+Corrupted data returned by phone.
+.SS 161
+Bad feature string in configuration.
+.SS 162
+Desired functionality has been disabled on compile time.
+.SS 163
+Bluetooth configuration requires channel option.
+.SS 164
+Service is not runnig.
+.SS 165
+Service configuration is missing.
+.SS 166
+Command rejected because device was busy. Wait and restart.
+
 .SH "EXAMPLE"
 
 
@@ -2571,8 +2714,7 @@ do it on command line using \-d textall \-f /tmp/gammu.log):
 .nf
 .ne 7
 [gammu]
-connection = your connection settings
-port = your port settings
+...your connection settings...
 logfile = /tmp/gammu.log
 logformat = textall
 .fi
