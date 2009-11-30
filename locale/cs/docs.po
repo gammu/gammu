@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-11-30 15:57+0100\n"
-"PO-Revision-Date: 2009-10-23 10:16+0200\n"
+"PO-Revision-Date: 2009-11-30 16:05+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,16 +31,16 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Nov 26 2009"
-msgstr "Březen 23, 2009"
+msgstr "Listopad 26, 2009"
 
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu 1.26.92"
-msgstr "Gammu 1.26.91"
+msgstr "Gammu 1.26.92"
 
 # type: TH
 #. type: TH
@@ -3994,7 +3994,7 @@ msgstr "I</dev/ttyACM?>"
 #: docs/user/gammu.1:2413
 #, no-wrap
 msgid "RETURN VALUES"
-msgstr ""
+msgstr "NÁVRATOVÉ KÓDY"
 
 #. type: Plain text
 #: docs/user/gammu.1:2419
@@ -4003,18 +4003,21 @@ msgid ""
 "Errors 2 and 3 mean wrong parameters or failure when opening file given on "
 "command line."
 msgstr ""
+"gammu při úspěchu vrací 0. V případě chyby je vrácen nenulový chybový kód. "
+"Chyby 2 a 3 znamenenají chybné parametry nebo chybu při otevírání souboru "
+"jenž byl zadán na příkazové řádce."
 
 #. type: Plain text
 #: docs/user/gammu.1:2422
 msgid ""
 "Errors codes greater than 100 map to the GSM_Error values increased by 100:"
-msgstr ""
+msgstr "Chyby větší než 100 odpovídají hodnotám GSM_Error zvětšeným o 100:"
 
 #. type: SS
 #: docs/user/gammu.1:2423
 #, no-wrap
 msgid "101"
-msgstr ""
+msgstr "101"
 
 #. type: Plain text
 #: docs/user/gammu.1:2425
@@ -4025,7 +4028,7 @@ msgstr "Žadná chyba."
 #: docs/user/gammu.1:2425
 #, no-wrap
 msgid "102"
-msgstr ""
+msgstr "102"
 
 #. type: Plain text
 #: docs/user/gammu.1:2427
@@ -4036,7 +4039,7 @@ msgstr "Chyba při otevírání zařízení. Přístup odmítnut."
 #: docs/user/gammu.1:2427
 #, no-wrap
 msgid "103"
-msgstr ""
+msgstr "103"
 
 #. type: Plain text
 #: docs/user/gammu.1:2429
@@ -4047,7 +4050,7 @@ msgstr "Chyba při otevírání zařízení, je zamčené."
 #: docs/user/gammu.1:2429
 #, no-wrap
 msgid "104"
-msgstr ""
+msgstr "104"
 
 #. type: Plain text
 #: docs/user/gammu.1:2431
@@ -4058,7 +4061,7 @@ msgstr "Chyba při otevírání zařízení, neexistuje."
 #: docs/user/gammu.1:2431
 #, no-wrap
 msgid "105"
-msgstr ""
+msgstr "105"
 
 #. type: Plain text
 #: docs/user/gammu.1:2433
@@ -4069,7 +4072,7 @@ msgstr "Chyba při otevírání zařízení, je již používáno."
 #: docs/user/gammu.1:2433
 #, no-wrap
 msgid "106"
-msgstr ""
+msgstr "106"
 
 #. type: Plain text
 #: docs/user/gammu.1:2435
@@ -4080,7 +4083,7 @@ msgstr "Chyba při otevírání zařízení, přístup odmítnut."
 #: docs/user/gammu.1:2435
 #, no-wrap
 msgid "107"
-msgstr ""
+msgstr "107"
 
 #. type: Plain text
 #: docs/user/gammu.1:2437
@@ -4091,7 +4094,7 @@ msgstr "Chyba při otevírání zařízení. Chybí ovladač v operačním syst�
 #: docs/user/gammu.1:2437
 #, no-wrap
 msgid "108"
-msgstr ""
+msgstr "108"
 
 #. type: Plain text
 #: docs/user/gammu.1:2439
@@ -4104,7 +4107,7 @@ msgstr ""
 #: docs/user/gammu.1:2439
 #, no-wrap
 msgid "109"
-msgstr ""
+msgstr "109"
 
 #. type: Plain text
 #: docs/user/gammu.1:2441
@@ -4115,7 +4118,7 @@ msgstr "Chyba při nastavování DTR nebo RTS."
 #: docs/user/gammu.1:2441
 #, no-wrap
 msgid "110"
-msgstr ""
+msgstr "110"
 
 #. type: Plain text
 #: docs/user/gammu.1:2443
@@ -4128,7 +4131,7 @@ msgstr ""
 #: docs/user/gammu.1:2443
 #, no-wrap
 msgid "111"
-msgstr ""
+msgstr "111"
 
 #. type: Plain text
 #: docs/user/gammu.1:2445
@@ -4139,7 +4142,7 @@ msgstr "Chyba při zápisu."
 #: docs/user/gammu.1:2445
 #, no-wrap
 msgid "112"
-msgstr ""
+msgstr "112"
 
 #. type: Plain text
 #: docs/user/gammu.1:2447
@@ -4150,7 +4153,7 @@ msgstr "Chyba při čtení."
 #: docs/user/gammu.1:2447
 #, no-wrap
 msgid "113"
-msgstr ""
+msgstr "113"
 
 #. type: Plain text
 #: docs/user/gammu.1:2449
@@ -4161,7 +4164,7 @@ msgstr "Nepodařilo se nastavit paritu na zařízení."
 #: docs/user/gammu.1:2449
 #, no-wrap
 msgid "114"
-msgstr ""
+msgstr "114"
 
 #. type: Plain text
 #: docs/user/gammu.1:2451
@@ -4172,55 +4175,53 @@ msgstr "Žadná odpověď v očekaváné době. Telefon pravděpodobně není p�
 #: docs/user/gammu.1:2451
 #, no-wrap
 msgid "115"
-msgstr ""
+msgstr "115"
 
 #. type: Plain text
 #: docs/user/gammu.1:2453
-#, fuzzy
 msgid ""
 "Frame not requested right now. See E<lt>http://wammu.eu/support/bugs/E<gt> "
 "for information how to report it."
 msgstr ""
-"Na stránce E<lt>http://wammu.eu/support/bugs/E<gt> naleznete více informací "
-"o hlášení chyb."
+"Tato odpověď od telefonu nebyla očekávána. Podívejte se na stránku "
+"E<lt>http://cs.wammu.eu/support/bugs/<gt> pro informace jak tuto událost "
+"nahlásit."
 
 #. type: SS
 #: docs/user/gammu.1:2453
 #, no-wrap
 msgid "116"
-msgstr ""
+msgstr "116"
 
 #. type: Plain text
 #: docs/user/gammu.1:2455
-#, fuzzy
 msgid ""
 "Unknown response from phone. See E<lt>http://wammu.eu/support/bugs/E<gt> for "
 "information how to report it."
 msgstr ""
-"Na stránce E<lt>http://wammu.eu/support/bugs/E<gt> naleznete více informací "
-"o hlášení chyb."
+"Neznámá odpověď od telefonu. Podívejte se na stránku E<lt>http://cs.wammu.eu/"
+"support/bugs/<gt> pro informace jak tuto událost nahlásit."
 
 #. type: SS
 #: docs/user/gammu.1:2455
 #, no-wrap
 msgid "117"
-msgstr ""
+msgstr "117"
 
 #. type: Plain text
 #: docs/user/gammu.1:2457
-#, fuzzy
 msgid ""
 "Unknown frame. See E<lt>http://wammu.eu/support/bugs/E<gt> for information "
 "how to report it."
 msgstr ""
-"Na stránce E<lt>http://wammu.eu/support/bugs/E<gt> naleznete více informací "
-"o hlášení chyb."
+"Neznámý rámec. Podívejte se na stránku E<lt>http://wammu.eu/support/bugs/"
+"E<gt> pro informace jak tuto událost nahlásit."
 
 #. type: SS
 #: docs/user/gammu.1:2457
 #, no-wrap
 msgid "118"
-msgstr ""
+msgstr "118"
 
 #. type: Plain text
 #: docs/user/gammu.1:2459
@@ -4231,7 +4232,7 @@ msgstr "Zadán neznámý typ připojení. Zkontrolujte konfigurační soubor."
 #: docs/user/gammu.1:2459
 #, no-wrap
 msgid "119"
-msgstr ""
+msgstr "119"
 
 #. type: Plain text
 #: docs/user/gammu.1:2461
@@ -4242,7 +4243,7 @@ msgstr "Zadán neznámý model telefonu. Zkontrolujte konfigurační soubor."
 #: docs/user/gammu.1:2461
 #, no-wrap
 msgid "120"
-msgstr ""
+msgstr "120"
 
 #. type: Plain text
 #: docs/user/gammu.1:2463
@@ -4257,7 +4258,7 @@ msgstr ""
 #: docs/user/gammu.1:2463
 #, no-wrap
 msgid "121"
-msgstr ""
+msgstr "121"
 
 #. type: Plain text
 #: docs/user/gammu.1:2465
@@ -4268,7 +4269,7 @@ msgstr "Funkce není podporována telefonem."
 #: docs/user/gammu.1:2465
 #, no-wrap
 msgid "122"
-msgstr ""
+msgstr "122"
 
 #. type: Plain text
 #: docs/user/gammu.1:2467
@@ -4279,7 +4280,7 @@ msgstr "Záznam je prázdný."
 #: docs/user/gammu.1:2467
 #, no-wrap
 msgid "123"
-msgstr ""
+msgstr "123"
 
 #. type: Plain text
 #: docs/user/gammu.1:2469
@@ -4290,7 +4291,7 @@ msgstr "Bezpečnostní chyba. Možná nebyl zadán PIN?"
 #: docs/user/gammu.1:2469
 #, no-wrap
 msgid "124"
-msgstr ""
+msgstr "124"
 
 #. type: Plain text
 #: docs/user/gammu.1:2471
@@ -4301,7 +4302,7 @@ msgstr "Chybná pozice. Možná příliš vysoká?"
 #: docs/user/gammu.1:2471
 #, no-wrap
 msgid "125"
-msgstr ""
+msgstr "125"
 
 #. type: Plain text
 #: docs/user/gammu.1:2473
@@ -4313,7 +4314,7 @@ msgstr ""
 #: docs/user/gammu.1:2473
 #, no-wrap
 msgid "126"
-msgstr ""
+msgstr "126"
 
 #. type: Plain text
 #: docs/user/gammu.1:2475
@@ -4324,7 +4325,7 @@ msgstr "Paměť je plná."
 #: docs/user/gammu.1:2475
 #, no-wrap
 msgid "127"
-msgstr ""
+msgstr "127"
 
 #. type: Plain text
 #: docs/user/gammu.1:2477
@@ -4335,7 +4336,7 @@ msgstr "Neznámá chyba."
 #: docs/user/gammu.1:2477
 #, no-wrap
 msgid "128"
-msgstr ""
+msgstr "128"
 
 #. type: Plain text
 #: docs/user/gammu.1:2479
@@ -4346,7 +4347,7 @@ msgstr "Zvolený soubor nelze otevřít."
 #: docs/user/gammu.1:2479
 #, no-wrap
 msgid "129"
-msgstr ""
+msgstr "129"
 
 #. type: Plain text
 #: docs/user/gammu.1:2481
@@ -4357,7 +4358,7 @@ msgstr "Je potřeba více paměti..."
 #: docs/user/gammu.1:2481
 #, no-wrap
 msgid "130"
-msgstr ""
+msgstr "130"
 
 #. type: Plain text
 #: docs/user/gammu.1:2483
@@ -4368,7 +4369,7 @@ msgstr "Přístup k souboru nebo zařízení odmítnut..."
 #: docs/user/gammu.1:2483
 #, no-wrap
 msgid "131"
-msgstr ""
+msgstr "131"
 
 #. type: Plain text
 #: docs/user/gammu.1:2485
@@ -4379,7 +4380,7 @@ msgstr "Prázdné číslo SMSC. Nastavte ho v telefonu nebo použijte -smscnumbe
 #: docs/user/gammu.1:2485
 #, no-wrap
 msgid "132"
-msgstr ""
+msgstr "132"
 
 #. type: Plain text
 #: docs/user/gammu.1:2487
@@ -4390,19 +4391,18 @@ msgstr "Jste v menu telefonu (upravujete záznam?). Opusťte ho a zkuste znovu."
 #: docs/user/gammu.1:2487
 #, no-wrap
 msgid "133"
-msgstr ""
+msgstr "133"
 
 #. type: Plain text
 #: docs/user/gammu.1:2489
-#, fuzzy
 msgid "Phone is not connected."
-msgstr "Informace o telefonu"
+msgstr "Telefon není připojen."
 
 #. type: SS
 #: docs/user/gammu.1:2489
 #, no-wrap
 msgid "134"
-msgstr ""
+msgstr "134"
 
 #. type: Plain text
 #: docs/user/gammu.1:2491
@@ -4415,7 +4415,7 @@ msgstr "Funkce je rozepsána. Pokud chcete pomoci, kontaktuje prosím autory."
 #: docs/user/gammu.1:2491
 #, no-wrap
 msgid "135"
-msgstr ""
+msgstr "135"
 
 #. type: Plain text
 #: docs/user/gammu.1:2493
@@ -4426,7 +4426,7 @@ msgstr "Telefon je vypnutý a připojený k nabíječce."
 #: docs/user/gammu.1:2493
 #, no-wrap
 msgid "136"
-msgstr ""
+msgstr "136"
 
 #. type: Plain text
 #: docs/user/gammu.1:2495
@@ -4437,7 +4437,7 @@ msgstr "Gammu tento formát nepodporuje."
 #: docs/user/gammu.1:2495
 #, no-wrap
 msgid "137"
-msgstr ""
+msgstr "137"
 
 #. type: Plain text
 #: docs/user/gammu.1:2497
@@ -4452,7 +4452,7 @@ msgstr ""
 #: docs/user/gammu.1:2497
 #, no-wrap
 msgid "138"
-msgstr ""
+msgstr "138"
 
 #. type: Plain text
 #: docs/user/gammu.1:2499
@@ -4463,7 +4463,7 @@ msgstr "Přenos zrušen telefonem, možná jste zadali zrušení přenosu v tele
 #: docs/user/gammu.1:2499
 #, no-wrap
 msgid "139"
-msgstr ""
+msgstr "139"
 
 #. type: Plain text
 #: docs/user/gammu.1:2501
@@ -4474,7 +4474,7 @@ msgstr "Ovladač telefonu potřebuje odeslat ještě jeden rámec."
 #: docs/user/gammu.1:2501
 #, no-wrap
 msgid "140"
-msgstr ""
+msgstr "140"
 
 #. type: Plain text
 #: docs/user/gammu.1:2503
@@ -4485,7 +4485,7 @@ msgstr "Použité připojení nepodporuje požadovanou funkci."
 #: docs/user/gammu.1:2503
 #, no-wrap
 msgid "141"
-msgstr ""
+msgstr "141"
 
 #. type: Plain text
 #: docs/user/gammu.1:2505
@@ -4496,7 +4496,7 @@ msgstr "Chyba CRC."
 #: docs/user/gammu.1:2505
 #, no-wrap
 msgid "142"
-msgstr ""
+msgstr "142"
 
 #. type: Plain text
 #: docs/user/gammu.1:2507
@@ -4507,7 +4507,7 @@ msgstr "Zadáno chybné datum nebo čas."
 #: docs/user/gammu.1:2507
 #, no-wrap
 msgid "143"
-msgstr ""
+msgstr "143"
 
 #. type: Plain text
 #: docs/user/gammu.1:2509
@@ -4518,7 +4518,7 @@ msgstr "Chyba při přístupu do paměti telefonu, možná je jen pro čtení."
 #: docs/user/gammu.1:2509
 #, no-wrap
 msgid "144"
-msgstr ""
+msgstr "144"
 
 #. type: Plain text
 #: docs/user/gammu.1:2511
@@ -4529,33 +4529,31 @@ msgstr "Zadána chybná data."
 #: docs/user/gammu.1:2511
 #, no-wrap
 msgid "145"
-msgstr ""
+msgstr "145"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2513
-#, fuzzy
 msgid "File with specified name already exists."
-msgstr "Přidá soubor se zadaným jménem do adresáře se zvoleným ID."
+msgstr "Soubor se zadaným jménem již existuje."
 
 #. type: SS
 #: docs/user/gammu.1:2513
 #, no-wrap
 msgid "146"
-msgstr ""
+msgstr "146"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2515
-#, fuzzy
 msgid "File with specified name doesn't exist."
-msgstr "Přidá soubor se zadaným jménem do adresáře se zvoleným ID."
+msgstr "Soubor se zadaným jménem neexistuje."
 
 #. type: SS
 #: docs/user/gammu.1:2515
 #, no-wrap
 msgid "147"
-msgstr ""
+msgstr "147"
 
 #. type: Plain text
 #: docs/user/gammu.1:2517
@@ -4566,7 +4564,7 @@ msgstr "Musíte zadat jméno složky, ne souboru."
 #: docs/user/gammu.1:2517
 #, no-wrap
 msgid "148"
-msgstr ""
+msgstr "148"
 
 #. type: Plain text
 #: docs/user/gammu.1:2519
@@ -4577,7 +4575,7 @@ msgstr "Musíte zadat jméno souboru, ne složky."
 #: docs/user/gammu.1:2519
 #, no-wrap
 msgid "149"
-msgstr ""
+msgstr "149"
 
 #. type: Plain text
 #: docs/user/gammu.1:2521
@@ -4588,7 +4586,7 @@ msgstr "Nelze přistoupit na SIM kartu."
 #: docs/user/gammu.1:2521
 #, no-wrap
 msgid "150"
-msgstr ""
+msgstr "150"
 
 #. type: Plain text
 #: docs/user/gammu.1:2523
@@ -4601,7 +4599,7 @@ msgstr ""
 #: docs/user/gammu.1:2523
 #, no-wrap
 msgid "151"
-msgstr ""
+msgstr "151"
 
 #. type: Plain text
 #: docs/user/gammu.1:2525
@@ -4612,7 +4610,7 @@ msgstr "Byla vypsána jen část složky."
 #: docs/user/gammu.1:2525
 #, no-wrap
 msgid "152"
-msgstr ""
+msgstr "152"
 
 #. type: Plain text
 #: docs/user/gammu.1:2527
@@ -4623,7 +4621,7 @@ msgstr "Složka musí být prázdná."
 #: docs/user/gammu.1:2527
 #, no-wrap
 msgid "153"
-msgstr ""
+msgstr "153"
 
 #. type: Plain text
 #: docs/user/gammu.1:2529
@@ -4634,20 +4632,19 @@ msgstr "Data byla převedena."
 #: docs/user/gammu.1:2529
 #, no-wrap
 msgid "154"
-msgstr ""
+msgstr "154"
 
 # type: TH
 #. type: Plain text
 #: docs/user/gammu.1:2531
-#, fuzzy
 msgid "Gammu is not configured."
-msgstr "Gammu configurator 0.3"
+msgstr "Gammu není nastaveno."
 
 #. type: SS
 #: docs/user/gammu.1:2531
 #, no-wrap
 msgid "155"
-msgstr ""
+msgstr "155"
 
 #. type: Plain text
 #: docs/user/gammu.1:2533
@@ -4658,7 +4655,7 @@ msgstr "Byla použita chybná složka."
 #: docs/user/gammu.1:2533
 #, no-wrap
 msgid "156"
-msgstr ""
+msgstr "156"
 
 #. type: Plain text
 #: docs/user/gammu.1:2535
@@ -4669,7 +4666,7 @@ msgstr "Interní chyba telefonu."
 #: docs/user/gammu.1:2535
 #, no-wrap
 msgid "157"
-msgstr ""
+msgstr "157"
 
 #. type: Plain text
 #: docs/user/gammu.1:2537
@@ -4680,7 +4677,7 @@ msgstr "Chyba při zápisu souboru na disk."
 #: docs/user/gammu.1:2537
 #, no-wrap
 msgid "158"
-msgstr ""
+msgstr "158"
 
 #. type: Plain text
 #: docs/user/gammu.1:2539
@@ -4691,7 +4688,7 @@ msgstr "Požadovaná sekce neexistuje."
 #: docs/user/gammu.1:2539
 #, no-wrap
 msgid "159"
-msgstr ""
+msgstr "159"
 
 #. type: Plain text
 #: docs/user/gammu.1:2541
@@ -4702,7 +4699,7 @@ msgstr "Používám výchozí hodnoty."
 #: docs/user/gammu.1:2541
 #, no-wrap
 msgid "160"
-msgstr ""
+msgstr "160"
 
 #. type: Plain text
 #: docs/user/gammu.1:2543
@@ -4713,7 +4710,7 @@ msgstr "Telefon vrátil poškozená data."
 #: docs/user/gammu.1:2543
 #, no-wrap
 msgid "161"
-msgstr ""
+msgstr "161"
 
 #. type: Plain text
 #: docs/user/gammu.1:2545
@@ -4724,7 +4721,7 @@ msgstr "Chybný název vlastnosti v konfiguraci."
 #: docs/user/gammu.1:2545
 #, no-wrap
 msgid "162"
-msgstr ""
+msgstr "162"
 
 #. type: Plain text
 #: docs/user/gammu.1:2547
@@ -4735,7 +4732,7 @@ msgstr "Požadovaná funkce byla vypnuta při kompilaci."
 #: docs/user/gammu.1:2547
 #, no-wrap
 msgid "163"
-msgstr ""
+msgstr "163"
 
 #. type: Plain text
 #: docs/user/gammu.1:2549
@@ -4746,7 +4743,7 @@ msgstr "Nastavení bluetooth potřebuje zadat kanál."
 #: docs/user/gammu.1:2549
 #, no-wrap
 msgid "164"
-msgstr ""
+msgstr "164"
 
 #. type: Plain text
 #: docs/user/gammu.1:2551
@@ -4757,20 +4754,19 @@ msgstr "Služba není spuštěna."
 #: docs/user/gammu.1:2551
 #, no-wrap
 msgid "165"
-msgstr ""
+msgstr "165"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2553
-#, fuzzy
 msgid "Service configuration is missing."
-msgstr "Určí, který konfigurační soubor bude použit."
+msgstr "Chybí nastavení služby."
 
 #. type: SS
 #: docs/user/gammu.1:2553
 #, no-wrap
 msgid "166"
-msgstr ""
+msgstr "166"
 
 #. type: Plain text
 #: docs/user/gammu.1:2555

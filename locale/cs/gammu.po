@@ -9,9 +9,9 @@ msgstr ""
 "Project-Id-Version: Gammu 1.26.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-11-30 10:51+0100\n"
-"PO-Revision-Date: 2009-10-23 10:14+0200\n"
+"PO-Revision-Date: 2009-11-30 15:59+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Language =cs <cs@li.org>\n"
+"Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2261,11 +2261,11 @@ msgstr "GPRS"
 
 #: gammu/misc.c:64
 msgid "attached"
-msgstr ""
+msgstr "připojeno"
 
 #: gammu/misc.c:67
 msgid "detached"
-msgstr ""
+msgstr "odpojeno"
 
 #: gammu/misc.c:182
 msgid "Never version of firmware is available!\n"
