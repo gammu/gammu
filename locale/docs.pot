@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-11-30 15:51+0100\n"
+"POT-Creation-Date: 2009-11-30 15:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3869,7 +3869,7 @@ msgstr ""
 
 #. type: Plain text
 #: docs/user/gammu.1:2513
-msgid "File with specified name already exist."
+msgid "File with specified name already exists."
 msgstr ""
 
 #. type: SS
