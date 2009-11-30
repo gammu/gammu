@@ -442,9 +442,13 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 			return ERR_NONE;
 		}
 
-		sms->SMS[sms->Number].Coding=SMS_Coding_8bit;
-		if (!strcmp(Row[1],"Unicode_No_Compression")) sms->SMS[sms->Number].Coding=SMS_Coding_Unicode_No_Compression;
-		if (!strcmp(Row[1],"Default_No_Compression")) sms->SMS[sms->Number].Coding=SMS_Coding_Default_No_Compression;
+		sms->SMS[sms->Number].Coding = SMS_Coding_8bit;
+		if (!strcmp(Row[1], "Unicode_No_Compression")) {
+			sms->SMS[sms->Number].Coding = SMS_Coding_Unicode_No_Compression;
+		}
+		if (!strcmp(Row[1], "Default_No_Compression")) {
+			sms->SMS[sms->Number].Coding = SMS_Coding_Default_No_Compression;
+		}
 
 		if (Row[0] == NULL || strlen(Row[0])==0) {
 			SMSD_Log(DEBUG_NOTICE, Config, "Message: %s", Row[4]);
