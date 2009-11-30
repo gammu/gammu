@@ -1,2 +1,8 @@
 #!/bin/sh
-indent -npro -kr -i8 -ts8 -sob -l80 -ss -ncs -cli8 -bad "$@"
+indent -npro -kr -i8 -ts8 -sob -ss -ncs -cli8 -nbad \
+    --line-length80 \
+    --braces-on-if-line \
+    --cuddle-else \
+    --cuddle-do-while \
+    --no-space-after-function-call-names \
+    "$@"
