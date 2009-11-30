@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Nov 26 2009" "Gammu 1.26.92" "Dokumentace Gammu"
+.TH GAMMU 1 "Listopad 26, 2009" "Gammu 1.26.92" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -2507,14 +2507,14 @@ Zobrazí informace o verzi a licenci
 .br
 \fI/dev/ttyACM?\fP
 
-.SH "RETURN VALUES"
+.SH "NÁVRATOVÉ KÓDY"
 
 .P
-gammu returns 0 on success. In case of failure non zero code is
-returned. Errors 2 and 3 mean wrong parameters or failure when opening file
-given on command line.
+gammu při úspěchu vrací 0. V případě chyby je vrácen nenulový chybový
+kód. Chyby 2 a 3 znamenenají chybné parametry nebo chybu při otevírání
+souboru jenž byl zadán na příkazové řádce.
 
-Errors codes greater than 100 map to the GSM_Error values increased by 100:
+Chyby větší než 100 odpovídají hodnotám GSM_Error zvětšeným o 100:
 
 .SS 101
 Žadná chyba.
@@ -2547,14 +2547,17 @@ Nepodařilo se nastavit paritu na zařízení.
 .SS 114
 Žadná odpověď v očekaváné době. Telefon pravděpodobně není připojen.
 .SS 115
-Frame not requested right now. See <http://wammu.eu/support/bugs/>
-for information how to report it.
+Tato odpověď od telefonu nebyla očekávána. Podívejte se na stránku
+<http://cs.wammu.eu/support/bugs/> pro informace jak tuto událost
+nahlásit.
 .SS 116
-Unknown response from phone. See <http://wammu.eu/support/bugs/> for
-information how to report it.
+Neznámá odpověď od telefonu. Podívejte se na stránku
+<http://cs.wammu.eu/support/bugs/> pro informace jak tuto událost
+nahlásit.
 .SS 117
-Unknown frame. See <http://wammu.eu/support/bugs/> for information
-how to report it.
+Neznámý rámec. Podívejte se na stránku
+<http://wammu.eu/support/bugs/> pro informace jak tuto událost
+nahlásit.
 .SS 118
 Zadán neznámý typ připojení. Zkontrolujte konfigurační soubor.
 .SS 119
@@ -2588,7 +2591,7 @@ Prázdné číslo SMSC. Nastavte ho v telefonu nebo použijte \-smscnumber.
 .SS 132
 Jste v menu telefonu (upravujete záznam?). Opusťte ho a zkuste znovu.
 .SS 133
-Phone is not connected.
+Telefon není připojen.
 .SS 134
 Funkce je rozepsána. Pokud chcete pomoci, kontaktuje prosím autory.
 .SS 135
@@ -2613,9 +2616,9 @@ Chyba při přístupu do paměti telefonu, možná je jen pro čtení.
 .SS 144
 Zadána chybná data.
 .SS 145
-File with specified name already exists.
+Soubor se zadaným jménem již existuje.
 .SS 146
-File with specified name doesn't exist.
+Soubor se zadaným jménem neexistuje.
 .SS 147
 Musíte zadat jméno složky, ne souboru.
 .SS 148
@@ -2632,7 +2635,7 @@ Složka musí být prázdná.
 .SS 153
 Data byla převedena.
 .SS 154
-Gammu is not configured.
+Gammu není nastaveno.
 .SS 155
 Byla použita chybná složka.
 .SS 156
@@ -2654,7 +2657,7 @@ Nastavení bluetooth potřebuje zadat kanál.
 .SS 164
 Služba není spuštěna.
 .SS 165
-Service configuration is missing.
+Chybí nastavení služby.
 .SS 166
 Příkaz byl odmítnut, protože zařízení je zaneprázdněné. Zkuste to po chvíli
 znovu.

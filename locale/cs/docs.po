@@ -4184,7 +4184,7 @@ msgid ""
 "for information how to report it."
 msgstr ""
 "Tato odpověď od telefonu nebyla očekávána. Podívejte se na stránku "
-"E<lt>http://cs.wammu.eu/support/bugs/<gt> pro informace jak tuto událost "
+"E<lt>http://cs.wammu.eu/support/bugs/E<gt> pro informace jak tuto událost "
 "nahlásit."
 
 #. type: SS
@@ -4200,7 +4200,7 @@ msgid ""
 "information how to report it."
 msgstr ""
 "Neznámá odpověď od telefonu. Podívejte se na stránku E<lt>http://cs.wammu.eu/"
-"support/bugs/<gt> pro informace jak tuto událost nahlásit."
+"support/bugs/E<gt> pro informace jak tuto událost nahlásit."
 
 #. type: SS
 #: docs/user/gammu.1:2455
