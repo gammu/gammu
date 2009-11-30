@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Říjen 13, 2009" "Gammu 1.26.91" "Dokumentace Gammu"
+.TH GAMMU 1 "Nov 26 2009" "Gammu 1.26.92" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -2507,6 +2507,158 @@ Zobrazí informace o verzi a licenci
 .br
 \fI/dev/ttyACM?\fP
 
+.SH "RETURN VALUES"
+
+.P
+gammu returns 0 on success. In case of failure non zero code is
+returned. Errors 2 and 3 mean wrong parameters or failure when opening file
+given on command line.
+
+Errors codes greater than 100 map to the GSM_Error values increased by 100:
+
+.SS 101
+Žadná chyba.
+.SS 102
+Chyba při otevírání zařízení. Přístup odmítnut.
+.SS 103
+Chyba při otevírání zařízení, je zamčené.
+.SS 104
+Chyba při otevírání zařízení, neexistuje.
+.SS 105
+Chyba při otevírání zařízení, je již používáno.
+.SS 106
+Chyba při otevírání zařízení, přístup odmítnut.
+.SS 107
+Chyba při otevírání zařízení. Chybí ovladač v operačním systému.
+.SS 108
+Chyba při otevírání zařízení. Hardware může být špatně připojen nebo
+nastaven.
+.SS 109
+Chyba při nastavování DTR nebo RTS.
+.SS 110
+Chyba při nastavování rychlosti zařízení. Rychlost pravděpodobně není
+podporována.
+.SS 111
+Chyba při zápisu.
+.SS 112
+Chyba při čtení.
+.SS 113
+Nepodařilo se nastavit paritu na zařízení.
+.SS 114
+Žadná odpověď v očekaváné době. Telefon pravděpodobně není připojen.
+.SS 115
+Frame not requested right now. See <http://wammu.eu/support/bugs/>
+for information how to report it.
+.SS 116
+Unknown response from phone. See <http://wammu.eu/support/bugs/> for
+information how to report it.
+.SS 117
+Unknown frame. See <http://wammu.eu/support/bugs/> for information
+how to report it.
+.SS 118
+Zadán neznámý typ připojení. Zkontrolujte konfigurační soubor.
+.SS 119
+Zadán neznámý model telefonu. Zkontrolujte konfigurační soubor.
+.SS 120
+Některé funkce nejsou dostupné pro váš systém (vypnuté při kompilaci nebo
+nejsou implementovány).
+.SS 121
+Funkce není podporována telefonem.
+.SS 122
+Záznam je prázdný.
+.SS 123
+Bezpečnostní chyba. Možná nebyl zadán PIN?
+.SS 124
+Chybná pozice. Možná příliš vysoká?
+.SS 125
+Funkcionalita není implementována. Pokud chcete pomoci, autoři pomoc
+uvítají.
+.SS 126
+Paměť je plná.
+.SS 127
+Neznámá chyba.
+.SS 128
+Zvolený soubor nelze otevřít.
+.SS 129
+Je potřeba více paměti...
+.SS 130
+Přístup k souboru nebo zařízení odmítnut...
+.SS 131
+Prázdné číslo SMSC. Nastavte ho v telefonu nebo použijte \-smscnumber.
+.SS 132
+Jste v menu telefonu (upravujete záznam?). Opusťte ho a zkuste znovu.
+.SS 133
+Phone is not connected.
+.SS 134
+Funkce je rozepsána. Pokud chcete pomoci, kontaktuje prosím autory.
+.SS 135
+Telefon je vypnutý a připojený k nabíječce.
+.SS 136
+Gammu tento formát nepodporuje.
+.SS 137
+Nikdo není dokonalý, ani Gammu a nastala chyba v implementaci
+protokolu. Prosím kontaktujte autory.
+.SS 138
+Přenos zrušen telefonem, možná jste zadali zrušení přenosu v telefonu.
+.SS 139
+Ovladač telefonu potřebuje odeslat ještě jeden rámec.
+.SS 140
+Použité připojení nepodporuje požadovanou funkci.
+.SS 141
+Chyba CRC.
+.SS 142
+Zadáno chybné datum nebo čas.
+.SS 143
+Chyba při přístupu do paměti telefonu, možná je jen pro čtení.
+.SS 144
+Zadána chybná data.
+.SS 145
+File with specified name already exist.
+.SS 146
+File with specified name doesn't exist.
+.SS 147
+Musíte zadat jméno složky, ne souboru.
+.SS 148
+Musíte zadat jméno souboru, ne složky.
+.SS 149
+Nelze přistoupit na SIM kartu.
+.SS 150
+Špatný verze programu GNAPPLET v telefonu. Prosím použijte verzi obsaženou v
+Gammu.
+.SS 151
+Byla vypsána jen část složky.
+.SS 152
+Složka musí být prázdná.
+.SS 153
+Data byla převedena.
+.SS 154
+Gammu is not configured.
+.SS 155
+Byla použita chybná složka.
+.SS 156
+Interní chyba telefonu.
+.SS 157
+Chyba při zápisu souboru na disk.
+.SS 158
+Požadovaná sekce neexistuje.
+.SS 159
+Používám výchozí hodnoty.
+.SS 160
+Telefon vrátil poškozená data.
+.SS 161
+Chybný název vlastnosti v konfiguraci.
+.SS 162
+Požadovaná funkce byla vypnuta při kompilaci.
+.SS 163
+Nastavení bluetooth potřebuje zadat kanál.
+.SS 164
+Služba není spuštěna.
+.SS 165
+Service configuration is missing.
+.SS 166
+Příkaz byl odmítnut, protože zařízení je zaneprázdněné. Zkuste to po chvíli
+znovu.
+
 .SH PŘÍKLAD
 
 
@@ -2674,8 +2826,7 @@ zapnout na příkazové řádce pomocí \-d textall \-f /tmp/gammu.log):
 .nf
 .ne 7
 [gammu]
-connection = vaše nastavení připojení
-port = vaše nastavení portu
+YOUR CONNECTION SETTINGS
 logfile = /tmp/gammu.log
 logformat = textall
 .fi

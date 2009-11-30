@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.26.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-11-30 10:51+0100\n"
+"POT-Creation-Date: 2009-11-30 15:49+0100\n"
 "PO-Revision-Date: 2009-09-07 07:24+0200\n"
 "Last-Translator: winawang <winawangz@yahoo.co.id>\n"
 "Language-Team: none\n"
@@ -2052,7 +2052,7 @@ msgstr ""
 
 #: gammu/message.c:190 gammu/misc.c:2004 gammu/misc.c:2201
 msgid "Number"
-msgstr ""
+msgstr "Nomor"
 
 #: gammu/message.c:191
 msgid "Default number"
