@@ -125,7 +125,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_INVALIDDATETIME, "INVALIDDATETIME",		N_("Invalid date or time specified.")},
 	{ERR_MEMORY, "MEMORY",			N_("Phone memory error, maybe it is read only.")},
 	{ERR_INVALIDDATA, "INVALIDDATA",		N_("Invalid data given to phone.")},
-	{ERR_FILEALREADYEXIST, "FILEALREADYEXIST",		N_("File with specified name already exist.")},
+	{ERR_FILEALREADYEXIST, "FILEALREADYEXIST",		N_("File with specified name already exists.")},
 	{ERR_FILENOTEXIST, "FILENOTEXIST",		N_("File with specified name doesn't exist.")},
 	{ERR_SHOULDBEFOLDER, "SHOULDBEFOLDER",		N_("You have to give folder name and not file name.")},
 	{ERR_SHOULDBEFILE, "SHOULDBEFILE",		N_("You have to give file name and not folder name.")},
