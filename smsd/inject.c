@@ -143,7 +143,8 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				break;
 		}
 #if !defined(HAVE_GETOPT) && !defined(HAVE_GETOPT_LONG)
-		if (optind != -1) break;
+		if (optind != -1)
+			break;
 #endif
 	}
 
@@ -199,7 +200,8 @@ int main(int argc, char **argv)
 
 	error = CreateMessage(&type, &sms, argc, startarg, argv, NULL);
 	if (error != ERR_NONE) {
-		printf("Failed to create message: %s\n", GSM_ErrorString(error));
+		printf("Failed to create message: %s\n",
+		       GSM_ErrorString(error));
 		return 1;
 	}
 
@@ -215,7 +217,8 @@ int main(int argc, char **argv)
 
 	error = SMSD_InjectSMS(config, &sms, newid);
 	if (error != ERR_NONE) {
-		printf("Failed to inject message: %s\n", GSM_ErrorString(error));
+		printf("Failed to inject message: %s\n",
+		       GSM_ErrorString(error));
 		SMSD_FreeConfig(config);
 		return 3;
 	}
