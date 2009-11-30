@@ -1,6 +1,8 @@
 #!/bin/sh
 # vim: expandtab sw=4 ts=4 sts=4:
 
+set -e
+
 LOCS=`ls locale/*/gammu.po | sed 's@.*/\(.*\)/[^/]*@\1@'`
 ver=`sed -n 's/set (VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
 
