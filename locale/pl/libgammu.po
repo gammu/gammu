@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.26.91\n"
+"Project-Id-Version: libGammu 1.26.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-11-19 14:59+0100\n"
+"POT-Creation-Date: 2009-11-30 10:51+0100\n"
 "PO-Revision-Date: 2009-01-30 17:11+0100\n"
 "Last-Translator: Rafał Ślubowski <RafalSlubowski@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -387,19 +387,19 @@ msgstr "Głośny"
 msgid "My style"
 msgstr "Mój styl"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:560
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:561
 msgid "SIM"
 msgstr "SIM"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:561 libgammu/phone/pfunc.c:41
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:562 libgammu/phone/pfunc.c:41
 msgid "Inbox"
 msgstr "Skrzynka odbiorcza"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:562
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:563
 msgid "Sent items"
 msgstr "Wysłane"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:563
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:564
 msgid "Saved items"
 msgstr "Zapisane"
 

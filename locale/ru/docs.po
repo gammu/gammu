@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.26.91\n"
+"Project-Id-Version: Gammu-docs 1.26.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-11-08 22:00+0100\n"
+"POT-Creation-Date: 2009-11-30 10:51+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -3728,7 +3728,7 @@ msgstr ""
 #. type: SH
 #: docs/user/gammu.1:2413 docs/user/gammurc.5:197 docs/user/gammu-smsdrc.5:375
 #: docs/user/gammu-smsd.1:70 docs/user/gammu-smsd-inject.1:37
-#: docs/user/gammu-smsd-files.7:79 docs/user/gammu-smsd-tables.7:397
+#: docs/user/gammu-smsd-files.7:79 docs/user/gammu-smsd-tables.7:395
 #, no-wrap
 msgid "EXAMPLE"
 msgstr ""
@@ -3922,7 +3922,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:116
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
-#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:501
+#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:499
 #, no-wrap
 msgid "COPYRIGHT"
 msgstr ""
@@ -3943,7 +3943,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:122
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
-#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:507
+#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:505
 msgid ""
 "This is free software: you are free to change and redistribute it.  There is "
 "NO WARRANTY, to the extent permitted by law."
@@ -3956,7 +3956,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:122
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
-#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:507
+#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:505
 #, no-wrap
 msgid "REPORTING BUGS"
 msgstr ""
@@ -4012,7 +4012,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:123
 #: docs/user/gammu-smsd-mysql.7:28 docs/user/gammu-smsd-pgsql.7:28
-#: docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:508
+#: docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:506
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr ""
 
@@ -4022,7 +4022,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:181 docs/user/gammu-smsd-inject.1:135
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:114
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
-#: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:499
+#: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:497
 #, no-wrap
 msgid "AUTHOR"
 msgstr ""
@@ -4073,7 +4073,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:112
 #: docs/user/gammu-smsd-mysql.7:17 docs/user/gammu-smsd-pgsql.7:17
-#: docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:494
+#: docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:492
 #, no-wrap
 msgid "SEE ALSO"
 msgstr ""
@@ -4714,7 +4714,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:183 docs/user/gammu-smsd-inject.1:137
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:116
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
-#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:501
+#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:499
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
 "E<lt>michal@cihar.comE<gt>."
@@ -4726,7 +4726,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:186 docs/user/gammu-smsd-inject.1:140
 #: docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:119
 #: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24
-#: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:504
+#: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:502
 msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
 "version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
@@ -6757,7 +6757,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-files.7:114 docs/user/gammu-smsd-tables.7:499
+#: docs/user/gammu-smsd-files.7:114 docs/user/gammu-smsd-tables.7:497
 msgid "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 msgstr ""
 
@@ -7234,13 +7234,13 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:156 docs/user/gammu-smsd-tables.7:363
+#: docs/user/gammu-smsd-tables.7:156 docs/user/gammu-smsd-tables.7:361
 msgid "B<RelativeValidity> (integer)"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:158 docs/user/gammu-smsd-tables.7:365
+#: docs/user/gammu-smsd-tables.7:158 docs/user/gammu-smsd-tables.7:363
 msgid "SMS relative validity like encoded using GSM specs"
 msgstr ""
 
@@ -7284,7 +7284,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:172 docs/user/gammu-smsd-tables.7:367
+#: docs/user/gammu-smsd-tables.7:172 docs/user/gammu-smsd-tables.7:365
 msgid "B<CreatorID> (text)"
 msgstr ""
 
@@ -7317,7 +7317,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:203 docs/user/gammu-smsd-tables.7:355
+#: docs/user/gammu-smsd-tables.7:203 docs/user/gammu-smsd-tables.7:353
 msgid "B<SequencePosition> (integer)"
 msgstr ""
 
@@ -7611,78 +7611,71 @@ msgstr ""
 msgid "SMS ID"
 msgstr ""
 
-# type: SS
-#. type: SS
-#: docs/user/gammu-smsd-tables.7:349 docs/user/gammu-smsd-tables.7:417
-#, no-wrap
-msgid "Injecting a message using SQL"
-msgstr ""
-
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:353
+#: docs/user/gammu-smsd-tables.7:351
 msgid "which SMSD instance sent this one sequence"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:357
+#: docs/user/gammu-smsd-tables.7:355
 msgid "SMS number in SMS sequence"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:359
+#: docs/user/gammu-smsd-tables.7:357
 msgid "B<TPMR> (integer)"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:361
+#: docs/user/gammu-smsd-tables.7:359
 msgid "Message Reference like in GSM specs"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:369
+#: docs/user/gammu-smsd-tables.7:367
 msgid "copied from CreatorID from outbox table, matches PhoneID"
 msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammu-smsd-tables.7:371
+#: docs/user/gammu-smsd-tables.7:369
 #, no-wrap
 msgid "B<pbk>"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:375 docs/user/gammu-smsd-tables.7:380
+#: docs/user/gammu-smsd-tables.7:373 docs/user/gammu-smsd-tables.7:378
 msgid "Not used by SMSD currently, included only for application usage."
 msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammu-smsd-tables.7:376
+#: docs/user/gammu-smsd-tables.7:374
 #, no-wrap
 msgid "B<pbk_groups>"
 msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu-smsd-tables.7:381
+#: docs/user/gammu-smsd-tables.7:379
 #, no-wrap
 msgid "HISTORY"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:384
+#: docs/user/gammu-smsd-tables.7:382
 msgid "History of schema versions:"
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:387
+#: docs/user/gammu-smsd-tables.7:385
 msgid ""
 "11 - all fields for storing message text are no longer limited to 160 chars, "
 "but are arbitrary length text fields (1.25.92)"
@@ -7690,7 +7683,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:390
+#: docs/user/gammu-smsd-tables.7:388
 msgid ""
 "10 - DeliveryDateTime is now NULL when message is not delivered, added "
 "several indexes"
@@ -7698,32 +7691,32 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:392
+#: docs/user/gammu-smsd-tables.7:390
 msgid "9 - added sent/received counters to phones table"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:394
+#: docs/user/gammu-smsd-tables.7:392
 msgid "8 - introduced phones table"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:396
+#: docs/user/gammu-smsd-tables.7:394
 msgid "7 - added CreatorID to tables (it holds PhoneID if set)"
 msgstr ""
 
 # type: SS
 #. type: SS
-#: docs/user/gammu-smsd-tables.7:399
+#: docs/user/gammu-smsd-tables.7:397
 #, no-wrap
 msgid "Creating tables"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:404
+#: docs/user/gammu-smsd-tables.7:402
 msgid ""
 "SQL scripts to create all needed tables for most databases are included in "
 "Gammu documentation (docs/sql). As well as some PHP scripts interacting with "
@@ -7732,19 +7725,26 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:406
+#: docs/user/gammu-smsd-tables.7:404
 msgid "For example to create SQLite tables, issue following command:"
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:412
+#: docs/user/gammu-smsd-tables.7:410
 #, no-wrap
 msgid "sqlite3 smsd.db E<lt> docs/sql/sqlite.sql\n"
 msgstr ""
 
+# type: SS
+#. type: SS
+#: docs/user/gammu-smsd-tables.7:415
+#, no-wrap
+msgid "Injecting a message using SQL"
+msgstr ""
+
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:422
+#: docs/user/gammu-smsd-tables.7:420
 msgid ""
 "To send a message, you can either use gammu-smsd-inject(1), which does all "
 "the magic for you, or you can insert the message manually. The simplest "
@@ -7752,7 +7752,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:438
+#: docs/user/gammu-smsd-tables.7:436
 #, no-wrap
 msgid ""
 "INSERT INTO outbox (\n"
@@ -7769,20 +7769,20 @@ msgid ""
 msgstr ""
 
 #. type: SS
-#: docs/user/gammu-smsd-tables.7:443
+#: docs/user/gammu-smsd-tables.7:441
 #, no-wrap
 msgid "Injecting long message using SQL"
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:447
+#: docs/user/gammu-smsd-tables.7:445
 msgid ""
 "Inserting multipart messages is a bit more tricky, you need to construct "
 "also UDH header and store it hexadecimally written into UDF field."
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:452
+#: docs/user/gammu-smsd-tables.7:450
 msgid ""
 "For long text message, the UDH starts with 050003 followed by byte as a "
 "message reference (you can put anything there, but it should be different "
@@ -7791,12 +7791,12 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:454
+#: docs/user/gammu-smsd-tables.7:452
 msgid "For example long text message of two parts could look like following:"
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:474
+#: docs/user/gammu-smsd-tables.7:472
 #, no-wrap
 msgid ""
 "INSERT INTO outbox (\n"
@@ -7817,7 +7817,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:489
+#: docs/user/gammu-smsd-tables.7:487
 #, no-wrap
 msgid ""
 "INSERT INTO outbox_multipart (\n"
@@ -7838,7 +7838,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:497
+#: docs/user/gammu-smsd-tables.7:495
 msgid ""
 "Database backends: gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7)"
