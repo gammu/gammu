@@ -3468,7 +3468,8 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 			ATGEN_CheckSBNR(s);
 		}
 		if (Priv->PBKSBNR == AT_AVAILABLE) {
-			sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location + Priv->FirstMemoryEntry - 1);
+			/* FirstMemoryEntry is not applied here, it is always 0 */
+			sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location - 1);
 			s->Phone.Data.Memory=entry;
 			smprintf(s, "Getting phonebook entry\n");
 			ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);

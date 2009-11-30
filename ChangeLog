@@ -26,6 +26,7 @@ ChangeLog
 [-] * Handle CME error 601 (bug#1044).
 [+] * Support for reading birthday from Samsung phonebook (bug#1038).
 [+] * Report GPRS state when getting network status (bug#1023).
+[-] * Fix reading of Siemens phonebook (bug#1046).
     
 20091119 - 1.26.91
 
