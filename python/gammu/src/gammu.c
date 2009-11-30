@@ -1681,7 +1681,7 @@ StateMachine_GetNetworkInfo(StateMachineObject *self, PyObject *args, PyObject *
         case GSM_NetworkStatusUnknown: buffer = "NetworkStatusUnknown"; break;
     }
 
-    return Py_BuildValue("{s:s,s:s,s:s,s:s,s:s}",
+    return Py_BuildValue("{s:s,s:s,s:s,s:s,s:s,s:s}",
             "NetworkName", netinfo.NetworkName,
             "State", buffer,
             "NetworkCode", netinfo.NetworkCode,
