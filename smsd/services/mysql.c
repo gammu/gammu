@@ -422,13 +422,13 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	}
 
 	sms->Number = 0;
-	for (i=0;i<GSM_MAX_MULTI_SMS;i++) {
+	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
 		GSM_SetDefaultSMSData(&sms->SMS[i]);
 		sms->SMS[i].SMSC.Number[0] = 0;
 		sms->SMS[i].SMSC.Number[1] = 0;
 	}
-	for (i=1;i<GSM_MAX_MULTI_SMS+1;i++) {
-		if (i==1) {
+	for (i = 1; i < GSM_MAX_MULTI_SMS + 1; i++) {
+		if (i == 1) {
 			sprintf(buf, "SELECT Text,Coding,UDH,Class,TextDecoded,ID,DestinationNumber,MultiPart,RelativeValidity,DeliveryReport,CreatorID FROM `outbox` WHERE ID='%s'",ID);
 		} else {
 			sprintf(buf, "SELECT Text,Coding,UDH,Class,TextDecoded,ID,SequencePosition FROM `outbox_multipart` WHERE ID='%s' AND SequencePosition='%i'",ID,i);
