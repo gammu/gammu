@@ -60,7 +60,7 @@ Vendor:         Michal Čihař <michal@cihar.com>
 # Mandriva
 %if 0%{?mandriva_version}
 
-%define dist_usb_libs libusb-1_0-devel
+%define dist_usb_libs libusb-1.0-devel
 %define dist_dbi_libs libdbi-devel libdbi-drivers-dbd-sqlite3 sqlite3-tools
 
 # 64-bit Mandriva has 64 in package name
@@ -70,12 +70,12 @@ Vendor:         Michal Čihař <michal@cihar.com>
 
 # Bluetooth things got renamed several times
 %if 0%{?mandriva_version} > 2007
-%define dist_bluez_libs lib%{?mandriva_hack}bluez2 lib%{?mandriva_hack}bluez-devel
+%define dist_bluez_libs lib%{?mandriva_hack}bluez-devel
 %else
 %if 0%{?mandriva_version} > 2006
-%define dist_bluez_libs lib%{?mandriva_hack}bluez2 lib%{?mandriva_hack}bluez2-devel
+%define dist_bluez_libs lib%{?mandriva_hack}bluez2-devel
 %else
-%define dist_bluez_libs libbluez1 >= 2.0 libbluez1-devel >= 2.0
+%define dist_bluez_libs libbluez1-devel >= 2.0
 %endif
 %endif
 
@@ -93,7 +93,7 @@ Vendor:         Michal Čihař <michal@cihar.com>
 
 %define dist_usb_libs libusb1-devel
 %define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
-%define dist_bluez_libs bluez-libs >= 2.0 bluez-libs-devel >= 2.0
+%define dist_bluez_libs bluez-libs-devel >= 2.0
 %define dist_postgres_libs postgresql-devel
 
 %else
@@ -101,7 +101,7 @@ Vendor:         Michal Čihař <michal@cihar.com>
 #Defaults for not know distributions
 %define dist_usb_libs libusb1-devel
 %define dist_dbi_libs libdbi-devel libdbi-dbd-sqlite sqlite
-%define dist_bluez_libs bluez-libs >= 2.0 bluez-libs-devel >= 2.0
+%define dist_bluez_libs bluez-libs-devel >= 2.0
 %define dist_postgres_libs postgresql-devel
 
 %endif
@@ -126,7 +126,11 @@ BuildRequires: %{dist_dbi_libs}
 
 BuildRequires: python-devel
 
+%if 0%{?centos_version} || 0%{?rhel_version} || 0%{?rhel} || 0%{?suse_version} < 1100
+BuildRequires: curl-devel
+%else
 BuildRequires: libcurl-devel
+%endif
 
 %if %usb
 BuildRequires: %{dist_usb_libs}
@@ -157,13 +161,13 @@ Currently supported phones include:
 This package contains Gammu binary as well as some examples.
 
 %package devel
+License:      GPL v2
 Summary:      Development files for Gammu
 %if 0%{?suse_version}
 Group:              Development/Libraries/C and C++
 %else
 Group:              Development/Libraries
 %endif
-Autoreqprov:  on
 Requires:           %{name} = %{version}-%{release} pkgconfig
 
 %description devel
@@ -185,6 +189,7 @@ Currently supported phones include:
 This package contain files needed for development.
 
 %package -n python-gammu
+License:    GPL v2
 Summary:    Python module to communicate with mobile phones
 %if 0%{?suse_version}
 Group:      Development/Libraries/Python
@@ -298,8 +303,10 @@ cd build-dir
 ctest -V
 
 %install
+%if 0%{?suse_version} == 0
 rm -rf %buildroot
 mkdir %buildroot
+%endif
 make -C build-dir install DESTDIR=%buildroot
 %find_lang %{name}
 %find_lang libgammu
