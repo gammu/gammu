@@ -1340,10 +1340,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure)
 			}
 			if (initerrors++ > 3) {
 				SMSD_Log(DEBUG_INFO, Config, "Going to 30 seconds sleep because of too much connection errors");
-				for (i = 0; i < 30; i++) {
+
+				for (i = 0; i < 60; i++) {
 					if (Config->shutdown)
 						break;
-					sleep(1);
+					usleep(500000);
 				}
 			}
 			SMSD_Log(DEBUG_INFO, Config, "Starting phone communication...");
