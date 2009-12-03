@@ -4536,7 +4536,9 @@ GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
 	/* Free static buffer inside GetLineString */
 	GetLineString(NULL, NULL, 0);
 	free(Priv->file.Buffer);
+	Priv->file.Buffer=NULL;
 	free(Priv->SMSCache);
+	Priv->SMSCache=NULL;
 	return ERR_NONE;
 }
 
