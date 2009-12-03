@@ -44,7 +44,7 @@ GSM_Error ATGEN_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	 * The numberr is composed '*', '#', '0'-'9'
 	 * The number contains 20 characters at most.
 	 */
-	unsigned char smscCmdReq[32]={'\0'};
+	unsigned char smscCmdReq[GSM_MAX_NUMBER_LENGTH + 12]={'\0'};
 
 	if (smsc->Location!=1) {
 		return ERR_INVALIDLOCATION;
