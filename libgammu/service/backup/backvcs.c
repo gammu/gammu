@@ -87,7 +87,7 @@ GSM_Error LoadVCalendarPrivate(char *FileName, GSM_Backup *backup, GSM_VCalendar
 		if (error != ERR_NONE) break;
 		if (Calendar.EntriesNum != 0) {
 			if (numCal < GSM_MAXCALENDARTODONOTES) {
-				backup->Calendar[numCal] = malloc(sizeof(GSM_CalendarEntry));
+				backup->Calendar[numCal] = (GSM_CalendarEntry *)malloc(sizeof(GSM_CalendarEntry));
 			        if (backup->Calendar[numCal] == NULL) {
 					error = ERR_MOREMEMORY;
 					break;
@@ -104,7 +104,7 @@ GSM_Error LoadVCalendarPrivate(char *FileName, GSM_Backup *backup, GSM_VCalendar
 		}
 		if (ToDo.EntriesNum != 0) {
 			if (numToDo < GSM_MAXCALENDARTODONOTES) {
-				backup->ToDo[numToDo] = malloc(sizeof(GSM_ToDoEntry));
+				backup->ToDo[numToDo] = (GSM_ToDoEntry *)malloc(sizeof(GSM_ToDoEntry));
 			        if (backup->ToDo[numToDo] == NULL) {
 					error = ERR_MOREMEMORY;
 					break;
@@ -122,6 +122,7 @@ GSM_Error LoadVCalendarPrivate(char *FileName, GSM_Backup *backup, GSM_VCalendar
 	}
 
 	free(File.Buffer);
+	File.Buffer=NULL;
 	return error;
 }
 
