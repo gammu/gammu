@@ -333,37 +333,61 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 void OBEXGEN_FreeVars(GSM_StateMachine *s)
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	int i;
+	int i=0;
 
 	for (i = 1; i <= Priv->PbLUIDCount; i++) {
 		free(Priv->PbLUID[i]);
+		Priv->PbLUID[i]=NULL;
 	}
 	free(Priv->PbLUID);
+	Priv->PbLUID=NULL;
 	free(Priv->PbData);
+	Priv->PbData=NULL;
+
 	for (i = 1; i <= Priv->NoteLUIDCount; i++) {
 		free(Priv->NoteLUID[i]);
+		Priv->NoteLUID[i]=NULL;
 	}
 	free(Priv->NoteLUID);
+	Priv->NoteLUID=NULL;
 	free(Priv->NoteData);
+	Priv->NoteData=NULL;
+
 	for (i = 1; i <= Priv->CalLUIDCount; i++) {
 		free(Priv->CalLUID[i]);
+		Priv->CalLUID[i]=NULL;
 	}
 	free(Priv->CalLUID);
+	Priv->CalLUID=NULL;
 	free(Priv->CalData);
+	Priv->CalData=NULL;
+
 	for (i = 1; i <= Priv->TodoLUIDCount; i++) {
 		free(Priv->TodoLUID[i]);
+		Priv->TodoLUID[i]=NULL;
 	}
 	free(Priv->TodoLUID);
+	Priv->TodoLUID=NULL;
 	free(Priv->PbIndex);
+	Priv->PbIndex=NULL;
 	free(Priv->NoteIndex);
+	Priv->NoteIndex=NULL;
 	free(Priv->CalIndex);
+	Priv->CalIndex=NULL;
 	free(Priv->TodoIndex);
+	Priv->TodoIndex=NULL;
 	free(Priv->PbOffsets);
+	Priv->PbOffsets=NULL;
 	free(Priv->NoteOffsets);
+	Priv->NoteOffsets=NULL;
 	free(Priv->CalOffsets);
+	Priv->CalOffsets=NULL;
 	free(Priv->TodoOffsets);
+	Priv->TodoOffsets=NULL;
 	free(Priv->OBEXCapability);
+	Priv->OBEXCapability=NULL;
 	free(Priv->OBEXDevinfo);
+	Priv->OBEXDevinfo=NULL;
 }
 
 /**
@@ -556,19 +580,19 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 					if (pos2 >= len2) break;
 					switch (msg.Buffer[Pos + 3 + pos2]) {
 						case 0x01:
-							NewLUID = malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
+							NewLUID = (char *)malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
 							memcpy(NewLUID,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
 							NewLUID[msg.Buffer[Pos + 3 + pos2 + 1]]=0;
 							smprintf(s, " LUID=\"%s\"", NewLUID);
 							break;
 						case 0x02:
-							CC = malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
+							CC = (char *)malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
 							memcpy(CC,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
 							CC[msg.Buffer[Pos + 3 + pos2 + 1]]=0;
 							smprintf(s, " CC=\"%s\"", CC);
 							break;
 						case 0x03:
-							timestamp = malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
+							timestamp = (char *)malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
 							memcpy(timestamp,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
 							timestamp[msg.Buffer[Pos + 3 + pos2 + 1]] = 0;
 							smprintf(s, " Timestamp=\"%s\"", timestamp);
@@ -579,34 +603,37 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				smprintf(s, "\n");
 				if (timestamp != NULL) {
 					free(timestamp);
+					timestamp=NULL;
 				}
 				if (CC != NULL) {
 					free(CC);
+					CC=NULL;
 				}
 				if (NewLUID != NULL) {
 					if (UpdatePbLUID) {
 						Priv->PbLUIDCount++;
-						Priv->PbLUID = realloc(Priv->PbLUID, (Priv->PbLUIDCount + 1) * sizeof(char *));
+						Priv->PbLUID = (char **)realloc(Priv->PbLUID, (Priv->PbLUIDCount + 1) * sizeof(char *));
 						if (Priv->PbLUID == NULL) {
 							return ERR_MOREMEMORY;
 						}
 						Priv->PbLUID[Priv->PbLUIDCount] = NewLUID;
 					} else if (UpdateTodoLUID) {
 						Priv->TodoLUIDCount++;
-						Priv->TodoLUID = realloc(Priv->TodoLUID, (Priv->TodoLUIDCount + 1) * sizeof(char *));
+						Priv->TodoLUID = (char **)realloc(Priv->TodoLUID, (Priv->TodoLUIDCount + 1) * sizeof(char *));
 						if (Priv->TodoLUID == NULL) {
 							return ERR_MOREMEMORY;
 						}
 						Priv->TodoLUID[Priv->TodoLUIDCount] = NewLUID;
 					} else if (UpdateCalLUID) {
 						Priv->CalLUIDCount++;
-						Priv->CalLUID = realloc(Priv->CalLUID, (Priv->CalLUIDCount + 1) * sizeof(char *));
+						Priv->CalLUID = (char **)realloc(Priv->CalLUID, (Priv->CalLUIDCount + 1) * sizeof(char *));
 						if (Priv->CalLUID == NULL) {
 							return ERR_MOREMEMORY;
 						}
 						Priv->CalLUID[Priv->CalLUIDCount] = NewLUID;
 					} else {
 						free(NewLUID);
+						NewLUID=NULL;
 					}
 				}
 				Pos += len2;
@@ -1187,6 +1214,7 @@ GSM_Error OBEXGEN_GetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 	if (error != ERR_EMPTY) {
 		if (File.Buffer != NULL) {
 			free(File.Buffer);
+			File.Buffer=NULL;
 		}
 		return error;
 	}
@@ -1211,7 +1239,7 @@ GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char **
 
 	/* Return data we got */
 	smprintf(s, "Got %d data\n", len);
-	*Buffer = realloc(*Buffer, len + 1);
+	*Buffer = (unsigned char *)realloc(*Buffer, len + 1);
 	if (*Buffer == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -1432,7 +1460,7 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 	error = OBEXGEN_ParseInfoLog(s, data, free_records, used_records, Cap);
 
 	free(data);
-
+	data=NULL;
 	return error;
 }
 
@@ -1455,7 +1483,7 @@ int OBEXGEN_GetFirstFreeLocation(int **IndexStorage, int *IndexCount) {
 
 	/* Update internal list */
 	(*IndexCount)++;
-	*IndexStorage = realloc(*IndexStorage, (*IndexCount) * sizeof(int));
+	*IndexStorage = (int *)realloc(*IndexStorage, (*IndexCount) * sizeof(int));
 	(*IndexStorage)[*IndexCount] = max;
 
 	return max;
@@ -1485,7 +1513,10 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
 
 	/* Free data if previously allocated */
 	if (!Recalculate) {
-		if (*Data != NULL) free(*Data);
+		if (*Data != NULL) {
+			free(*Data);
+			*Data=NULL;
+		}
 	}
 	/**
 	 * @todo should free all data here, but this execution path is not supported now
@@ -1524,7 +1555,7 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
 					/* Do we need to reallocate? */
 					if (*Count >= Size) {
 						Size += 20;
-						*Offsets = realloc(*Offsets, Size * sizeof(int));
+						*Offsets = (int *)realloc(*Offsets, Size * sizeof(int));
 						if (*Offsets == NULL) {
 							return ERR_MOREMEMORY;
 						}
@@ -1547,7 +1578,7 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
 					/* Do we need to reallocate? */
 					if (*LUIDCount >= LUIDSize) {
 						LUIDSize += 20;
-						*LUIDStorage = realloc(*LUIDStorage, LUIDSize * sizeof(char *));
+						*LUIDStorage = (char **)realloc(*LUIDStorage, LUIDSize * sizeof(char *));
 						if (*LUIDStorage == NULL) {
 							return ERR_MOREMEMORY;
 						}
@@ -1563,7 +1594,7 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
 					/* Do we need to reallocate? */
 					if (*IndexCount >= IndexSize) {
 						IndexSize += 20;
-						*IndexStorage = realloc(*IndexStorage, IndexSize * sizeof(int));
+						*IndexStorage = (int *)realloc(*IndexStorage, IndexSize * sizeof(int));
 						if (*IndexStorage == NULL) {
 							return ERR_MOREMEMORY;
 						}
@@ -1638,15 +1669,15 @@ GSM_Error OBEXGEN_InitPbLUID(GSM_StateMachine *s)
 GSM_Error OBEXGEN_GetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 {
 	GSM_Error 	error;
-	char		*data;
-	char		*path;
+	char		*data=NULL;
+	char		*path=NULL;
 	size_t		pos = 0;
 
 	error = OBEXGEN_InitPbLUID(s);
 	if (error != ERR_NONE) return error;
 
 	/* Calculate path */
-	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -1656,12 +1687,16 @@ GSM_Error OBEXGEN_GetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	/* Grab vCard */
 	error = OBEXGEN_GetTextFile(s, path, &data);
 	free(path);
+	path=NULL;
+
 	if (error == ERR_FILENOTEXIST) return ERR_EMPTY;
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
 	error = GSM_DecodeVCARD(&(s->di), data, &pos, Entry, SonyEricsson_VCard21_Phone);
 	free(data);
+	data=NULL;
+
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -1674,8 +1709,8 @@ GSM_Error OBEXGEN_GetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	char		*data;
-	char		*path;
+	char		*data=NULL;
+	char		*path=NULL;
 	size_t		pos = 0;
 
 	error = OBEXGEN_InitPbLUID(s);
@@ -1686,7 +1721,7 @@ GSM_Error OBEXGEN_GetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (Priv->PbLUID[Entry->Location] == NULL) return ERR_EMPTY;
 
 	/* Calculate path */
-	path = malloc(strlen(Priv->PbLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->PbLUID[Entry->Location]) + 22); /* Length of string bellow */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -1696,11 +1731,13 @@ GSM_Error OBEXGEN_GetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	/* Grab vCard */
 	error = OBEXGEN_GetTextFile(s, path, &data);
 	free(path);
+	path=NULL;
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
 	error = GSM_DecodeVCARD(&(s->di), data, &pos, Entry, SonyEricsson_VCard21_Phone);
 	free(data);
+	data=NULL;
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -1851,7 +1888,7 @@ GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, con
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	char		*path;
+	char		*path=NULL;
 
 	error = OBEXGEN_InitPbLUID(s);
 	if (error != ERR_NONE) return error;
@@ -1866,7 +1903,7 @@ GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, con
 	}
 
 	/* Calculate path */
-	path = malloc(strlen(Priv->PbLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->PbLUID[Entry->Location]) + 22); /* Length of string bellow */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -1886,7 +1923,7 @@ GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, con
 
 GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, const char *Data, int Size)
 {
-	char		*path;
+	char		*path=NULL;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	/* Forget entry if we're deleting */
@@ -1895,7 +1932,7 @@ GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, co
 	}
 
 	/* Calculate path */
-	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2072,8 +2109,8 @@ GSM_Error OBEXGEN_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Sta
 GSM_Error OBEXGEN_GetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 {
 	GSM_Error 	error;
-	char		*data;
-	char		*path;
+	char		*data=NULL;
+	char		*path=NULL;
 	size_t		pos = 0;
 	GSM_ToDoEntry	ToDo;
 
@@ -2081,7 +2118,7 @@ GSM_Error OBEXGEN_GetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	if (error != ERR_NONE) return error;
 
 	/* Calculate path */
-	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2091,12 +2128,14 @@ GSM_Error OBEXGEN_GetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	/* Grab vCalendar */
 	error = OBEXGEN_GetTextFile(s, path, &data);
 	free(path);
+	path=NULL;
 	if (error == ERR_FILENOTEXIST) return ERR_EMPTY;
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
 	error = GSM_DecodeVCALENDAR_VTODO(&(s->di), data, &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	free(data);
+	data=NULL;
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -2109,8 +2148,8 @@ GSM_Error OBEXGEN_GetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	char		*data;
-	char		*path;
+	char		*data=NULL;
+	char		*path=NULL;
 	size_t		pos = 0;
 	GSM_ToDoEntry	ToDo;
 
@@ -2122,7 +2161,7 @@ GSM_Error OBEXGEN_GetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	if (Priv->CalLUID[Entry->Location] == NULL) return ERR_EMPTY;
 
 	/* Calculate path */
-	path = malloc(strlen(Priv->CalLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->CalLUID[Entry->Location]) + 22); /* Length of string bellow */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2132,11 +2171,13 @@ GSM_Error OBEXGEN_GetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	/* Grab vCalendar */
 	error = OBEXGEN_GetTextFile(s, path, &data);
 	free(path);
+	path=NULL;
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
 	error = GSM_DecodeVCALENDAR_VTODO(&(s->di), data, &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	free(data);
+	data=NULL;
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -2284,7 +2325,7 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	char		*path;
+	char		*path=NULL;
 
 	error = OBEXGEN_InitCalLUID(s);
 	if (error != ERR_NONE) return error;
@@ -2299,7 +2340,7 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 	}
 
 	/* Calculate path */
-	path = malloc(strlen(Priv->CalLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->CalLUID[Entry->Location]) + 22); /* Length of string bellow */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2319,7 +2360,7 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 
 GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry, const char *Data, int Size)
 {
-	char		*path;
+	char		*path=NULL;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	/* Forget entry if we're deleting */
@@ -2328,7 +2369,7 @@ GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	}
 
 	/* Calculate path */
-	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2456,13 +2497,13 @@ GSM_Error OBEXGEN_GetTodoStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status)
 GSM_Error OBEXGEN_GetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 {
 	GSM_Error 	error;
-	char		*data;
-	char		*path;
+	char		*data=NULL;
+	char		*path=NULL;
 	size_t		pos = 0;
 	GSM_CalendarEntry	Cal;
 
 	/* Todoculate path */
-	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2472,12 +2513,14 @@ GSM_Error OBEXGEN_GetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	/* Grab vTodo */
 	error = OBEXGEN_GetTextFile(s, path, &data);
 	free(path);
+	path=NULL;
 	if (error == ERR_FILENOTEXIST) return ERR_EMPTY;
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
 	error = GSM_DecodeVCALENDAR_VTODO(&(s->di), data, &pos, &Cal, Entry, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	free(data);
+	data=NULL;
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -2490,8 +2533,8 @@ GSM_Error OBEXGEN_GetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	char		*data;
-	char		*path;
+	char		*data=NULL;
+	char		*path=NULL;
 	size_t		pos = 0;
 	GSM_CalendarEntry	Cal;
 
@@ -2503,7 +2546,7 @@ GSM_Error OBEXGEN_GetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	if (Priv->TodoLUID[Entry->Location] == NULL) return ERR_EMPTY;
 
 	/* Todoculate path */
-	path = malloc(strlen(Priv->TodoLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->TodoLUID[Entry->Location]) + 22); /* Length of string bellow */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2513,11 +2556,13 @@ GSM_Error OBEXGEN_GetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	/* Grab vTodo */
 	error = OBEXGEN_GetTextFile(s, path, &data);
 	free(path);
+	path=NULL;
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
 	error = GSM_DecodeVCALENDAR_VTODO(&(s->di), data, &pos, &Cal, Entry, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	free(data);
+	data=NULL;
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -2665,7 +2710,7 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const c
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	char		*path;
+	char		*path=NULL;
 
 	error = OBEXGEN_InitCalLUID(s);
 	if (error != ERR_NONE) return error;
@@ -2680,7 +2725,7 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const c
 	}
 
 	/* Calculate path */
-	path = malloc(strlen(Priv->TodoLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->TodoLUID[Entry->Location]) + 22); /* Length of string bellow */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2700,7 +2745,7 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const c
 
 GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const char *Data, int Size)
 {
-	char		*path;
+	char		*path=NULL;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	/* Forget entry if we're deleting */
@@ -2709,7 +2754,7 @@ GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const 
 	}
 
 	/* Todoculate path */
-	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2856,15 +2901,15 @@ GSM_Error OBEXGEN_InitNoteLUID(GSM_StateMachine *s)
 GSM_Error OBEXGEN_GetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 {
 	GSM_Error 	error;
-	char		*data;
-	char		*path;
+	char		*data=NULL;
+	char		*path=NULL;
 	size_t		pos = 0;
 
 	error = OBEXGEN_InitNoteLUID(s);
 	if (error != ERR_NONE) return error;
 
 	/* Calculate path */
-	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2874,12 +2919,14 @@ GSM_Error OBEXGEN_GetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	/* Grab vCard */
 	error = OBEXGEN_GetTextFile(s, path, &data);
 	free(path);
+	path=NULL;
 	if (error == ERR_FILENOTEXIST) return ERR_EMPTY;
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
 	error = GSM_DecodeVNOTE(data, &pos, Entry);
 	free(data);
+	data=NULL;
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -2892,8 +2939,8 @@ GSM_Error OBEXGEN_GetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	char		*data;
-	char		*path;
+	char		*data=NULL;
+	char		*path=NULL;
 	size_t		pos = 0;
 
 	error = OBEXGEN_InitNoteLUID(s);
@@ -2904,7 +2951,7 @@ GSM_Error OBEXGEN_GetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	if (Priv->NoteLUID[Entry->Location] == NULL) return ERR_EMPTY;
 
 	/* Calculate path */
-	path = malloc(strlen(Priv->NoteLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->NoteLUID[Entry->Location]) + 22); /* Length of string bellow */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -2914,11 +2961,13 @@ GSM_Error OBEXGEN_GetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	/* Grab vCard */
 	error = OBEXGEN_GetTextFile(s, path, &data);
 	free(path);
+	path=NULL;
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
 	error = GSM_DecodeVNOTE(data, &pos, Entry);
 	free(data);
+	data=NULL;
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -3065,7 +3114,7 @@ GSM_Error OBEXGEN_SetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry, const c
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	char		*path;
+	char		*path=NULL;
 
 	error = OBEXGEN_InitNoteLUID(s);
 	if (error != ERR_NONE) return error;
@@ -3080,7 +3129,7 @@ GSM_Error OBEXGEN_SetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry, const c
 	}
 
 	/* Calculate path */
-	path = malloc(strlen(Priv->NoteLUID[Entry->Location]) + 22); /* Length of string bellow */
+	path = (char *)malloc(strlen(Priv->NoteLUID[Entry->Location]) + 22); /* Length of string bellow */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
@@ -3100,7 +3149,7 @@ GSM_Error OBEXGEN_SetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry, const c
 
 GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, const char *Data, int Size)
 {
-	char		*path;
+	char		*path=NULL;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	/* Forget entry if we're deleting */
@@ -3109,7 +3158,7 @@ GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, const 
 	}
 
 	/* Calculate path */
-	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	path = (char *)malloc(20 + 22); /* Length of string bellow + length of number */
 	if (path == NULL) {
 		return ERR_MOREMEMORY;
 	}
