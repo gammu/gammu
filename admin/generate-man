@@ -1244,7 +1244,7 @@ def main():
 
     write_section(output, 'RETURN VALUES')
     output.write(RETURN_VALUES)
-    output.write(read_errors())
+    output.write(read_errors().replace('-', '\\-'))
 
     write_section(output, 'EXAMPLE')
     output.write(EXAMPLE)

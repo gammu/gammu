@@ -4,7 +4,7 @@
 # Automatically generated, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.26.92\n"
+"Project-Id-Version: Gammu 1.26.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-03 14:43+0100\n"
 "PO-Revision-Date: 2009-09-07 07:24+0200\n"

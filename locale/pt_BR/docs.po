@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.26.92\n"
+"Project-Id-Version: Gammu-docs 1.26.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-11-30 16:25+0100\n"
+"POT-Creation-Date: 2009-12-03 16:53+0100\n"
 "PO-Revision-Date: 2009-01-28 17:24+0100\n"
 "Last-Translator: hawshinka manson <hawshinka@gmail.com>\n"
 "Language-Team: none\n"
@@ -28,7 +28,7 @@ msgstr ""
 #. type: TH
 #: docs/user/gammu.1:1
 #, fuzzy, no-wrap
-msgid "Nov 30 2009"
+msgid "Dec  3 2009"
 msgstr "27 de Janeiro de 2009"
 
 #. type: TH

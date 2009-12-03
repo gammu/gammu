@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.26.92\n"
+"Project-Id-Version: Gammu-docs 1.26.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-11-30 16:25+0100\n"
-"PO-Revision-Date: 2009-11-30 16:28+0100\n"
+"POT-Creation-Date: 2009-12-03 16:53+0100\n"
+"PO-Revision-Date: 2009-12-03 16:54+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -32,8 +32,8 @@ msgstr "GAMMU"
 #. type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
-msgid "Nov 30 2009"
-msgstr "Listopad 30, 2009"
+msgid "Dec  3 2009"
+msgstr "Prosinec 3, 2009"
 
 # type: TH
 #. type: TH
@@ -10680,8 +10680,8 @@ msgid ""
 msgstr ""
 
 # type: TH
-#~ msgid "Oct 13 2009"
-#~ msgstr "Říjen 13, 2009"
+#~ msgid "Nov 30 2009"
+#~ msgstr "Listopad 30, 2009"
 
 # type: Plain text
 #~ msgid ""
