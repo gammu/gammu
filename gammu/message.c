@@ -360,10 +360,8 @@ void GetAllSMS(int argc, char *argv[])
 					*Backup.PhonePhonebook[used]=Pbk;
 					used++;
 				}
-				fprintf(stderr, "\r");
-				fprintf(stderr, "%s ", _("Reading phone phonebook:"));
-				fprintf(stderr, _("%i percent"),
-					used * 100 / MemStatus.MemoryUsed);
+				fprintf(stderr, "\r%s ", _("Reading phone phonebook:"));
+				fprintf(stderr, _("%i percent"),used * 100 / MemStatus.MemoryUsed);
 				i++;
 
 				if (gshutdown) {
@@ -469,10 +467,8 @@ void GetEachSMS(int argc, char *argv[])
 					*Backup.PhonePhonebook[used]=Pbk;
 					used++;
 				}
-				fprintf(stderr, "\r");
-				fprintf(stderr, "%s ", _("Reading phone phonebook:"));
-				fprintf(stderr, _("%i percent"),
-					used * 100 / MemStatus.MemoryUsed);
+				fprintf(stderr, "\r%s ", _("Reading phone phonebook:"));
+				fprintf(stderr, _("%i percent"),used * 100 / MemStatus.MemoryUsed);
 				fflush(stderr);
 				i++;
 
