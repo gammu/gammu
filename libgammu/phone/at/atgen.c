@@ -1765,6 +1765,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	Priv->SMSCount			= 0;
 	Priv->SMSCache			= NULL;
+	Priv->ReplyState		= 0;
 
 	if (s->ConnectionType != GCT_IRDAAT && s->ConnectionType != GCT_BLUEAT) {
 		/* We try to escape AT+CMGS mode, at least Siemens M20
