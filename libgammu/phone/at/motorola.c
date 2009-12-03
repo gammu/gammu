@@ -125,14 +125,18 @@ GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	MOTOROLA_CommandInfo *cmd;
 	const char *realcmd;
-	char buffer[30];
+	char buffer[30]={0};
 	GSM_Error error = ERR_NONE;
 
 	/* Do we need any mode switching? */
-	if (!Priv->Mode) return ERR_NONE;
+	if (!Priv->Mode) {
+		return ERR_NONE;
+	}
 
 	/* We don't care about non AT commands */
-	if (strncasecmp(command, "AT", 2) != 0) return ERR_NONE;
+	if (strncasecmp(command, "AT", 2) != 0) {
+		return ERR_NONE;
+	}
 
 	/* Skip AT prefix */
 	realcmd = command + 2;
@@ -163,13 +167,17 @@ GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command)
 
 	/* On succes we remember it */
 	if (error == ERR_NONE) {
+
 		/* We might need to restore charset as phone resets it */
 		if (cmd->Mode == 2) {
 			smprintf(s, "Waiting for banner...\n");
 
 			/* Wait for banner */
 			error = GSM_WaitForOnce(s, NULL, 0x00, 0x00, 40);
-			if (error != ERR_NONE) return error;
+
+			if (error != ERR_NONE) {
+				return error;
+			}
 
 			/* Check for banner result */
 			if (Priv->CurrentMode != 2) {
@@ -183,7 +191,6 @@ GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command)
 			Priv->CurrentMode = cmd->Mode;
 		}
 	}
-
 	return error;
 }
 
