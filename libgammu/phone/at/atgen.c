@@ -2388,6 +2388,7 @@ GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 	char			req[20]={0};
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
+	int			length=0;
 
 	if (Alarm->Location != 1) {
 		return ERR_INVALIDLOCATION;
@@ -2398,12 +2399,9 @@ GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
-
-	sprintf(req, "AT+CALA=\"%02i:%02i\"\r",Alarm->DateTime.Hour,Alarm->DateTime.Minute);
-
 	smprintf(s, "Setting Alarm\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 3, ID_SetAlarm);
-
+	length=sprintf(req, "AT+CALA=\"%02i:%02i\"\r",Alarm->DateTime.Hour,Alarm->DateTime.Minute);
+	ATGEN_WaitFor(s, req, length, 0x00, 3, ID_SetAlarm);
 	return error;
 }
 
