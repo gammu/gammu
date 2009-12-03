@@ -51,7 +51,7 @@ GSM_Error ATGEN_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	}
 	smprintf(s, "Setting SMSC\n");
 	sprintf(smscCmdReq, "AT+CSCA=\"%s\"\r",DecodeUnicodeString(smsc->Number));
-	ATGEN_WaitFor(s, smscCmdReq, strlen(smscCmdReq), 0x00, 4, ID_SetSMSC);
+	ATGEN_WaitForAutoLen(s, smscCmdReq, 0x00, 4, ID_SetSMSC);
 	return error;
 }
 
@@ -149,7 +149,7 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	smprintf(s, "Getting available SMS memories\n");
-	ATGEN_WaitFor(s, "AT+CPMS=?\r", strlen("AT+CPMS=?\r"), 0x00, 4, ID_GetSMSMemories);
+	ATGEN_WaitForAutoLen(s, "AT+CPMS=?\r", 0x00, 4, ID_GetSMSMemories);
 
 	if (error!=ERR_NONE) {
 		return error;
@@ -287,7 +287,7 @@ GSM_Error ATGEN_GetSMSMode(GSM_StateMachine *s)
 	/* Prefer PDU mode for most phones */
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_USE_SMSTEXTMODE)) {
 		smprintf(s, "Trying SMS PDU mode\n");
-		ATGEN_WaitFor(s, "AT+CMGF=0\r", strlen("AT+CMGF=0\r"), 0x00, 9, ID_GetSMSMode);
+		ATGEN_WaitForAutoLen(s, "AT+CMGF=0\r", 0x00, 9, ID_GetSMSMode);
 
 		if (error==ERR_NONE) {
 			Priv->SMSMode = SMS_AT_PDU;
@@ -295,12 +295,12 @@ GSM_Error ATGEN_GetSMSMode(GSM_StateMachine *s)
 		}
 	}
 	smprintf(s, "Trying SMS text mode\n");
-	ATGEN_WaitFor(s, "AT+CMGF=1\r", strlen("AT+CMGF=1\r"), 0x00, 9, ID_GetSMSMode);
+	ATGEN_WaitForAutoLen(s, "AT+CMGF=1\r", 0x00, 9, ID_GetSMSMode);
 
 	if (error == ERR_NONE) {
 		Priv->SMSMode = SMS_AT_TXT;
 		smprintf(s, "Enabling displaying all parameters in text mode\n");
-		ATGEN_WaitFor(s, "AT+CSDH=1\r", strlen("AT+CSDH=1\r"), 0x00, 3, ID_GetSMSMode);
+		ATGEN_WaitForAutoLen(s, "AT+CSDH=1\r", 0x00, 3, ID_GetSMSMode);
 
 		if (error == ERR_NONE) {
 			Priv->SMSTextDetails = TRUE;
@@ -1037,12 +1037,12 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, gboolean first)
 	smprintf(s, "Getting SMS locations\n");
 
 	if (Priv->SMSMode == SMS_AT_TXT) {
-		ATGEN_WaitFor(s, "AT+CMGL=\"ALL\"\r", strlen("AT+CMGL=\"ALL\"\r"), 0x00, 500, ID_GetSMSMessage);
+		ATGEN_WaitForAutoLen(s, "AT+CMGL=\"ALL\"\r", 0x00, 500, ID_GetSMSMessage);
 	} else {
-		ATGEN_WaitFor(s, "AT+CMGL=4\r", strlen("AT+CMGL=4\r"), 0x00, 20, ID_GetSMSMessage);
+		ATGEN_WaitForAutoLen(s, "AT+CMGL=4\r", 0x00, 20, ID_GetSMSMessage);
 	}
 	if (error == ERR_NOTSUPPORTED) {
-		ATGEN_WaitFor(s, "AT+CMGL\r", strlen("AT+CMGL\r"), 0x00, 5, ID_GetSMSMessage);
+		ATGEN_WaitForAutoLen(s, "AT+CMGL\r", 0x00, 5, ID_GetSMSMessage);
 	}
 	/*
 	 * We did not read anything, but it is correct, indicate that
@@ -1315,10 +1315,10 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 		smprintf(s, "Getting SIM SMS status\n");
 
 		if (Priv->SIMSaveSMS == AT_AVAILABLE) {
-			ATGEN_WaitFor(s, "AT+CPMS=\"SM\",\"SM\"\r", strlen("AT+CPMS=\"SM\",\"SM\"\r"), 0x00, 20, ID_GetSMSStatus);
+			ATGEN_WaitForAutoLen(s, "AT+CPMS=\"SM\",\"SM\"\r", 0x00, 20, ID_GetSMSStatus);
 			Priv->SMSMemoryWrite = TRUE;
 		} else {
-			ATGEN_WaitFor(s, "AT+CPMS=\"SM\"\r", strlen("AT+CPMS=\"SM\"\r"), 0x00, 20, ID_GetSMSStatus);
+			ATGEN_WaitForAutoLen(s, "AT+CPMS=\"SM\"\r", 0x00, 20, ID_GetSMSStatus);
 			Priv->SMSMemoryWrite = FALSE;
 		}
 		if (error!=ERR_NONE) {
@@ -1335,14 +1335,14 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 
 		if (Priv->PhoneSaveSMS == AT_AVAILABLE) {
 			if (Priv->MotorolaSMS) {
-				ATGEN_WaitFor(s, "AT+CPMS=\"MT\"\r", strlen("AT+CPMS=\"MT\"\r"), 0x00, 20, ID_GetSMSStatus);
+				ATGEN_WaitForAutoLen(s, "AT+CPMS=\"MT\"\r", 0x00, 20, ID_GetSMSStatus);
 				Priv->SMSMemoryWrite = FALSE;
 			} else {
-				ATGEN_WaitFor(s, "AT+CPMS=\"ME\",\"ME\"\r", strlen("AT+CPMS=\"ME\",\"ME\"\r"), 0x00, 20, ID_GetSMSStatus);
+				ATGEN_WaitForAutoLen(s, "AT+CPMS=\"ME\",\"ME\"\r", 0x00, 20, ID_GetSMSStatus);
 				Priv->SMSMemoryWrite = TRUE;
 			}
 		} else {
-			ATGEN_WaitFor(s, "AT+CPMS=\"ME\"\r", strlen("AT+CPMS=\"ME\"\r"), 0x00, 20, ID_GetSMSStatus);
+			ATGEN_WaitForAutoLen(s, "AT+CPMS=\"ME\"\r", 0x00, 20, ID_GetSMSStatus);
 			Priv->SMSMemoryWrite = FALSE;
 		}
 		if (error!=ERR_NONE) {
@@ -1519,7 +1519,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 			req[PHONE_SMSDeliver.TPVP],
 			req[PHONE_SMSDeliver.TPPID],
 			req[PHONE_SMSDeliver.TPDCS]);
-		ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 4, ID_SetSMSParameters);
+		ATGEN_WaitForAutoLen(s, buffer, 0x00, 4, ID_SetSMSParameters);
 
 		if (error == ERR_NOTSUPPORTED) {
 			/* Nokia Communicator 9000i doesn't support <vp> parameter */
@@ -1527,7 +1527,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 				req[PHONE_SMSDeliver.firstbyte],
 				req[PHONE_SMSDeliver.TPPID],
 				req[PHONE_SMSDeliver.TPDCS]);
-			ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 4, ID_SetSMSParameters);
+			ATGEN_WaitForAutoLen(s, buffer, 0x00, 4, ID_SetSMSParameters);
 		}
 		if (error != ERR_NONE) {
 			smprintf(s, "WARNING: Failed to set message parameters, continuing without them!\n");
@@ -1667,7 +1667,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		Replies 			= s->ReplyNum;
 		s->ReplyNum			= 1;
 		smprintf(s,"Waiting for modem prompt\n");
-		ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 20, ID_SaveSMSMessage);
+		ATGEN_WaitForAutoLen(s, buffer, 0x00, 20, ID_SaveSMSMessage);
 		s->ReplyNum			 = Replies;
 
 		if (error == ERR_NONE) {
@@ -1803,7 +1803,7 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 	while (retries < s->ReplyNum) {
 		smprintf(s,"Waiting for modem prompt\n");
-		ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 30, ID_IncomingFrame);
+		ATGEN_WaitForAutoLen(s, buffer, 0x00, 30, ID_IncomingFrame);
 
 		/* Restore original value */
 		s->ReplyNum = Replies;
@@ -1957,7 +1957,7 @@ GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	/* Issue command */
 	s->Phone.Data.SMSC = smsc;
 	smprintf(s, "Getting SMSC\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetSMSC);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_GetSMSC);
 	return error;
 }
 
@@ -2065,10 +2065,10 @@ GSM_Error ATGEN_SetFastSMSSending(GSM_StateMachine *s, gboolean enable)
 
 	if (enable) {
 		smprintf(s, "Enabling fast SMS sending\n");
-		ATGEN_WaitFor(s, "AT+CMMS=2\r", strlen("AT+CMMS=2\r"), 0x00, 4, ID_SetFastSMSSending);
+		ATGEN_WaitForAutoLen(s, "AT+CMMS=2\r", 0x00, 4, ID_SetFastSMSSending);
 	} else {
 		smprintf(s, "Disabling fast SMS sending\n");
-		ATGEN_WaitFor(s, "AT+CMMS=0\r", strlen("AT+CMMS=0\r"), 0x00, 4, ID_SetFastSMSSending);
+		ATGEN_WaitForAutoLen(s, "AT+CMMS=0\r", 0x00, 4, ID_SetFastSMSSending);
 	}
 	return error;
 }
@@ -2418,7 +2418,7 @@ GSM_Error ATGEN_GetCNMIMode(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	ATGEN_WaitFor(s, "AT+CNMI=?\r", strlen("AT+CNMI=?\r"), 0x00, 4, ID_GetCNMIMode);
+	ATGEN_WaitForAutoLen(s, "AT+CNMI=?\r", 0x00, 4, ID_GetCNMIMode);
 	return error;
 }
 

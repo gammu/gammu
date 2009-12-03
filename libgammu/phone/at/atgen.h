@@ -400,6 +400,14 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *s);
         error = GSM_WaitFor(s, cmd, len, type, time, request);
 
 /**
+ * Wrapper around \ref ATGEN_WaitFor which automatically sets
+ * length of request.
+ * It accepts same parameters as \ref GSM_WaitFor except length.
+ */
+#define ATGEN_WaitForAutoLen(s, cmd, type, time, request) \
+	ATGEN_WaitFor(s, cmd, strlen(cmd), type, time, request)
+
+/**
  * Parses AT formatted reply. This is a bit like sprintf parser, but
  * specially focused on AT replies and can automatically convert text
  * encoding and decode some special fields.

@@ -644,7 +644,7 @@ GSM_Error SAMSUNG_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Sta
 
 	s->Phone.Data.CalStatus = Status;
 
-	ATGEN_WaitFor(s, "AT+ORGI?\r", strlen("AT+ORGI?\r"), 0x00, 10, ID_GetCalendarNotesInfo);
+	ATGEN_WaitForAutoLen(s, "AT+ORGI?\r", 0x00, 10, ID_GetCalendarNotesInfo);
 
 	return error;
 }
@@ -950,7 +950,7 @@ GSM_Error SAMSUNG_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	sprintf(req, "AT+ORGR=%d\r", Note->Location - 1);
 
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 10, ID_GetCalendarNote);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 10, ID_GetCalendarNote);
 	return error;
 }
 
@@ -966,7 +966,7 @@ GSM_Error SAMSUNG_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	sprintf(req, "AT+ORGD=%d\r", Note->Location);
 
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 10, ID_DeleteCalendarNote);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 10, ID_DeleteCalendarNote);
 	return error;
 }
 

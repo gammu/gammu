@@ -1384,12 +1384,12 @@ GSM_Error ATGEN_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)
 	}
 	if (enable) {
 		smprintf(s, "Enabling incoming USSD\n");
-		ATGEN_WaitFor(s, "AT+CUSD=1\r", strlen("AT+CUSD=1\r"), 0x00, 3, ID_SetUSSD);
+		ATGEN_WaitForAutoLen(s, "AT+CUSD=1\r", 0x00, 3, ID_SetUSSD);
 	} else {
 		smprintf(s, "Terminating possible incoming USSD\n");
-		ATGEN_WaitFor(s, "AT+CUSD=2\r", strlen("AT+CUSD=2\r"), 0x00, 3, ID_SetUSSD);
+		ATGEN_WaitForAutoLen(s, "AT+CUSD=2\r", 0x00, 3, ID_SetUSSD);
 		smprintf(s, "Disabling incoming USSD\n");
-		ATGEN_WaitFor(s, "AT+CUSD=0\r", strlen("AT+CUSD=0\r"), 0x00, 3, ID_SetUSSD);
+		ATGEN_WaitForAutoLen(s, "AT+CUSD=0\r", 0x00, 3, ID_SetUSSD);
 	}
 	if (error==ERR_NONE) {
 		s->Phone.Data.EnableIncomingUSSD = enable;
@@ -1493,10 +1493,10 @@ GSM_Error ATGEN_GetModel(GSM_StateMachine *s)
 	if (s->Phone.Data.Model[0] != 0) return ERR_NONE;
 
 	smprintf(s, "Getting model\n");
-	ATGEN_WaitFor(s, "AT+CGMM\r", strlen("AT+CGMM\r"), 0x00, 3, ID_GetModel);
+	ATGEN_WaitForAutoLen(s, "AT+CGMM\r", 0x00, 3, ID_GetModel);
 
 	if (error != ERR_NONE) {
-		ATGEN_WaitFor(s, "ATI4\r", strlen("ATI4\r"), 0x00, 3, ID_GetModel);
+		ATGEN_WaitForAutoLen(s, "ATI4\r", 0x00, 3, ID_GetModel);
 	}
 	if (error == ERR_NONE) {
 		smprintf_level(s, D_TEXT, "[Connected model  - \"%s\"]\n",
@@ -1627,10 +1627,10 @@ GSM_Error ATGEN_GetManufacturer(GSM_StateMachine *s)
 
 	if (Priv->Manufacturer != 0 && s->Phone.Data.Manufacturer[0] != 0) return ERR_NONE;
 
-	ATGEN_WaitFor(s, "AT+CGMI\r", strlen("AT+CGMI\r"), 0x00, 4, ID_GetManufacturer);
+	ATGEN_WaitForAutoLen(s, "AT+CGMI\r", 0x00, 4, ID_GetManufacturer);
 
 	if (error != ERR_NONE) {
-		ATGEN_WaitFor(s, "ATI3\r", strlen("ATI3\r"), 0x00, 4, ID_GetManufacturer);
+		ATGEN_WaitForAutoLen(s, "ATI3\r", 0x00, 4, ID_GetManufacturer);
 	}
 	return error;
 }
@@ -1700,10 +1700,10 @@ GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Getting firmware versions\n");
-	ATGEN_WaitFor(s, "AT+CGMR\r", strlen("AT+CGMR\r"), 0x00, 16, ID_GetFirmware);
+	ATGEN_WaitForAutoLen(s, "AT+CGMR\r", 0x00, 16, ID_GetFirmware);
 
 	if (error != ERR_NONE) {
-		ATGEN_WaitFor(s, "ATI5\r", strlen("ATI5\r"), 0x00, 3, ID_GetFirmware);
+		ATGEN_WaitForAutoLen(s, "ATI5\r", 0x00, 3, ID_GetFirmware);
 	}
 
 	if (error == ERR_NONE) {
@@ -1826,11 +1826,11 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	smprintf(s, "Enabling CME errors\n");
 
 	/* Try numeric errors */
-	ATGEN_WaitFor(s, "AT+CMEE=1\r", strlen("AT+CMEE=1\r"), 0x00, 3, ID_EnableErrorInfo);
+	ATGEN_WaitForAutoLen(s, "AT+CMEE=1\r", 0x00, 3, ID_EnableErrorInfo);
 
 	if (error != ERR_NONE) {
 		/* Try textual errors */
-		ATGEN_WaitFor(s, "AT+CMEE=2\r", strlen("AT+CMEE=2\r"), 0x00, 3, ID_EnableErrorInfo);
+		ATGEN_WaitForAutoLen(s, "AT+CMEE=2\r", 0x00, 3, ID_EnableErrorInfo);
 
 		if (error != ERR_NONE) {
 			smprintf(s, "CME errors could not be enabled, some error types won't be detected.\n");
@@ -1853,7 +1853,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	if (!Priv->Mode) {
 		smprintf(s, "Checking for OBEX support\n");
 		/* We don't care about error here */
-		ATGEN_WaitFor(s, "AT+CPROT=?\r", strlen("AT+CPROT=?\r"), 0x00, 20, ID_SetOBEX);
+		ATGEN_WaitForAutoLen(s, "AT+CPROT=?\r", 0x00, 20, ID_SetOBEX);
 		error = ERR_NONE;
 	/* Disabled by default as it usually fails to work */
 	} else {
@@ -1882,7 +1882,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 #ifdef GSM_ENABLE_ATOBEX
 	if (Priv->Manufacturer == AT_Siemens) {
-		ATGEN_WaitFor(s, "AT^SQWE?\r", strlen("AT^SQWE?\r"), 0x00, 3, ID_GetProtocol);
+		ATGEN_WaitForAutoLen(s, "AT^SQWE?\r", 0x00, 3, ID_GetProtocol);
 
 		if (error == ERR_NONE) {
 			smprintf(s, "Phone seems to support Siemens like mode switching, adding OBEX feature.\n");
@@ -1891,7 +1891,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 			/* Switch to mode 0 if we're in different mode */
 			if (Priv->SQWEMode != 0) {
-				ATGEN_WaitFor(s, "AT^SQWE=0\r", strlen("AT^SQWE=0\r"), 0x00, 3, ID_SetOBEX);
+				ATGEN_WaitForAutoLen(s, "AT^SQWE=0\r", 0x00, 3, ID_SetOBEX);
 
 				if (error != ERR_NONE) {
 					return error;
@@ -2078,7 +2078,7 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 	/* Do we know current charset? */
 	if (Priv->Charset == 0) {
 		/* Get current charset */
-		ATGEN_WaitFor(s, "AT+CSCS?\r", strlen("AT+CSCS?\r"), 0x00, 3, ID_GetMemoryCharset);
+		ATGEN_WaitForAutoLen(s, "AT+CSCS?\r", 0x00, 3, ID_GetMemoryCharset);
 
 		/* ERR_NOTSUPPORTED means that we do not know charset phone returned */
 		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
@@ -2090,7 +2090,7 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 	if (Priv->NormalCharset == 0) {
 		/* Switch to GSM to be safe (UCS2 can give us encoded result) */
 		if (Priv->Charset == AT_CHARSET_UCS2 && Priv->EncodedCommands) {
-			ATGEN_WaitFor(s, "AT+CSCS=\"00470053004D\"\r", strlen("AT+CSCS=\"00470053004D\"\r"), 0x00, 3, ID_SetMemoryCharset);
+			ATGEN_WaitForAutoLen(s, "AT+CSCS=\"00470053004D\"\r", 0x00, 3, ID_SetMemoryCharset);
 
 			if (error == ERR_NONE) {
 				Priv->Charset = AT_CHARSET_GSM;
@@ -2101,7 +2101,7 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 		if (error != ERR_NONE) return error;
 
 		/* Get available charsets */
-		ATGEN_WaitFor(s, "AT+CSCS=?\r", strlen("AT+CSCS=?\r"), 0x00, 3, ID_GetMemoryCharset);
+		ATGEN_WaitForAutoLen(s, "AT+CSCS=?\r", 0x00, 3, ID_GetMemoryCharset);
 
 		if (error != ERR_NONE) return error;
 	}
@@ -2151,7 +2151,7 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 	} else {
 		sprintf(buffer, "AT+CSCS=\"%s\"\r", AT_Charsets[i].text);
 	}
-	ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 20, ID_SetMemoryCharset);
+	ATGEN_WaitForAutoLen(s, buffer, 0x00, 20, ID_SetMemoryCharset);
 
 	if (error == ERR_NONE) {
 		Priv->Charset = cset;
@@ -2161,7 +2161,7 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 	}
 
 	/* Verify we have charset we wanted (this is especially needed to detect whether phone encodes also control information and not only data) */
-	ATGEN_WaitFor(s, "AT+CSCS?\r", strlen("AT+CSCS?\r"), 0x00, 3, ID_GetMemoryCharset);
+	ATGEN_WaitForAutoLen(s, "AT+CSCS?\r", 0x00, 3, ID_GetMemoryCharset);
 
 	return error;
 }
@@ -2192,7 +2192,7 @@ GSM_Error ATGEN_GetIMEI (GSM_StateMachine *s)
 
 	if (s->Phone.Data.IMEI[0] != 0) return ERR_NONE;
 	smprintf(s, "Getting IMEI\n");
-	ATGEN_WaitFor(s, "AT+CGSN\r", strlen("AT+CGSN\r"), 0x00, 2, ID_GetIMEI);
+	ATGEN_WaitForAutoLen(s, "AT+CGSN\r", 0x00, 2, ID_GetIMEI);
 
 	return error;
 }
@@ -2299,7 +2299,7 @@ GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 	s->Phone.Data.DateTime=date_time;
 	smprintf(s, "Getting date & time\n");
-	ATGEN_WaitFor(s, "AT+CCLK?\r", strlen("AT+CCLK?\r"), 0x00, 4, ID_GetDateTime);
+	ATGEN_WaitForAutoLen(s, "AT+CCLK?\r", 0x00, 4, ID_GetDateTime);
 
 	return error;
 }
@@ -2335,7 +2335,7 @@ GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, gb
 	}
 	smprintf(s, "Setting date & time\n");
 
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_SetDateTime);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_SetDateTime);
 	if (error == ERR_UNKNOWN) error = ERR_NOTSUPPORTED;
 
 	if (set_timezone && (
@@ -2382,7 +2382,7 @@ GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 
 	s->Phone.Data.Alarm = Alarm;
 	smprintf(s, "Getting alarm\n");
-	ATGEN_WaitFor(s, "AT+CALA?\r", strlen("AT+CALA?\r"), 0x00, 4, ID_GetAlarm);
+	ATGEN_WaitForAutoLen(s, "AT+CALA?\r", 0x00, 4, ID_GetAlarm);
 
 	return error;
 }
@@ -2687,7 +2687,7 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	netinfo->GPRS = 0;
 
 	smprintf(s, "Enable full network info\n");
-	ATGEN_WaitFor(s, "AT+CREG=2\r", strlen("AT+CREG=2\r"), 0x00, 4, ID_GetNetworkInfo);
+	ATGEN_WaitForAutoLen(s, "AT+CREG=2\r", 0x00, 4, ID_GetNetworkInfo);
 
 	if ((error != ERR_NONE) &&
 	    (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Siemens) &&
@@ -2695,13 +2695,13 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 		return error;
 	}
 	smprintf(s, "Getting GPRS state\n");
-	ATGEN_WaitFor(s, "AT+CGATT?\r", strlen("AT+CGATT?\r"), 0x00, 4, ID_GetNetworkInfo);
+	ATGEN_WaitForAutoLen(s, "AT+CGATT?\r", 0x00, 4, ID_GetNetworkInfo);
 
 	if (error != ERR_NONE) {
 		return error;
 	}
 	smprintf(s, "Getting network LAC and CID and state\n");
-	ATGEN_WaitFor(s, "AT+CREG?\r", strlen("AT+CREG?\r"), 0x00, 4, ID_GetNetworkInfo);
+	ATGEN_WaitForAutoLen(s, "AT+CREG?\r", 0x00, 4, ID_GetNetworkInfo);
 
 	if (error != ERR_NONE) {
 		return error;
@@ -2709,19 +2709,19 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	if (netinfo->State == GSM_HomeNetwork || netinfo->State == GSM_RoamingNetwork) {
 		/* Set numeric format for AT+COPS? */
 		smprintf(s, "Setting short network name format\n");
-		ATGEN_WaitFor(s, "AT+COPS=3,2\r", strlen("AT+COPS=3,2\r"), 0x00, 4, ID_GetNetworkInfo);
+		ATGEN_WaitForAutoLen(s, "AT+COPS=3,2\r", 0x00, 4, ID_GetNetworkInfo);
 
 		/* Get operator code */
 		smprintf(s, "Getting network code\n");
-		ATGEN_WaitFor(s, "AT+COPS?\r", strlen("AT+COPS?\r"), 0x00, 4, ID_GetNetworkCode);
+		ATGEN_WaitForAutoLen(s, "AT+COPS?\r", 0x00, 4, ID_GetNetworkCode);
 
 		/* Set string format for AT+COPS? */
 		smprintf(s, "Setting long string network name format\n");
-		ATGEN_WaitFor(s, "AT+COPS=3,0\r", strlen("AT+COPS=3,0\r"), 0x00, 4, ID_GetNetworkInfo);
+		ATGEN_WaitForAutoLen(s, "AT+COPS=3,0\r", 0x00, 4, ID_GetNetworkInfo);
 
 		/* Get operator code */
 		smprintf(s, "Getting network code\n");
-		ATGEN_WaitFor(s, "AT+COPS?\r", strlen("AT+COPS?\r"), 0x00, 4, ID_GetNetworkName);
+		ATGEN_WaitForAutoLen(s, "AT+COPS?\r", 0x00, 4, ID_GetNetworkName);
 
 		/* All information here is optional */
 		error = ERR_NONE;
@@ -2785,7 +2785,7 @@ GSM_Error ATGEN_CheckSBNR(GSM_StateMachine *s)
 	char		req[] = "AT^SBNR=?\r";
 
 	smprintf(s, "Checking availability of SBNR\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_GetMemory);
 	return error;
 }
 
@@ -2795,7 +2795,7 @@ GSM_Error ATGEN_CheckSPBR(GSM_StateMachine *s)
 	char		req[] = "AT+SPBR=?\r";
 
 	smprintf(s, "Checking availability of SPBR\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_GetMemory);
 	return error;
 }
 
@@ -2805,7 +2805,7 @@ GSM_Error ATGEN_CheckMPBR(GSM_StateMachine *s)
 	char		req[] = "AT+MPBR=?\r";
 
 	smprintf(s, "Checking availability of MPBR\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_GetMemory);
 	return error;
 }
 
@@ -2842,7 +2842,7 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 	if (error != ERR_NONE) return error;
 
 	if (Priv->PBKMemories[0] == 0) {
-		ATGEN_WaitFor(s, "AT+CPBS=?\r", strlen("AT+CPBS=?\r"), 0x00, 3, ID_SetMemoryType);
+		ATGEN_WaitForAutoLen(s, "AT+CPBS=?\r", 0x00, 3, ID_SetMemoryType);
 
 		if (error != ERR_NONE) {
 			/*
@@ -2904,7 +2904,7 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 	}
 
 	smprintf(s, "Setting memory type\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 3, ID_SetMemoryType);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 3, ID_SetMemoryType);
 
 	if (error == ERR_NONE) {
 		Priv->PBKMemory = MemType;
@@ -3180,7 +3180,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	 */
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKENCPBS) || (Priv->PBKMemory == MEM_SM)) {
 		smprintf(s, "Getting memory status\n");
-		ATGEN_WaitFor(s, "AT+CPBS?\r", strlen("AT+CPBS?\r"), 0x00, 4, ID_GetMemoryStatus);
+		ATGEN_WaitForAutoLen(s, "AT+CPBS?\r", 0x00, 4, ID_GetMemoryStatus);
 
 		if (error == ERR_NONE) {
 			free_read = TRUE;
@@ -3192,7 +3192,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	 * this way.
 	 */
 	smprintf(s, "Getting memory information\n");
-	ATGEN_WaitFor(s, "AT+CPBR=?\r", strlen("AT+CPBR=?\r"), 0x00, 10, ID_GetMemoryStatus);
+	ATGEN_WaitForAutoLen(s, "AT+CPBR=?\r", 0x00, 10, ID_GetMemoryStatus);
 
 	/* Did we fail to get size in either way? */
 	if (error != ERR_NONE && Priv->MemorySize == 0) return error;
@@ -3222,7 +3222,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 
 		/* Read next interval */
 		sprintf(req, "AT+CPBR=%i,%i\r", start, end);
-		ATGEN_WaitFor(s, req, strlen(req), 0x00, 20, ID_GetMemoryStatus);
+		ATGEN_WaitForAutoLen(s, req, 0x00, 20, ID_GetMemoryStatus);
 
 		if (error == ERR_EMPTY) {
 			Priv->NextMemoryEntry = start;
@@ -3555,7 +3555,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 			sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location - 1);
 			s->Phone.Data.Memory=entry;
 			smprintf(s, "Getting phonebook entry\n");
-			ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
+			ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_GetMemory);
 			return error;
 		}
 	}
@@ -3596,7 +3596,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 30, ID_GetMemory);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 30, ID_GetMemory);
 	return error;
 }
 
@@ -3679,7 +3679,7 @@ GSM_Error ATGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 	smprintf(s, "Deleting all phonebook entries\n");
 	for (i = Priv->FirstMemoryEntry; i < Priv->FirstMemoryEntry + Priv->MemorySize; i++) {
 		sprintf(req, "AT+CPBW=%d\r",i);
-		ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_SetMemory);
+		ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_SetMemory);
 
 		if (error != ERR_NONE) {
 			return error;
@@ -3760,7 +3760,7 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 		free(encoded);
 		encoded=NULL;
 	}
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 30, ID_GetUSSD);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 30, ID_GetUSSD);
 	free(req);
 	req=NULL;
 	return error;
@@ -3821,7 +3821,7 @@ GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 		sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
 	}
 	smprintf(s, "Entering security code\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 6, ID_EnterSecurityCode);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 6, ID_EnterSecurityCode);
 	return error;
 }
 
@@ -3907,7 +3907,7 @@ GSM_Error ATGEN_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Sta
  	 * Because of it we try to read another reply after reading
 	 * status.
 	 */
-	ATGEN_WaitFor(s, "AT+CPIN?\r", strlen("AT+CPIN?\r"), 0x00, 4, ID_GetSecurityStatus);
+	ATGEN_WaitForAutoLen(s, "AT+CPIN?\r", 0x00, 4, ID_GetSecurityStatus);
 
 	/* Read the possible left over OK */
 	GSM_WaitForOnce(s, NULL, 0x00, 0x00, 4);
@@ -3920,7 +3920,7 @@ GSM_Error ATGEN_AnswerCall(GSM_StateMachine *s, int ID UNUSED, gboolean all)
 
 	if (all) {
 		smprintf(s, "Answering all calls\n");
-		ATGEN_WaitFor(s, "ATA\r", strlen("ATA\r"), 0x00, 4, ID_AnswerCall);
+		ATGEN_WaitForAutoLen(s, "ATA\r", 0x00, 4, ID_AnswerCall);
 		return error;
 	}
 	return ERR_NOTSUPPORTED;
@@ -3955,9 +3955,9 @@ GSM_Error ATGEN_CancelCall(GSM_StateMachine *s, int ID UNUSED, gboolean all)
 
 	if (all) {
 		smprintf(s, "Dropping all calls\n");
-		ATGEN_WaitFor(s, "ATH\r", strlen("ATH\r"), 0x00, 4, ID_CancelCall);
+		ATGEN_WaitForAutoLen(s, "ATH\r", 0x00, 4, ID_CancelCall);
 		error_ath = error;
-		ATGEN_WaitFor(s, "AT+CHUP\r", strlen("AT+CHUP\r"), 0x00, 4, ID_CancelCall);
+		ATGEN_WaitForAutoLen(s, "AT+CHUP\r", 0x00, 4, ID_CancelCall);
 
 		if (error_ath == ERR_NONE || error == ERR_NONE) {
 			return ERR_NONE;
@@ -3983,11 +3983,11 @@ GSM_Error ATGEN_Reset(GSM_StateMachine *s, gboolean hard)
 	smprintf(s, "Resetting device\n");
 
 	/* Siemens 35 */
-	ATGEN_WaitFor(s, "AT+CFUN=1,1\r", strlen("AT+CFUN=1,1\r"), 0x00, 8, ID_Reset);
+	ATGEN_WaitForAutoLen(s, "AT+CFUN=1,1\r", 0x00, 8, ID_Reset);
 
 	if (error != ERR_NONE) {
 		/* Siemens M20 */
-		ATGEN_WaitFor(s, "AT^SRESET\r", strlen("AT^SRESET\r"), 0x00, 8, ID_Reset);
+		ATGEN_WaitForAutoLen(s, "AT^SRESET\r", 0x00, 8, ID_Reset);
 	}
 	return error;
 }
@@ -4003,7 +4003,7 @@ GSM_Error ATGEN_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Ty
 	GSM_Error error;
 
 	smprintf(s, "Resetting settings to default\n");
-	ATGEN_WaitFor(s, "AT&F\r", strlen("AT&F\r"), 0x00, 4, ID_ResetPhoneSettings);
+	ATGEN_WaitForAutoLen(s, "AT&F\r", 0x00, 4, ID_ResetPhoneSettings);
 
 	return error;
 }
@@ -4013,7 +4013,7 @@ GSM_Error ATGEN_SetAutoNetworkLogin(GSM_StateMachine *s)
 	GSM_Error error;
 
 	smprintf(s, "Enabling automatic network login\n");
-	ATGEN_WaitFor(s, "AT+COPS=0\r", strlen("AT+COPS=0\r"), 0x00, 4, ID_SetAutoNetworkLogin);
+	ATGEN_WaitForAutoLen(s, "AT+COPS=0\r", 0x00, 4, ID_SetAutoNetworkLogin);
 
 	return error;
 }
@@ -4040,7 +4040,7 @@ GSM_Error ATGEN_SendDTMF(GSM_StateMachine *s, char *sequence)
 	req[pos++] = '\r';
 	req[pos++] = '\0';
 	smprintf(s, "Sending DTMF\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_SendDTMF);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_SendDTMF);
 	return error;
 }
 
@@ -4091,7 +4091,7 @@ GSM_Error ATGEN_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	}
 	sprintf(req, "AT+CPBW=%d\r",entry->Location + Priv->FirstMemoryEntry - 1);
 	smprintf(s, "Deleting phonebook entry\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_SetMemory);
+	ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_SetMemory);
 
 	if (error == ERR_EMPTY) {
 		return ERR_NONE;
@@ -4295,28 +4295,28 @@ GSM_Error ATGEN_SetIncomingCall(GSM_StateMachine *s, gboolean enable)
 		if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_CLIP)) {
 			/* Some (especially SE) phones are fucked up when we want to
 			 * see CLIP information */
-			ATGEN_WaitFor(s, "AT+CLIP=1\r", strlen("AT+CLIP=1\r"), 0x00, 3, ID_SetIncomingCall);
+			ATGEN_WaitForAutoLen(s, "AT+CLIP=1\r", 0x00, 3, ID_SetIncomingCall);
 
 			if (error != ERR_NONE) {
 				return error;
 			}
-			ATGEN_WaitFor(s, "AT+CRC=1\r", strlen("AT+CRC=1\r"), 0x00, 3, ID_SetIncomingCall);
+			ATGEN_WaitForAutoLen(s, "AT+CRC=1\r", 0x00, 3, ID_SetIncomingCall);
 
 			if (error != ERR_NONE) {
 				return error;
 			}
 		} else {
-			ATGEN_WaitFor(s, "AT+CRC=0\r", strlen("AT+CRC=0\r"), 0x00, 3, ID_SetIncomingCall);
+			ATGEN_WaitForAutoLen(s, "AT+CRC=0\r", 0x00, 3, ID_SetIncomingCall);
 
 			if (error != ERR_NONE) {
 				return error;
 			}
 		}
-		ATGEN_WaitFor(s, "AT+CCWA=1\r", strlen("AT+CCWA=1\r"), 0x00, 3, ID_SetIncomingCall);
+		ATGEN_WaitForAutoLen(s, "AT+CCWA=1\r", 0x00, 3, ID_SetIncomingCall);
 
 		/* We don't care if phone does not support this */
 	} else {
-		ATGEN_WaitFor(s, "AT+CCWA=0\r", strlen("AT+CCWA=0\r"), 0x00, 3, ID_SetIncomingCall);
+		ATGEN_WaitForAutoLen(s, "AT+CCWA=0\r", 0x00, 3, ID_SetIncomingCall);
 
 		/* We don't care if phone does not support this */
 		smprintf(s, "Disabling incoming call notification\n");
@@ -4470,7 +4470,7 @@ GSM_Error ATGEN_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 
 	s->Phone.Data.PhoneString = IMSI;
 	smprintf(s, "Getting SIM IMSI\n");
-	ATGEN_WaitFor(s, "AT+CIMI\r", strlen("AT+CIMI\r"), 0x00, 4, ID_GetSIMIMSI);
+	ATGEN_WaitForAutoLen(s, "AT+CIMI\r", 0x00, 4, ID_GetSIMIMSI);
 	return error;
 }
 
@@ -4484,7 +4484,7 @@ GSM_Error ATGEN_GetDisplayStatus(GSM_StateMachine *s UNUSED, GSM_DisplayFeatures
 
 	s->Phone.Data.DisplayFeatures = features;
 	smprintf(s, "Getting display status\n");
-	ATGEN_WaitFor(s, "AT+CIND?\r", strlen("AT+CIND?\r"), 0x00, 4, ID_GetDisplayStatus);
+	ATGEN_WaitForAutoLen(s, "AT+CIND?\r", 0x00, 4, ID_GetDisplayStatus);
 	return error;
 #endif
 }
@@ -4546,7 +4546,7 @@ GSM_Error ATGEN_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 	GSM_ClearBatteryCharge(bat);
 	s->Phone.Data.BatteryCharge = bat;
 	smprintf(s, "Getting battery charge\n");
-	ATGEN_WaitFor(s, "AT+CBC\r", strlen("AT+CBC\r"), 0x00, 4, ID_GetBatteryCharge);
+	ATGEN_WaitForAutoLen(s, "AT+CBC\r", 0x00, 4, ID_GetBatteryCharge);
 	return error;
 }
 
@@ -4628,7 +4628,7 @@ GSM_Error ATGEN_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
 
 	s->Phone.Data.SignalQuality = sig;
 	smprintf(s, "Getting signal quality info\n");
-	ATGEN_WaitFor(s, "AT+CSQ\r", strlen("AT+CSQ\r"), 0x00, 4, ID_GetSignalQuality);
+	ATGEN_WaitForAutoLen(s, "AT+CSQ\r", 0x00, 4, ID_GetSignalQuality);
 	return error;
 }
 
@@ -4850,14 +4850,14 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press)
 	strcat(frame, key);
 	strcat(frame, "\"\r");
 	smprintf(s, "Pressing key\n");
-	ATGEN_WaitFor(s, frame, strlen(frame), 0x00, 4, ID_PressKey);
+	ATGEN_WaitForAutoLen(s, frame, 0x00, 4, ID_PressKey);
 
 	if (error != ERR_NONE) {
 		return error;
 	}
 
 	/* Strange. My T310 needs it */
-	ATGEN_WaitFor(s, "ATE1\r", strlen("ATE1\r"), 0x00, 4, ID_EnableEcho);
+	ATGEN_WaitForAutoLen(s, "ATE1\r", 0x00, 4, ID_EnableEcho);
 	return error;
 }
 
