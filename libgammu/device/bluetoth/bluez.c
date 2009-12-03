@@ -197,6 +197,7 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, uu
 next_seq:
 		next = seq->next;
 		free(seq);
+		seq=NULL;
 		sdp_record_free(rec);
 	}
 	sdp_close(sess);
