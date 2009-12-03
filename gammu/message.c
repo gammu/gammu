@@ -173,9 +173,9 @@ void SetSMSC(int argc, char *argv[])
 
 void GetSMSC(int argc, char *argv[])
 {
-	GSM_SMSC 	smsc;
+	GSM_SMSC smsc;
 	GSM_Error error;
-	int 		start, stop, i;
+	int start=0, stop=0, i=0;
 
 	if (argc == 2) {
 		start = 1;
@@ -246,17 +246,15 @@ void GetSMSC(int argc, char *argv[])
 		printf("\n");
 		fflush(stdout);
 	}
-
 	GSM_Terminate();
 }
 
 void GetSMS(int argc, char *argv[])
 {
 	GSM_Error error;
-	GSM_MultiSMSMessage	sms;
-	GSM_SMSFolders		folders;
-	int			start, stop;
-	int			j;
+	GSM_MultiSMSMessage sms;
+	GSM_SMSFolders folders;
+	int start=0, stop=0, j=0;
 
 	GetStartStop(&start, &stop, 3, argc, argv);
 
@@ -288,8 +286,8 @@ void GetSMS(int argc, char *argv[])
 void DeleteSMS(int argc, char *argv[])
 {
 	GSM_Error error;
-	GSM_SMSMessage	sms;
-	int		start, stop, i;
+	GSM_SMSMessage sms;
+	int start=0, stop=0, i=0;
 
 	sms.Folder=atoi(argv[2]);
 
@@ -313,14 +311,14 @@ void GetAllSMS(int argc, char *argv[])
 	GSM_Error error;
 	GSM_MultiSMSMessage 	sms;
 	GSM_SMSFolders		folders;
-	gboolean			start = TRUE;
+	gboolean		start = TRUE;
 	int			smsnum=0,smspos=0;
 	GSM_Backup		*BackupPtr = NULL;
 #ifdef GSM_ENABLE_BACKUP
-	int			used,i;
 	GSM_MemoryStatus	MemStatus;
 	GSM_MemoryEntry		Pbk;
 	GSM_Backup		Backup;
+	int			used=0,i=0;
 
 	GSM_ClearBackup(&Backup);
 	BackupPtr = &Backup;
@@ -418,16 +416,15 @@ void GetEachSMS(int argc, char *argv[])
 {
 	GSM_Error error;
 	GSM_MultiSMSMessage	*GetSMSData[GSM_PHONE_MAXSMSINFOLDER],*SortedSMS[GSM_PHONE_MAXSMSINFOLDER],sms;
-	int			GetSMSNumber = 0,i,j;
-	int			smsnum=0,smspos=0;
 	GSM_SMSFolders		folders;
-	gboolean			start = TRUE, ems = TRUE;
 	GSM_Backup		*BackupPtr = NULL;
+	gboolean		start=TRUE, ems=TRUE;
+	int			GetSMSNumber=0,i=0,j=0,smsnum=0,smspos=0;
 #ifdef GSM_ENABLE_BACKUP
 	GSM_MemoryStatus	MemStatus;
 	GSM_MemoryEntry		Pbk;
-	int			used;
 	GSM_Backup		Backup;
+	int			used=0;
 
 	GSM_ClearBackup(&Backup);
 	BackupPtr = &Backup;
@@ -571,7 +568,7 @@ void GetSMSFolders(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_Error error;
 	GSM_SMSFolders folders;
-	int i;
+	int i=0;
 
 	GSM_Init(TRUE);
 
@@ -620,7 +617,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 	GSM_MultiSMSMessage sms;
 	GSM_Message_Type type;
 	GSM_SMSFolders folders;
-	int i;
+	int i=0;
 
 	if (strcasestr(argv[1], "savesms") != NULL) {
 		type = SMS_Save;
