@@ -72,7 +72,6 @@ static GSM_Error FBUS2_WriteFrame(GSM_StateMachine 	*s,
 	if (sent!=length) {
 		return ERR_DEVICEWRITEERROR;
 	}
-	usleep(length*1000);
 	return ERR_NONE;
 }
 
@@ -116,7 +115,6 @@ static GSM_Error FBUS2_WriteMessage (GSM_StateMachine 	*s,
 		if (error != ERR_NONE) {
 			return error;
 		}
-		usleep((thislength+2)*1000);
 	}
 	return ERR_NONE;
 }
@@ -321,14 +319,12 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length
 	unsigned char		buff[300]={0};
 	int			w = 0,recvlen=0;
 	gboolean		wassomething = FALSE;
-	size_t			size=sizeof(buff);
 
 	GSM_DumpMessageLevel2(s, command, length, 0xff);
 	s->Device.Functions->WriteDevice(s, command, length);
-	usleep(length*1000);
 
 	for (w = 0; w < timeout; w++) {
-		recvlen = s->Device.Functions->ReadDevice(s, buff, size);
+		recvlen = s->Device.Functions->ReadDevice(s, buff, sizeof(buff));
 
 		if (wassomething && recvlen == 0) {
 			return;
@@ -336,7 +332,7 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length
 			GSM_DumpMessageLevel2Recv(s, buff, recvlen, 0xff);
 			wassomething = TRUE;
 		}
-		usleep(size*100);
+		usleep(50000);
 	}
 }
 
@@ -376,7 +372,6 @@ static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s, const int repeats, cons
 		if (write_data != 1) {
 			return ERR_DEVICEWRITEERROR;
 		}
-		usleep(1000);
 
 		if (delays > 0) {
 			usleep(delays);
@@ -389,7 +384,6 @@ static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s, const int repeats, cons
 		if (write_data != 1) {
 			return ERR_DEVICEWRITEERROR;
 		}
-		usleep(1000);
 	}
 	sleep(1);
 	return ERR_NONE;
@@ -401,7 +395,6 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	GSM_Device_Functions	*Device 	= s->Device.Functions;
 	GSM_Error		error;
 	unsigned char		buff[300]={0};
-	size_t			size=sizeof(buff);
 
 	d->Msg.Length		= 0;
 	d->Msg.Buffer		= NULL;
@@ -488,8 +481,8 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	}
 
 	/* Read any possible junk on the line */
-	while (s->Device.Functions->ReadDevice(s, buff, size) > 0) {
-		usleep(size*1000);
+	while (s->Device.Functions->ReadDevice(s, buff, sizeof(buff)) > 0) {
+		usleep(1000);
 	}
 
 	return ERR_NONE;
