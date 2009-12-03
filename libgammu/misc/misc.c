@@ -615,9 +615,8 @@ gboolean GSM_IsNewerVersion(const char *latest_version, const char *current_vers
 
 void StripSpaces(char *buff)
 {
-	ssize_t i=0;
+	ssize_t i = 0;
 
-	i = 0;
 	while(iswspace(buff[i])) {
 		i++;
 	}
