@@ -173,15 +173,16 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 			if (d->SpecialAnswerLines == 1) {
 				/* This is end of special answer. We copy it and send to phone module */
-				Msg2.Buffer = malloc(d->LineEnd - d->SpecialAnswerStart + 3);
+				Msg2.Buffer = (unsigned char *)malloc(d->LineEnd - d->SpecialAnswerStart + 3);
 				memcpy(Msg2.Buffer,d->Msg.Buffer+d->SpecialAnswerStart,d->LineEnd - d->SpecialAnswerStart + 2);
 				Msg2.Length = d->LineEnd - d->SpecialAnswerStart + 2;
-				Msg2.Buffer[Msg2.Length] = 0;
+				Msg2.Buffer[Msg2.Length] = '\0';
 				Msg2.Type = 0;
 
 				s->Phone.Data.RequestMsg	= &Msg2;
 				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
 				free(Msg2.Buffer);
+				Msg2.Buffer=NULL;
 
 				/* We cut special answer from main buffer */
 				d->Msg.Length			= d->SpecialAnswerStart;
@@ -268,6 +269,7 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 static GSM_Error AT_Terminate(GSM_StateMachine *s)
 {
 	free(s->Protocol.Data.AT.Msg.Buffer);
+	s->Protocol.Data.AT.Msg.Buffer=NULL;
 	return ERR_NONE;
 }
 
