@@ -528,8 +528,8 @@ fail:
 
 static GSM_Error PrivSaveNGGNOL(FILE *file, GSM_MultiBitmap *bitmap)
 {
-	char 	*buffer;
-	size_t	x,y;
+	char 	*buffer=NULL;
+	size_t	x=0,y=0;
 	size_t	current=0;
 
 	buffer = (char *)malloc(bitmap->Bitmap[0].BitmapHeight * bitmap->Bitmap[0].BitmapWidth);
@@ -548,9 +548,11 @@ static GSM_Error PrivSaveNGGNOL(FILE *file, GSM_MultiBitmap *bitmap)
 	}
 	chk_fwrite(buffer,1,current,file);
 	free(buffer);
+	buffer=NULL;
 	return ERR_NONE;
 fail:
 	free(buffer);
+	buffer=NULL;
 	return ERR_WRITING_FILE;
 }
 
@@ -1041,14 +1043,14 @@ static GSM_Error loadwbmp(FILE *file, GSM_MultiBitmap *bitmap)
 static GSM_Error loadgif(FILE *file, GSM_MultiBitmap *bitmap)
 {
 	GSM_Bitmap 	*bmap = &bitmap->Bitmap[0];
-	char 		*buffer;
+	char 		*buffer=NULL;
 	struct stat 	st;
-	size_t readbytes, length;
+	size_t readbytes=0, length=0;
 
 	dbgprintf(NULL, "loading gif file\n");
 	fstat(fileno(file), &st);
         bmap->BinaryPic.Length = length = st.st_size;
-	bmap->BinaryPic.Buffer = buffer = malloc(length);
+	bmap->BinaryPic.Buffer = buffer = (char *)malloc(length);
 	if (bmap->BinaryPic.Buffer == NULL)
 		return ERR_MOREMEMORY;
 
