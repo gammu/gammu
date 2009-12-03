@@ -335,13 +335,16 @@ void GetAllSMS(int argc, char *argv[])
 	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
 		MemStatus.MemoryType = MEM_ME;
 		error=GSM_GetMemoryStatus(gsm, &MemStatus);
+
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
 			Pbk.MemoryType  = MEM_ME;
 			i		= 1;
 			used 		= 0;
+
 			while (used != MemStatus.MemoryUsed) {
 				Pbk.Location = i;
 				error=GSM_GetMemory(gsm, &Pbk);
+
 				if (error != ERR_EMPTY) {
 					Print_Error(error);
 
@@ -441,17 +444,22 @@ void GetEachSMS(int argc, char *argv[])
 	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
 		MemStatus.MemoryType = MEM_ME;
 		error=GSM_GetMemoryStatus(gsm, &MemStatus);
+
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
 			Pbk.MemoryType  = MEM_ME;
 			i		= 1;
 			used 		= 0;
+
 			while (used != MemStatus.MemoryUsed) {
 				Pbk.Location = i;
 				error=GSM_GetMemory(gsm, &Pbk);
+
 				if (error != ERR_EMPTY) {
 					Print_Error(error);
+
 					if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
 						Backup.PhonePhonebook[used] = malloc(sizeof(GSM_MemoryEntry));
+
 					        if (Backup.PhonePhonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
 						Backup.PhonePhonebook[used+1] = NULL;
 					} else {
@@ -494,6 +502,7 @@ void GetEachSMS(int argc, char *argv[])
 		}
 		sms.SMS[0].Folder=0x00;
 		error=GSM_GetNextSMS(gsm, &sms, start);
+
 		switch (error) {
 		case ERR_EMPTY:
 			break;
