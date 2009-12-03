@@ -183,9 +183,8 @@ GSM_Error GSM_SetFeatureString(GSM_Feature *list, const char *string)
 			break;
 		}
 	}
-
-
 	free(buffer);
+	buffer=NULL;
 	return error;
 }
 
