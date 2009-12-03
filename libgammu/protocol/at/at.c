@@ -14,28 +14,34 @@
 static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned const char *buffer,
 				     int length, unsigned char type)
 {
-	int i,sent = 0;
+	int sent=0, write_data=0, i=0;
 
 	GSM_DumpMessageLevel2(s, buffer, length, type);
 	GSM_DumpMessageLevel3(s, buffer, length, type);
+
 	if (s->Protocol.Data.AT.FastWrite) {
 		while (sent != length) {
-			if ((i = s->Device.Functions->WriteDevice(s,buffer + sent, length - sent)) == 0) {
+			write_data = s->Device.Functions->WriteDevice(s,buffer + sent, length - sent);
+
+			if (!write_data) {
 				return ERR_DEVICEWRITEERROR;
 			}
-			sent += i;
+			sent += write_data;
 		}
 	} else {
 		for (i=0;i<length;i++) {
-			if (s->Device.Functions->WriteDevice(s,buffer+i,1)!=1) return ERR_DEVICEWRITEERROR;
 			/* For some phones like Siemens M20 we need to wait a little
 			 * after writing each char. Possible reason: these phones
 			 * can't receive so fast chars or there is bug here in Gammu */
+			write_data = s->Device.Functions->WriteDevice(s, buffer + i, 1);
+
+			if (write_data != 1) {
+				return ERR_DEVICEWRITEERROR;
+			}
 			usleep(1000);
 		}
 		usleep(400000);
 	}
-
 	return ERR_NONE;
 }
 
