@@ -17,23 +17,23 @@ static GSM_Error MBUS2_WriteMessage (GSM_StateMachine 	*s,
 				     int 		MsgLength,
 				     unsigned char 	MsgType)
 {
-	unsigned char 			*buffer2, checksum = 0;
+	unsigned char 			*buffer=NULL, checksum = 0;
 	GSM_Protocol_MBUS2Data 		*d = &s->Protocol.Data.MBUS2;
-	int 				i, sent, len;
+	int 				i=0, sent=0, length=0;
 
 	GSM_DumpMessageLevel3(s, MsgBuffer, MsgLength, MsgType);
 
-	buffer2 = (unsigned char *)malloc(MsgLength + 8);
+	buffer = (unsigned char *)malloc(MsgLength + 8);
 
-	buffer2[0] = MBUS2_FRAME_ID;
-	buffer2[1] = MBUS2_DEVICE_PHONE;		/*  destination */
-	buffer2[2] = MBUS2_DEVICE_PC;    		/*  source */
-	buffer2[3] = MsgType;
-	buffer2[4] = MsgLength / 256;
-	buffer2[5] = MsgLength % 256;
+	buffer[0] = MBUS2_FRAME_ID;
+	buffer[1] = MBUS2_DEVICE_PHONE;		/*  destination */
+	buffer[2] = MBUS2_DEVICE_PC;    		/*  source */
+	buffer[3] = MsgType;
+	buffer[4] = MsgLength / 256;
+	buffer[5] = MsgLength % 256;
 
-	memcpy(buffer2 + 6, MsgBuffer, MsgLength);
-	len = 6 + MsgLength;
+	memcpy(buffer + 6, MsgBuffer, MsgLength);
+	length = 6 + MsgLength;
 
 	/* According to http://www.flosys.com/tdma/n5160.html some phones
          * can have problems with checksum equal 0x1F. Phones can recognize
@@ -43,25 +43,30 @@ static GSM_Error MBUS2_WriteMessage (GSM_StateMachine 	*s,
 	do {
 		d->MsgSequenceNumber++;
 
-		buffer2[len] = d->MsgSequenceNumber;
+		buffer[length] = d->MsgSequenceNumber;
 
 		/* Calculating checksum */
 		checksum = 0;
-		for (i = 0; i < len + 1; i++) checksum ^= buffer2[i];
+
+		for (i = 0; i < length + 1; i++) {
+			checksum ^= buffer[i];
+		}
 	} while (checksum == 0x1f);
 
-	buffer2[len++] = d->MsgSequenceNumber;
-	buffer2[len++] = checksum;
+	buffer[length++] = d->MsgSequenceNumber;
+	buffer[length++] = checksum;
 
-	GSM_DumpMessageLevel2(s, buffer2+6, MsgLength, MsgType);
+	GSM_DumpMessageLevel2(s, buffer+6, MsgLength, MsgType);
 
 	/* Sending to phone */
-	usleep(10000);
-	sent=s->Device.Functions->WriteDevice(s,buffer2,len);
+	sent=s->Device.Functions->WriteDevice(s,buffer,length);
+	free(buffer);
+	buffer=NULL;
 
-	free(buffer2);
-
-	if (sent!=len) return ERR_DEVICEWRITEERROR;
+	if (sent!=length) {
+		return ERR_DEVICEWRITEERROR;
+	}
+	usleep(length*1000);
 	return ERR_NONE;
 }
 
@@ -70,25 +75,30 @@ static GSM_Error MBUS2_SendAck(GSM_StateMachine 	*s,
 			       unsigned char 		sequence)
 {
 	GSM_Device_Functions 	*Device		= s->Device.Functions;
-	unsigned char 		buffer2[6];
-	int 			i;
+	unsigned char 		buffer[6]={0};
+	int 			i=0,length=0,write_data=0;
 
-	buffer2[0] = MBUS2_FRAME_ID;
-	buffer2[1] = MBUS2_DEVICE_PHONE;	/* destination */
-	buffer2[2] = MBUS2_DEVICE_PC;		/* source */
-	buffer2[3] = MBUS2_ACK_BYTE;
-	buffer2[4] = sequence;
-	buffer2[5] = 0;
+	buffer[0] = MBUS2_FRAME_ID;
+	buffer[1] = MBUS2_DEVICE_PHONE;	/* destination */
+	buffer[2] = MBUS2_DEVICE_PC;		/* source */
+	buffer[3] = MBUS2_ACK_BYTE;
+	buffer[4] = sequence;
+	buffer[5] = '\0';
+	length=strlen(buffer);
 
 	/* Calculating checksum */
-	for (i = 0; i < 5; i++) buffer2[5] ^= buffer2[i];
-
+	for (i = 0; i < length; i++) {
+		buffer[5] ^= buffer[i];
+	}
 	smprintf_level(s, D_TEXT, "[Sending Ack of type %02x, seq: %x]\n",type,sequence);
 
 	/* Sending to phone */
-	usleep(10000);
-	if (Device->WriteDevice(s,buffer2,6)!=6) return ERR_DEVICEWRITEERROR;
+	write_data=Device->WriteDevice(s,buffer,length);
 
+	if (write_data!=length) {
+		return ERR_DEVICEWRITEERROR;
+	}
+	usleep(length*1000);
 	return ERR_NONE;
 }
 
@@ -221,6 +231,7 @@ static GSM_Error MBUS2_Initialise(GSM_StateMachine *s)
 static GSM_Error MBUS2_Terminate(GSM_StateMachine *s)
 {
 	free(s->Protocol.Data.MBUS2.Msg.Buffer);
+	s->Protocol.Data.MBUS2.Msg.Buffer=NULL;
 	return ERR_NONE;
 }
 
