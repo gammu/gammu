@@ -66,7 +66,6 @@ static GSM_Error MBUS2_WriteMessage (GSM_StateMachine 	*s,
 	if (sent!=length) {
 		return ERR_DEVICEWRITEERROR;
 	}
-	usleep(length*1000);
 	return ERR_NONE;
 }
 
@@ -98,7 +97,6 @@ static GSM_Error MBUS2_SendAck(GSM_StateMachine 	*s,
 	if (write_data!=length) {
 		return ERR_DEVICEWRITEERROR;
 	}
-	usleep(length*1000);
 	return ERR_NONE;
 }
 
