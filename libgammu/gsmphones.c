@@ -819,6 +819,8 @@ GSM_PhoneModel allmodels[] = {
 	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},
 	{"A2D"  ,	  "A2D"  ,	  "" ,				   {0}},
 	{"9210" ,	  "RAE-3",	  "Nokia Communicator GSM900/1800",{0}},
+	{"MTK1" ,	  "MTK1",	  "",				   {0}},
+	{"MTK2" ,	  "MTK2",	  "",				   {0}},
 
 	/* Sagem */
 	{"myV-65",	"myV-65 GPRS",	  "",				   {F_SMSME900,0}},
