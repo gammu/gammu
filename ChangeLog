@@ -28,6 +28,8 @@ ChangeLog
 [+] * Report GPRS state when getting network status (bug#1023).
 [-] * Fix reading of Siemens phonebook (bug#1046).
 [+] * Make gammu error codes map to GSM_Error.
+[-] * Various code cleanups.
+[-] * Add ID for Huawei E169.
     
 20091119 - 1.26.91
 
