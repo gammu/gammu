@@ -65,7 +65,7 @@ static GSM_Error N6510_AllocFileCache(GSM_StateMachine *s, int requested)
 	newsize = requested + 10;
 
 	/* Reallocate memory */
-	Priv->FilesCache = realloc(Priv->FilesCache, newsize * sizeof(GSM_File));
+	Priv->FilesCache = (GSM_File *)realloc(Priv->FilesCache, newsize * sizeof(GSM_File));
 	if (Priv->FilesCache == NULL) return ERR_MOREMEMORY;
 
 	/* Store new cache size */
@@ -479,7 +479,7 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 	File->Folder = FALSE;
 
 	/* making backup */
-	BackupCache = malloc(sizeof(GSM_File) * Priv->FilesLocationsUsed);
+	BackupCache = (GSM_File *)malloc(sizeof(GSM_File) * Priv->FilesLocationsUsed);
 	if (BackupCache == NULL) return ERR_MOREMEMORY;
 	memcpy(BackupCache, Priv->FilesCache, sizeof(GSM_File) * Priv->FilesLocationsUsed);
 	FilesLocationsUsed = Priv->FilesLocationsUsed;
@@ -493,9 +493,10 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 	error = N6510_GetFileFolderInfo1(s, &Priv->FilesCache[0], TRUE);
 
 	/* backuping new data */
-	NewFiles = malloc(sizeof(GSM_File) * Priv->FilesLocationsUsed);
+	NewFiles = (GSM_File *)malloc(sizeof(GSM_File) * Priv->FilesLocationsUsed);
 	if (NewFiles == NULL) {
 		free(BackupCache);
+		BackupCache=NULL;
 		return ERR_MOREMEMORY;
 	}
 	memcpy(NewFiles, Priv->FilesCache, sizeof(GSM_File) * Priv->FilesLocationsUsed);
@@ -504,10 +505,12 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 	/* restoring */
 	memcpy(Priv->FilesCache, BackupCache, sizeof(GSM_File) * FilesLocationsUsed);
 	free(BackupCache);
+	BackupCache=NULL;
 	Priv->FilesLocationsUsed = FilesLocationsUsed;
 
 	if (error != ERR_NONE) {
 		free(NewFiles);
+		NewFiles=NULL;
 		return error;
 	}
 
@@ -517,6 +520,7 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 		if (error == ERR_EMPTY) continue;
 		if (error != ERR_NONE) {
 			free(NewFiles);
+			NewFiles=NULL;
 			return error;
 		}
 		smprintf(s, "%s",DecodeUnicodeString(File->Name));
@@ -525,10 +529,12 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 			smprintf(s, "the same\n");
 			File->Folder = NewFiles[i].Folder;
 			free(NewFiles);
+			NewFiles=NULL;
 			return ERR_NONE;
 		}
 	}
 	free(NewFiles);
+	NewFiles=NULL;
 	return ERR_EMPTY;
 }
 
