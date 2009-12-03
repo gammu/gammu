@@ -54,7 +54,6 @@ static GSM_Error GNAPBUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 	if (sent!=length) {
 		return ERR_DEVICEWRITEERROR;
 	}
-	usleep(length*1000);
 	return ERR_NONE;
 }
 
