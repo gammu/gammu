@@ -236,7 +236,7 @@ char *OSDateTime (GSM_DateTime dt, gboolean TimeZone)
 
 	if (!RecalcDateTime(&timeptr, dt.Year, dt.Month, dt.Day,
 				dt.Hour, dt.Minute, dt.Second)) {
-		retval2[0] = 0;
+		retval2[0] = '\0';
 		return retval2;
 	}
 
@@ -343,7 +343,7 @@ int GetLine(FILE *File, char *Line, int count)
 		num = strlen(Line) - 1;
 		while (num > 0) {
 			if (Line[num] != '\n' && Line[num] != '\r') break;
-			Line[num--] = 0;
+			Line[num--] = '\0';
 		}
 		return strlen(Line);
 	}
@@ -365,8 +365,8 @@ void FreeLines(GSM_CutLines *lines)
 
 void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const char *whitespaces, int spaceslen, gboolean eot)
 {
-	int 	i,number=0,j;
-	gboolean 	whitespace=TRUE, nowwhite;
+	int 	 i=0,number=0,j=0;
+	gboolean whitespace=TRUE, nowwhite;
 
 	for (i = 0; i < lines->allocated; i++)
 		lines->numbers[i]=0;
@@ -375,7 +375,7 @@ void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const
 		/* Reallocate buffer if needed */
 		if (number + 1 >= lines->allocated - 1) {
 			lines->allocated += 20;
-			lines->numbers = realloc(lines->numbers, lines->allocated * sizeof(int));
+			lines->numbers = (int *)realloc(lines->numbers, lines->allocated * sizeof(int));
 			if (lines->numbers == NULL) return;
 			for (j = lines->allocated - 20; j < lines->allocated; j++)
 				lines->numbers[j] = 0;
@@ -410,16 +410,15 @@ void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const
 const char *GetLineString(const char *message, const GSM_CutLines *lines, int start)
 {
 	static char *retval = NULL;
-	int len;
+	int len=0;
 
 	if (message == NULL) {
 		free(retval);
 		retval = NULL;
 		return NULL;
 	}
-
 	len = GetLineLength(message, lines, start);
-	retval = realloc(retval, len + 1);
+	retval = (char *)realloc(retval, len + 1);
 	if (retval == NULL) {
 		dbgprintf(NULL, "Allocation failed!\n");
 		return NULL;
@@ -427,7 +426,7 @@ const char *GetLineString(const char *message, const GSM_CutLines *lines, int st
 
 	memcpy(retval, message + lines->numbers[start * 2 - 2], len);
 
-	retval[len] = 0;
+	retval[len] = '\0';
 
 	return retval;
 }
@@ -441,7 +440,7 @@ void CopyLineString(char *dest, const char *src, const GSM_CutLines *lines, int 
 {
 	int len = GetLineLength(src, lines, start);
 	memcpy(dest, GetLineString(src, lines, start), len);
-	dest[len] = 0;
+	dest[len] = '\0';
 }
 
 const char *GetOS(void)
@@ -616,9 +615,8 @@ gboolean GSM_IsNewerVersion(const char *latest_version, const char *current_vers
 
 void StripSpaces(char *buff)
 {
-	ssize_t i;
+	ssize_t i = 0;
 
-	i = 0;
 	while(iswspace(buff[i])) {
 		i++;
 	}

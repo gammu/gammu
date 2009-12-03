@@ -249,10 +249,9 @@ static void prepareStateMachine(void)
 void decodesniff(int argc, char *argv[])
 {
 	GSM_ConnectionType	Protocol = GCT_MBUS2;
-	unsigned char 		Buffer[50000];
-	unsigned char 		Buffer2[50000];
+	unsigned char 		Buffer[65536]={'\0'},Buffer2[65536]={'\0'};
 	FILE			*file;
-	int			len, len2, pos, state, i;
+	int			len=0, len2=0, pos=0, state=0, i=0;
 	unsigned char		mybyte1 = 0,mybyte2;
 	GSM_Error error;
 
@@ -291,10 +290,12 @@ void decodesniff(int argc, char *argv[])
 		MBUS2Data.MsgRXState=RX_Sync;
 		len2=30000;
 		state=0;
+
 		while (len2==30000) {
 			len2=fread(Buffer, 1, 30000, file);
 			pos=0;
 			len=0;
+
 			while (pos!=len2) {
 				switch (state) {
 				case 0:
@@ -346,31 +347,34 @@ void decodesniff(int argc, char *argv[])
 
 void decodebinarydump(int argc, char *argv[])
 {
-	unsigned char 		Buffer[50000];
 	FILE			*file;
-	int			len, len2, i;
-	unsigned char		type;
-	gboolean			sent;
 	GSM_Protocol_Message	msg;
 	GSM_Debug_Info		ldi = {DL_TEXTALL, stdout, FALSE, NULL, TRUE, FALSE, NULL, NULL};
-	GSM_Error error;
+	GSM_Error		error;
+	unsigned char 		Buffer[65536]={'\0'},type=0;
+	int			len=0, len2=0, i=0;
+	gboolean		sent=FALSE;
 
 	prepareStateMachine();
+
 	if (argc > 3) {
 		strcpy(gsm->CurrentConfig->Model,argv[3]);
 		error = GSM_RegisterAllPhoneModules(gsm);
 		if (error!=ERR_NONE) Print_Error(error);
 	}
 	file = fopen(argv[2], "rb");
+
 	if (file == NULL) {
 		printf("Can not open file \"%s\"\n",argv[2]);
 		Terminate(3);
 	}
 	len2=30000;
 	msg.Buffer = NULL;
+
 	while (len2==30000) {
 		len2=fread(Buffer, 1, 30000, file);
 		i=0;
+
 		while (i!=len2) {
 			if (Buffer[i++]==0x01) {
 				smprintf(gsm, "Sending frame ");
@@ -384,12 +388,12 @@ void decodebinarydump(int argc, char *argv[])
 			len 	= len + Buffer[i++];
 			smprintf(gsm, "0x%02x / 0x%04x", type, len);
 			DumpMessage(&ldi, Buffer+i, len);
-			fflush(stdout);
+
 			if (gsm->Phone.Functions != NULL && !sent) {
 				msg.Buffer = (unsigned char *)realloc(msg.Buffer,len);
 				memcpy(msg.Buffer,Buffer+i,len);
-				msg.Type		= type;
-				msg.Length		= len;
+				msg.Type = type;
+				msg.Length = len;
 				gsm->Phone.Data.RequestMsg = &msg;
 				gsm->Phone.Functions->DispatchMessage(gsm);
 			}
@@ -397,7 +401,6 @@ void decodebinarydump(int argc, char *argv[])
 		}
 	}
 	fclose(file);
-
 }
 
 #endif

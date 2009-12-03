@@ -195,6 +195,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 
 	/* Free allocated memory */
 	free(buff);
+	buff=NULL;
 
 	if (s->ConnectionType == 0) {
 		return ERR_UNKNOWNCONNECTIONTYPESTRING;
@@ -786,11 +787,9 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 
 int GSM_ReadDevice (GSM_StateMachine *s, gboolean waitforreply)
 {
-	unsigned char	buff[65536];
-	int		res = 0, count;
-
-	int	i;
 	GSM_DateTime	Date;
+	unsigned char	buff[65536]={'\0'};
+	int		res=0,count=0,i=0;
 
 	if (!GSM_IsConnected(s)) {
 		return ERR_NOTCONNECTED;
@@ -800,15 +799,19 @@ int GSM_ReadDevice (GSM_StateMachine *s, gboolean waitforreply)
 	i=Date.Second;
 	while (i==Date.Second) {
 		res = s->Device.Functions->ReadDevice(s, buff, sizeof(buff));
-		if (!waitforreply) break;
-		if (res > 0) break;
+
+		if (!waitforreply) {
+			break;
+		}
+		if (res > 0) {
+			break;
+		}
 		usleep(5000);
 		GSM_GetCurrentDateTime(&Date);
 	}
-
-	for (count = 0; count < res; count++)
+	for (count = 0; count < res; count++) {
 		s->Protocol.Functions->StateMachine(s,buff[count]);
-
+	}
 	return res;
 }
 
@@ -846,11 +849,10 @@ gboolean GSM_IsConnected(GSM_StateMachine *s) {
 GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 			  int length, unsigned char type, int timeout)
 {
-	GSM_Phone_Data			*Phone = &s->Phone.Data;
-	GSM_Protocol_Message 		sentmsg;
-	int				i;
+	GSM_Phone_Data *Phone = &s->Phone.Data;
+	GSM_Protocol_Message sentmsg;
+	int i = 0;
 
-	i=0;
 	do {
 		if (length != 0) {
 			sentmsg.Length 	= length;
@@ -868,13 +870,15 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 		}
 
 		if (length != 0) {
-			free (sentmsg.Buffer);
-			Phone->SentMsg  = NULL;
+			free(sentmsg.Buffer);
+			sentmsg.Buffer=NULL;
+			Phone->SentMsg=NULL;
 		}
 
 		/* Request completed */
-		if (Phone->RequestID==ID_None) return Phone->DispatchError;
-
+		if (Phone->RequestID==ID_None) {
+			return Phone->DispatchError;
+		}
 		i++;
 	} while (i<timeout);
 
@@ -1120,7 +1124,7 @@ void GSM_SetConfigNum(GSM_StateMachine *s, int sections)
  */
 void GSM_ExpandUserPath(char **string)
 {
-	char *tmp, *home;
+	char *tmp=NULL, *home=NULL;
 
 	/* Is there something to expand */
 	if (*string[0] != '~') return;
@@ -1145,9 +1149,9 @@ void GSM_ExpandUserPath(char **string)
 GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 {
 	INI_Section 	*h;
-	unsigned char 	section[50];
-	gboolean		found = FALSE;
-	char *Temp;
+	unsigned char 	section[50]={0};
+	gboolean	found = FALSE;
+	char		*Temp=NULL;
 
 #if defined(WIN32) || defined(DJGPP)
         static const char *DefaultPort		= "com2:";
@@ -1214,7 +1218,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	/* Set time sync */
 	free(cfg->SyncTime);
 	cfg->SyncTime 	 = INI_GetValue(cfg_info, section, "synchronizetime",	FALSE);
-	if (!cfg->SyncTime) {
+	if (cfg->SyncTime == NULL) {
 		cfg->SyncTime		 	 = strdup(DefaultSynchronizeTime);
 	} else {
 		cfg->SyncTime			 = strdup(cfg->SyncTime);
@@ -1223,7 +1227,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	/* Set debug file */
 	free(cfg->DebugFile);
 	cfg->DebugFile   = INI_GetValue(cfg_info, section, "logfile", 		FALSE);
-	if (!cfg->DebugFile) {
+	if (cfg->DebugFile == NULL) {
 		cfg->DebugFile		 	 = strdup(DefaultDebugFile);
 	} else {
 		cfg->DebugFile			 = strdup(cfg->DebugFile);
@@ -1233,7 +1237,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	/* Set file locking */
 	free(cfg->LockDevice);
 	cfg->LockDevice  = INI_GetValue(cfg_info, section, "use_locking", 	FALSE);
-	if (!cfg->LockDevice) {
+	if (cfg->LockDevice == NULL) {
 		cfg->LockDevice	 		 = strdup(DefaultLockDevice);
 	} else {
 		cfg->LockDevice			 = strdup(cfg->LockDevice);
@@ -1241,28 +1245,30 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* Set model */
 	Temp		 = INI_GetValue(cfg_info, section, "model", 		FALSE);
-	if (!Temp || strcmp(Temp, "auto") == 0) {
+	if (Temp == NULL || strcmp(Temp, "auto") == 0) {
 		strcpy(cfg->Model,DefaultModel);
 	} else {
 		if (strlen(Temp) >= sizeof(cfg->Model))
-			Temp[sizeof(cfg->Model) - 1] = 0;
+			Temp[sizeof(cfg->Model) - 1] = '\0';
 		strcpy(cfg->Model,Temp);
 	}
 
 	/* Set Log format */
 	Temp		 = INI_GetValue(cfg_info, section, "logformat", 	FALSE);
-	if (!Temp) {
+
+	if (Temp == NULL) {
 		strcpy(cfg->DebugLevel,DefaultDebugLevel);
 	} else {
 		if (strlen(Temp) >= sizeof(cfg->DebugLevel))
-			Temp[sizeof(cfg->DebugLevel) - 1] = 0;
+			Temp[sizeof(cfg->DebugLevel) - 1] = '\0';
 		strcpy(cfg->DebugLevel,Temp);
 	}
 
 	/* Set startup info */
 	free(cfg->StartInfo);
 	cfg->StartInfo   = INI_GetValue(cfg_info, section, "startinfo", 	FALSE);
-	if (!cfg->StartInfo) {
+
+	if (cfg->StartInfo == NULL) {
 		cfg->StartInfo	 		 = strdup(DefaultStartInfo);
 	} else {
 		cfg->StartInfo			 = strdup(cfg->StartInfo);
@@ -1271,57 +1277,66 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	/* Read localised strings for some phones */
 
 	Temp		 = INI_GetValue(cfg_info, section, "reminder", 		FALSE);
-	if (!Temp) {
+
+	if (Temp == NULL) {
 		strcpy(cfg->TextReminder,"Reminder");
 	} else {
 		if (strlen(Temp) >= sizeof(cfg->TextReminder))
-			Temp[sizeof(cfg->TextReminder) - 1] = 0;
+			Temp[sizeof(cfg->TextReminder) - 1] = '\0';
 		strcpy(cfg->TextReminder,Temp);
 	}
 
 	Temp		 = INI_GetValue(cfg_info, section, "meeting", 		FALSE);
-	if (!Temp) {
+
+	if (Temp == NULL) {
 		strcpy(cfg->TextMeeting,"Meeting");
 	} else {
 		if (strlen(Temp) >= sizeof(cfg->TextMeeting))
-			Temp[sizeof(cfg->TextMeeting) - 1] = 0;
+			Temp[sizeof(cfg->TextMeeting) - 1] = '\0';
 		strcpy(cfg->TextMeeting,Temp);
 	}
 
 	Temp		 = INI_GetValue(cfg_info, section, "call", 		FALSE);
-	if (!Temp) {
+
+	if (Temp == NULL) {
 		strcpy(cfg->TextCall,"Call");
 	} else {
 		if (strlen(Temp) >= sizeof(cfg->TextCall))
-			Temp[sizeof(cfg->TextCall) - 1] = 0;
+			Temp[sizeof(cfg->TextCall) - 1] = '\0';
 		strcpy(cfg->TextCall,Temp);
 	}
 
 	Temp		 = INI_GetValue(cfg_info, section, "birthday", 		FALSE);
-	if (!Temp) {
+
+	if (Temp == NULL) {
 		strcpy(cfg->TextBirthday,"Birthday");
 	} else {
 		if (strlen(Temp) >= sizeof(cfg->TextBirthday))
-			Temp[sizeof(cfg->TextBirthday) - 1] = 0;
+			Temp[sizeof(cfg->TextBirthday) - 1] = '\0';
 		strcpy(cfg->TextBirthday,Temp);
 	}
 
 	Temp		 = INI_GetValue(cfg_info, section, "memo", 		FALSE);
-	if (!Temp) {
+
+	if (Temp == NULL) {
 		strcpy(cfg->TextMemo,"Memo");
 	} else {
 		if (strlen(Temp) >= sizeof(cfg->TextMemo))
-			Temp[sizeof(cfg->TextMemo) - 1] = 0;
+			Temp[sizeof(cfg->TextMemo) - 1] = '\0';
 		strcpy(cfg->TextMemo,Temp);
 	}
 
 	/* Phone features */
 	Temp		 = INI_GetValue(cfg_info, section, "features", 		FALSE);
-	if (!Temp) {
+
+	if (Temp == NULL) {
 		cfg->PhoneFeatures[0] = 0;
 	} else {
 		error = GSM_SetFeatureString(cfg->PhoneFeatures, Temp);
-		if (error != ERR_NONE) goto fail;
+
+		if (error != ERR_NONE) {
+			goto fail;
+		}
 	}
 	return ERR_NONE;
 
@@ -1377,7 +1392,7 @@ void GSM_DumpMessageLevel2Recv(GSM_StateMachine *s, unsigned const char *message
 
 void GSM_DumpMessageLevel3_Custom(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type, int direction)
 {
-	int i;
+	int i=0;
 	GSM_Debug_Info *curdi;
 
 	curdi = GSM_GetDI(s);
@@ -1387,7 +1402,10 @@ void GSM_DumpMessageLevel3_Custom(GSM_StateMachine *s, unsigned const char *mess
 		smprintf(s,"%c",type);
 		smprintf(s,"%c",messagesize/256);
 		smprintf(s,"%c",messagesize%256);
-		for (i=0;i<messagesize;i++) smprintf(s,"%c",message[i]);
+
+		for (i=0;i<messagesize;i++) {
+			smprintf(s,"%c",message[i]);
+		}
 	}
 }
 void GSM_DumpMessageLevel3(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
@@ -1403,8 +1421,8 @@ void GSM_DumpMessageLevel3Recv(GSM_StateMachine *s, unsigned const char *message
 void GSM_OSErrorInfo(GSM_StateMachine *s, const char *description)
 {
 #ifdef WIN32
-	int 		i;
-	unsigned char 	*lpMsgBuf;
+	int 		i=0;
+	unsigned char 	*lpMsgBuf=NULL;
 #endif
 	GSM_Debug_Info *curdi;
 
@@ -1574,21 +1592,27 @@ GSM_StateMachine *GSM_AllocStateMachine(void)
 
 void GSM_FreeStateMachine(GSM_StateMachine *s)
 {
-	int i;
+	int i=0;
 
 	if (s == NULL) return;
 
 	/* Free allocated memory */
 	for (i = 0; i <= MAX_CONFIG_NUM; i++) {
 		free(s->Config[i].Device);
+		s->Config[i].Device=NULL;
 		free(s->Config[i].Connection);
+		s->Config[i].Connection=NULL;
 		free(s->Config[i].SyncTime);
+		s->Config[i].SyncTime=NULL;
 		free(s->Config[i].DebugFile);
+		s->Config[i].DebugFile=NULL;
 		free(s->Config[i].LockDevice);
+		s->Config[i].LockDevice=NULL;
 		free(s->Config[i].StartInfo);
+		s->Config[i].StartInfo=NULL;
 	}
-
 	free(s);
+	s=NULL;
 }
 
 

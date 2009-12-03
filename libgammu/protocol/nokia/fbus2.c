@@ -32,47 +32,56 @@ static GSM_Error FBUS2_WriteFrame(GSM_StateMachine 	*s,
 				  int 			MsgLength,
 				  unsigned char 	MsgType)
 {
-	unsigned char 		  buffer2[FBUS2_MAX_TRANSMIT_LENGTH + 10];
+	unsigned char 		  buffer[FBUS2_MAX_TRANSMIT_LENGTH + 10]={0};
 	unsigned char 		  checksum=0;
-	int 			  i, len, sent;
+	int 			  i=0, length=0, sent=0;
 
-	buffer2[0] 	= FBUS2_FRAME_ID;
-	if (s->ConnectionType==GCT_FBUS2IRDA) buffer2[0] = FBUS2_IRDA_FRAME_ID;
+	buffer[0] 	= FBUS2_FRAME_ID;
 
-	buffer2[1] 	= FBUS2_DEVICE_PHONE;		/* destination */
-	buffer2[2]	= FBUS2_DEVICE_PC;		/* source */
-	buffer2[3]	= MsgType;
-	buffer2[4]	= MsgLength / 256;
-	buffer2[5]	= MsgLength % 256;
-
-	memcpy(buffer2 + 6, MsgBuffer, MsgLength);
-	len = MsgLength + 6;
+	if (s->ConnectionType==GCT_FBUS2IRDA) {
+		buffer[0] = FBUS2_IRDA_FRAME_ID;
+	}
+	buffer[1] 	= FBUS2_DEVICE_PHONE;		/* destination */
+	buffer[2]	= FBUS2_DEVICE_PC;		/* source */
+	buffer[3]	= MsgType;
+	buffer[4]	= MsgLength / 256;
+	buffer[5]	= MsgLength % 256;
+	memcpy(buffer + 6, MsgBuffer, MsgLength);
+	length = MsgLength + 6;
 
 	/* Odd messages require additional 0x00 byte */
-	if (MsgLength % 2) buffer2[len++] = 0x00;
+	if (MsgLength % 2) {
+		buffer[length++] = 0x00;
+	}
+	checksum = 0;
 
-	checksum 	= 0;
-	for (i = 0; i < len; i+=2) checksum ^= buffer2[i];
-	buffer2[len++] 	= checksum;
+	for (i = 0; i < length; i+=2) {
+		checksum ^= buffer[i];
+	}
+	buffer[length++] = checksum;
+	checksum = 0;
 
-	checksum 	= 0;
-	for (i = 1; i < len; i+=2) checksum ^= buffer2[i];
-	buffer2[len++] 	= checksum;
+	for (i = 1; i < length; i+=2) {
+		checksum ^= buffer[i];
+	}
+	buffer[length++] = checksum;
 
 	/* Sending to phone */
-	sent=s->Device.Functions->WriteDevice(s,buffer2,len);
-	if (sent!=len) return ERR_DEVICEWRITEERROR;
+	sent=s->Device.Functions->WriteDevice(s,buffer,length);
 
+	if (sent!=length) {
+		return ERR_DEVICEWRITEERROR;
+	}
 	return ERR_NONE;
 }
 
 static GSM_Error FBUS2_WriteMessage (GSM_StateMachine 	*s,
-				     unsigned const char 	*MsgBuffer,
+				     unsigned const char *MsgBuffer,
 				     int 		MsgLength,
 				     unsigned char 	MsgType)
 {
-	int 			i, nom, togo, thislength; /* number of messages, ... */
-	unsigned char 		buffer2[FBUS2_MAX_TRANSMIT_LENGTH + 2], seqnum;
+	int 			i=0, nom=0, togo=0, thislength=0; /* number of messages, ... */
+	unsigned char 		buffer[FBUS2_MAX_TRANSMIT_LENGTH + 2]={0}, seqnum=0;
 	GSM_Protocol_FBUS2Data	*d = &s->Protocol.Data.FBUS2;
 	GSM_Error 		error;
 
@@ -82,23 +91,31 @@ static GSM_Error FBUS2_WriteMessage (GSM_StateMachine 	*s,
 	togo = MsgLength;
 
 	for (i = 0; i < nom; i++) {
-		seqnum 			= d->MsgSequenceNumber;
-		if (i==0) seqnum 	= seqnum + 0x40;
-		d->MsgSequenceNumber 	= (d->MsgSequenceNumber + 1) & 0x07;
+		seqnum = d->MsgSequenceNumber;
+
+		if (i==0) {
+			seqnum = seqnum + 0x40;
+		}
+		d->MsgSequenceNumber = (d->MsgSequenceNumber + 1) & 0x07;
 
 		thislength = togo;
-		if (togo > FBUS2_MAX_TRANSMIT_LENGTH) thislength = FBUS2_MAX_TRANSMIT_LENGTH;
-		memcpy(buffer2, MsgBuffer + (MsgLength - togo), thislength);
-		buffer2[thislength]	= nom - i;
-		buffer2[thislength + 1]	= seqnum;
-		togo 			= togo - thislength;
 
-		GSM_DumpMessageLevel2(s, buffer2, thislength, MsgType);
+		if (togo > FBUS2_MAX_TRANSMIT_LENGTH) {
+			thislength = FBUS2_MAX_TRANSMIT_LENGTH;
+		}
+		memcpy(buffer, MsgBuffer + (MsgLength - togo), thislength);
+		buffer[thislength] = nom - i;
+		buffer[thislength + 1]	= seqnum;
+		togo = togo - thislength;
 
-		error = FBUS2_WriteFrame(s, buffer2, thislength + 2, MsgType);
-		if (error != ERR_NONE) return error;
+		GSM_DumpMessageLevel2(s, buffer, thislength, MsgType);
+
+		error = FBUS2_WriteFrame(s, buffer, thislength + 2, MsgType);
+
+		if (error != ERR_NONE) {
+			return error;
+		}
 	}
-
 	return ERR_NONE;
 }
 
@@ -106,17 +123,17 @@ static GSM_Error FBUS2_SendAck(GSM_StateMachine 	*s,
 			       unsigned char 		MsgType,
 			       unsigned char 		MsgSequence)
 {
-	unsigned char buffer2[2];
+	unsigned char buffer[2]={0};
 
-	buffer2[0] = MsgType;
-	buffer2[1] = MsgSequence;
+	buffer[0] = MsgType;
+	buffer[1] = MsgSequence;
 
 	smprintf_level(s, D_TEXT, "[Sending Ack of type %02x, seq %x]\n",
-			buffer2[0],
-			buffer2[1]);
+			buffer[0],
+			buffer[1]);
 
 	/* Sending to phone */
-	return FBUS2_WriteFrame(s, buffer2, 2, FBUS2_ACK_BYTE);
+	return FBUS2_WriteFrame(s, buffer, 2, FBUS2_ACK_BYTE);
 }
 
 static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
@@ -138,12 +155,10 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		/* Checksum is incorrect */
 		if (d->Msg.CheckSum[0] != d->Msg.CheckSum[1]) {
 			smprintf_level(s, D_ERROR, "[ERROR: checksum]\n");
-
 			free(d->Msg.Buffer);
-			d->Msg.Length 		= 0;
-			d->Msg.Buffer 		= NULL;
-
-			d->MsgRXState 		= RX_Sync;
+			d->Msg.Buffer = NULL;
+			d->Msg.Length = 0;
+			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
 		}
 
@@ -152,11 +167,9 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		if (d->Msg.Type == FBUS2_ACK_BYTE) {
 			smprintf_level(s, D_TEXT, "[Received Ack of type %02x, seq %02x]\n",
 					d->Msg.Buffer[0], seq_num);
-
 			free(d->Msg.Buffer);
-			d->Msg.Buffer 	= NULL;
-			d->Msg.Length 	= 0;
-
+			d->Msg.Buffer = NULL;
+			d->Msg.Length = 0;
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
 		}
@@ -173,23 +186,19 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		if ((seq_num & 0x40) != 0x40 && d->FramesToGo != frm_num) {
 			smprintf_level(s, D_ERROR, "[ERROR: Missed part of multiframe msg]\n");
-
 			free(d->Msg.Buffer);
-			d->Msg.Length 		= 0;
-			d->Msg.Buffer 		= NULL;
-
-			d->MsgRXState 		= RX_Sync;
+			d->Msg.Buffer = NULL;
+			d->Msg.Length = 0;
+			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
 		}
 
 		if ((seq_num & 0x40) != 0x40 && d->Msg.Type != d->MultiMsg.Type) {
 			smprintf_level(s, D_ERROR, "[ERROR: Multiframe msg in multiframe msg]\n");
-
 			free(d->Msg.Buffer);
-			d->Msg.Length 		= 0;
-			d->Msg.Buffer 		= NULL;
-
-			d->MsgRXState 		= RX_Sync;
+			d->Msg.Buffer = NULL;
+			d->Msg.Length = 0;
+			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
 		}
 
@@ -201,9 +210,8 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		d->MultiMsg.Length = d->MultiMsg.Length+d->Msg.Length-2;
 
 		free(d->Msg.Buffer);
-		d->Msg.Length 	= 0;
-		d->Msg.Buffer 	= NULL;
-
+		d->Msg.Buffer = NULL;
+		d->Msg.Length = 0;
 		d->FramesToGo--;
 
 		/* do not ack debug trace, as this could generate a
@@ -308,17 +316,16 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
  */
 static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length, int timeout)
 {
-	unsigned char		buff[300];
-	int			w = 0;
-	gboolean			wassomething = FALSE;
-	int recvlen;
-
+	unsigned char		buff[300]={0};
+	int			w = 0,recvlen=0;
+	gboolean		wassomething = FALSE;
 
 	GSM_DumpMessageLevel2(s, command, length, 0xff);
 	s->Device.Functions->WriteDevice(s, command, length);
 
 	for (w = 0; w < timeout; w++) {
-		recvlen = s->Device.Functions->ReadDevice(s, buff, sizeof(buff) - 1);
+		recvlen = s->Device.Functions->ReadDevice(s, buff, sizeof(buff));
+
 		if (wassomething && recvlen == 0) {
 			return;
 		} else if (recvlen > 0) {
@@ -355,27 +362,30 @@ static GSM_Error FBUS2_ATSwitch(GSM_StateMachine *s)
  */
 static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s, const int repeats, const int delays, const gboolean terminate)
 {
-	int count;
+	int count=0,write_data=0;
 	static const unsigned char init_char = 0x55;
 	static const unsigned char end_init_char = 0xc1;
 
 	for (count = 0; count < repeats; count ++) {
-		if (s->Device.Functions->WriteDevice(s, &init_char, 1) != 1) {
+		write_data=s->Device.Functions->WriteDevice(s, &init_char, 1);
+
+		if (write_data != 1) {
 			return ERR_DEVICEWRITEERROR;
 		}
+
 		if (delays > 0) {
 			usleep(delays);
 		}
 	}
 
 	if (terminate) {
-		if (s->Device.Functions->WriteDevice(s, &end_init_char, 1) != 1) {
+		write_data=s->Device.Functions->WriteDevice(s, &end_init_char, 1);
+
+		if (write_data != 1) {
 			return ERR_DEVICEWRITEERROR;
 		}
 	}
-
 	sleep(1);
-
 	return ERR_NONE;
 }
 
@@ -384,7 +394,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	GSM_Protocol_FBUS2Data	*d		= &s->Protocol.Data.FBUS2;
 	GSM_Device_Functions	*Device 	= s->Device.Functions;
 	GSM_Error		error;
-	unsigned char		buff[300];
+	unsigned char		buff[300]={0};
 
 	d->Msg.Length		= 0;
 	d->Msg.Buffer		= NULL;
@@ -481,10 +491,9 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 static GSM_Error FBUS2_Terminate(GSM_StateMachine *s)
 {
 	free(s->Protocol.Data.FBUS2.Msg.Buffer);
+	s->Protocol.Data.FBUS2.Msg.Buffer = NULL;
 	free(s->Protocol.Data.FBUS2.MultiMsg.Buffer);
-	s->Protocol.Data.FBUS2.Msg.Buffer 	= NULL;
-	s->Protocol.Data.FBUS2.MultiMsg.Buffer 	= NULL;
-
+	s->Protocol.Data.FBUS2.MultiMsg.Buffer = NULL;
 	sleep(2);
 	return ERR_NONE;
 }

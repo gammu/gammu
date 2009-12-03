@@ -836,14 +836,13 @@ static GSM_Error loadpuremidi(FILE *file, GSM_Ringtone *ringtone)
 static GSM_Error loadmmf(FILE *file, GSM_Ringtone *ringtone)
 {
 	struct 	stat st;
-	char 	*buffer;
-	size_t length;
-	size_t readbytes;
+	char 	*buffer=NULL;
+	size_t	length=0,readbytes=0;
 
 	dbgprintf(NULL, "loading smaf file\n");
 	fstat(fileno(file), &st);
 	ringtone->BinaryTone.Length = length = st.st_size;
-	ringtone->BinaryTone.Buffer = buffer = malloc(length);
+	ringtone->BinaryTone.Buffer = buffer = (char *)malloc(length);
 	if (buffer == NULL)
 		return ERR_MOREMEMORY;
 	readbytes = fread(buffer, 1, length, file);

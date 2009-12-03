@@ -183,9 +183,8 @@ GSM_Error GSM_SetFeatureString(GSM_Feature *list, const char *string)
 			break;
 		}
 	}
-
-
 	free(buffer);
+	buffer=NULL;
 	return error;
 }
 
@@ -835,6 +834,8 @@ GSM_PhoneModel allmodels[] = {
 	{"E162",	"E162",		"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, F_FOUR_DIGIT_YEAR, 0}},
 	{"E160G",	"E160G",	"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, F_FOUR_DIGIT_YEAR, 0}},
 	{"E162G",	"E162G",	"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, F_FOUR_DIGIT_YEAR, 0}},
+	{"E169",	"E169",		"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, F_FOUR_DIGIT_YEAR, 0}},
+	{"E169G",	"E169G",	"",		{F_SMS_LOCATION_0, F_ENCODED_USSD, F_FOUR_DIGIT_YEAR, 0}},
 
 	/* Ubinetics */
 	{"GDC201",	"GDC201",	"",		{F_SMS_NO_ME, 0}},
@@ -877,7 +878,7 @@ GSM_PhoneModel *GetModelData(GSM_StateMachine *s, const char *model, const char 
 
 gboolean GSM_IsPhoneFeatureAvailable(GSM_PhoneModel *model, GSM_Feature feature)
 {
-	int	i	= 0;
+	int i = 0;
 
 	while (model->features[i] != 0) {
 		if (model->features[i] == feature) {

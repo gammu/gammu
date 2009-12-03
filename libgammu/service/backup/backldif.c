@@ -334,7 +334,7 @@ GSM_Error LoadLDIF(const char *FileName, GSM_Backup *backup)
 	GSM_Error		error;
 	GSM_MemoryEntry	Pbk;
 	int			numPbk = 0;
-	size_t Pos = 0;
+	size_t			Pos = 0;
 
 	File.Buffer = NULL;
 	error = GSM_ReadFile(FileName, &File);
@@ -348,7 +348,7 @@ GSM_Error LoadLDIF(const char *FileName, GSM_Backup *backup)
 		}
 		if (error != ERR_NONE) break;
 		if (numPbk < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
-			backup->PhonePhonebook[numPbk] = malloc(sizeof(GSM_MemoryEntry));
+			backup->PhonePhonebook[numPbk] = (GSM_MemoryEntry *)malloc(sizeof(GSM_MemoryEntry));
 		        if (backup->PhonePhonebook[numPbk] == NULL) {
 				error = ERR_MOREMEMORY;
 				break;
@@ -366,7 +366,7 @@ GSM_Error LoadLDIF(const char *FileName, GSM_Backup *backup)
 	}
 
 	free(File.Buffer);
-
+	File.Buffer=NULL;
 	return error;
 }
 

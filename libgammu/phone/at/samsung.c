@@ -124,20 +124,20 @@ static unsigned int GetCRC(char *data, int size)
 
 static GSM_Error WaitFor(GSM_StateMachine *s, const char *t, int ttl)
 {
-	char 		readbuf[100];
-	int 		n;
-	int 	sec;
+	char 		readbuf[100]={0};
+	int 		n=0,sec=0;
         GSM_DateTime    Date;
 
         GSM_GetCurrentDateTime (&Date);
         sec = Date.Second;
 
-	n = s->Device.Functions->ReadDevice(s, readbuf, 80);
-	readbuf[n] = 0;
+	n = s->Device.Functions->ReadDevice(s, readbuf, sizeof(readbuf) - 1);
+	readbuf[n] = '\0';
+
 	while (strstr(readbuf, t) == NULL && (sec + ttl) >= Date.Second) {
-		usleep(500000);
-		n = s->Device.Functions->ReadDevice(s, readbuf, 80);
-		readbuf[n] = 0;
+		usleep(size*10);
+		n = s->Device.Functions->ReadDevice(s, readbuf, sizeof(readbuf) - 1);
+		readbuf[n] = '\0';
         	GSM_GetCurrentDateTime (&Date);
 	}
 
@@ -644,7 +644,7 @@ GSM_Error SAMSUNG_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Sta
 
 	s->Phone.Data.CalStatus = Status;
 
-	ATGEN_WaitFor(s, "AT+ORGI?\r", 9, 0x00, 10, ID_GetCalendarNotesInfo);
+	ATGEN_WaitFor(s, "AT+ORGI?\r", strlen("AT+ORGI?\r"), 0x00, 10, ID_GetCalendarNotesInfo);
 
 	return error;
 }

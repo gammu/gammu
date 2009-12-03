@@ -1331,11 +1331,11 @@ GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t Max
 	gboolean skip = FALSE;
 	gboolean quoted_printable = FALSE;
 	gboolean was_cr = FALSE, was_lf = FALSE;
-	size_t pos;
-	int tmp;
+	size_t pos=0;
+	int tmp=0;
 	size_t OutLen = 200;
 
-	*OutBuffer = malloc(OutLen);
+	*OutBuffer = (char *)malloc(OutLen);
 	if (*OutBuffer == NULL) return ERR_MOREMEMORY;
 	(*OutBuffer)[0] = 0;
 	pos = 0;
@@ -1391,7 +1391,7 @@ GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t Max
 			(*OutBuffer)[pos] = 0;
 			if (pos + 2 >= OutLen) {
 				OutLen += 100;
-				*OutBuffer = realloc(*OutBuffer, OutLen);
+				*OutBuffer = (char *)realloc(*OutBuffer, OutLen);
 				if (*OutBuffer == NULL) return ERR_MOREMEMORY;
 			}
 		}
@@ -1666,12 +1666,14 @@ void DecodeXMLUTF8(unsigned char *dest, const char *src, int len)
 			strncat(tmp, lastpos, pos_end - pos + 1);
 		}
 		free(entity);
+		entity=NULL;
 		lastpos = pos_end + 1;
 	}
 	/* Copy rest of string */
 	strcat(tmp, lastpos);
 	DecodeUTF8(dest, tmp, strlen(tmp));
 	free(tmp);
+	tmp=NULL;
 }
 
 void DecodeUTF7(unsigned char *dest, const unsigned char *src, int len)

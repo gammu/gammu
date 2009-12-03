@@ -254,7 +254,7 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer UNUSED, unsigned char 
 	num = 0;
 	while (backup->CallerLogos[num] != NULL) num++;
 	if (num < GSM_BACKUP_MAX_CALLER) {
-		backup->CallerLogos[num] = malloc(sizeof(GSM_Bitmap));
+		backup->CallerLogos[num] = (GSM_Bitmap *)malloc(sizeof(GSM_Bitmap));
 	        if (backup->CallerLogos[num] == NULL) return ERR_MOREMEMORY;
 		backup->CallerLogos[num + 1] = NULL;
 	} else {
@@ -279,7 +279,7 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer UNUSED, unsigned char
 		switch (buffer2[j++]) {
 			case 1:
 				dbgprintf(NULL, "Block 1 - startup logo\n");
-				backup->StartupLogo = malloc(sizeof(GSM_Bitmap));
+				backup->StartupLogo = (GSM_Bitmap *)malloc(sizeof(GSM_Bitmap));
 			        if (backup->StartupLogo == NULL) return ERR_MOREMEMORY;
 				backup->StartupLogo->Location	= 1;
 				backup->StartupLogo->BitmapHeight	= buffer2[j++];
@@ -303,7 +303,7 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer UNUSED, unsigned char
 				dbgprintf(NULL, "\"\n");
 #endif
 				if (backup->StartupLogo == NULL) {
-					backup->StartupLogo = malloc(sizeof(GSM_Bitmap));
+					backup->StartupLogo = (GSM_Bitmap *)malloc(sizeof(GSM_Bitmap));
 				        if (backup->StartupLogo == NULL) return ERR_MOREMEMORY;
 					backup->StartupLogo->Type = GSM_WelcomeNote_Text;
 					EncodeUnicode(backup->StartupLogo->Text,buffer2+j,buffer2[j]);
@@ -357,7 +357,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	if (buffer[10]==2) {
 		while (backup->PhonePhonebook[num] != NULL) num++;
 		if (num < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
-			backup->PhonePhonebook[num] = malloc(sizeof(GSM_MemoryEntry));
+			backup->PhonePhonebook[num] = (GSM_MemoryEntry *)malloc(sizeof(GSM_MemoryEntry));
 		        if (backup->PhonePhonebook[num] == NULL) {
 				GSM_FreeStateMachine(fake_sm);
 				return ERR_MOREMEMORY;
@@ -372,7 +372,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	} else {
 		while (backup->SIMPhonebook[num] != NULL) num++;
 		if (num < GSM_BACKUP_MAX_SIMPHONEBOOK) {
-			backup->SIMPhonebook[num] = malloc(sizeof(GSM_MemoryEntry));
+			backup->SIMPhonebook[num] = (GSM_MemoryEntry *)malloc(sizeof(GSM_MemoryEntry));
 		        if (backup->SIMPhonebook[num] == NULL) {
 				GSM_FreeStateMachine(fake_sm);
 				return ERR_MOREMEMORY;

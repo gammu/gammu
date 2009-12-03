@@ -217,7 +217,9 @@ int bluetooth_read(GSM_StateMachine *s, void *buffer, size_t size)
 			pthread_mutex_unlock(&(pContext->mutexWait));
 
 			free(pDataBlock->pData);
+			pDataBlock->pData=NULL;
 			free(pDataBlock);
+			pDataBlock=NULL;
 
 			return nBytes + size;
 		} else if (pDataBlock->nSize > size) {
@@ -239,7 +241,9 @@ int bluetooth_read(GSM_StateMachine *s, void *buffer, size_t size)
 			pthread_mutex_unlock(&(pContext->mutexWait));
 
 			free(pDataBlock->pData);
+			pDataBlock->pData=NULL;
 			free(pDataBlock);
+			pDataBlock=NULL;
 		}
 	}
 

@@ -602,10 +602,16 @@ static GSM_Error ALCATEL_Terminate(GSM_StateMachine *s)
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
 	free(Priv->CalendarItems);
+	Priv->CalendarItems=NULL;
 	free(Priv->ContactsItems);
+	Priv->ContactsItems=NULL;
 	free(Priv->ToDoItems);
+	Priv->ToDoItems=NULL;
 	error = ALCATEL_SetATMode(s);
-	if (error != ERR_NONE) return error;
+
+	if (error != ERR_NONE) {
+		return error;
+	}
 	return ATGEN_Terminate(s);
 }
 
@@ -735,7 +741,9 @@ static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s, gboolean refresh)
 	}
 
 	if (*Priv->CurrentList != NULL) {
-		if (!refresh) return ERR_NONE;
+		if (!refresh) {
+			return ERR_NONE;
+		}
 		free(*Priv->CurrentList);
 		*Priv->CurrentList = NULL;
 	}

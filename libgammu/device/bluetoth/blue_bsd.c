@@ -192,8 +192,8 @@ static GSM_Error bluetooth_search(GSM_StateMachine *s, bdaddr_t *bdaddr)
 			}
 			smprintf(s, "\n");
 		}
-
 		free(sv);
+		sv=NULL;
 	}
 
 	sdp_close(ss);
@@ -232,11 +232,13 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 	for (n = 0; n < count; n++) {
 		if (bluetooth_search(s, &ii[n].bdaddr) == ERR_NONE) {
 			free(ii);
+			ii=NULL;
 			return ERR_NONE;
 		}
 	}
 
 	free(ii);
+	ii=NULL;
 	return ERR_UNKNOWN;
 }
 

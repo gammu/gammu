@@ -1347,8 +1347,9 @@ void DCT4GetScreenDump(int argc, char *argv[])
 	error=GSM_WaitFor (gsm, req, 6, 0x0E, 4, ID_User3);
 	Print_Error(error);
 	len = 2000;
-	while (len >= 200) GSM_ReadDevice(gsm,TRUE);
-
+	while (len >= 200) {
+		GSM_ReadDevice(gsm,TRUE);
+	}
 	GSM_Terminate();
 }
 

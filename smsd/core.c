@@ -948,6 +948,7 @@ gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Confi
 				SMSD_Log(DEBUG_INFO, Config, "Process continued");
 			}
 			usleep(100000);
+
 			if (i++ > 1200) {
 				SMSD_Log(DEBUG_INFO, Config, "Waited two minutes for child process, giving up");
 				return TRUE;
@@ -1144,6 +1145,7 @@ gboolean SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		/* No outbox sms - wait few seconds and escape */
 		for (j = 0; j < Config->commtimeout && !Config->shutdown; j++) {
 			sleep(1);
+
 			if (j % 15 == 0) {
 				SMSD_PhoneStatus(Config);
 				Service->RefreshPhoneStatus(Config);
@@ -1340,10 +1342,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure)
 			}
 			if (initerrors++ > 3) {
 				SMSD_Log(DEBUG_INFO, Config, "Going to 30 seconds sleep because of too much connection errors");
-				for (i = 0; i < 30; i++) {
+
+				for (i = 0; i < 60; i++) {
 					if (Config->shutdown)
 						break;
-					sleep(1);
+					usleep(500000);
 				}
 			}
 			SMSD_Log(DEBUG_INFO, Config, "Starting phone communication...");

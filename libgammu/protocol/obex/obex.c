@@ -13,25 +13,28 @@
 #include "../../misc/coding/coding.h"
 #include "obex.h"
 
-static GSM_Error OBEX_WriteMessage (GSM_StateMachine *s, unsigned const char *buffer,
-				    int length, unsigned char type)
+static GSM_Error OBEX_WriteMessage (GSM_StateMachine *s, unsigned const char *MsgBuffer,
+				    int MsgLength, unsigned char type)
 {
-	unsigned char	*out_buffer;
-	int 		current=0,sent;
+	unsigned char	*buffer=NULL;
+	int 		length=0,sent=0;
 
-	out_buffer = (unsigned char *)malloc(length + 3);
+	buffer = (unsigned char *)malloc(MsgLength + 3);
 
-	OBEXAddBlock(out_buffer, &current, type, buffer, length);
+	OBEXAddBlock(buffer, &length, type, MsgBuffer, MsgLength);
 
-	GSM_DumpMessageLevel2(s, out_buffer+3, length, type);
-	GSM_DumpMessageLevel3(s, out_buffer+3, length, type);
+	GSM_DumpMessageLevel2(s, buffer+3, MsgLength, type);
+	GSM_DumpMessageLevel3(s, buffer+3, MsgLength, type);
 
 	/* Send it out... */
-	sent = s->Device.Functions->WriteDevice(s,out_buffer,current);
+	sent = s->Device.Functions->WriteDevice(s,buffer,length);
 
-	free(out_buffer);
+	free(buffer);
+	buffer=NULL;
 
-	if (sent!=current) return ERR_DEVICEWRITEERROR;
+	if (sent!=length) {
+		return ERR_DEVICEWRITEERROR;
+	}
 	return ERR_NONE;
 }
 
@@ -94,6 +97,7 @@ static GSM_Error OBEX_Initialise(GSM_StateMachine *s)
 static GSM_Error OBEX_Terminate(GSM_StateMachine *s)
 {
 	free(s->Protocol.Data.OBEX.Msg.Buffer);
+	s->Protocol.Data.OBEX.Msg.Buffer=NULL;
 	return ERR_NONE;
 }
 
