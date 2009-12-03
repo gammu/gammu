@@ -69,7 +69,7 @@ GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
 		if (error != ERR_NONE) break;
 		if (Pbk.MemoryType == MEM_SM) {
 			if (numSIM < GSM_BACKUP_MAX_SIMPHONEBOOK) {
-				backup->SIMPhonebook[numSIM] = malloc(sizeof(GSM_MemoryEntry));
+				backup->SIMPhonebook[numSIM] = (GSM_MemoryEntry *)malloc(sizeof(GSM_MemoryEntry));
 				if (backup->SIMPhonebook[numSIM] == NULL) {
 					error = ERR_MOREMEMORY;
 					break;
@@ -87,7 +87,7 @@ GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
 			numSIM++;
 		} else {
 			if (numPbk < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
-				backup->PhonePhonebook[numPbk] = malloc(sizeof(GSM_MemoryEntry));
+				backup->PhonePhonebook[numPbk] = (GSM_MemoryEntry *)malloc(sizeof(GSM_MemoryEntry));
 				if (backup->PhonePhonebook[numPbk] == NULL) {
 					error = ERR_MOREMEMORY;
 					break;
