@@ -236,10 +236,10 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gb
 static GSM_Error N3650_Initialise (GSM_StateMachine *s)
 {
 	GSM_Phone_N3650Data 	*Priv = &s->Phone.Data.Priv.N3650;
-	int			i;
+	int			i=0;
 
 	for (i=0;i<10000;i++) {
-		Priv->Files[i] = malloc(sizeof(GSM_File));
+		Priv->Files[i] = (GSM_File *)malloc(sizeof(GSM_File));
 	        if (Priv->Files[i] == NULL) return ERR_MOREMEMORY;
 	}
 	return ERR_NONE;
@@ -250,7 +250,10 @@ static GSM_Error N3650_Terminate(GSM_StateMachine *s)
 	GSM_Phone_N3650Data 	*Priv = &s->Phone.Data.Priv.N3650;
 	int			i;
 
-	for (i=0;i<10000;i++) free(Priv->Files[i]);
+	for (i=0;i<10000;i++) {
+		free(Priv->Files[i]);
+		Priv->Files[i]=NULL;
+	}
 	return ERR_NONE;
 }
 
