@@ -607,7 +607,8 @@ void SendSMSStatus (GSM_StateMachine *sm, int status, int MessageReference, void
 		printf(_("..error %i"),status);
 		SMSStatus = ERR_UNKNOWN;
 	}
-	printf(_(", message reference=%d\n"),MessageReference);
+	printf(_(", message reference=%d"),MessageReference);
+	printf("\n");
 	fflush(stdout);
 }
 
