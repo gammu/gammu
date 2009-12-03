@@ -1,4 +1,5 @@
 SAMSUNG Organizer AT commands
+=============================
 
 AT+ORGI?       : Get organizer information
 AT+ORG=number  : Get organizer details for index entry "number"
