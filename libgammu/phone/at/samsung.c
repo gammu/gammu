@@ -644,7 +644,7 @@ GSM_Error SAMSUNG_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Sta
 
 	s->Phone.Data.CalStatus = Status;
 
-	ATGEN_WaitFor(s, "AT+ORGI?\r", 9, 0x00, 10, ID_GetCalendarNotesInfo);
+	ATGEN_WaitFor(s, "AT+ORGI?\r", strlen("AT+ORGI?\r"), 0x00, 10, ID_GetCalendarNotesInfo);
 
 	return error;
 }
