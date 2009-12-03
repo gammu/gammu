@@ -1574,21 +1574,27 @@ GSM_StateMachine *GSM_AllocStateMachine(void)
 
 void GSM_FreeStateMachine(GSM_StateMachine *s)
 {
-	int i;
+	int i=0;
 
 	if (s == NULL) return;
 
 	/* Free allocated memory */
 	for (i = 0; i <= MAX_CONFIG_NUM; i++) {
 		free(s->Config[i].Device);
+		s->Config[i].Device=NULL;
 		free(s->Config[i].Connection);
+		s->Config[i].Connection=NULL;
 		free(s->Config[i].SyncTime);
+		s->Config[i].SyncTime=NULL;
 		free(s->Config[i].DebugFile);
+		s->Config[i].DebugFile=NULL;
 		free(s->Config[i].LockDevice);
+		s->Config[i].LockDevice=NULL;
 		free(s->Config[i].StartInfo);
+		s->Config[i].StartInfo=NULL;
 	}
-
 	free(s);
+	s=NULL;
 }
 
 
