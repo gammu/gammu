@@ -374,12 +374,17 @@ GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo *info)
 	int i;
 
 	for (i=0;i<GSM_MAX_MULTI_MMS;i++) {
-		if (info->Entries[i].File.Buffer != NULL) free(info->Entries[i].File.Buffer);
+		if (info->Entries[i].File.Buffer != NULL) {
+			free(info->Entries[i].File.Buffer);
+			info->Entries[i].File.Buffer=NULL;
+		}
 	}
 
 	memset(info,0,sizeof(GSM_EncodedMultiPartMMSInfo));
 
-	for (i=0;i<GSM_MAX_MULTI_MMS;i++) info->Entries[i].File.Buffer = NULL;
+	for (i=0;i<GSM_MAX_MULTI_MMS;i++) {
+		info->Entries[i].File.Buffer = NULL;
+	}
 	info->DateTimeAvailable = FALSE;
 
 	return ERR_NONE;
@@ -897,7 +902,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 		pos+=i;
 
 		/* data */
-		info->Entries[info->EntriesNum].File.Buffer = realloc(info->Entries[info->EntriesNum].File.Buffer,len3);
+		info->Entries[info->EntriesNum].File.Buffer = (unsigned char *)realloc(info->Entries[info->EntriesNum].File.Buffer,len3);
 		info->Entries[info->EntriesNum].File.Used   = len3;
 		memcpy(info->Entries[info->EntriesNum].File.Buffer,file->Buffer+pos,len3);
 
