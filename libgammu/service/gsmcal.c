@@ -1736,6 +1736,8 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 						error = GSM_DecodeVCAL_RRULE(di, rrule, Calendar, Time);
 					}
 					free(rrule);
+					rrule=NULL;
+
 					if (error != ERR_NONE) {
 						return error;
 					}
