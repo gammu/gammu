@@ -85,11 +85,11 @@ GSM_Error GSM_ReadFile(const char *FileName, GSM_File *File)
 	File->Buffer 	= NULL;
 	File->Used 	= 0;
 	while (i == 1000) {
-		File->Buffer 	= realloc(File->Buffer,File->Used + 1000);
+		File->Buffer 	= (unsigned char *)realloc(File->Buffer,File->Used + 1000);
 		i 		= fread(File->Buffer+File->Used,1,1000,file);
 		File->Used 	= File->Used + i;
 	}
-	File->Buffer = realloc(File->Buffer,File->Used + 1);
+	File->Buffer = (unsigned char *)realloc(File->Buffer,File->Used + 1);
 	/* Make it 0 terminated, in case it is needed somewhere (we don't count this to length) */
 	File->Buffer[File->Used] = 0;
 	fclose(file);
@@ -351,8 +351,8 @@ gboolean ReadVCALDate(char *Buffer, const char *Start, GSM_DateTime *Date, gbool
 
 GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Pos, const unsigned char *Text, const char *Start, const gboolean UTF8)
 {
-	char *buffer;
-	size_t len;
+	char *buffer=NULL;
+	size_t len=0;
 	GSM_Error error;
 
 	len = UnicodeLength(Text);
@@ -377,14 +377,15 @@ GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Pos, const u
 	}
 
 	free(buffer);
+	buffer=NULL;
 	return error;
 }
 
 GSM_Error VC_StoreBase64(char *Buffer, const size_t buff_len, size_t *Pos, const unsigned char *data, const size_t length)
 {
-	char *buffer, *pos, linebuffer[80];
-	size_t len, current;
-	char spacer[2];
+	char *buffer=NULL, *pos=NULL, linebuffer[80]={0};
+	size_t len=0, current=0;
+	char spacer[2]={0};
 	GSM_Error error;
 
 	/*
@@ -411,6 +412,7 @@ GSM_Error VC_StoreBase64(char *Buffer, const size_t buff_len, size_t *Pos, const
 		error =  VC_StoreLine(Buffer, buff_len, Pos, "%s%s", spacer, linebuffer);
 		if (error != ERR_NONE) {
 			free(buffer);
+			buffer=NULL;
 			return error;
 		}
 		spacer[0] = ' ';
@@ -419,6 +421,7 @@ GSM_Error VC_StoreBase64(char *Buffer, const size_t buff_len, size_t *Pos, const
 	}
 
 	free(buffer);
+	buffer=NULL;
 	return ERR_NONE;
 }
 
@@ -679,8 +682,11 @@ gboolean ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, con
 	dbgprintf(NULL, "ReadVCalText(%s) is \"%s\"\n", Start, DecodeUnicodeConsole(Value));
 fail:
 	free(line);
+	line=NULL;
 	free(tokens);
+	tokens=NULL;
 	free(charset);
+	charset=NULL;
 	return ret;
 }
 
