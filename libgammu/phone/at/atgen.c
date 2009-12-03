@@ -4504,10 +4504,14 @@ GSM_Error ATGEN_ReplyIgnore(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s
 
 static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
-	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer==AT_Siemens ) return SIEMENS_GetNextCalendar(s,Note,start);
-	if (Priv->Manufacturer==AT_Samsung ) return SAMSUNG_GetNextCalendar(s,Note,start);
+	if (Priv->Manufacturer==AT_Siemens ) {
+		return SIEMENS_GetNextCalendar(s,Note,start);
+	}
+	if (Priv->Manufacturer==AT_Samsung ) {
+		return SAMSUNG_GetNextCalendar(s,Note,start);
+	}
 	return ERR_NOTSUPPORTED;
 }
 
@@ -4515,7 +4519,9 @@ GSM_Error ATGEN_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Statu
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer==AT_Samsung)  return SAMSUNG_GetCalendarStatus(s, Status);
+	if (Priv->Manufacturer==AT_Samsung) {
+		return SAMSUNG_GetCalendarStatus(s, Status);
+	}
 	return ERR_NOTSUPPORTED;
 }
 
@@ -4523,8 +4529,12 @@ GSM_Error ATGEN_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_GetCalendar(s, Note);
-	if (Priv->Manufacturer==AT_Samsung)  return SAMSUNG_GetCalendar(s, Note);
+	if (Priv->Manufacturer==AT_Siemens) {
+		return SIEMENS_GetCalendar(s, Note);
+	}
+	if (Priv->Manufacturer==AT_Samsung) {
+		return SAMSUNG_GetCalendar(s, Note);
+	}
 	return ERR_NOTSUPPORTED;
 }
 
@@ -4546,8 +4556,12 @@ GSM_Error ATGEN_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_SetCalendarNote(s, Note);
-	if (Priv->Manufacturer==AT_Samsung)  return SAMSUNG_SetCalendar(s, Note);
+	if (Priv->Manufacturer==AT_Siemens) {
+		return SIEMENS_SetCalendarNote(s, Note);
+	}
+	if (Priv->Manufacturer==AT_Samsung) {
+		return SAMSUNG_SetCalendar(s, Note);
+	}
 	return ERR_NOTSUPPORTED;
 }
 
