@@ -73,7 +73,7 @@ GSM_Error LoadVNT(char *FileName, GSM_Backup *backup)
 		}
 		if (error != ERR_NONE) break;
 		if (num < GSM_BACKUP_MAX_NOTE) {
-			backup->Note[num] = malloc(sizeof(GSM_NoteEntry));
+			backup->Note[num] = (GSM_NoteEntry *)malloc(sizeof(GSM_NoteEntry));
 		        if (backup->Note[num] == NULL) {
 				error = ERR_MOREMEMORY;
 				break;
@@ -90,6 +90,7 @@ GSM_Error LoadVNT(char *FileName, GSM_Backup *backup)
 	}
 
 	free(File.Buffer);
+	File.Buffer=NULL;
 	return error;
 }
 
