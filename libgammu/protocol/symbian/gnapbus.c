@@ -14,45 +14,47 @@
 static GSM_Error GNAPBUS_WriteMessage (GSM_StateMachine *s, unsigned const char *MsgBuffer,
 				    int MsgLength, unsigned char MsgType)
 {
-	unsigned char		*buffer2;
-	int			sent,len;
-	unsigned char checksum;
-	int i;
+	unsigned char	*buffer=NULL;
+	int		sent=0,length=0,i=0;
+	unsigned char	checksum=0;
 
 	GSM_DumpMessageLevel3(s, MsgBuffer, MsgLength, MsgType);
 
-	buffer2 = (unsigned char *)malloc(MsgLength + 10);
+	buffer = (unsigned char *)malloc(MsgLength + 10);
 
-	buffer2[0] = GNAPBUS_FRAME_ID,
-	buffer2[1] = 0x00;
-	buffer2[2] = MsgLength / 256;
-	buffer2[3] = MsgLength % 256;
-	buffer2[4] = MsgType;
-	buffer2[5] = 0x00;
-	memcpy(buffer2 + 6, MsgBuffer, MsgLength);
-	len = 	MsgLength+6;
+	buffer[0] = GNAPBUS_FRAME_ID,
+	buffer[1] = 0x00;
+	buffer[2] = MsgLength / 256;
+	buffer[3] = MsgLength % 256;
+	buffer[4] = MsgType;
+	buffer[5] = 0x00;
+	memcpy(buffer + 6, MsgBuffer, MsgLength);
+	length = MsgLength+6;
 
-	if (MsgLength & 1) buffer2[len++] = 0x00;
+	if (MsgLength & 1) buffer[length++] = 0x00;
 	/* Odd messages require additional 0x00 byte */
-/* 	if (MsgLength % 2) buffer2[len++] = 0x00; */
+/* 	if (MsgLength % 2) buffer[length++] = 0x00; */
 
 	checksum 	= 0;
-	for (i = 0; i < len; i+=2) checksum ^= buffer2[i];
-	buffer2[len++] 	= checksum;
+	for (i = 0; i < length; i+=2) checksum ^= buffer[i];
+	buffer[length++] 	= checksum;
 
 	checksum 	= 0;
-	for (i = 1; i < len; i+=2) checksum ^= buffer2[i];
-	buffer2[len++] 	= checksum;
+	for (i = 1; i < length; i+=2) checksum ^= buffer[i];
+	buffer[length++] 	= checksum;
 
-/* 	GSM_DumpMessageLevel2(s, buffer2, len, MsgType); */
+/* 	GSM_DumpMessageLevel2(s, buffer, length, MsgType); */
 	GSM_DumpMessageLevel2(s, MsgBuffer, MsgLength, MsgType);
 
 	/* Sending to phone */
-	sent = s->Device.Functions->WriteDevice(s,buffer2,len);
+	sent = s->Device.Functions->WriteDevice(s,buffer,length);
+	free(buffer);
+	buffer=NULL;
 
-	free(buffer2);
-
-	if (sent!=len) return ERR_DEVICEWRITEERROR;
+	if (sent!=length) {
+		return ERR_DEVICEWRITEERROR;
+	}
+	usleep(length*1000);
 	return ERR_NONE;
 }
 
@@ -109,24 +111,19 @@ static GSM_Error GNAPBUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char
 				smprintf(s,"[ERROR: checksum]\n");
 			}
 			free(d->Msg.Buffer);
-			d->Msg.Length 		= 0;
-			d->Msg.Buffer 		= NULL;
-
-			d->MsgRXState 		= RX_Sync;
+			d->Msg.Buffer = NULL;
+			d->Msg.Length = 0;
+			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
 		}
-
-		s->Phone.Data.RequestMsg	= &d->Msg;
-		s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
-
+		s->Phone.Data.RequestMsg = &d->Msg;
+		s->Phone.Data.DispatchError = s->Phone.Functions->DispatchMessage(s);
 		free(d->Msg.Buffer);
-		d->Msg.Length 			= 0;
-		d->Msg.Buffer 			= NULL;
-
-		d->MsgRXState 			= RX_Sync;
+		d->Msg.Buffer = NULL;
+		d->Msg.Length = 0;
+		d->MsgRXState = RX_Sync;
 		return ERR_NONE;
 	}
-
 	return ERR_NONE;
 }
 
@@ -146,6 +143,7 @@ static GSM_Error GNAPBUS_Initialise(GSM_StateMachine *s)
 static GSM_Error GNAPBUS_Terminate(GSM_StateMachine *s)
 {
 	free(s->Protocol.Data.GNAPBUS.Msg.Buffer);
+	s->Protocol.Data.GNAPBUS.Msg.Buffer=NULL;
 	return ERR_NONE;
 }
 
