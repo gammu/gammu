@@ -559,14 +559,14 @@ static gboolean AddEMSText(GSM_SMSMessage *SMS, GSM_MultiPartSMSInfo *Info, int 
 		SMS->Coding = SMS_Coding_Default_No_Compression;
 #endif
 	case SMS_Coding_8bit:
-		Info->Entries[Info->EntriesNum].Buffer = realloc(Info->Entries[Info->EntriesNum].Buffer, BufferLen + (Len * 2));
+		Info->Entries[Info->EntriesNum].Buffer = (unsigned char *)realloc(Info->Entries[Info->EntriesNum].Buffer, BufferLen + (Len * 2));
 		if (Info->Entries[Info->EntriesNum].Buffer == NULL) return FALSE;
 		EncodeUnicode(Info->Entries[Info->EntriesNum].Buffer + BufferLen - 2, SMS->Text + (*Pos) *2, Len);
 		BufferLen += Len * 2;
 		break;
 	case SMS_Coding_Unicode_No_Compression:
 	case SMS_Coding_Default_No_Compression:
-		Info->Entries[Info->EntriesNum].Buffer = realloc(Info->Entries[Info->EntriesNum].Buffer, BufferLen + (Len * 2));
+		Info->Entries[Info->EntriesNum].Buffer = (unsigned char *)realloc(Info->Entries[Info->EntriesNum].Buffer, BufferLen + (Len * 2));
 		if (Info->Entries[Info->EntriesNum].Buffer == NULL) return FALSE;
 		memcpy(Info->Entries[Info->EntriesNum].Buffer + BufferLen - 2, SMS->Text + (*Pos) *2, Len * 2);
 		BufferLen += Len * 2;
