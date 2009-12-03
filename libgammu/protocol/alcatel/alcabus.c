@@ -75,10 +75,14 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 
 	GSM_DumpMessageLevel2(s, buffer, size, type);
 	GSM_DumpMessageLevel3(s, buffer, size, type);
+
 	while (sent != size ) {
-		if ((i = s->Device.Functions->WriteDevice(s,buffer + sent, size - sent)) == 0) {
+		i = s->Device.Functions->WriteDevice(s,buffer + sent, size - sent);
+
+		if (!i) {
 			return ERR_DEVICEWRITEERROR;
 		}
+		usleep((size-sent+10)*1000);
 		sent += i;
 	}
 
@@ -86,9 +90,11 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 		/* For connect and disconnect we need a bit larger delay */
 		while (d->busy) {
 			GSM_ReadDevice(s,TRUE);
-			usleep(1000);
-			i++;
-			if (i == 10) return ERR_TIMEOUT;
+			usleep(10000);
+
+			if (++i == 10) {
+				return ERR_TIMEOUT;
+			}
 		}
 	}
 	return ERR_NONE;
