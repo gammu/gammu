@@ -177,10 +177,14 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 
 GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_write, gboolean outbox)
 {
-	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
-	char 			req[] = "AT+CPMS=\"XX\",\"XX\"\r";
-	int			reqlen = 18;
-	GSM_Error		error;
+	GSM_Error error;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	/*
+	 * Store message to memory.
+	 */
+	unsigned char cpmsCmdReq[] = "AT+CPMS=\"XX\",\"XX\"\r";
+	size_t cpmsCmdReqLength = strlen(cpmsCmdReq);
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
@@ -207,10 +211,9 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_wri
 		}
 	} else {
 		/* No need to set memory for writing */
-		req[12] = '\r';
-		reqlen = 13;
+		cpmsCmdReq[12] = '\r';
+		cpmsCmdReqLength = 13;
 	}
-
 	if (SIM) {
 		if (Priv->SMSMemory == MEM_SM && (Priv->SMSMemoryWrite || !for_write)) {
 			return ERR_NONE;
@@ -218,13 +221,13 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_wri
 		if (Priv->SIMSMSMemory == AT_NOTAVAILABLE) {
 			return ERR_NOTSUPPORTED;
 		}
-
-		req[9]  = 'S'; req[10] = 'M';
-		req[14] = 'S'; req[15] = 'M';
+		cpmsCmdReq[9] = 'S'; cpmsCmdReq[10] = 'M';
+		cpmsCmdReq[14] = 'S'; cpmsCmdReq[15] = 'M';
 
 		smprintf(s, "Setting SMS memory type to SM\n");
-		ATGEN_WaitFor(s, req, reqlen, 0x00, 20, ID_SetMemoryType);
-		if (Priv->SIMSMSMemory == 0 && error == ERR_NONE) {
+		ATGEN_WaitFor(s, cpmsCmdReq, cpmsCmdReqLength, 0x00, 20, ID_SetMemoryType);
+
+		if (Priv->SIMSMSMemory == 0 && error != ERR_NONE) {
 			Priv->SIMSMSMemory = AT_AVAILABLE;
 		}
 		if (error == ERR_NOTSUPPORTED) {
@@ -244,19 +247,20 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, gboolean SIM, gboolean for_wri
 			return ERR_NOTSUPPORTED;
 		}
 		if (Priv->MotorolaSMS) {
-			req[9]  = 'M'; req[10] = 'T';
+			cpmsCmdReq[9]  = 'M'; cpmsCmdReq[10] = 'T';
+
 			if (outbox) {
-				req[14] = 'O'; req[15] = 'M';
+				cpmsCmdReq[14] = 'O'; cpmsCmdReq[15] = 'M';
 			} else {
-				req[14] = 'I'; req[15] = 'M';
+				cpmsCmdReq[14] = 'I'; cpmsCmdReq[15] = 'M';
 			}
 		} else {
-			req[9]  = 'M'; req[10] = 'E';
-			req[14] = 'M'; req[15] = 'E';
+			cpmsCmdReq[9] = 'M'; cpmsCmdReq[10] = 'E';
+			cpmsCmdReq[14] = 'M'; cpmsCmdReq[15] = 'E';
 		}
-
 		smprintf(s, "Setting SMS memory type to ME\n");
-		ATGEN_WaitFor(s, req, reqlen, 0x00, 20, ID_SetMemoryType);
+		ATGEN_WaitFor(s, cpmsCmdReq, cpmsCmdReqLength, 0x00, 20, ID_SetMemoryType);
+
 		if (Priv->PhoneSMSMemory == 0 && error == ERR_NONE) {
 			Priv->PhoneSMSMemory = AT_AVAILABLE;
 		}
