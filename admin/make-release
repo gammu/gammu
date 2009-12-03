@@ -30,6 +30,7 @@ signexe() {
     echo "$sign_passwd" | signcode \
         -spc ~/.id/codesigning.spc \
         -v ~/.id/codesigning.pvk \
+        -a sha1 \
         -$ individual \
         -n "$2" \
         -t http://timestamp.verisign.com/scripts/timstamp.dll \
