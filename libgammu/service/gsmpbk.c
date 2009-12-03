@@ -686,7 +686,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				Pbk->Entries[Pbk->EntriesNum].Picture.Type = PICTURE_JPG;
 
 				/* We allocate here more memory than is actually required */
-				Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = malloc(strlen(s));
+				Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = (unsigned char *)malloc(strlen(s));
 				if (Pbk->Entries[Pbk->EntriesNum].Picture.Buffer == NULL)
 					return ERR_MOREMEMORY;
 
