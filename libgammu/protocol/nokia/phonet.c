@@ -29,15 +29,18 @@ static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
 				      int 		MsgLength,
 				      unsigned char 	MsgType)
 {
-	unsigned char		*buffer;
-	int			sent;
-	GSM_Protocol_PHONETData 	*d = &s->Protocol.Data.PHONET;
+	unsigned char		*buffer=NULL;
+	int			sent=0,length=0;
+	GSM_Protocol_PHONETData *d = &s->Protocol.Data.PHONET;
 
 	GSM_DumpMessageLevel3(s, MsgBuffer, MsgLength, MsgType);
+	length=MsgLength + 6;
 
-	buffer = (unsigned char *)malloc(MsgLength + 6);
-	if (buffer == NULL) return ERR_MOREMEMORY;
+	buffer = (unsigned char *)malloc(length);
 
+	if (buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
 	buffer[0] = d->frame_id;
 	buffer[1] = d->device_phone;
 	buffer[2] = d->device_pc;
@@ -50,12 +53,13 @@ static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
 	GSM_DumpMessageLevel2(s, buffer + 6, MsgLength, MsgType);
 
 	/* Sending to phone */
-	sent = s->Device.Functions->WriteDevice(s, buffer, MsgLength + 6);
-
+	sent = s->Device.Functions->WriteDevice(s, buffer, length);
 	free(buffer);
+	buffer=NULL;
 
-	if (sent != MsgLength + 6)
+	if (sent != length) {
 		return ERR_DEVICEWRITEERROR;
+	}
 	return ERR_NONE;
 }
 
@@ -70,32 +74,27 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		/* This is not last byte in frame */
 		if (d->Msg.Count != d->Msg.Length) return ERR_NONE;
 
-		s->Phone.Data.RequestMsg	= &d->Msg;
-		s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
-
+		s->Phone.Data.RequestMsg = &d->Msg;
+		s->Phone.Data.DispatchError = s->Phone.Functions->DispatchMessage(s);
 		free(d->Msg.Buffer);
-		d->Msg.Length 			= 0;
-		d->Msg.Buffer 			= NULL;
-
-		d->MsgRXState 			= RX_Sync;
+		d->Msg.Buffer = NULL;
+		d->Msg.Length = 0;
+		d->MsgRXState = RX_Sync;
 		return ERR_NONE;
 	}
 	if (d->MsgRXState==RX_GetLength2) {
-		d->Msg.Length 	= d->Msg.Length + rx_char;
-		d->Msg.Buffer 	= (unsigned char *)malloc(d->Msg.Length);
-
-		d->MsgRXState 	= RX_GetMessage;
+		d->Msg.Length = d->Msg.Length + rx_char;
+		d->Msg.Buffer = (unsigned char *)malloc(d->Msg.Length);
+		d->MsgRXState = RX_GetMessage;
 		return ERR_NONE;
 	}
 	if (d->MsgRXState==RX_GetLength1) {
 		d->Msg.Length = rx_char * 256;
-
 		d->MsgRXState = RX_GetLength2;
 		return ERR_NONE;
 	}
 	if (d->MsgRXState==RX_GetType) {
-		d->Msg.Type   = rx_char;
-
+		d->Msg.Type = rx_char;
 		d->MsgRXState = RX_GetLength1;
 		return ERR_NONE;
 	}
@@ -106,7 +105,6 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			return ERR_NONE;
 		}
 		d->Msg.Source = rx_char;
-
 		d->MsgRXState = RX_GetType;
 		return ERR_NONE;
 	}
@@ -116,9 +114,8 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
 		}
-		d->Msg.Destination 	= rx_char;
-
-		d->MsgRXState 		= RX_GetSource;
+		d->Msg.Destination = rx_char;
+		d->MsgRXState = RX_GetSource;
 		return ERR_NONE;
 	}
 	if (d->MsgRXState==RX_Sync) {
@@ -126,8 +123,7 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			smprintf_level(s, D_ERROR, "[ERROR: incorrect frame ID - 0x%02x, not 0x%02x]\n", rx_char, d->frame_id);
 			return ERR_NONE;
 		}
-		d->Msg.Count  = 0;
-
+		d->Msg.Count = 0;
 		d->MsgRXState = RX_GetDestination;
 		return ERR_NONE;
 	}
@@ -136,9 +132,9 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 static GSM_Error PHONET_Initialise(GSM_StateMachine *s)
 {
-	int 				total = 0;
+	int 				total = 0, write_data=0;
 	GSM_Protocol_PHONETData 	*d = &s->Protocol.Data.PHONET;
-	unsigned char			req[10];
+	unsigned char			req[10]={0};
 
 	d->Msg.Length	= 0;
 	d->Msg.Buffer	= NULL;
@@ -175,7 +171,11 @@ static GSM_Error PHONET_Initialise(GSM_StateMachine *s)
 		req[4] = 0x00;
 		req[5] = 0x01;
 		req[6] = 0x04;
-		if (s->Device.Functions->WriteDevice(s,req,7) != 7) return ERR_DEVICEWRITEERROR;
+		write_data=s->Device.Functions->WriteDevice(s,req,7);
+
+		if (write_data != 7) {
+			return ERR_DEVICEWRITEERROR;
+		}
 
 		while (total < 7) {
 			total += s->Device.Functions->ReadDevice(s, req + total, sizeof(req) - total);
@@ -216,6 +216,7 @@ static GSM_Error PHONET_Initialise(GSM_StateMachine *s)
 static GSM_Error PHONET_Terminate(GSM_StateMachine *s)
 {
 	free(s->Protocol.Data.PHONET.Msg.Buffer);
+	s->Protocol.Data.PHONET.Msg.Buffer=NULL;
 	return ERR_NONE;
 }
 
