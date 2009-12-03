@@ -50,21 +50,19 @@ static gboolean irda_discover_device(GSM_StateMachine *state, int *fd)
 {
 	GSM_Device_IrdaData 	*d = &state->Device.Data.Irda;
 	struct irda_device_list	*list;
-    	unsigned char		*buf;
-    	int			sec;
-    	int			s, z, len, i;
+    	unsigned char		*buf=NULL;
+    	int			sec=0,s=0,z=0,len=0,i=0,deviceid=0;
     	GSM_DateTime		Date;
-    	gboolean			founddevice = FALSE;
-	int deviceid;
+    	gboolean		founddevice = FALSE;
 #ifdef WIN32
-	int			index;
+	int			index=0;
 #endif
 
    	(*fd) = socket(AF_IRDA, SOCK_STREAM, 0);
 
     	/* can handle maximally 10 devices during discovering */
     	len  = sizeof(struct irda_device_list) + sizeof(struct irda_device_info) * 10;
-    	buf  = malloc(len);
+    	buf  = (unsigned char *)malloc(len);
     	list = (struct irda_device_list *)buf;
 
     	/* Trying to find device during 2 seconds */
@@ -117,6 +115,8 @@ static gboolean irda_discover_device(GSM_StateMachine *state, int *fd)
 		if (founddevice) break;
     	}
     	free(buf);
+	buf=NULL;
+
 	if (!founddevice) {
 #ifdef WIN32
 	    	closesocket(*fd);
