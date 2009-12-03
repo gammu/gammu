@@ -1924,6 +1924,10 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
 	GSM_Error error;
+
+	/*
+	* Get SMSC command
+	*/
 	const char req[] = "AT+CSCA?\r";
 
 	/* Only one location supported */
