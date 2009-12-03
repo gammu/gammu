@@ -149,7 +149,7 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	smprintf(s, "Getting available SMS memories\n");
-	ATGEN_WaitFor(s, "AT+CPMS=?\r", 10, 0x00, 4, ID_GetSMSMemories);
+	ATGEN_WaitFor(s, "AT+CPMS=?\r", strlen("AT+CPMS=?\r"), 0x00, 4, ID_GetSMSMemories);
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_SM)) {
 		smprintf(s, "Forcing support for SM storage!\n");
@@ -281,26 +281,27 @@ GSM_Error ATGEN_GetSMSMode(GSM_StateMachine *s)
 	/* Prefer PDU mode for most phones */
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_USE_SMSTEXTMODE)) {
 		smprintf(s, "Trying SMS PDU mode\n");
-		ATGEN_WaitFor(s, "AT+CMGF=0\r", 10, 0x00, 9, ID_GetSMSMode);
+		ATGEN_WaitFor(s, "AT+CMGF=0\r", strlen("AT+CMGF=0\r"), 0x00, 9, ID_GetSMSMode);
+
 		if (error==ERR_NONE) {
 			Priv->SMSMode = SMS_AT_PDU;
 			return ERR_NONE;
 		}
 	}
-
 	smprintf(s, "Trying SMS text mode\n");
-	ATGEN_WaitFor(s, "AT+CMGF=1\r", 10, 0x00, 9, ID_GetSMSMode);
+	ATGEN_WaitFor(s, "AT+CMGF=1\r", strlen("AT+CMGF=1\r"), 0x00, 9, ID_GetSMSMode);
+
 	if (error == ERR_NONE) {
 		Priv->SMSMode = SMS_AT_TXT;
 		smprintf(s, "Enabling displaying all parameters in text mode\n");
-		ATGEN_WaitFor(s, "AT+CSDH=1\r", 10, 0x00, 3, ID_GetSMSMode);
+		ATGEN_WaitFor(s, "AT+CSDH=1\r", strlen("AT+CSDH=1\r"), 0x00, 3, ID_GetSMSMode);
+
 		if (error == ERR_NONE) {
 			Priv->SMSTextDetails = TRUE;
 		} else {
 			error = ERR_NONE;
 		}
 	}
-
 	return error;
 }
 
@@ -1031,12 +1032,12 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, gboolean first)
 	smprintf(s, "Getting SMS locations\n");
 
 	if (Priv->SMSMode == SMS_AT_TXT) {
-		ATGEN_WaitFor(s, "AT+CMGL=\"ALL\"\r", 14, 0x00, 500, ID_GetSMSMessage);
+		ATGEN_WaitFor(s, "AT+CMGL=\"ALL\"\r", strlen("AT+CMGL=\"ALL\"\r"), 0x00, 500, ID_GetSMSMessage);
 	} else {
-		ATGEN_WaitFor(s, "AT+CMGL=4\r", 10, 0x00, 20, ID_GetSMSMessage);
+		ATGEN_WaitFor(s, "AT+CMGL=4\r", strlen("AT+CMGL=4\r"), 0x00, 20, ID_GetSMSMessage);
 	}
 	if (error == ERR_NOTSUPPORTED) {
-		ATGEN_WaitFor(s, "AT+CMGL\r", 8, 0x00, 5, ID_GetSMSMessage);
+		ATGEN_WaitFor(s, "AT+CMGL\r", strlen("AT+CMGL\r"), 0x00, 5, ID_GetSMSMessage);
 	}
 	/*
 	 * We did not read anything, but it is correct, indicate that
@@ -1307,11 +1308,12 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 	}
 	if (Priv->SIMSMSMemory == AT_AVAILABLE) {
 		smprintf(s, "Getting SIM SMS status\n");
+
 		if (Priv->SIMSaveSMS == AT_AVAILABLE) {
-			ATGEN_WaitFor(s, "AT+CPMS=\"SM\",\"SM\"\r", 18, 0x00, 20, ID_GetSMSStatus);
+			ATGEN_WaitFor(s, "AT+CPMS=\"SM\",\"SM\"\r", strlen("AT+CPMS=\"SM\",\"SM\"\r"), 0x00, 20, ID_GetSMSStatus);
 			Priv->SMSMemoryWrite = TRUE;
 		} else {
-			ATGEN_WaitFor(s, "AT+CPMS=\"SM\"\r", 13, 0x00, 20, ID_GetSMSStatus);
+			ATGEN_WaitFor(s, "AT+CPMS=\"SM\"\r", strlen("AT+CPMS=\"SM\"\r"), 0x00, 20, ID_GetSMSStatus);
 			Priv->SMSMemoryWrite = FALSE;
 		}
 		if (error!=ERR_NONE) {
@@ -1328,14 +1330,14 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 
 		if (Priv->PhoneSaveSMS == AT_AVAILABLE) {
 			if (Priv->MotorolaSMS) {
-				ATGEN_WaitFor(s, "AT+CPMS=\"MT\"\r", 13, 0x00, 20, ID_GetSMSStatus);
+				ATGEN_WaitFor(s, "AT+CPMS=\"MT\"\r", strlen("AT+CPMS=\"MT\"\r"), 0x00, 20, ID_GetSMSStatus);
 				Priv->SMSMemoryWrite = FALSE;
 			} else {
-				ATGEN_WaitFor(s, "AT+CPMS=\"ME\",\"ME\"\r", 18, 0x00, 20, ID_GetSMSStatus);
+				ATGEN_WaitFor(s, "AT+CPMS=\"ME\",\"ME\"\r", strlen("AT+CPMS=\"ME\",\"ME\"\r"), 0x00, 20, ID_GetSMSStatus);
 				Priv->SMSMemoryWrite = TRUE;
 			}
 		} else {
-			ATGEN_WaitFor(s, "AT+CPMS=\"ME\"\r", 13, 0x00, 20, ID_GetSMSStatus);
+			ATGEN_WaitFor(s, "AT+CPMS=\"ME\"\r", strlen("AT+CPMS=\"ME\"\r"), 0x00, 20, ID_GetSMSStatus);
 			Priv->SMSMemoryWrite = FALSE;
 		}
 		if (error!=ERR_NONE) {
