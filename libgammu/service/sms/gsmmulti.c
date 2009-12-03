@@ -845,6 +845,7 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 			return TRUE;
 		}
 		free(Info->Entries[0].File->Buffer);
+		Info->Entries[0].File->Buffer=NULL;
 	}
 
 	/* Smart Messaging decoding */
@@ -1085,6 +1086,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 			OutputMessages[OutputMessagesNum] = (GSM_MultiSMSMessage *)malloc(sizeof(GSM_MultiSMSMessage));
 			if (OutputMessages[OutputMessagesNum] == NULL) {
 				free(InputMessagesSorted);
+				InputMessagesSorted=NULL;
 				return ERR_MOREMEMORY;
 			}
 			OutputMessages[OutputMessagesNum+1] = NULL;
@@ -1214,6 +1216,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 				OutputMessages[OutputMessagesNum] = (GSM_MultiSMSMessage *)malloc(sizeof(GSM_MultiSMSMessage));
 				if (OutputMessages[OutputMessagesNum] == NULL) {
 					free(InputMessagesSorted);
+					InputMessagesSorted=NULL;
 					return ERR_MOREMEMORY;
 				}
 				OutputMessages[OutputMessagesNum+1] = NULL;
@@ -1245,6 +1248,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 			OutputMessages[OutputMessagesNum] = (GSM_MultiSMSMessage *)malloc(sizeof(GSM_MultiSMSMessage));
 			if (OutputMessages[OutputMessagesNum] == NULL) {
 				free(InputMessagesSorted);
+				InputMessagesSorted=NULL;
 				return ERR_MOREMEMORY;
 			}
 			OutputMessages[OutputMessagesNum+1] = NULL;
@@ -1262,6 +1266,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 			OutputMessages[OutputMessagesNum] = (GSM_MultiSMSMessage *)malloc(sizeof(GSM_MultiSMSMessage));
 			if (OutputMessages[OutputMessagesNum] == NULL) {
 				free(InputMessagesSorted);
+				InputMessagesSorted=NULL;
 				return ERR_MOREMEMORY;
 			}
 			OutputMessages[OutputMessagesNum+1] = NULL;
@@ -1407,6 +1412,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 				OutputMessages[OutputMessagesNum] = (GSM_MultiSMSMessage *)malloc(sizeof(GSM_MultiSMSMessage));
 				if (OutputMessages[OutputMessagesNum] == NULL) {
 					free(InputMessagesSorted);
+					InputMessagesSorted=NULL;
 					return ERR_MOREMEMORY;
 				}
 				OutputMessages[OutputMessagesNum+1] = NULL;
@@ -1420,6 +1426,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 		}
 	}
 	free(InputMessagesSorted);
+	InputMessagesSorted=NULL;
 	return ERR_NONE;
 }
 
