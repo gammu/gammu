@@ -1773,10 +1773,14 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		 */
 		smprintf(s, "Escaping SMS mode\n");
 		error = s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
-		if (error!=ERR_NONE) return error;
+		if (error!=ERR_NONE) {
+			return error;
+		}
 
 	    	/* Grab any possible garbage */
-	    	while (s->Device.Functions->ReadDevice(s, buff, 2) > 0) usleep(10000);
+	    	while (s->Device.Functions->ReadDevice(s, buff, sizeof(buff)) > 0) {
+			usleep(10000);
+		}
 	}
 
     	/* When some phones (Alcatel BE5) is first time connected, it needs extra
