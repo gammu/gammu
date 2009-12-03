@@ -49,6 +49,7 @@ GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 	if (channel == NULL &&
 			strncasecmp(s->CurrentConfig->Connection, "bluerf", 6) != 0) {
 		free(device);
+		device=NULL;
 #ifdef BLUETOOTH_RF_SEARCHING
 		return bluetooth_findchannel(s);
 #else
@@ -116,6 +117,7 @@ GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 
 done:
 	free(device);
+	device=NULL;
 	return error;
 }
 
