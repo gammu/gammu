@@ -878,7 +878,7 @@ GSM_PhoneModel *GetModelData(GSM_StateMachine *s, const char *model, const char 
 
 gboolean GSM_IsPhoneFeatureAvailable(GSM_PhoneModel *model, GSM_Feature feature)
 {
-	int	i	= 0;
+	int i = 0;
 
 	while (model->features[i] != 0) {
 		if (model->features[i] == feature) {
