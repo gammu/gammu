@@ -32,8 +32,11 @@ GSM_MultiSMSMessage		IncomingSMSData;
 void IncomingSMS(GSM_StateMachine *sm UNUSED, GSM_SMSMessage sms, void *user_data)
 {
 	printf("%s\n", _("SMS message received"));
+	fflush(stdout);
+
  	if (wasincomingsms) {
  		printf("%s\n", _("We already have one pending, ignoring this one!"));
+		fflush(stdout);
  		return;
  	}
  	wasincomingsms = TRUE;
@@ -55,6 +58,7 @@ void DisplayIncomingSMS(void)
  		case ERR_EMPTY:
  			printf(_("Location %i\n"),IncomingSMSData.SMS[0].Location);
  			printf("%s\n", _("Empty"));
+			fflush(stdout);
  			break;
  		default:
  			Print_Error(error);
@@ -102,6 +106,7 @@ void IncomingUSSD(GSM_StateMachine *sm UNUSED, GSM_USSDMessage ussd, void *user_
 			break;
 	}
 	printf(LISTFORMAT "\"%s\"\n", _("Service reply"), DecodeUnicodeConsole(ussd.Text));
+	fflush(stdout);
 }
 
 void IncomingUSSD2(GSM_StateMachine *sm, GSM_USSDMessage ussd, void * user_data)
@@ -118,6 +123,7 @@ void GetUSSD(int argc UNUSED, char *argv[])
 
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
+	fflush(stderr);
 
 	GSM_SetIncomingUSSDCallback(gsm, IncomingUSSD2, NULL);
 
@@ -270,7 +276,7 @@ void GetSMS(int argc, char *argv[])
 			DisplayMultiSMSInfo(&sms,FALSE,FALSE,NULL, gsm);
 		}
 	}
-
+	fflush(stdout);
 	GSM_Terminate();
 }
 
@@ -341,6 +347,7 @@ void GetAllSMS(int argc, char *argv[])
 						printf("\n   ");
 						printf(_("Only part of data saved, please increase %s.") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
 						printf("\n");
+						fflush(stdout);
 						break;
 					}
 					*Backup.PhonePhonebook[used]=Pbk;
@@ -357,6 +364,7 @@ void GetAllSMS(int argc, char *argv[])
 				}
 			}
 			fprintf(stderr, "\n");
+			fflush(stderr);
 		}
 	}
 #endif
@@ -367,11 +375,13 @@ void GetAllSMS(int argc, char *argv[])
 	while (error == ERR_NONE) {
 		sms.SMS[0].Folder=0x00;
 		error=GSM_GetNextSMS(gsm, &sms, start);
+
 		switch (error) {
 		case ERR_EMPTY:
 			break;
 		case ERR_CORRUPTED:
 			fprintf(stderr, "\n%s\n", _("Corrupted message, skipping"));
+			fflush(stderr);
 			error = ERR_NONE;
 			continue;
 		default:
@@ -386,6 +396,7 @@ void GetAllSMS(int argc, char *argv[])
 	printf("\n\n");
 	printf(_("%i SMS parts in %i SMS sequences"),smsnum,smspos);
 	printf("\n");
+	fflush(stdout);
 
 #ifdef GSM_ENABLE_BEEP
 	GSM_PhoneBeep();
@@ -440,6 +451,7 @@ void GetEachSMS(int argc, char *argv[])
 						printf("\n   ");
 						printf(_("Only part of data saved, please increase %s.") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
 						printf("\n");
+						fflush(stdout);
 						break;
 					}
 					*Backup.PhonePhonebook[used]=Pbk;
@@ -449,6 +461,7 @@ void GetEachSMS(int argc, char *argv[])
 				fprintf(stderr, "%s ", _("Reading phone phonebook:"));
 				fprintf(stderr, _("%i percent"),
 					used * 100 / MemStatus.MemoryUsed);
+				fflush(stderr);
 				i++;
 				if (gshutdown) {
 					GSM_Terminate();
@@ -456,6 +469,7 @@ void GetEachSMS(int argc, char *argv[])
 				}
 			}
 			fprintf(stderr, "\n");
+			fflush(stderr);
 		}
 	}
 #endif
@@ -526,7 +540,7 @@ void GetEachSMS(int argc, char *argv[])
 	printf("\n");
 	printf(_("%i SMS parts in %i SMS sequences"),smsnum,smspos);
 	printf("\n");
-
+	fflush(stdout);
 	GSM_Terminate();
 }
 
@@ -553,7 +567,7 @@ void GetSMSFolders(int argc UNUSED, char *argv[] UNUSED)
 		if (folders.Folder[i].OutboxFolder) printf(_(", Outbox folder"));
 		printf("\n");
 	}
-
+	fflush(stdout);
 	GSM_Terminate();
 }
 
@@ -572,6 +586,7 @@ void SendSMSStatus (GSM_StateMachine *sm, int status, int MessageReference, void
 		SMSStatus = ERR_UNKNOWN;
 	}
 	printf(_(", message reference=%d\n"),MessageReference);
+	fflush(stdout);
 }
 
 void SendSaveDisplaySMS(int argc, char *argv[])
@@ -618,6 +633,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 
 				signal(SIGINT, interrupt);
 				fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C..."));
+				fflush(stderr);
 			}
 
 			for (i=0;i<sms.Number;i++) {
@@ -637,10 +653,13 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 				if (type == SMS_SendSaved) {
 					printf(_("Sending sms from folder \"%s\", location %i\n"),
 						DecodeUnicodeString(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
+					fflush(stdout);
 					SMSStatus = ERR_TIMEOUT;
 					error = GSM_SendSavedSMS(gsm, 0, sms.SMS[i].Location);
 					Print_Error(error);
 					printf(_("....waiting for network answer"));
+					fflush(stdout);
+
 					while (!gshutdown) {
 						GSM_ReadDevice(gsm,TRUE);
 						if (SMSStatus == ERR_UNKNOWN) {
@@ -654,6 +673,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 		case SMS_Send:
 			signal(SIGINT, interrupt);
 			fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C..."));
+			fflush(stderr);
 
 			GSM_SetSendSMSStatusCallback(gsm, SendSMSStatus, NULL);
 
@@ -711,11 +731,13 @@ void DeleteAllSMS(int argc, char *argv[])
 	GetStartStop(&foldernum, NULL, 2, argc, argv);
 	if (foldernum > folders.Number) {
 		printf(_("Too high folder number (max. %i)\n"),folders.Number);
+		fflush(stdout);
 		GSM_Terminate();
 		Terminate(2);
 	}
 
 	printf(_("Deleting SMS from \"%s\" folder: "),DecodeUnicodeConsole(folders.Folder[foldernum-1].Name));
+	fflush(stdout);
 
 	while (error == ERR_NONE) {
 		sms.SMS[0].Folder=0x00;
