@@ -80,7 +80,7 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 			    (ch[0] == 0 && ch[1] == 10)) {
 				break;
 			}
-			buffer 			= realloc(buffer,bufferused+2);
+			buffer 			= (unsigned char *)realloc(buffer,bufferused+2);
                         if (buffer == NULL) {
                                 error = ERR_MOREMEMORY;
 				goto done;
@@ -109,12 +109,12 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 				if (ch[0] == 0 && ch[1] == ']') {
 					if (buffer1used == 0) break;
 					if (Unicode) {
-						buffer1 		= realloc(buffer1,buffer1used+2);
+						buffer1 		= (unsigned char *)realloc(buffer1,buffer1used+2);
 						buffer1[buffer1used] 	= 0;
 						buffer1[buffer1used+1] 	= 0;
 						buffer1used		= buffer1used + 2;
 					} else {
-						buffer1 		= realloc(buffer1,buffer1used+1);
+						buffer1 		= (unsigned char *)realloc(buffer1,buffer1used+1);
 						buffer1[buffer1used] 	= 0x00;
 						buffer1used		= buffer1used + 1;
 					}
@@ -138,12 +138,12 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 					break;
 				}
 				if (Unicode) {
-					buffer1 		= realloc(buffer1,buffer1used+2);
+					buffer1 		= (unsigned char *)realloc(buffer1,buffer1used+2);
 					buffer1[buffer1used] 	= ch[0];
 					buffer1[buffer1used+1] 	= ch[1];
 					buffer1used		= buffer1used + 2;
 				} else {
-					buffer1 		= realloc(buffer1,buffer1used+1);
+					buffer1 		= (unsigned char *)realloc(buffer1,buffer1used+1);
 					buffer1[buffer1used] 	= ch[1];
 					buffer1used		= buffer1used + 1;
 				}
@@ -179,12 +179,12 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 					continue;
 				}
 				if (Unicode) {
-					buffer1 		= realloc(buffer1,buffer1used+2);
+					buffer1 		= (unsigned char *)realloc(buffer1,buffer1used+2);
 					buffer1[buffer1used] 	= ch[0];
 					buffer1[buffer1used+1] 	= ch[1];
 					buffer1used		= buffer1used + 2;
 				} else {
-					buffer1 		= realloc(buffer1,buffer1used+1);
+					buffer1 		= (unsigned char *)realloc(buffer1,buffer1used+1);
 					buffer1[buffer1used] 	= ch[1];
 					buffer1used		= buffer1used + 1;
 				}
@@ -199,12 +199,12 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 			}
 			if (level == 5) { /* key value */
 				if (Unicode) {
-					buffer2 		= realloc(buffer2,buffer2used+2);
+					buffer2 		= (unsigned char *)realloc(buffer2,buffer2used+2);
 					buffer2[buffer2used] 	= ch[0];
 					buffer2[buffer2used+1] 	= ch[1];
 					buffer2used		= buffer2used + 2;
 				} else {
-					buffer2 		= realloc(buffer2,buffer2used+1);
+					buffer2 		= (unsigned char *)realloc(buffer2,buffer2used+1);
 					buffer2[buffer2used] 	= ch[1];
 					buffer2used		= buffer2used + 1;
 				}
@@ -228,19 +228,19 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 				goto done;
                         }
 			if (Unicode) {
-				buffer1 		= realloc(buffer1,buffer1used+2);
+				buffer1 		= (unsigned char *)realloc(buffer1,buffer1used+2);
 				buffer1[buffer1used] 	= 0;
 				buffer1[buffer1used+1] 	= 0;
 				buffer1used		= buffer1used + 2;
-				buffer2 		= realloc(buffer2,buffer2used+2);
+				buffer2 		= (unsigned char *)realloc(buffer2,buffer2used+2);
 				buffer2[buffer2used] 	= 0;
 				buffer2[buffer2used+1] 	= 0;
 				buffer2used		= buffer2used + 2;
 			} else {
-				buffer1 		= realloc(buffer1,buffer1used+1);
+				buffer1 		= (unsigned char *)realloc(buffer1,buffer1used+1);
 				buffer1[buffer1used] 	= 0x00;
 				buffer1used		= buffer1used + 1;
-				buffer2 		= realloc(buffer2,buffer2used+1);
+				buffer2 		= (unsigned char *)realloc(buffer2,buffer2used+1);
 				buffer2[buffer2used] 	= 0x00;
 				buffer2used		= buffer2used + 1;
 			}
@@ -266,8 +266,14 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 		}
 	}
 done:
-	free(buffer); free(buffer1); free(buffer2);
+	free(buffer);
+	buffer=NULL;
+	free(buffer1);
+	buffer1=NULL;
+	free(buffer2);
+	buffer2=NULL;
 	fclose(f);
+
 	if (error == ERR_NONE) {
 		*result = INI_head;
 		if (INI_head == NULL) {
@@ -355,15 +361,18 @@ INI_Entry *INI_FindLastSectionEntry(INI_Section *file_info, const unsigned char 
 
 void INI_Free_Entries(INI_Entry *entry)
 {
-	INI_Entry *cur = entry, *next;
+	INI_Entry *cur = entry, *next=NULL;
 
 	if (cur == NULL) return;
 	while (cur != NULL) {
 		next = cur->Next;
 		free(cur->EntryName);
+		cur->EntryName=NULL;
 		free(cur->EntryValue);
+		cur->EntryValue=NULL;
 		free(cur);
-		cur = next;
+		cur=NULL;
+		cur=next;
 	}
 }
 
@@ -375,9 +384,11 @@ void INI_Free(INI_Section *head)
 	while (cur != NULL) {
 		next = cur->Next;
 		free(cur->SectionName);
+		cur->SectionName=NULL;
 		INI_Free_Entries(cur->SubEntries);
 		free(cur);
-		cur = next;
+		cur=NULL;
+		cur=next;
 	}
 }
 
