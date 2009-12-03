@@ -244,6 +244,7 @@ void GetSMSC(int argc, char *argv[])
 				}
 		}
 		printf("\n");
+		fflush(stdout);
 	}
 
 	GSM_Terminate();
