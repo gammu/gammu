@@ -390,25 +390,24 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
  */
 void ATGEN_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char folderid, int location)
 {
-	sms->Folder	= 0; /* Flat memory */
-	sms->Location	= (folderid - 1) * GSM_PHONE_MAXSMSINFOLDER + location;
+	sms->Folder = 0; /* Flat memory */
+	sms->Location = (folderid - 1) * GSM_PHONE_MAXSMSINFOLDER + location;
 
 	/* Some phones start locations from 0, handle them here */
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_LOCATION_0)) {
 		sms->Location++;
 	}
-
 	smprintf(s, "ATGEN folder %i & location %i -> SMS folder %i & location %i\n",
-		folderid, location, sms->Folder, sms->Location);
+			folderid, location, sms->Folder, sms->Location);
 }
 
 GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int state)
 {
-	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 	GSM_Error error;
-	GSM_SMSMessage		*sms	= &s->Phone.Data.GetSMSMessage->SMS[0];
-	unsigned char 		buffer[300];
-	size_t			parse_len, length;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_SMSMessage *sms = &s->Phone.Data.GetSMSMessage->SMS[0];
+	unsigned char buffer[300] = {'\0'};
+	size_t parse_len = 0, length = 0;
 
 	length = strlen(PDU);
 
