@@ -3126,7 +3126,10 @@ static GSM_Error N6510_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		req2[5] = Info.Ringtone[Ringtone->Location-1].ID % 256;
 		smprintf(s, "Getting binary ringtone\n");
  		error = GSM_WaitFor (s, req2, 6, 0x1f, s->Phone.Data.Priv.N6510.Timeout, ID_GetRingtone);
- 		if (Info.Ringtone) free(Info.Ringtone);
+ 		if (Info.Ringtone) {
+			free(Info.Ringtone);
+			Info.Ringtone=NULL;
+		}
  		return error;
 	case RING_MIDI:
 	case RING_MMF:
