@@ -1047,6 +1047,7 @@ vcard_complete:
 
 vcard_done:
 	free(Line);
+	Line=NULL;
 	return error;
 }
 
