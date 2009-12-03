@@ -37,16 +37,21 @@
 
 GSM_Error ATGEN_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
-	unsigned char req[50];
 	GSM_Error error;
+	/*
+	 * String value.
+	 * It indicates the SMSC number.
+	 * The numberr is composed '*', '#', '0'-'9'
+	 * The number contains 20 characters at most.
+	 */
+	unsigned char smscCmdReq[32]={'\0'};
 
-	if (smsc->Location!=1) return ERR_INVALIDLOCATION;
-
-	sprintf(req, "AT+CSCA=\"%s\"\r",DecodeUnicodeString(smsc->Number));
-
+	if (smsc->Location!=1) {
+		return ERR_INVALIDLOCATION;
+	}
 	smprintf(s, "Setting SMSC\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_SetSMSC);
-
+	sprintf(smscCmdReq, "AT+CSCA=\"%s\"\r",DecodeUnicodeString(smsc->Number));
+	ATGEN_WaitFor(s, smscCmdReq, strlen(smscCmdReq), 0x00, 4, ID_SetSMSC);
 	return error;
 }
 
