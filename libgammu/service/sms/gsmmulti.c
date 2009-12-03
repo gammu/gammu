@@ -834,7 +834,7 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 			GSM_DecodeSiemensOTASMS(di, &SiemensInfo,&SMS->SMS[i]);
 			j = SiemensInfo.AllDataLen - Info->Entries[0].File->Used;
 			if (j>SiemensInfo.DataLen) j = SiemensInfo.DataLen;
-			Info->Entries[0].File->Buffer = realloc(Info->Entries[0].File->Buffer,j+Info->Entries[0].File->Used);
+			Info->Entries[0].File->Buffer = (unsigned char *)realloc(Info->Entries[0].File->Buffer,j+Info->Entries[0].File->Used);
 			memcpy(Info->Entries[0].File->Buffer+Info->Entries[0].File->Used,SiemensInfo.Data,j);
 			Info->Entries[0].File->Used += j;
 		}
@@ -986,7 +986,7 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 		for (i=0;i<SMS->Number;i++) {
 			switch (SMS->SMS[i].Coding) {
 			case SMS_Coding_8bit:
-				Info->Entries[0].Buffer = realloc(Info->Entries[0].Buffer, Length + SMS->SMS[i].Length + 2);
+				Info->Entries[0].Buffer = (unsigned char *)realloc(Info->Entries[0].Buffer, Length + SMS->SMS[i].Length + 2);
 				if (Info->Entries[0].Buffer == NULL) return FALSE;
 
 				memcpy(Info->Entries[0].Buffer + Length, SMS->SMS[i].Text, SMS->SMS[i].Length);
@@ -1000,7 +1000,7 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 					Info->Entries[0].ID = SMS_ConcatenatedAutoTextLong16bit;
 				}
 			case SMS_Coding_Default_No_Compression:
-				Info->Entries[0].Buffer = realloc(Info->Entries[0].Buffer, Length + UnicodeLength(SMS->SMS[i].Text)*2 + 2);
+				Info->Entries[0].Buffer = (unsigned char *)realloc(Info->Entries[0].Buffer, Length + UnicodeLength(SMS->SMS[i].Text)*2 + 2);
 				if (Info->Entries[0].Buffer == NULL) return FALSE;
 
 				memcpy(Info->Entries[0].Buffer+Length,SMS->SMS[i].Text,UnicodeLength(SMS->SMS[i].Text)*2);
@@ -1082,7 +1082,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 		 */
 		if (GSM_DecodeSiemensOTASMS(di, &SiemensOTA,&InputMessages[i]->SMS[0]) &&
 		    SiemensOTA.PacketNum == 1) {
-			OutputMessages[OutputMessagesNum] = malloc(sizeof(GSM_MultiSMSMessage));
+			OutputMessages[OutputMessagesNum] = (GSM_MultiSMSMessage *)malloc(sizeof(GSM_MultiSMSMessage));
 			if (OutputMessages[OutputMessagesNum] == NULL) {
 				free(InputMessagesSorted);
 				return ERR_MOREMEMORY;
@@ -1211,7 +1211,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 				j++;
 			}
 			if (InputMessages[j]==NULL) {
-				OutputMessages[OutputMessagesNum] = malloc(sizeof(GSM_MultiSMSMessage));
+				OutputMessages[OutputMessagesNum] = (GSM_MultiSMSMessage *)malloc(sizeof(GSM_MultiSMSMessage));
 				if (OutputMessages[OutputMessagesNum] == NULL) {
 					free(InputMessagesSorted);
 					return ERR_MOREMEMORY;
@@ -1242,7 +1242,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 			if (ems && InputMessages[i]->SMS[0].UDH.PartNumber == -1) copyit = TRUE;
 		}
 		if (copyit) {
-			OutputMessages[OutputMessagesNum] = malloc(sizeof(GSM_MultiSMSMessage));
+			OutputMessages[OutputMessagesNum] = (GSM_MultiSMSMessage *)malloc(sizeof(GSM_MultiSMSMessage));
 			if (OutputMessages[OutputMessagesNum] == NULL) {
 				free(InputMessagesSorted);
 				return ERR_MOREMEMORY;
@@ -1259,7 +1259,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 		 * We will try to find other parts
 		 */
 		if (InputMessages[i]->SMS[0].UDH.PartNumber == 1) {
-			OutputMessages[OutputMessagesNum] = malloc(sizeof(GSM_MultiSMSMessage));
+			OutputMessages[OutputMessagesNum] = (GSM_MultiSMSMessage *)malloc(sizeof(GSM_MultiSMSMessage));
 			if (OutputMessages[OutputMessagesNum] == NULL) {
 				free(InputMessagesSorted);
 				return ERR_MOREMEMORY;
@@ -1404,7 +1404,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 				j++;
 			}
 			if (InputMessages[j]==NULL) {
-				OutputMessages[OutputMessagesNum] = malloc(sizeof(GSM_MultiSMSMessage));
+				OutputMessages[OutputMessagesNum] = (GSM_MultiSMSMessage *)malloc(sizeof(GSM_MultiSMSMessage));
 				if (OutputMessages[OutputMessagesNum] == NULL) {
 					free(InputMessagesSorted);
 					return ERR_MOREMEMORY;
