@@ -75,7 +75,7 @@ GSM_Error DUMMY_Error(GSM_StateMachine *s, const char *message)
 
 char * DUMMY_GetFilePath(GSM_StateMachine *s, const char *filename)
 {
-	static char *log_file=NULL;
+	char *log_file=NULL;
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
 	log_file = (char *)malloc(strlen(filename) + Priv->devlen + 2);
@@ -89,7 +89,7 @@ char * DUMMY_GetFilePath(GSM_StateMachine *s, const char *filename)
 
 char * DUMMY_GetFSFilePath(GSM_StateMachine *s, const unsigned char *fullname)
 {
-	static char *path=NULL;
+	char *path=NULL;
 	char *filename=NULL;
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
@@ -106,7 +106,7 @@ char * DUMMY_GetFSFilePath(GSM_StateMachine *s, const unsigned char *fullname)
 
 char * DUMMY_GetFSPath(GSM_StateMachine *s, const char *filename, int depth)
 {
-	static char *path=NULL;
+	char *path=NULL;
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
 	path = (char *)malloc(strlen(filename) + strlen(Priv->dirnames[depth]) + 2);
