@@ -75,7 +75,7 @@ GSM_Error DUMMY_Error(GSM_StateMachine *s, const char *message)
 
 char * DUMMY_GetFilePath(GSM_StateMachine *s, const char *filename)
 {
-	char *log_file;
+	static char *log_file=NULL;
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
 	log_file = (char *)malloc(strlen(filename) + Priv->devlen + 2);
@@ -89,8 +89,8 @@ char * DUMMY_GetFilePath(GSM_StateMachine *s, const char *filename)
 
 char * DUMMY_GetFSFilePath(GSM_StateMachine *s, const unsigned char *fullname)
 {
-	char *path;
-	char *filename;
+	static char *path=NULL;
+	char *filename=NULL;
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
 	filename = DecodeUnicodeString(fullname);
@@ -106,7 +106,7 @@ char * DUMMY_GetFSFilePath(GSM_StateMachine *s, const unsigned char *fullname)
 
 char * DUMMY_GetFSPath(GSM_StateMachine *s, const char *filename, int depth)
 {
-	char *path;
+	static char *path=NULL;
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
 	path = (char *)malloc(strlen(filename) + strlen(Priv->dirnames[depth]) + 2);
@@ -120,12 +120,12 @@ char * DUMMY_GetFSPath(GSM_StateMachine *s, const char *filename, int depth)
 
 int DUMMY_GetCount(GSM_StateMachine *s, const char *dirname)
 {
-	char *full_name;
-	int i;
+	char *full_name=NULL;
+	int i=0;
 	FILE *f;
 	int count = 0;
-	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
+	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 	full_name = (char *)malloc(strlen(dirname) + Priv->devlen + 20);
 
 	for (i = 1; i <= DUMMY_MAX_LOCATION; i++) {
@@ -136,15 +136,16 @@ int DUMMY_GetCount(GSM_StateMachine *s, const char *dirname)
 		fclose(f);
 	}
 	free(full_name);
+	full_name=NULL;
 	return count;
 }
 
 GSM_Error DUMMY_DeleteAll(GSM_StateMachine *s, const char *dirname)
 {
-	char *full_name;
-	int i;
-	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
+	char *full_name=NULL;
+	int i=0;
 
+	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 	full_name = (char *)malloc(strlen(dirname) + Priv->devlen + 20);
 
 	for (i = 1; i <= DUMMY_MAX_LOCATION; i++) {
@@ -153,38 +154,42 @@ GSM_Error DUMMY_DeleteAll(GSM_StateMachine *s, const char *dirname)
 		unlink(full_name);
 	}
 	free(full_name);
+	full_name=NULL;
 	return ERR_NONE;
 }
 
 int DUMMY_GetFirstFree(GSM_StateMachine *s, const char *dirname)
 {
-	char *full_name;
-	int i;
+	char *full_name=NULL;
+	int i=0;
 	FILE *f;
-	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
+	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 	full_name = (char *)malloc(strlen(dirname) + Priv->devlen + 20);
 
 	for (i = 1; i <= DUMMY_MAX_LOCATION; i++) {
 		sprintf(full_name, "%s/%s/%d", s->CurrentConfig->Device, dirname, i);
 		f = fopen(full_name, "r");
+
 		if (f == NULL) {
 			free(full_name);
+			full_name=NULL;
 			return i;
 		}
 		fclose(f);
 	}
 	free(full_name);
+	full_name=NULL;
 	return -1;
 }
 
 int DUMMY_GetNext(GSM_StateMachine *s, const char *dirname, int current)
 {
-	char *full_name;
-	int i;
+	char *full_name=NULL;
+	int i=0;
 	FILE *f;
-	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 
+	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
 	full_name = (char *)malloc(strlen(dirname) + Priv->devlen + 20);
 
 	for (i = current + 1; i <= DUMMY_MAX_LOCATION; i++) {
@@ -193,17 +198,21 @@ int DUMMY_GetNext(GSM_StateMachine *s, const char *dirname, int current)
 		if (f != NULL) {
 			fclose(f);
 			free(full_name);
+			full_name=NULL;
 			return i;
 		}
 	}
 	free(full_name);
+	full_name=NULL;
 	return -1;
 }
 
 char * DUMMY_GetSMSPath(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	char smspath[100];
+	char smspath[100]={0};
+
 	gboolean setfolder = (sms->Folder == 0);
+
 	while (sms->Location >= DUMMY_MAX_SMS) {
 		sms->Location -= DUMMY_MAX_SMS;
 		if (setfolder) {
@@ -262,51 +271,67 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 	path = DUMMY_GetFilePath(s, "fs");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "fs/incoming");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "sms");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "sms/1");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "sms/2");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "sms/3");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "sms/4");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "sms/5");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "pbk/ME");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "pbk/SM");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "pbk/MC");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "pbk/RC");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "pbk/DC");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "note");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "todo");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 	path = DUMMY_GetFilePath(s, "calendar");
 	MKDIR(path);
 	free(path);
+	path=NULL;
 
 	for (i = 0; i <= DUMMY_MAX_FS_DEPTH; i++) {
 		Priv->dir[i] = NULL;
@@ -314,6 +339,8 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 	Priv->fs_depth = 0;
 	Priv->log_file = fopen(log_file, "w");
 	free(log_file);
+	log_file=NULL;
+
 	if (Priv->log_file == NULL) {
 		i = errno;
 		GSM_OSErrorInfo(s, "Failed to open log");
@@ -441,6 +468,7 @@ GSM_Error DUMMY_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	error = GSM_ReadSMSBackupFile(filename, &Backup);
 
 	free(filename);
+	filename=NULL;
 
 	if (error != ERR_NONE) {
 		if (error == ERR_CANTOPENFILE) return ERR_EMPTY;
@@ -484,7 +512,7 @@ GSM_Error DUMMY_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 
 GSM_Error DUMMY_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
 
 	filename = DUMMY_GetSMSPath(s, sms);
@@ -494,19 +522,19 @@ GSM_Error DUMMY_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	} else {
 		error = DUMMY_Error(s, "SMS unlink failed");
 	}
-
 	free(filename);
-
+	filename=NULL;
 	return error;
 }
 
 GSM_Error DUMMY_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
 	GSM_SMS_Backup backup;
 
 	error = DUMMY_DeleteSMS(s, sms);
+
 	if (error != ERR_EMPTY && error != ERR_NONE) return error;
 
 	filename = DUMMY_GetSMSPath(s, sms);
@@ -516,18 +544,20 @@ GSM_Error DUMMY_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 	error = GSM_AddSMSBackupFile(filename, &backup);
 	free(filename);
+	filename=NULL;
 	return error;
 }
 
 GSM_Error DUMMY_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	char dirname[20];
+	char dirname[20]={0};
 
 	sprintf(dirname, "sms/%d", sms->Folder);
 	sms->Location = DUMMY_GetFirstFree(s, dirname);
 
-	if (sms->Location == -1) return ERR_FULL;
-
+	if (sms->Location == -1) {
+		return ERR_FULL;
+	}
 	return DUMMY_SetSMS(s, sms);
 }
 
@@ -563,7 +593,7 @@ GSM_Error DUMMY_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 
 GSM_Error DUMMY_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, gboolean start)
 {
-	char dirname[20];
+	char dirname[20]={0};
 
 	if (start) {
 		sms->SMS[0].Folder = 1;
@@ -859,7 +889,7 @@ GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *
 	}
 
 	free(path);
-
+	path=NULL;
 	*Pos = File->Used;
 
 	return ERR_EMPTY;
@@ -891,6 +921,7 @@ GSM_Error DUMMY_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, in
 	while (*pos != 0 && (pos = strchr(pos + 1, '/')) != NULL) File->Level++;
 
 	free(path);
+	path=NULL;
 
 	if (error == ERR_NONE) return ERR_EMPTY;
 	return error;
@@ -912,6 +943,8 @@ GSM_Error DUMMY_GetFolderListing(GSM_StateMachine *s, GSM_File *File, gboolean s
 		strcpy(Priv->dirnames[DUMMY_MAX_FS_DEPTH], path);
 		Priv->dir[DUMMY_MAX_FS_DEPTH] = opendir(path);
 		free(path);
+		path=NULL;
+
 		if (Priv->dir[DUMMY_MAX_FS_DEPTH] == NULL) {
 			return DUMMY_Error(s, "opendir failed");
 		}
@@ -933,6 +966,7 @@ read_next_entry:
 	path = DUMMY_GetFSPath(s, dp->d_name, DUMMY_MAX_FS_DEPTH);
 	if (stat(path, &sb) < 0) {
 		free(path);
+		path=NULL;
 		return DUMMY_Error(s, "stat failed");
 	}
 
@@ -958,18 +992,20 @@ read_next_entry:
 		if (Priv->fs_depth == DUMMY_MAX_FS_DEPTH - 1) {
 			smprintf(s, "We hit DUMMY_MAX_FS_DEPTH limit!\n");
 			free(path);
+			path=NULL;
 			return ERR_MOREMEMORY;
 		}
 		Priv->fs_depth++;
 		Priv->dir[Priv->fs_depth] = opendir(path);
 		if (Priv->dir[Priv->fs_depth] == NULL) {
 			free(path);
+			path=NULL;
 			return DUMMY_Error(s, "nested opendir failed");
 		}
 		strcpy(Priv->dirnames[Priv->fs_depth], path);
 	}
 	free(path);
-
+	path=NULL;
 	return ERR_NONE;
 }
 
@@ -992,6 +1028,8 @@ GSM_Error DUMMY_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, gboolean 
 		strcpy(Priv->dirnames[0], path);
 		Priv->dir[0] = opendir(path);
 		free(path);
+		path=NULL;
+
 		if (Priv->dir[0] == NULL) {
 			return DUMMY_Error(s, "opendir failed");
 		}
@@ -1016,6 +1054,7 @@ read_next_entry:
 	path = DUMMY_GetFSPath(s, dp->d_name, Priv->fs_depth);
 	if (stat(path, &sb) < 0) {
 		free(path);
+		path=NULL;
 		return DUMMY_Error(s, "stat failed");
 	}
 
@@ -1041,18 +1080,20 @@ read_next_entry:
 		if (Priv->fs_depth == DUMMY_MAX_FS_DEPTH - 1) {
 			smprintf(s, "We hit DUMMY_MAX_FS_DEPTH limit!\n");
 			free(path);
+			path=NULL;
 			return ERR_MOREMEMORY;
 		}
 		Priv->fs_depth++;
 		Priv->dir[Priv->fs_depth] = opendir(path);
 		if (Priv->dir[Priv->fs_depth] == NULL) {
 			free(path);
+			path=NULL;
 			return DUMMY_Error(s, "nested opendir failed");
 		}
 		strcpy(Priv->dirnames[Priv->fs_depth], path);
 	}
 	free(path);
-
+	path=NULL;
 	return ERR_NONE;
 }
 
@@ -1064,11 +1105,13 @@ GSM_Error DUMMY_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 	path = DUMMY_GetFSFilePath(s, ID);
 	if (unlink(path) != 0) {
 		free(path);
+		path=NULL;
 		error = DUMMY_Error(s, "unlink failed");
 		if (error == ERR_EMPTY) return ERR_FILENOTEXIST;
 		return error;
 	}
 	free(path);
+	path=NULL;
 	return ERR_NONE;
 }
 
@@ -1081,11 +1124,13 @@ GSM_Error DUMMY_DeleteFolder(GSM_StateMachine *s, unsigned char *ID)
 	smprintf(s, "Deleting directory %s\n", path);
 	if (rmdir(path) != 0) {
 		free(path);
+		path=NULL;
 		error = DUMMY_Error(s, "rmdir failed");
 		if (error == ERR_EMPTY) return ERR_FILENOTEXIST;
 		return error;
 	}
 	free(path);
+	path=NULL;
 	return ERR_NONE;
 }
 
@@ -1105,10 +1150,11 @@ GSM_Error DUMMY_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	path = DUMMY_GetFSFilePath(s, File->ID_FullName);
 	if (MKDIR(path) != 0) {
 		free(path);
+		path=NULL;
 		return DUMMY_Error(s, "mkdir failed");
 	}
 	free(path);
-
+	path=NULL;
 	return ERR_NONE;
 }
 
@@ -1124,11 +1170,10 @@ GSM_Error DUMMY_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 GSM_Error DUMMY_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Backup Backup;
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
-	int location;
+	int location=0,i=0;
 	GSM_MemoryType type;
-	int i;
 
 	type = entry->MemoryType;
 	location = entry->Location;
@@ -1137,6 +1182,7 @@ GSM_Error DUMMY_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	error = GSM_ReadBackupFile(filename, &Backup, GSM_Backup_VCard);
 
 	free(filename);
+	filename=NULL;
 
 	if (error != ERR_NONE) {
 		if (error == ERR_CANTOPENFILE) return ERR_EMPTY;
@@ -1145,9 +1191,10 @@ GSM_Error DUMMY_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	if (Backup.PhonePhonebook[0] == NULL) return ERR_EMPTY;
 
 	*entry = *(Backup.PhonePhonebook[0]);
+
 	for (i = 0; i < entry->EntriesNum; i++) {
 		if (entry->Entries[i].EntryType == PBK_Photo) {
-			entry->Entries[i].Picture.Buffer = malloc(entry->Entries[i].Picture.Length);
+			entry->Entries[i].Picture.Buffer = (unsigned char *)malloc(entry->Entries[i].Picture.Length);
 			memcpy(entry->Entries[i].Picture.Buffer, Backup.PhonePhonebook[0]->Entries[i].Picture.Buffer, entry->Entries[i].Picture.Length);
 		}
 	}
@@ -1160,7 +1207,7 @@ GSM_Error DUMMY_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 GSM_Error DUMMY_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, gboolean start)
 {
-	char dirname[20];
+	char dirname[20]={0};
 
 	if (start) {
 		entry->Location = 0;
@@ -1175,7 +1222,7 @@ GSM_Error DUMMY_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, gbool
 
 GSM_Error DUMMY_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
 
 	filename = DUMMY_MemoryPath(s, entry);
@@ -1187,13 +1234,13 @@ GSM_Error DUMMY_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	}
 
 	free(filename);
-
+	filename=NULL;
 	return error;
 }
 
 GSM_Error DUMMY_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
 	GSM_Backup backup;
 
@@ -1209,12 +1256,13 @@ GSM_Error DUMMY_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 	error = GSM_SaveBackupFile(filename, &backup, GSM_Backup_VCard);
 	free(filename);
+	filename=NULL;
 	return error;
 }
 
 GSM_Error DUMMY_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-	char dirname[20];
+	char dirname[20]={0};
 
 	sprintf(dirname, "pbk/%s", GSM_MemoryTypeToString(entry->MemoryType));
 	entry->Location = DUMMY_GetFirstFree(s, dirname);
@@ -1243,9 +1291,9 @@ GSM_Error DUMMY_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status)
 GSM_Error DUMMY_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 {
 	GSM_Backup Backup;
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
-	int location;
+	int location=0;
 
 	location = entry->Location;
 	filename = DUMMY_ToDoPath(s, entry);
@@ -1253,6 +1301,7 @@ GSM_Error DUMMY_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 	error = GSM_ReadBackupFile(filename, &Backup, GSM_Backup_VCalendar);
 
 	free(filename);
+	filename=NULL;
 
 	if (error != ERR_NONE) {
 		if (error == ERR_CANTOPENFILE) return ERR_EMPTY;
@@ -1280,7 +1329,7 @@ GSM_Error DUMMY_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry, gboolean 
 
 GSM_Error DUMMY_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 {
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
 
 	filename = DUMMY_ToDoPath(s, entry);
@@ -1292,13 +1341,13 @@ GSM_Error DUMMY_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 	}
 
 	free(filename);
-
+	filename=NULL;
 	return error;
 }
 
 GSM_Error DUMMY_SetToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 {
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
 	GSM_Backup backup;
 
@@ -1314,6 +1363,7 @@ GSM_Error DUMMY_SetToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 
 	error = GSM_SaveBackupFile(filename, &backup, GSM_Backup_VCalendar);
 	free(filename);
+	filename=NULL;
 	return error;
 }
 
@@ -1341,9 +1391,9 @@ GSM_Error DUMMY_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Statu
 GSM_Error DUMMY_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 {
 	GSM_Backup Backup;
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
-	int location;
+	int location=0;
 
 	location = entry->Location;
 	filename = DUMMY_CalendarPath(s, entry);
@@ -1351,6 +1401,7 @@ GSM_Error DUMMY_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 	error = GSM_ReadBackupFile(filename, &Backup, GSM_Backup_VCalendar);
 
 	free(filename);
+	filename=NULL;
 
 	if (error != ERR_NONE) {
 		if (error == ERR_CANTOPENFILE) return ERR_EMPTY;
@@ -1378,7 +1429,7 @@ GSM_Error DUMMY_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry, g
 
 GSM_Error DUMMY_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 {
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
 
 	filename = DUMMY_CalendarPath(s, entry);
@@ -1390,13 +1441,13 @@ GSM_Error DUMMY_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 	}
 
 	free(filename);
-
+	filename=NULL;
 	return error;
 }
 
 GSM_Error DUMMY_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 {
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
 	GSM_Backup backup;
 
@@ -1412,6 +1463,7 @@ GSM_Error DUMMY_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 
 	error = GSM_SaveBackupFile(filename, &backup, GSM_Backup_VCalendar);
 	free(filename);
+	filename=NULL;
 	return error;
 }
 
@@ -1439,9 +1491,9 @@ GSM_Error DUMMY_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status)
 GSM_Error DUMMY_GetNote(GSM_StateMachine *s, GSM_NoteEntry *entry)
 {
 	GSM_Backup Backup;
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
-	int location;
+	int location=0;
 
 	location = entry->Location;
 	filename = DUMMY_NotePath(s, entry);
@@ -1449,6 +1501,7 @@ GSM_Error DUMMY_GetNote(GSM_StateMachine *s, GSM_NoteEntry *entry)
 	error = GSM_ReadBackupFile(filename, &Backup, GSM_Backup_VNote);
 
 	free(filename);
+	filename=NULL;
 
 	if (error != ERR_NONE) {
 		if (error == ERR_CANTOPENFILE) return ERR_EMPTY;
@@ -1476,7 +1529,7 @@ GSM_Error DUMMY_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *entry, gboolean 
 
 GSM_Error DUMMY_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *entry)
 {
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
 
 	filename = DUMMY_NotePath(s, entry);
@@ -1486,15 +1539,14 @@ GSM_Error DUMMY_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *entry)
 	} else {
 		error = DUMMY_Error(s, "note unlink failed");
 	}
-
 	free(filename);
-
+	filename=NULL;
 	return error;
 }
 
 GSM_Error DUMMY_SetNote(GSM_StateMachine *s, GSM_NoteEntry *entry)
 {
-	char *filename;
+	char *filename=NULL;
 	GSM_Error error;
 	GSM_Backup backup;
 
@@ -1510,6 +1562,7 @@ GSM_Error DUMMY_SetNote(GSM_StateMachine *s, GSM_NoteEntry *entry)
 
 	error = GSM_SaveBackupFile(filename, &backup, GSM_Backup_VNote);
 	free(filename);
+	filename=NULL;
 	return error;
 }
 
