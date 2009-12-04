@@ -77,9 +77,9 @@ void 		EncodeDefault			(unsigned char *dest, const unsigned char *src, size_t *l
 void		DecodeDefault			(unsigned char *dest, const unsigned char *src, size_t len, gboolean UseExtensions,  unsigned char *ExtraAlphabet);
 void 		FindDefaultAlphabetLen		(const unsigned char *src, size_t *srclen, size_t *smslen, size_t maxlen);
 
-int GSM_PackSevenBitsToEight	(int offset, unsigned char *input, unsigned char *output, int length);
+int GSM_PackSevenBitsToEight	(int offset, const unsigned char *input, unsigned char *output, int length);
 int GSM_UnpackEightBitsToSeven	(int offset, int in_length, int out_length,
-				 unsigned char *input, unsigned char *output);
+				 const unsigned char *input, unsigned char *output);
 
 /* ----------------- Phone numbers according to GSM specs ------------------ */
 
@@ -104,8 +104,8 @@ typedef enum {
 	/* specification give also other values */
 } GSM_NumberType;
 
-int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, gboolean semioctet);
-int		GSM_PackSemiOctetNumber		(unsigned char *Number, unsigned char *Output, gboolean semioctet);
+int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, const unsigned char *Number, gboolean semioctet);
+int		GSM_PackSemiOctetNumber		(const unsigned char *Number, unsigned char *Output, gboolean semioctet);
 
 /* ---------------------------- Bits --------------------------------------- */
 

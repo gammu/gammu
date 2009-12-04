@@ -86,7 +86,7 @@ static GSM_UDHHeader UDHHeaders[] = {
 /* --------------------------- Unpacking SMS ------------------------------- */
 
 /* See GSM 03.40 section 9.2.3.11 */
-static GSM_Error GSM_DecodeSMSDateTime(GSM_Debug_Info *di, GSM_DateTime *DT, unsigned char *req)
+static GSM_Error GSM_DecodeSMSDateTime(GSM_Debug_Info *di, GSM_DateTime *DT, const unsigned char *req)
 {
 	DT->Year    = DecodeWithBCDAlphabet(req[0]);
 	if (DT->Year<90) DT->Year=DT->Year+2000; else DT->Year=DT->Year+1990;
@@ -362,7 +362,7 @@ GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_Debug_Info *di, GSM_SMSMessage 
 	return GSM_DecodeSMSStatusReportData(di, SMS, buffer[Layout.TPStatus]);
 }
 
-GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, size_t length, size_t *final_pos, gboolean SMSC)
+GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsigned char *buffer, size_t length, size_t *final_pos, gboolean SMSC)
 {
 	size_t pos = 0;
 	int type;

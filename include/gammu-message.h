@@ -557,7 +557,7 @@ typedef struct {
  * \ingroup SMS
  */
 GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS,
-			unsigned char *buffer, size_t length,
+			const unsigned char *buffer, size_t length,
 			size_t *final_pos, gboolean SMSC);
 
 /**

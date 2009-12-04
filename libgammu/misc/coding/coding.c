@@ -665,12 +665,12 @@ void FindDefaultAlphabetLen(const unsigned char *src, size_t *srclen, size_t *sm
 #define ByteMask ((1 << Bits) - 1)
 
 int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
-                           unsigned char *input, unsigned char *output)
+                           const unsigned char *input, unsigned char *output)
 {
 	/* (c) by Pavel Janik and Pawel Kot */
 
         unsigned char *output_pos 	= output; /* Current pointer to the output buffer */
-        unsigned char *input_pos  	= input;  /* Current pointer to the input buffer */
+        const unsigned char *input_pos  	= input;  /* Current pointer to the input buffer */
         unsigned char Rest 	= 0x00;
         int	      Bits;
 
@@ -704,12 +704,12 @@ int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
         return output_pos - output;
 }
 
-int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *output, int length)
+int GSM_PackSevenBitsToEight(int offset, const unsigned char *input, unsigned char *output, int length)
 {
 	/* (c) by Pavel Janik and Pawel Kot */
 
         unsigned char 	*output_pos = output; /* Current pointer to the output buffer */
-        unsigned char 	*input_pos  = input;  /* Current pointer to the input buffer */
+        const unsigned char 	*input_pos  = input;  /* Current pointer to the input buffer */
         int		Bits;             /* Number of bits directly copied to
                                            * the output buffer */
         Bits = (7 + offset) % 8;
@@ -739,7 +739,7 @@ int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *ou
         return (output_pos - output);
 }
 
-int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, gboolean semioctet)
+int GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, const unsigned char *Number, gboolean semioctet)
 {
 	unsigned char	Buffer[GSM_MAX_NUMBER_LENGTH + 1];
 	int		length		= Number[0];
@@ -816,7 +816,7 @@ out:
  *
  * 1 semioctet = 4 bits = half of byte
  */
-int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, gboolean semioctet)
+int GSM_PackSemiOctetNumber(const unsigned char *Number, unsigned char *Output, gboolean semioctet)
 {
 	unsigned char	format, buffer[GSM_MAX_NUMBER_LENGTH + 1];
 	int		length, i;
