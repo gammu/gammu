@@ -60,6 +60,11 @@ smscgi
 Simple cgi application gor handling SMS messages (a bit lighter version
 of SMSD).
 
+sql
+---
+
+Various SQL snippets and triggers useful with SMSD.
+
 sqlreply
 --------
 
