@@ -27,6 +27,9 @@ foreach(VCF ${VFORMATS})
     endif (${TYPE} STREQUAL .vcf)
 endforeach(VCF)
 
+configure_file("examples/pdu-decoder.py" "${CMAKE_CURRENT_BINARY_DIR}/pdu-decoder.py" COPY_ONLY)
+add_test("py-pdu-decode"  ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/pdu-decoder.py" "079124602009999002AB098106845688F8907080517375809070805183018000")
+
 configure_file("examples/sms-encode-decode.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py" COPY_ONLY)
 add_test("py-sms-encode-decode" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py")
 set_tests_properties("py-sms-encode-decode" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")

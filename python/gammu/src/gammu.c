@@ -6102,6 +6102,53 @@ gammu_ReadSMSBackup(PyObject *self, PyObject *args, PyObject *kwds)
     return result;
 }
 
+static char gammu_DecodePDU__doc__[] =
+"DecodePDU(Data, SMSC = False)\n\n"
+"Parses PDU packet.\n\n"
+"@param Data: PDU data, need to be binary not hex encoded\n"
+"@type Data: string\n"
+"@param SMSC: Whether PDU includes SMSC.\n"
+"@type SMSC: boolean\n"
+"@return: Message data\n"
+"@rtype: dict\n"
+;
+
+static PyObject *
+gammu_DecodePDU(PyObject *self, PyObject *args, PyObject *kwds)
+{
+    static char *kwlist[] = {"Filename", "SMSC", NULL};
+    GSM_Error error;
+    PyObject *result;
+    PyObject *o = Py_None;
+    gboolean smsc;
+    const char *pdu;
+    Py_ssize_t pdulen;
+	size_t parse_len = 0;
+    GSM_SMSMessage sms;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "s#|O", kwlist,
+                &pdu, &pdulen, &o))
+        return NULL;
+
+    if (o == Py_None) {
+        smsc = TRUE;
+    } else if (o == Py_False) {
+        smsc = FALSE;
+    } else if (o == Py_True) {
+        smsc = TRUE;
+    } else {
+        PyErr_SetString(PyExc_TypeError, "use None or boolean as SMSC!");
+        return NULL;
+    }
+
+    GSM_SetDefaultSMSData(&sms);
+	error = GSM_DecodePDUFrame(NULL, &sms,  pdu, pdulen, &parse_len, smsc);
+    if (!checkError(NULL, error, "DecodePDUFrame")) return NULL;
+
+    result = SMSToPython(&sms);
+    return result;
+}
+
 /* List of methods defined in the module */
 
 static struct PyMethodDef gammu_methods[] = {
@@ -6132,6 +6179,8 @@ static struct PyMethodDef gammu_methods[] = {
 
     {"SaveSMSBackup",   (PyCFunction)gammu_SaveSMSBackup,   METH_VARARGS|METH_KEYWORDS,   gammu_SaveSMSBackup__doc__},
     {"ReadSMSBackup",   (PyCFunction)gammu_ReadSMSBackup,   METH_VARARGS|METH_KEYWORDS,   gammu_ReadSMSBackup__doc__},
+
+    {"DecodePDU",       (PyCFunction)gammu_DecodePDU,       METH_VARARGS|METH_KEYWORDS,   gammu_DecodePDU__doc__},
 
     {NULL,	 (PyCFunction)NULL, 0, NULL}		/* sentinel */
 };

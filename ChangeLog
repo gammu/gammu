@@ -22,6 +22,7 @@ ChangeLog
 2009???? - 1.26.93
 
 [-] * Add ID for MTK1/MTK2 phones (bug#1051).
+[+] * Add DecodePDU to Python bindings.
     
 20091203 - 1.26.92
 
