@@ -1,53 +1,34 @@
 -- Poll trigger
 
--- It check sformat of message, stores vote and injects reply message
+-- It checks format of message, stores vote and injects reply message
 -- to smsd database
 
 -- Written by Okta <okta.nc@gmail.com>
+-- Updated by Peter Stuge <peter@stuge.se> to remove a race condition
 
 delimiter $
-create trigger
-smsd.sms
-AFTER
-INSERT
-on
-smsd.inbox
-for each row BEGIN
-DECLARE smsx,smsz,smsin varchar(200);
-DECLARE format,smsvote,sender_no varchar(200);
-DECLARE error,x,totalvote int;
 
-set smsz=new.TextDecoded;
-select ltrim(smsz) into smsx;
-select rtrim(smsx) into smsin;
-set sender_no=new.SenderNumber;
-select substring_index(smsin,' ',1) into format;
-select substring(smsin,6) into smsvote;
-select count(candidate) from polling.polling_data
-where candidate=smsvote into x;
-select vote from polling.polling_data
-where candidate=smsvote into totalvote;
-set totalvote=totalvote+1;
-set error=0;
+create trigger smsd.inbox_ai after insert on smsd.inbox for each row
+begin
+  declare msg,smsvote char(200);
+  declare found_candidate tinyint unsigned default 0;
+  declare reply char(160) default 'Sorry, the format that you entered was incorrect. Please resend in the following format: [VOTE CandidateName]';
 
-if format='vote' and x>0 then
-update polling.polling_data set vote=totalvote where candidate=smsvote;
-else
-set error=1;
-end if;
+  set msg=trim(new.TextDecoded);
+  set msg=trim(trim(leading '[' from trim(trailing ']' from msg)));
 
-if error=1 then
-insert into smsd.outbox (DestinationNumber,TextDecoded,CreatorID,Coding)
-VALUES (sender_no,'Sorry the format that you entered was incorrect or the
-candidate is not available. Please resend in the following format: [VOTE
-CandidateName]','Voter','Default_No_Compression');
-end if;
+  if left(msg,5)='vote ' then
+    set smsvote=trim(substring(msg,6));
+    select count(candidate)>0 from polling.polling_data where candidate=smsvote into found_candidate;
+    if found_candidate=0 then
+      set reply='Sorry, the candidate that you entered was not found. Please resend in the following format: [VOTE CandidateName]';
+    else
+      update polling.polling_data set vote=vote+1 where candidate=smsvote;
+      set reply='Thank you. Your vote has been accepted';
+    end if;
+  end if;
 
-if error=0 then
-insert into smsd.outbox (DestinationNumber,TextDecoded,CreatorID,Coding)
-VALUES (sender_no,'Thank you. Your vote has been
-accepted','Voter','Default_No_Compression');
-end if;
+  insert into smsd.outbox (DestinationNumber,TextDecoded,CreatorID,Coding) values (new.SenderNumber,reply,'Voter','Default_No_Compression');
+end; $
 
-END;
-$
+delimiter ;
