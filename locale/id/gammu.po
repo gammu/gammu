@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: Gammu 1.26.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-03 14:43+0100\n"
-"PO-Revision-Date: 2009-09-07 07:24+0200\n"
-"Last-Translator: winawang <winawangz@yahoo.co.id>\n"
+"PO-Revision-Date: 2009-12-05 20:59+0200\n"
+"Last-Translator: Lulus Seven N <luluspitu@yahoo.co.id>\n"
 "Language-Team: none\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Pootle 1.2.1\n"
 
@@ -4215,7 +4215,7 @@ msgstr ""
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
 msgid "Information"
-msgstr ""
+msgstr "Informasi"
 
 #, fuzzy
 #~ msgid ""
