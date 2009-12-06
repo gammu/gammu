@@ -238,6 +238,11 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 	                	smprintf(s, " - %s\n", addressAsString);
 				error = bluetooth_checkdevice(s, addressAsString,&protocolInfo);
 				if (error == ERR_NONE) {
+					free(s->CurrentConfig->Device);
+					s->CurrentConfig->Device = strdup(addressAsString);
+					if (s->CurrentConfig->Device == NULL) {
+						return ERR_MOREMEMORY;
+					}
 					result = WSALookupServiceEnd(handle);
 					return error;
 				}
