@@ -233,8 +233,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 		/* If we went here from "case SMS_Deliver", we don't write "SMS Message" */
 		if (sms.PDU==SMS_Submit) {
 			printf("%s\n", _("SMS message"));
-			if (sms.State==SMS_UnSent && sms.Memory==MEM_ME) {
-			} else {
+			if (sms.State == SMS_Sent) {
 				printf(LISTFORMAT "%d\n", _("Reference number"),sms.MessageReference);
 			}
 		}
