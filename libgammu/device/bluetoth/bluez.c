@@ -230,6 +230,12 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 		if (sdp_general_inquiry(ii, 20, 8, &count) < 0) {
 			return ERR_UNKNOWN;
 		}
+		free(s->CurrentConfig->Device);
+		s->CurrentConfig->Device = (char *)malloc(18);
+		if (s->CurrentConfig->Device == NULL) {
+			return ERR_MOREMEMORY;
+		}
+		ba2str(&ii[0].bdaddr, s->CurrentConfig->Device);
 	} else {
 		count = 1;
 		str2ba(s->CurrentConfig->Device,&ii[0].bdaddr);
