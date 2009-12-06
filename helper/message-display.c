@@ -236,7 +236,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 			if (sms.State == SMS_Sent) {
 				printf(LISTFORMAT "%d\n", _("Reference number"),sms.MessageReference);
 			}
-			if (CheckDate(sms.DateTime) && CheckTime(sms.DateTime)) {
+			if (CheckDate(&(sms.DateTime)) && CheckTime(&(sms.DateTime))) {
 				printf(LISTFORMAT "%s\n", _("Sent"), OSDateTime(sms.DateTime,TRUE));
 			}
 		}
