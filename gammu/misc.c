@@ -194,8 +194,13 @@ void Identify(int argc, char *argv[])
 	char date[GSM_MAX_VERSION_DATE_LENGTH];
 	double num;
 	GSM_Error error;
+	GSM_Config *curcfg;
 
 	GSM_Init(TRUE);
+
+	/* Read current configuration */
+	curcfg = GSM_GetConfig(gsm, -1);
+	printf(LISTFORMAT "%s\n", _("Device"), curcfg->Device);
 
 	error=GSM_GetManufacturer(gsm, buffer);
 	Print_Error(error);
