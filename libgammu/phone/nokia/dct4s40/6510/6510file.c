@@ -2356,13 +2356,13 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 
 	while (pos < FFF->Used) {
 		unknown = FALSE;
-		if (pos + 2 >= FFF->Used) {
-			smprintf(s, "ERROR: Reach end of file before end of block!\n");
-			return ERR_BUG;
-		}
 		if (FFF->Buffer[pos] == 0x00) {
 			smprintf(s, "WARNING: 0x00 block, assuming rest is just junk!\n");
 			break;
+		}
+		if (pos + 2 >= FFF->Used) {
+			smprintf(s, "ERROR: Reach end of file before end of block!\n");
+			return ERR_BUG;
 		}
 		switch (FFF->Buffer[pos]) {
 			case 0x02: /* SMSC number, ASCII */

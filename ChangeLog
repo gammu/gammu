@@ -24,6 +24,7 @@ ChangeLog
 [-] * Add ID for MTK1/MTK2 phones (bug#1051).
 [+] * Add DecodePDU to Python bindings.
 [+] * Added sample SQL trigger for SMSD polls.
+[-] * Display sent SMS time if it is available (bug#1053).
     
 20091203 - 1.26.92
 
