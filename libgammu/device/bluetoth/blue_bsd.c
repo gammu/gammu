@@ -233,6 +233,12 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 		if (bluetooth_search(s, &ii[n].bdaddr) == ERR_NONE) {
 			free(ii);
 			ii=NULL;
+			free(s->CurrentConfig->Device);
+			s->CurrentConfig->Device = (char *)malloc(18);
+			if (s->CurrentConfig->Device == NULL) {
+				return ERR_MOREMEMORY;
+			}
+			bt_ntoa(&ii[0].bdaddr, s->CurrentConfig->Device);
 			return ERR_NONE;
 		}
 	}
