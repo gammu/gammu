@@ -225,7 +225,7 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 
 	if (hci_devinfo(0, &hci_info) < 0) return ERR_DEVICENOTWORK;
 
-	if (strcmp(s->CurrentConfig->Device, "/dev/ttyS1") == 0) {
+	if (s->CurrentConfig->Device[0] == '/') {
 		smprintf(s, "Searching for devices\n");
 		if (sdp_general_inquiry(ii, 20, 8, &count) < 0) {
 			return ERR_UNKNOWN;
