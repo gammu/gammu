@@ -31,9 +31,9 @@ void interrupt(int sign)
 int main(int argc UNUSED, char **argv UNUSED)
 {
 	GSM_Debug_Info *debug_info;
-    gboolean start;
+	gboolean start;
 	GSM_MultiSMSMessage 	sms;
-    int i;
+	int i;
 
 	/* Register signal handler */
 	signal(SIGINT, interrupt);
@@ -86,30 +86,30 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = GSM_InitConnection(s, 3);
 	error_handler();
 
-    /* Read all messages */
-    error = ERR_NONE;
-    start = TRUE;
+	/* Read all messages */
+	error = ERR_NONE;
+	start = TRUE;
 	sms.Number = 0;
 	sms.SMS[0].Location = 0;
-    while (error == ERR_NONE && !gshutdown) {
-    	error = GSM_GetNextSMS(s, &sms, start);
-        if (error == ERR_EMPTY) break;
-        error_handler();
-        start = FALSE;
+	while (error == ERR_NONE && !gshutdown) {
+		error = GSM_GetNextSMS(s, &sms, start);
+		if (error == ERR_EMPTY) break;
+		error_handler();
+		start = FALSE;
 
-        /* Now we can do something with the message */
-        for (i = 0; i < sms.Number; i++) {
-            printf("Location: %d, Folder: %d\n", sms.SMS[i].Location, sms.SMS[i].Folder);
-            printf("Number: \"%s\"\n", DecodeUnicodeConsole(sms.SMS[i].Number));
-            /*
-             * Decoding with GSM_DecodeMultiPartSMS is also an option here,
-             * but for simplicity we use this approach which will handle only
-             * text messages.
-             */
-            printf("Text: \"%s\"\n", DecodeUnicodeConsole(sms.SMS[i].Text));
-            printf("\n");
-        }
-    }
+		/* Now we can do something with the message */
+		for (i = 0; i < sms.Number; i++) {
+			printf("Location: %d, Folder: %d\n", sms.SMS[i].Location, sms.SMS[i].Folder);
+			printf("Number: \"%s\"\n", DecodeUnicodeConsole(sms.SMS[i].Number));
+			/*
+			 * Decoding with GSM_DecodeMultiPartSMS is also an option here,
+			 * but for simplicity we use this approach which will handle only
+			 * text messages.
+			 */
+			printf("Text: \"%s\"\n", DecodeUnicodeConsole(sms.SMS[i].Text));
+			printf("\n");
+		}
+	}
 
 	/* Terminate connection */
 	error = GSM_TerminateConnection(s);
