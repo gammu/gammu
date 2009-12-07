@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-03 16:53+0100\n"
-"PO-Revision-Date: 2009-12-03 16:54+0100\n"
+"POT-Creation-Date: 2009-12-07 16:41+0100\n"
+"PO-Revision-Date: 2009-12-07 16:42+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6283,8 +6283,10 @@ msgstr "B<CommTimeout>"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:101
-msgid "How many seconds should SMSD wait after each read/write loop."
-msgstr "Kolik sekund by měl SMSD čekat po každém cyklu čtení/zápis."
+msgid "How many seconds should SMSD wait after there is no message in outbox."
+msgstr ""
+"Kolik sekund by měl SMSD čekat po každé, když není nalezena žádná zpráva k "
+"odeslání."
 
 # type: Plain text
 #. type: Plain text

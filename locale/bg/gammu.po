@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-07 15:40+0100\n"
+"POT-Creation-Date: 2009-12-07 16:41+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -67,8 +67,8 @@ msgid "Error while writing file!\n"
 msgstr ""
 
 #: gammu/backup.c:216 gammu/backup.c:958 gammu/backup.c:1593
-#: gammu/calendar.c:606 gammu/calendar.c:941 gammu/calendar.c:1016
-#: gammu/calendar.c:1041 gammu/memory.c:25 gammu/memory.c:308
+#: gammu/calendar.c:613 gammu/calendar.c:948 gammu/calendar.c:1023
+#: gammu/calendar.c:1048 gammu/memory.c:25 gammu/memory.c:308
 #: gammu/memory.c:372 gammu/message.c:128 gammu/misc.c:81 gammu/misc.c:348
 msgid "Press Ctrl+C to break..."
 msgstr ""
@@ -260,7 +260,7 @@ msgid "Time of backup"
 msgstr ""
 
 #: gammu/backup.c:961 gammu/backup.c:1570 gammu/calendar.c:222
-#: gammu/calendar.c:879
+#: gammu/calendar.c:886
 msgid "Phone"
 msgstr "Телефон"
 
@@ -493,119 +493,119 @@ msgstr ""
 msgid "saving %i SMS\n"
 msgstr ""
 
-#: gammu/calendar.c:35 gammu/calendar.c:686
+#: gammu/calendar.c:35 gammu/calendar.c:693
 msgid "Note type"
 msgstr ""
 
-#: gammu/calendar.c:38 gammu/calendar.c:689
+#: gammu/calendar.c:38 gammu/calendar.c:696
 msgid "Reminder (Date)"
 msgstr ""
 
-#: gammu/calendar.c:41 gammu/calendar.c:692
+#: gammu/calendar.c:41 gammu/calendar.c:699
 msgid "Call"
 msgstr "Позвъняване"
 
-#: gammu/calendar.c:44 gammu/calendar.c:695
+#: gammu/calendar.c:44 gammu/calendar.c:702
 msgid "Meeting"
 msgstr ""
 
-#: gammu/calendar.c:47 gammu/calendar.c:698
+#: gammu/calendar.c:47 gammu/calendar.c:705
 msgid "Birthday (Anniversary)"
 msgstr ""
 
-#: gammu/calendar.c:50 gammu/calendar.c:701
+#: gammu/calendar.c:50 gammu/calendar.c:708
 msgid "Memo (Miscellaneous)"
 msgstr ""
 
-#: gammu/calendar.c:53 gammu/calendar.c:704
+#: gammu/calendar.c:53 gammu/calendar.c:711
 msgid "Travel"
 msgstr ""
 
-#: gammu/calendar.c:56 gammu/calendar.c:707
+#: gammu/calendar.c:56 gammu/calendar.c:714
 msgid "Vacation"
 msgstr ""
 
-#: gammu/calendar.c:59 gammu/calendar.c:710 gammu/calendar.c:815
+#: gammu/calendar.c:59 gammu/calendar.c:717 gammu/calendar.c:822
 msgid "Alarm"
 msgstr "Алармен часовник"
 
-#: gammu/calendar.c:62 gammu/calendar.c:713
+#: gammu/calendar.c:62 gammu/calendar.c:720
 msgid "Daily alarm"
 msgstr ""
 
-#: gammu/calendar.c:65 gammu/calendar.c:716
+#: gammu/calendar.c:65 gammu/calendar.c:723
 msgid "Training/Athletism"
 msgstr ""
 
-#: gammu/calendar.c:68 gammu/calendar.c:719
+#: gammu/calendar.c:68 gammu/calendar.c:726
 msgid "Training/Ball Games"
 msgstr ""
 
-#: gammu/calendar.c:71 gammu/calendar.c:722
+#: gammu/calendar.c:71 gammu/calendar.c:729
 msgid "Training/Cycling"
 msgstr ""
 
-#: gammu/calendar.c:74 gammu/calendar.c:725
+#: gammu/calendar.c:74 gammu/calendar.c:732
 msgid "Training/Budo"
 msgstr ""
 
-#: gammu/calendar.c:77 gammu/calendar.c:728
+#: gammu/calendar.c:77 gammu/calendar.c:735
 msgid "Training/Dance"
 msgstr ""
 
-#: gammu/calendar.c:80 gammu/calendar.c:731
+#: gammu/calendar.c:80 gammu/calendar.c:738
 msgid "Training/Extreme Sports"
 msgstr ""
 
-#: gammu/calendar.c:83 gammu/calendar.c:734
+#: gammu/calendar.c:83 gammu/calendar.c:741
 msgid "Training/Football"
 msgstr ""
 
-#: gammu/calendar.c:86 gammu/calendar.c:737
+#: gammu/calendar.c:86 gammu/calendar.c:744
 msgid "Training/Golf"
 msgstr ""
 
-#: gammu/calendar.c:89 gammu/calendar.c:740
+#: gammu/calendar.c:89 gammu/calendar.c:747
 msgid "Training/Gym"
 msgstr ""
 
-#: gammu/calendar.c:92 gammu/calendar.c:743
+#: gammu/calendar.c:92 gammu/calendar.c:750
 msgid "Training/Horse Races"
 msgstr ""
 
-#: gammu/calendar.c:95 gammu/calendar.c:746
+#: gammu/calendar.c:95 gammu/calendar.c:753
 msgid "Training/Hockey"
 msgstr ""
 
-#: gammu/calendar.c:98 gammu/calendar.c:749
+#: gammu/calendar.c:98 gammu/calendar.c:756
 msgid "Training/Races"
 msgstr ""
 
-#: gammu/calendar.c:101 gammu/calendar.c:752
+#: gammu/calendar.c:101 gammu/calendar.c:759
 msgid "Training/Rugby"
 msgstr ""
 
-#: gammu/calendar.c:104 gammu/calendar.c:755
+#: gammu/calendar.c:104 gammu/calendar.c:762
 msgid "Training/Sailing"
 msgstr ""
 
-#: gammu/calendar.c:107 gammu/calendar.c:758
+#: gammu/calendar.c:107 gammu/calendar.c:765
 msgid "Training/Street Games"
 msgstr ""
 
-#: gammu/calendar.c:110 gammu/calendar.c:761
+#: gammu/calendar.c:110 gammu/calendar.c:768
 msgid "Training/Swimming"
 msgstr ""
 
-#: gammu/calendar.c:113 gammu/calendar.c:764
+#: gammu/calendar.c:113 gammu/calendar.c:771
 msgid "Training/Tennis"
 msgstr ""
 
-#: gammu/calendar.c:116 gammu/calendar.c:767
+#: gammu/calendar.c:116 gammu/calendar.c:774
 msgid "Training/Travels"
 msgstr ""
 
-#: gammu/calendar.c:119 gammu/calendar.c:770
+#: gammu/calendar.c:119 gammu/calendar.c:777
 msgid "Training/Winter Games"
 msgstr ""
 
@@ -621,7 +621,7 @@ msgstr "Начало"
 msgid "Stop"
 msgstr ""
 
-#: gammu/calendar.c:155 gammu/calendar.c:825 helper/memory-display.c:40
+#: gammu/calendar.c:155 gammu/calendar.c:832 helper/memory-display.c:40
 msgid "Last modified"
 msgstr ""
 
@@ -634,33 +634,33 @@ msgstr ""
 msgid "forever on each %i. day of %s"
 msgstr ""
 
-#: gammu/calendar.c:182 gammu/calendar.c:194 gammu/calendar.c:820
+#: gammu/calendar.c:182 gammu/calendar.c:194 gammu/calendar.c:827
 msgid "Silent alarm"
 msgstr ""
 
-#: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:830
-#: gammu/calendar.c:1052 gammu/message.c:205 gammu/misc.c:964
+#: gammu/calendar.c:202 gammu/calendar.c:532 gammu/calendar.c:837
+#: gammu/calendar.c:1059 gammu/message.c:205 gammu/misc.c:964
 #: helper/memory-display.c:130 helper/message-display.c:435
 #, c-format
 msgid "Text"
 msgstr "Текст"
 
-#: gammu/calendar.c:207 gammu/calendar.c:884
+#: gammu/calendar.c:207 gammu/calendar.c:891
 msgid "Description"
 msgstr ""
 
-#: gammu/calendar.c:212 gammu/calendar.c:894 helper/memory-display.c:136
+#: gammu/calendar.c:212 gammu/calendar.c:901 helper/memory-display.c:136
 msgid "LUID"
 msgstr ""
 
-#: gammu/calendar.c:217 gammu/calendar.c:573 gammu/calendar.c:617
-#: gammu/calendar.c:661 gammu/calendar.c:685 gammu/calendar.c:889
+#: gammu/calendar.c:217 gammu/calendar.c:580 gammu/calendar.c:624
+#: gammu/calendar.c:668 gammu/calendar.c:692 gammu/calendar.c:896
 #: gammu/memory.c:146 gammu/message.c:195 gammu/misc.c:1700 gammu/misc.c:1733
 #: gammu/misc.c:1994 gammu/misc.c:2103
 msgid "Location"
 msgstr "Местонахождение"
 
-#: gammu/calendar.c:227 gammu/calendar.c:835 helper/memory-display.c:61
+#: gammu/calendar.c:227 gammu/calendar.c:842 helper/memory-display.c:61
 msgid "Private"
 msgstr ""
 
@@ -673,7 +673,7 @@ msgid "No"
 msgstr "Не"
 
 #: gammu/calendar.c:241 gammu/calendar.c:247 gammu/calendar.c:252
-#: gammu/calendar.c:864 gammu/calendar.c:870
+#: gammu/calendar.c:871 gammu/calendar.c:877
 msgid "Contact ID"
 msgstr ""
 
@@ -830,103 +830,103 @@ msgstr ""
 msgid "Setting time in phone to the same time as is set in computer."
 msgstr ""
 
-#: gammu/calendar.c:459
+#: gammu/calendar.c:494
 msgid "Updating specified parts of date and time in phone."
 msgstr ""
 
-#: gammu/calendar.c:510
+#: gammu/calendar.c:517
 #, c-format
 msgid "Alarm (%i) not set in phone\n"
 msgstr ""
 
-#: gammu/calendar.c:514
+#: gammu/calendar.c:521
 #, c-format
 msgid "Alarm in location %i:\n"
 msgstr ""
 
-#: gammu/calendar.c:516 gammu/calendar.c:519 gammu/mms.c:95
+#: gammu/calendar.c:523 gammu/calendar.c:526 gammu/mms.c:95
 msgid "Date"
 msgstr "Дата"
 
-#: gammu/calendar.c:517
+#: gammu/calendar.c:524
 msgid "Every day"
 msgstr ""
 
-#: gammu/calendar.c:522
+#: gammu/calendar.c:529
 #, c-format
 msgid "Time: %02d:%02d\n"
 msgstr ""
 
-#: gammu/calendar.c:636
+#: gammu/calendar.c:643
 #, c-format
 msgid "Auto deleting disabled"
 msgstr ""
 
-#: gammu/calendar.c:638
+#: gammu/calendar.c:645
 #, c-format
 msgid "Auto deleting notes after %i day(s)"
 msgstr ""
 
-#: gammu/calendar.c:642
+#: gammu/calendar.c:649
 #, c-format
 msgid "Week starts on %s"
 msgstr ""
 
-#: gammu/calendar.c:667 gammu/memory.c:155
+#: gammu/calendar.c:674 gammu/memory.c:155
 msgid "Entry was empty"
 msgstr ""
 
-#: gammu/calendar.c:669 gammu/memory.c:157
+#: gammu/calendar.c:676 gammu/memory.c:157
 msgid "Entry was deleted"
 msgstr ""
 
-#: gammu/calendar.c:774 gammu/calendar.c:793 gammu/message.c:108
+#: gammu/calendar.c:781 gammu/calendar.c:800 gammu/message.c:108
 #: gammu/misc.c:1925 gammu/misc.c:1968
 msgid "Unknown"
 msgstr "Непознат"
 
-#: gammu/calendar.c:777
+#: gammu/calendar.c:784
 msgid "Priority"
 msgstr "Приоритет"
 
-#: gammu/calendar.c:780
+#: gammu/calendar.c:787
 msgid "Low"
 msgstr ""
 
-#: gammu/calendar.c:783
+#: gammu/calendar.c:790
 msgid "Medium"
 msgstr ""
 
-#: gammu/calendar.c:786
+#: gammu/calendar.c:793
 msgid "High"
 msgstr ""
 
-#: gammu/calendar.c:789
+#: gammu/calendar.c:796
 msgid "None"
 msgstr "Без"
 
-#: gammu/calendar.c:800
+#: gammu/calendar.c:807
 msgid "Due time"
 msgstr ""
 
-#: gammu/calendar.c:805
+#: gammu/calendar.c:812
 msgid "Start time"
 msgstr ""
 
-#: gammu/calendar.c:810
+#: gammu/calendar.c:817
 msgid "Completed"
 msgstr "Завършено"
 
-#: gammu/calendar.c:845 gammu/calendar.c:850 helper/memory-display.c:44
+#: gammu/calendar.c:852 gammu/calendar.c:857 helper/memory-display.c:44
 #: helper/memory-display.c:54 helper/memory-display.c:56
 msgid "Category"
 msgstr ""
 
-#: gammu/calendar.c:874
+#: gammu/calendar.c:881
 msgid "Contact"
 msgstr ""
 
-#: gammu/calendar.c:959 gammu/memory.c:312 gammu/memory.c:389
+#: gammu/calendar.c:966 gammu/memory.c:312 gammu/memory.c:389
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr ""

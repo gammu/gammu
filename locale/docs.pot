@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-03 16:53+0100\n"
+"POT-Creation-Date: 2009-12-07 16:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -5234,7 +5234,7 @@ msgstr ""
 
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:101
-msgid "How many seconds should SMSD wait after each read/write loop."
+msgid "How many seconds should SMSD wait after there is no message in outbox."
 msgstr ""
 
 #. type: Plain text
