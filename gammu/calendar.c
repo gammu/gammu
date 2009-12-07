@@ -454,10 +454,8 @@ void SetDateTime(int argc, char *argv[])
 		Print_Error(error);
 
 		if (error == ERR_NONE) {
-			printf("%s\n",
-			       _
-			       ("Updating specified parts of date and time in phone."));
 			shift = 0;
+			error = ERR_INVALIDDATETIME;
 			parse = strchr(argv[2], ':');
 			if (parse != NULL) {
 				date_time.Hour = atoi(argv[2]);
@@ -467,6 +465,11 @@ void SetDateTime(int argc, char *argv[])
 					date_time.Second = atoi(parse + 1);
 				}
 				shift = 1;
+				if (CheckTime(&date_time)) {
+					error = ERR_NONE;
+				} else {
+					error = ERR_INVALIDDATETIME;
+				}
 			}
 			if (argc - 1 >= 2 + shift) {
 				parse = strchr(argv[2 + shift], '/');
@@ -477,14 +480,18 @@ void SetDateTime(int argc, char *argv[])
 					if (parse != NULL) {
 						date_time.Day = atoi(parse + 1);
 					}
+					if (CheckDate(&date_time)) {
+						error = ERR_NONE;
+					} else {
+						error = ERR_INVALIDDATETIME;
+					}
 				}
 			}
-			if (!CheckDate(&date_time) || !CheckTime(&date_time))
-				error = ERR_INVALIDDATETIME;
 			/* we got the timezone from the phone */
 		}
 	}
 	if (error == ERR_NONE) {
+		printf("%s\n", _("Updating specified parts of date and time in phone."));
 		error = GSM_SetDateTime(gsm, &date_time);
 	}
 	Print_Error(error);
