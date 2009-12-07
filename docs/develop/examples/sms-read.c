@@ -91,6 +91,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	start = TRUE;
 	sms.Number = 0;
 	sms.SMS[0].Location = 0;
+	sms.SMS[0].Folder = 0;
 	while (error == ERR_NONE && !gshutdown) {
 		error = GSM_GetNextSMS(s, &sms, start);
 		if (error == ERR_EMPTY) break;
