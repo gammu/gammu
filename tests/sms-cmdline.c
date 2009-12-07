@@ -21,6 +21,7 @@ int main(int argc, char **argv)
 
 	error = CreateMessage(&type, &sms, argc, 1, argv, NULL);
 	gammu_test_result(error, "CreateMessage");
+	fflush(stderr);
 
 	DisplayMultiSMSInfo(&sms, FALSE, TRUE, NULL, NULL);
 	DisplayMultiSMSInfo(&sms, TRUE, TRUE, NULL, NULL);
