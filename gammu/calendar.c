@@ -445,7 +445,7 @@ void SetDateTime(int argc, char *argv[])
 	error = ERR_NONE;
 	if (argc < 3) {
 		/* set datetime to the current datetime in the PC */
-		printf("%s\n", _("Setting time in phone to the time on PC."));
+		printf("%s\n", _("Setting time in phone to the same time as is set in computer."));
 		GSM_GetCurrentDateTime(&date_time);
 	} else {
 		/* update only parts the user specified,
