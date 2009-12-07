@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.26.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-07 15:40+0100\n"
-"PO-Revision-Date: 2009-12-03 14:46+0100\n"
+"PO-Revision-Date: 2009-12-07 15:41+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -839,7 +839,6 @@ msgid ", date separator is %c\n"
 msgstr ", oddělovač data je %c\n"
 
 #: gammu/calendar.c:448
-#, fuzzy
 msgid "Setting time in phone to the same time as is set in computer."
 msgstr "Nastavuji čas v telefonu podle času v počítači."
 
