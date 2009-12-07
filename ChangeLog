@@ -25,6 +25,7 @@ ChangeLog
 [+] * Add DecodePDU to Python bindings.
 [+] * Added sample SQL trigger for SMSD polls.
 [-] * Display sent SMS time if it is available (bug#1053).
+[-] * Added bunch of new testcases.
     
 20091203 - 1.26.92
 
