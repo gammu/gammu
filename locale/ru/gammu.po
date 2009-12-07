@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.26.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-07 10:11+0100\n"
+"POT-Creation-Date: 2009-12-07 15:40+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -930,7 +930,7 @@ msgstr ", разделитель даты - %c\n"
 
 #: gammu/calendar.c:448
 #, fuzzy
-msgid "Setting time in phone to the time on PC."
+msgid "Setting time in phone to the same time as is set in computer."
 msgstr "Синхронизация времени в телефоне со временем в ПК.\n"
 
 #: gammu/calendar.c:459
@@ -4672,28 +4672,28 @@ msgstr ""
 "ID EMS-анимации: %i\n"
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:497 helper/message-display.c:515
+#: helper/message-display.c:497 helper/message-display.c:516
 #: helper/printing.c:18
 #, fuzzy
 msgid "Error"
 msgstr "Ошибка\n"
 
-#: helper/message-display.c:530
+#: helper/message-display.c:531
 msgid "Data PDU"
 msgstr ""
 
-#: helper/message-display.c:531
+#: helper/message-display.c:532
 #, fuzzy
 msgid "Number of bits"
 msgstr ""
 "\n"
 "Количество SMS: %i\n"
 
-#: helper/message-display.c:533
+#: helper/message-display.c:534
 msgid "UDH"
 msgstr ""
 
-#: helper/message-display.c:549
+#: helper/message-display.c:550
 msgid "Whole PDU"
 msgstr ""
 

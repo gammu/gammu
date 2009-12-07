@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.26.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-07 10:11+0100\n"
+"POT-Creation-Date: 2009-12-07 15:40+0100\n"
 "PO-Revision-Date: 2009-06-03 16:35+0200\n"
 "Last-Translator: Potwór Jaworny <sklep@szybkieczytanie.net>\n"
 "Language-Team: Language =pl\n"
@@ -836,7 +836,8 @@ msgid ", date separator is %c\n"
 msgstr ", separator daty: %c\n"
 
 #: gammu/calendar.c:448
-msgid "Setting time in phone to the time on PC."
+#, fuzzy
+msgid "Setting time in phone to the same time as is set in computer."
 msgstr "Ustawianie czasu w telefonie zgodnie z czasem PC."
 
 #: gammu/calendar.c:459
@@ -4310,25 +4311,25 @@ msgid "EMS animation ID"
 msgstr ""
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:497 helper/message-display.c:515
+#: helper/message-display.c:497 helper/message-display.c:516
 #: helper/printing.c:18
 msgid "Error"
 msgstr "Błąd"
 
-#: helper/message-display.c:530
+#: helper/message-display.c:531
 msgid "Data PDU"
 msgstr ""
 
-#: helper/message-display.c:531
+#: helper/message-display.c:532
 #, fuzzy
 msgid "Number of bits"
 msgstr "   Numer      : %s\n"
 
-#: helper/message-display.c:533
+#: helper/message-display.c:534
 msgid "UDH"
 msgstr ""
 
-#: helper/message-display.c:549
+#: helper/message-display.c:550
 msgid "Whole PDU"
 msgstr ""
 

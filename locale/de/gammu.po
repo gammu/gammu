@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.26.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-07 10:11+0100\n"
+"POT-Creation-Date: 2009-12-07 15:40+0100\n"
 "PO-Revision-Date: 2009-07-06 14:14+0200\n"
 "Last-Translator: Benedikt Sauer <filmor@gmail.com>\n"
 "Language-Team: Language =de\n"
@@ -864,7 +864,8 @@ msgid ", date separator is %c\n"
 msgstr ", das Datumstrennzeichen ist %c\n"
 
 #: gammu/calendar.c:448
-msgid "Setting time in phone to the time on PC."
+#, fuzzy
+msgid "Setting time in phone to the same time as is set in computer."
 msgstr "Setze die Uhrzeit im Telefon auf die Uhrzeit im PC."
 
 #: gammu/calendar.c:459
@@ -4340,17 +4341,17 @@ msgid "EMS animation ID"
 msgstr "EMS-Animations-ID"
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:497 helper/message-display.c:515
+#: helper/message-display.c:497 helper/message-display.c:516
 #: helper/printing.c:18
 msgid "Error"
 msgstr "Fehler"
 
-#: helper/message-display.c:530
+#: helper/message-display.c:531
 #, fuzzy
 msgid "Data PDU"
 msgstr "Daten (CSD)"
 
-#: helper/message-display.c:531
+#: helper/message-display.c:532
 #, fuzzy
 msgid "Number of bits"
 msgstr ""
@@ -4359,13 +4360,13 @@ msgstr ""
 
 # User Data Header, Im Zusammengan mit SMS
 # http://en.wikipedia.org/wiki/Short_message_service
-#: helper/message-display.c:533
+#: helper/message-display.c:534
 #, fuzzy
 msgid "UDH"
 msgstr "UDH"
 
 # "Protocol Data Unit" oder "Payload Data Unit"
-#: helper/message-display.c:549
+#: helper/message-display.c:550
 #, fuzzy
 msgid "Whole PDU"
 msgstr "Die ganze PDU"
