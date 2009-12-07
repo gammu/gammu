@@ -652,8 +652,21 @@ GSM_Error DUMMY_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber 
 GSM_Error DUMMY_DialService(GSM_StateMachine *s, char *number)
 {
 	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
+	GSM_USSDMessage ussd;
+	char ussd_text[GSM_MAX_USSD_LENGTH + 1];
+	size_t len;
+
 
 	fprintf(Priv->log_file, "Dialling service %s\n", number);
+
+	if (s->Phone.Data.EnableIncomingUSSD && s->User.IncomingUSSD != NULL) {
+		ussd.Status = USSD_NoActionNeeded;
+		len = snprintf(ussd_text, GSM_MAX_USSD_LENGTH, "Reply for %s", number);
+		EncodeUnicode(ussd.Text, ussd_text, len);
+
+		/* Notify application */
+		s->User.IncomingUSSD(s, ussd, s->User.IncomingUSSDUserData);
+	}
 
 	return ERR_NONE;
 }
@@ -823,7 +836,8 @@ GSM_Error DUMMY_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 
 GSM_Error DUMMY_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)
 {
-	return ERR_NOTIMPLEMENTED;
+	s->Phone.Data.EnableIncomingUSSD = enable;
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gboolean PhoneRingtone)
