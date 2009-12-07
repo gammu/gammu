@@ -203,6 +203,8 @@ gammu_test(addsms "" 1 "${Gammu_SOURCE_DIR}/tests/at-sms-encode/66.backup" "-yes
 gammu_test(backupsms "" "${CMAKE_CURRENT_BINARY_DIR}/test.smsbackup" "-all")
 gammu_test(deletesms "" 1 2)
 
+gammu_test(sendsms "" TEXT 132465 -text "Lorem ipsum")
+
 gammu_test(getallmemory "Name                 : \"firstname lastname\"" SM)
 gammu_test(getallmemory "LUID                 : \"000200000012\"" ME)
 gammu_test(getmemory "ISP Ph 019833206" ME 101)
