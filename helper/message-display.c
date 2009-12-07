@@ -342,6 +342,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 		break;
 #endif
 	}
+	fflush(stdout);
 }
 
 void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean ems, const GSM_Backup *Info, GSM_StateMachine *sm)
