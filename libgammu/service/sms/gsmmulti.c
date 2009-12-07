@@ -80,7 +80,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 {
 	size_t FreeText,FreeBytes,Copy,i,j;
 
-	smfprintf(di, "Checking used\n");
+	smfprintf(di, "Checking used: ");
 	GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], UsedText, &FreeText, &FreeBytes);
 
 	if (UDH) {
@@ -108,14 +108,15 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 		}
 
 		Copy = FreeText;
-		smfprintf(di, "copy %ld\n", (long)Copy);
-		if (BufferLen < Copy) Copy = BufferLen;
-		smfprintf(di, "copy %ld\n", (long)Copy);
+		smfprintf(di, "Copy %ld (max %ld)\n", (long)Copy, (long)BufferLen);
+		if (BufferLen < Copy) {
+			Copy = BufferLen;
+		}
 
 		switch (Coding) {
 		case SMS_Coding_Default_No_Compression:
 			FindDefaultAlphabetLen(Buffer,&i,&j,FreeText);
-			smfprintf(di, "def length %ld %ld\n", (long)i, (long)j);
+			smfprintf(di, "Defalt text, length %ld %ld\n", (long)i, (long)j);
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+i*2]   = 0;
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+i*2+1] = 0;
 			memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer,i*2);
@@ -141,7 +142,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di,
 		smfprintf(di, "Text added\n");
 	}
 
-	smfprintf(di, "Checking on the end\n");
+	smfprintf(di, "Checking at the end: ");
 	GSM_Find_Free_Used_SMS2(di, Coding,SMS->SMS[SMS->Number], UsedText, &FreeText, &FreeBytes);
 
 	return ERR_NONE;
