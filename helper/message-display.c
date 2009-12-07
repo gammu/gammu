@@ -499,6 +499,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 		}
 	}
 	printf("\n");
+	fflush(stdout);
 	GSM_FreeMultiPartSMSInfo(&SMSInfo);
 }
 
@@ -548,6 +549,7 @@ void DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *sm)
 	EncodeHexBin(hexreq, req, current);
         printf(LISTFORMAT "%s\n", _("Whole PDU"), hexreq);
 	printf("\n");
+	fflush(stdout);
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.
