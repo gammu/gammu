@@ -204,6 +204,7 @@ gammu_test(backupsms "" "${CMAKE_CURRENT_BINARY_DIR}/test.smsbackup" "-all")
 gammu_test(deletesms "" 1 2)
 
 gammu_test(sendsms "" TEXT 132465 -text "Lorem ipsum")
+gammu_test(savesms "" TEXT -text "Lorem ipsum" -folder 2)
 
 gammu_test(getallmemory "Name                 : \"firstname lastname\"" SM)
 gammu_test(getallmemory "LUID                 : \"000200000012\"" ME)
