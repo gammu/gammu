@@ -10,20 +10,6 @@ GSM_Error error;
 volatile GSM_Error sms_send_status;
 volatile gboolean gshutdown = FALSE;
 
-/* Handler for SMS send reply */
-void send_sms_callback (GSM_StateMachine *sm, int status, int MessageReference, void * user_data)
-{
-	printf("Sent SMS on device: \"%s\"\n", GSM_GetConfig(sm, -1)->Device);
-	if (status==0) {
-		printf("..OK");
-		sms_send_status = ERR_NONE;
-	} else {
-		printf("..error %i", status);
-		sms_send_status = ERR_UNKNOWN;
-	}
-	printf(", message reference=%d\n", MessageReference);
-}
-
 /* Function to handle errors */
 void error_handler(void)
 {
