@@ -1370,6 +1370,17 @@
     fun:mysql_server_init
     fun:mysql_init
 }
+{
+    mysql init
+    Memcheck:Leak
+    fun:malloc
+    fun:my_malloc
+    fun:my_error_register
+    fun:init_client_errs
+    fun:mysql_server_init
+    fun:mysql_init
+}
+
 
 {
     mysql init
