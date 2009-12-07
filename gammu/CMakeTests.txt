@@ -205,6 +205,8 @@ gammu_test(getcalendar "Coffee with Jason" 22)
 gammu_test(getcalendar "" 42)
 gammu_test(deletecalendar "Entry is empty" 42)
 
+gammu_test(getallnotes "")
+
 gammu_test(getalltodo "Wammu Bug erforschen")
 gammu_test(gettodo "Gorusme" 3)
 gammu_test(gettodo "" 99)
