@@ -62,7 +62,8 @@ unsigned char data[] = {
 	0x00, 0x00
 	};
 
-const char text[] = "A kiedy samemu dobrze - sam wiesz doskonale. Chcesz mnie zamieni? w";
+const char text[] = "A kiedy samemu dobrze - sam wiesz doskonale. Chcesz mnie zamienić w";
+char decoded_text[200];
 
 /* This is not part of API! */
 extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF, int location);
@@ -74,6 +75,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_File file;
 	GSM_Error error;
 	GSM_MultiSMSMessage sms;
+
+	/* Init locales for proper output */
+	GSM_InitLocales(NULL);
 
 	debug_info = GSM_GetGlobalDebug();
 	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
@@ -105,7 +109,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_FreeStateMachine(s);
 
 	/* Check expected text */
-	test_result(strcmp(text, DecodeUnicodeString(sms.SMS[0].Text)) == 0);
+	/* We do not compare full text due to locales problem */
+	EncodeUTF8(decoded_text, sms.SMS[0].Text);
+	test_result(strcmp(text, decoded_text) == 0);
 
 	gammu_test_result(error, "N6510_DecodeFilesystemSMS");
 
