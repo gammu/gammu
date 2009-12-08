@@ -800,17 +800,20 @@ GSM_Error DUMMY_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 
 GSM_Error DUMMY_SetIncomingCall (GSM_StateMachine *s, gboolean enable)
 {
-	return ERR_NOTIMPLEMENTED;
+	s->Phone.Data.EnableIncomingCall = enable;
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_SetIncomingCB (GSM_StateMachine *s, gboolean enable)
 {
-	return ERR_NOTIMPLEMENTED;
+	s->Phone.Data.EnableIncomingCB 	= enable;
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_SetIncomingSMS (GSM_StateMachine *s, gboolean enable)
 {
-	return ERR_NOTIMPLEMENTED;
+	s->Phone.Data.EnableIncomingSMS = enable;
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_SetFastSMSSending(GSM_StateMachine *s, gboolean enable)
