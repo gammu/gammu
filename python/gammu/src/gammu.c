@@ -6122,7 +6122,7 @@ gammu_DecodePDU(PyObject *self, PyObject *args, PyObject *kwds)
     PyObject *o = Py_None;
     gboolean smsc;
     const char *pdu;
-    Py_ssize_t pdulen;
+    int pdulen;
 	size_t parse_len = 0;
     GSM_SMSMessage sms;
 
