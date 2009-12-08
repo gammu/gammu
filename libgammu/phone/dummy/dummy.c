@@ -784,6 +784,9 @@ GSM_Error DUMMY_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Sta
 
 GSM_Error DUMMY_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type)
 {
+	if (Type == GSM_RESET_PHONESETTINGS) {
+		return ERR_NONE;
+	}
 	return ERR_NOTIMPLEMENTED;
 }
 
