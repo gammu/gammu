@@ -884,6 +884,22 @@
    fun:Py_Main
    fun:main
 }
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python*
+   fun:PyDict_SetItemString
+   fun:PyType_Ready
+   obj:/usr/bin/python*
+   fun:PyObject_IsInstance
+   obj:/usr/bin/python*
+   fun:PyEval_EvalFrameEx
+   fun:PyEval_EvalCodeEx
+   obj:/usr/bin/python*
+   fun:PyObject_Call
+   obj:/usr/bin/python*
+}
 
 {
    1,112 bytes in 5 blocks are still reachable
@@ -1742,6 +1758,22 @@
    fun:PyObject_IsSubclass
    obj:/usr/bin/python*
 }
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python*
+   fun:PyType_Ready
+   fun:PyObject_GenericGetAttr
+   obj:/usr/bin/python*
+   fun:PyEval_EvalFrameEx
+   fun:PyEval_EvalCodeEx
+   obj:/usr/bin/python*
+   fun:PyObject_Call
+   obj:/usr/bin/python*
+   fun:PyObject_Call
+   fun:PyEval_EvalFrameEx
+}
 
 {
    <insert_a_suppression_name_here>
@@ -1894,6 +1926,86 @@
    fun:PyEval_EvalCodeEx
    fun:PyEval_EvalCode
    fun:PyImport_ExecCodeModuleEx
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python*
+   fun:PyDict_SetItemString
+   fun:PyType_Ready
+   fun:init_functools
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   fun:PyImport_ImportModuleLevel
+   obj:/usr/bin/python*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python*
+   fun:PyDict_SetItemString
+   fun:PyType_Ready
+   fun:init_struct
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   fun:PyImport_ImportModuleLevel
+   obj:/usr/bin/python*
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python*
+   fun:PyDict_SetItemString
+   fun:PyType_Ready
+   fun:initdatetime
+   fun:_PyImport_LoadDynamicModule
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   fun:PyImport_ImportModuleLevel
+   obj:/usr/bin/python*
+   fun:PyObject_CallFunction
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python*
+   fun:PyType_Ready
+   fun:initdatetime
+   fun:_PyImport_LoadDynamicModule
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   fun:PyImport_ImportModuleLevel
+   obj:/usr/bin/python*
+   fun:PyObject_CallFunction
+   fun:PyImport_Import
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python*
+   fun:PyObject_SetAttr
+   obj:/usr/bin/python*
+   fun:PyEval_EvalFrameEx
+   fun:PyEval_EvalFrameEx
+   fun:PyEval_EvalCodeEx
+   obj:/usr/bin/python*
+   fun:PyObject_Call
+   obj:/usr/bin/python*
+   fun:PyObject_Call
+   fun:PyEval_CallObjectWithKeywords
 }
 
 
