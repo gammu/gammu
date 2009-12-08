@@ -275,6 +275,8 @@ GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
 				break;
 			case 2:
+			case 10:
+			case 11:
 				Memory->Entries[0].EntryType = PBK_Number_General;
 				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
 				break;
