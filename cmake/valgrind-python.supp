@@ -494,6 +494,13 @@
    fun:realloc
    fun:PyList_Append
 }
+{
+   456 bytes in 4 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:realloc
+   fun:PyList_Append
+}
 
 {
    536 bytes in 1 blocks are still reachable
