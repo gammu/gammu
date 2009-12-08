@@ -647,8 +647,9 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_E
 			pos++;
 			break;
 		case 0x0E:
-			smfprintf(di, "  Message size      : not done yet\n");
-			return ERR_FILENOTSUPPORTED;
+			smfprintf(di, "  Message size      : ignored for now\n");
+			pos += 2;
+			break;
 		case 0x0F:
 			smfprintf(di, "  Priority          : ");
 			switch (file->Buffer[pos++]) {
