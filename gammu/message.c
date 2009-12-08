@@ -407,6 +407,9 @@ void GetAllSMS(int argc, char *argv[])
 #ifdef GSM_ENABLE_BEEP
 	GSM_PhoneBeep();
 #endif
+#ifdef GSM_ENABLE_BACKUP
+	GSM_FreeBackup(&Backup);
+#endif
 	GSM_Terminate();
 }
 
@@ -552,6 +555,10 @@ void GetEachSMS(int argc, char *argv[])
 		SortedSMS[i] = NULL;
 		i++;
 	}
+
+#ifdef GSM_ENABLE_BACKUP
+	GSM_FreeBackup(&Backup);
+#endif
 
 	printf("\n");
 	printf(_("%i SMS parts in %i SMS sequences"),smsnum,smspos);
