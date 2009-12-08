@@ -63,6 +63,14 @@
 }
 
 {
+   Suppress leaking the GIL after a fork.
+   Memcheck:Leak
+   fun:malloc
+   fun:PyThread_allocate_lock
+   fun:PyImport_ImportModuleLevel
+}
+
+{
    Suppress leaking the autoTLSkey.  This looks like it shouldn't leak though.
    Memcheck:Leak
    fun:malloc
