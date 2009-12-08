@@ -178,6 +178,7 @@ gammu_test(setdatetime "Setting time in phone to the same time as is set in comp
 gammu_test_fail(setdatetime "Invalid date or time specified." "fail")
 gammu_test(getsmsfolders "\\n5.")
 gammu_test(dialvoice "" 123456)
+gammu_test(maketerminatedcall "" 123456 10)
 gammu_test(reset "" HARD)
 gammu_test(reset "" SOFT)
 #gammu_test(presskeysequence "" "mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@") <> cause problems to CTest
