@@ -71,6 +71,19 @@
 }
 
 {
+   <insert_a_suppression_name_here>
+   Memcheck:Addr4
+   fun:PyObject_Free
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   fun:PyImport_ImportModuleLevel
+}
+
+{
    Suppress leaking the autoTLSkey.  This looks like it shouldn't leak though.
    Memcheck:Leak
    fun:malloc
@@ -204,19 +217,19 @@
 {
    Generic ubuntu ld problems
    Memcheck:Addr8
-   obj:/lib/ld-2.4.so
-   obj:/lib/ld-2.4.so
-   obj:/lib/ld-2.4.so
-   obj:/lib/ld-2.4.so
+   obj:/lib*/ld-2.4.so
+   obj:/lib*/ld-2.4.so
+   obj:/lib*/ld-2.4.so
+   obj:/lib*/ld-2.4.so
 }
 
 {
    Generic gentoo ld problems
    Memcheck:Cond
-   obj:/lib/ld-2.3.4.so
-   obj:/lib/ld-2.3.4.so
-   obj:/lib/ld-2.3.4.so
-   obj:/lib/ld-2.3.4.so
+   obj:/lib*/ld-2.3.4.so
+   obj:/lib*/ld-2.3.4.so
+   obj:/lib*/ld-2.3.4.so
+   obj:/lib*/ld-2.3.4.so
 }
 
 {
@@ -224,10 +237,10 @@
    Memcheck:Param
    write(buf)
    fun:write
-   obj:/usr/lib/libdb1.so.2
-   obj:/usr/lib/libdb1.so.2
-   obj:/usr/lib/libdb1.so.2
-   obj:/usr/lib/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
    fun:dbm_close
 }
 
@@ -235,10 +248,10 @@
    DBM problems, see test_dbm
    Memcheck:Value8
    fun:memmove
-   obj:/usr/lib/libdb1.so.2
-   obj:/usr/lib/libdb1.so.2
-   obj:/usr/lib/libdb1.so.2
-   obj:/usr/lib/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
    fun:dbm_store
    fun:dbm_ass_sub
 }
@@ -246,9 +259,9 @@
 {
    DBM problems, see test_dbm
    Memcheck:Cond
-   obj:/usr/lib/libdb1.so.2
-   obj:/usr/lib/libdb1.so.2
-   obj:/usr/lib/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
    fun:dbm_store
    fun:dbm_ass_sub
 }
@@ -257,10 +270,10 @@
    DBM problems, see test_dbm
    Memcheck:Cond
    fun:memmove
-   obj:/usr/lib/libdb1.so.2
-   obj:/usr/lib/libdb1.so.2
-   obj:/usr/lib/libdb1.so.2
-   obj:/usr/lib/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
+   obj:/usr/lib*/libdb1.so.2
    fun:dbm_store
    fun:dbm_ass_sub
 }
@@ -277,8 +290,8 @@
 {
    ZLIB problems, see test_gzip
    Memcheck:Cond
-   obj:/lib/libz.so.1.2.3
-   obj:/lib/libz.so.1.2.3
+   obj:/lib*/libz.so.1.2.3
+   obj:/lib*/libz.so.1.2.3
    fun:deflate
 }
 
@@ -290,7 +303,7 @@
    fun:sh_set_lines_and_columns
    fun:_rl_get_screen_size
    fun:_rl_init_terminal_io
-   obj:/lib/libreadline.so.4.3
+   obj:/lib*/libreadline.so.4.3
    fun:rl_initialize
 }
 
@@ -359,7 +372,7 @@
    Memcheck:Param
    write(buf)
    fun:write
-   obj:/usr/lib/libcrypto.so.0.9.7
+   obj:/usr/lib*/libcrypto.so.0.9.7
 }
 
 {
@@ -389,13 +402,13 @@
 {
    from test_socket_ssl
    Memcheck:Cond
-   obj:/usr/lib/libssl.so.0.9.7
+   obj:/usr/lib*/libssl.so.0.9.7
 }
 
 {
    from test_socket_ssl
    Memcheck:Value4
-   obj:/usr/lib/libssl.so.0.9.7
+   obj:/usr/lib*/libssl.so.0.9.7
 }
 
 {
@@ -460,7 +473,7 @@
    Memcheck:Leak
    fun:malloc
    fun:PyList_New
-   obj:/usr/lib64/libpython2.5.so.1.0
+   obj:/usr/lib*/libpython*.so.*
 }
 
 {
@@ -492,7 +505,7 @@
    138 bytes in 1 blocks are still reachable
    Memcheck:Leak
    fun:malloc
-   obj:/usr/lib64/libpython2.5.so.1.0
+   obj:/usr/lib*/libpython*.so.*
    fun:Py_GetProgramFullPath
 }
 
@@ -548,7 +561,7 @@
    1,984 bytes in 2 blocks are still reachable
    Memcheck:Leak
    fun:malloc
-   obj:/usr/lib64/libpython2.5.so.1.0
+   obj:/usr/lib*/libpython*.so.*
    fun:_PyInt_Init
 }
 
@@ -616,12 +629,12 @@
    Memcheck:Leak
    fun:malloc
    fun:PyString_FromStringAndSize
-   obj:/usr/lib64/libpython2.5.so.1.0
-   obj:/usr/lib64/libpython2.5.so.1.0
-   obj:/usr/lib64/libpython2.5.so.1.0
-   obj:/usr/lib64/libpython2.5.so.1.0
-   obj:/usr/lib64/libpython2.5.so.1.0
-   obj:/usr/lib64/libpython2.5.so.1.0
+   obj:/usr/lib*/libpython*.so.*
+   obj:/usr/lib*/libpython*.so.*
+   obj:/usr/lib*/libpython*.so.*
+   obj:/usr/lib*/libpython*.so.*
+   obj:/usr/lib*/libpython*.so.*
+   obj:/usr/lib*/libpython*.so.*
    fun:PyMarshal_ReadObjectFromString
    fun:PyMarshal_ReadLastObjectFromFile
 }
@@ -727,42 +740,42 @@
    16 bytes in 1 blocks are still reachable
    Memcheck:Leak
    fun:malloc
-   obj:/lib/ld-2.7.so
+   obj:/lib*/ld-2.7.so
 }
 
 {
    32 bytes in 1 blocks are still reachable
    Memcheck:Leak
    fun:calloc
-   obj:/lib/libdl-2.7.so
+   obj:/lib*/libdl-2.7.so
 }
 
 {
    32 bytes in 1 blocks are still reachable
    Memcheck:Leak
    fun:calloc
-   obj:/lib64/libdl-2.8.so
+   obj:/lib*/libdl-2.8.so
 }
 
 {
    648 bytes in 4 blocks are still reachable
    Memcheck:Leak
    fun:calloc
-   obj:/lib/ld-2.7.so
+   obj:/lib*/ld-2.7.so
 }
 
 {
    480 bytes in 3 blocks are still reachable
    Memcheck:Leak
    fun:calloc
-   obj:/lib64/ld-2.8.so
+   obj:/lib*/ld-2.8.so
 }
 
 {
    32 bytes in 1 blocks are still reachable
    Memcheck:Leak
    fun:malloc
-   obj:/lib64/ld-2.8.so
+   obj:/lib*/ld-2.8.so
 }
 
 {
@@ -789,13 +802,24 @@
    286,080 bytes in 41 blocks are still reachable
    Memcheck:Leak
    fun:malloc
-   obj:/usr/lib64/libpython2.5.so.1.0
+   obj:/usr/lib*/libpython*.so.*
    fun:PyType_Ready
    fun:PyType_Ready
    fun:_Py_ReadyTypes
    fun:Py_InitializeEx
    fun:Py_Main
-   fun:(below main)
+}
+
+{
+   286,080 bytes in 41 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python*
+   fun:PyType_Ready
+   fun:PyType_Ready
+   fun:_Py_ReadyTypes
+   fun:Py_InitializeEx
+   fun:Py_Main
 }
 
 {
@@ -817,9 +841,9 @@
    1,112 bytes in 5 blocks are still reachable
    Memcheck:Leak
    fun:realloc
-   obj:/usr/lib64/libpython2.5.so.1.0
-   obj:/usr/lib64/libpython2.5.so.1.0
-   obj:/usr/lib64/libpython2.5.so.1.0
+   obj:/usr/lib*/libpython*.so.*
+   obj:/usr/lib*/libpython*.so.*
+   obj:/usr/lib*/libpython*.so.*
    fun:PyType_Ready
    fun:_PyExc_Init
    fun:Py_InitializeEx
@@ -833,6 +857,14 @@
    fun:realloc
    fun:list_resize
    fun:listpop
+   fun:PyEval_EvalFrameEx
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
    fun:PyEval_EvalFrameEx
 }
 {
@@ -852,18 +884,10 @@
    fun:PyString_Format
 }
 {
-   1 bytes in 1 blocks are still reachable in loss record 1 of 29
-   Memcheck:Leak
-   fun:realloc
-   obj:/usr/bin/python2.5
-   obj:/usr/bin/python2.5
-   fun:PyEval_EvalFrameEx
-}
-{
    420 bytes in 1 blocks are still reachable in loss record 11 of 29
    Memcheck:Leak
    fun:malloc
-   obj:/usr/bin/python2.5
+   obj:/usr/bin/python*
    fun:PyEval_EvalFrameEx
 }
 
@@ -878,7 +902,7 @@
    464 bytes in 1 blocks are still reachable in loss record 10 of 26
    Memcheck:Leak
    fun:malloc
-   obj:/usr/lib64/libpython2.5.so.1.0
+   obj:/usr/lib*/libpython*.so.*
    fun:PyEval_EvalFrameEx
 }
 
@@ -895,9 +919,9 @@
    988 bytes in 1 blocks are still reachable in loss record 18 of 29
    Memcheck:Leak
    fun:malloc
-   obj:/usr/bin/python2.5
+   obj:/usr/bin/python*
    fun:PyInt_FromLong
-   obj:/usr/bin/python2.5
+   obj:/usr/bin/python*
 }
 
 ### This is a CURL bug on SUSE 11.0
@@ -1013,7 +1037,7 @@
    Leak from dbi/dlopen
    Memcheck:Leak
    fun:calloc
-   obj:/lib/libdl-*.so
+   obj:/lib*/libdl-*.so
    fun:dlopen
    fun:dbi_initialize
 }
@@ -1153,12 +1177,12 @@
    Memcheck:Leak
    fun:malloc
    fun:inet_ntoa
-   obj:/usr/lib/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
    fun:GSM_ReadHTTPFile
 }
 
@@ -1167,16 +1191,16 @@
    Memcheck:Leak
    fun:malloc
    fun:inet_ntoa
-   obj:/usr/lib/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib/libcurl-gnutls.so.4.1.0
-   obj:/usr/lib/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
+   obj:/usr/lib*/libcurl-gnutls.so.4.1.0
    fun:curl_easy_perform
    fun:GSM_ReadHTTPFile
 }
-# Python 2.6 + libc 2.9
+# Python * + libc 2.9
 {
    dyload
    Memcheck:Leak
@@ -1190,8 +1214,8 @@
    Memcheck:Leak
    fun:malloc
    fun:PyList_New
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
    fun:Py_BuildValue
    fun:PyImport_Import
 }
@@ -1199,13 +1223,13 @@
    dynload2
    Memcheck:Leak
    fun:malloc
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
@@ -1214,16 +1238,16 @@
    dynload2
    Memcheck:Leak
    fun:malloc
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
@@ -1233,17 +1257,17 @@
    dynload2
    Memcheck:Leak
    fun:malloc
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
@@ -1252,12 +1276,12 @@
    dynload3
    Memcheck:Leak
    fun:malloc
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
@@ -1266,14 +1290,14 @@
    dynload4
    Memcheck:Leak
    fun:malloc
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
@@ -1282,12 +1306,12 @@
    dynload5
    Memcheck:Leak
    fun:calloc
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
@@ -1296,14 +1320,14 @@
    dynload6
    Memcheck:Leak
    fun:calloc
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
-   obj:/lib/ld-2.9.so
+   obj:/lib*/ld-2.9.so
    obj:/lib*/libdl-2.9.so
    fun:dlopen
    fun:_PyImport_GetDynLoadFunc
@@ -1312,15 +1336,15 @@
    marshal
    Memcheck:Leak
    fun:malloc
-   obj:/usr/bin/python2.6
+   obj:/usr/bin/python*
    fun:PyInt_FromLong
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
    fun:PyMarshal_ReadLastObjectFromFile
 }
 {
@@ -1328,20 +1352,32 @@
    Memcheck:Leak
    fun:malloc
    fun:PyString_FromStringAndSize
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   fun:PyMarshal_ReadLastObjectFromFile
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:PyString_FromStringAndSize
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
    fun:PyMarshal_ReadLastObjectFromFile
 }
 {
    execcodemodule
    Memcheck:Leak
    fun:malloc
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
    fun:PyObject_CallFunctionObjArgs
    fun:PyEval_EvalFrameEx
    fun:PyEval_EvalCodeEx
@@ -1359,7 +1395,7 @@
    path
    Memcheck:Leak
    fun:malloc
-   obj:/usr/bin/python2.6
+   obj:/usr/bin/python*
    fun:Py_GetProgramFullPath
 }
 {
@@ -1368,8 +1404,8 @@
    fun:malloc
    fun:_PyObject_GC_Malloc
    fun:PyType_GenericAlloc
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
    fun:PyObject_CallFunction
    fun:PyErr_NewException
    fun:initzipimport
@@ -1378,7 +1414,7 @@
    typeready
    Memcheck:Leak
    fun:malloc
-   obj:/usr/bin/python2.6
+   obj:/usr/bin/python*
    fun:PyType_Ready
    fun:PyType_Ready
    fun:_Py_ReadyTypes
@@ -1389,7 +1425,7 @@
    eval
    Memcheck:Leak
    fun:realloc
-   obj:/usr/bin/python2.6
+   obj:/usr/bin/python*
    fun:PyEval_EvalFrameEx
    fun:PyEval_EvalCodeEx
 }
@@ -1397,7 +1433,7 @@
    eval2
    Memcheck:Leak
    fun:malloc
-   obj:/usr/bin/python2.6
+   obj:/usr/bin/python*
    fun:PyEval_EvalFrameEx
    fun:PyEval_EvalCodeEx
 }
@@ -1405,8 +1441,8 @@
    call
    Memcheck:Leak
    fun:malloc
-   obj:/usr/bin/python2.6
-   obj:/usr/bin/python2.6
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
    fun:PyObject_Call
 }
 {
@@ -1415,6 +1451,17 @@
    fun:malloc
    fun:PyFloat_GetInfo
    fun:_PySys_Init
+   fun:Py_InitializeEx
+   fun:Py_Main
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python*
+   fun:PyDict_SetItemString
+   fun:PyType_Ready
+   fun:_PyExc_Init
    fun:Py_InitializeEx
    fun:Py_Main
 }
@@ -1446,8 +1493,8 @@
     Memcheck:Leak
     fun:malloc
     fun:my_once_alloc
-    obj:/usr/lib/libmysqlclient.so*
-    obj:/usr/lib/libmysqlclient.so*
+    obj:/usr/lib*/libmysqlclient.so*
+    obj:/usr/lib*/libmysqlclient.so*
     fun:get_charset_by_csname
     fun:mysql_init_character_set
     fun:mysql_real_connect
