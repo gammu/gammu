@@ -690,7 +690,9 @@ GSM_Error DUMMY_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 
 GSM_Error DUMMY_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *features)
 {
-	return ERR_NOTIMPLEMENTED;
+	features->Number = 1;
+	features->Feature[0] = GSM_KeypadLocked;
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_SetAutoNetworkLogin(GSM_StateMachine *s)
