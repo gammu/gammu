@@ -932,7 +932,7 @@
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
    fun:gnutls_global_init
-   obj:/usr/lib/libcurl*.so.*
+   obj:/usr/lib*/libcurl*.so.*
    fun:curl_global_init
 }
 {
@@ -949,7 +949,7 @@
    obj:/usr/lib*/libgcrypt.so.*
    obj:gcry_check_version
    fun:gnutls_global_init
-   obj:/usr/lib/libcurl*.so.*
+   obj:/usr/lib*/libcurl*.so.*
    fun:curl_global_init
 }
 {
@@ -968,8 +968,27 @@
    obj:/usr/lib*/libgnutls.so.*
    obj:/usr/lib*/libgnutls.so.*
    fun:gnutls_global_init
-   obj:/usr/lib/libcurl*.so.*
-   obj:/usr/lib/libcurl*.so.*
+   obj:/usr/lib*/libcurl*.so.*
+   obj:/usr/lib*/libcurl*.so.*
+   fun:curl_global_init
+}
+
+{
+   Leak from crypt
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:gcry_check_version
+   fun:gnutls_global_init
+   obj:/usr/lib*/libcurl*.so.*
+   obj:/usr/lib*/libcurl*.so.*
    fun:curl_global_init
 }
 
