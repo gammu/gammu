@@ -262,3 +262,11 @@ if (ONLINE_TESTING AND CURL_FOUND)
     gammu_test(checkfirmware "")
     gammu_test(checkversion "")
 endif (ONLINE_TESTING AND CURL_FOUND)
+
+# MMS decoding
+file(GLOB MMSES "${Gammu_SOURCE_DIR}/tests/mms/*.mms")
+list(SORT MMSES)
+
+foreach(TESTMMS ${MMSES})
+    gammu_test(readmmsfile "Message type" "${TESTMMS}")
+endforeach(TESTMMS ${MMSES})
