@@ -183,6 +183,7 @@ gammu_test(reset "" HARD)
 gammu_test(reset "" SOFT)
 gammu_test(resetphonesettings "" PHONE)
 gammu_test(senddtmf "" 123465)
+gammu_test(getdisplaystatus "Keypad locked")
 #gammu_test(presskeysequence "" "mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@") <> cause problems to CTest
 gammu_test(presskeysequence "" "mMnNpPuUdD+-123456789*0#gGrR[]hHcCjJfFoOmMdD@")
 gammu_test(displaysms "F4F29C9E769F41F4329E0E" TEXT 132456 -text "testing text")
