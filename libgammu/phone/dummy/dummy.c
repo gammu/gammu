@@ -792,6 +792,8 @@ GSM_Error DUMMY_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Ty
 
 GSM_Error DUMMY_SendDTMF(GSM_StateMachine *s, char *sequence)
 {
+	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
+
 	fprintf(Priv->log_file, "DTMF: %s\n", sequence);
 	return ERR_NONE;
 }
