@@ -186,6 +186,8 @@ gammu_test(presskeysequence "" "mMnNpPuUdD+-123456789*0#gGrR[]hHcCjJfFoOmMdD@")
 gammu_test(displaysms "F4F29C9E769F41F4329E0E" TEXT 132456 -text "testing text")
 gammu_test(getfilesystemstatus "1010101 bytes")
 gammu_test(getsecuritystatus "Nothing to enter.")
+gammu_test(entersecuritycode "" "NETWORK" "1234")
+gammu_test_fail(entersecuritycode "Invalid security code type" "XXX" "1234")
 gammu_test(batch "Batch processed, terminating." "${CMAKE_CURRENT_BINARY_DIR}/.gammu-batch")
 
 gammu_test(getussd "Reply for 666" "666")
