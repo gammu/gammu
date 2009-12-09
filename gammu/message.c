@@ -331,6 +331,7 @@ void GetAllSMS(int argc, char *argv[])
 
 #ifdef GSM_ENABLE_BACKUP
 	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
+		/* Retrieve numbers from phone phonebook */
 		MemStatus.MemoryType = MEM_ME;
 		error=GSM_GetMemoryStatus(gsm, &MemStatus);
 
@@ -362,6 +363,50 @@ void GetAllSMS(int argc, char *argv[])
 				}
 				fprintf(stderr, "\r%s ", _("Reading phone phonebook:"));
 				fprintf(stderr, _("%i percent"),used * 100 / MemStatus.MemoryUsed);
+				i++;
+
+				if (gshutdown) {
+					GSM_Terminate();
+					Terminate(4);
+				}
+			}
+			fprintf(stderr, "\n");
+			fflush(stderr);
+		}
+		/* Retrieve numbers from SIM phonebook */
+		MemStatus.MemoryType = MEM_SM;
+		error=GSM_GetMemoryStatus(gsm, &MemStatus);
+
+		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
+			Pbk.MemoryType  = MEM_SM;
+			i		= 1;
+			used 		= 0;
+
+			while (used != MemStatus.MemoryUsed) {
+				Pbk.Location = i;
+				error=GSM_GetMemory(gsm, &Pbk);
+
+				if (error != ERR_EMPTY) {
+					Print_Error(error);
+
+					if (used < GSM_BACKUP_MAX_SIMPHONEBOOK) {
+						Backup.SIMPhonebook[used] = malloc(sizeof(GSM_MemoryEntry));
+
+					        if (Backup.SIMPhonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
+						Backup.SIMPhonebook[used+1] = NULL;
+					} else {
+						printf("\n   ");
+						printf(_("Only part of data saved, please increase %s.") , "GSM_BACKUP_MAX_SIMPHONEBOOK");
+						printf("\n");
+						fflush(stdout);
+						break;
+					}
+					*Backup.SIMPhonebook[used]=Pbk;
+					used++;
+				}
+				fprintf(stderr, "\r%s ", _("Reading SIM phonebook:"));
+				fprintf(stderr, _("%i percent"),used * 100 / MemStatus.MemoryUsed);
+				fflush(stderr);
 				i++;
 
 				if (gshutdown) {
@@ -440,6 +485,7 @@ void GetEachSMS(int argc, char *argv[])
 
 #ifdef GSM_ENABLE_BACKUP
 	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
+		/* Retrieve numbers from phone phonebook */
 		MemStatus.MemoryType = MEM_ME;
 		error=GSM_GetMemoryStatus(gsm, &MemStatus);
 
@@ -471,6 +517,50 @@ void GetEachSMS(int argc, char *argv[])
 					used++;
 				}
 				fprintf(stderr, "\r%s ", _("Reading phone phonebook:"));
+				fprintf(stderr, _("%i percent"),used * 100 / MemStatus.MemoryUsed);
+				fflush(stderr);
+				i++;
+
+				if (gshutdown) {
+					GSM_Terminate();
+					Terminate(4);
+				}
+			}
+			fprintf(stderr, "\n");
+			fflush(stderr);
+		}
+		/* Retrieve numbers from SIM phonebook */
+		MemStatus.MemoryType = MEM_SM;
+		error=GSM_GetMemoryStatus(gsm, &MemStatus);
+
+		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
+			Pbk.MemoryType  = MEM_SM;
+			i		= 1;
+			used 		= 0;
+
+			while (used != MemStatus.MemoryUsed) {
+				Pbk.Location = i;
+				error=GSM_GetMemory(gsm, &Pbk);
+
+				if (error != ERR_EMPTY) {
+					Print_Error(error);
+
+					if (used < GSM_BACKUP_MAX_SIMPHONEBOOK) {
+						Backup.SIMPhonebook[used] = malloc(sizeof(GSM_MemoryEntry));
+
+					        if (Backup.SIMPhonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
+						Backup.SIMPhonebook[used+1] = NULL;
+					} else {
+						printf("\n   ");
+						printf(_("Only part of data saved, please increase %s.") , "GSM_BACKUP_MAX_SIMPHONEBOOK");
+						printf("\n");
+						fflush(stdout);
+						break;
+					}
+					*Backup.SIMPhonebook[used]=Pbk;
+					used++;
+				}
+				fprintf(stderr, "\r%s ", _("Reading SIM phonebook:"));
 				fprintf(stderr, _("%i percent"),used * 100 / MemStatus.MemoryUsed);
 				fflush(stderr);
 				i++;
