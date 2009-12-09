@@ -729,21 +729,15 @@ static GSM_Error SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, gboolean
 			if (error != ERR_NONE) return error;
 			break;
 		case CAL_TONE_ALARM_DATETIME:
-			error = SaveBackupText(file, "", "Alarm", UseUnicode);
+			error = SaveBackupText(file, "", "ToneAlarm", UseUnicode);
 			if (error != ERR_NONE) return error;
 			error = SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
-			if (error != ERR_NONE) return error;
-			sprintf(buffer,"AlarmType = Tone%c%c",13,10);
-			error = SaveBackupText(file, "", buffer, UseUnicode);
 			if (error != ERR_NONE) return error;
 			break;
 		case CAL_SILENT_ALARM_DATETIME:
 			error = SaveBackupText(file, "", "SilentAlarm", UseUnicode);
 			if (error != ERR_NONE) return error;
 			error = SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
-			if (error != ERR_NONE) return error;
-			sprintf(buffer,"AlarmType = Silent%c%c",13,10);
-			error = SaveBackupText(file, "", buffer, UseUnicode);
 			if (error != ERR_NONE) return error;
 			break;
 		case CAL_LAST_MODIFIED:
@@ -1608,7 +1602,7 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, gboolean UseUnicode)
 		error = SaveVCalDateTime(file, &backup->DateTime, UseUnicode);
 		if (error != ERR_NONE) goto done;
 	}
-	sprintf(buffer,"Format = 1.04%c%c",13,10);
+	sprintf(buffer,"Format = 1.05%c%c",13,10);
 	error = SaveBackupText(file, "", buffer, UseUnicode);
 	if (error != ERR_NONE) goto done;
 	sprintf(buffer,"%c%c",13,10);
@@ -2226,6 +2220,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
+	/* This is for compatibility with older backup formats */
 	sprintf(buffer,"Alarm");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
@@ -2238,6 +2233,14 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 				note->Entries[note->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
 			}
 		}
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
+		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
+	}
+	sprintf(buffer,"ToneAlarm");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
+		note->Entries[note->EntriesNum].EntryType = CAL_TONE_ALARM_DATETIME;
 		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
@@ -3126,6 +3129,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	if (readvalue == NULL) return ERR_FILENOTSUPPORTED;
 	/* Is this format version supported ? */
 	if (strcmp(readvalue,"1.01")!=0 && strcmp(readvalue,"1.02")!=0 &&
+            strcmp(readvalue,"1.05")!=0 &&
             strcmp(readvalue,"1.03")!=0 && strcmp(readvalue,"1.04")!=0) return ERR_FILENOTSUPPORTED;
 
 	readvalue = ReadCFGText(file_info, buffer, "IMEI", UseUnicode);
