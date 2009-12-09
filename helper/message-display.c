@@ -145,6 +145,91 @@ void PrintPhoneNumber(unsigned char *number, const GSM_Backup *Info)
 		printf(")");
 		break;
 	}
+	if (found) return;
+	i=0;
+	while (Info->SIMPhonebook[i]!=NULL) {
+		for (j=0;j<Info->SIMPhonebook[i]->EntriesNum;j++) {
+			switch (Info->SIMPhonebook[i]->Entries[j].EntryType) {
+			case PBK_Number_General:
+			case PBK_Number_Mobile:
+			case PBK_Number_Work:
+			case PBK_Number_Fax:
+			case PBK_Number_Home:
+			case PBK_Number_Pager:
+			case PBK_Number_Other:
+				if (mywstrncmp(Info->SIMPhonebook[i]->Entries[j].Text,number,-1)) {
+					found2=TRUE;
+					switch (Info->SIMPhonebook[i]->Entries[j].EntryType) {
+					case PBK_Number_Mobile:
+						printf(" (%s", _("mobile"));
+						break;
+					case PBK_Number_Work:
+						printf(" (%s", _("work"));
+						break;
+					case PBK_Number_Fax:
+						printf(" (%s", _("fax"));
+						break;
+					case PBK_Number_Home:
+						printf(" (%s", _("home"));
+						break;
+					case PBK_Number_Pager:
+						printf(" (%s", _("pager"));
+						break;
+					default:
+						found2=FALSE;
+						break;
+					}
+					found=TRUE;
+				}
+			default:
+				break;
+			}
+			if (found) break;
+		}
+		if (!found) {
+			i++;
+			continue;
+		}
+		found=FALSE;
+		for (z=0;z<Info->SIMPhonebook[i]->EntriesNum;z++) {
+			switch (Info->SIMPhonebook[i]->Entries[z].EntryType) {
+			case PBK_Text_LastName:
+			case PBK_Text_FirstName:
+				if (!found2) {
+					printf(" (");
+					found2=TRUE;
+				} else {
+					if (!found) {
+						printf(", ");
+					} else {
+						printf(" ");
+					}
+				}
+				printf("%s",DecodeUnicodeConsole(Info->SIMPhonebook[i]->Entries[z].Text));
+				found=TRUE;
+				break;
+			default:
+				break;
+			}
+		}
+		for (z=0;z<Info->SIMPhonebook[i]->EntriesNum;z++) {
+			switch (Info->SIMPhonebook[i]->Entries[z].EntryType) {
+			case PBK_Text_Name:
+				if (!found2) {
+					printf(" (");
+					found2=TRUE;
+				} else {
+					printf(", ");
+				}
+				printf("%s",DecodeUnicodeConsole(Info->SIMPhonebook[i]->Entries[z].Text));
+				break;
+			default:
+				break;
+			}
+		}
+		printf(")");
+		break;
+	}
 }
 
 void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean displayudh, const GSM_Backup *Info)
