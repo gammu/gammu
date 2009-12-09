@@ -25,9 +25,10 @@ int main(int argc, char **argv)
 	size_t len;
 	gboolean generate = FALSE;
 	GSM_Backup backup;
-	int i;
+	int i, j;
 	GSM_Debug_Info *debug_info;
 	gboolean skipcal, skiptodo;
+	gboolean check_map[MAX(GSM_CALENDAR_ENTRIES, GSM_TODO_ENTRIES)];
 
 	/* Configure debugging */
 	debug_info = GSM_GetGlobalDebug();
@@ -119,13 +120,22 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
+	for (i = 0; i < (int)(sizeof(check_map) / sizeof(gboolean)); i++) {
+		check_map[i] = FALSE;
+	}
+
 	/* Compare content */
 	if (!skipcal) {
 		for (i = 0; i < cal.EntriesNum; i++) {
-			printf("vc:%d backup:%d\n", cal.Entries[i].EntryType,
-				backup.Calendar[0]->Entries[i].EntryType);
-			test_result(cal.Entries[i].EntryType ==
-				backup.Calendar[0]->Entries[i].EntryType);
+			printf("field:%d\nn", cal.Entries[i].EntryType);
+			for (j = 0; j < backup.Calendar[0]->EntriesNum; j++) {
+				if (check_map[j] == FALSE && cal.Entries[i].EntryType == backup.Calendar[0]->Entries[j].EntryType) {
+					check_map[j] = TRUE;
+					break;
+				}
+			}
+			test_result(j < backup.Calendar[0]->EntriesNum);
+			test_result(cal.Entries[i].EntryType == backup.Calendar[0]->Entries[j].EntryType);
 			switch (cal.Entries[i].EntryType) {
 				case CAL_TEXT:
 				case CAL_DESCRIPTION:
@@ -134,11 +144,11 @@ int main(int argc, char **argv)
 				case CAL_LUID:
 					if (!mywstrncmp(
 						cal.Entries[i].Text,
-						backup.Calendar[0]->Entries[i].Text,
+						backup.Calendar[0]->Entries[j].Text,
 						0)) {
 						printf("Calendar field %d is not the same!\n", i);
 						printf("vc: '%s'\n", DecodeUnicodeConsole(cal.Entries[i].Text));
-						printf("bak: '%s'\n", DecodeUnicodeConsole(backup.Calendar[0]->Entries[i].Text));
+						printf("bak: '%s'\n", DecodeUnicodeConsole(backup.Calendar[0]->Entries[j].Text));
 						return 1;
 					}
 					break;
