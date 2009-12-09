@@ -55,7 +55,7 @@ void PrintSMSLocation(const GSM_SMSMessage *sms, const GSM_SMSFolders *folders)
 const GSM_MemoryEntry *SearchPhoneNumber(const unsigned char *number, const GSM_MemoryEntry **List, int *pos)
 {
 	int i;
-	while (List[i]!=NULL) {
+	for (i = 0; List[i] != NULL; i++) {
 		for (*pos = 0; *pos <  List[i]->EntriesNum; (*pos)++) {
 			switch (List[i]->Entries[*pos].EntryType) {
 				case PBK_Number_General:
