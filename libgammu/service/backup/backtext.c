@@ -738,7 +738,7 @@ static GSM_Error SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, gboolean
 			if (error != ERR_NONE) return error;
 			break;
 		case CAL_SILENT_ALARM_DATETIME:
-			error = SaveBackupText(file, "", "Alarm", UseUnicode);
+			error = SaveBackupText(file, "", "SilentAlarm", UseUnicode);
 			if (error != ERR_NONE) return error;
 			error = SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
 			if (error != ERR_NONE) return error;
@@ -2238,6 +2238,14 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 				note->Entries[note->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
 			}
 		}
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
+		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
+	}
+	sprintf(buffer,"SilentAlarm");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
+		note->Entries[note->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
 		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
