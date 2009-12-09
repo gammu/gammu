@@ -122,7 +122,7 @@ int main(int argc, char **argv)
 	/* Compare content */
 	if (!skipcal) {
 		for (i = 0; i < cal.EntriesNum; i++) {
-			printf("%d %d\n", cal.Entries[i].EntryType,
+			printf("vc:%d backup:%d\n", cal.Entries[i].EntryType,
 				backup.Calendar[0]->Entries[i].EntryType);
 			test_result(cal.Entries[i].EntryType ==
 				backup.Calendar[0]->Entries[i].EntryType);
