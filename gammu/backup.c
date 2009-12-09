@@ -351,7 +351,7 @@ void DoBackup(int argc, char *argv[])
 
 	if (Info.SIMPhonebook) {
 		printf("%s\n", _("Checking SIM phonebook"));
-		ReadPhonebook(Backup.PhonePhonebook, MEM_SM, _("Backup SIM phonebook?"), GSM_BACKUP_MAX_SIMPHONEBOOK);
+		ReadPhonebook(Backup.SIMPhonebook, MEM_SM, _("Backup SIM phonebook?"), GSM_BACKUP_MAX_SIMPHONEBOOK);
 	}
 
 	DoBackupPart = FALSE;

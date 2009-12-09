@@ -330,7 +330,7 @@ void GetAllSMS(int argc, char *argv[])
 #ifdef GSM_ENABLE_BACKUP
 	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
 		ReadPhonebook(Backup.PhonePhonebook, MEM_ME, NULL, GSM_BACKUP_MAX_PHONEPHONEBOOK);
-		ReadPhonebook(Backup.PhonePhonebook, MEM_SM, NULL, GSM_BACKUP_MAX_SIMPHONEBOOK);
+		ReadPhonebook(Backup.SIMPhonebook, MEM_SM, NULL, GSM_BACKUP_MAX_SIMPHONEBOOK);
 	}
 #endif
 
@@ -397,7 +397,7 @@ void GetEachSMS(int argc, char *argv[])
 #ifdef GSM_ENABLE_BACKUP
 	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
 		ReadPhonebook(Backup.PhonePhonebook, MEM_ME, NULL, GSM_BACKUP_MAX_PHONEPHONEBOOK);
-		ReadPhonebook(Backup.PhonePhonebook, MEM_SM, NULL, GSM_BACKUP_MAX_SIMPHONEBOOK);
+		ReadPhonebook(Backup.SIMPhonebook, MEM_SM, NULL, GSM_BACKUP_MAX_SIMPHONEBOOK);
 	}
 #endif
 

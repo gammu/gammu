@@ -88,7 +88,7 @@ void PrintPhoneNumber(const unsigned char *number, const GSM_Backup *Info)
 
 	if (Info == NULL) return;
 
-	/* Fist try phone phonebook */
+	/* First try phone phonebook */
 	pbk = SearchPhoneNumber(number, (const GSM_MemoryEntry **)Info->PhonePhonebook, &pos);
 	if (pbk == NULL) {
 		/* Fall back to SIM */
