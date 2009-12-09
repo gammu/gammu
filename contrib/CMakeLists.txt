@@ -25,9 +25,8 @@ set (SYMBIAN_FILES
 file(GLOB MEDIA_FILES "media/*.txt" "media/*.nlm")
 
 set (PHP_EXAMPLES
-    php/class_gammu/class.gammu_nix_win32_v2.php
+    php/class_gammu/class.gammu.php
     php/class_gammu/class.sms.gammu.php
-    php/class_gammu/example_gammu_text.php
     php/class_gammu/README
     php/smsd-mysql-admin/admin.php
     php/smsd-mysql-linked/linked.php
