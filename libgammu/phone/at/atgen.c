@@ -408,7 +408,7 @@ INLINE gboolean ATGEN_HasOnlyHexChars(const char *text, const size_t length)
  */
 INLINE gboolean ATGEN_IsUCS2(const char *text, const size_t length)
 {
-	return (length > 8) &&
+	return (length > 3) &&
 		(length % 4 == 0) &&
 		ATGEN_HasOnlyHexChars(text, length);
 }
