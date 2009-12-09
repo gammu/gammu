@@ -83,21 +83,19 @@ int main(int argc, char **argv)
 
 	/* Parse it */
 	error = SAMSUNG_ReplyGetMemory(msg, s);
+	gammu_test_result(error, "SAMSUNG_ReplyGetMemory");
 
 	/* This is normally done by ATGEN_Terminate */
 	FreeLines(&Priv->Lines);
 	GetLineString(NULL, NULL, 0);
 
     /* Print it */
-    if (error == ERR_NONE) {
-        error = PrintMemoryEntry(&Entry, s);
-        gammu_test_result(error, "PrintMemoryEntry");
-    }
+    error = PrintMemoryEntry(&Entry, s);
+    gammu_test_result(error, "PrintMemoryEntry");
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
-	gammu_test_result(error, "SAMSUNG_ReplyGetMemory");
 
 	return 0;
 }
