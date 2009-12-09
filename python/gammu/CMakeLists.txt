@@ -4,8 +4,12 @@
 
 project (python-gammu-module C)
 
+if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
+    CMAKE_COMPILER_IS_CYGWIN OR CMAKE_COMPILER_IS_GNUCXX)
 # Needed for Python at least for PyObject and PyTypeObject handling
 MACRO_TUNE_COMPILER("-fno-strict-aliasing")
+endif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
+    CMAKE_COMPILER_IS_CYGWIN OR CMAKE_COMPILER_IS_GNUCXX)
 
 # Python has defined these functions, but MinGW does also have them...
 if (MINGW)
