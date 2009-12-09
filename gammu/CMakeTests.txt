@@ -102,11 +102,11 @@ foreach(VCS ${VFORMATS})
             PROPERTIES WILL_FAIL TRUE)
     endif (TESTNAME MATCHES "01|02")
     add_test(gammu-savefile-vcs-todo-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile TODO ${TESTNAME}-todo.vcs ${VCS} 1)
-    if (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770")
+    if (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook")
         set_tests_properties(
             gammu-savefile-vcs-todo-${TESTNAME}
             PROPERTIES WILL_FAIL TRUE)
-    endif (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770")
+    endif (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook")
 endforeach(VCS)
 
 # Dummy phone tests

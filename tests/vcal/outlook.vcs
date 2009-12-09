@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+PRODID:-//IRPS UCSD EDU//iCal 1.0//EN
+VERSION:1.0
+TZ:-07
+BEGIN:VEVENT
+UID:4b1d7e0a273af
+DTSTART:20100226T080000Z
+DTEND:20100226T083000Z
+RRULE:D1 20100228T083000Z
+SUMMARY:Northeast Council of Aquarium Societies 35th Annual Convention
+DESCRIPTION;ENCODING=QUOTED-PRINTABLE:The Northeast Council of Aquarium Societies=e2=80=99 35th Annual Convention will be held at the Crowne Plaza Hotel in Cromwell, CT. This year=e2=80=99s convention will incorporate a Caribbean theme and feature a variety of speakers, including Lee Finley, Tony Orso, Jay Hemdal, and Tony Pinto. Auctions, bingo games, and an awards show comprise a sampling of the myriad events. Feasts include a Friday-night dinner buffet and an all-American buffet breakfast and night banquet on Saturday. For more information, visit http://northeastcouncil.org/convention.
+LOCATION:Cromwell, CT
+END:VEVENT
+END:VCALENDAR
