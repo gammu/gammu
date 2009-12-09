@@ -264,6 +264,7 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 			}
 		}
 		fprintf(stderr, "\n");
+		fflush(stderr);
 	}
 	return ERR_NONE;
 }
