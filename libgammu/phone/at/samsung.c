@@ -545,7 +545,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			 * +SPBR: 1,"+919821485060","","","","","apsengupta@gmail.com","6,Aditya","8,Sengupta",1985,2,31,"2,Me","0,"
 			 */
 			error = ATGEN_ParseReply(s, str,
-						"+SPBR: @i, @p, @p, @p, @p, @p, @s, @T, @T, @i, @i, @i, @T",
+						"+SPBR: @i, @p, @p, @p, @p, @p, @s, @T, @T, @i, @i, @i, @T, @T",
 						&Memory->Location,
 						Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 						Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
@@ -555,7 +555,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 						Memory->Entries[5].Text, sizeof(Memory->Entries[5].Text),
 						Memory->Entries[6].Text, sizeof(Memory->Entries[6].Text),
 						Memory->Entries[7].Text, sizeof(Memory->Entries[7].Text),
-						year, month, day,
+						&year, &month, &day,
 						Memory->Entries[8].Text, sizeof(Memory->Entries[8].Text),
 						Memory->Entries[9].Text, sizeof(Memory->Entries[9].Text));
 		}
