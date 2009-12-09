@@ -13,7 +13,7 @@ void PrintSMSLocation(const GSM_SMSMessage *sms, const GSM_SMSFolders *folders);
 /**
  * Prints single phone number optionally showing name of contact from backup data.
  */
-void PrintPhoneNumber(unsigned char *number, const GSM_Backup *Info);
+void PrintPhoneNumber(const unsigned char *number, const GSM_Backup *Info);
 
 void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean ems, const GSM_Backup *Info, GSM_StateMachine *sm);
 

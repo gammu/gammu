@@ -50,185 +50,79 @@ void PrintSMSLocation(const GSM_SMSMessage *sms, const GSM_SMSFolders *folders)
 }
 
 /**
+ * Searches for memory entry in NULL terminated entries list.
+ */
+const GSM_MemoryEntry *SearchPhoneNumber(const unsigned char *number, const GSM_MemoryEntry **List, int *pos)
+{
+	int i;
+	while (List[i]!=NULL) {
+		for (*pos = 0; *pos <  List[i]->EntriesNum; (*pos)++) {
+			switch (List[i]->Entries[*pos].EntryType) {
+				case PBK_Number_General:
+				case PBK_Number_Mobile:
+				case PBK_Number_Work:
+				case PBK_Number_Fax:
+				case PBK_Number_Home:
+				case PBK_Number_Pager:
+				case PBK_Number_Other:
+					if (mywstrncmp(List[i]->Entries[*pos].Text,number,-1)) {
+						return List[i];
+					}
+				default:
+					break;
+			}
+		}
+	}
+	return NULL;
+}
+
+/**
  * Prints single phone number optionally showing name of contact from backup data.
  */
-void PrintPhoneNumber(unsigned char *number, const GSM_Backup *Info)
+void PrintPhoneNumber(const unsigned char *number, const GSM_Backup *Info)
 {
-	gboolean 	found=FALSE,found2=FALSE;
-	int 	i,j,z;
+	const GSM_MemoryEntry *pbk;
+	int pos;
 
-	printf("\"%s\"",DecodeUnicodeConsole(number));
+	printf("\"%s\"", DecodeUnicodeConsole(number));
 
 	if (Info == NULL) return;
 
-	i=0;
-	while (Info->PhonePhonebook[i]!=NULL) {
-		for (j=0;j<Info->PhonePhonebook[i]->EntriesNum;j++) {
-			switch (Info->PhonePhonebook[i]->Entries[j].EntryType) {
-			case PBK_Number_General:
-			case PBK_Number_Mobile:
-			case PBK_Number_Work:
-			case PBK_Number_Fax:
-			case PBK_Number_Home:
-			case PBK_Number_Pager:
-			case PBK_Number_Other:
-				if (mywstrncmp(Info->PhonePhonebook[i]->Entries[j].Text,number,-1)) {
-					found2=TRUE;
-					switch (Info->PhonePhonebook[i]->Entries[j].EntryType) {
-					case PBK_Number_Mobile:
-						printf(" (%s", _("mobile"));
-						break;
-					case PBK_Number_Work:
-						printf(" (%s", _("work"));
-						break;
-					case PBK_Number_Fax:
-						printf(" (%s", _("fax"));
-						break;
-					case PBK_Number_Home:
-						printf(" (%s", _("home"));
-						break;
-					case PBK_Number_Pager:
-						printf(" (%s", _("pager"));
-						break;
-					default:
-						found2=FALSE;
-						break;
-					}
-					found=TRUE;
-				}
-			default:
-				break;
-			}
-			if (found) break;
-		}
-		if (!found) {
-			i++;
-			continue;
-		}
-		found=FALSE;
-		for (z=0;z<Info->PhonePhonebook[i]->EntriesNum;z++) {
-			switch (Info->PhonePhonebook[i]->Entries[z].EntryType) {
-			case PBK_Text_LastName:
-			case PBK_Text_FirstName:
-				if (!found2) {
-					printf(" (");
-					found2=TRUE;
-				} else {
-					if (!found) {
-						printf(", ");
-					} else {
-						printf(" ");
-					}
-				}
-				printf("%s",DecodeUnicodeConsole(Info->PhonePhonebook[i]->Entries[z].Text));
-				found=TRUE;
-				break;
-			default:
-				break;
-			}
-		}
-		for (z=0;z<Info->PhonePhonebook[i]->EntriesNum;z++) {
-			switch (Info->PhonePhonebook[i]->Entries[z].EntryType) {
-			case PBK_Text_Name:
-				if (!found2) {
-					printf(" (");
-					found2=TRUE;
-				} else {
-					printf(", ");
-				}
-				printf("%s",DecodeUnicodeConsole(Info->PhonePhonebook[i]->Entries[z].Text));
-				break;
-			default:
-				break;
-			}
-		}
-		printf(")");
-		break;
+	/* Fist try phone phonebook */
+	pbk = SearchPhoneNumber(number, (const GSM_MemoryEntry **)Info->PhonePhonebook, &pos);
+	if (pbk == NULL) {
+		/* Fall back to SIM */
+		pbk = SearchPhoneNumber(number, (const GSM_MemoryEntry **)Info->SIMPhonebook, &pos);
 	}
-	if (found) return;
-	i=0;
-	while (Info->SIMPhonebook[i]!=NULL) {
-		for (j=0;j<Info->SIMPhonebook[i]->EntriesNum;j++) {
-			switch (Info->SIMPhonebook[i]->Entries[j].EntryType) {
-			case PBK_Number_General:
-			case PBK_Number_Mobile:
-			case PBK_Number_Work:
-			case PBK_Number_Fax:
-			case PBK_Number_Home:
-			case PBK_Number_Pager:
-			case PBK_Number_Other:
-				if (mywstrncmp(Info->SIMPhonebook[i]->Entries[j].Text,number,-1)) {
-					found2=TRUE;
-					switch (Info->SIMPhonebook[i]->Entries[j].EntryType) {
-					case PBK_Number_Mobile:
-						printf(" (%s", _("mobile"));
-						break;
-					case PBK_Number_Work:
-						printf(" (%s", _("work"));
-						break;
-					case PBK_Number_Fax:
-						printf(" (%s", _("fax"));
-						break;
-					case PBK_Number_Home:
-						printf(" (%s", _("home"));
-						break;
-					case PBK_Number_Pager:
-						printf(" (%s", _("pager"));
-						break;
-					default:
-						found2=FALSE;
-						break;
-					}
-					found=TRUE;
-				}
-			default:
-				break;
-			}
-			if (found) break;
-		}
-		if (!found) {
-			i++;
-			continue;
-		}
-		found=FALSE;
-		for (z=0;z<Info->SIMPhonebook[i]->EntriesNum;z++) {
-			switch (Info->SIMPhonebook[i]->Entries[z].EntryType) {
-			case PBK_Text_LastName:
-			case PBK_Text_FirstName:
-				if (!found2) {
-					printf(" (");
-					found2=TRUE;
-				} else {
-					if (!found) {
-						printf(", ");
-					} else {
-						printf(" ");
-					}
-				}
-				printf("%s",DecodeUnicodeConsole(Info->SIMPhonebook[i]->Entries[z].Text));
-				found=TRUE;
-				break;
-			default:
-				break;
-			}
-		}
-		for (z=0;z<Info->SIMPhonebook[i]->EntriesNum;z++) {
-			switch (Info->SIMPhonebook[i]->Entries[z].EntryType) {
-			case PBK_Text_Name:
-				if (!found2) {
-					printf(" (");
-					found2=TRUE;
-				} else {
-					printf(", ");
-				}
-				printf("%s",DecodeUnicodeConsole(Info->SIMPhonebook[i]->Entries[z].Text));
-				break;
-			default:
-				break;
-			}
-		}
-		printf(")");
-		break;
+
+	/* Nothing found */
+	if (pbk == NULL) return;
+
+	/* Print name */
+	printf("%s", DecodeUnicodeConsole(GSM_PhonebookGetEntryName(pbk)));
+
+	/* Print phone type */
+	switch (pbk->Entries[pos].EntryType) {
+		case PBK_Number_Mobile:
+			printf(" (%s)", _("mobile"));
+			break;
+		case PBK_Number_Work:
+			printf(" (%s)", _("work"));
+			break;
+		case PBK_Number_Fax:
+			printf(" (%s)", _("fax"));
+			break;
+		case PBK_Number_Home:
+			printf(" (%s)", _("home"));
+			break;
+		case PBK_Number_Pager:
+			printf(" (%s)", _("pager"));
+			break;
+		case PBK_Number_General:
+			printf(" (%s)", _("general"));
+			break;
+		default:
+			break;
 	}
 }
 
