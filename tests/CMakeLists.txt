@@ -299,6 +299,24 @@ foreach(TESTMESSAGE ${MESSAGES})
         "${Gammu_SOURCE_DIR}/tests/at-model/${TESTMESSAGE}")
 endforeach(TESTMESSAGE $MESSAGES)
 
+# Samsung memory parsing
+add_executable(samsung-get-memory samsung-get-memory.c)
+target_link_libraries(samsung-get-memory libGammu)
+target_link_libraries(samsung-get-memory memorydisplay)
+
+# List test cases
+file(GLOB MESSAGES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/samsung-memory"
+    "${Gammu_SOURCE_DIR}/tests/samsung-memory/*.dump")
+list(SORT MESSAGES)
+
+foreach(TESTMESSAGE ${MESSAGES})
+    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+    add_test("samsung-get-memory-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/samsung-get-memory${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/samsung-memory/${TESTMESSAGE}")
+endforeach(TESTMESSAGE $MESSAGES)
+
 # AT CNMI parsing
 add_executable(at-cnmi-reply at-cnmi-reply.c)
 target_link_libraries(at-cnmi-reply libGammu)
