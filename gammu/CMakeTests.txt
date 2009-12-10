@@ -222,6 +222,7 @@ gammu_test(getallcalendar "C/S/007")
 gammu_test(getcalendar "Coffee with Jason" 22)
 gammu_test(getcalendar "" 42)
 gammu_test(deletecalendar "Entry is empty" 42)
+gammu_test(getcalendarsettings "Week starts on Monday")
 
 gammu_test(getallnotes "")
 
