@@ -1506,6 +1506,18 @@ GSM_Error DUMMY_DeleteAllCalendar(GSM_StateMachine *s)
 	return DUMMY_DeleteAll(s, "calendar");
 }
 
+GSM_Error DUMMY_GetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *settings)
+{
+	settings->StartDay = 1;
+	settings->AutoDelete = 1;
+	return ERR_NONE;
+}
+
+GSM_Error DUMMY_SetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *settings)
+{
+	return ERR_NONE;
+}
+
 GSM_Error DUMMY_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status)
 {
 	Status->Used = DUMMY_GetCount(s, "note");
@@ -1758,8 +1770,8 @@ GSM_Phone_Functions DUMMYPhone = {
 	DUMMY_AddCalendar,
 	DUMMY_DeleteCalendar,
 	DUMMY_DeleteAllCalendar,
-	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
-	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
+	DUMMY_GetCalendarSettings,
+	DUMMY_SetCalendarSettings,
 	DUMMY_GetNoteStatus,
 	DUMMY_GetNote,
 	DUMMY_GetNextNote,
