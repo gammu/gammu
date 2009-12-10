@@ -226,6 +226,10 @@ gammu_test(getcalendarsettings "Week starts on Monday")
 
 gammu_test(getallnotes "")
 
+gammu_test_fail(getalarm "Alarm (42) not set in phone" 42)
+gammu_test(setalarm "" 12 22)
+gammu_test(getalarm "Alarm in location 1:" 1)
+
 gammu_test(getalltodo "Wammu Bug erforschen")
 gammu_test(gettodo "Gorusme" 3)
 gammu_test(gettodo "" 99)
