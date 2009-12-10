@@ -1509,7 +1509,7 @@ GSM_Error DUMMY_DeleteAllCalendar(GSM_StateMachine *s)
 GSM_Error DUMMY_GetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *settings)
 {
 	settings->StartDay = 1;
-	settings->AutoDelete = 1;
+	settings->AutoDelete = 0;
 	return ERR_NONE;
 }
 
