@@ -252,6 +252,13 @@ char * DUMMY_CalendarPath(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 	return DUMMY_GetFilePath(s, path);
 }
 
+char * DUMMY_AlarmPath(GSM_StateMachine *s, GSM_Alarm *entry)
+{
+	char path[100];
+	sprintf(path, "alarm/%d",  entry->Location);
+	return DUMMY_GetFilePath(s, path);
+}
+
 /**
  * Initialises dummy module.
  */
@@ -314,6 +321,9 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 	MKDIR(path);
 	free(path);
 	path = DUMMY_GetFilePath(s, "calendar");
+	MKDIR(path);
+	free(path);
+	path = DUMMY_GetFilePath(s, "alarm");
 	MKDIR(path);
 	free(path);
 
@@ -819,14 +829,114 @@ GSM_Error DUMMY_GetManufacturer(GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
+GSM_Error DUMMY_GetAlarm(GSM_StateMachine *s, GSM_Alarm *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Backup Backup;
+	char *filename=NULL;
+	GSM_Error error;
+	int i;
+
+	filename = DUMMY_AlarmPath(s, entry);
+
+	error = GSM_ReadBackupFile(filename, &Backup, GSM_Backup_VCalendar);
+
+	free(filename);
+	filename=NULL;
+
+	if (error != ERR_NONE) {
+		if (error == ERR_CANTOPENFILE) return ERR_EMPTY;
+		return error;
+	}
+	if (Backup.Calendar[0] == NULL) return ERR_EMPTY;
+
+	entry->Repeating = FALSE;
+	entry->Text[0] = 0;
+	entry->Text[1] = 0;
+	GSM_GetCurrentDateTime(&entry->DateTime);
+
+	for (i = 0; i < Backup.Calendar[0]->EntriesNum; i++) {
+		switch (Backup.Calendar[0]->Entries[i].EntryType) {
+			case CAL_TONE_ALARM_DATETIME:
+				entry->DateTime = Backup.Calendar[0]->Entries[i].Date;
+				break;
+			case CAL_TEXT:
+				CopyUnicodeString(entry->Text, Backup.Calendar[0]->Entries[i].Text);
+				break;
+			case CAL_REPEAT_FREQUENCY:
+				if (Backup.Calendar[0]->Entries[i].Number) {
+					entry->Repeating = TRUE;
+				}
+				break;
+			default:
+				break;
+		}
+	}
+
+	GSM_FreeBackup(&Backup);
+
+	return ERR_NONE;
 }
 
-GSM_Error DUMMY_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
+GSM_Error DUMMY_DeleteAlarm(GSM_StateMachine *s, GSM_Alarm *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	char *filename=NULL;
+	GSM_Error error;
+
+	filename = DUMMY_AlarmPath(s, entry);
+
+	if (unlink(filename) == 0) {
+		error = ERR_NONE;
+	} else {
+		error = DUMMY_Error(s, "calendar unlink failed");
+	}
+
+	free(filename);
+	filename=NULL;
+	return error;
+}
+
+
+GSM_Error DUMMY_SetAlarm(GSM_StateMachine *s, GSM_Alarm *entry)
+{
+	char *filename=NULL;
+	GSM_Error error;
+	GSM_Backup backup;
+	GSM_CalendarEntry cal;
+
+	GSM_ClearBackup(&backup);
+
+	error = DUMMY_DeleteAlarm(s, entry);
+	if (error != ERR_EMPTY && error != ERR_NONE) return error;
+
+	filename = DUMMY_AlarmPath(s, entry);
+
+	cal.EntriesNum = 3;
+	cal.Type = GSM_CAL_ALARM;
+	cal.Location = entry->Location;
+	cal.Entries[0].EntryType = CAL_TONE_ALARM_DATETIME;
+	cal.Entries[0].Date = entry->DateTime;
+	cal.Entries[0].Date.Year = 1970;
+	cal.Entries[0].Date.Month = 1;
+	cal.Entries[0].Date.Day = 1;
+	cal.Entries[1].EntryType = CAL_START_DATETIME;
+	cal.Entries[1].Date = entry->DateTime;
+	cal.Entries[1].Date.Year = 1970;
+	cal.Entries[1].Date.Month = 1;
+	cal.Entries[1].Date.Day = 1;
+	cal.Entries[2].EntryType = CAL_TEXT;
+	CopyUnicodeString(cal.Entries[2].Text, entry->Text);
+	if (entry->Repeating) {
+		cal.Entries[3].EntryType = CAL_REPEAT_FREQUENCY;
+		cal.Entries[3].Number = 1;
+	}
+
+	backup.Calendar[0] = &cal;
+	backup.Calendar[1] = NULL;
+
+	error = GSM_SaveBackupFile(filename, &backup, GSM_Backup_VCalendar);
+	free(filename);
+	filename=NULL;
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)
