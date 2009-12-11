@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-03 14:43+0100\n"
-"PO-Revision-Date: 2009-12-11 19:23+0200\n"
+"PO-Revision-Date: 2009-12-11 19:24+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -236,7 +236,7 @@ msgstr "Súbor so zadaným názvom neexistuje."
 
 #: libgammu/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
-msgstr ""
+msgstr "Zadajte názov adresára, nie názov súboru."
 
 #: libgammu/gsmcomon.c:131
 msgid "You have to give file name and not folder name."
