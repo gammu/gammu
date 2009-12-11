@@ -183,6 +183,11 @@ void DeleteAllMemory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+/**
+ * Searches if memory entry contains given text.
+ *
+ * It prints it in match.
+ */
 void SearchOneEntry(GSM_MemoryEntry *Entry, const unsigned char *Text)
 {
 	int i;
@@ -256,6 +261,11 @@ void SearchOneEntry(GSM_MemoryEntry *Entry, const unsigned char *Text)
 	}
 }
 
+/**
+ * Reads all entries from one memory and searches them for some text.
+ *
+ * All matched entries are printed.
+ */
 void SearchOneMemory(GSM_MemoryType MemoryType, const char *Title, const unsigned char *Text)
 {
 	GSM_MemoryEntry		Entry;
