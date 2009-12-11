@@ -64,9 +64,8 @@ msgstr ""
 "Chyba pri nastavovaní rýchlosti zariadenia. Rýchlosť asi nie je podporovaná."
 
 #: libgammu/gsmcomon.c:94
-#, fuzzy
 msgid "Error writing to the device."
-msgstr "Chyba pri otváraní zariadenia"
+msgstr "Chyba pri otváraní zariadenia."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
