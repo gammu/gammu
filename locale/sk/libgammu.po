@@ -286,7 +286,7 @@ msgstr "Žiadna takáto sekcia neexistuje."
 
 #: libgammu/gsmcomon.c:142
 msgid "Using default values."
-msgstr "Použijú sa štandardných hodnôt."
+msgstr "Použijú sa štandardné hodnoty."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
