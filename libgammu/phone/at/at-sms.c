@@ -185,13 +185,13 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 	}
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_NO_ME)) {
 		smprintf(s, "Forcing to disable ME storage!\n");
-		s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_NOTAVAILABLE;
-		s->Phone.Data.Priv.ATGEN.PhoneSaveSMS = AT_NOTAVAILABLE;
+		Priv->PhoneSMSMemory = AT_NOTAVAILABLE;
+		Priv->PhoneSaveSMS = AT_NOTAVAILABLE;
 	}
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_NO_SM)) {
 		smprintf(s, "Forcing to disable SM storage!\n");
-		s->Phone.Data.Priv.ATGEN.SIMSMSMemory = AT_NOTAVAILABLE;
-		s->Phone.Data.Priv.ATGEN.SIMSaveSMS = AT_NOTAVAILABLE;
+		Priv->SIMSMSMemory = AT_NOTAVAILABLE;
+		Priv->SIMSaveSMS = AT_NOTAVAILABLE;
 	}
 	return ERR_NONE;
 }
@@ -1381,13 +1381,13 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 	int folder = 0;
 
 	if (s->Protocol.Data.AT.EditMode) {
-		if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_SMSEdit) {
+		if (Priv->ReplyState != AT_Reply_SMSEdit) {
 			return ATGEN_HandleCMSError(s);
 		}
 		s->Protocol.Data.AT.EditMode = FALSE;
 		return ERR_NONE;
 	}
-	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "SMS saved OK\n");
 
@@ -1735,7 +1735,7 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	int i = 0,reference = 0;
 
 	if (s->Protocol.Data.AT.EditMode) {
-		if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_SMSEdit) {
+		if (Priv->ReplyState != AT_Reply_SMSEdit) {
 			return ERR_UNKNOWN;
 		}
 		s->Protocol.Data.AT.EditMode = FALSE;
