@@ -266,7 +266,7 @@ msgstr "Údaje boli skonvertované."
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "Gammu nie je nakonfigurovaný."
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
