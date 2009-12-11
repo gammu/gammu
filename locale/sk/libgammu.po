@@ -381,7 +381,7 @@ msgstr "Rodina"
 
 #: libgammu/phone/nokia/nfunc.c:952
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #: libgammu/phone/nokia/nfunc.c:954
 msgid "Friends"
