@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/timeb.h>
+#include <ctype.h>
 #ifdef WIN32
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
@@ -617,14 +618,14 @@ void StripSpaces(char *buff)
 {
 	ssize_t i = 0;
 
-	while(iswspace(buff[i])) {
+	while(isspace(buff[i])) {
 		i++;
 	}
 	if (i > 0) {
 		memmove(buff, buff + i, strlen(buff + i));
 	}
 	i = strlen(buff) - 1;
-	while(iswspace(buff[i]) && i >= 0) {
+	while(isspace(buff[i]) && i >= 0) {
 		buff[i] = 0;
 		i--;
 	}
