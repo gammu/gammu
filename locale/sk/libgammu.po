@@ -69,7 +69,7 @@ msgstr "Chyba pri zápise do zariadenia."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
-msgstr ""
+msgstr "Chyba počas čitania zo zariadenia."
 
 #: libgammu/gsmcomon.c:96
 #, fuzzy
