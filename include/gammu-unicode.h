@@ -158,6 +158,15 @@ void DecodeUTF8(unsigned char *dest, const char *src, int len);
  */
 gboolean DecodeHexBin(unsigned char *dest, const unsigned char *src, int len);
 
+/**
+ * Converts single character from unicode to wchar_t.
+ */
+int EncodeWithUnicodeAlphabet(const unsigned char *value, wchar_t *dest);
+
+/**
+ * Converts single character from wchar_t to unicode.
+ */
+int DecodeWithUnicodeAlphabet(wchar_t value, unsigned char *dest);
 #endif
 
 /* Editor configuration

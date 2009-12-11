@@ -1,5 +1,7 @@
 #include "string.h"
 
+#include <gammu-unicode.h>
+
 #include <ctype.h>
 
 #ifndef HAVE_STRCASESTR

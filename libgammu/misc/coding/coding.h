@@ -36,9 +36,6 @@ typedef		int wint_t;
 /* ---------------------------- Unicode ------------------------------------ */
 gboolean 		myiswspace	  		(unsigned const char *src);
 
-int		EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
-int		DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);
-
 
 void 		ReverseUnicodeString		(unsigned char *String);
 
