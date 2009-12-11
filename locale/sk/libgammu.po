@@ -150,9 +150,8 @@ msgid "Unknown error."
 msgstr "Neznáma chyba."
 
 #: libgammu/gsmcomon.c:111
-#, fuzzy
 msgid "Can not open specified file."
-msgstr "Nie je možné vytvoriť súbor!"
+msgstr "Súbor nie je možné otvoriť."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
