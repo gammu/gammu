@@ -385,7 +385,7 @@ msgstr "VIP"
 
 #: libgammu/phone/nokia/nfunc.c:954
 msgid "Friends"
-msgstr ""
+msgstr "Priatelia"
 
 #: libgammu/phone/nokia/nfunc.c:956
 msgid "Colleagues"
