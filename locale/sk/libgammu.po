@@ -147,7 +147,7 @@ msgstr "Pamäť je plná."
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
-msgstr ""
+msgstr "Neznáma chyba."
 
 #: libgammu/gsmcomon.c:111
 #, fuzzy
