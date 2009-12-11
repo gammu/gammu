@@ -42,7 +42,7 @@ msgstr "Chyba pri prístupe k zariadeniu, už sa používa inou aplikáciou."
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
-msgstr ""
+msgstr "Chyba pri prístupe k zariadeniu, nemáte potrebné práva."
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
