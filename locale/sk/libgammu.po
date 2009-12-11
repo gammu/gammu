@@ -244,7 +244,7 @@ msgstr "Zadajte názov súboru, nie názov adresára."
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "Nie je možný prístup na SIM kartu."
 
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
