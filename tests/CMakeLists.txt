@@ -317,6 +317,25 @@ foreach(TESTMESSAGE ${MESSAGES})
         "${Gammu_SOURCE_DIR}/tests/samsung-memory/${TESTMESSAGE}")
 endforeach(TESTMESSAGE $MESSAGES)
 
+# AT getting of available phone memories
+add_executable(at-get-smsmemories at-get-smsmemories.c)
+target_link_libraries(at-get-smsmemories libGammu)
+
+# List test cases
+file(GLOB MESSAGES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-cpms"
+    "${Gammu_SOURCE_DIR}/tests/at-cpms/*.dump")
+list(SORT MESSAGES)
+
+foreach(TESTMESSAGE ${MESSAGES})
+    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+    add_test("at-get-smsmemories-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/at-get-smsmemories${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-cpms/${TESTMESSAGE}")
+    set_tests_properties("at-get-smsmemories-${TESTNAME}" PROPERTIES
+        PASS_REGULAR_EXPRESSION "read: ME : ok, SM : ok, save: ME : ok, SM = ok")
+endforeach(TESTMESSAGE $MESSAGES)
+
 # AT CNMI parsing
 add_executable(at-cnmi-reply at-cnmi-reply.c)
 target_link_libraries(at-cnmi-reply libGammu)
