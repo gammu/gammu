@@ -389,7 +389,7 @@ msgstr "Priatelia"
 
 #: libgammu/phone/nokia/nfunc.c:956
 msgid "Colleagues"
-msgstr ""
+msgstr "Kolegovia"
 
 #: libgammu/phone/nokia/nfunc.c:958
 msgid "Other"
