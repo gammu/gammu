@@ -1447,7 +1447,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 
 	/* Skip white spaces */
-	while (iswspace((int)*pos)) {
+	while (isspace(*pos)) {
 		pos++;
 	}
 	if (pos2 == NULL) {
@@ -1455,7 +1455,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 	/* Go before last char */
 	pos2--;
-	while(isspace((int)*pos2) && pos2 > pos) {
+	while(isspace(*pos2) && pos2 > pos) {
 		pos2--;
 	}
 
