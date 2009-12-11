@@ -175,13 +175,11 @@ def GetSMSFolders():
             folder['Memory'].encode('utf-8'))
     return folders
 
-def GetDateTime():
+def DateTime():
     dt = sm.GetDateTime()
     print dt
-    return dt
-
-def SetDateTime(dt):
     sm.SetDateTime(dt)
+    return dt
 
 smsfolders = GetSMSFolders()
 GetAllMemory('ME')
@@ -195,5 +193,4 @@ GetAllTodo()
 smslist = GetAllSMS()
 PrintAllSMS(smslist, smsfolders)
 LinkAllSMS(smslist, smsfolders)
-dt = GetDateTime()
-SetDateTime(dt)
+DateTime()
