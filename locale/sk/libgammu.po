@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-03 14:43+0100\n"
-"PO-Revision-Date: 2009-12-11 18:11+0200\n"
+"PO-Revision-Date: 2009-12-11 18:13+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -38,7 +38,7 @@ msgstr "Chyba pri prístupe k zariadeniu, zariadenie neexistuje."
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
-msgstr ""
+msgstr "Chyba pri prístupe k zariadeniu, už sa používa inou aplikáciou."
 
 #: libgammu/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
