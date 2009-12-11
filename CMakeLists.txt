@@ -81,6 +81,9 @@ find_package (PkgConfig)
 # Standard packages
 macro_optional_find_package (Doxygen)
 
+# I'd say this is task of CMake to export this
+check_symbol_exists (__clang__ "" CLANG_COMPILER)
+
 # Configuration checks
 check_symbol_exists (strncasecmp "string.h" HAVE_STRNCASECMP)
 check_symbol_exists (strcasecmp "string.h" HAVE_STRCASECMP)
@@ -434,7 +437,10 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     MACRO_TUNE_COMPILER("-Wfloat-equal")
     MACRO_TUNE_COMPILER("-Wbad-function-cast")
     MACRO_TUNE_COMPILER("-Wmissing-format-attribute")
-    MACRO_TUNE_COMPILER("-Wmissing-noreturn")
+    # Broken for now
+    if (NOT CLANG_COMPILER)
+        MACRO_TUNE_COMPILER("-Wmissing-noreturn")
+    endif (NOT CLANG_COMPILER)
 #   This should be enabled and only public functions exported, but it is far future
 #    MACRO_TUNE_COMPILER("-Wmissing-prototypes")
     MACRO_TUNE_COMPILER("-Wpointer-arith")

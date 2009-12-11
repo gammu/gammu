@@ -27,6 +27,7 @@ ChangeLog
 [-] * Display sent SMS time if it is available (bug#1053).
 [-] * Added bunch of new testcases.
 [-] * Distinguish silent/tone alarms in own backup format.
+[-] * Fixed compilation with Clang compiler.
     
 20091203 - 1.26.92
 
