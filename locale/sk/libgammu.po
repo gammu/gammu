@@ -120,7 +120,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
-msgstr ""
+msgstr "Funkcia nie je telefónom podporovaná."
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
