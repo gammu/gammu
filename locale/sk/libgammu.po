@@ -25,6 +25,8 @@ msgstr "Bez chyby."
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
 msgstr ""
+"Chyba pri prístupe k zariadeniu. Neznáme, zaneprázdnené alebo problém s "
+"právami."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
