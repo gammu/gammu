@@ -78,16 +78,16 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 		 *
 		 * @todo: Add support for BM (broadcast messages) and SR (status reports).
 		 */
-		s->Phone.Data.Priv.ATGEN.PhoneSaveSMS = AT_NOTAVAILABLE;
-		s->Phone.Data.Priv.ATGEN.SIMSaveSMS = AT_NOTAVAILABLE;
+		Priv->PhoneSaveSMS = AT_NOTAVAILABLE;
+		Priv->SIMSaveSMS = AT_NOTAVAILABLE;
 
 		Line = GetLineString(msg.Buffer, &Priv->Lines, 2);
 		if (strcmp(Line, "+CPMS: ") == 0 && Priv->Manufacturer == AT_Samsung) {
 			smprintf(s, "Assuming broken Samsung response, both memories available!\n");
-			s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_AVAILABLE;
-			s->Phone.Data.Priv.ATGEN.SIMSMSMemory = AT_AVAILABLE;
-			s->Phone.Data.Priv.ATGEN.PhoneSaveSMS = AT_AVAILABLE;
-			s->Phone.Data.Priv.ATGEN.SIMSaveSMS = AT_AVAILABLE;
+			Priv->PhoneSMSMemory = AT_AVAILABLE;
+			Priv->SIMSMSMemory = AT_AVAILABLE;
+			Priv->PhoneSaveSMS = AT_AVAILABLE;
+			Priv->SIMSaveSMS = AT_AVAILABLE;
 			goto success;
 		}
 
@@ -111,39 +111,39 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 			pos_tmp = strstr(pos_start, "\"SM\"");
 
 			if (pos_tmp != NULL && pos_tmp < pos_end) {
-				s->Phone.Data.Priv.ATGEN.SIMSaveSMS = AT_AVAILABLE;
+				Priv->SIMSaveSMS = AT_AVAILABLE;
 			}
 			pos_tmp = strstr(pos_start, "\"ME\"");
 
 			if (pos_tmp != NULL && pos_tmp < pos_end) {
-				s->Phone.Data.Priv.ATGEN.PhoneSaveSMS = AT_AVAILABLE;
+				Priv->PhoneSaveSMS = AT_AVAILABLE;
 			}
 		}
 		if (strstr(msg.Buffer, "\"SM\"") != NULL) {
-			s->Phone.Data.Priv.ATGEN.SIMSMSMemory = AT_AVAILABLE;
+			Priv->SIMSMSMemory = AT_AVAILABLE;
 		} else {
-			s->Phone.Data.Priv.ATGEN.SIMSMSMemory = AT_NOTAVAILABLE;
+			Priv->SIMSMSMemory = AT_NOTAVAILABLE;
 		}
 		if (strstr(msg.Buffer, "\"ME\"") != NULL) {
-			s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_AVAILABLE;
+			Priv->PhoneSMSMemory = AT_AVAILABLE;
 		} else {
-			s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_NOTAVAILABLE;
+			Priv->PhoneSMSMemory = AT_NOTAVAILABLE;
 
 			/* Check for Motorola style folders */
 			if (strstr(msg.Buffer, "\"MT\"") != NULL && strstr(msg.Buffer, "\"OM\"") != NULL) {
-				s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_AVAILABLE;
-				s->Phone.Data.Priv.ATGEN.PhoneSaveSMS = AT_AVAILABLE;
-				s->Phone.Data.Priv.ATGEN.MotorolaSMS = TRUE;
+				Priv->PhoneSMSMemory = AT_AVAILABLE;
+				Priv->PhoneSaveSMS = AT_AVAILABLE;
+				Priv->MotorolaSMS = TRUE;
 			}
 
 		}
 success:
 		smprintf(s, "Available SMS memories received: read: ME : %s, SM : %s, save: ME : %s, SM = %s, Motorola = %s\n",
-				s->Phone.Data.Priv.ATGEN.PhoneSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
-				s->Phone.Data.Priv.ATGEN.SIMSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
-				s->Phone.Data.Priv.ATGEN.PhoneSaveSMS == AT_AVAILABLE ? "ok" : "N/A",
-				s->Phone.Data.Priv.ATGEN.SIMSaveSMS == AT_AVAILABLE ? "ok" : "N/A",
-				s->Phone.Data.Priv.ATGEN.MotorolaSMS ? "yes" : "no"
+				Priv->PhoneSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
+				Priv->SIMSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
+				Priv->PhoneSaveSMS == AT_AVAILABLE ? "ok" : "N/A",
+				Priv->SIMSaveSMS == AT_AVAILABLE ? "ok" : "N/A",
+				Priv->MotorolaSMS ? "yes" : "no"
 				);
 		return ERR_NONE;
 	case AT_Reply_Error:
