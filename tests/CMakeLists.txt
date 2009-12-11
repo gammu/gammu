@@ -368,7 +368,7 @@ foreach(TESTMESSAGE ${MESSAGES})
         "${Gammu_SOURCE_DIR}/tests/at-cnmi/${TESTMESSAGE}")
 endforeach(TESTMESSAGE $MESSAGES)
 
-# AT CNMI parsing
+# AT USSD replies parsing
 add_executable(at-ussd-reply at-ussd-reply.c)
 target_link_libraries(at-ussd-reply libGammu)
 
