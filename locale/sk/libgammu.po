@@ -313,6 +313,7 @@ msgid "Service configuration is missing."
 msgstr "Chýba konfigurácia služby."
 
 #: libgammu/gsmcomon.c:149
+#, fuzzy
 msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
 "Príkaz bol odmietnutý, pretože zariadenie je obsadené. Počkajte a "
