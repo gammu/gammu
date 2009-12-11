@@ -220,7 +220,7 @@ msgstr "Uvedený neplatný dátum alebo čas."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr ""
+msgstr "Chyba pamäte telefónu, je možné že je iba na čítanie."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
