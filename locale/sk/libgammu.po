@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-03 14:43+0100\n"
-"PO-Revision-Date: 2009-12-11 19:25+0200\n"
+"PO-Revision-Date: 2009-12-11 19:27+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -249,6 +249,8 @@ msgstr "Nie je možný prístup na SIM kartu."
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
+"Nesprávna verzia GNAPPLETu v telefóne. Použite verziu z aktuálne použivaného "
+"Gammu."
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
