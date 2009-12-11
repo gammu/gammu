@@ -70,14 +70,14 @@ int main(int argc, char **argv)
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
 	Priv->Charset = AT_CHARSET_GSM;
-    s->User.IncomingUSSD = NULL;
+	s->User.IncomingUSSD = NULL;
 	s->Phone.Data.EnableIncomingUSSD = TRUE;
 
 	/* Init message */
 	msg.Type = 0;
 	msg.Length = len;
 	msg.Buffer = buffer;
-//	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, TRUE);
+	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, TRUE);
 
 	/* Parse it */
 	error = ATGEN_ReplyGetUSSD(msg, s);
