@@ -47,7 +47,10 @@ def init():
     '''
     global sm
     sm = gammu.StateMachine()
-    sm.ReadConfig()
+    if len(sys.argv) >= 2:
+        sm.ReadConfig(Filename = sys.argv[1])
+    else:
+        sm.ReadConfig()
     sm.Init()
     sm.SetIncomingCallback(callback)
     try:
@@ -61,8 +64,12 @@ def do_service(sm):
     '''
     Main code to talk with worker.
     '''
-    print 'Enter code (empty string to end):',
-    code = raw_input()
+    if len(sys.argv) >= 3:
+        code = sys.argv[2]
+        del sys.argv[2]
+    else:
+        print 'Enter code (empty string to end):',
+        code = raw_input()
     if code != '':
         print 'Talking to network...'
         sm.DialService(code)
