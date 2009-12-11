@@ -258,7 +258,7 @@ msgstr "Iba časť adresára bola zaradená do zoznamu."
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
-msgstr ""
+msgstr "Adresár musí byť prázdny."
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
