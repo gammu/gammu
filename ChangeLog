@@ -28,6 +28,7 @@ ChangeLog
 [-] * Added bunch of new testcases.
 [-] * Distinguish silent/tone alarms in own backup format.
 [-] * Fixed compilation with Clang compiler.
+[-] * Fixed handling of SMS memories with Samsung (bug#1063).
     
 20091203 - 1.26.92
 

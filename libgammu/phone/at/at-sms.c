@@ -58,8 +58,10 @@ GSM_Error ATGEN_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	char *pos_start=NULL, *pos_end=NULL, *pos_tmp=NULL;
+	const char *Line;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		/* Reply here is:
 		 * (memories for reading)[, (memories for writing)[, (memories for storing received messages)]]
@@ -78,6 +80,16 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 		 */
 		s->Phone.Data.Priv.ATGEN.PhoneSaveSMS = AT_NOTAVAILABLE;
 		s->Phone.Data.Priv.ATGEN.SIMSaveSMS = AT_NOTAVAILABLE;
+
+		Line = GetLineString(msg.Buffer, &Priv->Lines, 2);
+		if (strcmp(Line, "+CPMS: ") == 0 && Priv->Manufacturer == AT_Samsung) {
+			smprintf(s, "Assuming broken Samsung response, both memories available!\n");
+			s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_AVAILABLE;
+			s->Phone.Data.Priv.ATGEN.SIMSMSMemory = AT_AVAILABLE;
+			s->Phone.Data.Priv.ATGEN.PhoneSaveSMS = AT_AVAILABLE;
+			s->Phone.Data.Priv.ATGEN.SIMSaveSMS = AT_AVAILABLE;
+			goto success;
+		}
 
 		if (strchr(msg.Buffer, '(') == NULL) {
 			smprintf(s, "Assuming broken iWOW style response, no lists!\n");
@@ -125,6 +137,7 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 			}
 
 		}
+success:
 		smprintf(s, "Available SMS memories received: read: ME : %s, SM : %s, save: ME : %s, SM = %s, Motorola = %s\n",
 				s->Phone.Data.Priv.ATGEN.PhoneSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
 				s->Phone.Data.Priv.ATGEN.SIMSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
@@ -147,6 +160,12 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 {
 	GSM_Error error;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	error = ATGEN_GetManufacturer(s);
+
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	smprintf(s, "Getting available SMS memories\n");
 	ATGEN_WaitForAutoLen(s, "AT+CPMS=?\r", 0x00, 4, ID_GetSMSMemories);
