@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-03 14:43+0100\n"
-"PO-Revision-Date: 2009-12-11 20:16+0200\n"
+"PO-Revision-Date: 2009-12-11 20:17+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -315,6 +315,8 @@ msgstr "Chýba konfigurácia služby."
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
+"Príkaz bol odmietnutý, pretože zariadenie je obsadené. Počkajte a "
+"reštartujte."
 
 #: libgammu/gsmcomon.c:182
 msgid "Unknown error description."
