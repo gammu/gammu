@@ -1,12 +1,15 @@
 #!/usr/bin/env python
 
 import gammu
+import sys
 
 sm = gammu.StateMachine()
-sm.ReadConfig()
+if len(sys.argv) >= 2:
+    sm.ReadConfig(Filename = sys.argv[1])
+    del sys.argv[1]
+else:
+    sm.ReadConfig()
 sm.Init()
-
-import sys
 
 status = sm.GetBatteryCharge()
 
