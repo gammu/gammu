@@ -80,7 +80,7 @@ extern void GSM_InitLocales(const char *path);
 #endif
 
 /* Various hints for compilers */
-#if GSM_GNUC_PREREQ (2,8)
+#if GSM_GNUC_PREREQ (2,8) || defined(__clang__)
 #define PRINTF_STYLE(f, a) __attribute__ ((format(__printf__, f, a)))
 #define SCANF_STYLE(f, a) __attribute__ ((format(__scanf__, f, a)))
 #else
@@ -88,23 +88,28 @@ extern void GSM_InitLocales(const char *path);
 #define SCANF_STYLE(f, a)
 #endif
 
-#if GSM_GNUC_PREREQ (3,4)
+#if GSM_GNUC_PREREQ (3,4) || defined(__clang__)
 #define WARNUNUSED __attribute__ ((__warn_unused_result__))
 #else
 #define WARNUNUSED
 #endif
 
-#if GSM_GNUC_PREREQ (3,1)
+#if GSM_GNUC_PREREQ (3,1) || defined(__clang__)
 #define UNUSED __attribute__ ((unused))
 #else
 #define UNUSED
 #endif
 
-#if __GNUC__
-#define NORETURN __attribute__ ((noreturn))
-#define INLINE inline
+#if defined(__GNUC__) || defined(__clang__)
+#define NORETURN __attribute__((__noreturn__))
 #else
 #define NORETURN
+#endif
+
+/* Clang has bug in handling inline functions */
+#if defined(__GNUC__) && !defined(__clang__)
+#define INLINE inline
+#else
 #define INLINE
 #endif
 
