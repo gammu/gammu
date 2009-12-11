@@ -333,7 +333,7 @@ msgstr "Osobné"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1960 libgammu/phone/nokia/nfunc.c:1140
 msgid "Car"
-msgstr ""
+msgstr "Auto"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1962 libgammu/phone/nokia/nfunc.c:1142
 msgid "Headset"
