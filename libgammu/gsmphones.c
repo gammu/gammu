@@ -17,9 +17,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#ifdef HAVE_WCTYPE_H
-#  include <wctype.h>
-#endif
+#include <ctype.h>
 
 #include "../helper/string.h"
 
@@ -157,7 +155,7 @@ GSM_Error GSM_SetFeatureString(GSM_Feature *list, const char *string)
 			*end = 0;
 		}
 
-		while (iswspace(*pos))
+		while (isspace(*pos))
 			pos++;
 
 		while ((tmp = strchr(pos, ' ')) != NULL)
