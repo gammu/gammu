@@ -232,7 +232,7 @@ msgstr "Súbor so zadaným názvom už existuje."
 
 #: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
-msgstr ""
+msgstr "Súbor so zadaným názvom neexistuje."
 
 #: libgammu/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
