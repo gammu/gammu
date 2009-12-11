@@ -254,7 +254,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:134
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "Iba časť adresára bola zaradená do zoznamu."
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
