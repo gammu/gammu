@@ -13,8 +13,6 @@
 #include "../helper/printing.h"
 #include "../helper/string.h"
 
-#define GAMMU_CALLER_GROUPS	20
-
 void GetAllMemory(int argc UNUSED, char *argv[])
 {
 	GSM_MemoryEntry		Entry;
