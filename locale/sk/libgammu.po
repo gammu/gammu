@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-03 14:43+0100\n"
-"PO-Revision-Date: 2009-12-11 20:04+0200\n"
+"PO-Revision-Date: 2009-12-11 20:06+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -286,7 +286,7 @@ msgstr "Žiadna takáto sekcia neexistuje."
 
 #: libgammu/gsmcomon.c:142
 msgid "Using default values."
-msgstr ""
+msgstr "Použijú sa štandardných hodnôt."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
