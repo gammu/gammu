@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-03 14:43+0100\n"
-"PO-Revision-Date: 2009-12-11 19:29+0200\n"
+"PO-Revision-Date: 2009-12-11 20:03+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -278,7 +278,7 @@ msgstr "Interná chyba telefónu."
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
-msgstr ""
+msgstr "Chyba pri zápise súboru na disk."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
