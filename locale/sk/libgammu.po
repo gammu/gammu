@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-03 14:43+0100\n"
-"PO-Revision-Date: 2009-12-11 18:54+0200\n"
+"PO-Revision-Date: 2009-12-11 19:04+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -170,9 +170,8 @@ msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
 
 #: libgammu/gsmcomon.c:116
-#, fuzzy
 msgid "Phone is not connected."
-msgstr "&Telefón"
+msgstr "Telefón nie je pripojený."
 
 #: libgammu/gsmcomon.c:117
 #, fuzzy
