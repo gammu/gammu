@@ -14,6 +14,15 @@
  * to publish their code under.
  */
 
+#include <gammu-config.h>
+
+#ifdef HAVE_WCHAR_H
+#  include <wchar.h>
+#endif
+#ifdef HAVE_WCTYPE_H
+#  include <wctype.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
