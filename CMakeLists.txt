@@ -482,7 +482,9 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     #
     # Security related flags
     #
-    set (ENABLE_PROTECTION ON CACHE BOOL "Enable compile time protections (stack, read only code, fortify in libc...)")
+    if (NOT CLANG_COMPILER)
+        set (ENABLE_PROTECTION ON CACHE BOOL "Enable compile time protections (stack, read only code, fortify in libc...)")
+    endif (NOT CLANG_COMPILER)
     if (ENABLE_PROTECTION)
         # Need to enable -O to make fortify work
         set (CMAKE_C_FLAGS_DEBUG "-g -O")
