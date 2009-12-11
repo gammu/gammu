@@ -270,7 +270,7 @@ msgstr "Gammu nie je nakonfigurovaný."
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
-msgstr ""
+msgstr "Nesprávny použitý adresár."
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
