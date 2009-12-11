@@ -325,7 +325,7 @@ msgstr ""
 
 #: libgammu/phone/dummy/dummy.c:587
 msgid "Templates"
-msgstr "Šablóny."
+msgstr "Šablóny"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1958
 msgid "Personal"
