@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-03 14:43+0100\n"
-"PO-Revision-Date: 2009-12-11 18:17+0200\n"
+"PO-Revision-Date: 2009-12-11 18:18+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -65,7 +65,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
-msgstr "Chyba pri otváraní zariadenia."
+msgstr "Chyba pri zápise do zariadenia."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
