@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-03 14:43+0100\n"
-"PO-Revision-Date: 2009-12-11 18:53+0200\n"
+"PO-Revision-Date: 2009-12-11 18:54+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -163,7 +163,7 @@ msgstr "K tomuto súboru/zariadenie sú potrebné práva ..."
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
-msgstr ""
+msgstr "Prázdne SMSC číslo. Nastavte ho v telefóne, alebo použite -smscnumber."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
