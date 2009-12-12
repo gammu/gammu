@@ -266,6 +266,7 @@ gammu_test(getfolderlisting "dir2/dir2-5" "dir2")
 if (ONLINE_TESTING AND CURL_FOUND)
     gammu_test(checkfirmware "")
     gammu_test(checkversion "")
+    gammu_test(getlocation "B00B.*FACE")
 endif (ONLINE_TESTING AND CURL_FOUND)
 
 # MMS decoding

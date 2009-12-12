@@ -509,6 +509,7 @@ static GSM_Parameters Parameters[] = {
 	{"checkversion",		0, 1, CheckVersion,		{H_Gammu,0},			"[STABLE]"},
 	{"checkfirmware",		0, 0, CheckFirmware,		{H_Info,0},			""},
 	{"getdisplaystatus",		0, 0, GetDisplayStatus,		{H_Info,0},			""},
+	{"getlocation",			0, 0, GetLocation,		{H_Info,0},			""},
 	{"monitor",			0, 1, Monitor,			{H_Info,H_Network,H_Call,0},	"[times]"},
 	{"setautonetworklogin",	0, 0, SetAutoNetworkLogin,	{H_Network,0},			""},
 	{"listnetworks",		0, 1, ListNetworks,		{H_Network,0},			"[country]"},

@@ -186,6 +186,90 @@ void CheckFirmware(int argc UNUSED, char *argv[]UNUSED)
 	GSM_Terminate();
 }
 
+/**
+ * Get's location from OpenCellID.
+ */
+void GetLocation(int argc UNUSED, char *argv[]UNUSED)
+{
+	GSM_File OpenCell;
+	char url[70 + GSM_MAX_MODEL_LENGTH];
+	char *pos;
+	GSM_Error error;
+	GSM_NetworkInfo netinfo;
+	float latitude, longitude;
+	long int mnc, mcc, lac, cellid;
+
+	GSM_Init(TRUE);
+
+	/* Get model information */
+	error = GSM_GetNetworkInfo(gsm, &netinfo);
+	Print_Error(error);
+
+	/* Print network information */
+	PrintNetworkInfo(netinfo);
+
+	/* We need decimal numbers */
+	lac = strtol(netinfo.LAC, NULL, 16);
+	cellid = strtol(netinfo.CID, NULL, 16);
+
+	/* Split code to country and network */
+	if (sscanf(netinfo.NetworkCode, "%ld %ld", &mcc, &mnc) != 2) {
+		printf_err("Wrong network code from phone!\n");
+		return;
+	}
+
+	/* Request information from OpenCellID */
+	sprintf(url, "http://www.opencellid.org/cell/get?key=%s&mnc=%ld&mcc=%ld&lac=%ld&cellid=%ld",
+		OPENCELLID_API_KEY,
+		mnc, mcc, lac, cellid);
+
+	OpenCell.Buffer = NULL;
+	OpenCell.Used = 0;
+	if (!GSM_ReadHTTPFile(url, &OpenCell)) {
+		printf_err("Failed to request information from OpenCellID!\n");
+		return;
+	}
+	/* Parse reply:
+		<?xml version="1.0" encoding="UTF-8"?>
+		<rsp stat="ok">
+		  <cell range="6000" lac="0" lat="54.4910893937777" nbSamples="46" lon="27.9390742994699" cellId="29513" mcc="250" mnc="99"/>
+		</rsp>
+	*/
+	if (strstr(OpenCell.Buffer, "stat=\"ok\"") == NULL) {
+		printf_err("Request for information from OpenCellID failed!\n");
+		free(OpenCell.Buffer);
+		return;
+	}
+	pos = strstr(OpenCell.Buffer, "lat=\"");
+	if (pos == NULL) {
+		printf_err("Failed to find latitude in OpenCellID reply!\n");
+		free(OpenCell.Buffer);
+		return;
+	}
+	if (sscanf(pos, "lat=\"%f\"", &latitude) == 0) {
+		printf_err("Failed to parse latitude from OpenCellID reply!\n");
+		free(OpenCell.Buffer);
+		return;
+	}
+	pos = strstr(OpenCell.Buffer, "lon=\"");
+	if (pos == NULL) {
+		printf_err("Failed to find longitude in OpenCellID reply!\n");
+		free(OpenCell.Buffer);
+		return;
+	}
+	if (sscanf(pos, "lon=\"%f\"", &longitude) == 0) {
+		printf_err("Failed to parse longitude from OpenCellID reply!\n");
+		free(OpenCell.Buffer);
+		return;
+	}
+	free(OpenCell.Buffer);
+
+	printf(LISTFORMAT " %f", _("Latitude"), latitude);
+	printf(LISTFORMAT " %f", _("Longitude"), longitude);
+
+	GSM_Terminate();
+}
+
 
 
 void Identify(int argc, char *argv[])

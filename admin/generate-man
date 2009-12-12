@@ -350,6 +350,10 @@ HELP['identify'] = '''Show the most important phone data.
 ''' 
 HELP['networkinfo'] = '''Show information about network status from the phone.
 ''' 
+HELP['getlocation'] = '''Gets network information from phone (same as networkinfo)
+and prints location (latitude and longitude) based on information from 
+OpenCellID <http://opencellid.org>.
+''' 
 HELP['monitor'] = '''Get phone status and writes continuously to standard output. Press Ctrl+C
 to break this state.
 '''

@@ -29,6 +29,7 @@ ChangeLog
 [-] * Distinguish silent/tone alarms in own backup format.
 [-] * Fixed compilation with Clang compiler.
 [-] * Fixed handling of SMS memories with Samsung (bug#1063).
+[+] * Reporting location based on OpenCellID database (bug#1039).
     
 20091203 - 1.26.92
 

@@ -347,6 +347,9 @@
 /* Path where locales will be installed */
 #define LOCALE_PATH "@CMAKE_INSTALL_PREFIX@/@INSTALL_LOC_DIR@"
 
+/* OpenCellID API key */
+#define OPENCELLID_API_KEY "@CPENCELLID_API_KEY@"
+
 /* Most winapi crap can be used as well from Cygwin */
 #if defined(WIN32) || defined(__CYGWIN__)
 #define HAVE_WINDOWS_SERVICE
