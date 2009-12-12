@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.25.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-12 13:19+0100\n"
+"POT-Creation-Date: 2009-12-12 13:25+0100\n"
 "PO-Revision-Date: 2009-08-25 17:27+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2231,6 +2231,34 @@ msgstr ""
 #: gammu/misc.c:183
 #, c-format
 msgid "Latest version is %s and you run %s.\n"
+msgstr ""
+
+#: gammu/misc.c:217
+msgid "Wrong network code from phone!\n"
+msgstr ""
+
+#: gammu/misc.c:229
+msgid "Failed to request information from OpenCellID!\n"
+msgstr ""
+
+#: gammu/misc.c:239
+msgid "Request for information from OpenCellID failed!\n"
+msgstr ""
+
+#: gammu/misc.c:245
+msgid "Failed to find latitude in OpenCellID reply!\n"
+msgstr ""
+
+#: gammu/misc.c:250
+msgid "Failed to parse latitude from OpenCellID reply!\n"
+msgstr ""
+
+#: gammu/misc.c:256
+msgid "Failed to find longitude in OpenCellID reply!\n"
+msgstr ""
+
+#: gammu/misc.c:261
+msgid "Failed to parse longitude from OpenCellID reply!\n"
 msgstr ""
 
 #: gammu/misc.c:267
