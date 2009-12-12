@@ -205,9 +205,6 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 	error = GSM_GetNetworkInfo(gsm, &netinfo);
 	Print_Error(error);
 
-	/* Print network information */
-	PrintNetworkInfo(netinfo);
-
 	/* We need decimal numbers */
 	lac = strtol(netinfo.LAC, NULL, 16);
 	cellid = strtol(netinfo.CID, NULL, 16);
