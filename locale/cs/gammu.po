@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.26.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-12 13:19+0100\n"
-"PO-Revision-Date: 2009-12-07 15:41+0100\n"
+"PO-Revision-Date: 2009-12-12 13:23+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -77,9 +77,8 @@ msgid "Reading"
 msgstr "Načítám"
 
 #: gammu/backup.c:220
-#, fuzzy
 msgid "Only part of data saved, please increase the limit."
-msgstr "Byla uložena jen část dat, prosím zvětšete %s."
+msgstr "Byla uložena jen část dat, prosím zvyšte limit."
 
 #: gammu/backup.c:249 gammu/backup.c:376 gammu/backup.c:411 gammu/backup.c:448
 #: gammu/backup.c:485 gammu/backup.c:520 gammu/backup.c:586 gammu/backup.c:623
@@ -2278,12 +2277,11 @@ msgstr "Poslední verze je %s a vy používáte %s.\n"
 
 #: gammu/misc.c:267
 msgid "Latitude"
-msgstr ""
+msgstr "Zeměpisná šířka"
 
 #: gammu/misc.c:268
-#, fuzzy
 msgid "Longitude"
-msgstr "Typ přihlášení"
+msgstr "Zeměpisná délka"
 
 #: gammu/misc.c:287
 msgid "Device"
@@ -3844,9 +3842,8 @@ msgid "pager"
 msgstr "pager"
 
 #: helper/message-display.c:122
-#, fuzzy
 msgid "general"
-msgstr "Obecné"
+msgstr "obecné"
 
 #: helper/message-display.c:136
 msgid "SMS status report"
