@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-12 13:19+0100\n"
+"POT-Creation-Date: 2009-12-12 13:48+0100\n"
 "PO-Revision-Date: 2009-12-11 20:45+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
@@ -319,7 +319,17 @@ msgstr ""
 "Príkaz bol odmietnutý, pretože zariadenie je obsadené. Počkajte a "
 "reštartujte."
 
-#: libgammu/gsmcomon.c:182
+#: libgammu/gsmcomon.c:150
+#, fuzzy
+msgid "Could not connect to the server."
+msgstr "Pripojujem sa k IMAP serveru..."
+
+#: libgammu/gsmcomon.c:151
+#, fuzzy
+msgid "Could not resolve the host name."
+msgstr "Nebolo možné načítať uložené správy!"
+
+#: libgammu/gsmcomon.c:184
 msgid "Unknown error description."
 msgstr ""
 

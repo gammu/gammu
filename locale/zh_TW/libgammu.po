@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-12 13:19+0100\n"
+"POT-Creation-Date: 2009-12-12 13:48+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -300,7 +300,17 @@ msgstr "在程式指導下設定"
 msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
 
-#: libgammu/gsmcomon.c:182
+#: libgammu/gsmcomon.c:150
+#, fuzzy
+msgid "Could not connect to the server."
+msgstr "正在連線到IMAP伺服器..."
+
+#: libgammu/gsmcomon.c:151
+#, fuzzy
+msgid "Could not resolve the host name."
+msgstr "無法讀入已儲存的簡訊！"
+
+#: libgammu/gsmcomon.c:184
 msgid "Unknown error description."
 msgstr ""
 

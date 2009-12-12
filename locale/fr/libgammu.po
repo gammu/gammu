@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-12 13:19+0100\n"
+"POT-Creation-Date: 2009-12-12 13:48+0100\n"
 "PO-Revision-Date: 2009-06-01 14:02+0200\n"
 "Last-Translator: Cédric Corazza <cedric.corazza@wanadoo.fr>\n"
 "Language-Team: none\n"
@@ -334,7 +334,17 @@ msgstr "Le service n'est pas configuré."
 msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
 
-#: libgammu/gsmcomon.c:182
+#: libgammu/gsmcomon.c:150
+#, fuzzy
+msgid "Could not connect to the server."
+msgstr "Connexion au serveur IMAP ..."
+
+#: libgammu/gsmcomon.c:151
+#, fuzzy
+msgid "Could not resolve the host name."
+msgstr "Imposible de lire le message sauvegardé !"
+
+#: libgammu/gsmcomon.c:184
 msgid "Unknown error description."
 msgstr "La description de l'erreur est inconnue."
 

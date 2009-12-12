@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-12 13:19+0100\n"
+"POT-Creation-Date: 2009-12-12 13:48+0100\n"
 "PO-Revision-Date: 2009-03-23 19:32+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -339,7 +339,17 @@ msgstr "Seleccionar una sección de la configuración"
 msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
 
-#: libgammu/gsmcomon.c:182
+#: libgammu/gsmcomon.c:150
+#, fuzzy
+msgid "Could not connect to the server."
+msgstr "Conectando con el servidor IMAP..."
+
+#: libgammu/gsmcomon.c:151
+#, fuzzy
+msgid "Could not resolve the host name."
+msgstr "No se pueden leer los mensajes guardados"
+
+#: libgammu/gsmcomon.c:184
 msgid "Unknown error description."
 msgstr "Descripción del error desconocida."
 
