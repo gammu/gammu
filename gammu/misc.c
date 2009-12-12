@@ -214,7 +214,7 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 
 	/* Split code to country and network */
 	if (sscanf(netinfo.NetworkCode, "%ld %ld", &mcc, &mnc) != 2) {
-		printf_err("Wrong network code from phone!\n");
+		printf_err(_("Wrong network code from phone!\n"));
 		return;
 	}
 
@@ -226,7 +226,7 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 	OpenCell.Buffer = NULL;
 	OpenCell.Used = 0;
 	if (!GSM_ReadHTTPFile(url, &OpenCell)) {
-		printf_err("Failed to request information from OpenCellID!\n");
+		printf_err(_("Failed to request information from OpenCellID!\n"));
 		return;
 	}
 	/* Parse reply:
@@ -236,29 +236,29 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 		</rsp>
 	*/
 	if (strstr(OpenCell.Buffer, "stat=\"ok\"") == NULL) {
-		printf_err("Request for information from OpenCellID failed!\n");
+		printf_err(_("Request for information from OpenCellID failed!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
 	pos = strstr(OpenCell.Buffer, "lat=\"");
 	if (pos == NULL) {
-		printf_err("Failed to find latitude in OpenCellID reply!\n");
+		printf_err(_("Failed to find latitude in OpenCellID reply!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
 	if (sscanf(pos, "lat=\"%f\"", &latitude) == 0) {
-		printf_err("Failed to parse latitude from OpenCellID reply!\n");
+		printf_err(_("Failed to parse latitude from OpenCellID reply!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
 	pos = strstr(OpenCell.Buffer, "lon=\"");
 	if (pos == NULL) {
-		printf_err("Failed to find longitude in OpenCellID reply!\n");
+		printf_err(_("Failed to find longitude in OpenCellID reply!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
 	if (sscanf(pos, "lon=\"%f\"", &longitude) == 0) {
-		printf_err("Failed to parse longitude from OpenCellID reply!\n");
+		printf_err(_("Failed to parse longitude from OpenCellID reply!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
