@@ -1048,8 +1048,8 @@
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
-   obj:/usr/lib*/libgcrypt.so.*
-   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgnutls.so.*
+   obj:/usr/lib*/libgnutls.so.*
    obj:gcry_check_version
    fun:gnutls_global_init
    obj:/usr/lib*/libcurl*.so.*
