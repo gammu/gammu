@@ -263,8 +263,8 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 	}
 	free(OpenCell.Buffer);
 
-	printf(LISTFORMAT " %f", _("Latitude"), latitude);
-	printf(LISTFORMAT " %f", _("Longitude"), longitude);
+	printf(LISTFORMAT " %f\n", _("Latitude"), latitude);
+	printf(LISTFORMAT " %f\n", _("Longitude"), longitude);
 
 	GSM_Terminate();
 }
