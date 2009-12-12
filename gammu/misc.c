@@ -197,7 +197,7 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 	GSM_Error error;
 	GSM_NetworkInfo netinfo;
 	float latitude, longitude;
-	long int mnc, mcc, lac, cellid;
+	long int mnc, mcc, lac, cellid, nbSamples, range;
 
 	GSM_Init(TRUE);
 
@@ -261,10 +261,34 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 		free(OpenCell.Buffer);
 		return;
 	}
+	pos = strstr(OpenCell.Buffer, "range=\"");
+	if (pos == NULL) {
+		printf_err(_("Failed to find range in OpenCellID reply!\n"));
+		free(OpenCell.Buffer);
+		return;
+	}
+	if (sscanf(pos, "range=\"%ld\"", &range) == 0) {
+		printf_err(_("Failed to parse range from OpenCellID reply!\n"));
+		free(OpenCell.Buffer);
+		return;
+	}
+	pos = strstr(OpenCell.Buffer, "nbSamples=\"");
+	if (pos == NULL) {
+		printf_err(_("Failed to find nbSamples in OpenCellID reply!\n"));
+		free(OpenCell.Buffer);
+		return;
+	}
+	if (sscanf(pos, "nbSamples=\"%ld\"", &nbSamples) == 0) {
+		printf_err(_("Failed to parse nbSamples from OpenCellID reply!\n"));
+		free(OpenCell.Buffer);
+		return;
+	}
 	free(OpenCell.Buffer);
 
-	printf(LISTFORMAT " %f\n", _("Latitude"), latitude);
-	printf(LISTFORMAT " %f\n", _("Longitude"), longitude);
+	printf(LISTFORMAT "%f\n", _("Latitude"), latitude);
+	printf(LISTFORMAT "%f\n", _("Longitude"), longitude);
+	printf(LISTFORMAT "%ld\n", _("Range"), range);
+	printf(LISTFORMAT "%ld\n", _("Number of samples"), nbSamples);
 
 	GSM_Terminate();
 }
