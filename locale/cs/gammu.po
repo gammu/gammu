@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.26.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-12 14:11+0100\n"
-"PO-Revision-Date: 2009-12-12 13:29+0100\n"
+"PO-Revision-Date: 2009-12-12 14:14+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2300,24 +2300,20 @@ msgid "Failed to parse longitude from OpenCellID reply!\n"
 msgstr "Z odpovědi od OpenCellID se nepodařilo načíst zeměpisnou délku!\n"
 
 #: gammu/misc.c:263
-#, fuzzy
 msgid "Failed to find range in OpenCellID reply!\n"
-msgstr "V odpovědi od OpenCellID se nepodařilo najít zeměpisnou délku!\n"
+msgstr "V odpovědi od OpenCellID se nepodařilo najít přesnost!\n"
 
 #: gammu/misc.c:268
-#, fuzzy
 msgid "Failed to parse range from OpenCellID reply!\n"
-msgstr "Z odpovědi od OpenCellID se nepodařilo načíst zeměpisnou délku!\n"
+msgstr "Z odpovědi od OpenCellID se nepodařilo načíst přesnost!\n"
 
 #: gammu/misc.c:274
-#, fuzzy
 msgid "Failed to find nbSamples in OpenCellID reply!\n"
-msgstr "V odpovědi od OpenCellID se nepodařilo najít zeměpisnou šířku!\n"
+msgstr "V odpovědi od OpenCellID se nepodařilo najít počet vzorků!\n"
 
 #: gammu/misc.c:279
-#, fuzzy
 msgid "Failed to parse nbSamples from OpenCellID reply!\n"
-msgstr "Z odpovědi od OpenCellID se nepodařilo načíst zeměpisnou šířku!\n"
+msgstr "Z odpovědi od OpenCellID se nepodařilo načíst počet vzorků!\n"
 
 #: gammu/misc.c:285
 msgid "Latitude"
@@ -2328,14 +2324,12 @@ msgid "Longitude"
 msgstr "Zeměpisná délka"
 
 #: gammu/misc.c:287
-#, fuzzy
 msgid "Range"
-msgstr "Načítám"
+msgstr "Přesnost"
 
 #: gammu/misc.c:288
-#, fuzzy
 msgid "Number of samples"
-msgstr "Počet zpráv"
+msgstr "Počet vzorků"
 
 #: gammu/misc.c:307
 msgid "Device"
