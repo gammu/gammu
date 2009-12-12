@@ -309,6 +309,7 @@ static void CheckVersion(int argc, char *argv[])
 	const char *pos;
 	char new_version[20];
 	size_t i;
+	GSM_Error error;
 
 	if (argc >= 3) {
 		if (strcasecmp(argv[2], "STABLE") == 0) {
@@ -319,8 +320,8 @@ static void CheckVersion(int argc, char *argv[])
 	/* Read file */
 	RSS.Buffer = NULL;
 	RSS.Used = 0;
-	if (!GSM_ReadHTTPFile(RSS_URL, &RSS))
-		return;
+	error = GSM_ReadHTTPFile(RSS_URL, &RSS);
+	Print_Error(error);
 
 	if (checkstable) {
 		pos = strstr(RSS.Buffer, RSS_STABLE_STRING);

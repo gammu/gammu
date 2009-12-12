@@ -45,9 +45,9 @@ void interrupt(int sign);
  * \param url URL to download.
  * \param file Storage for data.
  *
- * \returns TRUE on success.
+ * \returns ERR_NONE on success.
  */
-gboolean GSM_ReadHTTPFile(const char *url, GSM_File *file);
+GSM_Error GSM_ReadHTTPFile(const char *url, GSM_File *file);
 
 /**
  * Cleanup performed at program termination.

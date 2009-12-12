@@ -147,6 +147,8 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_NOTRUNNING, "NOTRUNNING", N_("Service is not runnig.")},
 	{ERR_NOSERVICE, "NOSERVICE", N_("Service configuration is missing.")},
 	{ERR_BUSY, "BUSY", N_("Command rejected because device was busy. Wait and restart.")},
+	{ERR_COULDNT_CONNECT, "COULDNT_CONNECT", N_("Could not connect to the server.")},
+	{ERR_COULDNT_RESOLVE, "COULDNT_RESOLVE", N_("Could not resolve the host name.")},
 
 	{0,	"",				""}
 };

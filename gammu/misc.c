@@ -138,8 +138,8 @@ void CheckFirmware(int argc UNUSED, char *argv[]UNUSED)
 	sprintf(url, "http://www.gammu.org/support/phones/phonedbxml.php?model=%s", model);
 	PhoneDB.Buffer = NULL;
 	PhoneDB.Used = 0;
-	if (!GSM_ReadHTTPFile(url, &PhoneDB))
-		return;
+	error = GSM_ReadHTTPFile(url, &PhoneDB);
+	Print_Error(error);
 
 	/* Parse reply */
 	while (pos < PhoneDB.Used) {
@@ -225,10 +225,9 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 
 	OpenCell.Buffer = NULL;
 	OpenCell.Used = 0;
-	if (!GSM_ReadHTTPFile(url, &OpenCell)) {
-		printf_err(_("Failed to request information from OpenCellID!\n"));
-		return;
-	}
+	error = GSM_ReadHTTPFile(url, &OpenCell);
+	Print_Error(error);
+
 	/* Parse reply:
 		<?xml version="1.0" encoding="UTF-8"?>
 		<rsp stat="ok">

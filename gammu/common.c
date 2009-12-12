@@ -221,9 +221,9 @@ size_t write_mem(void *ptr, size_t size, size_t nmemb, void *data) {
  * \param url URL to download.
  * \param file Storage for data.
  *
- * \returns True on success.
+ * \returns ERR_NONE on success.
  */
-gboolean GSM_ReadHTTPFile(const char *url, GSM_File *file)
+GSM_Error GSM_ReadHTTPFile(const char *url, GSM_File *file)
 {
 #ifdef CURL_FOUND
 	CURL *dl_handle = NULL;
@@ -247,9 +247,20 @@ gboolean GSM_ReadHTTPFile(const char *url, GSM_File *file)
 
 	curl_easy_cleanup(dl_handle);
 
-	return (result == 0) ? TRUE : FALSE;
+	switch (result) {
+		case CURLE_OK:
+			return ERR_NONE;
+		case CURLE_URL_MALFORMAT:
+			return ERR_BUG;
+		case CURLE_COULDNT_CONNECT:
+			return ERR_COULDNT_CONNECT;
+		case CURLE_COULDNT_RESOLVE_HOST:
+			return ERR_COULDNT_RESOLVE;
+		default:
+			return ERR_UNKNOWN;
+	}
 #else
-	return FALSE;
+	return ERR_DISABLED;
 #endif
 }
 

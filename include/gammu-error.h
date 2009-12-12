@@ -293,6 +293,14 @@ typedef enum {
 	 * Command failed. Try again.
 	 */
 	ERR_BUSY,
+	/**
+	 * Can not connect to server.
+	 */
+	ERR_COULDNT_CONNECT,
+	/**
+	 * Can not resolve host name.
+	 */
+	ERR_COULDNT_RESOLVE,
 
 	/**
 	 * Just marker of highest error code, should not be used.
