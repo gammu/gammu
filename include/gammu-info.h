@@ -87,7 +87,7 @@ typedef struct {
 	/**
 	 * Cell ID (CID)
 	 */
-	unsigned char CID[10];
+	char CID[10];
 	/**
 	 * GSM network code.
 	 */
@@ -100,7 +100,7 @@ typedef struct {
 	/**
 	 * LAC (Local Area Code).
 	 */
-	unsigned char LAC[10];
+	char LAC[10];
 	/**
 	 * Name of current network like returned from phone (or empty).
 	 */
