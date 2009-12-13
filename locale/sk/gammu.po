@@ -311,7 +311,7 @@ msgstr "Zápis:"
 #: gammu/backup.c:1607
 #, c-format
 msgid "%i entries in backup file\n"
-msgstr ""
+msgstr "%i položiek v záložnom súbore\n"
 
 #: gammu/backup.c:987
 msgid "Restore phone phonebook?"
