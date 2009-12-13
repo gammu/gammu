@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-12 14:11+0100\n"
-"PO-Revision-Date: 2009-12-13 18:09+0200\n"
+"PO-Revision-Date: 2009-12-13 18:10+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -48,7 +48,7 @@ msgstr "Aké je umiestnenie a názov záložného súboru a typ pamäte?"
 #: gammu/backup.c:127 gammu/backup.c:138 helper/message-cmdline.c:533
 #: helper/message-cmdline.c:543
 msgid "Phonebook entry not found in file"
-msgstr ""
+msgstr "Položka telefónneho zoznamu nebola v súbore nájdená"
 
 #: gammu/backup.c:144 helper/message-cmdline.c:548
 #, c-format
