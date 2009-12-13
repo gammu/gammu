@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-12 14:11+0100\n"
-"PO-Revision-Date: 2009-12-13 18:08+0200\n"
+"PO-Revision-Date: 2009-12-13 18:09+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: helper/message-cmdline.c:437 helper/message-cmdline.c:474
 #: helper/message-cmdline.c:497
 msgid "Where is backup filename and location?"
-msgstr ""
+msgstr "Aký je názov záložného súboru a jeho umiestnenie?"
 
 #: gammu/backup.c:42 helper/message-cmdline.c:485
 msgid "Calendar note not found in file"
