@@ -214,7 +214,7 @@ msgstr "Zálohovať MMS nastavenia?"
 
 #: gammu/backup.c:679
 msgid "Checking phone Chat settings"
-msgstr ""
+msgstr "Kontrolujem nastavenia Chat-u"
 
 #: gammu/backup.c:683
 msgid "Backup phone Chat settings?"
