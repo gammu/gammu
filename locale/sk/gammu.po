@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-12 14:11+0100\n"
-"PO-Revision-Date: 2009-12-13 22:19+0200\n"
+"PO-Revision-Date: 2009-12-13 22:20+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -66,7 +66,7 @@ msgstr "Chyba pri otváraní súboru pre zápis!\n"
 
 #: gammu/backup.c:169 gammu/files.c:444 helper/message-cmdline.c:1095
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "Chyba pri zápise do súboru!\n"
 
 #: gammu/backup.c:210 gammu/backup.c:368 gammu/backup.c:440 gammu/backup.c:475
 #: gammu/backup.c:509 gammu/backup.c:577 gammu/backup.c:614 gammu/backup.c:651
