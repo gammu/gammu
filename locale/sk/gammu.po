@@ -182,7 +182,7 @@ msgstr "Zálohovať úvodné logo/text?"
 
 #: gammu/backup.c:552
 msgid "Checking phone operator logo"
-msgstr ""
+msgstr "Kontrolujem logo operátora"
 
 #: gammu/backup.c:557
 msgid "Backup phone operator logo?"
