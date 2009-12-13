@@ -77,7 +77,7 @@ msgstr "Čítanie"
 
 #: gammu/backup.c:220
 msgid "Only part of data saved, please increase the limit."
-msgstr ""
+msgstr "Uložená iba časť údajov, prosím zvýšte limit."
 
 #: gammu/backup.c:249 gammu/backup.c:376 gammu/backup.c:411 gammu/backup.c:448
 #: gammu/backup.c:485 gammu/backup.c:520 gammu/backup.c:586 gammu/backup.c:623
