@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-12 14:11+0100\n"
-"PO-Revision-Date: 2009-12-13 22:58+0200\n"
+"PO-Revision-Date: 2009-12-13 22:59+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -281,6 +281,8 @@ msgstr "Súbor vytvoril"
 #, c-format
 msgid "Checksum in backup file do not match (original: %s, new: %s). Continue?"
 msgstr ""
+"Kontrolný súčet záložného súboru sa nezhoduje (pôvodný: %s, nový: %s). "
+"Pokračovať?"
 
 #: gammu/backup.c:950
 msgid ""
