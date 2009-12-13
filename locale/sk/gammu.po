@@ -62,7 +62,7 @@ msgstr ""
 
 #: gammu/backup.c:165
 msgid "Error while opening file for writing!\n"
-msgstr "Chyba pri zápise do súboru!\n"
+msgstr "Chyba pri otváraní súboru pre zápis!\n"
 
 #: gammu/backup.c:169 gammu/files.c:444 helper/message-cmdline.c:1095
 msgid "Error while writing file!\n"
