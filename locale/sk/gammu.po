@@ -190,7 +190,7 @@ msgstr "Zálohovať logo operátora?"
 
 #: gammu/backup.c:568
 msgid "Checking phone WAP bookmarks"
-msgstr ""
+msgstr "Kontrolujem WAP záložky"
 
 #: gammu/backup.c:572
 msgid "Backup phone WAP bookmarks?"
