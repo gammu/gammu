@@ -89,7 +89,7 @@ msgstr "Uložená iba časť údajov, prosím zvýšte %s."
 
 #: gammu/backup.c:257 gammu/backup.c:419 gammu/mms.c:182
 msgid "Reading:"
-msgstr ""
+msgstr "Čítanie:"
 
 #: gammu/backup.c:258 gammu/backup.c:420 gammu/backup.c:969
 #: gammu/backup.c:1036 gammu/backup.c:1089 gammu/backup.c:1147
