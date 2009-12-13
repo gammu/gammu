@@ -328,7 +328,7 @@ msgstr ""
 #: gammu/backup.c:1016 gammu/backup.c:1075
 #, c-format
 msgid "Location %d"
-msgstr ""
+msgstr "Umiestnenie %d"
 
 #: gammu/backup.c:1055
 msgid "Restore SIM phonebook?"
