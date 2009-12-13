@@ -242,7 +242,7 @@ msgstr "Kontrolujem profily"
 
 #: gammu/backup.c:799
 msgid "Backup phone profiles?"
-msgstr ""
+msgstr "Zálohovať profily?"
 
 #: gammu/backup.c:828
 msgid "Checking phone FM radio stations"
