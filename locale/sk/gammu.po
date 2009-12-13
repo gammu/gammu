@@ -73,7 +73,7 @@ msgstr "Chyba pri zápise do súboru!\n"
 #: gammu/backup.c:688 gammu/backup.c:725 gammu/backup.c:763 gammu/backup.c:804
 #: gammu/backup.c:838 gammu/backup.c:875 gammu/message.c:407
 msgid "Reading"
-msgstr ""
+msgstr "Čítanie"
 
 #: gammu/backup.c:220
 msgid "Only part of data saved, please increase the limit."
