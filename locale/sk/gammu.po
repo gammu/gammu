@@ -206,7 +206,7 @@ msgstr "Zálohovať WAP nastavenia?"
 
 #: gammu/backup.c:642
 msgid "Checking phone MMS settings"
-msgstr ""
+msgstr "Kontrolujem nastavenia MMS"
 
 #: gammu/backup.c:646
 msgid "Backup phone MMS settings?"
