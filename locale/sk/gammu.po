@@ -53,7 +53,7 @@ msgstr "Položka telefónneho zoznamu nebola v súbore nájdená"
 #: gammu/backup.c:144 helper/message-cmdline.c:548
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr ""
+msgstr "Neznámy typ pamäte: \"%s\"\n"
 
 #: gammu/backup.c:159
 #, c-format
