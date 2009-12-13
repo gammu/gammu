@@ -103,7 +103,7 @@ msgstr "Čítanie:"
 #: gammu/misc.c:1312 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i percent"
 
 #: gammu/backup.c:311 gammu/backup.c:933 gammu/backup.c:1568
 #: gammu/calendar.c:613 gammu/calendar.c:948 gammu/calendar.c:1023
