@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-12 14:11+0100\n"
-"PO-Revision-Date: 2009-12-13 22:20+0200\n"
+"PO-Revision-Date: 2009-12-13 22:21+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -85,7 +85,7 @@ msgstr "Uložená iba časť údajov, prosím zvýšte limit."
 #: gammu/backup.c:815 gammu/backup.c:849 gammu/backup.c:886
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr ""
+msgstr "Uložená iba časť údajov, prosím zvýšte %s."
 
 #: gammu/backup.c:257 gammu/backup.c:419 gammu/mms.c:182
 msgid "Reading:"
