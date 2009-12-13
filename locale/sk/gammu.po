@@ -230,7 +230,7 @@ msgstr "Zálohovať nastavenia SyncML?"
 
 #: gammu/backup.c:752
 msgid "Checking phone user ringtones"
-msgstr ""
+msgstr "Kontrolujem užívateľske zvonenia"
 
 #: gammu/backup.c:757
 msgid "Backup phone user ringtones?"
