@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-12 14:11+0100\n"
-"PO-Revision-Date: 2009-12-13 23:00+0200\n"
+"PO-Revision-Date: 2009-12-13 23:01+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -304,7 +304,7 @@ msgstr "Obnoviť skupiny a logá volajúcich?"
 #: gammu/backup.c:1589 gammu/backup.c:1617 gammu/backup.c:1650
 #: gammu/backup.c:1674 gammu/backup.c:1699 gammu/files.c:743
 msgid "Writing:"
-msgstr ""
+msgstr "Zápis:"
 
 #: gammu/backup.c:986 gammu/backup.c:1054 gammu/backup.c:1115
 #: gammu/backup.c:1163 gammu/backup.c:1256 gammu/backup.c:1579
