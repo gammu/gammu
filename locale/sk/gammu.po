@@ -246,7 +246,7 @@ msgstr "Zálohovať profily?"
 
 #: gammu/backup.c:828
 msgid "Checking phone FM radio stations"
-msgstr "Kontrolujem nastavnia FM rádií"
+msgstr "Kontrolujem nastavenia FM rádií"
 
 #: gammu/backup.c:832
 msgid "Backup phone FM radio stations?"
