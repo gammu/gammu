@@ -782,6 +782,10 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
  * [YY[YY]/MM/DD,]hh:mm[:ss[+TZ]] , [] enclosed parts are optional
  * (or the same hex/unicode encoded).
  *
+ * It also handles when date and time are swapped.
+ *
+ * And tries to detect if the date is not in format MM-DD-YYYY.
+ *
  * @todo Too much static buffers are used here.
  */
 GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned char *_input)
@@ -790,6 +794,8 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	unsigned char		*pos=NULL;
 	unsigned char		buffer_unicode[200]={'\0'};
 	unsigned char		input[100]={'\0'};
+	char separator, *separator_pos, *comma_pos, *date_start, *time_start;
+	int year;
 	GSM_Error error;
 
 	strncpy(input, _input, 100);
@@ -817,26 +823,64 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	/* Strip possible quotes again */
 	if (*pos == '"') pos++;
 	if (buffer[strlen(pos) - 1] == '"') buffer[strlen(pos) - 1] = 0;
-	/* some phones report only time (HH:MM) in the alarm */
-	if (strchr(pos, '/')) {
-		/* date present */
-		/* Samsung phones report year as %d instead of %02d */
-		dt->Year = atoi(pos);
+
+	/* Check whether date is separated by / or - */
+	if ((separator_pos = strchr(pos, '/')) != NULL) {
+		separator = '/';
+	} else if ((separator_pos = strchr(pos, '-')) != NULL) {
+		separator = '-';
+	}
+
+	/* Find out where we have comma */
+	comma_pos = strchr(pos, ',');
+
+	/* Skip comma and possible whitespace */
+	if (comma_pos != NULL) {
+		comma_pos++;
+		while (isspace(*comma_pos) && *comma_pos != '\0') {
+			comma_pos++;
+		}
+	}
+
+	/* Find out locations of date parts */
+	if (comma_pos != NULL && separator_pos > comma_pos) {
+		date_start = comma_pos + 1;
+		time_start = pos;
+	} else if (separator_pos != NULL) {
+		date_start = pos;
+		time_start = comma_pos + 1;
+	} else {
+		date_start = NULL;
+		time_start = pos;
+	}
+
+	/* Do we have date? */
+	if (date_start != NULL) {
+		dt->Year = atoi(date_start);
+		pos = strchr(date_start, separator);
+		if (pos == NULL) return ERR_UNKNOWN;
+		pos++;
+		dt->Month = atoi(pos);
+		pos = strchr(pos, separator);
+		if (pos == NULL) return ERR_UNKNOWN;
+		pos++;
+		dt->Day = atoi(pos);
+
+		/* Are day, month and year swapped? */
+		if (dt->Day > 31) {
+			year = dt->Day;
+			dt->Day = dt->Month;
+			dt->Month = dt->Year;
+			dt->Year = year;
+		}
+
+		/* Do we need to handle Y2K (Samsung usually does this)? */
 		if (dt->Year > 80 && dt->Year < 1000) {
 			dt->Year += 1900;
 		} else if (dt->Year < 100) {
 			dt->Year += 2000;
 		}
-		pos = strchr(pos, '/');
-		pos++;
-		dt->Month = atoi(pos);
-		pos = strchr(pos, '/');
-		if (pos == NULL) return ERR_UNKNOWN;
-		pos++;
-		dt->Day = atoi(pos);
-		pos = strchr(pos, ',');
-		if (pos == NULL) return ERR_UNKNOWN;
-		pos++;
+
 	} else {
 		/* if date was not found, it is still necessary to initialize
 		   the variables, maybe Today() would be better in some replies */
@@ -845,27 +889,42 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 		dt->Day=0;
 	}
 
-	/* time present */
-	dt->Hour = atoi(pos);
-	pos = strchr(pos, ':');
-	if (pos == NULL) return ERR_UNKNOWN;
-	pos++;
-	dt->Minute = atoi(pos);
-	pos = strchr(pos, ':');
-	if (pos!=NULL) {
-	        /* seconds present */
+	/* Do we have time? */
+	if (time_start != NULL) {
+		dt->Hour = atoi(time_start);
+		pos = strchr(time_start, ':');
+		if (pos == NULL) return ERR_UNKNOWN;
 		pos++;
-		dt->Second = atoi(pos);
-	} else {
-		dt->Second=0;
-	}
+		dt->Minute = atoi(pos);
+		pos = strchr(pos, ':');
+		if (pos!=NULL) {
+			/* seconds present */
+			pos++;
+			dt->Second = atoi(pos);
+		} else {
+			dt->Second=0;
+		}
 
-	if ((pos != NULL) && (*pos == '+' || *pos == '-')) {
-		/* timezone present */
-		dt->Timezone = (*pos == '+' ? 1 : -1) * atoi(pos+1) * 3600;
+		if ((pos != NULL) && (*pos == '+' || *pos == '-')) {
+			/* timezone present */
+			dt->Timezone = (*pos == '+' ? 1 : -1) * atoi(pos+1) * 3600;
+		} else {
+			dt->Timezone = 0;
+		}
 	} else {
+		dt->Hour = 0;
+		dt->Minute = 0;
+		dt->Second = 0;
 		dt->Timezone = 0;
 	}
+	smprintf(s, "Parsed date: %d-%d-%d %d:%d:%d, TZ %d\n",
+		dt->Year,
+		dt->Month,
+		dt->Day,
+		dt->Hour,
+		dt->Minute,
+		dt->Second,
+		dt->Timezone);
 	return ERR_NONE;
 }
 
