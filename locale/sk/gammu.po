@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-12 14:11+0100\n"
-"PO-Revision-Date: 2009-12-13 22:33+0200\n"
+"PO-Revision-Date: 2009-12-13 22:34+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -186,7 +186,7 @@ msgstr "Kontrolujem logo operátora"
 
 #: gammu/backup.c:557
 msgid "Backup phone operator logo?"
-msgstr ""
+msgstr "Zálohovať logo operátora?"
 
 #: gammu/backup.c:568
 msgid "Checking phone WAP bookmarks"
