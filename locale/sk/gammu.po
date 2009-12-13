@@ -122,7 +122,7 @@ msgstr "Kontrolujem telefónny zoznam v telefóne"
 
 #: gammu/backup.c:349
 msgid "Backup phone phonebook?"
-msgstr ""
+msgstr "Zálohovať telefónny zoznam?"
 
 #: gammu/backup.c:353
 msgid "Checking SIM phonebook"
