@@ -154,7 +154,7 @@ msgstr "Kontrolujem poznámky v telefóne"
 
 #: gammu/backup.c:435
 msgid "Backup phone notes?"
-msgstr ""
+msgstr "Zálohovať poznámky?"
 
 #: gammu/backup.c:466
 msgid "Checking phone caller logos"
