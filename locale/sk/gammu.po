@@ -294,7 +294,7 @@ msgstr ""
 
 #: gammu/backup.c:958
 msgid "Restore phone caller groups and logos?"
-msgstr ""
+msgstr "Obnoviť skupiny a logá volajúcich?"
 
 #: gammu/backup.c:968 gammu/backup.c:1035 gammu/backup.c:1088
 #: gammu/backup.c:1146 gammu/backup.c:1195 gammu/backup.c:1223
