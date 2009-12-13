@@ -146,7 +146,7 @@ msgstr "Kontrolujem úlohy v telefóne"
 
 #: gammu/backup.c:397
 msgid "Backup phone todos?"
-msgstr ""
+msgstr "Zálohovať úlohy z telefóne?"
 
 #: gammu/backup.c:431
 msgid "Checking phone notes"
