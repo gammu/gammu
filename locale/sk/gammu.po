@@ -254,7 +254,7 @@ msgstr "Zálohovať nastavnia FM rádií?"
 
 #: gammu/backup.c:865
 msgid "Checking phone GPRS access points"
-msgstr ""
+msgstr "Kontrolujem prístupové body GPRS"
 
 #: gammu/backup.c:869
 msgid "Backup phone GPRS access points?"
