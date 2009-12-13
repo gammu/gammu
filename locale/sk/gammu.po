@@ -238,7 +238,7 @@ msgstr "Zálohovať užívateľske zvonenia?"
 
 #: gammu/backup.c:795
 msgid "Checking phone profiles"
-msgstr ""
+msgstr "Kontrolujem profily"
 
 #: gammu/backup.c:799
 msgid "Backup phone profiles?"
