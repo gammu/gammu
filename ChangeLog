@@ -20,6 +20,8 @@ ChangeLog
 =========
     
 2009???? - 1.26.94
+
+[+] * Initial support for reading Motorola calendar (bug#338).
     
 20091212 - 1.26.93
 

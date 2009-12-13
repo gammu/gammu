@@ -46,8 +46,19 @@ GSM_Error MOTOROLA_Banner(GSM_Protocol_Message msg, GSM_StateMachine *s);
  */
 GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s);
 
+GSM_Error MOTOROLA_ParseCalendarSimple(GSM_StateMachine *s, const char *line);
+
 GSM_Error MOTOROLA_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s);
 
+GSM_Error MOTOROLA_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error MOTOROLA_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start);
+GSM_Error MOTOROLA_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error MOTOROLA_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status);
+GSM_Error MOTOROLA_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+GSM_Error MOTOROLA_ReplySetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error MOTOROLA_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+GSM_Error MOTOROLA_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+GSM_Error MOTOROLA_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 #endif
 #endif
 

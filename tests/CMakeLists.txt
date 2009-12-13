@@ -627,6 +627,11 @@ add_executable(at-samsung at-samsung.c)
 target_link_libraries(at-samsung libGammu)
 add_test(at-samsung "${GAMMU_TEST_PATH}/at-samsung${GAMMU_TEST_SUFFIX}")
 
+# Motorola parser tests
+add_executable(at-motorola at-motorola.c)
+target_link_libraries(at-motorola libGammu)
+add_test(at-motorola "${GAMMU_TEST_PATH}/at-motorola${GAMMU_TEST_SUFFIX}")
+
 # AT parser tests
 add_executable(at-parser at-parser.c)
 target_link_libraries(at-parser libGammu)

@@ -4716,6 +4716,9 @@ GSM_Error ATGEN_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Statu
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
+	if (Priv->Manufacturer==AT_Motorola) {
+		return MOTOROLA_GetCalendarStatus(s, Status);
+	}
 	if (Priv->Manufacturer==AT_Samsung) {
 		return SAMSUNG_GetCalendarStatus(s, Status);
 	}
@@ -4728,6 +4731,9 @@ GSM_Error ATGEN_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	if (Priv->Manufacturer==AT_Siemens) {
 		return SIEMENS_GetCalendar(s, Note);
+	}
+	if (Priv->Manufacturer==AT_Motorola) {
+		return MOTOROLA_GetCalendar(s, Note);
 	}
 	if (Priv->Manufacturer==AT_Samsung) {
 		return SAMSUNG_GetCalendar(s, Note);
@@ -4756,6 +4762,9 @@ GSM_Error ATGEN_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	if (Priv->Manufacturer==AT_Siemens) {
 		return SIEMENS_SetCalendarNote(s, Note);
 	}
+	if (Priv->Manufacturer==AT_Motorola) {
+		return MOTOROLA_SetCalendar(s, Note);
+	}
 	if (Priv->Manufacturer==AT_Samsung) {
 		return SAMSUNG_SetCalendar(s, Note);
 	}
@@ -4768,6 +4777,7 @@ GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_AddCalendarNote(s, Note);
 	if (Priv->Manufacturer==AT_Samsung)  return SAMSUNG_AddCalendar(s, Note);
+	if (Priv->Manufacturer==AT_Motorola)  return MOTOROLA_AddCalendar(s, Note);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -4777,6 +4787,7 @@ GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_DelCalendarNote(s, Note);
 	if (Priv->Manufacturer==AT_Samsung)  return SAMSUNG_DelCalendar(s, Note);
+	if (Priv->Manufacturer==AT_Motorola)  return MOTOROLA_DelCalendar(s, Note);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -5150,6 +5161,12 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {SAMSUNG_ReplyGetCalendar,	"AT+ORGR="		,0x00,0x00,ID_GetCalendarNote },
 {ATGEN_GenericReply,		"AT+ORGD="		,0x00,0x00,ID_DeleteCalendarNote },
 {SAMSUNG_ReplySetCalendar,	"AT+ORGW="		,0x00,0x00,ID_SetCalendarNote },
+
+{MOTOROLA_ReplyGetCalendarStatus,"AT+MDBR=?"		,0x00,0x00,ID_GetCalendarNotesInfo },
+{MOTOROLA_ReplyGetCalendar,	"AT+MDBR="		,0x00,0x00,ID_GetCalendarNote },
+{ATGEN_GenericReply,		"AT+MDBWE="		,0x00,0x00,ID_DeleteCalendarNote },
+{MOTOROLA_ReplySetCalendar,	"AT+MDBW="		,0x00,0x00,ID_SetCalendarNote },
+{ATGEN_GenericReply,		"AT+MDBL="		,0x00,0x00,ID_SetCalendarNote },
 
 {ATGEN_GenericReplyIgnore, 	"^RSSI:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReplyIgnore, 	"^BOOT:"		,0x00,0x00,ID_IncomingFrame	 },

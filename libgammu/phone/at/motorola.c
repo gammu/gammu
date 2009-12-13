@@ -318,6 +318,286 @@ GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_UNKNOWNRESPONSE;
 }
 
+GSM_Error MOTOROLA_LockCalendar(GSM_StateMachine *s)
+{
+	GSM_Error error;
+
+	ATGEN_WaitForAutoLen(s, "AT+MDBL=1\r", 0x00, 10, ID_SetCalendarNote);
+
+	return error;
+}
+
+GSM_Error MOTOROLA_UnlockCalendar(GSM_StateMachine *s)
+{
+	GSM_Error error;
+
+	ATGEN_WaitForAutoLen(s, "AT+MDBL=0\r", 0x00, 10, ID_SetCalendarNote);
+
+	return error;
+}
+
+GSM_Error MOTOROLA_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error error;
+	int ignore;
+
+	if (Priv->ReplyState != AT_Reply_OK) {
+		switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+		case AT_Reply_Error:
+			return ERR_NOTSUPPORTED;
+		case AT_Reply_CMSError:
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+			return ERR_UNKNOWNRESPONSE;
+		}
+	}
+
+	/*
+	 * Reply looks like:
+	 * +MDBR: 500,1,64,8,2
+	 * (max events that can be stored, number of stored events, ?, ?, ?)
+	 */
+
+	error = ATGEN_ParseReply(s,
+		GetLineString(msg.Buffer, &Priv->Lines, 2),
+		"+MDBR: @i, @i, @i, @i, @i",
+		&s->Phone.Data.CalStatus->Free,
+		&s->Phone.Data.CalStatus->Used,
+		&ignore,
+		&ignore,
+		&ignore);
+	if (error != ERR_NONE) return error;
+	s->Phone.Data.CalStatus->Free += s->Phone.Data.CalStatus->Used;
+	return ERR_NONE;
+}
+
+GSM_Error MOTOROLA_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
+{
+	GSM_Error error;
+
+	s->Phone.Data.CalStatus = Status;
+
+	ATGEN_WaitForAutoLen(s, "AT+MDBR=?\r", 0x00, 10, ID_GetCalendarNotesInfo);
+
+	return error;
+}
+
+GSM_Error MOTOROLA_ParseCalendarSimple(GSM_StateMachine *s, const char *line)
+{
+	GSM_Error error;
+	int ignore;
+	GSM_CalendarEntry *Note = s->Phone.Data.Cal;
+	int duration, repeat, has_time, has_alarm;
+	/*
+	 * Parse following format:
+	 *
+	 * +MDBR: 0,"Meeting",1,0,"17:00","02-24-2006",60,"00:00","00-00-2000",0
+	 * +MDBR: 1,"Breakfast",1,1,"10:00","02-25-2006",60,"09:30","02-25-2006",2
+	 * event num, description, time flag (if 0, start time is meaningless), alarm enabl
+	 * ed flag (if 0, alarm time is meaningless), time, date, duration (mins), alarm ti
+	 * me, alarm date, repeat type
+	 *
+	 * repeat type:
+	 * 1 = daily
+	 * 2 = weekly
+	 * 3 = monthly on date
+	 * 4 = monthly on day
+	 * 5 = yearly
+	 */
+	Note->Entries[0].EntryType = CAL_TEXT;
+	Note->Entries[1].EntryType = CAL_START_DATETIME;
+	Note->Entries[1].Date.Timezone = 0;
+	Note->Entries[1].Date.Second = 0;
+	Note->Entries[2].EntryType = CAL_TONE_ALARM_DATETIME;
+	Note->Entries[2].Date.Timezone = 0;
+	Note->Entries[2].Date.Second = 0;
+	Note->EntriesNum = 3;
+	error = ATGEN_ParseReply(s,
+		line,
+		"+MDBR: @i, @s, @i, @i, @d, @i, @d, @i",
+		&ignore,
+		Note->Entries[0].Text, sizeof(Note->Entries[0].Text),
+		&has_time,
+		&has_alarm,
+		&(Note->Entries[1].Date),
+		&duration,
+		&(Note->Entries[2].Date),
+		&repeat);
+
+	if (!has_time && !has_alarm) {
+		Note->EntriesNum = 1;
+	} else if (!has_alarm) {
+		Note->EntriesNum = 2;
+	} else if (!has_time) {
+		Note->EntriesNum = 2;
+		Note->Entries[1].EntryType = Note->Entries[2].EntryType;
+		Note->Entries[1].Date = Note->Entries[2].Date;
+	}
+	switch (repeat) {
+		case 1:
+			Note->Entries[Note->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
+			Note->Entries[Note->EntriesNum].Number = 1;
+			Note->EntriesNum++;
+			break;
+		case 2:
+			Note->Entries[Note->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
+			Note->Entries[Note->EntriesNum].Number = 7;
+			Note->EntriesNum++;
+			break;
+		case 3:
+			Note->Entries[Note->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
+			Note->Entries[Note->EntriesNum].Number = 1;
+			Note->EntriesNum++;
+			Note->Entries[Note->EntriesNum].EntryType = CAL_REPEAT_DAY;
+			Note->Entries[Note->EntriesNum].Number = Note->Entries[1].Date.Day;
+			Note->EntriesNum++;
+			break;
+		case 4:
+			Note->Entries[Note->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
+			Note->Entries[Note->EntriesNum].Number = 1;
+			Note->EntriesNum++;
+			Note->Entries[Note->EntriesNum].EntryType = CAL_REPEAT_DAY;
+			Note->Entries[Note->EntriesNum].Number = Note->Entries[1].Date.Day;
+			Note->EntriesNum++;
+			break;
+		case 5:
+			Note->Entries[Note->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
+			Note->Entries[Note->EntriesNum].Number = 365;
+			Note->EntriesNum++;
+			break;
+	}
+	return error;
+}
+
+GSM_Error MOTOROLA_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error error;
+	const char *line;
+
+	if (Priv->ReplyState != AT_Reply_OK) {
+		switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+		case AT_Reply_Error:
+			return ERR_NOTSUPPORTED;
+		case AT_Reply_CMSError:
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+			return ERR_UNKNOWNRESPONSE;
+		}
+	}
+
+	line = GetLineString(msg.Buffer, &Priv->Lines, 2);
+
+	if (strcmp("OK", line) == 0) {
+		return ERR_EMPTY;
+	}
+
+	error = MOTOROLA_ParseCalendarSimple(s, line);
+	if (error != ERR_NONE) {
+		/* Fallback to parse complex later */
+	}
+	return error;
+}
+
+GSM_Error MOTOROLA_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
+{
+	GSM_Error error;
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	if (start) {
+		/* One bellow actual first position */
+		Note->Location = 0;
+		error = MOTOROLA_GetCalendarStatus(s, &Priv->CalendarStatus);
+		if (error != ERR_NONE) {
+			return error;
+		}
+		Priv->CalendarRead = 0;
+	}
+	s->Phone.Data.Cal 	= Note;
+	Note->EntriesNum 	= 0;
+	smprintf(s, "Getting calendar entry\n");
+	error = ERR_EMPTY;
+	while (error == ERR_EMPTY) {
+		Note->Location++;
+		if (Note->Location >= Priv->CalendarStatus.Used + Priv->CalendarStatus.Free) {
+			/* We're at the end */
+			return ERR_EMPTY;
+		}
+		if (Priv->CalendarRead >= Priv->CalendarStatus.Used) {
+			/* We've read all entries */
+			return ERR_EMPTY;
+		}
+		error = MOTOROLA_GetCalendar(s, Note);
+		if (error == ERR_NONE) {
+			Priv->CalendarRead++;
+		}
+	}
+	return error;
+}
+
+GSM_Error MOTOROLA_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+{
+	char req[50];
+	GSM_Error error;
+
+	error = MOTOROLA_LockCalendar(s);
+	if (error != ERR_NONE) return ERR_NONE;
+
+	s->Phone.Data.Cal = Note;
+
+	sprintf(req, "AT+MDBR=%d\r", Note->Location - 1);
+
+	ATGEN_WaitForAutoLen(s, req, 0x00, 10, ID_GetCalendarNote);
+	MOTOROLA_UnlockCalendar(s);
+	return error;
+}
+
+GSM_Error MOTOROLA_ReplySetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	return ERR_NOTIMPLEMENTED;
+}
+
+GSM_Error MOTOROLA_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+{
+	char req[50];
+	GSM_Error error;
+
+	error = MOTOROLA_LockCalendar(s);
+	if (error != ERR_NONE) return ERR_NONE;
+
+	sprintf(req, "AT+MDBWE=%d,0,0\r", Note->Location);
+
+	ATGEN_WaitForAutoLen(s, req, 0x00, 10, ID_DeleteCalendarNote);
+	MOTOROLA_UnlockCalendar(s);
+	return error;
+}
+
+GSM_Error MOTOROLA_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+{
+	GSM_Error error;
+
+	error = MOTOROLA_LockCalendar(s);
+	if (error != ERR_NONE) return ERR_NONE;
+
+	MOTOROLA_UnlockCalendar(s);
+	return ERR_NOTIMPLEMENTED;
+}
+
+GSM_Error MOTOROLA_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+{
+	GSM_Error error;
+
+	error = MOTOROLA_LockCalendar(s);
+	if (error != ERR_NONE) return ERR_NONE;
+
+	MOTOROLA_UnlockCalendar(s);
+	return ERR_NOTIMPLEMENTED;
+}
+
 #endif
 
 /*@}*/
