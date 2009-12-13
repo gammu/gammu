@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-12 14:11+0100\n"
-"PO-Revision-Date: 2009-12-13 18:05+0200\n"
+"PO-Revision-Date: 2009-12-13 18:07+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -39,7 +39,7 @@ msgstr "Poznámka nebola v súbore nájdená"
 
 #: gammu/backup.c:105
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "Poznámka s úlohou nebola v súbore nájdená"
 
 #: gammu/backup.c:115 helper/message-cmdline.c:521
 msgid "Where is backup filename and location and memory type?"
