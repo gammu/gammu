@@ -222,7 +222,7 @@ msgstr "Zálohovať nastavenia Chat-u?"
 
 #: gammu/backup.c:716
 msgid "Checking phone SyncML settings"
-msgstr ""
+msgstr "Kontrolujem nastavenia SyncML"
 
 #: gammu/backup.c:720
 msgid "Backup phone SyncML settings?"
