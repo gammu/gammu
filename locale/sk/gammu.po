@@ -262,7 +262,7 @@ msgstr "Zálohovať prístupové body GPRS?"
 
 #: gammu/backup.c:935 gammu/backup.c:1542
 msgid "Time of backup"
-msgstr ""
+msgstr "Čas zálohovania"
 
 #: gammu/backup.c:936 gammu/backup.c:1545 gammu/calendar.c:222
 #: gammu/calendar.c:886
