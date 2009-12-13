@@ -134,7 +134,7 @@ msgstr "Zálohovať telefónny zoznam na SIM karte?"
 
 #: gammu/backup.c:359
 msgid "Checking phone calendar"
-msgstr ""
+msgstr "Kontrolujem kalendár v telefóne"
 
 #: gammu/backup.c:363
 msgid "Backup phone calendar notes?"
