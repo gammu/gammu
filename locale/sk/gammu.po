@@ -35,7 +35,7 @@ msgstr "WAP záložka nebola v súbore nájdená"
 
 #: gammu/backup.c:84
 msgid "Note not found in file"
-msgstr ""
+msgstr "Poznámka nebola v súbore nájdená"
 
 #: gammu/backup.c:105
 msgid "Todo note not found in file"
