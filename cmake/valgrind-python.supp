@@ -53,6 +53,13 @@
    fun:PyThread_allocate_lock
    fun:PyEval_InitThreads
 }
+{
+   Suppress leaking the GIL.  Happens once per process, see comment in ceval.c.
+   Memcheck:Leak
+   fun:malloc
+   fun:PyThread_allocate_lock
+   fun:PyThread_create_key
+}
 
 {
    Suppress leaking the GIL after a fork.
@@ -900,6 +907,22 @@
    fun:PyObject_Call
    obj:/usr/bin/python*
 }
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python*
+   fun:PyString_InternInPlace
+   fun:PyString_FromStringAndSize
+   obj:/usr/bin/python*
+   fun:PyEval_EvalFrameEx
+   fun:PyEval_EvalFrameEx
+   fun:PyEval_EvalCodeEx
+   fun:PyEval_EvalCode
+   fun:PyImport_ExecCodeModuleEx
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+}
 
 {
    1,112 bytes in 5 blocks are still reachable
@@ -1612,6 +1635,14 @@
    fun:PyObject_CallFunction
    fun:PyErr_NewException
    fun:initzipimport
+}
+{
+   Some generic leak which happens in every module.
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/bin/python*
+   fun:PyDict_SetItemString
+   fun:PyType_Ready
 }
 {
    typeready
