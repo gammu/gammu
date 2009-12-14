@@ -1309,9 +1309,14 @@ GSM_Error DUMMY_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		if (error == ERR_CANTOPENFILE) return ERR_EMPTY;
 		return error;
 	}
-	if (Backup.PhonePhonebook[0] == NULL) return ERR_EMPTY;
+	if (Backup.PhonePhonebook[0] == NULL && Backup.SIMPhonebook[0] == NULL) return ERR_EMPTY;
 
-	*entry = *(Backup.PhonePhonebook[0]);
+
+	if (Backup.PhonePhonebook[0] != NULL) {
+		*entry = *(Backup.PhonePhonebook[0]);
+	} else {
+		*entry = *(Backup.SIMPhonebook[0]);
+	}
 
 	for (i = 0; i < entry->EntriesNum; i++) {
 		if (entry->Entries[i].EntryType == PBK_Photo) {
