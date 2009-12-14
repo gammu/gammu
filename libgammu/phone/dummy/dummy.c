@@ -918,11 +918,13 @@ GSM_Error DUMMY_SetAlarm(GSM_StateMachine *s, GSM_Alarm *entry)
 	cal.Entries[0].Date.Year = 1970;
 	cal.Entries[0].Date.Month = 1;
 	cal.Entries[0].Date.Day = 1;
+	cal.Entries[0].Date.Timezone = 0;
 	cal.Entries[1].EntryType = CAL_START_DATETIME;
 	cal.Entries[1].Date = entry->DateTime;
 	cal.Entries[1].Date.Year = 1970;
 	cal.Entries[1].Date.Month = 1;
 	cal.Entries[1].Date.Day = 1;
+	cal.Entries[1].Date.Timezone = 0;
 	cal.Entries[2].EntryType = CAL_TEXT;
 	CopyUnicodeString(cal.Entries[2].Text, entry->Text);
 	if (entry->Repeating) {
