@@ -58,16 +58,23 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 	/* These are lines with end of "normal" answers */
 	static const char 		*StartStrings[] = {
-		"OK\r"		,
-		"OK\n"		,
-		"ERROR\r"	 	,
-		"ERROR\n"	 	,
-		"+CME ERROR:"	,
-		"+CMS ERROR:"	,
+		/* Standard AT */
+		"OK\r",
+		"ERROR\r",
 
-		"MODEM ERROR:"	, /* Motorola A1200 */
+		/* AT with bad end of lines */
+		"OK\n",
+		"ERROR\n",
 
-		"COMMAND NOT SUPPORT" /* HUAWEI */	,
+		/* Standard GSM */
+		"+CME ERROR:",
+		"+CMS ERROR:",
+
+		/* Motorola A1200 */
+		"MODEM ERROR:",
+
+		/* Huawei */
+		"COMMAND NOT SUPPORT",
 
 		NULL};
 
