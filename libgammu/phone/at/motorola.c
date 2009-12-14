@@ -407,6 +407,7 @@ GSM_Error MOTOROLA_ParseCalendarSimple(GSM_StateMachine *s, const char *line)
 	 * 4 = monthly on day
 	 * 5 = yearly
 	 */
+	Note->Type = GSM_CAL_MEMO;
 	Note->Entries[0].EntryType = CAL_TEXT;
 	Note->Entries[1].EntryType = CAL_START_DATETIME;
 	Note->Entries[1].Date.Timezone = 0;
