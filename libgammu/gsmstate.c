@@ -590,18 +590,22 @@ GSM_Error GSM_TryGetModel(GSM_StateMachine *s)
 			default:
 				s->Phone.Functions = NULL;
 		}
-		if (s->Phone.Functions == NULL) return ERR_UNKNOWN;
+		/* Did we find matching phone driver? */
+		if (s->Phone.Functions == NULL) {
+			smprintf(s, "ERROR: Could not find proper module for autodetection!\n");
+			return ERR_UNKNOWN;
+		}
 
-		/* Please note, that AT module need to send first
-		 * command for enabling echo
-		 */
-		error=s->Phone.Functions->Initialise(s);
+		/* Initialize the phone driver */
+		error = s->Phone.Functions->Initialise(s);
 		if (error != ERR_NONE) return error;
 
-		error=s->Phone.Functions->GetModel(s);
+		/* Get model name from phone */
+		error = s->Phone.Functions->GetModel(s);
 		if (error != ERR_NONE) return error;
 
-		error=s->Phone.Functions->Terminate(s);
+		/* And terminate it again */
+		error = s->Phone.Functions->Terminate(s);
 		if (error != ERR_NONE) return error;
 	}
 	return ERR_NONE;
