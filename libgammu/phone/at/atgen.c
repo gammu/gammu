@@ -794,7 +794,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	unsigned char		*pos=NULL;
 	unsigned char		buffer_unicode[200]={'\0'};
 	unsigned char		input[100]={'\0'};
-	char separator, *separator_pos, *comma_pos, *date_start, *time_start;
+	char separator = '\0', *separator_pos, *comma_pos, *date_start, *time_start;
 	int year;
 	GSM_Error error;
 
