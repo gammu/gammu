@@ -1065,6 +1065,22 @@
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgnutls.so.*
+   obj:/usr/lib*/libgnutls.so.*
+   fun:gnutls_global_init
+   obj:/usr/lib*/libcurl*.so.*
+   fun:curl_global_init
+}
+{
+   Leak from crypt
+   Memcheck:Leak
+   fun:malloc
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
+   obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
    obj:/usr/lib*/libgcrypt.so.*
    fun:gcry_create_nonce
