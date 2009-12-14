@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-12 13:19+0100\n"
-"PO-Revision-Date: 2009-12-07 16:42+0100\n"
+"PO-Revision-Date: 2009-12-14 11:07+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,16 +31,16 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Dec 12 2009"
-msgstr "Prosinec 3, 2009"
+msgstr "Prosinec 12, 2009"
 
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu 1.26.93"
-msgstr "Gammu 1.26.92"
+msgstr "Gammu 1.26.93"
 
 # type: TH
 #. type: TH
@@ -3529,9 +3529,9 @@ msgstr "B<getdisplaystatus>"
 # type: TP
 #. type: TP
 #: docs/user/gammu.1:2183
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<getlocation>"
-msgstr "B<getalltodo>"
+msgstr "B<getlocation>"
 
 #. type: Plain text
 #: docs/user/gammu.1:2188
@@ -3540,6 +3540,9 @@ msgid ""
 "location (latitude and longitude) based on information from OpenCellID "
 "E<lt>http://opencellid.orgE<gt>."
 msgstr ""
+"Načte informace o síti z telefonu (stejné jako networkinfo)  a zobrazí vaše "
+"umístění (zeměpisnou šířku a délku) podle informací z OpenCellID E<lt>http://"
+"opencellid.orgE<gt>."
 
 # type: TP
 #. type: TP
@@ -9470,6 +9473,8 @@ msgid ""
 "Inserting multipart messages is a bit more tricky, you need to construct "
 "also UDH header and store it hexadecimally written into UDF field."
 msgstr ""
+"Vkládání dlouhých zpráv složených z více částí je trochu více komplikované. "
+"Musíte také vytvořit UDH hlavičku a uložit ji šestnáctkově do pole UDH."
 
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:450
@@ -9479,11 +9484,17 @@ msgid ""
 "for each message), byte for number of messages and byte for number of "
 "current message."
 msgstr ""
+"Pro dlouhou textovou zprávu, UDH začíná s 050003 následované jedním bajtem s "
+"referenčním číslem zprávy (můžete sem uložit cokoliv, ale mělo by to být "
+"jiné pro každou zprávu), bajtem s celkovým počet zpráv a bajtem určujícím "
+"pořadí aktuální zprávy."
 
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:452
 msgid "For example long text message of two parts could look like following:"
 msgstr ""
+"Například dlouhá textová zpráva skládající se z dvou částí může vypadat "
+"následovně:"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:472
@@ -10440,6 +10451,7 @@ msgstr ""
 #: INSTALL:193
 msgid "To build just bare static library without any dependencies, use:"
 msgstr ""
+"Pro kompilaci statické knihovny bez jakýhkoliv externích závislostí spusťte:"
 
 #. type: Plain text
 #: INSTALL:201
@@ -10679,6 +10691,8 @@ msgid ""
 "    You can enable some additional tests, which require some external\n"
 "    components to be setup and are disabled by default:\n"
 msgstr ""
+"    Dále můžete provést nějaké testy, které vyžadují externí\n"
+"    komponenty a jsou ve výchozím nastavení vypnuté:\n"
 
 #. type: Plain text
 #: INSTALL:295
@@ -10687,6 +10701,8 @@ msgid ""
 "    MYSQL_TESTING - you need to have setup MySQL server with database\n"
 "    where SMSD can play.\n"
 msgstr ""
+"    MYSQL_TESTING - potřebujete mít nastavený MySQL server s databází,\n"
+"    ve které může SMSD pracovat.\n"
 
 #. type: Plain text
 #: INSTALL:298
@@ -10695,6 +10711,8 @@ msgid ""
 "    PSQL_TESTING - you need to have setup PostgreSQL server with\n"
 "    database where SMSD can play.\n"
 msgstr ""
+"    PSQL_TESTING - potřebujete mít nastavený PostgreSQL server\n"
+"    s databází, ve které může SMSD pracovat.\n"
 
 # type: TH
 #~ msgid "Nov 30 2009"
