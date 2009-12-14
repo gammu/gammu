@@ -8,50 +8,52 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-12 14:11+0100\n"
-"PO-Revision-Date: 2009-01-27 14:28+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2009-12-13 23:16+0200\n"
+"Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Pootle 1.2.1\n"
 
 #: gammu/backup.c:31 gammu/backup.c:52 gammu/backup.c:73 gammu/backup.c:94
 #: helper/message-cmdline.c:369 helper/message-cmdline.c:393
 #: helper/message-cmdline.c:437 helper/message-cmdline.c:474
 #: helper/message-cmdline.c:497
 msgid "Where is backup filename and location?"
-msgstr ""
+msgstr "Aký je názov záložného súboru a jeho umiestnenie?"
 
 #: gammu/backup.c:42 helper/message-cmdline.c:485
 msgid "Calendar note not found in file"
-msgstr ""
+msgstr "Poznámka z kalendára nebola v súbore nájdená"
 
 #: gammu/backup.c:63
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "WAP záložka nebola v súbore nájdená"
 
 #: gammu/backup.c:84
 msgid "Note not found in file"
-msgstr ""
+msgstr "Poznámka nebola v súbore nájdená"
 
 #: gammu/backup.c:105
 msgid "Todo note not found in file"
-msgstr ""
+msgstr "Poznámka s úlohou nebola v súbore nájdená"
 
 #: gammu/backup.c:115 helper/message-cmdline.c:521
 msgid "Where is backup filename and location and memory type?"
-msgstr ""
+msgstr "Aké je umiestnenie a názov záložného súboru a typ pamäte?"
 
 #: gammu/backup.c:127 gammu/backup.c:138 helper/message-cmdline.c:533
 #: helper/message-cmdline.c:543
 msgid "Phonebook entry not found in file"
-msgstr ""
+msgstr "Položka telefónneho zoznamu nebola v súbore nájdená"
 
 #: gammu/backup.c:144 helper/message-cmdline.c:548
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr ""
+msgstr "Neznámy typ pamäte: \"%s\"\n"
 
 #: gammu/backup.c:159
 #, c-format
@@ -60,22 +62,22 @@ msgstr ""
 
 #: gammu/backup.c:165
 msgid "Error while opening file for writing!\n"
-msgstr ""
+msgstr "Chyba pri otváraní súboru pre zápis!\n"
 
 #: gammu/backup.c:169 gammu/files.c:444 helper/message-cmdline.c:1095
 msgid "Error while writing file!\n"
-msgstr ""
+msgstr "Chyba pri zápise do súboru!\n"
 
 #: gammu/backup.c:210 gammu/backup.c:368 gammu/backup.c:440 gammu/backup.c:475
 #: gammu/backup.c:509 gammu/backup.c:577 gammu/backup.c:614 gammu/backup.c:651
 #: gammu/backup.c:688 gammu/backup.c:725 gammu/backup.c:763 gammu/backup.c:804
 #: gammu/backup.c:838 gammu/backup.c:875 gammu/message.c:407
 msgid "Reading"
-msgstr ""
+msgstr "Čítanie"
 
 #: gammu/backup.c:220
 msgid "Only part of data saved, please increase the limit."
-msgstr ""
+msgstr "Uložená iba časť údajov, prosím zvýšte limit."
 
 #: gammu/backup.c:249 gammu/backup.c:376 gammu/backup.c:411 gammu/backup.c:448
 #: gammu/backup.c:485 gammu/backup.c:520 gammu/backup.c:586 gammu/backup.c:623
@@ -83,11 +85,11 @@ msgstr ""
 #: gammu/backup.c:815 gammu/backup.c:849 gammu/backup.c:886
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr ""
+msgstr "Uložená iba časť údajov, prosím zvýšte %s."
 
 #: gammu/backup.c:257 gammu/backup.c:419 gammu/mms.c:182
 msgid "Reading:"
-msgstr ""
+msgstr "Čítanie:"
 
 #: gammu/backup.c:258 gammu/backup.c:420 gammu/backup.c:969
 #: gammu/backup.c:1036 gammu/backup.c:1089 gammu/backup.c:1147
@@ -101,14 +103,14 @@ msgstr ""
 #: gammu/misc.c:1312 gammu/mms.c:183
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i percent"
 
 #: gammu/backup.c:311 gammu/backup.c:933 gammu/backup.c:1568
 #: gammu/calendar.c:613 gammu/calendar.c:948 gammu/calendar.c:1023
 #: gammu/calendar.c:1048 gammu/memory.c:23 gammu/memory.c:316
 #: gammu/memory.c:380 gammu/message.c:129 gammu/misc.c:81 gammu/misc.c:452
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "Prerušíte stlačením Ctrl+C ..."
 
 #: gammu/backup.c:316
 msgid "Use Unicode subformat of backup file?"
@@ -116,51 +118,51 @@ msgstr ""
 
 #: gammu/backup.c:348
 msgid "Checking phone phonebook"
-msgstr ""
+msgstr "Kontrolujem telefónny zoznam v telefóne"
 
 #: gammu/backup.c:349
 msgid "Backup phone phonebook?"
-msgstr ""
+msgstr "Zálohovať telefónny zoznam?"
 
 #: gammu/backup.c:353
 msgid "Checking SIM phonebook"
-msgstr ""
+msgstr "Kontrolujem telefónny zoznam na SIM karte"
 
 #: gammu/backup.c:354
 msgid "Backup SIM phonebook?"
-msgstr ""
+msgstr "Zálohovať telefónny zoznam na SIM karte?"
 
 #: gammu/backup.c:359
 msgid "Checking phone calendar"
-msgstr ""
+msgstr "Kontrolujem kalendár v telefóne"
 
 #: gammu/backup.c:363
 msgid "Backup phone calendar notes?"
-msgstr ""
+msgstr "Zálohovať poznámky v kalendári?"
 
 #: gammu/backup.c:394
 msgid "Checking phone todos"
-msgstr ""
+msgstr "Kontrolujem úlohy v telefóne"
 
 #: gammu/backup.c:397
 msgid "Backup phone todos?"
-msgstr ""
+msgstr "Zálohovať úlohy?"
 
 #: gammu/backup.c:431
 msgid "Checking phone notes"
-msgstr ""
+msgstr "Kontrolujem poznámky v telefóne"
 
 #: gammu/backup.c:435
 msgid "Backup phone notes?"
-msgstr ""
+msgstr "Zálohovať poznámky?"
 
 #: gammu/backup.c:466
 msgid "Checking phone caller logos"
-msgstr ""
+msgstr "Kontrolujem logo volajúceho"
 
 #: gammu/backup.c:471
 msgid "Backup phone caller groups and logos?"
-msgstr ""
+msgstr "Zálohovať skupiny a logá volajúcich?"
 
 #: gammu/backup.c:504
 msgid "Checking SIM SMS profiles"
@@ -172,95 +174,95 @@ msgstr ""
 
 #: gammu/backup.c:533
 msgid "Checking phone startup text"
-msgstr ""
+msgstr "Kontrolujem text po štarte telefónu"
 
 #: gammu/backup.c:537
 msgid "Backup phone startup logo/text?"
-msgstr ""
+msgstr "Zálohovať úvodné logo/text?"
 
 #: gammu/backup.c:552
 msgid "Checking phone operator logo"
-msgstr ""
+msgstr "Kontrolujem logo operátora"
 
 #: gammu/backup.c:557
 msgid "Backup phone operator logo?"
-msgstr ""
+msgstr "Zálohovať logo operátora?"
 
 #: gammu/backup.c:568
 msgid "Checking phone WAP bookmarks"
-msgstr ""
+msgstr "Kontrolujem WAP záložky"
 
 #: gammu/backup.c:572
 msgid "Backup phone WAP bookmarks?"
-msgstr ""
+msgstr "Zálohovať WAP záložky?"
 
 #: gammu/backup.c:605
 msgid "Checking phone WAP settings"
-msgstr ""
+msgstr "Kontrolujem nastavenia WAP"
 
 #: gammu/backup.c:609
 msgid "Backup phone WAP settings?"
-msgstr ""
+msgstr "Zálohovať WAP nastavenia?"
 
 #: gammu/backup.c:642
 msgid "Checking phone MMS settings"
-msgstr ""
+msgstr "Kontrolujem nastavenia MMS"
 
 #: gammu/backup.c:646
 msgid "Backup phone MMS settings?"
-msgstr ""
+msgstr "Zálohovať MMS nastavenia?"
 
 #: gammu/backup.c:679
 msgid "Checking phone Chat settings"
-msgstr ""
+msgstr "Kontrolujem nastavenia Chat-u"
 
 #: gammu/backup.c:683
 msgid "Backup phone Chat settings?"
-msgstr ""
+msgstr "Zálohovať nastavenia Chat-u?"
 
 #: gammu/backup.c:716
 msgid "Checking phone SyncML settings"
-msgstr ""
+msgstr "Kontrolujem nastavenia SyncML"
 
 #: gammu/backup.c:720
 msgid "Backup phone SyncML settings?"
-msgstr ""
+msgstr "Zálohovať nastavenia SyncML?"
 
 #: gammu/backup.c:752
 msgid "Checking phone user ringtones"
-msgstr ""
+msgstr "Kontrolujem užívateľske zvonenia"
 
 #: gammu/backup.c:757
 msgid "Backup phone user ringtones?"
-msgstr ""
+msgstr "Zálohovať užívateľske zvonenia?"
 
 #: gammu/backup.c:795
 msgid "Checking phone profiles"
-msgstr ""
+msgstr "Kontrolujem profily"
 
 #: gammu/backup.c:799
 msgid "Backup phone profiles?"
-msgstr ""
+msgstr "Zálohovať profily?"
 
 #: gammu/backup.c:828
 msgid "Checking phone FM radio stations"
-msgstr ""
+msgstr "Kontrolujem nastavenia FM rádií"
 
 #: gammu/backup.c:832
 msgid "Backup phone FM radio stations?"
-msgstr ""
+msgstr "Zálohovať nastavnia FM rádií?"
 
 #: gammu/backup.c:865
 msgid "Checking phone GPRS access points"
-msgstr ""
+msgstr "Kontrolujem prístupové body GPRS"
 
 #: gammu/backup.c:869
 msgid "Backup phone GPRS access points?"
-msgstr ""
+msgstr "Zálohovať prístupové body GPRS?"
 
 #: gammu/backup.c:935 gammu/backup.c:1542
 msgid "Time of backup"
-msgstr ""
+msgstr "Čas zálohovania"
 
 #: gammu/backup.c:936 gammu/backup.c:1545 gammu/calendar.c:222
 #: gammu/calendar.c:886
@@ -273,22 +275,26 @@ msgstr "IMEI"
 
 #: gammu/backup.c:938
 msgid "File created by"
-msgstr ""
+msgstr "Súbor vytvoril"
 
 #: gammu/backup.c:944
 #, c-format
 msgid "Checksum in backup file do not match (original: %s, new: %s). Continue?"
 msgstr ""
+"Kontrolný súčet záložného súboru sa nezhoduje (pôvodný: %s, nový: %s). "
+"Pokračovať?"
 
 #: gammu/backup.c:950
 msgid ""
 "Please note that restoring data will cause existing data in phone to be "
 "deleted."
 msgstr ""
+"Prosím berte na vedomie, že obnovou údajov sa existujúce údaje v telefóne "
+"vymažú."
 
 #: gammu/backup.c:958
 msgid "Restore phone caller groups and logos?"
-msgstr ""
+msgstr "Obnoviť skupiny a logá volajúcich?"
 
 #: gammu/backup.c:968 gammu/backup.c:1035 gammu/backup.c:1088
 #: gammu/backup.c:1146 gammu/backup.c:1195 gammu/backup.c:1223
@@ -298,39 +304,43 @@ msgstr ""
 #: gammu/backup.c:1589 gammu/backup.c:1617 gammu/backup.c:1650
 #: gammu/backup.c:1674 gammu/backup.c:1699 gammu/files.c:743
 msgid "Writing:"
-msgstr ""
+msgstr "Zápis:"
 
 #: gammu/backup.c:986 gammu/backup.c:1054 gammu/backup.c:1115
 #: gammu/backup.c:1163 gammu/backup.c:1256 gammu/backup.c:1579
 #: gammu/backup.c:1607
 #, c-format
 msgid "%i entries in backup file\n"
-msgstr ""
+msgstr "%i položiek v záložnom súbore\n"
 
 #: gammu/backup.c:987
 msgid "Restore phone phonebook?"
-msgstr ""
+msgstr "Znovuuložiť telefónny zoznam?"
 
 #: gammu/backup.c:1006
 msgid ""
 "Probably caller group is missing from your backup, add it and use --restore "
 "again."
 msgstr ""
+"Pravdepodobne v zálohe chýba skupina volajúcich, pridajte ju a znova použite "
+"--restore."
 
 #: gammu/backup.c:1016 gammu/backup.c:1075
 #, c-format
 msgid "Location %d"
-msgstr ""
+msgstr "Umiestnenie %d"
 
 #: gammu/backup.c:1055
 msgid "Restore SIM phonebook?"
-msgstr ""
+msgstr "Obnoviť telefónny zoznam SIM?"
 
 #: gammu/backup.c:1100 gammu/backup.c:1631
 msgid ""
 "Do you want to set phone date/time? (NOTE: in some phones it's required to "
 "correctly restore calendar notes and other items)"
 msgstr ""
+"Chcete nastaviť dátum/čas v telefóne? (Poznámka: pri niektorých telefónoch "
+"je to nutné  pre korektné obnovenie poznámok z kalendára a ďalších vecí)"
 
 #: gammu/backup.c:1116
 msgid "Restore phone calendar notes?"
