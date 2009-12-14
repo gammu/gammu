@@ -506,16 +506,22 @@ GSM_Error GSM_CloseConnection(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	smprintf(s,"[Closing]\n");
+	smprintf(s, "[Closing]\n");
 
-	error=s->Protocol.Functions->Terminate(s);
-	if (error!=ERR_NONE) return error;
+	/* Terminate protocol */
+	error = s->Protocol.Functions->Terminate(s);
+	if (error != ERR_NONE) return error;
 
+	/* Close the device */
 	error = s->Device.Functions->CloseDevice(s);
-	if (error!=ERR_NONE) return error;
+	if (error != ERR_NONE) return error;
 
-	if (s->LockFile!=NULL) unlock_device(s, &(s->LockFile));
+	/* Release lock if there was any */
+	if (s->LockFile != NULL) {
+		unlock_device(s, &(s->LockFile));
+	}
 
+	/* Null all structures in case we will be asked for new initialisation */
 	s->Phone.Data.ModelInfo		  = NULL;
 	s->Phone.Data.Manufacturer[0]	  = 0;
 	s->Phone.Data.Model[0]		  = 0;
