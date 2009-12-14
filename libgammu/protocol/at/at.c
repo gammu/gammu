@@ -23,7 +23,7 @@ static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned const char *buff
 		while (sent != length) {
 			write_data = s->Device.Functions->WriteDevice(s,buffer + sent, length - sent);
 
-			if (!write_data) {
+			if (write_data == 0 || write_data < 0) {
 				return ERR_DEVICEWRITEERROR;
 			}
 			sent += write_data;
