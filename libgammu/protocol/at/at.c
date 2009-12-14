@@ -75,22 +75,38 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	 * It starts with strings written here
 	 */
 	static const SpecialAnswersStruct SpecialAnswers[] = {
-		{"_OSIGQ:"	,1},	{"_OBS:"	,1},
-		{"^SCN:"	,1},	{"+CGREG:"	,1},
-		{"+CBM:"	,1},	{"+CMT:"	,2},
-		{"+CMTI:"	,1},	{"+CDS:"	,2},
-		{"+CREG:"	,1},	{"+CUSD"	,1},
-
-		{"RING"		,1},	{"NO CARRIER"	,1},
-		{"NO ANSWER"	,1},	{"+COLP"	,1},
-		{"+CLIP"	,1},	{"+CRING"	,1},
+		/* Standard GSM */
+		{"+CGREG:"	,1},
+		{"+CBM:"	,1},
+		{"+CMT:"	,2},
+		{"+CMTI:"	,1},
+		{"+CDS:"	,2},
+		{"+CREG:"	,1},
+		{"+CUSD"	,1},
+		{"+COLP"	,1},
+		{"+CLIP"	,1},
+		{"+CRING"	,1},
 		{"+CCWA"	,1},
 
+		/* Standard AT */
+		{"RING"		,1},
+		{"NO CARRIER"	,1},
+		{"NO ANSWER"	,1},
+
+		/* GlobeTrotter */
+		{"_OSIGQ:"	,1},
+		{"_OBS:"	,1},
+
+		{"^SCN:"	,1},
+
+		/* Sony-Ericsson */
 		{"*EBCA"	,1},
 
-		{"SDNDCRC ="	,1},	/* Samsung binary transfer end */
+		/* Samsung binary transfer end */
+		{"SDNDCRC ="	,1},
 
-		{"+MBAN:"	,1},	/* Motorola banner */
+		/* Motorola banner */
+		{"+MBAN:"	,1},
 
 		/* Huawei */
 		{"^RSSI:"	,1}, /* ^RSSI:18 */
