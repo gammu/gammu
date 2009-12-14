@@ -441,7 +441,7 @@ INSERT INTO outbox (
 .SS Injecting long message using SQL
 
 Inserting multipart messages is a bit more tricky, you need to construct also
-UDH header and store it hexadecimally written into UDF field.
+UDH header and store it hexadecimally written into UDH field.
 
 For long text message, the UDH starts with 050003 followed by byte as a
 message reference (you can put anything there, but it should be different for
