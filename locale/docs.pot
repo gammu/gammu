@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-14 10:53+0100\n"
+"POT-Creation-Date: 2009-12-14 11:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -7705,7 +7705,7 @@ msgstr ""
 #: docs/user/gammu-smsd-tables.7:445
 msgid ""
 "Inserting multipart messages is a bit more tricky, you need to construct "
-"also UDH header and store it hexadecimally written into UDF field."
+"also UDH header and store it hexadecimally written into UDH field."
 msgstr ""
 
 #. type: Plain text

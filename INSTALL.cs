@@ -186,7 +186,7 @@ mkdir build-win32 cd build-win32 cmake
 If your MinGW cross compiler binaries are not found automatically, you can
 specify their different names in cmake/Toolchain-mingw32.cmake.
 
-To build just bare static library without any dependencies, use:
+Pro kompilaci statické knihovny bez jakýhkoliv externích závislostí spusťte:
 
 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \
     -DBUILD_SHARED_LIBS=OFF \
@@ -285,14 +285,14 @@ There are some more options for testing:
 
 - zvláštní případy:
 
-    You can enable some additional tests, which require some external
-    components to be setup and are disabled by default:
+    Dále můžete provést nějaké testy, které vyžadují externí
+    komponenty a jsou ve výchozím nastavení vypnuté:
 
-    MYSQL_TESTING - you need to have setup MySQL server with database
-    where SMSD can play.
+    MYSQL_TESTING - potřebujete mít nastavený MySQL server s databází,
+    ve které může SMSD pracovat.
 
-    PSQL_TESTING - you need to have setup PostgreSQL server with
-    database where SMSD can play.
+    PSQL_TESTING - potřebujete mít nastavený PostgreSQL server
+    s databází, ve které může SMSD pracovat.
 
 
 # vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us

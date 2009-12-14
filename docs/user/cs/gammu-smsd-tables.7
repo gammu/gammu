@@ -456,15 +456,17 @@ INSERT INTO outbox (
 
 .SS "Vkládání dlouhých zpráv pomocí SQL"
 
-Inserting multipart messages is a bit more tricky, you need to construct
-also UDH header and store it hexadecimally written into UDF field.
+Vkládání dlouhých zpráv složených z více částí je trochu více
+komplikované. Musíte také vytvořit UDH hlavičku a uložit ji šestnáctkově do
+pole UDH.
 
-For long text message, the UDH starts with 050003 followed by byte as a
-message reference (you can put anything there, but it should be different
-for each message), byte for number of messages and byte for number of
-current message.
+Pro dlouhou textovou zprávu, UDH začíná s 050003 následované jedním bajtem s
+referenčním číslem zprávy (můžete sem uložit cokoliv, ale mělo by to být
+jiné pro každou zprávu), bajtem s celkovým počet zpráv a bajtem určujícím
+pořadí aktuální zprávy.
 
-For example long text message of two parts could look like following:
+Například dlouhá textová zpráva skládající se z dvou částí může vypadat
+následovně:
 
 .RS
 .sp
