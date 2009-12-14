@@ -29,7 +29,7 @@ static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned const char *buff
 			sent += write_data;
 		}
 	} else {
-		for (i=0;i<length;i++) {
+		for (i = 0; i < length; i++) {
 			/* For some phones like Siemens M20 we need to wait a little
 			 * after writing each char. Possible reason: these phones
 			 * can't receive so fast chars or there is bug here in Gammu */
@@ -209,7 +209,9 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 				/* We cut special answer from main buffer */
 				d->Msg.Length			= d->SpecialAnswerStart;
-				if (d->Msg.Length != 0) d->Msg.Length = d->Msg.Length - 2;
+				if (d->Msg.Length != 0) {
+					d->Msg.Length = d->Msg.Length - 2;
+				}
 
 				/* We need to find earlier values of all variables */
 				d->wascrlf 			= FALSE;
@@ -220,12 +222,14 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 						break;
 					case 10:
 					case 13:
-						if (!d->wascrlf) d->LineEnd = d->Msg.Length-1;
+						if (!d->wascrlf) {
+							d->LineEnd = d->Msg.Length - 1;
+						}
 						d->wascrlf = TRUE;
 						break;
 					default:
 						if (d->wascrlf) {
-							d->LineStart	= d->Msg.Length-1;
+							d->LineStart	= d->Msg.Length - 1;
 							d->wascrlf 	= FALSE;
 						}
 					}
@@ -253,7 +257,8 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			d->wascrlf 	= FALSE;
 		}
 		if (d->EditMode) {
-			if (strlen(d->Msg.Buffer+d->LineStart) == 2 && strncmp(d->Msg.Buffer+d->LineStart,"> ",2)==0) {
+			if (strlen(d->Msg.Buffer+d->LineStart) == 2 &&
+					strncmp(d->Msg. Buffer + d->LineStart, "> ", 2) == 0) {
 				s->Phone.Data.RequestMsg	= &d->Msg;
 				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
 			}
@@ -283,16 +288,16 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 	error = s->Device.Functions->DeviceSetParity(s, FALSE);
 	if (error != ERR_NONE) return error;
 
-	error = s->Device.Functions->DeviceSetDtrRts(s,TRUE,TRUE);
+	error = s->Device.Functions->DeviceSetDtrRts(s, TRUE, TRUE);
 	if (error != ERR_NONE) return error;
 
-	return s->Device.Functions->DeviceSetSpeed(s,s->Speed);
+	return s->Device.Functions->DeviceSetSpeed(s, s->Speed);
 }
 
 static GSM_Error AT_Terminate(GSM_StateMachine *s)
 {
 	free(s->Protocol.Data.AT.Msg.Buffer);
-	s->Protocol.Data.AT.Msg.Buffer=NULL;
+	s->Protocol.Data.AT.Msg.Buffer = NULL;
 	return ERR_NONE;
 }
 
