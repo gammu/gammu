@@ -1289,6 +1289,15 @@
    fun:_PyImport_GetDynLoadFunc
 }
 {
+   dyload
+   Memcheck:Leak
+   fun:calloc
+   fun:_dlerror_run 
+   fun:dlopen
+   fun:_PyImport_GetDynLoadFunc
+}
+
+{
    import
    Memcheck:Leak
    fun:malloc
