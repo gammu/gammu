@@ -60,9 +60,21 @@ static void GSM_RegisterConnection(GSM_StateMachine *s, unsigned int connection,
 	}
 }
 
+/**
+ * Information about connection names and parameters.
+ */
 typedef struct {
+	/**
+	 * Name of the connection used in config file.
+	 */
 	const char *Name;
+	/**
+	 * Connection type.
+	 */
 	const GSM_ConnectionType Connection;
+	/**
+	 * Whether to disable DTR/RTS handling on this connection.
+	 */
 	gboolean SkipDtrRts;
 } GSM_ConnectionInfo;
 
