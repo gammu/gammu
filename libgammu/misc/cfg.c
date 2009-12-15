@@ -36,7 +36,9 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 	*result = NULL;
 
 	f = fopen(FileName,"rb");
-	if (f == NULL) return ERR_CANTOPENFILE;
+	if (f == NULL) {
+		return ERR_CANTOPENFILE;
+	}
 
 	num = 0;
 	while(1) {
@@ -53,12 +55,16 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 			}
 			if (Unicode) {
 				if (num == 0) {
-					if (read_buffer_used == read_buffer_pos) continue;
+					if (read_buffer_used == read_buffer_pos) {
+						continue;
+					}
 					ch[0] = read_buffer[read_buffer_pos++];
 					num = 1;
 				}
 				if (num == 1) {
-					if (read_buffer_used == read_buffer_pos) continue;
+					if (read_buffer_used == read_buffer_pos) {
+						continue;
+					}
 					ch[1] = read_buffer[read_buffer_pos++];
 					num = 0;
 				}
@@ -71,7 +77,9 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 					ch[2] = ch[0]; ch[0] = ch[1]; ch[1] = ch[2];
 				}
 			} else {
-				if (read_buffer_used == read_buffer_pos) continue;
+				if (read_buffer_used == read_buffer_pos) {
+					continue;
+				}
 				ch[0] = 0;
 				ch[1] = read_buffer[read_buffer_pos++];
 				if (level == -1) level = 0;
@@ -101,13 +109,19 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 			ch[1] = buffer[i*2+1];
 			if (level == 0) { /* search for name of section */
 				if (ch[0] == 0 && ch[1] == '[') level = 1;
-				if (ch[0] == 0 && ch[1] == ';') break;
-				if (ch[0] == 0 && ch[1] == '#') break;
+				if (ch[0] == 0 && ch[1] == ';') {
+					break;
+				}
+				if (ch[0] == 0 && ch[1] == '#') {
+					break;
+				}
 				continue;
 			}
 			if (level == 1) { /* section name */
 				if (ch[0] == 0 && ch[1] == ']') {
-					if (buffer1used == 0) break;
+					if (buffer1used == 0) {
+						break;
+					}
 					if (Unicode) {
 						buffer1 		= (unsigned char *)realloc(buffer1,buffer1used+2);
 						buffer1[buffer1used] 	= 0;
@@ -150,28 +164,42 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 				continue;
 			}
 			if (level == 2) { /* search for key name */
-				if (ch[0] == 0 && ch[1] == ';') break;
-				if (ch[0] == 0 && ch[1] == '#') break;
+				if (ch[0] == 0 && ch[1] == ';') {
+					break;
+				}
+				if (ch[0] == 0 && ch[1] == '#') {
+					break;
+				}
 				if (ch[0] == 0 && ch[1] == '[') {
 					level = 1;
 					continue;
 				}
 				if (Unicode) {
-			                if (myiswspace(ch)) continue;
+			                if (myiswspace(ch)) {
+						continue;
+					}
 				} else {
-			                if (isspace((int) ch[1])) continue;
+			                if (isspace((int) ch[1])) {
+						continue;
+					}
 				}
 				level = 3;
 			}
 			if (level == 3) { /* key name */
 				if (ch[0] == 0 && ch[1] == '=') {
-					if (buffer1used == 0) break;
+					if (buffer1used == 0) {
+						break;
+					}
 					while(1) {
 						if (Unicode) {
-					                if (!myiswspace(buffer1+(buffer1used-2))) break;
+					                if (!myiswspace(buffer1+(buffer1used-2))) {
+								break;
+							}
 							buffer1used = buffer1used - 2;
 						} else {
-					                if (!isspace((int)buffer1[buffer1used-1])) break;
+					                if (!isspace((int)buffer1[buffer1used-1])) {
+								break;
+							}
 							buffer1used = buffer1used - 1;
 						}
 					}
@@ -191,9 +219,13 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 			}
 			if (level == 4) { /* search for key value */
 				if (Unicode) {
-			                if (myiswspace(ch)) continue;
+			                if (myiswspace(ch)) {
+						continue;
+					}
 				} else {
-			                if (isspace((int) ch[1])) continue;
+			                if (isspace((int) ch[1])) {
+						continue;
+					}
 				}
 				level = 5;
 			}
@@ -220,7 +252,9 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 					buffer2used -= 1;
 				}
 			}
-			if (buffer2used == 0) continue;
+			if (buffer2used == 0) {
+				continue;
+			}
 
 			entry = (INI_Entry *)malloc(sizeof(*entry));
                         if (entry == NULL) {
@@ -261,7 +295,9 @@ GSM_Error INI_ReadFile(const char *FileName, gboolean Unicode, INI_Section **res
 
 			entry->Prev = NULL;
                         entry->Next = INI_info->SubEntries;
-                        if (INI_info->SubEntries != NULL) INI_info->SubEntries->Prev = entry;
+                        if (INI_info->SubEntries != NULL) {
+				INI_info->SubEntries->Prev = entry;
+			}
                         INI_info->SubEntries = entry;
 		}
 	}
