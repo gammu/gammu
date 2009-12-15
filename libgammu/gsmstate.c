@@ -1195,7 +1195,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	cfg->UseGlobalDebugFile	 = DefaultUseGlobalDebugFile;
 
 	/* If we don't have valid config, bail out */
-	if (cfg_info= = NULL) {
+	if (cfg_info == NULL) {
 		error = ERR_UNCONFIGURED;
 		goto fail;
 	}
