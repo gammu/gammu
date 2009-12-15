@@ -5304,7 +5304,7 @@ StateMachine_init(StateMachineObject *self, PyObject *args, PyObject *kwds)
 static char StateMachineType__doc__[] =
 "StateMachine(Locale)\n\n"
 "StateMachine object, that is used for communication with phone.\n\n"
-// FIXME: following doc should go elsewhere
+/* FIXME: following doc should go elsewhere */
 "param Locale: What locales to use for gammu error messages, default is 'auto' which does autodetection according to user locales\n"
 "type Locale: string\n"
 ;

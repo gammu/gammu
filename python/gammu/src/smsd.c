@@ -294,7 +294,7 @@ SMSD_init(SMSDObject *self, PyObject *args, PyObject *kwds)
 static char SMSDType__doc__[] =
 "SMSD(Config)\n\n"
 "SMSD object, that is used for communication with phone.\n\n"
-// FIXME: following doc should go elsewhere
+/* FIXME: following doc should go elsewhere */
 "param Config: Path to SMSD configuration file\n"
 "type Config: string\n"
 ;
