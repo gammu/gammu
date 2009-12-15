@@ -66,8 +66,6 @@
 
 const char smsd_name[] = "gammu-smsd";
 
-GSM_SMSDConfig		SMSDaemon_Config;
-
 /**
  * Checks whether database schema version matches current one.
  */
