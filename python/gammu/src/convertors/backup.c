@@ -143,7 +143,7 @@ int BackupFromPython(PyObject *dict, GSM_Backup *backup) {
     char                *s;
 
     if (!PyDict_Check(dict)) {
-        PyErr_SetString(PyExc_ValueError, "Backup not a dictionary!");
+        PyErr_SetString(PyExc_ValueError, "Backup is not a dictionary!");
         return 0;
     }
 
