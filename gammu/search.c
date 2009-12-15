@@ -131,10 +131,10 @@ THREAD_RETURN SearchPhoneThread(void * arg)
 		/* Configure the tested state machine */
 		smcfg->Device = strdup(Info->Device);
 		smcfg->Connection = strdup(Info->Connections[j].Connection);
-		smcfg->SyncTime = strdup("no");
+		smcfg->SyncTime = FALSE;
 		smcfg->Model[0] = 0;
-		smcfg->LockDevice = strdup("no");
-		smcfg->StartInfo = strdup("no");
+		smcfg->LockDevice = FALSE;
+		smcfg->StartInfo = FALSE;
 
 		/* We have only one configured connection */
 		GSM_SetConfigNum(search_gsm, 1);

@@ -969,8 +969,7 @@ void DCT4SetLight(int argc, char *argv[])
 	}
 
 	for (i=0;i<gsm->ConfigNum;i++) {
-		free(gsm->Config[i].StartInfo);
-		gsm->Config[i].StartInfo = strdup("FALSE");
+		gsm->Config[i].StartInfo = FALSE;
 	}
 
 	GSM_Init(TRUE);

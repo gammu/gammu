@@ -477,7 +477,7 @@ GSM_Error GSM_OpenConnection(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	if (s->CurrentConfig->LockDevice != NULL && strcasecmp(s->CurrentConfig->LockDevice,"yes") == 0) {
+	if (s->CurrentConfig->LockDevice) {
 		error = lock_device(s, s->CurrentConfig->Device, &(s->LockFile));
 		if (error != ERR_NONE) return error;
 	}
@@ -763,12 +763,12 @@ autodetect:
 			return error;
 		}
 
-		if (strcasecmp(s->CurrentConfig->StartInfo,"yes") == 0) {
+		if (s->CurrentConfig->StartInfo) {
 			s->Phone.Functions->ShowStartInfo(s,TRUE);
 			s->Phone.Data.StartInfoCounter = 30;
 		}
 
-		if (strcasecmp(s->CurrentConfig->SyncTime,"yes") == 0) {
+		if (s->CurrentConfig->SyncTime) {
 			GSM_GetCurrentDateTime (&current_time);
 			s->Phone.Functions->SetDateTime(s,&current_time);
 		}
@@ -845,7 +845,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 
 	smprintf(s,"[Terminating]\n");
 
-	if (strcasecmp(s->CurrentConfig->StartInfo,"yes") == 0) {
+	if (s->CurrentConfig->StartInfo) {
 		if (s->Phone.Data.StartInfoCounter > 0) s->Phone.Functions->ShowStartInfo(s,FALSE);
 	}
 
@@ -915,7 +915,7 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
 	GSM_Error		error;
 	int			reply;
 
-	if (strcasecmp(s->CurrentConfig->StartInfo,"yes") == 0) {
+	if (s->CurrentConfig->StartInfo) {
 		if (Phone->StartInfoCounter > 0) {
 			Phone->StartInfoCounter--;
 			if (Phone->StartInfoCounter == 0) s->Phone.Functions->ShowStartInfo(s,FALSE);
@@ -1182,11 +1182,11 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 #endif
         static const char *DefaultModel		= "";
         static const char *DefaultConnection		= "fbus";
-	static const char *DefaultSynchronizeTime	= "no";
+	static gboolean DefaultSynchronizeTime	= FALSE;
 	static const char *DefaultDebugFile		= "";
 	static const char *DefaultDebugLevel		= "";
-	static const char *DefaultLockDevice		= "no";
-	static const char *DefaultStartInfo		= "no";
+	static gboolean DefaultLockDevice		= FALSE;
+	static gboolean DefaultStartInfo		= FALSE;
 
 	/* By default all debug output will go to one filedescriptor */
 	static const gboolean DefaultUseGlobalDebugFile 	= TRUE;
@@ -1238,13 +1238,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	}
 
 	/* Set time sync */
-	free(cfg->SyncTime);
-	cfg->SyncTime 	 = INI_GetValue(cfg_info, section, "synchronizetime",	FALSE);
-	if (cfg->SyncTime == NULL) {
-		cfg->SyncTime		 	 = strdup(DefaultSynchronizeTime);
-	} else {
-		cfg->SyncTime			 = strdup(cfg->SyncTime);
-	}
+	cfg->SyncTime = INI_GetBool(cfg_info, section, "synchronizetime", DefaultSynchronizeTime);
 
 	/* Set debug file */
 	free(cfg->DebugFile);
@@ -1257,13 +1251,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	}
 
 	/* Set file locking */
-	free(cfg->LockDevice);
-	cfg->LockDevice  = INI_GetValue(cfg_info, section, "use_locking", 	FALSE);
-	if (cfg->LockDevice == NULL) {
-		cfg->LockDevice	 		 = strdup(DefaultLockDevice);
-	} else {
-		cfg->LockDevice			 = strdup(cfg->LockDevice);
-	}
+	cfg->LockDevice  = INI_GetBool(cfg_info, section, "use_locking", DefaultLockDevice);
 
 	/* Set model */
 	Temp		 = INI_GetValue(cfg_info, section, "model", 		FALSE);
@@ -1287,14 +1275,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	}
 
 	/* Set startup info */
-	free(cfg->StartInfo);
-	cfg->StartInfo   = INI_GetValue(cfg_info, section, "startinfo", 	FALSE);
-
-	if (cfg->StartInfo == NULL) {
-		cfg->StartInfo	 		 = strdup(DefaultStartInfo);
-	} else {
-		cfg->StartInfo			 = strdup(cfg->StartInfo);
-	}
+	cfg->StartInfo = INI_GetBool(cfg_info, section, "startinfo", DefaultStartInfo);
 
 	/* Read localised strings for some phones */
 
@@ -1367,12 +1348,12 @@ fail:
 	if (num == 0) {
 		cfg->Device		 	 = strdup(DefaultPort);
 		cfg->Connection	 		 = strdup(DefaultConnection);
-		cfg->SyncTime		 	 = strdup(DefaultSynchronizeTime);
+		cfg->SyncTime		 	 = DefaultSynchronizeTime;
 		cfg->DebugFile		 	 = strdup(DefaultDebugFile);
-		cfg->LockDevice	 		 = strdup(DefaultLockDevice);
+		cfg->LockDevice	 		 = DefaultLockDevice;
 		strcpy(cfg->Model,DefaultModel);
 		strcpy(cfg->DebugLevel,DefaultDebugLevel);
-		cfg->StartInfo	 		 = strdup(DefaultStartInfo);
+		cfg->StartInfo	 		 = DefaultStartInfo;
 		strcpy(cfg->TextReminder,"Reminder");
 		strcpy(cfg->TextMeeting,"Meeting");
 		strcpy(cfg->TextCall,"Call");
@@ -1624,14 +1605,8 @@ void GSM_FreeStateMachine(GSM_StateMachine *s)
 		s->Config[i].Device=NULL;
 		free(s->Config[i].Connection);
 		s->Config[i].Connection=NULL;
-		free(s->Config[i].SyncTime);
-		s->Config[i].SyncTime=NULL;
 		free(s->Config[i].DebugFile);
 		s->Config[i].DebugFile=NULL;
-		free(s->Config[i].LockDevice);
-		s->Config[i].LockDevice=NULL;
-		free(s->Config[i].StartInfo);
-		s->Config[i].StartInfo=NULL;
 	}
 	free(s);
 	s=NULL;

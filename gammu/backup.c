@@ -1096,7 +1096,7 @@ void Restore(int argc, char *argv[])
 		fprintf(stderr, "\n");
 	}
 
-	if (!strcasecmp(GSM_GetConfig(gsm, -1)->SyncTime,"yes") == 0) {
+	if (GSM_GetConfig(gsm, -1)->SyncTime == FALSE) {
 		if (answer_yes(_("Do you want to set phone date/time? (NOTE: in some phones it's required to correctly restore calendar notes and other items)"))) {
 			GSM_GetCurrentDateTime(&date_time);
 
@@ -1627,7 +1627,7 @@ void AddNew(int argc, char *argv[])
 		}
 	}
 
-	if (!strcasecmp(GSM_GetConfig(gsm, -1)->SyncTime,"yes") == 0) {
+	if (GSM_GetConfig(gsm, -1)->SyncTime == FALSE) {
 		if (answer_yes(_("Do you want to set phone date/time? (NOTE: in some phones it's required to correctly restore calendar notes and other items)"))) {
 			GSM_GetCurrentDateTime(&date_time);
 

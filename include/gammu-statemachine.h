@@ -60,11 +60,11 @@ typedef struct {
 	/**
 	 * Synchronize time on startup?
 	 */
-	char *SyncTime;
+	gboolean SyncTime;
 	/**
 	 * Lock device ? (Unix)
 	 */
-	char *LockDevice;
+	gboolean LockDevice;
 	/**
 	 * Name of debug file
 	 */
@@ -72,7 +72,7 @@ typedef struct {
 	/**
 	 * Display something during start ?
 	 */
-	char *StartInfo;
+	gboolean StartInfo;
 	/**
 	 * Should we use global debug file?
 	 */

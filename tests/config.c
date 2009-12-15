@@ -12,7 +12,7 @@
 int main(int argc, char **argv)
 {
     GSM_Error error;
-    GSM_Config cfg  = {"", "", NULL, NULL, NULL, NULL, NULL, NULL, FALSE, "", "", "", "", "", {0}};
+    GSM_Config cfg  = {"", "", NULL, NULL, FALSE, FALSE, NULL, FALSE, FALSE, "", "", "", "", "", {0}};
     INI_Section *ini = NULL;
 
 	/* Check parameters */
@@ -34,10 +34,7 @@ int main(int argc, char **argv)
 
     free(cfg.Device);
     free(cfg.Connection);
-    free(cfg.SyncTime);
     free(cfg.DebugFile);
-    free(cfg.LockDevice);
-    free(cfg.StartInfo);
 
     return 0;
 }

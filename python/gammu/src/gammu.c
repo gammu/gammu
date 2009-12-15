@@ -394,14 +394,14 @@ StateMachine_GetConfig(StateMachineObject *self, PyObject *args, PyObject *kwds)
         return NULL;
     }
 
-    return Py_BuildValue("{s:s,s:s,s:s,s:s,s:s,s:s,s:s,s:s,s:i}",
+    return Py_BuildValue("{s:s,s:s,s:s,s:s,s:s,s:i,s:i,s:i,s:i}",
         "Model", Config->Model,
         "DebugLevel", Config->DebugLevel,
         "Device", Config->Device,
         "Connection", Config->Connection,
+        "DebugFile", Config->DebugFile,
         "SyncTime", Config->SyncTime,
         "LockDevice", Config->LockDevice,
-        "DebugFile", Config->DebugFile,
         "StartInfo", Config->StartInfo,
         "UseGlobalDebugFile", Config->UseGlobalDebugFile);
 }
@@ -451,6 +451,24 @@ StateMachine_SetConfig(StateMachineObject *self, PyObject *args, PyObject *kwds)
                 return NULL;
             }
             Config->UseGlobalDebugFile = PyInt_AsLong(value);
+        } else if (strcmp(s, "LockDevice") == 0) {
+            if (!PyInt_Check(value)) {
+                PyErr_Format(PyExc_ValueError, "Non integer value for LockDevice");
+                return NULL;
+            }
+            Config->LockDevice = PyInt_AsLong(value);
+        } else if (strcmp(s, "StartInfo") == 0) {
+            if (!PyInt_Check(value)) {
+                PyErr_Format(PyExc_ValueError, "Non integer value for StartInfo");
+                return NULL;
+            }
+            Config->StartInfo = PyInt_AsLong(value);
+        } else if (strcmp(s, "SyncTime") == 0) {
+            if (!PyInt_Check(value)) {
+                PyErr_Format(PyExc_ValueError, "Non integer value for SyncTime");
+                return NULL;
+            }
+            Config->SyncTime = PyInt_AsLong(value);
         } else {
             if (PyString_Check(value) || PyUnicode_Check(value)) {
                 if (PyUnicode_Check(value)) {
@@ -500,18 +518,9 @@ StateMachine_SetConfig(StateMachineObject *self, PyObject *args, PyObject *kwds)
             } else if (strcmp(s, "Connection") == 0) {
                 free(Config->Connection);
                 Config->Connection = setv;
-            } else if (strcmp(s, "SyncTime") == 0) {
-                free(Config->SyncTime);
-                Config->SyncTime = setv;
-            } else if (strcmp(s, "LockDevice") == 0) {
-                free(Config->LockDevice);
-                Config->LockDevice = setv;
             } else if (strcmp(s, "DebugFile") == 0) {
                 free(Config->DebugFile);
                 Config->DebugFile = setv;
-            } else if (strcmp(s, "StartInfo") == 0) {
-                free(Config->StartInfo);
-                Config->StartInfo = setv;
             } else if (strcmp(s, "Localize") == 0) {
                 /* We ignore this for backward compatibility */
             } else {
