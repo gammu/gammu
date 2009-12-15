@@ -283,7 +283,22 @@ done:
 	return error;
 }
 
-/*
+/**
+ * Returns integer value from configuration.
+ */
+int INI_GetInt(INI_Section *cfg, const unsigned char *section, const unsigned char *key, int fallback)
+{
+	char *str;
+
+	str = (char *)INI_GetValue(cfg, section, key, FALSE);
+	if (str) {
+		return atoi(str);
+	} else {
+		return fallback;
+	}
+}
+
+/**
  * Search for key value in file in Windows INI format style
  * Returns found value or NULL
  */

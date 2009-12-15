@@ -654,24 +654,19 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		SMSD_Log(DEBUG_NOTICE, Config, "Phone code is \"%s\"",Config->PhoneCode);
 	}
 
-	str = INI_GetValue(Config->smsdcfgfile, "smsd", "commtimeout", FALSE);
-	if (str) Config->commtimeout=atoi(str); else Config->commtimeout = 30;
-	str = INI_GetValue(Config->smsdcfgfile, "smsd", "deliveryreportdelay", FALSE);
-	if (str) Config->deliveryreportdelay=atoi(str); else Config->deliveryreportdelay = 600;
-	str = INI_GetValue(Config->smsdcfgfile, "smsd", "sendtimeout", FALSE);
-	if (str) Config->sendtimeout=atoi(str); else Config->sendtimeout = 30;
-	str = INI_GetValue(Config->smsdcfgfile, "smsd", "receivefrequency", FALSE);
-	if (str) Config->receivefrequency=atoi(str); else Config->receivefrequency = 0;
+	Config->commtimeout = INI_GetInt(Config->smsdcfgfile, "smsd", "commtimeout", 30);
+	Config->deliveryreportdelay = INI_GetInt(Config->smsdcfgfile, "smsd", "deliveryreportdelay", 600);
+	Config->sendtimeout = INI_GetInt(Config->smsdcfgfile, "smsd", "sendtimeout", 30);
+	Config->receivefrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "receivefrequency", 0);
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "checksecurity", FALSE);
 	if (str) Config->checksecurity = INI_IsTrue(str); else Config->checksecurity = TRUE;
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "checksignal", FALSE);
 	if (str) Config->checksignal = INI_IsTrue(str); else Config->checksignal = TRUE;
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "checkbattery", FALSE);
 	if (str) Config->checkbattery = INI_IsTrue(str); else Config->checkbattery = TRUE;
-	str = INI_GetValue(Config->smsdcfgfile, "smsd", "resetfrequency", FALSE);
-	if (str) Config->resetfrequency=atoi(str); else Config->resetfrequency = 0;
-	str = INI_GetValue(Config->smsdcfgfile, "smsd", "maxretries", FALSE);
-	if (str) Config->maxretries=atoi(str); else Config->maxretries = 1;
+	Config->resetfrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "resetfrequency", 0);
+	Config->maxretries = INI_GetInt(Config->smsdcfgfile, "smsd", "maxretries", 1);
+
 	SMSD_Log(DEBUG_NOTICE, Config, "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i",
 			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency);
 	SMSD_Log(DEBUG_NOTICE, Config, "checks: security=%d, battery=%d, signal=%d",
