@@ -1075,46 +1075,50 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM_
 	return error;
 }
 
+/**
+ * Reads message from phone, processes it and delete it from phone afterwards.
+ */
 gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 {
-	gboolean			start;
-	GSM_MultiSMSMessage 	sms;
-	GSM_Error		error=ERR_NONE;
-	int			i;
+	gboolean start;
+	GSM_MultiSMSMessage sms;
+	GSM_Error error = ERR_NONE;
+	int i;
 
 	start=TRUE;
 	sms.Number = 0;
 	sms.SMS[0].Location = 0;
 	while (error == ERR_NONE && !Config->shutdown) {
 		sms.SMS[0].Folder = 0;
-		error=GSM_GetNextSMS(Config->gsm, &sms, start);
+		error = GSM_GetNextSMS(Config->gsm, &sms, start);
 		switch (error) {
-		case ERR_EMPTY:
-			break;
-		case ERR_NONE:
-			if (SMSD_ValidMessage(Config, Service, &sms)) {
-				error = SMSD_ProcessSMS(Config, Service, &sms);
-			}
-			break;
-		default:
-	 		SMSD_Log(DEBUG_INFO, Config, "Error getting SMS (%s:%i)", GSM_ErrorString(error), error);
-			return FALSE;
+			case ERR_EMPTY:
+				break;
+			case ERR_NONE:
+				if (SMSD_ValidMessage(Config, Service, &sms)) {
+					error = SMSD_ProcessSMS(Config, Service, &sms);
+				}
+				break;
+			default:
+				SMSD_Log(DEBUG_INFO, Config, "Error getting SMS (%s:%i)", GSM_ErrorString(error), error);
+				return FALSE;
 		}
+		/* Delete any inbox messages */
 		if (error == ERR_NONE && sms.SMS[0].InboxFolder) {
-			for (i=0;i<sms.Number;i++) {
-				sms.SMS[i].Folder=0;
-				error=GSM_DeleteSMS(Config->gsm,&sms.SMS[i]);
+			for (i = 0; i < sms.Number; i++) {
+				sms.SMS[i].Folder = 0;
+				error=GSM_DeleteSMS(Config->gsm, &sms.SMS[i]);
 				switch (error) {
-				case ERR_NONE:
-				case ERR_EMPTY:
-					break;
-				default:
-					SMSD_Log(DEBUG_INFO, Config, "Error deleting SMS (%s:%i)", GSM_ErrorString(error), error);
-					return FALSE;
+					case ERR_NONE:
+					case ERR_EMPTY:
+						break;
+					default:
+						SMSD_Log(DEBUG_INFO, Config, "Error deleting SMS (%s:%i)", GSM_ErrorString(error), error);
+						return FALSE;
 				}
 			}
 		}
-		start=FALSE;
+		start = FALSE;
 	}
 	return TRUE;
 }
