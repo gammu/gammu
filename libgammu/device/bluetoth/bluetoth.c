@@ -11,7 +11,6 @@
 #include <errno.h>
 #include <string.h>
 
-//#include "../../misc/coding/coding.h"
 #include "../../gsmcomon.h"
 #include "../devfunc.h"
 #include "bluetoth.h"
