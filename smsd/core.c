@@ -793,24 +793,33 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	return ERR_NONE;
 }
 
+/**
+ * Checks whether phone does not need to enter some PIN.
+ */
 gboolean SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 {
-	GSM_SecurityCode 	SecurityCode;
-	GSM_Error		error;
+	GSM_SecurityCode SecurityCode;
+	GSM_Error error;
 	const char *code = NULL;
 
 	/* Need PIN ? */
-	error=GSM_GetSecurityStatus(Config->gsm,&SecurityCode.Type);
+	error = GSM_GetSecurityStatus(Config->gsm, &SecurityCode.Type);
+
+	/* No supported - do not check more */
+	if (error == ERR_NOTSUPPORTED) {
+		return TRUE;
+	}
+
 	/* Unknown error */
-	if (error != ERR_NOTSUPPORTED && error != ERR_NONE) {
+	if (error != ERR_NONE) {
 		SMSD_Log(DEBUG_ERROR, Config, "Error getting security status (%s:%i)", GSM_ErrorString(error), error);
 		return FALSE;
 	}
-	/* No supported - do not check more */
-	if (error == ERR_NOTSUPPORTED) return TRUE;
 
 	/* If PIN, try to enter */
 	switch (SecurityCode.Type) {
+		case SEC_None:
+			return TRUE;
 		case SEC_Pin:
 			code = Config->PINCode;
 			break;
@@ -826,13 +835,15 @@ gboolean SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 		case SEC_Puk2:
 			SMSD_Terminate(Config, "ERROR: phone requires not supported code type", ERR_UNKNOWN, TRUE, -1);
 			return FALSE;
-		case SEC_None:
-			return TRUE;
 	}
+
+	/* Check if the PIN was configured */
 	if (code == NULL) {
 		SMSD_Log(DEBUG_INFO, Config, "Warning: no code in config when phone might want one!");
 		return FALSE;
 	}
+
+	/* Enter the PIN */
 	SMSD_Log(DEBUG_NOTICE, Config, "Trying to enter code");
 	strcpy(SecurityCode.Code, code);
 	error = GSM_EnterSecurityCode(Config->gsm, SecurityCode);
