@@ -172,12 +172,24 @@ void SMSD_LogErrno(GSM_SMSDConfig *Config, const char *message)
 #endif
 }
 
+/**
+ * Log Gammu error code together with text.
+ */
+void SMSD_LogError(SMSD_DebugLevel level, GSM_SMSDConfig *Config, const char *message, GSM_Error error)
+{
+	SMSD_Log(level, Config, "%s: %s (%s[%i])",
+		message,
+		GSM_ErrorString(error),
+		GSM_ErrorName(error),
+		error);
+}
+
 void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, gboolean exitprogram, int rc)
 {
 	int ret = ERR_NONE;
 
 	if (error != ERR_NONE && error != 0) {
-		SMSD_Log(DEBUG_ERROR, Config, "%s (%s:%i)", msg, GSM_ErrorString(error), error);
+		SMSD_LogError(DEBUG_ERROR, Config, msg, error);
 	} else if (rc != 0) {
 		SMSD_LogErrno(Config, msg);
 	}
@@ -812,7 +824,7 @@ gboolean SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 
 	/* Unknown error */
 	if (error != ERR_NONE) {
-		SMSD_Log(DEBUG_ERROR, Config, "Error getting security status (%s:%i)", GSM_ErrorString(error), error);
+		SMSD_LogError(DEBUG_ERROR, Config, "Error getting security status", error);
 		return FALSE;
 	}
 
@@ -852,7 +864,7 @@ gboolean SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 		return FALSE;
 	}
 	if (error != ERR_NONE) {
-		SMSD_Log(DEBUG_ERROR, Config, "Error entering PIN (%s:%i)", GSM_ErrorString(error), error);
+		SMSD_LogError(DEBUG_ERROR, Config, "Error entering PIN", error);
 		return FALSE;
 	}
 	return TRUE;
@@ -1111,7 +1123,7 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				}
 				break;
 			default:
-				SMSD_Log(DEBUG_INFO, Config, "Error getting SMS (%s:%i)", GSM_ErrorString(error), error);
+				SMSD_LogError(DEBUG_INFO, Config, "Error getting SMS", error);
 				return FALSE;
 		}
 		/* Delete any inbox messages */
@@ -1124,7 +1136,7 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 					case ERR_EMPTY:
 						break;
 					default:
-						SMSD_Log(DEBUG_INFO, Config, "Error deleting SMS (%s:%i)", GSM_ErrorString(error), error);
+						SMSD_LogError(DEBUG_INFO, Config, "Error deleting SMS", error);
 						return FALSE;
 				}
 			}
@@ -1142,7 +1154,7 @@ gboolean SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	/* Do we have any SMS in phone ? */
 	error=GSM_GetSMSStatus(Config->gsm,&SMSStatus);
 	if (error != ERR_NONE) {
-		SMSD_Log(DEBUG_INFO, Config, "Error getting SMS status (%s:%i)", GSM_ErrorString(error), error);
+		SMSD_LogError(DEBUG_INFO, Config, "Error getting SMS status", error);
 		return FALSE;
 	}
 	/* Yes. We have SMS in phone */
@@ -1263,8 +1275,7 @@ gboolean SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		Config->SendingSMSStatus = ERR_TIMEOUT;
 		error = GSM_SendSMS(Config->gsm, &sms.SMS[i]);
 		if (error != ERR_NONE) {
-			SMSD_Log(DEBUG_INFO, Config, "Error sending SMS %s (%i): %s",
-				Config->SMSID, error, GSM_ErrorString(error));
+			SMSD_LogError(DEBUG_INFO, Config, "Error sending SMS", error);
 			Config->TPMR = -1;
 			goto failure_unsent;
 		}
@@ -1286,9 +1297,7 @@ gboolean SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			if (j>Config->sendtimeout) break;
 		}
 		if (Config->SendingSMSStatus != ERR_NONE) {
-			SMSD_Log(DEBUG_INFO, Config, "Error getting send status of %s (%i): %s",
-				Config->SMSID,
-				Config->SendingSMSStatus, GSM_ErrorString(Config->SendingSMSStatus));
+			SMSD_LogError(DEBUG_INFO, Config, "Error getting send status of message", Config->SendingSMSStatus);
 			goto failure_unsent;
 		}
 		Config->Status->Sent++;
@@ -1384,8 +1393,8 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure)
 		/* There were errors in communication - try to recover */
 		if (errors > 2 || errors == -1) {
 			if (errors != -1) {
-				SMSD_Log(DEBUG_INFO, Config, "Terminating communication %s, (%i, %i times)",
-						GSM_ErrorString(error), error, errors);
+				SMSD_Log(DEBUG_INFO, Config, "Already hit %d errors", errors);
+				SMSD_LogError(DEBUG_INFO, Config, "Terminating communication", error);
 				error=GSM_TerminateConnection(Config->gsm);
 			}
 			if (initerrors++ > 3) {
@@ -1419,9 +1428,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure)
 				}
 				if (initerrors > 3 || initerrors < 0) {
 					error = GSM_Reset(Config->gsm, FALSE); /* soft reset */
-					SMSD_Log(DEBUG_INFO, Config, "Reset return code: %s (%i) ",
-							GSM_ErrorString(error),
-							error);
+					SMSD_LogError(DEBUG_INFO, Config, "Reset return code", error);
 					lastreset = time(NULL);
 					sleep(5);
 				}
@@ -1431,8 +1438,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure)
 						error, TRUE, -1);
 				goto done;
 			default:
-				SMSD_Log(DEBUG_INFO, Config, "Error at init connection %s (%i)",
-						GSM_ErrorString(error), error);
+				SMSD_LogError(DEBUG_INFO, Config, "Error at init connection", error);
 				errors = 250;
 				break;
 			}
