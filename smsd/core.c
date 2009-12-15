@@ -869,7 +869,7 @@ char *SMSD_RunOnReceiveCommand(GSM_SMSDConfig *Config, const char *locations)
 }
 
 #ifdef WIN32
-gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, char *locations)
+gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms UNUSED, GSM_SMSDConfig *Config, char *locations)
 {
 	BOOL ret;
 	STARTUPINFO si;
@@ -906,7 +906,7 @@ gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Confi
 }
 #else
 
-gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, char *locations)
+gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms UNUSED, GSM_SMSDConfig *Config, char *locations)
 {
 	int pid;
 	int i;
@@ -1024,14 +1024,63 @@ gboolean SMSD_CheckSMSCNumber(GSM_SMSDConfig *Config, GSM_SMSDService *Service, 
 	return TRUE;
 }
 
+/**
+ * Performs checks whether given message is valid to be received by SMSD.
+ */
+gboolean SMSD_ValidMessage(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM_MultiSMSMessage *sms)
+{
+	char buffer[100];
+
+	/* Not Inbox SMS - exit */
+	if (!sms->SMS[0].InboxFolder) {
+		return FALSE;
+	}
+	/* Check SMSC number if we want to handle it */
+	DecodeUnicode(sms->SMS[0].SMSC.Number, buffer);
+	if (!SMSD_CheckSMSCNumber(Config, Service, buffer)) {
+		SMSD_Log(DEBUG_NOTICE, Config, "Message excluded because of SMSC: %s", buffer);
+		return FALSE;
+	}
+	/* Check sender number if we want to handle it */
+	DecodeUnicode(sms->SMS[0].Number, buffer);
+	if (!SMSD_CheckRemoteNumber(Config, Service, buffer)) {
+		SMSD_Log(DEBUG_NOTICE, Config, "Message excluded because of sender: %s", buffer);
+		return FALSE;
+	}
+	/* Finally process the message */
+	SMSD_Log(DEBUG_NOTICE, Config, "Received message from: %s", buffer);
+	return TRUE;
+}
+
+/**
+ * Does any processing is required for single message after it has been accepted.
+ *
+ * Stores message in the backend and executes RunOnReceive.
+ */
+GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM_MultiSMSMessage *sms)
+{
+	GSM_Error error = ERR_NONE;
+	char *locations;
+
+	/* Increase message counter */
+	Config->Status->Received += sms->Number;
+	/* Send message to the backend */
+	error = Service->SaveInboxSMS(sms, Config, &locations);
+	/* RunOnReceive handling */
+	if (Config->RunOnReceive != NULL && error == ERR_NONE) {
+		SMSD_RunOnReceive(sms, Config, locations);
+	}
+	/* Free memory allocated by SaveInboxSMS */
+	free(locations);
+	return error;
+}
+
 gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 {
 	gboolean			start;
 	GSM_MultiSMSMessage 	sms;
-	char 		buffer[100];
 	GSM_Error		error=ERR_NONE;
 	int			i;
-	char			*locations;
 
 	start=TRUE;
 	sms.Number = 0;
@@ -1043,23 +1092,8 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		case ERR_EMPTY:
 			break;
 		case ERR_NONE:
-			/* Not Inbox SMS - exit */
-			if (!sms.SMS[0].InboxFolder) break;
-			DecodeUnicode(sms.SMS[0].SMSC.Number,buffer);
-			if (!SMSD_CheckSMSCNumber(Config, Service, buffer)) {
-				SMSD_Log(DEBUG_NOTICE, Config, "Message excluded because of SMSC: %s", buffer);
-			}
-			DecodeUnicode(sms.SMS[0].Number,buffer);
-			if (SMSD_CheckRemoteNumber(Config, Service, buffer)) {
-				SMSD_Log(DEBUG_NOTICE, Config, "Received message from %s", buffer);
-				Config->Status->Received += sms.Number;
-	 			error = Service->SaveInboxSMS(&sms, Config, &locations);
-				if (Config->RunOnReceive != NULL && error == ERR_NONE) {
-					SMSD_RunOnReceive(sms, Config, locations);
-				}
-				free(locations);
-			} else {
-				SMSD_Log(DEBUG_NOTICE, Config, "Excluded %s", buffer);
+			if (SMSD_ValidMessage(Config, Service, &sms)) {
+				error = SMSD_ProcessSMS(Config, Service, &sms);
 			}
 			break;
 		default:
