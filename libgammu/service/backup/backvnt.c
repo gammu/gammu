@@ -39,7 +39,10 @@ GSM_Error SaveVNT(char *FileName, GSM_Backup *backup)
 	while (backup->Note[i]!=NULL) {
 		Length = 0;
 		error = GSM_EncodeVNTFile(Buffer, sizeof(Buffer), &Length, backup->Note[i]);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			fclose(file);
+			return error;
+		}
 		chk_fwrite(Buffer,1,Length,file);
 		i++;
 		sprintf(Buffer, "%c%c",13,10);

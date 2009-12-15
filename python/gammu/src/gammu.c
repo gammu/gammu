@@ -523,6 +523,7 @@ StateMachine_SetConfig(StateMachineObject *self, PyObject *args, PyObject *kwds)
                 Config->DebugFile = setv;
             } else if (strcmp(s, "Localize") == 0) {
                 /* We ignore this for backward compatibility */
+                free(setv);
             } else {
                 free(setv);
                 PyErr_Format(PyExc_ValueError, "Uknown key: %s", s);

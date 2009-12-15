@@ -40,7 +40,10 @@ GSM_Error SaveVCalendar(char *FileName, GSM_Backup *backup)
 		chk_fwrite(Buffer,1,2,file);
 		Length = 0;
 		error = GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer),&Length,backup->Calendar[i],FALSE,Nokia_VCalendar);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			fclose(file);
+			return error;
+		}
 		chk_fwrite(Buffer,1,Length,file);
 		i++;
 	}
@@ -50,7 +53,10 @@ GSM_Error SaveVCalendar(char *FileName, GSM_Backup *backup)
 		chk_fwrite(Buffer,1,2,file);
 		Length = 0;
 		error = GSM_EncodeVTODO(Buffer, sizeof(Buffer),&Length,backup->ToDo[i],FALSE,Nokia_VToDo);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			fclose(file);
+			return error;
+		}
 		chk_fwrite(Buffer,1,Length,file);
 		i++;
 	}

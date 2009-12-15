@@ -175,7 +175,10 @@ GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
 		i=0;
 		while (backup->PhonePhonebook[i]!=NULL) {
 			error = SaveLMBPBKEntry(file, backup->PhonePhonebook[i]);
-			if (error != ERR_NONE) return error;
+			if (error != ERR_NONE) {
+				fclose(file);
+				return error;
+			}
 			i++;
 		}
 	}
@@ -188,19 +191,28 @@ GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
 		i=0;
 		while (backup->SIMPhonebook[i]!=NULL) {
 			error = SaveLMBPBKEntry(file, backup->SIMPhonebook[i]);
-			if (error != ERR_NONE) return error;
+			if (error != ERR_NONE) {
+				fclose(file);
+				return error;
+			}
 			i++;
 		}
 	}
 	i=0;
 	while (backup->CallerLogos[i]!=NULL) {
 		error = SaveLMBCallerEntry(file, *backup->CallerLogos[i]);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			fclose(file);
+			return error;
+		}
 		i++;
 	}
 	if (backup->StartupLogo!=NULL) {
 		error = SaveLMBStartupEntry(file, *backup->StartupLogo);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			fclose(file);
+			return error;
+		}
 	}
 
 	fclose(file);
@@ -429,9 +441,13 @@ GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
 		blocksize = buffer[4] + buffer[5] * 256;
 		if (blocksize > sizeof(buffer2)) {
 			dbgprintf(NULL, "Too big block size!\n");
+			fclose(file);
 			return ERR_MOREMEMORY;
 		}
-		if (fread(buffer2, 1, blocksize, file) != blocksize) return ERR_FILENOTSUPPORTED;
+		if (fread(buffer2, 1, blocksize, file) != blocksize) {
+			fclose(file);
+			return ERR_FILENOTSUPPORTED;
+		}
 
 #ifdef DEBUG
 		if (memcmp(buffer, "PBK ",4)==0) {

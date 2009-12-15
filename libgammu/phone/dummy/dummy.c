@@ -1000,6 +1000,7 @@ GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *
 	}
 	if (fwrite(File->Buffer, 1, File->Used, file) != File->Used) {
 		error = DUMMY_Error(s, "fwrite failed");
+		fclose(file);
 		if (error == ERR_EMPTY) return ERR_PERMISSION;
 		return error;
 	}
