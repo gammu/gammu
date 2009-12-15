@@ -862,9 +862,8 @@ char *SMSD_RunOnReceiveCommand(GSM_SMSDConfig *Config, const char *locations)
 	assert(result != NULL);
 
 	result[0] = 0;
-	strcat(result, "\"");
 	strcat(result, Config->RunOnReceive);
-	strcat(result, "\" ");
+	strcat(result, " ");
 	strcat(result, locations);
 	return result;
 }
