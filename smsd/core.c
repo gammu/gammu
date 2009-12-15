@@ -415,7 +415,7 @@ GSM_Error SMSGetService(GSM_SMSDConfig *Config, GSM_SMSDService **Service)
 
 void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 {
-	GSM_SMSDService		*Service;
+	GSM_SMSDService	*Service;
 	GSM_Error error;
 
 	error = SMSGetService(Config, &Service);
@@ -423,14 +423,20 @@ void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 		Service->Free(Config);
 		Config->connected = FALSE;
 	}
+
 	SMSD_CloseLog(Config);
+
 	GSM_StringArray_Free(&(Config->IncludeNumbersList));
 	GSM_StringArray_Free(&(Config->ExcludeNumbersList));
 	GSM_StringArray_Free(&(Config->IncludeSMSCList));
 	GSM_StringArray_Free(&(Config->ExcludeSMSCList));
+
 	free(Config->gammu_log_buffer);
+
 	INI_Free(Config->smsdcfgfile);
+
 	GSM_FreeStateMachine(Config->gsm);
+
 	free(Config);
 }
 
@@ -439,7 +445,7 @@ void SMSD_FreeConfig(GSM_SMSDConfig *Config)
  */
 GSM_Error SMSD_LoadIniNumbersList(GSM_SMSDConfig *Config, GSM_StringArray *Array, const char *section)
 {
-	INI_Entry               *e;
+	INI_Entry *e;
 
 	for (e = INI_FindLastSectionEntry(Config->smsdcfgfile, section, FALSE); e != NULL; e = e->Prev) {
 		if (!GSM_StringArray_Add(Array, e->EntryValue)) {
