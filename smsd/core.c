@@ -184,25 +184,36 @@ void SMSD_LogError(SMSD_DebugLevel level, GSM_SMSDConfig *Config, const char *me
 		error);
 }
 
+/**
+ * Terminates SMSD, closing phone connection, closing log files and
+ * possibly reporting error code.
+ */
 void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, gboolean exitprogram, int rc)
 {
-	int ret = ERR_NONE;
+	GSM_Error ret = ERR_NONE;
 
+	/* Log error message */
 	if (error != ERR_NONE && error != 0) {
 		SMSD_LogError(DEBUG_ERROR, Config, msg, error);
 	} else if (rc != 0) {
 		SMSD_LogErrno(Config, msg);
 	}
+
+	/* Disconnect from phone */
 	if (GSM_IsConnected(Config->gsm)) {
 		SMSD_Log(DEBUG_INFO, Config, "Terminating communication...");
-		ret=GSM_TerminateConnection(Config->gsm);
-		if (ret!=ERR_NONE) {
-			printf("%s\n",GSM_ErrorString(error));
+		ret = GSM_TerminateConnection(Config->gsm);
+		if (ret != ERR_NONE) {
+			printf("%s\n", GSM_ErrorString(error));
+			/* Try again without checking errors */
 			if (GSM_IsConnected(Config->gsm)) {
+				SMSD_Log(DEBUG_INFO, Config, "Terminating communication for second time...");
 				GSM_TerminateConnection(Config->gsm);
 			}
 		}
 	}
+
+	/* Should we terminate program? */
 	if (exitprogram) {
 		if (rc == 0) {
 			Config->running = FALSE;
