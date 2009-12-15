@@ -3,7 +3,6 @@
 /* Licensed under GPL2+ */
 
 #include "debug.h"
-//#include "gsmstate.h"
 
 #include <string.h>
 #include <ctype.h>
