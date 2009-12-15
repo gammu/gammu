@@ -670,7 +670,21 @@
    fun:PyMarshal_ReadObjectFromString
    fun:PyMarshal_ReadLastObjectFromFile
 }
-
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:PyString_FromStringAndSize
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   fun:PyMarshal_ReadLastObjectFromFile
+}
 {
    3,072 bytes in 7 blocks are still reachable
    Memcheck:Leak
@@ -1016,6 +1030,18 @@
    fun:fill_free_list
    fun:PyInt_FromLong
    fun:PyModule_AddIntConstant
+   fun:init_locale
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:_PyObject_GC_Malloc
+   fun:PyType_GenericAlloc
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   fun:PyObject_CallFunction
+   fun:PyErr_NewException
    fun:init_locale
 }
 {
@@ -1714,6 +1740,27 @@
    fun:PyMarshal_ReadLastObjectFromFile
 }
 {
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:PyCode_New
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   obj:/usr/bin/python*
+   fun:PyMarshal_ReadLastObjectFromFile
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:realloc
+   obj:/usr/bin/python*
+   fun:PyEval_EvalFrameEx
+}
+{
    execcodemodule
    Memcheck:Leak
    fun:malloc
@@ -2270,13 +2317,18 @@
    fun:PyDict_SetItemString
    fun:PyType_Ready
    fun:init_struct
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:_PyObject_GC_Malloc
+   fun:PyType_GenericAlloc
    obj:/usr/bin/python*
    obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   fun:PyImport_ImportModuleLevel
-   obj:/usr/bin/python*
+   fun:PyObject_CallFunction
+   fun:PyErr_NewException
+   fun:init_struct
 }
 {
    <insert_a_suppression_name_here>
