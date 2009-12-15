@@ -125,6 +125,22 @@ int INI_GetInt(INI_Section *cfg,
 	const unsigned char *key,
 	int fallback);
 
+/**
+ * Returns boolean value from configuration. The file is automatically
+ * handled as not unicode.
+ *
+ * \param cfg File data as returned by \ref INI_ReadFile.
+ * \param section Section to scan.
+ * \param key Name of key to read.
+ * \param fallback Fallback value.
+ *
+ * \return Key value or fallback in case of failure.
+ */
+gboolean INI_GetBool(INI_Section *cfg,
+	const unsigned char *section,
+	const unsigned char *key,
+	gboolean fallback);
+
 
 /**
  * Checks whether value can be evaluated as true.

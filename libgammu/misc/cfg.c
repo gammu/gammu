@@ -299,6 +299,21 @@ int INI_GetInt(INI_Section *cfg, const unsigned char *section, const unsigned ch
 }
 
 /**
+ * Returns integer value from configuration.
+ */
+gboolean INI_GetBool(INI_Section *cfg, const unsigned char *section, const unsigned char *key, gboolean fallback)
+{
+	char *str;
+
+	str = (char *)INI_GetValue(cfg, section, key, FALSE);
+	if (str) {
+		return INI_IsTrue(str);
+	} else {
+		return fallback;
+	}
+}
+
+/**
  * Search for key value in file in Windows INI format style
  * Returns found value or NULL
  */

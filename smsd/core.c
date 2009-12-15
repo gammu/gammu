@@ -658,12 +658,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->deliveryreportdelay = INI_GetInt(Config->smsdcfgfile, "smsd", "deliveryreportdelay", 600);
 	Config->sendtimeout = INI_GetInt(Config->smsdcfgfile, "smsd", "sendtimeout", 30);
 	Config->receivefrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "receivefrequency", 0);
-	str = INI_GetValue(Config->smsdcfgfile, "smsd", "checksecurity", FALSE);
-	if (str) Config->checksecurity = INI_IsTrue(str); else Config->checksecurity = TRUE;
-	str = INI_GetValue(Config->smsdcfgfile, "smsd", "checksignal", FALSE);
-	if (str) Config->checksignal = INI_IsTrue(str); else Config->checksignal = TRUE;
-	str = INI_GetValue(Config->smsdcfgfile, "smsd", "checkbattery", FALSE);
-	if (str) Config->checkbattery = INI_IsTrue(str); else Config->checkbattery = TRUE;
+	Config->checksecurity = INI_GetBool(Config->smsdcfgfile, "smsd", "checksecurity", TRUE);
+	Config->checksignal = INI_GetBool(Config->smsdcfgfile, "smsd", "checksignal", TRUE);
+	Config->checkbattery = INI_GetBool(Config->smsdcfgfile, "smsd", "checkbattery", TRUE);
 	Config->resetfrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "resetfrequency", 0);
 	Config->maxretries = INI_GetInt(Config->smsdcfgfile, "smsd", "maxretries", 1);
 
