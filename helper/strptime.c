@@ -36,7 +36,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-//#include <sys/localedef.h>
 #include <ctype.h>
 #include <locale.h>
 #include <string.h>
