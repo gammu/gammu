@@ -207,7 +207,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 
 	/* Free allocated memory */
 	free(buff);
-	buff=NULL;
+	buff = NULL;
 
 	if (s->ConnectionType == 0) {
 		return ERR_UNKNOWNCONNECTIONTYPESTRING;
@@ -421,12 +421,12 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #endif
 		if (model->model[0] == 0) return ERR_UNKNOWNMODELSTRING;
 	}
-	s->Phone.Functions=NULL;
+	s->Phone.Functions = NULL;
 #ifdef GSM_ENABLE_ATGEN
 	/* AT module can have the same models ID to "normal" Nokia modules */
 	if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
 		GSM_RegisterModule(s,&ATGENPhone);
-		if (s->Phone.Functions!=NULL) return ERR_NONE;
+		if (s->Phone.Functions != NULL) return ERR_NONE;
 	}
 #endif
 	GSM_RegisterModule(s, &DUMMYPhone);
@@ -893,8 +893,8 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 
 		if (length != 0) {
 			free(sentmsg.Buffer);
-			sentmsg.Buffer=NULL;
-			Phone->SentMsg=NULL;
+			sentmsg.Buffer = NULL;
+			Phone->SentMsg = NULL;
 		}
 
 		/* Request completed */
@@ -999,7 +999,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	GSM_DumpMessageLevel3Recv(s, msg->Buffer, msg->Length, msg->Type);
 
 	Reply=s->User.UserReplyFunctions;
-	if (Reply!=NULL) error=CheckReplyFunctions(s,Reply,&reply);
+	if (Reply != NULL) error=CheckReplyFunctions(s,Reply,&reply);
 
 	if (error==ERR_UNKNOWNFRAME) {
 		Reply=s->Phone.Functions->ReplyFunctions;
@@ -1146,7 +1146,7 @@ void GSM_SetConfigNum(GSM_StateMachine *s, int sections)
  */
 void GSM_ExpandUserPath(char **string)
 {
-	char *tmp=NULL, *home=NULL;
+	char *tmp = NULL, *home = NULL;
 
 	/* Is there something to expand */
 	if (*string[0] != '~') return;
@@ -1173,7 +1173,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	INI_Section 	*h;
 	unsigned char 	section[50]={0};
 	gboolean	found = FALSE;
-	char		*Temp=NULL;
+	char		*Temp = NULL;
 
 #if defined(WIN32) || defined(DJGPP)
         static const char *DefaultPort		= "com2:";
@@ -1195,7 +1195,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	cfg->UseGlobalDebugFile	 = DefaultUseGlobalDebugFile;
 
 	/* If we don't have valid config, bail out */
-	if (cfg_info==NULL) {
+	if (cfg_info= = NULL) {
 		error = ERR_UNCONFIGURED;
 		goto fail;
 	}
@@ -1425,7 +1425,7 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, const char *description)
 {
 #ifdef WIN32
 	int 		i=0;
-	unsigned char 	*lpMsgBuf=NULL;
+	unsigned char 	*lpMsgBuf = NULL;
 #endif
 	GSM_Debug_Info *curdi;
 
@@ -1602,14 +1602,14 @@ void GSM_FreeStateMachine(GSM_StateMachine *s)
 	/* Free allocated memory */
 	for (i = 0; i <= MAX_CONFIG_NUM; i++) {
 		free(s->Config[i].Device);
-		s->Config[i].Device=NULL;
+		s->Config[i].Device = NULL;
 		free(s->Config[i].Connection);
-		s->Config[i].Connection=NULL;
+		s->Config[i].Connection = NULL;
 		free(s->Config[i].DebugFile);
-		s->Config[i].DebugFile=NULL;
+		s->Config[i].DebugFile = NULL;
 	}
 	free(s);
-	s=NULL;
+	s = NULL;
 }
 
 
