@@ -519,12 +519,12 @@ GSM_Error ATGEN_EncodeText(GSM_StateMachine *s,
 		default:
 			smprintf(s, "Unsupported charset! (%d)\n", Priv->Charset);
 			free(uname);
-			uname=NULL;
+			uname = NULL;
 			return ERR_SOURCENOTAVAILABLE;
 		}
 	*resultlength = len;
 	free(uname);
-	uname=NULL;
+	uname = NULL;
 	return ERR_NONE;
 }
 
@@ -645,7 +645,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 			if (2 * strlen(buffer) >= outlength) return ERR_MOREMEMORY;
 			DecodeDefault(output, buffer, strlen(buffer), TRUE, NULL);
 			free(buffer);
-			buffer=NULL;
+			buffer = NULL;
   			break;
   		case AT_CHARSET_GSM:
 			if (2 * length >= outlength) return ERR_MOREMEMORY;
@@ -791,7 +791,7 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
 GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned char *_input)
 {
 	unsigned char		buffer[100]={'\0'};
-	unsigned char		*pos=NULL;
+	unsigned char		*pos = NULL;
 	unsigned char		buffer_unicode[200]={'\0'};
 	unsigned char		input[100]={'\0'};
 	char separator = '\0', *separator_pos, *comma_pos, *date_start, *time_start;
@@ -932,12 +932,12 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 {
 	const char *fmt = format;
 	const char *inp = input;
-	char *endptr=NULL, *out_s=NULL, *search_pos=NULL;
+	char *endptr = NULL, *out_s = NULL, *search_pos = NULL;
 	GSM_DateTime *out_dt;
-	unsigned char *out_us=NULL,*buffer=NULL,*buffer2=NULL;
+	unsigned char *out_us = NULL,*buffer = NULL,*buffer2=NULL;
 	size_t length=0,storage_size=0;
-	int *out_i=NULL;
-	long int *out_l=NULL;
+	int *out_i = NULL;
+	long int *out_l = NULL;
 	va_list ap;
 	GSM_Error error = ERR_NONE;
 
@@ -997,7 +997,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 							smprintf(s, "Phone string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						}
 						free(buffer);
-						buffer=NULL;
+						buffer = NULL;
 
 						if (error != ERR_NONE) {
 							goto end;
@@ -1017,7 +1017,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 							smprintf(s, "Generic string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						}
 						free(buffer);
-						buffer=NULL;
+						buffer = NULL;
 
 						if (error != ERR_NONE) {
 							goto end;
@@ -1031,14 +1031,14 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						smprintf(s, "Parsed string with length \"%s\"\n", buffer);
 						if (!isdigit((int)buffer[0])) {
 							free(buffer);
-							buffer=NULL;
+							buffer = NULL;
 							error = ERR_UNKNOWNRESPONSE;
 							goto end;
 						}
 						search_pos = strchr(buffer, ',');
 						if (search_pos == NULL) {
 							free(buffer);
-							buffer=NULL;
+							buffer = NULL;
 							error = ERR_UNKNOWNRESPONSE;
 							goto end;
 						}
@@ -1051,7 +1051,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 							smprintf(s, "String with length decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						}
 						free(buffer);
-						buffer=NULL;
+						buffer = NULL;
 
 						if (error != ERR_NONE) {
 							goto end;
@@ -1065,14 +1065,14 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						smprintf(s, "Parsed utf-8 string with length \"%s\"\n", buffer);
 						if (!isdigit((int)buffer[0])) {
 							free(buffer);
-							buffer=NULL;
+							buffer = NULL;
 							error = ERR_UNKNOWNRESPONSE;
 							goto end;
 						}
 						search_pos = strchr(buffer, ',');
 						if (search_pos == NULL) {
 							free(buffer);
-							buffer=NULL;
+							buffer = NULL;
 							error = ERR_UNKNOWNRESPONSE;
 							goto end;
 						}
@@ -1080,7 +1080,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						DecodeUTF8(out_s, search_pos, strlen(search_pos));
 						smprintf(s, "utf-8 string with length decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						free(buffer);
-						buffer=NULL;
+						buffer = NULL;
 						inp += length;
 						break;
 					case 'e':
@@ -1096,7 +1096,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 							smprintf(s, "Generic string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						}
 						free(buffer);
-						buffer=NULL;
+						buffer = NULL;
 
 						if (error != ERR_NONE) {
 							goto end;
@@ -1115,7 +1115,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						DecodeUTF8(out_s, buffer, strlen(buffer));
 						smprintf(s, "Samsung string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						free(buffer);
-						buffer=NULL;
+						buffer = NULL;
 						inp += length;
 						break;
 					case 'r':
@@ -1125,13 +1125,13 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						smprintf(s, "Parsed raw string \"%s\"\n", buffer);
 						if (strlen(buffer) > storage_size) {
 							free(buffer);
-							buffer=NULL;
+							buffer = NULL;
 							error = ERR_MOREMEMORY;
 							goto end;
 						}
 						strcpy(out_us, buffer);
 						free(buffer);
-						buffer=NULL;
+						buffer = NULL;
 						inp += length;
 						break;
 					case 'd':
@@ -1155,7 +1155,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 							smprintf(s, "Parsed string for date \"%s\"\n", buffer);
 							error = ATGEN_DecodeDateTime(s, out_dt, buffer);
 							free(buffer);
-							buffer=NULL;
+							buffer = NULL;
 
 							if (error != ERR_NONE) {
 								goto end;
@@ -1346,7 +1346,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_USSDMessage ussd;
 	GSM_Error error;
-	unsigned char *pos=NULL;
+	unsigned char *pos = NULL;
 	int code=0;
 	char hex_encoded[2 * (GSM_MAX_USSD_LENGTH + 1)]={0};
 	char packed[GSM_MAX_USSD_LENGTH + 1]={0};
@@ -2508,7 +2508,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 		tmp = strdup(GetLineString(msg.Buffer,&Priv->Lines,2));
 		smprintf(s, "%i \"%s\"\n",i+1,GetLineString(tmp,&Lines,i+1));
 		free(tmp);
-		tmp=NULL;
+		tmp = NULL;
 		i++;
 	}
 
@@ -2516,7 +2516,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	tmp = strdup(GetLineString(msg.Buffer,&Priv->Lines,2));
 	answer = GetLineString(tmp,&Lines,2);
 	free(tmp);
-	tmp=NULL;
+	tmp = NULL;
 
 	while (*answer == 0x20) answer++;
 #ifdef DEBUG
@@ -2552,7 +2552,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
  		tmp = strdup(GetLineString(msg.Buffer,&Priv->Lines,2));
  		answer = GetLineString(tmp,&Lines,3);
  		free(tmp);
-		tmp=NULL;
+		tmp = NULL;
 
 		while (*answer == 0x20) answer++;
 		if (*answer == '"') answer++;
@@ -2571,7 +2571,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
  		tmp = strdup(GetLineString(msg.Buffer,&Priv->Lines,2));
  		answer = GetLineString(tmp,&Lines,4);
  		free(tmp);
-		tmp=NULL;
+		tmp = NULL;
 
 		while (*answer == 0x20) answer++;
 		if (*answer == '"') answer++;
@@ -3774,8 +3774,8 @@ GSM_Error ATGEN_ReplyDialVoice(GSM_Protocol_Message msg UNUSED, GSM_StateMachine
 GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 {
 	GSM_Error error;
-	char *req=NULL,*encoded=NULL;
-	unsigned char *tmp=NULL;
+	char *req = NULL,*encoded = NULL;
+	unsigned char *tmp = NULL;
 	const char format[] = "AT+CUSD=%d,\"%s\"\r";
 	size_t len=0, sevenlen=0;
 
@@ -3792,7 +3792,7 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 
 	if (error != ERR_NONE) {
 		free(req);
-		req=NULL;
+		req = NULL;
 		return error;
 	}
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
@@ -3801,7 +3801,7 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 
 		if (encoded == NULL) {
 			free(req);
-			req=NULL;
+			req = NULL;
 			return ERR_MOREMEMORY;
 		}
 		tmp = (unsigned char *)malloc(len + 1);
@@ -3814,7 +3814,7 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 		sevenlen = GSM_PackSevenBitsToEight(0, number, tmp, len);
 		EncodeHexBin(encoded, tmp, sevenlen);
 		free(tmp);
-		tmp=NULL;
+		tmp = NULL;
 	} else {
 		encoded = number;
 	}
@@ -3822,11 +3822,11 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 
 	if (encoded != number) {
 		free(encoded);
-		encoded=NULL;
+		encoded = NULL;
 	}
 	ATGEN_WaitFor(s, req, len, 0x00, 30, ID_GetUSSD);
 	free(req);
-	req=NULL;
+	req = NULL;
 	return error;
 }
 
@@ -4755,9 +4755,9 @@ GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
 	/* Free static buffer inside GetLineString */
 	GetLineString(NULL, NULL, 0);
 	free(Priv->file.Buffer);
-	Priv->file.Buffer=NULL;
+	Priv->file.Buffer = NULL;
 	free(Priv->SMSCache);
-	Priv->SMSCache=NULL;
+	Priv->SMSCache = NULL;
 	return ERR_NONE;
 }
 
