@@ -1373,10 +1373,35 @@ GSM_Error GSM_RegisterAllPhoneModules	(GSM_StateMachine *s);
 GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, unsigned const char *buffer,
 			  		 int length, unsigned char type, int timeout);
 
+/**
+ * Wait for reply from the phone.
+ *
+ * \param s State machine pointer.
+ * \param buffer Data to write to phone.
+ * \param length Length of data in buffer.
+ * \param type Type of request (for protocols where it makes sense).
+ * \param timeout How long to wait for reply.
+ * \param request ID of request
+ *
+ * \return Error code, ERR_NONE on sucecss.
+ */
 GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned const char *buffer,
 		       			 int length, unsigned char type, int timeout,
 					 GSM_Phone_RequestID request) WARNUNUSED;
 
+/**
+ * Wait for reply from the phone for ASCII strings without given length.
+ * This is just a convenience wrapper around GSM_WaitFor which fills in
+ * length.
+ *
+ * \param s State machine pointer.
+ * \param buffer Data to write to phone.
+ * \param type Type of request (for protocols where it makes sense).
+ * \param timeout How long to wait for reply.
+ * \param request ID of request
+ *
+ * \return Error code, ERR_NONE on sucecss.
+ */
 #define GSM_WaitForAutoLen(s,buffer,type,timeout,request) \
 	GSM_WaitFor(s,buffer,strlen(buffer),type,timeout,request)
 
