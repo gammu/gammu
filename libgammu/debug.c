@@ -187,35 +187,35 @@ gboolean GSM_SetDebugLevel(const char *info, GSM_Debug_Info *privdi)
 		privdi->dl = DL_NONE;
 		return TRUE;
 	}
-	if (!strcasecmp(info,"nothing")) {
+	if (!strcasecmp(info, "nothing")) {
 		privdi->dl = DL_NONE;
 		return TRUE;
 	}
-	if (!strcasecmp(info,"text")) {
+	if (!strcasecmp(info, "text")) {
 		privdi->dl = DL_TEXT;
 		return TRUE;
 	}
-	if (!strcasecmp(info,"textall")) {
+	if (!strcasecmp(info, "textall")) {
 		privdi->dl = DL_TEXTALL;
 		return TRUE;
 	}
-	if (!strcasecmp(info,"binary")) {
+	if (!strcasecmp(info, "binary")) {
 		privdi->dl = DL_BINARY;
 		return TRUE;
 	}
-	if (!strcasecmp(info,"errors")) {
+	if (!strcasecmp(info, "errors")) {
 		privdi->dl = DL_TEXTERROR;
 		return TRUE;
 	}
-	if (!strcasecmp(info,"textdate")) {
+	if (!strcasecmp(info, "textdate")) {
 		privdi->dl = DL_TEXTDATE;
 		return TRUE;
 	}
-	if (!strcasecmp(info,"textalldate")) {
+	if (!strcasecmp(info, "textalldate")) {
 		privdi->dl = DL_TEXTALLDATE;
 		return TRUE;
 	}
-	if (!strcasecmp(info,"errorsdate")) {
+	if (!strcasecmp(info, "errorsdate")) {
 		privdi->dl = DL_TEXTERRORDATE;
 		return TRUE;
 	}
