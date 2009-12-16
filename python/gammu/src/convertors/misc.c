@@ -39,6 +39,7 @@ GSM_MemoryType StringToMemoryType(const char *s) {
 
     if (type == 0) {
         PyErr_Format(PyExc_ValueError, "Bad value for memory type: '%s'", s);
+        return ENUM_INVALID;
     }
 
     return type;
