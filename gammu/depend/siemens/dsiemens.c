@@ -241,13 +241,13 @@ GSM_Error ATSIEMENS_GetSAT(GSM_StateMachine *sm)
     	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
         strcpy(req, "AT^SSTK=?\r");
-        error = GSM_WaitFor (sm, req, strlen(req), 0x00, 3, ID_User1);
+        error = GSM_WaitForAutoLen(sm, req, 0x00, 3, ID_User1);
 
     	for (i=0;i<3;i++){
 		len				= strlen(reqSAT[i]);
 		sm->Protocol.Data.AT.EditMode 	= TRUE;
         	sprintf(req, "AT^SSTK=%i,1\r",len/2);
-        	error = GSM_WaitFor (sm, req, strlen(req), 0x00, 3, ID_User1);
+        	error = GSM_WaitForAutoLen(sm, req, 0x00, 3, ID_User1);
 		sm->Phone.Data.DispatchError	= ERR_TIMEOUT;
 		sm->Phone.Data.RequestID		= ID_User1;
     		error = sm->Protocol.Functions->WriteMessage(sm, reqSAT[i], len, 0x00);
@@ -268,7 +268,7 @@ GSM_Error ATSIEMENS_GetNetmon(GSM_StateMachine *sm,int test_no)
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 	sprintf(req, "AT^S^MI=%d\r",test_no);
 	printf ("Siemens NetMonitor test #%i\n",test_no);
-	return GSM_WaitFor(sm, req, strlen(req), 0x00, 3, ID_User2);
+	return GSM_WaitForAutoLen(sm, req, 0x00, 3, ID_User2);
 }
 
 GSM_Error ATSIEMENS_ActivateNetmon (GSM_StateMachine *sm,int netmon_type)
@@ -282,7 +282,7 @@ GSM_Error ATSIEMENS_ActivateNetmon (GSM_StateMachine *sm,int netmon_type)
 	printf ("Activate Siemens NetMonitor\n");
 	siemens_code (req,req,2);
 
-	return GSM_WaitFor(sm, req, strlen(req), 0x00, 3, ID_User2);
+	return GSM_WaitForAutoLen(sm, req, 0x00, 3, ID_User2);
 }
 
 void ATSIEMENSActivateNetmon(int argc, char *argv[])
