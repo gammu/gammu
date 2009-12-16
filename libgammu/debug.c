@@ -183,15 +183,42 @@ GSM_Error GSM_SetDebugFunction(GSM_Log_Function info, void *data, GSM_Debug_Info
 
 gboolean GSM_SetDebugLevel(const char *info, GSM_Debug_Info *privdi)
 {
-	if (info == NULL)			{privdi->dl = DL_NONE;	 	return TRUE;}
-	if (!strcmp(info,"nothing")) 		{privdi->dl = DL_NONE;	 	return TRUE;}
-	if (!strcmp(info,"text")) 		{privdi->dl = DL_TEXT;	 	return TRUE;}
-	if (!strcmp(info,"textall")) 		{privdi->dl = DL_TEXTALL;    	return TRUE;}
-	if (!strcmp(info,"binary"))  		{privdi->dl = DL_BINARY;     	return TRUE;}
-	if (!strcmp(info,"errors"))  		{privdi->dl = DL_TEXTERROR;  	return TRUE;}
-	if (!strcmp(info,"textdate")) 		{privdi->dl = DL_TEXTDATE;	 	return TRUE;}
-	if (!strcmp(info,"textalldate")) 	{privdi->dl = DL_TEXTALLDATE;    	return TRUE;}
-	if (!strcmp(info,"errorsdate"))  	{privdi->dl = DL_TEXTERRORDATE;  	return TRUE;}
+	if (info == NULL) {
+		privdi->dl = DL_NONE;
+		return TRUE;
+	}
+	if (!strcmp(info,"nothing")) {
+		privdi->dl = DL_NONE;
+		return TRUE;
+	}
+	if (!strcmp(info,"text")) {
+		privdi->dl = DL_TEXT;
+		return TRUE;
+	}
+	if (!strcmp(info,"textall")) {
+		privdi->dl = DL_TEXTALL;
+		return TRUE;
+	}
+	if (!strcmp(info,"binary")) {
+		privdi->dl = DL_BINARY;
+		return TRUE;
+	}
+	if (!strcmp(info,"errors")) {
+		privdi->dl = DL_TEXTERROR;
+		return TRUE;
+	}
+	if (!strcmp(info,"textdate")) {
+		privdi->dl = DL_TEXTDATE;
+		return TRUE;
+	}
+	if (!strcmp(info,"textalldate")) {
+		privdi->dl = DL_TEXTALLDATE;
+		return TRUE;
+	}
+	if (!strcmp(info,"errorsdate")) {
+		privdi->dl = DL_TEXTERRORDATE;
+		return TRUE;
+	}
 	return FALSE;
 }
 
