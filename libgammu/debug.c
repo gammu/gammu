@@ -22,8 +22,8 @@ GSM_Debug_Info GSM_none_debug = {
 	"",
 	FALSE,
 	FALSE,
-    NULL,
-    NULL
+	NULL,
+	NULL
 	};
 
 GSM_Debug_Info GSM_global_debug = {
@@ -33,8 +33,8 @@ GSM_Debug_Info GSM_global_debug = {
 	"",
 	FALSE,
 	FALSE,
-    NULL,
-    NULL
+	NULL,
+	NULL
 	};
 
 /**
@@ -42,13 +42,11 @@ GSM_Debug_Info GSM_global_debug = {
  */
 void dbg_write(GSM_Debug_Info *d, const char *text)
 {
-    if (d->log_function != NULL) {
-        d->log_function(text, d->user_data);
-    } else if (d->df != NULL) {
-        fprintf(d->df, "%s", text);
-    }
-
-
+	if (d->log_function != NULL) {
+		d->log_function(text, d->user_data);
+	} else if (d->df != NULL) {
+		fprintf(d->df, "%s", text);
+	}
 }
 
 PRINTF_STYLE(2, 0)
@@ -78,11 +76,11 @@ int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)
 			/* Show date? */
 			if (l == DL_TEXTALLDATE || l == DL_TEXTERRORDATE || l == DL_TEXTDATE) {
 				GSM_GetCurrentDateTime(&date_time);
-                sprintf(timestamp, "%s %4d/%02d/%02d %02d:%02d:%02d: ",
-		                        DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
-		                        date_time.Year, date_time.Month, date_time.Day,
-		                        date_time.Hour, date_time.Minute, date_time.Second);
-                dbg_write(d, timestamp);
+				sprintf(timestamp, "%s %4d/%02d/%02d %02d:%02d:%02d: ",
+					DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
+					date_time.Year, date_time.Month, date_time.Day,
+					date_time.Hour, date_time.Minute, date_time.Second);
+				dbg_write(d, timestamp);
 			}
 			d->was_lf = FALSE;
 		}
@@ -113,9 +111,9 @@ int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)
 	}
 
 	/* Flush buffers, this might be configurable, but it could cause drop of last log messages */
-    if (d->df != NULL) {
-        fflush(d->df);
-    }
+	if (d->df != NULL) {
+		fflush(d->df);
+	}
 
 	return result;
 }
@@ -176,9 +174,9 @@ GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info *privdi)
 
 GSM_Error GSM_SetDebugFunction(GSM_Log_Function info, void *data, GSM_Debug_Info * privdi)
 {
-    privdi->log_function = info;
-    privdi->user_data = data;
-    return ERR_NONE;
+	privdi->log_function = info;
+	privdi->user_data = data;
+	return ERR_NONE;
 }
 
 gboolean GSM_SetDebugLevel(const char *info, GSM_Debug_Info *privdi)
@@ -237,7 +235,7 @@ gboolean GSM_SetDebugGlobal(gboolean info, GSM_Debug_Info *privdi)
 PRINTF_STYLE(2, 3)
 int smfprintf(GSM_Debug_Info *d, const char *format, ...)
 {
-        va_list 		argp;
+	va_list 		argp;
 	int 			result;
 	GSM_Debug_Info		*tmpdi;
 
@@ -372,3 +370,6 @@ void DumpMessageText(GSM_Debug_Info *d, const unsigned char *message, const int 
 	DumpMessage(d, message, messagesize);
 
 }
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */
