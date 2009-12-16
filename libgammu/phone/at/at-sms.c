@@ -1957,11 +1957,6 @@ GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
 	GSM_Error error;
 
-	/*
-	* Get SMSC command
-	*/
-	const char req[] = "AT+CSCA?\r";
-
 	/* Only one location supported */
 	if (smsc->Location != 1) {
 		return ERR_INVALIDLOCATION;
@@ -1977,7 +1972,7 @@ GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	/* Issue command */
 	s->Phone.Data.SMSC = smsc;
 	smprintf(s, "Getting SMSC\n");
-	ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_GetSMSC);
+	ATGEN_WaitForAutoLen(s, "AT+CSCA?\r", 0x00, 4, ID_GetSMSC);
 	return error;
 }
 
