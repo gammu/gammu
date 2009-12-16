@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.26.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-14 11:07+0100\n"
+"POT-Creation-Date: 2009-12-16 08:09+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -8435,12 +8435,11 @@ msgstr ""
 msgid "B<StatusError> (integer)"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-tables.7:315
 msgid ""
 "Status of delivery from delivery report message, codes are defined in GSM "
-"specification."
+"specification 03.40 section 9.2.3.15 (TP-Status)."
 msgstr ""
 
 # type: Plain text

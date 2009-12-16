@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.26.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-12 14:11+0100\n"
+"POT-Creation-Date: 2009-12-16 08:09+0100\n"
 "PO-Revision-Date: 2009-07-06 14:14+0200\n"
 "Last-Translator: Benedikt Sauer <filmor@gmail.com>\n"
 "Language-Team: Language =de\n"
@@ -1209,7 +1209,7 @@ msgstr "Unbekannt (%x)"
 msgid " (startup)"
 msgstr "(Programmstart)"
 
-#: gammu/depend/nokia/dct4.c:496 gammu/depend/nokia/dct4.c:1006
+#: gammu/depend/nokia/dct4.c:496 gammu/depend/nokia/dct4.c:1005
 msgid "Press any key to continue..."
 msgstr "Beliebige Taste drücken um fortzufahen..."
 
@@ -1268,309 +1268,309 @@ msgid "What should I do (\"%s\") ?\n"
 msgstr "Was soll gemacht werden (\"%s\") ?\n"
 
 #. l10n: Raw data for A/D convertor
-#: gammu/depend/nokia/dct4.c:1020
+#: gammu/depend/nokia/dct4.c:1019
 #, c-format
 msgid "raw result %10i "
 msgstr ""
 
 #. l10n: Processed data for A/D convertor
-#: gammu/depend/nokia/dct4.c:1024
+#: gammu/depend/nokia/dct4.c:1023
 #, fuzzy, c-format
 msgid "unit result %10i "
 msgstr "Einheitsresultat"
 
-#: gammu/depend/nokia/dct4.c:1037
+#: gammu/depend/nokia/dct4.c:1036
 #, fuzzy
 msgid "Battery voltage, divided:"
 msgstr "Batteriespannung"
 
-#: gammu/depend/nokia/dct4.c:1037 gammu/depend/nokia/dct4.c:1038
-#: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1043
-#: gammu/depend/nokia/dct4.c:1044 gammu/depend/nokia/dct4.c:1045
-#: gammu/depend/nokia/dct4.c:1048 gammu/depend/nokia/dct4.c:1049
-#: gammu/depend/nokia/dct4.c:1050
+#: gammu/depend/nokia/dct4.c:1036 gammu/depend/nokia/dct4.c:1037
+#: gammu/depend/nokia/dct4.c:1038 gammu/depend/nokia/dct4.c:1042
+#: gammu/depend/nokia/dct4.c:1043 gammu/depend/nokia/dct4.c:1044
+#: gammu/depend/nokia/dct4.c:1047 gammu/depend/nokia/dct4.c:1048
+#: gammu/depend/nokia/dct4.c:1049
 msgid "mV"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1038
+#: gammu/depend/nokia/dct4.c:1037
 #, fuzzy
 msgid "Battery voltage, scaled:"
 msgstr "Batteriespannung"
 
-#: gammu/depend/nokia/dct4.c:1039
+#: gammu/depend/nokia/dct4.c:1038
 #, fuzzy
 msgid "Charger voltage:"
 msgstr "Ladespannung"
 
-#: gammu/depend/nokia/dct4.c:1040
+#: gammu/depend/nokia/dct4.c:1039
 #, fuzzy
 msgid "Charger current:"
 msgstr "Ladestrom"
 
-#: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
-#: gammu/depend/nokia/dct4.c:1052
+#: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1050
+#: gammu/depend/nokia/dct4.c:1051
 msgid "mA"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1041
+#: gammu/depend/nokia/dct4.c:1040
 #, fuzzy
 msgid "Battery size indicator:"
 msgstr "Aktiviert Stimmenerkennung"
 
-#: gammu/depend/nokia/dct4.c:1041
+#: gammu/depend/nokia/dct4.c:1040
 msgid "Ohms"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1042
+#: gammu/depend/nokia/dct4.c:1041
 #, fuzzy
 msgid "Battery temperature:"
 msgstr "Batterietemperatur"
 
-#: gammu/depend/nokia/dct4.c:1042 gammu/depend/nokia/dct4.c:1046
-#: gammu/depend/nokia/dct4.c:1047
+#: gammu/depend/nokia/dct4.c:1041 gammu/depend/nokia/dct4.c:1045
+#: gammu/depend/nokia/dct4.c:1046
 msgid "K"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1043
+#: gammu/depend/nokia/dct4.c:1042
 #, fuzzy
 msgid "Headset interconnection:"
 msgstr "Telefonverbindung"
 
-#: gammu/depend/nokia/dct4.c:1044
+#: gammu/depend/nokia/dct4.c:1043
 #, fuzzy
 msgid "Hook interconnection:"
 msgstr "Telefonverbindung"
 
-#: gammu/depend/nokia/dct4.c:1045
+#: gammu/depend/nokia/dct4.c:1044
 #, fuzzy
 msgid "Light sensor:"
 msgstr "Beleuchtung"
 
-#: gammu/depend/nokia/dct4.c:1046
+#: gammu/depend/nokia/dct4.c:1045
 #, fuzzy
 msgid "Power amplifier temperature:"
 msgstr "Telefontemperatur"
 
-#: gammu/depend/nokia/dct4.c:1047
+#: gammu/depend/nokia/dct4.c:1046
 #, fuzzy
 msgid "VCXO temperature:"
 msgstr "Telefontemperatur"
 
-#: gammu/depend/nokia/dct4.c:1048
+#: gammu/depend/nokia/dct4.c:1047
 msgid "Resistive keyboard 1/headint2:"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1049
+#: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/auxdet:"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1050
+#: gammu/depend/nokia/dct4.c:1049
 #, fuzzy
 msgid "Initial battery voltage:"
 msgstr "Batteriespannung"
 
-#: gammu/depend/nokia/dct4.c:1051
+#: gammu/depend/nokia/dct4.c:1050
 #, fuzzy
 msgid "Battery Current:"
 msgstr "Batterietyp"
 
-#: gammu/depend/nokia/dct4.c:1052
+#: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current Fast:"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1158
+#: gammu/depend/nokia/dct4.c:1157
 msgid "Phone seems not to support radio"
 msgstr "Das Handy scheint kein Radio zu haben"
 
-#: gammu/depend/nokia/dct4.c:1165
+#: gammu/depend/nokia/dct4.c:1164
 msgid "Please connect headset. Required as antenna"
 msgstr "Bitte das Headset anschließen. Es dient als Antenne"
 
-#: gammu/depend/nokia/dct4.c:1360
+#: gammu/depend/nokia/dct4.c:1359
 #, c-format
 msgid "%i entries types\n"
 msgstr "%i Eintragstypen\n"
 
-#: gammu/depend/nokia/dct4.c:1363
+#: gammu/depend/nokia/dct4.c:1362
 #, c-format
 msgid "  entry ID %02X"
 msgstr "ID des Eintrags %02X"
 
-#: gammu/depend/nokia/dct4.c:1365
+#: gammu/depend/nokia/dct4.c:1364
 #, c-format
 msgid " (Speed dial on SIM)"
 msgstr "(Schnellwahl auf SIM)"
 
-#: gammu/depend/nokia/dct4.c:1366
+#: gammu/depend/nokia/dct4.c:1365
 #, fuzzy, c-format
 msgid " (Text: name (always the only one))"
 msgstr "(Text: Name (immer der Einzige))"
 
-#: gammu/depend/nokia/dct4.c:1367
+#: gammu/depend/nokia/dct4.c:1366
 #, fuzzy, c-format
 msgid " (Text: email address)"
 msgstr "(Text: eMail-Adresse)"
 
-#: gammu/depend/nokia/dct4.c:1368
+#: gammu/depend/nokia/dct4.c:1367
 #, c-format
 msgid " (Text: postal address)"
 msgstr "(Text: Anschrift)"
 
-#: gammu/depend/nokia/dct4.c:1369
+#: gammu/depend/nokia/dct4.c:1368
 #, c-format
 msgid " (Text: note)"
 msgstr "(Text: Notiz)"
 
-#: gammu/depend/nokia/dct4.c:1370
+#: gammu/depend/nokia/dct4.c:1369
 #, c-format
 msgid " (Phone number)"
 msgstr "(Telefonnummer)"
 
-#: gammu/depend/nokia/dct4.c:1371
+#: gammu/depend/nokia/dct4.c:1370
 #, c-format
 msgid " (Ringtone ID)"
 msgstr "(ID des Klingeltons)"
 
-#: gammu/depend/nokia/dct4.c:1372
+#: gammu/depend/nokia/dct4.c:1371
 #, c-format
 msgid " (Call register: date and time)"
 msgstr "(Liste aufrufen: Datum und Uhrzeit)"
 
-#: gammu/depend/nokia/dct4.c:1373
+#: gammu/depend/nokia/dct4.c:1372
 #, c-format
 msgid " (Call register: with missed calls)"
 msgstr "(Liste aufrufen: mit verpassten Anrufen)"
 
-#: gammu/depend/nokia/dct4.c:1374
+#: gammu/depend/nokia/dct4.c:1373
 #, c-format
 msgid " (Speed dial)"
 msgstr "(Schnellwahl)"
 
-#: gammu/depend/nokia/dct4.c:1375
+#: gammu/depend/nokia/dct4.c:1374
 #, c-format
 msgid " (Caller group: logo)"
 msgstr "(Anruferguppe: Logo)"
 
-#: gammu/depend/nokia/dct4.c:1376
+#: gammu/depend/nokia/dct4.c:1375
 #, c-format
 msgid " (Caller group: is logo on ?)"
 msgstr "(Anruferguppe: ist das Logo aktiviert?)"
 
-#: gammu/depend/nokia/dct4.c:1377
+#: gammu/depend/nokia/dct4.c:1376
 #, c-format
 msgid " (Caller group number in pbk entry)"
 msgstr "(Anrufergruppennummer im Telefonbucheintrag)"
 
-#: gammu/depend/nokia/dct4.c:1380
+#: gammu/depend/nokia/dct4.c:1379
 #, c-format
 msgid " (Text: URL address)"
 msgstr "(Text: Webadresse)"
 
-#: gammu/depend/nokia/dct4.c:1381
+#: gammu/depend/nokia/dct4.c:1380
 #, fuzzy, c-format
 msgid " (SMS list assignment)"
 msgstr "(SMS Listennummer)"
 
-#: gammu/depend/nokia/dct4.c:1382
+#: gammu/depend/nokia/dct4.c:1381
 #, fuzzy, c-format
 msgid " (Voice tag assignment)"
 msgstr "(Sprachwahl Zuordnung)"
 
-#: gammu/depend/nokia/dct4.c:1383
+#: gammu/depend/nokia/dct4.c:1382
 #, fuzzy, c-format
 msgid " (Picture ID assignment)"
 msgstr "(Bild ID Zuordnung)"
 
-#: gammu/depend/nokia/dct4.c:1384
+#: gammu/depend/nokia/dct4.c:1383
 #, c-format
 msgid " (Ringtone ID from filesystem/internal)"
 msgstr "(Klingelton-ID des Dataisystems/Intern)"
 
-#: gammu/depend/nokia/dct4.c:1385
+#: gammu/depend/nokia/dct4.c:1384
 #, c-format
 msgid " (Text: user ID)"
 msgstr "(Text: Benutzer-ID)"
 
-#: gammu/depend/nokia/dct4.c:1386
+#: gammu/depend/nokia/dct4.c:1385
 #, c-format
 msgid " (conversation list ID)"
 msgstr "(Umwandlungs ID Zuordnung)"
 
-#: gammu/depend/nokia/dct4.c:1387
+#: gammu/depend/nokia/dct4.c:1386
 #, c-format
 msgid " (Instant Messaging service list ID ?)"
 msgstr "(Instant Messenger Liste?)"
 
-#: gammu/depend/nokia/dct4.c:1388
+#: gammu/depend/nokia/dct4.c:1387
 #, c-format
 msgid " (presence list ID ?)"
 msgstr "(Anwesenheitsliste?)"
 
-#: gammu/depend/nokia/dct4.c:1389
+#: gammu/depend/nokia/dct4.c:1388
 #, c-format
 msgid " (SIP Address (Push to Talk address))"
 msgstr "(SIP-Adresse (Push-to-Talk-Adresse))"
 
-#: gammu/depend/nokia/dct4.c:1390
+#: gammu/depend/nokia/dct4.c:1389
 #, c-format
 msgid " (Group ID (6230i or later))"
 msgstr "(Gruppen-ID (6230i oder neuer))"
 
-#: gammu/depend/nokia/dct4.c:1392
+#: gammu/depend/nokia/dct4.c:1391
 #, c-format
 msgid ", type "
 msgstr "Eintragstyp"
 
-#: gammu/depend/nokia/dct4.c:1394
+#: gammu/depend/nokia/dct4.c:1393
 #, c-format
 msgid "string"
 msgstr "String"
 
-#: gammu/depend/nokia/dct4.c:1395
+#: gammu/depend/nokia/dct4.c:1394
 #, c-format
 msgid "byte"
 msgstr "Byte"
 
-#: gammu/depend/nokia/dct4.c:1396
+#: gammu/depend/nokia/dct4.c:1395
 #, c-format
 msgid "2 bytes"
 msgstr "2 Bytes"
 
-#: gammu/depend/nokia/dct4.c:1397
+#: gammu/depend/nokia/dct4.c:1396
 #, c-format
 msgid "4 bytes"
 msgstr "4 Bytes"
 
-#: gammu/depend/nokia/dct4.c:1404
+#: gammu/depend/nokia/dct4.c:1403
 #, c-format
 msgid "%i phone number types\n"
 msgstr "%i Arten von Telefonnummern\n"
 
-#: gammu/depend/nokia/dct4.c:1407 helper/memory-display.c:127
+#: gammu/depend/nokia/dct4.c:1406 helper/memory-display.c:127
 msgid "Home number"
 msgstr "Privatnummer   "
 
-#: gammu/depend/nokia/dct4.c:1408 helper/memory-display.c:122
+#: gammu/depend/nokia/dct4.c:1407 helper/memory-display.c:122
 msgid "Mobile number"
 msgstr "Handynummer       "
 
-#: gammu/depend/nokia/dct4.c:1409 helper/memory-display.c:126
+#: gammu/depend/nokia/dct4.c:1408 helper/memory-display.c:126
 msgid "Fax number"
 msgstr "Faxnummer"
 
-#: gammu/depend/nokia/dct4.c:1410
+#: gammu/depend/nokia/dct4.c:1409
 msgid "Office number"
 msgstr "Geschäftsnummer"
 
-#: gammu/depend/nokia/dct4.c:1411
+#: gammu/depend/nokia/dct4.c:1410
 msgid "Standard number"
 msgstr "Standardnummer "
 
-#: gammu/depend/nokia/dct4.c:1412
+#: gammu/depend/nokia/dct4.c:1411
 msgid "Unknown number"
 msgstr "Unbekannte Nummer"
 
-#: gammu/depend/nokia/dct4.c:1436
+#: gammu/depend/nokia/dct4.c:1435
 #, c-format
 msgid "ERROR: unknown memory type (\"%s\")\n"
 msgstr "FEHLER: Unbekannter Speichertyp (\"%s\")\n"
