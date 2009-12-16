@@ -394,7 +394,10 @@ void NetworkInfo(int argc UNUSED, char *argv[] UNUSED)
 void IncomingCall(GSM_StateMachine *sm UNUSED, GSM_Call call, void *user_data)
 {
 	printf(LISTFORMAT, _("Call info"));
-	if (call.CallIDAvailable) printf(_("ID %i, "),call.CallID);
+
+	if (call.CallIDAvailable) {
+		printf(_("ID %i, "),call.CallID);
+	}
 	switch(call.Status) {
 		case GSM_CALL_IncomingCall  	: printf(_("incoming call from \"%s\"\n"),DecodeUnicodeConsole(call.PhoneNumber));  	break;
 		case GSM_CALL_OutgoingCall  	: printf(_("outgoing call to \"%s\"\n"),DecodeUnicodeConsole(call.PhoneNumber));    	break;
