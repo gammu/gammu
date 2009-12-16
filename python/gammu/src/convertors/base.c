@@ -90,6 +90,7 @@ int GetIntFromDict(PyObject *dict, const char *key) {
             return i;
         } else {
             PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be integer", key);
+            return INT_INVALID;
         }
     }
 
