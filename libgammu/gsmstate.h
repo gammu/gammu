@@ -1377,6 +1377,9 @@ GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned const char *buffer,
 		       			 int length, unsigned char type, int timeout,
 					 GSM_Phone_RequestID request) WARNUNUSED;
 
+#define GSM_WaitForAutoLen(s,buffer,type,timeout,request) \
+	GSM_WaitFor(s,buffer,strlen(buffer),type,timeout,request)
+
 GSM_Error GSM_DispatchMessage		(GSM_StateMachine *s);
 
 void 	  GSM_DumpMessageLevel2		(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type);

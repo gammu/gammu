@@ -1848,22 +1848,22 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
      	 * wake up the phone and does nothing.
      	 */
     	smprintf(s, "Sending simple AT command to wake up some devices\n");
-	error = GSM_WaitFor(s, "AT\r", strlen("AT\r"), 0x00, 2, ID_IncomingFrame);
+	error = GSM_WaitForAutoLen(s, "AT\r", 0x00, 2, ID_IncomingFrame);
 
 	/* We want to see our commands to allow easy detection of reply functions */
 	smprintf(s, "Enabling echo\n");
-	error = GSM_WaitFor(s, "ATE1\r", strlen("ATE1\r"), 0x00, 3, ID_EnableEcho);
+	error = GSM_WaitForAutoLen(s, "ATE1\r", 0x00, 3, ID_EnableEcho);
 
 	/* Some modems (Sony Ericsson GC 79, GC 85) need to enable functionality
 	 * (with reset), otherwise they return ERROR on anything!
 	 */
 	if (error == ERR_UNKNOWN) {
-		error = GSM_WaitFor(s, "AT+CFUN=1,1\r", strlen("AT+CFUN=1,1\r"), 0x00, 3, ID_Reset);
+		error = GSM_WaitForAutoLen(s, "AT+CFUN=1,1\r", 0x00, 3, ID_Reset);
 
 		if (error != ERR_NONE) {
 			return error;
 		}
-		error = GSM_WaitFor(s, "ATE1\r", strlen("ATE1\r"), 0x00, 3, ID_EnableEcho);
+		error = GSM_WaitForAutoLen(s, "ATE1\r", 0x00, 3, ID_EnableEcho);
 	}
 	if (error != ERR_NONE) {
 		smprintf(s, "Phone does not support enabled echo, it can not work with Gammu!\n");
@@ -1872,7 +1872,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	/* Try whether phone supports mode switching as Motorola phones. */
 	smprintf(s, "Trying Motorola mode switch\n");
-	error = GSM_WaitFor(s, "AT+MODE=2\r", strlen("AT+MODE=2\r"), 0x00, 3, ID_ModeSwitch);
+	error = GSM_WaitForAutoLen(s, "AT+MODE=2\r", 0x00, 3, ID_ModeSwitch);
 
 	if (error != ERR_NONE) {
 		smprintf(s, "Seems not to be supported\n");

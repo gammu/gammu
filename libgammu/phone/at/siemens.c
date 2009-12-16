@@ -62,7 +62,7 @@ static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, cons
 	 	if (pos+352 < size) sz = 352; else sz = size - pos;
 		sprintf(req, "AT^SBNW=\"%s\",%i,%i,%i\r",templ,Location,CurrentFrame+1,MaxFrame);
 		s->Protocol.Data.AT.EditMode = TRUE;
-		error = GSM_WaitFor (s, req, strlen(req), 0x00, 3, RequestID);
+		error = GSM_WaitForAutoLen(s, req, 0x00, 3, RequestID);
 		s->Phone.Data.DispatchError=ERR_TIMEOUT;
 		s->Phone.Data.RequestID=RequestID;
 	     	if (error!=ERR_NONE) return error;
