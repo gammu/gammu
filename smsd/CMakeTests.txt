@@ -62,35 +62,11 @@ if (PSQL_TESTING)
     endif (LIBDBI_FOUND)
 endif (PSQL_TESTING)
 
-#add_test("smsd-files-unicode" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" unicode)
-#set_tests_properties("smsd-files-unicode" PROPERTIES
-#    PASS_REGULAR_EXPRESSION ".999999999999999.4.6.0.100.42"
-#    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
-#    )
-#add_test("smsd-files-standard" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" standard)
-#set_tests_properties("smsd-files-standard" PROPERTIES
-#    PASS_REGULAR_EXPRESSION ".999999999999999.4.6.0.100.42"
-#    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
-#    )
-#add_test("smsd-files-detail" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" detail)
-#set_tests_properties("smsd-files-detail" PROPERTIES
-#    PASS_REGULAR_EXPRESSION ".999999999999999.4.6.0.100.42"
-#    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
-#    )
-
 add_test("smsd-files-include-unicode" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files-include.sh" unicode)
 set_tests_properties("smsd-files-include-unicode" PROPERTIES
     PASS_REGULAR_EXPRESSION ".999999999999999.4.3.0.100.42"
     FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
     )
-
-#if (HAVE_ALARM)
-#    add_test("smsd-daemon-files-unicode" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-unicode/.smsdrc" -X 10 -p "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-unicode/smsd.pid")
-#    add_test("smsd-daemon-files-standard" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-standard/.smsdrc" -X 10 -p "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-standard/smsd.pid")
-#    add_test("smsd-daemon-files-detail" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-detail/.smsdrc" -X 10 -p "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-detail/smsd.pid")
-#    add_test("smsd-daemon-files-include-unicode" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-include-unicode/.smsdrc" -X 10 -p "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-files-include-unicode/smsd.pid")
-#endif (HAVE_ALARM)
-
 
 foreach (PROGRAM gammu-smsd gammu-smsd-monitor gammu-smsd-inject)
     add_test(${PROGRAM}-help "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --help)
