@@ -459,8 +459,8 @@ text
 \fB\-enableemail \fP | \fB\-disableemail \fP \- nastaví tyto indikátory. Text bude
 zkrácen na 1 SMS.
 
-\fB\-voidsms\fP \- many phones after receiving it won't display anything, only
-beep, vibrate or turn on light. Text will be cut to 1 sms.
+\fB\-voidsms\fP \- při odeslání této zprávy mnoho telefonů nic nezobrazí, jen
+oznámí přijetí nové zprávy. Text bude zkrácen na 1 sms.
 
 \fB\-unicode\fP \- SMS bude uložena v unicode.
 
@@ -728,8 +728,8 @@ obsah v telefonu (tedy ani nejsou detekovány duplicity).
 Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
 jestli chcete vymazat všechna svoje data).
 
-Use \-memory parameter to force usage of defined memory type for storing
-entries regardless what backu format says.
+Použijte přepínač \-memory pro vynucené použití jiného typu paměti než je
+uložena v souboru se zálohou.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP
@@ -1142,8 +1142,8 @@ obsah v telefonu (tedy ani nejsou detekovány duplicity).
 Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
 jestli chcete vymazat všechna svoje data).
 
-Use \-memory parameter to force usage of defined memory type for storing
-entries regardless what backu format says.
+Použijte přepínač \-memory pro vynucené použití jiného typu paměti než je
+uložena v souboru se zálohou.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP
@@ -1286,8 +1286,8 @@ obsah v telefonu (tedy ani nejsou detekovány duplicity).
 Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
 jestli chcete vymazat všechna svoje data).
 
-Use \-memory parameter to force usage of defined memory type for storing
-entries regardless what backu format says.
+Použijte přepínač \-memory pro vynucené použití jiného typu paměti než je
+uložena v souboru se zálohou.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP
@@ -1366,8 +1366,8 @@ Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje
 kalendář. Typ souboru je odhadnut (pro vstupní soubor podle přípony a
 obsahu, pro výstupní jen podle přípony).
 
-For example if you want to convert single entry from gammu native backup to
-vCalendar, you need following command:
+Napříkal pro převení zálohy gammu na vCalendar můžete použít následující
+příkaz:
 
     gammu savefile CALENDAR output.vcs myCalendar.backup 260
 
@@ -1406,8 +1406,8 @@ obsah v telefonu (tedy ani nejsou detekovány duplicity).
 Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
 jestli chcete vymazat všechna svoje data).
 
-Use \-memory parameter to force usage of defined memory type for storing
-entries regardless what backu format says.
+Použijte přepínač \-memory pro vynucené použití jiného typu paměti než je
+uložena v souboru se zálohou.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP
@@ -1490,8 +1490,8 @@ Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje
 úkoly. Typ souboru je odhadnut (pro vstupní soubor podle přípony a obsahu,
 pro výstupní jen podle přípony).
 
-For example if you want to convert single entry from gammu native backup to
-vCalendar, you need following command:
+Napříkal pro převení zálohy gammu na vCalendar můžete použít následující
+příkaz:
 
     gammu savefile CALENDAR output.vcs myCalendar.backup 260
 
@@ -1556,8 +1556,8 @@ obsah v telefonu (tedy ani nejsou detekovány duplicity).
 Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
 jestli chcete vymazat všechna svoje data).
 
-Use \-memory parameter to force usage of defined memory type for storing
-entries regardless what backu format says.
+Použijte přepínač \-memory pro vynucené použití jiného typu paměti než je
+uložena v souboru se zálohou.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP
@@ -1640,8 +1640,8 @@ obsah v telefonu (tedy ani nejsou detekovány duplicity).
 Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
 jestli chcete vymazat všechna svoje data).
 
-Use \-memory parameter to force usage of defined memory type for storing
-entries regardless what backu format says.
+Použijte přepínač \-memory pro vynucené použití jiného typu paměti než je
+uložena v souboru se zálohou.
 
 .TP 
 \fBaddsms\fP\fI folder file [\-yes]\fP
@@ -1722,8 +1722,8 @@ Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje
 kalendář. Typ souboru je odhadnut (pro vstupní soubor podle přípony a
 obsahu, pro výstupní jen podle přípony).
 
-For example if you want to convert single entry from gammu native backup to
-vCalendar, you need following command:
+Napříkal pro převení zálohy gammu na vCalendar můžete použít následující
+příkaz:
 
     gammu savefile CALENDAR output.vcs myCalendar.backup 260
 
@@ -1733,8 +1733,8 @@ Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje
 úkoly. Typ souboru je odhadnut (pro vstupní soubor podle přípony a obsahu,
 pro výstupní jen podle přípony).
 
-For example if you want to convert single entry from gammu native backup to
-vCalendar, you need following command:
+Napříkal pro převení zálohy gammu na vCalendar můžete použít následující
+příkaz:
 
     gammu savefile CALENDAR output.vcs myCalendar.backup 260
 
@@ -1959,8 +1959,8 @@ obsah v telefonu (tedy ani nejsou detekovány duplicity).
 Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
 jestli chcete vymazat všechna svoje data).
 
-Use \-memory parameter to force usage of defined memory type for storing
-entries regardless what backu format says.
+Použijte přepínač \-memory pro vynucené použití jiného typu paměti než je
+uložena v souboru se zálohou.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP
@@ -2193,8 +2193,8 @@ obsah v telefonu (tedy ani nejsou detekovány duplicity).
 Použijte parametr \-yes pro odověď ano na všechny dotazy (včetně dotazu
 jestli chcete vymazat všechna svoje data).
 
-Use \-memory parameter to force usage of defined memory type for storing
-entries regardless what backu format says.
+Použijte přepínač \-memory pro vynucené použití jiného typu paměti než je
+uložena v souboru se zálohou.
 
 .TP 
 \fBbackup\fP\fI file [\-yes]\fP

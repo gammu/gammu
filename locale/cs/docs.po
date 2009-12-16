@@ -14,10 +14,10 @@ msgstr ""
 "PO-Revision-Date: 2009-12-16 19:52+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
-"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Pootle 2.0.0\n"
 
@@ -9251,8 +9251,9 @@ msgstr "B<StatusError> (integer)"
 msgid ""
 "Status of delivery from delivery report message, codes are defined in GSM "
 "specification 03.40 section 9.2.3.15 (TP-Status)."
-msgstr "Stav z doručenky, hodnoty jsou definovány ve specifikaci GSM 03.40."
-"sekce 9.2.3.15 (TP-Status)."
+msgstr ""
+"Stav z doručenky, hodnoty jsou definovány ve specifikaci GSM 03.40.sekce "
+"9.2.3.15 (TP-Status)."
 
 # type: Plain text
 #. type: Plain text
