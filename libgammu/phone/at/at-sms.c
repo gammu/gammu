@@ -427,19 +427,27 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 	GSM_Error error;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_SMSMessage *sms = &s->Phone.Data.GetSMSMessage->SMS[0];
-	unsigned char buffer[300] = {'\0'};
+	unsigned char *buffer;
 	size_t parse_len = 0, length = 0;
 
 	length = strlen(PDU);
 
-	if (!DecodeHexBin (
-				buffer,
-				PDU,
-				length
-				)) {
+	/* Allocate memory for binary data */
+	buffer = (unsigned char*)malloc(length / 2);
+	if (buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
+
+	/* Decode hex encoded binary data */
+	if (!DecodeHexBin(buffer, PDU, length)) {
 		smprintf(s, "Failed to decode hex string!\n");
 		return ERR_CORRUPTED;
 	}
+
+	/* We decoded hex -> binary */
+	length /= 2;
+
+	/* Set message state */
 	switch (state) {
 		case 0:
 			sms->State = SMS_UnRead;
@@ -454,10 +462,12 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 			sms->State = SMS_Sent;
 			break;
 	}
-	length /= 2; /* We decoded hex -> binary */
+
+	/* Decode PDU */
 	error = GSM_DecodePDUFrame(&(s->di), sms,  buffer, length, &parse_len, TRUE);
 
 	if (error != ERR_NONE) {
+		free(buffer);
 		return error;
 	}
 	if (parse_len != length) {
@@ -466,10 +476,13 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 		if (buffer[parse_len] == 0xff) {
 			smprintf(s, "Assuming broken phone which pads SMS data with FF\n");
 		} else {
+			free(buffer);
 			return ERR_UNKNOWN;
 		}
 	}
+	free(buffer);
 
+	/* Set folder */
 	switch (sms->PDU) {
 		case SMS_Deliver:
 			/* @bug Broken when MEM_SM is not available */
