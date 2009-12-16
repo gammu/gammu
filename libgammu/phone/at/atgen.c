@@ -388,7 +388,7 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
  */
 INLINE gboolean ATGEN_HasOnlyHexChars(const char *text, const size_t length)
 {
-	size_t i=0;
+	size_t i = 0;
 
 	for (i = 0; i < length; i++) {
 		if (!isxdigit((int)text[i])) {
@@ -702,17 +702,17 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 
 int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
 {
-	int	position=0;
+	int	position = 0;
 	gboolean	inside_quotes = FALSE;
 
-	while ((*input!=',' || inside_quotes) && *input!=0x0d && *input!=0x00) {
+	while ((*input!=',' || inside_quotes) && *input != 0x0d && *input != 0x00) {
 		if (*input == '"') inside_quotes = ! inside_quotes;
 		*output = *input;
 		input	++;
 		output	++;
 		position++;
 	}
-	*output=0;
+	*output = 0;
 	position++;
 	return position;
 }
@@ -884,9 +884,9 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	} else {
 		/* if date was not found, it is still necessary to initialize
 		   the variables, maybe Today() would be better in some replies */
-		dt->Year=0;
-		dt->Month=0;
-		dt->Day=0;
+		dt->Year = 0;
+		dt->Month = 0;
+		dt->Day = 0;
 	}
 
 	/* Do we have time? */
@@ -897,12 +897,12 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 		pos++;
 		dt->Minute = atoi(pos);
 		pos = strchr(pos, ':');
-		if (pos!=NULL) {
+		if (pos != NULL) {
 			/* seconds present */
 			pos++;
 			dt->Second = atoi(pos);
 		} else {
-			dt->Second=0;
+			dt->Second = 0;
 		}
 
 		if ((pos != NULL) && (*pos == '+' || *pos == '-')) {
@@ -935,7 +935,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 	char *endptr = NULL, *out_s = NULL, *search_pos = NULL;
 	GSM_DateTime *out_dt;
 	unsigned char *out_us = NULL,*buffer = NULL,*buffer2=NULL;
-	size_t length=0,storage_size=0;
+	size_t length = 0,storage_size = 0;
 	int *out_i = NULL;
 	long int *out_l = NULL;
 	va_list ap;
@@ -1207,7 +1207,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 	GSM_Protocol_Message	*msg	= s->Phone.Data.RequestMsg;
-	int 			i=0,j=0,k=0;
+	int 			i = 0,j = 0,k = 0;
 	const char		*err, *line;
 	ATErrorCode		*ErrorCodes = NULL;
 
@@ -1347,7 +1347,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_USSDMessage ussd;
 	GSM_Error error;
 	unsigned char *pos = NULL;
-	int code=0;
+	int code = 0;
 	char hex_encoded[2 * (GSM_MAX_USSD_LENGTH + 1)]={0};
 	char packed[GSM_MAX_USSD_LENGTH + 1]={0};
 	char decoded[GSM_MAX_USSD_LENGTH + 1]={0};
@@ -1424,7 +1424,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		}
 
 		/* Notify application */
-		if (s->User.IncomingUSSD!=NULL) {
+		if (s->User.IncomingUSSD != NULL) {
 			s->User.IncomingUSSD(s, ussd, s->User.IncomingUSSDUserData);
 		}
 	}
@@ -1450,10 +1450,10 @@ GSM_Error ATGEN_SetIncomingUSSD(GSM_StateMachine *s, gboolean enable)
 		smprintf(s, "Disabling incoming USSD\n");
 		ATGEN_WaitForAutoLen(s, "AT+CUSD=0\r", 0x00, 3, ID_SetUSSD);
 	}
-	if (error==ERR_NONE) {
+	if (error == ERR_NONE) {
 		s->Phone.Data.EnableIncomingUSSD = enable;
 	}
-	if (error==ERR_UNKNOWN) {
+	if (error == ERR_UNKNOWN) {
 		return ERR_NOTSUPPORTED;
 	}
 	return error;
@@ -1698,7 +1698,7 @@ GSM_Error ATGEN_ReplyGetFirmware(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	int line=0;
+	int line = 0;
 
 	strcpy(s->Phone.Data.Version, "Unknown");
 
@@ -1755,7 +1755,7 @@ GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 
 	if (s->Phone.Data.Version[0] != 0) return ERR_NONE;
 
-	error=ATGEN_GetManufacturer(s);
+	error = ATGEN_GetManufacturer(s);
 	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Getting firmware versions\n");
@@ -1832,7 +1832,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		 */
 		smprintf(s, "Escaping SMS mode\n");
 		error = s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
-		if (error!=ERR_NONE) {
+		if (error != ERR_NONE) {
 			return error;
 		}
 
@@ -2357,7 +2357,7 @@ GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 		if (error != ERR_NONE) return error;
 	}
 
-	s->Phone.Data.DateTime=date_time;
+	s->Phone.Data.DateTime = date_time;
 	smprintf(s, "Getting date & time\n");
 	ATGEN_WaitForAutoLen(s, "AT+CCLK?\r", 0x00, 4, ID_GetDateTime);
 
@@ -2454,7 +2454,7 @@ GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 	char			req[20]={0};
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
-	int			length=0;
+	int			length = 0;
 
 	if (Alarm->Location != 1) {
 		return ERR_INVALIDLOCATION;
@@ -2466,7 +2466,7 @@ GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 		if (error != ERR_NONE) return error;
 	}
 	smprintf(s, "Setting Alarm\n");
-	length=sprintf(req, "AT+CALA=\"%02i:%02i\"\r",Alarm->DateTime.Hour,Alarm->DateTime.Minute);
+	length = sprintf(req, "AT+CALA=\"%02i:%02i\"\r",Alarm->DateTime.Hour,Alarm->DateTime.Minute);
 	ATGEN_WaitFor(s, req, length, 0x00, 3, ID_SetAlarm);
 	return error;
 }
@@ -2475,7 +2475,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 {
 	GSM_NetworkInfo		*NetworkInfo = s->Phone.Data.NetworkInfo;
 	GSM_CutLines		Lines;
-	int			i=0;
+	int			i = 0;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	const char			*answer;
 	char			*tmp;
@@ -2740,7 +2740,7 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 {
 	GSM_Error error;
 
-	s->Phone.Data.NetworkInfo=netinfo;
+	s->Phone.Data.NetworkInfo = netinfo;
 
 	netinfo->NetworkName[0] = 0;
 	netinfo->NetworkName[1] = 0;
@@ -2751,8 +2751,8 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	ATGEN_WaitForAutoLen(s, "AT+CREG=2\r", 0x00, 4, ID_GetNetworkInfo);
 
 	if ((error != ERR_NONE) &&
-	    (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Siemens) &&
-	    (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Ericsson)) {
+	    (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Siemens) &&
+	    (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Ericsson)) {
 		return error;
 	}
 	smprintf(s, "Getting GPRS state\n");
@@ -3209,7 +3209,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 {
 	GSM_Error		error;
 	char			req[20]={'\0'};
-	int			start=0,end=0,memory_end=0;
+	int			start = 0,end = 0,memory_end = 0;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	gboolean		free_read = FALSE;
 	size_t len;
@@ -3607,7 +3607,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	size_t len;
 
-	if (entry->Location==0x00) return ERR_INVALIDLOCATION;
+	if (entry->Location == 0x00) return ERR_INVALIDLOCATION;
 
 	if (entry->MemoryType == MEM_ME) {
 		if (Priv->PBKSBNR == 0) {
@@ -3616,7 +3616,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 		if (Priv->PBKSBNR == AT_AVAILABLE) {
 			/* FirstMemoryEntry is not applied here, it is always 0 */
 			len = sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location - 1);
-			s->Phone.Data.Memory=entry;
+			s->Phone.Data.Memory = entry;
 			smprintf(s, "Getting phonebook entry\n");
 			ATGEN_WaitFor(s, req, len, 0x00, 4, ID_GetMemory);
 			return error;
@@ -3777,7 +3777,7 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 	char *req = NULL,*encoded = NULL;
 	unsigned char *tmp = NULL;
 	const char format[] = "AT+CUSD=%d,\"%s\"\r";
-	size_t len=0, sevenlen=0;
+	size_t len = 0, sevenlen = 0;
 
 	/*
 	 * We need to allocate twice more memory for number here, because it
@@ -3843,7 +3843,7 @@ GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber 
 		return ERR_MOREMEMORY;
 	}
 	smprintf(s, "Making voice call\n");
-	length=sprintf(buffer, "ATDT%s;\r", number);
+	length = sprintf(buffer, "ATDT%s;\r", number);
 	ATGEN_WaitFor(s, buffer, length, 0x00, 20, ID_DialVoice);
 
 	if (error == ERR_INVALIDLOCATION) {
@@ -3965,7 +3965,7 @@ GSM_Error ATGEN_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Sta
 {
 	GSM_Error error;
 
-	s->Phone.Data.SecurityStatus=Status;
+	s->Phone.Data.SecurityStatus = Status;
 
 	smprintf(s, "Getting security code status\n");
 	/* Please note, that A2D doesn't return OK on the end.
@@ -4203,7 +4203,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	if (Priv->PBK_MPBR == AT_AVAILABLE) {
 		smprintf(s, "WARNING: setting memory for Motorola not implemented yet!\n");
 	}
-	for (i=0;i<entry->EntriesNum;i++) {
+	for (i = 0;i < entry->EntriesNum;i++) {
 		entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 	}
 	GSM_PhonebookFindDefaultNameNumberGroup(entry, &Name, &Number, &Group);
@@ -4414,7 +4414,7 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 
 	smprintf(s, "Incoming call info\n");
 
-	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL) {
+	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall != NULL) {
 		call.Status 		= 0;
 		call.StatusCode		= 0;
 		call.CallIDAvailable 	= FALSE;
