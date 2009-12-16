@@ -90,6 +90,22 @@ user = @MYSQL_USER@
 password = @MYSQL_PASSWORD@
 EOT
         ;;
+    files*)
+        INBOXF=`echo $SERVICE | sed 's/.*-//'`
+        cat >> .smsdrc <<EOT
+service = files
+inboxpath = @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/inbox/
+outboxpath = @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/outbox/
+sentsmspath = @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/sent/
+errorsmspath = @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/error/
+inboxformat = $INBOXF
+transmitformat = auto
+EOT
+        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/inbox/
+        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/outbox/
+        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/sent/
+        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/error/
+        ;;
 esac
 
 # Create database structures
@@ -145,6 +161,9 @@ case $SERVICE in
         ;;
     *mysql)
         echo "INSERT INTO outbox(DestinationNumber,TextDecoded,CreatorID,Coding) VALUES('800123465', 'This is a SQL test message', 'T3st', 'Default_No_Compression');" | @MYSQL_BIN@ -u@MYSQL_USER@ -h@MYSQL_HOST@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@
+        ;;
+    files*)
+        cp @CMAKE_CURRENT_SOURCE_DIR@/tests/OUT+4201234567890.txt @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/outbox/
         ;;
 esac
 
