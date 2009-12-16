@@ -155,7 +155,9 @@ int BackupFromPython(PyObject *dict, GSM_Backup *backup) {
         PyErr_Clear();
     } else {
         len = strlen(s);
-        if (len > GSM_MAX_IMEI_LENGTH - 1) len = GSM_MAX_IMEI_LENGTH - 1;
+        if (len > GSM_MAX_IMEI_LENGTH - 1) {
+            len = GSM_MAX_IMEI_LENGTH - 1;
+        }
         strncat(backup->IMEI, s, len);
     }
 
@@ -165,7 +167,9 @@ int BackupFromPython(PyObject *dict, GSM_Backup *backup) {
         PyErr_Clear();
     } else {
         len = strlen(s);
-        if (len > GSM_MAX_MODEL_LENGTH + GSM_MAX_VERSION_LENGTH - 1) len = GSM_MAX_MODEL_LENGTH + GSM_MAX_VERSION_LENGTH - 1;
+        if (len > GSM_MAX_MODEL_LENGTH + GSM_MAX_VERSION_LENGTH - 1) {
+            len = GSM_MAX_MODEL_LENGTH + GSM_MAX_VERSION_LENGTH - 1;
+        }
         strncat(backup->Model, s, len);
     }
 
