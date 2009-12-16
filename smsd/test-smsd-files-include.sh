@@ -84,6 +84,7 @@ done
 
 # Inject messages
 cp @CMAKE_CURRENT_SOURCE_DIR@/tests/OUT* @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/outbox/
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 
 sleep 5
 
@@ -92,7 +93,7 @@ for sms in 10 16 26 ; do
 done
 
 TIMEOUT=0
-while ! @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0 | grep -q ";999999999999999;3;3;0;100;42" ; do
+while ! @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0 | grep -q ";999999999999999;4;3;0;100;42" ; do
     @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0
     sleep 1
     TIMEOUT=$(($TIMEOUT + 1))
