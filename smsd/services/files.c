@@ -387,6 +387,110 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 	}
 }
 
+/* Adds SMS to Outbox */
+static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *NewID)
+{
+	GSM_Error	error = ERR_NONE;
+	int 		i,j;
+	unsigned char 	FileName[100], FullName[400], ext[7], buffer[64],buffer2[400];
+	FILE 		*file;
+#ifdef GSM_ENABLE_BACKUP
+	GSM_SMS_Backup 	backup;
+#endif
+
+	j = 0;
+
+	for (i=0;i<sms->Number;i++) {
+		strcpy(ext, "txt");
+		DecodeUnicode(sms->SMS[i].Number,buffer2);
+
+		file = NULL;
+		do {
+			time_t rawtime;
+			struct tm* timeinfo;
+
+			time(&rawtime);
+			timeinfo = localtime(&rawtime);
+
+			sprintf(FileName,
+				"OUTC%4d%2d%2d_%2d%2d%2d_00_%s_sms%d.%s",
+				1900 + timeinfo->tm_year,
+				timeinfo->tm_mon,
+				timeinfo->tm_mday,
+				timeinfo->tm_hour,
+				timeinfo->tm_min,
+				timeinfo->tm_sec,
+				buffer2, j, ext);
+			strcpy(FullName, Config->outboxpath);
+			strcat(FullName, FileName);
+			if (file) fclose(file);
+			file = fopen(FullName, "r");
+		} while ((i == 0) && file != NULL && (++j < 100));
+
+		if (file) {
+			fclose(file);
+			if (i == 0) {
+				SMSD_Log(DEBUG_ERROR, Config, "Cannot save %s. No available file names", FileName);
+				return ERR_CANTOPENFILE;
+			}
+		}
+		errno = 0;
+
+		if ((sms->SMS[i].PDU == SMS_Status_Report) && strcasecmp(Config->deliveryreport, "log") == 0) {
+			strcpy(buffer, DecodeUnicodeString(sms->SMS[i].Number));
+			SMSD_Log(DEBUG_NOTICE, Config, "Delivery report: %s to %s", DecodeUnicodeString(sms->SMS[i].Text), buffer);
+		} else {
+			if (strcasecmp(Config->inboxformat, "detail") == 0) {
+#ifndef GSM_ENABLE_BACKUP
+				SMSD_Log(DEBUG_ERROR, Config, "Saving in detail format not compiled in!");
+
+#else
+				for (j=0;j<sms->Number;j++) backup.SMS[j] = &sms->SMS[j];
+				backup.SMS[sms->Number] = NULL;
+				error = GSM_AddSMSBackupFile(FullName, &backup);
+#endif
+			} else {
+				file = fopen(FullName, "wb");
+				if (file != NULL) {
+					switch (sms->SMS[i].Coding) {
+					case SMS_Coding_Unicode_No_Compression:
+					case SMS_Coding_Default_No_Compression:
+					    DecodeUnicode(sms->SMS[i].Text,buffer2);
+					    if (strcasecmp(Config->inboxformat, "unicode") == 0) {
+						buffer[0] = 0xFE;
+						buffer[1] = 0xFF;
+						chk_fwrite(buffer,1,2,file);
+						chk_fwrite(sms->SMS[i].Text,1,strlen(buffer2)*2,file);
+					    } else {
+						chk_fwrite(buffer2,1,strlen(buffer2),file);
+					    }
+					    break;
+					case SMS_Coding_8bit:
+					    chk_fwrite(sms->SMS[i].Text,1,(size_t)sms->SMS[i].Length,file);
+					default:
+					    break;
+					}
+					fclose(file);
+				} else {
+					error = ERR_CANTOPENFILE;
+				}
+			}
+			if (error == ERR_NONE) {
+				SMSD_Log(DEBUG_INFO, Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report": "Received"), FileName);
+			} else {
+				SMSD_Log(DEBUG_INFO, Config, "Cannot save %s (%i)", FileName, errno);
+				return ERR_CANTOPENFILE;
+			}
+		}
+	}
+
+	if (NewID != NULL) strcpy(NewID, FullName);
+
+	return ERR_NONE;
+fail:
+	return ERR_WRITING_FILE;
+}
+
 static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms UNUSED,
 		GSM_SMSDConfig *Config, char *ID UNUSED,
 		int Part, GSM_SMSDSendingError err, int TPMR UNUSED)
@@ -409,7 +513,7 @@ GSM_SMSDService SMSDFiles = {
 	SMSDFiles_SaveInboxSMS,
 	SMSDFiles_FindOutboxSMS,
 	SMSDFiles_MoveSMS,
-	NOTIMPLEMENTED,			/* CreateOutboxSMS	*/
+	SMSDFiles_CreateOutboxSMS,
 	SMSDFiles_AddSentSMSInfo,
 	NOTIMPLEMENTED,			/* RefreshSendStatus	*/
 	NOTIMPLEMENTED			/* RefreshPhoneStatus	*/
