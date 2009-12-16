@@ -126,6 +126,7 @@ GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command)
 	const char *realcmd;
 	char buffer[30]={0};
 	GSM_Error error = ERR_NONE;
+	size_t len;
 
 	/* Do we need any mode switching? */
 	if (!Priv->Mode) {
@@ -161,8 +162,8 @@ GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command)
 
 	/* Switch mode */
 	smprintf(s, "Switching to mode %d\n", cmd->Mode);
-	sprintf(buffer, "AT+MODE=%d\r", cmd->Mode);
-	error = GSM_WaitFor(s, buffer, strlen(buffer), 0x00, 100, ID_ModeSwitch);
+	len = sprintf(buffer, "AT+MODE=%d\r", cmd->Mode);
+	error = GSM_WaitFor(s, buffer, len, 0x00, 100, ID_ModeSwitch);
 
 	/* On succes we remember it */
 	if (error == ERR_NONE) {
@@ -543,15 +544,16 @@ GSM_Error MOTOROLA_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	char req[50];
 	GSM_Error error;
+	size_t len;
 
 	error = MOTOROLA_LockCalendar(s);
 	if (error != ERR_NONE) return ERR_NONE;
 
 	s->Phone.Data.Cal = Note;
 
-	sprintf(req, "AT+MDBR=%d\r", Note->Location - 1);
+	len = sprintf(req, "AT+MDBR=%d\r", Note->Location - 1);
 
-	ATGEN_WaitForAutoLen(s, req, 0x00, 10, ID_GetCalendarNote);
+	ATGEN_WaitFor(s, req, len, 0x00, 10, ID_GetCalendarNote);
 	MOTOROLA_UnlockCalendar(s);
 	return error;
 }
@@ -565,13 +567,14 @@ GSM_Error MOTOROLA_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	char req[50];
 	GSM_Error error;
+	size_t len;
 
 	error = MOTOROLA_LockCalendar(s);
 	if (error != ERR_NONE) return ERR_NONE;
 
-	sprintf(req, "AT+MDBWE=%d,0,0\r", Note->Location);
+	len = sprintf(req, "AT+MDBWE=%d,0,0\r", Note->Location);
 
-	ATGEN_WaitForAutoLen(s, req, 0x00, 10, ID_DeleteCalendarNote);
+	ATGEN_WaitFor(s, req, len, 0x00, 10, ID_DeleteCalendarNote);
 	MOTOROLA_UnlockCalendar(s);
 	return error;
 }

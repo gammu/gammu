@@ -2133,6 +2133,7 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 	char			buffer3[100];
 	int			i = 0;
 	GSM_AT_Charset		cset;
+	size_t len;
 
 	/* Do we know current charset? */
 	if (Priv->Charset == 0) {
@@ -2206,11 +2207,11 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 	if (Priv->EncodedCommands && Priv->Charset == AT_CHARSET_UCS2) {
 		EncodeUnicode(buffer2, AT_Charsets[i].text, strlen(AT_Charsets[i].text));
 		EncodeHexUnicode(buffer3, buffer2, strlen(AT_Charsets[i].text));
-		sprintf(buffer, "AT+CSCS=\"%s\"\r", buffer3);
+		len = sprintf(buffer, "AT+CSCS=\"%s\"\r", buffer3);
 	} else {
-		sprintf(buffer, "AT+CSCS=\"%s\"\r", AT_Charsets[i].text);
+		len = sprintf(buffer, "AT+CSCS=\"%s\"\r", AT_Charsets[i].text);
 	}
-	ATGEN_WaitForAutoLen(s, buffer, 0x00, 20, ID_SetMemoryCharset);
+	ATGEN_WaitFor(s, buffer, len, 0x00, 20, ID_SetMemoryCharset);
 
 	if (error == ERR_NONE) {
 		Priv->Charset = cset;
@@ -2368,13 +2369,14 @@ GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, gb
 	char			tz[4] = "";
 	char			req[128];
 	GSM_Error		error;
+	size_t len;
 
 	if (set_timezone) {
 		sprintf(tz, "%+03i", date_time->Timezone / 3600);
 	}
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FOUR_DIGIT_YEAR)) {
-		sprintf(req, "AT+CCLK=\"%04i/%02i/%02i,%02i:%02i:%02i%s\"\r",
+		len = sprintf(req, "AT+CCLK=\"%04i/%02i/%02i,%02i:%02i:%02i%s\"\r",
 			     date_time->Year,
 			     date_time->Month ,
 			     date_time->Day,
@@ -2383,7 +2385,7 @@ GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, gb
 			     date_time->Second,
 			     tz);
 	} else {
-		sprintf(req, "AT+CCLK=\"%02i/%02i/%02i,%02i:%02i:%02i%s\"\r",
+		len = sprintf(req, "AT+CCLK=\"%02i/%02i/%02i,%02i:%02i:%02i%s\"\r",
 			     (date_time->Year > 2000 ? date_time->Year-2000 : date_time->Year-1900),
 			     date_time->Month ,
 			     date_time->Day,
@@ -2394,7 +2396,7 @@ GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, gb
 	}
 	smprintf(s, "Setting date & time\n");
 
-	ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_SetDateTime);
+	ATGEN_WaitFor(s, req, len, 0x00, 4, ID_SetDateTime);
 	if (error == ERR_UNKNOWN) error = ERR_NOTSUPPORTED;
 
 	if (set_timezone && (
@@ -3210,6 +3212,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	int			start=0,end=0,memory_end=0;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	gboolean		free_read = FALSE;
+	size_t len;
 
 	/* This can be NULL at this point */
 	if (Status != NULL) {
@@ -3280,8 +3283,8 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 			end = memory_end;
 
 		/* Read next interval */
-		sprintf(req, "AT+CPBR=%i,%i\r", start, end);
-		ATGEN_WaitForAutoLen(s, req, 0x00, 20, ID_GetMemoryStatus);
+		len = sprintf(req, "AT+CPBR=%i,%i\r", start, end);
+		ATGEN_WaitFor(s, req, len, 0x00, 20, ID_GetMemoryStatus);
 
 		if (error == ERR_EMPTY) {
 			Priv->NextMemoryEntry = start;
@@ -3602,6 +3605,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 	GSM_Error 		error;
 	char		req[20];
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	size_t len;
 
 	if (entry->Location==0x00) return ERR_INVALIDLOCATION;
 
@@ -3611,10 +3615,10 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 		}
 		if (Priv->PBKSBNR == AT_AVAILABLE) {
 			/* FirstMemoryEntry is not applied here, it is always 0 */
-			sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location - 1);
+			len = sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location - 1);
 			s->Phone.Data.Memory=entry;
 			smprintf(s, "Getting phonebook entry\n");
-			ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_GetMemory);
+			ATGEN_WaitFor(s, req, len, 0x00, 4, ID_GetMemory);
 			return error;
 		}
 	}
@@ -3642,20 +3646,20 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 	}
 
 	if (Priv->PBK_SPBR == AT_AVAILABLE) {
-		sprintf(req, "AT+SPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
+		len = sprintf(req, "AT+SPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
 	} else if (Priv->PBK_MPBR == AT_AVAILABLE) {
-		sprintf(req, "AT+MPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
+		len = sprintf(req, "AT+MPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
 	} else {
 		if (endlocation == 0) {
-			sprintf(req, "AT+CPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
+			len = sprintf(req, "AT+CPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
 		} else {
-			sprintf(req, "AT+CPBR=%i,%i\r", entry->Location + Priv->FirstMemoryEntry - 1, endlocation + Priv->FirstMemoryEntry - 1);
+			len = sprintf(req, "AT+CPBR=%i,%i\r", entry->Location + Priv->FirstMemoryEntry - 1, endlocation + Priv->FirstMemoryEntry - 1);
 		}
 	}
 
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
-	ATGEN_WaitForAutoLen(s, req, 0x00, 30, ID_GetMemory);
+	ATGEN_WaitFor(s, req, len, 0x00, 30, ID_GetMemory);
 	return error;
 }
 
@@ -3720,6 +3724,7 @@ GSM_Error ATGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 	unsigned char		req[100];
 	int			i;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	size_t len;
 
 	error = ATGEN_SetPBKMemory(s, type);
 	if (error != ERR_NONE) return error;
@@ -3737,8 +3742,8 @@ GSM_Error ATGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 
 	smprintf(s, "Deleting all phonebook entries\n");
 	for (i = Priv->FirstMemoryEntry; i < Priv->FirstMemoryEntry + Priv->MemorySize; i++) {
-		sprintf(req, "AT+CPBW=%d\r",i);
-		ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_SetMemory);
+		len = sprintf(req, "AT+CPBW=%d\r",i);
+		ATGEN_WaitFor(s, req, len, 0x00, 4, ID_SetMemory);
 
 		if (error != ERR_NONE) {
 			return error;
@@ -3813,13 +3818,13 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 	} else {
 		encoded = number;
 	}
-	sprintf(req, format, s->Phone.Data.EnableIncomingUSSD ? 1 : 0, encoded);
+	len = sprintf(req, format, s->Phone.Data.EnableIncomingUSSD ? 1 : 0, encoded);
 
 	if (encoded != number) {
 		free(encoded);
 		encoded=NULL;
 	}
-	ATGEN_WaitForAutoLen(s, req, 0x00, 30, ID_GetUSSD);
+	ATGEN_WaitFor(s, req, len, 0x00, 30, ID_GetUSSD);
 	free(req);
 	req=NULL;
 	return error;
@@ -3872,15 +3877,16 @@ GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 {
 	GSM_Error error;
 	unsigned char req[GSM_SECURITY_CODE_LEN + 12] = {'\0'};
+	size_t len;
 
 	if (Code.Type == SEC_Pin2 &&
 			s->Phone.Data.Priv.ATGEN.Manufacturer == AT_Siemens) {
-		sprintf(req, "AT+CPIN2=\"%s\"\r", Code.Code);
+		len = sprintf(req, "AT+CPIN2=\"%s\"\r", Code.Code);
 	} else {
-		sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
+		len = sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
 	}
 	smprintf(s, "Entering security code\n");
-	ATGEN_WaitForAutoLen(s, req, 0x00, 6, ID_EnterSecurityCode);
+	ATGEN_WaitFor(s, req, len, 0x00, 6, ID_EnterSecurityCode);
 	return error;
 }
 
@@ -4132,6 +4138,7 @@ GSM_Error ATGEN_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error error;
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char req[100] = {'\0'};
+	size_t len;
 
 	if (entry->Location < 1) {
 		return ERR_INVALIDLOCATION;
@@ -4148,9 +4155,9 @@ GSM_Error ATGEN_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			return error;
 		}
 	}
-	sprintf(req, "AT+CPBW=%d\r",entry->Location + Priv->FirstMemoryEntry - 1);
+	len = sprintf(req, "AT+CPBW=%d\r",entry->Location + Priv->FirstMemoryEntry - 1);
 	smprintf(s, "Deleting phonebook entry\n");
-	ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_SetMemory);
+	ATGEN_WaitFor(s, req, len, 0x00, 4, ID_SetMemory);
 
 	if (error == ERR_EMPTY) {
 		return ERR_NONE;
@@ -4282,8 +4289,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	 *         entry->Location, number, NumberType, name);
 	 * because name can contain 0 when using GSM alphabet.
 	 */
-	sprintf(req, "AT+CPBW=%d,\"%s\",%i,\"", entry->Location + Priv->FirstMemoryEntry - 1, number, NumberType);
-	reqlen = strlen(req);
+	reqlen = sprintf(req, "AT+CPBW=%d,\"%s\",%i,\"", entry->Location + Priv->FirstMemoryEntry - 1, number, NumberType);
 
 	if (reqlen + len > REQUEST_SIZE - 4) {
 		smprintf(s, "WARNING: Text truncated to fit in buffer!\n");

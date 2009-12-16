@@ -267,11 +267,12 @@ GSM_Error SAMSUNG_ReplySetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 GSM_Error SAMSUNG_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	unsigned char req[100];
+	size_t len;
 
 	s->Phone.Data.Bitmap=Bitmap;
 	smprintf(s, "Getting bitmap\n");
-	sprintf(req, "AT+IMGR=%d\r", Bitmap->Location-1);
-	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetBitmap);
+	len = sprintf(req, "AT+IMGR=%d\r", Bitmap->Location-1);
+	return GSM_WaitFor (s, req, len, 0x00, 4, ID_GetBitmap);
 }
 
 GSM_Error SAMSUNG_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
@@ -283,6 +284,7 @@ GSM_Error SAMSUNG_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
     const char *model;
 	GSM_Phone_Data  *Data = &s->Phone.Data;
 	int 		i;
+	size_t len;
 
 	s->Phone.Data.Bitmap = Bitmap;
 	smprintf(s, "Setting bitmap\n");
@@ -325,10 +327,10 @@ GSM_Error SAMSUNG_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	if ((dot = strrchr(name, '.')) != NULL)
 		*dot = 0;
 
-	sprintf(req, "AT+IMGW=0,\"%s\",2,0,0,0,0,100,%d,%u\r", name,
+	len = sprintf(req, "AT+IMGW=0,\"%s\",2,0,0,0,0,100,%d,%u\r", name,
 		Bitmap->BinaryPic.Length, (unsigned int)crc);
 
-	error = s->Protocol.Functions->WriteMessage(s, req, strlen(req), 0x00);
+	error = s->Protocol.Functions->WriteMessage(s, req, len, 0x00);
 	if (error!=ERR_NONE) return error;
 
 	return SetSamsungFrame(s, Bitmap->BinaryPic.Buffer,
@@ -399,11 +401,12 @@ GSM_Error SAMSUNG_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
 GSM_Error SAMSUNG_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gboolean PhoneRingtone UNUSED)
 {
 	unsigned char req[100];
+	size_t len;
 
 	s->Phone.Data.Ringtone = Ringtone;
 	smprintf(s, "Getting ringtone\n");
-	sprintf(req, "AT+MELR=%d\r", Ringtone->Location-1);
-	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetRingtone);
+	len = sprintf(req, "AT+MELR=%d\r", Ringtone->Location-1);
+	return GSM_WaitFor (s, req, len, 0x00, 4, ID_GetRingtone);
 }
 
 GSM_Error SAMSUNG_ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -418,6 +421,7 @@ GSM_Error SAMSUNG_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *
 	unsigned long	crc;
 	GSM_Error	error;
 	char		name[50], *dot;
+	size_t len;
 
 	s->Phone.Data.Ringtone = Ringtone;
 	smprintf(s, "Setting ringtone\n");
@@ -432,10 +436,10 @@ GSM_Error SAMSUNG_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *
 	if ((dot = strrchr(name, '.')) != NULL) *dot = 0;
 
 	crc = GetCRC(Ringtone->BinaryTone.Buffer, Ringtone->BinaryTone.Length);
-	sprintf(req, "AT+MELW=0,\"%s\",4,%ld,%u\r", name,
+	len = sprintf(req, "AT+MELW=0,\"%s\",4,%ld,%u\r", name,
 		(long)Ringtone->BinaryTone.Length, (unsigned int)crc);
 
-	error = s->Protocol.Functions->WriteMessage(s, req, strlen(req), 0x00);
+	error = s->Protocol.Functions->WriteMessage(s, req, len, 0x00);
 	if (error!=ERR_NONE) return error;
 
 	return SetSamsungFrame(s, Ringtone->BinaryTone.Buffer,
@@ -945,12 +949,13 @@ GSM_Error SAMSUNG_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	char req[50];
 	GSM_Error error;
+	size_t len;
 
 	s->Phone.Data.Cal = Note;
 
-	sprintf(req, "AT+ORGR=%d\r", Note->Location - 1);
+	len = sprintf(req, "AT+ORGR=%d\r", Note->Location - 1);
 
-	ATGEN_WaitForAutoLen(s, req, 0x00, 10, ID_GetCalendarNote);
+	ATGEN_WaitFor(s, req, len, 0x00, 10, ID_GetCalendarNote);
 	return error;
 }
 
@@ -963,10 +968,11 @@ GSM_Error SAMSUNG_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	char req[50];
 	GSM_Error error;
+	size_t len;
 
-	sprintf(req, "AT+ORGD=%d\r", Note->Location);
+	len = sprintf(req, "AT+ORGD=%d\r", Note->Location);
 
-	ATGEN_WaitForAutoLen(s, req, 0x00, 10, ID_DeleteCalendarNote);
+	ATGEN_WaitFor(s, req, len, 0x00, 10, ID_DeleteCalendarNote);
 	return error;
 }
 

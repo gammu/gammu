@@ -1435,6 +1435,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 	GSM_SMSC	 	SMSC;
 	unsigned char		req[1000] = {'\0'}, buffer[1000] = {'\0'};
 	int			i = 0, length = 0;
+	size_t len;
 
 	/* Set mode of SMS */
 	error = ATGEN_GetSMSMode(s);
@@ -1534,20 +1535,20 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 		if (error != ERR_NONE) {
 			return error;
 		}
-		sprintf(buffer, "AT+CSMP=%i,%i,%i,%i\r",
+		len = sprintf(buffer, "AT+CSMP=%i,%i,%i,%i\r",
 			req[PHONE_SMSDeliver.firstbyte],
 			req[PHONE_SMSDeliver.TPVP],
 			req[PHONE_SMSDeliver.TPPID],
 			req[PHONE_SMSDeliver.TPDCS]);
-		ATGEN_WaitForAutoLen(s, buffer, 0x00, 4, ID_SetSMSParameters);
+		ATGEN_WaitFor(s, buffer, len, 0x00, 4, ID_SetSMSParameters);
 
 		if (error == ERR_NOTSUPPORTED) {
 			/* Nokia Communicator 9000i doesn't support <vp> parameter */
-			sprintf(buffer, "AT+CSMP=%i,,%i,%i\r",
+			len = sprintf(buffer, "AT+CSMP=%i,,%i,%i\r",
 				req[PHONE_SMSDeliver.firstbyte],
 				req[PHONE_SMSDeliver.TPPID],
 				req[PHONE_SMSDeliver.TPDCS]);
-			ATGEN_WaitForAutoLen(s, buffer, 0x00, 4, ID_SetSMSParameters);
+			ATGEN_WaitFor(s, buffer, len, 0x00, 4, ID_SetSMSParameters);
 		}
 		if (error != ERR_NONE) {
 			smprintf(s, "WARNING: Failed to set message parameters, continuing without them!\n");
@@ -1585,6 +1586,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	unsigned char		buffer[1000] = {'\0'}, hexreq[1000] = {'\0'},folderid = 0;
 	const char		*statetxt;
 	int			state = 0, Replies = 0, reply = 0, current = 0, length = 0, location = 0;
+	size_t len;
 
 	/* This phone supports only sent/unsent messages on SIM */
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSONLYSENT)) {
@@ -1650,7 +1652,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 				if (error != ERR_NONE) return error;
 			}
 		}
-		sprintf(buffer, "AT+CMGW=%i,%i\r",current,state);
+		len = sprintf(buffer, "AT+CMGW=%i,%i\r",current,state);
 		break;
 	case SMS_AT_TXT:
 		if (sms->PDU == SMS_Deliver) {
@@ -1669,12 +1671,12 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 			 * Fortunately it will write "+CMGW: <index>\n" before and the message gets written
 			 */
 			if (sms->Number[1]!='+' && (sms->Number[1]<'0' || sms->Number[1]>'9')) {
-		        	sprintf(buffer, "AT+CMGW=\"123\",,\"%s\"\r",statetxt);
+		        	len = sprintf(buffer, "AT+CMGW=\"123\",,\"%s\"\r",statetxt);
 			} else {
-		        	sprintf(buffer, "AT+CMGW=\"%s\",,\"%s\"\r",DecodeUnicodeString(sms->Number),statetxt);
+		        	len = sprintf(buffer, "AT+CMGW=\"%s\",,\"%s\"\r",DecodeUnicodeString(sms->Number),statetxt);
 			}
 		} else {
-			sprintf(buffer, "AT+CMGW=\"%s\",,\"%s\"\r",DecodeUnicodeString(sms->Number),statetxt);
+			len = sprintf(buffer, "AT+CMGW=\"%s\",,\"%s\"\r",DecodeUnicodeString(sms->Number),statetxt);
 		}
 	}
 	Phone->SaveSMSMessage = sms;
@@ -1687,7 +1689,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		Replies 			= s->ReplyNum;
 		s->ReplyNum			= 1;
 		smprintf(s,"Waiting for modem prompt\n");
-		ATGEN_WaitForAutoLen(s, buffer, 0x00, 20, ID_SaveSMSMessage);
+		ATGEN_WaitFor(s, buffer, len, 0x00, 20, ID_SaveSMSMessage);
 		s->ReplyNum			 = Replies;
 
 		if (error == ERR_NONE) {
@@ -1794,6 +1796,7 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	GSM_Phone_Data *Phone = &s->Phone.Data;
 	unsigned char buffer[1000] = {'\0'}, hexreq[1000] = {'\0'};
 	int current = 0, length = 0, Replies = 0, retries = 0;
+	size_t len;
 
 	if (sms->PDU == SMS_Deliver) {
 		sms->PDU = SMS_Submit;
@@ -1805,10 +1808,10 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	}
 	switch (Phone->Priv.ATGEN.SMSMode) {
 	case SMS_AT_PDU:
-		sprintf(buffer, "AT+CMGS=%i\r",current);
+		len = sprintf(buffer, "AT+CMGS=%i\r",current);
 		break;
 	case SMS_AT_TXT:
-		sprintf(buffer, "AT+CMGS=\"%s\"\r",DecodeUnicodeString(sms->Number));
+		len = sprintf(buffer, "AT+CMGS=\"%s\"\r",DecodeUnicodeString(sms->Number));
 		break;
 	}
 
@@ -1823,7 +1826,7 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 	while (retries < s->ReplyNum) {
 		smprintf(s,"Waiting for modem prompt\n");
-		ATGEN_WaitForAutoLen(s, buffer, 0x00, 30, ID_IncomingFrame);
+		ATGEN_WaitFor(s, buffer, len, 0x00, 30, ID_IncomingFrame);
 
 		/* Restore original value */
 		s->ReplyNum = Replies;
@@ -1858,6 +1861,7 @@ GSM_Error ATGEN_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 	GSM_MultiSMSMessage msms;
 	unsigned char req[100] = {'\0'}, smsfolder = 0;
 	int location = 0;
+	size_t len;
 
 	msms.Number = 0;
 	msms.SMS[0].Folder 	= Folder;
@@ -1888,8 +1892,8 @@ GSM_Error ATGEN_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 	if (error != ERR_NONE) {
 		return error;
 	}
-	sprintf(req, "AT+CMSS=%i\r",location);
-	error=s->Protocol.Functions->WriteMessage(s, req, strlen(req), 0x00);
+	len = sprintf(req, "AT+CMSS=%i\r",location);
+	error=s->Protocol.Functions->WriteMessage(s, req, len, 0x00);
 	usleep(strlen(req)*1000);
 	return error;
 }

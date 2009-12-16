@@ -51,6 +51,7 @@ static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, cons
 	GSM_Error		error;
 	unsigned char 		req[20],req1[512],hexreq[2096];
 	int			MaxFrame,CurrentFrame,size,sz,pos=0;
+	size_t reqlen;
 
 	EncodeHexBin(hexreq,buff,len);
 	size	 = len * 2;
@@ -60,9 +61,9 @@ static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, cons
 	for (CurrentFrame=0;CurrentFrame<MaxFrame;CurrentFrame++) {
 		pos=CurrentFrame*352;
 	 	if (pos+352 < size) sz = 352; else sz = size - pos;
-		sprintf(req, "AT^SBNW=\"%s\",%i,%i,%i\r",templ,Location,CurrentFrame+1,MaxFrame);
+		reqlen = sprintf(req, "AT^SBNW=\"%s\",%i,%i,%i\r",templ,Location,CurrentFrame+1,MaxFrame);
 		s->Protocol.Data.AT.EditMode = TRUE;
-		error = GSM_WaitForAutoLen(s, req, 0x00, 3, RequestID);
+		error = GSM_WaitFor(s, req, reqlen, 0x00, 3, RequestID);
 		s->Phone.Data.DispatchError=ERR_TIMEOUT;
 		s->Phone.Data.RequestID=RequestID;
 	     	if (error!=ERR_NONE) return error;
@@ -115,13 +116,14 @@ GSM_Error SIEMENS_ReplySetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 GSM_Error SIEMENS_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	unsigned char req[32];
+	size_t len;
 
 	if (Bitmap->Type!=GSM_OperatorLogo) return ERR_NOTSUPPORTED;
 	if (Bitmap->Location-1 < 0) Bitmap->Location++;
 	s->Phone.Data.Bitmap=Bitmap;
-	sprintf(req, "AT^SBNR=\"bmp\",%i\r", Bitmap->Location-1);
+	len = sprintf(req, "AT^SBNR=\"bmp\",%i\r", Bitmap->Location-1);
 	smprintf(s, "Getting Bitmap\n");
-	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetBitmap);
+	return GSM_WaitFor (s, req, len, 0x00, 4, ID_GetBitmap);
 }
 
 GSM_Error SIEMENS_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
@@ -161,11 +163,12 @@ GSM_Error SIEMENS_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
 GSM_Error SIEMENS_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gboolean PhoneRingtone UNUSED)
 {
 	unsigned char req[32];
+	size_t len;
 
 	s->Phone.Data.Ringtone=Ringtone;
-	sprintf(req, "AT^SBNR=\"mid\",%i\r", Ringtone->Location-1);
+	len = sprintf(req, "AT^SBNR=\"mid\",%i\r", Ringtone->Location-1);
 	smprintf(s, "Getting RingTone\n");
-	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetRingtone);
+	return GSM_WaitFor (s, req, len, 0x00, 4, ID_GetRingtone);
 }
 
 GSM_Error SIEMENS_ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -226,6 +229,7 @@ GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 	GSM_Error		error;
 	unsigned char 		req[32];
 	int			Location;
+	size_t len;
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
@@ -236,8 +240,8 @@ GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 	Location = Note->Location;
 	while (1){
 		Location++;
-		sprintf(req, "AT^SBNR=\"vcs\",%i\r",Location);
-		error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetCalendarNote);
+		len = sprintf(req, "AT^SBNR=\"vcs\",%i\r",Location);
+		error = GSM_WaitFor (s, req, len, 0x00, 4, ID_GetCalendarNote);
 		if ((error!=ERR_NONE) && (error!=ERR_EMPTY)) {
 			error = ERR_INVALIDLOCATION;
 			break;
@@ -257,14 +261,15 @@ GSM_Error SIEMENS_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char 		req[32];
+	size_t len;
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
 	s->Phone.Data.Cal = Note;
-	sprintf(req, "AT^SBNR=\"vcs\",%i\r",Note->Location);
+	len = sprintf(req, "AT^SBNR=\"vcs\",%i\r",Note->Location);
 	smprintf(s, "Getting calendar note\n");
 
-	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetCalendarNote);
+	return GSM_WaitFor (s, req, len, 0x00, 4, ID_GetCalendarNote);
 }
 
 GSM_Error SIEMENS_ReplyAddCalendarNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -291,13 +296,14 @@ GSM_Error SIEMENS_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char 		req[32];
+	size_t len;
 
 	if (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 	s->Phone.Data.Cal = Note;
-	sprintf(req, "AT^SBNW=\"vcs\",%i,0\r",Note->Location);
+	len = sprintf(req, "AT^SBNW=\"vcs\",%i,0\r",Note->Location);
 	smprintf(s, "Deleting calendar note\n");
 	Priv->FirstFreeCalendarPos = 0;
-	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_DeleteCalendarNote);
+	return GSM_WaitFor(s, req, len, 0x00, 4, ID_DeleteCalendarNote);
 }
 
 GSM_Error SIEMENS_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
@@ -323,6 +329,7 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	unsigned char 		req[500], req1[32];
 	size_t			size=0;
 	int Location;
+	size_t len;
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
@@ -335,8 +342,8 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	Location = Note->Location;
 	while (1){
 		Location++;
-		sprintf(req1, "AT^SBNR=\"vcs\",%i\r",Location);
-		error = GSM_WaitFor (s, req1, strlen(req1), 0x00, 4, ID_GetCalendarNote);
+		len = sprintf(req1, "AT^SBNR=\"vcs\",%i\r",Location);
+		error = GSM_WaitFor (s, req1, len, 0x00, 4, ID_GetCalendarNote);
 		Note->Location			= Location;
 		Priv->FirstFreeCalendarPos	= Location;
 		if (error==ERR_EMPTY) break;
