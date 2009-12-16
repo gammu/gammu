@@ -5188,8 +5188,8 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 
 {ATOBEX_ReplyGetDateLocale,	"AT*ESDF?"	,0x00,0x00,ID_GetLocale		 },
 {ATOBEX_ReplyGetTimeLocale,	"AT*ESTF?"	,0x00,0x00,ID_GetLocale	 	 },
-{ATOBEX_ReplyGetFileSystemStatus,	"AT*EMEM"	,0x00,0x00,ID_FileSystemStatus 	 },
-{ATGEN_GenericReply,			"AT*EBCA"	,0x00,0x00,ID_GetBatteryCharge 	 },
+{ATOBEX_ReplyGetFileSystemStatus,"AT*EMEM"	,0x00,0x00,ID_FileSystemStatus 	 },
+{ATGEN_GenericReply,		"AT*EBCA"	,0x00,0x00,ID_GetBatteryCharge 	 },
 {ATOBEX_ReplyGetBatteryCharge,	"*EBCA:"	,0x00,0x00,ID_IncomingFrame	 },
 #endif
 #ifdef GSM_ENABLE_ALCATEL
