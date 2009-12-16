@@ -5241,7 +5241,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
  *  specific and it's part of ETSI specifications
  */
 {ATGEN_GenericReply,		"AT+IFC" 	 	,0x00,0x00,ID_SetFlowControl  	 },
-{ALCATEL_ProtocolVersionReply,	"AT+CPROT=?" 	 	,0x00,0x00,ID_AlcatelProtocol    },
+{ALCATEL_ProtocolVersionReply,	"AT+CPROT=?" 	 	,0x00,0x00,ID_AlcatelProtocol	 },
 {ATGEN_GenericReply,		"AT+CPROT=16" 	 	,0x00,0x00,ID_AlcatelConnect	 },
 #endif
 
@@ -5281,9 +5281,9 @@ GSM_Phone_Functions ATGENPhone = {
 	ATGEN_GetBatteryCharge,
 	ATGEN_GetSignalQuality,
 	ATGEN_GetNetworkInfo,
- 	NOTSUPPORTED,       		/*  	GetCategory 		*/
- 	NOTSUPPORTED,       		/*  	AddCategory 		*/
- 	NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
+	NOTSUPPORTED,	  		/*  	GetCategory 		*/
+	NOTSUPPORTED,	 		/*  	AddCategory 		*/
+	NOTSUPPORTED,	  		/*  	GetCategoryStatus 	*/
 	ATGEN_GetMemoryStatus,
 	ATGEN_GetMemory,
 	ATGEN_GetNextMemory,
@@ -5370,9 +5370,9 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/*	DeleteAllNotes		*/
 	NOTSUPPORTED, 			/*	GetProfile		*/
 	NOTSUPPORTED, 			/*	SetProfile		*/
-    	NOTSUPPORTED,			/*  	GetFMStation        	*/
-    	NOTSUPPORTED,			/* 	SetFMStation        	*/
-    	NOTSUPPORTED,			/* 	ClearFMStations       	*/
+	NOTSUPPORTED,			/*  	GetFMStation	  	*/
+	NOTSUPPORTED,			/* 	SetFMStation	  	*/
+	NOTSUPPORTED,			/* 	ClearFMStations	 	*/
 	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
 	NOTSUPPORTED,			/*	GetFolderListing	*/
 	NOTSUPPORTED,			/*	GetNextRootFolder	*/
