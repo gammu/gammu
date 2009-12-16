@@ -4709,42 +4709,44 @@ static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *N
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer == AT_Siemens ) {
-		return SIEMENS_GetNextCalendar(s,Note,start);
+	switch (Priv->Manufacturer) {
+		case AT_Siemens:
+			return SIEMENS_GetNextCalendar(s,Note,start);
+		case AT_Samsung:
+			return SAMSUNG_GetNextCalendar(s,Note,start);
+		default:
+			return ERR_NOTSUPPORTED;
 	}
-	if (Priv->Manufacturer == AT_Samsung ) {
-		return SAMSUNG_GetNextCalendar(s,Note,start);
-	}
-	return ERR_NOTSUPPORTED;
 }
 
 GSM_Error ATGEN_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer == AT_Motorola) {
-		return MOTOROLA_GetCalendarStatus(s, Status);
+	switch (Priv->Manufacturer) {
+		case AT_Motorola:
+			return MOTOROLA_GetCalendarStatus(s, Status);
+		case AT_Samsung:
+			return SAMSUNG_GetCalendarStatus(s, Status);
+		default:
+			return ERR_NOTSUPPORTED;
 	}
-	if (Priv->Manufacturer == AT_Samsung) {
-		return SAMSUNG_GetCalendarStatus(s, Status);
-	}
-	return ERR_NOTSUPPORTED;
 }
 
 GSM_Error ATGEN_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer == AT_Siemens) {
-		return SIEMENS_GetCalendar(s, Note);
+	switch (Priv->Manufacturer) {
+		case AT_Siemens:
+			return SIEMENS_GetCalendar(s, Note);
+		case AT_Motorola:
+			return MOTOROLA_GetCalendar(s, Note);
+		case AT_Samsung:
+			return SAMSUNG_GetCalendar(s, Note);
+		default:
+			return ERR_NOTSUPPORTED;
 	}
-	if (Priv->Manufacturer == AT_Motorola) {
-		return MOTOROLA_GetCalendar(s, Note);
-	}
-	if (Priv->Manufacturer == AT_Samsung) {
-		return SAMSUNG_GetCalendar(s, Note);
-	}
-	return ERR_NOTSUPPORTED;
 }
 
 GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
@@ -4765,36 +4767,48 @@ GSM_Error ATGEN_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer == AT_Siemens) {
-		return SIEMENS_SetCalendarNote(s, Note);
+	switch (Priv->Manufacturer) {
+		case AT_Siemens:
+			return SIEMENS_SetCalendarNote(s, Note);
+		case AT_Motorola:
+			return MOTOROLA_SetCalendar(s, Note);
+		case AT_Samsung:
+			return SAMSUNG_SetCalendar(s, Note);
+		default:
+			return ERR_NOTSUPPORTED;
 	}
-	if (Priv->Manufacturer == AT_Motorola) {
-		return MOTOROLA_SetCalendar(s, Note);
-	}
-	if (Priv->Manufacturer == AT_Samsung) {
-		return SAMSUNG_SetCalendar(s, Note);
-	}
-	return ERR_NOTSUPPORTED;
 }
 
 GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer == AT_Siemens)  return SIEMENS_AddCalendarNote(s, Note);
-	if (Priv->Manufacturer == AT_Samsung)  return SAMSUNG_AddCalendar(s, Note);
-	if (Priv->Manufacturer == AT_Motorola)  return MOTOROLA_AddCalendar(s, Note);
-	return ERR_NOTSUPPORTED;
+	switch (Priv->Manufacturer) {
+		case AT_Siemens:
+			return SIEMENS_AddCalendarNote(s, Note);
+		case AT_Samsung:
+			return SAMSUNG_AddCalendar(s, Note);
+		case AT_Motorola:
+			return MOTOROLA_AddCalendar(s, Note);
+		default:
+			return ERR_NOTSUPPORTED;
+	}
 }
 
 GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer == AT_Siemens)  return SIEMENS_DelCalendarNote(s, Note);
-	if (Priv->Manufacturer == AT_Samsung)  return SAMSUNG_DelCalendar(s, Note);
-	if (Priv->Manufacturer == AT_Motorola)  return MOTOROLA_DelCalendar(s, Note);
-	return ERR_NOTSUPPORTED;
+	switch (Priv->Manufacturer) {
+		case AT_Siemens:
+			return SIEMENS_DelCalendarNote(s, Note);
+		case AT_Samsung:
+			return SAMSUNG_DelCalendar(s, Note);
+		case AT_Motorola:
+			return MOTOROLA_DelCalendar(s, Note);
+		default:
+			return ERR_NOTSUPPORTED;
+	}
 }
 
 
@@ -4802,36 +4816,56 @@ GSM_Error ATGEN_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer == AT_Siemens) return SIEMENS_GetBitmap(s, Bitmap);
-	if (Priv->Manufacturer == AT_Samsung) return SAMSUNG_GetBitmap(s, Bitmap);
-	return ERR_NOTSUPPORTED;
+	switch (Priv->Manufacturer) {
+		case AT_Siemens:
+			return SIEMENS_GetBitmap(s, Bitmap);
+		case AT_Samsung:
+			return SAMSUNG_GetBitmap(s, Bitmap);
+		default:
+			return ERR_NOTSUPPORTED;
+	}
 }
 
 GSM_Error ATGEN_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer == AT_Siemens) return SIEMENS_SetBitmap(s, Bitmap);
-	if (Priv->Manufacturer == AT_Samsung) return SAMSUNG_SetBitmap(s, Bitmap);
-	return ERR_NOTSUPPORTED;
+	switch (Priv->Manufacturer) {
+		case AT_Siemens:
+			return SIEMENS_SetBitmap(s, Bitmap);
+		case AT_Samsung:
+			return SAMSUNG_SetBitmap(s, Bitmap);
+		default:
+			return ERR_NOTSUPPORTED;
+	}
 }
 
 GSM_Error ATGEN_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, gboolean PhoneRingtone)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer == AT_Siemens) return SIEMENS_GetRingtone(s, Ringtone, PhoneRingtone);
-	if (Priv->Manufacturer == AT_Samsung) return SAMSUNG_GetRingtone(s, Ringtone, PhoneRingtone);
-	return ERR_NOTSUPPORTED;
+	switch (Priv->Manufacturer) {
+		case AT_Siemens:
+			return SIEMENS_GetRingtone(s, Ringtone, PhoneRingtone);
+		case AT_Samsung:
+			return SAMSUNG_GetRingtone(s, Ringtone, PhoneRingtone);
+		default:
+			return ERR_NOTSUPPORTED;
+	}
 }
 
 GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer == AT_Siemens) return SIEMENS_SetRingtone(s, Ringtone, maxlength);
-	if (Priv->Manufacturer == AT_Samsung) return SAMSUNG_SetRingtone(s, Ringtone, maxlength);
-	return ERR_NOTSUPPORTED;
+	switch (Priv->Manufacturer) {
+		case AT_Siemens:
+			return SIEMENS_SetRingtone(s, Ringtone, maxlength);
+		case AT_Samsung:
+			return SAMSUNG_SetRingtone(s, Ringtone, maxlength);
+		default:
+			return ERR_NOTSUPPORTED;
+	}
 }
 
 GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press)
