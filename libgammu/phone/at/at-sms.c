@@ -821,7 +821,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 			}
 			return ERR_NONE;
 		default:
-			break;
+			return ERR_BUG;
 		}
 		break;
 	case AT_Reply_CMSError:
@@ -1827,6 +1827,8 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	case SMS_AT_TXT:
 		len = sprintf(buffer, "AT+CMGS=\"%s\"\r",DecodeUnicodeString(sms->Number));
 		break;
+	default:
+		return ERR_BUG;
 	}
 
 	/* We will be SMS edit mode */
