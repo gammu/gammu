@@ -163,6 +163,9 @@ void GSM_MakeMultiPartSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage	*SMS,
 
 	Len = 0;
 	while(1) {
+		if (SMS->Number >= GSM_MAX_MULTI_SMS) {
+			break;
+		}
 		GSM_SetDefaultSMSData(&SMS->SMS[SMS->Number]);
 		SMS->SMS[SMS->Number].Class    = Class;
 		SMS->SMS[SMS->Number].Coding   = Coding;
@@ -177,12 +180,9 @@ void GSM_MakeMultiPartSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage	*SMS,
 		}
 		Len += CopiedText;
 		smfprintf(di, "%ld %ld\n", (long)Len, (long)MessageLength);
-		if (Len == MessageLength) break;
-		if (SMS->Number == GSM_MAX_MULTI_SMS) break;
 		SMS->Number++;
+		if (Len == MessageLength) break;
 	}
-
-	SMS->Number++;
 
 	UDHID = GSM_MakeSMSIDFromTime();
 	GSM_GetCurrentDateTime (&Date);
