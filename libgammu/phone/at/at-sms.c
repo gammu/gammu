@@ -88,7 +88,7 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 			Priv->SIMSMSMemory = AT_AVAILABLE;
 			Priv->PhoneSaveSMS = AT_AVAILABLE;
 			Priv->SIMSaveSMS = AT_AVAILABLE;
-			return ERR_NONE;
+			goto completed;
 		}
 
 		if (strchr(msg.Buffer, '(') == NULL) {
@@ -137,6 +137,15 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 			}
 
 		}
+completed:
+		smprintf(s, "Available SMS memories received: read: ME : %s, SM : %s, save: ME : %s, SM = %s, Motorola = %s\n",
+				Priv->PhoneSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
+				Priv->SIMSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
+				Priv->PhoneSaveSMS == AT_AVAILABLE ? "ok" : "N/A",
+				Priv->SIMSaveSMS == AT_AVAILABLE ? "ok" : "N/A",
+				Priv->MotorolaSMS ? "yes" : "no"
+				);
+
 		return ERR_NONE;
 	case AT_Reply_Error:
 	case AT_Reply_CMSError:
@@ -165,14 +174,6 @@ GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 	if (error != ERR_NONE) {
 		return error;
 	}
-
-	smprintf(s, "Available SMS memories received: read: ME : %s, SM : %s, save: ME : %s, SM = %s, Motorola = %s\n",
-			Priv->PhoneSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
-			Priv->SIMSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
-			Priv->PhoneSaveSMS == AT_AVAILABLE ? "ok" : "N/A",
-			Priv->SIMSaveSMS == AT_AVAILABLE ? "ok" : "N/A",
-			Priv->MotorolaSMS ? "yes" : "no"
-			);
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_SM)) {
 		smprintf(s, "Forcing support for SM storage!\n");
