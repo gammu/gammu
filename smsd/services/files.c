@@ -213,11 +213,14 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  		EncodeUnicode(Buffer2, Buffer, len);
  		len = len*2;
  		memmove(Buffer, Buffer2, len);
- 	}
-
-  	Buffer[len] 	= 0;
-  	Buffer[len+1] 	= 0;
-  	ReadUnicodeFile(Buffer2,Buffer);
+		Buffer[len] 	= 0;
+		Buffer[len+1] 	= 0;
+ 	} else {
+		Buffer[len] 	= 0;
+		Buffer[len+1] 	= 0;
+		/* Possibly convert byte order */
+		ReadUnicodeFile(Buffer2,Buffer);
+	}
 
     	GSM_ClearMultiPartSMSInfo(&SMSInfo);
     	sms->Number = 0;
