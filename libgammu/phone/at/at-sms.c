@@ -1692,6 +1692,8 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		} else {
 			len = sprintf(buffer, "AT+CMGW=\"%s\",,\"%s\"\r",DecodeUnicodeString(sms->Number),statetxt);
 		}
+	default:
+		return ERR_BUG;
 	}
 	Phone->SaveSMSMessage = sms;
 
