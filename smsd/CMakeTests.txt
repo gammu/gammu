@@ -13,7 +13,6 @@ set(MYSQL_USER smsd CACHE STRING "User to use for MySQL tests")
 set(MYSQL_PASSWORD smsd CACHE STRING "Password to use for MySQL tests")
 
 configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" ESCAPE_QUOTES)
-configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd-files.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files.sh" ESCAPE_QUOTES)
 configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd-files-include.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files-include.sh" ESCAPE_QUOTES)
 
 macro(smsd_testsuite _driver)
