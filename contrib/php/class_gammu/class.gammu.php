@@ -134,7 +134,7 @@ class gammu {
 	}
 	
 	function Send($number,$text,&$respon) {
-		$respon = $this->gammu_exec("--sendsms TEXT {$number} -len ". strlen($text)." -text {$text}");
+		$respon = $this->gammu_exec("--sendsms TEXT {$number} -len ". strlen($text)." -text \"{$text}\"");
 		if (eregi("OK",$respon)) { return 1; } else { return 0; }
 	}
 	
