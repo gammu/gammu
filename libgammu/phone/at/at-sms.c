@@ -435,7 +435,7 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 	length = strlen(PDU);
 
 	/* Allocate memory for binary data */
-	buffer = (unsigned char*)malloc(length / 2);
+	buffer = (unsigned char*)malloc((length / 2) + 1);
 	if (buffer == NULL) {
 		return ERR_MOREMEMORY;
 	}
