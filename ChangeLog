@@ -24,6 +24,7 @@ ChangeLog
 [+] * Initial support for reading Motorola calendar (bug#338).
 [-] * Avoid parsing boolean config values all around the code.
 [+] * FILES backend of SMSD now support message injecting.
+[-] * Ignore duplicate lines in AT reply (bug#1069).
     
 20091212 - 1.26.93
 

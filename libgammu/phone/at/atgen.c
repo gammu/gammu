@@ -1210,6 +1210,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	int 			i = 0,j = 0,k = 0;
 	const char		*err, *line;
 	ATErrorCode		*ErrorCodes = NULL;
+	char *line1, *line2;
 
 	SplitLines(msg->Buffer, msg->Length, &Priv->Lines, "\x0D\x0A", 2, TRUE);
 
@@ -1218,6 +1219,28 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 		/* FIXME: handle special chars correctly */
 		smprintf(s, "%i \"%s\"\n",i+1,GetLineString(msg->Buffer,&Priv->Lines,i+1));
 		i++;
+	}
+
+	/* Check for duplicated command in response (bug#1069) */
+	if (i >= 2) {
+		/* Get first two lines */
+		line1 = strdup(GetLineString(msg->Buffer, &Priv->Lines, 1));
+		line2 = strdup(GetLineString(msg->Buffer, &Priv->Lines, 2));
+		if (line1 == NULL || line2 == NULL) {
+			free(line1);
+			free(line2);
+			return ERR_MOREMEMORY;
+		}
+		/* Is it AT command? */
+		if (strncmp(line1, "AT", 2) == 0) {
+			/* Are two lines same */
+			if (strcmp(line1, line2) == 0) {
+				smprintf(s, "Removing first reply, because it is duplicated\n");
+				/* Remove first line */
+				memmove(Priv->Lines.numbers, Priv->Lines.numbers + 2, (Priv->Lines.allocated - 2) * sizeof(Priv->Lines.numbers));
+
+			}
+		}
 	}
 
 	Priv->ReplyState 	= AT_Reply_Unknown;
