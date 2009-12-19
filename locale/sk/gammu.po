@@ -398,7 +398,7 @@ msgstr "Obnoviť nastavenia WAP?"
 
 #: gammu/backup.c:1385
 msgid "Restore phone MMS settings?"
-msgstr ""
+msgstr "Obnoviť nastavenia MMS?"
 
 #: gammu/backup.c:1411 gammu/misc.c:1437
 msgid "Delete all phone user ringtones?"
