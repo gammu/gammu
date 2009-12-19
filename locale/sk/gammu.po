@@ -358,7 +358,7 @@ msgstr "Odstraňujem staré poznámky:"
 #: gammu/backup.c:1476 gammu/misc.c:1324 gammu/misc.c:1369 gammu/misc.c:1393
 #: gammu/misc.c:1441
 msgid "Done"
-msgstr ""
+msgstr "Hotovo"
 
 #: gammu/backup.c:1165
 msgid "Restore phone todo?"
