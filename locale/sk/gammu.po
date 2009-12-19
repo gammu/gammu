@@ -464,7 +464,7 @@ msgstr "Pridať úlohy?"
 
 #: gammu/backup.c:1690
 msgid "Add phone WAP bookmarks?"
-msgstr ""
+msgstr "Pridať záložky WAP?"
 
 #: gammu/backupsms.c:50
 msgid "Delete each sms after backup?"
