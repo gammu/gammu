@@ -411,7 +411,7 @@ msgstr "Mažem"
 
 #: gammu/backup.c:1420
 msgid "Restore user ringtones?"
-msgstr ""
+msgstr "Obnoviť užívateľské zvonenia?"
 
 #: gammu/backup.c:1446
 msgid "Restore phone profiles?"
