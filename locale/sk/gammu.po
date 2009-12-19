@@ -419,7 +419,7 @@ msgstr "Obnoviť profily telefónu?"
 
 #: gammu/backup.c:1469
 msgid "Restore phone FM radio stations?"
-msgstr ""
+msgstr "Obnoviť FM stanice?"
 
 #: gammu/backup.c:1473
 msgid "Deleting old FM stations:"
