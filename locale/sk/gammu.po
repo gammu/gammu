@@ -344,7 +344,7 @@ msgstr ""
 
 #: gammu/backup.c:1116
 msgid "Restore phone calendar notes?"
-msgstr ""
+msgstr "Obnoviť poznámky z kalendára?"
 
 #: gammu/backup.c:1117
 msgid "Restore notes from the past?"
