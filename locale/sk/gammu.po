@@ -386,7 +386,7 @@ msgstr "Obnoviť logo operátora?"
 
 #: gammu/backup.c:1319
 msgid "Restore phone WAP bookmarks?"
-msgstr ""
+msgstr "Obnoviť WAP záložky?"
 
 #: gammu/backup.c:1323
 msgid "Deleting old bookmarks:"
