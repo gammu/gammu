@@ -382,7 +382,7 @@ msgstr "Obnoviť úvodné logo/text?"
 
 #: gammu/backup.c:1310
 msgid "Restore phone operator logo?"
-msgstr ""
+msgstr "Obnoviť logo operátora?"
 
 #: gammu/backup.c:1319
 msgid "Restore phone WAP bookmarks?"
