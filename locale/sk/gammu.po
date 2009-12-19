@@ -433,7 +433,7 @@ msgstr "Obnoviť prístupové body GPRS?"
 #: gammu/memory.c:171
 #, c-format
 msgid "Unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "Neznámy typ pamäte (\"%s\")\n"
 
 #: gammu/backup.c:1562 gammu/memory.c:73 gammu/misc.c:712 gammu/misc.c:741
 #: helper/message-cmdline.c:1017
