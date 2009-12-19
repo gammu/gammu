@@ -452,7 +452,7 @@ msgstr "Pridať položky telefónneho zoznamu?"
 
 #: gammu/backup.c:1610
 msgid "Add SIM phonebook entries?"
-msgstr ""
+msgstr "Pridať kontakty na SIM kartu?"
 
 #: gammu/backup.c:1642
 msgid "Add phone calendar notes?"
