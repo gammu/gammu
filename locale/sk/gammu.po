@@ -439,7 +439,7 @@ msgstr "Neznámy typ pamäte (\"%s\")\n"
 #: helper/message-cmdline.c:1017
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
-msgstr ""
+msgstr "Neznámy parameter (\"%s\")\n"
 
 #: gammu/backup.c:1581 gammu/backup.c:1609
 #, c-format
