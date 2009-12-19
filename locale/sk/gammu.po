@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-16 19:02+0100\n"
-"PO-Revision-Date: 2009-12-19 23:54+0200\n"
+"PO-Revision-Date: 2009-12-19 23:55+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -390,7 +390,7 @@ msgstr "Obnoviť WAP záložky?"
 
 #: gammu/backup.c:1323
 msgid "Deleting old bookmarks:"
-msgstr ""
+msgstr "Odstraňujem staré záložky:"
 
 #: gammu/backup.c:1360
 msgid "Restore phone WAP settings?"
