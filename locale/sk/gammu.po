@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-16 19:02+0100\n"
-"PO-Revision-Date: 2009-12-20 00:03+0200\n"
+"PO-Revision-Date: 2009-12-20 00:04+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -486,7 +486,7 @@ msgstr "Zvýšte %s\n"
 
 #: gammu/backupsms.c:106 gammu/misc.c:1314
 msgid "Deleting:"
-msgstr ""
+msgstr "Odstraňujem:"
 
 #: gammu/backupsms.c:140
 msgid "Restore message?"
