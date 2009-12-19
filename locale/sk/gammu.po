@@ -362,7 +362,7 @@ msgstr "Hotovo"
 
 #: gammu/backup.c:1165
 msgid "Restore phone todo?"
-msgstr ""
+msgstr "Obnoviť úlohy?"
 
 #: gammu/backup.c:1173
 msgid "Deleting old todos:"
