@@ -366,7 +366,7 @@ msgstr "Obnoviť úlohy?"
 
 #: gammu/backup.c:1173
 msgid "Deleting old todos:"
-msgstr ""
+msgstr "Odstraňujem staré úlohy:"
 
 #: gammu/backup.c:1258
 msgid "Restore phone notes?"
