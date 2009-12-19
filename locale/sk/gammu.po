@@ -374,7 +374,7 @@ msgstr "Obnoviť poznámky?"
 
 #: gammu/backup.c:1289
 msgid "Restore SIM SMSC profiles?"
-msgstr ""
+msgstr "Obnoviť SMSC profily na SIM karte?"
 
 #: gammu/backup.c:1306
 msgid "Restore phone startup logo/text?"
