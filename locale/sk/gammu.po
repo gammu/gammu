@@ -394,7 +394,7 @@ msgstr "Odstraňujem staré záložky:"
 
 #: gammu/backup.c:1360
 msgid "Restore phone WAP settings?"
-msgstr ""
+msgstr "Obnoviť nastavenia WAP?"
 
 #: gammu/backup.c:1385
 msgid "Restore phone MMS settings?"
