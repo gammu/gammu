@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-16 19:02+0100\n"
-"PO-Revision-Date: 2009-12-20 00:00+0200\n"
+"PO-Revision-Date: 2009-12-20 00:01+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -456,7 +456,7 @@ msgstr "Pridať kontakty na SIM kartu?"
 
 #: gammu/backup.c:1642
 msgid "Add phone calendar notes?"
-msgstr ""
+msgstr "Pridať poznámky do kalendára?"
 
 #: gammu/backup.c:1666
 msgid "Add phone ToDo?"
