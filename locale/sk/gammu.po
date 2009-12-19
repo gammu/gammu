@@ -460,7 +460,7 @@ msgstr "Pridať poznámky do kalendára?"
 
 #: gammu/backup.c:1666
 msgid "Add phone ToDo?"
-msgstr ""
+msgstr "Pridať úlohy?"
 
 #: gammu/backup.c:1690
 msgid "Add phone WAP bookmarks?"
