@@ -468,7 +468,7 @@ msgstr "Pridať záložky WAP?"
 
 #: gammu/backupsms.c:50
 msgid "Delete each sms after backup?"
-msgstr "Zmazať každú SMS správu po zazálohovaní?"
+msgstr "Zmazať každú SMS správu po zálohovaní?"
 
 #: gammu/backupsms.c:55
 #, c-format
