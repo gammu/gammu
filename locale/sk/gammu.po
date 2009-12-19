@@ -407,7 +407,7 @@ msgstr "Zmazať všetky užívateľské zvonenia?"
 #: gammu/backup.c:1415 gammu/misc.c:1356 gammu/misc.c:1380 gammu/misc.c:1404
 #: gammu/misc.c:1420 gammu/misc.c:1438
 msgid "Deleting"
-msgstr ""
+msgstr "Mažem"
 
 #: gammu/backup.c:1420
 msgid "Restore user ringtones?"
