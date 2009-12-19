@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-16 19:02+0100\n"
-"PO-Revision-Date: 2009-12-19 23:52+0200\n"
+"PO-Revision-Date: 2009-12-19 23:54+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -378,7 +378,7 @@ msgstr "Obnoviť SMSC profily na SIM karte?"
 
 #: gammu/backup.c:1306
 msgid "Restore phone startup logo/text?"
-msgstr ""
+msgstr "Obnoviť úvodné logo/text?"
 
 #: gammu/backup.c:1310
 msgid "Restore phone operator logo?"
