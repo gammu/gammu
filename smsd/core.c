@@ -724,8 +724,16 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 			Config->transmitformat = "7bit";
 		}
 		Config->outboxformat=INI_GetValue(Config->smsdcfgfile, "smsd", "outboxformat", FALSE);
-		if (Config->outboxformat == NULL || (strcasecmp(Config->outboxformat, "detail") != 0 && strcasecmp(Config->outboxformat, "unicode") != 0)) {
+		if (Config->outboxformat == NULL ||
+				(strcasecmp(Config->outboxformat, "detail") != 0 &&
+				strcasecmp(Config->outboxformat, "standard") != 0 &&
+				strcasecmp(Config->outboxformat, "unicode") != 0)) {
 			Config->outboxformat = "standard";
+#ifdef GSM_ENABLE_BACKUP
+			Config->inboxformat = "detail";
+#else
+			Config->inboxformat = "standard";
+#endif
 		}
 		SMSD_Log(DEBUG_NOTICE, Config, "Outbox is \"%s\" with format \"%s\" and transmission format \"%s\"",
 			Config->outboxpath,
