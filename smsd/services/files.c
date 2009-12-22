@@ -158,6 +158,12 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	FILE				*File;
  	int				i, len, phlen;
  	char				*pos1, *pos2, *options;
+	gboolean backup = FALSE;
+#ifdef GSM_ENABLE_BACKUP
+	GSM_SMS_Backup smsbackup;
+	GSM_Error error;
+	GSM_SMSMessage *smsp;
+#endif
 #ifdef WIN32
   	struct _finddata_t 		c_file;
   	intptr_t			hFile;
@@ -196,11 +202,16 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		if (pos == NULL) {
 			continue;
 		}
-		if (strncasecmp(pos, ".txt", 4) != 0) {
-			continue;
+		if (strncasecmp(pos, ".txt", 4) == 0) {
+			/* We have found text file */
+			backup = FALSE;
+			break;
 		}
-		/* We have found what we want */
-		break;
+		if (strncasecmp(pos, ".smsbackup", 10) == 0) {
+			/* We have found a SMS backup file */
+			backup = TRUE;
+			break;
+		}
 	}
 	/* Remember file name */
 	if (cur_file < num_files) {
@@ -219,6 +230,28 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 #else
 	return ERR_NOTSUPPORTED;
 #endif
+	if (backup) {
+#ifdef GSM_ENABLE_BACKUP
+		/* Load backup */
+		GSM_ClearSMSBackup(&smsbackup);
+		error = GSM_ReadSMSBackupFile(FileName, &smsbackup);
+		if (error != ERR_NONE) {
+			return error;
+		}
+		/* Copy it to our message */
+		sms->Number = 0;
+		for (smsp = smsbackup.SMS[0]; smsp != NULL; smsp++) {
+			sms->SMS[sms->Number++] = *smsp;
+		}
+		/* Free memory */
+		GSM_FreeSMSBackup(&smsbackup);
+		return ERR_NONE;
+#else
+		SMSD_Log(DEBUG_ERROR, Config, "SMS backup loading disabled at compile time!");
+		return ERR_DISABLED;
+
+#endif
+	}
 	options = strrchr(FileName, '.') + 4;
   	strcpy(FullName, Config->outboxpath);
   	strcat(FullName, FileName);
