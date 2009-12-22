@@ -101,10 +101,6 @@ errorsmspath = @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/error/
 inboxformat = $INBOXF
 transmitformat = auto
 EOT
-        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/inbox/
-        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/outbox/
-        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/sent/
-        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/error/
         ;;
 esac
 
@@ -120,6 +116,12 @@ case $SERVICE in
     *mysql)
         echo "DROP TABLE IF EXISTS  daemons, gammu, inbox, outbox, outbox_multipart, pbk, pbk_groups, phones, sentitems;" | @MYSQL_BIN@ -u@MYSQL_USER@ -h@MYSQL_HOST@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@
         @MYSQL_BIN@ -h@MYSQL_HOST@ -u@MYSQL_USER@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/mysql.sql
+        ;;
+    files*)
+        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/inbox/
+        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/outbox/
+        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/sent/
+        mkdir -p @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/error/
         ;;
 esac
 
