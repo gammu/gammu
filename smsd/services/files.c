@@ -106,21 +106,21 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 
 				switch (sms->SMS[i].Coding) {
 					case SMS_Coding_Unicode_No_Compression:
-	    				case SMS_Coding_Default_No_Compression:
-					    DecodeUnicode(sms->SMS[i].Text,buffer2);
-					    if (strcasecmp(Config->inboxformat, "unicode") == 0) {
-						buffer[0] = 0xFE;
-	    					buffer[1] = 0xFF;
-						chk_fwrite(buffer,1,2,file);
-						chk_fwrite(sms->SMS[i].Text,1,strlen(buffer2)*2,file);
-					    } else {
-						chk_fwrite(buffer2,1,strlen(buffer2),file);
-					    }
-					    break;
+					case SMS_Coding_Default_No_Compression:
+						DecodeUnicode(sms->SMS[i].Text,buffer2);
+						if (strcasecmp(Config->inboxformat, "unicode") == 0) {
+							buffer[0] = 0xFE;
+							buffer[1] = 0xFF;
+							chk_fwrite(buffer,1,2,file);
+							chk_fwrite(sms->SMS[i].Text,1,strlen(buffer2)*2,file);
+						} else {
+							chk_fwrite(buffer2,1,strlen(buffer2),file);
+						}
+						break;
 					case SMS_Coding_8bit:
-					    chk_fwrite(sms->SMS[i].Text,1,(size_t)sms->SMS[i].Length,file);
+						chk_fwrite(sms->SMS[i].Text,1,(size_t)sms->SMS[i].Length,file);
 					default:
-					    break;
+						break;
 				}
 				fclose(file);
 			}
