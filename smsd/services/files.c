@@ -442,54 +442,49 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			}
 		}
 
-		if ((sms->SMS[i].PDU == SMS_Status_Report) && strcasecmp(Config->deliveryreport, "log") == 0) {
-			strcpy(buffer, DecodeUnicodeString(sms->SMS[i].Number));
-			SMSD_Log(DEBUG_NOTICE, Config, "Delivery report: %s to %s", DecodeUnicodeString(sms->SMS[i].Text), buffer);
-		} else {
-			if (strcasecmp(Config->inboxformat, "detail") == 0) {
+		if (strcasecmp(Config->inboxformat, "detail") == 0) {
 #ifndef GSM_ENABLE_BACKUP
-				SMSD_Log(DEBUG_ERROR, Config, "Saving in detail format not compiled in!");
+			SMSD_Log(DEBUG_ERROR, Config, "Saving in detail format not compiled in!");
 
 #else
-				for (j = 0; j < sms->Number; j++) {
-					backup.SMS[j] = &sms->SMS[j];
-				}
-				backup.SMS[sms->Number] = NULL;
-				error = GSM_AddSMSBackupFile(FullName, &backup);
+			for (j = 0; j < sms->Number; j++) {
+				backup.SMS[j] = &sms->SMS[j];
+			}
+			backup.SMS[sms->Number] = NULL;
+			error = GSM_AddSMSBackupFile(FullName, &backup);
 #endif
-			} else {
-				file = fopen(FullName, "wb");
-				if (file == NULL) {
-					SMSD_LogErrno(Config, "Cannot save file!");
-					return ERR_CANTOPENFILE;
-				}
-				switch (sms->SMS[i].Coding) {
-					case SMS_Coding_Unicode_No_Compression:
-					case SMS_Coding_Default_No_Compression:
-					    DecodeUnicode(sms->SMS[i].Text,buffer2);
-					    if (strcasecmp(Config->inboxformat, "unicode") == 0) {
+		} else {
+			file = fopen(FullName, "wb");
+			if (file == NULL) {
+				SMSD_LogErrno(Config, "Cannot save file!");
+				return ERR_CANTOPENFILE;
+			}
+			switch (sms->SMS[i].Coding) {
+				case SMS_Coding_Unicode_No_Compression:
+				case SMS_Coding_Default_No_Compression:
+					DecodeUnicode(sms->SMS[i].Text,buffer2);
+					if (strcasecmp(Config->inboxformat, "unicode") == 0) {
 						buffer[0] = 0xFE;
 						buffer[1] = 0xFF;
 						chk_fwrite(buffer,1,2,file);
 						chk_fwrite(sms->SMS[i].Text,1,strlen(buffer2)*2,file);
-					    } else {
+					} else {
 						chk_fwrite(buffer2,1,strlen(buffer2),file);
-					    }
-					    break;
-					case SMS_Coding_8bit:
-					    chk_fwrite(sms->SMS[i].Text,1,(size_t)sms->SMS[i].Length,file);
-					default:
-					    break;
-				}
-				fclose(file);
+					}
+					break;
+				case SMS_Coding_8bit:
+					chk_fwrite(sms->SMS[i].Text,1,(size_t)sms->SMS[i].Length,file);
+				default:
+					break;
 			}
-
-			if (error != ERR_NONE) {
-				return error;
-			}
-
-			SMSD_Log(DEBUG_INFO, Config, "Created outbox message %s", FileName);
+			fclose(file);
 		}
+
+		if (error != ERR_NONE) {
+			return error;
+		}
+
+		SMSD_Log(DEBUG_INFO, Config, "Created outbox message %s", FileName);
 	}
 
 	if (NewID != NULL) {
