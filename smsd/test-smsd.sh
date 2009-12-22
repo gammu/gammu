@@ -150,9 +150,6 @@ for sms in 62 68 74 ; do
     cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/$sms.backup $DUMMY_PATH/sms/1/$sms
 done
 
-@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
-@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
-
 # Insert message manually
 case $SERVICE in
     *sqlite3)
@@ -169,6 +166,8 @@ case $SERVICE in
         ;;
 esac
 
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject@GAMMU_TEST_SUFFIX@ -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 
 sleep 5
 
