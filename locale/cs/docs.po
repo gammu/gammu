@@ -2849,7 +2849,7 @@ msgid ""
 "For example if you want to convert single entry from gammu native backup to "
 "vCalendar, you need following command:"
 msgstr ""
-"Napříkal pro převení zálohy gammu na vCalendar můžete použít následující "
+"Napříkal pro převedení zálohy gammu na vCalendar můžete použít následující "
 "příkaz:"
 
 #. type: Plain text
