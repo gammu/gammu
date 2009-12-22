@@ -724,11 +724,10 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 				(strcasecmp(Config->outboxformat, "detail") != 0 &&
 				strcasecmp(Config->outboxformat, "standard") != 0 &&
 				strcasecmp(Config->outboxformat, "unicode") != 0)) {
-			Config->outboxformat = "standard";
 #ifdef GSM_ENABLE_BACKUP
-			Config->inboxformat = "detail";
+			Config->outboxformat = "detail";
 #else
-			Config->inboxformat = "standard";
+			Config->outboxformat = "standard";
 #endif
 		}
 		SMSD_Log(DEBUG_NOTICE, Config, "Outbox is \"%s\" with format \"%s\" and transmission format \"%s\"",

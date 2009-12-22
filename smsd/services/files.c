@@ -157,19 +157,18 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  	unsigned char			Buffer2[(GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS+1)*2];
   	FILE				*File;
  	int				i, len, phlen;
- 	char				*pos1, *pos2, *options;
+	char				*pos1, *pos2, *options = NULL;
 	gboolean backup = FALSE;
 #ifdef GSM_ENABLE_BACKUP
 	GSM_SMS_Backup smsbackup;
 	GSM_Error error;
-	GSM_SMSMessage *smsp;
 #endif
 #ifdef WIN32
   	struct _finddata_t 		c_file;
   	intptr_t			hFile;
 
-  	strcpy(FullName, Config->outboxpath);
-  	strcat(FullName, "OUT*.txt*");
+	strcpy(FullName, Config->outboxpath);
+	strcat(FullName, "OUT*.txt*");
 	hFile = _findfirst(FullName, &c_file);
   	if (hFile == -1 ) {
   		return ERR_EMPTY;
@@ -230,22 +229,35 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 #else
 	return ERR_NOTSUPPORTED;
 #endif
+	strcpy(FullName, Config->outboxpath);
+	strcat(FullName, FileName);
+
 	if (backup) {
 #ifdef GSM_ENABLE_BACKUP
+		/* Remember ID */
+		strcpy(ID, FileName);
 		/* Load backup */
 		GSM_ClearSMSBackup(&smsbackup);
-		error = GSM_ReadSMSBackupFile(FileName, &smsbackup);
+		error = GSM_ReadSMSBackupFile(FullName, &smsbackup);
 		if (error != ERR_NONE) {
 			return error;
 		}
 		/* Copy it to our message */
 		sms->Number = 0;
-		for (smsp = smsbackup.SMS[0]; smsp != NULL; smsp++) {
-			sms->SMS[sms->Number++] = *smsp;
+		for (i = 0; smsbackup.SMS[i] != NULL; i++) {
+			sms->SMS[sms->Number++] = *smsbackup.SMS[i];
 		}
 		/* Free memory */
 		GSM_FreeSMSBackup(&smsbackup);
-		return ERR_NONE;
+
+		/* Set delivery report flag */
+		if (sms->SMS[0].PDU == SMS_Status_Report) {
+			Config->currdeliveryreport = 1;
+		} else {
+			Config->currdeliveryreport = -1;
+		}
+
+		goto done;
 #else
 		SMSD_Log(DEBUG_ERROR, Config, "SMS backup loading disabled at compile time!");
 		return ERR_DISABLED;
@@ -253,8 +265,6 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 #endif
 	}
 	options = strrchr(FileName, '.') + 4;
-  	strcpy(FullName, Config->outboxpath);
-  	strcat(FullName, FileName);
 
   	File = fopen(FullName, "rb");
 	if (File == NULL) {
@@ -328,8 +338,8 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 
   	GSM_EncodeMultiPartSMS(GSM_GetDebug(Config->gsm), &SMSInfo,sms);
 
+	strcpy(ID, FileName);
  	pos1 = FileName;
-	strcpy(ID,FileName);
  	for (i = 1; i <= 3 && pos1 != NULL ; i++) pos1 = strchr(++pos1, '_');
  	if (pos1 != NULL) {
 		/* OUT<priority><date>_<time>_<serialno>_<phone number>_<anything>.txt */
@@ -363,9 +373,10 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  		EncodeUnicode(sms->SMS[len].Number, pos1, phlen);
  	}
 
+done:
 	if (sms->Number != 0) {
 		DecodeUnicode(sms->SMS[0].Number,Buffer);
-		if (strchr(options, 'b')) { // WAP bookmark as title,URL
+		if (options != NULL && strchr(options, 'b')) { // WAP bookmark as title,URL
 			SMSD_Log(DEBUG_NOTICE, Config, "Found %i sms to \"%s\" with bookmark \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
 				sms->Number,
 				Buffer,
