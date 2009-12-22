@@ -7,7 +7,7 @@
 # Michal Čihař <michal@cihar.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.27.0\n"
+"Project-Id-Version: Gammu-docs 1.27.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-12-22 10:17+0100\n"
 "PO-Revision-Date: 2009-12-22 10:21+0100\n"
@@ -2849,7 +2849,7 @@ msgid ""
 "For example if you want to convert single entry from gammu native backup to "
 "vCalendar, you need following command:"
 msgstr ""
-"Napříkal pro převedení zálohy gammu na vCalendar můžete použít následující "
+"Například pro převedení zálohy gammu na vCalendar můžete použít následující "
 "příkaz:"
 
 #. type: Plain text
