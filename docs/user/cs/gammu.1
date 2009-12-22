@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Prosinec 12, 2009" "Gammu 1.26.93" "Dokumentace Gammu"
+.TH GAMMU 1 "Prosinec 22, 2009" "Gammu 1.27.0" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -447,8 +447,8 @@ Načte text ze standardního vstupu (nebo příkazové řádky, pokud je použit
 
 \fB\-flash\fP \- SMS třídy 0 (zobrazení jen na displej)
 
-\fB\-len len\fP \- specify, how many chars will be read. When use this option and
-text will be longer than 1 SMS, will be splitted into more linked SMS
+\fB\-len len\fP \- určí, kolik znaků bude načteno. Pokud bude zadaný text delší,
+než se vejde do jedné zprávy, bude automaticky rozdělen do více zpráv.
 
 \fB\-autolen len\fP \- specify, how many chars will be read. When use this option
 and text will be longer than 1 SMS, will be splitted into more linked
@@ -2683,6 +2683,10 @@ Chybí nastavení služby.
 .SS 166
 Příkaz byl odmítnut, protože zařízení je zaneprázdněné. Zkuste to po chvíli
 znovu.
+.SS 167
+Nepodařilo se připojit k serveru.
+.SS 168
+Nepodařilo se přeložit jméno počítače.
 
 .SH PŘÍKLAD
 
@@ -2851,7 +2855,7 @@ zapnout na příkazové řádce pomocí \-d textall \-f /tmp/gammu.log):
 .nf
 .ne 7
 [gammu]
-YOUR CONNECTION SETTINGS
+VAŠE NASTAVENÍ PŘIPOJENÍ
 logfile = /tmp/gammu.log
 logformat = textall
 .fi
