@@ -99,8 +99,12 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 #endif
 			} else {
 				file = fopen(FullName, "wb");
-				if (file != NULL) {
-					switch (sms->SMS[i].Coding) {
+				if (file == NULL) {
+					SMSD_LogErrno(Config, "Cannot save file!");
+					return ERR_CANTOPENFILE;
+				}
+
+				switch (sms->SMS[i].Coding) {
 					case SMS_Coding_Unicode_No_Compression:
 	    				case SMS_Coding_Default_No_Compression:
 					    DecodeUnicode(sms->SMS[i].Text,buffer2);
@@ -117,18 +121,15 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 					    chk_fwrite(sms->SMS[i].Text,1,(size_t)sms->SMS[i].Length,file);
 					default:
 					    break;
-					}
-					fclose(file);
-				} else {
-					error = ERR_CANTOPENFILE;
 				}
+				fclose(file);
 			}
-			if (error == ERR_NONE) {
-				SMSD_Log(DEBUG_INFO, Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report": "Received"), FileName);
-			} else {
-				SMSD_Log(DEBUG_INFO, Config, "Cannot save %s (%i)", FileName, errno);
-				return ERR_CANTOPENFILE;
+
+			if (error != ERR_NONE) {
+				return error;
 			}
+
+			SMSD_Log(DEBUG_INFO, Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report": "Received"), FileName);
 		}
 	}
 	return ERR_NONE;
@@ -376,15 +377,18 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 	}
 	if (ilen == olen) {
 		if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0)) {
-			SMSD_Log(DEBUG_INFO, Config, "Could not delete %s (%i)", ifilename, errno);
+			SMSD_LogErrno(Config, "Can not delete file");
+			SMSD_Log(DEBUG_INFO, Config, "Could not delete %s", ifilename);
 			return ERR_UNKNOWN;
 		}
 		return ERR_NONE;
 	} else {
 		SMSD_Log(DEBUG_INFO, Config, "Error copying SMS %s -> %s", ifilename, ofilename);
 		if (alwaysDelete) {
-			if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0))
-				SMSD_Log(DEBUG_INFO, Config, "Could not delete %s (%i)", ifilename, errno);
+			if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0)) {
+				SMSD_LogErrno(Config, "Can not delete file");
+				SMSD_Log(DEBUG_INFO, Config, "Could not delete %s", ifilename);
+			}
 		}
 		return ERR_UNKNOWN;
 	}
@@ -437,7 +441,6 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 				return ERR_CANTOPENFILE;
 			}
 		}
-		errno = 0;
 
 		if ((sms->SMS[i].PDU == SMS_Status_Report) && strcasecmp(Config->deliveryreport, "log") == 0) {
 			strcpy(buffer, DecodeUnicodeString(sms->SMS[i].Number));
@@ -456,8 +459,11 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 #endif
 			} else {
 				file = fopen(FullName, "wb");
-				if (file != NULL) {
-					switch (sms->SMS[i].Coding) {
+				if (file == NULL) {
+					SMSD_LogErrno(Config, "Cannot save file!");
+					return ERR_CANTOPENFILE;
+				}
+				switch (sms->SMS[i].Coding) {
 					case SMS_Coding_Unicode_No_Compression:
 					case SMS_Coding_Default_No_Compression:
 					    DecodeUnicode(sms->SMS[i].Text,buffer2);
@@ -474,22 +480,21 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 					    chk_fwrite(sms->SMS[i].Text,1,(size_t)sms->SMS[i].Length,file);
 					default:
 					    break;
-					}
-					fclose(file);
-				} else {
-					error = ERR_CANTOPENFILE;
 				}
+				fclose(file);
 			}
-			if (error == ERR_NONE) {
-				SMSD_Log(DEBUG_INFO, Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report": "Received"), FileName);
-			} else {
-				SMSD_Log(DEBUG_INFO, Config, "Cannot save %s (%i)", FileName, errno);
-				return ERR_CANTOPENFILE;
+
+			if (error != ERR_NONE) {
+				return error;
 			}
+
+			SMSD_Log(DEBUG_INFO, Config, "Created outbox message %s", FileName);
 		}
 	}
 
-	if (NewID != NULL) strcpy(NewID, FullName);
+	if (NewID != NULL) {
+		strcpy(NewID, FullName);
+	}
 
 	return ERR_NONE;
 fail:
