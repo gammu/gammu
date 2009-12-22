@@ -182,12 +182,9 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	n = scandir(FullName, &namelist, 0, alphasort);
   	m = 0;
  	while ((m < n) && ((*(namelist[m]->d_name) == '.') || // directory and UNIX hidden file
- 	                   !strncasecmp(namelist[m]->d_name,"out", 3) == 0 || // must start with 'out'
- 	                   ((strlen(namelist[m]->d_name) >= 4) &&
- 	                    strncasecmp(strrchr(namelist[m]->d_name, '.'),".txt",4) != 0
- 	                   )
- 	                  )
- 	      ) m++;
+		!strncasecmp(namelist[m]->d_name,"out", 3) == 0 || // must start with 'out'
+		((strlen(namelist[m]->d_name) >= 4) &&
+		strncasecmp(strrchr(namelist[m]->d_name, '.'),".txt",4) != 0))) m++;
   	if (m < n) strcpy(FileName,namelist[m]->d_name);
   	for (l=0; l < n; l++) free(namelist[l]);
   	free(namelist);
@@ -208,8 +205,8 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	fclose(File);
 
  	if ((len <  2) ||
-            (len >= 2  && ((Buffer[0] != 0xFF || Buffer[1] != 0xFE) &&
-	                   (Buffer[0] != 0xFE || Buffer[1] != 0xFF)))) {
+			(len >= 2  && ((Buffer[0] != 0xFF || Buffer[1] != 0xFE) &&
+			(Buffer[0] != 0xFE || Buffer[1] != 0xFF)))) {
  		if (len > GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS) len = GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS;
  		EncodeUnicode(Buffer2, Buffer, len);
  		len = len*2;
@@ -223,8 +220,8 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		ReadUnicodeFile(Buffer2,Buffer);
 	}
 
-    	GSM_ClearMultiPartSMSInfo(&SMSInfo);
-    	sms->Number = 0;
+	GSM_ClearMultiPartSMSInfo(&SMSInfo);
+	sms->Number = 0;
 
   	SMSInfo.ReplaceMessage  	= 0;
   	SMSInfo.Entries[0].Buffer	= Buffer2;
@@ -351,9 +348,9 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 
 	sourcepath = Config->outboxpath;
 	if (sent) {
-	    destpath = Config->sentsmspath;
+		destpath = Config->sentsmspath;
 	} else {
-	    destpath = Config->errorsmspath;
+		destpath = Config->errorsmspath;
 	}
 
 	strcpy(ifilename, sourcepath);
