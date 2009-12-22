@@ -345,6 +345,15 @@ are always written raw as they are received with extension .bin.
 Default is 'unicode'.
 
 .TP
+.BI OutboxFormat
+
+The format in which messages created by gammu-smsd-inject(1) will be stored,
+it accepts same values as InboxFormat.
+
+Default is 'detail' if Gammu is compiled in with backup functions, 'unicode'
+otherwise.
+
+.TP
 .BI TransmitFormat
 
 The format for transmitting the SMS: 'auto', 'unicode', '7bit'. 

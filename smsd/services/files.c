@@ -464,7 +464,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 	j = 0;
 
 	for (i=0;i<sms->Number;i++) {
-		if (strcasecmp(Config->inboxformat, "detail") == 0) {
+		if (strcasecmp(Config->outboxformat, "detail") == 0) {
 			strcpy(ext, "smsbackup");
 		} else {
 			strcpy(ext, "txt");
@@ -502,7 +502,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			}
 		}
 
-		if (strcasecmp(Config->inboxformat, "detail") == 0) {
+		if (strcasecmp(Config->outboxformat, "detail") == 0) {
 #ifndef GSM_ENABLE_BACKUP
 			SMSD_Log(DEBUG_ERROR, Config, "Saving in detail format not compiled in!");
 
@@ -523,7 +523,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 				case SMS_Coding_Unicode_No_Compression:
 				case SMS_Coding_Default_No_Compression:
 					DecodeUnicode(sms->SMS[i].Text,buffer2);
-					if (strcasecmp(Config->inboxformat, "unicode") == 0) {
+					if (strcasecmp(Config->outboxformat, "unicode") == 0) {
 						buffer[0] = 0xFE;
 						buffer[1] = 0xFF;
 						chk_fwrite(buffer,1,2,file);

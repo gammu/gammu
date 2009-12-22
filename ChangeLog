@@ -23,6 +23,7 @@ ChangeLog
 
 [-] * Simplify code in FILES smsd service.
 [-] * FILES service can send smsbackup messages.
+[+] * Configurable outbox format for SMSD/FILES.
     
 20091222 - 1.27.0
     

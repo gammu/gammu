@@ -703,10 +703,18 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
 
 		Config->inboxformat=INI_GetValue(Config->smsdcfgfile, "smsd", "inboxformat", FALSE);
-		if (Config->inboxformat == NULL || (strcasecmp(Config->inboxformat, "detail") != 0 && strcasecmp(Config->inboxformat, "unicode") != 0)) {
+		if (Config->inboxformat == NULL ||
+				(strcasecmp(Config->inboxformat, "detail") != 0 &&
+				strcasecmp(Config->inboxformat, "standard") != 0 &&
+				strcasecmp(Config->inboxformat, "unicode") != 0)) {
+#ifdef GSM_ENABLE_BACKUP
+			Config->inboxformat = "detail";
+#else
 			Config->inboxformat = "standard";
+#endif
 		}
 		SMSD_Log(DEBUG_NOTICE, Config, "Inbox is \"%s\" with format \"%s\"", Config->inboxpath, Config->inboxformat);
+
 
 		Config->outboxpath=INI_GetValue(Config->smsdcfgfile, "smsd", "outboxpath", FALSE);
 		if (Config->outboxpath == NULL) Config->outboxpath = emptyPath;
@@ -715,7 +723,14 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		if (Config->transmitformat == NULL || (strcasecmp(Config->transmitformat, "auto") != 0 && strcasecmp(Config->transmitformat, "unicode") != 0)) {
 			Config->transmitformat = "7bit";
 		}
-		SMSD_Log(DEBUG_NOTICE, Config, "Outbox is \"%s\" with transmission format \"%s\"", Config->outboxpath, Config->transmitformat);
+		Config->outboxformat=INI_GetValue(Config->smsdcfgfile, "smsd", "outboxformat", FALSE);
+		if (Config->outboxformat == NULL || (strcasecmp(Config->outboxformat, "detail") != 0 && strcasecmp(Config->outboxformat, "unicode") != 0)) {
+			Config->outboxformat = "standard";
+		}
+		SMSD_Log(DEBUG_NOTICE, Config, "Outbox is \"%s\" with format \"%s\" and transmission format \"%s\"",
+			Config->outboxpath,
+			Config->outboxformat,
+			Config->transmitformat);
 
 		Config->sentsmspath=INI_GetValue(Config->smsdcfgfile, "smsd", "sentsmspath", FALSE);
 		if (Config->sentsmspath == NULL) Config->sentsmspath = Config->outboxpath;

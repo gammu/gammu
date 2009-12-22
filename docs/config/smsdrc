@@ -77,3 +77,4 @@ driver = sqlite
 #errorsmspath = /var/spool/sms/error/
 #inboxformat = unicode
 #transmitformat = auto
+#outboxformat = detail

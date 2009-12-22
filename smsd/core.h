@@ -66,7 +66,7 @@ struct _GSM_SMSDConfig {
 
 	/* options for FILES */
 	const char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
-	const char   *errorsmspath, 	 *inboxformat,  *transmitformat;
+	const char   *errorsmspath, 	 *inboxformat,  *transmitformat, *outboxformat;
 
 	/* private variables required for work */
 	int		relativevalidity;
