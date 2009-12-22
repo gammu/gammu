@@ -707,11 +707,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 				(strcasecmp(Config->inboxformat, "detail") != 0 &&
 				strcasecmp(Config->inboxformat, "standard") != 0 &&
 				strcasecmp(Config->inboxformat, "unicode") != 0)) {
-#ifdef GSM_ENABLE_BACKUP
-			Config->inboxformat = "detail";
-#else
 			Config->inboxformat = "standard";
-#endif
 		}
 		SMSD_Log(DEBUG_NOTICE, Config, "Inbox is \"%s\" with format \"%s\"", Config->inboxpath, Config->inboxformat);
 
