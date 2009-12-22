@@ -150,7 +150,6 @@ fail:
  */
 static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID)
 {
-  	GSM_Error			error = ERR_NOTSUPPORTED;
   	GSM_MultiPartSMSInfo		SMSInfo;
 	GSM_WAPBookmark			Bookmark;
  	char 			FileName[100],FullName[400];
@@ -172,27 +171,54 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   		strcpy(FileName, c_file.name);
   	}
   	_findclose(hFile);
-	error = ERR_NONE;
 #elif defined(HAVE_DIRBROWSING)
-  	struct 				dirent **namelist = NULL;
-  	int 				l, m ,n;
+	struct dirent **namelist = NULL;
+	int cur_file ,num_files;
+	char *pos;
 
-  	strcpy(FullName, Config->outboxpath);
-  	FullName[strlen(Config->outboxpath)-1] = '\0';
-  	n = scandir(FullName, &namelist, 0, alphasort);
-  	m = 0;
- 	while ((m < n) && ((*(namelist[m]->d_name) == '.') || // directory and UNIX hidden file
-		!strncasecmp(namelist[m]->d_name,"out", 3) == 0 || // must start with 'out'
-		((strlen(namelist[m]->d_name) >= 4) &&
-		strncasecmp(strrchr(namelist[m]->d_name, '.'),".txt",4) != 0))) m++;
-  	if (m < n) strcpy(FileName,namelist[m]->d_name);
-  	for (l=0; l < n; l++) free(namelist[l]);
-  	free(namelist);
-  	namelist = NULL;
- 	if (m >= n) return ERR_EMPTY;
-	error = ERR_NONE;
+	strcpy(FullName, Config->outboxpath);
+
+	FullName[strlen(Config->outboxpath) - 1] = '\0';
+
+	num_files = scandir(FullName, &namelist, 0, alphasort);
+
+	for (cur_file = 0; cur_file < num_files; cur_file++) {
+		/* Hidden file or current/parent directory */
+		if (namelist[cur_file]->d_name[0] == '.') {
+			continue;
+		}
+		/* We care only about files starting with out */
+		if (strncasecmp(namelist[cur_file]->d_name, "out", 3) != 0) {
+			continue;
+		}
+		/* Check extension */
+		pos = strrchr(namelist[cur_file]->d_name, '.');
+		if (pos == NULL) {
+			continue;
+		}
+		if (strncasecmp(pos, ".txt", 4) != 0) {
+			continue;
+		}
+		/* We have found what we want */
+		break;
+	}
+	/* Remember file name */
+	if (cur_file < num_files) {
+		strcpy(FileName,namelist[cur_file]->d_name);
+	}
+	/* Free scandir result */
+	for (i = 0; i < num_files; i++) {
+		free(namelist[i]);
+	}
+	free(namelist);
+	namelist = NULL;
+	/* Did we actually find something? */
+	if (cur_file >= num_files) {
+		return ERR_EMPTY;
+	}
+#else
+	return ERR_NOTSUPPORTED;
 #endif
-	if (error != ERR_NONE) return error;
 	options = strrchr(FileName, '.') + 4;
   	strcpy(FullName, Config->outboxpath);
   	strcat(FullName, FileName);
