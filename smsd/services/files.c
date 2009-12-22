@@ -448,7 +448,9 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 				SMSD_Log(DEBUG_ERROR, Config, "Saving in detail format not compiled in!");
 
 #else
-				for (j=0;j<sms->Number;j++) backup.SMS[j] = &sms->SMS[j];
+				for (j = 0; j < sms->Number; j++) {
+					backup.SMS[j] = &sms->SMS[j];
+				}
 				backup.SMS[sms->Number] = NULL;
 				error = GSM_AddSMSBackupFile(FullName, &backup);
 #endif
