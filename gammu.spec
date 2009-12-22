@@ -1,5 +1,5 @@
 Name:               gammu
-Version:            1.26.94
+Version:            1.27.0
 Release:            1
 # Set to 0 to disable bluetooth support
 %if 0%{?opensuse_bs} && 0%{?sles_version} == 9
