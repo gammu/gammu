@@ -455,7 +455,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 {
 	GSM_Error	error = ERR_NONE;
 	int 		i,j;
-	unsigned char 	FileName[100], FullName[400], ext[7], buffer[64],buffer2[400];
+	unsigned char 	FileName[100], FullName[400], ext[17], buffer[64],buffer2[400];
 	FILE 		*file;
 #ifdef GSM_ENABLE_BACKUP
 	GSM_SMS_Backup 	backup;
@@ -464,7 +464,11 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 	j = 0;
 
 	for (i=0;i<sms->Number;i++) {
-		strcpy(ext, "txt");
+		if (strcasecmp(Config->inboxformat, "detail") == 0) {
+			strcpy(ext, "smsbackup");
+		} else {
+			strcpy(ext, "txt");
+		}
 		DecodeUnicode(sms->SMS[i].Number,buffer2);
 
 		file = NULL;
