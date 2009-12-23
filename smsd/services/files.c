@@ -491,7 +491,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			timeinfo = localtime(&rawtime);
 
 			sprintf(FileName,
-				"OUTC%4d%2d%2d_%2d%2d%2d_00_%s_sms%d.%s",
+				"OUTC%04d%02d%02d_%02d%02d%02d_00_%s_sms%d.%s",
 				1900 + timeinfo->tm_year,
 				timeinfo->tm_mon,
 				timeinfo->tm_mday,
