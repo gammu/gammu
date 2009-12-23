@@ -263,123 +263,122 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 			Config->currdeliveryreport = -1;
 		}
 
-		goto done;
 #else
 		SMSD_Log(DEBUG_ERROR, Config, "SMS backup loading disabled at compile time!");
 		return ERR_DISABLED;
 
 #endif
-	}
-	options = strrchr(FileName, '.') + 4;
+	} else {
+		options = strrchr(FileName, '.') + 4;
 
-  	File = fopen(FullName, "rb");
-	if (File == NULL) {
-		return ERR_CANTOPENFILE;
-	}
- 	len  = fread(Buffer, 1, sizeof(Buffer)-2, File);
-  	fclose(File);
+		File = fopen(FullName, "rb");
+		if (File == NULL) {
+			return ERR_CANTOPENFILE;
+		}
+		len  = fread(Buffer, 1, sizeof(Buffer)-2, File);
+		fclose(File);
 
- 	if ((len <  2) ||
-			(len >= 2  && ((Buffer[0] != 0xFF || Buffer[1] != 0xFE) &&
-			(Buffer[0] != 0xFE || Buffer[1] != 0xFF)))) {
- 		if (len > GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS) len = GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS;
- 		EncodeUnicode(Buffer2, Buffer, len);
- 		len = len*2;
- 		memmove(Buffer, Buffer2, len);
-		Buffer[len] 	= 0;
-		Buffer[len+1] 	= 0;
- 	} else {
-		Buffer[len] 	= 0;
-		Buffer[len+1] 	= 0;
-		/* Possibly convert byte order */
-		ReadUnicodeFile(Buffer2,Buffer);
-	}
-
-	GSM_ClearMultiPartSMSInfo(&SMSInfo);
-	sms->Number = 0;
-
-  	SMSInfo.ReplaceMessage  	= 0;
-  	SMSInfo.Entries[0].Buffer	= Buffer2;
-  	SMSInfo.Class			= -1;
-	SMSInfo.EntriesNum		= 1;
-	Config->currdeliveryreport	= -1;
-	if (strchr(options, 'd')) Config->currdeliveryreport	= 1;
-	if (strchr(options, 'f')) SMSInfo.Class 		= 0; /* flash SMS */
-
- 	if (strcasecmp(Config->transmitformat, "unicode") == 0) {
- 		SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
- 		SMSInfo.UnicodeCoding = TRUE;
- 	} else if (strcasecmp(Config->transmitformat, "7bit") == 0) {
- 		SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
- 		SMSInfo.UnicodeCoding = FALSE;
- 	} else {
-		/* auto */
- 		SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
-	}
-
-	if (strchr(options, 'b')) { // WAP bookmark as title,URL
-		SMSInfo.Entries[0].Buffer		= NULL;
-		SMSInfo.Entries[0].Bookmark		= &Bookmark;
-		SMSInfo.Entries[0].ID			= SMS_NokiaWAPBookmarkLong;
-		SMSInfo.Entries[0].Bookmark->Location	= 0;
-		pos2 = mywstrstr(Buffer2, "\0,");
-		if (pos2 == NULL) {
-			pos2 = Buffer2;
+		if ((len <  2) ||
+				(len >= 2  && ((Buffer[0] != 0xFF || Buffer[1] != 0xFE) &&
+				(Buffer[0] != 0xFE || Buffer[1] != 0xFF)))) {
+			if (len > GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS) len = GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS;
+			EncodeUnicode(Buffer2, Buffer, len);
+			len = len*2;
+			memmove(Buffer, Buffer2, len);
+			Buffer[len] 	= 0;
+			Buffer[len+1] 	= 0;
 		} else {
-			*pos2 = '\0'; pos2++; *pos2 = '\0'; pos2++; // replace comma by zero
+			Buffer[len] 	= 0;
+			Buffer[len+1] 	= 0;
+			/* Possibly convert byte order */
+			ReadUnicodeFile(Buffer2,Buffer);
 		}
 
-		len = UnicodeLength(Buffer2);
-		if (len > 50) len = 50;
-		memmove(&SMSInfo.Entries[0].Bookmark->Title, Buffer2, len * 2);
-		pos1 = &SMSInfo.Entries[0].Bookmark->Title[0] + len * 2;
-		*pos1 = '\0'; pos1++; *pos1 = '\0';
+		GSM_ClearMultiPartSMSInfo(&SMSInfo);
+		sms->Number = 0;
 
-		len = UnicodeLength(pos2);
-		if (len > 255) len = 255;
-		memmove(&SMSInfo.Entries[0].Bookmark->Address, pos2, len * 2);
-		pos1 = &SMSInfo.Entries[0].Bookmark->Address[0] + len * 2;
-		*pos1 = '\0'; pos1++; *pos1 = '\0';
-	}
+		SMSInfo.ReplaceMessage  	= 0;
+		SMSInfo.Entries[0].Buffer	= Buffer2;
+		SMSInfo.Class			= -1;
+		SMSInfo.EntriesNum		= 1;
+		Config->currdeliveryreport	= -1;
+		if (strchr(options, 'd')) Config->currdeliveryreport	= 1;
+		if (strchr(options, 'f')) SMSInfo.Class 		= 0; /* flash SMS */
 
-  	GSM_EncodeMultiPartSMS(GSM_GetDebug(Config->gsm), &SMSInfo,sms);
+		if (strcasecmp(Config->transmitformat, "unicode") == 0) {
+			SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
+			SMSInfo.UnicodeCoding = TRUE;
+		} else if (strcasecmp(Config->transmitformat, "7bit") == 0) {
+			SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
+			SMSInfo.UnicodeCoding = FALSE;
+		} else {
+			/* auto */
+			SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
+		}
 
-	strcpy(ID, FileName);
- 	pos1 = FileName;
- 	for (i = 1; i <= 3 && pos1 != NULL ; i++) pos1 = strchr(++pos1, '_');
- 	if (pos1 != NULL) {
-		/* OUT<priority><date>_<time>_<serialno>_<phone number>_<anything>.txt */
- 		pos2 = strchr(++pos1, '_');
- 		if (pos2 != NULL) {
- 			phlen = strlen(pos1) - strlen(pos2);
- 		} else {
+		if (strchr(options, 'b')) { // WAP bookmark as title,URL
+			SMSInfo.Entries[0].Buffer		= NULL;
+			SMSInfo.Entries[0].Bookmark		= &Bookmark;
+			SMSInfo.Entries[0].ID			= SMS_NokiaWAPBookmarkLong;
+			SMSInfo.Entries[0].Bookmark->Location	= 0;
+			pos2 = mywstrstr(Buffer2, "\0,");
+			if (pos2 == NULL) {
+				pos2 = Buffer2;
+			} else {
+				*pos2 = '\0'; pos2++; *pos2 = '\0'; pos2++; // replace comma by zero
+			}
+
+			len = UnicodeLength(Buffer2);
+			if (len > 50) len = 50;
+			memmove(&SMSInfo.Entries[0].Bookmark->Title, Buffer2, len * 2);
+			pos1 = &SMSInfo.Entries[0].Bookmark->Title[0] + len * 2;
+			*pos1 = '\0'; pos1++; *pos1 = '\0';
+
+			len = UnicodeLength(pos2);
+			if (len > 255) len = 255;
+			memmove(&SMSInfo.Entries[0].Bookmark->Address, pos2, len * 2);
+			pos1 = &SMSInfo.Entries[0].Bookmark->Address[0] + len * 2;
+			*pos1 = '\0'; pos1++; *pos1 = '\0';
+		}
+
+		GSM_EncodeMultiPartSMS(GSM_GetDebug(Config->gsm), &SMSInfo,sms);
+
+		strcpy(ID, FileName);
+		pos1 = FileName;
+		for (i = 1; i <= 3 && pos1 != NULL ; i++) pos1 = strchr(++pos1, '_');
+		if (pos1 != NULL) {
+			/* OUT<priority><date>_<time>_<serialno>_<phone number>_<anything>.txt */
+			pos2 = strchr(++pos1, '_');
+			if (pos2 != NULL) {
+				phlen = strlen(pos1) - strlen(pos2);
+			} else {
+				/* something wrong */
+				return ERR_UNKNOWN;
+			}
+		} else if (i == 2) {
+			/* OUTxxxxxxx.txt or OUTxxxxxxx */
+			pos1 = &FileName[3];
+			pos2 = strchr(pos1, '.');
+			if (pos2 == NULL) {
+				phlen = strlen(pos1);
+			} else {
+				phlen = strlen(pos1) - strlen(pos2);
+			}
+		} else if (i == 4) {
+			/* OUT<priority>_<phone number>_<serialno>.txt */
+			pos1 = strchr(FileName, '_');
+			pos2 = strchr(++pos1, '_');
+			phlen = strlen(pos1) - strlen(pos2);
+		} else {
 			/* something wrong */
- 			return ERR_UNKNOWN;
+			return ERR_UNKNOWN;
 		}
- 	} else if (i == 2) {
-		/* OUTxxxxxxx.txt or OUTxxxxxxx */
- 		pos1 = &FileName[3];
-		pos2 = strchr(pos1, '.');
- 		if (pos2 == NULL) {
-			phlen = strlen(pos1);
-		} else {
- 			phlen = strlen(pos1) - strlen(pos2);
+
+		for (len=0;len<sms->Number;len++) {
+			EncodeUnicode(sms->SMS[len].Number, pos1, phlen);
 		}
-	} else if (i == 4) {
-		/* OUT<priority>_<phone number>_<serialno>.txt */
- 		pos1 = strchr(FileName, '_');
- 		pos2 = strchr(++pos1, '_');
- 		phlen = strlen(pos1) - strlen(pos2);
- 	} else {
-		/* something wrong */
-		return ERR_UNKNOWN;
 	}
 
- 	for (len=0;len<sms->Number;len++) {
- 		EncodeUnicode(sms->SMS[len].Number, pos1, phlen);
- 	}
-
-done:
 	if (sms->Number != 0) {
 		DecodeUnicode(sms->SMS[0].Number,Buffer);
 		if (options != NULL && strchr(options, 'b')) { // WAP bookmark as title,URL
