@@ -178,7 +178,7 @@ done
 TIMEOUT=0
 while ! @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0 | grep -q ";999999999999999;3;6;0;100;42" ; do
     @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0
-    sleep 1
+    sleep 5
     TIMEOUT=$(($TIMEOUT + 1))
     if [ $TIMEOUT -gt 60 ] ; then
         echo "ERROR: Wrong timeout!"
