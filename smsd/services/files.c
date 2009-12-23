@@ -171,6 +171,12 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	strcat(FullName, "OUT*.txt*");
 	hFile = _findfirst(FullName, &c_file);
   	if (hFile == -1 ) {
+		strcpy(FullName, Config->outboxpath);
+		strcat(FullName, "OUT*.smsbackup*");
+		hFile = _findfirst(FullName, &c_file);
+		backup = TRUE;
+	}
+  	if (hFile == -1 ) {
   		return ERR_EMPTY;
   	} else {
   		strcpy(FileName, c_file.name);
