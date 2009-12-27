@@ -446,29 +446,25 @@ StateMachine_SetConfig(StateMachineObject *self, PyObject *args, PyObject *kwds)
             return NULL;
         }
         if (strcmp(s, "UseGlobalDebugFile") == 0) {
-            if (!PyInt_Check(value)) {
-                PyErr_Format(PyExc_ValueError, "Non integer value for UseGlobalDebugFile");
+            Config->UseGlobalDebugFile = BoolFromPython(value, "UseGlobalDebugFile");
+            if (Config->UseGlobalDebugFile == BOOL_INVALID) {
                 return NULL;
             }
-            Config->UseGlobalDebugFile = PyInt_AsLong(value);
         } else if (strcmp(s, "LockDevice") == 0) {
-            if (!PyInt_Check(value)) {
-                PyErr_Format(PyExc_ValueError, "Non integer value for LockDevice");
+            Config->LockDevice = BoolFromPython(value, "LockDevice");
+            if (Config->LockDevice == BOOL_INVALID) {
                 return NULL;
             }
-            Config->LockDevice = PyInt_AsLong(value);
         } else if (strcmp(s, "StartInfo") == 0) {
-            if (!PyInt_Check(value)) {
-                PyErr_Format(PyExc_ValueError, "Non integer value for StartInfo");
+            Config->StartInfo = BoolFromPython(value, "StartInfo");
+            if (Config->StartInfo == BOOL_INVALID) {
                 return NULL;
             }
-            Config->StartInfo = PyInt_AsLong(value);
         } else if (strcmp(s, "SyncTime") == 0) {
-            if (!PyInt_Check(value)) {
-                PyErr_Format(PyExc_ValueError, "Non integer value for SyncTime");
+            Config->SyncTime = BoolFromPython(value, "SyncTime");
+            if (Config->SyncTime == BOOL_INVALID) {
                 return NULL;
             }
-            Config->SyncTime = PyInt_AsLong(value);
         } else {
             if (PyString_Check(value) || PyUnicode_Check(value)) {
                 if (PyUnicode_Check(value)) {

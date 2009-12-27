@@ -24,6 +24,7 @@ ChangeLog
 [-] * Simplify code in FILES smsd service.
 [-] * FILES service can send smsbackup messages.
 [+] * Configurable outbox format for SMSD/FILES.
+[-] * Improve conversion of boolean settings from Python.
     
 20091222 - 1.27.0
     
