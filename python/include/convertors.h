@@ -147,6 +147,12 @@ int GetIntFromDict(PyObject *dict, const char *key);
 gboolean GetBoolFromDict(PyObject *dict, const char *key);
 
 /**
+ * Converts object to boolean value. It accepts boolean
+ * objects, integers and strings (yes, no, true, false).
+ */
+gboolean BoolFromPython(PyObject *o, const char *key);
+
+/**
  * Returns C string with length from dictionary dict with key key.
  *
  * Returns newly allocated memory.

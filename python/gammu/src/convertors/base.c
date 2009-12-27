@@ -23,16 +23,9 @@
 #include "convertors.h"
 #include "misc.h"
 
-gboolean GetBoolFromDict(PyObject *dict, const char *key) {
-    PyObject        *o;
-    char            *s;
-    int             i;
-
-    o = PyDict_GetItemString(dict, key);
-    if (o == NULL) {
-        PyErr_Format(PyExc_ValueError, "Missing key in dictionary: %s", key);
-        return BOOL_INVALID;
-    }
+gboolean BoolFromPython(PyObject *o, const char *key) {
+    char *s;
+    int i;
 
     if (!PyBool_Check(o)) {
         if (PyInt_Check(o)) {
@@ -46,6 +39,14 @@ gboolean GetBoolFromDict(PyObject *dict, const char *key) {
                 i = atoi(s);
                 if (i == 0) return FALSE;
                 else return TRUE;
+            } else if (strcasecmp(s, "yes") == 0) {
+                return TRUE;
+            } else if (strcasecmp(s, "true") == 0) {
+                return TRUE;
+            } else if (strcasecmp(s, "no") == 0) {
+                return FALSE;
+            } else if (strcasecmp(s, "false") == 0) {
+                return FALSE;
             } else {
                 PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be gboolean", key);
                 return BOOL_INVALID;
@@ -61,6 +62,18 @@ gboolean GetBoolFromDict(PyObject *dict, const char *key) {
 
     PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be gboolean", key);
     return BOOL_INVALID;
+}
+
+gboolean GetBoolFromDict(PyObject *dict, const char *key) {
+    PyObject        *o;
+
+    o = PyDict_GetItemString(dict, key);
+    if (o == NULL) {
+        PyErr_Format(PyExc_ValueError, "Missing key in dictionary: %s", key);
+        return BOOL_INVALID;
+    }
+
+    return BoolFromPython(o, key);
 }
 
 int GetIntFromDict(PyObject *dict, const char *key) {
