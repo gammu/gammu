@@ -366,7 +366,7 @@ static void Version(int argc UNUSED, char *argv[]UNUSED)
 {
 	PrintVersion();
 
-	printf("%s\n", _("Copyright (C) 2003 - 2009 Michal Cihar <michal@cihar.com> and other authors."));
+	printf("%s\n", _("Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."));
 
 	printf("\n");
 

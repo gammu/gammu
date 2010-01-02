@@ -1,6 +1,6 @@
 /*
  * python-gammu - Phone communication libary, SMSD part
- * Copyright © 2003 - 2009 Michal Čihař
+ * Copyright © 2003 - 2010 Michal Čihař
  *
  * This program is free software; you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free

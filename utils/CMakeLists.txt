@@ -1,5 +1,5 @@
 # cmake <http://www.cmake.org> build file for Gammu utils
-# Copyright (c) 2007-2009 Michal Cihar
+# Copyright (c) 2007 - 2010 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
 project (Gammu-utils C)

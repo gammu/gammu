@@ -35,6 +35,6 @@ sed -i "s/VERSION = '[0-9.]*'/VERSION = '$version'/" python/setup.py
 if ! grep -q " - $version" ChangeLog ; then
     sed -i -e '/^=========$/ a\
     ' -e '/^=========$/ a\
-2009???? - '"$version"'
+2010???? - '"$version"'
     ' ChangeLog
 fi

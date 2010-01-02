@@ -7,7 +7,7 @@ Gammu man page generator
 __author__ = 'Michal Čihař'
 __email__ = 'michal@cihar.com'
 __license__ = '''
-Copyright © 2003 - 2009 Michal Čihař
+Copyright © 2003 - 2010 Michal Čihař
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License version 2 as published by
@@ -284,7 +284,7 @@ are supported, for actual listing see <http://wammu.eu/phones/>.
 '''
 
 COPYRIGHT = '''
-Copyright \(co 2003-2009 Marcin Wiacek, Michal Cihar and other authors.
+Copyright \(co 2003 - 2010 Marcin Wiacek, Michal Cihar and other authors.
 License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old\\-licenses/gpl\\-2.0.html>
 .br
 This is free software: you are free to change and redistribute it.
