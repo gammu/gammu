@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-22 16:17+0100\n"
+"POT-Creation-Date: 2010-01-02 12:05+0100\n"
 "PO-Revision-Date: 2009-12-22 16:17+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -36,9 +36,9 @@ msgstr "Prosinec 22, 2009"
 
 # type: TH
 #. type: TH
-#: docs/user/gammu.1:1 docs/user/gammu-smsdrc.5:1
-#, no-wrap
-msgid "Gammu 1.27.0"
+#: docs/user/gammu.1:1
+#, fuzzy, no-wrap
+msgid "Gammu 1.27.90"
 msgstr "Gammu 1.27.0"
 
 # type: TH
@@ -1238,9 +1238,10 @@ msgstr "B<-flash> - SMS třídy 0 (zobrazení jen na displej)"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:411
+#, fuzzy
 msgid ""
 "B<-len len> - specify, how many chars will be read. When use this option and "
-"text will be longer than 1 SMS, will be splitted into more linked SMS"
+"text will be longer than 1 SMS, will be split into more linked SMS"
 msgstr ""
 "B<-len len> - určí, kolik znaků bude načteno. Pokud bude zadaný text delší, "
 "než se vejde do jedné zprávy, bude automaticky rozdělen do více zpráv."
@@ -1248,11 +1249,14 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:416
+#, fuzzy
 msgid ""
 "B<-autolen len> - specify, how many chars will be read. When use this option "
-"and text will be longer than 1 SMS, will be splitted into more linked SMS."
+"and text will be longer than 1 SMS, will be split into more linked SMS."
 "Coding type (SMS default alphabet/Unicode) is set according to input text"
 msgstr ""
+"B<-len len> - určí, kolik znaků bude načteno. Pokud bude zadaný text delší, "
+"než se vejde do jedné zprávy, bude automaticky rozdělen do více zpráv."
 
 # type: Plain text
 #. type: Plain text
@@ -2575,13 +2579,12 @@ msgstr "B<setbitmap DEALER>I< text>"
 msgid "B<setbitmap OPERATOR>I< [file [netcode]]>"
 msgstr "B<setbitmap OPERATOR>I< [file [netcode]]>"
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:1027
 msgid ""
 "Set operator logo in phone. When won't give file and netcode, operator logo "
 "will be removed from phone. When will give only filename, operator logo will "
-"be displayed for your current GSM operator. When give additionaly network "
+"be displayed for your current GSM operator. When give additionally network "
 "code, it will be displayed for this operator: B<gammu setbitmap OPERATOR "
 "file \"260 02\">"
 msgstr ""
@@ -5023,7 +5026,7 @@ msgid ""
 "Unicode, once in ASCII. When you will remove Unicode version Gammu will use "
 "ASCII on B<restore> (and you can easy edit ASCII text) and will convert it "
 "according to your OS locale. When will be available Unicode version of text, "
-"it will be used instead of ASCII (usefull with Unicode phones - it isn't "
+"it will be used instead of ASCII (useful with Unicode phones - it isn't "
 "important, what locale is set in computer and no conversion Unicode -E<gt> "
 "ASCII and ASCII -E<gt> Unicode is done)."
 msgstr ""
@@ -6072,6 +6075,13 @@ msgstr "GAMMU-SMSDRC"
 #, no-wrap
 msgid "October 20, 2009"
 msgstr "Říjen 20, 2009"
+
+# type: TH
+#. type: TH
+#: docs/user/gammu-smsdrc.5:1
+#, no-wrap
+msgid "Gammu 1.27.0"
+msgstr "Gammu 1.27.0"
 
 # type: Plain text
 #. type: Plain text
@@ -7504,8 +7514,8 @@ msgstr "Příklady pro Linux/Unix"
 # type: TP
 #. type: TP
 #: docs/user/gammu-smsd.1:74
-#, no-wrap
-msgid "Start SMSD as a deamon on Linux:"
+#, fuzzy, no-wrap
+msgid "Start SMSD as a daemon on Linux:"
 msgstr "Spuštění SMSD jako démon na Linuxu:"
 
 # type: Plain text
@@ -7518,8 +7528,8 @@ msgstr "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --da
 # type: TP
 #. type: TP
 #: docs/user/gammu-smsd.1:87
-#, no-wrap
-msgid "Start SMSD as a deamon on Linux with reduced privileges:"
+#, fuzzy, no-wrap
+msgid "Start SMSD as a daemon on Linux with reduced privileges:"
 msgstr "Spuštění SMSD jako démon s omezenými právy na Linuxu:"
 
 # type: Plain text
@@ -7692,9 +7702,10 @@ msgstr "Tato manuálová stránka stručně popisuje příkaz B<gammu-smsd-injec
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-inject.1:16
+#, fuzzy
 msgid ""
 "B<gammu-smsd-inject> is a program that enqueues message in Gammu SMS daemon, "
-"which will be later sent by the deamon using connected GSM modem."
+"which will be later sent by the daemon using connected GSM modem."
 msgstr ""
 "B<gammu-smsd-inject> je program, který přidá zprávy do fronty Gammu SMS "
 "démona, který je později odešle pomocí připojeného GSM modemu."
