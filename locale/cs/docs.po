@@ -4,13 +4,13 @@
 # Automatically generated, 2009.
 # Automatically generated <>, 2009.
 #  <>, 2009.
-# Michal Čihař <michal@cihar.com>, 2009.
+# Michal Čihař <michal@cihar.com>, 20, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-02 12:05+0100\n"
-"PO-Revision-Date: 2009-12-22 16:17+0100\n"
+"PO-Revision-Date: 2010-01-02 12:10+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,9 +37,9 @@ msgstr "Prosinec 22, 2009"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu 1.27.90"
-msgstr "Gammu 1.27.0"
+msgstr "Gammu 1.27.90"
 
 # type: TH
 #. type: TH
@@ -1238,7 +1238,6 @@ msgstr "B<-flash> - SMS třídy 0 (zobrazení jen na displej)"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:411
-#, fuzzy
 msgid ""
 "B<-len len> - specify, how many chars will be read. When use this option and "
 "text will be longer than 1 SMS, will be split into more linked SMS"
@@ -1249,7 +1248,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:416
-#, fuzzy
 msgid ""
 "B<-autolen len> - specify, how many chars will be read. When use this option "
 "and text will be longer than 1 SMS, will be split into more linked SMS."
@@ -7514,7 +7512,7 @@ msgstr "Příklady pro Linux/Unix"
 # type: TP
 #. type: TP
 #: docs/user/gammu-smsd.1:74
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Start SMSD as a daemon on Linux:"
 msgstr "Spuštění SMSD jako démon na Linuxu:"
 
@@ -7528,7 +7526,7 @@ msgstr "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --da
 # type: TP
 #. type: TP
 #: docs/user/gammu-smsd.1:87
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Start SMSD as a daemon on Linux with reduced privileges:"
 msgstr "Spuštění SMSD jako démon s omezenými právy na Linuxu:"
 
@@ -7702,7 +7700,6 @@ msgstr "Tato manuálová stránka stručně popisuje příkaz B<gammu-smsd-injec
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-inject.1:16
-#, fuzzy
 msgid ""
 "B<gammu-smsd-inject> is a program that enqueues message in Gammu SMS daemon, "
 "which will be later sent by the daemon using connected GSM modem."
