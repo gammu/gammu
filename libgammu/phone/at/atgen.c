@@ -2904,12 +2904,12 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 		if (Priv->PBKSBNR == 0) {
 			ATGEN_CheckSBNR(s);
 		}
-	}
-	if (Priv->PBK_SPBR == 0) {
-		ATGEN_CheckSPBR(s);
-	}
-	if (Priv->PBK_MPBR == 0) {
-		ATGEN_CheckMPBR(s);
+		if (Priv->PBK_SPBR == 0) {
+			ATGEN_CheckSPBR(s);
+		}
+		if (Priv->PBK_MPBR == 0) {
+			ATGEN_CheckMPBR(s);
+		}
 	}
 	if (Priv->PBKMemory == MemType) return ERR_NONE;
 
@@ -3636,21 +3636,27 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 		if (Priv->PBKSBNR == 0) {
 			ATGEN_CheckSBNR(s);
 		}
+		if (Priv->PBK_SPBR == 0) {
+			ATGEN_CheckSPBR(s);
+		}
+		if (Priv->PBK_MPBR == 0) {
+			ATGEN_CheckMPBR(s);
+		}
 		if (Priv->PBKSBNR == AT_AVAILABLE) {
 			/* FirstMemoryEntry is not applied here, it is always 0 */
 			len = sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location - 1);
-			s->Phone.Data.Memory = entry;
-			smprintf(s, "Getting phonebook entry\n");
-			ATGEN_WaitFor(s, req, len, 0x00, 4, ID_GetMemory);
-			return error;
+			goto read_memory;
 		}
-	}
-
-	if (Priv->PBK_SPBR == 0) {
-		ATGEN_CheckSPBR(s);
-	}
-	if (Priv->PBK_MPBR == 0) {
-		ATGEN_CheckMPBR(s);
+		if (Priv->PBK_SPBR == AT_AVAILABLE) {
+			/* FirstMemoryEntry is not applied here, it is always 1 */
+			len = sprintf(req, "AT+SPBR=%i\r", entry->Location);
+			goto read_memory;
+		}
+		if (Priv->PBK_MPBR == AT_AVAILABLE) {
+			/* FirstMemoryEntry is not applied here, it is always 1 */
+			len = sprintf(req, "AT+MPBR=%i\r", entry->Location);
+			goto read_memory;
+		}
 	}
 
 	error = ATGEN_GetManufacturer(s);
@@ -3668,18 +3674,13 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 		if (error != ERR_NONE) return error;
 	}
 
-	if (Priv->PBK_SPBR == AT_AVAILABLE) {
-		len = sprintf(req, "AT+SPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
-	} else if (Priv->PBK_MPBR == AT_AVAILABLE) {
-		len = sprintf(req, "AT+MPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
+	if (endlocation == 0) {
+		len = sprintf(req, "AT+CPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
 	} else {
-		if (endlocation == 0) {
-			len = sprintf(req, "AT+CPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
-		} else {
-			len = sprintf(req, "AT+CPBR=%i,%i\r", entry->Location + Priv->FirstMemoryEntry - 1, endlocation + Priv->FirstMemoryEntry - 1);
-		}
+		len = sprintf(req, "AT+CPBR=%i,%i\r", entry->Location + Priv->FirstMemoryEntry - 1, endlocation + Priv->FirstMemoryEntry - 1);
 	}
 
+read_memory:
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
 	ATGEN_WaitFor(s, req, len, 0x00, 30, ID_GetMemory);
@@ -3704,12 +3705,12 @@ GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, gboo
 		if (Priv->PBKSBNR == 0) {
 			ATGEN_CheckSBNR(s);
 		}
-	}
-	if (Priv->PBK_SPBR == 0) {
-		ATGEN_CheckSPBR(s);
-	}
-	if (Priv->PBK_MPBR == 0) {
-		ATGEN_CheckMPBR(s);
+		if (Priv->PBK_SPBR == 0) {
+			ATGEN_CheckSPBR(s);
+		}
+		if (Priv->PBK_MPBR == 0) {
+			ATGEN_CheckMPBR(s);
+		}
 	}
 	/* There are no status functions for SBNR */
 	if (entry->MemoryType != MEM_ME || Priv->PBKSBNR != AT_AVAILABLE) {
