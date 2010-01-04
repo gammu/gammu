@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-02 12:05+0100\n"
-"PO-Revision-Date: 2010-01-04 14:56+0200\n"
+"PO-Revision-Date: 2010-01-04 14:58+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -2177,6 +2177,9 @@ msgid ""
 "phone can also support usb storage, which is handled on the operating system "
 "level and Gammu does not use that."
 msgstr ""
+"Gammu umí přistupovat k souborům pomocí nativního protokolu (Nokie) nebo "
+"přes OBEX. Váš telefon také může podporovat stadard USB storage, který je "
+"podporován operačním systémem a Gammu k němu nepřistupuje."
 
 # type: TP
 #. type: TP
