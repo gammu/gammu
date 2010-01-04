@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-02 12:05+0100\n"
-"PO-Revision-Date: 2010-01-04 14:59+0200\n"
+"PO-Revision-Date: 2010-01-04 15:00+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -2212,6 +2212,9 @@ msgid ""
 "(file can't be for example forwarded from phone menu), system and hidden "
 "(file is hidden from phone menu) file attributes"
 msgstr ""
+"B<-readonly, -protected, -system, -hidden> - můžete nastavit atributy "
+"souboru jako jen pro čtení, chráněný (nemůže být přeposlán), systémový a "
+"skrytý (soubor není v telefonu zobrazen)"
 
 # type: Plain text
 #. type: Plain text
