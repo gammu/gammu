@@ -27,6 +27,7 @@ ChangeLog
 [-] * Improve conversion of boolean settings from Python.
 [-] * Do not use MPBR/SPBR for other than phone memory (bug #1076).
 [-] * Fix crash with unknown CME error (bug #1082).
+[-] * Fixed connecting to Onda devices (LP #501025).
     
 20091222 - 1.27.0
     

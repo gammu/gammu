@@ -121,6 +121,9 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"^BOOT:"	,1}, /* ^BOOT:27710117,0,0,0,75 */
 		{"^MODE:"	,1}, /* ^MODE:3,3 */
 
+		/* ONDA */
+		{"+ZUSIMR:"	,1}, /* +ZUSIMR:2 */
+
 		{NULL		,1}};
 
     	/* Ignore leading CR, LF and ESC */
