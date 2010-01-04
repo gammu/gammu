@@ -5,13 +5,14 @@
 # Automatically generated <>, 2009.
 #  <>, 2009.
 # Michal Čihař <michal@cihar.com>, 20, 2010.
+# Michal Čihař <michal@cihar.com>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 14:19+0100\n"
-"PO-Revision-Date: 2010-01-04 15:14+0200\n"
-"Last-Translator: Michal <michal@cihar.com>\n"
+"PO-Revision-Date: 2010-01-04 14:22+0100\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,9 +31,9 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Dec 27 2009"
-msgstr "Prosinec 22, 2009"
+msgstr "Prosinec 27, 2009"
 
 # type: TH
 #. type: TH
@@ -5137,13 +5138,12 @@ msgstr "COPYRIGHT"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2725
-#, fuzzy
 msgid ""
 "Copyright \\(co 2003 - 2010 Marcin Wiacek, Michal Cihar and other authors.  "
 "License GPLv2: GNU GPL version 2 E<lt>http://www.gnu.org/licenses/old-"
 "licenses/gpl-2.0.htmlE<gt>"
 msgstr ""
-"Copyright \\(co 2003-2009 Marcin Wiacek, Michal Čihař a další autoři.  "
+"Copyright \\(co 2003 - 2010 Marcin Wiacek, Michal Čihař a další autoři.  "
 "Licence GPLv2: GNU GPL verze 2 E<lt>http://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.htmlE<gt>"
 
