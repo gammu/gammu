@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-02 12:05+0100\n"
-"PO-Revision-Date: 2010-01-04 15:00+0200\n"
+"PO-Revision-Date: 2010-01-04 15:07+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -1329,6 +1329,9 @@ msgid ""
 "send more single SMS to one recipient with the same ID, each another SMS "
 "will replace each previous with the same ID"
 msgstr ""
+"B<-replacemessages ID> - B<ID> může být 1..7. Pokud použijete tento parametr "
+"a pošlete více zpráv se stejným ID jednomu příjemci, každá další zpráva se "
+"stejným ID přepíše předchozí"
 
 # type: Plain text
 #. type: Plain text
