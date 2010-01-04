@@ -274,6 +274,7 @@ static ATErrorCode CMEErrorCodes[] = {
 	{148,  "Unspecified GPRS error."},
 	{149,  "PDP authentication failure."},
 	{150,  "Invalid mobile class."},
+	{-1,   ""}
 };
 
 static char samsung_location_error[] = "[Samsung] Empty location";

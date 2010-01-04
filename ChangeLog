@@ -26,6 +26,7 @@ ChangeLog
 [+] * Configurable outbox format for SMSD/FILES.
 [-] * Improve conversion of boolean settings from Python.
 [-] * Do not use MPBR/SPBR for other that phone memory (bug #1076).
+[-] * Fix crash with unknown CME error (bug #1082).
     
 20091222 - 1.27.0
     
