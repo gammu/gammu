@@ -1348,7 +1348,7 @@ failure_sent:
 	return FALSE;
 }
 
-GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure)
+GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int max_failures)
 {
 	GSM_SMSDService		*Service;
 	GSM_Error		error;
@@ -1421,6 +1421,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure)
 				SMSD_Log(DEBUG_INFO, Config, "Already hit %d errors", errors);
 				SMSD_LogError(DEBUG_INFO, Config, "Terminating communication", error);
 				error=GSM_TerminateConnection(Config->gsm);
+			}
+			if (max_failures != 0 && initerrors > max_failures) {
+				Config->failure = ERR_TIMEOUT;
+				SMSD_Log(DEBUG_INFO, Config, "Reached maximal number of failures (%d), terminating", max_failures);
+				break;
 			}
 			if (initerrors++ > 3) {
 				SMSD_Log(DEBUG_INFO, Config, "Going to 30 seconds sleep because of too much connection errors");

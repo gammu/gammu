@@ -134,12 +134,14 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig * Config,
  * \param Config Pointer to SMSD configuration data.
  * \param exit_on_failure Whether failure should lead to terminaton of
  * program.
+ * \param max_failures Maximal number of failures after which SMSD will
+ * terminate. Use 0 to not terminate on failures.
  *
  * \return Error code
  *
  * \ingroup SMSD
  */
-GSM_Error SMSD_MainLoop(GSM_SMSDConfig * Config, gboolean exit_on_failure);
+GSM_Error SMSD_MainLoop(GSM_SMSDConfig * Config, gboolean exit_on_failure, int max_failures);
 
 /**
  * Creates new SMSD configuration.

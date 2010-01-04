@@ -194,7 +194,8 @@ int main(int argc, char **argv)
 		FALSE,
 		FALSE,
 		FALSE,
-		FALSE
+		FALSE,
+		0
 	};
 
 

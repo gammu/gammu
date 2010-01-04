@@ -178,6 +178,7 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 		{"group", 1, 0, 'G'},
 		{"service-name", 1, 0, 'n'},
 		{"suicide", 1, 0, 'X'},
+		{"max-failures", 1, 0, 'f'},
 		{0, 0, 0, 0}
 	};
 	int option_index;
@@ -222,6 +223,9 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				}
 				break;
 #endif
+			case 'f':
+				params->max_failures = atoi(optarg);
+				break;
 #ifdef HAVE_ALARM
 			case 'X':
 				alarm(atoi(optarg));
@@ -347,7 +351,8 @@ int main(int argc, char **argv)
 		FALSE,
 		FALSE,
 		FALSE,
-		FALSE
+		FALSE,
+		0
 	};
 
 	/*
@@ -436,7 +441,7 @@ read_config:
 		configure_daemon(&params);
 
 	reconfigure = FALSE;
-	error = SMSD_MainLoop(config, FALSE);
+	error = SMSD_MainLoop(config, FALSE, params.max_failures);
 	if (error != ERR_NONE) {
 		printf("Failed to run SMSD: %s\n", GSM_ErrorString(error));
 		SMSD_FreeConfig(config);

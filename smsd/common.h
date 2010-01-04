@@ -19,6 +19,7 @@ typedef struct {
 	gboolean run_service;
 	gboolean install_service;
 	gboolean uninstall_service;
+	int max_failures;
 } SMSD_Parameters;
 #endif
 

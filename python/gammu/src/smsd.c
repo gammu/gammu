@@ -84,8 +84,10 @@ typedef struct {
 /* ---------------------------------------------------------------- */
 
 static char SMSD_MainLoop__doc__[] =
-"MainLoop()\n\n"
+"MainLoop(MaxFailures)\n\n"
 "Runs SMS daemon.\n\n"
+"@param MaxFailures: After how many init failures SMSD ends. Defaults to 0, what means never.\n"
+"@type MaxFailures: int\n"
 "@return: None\n"
 "@rtype: None\n"
 ;
@@ -94,12 +96,14 @@ static PyObject *
 Py_SMSD_MainLoop(SMSDObject *self, PyObject *args, PyObject *kwds)
 {
     GSM_Error                   error;
+    int max_failures = 0;
+    static char *kwlist[] = {"MaxFailures", NULL};
 
-    if (!PyArg_ParseTuple(args, ""))
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|I", kwlist, &max_failures))
         return NULL;
 
     Py_BEGIN_ALLOW_THREADS
-    error = SMSD_MainLoop(self->config, FALSE);
+    error = SMSD_MainLoop(self->config, FALSE, max_failures);
     Py_END_ALLOW_THREADS
 
     if (!checkError(NULL, error, "SMSD_MainLoop")) return NULL;

@@ -32,7 +32,7 @@ int main(int argc UNUSED, char **argv UNUSED)
      * by SMSD_Shutdown(config); (for example from signal handler)
      * to make it stop.
      */
-	error = SMSD_MainLoop(config, FALSE);
+	error = SMSD_MainLoop(config, FALSE, 0);
 	if (error != ERR_NONE) {
 		printf("Failed to run SMSD!\n");
 		SMSD_FreeConfig(config);
