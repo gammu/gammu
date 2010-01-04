@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-02 12:05+0100\n"
-"PO-Revision-Date: 2010-01-04 14:55+0200\n"
+"PO-Revision-Date: 2010-01-04 14:56+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -1202,6 +1202,9 @@ msgid ""
 "B<-scale> - ringtone will have Scale info for each note. It will allow to "
 "edit it correctly later in phone composer (for example, in 33xx)"
 msgstr ""
+"B<-scale> - vyzvánění bude mít informaci o výšce u každé noty. S tímto "
+"nastavením je možné vyzvánění později upravovat v telefonu (například v "
+"Nokii 33xx)"
 
 # type: TP
 #. type: TP
