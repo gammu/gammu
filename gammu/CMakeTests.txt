@@ -266,7 +266,7 @@ gammu_test(getfolderlisting "dir2/dir2-5" "dir2")
 if (ONLINE_TESTING AND CURL_FOUND)
     gammu_test(checkfirmware "")
     gammu_test(checkversion "")
-    gammu_test(getlocation "Number of samples")
+    gammu_test(getlocation "Number of samples;Could not connect to the server")
 endif (ONLINE_TESTING AND CURL_FOUND)
 
 # MMS decoding
