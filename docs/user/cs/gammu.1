@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Prosinec 22, 2009" "Gammu 1.27.90" "Dokumentace Gammu"
+.TH GAMMU 1 "Dec 27 2009" "Gammu 1.27.90" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -343,10 +343,9 @@ jedné nebo více zpráv
 
 \fB\-fixedbitmap \fP \- obrázek o velikosti 16x16 nebo 32x32
 
-\fB\-protected\fP \- all ringtones and bitmaps after this parameter (excluding
-default ringtones and logos) will be "protected" (in phones compatible with
-ODI like SonyEricsson products it won't be possible to forward them from
-phone menu)
+\fB\-protected\fP \- všechna vyzvánění a obrázky (kromě předdefinovaných) uvedená
+za tímto parametrem budou "chráběna" (v telefonech podporující standard ODI
+jako například SonyEricsson je nebude možné přeposlat)
 
 \fIPříklad:\fP gammu savesms EMS \-text "Pozdrav" \-defsound 1 \-text "od Gammu"
 \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
@@ -423,8 +422,9 @@ formátu pro Nokii.
 \fB\-long\fP \- vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo
 do 2 SMS), ale umí s ním pracovat jen novější telefony (jako 33xx).
 
-\fB\-scale\fP \- ringtone will have Scale info for each note. It will allow to
-edit it correctly later in phone composer (for example, in 33xx)
+\fB\-scale\fP \- vyzvánění bude mít informaci o výšce u každé noty. S tímto
+nastavením je možné vyzvánění později upravovat v telefonu (například v
+Nokii 33xx)
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -473,9 +473,9 @@ vstupu.
 WordPadu (zvolte volbu "Uložit jako unicode text"). Na Linuxu můžete použít
 třeba YUdit nebo Vim.
 
-\fB\-replacemessages ID\fP \- \fBID\fP can be 1..7. When you will use option and
-send more single SMS to one recipient with the same ID, each another SMS
-will replace each previous with the same ID
+\fB\-replacemessages ID\fP \- \fBID\fP může být 1..7. Pokud použijete tento parametr
+a pošlete více zpráv se stejným ID jednomu příjemci, každá další zpráva se
+stejným ID přepíše předchozí
 
 \fB\-replacefile file\fP \- when you want, you can make file in such format:
 \fBsrc_unicode_char1, dest_unicode_char1, src_unicode_char2,
@@ -877,23 +877,22 @@ sendsms a savesms\fP.
 .SS Soubory
 .P
 
-Gammu allows to access phones using native protocol (Nokias) or OBEX. Your
-phone can also support usb storage, which is handled on the operating system
-level and Gammu does not use that.
+Gammu umí přistupovat k souborům pomocí nativního protokolu (Nokie) nebo
+přes OBEX. Váš telefon také může podporovat stadard USB storage, který je
+podporován operačním systémem a Gammu k němu nepřistupuje.
 
 .TP 
 \fBaddfile\fP\fI folderID name [\-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT] [\-readonly] [\-protected] [\-system] [\-hidden] [\-newtime]\fP
 Přidá soubor se zadaným jménem do adresáře se zvoleným ID.
 
-\fB\-type\fP \- file type was required for filesystem 1 in Nokia phones (current
-filesystem 2 doesn't need this)
+\fB\-type\fP \- typ souboru je vyžadován pro některé souborové systémy (starší
+telefony Nokia)
 
-\fB\-readonly, \-protected, \-system, \-hidden\fP \- you can set readonly, protected
-(file can't be for example forwarded from phone menu), system and hidden
-(file is hidden from phone menu) file attributes
+\fB\-readonly, \-protected, \-system, \-hidden\fP \- můžete nastavit atributy
+souboru jako jen pro čtení, chráněný (nemůže být přeposlán), systémový a
+skrytý (soubor není v telefonu zobrazen)
 
-\fB\-newtime\fP \- after using it date/time of file modification will be set to
-moment of uploading
+\fB\-newtime\fP \- čas modifikace souboru bude nastaven na aktuální čas
 
 
 .TP 
@@ -917,8 +916,8 @@ Načte ze souborového systému telefonu soubory se zadanými ID.
 Zobrazí informace o všech souborech a složkách v telefonu a/nebo na paměťové
 kartě. Výchozí je stromové zobrazení, ale můžete ho změnit:
 
-\fB\-flatall\fP there are displayed full file/folder details like ID (first
-parameter in line)
+\fB\-flatall\fP jsou zobrazeny všechny podrobnosti o souboru jako jeho ID (první
+v řádku)
 
 \fB\-flat\fP
 
@@ -1243,8 +1242,9 @@ formátu pro Nokii.
 \fB\-long\fP \- vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo
 do 2 SMS), ale umí s ním pracovat jen novější telefony (jako 33xx).
 
-\fB\-scale\fP \- ringtone will have Scale info for each note. It will allow to
-edit it correctly later in phone composer (for example, in 33xx)
+\fB\-scale\fP \- vyzvánění bude mít informaci o výšce u každé noty. S tímto
+nastavením je možné vyzvánění později upravovat v telefonu (například v
+Nokii 33xx)
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -2830,8 +2830,8 @@ Nahradit: Replace: Type = NumberMobile\enEntry\e1Text = "\e+36\e2\e3"\en
 
 .SH COPYRIGHT
 
-Copyright \(co 2003\-2009 Marcin Wiacek, Michal Čihař a další autoři.
-Licence GPLv2: GNU GPL verze 2
+Copyright \(co 2003 \- 2010 Marcin Wiacek, Michal Cihar and other authors.
+License GPLv2: GNU GPL version 2
 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
 .br
 Tento program je svobodný software; můžete jej šířit a modifikovat.  Není
