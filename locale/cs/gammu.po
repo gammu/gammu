@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the Gammu package.
 #
 #
-# Michal Čihař <michal@cihar.com>, 20, 2009.
+# Michal Čihař <michal@cihar.com>, 20, 20, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.27.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 14:19+0100\n"
-"PO-Revision-Date: 2009-12-12 14:14+0100\n"
+"PO-Revision-Date: 2010-01-04 14:23+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1703,11 +1703,10 @@ msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr "Nová testovací verze Gammu je dostupná! (%s místo %s)\n"
 
 #: gammu/gammu.c:369
-#, fuzzy
 msgid ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
-"Copyright (C) 2003 - 2009 Michal Čihař <michal@cihar.com> a další autoři."
+"Copyright (C) 2003 - 2010 Michal Čihař <michal@cihar.com> a další autoři."
 
 #: gammu/gammu.c:373
 msgid ""
