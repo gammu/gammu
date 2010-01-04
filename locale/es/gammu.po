@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-16 19:02+0100\n"
+"POT-Creation-Date: 2010-01-04 14:19+0100\n"
 "PO-Revision-Date: 2009-03-23 19:23+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -1731,7 +1731,7 @@ msgstr ""
 
 #: gammu/gammu.c:369
 msgid ""
-"Copyright (C) 2003 - 2009 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 
 #: gammu/gammu.c:373

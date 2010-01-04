@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-02 12:05+0100\n"
+"POT-Creation-Date: 2010-01-04 14:19+0100\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -26,7 +26,7 @@ msgstr ""
 #. type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
-msgid "Dec 22 2009"
+msgid "Dec 27 2009"
 msgstr ""
 
 #. type: TH
@@ -4816,11 +4816,10 @@ msgstr ""
 msgid "COPYRIGHT"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:2725
 msgid ""
-"Copyright \\(co 2003-2009 Marcin Wiacek, Michal Cihar and other authors.  "
+"Copyright \\(co 2003 - 2010 Marcin Wiacek, Michal Cihar and other authors.  "
 "License GPLv2: GNU GPL version 2 E<lt>http://www.gnu.org/licenses/old-"
 "licenses/gpl-2.0.htmlE<gt>"
 msgstr ""

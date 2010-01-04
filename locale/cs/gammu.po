@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.27.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-16 19:02+0100\n"
+"POT-Creation-Date: 2010-01-04 14:19+0100\n"
 "PO-Revision-Date: 2009-12-12 14:14+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1703,8 +1703,9 @@ msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr "Nová testovací verze Gammu je dostupná! (%s místo %s)\n"
 
 #: gammu/gammu.c:369
+#, fuzzy
 msgid ""
-"Copyright (C) 2003 - 2009 Michal Cihar <michal@cihar.com> and other authors."
+"Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
 "Copyright (C) 2003 - 2009 Michal Čihař <michal@cihar.com> a další autoři."
 
