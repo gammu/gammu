@@ -79,16 +79,18 @@ BOOL report_service_status(DWORD CurrentState,
 	m_ServiceStatus.dwServiceSpecificExitCode = 0;
 	m_ServiceStatus.dwWaitHint = WaitHint;
 
-	if (CurrentState == SERVICE_START_PENDING)
+	if (CurrentState == SERVICE_START_PENDING) {
 		m_ServiceStatus.dwControlsAccepted = 0;
-	else
+	} else {
 		m_ServiceStatus.dwControlsAccepted = SERVICE_ACCEPT_STOP;
+	}
 
 	if ( (CurrentState == SERVICE_RUNNING) ||
-			(CurrentState == SERVICE_STOPPED) )
+			(CurrentState == SERVICE_STOPPED) ) {
 		m_ServiceStatus.dwCheckPoint = 0;
-	else
+	} else {
 		m_ServiceStatus.dwCheckPoint = CheckPoint++;
+	}
 
 	// Report the status of the service to the SCM.
 	return SetServiceStatus( m_ServiceStatusHandle, &m_ServiceStatus );
@@ -107,10 +109,13 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 		return;
 	}
 
-	if (!report_service_status(SERVICE_START_PENDING, NO_ERROR, 3000))
+	if (!report_service_status(SERVICE_START_PENDING, NO_ERROR, 3000)) {
 		service_print_error("Failed to report state pending");
-	if (!report_service_status(SERVICE_RUNNING, NO_ERROR, 0))
+	}
+
+	if (!report_service_status(SERVICE_RUNNING, NO_ERROR, 0)) {
 		service_print_error("Failed to report state started");
+	}
 
 	error = SMSD_MainLoop(config, FALSE, 0);
 	if (error != ERR_NONE) {
@@ -147,8 +152,9 @@ gboolean install_smsd_service(SMSD_Parameters * params)
 
 	schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
 
-	if (schSCManager == NULL)
+	if (schSCManager == NULL) {
 		return FALSE;
+	}
 
 	schService = CreateService(schSCManager,
 				   smsd_service_name,
@@ -164,12 +170,14 @@ gboolean install_smsd_service(SMSD_Parameters * params)
 				   NULL,	// LocalSystem account
 				   NULL);	// no password
 
-	if (schService == NULL)
+	if (schService == NULL) {
 		return FALSE;
+	}
 
 	service_description.lpDescription = description;
-	if (ChangeServiceConfig2(schService, SERVICE_CONFIG_DESCRIPTION, &service_description) == 0)
+	if (ChangeServiceConfig2(schService, SERVICE_CONFIG_DESCRIPTION, &service_description) == 0) {
 		return FALSE;
+	}
 
 	CloseServiceHandle(schService);
 	return TRUE;
@@ -183,16 +191,21 @@ gboolean uninstall_smsd_service(void)
 
 	schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
 
-	if (schSCManager == NULL)
+	if (schSCManager == NULL) {
 		return FALSE;
-	hService =
-	    OpenService(schSCManager, smsd_service_name, SERVICE_ALL_ACCESS);
-	if (hService == NULL)
+	}
+
+	hService = OpenService(schSCManager, smsd_service_name, SERVICE_ALL_ACCESS);
+
+	if (hService == NULL) {
 		return FALSE;
-	if (DeleteService(hService) == 0)
+	}
+	if (DeleteService(hService) == 0) {
 		return FALSE;
-	if (CloseServiceHandle(hService) == 0)
+	}
+	if (CloseServiceHandle(hService) == 0) {
 		return FALSE;
+	}
 
 	return TRUE;
 }
@@ -228,16 +241,21 @@ gboolean start_smsd_service(void)
 
 	schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
 
-	if (schSCManager == NULL)
+	if (schSCManager == NULL) {
 		return FALSE;
-	hService =
-	    OpenService(schSCManager, smsd_service_name, SERVICE_ALL_ACCESS);
-	if (hService == NULL)
+	}
+
+	hService = OpenService(schSCManager, smsd_service_name, SERVICE_ALL_ACCESS);
+
+	if (hService == NULL) {
 		return FALSE;
-	if (StartService(hService, 0, NULL) == 0)
+	}
+	if (StartService(hService, 0, NULL) == 0) {
 		return FALSE;
-	if (CloseServiceHandle(hService) == 0)
+	}
+	if (CloseServiceHandle(hService) == 0) {
 		return FALSE;
+	}
 
 	return TRUE;
 }
