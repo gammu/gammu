@@ -112,7 +112,7 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 	if (!report_service_status(SERVICE_RUNNING, NO_ERROR, 0))
 		service_print_error("Failed to report state started");
 
-	error = SMSD_MainLoop(config, FALSE);
+	error = SMSD_MainLoop(config, FALSE, 0);
 	if (error != ERR_NONE) {
 		report_service_status(SERVICE_STOPPED, error, 0);
 		SMSD_LogErrno(config, "Failed to start SMSD");
@@ -140,8 +140,8 @@ gboolean install_smsd_service(SMSD_Parameters * params)
 	if (GetFullPathName(params->config_file, sizeof(config_name), config_name, NULL) == 0)
 		return FALSE;
 
-	sprintf(commandline, "\"%s\" -S -c \"%s\" -n \"%s\"",
-		program_name, config_name, smsd_service_name);
+	sprintf(commandline, "\"%s\" -S -c \"%s\" -n \"%s\" -f %d",
+		program_name, config_name, smsd_service_name, params->max_failures);
 
 	sprintf(service_display_name, "Gammu SMSD Service (%s)", smsd_service_name);
 
