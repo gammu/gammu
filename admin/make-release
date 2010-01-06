@@ -60,7 +60,7 @@ if [ "x$1" = "xbranch" ] ; then
     checkout=HEAD
     dotag=1
     # Pre release checks
-    if grep -q '^200[0-9]???? - ' ChangeLog ; then
+    if grep -q '^20[0-9][0-9]???? - ' ChangeLog ; then
         echo 'ChangeLog does not seem to be finalised, aborting!'
         exit 1
     fi
