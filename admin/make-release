@@ -192,4 +192,6 @@ if [ $dotag -eq 1 ] ; then
     git tag -s -m "Tag release $version" "$version"
     # Submit to PyPi
     $tmp/$repo-$version/python/setup.py register
+    # Upload to sf.net
+    ./admin/upload-release $version $tmp
 fi

@@ -2,9 +2,13 @@
 
 REL=$1
 if [ -z $REL ] ; then
-    echo 'Usage: upload-release VERSION'
-    echo 'Must be called in directory with binaries'
+    echo 'Usage: upload-release VERSION [DIR]'
+    echo 'Must be called in directory with binaries or with path'
     exit 1
+fi
+
+if [ ! -z "$2" ] ; then
+    cd "$2"
 fi
 
 sftp nijel,gammu@frs.sourceforge.net <<EOT
