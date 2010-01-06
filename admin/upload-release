@@ -1,0 +1,20 @@
+#!/bin/sh
+
+REL=$1
+if [ -z $REL ] ; then
+    echo 'Usage: upload-release VERSION'
+    echo 'Must be called in directory with binaries'
+    exit 1
+fi
+
+sftp nijel,gammu@frs.sourceforge.net <<EOT
+cd /home/frs/project/g/ga/gammu
+mkdir $REL
+cd $REL
+put Gammu-$REL-Windows-Minimal.exe
+put Gammu-$REL-Windows-Minimal.zip
+put Gammu-$REL-Windows.exe
+put Gammu-$REL-Windows.zip
+put gammu-$REL.tar.bz2
+put gammu-$REL.tar.gz
+EOT
