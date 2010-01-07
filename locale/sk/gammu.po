@@ -549,7 +549,7 @@ msgstr "Denný budík"
 
 #: gammu/calendar.c:65 gammu/calendar.c:723
 msgid "Training/Athletism"
-msgstr ""
+msgstr "Tréning/Atletika"
 
 #: gammu/calendar.c:68 gammu/calendar.c:726
 msgid "Training/Ball Games"
