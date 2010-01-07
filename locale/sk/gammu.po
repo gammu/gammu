@@ -956,7 +956,7 @@ msgstr "Čaká na PIN."
 
 #: gammu/common.c:46
 msgid "Waiting for PIN2."
-msgstr ""
+msgstr "Čaká na PIN2."
 
 #: gammu/common.c:49
 msgid "Waiting for PUK."
