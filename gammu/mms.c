@@ -46,7 +46,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 	GSM_CalendarEntry 		Calendar;
 	GSM_ToDoEntry 			ToDo;
 
-	if (num != -1 && answer_yes(_("Do you want to save this MMS file?"))) {
+	if (num != -1 && answer_yes("%s", _("Do you want to save this MMS file?"))) {
 		sprintf(buff,"%i_0",num);
 		file2 = fopen(buff,"wb");
 		if (fwrite(file->Buffer, 1, file->Used, file2) != file->Used) {
@@ -127,7 +127,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 			error = GSM_DecodeVCALENDAR_VTODO(GSM_GetDebug(gsm), info.Entries[i].File.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
 			if (error == ERR_NONE) PrintCalendar(&Calendar);
 		}
-		if (num != -1 && answer_yes(_("Do you want to save this attachment?"))) {
+		if (num != -1 && answer_yes("%s", _("Do you want to save this attachment?"))) {
 			sprintf(buff,"%i_%i_%s",num,i+1,DecodeUnicodeString(info.Entries[i].File.Name));
 			file2 = fopen(buff,"wb");
 			if (fwrite(info.Entries[i].File.Buffer, 1, info.Entries[i].File.Used, file2) != info.Entries[i].File.Used) {

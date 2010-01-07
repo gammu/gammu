@@ -1350,7 +1350,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	DoClear = FALSE;
 	error = GSM_GetNextCalendar(gsm,&Calendar,TRUE);
 	if (error == ERR_NONE) {
- 		if (answer_yes(_("Delete phone calendar notes?"))) DoClear = TRUE;
+ 		if (answer_yes("%s", _("Delete phone calendar notes?"))) DoClear = TRUE;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
@@ -1374,7 +1374,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	DoClear = FALSE;
 	error = GSM_GetToDoStatus(gsm,&ToDoStatus);
 	if (error == ERR_NONE && ToDoStatus.Used != 0) {
-		if (answer_yes(_("Delete phone todos?"))) DoClear = TRUE;
+		if (answer_yes("%s", _("Delete phone todos?"))) DoClear = TRUE;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
@@ -1398,7 +1398,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	DoClear = FALSE;
 	error = GSM_GetNotesStatus(gsm,&ToDoStatus);
 	if (error == ERR_NONE && ToDoStatus.Used != 0) {
-		if (answer_yes(_("Delete phone notes?"))) DoClear = TRUE;
+		if (answer_yes("%s", _("Delete phone notes?"))) DoClear = TRUE;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
@@ -1416,7 +1416,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	Bookmark.Location = 1;
 	error = GSM_GetWAPBookmark(gsm,&Bookmark);
 	if (error == ERR_NONE || error == ERR_INVALIDLOCATION) {
-		if (answer_yes(_("Delete phone WAP bookmarks?"))) {
+		if (answer_yes("%s", _("Delete phone WAP bookmarks?"))) {
 			fprintf(stderr, LISTFORMAT, _("Deleting"));
 			/* One thing to explain: DCT4 phones seems to have bug here.
 			 * When delete for example first bookmark, phone change
@@ -1434,7 +1434,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 			fflush(stderr);
 		}
 	}
-	if (answer_yes(_("Delete all phone user ringtones?"))) {
+	if (answer_yes("%s", _("Delete all phone user ringtones?"))) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
 		error=GSM_DeleteUserRingtones(gsm);
 		Print_Error(error);
@@ -1443,7 +1443,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	Station.Location = 1;
 	error=GSM_GetFMStation(gsm,&Station);
 	if (error == ERR_NONE || error == ERR_EMPTY) {
-	 	if (answer_yes(_("Delete all phone FM radio stations?"))) {
+	 	if (answer_yes("%s", _("Delete all phone FM radio stations?"))) {
  			error=GSM_ClearFMStations(gsm);
  			Print_Error(error);
 		}

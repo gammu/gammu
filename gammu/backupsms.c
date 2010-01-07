@@ -47,7 +47,7 @@ void BackupSMS(int argc UNUSED, char *argv[])
 	Print_Error(error);
 
 	if (askdelete) {
-		DeleteAfter = answer_yes(_("Delete each sms after backup?"));
+		DeleteAfter = answer_yes("%s", _("Delete each sms after backup?"));
 	}
 
 	for (j=0;j<folders.Number;j++) {
@@ -137,7 +137,7 @@ void AddSMS(int argc UNUSED, char *argv[])
 		SMS.Number = 1;
 		SMS.SMS[0] = *Backup.SMS[smsnum];
 		DisplayMultiSMSInfo(&SMS,FALSE,FALSE,NULL, gsm);
-		if (answer_yes(_("Restore message?"))) {
+		if (answer_yes("%s", _("Restore message?"))) {
 			error=GSM_AddSMS(gsm, Backup.SMS[smsnum]);
 			Print_Error(error);
 		}
@@ -164,7 +164,7 @@ void RestoreSMS(int argc, char *argv[])
 	error = GSM_ReadSMSBackupFile(argv[2], &Backup);
 	Print_Error(error);
 
-	restore8bit = answer_yes(_("Do you want to restore binary SMS?"));
+	restore8bit = answer_yes("%s", _("Do you want to restore binary SMS?"));
 
 	GSM_Init(TRUE);
 

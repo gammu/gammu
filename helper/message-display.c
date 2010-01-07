@@ -386,7 +386,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 			printf("\n");
 #if 0
 			/* Disabled for now */
-			if (answer_yes(_("Do you want to play it?")))
+			if (answer_yes("%s", _("Do you want to play it?")))
 				GSM_PlayRingtone(*SMSInfo.Entries[i].Ringtone);
 #endif
 			break;
