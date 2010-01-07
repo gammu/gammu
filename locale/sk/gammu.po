@@ -789,7 +789,7 @@ msgstr "12 hodín"
 #. l10n: 24 hours time
 #: gammu/calendar.c:400
 msgid "24 hours"
-msgstr ""
+msgstr "24 hodín"
 
 #: gammu/calendar.c:402
 #, c-format
