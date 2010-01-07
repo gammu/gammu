@@ -509,7 +509,7 @@ msgstr "ukladám SMS správu %i\n"
 
 #: gammu/calendar.c:35 gammu/calendar.c:693
 msgid "Note type"
-msgstr ""
+msgstr "Typ poznámky"
 
 #: gammu/calendar.c:38 gammu/calendar.c:696
 msgid "Reminder (Date)"
