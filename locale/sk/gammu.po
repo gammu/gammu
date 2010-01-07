@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 14:19+0100\n"
-"PO-Revision-Date: 2010-01-07 20:54+0200\n"
+"PO-Revision-Date: 2010-01-07 20:55+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -870,7 +870,7 @@ msgstr "Každý deň"
 #: gammu/calendar.c:529
 #, c-format
 msgid "Time: %02d:%02d\n"
-msgstr ""
+msgstr "Čas: %02d:%02d\n"
 
 #: gammu/calendar.c:643
 #, c-format
