@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 14:19+0100\n"
-"PO-Revision-Date: 2010-01-07 20:35+0200\n"
+"PO-Revision-Date: 2010-01-07 20:36+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -650,7 +650,7 @@ msgstr "navždy každý %i deň. deň v %s"
 
 #: gammu/calendar.c:182 gammu/calendar.c:194 gammu/calendar.c:827
 msgid "Silent alarm"
-msgstr ""
+msgstr "Tiché upozornenie"
 
 #: gammu/calendar.c:202 gammu/calendar.c:532 gammu/calendar.c:837
 #: gammu/calendar.c:1059 gammu/message.c:206 gammu/misc.c:1071
