@@ -799,7 +799,7 @@ msgstr "Formát dátumu je"
 #: gammu/calendar.c:405
 #, c-format
 msgid "DD MM YYYY"
-msgstr ""
+msgstr "DD MM RRRR"
 
 #: gammu/calendar.c:408
 #, c-format
