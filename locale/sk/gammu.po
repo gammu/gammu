@@ -561,7 +561,7 @@ msgstr "Tréning/Cyklistika"
 
 #: gammu/calendar.c:74 gammu/calendar.c:732
 msgid "Training/Budo"
-msgstr ""
+msgstr "Tréning/Budo"
 
 #: gammu/calendar.c:77 gammu/calendar.c:735
 msgid "Training/Dance"
