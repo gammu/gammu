@@ -731,7 +731,7 @@ msgstr "každý"
 #: gammu/calendar.c:315
 #, c-format
 msgid " on each %d. "
-msgstr "každý %d"
+msgstr "každý %d."
 
 #: gammu/calendar.c:320
 #, c-format
