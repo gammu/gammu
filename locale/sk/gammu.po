@@ -885,7 +885,7 @@ msgstr "Automatické zmazanie poznámok po %i dňoch"
 #: gammu/calendar.c:649
 #, c-format
 msgid "Week starts on %s"
-msgstr ""
+msgstr "Týždeň začína v %s"
 
 #: gammu/calendar.c:674 gammu/memory.c:153
 msgid "Entry was empty"
