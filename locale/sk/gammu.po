@@ -935,7 +935,7 @@ msgstr "Dokončené"
 #: gammu/calendar.c:852 gammu/calendar.c:857 helper/memory-display.c:44
 #: helper/memory-display.c:54 helper/memory-display.c:56
 msgid "Category"
-msgstr ""
+msgstr "Kategória"
 
 #: gammu/calendar.c:881
 msgid "Contact"
