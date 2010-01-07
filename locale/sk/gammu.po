@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 14:19+0100\n"
-"PO-Revision-Date: 2010-01-07 22:57+0200\n"
+"PO-Revision-Date: 2010-01-07 22:58+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -952,7 +952,7 @@ msgstr "Čaká na bezpečnostný kód."
 
 #: gammu/common.c:43
 msgid "Waiting for PIN."
-msgstr ""
+msgstr "Čaká na PIN."
 
 #: gammu/common.c:46
 msgid "Waiting for PIN2."
