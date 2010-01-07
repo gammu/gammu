@@ -804,7 +804,7 @@ msgstr "DD MM RRRR"
 #: gammu/calendar.c:408
 #, c-format
 msgid "MM DD YYYY"
-msgstr ""
+msgstr "MM DD RRRR"
 
 #: gammu/calendar.c:411
 #, c-format
