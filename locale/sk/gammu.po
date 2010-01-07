@@ -922,7 +922,7 @@ msgstr "Žiadna"
 
 #: gammu/calendar.c:807
 msgid "Due time"
-msgstr ""
+msgstr "Posledný termín"
 
 #: gammu/calendar.c:812
 msgid "Start time"
