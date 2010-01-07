@@ -706,7 +706,7 @@ msgstr[2] ""
 #: gammu/calendar.c:302
 #, c-format
 msgid "forever"
-msgstr ""
+msgstr "navždy"
 
 #: gammu/calendar.c:304
 #, c-format
