@@ -889,7 +889,7 @@ msgstr "Týždeň začína v %s"
 
 #: gammu/calendar.c:674 gammu/memory.c:153
 msgid "Entry was empty"
-msgstr ""
+msgstr "Záznam bol prázdny"
 
 #: gammu/calendar.c:676 gammu/memory.c:155
 msgid "Entry was deleted"
