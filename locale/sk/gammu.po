@@ -537,7 +537,7 @@ msgstr "Cesta"
 
 #: gammu/calendar.c:56 gammu/calendar.c:714
 msgid "Vacation"
-msgstr ""
+msgstr "Dovolenka"
 
 #: gammu/calendar.c:59 gammu/calendar.c:717 gammu/calendar.c:822
 msgid "Alarm"
