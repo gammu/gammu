@@ -761,7 +761,7 @@ msgstr "%d. deň roku"
 #: gammu/calendar.c:342
 #, c-format
 msgid "day"
-msgstr ""
+msgstr "deň"
 
 #: gammu/calendar.c:358
 msgid "Age"
