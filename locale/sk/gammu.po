@@ -829,7 +829,7 @@ msgstr "DD MM RR"
 #: gammu/calendar.c:423
 #, c-format
 msgid "YY MM DD"
-msgstr ""
+msgstr "RR MM DD"
 
 #: gammu/calendar.c:426
 #, c-format
