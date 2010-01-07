@@ -865,7 +865,7 @@ msgstr "Dátum"
 
 #: gammu/calendar.c:524
 msgid "Every day"
-msgstr ""
+msgstr "Každý deň"
 
 #: gammu/calendar.c:529
 #, c-format
