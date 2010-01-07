@@ -689,7 +689,7 @@ msgstr "Nie"
 #: gammu/calendar.c:241 gammu/calendar.c:247 gammu/calendar.c:252
 #: gammu/calendar.c:871 gammu/calendar.c:877
 msgid "Contact ID"
-msgstr ""
+msgstr "ID kontaktu"
 
 #: gammu/calendar.c:295
 msgid "Repeating"
