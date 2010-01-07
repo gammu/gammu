@@ -513,7 +513,7 @@ msgstr "Typ poznámky"
 
 #: gammu/calendar.c:38 gammu/calendar.c:696
 msgid "Reminder (Date)"
-msgstr ""
+msgstr "Pripomienka (Dátum)"
 
 #: gammu/calendar.c:41 gammu/calendar.c:699
 msgid "Call"
