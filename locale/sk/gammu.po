@@ -779,7 +779,7 @@ msgstr "Čas v telefóne je %s\n"
 #: gammu/calendar.c:394
 #, c-format
 msgid "Time format is "
-msgstr ""
+msgstr "Formát času je"
 
 #. l10n: AM/PM time
 #: gammu/calendar.c:397
