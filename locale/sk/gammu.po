@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 14:19+0100\n"
-"PO-Revision-Date: 2010-01-07 21:02+0200\n"
+"PO-Revision-Date: 2010-01-07 21:03+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -944,7 +944,7 @@ msgstr "Kontakt"
 #: gammu/calendar.c:966 gammu/memory.c:320 gammu/memory.c:397
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "Text pre vyhľadanie je príliš dlhý, skracujem na %d znakov!\n"
 
 #: gammu/common.c:40
 msgid "Waiting for Security Code."
