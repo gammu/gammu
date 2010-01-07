@@ -171,7 +171,7 @@ msgstr ""
 
 #: gammu/backup.c:505
 msgid "Backup SIM SMS profiles?"
-msgstr ""
+msgstr "Zazálohovať profily SIM SMS?"
 
 #: gammu/backup.c:533
 msgid "Checking phone startup text"
