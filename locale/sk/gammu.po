@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 14:19+0100\n"
-"PO-Revision-Date: 2010-01-07 20:55+0200\n"
+"PO-Revision-Date: 2010-01-07 20:56+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -880,7 +880,7 @@ msgstr "Automatické vymazávanie vypnuté"
 #: gammu/calendar.c:645
 #, c-format
 msgid "Auto deleting notes after %i day(s)"
-msgstr ""
+msgstr "Automatické zmazanie poznámok po %i dňoch"
 
 #: gammu/calendar.c:649
 #, c-format
