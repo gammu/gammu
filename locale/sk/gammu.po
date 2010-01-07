@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 14:19+0100\n"
-"PO-Revision-Date: 2010-01-07 22:58+0200\n"
+"PO-Revision-Date: 2010-01-07 22:59+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -960,7 +960,7 @@ msgstr "Čaká na PIN2."
 
 #: gammu/common.c:49
 msgid "Waiting for PUK."
-msgstr ""
+msgstr "Čaká na PUK."
 
 #: gammu/common.c:52
 msgid "Waiting for PUK2."
