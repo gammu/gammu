@@ -577,7 +577,7 @@ msgstr "Tréning/Futbal"
 
 #: gammu/calendar.c:86 gammu/calendar.c:744
 msgid "Training/Golf"
-msgstr ""
+msgstr "Tréning/Golf"
 
 #: gammu/calendar.c:89 gammu/calendar.c:747
 msgid "Training/Gym"
