@@ -784,7 +784,7 @@ msgstr "Formát času je"
 #. l10n: AM/PM time
 #: gammu/calendar.c:397
 msgid "12 hours"
-msgstr ""
+msgstr "12 hodín"
 
 #. l10n: 24 hours time
 #: gammu/calendar.c:400
