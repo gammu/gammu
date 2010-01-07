@@ -116,25 +116,25 @@ void GetFileSystem(int argc, char *argv[])
 			}
 			if (Files.Protected) {
 				/* l10n: One char to indicate protected file */
-				printf(_("P"));
+				printf("%s", _("P"));
 			} else {
 				printf(" ");
 			}
 			if (Files.ReadOnly) {
 				/* l10n: One char to indicate read only file */
-				printf(_("R"));
+				printf("%s", _("R"));
 			} else {
 				printf(" ");
 			}
 			if (Files.Hidden) {
 				/* l10n: One char to indicate hidden file */
-				printf(_("H"));
+				printf("%s", _("H"));
 			} else {
 				printf(" ");
 			}
 			if (Files.System) {
 				/* l10n: One char to indicate system file */
-				printf(_("S"));
+				printf("%s", _("S"));
 			} else {
 				printf(" ");
 			}
@@ -181,7 +181,7 @@ void GetFileSystem(int argc, char *argv[])
 			EncodeUTF8QuotedPrintable(IDUTF, Files.ID_FullName);
 			printf("%s;", IDUTF);
 			if (!Files.Folder) {
-				printf(_("File;"));
+				printf("%s", _("File;"));
 				printf("\"%s\";", FolderName);
 				printf("\"%s\";",
 				       DecodeUnicodeConsole(Files.Name));
@@ -205,13 +205,13 @@ void GetFileSystem(int argc, char *argv[])
 			}
 
 			if (Files.Protected)
-				printf(_("P"));
+				printf("%s", _("P"));
 			if (Files.ReadOnly)
-				printf(_("R"));
+				printf("%s", _("R"));
 			if (Files.Hidden)
-				printf(_("H"));
+				printf("%s", _("H"));
 			if (Files.System)
-				printf(_("S"));
+				printf("%s", _("S"));
 			printf("\n");
 		}
 		Start = FALSE;
@@ -312,7 +312,7 @@ void GetFolderListing(int argc UNUSED, char *argv[])
 		EncodeUTF8QuotedPrintable(IDUTF, Files.ID_FullName);
 		printf("%s;", IDUTF);
 		if (!Files.Folder) {
-			printf(_("File;"));
+			printf("%s", _("File;"));
 			printf("\"%s\";", DecodeUnicodeConsole(Files.Name));
 			if (!Files.ModifiedEmpty) {
 				printf("\"%s\";",
@@ -321,18 +321,18 @@ void GetFolderListing(int argc UNUSED, char *argv[])
 				printf("\"%c\";", 0x20);
 			printf("%ld;", (long)Files.Used);
 		} else {
-			printf(_("Folder"));
+			printf("%s", _("Folder"));
 			printf(";\"%s\";", DecodeUnicodeConsole(Files.Name));
 		}
 
 		if (Files.Protected)
-			printf(_("P"));
+			printf("%s", _("P"));
 		if (Files.ReadOnly)
-			printf(_("R"));
+			printf("%s", _("R"));
 		if (Files.Hidden)
-			printf(_("H"));
+			printf("%s", _("H"));
 		if (Files.System)
-			printf(_("S"));
+			printf("%s", _("S"));
 		printf("\n");
 
 		Start = FALSE;
@@ -441,7 +441,7 @@ void GetOneFile(GSM_File * File, gboolean newtime, int i)
 				Print_Error(ERR_CANTOPENFILE);
 			printf(_("  Saving to %s\n"), buffer);
 			if (fwrite(File->Buffer, 1, File->Used, file) != File->Used) {
-				printf_err(_("Error while writing file!\n"));
+				printf_err("%s", _("Error while writing file!\n"));
 			}
 			free(File->Buffer);
 			File->Buffer = NULL;

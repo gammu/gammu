@@ -426,9 +426,9 @@ static void RunBatch(int argc, char *argv[])
 		ln[0] = 0;
 		if (fgets(ln, sizeof(ln) - 2, bf) == NULL) {
 			if (!feof(bf)) {
-				printf_err(_("Error reading batch! Terminating.\n"));
+				printf_err("%s", _("Error reading batch! Terminating.\n"));
 			} else {
-				printf_info(_("Batch processed, terminating.\n"));
+				printf_info("%s", _("Batch processed, terminating.\n"));
 			}
 			break;
 		}
@@ -1144,7 +1144,7 @@ int main(int argc, char *argv[])
 
 	gsm = GSM_AllocStateMachine();
 	if (gsm == NULL) {
-		printf_err(_("Failed to allocate memory, aborting!\n"));
+		printf_err("%s", _("Failed to allocate memory, aborting!\n"));
 		exit(1);
 	}
 

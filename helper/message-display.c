@@ -137,10 +137,10 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 
 		printf(LISTFORMAT, _("Status"));
 		switch (sms.State) {
-			case SMS_Sent	: printf(_("Sent"));	break;
-			case SMS_Read	: printf(_("Read"));	break;
-			case SMS_UnRead	: printf(_("UnRead"));	break;
-			case SMS_UnSent	: printf(_("UnSent"));	break;
+			case SMS_Sent	: printf("%s", _("Sent"));	break;
+			case SMS_Read	: printf("%s", _("Read"));	break;
+			case SMS_UnRead	: printf("%s", _("UnRead"));	break;
+			case SMS_UnSent	: printf("%s", _("UnSent"));	break;
 		}
 		printf("\n");
 
@@ -156,39 +156,39 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 		printf(LISTFORMAT, _("Details"));
 		if (sms.DeliveryStatus & 0x40) {
 			if (sms.DeliveryStatus & 0x20) {
-				printf(_("Temporary error, "));
+				printf("%s", _("Temporary error, "));
 			} else {
-	     			printf(_("Permanent error, "));
+	     			printf("%s", _("Permanent error, "));
 			}
 	    	} else if (sms.DeliveryStatus & 0x20) {
-			printf(_("Temporary error, "));
+			printf("%s", _("Temporary error, "));
 		}
 		switch (sms.DeliveryStatus) {
-			case 0x00: printf(_("SM received by the SME"));				break;
-			case 0x01: printf(_("SM forwarded by the SC to the SME but the SC is unable to confirm delivery"));break;
-			case 0x02: printf(_("SM replaced by the SC"));				break;
-			case 0x20: printf(_("Congestion"));					break;
-			case 0x21: printf(_("SME busy"));					break;
-			case 0x22: printf(_("No response from SME"));				break;
-			case 0x23: printf(_("Service rejected"));				break;
-			case 0x24: printf(_("Quality of service not available"));		break;
-			case 0x25: printf(_("Error in SME"));					break;
-		        case 0x40: printf(_("Remote procedure error"));				break;
-		        case 0x41: printf(_("Incompatibile destination"));			break;
-		        case 0x42: printf(_("Connection rejected by SME"));			break;
-		        case 0x43: printf(_("Not obtainable"));					break;
-		        case 0x44: printf(_("Quality of service not available"));		break;
-		        case 0x45: printf(_("No internetworking available"));			break;
-		        case 0x46: printf(_("SM Validity Period Expired"));			break;
-		        case 0x47: printf(_("SM deleted by originating SME"));			break;
-		        case 0x48: printf(_("SM Deleted by SC Administration"));			break;
-		        case 0x49: printf(_("SM does not exist"));				break;
-		        case 0x60: printf(_("Congestion"));					break;
-		        case 0x61: printf(_("SME busy"));					break;
-		        case 0x62: printf(_("No response from SME"));				break;
-		        case 0x63: printf(_("Service rejected"));				break;
-		        case 0x64: printf(_("Quality of service not available"));		break;
-		        case 0x65: printf(_("Error in SME"));					break;
+			case 0x00: printf("%s", _("SM received by the SME"));				break;
+			case 0x01: printf("%s", _("SM forwarded by the SC to the SME but the SC is unable to confirm delivery"));break;
+			case 0x02: printf("%s", _("SM replaced by the SC"));				break;
+			case 0x20: printf("%s", _("Congestion"));					break;
+			case 0x21: printf("%s", _("SME busy"));					break;
+			case 0x22: printf("%s", _("No response from SME"));				break;
+			case 0x23: printf("%s", _("Service rejected"));				break;
+			case 0x24: printf("%s", _("Quality of service not available"));		break;
+			case 0x25: printf("%s", _("Error in SME"));					break;
+		        case 0x40: printf("%s", _("Remote procedure error"));				break;
+		        case 0x41: printf("%s", _("Incompatibile destination"));			break;
+		        case 0x42: printf("%s", _("Connection rejected by SME"));			break;
+		        case 0x43: printf("%s", _("Not obtainable"));					break;
+		        case 0x44: printf("%s", _("Quality of service not available"));		break;
+		        case 0x45: printf("%s", _("No internetworking available"));			break;
+		        case 0x46: printf("%s", _("SM Validity Period Expired"));			break;
+		        case 0x47: printf("%s", _("SM deleted by originating SME"));			break;
+		        case 0x48: printf("%s", _("SM Deleted by SC Administration"));			break;
+		        case 0x49: printf("%s", _("SM does not exist"));				break;
+		        case 0x60: printf("%s", _("Congestion"));					break;
+		        case 0x61: printf("%s", _("SME busy"));					break;
+		        case 0x62: printf("%s", _("No response from SME"));				break;
+		        case 0x63: printf("%s", _("Service rejected"));				break;
+		        case 0x64: printf("%s", _("Quality of service not available"));		break;
+		        case 0x65: printf("%s", _("Error in SME"));					break;
 		        default  : printf(_("Reserved/Specific to SC: %x"),sms.DeliveryStatus);	break;
 		}
 		printf("\n");
@@ -199,7 +199,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 			printf(LISTFORMAT "%s\n", _("Saved"), OSDateTime(sms.DateTime,TRUE));
 		} else {
 			printf(LISTFORMAT "\"%s\"", _("SMSC number"), DecodeUnicodeConsole(sms.SMSC.Number));
-			if (sms.ReplyViaSameSMSC) printf(_(" (set for reply)"));
+			if (sms.ReplyViaSameSMSC) printf("%s", _(" (set for reply)"));
 			printf("\n");
 			printf(LISTFORMAT "%s\n", _("Sent"), OSDateTime(sms.DateTime,TRUE));
 		}
@@ -228,20 +228,20 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 		printf(LISTFORMAT, _("Coding"));
 		switch (sms.Coding) {
 			case SMS_Coding_Unicode_No_Compression 	:
-				printf(_("Unicode (no compression)"));
+				printf("%s", _("Unicode (no compression)"));
 				break;
 			case SMS_Coding_Unicode_Compression 	:
-				printf(_("Unicode (compression)"));
+				printf("%s", _("Unicode (compression)"));
 				break;
 			case SMS_Coding_Default_No_Compression 	:
-				printf(_("Default GSM alphabet (no compression)"));
+				printf("%s", _("Default GSM alphabet (no compression)"));
 				break;
 			case SMS_Coding_Default_Compression 	:
-				printf(_("Default GSM alphabet (compression)"));
+				printf("%s", _("Default GSM alphabet (compression)"));
 				break;
 			case SMS_Coding_8bit			:
 				/* l10n: 8-bit message coding */
-				printf(_("8-bit"));
+				printf("%s", _("8-bit"));
 				break;
 		}
 		printf("\n");
@@ -257,36 +257,36 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 		}
 		printf(LISTFORMAT, _("Status"));
 		switch (sms.State) {
-			case SMS_Sent	:	printf(_("Sent"));	break;
-			case SMS_Read	:	printf(_("Read"));	break;
-			case SMS_UnRead	:	printf(_("UnRead"));	break;
-			case SMS_UnSent	:	printf(_("UnSent"));	break;
+			case SMS_Sent	:	printf("%s", _("Sent"));	break;
+			case SMS_Read	:	printf("%s", _("Read"));	break;
+			case SMS_UnRead	:	printf("%s", _("UnRead"));	break;
+			case SMS_UnSent	:	printf("%s", _("UnSent"));	break;
 		}
 		printf("\n");
 		if (sms.UDH.Type != UDH_NoUDH) {
 			printf(LISTFORMAT, _("User Data Header"));
 			switch (sms.UDH.Type) {
-			case UDH_ConcatenatedMessages	   : printf(_("Concatenated (linked) message")); 	 break;
-			case UDH_ConcatenatedMessages16bit : printf(_("Concatenated (linked) message")); 	 break;
-			case UDH_DisableVoice		   : printf(_("Disables voice indicator"));	 	 break;
-			case UDH_EnableVoice		   : printf(_("Enables voice indicator"));	 	 break;
-			case UDH_DisableFax		   : printf(_("Disables fax indicator"));	 	 break;
-			case UDH_EnableFax		   : printf(_("Enables fax indicator"));	 		 break;
-			case UDH_DisableEmail		   : printf(_("Disables email indicator"));	 	 break;
-			case UDH_EnableEmail		   : printf(_("Enables email indicator"));	 	 break;
-			case UDH_VoidSMS		   : printf(_("Void SMS"));			 	 break;
-			case UDH_NokiaWAP		   : printf(_("Nokia WAP bookmark"));		 	 break;
-			case UDH_NokiaOperatorLogoLong	   : printf(_("Nokia operator logo"));	 	 	 break;
-			case UDH_NokiaWAPLong		   : printf(_("Nokia WAP bookmark or WAP/MMS settings")); break;
-			case UDH_NokiaRingtone		   : printf(_("Nokia ringtone"));		 	 break;
-			case UDH_NokiaRingtoneLong	   : printf(_("Nokia ringtone"));		 	 break;
-			case UDH_NokiaOperatorLogo	   : printf(_("Nokia GSM operator logo"));	 	 break;
-			case UDH_NokiaCallerLogo	   : printf(_("Nokia caller logo"));		 	 break;
-			case UDH_NokiaProfileLong	   : printf(_("Nokia profile"));		 		 break;
-			case UDH_NokiaCalendarLong	   : printf(_("Nokia calendar note"));	 		 break;
-			case UDH_NokiaPhonebookLong	   : printf(_("Nokia phonebook entry"));	 		 break;
-			case UDH_UserUDH		   : printf(_("User UDH"));			 	 break;
-			case UDH_MMSIndicatorLong	   : printf(_("MMS indicator"));			 	 break;
+			case UDH_ConcatenatedMessages	   : printf("%s", _("Concatenated (linked) message")); 	 break;
+			case UDH_ConcatenatedMessages16bit : printf("%s", _("Concatenated (linked) message")); 	 break;
+			case UDH_DisableVoice		   : printf("%s", _("Disables voice indicator"));	 	 break;
+			case UDH_EnableVoice		   : printf("%s", _("Enables voice indicator"));	 	 break;
+			case UDH_DisableFax		   : printf("%s", _("Disables fax indicator"));	 	 break;
+			case UDH_EnableFax		   : printf("%s", _("Enables fax indicator"));	 		 break;
+			case UDH_DisableEmail		   : printf("%s", _("Disables email indicator"));	 	 break;
+			case UDH_EnableEmail		   : printf("%s", _("Enables email indicator"));	 	 break;
+			case UDH_VoidSMS		   : printf("%s", _("Void SMS"));			 	 break;
+			case UDH_NokiaWAP		   : printf("%s", _("Nokia WAP bookmark"));		 	 break;
+			case UDH_NokiaOperatorLogoLong	   : printf("%s", _("Nokia operator logo"));	 	 	 break;
+			case UDH_NokiaWAPLong		   : printf("%s", _("Nokia WAP bookmark or WAP/MMS settings")); break;
+			case UDH_NokiaRingtone		   : printf("%s", _("Nokia ringtone"));		 	 break;
+			case UDH_NokiaRingtoneLong	   : printf("%s", _("Nokia ringtone"));		 	 break;
+			case UDH_NokiaOperatorLogo	   : printf("%s", _("Nokia GSM operator logo"));	 	 break;
+			case UDH_NokiaCallerLogo	   : printf("%s", _("Nokia caller logo"));		 	 break;
+			case UDH_NokiaProfileLong	   : printf("%s", _("Nokia profile"));		 		 break;
+			case UDH_NokiaCalendarLong	   : printf("%s", _("Nokia calendar note"));	 		 break;
+			case UDH_NokiaPhonebookLong	   : printf("%s", _("Nokia phonebook entry"));	 		 break;
+			case UDH_UserUDH		   : printf("%s", _("User UDH"));			 	 break;
+			case UDH_MMSIndicatorLong	   : printf("%s", _("MMS indicator"));			 	 break;
 			case UDH_NoUDH:								 		 break;
 			}
 			if (sms.UDH.Type != UDH_NoUDH) {
@@ -365,7 +365,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 	for (i=0;i<SMSInfo.EntriesNum;i++) {
 		switch (SMSInfo.Entries[i].ID) {
 		case SMS_SiemensFile:
-			printf(_("Siemens OTA file"));
+			printf("%s", _("Siemens OTA file"));
 			if (strstr(DecodeUnicodeString(SMSInfo.Entries[i].File->Name),".vcf")) {
 				printf("%s\n", _(" - VCARD"));
 				SMSInfo.Entries[i].File->Buffer = realloc(SMSInfo.Entries[i].File->Buffer,1+SMSInfo.Entries[i].File->Used);

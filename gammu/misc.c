@@ -179,7 +179,7 @@ void CheckFirmware(int argc UNUSED, char *argv[]UNUSED)
 		return;
 
 	/* Print information to user */
-	printf_info(_("Never version of firmware is available!\n"));
+	printf_info("%s", _("Never version of firmware is available!\n"));
 	printf_info(_("Latest version is %s and you run %s.\n"),
 			latest_version, current_version);
 
@@ -211,7 +211,7 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 
 	/* Split code to country and network */
 	if (sscanf(netinfo.NetworkCode, "%ld %ld", &mcc, &mnc) != 2) {
-		printf_err(_("Wrong network code from phone!\n"));
+		printf_err("%s", _("Wrong network code from phone!\n"));
 		return;
 	}
 
@@ -232,51 +232,51 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 		</rsp>
 	*/
 	if (strstr(OpenCell.Buffer, "stat=\"ok\"") == NULL) {
-		printf_err(_("Request for information from OpenCellID failed!\n"));
+		printf_err("%s", _("Request for information from OpenCellID failed!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
 	pos = strstr(OpenCell.Buffer, "lat=\"");
 	if (pos == NULL) {
-		printf_err(_("Failed to find latitude in OpenCellID reply!\n"));
+		printf_err("%s", _("Failed to find latitude in OpenCellID reply!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
 	if (sscanf(pos, "lat=\"%f\"", &latitude) == 0) {
-		printf_err(_("Failed to parse latitude from OpenCellID reply!\n"));
+		printf_err("%s", _("Failed to parse latitude from OpenCellID reply!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
 	pos = strstr(OpenCell.Buffer, "lon=\"");
 	if (pos == NULL) {
-		printf_err(_("Failed to find longitude in OpenCellID reply!\n"));
+		printf_err("%s", _("Failed to find longitude in OpenCellID reply!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
 	if (sscanf(pos, "lon=\"%f\"", &longitude) == 0) {
-		printf_err(_("Failed to parse longitude from OpenCellID reply!\n"));
+		printf_err("%s", _("Failed to parse longitude from OpenCellID reply!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
 	pos = strstr(OpenCell.Buffer, "range=\"");
 	if (pos == NULL) {
-		printf_err(_("Failed to find range in OpenCellID reply!\n"));
+		printf_err("%s", _("Failed to find range in OpenCellID reply!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
 	if (sscanf(pos, "range=\"%ld\"", &range) == 0) {
-		printf_err(_("Failed to parse range from OpenCellID reply!\n"));
+		printf_err("%s", _("Failed to parse range from OpenCellID reply!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
 	pos = strstr(OpenCell.Buffer, "nbSamples=\"");
 	if (pos == NULL) {
-		printf_err(_("Failed to find nbSamples in OpenCellID reply!\n"));
+		printf_err("%s", _("Failed to find nbSamples in OpenCellID reply!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
 	if (sscanf(pos, "nbSamples=\"%ld\"", &nbSamples) == 0) {
-		printf_err(_("Failed to parse nbSamples from OpenCellID reply!\n"));
+		printf_err("%s", _("Failed to parse nbSamples from OpenCellID reply!\n"));
 		free(OpenCell.Buffer);
 		return;
 	}
@@ -539,26 +539,26 @@ void Monitor(int argc, char *argv[])
                 		printf(LISTFORMAT, _("Charge state"));
                 		switch (BatteryCharge.ChargeState) {
                     			case GSM_BatteryPowered:
-						printf(_("powered from battery"));
+						printf("%s", _("powered from battery"));
 						break;
                     			case GSM_BatteryConnected:
-						printf(_("battery connected, but not powered from battery"));
+						printf("%s", _("battery connected, but not powered from battery"));
                         			break;
                     			case GSM_BatteryCharging:
-						printf(_("battery connected and is being charged"));
+						printf("%s", _("battery connected and is being charged"));
                         			break;
                     			case GSM_BatteryFull:
-						printf(_("battery connected and is fully charged"));
+						printf("%s", _("battery connected and is fully charged"));
                         			break;
                     			case GSM_BatteryNotConnected:
-                        			printf(_("battery not connected"));
+                        			printf("%s", _("battery not connected"));
                         			break;
                     			case GSM_PowerFault:
-                        			printf(_("detected power failure"));
+                        			printf("%s", _("detected power failure"));
                         			break;
 #ifndef CHECK_CASES
                     			default:
-                        			printf(_("unknown"));
+                        			printf("%s", _("unknown"));
                        				break;
 #endif
                 		}
@@ -568,19 +568,19 @@ void Monitor(int argc, char *argv[])
                 		printf(LISTFORMAT, _("Battery type"));
                 		switch (BatteryCharge.BatteryType) {
                     			case GSM_BatteryLiIon:
-						printf(_("Lithium Ion"));
+						printf("%s", _("Lithium Ion"));
 						break;
                     			case GSM_BatteryLiPol:
-						printf(_("Lithium Polymer"));
+						printf("%s", _("Lithium Polymer"));
 						break;
                     			case GSM_BatteryNiMH:
-						printf(_("NiMH"));
+						printf("%s", _("NiMH"));
 						break;
 					case GSM_BatteryUnknown:
 #ifndef CHECK_CASES
                     			default:
 #endif
-                        			printf(_("unknown"));
+                        			printf("%s", _("unknown"));
                        				break;
                 		}
                 		printf("\n");
@@ -666,10 +666,10 @@ void GetRingtone(int argc, char *argv[])
 	Print_Error(error);
 
 	switch (ringtone.Format) {
-		case RING_NOTETONE	: printf(_("Smart Messaging"));	break;
-		case RING_NOKIABINARY	: printf(_("Nokia binary"));	break;
-		case RING_MIDI		: printf(_("MIDI"));		break;
-		case RING_MMF		: printf(_("SMAF (MMF)"));	break;
+		case RING_NOTETONE	: printf("%s", _("Smart Messaging"));	break;
+		case RING_NOKIABINARY	: printf("%s", _("Nokia binary"));	break;
+		case RING_MIDI		: printf("%s", _("MIDI"));		break;
+		case RING_MMF		: printf("%s", _("SMAF (MMF)"));	break;
 	}
 	printf(_(" format, ringtone \"%s\"\n"),DecodeUnicodeConsole(ringtone.Name));
 
@@ -949,7 +949,7 @@ void GetGPRSPoint(int argc, char *argv[])
 		} else {
 			printf(_("%i. Access point %i"),point.Location,point.Location);
 		}
-		if (point.Active) printf(_(" (active)"));
+		if (point.Active) printf("%s", _(" (active)"));
 		printf("\n");
 		if (error != ERR_EMPTY) {
 			printf(LISTFORMAT "\"%s\"\n\n", _("Address"),DecodeUnicodeConsole(point.URL));
@@ -1473,14 +1473,14 @@ void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
 	switch (settings->Settings[j].Bearer) {
 	case WAPSETTINGS_BEARER_SMS:
 		printf(LISTFORMAT "%s", _("Bearer"), _("SMS"));
-		if (settings->ActiveBearer == WAPSETTINGS_BEARER_SMS) printf(_(" (active)"));
+		if (settings->ActiveBearer == WAPSETTINGS_BEARER_SMS) printf("%s", _(" (active)"));
 		printf("\n");
 		printf(LISTFORMAT "\"%s\"\n", _("Server number"),DecodeUnicodeConsole(settings->Settings[j].Server));
 		printf(LISTFORMAT "\"%s\"\n", _("Service number"),DecodeUnicodeConsole(settings->Settings[j].Service));
 		break;
 	case WAPSETTINGS_BEARER_DATA:
 		printf(LISTFORMAT "%s", _("Bearer"), _("Data (CSD)"));
-		if (settings->ActiveBearer == WAPSETTINGS_BEARER_DATA) printf(_(" (active)"));
+		if (settings->ActiveBearer == WAPSETTINGS_BEARER_DATA) printf("%s", _(" (active)"));
 		printf("\n");
 		printf(LISTFORMAT "\"%s\"\n", _("Dial-up number"),DecodeUnicodeConsole(settings->Settings[j].DialUp));
 		printf(LISTFORMAT "\"%s\"\n", _("IP address"),DecodeUnicodeConsole(settings->Settings[j].IPAddress));
@@ -1515,7 +1515,7 @@ void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
 		break;
 	case WAPSETTINGS_BEARER_USSD:
 		printf(LISTFORMAT "%s", _("Bearer"), _("USSD"));
-		if (settings->ActiveBearer == WAPSETTINGS_BEARER_USSD) printf(_(" (active)"));
+		if (settings->ActiveBearer == WAPSETTINGS_BEARER_USSD) printf("%s", _(" (active)"));
 		printf("\n");
 		printf(LISTFORMAT "\"%s\"\n", _("Service code"),DecodeUnicodeConsole(settings->Settings[j].Code));
 		if (settings->Settings[j].IsIP) {
@@ -1528,7 +1528,7 @@ void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
 		break;
 	case WAPSETTINGS_BEARER_GPRS:
 		printf(LISTFORMAT "%s", _("Bearer"), _("GPRS"));
-		if (settings->ActiveBearer == WAPSETTINGS_BEARER_GPRS) printf(_(" (active)"));
+		if (settings->ActiveBearer == WAPSETTINGS_BEARER_GPRS) printf("%s", _(" (active)"));
 		printf("\n");
 		if (settings->Settings[j].ManualLogin) {
 			printf(LISTFORMAT "%s\n", _("Login type"), _("Manual"));
@@ -1567,7 +1567,7 @@ void GetSyncMLSettings(int argc, char *argv[])
 		} else {
 			printf("%s", DecodeUnicodeConsole(settings.Name));
 		}
-		if (settings.Active) printf(_(" (active)"));
+		if (settings.Active) printf("%s", _(" (active)"));
 		printf("\n");
 		printf(LISTFORMAT "\"%s\"\n", _("User"),DecodeUnicodeConsole(settings.User));
 		printf(LISTFORMAT "\"%s\"\n", _("Password"),DecodeUnicodeConsole(settings.Password));
@@ -1616,7 +1616,7 @@ void GetChatSettings(int argc, char *argv[])
 		} else {
 			printf("%s", DecodeUnicodeConsole(settings.Name));
 		}
-		if (settings.Active) printf(_(" (active)"));
+		if (settings.Active) printf("%s", _(" (active)"));
 		printf("\n");
 		printf(LISTFORMAT "\"%s\"\n", _("Homepage"),DecodeUnicodeConsole(settings.HomePage));
 		printf(LISTFORMAT "\"%s\"\n", _("User"),DecodeUnicodeConsole(settings.User));
@@ -1691,10 +1691,10 @@ void CopyBitmap(int argc, char *argv[])
 	if (argc==3) {
 		for (i=0;i<Bitmap.Number;i++) {
 			switch (Bitmap.Bitmap[i].Type) {
-				case GSM_StartupLogo :	printf(_("Startup logo"));		break;
-				case GSM_OperatorLogo:	printf(_("Operator logo")); 	break;
-				case GSM_PictureImage:	printf(_("Picture")); 	break;
-				case GSM_CallerGroupLogo  :	printf(_("Caller group logo")); 	break;
+				case GSM_StartupLogo :	printf("%s", _("Startup logo"));		break;
+				case GSM_OperatorLogo:	printf("%s", _("Operator logo")); 	break;
+				case GSM_PictureImage:	printf("%s", _("Picture")); 	break;
+				case GSM_CallerGroupLogo  :	printf("%s", _("Caller group logo")); 	break;
 				default		     : 					break;
 			}
 			printf(_(", width %i, height %i\n"),
@@ -1970,10 +1970,10 @@ void GetProfile(int argc, char *argv[])
 		Print_Error(error);
 
 		printf("%i. \"%s\"",i,DecodeUnicodeConsole(Profile.Name));
-		if (Profile.Active)		printf(_(" (active)"));
-		if (Profile.DefaultName) 	printf(_(" (default name)"));
-		if (Profile.HeadSetProfile) 	printf(_(" (Head set profile)"));
-		if (Profile.CarKitProfile) 	printf(_(" (Car kit profile)"));
+		if (Profile.Active)		printf("%s", _(" (active)"));
+		if (Profile.DefaultName) 	printf("%s", _(" (default name)"));
+		if (Profile.HeadSetProfile) 	printf("%s", _(" (Head set profile)"));
+		if (Profile.CarKitProfile) 	printf("%s", _(" (Car kit profile)"));
 		printf("\n");
 		for (j=0;j<Profile.FeaturesNumber;j++) {
 			special = FALSE;
@@ -2259,7 +2259,7 @@ void CallDivert(int argc, char *argv[])
 	if (strcasecmp("get", argv[2]) == 0) {
 		error = GSM_GetCallDivert(gsm,&cd);
 	    	Print_Error(error);
-		printf(_("Query:"));
+		printf("%s", _("Query:"));
 		printf("\n");
 		printf("  " LISTFORMAT, _("Divert type"));
 	} else {
@@ -2272,38 +2272,38 @@ void CallDivert(int argc, char *argv[])
 
 		error = GSM_SetCallDivert(gsm,&cd);
 	    	Print_Error(error);
-		printf(_("Changed:"));
+		printf("%s", _("Changed:"));
 		printf("\n");
 		printf("  " LISTFORMAT, _("Divert type"));
 	}
 
       	switch (cd.Request.DivertType) {
-   		case GSM_DIVERT_Busy      : printf(_("when busy"));				break;
-	        case GSM_DIVERT_NoAnswer  : printf(_("when not answered"));			break;
-      	        case GSM_DIVERT_OutOfReach: printf(_("when phone off or no coverage"));	break;
-                case GSM_DIVERT_AllTypes  : printf(_("all types of diverts"));			break;
+   		case GSM_DIVERT_Busy      : printf("%s", _("when busy"));				break;
+	        case GSM_DIVERT_NoAnswer  : printf("%s", _("when not answered"));			break;
+      	        case GSM_DIVERT_OutOfReach: printf("%s", _("when phone off or no coverage"));	break;
+                case GSM_DIVERT_AllTypes  : printf("%s", _("all types of diverts"));			break;
                 default		          : printf(_("unknown %i"),cd.Request.DivertType);			break;
         }
 	printf("\n");
 	printf("  " LISTFORMAT, _("Call type"));
 	switch (cd.Request.CallType) {
-	 	case GSM_DIVERT_VoiceCalls: printf(_("voice"));				break;
-                case GSM_DIVERT_FaxCalls  : printf(_("fax"));				break;
-                case GSM_DIVERT_DataCalls : printf(_("data"));		 		break;
-		case GSM_DIVERT_AllCalls  : printf(_("data & fax & voice"));		break;
+	 	case GSM_DIVERT_VoiceCalls: printf("%s", _("voice"));				break;
+                case GSM_DIVERT_FaxCalls  : printf("%s", _("fax"));				break;
+                case GSM_DIVERT_DataCalls : printf("%s", _("data"));		 		break;
+		case GSM_DIVERT_AllCalls  : printf("%s", _("data & fax & voice"));		break;
                 default                   : printf(_("unknown %i"),cd.Request.CallType);   		break;
         }
 	printf("\n");
-	printf(_("Response:"));
+	printf("%s", _("Response:"));
 	printf("\n");
 
 	for (i=0;i<cd.Response.EntriesNum;i++) {
 		printf("\n");
 		printf("  " LISTFORMAT, _("Call type"));
         	switch (cd.Response.Entries[i].CallType) {
-                	case GSM_DIVERT_VoiceCalls: printf(_("voice"));		 	break;
-                	case GSM_DIVERT_FaxCalls  : printf(_("fax"));		 	break;
-                	case GSM_DIVERT_DataCalls : printf(_("data"));		 	break;
+                	case GSM_DIVERT_VoiceCalls: printf("%s", _("voice"));		 	break;
+                	case GSM_DIVERT_FaxCalls  : printf("%s", _("fax"));		 	break;
+                	case GSM_DIVERT_DataCalls : printf("%s", _("data"));		 	break;
                 	default                   : printf(_("unknown %i"),cd.Response.Entries[i].CallType);break;
               	}
 		printf("\n");

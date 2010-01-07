@@ -299,7 +299,7 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 			       repeat_count);
 		}
 		if ((repeat_startdate.Day == 0) && (repeat_stopdate.Day == 0)) {
-			printf(_("forever"));
+			printf("%s", _("forever"));
 		} else if (repeat_startdate.Day == 0) {
 			printf(_("till %s"), OSDate(repeat_stopdate));
 		} else if (repeat_stopdate.Day == 0) {
@@ -310,7 +310,7 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 		}
 		if (repeat_frequency != -1) {
 			if (repeat_frequency == 1) {
-				printf(_(" on each "));
+				printf("%s", _(" on each "));
 			} else {
 				printf(_(" on each %d. "), repeat_frequency);
 			}
@@ -320,13 +320,13 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 					printf(_(" in %d. week of "),
 					       repeat_weekofmonth);
 				} else {
-					printf(_(" in "));
+					printf("%s", _(" in "));
 				}
 				if (repeat_month > 0) {
 					printf("%s",
 					       GetMonthName(repeat_month));
 				} else {
-					printf(_("each month"));
+					printf("%s", _("each month"));
 				}
 			} else if (repeat_day > 0) {
 				printf(_("%d. day of "), repeat_day);
@@ -334,12 +334,12 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 					printf("%s",
 					       GetMonthName(repeat_month));
 				} else {
-					printf(_("each month"));
+					printf("%s", _("each month"));
 				}
 			} else if (repeat_dayofyear > 0) {
 				printf(_("%d. day of year"), repeat_dayofyear);
 			} else {
-				printf(_("day"));
+				printf("%s", _("day"));
 			}
 		}
 		printf("\n");
@@ -391,7 +391,7 @@ void GetDateTime(int argc UNUSED, char *argv[]UNUSED)
 			break;
 		default:
 			Print_Error(error);
-			printf(_("Time format is "));
+			printf("%s", _("Time format is "));
 			if (locale.AMPMTime) {
 				/* l10n: AM/PM time */
 				printf("%s\n", _("12 hours"));
@@ -399,31 +399,31 @@ void GetDateTime(int argc UNUSED, char *argv[]UNUSED)
 				/* l10n: 24 hours time */
 				printf("%s\n", _("24 hours"));
 			}
-			printf(_("Date format is "));
+			printf("%s", _("Date format is "));
 			switch (locale.DateFormat) {
 				case GSM_Date_DDMMYYYY:
-					printf(_("DD MM YYYY"));
+					printf("%s", _("DD MM YYYY"));
 					break;
 				case GSM_Date_MMDDYYYY:
-					printf(_("MM DD YYYY"));
+					printf("%s", _("MM DD YYYY"));
 					break;
 				case GSM_Date_YYYYMMDD:
-					printf(_("YYYY MM DD"));
+					printf("%s", _("YYYY MM DD"));
 					break;
 				case GSM_Date_DDMMMYY:
-					printf(_("DD MMM YY"));
+					printf("%s", _("DD MMM YY"));
 					break;
 				case GSM_Date_MMDDYY:
-					printf(_("MM DD YY"));
+					printf("%s", _("MM DD YY"));
 					break;
 				case GSM_Date_DDMMYY:
-					printf(_("DD MM YY"));
+					printf("%s", _("DD MM YY"));
 					break;
 				case GSM_Date_YYMMDD:
-					printf(_("YY MM DD"));
+					printf("%s", _("YY MM DD"));
 					break;
 				case GSM_Date_OFF:
-					printf(_("OFF"));
+					printf("%s", _("OFF"));
 					break;
 				default:
 					break;
@@ -640,7 +640,7 @@ void GetCalendarSettings(int argc UNUSED, char *argv[]UNUSED)
 	Print_Error(error);
 
 	if (settings.AutoDelete == 0) {
-		printf(_("Auto deleting disabled"));
+		printf("%s", _("Auto deleting disabled"));
 	} else {
 		printf(_("Auto deleting notes after %i day(s)"),
 		       settings.AutoDelete);

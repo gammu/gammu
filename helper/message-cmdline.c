@@ -1092,7 +1092,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			}
 			memset(ReplaceBuffer,0,sizeof(ReplaceBuffer));
 			if (fread(ReplaceBuffer,1,sizeof(ReplaceBuffer),ReplaceFileHadle) != sizeof(ReplaceBuffer)) {
-				printf_err(_("Error while writing file!\n"));
+				printf_err("%s", _("Error while writing file!\n"));
 			}
 			fclose(ReplaceFileHadle);
 			ReadUnicodeFile(ReplaceBuffer2,ReplaceBuffer);

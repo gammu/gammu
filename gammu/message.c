@@ -203,10 +203,10 @@ void GetSMSC(int argc, char *argv[])
 
 		printf(LISTFORMAT, _("Format"));
 		switch (smsc.Format) {
-			case SMS_FORMAT_Text	: printf(_("Text"));	break;
-			case SMS_FORMAT_Fax	: printf(_("Fax"));	break;
-			case SMS_FORMAT_Email	: printf(_("Email"));	break;
-			case SMS_FORMAT_Pager	: printf(_("Pager"));	break;
+			case SMS_FORMAT_Text	: printf("%s", _("Text"));	break;
+			case SMS_FORMAT_Fax	: printf("%s", _("Fax"));	break;
+			case SMS_FORMAT_Email	: printf("%s", _("Email"));	break;
+			case SMS_FORMAT_Pager	: printf("%s", _("Pager"));	break;
 		}
 		printf("\n");
 
@@ -229,7 +229,7 @@ void GetSMSC(int argc, char *argv[])
 				PRINTWEEKS(1);
 				break;
 			case SMS_VALID_Max_Time	:
-				printf(_("Maximum time"));
+				printf("%s", _("Maximum time"));
 				break;
 			default:
 				/* Typecasting is here needed to silent GCC warning.
@@ -497,13 +497,13 @@ void GetSMSFolders(int argc UNUSED, char *argv[] UNUSED)
 		printf("%i. \"%30s\"",i+1,DecodeUnicodeConsole(folders.Folder[i].Name));
 
 		switch(folders.Folder[i].Memory) {
-			case MEM_SM: printf(_(", SIM memory")); 		break;
-			case MEM_ME: printf(_(", phone memory")); 	break;
-			case MEM_MT: printf(_(", phone or SIM memory")); break;
+			case MEM_SM: printf("%s", _(", SIM memory")); 		break;
+			case MEM_ME: printf("%s", _(", phone memory")); 	break;
+			case MEM_MT: printf("%s", _(", phone or SIM memory")); break;
 			default    : break;
 		}
-		if (folders.Folder[i].InboxFolder) printf(_(", Inbox folder"));
-		if (folders.Folder[i].OutboxFolder) printf(_(", Outbox folder"));
+		if (folders.Folder[i].InboxFolder) printf("%s", _(", Inbox folder"));
+		if (folders.Folder[i].OutboxFolder) printf("%s", _(", Outbox folder"));
 		printf("\n");
 	}
 	fflush(stdout);
@@ -519,7 +519,7 @@ void SendSMSStatus (GSM_StateMachine *sm, int status, int MessageReference, void
 	smprintf(gsm, "Sent SMS on device: \"%s\"\n", GSM_GetConfig(sm, -1)->Device);
 
 	if (status==0) {
-		printf(_("..OK"));
+		printf("%s", _("..OK"));
 		SMSStatus = ERR_NONE;
 	} else {
 		printf(_("..error %i"),status);
@@ -598,7 +598,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 					SMSStatus = ERR_TIMEOUT;
 					error = GSM_SendSavedSMS(gsm, 0, sms.SMS[i].Location);
 					Print_Error(error);
-					printf(_("....waiting for network answer"));
+					printf("%s", _("....waiting for network answer"));
 					fflush(stdout);
 
 					while (!gshutdown) {
@@ -624,7 +624,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 				SMSStatus = ERR_TIMEOUT;
 				error=GSM_SendSMS(gsm, &sms.SMS[i]);
 				Print_Error(error);
-				printf(_("....waiting for network answer"));
+				printf("%s", _("....waiting for network answer"));
 				fflush(stdout);
 
 				while (!gshutdown) {
@@ -638,7 +638,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			}
 			break;
 		default:
-			printf_err(_("Something went wrong, uknown message operation!\n"));
+			printf_err("%s", _("Something went wrong, uknown message operation!\n"));
 	}
 
 	GSM_Terminate();

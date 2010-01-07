@@ -365,14 +365,14 @@ static GSM_Error DCT4_ReplyTestsStatus(GSM_Protocol_Message msg, GSM_StateMachin
 			if (DCT4Tests.Tests[j].ID == msg.Buffer[pos+2]) {
 				printf("\"%40s\" : ",DCT4Tests.Tests[j].Name);
 				switch(msg.Buffer[pos+3]) {
-					case 0x00: printf(_("Passed")); 		break;
-					case 0x01: printf(_("Fail"));   		break;
-					case 0x03: printf(_("Not executed")); 	break;
-					case 0x06: printf(_("No signal"));		break;
-					case 0x0D: printf(_("Timeout"));		break;
+					case 0x00: printf("%s", _("Passed")); 		break;
+					case 0x01: printf("%s", _("Fail"));   		break;
+					case 0x03: printf("%s", _("Not executed")); 	break;
+					case 0x06: printf("%s", _("No signal"));		break;
+					case 0x0D: printf("%s", _("Timeout"));		break;
 					default  : printf(_("Unknown (%x)"),msg.Buffer[pos+3]);
 				}
-				if (DCT4Tests.Tests[j].Startup) printf(_(" (startup)"));
+				if (DCT4Tests.Tests[j].Startup) printf("%s", _(" (startup)"));
 				printf("\n");
 				break;
 			}
@@ -1361,39 +1361,39 @@ static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMac
 	for (i=0;i<msg.Buffer[5]-1;i++) {
 		printf(_("  entry ID %02X"),msg.Buffer[pos+4]);
 		switch (msg.Buffer[pos+4]) {
-		case N7110_PBK_SIM_SPEEDDIAL	: printf(_(" (Speed dial on SIM)")); 			break;
-		case N7110_PBK_NAME	    	: printf(_(" (Text: name (always the only one))"));		break;
-		case N7110_PBK_EMAIL	    	: printf(_(" (Text: email address)"));			break;
-		case N7110_PBK_POSTAL	    	: printf(_(" (Text: postal address)"));			break;
-		case N7110_PBK_NOTE	    	: printf(_(" (Text: note)"));				break;
-		case N7110_PBK_NUMBER 	    	: printf(_(" (Phone number)"));				break;
-		case N7110_PBK_RINGTONE_ID  	: printf(_(" (Ringtone ID)"));				break;
-		case N7110_PBK_DATETIME    	: printf(_(" (Call register: date and time)"));		break;
-		case N7110_PBK_UNKNOWN1	    	: printf(_(" (Call register: with missed calls)"));	break;
-		case N7110_PBK_SPEEDDIAL    	: printf(_(" (Speed dial)"));				break;
-		case N7110_PBK_GROUPLOGO    	: printf(_(" (Caller group: logo)"));			break;
-		case N7110_PBK_LOGOON	    	: printf(_(" (Caller group: is logo on ?)"));		break;
-		case N7110_PBK_GROUP	    	: printf(_(" (Caller group number in pbk entry)"));	break;
+		case N7110_PBK_SIM_SPEEDDIAL	: printf("%s", _(" (Speed dial on SIM)")); 			break;
+		case N7110_PBK_NAME	    	: printf("%s", _(" (Text: name (always the only one))"));		break;
+		case N7110_PBK_EMAIL	    	: printf("%s", _(" (Text: email address)"));			break;
+		case N7110_PBK_POSTAL	    	: printf("%s", _(" (Text: postal address)"));			break;
+		case N7110_PBK_NOTE	    	: printf("%s", _(" (Text: note)"));				break;
+		case N7110_PBK_NUMBER 	    	: printf("%s", _(" (Phone number)"));				break;
+		case N7110_PBK_RINGTONE_ID  	: printf("%s", _(" (Ringtone ID)"));				break;
+		case N7110_PBK_DATETIME    	: printf("%s", _(" (Call register: date and time)"));		break;
+		case N7110_PBK_UNKNOWN1	    	: printf("%s", _(" (Call register: with missed calls)"));	break;
+		case N7110_PBK_SPEEDDIAL    	: printf("%s", _(" (Speed dial)"));				break;
+		case N7110_PBK_GROUPLOGO    	: printf("%s", _(" (Caller group: logo)"));			break;
+		case N7110_PBK_LOGOON	    	: printf("%s", _(" (Caller group: is logo on ?)"));		break;
+		case N7110_PBK_GROUP	    	: printf("%s", _(" (Caller group number in pbk entry)"));	break;
 
 		/* DCT4 only */
-		case N6510_PBK_URL		: printf(_(" (Text: URL address)"));			break;
-		case N6510_PBK_SMSLIST_ID	: printf(_(" (SMS list assignment)"));			break;
-		case N6510_PBK_VOICETAG_ID	: printf(_(" (Voice tag assignment)"));			break;
-		case N6510_PBK_PICTURE_ID	: printf(_(" (Picture ID assignment)"));			break;
-		case N6510_PBK_RINGTONEFILE_ID  : printf(_(" (Ringtone ID from filesystem/internal)"));	break;
-		case N6510_PBK_USER_ID          : printf(_(" (Text: user ID)"));				break;
-		case N6510_PBK_UNKNOWN2	        : printf(_(" (conversation list ID)"));			break;
-		case N6510_PBK_UNKNOWN3	 	: printf(_(" (Instant Messaging service list ID ?)"));	break;
-		case N6510_PBK_UNKNOWN4	 	: printf(_(" (presence list ID ?)"));			break;
-		case N6510_PBK_PUSHTOTALK_ID	: printf(_(" (SIP Address (Push to Talk address))"));	break;
-		case N6510_PBK_GROUP2_ID	: printf(_(" (Group ID (6230i or later))"));		break;
+		case N6510_PBK_URL		: printf("%s", _(" (Text: URL address)"));			break;
+		case N6510_PBK_SMSLIST_ID	: printf("%s", _(" (SMS list assignment)"));			break;
+		case N6510_PBK_VOICETAG_ID	: printf("%s", _(" (Voice tag assignment)"));			break;
+		case N6510_PBK_PICTURE_ID	: printf("%s", _(" (Picture ID assignment)"));			break;
+		case N6510_PBK_RINGTONEFILE_ID  : printf("%s", _(" (Ringtone ID from filesystem/internal)"));	break;
+		case N6510_PBK_USER_ID          : printf("%s", _(" (Text: user ID)"));				break;
+		case N6510_PBK_UNKNOWN2	        : printf("%s", _(" (conversation list ID)"));			break;
+		case N6510_PBK_UNKNOWN3	 	: printf("%s", _(" (Instant Messaging service list ID ?)"));	break;
+		case N6510_PBK_UNKNOWN4	 	: printf("%s", _(" (presence list ID ?)"));			break;
+		case N6510_PBK_PUSHTOTALK_ID	: printf("%s", _(" (SIP Address (Push to Talk address))"));	break;
+		case N6510_PBK_GROUP2_ID	: printf("%s", _(" (Group ID (6230i or later))"));		break;
 		}
-		printf(_(", type "));
+		printf("%s", _(", type "));
 		switch (msg.Buffer[pos+5]) {
-		case 0x05: printf(_("string")); 	break;
-		case 0x02: printf(_("byte")); 	break;
-		case 0x03: printf(_("2 bytes")); 	break;
-		case 0x06: printf(_("4 bytes")); 	break;
+		case 0x05: printf("%s", _("string")); 	break;
+		case 0x02: printf("%s", _("byte")); 	break;
+		case 0x03: printf("%s", _("2 bytes")); 	break;
+		case 0x06: printf("%s", _("4 bytes")); 	break;
 		default  : printf("%02X",msg.Buffer[pos+5]);
 		}
 		printf("\n");

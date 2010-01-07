@@ -27,7 +27,7 @@ void GetMMSFolders(int argc UNUSED, char *argv[] UNUSED)
 
 	for (i=0;i<folders.Number;i++) {
 		printf("%i. \"%s\"",i+1,DecodeUnicodeConsole(folders.Folder[i].Name));
-		if (folders.Folder[i].InboxFolder) printf(_(", Inbox folder"));
+		if (folders.Folder[i].InboxFolder) printf("%s", _(", Inbox folder"));
 		printf("\n");
 	}
 
@@ -70,7 +70,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 	if (UnicodeLength(info.Source) != 0) {
 		printf(LISTFORMAT, _("Sender"));
 		switch (info.SourceType) {
-			case MMSADDRESS_PHONE: printf(_("phone ")); break;
+			case MMSADDRESS_PHONE: printf("%s", _("phone ")); break;
 			default: 				 break;
 		}
 		printf("%s\n",DecodeUnicodeString(info.Source));
@@ -78,7 +78,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 	if (UnicodeLength(info.Destination) != 0) {
 		printf(LISTFORMAT, _("Recipient"));
 		switch (info.DestinationType) {
-			case MMSADDRESS_PHONE: printf(_("phone ")); break;
+			case MMSADDRESS_PHONE: printf("%s", _("phone ")); break;
 			default: 				 break;
 		}
 		printf("%s\n",DecodeUnicodeString(info.Destination));
@@ -86,7 +86,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 	if (UnicodeLength(info.CC) != 0) {
 		printf(LISTFORMAT, _("CC"));
 		switch (info.CCType) {
-			case MMSADDRESS_PHONE: printf(_("phone ")); break;
+			case MMSADDRESS_PHONE: printf("%s", _("phone ")); break;
 			default: 				 break;
 		}
 		printf("%s\n",DecodeUnicodeString(info.CC));

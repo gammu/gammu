@@ -121,7 +121,7 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 	      				case Note_H  :			printf("7");break;
 	      				default      :			printf("0");break;
 				}
-				if (Note->DurationSpec == DottedNote) printf(_("(longer)"));
+				if (Note->DurationSpec == DottedNote) printf("%s", _("(longer)"));
 	    			switch (Note->Note) {
       					case Note_Cis: case Note_Dis:
       					case Note_Fis: case Note_Gis:
