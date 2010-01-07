@@ -521,7 +521,7 @@ msgstr "Volať"
 
 #: gammu/calendar.c:44 gammu/calendar.c:702
 msgid "Meeting"
-msgstr ""
+msgstr "Stretnutie"
 
 #: gammu/calendar.c:47 gammu/calendar.c:705
 msgid "Birthday (Anniversary)"
