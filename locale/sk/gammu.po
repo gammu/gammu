@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 14:19+0100\n"
-"PO-Revision-Date: 2010-01-07 20:47+0200\n"
+"PO-Revision-Date: 2010-01-07 20:48+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -843,7 +843,7 @@ msgstr ",odďeľovač dátumu je %c\n"
 
 #: gammu/calendar.c:448
 msgid "Setting time in phone to the same time as is set in computer."
-msgstr ""
+msgstr "Nastavujem čas v telefóne podľa času v počítači."
 
 #: gammu/calendar.c:494
 msgid "Updating specified parts of date and time in phone."
