@@ -839,7 +839,7 @@ msgstr "VYPNUTÉ"
 #: gammu/calendar.c:431
 #, c-format
 msgid ", date separator is %c\n"
-msgstr ""
+msgstr ",odďeľovač dátumu je %c\n"
 
 #: gammu/calendar.c:448
 msgid "Setting time in phone to the same time as is set in computer."
