@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 14:19+0100\n"
-"PO-Revision-Date: 2010-01-07 20:08+0200\n"
+"PO-Revision-Date: 2010-01-07 20:09+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -500,7 +500,7 @@ msgstr "Chcete obnoviť binárne SMS?"
 #: gammu/backupsms.c:179
 #, c-format
 msgid "Restore %03i sms to folder \"%s\"%s?"
-msgstr ""
+msgstr "Obnoviť %03i sms do zložky \"%s\"%s?"
 
 #: gammu/backupsms.c:183
 #, c-format
