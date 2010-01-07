@@ -906,7 +906,7 @@ msgstr "Priorita"
 
 #: gammu/calendar.c:787
 msgid "Low"
-msgstr ""
+msgstr "Nízka"
 
 #: gammu/calendar.c:790
 msgid "Medium"
