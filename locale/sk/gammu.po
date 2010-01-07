@@ -765,7 +765,7 @@ msgstr "deň"
 
 #: gammu/calendar.c:358
 msgid "Age"
-msgstr ""
+msgstr "Vek"
 
 #: gammu/calendar.c:377
 msgid "Date and time not set in phone"
