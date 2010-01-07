@@ -721,7 +721,7 @@ msgstr "od %s"
 #: gammu/calendar.c:308
 #, c-format
 msgid "since %s till %s"
-msgstr ""
+msgstr "od %s do %s"
 
 #: gammu/calendar.c:313
 #, c-format
