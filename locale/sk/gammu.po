@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 14:19+0100\n"
-"PO-Revision-Date: 2010-01-07 20:15+0200\n"
+"PO-Revision-Date: 2010-01-07 20:16+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -541,7 +541,7 @@ msgstr "Dovolenka"
 
 #: gammu/calendar.c:59 gammu/calendar.c:717 gammu/calendar.c:822
 msgid "Alarm"
-msgstr "Upozornenie"
+msgstr "Budík"
 
 #: gammu/calendar.c:62 gammu/calendar.c:720
 msgid "Daily alarm"
