@@ -711,7 +711,7 @@ msgstr "navždy"
 #: gammu/calendar.c:304
 #, c-format
 msgid "till %s"
-msgstr ""
+msgstr "do %s"
 
 #: gammu/calendar.c:306
 #, c-format
