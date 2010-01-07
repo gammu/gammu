@@ -676,7 +676,7 @@ msgstr "Umiestnenie"
 
 #: gammu/calendar.c:227 gammu/calendar.c:842 helper/memory-display.c:61
 msgid "Private"
-msgstr ""
+msgstr "Sukromný"
 
 #: gammu/calendar.c:229
 msgid "Yes"
