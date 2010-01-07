@@ -581,7 +581,7 @@ msgstr "Tréning/Golf"
 
 #: gammu/calendar.c:89 gammu/calendar.c:747
 msgid "Training/Gym"
-msgstr ""
+msgstr "Tréning/Telocvičňa"
 
 #: gammu/calendar.c:92 gammu/calendar.c:750
 msgid "Training/Horse Races"
