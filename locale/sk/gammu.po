@@ -968,7 +968,7 @@ msgstr "Čaká na PUK2."
 
 #: gammu/common.c:55
 msgid "Waiting for phone code."
-msgstr ""
+msgstr "Čaká na kód telefónu."
 
 #: gammu/common.c:58
 msgid "Waiting for network code."
