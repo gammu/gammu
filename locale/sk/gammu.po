@@ -533,7 +533,7 @@ msgstr "Poznámka (Rôzne)"
 
 #: gammu/calendar.c:53 gammu/calendar.c:711
 msgid "Travel"
-msgstr ""
+msgstr "Cesta"
 
 #: gammu/calendar.c:56 gammu/calendar.c:714
 msgid "Vacation"
