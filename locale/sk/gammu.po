@@ -741,7 +741,7 @@ msgstr "v %d. týždni"
 #: gammu/calendar.c:323
 #, c-format
 msgid " in "
-msgstr ""
+msgstr "v"
 
 #: gammu/calendar.c:329 gammu/calendar.c:337
 #, c-format
