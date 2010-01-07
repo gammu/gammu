@@ -939,7 +939,7 @@ msgstr "Kategória"
 
 #: gammu/calendar.c:881
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #: gammu/calendar.c:966 gammu/memory.c:320 gammu/memory.c:397
 #, c-format
