@@ -914,7 +914,7 @@ msgstr "Stredné"
 
 #: gammu/calendar.c:793
 msgid "High"
-msgstr ""
+msgstr "Vysoká"
 
 #: gammu/calendar.c:796
 msgid "None"
