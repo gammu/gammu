@@ -751,7 +751,7 @@ msgstr "každom mesiaci"
 #: gammu/calendar.c:332
 #, c-format
 msgid "%d. day of "
-msgstr ""
+msgstr "%d. deň v"
 
 #: gammu/calendar.c:340
 #, c-format
