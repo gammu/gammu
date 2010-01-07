@@ -491,7 +491,7 @@ msgstr "Odstraňujem:"
 
 #: gammu/backupsms.c:140
 msgid "Restore message?"
-msgstr ""
+msgstr "Obnoviť správu?"
 
 #: gammu/backupsms.c:167
 msgid "Do you want to restore binary SMS?"
