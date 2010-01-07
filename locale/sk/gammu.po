@@ -746,7 +746,7 @@ msgstr "v"
 #: gammu/calendar.c:329 gammu/calendar.c:337
 #, c-format
 msgid "each month"
-msgstr ""
+msgstr "každom mesiaci"
 
 #: gammu/calendar.c:332
 #, c-format
