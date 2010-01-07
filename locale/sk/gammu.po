@@ -665,7 +665,7 @@ msgstr "Popis"
 
 #: gammu/calendar.c:212 gammu/calendar.c:901 helper/memory-display.c:136
 msgid "LUID"
-msgstr ""
+msgstr "LUID"
 
 #: gammu/calendar.c:217 gammu/calendar.c:580 gammu/calendar.c:624
 #: gammu/calendar.c:668 gammu/calendar.c:692 gammu/calendar.c:896
