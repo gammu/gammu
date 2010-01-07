@@ -573,7 +573,7 @@ msgstr "Tréning/Extrémne Športy"
 
 #: gammu/calendar.c:83 gammu/calendar.c:741
 msgid "Training/Football"
-msgstr ""
+msgstr "Tréning/Futbal"
 
 #: gammu/calendar.c:86 gammu/calendar.c:744
 msgid "Training/Golf"
