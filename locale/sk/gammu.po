@@ -918,7 +918,7 @@ msgstr "Vysoká"
 
 #: gammu/calendar.c:796
 msgid "None"
-msgstr "Žiadne"
+msgstr "Žiadna"
 
 #: gammu/calendar.c:807
 msgid "Due time"
