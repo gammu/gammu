@@ -646,7 +646,7 @@ msgstr "Zvukové upozornenie"
 #: gammu/calendar.c:163 gammu/calendar.c:184
 #, c-format
 msgid "forever on each %i. day of %s"
-msgstr ""
+msgstr "navždy každý %i deň. deň v %s"
 
 #: gammu/calendar.c:182 gammu/calendar.c:194 gammu/calendar.c:827
 msgid "Silent alarm"
