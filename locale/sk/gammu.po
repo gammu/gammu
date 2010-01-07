@@ -637,7 +637,7 @@ msgstr "Koniec"
 
 #: gammu/calendar.c:155 gammu/calendar.c:832 helper/memory-display.c:40
 msgid "Last modified"
-msgstr ""
+msgstr "Posledná zmena"
 
 #: gammu/calendar.c:161 gammu/calendar.c:173
 msgid "Tone alarm"
