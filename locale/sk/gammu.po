@@ -633,7 +633,7 @@ msgstr "Začiatok"
 
 #: gammu/calendar.c:148
 msgid "Stop"
-msgstr ""
+msgstr "Koniec"
 
 #: gammu/calendar.c:155 gammu/calendar.c:832 helper/memory-display.c:40
 msgid "Last modified"
