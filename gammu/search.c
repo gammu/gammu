@@ -179,14 +179,14 @@ void MakeSearchThread(int i)
 	if (pthread_create
 	    (&Threads[i], NULL, SearchPhoneThread,
 	     &SearchDevices[i]) != 0) {
-		fprintf(stderr, _("Error creating thread\n"));
+		fprintf(stderr, "%s", _("Error creating thread\n"));
 	}
 #else
 	Threads[i] = CreateThread((LPSECURITY_ATTRIBUTES) NULL, 0,
 			 (LPTHREAD_START_ROUTINE) SearchPhoneThread,
 			 &SearchDevices[i], 0, NULL);
 	if (Threads[i] 	== NULL) {
-		fprintf(stderr, _("Error creating thread\n"));
+		fprintf(stderr, "%s", _("Error creating thread\n"));
 	}
 #endif
 }

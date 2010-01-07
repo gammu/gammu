@@ -602,7 +602,7 @@ void NokiaAddFile(int argc, char *argv[])
 		}
 	}
 	if (!Found) {
-		fprintf(stderr, _("Searching for phone folder: "));
+		fprintf(stderr, "%s", _("Searching for phone folder: "));
 		while (1) {
 			error = GSM_GetNextFileFolder(gsm,&Files,Start);
 			if (error == ERR_EMPTY) break;
