@@ -525,7 +525,7 @@ msgstr "Stretnutie"
 
 #: gammu/calendar.c:47 gammu/calendar.c:705
 msgid "Birthday (Anniversary)"
-msgstr ""
+msgstr "Narodeniny (Výročie)"
 
 #: gammu/calendar.c:50 gammu/calendar.c:708
 msgid "Memo (Miscellaneous)"
