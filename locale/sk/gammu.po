@@ -557,7 +557,7 @@ msgstr "Tréning/Loptové hry"
 
 #: gammu/calendar.c:71 gammu/calendar.c:729
 msgid "Training/Cycling"
-msgstr ""
+msgstr "Tréning/Cyklistika"
 
 #: gammu/calendar.c:74 gammu/calendar.c:732
 msgid "Training/Budo"
