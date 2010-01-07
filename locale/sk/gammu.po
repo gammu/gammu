@@ -875,7 +875,7 @@ msgstr "Čas: %02d:%02d\n"
 #: gammu/calendar.c:643
 #, c-format
 msgid "Auto deleting disabled"
-msgstr ""
+msgstr "Automatické vymazávanie vypnuté"
 
 #: gammu/calendar.c:645
 #, c-format
