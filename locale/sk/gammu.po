@@ -545,7 +545,7 @@ msgstr "Budík"
 
 #: gammu/calendar.c:62 gammu/calendar.c:720
 msgid "Daily alarm"
-msgstr ""
+msgstr "Denný budík"
 
 #: gammu/calendar.c:65 gammu/calendar.c:723
 msgid "Training/Athletism"
