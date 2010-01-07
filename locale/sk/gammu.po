@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 14:19+0100\n"
-"PO-Revision-Date: 2010-01-07 20:34+0200\n"
+"PO-Revision-Date: 2010-01-07 20:35+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -641,7 +641,7 @@ msgstr "Posledná zmena"
 
 #: gammu/calendar.c:161 gammu/calendar.c:173
 msgid "Tone alarm"
-msgstr ""
+msgstr "Zvukové upozornenie"
 
 #: gammu/calendar.c:163 gammu/calendar.c:184
 #, c-format
