@@ -691,21 +691,17 @@ StateMachine_ReadDevice(StateMachineObject *self, PyObject *args, PyObject *kwds
 {
     static char         *kwlist[] = {"Wait", NULL};
     PyObject            *o = Py_None;
-    gboolean                waiting;
+    gboolean                waiting = FALSE;
     long int            result;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|O", kwlist, &o))
         return NULL;
 
-    if (o == Py_None) {
-        waiting = FALSE;
-    } else if (o == Py_False) {
-        waiting = FALSE;
-    } else if (o == Py_True) {
-        waiting = TRUE;
-    } else {
-        PyErr_SetString(PyExc_TypeError, "use None or gboolean as Wait!");
-        return NULL;
+    if (o != PyNone) {
+        waiting = BoolFromPython(o, "Wait");
+        if (waiting == BOOL_INVALID) {
+            return NULL;
+        }
     }
 
     BEGIN_PHONE_COMM
@@ -2874,22 +2870,25 @@ StateMachine_DialVoice(StateMachineObject *self, PyObject *args, PyObject *kwds)
     static char         *kwlist[] = {"Number", "ShowNumber", NULL};
     char                *s;
     PyObject            *o = Py_None;
-    GSM_CallShowNumber  ShowNumber;
+    GSM_CallShowNumber  ShowNumber = GSM_CALL_DefaultNumberPresence;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "s|O", kwlist,
                 &s, &o))
         return NULL;
 
-    if (o == Py_None) {
-        ShowNumber = GSM_CALL_DefaultNumberPresence;
-    } else if (o == Py_False) {
-        ShowNumber = GSM_CALL_HideNumber;
-    } else if (o == Py_True) {
-        ShowNumber = GSM_CALL_ShowNumber;
-    } else {
-        PyErr_SetString(PyExc_TypeError, "use None or gboolean as ShowNumber!");
-        return NULL;
+    if (o != PyNone) {
+        switch (BoolFromPython(o, "ShowNumber")) {
+            case BOOL_INVALID:
+                return NULL;
+            case TRUE:
+                ShowNumber = GSM_CALL_ShowNumber;
+                break;
+            case FALSE:
+                ShowNumber = GSM_CALL_HideNumber;
+                break;
+        }
     }
+
 
     BEGIN_PHONE_COMM
     error = GSM_DialVoice(self->s, s, ShowNumber);
@@ -2959,14 +2958,11 @@ StateMachine_AnswerCall(StateMachineObject *self, PyObject *args, PyObject *kwds
                 &id, &o))
         return NULL;
 
-    if (o == Py_False) {
-        all = FALSE;
-    } else if (o == Py_True) {
-        all = TRUE;
-    } else {
-        PyErr_SetString(PyExc_TypeError, "use gboolean as All!");
+    next = BoolFromPython(o, "All");
+    if (next == BOOL_INVALID) {
         return NULL;
     }
+
 
     BEGIN_PHONE_COMM
     error = GSM_AnswerCall(self->s, id, all);
@@ -3004,12 +3000,8 @@ StateMachine_CancelCall(StateMachineObject *self, PyObject *args, PyObject *kwds
                 &id, &o))
         return NULL;
 
-    if (o == Py_False) {
-        all = FALSE;
-    } else if (o == Py_True) {
-        all = TRUE;
-    } else {
-        PyErr_SetString(PyExc_TypeError, "use gboolean as All!");
+    all = BoolFromPython(o, "All");
+    if (all == BOOL_INVALID) {
         return NULL;
     }
 
@@ -3178,12 +3170,8 @@ StateMachine_TransferCall(StateMachineObject *self, PyObject *args, PyObject *kw
                 &id, &o))
         return NULL;
 
-    if (o == Py_False) {
-        next = FALSE;
-    } else if (o == Py_True) {
-        next = TRUE;
-    } else {
-        PyErr_SetString(PyExc_TypeError, "use gboolean as Next!");
+    next = BoolFromPython(o, "Next");
+    if (next == BOOL_INVALID) {
         return NULL;
     }
 
@@ -3221,12 +3209,8 @@ StateMachine_SwitchCall(StateMachineObject *self, PyObject *args, PyObject *kwds
                 &id, &o))
         return NULL;
 
-    if (o == Py_False) {
-        next = FALSE;
-    } else if (o == Py_True) {
-        next = TRUE;
-    } else {
-        PyErr_SetString(PyExc_TypeError, "use gboolean as Next!");
+    next = BoolFromPython(o, "Next");
+    if (next == BOOL_INVALID) {
         return NULL;
     }
 

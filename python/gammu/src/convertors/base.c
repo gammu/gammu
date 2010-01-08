@@ -48,19 +48,19 @@ gboolean BoolFromPython(PyObject *o, const char *key) {
             } else if (strcasecmp(s, "false") == 0) {
                 return FALSE;
             } else {
-                PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be gboolean", key);
+                PyErr_Format(PyExc_ValueError, "String value of '%s' doesn't seem to be boolean", key);
                 return BOOL_INVALID;
             }
         }
 
-        PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be gboolean", key);
+        PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be boolean", key);
         return BOOL_INVALID;
     }
 
     if (Py_False == o) return FALSE;
     else if (Py_True == o) return TRUE;
 
-    PyErr_Format(PyExc_ValueError, "Value of '%s' doesn't seem to be gboolean", key);
+    PyErr_Format(PyExc_ValueError, "Bool value of '%s' doesn't seem to be boolean", key);
     return BOOL_INVALID;
 }
 
