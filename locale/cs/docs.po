@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-04 18:16+0100\n"
-"PO-Revision-Date: 2010-01-04 18:17+0100\n"
+"PO-Revision-Date: 2010-01-08 15:09+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -10716,7 +10716,7 @@ msgstr "http://cdash.cihar.com/index.php?project=Gammu"
 #. type: Plain text
 #: INSTALL:267
 msgid "There are some more options for testing:"
-msgstr ""
+msgstr "Existují další možnosti ovlivnit testování:"
 
 #. type: Plain text
 #: INSTALL:269
@@ -10731,6 +10731,9 @@ msgid ""
 "    report. You need to do this after 'make Experimental' and you can\n"
 "    submit results using 'make ExperimentalSubmit'.\n"
 msgstr ""
+"    Provede také kontrolování přístupů do paměti pomocí valgrindu a\n"
+"    odešle informace. Musíte to provést po 'make Experimental' a můžete\n"
+"    odeslat výsledky pomocí 'make ExperimentalSubmit'.\n"
 
 # type: Plain text
 #. type: Plain text
@@ -10745,6 +10748,8 @@ msgid ""
 "    To get test coverage reports, you need to configure project using \n"
 "    'cmake -DCOVERAGE=ON'\n"
 msgstr ""
+"    Pro získání informací o pokrytí testy, musíte zkonfigurovat\n"
+"    projekt pomocí 'cmake -DCOVERAGE=ON'\n"
 
 #. type: Plain text
 #: INSTALL:280
