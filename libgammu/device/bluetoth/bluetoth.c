@@ -53,6 +53,10 @@ GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 #ifdef BLUETOOTH_RF_SEARCHING
 		return bluetooth_findchannel(s);
 #else
+		smprintf(s, "WARNING: Channel searching not implemented on your platform!\n");
+		smprintf(s, "Please user bluerf* connection or define channel in configuration\n");
+		smprintf(s, "You can specify channel by adding it after phone address separated by slash\n");
+		smprintf(s, "For example: 11:22:33:44:55:66/12\n");
 		return ERR_SOURCENOTAVAILABLE;
 #endif
 	}
