@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Prosinec 27, 2009" "Gammu 1.27.90" "Dokumentace Gammu"
+.TH GAMMU 1 "Leden  8, 2010" "Gammu 1.27.91" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -282,8 +282,10 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms CALENDAR\fP\fI file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
-Načte kalendář ze zálohy (formáty jaké vytváří funkce \fBbackup\fP) a uloží ho
-do telefonu jako SMS ve formátu VCALENDAR 1.0.
+Načte poznámku kalendáře ze zálohy vytvořené parametrem \fBbackup\fP a uloží ho
+do telefonu ve formátu VCALENDAR 1.0 jako SMS. Parametr location určuje
+pozici, ze které bude načten kalendář ze souboru se zálohou (obvykle 1, ale
+může být užitečné, pokud záloha obsahuje více položek).
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -507,7 +509,9 @@ sendsms a savesms\fP.
 \fBsavesms VCARD10|VCARD21\fP\fI file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
 Načte kontakt ze zálohy (formáty jaké vytváří funkce \fBbackup\fP) a uloží ho
 do telefonu jako SMS ve formátu VCARD 1.0 (jen jméno a výchozí číslo) nebo
-VCARD 2.1 (všechny informace o kontaktu).
+VCARD 2.1 (všechny informace o kontaktu). Parametr location určuje pozici,
+ze které bude načten kontakt ze souboru se zálohou (obvykle 1, ale může být
+užitečné, pokud záloha obsahuje více položek).
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -851,7 +855,9 @@ následujícím příkazem:
 \fBsavesms VCARD10|VCARD21\fP\fI file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
 Načte kontakt ze zálohy (formáty jaké vytváří funkce \fBbackup\fP) a uloží ho
 do telefonu jako SMS ve formátu VCARD 1.0 (jen jméno a výchozí číslo) nebo
-VCARD 2.1 (všechny informace o kontaktu).
+VCARD 2.1 (všechny informace o kontaktu). Parametr location určuje pozici,
+ze které bude načten kontakt ze souboru se zálohou (obvykle 1, ale může být
+užitečné, pokud záloha obsahuje více položek).
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro
@@ -1371,8 +1377,10 @@ příkaz:
 
 .TP 
 \fBsavesms CALENDAR\fP\fI file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
-Načte kalendář ze zálohy (formáty jaké vytváří funkce \fBbackup\fP) a uloží ho
-do telefonu jako SMS ve formátu VCALENDAR 1.0.
+Načte poznámku kalendáře ze zálohy vytvořené parametrem \fBbackup\fP a uloží ho
+do telefonu ve formátu VCALENDAR 1.0 jako SMS. Parametr location určuje
+pozici, ze které bude načten kalendář ze souboru se zálohou (obvykle 1, ale
+může být užitečné, pokud záloha obsahuje více položek).
 
 
 Popis společných parametrů naleznete v sekci \fBSpolečné parametry pro

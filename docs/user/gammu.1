@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Dec 27 2009" "Gammu 1.27.90" "Gammu Documentation"
+.TH "GAMMU" "1" "Jan  8 2010" "Gammu 1.27.91" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -270,7 +270,9 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 .TP
 .BI "savesms CALENDAR" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Read calendar note from file created by \fBbackup\fR option and saves in
-VCALENDAR 1.0 format as SMS.
+VCALENDAR 1.0 format as SMS. The location identifies position of calendar item 
+to be read in backup file (usually 1, but can be useful in case the backup contains 
+more items).
 
 
 For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
@@ -465,7 +467,9 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 .BI "savesms VCARD10|VCARD21" " file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Read phonebook entry from file created by \fBbackup\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
-all numbers, text and name) format as SMS
+all numbers, text and name) format as SMS. The location identifies position of contact item 
+to be read in backup file (usually 1, but can be useful in case the backup contains 
+more items).
 
 
 For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
@@ -790,7 +794,9 @@ backup to vCard, you need following command:
 .BI "savesms VCARD10|VCARD21" " file SM|ME location [\-nokia] [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Read phonebook entry from file created by \fBbackup\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
-all numbers, text and name) format as SMS
+all numbers, text and name) format as SMS. The location identifies position of contact item 
+to be read in backup file (usually 1, but can be useful in case the backup contains 
+more items).
 
 
 For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.
@@ -1287,7 +1293,9 @@ backup to vCalendar, you need following command:
 .TP
 .BI "savesms CALENDAR" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Read calendar note from file created by \fBbackup\fR option and saves in
-VCALENDAR 1.0 format as SMS.
+VCALENDAR 1.0 format as SMS. The location identifies position of calendar item 
+to be read in backup file (usually 1, but can be useful in case the backup contains 
+more items).
 
 
 For description of shared parameters see \fBCommon parameters for sendsms and savesms\fR.

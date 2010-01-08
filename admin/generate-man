@@ -819,13 +819,17 @@ HELP['savesms WAPSETTINGS'] = '''Read WAP settings from file created by \\fBback
 HELP['savesms MMSSETTINGS'] = '''Saves a message with MMS configuration. The
 configuration will be read from Gammu backup file from given location.''' 
 HELP['savesms CALENDAR'] = '''Read calendar note from file created by \\fBbackup\\fR option and saves in
-VCALENDAR 1.0 format as SMS.
+VCALENDAR 1.0 format as SMS. The location identifies position of calendar item 
+to be read in backup file (usually 1, but can be useful in case the backup contains 
+more items).
 '''
 HELP['savesms TODO'] = '''Saves a message with a todo entry. The content will
 be read from any backup format which Gammu supports and from given location.'''
 HELP['savesms VCARD10|VCARD21'] = '''Read phonebook entry from file created by \\fBbackup\\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
-all numbers, text and name) format as SMS
+all numbers, text and name) format as SMS. The location identifies position of contact item 
+to be read in backup file (usually 1, but can be useful in case the backup contains 
+more items).
 '''
 HELP['savesms PROFILE'] = '''Read ringtone (RTTL) format and bitmap (Picture Image size) and name and save
 as Nokia profile.
