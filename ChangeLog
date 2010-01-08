@@ -31,6 +31,7 @@ ChangeLog
 [-] * Fix crash with unknown CME error (bug #1082).
 [-] * Fixed connecting to Onda devices (LP #501025).
 [+] * SMSD can terminate itself after defined number of failures.
+[-] * Improved decoding of SM30 Nokia messages (bug #1091).
     
 20091222 - 1.27.0
     

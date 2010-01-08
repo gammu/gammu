@@ -686,11 +686,11 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 		EncodeDefault(Buffer2, Buffer, &smslen, TRUE, NULL);
 		DecodeDefault(Buffer,  Buffer2, smslen, TRUE, NULL);
 #ifdef DEBUG
-		if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE) {
+		if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE) {
 			smfprintf(di, "Info->Entries[0].Buffer:\n");
-			DumpMessage(&GSM_global_debug, Info->Entries[0].Buffer, UnicodeLength(Info->Entries[0].Buffer)*2);
+			DumpMessage(di, Info->Entries[0].Buffer, UnicodeLength(Info->Entries[0].Buffer)*2);
 			smfprintf(di, "Buffer:\n");
-			DumpMessage(&GSM_global_debug, Buffer, UnicodeLength(Buffer)*2);
+			DumpMessage(di, Buffer, UnicodeLength(Buffer)*2);
 		}
 #endif
 		Info->UnicodeCoding = FALSE;
@@ -865,8 +865,8 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 		Info->Entries[0].Bitmap->Number = 1;
 		PHONE_DecodeBitmap(GSM_NokiaCallerLogo, SMS->SMS[0].Text+4, &Info->Entries[0].Bitmap->Bitmap[0]);
 #ifdef DEBUG
-		if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
-			GSM_PrintBitmap(GSM_global_debug.df,&Info->Entries[0].Bitmap->Bitmap[0]);
+		if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE)
+			GSM_PrintBitmap(di->df,&Info->Entries[0].Bitmap->Bitmap[0]);
 #endif
 		Info->Entries[0].ID 	= SMS_NokiaCallerLogo;
 		Info->EntriesNum	= 1;
@@ -879,8 +879,8 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 		PHONE_DecodeBitmap(GSM_NokiaOperatorLogo, SMS->SMS[0].Text+7, &Info->Entries[0].Bitmap->Bitmap[0]);
 		NOKIA_DecodeNetworkCode(SMS->SMS[0].Text, Info->Entries[0].Bitmap->Bitmap[0].NetworkCode);
 #ifdef DEBUG
-		if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
-			GSM_PrintBitmap(GSM_global_debug.df,&Info->Entries[0].Bitmap->Bitmap[0]);
+		if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE)
+			GSM_PrintBitmap(di->df,&Info->Entries[0].Bitmap->Bitmap[0]);
 #endif
 		Info->Entries[0].ID 	= SMS_NokiaOperatorLogo;
 		Info->EntriesNum	= 1;
@@ -900,7 +900,7 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 		Info->Entries[0].ID = SMS_NokiaPictureImageLong;
 		Info->Entries[0].Bitmap = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap));
 		if (Info->Entries[0].Bitmap == NULL) return FALSE;
-		Info->Entries[0].Bitmap->Number = 1;
+		Info->Entries[0].Bitmap->Number = 0;
 		Info->Entries[0].Bitmap->Bitmap[0].Text[0] = 0;
 		Info->Entries[0].Bitmap->Bitmap[0].Text[1] = 0;
 		i=1;
@@ -914,10 +914,12 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 				break;
 			case SM30_OTA:
 				smfprintf(di, "OTA bitmap as Picture Image\n");
-				PHONE_DecodeBitmap(GSM_NokiaPictureImage, Buffer + i + 7, &Info->Entries[0].Bitmap->Bitmap[0]);
+				PHONE_DecodeBitmap(GSM_NokiaPictureImage, Buffer + i + 7, &Info->Entries[0].Bitmap->Bitmap[Info->Entries[0].Bitmap->Number]);
+				Info->Entries[0].Bitmap->Number += 1;
 #ifdef DEBUG
-				if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
-					GSM_PrintBitmap(GSM_global_debug.df,&Info->Entries[0].Bitmap->Bitmap[0]);
+				if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE) {
+					GSM_PrintBitmap(di->df, &Info->Entries[0].Bitmap->Bitmap[0]);
+				}
 #endif
 				break;
 			case SM30_RINGTONE:
@@ -931,16 +933,18 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 				break;
 			case SM30_SCREENSAVER:
 				smfprintf(di, "OTA bitmap as Screen Saver\n");
-				PHONE_DecodeBitmap(GSM_NokiaPictureImage, Buffer + i + 7, &Info->Entries[0].Bitmap->Bitmap[0]);
+				PHONE_DecodeBitmap(GSM_NokiaPictureImage, Buffer + i + 7, &Info->Entries[0].Bitmap->Bitmap[Info->Entries[0].Bitmap->Number]);
+				Info->Entries[0].Bitmap->Number += 1;
 #ifdef DEBUG
-				if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
-					GSM_PrintBitmap(GSM_global_debug.df,&Info->Entries[0].Bitmap->Bitmap[0]);
+				if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE) {
+					GSM_PrintBitmap(di->df, &Info->Entries[0].Bitmap->Bitmap[0]);
+				}
 #endif
 				Info->Entries[0].ID = SMS_NokiaScreenSaverLong;
 				break;
 			}
 			i = i + Buffer[i+1]*256 + Buffer[i+2] + 3;
-			smfprintf(di, "%i %i\n",i,Length);
+			smfprintf(di, "Profile: pos=%i length=%i\n", i, Length);
 		}
 		i=1;
 		while (i!=Length) {
