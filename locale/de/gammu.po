@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.27.90\n"
+"Project-Id-Version: Gammu 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-04 14:19+0100\n"
+"POT-Creation-Date: 2010-01-08 15:05+0100\n"
 "PO-Revision-Date: 2009-07-06 14:14+0200\n"
 "Last-Translator: Benedikt Sauer <filmor@gmail.com>\n"
 "Language-Team: Language =de\n"
@@ -684,7 +684,6 @@ msgstr "Lautloser Alarm"
 #: gammu/calendar.c:202 gammu/calendar.c:532 gammu/calendar.c:837
 #: gammu/calendar.c:1059 gammu/message.c:206 gammu/misc.c:1071
 #: helper/memory-display.c:130 helper/message-display.c:414
-#, c-format
 msgid "Text"
 msgstr "Text"
 
@@ -732,7 +731,6 @@ msgstr[0] "einmal"
 msgstr[1] "%d Mal"
 
 #: gammu/calendar.c:302
-#, c-format
 msgid "forever"
 msgstr "für immer"
 
@@ -752,7 +750,6 @@ msgid "since %s till %s"
 msgstr "von %s bis %s"
 
 #: gammu/calendar.c:313
-#, c-format
 msgid " on each "
 msgstr " an jedem"
 
@@ -767,12 +764,10 @@ msgid " in %d. week of "
 msgstr " in der %d. Woche von "
 
 #: gammu/calendar.c:323
-#, c-format
 msgid " in "
 msgstr " in"
 
 #: gammu/calendar.c:329 gammu/calendar.c:337
-#, c-format
 msgid "each month"
 msgstr "jeden Monat"
 
@@ -787,7 +782,6 @@ msgid "%d. day of year"
 msgstr "%d. Tag im Jahr"
 
 #: gammu/calendar.c:342
-#, c-format
 msgid "day"
 msgstr "Tag"
 
@@ -805,7 +799,6 @@ msgid "Phone time is %s\n"
 msgstr "Die Uhrzeit im Telefon ist %s\n"
 
 #: gammu/calendar.c:394
-#, c-format
 msgid "Time format is "
 msgstr "Das Uhrzeitformat ist "
 
@@ -820,47 +813,38 @@ msgid "24 hours"
 msgstr "24 Stunden"
 
 #: gammu/calendar.c:402
-#, c-format
 msgid "Date format is "
 msgstr "das Datumsformat ist "
 
 #: gammu/calendar.c:405
-#, c-format
 msgid "DD MM YYYY"
 msgstr "TT MM JJJJ"
 
 #: gammu/calendar.c:408
-#, c-format
 msgid "MM DD YYYY"
 msgstr "MM TT JJJJ"
 
 #: gammu/calendar.c:411
-#, c-format
 msgid "YYYY MM DD"
 msgstr "JJJJ MM TT"
 
 #: gammu/calendar.c:414
-#, c-format
 msgid "DD MMM YY"
 msgstr "TT MMM JJ"
 
 #: gammu/calendar.c:417
-#, c-format
 msgid "MM DD YY"
 msgstr "MM TT JJ"
 
 #: gammu/calendar.c:420
-#, c-format
 msgid "DD MM YY"
 msgstr "TT MM JJ"
 
 #: gammu/calendar.c:423
-#, c-format
 msgid "YY MM DD"
 msgstr "JJ MM TT"
 
 #: gammu/calendar.c:426
-#, c-format
 msgid "OFF"
 msgstr "AUS"
 
@@ -903,7 +887,6 @@ msgid "Time: %02d:%02d\n"
 msgstr "Uhrzeit: %02d:%02d\n"
 
 #: gammu/calendar.c:643
-#, c-format
 msgid "Auto deleting disabled"
 msgstr "Automatisches Löschen deaktiviert"
 
@@ -1175,27 +1158,22 @@ msgstr ""
 "gammu/report> wo dieser Fehler zu melden ist."
 
 #: gammu/depend/nokia/dct4.c:368
-#, c-format
 msgid "Passed"
 msgstr "Erfolgreich"
 
 #: gammu/depend/nokia/dct4.c:369
-#, c-format
 msgid "Fail"
 msgstr "Fehlgeschlagen"
 
 #: gammu/depend/nokia/dct4.c:370
-#, c-format
 msgid "Not executed"
 msgstr "Nicht ausgeführt"
 
 #: gammu/depend/nokia/dct4.c:371
-#, c-format
 msgid "No signal"
 msgstr "Kein Signal"
 
 #: gammu/depend/nokia/dct4.c:372 gammu/message.c:103 gammu/misc.c:2310
-#, c-format
 msgid "Timeout"
 msgstr "Zeitüberschreitung"
 
@@ -1205,7 +1183,6 @@ msgid "Unknown (%x)"
 msgstr "Unbekannt (%x)"
 
 #: gammu/depend/nokia/dct4.c:375
-#, c-format
 msgid " (startup)"
 msgstr "(Programmstart)"
 
@@ -1397,147 +1374,123 @@ msgid "  entry ID %02X"
 msgstr "ID des Eintrags %02X"
 
 #: gammu/depend/nokia/dct4.c:1364
-#, c-format
 msgid " (Speed dial on SIM)"
 msgstr "(Schnellwahl auf SIM)"
 
 #: gammu/depend/nokia/dct4.c:1365
-#, fuzzy, c-format
+#, fuzzy
 msgid " (Text: name (always the only one))"
 msgstr "(Text: Name (immer der Einzige))"
 
 #: gammu/depend/nokia/dct4.c:1366
-#, fuzzy, c-format
+#, fuzzy
 msgid " (Text: email address)"
 msgstr "(Text: eMail-Adresse)"
 
 #: gammu/depend/nokia/dct4.c:1367
-#, c-format
 msgid " (Text: postal address)"
 msgstr "(Text: Anschrift)"
 
 #: gammu/depend/nokia/dct4.c:1368
-#, c-format
 msgid " (Text: note)"
 msgstr "(Text: Notiz)"
 
 #: gammu/depend/nokia/dct4.c:1369
-#, c-format
 msgid " (Phone number)"
 msgstr "(Telefonnummer)"
 
 #: gammu/depend/nokia/dct4.c:1370
-#, c-format
 msgid " (Ringtone ID)"
 msgstr "(ID des Klingeltons)"
 
 #: gammu/depend/nokia/dct4.c:1371
-#, c-format
 msgid " (Call register: date and time)"
 msgstr "(Liste aufrufen: Datum und Uhrzeit)"
 
 #: gammu/depend/nokia/dct4.c:1372
-#, c-format
 msgid " (Call register: with missed calls)"
 msgstr "(Liste aufrufen: mit verpassten Anrufen)"
 
 #: gammu/depend/nokia/dct4.c:1373
-#, c-format
 msgid " (Speed dial)"
 msgstr "(Schnellwahl)"
 
 #: gammu/depend/nokia/dct4.c:1374
-#, c-format
 msgid " (Caller group: logo)"
 msgstr "(Anruferguppe: Logo)"
 
 #: gammu/depend/nokia/dct4.c:1375
-#, c-format
 msgid " (Caller group: is logo on ?)"
 msgstr "(Anruferguppe: ist das Logo aktiviert?)"
 
 #: gammu/depend/nokia/dct4.c:1376
-#, c-format
 msgid " (Caller group number in pbk entry)"
 msgstr "(Anrufergruppennummer im Telefonbucheintrag)"
 
 #: gammu/depend/nokia/dct4.c:1379
-#, c-format
 msgid " (Text: URL address)"
 msgstr "(Text: Webadresse)"
 
 #: gammu/depend/nokia/dct4.c:1380
-#, fuzzy, c-format
+#, fuzzy
 msgid " (SMS list assignment)"
 msgstr "(SMS Listennummer)"
 
 #: gammu/depend/nokia/dct4.c:1381
-#, fuzzy, c-format
+#, fuzzy
 msgid " (Voice tag assignment)"
 msgstr "(Sprachwahl Zuordnung)"
 
 #: gammu/depend/nokia/dct4.c:1382
-#, fuzzy, c-format
+#, fuzzy
 msgid " (Picture ID assignment)"
 msgstr "(Bild ID Zuordnung)"
 
 #: gammu/depend/nokia/dct4.c:1383
-#, c-format
 msgid " (Ringtone ID from filesystem/internal)"
 msgstr "(Klingelton-ID des Dataisystems/Intern)"
 
 #: gammu/depend/nokia/dct4.c:1384
-#, c-format
 msgid " (Text: user ID)"
 msgstr "(Text: Benutzer-ID)"
 
 #: gammu/depend/nokia/dct4.c:1385
-#, c-format
 msgid " (conversation list ID)"
 msgstr "(Umwandlungs ID Zuordnung)"
 
 #: gammu/depend/nokia/dct4.c:1386
-#, c-format
 msgid " (Instant Messaging service list ID ?)"
 msgstr "(Instant Messenger Liste?)"
 
 #: gammu/depend/nokia/dct4.c:1387
-#, c-format
 msgid " (presence list ID ?)"
 msgstr "(Anwesenheitsliste?)"
 
 #: gammu/depend/nokia/dct4.c:1388
-#, c-format
 msgid " (SIP Address (Push to Talk address))"
 msgstr "(SIP-Adresse (Push-to-Talk-Adresse))"
 
 #: gammu/depend/nokia/dct4.c:1389
-#, c-format
 msgid " (Group ID (6230i or later))"
 msgstr "(Gruppen-ID (6230i oder neuer))"
 
 #: gammu/depend/nokia/dct4.c:1391
-#, c-format
 msgid ", type "
 msgstr "Eintragstyp"
 
 #: gammu/depend/nokia/dct4.c:1393
-#, c-format
 msgid "string"
 msgstr "String"
 
 #: gammu/depend/nokia/dct4.c:1394
-#, c-format
 msgid "byte"
 msgstr "Byte"
 
 #: gammu/depend/nokia/dct4.c:1395
-#, c-format
 msgid "2 bytes"
 msgstr "2 Bytes"
 
 #: gammu/depend/nokia/dct4.c:1396
-#, c-format
 msgid "4 bytes"
 msgstr "4 Bytes"
 
@@ -1597,25 +1550,21 @@ msgstr "Belegt von: %i Bildern, %i Tönen, %i Designs"
 
 #. l10n: One char to indicate protected file
 #: gammu/files.c:119 gammu/files.c:208 gammu/files.c:329
-#, c-format
 msgid "P"
 msgstr "g"
 
 #. l10n: One char to indicate read only file
 #: gammu/files.c:125 gammu/files.c:210 gammu/files.c:331
-#, c-format
 msgid "R"
 msgstr "L"
 
 #. l10n: One char to indicate hidden file
 #: gammu/files.c:131 gammu/files.c:212 gammu/files.c:333
-#, c-format
 msgid "H"
 msgstr "V"
 
 #. l10n: One char to indicate system file
 #: gammu/files.c:137 gammu/files.c:214 gammu/files.c:335
-#, c-format
 msgid "S"
 msgstr "S"
 
@@ -1625,12 +1574,10 @@ msgid "Part of folder"
 msgstr "Teil des Verzeichnisses"
 
 #: gammu/files.c:160 gammu/files.c:173 gammu/files.c:199 gammu/files.c:324
-#, c-format
 msgid "Folder"
 msgstr "Verzeichnis"
 
 #: gammu/files.c:184 gammu/files.c:315
-#, c-format
 msgid "File;"
 msgstr "Datei;"
 
@@ -2137,17 +2084,14 @@ msgid "Format"
 msgstr "Format"
 
 #: gammu/message.c:207
-#, c-format
 msgid "Fax"
 msgstr "Fax"
 
 #: gammu/message.c:208
-#, c-format
 msgid "Email"
 msgstr "E-Mail"
 
 #: gammu/message.c:209
-#, c-format
 msgid "Pager"
 msgstr "Pager"
 
@@ -2156,7 +2100,6 @@ msgid "Validity"
 msgstr "Gültigkeit"
 
 #: gammu/message.c:232
-#, c-format
 msgid "Maximum time"
 msgstr "Maximale Zeit"
 
@@ -2176,32 +2119,26 @@ msgid "SMS counter overflow"
 msgstr "SMS Zählerüberlauf"
 
 #: gammu/message.c:500
-#, c-format
 msgid ", SIM memory"
 msgstr ", SIM-Speicher"
 
 #: gammu/message.c:501
-#, c-format
 msgid ", phone memory"
 msgstr ", Telefonspeicher"
 
 #: gammu/message.c:502
-#, c-format
 msgid ", phone or SIM memory"
 msgstr ", Telefon- oder SIM-Speicher"
 
 #: gammu/message.c:505 gammu/mms.c:30
-#, c-format
 msgid ", Inbox folder"
 msgstr ", Posteingangsordner"
 
 #: gammu/message.c:506
-#, c-format
 msgid ", Outbox folder"
 msgstr ", Postausgangsordner"
 
 #: gammu/message.c:522
-#, c-format
 msgid "..OK"
 msgstr "..OK"
 
@@ -2253,7 +2190,6 @@ msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr "Sende SMS aus dem Ordner \"%s\", Speicherplatz %i\n"
 
 #: gammu/message.c:601 gammu/message.c:627
-#, c-format
 msgid "....waiting for network answer"
 msgstr "....warte auf Netz-Bestätiung"
 
@@ -2301,7 +2237,6 @@ msgid "registration to network denied"
 msgstr "Anmeldung an Netz abgelehnt"
 
 #: gammu/misc.c:40 gammu/misc.c:42 gammu/misc.c:561 gammu/misc.c:583
-#, c-format
 msgid "unknown"
 msgstr "unbekannt"
 
@@ -2576,32 +2511,26 @@ msgid "Charge state"
 msgstr "Ladestatus"
 
 #: gammu/misc.c:542
-#, c-format
 msgid "powered from battery"
 msgstr "Batteriebetrieb"
 
 #: gammu/misc.c:545
-#, c-format
 msgid "battery connected, but not powered from battery"
 msgstr "Batterie ist angeschlossen, liefert aber keinen Strom"
 
 #: gammu/misc.c:548
-#, c-format
 msgid "battery connected and is being charged"
 msgstr "Batterie ist angeschlossen und wird geladen"
 
 #: gammu/misc.c:551
-#, c-format
 msgid "battery connected and is fully charged"
 msgstr "Batterie ist angeschlossen und vollständig geladen"
 
 #: gammu/misc.c:554
-#, c-format
 msgid "battery not connected"
 msgstr "Batterie ist nicht angeschlossen"
 
 #: gammu/misc.c:557
-#, c-format
 msgid "detected power failure"
 msgstr "Fehler in der Stromversorgung"
 
@@ -2610,17 +2539,14 @@ msgid "Battery type"
 msgstr "Batterietyp"
 
 #: gammu/misc.c:571
-#, c-format
 msgid "Lithium Ion"
 msgstr "Lithionionen"
 
 #: gammu/misc.c:574
-#, c-format
 msgid "Lithium Polymer"
 msgstr "Lithion-Polymer"
 
 #: gammu/misc.c:577
-#, c-format
 msgid "NiMH"
 msgstr "NiMH"
 
@@ -2674,22 +2600,18 @@ msgid "Leaving monitor mode..."
 msgstr "Verlasse Überwachungsmodus..."
 
 #: gammu/misc.c:669
-#, c-format
 msgid "Smart Messaging"
 msgstr "Intelligente Nachrichten"
 
 #: gammu/misc.c:670
-#, c-format
 msgid "Nokia binary"
 msgstr "Nokia Programm"
 
 #: gammu/misc.c:671
-#, c-format
 msgid "MIDI"
 msgstr "MIDI"
 
 #: gammu/misc.c:672
-#, c-format
 msgid "SMAF (MMF)"
 msgstr "SMAF (MMF)"
 
@@ -2714,7 +2636,6 @@ msgstr "%i. Zugangsknoten %i"
 
 #: gammu/misc.c:952 gammu/misc.c:1476 gammu/misc.c:1483 gammu/misc.c:1518
 #: gammu/misc.c:1531 gammu/misc.c:1570 gammu/misc.c:1619 gammu/misc.c:1973
-#, c-format
 msgid " (active)"
 msgstr " (aktiv)"
 
@@ -3047,22 +2968,19 @@ msgid "Read only"
 msgstr "Lese"
 
 #: gammu/misc.c:1694
-#, c-format
 msgid "Startup logo"
 msgstr "Startlogo"
 
 #: gammu/misc.c:1695
-#, c-format
 msgid "Operator logo"
 msgstr "Betreiberlogo"
 
 #: gammu/misc.c:1696 helper/message-display.c:412
-#, fuzzy, c-format
+#, fuzzy
 msgid "Picture"
 msgstr "Bild-ID"
 
 #: gammu/misc.c:1697
-#, c-format
 msgid "Caller group logo"
 msgstr "Anruferguppenlogo"
 
@@ -3115,17 +3033,14 @@ msgid "No PIN code entered!"
 msgstr ""
 
 #: gammu/misc.c:1974
-#, c-format
 msgid " (default name)"
 msgstr " (Standard-Name)"
 
 #: gammu/misc.c:1975
-#, c-format
 msgid " (Head set profile)"
 msgstr " (Head-Set-Profil)"
 
 #: gammu/misc.c:1976
-#, c-format
 msgid " (Car kit profile)"
 msgstr " (Freisprechanlagen-Profil)"
 
@@ -3307,7 +3222,6 @@ msgid "Unknown call type (\"%s\")\n"
 msgstr "Unbekannter Anruftyp (\"%s\")\n"
 
 #: gammu/misc.c:2262
-#, c-format
 msgid "Query:"
 msgstr ""
 
@@ -3319,27 +3233,22 @@ msgstr ""
 "    Rufumleitung: "
 
 #: gammu/misc.c:2275
-#, c-format
 msgid "Changed:"
 msgstr ""
 
 #: gammu/misc.c:2281
-#, c-format
 msgid "when busy"
 msgstr "wenn beschäftigt"
 
 #: gammu/misc.c:2282
-#, c-format
 msgid "when not answered"
 msgstr "wenn nicht beantwortet"
 
 #: gammu/misc.c:2283
-#, c-format
 msgid "when phone off or no coverage"
 msgstr "wenn das Telefon aus ist oder keinen Empfang hat"
 
 #: gammu/misc.c:2284
-#, c-format
 msgid "all types of diverts"
 msgstr "alle Arten von Umlenkungen"
 
@@ -3354,27 +3263,23 @@ msgid "Call type"
 msgstr "Anruf aktiv"
 
 #: gammu/misc.c:2290 gammu/misc.c:2304
-#, c-format
 msgid "voice"
 msgstr "Stimme"
 
 #: gammu/misc.c:2291 gammu/misc.c:2305 helper/message-display.c:113
-#, c-format
 msgid "fax"
 msgstr "Fax"
 
 #: gammu/misc.c:2292 gammu/misc.c:2306
-#, c-format
 msgid "data"
 msgstr "Daten"
 
 #: gammu/misc.c:2293
-#, c-format
 msgid "data & fax & voice"
 msgstr "Daten & Fax & Stimme"
 
 #: gammu/misc.c:2297
-#, fuzzy, c-format
+#, fuzzy
 msgid "Response:"
 msgstr ""
 "\n"
@@ -3400,7 +3305,6 @@ msgid "Some MMS file features unknown for Gammu decoder"
 msgstr "Gammu kennt nicht alle Eigenschaften dieses MMS"
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
-#, c-format
 msgid "phone "
 msgstr "Telefon"
 
@@ -3480,7 +3384,6 @@ msgstr ""
 "Zum Eingeben drücken Sie bitte: "
 
 #: gammu/nokia.c:124
-#, c-format
 msgid "(longer)"
 msgstr "(länger)"
 
@@ -3525,7 +3428,6 @@ msgstr ""
 "Ordner nicht gefunden. Vermutlich wird diese Funktion nicht unterstützt!"
 
 #: gammu/nokia.c:605
-#, c-format
 msgid "Searching for phone folder: "
 msgstr "Suche nach Telefon-Ordnern: "
 
@@ -3599,7 +3501,7 @@ msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr "Verbindung \"%s\" auf Gerät \"%s\"\n"
 
 #: gammu/search.c:182 gammu/search.c:189
-#, fuzzy, c-format
+#, fuzzy
 msgid "Error creating thread\n"
 msgstr "Fehler beim Schreiben auf das Gerät."
 
@@ -4020,22 +3922,18 @@ msgstr "SMS Statusbericht"
 #: helper/message-display.c:140 helper/message-display.c:152
 #: helper/message-display.c:204 helper/message-display.c:219
 #: helper/message-display.c:260
-#, c-format
 msgid "Sent"
 msgstr "Gesendet"
 
 #: helper/message-display.c:141 helper/message-display.c:261
-#, c-format
 msgid "Read"
 msgstr "Gelesen"
 
 #: helper/message-display.c:142 helper/message-display.c:262
-#, c-format
 msgid "UnRead"
 msgstr "Ungelesen"
 
 #: helper/message-display.c:143 helper/message-display.c:263
-#, c-format
 msgid "UnSent"
 msgstr "Nicht gesendet"
 
@@ -4066,22 +3964,18 @@ msgid "Details"
 msgstr "Details"
 
 #: helper/message-display.c:159 helper/message-display.c:164
-#, c-format
 msgid "Temporary error, "
 msgstr "Temporärer Fehler, "
 
 #: helper/message-display.c:161
-#, c-format
 msgid "Permanent error, "
 msgstr "Ständiger Fehler, "
 
 #: helper/message-display.c:167
-#, c-format
 msgid "SM received by the SME"
 msgstr "SM empfangen durch die SME"
 
 #: helper/message-display.c:168
-#, c-format
 msgid ""
 "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
 msgstr ""
@@ -4089,83 +3983,67 @@ msgstr ""
 "nicht bestätigen"
 
 #: helper/message-display.c:169
-#, c-format
 msgid "SM replaced by the SC"
 msgstr "SM ersetzt durch die SC"
 
 #: helper/message-display.c:170 helper/message-display.c:186
-#, c-format
 msgid "Congestion"
 msgstr "Stau"
 
 #: helper/message-display.c:171 helper/message-display.c:187
-#, c-format
 msgid "SME busy"
 msgstr "SME ist beschäftigt"
 
 #: helper/message-display.c:172 helper/message-display.c:188
-#, c-format
 msgid "No response from SME"
 msgstr "Keie Rückmeldung von der SME"
 
 #: helper/message-display.c:173 helper/message-display.c:189
-#, c-format
 msgid "Service rejected"
 msgstr "Dienst abgelehnt"
 
 #: helper/message-display.c:174 helper/message-display.c:180
 #: helper/message-display.c:190
-#, c-format
 msgid "Quality of service not available"
 msgstr "Dienstgüte (QoS) nicht verfügbar"
 
 #: helper/message-display.c:175 helper/message-display.c:191
-#, c-format
 msgid "Error in SME"
 msgstr "Fehler in der SME"
 
 #: helper/message-display.c:176
-#, c-format
 msgid "Remote procedure error"
 msgstr "Fehler in entfernter Prozedur"
 
 #: helper/message-display.c:177
-#, c-format
 msgid "Incompatibile destination"
 msgstr "Inkompatibles Ziel"
 
 #: helper/message-display.c:178
-#, c-format
 msgid "Connection rejected by SME"
 msgstr "Verbindung von SME abgelhnt"
 
 #: helper/message-display.c:179
-#, c-format
 msgid "Not obtainable"
 msgstr "Nicht erhältlich"
 
 #: helper/message-display.c:181
-#, c-format
 msgid "No internetworking available"
 msgstr "Keine Internetverbindung verfügbar"
 
 #: helper/message-display.c:182
-#, c-format
 msgid "SM Validity Period Expired"
 msgstr "SM Gültigkeitsdauer abgelaufen"
 
 #: helper/message-display.c:183
-#, c-format
 msgid "SM deleted by originating SME"
 msgstr "SM durch die abgehende SME gelöscht"
 
 #: helper/message-display.c:184
-#, c-format
 msgid "SM Deleted by SC Administration"
 msgstr "SM von der SC-Verwaltung gelöscht"
 
 #: helper/message-display.c:185
-#, c-format
 msgid "SM does not exist"
 msgstr "SM existiert nicht"
 
@@ -4183,7 +4061,6 @@ msgid "Saved"
 msgstr "Gespeichert"
 
 #: helper/message-display.c:202
-#, c-format
 msgid " (set for reply)"
 msgstr " (gesetzt für Antwort)"
 
@@ -4200,28 +4077,24 @@ msgid "Coding"
 msgstr "Zeichenkodierung"
 
 #: helper/message-display.c:231
-#, c-format
 msgid "Unicode (no compression)"
 msgstr "Unicode (keine Kompression)"
 
 #: helper/message-display.c:234
-#, c-format
 msgid "Unicode (compression)"
 msgstr "Unicode (Kompression)"
 
 #: helper/message-display.c:237
-#, c-format
 msgid "Default GSM alphabet (no compression)"
 msgstr "Vorgabe-GSM-Alphabet (keine Kompression)"
 
 #: helper/message-display.c:240
-#, c-format
 msgid "Default GSM alphabet (compression)"
 msgstr "Vorgabe-GSM-Alphabet (Kompression)"
 
 #. l10n: 8-bit message coding
 #: helper/message-display.c:244
-#, fuzzy, c-format
+#, fuzzy
 msgid "8-bit"
 msgstr "8 Bit"
 
@@ -4230,97 +4103,78 @@ msgid "User Data Header"
 msgstr "Nutzdatenkopf"
 
 #: helper/message-display.c:269 helper/message-display.c:270
-#, c-format
 msgid "Concatenated (linked) message"
 msgstr "Verkettete (verknüpfte) Nachricht"
 
 #: helper/message-display.c:271
-#, c-format
 msgid "Disables voice indicator"
 msgstr "Deaktiviert Stimmerkennung"
 
 #: helper/message-display.c:272
-#, c-format
 msgid "Enables voice indicator"
 msgstr "Aktiviert Stimmenerkennung"
 
 #: helper/message-display.c:273
-#, c-format
 msgid "Disables fax indicator"
 msgstr "Deaktiviert Fax-Erkennung"
 
 #: helper/message-display.c:274
-#, c-format
 msgid "Enables fax indicator"
 msgstr "Aktiviert Fax-Erkennung"
 
 #: helper/message-display.c:275
-#, c-format
 msgid "Disables email indicator"
 msgstr "Deaktiviert E-Mail-Erkennung"
 
 #: helper/message-display.c:276
-#, c-format
 msgid "Enables email indicator"
 msgstr "Aktiviert E-Mail-Erkennung"
 
 #: helper/message-display.c:277
-#, c-format
 msgid "Void SMS"
 msgstr "Ungültige SMS"
 
 #: helper/message-display.c:278
-#, c-format
 msgid "Nokia WAP bookmark"
 msgstr "Nokia WAP-Lesezeichen"
 
 #: helper/message-display.c:279
-#, c-format
 msgid "Nokia operator logo"
 msgstr "Nokia Betreiberlogo"
 
 #: helper/message-display.c:280
-#, c-format
 msgid "Nokia WAP bookmark or WAP/MMS settings"
 msgstr "Nokia WAP-Lesezeichen oder WAP/MMS-Einstellungen"
 
 #: helper/message-display.c:281 helper/message-display.c:282
-#, c-format
 msgid "Nokia ringtone"
 msgstr "Nokia Klingelton"
 
 #: helper/message-display.c:283
-#, c-format
 msgid "Nokia GSM operator logo"
 msgstr "Nokia GSM Betreiberlogo"
 
 #: helper/message-display.c:284
-#, c-format
 msgid "Nokia caller logo"
 msgstr "Nokia Anruferlogo"
 
 #: helper/message-display.c:285
-#, c-format
 msgid "Nokia profile"
 msgstr "Nokia Profil"
 
 #: helper/message-display.c:286
-#, c-format
 msgid "Nokia calendar note"
 msgstr "Nokia Kalendernotiz"
 
 #: helper/message-display.c:287
-#, c-format
 msgid "Nokia phonebook entry"
 msgstr "Nokia Telefonbucheintrag"
 
 #: helper/message-display.c:288
-#, c-format
 msgid "User UDH"
 msgstr "Benutzer-UDH"
 
 #: helper/message-display.c:289
-#, c-format
 msgid "MMS indicator"
 msgstr "MMS-Kennung"
 
@@ -4365,7 +4219,6 @@ msgstr ""
 "nicht implementiert)"
 
 #: helper/message-display.c:368
-#, c-format
 msgid "Siemens OTA file"
 msgstr "Siemens-OTA-Datei"
 
