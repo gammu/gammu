@@ -261,18 +261,18 @@ version, run tests and submit data to dashboard:
 
 http://cdash.cihar.com/index.php?project=Gammu
 
-There are some more options for testing:
+Existují další možnosti ovlivnit testování:
 
 - make ExperimentalMemCheck
 
-    This checks memory accesses using valgrind during tests and submits
-    report. You need to do this after 'make Experimental' and you can
-    submit results using 'make ExperimentalSubmit'.
+    Provede také kontrolování přístupů do paměti pomocí valgrindu a
+    odešle informace. Musíte to provést po 'make Experimental' a můžete
+    odeslat výsledky pomocí 'make ExperimentalSubmit'.
 
 - pokrytí testy
 
-    To get test coverage reports, you need to configure project using 
-    'cmake -DCOVERAGE=ON'
+    Pro získání informací o pokrytí testy, musíte zkonfigurovat
+    projekt pomocí 'cmake -DCOVERAGE=ON'
 
 - noční testování
 
