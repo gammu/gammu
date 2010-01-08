@@ -1263,7 +1263,7 @@ msgid ""
 "and text will be longer than 1 SMS, will be split into more linked SMS."
 "Coding type (SMS default alphabet/Unicode) is set according to input text"
 msgstr ""
-"B<-len len> - určí, kolik znaků bude načteno. Pokud bude zadaný text delší, "
+"B<-autolen len> - určí, kolik znaků bude načteno. Pokud bude zadaný text delší, "
 "než se vejde do jedné zprávy, bude automaticky rozdělen do více zpráv."
 
 # type: Plain text
