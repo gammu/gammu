@@ -916,8 +916,9 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 				smfprintf(di, "OTA bitmap as Picture Image\n");
 				PHONE_DecodeBitmap(GSM_NokiaPictureImage, Buffer + i + 7, &Info->Entries[0].Bitmap->Bitmap[0]);
 #ifdef DEBUG
-				if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE)
-					GSM_PrintBitmap(di->df,&Info->Entries[0].Bitmap->Bitmap[0]);
+				if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE) {
+					GSM_PrintBitmap(di->df, &Info->Entries[0].Bitmap->Bitmap[0]);
+				}
 #endif
 				break;
 			case SM30_RINGTONE:
@@ -933,8 +934,9 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 				smfprintf(di, "OTA bitmap as Screen Saver\n");
 				PHONE_DecodeBitmap(GSM_NokiaPictureImage, Buffer + i + 7, &Info->Entries[0].Bitmap->Bitmap[0]);
 #ifdef DEBUG
-				if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE)
-					GSM_PrintBitmap(di->df,&Info->Entries[0].Bitmap->Bitmap[0]);
+				if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE) {
+					GSM_PrintBitmap(di->df, &Info->Entries[0].Bitmap->Bitmap[0]);
+				}
 #endif
 				Info->Entries[0].ID = SMS_NokiaScreenSaverLong;
 				break;
