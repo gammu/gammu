@@ -470,7 +470,7 @@ StateMachine_SetConfig(StateMachineObject *self, PyObject *args, PyObject *kwds)
                 if (PyUnicode_Check(value)) {
                     str = PyUnicode_AsASCIIString(value);
                     if (str == NULL) {
-                        PyErr_Format(PyExc_ValueError, "Non string value for %s", s);
+                        PyErr_Format(PyExc_ValueError, "Non string value for %s (unicode)", s);
                         return NULL;
                     }
                 } else {
@@ -479,7 +479,7 @@ StateMachine_SetConfig(StateMachineObject *self, PyObject *args, PyObject *kwds)
                 }
                 v = PyString_AsString(value);
                 if (v == NULL) {
-                    PyErr_Format(PyExc_ValueError, "Non string value for %s", s);
+                    PyErr_Format(PyExc_ValueError, "Non string value for (string) %s", s);
                     return NULL;
                 } else {
                     setv = strdup(v);
@@ -697,7 +697,7 @@ StateMachine_ReadDevice(StateMachineObject *self, PyObject *args, PyObject *kwds
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|O", kwlist, &o))
         return NULL;
 
-    if (o != PyNone) {
+    if (o != Py_None) {
         waiting = BoolFromPython(o, "Wait");
         if (waiting == BOOL_INVALID) {
             return NULL;
@@ -2876,7 +2876,7 @@ StateMachine_DialVoice(StateMachineObject *self, PyObject *args, PyObject *kwds)
                 &s, &o))
         return NULL;
 
-    if (o != PyNone) {
+    if (o != Py_None) {
         switch (BoolFromPython(o, "ShowNumber")) {
             case BOOL_INVALID:
                 return NULL;
@@ -2958,8 +2958,8 @@ StateMachine_AnswerCall(StateMachineObject *self, PyObject *args, PyObject *kwds
                 &id, &o))
         return NULL;
 
-    next = BoolFromPython(o, "All");
-    if (next == BOOL_INVALID) {
+    all = BoolFromPython(o, "All");
+    if (all == BOOL_INVALID) {
         return NULL;
     }
 
