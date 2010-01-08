@@ -704,7 +704,7 @@ StateMachine_ReadDevice(StateMachineObject *self, PyObject *args, PyObject *kwds
     } else if (o == Py_True) {
         waiting = TRUE;
     } else {
-        PyErr_SetString(PyExc_TypeError, "use None or gboolean as Wait!");
+        PyErr_SetString(PyExc_TypeError, "use None or boolean as Wait!");
         return NULL;
     }
 
@@ -2887,7 +2887,7 @@ StateMachine_DialVoice(StateMachineObject *self, PyObject *args, PyObject *kwds)
     } else if (o == Py_True) {
         ShowNumber = GSM_CALL_ShowNumber;
     } else {
-        PyErr_SetString(PyExc_TypeError, "use None or gboolean as ShowNumber!");
+        PyErr_SetString(PyExc_TypeError, "use None or boolean as ShowNumber!");
         return NULL;
     }
 
@@ -2964,7 +2964,7 @@ StateMachine_AnswerCall(StateMachineObject *self, PyObject *args, PyObject *kwds
     } else if (o == Py_True) {
         all = TRUE;
     } else {
-        PyErr_SetString(PyExc_TypeError, "use gboolean as All!");
+        PyErr_SetString(PyExc_TypeError, "use boolean as All!");
         return NULL;
     }
 
@@ -3009,7 +3009,7 @@ StateMachine_CancelCall(StateMachineObject *self, PyObject *args, PyObject *kwds
     } else if (o == Py_True) {
         all = TRUE;
     } else {
-        PyErr_SetString(PyExc_TypeError, "use gboolean as All!");
+        PyErr_SetString(PyExc_TypeError, "use boolean as All!");
         return NULL;
     }
 
@@ -3183,7 +3183,7 @@ StateMachine_TransferCall(StateMachineObject *self, PyObject *args, PyObject *kw
     } else if (o == Py_True) {
         next = TRUE;
     } else {
-        PyErr_SetString(PyExc_TypeError, "use gboolean as Next!");
+        PyErr_SetString(PyExc_TypeError, "use boolean as Next!");
         return NULL;
     }
 
@@ -3226,7 +3226,7 @@ StateMachine_SwitchCall(StateMachineObject *self, PyObject *args, PyObject *kwds
     } else if (o == Py_True) {
         next = TRUE;
     } else {
-        PyErr_SetString(PyExc_TypeError, "use gboolean as Next!");
+        PyErr_SetString(PyExc_TypeError, "use boolean as Next!");
         return NULL;
     }
 
