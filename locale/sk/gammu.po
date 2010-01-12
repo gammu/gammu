@@ -1324,7 +1324,7 @@ msgstr "  ID položky %02X"
 
 #: gammu/depend/nokia/dct4.c:1364
 msgid " (Speed dial on SIM)"
-msgstr "(Rýchla voľba na SIM)"
+msgstr " (Rýchla voľba na SIM)"
 
 #: gammu/depend/nokia/dct4.c:1365
 msgid " (Text: name (always the only one))"
