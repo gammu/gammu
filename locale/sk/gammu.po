@@ -1297,9 +1297,8 @@ msgid "Initial battery voltage:"
 msgstr "Pôvodné napätie batérie:"
 
 #: gammu/depend/nokia/dct4.c:1050
-#, fuzzy
 msgid "Battery Current:"
-msgstr "Zmazať aktuálnu"
+msgstr "Prúd batérie:"
 
 #: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current Fast:"
