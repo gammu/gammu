@@ -1628,7 +1628,7 @@ msgstr "Protokoly"
 
 #: gammu/gammu.c:214
 msgid "Phones"
-msgstr ""
+msgstr "Telefóny"
 
 #: gammu/gammu.c:259
 msgid "Miscellaneous"
