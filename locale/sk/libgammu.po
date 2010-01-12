@@ -154,7 +154,7 @@ msgstr "Súbor nie je možné otvoriť."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
-msgstr "Potrebná väčšia pamäť ..."
+msgstr "Potrebná väčšia pamäť..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Permission to file/device required..."
