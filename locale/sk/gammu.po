@@ -1336,7 +1336,7 @@ msgstr " (Text: emailová adresa)"
 
 #: gammu/depend/nokia/dct4.c:1367
 msgid " (Text: postal address)"
-msgstr "(Text: poštová adresa)"
+msgstr " (Text: poštová adresa)"
 
 #: gammu/depend/nokia/dct4.c:1368
 msgid " (Text: note)"
