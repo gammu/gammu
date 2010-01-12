@@ -1736,7 +1736,7 @@ msgstr "Zvonenia"
 
 #: gammu/gammu.c:749
 msgid "Calendar notes"
-msgstr ""
+msgstr "Kalendár"
 
 #: gammu/gammu.c:750
 msgid "To do lists"
