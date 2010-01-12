@@ -1056,7 +1056,7 @@ msgstr "Bezpečnostný stav."
 #: gammu/common.c:308 gammu/misc.c:1102 gammu/misc.c:1117 gammu/misc.c:1124
 #: gammu/misc.c:1131 gammu/misc.c:1161
 msgid "More parameters required!"
-msgstr "Je potrebných viac parametrov."
+msgstr "Je potrebných viac parametrov!"
 
 #: gammu/common.c:314 gammu/common.c:324 gammu/depend/nokia/dct4.c:686
 #: gammu/misc.c:1277
