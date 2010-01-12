@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 15:10+0100\n"
-"PO-Revision-Date: 2010-01-12 22:44+0200\n"
+"PO-Revision-Date: 2010-01-12 22:45+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1571,7 +1571,7 @@ msgstr "  Ukladám do %s\n"
 #: gammu/files.c:692 gammu/nokia.c:937
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
-msgstr ""
+msgstr "Parameter \"%s\" je neznámy\n"
 
 #: gammu/files.c:727
 #, c-format
