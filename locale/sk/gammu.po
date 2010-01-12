@@ -1227,7 +1227,7 @@ msgstr "Napätie batérie, rozdelené:"
 #: gammu/depend/nokia/dct4.c:1047 gammu/depend/nokia/dct4.c:1048
 #: gammu/depend/nokia/dct4.c:1049
 msgid "mV"
-msgstr ""
+msgstr "mV"
 
 #: gammu/depend/nokia/dct4.c:1037
 msgid "Battery voltage, scaled:"
