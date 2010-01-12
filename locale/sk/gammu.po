@@ -1031,7 +1031,7 @@ msgstr "Streda"
 
 #: gammu/common.c:133
 msgid "Thursday"
-msgstr ""
+msgstr "Štvrtok"
 
 #: gammu/common.c:136
 msgid "Friday"
