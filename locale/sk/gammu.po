@@ -483,7 +483,7 @@ msgstr " (SIM)"
 #: gammu/backupsms.c:83
 #, c-format
 msgid "   Increase %s\n"
-msgstr "Zvýšte %s\n"
+msgstr "   Zvýšte %s\n"
 
 #: gammu/backupsms.c:106 gammu/misc.c:1314
 msgid "Deleting:"
