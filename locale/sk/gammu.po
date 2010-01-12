@@ -1548,7 +1548,7 @@ msgstr "Sťahujem \"%s\"\n"
 
 #: gammu/files.c:379
 msgid "Is a folder. Please give only file names."
-msgstr ""
+msgstr "Je zložka. Prosím zadajte iba názvy súborov."
 
 #: gammu/files.c:399 gammu/files.c:606
 #, c-format
