@@ -1800,7 +1800,7 @@ msgstr "Funkcie, ktoré sa inde nevošli"
 
 #: gammu/gammu.c:774
 msgid "Gammu information"
-msgstr ""
+msgstr "Informácie o Gammu"
 
 #: gammu/gammu.c:790
 msgid "Usage: gammu [parameters] <command> [options]"
