@@ -737,7 +737,7 @@ msgstr " v %d. týždni "
 
 #: gammu/calendar.c:323
 msgid " in "
-msgstr "v"
+msgstr " v "
 
 #: gammu/calendar.c:329 gammu/calendar.c:337
 msgid "each month"
