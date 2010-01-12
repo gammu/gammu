@@ -1449,7 +1449,7 @@ msgstr "Číslo domov"
 
 #: gammu/depend/nokia/dct4.c:1407 helper/memory-display.c:122
 msgid "Mobile number"
-msgstr ""
+msgstr "Číslo na mobil"
 
 #: gammu/depend/nokia/dct4.c:1408 helper/memory-display.c:126
 msgid "Fax number"
