@@ -963,7 +963,7 @@ msgstr "Nie je čo vložiť."
 
 #: gammu/common.c:65
 msgid "Unknown security status."
-msgstr ""
+msgstr "Neznámy stav bezpečnosti."
 
 #: gammu/common.c:76
 msgid "January"
