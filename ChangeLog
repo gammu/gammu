@@ -22,6 +22,7 @@ ChangeLog
 2010???? - 1.27.91
 
 [-] * Add ID for Nokia 6275i (bug #1096).
+[-] * Fix Windows build by not defining MSVC version.
     
 20100106 - 1.27.90
 

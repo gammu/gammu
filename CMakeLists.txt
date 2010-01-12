@@ -32,11 +32,6 @@ else (CMAKE_CROSSCOMPILING AND MINGW)
     set (GAMMU_TEST_SUFFIX "")
 endif (CMAKE_CROSSCOMPILING AND MINGW)
 
-if (MINGW)
-    # My MinGW is hacked to use msvcr90.dll, to work with Python
-    add_definitions(-D_MSVCRT_VERSION__=0x090)
-endif (MINGW)
-
 # Set version
 set (VERSION "1.27.91" CACHE INTERNAL "")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\1" "VERSION_MAJOR" "${VERSION}")
@@ -514,6 +509,7 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     # This is not supported by MinGW and is broken currently
 #    if (CMAKE_COMPILER_IS_MINGW)
 #        MACRO_TUNE_COMPILER("-specs=${Gammu_SOURCE_DIR}/cmake/mingw.spec")
+#        add_definitions(-D_MSVCRT_VERSION__=0x090)
 #    endif (CMAKE_COMPILER_IS_MINGW)
 endif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     CMAKE_COMPILER_IS_CYGWIN OR CMAKE_COMPILER_IS_GNUCXX)
