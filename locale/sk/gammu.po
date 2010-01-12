@@ -1512,7 +1512,7 @@ msgstr "S"
 
 #: gammu/files.c:158 gammu/files.c:171 gammu/files.c:197
 msgid "Part of folder"
-msgstr ""
+msgstr "Časť zložky"
 
 #: gammu/files.c:160 gammu/files.c:173 gammu/files.c:199 gammu/files.c:324
 msgid "Folder"
