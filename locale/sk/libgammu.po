@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-12 10:15+0100\n"
-"PO-Revision-Date: 2010-01-12 23:19+0200\n"
+"PO-Revision-Date: 2010-01-12 23:20+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -323,9 +323,8 @@ msgid "Could not connect to the server."
 msgstr "Nepodarilo sa pripojiť k serveru."
 
 #: libgammu/gsmcomon.c:151
-#, fuzzy
 msgid "Could not resolve the host name."
-msgstr "Nebolo možné načítať uložené správy!"
+msgstr "Nepodarilo sa preložiť meno počítača."
 
 #: libgammu/gsmcomon.c:184
 msgid "Unknown error description."
