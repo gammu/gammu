@@ -1261,7 +1261,7 @@ msgstr "Teplota batérie:"
 #: gammu/depend/nokia/dct4.c:1041 gammu/depend/nokia/dct4.c:1045
 #: gammu/depend/nokia/dct4.c:1046
 msgid "K"
-msgstr ""
+msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1042
 #, fuzzy
