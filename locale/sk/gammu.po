@@ -1302,7 +1302,7 @@ msgstr "Nabíjací prúd batérie:"
 
 #: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current Fast:"
-msgstr ""
+msgstr "Nabíjací prúd batérie pre rýchle nabíjanie:"
 
 #: gammu/depend/nokia/dct4.c:1157
 msgid "Phone seems not to support radio"
