@@ -1586,7 +1586,7 @@ msgstr "Chýba parameter!"
 #: gammu/files.c:745
 #, c-format
 msgid "ID of new file is \"%s\"\n"
-msgstr ""
+msgstr "ID vytvoreného súboru je \"%s\"\n"
 
 #: gammu/files.c:766
 #, c-format
