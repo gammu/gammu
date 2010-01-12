@@ -1665,7 +1665,7 @@ msgstr ""
 
 #: gammu/gammu.c:377
 msgid "There is NO WARRANTY, to the extent permitted by law."
-msgstr ""
+msgstr "Nie je poskytovaná ŽIADNA ZÁRUKA a to v miere povolenej zákonom."
 
 #: gammu/gammu.c:381
 msgid "Check <http://wammu.eu/gammu/> for updates."
