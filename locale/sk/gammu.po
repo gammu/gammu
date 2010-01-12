@@ -1112,7 +1112,7 @@ msgstr "%s (áno/nie) ?"
 
 #: gammu/depend/nokia/dct4.c:264
 msgid "Setting done"
-msgstr ""
+msgstr "Nastavenie vykonané"
 
 #: gammu/depend/nokia/dct4.c:302
 msgid ""
