@@ -786,7 +786,7 @@ msgstr "24 hodín"
 
 #: gammu/calendar.c:402
 msgid "Date format is "
-msgstr "Formát dátumu je"
+msgstr "Formát dátumu je "
 
 #: gammu/calendar.c:405
 msgid "DD MM YYYY"
