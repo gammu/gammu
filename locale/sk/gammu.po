@@ -1566,7 +1566,7 @@ msgstr ""
 #: gammu/files.c:442
 #, c-format
 msgid "  Saving to %s\n"
-msgstr ""
+msgstr "  Ukladám do %s\n"
 
 #: gammu/files.c:692 gammu/nokia.c:937
 #, c-format
