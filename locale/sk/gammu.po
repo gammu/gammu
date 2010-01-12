@@ -733,7 +733,7 @@ msgstr " každý %d. "
 #: gammu/calendar.c:320
 #, c-format
 msgid " in %d. week of "
-msgstr "v %d. týždni"
+msgstr " v %d. týždni "
 
 #: gammu/calendar.c:323
 msgid " in "
