@@ -1674,7 +1674,7 @@ msgstr ""
 
 #: gammu/gammu.c:407
 msgid "standard input"
-msgstr ""
+msgstr "štandardný vstup"
 
 #: gammu/gammu.c:418
 #, c-format
