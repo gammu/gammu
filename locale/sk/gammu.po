@@ -1768,7 +1768,7 @@ msgstr "Špecifické pre Siemens"
 
 #: gammu/gammu.c:764
 msgid "WAP settings and bookmarks"
-msgstr ""
+msgstr "Nastavenie WAPu a záložiek"
 
 #: gammu/gammu.c:765
 msgid "MMS and MMS settings"
