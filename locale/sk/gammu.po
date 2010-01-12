@@ -1043,7 +1043,7 @@ msgstr "Sobota"
 
 #: gammu/common.c:142
 msgid "Sunday"
-msgstr ""
+msgstr "Nedeľa"
 
 #: gammu/common.c:145
 msgid "Bad day!"
