@@ -1238,9 +1238,8 @@ msgid "Charger voltage:"
 msgstr "Nabíjacie napätie:"
 
 #: gammu/depend/nokia/dct4.c:1039
-#, fuzzy
 msgid "Charger current:"
-msgstr "Zmazať aktuálnu"
+msgstr "Nabíjací prúd:"
 
 #: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1050
 #: gammu/depend/nokia/dct4.c:1051
