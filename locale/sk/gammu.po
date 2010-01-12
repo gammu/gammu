@@ -1136,7 +1136,7 @@ msgstr "Nespustené"
 
 #: gammu/depend/nokia/dct4.c:371
 msgid "No signal"
-msgstr ""
+msgstr "Žiaden signál"
 
 #: gammu/depend/nokia/dct4.c:372 gammu/message.c:103 gammu/misc.c:2310
 msgid "Timeout"
