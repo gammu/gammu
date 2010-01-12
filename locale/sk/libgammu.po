@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-12 10:15+0100\n"
-"PO-Revision-Date: 2010-01-12 23:20+0200\n"
+"PO-Revision-Date: 2010-01-12 23:21+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -134,11 +134,10 @@ msgid "Invalid location. Maybe too high?"
 msgstr ""
 
 #: libgammu/gsmcomon.c:108
-#, fuzzy
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
-"Táto funkcia nie je pre váš telefón implementovaná. Ak chcete pomôcť s "
-"implementáciou, kontaktujte prosím autorov."
+"Táto funkcia nie je implementovaná. Ak chcete pomôcť s implementáciou, "
+"kontaktujte prosím autorov."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
