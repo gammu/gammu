@@ -1752,7 +1752,7 @@ msgstr "Čas, dátum a budíky"
 
 #: gammu/gammu.c:753
 msgid "Categories"
-msgstr ""
+msgstr "Kategórie"
 
 #: gammu/gammu.c:755
 msgid "Backing up and restoring"
