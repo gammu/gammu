@@ -1776,7 +1776,7 @@ msgstr "MMS a ich nastavenia"
 
 #: gammu/gammu.c:766
 msgid "Phone tests"
-msgstr ""
+msgstr "Testy telefónu"
 
 #: gammu/gammu.c:767
 msgid "FM radio"
