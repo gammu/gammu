@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 15:10+0100\n"
-"PO-Revision-Date: 2010-01-12 22:43+0200\n"
+"PO-Revision-Date: 2010-01-12 22:44+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1560,6 +1560,8 @@ msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
+"Kontrólny súčet vypočítaný telefónom sa nezhoduje so súčtom ktorý vypočítal "
+"Gammu. Súbor je poškodený alebo je chyba v Gammu."
 
 #: gammu/files.c:442
 #, c-format
