@@ -1149,7 +1149,7 @@ msgstr "Neznámy (%x)"
 
 #: gammu/depend/nokia/dct4.c:375
 msgid " (startup)"
-msgstr ""
+msgstr " (úvodný)"
 
 #: gammu/depend/nokia/dct4.c:496 gammu/depend/nokia/dct4.c:1005
 msgid "Press any key to continue..."
