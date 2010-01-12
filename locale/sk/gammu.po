@@ -967,7 +967,7 @@ msgstr "Neznámy bezpečnostný stav."
 
 #: gammu/common.c:76
 msgid "January"
-msgstr ""
+msgstr "Január"
 
 #: gammu/common.c:79
 msgid "February"
