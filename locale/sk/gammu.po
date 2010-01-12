@@ -1252,7 +1252,7 @@ msgstr "Indikátor veľkosti batérie:"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Ohms"
-msgstr ""
+msgstr "Ohmov"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Battery temperature:"
