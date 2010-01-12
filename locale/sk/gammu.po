@@ -1128,7 +1128,7 @@ msgstr "Prešlo"
 
 #: gammu/depend/nokia/dct4.c:369
 msgid "Fail"
-msgstr ""
+msgstr "Zlyhalo"
 
 #: gammu/depend/nokia/dct4.c:370
 msgid "Not executed"
