@@ -1332,7 +1332,7 @@ msgstr " (Text: meno (vždy len jedno))"
 
 #: gammu/depend/nokia/dct4.c:1366
 msgid " (Text: email address)"
-msgstr "(Text: emailová adresa)"
+msgstr " (Text: emailová adresa)"
 
 #: gammu/depend/nokia/dct4.c:1367
 msgid " (Text: postal address)"
