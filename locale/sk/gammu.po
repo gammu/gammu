@@ -1470,7 +1470,7 @@ msgstr "Neznáme číslo"
 #: gammu/depend/nokia/dct4.c:1435
 #, c-format
 msgid "ERROR: unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "CHYBA: neznámy typ pamäte (\"%s\")\n"
 
 #: gammu/files.c:48
 msgid "Phone memory"
