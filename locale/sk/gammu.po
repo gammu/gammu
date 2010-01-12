@@ -1624,7 +1624,7 @@ msgstr "Zakompilované vlastnosti:"
 
 #: gammu/gammu.c:146
 msgid "Protocols"
-msgstr ""
+msgstr "Protokoly"
 
 #: gammu/gammu.c:214
 msgid "Phones"
