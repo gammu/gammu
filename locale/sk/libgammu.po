@@ -105,7 +105,7 @@ msgstr "Neznámy typ pripojenia. Skontrolujte konfiguračný súbor."
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr ""
+msgstr "Neznámy typ telefónu. Skontrolujte konfiguračný súbor."
 
 #: libgammu/gsmcomon.c:103
 msgid ""
