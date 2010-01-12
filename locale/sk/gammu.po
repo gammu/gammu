@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 15:10+0100\n"
-"PO-Revision-Date: 2010-01-12 22:38+0200\n"
+"PO-Revision-Date: 2010-01-12 22:39+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1483,7 +1483,7 @@ msgstr "%i bajtov (voľných %i bajtov, použitých %i bajtov)"
 
 #: gammu/files.c:55
 msgid "Usage details"
-msgstr ""
+msgstr "Podrobnosti o používaní"
 
 #: gammu/files.c:56
 #, c-format
