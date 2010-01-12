@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 15:10+0100\n"
-"PO-Revision-Date: 2010-01-12 22:37+0200\n"
+"PO-Revision-Date: 2010-01-12 22:38+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1474,7 +1474,7 @@ msgstr "CHYBA: neznámy typ pamäte (\"%s\")\n"
 
 #: gammu/files.c:48
 msgid "Phone memory"
-msgstr ""
+msgstr "Pamäť telefónu"
 
 #: gammu/files.c:49
 #, c-format
