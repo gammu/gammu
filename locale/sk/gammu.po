@@ -999,7 +999,7 @@ msgstr "August"
 
 #: gammu/common.c:100
 msgid "September"
-msgstr ""
+msgstr "September"
 
 #: gammu/common.c:103
 msgid "October"
