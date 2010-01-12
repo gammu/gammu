@@ -1648,6 +1648,7 @@ msgstr "Nová testovacia verzia Gammu je dostupná! (%s namiesto of %s)\n"
 msgid ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
+"Copyright (C) 2003 - 2010 Michal Čihař <michal@cihar.com> a ďalší autori."
 
 #: gammu/gammu.c:373
 msgid ""
