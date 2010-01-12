@@ -1424,7 +1424,7 @@ msgstr ",typ"
 
 #: gammu/depend/nokia/dct4.c:1393
 msgid "string"
-msgstr ""
+msgstr "reťazec"
 
 #: gammu/depend/nokia/dct4.c:1394
 msgid "byte"
