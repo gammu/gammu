@@ -1027,7 +1027,7 @@ msgstr "Utorok"
 
 #: gammu/common.c:130
 msgid "Wednesday"
-msgstr ""
+msgstr "Streda"
 
 #: gammu/common.c:133
 msgid "Thursday"
