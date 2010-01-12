@@ -1172,7 +1172,7 @@ msgstr "Skúšam %i\n"
 #: gammu/depend/nokia/dct4.c:554
 #, c-format
 msgid "Security code is %s\n"
-msgstr ""
+msgstr "Bezpečnostný kód je %s\n"
 
 #: gammu/depend/nokia/dct4.c:799
 #, c-format
