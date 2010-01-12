@@ -1632,7 +1632,7 @@ msgstr "Telefóny"
 
 #: gammu/gammu.c:259
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Rôzne"
 
 #: gammu/gammu.c:338
 #, c-format
