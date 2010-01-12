@@ -700,7 +700,7 @@ msgid "for %d time "
 msgid_plural "for %d times "
 msgstr[0] "%d-krát"
 msgstr[1] "%d-krát"
-msgstr[2] ""
+msgstr[2] "%d-krát"
 
 #: gammu/calendar.c:302
 msgid "forever"
