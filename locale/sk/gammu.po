@@ -1215,7 +1215,7 @@ msgstr "nespracovaný výsledok %10i "
 #: gammu/depend/nokia/dct4.c:1023
 #, c-format
 msgid "unit result %10i "
-msgstr ""
+msgstr "spracovaný výsledok %10i "
 
 #: gammu/depend/nokia/dct4.c:1036
 msgid "Battery voltage, divided:"
