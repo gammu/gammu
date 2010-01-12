@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 15:10+0100\n"
-"PO-Revision-Date: 2010-01-12 22:58+0200\n"
+"PO-Revision-Date: 2010-01-12 22:59+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1620,7 +1620,7 @@ msgstr "[Gammu verzia %s skompilovaná %s dňa %s s použitím %s]"
 
 #: gammu/gammu.c:144
 msgid "Compiled in features:"
-msgstr ""
+msgstr "Zakompilované vlastnosti:"
 
 #: gammu/gammu.c:146
 msgid "Protocols"
