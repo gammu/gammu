@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 15:10+0100\n"
-"PO-Revision-Date: 2010-01-12 22:15+0200\n"
+"PO-Revision-Date: 2010-01-12 22:16+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1294,7 +1294,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1049
 msgid "Initial battery voltage:"
-msgstr ""
+msgstr "Pôvodné napätie batérie:"
 
 #: gammu/depend/nokia/dct4.c:1050
 #, fuzzy
