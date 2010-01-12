@@ -12,7 +12,7 @@ if [ ! -z "$2" ] ; then
 fi
 
 sftp nijel,gammu@frs.sourceforge.net <<EOT
-cd /home/frs/project/g/ga/gammu
+cd /home/frs/project/g/ga/gammu/gammu
 mkdir $REL
 cd $REL
 put Gammu-$REL-Windows-Minimal.exe
