@@ -1023,7 +1023,7 @@ msgstr "Pondelok"
 
 #: gammu/common.c:127
 msgid "Tuesday"
-msgstr ""
+msgstr "Utorok"
 
 #: gammu/common.c:130
 msgid "Wednesday"
