@@ -1219,7 +1219,7 @@ msgstr "spracovaný výsledok %10i "
 
 #: gammu/depend/nokia/dct4.c:1036
 msgid "Battery voltage, divided:"
-msgstr "Napetie batérie, rozdelené:"
+msgstr "Napätie batérie, rozdelené:"
 
 #: gammu/depend/nokia/dct4.c:1036 gammu/depend/nokia/dct4.c:1037
 #: gammu/depend/nokia/dct4.c:1038 gammu/depend/nokia/dct4.c:1042
