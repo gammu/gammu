@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-12 10:15+0100\n"
-"PO-Revision-Date: 2010-01-12 23:21+0200\n"
+"PO-Revision-Date: 2010-01-12 23:22+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -172,12 +172,11 @@ msgid "Phone is not connected."
 msgstr "Telefón nie je pripojený."
 
 #: libgammu/gsmcomon.c:117
-#, fuzzy
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
 msgstr ""
-"Táto funkcia nie je pre váš telefón implementovaná. Ak chcete pomôcť s "
+"Na implementácii tejto funkcie sa pracuje. Ak chcete pomôcť s "
 "implementáciou, kontaktujte prosím autorov."
 
 #: libgammu/gsmcomon.c:118
