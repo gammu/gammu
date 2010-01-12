@@ -1388,7 +1388,7 @@ msgstr " (Priradenie hlasového vytáčania)"
 
 #: gammu/depend/nokia/dct4.c:1382
 msgid " (Picture ID assignment)"
-msgstr "(Priradenie ID obrázku)"
+msgstr " (Priradenie ID obrázku)"
 
 #: gammu/depend/nokia/dct4.c:1383
 msgid " (Ringtone ID from filesystem/internal)"
