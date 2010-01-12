@@ -478,7 +478,7 @@ msgstr "Zálohovať SMS so zložky \"%s\"%s?"
 
 #: gammu/backupsms.c:57 gammu/backupsms.c:182
 msgid " (SIM)"
-msgstr "(SIM)"
+msgstr " (SIM)"
 
 #: gammu/backupsms.c:83
 #, c-format
