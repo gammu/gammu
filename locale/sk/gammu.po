@@ -1553,7 +1553,7 @@ msgstr "Je zložka. Prosím zadajte iba názvy súborov."
 #: gammu/files.c:399 gammu/files.c:606
 #, c-format
 msgid " (%02i:%02i minutes left)"
-msgstr "(zostáva %02i:%02i minút)"
+msgstr " (zostáva %02i:%02i minút)"
 
 #: gammu/files.c:410 gammu/files.c:617
 msgid ""
