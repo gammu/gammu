@@ -1103,7 +1103,7 @@ msgstr "NIE (vždy)"
 
 #: gammu/depend/nokia/dct4.c:65
 msgid "Can't do it with current phone protocol"
-msgstr ""
+msgstr "Operáciu nie je možné uskutočniť so sučasným protokolom"
 
 #: gammu/depend/nokia/dct4.c:79
 #, c-format
