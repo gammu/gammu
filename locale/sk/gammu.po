@@ -3656,9 +3656,9 @@ msgid "ToDo note not found in file"
 msgstr ""
 
 #: helper/message-cmdline.c:1040
-#, fuzzy, c-format
+#, c-format
 msgid "Wrong message length (\"%s\")\n"
-msgstr "Zapisujem správu(y)..."
+msgstr "Chybná dĺžka správy (\"%s\")\n"
 
 #: helper/message-cmdline.c:1063
 #, c-format
