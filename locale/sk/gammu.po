@@ -1792,7 +1792,7 @@ msgstr "Nastavenie telefónu"
 
 #: gammu/gammu.c:771
 msgid "Dumps decoding"
-msgstr ""
+msgstr "Dekódovanie výpisov"
 
 #: gammu/gammu.c:773
 msgid "Functions that don't fit elsewhere"
