@@ -1461,7 +1461,7 @@ msgstr "Číslo do kancelárie"
 
 #: gammu/depend/nokia/dct4.c:1410
 msgid "Standard number"
-msgstr ""
+msgstr "Štandarndé číslo"
 
 #: gammu/depend/nokia/dct4.c:1411
 msgid "Unknown number"
