@@ -1748,7 +1748,7 @@ msgstr "Poznámky"
 
 #: gammu/gammu.c:752
 msgid "Date, time and alarms"
-msgstr ""
+msgstr "Čas, dátum a budíky"
 
 #: gammu/gammu.c:753
 msgid "Categories"
