@@ -1420,7 +1420,7 @@ msgstr "(ID skupiny (6230i a staršie))"
 
 #: gammu/depend/nokia/dct4.c:1391
 msgid ", type "
-msgstr ",typ"
+msgstr ",typ "
 
 #: gammu/depend/nokia/dct4.c:1393
 msgid "string"
