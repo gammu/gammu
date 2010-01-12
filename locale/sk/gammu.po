@@ -1248,7 +1248,7 @@ msgstr "mA"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Battery size indicator:"
-msgstr ""
+msgstr "Indikátor veľkosti batérie:"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Ohms"
