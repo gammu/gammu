@@ -1108,7 +1108,7 @@ msgstr "Operáciu nie je možné uskutočniť so sučasným protokolom"
 #: gammu/depend/nokia/dct4.c:79
 #, c-format
 msgid "%s (yes/no) ? "
-msgstr "%s (áno/nie) ?"
+msgstr "%s (áno/nie) ? "
 
 #: gammu/depend/nokia/dct4.c:264
 msgid "Setting done"
