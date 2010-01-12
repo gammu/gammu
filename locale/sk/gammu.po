@@ -1364,7 +1364,7 @@ msgstr " (Rýchla voľba)"
 
 #: gammu/depend/nokia/dct4.c:1374
 msgid " (Caller group: logo)"
-msgstr "(Skupina: logo)"
+msgstr " (Skupina: logo)"
 
 #: gammu/depend/nokia/dct4.c:1375
 msgid " (Caller group: is logo on ?)"
