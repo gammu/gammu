@@ -1457,7 +1457,7 @@ msgstr "Faxové číslo"
 
 #: gammu/depend/nokia/dct4.c:1409
 msgid "Office number"
-msgstr ""
+msgstr "Číslo do kancelárie"
 
 #: gammu/depend/nokia/dct4.c:1410
 msgid "Standard number"
