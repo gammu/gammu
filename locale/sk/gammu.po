@@ -1396,7 +1396,7 @@ msgstr "(ID zvonenia zo súboru/interné)"
 
 #: gammu/depend/nokia/dct4.c:1384
 msgid " (Text: user ID)"
-msgstr ""
+msgstr "(Text: ID užívateľa)"
 
 #: gammu/depend/nokia/dct4.c:1385
 msgid " (conversation list ID)"
