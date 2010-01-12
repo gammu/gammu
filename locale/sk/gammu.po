@@ -1581,7 +1581,7 @@ msgstr "Aký typ súboru (\"%s\") ?\n"
 #: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:946
 #: helper/message-cmdline.c:1292
 msgid "Parameter missing!"
-msgstr ""
+msgstr "Chýba parameter!"
 
 #: gammu/files.c:745
 #, c-format
