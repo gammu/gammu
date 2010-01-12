@@ -1328,7 +1328,7 @@ msgstr " (Rýchla voľba na SIM)"
 
 #: gammu/depend/nokia/dct4.c:1365
 msgid " (Text: name (always the only one))"
-msgstr "(Text: meno (vždy len jedno))"
+msgstr " (Text: meno (vždy len jedno))"
 
 #: gammu/depend/nokia/dct4.c:1366
 msgid " (Text: email address)"
