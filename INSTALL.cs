@@ -183,8 +183,8 @@ install mingw32. Build is then quite simple:
 mkdir build-win32 cd build-win32 cmake
 .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake make
 
-If your MinGW cross compiler binaries are not found automatically, you can
-specify their different names in cmake/Toolchain-mingw32.cmake.
+Pokud nebyl váš kompilátor pro MinGW nalezen automaticky, můžete zadat jeho
+jméno v cmake/Toolchain-mingw32.cmake.
 
 Pro kompilaci statické knihovny bez jakýhkoliv externích závislostí spusťte:
 

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 16:42+0100\n"
-"PO-Revision-Date: 2010-01-08 16:42+0100\n"
+"PO-Revision-Date: 2010-01-12 11:09+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1263,8 +1263,8 @@ msgid ""
 "and text will be longer than 1 SMS, will be split into more linked SMS."
 "Coding type (SMS default alphabet/Unicode) is set according to input text"
 msgstr ""
-"B<-autolen len> - určí, kolik znaků bude načteno. Pokud bude zadaný text delší, "
-"než se vejde do jedné zprávy, bude automaticky rozdělen do více zpráv."
+"B<-autolen len> - určí, kolik znaků bude načteno. Pokud bude zadaný text "
+"delší, než se vejde do jedné zprávy, bude automaticky rozdělen do více zpráv."
 
 # type: Plain text
 #. type: Plain text
@@ -10537,6 +10537,8 @@ msgid ""
 "If your MinGW cross compiler binaries are not found automatically, you can "
 "specify their different names in cmake/Toolchain-mingw32.cmake."
 msgstr ""
+"Pokud nebyl váš kompilátor pro MinGW nalezen automaticky, můžete zadat jeho "
+"jméno v cmake/Toolchain-mingw32.cmake."
 
 #. type: Plain text
 #: INSTALL:193
