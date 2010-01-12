@@ -1091,7 +1091,7 @@ msgstr "JEDNO"
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:352 gammu/common.c:365
 msgid "NONE"
-msgstr ""
+msgstr "NIČ"
 
 #: gammu/common.c:354
 msgid "YES (always)"
