@@ -1076,7 +1076,7 @@ msgstr "áno"
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:351 gammu/common.c:383 gammu/depend/nokia/dct4.c:85
 msgid "no"
-msgstr ""
+msgstr "nie"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:352 gammu/common.c:375
