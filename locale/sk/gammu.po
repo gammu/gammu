@@ -1081,7 +1081,7 @@ msgstr "nie"
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:352 gammu/common.c:375
 msgid "ALL"
-msgstr ""
+msgstr "VŠETKO"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:352 gammu/common.c:370
