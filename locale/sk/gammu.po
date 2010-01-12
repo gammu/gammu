@@ -1177,7 +1177,7 @@ msgstr "Bezpečnostný kód je %s\n"
 #: gammu/depend/nokia/dct4.c:799
 #, c-format
 msgid "device address %02x%02x%02x%02x%02x%02x\n"
-msgstr ""
+msgstr "adresa zariadenia je %02x%02x%02x%02x%02x%02x\n"
 
 #: gammu/depend/nokia/dct4.c:823
 msgid "Old simlock"
