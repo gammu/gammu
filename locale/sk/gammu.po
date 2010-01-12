@@ -1783,9 +1783,8 @@ msgid "FM radio"
 msgstr "FM rádio"
 
 #: gammu/gammu.c:768
-#, fuzzy
 msgid "Phone information"
-msgstr "&Telefón"
+msgstr "Informácie o telefóne"
 
 #: gammu/gammu.c:769
 msgid "Phone settings"
