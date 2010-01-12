@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 15:10+0100\n"
-"PO-Revision-Date: 2010-01-12 22:28+0200\n"
+"PO-Revision-Date: 2010-01-12 22:29+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1392,7 +1392,7 @@ msgstr "(Priradenie ID obrázku)"
 
 #: gammu/depend/nokia/dct4.c:1383
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr ""
+msgstr "(ID zvonenia zo súboru/interné)"
 
 #: gammu/depend/nokia/dct4.c:1384
 msgid " (Text: user ID)"
