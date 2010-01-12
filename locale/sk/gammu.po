@@ -1488,7 +1488,7 @@ msgstr "Podrobnosti o používaní"
 #: gammu/files.c:56
 #, c-format
 msgid "images: %i, sounds: %i, themes: %i"
-msgstr ""
+msgstr "obrázky: %i, zvuky: %i, témy: %i"
 
 #. l10n: One char to indicate protected file
 #: gammu/files.c:119 gammu/files.c:208 gammu/files.c:329
