@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-12 10:15+0100\n"
-"PO-Revision-Date: 2010-01-12 23:24+0200\n"
+"PO-Revision-Date: 2010-01-12 23:25+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -24,9 +24,7 @@ msgstr "Bez chyby."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr ""
-"Chyba pri prístupe k zariadeniu. Neznáme, zaneprázdnené alebo problém s "
-"právami."
+msgstr "Chyba pri otváraní zariadenia. Prístup bol zamietnutý."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
