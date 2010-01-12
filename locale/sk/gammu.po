@@ -1368,7 +1368,7 @@ msgstr " (Skupina: logo)"
 
 #: gammu/depend/nokia/dct4.c:1375
 msgid " (Caller group: is logo on ?)"
-msgstr "(Skupina: je logo zapnuté?)"
+msgstr " (Skupina: je logo zapnuté?)"
 
 #: gammu/depend/nokia/dct4.c:1376
 msgid " (Caller group number in pbk entry)"
