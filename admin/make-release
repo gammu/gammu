@@ -6,6 +6,8 @@
 set -e
 
 repo=gammu
+toolchain=cmake/Toolchain-mingw32msvc.cmake
+#toolchain=cmake/Toolchain-mingw32.cmake
 
 version=`sed -n 's/set (VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
 
@@ -91,7 +93,7 @@ echo 'Building Windows version...'
 mkdir build-win-shared
 cd build-win-shared
 cmake ../$repo-$version \
-    -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32msvc.cmake \
+    -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/$toolchain \
     -DBUILD_SHARED_LIBS=ON \
     -DDLL_LIBMYSQL.DLL=~/win-cross/mysql/bin/libmysql.dll \
     -DMYSQL_INCLUDE_DIR=~/win-cross/mysql/include \
@@ -112,7 +114,7 @@ mkdir build-win-minimal
 echo "Building minimal Windows version..."
 cd $tmp/build-win-minimal
 cmake ../$repo-$version \
-    -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32msvc.cmake \
+    -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/$toolchain \
     -DBUILD_SHARED_LIBS=OFF \
     $CMAKE_EXTRA \
     -DCPACK_SYSTEM_NAME=Windows-Minimal \
@@ -139,7 +141,7 @@ for py in 2.6 ; do
     echo "Building minimal Windows version with Python $py..."
     cd $tmp/build-win-python
     cmake ../$repo-$version \
-        -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32msvc.cmake \
+        -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/$toolchain \
         -DBUILD_SHARED_LIBS=OFF \
         $CMAKE_EXTRA \
         -DCPACK_SYSTEM_NAME=Windows-Minimal \
