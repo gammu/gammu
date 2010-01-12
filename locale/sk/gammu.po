@@ -1051,7 +1051,7 @@ msgstr "Nesprávny deň!"
 
 #: gammu/common.c:192
 msgid "Security status"
-msgstr ""
+msgstr "Bezpečnostný stav."
 
 #: gammu/common.c:308 gammu/misc.c:1102 gammu/misc.c:1117 gammu/misc.c:1124
 #: gammu/misc.c:1131 gammu/misc.c:1161
