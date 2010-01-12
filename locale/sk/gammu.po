@@ -1244,7 +1244,7 @@ msgstr "Nabíjací prúd:"
 #: gammu/depend/nokia/dct4.c:1039 gammu/depend/nokia/dct4.c:1050
 #: gammu/depend/nokia/dct4.c:1051
 msgid "mA"
-msgstr ""
+msgstr "mA"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Battery size indicator:"
