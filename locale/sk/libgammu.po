@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-12 10:15+0100\n"
-"PO-Revision-Date: 2009-12-11 20:45+0200\n"
+"PO-Revision-Date: 2010-01-12 23:19+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sk\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Pootle 1.2.1\n"
+"X-Generator: Pootle 2.0.0\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -72,9 +72,8 @@ msgid "Error during reading from the device."
 msgstr "Chyba počas čitania zo zariadenia."
 
 #: libgammu/gsmcomon.c:96
-#, fuzzy
 msgid "Can't set parity on the device."
-msgstr "Pripojiť zariadenie"
+msgstr "Pripojiť zariadenie."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
