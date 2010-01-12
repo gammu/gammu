@@ -1306,7 +1306,7 @@ msgstr "Nabíjací prúd batérie pre rýchle nabíjanie:"
 
 #: gammu/depend/nokia/dct4.c:1157
 msgid "Phone seems not to support radio"
-msgstr ""
+msgstr "Telefń pravdepodobne nepodporuje rádio"
 
 #: gammu/depend/nokia/dct4.c:1164
 msgid "Please connect headset. Required as antenna"
