@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 15:10+0100\n"
-"PO-Revision-Date: 2010-01-12 21:59+0200\n"
+"PO-Revision-Date: 2010-01-12 22:00+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1061,7 +1061,7 @@ msgstr "Je potrebných viac parametrov!"
 #: gammu/common.c:314 gammu/common.c:324 gammu/depend/nokia/dct4.c:686
 #: gammu/misc.c:1277
 msgid "Please enumerate locations from 1"
-msgstr ""
+msgstr "Prosím očíslujte pozície od 1"
 
 #: gammu/common.c:329
 msgid "Swapping start and end location"
