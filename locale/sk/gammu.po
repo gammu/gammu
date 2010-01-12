@@ -1011,7 +1011,7 @@ msgstr "November"
 
 #: gammu/common.c:109
 msgid "December"
-msgstr ""
+msgstr "December"
 
 #: gammu/common.c:112
 msgid "Bad month!"
