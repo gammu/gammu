@@ -1503,7 +1503,7 @@ msgstr "R"
 #. l10n: One char to indicate hidden file
 #: gammu/files.c:131 gammu/files.c:212 gammu/files.c:333
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #. l10n: One char to indicate system file
 #: gammu/files.c:137 gammu/files.c:214 gammu/files.c:335
