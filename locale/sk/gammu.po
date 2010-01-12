@@ -1436,7 +1436,7 @@ msgstr "2 bajty"
 
 #: gammu/depend/nokia/dct4.c:1396
 msgid "4 bytes"
-msgstr ""
+msgstr "4 bajty"
 
 #: gammu/depend/nokia/dct4.c:1403
 #, c-format
