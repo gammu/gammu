@@ -1278,7 +1278,7 @@ msgstr "Svetelný senzor:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Power amplifier temperature:"
-msgstr ""
+msgstr "Teplota zosilňovača:"
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "VCXO temperature:"
