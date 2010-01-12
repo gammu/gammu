@@ -1392,7 +1392,7 @@ msgstr " (Priradenie ID obrázku)"
 
 #: gammu/depend/nokia/dct4.c:1383
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr "(ID zvonenia zo súboru/interné)"
+msgstr " (ID zvonenia zo súboru/interné)"
 
 #: gammu/depend/nokia/dct4.c:1384
 msgid " (Text: user ID)"
