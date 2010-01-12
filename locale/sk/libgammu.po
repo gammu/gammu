@@ -127,7 +127,7 @@ msgstr "Položka je prázdna."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
-msgstr "Bezpečnostná chyba. Pravdepodobne chýba PIN."
+msgstr "Bezpečnostná chyba. Pravdepodobne chýba PIN?"
 
 #: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
