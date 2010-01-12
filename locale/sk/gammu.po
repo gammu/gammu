@@ -1687,7 +1687,7 @@ msgstr "Chyba pri načítaní dávky! Končím.\n"
 
 #: gammu/gammu.c:431
 msgid "Batch processed, terminating.\n"
-msgstr ""
+msgstr "Dávka spracovaná, končím.\n"
 
 #: gammu/gammu.c:468
 #, c-format
