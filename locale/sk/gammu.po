@@ -1380,7 +1380,7 @@ msgstr " (Text: URL adresa)"
 
 #: gammu/depend/nokia/dct4.c:1380
 msgid " (SMS list assignment)"
-msgstr "(Priradenie SMS zoznamu)"
+msgstr " (Priradenie SMS zoznamu)"
 
 #: gammu/depend/nokia/dct4.c:1381
 msgid " (Voice tag assignment)"
