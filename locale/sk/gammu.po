@@ -1185,7 +1185,7 @@ msgstr "Starý simlock"
 
 #: gammu/depend/nokia/dct4.c:844
 msgid "Simlock data"
-msgstr ""
+msgstr "Údaje simlocku"
 
 #: gammu/depend/nokia/dct4.c:871
 msgid "Bluetooth"
