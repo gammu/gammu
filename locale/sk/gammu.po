@@ -1310,7 +1310,7 @@ msgstr "Telefón pravdepodobne nepodporuje rádio"
 
 #: gammu/depend/nokia/dct4.c:1164
 msgid "Please connect headset. Required as antenna"
-msgstr ""
+msgstr "Prosím pripojte headset. Je potrebný ako anténa"
 
 #: gammu/depend/nokia/dct4.c:1359
 #, c-format
