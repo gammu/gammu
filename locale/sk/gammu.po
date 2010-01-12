@@ -1167,7 +1167,7 @@ msgstr "Neznáma príčina. Nepodarilo sa zresetovať váš bezpečnostný kód"
 #: gammu/depend/nokia/dct4.c:535
 #, c-format
 msgid "Trying %i\n"
-msgstr ""
+msgstr "Skúšam %i\n"
 
 #: gammu/depend/nokia/dct4.c:554
 #, c-format
