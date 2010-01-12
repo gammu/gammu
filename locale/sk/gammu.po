@@ -1720,7 +1720,7 @@ msgstr "SMS a EMS"
 
 #: gammu/gammu.c:745
 msgid "Memory (phonebooks and calls)"
-msgstr ""
+msgstr "Pamäť (kontakty a hovory)"
 
 #: gammu/gammu.c:746
 msgid "Filesystem"
