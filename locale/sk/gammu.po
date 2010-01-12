@@ -1611,7 +1611,7 @@ msgstr "Sieť"
 #: gammu/misc.c:1811 gammu/misc.c:1850 gammu/misc.c:2115 gammu/mms.c:112
 #: helper/memory-display.c:137 helper/message-display.c:223
 msgid "Name"
-msgstr "Položka"
+msgstr "Meno"
 
 #: gammu/gammu.c:135
 #, c-format
