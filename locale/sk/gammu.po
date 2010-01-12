@@ -1445,7 +1445,7 @@ msgstr "%i typov telefónnych čísel\n"
 
 #: gammu/depend/nokia/dct4.c:1406 helper/memory-display.c:127
 msgid "Home number"
-msgstr ""
+msgstr "Číslo domov"
 
 #: gammu/depend/nokia/dct4.c:1407 helper/memory-display.c:122
 msgid "Mobile number"
