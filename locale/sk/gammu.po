@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 15:10+0100\n"
-"PO-Revision-Date: 2010-01-12 23:06+0200\n"
+"PO-Revision-Date: 2010-01-12 23:07+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1692,7 +1692,7 @@ msgstr "Dávka spracovaná, končím.\n"
 #: gammu/gammu.c:468
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
-msgstr ""
+msgstr "Spúšťam dávku \"%s\" - príkaz %i: %s\n"
 
 #: gammu/gammu.c:491
 msgid ""
