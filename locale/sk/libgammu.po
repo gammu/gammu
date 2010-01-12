@@ -319,9 +319,8 @@ msgstr ""
 "reštartujte."
 
 #: libgammu/gsmcomon.c:150
-#, fuzzy
 msgid "Could not connect to the server."
-msgstr "Pripojujem sa k IMAP serveru..."
+msgstr "Nepodarilo sa pripojiť k serveru."
 
 #: libgammu/gsmcomon.c:151
 #, fuzzy
