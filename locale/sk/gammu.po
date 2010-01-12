@@ -1724,7 +1724,7 @@ msgstr "Pamäť (kontakty a hovory)"
 
 #: gammu/gammu.c:746
 msgid "Filesystem"
-msgstr ""
+msgstr "Súbory"
 
 #: gammu/gammu.c:747
 msgid "Logo and pictures"
