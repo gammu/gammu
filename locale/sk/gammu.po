@@ -975,7 +975,7 @@ msgstr "Február"
 
 #: gammu/common.c:82
 msgid "March"
-msgstr ""
+msgstr "Marec"
 
 #: gammu/common.c:85
 msgid "April"
