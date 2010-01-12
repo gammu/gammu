@@ -1530,7 +1530,7 @@ msgstr "Využité v telefóne: %li bajtov"
 #: gammu/files.c:226
 #, c-format
 msgid ", used in card: %li bytes"
-msgstr ""
+msgstr ",využité na karte: %li bajtov"
 
 #: gammu/files.c:256
 #, c-format
