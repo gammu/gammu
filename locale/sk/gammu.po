@@ -983,7 +983,7 @@ msgstr "Apríľ"
 
 #: gammu/common.c:88
 msgid "May"
-msgstr ""
+msgstr "Máj"
 
 #: gammu/common.c:91
 msgid "June"
