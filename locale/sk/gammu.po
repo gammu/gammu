@@ -1071,7 +1071,7 @@ msgstr "Vymieňam začiatok a koniec"
 #: gammu/common.c:351 gammu/common.c:380 gammu/depend/nokia/dct4.c:84
 #: gammu/misc.c:1669
 msgid "yes"
-msgstr ""
+msgstr "áno"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:351 gammu/common.c:383 gammu/depend/nokia/dct4.c:85
