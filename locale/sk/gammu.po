@@ -1340,7 +1340,7 @@ msgstr " (Text: poštová adresa)"
 
 #: gammu/depend/nokia/dct4.c:1368
 msgid " (Text: note)"
-msgstr "(Text: poznámka)"
+msgstr " (Text: poznámka)"
 
 #: gammu/depend/nokia/dct4.c:1369
 msgid " (Phone number)"
