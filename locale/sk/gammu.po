@@ -1162,7 +1162,7 @@ msgstr "Bezpečnostný k nastavený na \"12345\"\n"
 
 #: gammu/depend/nokia/dct4.c:511
 msgid "Unknown reason. Can't reset your security code"
-msgstr ""
+msgstr "Neznáma príčina. Nepodarilo sa zresetovať váš bezpečnostný k"
 
 #: gammu/depend/nokia/dct4.c:535
 #, c-format
