@@ -1019,7 +1019,7 @@ msgstr "Nespávny mesiac!"
 
 #: gammu/common.c:124
 msgid "Monday"
-msgstr ""
+msgstr "Pondelok"
 
 #: gammu/common.c:127
 msgid "Tuesday"
