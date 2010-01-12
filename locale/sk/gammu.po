@@ -1132,7 +1132,7 @@ msgstr "Zlyhalo"
 
 #: gammu/depend/nokia/dct4.c:370
 msgid "Not executed"
-msgstr ""
+msgstr "Nespustené"
 
 #: gammu/depend/nokia/dct4.c:371
 msgid "No signal"
