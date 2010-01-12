@@ -1039,7 +1039,7 @@ msgstr "Piatok"
 
 #: gammu/common.c:139
 msgid "Saturday"
-msgstr ""
+msgstr "Sobota"
 
 #: gammu/common.c:142
 msgid "Sunday"
