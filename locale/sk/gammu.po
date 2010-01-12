@@ -1679,7 +1679,7 @@ msgstr "štandardný vstup"
 #: gammu/gammu.c:418
 #, c-format
 msgid "Batch file could not be opened: %s\n"
-msgstr ""
+msgstr "Dávkový súbor nemohol byť otvorený: %s\n"
 
 #: gammu/gammu.c:429
 msgid "Error reading batch! Terminating.\n"
