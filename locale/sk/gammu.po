@@ -1099,7 +1099,7 @@ msgstr "ÁNO (vždy)"
 
 #: gammu/common.c:358
 msgid "NO (always)"
-msgstr ""
+msgstr "NIE (vždy)"
 
 #: gammu/depend/nokia/dct4.c:65
 msgid "Can't do it with current phone protocol"
