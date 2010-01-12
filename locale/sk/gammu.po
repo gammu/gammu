@@ -1086,7 +1086,7 @@ msgstr "VŠETKO"
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:352 gammu/common.c:370
 msgid "ONLY"
-msgstr ""
+msgstr "JEDNO"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:352 gammu/common.c:365
