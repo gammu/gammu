@@ -1428,7 +1428,7 @@ msgstr "reťazec"
 
 #: gammu/depend/nokia/dct4.c:1394
 msgid "byte"
-msgstr ""
+msgstr "bajt"
 
 #: gammu/depend/nokia/dct4.c:1395
 msgid "2 bytes"
