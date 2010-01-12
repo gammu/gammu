@@ -1616,7 +1616,7 @@ msgstr "Meno"
 #: gammu/gammu.c:135
 #, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
-msgstr ""
+msgstr "[Gammu verzia %s skompilovaná %s dňa %s s použitím %s]"
 
 #: gammu/gammu.c:144
 msgid "Compiled in features:"
