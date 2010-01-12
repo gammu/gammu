@@ -1282,7 +1282,7 @@ msgstr "Teplota zosilňovača:"
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "VCXO temperature:"
-msgstr ""
+msgstr "Teplota VCXO:"
 
 #: gammu/depend/nokia/dct4.c:1047
 msgid "Resistive keyboard 1/headint2:"
