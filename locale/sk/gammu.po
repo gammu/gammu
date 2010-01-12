@@ -1372,7 +1372,7 @@ msgstr "(Skupina: je logo zapnuté?)"
 
 #: gammu/depend/nokia/dct4.c:1376
 msgid " (Caller group number in pbk entry)"
-msgstr "(Skupina volajúcich v položke telefonného zoznamu)"
+msgstr "(Číslo skupiny volajúcich v položke telefonného zoznamu)"
 
 #: gammu/depend/nokia/dct4.c:1379
 msgid " (Text: URL address)"
