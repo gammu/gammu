@@ -1716,7 +1716,7 @@ msgstr "Hovory"
 
 #: gammu/gammu.c:744
 msgid "SMS and EMS"
-msgstr ""
+msgstr "SMS a EMS"
 
 #: gammu/gammu.c:745
 msgid "Memory (phonebooks and calls)"
