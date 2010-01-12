@@ -1352,7 +1352,7 @@ msgstr " (ID zvonenia)"
 
 #: gammu/depend/nokia/dct4.c:1371
 msgid " (Call register: date and time)"
-msgstr "(História hovorov: dátum a čas)"
+msgstr " (História hovorov: dátum a čas)"
 
 #: gammu/depend/nokia/dct4.c:1372
 msgid " (Call register: with missed calls)"
