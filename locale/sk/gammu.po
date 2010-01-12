@@ -723,7 +723,7 @@ msgstr "od %s do %s"
 
 #: gammu/calendar.c:313
 msgid " on each "
-msgstr "každý"
+msgstr " každý "
 
 #: gammu/calendar.c:315
 #, c-format
