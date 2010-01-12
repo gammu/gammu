@@ -1520,7 +1520,7 @@ msgstr "Zložka"
 
 #: gammu/files.c:184 gammu/files.c:315
 msgid "File;"
-msgstr ""
+msgstr "Súbor:"
 
 #: gammu/files.c:224
 #, c-format
