@@ -1376,7 +1376,7 @@ msgstr " (Číslo skupiny volajúcich v položke telefonného zoznamu)"
 
 #: gammu/depend/nokia/dct4.c:1379
 msgid " (Text: URL address)"
-msgstr "(Text: URL adresa)"
+msgstr " (Text: URL adresa)"
 
 #: gammu/depend/nokia/dct4.c:1380
 msgid " (SMS list assignment)"
