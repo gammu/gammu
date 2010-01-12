@@ -163,7 +163,7 @@ msgstr "Prázdne SMSC číslo. Nastavte ho v telefóne, alebo použite -smscnumb
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
-msgstr ""
+msgstr "Ste v menu telefónu (upravujete záznam?). Opustite ho a skúste znovu."
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
