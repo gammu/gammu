@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 15:10+0100\n"
-"PO-Revision-Date: 2010-01-12 22:07+0200\n"
+"PO-Revision-Date: 2010-01-12 22:08+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1158,7 +1158,7 @@ msgstr "Pre pokračovanie stlačte ľubovoľnú klávesu..."
 #: gammu/depend/nokia/dct4.c:508
 #, c-format
 msgid "Security code set to \"12345\"\n"
-msgstr ""
+msgstr "Bezpečnostný k nastavený na \"12345\"\n"
 
 #: gammu/depend/nokia/dct4.c:511
 msgid "Unknown reason. Can't reset your security code"
