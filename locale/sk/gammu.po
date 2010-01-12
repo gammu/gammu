@@ -1655,6 +1655,8 @@ msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
 msgstr ""
+"Licencia GPLv2: GNU GPL verze 2 "
+"<http://creativecommons.org/licenses/GPL/2.0/>."
 
 #: gammu/gammu.c:375
 msgid "This is free software: you are free to change and redistribute it."
