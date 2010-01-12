@@ -1412,7 +1412,7 @@ msgstr " (ID zoznamu prezencie)"
 
 #: gammu/depend/nokia/dct4.c:1388
 msgid " (SIP Address (Push to Talk address))"
-msgstr "(SIP adresa(adresa Push to Talk))"
+msgstr " (SIP adresa(adresa Push to Talk))"
 
 #: gammu/depend/nokia/dct4.c:1389
 msgid " (Group ID (6230i or later))"
