@@ -1035,7 +1035,7 @@ msgstr "Štvrtok"
 
 #: gammu/common.c:136
 msgid "Friday"
-msgstr ""
+msgstr "Piatok"
 
 #: gammu/common.c:139
 msgid "Saturday"
