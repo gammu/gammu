@@ -1576,7 +1576,7 @@ msgstr "Parameter \"%s\" je neznámy\n"
 #: gammu/files.c:727
 #, c-format
 msgid "What file type (\"%s\") ?\n"
-msgstr ""
+msgstr "Aký typ súboru (\"%s\") ?\n"
 
 #: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:946
 #: helper/message-cmdline.c:1292
