@@ -1315,7 +1315,7 @@ msgstr "Prosím pripojte headset. Je potrebný ako anténa"
 #: gammu/depend/nokia/dct4.c:1359
 #, c-format
 msgid "%i entries types\n"
-msgstr ""
+msgstr "%i typov položiek\n"
 
 #: gammu/depend/nokia/dct4.c:1362
 #, c-format
