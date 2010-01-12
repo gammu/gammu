@@ -991,7 +991,7 @@ msgstr "Jún"
 
 #: gammu/common.c:94
 msgid "July"
-msgstr ""
+msgstr "Júl"
 
 #: gammu/common.c:97
 msgid "August"
