@@ -1356,7 +1356,7 @@ msgstr " (História hovorov: dátum a čas)"
 
 #: gammu/depend/nokia/dct4.c:1372
 msgid " (Call register: with missed calls)"
-msgstr "(História hovorov: so zmeškanými hovormi)"
+msgstr " (História hovorov: so zmeškanými hovormi)"
 
 #: gammu/depend/nokia/dct4.c:1373
 msgid " (Speed dial)"
