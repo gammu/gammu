@@ -1760,7 +1760,7 @@ msgstr "Záloha a obnovenie"
 
 #: gammu/gammu.c:758
 msgid "Nokia specific"
-msgstr ""
+msgstr "Špecifické pre Nokiu"
 
 #: gammu/gammu.c:761
 msgid "Siemens specific"
