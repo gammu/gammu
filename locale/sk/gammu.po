@@ -1153,7 +1153,7 @@ msgstr " (úvodný)"
 
 #: gammu/depend/nokia/dct4.c:496 gammu/depend/nokia/dct4.c:1005
 msgid "Press any key to continue..."
-msgstr ""
+msgstr "Pre pokračovanie stlačte ľubovoľnú klávesu..."
 
 #: gammu/depend/nokia/dct4.c:508
 #, c-format
