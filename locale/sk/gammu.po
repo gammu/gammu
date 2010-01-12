@@ -1780,7 +1780,7 @@ msgstr "Testy telefónu"
 
 #: gammu/gammu.c:767
 msgid "FM radio"
-msgstr ""
+msgstr "FM rádio"
 
 #: gammu/gammu.c:768
 #, fuzzy
