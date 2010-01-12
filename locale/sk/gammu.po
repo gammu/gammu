@@ -1344,7 +1344,7 @@ msgstr " (Text: poznámka)"
 
 #: gammu/depend/nokia/dct4.c:1369
 msgid " (Phone number)"
-msgstr "(Telefónne číslo)"
+msgstr " (Telefónne číslo)"
 
 #: gammu/depend/nokia/dct4.c:1370
 msgid " (Ringtone ID)"
