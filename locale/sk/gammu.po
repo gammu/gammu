@@ -1384,7 +1384,7 @@ msgstr " (Priradenie SMS zoznamu)"
 
 #: gammu/depend/nokia/dct4.c:1381
 msgid " (Voice tag assignment)"
-msgstr "(Priradenie hlasového vytáčania)"
+msgstr " (Priradenie hlasového vytáčania)"
 
 #: gammu/depend/nokia/dct4.c:1382
 msgid " (Picture ID assignment)"
