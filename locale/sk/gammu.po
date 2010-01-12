@@ -1479,7 +1479,7 @@ msgstr "Pamäť telefónu"
 #: gammu/files.c:49
 #, c-format
 msgid "%i bytes (free %i bytes, used %i bytes)"
-msgstr ""
+msgstr "%i bajtov (voľných %i bajtov, použitých %i bajtov)"
 
 #: gammu/files.c:55
 msgid "Usage details"
