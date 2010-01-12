@@ -1348,7 +1348,7 @@ msgstr "(Telefónne číslo)"
 
 #: gammu/depend/nokia/dct4.c:1370
 msgid " (Ringtone ID)"
-msgstr ""
+msgstr "(ID zvonenia)"
 
 #: gammu/depend/nokia/dct4.c:1371
 msgid " (Call register: date and time)"
