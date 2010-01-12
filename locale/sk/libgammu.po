@@ -158,7 +158,7 @@ msgstr "Potrebná väčšia pamäť..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Permission to file/device required..."
-msgstr "K tomuto súboru/zariadenie sú potrebné práva ..."
+msgstr "K tomuto súboru/zariadenie sú potrebné práva..."
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
