@@ -1360,7 +1360,7 @@ msgstr "(História hovorov: so zmeškanými hovormi)"
 
 #: gammu/depend/nokia/dct4.c:1373
 msgid " (Speed dial)"
-msgstr ""
+msgstr "(Rýchla voľba)"
 
 #: gammu/depend/nokia/dct4.c:1374
 msgid " (Caller group: logo)"
