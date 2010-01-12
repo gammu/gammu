@@ -1728,7 +1728,7 @@ msgstr "Súbory"
 
 #: gammu/gammu.c:747
 msgid "Logo and pictures"
-msgstr ""
+msgstr "Logá a obrázky"
 
 #: gammu/gammu.c:748
 msgid "Ringtones"
