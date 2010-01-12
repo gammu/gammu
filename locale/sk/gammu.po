@@ -1544,7 +1544,7 @@ msgstr "Iba časť zložky"
 #: gammu/files.c:371
 #, c-format
 msgid "Getting \"%s\"\n"
-msgstr ""
+msgstr "Sťahujem \"%s\"\n"
 
 #: gammu/files.c:379
 msgid "Is a folder. Please give only file names."
