@@ -1796,7 +1796,7 @@ msgstr "Dekódovanie výpisov"
 
 #: gammu/gammu.c:773
 msgid "Functions that don't fit elsewhere"
-msgstr ""
+msgstr "Funkcie, ktoré sa inde nevošli"
 
 #: gammu/gammu.c:774
 msgid "Gammu information"
