@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 15:10+0100\n"
-"PO-Revision-Date: 2010-01-12 21:56+0200\n"
+"PO-Revision-Date: 2010-01-12 21:57+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -963,7 +963,7 @@ msgstr "Nie je čo vložiť."
 
 #: gammu/common.c:65
 msgid "Unknown security status."
-msgstr "Neznámy stav bezpečnosti."
+msgstr "Neznámy bezpečnostný stav."
 
 #: gammu/common.c:76
 msgid "January"
