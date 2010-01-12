@@ -1264,9 +1264,8 @@ msgid "K"
 msgstr "K"
 
 #: gammu/depend/nokia/dct4.c:1042
-#, fuzzy
 msgid "Headset interconnection:"
-msgstr "Pripojenie k telefónu"
+msgstr "Pripojenie headsetu:"
 
 #: gammu/depend/nokia/dct4.c:1043
 #, fuzzy
