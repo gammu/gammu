@@ -1756,7 +1756,7 @@ msgstr "Kategórie"
 
 #: gammu/gammu.c:755
 msgid "Backing up and restoring"
-msgstr ""
+msgstr "Záloha a obnovenie"
 
 #: gammu/gammu.c:758
 msgid "Nokia specific"
