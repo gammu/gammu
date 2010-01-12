@@ -1772,7 +1772,7 @@ msgstr "Nastavenie WAPu a záložiek"
 
 #: gammu/gammu.c:765
 msgid "MMS and MMS settings"
-msgstr ""
+msgstr "MMS a ich nastavenia"
 
 #: gammu/gammu.c:766
 msgid "Phone tests"
