@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 15:10+0100\n"
-"PO-Revision-Date: 2010-01-12 22:00+0200\n"
+"PO-Revision-Date: 2010-01-12 22:01+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1065,7 +1065,7 @@ msgstr "Prosím očíslujte pozície od 1"
 
 #: gammu/common.c:329
 msgid "Swapping start and end location"
-msgstr ""
+msgstr "Vymieňam začiatok a koniec"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/common.c:351 gammu/common.c:380 gammu/depend/nokia/dct4.c:84
