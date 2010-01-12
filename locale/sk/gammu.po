@@ -1416,7 +1416,7 @@ msgstr " (SIP adresa(adresa Push to Talk))"
 
 #: gammu/depend/nokia/dct4.c:1389
 msgid " (Group ID (6230i or later))"
-msgstr "(ID skupiny (6230i a staršie))"
+msgstr " (ID skupiny (6230i a staršie))"
 
 #: gammu/depend/nokia/dct4.c:1391
 msgid ", type "
