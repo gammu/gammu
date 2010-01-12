@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-12 10:15+0100\n"
-"PO-Revision-Date: 2010-01-12 23:26+0200\n"
+"PO-Revision-Date: 2010-01-12 23:27+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -129,7 +129,7 @@ msgstr "Bezpečnostná chyba. Pravdepodobne chýba PIN?"
 
 #: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
-msgstr ""
+msgstr "Chybná pozícia. Možno príliš vysoká?"
 
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
