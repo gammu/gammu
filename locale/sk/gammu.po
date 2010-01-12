@@ -1400,7 +1400,7 @@ msgstr " (Text: ID užívateľa)"
 
 #: gammu/depend/nokia/dct4.c:1385
 msgid " (conversation list ID)"
-msgstr "(ID zoznamu konverzácií)"
+msgstr " (ID zoznamu konverzácií)"
 
 #: gammu/depend/nokia/dct4.c:1386
 msgid " (Instant Messaging service list ID ?)"
