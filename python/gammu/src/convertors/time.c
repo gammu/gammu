@@ -81,7 +81,10 @@ int BuildGSMDateTime(PyObject *pydt, GSM_DateTime *dt) {
     if (pydt == Py_None) return 1;
 
     result = PyObject_GetAttrString(pydt, "year");
-    if (result == NULL) return 0;
+    if (result == NULL) {
+        PyErr_Format(PyExc_ValueError, "Attribute year is missing");
+        return 0;
+    }
     if (!PyInt_Check(result)) {
         PyErr_Format(PyExc_ValueError, "Attribute %s doesn't seem to be integer", "year");
         Py_DECREF(result);
@@ -91,7 +94,10 @@ int BuildGSMDateTime(PyObject *pydt, GSM_DateTime *dt) {
     Py_DECREF(result);
 
     result = PyObject_GetAttrString(pydt, "month");
-    if (result == NULL) return 0;
+    if (result == NULL) {
+        PyErr_Format(PyExc_ValueError, "Attribute month is missing");
+        return 0;
+    }
     if (!PyInt_Check(result)) {
         Py_DECREF(result);
         PyErr_Format(PyExc_ValueError, "Attribute %s doesn't seem to be integer", "month");
@@ -101,7 +107,10 @@ int BuildGSMDateTime(PyObject *pydt, GSM_DateTime *dt) {
     Py_DECREF(result);
 
     result = PyObject_GetAttrString(pydt, "day");
-    if (result == NULL) return 0;
+    if (result == NULL) {
+        PyErr_Format(PyExc_ValueError, "Attribute day is missing");
+        return 0;
+    }
     if (!PyInt_Check(result)) {
         Py_DECREF(result);
         PyErr_Format(PyExc_ValueError, "Attribute %s doesn't seem to be integer", "day");
@@ -111,7 +120,10 @@ int BuildGSMDateTime(PyObject *pydt, GSM_DateTime *dt) {
     Py_DECREF(result);
 
     result = PyObject_GetAttrString(pydt, "hour");
-    if (result == NULL) return 0;
+    if (result == NULL) {
+        PyErr_Format(PyExc_ValueError, "Attribute hour is missing");
+        return 0;
+    }
     if (!PyInt_Check(result)) {
         Py_DECREF(result);
         PyErr_Format(PyExc_ValueError, "Attribute %s doesn't seem to be integer", "hour");
@@ -121,7 +133,10 @@ int BuildGSMDateTime(PyObject *pydt, GSM_DateTime *dt) {
     Py_DECREF(result);
 
     result = PyObject_GetAttrString(pydt, "minute");
-    if (result == NULL) return 0;
+    if (result == NULL) {
+        PyErr_Format(PyExc_ValueError, "Attribute minute is missing");
+        return 0;
+    }
     if (!PyInt_Check(result)) {
         Py_DECREF(result);
         PyErr_Format(PyExc_ValueError, "Attribute %s doesn't seem to be integer", "minute");
@@ -131,7 +146,10 @@ int BuildGSMDateTime(PyObject *pydt, GSM_DateTime *dt) {
     Py_DECREF(result);
 
     result = PyObject_GetAttrString(pydt, "second");
-    if (result == NULL) return 0;
+    if (result == NULL) {
+        PyErr_Format(PyExc_ValueError, "Attribute second is missing");
+        return 0;
+    }
     if (!PyInt_Check(result)) {
         Py_DECREF(result);
         PyErr_Format(PyExc_ValueError, "Attribute %s doesn't seem to be integer", "second");
