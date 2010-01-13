@@ -183,6 +183,11 @@ GSM_DateTime GetDateTimeFromDict(PyObject *dict, const char *key) {
 
     if (!BuildGSMDateTime(o, &dt)) {
         dt.Year = -1;
+    } else {
+        /* We use this as an error value */
+        if (dt.Year == -1) {
+            dt.Year = 0;
+        }
     }
     return dt;
 }
