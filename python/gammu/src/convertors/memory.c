@@ -312,13 +312,21 @@ int MemoryEntryFromPython(PyObject *dict, GSM_MemoryEntry *entry, int needs_loca
 
     memset(entry, 0, sizeof(entry));
 
-    if (needs_location) {
-        entry->Location = GetIntFromDict(dict, "Location");
-        if (entry->Location == INT_INVALID) return 0;
+    entry->Location = GetIntFromDict(dict, "Location");
+    if (entry->Location == INT_INVALID) {
+        if (needs_location) {
+            return 0;
+        }
+        PyErr_Clear();
     }
 
     entry->MemoryType = GetMemoryTypeFromDict(dict, "MemoryType");
-    if (entry->MemoryType == ENUM_INVALID || entry->MemoryType == 0) return 0;
+    if (entry->MemoryType == ENUM_INVALID || entry->MemoryType == 0) {
+        if (needs_location) {
+            return 0;
+        }
+        PyErr_Clear();
+    }
 
     o = PyDict_GetItemString(dict, "Entries");
     if (o == NULL) {
