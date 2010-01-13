@@ -126,8 +126,15 @@ PyObject *BackupToPython(GSM_Backup *backup) {
         }\
         for (i = 0; i < len; i++) {\
             backup->data[i] = (type *)malloc(sizeof(type));\
+            if (backup->data[i] == NULL) { \
+                PyErr_Format(PyExc_MemoryError, "Failed to allocate memory!"); \
+                return 0;\
+            }\
             x = PyList_GetItem(o, i);\
-            if (x == NULL) return 0;\
+            if (x == NULL) {\
+                PyErr_Format(PyExc_ValueError, "Failed to get item %ld from list %s!", (long)i, key);\
+                return 0;\
+            }\
             if (!conv) {\
                 return 0;\
             }\
