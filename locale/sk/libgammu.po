@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-12 10:15+0100\n"
-"PO-Revision-Date: 2009-12-11 20:45+0200\n"
+"PO-Revision-Date: 2010-01-12 23:27+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
+"Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sk\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Pootle 1.2.1\n"
+"X-Generator: Pootle 2.0.0\n"
 
 #: libgammu/gsmcomon.c:84
 msgid "No error."
@@ -24,9 +24,7 @@ msgstr "Bez chyby."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr ""
-"Chyba pri prístupe k zariadeniu. Neznáme, zaneprázdnené alebo problém s "
-"právami."
+msgstr "Chyba pri otváraní zariadenia. Prístup bol zamietnutý."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
@@ -72,9 +70,8 @@ msgid "Error during reading from the device."
 msgstr "Chyba počas čitania zo zariadenia."
 
 #: libgammu/gsmcomon.c:96
-#, fuzzy
 msgid "Can't set parity on the device."
-msgstr "Pripojiť zariadenie"
+msgstr "Pripojiť zariadenie."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
@@ -93,8 +90,8 @@ msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Neznáma odpoveď z telefónu. Pre viacej informácii o podaní správy choď na "
-"<http://wammu.eu/support/bugs/>."
+"Neznáma odpoveď z telefónu. Pozrite sa na <http://wammu.eu/support/bugs/> "
+"pre informácie ako túto udalosť nahlásiť."
 
 #: libgammu/gsmcomon.c:100
 msgid ""
@@ -104,11 +101,11 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
-msgstr ""
+msgstr "Neznámy typ pripojenia. Skontrolujte konfiguračný súbor."
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr ""
+msgstr "Neznámy typ telefónu. Skontrolujte konfiguračný súbor."
 
 #: libgammu/gsmcomon.c:103
 msgid ""
@@ -128,18 +125,17 @@ msgstr "Položka je prázdna."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
-msgstr "Bezpečnostná chyba. Pravdepodobne chýba PIN."
+msgstr "Bezpečnostná chyba. Pravdepodobne chýba PIN?"
 
 #: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
-msgstr ""
+msgstr "Chybná pozícia. Možno príliš vysoká?"
 
 #: libgammu/gsmcomon.c:108
-#, fuzzy
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
-"Táto funkcia nie je pre váš telefón implementovaná. Ak chcete pomôcť s "
-"implementáciou, kontaktujte prosím autorov."
+"Táto funkcia nie je implementovaná. Ak chcete pomôcť s implementáciou, "
+"kontaktujte prosím autorov."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
@@ -155,11 +151,11 @@ msgstr "Súbor nie je možné otvoriť."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
-msgstr "Potrebná väčšia pamäť ..."
+msgstr "Potrebná väčšia pamäť..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Permission to file/device required..."
-msgstr "K tomuto súboru/zariadenie sú potrebné práva ..."
+msgstr "K tomuto súboru/zariadenie sú potrebné práva..."
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
@@ -167,19 +163,18 @@ msgstr "Prázdne SMSC číslo. Nastavte ho v telefóne, alebo použite -smscnumb
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
-msgstr ""
+msgstr "Ste v menu telefónu (upravujete záznam?). Opustite ho a skúste znovu."
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
 msgstr "Telefón nie je pripojený."
 
 #: libgammu/gsmcomon.c:117
-#, fuzzy
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
 msgstr ""
-"Táto funkcia nie je pre váš telefón implementovaná. Ak chcete pomôcť s "
+"Na implementácii tejto funkcie sa pracuje. Ak chcete pomôcť s "
 "implementáciou, kontaktujte prosím autorov."
 
 #: libgammu/gsmcomon.c:118
@@ -313,21 +308,18 @@ msgid "Service configuration is missing."
 msgstr "Chýba konfigurácia služby."
 
 #: libgammu/gsmcomon.c:149
-#, fuzzy
 msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
-"Príkaz bol odmietnutý, pretože zariadenie je obsadené. Počkajte a "
-"reštartujte."
+"Príkaz bol odmietnutý, pretože zariadenie je obsadené. Zkuste to o chviľu "
+"znova."
 
 #: libgammu/gsmcomon.c:150
-#, fuzzy
 msgid "Could not connect to the server."
-msgstr "Pripojujem sa k IMAP serveru..."
+msgstr "Nepodarilo sa pripojiť k serveru."
 
 #: libgammu/gsmcomon.c:151
-#, fuzzy
 msgid "Could not resolve the host name."
-msgstr "Nebolo možné načítať uložené správy!"
+msgstr "Nepodarilo sa preložiť meno počítača."
 
 #: libgammu/gsmcomon.c:184
 msgid "Unknown error description."
