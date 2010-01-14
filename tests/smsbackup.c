@@ -37,6 +37,10 @@ int main(int argc UNUSED, char **argv UNUSED)
 		SMS.SMS[0] = *Backup.SMS[i];
                 DisplayMultiSMSInfo(&SMS, FALSE, TRUE, NULL, NULL);
 	}
+	/*
+	 * TODO: Should link messages here and display concatenated
+	 * ones.
+	 */
 
 	/* We don't need this anymore */
 	GSM_FreeSMSBackup(&Backup);
