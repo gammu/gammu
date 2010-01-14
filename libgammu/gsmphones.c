@@ -401,7 +401,7 @@ GSM_PhoneModel allmodels[] = {
 	{"ME45" ,	  "3618" ,	  "",				   {0}},
 	{"S55" ,	  "S55" ,	  "",				   {0}},
 	{"S65" ,	  "S65" ,	  "SIEMENS S65",		   {0}},
-	{"MC75" ,	  "MC75",	  "",				   {0}},
+	{"MC75" ,	  "MC75",	  "",				   {F_NO_ATOBEX, 0}},
 
 	/* Samsung */
 	{"E250",	  "SAMSUNG SGH-E250" , "",			   {F_FORCE_UTF8, F_SMS_SM, F_SMS_ME, 0}},
