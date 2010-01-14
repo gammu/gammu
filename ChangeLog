@@ -4415,5 +4415,5 @@ YYYYMMDD - description
 
 # vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
 # vim: ft=changelog fenc=utf-8 encoding=utf-8
-# vim: fde=getline(v\:lnum-1)=~'^\\s*$'&&getline(v\:lnum)=~'^\\d'?'>1'\:1&&v\:lnum>17&&getline(v\:lnum)!~'^#'
+# vim: fde=getline(v\:lnum-1)=~'^\\s*$'&&getline(v\:lnum)=~'^\\d'?'>1'\:1&&v\:lnum>22&&getline(v\:lnum)!~'^#'
 # vim: fdn=1 fdm=expr
