@@ -23,6 +23,7 @@ ChangeLog
 
 [-] * Add ID for Nokia 6275i (bug #1096).
 [-] * Fix Windows build by not defining MSVC version.
+[-] * Correctly use first entry location in MPBR (bug #1076).
     
 20100106 - 1.27.90
 

@@ -3664,8 +3664,10 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 			goto read_memory;
 		}
 		if (Priv->PBK_MPBR == AT_AVAILABLE) {
-			/* FirstMemoryEntry is not applied here, it is always 1 */
-			len = sprintf(req, "AT+MPBR=%i\r", entry->Location);
+			if (Priv->FirstMemoryEntry == -1) {
+				ATGEN_CheckMPBR(s);
+			}
+			len = sprintf(req, "AT+MPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
 			goto read_memory;
 		}
 	}
