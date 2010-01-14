@@ -1968,9 +1968,15 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		ATGEN_WaitForAutoLen(s, "AT^SQWE?\r", 0x00, 3, ID_GetProtocol);
 
 		if (error == ERR_NONE) {
-			smprintf(s, "Phone seems to support Siemens like mode switching, adding OBEX feature.\n");
-			GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_OBEX);
-			GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_SQWE);
+			if (s->ConnectionType != GCT_IRDAAT &&
+					s->ConnectionType != GCT_BLUEAT &&
+					!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_ATOBEX) &&
+					!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)
+					) {
+				smprintf(s, "Phone seems to support Siemens like mode switching, adding OBEX feature.\n");
+				GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_OBEX);
+				GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_SQWE);
+			}
 
 			/* Switch to mode 0 if we're in different mode */
 			if (Priv->SQWEMode != 0) {
