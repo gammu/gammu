@@ -27,6 +27,10 @@ gboolean BoolFromPython(PyObject *o, const char *key) {
     char *s;
     int i;
 
+    if (o == Py_None) {
+        return FALSE;
+    }
+
     if (!PyBool_Check(o)) {
         if (PyInt_Check(o)) {
             i = PyInt_AsLong(o);
