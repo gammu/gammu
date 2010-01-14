@@ -207,13 +207,25 @@ GSM_Error MOTOROLA_Banner(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 GSM_Error MOTOROLA_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error error;
 
 	Priv->PBK_MPBR = AT_NOTAVAILABLE;
 
  	switch (Priv->ReplyState) {
  	case AT_Reply_OK:
-		/* FIXME: does phone give also some useful infromation here? */
+		/* Reply string:
+		 * +MPBR: 10-18259,40,24,14,0-1,64,(255),(0),(0-1),(1-11),(255),25,(0-1,255),264,(0),62,62,32,32,32,32,50,264
+		 */
 		Priv->PBK_MPBR = AT_AVAILABLE;
+		error = ATGEN_ParseReply(s, GetLineString(msg.Buffer, &Priv->Lines, 2),
+					"+MPBR: @i-@i, @",
+					&Priv->FirstMemoryEntry,
+					&Priv->MemorySize);
+		if (error != ERR_NONE) {
+			return error;
+		}
+
+		Priv->MemorySize -= Priv->FirstMemoryEntry;
 
 		return ERR_NONE;
 	case AT_Reply_Error:
