@@ -1476,10 +1476,10 @@ StateMachine_GetSecurityStatus(StateMachineObject *self, PyObject *args, PyObjec
 
     switch (Status) {
         case SEC_SecurityCode: return Py_BuildValue("s", "SecurityCode");
-        case SEC_Pin: return Py_BuildValue("s", "Pin");
-        case SEC_Pin2: return Py_BuildValue("s", "Pin2");
-        case SEC_Puk: return Py_BuildValue("s", "Puk");
-        case SEC_Puk2: return Py_BuildValue("s", "Puk2");
+        case SEC_Pin: return Py_BuildValue("s", "PIN");
+        case SEC_Pin2: return Py_BuildValue("s", "PIN2");
+        case SEC_Puk: return Py_BuildValue("s", "PUK");
+        case SEC_Puk2: return Py_BuildValue("s", "PUK2");
         case SEC_Phone: return Py_BuildValue("s", "Phone");
         case SEC_Network: return Py_BuildValue("s", "Network");
         case SEC_None: Py_RETURN_NONE;
