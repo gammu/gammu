@@ -393,12 +393,11 @@ msgstr ""
 msgid "Unholds call."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:120
 #, no-wrap
 msgid "SMS and EMS"
-msgstr ""
+msgstr "SMS a EMS"
 
 # type: Plain text
 #. type: Plain text
@@ -1514,12 +1513,11 @@ msgid ""
 "just changes the SMSC number."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:656
 #, no-wrap
 msgid "Memory (phonebooks and calls)"
-msgstr ""
+msgstr "Pamäť (kontakty a hovory)"
 
 #. type: TP
 #: docs/user/gammu.1:657 docs/user/gammu.1:1315 docs/user/gammu.1:1467
@@ -1957,12 +1955,11 @@ msgid ""
 "substring lookup. You can interrupt searching by pressing Ctrl+C."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:820
 #, no-wrap
 msgid "Filesystem"
-msgstr ""
+msgstr "Súbory"
 
 #. type: Plain text
 #: docs/user/gammu.1:826
@@ -2232,12 +2229,11 @@ msgstr ""
 msgid "B<setfileattrib>I< folderID [-system] [-readonly] [-hidden] [-protected]>"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:913
 #, no-wrap
 msgid "Logo and pictures"
-msgstr ""
+msgstr "Logá a obrázky"
 
 # type: TP
 #. type: TP
@@ -2542,12 +2538,11 @@ msgid ""
 "will blink later in phone menus"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1195
 #, no-wrap
 msgid "Calendar notes"
-msgstr ""
+msgstr "Kalendár"
 
 # type: TP
 #. type: TP
@@ -2629,12 +2624,11 @@ msgstr ""
 msgid "    gammu savefile CALENDAR output.vcs myCalendar.backup 260\n"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1314
 #, no-wrap
 msgid "To do lists"
-msgstr ""
+msgstr "Úlohy"
 
 # type: TP
 #. type: TP
@@ -2694,12 +2688,11 @@ msgid ""
 "extension and file content, for output solely on extension)."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1437
 #, no-wrap
 msgid "Notes"
-msgstr ""
+msgstr "Poznámky"
 
 # type: TP
 #. type: TP
@@ -2713,12 +2706,11 @@ msgstr ""
 msgid "Reads all notes from the phone."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1443
 #, no-wrap
 msgid "Date, time and alarms"
-msgstr ""
+msgstr "Čas, dátum a budíky"
 
 # type: TP
 #. type: TP
@@ -2783,19 +2775,17 @@ msgid ""
 "phone and use Gammu. See gammurc(5) for details."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1466
 #, no-wrap
 msgid "Categories"
-msgstr ""
+msgstr "Kategórie"
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1554
 #, no-wrap
 msgid "Backing up and restoring"
-msgstr ""
+msgstr "Záloha a obnovenie"
 
 # type: TP
 #. type: TP
@@ -2804,12 +2794,11 @@ msgstr ""
 msgid "B<savefile BOOKMARK>I< target.url file location>"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1679
 #, no-wrap
 msgid "Nokia specific"
-msgstr ""
+msgstr "Špecifické pre Nokiu"
 
 # type: TP
 #. type: TP
@@ -3062,12 +3051,11 @@ msgstr ""
 msgid "B<nokiavibratest>"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1809
 #, no-wrap
 msgid "Siemens specific"
-msgstr ""
+msgstr "Špecifické pre Siemens"
 
 # type: TP
 #. type: TP
@@ -3090,12 +3078,11 @@ msgstr ""
 msgid "B<siemenssatnetmon>"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1820
 #, no-wrap
 msgid "Network"
-msgstr ""
+msgstr "Sieť"
 
 # type: TP
 #. type: TP
@@ -3136,12 +3123,11 @@ msgstr ""
 msgid "B<setautonetworklogin>"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:1873
 #, no-wrap
 msgid "WAP settings and bookmarks"
-msgstr ""
+msgstr "Nastavenie WAPu a záložiek"
 
 # type: TP
 #. type: TP
@@ -3196,12 +3182,11 @@ msgstr ""
 msgid "Get WAP settings from phone."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2026
 #, no-wrap
 msgid "MMS and MMS settings"
-msgstr ""
+msgstr "MMS a ich nastavenia"
 
 # type: TP
 #. type: TP
@@ -3238,19 +3223,17 @@ msgstr ""
 msgid "B<readmmsfile>I< file [-save]>"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2081
 #, no-wrap
 msgid "Phone tests"
-msgstr ""
+msgstr "Testy telefónu"
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2098
 #, no-wrap
 msgid "FM radio"
-msgstr ""
+msgstr "FM rádio"
 
 # type: TP
 #. type: TP
@@ -3335,12 +3318,11 @@ msgstr ""
 msgid "Show the most important phone data."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2215
 #, no-wrap
 msgid "Phone settings"
-msgstr ""
+msgstr "Nastavenie telefónu"
 
 # type: TP
 #. type: TP
@@ -3458,12 +3440,11 @@ msgstr ""
 msgid "* clear date/time"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2281
 #, no-wrap
 msgid "Dumps decoding"
-msgstr ""
+msgstr "Dekódovanie výpisov"
 
 # type: TP
 #. type: TP
@@ -3506,12 +3487,11 @@ msgstr ""
 msgid "B<makeconverttable>I< file>"
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2300
 #, no-wrap
 msgid "Functions that don't fit elsewhere"
-msgstr ""
+msgstr "Funkcie, ktoré sa inde nevošli"
 
 # type: TP
 #. type: TP
@@ -3649,12 +3629,11 @@ msgid ""
 "connection, this is a convenient way to find working setup for Gammu."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:2393
 #, no-wrap
 msgid "Gammu information"
-msgstr ""
+msgstr "Informácie o Gammu"
 
 #. type: TP
 #: docs/user/gammu.1:2394
@@ -4039,7 +4018,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2490
 msgid "Unknown connection type string. Check config file."
-msgstr ""
+msgstr "Neznámy typ pripojenia. Skontrolujte konfiguračný súbor."
 
 #. type: SS
 #: docs/user/gammu.1:2490
@@ -4050,7 +4029,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2492
 msgid "Unknown model type string. Check config file."
-msgstr ""
+msgstr "Neznámy typ telefónu. Skontrolujte konfiguračný súbor."
 
 #. type: SS
 #: docs/user/gammu.1:2492
@@ -4109,7 +4088,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2502
 msgid "Invalid location. Maybe too high?"
-msgstr ""
+msgstr "Chybná pozícia. Možno príliš vysoká?"
 
 #. type: SS
 #: docs/user/gammu.1:2502
@@ -4201,7 +4180,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2518
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
-msgstr ""
+msgstr "Ste v menu telefónu (upravujete záznam?). Opustite ho a skúste znovu."
 
 #. type: SS
 #: docs/user/gammu.1:2518
