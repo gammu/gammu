@@ -1427,12 +1427,12 @@ StateMachine_EnterSecurityCode(StateMachineObject *self, PyObject *args, PyObjec
                 &s, &code))
         return NULL;
 
-    if (strcmp(s, "PIN") == 0)          Code.Type = SEC_Pin;
-    else if (strcmp(s, "PUK") == 0)     Code.Type = SEC_Puk;
-    else if (strcmp(s, "PIN2") == 0)    Code.Type = SEC_Pin2;
-    else if (strcmp(s, "PUK2") == 0)    Code.Type = SEC_Puk2;
-    else if (strcmp(s, "Phone") == 0)   Code.Type = SEC_Phone;
-    else if (strcmp(s, "Network") == 0)   Code.Type = SEC_Network;
+    if (strcasecmp(s, "PIN") == 0)          Code.Type = SEC_Pin;
+    else if (strcasecmp(s, "PUK") == 0)     Code.Type = SEC_Puk;
+    else if (strcasecmp(s, "PIN2") == 0)    Code.Type = SEC_Pin2;
+    else if (strcasecmp(s, "PUK2") == 0)    Code.Type = SEC_Puk2;
+    else if (strcasecmp(s, "Phone") == 0)   Code.Type = SEC_Phone;
+    else if (strcasecmp(s, "Network") == 0)   Code.Type = SEC_Network;
     else {
         PyErr_Format(PyExc_ValueError, "Bad value for Type: '%s'", s);
         return NULL;
