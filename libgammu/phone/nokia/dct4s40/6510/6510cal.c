@@ -343,6 +343,8 @@ static GSM_Error N6510_GetCalendarNotePos3(GSM_StateMachine *s)
 GSM_Error N6510_ReplyGetCalendarNotePos(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Buffer[3]) {
+	case 0xf0:
+		return ERR_NOTSUPPORTED;
 	case 0x32:
 		/* Old method 1 for accessing calendar */
 		return N71_65_ReplyGetCalendarNotePos1(msg, s,&s->Phone.Data.Priv.N6510.FirstCalendarPos);

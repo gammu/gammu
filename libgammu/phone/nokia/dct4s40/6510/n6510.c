@@ -4162,6 +4162,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyDelCalendar,	  "\x13",0x03,0xF0,ID_DeleteCalendarNote  },
 	{N71_65_ReplyGetNextCalendar1,	  "\x13",0x03,0x1A,ID_GetCalendarNote	  },/*method 1*/
 	{N6510_ReplyGetCalendarNotePos,	  "\x13",0x03,0x32,ID_GetCalendarNotePos  },/*method 1*/
+	{N6510_ReplyGetCalendarNotePos,	  "\x13",0x03,0xF0,ID_GetCalendarNotePos  },/*method 1*/
 	{N6510_ReplyGetCalendarInfo,	  "\x13",0x03,0x3B,ID_GetCalendarNotesInfo},/*method 1*/
 #ifdef DEBUG
 	{N71_65_ReplyGetNextCalendar2,	  "\x13",0x03,0x3F,ID_GetCalendarNote	  },
