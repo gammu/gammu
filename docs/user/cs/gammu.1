@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Jan 19 2010" "Gammu 1.27.91" "Dokumentace Gammu"
+.TH GAMMU 1 "Leden  19, 2010" "Gammu 1.27.91" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -45,11 +45,11 @@ Příkazy mohou být zadány s i bez úvodního \-\-.
 
 .SS Hovory
 .TP 
-\fBanswercall\fP\fI [ID]\fP
+\fBanswercall\fP\fI [id]\fP
 Přijmout příchozí hovor.
 
 .TP 
-\fBcancelcall\fP\fI [ID]\fP
+\fBcancelcall\fP\fI [id]\fP
 Zrušit příchozí hovor.
 
 .TP 
@@ -57,7 +57,7 @@ Zrušit příchozí hovor.
 Zruší všechna přesměrování hovorů.
 
 .TP 
-\fBconferencecall\fP\fI ID\fP
+\fBconferencecall\fP\fI id\fP
 Začne konferenční hovor.
 
 .TP 
@@ -90,7 +90,7 @@ Načte seznam rychlého vytáčení.
 Načte USSD informace \- vytvočí servisní číslo a načtě odpověď.
 
 .TP 
-\fBholdcall\fP\fI ID\fP
+\fBholdcall\fP\fI id\fP
 Přidrží hovor.
 
 .TP 
@@ -109,19 +109,19 @@ Přehraje DTMF tóny. V některých telefonech je toto k dispozici jen během
 hovoru.
 
 .TP 
-\fBsplitcall\fP\fI ID\fP
+\fBsplitcall\fP\fI id\fP
 Rozdělí hovor.
 
 .TP 
-\fBswitchcall\fP\fI [ID]\fP
+\fBswitchcall\fP\fI [id]\fP
 Přepne hovor.
 
 .TP 
-\fBtransfercall\fP\fI [ID]\fP
+\fBtransfercall\fP\fI [id]\fP
 Přenese hovor.
 
 .TP 
-\fBunholdcall\fP\fI ID\fP
+\fBunholdcall\fP\fI id\fP
 Zruší přdržení hovoru.
 
 
@@ -782,16 +782,16 @@ V části \fBPŘÍKLAD\fP naleznete nějaké tipy pro práci se souborem záloh 
 Odstraní všechna uživatelská data z telefonu.
 
 .TP 
-\fBdeleteallmemory\fP\fI DC|MC|RC|ON|VM|SM|ME|MT|FD|SL\fP
+\fBdeleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL\fP
 Odstraní všechny položky ze zadané paměti.
 .TP 
 \fBdeletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL\fP\fI start [stop]\fP
 Odstraní položky v zadaném rozsahu ze zadané paměti.
 .TP 
-\fBgetallcategory\fP\fI TODO|PHONEBOOK\fP
+\fBgetallcategory TODO|PHONEBOOK\fP
 
 .TP 
-\fBgetallmemory\fP\fI DC|MC|RC|ON|VM|SM|ME|MT|FD|SL\fP
+\fBgetallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL\fP
 Načte všechny položky paměti (kontakt nebo hovor) z telefonu.. Pro popis
 typů paměti se podívejte na \fBgetmemory\fP.
 .TP 
@@ -912,11 +912,11 @@ Vymaže soubory se zadanými ID.
 \fBdeletefolder\fP\fI name\fP
 Vymaže složku se zadaným ID.
 .TP 
-\fBgetfilefolder\fP\fI ID1, ID2, ...\fP
+\fBgetfilefolder\fP\fI fileID, fileID, ...\fP
 Načte ze souborového systému telefonu soubory nebo všechny soubory ze složky
 se zadaným ID.
 .TP 
-\fBgetfiles\fP\fI ID1, ID2, ...\fP
+\fBgetfiles\fP\fI fileID, fileID, ...\fP
 Načte ze souborového systému telefonu soubory se zadanými ID.
 .TP 
 \fBgetfilesystem\fP\fI [\-flatall|\-flat]\fP
@@ -952,10 +952,10 @@ nejčastěji nastává s infračerveným připojením.
 Zobrazí informace o kořenových složkách dostupných v telefonu.
 
 .TP 
-\fBnokiaaddfile\fP\fI Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]\fP
-Install the *.jar/*.jad file pair of a midlet in the application or game
-menu of the phone. You need to specify filename without the jar/jad suffix,
-both will be added automatically.
+\fBnokiaaddfile APPLICATION|GAME\fP\fI file [\-readonly] [\-overwrite] [\-overwriteall]\fP
+Naistaluje soubory *.jar/*.jad jako midlet do složky aplikací nebo her v
+telefonu. Jméno souboru musíte zadat bez přípony .jar/.jad, budou doplěny
+automaticky.
 
 The option \fI\-overwrite\fP deletes the application's .jad and .jar files bevor
 installing, but doesn't delete the application data. Option \fI\-overwriteall\fP
@@ -969,6 +969,9 @@ a přidá ho do složky Applications
 ho do složky Tones
 
 Pro vygenerování jad souboru z jar souboru můžete použít jadmaker(1).
+
+.TP 
+\fBnokiaaddfile GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD\fP\fI file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]\fP
 
 .TP 
 \fBnokiaaddplaylists\fP
@@ -986,20 +989,19 @@ většina telefonů vám nabídne možnost ho importovat).
 .SS "Loga a obrázky"
 .TP 
 \fBcopybitmap\fP\fI inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]\fP
-Allow to convert logos files to another. When give ONLY inputfile, output
-will be written to stdout using ASCII art. When give output file and format,
-in some file formats (like NLM) will be set indicator informing about logo
-type to given.
-
-.TP 
-\fBgetbitmap\fP\fI DEALER\fP
-In some models it's possible to save dealer welcome note \- text displayed
-during enabling phone, which can't be edited from phone menu.  Here you can
-get it.
+Převádí loga mezi různými formáty. Pokud neuvedete výstupní soubor, logo
+bude zobrazeno v ASCII artu. V některých výstupních formátech (například
+NLM) může být nastaven i idnikátor typu loga.
 
 .TP 
 \fBgetbitmap CALLER\fP\fI location [file]\fP
 Načte logo skupiny z telefonu. Umístění 1\-5.
+
+.TP 
+\fBgetbitmap DEALER\fP
+U některých telefonů je možné nastavit uvítací text, který je zobrazen při
+zapnutí telefonu a nemůže být změněn z menu telefonu. Tímto příkazem ho
+můžete stáhout.
 
 .TP 
 \fBgetbitmap OPERATOR\fP\fI [file]\fP
@@ -1012,6 +1014,10 @@ Načte obrázek z telefonu.
 .TP 
 \fBgetbitmap STARTUP\fP\fI [file]\fP
 Načte statické startovací logo z telefonu. Umožní jeho uložení do souboru.
+
+.TP 
+\fBgetbitmap TEXT\fP
+Get startup text from phone.
 
 .TP 
 \fBsavesms ANIMATION\fP\fI frames file1 file2... [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
@@ -1095,16 +1101,16 @@ sendsms a savesms\fP.
 .TP 
 \fBsetbitmap CALLER\fP\fI location [file]\fP
 Nastaví logo volajícího.
-
 .TP 
 \fBsetbitmap COLOUROPERATOR\fP\fI [fileID [netcode]]\fP
-
+Sets color operator logo in phone.
 .TP 
 \fBsetbitmap COLOURSTARTUP\fP\fI [fileID]\fP
 
 .TP 
 \fBsetbitmap DEALER\fP\fI text\fP
-
+Sets welcome message configured by dealer, which usually can not be changed
+in phone menus.
 .TP 
 \fBsetbitmap OPERATOR\fP\fI [file [netcode]]\fP
 Set operator logo in phone. When won't give file and netcode, operator logo
@@ -1115,19 +1121,19 @@ file "260 02"\fP
 
 .TP 
 \fBsetbitmap PICTURE\fP\fI file location [text]\fP
-
+Sets picture image in phone.
 .TP 
 \fBsetbitmap STARTUP\fP\fI file|1|2|3\fP
 Set startup logo in phone. It can be static (then you will have to give file
 name) or one of predefined animated (only some phones like Nokia 3310 or
-3330 supports it)
+3330 supports it).
 
 .TP 
 \fBsetbitmap TEXT\fP\fI text\fP
-
+Sets startup text in phone.
 .TP 
 \fBsetbitmap WALLPAPER\fP\fI fileID\fP
-
+Sets wallpaper in phone.
 
 .SS Zvonění
 .P
@@ -1466,7 +1472,7 @@ Odstraní všechna uživatelská data z telefonu.
 \fBdeletetodo\fP\fI start [stop]\fP
 Odstraní vybrané úkoly z telefonu.
 .TP 
-\fBgetallcategory\fP\fI TODO|PHONEBOOK\fP
+\fBgetallcategory TODO|PHONEBOOK\fP
 
 .TP 
 \fBgetalltodo\fP
@@ -1613,7 +1619,7 @@ V části \fBPŘÍKLAD\fP naleznete nějaké tipy pro práci se souborem záloh 
 Odstraní všechna uživatelská data z telefonu.
 
 .TP 
-\fBgetallcategory\fP\fI TODO|PHONEBOOK\fP
+\fBgetallcategory TODO|PHONEBOOK\fP
 
 .TP 
 \fBgetcategory TODO|PHONEBOOK\fP\fI start [stop]\fP
@@ -1721,7 +1727,7 @@ zvolené složky v telefonu. Pokud to telefon podporuje, budou stávající
 zprávy ve složce přepsány!
 .TP 
 \fBsavefile BOOKMARK\fP\fI target.url file location\fP
-
+Converts backup format supported by Gammu to vBookmark file.
 .TP 
 \fBsavefile CALENDAR\fP\fI target.vcs file location\fP
 Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro
@@ -1758,10 +1764,10 @@ následujícím příkazem:
 
 .SS "Specifické pro Nokii"
 .TP 
-\fBnokiaaddfile\fP\fI Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]\fP
-Install the *.jar/*.jad file pair of a midlet in the application or game
-menu of the phone. You need to specify filename without the jar/jad suffix,
-both will be added automatically.
+\fBnokiaaddfile APPLICATION|GAME\fP\fI file [\-readonly] [\-overwrite] [\-overwriteall]\fP
+Naistaluje soubory *.jar/*.jad jako midlet do složky aplikací nebo her v
+telefonu. Jméno souboru musíte zadat bez přípony .jar/.jad, budou doplěny
+automaticky.
 
 The option \fI\-overwrite\fP deletes the application's .jad and .jar files bevor
 installing, but doesn't delete the application data. Option \fI\-overwriteall\fP
@@ -1775,6 +1781,9 @@ a přidá ho do složky Applications
 ho do složky Tones
 
 Pro vygenerování jad souboru z jar souboru můžete použít jadmaker(1).
+
+.TP 
+\fBnokiaaddfile GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD\fP\fI file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]\fP
 
 .TP 
 \fBnokiaaddplaylists\fP
@@ -2050,7 +2059,7 @@ není nastaven čas a datum.
 
 .TP 
 \fBsavefile BOOKMARK\fP\fI target.url file location\fP
-
+Converts backup format supported by Gammu to vBookmark file.
 .TP 
 \fBsavesms BOOKMARK\fP\fI file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
 Načte WAP záložky ze souboru vytvořeného příkazem \fBbackup\fP a uloží je ve
@@ -2313,7 +2322,7 @@ položek.
 \fBgetprofile\fP\fI start [stop]\fP
 
 .TP 
-\fBresetphonesettings\fP\fI PHONE|DEV|UIF|ALL|FACTORY\fP
+\fBresetphonesettings PHONE|DEV|UIF|ALL|FACTORY\fP
 Obnoví výchozí nastavení telefonu. \fIBUĎTE OPATRNÍ !!!!\fP
 
 \fBPHONE:\fP
@@ -2471,7 +2480,7 @@ Simuluje stisk kláves na klávesnici telefonu
 \fB123456789*0#\fP číslicová klávesnice
 
 .TP 
-\fBreset\fP\fI SOFT|HARD\fP
+\fBreset SOFT|HARD\fP
 Provede reset telefonu, buď rychlý (SOFT, bez ptaní na PIN) nebo trvdý
 (HARD, s požadavkem na PIN).
 
