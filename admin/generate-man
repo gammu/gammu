@@ -470,7 +470,7 @@ HELP['addfile'] = '''Add file with specified name to folder with specified folde
 - after using it date/time of file modification will be set to moment of uploading 
 
 '''
-HELP['nokiaaddfile'] = '''Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You have to give the name without the jar/jad suffix, otherwise you will get the slightly confusing error message Can't open specified file. Read only ?
+HELP['nokiaaddfile'] = '''Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You need to specify filename without the jar/jad suffix, both will be added automatically.
 
 The option
 .I \-overwrite
@@ -1132,6 +1132,8 @@ def read_help(section):
     pipe = os.popen('LANG=C %s help %s' % (BIN_PATH, section))
     data = pipe.readlines()
     pipe.close()
+    if data[0].find('No configuration file found!') != -1:
+        del data[0]
     return data
 
 def parse_sections(lines):
