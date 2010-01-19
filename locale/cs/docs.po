@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-19 12:28+0100\n"
-"PO-Revision-Date: 2010-01-19 13:47+0200\n"
+"PO-Revision-Date: 2010-01-19 13:49+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -2500,6 +2500,9 @@ msgid ""
 "in some file formats (like NLM) will be set indicator informing about logo "
 "type to given."
 msgstr ""
+"Převádí loga mezi různými formáty. Pokud neuvedete výstupní soubor, logo "
+"bude zobrazeno v ASCII artu. V některých výstupních formátech (například "
+"NLM) může být nastaven i idnikátor typu loga."
 
 # type: TP
 #. type: TP
