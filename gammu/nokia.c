@@ -550,17 +550,26 @@ void NokiaAddFile(int argc, char *argv[])
 	}
 
 	if (strcasecmp(argv[2],"Application") == 0 || strcasecmp(argv[2],"Game") == 0) {
-		sprintf(buffer,"%s.jad",argv[3]);
-		file = fopen(buffer,"rb");
-		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
+		sprintf(buffer, "%s.jad", argv[3]);
+		file = fopen(buffer, "rb");
+		if (file == NULL) {
+			printf_err(_("Can not open file %s\n"), buffer);
+			Print_Error(ERR_CANTOPENFILE);
+		}
 		fclose(file);
-		sprintf(buffer,"%s.jar",argv[3]);
-		file = fopen(buffer,"rb");
-		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
+		sprintf(buffer, "%s.jar", argv[3]);
+		file = fopen(buffer, "rb");
+		if (file == NULL) {
+			printf_err(_("Can not open file %s\n"), buffer);
+			Print_Error(ERR_CANTOPENFILE);
+		}
 		fclose(file);
 	} else {
 		file = fopen(argv[3],"rb");
-		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
+		if (file == NULL) {
+			printf_err(_("Can not open file %s\n"), argv[3]);
+			Print_Error(ERR_CANTOPENFILE);
+		}
 		fclose(file);
 	}
 
