@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-08 16:42+0100\n"
+"POT-Creation-Date: 2010-01-19 10:40+0100\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -64,7 +64,6 @@ msgstr "NÉV"
 msgid "Gammu - Does some neat things with your cellular phone or modem."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:8 docs/user/gammurc.5:7 docs/user/gammu-smsdrc.5:7
 #: docs/user/gammu-smsd.1:4 docs/user/gammu-smsd-inject.1:4
@@ -72,7 +71,7 @@ msgstr ""
 #: docs/user/gammu-config.1:4
 #, no-wrap
 msgid "SYNOPSIS"
-msgstr ""
+msgstr "ÁTTEKINTÉS"
 
 # type: Plain text
 #. type: Plain text
@@ -80,7 +79,6 @@ msgstr ""
 msgid "Usage: gammu [I<parameters>] E<lt>commandE<gt> [I<options>]"
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:13 docs/user/gammurc.5:11 docs/user/gammu-smsdrc.5:9
 #: docs/user/gammu-smsd.1:7 docs/user/gammu-smsd-inject.1:9
@@ -90,7 +88,7 @@ msgstr ""
 #: docs/user/gammu-smsd-dbi.7:7 docs/user/gammu-smsd-tables.7:7
 #, no-wrap
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "LEÍRÁS"
 
 #. type: Plain text
 #: docs/user/gammu.1:19
@@ -99,12 +97,11 @@ msgid ""
 "supported, for actual listing see E<lt>http://wammu.eu/phones/E<gt>."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:21
 #, no-wrap
 msgid "OPTIONS"
-msgstr ""
+msgstr "BEÁLLÍTÁSOK"
 
 # type: Plain text
 #. type: Plain text
@@ -4825,7 +4822,6 @@ msgid ""
 "NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:2737 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:467
 #: docs/user/gammu-smsd.1:192 docs/user/gammu-smsd-inject.1:142
@@ -4835,7 +4831,7 @@ msgstr ""
 #: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:505
 #, no-wrap
 msgid "REPORTING BUGS"
-msgstr ""
+msgstr "HIBÁK JELENTÉSE"
 
 # type: Plain text
 #. type: Plain text
@@ -7283,18 +7279,16 @@ msgid ""
 "starting with two dashes (`-'). A summary of options is included below."
 msgstr ""
 
-# type: TP
 #. type: TP
 #: docs/user/jadmaker.1:14 docs/user/gammu-config.1:13
 #, no-wrap
 msgid "B<-h, --help>"
-msgstr ""
+msgstr "B<-h, --help>"
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/jadmaker.1:17 docs/user/gammu-config.1:16
 msgid "Show summary of options."
-msgstr ""
+msgstr "Megjeleníti ezt a súgót."
 
 # type: TP
 #. type: TP
