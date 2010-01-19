@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-19 13:18+0100\n"
-"PO-Revision-Date: 2010-01-19 18:49+0200\n"
+"PO-Revision-Date: 2010-01-19 18:50+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -3260,6 +3260,8 @@ msgid ""
 "nokianetmonitor 243> in some phones like 6210 or 9210 have to reboot them to "
 "see netmonitor menu)"
 msgstr ""
+"I<TIP:> test B<243> zapne všechny testy (po použití příkazu B<gammu "
+"nokianetmonitor 243> se musí některé telefony restartovat)"
 
 # type: TP
 #. type: TP
