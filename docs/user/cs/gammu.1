@@ -957,10 +957,9 @@ Naistaluje soubory *.jar/*.jad jako midlet do složky aplikací nebo her v
 telefonu. Jméno souboru musíte zadat bez přípony .jar/.jad, budou doplěny
 automaticky.
 
-The option \fI\-overwrite\fP deletes the application's .jad and .jar files bevor
-installing, but doesn't delete the application data. Option \fI\-overwriteall\fP
-will also delete all data. Both these options work only for Application or
-Game upload.
+Parametr \fI\-overwrite\fP způsobí vymazání .jad a .jar souborů aplikace před
+nahráním nové, ale zachová její data. Parametr \fI\-overwriteall\fP odstraní i
+její data. Oba tyto parametry fungují jen při nahrávání aplikací nebo her.
 
 \fIExample:\fP gammu nokiaaddfile Application Alien načte Alien.JAD a Alien.JAR
 a přidá ho do složky Applications
@@ -1113,11 +1112,10 @@ Nastaví v telefonu uvítací zprávu prodejce, která se obvykle v menu telefon
 nedá nastavit.
 .TP 
 \fBsetbitmap OPERATOR\fP\fI [file [netcode]]\fP
-Set operator logo in phone. When won't give file and netcode, operator logo
-will be removed from phone. When will give only filename, operator logo will
-be displayed for your current GSM operator. When give additionally network
-code, it will be displayed for this operator: \fBgammu setbitmap OPERATOR
-file "260 02"\fP
+Nastaví logo operátora v telefonu. Pokud nezadáte ani soubor ani kód sítě,
+logo v telefonu bude vymazáno. Při vynechání kódu sítě se použije síť, ke
+které je telefon právě připojený. Zadáním kódu určíte pro jakého operátora
+bude logo zobrazeno: \fBgammu setbitmap OPERATOR file "230 03"\fP
 
 .TP 
 \fBsetbitmap PICTURE\fP\fI file location [text]\fP
@@ -1769,10 +1767,9 @@ Naistaluje soubory *.jar/*.jad jako midlet do složky aplikací nebo her v
 telefonu. Jméno souboru musíte zadat bez přípony .jar/.jad, budou doplěny
 automaticky.
 
-The option \fI\-overwrite\fP deletes the application's .jad and .jar files bevor
-installing, but doesn't delete the application data. Option \fI\-overwriteall\fP
-will also delete all data. Both these options work only for Application or
-Game upload.
+Parametr \fI\-overwrite\fP způsobí vymazání .jad a .jar souborů aplikace před
+nahráním nové, ale zachová její data. Parametr \fI\-overwriteall\fP odstraní i
+její data. Oba tyto parametry fungují jen při nahrávání aplikací nebo her.
 
 \fIExample:\fP gammu nokiaaddfile Application Alien načte Alien.JAD a Alien.JAR
 a přidá ho do složky Applications
@@ -1807,9 +1804,8 @@ Nokia (a jak by mělo vypadat).
 
 .TP 
 \fBnokiagetoperatorname\fP
-6110.c phones have place for name for one GSM network (of course, with
-flashing it's possible to change all names, but Gammu is not flasher
-;\-)). You can get this name using this option.
+Telefonu kompatibilní s 6110 umožňují změnit jméno jednoho operátora a tento
+příkaz vám umožní tuto změnu provést.
 
 .TP 
 \fBnokiagetpbkfeatures\fP\fI memorytype\fP
@@ -1823,9 +1819,9 @@ flashing it's possible to change all names, but Gammu is not flasher
 .TP 
 \fBnokiagetvoicerecord\fP\fI location\fP
 
-Get voice record from location and save to WAV file. File is coded using GSM
-6.10 codec (available for example in win32). Name of file is like name of
-voice record in phone.
+Získá ze zadané pozice v telefonu zvukovou nahrávku a uloží ji do souboru
+WAV. Soubor je komprimován pomocí kodeku GSM 6.10. Jeho jméno je stejné jako
+je v telefonu.
 
 .TP 
 \fBnokiamakecamerashoot\fP
@@ -1837,9 +1833,8 @@ Zobrazí výstup nebo nastaví netmonitor na telefonech Nokia DCT3.
 \fITIP:\fP Pro více informací se podívejte na stránky
 \fIhttp://www.mwiacek.com\fP, kde naleznete manuál k netmonitoru.
 
-\fITIP:\fP test \fB243\fP enables all tests (after using command \fBgammu
-nokianetmonitor 243\fP in some phones like 6210 or 9210 have to reboot them to
-see netmonitor menu)
+\fITIP:\fP test \fB243\fP zapne všechny testy (po použití příkazu \fBgammu
+nokianetmonitor 243\fP se musí některé telefony restartovat)
 
 .TP 
 \fBnokianetmonitor36\fP
@@ -1931,9 +1926,8 @@ Zobrazí informace o stavu sítě z telefonu.
 
 .TP 
 \fBnokiagetoperatorname\fP
-6110.c phones have place for name for one GSM network (of course, with
-flashing it's possible to change all names, but Gammu is not flasher
-;\-)). You can get this name using this option.
+Telefonu kompatibilní s 6110 umožňují změnit jméno jednoho operátora a tento
+příkaz vám umožní tuto změnu provést.
 
 .TP 
 \fBnokianetmonitor\fP\fI test\fP
@@ -1942,9 +1936,8 @@ Zobrazí výstup nebo nastaví netmonitor na telefonech Nokia DCT3.
 \fITIP:\fP Pro více informací se podívejte na stránky
 \fIhttp://www.mwiacek.com\fP, kde naleznete manuál k netmonitoru.
 
-\fITIP:\fP test \fB243\fP enables all tests (after using command \fBgammu
-nokianetmonitor 243\fP in some phones like 6210 or 9210 have to reboot them to
-see netmonitor menu)
+\fITIP:\fP test \fB243\fP zapne všechny testy (po použití příkazu \fBgammu
+nokianetmonitor 243\fP se musí některé telefony restartovat)
 
 .TP 
 \fBnokiasetoperatorname\fP\fI [networkcode name]\fP
@@ -2420,9 +2413,9 @@ standardního vstupu.
 .TP 
 \fBnokiagetvoicerecord\fP\fI location\fP
 
-Get voice record from location and save to WAV file. File is coded using GSM
-6.10 codec (available for example in win32). Name of file is like name of
-voice record in phone.
+Získá ze zadané pozice v telefonu zvukovou nahrávku a uloží ji do souboru
+WAV. Soubor je komprimován pomocí kodeku GSM 6.10. Jeho jméno je stejné jako
+je v telefonu.
 
 .TP 
 \fBnokiamakecamerashoot\fP
