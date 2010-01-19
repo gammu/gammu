@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-19 12:28+0100\n"
-"PO-Revision-Date: 2010-01-19 13:49+0200\n"
+"PO-Revision-Date: 2010-01-19 13:51+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -2519,6 +2519,9 @@ msgid ""
 "during enabling phone, which can't be edited from phone menu.  Here you can "
 "get it."
 msgstr ""
+"U některých telefonů je možné nastavit uvítací text, který je zobrazen při "
+"zapnutí telefonu a nemůže být změněn z menu telefonu. Tímto příkazem ho "
+"můžete stáhout."
 
 # type: TP
 #. type: TP
