@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-19 12:28+0100\n"
-"PO-Revision-Date: 2010-01-19 13:51+0200\n"
+"PO-Revision-Date: 2010-01-19 13:54+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -2651,6 +2651,9 @@ msgid ""
 "name) or one of predefined animated (only some phones like Nokia 3310 or "
 "3330 supports it)"
 msgstr ""
+"Nastaví v telefonu logo při spuštění. Může to být zadaný obrázek (pak musíte "
+"zadat jeho cestu), nebo jedna z předdefinovaných animací (toto podporují "
+"jen některé telefony jako Nokia 3310 nebo 3330)."
 
 # type: TP
 #. type: TP
