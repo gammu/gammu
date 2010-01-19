@@ -206,9 +206,9 @@ to tune it for your environment.
 Externí knihovny
 ----------------
 
-The easies way to link with third party libraries is to add path to their
-installation to cmake/Toolchain-mingw32.cmake or to list these paths in
-CMAKE_FIND_ROOT_PATH when invoking cmake.
+Nejsnazší způsob zadání cest k používaným knihovnám je v souboru
+cmake/Toolchain-mingw32.cmake nebo jejich zadáním v parametru
+CMAKE_FIND_ROOT_PATH při spuštění cmake.
 
 
 MySQL

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-08 16:42+0100\n"
-"PO-Revision-Date: 2010-01-14 11:28+0200\n"
+"PO-Revision-Date: 2010-01-19 10:39+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -10599,6 +10599,9 @@ msgid ""
 "installation to cmake/Toolchain-mingw32.cmake or to list these paths in "
 "CMAKE_FIND_ROOT_PATH when invoking cmake."
 msgstr ""
+"Nejsnazší způsob zadání cest k používaným knihovnám je v souboru cmake/"
+"Toolchain-mingw32.cmake nebo jejich zadáním v parametru CMAKE_FIND_ROOT_PATH "
+"při spuštění cmake."
 
 #. type: Plain text
 #: INSTALL:218
