@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-19 13:18+0100\n"
-"PO-Revision-Date: 2010-01-19 18:47+0200\n"
+"PO-Revision-Date: 2010-01-19 18:49+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -3196,6 +3196,8 @@ msgid ""
 "flashing it's possible to change all names, but Gammu is not flasher ;-)). "
 "You can get this name using this option."
 msgstr ""
+"Telefonu kompatibilní s 6110 umožňují změnit jméno jednoho operátora a tento "
+"příkaz vám umožní tuto změnu provést."
 
 # type: TP
 #. type: TP
