@@ -470,7 +470,7 @@ HELP['addfile'] = '''Add file with specified name to folder with specified folde
 - after using it date/time of file modification will be set to moment of uploading 
 
 '''
-HELP['nokiaaddfile'] = '''Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You need to specify filename without the jar/jad suffix, both will be added automatically.
+HELP['nokiaaddfile APPLICATION|GAME'] = '''Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You need to specify filename without the jar/jad suffix, both will be added automatically.
 
 The option
 .I \-overwrite
@@ -677,29 +677,27 @@ HELP['getbitmap OPERATOR'] = '''Get operator logo (picture displayed instead of 
 ''' 
 HELP['getbitmap PICTURE'] = '''Get Picture Image from phone.
 '''
-HELP['getbitmap'] = '''Get startup text from phone.
+HELP['getbitmap TEXT'] = '''Get startup text from phone.
 '''
-HELP['getbitmap'] = '''In some models it's possible to save dealer welcome note - text displayed
+HELP['getbitmap DEALER'] = '''In some models it's possible to save dealer welcome note - text displayed
 during enabling phone, which can't be edited from phone menu.  Here you can
 get it.
 '''
 HELP['setbitmap STARTUP'] = '''Set startup logo in phone. It can be static (then you will have to give file
 name) or one of predefined animated (only some phones like Nokia 3310 or 3330
-supports it)
+supports it).
 '''
-HELP['setbitmap COLOURSTARTUP'] = ''''''
-HELP['setbitmap WALLPAPER'] = '''''' 
-HELP['setbitmap CALLER'] = '''Set caller logo.
-''' 
+HELP['setbitmap WALLPAPER'] = '''Sets wallpaper in phone.''' 
+HELP['setbitmap CALLER'] = '''Set caller logo.''' 
 HELP['setbitmap OPERATOR'] = '''Set operator logo in phone. When won't give file and netcode, operator logo
 will be removed from phone. When will give only filename, operator logo will
 be displayed for your current GSM operator. When give additionally network
 code, it will be displayed for this operator: \\fBgammu setbitmap OPERATOR file "260 02"\\fR
 '''
-HELP['setbitmap COLOUROPERATOR'] = '''''' 
-HELP['setbitmap PICTURE'] = '''''' 
-HELP['setbitmap TEXT'] = '''''' 
-HELP['setbitmap DEALER'] = '''''' 
+HELP['setbitmap COLOUROPERATOR'] = '''Sets color operator logo in phone.''' 
+HELP['setbitmap PICTURE'] = '''Sets picture image in phone.''' 
+HELP['setbitmap TEXT'] = '''Sets startup text in phone.''' 
+HELP['setbitmap DEALER'] = '''Sets welcome message configured by dealer, which usually can not be changed in phone menus.''' 
 HELP['copybitmap'] = '''Allow to convert logos files to another. When give ONLY inputfile, output will
 be written to stdout using ASCII art. When give output file and format, in
 some file formats (like NLM) will be set indicator informing about logo type
@@ -735,7 +733,8 @@ backup to vCard, you need following command:
 
     gammu savefile CALENDAR output.vcf myPhonebook.backup ME 42
 '''
-HELP['savefile'] = '''''' 
+HELP['savefile BOOKMARK'] = '''Converts backup format supported by
+Gammu to vBookmark file.''' 
 HELP['savesms TEXT'] = '''Take text from stdin (or commandline if \\-text 
 specified) and save as text SMS into SIM/phone memory.
 
@@ -1117,10 +1116,10 @@ usually just upload them to some folder in phone filesystem.
 import os
 import re
 
-SECTION_MATCHER = re.compile(' *([^ ]*) - (.*)')
-COMMAND_MATCHER = re.compile('^([^ \n]*) (.*)')
-COMMAND_SUBCOMMAND_MATCHER = re.compile('^([^ \n]*) ([A-Z0-9|]*) (.*)')
-COMMAND_MATCHER_NOPARAM = re.compile('^([^ \n]*)')
+SECTION_MATCHER = re.compile(' *([^ ]+) - (.+)')
+COMMAND_MATCHER = re.compile('^([^ \n]+) (.+)')
+COMMAND_SUBCOMMAND_MATCHER = re.compile('^([^ \n]+) ([A-Z][A-Za-z0-9|]+)( (.*)|)')
+COMMAND_MATCHER_NOPARAM = re.compile('^([^ \n]+)')
 
 def read_errors():
     pipe = os.popen('LANG=C %s -m' % ERROR_LIST_PATH)
@@ -1163,7 +1162,10 @@ def parse_section_help(lines):
                 options = match.groups()[1]
         else:
             command = '%s %s' % (match.groups()[0], match.groups()[1])
-            options = match.groups()[2]
+            if match.groups()[3] is None:
+                options = ''
+            else:
+                options = match.groups()[3]
         result[command] = options
     return result
 
@@ -1179,10 +1181,10 @@ def get_command_help(command):
             ret = HELP[maincommand]
             if ret == '':
                 raise KeyError()
-            print 'Fallback to %s from %s' % (maincommand, command)
+            print 'Fallback to "%s" from "%s"' % (maincommand, command)
             return ret
         except:
-            print 'No help for %s' % command
+            print 'No help for "%s"' % command
             return ''
 
 def write_section(output, name):

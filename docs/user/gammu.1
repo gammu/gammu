@@ -38,11 +38,11 @@ Commands can be specified with or without leading \-\-.
 
 .SS "Calls"
 .TP
-.BI "answercall" " [ID]"
+.BI "answercall" " [id]"
 Answer incoming call.
 
 .TP
-.BI "cancelcall" " [ID]"
+.BI "cancelcall" " [id]"
 Cancel incoming call
 
 .TP
@@ -50,7 +50,7 @@ Cancel incoming call
 Cancel all existing call diverts.
 
 .TP
-.BI "conferencecall" " ID"
+.BI "conferencecall" " id"
 Initiates a conference call.
 
 .TP
@@ -83,7 +83,7 @@ Gets speed dial choices.
 Retrieves USSD information - dials a service number and reads response.
 
 .TP
-.BI "holdcall" " ID"
+.BI "holdcall" " id"
 Holds call.
 
 .TP
@@ -101,19 +101,19 @@ to break this state.
 Plays DTMF sequence. In some phones available only during calls
 
 .TP
-.BI "splitcall" " ID"
+.BI "splitcall" " id"
 Splits call.
 
 .TP
-.BI "switchcall" " [ID]"
+.BI "switchcall" " [id]"
 Switches call.
 
 .TP
-.BI "transfercall" " [ID]"
+.BI "transfercall" " [id]"
 Transfers call.
 
 .TP
-.BI "unholdcall" " ID"
+.BI "unholdcall" " id"
 Unholds call.
 
 
@@ -719,16 +719,16 @@ See \fBEXAMPLE\fR section for some hints on manipulating Gammu backup format.
 Deletes all private data from the phone.
 
 .TP
-.BI "deleteallmemory" " DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
+.BI "deleteallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 Deletes all entries from specified memory type.
 .TP
 .BI "deletememory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL" " start [stop]"
 Deletes entries in specified range from specified memory type.
 .TP
-.BI "getallcategory" " TODO|PHONEBOOK"
+.BI "getallcategory TODO|PHONEBOOK"
 
 .TP
-.BI "getallmemory" " DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
+.BI "getallmemory DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 Get all memory locations from phone. For memory
 types see \fBgetmemory\fR.
 .TP
@@ -849,10 +849,10 @@ Delete files with given IDs.
 .BI "deletefolder" " name"
 Delete folder with given ID.
 .TP
-.BI "getfilefolder" " ID1, ID2, ..."
+.BI "getfilefolder" " fileID, fileID, ..."
 Retrieve files or all files from folder with given IDs from a phone filesytem.
 .TP
-.BI "getfiles" " ID1, ID2, ..."
+.BI "getfiles" " fileID, fileID, ..."
 Retrieve files with given IDs from a phone filesytem.
 .TP
 .BI "getfilesystem" " [\-flatall|\-flat]"
@@ -882,7 +882,7 @@ Please note, that in some phones (like N6230) content of some folders (with more
 Display info about drives available in phone/memory card.
 
 .TP
-.BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]"
+.BI "nokiaaddfile APPLICATION|GAME" " file [\-readonly] [\-overwrite] [\-overwriteall]"
 Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You need to specify filename without the jar/jad suffix, both will be added automatically.
 
 The option
@@ -896,6 +896,9 @@ will also delete all data. Both these options work only for Application or Game 
 \fIExample:\fR gammu nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 
 You can use jadmaker(1) to generate a .jad file from a .jar file.
+
+.TP
+.BI "nokiaaddfile GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD" " file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]"
 
 .TP
 .BI "nokiaaddplaylists"
@@ -919,14 +922,14 @@ some file formats (like NLM) will be set indicator informing about logo type
 to given.
 
 .TP
-.BI "getbitmap" " DEALER"
+.BI "getbitmap CALLER" " location [file]"
+Get caller group logo from phone. Locations 1-5.
+
+.TP
+.BI "getbitmap DEALER"
 In some models it's possible to save dealer welcome note - text displayed
 during enabling phone, which can't be edited from phone menu.  Here you can
 get it.
-
-.TP
-.BI "getbitmap CALLER" " location [file]"
-Get caller group logo from phone. Locations 1-5.
 
 .TP
 .BI "getbitmap OPERATOR" " [file]"
@@ -939,6 +942,10 @@ Get Picture Image from phone.
 .TP
 .BI "getbitmap STARTUP" " [file]"
 Get static startup logo from phone. Allow to save it in file.
+
+.TP
+.BI "getbitmap TEXT"
+Get startup text from phone.
 
 .TP
 .BI "savesms ANIMATION" " frames file1 file2... [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
@@ -1014,16 +1021,15 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 .TP
 .BI "setbitmap CALLER" " location [file]"
 Set caller logo.
-
 .TP
 .BI "setbitmap COLOUROPERATOR" " [fileID [netcode]]"
-
+Sets color operator logo in phone.
 .TP
 .BI "setbitmap COLOURSTARTUP" " [fileID]"
 
 .TP
 .BI "setbitmap DEALER" " text"
-
+Sets welcome message configured by dealer, which usually can not be changed in phone menus.
 .TP
 .BI "setbitmap OPERATOR" " [file [netcode]]"
 Set operator logo in phone. When won't give file and netcode, operator logo
@@ -1033,19 +1039,19 @@ code, it will be displayed for this operator: \fBgammu setbitmap OPERATOR file "
 
 .TP
 .BI "setbitmap PICTURE" " file location [text]"
-
+Sets picture image in phone.
 .TP
 .BI "setbitmap STARTUP" " file|1|2|3"
 Set startup logo in phone. It can be static (then you will have to give file
 name) or one of predefined animated (only some phones like Nokia 3310 or 3330
-supports it)
+supports it).
 
 .TP
 .BI "setbitmap TEXT" " text"
-
+Sets startup text in phone.
 .TP
 .BI "setbitmap WALLPAPER" " fileID"
-
+Sets wallpaper in phone.
 
 .SS "Ringtones"
 .P
@@ -1380,7 +1386,7 @@ Deletes all private data from the phone.
 .BI "deletetodo" " start [stop]"
 Deletes selected todo entries in phone. 
 .TP
-.BI "getallcategory" " TODO|PHONEBOOK"
+.BI "getallcategory TODO|PHONEBOOK"
 
 .TP
 .BI "getalltodo"
@@ -1529,7 +1535,7 @@ See \fBEXAMPLE\fR section for some hints on manipulating Gammu backup format.
 Deletes all private data from the phone.
 
 .TP
-.BI "getallcategory" " TODO|PHONEBOOK"
+.BI "getallcategory TODO|PHONEBOOK"
 
 .TP
 .BI "getcategory TODO|PHONEBOOK" " start [stop]"
@@ -1638,7 +1644,8 @@ selected folder in phone. Please note that this overwrites existing
 messages in phone (if it supports it).
 .TP
 .BI "savefile BOOKMARK" " target.url file location"
-
+Converts backup format supported by
+Gammu to vBookmark file.
 .TP
 .BI "savefile CALENDAR" " target.vcs file location"
 Allows to convert between various backup formats which gammu
@@ -1678,7 +1685,7 @@ backup to vCard, you need following command:
 
 .SS "Nokia specific"
 .TP
-.BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]"
+.BI "nokiaaddfile APPLICATION|GAME" " file [\-readonly] [\-overwrite] [\-overwriteall]"
 Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You need to specify filename without the jar/jad suffix, both will be added automatically.
 
 The option
@@ -1692,6 +1699,9 @@ will also delete all data. Both these options work only for Application or Game 
 \fIExample:\fR gammu nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 
 You can use jadmaker(1) to generate a .jad file from a .jar file.
+
+.TP
+.BI "nokiaaddfile GALLERY|GALLERY2|CAMERA|TONES|TONES2|RECORDS|VIDEO|PLAYLIST|MEMORYCARD" " file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]"
 
 .TP
 .BI "nokiaaddplaylists"
@@ -1968,7 +1978,8 @@ be done, when phone doesn't have set clock inside.
 
 .TP
 .BI "savefile BOOKMARK" " target.url file location"
-
+Converts backup format supported by
+Gammu to vBookmark file.
 .TP
 .BI "savesms BOOKMARK" " file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
 Read WAP bookmark from file created by \fBbackup\fR option and saves in
@@ -2222,7 +2233,7 @@ week or automatic deleting of old entries.
 .BI "getprofile" " start [stop]"
 
 .TP
-.BI "resetphonesettings" " PHONE|DEV|UIF|ALL|FACTORY"
+.BI "resetphonesettings PHONE|DEV|UIF|ALL|FACTORY"
 Reset phone settings. \fIBE CAREFULL !!!!\fR
 
 \fBPHONE:\fR
@@ -2378,7 +2389,7 @@ Press specified key sequence on phone keyboard
 \fB123456789*0#\fR is numeric keyboard
 
 .TP
-.BI "reset" " SOFT|HARD"
+.BI "reset SOFT|HARD"
 Make phone reset: soft (without asking for PIN) or hard (with PIN).
 
 \fINote:\fR some phones will make hard reset even with \fBSOFT\fR option.
