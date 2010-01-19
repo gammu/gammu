@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.25.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-08 15:05+0100\n"
+"POT-Creation-Date: 2010-01-19 12:19+0100\n"
 "PO-Revision-Date: 2009-08-25 17:27+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1551,7 +1551,7 @@ msgstr ""
 msgid "  Saving to %s\n"
 msgstr ""
 
-#: gammu/files.c:692 gammu/nokia.c:937
+#: gammu/files.c:692 gammu/nokia.c:946
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr ""
@@ -1561,7 +1561,7 @@ msgstr ""
 msgid "What file type (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:946
+#: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:955
 #: helper/message-cmdline.c:1292
 msgid "Parameter missing!"
 msgstr ""
@@ -3265,67 +3265,72 @@ msgstr ""
 msgid "What folder type (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/nokia.c:582 gammu/nokia.c:656
+#: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
+#, c-format
+msgid "Can not open file %s\n"
+msgstr ""
+
+#: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
 msgstr ""
 
-#: gammu/nokia.c:605
+#: gammu/nokia.c:614
 msgid "Searching for phone folder: "
 msgstr ""
 
-#: gammu/nokia.c:682
+#: gammu/nokia.c:691
 msgid "No vendor info in JAD file"
 msgstr ""
 
-#: gammu/nokia.c:687
+#: gammu/nokia.c:696
 msgid "No name info in JAD file"
 msgstr ""
 
-#: gammu/nokia.c:692
+#: gammu/nokia.c:701
 msgid "No JAR URL info in JAD file"
 msgstr ""
 
-#: gammu/nokia.c:698
+#: gammu/nokia.c:707
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
 msgstr ""
 
-#: gammu/nokia.c:722
+#: gammu/nokia.c:731
 msgid "No JAR size info in JAD file. Added by Gammu."
 msgstr ""
 
-#: gammu/nokia.c:731
+#: gammu/nokia.c:740
 #, c-format
 msgid "Adding \"%s\""
 msgstr ""
 
-#: gammu/nokia.c:732
+#: gammu/nokia.c:741
 #, c-format
 msgid " version %s"
 msgstr ""
 
-#: gammu/nokia.c:733
+#: gammu/nokia.c:742
 #, c-format
 msgid " created by %s\n"
 msgstr ""
 
-#: gammu/nokia.c:784 gammu/nokia.c:836
+#: gammu/nokia.c:793 gammu/nokia.c:845
 msgid "Application already exists. Deleting by Gammu."
 msgstr ""
 
-#: gammu/nokia.c:817 gammu/nokia.c:850
+#: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
 msgid "  Deleting %s\n"
 msgstr ""
 
-#: gammu/nokia.c:873
+#: gammu/nokia.c:882
 msgid "Writing JAD file:"
 msgstr ""
 
-#: gammu/nokia.c:892
+#: gammu/nokia.c:901
 msgid "Writing JAR file:"
 msgstr ""
 
-#: gammu/nokia.c:967
+#: gammu/nokia.c:976
 msgid "Writing file:"
 msgstr ""
 

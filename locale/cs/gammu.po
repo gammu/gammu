@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-08 15:05+0100\n"
+"POT-Creation-Date: 2010-01-19 12:19+0100\n"
 "PO-Revision-Date: 2010-01-04 14:23+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1568,7 +1568,7 @@ msgstr ""
 msgid "  Saving to %s\n"
 msgstr "  Ukládám do %s\n"
 
-#: gammu/files.c:692 gammu/nokia.c:937
+#: gammu/files.c:692 gammu/nokia.c:946
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr "Parametr \"%s\" není známý\n"
@@ -1578,7 +1578,7 @@ msgstr "Parametr \"%s\" není známý\n"
 msgid "What file type (\"%s\") ?\n"
 msgstr "Jaký typ souboru (\"%s\") ?\n"
 
-#: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:946
+#: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:955
 #: helper/message-cmdline.c:1292
 msgid "Parameter missing!"
 msgstr "Chybí parametr!"
@@ -3310,68 +3310,73 @@ msgstr "Chyba při mazání seznamu skladeb"
 msgid "What folder type (\"%s\") ?\n"
 msgstr "Jaký typ složky (\"%s\")?\n"
 
-#: gammu/nokia.c:582 gammu/nokia.c:656
+#: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
+#, fuzzy, c-format
+msgid "Can not open file %s\n"
+msgstr "Nepodařilo se otevřít soubor \"%s\"\n"
+
+#: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
 msgstr "Složna nebyla nalezena. Pravděpodobně tatko funkce není podporována!"
 
-#: gammu/nokia.c:605
+#: gammu/nokia.c:614
 msgid "Searching for phone folder: "
 msgstr "Hledám složku v telefonu: "
 
-#: gammu/nokia.c:682
+#: gammu/nokia.c:691
 msgid "No vendor info in JAD file"
 msgstr "V JAD souboru chybí jméno výrobce."
 
-#: gammu/nokia.c:687
+#: gammu/nokia.c:696
 msgid "No name info in JAD file"
 msgstr "V JAD souboru chybí jméno."
 
-#: gammu/nokia.c:692
+#: gammu/nokia.c:701
 msgid "No JAR URL info in JAD file"
 msgstr "V JAD souboru chybí URL pro JAR."
 
-#: gammu/nokia.c:698
+#: gammu/nokia.c:707
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
 msgstr "Udaná velikost JAR souboru je chybná. Opraveno."
 
-#: gammu/nokia.c:722
+#: gammu/nokia.c:731
 msgid "No JAR size info in JAD file. Added by Gammu."
 msgstr ""
 "V JAD souboru chybí velikost JAD souboru. Přidávám chybějící informace."
 
-#: gammu/nokia.c:731
+#: gammu/nokia.c:740
 #, c-format
 msgid "Adding \"%s\""
 msgstr "Přidávám \"%s\""
 
-#: gammu/nokia.c:732
+#: gammu/nokia.c:741
 #, c-format
 msgid " version %s"
 msgstr " verze %s"
 
-#: gammu/nokia.c:733
+#: gammu/nokia.c:742
 #, c-format
 msgid " created by %s\n"
 msgstr " vytvořil %s\n"
 
-#: gammu/nokia.c:784 gammu/nokia.c:836
+#: gammu/nokia.c:793 gammu/nokia.c:845
 msgid "Application already exists. Deleting by Gammu."
 msgstr "Aplikace již existuje. Mažu ji"
 
-#: gammu/nokia.c:817 gammu/nokia.c:850
+#: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
 msgid "  Deleting %s\n"
 msgstr "  Odstraňuji %s\n"
 
-#: gammu/nokia.c:873
+#: gammu/nokia.c:882
 msgid "Writing JAD file:"
 msgstr "Zapisuji JAD soubor:"
 
-#: gammu/nokia.c:892
+#: gammu/nokia.c:901
 msgid "Writing JAR file:"
 msgstr "Zapisuji JAR soubor:"
 
-#: gammu/nokia.c:967
+#: gammu/nokia.c:976
 msgid "Writing file:"
 msgstr "Zapisuji soubor:"
 

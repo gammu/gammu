@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-08 15:05+0100\n"
+"POT-Creation-Date: 2010-01-19 12:19+0100\n"
 "PO-Revision-Date: 2009-03-23 19:23+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -1598,7 +1598,7 @@ msgstr ""
 msgid "  Saving to %s\n"
 msgstr "  Guardando en %s\n"
 
-#: gammu/files.c:692 gammu/nokia.c:937
+#: gammu/files.c:692 gammu/nokia.c:946
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr "Parámetro \"%s\" desconocido\n"
@@ -1608,7 +1608,7 @@ msgstr "Parámetro \"%s\" desconocido\n"
 msgid "What file type (\"%s\") ?\n"
 msgstr "¿Que tipo de archivo es (\"%s\")?\n"
 
-#: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:946
+#: gammu/files.c:736 gammu/misc.c:1273 gammu/nokia.c:955
 #: helper/message-cmdline.c:1292
 msgid "Parameter missing!"
 msgstr "¡Falta un parámetro!"
@@ -3379,75 +3379,80 @@ msgstr "Problema al borrar la lista de reproducción"
 msgid "What folder type (\"%s\") ?\n"
 msgstr "¿Qué tipo de carpeta (\"%s\")?\n"
 
-#: gammu/nokia.c:582 gammu/nokia.c:656
+#: gammu/nokia.c:556 gammu/nokia.c:563 gammu/nokia.c:570
+#, fuzzy, c-format
+msgid "Can not open file %s\n"
+msgstr "No se pudo abrir el archivo \"%s\"\n"
+
+#: gammu/nokia.c:591 gammu/nokia.c:665
 msgid "Folder not found. Probably function not supported!"
 msgstr "carpeta no encontrada. Probablemente es una función no soportada."
 
-#: gammu/nokia.c:605
+#: gammu/nokia.c:614
 msgid "Searching for phone folder: "
 msgstr "Buscando la carpeta del teléfono:"
 
-#: gammu/nokia.c:682
+#: gammu/nokia.c:691
 msgid "No vendor info in JAD file"
 msgstr "No hay información del vendedor en el archivo JAD"
 
-#: gammu/nokia.c:687
+#: gammu/nokia.c:696
 msgid "No name info in JAD file"
 msgstr "no hay información del nombre en el archivo JAD"
 
-#: gammu/nokia.c:692
+#: gammu/nokia.c:701
 msgid "No JAR URL info in JAD file"
 msgstr "no hay información de URL JAR en el archivo JAD"
 
-#: gammu/nokia.c:698
+#: gammu/nokia.c:707
 #, fuzzy
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
 msgstr ""
 "INFORMACIÓN: el tamaño indicado del archivo JAR es diferente del real. "
 "Corregido por Gammu"
 
-#: gammu/nokia.c:722
+#: gammu/nokia.c:731
 #, fuzzy
 msgid "No JAR size info in JAD file. Added by Gammu."
 msgstr ""
 "INFORMACIÓN: No se indica tamaño del JAR en el archivo JAD. Añadido por "
 "Gammu."
 
-#: gammu/nokia.c:731
+#: gammu/nokia.c:740
 #, c-format
 msgid "Adding \"%s\""
 msgstr "Añadiendo \"%s\""
 
-#: gammu/nokia.c:732
+#: gammu/nokia.c:741
 #, c-format
 msgid " version %s"
 msgstr " versión %s"
 
-#: gammu/nokia.c:733
+#: gammu/nokia.c:742
 #, c-format
 msgid " created by %s\n"
 msgstr " creado por %s\n"
 
-#: gammu/nokia.c:784 gammu/nokia.c:836
+#: gammu/nokia.c:793 gammu/nokia.c:845
 #, fuzzy
 msgid "Application already exists. Deleting by Gammu."
 msgstr "INFO: La aplicación ya existe. Gammu la borrará"
 
-#: gammu/nokia.c:817 gammu/nokia.c:850
+#: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
 msgid "  Deleting %s\n"
 msgstr "  Borrando %s\n"
 
-#: gammu/nokia.c:873
+#: gammu/nokia.c:882
 #, fuzzy
 msgid "Writing JAD file:"
 msgstr "No hay información del vendedor en el archivo JAD"
 
-#: gammu/nokia.c:892
+#: gammu/nokia.c:901
 msgid "Writing JAR file:"
 msgstr ""
 
-#: gammu/nokia.c:967
+#: gammu/nokia.c:976
 msgid "Writing file:"
 msgstr ""
 
