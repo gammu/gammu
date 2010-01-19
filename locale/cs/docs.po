@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-19 12:28+0100\n"
-"PO-Revision-Date: 2010-01-19 13:46+0200\n"
+"PO-Revision-Date: 2010-01-19 13:47+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -2406,6 +2406,9 @@ msgid ""
 "menu of the phone. You need to specify filename without the jar/jad suffix, "
 "both will be added automatically."
 msgstr ""
+"Naistaluje soubory *.jar/*.jad jako midlet do složky aplikací nebo her v "
+"telefonu. Jméno souboru musíte zadat bez přípony .jar/.jad, budou doplěny "
+"automaticky."
 
 # type: Plain text
 #. type: Plain text
