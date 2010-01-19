@@ -1017,7 +1017,7 @@ Načte statické startovací logo z telefonu. Umožní jeho uložení do souboru
 
 .TP 
 \fBgetbitmap TEXT\fP
-Get startup text from phone.
+Načte z telefonu uvítací text.
 
 .TP 
 \fBsavesms ANIMATION\fP\fI frames file1 file2... [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
@@ -1103,14 +1103,14 @@ sendsms a savesms\fP.
 Nastaví logo volajícího.
 .TP 
 \fBsetbitmap COLOUROPERATOR\fP\fI [fileID [netcode]]\fP
-Sets color operator logo in phone.
+Nastaví v telefonu logo operátora.
 .TP 
 \fBsetbitmap COLOURSTARTUP\fP\fI [fileID]\fP
 
 .TP 
 \fBsetbitmap DEALER\fP\fI text\fP
-Sets welcome message configured by dealer, which usually can not be changed
-in phone menus.
+Nastaví v telefonu uvítací zprávu prodejce, která se obvykle v menu telefonu
+nedá nastavit.
 .TP 
 \fBsetbitmap OPERATOR\fP\fI [file [netcode]]\fP
 Set operator logo in phone. When won't give file and netcode, operator logo
@@ -1121,19 +1121,19 @@ file "260 02"\fP
 
 .TP 
 \fBsetbitmap PICTURE\fP\fI file location [text]\fP
-Sets picture image in phone.
+Nastaví obrázek v telefonu.
 .TP 
 \fBsetbitmap STARTUP\fP\fI file|1|2|3\fP
-Set startup logo in phone. It can be static (then you will have to give file
-name) or one of predefined animated (only some phones like Nokia 3310 or
-3330 supports it).
+Nastaví v telefonu logo při spuštění. Může to být zadaný obrázek (pak musíte
+zadat jeho cestu), nebo jedna z předdefinovaných animací (toto podporují jen
+některé telefony jako Nokia 3310 nebo 3330).
 
 .TP 
 \fBsetbitmap TEXT\fP\fI text\fP
-Sets startup text in phone.
+Nastaví v telefonu uvítací text.
 .TP 
 \fBsetbitmap WALLPAPER\fP\fI fileID\fP
-Sets wallpaper in phone.
+Nastaví v telefonu obrázek pozadí.
 
 .SS Zvonění
 .P
@@ -1727,7 +1727,7 @@ zvolené složky v telefonu. Pokud to telefon podporuje, budou stávající
 zprávy ve složce přepsány!
 .TP 
 \fBsavefile BOOKMARK\fP\fI target.url file location\fP
-Converts backup format supported by Gammu to vBookmark file.
+Převede formát se zálohou podporovaný Gammu do souboru vBookmark.
 .TP 
 \fBsavefile CALENDAR\fP\fI target.vcs file location\fP
 Umožní převádět mezi různými formáty pro zálohy, které Gammu podporuje pro
@@ -2059,7 +2059,7 @@ není nastaven čas a datum.
 
 .TP 
 \fBsavefile BOOKMARK\fP\fI target.url file location\fP
-Converts backup format supported by Gammu to vBookmark file.
+Převede formát se zálohou podporovaný Gammu do souboru vBookmark.
 .TP 
 \fBsavesms BOOKMARK\fP\fI file location [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
 Načte WAP záložky ze souboru vytvořeného příkazem \fBbackup\fP a uloží je ve
