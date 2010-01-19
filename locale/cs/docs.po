@@ -11,9 +11,10 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-19 12:28+0100\n"
-"PO-Revision-Date: 2010-01-19 13:13+0200\n"
+"PO-Revision-Date: 2010-01-19 13:54+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -30,9 +31,9 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Jan 19 2010"
-msgstr "Leden  8, 2010"
+msgstr "Leden  19, 2010"
 
 # type: TH
 #. type: TH
@@ -2405,6 +2406,9 @@ msgid ""
 "menu of the phone. You need to specify filename without the jar/jad suffix, "
 "both will be added automatically."
 msgstr ""
+"Naistaluje soubory *.jar/*.jad jako midlet do složky aplikací nebo her v "
+"telefonu. Jméno souboru musíte zadat bez přípony .jar/.jad, budou doplěny "
+"automaticky."
 
 # type: Plain text
 #. type: Plain text
@@ -2496,6 +2500,9 @@ msgid ""
 "in some file formats (like NLM) will be set indicator informing about logo "
 "type to given."
 msgstr ""
+"Převádí loga mezi různými formáty. Pokud neuvedete výstupní soubor, logo "
+"bude zobrazeno v ASCII artu. V některých výstupních formátech (například "
+"NLM) může být nastaven i idnikátor typu loga."
 
 # type: TP
 #. type: TP
@@ -2512,6 +2519,9 @@ msgid ""
 "during enabling phone, which can't be edited from phone menu.  Here you can "
 "get it."
 msgstr ""
+"U některých telefonů je možné nastavit uvítací text, který je zobrazen při "
+"zapnutí telefonu a nemůže být změněn z menu telefonu. Tímto příkazem ho "
+"můžete stáhout."
 
 # type: TP
 #. type: TP
@@ -2641,6 +2651,9 @@ msgid ""
 "name) or one of predefined animated (only some phones like Nokia 3310 or "
 "3330 supports it)"
 msgstr ""
+"Nastaví v telefonu logo při spuštění. Může to být zadaný obrázek (pak musíte "
+"zadat jeho cestu), nebo jedna z předdefinovaných animací (toto podporují "
+"jen některé telefony jako Nokia 3310 nebo 3330)."
 
 # type: TP
 #. type: TP
