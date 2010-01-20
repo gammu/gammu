@@ -622,7 +622,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 
 	/* Does our config file contain gammu section? */
 	if (INI_FindLastSectionEntry(Config->smsdcfgfile, "gammu", FALSE) == NULL) {
- 		SMSD_Log(DEBUG_ERROR, Config, "No gammu configuration found!");
+ 		SMSD_Log(DEBUG_ERROR, Config, "No gammu configuration found (no [gammu] section in SMSD config file)!");
 		return ERR_UNCONFIGURED;
 	}
 
