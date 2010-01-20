@@ -975,7 +975,7 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 				break;
 			}
 			i = i + Buffer[i+1]*256 + Buffer[i+2] + 3;
-			smfprintf(di, "%i %i\n",i,Length);
+			smfprintf(di, "Profile: pos=%i length=%i\n", i, Length);
 		}
 		return TRUE;
 	}
