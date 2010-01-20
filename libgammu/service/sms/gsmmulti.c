@@ -904,7 +904,7 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 		Info->Entries[0].Bitmap->Bitmap[0].Text[0] = 0;
 		Info->Entries[0].Bitmap->Bitmap[0].Text[1] = 0;
 		i=1;
-		while (i!=Length) {
+		while (i < Length) {
 			switch (Buffer[i]) {
 			case SM30_ISOTEXT:
 				smfprintf(di, "ISO 8859-2 text\n");
@@ -947,7 +947,7 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 			smfprintf(di, "Profile: pos=%i length=%i\n", i, Length);
 		}
 		i=1;
-		while (i!=Length) {
+		while (i < Length) {
 			switch (Buffer[i]) {
 			case SM30_ISOTEXT:
 				smfprintf(di, "ISO 8859-2 text\n");
