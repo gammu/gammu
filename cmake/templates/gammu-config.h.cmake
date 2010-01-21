@@ -294,6 +294,12 @@
 #ifndef HAVE_INTPTR_T
 #cmakedefine HAVE_INTPTR_T
 #endif
+#ifndef HAVE_GETPWUID
+#cmakedefine HAVE_GETPWUID
+#endif
+#ifndef HAVE_GETUID
+#cmakedefine HAVE_GETUID
+#endif
 
 /**
  * __FUNCTION__ support

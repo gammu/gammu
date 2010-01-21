@@ -22,6 +22,12 @@
 
 #include "../helper/string.h"
 
+#if defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
+#include <sys/types.h>
+#include <pwd.h>
+#include <unistd.h>
+#endif
+
 #if defined(WIN32) || defined(DJGPP)
 /* Needed for SHGFP_TYPE_CURRENT */
 #define _WIN32_IE 0x0501
@@ -1065,6 +1071,9 @@ GSM_Error GSM_FindGammuRC (INI_Section **result, const char *force_config)
 	char configfile[PATH_MAX + 1];
 	char *envpath;
 	GSM_Error error;
+#if defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
+	struct passwd *pwent;
+#endif
 
 	*result = NULL;
 
@@ -1094,6 +1103,18 @@ GSM_Error GSM_FindGammuRC (INI_Section **result, const char *force_config)
 		error = GSM_TryReadGammuRC(configfile, result);
 		if (error == ERR_NONE) return ERR_NONE;
 	}
+
+#if defined(HAVE_GETPWUID) && defined(HAVE_GETUID)
+	pwent = getpwuid(getuid());
+	if (pwent != NULL) {
+		strcat(configfile, pwent->pw_dir);
+		strcat(configfile, GAMMURC_NAME);
+
+		error = GSM_TryReadGammuRC(configfile, result);
+		if (error == ERR_NONE) return ERR_NONE;
+	}
+
+#endif
 
 #if defined(WIN32)
 	/* Reset as we're using strcat */

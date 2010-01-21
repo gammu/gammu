@@ -25,6 +25,7 @@ ChangeLog
 [-] * Fix Windows build by not defining MSVC version.
 [-] * Correctly use first entry location in MPBR (bug #1076).
 [-] * Avoid buffer overrun when parsing SM30 SMS (bug #1110).
+[-] * Properly detect user home directory.
     
 20100106 - 1.27.90
 
