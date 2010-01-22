@@ -110,11 +110,11 @@ GSM_Error ATOBEX_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
 	switch (Priv->HasOBEX) {
 		case ATOBEX_OBEX_CPROT0:
 			/* 3GPP TS 27.007 standard */
-			error = GSM_WaitFor (s, "AT+CPROT=0\r", 11, 0x00, 20, ID_SetOBEX);
+			error = GSM_WaitFor (s, "AT+CPROT=0\r", 11, 0x00, 100, ID_SetOBEX);
 			break;
 		case ATOBEX_OBEX_EOBEX:
 			/* Sony-Ericsson extension */
-			error = GSM_WaitFor (s, "AT*EOBEX\r", 9, 0x00, 20, ID_SetOBEX);
+			error = GSM_WaitFor (s, "AT*EOBEX\r", 9, 0x00, 100, ID_SetOBEX);
 			break;
 		case ATOBEX_OBEX_MODE22:
 			/* Motorola extension */
