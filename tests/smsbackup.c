@@ -32,15 +32,13 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = GSM_ReadSMSBackupFile(argv[1], &Backup);
 	gammu_test_result(error, "GSM_ReadSMSBackupFile");
 
+
         for (i = 0; Backup.SMS[i] != NULL; i++) {
-		SMS.Number = 1;
-		SMS.SMS[0] = *Backup.SMS[i];
-                DisplayMultiSMSInfo(&SMS, FALSE, TRUE, NULL, NULL);
+		SMS.Number = i;
+		SMS.SMS[i] = *Backup.SMS[i];
 	}
-	/*
-	 * TODO: Should link messages here and display concatenated
-	 * ones.
-	 */
+
+	DisplayMultiSMSInfo(&SMS, TRUE, TRUE, NULL, NULL);
 
 	/* We don't need this anymore */
 	GSM_FreeSMSBackup(&Backup);
