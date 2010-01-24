@@ -47,6 +47,32 @@
  */
 
 /**
+ * MMS message class.
+ */
+typedef enum {
+	/**
+	 * None class specified.
+	 */
+	GSM_MMS_None = 0,
+	/**
+	 * Personal message.
+	 */
+	GSM_MMS_Personal = 1,
+	/**
+	 * Advertisement message.
+	 */
+	GSM_MMS_Advertisement,
+	/**
+	 * Informational message.
+	 */
+	GSM_MMS_Info,
+	/**
+	 * Automatic message class.
+	 */
+	GSM_MMS_Auto,
+} GSM_MMS_Class;
+
+/**
  * MMS indicator data.
  *
  * \ingroup MMS
@@ -69,9 +95,9 @@ typedef struct {
 	 */
 	size_t MessageSize;
 	/**
-	 * True for Personal class of message./
+	 * Class of a message.
 	 */
-	gboolean Personal;
+	GSM_MMS_Class Class;
 } GSM_MMSIndicator;
 
 /**

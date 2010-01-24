@@ -371,11 +371,26 @@ void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MM
 	/* 1.2 (0x90 is 1.0) */
 	Buffer[(*Length)++] = 0x92;
 
-	if (Indicator.Personal) {
-		/* Message class */
-		Buffer[(*Length)++] = 0x8a;
-		/* Personal (80 = personal, 81 = ad, 82=info, 83 = auto) */
-		Buffer[(*Length)++] = 0x80;
+	/* Message class */
+	switch (Indicator.Class) {
+		case GSM_MMS_None:
+			break;
+		case GSM_MMS_Personal:
+			Buffer[(*Length)++] = 0x8a;
+			Buffer[(*Length)++] = 0x80;
+			break;
+		case GSM_MMS_Advertisement:
+			Buffer[(*Length)++] = 0x8a;
+			Buffer[(*Length)++] = 0x81;
+			break;
+		case GSM_MMS_Info:
+			Buffer[(*Length)++] = 0x8a;
+			Buffer[(*Length)++] = 0x82;
+			break;
+		case GSM_MMS_Auto:
+			Buffer[(*Length)++] = 0x8a;
+			Buffer[(*Length)++] = 0x83;
+			break;
 	}
 
 	if (Indicator.MessageSize > 0) {

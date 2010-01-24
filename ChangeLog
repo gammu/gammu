@@ -27,6 +27,7 @@ ChangeLog
 [-] * Avoid buffer overrun when parsing SM30 SMS (bug #1110).
 [-] * Properly detect user home directory.
 [+] * Improved MMS notifications encoding.
+[+] * Allow to specify MMS notification class.
     
 20100106 - 1.27.90
 

@@ -21,14 +21,58 @@
 /* MMS and WAP related conversions */
 #include "convertors.h"
 
+char *MMSClassToString(GSM_MMS_Class c) {
+    char *s = NULL;
+
+    switch (c) {
+        case GSM_MMS_Personal:
+            s = strdup("Personal");
+            break;
+	    case GSM_MMS_Advertisement:
+            s = strdup("Advertisement");
+            break;
+	    case GSM_MMS_Info:
+            s = strdup("Info");
+            break;
+	    case GSM_MMS_Auto:
+            s = strdup("Auto");
+            break;
+        case GSM_MMS_None:
+            s = strdup("");
+            break;
+    }
+
+    if (s == NULL) {
+        PyErr_Format(PyExc_ValueError, "Bad value for MMS Class from Gammu: '%d'", c);
+        return NULL;
+    }
+
+    return s;
+}
+
+GSM_MMS_Class MMSClassFromString(const char *s) {
+    if (strcmp("Personal", s) == 0) return GSM_MMS_Personal;
+    else if (strcmp("Advertisement", s) == 0) return GSM_MMS_Advertisement;
+    else if (strcmp("Info", s) == 0) return GSM_MMS_Info;
+    else if (strcmp("Auto", s) == 0) return GSM_MMS_Auto;
+    else if (strcmp("", s) == 0) return GSM_MMS_None;
+    PyErr_Format(PyExc_MemoryError, "Bad value for MMS Class Type '%s'", s);
+    return ENUM_INVALID;
+}
 
 PyObject *MMSIndicatorToPython(GSM_MMSIndicator *mms) {
-    return Py_BuildValue("{s:s,s:s,s:s,s:i}",
+    char *class;
+
+    class = MMSClassToString(mms->Class);
+    if (class == NULL) {
+        return NULL;
+    }
+    return Py_BuildValue("{s:s,s:s,s:s,s:s}",
             "Address",          mms->Address,
             "Title",            mms->Title,
             "Sender",           mms->Sender,
             "MessageSize",      (int)mms->MessageSize,
-            "Personal",         (int)mms->Personal);
+            "Class",           class);
 }
 
 int MMSIndicatorFromPython(PyObject* dict, GSM_MMSIndicator *mms) {
@@ -67,11 +111,13 @@ int MMSIndicatorFromPython(PyObject* dict, GSM_MMSIndicator *mms) {
         mms->MessageSize = 0;
     }
 
-    mms->Personal = GetBoolFromDict(dict, "Personal");
-    if (mms->Personal == BOOL_INVALID) {
-        mms->Personal = FALSE;
+    s = GetCStringFromDict(dict, "Class");
+    if (s != NULL) {
+        mms->Class = MMSClassFromString(s);
+        if (mms->Class == ENUM_INVALID) {
+            return 0;
+        }
     }
-
 
     return 1;
 }
