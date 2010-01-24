@@ -329,31 +329,79 @@ void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MM
 	unsigned char 	buffer[200];
 	int		i;
 
-	strcpy(Buffer+(*Length),"\xE6\x06\"");
-	(*Length)=(*Length)+3;
+
+	/*
+	 * WSP header
+	 */
+
+	/* Transaction ID (maybe this should be random?) */
+	Buffer[(*Length)++] = 0xe6;
+	/* PDU type push */
+	Buffer[(*Length)++] = 0x06;
+	/* Header length */
+	Buffer[(*Length)++] = 0x22;
+	/* MIME type (header) */
 	strcpy(Buffer+(*Length),"application/vnd.wap.mms-message");
 	(*Length)=(*Length)+31;
 	Buffer[(*Length)++] = 0x00;
 
-	strcpy(Buffer+(*Length),"\xAF\x84\x8C\x82\x98");
-	(*Length)=(*Length)+5;
+	/* WAP push (x-wap-application.ua) */
+	Buffer[(*Length)++] = 0xaf;
+	Buffer[(*Length)++] = 0x84;
 
+	/*
+	 * MMS data
+	 */
+
+	/* Transaction type */
+	Buffer[(*Length)++] = 0x8c;
+	/* m-notification-ind */
+	Buffer[(*Length)++] = 0x82;
+
+	/* Transaction ID, usually last part of address */
+	Buffer[(*Length)++] = 0x98;
 	i = strlen(Indicator.Address);
 	while (Indicator.Address[i] != '/' && i!=0) i--;
 	strcpy(Buffer+(*Length),Indicator.Address+i+1);
 	(*Length)=(*Length)+strlen(Indicator.Address+i+1);
 	Buffer[(*Length)++] = 0x00;
 
-	strcpy(Buffer+(*Length),"\x8D\x90\x89");
-	(*Length)=(*Length)+3;
+	/* MMS version */
+	Buffer[(*Length)++] = 0x8d;
+	/* 1.2 (0x90 is 1.0) */
+	Buffer[(*Length)++] = 0x92;
 
+	if (Indicator.Personal) {
+		/* Message class */
+		Buffer[(*Length)++] = 0x8a;
+		/* Personal (80 = personal, 81 = ad, 82=info, 83 = auto) */
+		Buffer[(*Length)++] = 0x80;
+	}
+
+	if (Indicator.MessageSize > 0) {
+		/* Message size */
+		Buffer[(*Length)++] = 0x8e;
+		/* Length of size */
+		Buffer[(*Length)++] = 0x04;
+		Buffer[(*Length)++] = ((long)Indicator.MessageSize >> 24) & 0xff;
+		Buffer[(*Length)++] = ((long)Indicator.MessageSize >> 16) & 0xff;
+		Buffer[(*Length)++] = ((long)Indicator.MessageSize >>  8) & 0xff;
+		Buffer[(*Length)++] = ((long)Indicator.MessageSize >>  0) & 0xff;
+	}
+
+	/* Sender address */
+	Buffer[(*Length)++] = 0x89;
 	sprintf(buffer,"%s/TYPE=PLMN",Indicator.Sender);
-	Buffer[(*Length)++] = strlen(buffer);
+	/* Field size */
+	Buffer[(*Length)++] = strlen(buffer) + 2;
+	/* Sender address is present */
 	Buffer[(*Length)++] = 0x80;
 	strcpy(Buffer+(*Length),buffer);
 	(*Length)=(*Length)+strlen(buffer);
+	/* Zero terminate */
 	Buffer[(*Length)++] = 0x00;
 
+	/* Subject */
 	Buffer[(*Length)++] = 0x96;
 	strcpy(Buffer+(*Length),Indicator.Title);
 	(*Length)=(*Length)+strlen(Indicator.Title);
@@ -363,6 +411,7 @@ void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MM
 	(*Length)=(*Length)+12;
 	Buffer[(*Length)++] = 0x00;
 
+	/* Content location */
 	Buffer[(*Length)++] = 0x83;
 	strcpy(Buffer+(*Length),Indicator.Address);
 	(*Length)=(*Length)+strlen(Indicator.Address);

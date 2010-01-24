@@ -52,9 +52,26 @@
  * \ingroup MMS
  */
 typedef struct {
+	/**
+	 * Message address (URL for download).
+	 */
 	char Address[500];
+	/**
+	 * Message title (subject).
+	 */
 	char Title[200];
+	/**
+	 * Message sender.
+	 */
 	char Sender[200];
+	/**
+	 * Message size, if 0 it won't be decoded or was not decoded.
+	 */
+	size_t MessageSize;
+	/**
+	 * True for Personal class of message./
+	 */
+	gboolean Personal;
 } GSM_MMSIndicator;
 
 /**

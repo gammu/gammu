@@ -23,10 +23,12 @@
 
 
 PyObject *MMSIndicatorToPython(GSM_MMSIndicator *mms) {
-    return Py_BuildValue("{s:s,s:s,s:s}",
+    return Py_BuildValue("{s:s,s:s,s:s,s:i}",
             "Address",          mms->Address,
             "Title",            mms->Title,
-            "Sender",           mms->Sender);
+            "Sender",           mms->Sender,
+            "MessageSize",      (int)mms->MessageSize,
+            "Personal",         (int)mms->Personal);
 }
 
 int MMSIndicatorFromPython(PyObject* dict, GSM_MMSIndicator *mms) {
@@ -59,6 +61,17 @@ int MMSIndicatorFromPython(PyObject* dict, GSM_MMSIndicator *mms) {
         return 0;
     }
     strcpy(s, mms->Sender);
+
+    mms->MessageSize = GetIntFromDict(dict, "MessageSender");
+    if (mms->MessageSize == INT_INVALID) {
+        mms->MessageSize = 0;
+    }
+
+    mms->Personal = GetBoolFromDict(dict, "Personal");
+    if (mms->Personal == BOOL_INVALID) {
+        mms->Personal = FALSE;
+    }
+
 
     return 1;
 }
