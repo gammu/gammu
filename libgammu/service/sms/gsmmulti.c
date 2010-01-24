@@ -823,7 +823,9 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 	}
 
 	/* EMS decoding */
-	if (emsexist) return GSM_DecodeEMSMultiPartSMS(di, Info,SMS);
+	if (emsexist) {
+		return GSM_DecodeEMSMultiPartSMS(di, Info,SMS);
+	}
 
 	/* Siemens OTA */
 	if (GSM_DecodeSiemensOTASMS(di, &SiemensInfo,&SMS->SMS[0])) {
