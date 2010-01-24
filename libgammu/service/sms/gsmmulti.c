@@ -796,6 +796,109 @@ void GSM_FreeMultiPartSMSInfo(GSM_MultiPartSMSInfo *Info)
 	}
 }
 
+/**
+ * Decodes long Nokia profile SMS.
+ */
+gboolean GSM_DecodeNokiaProfile(GSM_Debug_Info *di,
+			    GSM_MultiPartSMSInfo	*Info,
+			    GSM_MultiSMSMessage		*SMS)
+{
+	int i, Length = 0;
+	char Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
+
+	for (i=0;i<SMS->Number;i++) {
+		if (SMS->SMS[i].UDH.Type != UDH_NokiaProfileLong ||
+		    SMS->SMS[i].UDH.Text[11] != i+1		 ||
+		    SMS->SMS[i].UDH.Text[10] != SMS->Number) {
+			return FALSE;
+		}
+		memcpy(Buffer+Length,SMS->SMS[i].Text,SMS->SMS[i].Length);
+		Length = Length + SMS->SMS[i].Length;
+	}
+	Info->EntriesNum    = 1;
+	Info->Entries[0].ID = SMS_NokiaPictureImageLong;
+	Info->Entries[0].Bitmap = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap));
+	if (Info->Entries[0].Bitmap == NULL) return FALSE;
+	Info->Entries[0].Bitmap->Number = 0;
+	Info->Entries[0].Bitmap->Bitmap[0].Text[0] = 0;
+	Info->Entries[0].Bitmap->Bitmap[0].Text[1] = 0;
+	i=1;
+	while (i < Length) {
+		switch (Buffer[i]) {
+		case SM30_ISOTEXT:
+			smfprintf(di, "ISO 8859-2 text\n");
+			break;
+		case SM30_UNICODETEXT:
+			smfprintf(di, "Unicode text\n");
+			break;
+		case SM30_OTA:
+			smfprintf(di, "OTA bitmap as Picture Image\n");
+			PHONE_DecodeBitmap(GSM_NokiaPictureImage, Buffer + i + 7, &Info->Entries[0].Bitmap->Bitmap[Info->Entries[0].Bitmap->Number]);
+			Info->Entries[0].Bitmap->Number += 1;
+#ifdef DEBUG
+			if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE) {
+				GSM_PrintBitmap(di->df, &Info->Entries[0].Bitmap->Bitmap[0]);
+			}
+#endif
+			break;
+		case SM30_RINGTONE:
+			smfprintf(di, "RTTL ringtone\n");
+			Info->Unknown = TRUE;
+			break;
+		case SM30_PROFILENAME:
+			smfprintf(di, "Profile Name\n");
+			Info->Entries[0].ID = SMS_NokiaProfileLong;
+			Info->Unknown = TRUE;
+			break;
+		case SM30_SCREENSAVER:
+			smfprintf(di, "OTA bitmap as Screen Saver\n");
+			PHONE_DecodeBitmap(GSM_NokiaPictureImage, Buffer + i + 7, &Info->Entries[0].Bitmap->Bitmap[Info->Entries[0].Bitmap->Number]);
+			Info->Entries[0].Bitmap->Number += 1;
+#ifdef DEBUG
+			if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE) {
+				GSM_PrintBitmap(di->df, &Info->Entries[0].Bitmap->Bitmap[0]);
+			}
+#endif
+			Info->Entries[0].ID = SMS_NokiaScreenSaverLong;
+			break;
+		}
+		i = i + Buffer[i+1]*256 + Buffer[i+2] + 3;
+		smfprintf(di, "Profile: pos=%i length=%i\n", i, Length);
+	}
+	i=1;
+	while (i < Length) {
+		switch (Buffer[i]) {
+		case SM30_ISOTEXT:
+			smfprintf(di, "ISO 8859-2 text\n");
+			EncodeUnicode (Info->Entries[0].Bitmap->Bitmap[0].Text, Buffer+i+3, Buffer[i+2]);
+			smfprintf(di, "ISO Text \"%s\"\n",DecodeUnicodeString(Info->Entries[0].Bitmap->Bitmap[0].Text));
+			break;
+		case SM30_UNICODETEXT:
+			smfprintf(di, "Unicode text\n");
+			memcpy(Info->Entries[0].Bitmap->Bitmap[0].Text,Buffer+i+3,Buffer[i+1]*256+Buffer[i+2]);
+			Info->Entries[0].Bitmap->Bitmap[0].Text[Buffer[i+1]*256 + Buffer[i+2]] 	= 0;
+			Info->Entries[0].Bitmap->Bitmap[0].Text[Buffer[i+1]*256 + Buffer[i+2]+ 1] 	= 0;
+			smfprintf(di, "Unicode Text \"%s\"\n",DecodeUnicodeString(Info->Entries[0].Bitmap->Bitmap[0].Text));
+			break;
+		case SM30_OTA:
+			smfprintf(di, "OTA bitmap as Picture Image\n");
+			break;
+		case SM30_RINGTONE:
+			smfprintf(di, "RTTL ringtone\n");
+			break;
+		case SM30_PROFILENAME:
+			smfprintf(di, "Profile Name\n");
+			break;
+		case SM30_SCREENSAVER:
+			smfprintf(di, "OTA bitmap as Screen Saver\n");
+			break;
+		}
+		i = i + Buffer[i+1]*256 + Buffer[i+2] + 3;
+		smfprintf(di, "Profile: pos=%i length=%i\n", i, Length);
+	}
+	return TRUE;
+}
+
 /* ----------------- Joining SMS from parts -------------------------------- */
 
 gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
@@ -805,7 +908,6 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 {
 	int 			i, Length = 0;
 	unsigned int		j;
-	char			Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
 	gboolean 			emsexist = FALSE;
 	GSM_SiemensOTASMSInfo	SiemensInfo;
 
@@ -889,97 +991,7 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 		return TRUE;
 	}
 	if (SMS->SMS[0].UDH.Type == UDH_NokiaProfileLong) {
-		for (i=0;i<SMS->Number;i++) {
-			if (SMS->SMS[i].UDH.Type != UDH_NokiaProfileLong ||
-			    SMS->SMS[i].UDH.Text[11] != i+1		 ||
-			    SMS->SMS[i].UDH.Text[10] != SMS->Number) {
-				return FALSE;
-			}
-			memcpy(Buffer+Length,SMS->SMS[i].Text,SMS->SMS[i].Length);
-			Length = Length + SMS->SMS[i].Length;
-		}
-		Info->EntriesNum    = 1;
-		Info->Entries[0].ID = SMS_NokiaPictureImageLong;
-		Info->Entries[0].Bitmap = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap));
-		if (Info->Entries[0].Bitmap == NULL) return FALSE;
-		Info->Entries[0].Bitmap->Number = 0;
-		Info->Entries[0].Bitmap->Bitmap[0].Text[0] = 0;
-		Info->Entries[0].Bitmap->Bitmap[0].Text[1] = 0;
-		i=1;
-		while (i < Length) {
-			switch (Buffer[i]) {
-			case SM30_ISOTEXT:
-				smfprintf(di, "ISO 8859-2 text\n");
-				break;
-			case SM30_UNICODETEXT:
-				smfprintf(di, "Unicode text\n");
-				break;
-			case SM30_OTA:
-				smfprintf(di, "OTA bitmap as Picture Image\n");
-				PHONE_DecodeBitmap(GSM_NokiaPictureImage, Buffer + i + 7, &Info->Entries[0].Bitmap->Bitmap[Info->Entries[0].Bitmap->Number]);
-				Info->Entries[0].Bitmap->Number += 1;
-#ifdef DEBUG
-				if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE) {
-					GSM_PrintBitmap(di->df, &Info->Entries[0].Bitmap->Bitmap[0]);
-				}
-#endif
-				break;
-			case SM30_RINGTONE:
-				smfprintf(di, "RTTL ringtone\n");
-				Info->Unknown = TRUE;
-				break;
-			case SM30_PROFILENAME:
-				smfprintf(di, "Profile Name\n");
-				Info->Entries[0].ID = SMS_NokiaProfileLong;
-				Info->Unknown = TRUE;
-				break;
-			case SM30_SCREENSAVER:
-				smfprintf(di, "OTA bitmap as Screen Saver\n");
-				PHONE_DecodeBitmap(GSM_NokiaPictureImage, Buffer + i + 7, &Info->Entries[0].Bitmap->Bitmap[Info->Entries[0].Bitmap->Number]);
-				Info->Entries[0].Bitmap->Number += 1;
-#ifdef DEBUG
-				if (di->dl == DL_TEXTALL || di->dl == DL_TEXTALLDATE) {
-					GSM_PrintBitmap(di->df, &Info->Entries[0].Bitmap->Bitmap[0]);
-				}
-#endif
-				Info->Entries[0].ID = SMS_NokiaScreenSaverLong;
-				break;
-			}
-			i = i + Buffer[i+1]*256 + Buffer[i+2] + 3;
-			smfprintf(di, "Profile: pos=%i length=%i\n", i, Length);
-		}
-		i=1;
-		while (i < Length) {
-			switch (Buffer[i]) {
-			case SM30_ISOTEXT:
-				smfprintf(di, "ISO 8859-2 text\n");
-				EncodeUnicode (Info->Entries[0].Bitmap->Bitmap[0].Text, Buffer+i+3, Buffer[i+2]);
-				smfprintf(di, "ISO Text \"%s\"\n",DecodeUnicodeString(Info->Entries[0].Bitmap->Bitmap[0].Text));
-				break;
-			case SM30_UNICODETEXT:
-				smfprintf(di, "Unicode text\n");
-				memcpy(Info->Entries[0].Bitmap->Bitmap[0].Text,Buffer+i+3,Buffer[i+1]*256+Buffer[i+2]);
-				Info->Entries[0].Bitmap->Bitmap[0].Text[Buffer[i+1]*256 + Buffer[i+2]] 	= 0;
-				Info->Entries[0].Bitmap->Bitmap[0].Text[Buffer[i+1]*256 + Buffer[i+2]+ 1] 	= 0;
-				smfprintf(di, "Unicode Text \"%s\"\n",DecodeUnicodeString(Info->Entries[0].Bitmap->Bitmap[0].Text));
-				break;
-			case SM30_OTA:
-				smfprintf(di, "OTA bitmap as Picture Image\n");
-				break;
-			case SM30_RINGTONE:
-				smfprintf(di, "RTTL ringtone\n");
-				break;
-			case SM30_PROFILENAME:
-				smfprintf(di, "Profile Name\n");
-				break;
-			case SM30_SCREENSAVER:
-				smfprintf(di, "OTA bitmap as Screen Saver\n");
-				break;
-			}
-			i = i + Buffer[i+1]*256 + Buffer[i+2] + 3;
-			smfprintf(di, "Profile: pos=%i length=%i\n", i, Length);
-		}
-		return TRUE;
+		return GSM_DecodeNokiaProfile(di, Info, SMS);
 	}
 
 	/* Linked sms */
