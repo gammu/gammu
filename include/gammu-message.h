@@ -890,6 +890,9 @@ typedef enum {
 	SMS_EMSFixedBitmap,
 	SMS_EMSVariableBitmap,
 	SMS_EMSVariableBitmapLong,
+	/**
+	 * MMS message indicator.
+	 */
 	SMS_MMSIndicatorLong,
 	SMS_WAPIndicatorLong,
 	/**
