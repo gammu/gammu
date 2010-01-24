@@ -899,6 +899,53 @@ gboolean GSM_DecodeNokiaProfile(GSM_Debug_Info *di,
 	return TRUE;
 }
 
+/**
+ * Decodes long linked text SMS.
+ */
+gboolean GSM_DecodeLinkedText(GSM_Debug_Info *di,
+			    GSM_MultiPartSMSInfo	*Info,
+			    GSM_MultiSMSMessage		*SMS)
+{
+	int i, Length = 0;
+
+	Info->EntriesNum    = 1;
+	Info->Entries[0].ID = SMS_ConcatenatedTextLong;
+	if (SMS->SMS[0].UDH.Type == UDH_ConcatenatedMessages16bit) {
+		Info->Entries[0].ID = SMS_ConcatenatedTextLong16bit;
+	}
+
+	for (i=0;i<SMS->Number;i++) {
+		switch (SMS->SMS[i].Coding) {
+		case SMS_Coding_8bit:
+			Info->Entries[0].Buffer = (unsigned char *)realloc(Info->Entries[0].Buffer, Length + SMS->SMS[i].Length + 2);
+			if (Info->Entries[0].Buffer == NULL) return FALSE;
+
+			memcpy(Info->Entries[0].Buffer + Length, SMS->SMS[i].Text, SMS->SMS[i].Length);
+			Length=Length+SMS->SMS[i].Length;
+			break;
+		case SMS_Coding_Unicode_No_Compression:
+			if (Info->Entries[0].ID == SMS_ConcatenatedTextLong) {
+				Info->Entries[0].ID = SMS_ConcatenatedAutoTextLong;
+			}
+			if (Info->Entries[0].ID == SMS_ConcatenatedTextLong16bit) {
+				Info->Entries[0].ID = SMS_ConcatenatedAutoTextLong16bit;
+			}
+		case SMS_Coding_Default_No_Compression:
+			Info->Entries[0].Buffer = (unsigned char *)realloc(Info->Entries[0].Buffer, Length + UnicodeLength(SMS->SMS[i].Text)*2 + 2);
+			if (Info->Entries[0].Buffer == NULL) return FALSE;
+
+			memcpy(Info->Entries[0].Buffer+Length,SMS->SMS[i].Text,UnicodeLength(SMS->SMS[i].Text)*2);
+			Length=Length+UnicodeLength(SMS->SMS[i].Text)*2;
+			break;
+		default:
+			break;
+		}
+	}
+	Info->Entries[0].Buffer[Length]	  = 0;
+	Info->Entries[0].Buffer[Length+1] = 0;
+	return TRUE;
+}
+
 /* ----------------- Joining SMS from parts -------------------------------- */
 
 gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
@@ -906,7 +953,7 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 			    GSM_MultiSMSMessage		*SMS,
 			    gboolean			ems)
 {
-	int 			i, Length = 0;
+	int 			i;
 	unsigned int		j;
 	gboolean 			emsexist = FALSE;
 	GSM_SiemensOTASMSInfo	SiemensInfo;
@@ -997,42 +1044,7 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 	/* Linked sms */
 	if (SMS->SMS[0].UDH.Type == UDH_ConcatenatedMessages ||
 	    SMS->SMS[0].UDH.Type == UDH_ConcatenatedMessages16bit) {
-		Info->EntriesNum    = 1;
-		Info->Entries[0].ID = SMS_ConcatenatedTextLong;
-	 	if (SMS->SMS[0].UDH.Type == UDH_ConcatenatedMessages16bit) {
-			Info->Entries[0].ID = SMS_ConcatenatedTextLong16bit;
-		}
-
-		for (i=0;i<SMS->Number;i++) {
-			switch (SMS->SMS[i].Coding) {
-			case SMS_Coding_8bit:
-				Info->Entries[0].Buffer = (unsigned char *)realloc(Info->Entries[0].Buffer, Length + SMS->SMS[i].Length + 2);
-				if (Info->Entries[0].Buffer == NULL) return FALSE;
-
-				memcpy(Info->Entries[0].Buffer + Length, SMS->SMS[i].Text, SMS->SMS[i].Length);
-				Length=Length+SMS->SMS[i].Length;
-				break;
-			case SMS_Coding_Unicode_No_Compression:
-				if (Info->Entries[0].ID == SMS_ConcatenatedTextLong) {
-					Info->Entries[0].ID = SMS_ConcatenatedAutoTextLong;
-				}
-				if (Info->Entries[0].ID == SMS_ConcatenatedTextLong16bit) {
-					Info->Entries[0].ID = SMS_ConcatenatedAutoTextLong16bit;
-				}
-			case SMS_Coding_Default_No_Compression:
-				Info->Entries[0].Buffer = (unsigned char *)realloc(Info->Entries[0].Buffer, Length + UnicodeLength(SMS->SMS[i].Text)*2 + 2);
-				if (Info->Entries[0].Buffer == NULL) return FALSE;
-
-				memcpy(Info->Entries[0].Buffer+Length,SMS->SMS[i].Text,UnicodeLength(SMS->SMS[i].Text)*2);
-				Length=Length+UnicodeLength(SMS->SMS[i].Text)*2;
-				break;
-			default:
-				break;
-			}
-		}
-		Info->Entries[0].Buffer[Length]	  = 0;
-		Info->Entries[0].Buffer[Length+1] = 0;
-		return TRUE;
+		return GSM_DecodeLinkedText(di, Info, SMS);
 	}
 
 	return FALSE;
