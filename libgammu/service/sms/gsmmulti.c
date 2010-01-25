@@ -797,6 +797,135 @@ void GSM_FreeMultiPartSMSInfo(GSM_MultiPartSMSInfo *Info)
 }
 
 /**
+ * Decodes long MMS notification SMS.
+ */
+gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
+			    GSM_MultiPartSMSInfo	*Info,
+			    GSM_MultiSMSMessage		*SMS)
+{
+	int i, Length = 0, j;
+	unsigned char Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
+
+	/* Concatenate data */
+	for (i = 0; i < SMS->Number; i++) {
+		if (SMS->SMS[i].UDH.Type != UDH_MMSIndicatorLong ||
+		    SMS->SMS[i].UDH.Text[11] != i+1		 ||
+		    SMS->SMS[i].UDH.Text[10] != SMS->Number) {
+			return FALSE;
+		}
+		memcpy(Buffer + Length, SMS->SMS[i].Text, SMS->SMS[i].Length);
+		Length = Length + SMS->SMS[i].Length;
+	}
+
+	dbgprintf(di, "MMS data of length %d:\n", Length);
+	DumpMessage(di, Buffer, Length);
+	Info->Entries[0].MMSIndicator = (GSM_MMSIndicator *)malloc(sizeof(GSM_MMSIndicator));
+	if (Info->Entries[0].MMSIndicator == NULL) {
+		return FALSE;
+	}
+	Info->EntriesNum    = 1;
+	Info->Entries[0].ID = SMS_MMSIndicatorLong;
+	Info->Entries[0].MMSIndicator->Class = GSM_MMS_None;
+	Info->Entries[0].MMSIndicator->MessageSize = 0;
+	Info->Entries[0].MMSIndicator->Title[0] = 0;
+	Info->Entries[0].MMSIndicator->Sender[0] = 0;
+	Info->Entries[0].MMSIndicator->Address[0] = 0;
+
+	/* First byte is transaction ID */
+	/* PUSH */
+	if (Buffer[1] != 0x06) {
+		return FALSE;
+	}
+	/* Process payload */
+	for (i = 2 + Buffer[2]; i < Length; i++) {
+		switch(Buffer[i]) {
+			case 0x8c:
+				/* Transaction type */
+				i++;
+				if (Buffer[i] != 0x82) {
+					dbgprintf(di, "Unsupported transaction type: 0x%02x\n", Buffer[i]);
+					return FALSE;
+				}
+				break;
+			case 0x98:
+				/* Message ID */
+				while (Buffer[i] != 0 && i < Length) i++;
+				break;
+			case 0x8d:
+				/* MMS version */
+				i++;
+				if (Buffer[i] < 0x90 || Buffer[i] > 0x92) {
+					dbgprintf(di, "Unsupported MMS version: 0x%02x\n", Buffer[i]);
+					return FALSE;
+				}
+				break;
+			case 0x89:
+				/* Sender */
+				i++;
+				if (Buffer[i] == 0) continue;
+				if (Buffer[i + 1] == 0x80) {
+					strcpy(Info->Entries[0].MMSIndicator->Sender, Buffer + i + 2);
+				}
+				i += Buffer[i];
+				break;
+			case 0x96:
+				/* Title */
+				strcpy(Info->Entries[0].MMSIndicator->Title, Buffer + i + 1);
+				i += strlen(Info->Entries[0].MMSIndicator->Title);
+				break;
+			case 0x8a:
+				/* Class */
+				i++;
+				switch (Buffer[i]) {
+					case 0x80:
+						Info->Entries[0].MMSIndicator->Class = GSM_MMS_Personal;
+						break;
+					case 0x81:
+						Info->Entries[0].MMSIndicator->Class = GSM_MMS_Advertisement;
+						break;
+					case 0x82:
+						Info->Entries[0].MMSIndicator->Class = GSM_MMS_Info;
+						break;
+					case 0x83:
+						Info->Entries[0].MMSIndicator->Class = GSM_MMS_Auto;
+						break;
+					default:
+						dbgprintf(di, "Unsupported MMS class: 0x%02x\n", Buffer[i]);
+						break;
+				}
+				break;
+			case 0x8e:
+				/* Message size */
+				i++;
+				for (j = i + 1; j < i + 1 + Buffer[i]; j++) {
+					Info->Entries[0].MMSIndicator->MessageSize = (Info->Entries[0].MMSIndicator->MessageSize << 8) + Buffer[j];
+				}
+				i += Buffer[i];
+				break;
+			case 0x88:
+				/* Don't know */
+				i++;
+				break;
+			case 0x81:
+				/* Don't know */
+				i++;
+				i += Buffer[i];
+				break;
+			case 0x83:
+				/* URL */
+				strcpy(Info->Entries[0].MMSIndicator->Address, Buffer + i + 1);
+				i += strlen(Info->Entries[0].MMSIndicator->Address);
+				break;
+			default:
+				dbgprintf(di, "Uknown MMS tag: 0x%02x\n", Buffer[i]);
+				break;
+		}
+	}
+
+	return TRUE;
+}
+
+/**
  * Decodes long Nokia profile SMS.
  */
 gboolean GSM_DecodeNokiaProfile(GSM_Debug_Info *di,
@@ -1045,6 +1174,10 @@ gboolean GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
 	if (SMS->SMS[0].UDH.Type == UDH_ConcatenatedMessages ||
 	    SMS->SMS[0].UDH.Type == UDH_ConcatenatedMessages16bit) {
 		return GSM_DecodeLinkedText(di, Info, SMS);
+	}
+	/* MMS indication */
+	if (SMS->SMS[0].UDH.Type == UDH_MMSIndicatorLong) {
+		return GSM_DecodeMMSIndication(di, Info, SMS);
 	}
 
 	return FALSE;
