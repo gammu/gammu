@@ -36,10 +36,12 @@ which control message filtering (see bellow).
 .TP
 .BI Service
 
-SMSD service to use, one of FILES, MYSQL, PGSQL, DBI (depends on compiled in
-support for backends).
+SMSD service to use, one of FILES, NULL, MYSQL, PGSQL, DBI (depends on compiled
+in support for backends).
 
 \fBFILES\fR - stores messages in files, see gammu-smsd-files(7) for details
+.br
+\fBNULL\fR - does not store messages at all, see gammu-smsd-null(7) for details
 .br
 \fBMYSQL\fR - stores messages in MySQL database, see gammu-smsd-mysql(7) for
 details
@@ -455,7 +457,8 @@ number1 = 666
 .SH SEE ALSO
 gammu\-smsd(1), gammu(1), gammurc(5)
 
-gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7), gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7)
+gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7), gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7), gammu\-smsd\-null(7)
+
 .SH AUTHOR
 gammu\-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
 .SH COPYRIGHT

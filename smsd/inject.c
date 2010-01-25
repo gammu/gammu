@@ -40,6 +40,7 @@ NORETURN void version(void)
 	printf("  - %s\n", "GETOPT_LONG");
 #endif
 	printf("Backend services:\n");
+	printf("  - %s\n", "NULL");
 	printf("  - %s\n", "FILES");
 #ifdef HAVE_MYSQL_MYSQL_H
 	printf("  - %s\n", "MYSQL");

@@ -30,6 +30,7 @@ ChangeLog
 [+] * Allow to specify MMS notification class.
 [+] * Implemented decoding of MMS notification (bug #1100).
 [+] * SMSD now properly groups multipart messages together.
+[+] * New NULL service for SMSD.
     
 20100106 - 1.27.90
 

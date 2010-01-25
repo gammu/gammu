@@ -48,6 +48,7 @@
 
 #include "core.h"
 #include "services/files.h"
+#include "services/null.h"
 #ifdef HAVE_MYSQL_MYSQL_H
 #  include "services/mysql.h"
 #endif
@@ -381,6 +382,9 @@ GSM_Error SMSGetService(GSM_SMSDConfig *Config, GSM_SMSDService **Service)
 	if (strcasecmp(Config->Service, "FILES") == 0) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Using FILES service");
 		*Service = &SMSDFiles;
+	} else if (strcasecmp(Config->Service, "NULL") == 0) {
+		SMSD_Log(DEBUG_NOTICE, Config, "Using NULL service");
+		*Service = &SMSDNull;
 	} else if (strcasecmp(Config->Service, "DBI") == 0) {
 #ifdef LIBDBI_FOUND
 		SMSD_Log(DEBUG_NOTICE, Config, "Using DBI service");

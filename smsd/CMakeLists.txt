@@ -9,6 +9,7 @@ include(GammuTuneCompiler)
 set (LIBRARY_SRC
     core.c
     services/files.c
+    services/null.c
     )
 
 if (HAVE_MYSQL_MYSQL_H)
