@@ -422,9 +422,8 @@ void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MM
 	(*Length)=(*Length)+strlen(Indicator.Title);
 	Buffer[(*Length)++] = 0x00;
 
-	strcpy(Buffer+(*Length),"\x8A\x80\x8E\x02\x47\xBB\x88\x05\x81\x03\x02\xA3");
-	(*Length)=(*Length)+12;
-	Buffer[(*Length)++] = 0x00;
+	strcpy(Buffer+(*Length),"\x88\x05\x81\x03\x02\xA3\xA3");
+	(*Length)=(*Length)+7;
 
 	/* Content location */
 	Buffer[(*Length)++] = 0x83;
