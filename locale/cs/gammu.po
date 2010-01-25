@@ -4131,7 +4131,7 @@ msgid "EMS animation ID"
 msgstr "ID EMS animace"
 
 #: helper/message-display.c:448
-msgid "Mesage size"
+msgid "Message size"
 msgstr "Velikost zprávy"
 
 #. l10n: Generic prefix for error messages
