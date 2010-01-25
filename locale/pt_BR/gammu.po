@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-25 21:34+0100\n"
+"POT-Creation-Date: 2010-01-25 23:51+0100\n"
 "PO-Revision-Date: 2009-10-26 18:12+0200\n"
 "Last-Translator: Filipe Domingues <fseverense@gmail.com>\n"
 "Language-Team: none\n"
@@ -4095,7 +4095,7 @@ msgstr ""
 
 #: helper/message-display.c:448
 #, fuzzy
-msgid "Mesage size"
+msgid "Message size"
 msgstr "Mensagens"
 
 #. l10n: Generic prefix for error messages
