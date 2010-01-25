@@ -1108,7 +1108,7 @@ gboolean SMSD_ValidMessage(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM
 GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM_MultiSMSMessage *sms)
 {
 	GSM_Error error = ERR_NONE;
-	char *locations;
+	char *locations = NULL;
 
 	/* Increase message counter */
 	Config->Status->Received += sms->Number;
