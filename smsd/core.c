@@ -1191,13 +1191,15 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		if (SortedSMS[i]->SMS[0].UDH.Type != UDH_NoUDH) {
 			if (SortedSMS[i]->SMS[0].UDH.AllParts != SortedSMS[i]->Number) {
 				if (Config->IncompleteMessageTime != 0 && Config->IncompleteMessageReference == SortedSMS[i]->SMS[0].MessageReference && difftime(time(NULL), Config->IncompleteMessageTime) > Config->multiparttimeout) {
-					SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message, processing after timeout");
+					SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, processing after timeout",
+						Config->IncompleteMessageReference);
 				} else {
-					if (Config->IncompleteMessageTime != 0) {
+					if (Config->IncompleteMessageTime == 0) {
 						 Config->IncompleteMessageReference = SortedSMS[i]->SMS[0].MessageReference;
 						 Config->IncompleteMessageTime = time(NULL);
 					}
-					SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message, waiting for other parts");
+					SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts (waited %.0f seconds)",
+						Config->IncompleteMessageReference, difftime(time(NULL), Config->IncompleteMessageTime));
 					goto cleanup;
 				}
 			}
