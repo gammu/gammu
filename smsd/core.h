@@ -164,7 +164,7 @@ struct _GSM_SMSDConfig {
 	/**
 	 * Multipart messages processing.
 	 */
-	unsigned char IncompleteMessageReference;
+	unsigned char IncompleteMessageID;
 	time_t IncompleteMessageTime;
 
 #ifdef HAVE_SHM
