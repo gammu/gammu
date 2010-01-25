@@ -1130,9 +1130,12 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 {
 	gboolean start;
 	GSM_MultiSMSMessage sms;
+	GSM_MultiSMSMessage *GetSMSData[GSM_PHONE_MAXSMSINFOLDER], *SortedSMS[GSM_PHONE_MAXSMSINFOLDER];
 	GSM_Error error = ERR_NONE;
-	int i;
+	int GetSMSNumber = 0;
+	int i, j;
 
+	/* Read messages from phone */
 	start=TRUE;
 	sms.Number = 0;
 	sms.SMS[0].Location = 0;
@@ -1144,29 +1147,71 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				break;
 			case ERR_NONE:
 				if (SMSD_ValidMessage(Config, Service, &sms)) {
-					error = SMSD_ProcessSMS(Config, Service, &sms);
+					GetSMSData[GetSMSNumber] = malloc(sizeof(GSM_MultiSMSMessage));
+
+					if (GetSMSData[GetSMSNumber] == NULL) {
+						SMSD_Log(DEBUG_ERROR, Config, "Failed to allocate memory");
+						return FALSE;
+					}
+					GetSMSData[GetSMSNumber + 1] = NULL;
+					memcpy(GetSMSData[GetSMSNumber], &sms, sizeof(GSM_MultiSMSMessage));
+					GetSMSNumber++;
 				}
 				break;
 			default:
 				SMSD_LogError(DEBUG_INFO, Config, "Error getting SMS", error);
 				return FALSE;
 		}
-		/* Delete any inbox messages */
-		if (error == ERR_NONE && sms.SMS[0].InboxFolder) {
-			for (i = 0; i < sms.Number; i++) {
-				sms.SMS[i].Folder = 0;
-				error=GSM_DeleteSMS(Config->gsm, &sms.SMS[i]);
-				switch (error) {
-					case ERR_NONE:
-					case ERR_EMPTY:
-						break;
-					default:
-						SMSD_LogError(DEBUG_INFO, Config, "Error deleting SMS", error);
-						return FALSE;
-				}
+		start = FALSE;
+	}
+
+	/* Link messages */
+	error = GSM_LinkSMS(GSM_GetDebug(Config->gsm), GetSMSData, SortedSMS, TRUE);
+
+	/* Free memory */
+	i=0;
+	while (GetSMSData[i] != NULL) {
+		free(GetSMSData[i]);
+		GetSMSData[i] = NULL;
+		i++;
+	}
+
+	/* Process messages */
+	i=0;
+
+	for (i = 0; SortedSMS[i] != NULL; i++) {
+		/* Check if we have all parts */
+		if (SortedSMS[i]->SMS[0].UDH.Type != UDH_NoUDH) {
+			if (SortedSMS[i]->SMS[0].UDH.AllParts != SortedSMS[i]->Number) {
+				SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message");
+				goto cleanup;
 			}
 		}
-		start = FALSE;
+
+		/* Actually process the message */
+		error = SMSD_ProcessSMS(Config, Service, SortedSMS[i]);
+		if (error != ERR_NONE) {
+			SMSD_LogError(DEBUG_INFO, Config, "Error processing SMS", error);
+			return FALSE;
+		}
+
+		/* Delete processed messages */
+		for (j = 0; j < SortedSMS[i]->Number; j++) {
+			SortedSMS[i]->SMS[j].Folder = 0;
+			error = GSM_DeleteSMS(Config->gsm, &SortedSMS[i]->SMS[j]);
+			switch (error) {
+				case ERR_NONE:
+				case ERR_EMPTY:
+					break;
+				default:
+					SMSD_LogError(DEBUG_INFO, Config, "Error deleting SMS", error);
+					return FALSE;
+			}
+		}
+
+cleanup:
+		free(SortedSMS[i]);
+		SortedSMS[i] = NULL;
 	}
 	return TRUE;
 }
