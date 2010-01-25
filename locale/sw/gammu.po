@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.25.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-19 12:19+0100\n"
+"POT-Creation-Date: 2010-01-25 21:34+0100\n"
 "PO-Revision-Date: 2009-08-25 17:27+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2517,7 +2517,7 @@ msgstr ""
 msgid "What type of reset do you want (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/misc.c:908 gammu/misc.c:955
+#: gammu/misc.c:908 gammu/misc.c:955 helper/message-display.c:447
 msgid "Address"
 msgstr ""
 
@@ -2590,7 +2590,7 @@ msgstr ""
 msgid "No operator logo in phone"
 msgstr ""
 
-#: gammu/misc.c:1072 gammu/mms.c:71
+#: gammu/misc.c:1072 gammu/mms.c:71 helper/message-display.c:445
 msgid "Sender"
 msgstr ""
 
@@ -3176,7 +3176,7 @@ msgstr ""
 msgid "Message type"
 msgstr ""
 
-#: gammu/mms.c:97
+#: gammu/mms.c:97 helper/message-display.c:446
 msgid "Subject"
 msgstr ""
 
@@ -4074,25 +4074,29 @@ msgstr ""
 msgid "EMS animation ID"
 msgstr ""
 
+#: helper/message-display.c:448
+msgid "Mesage size"
+msgstr ""
+
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:476 helper/message-display.c:495
+#: helper/message-display.c:481 helper/message-display.c:500
 #: helper/printing.c:18
 msgid "Error"
 msgstr ""
 
-#: helper/message-display.c:510
+#: helper/message-display.c:515
 msgid "Data PDU"
 msgstr ""
 
-#: helper/message-display.c:511
+#: helper/message-display.c:516
 msgid "Number of bits"
 msgstr ""
 
-#: helper/message-display.c:513
+#: helper/message-display.c:518
 msgid "UDH"
 msgstr ""
 
-#: helper/message-display.c:529
+#: helper/message-display.c:534
 msgid "Whole PDU"
 msgstr ""
 

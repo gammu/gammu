@@ -39,11 +39,13 @@ ovládají filtrování zpráv (viz dále).
 .TP 
 \fBService\fP
 
-Jakou službu SMSM použít, jedna z FILES, MYSQL, PGSQL, DBI (záleží na
-zakompilovaných knihovnách).
+SMSD service to use, one of FILES, NULL, MYSQL, PGSQL, DBI (depends on
+compiled in support for backends).
 
 \fBFILES\fP \- ukládá zprávy v souborech, pro podrobnosti viz
 gammu\-smsd\-files(7)
+.br
+\fBNULL\fP \- does not store messages at all, see gammu\-smsd\-null(7) for details
 .br
 \fBMYSQL\fP \- ukládá zprávy v MySQL databázi, pro podrobnosti viz
 gammu\-smsd\-mysql(7)
@@ -461,7 +463,8 @@ number1 = 666
 gammu\-smsd(1), gammu(1), gammurc(5)
 
 gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7),
-gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7)
+gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7), gammu\-smsd\-null(7)
+
 .SH AUTOR
 gammu\-smsd a tuto manuálovou stránku napsal Michal Čihař
 <michal@cihar.com>.
