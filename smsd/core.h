@@ -56,6 +56,7 @@ struct _GSM_SMSDConfig {
 	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency;
 	int deliveryreportdelay;
 	unsigned int	resetfrequency;
+	unsigned int multiparttimeout;
 	const char   *deliveryreport, *logfilename,  *PINCode, *NetworkCode, *PhoneCode;
 	const char	*PhoneID;
 	const char   *RunOnReceive;
@@ -159,6 +160,12 @@ struct _GSM_SMSDConfig {
 	 * Message reference set by callback from libGammu.
 	 */
 	volatile int TPMR;
+
+	/**
+	 * Multipart messages processing.
+	 */
+	unsigned char IncompleteMessageReference;
+	time_t IncompleteMessageTime;
 
 #ifdef HAVE_SHM
 	key_t shm_key;

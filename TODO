@@ -37,5 +37,4 @@ This file is probably not usable for anybody except me ;-).
     - the code needs review
 
 SMSD
-    - handling of incomplete multipart
     - passsing decoded data in environment

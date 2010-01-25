@@ -666,6 +666,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->checksignal = INI_GetBool(Config->smsdcfgfile, "smsd", "checksignal", TRUE);
 	Config->checkbattery = INI_GetBool(Config->smsdcfgfile, "smsd", "checkbattery", TRUE);
 	Config->resetfrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "resetfrequency", 0);
+	Config->multiparttimeout = INI_GetInt(Config->smsdcfgfile, "smsd", "multiparttimeout", 600);
 	Config->maxretries = INI_GetInt(Config->smsdcfgfile, "smsd", "maxretries", 1);
 
 	SMSD_Log(DEBUG_NOTICE, Config, "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i",
@@ -830,6 +831,8 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->prevSMSID[0] 	  = 0;
 	Config->relativevalidity  = -1;
 	Config->Status = NULL;
+	Config->IncompleteMessageReference = 0;
+	Config->IncompleteMessageTime = 0;
 
 	return ERR_NONE;
 }
@@ -1187,9 +1190,22 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		/* Check if we have all parts */
 		if (SortedSMS[i]->SMS[0].UDH.Type != UDH_NoUDH) {
 			if (SortedSMS[i]->SMS[0].UDH.AllParts != SortedSMS[i]->Number) {
-				SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message");
-				goto cleanup;
+				if (Config->IncompleteMessageTime != 0 && Config->IncompleteMessageReference == SortedSMS[i]->SMS[0].MessageReference && difftime(time(NULL), Config->IncompleteMessageTime) > Config->multiparttimeout) {
+					SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message, processing after timeout");
+				} else {
+					if (Config->IncompleteMessageTime != 0) {
+						 Config->IncompleteMessageReference = SortedSMS[i]->SMS[0].MessageReference;
+						 Config->IncompleteMessageTime = time(NULL);
+					}
+					SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message, waiting for other parts");
+					goto cleanup;
+				}
 			}
+		}
+
+		/* Clean multipart wait flag */
+		if (Config->IncompleteMessageReference == SortedSMS[i]->SMS[0].MessageReference) {
+			Config->IncompleteMessageTime = 0;
 		}
 
 		/* Actually process the message */
