@@ -6,7 +6,7 @@ SMSD_PID=0
 
 SERVICE="$1"
 
-TEST_MATCH=";999999999999999;3;6;0;100;42"
+TEST_MATCH=";999999999999999;3;9;0;100;42"
 
 echo "NOTICE: This test is quite tricky about timing, if you run it on really slow platform, it might fail."
 echo "NOTICE: Testing service $SERVICE"
@@ -39,6 +39,7 @@ loglevel = textall
 
 [smsd]
 commtimeout = 5
+multiparttimeout = 5
 debuglevel = 255
 logfile = stderr
 runonreceive = @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.sh
@@ -93,7 +94,7 @@ password = @MYSQL_PASSWORD@
 EOT
         ;;
     null)
-        TEST_MATCH=";999999999999999;0;8;0;100;42"
+        TEST_MATCH=";999999999999999;0;9;0;100;42"
         cat >> .smsdrc <<EOT
 service = null
 EOT
@@ -183,6 +184,7 @@ sleep 5
 for sms in 10 16 26 ; do
     cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/$sms.backup $DUMMY_PATH/sms/3/$sms
 done
+cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/smsbackups/mms-part.smsbackup $DUMMY_PATH/sms/1/666
 
 TIMEOUT=0
 while ! @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0 | grep -q "$TEST_MATCH" ; do
@@ -199,7 +201,7 @@ sleep 5
 
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0
 
-if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 7 ] ; then
+if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 8 ] ; then
     echo "ERROR: Wrong number of messages received!"
     exit 1
 fi
