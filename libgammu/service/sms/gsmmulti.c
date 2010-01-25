@@ -837,7 +837,7 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 		return FALSE;
 	}
 	/* Process payload */
-	for (i = 2 + Buffer[2]; i < Length; i++) {
+	for (i = 3 + Buffer[2]; i < Length; i++) {
 		switch(Buffer[i]) {
 			case 0x8c:
 				/* Transaction type */
@@ -871,7 +871,7 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 			case 0x96:
 				/* Title */
 				strcpy(Info->Entries[0].MMSIndicator->Title, Buffer + i + 1);
-				i += strlen(Info->Entries[0].MMSIndicator->Title);
+				i += strlen(Info->Entries[0].MMSIndicator->Title) + 1;
 				break;
 			case 0x8a:
 				/* Class */
@@ -914,10 +914,11 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 			case 0x83:
 				/* URL */
 				strcpy(Info->Entries[0].MMSIndicator->Address, Buffer + i + 1);
-				i += strlen(Info->Entries[0].MMSIndicator->Address);
+				i += strlen(Info->Entries[0].MMSIndicator->Address) + 1;
 				break;
+			case 0x87:
 			default:
-				dbgprintf(di, "Uknown MMS tag: 0x%02x\n", Buffer[i]);
+				dbgprintf(di, "Unknown MMS tag: 0x%02x\n", Buffer[i]);
 				break;
 		}
 	}

@@ -203,18 +203,22 @@ option has actually no effect of FILES backend service.
 .TP
 .BI RunOnReceive
 
-Executes a program after receiving message. This parameter is executed through
-shell, so you might need to escape some special characters and you can include
-any number of parameters. Additionally parameters with identifiers of received
-messages are appended to the command line. The identifiers depend on used
-service backend, typically it is ID of inserted row for database backends or
-file name for file based backends.
+Executes a program after receiving message. 
+
+This parameter is executed through shell, so you might need to escape some
+special characters and you can include any number of parameters. Additionally
+parameters with identifiers of received messages are appended to the command
+line. The identifiers depend on used service backend, typically it is ID of
+inserted row for database backends or file name for file based backends.
 
 Gammu SMSD waits for the script to terminate. If you make some time consuming
 there, it will make SMSD not receive new messages. However to limit breakage
 from this situation, the waiting time is limited to two minutes. After this
 time SMSD will continue in normal operation and might execute your script
 again.
+
+The process has available lot of information about received message in 
+environment, check gammu\-smsd\-run(7) for more details.
 
 .TP
 .BI IncludeNumbersFile
@@ -466,7 +470,7 @@ number1 = 666
 .SH SEE ALSO
 gammu\-smsd(1), gammu(1), gammurc(5)
 
-gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7), gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7), gammu\-smsd\-null(7)
+gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7), gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7), gammu\-smsd\-null(7), gammu\-smsd\-run(7)
 
 .SH AUTHOR
 gammu\-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.

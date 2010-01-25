@@ -137,6 +137,7 @@ esac
 cat > @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.sh << EOT
 #!@SH_BIN@
 echo "\$@" >> @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log
+env >> @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/env.log
 exit 4
 EOT
 chmod +x @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.sh
@@ -203,5 +204,10 @@ sleep 5
 
 if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 8 ] ; then
     echo "ERROR: Wrong number of messages received!"
+    exit 1
+fi
+
+if ! grep -q -F 'MMS_ADDRESS=http://mmscz/?m=m5da5a9jn210ma56q20' @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/env.log ; then
+    echo "ERROR: Wrong MMS message received!"
     exit 1
 fi

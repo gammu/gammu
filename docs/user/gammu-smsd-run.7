@@ -1,0 +1,106 @@
+.TH GAMMU-SMSD-RUN 7 "January 25, 2010" "Gammu 1.28.0" "Gammu Documentation"
+.SH NAME
+
+gammu\-smsd\-run - documentation for RunOnReceive directive
+
+.SH DESCRIPTION
+
+Gammu SMSD can be configured by RunOnReceive directive (see gammu\-smsdrc(5)
+for details) to run defined program after receiving message. 
+    
+This parameter is executed through shell, so you might need to escape some
+special characters and you can include any number of parameters. Additionally
+parameters with identifiers of received messages are appended to the command
+line. The identifiers depend on used service backend, typically it is ID of
+inserted row for database backends or file name for file based backends.
+
+Gammu SMSD waits for the script to terminate. If you make some time consuming
+there, it will make SMSD not receive new messages. However to limit breakage
+from this situation, the waiting time is limited to two minutes. After this
+time SMSD will continue in normal operation and might execute your script
+again.
+
+.SH ENVIRONMENT
+
+Program is executed with environment which contains lot of information about
+the message. You can use it together with NULL service (see
+gammu\-smsd\-null(7)) to implement completely own processing of messages.
+
+.SS Global variables
+
+.TP
+.BI SMS_MESSAGES
+
+Number of physical messages received.
+
+.TP
+.BI DECODED_PARTS
+
+Number of decoded message parts.
+
+.SS Per message variables
+
+The variables further described as SMS_1_... are generated for each physical
+message, where 1 is replaced by current number of message.
+
+.TP
+.BI SMS_1_CLASS
+
+Class of message.
+
+.TP
+.BI SMS_1_NUMBER
+
+Sender number.
+
+.TP
+.BI SMS_1_TEXT
+
+Message text. Text is not available for 8-bit binary messages.
+
+.SS Per part variables
+
+The variables further described as DECODED_1_... are generated for each message
+part, where 1 is replaced by current number of part. Set are only those
+variables whose content is present in the message.
+
+.TP
+.BI DECODED_1_TEXT
+
+Decoded long message text.
+
+.TP
+.BI DECODED_1_MMS_SENDER
+
+Sender of MMS indication message.
+
+.TP
+.BI DECODED_1_MMS_TITLE
+
+title of MMS indication message.
+
+.TP
+.BI DECODED_1_MMS_ADDRESS
+
+Address (URL) of MMS from MMS indication message.
+
+.TP
+.BI DECODED_1_MMS_SIZE
+
+Size of MMS as specified in MMS indication message.
+
+
+.SH SEE ALSO
+gammu\-smsd(1), gammu\-smsdrc(5), gammu(1), gammurc(5)
+.SH AUTHOR
+gammu\-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
+.SH COPYRIGHT
+Copyright \(co 2010 Michal Cihar and other authors.
+License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH REPORTING BUGS
+Please report bugs to <http://bugs.cihar.com>.
+
+

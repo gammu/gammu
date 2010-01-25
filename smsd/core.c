@@ -925,8 +925,69 @@ char *SMSD_RunOnReceiveCommand(GSM_SMSDConfig *Config, const char *locations)
 	return result;
 }
 
+/**
+ * Fills in environment with information about messages.
+ */
+void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *locations)
+{
+	GSM_MultiPartSMSInfo SMSInfo;
+	char buffer[100], name[100];
+	int i;
+
+	/* Raw message data */
+	sprintf(buffer, "%d", sms->Number);
+	setenv("SMS_MESSAGES", buffer, 1);
+	for (i = 0; i < sms->Number; i++) {
+		sprintf(buffer, "%d", sms->SMS[i].Class);
+		sprintf(name, "SMS_%d_CLASS", i + 1);
+		setenv(name, buffer, 1);
+		sprintf(name, "SMS_%d_NUMBER", i + 1);
+		setenv(name, DecodeUnicodeConsole(sms->SMS[i].Number), 1);
+		if (sms->SMS[i].Coding != SMS_Coding_8bit) {
+			sprintf(name, "SMS_%d_TEXT", i + 1);
+			setenv(name, DecodeUnicodeConsole(sms->SMS[i].Text), 1);
+		}
+	}
+
+	/* Decoded message data */
+	if (GSM_DecodeMultiPartSMS(GSM_GetDebug(Config->gsm), &SMSInfo, sms, TRUE)) {
+		sprintf(buffer, "%d", SMSInfo.EntriesNum);
+		setenv("DECODED_PARTS", buffer, 1);
+		for (i = 0; i < SMSInfo.EntriesNum; i++) {
+			switch (SMSInfo.Entries[i].ID) {
+				case SMS_ConcatenatedTextLong:
+				case SMS_ConcatenatedAutoTextLong:
+				case SMS_ConcatenatedTextLong16bit:
+				case SMS_ConcatenatedAutoTextLong16bit:
+				case SMS_NokiaVCARD21Long:
+				case SMS_NokiaVCALENDAR10Long:
+					sprintf(name, "DECODED_%d_TEXT", i);
+					setenv(name, DecodeUnicodeConsole(SMSInfo.Entries[i].Buffer), 1);
+					break;
+				case SMS_MMSIndicatorLong:
+					sprintf(name, "DECODED_%d_MMS_SENDER", i + 1);
+					setenv(name, SMSInfo.Entries[i].MMSIndicator->Sender, 1);
+					sprintf(name, "DECODED_%d_MMS_TITLE", i + 1);
+					setenv(name, SMSInfo.Entries[i].MMSIndicator->Title, 1);
+					sprintf(name, "DECODED_%d_MMS_ADDRESS", i + 1);
+					setenv(name, SMSInfo.Entries[i].MMSIndicator->Address, 1);
+					sprintf(name, "DECODED_%d_MMS_SIZE", i + 1);
+					sprintf(buffer, "%d", SMSInfo.Entries[i].MMSIndicator->MessageSize);
+					setenv(name, buffer, 1);
+					break;
+				default:
+					/* We ignore others for now */
+					break;
+			}
+		}
+	} else {
+		setenv("DECODED_PARTS", "0", 1);
+	}
+	GSM_FreeMultiPartSMSInfo(&SMSInfo);
+}
+
 #ifdef WIN32
-gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms UNUSED, GSM_SMSDConfig *Config, char *locations)
+gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *locations)
 {
 	BOOL ret;
 	STARTUPINFO si;
@@ -934,6 +995,9 @@ gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms UNUSED, GSM_SMSDConfig *Conf
 	char *cmdline;
 
 	cmdline = SMSD_RunOnReceiveCommand(Config, locations);
+
+	/* Prepare environment */
+	SMSD_RunOnReceiveEnvironment(sms, Config, locations);
 
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
@@ -963,7 +1027,7 @@ gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms UNUSED, GSM_SMSDConfig *Conf
 }
 #else
 
-gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms UNUSED, GSM_SMSDConfig *Config, char *locations)
+gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *locations)
 {
 	int pid;
 	int i;
@@ -1015,6 +1079,9 @@ gboolean SMSD_RunOnReceive(GSM_MultiSMSMessage *sms UNUSED, GSM_SMSDConfig *Conf
 	}
 
 	/* we are the child */
+
+	/* Prepare environment */
+	SMSD_RunOnReceiveEnvironment(sms, Config, locations);
 
 	/* Calculate command line */
 	cmdline = SMSD_RunOnReceiveCommand(Config, locations);
