@@ -34,7 +34,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 
         for (i = 0; Backup.SMS[i] != NULL; i++) {
-		SMS.Number = i;
+		SMS.Number = i + 1;
 		SMS.SMS[i] = *Backup.SMS[i];
 	}
 
