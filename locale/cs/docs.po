@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-25 21:34+0100\n"
-"PO-Revision-Date: 2010-01-19 18:52+0200\n"
+"PO-Revision-Date: 2010-01-25 21:41+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6307,11 +6307,10 @@ msgstr ""
 
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:45
-#, fuzzy
 msgid ""
 "B<NULL> - does not store messages at all, see gammu-smsd-null(7) for details"
 msgstr ""
-"B<FILES> - ukládá zprávy v souborech, pro podrobnosti viz gammu-smsd-files(7)"
+"B<NULL> - vůbec neukládá zprávy, pro podrobnosti viz gammu-smsd-null(7)"
 
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:48
@@ -7323,13 +7322,12 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:461 docs/user/gammu-smsd.1:187
-#, fuzzy
 msgid ""
 "gammu-smsd-files(7), gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7), gammu-smsd-tables(7), gammu-smsd-null(7)"
 msgstr ""
 "gammu-smsd-files(7), gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
-"(7), gammu-smsd-tables(7)"
+"(7), gammu-smsd-tables(7), gammu-smsd-null(7)"
 
 # type: Plain text
 #. type: Plain text
@@ -7711,6 +7709,8 @@ msgid ""
 "Under Windows 7 you might need to disable UAC (user account control) before "
 "you will be able to install SMSD service."
 msgstr ""
+"Pod Windows 7 možná budete potřebovat vypnout UAC (user account control) "
+"před tím než vám půjde nainstalovat služba SMSD."
 
 # type: SS
 #. type: SS
@@ -9786,32 +9786,29 @@ msgstr ""
 # type: TH
 #. type: TH
 #: docs/user/gammu-smsd-null.7:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "GAMMU-SMSD-NULL"
-msgstr "GAMMU-SMSD"
+msgstr "GAMMU-SMSD-NULL"
 
 # type: TH
 #. type: TH
 #: docs/user/gammu-smsd-null.7:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "January 25, 2010"
-msgstr "Leden  15, 2009"
+msgstr "Leden  25, 2010"
 
 # type: TH
 #. type: TH
 #: docs/user/gammu-smsd-null.7:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu 1.28.0"
-msgstr "Gammu 1.23.0"
+msgstr "Gammu 1.28.0"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-null.7:5
-#, fuzzy
 msgid "gammu-smsd-null - gammu-smsd(1) backend not storing messages"
-msgstr ""
-"gammu-smsd-files - služba pro gammu-smsd(1) používající k ukládání zpráv "
-"soubory"
+msgstr "gammu-smsd-null - služba pro gammu-smsd(1) neukládající zprávy"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-null.7:13
@@ -9820,16 +9817,17 @@ msgid ""
 "don't want to store messages at all and you want to process then in "
 "RunOnReceive handler."
 msgstr ""
+"Služba NULL zprávy vůbec neukládá. Toto může být užitečné, pokud zprávy "
+"chcete zpracovat sami v programu nastaveném v RunOnReceive."
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-null.7:21
-#, fuzzy
 msgid ""
 "Copyright \\(co 2010 Michal Cihar and other authors.  License GPLv2: GNU GPL "
 "version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
 msgstr ""
-"Copyright \\(co 2009 Michal Čihař a další autoři.  Licence GPLv2: GNU GPL "
+"Copyright \\(co 2010 Michal Čihař a další autoři.  Licence GPLv2: GNU GPL "
 "verze 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
 
 #. type: Plain text
