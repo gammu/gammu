@@ -93,7 +93,7 @@ password = @MYSQL_PASSWORD@
 EOT
         ;;
     null)
-        TEST_MATCH=";999999999999999;0;6;0;100;42"
+        TEST_MATCH=";999999999999999;0;8;0;100;42"
         cat >> .smsdrc <<EOT
 service = null
 EOT
@@ -157,6 +157,7 @@ sleep 5
 for sms in 62 68 74 ; do
     cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/$sms.backup $DUMMY_PATH/sms/1/$sms
 done
+cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/smsbackups/mms.smsbackup $DUMMY_PATH/sms/1/42
 
 # Insert message manually
 case $SERVICE in
@@ -198,7 +199,7 @@ sleep 5
 
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0
 
-if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 6 ] ; then
+if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test-$SERVICE/received.log` -ne 7 ] ; then
     echo "ERROR: Wrong number of messages received!"
     exit 1
 fi
