@@ -441,6 +441,12 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 		case SMS_EMSPredefinedAnimation:
 			printf("\n" LISTFORMAT "%i\n", _("EMS animation ID"),SMSInfo.Entries[i].Number);
 			break;
+		case SMS_MMSIndicatorLong:
+			printf(LISTFORMAT "%s\n", _("Sender"),SMSInfo.Entries[i].MMSIndicator->Sender);
+			printf(LISTFORMAT "%s\n", _("Subject"),SMSInfo.Entries[i].MMSIndicator->Title);
+			printf(LISTFORMAT "%s\n", _("Address"),SMSInfo.Entries[i].MMSIndicator->Address);
+			printf(LISTFORMAT "%i\n", _("Mesage size"),SMSInfo.Entries[i].MMSIndicator->MessageSize);
+			break;
 		case SMS_Text:
 		case SMS_NokiaRingtoneLong:
 		case SMS_NokiaOperatorLogoLong:
@@ -465,7 +471,6 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 		case SMS_EMSSound12Long:
 		case SMS_EMSSonyEricssonSoundLong:
 		case SMS_EMSVariableBitmapLong:
-		case SMS_MMSIndicatorLong:
 		case SMS_WAPIndicatorLong:
 		case SMS_AlcatelMonoBitmapLong:
 		case SMS_AlcatelMonoAnimationLong:
