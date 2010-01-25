@@ -1644,6 +1644,11 @@ GSM_Error SMSD_NoneFunction(void)
 	return ERR_NONE;
 }
 
+GSM_Error SMSD_EmptyFunction(void)
+{
+	return ERR_EMPTY;
+}
+
 GSM_Error SMSD_NotImplementedFunction(void)
 {
 	return ERR_NOTIMPLEMENTED;

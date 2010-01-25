@@ -199,10 +199,12 @@ typedef struct {
 } GSM_SMSDService;
 
 extern GSM_Error SMSD_NoneFunction		(void);
+extern GSM_Error SMSD_EmptyFunction		(void);
 extern GSM_Error SMSD_NotImplementedFunction	(void);
 extern GSM_Error SMSD_NotSupportedFunction	(void);
 
 #define NONEFUNCTION 	(void *) SMSD_NoneFunction
+#define EMPTYFUNCTION 	(void *) SMSD_EmptyFunction
 #define NOTIMPLEMENTED 	(void *) SMSD_NotImplementedFunction
 #define NOTSUPPORTED 	(void *) SMSD_NotSupportedFunction
 

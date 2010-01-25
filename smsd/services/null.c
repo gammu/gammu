@@ -12,7 +12,7 @@ GSM_SMSDService SMSDNull = {
 	NONEFUNCTION,			/* Free 		*/
 	NONEFUNCTION,			/* InitAfterConnect 	*/
 	NONEFUNCTION,			/* SaveInboxSMS		*/
-	NONEFUNCTION,			/* FindOutboxSMS	*/
+	EMPTYFUNCTION,			/* FindOutboxSMS	*/
 	NONEFUNCTION,			/* MoveSMS		*/
 	NONEFUNCTION,			/* CreateOutboxSMS	*/
 	NONEFUNCTION,			/* AddSentSMSInfo	*/
