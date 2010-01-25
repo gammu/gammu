@@ -3763,7 +3763,7 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 		if (!DecodeHexBin (SMS->Text, readbuffer, strlen(readbuffer))) {
 			dbgprintf(NULL, "Failed decoding binary field!\n");
 		}
-		SMS->Length = strlen(readbuffer)/4;
+		SMS->Length = strlen(readbuffer)/2;
 	}
 	SMS->Text[SMS->Length * 2]	= 0;
 	SMS->Text[SMS->Length * 2 + 1] 	= 0;
