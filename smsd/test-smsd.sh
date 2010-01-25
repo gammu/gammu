@@ -6,6 +6,8 @@ SMSD_PID=0
 
 SERVICE="$1"
 
+TEST_MATCH=";999999999999999;3;6;0;100;42"
+
 echo "NOTICE: This test is quite tricky about timing, if you run it on really slow platform, it might fail."
 echo "NOTICE: Testing service $SERVICE"
 
@@ -88,6 +90,12 @@ pc = @MYSQL_HOST@
 database = @MYSQL_DATABASE@
 user = @MYSQL_USER@
 password = @MYSQL_PASSWORD@
+EOT
+        ;;
+    null)
+        TEST_MATCH=";999999999999999;0;6;0;100;42"
+        cat >> .smsdrc <<EOT
+service = null
 EOT
         ;;
     files*)
@@ -176,7 +184,7 @@ for sms in 10 16 26 ; do
 done
 
 TIMEOUT=0
-while ! @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0 | grep -q ";999999999999999;3;6;0;100;42" ; do
+while ! @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0 | grep -q "$TEST_MATCH" ; do
     @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor@GAMMU_TEST_SUFFIX@ -C -c "$CONFIG_PATH" -l 1 -d 0
     sleep 5
     TIMEOUT=$(($TIMEOUT + 1))

@@ -46,6 +46,7 @@ endif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
 smsd_testsuite("files-unicode")
 smsd_testsuite("files-standard")
 smsd_testsuite("files-detail")
+smsd_testsuite("null")
 
 if (MYSQL_TESTING)
     smsd_testsuite("mysql")
