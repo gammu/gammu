@@ -164,7 +164,7 @@ int main(int argc, char **argv)
 	GSM_Message_Type type = SMS_SMSD;
 	GSM_SMSDConfig *config;
 	const char program_name[] = "gammu-smsd-inject";
-	char newid[200];
+	char newid[200] = { 0 };
 
 	SMSD_Parameters params = {
 		NULL,
