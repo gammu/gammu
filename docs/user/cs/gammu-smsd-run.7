@@ -1,0 +1,111 @@
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH GAMMU\-SMSD\-RUN 7 "Leden  25, 2010" "Gammu 1.28.0" "Dokumentace Gammu"
+.SH JMÉNO
+
+gammu\-smsd\-run \- dokumentace pro parametr RunOnReceive
+
+.SH POPIS
+
+Gammu SMSD can be configured by RunOnReceive directive (see gammu\-smsdrc(5)
+for details) to run defined program after receiving message.
+    
+Tento prarametr je spuštěn přes shell, takže možná budete potřebovat
+escapovat některé znaky a můžete použít jakékoliv množství parametrů. SMSD
+dále přidá parametry s identifikátory přijatých zpráv. Typ identifikátorů
+záleží na použité službě, pro databázové služby je to obvykle ID vloženého
+řádku, pro souborové pak jméno souboru.
+
+Gammu SMSD čeká na ukončení skriptu. Pokud budete provádět nějaké časově
+náročné operace, zastavíte přijímání nových zpráv. Aby se zabránilo větším
+komplikacím, čeká SMSD maximálně dvě minuty. Po této době bude pokračovat v
+normálním běhu a může spustit váš skript znovu.
+
+.SH PROSTŘEDÍ
+
+Program is executed with environment which contains lot of information about
+the message. You can use it together with NULL service (see
+gammu\-smsd\-null(7)) to implement completely own processing of messages.
+
+.SS "Globální proměnné"
+
+.TP 
+\fBSMS_MESSAGES\fP
+
+Počet skutečně přijatých zpráv.
+
+.TP 
+\fBDECODED_PARTS\fP
+
+Počet dekódovaných částí zpráv.
+
+.SS "Proměnné pro každou zprávu"
+
+The variables further described as SMS_1_... are generated for each physical
+message, where 1 is replaced by current number of message.
+
+.TP 
+\fBSMS_1_CLASS\fP
+
+Třída zprávy.
+
+.TP 
+\fBSMS_1_NUMBER\fP
+
+Číslo odesílatele.
+
+.TP 
+\fBSMS_1_TEXT\fP
+
+Text zprávy. Není dostupné pro 8\-bitové binární zprávy.
+
+.SS "Proměnné pro každou část"
+
+The variables further described as DECODED_1_... are generated for each
+message part, where 1 is replaced by current number of part. Set are only
+those variables whose content is present in the message.
+
+.TP 
+\fBDECODED_1_TEXT\fP
+
+Dekódovaný dlouhý text zprávy.
+
+.TP 
+\fBDECODED_1_MMS_SENDER\fP
+
+Odesílatel zprávy oznamující MMS.
+
+.TP 
+\fBDECODED_1_MMS_TITLE\fP
+
+Název zprávy oznamující MMS.
+
+.TP 
+\fBDECODED_1_MMS_ADDRESS\fP
+
+Addresa (URL) MMS zpráv z ze zprávy oznamující MMS.
+
+.TP 
+\fBDECODED_1_MMS_SIZE\fP
+
+Velikost MMS tak jak je uvedena ve zprávě oznamující MMS.
+
+
+.SH "DALŠÍ INFORMACE"
+gammu\-smsd(1), gammu\-smsdrc(5), gammu(1), gammurc(5)
+.SH AUTOR
+gammu\-smsd a tuto manuálovou stránku napsal Michal Čihař
+<michal@cihar.com>.
+.SH COPYRIGHT
+Copyright \(co 2010 Michal Čihař a další autoři.  Licence GPLv2: GNU GPL
+verze 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
+.br
+Tento program je svobodný software; můžete jej šířit a modifikovat.  Není
+poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem.
+.SH "HLÁŠENÍ CHYB"
+Prosím hlašte chyby na <http://bugs.cihar.com>.
+
+

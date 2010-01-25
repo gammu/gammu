@@ -39,8 +39,8 @@ ovládají filtrování zpráv (viz dále).
 .TP 
 \fBService\fP
 
-SMSD service to use, one of FILES, NULL, MYSQL, PGSQL, DBI (depends on
-compiled in support for backends).
+Jakou službu SMSM použít, jedna z FILES, NULL, MYSQL, PGSQL, DBI (záleží na
+zakompilovaných knihovnách).
 
 \fBFILES\fP \- ukládá zprávy v souborech, pro podrobnosti viz
 gammu\-smsd\-files(7)
@@ -135,9 +135,9 @@ Výchozí je 0 (není použito).
 .TP 
 \fBMultipartTimeout\fP
 
-The number of seconds how long will SMSD wait for all parts of multipart
-message. If all parts won't arrive in time, parts will be processed as
-separate messages.
+Počet sekund jak dlouho bude SMSD čekat na doručení všech částí
+zprávy. Pokud všechny části nedorazí včas, budou zpracovány jako samostatné
+zprávy.
 
 Výchozí je 600 (10 minut).
 
@@ -208,22 +208,21 @@ ukládání zpráv do souborů (FILES).
 .TP 
 \fBRunOnReceive\fP
 
-Executes a program after receiving message.
+Spustí program po přijetí zprávy.
 
-This parameter is executed through shell, so you might need to escape some
-special characters and you can include any number of
-parameters. Additionally parameters with identifiers of received messages
-are appended to the command line. The identifiers depend on used service
-backend, typically it is ID of inserted row for database backends or file
-name for file based backends.
+Tento prarametr je spuštěn přes shell, takže možná budete potřebovat
+escapovat některé znaky a můžete použít jakékoliv množství parametrů. SMSD
+dále přidá parametry s identifikátory přijatých zpráv. Typ identifikátorů
+záleží na použité službě, pro databázové služby je to obvykle ID vloženého
+řádku, pro souborové pak jméno souboru.
 
 Gammu SMSD čeká na ukončení skriptu. Pokud budete provádět nějaké časově
 náročné operace, zastavíte přijímání nových zpráv. Aby se zabránilo větším
 komplikacím, čeká SMSD maximálně dvě minuty. Po této době bude pokračovat v
 normálním běhu a může spustit váš skript znovu.
 
-The process has available lot of information about received message in
-environment, check gammu\-smsd\-run(7) for more details.
+Spuštěný proces má v prostředí dostupné množství informací o přijaté zprávě,
+více podrobností naleznete v gammu\-smsd\-run(7).
 
 .TP 
 \fBIncludeNumbersFile\fP

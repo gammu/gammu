@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-25 23:25+0100\n"
-"PO-Revision-Date: 2010-01-25 21:41+0100\n"
+"PO-Revision-Date: 2010-01-25 23:48+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6290,12 +6290,11 @@ msgstr "B<Service>"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:41
-#, fuzzy
 msgid ""
 "SMSD service to use, one of FILES, NULL, MYSQL, PGSQL, DBI (depends on "
 "compiled in support for backends)."
 msgstr ""
-"Jakou službu SMSM použít, jedna z FILES, MYSQL, PGSQL, DBI (záleží na "
+"Jakou službu SMSM použít, jedna z FILES, NULL, MYSQL, PGSQL, DBI (záleží na "
 "zakompilovaných knihovnách)."
 
 #. type: Plain text
@@ -6544,10 +6543,9 @@ msgstr "Výchozí je 0 (není použito)."
 # type: TP
 #. type: TP
 #: docs/user/gammu-smsdrc.5:130
-#, fuzzy, no-wrap
-#| msgid "B<CommTimeout>"
+#, no-wrap
 msgid "B<MultipartTimeout>"
-msgstr "B<CommTimeout>"
+msgstr "B<MultipartTimeout>"
 
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:136
@@ -6556,6 +6554,8 @@ msgid ""
 "message. If all parts won't arrive in time, parts will be processed as "
 "separate messages."
 msgstr ""
+"Počet sekund jak dlouho bude SMSD čekat na doručení všech částí zprávy. "
+"Pokud všechny části nedorazí včas, budou zpracovány jako samostatné zprávy."
 
 # type: Plain text
 #. type: Plain text
@@ -6726,22 +6726,12 @@ msgstr "B<RunOnReceive>"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:207
-#, fuzzy
-#| msgid "Other fields are same as for received messages."
 msgid "Executes a program after receiving message."
-msgstr "Ostatní položky jsou stejné jako pro odeslané zprávy."
+msgstr "Spustí program po přijetí zprávy."
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:213 docs/user/gammu-smsd-run.7:16
-#, fuzzy
-#| msgid ""
-#| "Executes a program after receiving message. This parameter is executed "
-#| "through shell, so you might need to escape some special characters and "
-#| "you can include any number of parameters. Additionally parameters with "
-#| "identifiers of received messages are appended to the command line. The "
-#| "identifiers depend on used service backend, typically it is ID of "
-#| "inserted row for database backends or file name for file based backends."
 msgid ""
 "This parameter is executed through shell, so you might need to escape some "
 "special characters and you can include any number of parameters. "
@@ -6750,11 +6740,11 @@ msgid ""
 "typically it is ID of inserted row for database backends or file name for "
 "file based backends."
 msgstr ""
-"Spustí program po přijetí zprávy. Tento prarametr je spuštěn přes shell, "
-"takže možná budete potřebovat escapovat některé znaky a můžete použít "
-"jakékoliv množství parametrů. SMSD dále přidá parametry s identifikátory "
-"přijatých zpráv. Typ identifikátorů záleží na použité službě, pro databázové "
-"služby je to obvykle ID vloženého řádku, pro souborové pak jméno souboru."
+"Tento prarametr je spuštěn přes shell, takže možná budete potřebovat "
+"escapovat některé znaky a můžete použít jakékoliv množství parametrů. SMSD "
+"dále přidá parametry s identifikátory přijatých zpráv. Typ identifikátorů "
+"záleží na použité službě, pro databázové služby je to obvykle ID vloženého "
+"řádku, pro souborové pak jméno souboru."
 
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:219 docs/user/gammu-smsd-run.7:22
@@ -6776,6 +6766,8 @@ msgid ""
 "The process has available lot of information about received message in "
 "environment, check gammu-smsd-run(7) for more details."
 msgstr ""
+"Spuštěný proces má v prostředí dostupné množství informací o přijaté zprávě, "
+"více podrobností naleznete v gammu-smsd-run(7)."
 
 #. type: TP
 #: docs/user/gammu-smsdrc.5:223
@@ -7361,16 +7353,12 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:474 docs/user/gammu-smsd.1:187
-#, fuzzy
-#| msgid ""
-#| "gammu-smsd-files(7), gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-"
-#| "dbi(7), gammu-smsd-tables(7), gammu-smsd-null(7)"
 msgid ""
 "gammu-smsd-files(7), gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7), gammu-smsd-tables(7), gammu-smsd-null(7), gammu-smsd-run(7)"
 msgstr ""
 "gammu-smsd-files(7), gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
-"(7), gammu-smsd-tables(7), gammu-smsd-null(7)"
+"(7), gammu-smsd-tables(7), gammu-smsd-null(7), gammu-smsd-run(7)"
 
 # type: Plain text
 #. type: Plain text
@@ -9876,15 +9864,14 @@ msgstr ""
 # type: TH
 #. type: TH
 #: docs/user/gammu-smsd-run.7:1
-#, fuzzy, no-wrap
-#| msgid "GAMMU-SMSDRC"
+#, no-wrap
 msgid "GAMMU-SMSD-RUN"
-msgstr "GAMMU-SMSDRC"
+msgstr "GAMMU-SMSD-RUN"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:5
 msgid "gammu-smsd-run - documentation for RunOnReceive directive"
-msgstr ""
+msgstr "gammu-smsd-run - dokumentace pro parametr RunOnReceive"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:10
@@ -9897,7 +9884,7 @@ msgstr ""
 #: docs/user/gammu-smsd-run.7:23
 #, no-wrap
 msgid "ENVIRONMENT"
-msgstr ""
+msgstr "PROSTŘEDÍ"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:28
@@ -9911,35 +9898,35 @@ msgstr ""
 #: docs/user/gammu-smsd-run.7:29
 #, no-wrap
 msgid "Global variables"
-msgstr ""
+msgstr "Globální proměnné"
 
 #. type: TP
 #: docs/user/gammu-smsd-run.7:31
 #, no-wrap
 msgid "B<SMS_MESSAGES>"
-msgstr ""
+msgstr "B<SMS_MESSAGES>"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:35
 msgid "Number of physical messages received."
-msgstr ""
+msgstr "Počet skutečně přijatých zpráv."
 
 #. type: TP
 #: docs/user/gammu-smsd-run.7:36
 #, no-wrap
 msgid "B<DECODED_PARTS>"
-msgstr ""
+msgstr "B<DECODED_PARTS>"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:40
 msgid "Number of decoded message parts."
-msgstr ""
+msgstr "Počet dekódovaných částí zpráv."
 
 #. type: SS
 #: docs/user/gammu-smsd-run.7:41
 #, no-wrap
 msgid "Per message variables"
-msgstr ""
+msgstr "Proměnné pro každou zprávu"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:45
@@ -9952,46 +9939,42 @@ msgstr ""
 #: docs/user/gammu-smsd-run.7:46
 #, no-wrap
 msgid "B<SMS_1_CLASS>"
-msgstr ""
+msgstr "B<SMS_1_CLASS>"
 
 # type: SS
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:50
-#, fuzzy
-#| msgid "Transmitting of messages"
 msgid "Class of message."
-msgstr "Odesílání zpráv"
+msgstr "Třída zprávy."
 
 #. type: TP
 #: docs/user/gammu-smsd-run.7:51
 #, no-wrap
 msgid "B<SMS_1_NUMBER>"
-msgstr ""
+msgstr "B<SMS_1_NUMBER>"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:55
-#, fuzzy
-#| msgid "decoded SMS sender number"
 msgid "Sender number."
-msgstr "číslo odesílatele SMS"
+msgstr "Číslo odesílatele."
 
 #. type: TP
 #: docs/user/gammu-smsd-run.7:56
 #, no-wrap
 msgid "B<SMS_1_TEXT>"
-msgstr ""
+msgstr "B<SMS_1_TEXT>"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:60
 msgid "Message text. Text is not available for 8-bit binary messages."
-msgstr ""
+msgstr "Text zprávy. Není dostupné pro 8-bitové binární zprávy."
 
 #. type: SS
 #: docs/user/gammu-smsd-run.7:61
 #, no-wrap
 msgid "Per part variables"
-msgstr ""
+msgstr "Proměnné pro každou část"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:66
@@ -10005,56 +9988,56 @@ msgstr ""
 #: docs/user/gammu-smsd-run.7:67
 #, no-wrap
 msgid "B<DECODED_1_TEXT>"
-msgstr ""
+msgstr "B<DECODED_1_TEXT>"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:71
 msgid "Decoded long message text."
-msgstr ""
+msgstr "Dekódovaný dlouhý text zprávy."
 
 #. type: TP
 #: docs/user/gammu-smsd-run.7:72
 #, no-wrap
 msgid "B<DECODED_1_MMS_SENDER>"
-msgstr ""
+msgstr "B<DECODED_1_MMS_SENDER>"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:76
 msgid "Sender of MMS indication message."
-msgstr ""
+msgstr "Odesílatel zprávy oznamující MMS."
 
 #. type: TP
 #: docs/user/gammu-smsd-run.7:77
 #, no-wrap
 msgid "B<DECODED_1_MMS_TITLE>"
-msgstr ""
+msgstr "B<DECODED_1_MMS_TITLE>"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:81
 msgid "title of MMS indication message."
-msgstr ""
+msgstr "Název zprávy oznamující MMS."
 
 #. type: TP
 #: docs/user/gammu-smsd-run.7:82
 #, no-wrap
 msgid "B<DECODED_1_MMS_ADDRESS>"
-msgstr ""
+msgstr "B<DECODED_1_MMS_ADDRESS>"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:86
 msgid "Address (URL) of MMS from MMS indication message."
-msgstr ""
+msgstr "Addresa (URL) MMS zpráv z ze zprávy oznamující MMS."
 
 #. type: TP
 #: docs/user/gammu-smsd-run.7:87
 #, no-wrap
 msgid "B<DECODED_1_MMS_SIZE>"
-msgstr ""
+msgstr "B<DECODED_1_MMS_SIZE>"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:91
 msgid "Size of MMS as specified in MMS indication message."
-msgstr ""
+msgstr "Velikost MMS tak jak je uvedena ve zprávě oznamující MMS."
 
 #. type: Plain text
 #: README:2
