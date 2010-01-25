@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <signal.h>
+#include <string.h>
 #ifndef WIN32
 #include <unistd.h>
 #endif
@@ -224,7 +225,11 @@ int main(int argc, char **argv)
 		SMSD_FreeConfig(config);
 		return 3;
 	}
-	printf("Written message with ID %s\n", newid);
+	if (strlen(newid) == 0) {
+		printf("Written message without ID\n");
+	} else {
+		printf("Written message with ID %s\n", newid);
+	}
 
 	SMSD_FreeConfig(config);
 
