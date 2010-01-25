@@ -911,7 +911,9 @@ char *SMSD_RunOnReceiveCommand(GSM_SMSDConfig *Config, const char *locations)
 
 	assert(Config->RunOnReceive != NULL);
 
-	if (locations == NULL) return strdup(Config->RunOnReceive);
+	if (locations == NULL) {
+		return strdup(Config->RunOnReceive);
+	}
 
 	result = (char *)malloc(strlen(locations) + strlen(Config->RunOnReceive) + 20);
 	assert(result != NULL);
