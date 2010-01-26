@@ -870,8 +870,14 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 				break;
 			case 0x96:
 				/* Title */
-				strcpy(Info->Entries[0].MMSIndicator->Title, Buffer + i + 1);
-				i += strlen(Info->Entries[0].MMSIndicator->Title) + 1;
+				if (Buffer[i + 1] == 0x0a && Buffer[i + 2] == 0xea) {
+					/* UTF-8 */
+					strcpy(Info->Entries[0].MMSIndicator->Title, Buffer + i + 3);
+					i += strlen(Info->Entries[0].MMSIndicator->Title) + 3;
+				} else {
+					strcpy(Info->Entries[0].MMSIndicator->Title, Buffer + i + 1);
+					i += strlen(Info->Entries[0].MMSIndicator->Title) + 1;
+				}
 				break;
 			case 0x8a:
 				/* Class */
