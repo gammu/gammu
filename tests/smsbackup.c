@@ -16,7 +16,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_Error error;
 	GSM_SMS_Backup Backup;
 	GSM_MultiSMSMessage SMS;
-        int i;
+        int i, step = 0;
 
 	/* Check parameters */
 	if (argc != 2) {
@@ -33,12 +33,19 @@ int main(int argc UNUSED, char **argv UNUSED)
 	gammu_test_result(error, "GSM_ReadSMSBackupFile");
 
 
-        for (i = 0; Backup.SMS[i] != NULL; i++) {
-		SMS.Number = i + 1;
-		SMS.SMS[i] = *Backup.SMS[i];
-	}
+	do {
+		for (i = step; Backup.SMS[i] != NULL && i - step < GSM_MAX_MULTI_SMS; i++) {
+			SMS.Number = i + 1 - step;
+			SMS.SMS[i - step] = *Backup.SMS[i];
+		}
+		if (i - step == GSM_MAX_MULTI_SMS) {
+			step = i;
+		} else {
+			step = 0;
+		}
 
-	DisplayMultiSMSInfo(&SMS, TRUE, TRUE, NULL, NULL);
+		DisplayMultiSMSInfo(&SMS, TRUE, TRUE, NULL, NULL);
+	} while (step > 0);
 
 	/* We don't need this anymore */
 	GSM_FreeSMSBackup(&Backup);
