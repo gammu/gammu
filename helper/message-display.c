@@ -445,7 +445,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 			printf(LISTFORMAT "%s\n", _("Sender"),SMSInfo.Entries[i].MMSIndicator->Sender);
 			printf(LISTFORMAT "%s\n", _("Subject"),SMSInfo.Entries[i].MMSIndicator->Title);
 			printf(LISTFORMAT "%s\n", _("Address"),SMSInfo.Entries[i].MMSIndicator->Address);
-			printf(LISTFORMAT "%i\n", _("Message size"),SMSInfo.Entries[i].MMSIndicator->MessageSize);
+			printf(LISTFORMAT "%li\n", _("Message size"), (long)SMSInfo.Entries[i].MMSIndicator->MessageSize);
 			break;
 		case SMS_Text:
 		case SMS_NokiaRingtoneLong:

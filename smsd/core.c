@@ -972,7 +972,7 @@ void SMSD_RunOnReceiveEnvironment(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Conf
 					sprintf(name, "DECODED_%d_MMS_ADDRESS", i + 1);
 					setenv(name, SMSInfo.Entries[i].MMSIndicator->Address, 1);
 					sprintf(name, "DECODED_%d_MMS_SIZE", i + 1);
-					sprintf(buffer, "%d", SMSInfo.Entries[i].MMSIndicator->MessageSize);
+					sprintf(buffer, "%ld", (long)SMSInfo.Entries[i].MMSIndicator->MessageSize);
 					setenv(name, buffer, 1);
 					break;
 				default:
