@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-26 21:07+0100\n"
+"POT-Creation-Date: 2010-01-26 21:11+0100\n"
 "PO-Revision-Date: 2010-01-25 23:48+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -5007,6 +5007,7 @@ msgstr "Nepodařilo se přeložit jméno počítače."
 #: docs/user/gammu.1:2602 docs/user/gammurc.5:197 docs/user/gammu-smsdrc.5:399
 #: docs/user/gammu-smsd.1:73 docs/user/gammu-smsd-inject.1:36
 #: docs/user/gammu-smsd-files.7:75 docs/user/gammu-smsd-tables.7:395
+#: docs/user/gammu-smsd-run.7:93
 #, no-wrap
 msgid "EXAMPLE"
 msgstr "PŘÍKLAD"
@@ -10039,13 +10040,6 @@ msgstr "B<DECODED_1_MMS_SIZE>"
 msgid "Size of MMS as specified in MMS indication message."
 msgstr "Velikost MMS tak jak je uvedena ve zprávě oznamující MMS."
 
-# type: SH
-#. type: SH
-#: docs/user/gammu-smsd-run.7:93
-#, fuzzy, no-wrap
-msgid "EXAMPLES"
-msgstr "PŘÍKLAD"
-
 #. type: SS
 #: docs/user/gammu-smsd-run.7:95
 #, no-wrap
@@ -11220,6 +11214,11 @@ msgid ""
 msgstr ""
 "    PSQL_TESTING - potřebujete mít nastavený PostgreSQL server\n"
 "    s databází, ve které může SMSD pracovat.\n"
+
+# type: SH
+#, fuzzy
+#~ msgid "EXAMPLES"
+#~ msgstr "PŘÍKLAD"
 
 # type: TH
 #~ msgid "Dec 27 2009"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-26 21:07+0100\n"
+"POT-Creation-Date: 2010-01-26 21:11+0100\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -4639,6 +4639,7 @@ msgstr "Δεν κατέστη δυνατή η ανάγνωση του αποθη
 #: docs/user/gammu.1:2602 docs/user/gammurc.5:197 docs/user/gammu-smsdrc.5:399
 #: docs/user/gammu-smsd.1:73 docs/user/gammu-smsd-inject.1:36
 #: docs/user/gammu-smsd-files.7:75 docs/user/gammu-smsd-tables.7:395
+#: docs/user/gammu-smsd-run.7:93
 #, no-wrap
 msgid "EXAMPLE"
 msgstr ""
@@ -9023,12 +9024,6 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:91
 msgid "Size of MMS as specified in MMS indication message."
-msgstr ""
-
-#. type: SH
-#: docs/user/gammu-smsd-run.7:93
-#, no-wrap
-msgid "EXAMPLES"
 msgstr ""
 
 #. type: SS
