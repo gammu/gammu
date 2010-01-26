@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-26 21:11+0100\n"
-"PO-Revision-Date: 2010-01-25 23:48+0100\n"
+"PO-Revision-Date: 2010-01-26 21:20+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -9880,6 +9880,8 @@ msgid ""
 "Gammu SMSD can be configured by RunOnReceive directive (see gammu-smsdrc(5)  "
 "for details) to run defined program after receiving message."
 msgstr ""
+"Gammu SMSD může být nastaven pomocí direktivy RunOnReceive (viz gammu-smsdrc"
+"(5)) aby spouštěl zadaný program při přijetí zprávy."
 
 #. type: SH
 #: docs/user/gammu-smsd-run.7:23
@@ -9894,6 +9896,9 @@ msgid ""
 "the message. You can use it together with NULL service (see gammu-smsd-null"
 "(7)) to implement completely own processing of messages."
 msgstr ""
+"Program je spuštěn s prostředím, které obsahuje mnoho informací o zprávě. "
+"Toto můžete použít spolu se službou NULL (viz gammu-smsd-null(7)) pro "
+"vytvoření vlastního zpracování zpráv."
 
 #. type: SS
 #: docs/user/gammu-smsd-run.7:29
@@ -9935,6 +9940,8 @@ msgid ""
 "The variables further described as SMS_1_... are generated for each physical "
 "message, where 1 is replaced by current number of message."
 msgstr ""
+"Proměnné dále popsané jako SMS_1_... jsou vytvořeny pro každou fyzickou "
+"zprávu, kde číslo 1 je nahrazeno číslem zprávy."
 
 #. type: TP
 #: docs/user/gammu-smsd-run.7:46
@@ -9984,6 +9991,8 @@ msgid ""
 "message part, where 1 is replaced by current number of part. Set are only "
 "those variables whose content is present in the message."
 msgstr ""
+"Proměnné dále popsané jako DECODED_1_... jsou vytvořeny pro každou část "
+"zprávy, kde číslo 1 je nahrazeno číslem části zprávy."
 
 #. type: TP
 #: docs/user/gammu-smsd-run.7:67
@@ -10044,7 +10053,7 @@ msgstr "Velikost MMS tak jak je uvedena ve zprávě oznamující MMS."
 #: docs/user/gammu-smsd-run.7:95
 #, no-wrap
 msgid "Passing MMS indication parameters to external program"
-msgstr ""
+msgstr "Předávání parametrů zprávy oznamující MMS externímu programu"
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:100
@@ -10053,6 +10062,9 @@ msgid ""
 "about each received MMS indication to the log file. Just replace echo "
 "command with your own program to do custom processing."
 msgstr ""
+"Následující skript (pokud bude použit jako RunOnReceive) zapíše informace o "
+"každé přijaté zprávě oznamující MMS do textového souboru. Nahrazením příkazu "
+"echo můžete zařadit vlastní program, který tyto parametry zpracuje."
 
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:113
@@ -10067,6 +10079,14 @@ msgid ""
 "    echo \"$DECODED_1_MMS_ADDRESS\" \"$DECODED_1_MMS_SENDER\" \"$DECODED_1_MMS_TITLE\" E<gt>E<gt> /tmp/smsd-mms.log\n"
 "fi\n"
 msgstr ""
+"#!/bin/sh\n"
+"if [ $DECODED_PARTS -eq 0 ] ; then\n"
+"    # Nejsou žádné dekódované části\n"
+"    exit\n"
+"fi\n"
+"if [ \"$DECODED_1_MMS_ADDRESS\" ] ; then\n"
+"    echo \"$DECODED_1_MMS_ADDRESS\" \"$DECODED_1_MMS_SENDER\" \"$DECODED_1_MMS_TITLE\" E<gt>E<gt> /tmp/smsd-mms.log\n"
+"fi\n"
 
 #. type: Plain text
 #: README:2
