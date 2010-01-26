@@ -71,6 +71,7 @@ int main(int argc, char **argv)
 	Data->ModelInfo = GetModelData(NULL, NULL, "unknown", NULL);
 	Priv = &s->Phone.Data.Priv.ATGEN;
 	Priv->ReplyState = AT_Reply_OK;
+	Priv->Manufacturer = AT_Motorola;
 	Priv->SMSMode = SMS_AT_PDU;
     if (argc == 3 && strcmp(argv[2], "PCCP437") == 0) {
         Priv->Charset = AT_CHARSET_PCCP437;
