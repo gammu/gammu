@@ -368,6 +368,23 @@ foreach(TESTMESSAGE ${MESSAGES})
         "${Gammu_SOURCE_DIR}/tests/at-cnmi/${TESTMESSAGE}")
 endforeach(TESTMESSAGE $MESSAGES)
 
+# AT memory parsing
+add_executable(at-getmemory-reply at-getmemory-reply.c)
+target_link_libraries(at-getmemory-reply libGammu)
+target_link_libraries(at-getmemory-reply memorydisplay)
+
+macro(at_getmemory_reply_test _file _charset _test)
+
+add_test("at-getmemory-reply-${_file}"
+        "${GAMMU_TEST_PATH}/at-getmemory-reply${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-getmemory/${_file}")
+set_tests_properties("at-getmemory-reply-${_file}"
+    PROPERTIES PASS_REGULAR_EXPRESSION "${_test}")
+
+endmacro(at_getmemory_reply_test _file _charset _test)
+
+at_getmemory_reply_test(samsung.dump PCCP437 AsistZahr)
+
 # AT USSD replies parsing
 add_executable(at-ussd-reply at-ussd-reply.c)
 target_link_libraries(at-ussd-reply libGammu)
