@@ -76,6 +76,8 @@ int main(int argc, char **argv)
         Priv->Charset = AT_CHARSET_PCCP437;
     } else if (argc == 3 && strcmp(argv[2], "UTF8") == 0) {
         Priv->Charset = AT_CHARSET_UTF8;
+    } else if (argc == 3 && strcmp(argv[2], "HEX") == 0) {
+        Priv->Charset = AT_CHARSET_HEX;
     } else {
         Priv->Charset = AT_CHARSET_UCS2;
     }
