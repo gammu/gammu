@@ -1120,7 +1120,7 @@ static GSM_Error N6510_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *
 
 	s->Phone.Data.SignalQuality = sig;
 	smprintf(s, "Getting network level\n");
-	return GSM_WaitFor (s, req, 9, 0x0a, s->Phone.Data.Priv.N6510.Timeout, ID_GetSignalQuality);
+	return GSM_WaitFor (s, req, 9, 0x0a, s->Phone.Data.Priv.N6510.Timeout * 3, ID_GetSignalQuality);
 }
 
 static GSM_Error N6510_IncomingBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
