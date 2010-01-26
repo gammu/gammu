@@ -34,6 +34,7 @@ ChangeLog
 [+] * RunOnReceive now gets environment variables with SMS data.
 [-] * Fixed AT lines splitting to work properly with quotes.
 [-] * Separate getting information for Motorola phones (bug #1076).
+[-] * Fixed reading of Samsung contacts (bug #1105).
     
 20100106 - 1.27.90
 

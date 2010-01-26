@@ -597,6 +597,10 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case AT_Reply_CMSError:
  	        return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
+		/* Empty location */
+		if (Priv->ErrorCode == 28) {
+			return ERR_EMPTY;
+		}
 	        return ATGEN_HandleCMEError(s);
 	default:
 		break;
