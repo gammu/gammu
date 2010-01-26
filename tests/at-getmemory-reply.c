@@ -74,6 +74,8 @@ int main(int argc, char **argv)
 	Priv->SMSMode = SMS_AT_PDU;
     if (argc == 3 && strcmp(argv[2], "PCCP437") == 0) {
         Priv->Charset = AT_CHARSET_PCCP437;
+    } else if (argc == 3 && strcmp(argv[2], "UTF8") == 0) {
+        Priv->Charset = AT_CHARSET_UTF8;
     } else {
         Priv->Charset = AT_CHARSET_UCS2;
     }
