@@ -369,43 +369,56 @@ void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const
 	int 	 i=0,number=0,j=0;
 	gboolean whitespace=TRUE, nowwhite;
 
-	for (i = 0; i < lines->allocated; i++)
-		lines->numbers[i]=0;
+	/* Clean current lines */
+	for (i = 0; i < lines->allocated; i++) {
+		lines->numbers[i] = 0;
+	}
 
+	/* Go through message */
 	for (i = 0; i < messagesize; i++) {
 		/* Reallocate buffer if needed */
 		if (number + 1 >= lines->allocated - 1) {
 			lines->allocated += 20;
 			lines->numbers = (int *)realloc(lines->numbers, lines->allocated * sizeof(int));
-			if (lines->numbers == NULL) return;
-			for (j = lines->allocated - 20; j < lines->allocated; j++)
+			if (lines->numbers == NULL) {
+				return;
+			}
+			for (j = lines->allocated - 20; j < lines->allocated; j++) {
 				lines->numbers[j] = 0;
+			}
 		}
 
 		nowwhite = FALSE;
+
+		/* Check for whitespace */
 		for (j = 0; j < spaceslen; j++) {
 			if (whitespaces[j] == message[i]) {
 				nowwhite = TRUE;
 				break;
 			}
 		}
+
+		/* Split line if there is change from whitespace to non whitespace */
 		if (whitespace) {
 			if (!nowwhite) {
-				lines->numbers[number]=i;
+				lines->numbers[number] = i;
 				number++;
-				whitespace=FALSE;
+				whitespace = FALSE;
 			}
 		} else {
 			if (nowwhite) {
-				lines->numbers[number]=i;
+				lines->numbers[number] = i;
 				number++;
-				whitespace=TRUE;
+				whitespace = TRUE;
 			}
 
 		}
 	}
-    	if (eot && !whitespace)
+
+	/* Store possible end if there was not just whitespace */
+    	if (eot && !whitespace) {
 		lines->numbers[number] = messagesize;
+	}
 }
 
 const char *GetLineString(const char *message, const GSM_CutLines *lines, int start)
