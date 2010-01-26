@@ -10,8 +10,8 @@ gammu\-smsd\-run \- dokumentace pro parametr RunOnReceive
 
 .SH POPIS
 
-Gammu SMSD can be configured by RunOnReceive directive (see gammu\-smsdrc(5)
-for details) to run defined program after receiving message.
+Gammu SMSD může být nastaven pomocí direktivy RunOnReceive (viz
+gammu\-smsdrc(5)) aby spouštěl zadaný program při přijetí zprávy.
     
 Tento prarametr je spuštěn přes shell, takže možná budete potřebovat
 escapovat některé znaky a můžete použít jakékoliv množství parametrů. SMSD
@@ -26,9 +26,9 @@ normálním běhu a může spustit váš skript znovu.
 
 .SH PROSTŘEDÍ
 
-Program is executed with environment which contains lot of information about
-the message. You can use it together with NULL service (see
-gammu\-smsd\-null(7)) to implement completely own processing of messages.
+Program je spuštěn s prostředím, které obsahuje mnoho informací o
+zprávě. Toto můžete použít spolu se službou NULL (viz gammu\-smsd\-null(7))
+pro vytvoření vlastního zpracování zpráv.
 
 .SS "Globální proměnné"
 
@@ -44,8 +44,8 @@ Počet dekódovaných částí zpráv.
 
 .SS "Proměnné pro každou zprávu"
 
-The variables further described as SMS_1_... are generated for each physical
-message, where 1 is replaced by current number of message.
+Proměnné dále popsané jako SMS_1_... jsou vytvořeny pro každou fyzickou
+zprávu, kde číslo 1 je nahrazeno číslem zprávy.
 
 .TP 
 \fBSMS_1_CLASS\fP
@@ -64,9 +64,8 @@ Text zprávy. Není dostupné pro 8\-bitové binární zprávy.
 
 .SS "Proměnné pro každou část"
 
-The variables further described as DECODED_1_... are generated for each
-message part, where 1 is replaced by current number of part. Set are only
-those variables whose content is present in the message.
+Proměnné dále popsané jako DECODED_1_... jsou vytvořeny pro každou část
+zprávy, kde číslo 1 je nahrazeno číslem části zprávy.
 
 .TP 
 \fBDECODED_1_TEXT\fP
@@ -96,11 +95,11 @@ Velikost MMS tak jak je uvedena ve zprávě oznamující MMS.
 
 .SH PŘÍKLAD
 
-.SS "Passing MMS indication parameters to external program"
+.SS "Předávání parametrů zprávy oznamující MMS externímu programu"
 
-Following script (if used as RunOnReceive handler) will write information
-about each received MMS indication to the log file. Just replace echo
-command with your own program to do custom processing.
+Následující skript (pokud bude použit jako RunOnReceive) zapíše informace o
+každé přijaté zprávě oznamující MMS do textového souboru. Nahrazením příkazu
+echo můžete zařadit vlastní program, který tyto parametry zpracuje.
 
 .RS
 .sp
@@ -108,7 +107,7 @@ command with your own program to do custom processing.
 .ne 7
 #!/bin/sh
 if [ $DECODED_PARTS \-eq 0 ] ; then
-    # No decoded parts, nothing to process
+    # Nejsou žádné dekódované části
     exit
 fi
 if [ "$DECODED_1_MMS_ADDRESS" ] ; then
