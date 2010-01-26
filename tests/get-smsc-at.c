@@ -73,7 +73,7 @@ int main(int argc, char **argv)
 	msg.Type = 0;
 	msg.Length = len;
 	msg.Buffer = buffer;
-	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, TRUE);
+	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, "\"", 1, TRUE);
 
 	/* Pointer to store message */
 	s->Phone.Data.SMSC = &SMSC;

@@ -1630,7 +1630,7 @@ GSM_Error GNAPGEN_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMachi
 	if (Data->RequestID!=ID_GetManufacturer && Data->RequestID!=ID_GetModel) return ERR_NONE;
 
 	InitLines(&lines);
-	SplitLines(DecodeUnicodeString(msg.Buffer+6), msg.Length-6, &lines, "\x0A", 1, FALSE);
+	SplitLines(DecodeUnicodeString(msg.Buffer+6), msg.Length-6, &lines, "\x0A", 1, "", 0, FALSE);
 
 	strcpy(Data->Model,GetLineString(DecodeUnicodeString(msg.Buffer+6), &lines, 4));
 	smprintf(s, "Received model %s\n",Data->Model);

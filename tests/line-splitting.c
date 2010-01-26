@@ -1033,7 +1033,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	InitLines(&lines);
 
-	SplitLines(input, sizeof(input), &lines, "\n", 1, FALSE);
+	SplitLines(input, sizeof(input), &lines, "\n", 1, "", 0 ,FALSE);
 
 #define COMPARE(num, text) \
 	if (strcmp(GetLineString(input, &lines, num), text) != 0) { \

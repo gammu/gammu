@@ -1213,7 +1213,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	ATErrorCode		*ErrorCodes = NULL;
 	char *line1, *line2;
 
-	SplitLines(msg->Buffer, msg->Length, &Priv->Lines, "\x0D\x0A", 2, TRUE);
+	SplitLines(msg->Buffer, msg->Length, &Priv->Lines, "\x0D\x0A", 2, "\"", 1, TRUE);
 
 	/* Find number of lines */
 	while (Priv->Lines.numbers[i*2+1] != 0) {
@@ -2534,7 +2534,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	InitLines(&Lines);
 	SplitLines(GetLineString(msg.Buffer,&Priv->Lines,2),
 		GetLineLength(msg.Buffer,&Priv->Lines,2),
-		&Lines, ",", 1, TRUE);
+		&Lines, ",", 1, "", 0, TRUE);
 
 	/* Find number of lines */
 	while (Lines.numbers[i*2+1] != 0) {

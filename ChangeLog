@@ -32,6 +32,7 @@ ChangeLog
 [+] * SMSD now properly groups multipart messages together.
 [+] * New NULL service for SMSD.
 [+] * RunOnReceive now gets environment variables with SMS data.
+[-] * Fixed AT lines splitting to work properly with quotes.
     
 20100106 - 1.27.90
 

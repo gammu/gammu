@@ -364,10 +364,13 @@ void FreeLines(GSM_CutLines *lines)
 	lines->allocated = 0;
 }
 
-void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const char *whitespaces, int spaceslen, gboolean eot)
+void SplitLines(const char *message, const int messagesize, GSM_CutLines *lines,
+	const char *whitespaces, const int spaceslen,
+	const char *quotes, const int quoteslen,
+	const gboolean eot)
 {
 	int 	 i=0,number=0,j=0;
-	gboolean whitespace=TRUE, nowwhite;
+	gboolean whitespace = TRUE, nowwhite, insidequotes = FALSE;
 
 	/* Clean current lines */
 	for (i = 0; i < lines->allocated; i++) {
@@ -389,6 +392,19 @@ void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const
 		}
 
 		nowwhite = FALSE;
+
+		/* Check for quotes */
+		for (j = 0; j < quoteslen; j++) {
+			if (quotes[j] == message[i]) {
+				insidequotes = !(insidequotes);
+				break;
+			}
+		}
+
+		/* Find matching quote */
+		if (insidequotes) {
+			continue;
+		}
 
 		/* Check for whitespace */
 		for (j = 0; j < spaceslen; j++) {

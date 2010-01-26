@@ -45,7 +45,7 @@ typedef struct {
 /**
  * Calculates string cut points to split it to lines.
  */
-void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const char *whitespaces, int spaceslen, gboolean eot);
+void SplitLines(const char *message, const int messagesize, GSM_CutLines *lines, const char *whitespaces, const int spaceslen, const char *quotes, const int quoteslen, const gboolean eot);
 
 /**
  * Returns pointer to static buffer containing line.

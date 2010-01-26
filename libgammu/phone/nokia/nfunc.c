@@ -1518,7 +1518,7 @@ GSM_Error DCT3DCT4_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMach
 
 	InitLines(&lines);
 
-	SplitLines(msg.Buffer, msg.Length, &lines, "\x20\x0A", 2, FALSE);
+	SplitLines(msg.Buffer, msg.Length, &lines, "\x20\x0A", 2, "", 0, FALSE);
 
 	strcpy(Data->Model,GetLineString(msg.Buffer, &lines, 4));
 	smprintf(s, "Received model %s\n",Data->Model);
