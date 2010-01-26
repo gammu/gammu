@@ -90,6 +90,31 @@ Address (URL) of MMS from MMS indication message.
 Size of MMS as specified in MMS indication message.
 
 
+.SH EXAMPLES
+
+.SS Passing MMS indication parameters to external program
+
+Following script (if used as RunOnReceive handler) will write information
+about each received MMS indication to the log file. Just replace echo command
+with your own program to do custom processing.
+
+.RS
+.sp
+.nf
+.ne 7
+#!/bin/sh
+if [ $DECODED_PARTS -eq 0 ] ; then
+    # No decoded parts, nothing to process
+    exit
+fi
+if [ "$DECODED_1_MMS_ADDRESS" ] ; then
+    echo "$DECODED_1_MMS_ADDRESS" "$DECODED_1_MMS_SENDER" "$DECODED_1_MMS_TITLE" >> /tmp/smsd-mms.log
+fi
+.fi
+.sp
+.RE
+.PP
+
 .SH SEE ALSO
 gammu\-smsd(1), gammu\-smsdrc(5), gammu(1), gammurc(5)
 .SH AUTHOR
