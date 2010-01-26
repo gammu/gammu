@@ -219,13 +219,13 @@ GSM_Error MOTOROLA_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine
 		Priv->PBK_MPBR = AT_AVAILABLE;
 		error = ATGEN_ParseReply(s, GetLineString(msg.Buffer, &Priv->Lines, 2),
 					"+MPBR: @i-@i, @",
-					&Priv->FirstMemoryEntry,
-					&Priv->MemorySize);
+					&Priv->MotorolaFirstMemoryEntry,
+					&Priv->MotorolaMemorySize);
 		if (error != ERR_NONE) {
 			return error;
 		}
 
-		Priv->MemorySize -= Priv->FirstMemoryEntry;
+		Priv->MotorolaMemorySize -= Priv->MotorolaFirstMemoryEntry;
 
 		return ERR_NONE;
 	case AT_Reply_Error:

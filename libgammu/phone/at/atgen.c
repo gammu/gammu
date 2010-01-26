@@ -1829,10 +1829,12 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->FirstFreeCalendarPos	= 0;
 	Priv->NextMemoryEntry		= 0;
 	Priv->FirstMemoryEntry		= -1;
+	Priv->MotorolaFirstMemoryEntry	= -1;
 	Priv->file.Used 		= 0;
 	Priv->file.Buffer 		= NULL;
 	Priv->Mode			= FALSE;
 	Priv->MemorySize		= 0;
+	Priv->MotorolaMemorySize	= 0;
 	Priv->MemoryUsed		= 0;
 	Priv->TextLength		= 0;
 	Priv->NumberLength		= 0;
@@ -3675,10 +3677,10 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 			goto read_memory;
 		}
 		if (Priv->PBK_MPBR == AT_AVAILABLE) {
-			if (Priv->FirstMemoryEntry == -1) {
+			if (Priv->MotorolaFirstMemoryEntry == -1) {
 				ATGEN_CheckMPBR(s);
 			}
-			len = sprintf(req, "AT+MPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
+			len = sprintf(req, "AT+MPBR=%i\r", entry->Location + Priv->MotorolaFirstMemoryEntry - 1);
 			goto read_memory;
 		}
 	}
@@ -3754,7 +3756,11 @@ GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, gboo
 	}
 	while ((error = ATGEN_PrivGetMemory(s, entry, step == 0 ? 0 : MIN(Priv->MemorySize, entry->Location + step))) == ERR_EMPTY) {
 		entry->Location += step + 1;
-		if (entry->Location > Priv->MemorySize) break;
+		if (Priv->PBK_MPBR == AT_AVAILABLE && entry->MemoryType == MEM_ME) {
+			if (entry->Location > Priv->MotorolaMemorySize) break;
+		} else {
+			if (entry->Location > Priv->MemorySize) break;
+		}
 		/* SBNR works only for one location */
 		if ((entry->MemoryType != MEM_ME || Priv->PBKSBNR != AT_AVAILABLE) &&
 				Priv->PBK_MPBR != AT_AVAILABLE &&

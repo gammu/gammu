@@ -254,6 +254,10 @@ typedef struct {
 	 */
 	int			FirstMemoryEntry;
 	/**
+	 * First memory entry to be read for Motorola
+	 */
+	int			MotorolaFirstMemoryEntry;
+	/**
 	 * Charset set in phone
 	 */
 	GSM_AT_Charset		Charset;
@@ -279,6 +283,7 @@ typedef struct {
 	size_t			NumberLength;
 	size_t			TextLength;
 	int			MemorySize;
+	int			MotorolaMemorySize;
 	int			MemoryUsed;
 
 	GSM_SMSMemoryStatus	LastSMSStatus;
