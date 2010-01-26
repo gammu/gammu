@@ -370,7 +370,7 @@ void SplitLines(const char *message, const int messagesize, GSM_CutLines *lines,
 	const gboolean eot)
 {
 	int 	 i=0,number=0,j=0, lastquote = -1;
-	gboolean whitespace = TRUE, nowwhite, insidequotes = FALSE;
+	gboolean whitespace = TRUE, nowwhite = FALSE, insidequotes = FALSE;
 
 	/* Clean current lines */
 	for (i = 0; i < lines->allocated; i++) {
