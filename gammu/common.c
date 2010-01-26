@@ -257,6 +257,7 @@ GSM_Error GSM_ReadHTTPFile(const char *url, GSM_File *file)
 		case CURLE_COULDNT_RESOLVE_HOST:
 			return ERR_COULDNT_RESOLVE;
 		default:
+			printf_err("Unknown curl error: %d\n", result);
 			return ERR_UNKNOWN;
 	}
 #else
