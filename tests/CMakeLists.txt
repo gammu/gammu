@@ -384,6 +384,7 @@ set_tests_properties("at-getmemory-reply-${_file}"
 endmacro(at_getmemory_reply_test _file _charset _test)
 
 at_getmemory_reply_test(samsung.dump PCCP437 AsistZahr)
+at_getmemory_reply_test(samsung-p900.dump PCCP437 "My Tempo")
 
 # AT USSD replies parsing
 add_executable(at-ussd-reply at-ussd-reply.c)
