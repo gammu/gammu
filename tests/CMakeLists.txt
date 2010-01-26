@@ -377,14 +377,15 @@ macro(at_getmemory_reply_test _file _charset _test)
 
 add_test("at-getmemory-reply-${_file}"
         "${GAMMU_TEST_PATH}/at-getmemory-reply${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-getmemory/${_file}")
+        "${Gammu_SOURCE_DIR}/tests/at-getmemory/${_file}.dump"
+        "${_charset}")
 set_tests_properties("at-getmemory-reply-${_file}"
     PROPERTIES PASS_REGULAR_EXPRESSION "${_test}")
 
 endmacro(at_getmemory_reply_test _file _charset _test)
 
-at_getmemory_reply_test(samsung.dump PCCP437 AsistZahr)
-at_getmemory_reply_test(samsung-p900.dump PCCP437 "My Tempo")
+at_getmemory_reply_test(samsung PCCP437 AsistZahr)
+at_getmemory_reply_test(samsung-p900 PCCP437 "My Tempo")
 
 # AT USSD replies parsing
 add_executable(at-ussd-reply at-ussd-reply.c)
