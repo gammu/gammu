@@ -3399,13 +3399,24 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		Memory->Entries[1].EntryType = PBK_Text_Name;
 
 		/* Try standard reply */
-		error = ATGEN_ParseReply(s,
-					GetLineString(msg.Buffer, &Priv->Lines, 2),
-					"+CPBR: @i, @p, @I, @e",
-					&Memory->Location,
-					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
-					&number_type,
-					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+		if (Priv->Manufacturer == AT_Motorola) {
+			/* Enable encoding guessing for Motorola */
+			error = ATGEN_ParseReply(s,
+						GetLineString(msg.Buffer, &Priv->Lines, 2),
+						"+CPBR: @i, @p, @I, @s",
+						&Memory->Location,
+						Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+						&number_type,
+						Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+		} else {
+			error = ATGEN_ParseReply(s,
+						GetLineString(msg.Buffer, &Priv->Lines, 2),
+						"+CPBR: @i, @p, @I, @e",
+						&Memory->Location,
+						Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+						&number_type,
+						Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+		}
 		if (error == ERR_NONE) {
 			smprintf(s, "Generic AT reply detected\n");
 			/* Adjust location */
