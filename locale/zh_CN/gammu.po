@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-25 23:51+0100\n"
+"POT-Creation-Date: 2010-01-26 21:07+0100\n"
 "PO-Revision-Date: 2009-01-27 14:20+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -1040,51 +1040,51 @@ msgstr ""
 msgid "Security status"
 msgstr ""
 
-#: gammu/common.c:308 gammu/misc.c:1102 gammu/misc.c:1117 gammu/misc.c:1124
+#: gammu/common.c:309 gammu/misc.c:1102 gammu/misc.c:1117 gammu/misc.c:1124
 #: gammu/misc.c:1131 gammu/misc.c:1161
 msgid "More parameters required!"
 msgstr ""
 
-#: gammu/common.c:314 gammu/common.c:324 gammu/depend/nokia/dct4.c:686
+#: gammu/common.c:315 gammu/common.c:325 gammu/depend/nokia/dct4.c:686
 #: gammu/misc.c:1277
 msgid "Please enumerate locations from 1"
 msgstr ""
 
-#: gammu/common.c:329
+#: gammu/common.c:330
 msgid "Swapping start and end location"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:351 gammu/common.c:380 gammu/depend/nokia/dct4.c:84
+#: gammu/common.c:352 gammu/common.c:381 gammu/depend/nokia/dct4.c:84
 #: gammu/misc.c:1669
 msgid "yes"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:351 gammu/common.c:383 gammu/depend/nokia/dct4.c:85
+#: gammu/common.c:352 gammu/common.c:384 gammu/depend/nokia/dct4.c:85
 msgid "no"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:352 gammu/common.c:375
+#: gammu/common.c:353 gammu/common.c:376
 msgid "ALL"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:352 gammu/common.c:370
+#: gammu/common.c:353 gammu/common.c:371
 msgid "ONLY"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:352 gammu/common.c:365
+#: gammu/common.c:353 gammu/common.c:366
 msgid "NONE"
 msgstr ""
 
-#: gammu/common.c:354
+#: gammu/common.c:355
 msgid "YES (always)"
 msgstr ""
 
-#: gammu/common.c:358
+#: gammu/common.c:359
 msgid "NO (always)"
 msgstr ""
 

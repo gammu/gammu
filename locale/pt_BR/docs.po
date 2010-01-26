@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-25 23:25+0100\n"
+"POT-Creation-Date: 2010-01-26 21:07+0100\n"
 "PO-Revision-Date: 2009-01-28 17:24+0100\n"
 "Last-Translator: hawshinka manson <hawshinka@gmail.com>\n"
 "Language-Team: none\n"
@@ -4835,7 +4835,7 @@ msgstr ""
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:112
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
 #: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:499
-#: docs/user/gammu-smsd-null.7:18 docs/user/gammu-smsd-run.7:97
+#: docs/user/gammu-smsd-null.7:18 docs/user/gammu-smsd-run.7:122
 #, no-wrap
 msgid "COPYRIGHT"
 msgstr ""
@@ -4856,7 +4856,7 @@ msgstr ""
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:118
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
 #: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:505
-#: docs/user/gammu-smsd-null.7:24 docs/user/gammu-smsd-run.7:103
+#: docs/user/gammu-smsd-null.7:24 docs/user/gammu-smsd-run.7:128
 msgid ""
 "This is free software: you are free to change and redistribute it.  There is "
 "NO WARRANTY, to the extent permitted by law."
@@ -4870,7 +4870,7 @@ msgstr ""
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:118
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
 #: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:505
-#: docs/user/gammu-smsd-null.7:24 docs/user/gammu-smsd-run.7:103
+#: docs/user/gammu-smsd-null.7:24 docs/user/gammu-smsd-run.7:128
 #, no-wrap
 msgid "REPORTING BUGS"
 msgstr ""
@@ -4926,7 +4926,7 @@ msgstr ""
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:119
 #: docs/user/gammu-smsd-mysql.7:28 docs/user/gammu-smsd-pgsql.7:28
 #: docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:506
-#: docs/user/gammu-smsd-null.7:26 docs/user/gammu-smsd-run.7:105
+#: docs/user/gammu-smsd-null.7:26 docs/user/gammu-smsd-run.7:130
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr ""
 
@@ -4937,7 +4937,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:110
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
 #: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:497
-#: docs/user/gammu-smsd-null.7:16 docs/user/gammu-smsd-run.7:95
+#: docs/user/gammu-smsd-null.7:16 docs/user/gammu-smsd-run.7:120
 #, no-wrap
 msgid "AUTHOR"
 msgstr ""
@@ -4989,7 +4989,7 @@ msgstr ""
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:108
 #: docs/user/gammu-smsd-mysql.7:17 docs/user/gammu-smsd-pgsql.7:17
 #: docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:492
-#: docs/user/gammu-smsd-null.7:14 docs/user/gammu-smsd-run.7:93
+#: docs/user/gammu-smsd-null.7:14 docs/user/gammu-smsd-run.7:118
 #, no-wrap
 msgid "SEE ALSO"
 msgstr ""
@@ -5632,7 +5632,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:112
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
 #: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:499
-#: docs/user/gammu-smsd-null.7:18 docs/user/gammu-smsd-run.7:97
+#: docs/user/gammu-smsd-null.7:18 docs/user/gammu-smsd-run.7:122
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
 "E<lt>michal@cihar.comE<gt>."
@@ -7732,7 +7732,7 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsd-files.7:110 docs/user/gammu-smsd-tables.7:497
-#: docs/user/gammu-smsd-null.7:16 docs/user/gammu-smsd-run.7:95
+#: docs/user/gammu-smsd-null.7:16 docs/user/gammu-smsd-run.7:120
 msgid "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 msgstr ""
 
@@ -8852,7 +8852,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammu-smsd-null.7:21 docs/user/gammu-smsd-run.7:100
+#: docs/user/gammu-smsd-null.7:21 docs/user/gammu-smsd-run.7:125
 msgid ""
 "Copyright \\(co 2010 Michal Cihar and other authors.  License GPLv2: GNU GPL "
 "version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
@@ -9031,6 +9031,40 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu-smsd-run.7:91
 msgid "Size of MMS as specified in MMS indication message."
+msgstr ""
+
+#. type: SH
+#: docs/user/gammu-smsd-run.7:93
+#, no-wrap
+msgid "EXAMPLES"
+msgstr ""
+
+#. type: SS
+#: docs/user/gammu-smsd-run.7:95
+#, no-wrap
+msgid "Passing MMS indication parameters to external program"
+msgstr ""
+
+#. type: Plain text
+#: docs/user/gammu-smsd-run.7:100
+msgid ""
+"Following script (if used as RunOnReceive handler) will write information "
+"about each received MMS indication to the log file. Just replace echo "
+"command with your own program to do custom processing."
+msgstr ""
+
+#. type: Plain text
+#: docs/user/gammu-smsd-run.7:113
+#, no-wrap
+msgid ""
+"#!/bin/sh\n"
+"if [ $DECODED_PARTS -eq 0 ] ; then\n"
+"    # No decoded parts, nothing to process\n"
+"    exit\n"
+"fi\n"
+"if [ \"$DECODED_1_MMS_ADDRESS\" ] ; then\n"
+"    echo \"$DECODED_1_MMS_ADDRESS\" \"$DECODED_1_MMS_SENDER\" \"$DECODED_1_MMS_TITLE\" E<gt>E<gt> /tmp/smsd-mms.log\n"
+"fi\n"
 msgstr ""
 
 #. type: Plain text
