@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-26 21:11+0100\n"
-"PO-Revision-Date: 2010-01-27 15:03+0200\n"
+"PO-Revision-Date: 2010-01-27 15:05+0200\n"
 "Last-Translator: Fabio <fabiosatierf@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -84,7 +84,7 @@ msgstr "Sinopse"
 #. type: Plain text
 #: docs/user/gammu.1:11
 msgid "Usage: gammu [I<parameters>] E<lt>commandE<gt> [I<options>]"
-msgstr ""
+msgstr "Utilização: gammu [I<parâmetros>] E<lt>comandoE<gt> [I<opções>]"
 
 # type: SH
 #. type: SH
