@@ -36,7 +36,7 @@ msgstr "19 de Janeiro de 2010"
 #: docs/user/gammu.1:1
 #, no-wrap
 msgid "Gammu 1.27.91"
-msgstr ""
+msgstr "Gammu 1.27.91"
 
 # type: TH
 #. type: TH
