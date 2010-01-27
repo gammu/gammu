@@ -238,7 +238,7 @@ static gboolean ReadBackupText(INI_Section *file_info, char *section, char *myna
 			myvalue[UnicodeLength(myvalue)*2-2]=0;
 			myvalue[UnicodeLength(myvalue)*2-1]=0;
 
-			dbgprintf(NULL, "%s\n",DecodeUnicodeString(readvalue));
+			dbgprintf(NULL, "Cfg read: %s\n",DecodeUnicodeString(readvalue));
 		} else {
 			myvalue[0]=0;
 			myvalue[1]=0;
@@ -249,11 +249,11 @@ static gboolean ReadBackupText(INI_Section *file_info, char *section, char *myna
 		strcat(paramname,"Unicode");
 		readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
-			dbgprintf(NULL, "%s %ld\n",readvalue,(long)strlen(readvalue));
+			dbgprintf(NULL, "Cfg read: %s %ld\n",readvalue,(long)strlen(readvalue));
 			DecodeHexBin (myvalue, readvalue, strlen(readvalue));
 			myvalue[strlen(readvalue)/2]=0;
 			myvalue[strlen(readvalue)/2+1]=0;
-			dbgprintf(NULL, "%s\n",DecodeUnicodeString(myvalue));
+			dbgprintf(NULL, "Cfg decoded: %s\n",DecodeUnicodeString(myvalue));
 		} else {
 			strcpy(paramname,myname);
 			readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
