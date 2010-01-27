@@ -1230,7 +1230,7 @@ GSM_Error GSM_LinkSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage **InputMessages, G
 					default:
 						smfprintf(di, "Block %02x\n",InputMessages[i]->SMS[0].UDH.Text[w]);
 					}
-					smfprintf(di, "%i %i %i %i\n",
+					smfprintf(di, "id8: %i, id16: %i, part: %i, parts count: %i\n",
 						InputMessages[i]->SMS[0].UDH.ID8bit,
 						InputMessages[i]->SMS[0].UDH.ID16bit,
 						InputMessages[i]->SMS[0].UDH.PartNumber,
