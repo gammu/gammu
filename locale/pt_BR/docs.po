@@ -28,9 +28,9 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Jan 19 2010"
-msgstr "27 de Janeiro de 2009"
+msgstr "19 de Janeiro de 2010"
 
 #. type: TH
 #: docs/user/gammu.1:1
