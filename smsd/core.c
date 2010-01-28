@@ -1241,6 +1241,11 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		start = FALSE;
 	}
 
+	/* No messages to process */
+	if (GetSMSNumber == 0) {
+		return TRUE;
+	}
+
 	/* Link messages */
 	error = GSM_LinkSMS(GSM_GetDebug(Config->gsm), GetSMSData, SortedSMS, TRUE);
 
