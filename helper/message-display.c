@@ -304,8 +304,8 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 		}
 		if (displaytext) {
 			printf("\n");
-			if (sms.Coding!=SMS_Coding_8bit) {
-				printf("%s\n",DecodeUnicodeConsole(sms.Text));
+			if (sms.Coding != SMS_Coding_8bit) {
+				printf("%s\n", DecodeUnicodeConsole(sms.Text));
 			} else {
 				if (GSM_DecodeSiemensOTASMS(GSM_GetGlobalDebug(), &SiemensOTA,&sms)) {
 					printf("%s\n", _("Siemens file"));
