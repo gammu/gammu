@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-28 08:51+0100\n"
-"PO-Revision-Date: 2010-01-28 20:14+0200\n"
+"PO-Revision-Date: 2010-01-28 20:18+0200\n"
 "Last-Translator:  <wejick@gmail.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -325,8 +325,9 @@ msgid "Could not connect to the server."
 msgstr "Tidak dapat terhubung ke server."
 
 #: libgammu/gsmcomon.c:151
+#, fuzzy
 msgid "Could not resolve the host name."
-msgstr ""
+msgstr "Tidak dapat memutuskan nama host"
 
 #: libgammu/gsmcomon.c:184
 msgid "Unknown error description."
