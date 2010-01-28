@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-12 13:48+0100\n"
+"POT-Creation-Date: 2010-01-28 08:51+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -356,7 +356,7 @@ msgstr "Невозможно прочитать сохраненное сооб�
 msgid "Unknown error description."
 msgstr "Неизвестная ошибка."
 
-#: libgammu/phone/dummy/dummy.c:581
+#: libgammu/phone/dummy/dummy.c:583
 #, fuzzy
 msgid "Templates"
 msgstr ", %i шаблонов"

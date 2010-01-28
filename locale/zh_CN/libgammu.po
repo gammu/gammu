@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-12 13:48+0100\n"
+"POT-Creation-Date: 2010-01-28 08:51+0100\n"
 "PO-Revision-Date: 2009-10-28 10:28+0200\n"
 "Last-Translator: chongchaochen <iechongchao@hotmail.com>\n"
 "Language-Team: none\n"
@@ -316,7 +316,7 @@ msgstr "不能读入已保存的短消息！"
 msgid "Unknown error description."
 msgstr ""
 
-#: libgammu/phone/dummy/dummy.c:581
+#: libgammu/phone/dummy/dummy.c:583
 msgid "Templates"
 msgstr ""
 

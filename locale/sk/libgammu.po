@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-12 15:44+0100\n"
+"POT-Creation-Date: 2010-01-28 08:51+0100\n"
 "PO-Revision-Date: 2010-01-12 23:27+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
@@ -325,7 +325,7 @@ msgstr "Nepodarilo sa preložiť meno počítača."
 msgid "Unknown error description."
 msgstr ""
 
-#: libgammu/phone/dummy/dummy.c:581
+#: libgammu/phone/dummy/dummy.c:583
 msgid "Templates"
 msgstr "Šablóny"
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-12-12 13:48+0100\n"
+"POT-Creation-Date: 2010-01-28 08:51+0100\n"
 "PO-Revision-Date: 2009-03-15 16:50+0200\n"
 "Last-Translator: soft developer <soft-developer@live.com>\n"
 "Language-Team: Language =it\n"
@@ -358,7 +358,7 @@ msgstr "Impossibile leggere i messaggi salvati!"
 msgid "Unknown error description."
 msgstr "Errore sconosciuto"
 
-#: libgammu/phone/dummy/dummy.c:581
+#: libgammu/phone/dummy/dummy.c:583
 msgid "Templates"
 msgstr "Modelli"
 

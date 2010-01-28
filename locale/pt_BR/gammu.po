@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-26 21:07+0100\n"
+"POT-Creation-Date: 2010-01-28 08:51+0100\n"
 "PO-Revision-Date: 2009-10-26 18:12+0200\n"
 "Last-Translator: Filipe Domingues <fseverense@gmail.com>\n"
 "Language-Team: none\n"
@@ -1795,7 +1795,7 @@ msgstr ""
 # type: Plain text
 #: gammu/gammu.c:791
 msgid "Parameters before command configure gammu behaviour:"
-msgstr ""
+msgstr "Os parâmetros antes do comando configuram o funcionamento do gammu:"
 
 #: gammu/gammu.c:792
 msgid "-c / --config <filename> ... name of configuration file"
