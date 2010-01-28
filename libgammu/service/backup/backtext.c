@@ -3755,6 +3755,7 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 		SMS->Text[0] = 0;
 		SMS->Text[1] = 0;
 	} else {
+		dbgprintf(NULL, "Linked text: %s\n", readbuffer);
 		/* This is hex encoded unicode, need to multiply by 4 */
 		if (strlen(readbuffer) > 4 * GSM_MAX_SMS_CHARS_LENGTH) {
 			dbgprintf(NULL, "Message text too long, truncating!\n");
@@ -3763,10 +3764,18 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 		if (!DecodeHexBin (SMS->Text, readbuffer, strlen(readbuffer))) {
 			dbgprintf(NULL, "Failed decoding binary field!\n");
 		}
-		SMS->Length = strlen(readbuffer)/2;
+		/*
+		 * For 8-bit messages we store number of bytes,
+		 * otherwise length of text which should be nul terminated.
+		 */
+		if (SMS->Coding == SMS_Coding_8bit) {
+			SMS->Length = strlen(readbuffer)/2;
+		} else {
+			SMS->Length = strlen(readbuffer)/4;
+			SMS->Text[(SMS->Length * 2)]	= 0;
+			SMS->Text[(SMS->Length * 2) + 1] 	= 0;
+		}
 	}
-	SMS->Text[SMS->Length * 2]	= 0;
-	SMS->Text[SMS->Length * 2 + 1] 	= 0;
 	free(readbuffer);
 	readbuffer=NULL;
 	sprintf(buffer,"Folder");
