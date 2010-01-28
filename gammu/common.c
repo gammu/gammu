@@ -253,6 +253,7 @@ GSM_Error GSM_ReadHTTPFile(const char *url, GSM_File *file)
 		case CURLE_URL_MALFORMAT:
 			return ERR_BUG;
 		case CURLE_COULDNT_CONNECT:
+		case CURLE_RECV_ERROR:
 			return ERR_COULDNT_CONNECT;
 		case CURLE_COULDNT_RESOLVE_HOST:
 			return ERR_COULDNT_RESOLVE;
