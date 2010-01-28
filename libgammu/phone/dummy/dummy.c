@@ -377,7 +377,9 @@ GSM_Error DUMMY_Terminate(GSM_StateMachine *s)
 			Priv->dir[i] = NULL;
 		}
 	}
-	fclose(Priv->log_file);
+	if (Priv->log_file != NULL) {
+		fclose(Priv->log_file);
+	}
 	return ERR_NONE;
 }
 
