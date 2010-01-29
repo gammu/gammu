@@ -239,6 +239,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		strcpy(MMSInfo.Address,	argv[0 + startarg]);
 		strcpy(MMSInfo.Title,	argv[1 + startarg]);
 		strcpy(MMSInfo.Sender,	argv[2 + startarg]);
+		MMSInfo.Class = GSM_MMS_Auto;
+		MMSInfo.MessageSize = 0;
 		startarg += 3;
 		break;
 	case COMPOSE_WAPINDICATOR:
