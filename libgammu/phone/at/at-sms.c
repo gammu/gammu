@@ -443,6 +443,7 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 	/* Decode hex encoded binary data */
 	if (!DecodeHexBin(buffer, PDU, length)) {
 		smprintf(s, "Failed to decode hex string!\n");
+		free(buffer);
 		return ERR_CORRUPTED;
 	}
 
