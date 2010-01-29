@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-26 21:11+0100\n"
+"POT-Creation-Date: 2010-01-28 08:52+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -4628,7 +4628,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2599
 msgid "Could not connect to the server."
-msgstr ""
+msgstr "Tidak dapat terhubung ke server."
 
 #. type: SS
 #: docs/user/gammu.1:2599
@@ -4638,8 +4638,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/user/gammu.1:2601
+#, fuzzy
 msgid "Could not resolve the host name."
-msgstr ""
+msgstr "Tidak dapat memutuskan nama host"
 
 # type: SH
 #. type: SH
