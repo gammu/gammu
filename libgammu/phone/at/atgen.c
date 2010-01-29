@@ -4245,17 +4245,19 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	if (error != ERR_NONE) {
 		return error;
 	}
-	if (Priv->PBK_SPBR == 0) {
-		ATGEN_CheckSPBR(s);
-	}
-	if (Priv->PBK_MPBR == 0) {
-		ATGEN_CheckMPBR(s);
-	}
-	if (Priv->PBK_SPBR == AT_AVAILABLE) {
-		return SAMSUNG_SetMemory(s, entry);
-	}
-	if (Priv->PBK_MPBR == AT_AVAILABLE) {
-		smprintf(s, "WARNING: setting memory for Motorola not implemented yet!\n");
+	if (entry->MemoryType == MEM_ME) {
+		if (Priv->PBK_SPBR == 0) {
+			ATGEN_CheckSPBR(s);
+		}
+		if (Priv->PBK_MPBR == 0) {
+			ATGEN_CheckMPBR(s);
+		}
+		if (Priv->PBK_SPBR == AT_AVAILABLE) {
+			return SAMSUNG_SetMemory(s, entry);
+		}
+		if (Priv->PBK_MPBR == AT_AVAILABLE) {
+			smprintf(s, "WARNING: setting memory for Motorola not implemented yet!\n");
+		}
 	}
 	for (i = 0;i < entry->EntriesNum;i++) {
 		entry->Entries[i].AddError = ERR_NOTSUPPORTED;
