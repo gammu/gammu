@@ -611,6 +611,7 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 GSM_Error SAMSUNG_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	/* FIXME: Here you have to implement conversion of GSM_MemoryEntry to AT command */
+	smprintf(s, "Setting memory for Samsung not implemented yet!\n");
 	return ERR_NOTIMPLEMENTED;
 }
 
