@@ -656,8 +656,10 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 				Config->currdeliveryreport = 0;
 			}
 
-			if (!strcmp(PQgetvalue(Res, 0, 7), "f"))
+			if (!strcmp(PQgetvalue(Res, 0, 7), "f")) {
+				PQclear(Res);
 				break;
+			}
 
 		}
 		PQclear(Res);
