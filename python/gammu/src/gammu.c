@@ -5228,6 +5228,8 @@ StateMachine_dealloc(StateMachineObject *self)
         /* Terminate the connection */
         GSM_TerminateConnection(self->s);
     }
+    GSM_FreeStateMachine(self->s);
+    self->s = NULL;
     END_PHONE_COMM
 
     if (self->DebugFile != NULL) {
@@ -5238,7 +5240,6 @@ StateMachine_dealloc(StateMachineObject *self)
 #ifdef WITH_THREAD
     PyThread_free_lock(self->mutex);
 #endif
-    GSM_FreeStateMachine(self->s);
     self->ob_type->tp_free((PyObject*)self);
 }
 
