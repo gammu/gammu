@@ -5253,6 +5253,14 @@ StateMachine_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
     return (PyObject *)self;
 }
 
+static void
+StateMachine_free(void *obj)
+{
+    StateMachineObject *self = (StateMachineObject *)obj;
+    GSM_FreeStateMachine(self->s);
+    self->s = NULL;
+}
+
 static int
 StateMachine_init(StateMachineObject *self, PyObject *args, PyObject *kwds)
 {
@@ -5348,7 +5356,7 @@ static PyTypeObject StateMachineType = {
     (initproc)StateMachine_init,      /* tp_init */
     0,                         /* tp_alloc */
     StateMachine_new,          /* tp_new */
-    NULL,                      /* tp_free */
+    StateMachine_free,         /* tp_free */
     0,                         /* tp_is_gc */
 	0,                         /* tp_bases */
 	0,                         /* tp_mro */
