@@ -402,7 +402,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 				sms->SMS[0].UDH.Type,
 				sms->SMS[0].UDH.Length,
 				Config->currdeliveryreport,
-				SMSInfo.Class);
+				sms->SMS[0].Class);
 		}
 	} else {
 		SMSD_Log(DEBUG_NOTICE, Config, "error: SMS-count = 0");
