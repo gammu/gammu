@@ -925,6 +925,10 @@ char *SMSD_RunOnReceiveCommand(GSM_SMSDConfig *Config, const char *locations)
 	return result;
 }
 
+#ifdef WIN32
+#define setenv(var, value, force) SetEnvironmentVariable(var, value)
+#endif
+
 /**
  * Fills in environment with information about messages.
  */
