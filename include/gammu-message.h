@@ -716,7 +716,7 @@ typedef struct {
 	/**
  	 * Number of SMS folders.
 	 */
-	unsigned char Number;
+	int Number;
 } GSM_SMSFolders;
 
 /**
