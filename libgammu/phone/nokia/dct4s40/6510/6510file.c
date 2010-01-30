@@ -2512,11 +2512,13 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		while (Priv->SMSFileError == ERR_EMPTY) {
 			Priv->SMSFileFolder++;
 			/* Too high folder number */
-			if ((Priv->SMSFileFolder-1)>=Priv->LastSMSFolders.Number) return ERR_EMPTY;
+			if ((Priv->SMSFileFolder-1) >= Priv->LastSMSFolders.Number) {
+				return ERR_EMPTY;
+			}
 
-			EncodeUnicode(Priv->SMSFile.ID_FullName,"d:/predefmessages/",18);
-			CopyUnicodeString(Priv->SMSFile.ID_FullName+36,Priv->LastSMSFolders.Folder[Priv->SMSFileFolder-1].Name);
-			smprintf(s,"folder name is %s\n",DecodeUnicodeString(Priv->SMSFile.ID_FullName));
+			EncodeUnicode(Priv->SMSFile.ID_FullName, "d:/predefmessages/", 18);
+			CopyUnicodeString(Priv->SMSFile.ID_FullName + 36, Priv->LastSMSFolders.Folder[Priv->SMSFileFolder-1].Name);
+			smprintf(s,"folder name is %s\n", DecodeUnicodeString(Priv->SMSFile.ID_FullName));
 
 			Priv->SMSFileError = N6510_GetFolderListing(s,&Priv->SMSFile,TRUE);
 		}
