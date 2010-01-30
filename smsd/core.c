@@ -1524,6 +1524,82 @@ failure_sent:
 }
 
 /**
+ * Initializes shared memory segment, writable if asked for it.
+ */
+GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
+{
+#ifdef HAVE_SHM
+	/* Allocate world redable SHM segment */
+	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), writable ? (IPC_CREAT | S_IRWXU | S_IRGRP | S_IROTH) : 0);
+	if (Config->shm_handle == -1) {
+		SMSD_Terminate(Config, "Failed to allocate shared memory segment!", ERR_NONE, TRUE, -1);
+		return ERR_UNKNOWN;
+	}
+	Config->Status = shmat(Config->shm_handle, NULL, 0);
+	if (Config->Status == (void *) -1) {
+		SMSD_Terminate(Config, "Failed to map shared memory segment!", ERR_NONE, TRUE, -1);
+		return ERR_UNKNOWN;
+	}
+	if (!writable && Config->Status->Version != SMSD_SHM_VERSION) {
+		shmdt(Config->Status);
+		return ERR_WRONGCRC;
+	}
+#elif defined(WIN32)
+	Config->map_handle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, writable ? PAGE_READWRITE : PAGE_READONLY, 0, sizeof(GSM_SMSDStatus), Config->map_key);
+	if (Config->map_handle == NULL) {
+		if (writable) {
+			SMSD_Terminate(Config, "Failed to allocate shared memory segment!", ERR_NONE, TRUE, -1);
+			return ERR_UNKNOWN;
+		} else {
+			SMSD_LogErrno(Config, "Can not CreateFileMapping");
+			return ERR_NOTRUNNING;
+		}
+	}
+	Config->Status = MapViewOfFile(Config->map_handle, writable ? FILE_MAP_ALL_ACCESS : FILE_MAP_READ, 0, 0, sizeof(GSM_SMSDStatus));
+	if (Config->Status == NULL) {
+		if (writable) {
+			SMSD_Terminate(Config, "Failed to map shared memory!", ERR_NONE, TRUE, -1);
+			return ERR_UNKNOWN;
+		} else {
+			SMSD_LogErrno(Config, "Failet to map shared memory!");
+			return ERR_NOTRUNNING;
+		}
+	}
+#else
+	if (writable) {
+		return ERR_NOTSUPPORTED;
+	}
+	Config->Status = malloc(sizeof(GSM_SMSDStatus));
+	if (Config->Status == NULL) {
+		SMSD_Terminate(Config, "Failed to map shared memory segment!", ERR_NONE, TRUE, -1);
+		return ERR_UNKNOWN;
+	}
+#endif
+	Config->Status->Version = SMSD_SHM_VERSION;
+	return ERR_NONE;
+}
+
+/**
+ * Frees shared memory segment, writable if asked for it.
+ */
+GSM_Error SMSD_FreeSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
+{
+#ifdef HAVE_SHM
+	shmdt(Config->Status);
+	if (writable) {
+		shmctl(Config->shm_handle, IPC_RMID, NULL);
+	}
+#elif defined(WIN32)
+	UnmapViewOfFile(Config->Status);
+	CloseHandle(Config->map_handle);
+#else
+	if (writable) {
+		free(Config->Status);
+	}
+#endif
+	return ERR_NONE;
+}
+/**
  * Main loop which takes care of connection to phone and processing of
  * messages.
  */
@@ -1549,33 +1625,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		goto done;
 	}
 
-#ifdef HAVE_SHM
-	/* Allocate world redable SHM segment */
-	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), IPC_CREAT | S_IRWXU | S_IRGRP | S_IROTH);
-	if (Config->shm_handle == -1) {
-		SMSD_Terminate(Config, "Failed to allocate shared memory segment!", ERR_NONE, TRUE, -1);
+	error = SMSD_InitSharedMemory(Config, TRUE);
+	if (error != ERR_NONE) {
 		goto done;
 	}
-	Config->Status = shmat(Config->shm_handle, NULL, 0);
-	if (Config->Status == (void *) -1) {
-		SMSD_Terminate(Config, "Failed to map shared memory segment!", ERR_NONE, TRUE, -1);
-		goto done;
-	}
-#elif defined(WIN32)
-	Config->map_handle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(GSM_SMSDStatus), Config->map_key);
-	if (Config->map_handle == NULL) {
-		SMSD_Terminate(Config, "Failed to allocate shared memory segment!", ERR_NONE, TRUE, -1);
-		goto done;
-	}
-	Config->Status = MapViewOfFile(Config->map_handle, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(GSM_SMSDStatus));
-#else
-	Config->Status = malloc(sizeof(GSM_SMSDStatus));
-	if (Config->Status == NULL) {
-		SMSD_Terminate(Config, "Failed to map shared memory segment!", ERR_NONE, TRUE, -1);
-		goto done;
-	}
-#endif
-	Config->Status->Version = SMSD_SHM_VERSION;
+
 	Config->running = TRUE;
 	strcpy(Config->Status->PhoneID, Config->PhoneID);
 	sprintf(Config->Status->Client, "Gammu %s on %s compiler %s",
@@ -1688,17 +1742,13 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	}
 	Service->Free(Config);
 
-#ifdef HAVE_SHM
-	shmdt(Config->Status);
-	shmctl(Config->shm_handle, IPC_RMID, NULL);
-#elif defined(WIN32)
-	UnmapViewOfFile(Config->Status);
-	CloseHandle(Config->map_handle);
-#else
-	free(Config->Status);
-#endif
-
 done_connected:
+	/* Free shared memory */
+	error = SMSD_FreeSharedMemory(Config, TRUE);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
 	GSM_SetFastSMSSending(Config->gsm,FALSE);
 done:
 	SMSD_Terminate(Config, "Stopping Gammu smsd", ERR_NONE, FALSE, 0);
@@ -1722,51 +1772,28 @@ GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms, char
 
 GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
 {
+	GSM_Error error;
+	/* Check for local instance */
 	if (Config->running) {
 		memcpy(status, Config->Status, sizeof(GSM_SMSDStatus));
 		return ERR_NONE;
 	}
-#if defined(HAVE_SHM) || defined(WIN32)
-	/* Get SHM segment */
-#ifdef HAVE_SHM
-	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), 0);
-	if (Config->shm_handle == -1) {
-		SMSD_LogErrno(Config, "Can not shmget");
-		return ERR_NOTRUNNING;
+
+	/* Init shared memory */
+	error = SMSD_InitSharedMemory(Config, FALSE);
+	if (error != ERR_NONE) {
+		return error;
 	}
-	Config->Status = shmat(Config->shm_handle, NULL, 0);
-	if (Config->Status == (void *) -1) {
-		SMSD_LogErrno(Config, "Can not shmat");
-		return ERR_UNKNOWN;
-	}
-	if (Config->Status->Version != SMSD_SHM_VERSION) {
-		shmdt(Config->Status);
-		return ERR_WRONGCRC;
-	}
-#else
-	Config->map_handle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READONLY, 0, sizeof(GSM_SMSDStatus), Config->map_key);
-	if (Config->map_handle == NULL) {
-		SMSD_LogErrno(Config, "Can not CreateFileMapping");
-		return ERR_NOTRUNNING;
-	}
-	Config->Status = MapViewOfFile(Config->map_handle, FILE_MAP_READ, 0, 0, sizeof(GSM_SMSDStatus));
-	if (Config->Status == NULL) {
-		SMSD_LogErrno(Config, "Can not CreateFileMapping");
-		return ERR_UNKNOWN;
-	}
-#endif
+
+	/* Copy data from shared memory */
 	memcpy(status, Config->Status, sizeof(GSM_SMSDStatus));
 
-#ifdef HAVE_SHM
-	shmdt(Config->Status);
-#else
-	UnmapViewOfFile(Config->Status);
-	CloseHandle(Config->map_handle);
-#endif
+	/* Free shared memory */
+	error = SMSD_FreeSharedMemory(Config, FALSE);
+	if (error != ERR_NONE) {
+		return error;
+	}
 	return ERR_NONE;
-#else
-	return ERR_NOTSUPPORTED;
-#endif
 }
 
 GSM_Error SMSD_NoneFunction(void)
