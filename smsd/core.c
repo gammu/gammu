@@ -1205,6 +1205,8 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM_
 
 /**
  * Reads message from phone, processes it and delete it from phone afterwards.
+ *
+ * It tries to link multipart messages together if possible.
  */
 gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 {
@@ -1320,6 +1322,10 @@ cleanup:
 	return TRUE;
 }
 
+/**
+ * Checks whether there are some messages to process and calls
+ * SMSD_ReadDeleteSMS to process them.
+ */
 gboolean SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 {
 	GSM_SMSMemoryStatus	SMSStatus;
@@ -1353,6 +1359,9 @@ gboolean SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	return TRUE;
 }
 
+/**
+ * Reads status from phone to configuration.
+ */
 void SMSD_PhoneStatus(GSM_SMSDConfig *Config) {
 	GSM_Error error;
 
@@ -1374,7 +1383,9 @@ void SMSD_PhoneStatus(GSM_SMSDConfig *Config) {
 	}
 }
 
-
+/**
+ * Sends a sms message which is provided by the service backend.
+ */
 gboolean SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 {
 	GSM_MultiSMSMessage  	sms;
@@ -1512,6 +1523,10 @@ failure_sent:
 	return FALSE;
 }
 
+/**
+ * Main loop which takes care of connection to phone and processing of
+ * messages.
+ */
 GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int max_failures)
 {
 	GSM_SMSDService		*Service;
