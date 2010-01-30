@@ -36,6 +36,7 @@ ChangeLog
 [-] * Separate getting information for Motorola phones (bug #1076).
 [-] * Fixed reading of Samsung contacts (bug #1105).
 [-] * Re-enable classic AT commands for adding Samsung contact (bug #1105).
+[+] * SMSD no longer requires support for SMS status, so it works with Nokia S40 phones.
     
 20100106 - 1.27.90
 

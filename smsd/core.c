@@ -1324,17 +1324,32 @@ gboolean SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 {
 	GSM_SMSMemoryStatus	SMSStatus;
 	GSM_Error		error;
+	gboolean new_message = FALSE;
+	GSM_MultiSMSMessage sms;
 
 	/* Do we have any SMS in phone ? */
-	error=GSM_GetSMSStatus(Config->gsm,&SMSStatus);
-	if (error != ERR_NONE) {
+
+	/* First try SMS status */
+	error = GSM_GetSMSStatus(Config->gsm,&SMSStatus);
+	if (error == ERR_NONE) {
+		new_message = (SMSStatus.SIMUsed + SMSStatus.PhoneUsed > 0);
+	} else if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
+		/* Fallback to GetNext */
+		sms.Number = 0;
+		sms.SMS[0].Location = 0;
+		sms.SMS[0].Folder = 0;
+		error = GSM_GetNextSMS(Config->gsm, &sms, TRUE);
+		new_message = (error == ERR_NONE);
+	} else {
 		SMSD_LogError(DEBUG_INFO, Config, "Error getting SMS status", error);
 		return FALSE;
 	}
+
 	/* Yes. We have SMS in phone */
-	if (SMSStatus.SIMUsed+SMSStatus.PhoneUsed != 0) {
+	if (new_message) {
 		return SMSD_ReadDeleteSMS(Config,Service);
 	}
+
 	return TRUE;
 }
 
