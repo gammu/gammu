@@ -1842,6 +1842,7 @@ msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
+"Viac informácii nájdete v jednotlivých témach (gammu --help téma). Témy sú:"
 
 #: gammu/gammu.c:898
 msgid "Unknown help topic specified!"
