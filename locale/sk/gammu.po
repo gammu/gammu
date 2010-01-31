@@ -2643,7 +2643,7 @@ msgstr "Text poznámky distribútora je \"%s\"\n"
 #: gammu/misc.c:1219
 #, c-format
 msgid "What type of logo do you want to set (\"%s\") ?\n"
-msgstr ""
+msgstr "Aký typ loga chcete nastaviť (\"%s\") ?\n"
 
 #: gammu/misc.c:1260
 #, c-format
