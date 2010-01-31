@@ -2027,7 +2027,7 @@ msgstr "Fax"
 
 #: gammu/message.c:208
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: gammu/message.c:209
 msgid "Pager"
