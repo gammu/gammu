@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 13:18+0200\n"
+"PO-Revision-Date: 2010-01-31 13:19+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1809,7 +1809,7 @@ msgstr "Použitie: gammu [parametre] <príkaz> [voľby]"
 # type: Plain text
 #: gammu/gammu.c:791
 msgid "Parameters before command configure gammu behaviour:"
-msgstr ""
+msgstr "Parametre pred príkazom upravujú chovanie gammu:"
 
 #: gammu/gammu.c:792
 msgid "-c / --config <filename> ... name of configuration file"
