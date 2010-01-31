@@ -2316,7 +2316,7 @@ msgstr "hovor prebieha"
 
 #: gammu/misc.c:405
 msgid "end of call (unknown side)"
-msgstr ""
+msgstr "koniec hovoru(neznáma príčina)"
 
 #: gammu/misc.c:406
 msgid "call end from our side"
