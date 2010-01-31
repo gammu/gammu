@@ -1883,7 +1883,7 @@ msgstr "Príliš veľa parametrov (funkcia akceptuje %d až %d)\n"
 
 #: gammu/gammu.c:1044
 msgid "Bad option!"
-msgstr ""
+msgstr "Chybná voľba!"
 
 #: gammu/gammu.c:1125
 msgid "Configuration could not be parsed!"
