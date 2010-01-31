@@ -1386,7 +1386,7 @@ void SMSD_PhoneStatus(GSM_SMSDConfig *Config) {
 /**
  * Sends a sms message which is provided by the service backend.
  */
-gboolean SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
+GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 {
 	GSM_MultiSMSMessage  	sms;
 	GSM_DateTime         	Date;
@@ -1402,16 +1402,8 @@ gboolean SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	error = Service->FindOutboxSMS(&sms, Config, Config->SMSID);
 
 	if (error == ERR_EMPTY || error == ERR_NOTSUPPORTED) {
-		/* No outbox sms - wait few seconds and escape */
-		for (j = 0; j < Config->commtimeout && !Config->shutdown; j++) {
-			sleep(1);
-
-			if (j % 15 == 0) {
-				SMSD_PhoneStatus(Config);
-				Service->RefreshPhoneStatus(Config);
-			}
-		}
-		return TRUE;
+		/* No outbox sms */
+		return error;
 	}
 	if (error != ERR_NONE) {
 		/* Unknown error - escape */
@@ -1421,10 +1413,12 @@ gboolean SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
 		}
 		Service->MoveSMS(&sms,Config, Config->SMSID, TRUE,FALSE);
-		return FALSE;
+		return error;
 	}
 
-	if (Config->shutdown) return TRUE;
+	if (Config->shutdown) {
+		return ERR_NONE;
+	}
 
 	if (strcmp(Config->prevSMSID, Config->SMSID) == 0) {
 		SMSD_Log(DEBUG_NOTICE, Config, "Same message as previous one: %s", Config->SMSID);
@@ -1438,7 +1432,7 @@ gboolean SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
 			}
 			Service->MoveSMS(&sms,Config, Config->SMSID, TRUE,FALSE);
-			return FALSE;
+			return ERR_UNKNOWN;
 		}
 	} else {
 		SMSD_Log(DEBUG_NOTICE, Config, "New messsage to send: %s", Config->SMSID);
@@ -1452,7 +1446,7 @@ gboolean SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				error = GSM_GetSMSC(Config->gsm,&Config->SMSC);
 				if (error!=ERR_NONE) {
 					SMSD_Log(DEBUG_ERROR, Config, "Error getting SMSC from phone");
-					return FALSE;
+					return ERR_UNKNOWN;
 				}
 
 			}
@@ -1510,17 +1504,17 @@ gboolean SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	if (Service->MoveSMS(&sms,Config, Config->SMSID, FALSE, TRUE) != ERR_NONE) {
 		Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
 	}
-	return TRUE;
+	return ERR_NONE;
 failure_unsent:
 	Config->Status->Failed++;
 	Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i + 1, SMSD_SEND_SENDING_ERROR, Config->TPMR);
 	Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
-	return FALSE;
+	return ERR_UNKNOWN;
 failure_sent:
 	if (Service->MoveSMS(&sms,Config, Config->SMSID, FALSE, TRUE) != ERR_NONE) {
 		Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
 	}
-	return FALSE;
+	return ERR_UNKNOWN;
 }
 
 /**
@@ -1623,7 +1617,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	GSM_SMSDService		*Service;
 	GSM_Error		error;
 	int                     errors = -1, initerrors=0;
- 	time_t			lastreceive, lastreset = 0;
+ 	time_t			lastreceive, lastreset = 0, lastnothingsent = 0;
 	int i;
 	gboolean first_start = TRUE, force_reset = FALSE;
 
@@ -1743,15 +1737,27 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			}
 
 		}
+
 		/* time for preventive reset */
 		if (Config->resetfrequency > 0 && difftime(time(NULL), lastreset) >= Config->resetfrequency) {
 			force_reset = TRUE;
 			continue;
 		}
+
 		/* Send any queued messages */
-		if (!SMSD_SendSMS(Config, Service)) {
-			continue;
+		if (difftime(time(NULL), lastnothingsent) >= Config->commtimeout) {
+			error = SMSD_SendSMS(Config, Service);
+			if (error == ERR_EMPTY) {
+				lastnothingsent = time(NULL);
+			}
+			/* We don't care about other errors here, they are handled in SMSD_SendSMS */
 		}
+		/* Refresh phone status in shared memory and in service */
+		SMSD_PhoneStatus(Config);
+		Service->RefreshPhoneStatus(Config);
+
+		/* Sleep some time before another loop */
+		sleep(1);
 	}
 	Service->Free(Config);
 
