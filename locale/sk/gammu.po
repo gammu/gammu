@@ -2031,7 +2031,7 @@ msgstr "Email"
 
 #: gammu/message.c:209
 msgid "Pager"
-msgstr ""
+msgstr "Pager"
 
 #: gammu/message.c:213
 msgid "Validity"
