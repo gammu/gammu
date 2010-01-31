@@ -2436,7 +2436,7 @@ msgstr "Prúd do telefónu"
 
 #: gammu/misc.c:539
 msgid "Charge state"
-msgstr ""
+msgstr "Stav nabíjania"
 
 #: gammu/misc.c:542
 msgid "powered from battery"
