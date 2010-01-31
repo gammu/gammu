@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-31 11:24+0100\n"
-"PO-Revision-Date: 2010-01-26 21:20+0100\n"
+"PO-Revision-Date: 2010-01-31 11:33+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6544,10 +6544,10 @@ msgstr "Výchozí je 0 (není použito)."
 # type: TP
 #. type: TP
 #: docs/user/gammu-smsdrc.5:130
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<ResetFrequency>"
 msgid "B<StatusFrequency>"
-msgstr "B<ResetFrequency>"
+msgstr "B<StatusFrequency>"
 
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:135
@@ -6555,22 +6555,24 @@ msgid ""
 "The number of seconds between refreshing phone status (battery, signal) "
 "stored in shared memory and possibly in service backends. Use 0 to disable."
 msgstr ""
+"Počet sekund mezi načítáním stavu telefonu (baterie a signál) a ukládáním do "
+"sdílené paměti a případně to úložiště používané služby. Pro nenačítání "
+"těchto informací nastavte 0."
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:137
-#, fuzzy
 #| msgid "Default is 1."
 msgid "Default is 15."
-msgstr "Výchozí je 1."
+msgstr "Výchozí je 15."
 
 # type: TP
 #. type: TP
 #: docs/user/gammu-smsdrc.5:138
-#, fuzzy, no-wrap
+#, no-wrap
 #| msgid "B<LogFile>"
 msgid "B<LoopSleep>"
-msgstr "B<LogFile>"
+msgstr "B<LoopSleep>"
 
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:145
@@ -6580,6 +6582,9 @@ msgid ""
 "effects to other time based configurations, because they will be effectively "
 "rounded to multiply of this value."
 msgstr ""
+"Počet sekund, kolik bude SMSD spát před zjišťováním nějaké aktivity. Hodnota "
+"větší než 1 bude mít vliv na ostatní nastavení časů, protože ty pak budou "
+"efektivně zaokrouhlena nahoru na nejbližší násobek tohoto nastavení."
 
 # type: TP
 #. type: TP
@@ -10917,6 +10922,13 @@ msgid ""
 "The result should be project for your compiler where you should be able to "
 "work with it as with any other project."
 msgstr ""
+"Pro vytvoření projektu pro kompilaci Gammu bude potřebovat CMake z <http://"
+"www.cmake.org>. CMake umí vytvořit projekty pro většinu běžně používaných "
+"IDE včetně Microsoft Visual Studio, nástroje Borland, Cygwin nebo Mingw32. "
+"Stačí kliknout na CMakeLists.txt ve zdrojových kódech a nastavit CMake tak, "
+"aby byl schopen nalézt volitelné knihovny (v sekci o křížové kompilaci "
+"naleznete informace jak je získat). Výsledkem by měl být projekt, se kterým "
+"budete moci pracovat stejně jako s jakýmkoliv jiným ve vašem IDE."
 
 #. type: Plain text
 #: INSTALL:160
