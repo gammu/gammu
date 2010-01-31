@@ -1969,7 +1969,7 @@ msgstr "Prijatá CB správa"
 #: gammu/message.c:77
 #, c-format
 msgid "Channel %i, text \"%s\"\n"
-msgstr ""
+msgstr "Kanál %i, text \"%s\"\n"
 
 #: gammu/message.c:83
 msgid "USSD received"
