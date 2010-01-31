@@ -359,7 +359,7 @@ msgstr "Hlasité"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1976
 msgid "My style"
-msgstr ""
+msgstr "Môj štýl"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:561
 msgid "SIM"
