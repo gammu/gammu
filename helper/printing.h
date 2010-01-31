@@ -5,6 +5,8 @@
 #ifndef __helper_printing_h__
 #define __helper_printing_h__
 
+#include <gammu-misc.h>
+
 /**
  * Write error to user.
  */
