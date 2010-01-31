@@ -1887,7 +1887,7 @@ msgstr "Chybná voľba!"
 
 #: gammu/gammu.c:1125
 msgid "Configuration could not be parsed!"
-msgstr ""
+msgstr "Nastavenie nemohlo byť spracované!"
 
 #: gammu/gammu.c:1127
 msgid "No configuration file found!"
