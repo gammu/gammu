@@ -1869,7 +1869,7 @@ msgstr "Príliš malo parametrov (funkcia požaduje %d až %d)\n"
 
 #: gammu/gammu.c:1002 gammu/gammu.c:1023
 msgid "Parameters help"
-msgstr ""
+msgstr "Pomoc pre parametre"
 
 #: gammu/gammu.c:1014
 #, c-format
