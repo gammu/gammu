@@ -2298,7 +2298,7 @@ msgstr "Informácie o hovore"
 #: gammu/misc.c:399
 #, c-format
 msgid "ID %i, "
-msgstr ""
+msgstr "ID %i, "
 
 #: gammu/misc.c:402
 #, c-format
