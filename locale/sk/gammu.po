@@ -2512,7 +2512,7 @@ msgstr "%i neprečítané"
 #: gammu/misc.c:615 gammu/misc.c:625
 #, c-format
 msgid "%i locations"
-msgstr ""
+msgstr "%i pozícii"
 
 #: gammu/misc.c:620
 msgid "Phone SMS status"
