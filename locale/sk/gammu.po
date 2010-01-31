@@ -2035,7 +2035,7 @@ msgstr "Pager"
 
 #: gammu/message.c:213
 msgid "Validity"
-msgstr ""
+msgstr "Platnosť"
 
 #: gammu/message.c:232
 msgid "Maximum time"
