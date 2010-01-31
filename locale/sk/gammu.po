@@ -2565,7 +2565,7 @@ msgstr "%i. Prístupový bod %i"
 #: gammu/misc.c:952 gammu/misc.c:1476 gammu/misc.c:1483 gammu/misc.c:1518
 #: gammu/misc.c:1531 gammu/misc.c:1570 gammu/misc.c:1619 gammu/misc.c:1973
 msgid " (active)"
-msgstr ""
+msgstr " (aktívny)"
 
 #: gammu/misc.c:979 gammu/misc.c:1136
 msgid "Maximal location for caller logo can be 5"
