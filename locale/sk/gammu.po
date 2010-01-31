@@ -2346,7 +2346,7 @@ msgstr "hovor bol presmerovaný"
 #: gammu/misc.c:418
 #, c-format
 msgid "%3d used"
-msgstr "%3d využité"
+msgstr "%3d využitých"
 
 #: gammu/misc.c:420
 #, c-format
