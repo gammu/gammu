@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 13:38+0200\n"
+"PO-Revision-Date: 2010-01-31 13:39+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2060,7 +2060,7 @@ msgstr ",SIM karta"
 
 #: gammu/message.c:501
 msgid ", phone memory"
-msgstr ""
+msgstr ",pamäť telefónu"
 
 #: gammu/message.c:502
 msgid ", phone or SIM memory"
