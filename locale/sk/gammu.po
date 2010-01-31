@@ -2068,7 +2068,7 @@ msgstr ", pamäť telefónu alebo SIM karta"
 
 #: gammu/message.c:505 gammu/mms.c:30
 msgid ", Inbox folder"
-msgstr ",doručené správy"
+msgstr ", doručené správy"
 
 #: gammu/message.c:506
 msgid ", Outbox folder"
