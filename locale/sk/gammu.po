@@ -597,7 +597,7 @@ msgstr "Tréning/Preteky"
 
 #: gammu/calendar.c:101 gammu/calendar.c:759
 msgid "Training/Rugby"
-msgstr ""
+msgstr "Tréning/Ragby"
 
 #: gammu/calendar.c:104 gammu/calendar.c:762
 msgid "Training/Sailing"
