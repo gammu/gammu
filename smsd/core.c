@@ -1575,8 +1575,20 @@ GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 		return ERR_UNKNOWN;
 	}
 #endif
+	/* Initial shared memory content */
 	if (writable) {
 		Config->Status->Version = SMSD_SHM_VERSION;
+		strcpy(Config->Status->PhoneID, Config->PhoneID);
+		sprintf(Config->Status->Client, "Gammu %s on %s compiler %s",
+			VERSION,
+			GetOS(),
+			GetCompiler());
+		memset(&Config->Status->Charge, 0, sizeof(GSM_BatteryCharge));
+		memset(&Config->Status->Network, 0, sizeof(GSM_SignalQuality));
+		Config->Status->Received = 0;
+		Config->Status->Failed = 0;
+		Config->Status->Sent = 0;
+		Config->Status->IMEI[0] = 0;
 	}
 	return ERR_NONE;
 }
@@ -1633,17 +1645,6 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	}
 
 	Config->running = TRUE;
-	strcpy(Config->Status->PhoneID, Config->PhoneID);
-	sprintf(Config->Status->Client, "Gammu %s on %s compiler %s",
-		VERSION,
-		GetOS(),
-		GetCompiler());
-	memset(&Config->Status->Charge, 0, sizeof(GSM_BatteryCharge));
-	memset(&Config->Status->Network, 0, sizeof(GSM_SignalQuality));
-	Config->Status->Received = 0;
-	Config->Status->Failed = 0;
-	Config->Status->Sent = 0;
-	Config->Status->IMEI[0] = 0;
 
 	lastreceive		= time(NULL);
 	lastreset		= time(NULL);
