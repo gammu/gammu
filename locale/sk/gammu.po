@@ -2056,7 +2056,7 @@ msgstr "Pretieklo počítadlo SMS"
 
 #: gammu/message.c:500
 msgid ", SIM memory"
-msgstr ""
+msgstr ",SIM karta"
 
 #: gammu/message.c:501
 msgid ", phone memory"
