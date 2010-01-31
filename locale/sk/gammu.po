@@ -2076,7 +2076,7 @@ msgstr ",zložka s odoslanými správami"
 
 #: gammu/message.c:522
 msgid "..OK"
-msgstr ""
+msgstr "..OK"
 
 #: gammu/message.c:525
 #, c-format
