@@ -323,7 +323,7 @@ msgstr "Nepodarilo sa preložiť meno počítača."
 
 #: libgammu/gsmcomon.c:184
 msgid "Unknown error description."
-msgstr ""
+msgstr "Neznámy popis chyby."
 
 #: libgammu/phone/dummy/dummy.c:583
 msgid "Templates"
