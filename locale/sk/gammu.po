@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 13:42+0200\n"
+"PO-Revision-Date: 2010-01-31 13:43+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2125,7 +2125,7 @@ msgstr "Odosielam správu zo zložky \"%s\", pozícia %i\n"
 
 #: gammu/message.c:601 gammu/message.c:627
 msgid "....waiting for network answer"
-msgstr ""
+msgstr "....čakám na odpoveď siete"
 
 #: gammu/message.c:622
 #, c-format
