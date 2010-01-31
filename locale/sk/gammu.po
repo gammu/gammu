@@ -2402,7 +2402,7 @@ msgstr "Teplota batérie"
 #: gammu/misc.c:510 gammu/misc.c:515
 #, c-format
 msgid "%i C"
-msgstr ""
+msgstr "%i C"
 
 #: gammu/misc.c:514
 msgid "Phone temperature"
