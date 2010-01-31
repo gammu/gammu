@@ -2480,7 +2480,7 @@ msgstr "NiMH"
 
 #: gammu/misc.c:592
 msgid "Signal strength"
-msgstr ""
+msgstr "Sila signálu"
 
 #: gammu/misc.c:593
 #, c-format
