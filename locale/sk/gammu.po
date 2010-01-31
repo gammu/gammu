@@ -605,7 +605,7 @@ msgstr "Tréning/Plavba"
 
 #: gammu/calendar.c:107 gammu/calendar.c:765
 msgid "Training/Street Games"
-msgstr ""
+msgstr "Tréning/Pouličné hry"
 
 #: gammu/calendar.c:110 gammu/calendar.c:768
 msgid "Training/Swimming"
