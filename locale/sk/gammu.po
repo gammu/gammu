@@ -2172,7 +2172,7 @@ msgstr "registrácia do siete odmietnutá"
 
 #: gammu/misc.c:40 gammu/misc.c:42 gammu/misc.c:561 gammu/misc.c:583
 msgid "unknown"
-msgstr ""
+msgstr "neznámy"
 
 #: gammu/misc.c:56
 msgid "Name in phone"
