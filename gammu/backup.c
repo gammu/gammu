@@ -31,8 +31,10 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			Terminate(2);
 		}
-		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
-		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
+		error = GSM_ReadBackupFile(argv[4], &Backup,GSM_GuessBackupFormat(argv[4], FALSE));
+		if (error != ERR_NOTIMPLEMENTED) {
+			Print_Error(error);
+		}
 		i = 0;
 		while (Backup.Calendar[i]!=NULL) {
 			if (i == atoi(argv[5])-1) break;
