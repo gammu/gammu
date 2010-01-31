@@ -2188,7 +2188,7 @@ msgstr "pripojené"
 
 #: gammu/misc.c:67
 msgid "detached"
-msgstr ""
+msgstr "odpojené"
 
 #: gammu/misc.c:182
 msgid "Never version of firmware is available!\n"
