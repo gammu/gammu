@@ -2130,7 +2130,7 @@ msgstr "....čakám na odpoveď siete"
 #: gammu/message.c:622
 #, c-format
 msgid "Sending SMS %i/%i"
-msgstr ""
+msgstr "Odosielam SMS %i/%i"
 
 #: gammu/message.c:641
 msgid "Something went wrong, uknown message operation!\n"
