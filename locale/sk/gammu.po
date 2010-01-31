@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 13:29+0200\n"
+"PO-Revision-Date: 2010-01-31 13:31+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1914,7 +1914,7 @@ msgstr "Nebolo načítané žiadne nastavenie, používam východzie hodnoty!"
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
-msgstr ""
+msgstr "Nainštalovaná verzia libGammu.so  (%s) sa líši od verzie Gammu (%s)\n"
 
 #: gammu/memory.c:40 gammu/memory.c:94 gammu/memory.c:112 gammu/memory.c:239
 #: gammu/memory.c:356
