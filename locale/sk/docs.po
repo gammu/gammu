@@ -114,7 +114,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:24
 msgid "Parameters before command configure gammu behaviour:"
-msgstr ""
+msgstr "Parametre pred príkazom upravujú chovanie gammu:"
 
 # type: Plain text
 #. type: Plain text
@@ -151,11 +151,10 @@ msgstr ""
 msgid "Commands"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:37
 msgid "Commands can be specified with or without leading --."
-msgstr ""
+msgstr "Príkazy môžu byť zadávané s aj bez úvodného --."
 
 #. type: SS
 #: docs/user/gammu.1:39
@@ -4288,7 +4287,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2541
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
-msgstr ""
+msgstr "Preos zrušený telefónom, možno ste zadali zrušenie prenosu v telefóne."
 
 #. type: SS
 #: docs/user/gammu.1:2541
@@ -4299,7 +4298,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2543
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "Ovládač telefónu potrebuje odoslať ešte jeden rámec."
 
 #. type: SS
 #: docs/user/gammu.1:2543
@@ -4354,7 +4353,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2553
 msgid "Invalid data given to phone."
-msgstr ""
+msgstr "Zadaná chybná hodnota."
 
 #. type: SS
 #: docs/user/gammu.1:2553
@@ -4543,7 +4542,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2587
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "Chybný názov vlastnosti v konfigurácii."
 
 #. type: SS
 #: docs/user/gammu.1:2587
