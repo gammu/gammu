@@ -2371,7 +2371,7 @@ msgstr "Povoľujem informácie o prichádzajúcich hovoroch"
 
 #: gammu/misc.c:472
 msgid "Enabling info about USSD"
-msgstr ""
+msgstr "Povoľujem informácie o USSD"
 
 #: gammu/misc.c:489
 msgid "Todos"
