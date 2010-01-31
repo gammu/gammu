@@ -2516,7 +2516,7 @@ msgstr "%i pozícii"
 
 #: gammu/misc.c:620
 msgid "Phone SMS status"
-msgstr ""
+msgstr "Stav SMS v telefóne"
 
 #: gammu/misc.c:628
 #, c-format
