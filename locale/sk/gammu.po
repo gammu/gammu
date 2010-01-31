@@ -2452,7 +2452,7 @@ msgstr "batéria je pripojená a nabíja sa"
 
 #: gammu/misc.c:551
 msgid "battery connected and is fully charged"
-msgstr ""
+msgstr "batéria je pripojená na je plne nabitá"
 
 #: gammu/misc.c:554
 msgid "battery not connected"
