@@ -2225,7 +2225,7 @@ msgstr "V odpovedi z OpenCellID sa nepodarilo načítať zemepisnú dĺžku!\n"
 
 #: gammu/misc.c:263
 msgid "Failed to find range in OpenCellID reply!\n"
-msgstr ""
+msgstr "V odpovedi z OpenCellID sa nepodarilo nájsť presnosť!\n"
 
 #: gammu/misc.c:268
 msgid "Failed to parse range from OpenCellID reply!\n"
