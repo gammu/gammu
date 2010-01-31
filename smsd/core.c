@@ -1678,7 +1678,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 				}
 			}
 			SMSD_Log(DEBUG_INFO, Config, "Starting phone communication...");
-			error=GSM_InitConnection_Log(Config->gsm, 2, SMSD_Log_Function, Config);
+			error = GSM_InitConnection_Log(Config->gsm, 2, SMSD_Log_Function, Config);
 			switch (error) {
 			case ERR_NONE:
 				GSM_SetSendSMSStatusCallback(Config->gsm, SMSD_SendSMSStatusCallback, Config);
