@@ -2333,7 +2333,7 @@ msgstr "hovor uskutočnený. Čakám na odpoveď"
 
 #: gammu/misc.c:409
 msgid "call held"
-msgstr ""
+msgstr "hovor je podržaný"
 
 #: gammu/misc.c:410
 msgid "call resumed"
