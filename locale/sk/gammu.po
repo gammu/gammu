@@ -2560,7 +2560,7 @@ msgstr "Adresa"
 #: gammu/misc.c:950
 #, c-format
 msgid "%i. Access point %i"
-msgstr ""
+msgstr "%i. Prístupový bod %i"
 
 #: gammu/misc.c:952 gammu/misc.c:1476 gammu/misc.c:1483 gammu/misc.c:1518
 #: gammu/misc.c:1531 gammu/misc.c:1570 gammu/misc.c:1619 gammu/misc.c:1973
