@@ -2249,7 +2249,7 @@ msgstr "Zemepisná dĺžka"
 
 #: gammu/misc.c:287
 msgid "Range"
-msgstr ""
+msgstr "Presnosť"
 
 #: gammu/misc.c:288
 #, fuzzy
