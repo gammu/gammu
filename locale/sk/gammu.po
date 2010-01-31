@@ -1908,7 +1908,7 @@ msgstr "Nepodarilo sa načítať [gammu%d] sekciu z konfiguračného súboru (ga
 
 #: gammu/gammu.c:1193 gammu/gammu.c:1204
 msgid "No configuration read, using builtin defaults!"
-msgstr ""
+msgstr "Nebolo načítané žiadne nastavenie, používam východzie hodnoty!"
 
 #: gammu/gammu.c:1247
 #, c-format
