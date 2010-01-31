@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 13:37+0200\n"
+"PO-Revision-Date: 2010-01-31 13:38+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2043,7 +2043,7 @@ msgstr "Maximálny čas"
 
 #: gammu/message.c:348 gammu/message.c:421 gammu/message.c:694
 msgid "Corrupted message, skipping"
-msgstr ""
+msgstr "Poškodená správa, preskakujem"
 
 #: gammu/message.c:362 gammu/message.c:479
 #, c-format
