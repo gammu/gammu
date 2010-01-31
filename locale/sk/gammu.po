@@ -2023,7 +2023,7 @@ msgstr "Forrmát"
 
 #: gammu/message.c:207
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: gammu/message.c:208
 msgid "Email"
