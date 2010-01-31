@@ -1473,9 +1473,12 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 			Config->TPMR = -1;
 			goto failure_unsent;
 		}
-		Service->RefreshPhoneStatus(Config);
 		j    = 0;
 		while (!Config->shutdown) {
+			/* Update timestamp for SMS in backend */
+			Service->RefreshSendStatus(Config, Config->SMSID);
+			/* Update timestamp for phone in backend */
+			Service->RefreshPhoneStatus(Config);
 			GSM_GetCurrentDateTime (&Date);
 			z=Date.Second;
 			while (z==Date.Second) {
@@ -1484,8 +1487,6 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				GSM_ReadDevice(Config->gsm,TRUE);
 				if (Config->SendingSMSStatus != ERR_TIMEOUT) break;
 			}
-			Service->RefreshSendStatus(Config, Config->SMSID);
-			Service->RefreshPhoneStatus(Config);
 			if (Config->SendingSMSStatus != ERR_TIMEOUT) break;
 			j++;
 			if (j>Config->sendtimeout) break;
