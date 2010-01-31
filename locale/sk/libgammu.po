@@ -367,7 +367,7 @@ msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:562 libgammu/phone/pfunc.c:41
 msgid "Inbox"
-msgstr ""
+msgstr "Prijaté"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:563
 msgid "Sent items"
