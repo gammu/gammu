@@ -2551,7 +2551,7 @@ msgstr " formát, zvonenia \"%s\"\n"
 #: gammu/misc.c:881
 #, c-format
 msgid "What type of reset do you want (\"%s\") ?\n"
-msgstr ""
+msgstr "Ktorý typ resetu chcete uskutočniť (\"%s\") ?\n"
 
 #: gammu/misc.c:908 gammu/misc.c:955 helper/message-display.c:447
 msgid "Address"
