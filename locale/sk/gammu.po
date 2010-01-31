@@ -2415,7 +2415,7 @@ msgstr "Napätie batérie"
 #: gammu/misc.c:520 gammu/misc.c:525
 #, c-format
 msgid "%i mV"
-msgstr ""
+msgstr "%i mV"
 
 #: gammu/misc.c:524
 msgid "Charge voltage"
