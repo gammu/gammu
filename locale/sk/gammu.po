@@ -2387,7 +2387,7 @@ msgstr "Stav batérie"
 
 #: gammu/misc.c:503
 msgid "Battery capacity"
-msgstr ""
+msgstr "Kapacita batérie"
 
 #: gammu/misc.c:504
 #, c-format
