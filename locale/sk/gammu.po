@@ -2464,7 +2464,7 @@ msgstr "zistená chyba napájania"
 
 #: gammu/misc.c:568
 msgid "Battery type"
-msgstr ""
+msgstr "Typ batérie"
 
 #: gammu/misc.c:571
 msgid "Lithium Ion"
