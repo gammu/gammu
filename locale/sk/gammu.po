@@ -2252,9 +2252,8 @@ msgid "Range"
 msgstr "Presnosť"
 
 #: gammu/misc.c:288
-#, fuzzy
 msgid "Number of samples"
-msgstr "Predvoľba čísel"
+msgstr "Počet vzoriek"
 
 #: gammu/misc.c:307
 msgid "Device"
