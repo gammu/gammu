@@ -1973,7 +1973,7 @@ msgstr "Kanál %i, text \"%s\"\n"
 
 #: gammu/message.c:83
 msgid "USSD received"
-msgstr ""
+msgstr "Prijaté USSD"
 
 #: gammu/message.c:84 helper/message-display.c:138
 #: helper/message-display.c:258
