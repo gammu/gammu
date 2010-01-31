@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 13:22+0200\n"
+"PO-Revision-Date: 2010-01-31 13:23+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1846,7 +1846,7 @@ msgstr ""
 
 #: gammu/gammu.c:898
 msgid "Unknown help topic specified!"
-msgstr ""
+msgstr "Zadaná neznáma téma!"
 
 #: gammu/gammu.c:902
 #, c-format
