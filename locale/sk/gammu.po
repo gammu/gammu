@@ -2156,7 +2156,7 @@ msgstr "domáca sieť"
 
 #: gammu/misc.c:36
 msgid "roaming network"
-msgstr ""
+msgstr "roamingová sieť"
 
 #: gammu/misc.c:37
 msgid "requesting network"
