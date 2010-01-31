@@ -2293,7 +2293,7 @@ msgstr "SIM IMSI"
 
 #: gammu/misc.c:396
 msgid "Call info"
-msgstr ""
+msgstr "Informácie o hovore"
 
 #: gammu/misc.c:399
 #, c-format
