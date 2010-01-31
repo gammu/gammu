@@ -1611,6 +1611,7 @@ GSM_Error SMSD_FreeSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 		free(Config->Status);
 	}
 #endif
+	Config->Status = NULL;
 	return ERR_NONE;
 }
 /**
