@@ -2116,7 +2116,7 @@ msgstr "SIM"
 
 #: gammu/message.c:591
 msgid "phone"
-msgstr ""
+msgstr "telefón"
 
 #: gammu/message.c:595
 #, c-format
