@@ -2072,7 +2072,7 @@ msgstr ",doručené správy"
 
 #: gammu/message.c:506
 msgid ", Outbox folder"
-msgstr ""
+msgstr ",zložka s odoslanými správami"
 
 #: gammu/message.c:522
 msgid "..OK"
