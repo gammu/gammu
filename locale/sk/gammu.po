@@ -1899,7 +1899,7 @@ msgstr "Nepodarilo sa alokovať pamäť, končím!\n"
 
 #: gammu/gammu.c:1178
 msgid "Too few parameters!"
-msgstr ""
+msgstr "Príliš málo parametrov!"
 
 #: gammu/gammu.c:1191
 #, c-format
