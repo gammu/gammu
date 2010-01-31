@@ -1664,6 +1664,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 				SMSD_LogError(DEBUG_INFO, Config, "Terminating communication", error);
 				error = GSM_TerminateConnection(Config->gsm);
 			}
+			/* Did we reach limit for errors? */
 			if (max_failures != 0 && initerrors > max_failures) {
 				Config->failure = ERR_TIMEOUT;
 				SMSD_Log(DEBUG_INFO, Config, "Reached maximal number of failures (%d), terminating", max_failures);
