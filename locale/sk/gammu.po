@@ -2098,7 +2098,7 @@ msgstr "Počet správ"
 
 #: gammu/message.c:576 gammu/message.c:616
 msgid "If you want break, press Ctrl+C..."
-msgstr ""
+msgstr "Pro prerušenie stlačte Ctrl+C..."
 
 #: gammu/message.c:581
 #, c-format
