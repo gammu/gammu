@@ -1943,7 +1943,7 @@ msgstr "Záznam je prázdny"
 #: gammu/memory.c:119
 #, c-format
 msgid "%i entries empty, %i entries filled\n"
-msgstr ""
+msgstr "%i záznamov prázdnych, %i záznamov obsadených\n"
 
 #: gammu/message.c:35
 msgid "SMS message received"
