@@ -2444,7 +2444,7 @@ msgstr "napájané z batérie"
 
 #: gammu/misc.c:545
 msgid "battery connected, but not powered from battery"
-msgstr "batéria je pripojená, ale telefón ju napoužíva"
+msgstr "batéria je pripojená, ale telefón ju nepoužíva"
 
 #: gammu/misc.c:548
 msgid "battery connected and is being charged"
