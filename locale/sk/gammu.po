@@ -2064,7 +2064,7 @@ msgstr ", pamäť telefónu"
 
 #: gammu/message.c:502
 msgid ", phone or SIM memory"
-msgstr ",pamäť telefónu alebo SIM karta"
+msgstr ", pamäť telefónu alebo SIM karta"
 
 #: gammu/message.c:505 gammu/mms.c:30
 msgid ", Inbox folder"
