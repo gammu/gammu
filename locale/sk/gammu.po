@@ -2428,7 +2428,7 @@ msgstr "Nabíjací prúd"
 #: gammu/misc.c:530 gammu/misc.c:535
 #, c-format
 msgid "%i mA"
-msgstr ""
+msgstr "%i mA"
 
 #: gammu/misc.c:534
 msgid "Phone current"
