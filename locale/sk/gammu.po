@@ -2555,7 +2555,7 @@ msgstr "Ktorý typ resetu chcete uskutočniť (\"%s\") ?\n"
 
 #: gammu/misc.c:908 gammu/misc.c:955 helper/message-display.c:447
 msgid "Address"
-msgstr ""
+msgstr "Adresa"
 
 #: gammu/misc.c:950
 #, c-format
