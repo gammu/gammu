@@ -2468,7 +2468,7 @@ msgstr "Typ batérie"
 
 #: gammu/misc.c:571
 msgid "Lithium Ion"
-msgstr ""
+msgstr "Lithium Ion"
 
 #: gammu/misc.c:574
 msgid "Lithium Polymer"
