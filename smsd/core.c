@@ -1625,7 +1625,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	int                     errors = -1, initerrors=0;
  	time_t			lastreceive, lastreset = 0;
 	int i;
-	gboolean first_start = TRUE;
+	gboolean first_start = TRUE, force_reset = FALSE;
 
 	Config->failure = ERR_NONE;
 	Config->exit_on_failure = exit_on_failure;
@@ -1654,8 +1654,8 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 	while (!Config->shutdown) {
 		/* There were errors in communication - try to recover */
-		if (errors > 2 || errors == -1) {
-			if (errors != -1) {
+		if (errors > 2 || first_start || force_reset) {
+			if (! first_start) {
 				SMSD_Log(DEBUG_INFO, Config, "Already hit %d errors", errors);
 				SMSD_LogError(DEBUG_INFO, Config, "Terminating communication", error);
 				error=GSM_TerminateConnection(Config->gsm);
@@ -1695,11 +1695,12 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 				}
 				errors = 0;
 
-				if (initerrors > 3 || initerrors < 0) {
+				if (initerrors > 3 || force_reset ) {
 					error = GSM_Reset(Config->gsm, FALSE); /* soft reset */
 					SMSD_LogError(DEBUG_INFO, Config, "Reset return code", error);
 					lastreset = time(NULL);
 					sleep(5);
+					force_reset = FALSE;
 				}
 				break;
 			case ERR_DEVICEOPENERROR:
@@ -1735,12 +1736,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 				errors=0;
 			}
 
-			/* time for preventive reset */
-			if (Config->resetfrequency > 0 && difftime(time(NULL), lastreset) >= Config->resetfrequency) {
-				errors = 254;
-				initerrors = -2;
-				continue;
-			}
+		}
+		/* time for preventive reset */
+		if (Config->resetfrequency > 0 && difftime(time(NULL), lastreset) >= Config->resetfrequency) {
+			force_reset = TRUE;
+			continue;
 		}
 		if (!SMSD_SendSMS(Config, Service)) {
 			continue;
