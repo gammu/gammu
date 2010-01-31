@@ -2060,7 +2060,7 @@ msgstr ", SIM karta"
 
 #: gammu/message.c:501
 msgid ", phone memory"
-msgstr ",pamäť telefónu"
+msgstr ", pamäť telefónu"
 
 #: gammu/message.c:502
 msgid ", phone or SIM memory"
