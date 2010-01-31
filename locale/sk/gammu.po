@@ -621,7 +621,7 @@ msgstr "Tréning/Cestovanie"
 
 #: gammu/calendar.c:119 gammu/calendar.c:777
 msgid "Training/Winter Games"
-msgstr ""
+msgstr "Tréning/Zimné hry"
 
 #: gammu/calendar.c:123
 msgid "unknown type!"
