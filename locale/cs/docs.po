@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-31 13:00+0100\n"
-"PO-Revision-Date: 2010-01-31 11:33+0100\n"
+"PO-Revision-Date: 2010-01-31 13:05+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -6195,9 +6195,9 @@ msgstr "GAMMU-SMSDRC"
 # type: TH
 #. type: TH
 #: docs/user/gammu-smsdrc.5:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "January 31, 2010"
-msgstr "Leden 31, 2009"
+msgstr "Leden 31, 2010"
 
 # type: TH
 #. type: TH

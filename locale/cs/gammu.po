@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-31 13:00+0100\n"
-"PO-Revision-Date: 2010-01-25 21:38+0100\n"
+"PO-Revision-Date: 2010-01-31 13:06+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3390,14 +3390,14 @@ msgid "Error creating thread\n"
 msgstr "Chyba vytváření vlákna\n"
 
 #: helper/cmdline.c:18
-#, fuzzy, c-format
+#, c-format
 msgid "Number out of range: %s\n"
-msgstr "Počet zpráv: %i"
+msgstr "Číslo je mimo povolený rozsah: %s\n"
 
 #: helper/cmdline.c:23
-#, fuzzy, c-format
+#, c-format
 msgid "Parameter is not a number: %s\n"
-msgstr "Parametr \"%s\" není známý\n"
+msgstr "Parametr není číslo: %s\n"
 
 #: helper/formats.h:2
 #, c-format
