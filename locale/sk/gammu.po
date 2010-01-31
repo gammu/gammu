@@ -2672,7 +2672,7 @@ msgstr "Vymazať prijaté hovory?"
 
 #: gammu/misc.c:1353
 msgid "Delete phone calendar notes?"
-msgstr ""
+msgstr "Vymazať kalendár?"
 
 #: gammu/misc.c:1377
 msgid "Delete phone todos?"
