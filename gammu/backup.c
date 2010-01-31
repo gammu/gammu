@@ -15,6 +15,7 @@
 #include "../helper/memory-display.h"
 #include "../helper/printing.h"
 #include "../helper/string.h"
+#include "../helper/cmdline.h"
 
 void SaveFile(int argc, char *argv[])
 {
@@ -25,22 +26,24 @@ void SaveFile(int argc, char *argv[])
 	FILE			*file;
 	unsigned char		Buffer[100000];
 	GSM_MemoryEntry		*pbk;
+	long int location;
 
 	if (strcasecmp(argv[2],"CALENDAR") == 0) {
-		if (argc<5) {
+		if (argc < 5) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			Terminate(2);
 		}
+		location = GetInt(argv[5]) - 1;
 		error = GSM_ReadBackupFile(argv[4], &Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error != ERR_NOTIMPLEMENTED) {
 			Print_Error(error);
 		}
 		i = 0;
-		while (Backup.Calendar[i]!=NULL) {
-			if (i == atoi(argv[5])-1) break;
+		while (Backup.Calendar[i] != NULL) {
+			if (i == location) break;
 			i++;
 		}
-		if (i != atoi(argv[5])-1 || Backup.Calendar[i] == NULL) {
+		if (i != location || Backup.Calendar[i] == NULL) {
 			printf("%s\n", _("Calendar note not found in file"));
 			GSM_FreeBackup(&Backup);
 			Terminate(2);
@@ -50,18 +53,21 @@ void SaveFile(int argc, char *argv[])
 		GSM_FreeBackup(&Backup);
 		Print_Error(error);
 	} else if (strcasecmp(argv[2],"BOOKMARK") == 0) {
-		if (argc<5) {
+		if (argc < 5) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			Terminate(2);
 		}
-		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
-		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
+		location = GetInt(argv[5]) - 1;
+		error = GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
+		if (error != ERR_NOTIMPLEMENTED) {
+			Print_Error(error);
+		}
 		i = 0;
 		while (Backup.WAPBookmark[i]!=NULL) {
-			if (i == atoi(argv[5])-1) break;
+			if (i == location) break;
 			i++;
 		}
-		if (i != atoi(argv[5])-1 || Backup.WAPBookmark[i] == NULL) {
+		if (i != location || Backup.WAPBookmark[i] == NULL) {
 			printf("%s\n", _("WAP bookmark not found in file"));
 			GSM_FreeBackup(&Backup);
 			Terminate(2);
@@ -75,14 +81,15 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			Terminate(2);
 		}
+		location = GetInt(argv[5]) - 1;
 		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.Note[i]!=NULL) {
-			if (i == atoi(argv[5])-1) break;
+			if (i == location) break;
 			i++;
 		}
-		if (i != atoi(argv[5])-1 || Backup.Note[i] == NULL) {
+		if (i != location || Backup.Note[i] == NULL) {
 			printf("%s\n", _("Note not found in file"));
 			GSM_FreeBackup(&Backup);
 			Terminate(2);
@@ -96,14 +103,15 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			Terminate(2);
 		}
+		location = GetInt(argv[5]) - 1;
 		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.ToDo[i]!=NULL) {
-			if (i == atoi(argv[5])-1) break;
+			if (i == location) break;
 			i++;
 		}
-		if (i != atoi(argv[5])-1 || Backup.ToDo[i] == NULL) {
+		if (i != location || Backup.ToDo[i] == NULL) {
 			printf("%s\n", _("Todo note not found in file"));
 			GSM_FreeBackup(&Backup);
 			Terminate(2);
@@ -117,15 +125,16 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location and memory type?"));
 			Terminate(2);
 		}
+		location = GetInt(argv[6]) - 1;
 		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], FALSE));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		if (strcasecmp(argv[5],"SM") == 0) {
 			while (Backup.SIMPhonebook[i]!=NULL) {
-				if (i == atoi(argv[6])-1) break;
+				if (i == location) break;
 				i++;
 			}
-			if (i != atoi(argv[6])-1 || Backup.SIMPhonebook[i] == NULL) {
+			if (i != location || Backup.SIMPhonebook[i] == NULL) {
 				printf("%s\n", _("Phonebook entry not found in file"));
 				GSM_FreeBackup(&Backup);
 				Terminate(2);
@@ -133,10 +142,10 @@ void SaveFile(int argc, char *argv[])
 			pbk = Backup.SIMPhonebook[i];
 		} else if (strcasecmp(argv[5],"ME") == 0) {
 			while (Backup.PhonePhonebook[i]!=NULL) {
-				if (i == atoi(argv[6])-1) break;
+				if (i == location) break;
 				i++;
 			}
-			if (i != atoi(argv[6])-1 || Backup.PhonePhonebook[i] == NULL) {
+			if (i != location || Backup.PhonePhonebook[i] == NULL) {
 				printf("%s\n", _("Phonebook entry not found in file"));
 				GSM_FreeBackup(&Backup);
 				Terminate(2);

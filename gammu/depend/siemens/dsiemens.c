@@ -13,6 +13,7 @@
 #include "../../gammu.h"
 #include "dsiemens.h"
 #include "chiffre.h"
+#include "../../../helper/cmdline.h"
 
 extern GSM_Error  ATGEN_GetSIMIMSI (GSM_StateMachine *sm, char *IMSI);
 extern GSM_Error  ATGEN_GetMemoryStatus (GSM_StateMachine *sm, GSM_MemoryStatus *status);
@@ -298,7 +299,7 @@ void ATSIEMENSActivateNetmon(int argc, char *argv[])
 	gsm->User.UserReplyFunctions=UserReplyFunctionsAtS;
 
 	printf ("Activate NetMonitor...\n");
-	netmon_type = atoi(argv[2]);
+	netmon_type = GetInt(argv[2]);
 
 	if ((netmon_type==1) || (netmon_type==2)) {
 	    error   = ATGEN_GetSIMIMSI (gsm,imsi);
@@ -350,7 +351,7 @@ void ATSIEMENSNetmonitor(int argc, char *argv[])
 	gsm->User.UserReplyFunctions=UserReplyFunctionsAtS;
 
 	printf ("Getting Siemens NetMonitor...\n");
-	test_no = atoi(argv[2]);
+	test_no = GetInt(argv[2]);
 	error   = ATSIEMENS_GetNetmon (gsm,test_no+1);
 	Print_Error(error);
 	GSM_Terminate();

@@ -15,6 +15,7 @@
 #include "../../../libgammu/service/gsmnet.h"
 #include "../../gammu.h"
 #include "../../../helper/string.h"
+#include "../../../helper/cmdline.h"
 
 extern GSM_Reply_Function UserReplyFunctions3[];
 
@@ -312,13 +313,13 @@ void DCT3DisplayTest(int argc, char *argv[])
 
 	CheckDCT3();
 
-	if (atoi(argv[2]) != 1 && atoi(argv[2]) != 2) {
+	if (GetInt(argv[2]) != 1 && GetInt(argv[2]) != 2) {
 		printf("Give 1 or 2 as test number\n");
 	}
 
 	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
-	req[4] = atoi(argv[2]);
+	req[4] = GetInt(argv[2]);
 	gsm->Protocol.Functions->WriteMessage(gsm, req, 5, 0x40);
 
 	printf("Press any key to continue...\n");
@@ -341,12 +342,12 @@ void DCT3netmonitor(int argc, char *argv[])
 
         CheckDCT3();
 
-	error=DCT3_Netmonitor(gsm, atoi(argv[2]), value);
+	error=DCT3_Netmonitor(gsm, GetInt(argv[2]), value);
 	Print_Error(error);
 
 	printf("%s\n",value);
 #ifdef GSM_ENABLE_BEEP
-	if (atoi(argv[2]) == 243) GSM_PhoneBeep();
+	if (GetInt(argv[2]) == 243) GSM_PhoneBeep();
 #endif
 	GSM_Terminate();
 }

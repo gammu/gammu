@@ -51,6 +51,7 @@ target_link_libraries (gammu messagecmdline)
 target_link_libraries (gammu memorydisplay)
 target_link_libraries (gammu printing)
 target_link_libraries (gammu string)
+target_link_libraries (gammu cmdline)
 target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
 
 include_directories (

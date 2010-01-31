@@ -8,6 +8,7 @@
 #include "common.h"
 #include "../helper/formats.h"
 #include "../helper/printing.h"
+#include "../helper/cmdline.h"
 
 #ifdef CURL_FOUND
 #include <curl/curl.h>
@@ -311,7 +312,7 @@ void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 		Terminate(2);
 	}
 
-	*start = atoi(argv[num]);
+	*start = GetInt(argv[num]);
 	if (*start == 0) {
 		printf_err("%s\n", _("Please enumerate locations from 1"));
 		Terminate(2);
@@ -320,7 +321,7 @@ void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 	if (stop != NULL) {
 		*stop = *start;
 		if (argc >= num + 2)
-			*stop = atoi(argv[num + 1]);
+			*stop = GetInt(argv[num + 1]);
 		if (*stop == 0) {
 			printf_err("%s\n",
 				   _("Please enumerate locations from 1"));

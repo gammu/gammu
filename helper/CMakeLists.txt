@@ -33,6 +33,7 @@ GAMMU_TUNE_SHARED(messagecmdline)
 target_link_libraries (messagecmdline libGammu)
 target_link_libraries (messagecmdline printing)
 target_link_libraries (messagecmdline string)
+target_link_libraries (messagecmdline cmdline)
 
 add_library (messagedisplay STATIC message-display.c)
 GAMMU_TUNE_SHARED(messagedisplay)

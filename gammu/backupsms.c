@@ -10,6 +10,7 @@
 #include "message.h"
 #include "common.h"
 #include "../helper/formats.h"
+#include "../helper/cmdline.h"
 
 #include "../helper/message-display.h"
 #include "../helper/printing.h"
@@ -124,7 +125,7 @@ void AddSMS(int argc UNUSED, char *argv[])
 
 	if (argc == 5 && strcasecmp(argv[4],"-yes") == 0) always_answer_yes = TRUE;
 
-	folder = atoi(argv[2]);
+	folder = GetInt(argv[2]);
 
 	error = GSM_ReadSMSBackupFile(argv[3], &Backup);
 	Print_Error(error);

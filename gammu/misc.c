@@ -19,6 +19,7 @@
 #include "../helper/formats.h"
 #include "../helper/printing.h"
 #include "../helper/string.h"
+#include "../helper/cmdline.h"
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 #  include "depend/nokia/dct3.h"
@@ -447,7 +448,7 @@ void Monitor(int argc, char *argv[])
 	int 			count = -1;
 
 	if (argc >= 3) {
-		count = atoi(argv[2]);
+		count = GetInt(argv[2]);
 		if (count <= 0) count = -1;
 	}
 
@@ -754,7 +755,7 @@ void MakeTerminatedCall(int argc, char *argv[])
 	error=GSM_DialVoice(gsm, argv[2], ShowNumber);
 	Print_Error(error);
 
-	sleep(atoi(argv[3]));
+	sleep(GetInt(argv[3]));
 	GSM_ReadDevice(gsm,TRUE);
 
 	if (TerminateID != -1) {
@@ -772,7 +773,7 @@ void CancelCall(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 	if (argc>2) {
-		error=GSM_CancelCall(gsm,atoi(argv[2]),FALSE);
+		error=GSM_CancelCall(gsm,GetInt(argv[2]),FALSE);
 	} else {
 		error=GSM_CancelCall(gsm,0,TRUE);
 	}
@@ -787,7 +788,7 @@ void AnswerCall(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 	if (argc>2) {
-		error=GSM_AnswerCall(gsm,atoi(argv[2]),FALSE);
+		error=GSM_AnswerCall(gsm,GetInt(argv[2]),FALSE);
 	} else {
 		error=GSM_AnswerCall(gsm,0,TRUE);
 	}
@@ -801,7 +802,7 @@ void UnholdCall(int argc UNUSED, char *argv[])
 	GSM_Error error;
 	GSM_Init(TRUE);
 
-	error=GSM_UnholdCall(gsm,atoi(argv[2]));
+	error=GSM_UnholdCall(gsm,GetInt(argv[2]));
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -812,7 +813,7 @@ void HoldCall(int argc UNUSED, char *argv[])
 	GSM_Error error;
 	GSM_Init(TRUE);
 
-	error=GSM_HoldCall(gsm,atoi(argv[2]));
+	error=GSM_HoldCall(gsm,GetInt(argv[2]));
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -823,7 +824,7 @@ void ConferenceCall(int argc UNUSED, char *argv[])
 	GSM_Error error;
 	GSM_Init(TRUE);
 
-	error=GSM_ConferenceCall(gsm,atoi(argv[2]));
+	error=GSM_ConferenceCall(gsm,GetInt(argv[2]));
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -834,7 +835,7 @@ void SplitCall(int argc UNUSED, char *argv[])
 	GSM_Error error;
 	GSM_Init(TRUE);
 
-	error=GSM_SplitCall(gsm,atoi(argv[2]));
+	error=GSM_SplitCall(gsm,GetInt(argv[2]));
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -846,7 +847,7 @@ void SwitchCall(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 	if (argc > 2) {
-		error=GSM_SwitchCall(gsm,atoi(argv[2]),FALSE);
+		error=GSM_SwitchCall(gsm,GetInt(argv[2]),FALSE);
 	} else {
 		error=GSM_SwitchCall(gsm,0,TRUE);
 	}
@@ -861,7 +862,7 @@ void TransferCall(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 	if (argc > 2) {
-		error=GSM_TransferCall(gsm,atoi(argv[2]),FALSE);
+		error=GSM_TransferCall(gsm,GetInt(argv[2]),FALSE);
 	} else {
 		error=GSM_TransferCall(gsm,0,TRUE);
 	}
@@ -1162,7 +1163,7 @@ void SetBitmap(int argc, char *argv[])
 			Terminate(2);
 		}
 		MultiBitmap.Bitmap[0].Type		= GSM_PictureImage;
-		MultiBitmap.Bitmap[0].Location		= atoi(argv[4]);
+		MultiBitmap.Bitmap[0].Location		= GetInt(argv[4]);
 		error=GSM_ReadBitmapFile(argv[3],&MultiBitmap);
 		Print_Error(error);
 		memcpy(&Bitmap,&MultiBitmap.Bitmap[0],sizeof(GSM_Bitmap));
@@ -1175,7 +1176,7 @@ void SetBitmap(int argc, char *argv[])
 		Bitmap.Type = GSM_ColourOperatorLogo_ID;
 		strcpy(Bitmap.NetworkCode,"000 00");
 		if (argc > 3) {
-			Bitmap.ID = atoi(argv[3]);
+			Bitmap.ID = GetInt(argv[3]);
 			if (argc>4) {
 				strncpy(Bitmap.NetworkCode,argv[4],6);
 			} else {
@@ -1191,12 +1192,12 @@ void SetBitmap(int argc, char *argv[])
 		Bitmap.Location = 0;
 		if (argc > 3) {
 			Bitmap.Location = 1;
-			Bitmap.ID 	= atoi(argv[3]);
+			Bitmap.ID 	= GetInt(argv[3]);
 		}
 	} else if (strcasecmp(argv[2],"WALLPAPER") == 0) {
 		Bitmap.Type 		= GSM_ColourWallPaper_ID;
 		Bitmap.ID		= 0;
-		if (argc > 3) Bitmap.ID = atoi(argv[3]);
+		if (argc > 3) Bitmap.ID = GetInt(argv[3]);
 	} else if (strcasecmp(argv[2],"OPERATOR") == 0) {
 		MultiBitmap.Bitmap[0].Type	= GSM_OperatorLogo;
 		MultiBitmap.Bitmap[0].Location 	= 1;
@@ -1260,7 +1261,7 @@ void SetRingtone(int argc, char *argv[])
 			printf(_("Unknown parameter (\"%s\")"),argv[i]);
 			Terminate(2);
 		case 1:
-			ringtone.Location=atoi(argv[i]);
+			ringtone.Location=GetInt(argv[i]);
 			nextlong = 0;
 			break;
 		case 2:
@@ -2268,7 +2269,7 @@ void CallDivert(int argc, char *argv[])
 		if (argc > 5) EncodeUnicode(cd.Request.Number,argv[5],strlen(argv[5]));
 
 		cd.Request.Timeout = 0;
-		if (argc > 6) cd.Request.Timeout = atoi(argv[6]);
+		if (argc > 6) cd.Request.Timeout = GetInt(argv[6]);
 
 		error = GSM_SetCallDivert(gsm,&cd);
 	    	Print_Error(error);

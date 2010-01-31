@@ -27,6 +27,7 @@
 #include "../helper/locales.h"
 #include "../helper/printing.h"
 #include "../helper/string.h"
+#include "../helper/cmdline.h"
 
 #ifdef DEBUG
 #  include "sniff.h"
@@ -284,15 +285,17 @@ int VersionToInt(const char *Buffer)
 	retval = atoi(Buffer) * 10000;
 	while (Buffer[pos] != '.') {
 		pos++;
-		if (pos == strlen(Buffer))
+		if (Buffer[pos] == '\0') {
 			return retval;
+		}
 	}
 	pos++;
 	retval += atoi(Buffer + pos) * 100;
 	while (Buffer[pos] != '.') {
 		pos++;
-		if (pos == strlen(Buffer))
+		if (Buffer[pos] == '\0') {
 			return retval;
+		}
 	}
 	pos++;
 	return retval + atoi(Buffer + pos);
@@ -1084,7 +1087,7 @@ int main(int argc, char *argv[])
 		    strcasecmp(argv[i], "-s") == 0) &&
 		    i + 1 < argc) {
 			i++;
-			only_config = atoi(argv[i]);
+			only_config = GetInt(argv[i]);
 			start += 2;
 		} else if ((strcasecmp(argv[i], "--debug") == 0 ||
 		    strcasecmp(argv[i], "-d") == 0) &&
@@ -1104,7 +1107,7 @@ int main(int argc, char *argv[])
 			start += 2;
 		} else if (isdigit((int)argv[i][0])) {
 			/* Compatibilitty: config file section */
-			only_config = atoi(argv[i]);
+			only_config = GetInt(argv[i]);
 			if (only_config >= 0)
 				start++;
 			else

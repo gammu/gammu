@@ -25,6 +25,7 @@
 #include "../helper/message-cmdline.h"
 #include "../helper/printing.h"
 #include "../helper/string.h"
+#include "../helper/cmdline.h"
 
 volatile gboolean 			wasincomingsms 		= FALSE;
 
@@ -154,7 +155,7 @@ void SetSMSC(int argc, char *argv[])
 	GSM_Error error;
 	GSM_SMSC smsc;
 
-	smsc.Location = atoi(argv[2]);
+	smsc.Location = GetInt(argv[2]);
 	if (smsc.Location < 1) {
 		printf_err(_("Invalid SMSC location: %s\n"), argv[2]);
 		return;
@@ -256,8 +257,10 @@ void GetSMS(int argc, char *argv[])
 	GSM_MultiSMSMessage sms;
 	GSM_SMSFolders folders;
 	int start=0, stop=0, j=0;
+	long int folder;
 
 	GetStartStop(&start, &stop, 3, argc, argv);
+	folder = GetInt(argv[2]);
 
 	GSM_Init(TRUE);
 
@@ -265,7 +268,7 @@ void GetSMS(int argc, char *argv[])
 	Print_Error(error);
 
 	for (j = start; j <= stop; j++) {
-		sms.SMS[0].Folder	= atoi(argv[2]);
+		sms.SMS[0].Folder	= folder;
 		sms.SMS[0].Location	= j;
 		sms.Number = 0;
 		error=GSM_GetSMS(gsm, &sms);
@@ -290,7 +293,7 @@ void DeleteSMS(int argc, char *argv[])
 	GSM_SMSMessage sms;
 	int start=0, stop=0, i=0;
 
-	sms.Folder=atoi(argv[2]);
+	sms.Folder = GetInt(argv[2]);
 
 	GetStartStop(&start, &stop, 3, argc, argv);
 

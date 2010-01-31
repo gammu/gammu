@@ -18,6 +18,7 @@
 #include "printing.h"
 #include "string.h"
 #include "message-cmdline.h"
+#include "cmdline.h"
 
 typedef enum {
 	COMPOSE_ANIMATION = 1,
@@ -319,7 +320,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		BMP_AUTO_ALLOC(0);
 		bitmap[0]->Number 		= 0;
 		i				= 1;
-		frames_num = atoi(argv[startarg]);
+		frames_num = GetInt(argv[startarg]);
 		if (frames_num > GSM_MAX_MULTI_BITMAP) {
 			printf("%s\n", _("Too many animation frames!"));
 			exit(-1);
@@ -375,10 +376,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.WAPBookmark[i]!=NULL) {
-			if (i == atoi(argv[1 + startarg])-1) break;
+			if (i == GetInt(argv[1 + startarg])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[1 + startarg])-1) {
+		if (i != GetInt(argv[1 + startarg])-1) {
 			printf("%s\n", _("Bookmark not found in file"));
 			exit(-1);
 		}
@@ -399,10 +400,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.WAPSettings[i]!=NULL) {
-			if (i == atoi(argv[1 + startarg])-1) break;
+			if (i == GetInt(argv[1 + startarg])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[1 + startarg])-1 || Backup.WAPSettings[i] == NULL) {
+		if (i != GetInt(argv[1 + startarg])-1 || Backup.WAPSettings[i] == NULL) {
 			printf("%s\n", _("WAP settings not found in file"));
 			exit(-1);
 		}
@@ -443,10 +444,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.MMSSettings[i]!=NULL) {
-			if (i == atoi(argv[1 + startarg])-1) break;
+			if (i == GetInt(argv[1 + startarg])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[1 + startarg])-1 || Backup.MMSSettings[i] == NULL) {
+		if (i != GetInt(argv[1 + startarg])-1 || Backup.MMSSettings[i] == NULL) {
 			printf("%s\n", _("MMS settings not found in file"));
 			exit(-1);
 		}
@@ -480,10 +481,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.Calendar[i]!=NULL) {
-			if (i == atoi(argv[1 + startarg])-1) break;
+			if (i == GetInt(argv[1 + startarg])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[1 + startarg])-1) {
+		if (i != GetInt(argv[1 + startarg])-1) {
 			printf("%s\n", _("Calendar note not found in file"));
 			exit(-1);
 		}
@@ -503,10 +504,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.ToDo[i]!=NULL) {
-			if (i == atoi(argv[1 + startarg])-1) break;
+			if (i == GetInt(argv[1 + startarg])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[1 + startarg])-1) {
+		if (i != GetInt(argv[1 + startarg])-1) {
 			printf("%s\n", _("ToDo note not found in file"));
 			exit(-1);
 		}
@@ -528,20 +529,20 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		i = 0;
 		if (strcasecmp(argv[1 + startarg],"SM") == 0) {
 			while (Backup.SIMPhonebook[i]!=NULL) {
-				if (i == atoi(argv[2 + startarg])-1) break;
+				if (i == GetInt(argv[2 + startarg])-1) break;
 				i++;
 			}
-			if (i != atoi(argv[2 + startarg])-1) {
+			if (i != GetInt(argv[2 + startarg])-1) {
 				printf("%s\n", _("Phonebook entry not found in file"));
 				exit(-1);
 			}
 			SMSInfo.Entries[0].Phonebook = Backup.SIMPhonebook[i];
 		} else if (strcasecmp(argv[1 + startarg],"ME") == 0) {
 			while (Backup.PhonePhonebook[i]!=NULL) {
-				if (i == atoi(argv[2 + startarg])-1) break;
+				if (i == GetInt(argv[2 + startarg])-1) break;
 				i++;
 			}
-			if (i != atoi(argv[2 + startarg])-1) {
+			if (i != GetInt(argv[2 + startarg])-1) {
 				printf("%s\n", _("Phonebook entry not found in file"));
 				exit(-1);
 			}
@@ -1020,7 +1021,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			exit(-1);
 			break;
 		case 1: /* SMS folder - only during saving SMS */
-			Folder	 = atoi(argv[i]);
+			Folder	 = GetInt(argv[i]);
 			nextlong = 0;
 			break;
 		case 2: /* Remote number - only during saving SMS */
@@ -1028,7 +1029,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 3: /* SMSC set number */
-			SMSCSet	 = atoi(argv[i]);
+			SMSCSet	 = GetInt(argv[i]);
 			nextlong = 0;
 			break;
 		case 4: /* Number of SMSC */
@@ -1037,7 +1038,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong	= 0;
 			break;
 		case 5: /* Length of text SMS */
-			param_value = atoi(argv[i]);
+			param_value = GetInt(argv[i]);
 			if (param_value <= 0) {
 				printf(_("Wrong message length (\"%s\")\n"),argv[i]);
 				exit(-1);
@@ -1079,7 +1080,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 8:/* Reject duplicates ID */
-			SMSInfo.ReplaceMessage = atoi(argv[i]);
+			SMSInfo.ReplaceMessage = GetInt(argv[i]);
 			if (SMSInfo.ReplaceMessage < 1 || SMSInfo.ReplaceMessage > 7) {
 				printf(_("You have to give number between 1 and 7 (\"%s\")\n"),argv[i]);
 				exit(-1);
@@ -1132,7 +1133,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 12:/* EMS predefined sound/animation number */
-			SMSInfo.Entries[SMSInfo.EntriesNum].Number = atoi(argv[i]);
+			SMSInfo.Entries[SMSInfo.EntriesNum].Number = GetInt(argv[i]);
 			SMSInfo.EntriesNum++;
 			nextlong = 0;
 			break;
@@ -1155,7 +1156,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 16:/* Number of frames for EMS animation */
-			FramesNum = atoi(argv[i]);
+			FramesNum = GetInt(argv[i]);
 			if (FramesNum < 1 || FramesNum > 4) {
 				printf(_("You have to give number of EMS frames between 1 and 4 (\"%s\")\n"),argv[i]);
 				exit(-1);
@@ -1196,7 +1197,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 19:/* Number of protected items */
-			Protected 	= atoi(argv[i]);
+			Protected 	= GetInt(argv[i]);
 			nextlong 	= 0;
 			break;
 		case 20:/* Formatting text for EMS */
@@ -1242,7 +1243,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 21:/*MaxSMS*/
-			MaxSMS   = atoi(argv[i]);
+			MaxSMS   = GetInt(argv[i]);
 			nextlong = 0;
 			break;
 		case 22:/* profile name */

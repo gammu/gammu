@@ -12,6 +12,7 @@
 #include "calendar.h"
 
 #include "../helper/formats.h"
+#include "../helper/cmdline.h"
 
 void PrintCalendar(GSM_CalendarEntry * Note)
 {
@@ -509,7 +510,7 @@ void GetAlarm(int argc, char *argv[])
 	if (argc < 3) {
 		Alarm.Location = 1;
 	} else {
-		Alarm.Location = atoi(argv[2]);
+		Alarm.Location = GetInt(argv[2]);
 	}
 	error = GSM_GetAlarm(gsm, &Alarm);
 	switch (error) {
@@ -545,8 +546,8 @@ void SetAlarm(int argc UNUSED, char *argv[])
 	GSM_Alarm Alarm;
 	GSM_Error error;
 
-	Alarm.DateTime.Hour = atoi(argv[2]);
-	Alarm.DateTime.Minute = atoi(argv[3]);
+	Alarm.DateTime.Hour = GetInt(argv[2]);
+	Alarm.DateTime.Minute = GetInt(argv[3]);
 	Alarm.DateTime.Second = 0;
 	Alarm.Location = 1;
 	Alarm.Repeating = TRUE;
@@ -956,7 +957,7 @@ void ListToDoCategory(int argc UNUSED, char *argv[])
 	}
 
 	if (Number) {
-		j = atoi(argv[2]);
+		j = GetInt(argv[2]);
 		if (j > 0) {
 			ListToDoCategoryEntries(j);
 		}

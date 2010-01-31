@@ -16,6 +16,7 @@
 
 #include "../../../helper/formats.h"
 #include "../../../helper/string.h"
+#include "../../../helper/cmdline.h"
 
 extern GSM_Reply_Function UserReplyFunctions4[];
 
@@ -459,7 +460,7 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 
 	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
-	SetLevel[4] = atoi(argv[2]);
+	SetLevel[4] = GetInt(argv[2]);
 	error=GSM_WaitFor (gsm, SetLevel, 6, 0x1C, 4, ID_User3);
 	Print_Error(error);
 
@@ -681,7 +682,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	FILE		*WAVFile;
 	GSM_Error error;
 
-	Location = atoi(argv[2]);
+	Location = GetInt(argv[2]);
 	if (Location == 0x00) {
 		printf("%s\n", _("Please enumerate locations from 1"));
 		return;
@@ -999,7 +1000,7 @@ void DCT4DisplayTest(int argc, char *argv[])
 
 	gsm->Protocol.Functions->WriteMessage(gsm, req0, 6, 0x40);
 
-	req[8] = atoi(argv[2]);
+	req[8] = GetInt(argv[2]);
 	gsm->Protocol.Functions->WriteMessage(gsm, req, 10, 0x40);
 
 	printf("%s\n", _("Press any key to continue..."));
@@ -1263,13 +1264,13 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 	error=GSM_GetRingtonesInfo(gsm,&Info);
 	Print_Error(error);
 
-	if (atoi(argv[2]) > Info.Number-1) {
+	if (GetInt(argv[2]) > Info.Number-1) {
 		GSM_Terminate();
 		return;
 	}
-	req[4] = Info.Ringtone[atoi(argv[2])-1].ID / 256;
-	req[5] = Info.Ringtone[atoi(argv[2])-1].ID % 256;
-	req[6] = Info.Ringtone[atoi(argv[2])-1].Group;
+	req[4] = Info.Ringtone[GetInt(argv[2])-1].ID / 256;
+	req[5] = Info.Ringtone[GetInt(argv[2])-1].ID % 256;
+	req[6] = Info.Ringtone[GetInt(argv[2])-1].Group;
 
 	error=GSM_WaitFor (gsm, req, 18, 0x1F, 4, ID_User3);
 	Print_Error(error);

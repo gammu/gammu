@@ -12,6 +12,7 @@
 #include "../helper/memory-display.h"
 #include "../helper/printing.h"
 #include "../helper/string.h"
+#include "../helper/cmdline.h"
 
 void GetAllMemory(int argc UNUSED, char *argv[])
 {
@@ -388,7 +389,7 @@ void ListMemoryCategory(int argc UNUSED, char *argv[])
 	}
 
 	if (Number) {
-		j = atoi(argv[2]);
+		j = GetInt(argv[2]);
 		if (j > 0) {
 			ListMemoryCategoryEntries(j);
 		}
