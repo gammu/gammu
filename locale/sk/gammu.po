@@ -2217,7 +2217,7 @@ msgstr "V odpovedi z OpenCellID sa nepodarilo načítať zemepisnú šírku!\n"
 
 #: gammu/misc.c:252
 msgid "Failed to find longitude in OpenCellID reply!\n"
-msgstr ""
+msgstr "V odpovedi z OpenCellID sa nepodarilo nájsť zemepisnú dĺžku!\n"
 
 #: gammu/misc.c:257
 msgid "Failed to parse longitude from OpenCellID reply!\n"
