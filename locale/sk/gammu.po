@@ -2139,7 +2139,7 @@ msgstr "Nastala nejaká chyba, neznáma operácia so správou!\n"
 #: gammu/message.c:677
 #, c-format
 msgid "Too high folder number (max. %i)\n"
-msgstr ""
+msgstr "Príliš vysoké číslo zložky (maximálne %i)\n"
 
 #: gammu/message.c:683
 #, c-format
