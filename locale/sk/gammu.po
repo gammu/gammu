@@ -2320,7 +2320,7 @@ msgstr "koniec hovoru(neznáma príčina)"
 
 #: gammu/misc.c:406
 msgid "call end from our side"
-msgstr ""
+msgstr "hovor ukončený z našej strany"
 
 #: gammu/misc.c:407
 #, c-format
