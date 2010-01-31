@@ -2383,7 +2383,7 @@ msgstr "Kalendár"
 
 #: gammu/misc.c:498
 msgid "Battery level"
-msgstr ""
+msgstr "Stav betérie"
 
 #: gammu/misc.c:503
 msgid "Battery capacity"
