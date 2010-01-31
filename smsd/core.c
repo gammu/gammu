@@ -1757,21 +1757,31 @@ done:
 	return Config->failure;
 }
 
+/**
+ * Function to inject message to service backend.
+ */
 GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms, char *NewID)
 {
 	GSM_SMSDService		*Service;
 	GSM_Error error;
 
+	/* Get service object */
 	error = SMSGetService(Config, &Service);
 	if (error != ERR_NONE) return ERR_UNKNOWN;
 
+	/* Initialize service */
 	error = SMSD_Init(Config, Service);
 	if (error != ERR_NONE) return ERR_UNKNOWN;
 
+	/* Store message in outbox */
 	error = Service->CreateOutboxSMS(sms, Config, NewID);
 	return error;
 }
 
+/**
+ * Returns current status of SMSD, either from shared memory segment or
+ * from process memory if SMSD is running in same process.
+ */
 GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
 {
 	GSM_Error error;
