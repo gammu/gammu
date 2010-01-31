@@ -1649,7 +1649,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 	Config->running = TRUE;
 
-	Config->SendingSMSStatus 	= ERR_UNKNOWN;
+	Config->SendingSMSStatus = ERR_UNKNOWN;
 
 	while (!Config->shutdown) {
 		/* There were errors in communication - try to recover */
@@ -1728,7 +1728,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 				initerrors++;
 				continue;
 			} else {
-				errors=0;
+				errors = 0;
 			}
 
 			initerrors = 0;
@@ -1738,7 +1738,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 				errors++;
 				continue;
 			} else {
-				errors=0;
+				errors = 0;
 			}
 
 		}
