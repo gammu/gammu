@@ -2164,7 +2164,7 @@ msgstr "požaduje sieť"
 
 #: gammu/misc.c:38
 msgid "not logged into network"
-msgstr ""
+msgstr "neprihlásený do siete"
 
 #: gammu/misc.c:39
 msgid "registration to network denied"
