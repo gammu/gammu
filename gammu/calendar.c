@@ -439,7 +439,7 @@ void GetDateTime(int argc UNUSED, char *argv[]UNUSED)
 void SetDateTime(int argc, char *argv[])
 {
 	GSM_DateTime date_time;
-	char shift, *parse;
+	char shift, *parse, *parse2;
 	GSM_Error error;
 
 	GSM_Init(TRUE);
@@ -459,12 +459,14 @@ void SetDateTime(int argc, char *argv[])
 			error = ERR_INVALIDDATETIME;
 			parse = strchr(argv[2], ':');
 			if (parse != NULL) {
-				date_time.Hour = atoi(argv[2]);
-				date_time.Minute = atoi(parse + 1);
-				parse = strchr(parse + 1, ':');
-				if (parse != NULL) {
-					date_time.Second = atoi(parse + 1);
+				*parse = '\0';
+				date_time.Hour = GetInt(argv[2]);
+				parse2 = strchr(parse + 1, ':');
+				if (parse2 != NULL) {
+					*parse2 = '\0';
+					date_time.Second = GetInt(parse2 + 1);
 				}
+				date_time.Minute = GetInt(parse + 1);
 				shift = 1;
 				if (CheckTime(&date_time)) {
 					error = ERR_NONE;
@@ -475,12 +477,14 @@ void SetDateTime(int argc, char *argv[])
 			if (argc - 1 >= 2 + shift) {
 				parse = strchr(argv[2 + shift], '/');
 				if (parse != NULL) {
-					date_time.Year = atoi(argv[2 + shift]);
-					date_time.Month = atoi(parse + 1);
-					parse = strchr(parse + 1, '/');
-					if (parse != NULL) {
-						date_time.Day = atoi(parse + 1);
+					*parse = '\0';
+					date_time.Year = GetInt(argv[2 + shift]);
+					parse2 = strchr(parse + 1, '/');
+					if (parse2 != NULL) {
+						*parse2 = '\0';
+						date_time.Day = GetInt(parse2 + 1);
 					}
+					date_time.Month = GetInt(parse + 1);
 					if (CheckDate(&date_time)) {
 						error = ERR_NONE;
 					} else {

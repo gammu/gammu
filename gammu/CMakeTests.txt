@@ -176,6 +176,7 @@ gammu_test(setdatetime "Updating specified parts of date and time in phone." "9:
 gammu_test(setdatetime "Updating specified parts of date and time in phone." "2009/03/31")
 gammu_test(setdatetime "Setting time in phone to the same time as is set in computer." )
 gammu_test_fail(setdatetime "Invalid date or time specified." "fail")
+gammu_test_fail(setdatetime "Parameter is not a number" "9:xx")
 gammu_test(getsmsfolders "\\n5.")
 gammu_test(dialvoice "" 123456)
 gammu_test(maketerminatedcall "" 123456 10)
