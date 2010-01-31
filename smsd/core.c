@@ -1625,6 +1625,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	int                     errors = -1, initerrors=0;
  	time_t			lastreceive, lastreset = 0;
 	int i;
+	gboolean first_start = TRUE;
 
 	Config->failure = ERR_NONE;
 	Config->exit_on_failure = exit_on_failure;
@@ -1678,8 +1679,8 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			switch (error) {
 			case ERR_NONE:
 				GSM_SetSendSMSStatusCallback(Config->gsm, SMSD_SendSMSStatusCallback, Config);
-				if (errors == -1) {
-					errors = 0;
+				/* On first start we need to initialize some variables */
+				if (first_start) {
 					if (GSM_GetIMEI(Config->gsm, Config->Status->IMEI) != ERR_NONE) {
 						errors++;
 					} else {
@@ -1690,9 +1691,10 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 						}
 						GSM_SetFastSMSSending(Config->gsm, TRUE);
 					}
-				} else {
-					errors = 0;
+					first_start = FALSE;
 				}
+				errors = 0;
+
 				if (initerrors > 3 || initerrors < 0) {
 					error = GSM_Reset(Config->gsm, FALSE); /* soft reset */
 					SMSD_LogError(DEBUG_INFO, Config, "Reset return code", error);
