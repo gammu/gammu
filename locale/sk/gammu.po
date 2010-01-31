@@ -2612,7 +2612,7 @@ msgstr "Bitmapa"
 
 #: gammu/misc.c:1048 gammu/misc.c:1578 gammu/misc.c:1581 gammu/mms.c:102
 msgid "enabled"
-msgstr ""
+msgstr "povolené"
 
 #: gammu/misc.c:1050 gammu/misc.c:1579 gammu/misc.c:1582 gammu/mms.c:104
 msgid "disabled"
