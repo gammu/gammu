@@ -53,7 +53,7 @@ struct _GSM_SMSDConfig {
 	/* general options */
 	GSM_StringArray IncludeNumbersList, ExcludeNumbersList;
 	GSM_StringArray IncludeSMSCList, ExcludeSMSCList;
-	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency;
+	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency, statusfrequency;
 	int deliveryreportdelay;
 	unsigned int	resetfrequency;
 	unsigned int multiparttimeout;

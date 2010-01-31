@@ -662,6 +662,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->deliveryreportdelay = INI_GetInt(Config->smsdcfgfile, "smsd", "deliveryreportdelay", 600);
 	Config->sendtimeout = INI_GetInt(Config->smsdcfgfile, "smsd", "sendtimeout", 30);
 	Config->receivefrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "receivefrequency", 0);
+	Config->statusfrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "statusfrequency", 0);
 	Config->checksecurity = INI_GetBool(Config->smsdcfgfile, "smsd", "checksecurity", TRUE);
 	Config->checksignal = INI_GetBool(Config->smsdcfgfile, "smsd", "checksignal", TRUE);
 	Config->checkbattery = INI_GetBool(Config->smsdcfgfile, "smsd", "checkbattery", TRUE);
@@ -1618,7 +1619,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	GSM_SMSDService		*Service;
 	GSM_Error		error;
 	int                     errors = -1, initerrors=0;
- 	time_t			lastreceive, lastreset = 0, lastnothingsent = 0;
+ 	time_t			lastreceive, lastreset = 0, lastnothingsent = 0, laststatus = 0;
 	int i;
 	gboolean first_start = TRUE, force_reset = FALSE;
 
@@ -1754,7 +1755,10 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			/* We don't care about other errors here, they are handled in SMSD_SendSMS */
 		}
 		/* Refresh phone status in shared memory and in service */
-		SMSD_PhoneStatus(Config);
+		if ((Config->statusfrequency > 0) && (difftime(time(NULL), laststatus) >= Config->statusfrequency)) {
+			SMSD_PhoneStatus(Config);
+			laststatus = time(NULL);
+		}
 		Service->RefreshPhoneStatus(Config);
 
 		/* Sleep some time before another loop */

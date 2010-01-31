@@ -128,6 +128,14 @@ CommTimeout seconds and after each sent SMS.
 Default is 0 (not used).
 
 .TP
+.BI StatusFrequency 
+
+The number of seconds between refreshing phone status (battery, signal) stored
+in shared memory and possibly in service backends. Use 0 to disable.
+
+Default is 15.
+
+.TP
 .BI MultipartTimeout
 
 The number of seconds how long will SMSD wait for all parts of multipart
