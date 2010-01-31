@@ -2598,7 +2598,7 @@ msgstr "(súbor s ID %i)\n"
 #: gammu/misc.c:1037
 #, c-format
 msgid "\"%s\" (ID %i)\n"
-msgstr ""
+msgstr "\"%s\" (ID %i)\n"
 
 #. l10n: Ringtone ID format
 #: gammu/misc.c:1042
