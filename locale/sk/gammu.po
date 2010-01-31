@@ -2341,7 +2341,7 @@ msgstr "hovor je obnovený"
 
 #: gammu/misc.c:411
 msgid "call switched"
-msgstr ""
+msgstr "hovor bol presmerovaný"
 
 #: gammu/misc.c:418
 #, c-format
