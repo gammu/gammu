@@ -2039,7 +2039,7 @@ msgstr "Platnosť"
 
 #: gammu/message.c:232
 msgid "Maximum time"
-msgstr ""
+msgstr "Maximálny čas"
 
 #: gammu/message.c:348 gammu/message.c:421 gammu/message.c:694
 msgid "Corrupted message, skipping"
