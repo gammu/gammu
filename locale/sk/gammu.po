@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 14:02+0200\n"
+"PO-Revision-Date: 2010-01-31 14:03+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2456,7 +2456,7 @@ msgstr "batéria je pripojená na je plne nabitá"
 
 #: gammu/misc.c:554
 msgid "battery not connected"
-msgstr ""
+msgstr "batéria nie je preipojená"
 
 #: gammu/misc.c:557
 msgid "detected power failure"
