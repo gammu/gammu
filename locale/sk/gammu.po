@@ -2160,7 +2160,7 @@ msgstr "roamingová sieť"
 
 #: gammu/misc.c:37
 msgid "requesting network"
-msgstr ""
+msgstr "požaduje sieť"
 
 #: gammu/misc.c:38
 msgid "not logged into network"
