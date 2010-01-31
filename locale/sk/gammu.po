@@ -1994,7 +1994,7 @@ msgstr "Ukončené"
 
 #: gammu/message.c:97
 msgid "Another client replied"
-msgstr ""
+msgstr "Iný klient už odpovedal"
 
 #: gammu/message.c:100
 msgid "Not supported"
