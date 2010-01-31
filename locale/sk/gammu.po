@@ -2002,7 +2002,7 @@ msgstr "Nepodporované"
 
 #: gammu/message.c:112
 msgid "Service reply"
-msgstr ""
+msgstr "Servisná odpoveď"
 
 #: gammu/message.c:159
 #, c-format
