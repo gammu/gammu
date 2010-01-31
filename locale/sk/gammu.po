@@ -2521,7 +2521,7 @@ msgstr "Stav SMS v telefóne"
 #: gammu/misc.c:628
 #, c-format
 msgid "%i templates"
-msgstr ""
+msgstr "%i šablón"
 
 #: gammu/misc.c:641
 msgid "Leaving monitor mode..."
