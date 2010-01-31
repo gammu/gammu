@@ -2209,7 +2209,7 @@ msgstr "Požiadavka na informáciu z OpenCellID zlyhala!\n"
 
 #: gammu/misc.c:241
 msgid "Failed to find latitude in OpenCellID reply!\n"
-msgstr "V odpovedi od OpenCellID sa nepodarilo nájsť zemepisnú šírku!\n"
+msgstr "V odpovedi z OpenCellID sa nepodarilo nájsť zemepisnú šírku!\n"
 
 #: gammu/misc.c:246
 msgid "Failed to parse latitude from OpenCellID reply!\n"
