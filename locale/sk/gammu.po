@@ -2493,7 +2493,7 @@ msgstr "Úroveň siete"
 
 #: gammu/misc.c:602
 msgid "Bit error rate"
-msgstr ""
+msgstr "bitová chybovosť"
 
 #: gammu/misc.c:610
 msgid "SIM SMS status"
