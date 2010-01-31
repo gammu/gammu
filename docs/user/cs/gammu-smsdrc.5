@@ -133,6 +133,24 @@ každých CommTimeout sekund a po každé odeslané SMS.
 Výchozí je 0 (není použito).
 
 .TP 
+\fBStatusFrequency\fP
+
+The number of seconds between refreshing phone status (battery, signal)
+stored in shared memory and possibly in service backends. Use 0 to disable.
+
+Default is 15.
+
+.TP 
+\fBLoopSleep\fP
+
+The number of seconds how long will SMSD sleep before checking for some
+activity. Please note that setting this to higher value than 1 will have
+effects to other time based configurations, because they will be effectively
+rounded to multiply of this value.
+
+Výchozí je 1.
+
+.TP 
 \fBMultipartTimeout\fP
 
 Počet sekund jak dlouho bude SMSD čekat na doručení všech částí
