@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 14:12+0200\n"
+"PO-Revision-Date: 2010-01-31 14:13+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2668,7 +2668,7 @@ msgstr "Vymazať odchádzajúce hovory?"
 
 #: gammu/misc.c:1348
 msgid "Delete received calls?"
-msgstr ""
+msgstr "Vymazať prijaté hovory?"
 
 #: gammu/misc.c:1353
 msgid "Delete phone calendar notes?"
