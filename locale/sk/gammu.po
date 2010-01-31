@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 13:25+0200\n"
+"PO-Revision-Date: 2010-01-31 13:26+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1874,7 +1874,7 @@ msgstr "Pomoc pre parametre"
 #: gammu/gammu.c:1014
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
-msgstr ""
+msgstr "Príliš veľa parametrov (funkcia akceptuje %d)\n"
 
 #: gammu/gammu.c:1017
 #, c-format
