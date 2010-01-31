@@ -617,7 +617,7 @@ msgstr "Tréning/Tenis"
 
 #: gammu/calendar.c:116 gammu/calendar.c:774
 msgid "Training/Travels"
-msgstr ""
+msgstr "Tréning/Cestovanie"
 
 #: gammu/calendar.c:119 gammu/calendar.c:777
 msgid "Training/Winter Games"
