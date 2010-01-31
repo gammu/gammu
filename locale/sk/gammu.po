@@ -1891,7 +1891,7 @@ msgstr "Nastavenie nemohlo byť spracované!"
 
 #: gammu/gammu.c:1127
 msgid "No configuration file found!"
-msgstr ""
+msgstr "Nebol nájdený konfiguračný súbor!"
 
 #: gammu/gammu.c:1147
 msgid "Failed to allocate memory, aborting!\n"
