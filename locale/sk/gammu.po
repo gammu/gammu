@@ -2052,7 +2052,7 @@ msgstr "%i SMS častí v %i SMS sekvenciách"
 
 #: gammu/message.c:411
 msgid "SMS counter overflow"
-msgstr ""
+msgstr "Pretieklo počítadlo SMS"
 
 #: gammu/message.c:500
 msgid ", SIM memory"
