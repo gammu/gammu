@@ -2648,7 +2648,7 @@ msgstr "Aký typ loga chcete nastaviť (\"%s\") ?\n"
 #: gammu/misc.c:1260
 #, c-format
 msgid "Unknown parameter (\"%s\")"
-msgstr ""
+msgstr "Neznámy parameter (\"%s\")"
 
 #: gammu/misc.c:1344
 msgid "Delete phone phonebook?"
