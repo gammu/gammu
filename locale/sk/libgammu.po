@@ -411,7 +411,7 @@ msgstr "Vonkajšie"
 
 #: libgammu/phone/nokia/nfunc.c:1138
 msgid "Pager"
-msgstr ""
+msgstr "Pager"
 
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
