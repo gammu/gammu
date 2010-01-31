@@ -1964,7 +1964,7 @@ msgstr "Prázdne"
 
 #: gammu/message.c:76
 msgid "CB message received"
-msgstr ""
+msgstr "Prijatá CB správa"
 
 #: gammu/message.c:77
 #, c-format
