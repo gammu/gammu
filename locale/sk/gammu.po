@@ -2432,7 +2432,7 @@ msgstr "%i mA"
 
 #: gammu/misc.c:534
 msgid "Phone current"
-msgstr ""
+msgstr "Prúd do telefónu"
 
 #: gammu/misc.c:539
 msgid "Charge state"
