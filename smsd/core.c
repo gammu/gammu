@@ -1656,10 +1656,13 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	while (!Config->shutdown) {
 		/* There were errors in communication - try to recover */
 		if (errors > 2 || first_start || force_reset) {
-			if (! first_start) {
-				SMSD_Log(DEBUG_INFO, Config, "Already hit %d errors", errors);
+			/* Should we disconnect from phone? */
+			if (GSM_IsConnected(Config->gsm)) {
+				if (! force_reset) {
+					SMSD_Log(DEBUG_INFO, Config, "Already hit %d errors", errors);
+				}
 				SMSD_LogError(DEBUG_INFO, Config, "Terminating communication", error);
-				error=GSM_TerminateConnection(Config->gsm);
+				error = GSM_TerminateConnection(Config->gsm);
 			}
 			if (max_failures != 0 && initerrors > max_failures) {
 				Config->failure = ERR_TIMEOUT;
