@@ -1990,7 +1990,7 @@ msgstr "Akcia vyžadovaná"
 
 #: gammu/message.c:94
 msgid "Terminated"
-msgstr ""
+msgstr "Ukončené"
 
 #: gammu/message.c:97
 msgid "Another client replied"
