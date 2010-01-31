@@ -2176,7 +2176,7 @@ msgstr "neznámy"
 
 #: gammu/misc.c:56
 msgid "Name in phone"
-msgstr ""
+msgstr "Názov v telefóne"
 
 #: gammu/misc.c:61 gammu/misc.c:1530
 msgid "GPRS"
