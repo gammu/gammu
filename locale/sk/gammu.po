@@ -2015,7 +2015,7 @@ msgstr "Číslo"
 
 #: gammu/message.c:202
 msgid "Default number"
-msgstr ""
+msgstr "Východzie číslo"
 
 #: gammu/message.c:204
 msgid "Format"
