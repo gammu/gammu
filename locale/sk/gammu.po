@@ -2121,7 +2121,7 @@ msgstr "telefón"
 #: gammu/message.c:595
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
-msgstr ""
+msgstr "Odosielam správu zo zložky \"%s\", pozícia %i\n"
 
 #: gammu/message.c:601 gammu/message.c:627
 msgid "....waiting for network answer"
