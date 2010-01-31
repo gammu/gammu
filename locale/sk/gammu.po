@@ -2476,7 +2476,7 @@ msgstr "Lithium Polymer"
 
 #: gammu/misc.c:577
 msgid "NiMH"
-msgstr ""
+msgstr "NiMH"
 
 #: gammu/misc.c:592
 msgid "Signal strength"
