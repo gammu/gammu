@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 13:19+0200\n"
+"PO-Revision-Date: 2010-01-31 13:20+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1818,6 +1818,8 @@ msgstr "-c / --config <súbor> ... meno konfiguračného súboru"
 #: gammu/gammu.c:793
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
 msgstr ""
+"-s / --section <číslokonf> ... číslo konfigurácie, ktorá sa má použiť, napr. "
+"42"
 
 #: gammu/gammu.c:794
 msgid ""
