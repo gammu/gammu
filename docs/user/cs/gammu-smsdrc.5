@@ -135,18 +135,18 @@ Výchozí je 0 (není použito).
 .TP 
 \fBStatusFrequency\fP
 
-The number of seconds between refreshing phone status (battery, signal)
-stored in shared memory and possibly in service backends. Use 0 to disable.
+Počet sekund mezi načítáním stavu telefonu (baterie a signál) a ukládáním do
+sdílené paměti a případně to úložiště používané služby. Pro nenačítání
+těchto informací nastavte 0.
 
-Default is 15.
+Výchozí je 15.
 
 .TP 
 \fBLoopSleep\fP
 
-The number of seconds how long will SMSD sleep before checking for some
-activity. Please note that setting this to higher value than 1 will have
-effects to other time based configurations, because they will be effectively
-rounded to multiply of this value.
+Počet sekund, kolik bude SMSD spát před zjišťováním nějaké aktivity. Hodnota
+větší než 1 bude mít vliv na ostatní nastavení časů, protože ty pak budou
+efektivně zaokrouhlena nahoru na nejbližší násobek tohoto nastavení.
 
 Výchozí je 1.
 

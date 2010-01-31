@@ -6545,7 +6545,6 @@ msgstr "Výchozí je 0 (není použito)."
 #. type: TP
 #: docs/user/gammu-smsdrc.5:130
 #, no-wrap
-#| msgid "B<ResetFrequency>"
 msgid "B<StatusFrequency>"
 msgstr "B<StatusFrequency>"
 
@@ -6562,7 +6561,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:137
-#| msgid "Default is 1."
 msgid "Default is 15."
 msgstr "Výchozí je 15."
 
@@ -6570,7 +6568,6 @@ msgstr "Výchozí je 15."
 #. type: TP
 #: docs/user/gammu-smsdrc.5:138
 #, no-wrap
-#| msgid "B<LogFile>"
 msgid "B<LoopSleep>"
 msgstr "B<LoopSleep>"
 

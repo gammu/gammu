@@ -146,13 +146,14 @@ Například:
 Ze zdrojového kódu - Windows
 ============================
 
-You need CMake from <http://www.cmake.org> for configuring Gammu. CMake is
-able to generate projects for various tools including Microsoft Visual
-Studio, Borland toolchains, Cygwin or Mingw32. Just click on CMakeLists.txt
-in project sources and configure CMake to be able to find optional libraries
-(see cross compilation section for more information about getting
-those). The result should be project for your compiler where you should be
-able to work with it as with any other project.
+Pro vytvoření projektu pro kompilaci Gammu bude potřebovat CMake z
+<http://www.cmake.org>. CMake umí vytvořit projekty pro většinu běžně
+používaných IDE včetně Microsoft Visual Studio, nástroje Borland, Cygwin
+nebo Mingw32. Stačí kliknout na CMakeLists.txt ve zdrojových kódech a
+nastavit CMake tak, aby byl schopen nalézt volitelné knihovny (v sekci o
+křížové kompilaci naleznete informace jak je získat). Výsledkem by měl být
+projekt, se kterým budete moci pracovat stejně jako s jakýmkoliv jiným ve
+vašem IDE.
 
 Podrobnější informace naleznete na wiki:
 http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/installing_in_Windows
