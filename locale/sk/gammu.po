@@ -1813,7 +1813,7 @@ msgstr "Parametre pred príkazom upravujú chovanie gammu:"
 
 #: gammu/gammu.c:792
 msgid "-c / --config <filename> ... name of configuration file"
-msgstr ""
+msgstr "-c / --config <súbor> ... meno konfiguračného súboru"
 
 #: gammu/gammu.c:793
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
