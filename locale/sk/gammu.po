@@ -2090,7 +2090,7 @@ msgstr ", referenčné číslo správy=%d"
 
 #: gammu/message.c:561
 msgid "Message number"
-msgstr ""
+msgstr "Číslo správy"
 
 #: gammu/message.c:565
 msgid "Number of messages"
