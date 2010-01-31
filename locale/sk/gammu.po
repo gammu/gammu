@@ -2337,7 +2337,7 @@ msgstr "hovor je podržaný"
 
 #: gammu/misc.c:410
 msgid "call resumed"
-msgstr ""
+msgstr "hovor je obnovený"
 
 #: gammu/misc.c:411
 msgid "call switched"
