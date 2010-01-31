@@ -2081,7 +2081,7 @@ msgstr "..OK"
 #: gammu/message.c:525
 #, c-format
 msgid "..error %i"
-msgstr ""
+msgstr "..chyba %i"
 
 #: gammu/message.c:528
 #, c-format
