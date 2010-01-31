@@ -403,7 +403,7 @@ msgstr "Stretnutie"
 
 #: libgammu/phone/nokia/nfunc.c:1136
 msgid "Outdoor"
-msgstr ""
+msgstr "Vonkajšie"
 
 #: libgammu/phone/nokia/nfunc.c:1138
 msgid "Pager"
