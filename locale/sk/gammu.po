@@ -2660,7 +2660,7 @@ msgstr "Vymazať telefónny zoznam na SIM karte?"
 
 #: gammu/misc.c:1346
 msgid "Delete missed calls?"
-msgstr ""
+msgstr "Vymazať zmeškané hovory?"
 
 #: gammu/misc.c:1347
 msgid "Delete dialled calls?"
