@@ -2664,7 +2664,7 @@ msgstr "Vymazať zmeškané hovory?"
 
 #: gammu/misc.c:1347
 msgid "Delete dialled calls?"
-msgstr ""
+msgstr "Vymazať odchádzajúce hovory?"
 
 #: gammu/misc.c:1348
 msgid "Delete received calls?"
