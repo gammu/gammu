@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 13:59+0200\n"
+"PO-Revision-Date: 2010-01-31 14:00+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2392,7 +2392,7 @@ msgstr "Kapacita batérie"
 #: gammu/misc.c:504
 #, c-format
 msgid "%i mAh"
-msgstr ""
+msgstr "%i mAh"
 
 #: gammu/misc.c:508
 msgid "Battery temperature"
