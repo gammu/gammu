@@ -2180,7 +2180,7 @@ msgstr "Názov v telefóne"
 
 #: gammu/misc.c:61 gammu/misc.c:1530
 msgid "GPRS"
-msgstr ""
+msgstr "GPRS"
 
 #: gammu/misc.c:64
 msgid "attached"
