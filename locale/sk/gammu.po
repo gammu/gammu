@@ -2103,7 +2103,7 @@ msgstr "Pro prerušenie stlačte Ctrl+C..."
 #: gammu/message.c:581
 #, c-format
 msgid "Saving SMS %i/%i\n"
-msgstr ""
+msgstr "Ukladám SMS %i/%i\n"
 
 #: gammu/message.c:584
 #, c-format
