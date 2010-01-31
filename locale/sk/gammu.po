@@ -1982,7 +1982,7 @@ msgstr "Stav"
 
 #: gammu/message.c:88
 msgid "No action needed"
-msgstr ""
+msgstr "Nie je potrebná žiadna akcia"
 
 #: gammu/message.c:91
 msgid "Action needed"
