@@ -2144,7 +2144,7 @@ msgstr "Príliš vysoké číslo zložky (maximálne %i)\n"
 #: gammu/message.c:683
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
-msgstr "Odstraňujem SMS zo zložky \"%s\":  "
+msgstr "Odstraňujem SMS zo zložky \"%s\": "
 
 #: gammu/misc.c:33
 msgid "Network state"
