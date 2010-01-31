@@ -1,5 +1,5 @@
-#ifndef __helper_message_cmdline_h__
-#define __helper_message_cmdline_h__
+#ifndef __helper_cmdline_h__
+#define __helper_cmdline_h__
 
 /**
  * Returns integer from string or terminates program on failure.
