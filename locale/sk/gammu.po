@@ -2502,7 +2502,7 @@ msgstr "Stav SMS a SIM"
 #: gammu/misc.c:611 gammu/misc.c:621
 #, c-format
 msgid "%i used"
-msgstr ""
+msgstr "%i použité"
 
 #: gammu/misc.c:613 gammu/misc.c:623
 #, c-format
