@@ -2148,7 +2148,7 @@ msgstr "Odstraňujem SMS zo zložky \"%s\": "
 
 #: gammu/misc.c:33
 msgid "Network state"
-msgstr ""
+msgstr "Stav siete"
 
 #: gammu/misc.c:35
 msgid "home network"
