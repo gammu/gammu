@@ -2184,7 +2184,7 @@ msgstr "GPRS"
 
 #: gammu/misc.c:64
 msgid "attached"
-msgstr ""
+msgstr "pripojené"
 
 #: gammu/misc.c:67
 msgid "detached"
