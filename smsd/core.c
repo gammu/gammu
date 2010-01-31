@@ -1575,7 +1575,9 @@ GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 		return ERR_UNKNOWN;
 	}
 #endif
-	Config->Status->Version = SMSD_SHM_VERSION;
+	if (writable) {
+		Config->Status->Version = SMSD_SHM_VERSION;
+	}
 	return ERR_NONE;
 }
 
