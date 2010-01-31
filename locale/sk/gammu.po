@@ -2245,7 +2245,7 @@ msgstr "Zemepisná šírka"
 
 #: gammu/misc.c:286
 msgid "Longitude"
-msgstr ""
+msgstr "Zemepisná dĺžka"
 
 #: gammu/misc.c:287
 msgid "Range"
