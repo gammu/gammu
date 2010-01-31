@@ -835,6 +835,25 @@ add_test(include-wap "${GAMMU_TEST_PATH}/include-wap${GAMMU_TEST_SUFFIX}")
 
 # Auto generated include tests end
 
+# Test for GetInt
+add_executable(getint getint.c)
+target_link_libraries(getint cmdline)
+set(GETINT_PASS 1 23213 3213213 -321312)
+set(GETINT_FAIL 1a 24432f xxx foo 3243243243243243232432432432432)
+foreach(NUM ${GETINT_PASS})
+    add_test(getint-${NUM} "${GAMMU_TEST_PATH}/getint${GAMMU_TEST_SUFFIX}" "${NUM}")
+    set_tests_properties(
+        getint-${NUM}
+        PROPERTIES
+        PASS_REGULAR_EXPRESSION "Result: ${NUM}")
+endforeach(NUM ${GETINT_PASS})
+foreach(NUM ${GETINT_FAIL})
+    add_test(getint-${NUM} "${GAMMU_TEST_PATH}/getint${GAMMU_TEST_SUFFIX}" "${NUM}")
+    set_tests_properties(
+        getint-${NUM}
+        PROPERTIES WILL_FAIL TRUE)
+endforeach(NUM ${GETINT_FAIL})
+
 # Test for locking, only on !WIN32 and if we can write to lock dir
 if (NOT WIN32)
     execute_process(COMMAND test -w /var/lock/ RESULT_VARIABLE VAR_LOCK_WRITABLE)

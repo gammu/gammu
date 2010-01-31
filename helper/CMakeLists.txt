@@ -20,6 +20,10 @@ GAMMU_TUNE_SHARED(array)
 add_library (printing STATIC printing.c)
 GAMMU_TUNE_SHARED(printing)
 
+add_library (cmdline STATIC cmdline.c)
+GAMMU_TUNE_SHARED(cmdline)
+target_link_libraries (cmdline printing)
+
 add_library (memorydisplay STATIC memory-display.c)
 GAMMU_TUNE_SHARED(memorydisplay)
 target_link_libraries (memorydisplay libGammu)
