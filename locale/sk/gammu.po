@@ -1960,7 +1960,7 @@ msgstr "Pozícia %i\n"
 
 #: gammu/message.c:62 gammu/message.c:275
 msgid "Empty"
-msgstr ""
+msgstr "Prázdne"
 
 #: gammu/message.c:76
 msgid "CB message received"
