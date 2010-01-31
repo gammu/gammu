@@ -1920,7 +1920,7 @@ msgstr "Nainštalovaná verzia libGammu.so (%s) sa líši od verzie Gammu (%s)\n
 #: gammu/memory.c:356
 #, c-format
 msgid "Memory %s, Location %i\n"
-msgstr ""
+msgstr "Pamäť %s, pozícia %i\n"
 
 #: gammu/memory.c:83
 msgid ""
