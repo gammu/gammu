@@ -1620,7 +1620,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 	GSM_SMSDService		*Service;
 	GSM_Error		error;
 	int                     errors = -1, initerrors=0;
- 	time_t			lastreceive, lastreset = 0, lastnothingsent = 0, laststatus = 0;
+ 	time_t			lastreceive = 0, lastreset = time(NULL), lastnothingsent = 0, laststatus = 0;
 	int i;
 	gboolean first_start = TRUE, force_reset = FALSE;
 
@@ -1649,8 +1649,6 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 	Config->running = TRUE;
 
-	lastreceive		= time(NULL);
-	lastreset		= time(NULL);
 	Config->SendingSMSStatus 	= ERR_UNKNOWN;
 
 	while (!Config->shutdown) {
