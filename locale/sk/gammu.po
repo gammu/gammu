@@ -1914,7 +1914,7 @@ msgstr "Nebolo načítané žiadne nastavenie, používam východzie hodnoty!"
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
-msgstr "Nainštalovaná verzia libGammu.so  (%s) sa líši od verzie Gammu (%s)\n"
+msgstr "Nainštalovaná verzia libGammu.so (%s) sa líši od verzie Gammu (%s)\n"
 
 #: gammu/memory.c:40 gammu/memory.c:94 gammu/memory.c:112 gammu/memory.c:239
 #: gammu/memory.c:356
