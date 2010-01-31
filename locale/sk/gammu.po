@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 13:53+0200\n"
+"PO-Revision-Date: 2010-01-31 13:54+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2325,7 +2325,7 @@ msgstr "hovor ukončený z našej strany"
 #: gammu/misc.c:407
 #, c-format
 msgid "call end from remote side (code %i)\n"
-msgstr ""
+msgstr "hovor ukončený z druhej strany (kód %i)\n"
 
 #: gammu/misc.c:408
 msgid "call established. Waiting for answer"
