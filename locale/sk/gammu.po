@@ -2460,7 +2460,7 @@ msgstr "batéria nie je preipojená"
 
 #: gammu/misc.c:557
 msgid "detected power failure"
-msgstr ""
+msgstr "zistená chyba napájania"
 
 #: gammu/misc.c:568
 msgid "Battery type"
