@@ -2094,7 +2094,7 @@ msgstr "Číslo správy"
 
 #: gammu/message.c:565
 msgid "Number of messages"
-msgstr ""
+msgstr "Počet správ"
 
 #: gammu/message.c:576 gammu/message.c:616
 msgid "If you want break, press Ctrl+C..."
