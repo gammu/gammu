@@ -1860,7 +1860,7 @@ msgstr ""
 #: gammu/gammu.c:993
 #, c-format
 msgid "More parameters required (function requires %d)\n"
-msgstr ""
+msgstr "Príliš málo parametrov (funkcia požaduje %d)\n"
 
 #: gammu/gammu.c:996
 #, c-format
