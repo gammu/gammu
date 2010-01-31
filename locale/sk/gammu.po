@@ -2363,7 +2363,7 @@ msgstr "Povoľujem informácie o prichádzajúcich SMS"
 
 #: gammu/misc.c:468
 msgid "Enabling info about incoming CB"
-msgstr ""
+msgstr "Povoľujem informácie o prichádzajúcich CB"
 
 #: gammu/misc.c:470
 msgid "Enabling info about calls"
