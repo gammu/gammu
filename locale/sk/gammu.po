@@ -1978,7 +1978,7 @@ msgstr "Prijaté USSD"
 #: gammu/message.c:84 helper/message-display.c:138
 #: helper/message-display.c:258
 msgid "Status"
-msgstr ""
+msgstr "Stav"
 
 #: gammu/message.c:88
 msgid "No action needed"
