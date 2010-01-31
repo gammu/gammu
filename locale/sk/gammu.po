@@ -2620,7 +2620,7 @@ msgstr "zakázané"
 
 #: gammu/misc.c:1053
 msgid "Bitmap ID"
-msgstr ""
+msgstr "ID bitmapy"
 
 #: gammu/misc.c:1066
 msgid "No operator logo in phone"
