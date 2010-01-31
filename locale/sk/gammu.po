@@ -2525,7 +2525,7 @@ msgstr "%i šablón"
 
 #: gammu/misc.c:641
 msgid "Leaving monitor mode..."
-msgstr ""
+msgstr "Ukončujem monitorovací režim..."
 
 #: gammu/misc.c:669
 msgid "Smart Messaging"
