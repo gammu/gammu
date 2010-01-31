@@ -1826,6 +1826,8 @@ msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
 msgstr ""
+"-d / --debug <úroveň> ... ladiaca úroveň  "
+"(nothing|text|textall|textalldate|binary|errors)"
 
 #: gammu/gammu.c:795
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
