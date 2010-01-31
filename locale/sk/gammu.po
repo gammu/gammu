@@ -2423,7 +2423,7 @@ msgstr "Nabíjacie napätie"
 
 #: gammu/misc.c:529
 msgid "Charge current"
-msgstr ""
+msgstr "Nabíjací prúd"
 
 #: gammu/misc.c:530 gammu/misc.c:535
 #, c-format
