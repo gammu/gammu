@@ -2628,7 +2628,7 @@ msgstr "V telefóne nie je žiadne logo operátora"
 
 #: gammu/misc.c:1072 gammu/mms.c:71 helper/message-display.c:445
 msgid "Sender"
-msgstr ""
+msgstr "odosielateľ"
 
 #: gammu/misc.c:1078
 #, c-format
