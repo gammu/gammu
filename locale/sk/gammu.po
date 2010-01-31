@@ -2541,7 +2541,7 @@ msgstr "MIDI"
 
 #: gammu/misc.c:672
 msgid "SMAF (MMF)"
-msgstr ""
+msgstr "SMAF (MMF)"
 
 #: gammu/misc.c:674
 #, c-format
