@@ -2019,7 +2019,7 @@ msgstr "Východzie číslo"
 
 #: gammu/message.c:204
 msgid "Format"
-msgstr ""
+msgstr "Forrmát"
 
 #: gammu/message.c:207
 msgid "Fax"
