@@ -2048,7 +2048,7 @@ msgstr "Poškodená správa, preskakujem"
 #: gammu/message.c:362 gammu/message.c:479
 #, c-format
 msgid "%i SMS parts in %i SMS sequences"
-msgstr ""
+msgstr "%i SMS častí v %i SMS sekvenciách"
 
 #: gammu/message.c:411
 msgid "SMS counter overflow"
