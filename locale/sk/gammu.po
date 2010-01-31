@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 13:49+0200\n"
+"PO-Revision-Date: 2010-01-31 13:50+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2221,7 +2221,7 @@ msgstr "V odpovedi z OpenCellID sa nepodarilo nájsť zemepisnú dĺžku!\n"
 
 #: gammu/misc.c:257
 msgid "Failed to parse longitude from OpenCellID reply!\n"
-msgstr ""
+msgstr "V odpovedi z OpenCellID sa nepodarilo načítať zemepisnú dĺžku!\n"
 
 #: gammu/misc.c:263
 msgid "Failed to find range in OpenCellID reply!\n"
