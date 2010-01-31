@@ -663,6 +663,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->sendtimeout = INI_GetInt(Config->smsdcfgfile, "smsd", "sendtimeout", 30);
 	Config->receivefrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "receivefrequency", 0);
 	Config->statusfrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "statusfrequency", 0);
+	Config->loopsleep = INI_GetInt(Config->smsdcfgfile, "smsd", "loopsleep", 1);
 	Config->checksecurity = INI_GetBool(Config->smsdcfgfile, "smsd", "checksecurity", TRUE);
 	Config->checksignal = INI_GetBool(Config->smsdcfgfile, "smsd", "checksignal", TRUE);
 	Config->checkbattery = INI_GetBool(Config->smsdcfgfile, "smsd", "checkbattery", TRUE);
@@ -1762,7 +1763,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		Service->RefreshPhoneStatus(Config);
 
 		/* Sleep some time before another loop */
-		sleep(1);
+		sleep(Config->loopsleep);
 	}
 	Service->Free(Config);
 

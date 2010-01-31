@@ -136,6 +136,16 @@ in shared memory and possibly in service backends. Use 0 to disable.
 Default is 15.
 
 .TP
+.BI LoopSleep
+
+The number of seconds how long will SMSD sleep before checking for some
+activity. Please note that setting this to higher value than 1 will have
+effects to other time based configurations, because they will be effectively
+rounded to multiply of this value.
+
+Default is 1.
+
+.TP
 .BI MultipartTimeout
 
 The number of seconds how long will SMSD wait for all parts of multipart
