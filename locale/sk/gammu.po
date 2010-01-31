@@ -2355,7 +2355,7 @@ msgstr "%3d voľných"
 
 #: gammu/misc.c:456
 msgid "Entering monitor mode..."
-msgstr ""
+msgstr "Začínam monitorovací režim..."
 
 #: gammu/misc.c:466
 msgid "Enabling info about incoming SMS"
