@@ -2303,7 +2303,7 @@ msgstr "ID %i, "
 #: gammu/misc.c:402
 #, c-format
 msgid "incoming call from \"%s\"\n"
-msgstr "Prichádzajúci hovor od \"%s\"\n"
+msgstr "prichádzajúci hovor od \"%s\"\n"
 
 #: gammu/misc.c:403
 #, c-format
