@@ -2578,7 +2578,7 @@ msgstr "Aký typ loga chcete načítať (\"%s\") ?\n"
 
 #: gammu/misc.c:1008
 msgid "Group name"
-msgstr ""
+msgstr "Meno skupiny"
 
 #: gammu/misc.c:1009 gammu/misc.c:1012
 msgid "default"
