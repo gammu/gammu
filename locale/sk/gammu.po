@@ -2406,7 +2406,7 @@ msgstr "%i C"
 
 #: gammu/misc.c:514
 msgid "Phone temperature"
-msgstr ""
+msgstr "Teplota telefónu"
 
 #: gammu/misc.c:519
 msgid "Battery voltage"
