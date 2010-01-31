@@ -2656,7 +2656,7 @@ msgstr "Vymazať telefónny zoznam?"
 
 #: gammu/misc.c:1345
 msgid "Delete SIM phonebook?"
-msgstr ""
+msgstr "Vymazať telefónny zoznam na SIM karte?"
 
 #: gammu/misc.c:1346
 msgid "Delete missed calls?"
