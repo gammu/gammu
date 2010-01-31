@@ -2367,7 +2367,7 @@ msgstr "Povoľujem informácie o prichádzajúcich CB"
 
 #: gammu/misc.c:470
 msgid "Enabling info about calls"
-msgstr ""
+msgstr "Povoľujem informácie o prichádzajúcich hovoroch"
 
 #: gammu/misc.c:472
 msgid "Enabling info about USSD"
