@@ -2152,7 +2152,7 @@ msgstr "Stav siete"
 
 #: gammu/misc.c:35
 msgid "home network"
-msgstr ""
+msgstr "domáca sieť"
 
 #: gammu/misc.c:36
 msgid "roaming network"
