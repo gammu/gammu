@@ -2587,7 +2587,7 @@ msgstr "vychodzie"
 #: gammu/misc.c:1012 gammu/misc.c:1014 gammu/misc.c:1027 gammu/misc.c:1034
 #: helper/memory-display.c:100
 msgid "Ringtone"
-msgstr ""
+msgstr "Zvonenie"
 
 #: gammu/misc.c:1028
 #, c-format
