@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-29 14:38+0100\n"
-"PO-Revision-Date: 2010-01-31 13:47+0200\n"
+"PO-Revision-Date: 2010-01-31 13:48+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2205,7 +2205,7 @@ msgstr "Telefón vrátil chybný kód siete!\n"
 
 #: gammu/misc.c:235
 msgid "Request for information from OpenCellID failed!\n"
-msgstr ""
+msgstr "Požiadavka na informáciu z OpenCellID zlyhala!\n"
 
 #: gammu/misc.c:241
 msgid "Failed to find latitude in OpenCellID reply!\n"
