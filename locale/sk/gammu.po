@@ -2229,7 +2229,7 @@ msgstr "V odpovedi z OpenCellID sa nepodarilo nájsť presnosť!\n"
 
 #: gammu/misc.c:268
 msgid "Failed to parse range from OpenCellID reply!\n"
-msgstr ""
+msgstr "V odpovedi z OpenCellID sa nepodarilo načítať presnosť!\n"
 
 #: gammu/misc.c:274
 msgid "Failed to find nbSamples in OpenCellID reply!\n"
