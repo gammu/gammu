@@ -2440,7 +2440,7 @@ msgstr "Stav nabíjania"
 
 #: gammu/misc.c:542
 msgid "powered from battery"
-msgstr ""
+msgstr "napájané z batérie"
 
 #: gammu/misc.c:545
 msgid "battery connected, but not powered from battery"
