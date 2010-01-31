@@ -1951,7 +1951,7 @@ msgstr "SMS správa prijatá"
 
 #: gammu/message.c:39
 msgid "We already have one pending, ignoring this one!"
-msgstr ""
+msgstr "Jedna už čaká na spracovanie, túto ignorujem!"
 
 #: gammu/message.c:61 gammu/message.c:274
 #, c-format
