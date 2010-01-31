@@ -2192,7 +2192,7 @@ msgstr "odpojené"
 
 #: gammu/misc.c:182
 msgid "Never version of firmware is available!\n"
-msgstr ""
+msgstr "Je dostupná novšia verzia firmware!\n"
 
 #: gammu/misc.c:183
 #, c-format
