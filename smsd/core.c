@@ -1629,18 +1629,22 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 
 	Config->failure = ERR_NONE;
 	Config->exit_on_failure = exit_on_failure;
+
+	/* Get service */
 	error = SMSGetService(Config, &Service);
 	if (error!=ERR_NONE) {
 		SMSD_Terminate(Config, "Failed to setup SMSD service", error, TRUE, -1);
 		goto done;
 	}
 
+	/* Init service */
 	error = SMSD_Init(Config, Service);
 	if (error!=ERR_NONE) {
 		SMSD_Terminate(Config, "Initialisation failed, stopping Gammu smsd", error, TRUE, -1);
 		goto done;
 	}
 
+	/* Init shared memory */
 	error = SMSD_InitSharedMemory(Config, TRUE);
 	if (error != ERR_NONE) {
 		goto done;
@@ -1714,10 +1718,12 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			}
 			continue;
 		}
+
+		/* Should we receive? */
 		if ((difftime(time(NULL), lastreceive) >= Config->receivefrequency) || (Config->SendingSMSStatus != ERR_NONE)) {
 	 		lastreceive = time(NULL);
 
-
+			/* Do we need to check security? */
 			if (Config->checksecurity && !SMSD_CheckSecurity(Config)) {
 				errors++;
 				initerrors++;
@@ -1742,6 +1748,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 			force_reset = TRUE;
 			continue;
 		}
+		/* Send any queued messages */
 		if (!SMSD_SendSMS(Config, Service)) {
 			continue;
 		}
