@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-31 11:24+0100\n"
+"POT-Creation-Date: 2010-01-31 13:00+0100\n"
 "PO-Revision-Date: 2009-05-25 12:11+0200\n"
 "Last-Translator: Joop van der Linden <joopjrvdlinden@hotmail.com>\n"
 "Language-Team: none\n"
@@ -5654,14 +5654,15 @@ msgstr ""
 
 #. type: TH
 #: docs/user/gammu-smsdrc.5:1
-#, fuzzy, no-wrap
-msgid "October 20, 2009"
-msgstr "5 Mei 2009"
+#, no-wrap
+msgid "January 31, 2010"
+msgstr ""
 
 #. type: TH
-#: docs/user/gammu-smsdrc.5:1
+#: docs/user/gammu-smsdrc.5:1 docs/user/gammu-smsd-null.7:1
+#: docs/user/gammu-smsd-run.7:1
 #, fuzzy, no-wrap
-msgid "Gammu 1.27.0"
+msgid "Gammu 1.28.0"
 msgstr "Gammu 1.24.90"
 
 # type: Plain text
@@ -8852,12 +8853,6 @@ msgstr ""
 msgid "January 25, 2010"
 msgstr ""
 
-#. type: TH
-#: docs/user/gammu-smsd-null.7:1 docs/user/gammu-smsd-run.7:1
-#, fuzzy, no-wrap
-msgid "Gammu 1.28.0"
-msgstr "Gammu 1.24.90"
-
 #. type: Plain text
 #: docs/user/gammu-smsd-null.7:5
 msgid "gammu-smsd-null - gammu-smsd(1) backend not storing messages"
@@ -10008,6 +10003,14 @@ msgid ""
 "    PSQL_TESTING - you need to have setup PostgreSQL server with\n"
 "    database where SMSD can play.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "October 20, 2009"
+#~ msgstr "5 Mei 2009"
+
+#, fuzzy
+#~ msgid "Gammu 1.27.0"
+#~ msgstr "Gammu 1.24.90"
 
 #, fuzzy
 #~ msgid "Dec 27 2009"
