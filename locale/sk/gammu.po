@@ -2201,7 +2201,7 @@ msgstr "Posledná verzia je %s a vy používate %s.\n"
 
 #: gammu/misc.c:214
 msgid "Wrong network code from phone!\n"
-msgstr ""
+msgstr "Telefón vrátil chybný kód siete!\n"
 
 #: gammu/misc.c:235
 msgid "Request for information from OpenCellID failed!\n"
