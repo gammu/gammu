@@ -14,7 +14,12 @@ long int GetInt(const char* param)
 
     result = strtol(param, &endptr, 10);
 
+#ifdef WIN32
+    /* Windows do not report correctly errno */
+    if (result == LONG_MAX || result == LONG_MIN) {
+#else
     if ((errno == ERANGE && (result == LONG_MAX || result == LONG_MIN))) {
+#endif
         printf_err(_("Number out of range: %s\n"), param);
         exit(2);
     }
