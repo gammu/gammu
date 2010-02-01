@@ -12,6 +12,6 @@ int main(int argc, char **argv)
         printf("Usage: getint number\n");
         exit(2);
     }
-    printf("Result: %ld", GetInt(argv[1]));
+    printf("Result: %ld\n", GetInt(argv[1]));
     return 0;
 }
