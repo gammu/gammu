@@ -94,17 +94,9 @@ if __name__ == '__main__':
 
         time.sleep(1)
 
+    finally:
         # Signal SMSD to stop
         smsd.Shutdown()
 
         # Wait for it
         smsd_thread.join()
-    # Catch any exception and signal smsd to stop and reraise it
-    except Exception, exc:
-        traceback.print_exc()
-        try:
-            smsd.Shutdown()
-        except:
-            pass
-        raise exc
-
