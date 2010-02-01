@@ -1189,7 +1189,7 @@
    Leak from dbi/dlopen
    Memcheck:Leak
    fun:calloc
-   fun: _dlerror_run
+   fun:_dlerror_run
    fun:dlopen
    fun:dbi_initialize
 }
@@ -1197,7 +1197,7 @@
    Leak from dbi/dlopen
    Memcheck:Leak
    fun:calloc
-   fun: _dlerror_run
+   fun:_dlerror_run
    fun:dlopen@@GLIBC_2.1
    fun:dbi_initialize
 }
@@ -1205,11 +1205,10 @@
    Leak from dbi/dlopen
    Memcheck:Leak
    fun:calloc
-   fun: _dlerror_run
+   fun:_dlerror_run
    fun:dlopen@@GLIBC_2.2.5
    fun:dbi_initialize
 }
-
 
 # Shell suppressions, /bin/sh is used for smsd testing
 {
