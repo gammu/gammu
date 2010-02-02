@@ -1590,7 +1590,13 @@ void AddNew(int argc, char *argv[])
 	if (Backup.PhonePhonebook[0] != NULL) {
 		MemStatus.MemoryType = (MemoryType == 0 ? MEM_ME : MemoryType);
 		error=GSM_GetMemoryStatus(gsm, &MemStatus);
-		if (error==ERR_NONE) {
+		/* Some phones do not support status, try reading some entry */
+		if (error != ERR_NONE) {
+			Pbk.Location = 1;
+			Pbk.MemoryType = MEM_ME;
+			error = GSM_GetMemory(gsm, &Pbk);
+		}
+		if (error == ERR_NONE || error == ERR_EMPTY) {
 			max = 0;
 			while (Backup.PhonePhonebook[max]!=NULL) max++;
 			fprintf(stderr, _("%i entries in backup file\n"),max);
