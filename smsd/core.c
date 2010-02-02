@@ -1541,6 +1541,11 @@ GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 		shmdt(Config->Status);
 		return ERR_WRONGCRC;
 	}
+	if (writable) {
+		SMSD_Log(DEBUG_INFO, Config, "Created POSIX RW shared memory at %p", Config->Status);
+	} else {
+		SMSD_Log(DEBUG_INFO, Config, "Mapped POSIX RO shared memory at %p", Config->Status);
+	}
 #elif defined(WIN32)
 	Config->map_handle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, writable ? PAGE_READWRITE : PAGE_READONLY, 0, sizeof(GSM_SMSDStatus), Config->map_key);
 	if (Config->map_handle == NULL) {
@@ -1562,6 +1567,11 @@ GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 			return ERR_NOTRUNNING;
 		}
 	}
+	if (writable) {
+		SMSD_Log(DEBUG_INFO, Config, "Created Windows RW shared memory at %p", Config->Status);
+	} else {
+		SMSD_Log(DEBUG_INFO, Config, "Mapped Windows RO shared memory at %p", Config->Status);
+	}
 #else
 	if (writable) {
 		return ERR_NOTSUPPORTED;
@@ -1570,6 +1580,9 @@ GSM_Error SMSD_InitSharedMemory(GSM_SMSDConfig *Config, gboolean writable)
 	if (Config->Status == NULL) {
 		SMSD_Terminate(Config, "Failed to map shared memory segment!", ERR_NONE, TRUE, -1);
 		return ERR_UNKNOWN;
+	}
+	if (writable) {
+		SMSD_Log(DEBUG_INFO, Config, "No shared memory, using standard malloc %p", Config->Status);
 	}
 #endif
 	/* Initial shared memory content */
