@@ -3324,7 +3324,9 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 
 		if (error == ERR_EMPTY) {
 			Priv->NextMemoryEntry = start;
-			return ERR_NONE;
+			if (NeededInfo == AT_NextEmpty) {
+				return ERR_NONE;
+			}
 		} else if (error != ERR_NONE) {
 			return error;
 		}
