@@ -2414,13 +2414,17 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 			case 0x0c:
 				/* This seems to be message ID (per number) */
 				break;
+			case 0x24:
+				/* 24$|00 |01 |01 */
+				if (FFF->Buffer[pos + 2] != 1 || FFF->Buffer[pos + 3] != 1) {
+					unknown = TRUE;
+				}
+				break;
 			case 0x07:
 			case 0x0b:
 			case 0x0e:
 			case 0x22:
 				/* 22"|00 |01 |84 */
-			case 0x24:
-				/* 24$|00 |01 |01 */
 			case 0x26:
 			case 0x27:
 			case 0x2a:
