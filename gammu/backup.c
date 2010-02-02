@@ -997,7 +997,7 @@ void Restore(int argc, char *argv[])
 			Pbk.MemoryType = MEM_ME;
 			error = GSM_GetMemory(gsm, &Pbk);
 		}
-		if (error==ERR_NONE) {
+		if (error == ERR_NONE || error == ERR_EMPTY) {
 			max = 0;
 			while (Backup.PhonePhonebook[max]!=NULL) max++;
 			fprintf(stderr, _("%i entries in backup file\n"),max);
