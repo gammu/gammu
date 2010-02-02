@@ -991,6 +991,12 @@ void Restore(int argc, char *argv[])
 	if (Backup.PhonePhonebook[0] != NULL) {
 		MemStatus.MemoryType = MEM_ME;
 		error=GSM_GetMemoryStatus(gsm, &MemStatus);
+		/* Some phones do not support status, try reading some entry */
+		if (error != ERR_NONE) {
+			Pbk.Location = 1;
+			Pbk.MemoryType = MEM_ME;
+			error = GSM_GetMemory(gsm, &Pbk);
+		}
 		if (error==ERR_NONE) {
 			max = 0;
 			while (Backup.PhonePhonebook[max]!=NULL) max++;

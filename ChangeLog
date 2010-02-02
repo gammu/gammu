@@ -38,6 +38,7 @@ ChangeLog
 [-] * Re-enable classic AT commands for adding Samsung contact (bug #1105).
 [+] * SMSD no longer requires support for SMS status, so it works with Nokia S40 phones.
 [-] * Fix finding of empty location for some AT phones (bug #1119).
+[-] * Restore phone phonebook also to phones not supporting status (bug #1122).
     
 20100106 - 1.27.90
 
