@@ -1214,7 +1214,7 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 {
 	gboolean start;
 	GSM_MultiSMSMessage sms;
-	GSM_MultiSMSMessage *GetSMSData[GSM_PHONE_MAXSMSINFOLDER], *SortedSMS[GSM_PHONE_MAXSMSINFOLDER];
+	GSM_MultiSMSMessage *GetSMSData[GSM_PHONE_MAXSMSINFOLDER + 1], *SortedSMS[GSM_PHONE_MAXSMSINFOLDER + 1];
 	GSM_Error error = ERR_NONE;
 	int GetSMSNumber = 0;
 	int i, j;
@@ -1247,6 +1247,10 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				return FALSE;
 		}
 		start = FALSE;
+		if (GetSMSNumber >= GSM_PHONE_MAXSMSINFOLDER) {
+			SMSD_Log(DEBUG_INFO, Config, "Can not read all messages at once");
+			break;
+		}
 	}
 
 	/* No messages to process */
