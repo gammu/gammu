@@ -1599,12 +1599,14 @@ void AddNew(int argc, char *argv[])
 		}
 		if (error == ERR_NONE || error == ERR_EMPTY) {
 			max = 0;
-			while (Backup.PhonePhonebook[max]!=NULL) max++;
-			fprintf(stderr, _("%i entries in backup file\n"),max);
+			while (Backup.PhonePhonebook[max] != NULL) {
+				max++;
+			}
+			fprintf(stderr, _("%i entries in backup file\n"), max);
 			if (MemStatus.MemoryFree < max) {
-				fprintf(stderr, _("Memory has only %i free locations.Exiting\n"),MemStatus.MemoryFree);
+				fprintf(stderr, _("Memory has only %i free locations.Exiting\n"), MemStatus.MemoryFree);
 			} else if (answer_yes("%s", _("Add phone phonebook entries?"))) {
-				for (i=0;i<max;i++) {
+				for (i = 0; i < max; i++) {
 					Pbk 		= *Backup.PhonePhonebook[i];
 					Pbk.MemoryType 	= (MemoryType == 0 ? MEM_ME : MemoryType);
 					error=GSM_AddMemory(gsm, &Pbk);
