@@ -1017,11 +1017,6 @@ void Restore(int argc, char *argv[])
 				continue;
 			}
 			error = GSM_SetMemory(gsm, Backup.PhonePhonebook[i]);
-			if (error == ERR_PERMISSION && GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_6230iCALLER)) {
-				error = GSM_DeleteMemory(gsm, &Pbk);
-				Print_Error(error);
-				error = GSM_SetMemory(gsm, &Pbk);
-			}
 			if (error == ERR_MEMORY && GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_6230iCALLER)) {
 				printf_err("%s\n", _("Probably caller group is missing from your backup, add it and use --restore again."));
 				GSM_Terminate();
@@ -1030,16 +1025,16 @@ void Restore(int argc, char *argv[])
 			Print_Error(error);
 			if (error == ERR_NONE) {
 				First = TRUE;
-				for (j = 0; j < Pbk.EntriesNum; j++) {
-					if (Pbk.Entries[j].AddError == ERR_NONE) continue;
+				for (j = 0; j < Backup.PhonePhonebook[i]->EntriesNum; j++) {
+					if (Backup.PhonePhonebook[i]->Entries[j].AddError == ERR_NONE) continue;
 					if (First) {
 						printf("\r");
-						printf(_("Location %d"), Pbk.Location);
+						printf(_("Location %d"), Backup.PhonePhonebook[i]->Location);
 						printf("%20s\n    ", " ");
 						First = FALSE;
 					}
-					PrintMemorySubEntry(&Pbk.Entries[j], gsm);
-					printf("    %s\n", GSM_ErrorString(Pbk.Entries[j].AddError));
+					PrintMemorySubEntry(&Backup.PhonePhonebook[i]->Entries[j], gsm);
+					printf("    %s\n", GSM_ErrorString(Backup.PhonePhonebook[i]->Entries[j].AddError));
 				}
 			}
 
