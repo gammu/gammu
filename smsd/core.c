@@ -1214,7 +1214,8 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 {
 	gboolean start;
 	GSM_MultiSMSMessage sms;
-	GSM_MultiSMSMessage *GetSMSData[GSM_PHONE_MAXSMSINFOLDER + 1], *SortedSMS[GSM_PHONE_MAXSMSINFOLDER + 1];
+	GSM_MultiSMSMessage **GetSMSData = NULL, **SortedSMS;
+	int allocated = 0;
 	GSM_Error error = ERR_NONE;
 	int GetSMSNumber = 0;
 	int i, j;
@@ -1231,14 +1232,23 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				break;
 			case ERR_NONE:
 				if (SMSD_ValidMessage(Config, Service, &sms)) {
+					if (allocated <= GetSMSNumber + 2) {
+						GetSMSData = (GSM_MultiSMSMessage **)realloc(GetSMSData, (allocated + 20) * sizeof(GSM_MultiSMSMessage *));
+						if (GetSMSData == NULL) {
+							SMSD_Log(DEBUG_ERROR, Config, "Failed to allocate memory");
+							return FALSE;
+						}
+						allocated += 20;
+					}
 					GetSMSData[GetSMSNumber] = malloc(sizeof(GSM_MultiSMSMessage));
 
 					if (GetSMSData[GetSMSNumber] == NULL) {
 						SMSD_Log(DEBUG_ERROR, Config, "Failed to allocate memory");
 						return FALSE;
 					}
+
+					*(GetSMSData[GetSMSNumber]) = sms;
 					GetSMSData[GetSMSNumber + 1] = NULL;
-					memcpy(GetSMSData[GetSMSNumber], &sms, sizeof(GSM_MultiSMSMessage));
 					GetSMSNumber++;
 				}
 				break;
@@ -1247,16 +1257,15 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				return FALSE;
 		}
 		start = FALSE;
-		if (GetSMSNumber >= GSM_PHONE_MAXSMSINFOLDER) {
-			SMSD_Log(DEBUG_INFO, Config, "Can not read all messages at once");
-			break;
-		}
 	}
 
 	/* No messages to process */
 	if (GetSMSNumber == 0) {
 		return TRUE;
 	}
+
+	/* Allocate memory for sorted messages */
+	SortedSMS = (GSM_MultiSMSMessage **)malloc(allocated * sizeof(GSM_MultiSMSMessage *));
 
 	/* Link messages */
 	error = GSM_LinkSMS(GSM_GetDebug(Config->gsm), GetSMSData, SortedSMS, TRUE);
@@ -1268,6 +1277,7 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		GetSMSData[i] = NULL;
 		i++;
 	}
+	free(GetSMSData);
 
 	/* Process messages */
 	i=0;
@@ -1325,6 +1335,7 @@ cleanup:
 		free(SortedSMS[i]);
 		SortedSMS[i] = NULL;
 	}
+	free(SortedSMS);
 	return TRUE;
 }
 
