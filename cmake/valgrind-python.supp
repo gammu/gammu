@@ -640,13 +640,29 @@
    fun:malloc
    fun:PyString_FromStringAndSize
    fun:r_object
+}
+{
+   1,372 bytes in 5 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:PyString_FromStringAndSize
    fun:r_object
+}
+{
+   1,372 bytes in 5 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:PyString_FromStringAndSize
    fun:r_object
+}
+{
+   1,372 bytes in 5 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:fill_free_list
+   fun:PyInt_FromLong
    fun:r_object
-   fun:r_object
-   fun:r_object
-   fun:PyMarshal_ReadLastObjectFromFile
-   fun:load_source_module
 }
 {
    <insert_a_suppression_name_here>
@@ -780,6 +796,51 @@
    fun:PyType_GenericAlloc
    fun:type_new
    fun:type_call
+}
+{
+   11,960 bytes in 13 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:type_new
+   fun:type_call
+}
+{
+   11,960 bytes in 13 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:_PyObject_GC_Malloc
+   fun:PyType_GenericAlloc
+   fun:type_new
+   fun:tp_new_wrapper
+}
+
+{
+   262,144 bytes in 1 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:_PyObject_GC_Malloc
+   fun:PyType_GenericAlloc
+   fun:descr_new
+}
+{
+   11,960 bytes in 13 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:_PyObject_GC_Malloc
+   fun:PyType_GenericAlloc
+   fun:descr_new
+}
+{
+   11,960 bytes in 13 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:fill_free_list
+   fun:PyInt_FromLong
+   fun:do_mkvalue
+   fun:do_mktuple
+   fun:va_build_value
+   fun:Py_BuildValue
+   fun:zipimporter_init
 }
 
 {
@@ -995,6 +1056,14 @@
    fun:realloc
    fun:list_resize
    fun:listpop
+   fun:PyEval_EvalFrameEx
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:type_new
+   fun:tp_new_wrapper
    fun:PyEval_EvalFrameEx
 }
 {
