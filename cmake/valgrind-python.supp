@@ -1206,6 +1206,83 @@
    fun:execute_builtin
 }
 {
+   Bash-x
+   Memcheck:Leak
+   fun:malloc
+   fun:xmalloc
+   fun:make_variable_value
+}
+{
+   Bash-x
+   Memcheck:Leak
+   fun:malloc
+   fun:xmalloc
+   fun:set_lang
+}
+{
+   Bash-x
+   Memcheck:Leak
+   fun:malloc
+   fun:xmalloc
+   fun:array_create_element
+}
+{
+   Bash-x
+   Memcheck:Leak
+   fun:malloc
+   fun:xmalloc
+   fun:make_bare_word
+}
+{
+   Bash-x
+   Memcheck:Leak
+   fun:malloc
+   fun:xmalloc
+   obj:/bin/bash
+}
+{
+   Bash-x
+   Memcheck:Leak
+   fun:realloc
+   fun:xrealloc
+   obj:/bin/bash
+}
+{
+   Bash-x
+   Memcheck:Leak
+   fun:malloc
+   fun:xrealloc
+   obj:/bin/bash
+}
+{
+   Bash-x
+   Memcheck:Leak
+   fun:malloc
+   fun:xrealloc
+   fun:push_dollar_vars
+}
+{
+   Bash-x
+   Memcheck:Leak
+   fun:malloc
+   fun:xmalloc
+   fun:hash_create
+}
+{
+   Bash-x
+   Memcheck:Leak
+   fun:realloc
+   fun:xrealloc
+   fun:maybe_make_export_env
+}
+{
+   Bash-x
+   Memcheck:Leak
+   fun:malloc
+   fun:xmalloc
+   fun:cmd_init
+}
+{
    Bash-2
    Memcheck:Leak
    fun:realloc
