@@ -959,6 +959,7 @@ void Restore(int argc, char *argv[])
 	GSM_Init(TRUE);
 
 	printf("%s\n", _("Please note that restoring data will cause existing data in phone to be deleted."));
+	printf("%s\n", _("Use addnew command if you just want to add some entries to your phone."));
 
 	DoRestore = FALSE;
 	if (Backup.CallerLogos[0] != NULL) {
