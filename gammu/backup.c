@@ -1006,53 +1006,45 @@ void Restore(int argc, char *argv[])
 	}
 	if (DoRestore) {
 		used = 0;
-		for (i=0;i<MemStatus.MemoryUsed+MemStatus.MemoryFree;i++) {
-			Pbk.MemoryType 	= MEM_ME;
-			Pbk.Location	= i + 1;
-			Pbk.EntriesNum	= 0;
-			if (used<max && Backup.PhonePhonebook[used]->Location == Pbk.Location) {
-				Pbk = *Backup.PhonePhonebook[used];
-				used++;
-				if (Pbk.EntriesNum != 0) error=GSM_SetMemory(gsm, &Pbk);
-				if (error == ERR_PERMISSION && GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_6230iCALLER)) {
-					error=GSM_DeleteMemory(gsm, &Pbk);
-					Print_Error(error);
-					error=GSM_SetMemory(gsm, &Pbk);
-				}
-				if (error == ERR_MEMORY && GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_6230iCALLER)) {
-					printf_err("%s\n", _("Probably caller group is missing from your backup, add it and use --restore again."));
-					GSM_Terminate();
-					Terminate(2);
-				}
-				if (Pbk.EntriesNum != 0 && error==ERR_NONE) {
-					First = TRUE;
-					for (j=0;j<Pbk.EntriesNum;j++) {
-			 			if (Pbk.Entries[j].AddError == ERR_NONE) continue;
-						if (First) {
-							printf("\r");
-							printf(_("Location %d"), Pbk.Location);
-							printf("%20s\n    ", " ");
-							First = FALSE;
-						}
-						PrintMemorySubEntry(&Pbk.Entries[j], gsm);
-						printf("    %s\n", GSM_ErrorString(Pbk.Entries[j].AddError));
+		/* Delete existing entries */
+		error = GSM_DeleteAllMemory(gsm, MEM_ME);
+		Print_Error(error);
+
+		/* Save backed up entries */
+		for (i = 0; Backup.PhonePhonebook[i] != NULL; i++) {
+			if (Backup.PhonePhonebook[i]->EntriesNum == 0) {
+				continue;
+			}
+			error = GSM_SetMemory(gsm, Backup.PhonePhonebook[i]);
+			if (error == ERR_PERMISSION && GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_6230iCALLER)) {
+				error = GSM_DeleteMemory(gsm, &Pbk);
+				Print_Error(error);
+				error = GSM_SetMemory(gsm, &Pbk);
+			}
+			if (error == ERR_MEMORY && GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_6230iCALLER)) {
+				printf_err("%s\n", _("Probably caller group is missing from your backup, add it and use --restore again."));
+				GSM_Terminate();
+				Terminate(2);
+			}
+			Print_Error(error);
+			if (error == ERR_NONE) {
+				First = TRUE;
+				for (j = 0; j < Pbk.EntriesNum; j++) {
+					if (Pbk.Entries[j].AddError == ERR_NONE) continue;
+					if (First) {
+						printf("\r");
+						printf(_("Location %d"), Pbk.Location);
+						printf("%20s\n    ", " ");
+						First = FALSE;
 					}
+					PrintMemorySubEntry(&Pbk.Entries[j], gsm);
+					printf("    %s\n", GSM_ErrorString(Pbk.Entries[j].AddError));
 				}
 			}
-			if (Pbk.EntriesNum == 0) {
-				/* Delete only when there was some content in phone */
-				if (MemStatus.MemoryUsed > 0) {
-					error = GSM_DeleteMemory(gsm, &Pbk);
-					if (error != ERR_EMPTY && error != ERR_NONE) {
-						Print_Error(error);
-					}
-				}
-			}
+
 			fprintf(stderr, "\r");
 			fprintf(stderr, "%s ", _("Writing:"));
-			fprintf(stderr, _("%i percent"),
-					(i + 1) * 100 / (MemStatus.MemoryUsed + MemStatus.MemoryFree)
-					);
+			fprintf(stderr, _("%i percent"), (i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				Terminate(4);
