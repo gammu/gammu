@@ -1595,6 +1595,7 @@ void AddNew(int argc, char *argv[])
 			Pbk.Location = 1;
 			Pbk.MemoryType = MEM_ME;
 			error = GSM_GetMemory(gsm, &Pbk);
+			MemStatus.MemoryFree = 9999999;
 		}
 		if (error == ERR_NONE || error == ERR_EMPTY) {
 			max = 0;
