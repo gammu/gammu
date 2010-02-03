@@ -808,6 +808,16 @@
    11,960 bytes in 13 blocks are still reachable
    Memcheck:Leak
    fun:malloc
+   fun:PyObject_Malloc
+   fun:_PyObject_GC_Malloc
+   fun:PyType_GenericAlloc
+   fun:partial_new
+   fun:type_call
+}
+{
+   11,960 bytes in 13 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
    fun:_PyObject_GC_Malloc
    fun:PyType_GenericAlloc
    fun:type_new
@@ -1101,6 +1111,15 @@
    fun:PyEval_EvalFrameEx
 }
 {
+   1 bytes in 1 blocks are still reachable in loss record 1 of 31
+   Memcheck:Leak
+   fun:malloc
+   fun:realloc
+   fun:app1
+   fun:listappend
+   fun:PyEval_EvalFrameEx
+}
+{
    <insert_a_suppression_name_here>
    Memcheck:Leak
    fun:malloc
@@ -1175,6 +1194,17 @@
    fun:PyObject_CallFunction
    fun:PyErr_NewException
    fun:init_locale
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:_PyObject_GC_Malloc
+   fun:_PyObject_GC_New
+   fun:PyInstance_NewRaw
+   fun:PyInstance_New
+   fun:PyObject_Call
 }
 {
    988 bytes in 1 blocks are still reachable in loss record 18 of 29
