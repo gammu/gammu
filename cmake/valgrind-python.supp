@@ -2503,3 +2503,16 @@
     fun:mysql_init_character_set
     fun:mysql_real_connect
 }
+
+
+# Following might actually be bug in python-gammu, but I really don't see what could be done better
+
+{
+    python-gammu exceptions
+    Memcheck:Leak
+    fun:malloc
+    fun:PyObject_Malloc
+    fun:PyString_FromStringAndSize
+    fun:PyErr_NewException
+    fun:gammu_create_errors
+}
