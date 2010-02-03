@@ -815,6 +815,14 @@
 }
 
 {
+   262,144 bytes in 1 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:_PyObject_GC_Malloc
+   fun:PyType_GenericAlloc
+   fun:descr_new
+}
+{
    <insert_a_suppression_name_here>
    Memcheck:Leak
    fun:malloc
