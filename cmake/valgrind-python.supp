@@ -562,6 +562,23 @@
    fun:PyInt_FromLong
    fun:analyze_block
 }
+{
+   Dont know ;-)
+   Memcheck:Leak
+    fun:malloc
+    fun:PyObject_Malloc
+    fun:PyNode_AddChild
+    fun:PyParser_AddToken
+    fun:parsetok
+}
+{
+   Dont know ;-)
+   Memcheck:Leak
+   fun:malloc
+   fun:fill_free_list
+   fun:PyInt_FromLong
+   fun:symtable_enter_block
+}
 
 {
    992 bytes in 1 blocks are still reachable
