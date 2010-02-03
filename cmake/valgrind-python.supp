@@ -597,6 +597,16 @@
    fun:initposix
 }
 {
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:PyDict_SetItemString
+   fun:PyType_Ready
+   fun:PyStructSequence_InitType
+   fun:initposix
+}
+{
    992 bytes in 1 blocks are still reachable
    Memcheck:Leak
    fun:malloc
