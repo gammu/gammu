@@ -635,6 +635,22 @@
 }
 
 {
+    400 bytes in 1 blocks are still reachable
+    Memcheck:Leak
+    fun:malloc
+    fun:PyStructSequence_InitType
+    fun:inittime
+}
+{
+   1,372 bytes in 5 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:_PyObject_GC_Malloc
+   fun:_PyObject_GC_NewVar
+   fun:PyTuple_New
+   fun:r_object
+}
+{
    1,372 bytes in 5 blocks are still reachable
    Memcheck:Leak
    fun:malloc
@@ -802,6 +818,14 @@
    Memcheck:Leak
    fun:malloc
    fun:type_new
+   fun:type_call
+}
+{
+   11,960 bytes in 13 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:newblock
+   fun:deque_new
    fun:type_call
 }
 {
@@ -1065,6 +1089,15 @@
    fun:realloc
    fun:list_resize
    fun:listpop
+   fun:PyEval_EvalFrameEx
+}
+{
+   1 bytes in 1 blocks are still reachable in loss record 1 of 31
+   Memcheck:Leak
+   fun:realloc
+   fun:list_resize
+   fun:ins1
+   fun:listinsert
    fun:PyEval_EvalFrameEx
 }
 {
