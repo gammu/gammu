@@ -755,10 +755,6 @@
    fun:PyType_GenericAlloc
    fun:type_new
    fun:type_call
-   fun:call_function_tail
-   fun:PyObject_CallFunction
-   fun:PyErr_NewException
-   fun:initzipimport
 }
 
 {
@@ -2156,6 +2152,20 @@
    fun:PyDict_SetItemString
    fun:PyType_Ready
    fun:PyObject_GenericGetAttr
+   fun:PyImport_Import
+   fun:PyImport_ImportModule
+   fun:_PyExc_Init
+   fun:Py_InitializeEx
+   fun:Py_Main
+   fun:(below main)
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
+   fun:PyThread_allocate_lock
+   fun:_PyImport_AcquireLock
+   fun:PyImport_ImportModuleLevel
    fun:PyImport_Import
    fun:PyImport_ImportModule
    fun:_PyExc_Init
