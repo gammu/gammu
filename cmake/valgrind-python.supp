@@ -612,26 +612,6 @@
    fun:initposix
 }
 {
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:PyStructSequence_InitType
-   fun:initposix
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   fun:PyObject_Malloc
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:PyStructSequence_InitType
-   fun:initposix
-}
-{
    992 bytes in 1 blocks are still reachable
    Memcheck:Leak
    fun:malloc
@@ -904,17 +884,6 @@
 }
 
 {
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:initzipimport
-}
-
-
-{
    35,112 bytes in 77 blocks are still reachable
    Memcheck:Leak
    fun:malloc
@@ -984,56 +953,6 @@
 }
 
 {
-   136,512 bytes in 36 blocks are still reachable
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyType_Ready
-   fun:PyType_Ready
-   fun:_Py_ReadyTypes
-   fun:Py_InitializeEx
-   fun:Py_Initialize
-   fun:Py_Main
-   fun:main
-}
-
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyType_Ready
-   fun:_Py_ReadyTypes
-   fun:Py_InitializeEx
-   fun:Py_Main
-}
-
-
-{
-   286,080 bytes in 41 blocks are still reachable
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/lib*/libpython*.so.*
-   fun:PyType_Ready
-   fun:PyType_Ready
-   fun:_Py_ReadyTypes
-   fun:Py_InitializeEx
-   fun:Py_Main
-}
-
-{
-   286,080 bytes in 41 blocks are still reachable
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyType_Ready
-   fun:PyType_Ready
-   fun:_Py_ReadyTypes
-   fun:Py_InitializeEx
-   fun:Py_Main
-}
-
-{
    988 bytes in 1 blocks are still reachable
    Memcheck:Leak
    fun:malloc
@@ -1046,22 +965,6 @@
    fun:PyRun_SimpleFileExFlags
    fun:Py_Main
    fun:main
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   obj:/usr/bin/python*
-   fun:PyObject_IsInstance
-   obj:/usr/bin/python*
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   obj:/usr/bin/python*
-   fun:PyObject_Call
-   obj:/usr/bin/python*
 }
 {
    <insert_a_suppression_name_here>
@@ -1094,20 +997,6 @@
    fun:PyImport_ExecCodeModuleEx
    obj:/usr/bin/python*
    obj:/usr/bin/python*
-}
-
-{
-   1,112 bytes in 5 blocks are still reachable
-   Memcheck:Leak
-   fun:realloc
-   obj:/usr/lib*/libpython*.so.*
-   obj:/usr/lib*/libpython*.so.*
-   obj:/usr/lib*/libpython*.so.*
-   fun:PyType_Ready
-   fun:_PyExc_Init
-   fun:Py_InitializeEx
-   fun:Py_Main
-   fun:(below main)
 }
 
 {
@@ -2051,16 +1940,6 @@
    <insert_a_suppression_name_here>
    Memcheck:Leak
    fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:PyStructSequence_InitType
-   fun:_PySys_Init
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
    fun:PyStructSequence_InitType
    fun:_PySys_Init
 }
@@ -2072,47 +1951,6 @@
    fun:_PySys_Init
 }
 
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:PyStructSequence_InitType
-   fun:_PyFloat_Init
-   fun:Py_InitializeEx
-   fun:Py_Main
-   fun:(below main)
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:_PyUnicodeUCS4_Init
-   fun:Py_InitializeEx
-   fun:Py_Main
-   fun:(below main)
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   obj:/usr/bin/python*
-   fun:PyObject_Call
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-}
 {
    <insert_a_suppression_name_here>
    Memcheck:Leak
@@ -2163,10 +2001,25 @@
    fun:malloc
    obj:/usr/bin/python*
    fun:PyType_Ready
+}
+{
+   typeready
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:PyString_FromString
+   fun:PyString_InternFromString
+   fun:PyDescr_NewMethod
+   fun:PyType_Ready 
+}
+{
+   1,112 bytes in 5 blocks are still reachable
+   Memcheck:Leak
+   fun:realloc
+   obj:/usr/lib*/libpython*.so.*
+   obj:/usr/lib*/libpython*.so.*
+   obj:/usr/lib*/libpython*.so.*
    fun:PyType_Ready
-   fun:_Py_ReadyTypes
-   fun:Py_InitializeEx
-   fun:Py_Main
 }
 {
    eval
@@ -2196,92 +2049,6 @@
    <insert_a_suppression_name_here>
    Memcheck:Leak
    fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:_PyExc_Init
-   fun:Py_InitializeEx
-   fun:Py_Main
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyType_Ready
-   fun:_PyExc_Init
-   fun:Py_InitializeEx
-   fun:Py_Main
-   fun:(below main)
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   fun:PyObject_CallFunctionObjArgs
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   fun:PyEval_EvalCode
-   fun:PyImport_ExecCodeModuleEx
-   obj:/usr/bin/python*
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   fun:PyObject_CallFunctionObjArgs
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyType_Ready
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   obj:/usr/bin/python*
-   fun:PyObject_Call
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   fun:PyObject_CallFunctionObjArgs
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyType_Ready
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   obj:/usr/bin/python*
-   fun:PyObject_Call
-   obj:/usr/bin/python*
-   fun:PyObject_CallFunctionObjArgs
-   fun:PyObject_IsSubclass
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
    fun:_PyObject_GC_Malloc
    fun:PyType_GenericAlloc
    obj:/usr/bin/python*
@@ -2342,54 +2109,6 @@
    obj:/usr/bin/python*
    obj:/usr/bin/python*
    fun:PyObject_CallFunctionObjArgs
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyType_Ready
-   fun:PyObject_GenericGetAttr
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   obj:/usr/bin/python*
-   fun:PyObject_Call
-   obj:/usr/bin/python*
-   fun:PyObject_CallFunctionObjArgs
-   fun:PyObject_IsSubclass
-   obj:/usr/bin/python*
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyType_Ready
-   fun:PyObject_GenericGetAttr
-   obj:/usr/bin/python*
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   obj:/usr/bin/python*
-   fun:PyObject_Call
-   obj:/usr/bin/python*
-   fun:PyObject_Call
-   fun:PyEval_EvalFrameEx
-}
-
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:PyObject_GenericGetAttr
-   fun:PyImport_Import
-   fun:PyImport_ImportModule
-   fun:_PyExc_Init
-   fun:Py_InitializeEx
-   fun:Py_Main
-   fun:(below main)
 }
 {
    <insert_a_suppression_name_here>
@@ -2420,67 +2139,6 @@
    <insert_a_suppression_name_here>
    Memcheck:Leak
    fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:PyObject_GenericGetAttr
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalFrameEx
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:PyObject_GenericGetAttr
-   fun:PyObject_GetAttrString
-   fun:PyObject_CallMethod
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   fun:PyEval_EvalCode
-   fun:PyImport_ExecCodeModuleEx
-   obj:/usr/bin/python*
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   obj:/usr/bin/python*
-   fun:PyObject_Call
-   obj:/usr/bin/python*
-   fun:PyObject_CallFunctionObjArgs
-}
-
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:_Py_ReadyTypes
-   fun:Py_InitializeEx
-   fun:Py_Main
-   fun:(below main)
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
    fun:_PyObject_GC_Malloc
    fun:PyType_GenericAlloc
    obj:/usr/bin/python*
@@ -2493,80 +2151,6 @@
    fun:Py_Main
    fun:(below main)
 }
-
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   obj:/usr/bin/python*
-   fun:PyObject_GetAttrString
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   fun:PyEval_EvalCode
-   fun:PyImport_ExecCodeModuleEx
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:PyObject_GenericGetAttr
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   fun:PyEval_EvalCode
-   fun:PyImport_ExecCodeModuleEx
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyType_Ready
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   fun:PyEval_EvalFrameEx
-   fun:PyEval_EvalCodeEx
-   fun:PyEval_EvalCode
-   fun:PyImport_ExecCodeModuleEx
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:init_functools
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   fun:PyImport_ImportModuleLevel
-   obj:/usr/bin/python*
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:init_struct
-}
 {
    <insert_a_suppression_name_here>
    Memcheck:Leak
@@ -2578,38 +2162,6 @@
    fun:PyObject_CallFunction
    fun:PyErr_NewException
    fun:init_struct
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyDict_SetItemString
-   fun:PyType_Ready
-   fun:initdatetime
-   fun:_PyImport_LoadDynamicModule
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   fun:PyImport_ImportModuleLevel
-   obj:/usr/bin/python*
-   fun:PyObject_CallFunction
-}
-{
-   <insert_a_suppression_name_here>
-   Memcheck:Leak
-   fun:malloc
-   obj:/usr/bin/python*
-   fun:PyType_Ready
-   fun:initdatetime
-   fun:_PyImport_LoadDynamicModule
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   obj:/usr/bin/python*
-   fun:PyImport_ImportModuleLevel
-   obj:/usr/bin/python*
-   fun:PyObject_CallFunction
-   fun:PyImport_Import
 }
 {
    <insert_a_suppression_name_here>
