@@ -583,6 +583,14 @@
    1,000 bytes in 2 blocks are still reachable
    Memcheck:Leak
    fun:malloc
+   fun:PyObject_Malloc
+   fun:PyString_FromString
+   fun:initposix
+}
+{
+   1,000 bytes in 2 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
    fun:PyStructSequence_InitType
    fun:initposix
 }
