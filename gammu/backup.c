@@ -248,15 +248,15 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 		while (used != MemStatus.MemoryUsed) {
 			Pbk.Location = i;
 			error=GSM_GetMemory(gsm, &Pbk);
-			if (error != ERR_EMPTY) {
+			if (error == ERR_NONE) {
 				Print_Error(error);
-				if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
+				if (used < max_entries) {
 					Phonebook[used] = malloc(sizeof(GSM_MemoryEntry));
 					if (Phonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
 					Phonebook[used+1] = NULL;
 				} else {
 					printf("\n   ");
-					printf(_("Only part of data saved, please increase %s.") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
+					printf(_("Only part of data saved, please increase %s.") , "max_entries");
 					printf("\n");
 					break;
 				}
