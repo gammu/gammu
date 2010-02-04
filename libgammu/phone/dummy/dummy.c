@@ -1324,7 +1324,11 @@ GSM_Error DUMMY_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	for (i = 0; i < entry->EntriesNum; i++) {
 		if (entry->Entries[i].EntryType == PBK_Photo) {
 			entry->Entries[i].Picture.Buffer = (unsigned char *)malloc(entry->Entries[i].Picture.Length);
-			memcpy(entry->Entries[i].Picture.Buffer, Backup.PhonePhonebook[0]->Entries[i].Picture.Buffer, entry->Entries[i].Picture.Length);
+			if (Backup.PhonePhonebook[0] != NULL) {
+				memcpy(entry->Entries[i].Picture.Buffer, Backup.PhonePhonebook[0]->Entries[i].Picture.Buffer, entry->Entries[i].Picture.Length);
+			} else {
+				memcpy(entry->Entries[i].Picture.Buffer, Backup.SIMPhonebook[0]->Entries[i].Picture.Buffer, entry->Entries[i].Picture.Length);
+			}
 		}
 	}
 	entry->Location = location;
