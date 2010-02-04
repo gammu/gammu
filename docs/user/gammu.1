@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Jan 19 2010" "Gammu 1.27.91" "Gammu Documentation"
+.TH "GAMMU" "1" "Feb  2 2010" "Gammu 1.27.91" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -1773,6 +1773,13 @@ Get/reset to "12345" security code
 .TP
 .BI "nokiaselftests"
 
+Perform tests for Nokia DCT3 phones.
+
+Note: EEPROM test can show an error when your phone has an EEPROM in 
+flash (like 82xx/7110/62xx/33xx). The clock test will show an error 
+when the phone doesn?t have an internal battery for the clock (like
+3xxx).
+
 .TP
 .BI "nokiasetlights" " keypad|display|torch on|off"
 
@@ -2098,6 +2105,13 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 
 .TP
 .BI "nokiaselftests"
+
+Perform tests for Nokia DCT3 phones.
+
+Note: EEPROM test can show an error when your phone has an EEPROM in 
+flash (like 82xx/7110/62xx/33xx). The clock test will show an error 
+when the phone doesn?t have an internal battery for the clock (like
+3xxx).
 
 .TP
 .BI "nokiasetlights" " keypad|display|torch on|off"
