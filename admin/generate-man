@@ -357,7 +357,7 @@ OpenCellID <http://opencellid.org>.
 HELP['monitor'] = '''Get phone status and writes continuously to standard output. Press Ctrl+C
 to break this state.
 '''
-HELP['reset'] = '''Make phone reset: soft (without asking for PIN) or hard (with PIN).
+HELP['reset SOFT|HARD'] = '''Make phone reset: soft (without asking for PIN) or hard (with PIN).
 
 \\fINote:\\fR some phones will make hard reset even with \\fBSOFT\\fR option.
 '''
