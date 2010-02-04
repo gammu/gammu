@@ -247,7 +247,7 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 		used 		= 0;
 		while (used != MemStatus.MemoryUsed) {
 			Pbk.Location = i;
-			error=GSM_GetMemory(gsm, &Pbk);
+			error = GSM_GetMemory(gsm, &Pbk);
 			if (error == ERR_NONE) {
 				Print_Error(error);
 				if (used < max_entries) {
