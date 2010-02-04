@@ -243,7 +243,6 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	} else {
-		Pbk.MemoryType  = MEM_ME;
 		i		= 1;
 		used 		= 0;
 		while (used != MemStatus.MemoryUsed) {
