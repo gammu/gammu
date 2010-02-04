@@ -247,7 +247,7 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 		while (used < MemStatus.MemoryUsed) {
 			Pbk.Location = i;
 			error = GSM_GetMemory(gsm, &Pbk);
-			if (error == ERR_NONE) {
+			if (error != ERR_EMPTY) {
 				Print_Error(error);
 				if (used >= max_entries) {
 					printf("\n   %s\n", _("Only part of data saved, please increase the limit."));
