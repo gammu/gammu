@@ -620,7 +620,16 @@
    fun:setup_confname_table
    fun:initposix
 }
-
+{
+   992 bytes in 1 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:PyString_FromString
+   fun:PyDict_SetItemString
+   fun:PyModule_AddObject
+   fun:initposix
+}
 {
    1,344 bytes in 19 blocks are still reachable
    Memcheck:Leak
