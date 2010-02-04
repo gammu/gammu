@@ -255,9 +255,7 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 					if (Phonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
 					Phonebook[used+1] = NULL;
 				} else {
-					printf("\n   ");
-					printf(_("Only part of data saved, please increase %s.") , "max_entries");
-					printf("\n");
+					printf("\n   %s\n", _("Only part of data saved, please increase the limit."));
 					break;
 				}
 				*Phonebook[used] = Pbk;
