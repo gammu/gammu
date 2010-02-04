@@ -29,6 +29,8 @@ configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/01.backup" "${CMAKE_CURR
 configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/90.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/2/10" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/99.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/3/42" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/80.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/4/15" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/smsbackups/mms-part.smsbackup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/4/20" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/smsbackups/mms-part2.smsbackup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/4/21" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/vcards/private.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/ME/1" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/ME/101" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/vcards/photo.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/ME/103" COPY_ONLY)

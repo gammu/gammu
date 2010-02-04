@@ -221,16 +221,15 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		error = ERR_NONE;
 		while (error == ERR_NONE) {
-			if (used < max_entries) {
-				Phonebook[used] = malloc(sizeof(GSM_MemoryEntry));
-				if (Phonebook[used] == NULL) {
-					Print_Error(ERR_MOREMEMORY);
-				}
-				Phonebook[used+1] = NULL;
-			} else {
+			if (used >= max_entries) {
 				printf("\n   %s\n", _("Only part of data saved, please increase the limit."));
 				break;
 			}
+			Phonebook[used] = malloc(sizeof(GSM_MemoryEntry));
+			if (Phonebook[used] == NULL) {
+				Print_Error(ERR_MOREMEMORY);
+			}
+			Phonebook[used+1] = NULL;
 			*Phonebook[used] = Pbk;
 			used++;
 			error = GSM_GetNextMemory(gsm, &Pbk, FALSE);
@@ -243,24 +242,22 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 		fprintf(stderr, "\n");
 		fflush(stderr);
 	} else {
-		Pbk.MemoryType  = MEM_ME;
 		i		= 1;
 		used 		= 0;
-		while (used != MemStatus.MemoryUsed) {
+		while (used < MemStatus.MemoryUsed) {
 			Pbk.Location = i;
-			error=GSM_GetMemory(gsm, &Pbk);
+			error = GSM_GetMemory(gsm, &Pbk);
 			if (error != ERR_EMPTY) {
 				Print_Error(error);
-				if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
-					Phonebook[used] = malloc(sizeof(GSM_MemoryEntry));
-					if (Phonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
-					Phonebook[used+1] = NULL;
-				} else {
-					printf("\n   ");
-					printf(_("Only part of data saved, please increase %s.") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
-					printf("\n");
+				if (used >= max_entries) {
+					printf("\n   %s\n", _("Only part of data saved, please increase the limit."));
 					break;
 				}
+				Phonebook[used] = malloc(sizeof(GSM_MemoryEntry));
+				if (Phonebook[used] == NULL) {
+					Print_Error(ERR_MOREMEMORY);
+				}
+				Phonebook[used+1] = NULL;
 				*Phonebook[used] = Pbk;
 				used++;
 			}

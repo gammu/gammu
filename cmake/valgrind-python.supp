@@ -620,7 +620,16 @@
    fun:setup_confname_table
    fun:initposix
 }
-
+{
+   992 bytes in 1 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:PyString_FromString
+   fun:PyDict_SetItemString
+   fun:PyModule_AddObject
+   fun:initposix
+}
 {
    1,344 bytes in 19 blocks are still reachable
    Memcheck:Leak
@@ -2013,6 +2022,16 @@
    fun:PyType_Ready 
 }
 {
+   typeready
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:_PyObject_GC_Malloc
+   fun:PyType_GenericAlloc
+   fun:PyDescr_NewWrapper
+   fun:PyType_Ready 
+}
+{
    1,112 bytes in 5 blocks are still reachable
    Memcheck:Leak
    fun:realloc
@@ -2155,6 +2174,15 @@
    <insert_a_suppression_name_here>
    Memcheck:Leak
    fun:malloc
+   fun:PyObject_Malloc
+   fun:PyString_FromString
+   fun:PyDict_SetItemString
+   fun:initsignal
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   fun:malloc
    fun:_PyObject_GC_Malloc
    fun:PyType_GenericAlloc
    obj:/usr/bin/python*
@@ -2223,6 +2251,19 @@
     fun:malloc
     fun:PyObject_Malloc
     fun:PyString_FromStringAndSize
+    fun:PyErr_NewException
+    fun:gammu_create_errors
+}
+
+{
+    python-gammu exceptions
+    Memcheck:Leak
+    fun:malloc
+    fun:PyObject_Malloc
+    fun:type_new
+    fun:type_call
+    fun:call_function_tail
+    fun:PyObject_CallFunction
     fun:PyErr_NewException
     fun:gammu_create_errors
 }
