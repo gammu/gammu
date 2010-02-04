@@ -252,7 +252,9 @@ GSM_Error ReadPhonebook(GSM_MemoryEntry **Phonebook, GSM_MemoryType MemoryType, 
 				Print_Error(error);
 				if (used < max_entries) {
 					Phonebook[used] = malloc(sizeof(GSM_MemoryEntry));
-					if (Phonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
+					if (Phonebook[used] == NULL) {
+						Print_Error(ERR_MOREMEMORY);
+					}
 					Phonebook[used+1] = NULL;
 				} else {
 					printf("\n   %s\n", _("Only part of data saved, please increase the limit."));
