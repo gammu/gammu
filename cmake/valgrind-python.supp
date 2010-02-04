@@ -2254,3 +2254,16 @@
     fun:PyErr_NewException
     fun:gammu_create_errors
 }
+
+{
+    python-gammu exceptions
+    Memcheck:Leak
+    fun:malloc
+    fun:PyObject_Malloc
+    fun:type_new
+    fun:type_call
+    fun:call_function_tail
+    fun:PyObject_CallFunction
+    fun:PyErr_NewException
+    fun:gammu_create_errors
+}
