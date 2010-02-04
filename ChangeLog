@@ -41,7 +41,6 @@ ChangeLog
 [-] * Restore phone phonebook also to phones not supporting status (bug #1122).
 [-] * Avoid reading phone memory on reading SIM (bug #1123).
     
->>>>>>> 3f152622498849ce9f4e386c34b5fca52753e8f4
 20100106 - 1.27.90
 
 [-] * Simplify code in FILES smsd service.
