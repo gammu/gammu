@@ -2013,6 +2013,16 @@
    fun:PyType_Ready 
 }
 {
+   typeready
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:_PyObject_GC_Malloc
+   fun:PyType_GenericAlloc
+   fun:PyDescr_NewWrapper
+   fun:PyType_Ready 
+}
+{
    1,112 bytes in 5 blocks are still reachable
    Memcheck:Leak
    fun:realloc
