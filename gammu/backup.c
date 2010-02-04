@@ -990,6 +990,8 @@ void Restore(int argc, char *argv[])
 
 	DoRestore = FALSE;
 	if (Backup.PhonePhonebook[0] != NULL) {
+		max = 0;
+		while (Backup.PhonePhonebook[max]!=NULL) max++;
 		MemStatus.MemoryType = MEM_ME;
 		error=GSM_GetMemoryStatus(gsm, &MemStatus);
 		/* Some phones do not support status, try reading some entry */
@@ -997,10 +999,10 @@ void Restore(int argc, char *argv[])
 			Pbk.Location = 1;
 			Pbk.MemoryType = MEM_ME;
 			error = GSM_GetMemory(gsm, &Pbk);
+			MemStatus.MemoryUsed = max;
+			MemStatus.MemoryFree = max;
 		}
 		if (error == ERR_NONE || error == ERR_EMPTY) {
-			max = 0;
-			while (Backup.PhonePhonebook[max]!=NULL) max++;
 			fprintf(stderr, _("%i entries in backup file\n"),max);
 			if (answer_yes("%s", _("Restore phone phonebook?"))) DoRestore = TRUE;
 		}
