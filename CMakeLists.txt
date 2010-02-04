@@ -33,7 +33,7 @@ else (CMAKE_CROSSCOMPILING AND MINGW)
 endif (CMAKE_CROSSCOMPILING AND MINGW)
 
 # Set version
-set (VERSION "1.27.91" CACHE INTERNAL "")
+set (VERSION "1.27.92" CACHE INTERNAL "")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\1" "VERSION_MAJOR" "${VERSION}")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\2" "VERSION_MINOR" "${VERSION}")
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\3" "VERSION_PATCH" "${VERSION}")
