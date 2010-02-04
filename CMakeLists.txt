@@ -540,7 +540,6 @@ endif (BUILD_SHARED_LIBS)
 
 set (DOCS
     README
-    SUPPORTERS
     ChangeLog
     COPYING
     )
