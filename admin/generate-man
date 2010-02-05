@@ -577,7 +577,7 @@ HELP['playsavedringtone'] = '''
 Play one of "built" ringtones. This option is available for DCT4 phones. For getting ringtones list use getringtoneslist.
 '''
 HELP['getringtoneslist'] = '''
-Get list of sounds 
+Get list of predefined ringtones.
 '''
 HELP['getringtone'] = '''Get ringtone from phone in RTTL or BINARY format. 
 
@@ -1150,6 +1150,12 @@ level and Gammu does not use that.
 SECTION_HELP['ringtone'] = '''
 Ringtones are mostly supported only for older phones. For recent phones you
 usually just upload them to some folder in phone filesystem.
+
+There are recognized various file formats by options described below: rttl,
+binary format created for Gammu, mid (saving), re (reading), ott, communicator,
+ringtones format found in fkn.pl, wav (saving), ime/imy (saving), rng, mmf (for
+Samsung).
+
 '''
 SECTION_HELP['calendar'] = '''
 In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitations (depending on phone firmware version).
