@@ -179,7 +179,9 @@ void SaveFile(int argc, char *argv[])
 	if (j != fwrite(Buffer,1,j,file)) {
 		printf_err("%s", _("Error while writing file!\n"));
 	}
-	fclose(file);
+	if (fclose(file) != 0) {
+		printf_err("%s", _("Error while closing file!\n"));
+	}
 }
 
 /**
