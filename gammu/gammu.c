@@ -700,7 +700,7 @@ static GSM_Parameters Parameters[] = {
 	{"networkinfo",		0, 0, NetworkInfo,		{H_Network,0},			""},
 #ifdef GSM_ENABLE_AT
 	{"siemenssatnetmon",		0, 0, ATSIEMENSSATNetmon,	{H_Siemens,H_Network,0},	""},
-	{"siemensnetmonact",		1, 1, ATSIEMENSActivateNetmon,	{H_Siemens,H_Network,0},	"netmon_type (1-full, 2-simple)"},
+	{"siemensnetmonact",		1, 1, ATSIEMENSActivateNetmon,	{H_Siemens,H_Network,0},	"netmon_type"},
 	{"siemensnetmonitor",		1, 1, ATSIEMENSNetmonitor,	{H_Siemens,H_Network,0},	"test"},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110

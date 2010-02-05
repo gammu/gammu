@@ -949,7 +949,11 @@ HELP['nokianetmonitor36'] = '''Reset counters from netmonitor test 36 in Nokia D
 \\fITIP:\\fR For more info about this option, please visit
 \\fIhttp://www.mwiacek.com\\fR and read netmonitor manual.
 '''
-HELP['siemensnetmonitor'] = '''''' 
+HELP['siemenssatnetmon'] = ''''''
+HELP['siemensnetmonitor'] = ''''''
+HELP['siemensnetmonact'] = '''
+Enables network monitor in Siemens phone. Currently known values for type
+are 1 for full and 2 for simple mode.''' 
 HELP['backup'] = '''Backup your phone to file. It's possible to backup (depends on phone and backup format):
 
 * phonebook from SIM and phone memory
