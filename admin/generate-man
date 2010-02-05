@@ -1160,6 +1160,13 @@ Samsung).
 SECTION_HELP['calendar'] = '''
 In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitations (depending on phone firmware version).
 '''
+SECTION_HELP['logo'] = '''
+These options are mainly (there are few expections) for monochromatic logos and
+images available in older phones. Recognized file formats: xpm (only saving),
+2-colors bmp, nlm, nsl, ngg, nol, wbmp, gif (for Samsung).
+
+In new models all bitmaps are saved in filesystem and should go into filesystem section
+'''
 
 # Code
 
