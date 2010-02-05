@@ -685,7 +685,7 @@ get it.
 '''
 HELP['setbitmap STARTUP'] = '''Set startup logo in phone. It can be static (then you will have to give file
 name) or one of predefined animated (only some phones like Nokia 3310 or 3330
-supports it).
+supports it, use location 1, 2 or 3 for these).
 '''
 HELP['setbitmap WALLPAPER'] = '''Sets wallpaper in phone.''' 
 HELP['setbitmap CALLER'] = '''Set caller logo.''' 
