@@ -1151,6 +1151,9 @@ SECTION_HELP['ringtone'] = '''
 Ringtones are mostly supported only for older phones. For recent phones you
 usually just upload them to some folder in phone filesystem.
 '''
+SECTION_HELP['calendar'] = '''
+In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitations (depending on phone firmware version).
+'''
 
 # Code
 

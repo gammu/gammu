@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Feb  2 2010" "Gammu 1.27.91" "Gammu Documentation"
+.TH "GAMMU" "1" "Feb  5 2010" "Gammu 1.27.92" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -1199,6 +1199,10 @@ editing ringtone in composer from phone menu (for example, in N33xx).
 
 
 .SS "Calendar notes"
+.P
+
+In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some limitations (depending on phone firmware version).
+
 .TP
 .BI "addnew" " file [\-yes] [\-memory ME|SM|..]"
 Adds data written in file created using \fBbackup option\fR. All things
@@ -1444,6 +1448,9 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 .TP
 .BI "getallnotes"
 Reads all notes from the phone.
+
+Note: Not all phones supports this function, especially most Sony Ericsson 
+phones even if they have notes inside phone.
 
 
 .SS "Date, time and alarms"
@@ -1851,7 +1858,7 @@ Set vibra power to "level" (given in percent)
 
 .SS "Siemens specific"
 .TP
-.BI "siemensnetmonact" " netmon_type (1\-full, 2\-simple)"
+.BI "siemensnetmonact" " netmon_type"
 
 Enables network monitor in Siemens phone. Currently known values for type
 are 1 for full and 2 for simple mode.
@@ -1906,7 +1913,7 @@ reboot them to see netmonitor menu)
 .BI "setautonetworklogin"
 
 .TP
-.BI "siemensnetmonact" " netmon_type (1\-full, 2\-simple)"
+.BI "siemensnetmonact" " netmon_type"
 
 Enables network monitor in Siemens phone. Currently known values for type
 are 1 for full and 2 for simple mode.
