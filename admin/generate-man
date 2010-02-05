@@ -1065,6 +1065,9 @@ This option is available only if Gammu was compiled with debuging options.
 
 ''' 
 HELP['getallnotes'] = '''Reads all notes from the phone.
+
+Note: Not all phones supports this function, especially most Sony Ericsson 
+phones even if they have notes inside phone.
 '''
 HELP['searchphone'] = '''Attempts to search for a connected phone. Please note
 that this can take a very long time, but in case you have no clue how to
