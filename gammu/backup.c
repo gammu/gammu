@@ -22,7 +22,7 @@ void SaveFile(int argc, char *argv[])
 	GSM_Error error;
 	GSM_Backup		Backup;
 	int			i;
-	size_t j;
+	size_t data_size = 0;
 	FILE			*file;
 	unsigned char		Buffer[100000];
 	GSM_MemoryEntry		*pbk;
@@ -48,8 +48,7 @@ void SaveFile(int argc, char *argv[])
 			GSM_FreeBackup(&Backup);
 			Terminate(2);
 		}
-		j = 0;
-		error = GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer), &j, Backup.Calendar[i],TRUE,Nokia_VCalendar);
+		error = GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer), &data_size, Backup.Calendar[i],TRUE,Nokia_VCalendar);
 		GSM_FreeBackup(&Backup);
 		Print_Error(error);
 	} else if (strcasecmp(argv[2],"BOOKMARK") == 0) {
@@ -72,8 +71,7 @@ void SaveFile(int argc, char *argv[])
 			GSM_FreeBackup(&Backup);
 			Terminate(2);
 		}
-		j = 0;
-		error = GSM_EncodeURLFile(Buffer, &j, Backup.WAPBookmark[i]);
+		error = GSM_EncodeURLFile(Buffer, &data_size, Backup.WAPBookmark[i]);
 		GSM_FreeBackup(&Backup);
 		Print_Error(error);
 	} else if (strcasecmp(argv[2],"NOTE") == 0) {
@@ -94,8 +92,7 @@ void SaveFile(int argc, char *argv[])
 			GSM_FreeBackup(&Backup);
 			Terminate(2);
 		}
-		j = 0;
-		error = GSM_EncodeVNTFile(Buffer, sizeof(Buffer), &j, Backup.Note[i]);
+		error = GSM_EncodeVNTFile(Buffer, sizeof(Buffer), &data_size, Backup.Note[i]);
 		GSM_FreeBackup(&Backup);
 		Print_Error(error);
 	} else if (strcasecmp(argv[2],"TODO") == 0) {
@@ -116,8 +113,7 @@ void SaveFile(int argc, char *argv[])
 			GSM_FreeBackup(&Backup);
 			Terminate(2);
 		}
-		j = 0;
-		error = GSM_EncodeVTODO(Buffer, sizeof(Buffer), &j, Backup.ToDo[i], TRUE, Nokia_VToDo);
+		error = GSM_EncodeVTODO(Buffer, sizeof(Buffer), &data_size, Backup.ToDo[i], TRUE, Nokia_VToDo);
 		GSM_FreeBackup(&Backup);
 		Print_Error(error);
 	} else if (strcasecmp(argv[2],"VCARD10") == 0 || strcasecmp(argv[2],"VCARD21") == 0) {
@@ -156,13 +152,12 @@ void SaveFile(int argc, char *argv[])
 			GSM_FreeBackup(&Backup);
 			Terminate(2);
 		}
-		j = 0;
 		if (strcasecmp(argv[2],"VCARD10") == 0) {
-			error = GSM_EncodeVCARD(GSM_GetDebug(gsm), Buffer, sizeof(Buffer), &j, pbk, TRUE, Nokia_VCard10);
+			error = GSM_EncodeVCARD(GSM_GetDebug(gsm), Buffer, sizeof(Buffer), &data_size, pbk, TRUE, Nokia_VCard10);
 			GSM_FreeBackup(&Backup);
 			Print_Error(error);
 		} else {
-			error = GSM_EncodeVCARD(GSM_GetDebug(gsm), Buffer, sizeof(Buffer), &j, pbk, TRUE, Nokia_VCard21);
+			error = GSM_EncodeVCARD(GSM_GetDebug(gsm), Buffer, sizeof(Buffer), &data_size, pbk, TRUE, Nokia_VCard21);
 			GSM_FreeBackup(&Backup);
 			Print_Error(error);
 		}
@@ -176,7 +171,7 @@ void SaveFile(int argc, char *argv[])
 		printf_err("%s", _("Error while opening file for writing!\n"));
 		Terminate(3);
 	}
-	if (j != fwrite(Buffer,1,j,file)) {
+	if (data_size != fwrite(Buffer,1,data_size,file)) {
 		printf_err("%s", _("Error while writing file!\n"));
 	}
 	if (fclose(file) != 0) {
