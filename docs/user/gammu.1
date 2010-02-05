@@ -903,6 +903,28 @@ You can use jadmaker(1) to generate a .jad file from a .jar file.
 .TP
 .BI "nokiaaddplaylists"
 
+Goes through phone memory and generated playlist for all music files found.
+
+To manually manage playlists:
+
+    gammu addfile a:\\predefplaylist filename.m3u
+
+Will add playlist filename.m3u
+
+    gammu getfilesystem
+
+Will get list of all files (including names of files with playlists)
+
+    gammu deletefiles a:\\predefplaylist\\filename.m3u
+
+Will delete playlist filename.m3u
+
+Format of m3u playlist is easy (standard mp3 playlist):
+
+First line is #EXTM3U, next lines contain  names of files (b:\file1.mp3,
+b:\folder1\file2.mp3, etc.). File needs t have '\r\n' terminated lines. So
+just run unix2dos on the resulting file before uploading it your your phone.
+
 .TP
 .BI "sendfile" " name"
 Sends file to a phone. It's up to phone to decide where
@@ -1726,6 +1748,28 @@ You can use jadmaker(1) to generate a .jad file from a .jar file.
 
 .TP
 .BI "nokiaaddplaylists"
+
+Goes through phone memory and generated playlist for all music files found.
+
+To manually manage playlists:
+
+    gammu addfile a:\\predefplaylist filename.m3u
+
+Will add playlist filename.m3u
+
+    gammu getfilesystem
+
+Will get list of all files (including names of files with playlists)
+
+    gammu deletefiles a:\\predefplaylist\\filename.m3u
+
+Will delete playlist filename.m3u
+
+Format of m3u playlist is easy (standard mp3 playlist):
+
+First line is #EXTM3U, next lines contain  names of files (b:\file1.mp3,
+b:\folder1\file2.mp3, etc.). File needs t have '\r\n' terminated lines. So
+just run unix2dos on the resulting file before uploading it your your phone.
 
 .TP
 .BI "nokiacomposer" " file"

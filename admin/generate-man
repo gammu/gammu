@@ -470,6 +470,29 @@ HELP['addfile'] = '''Add file with specified name to folder with specified folde
 - after using it date/time of file modification will be set to moment of uploading 
 
 '''
+HELP['nokiaaddplaylists'] = '''
+Goes through phone memory and generated playlist for all music files found.
+
+To manually manage playlists:
+
+    gammu addfile a:\\\\predefplaylist filename.m3u
+
+Will add playlist filename.m3u
+
+    gammu getfilesystem
+
+Will get list of all files (including names of files with playlists)
+
+    gammu deletefiles a:\\\\predefplaylist\\\\filename.m3u
+
+Will delete playlist filename.m3u
+
+Format of m3u playlist is easy (standard mp3 playlist):
+
+First line is #EXTM3U, next lines contain  names of files (b:\\file1.mp3,
+b:\\folder1\\file2.mp3, etc.). File needs t have '\\r\\n' terminated lines. So
+just run unix2dos on the resulting file before uploading it your your phone.
+'''
 HELP['nokiaaddfile APPLICATION|GAME'] = '''Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You need to specify filename without the jar/jad suffix, both will be added automatically.
 
 The option
