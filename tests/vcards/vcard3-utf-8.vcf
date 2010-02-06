@@ -1,0 +1,13 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Bodø likningskontor
+N:Bodø likningskontor;;;;
+NOTE:Telefonhenvendelser til saksbehandler\: \nMan 08\:00-15\:30, tir-fre 1
+ 2\:00-15\:30
+TEL;TYPE=WORK,VOICE:+4775546800
+TEL;TYPE=WORK,FAX:+4775546805
+ADR;TYPE=work:;;Moloveien 20;Bodø;Nordland;8002;Norway
+EMAIL;TYPE=INTERNET:bodo.lk@skatteetaten.no
+CATEGORIES:government,Norwegian
+END:VCARD
+
