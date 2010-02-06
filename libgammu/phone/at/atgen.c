@@ -5211,6 +5211,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {SAMSUNG_ReplyGetMemoryInfo,	"AT+SPBR=?"		,0x00,0x00,ID_GetMemory		 },
 {MOTOROLA_ReplyGetMemoryInfo,	"AT+MPBR=?"		,0x00,0x00,ID_GetMemory		 },
 {SIEMENS_ReplyGetMemory,	"AT^SBNR=\"vcf\""	,0x00,0x00,ID_GetMemory		 },
+{SIEMENS_ReplySetMemory,	"AT^SBNW=\"vcf\""	,0x00,0x00,ID_SetMemory		 },
 {SAMSUNG_ReplyGetMemory,	"AT+SPBR"		,0x00,0x00,ID_GetMemory		 },
 {MOTOROLA_ReplyGetMemory,	"AT+MPBR"		,0x00,0x00,ID_GetMemory		 },
 {ATGEN_ReplySetMemory,		"AT+CPBW"		,0x00,0x00,ID_SetMemory		 },

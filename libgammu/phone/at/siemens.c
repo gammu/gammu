@@ -277,6 +277,11 @@ GSM_Error SIEMENS_ReplyAddCalendarNote(GSM_Protocol_Message msg, GSM_StateMachin
     return SIEMENS_ReplySetFunction (msg, s, "Calendar Note");
 }
 
+GSM_Error SIEMENS_ReplySetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+    return SIEMENS_ReplySetFunction (msg, s, "Memory entry");
+}
+
 GSM_Error SIEMENS_ReplyDelCalendarNote(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
