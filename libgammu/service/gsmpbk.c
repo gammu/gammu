@@ -618,6 +618,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 	int	     Level = 0;
 	char   *s;
 	int		pos;
+	int		version = 1;
 	GSM_Error	error;
 	char	*Line = NULL;
 
@@ -642,6 +643,10 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 			CHECK_NUM_ENTRIES;
 			if (strstr(Line,"END:VCARD")) {
 				goto vcard_complete;
+			}
+			if (strstr(Line, "VERSION:") != NULL) {
+				version = atoi(Line + 8);
+				dbgprintf(di, "vCard version %d\n", version);
 			}
 			if (ReadVCALText(Line, "N", Buff, FALSE)) {
 				pos = 0;
