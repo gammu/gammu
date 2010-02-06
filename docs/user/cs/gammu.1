@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Feb  2 2010" "Gammu 1.27.91" "Dokumentace Gammu"
+.TH GAMMU 1 "Feb  5 2010" "Gammu 1.27.92" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -975,6 +975,29 @@ Pro vygenerování jad souboru z jar souboru můžete použít jadmaker(1).
 .TP 
 \fBnokiaaddplaylists\fP
 
+Goes through phone memory and generated playlist for all music files found.
+
+To manually manage playlists:
+
+    gammu addfile a:\epredefplaylist filename.m3u
+
+Will add playlist filename.m3u
+
+    gammu getfilesystem
+
+Will get list of all files (including names of files with playlists)
+
+    gammu deletefiles a:\epredefplaylist\efilename.m3u
+
+Will delete playlist filename.m3u
+
+Format of m3u playlist is easy (standard mp3 playlist):
+
+First line is #EXTM3U, next lines contain names of files (b:\efile1.mp3,
+b:\efolder1\efile2.mp3, etc.). File needs t have '\er\en' terminated
+lines. So just run unix2dos on the resulting file before uploading it your
+your phone.
+
 .TP 
 \fBsendfile\fP\fI name\fP
 Odešle soubor do telefonu. Je na telefonu, aby se rozhodl, co s ním udělá,
@@ -986,6 +1009,15 @@ většina telefonů vám nabídne možnost ho importovat).
 
 
 .SS "Loga a obrázky"
+.P
+
+These options are mainly (there are few expections) for monochromatic logos
+and images available in older phones. Recognized file formats: xpm (only
+saving), 2\-colors bmp, nlm, nsl, ngg, nol, wbmp, gif (for Samsung).
+
+In new models all bitmaps are saved in filesystem and should go into
+filesystem section
+
 .TP 
 \fBcopybitmap\fP\fI inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]\fP
 Převádí loga mezi různými formáty. Pokud neuvedete výstupní soubor, logo
@@ -1122,9 +1154,9 @@ bude logo zobrazeno: \fBgammu setbitmap OPERATOR file "230 03"\fP
 Nastaví obrázek v telefonu.
 .TP 
 \fBsetbitmap STARTUP\fP\fI file|1|2|3\fP
-Nastaví v telefonu logo při spuštění. Může to být zadaný obrázek (pak musíte
-zadat jeho cestu), nebo jedna z předdefinovaných animací (toto podporují jen
-některé telefony jako Nokia 3310 nebo 3330).
+Set startup logo in phone. It can be static (then you will have to give file
+name) or one of predefined animated (only some phones like Nokia 3310 or
+3330 supports it, use location 1, 2 or 3 for these).
 
 .TP 
 \fBsetbitmap TEXT\fP\fI text\fP
@@ -1138,6 +1170,12 @@ Nastaví v telefonu obrázek pozadí.
 
 Vyzvánění jsou většinou podporována jen pro starší telefony. Pro novější je
 obvykle jen musíte nahrát do správné složky v telefonu.
+
+There are recognized various file formats by options described below: rttl,
+binary format created for Gammu, mid (saving), re (reading), ott,
+communicator, ringtones format found in fkn.pl, wav (saving), ime/imy
+(saving), rng, mmf (for Samsung).
+
 
 .TP 
 \fBaddnew\fP\fI file [\-yes] [\-memory ME|SM|..]\fP
@@ -1284,6 +1322,11 @@ některých telefonů blikat (například 33xx)
 
 
 .SS Kalendář
+.P
+
+In Nokia 3310, 3315 and 3330 these are named "Reminders" and have some
+limitations (depending on phone firmware version).
+
 .TP 
 \fBaddnew\fP\fI file [\-yes] [\-memory ME|SM|..]\fP
 Přidá data ze souboru vytvořeného pomocí fuknce \fBbackup\fP.
@@ -1529,6 +1572,9 @@ sendsms a savesms\fP.
 .TP 
 \fBgetallnotes\fP
 Zobrazí všechny poznámky z telefonu.
+
+Note: Not all phones supports this function, especially most Sony Ericsson
+phones even if they have notes inside phone.
 
 
 .SS "Čas, datum a budíky"
@@ -1785,6 +1831,29 @@ Pro vygenerování jad souboru z jar souboru můžete použít jadmaker(1).
 .TP 
 \fBnokiaaddplaylists\fP
 
+Goes through phone memory and generated playlist for all music files found.
+
+To manually manage playlists:
+
+    gammu addfile a:\epredefplaylist filename.m3u
+
+Will add playlist filename.m3u
+
+    gammu getfilesystem
+
+Will get list of all files (including names of files with playlists)
+
+    gammu deletefiles a:\epredefplaylist\efilename.m3u
+
+Will delete playlist filename.m3u
+
+Format of m3u playlist is easy (standard mp3 playlist):
+
+First line is #EXTM3U, next lines contain names of files (b:\efile1.mp3,
+b:\efolder1\efile2.mp3, etc.). File needs t have '\er\en' terminated
+lines. So just run unix2dos on the resulting file before uploading it your
+your phone.
+
 .TP 
 \fBnokiacomposer\fP\fI file\fP
 Zobrazí jak zadat RTTL vyzvánění ve skladateli dostupném v mnoha telefonech
@@ -1929,7 +1998,7 @@ Nastaví úrověň vibrací na úroveň "level" (v procentech)
 
 .SS "Specifické pro Siemens"
 .TP 
-\fBsiemensnetmonact\fP\fI netmon_type (1\-full, 2\-simple)\fP
+\fBsiemensnetmonact\fP\fI netmon_type\fP
 
 Enables network monitor in Siemens phone. Currently known values for type
 are 1 for full and 2 for simple mode.
@@ -1982,7 +2051,7 @@ nokianetmonitor 243\fP se musí některé telefony restartovat)
 \fBsetautonetworklogin\fP
 
 .TP 
-\fBsiemensnetmonact\fP\fI netmon_type (1\-full, 2\-simple)\fP
+\fBsiemensnetmonact\fP\fI netmon_type\fP
 
 Enables network monitor in Siemens phone. Currently known values for type
 are 1 for full and 2 for simple mode.
