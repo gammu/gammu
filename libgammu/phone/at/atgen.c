@@ -5210,7 +5210,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {SIEMENS_ReplyGetMemoryInfo,	"AT^SBNR=?"		,0x00,0x00,ID_GetMemory		 },
 {SAMSUNG_ReplyGetMemoryInfo,	"AT+SPBR=?"		,0x00,0x00,ID_GetMemory		 },
 {MOTOROLA_ReplyGetMemoryInfo,	"AT+MPBR=?"		,0x00,0x00,ID_GetMemory		 },
-{SIEMENS_ReplyGetMemory,	"AT^SBNR"		,0x00,0x00,ID_GetMemory		 },
+{SIEMENS_ReplyGetMemory,	"AT^SBNR=\"vcf\""	,0x00,0x00,ID_GetMemory		 },
 {SAMSUNG_ReplyGetMemory,	"AT+SPBR"		,0x00,0x00,ID_GetMemory		 },
 {MOTOROLA_ReplyGetMemory,	"AT+MPBR"		,0x00,0x00,ID_GetMemory		 },
 {ATGEN_ReplySetMemory,		"AT+CPBW"		,0x00,0x00,ID_SetMemory		 },
