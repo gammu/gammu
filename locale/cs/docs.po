@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-06 17:42+0100\n"
-"PO-Revision-Date: 2010-01-31 13:05+0100\n"
+"PO-Revision-Date: 2010-02-06 17:47+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,16 +31,16 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Feb  5 2010"
-msgstr "Prosinec 27, 2009"
+msgstr "5. únor 2010"
 
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu 1.27.92"
-msgstr "Gammu 1.27.91"
+msgstr "Gammu 1.27.92"
 
 # type: TH
 #. type: TH
@@ -2768,7 +2768,6 @@ msgstr "B<setbitmap STARTUP>I< file|1|2|3>"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:1078
-#, fuzzy
 msgid ""
 "Set startup logo in phone. It can be static (then you will have to give file "
 "name) or one of predefined animated (only some phones like Nokia 3310 or "
@@ -2776,7 +2775,7 @@ msgid ""
 msgstr ""
 "Nastaví v telefonu logo při spuštění. Může to být zadaný obrázek (pak musíte "
 "zadat jeho cestu), nebo jedna z předdefinovaných animací (toto podporují jen "
-"některé telefony jako Nokia 3310 nebo 3330)."
+"některé telefony jako Nokia 3310 nebo 3330, použijte umístění 1, 2 nebo 3)."
 
 # type: TP
 #. type: TP
@@ -3469,9 +3468,8 @@ msgstr "B<nokiaselftests>"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:1868 docs/user/gammu.1:2205
-#, fuzzy
 msgid "Perform tests for Nokia DCT3 phones."
-msgstr "Zobrazí výstup nebo nastaví netmonitor na telefonech Nokia DCT3."
+msgstr "Spustí testy na telefonech Nokia DCT3."
 
 #. type: Plain text
 #: docs/user/gammu.1:1873 docs/user/gammu.1:2210
@@ -3605,9 +3603,9 @@ msgstr "Specifické pro Siemens"
 # type: TP
 #. type: TP
 #: docs/user/gammu.1:1918 docs/user/gammu.1:1973
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<siemensnetmonact>I< netmon_type>"
-msgstr "B<siemensnetmonact>I< netmon_type (1-full, 2-simple)>"
+msgstr "B<siemensnetmonact>I< netmon_type>"
 
 #. type: Plain text
 #: docs/user/gammu.1:1923 docs/user/gammu.1:1978
