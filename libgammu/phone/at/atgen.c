@@ -4255,11 +4255,17 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		if (Priv->PBK_MPBR == 0) {
 			ATGEN_CheckMPBR(s);
 		}
+		if (Priv->PBKSBNR == 0) {
+			ATGEN_CheckSBNR(s);
+		}
 		if (Priv->PBK_SPBR == AT_AVAILABLE) {
 			return SAMSUNG_SetMemory(s, entry);
 		}
 		if (Priv->PBK_MPBR == AT_AVAILABLE) {
 			smprintf(s, "WARNING: setting memory for Motorola not implemented yet!\n");
+		}
+		if (Priv->PBKSBNR == AT_AVAILABLE) {
+			return SIEMENS_SetMemory(s, entry);
 		}
 	}
 	for (i = 0;i < entry->EntriesNum;i++) {

@@ -431,6 +431,25 @@ GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 	}
 }
 
+GSM_Error SIEMENS_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error		error;
+	unsigned char 		req[5000];
+	size_t			size=0;
+
+	if (Priv->Manufacturer != AT_Siemens) {
+		return ERR_NOTSUPPORTED;
+	}
+	if (entry->MemoryType != MEM_ME) {
+		return ERR_NOTSUPPORTED;
+	}
+
+	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req) ,&size, entry, TRUE, SonyEricsson_VCard10);
+	if (error != ERR_NONE) return error;
+
+	return SetSiemensFrame(s, req, "vcf", entry->Location, ID_SetMemory, size);
+}
 
 #endif
 
