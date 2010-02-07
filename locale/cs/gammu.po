@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-05 06:30+0100\n"
-"PO-Revision-Date: 2010-01-31 13:06+0100\n"
+"PO-Revision-Date: 2010-02-07 22:49+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -70,9 +70,8 @@ msgid "Error while writing file!\n"
 msgstr "Chyba při zápisu do souboru!\n"
 
 #: gammu/backup.c:178
-#, fuzzy
 msgid "Error while closing file!\n"
-msgstr "Chyba při zápisu do souboru!\n"
+msgstr "Chyba při zavírání souboru!\n"
 
 #: gammu/backup.c:218 gammu/backup.c:373 gammu/backup.c:445 gammu/backup.c:480
 #: gammu/backup.c:514 gammu/backup.c:582 gammu/backup.c:619 gammu/backup.c:656
@@ -300,7 +299,7 @@ msgstr ""
 
 #: gammu/backup.c:956
 msgid "Use addnew command if you just want to add some entries to your phone."
-msgstr ""
+msgstr "Pro přidání nových položek do telefonu použijte příkaz addnew."
 
 #: gammu/backup.c:964
 msgid "Restore phone caller groups and logos?"
