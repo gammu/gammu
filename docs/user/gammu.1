@@ -211,7 +211,8 @@ will see location. If you want to get such sms from phone alone, use
 
 .TP
 .BI "geteachsms" " \-pbk"
-Similiary to \fBgetallsms\fR. Difference is, that links all contacenated sms
+Similiary to \fBgetallsms\fR. Difference is, that
+links all concatenated sms
 
 .TP
 .BI "getsms" " folder start [stop]"
@@ -437,7 +438,7 @@ For description of shared parameters see \fBCommon parameters for sendsms and sa
 Take text from stdin (or commandline if \-text 
 specified) and save as text SMS into SIM/phone memory.
 
-\fB\-flash\fR - Class 0 SMS
+\fB\-flash\fR - Class 0 SMS (should be displayed after receiving on recipients' phone display after receiving without entering Inbox)
 
 \fB\-len len\fR - specify, how many chars will be read. When use this
 option and text will be longer than 1 SMS, will be split into more
@@ -462,6 +463,8 @@ only beep, vibrate or turn on light. Text will be cut to 1 sms.
 \fB\-text\fR - get text from command line instead of stdin.
 
 \fB\-textutf8\fR - get text in UTF-8 from command line instead of stdin.
+
+\fB\-16bit\fR - Gammu uses SMS headers with 16-bit numbers for saving linking info in SMS (it means less chars available for user in each SMS)
 
 \fITIP:\fR
 You can create Unicode file using WordPad in Windows (during saving select
