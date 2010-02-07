@@ -171,6 +171,31 @@ not deliver it).
 \fB\-save\fR - will also save message which is being sent
 
 .TP
+\fBIntroduction to SMS formats\fR
+
+These commands are provided for SMS. Gammu has got support for many SMS formats like:
+
+ * Nokia Smart Messaging (used for monochromatic picture images, downloadable profiles, monochromatic operator logos, monochromatic caller logos and monophonic ringtones)
+ * Linked SMS (both with 8 and 16-bit identification numbers in headers)
+ * EMS (this is SMS format used for saving monochromatic images, monophonic ringtones, animations, text formatting and others)
+
+.TP
+\fBEncoding chars in SMS text\fR
+
+Text in SMS can be coded using two ways:
+
+* with GSM Default Alphabet - in single SMS you can have maximally 160 chars (Gammu doesn't support compressing such texts according to GSM standards, but it isn't big limit, because there are no phones supporting them), but they're from limited set:
+  * all Latin small and large
+  * all digits
+  * some Greek
+  * some other national
+  * some symbols like  @ ! " # & / ( ) % * + = - , . : ; < > ?
+  * few others
+
+* with Unicode - in single SMS you can save maximally 70 chars, but these can be any chars including all national and special. Please note, that problems with receiving/displaying such SMS can be sometimes connected with limits existing in (recipient's) phone firmware.
+
+
+.TP
 .BI "addsms" " folder file [\-yes]"
 Adds SMSes from file (format like backupsms uses) to
 selected folder in phone.
