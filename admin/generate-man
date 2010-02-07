@@ -1225,6 +1225,19 @@ Text in SMS can be coded using two ways:
 
 * with Unicode - in single SMS you can save maximally 70 chars, but these can be any chars including all national and special. Please note, that problems with receiving/displaying such SMS can be sometimes connected with limits existing in (recipient's) phone firmware.
 
+Gammu tries to give solution for some issues connected with translating chars between phone and computer. If you copy text into SMS:
+
+1. all chars are internally converted into Unicode:
+  * if they were given using standard input, there are used operating system functions (you need to have correctly set national support for Greek chars to have Greek chars conversion, etc.)
+  * if you gave Unicode coded file to Gammu, chars from it are simply copied
+
+2. if SMS will use:
+  * GSM Default Alphabet, Gammu will:
+     * check, if some Unicode chars can be saved in GSM Default Alphabet using two chars only and will create such sequences (it's done for ^ { } \ [ ] ~ | ? chars)
+     * put all chars available in GSM Default Alphabet into SMS
+     * try to save into SMS all other national chars (with dashes, dots, double dots, etc.) after replacing them with Latin
+     * use "?" for all other chars
+  * Unicode, Gammu will copy all chars into SMS
 '''
 SECTION_HELP['filesystem'] = '''
 Gammu allows to access phones using native protocol (Nokias) or OBEX. Your
