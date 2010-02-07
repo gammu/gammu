@@ -362,6 +362,13 @@ GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 	Config->log_type = SMSD_LOG_NONE;
 	Config->debug_level = 0;
 	Config->Service = NULL;
+
+	/* Prepare lists */
+	GSM_StringArray_New(&(Config->IncludeNumbersList));
+	GSM_StringArray_New(&(Config->ExcludeNumbersList));
+	GSM_StringArray_New(&(Config->IncludeSMSCList));
+	GSM_StringArray_New(&(Config->ExcludeSMSCList));
+
 	if (name == NULL) {
 		Config->program_name = smsd_name;
 	} else {
@@ -772,12 +779,6 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 		/* This one can be NULL */
 	}
 #endif
-
-	/* Prepare lists */
-	GSM_StringArray_New(&(Config->IncludeNumbersList));
-	GSM_StringArray_New(&(Config->ExcludeNumbersList));
-	GSM_StringArray_New(&(Config->IncludeSMSCList));
-	GSM_StringArray_New(&(Config->ExcludeSMSCList));
 
 	/* Process include section in config file */
 	error = SMSD_LoadIniNumbersList(Config, &(Config->IncludeNumbersList), "include_numbers");
