@@ -4243,11 +4243,6 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	if (entry->Location == 0) {
 		return ERR_INVALIDLOCATION;
 	}
-	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
-
-	if (error != ERR_NONE) {
-		return error;
-	}
 	if (entry->MemoryType == MEM_ME) {
 		if (Priv->PBK_SPBR == 0) {
 			ATGEN_CheckSPBR(s);
@@ -4267,6 +4262,11 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		if (Priv->PBKSBNR == AT_AVAILABLE) {
 			return SIEMENS_SetMemory(s, entry);
 		}
+	}
+	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
+
+	if (error != ERR_NONE) {
+		return error;
 	}
 	for (i = 0;i < entry->EntriesNum;i++) {
 		entry->Entries[i].AddError = ERR_NOTSUPPORTED;
