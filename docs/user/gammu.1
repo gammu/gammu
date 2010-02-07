@@ -242,6 +242,8 @@ Get names for SMS folders in phone
 
 .TP
 .BI "nokiagett9"
+This option should display T9 dictionary content from
+DCT4 phones.
 
 .TP
 .BI "restoresms" " file [\-yes]"
@@ -316,13 +318,28 @@ Saves EMS sequence. All parameters after \fB\-unread\fR (like \fB\-defsound\fR) 
 
 \fB\-toneSE\fR - adds IMelody in "short" form supported by SonyEricsson phones
 
+\fB\-toneSElong\fR - add SonyEricsson IMelody saved in one or few SMS with UPI
+
 \fB\-variablebitmap\fR - bitmap in any size saved in one SMS
 
 \fB\-variablebitmaplong\fR - bitmap with maximal size 96x128 saved in one or few sms
 
-\fB\-fixedbitmap \fR - bitmap 16x16 or 32x32
+\fB\-fixedbitmap\fR - bitmap 16x16 or 32x32
 
 \fB\-protected\fR - all ringtones and bitmaps after this parameter (excluding default ringtones and logos) will be "protected" (in phones compatible with ODI like SonyEricsson products it won't be possible to forward them from phone menu)
+
+\fB\-16bit\fR - Gammu uses SMS headers with 16-bit numbers for saving linking info in SMS (it means less chars available for user in each SMS)
+
+\fB\-format\fR lcrasbiut - last text will be formatted. You can use combinations of chars:
+    l - left aligned
+    c - centered
+    r - right aligned
+    a - large font
+    s - small font
+    b - bold font
+    i - italic font
+    u - underlined font
+    t - strikethrough font
 
 \fIExample:\fR gammu savesms EMS \-text "Greetings" \-defsound 1 \-text "from Gammu" \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
 
@@ -1830,6 +1847,8 @@ name using this option.
 
 .TP
 .BI "nokiagett9"
+This option should display T9 dictionary content from
+DCT4 phones.
 
 .TP
 .BI "nokiagetvoicerecord" " location"
