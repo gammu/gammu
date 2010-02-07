@@ -807,8 +807,8 @@ there is example file (\\fIreplace.txt\\fR), which will change all "a" chars to 
 
 \\fIExample:\\fR echo some_text | gammu savesms TEXT
 '''
-HELP['savesms RINGTONE'] = '''Read RTTL ringtone from file and save as SMS into SIM/phone 
-memory. Ringtone is saved in Nokia format.
+HELP['savesms RINGTONE'] = '''Read RTTL ringtone from file and save as SMS
+into SIM/phone memory. Ringtone is saved in Nokia (Smart Messaging) format.
 
 \\fB\\-long\\fR - ringtone is saved using Profile style. It can be longer (and saved
 in 2 SMS), but decoded only by newer phones (like 33xx)
@@ -816,12 +816,25 @@ in 2 SMS), but decoded only by newer phones (like 33xx)
 \\fB\\-scale\\fR - ringtone will have Scale info for each note. It will allow to edit
 it correctly later in phone composer (for example, in 33xx)
 '''
-HELP['savesms OPERATOR'] = '''Save operator logo as sms (Nokia format - size 72x14 or 78x21 after
-using \\fB\\-biglogo\\fR).
+HELP['savesms OPERATOR'] = '''Save operator logo as sms in Nokia (Smart
+Messaging) format - size 72x14 or 78x21 after using \\fB\\-biglogo\\fR, all in
+two colors.
+
+Please note, that it isn't designed for colour logos available for example in
+DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
+commands.
 '''
-HELP['savesms CALLER'] = '''Save caller logo as sms (Nokia format - size 72x14).
+HELP['savesms CALLER'] = '''Save caller logo as sms in Nokia (Smart Messaging)
+format - size 72x14, two colors.
+
+Please note, that it isn't designed for colour logos available for example in
+DCT4/TIKU - you need to put bitmap file there inside phone using filesystem
+commands.
 '''
-HELP['savesms PICTURE'] = '''Save Picture Image as sms (Nokia format - size 72x28).
+HELP['savesms PICTURE'] = '''
+Read bitmap from 2 colors file (bmp, nlm, nsl, ngg, nol, wbmp, etc.), format
+into bitmap in Smart Messaging (72x28, 2 colors, called often Picture Image
+and saved with text) or Alcatel format and send/save over SMS.
 '''
 HELP['savesms ANIMATION'] = '''Save an animation as a SMS. You need to give
 number of frames and picture for each frame. Each picture can be in any
@@ -853,8 +866,10 @@ all numbers, text and name) format as SMS. The location identifies position of c
 to be read in backup file (usually 1, but can be useful in case the backup contains 
 more items).
 '''
-HELP['savesms PROFILE'] = '''Read ringtone (RTTL) format and bitmap (Picture Image size) and name and save
-as Nokia profile.
+HELP['savesms PROFILE'] = '''
+Read ringtone (RTTL) format, bitmap (Picture Image size) and name, format into
+Smart Messaging profile and send/save as SMS. Please note, that this format is
+abandomed by Nokia and supported by some (older) devices only like Nokia 3310.
 '''
 HELP['savesms SMSTEMPLATE'] = '''Saves a SMS template (for Alcatel phones).
 '''
