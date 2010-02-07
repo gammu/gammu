@@ -3671,7 +3671,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 		}
 		if (Priv->PBKSBNR == AT_AVAILABLE) {
 			/* FirstMemoryEntry is not applied here, it is always 0 */
-			len = sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location - 1);
+			len = sprintf(req, "AT^SBNR=\"vcf\",%i\r",entry->Location - 1);
 			goto read_memory;
 		}
 		if (Priv->PBK_SPBR == AT_AVAILABLE) {
