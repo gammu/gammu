@@ -178,12 +178,26 @@ gammu\-smsd.exe \-c smsdrc
 You now should be able to get errors from SMSD even if it fails to start as a
 service.
 
+.SH KNOWN LIMITATIONS
+
+You can not use same phone by more programs in same time. However in case you
+did not enable locking in [gammu] section, it might be able to start the
+communication with phone from more programs. In this case neither of the
+programs will probably work.
+
+There is no way to detect that SMS message is reply to another by looking at
+message headers. The only way to achieve this is to add some token to the
+message and let the user include it in the message on reply.
+
 .SH SEE ALSO
 gammu\-smsdrc(5), gammu(1), gammu\-smsd\-inject(1), gammu\-smsd\-monitor(1)
 
 Documentation for different backends:
 
 gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7), gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7), gammu\-smsd\-null(7), gammu\-smsd\-run(7)
+
+For web based frontend to SMSD database (currently only MySQL is being
+supported), please check Kalkun - <http://kalkun.sourceforge.net/>.
 .SH AUTHOR
 gammu\-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
 .SH COPYRIGHT
