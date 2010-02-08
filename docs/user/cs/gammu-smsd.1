@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU\-SMSD 1 "Leden  15, 2009" "Gammu 1.23.0" "Dokumentace Gammu"
+.TH GAMMU\-SMSD 1 "February 8, 2010" "Gammu 1.28.0" "Dokumentace Gammu"
 .SH JMÉNO
 gammu\-smsd \- SMS démon pro Gammu
 .SH SYNTAXE
@@ -184,6 +184,17 @@ gammu\-smsd.exe \-c smsdrc
 Nyní by mělo být možné dostat popis chyb i když SMSD nejde spustit jako
 služba.
 
+.SH "KNOWN LIMITATIONS"
+
+You can not use same phone by more programs in same time. However in case
+you did not enable locking in [gammu] section, it might be able to start the
+communication with phone from more programs. In this case neither of the
+programs will probably work.
+
+There is no way to detect that SMS message is reply to another by looking at
+message headers. The only way to achieve this is to add some token to the
+message and let the user include it in the message on reply.
+
 .SH "DALŠÍ INFORMACE"
 gammu\-smsdrc(5), gammu(1), gammu\-smsd\-inject(1), gammu\-smsd\-monitor(1)
 
@@ -192,6 +203,9 @@ Dokumentace pro různé služby:
 gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7),
 gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7), gammu\-smsd\-null(7),
 gammu\-smsd\-run(7)
+
+For web based frontend to SMSD database (currently only MySQL is being
+supported), please check Kalkun \- <http://kalkun.sourceforge.net/>.
 .SH AUTOR
 gammu\-smsd a tuto manuálovou stránku napsal Michal Čihař
 <michal@cihar.com>.
