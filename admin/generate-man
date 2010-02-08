@@ -1204,11 +1204,17 @@ not deliver it).
 .TP
 \\fBIntroduction to SMS formats\\fR
 
-These commands are provided for SMS. Gammu has got support for many SMS formats like:
+Gammu has support for many SMS formats like:
 
  * Nokia Smart Messaging (used for monochromatic picture images, downloadable profiles, monochromatic operator logos, monochromatic caller logos and monophonic ringtones)
  * Linked SMS (both with 8 and 16-bit identification numbers in headers)
  * EMS (this is SMS format used for saving monochromatic images, monophonic ringtones, animations, text formatting and others)
+ * MMS notifications
+ * Alcatel logo messages
+
+You need to ensure that the target phone supports message type you want to
+send. Otherwise the phone will not be able to display it or will even crash,
+because firmware of phone did not expect this possibility.
 
 .TP
 \\fBEncoding chars in SMS text\\fR

@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-07 22:41+0100\n"
-"PO-Revision-Date: 2010-02-06 17:47+0100\n"
+"PO-Revision-Date: 2010-02-08 15:29+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -583,7 +583,7 @@ msgstr "B<-save> - zpráva bude před odesláním uložena do telefonu"
 #: docs/user/gammu.1:173
 #, no-wrap
 msgid "B<Introduction to SMS formats>"
-msgstr ""
+msgstr "B<Úvod do formátů SMS>"
 
 #. type: Plain text
 #: docs/user/gammu.1:177
