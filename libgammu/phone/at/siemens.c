@@ -25,23 +25,27 @@ static GSM_Error GetSiemensFrame(GSM_Protocol_Message msg, GSM_StateMachine *s, 
 	int			i=2, pos=0, length=0;
 	unsigned char 		buf[512];
 
-	if (strstr(GetLineString(msg.Buffer,&Priv->Lines,2),"OK")) return ERR_EMPTY;
-        if (!strstr(GetLineString(msg.Buffer,&Priv->Lines,2),templ)) return ERR_UNKNOWN;
+	if (strstr(GetLineString(msg.Buffer,&Priv->Lines,2), "OK")) {
+		return ERR_EMPTY;
+	}
+	if (!strstr(GetLineString(msg.Buffer,&Priv->Lines,2), templ)) {
+		return ERR_UNKNOWN;
+	}
 
 	while (1) {
 		if (Priv->Lines.numbers[i*2+1]==0) break;
-		if ((!strstr(GetLineString(msg.Buffer,&Priv->Lines,i+1),templ)) &&
-	            (strstr(GetLineString(msg.Buffer,&Priv->Lines,i),templ))){
-			length = strlen(GetLineString(msg.Buffer,&Priv->Lines,i+1));
-			DecodeHexBin(buf, GetLineString(msg.Buffer,&Priv->Lines,i+1),length);
-			length = length/2;
+		if ((!strstr(GetLineString(msg.Buffer, &Priv->Lines, i + 1), templ)) &&
+				(strstr(GetLineString(msg.Buffer, &Priv->Lines, i), templ))){
+			length = strlen(GetLineString(msg.Buffer, &Priv->Lines, i + 1));
+			DecodeHexBin(buf, GetLineString(msg.Buffer, &Priv->Lines, i + 1),length);
+			length = length / 2;
 			memcpy (buffer+pos,buf,length);
 			pos+=length;
 		}
 		i++;
 	}
 	*len = pos;
-       return ERR_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, const char *templ,
