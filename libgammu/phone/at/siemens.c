@@ -49,7 +49,7 @@ static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, cons
 {
 	GSM_Phone_Data		*Phone = &s->Phone.Data;
 	GSM_Error		error;
-	unsigned char 		req[20],req1[512],hexreq[2096];
+	unsigned char 		req[20],req1[512],hexreq[10000];
 	int			MaxFrame,CurrentFrame,size,sz,pos=0;
 	size_t reqlen;
 
