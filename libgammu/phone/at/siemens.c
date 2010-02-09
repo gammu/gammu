@@ -58,29 +58,54 @@ static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, cons
 		return ERR_MOREMEMORY;
 	}
 
-	EncodeHexBin(hexreq,buff,len);
+	/* Encode request data */
+	EncodeHexBin(hexreq, buff, len);
+
+	/* Calculate number of frames */
 	size	 = len * 2;
 	MaxFrame = size / 352;
-	if (size % 352) MaxFrame++;
+	if (size % 352) {
+		MaxFrame++;
+	}
 
-	for (CurrentFrame=0;CurrentFrame<MaxFrame;CurrentFrame++) {
-		pos=CurrentFrame*352;
-	 	if (pos+352 < size) sz = 352; else sz = size - pos;
+	for (CurrentFrame = 0; CurrentFrame < MaxFrame; CurrentFrame++) {
+		pos = CurrentFrame * 352;
+		if (pos + 352 < size) {
+			sz = 352;
+		} else {
+			sz = size - pos;
+		}
+
+		/* Write AT command */
 		reqlen = sprintf(req, "AT^SBNW=\"%s\",%i,%i,%i\r",templ,Location,CurrentFrame+1,MaxFrame);
 		s->Protocol.Data.AT.EditMode = TRUE;
 		error = GSM_WaitFor(s, req, reqlen, 0x00, 3, RequestID);
-		s->Phone.Data.DispatchError=ERR_TIMEOUT;
-		s->Phone.Data.RequestID=RequestID;
-	     	if (error!=ERR_NONE) return error;
-	 	memcpy (req1,hexreq+pos,sz);
-	 	error = s->Protocol.Functions->WriteMessage(s, req1, sz, 0x00);
-	 	if (error!=ERR_NONE) return error;
+		s->Phone.Data.DispatchError = ERR_TIMEOUT;
+		s->Phone.Data.RequestID = RequestID;
+		if (error != ERR_NONE) {
+			return error;
+		}
+
+		/* Write data */
+		memcpy(req1, hexreq + pos, sz);
+		error = s->Protocol.Functions->WriteMessage(s, req1, sz, 0x00);
+		if (error!=ERR_NONE) {
+			return error;
+		}
+
+		/* Write termination mark */
 		error = s->Protocol.Functions->WriteMessage(s,"\x1A", 1, 0x00);
-	 	if (error!=ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			return error;
+		}
+
+		/* Wait for transaction completion */
 		error = GSM_WaitForOnce(s, NULL, 0x00, 0x00, 4);
-	 	if (error == ERR_TIMEOUT) return error;
-	 }
-	 return Phone->DispatchError;
+		if (error == ERR_TIMEOUT) {
+			return error;
+		}
+	}
+	return Phone->DispatchError;
 }
 
 GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
