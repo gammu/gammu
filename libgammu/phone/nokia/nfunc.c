@@ -910,8 +910,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				smprintf(s, "Too much favorite messaging numbers!\n");
 				return ERR_MOREMEMORY;
 			}
-			used_favorite_messaging_numbers++;
 			favorite_messaging_numbers[used_favorite_messaging_numbers] = (int)Block[5];
+			used_favorite_messaging_numbers++;
 
 			continue;
 		}

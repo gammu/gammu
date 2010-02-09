@@ -23,6 +23,7 @@ ChangeLog
 
 [+] * Write support for Siemens phonebook (bug #1129).
 [-] * Properly decode UTF-8 version 3.0 vCards (bug #1132).
+[-] * Fixed wrong counting of favorite messaging numbers (bug #1010).
     
 20100204 - 1.27.91
 
