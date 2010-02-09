@@ -107,7 +107,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 			 * but for simplicity we use this approach which will handle only
 			 * text messages.
 			 */
-			printf("Text: \"%s\"\n", DecodeUnicodeConsole(sms.SMS[i].Text));
+			if (sms.SMS[i].Coding == SMS_Coding_8bit) {
+				printf("8-bit message, can not display\n");
+			} else {
+				printf("Text: \"%s\"\n", DecodeUnicodeConsole(sms.SMS[i].Text));
+			}
 			printf("\n");
 		}
 	}
