@@ -45,13 +45,18 @@ static GSM_Error GetSiemensFrame(GSM_Protocol_Message msg, GSM_StateMachine *s, 
 }
 
 static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, const char *templ,
-			    int Location, GSM_Phone_RequestID RequestID, int len)
+			    int Location, GSM_Phone_RequestID RequestID, size_t len)
 {
 	GSM_Phone_Data		*Phone = &s->Phone.Data;
 	GSM_Error		error;
 	unsigned char 		req[20],req1[512],hexreq[2096];
 	int			MaxFrame,CurrentFrame,size,sz,pos=0;
 	size_t reqlen;
+
+	if ((len * 2) > (sizeof(hexreq) - 1)) {
+		smprintf(s, "Too long request!\n");
+		return ERR_MOREMEMORY;
+	}
 
 	EncodeHexBin(hexreq,buff,len);
 	size	 = len * 2;
