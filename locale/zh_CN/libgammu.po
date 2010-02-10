@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-28 08:51+0100\n"
-"PO-Revision-Date: 2010-02-10 10:12+0200\n"
+"PO-Revision-Date: 2010-02-10 10:18+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -288,7 +288,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not runnig."
-msgstr ""
+msgstr "服务未运行。"
 
 #: libgammu/gsmcomon.c:148
 #, fuzzy
