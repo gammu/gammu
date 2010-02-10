@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-28 08:51+0100\n"
-"PO-Revision-Date: 2010-02-10 09:53+0200\n"
+"PO-Revision-Date: 2010-02-10 09:55+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -127,9 +127,8 @@ msgid "Invalid location. Maybe too high?"
 msgstr "无效的位置，可能超出范围了？"
 
 #: libgammu/gsmcomon.c:108
-#, fuzzy
 msgid "Functionality not implemented. You are welcome to help authors with it."
-msgstr "这个功能不支持你的手机，如果你想提供帮助，请联系作者。"
+msgstr "你的手机不支持此功能，如果您想帮助我们，欢迎联系作者。"
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
