@@ -4244,7 +4244,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2710
 msgid "Error opening device. No required driver in operating system."
-msgstr ""
+msgstr "打开设备出错，操作系统中没有需要的驱动。"
 
 #. type: SS
 #: docs/user/gammu.1:2710
@@ -4375,7 +4375,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2732
 msgid "Unknown connection type string. Check config file."
-msgstr ""
+msgstr "未知的连接类型。请检查配置文件。"
 
 #. type: SS
 #: docs/user/gammu.1:2732
@@ -4399,7 +4399,7 @@ msgstr ""
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "implemented)."
-msgstr ""
+msgstr "系统的部分功能不可用（被禁用或不支持）。"
 
 #. type: SS
 #: docs/user/gammu.1:2736
@@ -4432,7 +4432,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2742
 msgid "Security error. Maybe no PIN?"
-msgstr ""
+msgstr "安全错误。可能没有 PIN 码？"
 
 #. type: SS
 #: docs/user/gammu.1:2742
@@ -4569,7 +4569,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2766
 msgid "Phone is disabled and connected to charger."
-msgstr ""
+msgstr "手机已禁用并连接到充电器。"
 
 #. type: SS
 #: docs/user/gammu.1:2766
@@ -4580,7 +4580,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2768
 msgid "File format not supported by Gammu."
-msgstr ""
+msgstr "Gammu 尚不支持此文件格式。"
 
 #. type: SS
 #: docs/user/gammu.1:2768
@@ -4604,7 +4604,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2772
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
-msgstr ""
+msgstr "传输已被手机取消，你可能在手机上按了取消。"
 
 #. type: SS
 #: docs/user/gammu.1:2772
@@ -4637,7 +4637,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2778
 msgid "CRC error."
-msgstr ""
+msgstr "CRC 校验错误。"
 
 #. type: SS
 #: docs/user/gammu.1:2778
@@ -4648,7 +4648,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2780
 msgid "Invalid date or time specified."
-msgstr ""
+msgstr "无效的日期或时间。"
 
 #. type: SS
 #: docs/user/gammu.1:2780
@@ -4659,7 +4659,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2782
 msgid "Phone memory error, maybe it is read only."
-msgstr ""
+msgstr "手机内存错误，可能是只读的。"
 
 #. type: SS
 #: docs/user/gammu.1:2782
@@ -4681,7 +4681,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2786
 msgid "File with specified name already exists."
-msgstr ""
+msgstr "文件已存在。"
 
 #. type: SS
 #: docs/user/gammu.1:2786
@@ -4692,7 +4692,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2788
 msgid "File with specified name doesn't exist."
-msgstr ""
+msgstr "文件不存在。"
 
 #. type: SS
 #: docs/user/gammu.1:2788
@@ -4703,7 +4703,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2790
 msgid "You have to give folder name and not file name."
-msgstr ""
+msgstr "这是一个目录不是文件。"
 
 #. type: SS
 #: docs/user/gammu.1:2790
@@ -4714,7 +4714,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2792
 msgid "You have to give file name and not folder name."
-msgstr ""
+msgstr "这是一个文件不是目录。"
 
 #. type: SS
 #: docs/user/gammu.1:2792
@@ -4725,7 +4725,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2794
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "无法访问 SIM 卡。"
 
 #. type: SS
 #: docs/user/gammu.1:2794
@@ -4747,7 +4747,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2798
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "仅有部分目录被列出。"
 
 #. type: SS
 #: docs/user/gammu.1:2798
@@ -4758,7 +4758,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2800
 msgid "Folder must be empty."
-msgstr ""
+msgstr "目录必须是空的。"
 
 #. type: SS
 #: docs/user/gammu.1:2800
@@ -4769,7 +4769,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2802
 msgid "Data were converted."
-msgstr ""
+msgstr "数据已转换。"
 
 #. type: SS
 #: docs/user/gammu.1:2802
@@ -4780,7 +4780,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2804
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "Gammu 尚未配置。"
 
 #. type: SS
 #: docs/user/gammu.1:2804
@@ -4791,7 +4791,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2806
 msgid "Wrong folder used."
-msgstr ""
+msgstr "使用了错误的文件夹。"
 
 #. type: SS
 #: docs/user/gammu.1:2806
@@ -4802,7 +4802,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2808
 msgid "Internal phone error."
-msgstr ""
+msgstr "手机内部错误。"
 
 #. type: SS
 #: docs/user/gammu.1:2808
@@ -4813,7 +4813,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2810
 msgid "Error writing file to disk."
-msgstr ""
+msgstr "写入文件到磁盘出错。"
 
 #. type: SS
 #: docs/user/gammu.1:2810
@@ -4835,7 +4835,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2814
 msgid "Using default values."
-msgstr ""
+msgstr "使用默认值。"
 
 #. type: SS
 #: docs/user/gammu.1:2814
@@ -4846,7 +4846,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2816
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "手机返回了损坏的数据。"
 
 #. type: SS
 #: docs/user/gammu.1:2816
@@ -4890,7 +4890,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2824
 msgid "Service is not runnig."
-msgstr ""
+msgstr "服务未运行。"
 
 #. type: SS
 #: docs/user/gammu.1:2824

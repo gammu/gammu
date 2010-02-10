@@ -7763,7 +7763,6 @@ msgstr "GAMMU-SMSD"
 #. type: TH
 #: docs/user/gammu-smsd.1:1
 #, fuzzy, no-wrap
-#| msgid "January 31, 2010"
 msgid "February 8, 2010"
 msgstr "Leden 31, 2010"
 
