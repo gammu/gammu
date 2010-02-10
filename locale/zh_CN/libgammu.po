@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-28 08:51+0100\n"
-"PO-Revision-Date: 2010-02-10 10:10+0200\n"
+"PO-Revision-Date: 2010-02-10 10:11+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -260,7 +260,7 @@ msgstr "手机内部错误。"
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
-msgstr ""
+msgstr "写入文件到磁盘出错。"
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
