@@ -256,7 +256,7 @@ msgstr "使用了错误的文件夹。"
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
-msgstr ""
+msgstr "手机内部错误。"
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
