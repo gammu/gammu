@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-28 08:51+0100\n"
-"PO-Revision-Date: 2010-02-10 10:03+0200\n"
+"PO-Revision-Date: 2010-02-10 10:04+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -200,7 +200,7 @@ msgstr "CRC 校验错误。"
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
-msgstr ""
+msgstr "无效的日期或时间。"
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
