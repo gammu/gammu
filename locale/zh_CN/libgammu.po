@@ -312,7 +312,7 @@ msgstr ""
 
 #: libgammu/phone/dummy/dummy.c:583
 msgid "Templates"
-msgstr ""
+msgstr "模板"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1958
 msgid "Personal"
