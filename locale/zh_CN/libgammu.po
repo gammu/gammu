@@ -204,7 +204,7 @@ msgstr "无效的日期或时间。"
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr ""
+msgstr "手机内存错误，可能是只读的。"
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
