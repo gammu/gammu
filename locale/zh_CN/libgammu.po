@@ -224,7 +224,7 @@ msgstr "这是一个目录不是文件。"
 
 #: libgammu/gsmcomon.c:131
 msgid "You have to give file name and not folder name."
-msgstr ""
+msgstr "这是一个文件不是目录。"
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
