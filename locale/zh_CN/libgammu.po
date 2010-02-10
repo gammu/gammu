@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-28 08:51+0100\n"
-"PO-Revision-Date: 2010-02-10 09:57+0200\n"
+"PO-Revision-Date: 2010-02-10 09:58+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -163,11 +163,10 @@ msgid "Phone is not connected."
 msgstr "手机未连接。"
 
 #: libgammu/gsmcomon.c:117
-#, fuzzy
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
-msgstr "这个功能不支持你的手机，如果你想提供帮助，请联系作者。"
+msgstr "你的手机目前不支持此功能，请联系作者寻求帮助。"
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
