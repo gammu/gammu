@@ -291,9 +291,8 @@ msgid "Service is not runnig."
 msgstr "服务未运行。"
 
 #: libgammu/gsmcomon.c:148
-#, fuzzy
 msgid "Service configuration is missing."
-msgstr "在程序指导下配置"
+msgstr "服务配置丢失。"
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
