@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-28 08:51+0100\n"
-"PO-Revision-Date: 2010-02-10 09:58+0200\n"
+"PO-Revision-Date: 2010-02-10 09:59+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -174,7 +174,7 @@ msgstr "手机已禁用并连接到充电器。"
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
-msgstr ""
+msgstr "Gammu 尚不支持此文件格式。"
 
 #: libgammu/gsmcomon.c:120
 msgid ""
