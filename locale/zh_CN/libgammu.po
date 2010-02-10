@@ -244,7 +244,7 @@ msgstr "目录必须是空的。"
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
-msgstr ""
+msgstr "数据已转换。"
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
