@@ -272,7 +272,7 @@ msgstr "使用默认值。"
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "手机返回了损坏的数据。"
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
