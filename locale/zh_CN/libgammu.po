@@ -228,7 +228,7 @@ msgstr "这是一个文件不是目录。"
 
 #: libgammu/gsmcomon.c:132
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "无法访问 SIM 卡。"
 
 #: libgammu/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
