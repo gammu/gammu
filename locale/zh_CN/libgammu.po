@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-01-28 08:51+0100\n"
-"PO-Revision-Date: 2010-02-10 10:18+0200\n"
+"PO-Revision-Date: 2010-02-10 10:19+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
 "Language: zh_CN\n"
@@ -299,9 +299,8 @@ msgid "Command rejected because device was busy. Wait and restart."
 msgstr ""
 
 #: libgammu/gsmcomon.c:150
-#, fuzzy
 msgid "Could not connect to the server."
-msgstr "正在连接到IMAP服务器..."
+msgstr "无法连接到服务器。"
 
 #: libgammu/gsmcomon.c:151
 #, fuzzy
