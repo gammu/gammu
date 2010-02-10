@@ -252,7 +252,7 @@ msgstr "Gammu 尚未配置。"
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
-msgstr ""
+msgstr "使用了错误的文件夹。"
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
