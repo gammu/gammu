@@ -170,7 +170,7 @@ msgstr "你的手机目前不支持此功能，请联系作者寻求帮助。"
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
-msgstr ""
+msgstr "手机已禁用并连接到充电器。"
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
