@@ -272,7 +272,7 @@ GSM_Error lock_device(GSM_StateMachine *s, const char* port, char **lock_name)
 			if (unlink(lock_file) != 0) {
 				smprintf(s, "Overriding failed, please check the permissions\n");
 				smprintf(s, "Cannot lock device\n");
-				error = ERR_PERMISSION;
+				error = ERR_DEVICENOPERMISSION;
 				goto failed;
 			}
 		} else {
@@ -290,7 +290,7 @@ GSM_Error lock_device(GSM_StateMachine *s, const char* port, char **lock_name)
 			error = ERR_DEVICEOPENERROR;
 		} else if (errno == EACCES) {
 			smprintf(s, "Please check permission on lock directory\n");
-			error = ERR_PERMISSION;
+			error = ERR_DEVICENOPERMISSION;
 		} else if (errno == ENOENT) {
 			smprintf(s, "Cannot create lockfile %s. Please check for existence of path\n", lock_file);
 			error = ERR_UNKNOWN;

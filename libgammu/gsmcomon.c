@@ -110,7 +110,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_UNKNOWN, "UNKNOWN",			N_("Unknown error.")},
 	{ERR_CANTOPENFILE, "CANTOPENFILE",		N_("Can not open specified file.")},
 	{ERR_MOREMEMORY, "MOREMEMORY",		N_("More memory required...")},
-	{ERR_PERMISSION, "PERMISSION",		N_("Permission to file/device required...")},
+	{ERR_PERMISSION, "PERMISSION",		N_("Operation not allowed by phone.")},
 	{ERR_EMPTYSMSC, "EMPTYSMSC",			N_("Empty SMSC number. Set in phone or use -smscnumber.")},
 	{ERR_INSIDEPHONEMENU, "INSIDEPHONEMENU",		N_("You're inside phone menu (maybe editing?). Leave it and try again.")},
 	{ERR_NOTCONNECTED, "NOTCONNECTED",		N_("Phone is not connected.")},
