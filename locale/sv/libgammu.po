@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-28 08:51+0100\n"
+"POT-Creation-Date: 2010-02-11 09:59+0100\n"
 "PO-Revision-Date: 2009-02-18 23:31+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: none\n"
@@ -167,8 +167,9 @@ msgid "More memory required..."
 msgstr "Mer minne behövs..."
 
 #: libgammu/gsmcomon.c:113
-msgid "Permission to file/device required..."
-msgstr "Behörighet till fil/enhet krävs..."
+#, fuzzy
+msgid "Operation not allowed by phone."
+msgstr "Funktionen stöds inte av telefonen."
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
@@ -429,6 +430,9 @@ msgstr "Personsökare"
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Utkorg"
+
+#~ msgid "Permission to file/device required..."
+#~ msgstr "Behörighet till fil/enhet krävs..."
 
 #~ msgid "Function not implemented. Help required."
 #~ msgstr "Funktionen är inte implementerad. Hjälp behövs."

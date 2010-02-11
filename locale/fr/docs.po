@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-02-08 15:53+0100\n"
+"POT-Creation-Date: 2010-02-11 09:59+0100\n"
 "PO-Revision-Date: 2009-06-01 13:48+0200\n"
 "Last-Translator: Cédric Corazza <cedric.corazza@wanadoo.fr>\n"
 "Language-Team: none\n"
@@ -30,7 +30,7 @@ msgstr ""
 #. type: TH
 #: docs/user/gammu.1:1
 #, fuzzy, no-wrap
-msgid "Feb  5 2010"
+msgid "Feb  9 2010"
 msgstr "5 mai 2009"
 
 #. type: TH
@@ -4607,8 +4607,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/user/gammu.1:2756
-msgid "Permission to file/device required..."
-msgstr "Les permissions sur le fichier/périphérique sont nécessaires..."
+#, fuzzy
+msgid "Operation not allowed by phone."
+msgstr "Fonctionnalités non supportées par votre téléphone."
 
 #. type: SS
 #: docs/user/gammu.1:2756
@@ -10451,6 +10452,9 @@ msgid ""
 "    PSQL_TESTING - you need to have setup PostgreSQL server with\n"
 "    database where SMSD can play.\n"
 msgstr ""
+
+#~ msgid "Permission to file/device required..."
+#~ msgstr "Les permissions sur le fichier/périphérique sont nécessaires..."
 
 #, fuzzy
 #~ msgid "October 20, 2009"

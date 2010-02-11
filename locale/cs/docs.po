@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-02-08 15:53+0100\n"
+"POT-Creation-Date: 2010-02-11 09:59+0100\n"
 "PO-Revision-Date: 2010-02-08 15:29+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -31,8 +31,8 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, no-wrap
-msgid "Feb  5 2010"
+#, fuzzy, no-wrap
+msgid "Feb  9 2010"
 msgstr "5. únor 2010"
 
 # type: TH
@@ -4886,8 +4886,9 @@ msgstr "130"
 
 #. type: Plain text
 #: docs/user/gammu.1:2756
-msgid "Permission to file/device required..."
-msgstr "Přístup k souboru nebo zařízení odmítnut..."
+#, fuzzy
+msgid "Operation not allowed by phone."
+msgstr "Funkce není podporována telefonem."
 
 #. type: SS
 #: docs/user/gammu.1:2756
@@ -11626,6 +11627,9 @@ msgid ""
 msgstr ""
 "    PSQL_TESTING - potřebujete mít nastavený PostgreSQL server\n"
 "    s databází, ve které může SMSD pracovat.\n"
+
+#~ msgid "Permission to file/device required..."
+#~ msgstr "Přístup k souboru nebo zařízení odmítnut..."
 
 # type: TH
 #~ msgid "January  15, 2009"

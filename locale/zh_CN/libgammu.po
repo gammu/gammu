@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-02-10 23:56+0100\n"
+"POT-Creation-Date: 2010-02-11 09:59+0100\n"
 "PO-Revision-Date: 2010-02-10 10:20+0200\n"
 "Last-Translator: shanyan baishui <Siramizu@gmail.com>\n"
 "Language-Team: none\n"
@@ -147,8 +147,9 @@ msgid "More memory required..."
 msgstr "内存不足"
 
 #: libgammu/gsmcomon.c:113
-msgid "Permission to file/device required..."
-msgstr "没有文件/设备的权限"
+#, fuzzy
+msgid "Operation not allowed by phone."
+msgstr "手机不支持该功能。"
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
@@ -397,3 +398,6 @@ msgstr ""
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "发件箱"
+
+#~ msgid "Permission to file/device required..."
+#~ msgstr "没有文件/设备的权限"

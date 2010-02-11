@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.27.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-28 08:51+0100\n"
+"POT-Creation-Date: 2010-02-11 09:59+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -172,8 +172,9 @@ msgid "More memory required..."
 msgstr "Нехватка памяти..."
 
 #: libgammu/gsmcomon.c:113
-msgid "Permission to file/device required..."
-msgstr "Необходимы права доступа к файлу или устройству..."
+#, fuzzy
+msgid "Operation not allowed by phone."
+msgstr "Функция не поддерживается телефоном."
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
@@ -444,6 +445,9 @@ msgstr "Пейджер"
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Исходящие"
+
+#~ msgid "Permission to file/device required..."
+#~ msgstr "Необходимы права доступа к файлу или устройству..."
 
 #~ msgid "Function not implemented. Help required."
 #~ msgstr "Функция не реализована. Требуется помощь."

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.27.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-01-29 14:52+0100\n"
+"POT-Creation-Date: 2010-02-11 09:59+0100\n"
 "PO-Revision-Date: 2010-01-28 20:18+0200\n"
 "Last-Translator:  <wejick@gmail.com>\n"
 "Language-Team: none\n"
@@ -160,8 +160,9 @@ msgid "More memory required..."
 msgstr "Diperlukan memori lebih..."
 
 #: libgammu/gsmcomon.c:113
-msgid "Permission to file/device required..."
-msgstr "Ijin ke file/perangkat dibutuhkan..."
+#, fuzzy
+msgid "Operation not allowed by phone."
+msgstr "Fungsi tidak didukung oleh telepon"
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
@@ -420,3 +421,6 @@ msgstr "Pager"
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Kotak Keluar"
+
+#~ msgid "Permission to file/device required..."
+#~ msgstr "Ijin ke file/perangkat dibutuhkan..."
