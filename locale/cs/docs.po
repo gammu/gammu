@@ -4886,9 +4886,8 @@ msgstr "130"
 
 #. type: Plain text
 #: docs/user/gammu.1:2756
-#, fuzzy
 msgid "Operation not allowed by phone."
-msgstr "Funkce není podporována telefonem."
+msgstr "Operace nebyla povolena telefonem."
 
 #. type: SS
 #: docs/user/gammu.1:2756
