@@ -1,15 +1,13 @@
 # libGammu translation.
 # Copyright (C) 2003 - 2009 Michal Čihař
 # This file is distributed under the same license as the Gammu package.
-#
-#
-# Michal Čihař <michal@cihar.com>, 20, 2009.
+# Michal Čihař <michal@cihar.com>, 20, 2009, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.27.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-11 09:59+0100\n"
-"PO-Revision-Date: 2009-12-12 13:53+0100\n"
+"PO-Revision-Date: 2010-02-11 10:00+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -157,9 +155,8 @@ msgid "More memory required..."
 msgstr "Je potřeba více paměti..."
 
 #: libgammu/gsmcomon.c:113
-#, fuzzy
 msgid "Operation not allowed by phone."
-msgstr "Funkce není podporována telefonem."
+msgstr "Operace nebyla povolena telefonem."
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
