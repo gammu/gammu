@@ -153,17 +153,19 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 				DecodeUnicodeString(pbk->Entries[Number].Text));
 			if (error != ERR_NONE) return error;
 		}
-	} else if (Version == Nokia_VCard21 || Version == SonyEricsson_VCard21) {
+	} else if (Version == Nokia_VCard21 || Version == SonyEricsson_VCard21_Phone || Version == SonyEricsson_VCard21) {
 		if (header) {
 			error = VC_StoreLine(Buffer, buff_len, Length, "VERSION:2.1");
 			if (error != ERR_NONE) return error;
 		}
 
-		error = VC_StoreLine(Buffer, buff_len, Length, "X-GAMMU-LOCATION:%d", pbk->Location);
-		if (error != ERR_NONE) return error;
+		if (Version != SonyEricsson_VCard21_Phone) {
+			error = VC_StoreLine(Buffer, buff_len, Length, "X-GAMMU-LOCATION:%d", pbk->Location);
+			if (error != ERR_NONE) return error;
 
-		error = VC_StoreLine(Buffer, buff_len, Length, "X-GAMMU-MEMORY:%s", GSM_MemoryTypeToString(pbk->MemoryType));
-		if (error != ERR_NONE) return error;
+			error = VC_StoreLine(Buffer, buff_len, Length, "X-GAMMU-MEMORY:%s", GSM_MemoryTypeToString(pbk->MemoryType));
+			if (error != ERR_NONE) return error;
+		}
 
 		for (i=0; i < pbk->EntriesNum; i++) {
 			ignore = FALSE;
