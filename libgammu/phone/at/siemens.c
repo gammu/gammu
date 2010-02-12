@@ -484,7 +484,12 @@ GSM_Error SIEMENS_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		return ERR_NOTSUPPORTED;
 	}
 
-	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req) ,&size, entry, TRUE, SonyEricsson_VCard21_Phone);
+	/*
+	 * Phone does not seem to be able to handle full vCard 2.1,
+	 * it might be necessary to add some another vCard type specially
+	 * tailored for Siemens.
+	 */
+	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req) ,&size, entry, TRUE, SonyEricsson_VCard10);
 	if (error != ERR_NONE) return error;
 
 	return SetSiemensFrame(s, req, "vcf", entry->Location, ID_SetMemory, size);
