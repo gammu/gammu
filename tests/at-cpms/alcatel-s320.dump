@@ -1,0 +1,4 @@
+AT+CPMS=?
+
++CPMS: ("SM", "ME", "SM_P", "ME_P", "MT"), ("SM", "ME", "SM_P", "ME_P", "MT"), ("SM", "ME", "SM_P", "ME_P", "MT")
+OK
