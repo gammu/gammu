@@ -3227,6 +3227,38 @@ StateMachine_SwitchCall(StateMachineObject *self, PyObject *args, PyObject *kwds
     Py_RETURN_NONE;
 }
 
+/************/
+/* SendDTMF */
+/************/
+
+static char StateMachine_SendDTMF__doc__[] =
+"SendDTMF(Number)\n\n"
+"Sends DTMF (Dual Tone Multi Frequency) tone.\n"
+"@param Number: Number to dial\n"
+"@type Number: string\n"
+"@return: None\n"
+"@rtype: None\n"
+;
+
+static PyObject *
+StateMachine_SendDTMF(StateMachineObject *self, PyObject *args, PyObject *kwds) {
+    GSM_Error           error;
+    static char         *kwlist[] = {"Number", NULL};
+    char                *s;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "s", kwlist,
+                &s))
+        return NULL;
+
+    BEGIN_PHONE_COMM
+    error = GSM_SendDTMF(self->s, s);
+    END_PHONE_COMM
+
+    if (!checkError(self->s, error, "SendDTMF")) return NULL;
+
+    Py_RETURN_NONE;
+}
+
 #if 0
 /*****************/
 /* GetCallDivert */
@@ -3287,27 +3319,6 @@ StateMachine_CancelAllDiverts(StateMachineObject *self, PyObject *args, PyObject
     END_PHONE_COMM
 
     if (!checkError(self->s, error, "CancelAllDiverts")) return NULL;
-
-    Py_RETURN_NONE;
-}
-
-/************/
-/* SendDTMF */
-/************/
-
-static char StateMachine_SendDTMF__doc__[] =
-"Sends DTMF (Dual Tone Multi Frequency) tone."
-;
-
-static PyObject *
-StateMachine_SendDTMF(StateMachineObject *self, PyObject *args, PyObject *kwds) {
-    GSM_Error           error;
-
-    BEGIN_PHONE_COMM
-    error = GSM_SendDTMF(self->s);
-    END_PHONE_COMM
-
-    if (!checkError(self->s, error, "SendDTMF")) return NULL;
 
     Py_RETURN_NONE;
 }
@@ -5101,11 +5112,11 @@ static struct PyMethodDef StateMachine_methods[] = {
     {"SplitCall",	(PyCFunction)StateMachine_SplitCall,	METH_VARARGS|METH_KEYWORDS,	StateMachine_SplitCall__doc__},
     {"TransferCall",	(PyCFunction)StateMachine_TransferCall,	METH_VARARGS|METH_KEYWORDS,	StateMachine_TransferCall__doc__},
     {"SwitchCall",	(PyCFunction)StateMachine_SwitchCall,	METH_VARARGS|METH_KEYWORDS,	StateMachine_SwitchCall__doc__},
+    {"SendDTMF",	(PyCFunction)StateMachine_SendDTMF,	METH_VARARGS|METH_KEYWORDS,	StateMachine_SendDTMF__doc__},
 #if 0
     {"GetCallDivert",	(PyCFunction)StateMachine_GetCallDivert,	METH_VARARGS|METH_KEYWORDS,	StateMachine_GetCallDivert__doc__},
     {"SetCallDivert",	(PyCFunction)StateMachine_SetCallDivert,	METH_VARARGS|METH_KEYWORDS,	StateMachine_SetCallDivert__doc__},
     {"CancelAllDiverts",	(PyCFunction)StateMachine_CancelAllDiverts,	METH_VARARGS|METH_KEYWORDS,	StateMachine_CancelAllDiverts__doc__},
-    {"SendDTMF",	(PyCFunction)StateMachine_SendDTMF,	METH_VARARGS|METH_KEYWORDS,	StateMachine_SendDTMF__doc__},
     {"GetRingtone",	(PyCFunction)StateMachine_GetRingtone,	METH_VARARGS|METH_KEYWORDS,	StateMachine_GetRingtone__doc__},
     {"SetRingtone",	(PyCFunction)StateMachine_SetRingtone,	METH_VARARGS|METH_KEYWORDS,	StateMachine_SetRingtone__doc__},
     {"GetRingtonesInfo",	(PyCFunction)StateMachine_GetRingtonesInfo,	METH_VARARGS|METH_KEYWORDS,	StateMachine_GetRingtonesInfo__doc__},
