@@ -2908,7 +2908,7 @@ StateMachine_DialVoice(StateMachineObject *self, PyObject *args, PyObject *kwds)
 /*************/
 
 static char StateMachine_DialService__doc__[] =
-"DialService(Number, ShowNumber)\n\n"
+"DialService(Number)\n\n"
 "Dials number and starts voice call.\n"
 "@param Number: Number to dial\n"
 "@type Number: string\n"
