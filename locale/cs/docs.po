@@ -4,14 +4,13 @@
 # Automatically generated, 2009.
 # Automatically generated <>, 2009.
 #  <>, 2009.
-# Michal Čihař <michal@cihar.com>, 20, 2010.
-# Michal Čihař <michal@cihar.com>, 2010.
+# Michal <michal@cihar.com>, 20, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-02-11 09:59+0100\n"
-"PO-Revision-Date: 2010-02-08 15:29+0100\n"
+"POT-Creation-Date: 2010-02-15 10:58+0100\n"
+"PO-Revision-Date: 2010-02-15 11:04+0100\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,9 +30,9 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Feb  9 2010"
-msgstr "5. únor 2010"
+msgstr "9. únor 2010"
 
 # type: TH
 #. type: TH
@@ -588,7 +587,7 @@ msgstr "B<Úvod do formátů SMS>"
 #. type: Plain text
 #: docs/user/gammu.1:177
 msgid "Gammu has support for many SMS formats like:"
-msgstr ""
+msgstr "Gammu podporuje mnoho formátů SMS včetně:"
 
 #. type: Plain text
 #: docs/user/gammu.1:183
@@ -795,7 +794,6 @@ msgstr "B<geteachsms>I< -pbk>"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:260
-#, fuzzy
 msgid ""
 "Similiary to B<getallsms>. Difference is, that links all concatenated sms"
 msgstr ""
@@ -995,11 +993,12 @@ msgstr "B<savesms CALLER>I< file [-folder id] [-unread] [-read] [-unsent] [-sent
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:332 docs/user/gammu.1:1073
-#, fuzzy
 msgid ""
 "Save caller logo as sms in Nokia (Smart Messaging)  format - size 72x14, two "
 "colors."
-msgstr "Uloží logo volajícího jako SMS (formát pro Nokia - velikost 72x14)."
+msgstr ""
+"Uloží logo volajícího jako SMS (formát pro Nokia Smart Messaging - velikost "
+"72x14)."
 
 #. type: Plain text
 #: docs/user/gammu.1:336 docs/user/gammu.1:430 docs/user/gammu.1:1077
@@ -1144,7 +1143,6 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:373
-#, fuzzy
 msgid "B<-fixedbitmap> - bitmap 16x16 or 32x32"
 msgstr "B<-fixedbitmap > - obrázek o velikosti 16x16 nebo 32x32"
 
@@ -1269,13 +1267,12 @@ msgstr "B<savesms OPERATOR>I< file [-folder id] [-unread] [-read] [-unsent] [-se
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:426 docs/user/gammu.1:1087
-#, fuzzy
 msgid ""
 "Save operator logo as sms in Nokia (Smart Messaging) format - size 72x14 or "
 "78x21 after using B<-biglogo>, all in two colors."
 msgstr ""
-"Uloži logo operátora jako SMS (formát pro Nokie - velikost 72x14 nebo 78x21 "
-"po použití B<-biglogo>)."
+"Uloží logo operátora jako SMS (formát Nokia Smart Messaging - velikost 72x14 "
+"nebo 78x21 po použití B<-biglogo>, jen ve dvou barvách)."
 
 # type: TP
 #. type: TP
@@ -1318,13 +1315,12 @@ msgstr "B<savesms RINGTONE>I< file [-folder id] [-unread] [-read] [-unsent] [-se
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:461 docs/user/gammu.1:1297
-#, fuzzy
 msgid ""
 "Read RTTL ringtone from file and save as SMS into SIM/phone memory. Ringtone "
 "is saved in Nokia (Smart Messaging) format."
 msgstr ""
 "Našte RTTL vyzvánění ze souboru a uloží ho jako SMS. Vyzvánění je uloženo ve "
-"formátu pro Nokii."
+"formátu Nokia Smart Messaging.."
 
 # type: Plain text
 #. type: Plain text
@@ -5547,7 +5543,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:112
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
-#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:499
+#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:500
 #: docs/user/gammu-smsd-null.7:18 docs/user/gammu-smsd-run.7:122
 #, no-wrap
 msgid "COPYRIGHT"
@@ -5572,7 +5568,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:118
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
-#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:505
+#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:506
 #: docs/user/gammu-smsd-null.7:24 docs/user/gammu-smsd-run.7:128
 msgid ""
 "This is free software: you are free to change and redistribute it.  There is "
@@ -5588,7 +5584,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:118
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
-#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:505
+#: docs/user/gammu-smsd-dbi.7:27 docs/user/gammu-smsd-tables.7:506
 #: docs/user/gammu-smsd-null.7:24 docs/user/gammu-smsd-run.7:128
 #, no-wrap
 msgid "REPORTING BUGS"
@@ -5659,7 +5655,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:119
 #: docs/user/gammu-smsd-mysql.7:28 docs/user/gammu-smsd-pgsql.7:28
-#: docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:506
+#: docs/user/gammu-smsd-dbi.7:28 docs/user/gammu-smsd-tables.7:507
 #: docs/user/gammu-smsd-null.7:26 docs/user/gammu-smsd-run.7:130
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr "Prosím hlašte chyby na E<lt>http://bugs.cihar.comE<gt>."
@@ -5670,7 +5666,7 @@ msgstr "Prosím hlašte chyby na E<lt>http://bugs.cihar.comE<gt>."
 #: docs/user/gammu-smsd.1:201 docs/user/gammu-smsd-inject.1:134
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:110
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
-#: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:497
+#: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:498
 #: docs/user/gammu-smsd-null.7:16 docs/user/gammu-smsd-run.7:120
 #, no-wrap
 msgid "AUTHOR"
@@ -5732,7 +5728,7 @@ msgstr ""
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:108
 #: docs/user/gammu-smsd-mysql.7:17 docs/user/gammu-smsd-pgsql.7:17
-#: docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:492
+#: docs/user/gammu-smsd-dbi.7:17 docs/user/gammu-smsd-tables.7:493
 #: docs/user/gammu-smsd-null.7:14 docs/user/gammu-smsd-run.7:118
 #, no-wrap
 msgid "SEE ALSO"
@@ -6481,7 +6477,7 @@ msgstr "gammu-smsd(1), gammu(1), gammurc(5)"
 #: docs/user/gammu-smsd.1:203 docs/user/gammu-smsd-inject.1:136
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:112
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
-#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:499
+#: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:500
 #: docs/user/gammu-smsd-null.7:18 docs/user/gammu-smsd-run.7:122
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
@@ -6496,7 +6492,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:206 docs/user/gammu-smsd-inject.1:139
 #: docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:115
 #: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24
-#: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:502
+#: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:503
 msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
 "version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
@@ -7762,9 +7758,9 @@ msgstr "GAMMU-SMSD"
 # type: TH
 #. type: TH
 #: docs/user/gammu-smsd.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "February 8, 2010"
-msgstr "Leden 31, 2010"
+msgstr "8. únor 2010"
 
 # type: Plain text
 #. type: Plain text
@@ -8212,7 +8208,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:181
 #, no-wrap
 msgid "KNOWN LIMITATIONS"
-msgstr ""
+msgstr "ZNÁMÁ OMEZENÍ"
 
 #. type: Plain text
 #: docs/user/gammu-smsd.1:187
@@ -8979,7 +8975,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-files.7:110 docs/user/gammu-smsd-tables.7:497
+#: docs/user/gammu-smsd-files.7:110 docs/user/gammu-smsd-tables.7:498
 #: docs/user/gammu-smsd-null.7:16 docs/user/gammu-smsd-run.7:120
 msgid "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 msgstr "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
@@ -10107,27 +10103,29 @@ msgstr ""
 "Musíte také vytvořit UDH hlavičku a uložit ji šestnáctkově do pole UDH."
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:450
+#: docs/user/gammu-smsd-tables.7:451
 msgid ""
 "For long text message, the UDH starts with 050003 followed by byte as a "
 "message reference (you can put anything there, but it should be different "
-"for each message), byte for number of messages and byte for number of "
-"current message."
+"for each message, D3 in following example), byte for number of messages (02 "
+"in example)  and byte for number of current message (01 for first message, "
+"02 for second, etc.)."
 msgstr ""
 "Pro dlouhou textovou zprávu, UDH začíná s 050003 následované jedním bajtem s "
 "referenčním číslem zprávy (můžete sem uložit cokoliv, ale mělo by to být "
-"jiné pro každou zprávu), bajtem s celkovým počet zpráv a bajtem určujícím "
-"pořadí aktuální zprávy."
+"jiné pro každou zprávu, v příkladě je použito D3), bajtem s celkovým počet "
+"zpráv (v příkladě 02) a bajtem určujícím pořadí aktuální zprávy (01 pro "
+"první zprávu, 02 pro druhou, atd.)."
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:452
+#: docs/user/gammu-smsd-tables.7:453
 msgid "For example long text message of two parts could look like following:"
 msgstr ""
 "Například dlouhá textová zpráva skládající se z dvou částí může vypadat "
 "následovně:"
 
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:472
+#: docs/user/gammu-smsd-tables.7:473
 #, no-wrap
 msgid ""
 "INSERT INTO outbox (\n"
@@ -10164,7 +10162,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:487
+#: docs/user/gammu-smsd-tables.7:488
 #, no-wrap
 msgid ""
 "INSERT INTO outbox_multipart (\n"
@@ -10199,7 +10197,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu-smsd-tables.7:495
+#: docs/user/gammu-smsd-tables.7:496
 msgid ""
 "Database backends: gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7)"

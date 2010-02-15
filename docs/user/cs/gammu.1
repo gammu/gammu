@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Feb  9 2010" "Gammu 1.27.92" "Dokumentace Gammu"
+.TH GAMMU 1 "9. únor 2010" "Gammu 1.27.92" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -184,7 +184,7 @@ platná (SMSC zruší zprávu po této době pokud se jí nepodařilo doručit).
 .TP 
 \fBÚvod do formátů SMS\fP
 
-Gammu has support for many SMS formats like:
+Gammu podporuje mnoho formátů SMS včetně:
 
  * Nokia Smart Messaging (used for monochromatic picture images, downloadable profiles, monochromatic operator logos, monochromatic caller logos and monophonic ringtones)
  * Linked SMS (both with 8 and 16\-bit identification numbers in headers)
@@ -265,7 +265,8 @@ pokud chcete získat jednotlivou zprávu, použijte \fBgammu getsms 0 location\f
 
 .TP 
 \fBgeteachsms\fP\fI \-pbk\fP
-Similiary to \fBgetallsms\fP. Difference is, that links all concatenated sms
+Podobné jako \fBgetallsms\fP, jen dlouhé zprávy budu spojeny a dekódovány
+dohromady.
 
 .TP 
 \fBgetsms\fP\fI folder start [stop]\fP
@@ -338,8 +339,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms CALLER\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
-Save caller logo as sms in Nokia (Smart Messaging)  format \- size 72x14, two
-colors.
+Uloží logo volajícího jako SMS (formát pro Nokia Smart Messaging \- velikost
+72x14).
 
 Please note, that it isn't designed for colour logos available for example
 in DCT4/TIKU \- you need to put bitmap file there inside phone using
@@ -394,7 +395,7 @@ podporováno telefony Sony\-Ericssonn.
 \fB\-variablebitmaplong\fP \- obrázek o maximální velikosti 96x128 uložený v
 jedné nebo více zpráv
 
-\fB\-fixedbitmap\fP \- bitmap 16x16 or 32x32
+\fB\-fixedbitmap \fP \- obrázek o velikosti 16x16 nebo 32x32
 
 \fB\-protected\fP \- všechna vyzvánění a obrázky (kromě předdefinovaných) uvedená
 za tímto parametrem budou "chráběna" (v telefonech podporující standard ODI
@@ -455,8 +456,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms OPERATOR\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-netcode netcode] [\-biglogo]\fP
-Save operator logo as sms in Nokia (Smart Messaging) format \- size 72x14 or
-78x21 after using \fB\-biglogo\fP, all in two colors.
+Uloží logo operátora jako SMS (formát Nokia Smart Messaging \- velikost 72x14
+nebo 78x21 po použití \fB\-biglogo\fP, jen ve dvou barvách).
 
 Please note, that it isn't designed for colour logos available for example
 in DCT4/TIKU \- you need to put bitmap file there inside phone using
@@ -494,8 +495,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms RINGTONE\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]\fP
-Read RTTL ringtone from file and save as SMS into SIM/phone memory. Ringtone
-is saved in Nokia (Smart Messaging) format.
+Našte RTTL vyzvánění ze souboru a uloží ho jako SMS. Vyzvánění je uloženo ve
+formátu Nokia Smart Messaging..
 
 \fB\-long\fP \- vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo
 do 2 SMS), ale umí s ním pracovat jen novější telefony (jako 33xx).
@@ -1143,8 +1144,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms CALLER\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]\fP
-Save caller logo as sms in Nokia (Smart Messaging)  format \- size 72x14, two
-colors.
+Uloží logo volajícího jako SMS (formát pro Nokia Smart Messaging \- velikost
+72x14).
 
 Please note, that it isn't designed for colour logos available for example
 in DCT4/TIKU \- you need to put bitmap file there inside phone using
@@ -1157,8 +1158,8 @@ sendsms a savesms\fP.
 
 .TP 
 \fBsavesms OPERATOR\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-netcode netcode] [\-biglogo]\fP
-Save operator logo as sms in Nokia (Smart Messaging) format \- size 72x14 or
-78x21 after using \fB\-biglogo\fP, all in two colors.
+Uloží logo operátora jako SMS (formát Nokia Smart Messaging \- velikost 72x14
+nebo 78x21 po použití \fB\-biglogo\fP, jen ve dvou barvách).
 
 Please note, that it isn't designed for colour logos available for example
 in DCT4/TIKU \- you need to put bitmap file there inside phone using
@@ -1376,8 +1377,8 @@ není nastaven čas a datum.
 
 .TP 
 \fBsavesms RINGTONE\fP\fI file [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-long] [\-scale]\fP
-Read RTTL ringtone from file and save as SMS into SIM/phone memory. Ringtone
-is saved in Nokia (Smart Messaging) format.
+Našte RTTL vyzvánění ze souboru a uloží ho jako SMS. Vyzvánění je uloženo ve
+formátu Nokia Smart Messaging..
 
 \fB\-long\fP \- vyzvánění je uloženo v podobě profilo. Může být delší (a uloženo
 do 2 SMS), ale umí s ním pracovat jen novější telefony (jako 33xx).
