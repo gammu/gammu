@@ -3290,7 +3290,11 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	 * this way.
 	 */
 	smprintf(s, "Getting memory information\n");
-	ATGEN_WaitForAutoLen(s, "AT+CPBR=?\r", 0x00, 10, ID_GetMemoryStatus);
+	if (Status != NULL && Status->MemoryType == MEM_ME && Priv->PBK_MPBR == AT_AVAILABLE) {
+		ATGEN_WaitForAutoLen(s, "AT+MPBR=?\r", 0x00, 10, ID_GetMemoryStatus);
+	} else {
+		ATGEN_WaitForAutoLen(s, "AT+CPBR=?\r", 0x00, 10, ID_GetMemoryStatus);
+	}
 
 	/* Did we fail to get size in either way? */
 	if (error != ERR_NONE && Priv->MemorySize == 0) return error;
@@ -5201,6 +5205,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetCPBSMemoryStatus,"AT+CPBS?"		,0x00,0x00,ID_GetMemoryStatus	 },
 /* Samsung phones reply +CPBR: after OK --claudio */
 {ATGEN_ReplyGetCPBRMemoryInfo,	"AT+CPBR=?"		,0x00,0x00,ID_GetMemoryStatus	 },
+{MOTOROLA_ReplyGetMPBRMemoryInfo,	"AT+MPBR=?"		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_ReplyGetCPBRMemoryInfo,	"+CPBR:"		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_ReplyGetCPBRMemoryStatus,"AT+CPBR="		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_ReplyGetCharsets,	"AT+CSCS=?"		,0x00,0x00,ID_GetMemoryCharset	 },

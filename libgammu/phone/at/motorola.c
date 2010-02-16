@@ -613,6 +613,125 @@ GSM_Error MOTOROLA_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return ERR_NOTIMPLEMENTED;
 }
 
+GSM_Error MOTOROLA_ReplyGetMPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+ 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	const char *str;
+	GSM_Error error;
+	int ignore;
+
+ 	switch (Priv->ReplyState) {
+ 	case AT_Reply_OK:
+		smprintf(s, "Memory info received\n");
+
+		str = GetLineString(msg.Buffer, &Priv->Lines, 2);
+
+		/* Check for empty reply */
+		if (strcmp("OK", str) == 0) {
+			return ERR_UNKNOWN;
+		}
+
+		/* Try standard format first */
+		error = ATGEN_ParseReply(s, str,
+					"+MPBR: (@i-@i), @i, @i",
+					&Priv->FirstMemoryEntry,
+					&Priv->MemorySize,
+					&Priv->NumberLength,
+					&Priv->TextLength);
+		if (error == ERR_NONE) {
+			/* Calculate memory size from last position we got from phone */
+			Priv->MemorySize = Priv->MemorySize + 1 - Priv->FirstMemoryEntry;
+			return ERR_NONE;
+		}
+
+		/* Try Motorola format then */
+		error = ATGEN_ParseReply(s, str,
+					"+MPBR: @i-@i, @i, @i",
+					&Priv->FirstMemoryEntry,
+					&Priv->MemorySize,
+					&Priv->NumberLength,
+					&Priv->TextLength);
+		if (error == ERR_NONE) {
+			/* Calculate memory size from last position we got from phone */
+			Priv->MemorySize = Priv->MemorySize + 1 - Priv->FirstMemoryEntry;
+			return ERR_NONE;
+		}
+
+		/* Try Sharp format */
+		error = ATGEN_ParseReply(s, str,
+					"+MPBR: (), @i, @i",
+					&Priv->NumberLength,
+					&Priv->TextLength);
+		if (error == ERR_NONE) {
+			/* Hardcode size, we have no other choice here */
+			Priv->FirstMemoryEntry = 1;
+			Priv->MemorySize = 1000;
+			return ERR_NONE;
+		}
+
+		/* Try single entry format */
+		error = ATGEN_ParseReply(s, str,
+					"+MPBR: (@i), @i, @i",
+					&Priv->FirstMemoryEntry,
+					&Priv->NumberLength,
+					&Priv->TextLength);
+		if (error == ERR_NONE) {
+			/* Hardcode size, we have no other choice here */
+			Priv->MemorySize = 1;
+			return ERR_NONE;
+		}
+
+		/* Try Samsung format at the end */
+		error = ATGEN_ParseReply(s, str,
+					"+MPBR: (@i-@i), @i, @i, @i",
+					&Priv->FirstMemoryEntry,
+					&Priv->MemorySize,
+					&Priv->NumberLength,
+					&Priv->TextLength,
+					&ignore);
+		if (error == ERR_NONE) {
+			/* Calculate memory size from last position we got from phone */
+			Priv->MemorySize = Priv->MemorySize + 1 - Priv->FirstMemoryEntry;
+			return ERR_NONE;
+		}
+
+
+		/* Try standard format + unknown field */
+		error = ATGEN_ParseReply(s, str,
+					"+MPBR: (@i-@i), @i, @i, @0",
+					&Priv->FirstMemoryEntry,
+					&Priv->MemorySize,
+					&Priv->NumberLength,
+					&Priv->TextLength);
+		if (error == ERR_NONE) {
+			/* Calculate memory size from last position we got from phone */
+			Priv->MemorySize = Priv->MemorySize + 1 - Priv->FirstMemoryEntry;
+			return ERR_NONE;
+		}
+
+		/* Try cripled standard format */
+		error = ATGEN_ParseReply(s, str,
+					"+MPBR: (@i-@i)",
+					&Priv->FirstMemoryEntry,
+					&Priv->MemorySize);
+		if (error == ERR_NONE) {
+			/* Calculate memory size from last position we got from phone */
+			Priv->MemorySize = Priv->MemorySize + 1 - Priv->FirstMemoryEntry;
+			return ERR_NONE;
+		}
+
+		return ERR_UNKNOWNRESPONSE;
+	case AT_Reply_Error:
+		return ERR_UNKNOWN;
+	case AT_Reply_CMSError:
+	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
+ 	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+}
+
 #endif
 
 /*@}*/
