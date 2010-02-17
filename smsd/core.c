@@ -1260,6 +1260,9 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		start = FALSE;
 	}
 
+	/* Log how many messages were read */
+	SMSD_Log(DEBUG_INFO, Config, "Read %d messages", GetSMSNumber);
+
 	/* No messages to process */
 	if (GetSMSNumber == 0) {
 		return TRUE;
