@@ -1497,17 +1497,23 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 			Service->RefreshSendStatus(Config, Config->SMSID);
 			/* Update timestamp for phone in backend */
 			Service->RefreshPhoneStatus(Config);
-			GSM_GetCurrentDateTime (&Date);
-			z=Date.Second;
-			while (z==Date.Second) {
+			GSM_GetCurrentDateTime(&Date);
+			z = Date.Second;
+			while (z == Date.Second) {
 				usleep(10000);
 				GSM_GetCurrentDateTime(&Date);
-				GSM_ReadDevice(Config->gsm,TRUE);
-				if (Config->SendingSMSStatus != ERR_TIMEOUT) break;
+				GSM_ReadDevice(Config->gsm, TRUE);
+				if (Config->SendingSMSStatus != ERR_TIMEOUT) {
+					break;
+				}
 			}
-			if (Config->SendingSMSStatus != ERR_TIMEOUT) break;
+			if (Config->SendingSMSStatus != ERR_TIMEOUT) {
+				break;
+			}
 			j++;
-			if (j>Config->sendtimeout) break;
+			if (j > Config->sendtimeout) {
+				break;
+			}
 		}
 		if (Config->SendingSMSStatus != ERR_NONE) {
 			SMSD_LogError(DEBUG_INFO, Config, "Error getting send status of message", Config->SendingSMSStatus);
@@ -1515,7 +1521,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		}
 		Config->Status->Sent++;
 		error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, Config->TPMR);
-		if (error!=ERR_NONE) {
+		if (error != ERR_NONE) {
 			goto failure_sent;
 		}
 	}
