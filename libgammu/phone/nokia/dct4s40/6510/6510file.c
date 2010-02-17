@@ -2396,7 +2396,11 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 						CopyUnicodeString(sms->SMS[0].Number, FFF->Buffer + pos + 3);
 						has_number = TRUE;
 					} else {
-						CopyUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum++], FFF->Buffer + pos + 3);
+						if (sms->SMS[0].OtherNumbersNum < GSM_SMS_OTHER_NUMBERS) {
+							CopyUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum++], FFF->Buffer + pos + 3);
+						} else {
+							smprintf(s, "WARNING: Too many recipients, ignoring some!\n");
+						}
 					}
 				}
 				break;
