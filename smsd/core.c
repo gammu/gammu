@@ -1457,7 +1457,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		Config->retries = 0;
 		strcpy(Config->prevSMSID, Config->SMSID);
 	}
-	for (i=0;i<sms.Number;i++) {
+	for (i = 0; i < sms.Number; i++) {
 		if (sms.SMS[i].SMSC.Location == 1) {
 			if (Config->SMSC.Location == 0) {
 				Config->SMSC.Location = 1;
