@@ -2416,7 +2416,9 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 				break;
 			case 0x24:
 				/* 24$|00 |01 |01 */
-				if (FFF->Buffer[pos + 2] != 1 || FFF->Buffer[pos + 3] != 1) {
+				/* 24$|00 |01 |00 */
+				if ((FFF->Buffer[pos + 2] != 1 || FFF->Buffer[pos + 3] != 1) &&
+					(FFF->Buffer[pos + 2] != 1 || FFF->Buffer[pos + 3] != 0)) {
 					unknown = TRUE;
 				}
 				break;
