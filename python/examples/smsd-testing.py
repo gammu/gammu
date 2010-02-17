@@ -83,12 +83,21 @@ if __name__ == '__main__':
         # Start SMSD thread
         smsd_thread = threading.Thread(target = smsd.MainLoop)
         smsd_thread.start()
-
-        time.sleep(30)
+        # We need to let it run for some time here to finish initialization
+        time.sleep(10)
 
         # Show SMSD status
-        status = smsd.GetStatus()
-        print status
+        retries = 0
+        while retries < 60:
+            status = smsd.GetStatus()
+            for k in status.keys():
+                print '%s: %s' % (k, status[k])
+            print
+            if status['Sent'] >= 2:
+                break
+            time.sleep(10)
+            retries += 1
+
         if status['Sent'] != 2:
             raise Exception('Messages were not sent!')
 
