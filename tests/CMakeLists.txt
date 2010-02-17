@@ -214,6 +214,11 @@ target_link_libraries(sms-nokia-12 libGammu)
 target_link_libraries(sms-nokia-12 messagedisplay)
 add_test(sms-nokia-12 "${GAMMU_TEST_PATH}/sms-nokia-12${GAMMU_TEST_SUFFIX}")
 
+add_executable(sms-nokia-13 sms-nokia-13.c)
+target_link_libraries(sms-nokia-13 libGammu)
+target_link_libraries(sms-nokia-13 messagedisplay)
+add_test(sms-nokia-13 "${GAMMU_TEST_PATH}/sms-nokia-13${GAMMU_TEST_SUFFIX}")
+
 # Nokia ringtone
 add_executable(nokia-6110-ringtone nokia-6110-ringtone.c)
 target_link_libraries(nokia-6110-ringtone libGammu)
