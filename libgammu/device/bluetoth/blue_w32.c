@@ -84,6 +84,8 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 			return ERR_TIMEOUT;	 /* remote device failed to respond */
 		if (err == WSAENETDOWN)
 			return ERR_DEVICENOTWORK; /* socket operation connected with dead network */
+		if (err == WSAENETUNREACH)
+			return ERR_DEVICENOTWORK; /* socket operation connected with unreachable network */
 		/* noauth */
 		close(d->hPhone);
 		return ERR_UNKNOWN;
