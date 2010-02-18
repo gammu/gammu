@@ -29,8 +29,8 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
     	WSADATA				wsaData;
 	SOCKADDR_BTH 			sab;
-	int				i;
 	DWORD				err;
+	const char *ch;
 
 	smprintf(s, "Connecting to RF channel %i\n",port);
 
@@ -56,18 +56,16 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	sab.port 		= port;
 	sab.addressFamily 	= AF_BTH;
 	sab.btAddr 		= 0;
-	for (i=0;i<(int)strlen(device);i++) {
-		if (device[i] >='0' && device[i] <='9') {
+	for (ch = device; *ch != '\0'; ch++){
+		if (*ch >='0' && *ch <='9') {
 			sab.btAddr = sab.btAddr * 16;
-			sab.btAddr = sab.btAddr + (device[i]-'0');
-		}
-		if (device[i] >='a' && device[i] <='f') {
+			sab.btAddr = sab.btAddr + (*ch-'0');
+		} else if (*ch >='a' && *ch <='f') {
 			sab.btAddr = sab.btAddr * 16;
-			sab.btAddr = sab.btAddr + (device[i]-'a'+10);
-		}
-		if (device[i] >='A' && device[i] <='F') {
+			sab.btAddr = sab.btAddr + (*ch-'a'+10);
+		} else if (*ch >='A' && *ch <='F') {
 			sab.btAddr = sab.btAddr * 16;
-			sab.btAddr = sab.btAddr + (device[i]-'A'+10);
+			sab.btAddr = sab.btAddr + (*ch-'A'+10);
 		}
 	}
 
