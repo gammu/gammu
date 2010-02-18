@@ -2643,6 +2643,8 @@ GSM_Error N71_65_EnableFunctions(GSM_StateMachine *s,const char *buff,int len)
 GSM_Error N71_65_ReplySendDTMF(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Buffer[3]) {
+	case 0xf0:
+		return ERR_NOTSUPPORTED;
 	case 0x51:
 		smprintf(s, "DTMF sent OK\n");
 		return ERR_NONE;

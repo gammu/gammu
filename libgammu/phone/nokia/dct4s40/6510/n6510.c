@@ -4111,6 +4111,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x25,ID_IncomingFrame	  },
 	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x27,ID_IncomingFrame	  },
 	{N71_65_ReplySendDTMF,		  "\x01",0x03,0x51,ID_SendDTMF		  },
+	{N71_65_ReplySendDTMF,		  "\x01",0x03,0xf0,ID_SendDTMF		  },
 	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x53,ID_IncomingFrame	  },
 	{N71_65_ReplySendDTMF,		  "\x01",0x03,0x59,ID_SendDTMF		  },
 	{N71_65_ReplySendDTMF,		  "\x01",0x03,0x5E,ID_SendDTMF		  },
