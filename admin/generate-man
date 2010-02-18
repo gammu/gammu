@@ -973,7 +973,7 @@ steps:
 .br
 8. select "Audio codecs"
 .br
-9.  select "windows\system32" directory and file "mmdriver.inf"
+9.  select "windows\\\\system32" directory and file "mmdriver.inf"
 .br
 10. if You will be asked for file msgsm32.acm, it should unpacked from Windows CD
 .br
