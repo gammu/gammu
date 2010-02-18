@@ -80,14 +80,16 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	if (connect (d->hPhone, (struct sockaddr *)&sab, sizeof(sab)) != 0) {
 		err = GetLastError();
 		GSM_OSErrorInfo(s, "Connect in bluetooth_open");
+
+		/* Close the handle */
+		close(d->hPhone);
+
 		if (err == WSAETIMEDOUT)
 			return ERR_TIMEOUT;	 /* remote device failed to respond */
 		if (err == WSAENETDOWN)
 			return ERR_DEVICENOTWORK; /* socket operation connected with dead network */
 		if (err == WSAENETUNREACH)
 			return ERR_DEVICENOTWORK; /* socket operation connected with unreachable network */
-		/* noauth */
-		close(d->hPhone);
 		return ERR_UNKNOWN;
 	}
 
