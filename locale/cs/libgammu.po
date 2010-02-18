@@ -4,9 +4,9 @@
 # Michal Čihař <michal@cihar.com>, 20, 2009, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.27.92\n"
+"Project-Id-Version: libGammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-02-11 09:59+0100\n"
+"POT-Creation-Date: 2010-02-18 17:08+0100\n"
 "PO-Revision-Date: 2010-02-11 10:00+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -360,19 +360,19 @@ msgstr "Hlasité"
 msgid "My style"
 msgstr "Můj styl"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:561
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:563
 msgid "SIM"
 msgstr "SIM"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:562 libgammu/phone/pfunc.c:41
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:564 libgammu/phone/pfunc.c:41
 msgid "Inbox"
 msgstr "Příchozí"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:563
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:565
 msgid "Sent items"
 msgstr "Odeslané zprávy"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:564
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:566
 msgid "Saved items"
 msgstr "Uložené zprávy"
 

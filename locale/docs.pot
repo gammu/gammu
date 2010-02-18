@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.27.92\n"
+"Project-Id-Version: Gammu-docs 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-02-15 10:58+0100\n"
+"POT-Creation-Date: 2010-02-18 17:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,13 +25,13 @@ msgstr ""
 #. type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
-msgid "Feb  9 2010"
+msgid "Feb 17 2010"
 msgstr ""
 
 #. type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
-msgid "Gammu 1.27.92"
+msgid "Gammu 1.27.93"
 msgstr ""
 
 #. type: TH
@@ -2947,7 +2947,7 @@ msgstr ""
 
 #. type: Plain text
 #: docs/user/gammu.1:1928 docs/user/gammu.1:2562
-msgid "9.  select \"windows\\system32\" directory and file \"mmdriver.inf\""
+msgid "9.  select \"windows\\esystem32\" directory and file \"mmdriver.inf\""
 msgstr ""
 
 #. type: Plain text

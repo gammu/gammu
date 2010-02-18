@@ -4,9 +4,9 @@
 # Automatically generated, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.27.92\n"
+"Project-Id-Version: libGammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-02-11 09:59+0100\n"
+"POT-Creation-Date: 2010-02-18 17:08+0100\n"
 "PO-Revision-Date: 2010-01-28 20:18+0200\n"
 "Last-Translator:  <wejick@gmail.com>\n"
 "Language-Team: none\n"
@@ -370,19 +370,19 @@ msgstr "Keras"
 msgid "My style"
 msgstr "Gayaku"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:561
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:563
 msgid "SIM"
 msgstr "SIM"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:562 libgammu/phone/pfunc.c:41
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:564 libgammu/phone/pfunc.c:41
 msgid "Inbox"
 msgstr "Kotak masuk"
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:563
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:565
 msgid "Sent items"
 msgstr "Terkirim."
 
-#: libgammu/phone/nokia/dct4s40/6510/n6510.c:564
+#: libgammu/phone/nokia/dct4s40/6510/n6510.c:566
 msgid "Saved items"
 msgstr "Tersimpan"
 
