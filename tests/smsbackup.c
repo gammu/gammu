@@ -60,6 +60,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* We don't need this anymore */
 	GSM_FreeSMSBackup(&Backup);
+	free(InputSMS);
+	free(SortedSMS);
 
 	return 0;
 }
