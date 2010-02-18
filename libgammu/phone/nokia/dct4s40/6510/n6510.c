@@ -330,6 +330,8 @@ static GSM_Error N6510_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMa
 	char		name[100];
 	GSM_NetworkInfo NetInfo;
 
+	if (msg.Buffer[3] == 0xf0) return ERR_NOTSUPPORTED;
+
 	smprintf(s, "Network status            : ");
 	switch (msg.Buffer[8]) {
 		case 0x00 : smprintf(s, "home network\n");		break;
@@ -4141,6 +4143,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	{N6510_ReplyGetNetworkInfo,	  "\x0A",0x03,0x01,ID_GetNetworkInfo	  },
 	{N6510_ReplyGetNetworkInfo,	  "\x0A",0x03,0x01,ID_IncomingFrame	  },
+	{N6510_ReplyGetNetworkInfo,	  "\x0A",0x03,0xf0,ID_IncomingFrame	  },
 	{N6510_ReplyLogIntoNetwork,	  "\x0A",0x03,0x02,ID_IncomingFrame	  },
 	{N6510_ReplyGetSignalQuality,	  "\x0A",0x03,0x0C,ID_GetSignalQuality	  },
 	{NoneReply,			  "\x0A",0x03,0x16,ID_IncomingFrame	  },
