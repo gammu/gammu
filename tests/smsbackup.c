@@ -15,8 +15,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_Debug_Info *debug_info;
 	GSM_Error error;
 	GSM_SMS_Backup Backup;
-	GSM_MultiSMSMessage SMS;
-        int i, step = 0;
+	GSM_MultiSMSMessage **SortedSMS, **InputSMS;
+	int i, count;
 
 	/* Check parameters */
 	if (argc != 2) {
@@ -28,24 +28,35 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
-	/* Allocates state machine */
+	/* Read the backup */
 	error = GSM_ReadSMSBackupFile(argv[1], &Backup);
 	gammu_test_result(error, "GSM_ReadSMSBackupFile");
 
+	/* Calculate number of messages */
+	count = 0;
+	while (Backup.SMS[count] != NULL) {
+		count++;
+	}
 
-	do {
-		for (i = step; Backup.SMS[i] != NULL && i - step < GSM_MAX_MULTI_SMS; i++) {
-			SMS.Number = i + 1 - step;
-			SMS.SMS[i - step] = *Backup.SMS[i];
-		}
-		if (i - step == GSM_MAX_MULTI_SMS) {
-			step = i;
-		} else {
-			step = 0;
-		}
+	/* Allocate memory for sorted ones */
+	SortedSMS = (GSM_MultiSMSMessage **)malloc((count + 1) * sizeof(GSM_MultiSMSMessage *));
+	InputSMS = (GSM_MultiSMSMessage **)malloc((count + 1) * sizeof(GSM_MultiSMSMessage *));
 
-		DisplayMultiSMSInfo(&SMS, TRUE, TRUE, NULL, NULL);
-	} while (step > 0);
+	/* Copy messages to multi message buffers */
+	for (i = 0; i < count; i++) {
+		InputSMS[i] = (GSM_MultiSMSMessage *)malloc(sizeof(GSM_MultiSMSMessage));
+		InputSMS[i]->Number = 1;
+		InputSMS[i]->SMS[0] = *Backup.SMS[i];
+	}
+	InputSMS[i] = NULL;
+
+	/* Sort linked messages */
+	error = GSM_LinkSMS(debug_info, InputSMS, SortedSMS, TRUE);
+
+	/* Display messages */
+	for (i = 0; SortedSMS[i] != NULL; i++) {
+		DisplayMultiSMSInfo(SortedSMS[i], TRUE, TRUE, NULL, NULL);
+	}
 
 	/* We don't need this anymore */
 	GSM_FreeSMSBackup(&Backup);
