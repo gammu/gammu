@@ -22,6 +22,7 @@ ChangeLog
 2010???? - 1.27.93
 
 [-] * Fix crash when SMS in Nokia has too many recipients (bug #1136).
+[-] * Better handling of Bluetooth errors on Windows (bug #1146).
     
 20100217 - 1.27.92
 

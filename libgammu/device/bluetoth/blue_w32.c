@@ -84,17 +84,25 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 		/* Close the handle */
 		close(d->hPhone);
 
-		if (err == WSAETIMEDOUT) {
-			/* remote device failed to respond */
-			return ERR_TIMEOUT;
-		}
-		if (err == WSAENETDOWN) {
-			/* socket operation connected with dead network */
-			return ERR_DEVICENOTWORK;
-		}
-		if (err == WSAENETUNREACH) {
-			/* socket operation connected with unreachable network */
-			return ERR_DEVICENOTWORK;
+		switch (err) {
+			case WSAETIMEDOUT:
+				smprintf(s, "The I/O timed out at the Bluetooth radio level (PAGE_TIMEOUT).\n");
+				return ERR_TIMEOUT;
+			case WSAEDISCON:
+				smprintf(s, "The RFCOMM channel disconnected by remote peer.\n");
+				return ERR_DEVICEOPENERROR;
+			case WSAEHOSTDOWN:
+				smprintf(s, "The RFCOMM received DM response.\n");
+				return ERR_DEVICEOPENERROR;
+			case WSAENETDOWN:
+				smprintf(s, "Unexpected network error.\n");
+				return ERR_DEVICENOTWORK;
+			case WSAESHUTDOWN:
+				smprintf(s, "The L2CAP channel disconnected by remote peer.\n");
+				return ERR_DEVICEOPENERROR;
+			case WSAENETUNREACH:
+				smprintf(s, "Error other than time-out at L2CAP or Bluetooth radio level.\n");
+				return ERR_DEVICENOTWORK;
 		}
 		return ERR_UNKNOWN;
 	}
