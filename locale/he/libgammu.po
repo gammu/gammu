@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-18 17:08+0100\n"
-"PO-Revision-Date: 2010-02-20 12:49+0200\n"
+"PO-Revision-Date: 2010-02-20 12:50+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -156,7 +156,7 @@ msgstr "הפעולה אינה מורשית על ידי הטלפון."
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
-msgstr "מספר מרכז ה־SMS ריק. יש להגדירו בטלפון או להשתמש ב־'-smscnumber'."
+msgstr "מספר מרכז ה־SMS ריק. יש להגדירו בטלפון או להשתמש ב־'‎-smscnumber'."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
