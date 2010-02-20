@@ -44,7 +44,7 @@ msgstr "ארעה שגיאה בפתיחת ההתקן, אין לך הרשאות ל
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
-msgstr ""
+msgstr "ארעה שגיאה בפתיחת ההתקן. מנהל ההתקן הנחוץ אינו מותקן במערכת ההפעלה."
 
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
