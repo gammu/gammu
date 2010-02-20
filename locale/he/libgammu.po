@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-18 17:08+0100\n"
-"PO-Revision-Date: 2010-02-20 13:03+0200\n"
+"PO-Revision-Date: 2010-02-20 13:04+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -303,7 +303,7 @@ msgstr "תצורת השירות חסרה."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
-msgstr ""
+msgstr "הפקודה נדחתה כיוון שההתקן היה עסוק. יש להמתין ולהפעיל מחדש."
 
 #: libgammu/gsmcomon.c:150
 msgid "Could not connect to the server."
