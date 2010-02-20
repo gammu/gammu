@@ -83,7 +83,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:11
 msgid "Usage: gammu [I<parameters>] E<lt>commandE<gt> [I<options>]"
-msgstr ""
+msgstr "שימוש: gammu [I<parameters>] E<lt>commandE<gt> [I<options>]"
 
 # type: SH
 #. type: SH
