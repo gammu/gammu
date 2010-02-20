@@ -283,7 +283,7 @@ msgstr "הוחזרו נתונים שגויים מהטלפון."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "מחרוזת התכונה שהוגדרה היא שגויה."
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
