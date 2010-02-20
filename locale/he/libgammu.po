@@ -351,7 +351,7 @@ msgstr "צליל חזק"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1976
 msgid "My style"
-msgstr ""
+msgstr "הסגנון שלי"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:563
 msgid "SIM"
