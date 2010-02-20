@@ -68,7 +68,7 @@ msgstr "ארעה שגיאה במהלך הקריאה מההתקן."
 
 #: libgammu/gsmcomon.c:96
 msgid "Can't set parity on the device."
-msgstr ""
+msgstr "לא ניתן להגדיר אי־זוגיות על ההתקן."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
