@@ -315,7 +315,7 @@ msgstr "לא ניתן לפתור את שם המארח."
 
 #: libgammu/gsmcomon.c:184
 msgid "Unknown error description."
-msgstr ""
+msgstr "תיאור השגיאה אינו ידוע."
 
 #: libgammu/phone/dummy/dummy.c:583
 msgid "Templates"
