@@ -144,7 +144,7 @@ msgstr "שגיאה לא ידועה."
 
 #: libgammu/gsmcomon.c:111
 msgid "Can not open specified file."
-msgstr ""
+msgstr "לא ניתן לפתוח את הקובץ שצוין."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
