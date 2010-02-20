@@ -299,7 +299,7 @@ msgstr "השירות אינו פעיל."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
-msgstr ""
+msgstr "תצורת השירות חסרה."
 
 #: libgammu/gsmcomon.c:149
 msgid "Command rejected because device was busy. Wait and restart."
