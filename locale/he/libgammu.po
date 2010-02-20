@@ -185,6 +185,8 @@ msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
+"אף אחד אינו מושלם, הופיעו כמה באגים ביישומי הפרוטוקול. נא לי צור קשר עם "
+"היוצרים."
 
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
