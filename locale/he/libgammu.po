@@ -222,7 +222,7 @@ msgstr "הקובץ עם השם שצוין כבר קיים."
 
 #: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
-msgstr ""
+msgstr "הקובץ עם השם שצוין אינו קיים."
 
 #: libgammu/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
