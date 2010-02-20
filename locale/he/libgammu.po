@@ -251,7 +251,7 @@ msgstr "על התיקייה להיות ריקה."
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
-msgstr ""
+msgstr "הנתונים הומרו."
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
