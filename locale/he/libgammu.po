@@ -387,7 +387,7 @@ msgstr "שותפים לעבודה"
 
 #: libgammu/phone/nokia/nfunc.c:958
 msgid "Other"
-msgstr ""
+msgstr "אחר"
 
 #: libgammu/phone/nokia/nfunc.c:1134
 msgid "Meeting"
