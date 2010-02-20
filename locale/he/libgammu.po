@@ -255,7 +255,7 @@ msgstr "הנתונים הומרו."
 
 #: libgammu/gsmcomon.c:137
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "Gammu אינו מוגדר."
 
 #: libgammu/gsmcomon.c:138
 msgid "Wrong folder used."
