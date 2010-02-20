@@ -335,7 +335,7 @@ msgstr "אוזניה"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1968 libgammu/phone/nokia/nfunc.c:1130
 msgid "General"
-msgstr ""
+msgstr "כללי"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1970 libgammu/phone/nokia/nfunc.c:1132
 msgid "Silent"
