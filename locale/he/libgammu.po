@@ -383,7 +383,7 @@ msgstr "חברים"
 
 #: libgammu/phone/nokia/nfunc.c:956
 msgid "Colleagues"
-msgstr ""
+msgstr "שותפים לעבודה"
 
 #: libgammu/phone/nokia/nfunc.c:958
 msgid "Other"
