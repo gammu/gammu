@@ -28,7 +28,7 @@ msgstr "ארעה שגיאה בפתיחת ההתקן. לא ידוע, עסוק א�
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr ""
+msgstr "ארעה שגיאה בפתיחת ההתקן, הוא נעול."
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
