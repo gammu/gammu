@@ -291,7 +291,7 @@ msgstr "התכונה המבוקשת נוטרלה בזמן ההידור."
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
-msgstr ""
+msgstr "תצורת ה־Bluetooth דורשת אפשרות ערוץ."
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not runnig."
