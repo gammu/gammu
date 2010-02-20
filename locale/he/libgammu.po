@@ -160,7 +160,7 @@ msgstr "מספר מרכז ה־SMS ריק. יש להגדירו בטלפון או 
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
-msgstr ""
+msgstr "אתם בתוך תפריט הטלפון (אולי עורכים?). עזבו אותו ונסו שוב."
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
