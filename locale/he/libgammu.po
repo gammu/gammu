@@ -95,6 +95,8 @@ msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
+"המסגרת אינה ידועה. יש לעיין ב־<http://wammu.eu/support/bugs/> לקבלת מידע "
+"אודות דיווח על תקלה זו."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
