@@ -116,7 +116,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:104
 msgid "Function not supported by phone."
-msgstr ""
+msgstr "התכונה אינה נתמכת על ידי הטלפון."
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
