@@ -61,7 +61,7 @@ msgstr "תיעוד Gammu"
 #: docs/user/gammu-smsd-null.7:2 docs/user/gammu-smsd-run.7:2
 #, no-wrap
 msgid "NAME"
-msgstr ""
+msgstr "ירון שהרבני"
 
 # type: Plain text
 #. type: Plain text
