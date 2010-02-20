@@ -367,7 +367,7 @@ msgstr "פריטים שנשלחו"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:566
 msgid "Saved items"
-msgstr ""
+msgstr "פריטים שנשמרו"
 
 #: libgammu/phone/nokia/nfunc.c:950
 msgid "Family"
