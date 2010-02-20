@@ -206,7 +206,7 @@ msgstr "שגיאת CRC."
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
-msgstr ""
+msgstr "הזמן/תאריך שצוינו שגוי."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
