@@ -24,7 +24,7 @@ msgstr "אין שגיאה."
 
 #: libgammu/gsmcomon.c:85
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr ""
+msgstr "ארעה שגיאה בפתיחת ההתקן. לא ידוע, עסוק או שאין הרשאות."
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
