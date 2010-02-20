@@ -363,7 +363,7 @@ msgstr "דואר נכנס"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:565
 msgid "Sent items"
-msgstr ""
+msgstr "פריטים שנשלחו"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:566
 msgid "Saved items"
