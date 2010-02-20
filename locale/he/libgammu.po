@@ -331,7 +331,7 @@ msgstr "רכב"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1962 libgammu/phone/nokia/nfunc.c:1142
 msgid "Headset"
-msgstr ""
+msgstr "אוזניה"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1968 libgammu/phone/nokia/nfunc.c:1130
 msgid "General"
