@@ -136,7 +136,7 @@ msgstr "התכונה אינה נתמכת עדיין. הרגישו חופשיים
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
-msgstr ""
+msgstr "הזיכרון מלא."
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
