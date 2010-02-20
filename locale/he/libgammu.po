@@ -202,7 +202,7 @@ msgstr "סוג החיבור הנוכחי אינו תומך בפונקציה שה
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
-msgstr ""
+msgstr "שגיאת CRC."
 
 #: libgammu/gsmcomon.c:125
 msgid "Invalid date or time specified."
