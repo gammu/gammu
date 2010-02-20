@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-18 17:08+0100\n"
-"PO-Revision-Date: 2010-02-20 12:53+0200\n"
+"PO-Revision-Date: 2010-02-20 12:54+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -198,7 +198,7 @@ msgstr "על מודול הטלפון לשלוח מסגרת תשובה נוספת
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
-msgstr ""
+msgstr "סוג החיבור הנוכחי אינו תומך בפונקציה שהוזמנה."
 
 #: libgammu/gsmcomon.c:124
 msgid "CRC error."
