@@ -124,7 +124,7 @@ msgstr "הרשומה ריקה."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
-msgstr ""
+msgstr "שגיאת אבטחה. אולי אין קוד PIN?"
 
 #: libgammu/gsmcomon.c:107
 msgid "Invalid location. Maybe too high?"
