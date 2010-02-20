@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-18 17:08+0100\n"
-"PO-Revision-Date: 2010-02-20 12:51+0200\n"
+"PO-Revision-Date: 2010-02-20 12:52+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -178,7 +178,7 @@ msgstr "הטלפון מנוטרל ומחובר למטען."
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
-msgstr ""
+msgstr "סוג הקובץ אינו נתמך על ידי Gammu."
 
 #: libgammu/gsmcomon.c:120
 msgid ""
