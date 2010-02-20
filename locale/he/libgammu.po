@@ -399,7 +399,7 @@ msgstr "מחוץ למבנה"
 
 #: libgammu/phone/nokia/nfunc.c:1138
 msgid "Pager"
-msgstr ""
+msgstr "זימונית"
 
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
