@@ -379,7 +379,7 @@ msgstr "אח\"מים"
 
 #: libgammu/phone/nokia/nfunc.c:954
 msgid "Friends"
-msgstr ""
+msgstr "חברים"
 
 #: libgammu/phone/nokia/nfunc.c:956
 msgid "Colleagues"
