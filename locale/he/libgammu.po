@@ -104,7 +104,7 @@ msgstr "מחרוזת סוג החיבור אינה מוכרת. יש לבדוק א
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr ""
+msgstr "מחרוזת סוג הדגם אינה ידועה. יש לבדוק את קובץ התצורה."
 
 #: libgammu/gsmcomon.c:103
 msgid ""
