@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-18 17:08+0100\n"
-"PO-Revision-Date: 2010-02-20 13:05+0200\n"
+"PO-Revision-Date: 2010-02-20 13:06+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -355,7 +355,7 @@ msgstr "הסגנון שלי"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:563
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: libgammu/phone/nokia/dct4s40/6510/n6510.c:564 libgammu/phone/pfunc.c:41
 msgid "Inbox"
