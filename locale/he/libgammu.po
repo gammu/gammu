@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-18 17:08+0100\n"
-"PO-Revision-Date: 2010-02-20 12:52+0200\n"
+"PO-Revision-Date: 2010-02-20 12:53+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -190,7 +190,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
-msgstr ""
+msgstr "ההעברה בוטלה על ידי הטלפון, יתכן שלחצת על ביטול בטלפון."
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
