@@ -174,7 +174,7 @@ msgstr "התכונה מוטמעת בימים אלה ממש. אם ברצונך ב
 
 #: libgammu/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
-msgstr ""
+msgstr "הטלפון מנוטרל ומחובר למטען."
 
 #: libgammu/gsmcomon.c:119
 msgid "File format not supported by Gammu."
