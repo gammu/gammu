@@ -295,7 +295,7 @@ msgstr "תצורת ה־Bluetooth דורשת אפשרות ערוץ."
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not runnig."
-msgstr ""
+msgstr "השירות אינו פעיל."
 
 #: libgammu/gsmcomon.c:148
 msgid "Service configuration is missing."
