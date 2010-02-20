@@ -267,7 +267,7 @@ msgstr "שגיאת טלפון פנימית."
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
-msgstr ""
+msgstr "שגיאה בכתיבת הקובץ לכונן."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
