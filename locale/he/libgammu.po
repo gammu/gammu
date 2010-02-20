@@ -64,7 +64,7 @@ msgstr "ארעה שגיאה בעת הכתיבה אל ההתקן."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
-msgstr ""
+msgstr "ארעה שגיאה במהלך הקריאה מההתקן."
 
 #: libgammu/gsmcomon.c:96
 msgid "Can't set parity on the device."
