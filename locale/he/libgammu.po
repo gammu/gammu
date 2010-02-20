@@ -56,7 +56,7 @@ msgstr "ארעה שגיאה בעת הגדרת ההתקן ל־DTR או RTS."
 
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
-msgstr ""
+msgstr "ארעה שגיאה בהגדרת מהירות ההתקן. יתכן שאין תמיכה במהירות."
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
