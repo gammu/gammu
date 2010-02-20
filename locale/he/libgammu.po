@@ -307,7 +307,7 @@ msgstr "הפקודה נדחתה כיוון שההתקן היה עסוק. יש ל
 
 #: libgammu/gsmcomon.c:150
 msgid "Could not connect to the server."
-msgstr ""
+msgstr "לא ניתן להתחבר אל השרת."
 
 #: libgammu/gsmcomon.c:151
 msgid "Could not resolve the host name."
