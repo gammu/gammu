@@ -140,7 +140,7 @@ msgstr "הזיכרון מלא."
 
 #: libgammu/gsmcomon.c:110
 msgid "Unknown error."
-msgstr ""
+msgstr "שגיאה לא ידועה."
 
 #: libgammu/gsmcomon.c:111
 msgid "Can not open specified file."
