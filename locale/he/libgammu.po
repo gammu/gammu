@@ -185,7 +185,7 @@ msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
-"אף אחד אינו מושלם, הופיעו כמה באגים ביישומי הפרוטוקול. נא לי צור קשר עם "
+"אף אחד אינו מושלם, הופיעו כמה באגים ביישומי הפרוטוקול. נא ליצור קשר עם "
 "היוצרים."
 
 #: libgammu/gsmcomon.c:121
