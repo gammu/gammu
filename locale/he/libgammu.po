@@ -311,7 +311,7 @@ msgstr "לא ניתן להתחבר אל השרת."
 
 #: libgammu/gsmcomon.c:151
 msgid "Could not resolve the host name."
-msgstr ""
+msgstr "לא ניתן לפתור את שם המארח."
 
 #: libgammu/gsmcomon.c:184
 msgid "Unknown error description."
