@@ -247,7 +247,7 @@ msgstr "רק חלק מהתיקייה מוצג."
 
 #: libgammu/gsmcomon.c:135
 msgid "Folder must be empty."
-msgstr ""
+msgstr "על התיקייה להיות ריקה."
 
 #: libgammu/gsmcomon.c:136
 msgid "Data were converted."
