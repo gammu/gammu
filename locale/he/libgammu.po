@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-18 17:08+0100\n"
-"PO-Revision-Date: 2010-02-20 12:47+0200\n"
+"PO-Revision-Date: 2010-02-20 12:48+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -132,7 +132,7 @@ msgstr "המיקום שגוי. אולי גבוה מדי?"
 
 #: libgammu/gsmcomon.c:108
 msgid "Functionality not implemented. You are welcome to help authors with it."
-msgstr ""
+msgstr "התכונה אינה נתמכת עדיין. הרגישו חופשיים לסייע לכותבי התכנה עם תכונה זו."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
