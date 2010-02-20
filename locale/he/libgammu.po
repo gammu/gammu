@@ -120,7 +120,7 @@ msgstr "התכונה אינה נתמכת על ידי הטלפון."
 
 #: libgammu/gsmcomon.c:105
 msgid "Entry is empty."
-msgstr ""
+msgstr "הרשומה ריקה."
 
 #: libgammu/gsmcomon.c:106
 msgid "Security error. Maybe no PIN?"
