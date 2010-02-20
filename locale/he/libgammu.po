@@ -156,7 +156,7 @@ msgstr "הפעולה אינה מורשית על ידי הטלפון."
 
 #: libgammu/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
-msgstr ""
+msgstr "מספר מרכז ה־SMS ריק. יש להגדירו בטלפון או להשתמש ב־'-smscnumber'."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
