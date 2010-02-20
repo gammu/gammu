@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-18 17:08+0100\n"
-"PO-Revision-Date: 2010-02-20 12:41+0200\n"
+"PO-Revision-Date: 2010-02-20 12:42+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -60,7 +60,7 @@ msgstr "ארעה שגיאה בהגדרת מהירות ההתקן. יתכן שא�
 
 #: libgammu/gsmcomon.c:94
 msgid "Error writing to the device."
-msgstr ""
+msgstr "ארעה שגיאה בעת הכתיבה אל ההתקן."
 
 #: libgammu/gsmcomon.c:95
 msgid "Error during reading from the device."
