@@ -271,7 +271,7 @@ msgstr "שגיאה בכתיבת הקובץ לכונן."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
-msgstr ""
+msgstr "לא קיים אגף כזה."
 
 #: libgammu/gsmcomon.c:142
 msgid "Using default values."
