@@ -48,7 +48,7 @@ msgstr "Gammu 1.27.93"
 #: docs/user/gammu-smsd-null.7:1 docs/user/gammu-smsd-run.7:1
 #, no-wrap
 msgid "Gammu Documentation"
-msgstr ""
+msgstr "תיעוד Gammu"
 
 # type: SH
 #. type: SH
