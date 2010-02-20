@@ -194,7 +194,7 @@ msgstr "ההעברה בוטלה על ידי הטלפון, יתכן שלחצת ע
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "על מודול הטלפון לשלוח מסגרת תשובה נוספת."
 
 #: libgammu/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
