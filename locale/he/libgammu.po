@@ -164,7 +164,7 @@ msgstr "אתם בתוך תפריט הטלפון (אולי עורכים?). עזב
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
-msgstr ""
+msgstr "הטלפון אינו מחובר."
 
 #: libgammu/gsmcomon.c:117
 msgid ""
