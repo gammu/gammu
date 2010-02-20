@@ -347,7 +347,7 @@ msgstr "חשאי"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1974
 msgid "Loud"
-msgstr ""
+msgstr "צליל חזק"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1976
 msgid "My style"
