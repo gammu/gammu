@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-18 17:08+0100\n"
-"PO-Revision-Date: 2010-02-20 13:08+0200\n"
+"PO-Revision-Date: 2010-02-20 13:09+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -67,7 +67,7 @@ msgstr "ירון שהרבני"
 #. type: Plain text
 #: docs/user/gammu.1:7
 msgid "Gammu - Does some neat things with your cellular phone or modem."
-msgstr ""
+msgstr "Gammu - מאפשרת לכם לעשות דברים מגניבים עם הטלפון או המודם הסלולרי שלכם."
 
 # type: SH
 #. type: SH
