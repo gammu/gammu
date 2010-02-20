@@ -343,7 +343,7 @@ msgstr "שקט"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1972
 msgid "Discreet"
-msgstr ""
+msgstr "חשאי"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1974
 msgid "Loud"
