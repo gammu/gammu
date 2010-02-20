@@ -52,7 +52,7 @@ msgstr "ארעה שגיאה בפתיחת ההתקן. חלק מהחומרה מו�
 
 #: libgammu/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
-msgstr ""
+msgstr "ארעה שגיאה בעת הגדרת ההתקן ל־DTR או RTS."
 
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
