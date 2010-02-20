@@ -391,7 +391,7 @@ msgstr "אחר"
 
 #: libgammu/phone/nokia/nfunc.c:1134
 msgid "Meeting"
-msgstr ""
+msgstr "פגישה"
 
 #: libgammu/phone/nokia/nfunc.c:1136
 msgid "Outdoor"
