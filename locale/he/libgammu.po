@@ -263,7 +263,7 @@ msgstr "התיקייה שבשימוש שגויה."
 
 #: libgammu/gsmcomon.c:139
 msgid "Internal phone error."
-msgstr ""
+msgstr "שגיאת טלפון פנימית."
 
 #: libgammu/gsmcomon.c:140
 msgid "Error writing file to disk."
