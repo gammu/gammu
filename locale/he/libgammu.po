@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-18 17:08+0100\n"
-"PO-Revision-Date: 2010-02-20 12:42+0200\n"
+"PO-Revision-Date: 2010-02-20 12:43+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
 "Language: he\n"
@@ -72,7 +72,7 @@ msgstr "לא ניתן להגדיר אי־זוגיות על ההתקן."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
-msgstr ""
+msgstr "לא הייתה תגובה בפרק הזמן שהוגדר. יתכן שהטלפון אינו מחובר."
 
 #: libgammu/gsmcomon.c:98
 msgid ""
