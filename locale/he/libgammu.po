@@ -279,7 +279,7 @@ msgstr "נעשה שימוש בערכי ברירת המחדל."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "הוחזרו נתונים שגויים מהטלפון."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
