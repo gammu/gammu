@@ -210,7 +210,7 @@ msgstr "הזמן/תאריך שצוינו שגוי."
 
 #: libgammu/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
-msgstr ""
+msgstr "שגיאה בזיכרון הטלפון, כנראה שהוא לקריאה בלבד."
 
 #: libgammu/gsmcomon.c:127
 msgid "Invalid data given to phone."
