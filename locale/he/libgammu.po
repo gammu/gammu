@@ -148,7 +148,7 @@ msgstr "לא ניתן לפתוח את הקובץ שצוין."
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
-msgstr ""
+msgstr "נדרש זיכרון נוסף..."
 
 #: libgammu/gsmcomon.c:113
 msgid "Operation not allowed by phone."
