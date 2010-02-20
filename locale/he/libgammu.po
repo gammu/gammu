@@ -371,7 +371,7 @@ msgstr "פריטים שנשמרו"
 
 #: libgammu/phone/nokia/nfunc.c:950
 msgid "Family"
-msgstr ""
+msgstr "משפחה"
 
 #: libgammu/phone/nokia/nfunc.c:952
 msgid "VIP"
