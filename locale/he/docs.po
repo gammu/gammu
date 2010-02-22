@@ -11,10 +11,10 @@ msgstr ""
 "PO-Revision-Date: 2010-02-20 13:09+0200\n"
 "Last-Translator: Yaron Shahrabani <sh.yaron@gmail.com>\n"
 "Language-Team: none\n"
-"Language: he\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: he\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.0.1\n"
 
@@ -67,7 +67,8 @@ msgstr "ירון שהרבני"
 #. type: Plain text
 #: docs/user/gammu.1:7
 msgid "Gammu - Does some neat things with your cellular phone or modem."
-msgstr "Gammu - מאפשרת לכם לעשות דברים מגניבים עם הטלפון או המודם הסלולרי שלכם."
+msgstr ""
+"Gammu - מאפשרת לכם לעשות דברים מגניבים עם הטלפון או המודם הסלולרי שלכם."
 
 # type: SH
 #. type: SH
@@ -4184,7 +4185,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2698
 msgid "No error."
-msgstr ""
+msgstr "אין שגיאה."
 
 #. type: SS
 #: docs/user/gammu.1:2698
@@ -4195,7 +4196,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2700
 msgid "Error opening device. Unknown, busy or no permissions."
-msgstr ""
+msgstr "ארעה שגיאה בפתיחת ההתקן. לא ידוע, עסוק או שאין הרשאות."
 
 #. type: SS
 #: docs/user/gammu.1:2700
@@ -4206,7 +4207,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2702
 msgid "Error opening device, it is locked."
-msgstr ""
+msgstr "ארעה שגיאה בפתיחת ההתקן, הוא נעול."
 
 #. type: SS
 #: docs/user/gammu.1:2702
@@ -4217,7 +4218,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2704
 msgid "Error opening device, it doesn't exist."
-msgstr ""
+msgstr "ארעה שגיאה בפתיחת ההתקן, הוא אינו קיים."
 
 #. type: SS
 #: docs/user/gammu.1:2704
@@ -4228,7 +4229,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2706
 msgid "Error opening device, it is already opened by other application."
-msgstr ""
+msgstr "ארעה שגיאה בפתיחת ההתקן, הוא כבר פתוח בידי יישום אחר."
 
 #. type: SS
 #: docs/user/gammu.1:2706
@@ -4239,7 +4240,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2708
 msgid "Error opening device, you don't have permissions."
-msgstr ""
+msgstr "ארעה שגיאה בפתיחת ההתקן, אין לך הרשאות לכך."
 
 #. type: SS
 #: docs/user/gammu.1:2708
@@ -4250,7 +4251,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2710
 msgid "Error opening device. No required driver in operating system."
-msgstr ""
+msgstr "ארעה שגיאה בפתיחת ההתקן. מנהל ההתקן הנחוץ אינו מותקן במערכת ההפעלה."
 
 #. type: SS
 #: docs/user/gammu.1:2710
@@ -4261,7 +4262,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2712
 msgid "Error opening device. Some hardware not connected/wrongly configured."
-msgstr ""
+msgstr "ארעה שגיאה בפתיחת ההתקן. חלק מהחומרה מוגדר/מחובר שלא כראוי."
 
 #. type: SS
 #: docs/user/gammu.1:2712
@@ -4272,7 +4273,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2714
 msgid "Error setting device DTR or RTS."
-msgstr ""
+msgstr "ארעה שגיאה בעת הגדרת ההתקן ל־DTR או RTS."
 
 #. type: SS
 #: docs/user/gammu.1:2714
@@ -4283,7 +4284,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2716
 msgid "Error setting device speed. Maybe speed not supported."
-msgstr ""
+msgstr "ארעה שגיאה בהגדרת מהירות ההתקן. יתכן שאין תמיכה במהירות."
 
 #. type: SS
 #: docs/user/gammu.1:2716
@@ -4294,7 +4295,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2718
 msgid "Error writing to the device."
-msgstr ""
+msgstr "ארעה שגיאה בעת הכתיבה אל ההתקן."
 
 #. type: SS
 #: docs/user/gammu.1:2718
@@ -4305,7 +4306,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2720
 msgid "Error during reading from the device."
-msgstr ""
+msgstr "ארעה שגיאה במהלך הקריאה מההתקן."
 
 #. type: SS
 #: docs/user/gammu.1:2720
@@ -4316,7 +4317,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2722
 msgid "Can't set parity on the device."
-msgstr ""
+msgstr "לא ניתן להגדיר אי־זוגיות על ההתקן."
 
 #. type: SS
 #: docs/user/gammu.1:2722
@@ -4327,7 +4328,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2724
 msgid "No response in specified timeout. Probably phone not connected."
-msgstr ""
+msgstr "לא הייתה תגובה בפרק הזמן שהוגדר. יתכן שהטלפון אינו מחובר."
 
 #. type: SS
 #: docs/user/gammu.1:2724
@@ -4377,7 +4378,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2732
 msgid "Unknown connection type string. Check config file."
-msgstr ""
+msgstr "מחרוזת סוג החיבור אינה מוכרת. יש לבדוק את קובץ התצורה."
 
 #. type: SS
 #: docs/user/gammu.1:2732
@@ -4388,7 +4389,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2734
 msgid "Unknown model type string. Check config file."
-msgstr ""
+msgstr "מחרוזת סוג הדגם אינה ידועה. יש לבדוק את קובץ התצורה."
 
 #. type: SS
 #: docs/user/gammu.1:2734
@@ -4402,6 +4403,7 @@ msgid ""
 "Some functions not available for your system (disabled in config or not "
 "implemented)."
 msgstr ""
+"כמה מהתכונות אינן זמינות עבור המערכת שלך (נוטרלו בתצורה או שלא הוטמעו עדיין)."
 
 #. type: SS
 #: docs/user/gammu.1:2736
@@ -4412,7 +4414,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2738
 msgid "Function not supported by phone."
-msgstr ""
+msgstr "התכונה אינה נתמכת על ידי הטלפון."
 
 #. type: SS
 #: docs/user/gammu.1:2738
@@ -4423,7 +4425,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2740
 msgid "Entry is empty."
-msgstr ""
+msgstr "הרשומה ריקה."
 
 #. type: SS
 #: docs/user/gammu.1:2740
@@ -4434,7 +4436,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2742
 msgid "Security error. Maybe no PIN?"
-msgstr ""
+msgstr "שגיאת אבטחה. אולי אין קוד PIN?"
 
 #. type: SS
 #: docs/user/gammu.1:2742
@@ -4445,7 +4447,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2744
 msgid "Invalid location. Maybe too high?"
-msgstr ""
+msgstr "המיקום שגוי. אולי גבוה מדי?"
 
 #. type: SS
 #: docs/user/gammu.1:2744
@@ -4457,6 +4459,7 @@ msgstr ""
 #: docs/user/gammu.1:2746
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
+"התכונה אינה נתמכת עדיין. הרגישו חופשיים לסייע לכותבי התכנה עם תכונה זו."
 
 #. type: SS
 #: docs/user/gammu.1:2746
@@ -4467,7 +4470,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2748
 msgid "Memory full."
-msgstr ""
+msgstr "הזיכרון מלא."
 
 #. type: SS
 #: docs/user/gammu.1:2748
@@ -4478,7 +4481,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2750
 msgid "Unknown error."
-msgstr ""
+msgstr "שגיאה לא ידועה."
 
 #. type: SS
 #: docs/user/gammu.1:2750
@@ -4489,7 +4492,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2752
 msgid "Can not open specified file."
-msgstr ""
+msgstr "לא ניתן לפתוח את הקובץ שצוין."
 
 #. type: SS
 #: docs/user/gammu.1:2752
@@ -4500,7 +4503,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2754
 msgid "More memory required..."
-msgstr ""
+msgstr "נדרש זיכרון נוסף..."
 
 #. type: SS
 #: docs/user/gammu.1:2754
@@ -4511,7 +4514,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2756
 msgid "Operation not allowed by phone."
-msgstr ""
+msgstr "הפעולה אינה מורשית על ידי הטלפון."
 
 #. type: SS
 #: docs/user/gammu.1:2756
@@ -4522,7 +4525,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2758
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
-msgstr ""
+msgstr "מספר מרכז ה־SMS ריק. יש להגדירו בטלפון או להשתמש ב־'‎-smscnumber'."
 
 #. type: SS
 #: docs/user/gammu.1:2758
@@ -4533,7 +4536,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2760
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
-msgstr ""
+msgstr "אתם בתוך תפריט הטלפון (אולי עורכים?). עזבו אותו ונסו שוב."
 
 #. type: SS
 #: docs/user/gammu.1:2760
@@ -4544,7 +4547,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2762
 msgid "Phone is not connected."
-msgstr ""
+msgstr "הטלפון אינו מחובר."
 
 #. type: SS
 #: docs/user/gammu.1:2762
@@ -4557,7 +4560,7 @@ msgstr ""
 msgid ""
 "Function is currently being implemented. If you want to help, please contact "
 "authors."
-msgstr ""
+msgstr "התכונה מוטמעת בימים אלה ממש. אם ברצונך בעזרה, נא ליצור קשר עם היוצרים."
 
 #. type: SS
 #: docs/user/gammu.1:2764
@@ -4568,7 +4571,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2766
 msgid "Phone is disabled and connected to charger."
-msgstr ""
+msgstr "הטלפון מנוטרל ומחובר למטען."
 
 #. type: SS
 #: docs/user/gammu.1:2766
@@ -4579,7 +4582,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2768
 msgid "File format not supported by Gammu."
-msgstr ""
+msgstr "סוג הקובץ אינו נתמך על ידי Gammu."
 
 #. type: SS
 #: docs/user/gammu.1:2768
@@ -4593,6 +4596,8 @@ msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
+"אף אחד אינו מושלם, הופיעו כמה באגים ביישומי הפרוטוקול. נא ליצור קשר עם "
+"היוצרים."
 
 #. type: SS
 #: docs/user/gammu.1:2770
@@ -4603,7 +4608,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2772
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
-msgstr ""
+msgstr "ההעברה בוטלה על ידי הטלפון, יתכן שלחצת על ביטול בטלפון."
 
 #. type: SS
 #: docs/user/gammu.1:2772
@@ -4614,7 +4619,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2774
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "על מודול הטלפון לשלוח מסגרת תשובה נוספת."
 
 #. type: SS
 #: docs/user/gammu.1:2774
@@ -4625,7 +4630,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2776
 msgid "Current connection type doesn't support called function."
-msgstr ""
+msgstr "סוג החיבור הנוכחי אינו תומך בפונקציה שהוזמנה."
 
 #. type: SS
 #: docs/user/gammu.1:2776
@@ -4636,7 +4641,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2778
 msgid "CRC error."
-msgstr ""
+msgstr "שגיאת CRC."
 
 #. type: SS
 #: docs/user/gammu.1:2778
@@ -4647,7 +4652,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2780
 msgid "Invalid date or time specified."
-msgstr ""
+msgstr "הזמן/תאריך שצוינו שגוי."
 
 #. type: SS
 #: docs/user/gammu.1:2780
@@ -4658,7 +4663,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2782
 msgid "Phone memory error, maybe it is read only."
-msgstr ""
+msgstr "שגיאה בזיכרון הטלפון, כנראה שהוא לקריאה בלבד."
 
 #. type: SS
 #: docs/user/gammu.1:2782
@@ -4669,7 +4674,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2784
 msgid "Invalid data given to phone."
-msgstr ""
+msgstr "הועברו נתונים שגויים לטלפון."
 
 #. type: SS
 #: docs/user/gammu.1:2784
@@ -4680,7 +4685,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2786
 msgid "File with specified name already exists."
-msgstr ""
+msgstr "הקובץ עם השם שצוין כבר קיים."
 
 #. type: SS
 #: docs/user/gammu.1:2786
@@ -4691,7 +4696,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2788
 msgid "File with specified name doesn't exist."
-msgstr ""
+msgstr "הקובץ עם השם שצוין אינו קיים."
 
 #. type: SS
 #: docs/user/gammu.1:2788
@@ -4702,7 +4707,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2790
 msgid "You have to give folder name and not file name."
-msgstr ""
+msgstr "עליך לספק שם תיקייה ולא שם קובץ."
 
 #. type: SS
 #: docs/user/gammu.1:2790
@@ -4713,7 +4718,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2792
 msgid "You have to give file name and not folder name."
-msgstr ""
+msgstr "עליך לספק שם קובץ ולא שם תיקייה."
 
 #. type: SS
 #: docs/user/gammu.1:2792
@@ -4724,7 +4729,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2794
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "לא ניתן לגשת אל כרטיס ה־SIM."
 
 #. type: SS
 #: docs/user/gammu.1:2794
@@ -4736,6 +4741,7 @@ msgstr ""
 #: docs/user/gammu.1:2796
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
+"גרסת ה־GNAPPLET שבטלפון שגויה. יש להשתמש בגרסה התואמת ל־Gammu הנמצא בשימוש."
 
 #. type: SS
 #: docs/user/gammu.1:2796
@@ -4746,7 +4752,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2798
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "רק חלק מהתיקייה מוצג."
 
 #. type: SS
 #: docs/user/gammu.1:2798
@@ -4757,7 +4763,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2800
 msgid "Folder must be empty."
-msgstr ""
+msgstr "על התיקייה להיות ריקה."
 
 #. type: SS
 #: docs/user/gammu.1:2800
@@ -4768,7 +4774,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2802
 msgid "Data were converted."
-msgstr ""
+msgstr "הנתונים הומרו."
 
 #. type: SS
 #: docs/user/gammu.1:2802
@@ -4779,7 +4785,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2804
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "Gammu אינו מוגדר."
 
 #. type: SS
 #: docs/user/gammu.1:2804
@@ -4790,7 +4796,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2806
 msgid "Wrong folder used."
-msgstr ""
+msgstr "התיקייה שבשימוש שגויה."
 
 #. type: SS
 #: docs/user/gammu.1:2806
@@ -4801,7 +4807,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2808
 msgid "Internal phone error."
-msgstr ""
+msgstr "שגיאת טלפון פנימית."
 
 #. type: SS
 #: docs/user/gammu.1:2808
@@ -4812,7 +4818,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2810
 msgid "Error writing file to disk."
-msgstr ""
+msgstr "שגיאה בכתיבת הקובץ לכונן."
 
 #. type: SS
 #: docs/user/gammu.1:2810
@@ -4823,7 +4829,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2812
 msgid "No such section exists."
-msgstr ""
+msgstr "לא קיים אגף כזה."
 
 #. type: SS
 #: docs/user/gammu.1:2812
@@ -4834,7 +4840,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2814
 msgid "Using default values."
-msgstr ""
+msgstr "נעשה שימוש בערכי ברירת המחדל."
 
 #. type: SS
 #: docs/user/gammu.1:2814
@@ -4845,7 +4851,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2816
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "הוחזרו נתונים שגויים מהטלפון."
 
 #. type: SS
 #: docs/user/gammu.1:2816
@@ -4856,7 +4862,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2818
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "מחרוזת התכונה שהוגדרה היא שגויה."
 
 #. type: SS
 #: docs/user/gammu.1:2818
@@ -4867,7 +4873,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2820
 msgid "Desired functionality has been disabled on compile time."
-msgstr ""
+msgstr "התכונה המבוקשת נוטרלה בזמן ההידור."
 
 #. type: SS
 #: docs/user/gammu.1:2820
@@ -4878,7 +4884,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2822
 msgid "Bluetooth configuration requires channel option."
-msgstr ""
+msgstr "תצורת ה־Bluetooth דורשת אפשרות ערוץ."
 
 #. type: SS
 #: docs/user/gammu.1:2822
@@ -4889,7 +4895,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2824
 msgid "Service is not runnig."
-msgstr ""
+msgstr "השירות אינו פעיל."
 
 #. type: SS
 #: docs/user/gammu.1:2824
@@ -4900,7 +4906,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2826
 msgid "Service configuration is missing."
-msgstr ""
+msgstr "תצורת השירות חסרה."
 
 #. type: SS
 #: docs/user/gammu.1:2826
@@ -4911,7 +4917,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2828
 msgid "Command rejected because device was busy. Wait and restart."
-msgstr ""
+msgstr "הפקודה נדחתה כיוון שההתקן היה עסוק. יש להמתין ולהפעיל מחדש."
 
 #. type: SS
 #: docs/user/gammu.1:2828
@@ -4922,7 +4928,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2830
 msgid "Could not connect to the server."
-msgstr ""
+msgstr "לא ניתן להתחבר אל השרת."
 
 #. type: SS
 #: docs/user/gammu.1:2830
@@ -4933,7 +4939,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2832
 msgid "Could not resolve the host name."
-msgstr ""
+msgstr "לא ניתן לפתור את שם המארח."
 
 # type: SH
 #. type: SH
