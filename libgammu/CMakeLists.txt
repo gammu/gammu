@@ -68,9 +68,11 @@ set (LIBRARY_SRC
     phone/nokia/nfunc.c
     phone/nokia/nfuncold.c
     phone/obex/obexgen.c
-    phone/dummy/dummy.c
     phone/symbian/gnapgen.c)
 
+if (WITH_BACKUP)
+    list (APPEND LIBRARY_SRC phone/dummy/dummy.c)
+endif (WITH_BACKUP)
 if (BLUEZ_FOUND)
     list (APPEND LIBRARY_SRC device/bluetoth/bluez.c)
 endif (BLUEZ_FOUND)
