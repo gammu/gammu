@@ -64,95 +64,100 @@ add_executable(network-codes network-codes.c)
 target_link_libraries(network-codes libGammu)
 add_test(network-codes "${GAMMU_TEST_PATH}/network-codes${GAMMU_TEST_SUFFIX}" "-n")
 
-# smsbackup parsing
-add_executable(smsbackup smsbackup.c)
-target_link_libraries(smsbackup messagedisplay)
-target_link_libraries(smsbackup libGammu)
+if (WITH_BACKUP)
+    # smsbackup parsing
+    add_executable(smsbackup smsbackup.c)
+    target_link_libraries(smsbackup messagedisplay)
+    target_link_libraries(smsbackup libGammu)
 
-# List test cases
-file(GLOB VCARDS
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/smsbackups"
-    "${Gammu_SOURCE_DIR}/tests/smsbackups/*.smsbackup")
-list(SORT VCARDS)
+    # List test cases
+    file(GLOB VCARDS
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/smsbackups"
+        "${Gammu_SOURCE_DIR}/tests/smsbackups/*.smsbackup")
+    list(SORT VCARDS)
 
-foreach(TESTVCARD ${VCARDS})
-    string(REPLACE .smsbackup "" TESTNAME ${TESTVCARD})
-    add_test("smsbackup-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/smsbackup${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/smsbackups/${TESTVCARD}")
-endforeach(TESTVCARD $VCARDS)
+    foreach(TESTVCARD ${VCARDS})
+        string(REPLACE .smsbackup "" TESTNAME ${TESTVCARD})
+        add_test("smsbackup-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/smsbackup${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/smsbackups/${TESTVCARD}")
+    endforeach(TESTVCARD $VCARDS)
+endif (WITH_BACKUP)
 
+if (WITH_BACKUP)
+    # vCard parsing
+    add_executable(vcard-read vcard-read.c)
+    target_link_libraries(vcard-read memorydisplay)
+    target_link_libraries(vcard-read libGammu)
 
-# vCard parsing
-add_executable(vcard-read vcard-read.c)
-target_link_libraries(vcard-read memorydisplay)
-target_link_libraries(vcard-read libGammu)
+    # List test cases
+    file(GLOB VCARDS
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards"
+        "${Gammu_SOURCE_DIR}/tests/vcards/*.vcf")
+    list(SORT VCARDS)
 
-# List test cases
-file(GLOB VCARDS
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards"
-    "${Gammu_SOURCE_DIR}/tests/vcards/*.vcf")
-list(SORT VCARDS)
+    foreach(TESTVCARD ${VCARDS})
+        string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
+        string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
+        add_test("vcard-read-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/vcard-read${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/vcards/${TESTVCARD}"
+            "${Gammu_SOURCE_DIR}/tests/vcards/${TESTBACKUP}")
+    endforeach(TESTVCARD $VCARDS)
 
-foreach(TESTVCARD ${VCARDS})
-    string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
-    string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
-    add_test("vcard-read-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/vcard-read${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/vcards/${TESTVCARD}"
-        "${Gammu_SOURCE_DIR}/tests/vcards/${TESTBACKUP}")
-endforeach(TESTVCARD $VCARDS)
+    file(GLOB VCARDS
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards-failing"
+        "${Gammu_SOURCE_DIR}/tests/vcards-failing/*.vcf")
+    list(SORT VCARDS)
 
-file(GLOB VCARDS
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards-failing"
-    "${Gammu_SOURCE_DIR}/tests/vcards-failing/*.vcf")
-list(SORT VCARDS)
-
-foreach(TESTVCARD ${VCARDS})
-    string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
-    string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
-    add_test("vcard-read-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/vcard-read${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/vcards-failing/${TESTVCARD}"
-        "${Gammu_SOURCE_DIR}/tests/vcards-failing/${TESTBACKUP}")
-    set_tests_properties(
-        "vcard-read-${TESTNAME}"
-        PROPERTIES WILL_FAIL TRUE)
-endforeach(TESTVCARD $VCARDS)
+    foreach(TESTVCARD ${VCARDS})
+        string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
+        string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
+        add_test("vcard-read-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/vcard-read${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/vcards-failing/${TESTVCARD}"
+            "${Gammu_SOURCE_DIR}/tests/vcards-failing/${TESTBACKUP}")
+        set_tests_properties(
+            "vcard-read-${TESTNAME}"
+            PROPERTIES WILL_FAIL TRUE)
+    endforeach(TESTVCARD $VCARDS)
+endif (WITH_BACKUP)
 
 # [iv]Calendar parsing
-add_executable(cal-read cal-read.c)
-target_link_libraries(cal-read libGammu)
+if (WITH_BACKUP)
+    add_executable(cal-read cal-read.c)
+    target_link_libraries(cal-read libGammu)
 
-# List test cases
-file(GLOB VCALS
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcal"
-    "${Gammu_SOURCE_DIR}/tests/vcal/*.vcs")
-list(SORT VCALS)
+    # List test cases
+    file(GLOB VCALS
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/vcal"
+        "${Gammu_SOURCE_DIR}/tests/vcal/*.vcs")
+    list(SORT VCALS)
 
-foreach(TESTVCAL ${VCALS})
-    string(REPLACE vcs backup TESTBACKUP ${TESTVCAL})
-    string(REPLACE .vcs "" TESTNAME ${TESTVCAL})
-    add_test("cal-read-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/cal-read${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/vcal/${TESTVCAL}"
-        "${Gammu_SOURCE_DIR}/tests/vcal/${TESTBACKUP}")
-endforeach(TESTVCAL $VCALS)
+    foreach(TESTVCAL ${VCALS})
+        string(REPLACE vcs backup TESTBACKUP ${TESTVCAL})
+        string(REPLACE .vcs "" TESTNAME ${TESTVCAL})
+        add_test("cal-read-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/cal-read${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/vcal/${TESTVCAL}"
+            "${Gammu_SOURCE_DIR}/tests/vcal/${TESTBACKUP}")
+    endforeach(TESTVCAL $VCALS)
 
-# List test cases
-file(GLOB VCALS
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcal"
-    "${Gammu_SOURCE_DIR}/tests/vcal/*.ics")
-list(SORT VCALS)
+    # List test cases
+    file(GLOB VCALS
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/vcal"
+        "${Gammu_SOURCE_DIR}/tests/vcal/*.ics")
+    list(SORT VCALS)
 
-foreach(TESTVCAL ${VCALS})
-    string(REPLACE ics backup TESTBACKUP ${TESTVCAL})
-    string(REPLACE .ics "" TESTNAME ${TESTVCAL})
-    add_test("cal-read-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/cal-read${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/vcal/${TESTVCAL}"
-        "${Gammu_SOURCE_DIR}/tests/vcal/${TESTBACKUP}")
-endforeach(TESTVCAL $VCALS)
+    foreach(TESTVCAL ${VCALS})
+        string(REPLACE ics backup TESTBACKUP ${TESTVCAL})
+        string(REPLACE .ics "" TESTNAME ${TESTVCAL})
+        add_test("cal-read-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/cal-read${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/vcal/${TESTVCAL}"
+            "${Gammu_SOURCE_DIR}/tests/vcal/${TESTBACKUP}")
+    endforeach(TESTVCAL $VCALS)
+endif (WITH_BACKUP)
 
 # SMS parsing
 if (NOKIA6110)
@@ -479,24 +484,26 @@ foreach(TESTMESSAGE ${MESSAGES})
         PROPERTIES WILL_FAIL TRUE)
 endforeach(TESTMESSAGE $MESSAGES)
 
-# AT SMS encoding
-add_executable(sms-at-encode sms-at-encode.c)
-target_link_libraries(sms-at-encode libGammu)
+if (WITH_BACKUP)
+    # AT SMS encoding
+    add_executable(sms-at-encode sms-at-encode.c)
+    target_link_libraries(sms-at-encode libGammu)
 
-# List test cases
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-encode"
-    "${Gammu_SOURCE_DIR}/tests/at-sms-encode/*.backup")
-list(SORT MESSAGES)
+    # List test cases
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-encode"
+        "${Gammu_SOURCE_DIR}/tests/at-sms-encode/*.backup")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .backup "" TESTNAME ${TESTMESSAGE})
-    string(REPLACE backup dump TESTDUMP ${TESTMESSAGE})
-    add_test("sms-at-encode-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/sms-at-encode${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-sms-encode/${TESTMESSAGE}"
-        "${Gammu_SOURCE_DIR}/tests/at-sms-encode/${TESTDUMP}")
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .backup "" TESTNAME ${TESTMESSAGE})
+        string(REPLACE backup dump TESTDUMP ${TESTMESSAGE})
+        add_test("sms-at-encode-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/sms-at-encode${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-sms-encode/${TESTMESSAGE}"
+            "${Gammu_SOURCE_DIR}/tests/at-sms-encode/${TESTDUMP}")
+    endforeach(TESTMESSAGE $MESSAGES)
+endif (WITH_BACKUP)
 
 # SMS encoding
 add_executable(sms-encode-decode sms-encode-decode.c)
