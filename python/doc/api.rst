@@ -8,5 +8,6 @@ python-gammu API
     gammu
     statemachine
     smsd
+    data
     worker
     exceptions

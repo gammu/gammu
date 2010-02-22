@@ -1,0 +1,35 @@
+:mod:`gammu.Data` -- Generic data usable with Gammu
+===================================================
+
+.. module:: gammu.Data
+    :synopsis: Provides various data, which can be useful with Gammu.
+
+.. data:: Connections
+
+    Provides list of connection strings known to Gammu. They can be used for
+    example when giving user a choice of connection string.
+
+.. data:: MemoryValueTypes
+
+    Provides list of types of memory entry values.
+
+.. data:: CalendarTypes
+
+    Provides list of calendar envet types.
+
+.. data:: CalendarValueTypes
+
+    Provides list of types of calendar entry values.
+
+.. data:: TodoPriorities
+
+   Provides list of todo priorities.
+
+.. data:: TodoValueTypes
+
+    Provides list of types of todo entry values.
+
+.. data:: InternationalPrefixes
+
+    List of known internaltional prefixes.
+
