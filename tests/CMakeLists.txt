@@ -692,25 +692,27 @@ add_test(sms-cmdline-MMSSETTINGS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUF
 set_tests_properties(sms-cmdline-MMSSETTINGS PROPERTIES
     PASS_REGULAR_EXPRESSION "User Data Header     : Nokia WAP bookmark or WAP/MMS settings, ID \\(8 bit\\) [0-9]*, 2 parts")
 
-# Samsung parser tests
-add_executable(at-samsung at-samsung.c)
-target_link_libraries(at-samsung libGammu)
-add_test(at-samsung "${GAMMU_TEST_PATH}/at-samsung${GAMMU_TEST_SUFFIX}")
+if (WITH_ATGEN)
+    # Samsung parser tests
+    add_executable(at-samsung at-samsung.c)
+    target_link_libraries(at-samsung libGammu)
+    add_test(at-samsung "${GAMMU_TEST_PATH}/at-samsung${GAMMU_TEST_SUFFIX}")
 
-# Motorola parser tests
-add_executable(at-motorola at-motorola.c)
-target_link_libraries(at-motorola libGammu)
-add_test(at-motorola "${GAMMU_TEST_PATH}/at-motorola${GAMMU_TEST_SUFFIX}")
+    # Motorola parser tests
+    add_executable(at-motorola at-motorola.c)
+    target_link_libraries(at-motorola libGammu)
+    add_test(at-motorola "${GAMMU_TEST_PATH}/at-motorola${GAMMU_TEST_SUFFIX}")
 
-# AT parser tests
-add_executable(at-parser at-parser.c)
-target_link_libraries(at-parser libGammu)
-add_test(at-parser "${GAMMU_TEST_PATH}/at-parser${GAMMU_TEST_SUFFIX}")
+    # AT parser tests
+    add_executable(at-parser at-parser.c)
+    target_link_libraries(at-parser libGammu)
+    add_test(at-parser "${GAMMU_TEST_PATH}/at-parser${GAMMU_TEST_SUFFIX}")
 
-# AT text encoding/decoding
-add_executable(at-charset at-charset.c)
-target_link_libraries(at-charset libGammu)
-add_test(at-charset "${GAMMU_TEST_PATH}/at-charset${GAMMU_TEST_SUFFIX}")
+    # AT text encoding/decoding
+    add_executable(at-charset at-charset.c)
+    target_link_libraries(at-charset libGammu)
+    add_test(at-charset "${GAMMU_TEST_PATH}/at-charset${GAMMU_TEST_SUFFIX}")
+endif (WITH_ATGEN)
 
 # Line parser tests
 add_executable(line-splitting line-splitting.c)
