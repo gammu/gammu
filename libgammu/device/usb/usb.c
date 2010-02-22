@@ -8,13 +8,15 @@
  * Licensed under GNU GPL version 2 or later
  */
 
+#include <gammu-config.h>
+
+#include <libusb.h>
+#include "usb.h"
+
 #include "../../gsmstate.h"
 #include "../../gsmcomon.h"
 
 #if defined(GSM_ENABLE_DKU2PHONET) && defined(GSM_ENABLE_USBDEVICE)
-
-#include <libusb.h>
-#include "usb.h"
 
 /**
  * Nokia USB vendor ID.
