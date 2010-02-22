@@ -10,12 +10,14 @@
 
 #include <gammu-config.h>
 
-#if defined(GSM_ENABLE_DKU2PHONET) && defined(GSM_ENABLE_USBDEVICE)
-
+#ifdef LIBUSB_FOUND
 #include <libusb.h>
-#include "usb.h"
+#endif
 
 #include "../../gsmstate.h"
+#if defined(GSM_ENABLE_DKU2PHONET) && defined(GSM_ENABLE_USBDEVICE)
+#include "usb.h"
+
 #include "../../gsmcomon.h"
 
 /**
