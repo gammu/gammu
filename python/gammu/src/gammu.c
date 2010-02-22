@@ -5941,6 +5941,7 @@ gammu_SaveRingtone(PyObject *self, PyObject *args, PyObject *kwds)
     Py_RETURN_NONE;
 }
 
+#ifdef GSM_ENABLE_BACKUP
 static char gammu_SaveBackup__doc__[] =
 "SaveBackup(Filename, Backup, Format)\n\n"
 "Saves backup into file.\n\n"
@@ -6107,6 +6108,7 @@ gammu_ReadSMSBackup(PyObject *self, PyObject *args, PyObject *kwds)
     GSM_FreeSMSBackup(&backup);
     return result;
 }
+#endif
 
 static char gammu_DecodePDU__doc__[] =
 "DecodePDU(Data, SMSC = False)\n\n"
@@ -6180,11 +6182,13 @@ static struct PyMethodDef gammu_methods[] = {
 
     {"SaveRingtone",    (PyCFunction)gammu_SaveRingtone,    METH_VARARGS|METH_KEYWORDS,   gammu_SaveRingtone__doc__},
 
+#ifdef GSM_ENABLE_BACKUP
     {"SaveBackup",      (PyCFunction)gammu_SaveBackup,      METH_VARARGS|METH_KEYWORDS,   gammu_SaveBackup__doc__},
     {"ReadBackup",      (PyCFunction)gammu_ReadBackup,      METH_VARARGS|METH_KEYWORDS,   gammu_ReadBackup__doc__},
 
     {"SaveSMSBackup",   (PyCFunction)gammu_SaveSMSBackup,   METH_VARARGS|METH_KEYWORDS,   gammu_SaveSMSBackup__doc__},
     {"ReadSMSBackup",   (PyCFunction)gammu_ReadSMSBackup,   METH_VARARGS|METH_KEYWORDS,   gammu_ReadSMSBackup__doc__},
+#endif
 
     {"DecodePDU",       (PyCFunction)gammu_DecodePDU,       METH_VARARGS|METH_KEYWORDS,   gammu_DecodePDU__doc__},
 

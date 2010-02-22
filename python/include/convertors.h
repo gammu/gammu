@@ -269,6 +269,7 @@ int MultiSMSListFromPython(PyObject *list, GSM_MultiSMSMessage ***sms);
  */
 PyObject *MultiSMSListToPython(GSM_MultiSMSMessage **sms);
 
+#ifdef GSM_ENABLE_BACKUP
 /**
  * Converts SMS backup to list of Python objects.
  */
@@ -278,6 +279,7 @@ PyObject *SMSBackupToPython(GSM_SMS_Backup *sms);
  * Converts SMS backup from list of Python objects.
  */
 int SMSBackupFromPython(PyObject *list, GSM_SMS_Backup *sms);
+#endif
 
 /**
  * Converts Todo to Python object.
@@ -354,6 +356,7 @@ PyObject *RingtoneToPython(GSM_Ringtone *ring);
  */
 int RingtoneFromPython(PyObject *dict, GSM_Ringtone *ring);
 
+#ifdef GSM_ENABLE_BACKUP
 /**
  * Converts backup to Python object.
  */
@@ -368,6 +371,7 @@ int BackupFromPython(PyObject *dict, GSM_Backup *backup);
  * Converts backup format from string to Gammu.
  */
 int BackupFormatFromString(const char *s, GSM_BackupFormat *format);
+#endif
 
 /**
  * Converts file to Python object.

@@ -1824,6 +1824,7 @@ PyObject *SMSFoldersToPython(GSM_SMSFolders *folders) {
     return val;
 }
 
+#ifdef GSM_ENABLE_BACKUP
 PyObject *SMSBackupToPython(GSM_SMS_Backup *sms) {
     PyObject    *val;
     PyObject    *item;
@@ -1891,3 +1892,4 @@ int SMSBackupFromPython(PyObject *list, GSM_SMS_Backup *sms) {
 
     return 1;
 }
+#endif

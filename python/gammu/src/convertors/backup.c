@@ -23,6 +23,8 @@
 #include "convertors.h"
 #include "misc.h"
 
+#ifdef GSM_ENABLE_BACKUP
+
 /* FIXME: should better check for errors and support all backup features */
 
 PyObject *BackupToPython(GSM_Backup *backup) {
@@ -224,3 +226,5 @@ int BackupFormatFromString(const char *s, GSM_BackupFormat *format) {
     }
     return 1;
 }
+
+#endif
