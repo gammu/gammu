@@ -13,6 +13,7 @@ MACRO (MACRO_GAMMU_OPTION _name _description _default _cond1 _cond2)
         endif (WITH_${_name})
     else (${_cond1} AND ${_cond2})
         set(GSM_ENABLE_${_name} FALSE CACHE INTERNAL "${_name}")
+        set(WITH_${_name} FALSE CACHE INTERNAL "Whether to enable ${_description}" FORCE)
     endif (${_cond1} AND ${_cond2})
 ENDMACRO (MACRO_GAMMU_OPTION)
 
