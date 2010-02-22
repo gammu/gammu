@@ -30,7 +30,7 @@ GAMMU_SRC_DIR='@Gammu_SOURCE_DIR@'
 if SQLITE_BIN == '' or SQLITE_BIN[0] == '@':
     raise Exception('Please configure this script!')
 
-import gammu
+import gammu.smsd
 import sys
 import os
 import threading
@@ -71,7 +71,7 @@ if __name__ == '__main__':
         CreateSQLiteDB()
 
         # Load configuration
-        smsd = gammu.SMSD(smsdrc)
+        smsd = gammu.smsd.SMSD(smsdrc)
 
         # Inject SMS messages
         # Please note that SMSD is not thread safe, so you can not use inject and main loop from different threads
