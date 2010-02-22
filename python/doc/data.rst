@@ -33,3 +33,10 @@
 
     List of known internaltional prefixes.
 
+.. data:: Errors
+
+    Mapping of text representation of errors to gammu error codes. Reverse to :data:`ErrorNumbers`.
+
+.. data:: ErrorNumbers
+
+    Mapping of gammu error codes to text representation. Reverse to :data:`Errors`.
