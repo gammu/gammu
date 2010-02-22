@@ -43,6 +43,7 @@ Contents
     :maxdepth: 3
 
     api
+    install
 
 Indices and tables
 ------------------
