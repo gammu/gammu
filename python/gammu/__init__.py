@@ -2,11 +2,6 @@
 # vim: expandtab sw=4 ts=4 sts=4:
 '''
 Phone communication libary - python wrapper for Gammu library.
-
-This module wraps all python-gammu functionality. Core library is
-named L{gammu._gammu} and all of it's content is automatically
-imported also into this gammu module, so you can use both
-L{gammu.StateMachine} or L{gammu._gammu.StateMachine}.
 '''
 __author__ = 'Michal Čihař'
 __email__ = 'michal@cihar.com'
