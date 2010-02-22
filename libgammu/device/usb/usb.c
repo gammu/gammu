@@ -10,13 +10,13 @@
 
 #include <gammu-config.h>
 
+#if defined(GSM_ENABLE_DKU2PHONET) && defined(GSM_ENABLE_USBDEVICE)
+
 #include <libusb.h>
 #include "usb.h"
 
 #include "../../gsmstate.h"
 #include "../../gsmcomon.h"
-
-#if defined(GSM_ENABLE_DKU2PHONET) && defined(GSM_ENABLE_USBDEVICE)
 
 /**
  * Nokia USB vendor ID.
