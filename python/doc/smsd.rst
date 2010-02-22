@@ -10,6 +10,11 @@
 .. class:: gammu.smsd.SMSD(Config)
     
     SMSD main class, that is used for communication with phone.
+        
+    You don't need to run the SMS daemon itself to control or ask it for
+    status, this can be also done on separately running instances. All you
+    need to do for this is to give same configuration file as that instance is
+    using.
 
     :param Config: Path to SMSD configuration file.
     :type Config: string
@@ -37,9 +42,6 @@
     .. method:: GetStatus()
 
         Returns SMSD status. 
-        
-        This works also for external SMSD daemon instances, the instance is
-        identified by configuration file passed when creating SMSD class.
 
         The following values are set in resulting dictionary:
         
@@ -81,9 +83,6 @@
     .. method:: InjectSMS(Message)
 
         Injects SMS message into outgoing messages queue in SMSD.
-        
-        This works also for external SMSD daemon instances, the instance is
-        identified by configuration file passed when creating SMSD class.
 
         :param Message: Nessage to inject (can be multipart)
         :type Message: list
