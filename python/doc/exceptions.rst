@@ -1,5 +1,5 @@
-gammu exceptions
-================
+Exceptions
+==========
 
 .. autoexception:: gammu.GSMError
     :show-inheritance:
@@ -132,4 +132,10 @@ gammu exceptions
 .. autoexception:: gammu.ERR_NOTRUNNING
     :show-inheritance:
 .. autoexception:: gammu.ERR_NOSERVICE
+    :show-inheritance:
+.. autoexception:: gammu.ERR_BUSY
+    :show-inheritance:
+.. autoexception:: gammu.ERR_COULDNT_CONNECT
+    :show-inheritance:
+.. autoexception:: gammu.ERR_COULDNT_RESOLVE
     :show-inheritance:
