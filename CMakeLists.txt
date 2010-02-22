@@ -546,8 +546,8 @@ set (DOCS
     )
 
 # OpenCellID API key
-set (CPENCELLID_API_KEY "2623b0e70e9fa77754a3db53f3cb6458" CACHE STRING "OpenCellID API key")
-mark_as_advanced (CPENCELLID_API_KEY)
+set (OPENCELLID_API_KEY "2623b0e70e9fa77754a3db53f3cb6458" CACHE STRING "OpenCellID API key")
+mark_as_advanced (OPENCELLID_API_KEY)
 
 if (CMAKE_USE_PTHREADS_INIT)
     set (HAVE_PTHREAD ON)
