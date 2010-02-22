@@ -25,6 +25,7 @@ ChangeLog
 [-] * Better handling of Bluetooth errors on Windows (bug #1146).
 [-] * Build with -Wl,--as-needed to avoid not required dependencies.
 [-] * Python module now uses more PEP-3 compliant naming.
+[-] * Fix compilation while disabling some features.
     
 20100217 - 1.27.92
 
