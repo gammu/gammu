@@ -27,6 +27,7 @@
 #include "../../gsmcomon.h"
 #include "../../gsmphones.h"
 #include "../../misc/coding/coding.h"
+#include "../../service/gsmmisc.h"
 #include "../../service/gsmpbk.h"
 #include "../pfunc.h"
 
