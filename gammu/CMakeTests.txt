@@ -76,97 +76,105 @@ foreach(EXT ott rng mid imy ime wav rttl)
     endforeach(EXT2)
 endforeach(EXT)
 
-# Backup conversions
-file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcards/*.vcf")
-foreach(VCF ${VFORMATS})
-    get_filename_component(TESTNAME "${VCF}" NAME_WE)
-    add_test(gammu-savefile-vcf1-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile VCARD10 ${TESTNAME}.1.vcf ${VCF} ME 1)
-    add_test(gammu-savefile-vcf2-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile VCARD21 ${TESTNAME}.2.vcf ${VCF} ME 1)
-endforeach(VCF)
+if (WITH_BACKUP)
+    # Backup conversions
+    file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcards/*.vcf")
+    foreach(VCF ${VFORMATS})
+        get_filename_component(TESTNAME "${VCF}" NAME_WE)
+        add_test(gammu-savefile-vcf1-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile VCARD10 ${TESTNAME}.1.vcf ${VCF} ME 1)
+        add_test(gammu-savefile-vcf2-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile VCARD21 ${TESTNAME}.2.vcf ${VCF} ME 1)
+    endforeach(VCF)
 
-file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vnote/*.vnt")
-foreach(VNT ${VFORMATS})
-    get_filename_component(TESTNAME "${VNT}" NAME_WE)
-    add_test(gammu-savefile-vnt-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile NOTE ${TESTNAME}.2.vnt ${VNT} 1)
-endforeach(VNT)
+    file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vnote/*.vnt")
+    foreach(VNT ${VFORMATS})
+        get_filename_component(TESTNAME "${VNT}" NAME_WE)
+        add_test(gammu-savefile-vnt-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile NOTE ${TESTNAME}.2.vnt ${VNT} 1)
+    endforeach(VNT)
 
-file(GLOB VFORMATS
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.ics"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.vcs")
-foreach(VCS ${VFORMATS})
-    get_filename_component(TESTNAME "${VCS}" NAME_WE)
-    add_test(gammu-savefile-vcs-cal-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile CALENDAR ${TESTNAME}-cal.vcs ${VCS} 1)
-    if (TESTNAME MATCHES "01|02")
-        set_tests_properties(
-            gammu-savefile-vcs-cal-${TESTNAME}
-            PROPERTIES WILL_FAIL TRUE)
-    endif (TESTNAME MATCHES "01|02")
-    add_test(gammu-savefile-vcs-todo-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile TODO ${TESTNAME}-todo.vcs ${VCS} 1)
-    if (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook")
-        set_tests_properties(
-            gammu-savefile-vcs-todo-${TESTNAME}
-            PROPERTIES WILL_FAIL TRUE)
-    endif (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook")
-endforeach(VCS)
+    file(GLOB VFORMATS
+        "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.ics"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.vcs")
+    foreach(VCS ${VFORMATS})
+        get_filename_component(TESTNAME "${VCS}" NAME_WE)
+        add_test(gammu-savefile-vcs-cal-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile CALENDAR ${TESTNAME}-cal.vcs ${VCS} 1)
+        if (TESTNAME MATCHES "01|02")
+            set_tests_properties(
+                gammu-savefile-vcs-cal-${TESTNAME}
+                PROPERTIES WILL_FAIL TRUE)
+        endif (TESTNAME MATCHES "01|02")
+        add_test(gammu-savefile-vcs-todo-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile TODO ${TESTNAME}-todo.vcs ${VCS} 1)
+        if (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook")
+            set_tests_properties(
+                gammu-savefile-vcs-todo-${TESTNAME}
+                PROPERTIES WILL_FAIL TRUE)
+        endif (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1|p990|k770|outlook")
+    endforeach(VCS)
+endif (WITH_BACKUP)
 
 # Dummy phone tests
 macro (gammu_test _name _expression)
-    set(_params_list ${ARGN})
-    list(LENGTH _params_list _params_count)
-    if (_params_count GREATER 0)
-        list(GET _params_list 0 __param)
-        get_filename_component(__param ${__param} NAME)
-        string (REPLACE " " "_" __param "${__param}")
-        string (REPLACE "<" "_" __param "${__param}")
-        string (REPLACE ">" "_" __param "${__param}")
-        string (REPLACE "&" "_" __param "${__param}")
-        string (REPLACE "-" "_" __param "${__param}")
-        string (REPLACE "=" "_" __param "${__param}")
-        string (REPLACE "," "_" __param "${__param}")
-        string (REPLACE "#" "_" __param "${__param}")
-        set(__extraname "-${__param}")
-    else (_params_count GREATER 0)
-        set(__extraname "")
-    endif (_params_count GREATER 0)
-    add_test("gammu-dummy-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
-    set_tests_properties("gammu-dummy-${_name}${__extraname}" PROPERTIES
-        PASS_REGULAR_EXPRESSION "${_expression}"
-        )
+    if (WITH_BACKUP)
+        set(_params_list ${ARGN})
+        list(LENGTH _params_list _params_count)
+        if (_params_count GREATER 0)
+            list(GET _params_list 0 __param)
+            get_filename_component(__param ${__param} NAME)
+            string (REPLACE " " "_" __param "${__param}")
+            string (REPLACE "<" "_" __param "${__param}")
+            string (REPLACE ">" "_" __param "${__param}")
+            string (REPLACE "&" "_" __param "${__param}")
+            string (REPLACE "-" "_" __param "${__param}")
+            string (REPLACE "=" "_" __param "${__param}")
+            string (REPLACE "," "_" __param "${__param}")
+            string (REPLACE "#" "_" __param "${__param}")
+            set(__extraname "-${__param}")
+        else (_params_count GREATER 0)
+            set(__extraname "")
+        endif (_params_count GREATER 0)
+        add_test("gammu-dummy-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+        set_tests_properties("gammu-dummy-${_name}${__extraname}" PROPERTIES
+            PASS_REGULAR_EXPRESSION "${_expression}"
+            )
+    endif (WITH_BACKUP)
 endmacro (gammu_test _name _expression)
 
 macro (gammu_test_fail _name _expression)
-    set(_params_list ${ARGN})
-    list(LENGTH _params_list _params_count)
-    if (${_params_count} GREATER 0)
-        list(GET _params_list 0 __param)
-        get_filename_component(__param ${__param} NAME)
-        string (REPLACE " " "_" __param "${__param}")
-        string (REPLACE "<" "_" __param "${__param}")
-        string (REPLACE ">" "_" __param "${__param}")
-        string (REPLACE "&" "_" __param "${__param}")
-        string (REPLACE "-" "_" __param "${__param}")
-        string (REPLACE "=" "_" __param "${__param}")
-        string (REPLACE "," "_" __param "${__param}")
-        string (REPLACE "#" "_" __param "${__param}")
-        set(__extraname "-${__param}")
-    else (${_params_count} GREATER 0)
-        set(__extraname "")
-    endif (${_params_count} GREATER 0)
-    add_test("gammu-dummy-fail-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
-    set_tests_properties("gammu-dummy-fail-${_name}${__extraname}" PROPERTIES
-        FAIL_REGULAR_EXPRESSION "${_expression}"
-        WILL_FAIL TRUE
-        )
+    if (WITH_BACKUP)
+        set(_params_list ${ARGN})
+        list(LENGTH _params_list _params_count)
+        if (${_params_count} GREATER 0)
+            list(GET _params_list 0 __param)
+            get_filename_component(__param ${__param} NAME)
+            string (REPLACE " " "_" __param "${__param}")
+            string (REPLACE "<" "_" __param "${__param}")
+            string (REPLACE ">" "_" __param "${__param}")
+            string (REPLACE "&" "_" __param "${__param}")
+            string (REPLACE "-" "_" __param "${__param}")
+            string (REPLACE "=" "_" __param "${__param}")
+            string (REPLACE "," "_" __param "${__param}")
+            string (REPLACE "#" "_" __param "${__param}")
+            set(__extraname "-${__param}")
+        else (${_params_count} GREATER 0)
+            set(__extraname "")
+        endif (${_params_count} GREATER 0)
+        add_test("gammu-dummy-fail-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+        set_tests_properties("gammu-dummy-fail-${_name}${__extraname}" PROPERTIES
+            FAIL_REGULAR_EXPRESSION "${_expression}"
+            WILL_FAIL TRUE
+            )
+    endif (WITH_BACKUP)
 endmacro (gammu_test_fail _name _expression)
 
 gammu_test_fail(nonsense "Bad option!")
 gammu_test_fail(identify "Too many parameters" 1)
 gammu_test_fail(reset "More parameters required")
 
-add_test("gammu-dummy-99-identify" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" -s 99 identify)
-set_tests_properties("gammu-dummy-99-identify" PROPERTIES
-    PASS_REGULAR_EXPRESSION "DUMMY-001"
-    )
+if (WITH_BACKUP)
+    add_test("gammu-dummy-99-identify" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" -s 99 identify)
+    set_tests_properties("gammu-dummy-99-identify" PROPERTIES
+        PASS_REGULAR_EXPRESSION "DUMMY-001"
+        )
+endif (WITH_BACKUP)
 
 gammu_test(monitor GammuTel 1)
 gammu_test(networkinfo "B00B.*FACE")

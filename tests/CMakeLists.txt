@@ -730,19 +730,21 @@ foreach(TESTCONFIG ${CONFIGS})
 endforeach(TESTCONFIG $CONFIGS)
 
 
-# Just try to compile example whether it is still correct
-add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.c")
-target_link_libraries(phone-info libGammu)
-add_test(phone-info "${GAMMU_TEST_PATH}/phone-info${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
-add_executable(sms-send "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-send.c")
-target_link_libraries(sms-send libGammu)
-add_test(sms-send "${GAMMU_TEST_PATH}/sms-send${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
-add_executable(sms-read "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-read.c")
-target_link_libraries(sms-read libGammu)
-add_test(sms-read "${GAMMU_TEST_PATH}/sms-read${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
-add_executable(smsd "${Gammu_SOURCE_DIR}/docs/develop/examples/smsd.c")
-target_link_libraries(smsd libGammu)
-target_link_libraries(smsd gsmsd)
+# Examples
+if (WITH_BACKUP)
+    add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.c")
+    target_link_libraries(phone-info libGammu)
+    add_test(phone-info "${GAMMU_TEST_PATH}/phone-info${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
+    add_executable(sms-send "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-send.c")
+    target_link_libraries(sms-send libGammu)
+    add_test(sms-send "${GAMMU_TEST_PATH}/sms-send${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
+    add_executable(sms-read "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-read.c")
+    target_link_libraries(sms-read libGammu)
+    add_test(sms-read "${GAMMU_TEST_PATH}/sms-read${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
+    add_executable(smsd "${Gammu_SOURCE_DIR}/docs/develop/examples/smsd.c")
+    target_link_libraries(smsd libGammu)
+    target_link_libraries(smsd gsmsd)
+endif (WITH_BACKUP)
 
 
 # Auto generated include tests begin
