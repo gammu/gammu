@@ -317,8 +317,9 @@ void GetAllSMS(int argc, char *argv[])
 	GSM_SMSFolders		folders;
 	gboolean		start = TRUE;
 	int			smsnum=0,smspos=0;
+#ifndef GSM_ENABLE_BACKUP
 	void			*BackupPtr = NULL;
-#ifdef GSM_ENABLE_BACKUP
+#else
 	GSM_Backup		*BackupPtr = NULL;
 	GSM_Backup		Backup;
 
@@ -383,8 +384,9 @@ void GetEachSMS(int argc, char *argv[])
 	GSM_SMSFolders		folders;
 	gboolean		start=TRUE, ems=TRUE;
 	int			GetSMSNumber=0,i=0,j=0,smsnum=0,smspos=0;
+#ifndef GSM_ENABLE_BACKUP
 	void			*BackupPtr = NULL;
-#ifdef GSM_ENABLE_BACKUP
+#else
 	GSM_Backup		*BackupPtr = NULL;
 	GSM_Backup		Backup;
 
