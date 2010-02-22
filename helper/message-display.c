@@ -79,15 +79,22 @@ const GSM_MemoryEntry *SearchPhoneNumber(const unsigned char *number, const GSM_
 /**
  * Prints single phone number optionally showing name of contact from backup data.
  */
+#ifdef GSM_ENABLE_BACKUP
 void PrintPhoneNumber(const unsigned char *number, const GSM_Backup *Info)
+#else
+void PrintPhoneNumber(const unsigned char *number, const void *Info)
+#endif
 {
+#ifdef GSM_ENABLE_BACKUP
 	const GSM_MemoryEntry *pbk;
 	int pos;
+#endif
 
 	printf("\"%s\"", DecodeUnicodeConsole(number));
 
 	if (Info == NULL) return;
 
+#ifdef GSM_ENABLE_BACKUP
 	/* First try phone phonebook */
 	pbk = SearchPhoneNumber(number, (const GSM_MemoryEntry **)Info->PhonePhonebook, &pos);
 	if (pbk == NULL) {
@@ -124,9 +131,14 @@ void PrintPhoneNumber(const unsigned char *number, const GSM_Backup *Info)
 		default:
 			break;
 	}
+#endif
 }
 
+#ifdef GSM_ENABLE_BACKUP
 void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean displayudh, const GSM_Backup *Info)
+#else
+void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean displayudh, const void *Info)
+#endif
 {
 	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	int			i;
@@ -324,7 +336,11 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, gboolean displaytext, gboolean dis
 	fflush(stdout);
 }
 
+#ifdef GSM_ENABLE_BACKUP
 void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean ems, const GSM_Backup *Info, GSM_StateMachine *sm)
+#else
+void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean ems, const void *Info, GSM_StateMachine *sm)
+#endif
 {
 	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	GSM_MultiPartSMSInfo	SMSInfo;
