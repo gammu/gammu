@@ -359,11 +359,13 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 		}
 #endif
 
+#ifdef GSM_ENABLE_BACKUP
 		if (s->ConnectionType == GCT_NONE) {
 			smprintf(s,"[Module           - \"%s\"]\n",DUMMYPhone.models);
 			s->Phone.Functions = &DUMMYPhone;
 			return ERR_NONE;
 		}
+#endif
 
 		/* With GNAPgen and auto model we can work with unknown models too */
 #ifdef GSM_ENABLE_GNAPGEN
@@ -435,7 +437,9 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 		if (s->Phone.Functions != NULL) return ERR_NONE;
 	}
 #endif
+#ifdef GSM_ENABLE_BACKUP
 	GSM_RegisterModule(s, &DUMMYPhone);
+#endif
 #ifdef GSM_ENABLE_OBEXGEN
 	GSM_RegisterModule(s,&OBEXGENPhone);
 #endif
@@ -553,9 +557,11 @@ GSM_Error GSM_TryGetModel(GSM_StateMachine *s)
 	if (s->Phone.Data.Model[0]==0) {
 		smprintf(s,"[Module           - \"auto\"]\n");
 		switch (s->ConnectionType) {
+#ifdef GSM_ENABLE_BACKUP
 			case GCT_NONE:
 				s->Phone.Functions = &DUMMYPhone;
 				break;
+#endif
 #ifdef GSM_ENABLE_ATGEN
 			case GCT_AT:
 			case GCT_BLUEAT:
