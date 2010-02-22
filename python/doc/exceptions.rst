@@ -1,141 +1,147 @@
-Exceptions
-==========
+:mod:`gammu.exception` -- Gammu exception handling
+==================================================
 
-.. autoexception:: gammu.GSMError
+.. module:: gammu.exception
+    :synopsis: Defines all exceptions used in Gammu.
+
+.. exception:: gammu.exception.GSMError
+
+    Generic class as parent for all Gammu exceptions. This is never raised
+    directly, but should be used to catch any Gammu related exception.
+
+.. autoexception:: gammu.exception.ERR_NONE
     :show-inheritance:
-.. autoexception:: gammu.ERR_NONE
+.. autoexception:: gammu.exception.ERR_DEVICEOPENERROR
     :show-inheritance:
-.. autoexception:: gammu.ERR_DEVICEOPENERROR
+.. autoexception:: gammu.exception.ERR_DEVICELOCKED
     :show-inheritance:
-.. autoexception:: gammu.ERR_DEVICELOCKED
+.. autoexception:: gammu.exception.ERR_DEVICENOTEXIST
     :show-inheritance:
-.. autoexception:: gammu.ERR_DEVICENOTEXIST
+.. autoexception:: gammu.exception.ERR_DEVICEBUSY
     :show-inheritance:
-.. autoexception:: gammu.ERR_DEVICEBUSY
+.. autoexception:: gammu.exception.ERR_DEVICENOPERMISSION
     :show-inheritance:
-.. autoexception:: gammu.ERR_DEVICENOPERMISSION
+.. autoexception:: gammu.exception.ERR_DEVICENODRIVER
     :show-inheritance:
-.. autoexception:: gammu.ERR_DEVICENODRIVER
+.. autoexception:: gammu.exception.ERR_DEVICENOTWORK
     :show-inheritance:
-.. autoexception:: gammu.ERR_DEVICENOTWORK
+.. autoexception:: gammu.exception.ERR_DEVICEDTRRTSERROR
     :show-inheritance:
-.. autoexception:: gammu.ERR_DEVICEDTRRTSERROR
+.. autoexception:: gammu.exception.ERR_DEVICECHANGESPEEDERROR
     :show-inheritance:
-.. autoexception:: gammu.ERR_DEVICECHANGESPEEDERROR
+.. autoexception:: gammu.exception.ERR_DEVICEWRITEERROR
     :show-inheritance:
-.. autoexception:: gammu.ERR_DEVICEWRITEERROR
+.. autoexception:: gammu.exception.ERR_DEVICEREADERROR
     :show-inheritance:
-.. autoexception:: gammu.ERR_DEVICEREADERROR
+.. autoexception:: gammu.exception.ERR_DEVICEPARITYERROR
     :show-inheritance:
-.. autoexception:: gammu.ERR_DEVICEPARITYERROR
+.. autoexception:: gammu.exception.ERR_TIMEOUT
     :show-inheritance:
-.. autoexception:: gammu.ERR_TIMEOUT
+.. autoexception:: gammu.exception.ERR_FRAMENOTREQUESTED
     :show-inheritance:
-.. autoexception:: gammu.ERR_FRAMENOTREQUESTED
+.. autoexception:: gammu.exception.ERR_UNKNOWNRESPONSE
     :show-inheritance:
-.. autoexception:: gammu.ERR_UNKNOWNRESPONSE
+.. autoexception:: gammu.exception.ERR_UNKNOWNFRAME
     :show-inheritance:
-.. autoexception:: gammu.ERR_UNKNOWNFRAME
+.. autoexception:: gammu.exception.ERR_UNKNOWNCONNECTIONTYPESTRING
     :show-inheritance:
-.. autoexception:: gammu.ERR_UNKNOWNCONNECTIONTYPESTRING
+.. autoexception:: gammu.exception.ERR_UNKNOWNMODELSTRING
     :show-inheritance:
-.. autoexception:: gammu.ERR_UNKNOWNMODELSTRING
+.. autoexception:: gammu.exception.ERR_SOURCENOTAVAILABLE
     :show-inheritance:
-.. autoexception:: gammu.ERR_SOURCENOTAVAILABLE
+.. autoexception:: gammu.exception.ERR_NOTSUPPORTED
     :show-inheritance:
-.. autoexception:: gammu.ERR_NOTSUPPORTED
+.. autoexception:: gammu.exception.ERR_EMPTY
     :show-inheritance:
-.. autoexception:: gammu.ERR_EMPTY
+.. autoexception:: gammu.exception.ERR_SECURITYERROR
     :show-inheritance:
-.. autoexception:: gammu.ERR_SECURITYERROR
+.. autoexception:: gammu.exception.ERR_INVALIDLOCATION
     :show-inheritance:
-.. autoexception:: gammu.ERR_INVALIDLOCATION
+.. autoexception:: gammu.exception.ERR_NOTIMPLEMENTED
     :show-inheritance:
-.. autoexception:: gammu.ERR_NOTIMPLEMENTED
+.. autoexception:: gammu.exception.ERR_FULL
     :show-inheritance:
-.. autoexception:: gammu.ERR_FULL
+.. autoexception:: gammu.exception.ERR_UNKNOWN
     :show-inheritance:
-.. autoexception:: gammu.ERR_UNKNOWN
+.. autoexception:: gammu.exception.ERR_CANTOPENFILE
     :show-inheritance:
-.. autoexception:: gammu.ERR_CANTOPENFILE
+.. autoexception:: gammu.exception.ERR_MOREMEMORY
     :show-inheritance:
-.. autoexception:: gammu.ERR_MOREMEMORY
+.. autoexception:: gammu.exception.ERR_PERMISSION
     :show-inheritance:
-.. autoexception:: gammu.ERR_PERMISSION
+.. autoexception:: gammu.exception.ERR_EMPTYSMSC
     :show-inheritance:
-.. autoexception:: gammu.ERR_EMPTYSMSC
+.. autoexception:: gammu.exception.ERR_INSIDEPHONEMENU
     :show-inheritance:
-.. autoexception:: gammu.ERR_INSIDEPHONEMENU
+.. autoexception:: gammu.exception.ERR_NOTCONNECTED
     :show-inheritance:
-.. autoexception:: gammu.ERR_NOTCONNECTED
+.. autoexception:: gammu.exception.ERR_WORKINPROGRESS
     :show-inheritance:
-.. autoexception:: gammu.ERR_WORKINPROGRESS
+.. autoexception:: gammu.exception.ERR_PHONEOFF
     :show-inheritance:
-.. autoexception:: gammu.ERR_PHONEOFF
+.. autoexception:: gammu.exception.ERR_FILENOTSUPPORTED
     :show-inheritance:
-.. autoexception:: gammu.ERR_FILENOTSUPPORTED
+.. autoexception:: gammu.exception.ERR_BUG
     :show-inheritance:
-.. autoexception:: gammu.ERR_BUG
+.. autoexception:: gammu.exception.ERR_CANCELED
     :show-inheritance:
-.. autoexception:: gammu.ERR_CANCELED
+.. autoexception:: gammu.exception.ERR_NEEDANOTHERANSWER
     :show-inheritance:
-.. autoexception:: gammu.ERR_NEEDANOTHERANSWER
+.. autoexception:: gammu.exception.ERR_OTHERCONNECTIONREQUIRED
     :show-inheritance:
-.. autoexception:: gammu.ERR_OTHERCONNECTIONREQUIRED
+.. autoexception:: gammu.exception.ERR_WRONGCRC
     :show-inheritance:
-.. autoexception:: gammu.ERR_WRONGCRC
+.. autoexception:: gammu.exception.ERR_INVALIDDATETIME
     :show-inheritance:
-.. autoexception:: gammu.ERR_INVALIDDATETIME
+.. autoexception:: gammu.exception.ERR_MEMORY
     :show-inheritance:
-.. autoexception:: gammu.ERR_MEMORY
+.. autoexception:: gammu.exception.ERR_INVALIDDATA
     :show-inheritance:
-.. autoexception:: gammu.ERR_INVALIDDATA
+.. autoexception:: gammu.exception.ERR_FILEALREADYEXIST
     :show-inheritance:
-.. autoexception:: gammu.ERR_FILEALREADYEXIST
+.. autoexception:: gammu.exception.ERR_FILENOTEXIST
     :show-inheritance:
-.. autoexception:: gammu.ERR_FILENOTEXIST
+.. autoexception:: gammu.exception.ERR_SHOULDBEFOLDER
     :show-inheritance:
-.. autoexception:: gammu.ERR_SHOULDBEFOLDER
+.. autoexception:: gammu.exception.ERR_SHOULDBEFILE
     :show-inheritance:
-.. autoexception:: gammu.ERR_SHOULDBEFILE
+.. autoexception:: gammu.exception.ERR_NOSIM
     :show-inheritance:
-.. autoexception:: gammu.ERR_NOSIM
+.. autoexception:: gammu.exception.ERR_GNAPPLETWRONG
     :show-inheritance:
-.. autoexception:: gammu.ERR_GNAPPLETWRONG
+.. autoexception:: gammu.exception.ERR_FOLDERPART
     :show-inheritance:
-.. autoexception:: gammu.ERR_FOLDERPART
+.. autoexception:: gammu.exception.ERR_FOLDERNOTEMPTY
     :show-inheritance:
-.. autoexception:: gammu.ERR_FOLDERNOTEMPTY
+.. autoexception:: gammu.exception.ERR_DATACONVERTED
     :show-inheritance:
-.. autoexception:: gammu.ERR_DATACONVERTED
+.. autoexception:: gammu.exception.ERR_UNCONFIGURED
     :show-inheritance:
-.. autoexception:: gammu.ERR_UNCONFIGURED
+.. autoexception:: gammu.exception.ERR_WRONGFOLDER
     :show-inheritance:
-.. autoexception:: gammu.ERR_WRONGFOLDER
+.. autoexception:: gammu.exception.ERR_PHONE_INTERNAL
     :show-inheritance:
-.. autoexception:: gammu.ERR_PHONE_INTERNAL
+.. autoexception:: gammu.exception.ERR_WRITING_FILE
     :show-inheritance:
-.. autoexception:: gammu.ERR_WRITING_FILE
+.. autoexception:: gammu.exception.ERR_NONE_SECTION
     :show-inheritance:
-.. autoexception:: gammu.ERR_NONE_SECTION
+.. autoexception:: gammu.exception.ERR_USING_DEFAULTS
     :show-inheritance:
-.. autoexception:: gammu.ERR_USING_DEFAULTS
+.. autoexception:: gammu.exception.ERR_CORRUPTED
     :show-inheritance:
-.. autoexception:: gammu.ERR_CORRUPTED
+.. autoexception:: gammu.exception.ERR_BADFEATURE
     :show-inheritance:
-.. autoexception:: gammu.ERR_BADFEATURE
+.. autoexception:: gammu.exception.ERR_DISABLED
     :show-inheritance:
-.. autoexception:: gammu.ERR_DISABLED
+.. autoexception:: gammu.exception.ERR_SPECIFYCHANNEL
     :show-inheritance:
-.. autoexception:: gammu.ERR_SPECIFYCHANNEL
+.. autoexception:: gammu.exception.ERR_NOTRUNNING
     :show-inheritance:
-.. autoexception:: gammu.ERR_NOTRUNNING
+.. autoexception:: gammu.exception.ERR_NOSERVICE
     :show-inheritance:
-.. autoexception:: gammu.ERR_NOSERVICE
+.. autoexception:: gammu.exception.ERR_BUSY
     :show-inheritance:
-.. autoexception:: gammu.ERR_BUSY
+.. autoexception:: gammu.exception.ERR_COULDNT_CONNECT
     :show-inheritance:
-.. autoexception:: gammu.ERR_COULDNT_CONNECT
-    :show-inheritance:
-.. autoexception:: gammu.ERR_COULDNT_RESOLVE
+.. autoexception:: gammu.exception.ERR_COULDNT_RESOLVE
     :show-inheritance:

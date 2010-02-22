@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 # vim: expandtab sw=4 ts=4 sts=4:
 '''
-Phone communication libary - python wrapper for Gammu library.
+Gammu exceptions.
 '''
 __author__ = 'Michal Čihař'
 __email__ = 'michal@cihar.com'
@@ -22,20 +22,19 @@ this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 '''
 
-# Submodules
-__all__ = [
-    'data',
-    'worker',
-    'smsd',
-    'core',
-    'exception',
-    ]
-
-# Conveniency and backward compatibility import
-from gammu._gammu import *
-
 import gammu._gammu
-__version__ = 'Gammu %s, python-gammu %s' % (
-        gammu._gammu.Version()[0],
-        gammu._gammu.Version()[1]
-        )
+
+# Import base exception
+from gammu._gammu import GSMError
+
+# Import all exceptions
+for _name in dir(gammu._gammu):
+    if not _name.startswith('ERR_'):
+        continue
+    _temp = __import__('gammu._gammu', globals(), locals(), [_name], -1)
+    locals()[_name] = getattr(_temp, _name)
+
+# Cleanup
+del _name
+del _temp
+del gammu
