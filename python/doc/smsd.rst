@@ -14,78 +14,78 @@
     :param Config: Path to SMSD configuration file.
     :type Config: string
 
-.. method:: MainLoop(MaxFailures)
+    .. method:: MainLoop(MaxFailures)
 
-    Runs SMS daemon main loop. 
-    
-    Please note that this will run until some serious error occurs or until
-    terminated by :meth:`Shutdown`.
-
-    :param MaxFailures: After how many init failures SMSD ends. Defaults to 0, what means never.
-    :type MaxFailures: int
-    :return: None
-    :rtype: None
-
-
-.. method:: Shutdown()
-    
-    Signals SMS daemon to stop.
-
-    :return: None
-    :rtype: None
-
-.. method:: GetStatus()
-
-    Returns SMSD status. 
-    
-    This works also for external SMSD daemon instances, the instance is
-    identified by configuration file passed when creating SMSD class.
-
-    The following values are set in resulting dictionary:
-    
-    Client
-
-        Client software name.
-
-    PhoneID
+        Runs SMS daemon main loop. 
         
-        PhoneID which can be used for multiple SMSD setup.
+        Please note that this will run until some serious error occurs or until
+        terminated by :meth:`Shutdown`.
 
-    IMEI
+        :param MaxFailures: After how many init failures SMSD ends. Defaults to 0, what means never.
+        :type MaxFailures: int
+        :return: None
+        :rtype: None
 
-        IMEI of currently connected phone.
 
-    Sent
+    .. method:: Shutdown()
+        
+        Signals SMS daemon to stop.
 
-        Number of sent messages.
+        :return: None
+        :rtype: None
 
-    Received
+    .. method:: GetStatus()
 
-        Number of received messages.
+        Returns SMSD status. 
+        
+        This works also for external SMSD daemon instances, the instance is
+        identified by configuration file passed when creating SMSD class.
 
-    Failed
+        The following values are set in resulting dictionary:
+        
+        Client
 
-        Number of failed messages.
+            Client software name.
 
-    BatterPercent
+        PhoneID
+            
+            PhoneID which can be used for multiple SMSD setup.
 
-        Last battery state as reported by connected phone.
+        IMEI
 
-    NetworkSignal
+            IMEI of currently connected phone.
 
-        Last signal level as reported by connected phone.
+        Sent
 
-    :return: Dict with status values
-    :rtype: dict
+            Number of sent messages.
 
-.. method:: InjectSMS(Message)
+        Received
 
-    Injects SMS message into outgoing messages queue in SMSD.
-    
-    This works also for external SMSD daemon instances, the instance is
-    identified by configuration file passed when creating SMSD class.
+            Number of received messages.
 
-    :param Message: Nessage to inject (can be multipart)
-    :type Message: list
-    :return: ID of inserted message
-    :rtype: string
+        Failed
+
+            Number of failed messages.
+
+        BatterPercent
+
+            Last battery state as reported by connected phone.
+
+        NetworkSignal
+
+            Last signal level as reported by connected phone.
+
+        :return: Dict with status values
+        :rtype: dict
+
+    .. method:: InjectSMS(Message)
+
+        Injects SMS message into outgoing messages queue in SMSD.
+        
+        This works also for external SMSD daemon instances, the instance is
+        identified by configuration file passed when creating SMSD class.
+
+        :param Message: Nessage to inject (can be multipart)
+        :type Message: list
+        :return: ID of inserted message
+        :rtype: string
