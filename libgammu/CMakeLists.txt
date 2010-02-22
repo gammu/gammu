@@ -36,6 +36,7 @@ set (LIBRARY_SRC
     service/backup/backvnt.c
     device/bluetoth/bluetoth.c
     device/irda/irda.c
+    device/usb/usb.c
     device/devfunc.c
     protocol/at/at.c
     protocol/alcatel/alcabus.c
@@ -73,9 +74,6 @@ set (LIBRARY_SRC
 if (BLUEZ_FOUND)
     list (APPEND LIBRARY_SRC device/bluetoth/bluez.c)
 endif (BLUEZ_FOUND)
-if (LIBUSB_FOUND AND DKU2PHONET)
-    list (APPEND LIBRARY_SRC device/usb/usb.c)
-endif (LIBUSB_FOUND AND DKU2PHONET)
 if (BSD_BLUE_FOUND)
     list (APPEND LIBRARY_SRC device/bluetoth/blue_bsd.c)
 endif (BSD_BLUE_FOUND)

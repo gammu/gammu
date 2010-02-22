@@ -14,6 +14,7 @@
 #include "../../gsmstate.h"
 #include "../../gsmcomon.h"
 
+#if defined(GSM_ENABLE_DKU2PHONET) && defined(GSM_ENABLE_USBDEVICE)
 /**
  * Nokia USB vendor ID.
  */
@@ -531,6 +532,7 @@ GSM_Device_Functions FBUSUSBDevice = {
     	GSM_USB_Read,
     	GSM_USB_Write
 };
+#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
