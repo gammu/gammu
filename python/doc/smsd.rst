@@ -41,6 +41,40 @@
     This works also for external SMSD daemon instances, the instance is
     identified by configuration file passed when creating SMSD class.
 
+    The following values are set in resulting dictionary:
+    
+    Client
+
+        Client software name.
+
+    PhoneID
+        
+        PhoneID which can be used for multiple SMSD setup.
+
+    IMEI
+
+        IMEI of currently connected phone.
+
+    Sent
+
+        Number of sent messages.
+
+    Received
+
+        Number of received messages.
+
+    Failed
+
+        Number of failed messages.
+
+    BatterPercent
+
+        Last battery state as reported by connected phone.
+
+    NetworkSignal
+
+        Last signal level as reported by connected phone.
+
     :return: Dict with status values
     :rtype: dict
 
