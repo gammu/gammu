@@ -18,6 +18,7 @@
 #include "gsmphones.h"
 #include "gsmstate.h"
 #include "misc/coding/coding.h"
+#include "misc/misc.h"
 #include "device/devfunc.h"
 
 #include "../helper/string.h"
