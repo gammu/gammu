@@ -24,6 +24,7 @@ ChangeLog
 [-] * Fix crash when SMS in Nokia has too many recipients (bug #1136).
 [-] * Better handling of Bluetooth errors on Windows (bug #1146).
 [-] * Build with -Wl,--as-needed to avoid not required dependencies.
+[-] * Python module now uses more PEP-3 compliant naming.
     
 20100217 - 1.27.92
 

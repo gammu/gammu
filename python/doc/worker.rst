@@ -1,6 +1,6 @@
-:mod:`gammu.Worker`
+:mod:`gammu.worker`
 ===================
 
-.. automodule:: gammu.Worker
+.. automodule:: gammu.worker
    :members:
 

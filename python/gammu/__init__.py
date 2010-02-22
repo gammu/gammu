@@ -24,10 +24,11 @@ this program; if not, write to the Free Software Foundation, Inc.,
 
 # Submodules
 __all__ = [
-    'Data',
-    'Worker',
-    'SMSD',
-    'StateMachine'
+    'data',
+    'worker',
+    'smsd',
+    'core',
+    'exceptions',
     ]
 
 # Conveniency and backward compatibility import

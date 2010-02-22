@@ -1,7 +1,7 @@
-:mod:`gammu.Data` -- Generic data usable with Gammu
+:mod:`gammu.data` -- Generic data usable with Gammu
 ===================================================
 
-.. module:: gammu.Data
+.. module:: gammu.data
     :synopsis: Provides various data, which can be useful with Gammu.
 
 .. data:: Connections
