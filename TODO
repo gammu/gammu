@@ -5,32 +5,7 @@ This file is probably not usable for anybody except me ;-).
 #  define GSM_USED_IRDAOBEX
 #endif
 
-- make gammu core interruptible by some flag. this is especially needed when connect takes ages
-
 - drop multiple configurations handling in libGammu, it should provide just API to read some section from Gammurc and possible fall-back logic should be in application
-
-- add support for listing inbox messages in SMSD (to allow interface which will list them)
-    - filtering flags: timestamp, processed
-    - add support for setting processed flag via API
-
-- add support for acquiring number of messages in sending queue
-    - this should not require database knowledge
-
-- split a bit some huge source files
-    find . -type f -name '*.c' -not -path '*.svn*' | xargs stat -c '%s %n' | sort -n
-        64833 ./gammu/misc.c
-        66743 ./tests/line-splitting.c
-        67624 ./libgammu/service/gsmcal.c
-        69016 ./libgammu/phone/at/at-sms.c
-        82476 ./libgammu/phone/nokia/dct4s40/6510/6510file.c
-        86313 ./libgammu/phone/nokia/nfunc.c
-        101274 ./libgammu/phone/obex/obexgen.c
-        134022 ./libgammu/phone/alcatel/alcatel.c
-        136447 ./libgammu/phone/nokia/dct3/n6110.c
-        148923 ./libgammu/phone/nokia/dct4s40/6510/n6510.c
-        149421 ./libgammu/service/backup/backtext.c
-        151594 ./libgammu/phone/at/atgen.c
-        182944 ./python/gammu/src/gammu.c
 
 - when SMSD fails to send message
     - SQL backend should store this state
