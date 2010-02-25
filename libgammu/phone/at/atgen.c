@@ -1373,6 +1373,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_Error error;
 	unsigned char *pos = NULL;
 	int code = 0;
+	int gsm7 = 0;
 	char hex_encoded[2 * (GSM_MAX_USSD_LENGTH + 1)]={0};
 	char packed[GSM_MAX_USSD_LENGTH + 1]={0};
 	char decoded[GSM_MAX_USSD_LENGTH + 1]={0};
@@ -1434,12 +1435,26 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		ussd.Text[1] = 0;
 
 		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ENCODED_USSD)) {
-			ATGEN_ParseReply(s, pos,
-					"+CUSD: @i, @r @0",
-					&code,
-					hex_encoded, sizeof(hex_encoded));
- 			DecodeHexBin(packed, hex_encoded, strlen(hex_encoded));
-			GSM_UnpackEightBitsToSeven(0, strlen(hex_encoded), sizeof(decoded), packed, decoded);
+			error = ATGEN_ParseReply(s, pos,
+						"+CUSD: @i, @r, @i @0",
+						&code,
+						hex_encoded, sizeof(hex_encoded),
+						&gsm7);
+
+			if (error != ERR_NONE) {
+				gsm7 = 0;
+				ATGEN_ParseReply(s, pos,
+						"+CUSD: @i, @r @0",
+						&code,
+						hex_encoded, sizeof(hex_encoded));
+			}
+
+			if (gsm7 == 15) {
+	 			DecodeHexBin(packed, hex_encoded, strlen(hex_encoded));
+				GSM_UnpackEightBitsToSeven(0, strlen(hex_encoded), sizeof(decoded), packed, decoded);
+			} else {
+	 			DecodeHexBin(decoded, hex_encoded, strlen(hex_encoded));
+			}
    			DecodeDefault(ussd.Text, decoded, strlen(decoded), FALSE, NULL);
 		} else {
 			ATGEN_ParseReply(s, pos,
@@ -3838,7 +3853,7 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 	GSM_Error error;
 	char *req = NULL,*encoded = NULL;
 	unsigned char *tmp = NULL;
-	const char format[] = "AT+CUSD=%d,\"%s\"\r";
+	const char format[] = "AT+CUSD=%d,\"%s\",15\r";
 	size_t len = 0, sevenlen = 0;
 
 	/*
