@@ -1450,12 +1450,12 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			}
 
 			if (gsm7 == 15) {
-	 			DecodeHexBin(packed, hex_encoded, strlen(hex_encoded));
+				DecodeHexBin(packed, hex_encoded, strlen(hex_encoded));
 				GSM_UnpackEightBitsToSeven(0, strlen(hex_encoded), sizeof(decoded), packed, decoded);
 			} else {
-	 			DecodeHexBin(decoded, hex_encoded, strlen(hex_encoded));
+				DecodeHexBin(decoded, hex_encoded, strlen(hex_encoded));
 			}
-   			DecodeDefault(ussd.Text, decoded, strlen(decoded), FALSE, NULL);
+			DecodeDefault(ussd.Text, decoded, strlen(decoded), FALSE, NULL);
 		} else {
 			ATGEN_ParseReply(s, pos,
 					"+CUSD: @i, @s @0",
