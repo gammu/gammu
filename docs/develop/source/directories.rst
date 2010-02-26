@@ -7,6 +7,27 @@ libgammu directory
 This directory contains sources of Gammu library. You can find all phone
 communication and data encoding functionality here.
 
+There are following subdirectories:
+
+device
+  drivers for devices such serial ports or irda
+device/serial
+  drivers for serial ports
+device/irda
+  drivers for infrared over sockets
+protocol
+  protocol drivers
+protocol/nokia
+  Nokia specific protocols
+phone
+  phone modules
+phone/nokia
+  modules for different Nokia phones
+misc
+  different services. They can be used for any project
+service
+  different gsm services for logos, ringtones, etc.
+
 gammu directory
 ---------------
 
