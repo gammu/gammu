@@ -39,7 +39,7 @@ Contents
 .. toctree::
     :maxdepth: 3
 
-    api
+    python/api
     install
 
 Indices and tables

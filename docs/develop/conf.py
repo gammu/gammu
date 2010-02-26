@@ -41,8 +41,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'python-gammu'
-copyright = u'2009, Michal Čihař <michal@cihar.com>'
+project = u'Gammu'
+copyright = u'2009-2010, Michal Čihař <michal@cihar.com>'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -153,7 +153,7 @@ html_static_path = ['@CMAKE_CURRENT_SOURCE_DIR@/doc/.static']
 #html_file_suffix = ''
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'python-gammudoc'
+htmlhelp_basename = 'gammudoc'
 
 
 # Options for LaTeX output
@@ -168,7 +168,7 @@ htmlhelp_basename = 'python-gammudoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, document class [howto/manual]).
 latex_documents = [
-  ('index', 'python-gammu.tex', ur'python-gammu Documentation',
+  ('index', 'gammu.tex', ur'Gammu Documentation',
    ur'Michal Čihař <michal@cihar.com>', 'manual'),
 ]
 
