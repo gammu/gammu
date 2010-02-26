@@ -19,6 +19,9 @@
 #include <gammu-wap.h>
 #include <gammu-settings.h>
 #include <gammu-ringtone.h>
+#include <gammu-config.h>
+
+#ifdef GSM_ENABLE_BACKUP
 
 /**
  * Maximal number of SMSes in backup.
@@ -475,6 +478,9 @@ void GSM_GetBackupFormatFeatures(GSM_BackupFormat Format,
  */
 void GSM_GetBackupFileFeatures(GSM_BackupFormat Format, GSM_Backup_Info * info,
 			       GSM_Backup * backup);
+
+#endif
+
 #endif
 
 /* Editor configuration

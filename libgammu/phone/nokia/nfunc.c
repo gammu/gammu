@@ -992,6 +992,18 @@ void NOKIA_DecodeDateTime(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTi
 		datetime->Year, datetime->Month, datetime->Day);
 }
 
+void NOKIA_EncodeDateTime(GSM_StateMachine *s UNUSED, unsigned char* buffer, GSM_DateTime *datetime)
+{
+	buffer[0] = datetime->Year / 256;
+	buffer[1] = datetime->Year % 256;
+	buffer[2] = datetime->Month;
+	buffer[3] = datetime->Day;
+
+	buffer[4] = datetime->Hour;
+	buffer[5] = datetime->Minute;
+}
+
+
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 
 /* --------------------- Some general Nokia functions ---------------------- */
@@ -1083,17 +1095,6 @@ GSM_MemoryType NOKIA_GetMemoryType(GSM_StateMachine *s UNUSED, GSM_MemoryType me
 		i=i+2;
 	}
 	return 0xff;
-}
-
-void NOKIA_EncodeDateTime(GSM_StateMachine *s UNUSED, unsigned char* buffer, GSM_DateTime *datetime)
-{
-	buffer[0] = datetime->Year / 256;
-	buffer[1] = datetime->Year % 256;
-	buffer[2] = datetime->Month;
-	buffer[3] = datetime->Day;
-
-	buffer[4] = datetime->Hour;
-	buffer[5] = datetime->Minute;
 }
 
 void NOKIA_SortSMSFolderStatus(GSM_StateMachine *s, GSM_NOKIASMSFolder *Folder)

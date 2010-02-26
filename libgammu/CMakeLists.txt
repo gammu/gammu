@@ -36,6 +36,7 @@ set (LIBRARY_SRC
     service/backup/backvnt.c
     device/bluetoth/bluetoth.c
     device/irda/irda.c
+    device/usb/usb.c
     device/devfunc.c
     protocol/at/at.c
     protocol/alcatel/alcabus.c
@@ -67,15 +68,14 @@ set (LIBRARY_SRC
     phone/nokia/nfunc.c
     phone/nokia/nfuncold.c
     phone/obex/obexgen.c
-    phone/dummy/dummy.c
     phone/symbian/gnapgen.c)
 
+if (WITH_BACKUP)
+    list (APPEND LIBRARY_SRC phone/dummy/dummy.c)
+endif (WITH_BACKUP)
 if (BLUEZ_FOUND)
     list (APPEND LIBRARY_SRC device/bluetoth/bluez.c)
 endif (BLUEZ_FOUND)
-if (LIBUSB_FOUND)
-    list (APPEND LIBRARY_SRC device/usb/usb.c)
-endif (LIBUSB_FOUND)
 if (BSD_BLUE_FOUND)
     list (APPEND LIBRARY_SRC device/bluetoth/blue_bsd.c)
 endif (BSD_BLUE_FOUND)

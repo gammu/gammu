@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-02-05 06:30+0100\n"
+"POT-Creation-Date: 2010-02-22 09:07+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -518,7 +518,7 @@ msgstr ""
 
 #: gammu/calendar.c:45 gammu/calendar.c:707
 msgid "Meeting"
-msgstr ""
+msgstr "פגישה"
 
 #: gammu/calendar.c:48 gammu/calendar.c:710
 msgid "Birthday (Anniversary)"
@@ -2004,7 +2004,7 @@ msgstr ""
 
 #: gammu/message.c:210
 msgid "Pager"
-msgstr ""
+msgstr "זימונית"
 
 #: gammu/message.c:214
 msgid "Validity"
@@ -2085,7 +2085,7 @@ msgstr ""
 
 #: gammu/message.c:592
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: gammu/message.c:594
 msgid "phone"
@@ -3024,7 +3024,7 @@ msgstr ""
 
 #: gammu/misc.c:2063
 msgid "Personal"
-msgstr ""
+msgstr "אישי"
 
 #: gammu/misc.c:2068
 msgid "Vibrate first"

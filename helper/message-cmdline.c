@@ -562,6 +562,17 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		}
 		startarg += 3;
 		break;
+#else
+	case COMPOSE_BOOKMARK:
+	case COMPOSE_WAPSETTINGS:
+	case COMPOSE_MMSSETTINGS:
+	case COMPOSE_CALENDAR:
+	case COMPOSE_TODO:
+	case COMPOSE_VCARD10:
+	case COMPOSE_VCARD21:
+		printf("%s\n", _("Backup functionality not compiled in!"));
+		exit(100 + ERR_DISABLED);
+		break;
 #endif
 	case COMPOSE_PROFILE:
 		SMSInfo.Entries[0].ID = SMS_NokiaProfileLong;

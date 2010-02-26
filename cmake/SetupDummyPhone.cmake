@@ -2,7 +2,7 @@
 # Copyright (c) 2007-2009 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4 ft=cmake:
 
-
+if (WITH_BACKUP)
 file(REMOVE_RECURSE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy")
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy")
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/1")
@@ -56,3 +56,4 @@ connection = none
 port = ${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy
 gammuloc = /dev/null
 ")
+endif (WITH_BACKUP)

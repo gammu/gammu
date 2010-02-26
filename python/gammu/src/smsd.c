@@ -83,14 +83,7 @@ typedef struct {
 
 /* ---------------------------------------------------------------- */
 
-static char SMSD_MainLoop__doc__[] =
-"MainLoop(MaxFailures)\n\n"
-"Runs SMS daemon.\n\n"
-"@param MaxFailures: After how many init failures SMSD ends. Defaults to 0, what means never.\n"
-"@type MaxFailures: int\n"
-"@return: None\n"
-"@rtype: None\n"
-;
+static char SMSD_MainLoop__doc__[] = "Runs SMS daemon.";
 
 static PyObject *
 Py_SMSD_MainLoop(SMSDObject *self, PyObject *args, PyObject *kwds)
@@ -111,12 +104,7 @@ Py_SMSD_MainLoop(SMSDObject *self, PyObject *args, PyObject *kwds)
     Py_RETURN_NONE;
 }
 
-static char SMSD_Shutdown__doc__[] =
-"Shutdown()\n\n"
-"Flags SMS daemon to stop.\n\n"
-"@return: None\n"
-"@rtype: None\n"
-;
+static char SMSD_Shutdown__doc__[] = "Signals SMS daemon to stop.";
 
 static PyObject *
 Py_SMSD_Shutdown(SMSDObject *self, PyObject *args, PyObject *kwds)
@@ -135,12 +123,7 @@ Py_SMSD_Shutdown(SMSDObject *self, PyObject *args, PyObject *kwds)
     Py_RETURN_NONE;
 }
 
-static char SMSD_GetStatus__doc__[] =
-"GetStatus()\n\n"
-"Returns SMSD status.\n\n"
-"@return: Dict with status values\n"
-"@rtype: dict\n"
-;
+static char SMSD_GetStatus__doc__[] = "Returns SMSD status.";
 
 static PyObject *
 Py_SMSD_GetStatus(SMSDObject *self, PyObject *args, PyObject *kwds)
@@ -168,14 +151,7 @@ Py_SMSD_GetStatus(SMSDObject *self, PyObject *args, PyObject *kwds)
             "NetworkSignal", status.Network.SignalPercent);
 }
 
-static char SMSD_InjectSMS__doc__[] =
-"InjectSMS(Message)\n\n"
-"Decodes multi part SMS message.\n\n"
-"@param Message: Nessage to inject (can be multipart)\n"
-"@type Message: list\n"
-"@return: ID of inserted message\n"
-"@rtype: string\n"
-;
+static char SMSD_InjectSMS__doc__[] = "Injects a message to the SMSD queue";
 
 static PyObject *
 Py_SMSD_InjectSMS(SMSDObject *self, PyObject *args, PyObject *kwds)
@@ -296,11 +272,7 @@ SMSD_init(SMSDObject *self, PyObject *args, PyObject *kwds)
 }
 
 static char SMSDType__doc__[] =
-"SMSD(Config)\n\n"
-"SMSD object, that is used for communication with phone.\n\n"
-/* FIXME: following doc should go elsewhere */
-"param Config: Path to SMSD configuration file\n"
-"type Config: string\n"
+"SMSD object, that is used for communication with phone."
 ;
 
 static PyTypeObject SMSDType = {

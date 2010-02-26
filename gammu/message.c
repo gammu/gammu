@@ -317,8 +317,10 @@ void GetAllSMS(int argc, char *argv[])
 	GSM_SMSFolders		folders;
 	gboolean		start = TRUE;
 	int			smsnum=0,smspos=0;
+#ifndef GSM_ENABLE_BACKUP
+	void			*BackupPtr = NULL;
+#else
 	GSM_Backup		*BackupPtr = NULL;
-#ifdef GSM_ENABLE_BACKUP
 	GSM_Backup		Backup;
 
 	GSM_ClearBackup(&Backup);
@@ -380,10 +382,12 @@ void GetEachSMS(int argc, char *argv[])
 	GSM_Error error;
 	GSM_MultiSMSMessage	*GetSMSData[GSM_PHONE_MAXSMSINFOLDER],*SortedSMS[GSM_PHONE_MAXSMSINFOLDER],sms;
 	GSM_SMSFolders		folders;
-	GSM_Backup		*BackupPtr = NULL;
 	gboolean		start=TRUE, ems=TRUE;
 	int			GetSMSNumber=0,i=0,j=0,smsnum=0,smspos=0;
-#ifdef GSM_ENABLE_BACKUP
+#ifndef GSM_ENABLE_BACKUP
+	void			*BackupPtr = NULL;
+#else
+	GSM_Backup		*BackupPtr = NULL;
 	GSM_Backup		Backup;
 
 	GSM_ClearBackup(&Backup);

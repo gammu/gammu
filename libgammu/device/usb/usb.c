@@ -8,10 +8,16 @@
  * Licensed under GNU GPL version 2 or later
  */
 
+#include <gammu-config.h>
+
+#ifdef LIBUSB_FOUND
 #include <libusb.h>
-#include "usb.h"
+#endif
 
 #include "../../gsmstate.h"
+#if defined(GSM_ENABLE_DKU2PHONET) && defined(GSM_ENABLE_USBDEVICE)
+#include "usb.h"
+
 #include "../../gsmcomon.h"
 
 /**
@@ -531,6 +537,7 @@ GSM_Device_Functions FBUSUSBDevice = {
     	GSM_USB_Read,
     	GSM_USB_Write
 };
+#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

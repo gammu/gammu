@@ -64,411 +64,448 @@ add_executable(network-codes network-codes.c)
 target_link_libraries(network-codes libGammu)
 add_test(network-codes "${GAMMU_TEST_PATH}/network-codes${GAMMU_TEST_SUFFIX}" "-n")
 
-# smsbackup parsing
-add_executable(smsbackup smsbackup.c)
-target_link_libraries(smsbackup messagedisplay)
-target_link_libraries(smsbackup libGammu)
+if (WITH_BACKUP)
+    # smsbackup parsing
+    add_executable(smsbackup smsbackup.c)
+    target_link_libraries(smsbackup messagedisplay)
+    target_link_libraries(smsbackup libGammu)
 
-# List test cases
-file(GLOB VCARDS
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/smsbackups"
-    "${Gammu_SOURCE_DIR}/tests/smsbackups/*.smsbackup")
-list(SORT VCARDS)
+    # List test cases
+    file(GLOB VCARDS
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/smsbackups"
+        "${Gammu_SOURCE_DIR}/tests/smsbackups/*.smsbackup")
+    list(SORT VCARDS)
 
-foreach(TESTVCARD ${VCARDS})
-    string(REPLACE .smsbackup "" TESTNAME ${TESTVCARD})
-    add_test("smsbackup-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/smsbackup${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/smsbackups/${TESTVCARD}")
-endforeach(TESTVCARD $VCARDS)
+    foreach(TESTVCARD ${VCARDS})
+        string(REPLACE .smsbackup "" TESTNAME ${TESTVCARD})
+        add_test("smsbackup-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/smsbackup${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/smsbackups/${TESTVCARD}")
+    endforeach(TESTVCARD $VCARDS)
+endif (WITH_BACKUP)
 
+if (WITH_BACKUP)
+    # vCard parsing
+    add_executable(vcard-read vcard-read.c)
+    target_link_libraries(vcard-read memorydisplay)
+    target_link_libraries(vcard-read libGammu)
 
-# vCard parsing
-add_executable(vcard-read vcard-read.c)
-target_link_libraries(vcard-read memorydisplay)
-target_link_libraries(vcard-read libGammu)
+    # List test cases
+    file(GLOB VCARDS
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards"
+        "${Gammu_SOURCE_DIR}/tests/vcards/*.vcf")
+    list(SORT VCARDS)
 
-# List test cases
-file(GLOB VCARDS
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards"
-    "${Gammu_SOURCE_DIR}/tests/vcards/*.vcf")
-list(SORT VCARDS)
+    foreach(TESTVCARD ${VCARDS})
+        string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
+        string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
+        add_test("vcard-read-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/vcard-read${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/vcards/${TESTVCARD}"
+            "${Gammu_SOURCE_DIR}/tests/vcards/${TESTBACKUP}")
+    endforeach(TESTVCARD $VCARDS)
 
-foreach(TESTVCARD ${VCARDS})
-    string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
-    string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
-    add_test("vcard-read-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/vcard-read${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/vcards/${TESTVCARD}"
-        "${Gammu_SOURCE_DIR}/tests/vcards/${TESTBACKUP}")
-endforeach(TESTVCARD $VCARDS)
+    file(GLOB VCARDS
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards-failing"
+        "${Gammu_SOURCE_DIR}/tests/vcards-failing/*.vcf")
+    list(SORT VCARDS)
 
-file(GLOB VCARDS
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards-failing"
-    "${Gammu_SOURCE_DIR}/tests/vcards-failing/*.vcf")
-list(SORT VCARDS)
-
-foreach(TESTVCARD ${VCARDS})
-    string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
-    string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
-    add_test("vcard-read-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/vcard-read${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/vcards-failing/${TESTVCARD}"
-        "${Gammu_SOURCE_DIR}/tests/vcards-failing/${TESTBACKUP}")
-    set_tests_properties(
-        "vcard-read-${TESTNAME}"
-        PROPERTIES WILL_FAIL TRUE)
-endforeach(TESTVCARD $VCARDS)
+    foreach(TESTVCARD ${VCARDS})
+        string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
+        string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
+        add_test("vcard-read-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/vcard-read${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/vcards-failing/${TESTVCARD}"
+            "${Gammu_SOURCE_DIR}/tests/vcards-failing/${TESTBACKUP}")
+        set_tests_properties(
+            "vcard-read-${TESTNAME}"
+            PROPERTIES WILL_FAIL TRUE)
+    endforeach(TESTVCARD $VCARDS)
+endif (WITH_BACKUP)
 
 # [iv]Calendar parsing
-add_executable(cal-read cal-read.c)
-target_link_libraries(cal-read libGammu)
+if (WITH_BACKUP)
+    add_executable(cal-read cal-read.c)
+    target_link_libraries(cal-read libGammu)
 
-# List test cases
-file(GLOB VCALS
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcal"
-    "${Gammu_SOURCE_DIR}/tests/vcal/*.vcs")
-list(SORT VCALS)
+    # List test cases
+    file(GLOB VCALS
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/vcal"
+        "${Gammu_SOURCE_DIR}/tests/vcal/*.vcs")
+    list(SORT VCALS)
 
-foreach(TESTVCAL ${VCALS})
-    string(REPLACE vcs backup TESTBACKUP ${TESTVCAL})
-    string(REPLACE .vcs "" TESTNAME ${TESTVCAL})
-    add_test("cal-read-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/cal-read${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/vcal/${TESTVCAL}"
-        "${Gammu_SOURCE_DIR}/tests/vcal/${TESTBACKUP}")
-endforeach(TESTVCAL $VCALS)
+    foreach(TESTVCAL ${VCALS})
+        string(REPLACE vcs backup TESTBACKUP ${TESTVCAL})
+        string(REPLACE .vcs "" TESTNAME ${TESTVCAL})
+        add_test("cal-read-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/cal-read${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/vcal/${TESTVCAL}"
+            "${Gammu_SOURCE_DIR}/tests/vcal/${TESTBACKUP}")
+    endforeach(TESTVCAL $VCALS)
 
-# List test cases
-file(GLOB VCALS
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcal"
-    "${Gammu_SOURCE_DIR}/tests/vcal/*.ics")
-list(SORT VCALS)
+    # List test cases
+    file(GLOB VCALS
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/vcal"
+        "${Gammu_SOURCE_DIR}/tests/vcal/*.ics")
+    list(SORT VCALS)
 
-foreach(TESTVCAL ${VCALS})
-    string(REPLACE ics backup TESTBACKUP ${TESTVCAL})
-    string(REPLACE .ics "" TESTNAME ${TESTVCAL})
-    add_test("cal-read-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/cal-read${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/vcal/${TESTVCAL}"
-        "${Gammu_SOURCE_DIR}/tests/vcal/${TESTBACKUP}")
-endforeach(TESTVCAL $VCALS)
+    foreach(TESTVCAL ${VCALS})
+        string(REPLACE ics backup TESTBACKUP ${TESTVCAL})
+        string(REPLACE .ics "" TESTNAME ${TESTVCAL})
+        add_test("cal-read-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/cal-read${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/vcal/${TESTVCAL}"
+            "${Gammu_SOURCE_DIR}/tests/vcal/${TESTBACKUP}")
+    endforeach(TESTVCAL $VCALS)
+endif (WITH_BACKUP)
 
 # SMS parsing
-add_executable(sms-nokia-01 sms-nokia-01.c)
-target_link_libraries(sms-nokia-01 libGammu)
-target_link_libraries(sms-nokia-01 messagedisplay)
-add_test(sms-nokia-01 "${GAMMU_TEST_PATH}/sms-nokia-01${GAMMU_TEST_SUFFIX}")
+if (NOKIA6110)
+    add_executable(sms-nokia-01 sms-nokia-01.c)
+    target_link_libraries(sms-nokia-01 libGammu)
+    target_link_libraries(sms-nokia-01 messagedisplay)
+    add_test(sms-nokia-01 "${GAMMU_TEST_PATH}/sms-nokia-01${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6110)
 
-add_executable(sms-nokia-02 sms-nokia-02.c)
-target_link_libraries(sms-nokia-02 libGammu)
-target_link_libraries(sms-nokia-02 messagedisplay)
-add_test(sms-nokia-02 "${GAMMU_TEST_PATH}/sms-nokia-02${GAMMU_TEST_SUFFIX}")
+if (NOKIA6510)
+    add_executable(sms-nokia-02 sms-nokia-02.c)
+    target_link_libraries(sms-nokia-02 libGammu)
+    target_link_libraries(sms-nokia-02 messagedisplay)
+    add_test(sms-nokia-02 "${GAMMU_TEST_PATH}/sms-nokia-02${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6510)
 
-add_executable(sms-nokia-03 sms-nokia-03.c)
-target_link_libraries(sms-nokia-03 libGammu)
-target_link_libraries(sms-nokia-03 messagedisplay)
-add_test(sms-nokia-03 "${GAMMU_TEST_PATH}/sms-nokia-03${GAMMU_TEST_SUFFIX}")
+if (NOKIA6510)
+    add_executable(sms-nokia-03 sms-nokia-03.c)
+    target_link_libraries(sms-nokia-03 libGammu)
+    target_link_libraries(sms-nokia-03 messagedisplay)
+    add_test(sms-nokia-03 "${GAMMU_TEST_PATH}/sms-nokia-03${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6510)
 
-add_executable(sms-nokia-04 sms-nokia-04.c)
-target_link_libraries(sms-nokia-04 libGammu)
-target_link_libraries(sms-nokia-04 messagedisplay)
-add_test(sms-nokia-04 "${GAMMU_TEST_PATH}/sms-nokia-04${GAMMU_TEST_SUFFIX}")
+if (NOKIA6510)
+    add_executable(sms-nokia-04 sms-nokia-04.c)
+    target_link_libraries(sms-nokia-04 libGammu)
+    target_link_libraries(sms-nokia-04 messagedisplay)
+    add_test(sms-nokia-04 "${GAMMU_TEST_PATH}/sms-nokia-04${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6510)
 
-add_executable(sms-nokia-05 sms-nokia-05.c)
-target_link_libraries(sms-nokia-05 libGammu)
-target_link_libraries(sms-nokia-05 messagedisplay)
-add_test(sms-nokia-05 "${GAMMU_TEST_PATH}/sms-nokia-05${GAMMU_TEST_SUFFIX}")
+if (NOKIA6510)
+    add_executable(sms-nokia-05 sms-nokia-05.c)
+    target_link_libraries(sms-nokia-05 libGammu)
+    target_link_libraries(sms-nokia-05 messagedisplay)
+    add_test(sms-nokia-05 "${GAMMU_TEST_PATH}/sms-nokia-05${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6510)
 
-add_executable(sms-nokia-06 sms-nokia-06.c)
-target_link_libraries(sms-nokia-06 libGammu)
-target_link_libraries(sms-nokia-06 messagedisplay)
-add_test(sms-nokia-06 "${GAMMU_TEST_PATH}/sms-nokia-06${GAMMU_TEST_SUFFIX}")
+if (NOKIA6510)
+    add_executable(sms-nokia-06 sms-nokia-06.c)
+    target_link_libraries(sms-nokia-06 libGammu)
+    target_link_libraries(sms-nokia-06 messagedisplay)
+    add_test(sms-nokia-06 "${GAMMU_TEST_PATH}/sms-nokia-06${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6510)
 
-add_executable(sms-nokia-07 sms-nokia-07.c)
-target_link_libraries(sms-nokia-07 libGammu)
-add_test(sms-nokia-07 "${GAMMU_TEST_PATH}/sms-nokia-07${GAMMU_TEST_SUFFIX}")
+if (NOKIA6510)
+    add_executable(sms-nokia-07 sms-nokia-07.c)
+    target_link_libraries(sms-nokia-07 libGammu)
+    add_test(sms-nokia-07 "${GAMMU_TEST_PATH}/sms-nokia-07${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6510)
 
-add_executable(sms-nokia-08 sms-nokia-08.c)
-target_link_libraries(sms-nokia-08 libGammu)
-target_link_libraries(sms-nokia-08 messagedisplay)
-add_test(sms-nokia-08 "${GAMMU_TEST_PATH}/sms-nokia-08${GAMMU_TEST_SUFFIX}")
+if (NOKIA6510)
+    add_executable(sms-nokia-08 sms-nokia-08.c)
+    target_link_libraries(sms-nokia-08 libGammu)
+    target_link_libraries(sms-nokia-08 messagedisplay)
+    add_test(sms-nokia-08 "${GAMMU_TEST_PATH}/sms-nokia-08${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6510)
 
-add_executable(sms-nokia-09 sms-nokia-09.c)
-target_link_libraries(sms-nokia-09 libGammu)
-target_link_libraries(sms-nokia-09 messagedisplay)
-add_test(sms-nokia-09 "${GAMMU_TEST_PATH}/sms-nokia-09${GAMMU_TEST_SUFFIX}")
+if (NOKIA6510)
+    add_executable(sms-nokia-09 sms-nokia-09.c)
+    target_link_libraries(sms-nokia-09 libGammu)
+    target_link_libraries(sms-nokia-09 messagedisplay)
+    add_test(sms-nokia-09 "${GAMMU_TEST_PATH}/sms-nokia-09${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6510)
 
-add_executable(sms-nokia-10 sms-nokia-10.c)
-target_link_libraries(sms-nokia-10 libGammu)
-target_link_libraries(sms-nokia-10 messagedisplay)
-add_test(sms-nokia-10 "${GAMMU_TEST_PATH}/sms-nokia-10${GAMMU_TEST_SUFFIX}")
+if (NOKIA6510)
+    add_executable(sms-nokia-10 sms-nokia-10.c)
+    target_link_libraries(sms-nokia-10 libGammu)
+    target_link_libraries(sms-nokia-10 messagedisplay)
+    add_test(sms-nokia-10 "${GAMMU_TEST_PATH}/sms-nokia-10${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6510)
 
-add_executable(sms-nokia-11 sms-nokia-11.c)
-target_link_libraries(sms-nokia-11 libGammu)
-target_link_libraries(sms-nokia-11 messagedisplay)
-add_test(sms-nokia-11 "${GAMMU_TEST_PATH}/sms-nokia-11${GAMMU_TEST_SUFFIX}")
+if (NOKIA6510)
+    add_executable(sms-nokia-11 sms-nokia-11.c)
+    target_link_libraries(sms-nokia-11 libGammu)
+    target_link_libraries(sms-nokia-11 messagedisplay)
+    add_test(sms-nokia-11 "${GAMMU_TEST_PATH}/sms-nokia-11${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6510)
 
-add_executable(sms-nokia-12 sms-nokia-12.c)
-target_link_libraries(sms-nokia-12 libGammu)
-target_link_libraries(sms-nokia-12 messagedisplay)
-add_test(sms-nokia-12 "${GAMMU_TEST_PATH}/sms-nokia-12${GAMMU_TEST_SUFFIX}")
+if (NOKIA6510)
+    add_executable(sms-nokia-12 sms-nokia-12.c)
+    target_link_libraries(sms-nokia-12 libGammu)
+    target_link_libraries(sms-nokia-12 messagedisplay)
+    add_test(sms-nokia-12 "${GAMMU_TEST_PATH}/sms-nokia-12${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6510)
 
-add_executable(sms-nokia-13 sms-nokia-13.c)
-target_link_libraries(sms-nokia-13 libGammu)
-target_link_libraries(sms-nokia-13 messagedisplay)
-add_test(sms-nokia-13 "${GAMMU_TEST_PATH}/sms-nokia-13${GAMMU_TEST_SUFFIX}")
+if (NOKIA6510)
+    add_executable(sms-nokia-13 sms-nokia-13.c)
+    target_link_libraries(sms-nokia-13 libGammu)
+    target_link_libraries(sms-nokia-13 messagedisplay)
+    add_test(sms-nokia-13 "${GAMMU_TEST_PATH}/sms-nokia-13${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6510)
 
+if (NOKIA6110)
 # Nokia ringtone
-add_executable(nokia-6110-ringtone nokia-6110-ringtone.c)
-target_link_libraries(nokia-6110-ringtone libGammu)
-add_test(nokia-6110-ringtone "${GAMMU_TEST_PATH}/nokia-6110-ringtone${GAMMU_TEST_SUFFIX}")
+    add_executable(nokia-6110-ringtone nokia-6110-ringtone.c)
+    target_link_libraries(nokia-6110-ringtone libGammu)
+    add_test(nokia-6110-ringtone "${GAMMU_TEST_PATH}/nokia-6110-ringtone${GAMMU_TEST_SUFFIX}")
+endif (NOKIA6110)
 
-# AT SMS parsing
-add_executable(sms-at-parse sms-at-parse.c)
-target_link_libraries(sms-at-parse libGammu)
-target_link_libraries(sms-at-parse messagedisplay)
+if (WITH_ATGEN)
+    # AT SMS parsing
+    add_executable(sms-at-parse sms-at-parse.c)
+    target_link_libraries(sms-at-parse libGammu)
+    target_link_libraries(sms-at-parse messagedisplay)
 
-# AT SMS parsing - simple PDU decoder
-add_executable(pdu-decode pdu-decode.c)
+    # AT SMS parsing - simple PDU decoder
+    add_executable(pdu-decode pdu-decode.c)
 
-# List test cases for success
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms"
-    "${Gammu_SOURCE_DIR}/tests/at-sms/*.dump")
-list(SORT MESSAGES)
+    # List test cases for success
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms"
+        "${Gammu_SOURCE_DIR}/tests/at-sms/*.dump")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-    add_test("sms-at-parse-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
-    add_test("pdu-decode-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/pdu-decode${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("sms-at-parse-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
+        add_test("pdu-decode-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/pdu-decode${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
+    endforeach(TESTMESSAGE $MESSAGES)
 
-# List test cases for TXT mode
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-txt"
-    "${Gammu_SOURCE_DIR}/tests/at-sms-txt/*.dump")
-list(SORT MESSAGES)
+    # List test cases for TXT mode
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-txt"
+        "${Gammu_SOURCE_DIR}/tests/at-sms-txt/*.dump")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-    add_test("sms-at-parse-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-sms-txt/${TESTMESSAGE}"
-        "TXT")
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("sms-at-parse-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-sms-txt/${TESTMESSAGE}"
+            "TXT")
+    endforeach(TESTMESSAGE $MESSAGES)
 
-# List test cases for failure
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-failing"
-    "${Gammu_SOURCE_DIR}/tests/at-sms-failing/*.dump")
-list(SORT MESSAGES)
+    # List test cases for failure
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-failing"
+        "${Gammu_SOURCE_DIR}/tests/at-sms-failing/*.dump")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-    add_test("sms-at-parse-fail-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-sms-failing/${TESTMESSAGE}")
-    add_test("pdu-decode-fail-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/pdu-decode${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-sms-failing/${TESTMESSAGE}")
-    set_tests_properties(
-        "pdu-decode-fail-${TESTNAME}"
-        "sms-at-parse-fail-${TESTNAME}"
-        PROPERTIES WILL_FAIL TRUE)
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("sms-at-parse-fail-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-sms-failing/${TESTMESSAGE}")
+        add_test("pdu-decode-fail-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/pdu-decode${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-sms-failing/${TESTMESSAGE}")
+        set_tests_properties(
+            "pdu-decode-fail-${TESTNAME}"
+            "sms-at-parse-fail-${TESTNAME}"
+            PROPERTIES WILL_FAIL TRUE)
+    endforeach(TESTMESSAGE $MESSAGES)
 
-# List test cases
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms"
-    "${Gammu_SOURCE_DIR}/tests/at-sms/*.dump")
-list(SORT MESSAGES)
+    # List test cases
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms"
+        "${Gammu_SOURCE_DIR}/tests/at-sms/*.dump")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+    endforeach(TESTMESSAGE $MESSAGES)
 
-# AT model parsing
-add_executable(get-model-at get-model-at.c)
-target_link_libraries(get-model-at libGammu)
+    # AT model parsing
+    add_executable(get-model-at get-model-at.c)
+    target_link_libraries(get-model-at libGammu)
 
-# List test cases
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-model"
-    "${Gammu_SOURCE_DIR}/tests/at-model/*.dump")
-list(SORT MESSAGES)
+    # List test cases
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-model"
+        "${Gammu_SOURCE_DIR}/tests/at-model/*.dump")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-    add_test("get-model-at-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/get-model-at${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-model/${TESTMESSAGE}")
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("get-model-at-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/get-model-at${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-model/${TESTMESSAGE}")
+    endforeach(TESTMESSAGE $MESSAGES)
 
-# Samsung memory parsing
-add_executable(samsung-get-memory samsung-get-memory.c)
-target_link_libraries(samsung-get-memory libGammu)
-target_link_libraries(samsung-get-memory memorydisplay)
+    # Samsung memory parsing
+    add_executable(samsung-get-memory samsung-get-memory.c)
+    target_link_libraries(samsung-get-memory libGammu)
+    target_link_libraries(samsung-get-memory memorydisplay)
 
-# List test cases
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/samsung-memory"
-    "${Gammu_SOURCE_DIR}/tests/samsung-memory/*.dump")
-list(SORT MESSAGES)
+    # List test cases
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/samsung-memory"
+        "${Gammu_SOURCE_DIR}/tests/samsung-memory/*.dump")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-    add_test("samsung-get-memory-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/samsung-get-memory${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/samsung-memory/${TESTMESSAGE}")
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("samsung-get-memory-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/samsung-get-memory${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/samsung-memory/${TESTMESSAGE}")
+    endforeach(TESTMESSAGE $MESSAGES)
 
-# AT getting of available phone memories
-add_executable(at-get-smsmemories at-get-smsmemories.c)
-target_link_libraries(at-get-smsmemories libGammu)
+    # AT getting of available phone memories
+    add_executable(at-get-smsmemories at-get-smsmemories.c)
+    target_link_libraries(at-get-smsmemories libGammu)
 
-# List test cases for all memories
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-cpms"
-    "${Gammu_SOURCE_DIR}/tests/at-cpms/*.dump")
-list(SORT MESSAGES)
+    # List test cases for all memories
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-cpms"
+        "${Gammu_SOURCE_DIR}/tests/at-cpms/*.dump")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-    add_test("at-get-smsmemories-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/at-get-smsmemories${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-cpms/${TESTMESSAGE}")
-    set_tests_properties("at-get-smsmemories-${TESTNAME}" PROPERTIES
-        PASS_REGULAR_EXPRESSION "read: ME : ok, SM : ok, save: ME : ok, SM = ok")
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("at-get-smsmemories-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/at-get-smsmemories${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-cpms/${TESTMESSAGE}")
+        set_tests_properties("at-get-smsmemories-${TESTNAME}" PROPERTIES
+            PASS_REGULAR_EXPRESSION "read: ME : ok, SM : ok, save: ME : ok, SM = ok")
+    endforeach(TESTMESSAGE $MESSAGES)
 
-# List test cases for just SM
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-cpms-sm"
-    "${Gammu_SOURCE_DIR}/tests/at-cpms-sm/*.dump")
-list(SORT MESSAGES)
+    # List test cases for just SM
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-cpms-sm"
+        "${Gammu_SOURCE_DIR}/tests/at-cpms-sm/*.dump")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-    add_test("at-get-smsmemories-sm-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/at-get-smsmemories${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-cpms-sm/${TESTMESSAGE}")
-    set_tests_properties("at-get-smsmemories-sm-${TESTNAME}" PROPERTIES
-        PASS_REGULAR_EXPRESSION "read: ME : N/A, SM : ok, save: ME : N/A, SM = ok")
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("at-get-smsmemories-sm-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/at-get-smsmemories${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-cpms-sm/${TESTMESSAGE}")
+        set_tests_properties("at-get-smsmemories-sm-${TESTNAME}" PROPERTIES
+            PASS_REGULAR_EXPRESSION "read: ME : N/A, SM : ok, save: ME : N/A, SM = ok")
+    endforeach(TESTMESSAGE $MESSAGES)
 
-# AT CNMI parsing
-add_executable(at-cnmi-reply at-cnmi-reply.c)
-target_link_libraries(at-cnmi-reply libGammu)
+    # AT CNMI parsing
+    add_executable(at-cnmi-reply at-cnmi-reply.c)
+    target_link_libraries(at-cnmi-reply libGammu)
 
-# List test cases
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-cnmi"
-    "${Gammu_SOURCE_DIR}/tests/at-cnmi/*.dump")
-list(SORT MESSAGES)
+    # List test cases
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-cnmi"
+        "${Gammu_SOURCE_DIR}/tests/at-cnmi/*.dump")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-    add_test("at-cnmi-reply-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/at-cnmi-reply${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-cnmi/${TESTMESSAGE}")
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("at-cnmi-reply-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/at-cnmi-reply${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-cnmi/${TESTMESSAGE}")
+    endforeach(TESTMESSAGE $MESSAGES)
 
-# AT memory parsing
-add_executable(at-getmemory-reply at-getmemory-reply.c)
-target_link_libraries(at-getmemory-reply libGammu)
-target_link_libraries(at-getmemory-reply memorydisplay)
+    # AT memory parsing
+    add_executable(at-getmemory-reply at-getmemory-reply.c)
+    target_link_libraries(at-getmemory-reply libGammu)
+    target_link_libraries(at-getmemory-reply memorydisplay)
 
-macro(at_getmemory_reply_test _file _charset _test)
+    macro(at_getmemory_reply_test _file _charset _test)
 
-add_test("at-getmemory-reply-${_file}"
-        "${GAMMU_TEST_PATH}/at-getmemory-reply${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-getmemory/${_file}.dump"
-        "${_charset}")
-set_tests_properties("at-getmemory-reply-${_file}"
-    PROPERTIES PASS_REGULAR_EXPRESSION "${_test}")
+    add_test("at-getmemory-reply-${_file}"
+            "${GAMMU_TEST_PATH}/at-getmemory-reply${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-getmemory/${_file}.dump"
+            "${_charset}")
+    set_tests_properties("at-getmemory-reply-${_file}"
+        PROPERTIES PASS_REGULAR_EXPRESSION "${_test}")
 
-endmacro(at_getmemory_reply_test _file _charset _test)
+    endmacro(at_getmemory_reply_test _file _charset _test)
 
-at_getmemory_reply_test(samsung PCCP437 AsistZahr)
-at_getmemory_reply_test(samsung-p900 PCCP437 "My Tempo")
-at_getmemory_reply_test(with-time UTF8 "Mama GSM")
-at_getmemory_reply_test(with-date-time UTF8 "60122256476")
-at_getmemory_reply_test(ucs2 UCS2 "Stanley Paul")
-at_getmemory_reply_test(ucs2-motorola UCS2 "Virchow Klinikum St. 31")
+    at_getmemory_reply_test(samsung PCCP437 AsistZahr)
+    at_getmemory_reply_test(samsung-p900 PCCP437 "My Tempo")
+    at_getmemory_reply_test(with-time UTF8 "Mama GSM")
+    at_getmemory_reply_test(with-date-time UTF8 "60122256476")
+    at_getmemory_reply_test(ucs2 UCS2 "Stanley Paul")
+    at_getmemory_reply_test(ucs2-motorola UCS2 "Virchow Klinikum St. 31")
 
-# AT USSD replies parsing
-add_executable(at-ussd-reply at-ussd-reply.c)
-target_link_libraries(at-ussd-reply libGammu)
+    # AT USSD replies parsing
+    add_executable(at-ussd-reply at-ussd-reply.c)
+    target_link_libraries(at-ussd-reply libGammu)
 
-# List test cases
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-ussd"
-    "${Gammu_SOURCE_DIR}/tests/at-ussd/*.dump")
-list(SORT MESSAGES)
+    # List test cases
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-ussd"
+        "${Gammu_SOURCE_DIR}/tests/at-ussd/*.dump")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-    string(REGEX REPLACE ".*-(.*)\\.dump" "\\1" PHONE_MODEL ${TESTMESSAGE})
-    add_test("at-ussd-reply-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/at-ussd-reply${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-ussd/${TESTMESSAGE}" "${PHONE_MODEL}")
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        string(REGEX REPLACE ".*-(.*)\\.dump" "\\1" PHONE_MODEL ${TESTMESSAGE})
+        add_test("at-ussd-reply-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/at-ussd-reply${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-ussd/${TESTMESSAGE}" "${PHONE_MODEL}")
+    endforeach(TESTMESSAGE $MESSAGES)
 
-# AT SMSC parsing
-add_executable(get-smsc-at get-smsc-at.c)
-target_link_libraries(get-smsc-at libGammu)
+    # AT SMSC parsing
+    add_executable(get-smsc-at get-smsc-at.c)
+    target_link_libraries(get-smsc-at libGammu)
 
-# List test cases
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-smsc"
-    "${Gammu_SOURCE_DIR}/tests/at-smsc/*.dump")
-list(SORT MESSAGES)
+    # List test cases
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-smsc"
+        "${Gammu_SOURCE_DIR}/tests/at-smsc/*.dump")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-    add_test("get-smsc-at-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/get-smsc-at${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-smsc/${TESTMESSAGE}")
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("get-smsc-at-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/get-smsc-at${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-smsc/${TESTMESSAGE}")
+    endforeach(TESTMESSAGE $MESSAGES)
 
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-smsc-failing"
-    "${Gammu_SOURCE_DIR}/tests/at-smsc-failing/*.dump")
-list(SORT MESSAGES)
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-smsc-failing"
+        "${Gammu_SOURCE_DIR}/tests/at-smsc-failing/*.dump")
+    list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-    add_test("get-smsc-at-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/get-smsc-at${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-smsc-failing/${TESTMESSAGE}")
-    set_tests_properties(
-        "get-smsc-at-${TESTNAME}"
-        PROPERTIES WILL_FAIL TRUE)
-endforeach(TESTMESSAGE $MESSAGES)
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("get-smsc-at-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/get-smsc-at${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-smsc-failing/${TESTMESSAGE}")
+        set_tests_properties(
+            "get-smsc-at-${TESTNAME}"
+            PROPERTIES WILL_FAIL TRUE)
+    endforeach(TESTMESSAGE $MESSAGES)
 
-# AT SMS encoding
-add_executable(sms-at-encode sms-at-encode.c)
-target_link_libraries(sms-at-encode libGammu)
+    if (WITH_BACKUP)
+        # AT SMS encoding
+        add_executable(sms-at-encode sms-at-encode.c)
+        target_link_libraries(sms-at-encode libGammu)
 
-# List test cases
-file(GLOB MESSAGES
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-encode"
-    "${Gammu_SOURCE_DIR}/tests/at-sms-encode/*.backup")
-list(SORT MESSAGES)
+        # List test cases
+        file(GLOB MESSAGES
+            RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-encode"
+            "${Gammu_SOURCE_DIR}/tests/at-sms-encode/*.backup")
+        list(SORT MESSAGES)
 
-foreach(TESTMESSAGE ${MESSAGES})
-    string(REPLACE .backup "" TESTNAME ${TESTMESSAGE})
-    string(REPLACE backup dump TESTDUMP ${TESTMESSAGE})
-    add_test("sms-at-encode-${TESTNAME}"
-        "${GAMMU_TEST_PATH}/sms-at-encode${GAMMU_TEST_SUFFIX}"
-        "${Gammu_SOURCE_DIR}/tests/at-sms-encode/${TESTMESSAGE}"
-        "${Gammu_SOURCE_DIR}/tests/at-sms-encode/${TESTDUMP}")
-endforeach(TESTMESSAGE $MESSAGES)
+        foreach(TESTMESSAGE ${MESSAGES})
+            string(REPLACE .backup "" TESTNAME ${TESTMESSAGE})
+            string(REPLACE backup dump TESTDUMP ${TESTMESSAGE})
+            add_test("sms-at-encode-${TESTNAME}"
+                "${GAMMU_TEST_PATH}/sms-at-encode${GAMMU_TEST_SUFFIX}"
+                "${Gammu_SOURCE_DIR}/tests/at-sms-encode/${TESTMESSAGE}"
+                "${Gammu_SOURCE_DIR}/tests/at-sms-encode/${TESTDUMP}")
+        endforeach(TESTMESSAGE $MESSAGES)
+    endif (WITH_BACKUP)
+endif (WITH_ATGEN)
 
 # SMS encoding
 add_executable(sms-encode-decode sms-encode-decode.c)
@@ -655,25 +692,27 @@ add_test(sms-cmdline-MMSSETTINGS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUF
 set_tests_properties(sms-cmdline-MMSSETTINGS PROPERTIES
     PASS_REGULAR_EXPRESSION "User Data Header     : Nokia WAP bookmark or WAP/MMS settings, ID \\(8 bit\\) [0-9]*, 2 parts")
 
-# Samsung parser tests
-add_executable(at-samsung at-samsung.c)
-target_link_libraries(at-samsung libGammu)
-add_test(at-samsung "${GAMMU_TEST_PATH}/at-samsung${GAMMU_TEST_SUFFIX}")
+if (WITH_ATGEN)
+    # Samsung parser tests
+    add_executable(at-samsung at-samsung.c)
+    target_link_libraries(at-samsung libGammu)
+    add_test(at-samsung "${GAMMU_TEST_PATH}/at-samsung${GAMMU_TEST_SUFFIX}")
 
-# Motorola parser tests
-add_executable(at-motorola at-motorola.c)
-target_link_libraries(at-motorola libGammu)
-add_test(at-motorola "${GAMMU_TEST_PATH}/at-motorola${GAMMU_TEST_SUFFIX}")
+    # Motorola parser tests
+    add_executable(at-motorola at-motorola.c)
+    target_link_libraries(at-motorola libGammu)
+    add_test(at-motorola "${GAMMU_TEST_PATH}/at-motorola${GAMMU_TEST_SUFFIX}")
 
-# AT parser tests
-add_executable(at-parser at-parser.c)
-target_link_libraries(at-parser libGammu)
-add_test(at-parser "${GAMMU_TEST_PATH}/at-parser${GAMMU_TEST_SUFFIX}")
+    # AT parser tests
+    add_executable(at-parser at-parser.c)
+    target_link_libraries(at-parser libGammu)
+    add_test(at-parser "${GAMMU_TEST_PATH}/at-parser${GAMMU_TEST_SUFFIX}")
 
-# AT text encoding/decoding
-add_executable(at-charset at-charset.c)
-target_link_libraries(at-charset libGammu)
-add_test(at-charset "${GAMMU_TEST_PATH}/at-charset${GAMMU_TEST_SUFFIX}")
+    # AT text encoding/decoding
+    add_executable(at-charset at-charset.c)
+    target_link_libraries(at-charset libGammu)
+    add_test(at-charset "${GAMMU_TEST_PATH}/at-charset${GAMMU_TEST_SUFFIX}")
+endif (WITH_ATGEN)
 
 # Line parser tests
 add_executable(line-splitting line-splitting.c)
@@ -695,19 +734,21 @@ foreach(TESTCONFIG ${CONFIGS})
 endforeach(TESTCONFIG $CONFIGS)
 
 
-# Just try to compile example whether it is still correct
-add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.c")
-target_link_libraries(phone-info libGammu)
-add_test(phone-info "${GAMMU_TEST_PATH}/phone-info${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
-add_executable(sms-send "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-send.c")
-target_link_libraries(sms-send libGammu)
-add_test(sms-send "${GAMMU_TEST_PATH}/sms-send${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
-add_executable(sms-read "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-read.c")
-target_link_libraries(sms-read libGammu)
-add_test(sms-read "${GAMMU_TEST_PATH}/sms-read${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
-add_executable(smsd "${Gammu_SOURCE_DIR}/docs/develop/examples/smsd.c")
-target_link_libraries(smsd libGammu)
-target_link_libraries(smsd gsmsd)
+# Examples
+if (WITH_BACKUP)
+    add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.c")
+    target_link_libraries(phone-info libGammu)
+    add_test(phone-info "${GAMMU_TEST_PATH}/phone-info${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
+    add_executable(sms-send "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-send.c")
+    target_link_libraries(sms-send libGammu)
+    add_test(sms-send "${GAMMU_TEST_PATH}/sms-send${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
+    add_executable(sms-read "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-read.c")
+    target_link_libraries(sms-read libGammu)
+    add_test(sms-read "${GAMMU_TEST_PATH}/sms-read${GAMMU_TEST_SUFFIX}" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
+    add_executable(smsd "${Gammu_SOURCE_DIR}/docs/develop/examples/smsd.c")
+    target_link_libraries(smsd libGammu)
+    target_link_libraries(smsd gsmsd)
+endif (WITH_BACKUP)
 
 
 # Auto generated include tests begin

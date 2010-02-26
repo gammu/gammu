@@ -2,79 +2,81 @@
 # Copyright (c) 2007 - 2010 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4 ft=cmake:
 
-set(PSQL_HOST 127.0.0.1 CACHE STRING "Host to use for PostgreSQL tests")
-set(PSQL_DATABASE smsd CACHE STRING "Database to use for PostgreSQL tests")
-set(PSQL_USER smsd CACHE STRING "User to use for PostgreSQL tests")
-set(PSQL_PASSWORD smsd CACHE STRING "Password to use for PostgreSQL tests")
+if (WITH_BACKUP)
+    set(PSQL_HOST 127.0.0.1 CACHE STRING "Host to use for PostgreSQL tests")
+    set(PSQL_DATABASE smsd CACHE STRING "Database to use for PostgreSQL tests")
+    set(PSQL_USER smsd CACHE STRING "User to use for PostgreSQL tests")
+    set(PSQL_PASSWORD smsd CACHE STRING "Password to use for PostgreSQL tests")
 
-set(MYSQL_HOST 127.0.0.1 CACHE STRING "Host to use for MySQL tests")
-set(MYSQL_DATABASE smsd CACHE STRING "Database to use for MySQL tests")
-set(MYSQL_USER smsd CACHE STRING "User to use for MySQL tests")
-set(MYSQL_PASSWORD smsd CACHE STRING "Password to use for MySQL tests")
+    set(MYSQL_HOST 127.0.0.1 CACHE STRING "Host to use for MySQL tests")
+    set(MYSQL_DATABASE smsd CACHE STRING "Database to use for MySQL tests")
+    set(MYSQL_USER smsd CACHE STRING "User to use for MySQL tests")
+    set(MYSQL_PASSWORD smsd CACHE STRING "Password to use for MySQL tests")
 
-configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" ESCAPE_QUOTES)
-configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd-files-include.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files-include.sh" ESCAPE_QUOTES)
+    configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" ESCAPE_QUOTES)
+    configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd-files-include.sh" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files-include.sh" ESCAPE_QUOTES)
 
-macro(smsd_testsuite _driver)
-    # This test tests some functionality and setups environment
-    add_test("smsd-${_driver}" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" "${_driver}")
-    set_tests_properties("smsd-${_driver}" PROPERTIES
-        FAIL_REGULAR_EXPRESSION "ERROR: ;DBI error ([^5]:|[0-9][^:]);Wrong;Process finished successfully;Process failed with exit status [^4]"
-        )
+    macro(smsd_testsuite _driver)
+        # This test tests some functionality and setups environment
+        add_test("smsd-${_driver}" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd.sh" "${_driver}")
+        set_tests_properties("smsd-${_driver}" PROPERTIES
+            FAIL_REGULAR_EXPRESSION "ERROR: ;DBI error ([^5]:|[0-9][^:]);Wrong;Process finished successfully;Process failed with exit status [^4]"
+            )
 
-    add_test("smsd-inject-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" TEXT 123465 -text "Lorem ipsum.")
-    set_tests_properties("smsd-inject-${_driver}" PROPERTIES
-        FAIL_REGULAR_EXPRESSION "DBI error;SQL failed"
-        )
-    add_test("smsd-inject-long-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" EMS 123465 -text "Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbezy ucixh mqudemiywty nzihriduwlo yxylyujvghpv. Tiekoohunl dloijoda qelejocewu bfe bxuahadempivog. Ev mfegijox vleinley ewig qihopqu fafozmuvipc ernogtipeq acuoclzyv m poujhyerbjpipc vyq. Xty ljietenea ypep ti dik ela jozmyihipup xopujoqyjaw jojyuhietry mexykpih ysec yum zyhniet dezjiyup nuyryfsohnir Zeyoekemdoj tayqgh. Xvujuxy gysun dahyfecpetk uziyecz jogovxi fbypexsotn exymnomeatd ayiostiyvoxfy iqilo redvejf gfeypavlvaqu vfyjonytbug rgyxn siuybmulijub bxu xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.")
-    set_tests_properties("smsd-inject-long-${_driver}" PROPERTIES
-        FAIL_REGULAR_EXPRESSION "DBI error"
-        )
-    if (HAVE_ALARM)
-        add_test("smsd-daemon-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10)
-        set_tests_properties("smsd-daemon-${_driver}" PROPERTIES
+        add_test("smsd-inject-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" TEXT 123465 -text "Lorem ipsum.")
+        set_tests_properties("smsd-inject-${_driver}" PROPERTIES
             FAIL_REGULAR_EXPRESSION "DBI error;SQL failed"
             )
-    endif (HAVE_ALARM)
-endmacro(smsd_testsuite _driver)
+        add_test("smsd-inject-long-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" EMS 123465 -text "Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbezy ucixh mqudemiywty nzihriduwlo yxylyujvghpv. Tiekoohunl dloijoda qelejocewu bfe bxuahadempivog. Ev mfegijox vleinley ewig qihopqu fafozmuvipc ernogtipeq acuoclzyv m poujhyerbjpipc vyq. Xty ljietenea ypep ti dik ela jozmyihipup xopujoqyjaw jojyuhietry mexykpih ysec yum zyhniet dezjiyup nuyryfsohnir Zeyoekemdoj tayqgh. Xvujuxy gysun dahyfecpetk uziyecz jogovxi fbypexsotn exymnomeatd ayiostiyvoxfy iqilo redvejf gfeypavlvaqu vfyjonytbug rgyxn siuybmulijub bxu xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.")
+        set_tests_properties("smsd-inject-long-${_driver}" PROPERTIES
+            FAIL_REGULAR_EXPRESSION "DBI error"
+            )
+        if (HAVE_ALARM)
+            add_test("smsd-daemon-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10)
+            set_tests_properties("smsd-daemon-${_driver}" PROPERTIES
+                FAIL_REGULAR_EXPRESSION "DBI error;SQL failed"
+                )
+        endif (HAVE_ALARM)
+    endmacro(smsd_testsuite _driver)
 
-if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
-    smsd_testsuite("dbi-sqlite3")
-endif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
+    if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
+        smsd_testsuite("dbi-sqlite3")
+    endif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
 
-smsd_testsuite("files-unicode")
-smsd_testsuite("files-standard")
-smsd_testsuite("files-detail")
-smsd_testsuite("null")
+    smsd_testsuite("files-unicode")
+    smsd_testsuite("files-standard")
+    smsd_testsuite("files-detail")
+    smsd_testsuite("null")
 
-if (MYSQL_TESTING)
-    smsd_testsuite("mysql")
-    if (LIBDBI_FOUND)
-        smsd_testsuite("dbi-mysql")
-    endif (LIBDBI_FOUND)
-endif (MYSQL_TESTING)
+    if (MYSQL_TESTING)
+        smsd_testsuite("mysql")
+        if (LIBDBI_FOUND)
+            smsd_testsuite("dbi-mysql")
+        endif (LIBDBI_FOUND)
+    endif (MYSQL_TESTING)
 
-if (PSQL_TESTING)
-    smsd_testsuite("pgsql")
-    if (LIBDBI_FOUND)
-        smsd_testsuite("dbi-pgsql")
-    endif (LIBDBI_FOUND)
-endif (PSQL_TESTING)
+    if (PSQL_TESTING)
+        smsd_testsuite("pgsql")
+        if (LIBDBI_FOUND)
+            smsd_testsuite("dbi-pgsql")
+        endif (LIBDBI_FOUND)
+    endif (PSQL_TESTING)
 
-add_test("smsd-files-include-unicode" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files-include.sh" unicode)
-set_tests_properties("smsd-files-include-unicode" PROPERTIES
-    PASS_REGULAR_EXPRESSION ".999999999999999.4.3.0.100.42"
-    FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
-    )
-
-foreach (PROGRAM gammu-smsd gammu-smsd-monitor gammu-smsd-inject)
-    add_test(${PROGRAM}-help "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --help)
-    add_test(${PROGRAM}-version "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --version)
-    set_tests_properties(${PROGRAM}-version PROPERTIES
-        PASS_REGULAR_EXPRESSION "${VERSION}"
+    add_test("smsd-files-include-unicode" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/run-test-smsd-files-include.sh" unicode)
+    set_tests_properties("smsd-files-include-unicode" PROPERTIES
+        PASS_REGULAR_EXPRESSION ".999999999999999.4.3.0.100.42"
+        FAIL_REGULAR_EXPRESSION "ERROR: ;Wrong;Process failed with exit status"
         )
-    add_test(${PROGRAM}-fail "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --nonsense)
-    set_tests_properties(
-        ${PROGRAM}-fail
-        PROPERTIES WILL_FAIL TRUE)
-endforeach (PROGRAM gammu-smsd gammu-smsd-monitor gammu-smsd-inject)
+
+    foreach (PROGRAM gammu-smsd gammu-smsd-monitor gammu-smsd-inject)
+        add_test(${PROGRAM}-help "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --help)
+        add_test(${PROGRAM}-version "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --version)
+        set_tests_properties(${PROGRAM}-version PROPERTIES
+            PASS_REGULAR_EXPRESSION "${VERSION}"
+            )
+        add_test(${PROGRAM}-fail "${CMAKE_CURRENT_BINARY_DIR}/${PROGRAM}${GAMMU_TEST_SUFFIX}" --nonsense)
+        set_tests_properties(
+            ${PROGRAM}-fail
+            PROPERTIES WILL_FAIL TRUE)
+    endforeach (PROGRAM gammu-smsd gammu-smsd-monitor gammu-smsd-inject)
+endif (WITH_BACKUP)

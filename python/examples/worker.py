@@ -29,7 +29,7 @@ this program; if not, write to the Free Software Foundation, Inc.,
 
 import sys
 import gammu
-import gammu.Worker
+import gammu.worker
 
 def callback(name, result, error, percents):
     '''
@@ -59,7 +59,7 @@ def main():
     '''
     Main code to talk with worker.
     '''
-    worker = gammu.Worker.GammuWorker(callback)
+    worker = gammu.worker.GammuWorker(callback)
     worker.configure(read_config())
     # We can directly invoke commands
     worker.enqueue('GetManufacturer')
