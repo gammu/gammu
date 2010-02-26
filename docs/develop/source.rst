@@ -3,6 +3,9 @@ Gammu source code
 
 This document describes Gammu source to allow easier orientation in it.
 
+Directory structure
++++++++++++++++++++
+
 libgammu directory
 ------------------
 

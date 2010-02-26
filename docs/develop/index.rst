@@ -37,7 +37,7 @@ Contents
 --------
 
 .. toctree::
-    :maxdepth: 3
+    :maxdepth: 2
 
     source
     python/api
