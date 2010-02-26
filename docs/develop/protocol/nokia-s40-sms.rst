@@ -5,6 +5,9 @@ This text is work in progress and does not claim to be correct or accurate. It
 is solely based on Gammu dumps received from users. Analysed by Michal Cihar
 <michal@cihar.com>.
 
+File structure
+--------------
+
 - 176 bytes header
     - at offset 7 is length of PDU data
     - at offset 94 is stored remote number in unicode
