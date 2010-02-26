@@ -40,7 +40,7 @@ Contents
     :maxdepth: 2
 
     source
-    python/api
+    python/index
     c/index
     install
 
