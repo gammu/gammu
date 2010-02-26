@@ -39,7 +39,7 @@ Contents
 .. toctree::
     :maxdepth: 2
 
-    source
+    source/index
     python/index
     c/index
     install
