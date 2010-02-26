@@ -8,8 +8,9 @@ Python and C version of the API.
 A taste of python-gammu
 -----------------------
 
-Following code will connect to phone based on your Gammu configuration
-(usually stored in :file:`~/.gammurc`) and gets network information from it::
+Python-gammu allows you to easily access the phone. Following code will connect
+to phone based on your Gammu configuration (usually stored in
+:file:`~/.gammurc`) and gets network information from it::
 
     import gammu
     import sys
