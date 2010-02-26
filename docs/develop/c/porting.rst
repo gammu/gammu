@@ -19,7 +19,7 @@ API, which has to be done for various reasons:
   behaviour when some internals are changed.
 
 Changes you have to do in your code
-===================================
+-----------------------------------
 
 Bellow examples expect sm to be state machine structure in your current
 code, change it to appropriate variable name if it differs.
@@ -44,5 +44,3 @@ hesitate to contact author or ask on mailing list if you miss something.
 
 API documentation can be generated using Doxygen (make apidoc in build
 tree), you can also view it online at <http://wammu.eu/docs/devel/api/>.
-
-# vim: et ts=4 sw=4 sts=4 tw=72

@@ -41,6 +41,7 @@ Contents
 
     source
     python/api
+    c/index
     install
 
 Indices and tables
