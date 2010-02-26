@@ -73,7 +73,10 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 
 		if ((sms->SMS[i].PDU == SMS_Status_Report) && strcasecmp(Config->deliveryreport, "log") == 0) {
 			strcpy(buffer, DecodeUnicodeString(sms->SMS[i].Number));
-			SMSD_Log(DEBUG_NOTICE, Config, "Delivery report: %s to %s", DecodeUnicodeString(sms->SMS[i].Text), buffer);
+			SMSD_Log(DEBUG_NOTICE, Config, "Delivery report: %s to %s, message reference 0x%02x",
+				DecodeUnicodeString(sms->SMS[i].Text),
+				buffer,
+				sms->SMS[i].MessageReference);
 		} else {
 			if (locations_pos + strlen(FileName) + 2 >= locations_size) {
 				locations_size += strlen(FileName) + 30;
@@ -574,14 +577,15 @@ fail:
 
 static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms UNUSED,
 		GSM_SMSDConfig *Config, char *ID UNUSED,
-		int Part, GSM_SMSDSendingError err, int TPMR UNUSED)
+		int Part, GSM_SMSDSendingError err, int TPMR)
 {
 	if (err == SMSD_SEND_OK) {
-		SMSD_Log(DEBUG_INFO, Config, "Transmitted %s (%s: %i) to %s",
+		SMSD_Log(DEBUG_INFO, Config, "Transmitted %s (%s: %i) to %s, message reference 0x%02x",
 				Config->SMSID,
 				(Part == sms->Number ? "total" : "part"),
 				Part,
-				DecodeUnicodeString(sms->SMS[0].Number));
+				DecodeUnicodeString(sms->SMS[0].Number),
+				TPMR);
 	}
 
   	return ERR_NONE;
