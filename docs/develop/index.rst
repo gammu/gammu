@@ -44,6 +44,7 @@ Contents
     c/index
     install
     project/index
+    protocol/index
 
 Indices and tables
 ------------------
