@@ -1,11 +1,7 @@
 TDMA 5120TDMA 5120 
+==================
+
 Eduardo Spremolla gnokii-users@mail.freesoftware.fsf.org 
-10 Jul 2002 10:10:11 -0300 
-  Previous message: Getting started (6210) 
-  Next message: usb gnokii 
-  Messages sorted by: [ date ] [ thread ] [ subject ] [ author ] 
-
-
 
 After playing a while with my 5120i y find some use full frames:
 
@@ -75,15 +71,3 @@ write info from an area of the buffer that I did not send!!!!
 OK so far. Still looking for how to handle SMS......
 
 LALO
-
-
-
-
-
-
-
-
-  Previous message: Getting started (6210) 
-  Next message: usb gnokii 
-  Messages sorted by: [ date ] [ thread ] [ subject ] [ author ] 
-

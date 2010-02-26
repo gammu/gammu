@@ -19,30 +19,52 @@ Block: <TYPE = byte> <LENGTH = word> <DATA ...>
 Blocks
 ------
 
-0x01 - Unknown \x00 / \x01 (maybe received / sent)
-0x02 - SMSC number, ASCII
-0x03 - Text, unicode
-0x04 - Sender, unicode
-0x05 - Recipient, unicode
-0x06 - Unknown \x00\x00\x00\x00
-0x07 - Unknown \x00
-0x08 - Unknown \x02 / \x00
-0x09 - Unknown \x00\x00\x00\x00
+0x01
+  Unknown \x00 / \x01 (maybe received / sent)
+0x02
+  SMSC number, ASCII
+0x03
+  Text, unicode
+0x04
+  Sender, unicode
+0x05
+  Recipient, unicode
+0x06
+  Unknown \x00\x00\x00\x00
+0x07
+  Unknown \x00
+0x08
+  Unknown \x02 / \x00
+0x09
+  Unknown \x00\x00\x00\x00
 0x0a
-0x0b - Unknown \x00
-0x0c - Unknown, several values (maybe message reference per number)
+  Unknown \x00
+0x0b
+  Unknown \x00
+0x0c
+  Unknown, several values (maybe message reference per number)
 0x0d
+  Unknown \x00\x00
 0x0e
-0x0f - Unknown \x00\x00
+  Unknown \x00\x00
+0x0f
+  Unknown \x00\x00
 
 
-0x22 - Unknown \x00
-0x23 - Unknown \x00\x00\x00\x00
-0x24 - Unknown \x00
-0x26 - Unknown \x00
-0x27 - Unknown \x00
-0x2a - Unknown \x00
-0x2b - some text (Sender?), unicode
+0x22
+  Unknown \x00
+0x23
+  Unknown \x00\x00\x00\x00
+0x24
+  Unknown \x00
+0x26
+  Unknown \x00
+0x27
+  Unknown \x00
+0x2a
+  Unknown \x00
+0x2b
+  some text (Sender?), unicode
 
 
 To test:

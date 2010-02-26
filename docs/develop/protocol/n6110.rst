@@ -1,3 +1,5 @@
+Nokia 6110
+==========
 
 Last update 04.07.2002
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,7 +41,7 @@ Correct format is FBUS version 2/Direct IRDA/MBUS version 2
                       Battery percent level
                    0x5e, 0x0c, 0x52(?), 0x4b(?), 0x6f(?), 0x02, voltageHI, voltageLO
                       Battery standby voltage
-                   ............
+                   ...
 0x01: Call Information
     s Make call             { 0x0001, "number", type, block }
                               where type:
