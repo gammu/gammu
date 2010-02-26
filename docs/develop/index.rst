@@ -39,6 +39,7 @@ Contents
 .. toctree::
     :maxdepth: 3
 
+    source
     python/api
     install
 
