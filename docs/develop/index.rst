@@ -43,6 +43,7 @@ Contents
     python/index
     c/index
     install
+    project/index
 
 Indices and tables
 ------------------
