@@ -256,6 +256,34 @@ connection = blueat
 .RE
 .PP
 
+.SS Working with multiple phones
+
+Gammu can be configured for multiple phones (however only one connection
+is used at one time, you can choose which one to use with \-\-section
+parameter). Configuration for phones on three serial ports would look
+like following:
+
+.RS
+.sp
+.nf
+.ne 7
+[gammu]
+port = /dev/ttyS0
+connection = at
+
+[gammmu1]
+port = /dev/ttyS1
+connection = at
+
+[gammmu2]
+port = /dev/ttyS2
+connection = at
+.fi
+.sp
+.RE
+.PP
+
+
 .SH SEE ALSO
 gammu\-smsd(1), gammu(1), gammurc(5)
 .SH AUTHOR
