@@ -6,7 +6,6 @@ python-gammu API
     :maxdepth: 3
 
     gammu
-    statemachine
     smsd
     data
     worker
