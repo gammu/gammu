@@ -52,7 +52,7 @@ typedef struct {
  *
  * \return Error code
  */
-extern GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup * backup);
+GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup * backup);
 
 /**
  * Adds data to SMS backup file.
@@ -64,7 +64,7 @@ extern GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup * backup);
  *
  * \return Error code
  */
-extern GSM_Error GSM_AddSMSBackupFile(char *FileName, GSM_SMS_Backup * backup);
+GSM_Error GSM_AddSMSBackupFile(char *FileName, GSM_SMS_Backup * backup);
 
 /**
  * Clears SMS backup structure
