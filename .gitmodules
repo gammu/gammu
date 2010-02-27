@@ -1,0 +1,3 @@
+[submodule "external/breathe"]
+	path = external/breathe
+	url = git://github.com/nijel/breathe.git

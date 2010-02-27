@@ -6,3 +6,6 @@ libGammu C API
 
     porting
 
+.. doxygenindex::
+   :project: api
+

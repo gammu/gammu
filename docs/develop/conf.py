@@ -20,13 +20,14 @@ import sys, os
 # is relative to the documentation root, use os.path.abspath to make it
 # absolute, like shown here.
 sys.path.insert(0, '@CMAKE_CURRENT_BINARY_DIR@/../../python')
+sys.path.append('@Gammu_SOURCE_DIR@/external/breathe')
 
 # General configuration
 # ---------------------
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc']
+extensions = ['sphinx.ext.autodoc', 'breathe']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['@CMAKE_CURRENT_SOURCE_DIR@/doc/.templates']
@@ -188,3 +189,13 @@ latex_documents = [
 
 # If false, no module index is generated.
 #latex_use_modindex = True
+
+# Options for breathe extension
+# -----------------------------
+
+breathe_projects = {
+    'api':'@DOXYGEN_OUTPUT@/xml',
+    }
+
+breathe_default_project = 'api'
+
