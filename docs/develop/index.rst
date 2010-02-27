@@ -40,11 +40,11 @@ Contents
 .. toctree::
     :maxdepth: 2
 
-    source/index
     python/index
     c/index
     install
     project/index
+    source/index
     protocol/index
 
 Indices and tables

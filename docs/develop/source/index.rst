@@ -8,3 +8,4 @@ This document describes Gammu source to allow easier orientation in it.
 
     coding-style
     directories
+    reply
