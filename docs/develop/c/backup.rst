@@ -12,3 +12,7 @@ Backup
 .. doxygenfunction:: GSM_FreeBackup
 .. doxygenfunction:: GSM_GetBackupFormatFeatures
 .. doxygenfunction:: GSM_GetBackupFileFeatures
+.. doxygenstruct:: GSM_SMS_Backup
+.. doxygenstruct:: GSM_Backup
+.. doxygenenum:: GSM_BackupFormat
+.. doxygenstruct:: GSM_Backup_Info

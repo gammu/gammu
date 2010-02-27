@@ -19,3 +19,14 @@ Settings
 .. doxygenfunction:: GSM_ClearFMStations
 .. doxygenfunction:: GSM_GetGPRSAccessPoint
 .. doxygenfunction:: GSM_SetGPRSAccessPoint
+.. doxygenstruct:: GSM_SyncMLSettings
+.. doxygenenum:: GSM_ResetSettingsType
+.. doxygenstruct:: GSM_ChatSettings
+.. doxygenenum:: GSM_Profile_Feat_Value
+.. doxygenenum:: GSM_Profile_Feat_ID
+.. doxygenstruct:: GSM_Profile
+.. doxygenstruct:: GSM_FMStation
+.. doxygenstruct:: GSM_GPRSAccessPoint
+.. doxygenenum:: GSM_DateFormat
+.. doxygenstruct:: GSM_Locale
+.. doxygenstruct:: GSM_Profile_PhoneTableValue

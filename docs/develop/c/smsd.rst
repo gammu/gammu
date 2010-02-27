@@ -8,3 +8,4 @@ SMSD
 .. doxygenfunction:: SMSD_MainLoop
 .. doxygenfunction:: SMSD_NewConfig
 .. doxygenfunction:: SMSD_FreeConfig
+.. doxygenstruct:: GSM_SMSDStatus

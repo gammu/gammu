@@ -12,3 +12,5 @@ Date and time
 .. doxygenfunction:: CheckTime
 .. doxygenfunction:: GSM_GetDateTime
 .. doxygenfunction:: GSM_SetDateTime
+.. doxygenstruct:: GSM_DateTime
+.. doxygenstruct:: GSM_DeltaTime

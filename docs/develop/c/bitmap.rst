@@ -10,3 +10,8 @@ Bitmap
 .. doxygenfunction:: GSM_SetPointBitmap
 .. doxygenfunction:: GSM_ClearPointBitmap
 .. doxygenfunction:: GSM_ClearBitmap
+.. doxygenenum:: GSM_BinaryPicture_Types
+.. doxygenstruct:: GSM_BinaryPicture
+.. doxygenenum:: GSM_Bitmap_Types
+.. doxygenstruct:: GSM_Bitmap
+.. doxygenstruct:: GSM_MultiBitmap

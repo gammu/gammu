@@ -22,3 +22,14 @@ Info
 .. doxygenfunction:: GSM_GetSignalQuality
 .. doxygenfunction:: GSM_GetNetworkInfo
 .. doxygenfunction:: GSM_GetDisplayStatus
+.. doxygenenum:: GSM_NetworkInfo_State
+.. doxygenenum:: GSM_GPRS_State
+.. doxygenstruct:: GSM_NetworkInfo
+.. doxygenstruct:: GSM_SignalQuality
+.. doxygenenum:: GSM_ChargeState
+.. doxygenenum:: GSM_BatteryType
+.. doxygenstruct:: GSM_BatteryCharge
+.. doxygenenum:: GSM_DisplayFeature
+.. doxygenstruct:: GSM_DisplayFeatures
+.. doxygenenum:: GSM_Feature
+.. doxygenstruct:: GSM_PhoneModel

@@ -1,6 +1,7 @@
-.. doxygenfunction:: GetLine
+Miscellaneous
 =============
 
+.. doxygenfunction:: GetLine
 .. doxygenfunction:: GetGammuVersion
 .. doxygenfunction:: GetCompiler
 .. doxygenfunction:: GetOS

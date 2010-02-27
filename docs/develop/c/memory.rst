@@ -16,3 +16,10 @@ Memory
 .. doxygenfunction:: GSM_EncodeVCARD
 .. doxygenfunction:: GSM_DecodeVCARD
 .. doxygenfunction:: GSM_FreeMemoryEntry
+.. doxygenenum:: GSM_MemoryType
+.. doxygenstruct:: GSM_MemoryStatus
+.. doxygenenum:: GSM_EntryType
+.. doxygenstruct:: GSM_SubMemoryEntry
+.. doxygenstruct:: GSM_MemoryEntry
+.. doxygenstruct:: GSM_SpeedDial
+.. doxygenenum:: GSM_VCardVersion

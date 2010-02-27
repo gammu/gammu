@@ -14,3 +14,7 @@ State machine
 .. doxygenfunction:: GSM_AllocStateMachine
 .. doxygenfunction:: GSM_FreeStateMachine
 .. doxygenfunction:: GSM_GetUsedConnection
+.. doxygenstruct:: GSM_Config
+.. doxygentypedef:: GSM_StateMachine
+.. doxygentypedef:: GSM_Log_Function
+.. doxygenenum:: GSM_ConnectionType

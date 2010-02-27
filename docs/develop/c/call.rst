@@ -16,3 +16,10 @@ Call
 .. doxygenfunction:: GSM_CancelAllDiverts
 .. doxygenfunction:: GSM_SetIncomingCall
 .. doxygenfunction:: GSM_SendDTMF
+.. doxygenenum:: GSM_CallStatus
+.. doxygenstruct:: GSM_Call
+.. doxygenenum:: GSM_Divert_DivertTypes
+.. doxygenenum:: GSM_Divert_CallTypes
+.. doxygenstruct:: GSM_CallDivert
+.. doxygenstruct:: GSM_MultiCallDivert
+.. doxygenenum:: GSM_CallShowNumber
