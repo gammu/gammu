@@ -5,4 +5,5 @@ Gammu project
     :maxdepth: 2
 
     motivation
+    contributing
 
