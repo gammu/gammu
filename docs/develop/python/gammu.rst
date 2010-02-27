@@ -12,12 +12,18 @@ This module wraps all python-gammu functionality.
 .. autoclass:: gammu.StateMachine
    :members: 
 
+Generic functions
+-----------------
+
 .. function:: Version()
 
     Get version information.
 
     :return: Tuple of version information - Gammu runtime version, python-gammu version, build time Gammu version.
     :rtype: tuple
+
+Debugging configuration
+-----------------------
 
 .. function:: SetDebugFile(File)
 
@@ -45,6 +51,9 @@ This module wraps all python-gammu functionality.
        * errorsdate
     :return: None
     :rtype: None
+
+Message processing
+------------------
 
 .. function:: LinkSMS(Messages, EMS)
 
@@ -76,6 +85,20 @@ This module wraps all python-gammu functionality.
     :type MessageInfo: dict
     :return: Dictionary with raw message
     :rtype: dict
+
+.. function:: DecodePDU(Data, SMSC = False)
+
+    Parses PDU packet.
+
+    :param Data: PDU data, need to be binary not hex encoded
+    :type Data: string
+    :param SMSC: Whether PDU includes SMSC.
+    :type SMSC: boolean
+    :return: Message data
+    :rtype: dict
+
+Encoding and decoding entries
+-----------------------------
 
 .. function:: DecodeVCARD(Text)
 
@@ -149,6 +172,9 @@ This module wraps all python-gammu functionality.
     :return: String with vCard
     :rtype: string
 
+Backup reading and writing
+--------------------------
+
 .. function:: SaveRingtone(Filename, Ringtone, Format)
 
     Saves ringtone into file.
@@ -214,14 +240,3 @@ This module wraps all python-gammu functionality.
     :type Filename: string
     :return: List of messages read from file
     :rtype: list
-
-.. function:: DecodePDU(Data, SMSC = False)
-
-    Parses PDU packet.
-
-    :param Data: PDU data, need to be binary not hex encoded
-    :type Data: string
-    :param SMSC: Whether PDU includes SMSC.
-    :type SMSC: boolean
-    :return: Message data
-    :rtype: dict
