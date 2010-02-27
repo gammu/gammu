@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-18 17:08+0100\n"
-"PO-Revision-Date: 2010-02-27 17:37+0200\n"
+"PO-Revision-Date: 2010-02-27 17:38+0200\n"
 "Last-Translator:  <doi@freemail.hu>\n"
 "Language-Team: none\n"
 "Language: hu\n"
@@ -44,7 +44,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
-msgstr ""
+msgstr "Az eszköz nem nyitható meg, mert nincs hozzá megfelelő illesztőprogram."
 
 #: libgammu/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrongly configured."
