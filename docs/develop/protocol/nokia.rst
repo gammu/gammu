@@ -8,33 +8,36 @@ Some of the frames might be hazardous to your phone. Be careful!!!
 We do not take any responsibility or liability for damages, etc.
 
 Last update 23.06.2003
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Assembled by
-	Balazs Nagy          <js@iksz.hu>
-	Alfred R. Nurnberger <arnu@flosys.com>
-	Hugh Blemings        <Hugh.Blemings@vsb.com.au>
-	Mike Bradley         <mike@trumpington.st>
-	Odinokov Serge       <serge@takas.lt>
-	Pavel Janik          <Pavel@Janik.cz>
-	Pawel Kot            <pkot@linuxnews.pl>
-	Marcin Wiacek        <Marcin@MWiacek.com>
-        Jens Bennfors        <jens.bennfors@ing.hj.se>
-        Michael Hund         <michael@drhund.de>
-        Jay Bertrand         <jay.bertrand@libertysurf.fr>
-                             <arnu@venia.net>
-        Andrew Kozin
-        Pavel Machek         <pavel@ucw.cz>
-        Diego Betancor       <dbetancor@duocom.net>
-	... and other members of gnokii mailing list
-            and authors of some WWW pages.
+Balazs Nagy          <js@iksz.hu>
+Alfred R. Nurnberger <arnu@flosys.com>
+Hugh Blemings        <Hugh.Blemings@vsb.com.au>
+Mike Bradley         <mike@trumpington.st>
+Odinokov Serge       <serge@takas.lt>
+Pavel Janik          <Pavel@Janik.cz>
+Pawel Kot            <pkot@linuxnews.pl>
+Marcin Wiacek        <Marcin@MWiacek.com>
+Jens Bennfors        <jens.bennfors@ing.hj.se>
+Michael Hund         <michael@drhund.de>
+Jay Bertrand         <jay.bertrand@libertysurf.fr>
+<arnu@venia.net>
+Andrew Kozin
+Pavel Machek         <pavel@ucw.cz>
+Diego Betancor       <dbetancor@duocom.net>
+... and other members of gnokii mailing list
+and authors of some WWW pages.
 
-NOTE: this information isn't (and can't be) complete.  If you know anything
-about features not listed here or you noticed a bug in this list, please
-notify us via e-mail.  Thank you.
+.. note::
 
- Frame format for MBUS version 1:
+    this information isn't (and can't be) complete.  If you know anything
+    about features not listed here or you noticed a bug in this list, please
+    notify us via e-mail.  Thank you.
 
-  Request from Computer/Answer from Phone:
+Frame format for MBUS version 1
+-------------------------------
+
+Request from Computer/Answer from Phone::
 
    { DestDEV, SrcDEV, FrameLength, MsgType, {block}, id, ChkSum }
 
@@ -49,7 +52,7 @@ notify us via e-mail.  Thank you.
                                 the request is accepted
              ChkSum:            XOR on frame's all numbers
 
-  Ack from Phone:
+Ack from Phone::
     
     { DestDEV, 0x00, FrameLength, MsgType, {block} , id, ChkSum }
 
@@ -63,15 +66,15 @@ notify us via e-mail.  Thank you.
                                 the request is accepted
              ChkSum:            XOR on frame's all numbers
 
-    Update: description above according to the
-    http://www.gadgets.demon.co.uk/nokia21xx/protocol.html.
+Update: description above according to the
+http://www.gadgets.demon.co.uk/nokia21xx/protocol.html.
 
-    Pavel Machek <pavel@ucw.cz> wrote:
-      0x7e is actually registration acknowledge. Both have nothing to do
-      with DestDEV, except that special device needs to be used for
-      registration.
+Pavel Machek <pavel@ucw.cz> wrote:
+  0x7e is actually registration acknowledge. Both have nothing to do
+  with DestDEV, except that special device needs to be used for
+  registration.
 
-  Ack from Computer:
+Ack from Computer::
 
     { 0x00, SrcDEV, 0x7f, id, ChkSum }
 
@@ -81,36 +84,39 @@ notify us via e-mail.  Thank you.
                                 the request is accepted
              ChkSum:            XOR on frame's all numbers
 
-   Port settings:
+Port settings:
      Speed 9600 bps, Bits 8, ParityOdd, Stop Bits 1, DTR and RTS logic 0
 
-   In the MBUS bus, the phone has only one connector for transmition and
-   reception.
+In the MBUS bus, the phone has only one connector for transmition and
+reception.
 
-   Because of this characteristics of the phone connector, every time that the
-   PC writes into the phone it is writing as well into its own Rx. So every
-   time the PC sends info into the phone it finds that same information in its
-   own Rx buffers, like a mirror copy. This should be discarded.
-   
-   The communications is made like an old cb radio, only one
-   talking at a time. Many transmission are made this way:
+Because of this characteristics of the phone connector, every time that the
+PC writes into the phone it is writing as well into its own Rx. So every
+time the PC sends info into the phone it finds that same information in its
+own Rx buffers, like a mirror copy. This should be discarded.
 
-     <computer sends request>
-     <phone sends ack>
-     <phone sends response>
-     <computer sends ack>
+The communications is made like an old cb radio, only one
+talking at a time. Many transmission are made this way:
 
-   Some frames are sent from phone without asking for them
+* <computer sends request>
+* <phone sends ack>
+* <phone sends response>
+* <computer sends ack>
 
-   You have to implement collision protocol. IE. you should listen for
-   what you are transmitting, and if it does not come back, you have
-   collision.
+Some frames are sent from phone without asking for them
 
-   You should wait for bus to be free for 3 miliseconds before normal
-   message, and for 2.5 miliseconds before acknowledge. You should wait
-   for acknowledge for 200 miliseconds, then retransmit.
+You have to implement collision protocol. IE. you should listen for
+what you are transmitting, and if it does not come back, you have
+collision.
 
- Frame format for FBUS version 1:
+You should wait for bus to be free for 3 miliseconds before normal
+message, and for 2.5 miliseconds before acknowledge. You should wait
+for acknowledge for 200 miliseconds, then retransmit.
+
+Frame format for FBUS version 1
+-------------------------------
+
+All frames::
 
     { FrameID, FrameLength, MsgType, {block}, SeqNo, ChkSum }
 
@@ -131,7 +137,10 @@ notify us via e-mail.  Thank you.
                                 for (i = 0; i < (2 + CMD_LEN); i++)
                                   CRC ^= frame[i];
 
- Frame format for FBUS version 2/Direct IRDA:
+Frame format for FBUS version 2/Direct IRDA
+-------------------------------------------
+
+All frames::
 
     { FrameID, DestDEV, SrcDEV, MsgType, 0x00, FrameLength, {block}, FramesToGo,
       SeqNo, PaddingByte?, ChkSum1, ChkSum2 }
@@ -152,8 +161,11 @@ notify us via e-mail.  Thank you.
                ChkSum1:         XOR on frame's odd numbers
                ChkSum2?:        XOR on frame's even numbers
 
- Frame format for MBUS version 2:
+Frame format for MBUS version 2
+-------------------------------
  
+Cable::
+
     { FrameID, DestDEV, SrcDEV, MsgType, FrameLengthLO, FrameLengthHI, {block},
       SeqNo, ChkSum }
 
@@ -170,16 +182,16 @@ notify us via e-mail.  Thank you.
                SeqNo:           sequence number
                ChkSum:          XOR on frame's all numbers
 
-    Please note that M2BUS has only one checksum: XOR on frame[FrameID..SeqNo]
+Please note that M2BUS has only one checksum: XOR on frame[FrameID..SeqNo]
 
-  Ack:
+Ack::
     
     { FrameID, DestDEV, SrcDEV, 0x7f, Id_SeqNo, ChkSum }
 	
 	 where Id_SeqNo:        Is the sequence number that you are
 	                        acknowleging (from the other part).
 
- Frame format for Infrared:
+Frame format for Infrared::
 
     { FrameID, DestDEV, SrcDEV, MsgType, FrameLengthLo, FrameLengthHi, {block}}
 
@@ -189,7 +201,7 @@ notify us via e-mail.  Thank you.
                MsgType:         see List
                FrameLength:     {block}
 
- Frame format for Bluetooth:
+Frame format for Bluetooth::
 
     { FrameID, DestDEV, SrcDEV, MsgType, FrameLengthLo, FrameLengthHi, {block} }
 
@@ -199,7 +211,7 @@ notify us via e-mail.  Thank you.
                MsgType:         see List
                FrameLength:     {block}
 
- Frames list format:
+Frames list format::
 
     hex: Short description
        x msg desc                { ... }
@@ -211,30 +223,41 @@ notify us via e-mail.  Thank you.
                { ... }: data after 0x00, 0x01 header
                {+... }: raw data (without header)
 
--------------------------------------------------------------------------------
+Misc (about MBUS version 2)
+---------------------------
 
-Misc (about MBUS version 2):
+0x4E commands
++++++++++++++
 
-0x4E commands:
-  (sent from a 5160i TDMA / 6160i TDMA / 6185 CDMA or 7110 GSM 
-   phone to the uC in the DLR-3 cable) 
+(sent from a 5160i TDMA / 6160i TDMA / 6185 CDMA or 7110 GSM 
+phone to the uC in the DLR-3 cable) 
+
 DLR-3 req:
-  1F 48 00 4E 00 02 01 XX SQ CS
-      frame sent from the phone to the DLR-3 cable
-      (after 15kOhm resistor detected betw. XMIC (3) and DGND (9).)                                                                                  
-      DSR,DCD,CTS flow control data is coded into the 2nd databyte 
-      XX: bit.0=/CTS 
-          bit.1=/DCD
-          bit.2=CMD/DATA
-          bit.3=DSR
-          bit.4-7=0 
 
-0x78 / 0x79 commands:
-  (used by handsfree carkit) Works also on GSM phones (5110 / 6110 / etc) 
+1F 48 00 4E 00 02 01 XX SQ CS
+
+  frame sent from the phone to the DLR-3 cable
+  (after 15kOhm resistor detected betw. XMIC (3) and DGND (9).)                                                                                  
+  DSR,DCD,CTS flow control data is coded into the 2nd databyte 
+
+  XX: 
+
+      * bit.0=/CTS 
+      * bit.1=/DCD
+      * bit.2=CMD/DATA
+      * bit.3=DSR
+      * bit.4-7=0 
+
+0x78 / 0x79 commands
+++++++++++++++++++++
+
+(used by handsfree carkit) Works also on GSM phones (5110 / 6110 / etc) 
+
 These commands are used by the Nokia Carkits to switch the phone audio path to 
 XMiC and XEAR , turn the phone on/off according to the car ignition, and
 control the PA loudspeaker amplifier in the carkit and the car radio mute
 output which silences the car radio during a call 
+
 mute status tone:
   1F 04 00 78 00 04 01 02 0E 00 SQ CS
      status indication = disable carkit audio amplifier (no audio / no tone) 
@@ -249,9 +272,9 @@ mute status call:
      status indication = enable radio mute output (call active) 
 enable ???:
   1F 04 00 78 00 04 01 02 08 01 SQ CS
-     status indication = enable ???  sent to HFU-2 on power on 
-  byte 9 (07,08,0E) seems to be a pointer to a memory location,
-  byte 10 is the data at this memeory location. 
+      status indication = enable ???  sent to HFU-2 on power on 
+      byte 9 (07,08,0E) seems to be a pointer to a memory location,
+      byte 10 is the data at this memeory location. 
 response from HFU:
   1F 00 04 78 00 03 02 01 03 SQ CS
      response message from HFU-2 (use unknown) 
@@ -267,22 +290,25 @@ ext. HS Offhk:
 ext. HS Onhk:
   1F 00 04 79 00 05 02 01 01 63 00 SQ CS
      enables carkit mode + external handset put back (ON-Hook) 
-  Ignition and Hook are coded into one byte 
-    bit.0 = 0:on power on 1:when in operation 
-    bit.1 = IGNITION STATUS 
-    bit.2 = x  can be 1 or 0 
-    bit.3 = 0 
-    bit.4 = 0 
-    bit.5 = 1 
-    bit.6 = Hook (inverted) 
-    bit.7 = 0 
+     Ignition and Hook are coded into one byte 
+
+        * bit.0 = 0:on power on 1:when in operation 
+        * bit.1 = IGNITION STATUS 
+        * bit.2 = x  can be 1 or 0 
+        * bit.3 = 0 
+        * bit.4 = 0 
+        * bit.5 = 1 
+        * bit.6 = Hook (inverted) 
+        * bit.7 = 0 
 HFU-2 version:
   1F 00 04 79 00 12 02 01 02 06 00 56 20 30 36 2E 30 30 0A 48 46 55 32 00 SQ CS
 for HFU-2:
   1F 04 00 DA 00 02 00 02 SQ CS
     function unknown - sent from Nokia phone to HFU-2mute output (call active ) 
 
-0xD0 commands: 
+0xD0 commands 
++++++++++++++
+
 init:
   1F 00 1D D0 00 01 04 SQ CS
     sent by the Service Software or HFU-2 on startup 
