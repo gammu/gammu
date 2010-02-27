@@ -1,17 +1,32 @@
 Discovering protocol
 ====================
 
-You have to have communication dump.
+You need to get a communication dump to be able to understand protocol
+or discover new commands. As most vendors provide some software for
+Windows, all following sections assume you do the sniffing on Windows.
 
-Let's start from cable connection:
+USB
+---
 
-Download http://www.sysinternals.com/ntw2k/freeware/portmon.shtml
-It allows to capture bytes sent and received by ready binary software.
+For USB there exist various tools to dump USB communication. The dumps
+can be later analyzed and used to discover protocol details or unknown
+commands. One of the best free tools available currently is `UsbSnoop`_.
+
+.. _UsbSnoop: http://www.pcausa.com/Utilities/UsbSnoop/
+
+Serial port
+-----------
+
+
+Download `Portmon`_, which allows to capture bytes sent and received by
+ready binary software.
+
+.. _Portmon: http://www.sysinternals.com/ntw2k/freeware/portmon.shtml
 
 If you have log saved by PortMon and protocol is the same to "old" Nokia
-protocols, can use Gammu to decode it. It's simple:
+protocols, can use Gammu to decode it. It's simple::
 
-gammu --decodesniff MBUS2 file 6210 > log
+    gammu --decodesniff MBUS2 file 6210 > log
 
 saves in log decoded MBUS2 dump session. There is used phone module for
 6210 and have you have debug info about 6210 specific frames (you don't have
@@ -24,7 +39,9 @@ to add model). Dump file for --decodesniff and MBUS should be specific:
 
 3. without Date & Time ("Options", "Show Time" & "Clock Time")
 
-Now something about sniffing infrared:
+
+Infrared
+--------
 
 First of all you need two computers with IrDA. One running linux, that will
 sniff and one running windows, which will communicate with the phone and
