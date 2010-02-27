@@ -12,3 +12,4 @@ Debug
 .. doxygenfunction:: GSM_SetDebugGlobal
 .. doxygenfunction:: GSM_LogError
 .. doxygenfunction:: smprintf
+.. doxygentypedef:: GSM_Debug_Info

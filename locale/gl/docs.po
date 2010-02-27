@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-02-18 17:08+0100\n"
+"POT-Creation-Date: 2010-02-28 00:12+0100\n"
 "PO-Revision-Date: 2009-02-14 23:34+0100\n"
 "Last-Translator: Alejandro Casas <acasasv@yahoo.es>\n"
 "Language-Team: none\n"
@@ -5187,7 +5187,7 @@ msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu.1:2971 docs/user/gammurc.5:263 docs/user/gammu-smsdrc.5:495
+#: docs/user/gammu.1:2971 docs/user/gammurc.5:291 docs/user/gammu-smsdrc.5:495
 #: docs/user/gammu-smsd.1:203 docs/user/gammu-smsd-inject.1:136
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:112
@@ -5208,7 +5208,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2978 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:501
+#: docs/user/gammu.1:2978 docs/user/gammurc.5:297 docs/user/gammu-smsdrc.5:501
 #: docs/user/gammu-smsd.1:209 docs/user/gammu-smsd-inject.1:142
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:118
@@ -5222,7 +5222,7 @@ msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu.1:2979 docs/user/gammurc.5:269 docs/user/gammu-smsdrc.5:501
+#: docs/user/gammu.1:2979 docs/user/gammurc.5:297 docs/user/gammu-smsdrc.5:501
 #: docs/user/gammu-smsd.1:209 docs/user/gammu-smsd-inject.1:142
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:118
@@ -5278,7 +5278,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:3009 docs/user/gammurc.5:270 docs/user/gammu-smsdrc.5:503
+#: docs/user/gammu.1:3009 docs/user/gammurc.5:298 docs/user/gammu-smsdrc.5:503
 #: docs/user/gammu-smsd.1:211 docs/user/gammu-smsd-inject.1:144
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:119
@@ -5290,7 +5290,7 @@ msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu.1:3010 docs/user/gammurc.5:261 docs/user/gammu-smsdrc.5:493
+#: docs/user/gammu.1:3010 docs/user/gammurc.5:289 docs/user/gammu-smsdrc.5:493
 #: docs/user/gammu-smsd.1:201 docs/user/gammu-smsd-inject.1:134
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:110
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
@@ -5341,7 +5341,7 @@ msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu.1:3036 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:488
+#: docs/user/gammu.1:3036 docs/user/gammurc.5:287 docs/user/gammu-smsdrc.5:488
 #: docs/user/gammu-smsd.1:192 docs/user/gammu-smsd-inject.1:132
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:108
@@ -5976,15 +5976,56 @@ msgid ""
 "connection = blueat\n"
 msgstr ""
 
+#. type: SS
+#: docs/user/gammurc.5:259
+#, no-wrap
+msgid "Working with multiple phones"
+msgstr ""
+
+#. type: Plain text
+#: docs/user/gammurc.5:265
+msgid ""
+"Gammu can be configured for multiple phones (however only one connection is "
+"used at one time, you can choose which one to use with --section parameter). "
+"Configuration for phones on three serial ports would look like following:"
+msgstr ""
+
+#. type: Plain text
+#: docs/user/gammurc.5:273
+#, no-wrap
+msgid ""
+"[gammu]\n"
+"port = /dev/ttyS0\n"
+"connection = at\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/user/gammurc.5:277
+#, no-wrap
+msgid ""
+"[gammmu1]\n"
+"port = /dev/ttyS1\n"
+"connection = at\n"
+msgstr ""
+
+#. type: Plain text
+#: docs/user/gammurc.5:281
+#, no-wrap
+msgid ""
+"[gammmu2]\n"
+"port = /dev/ttyS2\n"
+"connection = at\n"
+msgstr ""
+
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:261 docs/user/gammu-smsdrc.5:490
+#: docs/user/gammurc.5:289 docs/user/gammu-smsdrc.5:490
 msgid "gammu-smsd(1), gammu(1), gammurc(5)"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:263 docs/user/gammu-smsdrc.5:495
+#: docs/user/gammurc.5:291 docs/user/gammu-smsdrc.5:495
 #: docs/user/gammu-smsd.1:203 docs/user/gammu-smsd-inject.1:136
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:112
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
@@ -5997,7 +6038,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:266 docs/user/gammu-smsdrc.5:498
+#: docs/user/gammurc.5:294 docs/user/gammu-smsdrc.5:498
 #: docs/user/gammu-smsd.1:206 docs/user/gammu-smsd-inject.1:139
 #: docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:115
 #: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24

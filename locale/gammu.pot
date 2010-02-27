@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-02-22 09:07+0100\n"
+"POT-Creation-Date: 2010-02-28 00:12+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -63,7 +63,7 @@ msgstr ""
 msgid "Error while opening file for writing!\n"
 msgstr ""
 
-#: gammu/backup.c:175 gammu/files.c:444 helper/message-cmdline.c:1098
+#: gammu/backup.c:175 gammu/files.c:444 helper/message-cmdline.c:1109
 msgid "Error while writing file!\n"
 msgstr ""
 
@@ -74,7 +74,7 @@ msgstr ""
 #: gammu/backup.c:218 gammu/backup.c:373 gammu/backup.c:445 gammu/backup.c:480
 #: gammu/backup.c:514 gammu/backup.c:582 gammu/backup.c:619 gammu/backup.c:656
 #: gammu/backup.c:693 gammu/backup.c:730 gammu/backup.c:768 gammu/backup.c:809
-#: gammu/backup.c:843 gammu/backup.c:880 gammu/message.c:410
+#: gammu/backup.c:843 gammu/backup.c:880 gammu/message.c:414
 msgid "Reading"
 msgstr ""
 
@@ -435,7 +435,7 @@ msgid "Unknown memory type (\"%s\")\n"
 msgstr ""
 
 #: gammu/backup.c:1576 gammu/memory.c:74 gammu/misc.c:713 gammu/misc.c:742
-#: helper/message-cmdline.c:1020
+#: helper/message-cmdline.c:1031
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
 msgstr ""
@@ -652,7 +652,7 @@ msgstr ""
 
 #: gammu/calendar.c:203 gammu/calendar.c:537 gammu/calendar.c:842
 #: gammu/calendar.c:1064 gammu/message.c:207 gammu/misc.c:1072
-#: helper/memory-display.c:130 helper/message-display.c:414
+#: helper/memory-display.c:130 helper/message-display.c:430
 msgid "Text"
 msgstr ""
 
@@ -1571,7 +1571,7 @@ msgid "What file type (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/files.c:736 gammu/misc.c:1274 gammu/nokia.c:955
-#: helper/message-cmdline.c:1295
+#: helper/message-cmdline.c:1306
 msgid "Parameter missing!"
 msgstr ""
 
@@ -1601,7 +1601,7 @@ msgstr ""
 
 #: gammu/gammu.c:117 gammu/message.c:200 gammu/misc.c:908 gammu/misc.c:1075
 #: gammu/misc.c:1812 gammu/misc.c:1851 gammu/misc.c:2116 gammu/mms.c:112
-#: helper/memory-display.c:137 helper/message-display.c:223
+#: helper/memory-display.c:137 helper/message-display.c:235
 msgid "Name"
 msgstr ""
 
@@ -1948,8 +1948,8 @@ msgstr ""
 msgid "USSD received"
 msgstr ""
 
-#: gammu/message.c:85 helper/message-display.c:138
-#: helper/message-display.c:258
+#: gammu/message.c:85 helper/message-display.c:150
+#: helper/message-display.c:270
 msgid "Status"
 msgstr ""
 
@@ -2014,107 +2014,107 @@ msgstr ""
 msgid "Maximum time"
 msgstr ""
 
-#: gammu/message.c:351 gammu/message.c:424 gammu/message.c:697
+#: gammu/message.c:353 gammu/message.c:428 gammu/message.c:701
 msgid "Corrupted message, skipping"
 msgstr ""
 
-#: gammu/message.c:365 gammu/message.c:482
+#: gammu/message.c:367 gammu/message.c:486
 #, c-format
 msgid "%i SMS parts in %i SMS sequences"
 msgstr ""
 
-#: gammu/message.c:414
+#: gammu/message.c:418
 msgid "SMS counter overflow"
 msgstr ""
 
-#: gammu/message.c:503
+#: gammu/message.c:507
 msgid ", SIM memory"
 msgstr ""
 
-#: gammu/message.c:504
+#: gammu/message.c:508
 msgid ", phone memory"
 msgstr ""
 
-#: gammu/message.c:505
+#: gammu/message.c:509
 msgid ", phone or SIM memory"
 msgstr ""
 
-#: gammu/message.c:508 gammu/mms.c:30
+#: gammu/message.c:512 gammu/mms.c:30
 msgid ", Inbox folder"
 msgstr ""
 
-#: gammu/message.c:509
+#: gammu/message.c:513
 msgid ", Outbox folder"
 msgstr ""
 
-#: gammu/message.c:525
+#: gammu/message.c:529
 msgid "..OK"
 msgstr ""
 
-#: gammu/message.c:528
+#: gammu/message.c:532
 #, c-format
 msgid "..error %i"
 msgstr ""
 
-#: gammu/message.c:531
+#: gammu/message.c:535
 #, c-format
 msgid ", message reference=%d"
 msgstr ""
 
-#: gammu/message.c:564
+#: gammu/message.c:568
 msgid "Message number"
 msgstr ""
 
-#: gammu/message.c:568
+#: gammu/message.c:572
 msgid "Number of messages"
 msgstr ""
 
-#: gammu/message.c:579 gammu/message.c:619
+#: gammu/message.c:583 gammu/message.c:623
 msgid "If you want break, press Ctrl+C..."
 msgstr ""
 
-#: gammu/message.c:584
+#: gammu/message.c:588
 #, c-format
 msgid "Saving SMS %i/%i\n"
 msgstr ""
 
-#: gammu/message.c:587
+#: gammu/message.c:591
 #, c-format
 msgid "Saved in folder number %d \"%s\", location %i"
 msgstr ""
 
-#: gammu/message.c:592
+#: gammu/message.c:596
 msgid "SIM"
 msgstr ""
 
-#: gammu/message.c:594
+#: gammu/message.c:598
 msgid "phone"
 msgstr ""
 
-#: gammu/message.c:598
+#: gammu/message.c:602
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr ""
 
-#: gammu/message.c:604 gammu/message.c:630
+#: gammu/message.c:608 gammu/message.c:634
 msgid "....waiting for network answer"
 msgstr ""
 
-#: gammu/message.c:625
+#: gammu/message.c:629
 #, c-format
 msgid "Sending SMS %i/%i"
 msgstr ""
 
-#: gammu/message.c:644
+#: gammu/message.c:648
 msgid "Something went wrong, uknown message operation!\n"
 msgstr ""
 
-#: gammu/message.c:680
+#: gammu/message.c:684
 #, c-format
 msgid "Too high folder number (max. %i)\n"
 msgstr ""
 
-#: gammu/message.c:686
+#: gammu/message.c:690
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
 msgstr ""
@@ -2526,7 +2526,7 @@ msgstr ""
 msgid "What type of reset do you want (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/misc.c:909 gammu/misc.c:956 helper/message-display.c:447
+#: gammu/misc.c:909 gammu/misc.c:956 helper/message-display.c:463
 msgid "Address"
 msgstr ""
 
@@ -2599,7 +2599,7 @@ msgstr ""
 msgid "No operator logo in phone"
 msgstr ""
 
-#: gammu/misc.c:1073 gammu/mms.c:71 helper/message-display.c:445
+#: gammu/misc.c:1073 gammu/mms.c:71 helper/message-display.c:461
 msgid "Sender"
 msgstr ""
 
@@ -2850,7 +2850,7 @@ msgstr ""
 msgid "Operator logo"
 msgstr ""
 
-#: gammu/misc.c:1697 helper/message-display.c:412
+#: gammu/misc.c:1697 helper/message-display.c:428
 msgid "Picture"
 msgstr ""
 
@@ -2958,7 +2958,7 @@ msgstr ""
 msgid "Warning (games) tones"
 msgstr ""
 
-#: gammu/misc.c:2028 helper/message-display.c:408
+#: gammu/misc.c:2028 helper/message-display.c:424
 msgid "Screen saver"
 msgstr ""
 
@@ -3135,7 +3135,7 @@ msgstr ""
 msgid "voice"
 msgstr ""
 
-#: gammu/misc.c:2292 gammu/misc.c:2306 helper/message-display.c:113
+#: gammu/misc.c:2292 gammu/misc.c:2306 helper/message-display.c:120
 msgid "fax"
 msgstr ""
 
@@ -3185,7 +3185,7 @@ msgstr ""
 msgid "Message type"
 msgstr ""
 
-#: gammu/mms.c:97 helper/message-display.c:446
+#: gammu/mms.c:97 helper/message-display.c:462
 msgid "Subject"
 msgstr ""
 
@@ -3642,77 +3642,81 @@ msgstr ""
 msgid "ToDo note not found in file"
 msgstr ""
 
-#: helper/message-cmdline.c:1043
+#: helper/message-cmdline.c:573
+msgid "Backup functionality not compiled in!"
+msgstr ""
+
+#: helper/message-cmdline.c:1054
 #, c-format
 msgid "Wrong message length (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1066
+#: helper/message-cmdline.c:1077
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1085
+#: helper/message-cmdline.c:1096
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1123
+#: helper/message-cmdline.c:1134
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1161
+#: helper/message-cmdline.c:1172
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1186
+#: helper/message-cmdline.c:1197
 #, c-format
 msgid "Can't open file \"%s\"\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1235
+#: helper/message-cmdline.c:1246
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1240
+#: helper/message-cmdline.c:1251
 msgid "Last parameter wasn't text"
 msgstr ""
 
-#: helper/message-cmdline.c:1274
+#: helper/message-cmdline.c:1285
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1314
+#: helper/message-cmdline.c:1325
 msgid "Enter message text and press ^D:"
 msgstr ""
 
-#: helper/message-cmdline.c:1326
+#: helper/message-cmdline.c:1337
 msgid "No chars read, assuming it is okay!"
 msgstr ""
 
-#: helper/message-cmdline.c:1346
+#: helper/message-cmdline.c:1357
 msgid "No network code"
 msgstr ""
 
-#: helper/message-cmdline.c:1352
+#: helper/message-cmdline.c:1363
 msgid "You have to set network code!"
-msgstr ""
-
-#: helper/message-cmdline.c:1391
-#, c-format
-msgid "Ringtone too long. %i percent part cut\n"
 msgstr ""
 
 #: helper/message-cmdline.c:1402
 #, c-format
+msgid "Ringtone too long. %i percent part cut\n"
+msgstr ""
+
+#: helper/message-cmdline.c:1413
+#, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr ""
 
-#: helper/message-cmdline.c:1412
+#: helper/message-cmdline.c:1423
 msgid "Use -smscnumber option to give SMSC number"
 msgstr ""
 
@@ -3737,385 +3741,385 @@ msgstr ""
 msgid "Inbox folder"
 msgstr ""
 
-#: helper/message-display.c:107
+#: helper/message-display.c:114
 msgid "mobile"
 msgstr ""
 
-#: helper/message-display.c:110
+#: helper/message-display.c:117
 msgid "work"
 msgstr ""
 
-#: helper/message-display.c:116
+#: helper/message-display.c:123
 msgid "home"
 msgstr ""
 
-#: helper/message-display.c:119
+#: helper/message-display.c:126
 msgid "pager"
 msgstr ""
 
-#: helper/message-display.c:122
+#: helper/message-display.c:129
 msgid "general"
 msgstr ""
 
-#: helper/message-display.c:136
+#: helper/message-display.c:148
 msgid "SMS status report"
 msgstr ""
 
-#: helper/message-display.c:140 helper/message-display.c:152
-#: helper/message-display.c:204 helper/message-display.c:219
-#: helper/message-display.c:260
+#: helper/message-display.c:152 helper/message-display.c:164
+#: helper/message-display.c:216 helper/message-display.c:231
+#: helper/message-display.c:272
 msgid "Sent"
 msgstr ""
 
-#: helper/message-display.c:141 helper/message-display.c:261
+#: helper/message-display.c:153 helper/message-display.c:273
 msgid "Read"
 msgstr ""
 
-#: helper/message-display.c:142 helper/message-display.c:262
+#: helper/message-display.c:154 helper/message-display.c:274
 msgid "UnRead"
 msgstr ""
 
-#: helper/message-display.c:143 helper/message-display.c:263
+#: helper/message-display.c:155 helper/message-display.c:275
 msgid "UnSent"
 msgstr ""
 
-#: helper/message-display.c:147 helper/message-display.c:250
+#: helper/message-display.c:159 helper/message-display.c:262
 msgid "Remote number"
 msgid_plural "Remote numbers"
 msgstr[0] ""
 msgstr[1] ""
 
-#: helper/message-display.c:151 helper/message-display.c:216
+#: helper/message-display.c:163 helper/message-display.c:228
 msgid "Reference number"
 msgstr ""
 
-#: helper/message-display.c:153 helper/message-display.c:201
+#: helper/message-display.c:165 helper/message-display.c:213
 msgid "SMSC number"
 msgstr ""
 
-#: helper/message-display.c:154
+#: helper/message-display.c:166
 msgid "SMSC response"
 msgstr ""
 
-#: helper/message-display.c:155
+#: helper/message-display.c:167
 msgid "Delivery status"
 msgstr ""
 
-#: helper/message-display.c:156
+#: helper/message-display.c:168
 msgid "Details"
 msgstr ""
 
-#: helper/message-display.c:159 helper/message-display.c:164
+#: helper/message-display.c:171 helper/message-display.c:176
 msgid "Temporary error, "
 msgstr ""
 
-#: helper/message-display.c:161
+#: helper/message-display.c:173
 msgid "Permanent error, "
 msgstr ""
 
-#: helper/message-display.c:167
+#: helper/message-display.c:179
 msgid "SM received by the SME"
 msgstr ""
 
-#: helper/message-display.c:168
+#: helper/message-display.c:180
 msgid ""
 "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
 msgstr ""
 
-#: helper/message-display.c:169
+#: helper/message-display.c:181
 msgid "SM replaced by the SC"
 msgstr ""
 
-#: helper/message-display.c:170 helper/message-display.c:186
+#: helper/message-display.c:182 helper/message-display.c:198
 msgid "Congestion"
 msgstr ""
 
-#: helper/message-display.c:171 helper/message-display.c:187
+#: helper/message-display.c:183 helper/message-display.c:199
 msgid "SME busy"
 msgstr ""
 
-#: helper/message-display.c:172 helper/message-display.c:188
+#: helper/message-display.c:184 helper/message-display.c:200
 msgid "No response from SME"
 msgstr ""
 
-#: helper/message-display.c:173 helper/message-display.c:189
+#: helper/message-display.c:185 helper/message-display.c:201
 msgid "Service rejected"
 msgstr ""
 
-#: helper/message-display.c:174 helper/message-display.c:180
-#: helper/message-display.c:190
+#: helper/message-display.c:186 helper/message-display.c:192
+#: helper/message-display.c:202
 msgid "Quality of service not available"
 msgstr ""
 
-#: helper/message-display.c:175 helper/message-display.c:191
+#: helper/message-display.c:187 helper/message-display.c:203
 msgid "Error in SME"
 msgstr ""
 
-#: helper/message-display.c:176
+#: helper/message-display.c:188
 msgid "Remote procedure error"
 msgstr ""
 
-#: helper/message-display.c:177
+#: helper/message-display.c:189
 msgid "Incompatibile destination"
 msgstr ""
 
-#: helper/message-display.c:178
+#: helper/message-display.c:190
 msgid "Connection rejected by SME"
 msgstr ""
 
-#: helper/message-display.c:179
+#: helper/message-display.c:191
 msgid "Not obtainable"
 msgstr ""
 
-#: helper/message-display.c:181
+#: helper/message-display.c:193
 msgid "No internetworking available"
 msgstr ""
 
-#: helper/message-display.c:182
+#: helper/message-display.c:194
 msgid "SM Validity Period Expired"
 msgstr ""
 
-#: helper/message-display.c:183
+#: helper/message-display.c:195
 msgid "SM deleted by originating SME"
 msgstr ""
 
-#: helper/message-display.c:184
+#: helper/message-display.c:196
 msgid "SM Deleted by SC Administration"
 msgstr ""
 
-#: helper/message-display.c:185
+#: helper/message-display.c:197
 msgid "SM does not exist"
 msgstr ""
 
-#: helper/message-display.c:192
+#: helper/message-display.c:204
 #, c-format
 msgid "Reserved/Specific to SC: %x"
 msgstr ""
 
-#: helper/message-display.c:197 helper/message-display.c:214
+#: helper/message-display.c:209 helper/message-display.c:226
 msgid "SMS message"
 msgstr ""
 
-#: helper/message-display.c:199
+#: helper/message-display.c:211
 msgid "Saved"
 msgstr ""
 
-#: helper/message-display.c:202
+#: helper/message-display.c:214
 msgid " (set for reply)"
 msgstr ""
 
-#: helper/message-display.c:211
+#: helper/message-display.c:223
 msgid "SMS replacing ID"
 msgstr ""
 
-#: helper/message-display.c:226
+#: helper/message-display.c:238
 msgid "Class"
 msgstr ""
 
-#: helper/message-display.c:228
+#: helper/message-display.c:240
 msgid "Coding"
 msgstr ""
 
-#: helper/message-display.c:231
+#: helper/message-display.c:243
 msgid "Unicode (no compression)"
 msgstr ""
 
-#: helper/message-display.c:234
+#: helper/message-display.c:246
 msgid "Unicode (compression)"
 msgstr ""
 
-#: helper/message-display.c:237
+#: helper/message-display.c:249
 msgid "Default GSM alphabet (no compression)"
 msgstr ""
 
-#: helper/message-display.c:240
+#: helper/message-display.c:252
 msgid "Default GSM alphabet (compression)"
 msgstr ""
 
 #. l10n: 8-bit message coding
-#: helper/message-display.c:244
+#: helper/message-display.c:256
 msgid "8-bit"
 msgstr ""
 
-#: helper/message-display.c:267
+#: helper/message-display.c:279
 msgid "User Data Header"
 msgstr ""
 
-#: helper/message-display.c:269 helper/message-display.c:270
+#: helper/message-display.c:281 helper/message-display.c:282
 msgid "Concatenated (linked) message"
 msgstr ""
 
-#: helper/message-display.c:271
+#: helper/message-display.c:283
 msgid "Disables voice indicator"
 msgstr ""
 
-#: helper/message-display.c:272
+#: helper/message-display.c:284
 msgid "Enables voice indicator"
 msgstr ""
 
-#: helper/message-display.c:273
+#: helper/message-display.c:285
 msgid "Disables fax indicator"
 msgstr ""
 
-#: helper/message-display.c:274
+#: helper/message-display.c:286
 msgid "Enables fax indicator"
 msgstr ""
 
-#: helper/message-display.c:275
+#: helper/message-display.c:287
 msgid "Disables email indicator"
 msgstr ""
 
-#: helper/message-display.c:276
+#: helper/message-display.c:288
 msgid "Enables email indicator"
 msgstr ""
 
-#: helper/message-display.c:277
+#: helper/message-display.c:289
 msgid "Void SMS"
 msgstr ""
 
-#: helper/message-display.c:278
+#: helper/message-display.c:290
 msgid "Nokia WAP bookmark"
 msgstr ""
 
-#: helper/message-display.c:279
+#: helper/message-display.c:291
 msgid "Nokia operator logo"
 msgstr ""
 
-#: helper/message-display.c:280
+#: helper/message-display.c:292
 msgid "Nokia WAP bookmark or WAP/MMS settings"
 msgstr ""
 
-#: helper/message-display.c:281 helper/message-display.c:282
+#: helper/message-display.c:293 helper/message-display.c:294
 msgid "Nokia ringtone"
 msgstr ""
 
-#: helper/message-display.c:283
+#: helper/message-display.c:295
 msgid "Nokia GSM operator logo"
 msgstr ""
 
-#: helper/message-display.c:284
+#: helper/message-display.c:296
 msgid "Nokia caller logo"
 msgstr ""
 
-#: helper/message-display.c:285
+#: helper/message-display.c:297
 msgid "Nokia profile"
 msgstr ""
 
-#: helper/message-display.c:286
+#: helper/message-display.c:298
 msgid "Nokia calendar note"
 msgstr ""
 
-#: helper/message-display.c:287
+#: helper/message-display.c:299
 msgid "Nokia phonebook entry"
 msgstr ""
 
-#: helper/message-display.c:288
+#: helper/message-display.c:300
 msgid "User UDH"
 msgstr ""
 
-#: helper/message-display.c:289
+#: helper/message-display.c:301
 msgid "MMS indicator"
 msgstr ""
 
-#: helper/message-display.c:293
+#: helper/message-display.c:305
 #, c-format
 msgid ", ID (8 bit) %i"
 msgstr ""
 
-#: helper/message-display.c:294
+#: helper/message-display.c:306
 #, c-format
 msgid ", ID (16 bit) %i"
 msgstr ""
 
-#: helper/message-display.c:297
+#: helper/message-display.c:309
 #, c-format
 msgid ", part %i of %i"
 msgstr ""
 
-#: helper/message-display.c:299
+#: helper/message-display.c:311
 #, c-format
 msgid ", %i parts"
 msgstr ""
 
-#: helper/message-display.c:311
+#: helper/message-display.c:323
 msgid "Siemens file"
 msgstr ""
 
-#: helper/message-display.c:314
+#: helper/message-display.c:326
 msgid "8 bit SMS, cannot be displayed here"
 msgstr ""
 
-#: helper/message-display.c:320
+#: helper/message-display.c:332
 #, c-format
 msgid "Unknown PDU type: 0x%x\n"
 msgstr ""
 
-#: helper/message-display.c:363
+#: helper/message-display.c:379
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
 msgstr ""
 
-#: helper/message-display.c:368
+#: helper/message-display.c:384
 msgid "Siemens OTA file"
 msgstr ""
 
-#: helper/message-display.c:370
+#: helper/message-display.c:386
 msgid " - VCARD"
 msgstr ""
 
-#: helper/message-display.c:384
+#: helper/message-display.c:400
 #, c-format
 msgid "Ringtone \"%s\"\n"
 msgstr ""
 
-#: helper/message-display.c:389
+#: helper/message-display.c:405
 msgid "Do you want to play it?"
 msgstr ""
 
-#: helper/message-display.c:394
+#: helper/message-display.c:410
 msgid "Caller logo"
 msgstr ""
 
-#: helper/message-display.c:398
+#: helper/message-display.c:414
 #, c-format
 msgid "Operator logo for %s network"
 msgstr ""
 
-#: helper/message-display.c:418
+#: helper/message-display.c:434
 msgid "Profile"
 msgstr ""
 
-#: helper/message-display.c:439
+#: helper/message-display.c:455
 msgid "EMS sound ID"
 msgstr ""
 
-#: helper/message-display.c:442
+#: helper/message-display.c:458
 msgid "EMS animation ID"
 msgstr ""
 
-#: helper/message-display.c:448
+#: helper/message-display.c:464
 msgid "Message size"
 msgstr ""
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:481 helper/message-display.c:500
+#: helper/message-display.c:497 helper/message-display.c:516
 #: helper/printing.c:18
 msgid "Error"
 msgstr ""
 
-#: helper/message-display.c:515
+#: helper/message-display.c:531
 msgid "Data PDU"
 msgstr ""
 
-#: helper/message-display.c:516
+#: helper/message-display.c:532
 msgid "Number of bits"
 msgstr ""
 
-#: helper/message-display.c:518
+#: helper/message-display.c:534
 msgid "UDH"
 msgstr ""
 
-#: helper/message-display.c:534
+#: helper/message-display.c:550
 msgid "Whole PDU"
 msgstr ""
 
