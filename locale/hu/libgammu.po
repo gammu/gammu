@@ -32,7 +32,7 @@ msgstr "Az eszköz nem nyitható meg, mert zárolt."
 
 #: libgammu/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
-msgstr ""
+msgstr "Az eszköz nem nyitható meg, mert nem létezik."
 
 #: libgammu/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
