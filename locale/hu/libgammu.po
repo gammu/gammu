@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-18 17:08+0100\n"
-"PO-Revision-Date: 2010-02-27 17:38+0200\n"
+"PO-Revision-Date: 2010-02-27 17:40+0200\n"
 "Last-Translator:  <doi@freemail.hu>\n"
 "Language-Team: none\n"
 "Language: hu\n"
@@ -57,6 +57,8 @@ msgstr ""
 #: libgammu/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
+"Hiba az eszköz sebességének megadásakor. Lehet, hogy ez a sebesség nem "
+"támogatott."
 
 #: libgammu/gsmcomon.c:94
 #, fuzzy
