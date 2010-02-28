@@ -1,5 +1,5 @@
-Hints for libGammu Novices  -  Phil Endecott, 3 Jan 2004
---------------------------------------------------------
+Hints for libGammu Novices
+==========================
 
 Here are some brief hints for anyone who, like me, wants to write some
 quick c / C++ code to talk to their phone using the Gammu library.
@@ -7,43 +7,57 @@ quick c / C++ code to talk to their phone using the Gammu library.
 This document is based on Gammu version 0.90.0.
 
 
-1. Basic library usage:
------------------------
+Basic library usage
+-------------------
 
-#include <gammu.h>
+.. code-block:: c
 
-Compile with flags from pkg-config: pkg-config --cflags gammu
+    #include <gammu.h>
 
-Link with flags from pkg-config: pkg-config --libs gammu
+Compile with flags from pkg-config::
+
+    pkg-config --cflags gammu
+
+Link with flags from pkg-config:: 
+
+    pkg-config --libs gammu
 
 
 Gammu stores all its data in a GSM_StateMachine struct.  Declare one
 of those:
 
-GSM_StateMachine state_machine;
+.. code-block:: c
+
+    GSM_StateMachine state_machine;
 
 You'll want to check for errors from time to time.  Do it using a
 function something like this:
 
-void check_error(GSM_Error err)
-{
-  if (err==GE_NONE) {
-    return;
-  }
-  cerr << "Gammu error \""
-       << print_error(err,state_machine.di.df,state_machine.msg)
-       << "\"" << endl;
-  exit(1);
-}
+.. code-block:: c
+
+    void check_error(GSM_Error err)
+    {
+      if (err==GE_NONE) {
+        return;
+      }
+      cerr << "Gammu error \""
+           << print_error(err,state_machine.di.df,state_machine.msg)
+           << "\"" << endl;
+      exit(1);
+    }
 
 Start with this initialisation:
+
+.. code-block:: c
 
   state_machine.opened=false;
   state_machine.msg=NULL;
   state_machine.ConfigNum=0;
 
 Now think about the configuration file.  To use the default
-~/.gammurc, do this:
+:file:`~/.gammurc`, do this:
+
+.. code-block:: c
 
   CFG_Header* cfg_header = CFG_FindGammuRC();
   assert(cfg_header);
@@ -53,11 +67,15 @@ populate the structure yourself.
 
 Now put the information from the file into the state_machine structure:
 
+.. code-block:: c
+
   state_machine.Config[0].Localize=NULL;
   assert(CFG_ReadConfig(cfg_header,&state_machine.Config[0],0));
   state_machine.ConfigNum++;
 
 OK, now initialise the connection:
+
+.. code-block:: c
 
   check_error( GSM_InitConnection(&state_machine,3) );
 
@@ -66,41 +84,45 @@ OK, now initialise the connection:
 Do stuff by calling function-pointers in state_machine.Phone.Functions.
 For example, this reads from a phone-book memory:
 
-check_error ( state_machine.Phone.Functions->GetMemory(&state_machine, &entry) )
+.. code-block:: c
+
+    check_error ( state_machine.Phone.Functions->GetMemory(&state_machine, &entry) )
 
 where entry is declared as a GSM_MemoryEntry.  Specify which entry to
 get by setting the entry.MemoryType and entry.Location fields first.
 
 Similarly, this writes one back:
 
-check_error ( state_machine.Phone.Functions->SetMemory(&state_machine, &entry) )
+.. code-block:: c
+
+    check_error ( state_machine.Phone.Functions->SetMemory(&state_machine, &entry) )
 
 There are numerous other functions to achieve all the same things you
 can do from the gammu command-line application.
 
 When you're finished:
 
-check_error ( GSM_TerminateConnection(&state_machine) );
+.. code-block:: c
+
+    check_error ( GSM_TerminateConnection(&state_machine) );
 
 
-2. For C++ users:
+For C++ users
+-------------
 
 I'm using libgammu from C++, and have the following suggestions:
 
-- Put 'extern "C"' around the #include <gammu/gammu.h> as it doesn't
-have this itself.
+* Put 'extern "C"' around the #include <gammu/gammu.h> as it doesn't
+  have this itself.
+* #undef bool after #including it (they #define bool int).
+* The gammu headers generally declare strings as "unsigned char*"
+  rather than "const char*".  I presume they actually are const, but
+  experience tells me it is best not to make assumptions and avoid
+  const_cast.  Copy your string literal into a writable unsigned char
+  array.  Ugly but safe.
 
-- #undef bool after #including it (they #define bool int).
-
-- The gammu headers generally declare strings as "unsigned char*"
-rather than "const char*".  I presume they actually are const, but
-experience tells me it is best not to make assumptions and avoid
-const_cast.  Copy your string literal into a writable unsigned char
-array.  Ugly but safe.
-
-
-
-3. Unicode:
+Unicode
+-------
 
 Strings, e.g. in the GSM_MemoryEntry structure, are stored in Unicode.
 If you've got "normal" strings you'll need to convert them.  I
@@ -116,7 +138,8 @@ think (?) that the output from recode_string_to_buffer needs to have
 ends?).
 
 
-4. Other hints:
+Other hints
+-----------
 
 I spent a long time trying to work out why I couldn't save address
 book entries until I discovered that you're not allowed to have spaces
@@ -128,7 +151,8 @@ di.df = stdout;
 (di is declared as "extern Debug_Info di;" in gammu/misc/misc.h)
 
 
-5. Further documentation:
+Further documentation
+---------------------
 
 There isn't any.  Your best best is to look at the include files, and
 to try to decipher the 7000+ lines of gammu.c, the command-line
@@ -146,4 +170,5 @@ email address.
 
 
 This document is in the public domain.  Do what you like with it.
+
 
