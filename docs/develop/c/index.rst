@@ -1,5 +1,5 @@
-libGammu C API
-==============
+libGammu
+========
 
 .. warning::
 
