@@ -10,3 +10,4 @@ Callback
 .. doxygentypedef:: IncomingSMSCallback
 .. doxygentypedef:: IncomingCBCallback
 .. doxygentypedef:: IncomingUSSDCallback
+.. doxygentypedef:: SendSMSStatusCallback
