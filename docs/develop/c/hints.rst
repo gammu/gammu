@@ -4,7 +4,9 @@ Hints for libGammu Novices
 Here are some brief hints for anyone who, like me, wants to write some
 quick c / C++ code to talk to their phone using the Gammu library.
 
-This document is based on Gammu version 0.90.0.
+.. warning::
+
+    This document is based on Gammu version 0.90.0.
 
 
 Basic library usage
