@@ -35,13 +35,16 @@ directly to one of authors::
 Creating patches
 ----------------
 
-I will describe, how to make patch using diff. If you can't make it,
-simply send me info about changes in plain text email or attached ASCII
-file.
+If for whatever reason you don't want to use Git, you can also manually create
+patches using :program:`diff`. Also we can handle if you send us just the file
+you have changed with reference where did you take it.
 
-1. copy source with Gammu, you start from, into "gammu" dir
-2. copy source with Gammu, you want to modify, into "work" dir
-3. make changes in "work"
-4. go into subdirectory with "gammu" and "work"
-5. make "diff -urx CVS gammu work > patchfile"
-6. send "patchfile" to me ;-)
+To manually create patch you can use following steps:
+
+1. Copy source with Gammu, you start from, into ``gammu`` directory.
+2. Copy source with Gammu, you want to modify, into ``work`` directory.
+3. Make your changes in ``work`` directory.
+4. Go into parent directory, where ``gammu`` and ``work`` directories are
+   placed.
+5. Call ``diff -rup -X .git gammu work > patchfile``.
+6. Send ``patchfile`` to us (you can use bug tracker or mailing list).
