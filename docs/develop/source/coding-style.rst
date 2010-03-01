@@ -1,6 +1,13 @@
 Coding Style
 ============
 
+Please follow coding style when touching Gammu code. We know that there are
+still some parts which really do not follow it and fixes to that are also
+welcome.
+
+The coding style is quite similar to what Linux kernel uses, the only major
+differences are requested block braces and switch indentation.
+
 1. Use indentation, tab is tab and is 8 chars wide.
 2. Try to avoid long lines (though there is currently no hard limit on line
    length).

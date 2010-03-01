@@ -1,5 +1,5 @@
 #!/bin/sh
-indent -npro -kr -i8 -ts8 -sob -ss -ncs -cli8 -nbad \
+indent -npro -kr -i8 -ts8 -sob -ss -ncs -cli8 -nbad -cp1 \
     --line-length180 \
     --indent-label0 \
     --braces-on-if-line \
