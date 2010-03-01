@@ -42,3 +42,6 @@ Coding Style
             return *bar;
         }
 7. Generally all enums start from 1, not from 0. 0 is used for not set value.
+
+You can use :program:`admin/Gindent` to adjust coding style of your file to
+match our coding style.
