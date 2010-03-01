@@ -77,13 +77,13 @@ locale directory
 ----------------
 
 Gettext po files for translating Gammu, libGammu and user documentation.
-See :doc:`../source/localization` for more information.
+See :doc:`localization` for more information.
 
 tests directory
 ---------------
 
-CTest based test suite for libGammu. Tests are ran daily and you can find the
-results on `dashboard <https://cdash.cihar.com/index.php?project=Gammu>`_.
+CTest based test suite for libGammu.
+See :doc:`testing` for more information.
 
 utils directory
 ---------------
