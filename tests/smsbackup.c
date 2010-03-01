@@ -39,12 +39,12 @@ int main(int argc UNUSED, char **argv UNUSED)
 	}
 
 	/* Allocate memory for sorted ones */
-	SortedSMS = (GSM_MultiSMSMessage **)malloc((count + 1) * sizeof(GSM_MultiSMSMessage *));
-	InputSMS = (GSM_MultiSMSMessage **)malloc((count + 1) * sizeof(GSM_MultiSMSMessage *));
+	SortedSMS = (GSM_MultiSMSMessage **) malloc((count + 1) * sizeof(GSM_MultiSMSMessage *));
+	InputSMS = (GSM_MultiSMSMessage **) malloc((count + 1) * sizeof(GSM_MultiSMSMessage *));
 
 	/* Copy messages to multi message buffers */
 	for (i = 0; i < count; i++) {
-		InputSMS[i] = (GSM_MultiSMSMessage *)malloc(sizeof(GSM_MultiSMSMessage));
+		InputSMS[i] = (GSM_MultiSMSMessage *) malloc(sizeof(GSM_MultiSMSMessage));
 		InputSMS[i]->Number = 1;
 		InputSMS[i]->SMS[0] = *Backup.SMS[i];
 	}
@@ -69,4 +69,3 @@ int main(int argc UNUSED, char **argv UNUSED)
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
-

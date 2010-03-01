@@ -7,8 +7,8 @@
 
 #include "common.h"
 
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
 
 #include "../helper/message-display.h"
 
@@ -32,14 +32,14 @@ unsigned char data[] = {
 	0x00, 0x30, 0x00, 0x32, 0x00, 0x32, 0x00, 0x00, 0x0C, 0x00, 0x01, 0x00, 0x07, 0x00, 0x01, 0x00,
 	0x05, 0x00, 0x01, 0x00, 0x06, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x01, 0x02, 0x0B,
 	0x00, 0x01, 0x00, 0x09, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00
-	};
+};
 
 unsigned char message[] = {
 	0x00, 0x34, 0x00, 0x35, 0x00, 0x35, 0x00, 0x35, 0x00, 0x35, 0x00, 0x0A
-	};
+};
 
 /* This is not part of API! */
-extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF, int location);
+extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms, GSM_File * FFF, int location);
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
@@ -56,7 +56,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
-	test_result (s != NULL);
+	test_result(s != NULL);
 
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(TRUE, debug_info);
@@ -76,7 +76,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Check expected text */
 	len = UnicodeLength(sms.SMS[0].Text);
-	if (len > (sizeof(message) / 2) - 1) len = (sizeof(message) / 2) - 1;
+	if (len > (sizeof(message) / 2) - 1)
+		len = (sizeof(message) / 2) - 1;
 	test_result(mywstrncmp(sms.SMS[0].Text, message, len) == TRUE);
 
 	/* Display message */

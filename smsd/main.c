@@ -126,8 +126,7 @@ void help(void)
 	printf("options:\n");
 	print_option("h", "help", "shows this help");
 	print_option("v", "version", "shows version information");
-	print_option_param("c", "config", "CONFIG_FILE",
-			   "defines path to config file");
+	print_option_param("c", "config", "CONFIG_FILE", "defines path to config file");
 #ifdef HAVE_DAEMON
 	print_option("d", "daemon", "daemonizes program after startup");
 #endif
@@ -142,10 +141,8 @@ void help(void)
 	print_option_param("X", "suicide", "SECONDS", "kills itself after number of seconds");
 #endif
 #ifdef HAVE_WINDOWS_SERVICE
-	print_option("i", "install-service",
-		     "installs SMSD as a Windows service");
-	print_option("u", "uninstall-service",
-		     "uninstalls SMSD as a Windows service");
+	print_option("i", "install-service", "installs SMSD as a Windows service");
+	print_option("u", "uninstall-service", "uninstalls SMSD as a Windows service");
 	print_option("s", "start-service", "starts SMSD Windows service");
 	print_option("k", "stop-service", "stops SMSD Windows service");
 	print_option("S", "run-as-service", "runs as a SMSD Windows service");
@@ -184,9 +181,7 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 	};
 	int option_index;
 
-	while ((opt =
-		getopt_long(argc, argv, "hvdc:p:iusSkU:G:n:X:", long_options,
-			    &option_index)) != -1) {
+	while ((opt = getopt_long(argc, argv, "hvdc:p:iusSkU:G:n:X:", long_options, &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
 	while ((opt = getopt(argc, argv, "hvdc:p:iusSkU:G:n:X:")) != -1) {
 #else
@@ -280,7 +275,6 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 
 }
 
-
 void configure_daemon(SMSD_Parameters * params)
 {
 	signal(SIGINT, smsd_interrupt);
@@ -322,8 +316,7 @@ void configure_daemon(SMSD_Parameters * params)
 #ifdef HAVE_WINDOWS_SERVICE
 	if (params->run_service) {
 		if (!start_smsd_service_dispatcher()) {
-			printf("Error starting %s service\n",
-			       smsd_service_name);
+			printf("Error starting %s service\n", smsd_service_name);
 			service_print_error("Error running service");
 			exit(1);
 		}
@@ -367,24 +360,20 @@ int main(int argc, char **argv)
 #ifdef HAVE_WINDOWS_SERVICE
 	if (params.stop_service) {
 		if (stop_smsd_service()) {
-			printf("Service %s stopped sucessfully\n",
-			       smsd_service_name);
+			printf("Service %s stopped sucessfully\n", smsd_service_name);
 			exit(0);
 		} else {
-			printf("Error stopping %s service\n",
-			       smsd_service_name);
+			printf("Error stopping %s service\n", smsd_service_name);
 			service_print_error("Error stopping service");
 			exit(1);
 		}
 	}
 	if (params.uninstall_service) {
 		if (uninstall_smsd_service()) {
-			printf("Service %s uninstalled sucessfully\n",
-			       smsd_service_name);
+			printf("Service %s uninstalled sucessfully\n", smsd_service_name);
 			exit(0);
 		} else {
-			printf("Error uninstalling %s service\n",
-			       smsd_service_name);
+			printf("Error uninstalling %s service\n", smsd_service_name);
 			service_print_error("Error uninstalling service");
 			exit(1);
 		}
@@ -403,24 +392,20 @@ int main(int argc, char **argv)
 #ifdef HAVE_WINDOWS_SERVICE
 	if (params.install_service) {
 		if (install_smsd_service(&params)) {
-			printf("Service %s installed sucessfully\n",
-			       smsd_service_name);
+			printf("Service %s installed sucessfully\n", smsd_service_name);
 			exit(0);
 		} else {
-			printf("Error installing %s service\n",
-			       smsd_service_name);
+			printf("Error installing %s service\n", smsd_service_name);
 			service_print_error("Error installing service");
 			exit(1);
 		}
 	}
 	if (params.start_service) {
 		if (start_smsd_service()) {
-			printf("Service %s started sucessfully\n",
-			       smsd_service_name);
+			printf("Service %s started sucessfully\n", smsd_service_name);
 			exit(0);
 		} else {
-			printf("Error starting %s service\n",
-			       smsd_service_name);
+			printf("Error starting %s service\n", smsd_service_name);
 			service_print_error("Error starting service");
 			exit(1);
 		}

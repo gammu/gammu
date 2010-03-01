@@ -13,6 +13,7 @@
 # endif
 #endif
 
-int main(int argc UNUSED, char** argv UNUSED) {
+int main(int argc UNUSED, char **argv UNUSED)
+{
 	return 0;
 }

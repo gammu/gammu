@@ -3,9 +3,9 @@
 #include <gammu.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
-#include "../libgammu/gsmphones.h" /* Phone data */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
+#include "../libgammu/gsmphones.h"	/* Phone data */
 
 #include "../helper/message-display.h"
 
@@ -16,10 +16,10 @@ unsigned char data[] = {
 	0x51, 0x00, 0x00, 0xF0, 0x00, 0x04, 0x82, 0x0B, 0x01, 0x07, 0x0A, 0x81, 0x70, 0x60, 0x50, 0x75,
 	0x85, 0x82, 0x0C, 0x02, 0x08, 0x07, 0x91, 0x64, 0x07, 0x05, 0x80, 0x99, 0xF9, 0x80, 0x0D, 0x09,
 	0x0A, 0x08, 0x0D, 0x02, 0x00, 0x07, 0x0B, 0x02, 0x00, 0x00, 0x08, 0x05, 0x01, 0xFF, 0x00,
-	};
+};
 
 /* This is not part of API! */
-extern GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s);
+extern GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine * s);
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
@@ -35,7 +35,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
-	test_result (s != NULL);
+	test_result(s != NULL);
 
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(TRUE, debug_info);
@@ -50,7 +50,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	msg.Buffer = data;
 
 	s->Phone.Data.GetSMSMessage = &sms;
-	sms.SMS[0].Memory	= MEM_ME;
+	sms.SMS[0].Memory = MEM_ME;
 
 	/* Parse it */
 	error = N6510_ReplyGetSMSMessage(msg, s);

@@ -67,7 +67,7 @@ extern PyObject *PyERR_OTHERCONNECTIONREQUIRED;
 extern PyObject *PyERR_WRONGCRC;
 extern PyObject *PyERR_INVALIDDATETIME;
 
-int checkError(GSM_StateMachine *s, GSM_Error error, const char *where);
-int gammu_create_errors(PyObject *d);
+int checkError(GSM_StateMachine * s, GSM_Error error, const char *where);
+int gammu_create_errors(PyObject * d);
 
 #endif

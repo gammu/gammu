@@ -7,8 +7,8 @@
 
 #include "common.h"
 
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
 
 #include "../helper/message-display.h"
 
@@ -43,13 +43,12 @@ unsigned char data[] = {
 	0x00, 0x0E, 0x00, 0x54, 0x00, 0x63, 0x00, 0x68, 0x00, 0x69, 0x00, 0x62, 0x00, 0x6F, 0x00, 0x00,
 	0x07, 0x00, 0x01, 0x00, 0x05, 0x00, 0x01, 0x00, 0x12, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x24,
 	0x00, 0x01, 0x00, 0x22, 0x00, 0x01, 0x00
-	};
+};
 
 const char smsc[] = "+491760000443";
 
-
 /* This is not part of API! */
-extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF, int location);
+extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms, GSM_File * FFF, int location);
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
@@ -65,7 +64,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
-	test_result (s != NULL);
+	test_result(s != NULL);
 
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(TRUE, debug_info);

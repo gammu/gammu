@@ -7,8 +7,8 @@
 
 #include "common.h"
 
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
 
 #include "../helper/message-display.h"
 
@@ -39,12 +39,12 @@ unsigned char data[] = {
 	0x7A, 0x00, 0x65, 0x00, 0x6B, 0x00, 0x00, 0x20, 0x00, 0x17, 0x47, 0x6D, 0x61, 0x69, 0x6C, 0x49,
 	0x64, 0x31, 0x31, 0x63, 0x31, 0x33, 0x30, 0x31, 0x32, 0x39, 0x31, 0x33, 0x64, 0x30, 0x61, 0x66,
 	0x37,
-	};
+};
 
 const char text[] = "";
 
 /* This is not part of API! */
-extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF, int location);
+extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms, GSM_File * FFF, int location);
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
@@ -60,7 +60,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
-	test_result (s != NULL);
+	test_result(s != NULL);
 
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(TRUE, debug_info);

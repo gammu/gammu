@@ -15,14 +15,13 @@ char debug_filename[] = ".\\gammu-debug-test.log";
 char debug_filename[] = "./gammu-debug-test.log";
 #endif
 
-
 NORETURN void fail(int errcode)
 {
 	unlink(debug_filename);
 	exit(errcode);
 }
 
-void check_log(FILE *f, gboolean match, const char *test_name)
+void check_log(FILE * f, gboolean match, const char *test_name)
 {
 	char buff[100];
 	char test_message[] = "T3ST M3S5AG3";
@@ -99,7 +98,6 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = GSM_SetDebugFileDescriptor(NULL, FALSE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(NULL, FALSE, di_global)");
 
-
 	/*
 	 * Test 3 - global /dev/null, local tempfile, use global
 	 */
@@ -116,7 +114,6 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = GSM_SetDebugFileDescriptor(NULL, FALSE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(NULL, FALSE, di_global)");
 
-
 	/*
 	 * Test 4 - global tempfile, local /dev/null, use global
 	 */
@@ -132,7 +129,6 @@ int main(int argc UNUSED, char **argv UNUSED)
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(NULL, FALSE, di_sm)");
 	error = GSM_SetDebugFileDescriptor(NULL, FALSE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(NULL, FALSE, di_global)");
-
 
 	/*
 	 * Test 5 - global tempfile, local /dev/null, do not use global
@@ -167,7 +163,6 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = GSM_SetDebugFileDescriptor(NULL, FALSE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(NULL, FALSE, di_global)");
 
-
 	/*
 	 * Test 7 - global /dev/null, local tempfile, use global
 	 */
@@ -185,7 +180,6 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = GSM_SetDebugFileDescriptor(NULL, FALSE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(NULL, FALSE, di_global)");
 
-
 	/*
 	 * Test 8 - global tempfile, local /dev/null, use global
 	 */
@@ -202,7 +196,6 @@ int main(int argc UNUSED, char **argv UNUSED)
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(NULL, FALSE, di_sm)");
 	error = GSM_SetDebugFileDescriptor(NULL, FALSE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(NULL, FALSE, di_global)");
-
 
 	/*
 	 * Test 9 - global tempfile, local /dev/null, do not use global
@@ -258,7 +251,6 @@ int main(int argc UNUSED, char **argv UNUSED)
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(NULL, FALSE, di_sm)");
 	error = GSM_SetDebugFileDescriptor(NULL, FALSE, di_global);
 	gammu_test_result(error, "GSM_SetDebugFileDescriptor(NULL, FALSE, di_global)");
-
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);

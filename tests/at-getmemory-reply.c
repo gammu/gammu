@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
-#include "../libgammu/gsmphones.h" /* Phone data */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
+#include "../libgammu/gsmphones.h"	/* Phone data */
 
 #include "../helper/memory-display.h"
 
@@ -14,7 +14,7 @@
 
 #define BUFFER_SIZE 16384
 
-extern GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s);
+extern GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine * s);
 
 int main(int argc, char **argv)
 {
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	GSM_StateMachine *s;
 	GSM_Protocol_Message msg;
 	GSM_Error error;
-    GSM_MemoryEntry memory;
+	GSM_MemoryEntry memory;
 
 	/* Check parameters */
 	if (argc != 2 && argc != 3) {
@@ -73,15 +73,15 @@ int main(int argc, char **argv)
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->Manufacturer = AT_Motorola;
 	Priv->SMSMode = SMS_AT_PDU;
-    if (argc == 3 && strcmp(argv[2], "PCCP437") == 0) {
-        Priv->Charset = AT_CHARSET_PCCP437;
-    } else if (argc == 3 && strcmp(argv[2], "UTF8") == 0) {
-        Priv->Charset = AT_CHARSET_UTF8;
-    } else if (argc == 3 && strcmp(argv[2], "HEX") == 0) {
-        Priv->Charset = AT_CHARSET_HEX;
-    } else {
-        Priv->Charset = AT_CHARSET_UCS2;
-    }
+	if (argc == 3 && strcmp(argv[2], "PCCP437") == 0) {
+		Priv->Charset = AT_CHARSET_PCCP437;
+	} else if (argc == 3 && strcmp(argv[2], "UTF8") == 0) {
+		Priv->Charset = AT_CHARSET_UTF8;
+	} else if (argc == 3 && strcmp(argv[2], "HEX") == 0) {
+		Priv->Charset = AT_CHARSET_HEX;
+	} else {
+		Priv->Charset = AT_CHARSET_UCS2;
+	}
 
 	/* Init message */
 	msg.Type = 0;
@@ -89,7 +89,7 @@ int main(int argc, char **argv)
 	msg.Buffer = buffer;
 	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, "\"", 1, TRUE);
 
-    s->Phone.Data.Memory = &memory;
+	s->Phone.Data.Memory = &memory;
 
 	/* Parse it */
 	error = ATGEN_ReplyGetMemory(msg, s);
@@ -106,12 +106,9 @@ int main(int argc, char **argv)
 	error = PrintMemoryEntry(&memory, NULL);
 	gammu_test_result(error, "PrintMemoryEntry");
 
-
 	return 0;
 }
 
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
-
-

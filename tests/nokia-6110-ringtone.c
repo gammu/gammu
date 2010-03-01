@@ -3,8 +3,8 @@
 #include <gammu.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
 
 #include "common.h"
 
@@ -29,10 +29,10 @@ unsigned char data[] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00,
-	};
+};
 
 /* This is not part of API! */
-extern GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s);
+extern GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine * s);
 
 int main(int argc UNUSED, char **argv UNUSED)
 {

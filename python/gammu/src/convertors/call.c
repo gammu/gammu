@@ -22,59 +22,86 @@
 
 #include "convertors.h"
 
-char *CallStatusToString(GSM_CallStatus ct) {
-    char *s = NULL;
+char *CallStatusToString(GSM_CallStatus ct)
+{
+	char *s = NULL;
 
-    switch (ct) {
-        case GSM_CALL_IncomingCall: s = strdup("IncomingCall"); break;
-        case GSM_CALL_OutgoingCall: s = strdup("OutgoingCall"); break;
-        case GSM_CALL_CallStart: s = strdup("CallStart"); break;
-        case GSM_CALL_CallEnd: s = strdup("CallEnd"); break;
-        case GSM_CALL_CallRemoteEnd: s = strdup("CallRemoteEnd"); break;
-        case GSM_CALL_CallLocalEnd: s = strdup("CallLocalEnd"); break;
-        case GSM_CALL_CallEstablished: s = strdup("CallEstablished"); break;
-        case GSM_CALL_CallHeld: s = strdup("CallHeld"); break;
-        case GSM_CALL_CallResumed: s = strdup("CallResumed"); break;
-        case GSM_CALL_CallSwitched: s = strdup("CallSwitched"); break;
-    }
+	switch (ct) {
+		case GSM_CALL_IncomingCall:
+			s = strdup("IncomingCall");
+			break;
+		case GSM_CALL_OutgoingCall:
+			s = strdup("OutgoingCall");
+			break;
+		case GSM_CALL_CallStart:
+			s = strdup("CallStart");
+			break;
+		case GSM_CALL_CallEnd:
+			s = strdup("CallEnd");
+			break;
+		case GSM_CALL_CallRemoteEnd:
+			s = strdup("CallRemoteEnd");
+			break;
+		case GSM_CALL_CallLocalEnd:
+			s = strdup("CallLocalEnd");
+			break;
+		case GSM_CALL_CallEstablished:
+			s = strdup("CallEstablished");
+			break;
+		case GSM_CALL_CallHeld:
+			s = strdup("CallHeld");
+			break;
+		case GSM_CALL_CallResumed:
+			s = strdup("CallResumed");
+			break;
+		case GSM_CALL_CallSwitched:
+			s = strdup("CallSwitched");
+			break;
+	}
 
-    if (s == NULL) {
-        PyErr_Format(PyExc_ValueError, "Bad value for CallStatus from Gammu: '%d'", ct);
-        return NULL;
-    }
+	if (s == NULL) {
+		PyErr_Format(PyExc_ValueError,
+			     "Bad value for CallStatus from Gammu: '%d'", ct);
+		return NULL;
+	}
 
-    return s;
+	return s;
 }
 
-PyObject *CallToPython(GSM_Call *call) {
-    PyObject *number;
-    PyObject *result;
-    char *status;
+PyObject *CallToPython(GSM_Call * call)
+{
+	PyObject *number;
+	PyObject *result;
+	char *status;
 
-    number = UnicodeStringToPython(call->PhoneNumber);
-    if (number == NULL) {
-        return NULL;
-    }
+	number = UnicodeStringToPython(call->PhoneNumber);
+	if (number == NULL) {
+		return NULL;
+	}
 
-    status = CallStatusToString(call->Status);
-    if (status == NULL) {
-        Py_DECREF(number);
-        return NULL;
-    }
+	status = CallStatusToString(call->Status);
+	if (status == NULL) {
+		Py_DECREF(number);
+		return NULL;
+	}
 
-    if (call->CallIDAvailable) {
-        result = Py_BuildValue("{s:s,s:O,s:i,s:i}",
-                "Status", status,
-                "Number", number,
-                "CallID", call->CallID,
-                "StatusCode", call->StatusCode);
-    } else {
-        result = Py_BuildValue("{s:s,s:O,s:i}",
-                "Status", status,
-                "Number", number,
-                "StatusCode", call->StatusCode);
-    }
-    Py_DECREF(number);
-    free(status);
-    return result;
+	if (call->CallIDAvailable) {
+		result = Py_BuildValue("{s:s,s:O,s:i,s:i}",
+				       "Status", status,
+				       "Number", number,
+				       "CallID", call->CallID,
+				       "StatusCode", call->StatusCode);
+	} else {
+		result = Py_BuildValue("{s:s,s:O,s:i}",
+				       "Status", status,
+				       "Number", number,
+				       "StatusCode", call->StatusCode);
+	}
+	Py_DECREF(number);
+	free(status);
+	return result;
 }
+
+/*
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

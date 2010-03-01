@@ -7,5 +7,7 @@ This document describes Gammu source to allow easier orientation in it.
     :maxdepth: 2
 
     coding-style
+    testing
+    localization
     directories
     reply
