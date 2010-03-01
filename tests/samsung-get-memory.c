@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
-#include "../libgammu/gsmphones.h" /* Phone data */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
+#include "../libgammu/gsmphones.h"	/* Phone data */
 
 #include "../helper/memory-display.h"
 
@@ -14,7 +14,7 @@
 
 #define BUFFER_SIZE 16384
 
-extern GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s);
+extern GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine * s);
 
 int main(int argc, char **argv)
 {
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 	GSM_StateMachine *s;
 	GSM_Protocol_Message msg;
 	GSM_Error error;
-    GSM_MemoryEntry Entry;
+	GSM_MemoryEntry Entry;
 
 	/* Check parameters */
 	if (argc != 2) {
@@ -73,7 +73,7 @@ int main(int argc, char **argv)
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
 	Priv->Charset = AT_CHARSET_UCS2;
-    s->Phone.Data.Memory = &Entry;
+	s->Phone.Data.Memory = &Entry;
 
 	/* Init message */
 	msg.Type = 0;
@@ -89,13 +89,12 @@ int main(int argc, char **argv)
 	FreeLines(&Priv->Lines);
 	GetLineString(NULL, NULL, 0);
 
-    /* Print it */
-    error = PrintMemoryEntry(&Entry, s);
-    gammu_test_result(error, "PrintMemoryEntry");
+	/* Print it */
+	error = PrintMemoryEntry(&Entry, s);
+	gammu_test_result(error, "PrintMemoryEntry");
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
-
 
 	return 0;
 }
@@ -103,5 +102,3 @@ int main(int argc, char **argv)
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
-
-

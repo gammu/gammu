@@ -3,8 +3,8 @@
 #include <gammu.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
 
 #include "../helper/message-display.h"
 
@@ -23,10 +23,10 @@ unsigned char data[] = {
 	0xB4, 0x2E, 0xDF, 0x6E, 0xB7, 0x1B, 0x4A, 0x0A, 0x9F, 0xD5, 0x60, 0x2B, 0x28, 0xD4, 0x99, 0x72,
 	0x4D, 0xF3, 0x61, 0x79, 0x98, 0x0E, 0x32, 0x81, 0xD6, 0x65, 0x7A, 0xD9, 0x4D, 0xAF, 0x87, 0xDD,
 	0x20, 0x71, 0x59, 0xCE, 0x0E, 0xAF, 0xEB,
-	};
+};
 
 /* This is not part of API! */
-extern GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s);
+extern GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine * s);
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
@@ -42,7 +42,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
-	test_result (s != NULL);
+	test_result(s != NULL);
 
 	/* Init message */
 	msg.Type = 0x14;

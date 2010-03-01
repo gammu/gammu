@@ -7,9 +7,9 @@
 #include "common.h"
 #include "../libgammu/phone/at/atgen.h"
 #include "../libgammu/phone/at/samsung.h"
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
-#include "../libgammu/gsmphones.h" /* Phone data */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
+#include "../libgammu/gsmphones.h"	/* Phone data */
 
 #define BUFFER_SIZE ((size_t)16384)
 
@@ -53,7 +53,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = SAMSUNG_ParseTask(s, "+ORGR: 205,3,,\"\002Cemento\003\",13,3,2009,10,35,13,3,2009,,,,1,3,0,0,1,0,,,");
 	gammu_test_result(error, "Task 1");
 
-	error = SAMSUNG_ParseAppointment(s, "+ORGR: 161,1,\"\002Comprar lagrimas artificiales\003\",\"\002Farmacia\003\",2,4,2009,9,0,2,4,2009,9,10,\"Farmacia\",1,1,0,3,,,29,1,2010");
+	error = SAMSUNG_ParseAppointment(s,
+					 "+ORGR: 161,1,\"\002Comprar lagrimas artificiales\003\",\"\002Farmacia\003\",2,4,2009,9,0,2,4,2009,9,10,\"Farmacia\",1,1,0,3,,,29,1,2010");
 	gammu_test_result(error, "Appointment 1");
 
 	error = SAMSUNG_ParseAppointment(s, "+ORGR: 235,4,\"\002Curso\003\",\"\002Averiguar\003\",13,3,2009,9,50,13,3,2009,9,59,,1,1,0,,,,,,");

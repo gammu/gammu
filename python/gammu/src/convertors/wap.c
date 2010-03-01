@@ -21,145 +21,164 @@
 /* MMS and WAP related conversions */
 #include "convertors.h"
 
-char *MMSClassToString(GSM_MMS_Class c) {
-    char *s = NULL;
+char *MMSClassToString(GSM_MMS_Class c)
+{
+	char *s = NULL;
 
-    switch (c) {
-        case GSM_MMS_Personal:
-            s = strdup("Personal");
-            break;
-	    case GSM_MMS_Advertisement:
-            s = strdup("Advertisement");
-            break;
-	    case GSM_MMS_Info:
-            s = strdup("Info");
-            break;
-	    case GSM_MMS_Auto:
-            s = strdup("Auto");
-            break;
-        case GSM_MMS_None:
-            s = strdup("");
-            break;
-    }
+	switch (c) {
+		case GSM_MMS_Personal:
+			s = strdup("Personal");
+			break;
+		case GSM_MMS_Advertisement:
+			s = strdup("Advertisement");
+			break;
+		case GSM_MMS_Info:
+			s = strdup("Info");
+			break;
+		case GSM_MMS_Auto:
+			s = strdup("Auto");
+			break;
+		case GSM_MMS_None:
+			s = strdup("");
+			break;
+	}
 
-    if (s == NULL) {
-        PyErr_Format(PyExc_ValueError, "Bad value for MMS Class from Gammu: '%d'", c);
-        return NULL;
-    }
+	if (s == NULL) {
+		PyErr_Format(PyExc_ValueError,
+			     "Bad value for MMS Class from Gammu: '%d'", c);
+		return NULL;
+	}
 
-    return s;
+	return s;
 }
 
-GSM_MMS_Class MMSClassFromString(const char *s) {
-    if (strcmp("Personal", s) == 0) return GSM_MMS_Personal;
-    else if (strcmp("Advertisement", s) == 0) return GSM_MMS_Advertisement;
-    else if (strcmp("Info", s) == 0) return GSM_MMS_Info;
-    else if (strcmp("Auto", s) == 0) return GSM_MMS_Auto;
-    else if (strcmp("", s) == 0) return GSM_MMS_None;
-    PyErr_Format(PyExc_MemoryError, "Bad value for MMS Class Type '%s'", s);
-    return ENUM_INVALID;
+GSM_MMS_Class MMSClassFromString(const char *s)
+{
+	if (strcmp("Personal", s) == 0)
+		return GSM_MMS_Personal;
+	else if (strcmp("Advertisement", s) == 0)
+		return GSM_MMS_Advertisement;
+	else if (strcmp("Info", s) == 0)
+		return GSM_MMS_Info;
+	else if (strcmp("Auto", s) == 0)
+		return GSM_MMS_Auto;
+	else if (strcmp("", s) == 0)
+		return GSM_MMS_None;
+	PyErr_Format(PyExc_MemoryError, "Bad value for MMS Class Type '%s'", s);
+	return ENUM_INVALID;
 }
 
-PyObject *MMSIndicatorToPython(GSM_MMSIndicator *mms) {
-    char *class;
+PyObject *MMSIndicatorToPython(GSM_MMSIndicator * mms)
+{
+	char *class;
 
-    class = MMSClassToString(mms->Class);
-    if (class == NULL) {
-        return NULL;
-    }
-    return Py_BuildValue("{s:s,s:s,s:s,s:s}",
-            "Address",          mms->Address,
-            "Title",            mms->Title,
-            "Sender",           mms->Sender,
-            "MessageSize",      (int)mms->MessageSize,
-            "Class",           class);
+	class = MMSClassToString(mms->Class);
+	if (class == NULL) {
+		return NULL;
+	}
+	return Py_BuildValue("{s:s,s:s,s:s,s:s}",
+			     "Address", mms->Address,
+			     "Title", mms->Title,
+			     "Sender", mms->Sender,
+			     "MessageSize", (int)mms->MessageSize,
+			     "Class", class);
 }
 
-int MMSIndicatorFromPython(PyObject* dict, GSM_MMSIndicator *mms) {
-    char    *s;
+int MMSIndicatorFromPython(PyObject * dict, GSM_MMSIndicator * mms)
+{
+	char *s;
 
-    if (!PyDict_Check(dict)) {
-        PyErr_Format(PyExc_ValueError, "MMSIndicator is not a dictionary");
-        return 0;
-    }
+	if (!PyDict_Check(dict)) {
+		PyErr_Format(PyExc_ValueError,
+			     "MMSIndicator is not a dictionary");
+		return 0;
+	}
 
-    memset(mms, 0, sizeof(mms));
+	memset(mms, 0, sizeof(mms));
 
-    s = GetCStringFromDict(dict, "Address");
-    if (strlen(s) > 499) {
-        PyErr_Format(PyExc_ValueError, "Address too long!");
-        return 0;
-    }
-    strcpy(s, mms->Address);
+	s = GetCStringFromDict(dict, "Address");
+	if (strlen(s) > 499) {
+		PyErr_Format(PyExc_ValueError, "Address too long!");
+		return 0;
+	}
+	strcpy(s, mms->Address);
 
-    s = GetCStringFromDict(dict, "Title");
-    if (strlen(s) > 499) {
-        PyErr_Format(PyExc_ValueError, "Title too long!");
-        return 0;
-    }
-    strcpy(s, mms->Title);
+	s = GetCStringFromDict(dict, "Title");
+	if (strlen(s) > 499) {
+		PyErr_Format(PyExc_ValueError, "Title too long!");
+		return 0;
+	}
+	strcpy(s, mms->Title);
 
-    s = GetCStringFromDict(dict, "Sender");
-    if (strlen(s) > 499) {
-        PyErr_Format(PyExc_ValueError, "Sender too long!");
-        return 0;
-    }
-    strcpy(s, mms->Sender);
+	s = GetCStringFromDict(dict, "Sender");
+	if (strlen(s) > 499) {
+		PyErr_Format(PyExc_ValueError, "Sender too long!");
+		return 0;
+	}
+	strcpy(s, mms->Sender);
 
-    mms->MessageSize = GetIntFromDict(dict, "MessageSender");
-    if (mms->MessageSize == INT_INVALID) {
-        mms->MessageSize = 0;
-    }
+	mms->MessageSize = GetIntFromDict(dict, "MessageSender");
+	if (mms->MessageSize == INT_INVALID) {
+		mms->MessageSize = 0;
+	}
 
-    s = GetCStringFromDict(dict, "Class");
-    if (s != NULL) {
-        mms->Class = MMSClassFromString(s);
-        if (mms->Class == ENUM_INVALID) {
-            return 0;
-        }
-    }
+	s = GetCStringFromDict(dict, "Class");
+	if (s != NULL) {
+		mms->Class = MMSClassFromString(s);
+		if (mms->Class == ENUM_INVALID) {
+			return 0;
+		}
+	}
 
-    return 1;
+	return 1;
 }
 
-PyObject *WAPBookmarkToPython(GSM_WAPBookmark *wap) {
-    PyObject            *ret;
-    Py_UNICODE          *title, *address;
+PyObject *WAPBookmarkToPython(GSM_WAPBookmark * wap)
+{
+	PyObject *ret;
+	Py_UNICODE *title, *address;
 
-    title = strGammuToPython(wap->Title);
-    if (title  == NULL) return NULL;
+	title = strGammuToPython(wap->Title);
+	if (title == NULL)
+		return NULL;
 
-    address = strGammuToPython(wap->Address);
-    if (address  == NULL) return NULL;
+	address = strGammuToPython(wap->Address);
+	if (address == NULL)
+		return NULL;
 
-    ret = Py_BuildValue("{s:s,s:s,s:i}",
-            "Address",          address,
-            "Title",            title,
-            "Location",         wap->Location);
+	ret = Py_BuildValue("{s:s,s:s,s:i}",
+			    "Address", address,
+			    "Title", title, "Location", wap->Location);
 
-    free(title);
-    free(address);
+	free(title);
+	free(address);
 
-    return ret;
+	return ret;
 }
 
-int WAPBookmarkFromPython(PyObject* dict, GSM_WAPBookmark *wap) {
-    if (!PyDict_Check(dict)) {
-        PyErr_Format(PyExc_ValueError, "WAPBookmark is not a dictionary");
-        return 0;
-    }
+int WAPBookmarkFromPython(PyObject * dict, GSM_WAPBookmark * wap)
+{
+	if (!PyDict_Check(dict)) {
+		PyErr_Format(PyExc_ValueError,
+			     "WAPBookmark is not a dictionary");
+		return 0;
+	}
 
-    memset(wap, 0, sizeof(wap));
+	memset(wap, 0, sizeof(wap));
 
-    wap->Location = GetIntFromDict(dict, "Location");
-    if (wap->Location == INT_INVALID) return 0;
+	wap->Location = GetIntFromDict(dict, "Location");
+	if (wap->Location == INT_INVALID)
+		return 0;
 
-    if (!CopyStringFromDict(dict, "Address", 255, wap->Address))
-        return 0;
+	if (!CopyStringFromDict(dict, "Address", 255, wap->Address))
+		return 0;
 
-    if (!CopyStringFromDict(dict, "Title", 50, wap->Title))
-        return 0;
+	if (!CopyStringFromDict(dict, "Title", 50, wap->Title))
+		return 0;
 
-    return 1;
+	return 1;
 }
 
+/*
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

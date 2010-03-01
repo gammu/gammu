@@ -2,7 +2,6 @@
  * Config file parsing tests.
  */
 
-
 #include <gammu.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -11,9 +10,9 @@
 
 int main(int argc, char **argv)
 {
-    GSM_Error error;
-    GSM_Config cfg  = {"", "", NULL, NULL, FALSE, FALSE, NULL, FALSE, FALSE, "", "", "", "", "", {0}};
-    INI_Section *ini = NULL;
+	GSM_Error error;
+	GSM_Config cfg = { "", "", NULL, NULL, FALSE, FALSE, NULL, FALSE, FALSE, "", "", "", "", "", {0} };
+	INI_Section *ini = NULL;
 
 	/* Check parameters */
 	if (argc != 2) {
@@ -30,11 +29,11 @@ int main(int argc, char **argv)
 	/* Free config file structures */
 	INI_Free(ini);
 
-    printf("DEBUG_LEVEL: '%s'\n", cfg.DebugLevel);
+	printf("DEBUG_LEVEL: '%s'\n", cfg.DebugLevel);
 
-    free(cfg.Device);
-    free(cfg.Connection);
-    free(cfg.DebugFile);
+	free(cfg.Device);
+	free(cfg.Connection);
+	free(cfg.DebugFile);
 
-    return 0;
+	return 0;
 }

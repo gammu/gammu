@@ -67,11 +67,9 @@ int main(int argc, char **argv)
 
 	/* Parse [iv]Calendar */
 	if (strstr(argv[1], ".ics") != NULL) {
-		error = GSM_DecodeVCALENDAR_VTODO(NULL, buffer, &pos, &cal, &todo,
-				Mozilla_iCalendar, Mozilla_VToDo);
+		error = GSM_DecodeVCALENDAR_VTODO(NULL, buffer, &pos, &cal, &todo, Mozilla_iCalendar, Mozilla_VToDo);
 	} else {
-		error = GSM_DecodeVCALENDAR_VTODO(NULL, buffer, &pos, &cal, &todo,
-				SonyEricsson_VCalendar, SonyEricsson_VToDo);
+		error = GSM_DecodeVCALENDAR_VTODO(NULL, buffer, &pos, &cal, &todo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	}
 	gammu_test_result(error, "GSM_DecodeVCALENDAR_VTODO");
 
@@ -142,10 +140,7 @@ int main(int argc, char **argv)
 				case CAL_LOCATION:
 				case CAL_PHONE:
 				case CAL_LUID:
-					if (!mywstrncmp(
-						cal.Entries[i].Text,
-						backup.Calendar[0]->Entries[j].Text,
-						0)) {
+					if (!mywstrncmp(cal.Entries[i].Text, backup.Calendar[0]->Entries[j].Text, 0)) {
 						printf("Calendar field %d is not the same!\n", i);
 						printf("vc: '%s'\n", DecodeUnicodeConsole(cal.Entries[i].Text));
 						printf("bak: '%s'\n", DecodeUnicodeConsole(backup.Calendar[0]->Entries[j].Text));
@@ -181,10 +176,7 @@ int main(int argc, char **argv)
 				case TODO_LOCATION:
 				case TODO_PHONE:
 				case TODO_LUID:
-					if (!mywstrncmp(
-						todo.Entries[i].Text,
-						backup.ToDo[0]->Entries[i].Text,
-						0)) {
+					if (!mywstrncmp(todo.Entries[i].Text, backup.ToDo[0]->Entries[i].Text, 0)) {
 						printf("Todo field %d is not the same!\n", i);
 						return 1;
 					}
@@ -202,7 +194,6 @@ int main(int argc, char **argv)
 			}
 		}
 	}
-
 
 	/* Free data */
 	GSM_FreeBackup(&backup);

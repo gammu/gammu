@@ -54,37 +54,37 @@
 /**
  * Creates Python datetime.datetime from GSM_DateTime.
  */
-PyObject *BuildPythonDateTime(const GSM_DateTime *dt);
+PyObject *BuildPythonDateTime(const GSM_DateTime * dt);
 
 /**
  * Creates Python datetime.time from GSM_DateTime.
  */
-PyObject *BuildPythonTime(const GSM_DateTime *dt);
+PyObject *BuildPythonTime(const GSM_DateTime * dt);
 
 /**
  * Creates GSM_DateTime from Python datetime.time.
  */
-int BuildGSMDateTime(PyObject *pydt, GSM_DateTime *dt);
+int BuildGSMDateTime(PyObject * pydt, GSM_DateTime * dt);
 
 /**
  * Creates GSM_DateTime from Python datetime.date.
  */
-int BuildGSMDate(PyObject *pydt, GSM_DateTime *dt);
+int BuildGSMDate(PyObject * pydt, GSM_DateTime * dt);
 
 /**
  * Creates GSM_DateTime from Python datetime.time.
  */
-int BuildGSMTime(PyObject *pydt, GSM_DateTime *dt);
+int BuildGSMTime(PyObject * pydt, GSM_DateTime * dt);
 
 /**
  * Convert Python unicode string to Gammu unicode string.
  */
-unsigned char *strPythonToGammu(const Py_UNICODE *src, const size_t len);
+unsigned char *strPythonToGammu(const Py_UNICODE * src, const size_t len);
 
 /**
  * Converts either object to unicode and returns its value.
  */
-unsigned char *StringPythonToGammu(PyObject *o);
+unsigned char *StringPythonToGammu(PyObject * o);
 
 /**
  * Convert Gammu unicode string to unicode string that can be read by Python.
@@ -104,7 +104,8 @@ PyObject *UnicodeStringToPython(const unsigned char *src);
 /**
  * Convert Gammu unicode string with defined length to python unicode object.
  */
-PyObject *UnicodeStringToPythonL(const unsigned char *src, const Py_ssize_t len);
+PyObject *UnicodeStringToPythonL(const unsigned char *src,
+				 const Py_ssize_t len);
 
 /**
  * Converts locale encoded string to python unicode string.
@@ -129,85 +130,88 @@ char *MemoryTypeToString(const GSM_MemoryType t);
 /**
  * Builds Python object containing all GSM_MemoryEntry values.
  */
-PyObject *MemoryEntryToPython(const GSM_MemoryEntry *entry);
+PyObject *MemoryEntryToPython(const GSM_MemoryEntry * entry);
 
 /**
  * Fills GSM_MemoryEntry from Pythons dictionary:.
  */
-int MemoryEntryFromPython(PyObject *dict, GSM_MemoryEntry *entry, int needs_location);
+int MemoryEntryFromPython(PyObject * dict, GSM_MemoryEntry * entry,
+			  int needs_location);
 
 /**
  * Gets integer from dictionary dict with key key.
  */
-int GetIntFromDict(PyObject *dict, const char *key);
+int GetIntFromDict(PyObject * dict, const char *key);
 
 /**
  * Gets gboolean from dictionary dict with key key.
  */
-gboolean GetBoolFromDict(PyObject *dict, const char *key);
+gboolean GetBoolFromDict(PyObject * dict, const char *key);
 
 /**
  * Converts object to boolean value. It accepts boolean
  * objects, integers and strings (yes, no, true, false).
  */
-gboolean BoolFromPython(PyObject *o, const char *key);
+gboolean BoolFromPython(PyObject * o, const char *key);
 
 /**
  * Returns C string with length from dictionary dict with key key.
  *
  * Returns newly allocated memory.
  */
-char *GetCStringLengthFromDict(PyObject *dict, const char *key, Py_ssize_t *length);
+char *GetCStringLengthFromDict(PyObject * dict, const char *key,
+			       Py_ssize_t * length);
 
 /**
  * Gets C string from dictionary dict with key key.
  */
-char *GetCStringFromDict(PyObject *dict, const char *key);
+char *GetCStringFromDict(PyObject * dict, const char *key);
 
 /**
  * Gets gammu unicode string from dictionary dict with key key.
  */
-unsigned char *GetStringFromDict(PyObject *dict, const char *key);
+unsigned char *GetStringFromDict(PyObject * dict, const char *key);
 
 /**
  * Copies unicode string from Python dictionary to Gammu string with length checking
  */
-int CopyStringFromDict(PyObject *dict, const char *key, size_t len, unsigned char *dest);
+int CopyStringFromDict(PyObject * dict, const char *key, size_t len,
+		       unsigned char *dest);
 
 /**
  * Gets GSM_DateTime from dictionary dict with key key.
  */
-GSM_DateTime GetDateTimeFromDict(PyObject *dict, const char *key);
+GSM_DateTime GetDateTimeFromDict(PyObject * dict, const char *key);
 
 /**
  * Gets GSM_DateTime from dictionary dict with key key.
  */
-GSM_DateTime GetDateFromDict(PyObject *dict, const char *key);
+GSM_DateTime GetDateFromDict(PyObject * dict, const char *key);
 
 /**
  * Gets char* from dictionary dict with key key. (doesn't allocate it!)
  */
-char *GetCharFromDict(PyObject *dict, const char *key);
+char *GetCharFromDict(PyObject * dict, const char *key);
 
 /**
  * Gets char* with length (may contain NULs) from dictionary dict with key key. (doesn't allocate it!)
  */
-char *GetDataFromDict(PyObject *dict, const char *key, Py_ssize_t *len);
+char *GetDataFromDict(PyObject * dict, const char *key, Py_ssize_t * len);
 
 /**
  * Gets GSM_MemoryType from dictionary dict with key key.
  */
-GSM_MemoryType GetMemoryTypeFromDict(PyObject *dict, const char *key);
+GSM_MemoryType GetMemoryTypeFromDict(PyObject * dict, const char *key);
 
 /**
  * Coverts cell broadcast message to Python object.
  */
-PyObject *CBToPython(GSM_CBMessage *cb);
+PyObject *CBToPython(GSM_CBMessage * cb);
 
 /**
  * Coverts USSD message to Python object.
  */
-PyObject *USSDToPython(GSM_USSDMessage *ussd);
+PyObject *USSDToPython(GSM_USSDMessage * ussd);
 
 /**
  * Converts SMSValidity to string.
@@ -232,64 +236,65 @@ GSM_SMSFormat StringToSMSFormat(char *s);
 /**
  * Builds python object from GSM_SMSC.
  */
-PyObject *SMSCToPython(GSM_SMSC *smsc);
+PyObject *SMSCToPython(GSM_SMSC * smsc);
 
 /**
  * Parses python object into GMS_SMSC.
  */
-int SMSCFromPython(PyObject* dict, GSM_SMSC *smsc, gboolean complete);
+int SMSCFromPython(PyObject * dict, GSM_SMSC * smsc, gboolean complete);
 
 /**
  * Converts SMS to python object.
  */
-PyObject *SMSToPython(GSM_SMSMessage *sms);
+PyObject *SMSToPython(GSM_SMSMessage * sms);
 
 /**
  * Creates SMS from python object.
  */
-int SMSFromPython(PyObject *dict, GSM_SMSMessage *sms, int needslocation, int needsfolder, int needsnumber);
+int SMSFromPython(PyObject * dict, GSM_SMSMessage * sms, int needslocation,
+		  int needsfolder, int needsnumber);
 
 /**
  * Converts MultiSMS to list of python object.
  */
-PyObject *MultiSMSToPython(GSM_MultiSMSMessage *sms);
+PyObject *MultiSMSToPython(GSM_MultiSMSMessage * sms);
 
 /**
  * Converts MultiSMS from list of python objects.
  */
-int MultiSMSFromPython(PyObject *list, GSM_MultiSMSMessage *sms);
+int MultiSMSFromPython(PyObject * list, GSM_MultiSMSMessage * sms);
 
 /**
  * Converts MultiSMS list from list of python objects.
  */
-int MultiSMSListFromPython(PyObject *list, GSM_MultiSMSMessage ***sms);
+int MultiSMSListFromPython(PyObject * list, GSM_MultiSMSMessage *** sms);
 
 /**
  * Converts MultiSMS list to list of python objects.
  */
-PyObject *MultiSMSListToPython(GSM_MultiSMSMessage **sms);
+PyObject *MultiSMSListToPython(GSM_MultiSMSMessage ** sms);
 
 #ifdef GSM_ENABLE_BACKUP
 /**
  * Converts SMS backup to list of Python objects.
  */
-PyObject *SMSBackupToPython(GSM_SMS_Backup *sms);
+PyObject *SMSBackupToPython(GSM_SMS_Backup * sms);
 
 /**
  * Converts SMS backup from list of Python objects.
  */
-int SMSBackupFromPython(PyObject *list, GSM_SMS_Backup *sms);
+int SMSBackupFromPython(PyObject * list, GSM_SMS_Backup * sms);
 #endif
 
 /**
  * Converts Todo to Python object.
  */
-PyObject *TodoToPython(const GSM_ToDoEntry *entry);
+PyObject *TodoToPython(const GSM_ToDoEntry * entry);
 
 /**
  * Converts Todo from Python object.
  */
-int TodoFromPython(PyObject *dict, GSM_ToDoEntry *entry, int needs_location);
+int TodoFromPython(PyObject * dict, GSM_ToDoEntry * entry, int needs_location);
 
 /**
  * Convert calendar type to string.
@@ -304,89 +309,90 @@ GSM_CalendarNoteType StringToCalendarType(const char *s);
 /**
  * Converts Calendar to Python object.
  */
-PyObject *CalendarToPython(const GSM_CalendarEntry *entry);
+PyObject *CalendarToPython(const GSM_CalendarEntry * entry);
 
 /**
  * Converts Calendar from Python object.
  */
-int CalendarFromPython(PyObject *dict, GSM_CalendarEntry *entry, int needs_location);
+int CalendarFromPython(PyObject * dict, GSM_CalendarEntry * entry,
+		       int needs_location);
 
 /**
  * Converts SMSInfo to Python object.
  */
-PyObject *SMSInfoToPython(GSM_MultiPartSMSInfo *smsinfo);
+PyObject *SMSInfoToPython(GSM_MultiPartSMSInfo * smsinfo);
 
 /**
  * Converts SMSInfo from Python object.
  */
-int SMSInfoFromPython(PyObject *dict, GSM_MultiPartSMSInfo *entry);
+int SMSInfoFromPython(PyObject * dict, GSM_MultiPartSMSInfo * entry);
 
 /**
  * Converts Bitmap to Python object.
  */
-PyObject *BitmapToPython(GSM_Bitmap *bitmap);
+PyObject *BitmapToPython(GSM_Bitmap * bitmap);
 
 /**
  * Converts multiple Bitmaps to list of Python objects.
  */
-PyObject *MultiBitmapToPython(GSM_MultiBitmap *bmp);
+PyObject *MultiBitmapToPython(GSM_MultiBitmap * bmp);
 
 /**
  * Converts Bitmap from Python object.
  */
-int BitmapFromPython(PyObject *data, GSM_Bitmap *bitmap);
+int BitmapFromPython(PyObject * data, GSM_Bitmap * bitmap);
 
 /**
  * Converts multiple Bitmaps from list of Python objects.
  */
-int MultiBitmapFromPython(PyObject *list, GSM_MultiBitmap *bmp);
+int MultiBitmapFromPython(PyObject * list, GSM_MultiBitmap * bmp);
 
 /**
  * Converts SMS folders structure to list of Python objects.
  */
-PyObject *SMSFoldersToPython(GSM_SMSFolders *folders);
+PyObject *SMSFoldersToPython(GSM_SMSFolders * folders);
 
 /**
  * Converts ringtone to Python object.
  */
-PyObject *RingtoneToPython(GSM_Ringtone *ring);
+PyObject *RingtoneToPython(GSM_Ringtone * ring);
 
 /**
  * Converts ringtone from Python object.
  */
-int RingtoneFromPython(PyObject *dict, GSM_Ringtone *ring);
+int RingtoneFromPython(PyObject * dict, GSM_Ringtone * ring);
 
 #ifdef GSM_ENABLE_BACKUP
 /**
  * Converts backup to Python object.
  */
-PyObject *BackupToPython(GSM_Backup *backup);
+PyObject *BackupToPython(GSM_Backup * backup);
 
 /**
  * Converts backup from Python object.
  */
-int BackupFromPython(PyObject *dict, GSM_Backup *backup);
+int BackupFromPython(PyObject * dict, GSM_Backup * backup);
 
 /**
  * Converts backup format from string to Gammu.
  */
-int BackupFormatFromString(const char *s, GSM_BackupFormat *format);
+int BackupFormatFromString(const char *s, GSM_BackupFormat * format);
 #endif
 
 /**
  * Converts file to Python object.
  */
-PyObject *FileToPython(GSM_File *file);
+PyObject *FileToPython(GSM_File * file);
 
 /**
  * Converts file from Python object.
  */
-int FileFromPython(PyObject *dict, GSM_File *file, gboolean check);
+int FileFromPython(PyObject * dict, GSM_File * file, gboolean check);
 
 /**
  * Converts call to Python object.
  */
-PyObject *CallToPython(GSM_Call *call);
+PyObject *CallToPython(GSM_Call * call);
 
 /**
  * Converts call type to Python object.
@@ -396,21 +402,21 @@ char *CallStatusToString(GSM_CallStatus ct);
 /**
  * Converts MMS indicator to Python object.
  */
-PyObject *MMSIndicatorToPython(GSM_MMSIndicator *mms);
+PyObject *MMSIndicatorToPython(GSM_MMSIndicator * mms);
 
 /**
  * Converts MMS indicator from Python object.
  */
-int MMSIndicatorFromPython(PyObject* dict, GSM_MMSIndicator *mms);
+int MMSIndicatorFromPython(PyObject * dict, GSM_MMSIndicator * mms);
 
 /**
  * Converts WAP bookmark to Python object.
  */
-PyObject *WAPBookmarkToPython(GSM_WAPBookmark *wap);
+PyObject *WAPBookmarkToPython(GSM_WAPBookmark * wap);
 
 /**
  * Converts WAP bookmark from Python object.
  */
-int WAPBookmarkFromPython(PyObject* dict, GSM_WAPBookmark *wap);
+int WAPBookmarkFromPython(PyObject * dict, GSM_WAPBookmark * wap);
 
 #endif

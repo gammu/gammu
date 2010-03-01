@@ -14,7 +14,8 @@
 /**
  * Converts hex digit to number, returns -1 on failure.
  */
-int hexdigit2number(const char digit) {
+int hexdigit2number(const char digit)
+{
 	if (digit >= '0' && digit <= '9') {
 		return digit - '0';
 	}
@@ -32,14 +33,16 @@ int hexdigit2number(const char digit) {
  * Converts hex string of arbitrary length to number, returns -1 on
  * failure.
  */
-int hex2number(const char *buffer, const size_t len) {
+int hex2number(const char *buffer, const size_t len)
+{
 	int result = 0, tmp;
 	size_t pos;
 
 	for (pos = 0; pos < len; pos++) {
 		result = result << 4;
 		tmp = hexdigit2number(buffer[pos]);
-		if (tmp < 0) return tmp;
+		if (tmp < 0)
+			return tmp;
 		result += tmp;
 	}
 	return result;
@@ -48,7 +51,8 @@ int hex2number(const char *buffer, const size_t len) {
 /**
  * Reads single number encoded in PDU.
  */
-int pdu_get_number(const char *buffer, const int semioctet) {
+int pdu_get_number(const char *buffer, const int semioctet)
+{
 	int length;
 	int type;
 	char *out;
@@ -56,24 +60,26 @@ int pdu_get_number(const char *buffer, const int semioctet) {
 
 	length = hex2number(buffer, 2);
 	if (semioctet) {
-		if (length % 2) length++;
+		if (length % 2)
+			length++;
 		length = length / 2 + 1;
 	}
 	printf("Number length = %d\n", length);
 
-	if (length == 0) return 2;
+	if (length == 0)
+		return 2;
 
 	type = hex2number(buffer + 2, 2);
 	printf("Number type = %d\n", type);
 
 	out = (char *)malloc((2 * length) + 1);
-	if (out == NULL) return -1;
+	if (out == NULL)
+		return -1;
 	memset(out, 0, 2 * length);
 
 	for (i = 0; i < (length - 1) * 2; i++) {
 		if (!isxdigit((int)buffer[4 + i])) {
-			printf("Non hex digit in PDU (%s)!\n",
-					buffer + 4 +  i);
+			printf("Non hex digit in PDU (%s)!\n", buffer + 4 + i);
 			free(out);
 			return -1;
 		}
@@ -96,24 +102,19 @@ int pdu_get_number(const char *buffer, const int semioctet) {
 /**
  * Parses timestamp from PDU.
  */
-int pdu_get_timestamp(const char *buffer) {
+int pdu_get_timestamp(const char *buffer)
+{
 	int i;
 
-
 	for (i = 0; i < 14; i++) {
-		if (!isxdigit((int)buffer[i])) return -1;
+		if (!isxdigit((int)buffer[i]))
+			return -1;
 	}
 
 	printf("Date: %d-%d-%d %d:%d:%d TZ=%d\n",
-			hex2number(buffer +  0, 2),
-			hex2number(buffer +  2, 2),
-			hex2number(buffer +  4, 2),
-			hex2number(buffer +  6, 2),
-			hex2number(buffer +  8, 2),
-			hex2number(buffer + 10, 2),
-			hex2number(buffer + 12, 2)
-	      );
-
+	       hex2number(buffer + 0, 2),
+	       hex2number(buffer + 2, 2), hex2number(buffer + 4, 2), hex2number(buffer + 6, 2), hex2number(buffer + 8, 2), hex2number(buffer + 10, 2), hex2number(buffer + 12, 2)
+	    );
 
 	return 14;
 }
@@ -121,7 +122,8 @@ int pdu_get_timestamp(const char *buffer) {
 /**
  * Decodes textual PDU.
  */
-int pdu_decode(const char *buffer) {
+int pdu_decode(const char *buffer)
+{
 	/* Values */
 	int type;
 	int mr;
@@ -141,12 +143,14 @@ int pdu_decode(const char *buffer) {
 
 	/* SMSC number */
 	ret = pdu_get_number(buffer + pos, 0);
-	if (ret < 0) return ret;
+	if (ret < 0)
+		return ret;
 	pos += ret;
 
 	/* Message type */
 	type = hex2number(buffer + pos, 2);
-	if (type < 0) return type;
+	if (type < 0)
+		return type;
 	pos += 2;
 	printf("Message type: %02x - ", type);
 
@@ -204,7 +208,8 @@ int pdu_decode(const char *buffer) {
 	/* Message reference (for submit) */
 	if (submit || report) {
 		mr = hex2number(buffer + pos, 2);
-		if (mr < 0) return mr;
+		if (mr < 0)
+			return mr;
 		pos += 2;
 		printf("MR = 0x%02X\n", mr);
 	}
@@ -212,30 +217,35 @@ int pdu_decode(const char *buffer) {
 	/* Address (sender for deliver, receiver for submit, recipient
 	 * for report) */
 	ret = pdu_get_number(buffer + pos, 1);
-	if (ret < 0) return ret;
+	if (ret < 0)
+		return ret;
 	pos += ret;
 
 	if (report) {
 		/* Timestamp */
 		ret = pdu_get_timestamp(buffer + pos);
-		if (ret < 0) return ret;
+		if (ret < 0)
+			return ret;
 		pos += ret;
 
 		/* SMSC timestamp */
 		ret = pdu_get_timestamp(buffer + pos);
-		if (ret < 0) return ret;
+		if (ret < 0)
+			return ret;
 		pos += ret;
 	}
 	if (submit || deliver) {
 		/* PID */
 		pid = hex2number(buffer + pos, 2);
-		if (pid < 0) return pid;
+		if (pid < 0)
+			return pid;
 		pos += 2;
 		printf("PID = 0x%02X\n", pid);
 
 		/* DCS */
 		dcs = hex2number(buffer + pos, 2);
-		if (dcs < 0) return dcs;
+		if (dcs < 0)
+			return dcs;
 		pos += 2;
 		printf("DCS = 0x%02X\n", dcs);
 	}
@@ -243,31 +253,34 @@ int pdu_decode(const char *buffer) {
 		/* Validity */
 		if (vpf == 2 || vpf == 0) {
 			vp = hex2number(buffer + pos, 2);
-			if (vp < 0) return vp;
+			if (vp < 0)
+				return vp;
 			pos += 2;
 			printf("VP = 0x%02X\n", vp);
 		} else if (vpf == 3) {
 			ret = pdu_get_timestamp(buffer + pos);
-			if (ret < 0) return ret;
+			if (ret < 0)
+				return ret;
 			pos += ret;
 		}
 	}
 	if (deliver) {
 		/* SMSC timestamp */
 		ret = pdu_get_timestamp(buffer + pos);
-		if (ret < 0) return ret;
+		if (ret < 0)
+			return ret;
 		pos += ret;
 	}
 	if (submit || deliver) {
 		/* UD */
 		udhl = hex2number(buffer + pos, 2);
-		if (udhl < 0) return udhl;
+		if (udhl < 0)
+			return udhl;
 		pos += 2;
 		printf("UDL = 0x%02X\n", udhl);
 		/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
 		if ((((dcs & 0xC0) == 0) && ((dcs == 0) || ((dcs & 0x2C) == 0x00) || ((dcs & 0x2C) == 0x20))) ||
-			((((dcs & 0xF0) == 0xC0) || ((dcs & 0xF0) == 0xD0)) && ((dcs & 4) != 4)) ||
-			(((dcs & 0xF0) == 0xF0) && ((dcs & 8) != 8) && ((dcs & 4) == 0))) {
+		    ((((dcs & 0xF0) == 0xC0) || ((dcs & 0xF0) == 0xD0)) && ((dcs & 4) != 4)) || (((dcs & 0xF0) == 0xF0) && ((dcs & 8) != 8) && ((dcs & 4) == 0))) {
 			if ((udhl * 7) % 8 != 0) {
 				udhl = (udhl * 7) / 8;
 				udhl++;
@@ -294,11 +307,11 @@ int pdu_decode(const char *buffer) {
 		return 1;
 	}
 
-
 	return 0;
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
 	char buffer[BUFFER_SIZE];
 	char *pos;
 	FILE *f;
@@ -331,14 +344,17 @@ int main(int argc, char **argv) {
 	fclose(f);
 
 	pos = strchr(buffer, '\n');
-	if (pos == NULL) return 2;
+	if (pos == NULL)
+		return 2;
 	pos++;
 
 	pos = strchr(pos, '\n');
-	if (pos == NULL) return 2;
+	if (pos == NULL)
+		return 2;
 	pos++;
 
-	if (pdu_decode(pos) < 0) return 3;
+	if (pdu_decode(pos) < 0)
+		return 3;
 
 	return 0;
 }

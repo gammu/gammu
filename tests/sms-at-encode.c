@@ -4,13 +4,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
-#include "../libgammu/gsmphones.h" /* Phone data */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
+#include "../libgammu/gsmphones.h"	/* Phone data */
 
 #include "common.h"
 
-extern GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsigned char *hexreq, int *current, int *length2);
+extern GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine * s, GSM_SMSMessage * message, unsigned char *hexreq, int *current, int *length2);
 
 #define BUFFER_SIZE 16384
 
@@ -24,9 +24,9 @@ int main(int argc, char **argv)
 	size_t len;
 	GSM_StateMachine *s;
 	GSM_Error error;
-	int			current, current2;
-	unsigned char		hexreq[1000];
-	GSM_SMS_Backup		Backup;
+	int current, current2;
+	unsigned char hexreq[1000];
+	GSM_SMS_Backup Backup;
 	gboolean generate = FALSE;
 
 	/* Enable debugging */

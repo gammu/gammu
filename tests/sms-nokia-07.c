@@ -7,8 +7,8 @@
 
 #include "common.h"
 
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
 
 unsigned char data[] = {
 	0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, 0x3E, 0x00, 0x00, 0x01, 0x4C, 0x00, 0x00, 0x00, 0x00,
@@ -32,11 +32,10 @@ unsigned char data[] = {
 	0x69, 0x00, 0x65, 0x00, 0x76, 0x00, 0x65, 0x00, 0x20, 0x00, 0x74, 0x00, 0x68, 0x00, 0x65, 0x00,
 	0x20, 0x00, 0x6D, 0x00, 0x65, 0x00, 0x73, 0x00, 0x73, 0x00, 0x61, 0x00, 0x67, 0x00, 0x65, 0x00,
 	0x00, 0x06, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x01, 0x00
-	};
-
+};
 
 /* This is not part of API! */
-extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF, int location);
+extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms, GSM_File * FFF, int location);
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
@@ -52,7 +51,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
-	test_result (s != NULL);
+	test_result(s != NULL);
 
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(TRUE, debug_info);
@@ -68,7 +67,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Parse it */
 	error = N6510_DecodeFilesystemSMS(s, &sms, &file, 0);
 	free(file.Buffer);
-	if (error != ERR_CORRUPTED) return 1;
+	if (error != ERR_CORRUPTED)
+		return 1;
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);

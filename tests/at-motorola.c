@@ -7,9 +7,9 @@
 #include "common.h"
 #include "../libgammu/phone/at/atgen.h"
 #include "../libgammu/phone/at/motorola.h"
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
-#include "../libgammu/gsmphones.h" /* Phone data */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
+#include "../libgammu/gsmphones.h"	/* Phone data */
 
 #define BUFFER_SIZE ((size_t)16384)
 
@@ -21,8 +21,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_StateMachine *s;
 	GSM_Error error;
 	GSM_CalendarEntry entry;
-    char buff[2048];
-    size_t pos;
+	char buff[2048];
+	size_t pos;
 
 	/* Init locales to get proper encoding */
 	GSM_InitLocales(NULL);
@@ -52,20 +52,20 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = MOTOROLA_ParseCalendarSimple(s, "+MDBR: 0,\"Meeting\",1,0,\"17:00\",\"02-24-2006\",60,\"00:00\",\"00-00-2000\",0");
 	gammu_test_result(error, "Calendar 1");
 
-    pos = 0;
-    error = GSM_EncodeVCALENDAR(buff, sizeof(buff), &pos, &entry, FALSE, SonyEricsson_VCalendar);
+	pos = 0;
+	error = GSM_EncodeVCALENDAR(buff, sizeof(buff), &pos, &entry, FALSE, SonyEricsson_VCalendar);
 	gammu_test_result(error, "Encode Calendar 1");
 
-    printf("%s\n", buff);
+	printf("%s\n", buff);
 
 	error = MOTOROLA_ParseCalendarSimple(s, "+MDBR: 1,\"Breakfast\",1,1,\"10:00\",\"02-25-2006\",60,\"09:30\",\"02-25-2006\",2");
 	gammu_test_result(error, "Calendar 2");
 
-    pos = 0;
-    error = GSM_EncodeVCALENDAR(buff, sizeof(buff), &pos, &entry, FALSE, SonyEricsson_VCalendar);
+	pos = 0;
+	error = GSM_EncodeVCALENDAR(buff, sizeof(buff), &pos, &entry, FALSE, SonyEricsson_VCalendar);
 	gammu_test_result(error, "Encode Calendar 2");
 
-    printf("%s\n", buff);
+	printf("%s\n", buff);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
@@ -76,4 +76,3 @@ int main(int argc UNUSED, char **argv UNUSED)
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
-

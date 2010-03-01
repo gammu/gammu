@@ -4,15 +4,15 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "../libgammu/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
-#include "../libgammu/gsmstate.h" /* Needed for state machine internals */
-#include "../libgammu/gsmphones.h" /* Phone data */
+#include "../libgammu/protocol/protocol.h"	/* Needed for GSM_Protocol_Message */
+#include "../libgammu/gsmstate.h"	/* Needed for state machine internals */
+#include "../libgammu/gsmphones.h"	/* Phone data */
 
 #include "common.h"
 
 #define BUFFER_SIZE 16384
 
-extern GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *s);
+extern GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine * s);
 
 int main(int argc, char **argv)
 {
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
 	Priv->Charset = AT_CHARSET_UCS2;
-    Priv->Manufacturer = AT_Samsung;
+	Priv->Manufacturer = AT_Samsung;
 
 	/* Init message */
 	msg.Type = 0;
@@ -96,5 +96,3 @@ int main(int argc, char **argv)
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
-
-

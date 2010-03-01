@@ -7,8 +7,7 @@
 
 #include "../libgammu/gsmphones.h"
 
-
-int single_test(const char *string, const char* expected)
+int single_test(const char *string, const char *expected)
 {
 	const char *ret;
 	ret = GSM_GetNetworkName(string);
@@ -34,4 +33,3 @@ int main(int argc, char **argv)
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
-
