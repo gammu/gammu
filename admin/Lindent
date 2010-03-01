@@ -1,6 +1,7 @@
 #!/bin/sh
 indent -npro -kr -i8 -ts8 -sob -ss -ncs -cli8 -nbad \
-    --line-length80 \
+    --line-length150 \
+    --indent-label0 \
     --braces-on-if-line \
     --cuddle-else \
     --cuddle-do-while \
