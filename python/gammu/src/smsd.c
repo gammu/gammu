@@ -40,37 +40,7 @@
 /* Error objects */
 #include "errors.h"
 
-/* Other useful stuff */
-#include "misc.h"
-
-/* Length of buffers used in most of code */
-#define BUFFER_LENGTH 255
-
-#ifdef WITH_THREAD
-
-/* Use python locking */
-
-#define BEGIN_PHONE_COMM \
-    Py_BEGIN_ALLOW_THREADS \
-    PyThread_acquire_lock(self->mutex, 1);
-
-#define END_PHONE_COMM \
-    PyThread_release_lock(self->mutex); \
-    Py_END_ALLOW_THREADS \
-    CheckIncomingEvents(self);
-
-#else
-
-/* No need for locking when no threads */
-#define BEGIN_PHONE_COMM
-#define END_PHONE_COMM \
-    CheckIncomingEvents(self);
-
-#endif
-
 const char program_name[] = "python-gammu";
-
-#define MAX_EVENTS 10
 
 /* ----------------------------------------------------- */
 
@@ -357,5 +327,5 @@ gboolean gammu_smsd_init(PyObject *m) {
     return TRUE;
 }
 /*
- * vim: expandtab sw=4 ts=4 sts=4:
+ * vim: noexpandtab sw=8 ts=8 sts=8:
  */
