@@ -43,7 +43,6 @@ Contents
     project/index
     python/index
     c/index
-    install
     source/index
     protocol/index
 

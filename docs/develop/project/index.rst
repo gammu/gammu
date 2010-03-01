@@ -14,6 +14,7 @@ help of many contributors.
 .. toctree::
     :maxdepth: 2
 
+    install
     motivation
     contributing
 
