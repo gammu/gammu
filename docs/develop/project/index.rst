@@ -17,6 +17,7 @@ help of many contributors.
     install
     motivation
     contributing
+    source/index
 
 .. _Gnokii: http://www.gnokii.org
 .. _MyGnokii:  http://www.mwiacek.com

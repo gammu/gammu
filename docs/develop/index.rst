@@ -3,19 +3,18 @@ Welcome to Gammu's documentation!
 
 `Gammu library`_ and `python-gammu`_ provide you way to communicate with
 your cell phone using standard API. This documentation explains both
-Python and C version of the API.
+:doc:`python/index` and :doc:`c/api`.
 
 
 Contents
 --------
 
 .. toctree::
-    :maxdepth: 3
+    :maxdepth: 2
 
     project/index
     python/index
     c/index
-    source/index
     protocol/index
 
 Indices and tables
