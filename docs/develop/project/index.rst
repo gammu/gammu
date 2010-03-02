@@ -17,6 +17,10 @@ help of many contributors.
     install
     motivation
     contributing
+    localization
+    testing
+    coding-style
+    directories
     source/index
 
 .. _Gnokii: http://www.gnokii.org
