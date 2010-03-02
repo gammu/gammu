@@ -1,36 +1,34 @@
 Hints for libGammu Novices
 ==========================
 
-Here are some brief hints for anyone who, like me, wants to write some
-quick c / C++ code to talk to their phone using the Gammu library.
-
-.. warning::
-
-    This document is based on Gammu version 0.90.0.
+This is very short overview of libGammu usage. You will probably need to study
+:doc:`api` to find out what functions you want to use.
 
 
 Basic library usage
 -------------------
 
+You need to include main header file:
+
 .. code-block:: c
 
     #include <gammu.h>
 
-Compile with flags from pkg-config::
+To compile you need to pass flags from pkg-config::
 
     pkg-config --cflags gammu
 
-Link with flags from pkg-config:: 
+To link you need to pass from pkg-config:: 
 
     pkg-config --libs gammu
 
 
-Gammu stores all its data in a GSM_StateMachine struct.  Declare one
-of those:
+Gammu stores all its data in a GSM_StateMachine struct. This structure is not
+public, so all you can define is a pointer to it:
 
 .. code-block:: c
 
-    GSM_StateMachine state_machine;
+    GSM_StateMachine *state_machine;
 
 You'll want to check for errors from time to time.  Do it using a
 function something like this:
@@ -39,138 +37,122 @@ function something like this:
 
     void check_error(GSM_Error err)
     {
-      if (err==GE_NONE) {
+      if (err == ERR_NONE) {
         return;
       }
-      cerr << "Gammu error \""
-           << print_error(err,state_machine.di.df,state_machine.msg)
-           << "\"" << endl;
+      fprintf(stderr, "Gammu failure: %s\n", GSM_ErrorString(error));
       exit(1);
     }
 
-Start with this initialisation:
+As libGammu does interact with strings in your local encoding, it is good idea
+to initialize locales subsystem first (otherwise you would get broken non
+ASCII characters):
 
 .. code-block:: c
 
-  state_machine.opened=false;
-  state_machine.msg=NULL;
-  state_machine.ConfigNum=0;
+    GSM_InitLocales(NULL);
+
+You first need to allocate a state machine structure:
+
+.. code-block:: c
+
+    state_machine = GSM_AllocStateMachine();
 
 Now think about the configuration file.  To use the default
 :file:`~/.gammurc`, do this:
 
 .. code-block:: c
 
-  CFG_Header* cfg_header = CFG_FindGammuRC();
-  assert(cfg_header);
+    INI_Section *cfg;
 
-There are functions to read arbitary files, or you could probably
-populate the structure yourself.
+    /* Find it */
+    error = GSM_FindGammuRC(&cfg, NULL);
+    check_error(error);
 
-Now put the information from the file into the state_machine structure:
+    /* Read it */
+    error = GSM_ReadConfig(cfg, GSM_GetConfig(state_machine, 0), 0);
+    check_error(error);
 
-.. code-block:: c
+    /* Free allocated memory */
+    INI_Free(cfg);
 
-  state_machine.Config[0].Localize=NULL;
-  assert(CFG_ReadConfig(cfg_header,&state_machine.Config[0],0));
-  state_machine.ConfigNum++;
+    /* We care onlu about first configuration */
+    GSM_SetConfigNum(s, 1);
 
-OK, now initialise the connection:
-
-.. code-block:: c
-
-  check_error( GSM_InitConnection(&state_machine,3) );
-
-(Don't ask me what the "3" does!!!)
-
-Do stuff by calling function-pointers in state_machine.Phone.Functions.
-For example, this reads from a phone-book memory:
+OK, now initialise the connection (3 means number of replies you want to wait
+for in case of failure):
 
 .. code-block:: c
 
-    check_error ( state_machine.Phone.Functions->GetMemory(&state_machine, &entry) )
+    error = GSM_InitConnection(s, 3);
+    check_error(error);
 
-where entry is declared as a GSM_MemoryEntry.  Specify which entry to
-get by setting the entry.MemoryType and entry.Location fields first.
-
-Similarly, this writes one back:
-
-.. code-block:: c
-
-    check_error ( state_machine.Phone.Functions->SetMemory(&state_machine, &entry) )
-
-There are numerous other functions to achieve all the same things you
-can do from the gammu command-line application.
-
-When you're finished:
+Now you are ready to communicate with the phone, for example you can read
+manufacturer name:
 
 .. code-block:: c
 
-    check_error ( GSM_TerminateConnection(&state_machine) );
+    error = GSM_GetManufacturer(s, buffer);
+    check_error(error);
 
+When you're finished, you need to disconnect and free allocated memory:
 
-For C++ users
--------------
+.. code-block:: c
 
-I'm using libgammu from C++, and have the following suggestions:
+    error = GSM_TerminateConnection(s);
+    check_error(error);
 
-* Put 'extern "C"' around the #include <gammu/gammu.h> as it doesn't
-  have this itself.
-* #undef bool after #including it (they #define bool int).
-* The gammu headers generally declare strings as "unsigned char*"
-  rather than "const char*".  I presume they actually are const, but
-  experience tells me it is best not to make assumptions and avoid
-  const_cast.  Copy your string literal into a writable unsigned char
-  array.  Ugly but safe.
+    /* Free up used memory */
+    GSM_FreeStateMachine(s);
+    check_error(error);
+
+There are also other :doc:`examples`.
 
 Unicode
 -------
 
-Strings, e.g. in the GSM_MemoryEntry structure, are stored in Unicode.
-If you've got "normal" strings you'll need to convert them.  I
-strongly suggest using the GNU recode library.  It is simple to use
-and well documented (info recode).  You need to use UCS-2 encoding.
+Gammu stores all strings internally in UCS-2-BE encoding (terminated by two
+zero bytes). This is used mostly for historical reasons and today the obvious
+choice would be ``wchar_t``.  To work with these strings, various functions
+are provided (``UnicodeLength``, ``DecodeUnicode``, ``EncodeUnicode``,
+``CopyUnicodeString``, etc.).
 
-Note that UCS-2 strings will have null bytes in them, so functions
-that expect null-terminated strings (e.g. strlen, strcpy) won't work.
-(C++ STL strings work, apart from the from-char*-constructor).  This
-also means you can't use the librecode recode_string function.  I
-think (?) that the output from recode_string_to_buffer needs to have
-16 bits of 0 appended (else how does anyone know where the string
-ends?).
+For printing on console you should use:
 
+.. code-block:: c
 
-Other hints
------------
+    printf("%s\n", DecodeUnicodeConsole(unicode_string));
 
-I spent a long time trying to work out why I couldn't save address
-book entries until I discovered that you're not allowed to have spaces
-in phone numbers.  Strip them out first.
+For giving string to some GUI toolkit:
 
-Use these two lines to get copiuos debugging output:
-di.dl = DL_TEXTALL;
-di.df = stdout;
-(di is declared as "extern Debug_Info di;" in gammu/misc/misc.h)
+.. code-block:: c
 
+    printf("%s\n", DecodeUnicodeString(unicode_string));
 
-Further documentation
----------------------
+.. note::
 
-There isn't any.  Your best best is to look at the include files, and
-to try to decipher the 7000+ lines of gammu.c, the command-line
-program, which calls most of the functions in the library.  (You'll
-need the Gammu source package for that.)
+   These functions differ only on platforms where console uses historically
+   different character set than GUI, what effectively means only Microsoft
+   Windows.
 
-For Phone.Functions function names, look for struct
-GSM_Phone_Functions in gsmstate.h.  For address book entry structures,
-look in services/gsmpbk.h.
+Debugging
+---------
 
-The author is unlikely to know the answer to your question, but you
-may email me if the gammu mailing list doesn't know the answer (or
-won't tell you).  Visit http://chezphil.org/email/genemail.cgi for an
-email address.
+You can either enabled debug logging globally or per state machine. 
 
+To enable global debugging use:
 
-This document is in the public domain.  Do what you like with it.
+.. code-block:: c
 
+	debug_info = GSM_GetGlobalDebug();
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
+	GSM_SetDebugLevel("textall", debug_info);
 
+For per state machine configuration:
+
+.. code-block:: c
+
+	debug_info = GSM_GetDebug(s);
+	GSM_SetDebugGlobal(FALSE, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
+	GSM_SetDebugLevel("textall", debug_info);
