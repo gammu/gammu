@@ -1,5 +1,5 @@
-Gammu source code
-=================
+Source code
+===========
 
 This document describes Gammu source to allow easier orientation in it.
 
