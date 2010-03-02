@@ -11,4 +11,3 @@ Gammu project
     testing
     coding-style
     directories
-    source/index

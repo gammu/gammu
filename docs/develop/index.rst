@@ -15,6 +15,7 @@ Contents
     project/index
     python/index
     c/index
+    internal/index
     protocol/index
 
 Indices and tables
