@@ -1,6 +1,9 @@
 Porting from libGammu older than 1.12.0
 ========================================
 
+Rationale for API change
+------------------------
+
 This document describes what you have to change in your code, if you
 used Gammu older than 1.12.0. This release came with huge changes to
 API, which has to be done for various reasons:
