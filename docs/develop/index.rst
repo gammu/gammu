@@ -5,6 +5,9 @@ Welcome to Gammu's documentation!
 your cell phone using standard API. This documentation explains both
 :doc:`python/index` and :doc:`c/api`.
 
+You can also learn something about :doc:`internal/index` and also about
+:doc:`protocol/index`.
+
 
 Contents
 --------

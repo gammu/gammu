@@ -1,5 +1,5 @@
-Protocols documentation
-=======================
+Phone Protocols
+===============
 
 .. toctree::
     :maxdepth: 2
