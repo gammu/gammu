@@ -2316,7 +2316,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	has_number = FALSE;
 
 	/* Do we have any PDU data? */
-	if (FFF->Buffer[7] > 0) {
+	if (FFF->Buffer[7] > 0 && FFF->Used > 176) {
 		/* Parse PDU data */
 		error = GSM_DecodePDUFrame(&(s->di), &(sms->SMS[0]),  FFF->Buffer + 176, FFF->Used - 176, &parse_len, FALSE);
 		if (error != ERR_NONE) return error;
