@@ -1015,7 +1015,10 @@ void NOKIA_DecodeSMSState(GSM_StateMachine *s, unsigned char state, GSM_SMSMessa
 		case 0x03 : sms->State = SMS_UnRead; break;
 		case 0x05 : sms->State = SMS_Sent;   break;
 		case 0x07 : sms->State = SMS_UnSent; break;
-		default	  : smprintf(s, "Unknown SMS state: %02x\n",state);
+		default	  :
+			sms->State = SMS_Read;
+			smprintf(s, "Unknown SMS state: %02x\n",state);
+			break;
 	}
 }
 
