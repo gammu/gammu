@@ -160,12 +160,12 @@ if (WITH_BACKUP)
 endif (WITH_BACKUP)
 
 # SMS parsing
-if (NOKIA6110)
+if (WITH_NOKIA6110)
     add_executable(sms-nokia-01 sms-nokia-01.c)
     target_link_libraries(sms-nokia-01 libGammu)
     target_link_libraries(sms-nokia-01 messagedisplay)
     add_test(sms-nokia-01 "${GAMMU_TEST_PATH}/sms-nokia-01${GAMMU_TEST_SUFFIX}")
-endif (NOKIA6110)
+endif (WITH_NOKIA6110)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-02 sms-nokia-02.c)
@@ -257,12 +257,12 @@ if (WITH_NOKIA6510)
     add_test(sms-nokia-14 "${GAMMU_TEST_PATH}/sms-nokia-14${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
-if (NOKIA6110)
+if (WITH_NOKIA6110)
 # Nokia ringtone
     add_executable(nokia-6110-ringtone nokia-6110-ringtone.c)
     target_link_libraries(nokia-6110-ringtone libGammu)
     add_test(nokia-6110-ringtone "${GAMMU_TEST_PATH}/nokia-6110-ringtone${GAMMU_TEST_SUFFIX}")
-endif (NOKIA6110)
+endif (WITH_NOKIA6110)
 
 if (WITH_ATGEN)
     # AT SMS parsing
