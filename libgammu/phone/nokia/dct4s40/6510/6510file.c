@@ -484,6 +484,10 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 	memcpy(BackupCache, Priv->FilesCache, sizeof(GSM_File) * Priv->FilesLocationsUsed);
 	FilesLocationsUsed = Priv->FilesLocationsUsed;
 
+	/* Allocate new cache */
+	error = N6510_AllocFileCache(s, 1);
+	if (error != ERR_NONE) return error;
+
 	/* putting own data */
 	Priv->FilesCache[0].Level    	= 1;
 	Priv->FilesLocationsUsed 	= 1;
