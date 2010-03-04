@@ -36,6 +36,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_Error error;
 	GSM_MultiSMSMessage sms;
 
+	/* Init locales for proper output */
+	GSM_InitLocales(NULL);
+
 	debug_info = GSM_GetGlobalDebug();
 	GSM_SetDebugFileDescriptor(stderr, FALSE, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
