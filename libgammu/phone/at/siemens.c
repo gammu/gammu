@@ -109,6 +109,9 @@ static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, cons
 			return error;
 		}
 	}
+	/* Give phone some time to process the request */
+	/* @todo: This is probably way too big */
+	usleep(500000);
 	return Phone->DispatchError;
 }
 
