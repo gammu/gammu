@@ -1643,6 +1643,18 @@ static GSM_Error N6510_DeleteUserRingtones(GSM_StateMachine *s)
 	return GSM_WaitFor (s, DelAllRingtoneReq, 6, 0x1F, s->Phone.Data.Priv.N6510.Timeout, ID_SetRingtone);
 }
 
+static GSM_Error N6510_ReplyPressKey(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+{
+	if (msg.Buffer[3] == 0x33) {
+		smprintf(s, "Key auto released\n");
+	} else if (msg.Buffer[3] == 0x12) {
+		smprintf(s, "Key pressed\n");
+	} else {
+		return ERR_UNKNOWN;
+	}
+	return ERR_NONE;
+}
+
 static GSM_Error N6510_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean Press)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x11, 0x00, 0x01, 0x00, 0x00,
@@ -4124,6 +4136,8 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyCallInfo,		  "\x01",0x03,0xA6,ID_IncomingFrame	  },
 	{N71_65_ReplyCallInfo,		  "\x01",0x03,0xD2,ID_IncomingFrame	  },
 	{N71_65_ReplyCallInfo,		  "\x01",0x03,0xD3,ID_IncomingFrame	  },
+	{N6510_ReplyPressKey,		  "\x01",0x03,0x33,ID_PressKey		  },
+	{N6510_ReplyPressKey,		  "\x01",0x03,0x12,ID_PressKey		  },
 
 	{N6510_ReplySendSMSMessage,	  "\x02",0x03,0x03,ID_IncomingFrame	  },
 	{N6510_ReplyIncomingSMS,	  "\x02",0x03,0x04,ID_IncomingFrame	  },
