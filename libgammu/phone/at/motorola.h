@@ -49,6 +49,7 @@ GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 GSM_Error MOTOROLA_ParseCalendarSimple(GSM_StateMachine *s, const char *line);
 
 GSM_Error MOTOROLA_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error MOTOROLA_ReplyGetMPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s);
 
 GSM_Error MOTOROLA_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error MOTOROLA_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start);

@@ -732,6 +732,25 @@ GSM_Error MOTOROLA_ReplyGetMPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMac
 	}
 }
 
+GSM_Error MOTOROLA_ReplyGetMPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+ 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+ 	switch (Priv->ReplyState) {
+ 	case AT_Reply_OK:
+		smprintf(s, "Memory status received\n");
+		return ERR_NONE;
+	case AT_Reply_Error:
+		return ERR_UNKNOWN;
+	case AT_Reply_CMSError:
+	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
+ 	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+}
+
 #endif
 
 /*@}*/
