@@ -2491,6 +2491,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	N26510_SetSMSLocation(s, &sms->SMS[0], 0, location);
 
 	sms->SMS[0].Folder = Priv->SMSFileFolder;
+	sms->SMS[0].InboxFolder = Priv->LastSMSFolders.Folder[Priv->SMSFileFolder].InboxFolder;
 	sms->SMS[0].Location = 0; /* fixme */
 
 	return ERR_NONE;
