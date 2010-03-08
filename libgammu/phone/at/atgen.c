@@ -5221,7 +5221,6 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetCPBSMemoryStatus,"AT+CPBS?"		,0x00,0x00,ID_GetMemoryStatus	 },
 /* Samsung phones reply +CPBR: after OK --claudio */
 {ATGEN_ReplyGetCPBRMemoryInfo,	"AT+CPBR=?"		,0x00,0x00,ID_GetMemoryStatus	 },
-{MOTOROLA_ReplyGetMPBRMemoryInfo,	"AT+MPBR=?"		,0x00,0x00,ID_GetMemoryStatus	 },
 {MOTOROLA_ReplyGetMPBRMemoryStatus,	"AT+MPBR?"		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_ReplyGetCPBRMemoryInfo,	"+CPBR:"		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_ReplyGetCPBRMemoryStatus,"AT+CPBR="		,0x00,0x00,ID_GetMemoryStatus	 },
