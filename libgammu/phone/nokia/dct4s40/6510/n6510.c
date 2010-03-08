@@ -1661,6 +1661,11 @@ static GSM_Error N6510_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, gboolean P
 			       0x00,		/* Event */
 			       0x01};		/* Number of presses */
 
+	if (Key != GSM_KEY_GREEN) {
+		smprintf(s, "Mapping for key code %d missing!\n", Key);
+		return ERR_NOTIMPLEMENTED;
+	}
+
 	req[7] = Key;
 	if (Press) {
 		req[8] = NOKIA_PRESSPHONEKEY;
