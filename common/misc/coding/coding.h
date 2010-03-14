@@ -25,7 +25,7 @@ int 		mytowlower			(wchar_t c);
 unsigned int 	EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
 unsigned int 	DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);
 
-unsigned int	UnicodeLength			(const unsigned char *str);
+size_t		UnicodeLength			(const unsigned char *str);
 unsigned char	*DecodeUnicodeString		(const unsigned char *src);
 unsigned char   *DecodeUnicodeConsole		(const unsigned char *src);
 void		DecodeUnicode			(const unsigned char *src, unsigned char *dest);
@@ -53,8 +53,8 @@ void		EncodeBCD			(unsigned char *dest, const unsigned char *src, int len, bool 
 void 		DecodeUTF7			(unsigned char *dest, const unsigned char *src, int len);
 
 /* ------------------------------ UTF8 ------------------------------------- */
-wchar_t		DecodeWithUTF8Alphabet		(unsigned char mychar3, unsigned char mychar4);
-bool 		EncodeWithUTF8Alphabet		(unsigned char mychar1, unsigned char mychar2, unsigned char *ret1, unsigned char *ret2);
+int 		EncodeWithUTF8Alphabet2		(unsigned char mychar1, unsigned char mychar2, unsigned char *ret);
+int 		DecodeWithUTF8Alphabet2		(unsigned char *src, wchar_t *dest, int len);
 
 bool		EncodeUTF8QuotedPrintable	(unsigned char *dest, const unsigned char *src);
 void 		DecodeUTF8QuotedPrintable	(unsigned char *dest, const unsigned char *src, int len);

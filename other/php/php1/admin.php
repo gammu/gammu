@@ -95,7 +95,10 @@ if (!isset($db_name) && isset($_GET['db'])) {
 if (isset($db_pass) && isset($db_user) && isset($db_serv)) {
 	$dbpass = @mysql_connect("$db_serv","$db_user","$db_pass");
 	if ($dbpass) {
-		if (isset($db_name)) $dbconnect = mysql_select_db("$db_name");
+		mysql_query("SET NAMES UTF8;");
+		if (isset($db_name)) {
+			$dbconnect = mysql_select_db("$db_name");
+		}
 	}
 }
 
@@ -123,7 +126,7 @@ if (isset($dbpass) && isset($dbconnect) && isset($_GET['op']) &&
 		}
 		$phone = $_GET['phone'];
 		$report = $_GET['report'];
-		if ($tresc.length > 160) {
+		if (strlen($tresc) > 160) {
 //			$result2 = mysql_db_query("$db_name","select ID from outbox order by ID desc limit 1");
 //			$rekord2 = mysql_fetch_row($result2);
 //			if ($rekord == null) {
@@ -136,13 +139,13 @@ if (isset($dbpass) && isset($dbconnect) && isset($_GET['op']) &&
 //			$text = "";
 		} else {
 			if ($report == "yes") {
-				mysql_query ("insert into outbox(Class,DestinationNumber,TextDecoded,SendingDateTime,RelativeValidity,SenderID,DeliveryReport,Coding) VALUES('$class','$number','$tresc','$datoom','$validity','$phone','yes','Default_No_Compression')");
+				mysql_query ("insert into outbox(UpdatedInDB,InsertIntoDB,Class,DestinationNumber,TextDecoded,SendingDateTime,RelativeValidity,SenderID,DeliveryReport,Coding) VALUES(now(),now(),'$class','$number','$tresc','$datoom','$validity','$phone','yes','Default_No_Compression')");
 			}
 			if ($report == "no") {
-				mysql_query ("insert into outbox(Class,DestinationNumber,TextDecoded,SendingDateTime,RelativeValidity,SenderID,DeliveryReport,Coding) VALUES('$class','$number','$tresc','$datoom','$validity','$phone','no','Default_No_Compression')");
+				mysql_query ("insert into outbox(UpdatedInDB,InsertIntoDB,Class,DestinationNumber,TextDecoded,SendingDateTime,RelativeValidity,SenderID,DeliveryReport,Coding) VALUES(now(),now(),'$class','$number','$tresc','$datoom','$validity','$phone','no','Default_No_Compression')");
 			}
 			if ($report == "default") {
-				mysql_query ("insert into outbox(Class,DestinationNumber,TextDecoded,SendingDateTime,RelativeValidity,SenderID,Coding) VALUES('$class','$number','$tresc','$datoom','$validity','$phone','Default_No_Compression')");
+				mysql_query ("insert into outbox(UpdatedInDB,InsertIntoDB,Class,DestinationNumber,TextDecoded,SendingDateTime,RelativeValidity,SenderID,Coding) VALUES(now(),now(),'$class','$number','$tresc','$datoom','$validity','$phone','Default_No_Compression')");
 			}
 		}
 	}
@@ -169,6 +172,8 @@ if (isset($dbpass) && isset($dbconnect) && isset($_GET['op']) && isset($_GET['dz
 }
 
 echo "<HTML>\n<HEAD>\n";
+echo "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
+
 echo "<STYLE TYPE=text/css>\n";
 echo "<!--\n";
 echo "BODY 			{text-decoration: none; color: #404040; font-family: verdana, arial; font-weight: normal; font-size: 10px; margin-left: 0pt; margin-right: 0pt; margin-top: 0pt; margin-bottom: 0pt}\n";
@@ -271,7 +276,7 @@ while ($row0 = mysql_fetch_object($result0)) {
 	$rekord = @mysql_fetch_row($result);
 	if (!$rekord) continue;
 	mysql_free_result($result);
-	if ($rekord[0]!='5') continue;
+	if ($rekord[0]!='6') continue;
 
 	$result2 = @mysql_list_tables($row0->Database);
 	if (!$result2) continue;

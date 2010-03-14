@@ -114,7 +114,7 @@ void RemoveDuplicatedStrings(char *filename)
 	fwrite(buffer,1,2,output);
 	sprintf(buffer,"# Localization file for Gammu version %s",VERSION);
 	WriteOutput(buffer);
-	sprintf(buffer,"# More on Gammu on www.mwiacek.com, www.cihar.com, www.gammu.net");
+	sprintf(buffer,"# More on Gammu on www.mwiacek.com, www.cihar.com, www.gammu.org");
 	WriteOutput(buffer);
 	WriteOutput("");
 	WriteOutput("[locale]");
@@ -190,7 +190,7 @@ void ProcessLangFile(char *filename)
 	fwrite(buffer,1,2,output);
 	sprintf(buffer,"# Localization file for Gammu version %s",VERSION);
 	WriteOutput(buffer);
-	sprintf(buffer,"# More on Gammu on www.mwiacek.com, www.cihar.com, www.gammu.net");
+	sprintf(buffer,"# More on Gammu on www.mwiacek.com, www.cihar.com, www.gammu.org");
 	WriteOutput(buffer);
 	WriteOutput("");
 

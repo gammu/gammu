@@ -8,7 +8,7 @@ MY_MAJOR_VER=${PV:0:3}
 
 DESCRIPTION="a fork of the gnokii project, a tool to handle your cellular phone"
 SRC_URI="http://www.mwiacek.com/zips/gsm/${PN}/stable/${MY_MAJOR_VER/./_}x/${P}.tar.gz"
-HOMEPAGE="http://www.gammu.net/projects/gammu.php"
+HOMEPAGE="http://www.gammu.org/wiki/index.php?title=Gammu:Main_Page"
 
 IUSE="debug bluetooth irda mysql"
 SLOT="0"

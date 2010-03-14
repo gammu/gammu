@@ -47,6 +47,20 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 	char		string[500];
 	unsigned char	type;
 
+	memset(string,0,sizeof(string));
+	for (i = 0; i < entry.EntriesNum; i++) {
+		if (entry.Entries[i].EntryType == PBK_Text_LastName ||
+		    entry.Entries[i].EntryType == PBK_Text_FirstName) {
+			CopyUnicodeString(string+UnicodeLength(string+1)*2+1,entry.Entries[i].Text);
+		}
+	}
+	if (UnicodeLength(string+1) != 0) {
+		type = N7110_PBK_NAME;
+		len = UnicodeLength(string+1);
+		string[0] = len*2+2;
+		string[len*2+1] = 0;
+		count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
+	}
 	for (i = 0; i < entry.EntriesNum; i++) {
 		type = 0;
 		if (entry.Entries[i].EntryType == PBK_Number_General) type = N7110_PBK_NUMBER_GENERAL;
@@ -98,6 +112,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 			}
 			continue;
 		}
+		dbgprintf("entry num %i %i\n",i,entry.EntriesNum);
 		if (entry.Entries[i].EntryType == PBK_Text_Note)   type = N7110_PBK_NOTE;
 		if (entry.Entries[i].EntryType == PBK_Text_Postal) type = N7110_PBK_POSTAL;
 		if (entry.Entries[i].EntryType == PBK_Text_Email)  type = N7110_PBK_EMAIL;
@@ -114,7 +129,6 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 			string[len*2+1] = 0;
 			count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
 			continue;
-
 		}
 		if (entry.Entries[i].EntryType == PBK_Caller_Group) {
 			if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) {

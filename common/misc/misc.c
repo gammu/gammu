@@ -425,6 +425,7 @@ int smfprintf(Debug_Info *d, const char *format, ...)
 
 bool GSM_SetDebugLevel(char *info, Debug_Info *di)
 {
+	if (info == NULL)			{di->dl = DL_NONE;	 	return true;}
 	if (!strcmp(info,"nothing")) 		{di->dl = DL_NONE;	 	return true;}
 	if (!strcmp(info,"text")) 		{di->dl = DL_TEXT;	 	return true;}
 	if (!strcmp(info,"textall")) 		{di->dl = DL_TEXTALL;    	return true;}
