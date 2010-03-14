@@ -700,7 +700,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	return error;
 }
 
-CFG_Header *CFG_FindGammuRC()
+CFG_Header *CFG_FindGammuRC(void)
 {
 	CFG_Header	*cfg_info;
         char		*homedir;
@@ -721,12 +721,12 @@ CFG_Header *CFG_FindGammuRC()
         if ((cfg_info = CFG_ReadFile(rcfile, false)) == NULL) {
 #if defined(WIN32) || defined(DJGPP)
                 if ((cfg_info = CFG_ReadFile("gammurc", false)) == NULL) {
-//			dprintf("CFG file - No config files. Using defaults.\n");
+//			dbgprintf("CFG file - No config files. Using defaults.\n");
                         return NULL;
                 }
 #else
                 if ((cfg_info = CFG_ReadFile("/etc/gammurc", false)) == NULL) {
-//			dprintf("CFG file - No config files. Using defaults.\n");
+//			dbgprintf("CFG file - No config files. Using defaults.\n");
                         return NULL;
                 }
 #endif

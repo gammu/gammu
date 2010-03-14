@@ -151,6 +151,8 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{GE_CANCELED,			"Transfer was canceled by phone (you pressed cancel on phone?)."},
 	/* Some missed */
 	{GE_OTHERCONNECTIONREQUIRED,	"Current connection type doesn't support called function."},
+	/* Some missed */
+	{GE_INVALIDDATETIME,		"Invalid date or time specified."},
 
 	{0,				""}
 };
@@ -173,7 +175,7 @@ unsigned char *print_error(GSM_Error e, FILE *df, CFG_Header *cfg)
 	return GetMsg(cfg,def);
 }
 
-char *GetGammuVersion()
+char *GetGammuVersion(void)
 {
 	static char Buffer[1000]="";
 
@@ -206,7 +208,7 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 		case DL_TEXTERRORDATE:
 			testfile = fopen(info,"ac");
 			if (!testfile) {
-				dprintf("Can't open debug file\n");
+				dbgprintf("Can't open debug file\n");
 				return GE_CANTOPENFILE;
 			}
 			fseek(testfile, 0, SEEK_END);
@@ -219,7 +221,7 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 			testfile = fopen(info,"wc");
 		}
 		if (!testfile) {
-			dprintf("Can't open debug file\n");
+			dbgprintf("Can't open debug file\n");
 			return GE_CANTOPENFILE;
 		} else {
 			if (privdi->df && privdi->df != stdout)

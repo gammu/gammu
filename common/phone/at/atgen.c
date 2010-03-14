@@ -539,7 +539,7 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 {
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
-		dprintf("Memory status received\n");
+		dbgprintf("Memory status received\n");
 		if (strncmp(msg.Buffer, "ME", 2) == 0) s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_PHONE_SMS_AVAILABLE;
 		return GE_NONE;
 	case AT_Reply_Error:
@@ -552,7 +552,7 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 
 GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 {
-	dprintf("Getting available SMS memories\n");
+	dbgprintf("Getting available SMS memories\n");
 	return GSM_WaitFor (s, "AT+CPMS?\r", 9, 0x00, 4, ID_GetSMSMemories);
 }
 
@@ -2055,6 +2055,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		}
 		return GE_NONE;
 	case AT_Reply_Error:
+	case AT_Reply_CMEError:
  		smprintf(s, "Error - too high location ?\n");
 		return GE_INVALIDLOCATION;
 	case AT_Reply_CMSError:
@@ -2112,6 +2113,20 @@ GSM_Error ATGEN_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
+}
+
+GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
+{
+	GSM_Error		error;
+
+	if (start) {
+		entry->Location = 1;
+	} else {
+		entry->Location++;
+	}
+	while ((error = ATGEN_GetMemory(s, entry)) == GE_EMPTY) entry->Location++;
+	if (error == GE_INVALIDLOCATION) return GE_EMPTY;
+	return error;
 }
 
 GSM_Error ATGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
@@ -2959,7 +2974,7 @@ GSM_Phone_Functions ATGENPhone = {
  	NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
 	ATGEN_GetMemoryStatus,
 	ATGEN_GetMemory,
-	NOTSUPPORTED,			/*	GetNextMemory		*/
+	ATGEN_GetNextMemory,
 	ATGEN_SetMemory,
 	ATGEN_AddMemory,
 	ATGEN_DeleteMemory,

@@ -68,12 +68,12 @@ typedef struct {
 extern Debug_Info	di;
 
 #ifdef DEBUG
-int dprintf(const char *format, ...);
+int dbgprintf(const char *format, ...);
 #else
 #  ifndef WIN32
-#    define dprintf(a...) do { } while (0)
+#    define dbgprintf(a...) do { } while (0)
 #  else
-#    define dprintf
+#    define dbgprintf
 #  endif
 #endif
 
@@ -104,6 +104,8 @@ char *DayOfWeek 		(int year, int month, int day);
 time_t Fill_Time_T		(GSM_DateTime DT, int TZ);
 void GetTimeDifference		(unsigned long diff, GSM_DateTime *DT, bool Plus, int multi);
 void Fill_GSM_DateTime		(GSM_DateTime *Date, time_t timet);
+bool CheckDate		(GSM_DateTime *date);
+bool CheckTime		(GSM_DateTime *date);
 
 #endif
 

@@ -563,17 +563,17 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 	switch (Number[1]) {
 	case GNT_ALPHANUMERIC:
 		if (length > 6) length++;
-		dprintf("Alphanumeric number, length %i\n",length);
+		dbgprintf("Alphanumeric number, length %i\n",length);
 		GSM_UnpackEightBitsToSeven(0, length, length, Number+2, Buffer);
 		Buffer[length]=0;
 		break;
 	case GNT_INTERNATIONAL:
-		dprintf("International number\n");
+		dbgprintf("International number\n");
 		Buffer[0]='+';
 		DecodeBCD(Buffer+1,Number+2, length);
 		break;
 	default:
-		dprintf("Default number %02x\n",Number[1]);
+		dbgprintf("Default number %02x\n",Number[1]);
 		DecodeBCD (Buffer, Number+2, length);
 		break;
 	}
@@ -929,6 +929,94 @@ int mytowlower(wchar_t c)
 #else
 	return towlower(c);
 #endif
+}
+
+/*
+ * Following code is based on wcsstr from the GNU C Library, original
+ * comment follows:
+ */
+/*
+ * The original strstr() file contains the following comment:
+ *
+ * My personal strstr() implementation that beats most other algorithms.
+ * Until someone tells me otherwise, I assume that this is the
+ * fastest implementation of strstr() in C.
+ * I deliberately chose not to comment it.  You should have at least
+ * as much fun trying to understand it, as I had to write it :-).
+ *
+ * Stephen R. van den Berg, berg@pool.informatik.rwth-aachen.de */
+
+unsigned char *mystrstr (const unsigned char *haystack, const unsigned char *needle)
+{
+/* One crazy define to convert unicode used in Gammu to standard wchar_t */
+#define tolowerwchar(x) (mytowlower((wchar_t)( (((&(x))[0] & 0xff) << 8) | (((&(x))[1] & 0xff)) )))
+	 register wchar_t b, c;
+
+	if ((b = tolowerwchar(*needle)) != L'\0') {
+		haystack -= 2;				/* possible ANSI violation */
+		do {
+			haystack += 2;
+			if ((c = tolowerwchar(*haystack)) == L'\0')
+				goto ret0;
+		} while (c != b);
+
+		needle += 2;
+		if ((c = tolowerwchar(*needle)) == L'\0')
+			goto foundneedle;
+		needle += 2;
+		goto jin;
+
+		for (;;) {
+			register wchar_t a;
+			register const unsigned char *rhaystack, *rneedle;
+
+			do {
+				haystack += 2;
+				if ((a = tolowerwchar(*haystack)) == L'\0')
+					goto ret0;
+				if (a == b)
+					break;
+				haystack += 2;
+				if ((a = tolowerwchar(*haystack)) == L'\0')
+					goto ret0;
+shloop:				;
+			} while (a != b);
+
+jin:			haystack += 2;
+			if ((a = tolowerwchar(*haystack)) == L'\0')
+				goto ret0;
+
+			if (a != c)
+				goto shloop;
+
+			rhaystack = haystack + 2;
+			haystack -= 2;
+			rneedle = needle;
+			if (tolowerwchar(*rhaystack) == (a = tolowerwchar(*rneedle)))
+				do {
+					if (a == L'\0')
+						goto foundneedle;
+					rhaystack += 2;
+					needle += 2;
+					if (tolowerwchar(*rhaystack) != (a = tolowerwchar(*needle)))
+						break ;
+					if (a == L'\0')
+						goto foundneedle;
+					rhaystack += 2;
+					needle += 2;
+				} while (tolowerwchar(*rhaystack) == (a = tolowerwchar(*needle)));
+
+			needle = rneedle;		  /* took the register-poor approach */
+
+			if (a == L'\0')
+				break;
+		}
+	}
+foundneedle:
+	return (unsigned char *)haystack;
+ret0:
+	return NULL;
+#undef tolowerwchar
 }
 
 void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen)

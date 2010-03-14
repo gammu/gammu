@@ -12,6 +12,7 @@ typedef		int wint_t;
 
 /* ---------------------------- Unicode ------------------------------------ */
 bool 		mywstrncasecmp			(unsigned char *a, unsigned char *b, int num);
+unsigned char	*mystrstr			(const unsigned char *haystack, const unsigned char *needle);
 bool 		mywstrncmp			(unsigned char *a, unsigned char *b, int num);
 bool 		myiswspace	  		(unsigned char *src);
 int 		mytowlower			(wchar_t c);

@@ -230,7 +230,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 #ifdef DEBUG
 	if (sms->Number != 0) {
 		DecodeUnicode(sms->SMS[0].Number,Buffer);
-	 	dprintf("Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i\n",
+	 	dbgprintf("Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i\n",
 			sms->Number,
 			Buffer,
 	 		DecodeUnicodeString(sms->SMS[0].Text),
@@ -238,7 +238,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 			sms->SMS[0].Length,
 			sms->SMS[0].UDH.Type,
 			sms->SMS[0].UDH.Length);
-	} else dprintf("error\n");
+	} else dbgprintf("error\n");
 #endif
 
   	return GE_NONE;

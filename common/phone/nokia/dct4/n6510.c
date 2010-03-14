@@ -1364,7 +1364,7 @@ static GSM_Error N6510_EnableWAPMMSSettings(GSM_StateMachine *s, bool MMS)
 	if (error != GE_NONE) return error;
 
 	if (MMS) {
-		dprintf("Enabling MMS\n");
+		dbgprintf("Enabling MMS\n");
 		return GSM_WaitFor (s, req2, 5, 0x3f, 4, ID_EnableWAP);
 	} else {
 		return GSM_WaitFor (s, req2, 4, 0x3f, 4, ID_EnableWAP);
@@ -3476,7 +3476,7 @@ void N6510_EncodeFMFrequency(double freq, unsigned char *buff)
 	}
 	StringToDouble(buffer, &freq0);
  	freq2 = (unsigned int)freq0;
-	dprintf("Frequency: %s %i\n",buffer,freq2);	
+	dbgprintf("Frequency: %s %i\n",buffer,freq2);	
  	freq2	= freq2 - 0xffff;
  	buff[0] = freq2 / 0x100;
  	buff[1] = freq2 % 0x100;
@@ -3488,7 +3488,7 @@ void N6510_DecodeFMFrequency(double *freq, unsigned char *buff)
 
 	sprintf(buffer,"%i.%i",(0xffff + buff[0] * 0x100 + buff[1])/1000,
 			       (0xffff + buff[0] * 0x100 + buff[1])%1000);
-	dprintf("Frequency: %s\n",buffer);
+	dbgprintf("Frequency: %s\n",buffer);
 	StringToDouble(buffer, freq);
 }
 
@@ -3687,7 +3687,7 @@ static int N6510_FindFileCheckSum(unsigned char *ptr, int len)
 			accx <<= 1;
 		}
 	}
-	dprintf("Checksum from Gammu is %04X\n",(acc & 0xffff));
+	dbgprintf("Checksum from Gammu is %04X\n",(acc & 0xffff));
 	return (acc & 0xffff);
 }
 
@@ -3705,7 +3705,7 @@ static GSM_Error N6510_ReplyGetFileFolderInfo(GSM_Protocol_Message msg, GSM_Stat
 		if (File->Name[0] == 0x00 && File->Name[1] == 0x00) return GE_UNKNOWN;
 
 		i = msg.Buffer[8]*256+msg.Buffer[9];
-		dprintf("%02x %02x %02x %02x %02x %02x %02x %02x %02x\n",
+		dbgprintf("%02x %02x %02x %02x %02x %02x %02x %02x %02x\n",
 			msg.Buffer[i-5],msg.Buffer[i-4],msg.Buffer[i-3],
 			msg.Buffer[i-2],msg.Buffer[i-1],msg.Buffer[i],
 			msg.Buffer[i+1],msg.Buffer[i+2],msg.Buffer[i+3]);
@@ -3725,7 +3725,7 @@ static GSM_Error N6510_ReplyGetFileFolderInfo(GSM_Protocol_Message msg, GSM_Stat
 		File->ModifiedEmpty = false;
 		NOKIA_DecodeDateTime(s, msg.Buffer+i-22, &File->Modified);
 		if (File->Modified.Year == 0x00) File->ModifiedEmpty = true;
-		dprintf("%02x %02x %02x %02x\n",msg.Buffer[i-22],msg.Buffer[i-21],msg.Buffer[i-20],msg.Buffer[i-19]);
+		dbgprintf("%02x %02x %02x %02x\n",msg.Buffer[i-22],msg.Buffer[i-21],msg.Buffer[i-20],msg.Buffer[i-19]);
 
 		Priv->FileToken = msg.Buffer[i-10]*256+msg.Buffer[i-9];
 		Priv->ParentID  = msg.Buffer[i]*256+msg.Buffer[i+1];
@@ -3768,7 +3768,7 @@ static GSM_Error N6510_ReplyGetFileFolderInfo(GSM_Protocol_Message msg, GSM_Stat
 			i = Priv->FilesLocationsUsed-1;
 			while (1) {
 				if (i==Priv->FilesLocationsCurrent-1) break;
-				dprintf("Copying %i to %i, max %i, current %i\n",
+				dbgprintf("Copying %i to %i, max %i, current %i\n",
 					i,i+msg.Buffer[9],
 					Priv->FilesLocationsUsed,Priv->FilesLocationsCurrent);
 				Priv->FilesLocations[i+msg.Buffer[9]] 	= Priv->FilesLocations[i];
@@ -3779,9 +3779,9 @@ static GSM_Error N6510_ReplyGetFileFolderInfo(GSM_Protocol_Message msg, GSM_Stat
 			for (i=0;i<msg.Buffer[9];i++) {
 				Priv->FilesLocations[Priv->FilesLocationsCurrent+i] 	= msg.Buffer[13+i*4];
 				Priv->FilesLevels[Priv->FilesLocationsCurrent+i] 	= File->Level+1;
-				dprintf("%i ",Priv->FilesLocations[Priv->FilesLocationsCurrent+i]);
+				dbgprintf("%i ",Priv->FilesLocations[Priv->FilesLocationsCurrent+i]);
 			}
-			dprintf("\n");
+			dbgprintf("\n");
 		}
 		if (msg.Buffer[9] != 0x00) File->Folder = true;
 		return GE_NONE;		
@@ -3961,13 +3961,13 @@ static GSM_Error N6510_SearchForFileName(GSM_StateMachine *s, GSM_File *File)
 		if (FilesLocationsCurrent2 == FilesLocationsUsed2) return GE_EMPTY;
 
 		sprintf(File2.ID_FullName,"%i",FilesLocations2[FilesLocationsCurrent2]);
-		dprintf("Current is %i\n",FilesLocations2[FilesLocationsCurrent2]);
+		dbgprintf("Current is %i\n",FilesLocations2[FilesLocationsCurrent2]);
 		FilesLocationsCurrent2++;
 
 		error = N6510_GetFileFolderInfo(s, &File2, ID_AddFile);
 		if (error == GE_EMPTY) continue;
 		if (error != GE_NONE) return error;
-		dprintf("%s %s\n",DecodeUnicodeString(File->Name),DecodeUnicodeString(File2.Name));
+		dbgprintf("%s %s\n",DecodeUnicodeString(File->Name),DecodeUnicodeString(File2.Name));
 		if (mywstrncasecmp(File2.Name,File->Name,0)) return GE_NONE;
 	}
 	return GE_EMPTY;

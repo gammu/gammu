@@ -61,7 +61,7 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 			sab.btAddr = sab.btAddr + (s->CurrentConfig->Device[i]-'A'+10);
 		}
 	}
-	dprintf("Remote Bluetooth device is %04x%08x\n",
+	dbgprintf("Remote Bluetooth device is %04x%08x\n",
 	  		GET_NAP(sab.btAddr), GET_SAP(sab.btAddr));
 
 	if (connect (d->hPhone, (struct sockaddr *)&sab, sizeof(sab)) != 0) {
@@ -85,7 +85,7 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 	int 				fd;
 
 	if ((fd = socket(PF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM)) < 0) {
-		dprintf("Can't create socket\n");
+		dbgprintf("Can't create socket\n");
 		return GE_DEVICENODRIVER;
 	}
 
@@ -94,7 +94,7 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 	laddr.rc_channel 	= 0;
 
 	if (bind(fd, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
-		dprintf("Can't bind socket\n");
+		dbgprintf("Can't bind socket\n");
 		close(fd);
 		return GE_DEVICEOPENERROR;
 	}
@@ -105,7 +105,7 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 	raddr.rc_channel 	= port;
 
 	if (connect(fd, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
-		dprintf("Can't connect\n");
+		dbgprintf("Can't connect\n");
 		close(fd);
 		return GE_DEVICEOPENERROR;
 	}

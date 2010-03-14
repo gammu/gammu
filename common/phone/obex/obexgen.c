@@ -475,7 +475,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 
 	while (1) {
 		if (Priv->FilesLocationsCurrent == Priv->FilesLocationsUsed) {
-			dprintf("Last file\n");
+			dbgprintf("Last file\n");
 			return GE_EMPTY;
 		}
 
@@ -545,7 +545,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 					}
 					name[j] = 0;
 					if (strcmp(name,".")) {
-						dprintf("copying folder %s to %i parent %i\n",name,Priv->FilesLocationsCurrent+pos2,Priv->FilesLocationsCurrent);
+						dbgprintf("copying folder %s to %i parent %i\n",name,Priv->FilesLocationsCurrent+pos2,Priv->FilesLocationsCurrent);
 						strcpy(Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,File->ID_FullName);
 						if (strlen(File->ID_FullName) != 0) strcat(Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,"\\");
 						strcat(Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,name);
@@ -566,7 +566,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 						j++;
 					}
 					name[j] = 0;
-					dprintf("copying file %s to %i\n",name,Priv->FilesLocationsCurrent+pos2);
+					dbgprintf("copying file %s to %i\n",name,Priv->FilesLocationsCurrent+pos2);
 					Priv->Files[Priv->FilesLocationsCurrent+pos2].Level	= File->Level+1;
 					Priv->Files[Priv->FilesLocationsCurrent+pos2].Folder 	= false;
 					strcpy(Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,File->ID_FullName);

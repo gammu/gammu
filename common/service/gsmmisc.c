@@ -81,11 +81,11 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 	File->ModifiedEmpty = true;
 	if (stat(FileName,&fileinfo) == 0) {
 		File->ModifiedEmpty = false;
-		dprintf("File info read correctly\n");
+		dbgprintf("File info read correctly\n");
 		//st_mtime is time of last modification of file
 		Fill_GSM_DateTime(&File->Modified, fileinfo.st_mtime);
 		File->Modified.Year = File->Modified.Year + 1900;
-		dprintf("FileTime: %02i-%02i-%04i %02i:%02i:%02i\n",
+		dbgprintf("FileTime: %02i-%02i-%04i %02i:%02i:%02i\n",
 			File->Modified.Day,File->Modified.Month,File->Modified.Year,
 			File->Modified.Hour,File->Modified.Minute,File->Modified.Second);
 	}
@@ -118,24 +118,24 @@ GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR, ch
 
 	GSM_JADFindLine(File, "MIDlet-Vendor:", Vendor);
 	if (Vendor[0] == 0x00) return GE_FILENOTSUPPORTED;
-	dprintf("Vendor: \"%s\"\n",Vendor);
+	dbgprintf("Vendor: \"%s\"\n",Vendor);
 
 	GSM_JADFindLine(File, "MIDlet-Name:", Name);
 	if (Name[0] == 0x00) return GE_FILENOTSUPPORTED;
-	dprintf("Name: \"%s\"\n",Name);
+	dbgprintf("Name: \"%s\"\n",Name);
 
 	GSM_JADFindLine(File, "MIDlet-Jar-URL:", JAR);
 	if (JAR[0] == 0x00) return GE_FILENOTSUPPORTED;
-	dprintf("JAR file URL: \"%s\"\n",JAR);
+	dbgprintf("JAR file URL: \"%s\"\n",JAR);
 
 	GSM_JADFindLine(File, "MIDlet-Jar-Size:", Size2);
 	*Size = -1;
 	if (Size2[0] == 0x00) return GE_FILENOTSUPPORTED;
-	dprintf("JAR size: \"%s\"\n",Size2);
+	dbgprintf("JAR size: \"%s\"\n",Size2);
 	(*Size) = atoi(Size2);
 
 	GSM_JADFindLine(File, "MIDlet-Version:", Version);
-	dprintf("Version: \"%s\"\n",Version);
+	dbgprintf("Version: \"%s\"\n",Version);
 
 	return GE_NONE;
 }
@@ -219,28 +219,28 @@ bool ReadVCALText(char *Buffer, char *Start, char *Value)
 	strcat(buff,":");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		EncodeUnicode(Value,Buffer+strlen(Start)+1,strlen(Buffer)-(strlen(Start)+1));
-		dprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
+		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
 		return true;
 	}
 	strcpy(buff,Start);
 	strcat(buff,";CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		DecodeUTF8QuotedPrintable(Value,Buffer+strlen(Start)+41,strlen(Buffer)-(strlen(Start)+41));
-		dprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
+		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
 		return true;
 	}
 	strcpy(buff,Start);
 	strcat(buff,";CHARSET=UTF-8:");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		DecodeUTF8(Value,Buffer+strlen(Start)+15,strlen(Buffer)-(strlen(Start)+15));
-		dprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
+		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
 		return true;
 	}
 	strcpy(buff,Start);
 	strcat(buff,";CHARSET=UTF-7:");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		DecodeUTF7(Value,Buffer+strlen(Start)+15,strlen(Buffer)-(strlen(Start)+15));
-		dprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
+		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
 		return true;
 	}
 	return false;

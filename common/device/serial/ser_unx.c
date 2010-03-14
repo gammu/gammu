@@ -159,11 +159,11 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
     flags = 0;
     ioctl(d->hPhone, TIOCMGET, &flags);
 
-    dprintf("Serial device:");
-    dprintf(" DTR is %s",       flags&TIOCM_DTR?"up":"down");
-    dprintf(", RTS is %s",      flags&TIOCM_RTS?"up":"down");
-    dprintf(", CAR is %s",      flags&TIOCM_CAR?"up":"down");
-    dprintf(", CTS is %s\n",    flags&TIOCM_CTS?"up":"down");
+    dbgprintf("Serial device:");
+    dbgprintf(" DTR is %s",       flags&TIOCM_DTR?"up":"down");
+    dbgprintf(", RTS is %s",      flags&TIOCM_RTS?"up":"down");
+    dbgprintf(", CAR is %s",      flags&TIOCM_CAR?"up":"down");
+    dbgprintf(", CTS is %s\n",    flags&TIOCM_CTS?"up":"down");
     if (((flags&TIOCM_DTR)==TIOCM_DTR) != dtr) return GE_DEVICEDTRRTSERROR;
     if (((flags&TIOCM_RTS)==TIOCM_RTS) != rts) return GE_DEVICEDTRRTSERROR;
 
@@ -177,12 +177,14 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 {
     GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
     struct termios  		t;
-    int             		speed2=B9600;
+    int             		speed2=B19200;
 
     if (tcgetattr(d->hPhone, &t)) {
         GSM_OSErrorInfo(s,"tcgetattr in serial_setspeed");
         return GE_DEVICEREADERROR;
     }
+
+    smprintf(s, "Setting speed to %d\n", speed);
 
     switch (speed) {
         case 50:     speed2 = B50;     break;

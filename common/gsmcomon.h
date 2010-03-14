@@ -62,7 +62,8 @@ typedef enum {
     	GE_CANCELED,                 	/* Action was canceled by user */
 	GE_NEEDANOTHERANSWER,   	/* Inside Gammu: phone module need to send another answer frame */
 /*40*/	GE_OTHERCONNECTIONREQUIRED,
-	GE_WRONGCRC
+	GE_WRONGCRC,
+	GE_INVALIDDATETIME		/* Invalid date/time */
 } GSM_Error;
 
 extern GSM_Error NoneFunction		(void);
@@ -78,7 +79,7 @@ unsigned char *print_error	(GSM_Error e, FILE *df, CFG_Header *cfg);
 
 GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi);
 
-char *GetGammuVersion();
+char *GetGammuVersion(void);
 
 #endif
 
