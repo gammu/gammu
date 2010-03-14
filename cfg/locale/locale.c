@@ -126,7 +126,7 @@ void RemoveDuplicatedStrings(char *filename)
 					number++;
 				}
 				if (num2 != -1 && num2 < num) {
-	                                if (wcscmp(((const wchar_t *)e2->value), ((const wchar_t *)e->value)) == 0) {
+	                                if (mywstrncmp(e2->value, e->value, 0)) {
 						duplicated = true;
 						break;
 	                                }
@@ -198,7 +198,7 @@ void ProcessLangFile(char *filename)
 					num_lang = atoi(buffer+2);
 				}
 				if (num_lang!=-1) {
-	                                if (wcscmp(((const wchar_t *)e_lang->value), ((const wchar_t *)e->value)) == 0) {
+	                                if (mywstrncmp(e_lang->value, e->value, 0)) {
 						sprintf(buffer2,"T%04i",num_lang);
 						EncodeUnicode(buffer,buffer2,6);
 					        retval_lang = CFG_Get(cfg_lang, buff2, buffer,true);
@@ -299,6 +299,7 @@ int main(int argc, char *argv[])
 
 	ProcessLangFile("../../docs/docs/locale/gammu_pl.txt");
 #endif
-
+	printf("\n");
+	
 	return (0);
 }

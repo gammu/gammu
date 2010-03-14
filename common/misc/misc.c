@@ -39,7 +39,7 @@ char *DayOfWeek (int year, int month, int day)
 }
 
 /* Dumps a message */
-void DumpMessage(FILE *df, unsigned char *message, int messagesize)
+void DumpMessage(FILE *df, const unsigned char *message, int messagesize)
 {
 	int 	i;
 	char 	buf[17];

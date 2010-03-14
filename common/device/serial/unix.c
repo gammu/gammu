@@ -37,7 +37,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
     /* O_NONBLOCK MUST be used here as the CLOCAL may be currently off
      * and if DCD is down the "open" syscall would be stuck wating for DCD.
      */
-    d->hPhone = open(s->CFGDevice, O_RDWR | O_NOCTTY | O_NONBLOCK);
+    d->hPhone = open(s->Config.Device, O_RDWR | O_NOCTTY | O_NONBLOCK);
     if (d->hPhone < 0) {
 	GSM_OSErrorInfo(s,"open in serial_open");
 	return GE_DEVICEOPENERROR;
@@ -180,8 +180,10 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
     }
 
     t.c_cflag |= speed2;
-//    t.c_ispeed = speed2;
-//    t.c_ospeed = speed2;
+
+    /* Required in FreeBSD */
+    t.c_ispeed = speed2;
+    t.c_ospeed = speed2;
 
     if (tcsetattr(d->hPhone, TCSADRAIN, &t) == -1) {
         serial_close(s);

@@ -1,15 +1,15 @@
 dnl Process this file with autoconf to produce a configure script.
 
-dnl Disabling cache file
-define([AC_CACHE_LOAD], )dnl
-define([AC_CACHE_SAVE], )dnl
+dnl Disabling cache file - now commented and not used
+dnl define([AC_CACHE_LOAD], )dnl
+dnl define([AC_CACHE_SAVE], )dnl
 
 dnl Default C source file
 AC_INIT(../../gammu/gammu.c)
 dnl Default prefix for package
 AC_PREFIX_DEFAULT("/usr/local")
 dnl Version
-VERSION='0.62'
+VERSION=`cat VERSION`
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
 AC_SUBST(VERSION)
 dnl Compiler flags
@@ -27,11 +27,14 @@ AC_PROG_GCC_TRADITIONAL
 AC_FUNC_MEMCMP
 AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(mktime select socket strdup strerror strstr)
+AC_CHECK_FUNCS(mktime select socket strdup strerror strstr scandir alphasort)
+AC_SUBST(HAVE_SCANDIR)
+AC_SUBST(HAVE_ALPHASORT)
 
 dnl Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS(fcntl.h sys/file.h sys/ioctl.h sys/time.h unistd.h)
+AC_CHECK_HEADERS(fcntl.h sys/file.h sys/ioctl.h sys/time.h unistd.h dirent.h)
+AC_SUBST(HAVE_DIRENT_H)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -40,14 +43,42 @@ AC_TYPE_SIZE_T
 AC_HEADER_TIME
 AC_STRUCT_TM
 
-dnl Path for bluetooth library
-AC_ARG_WITH(bluetooth,
-	[  --with-bluetooth=DIR     Specifies the base libbluetooth],
+dnl Path for making RPM
+RPM_DIR="/usr/src/RPM"
+AC_ARG_WITH(rpmdir,
+	[  --with-rpmdir=DIR       Specifies the directory for making RPM],
 	[ if test x$withval = xyes; then
-		AC_MSG_WARN(Usage is: --with-bluetooth=DIR)
+		AC_MSG_WARN(Usage is: --with-rpmdir=DIR)
+	  else
+		RPM_DIR="$withval"
+	  fi
+	]
+)
+AC_SUBST(RPM_DIR)
+
+dnl temp directory
+TEMP_DIR="/tmp"
+AC_ARG_WITH(tmpdir,
+	[  --with-tmpdir=DIR       Specifies the temporary directory],
+	[ if test x$withval = xyes; then
+		AC_MSG_WARN(Usage is: --with-tmpdir=DIR)
+	  else
+		TEMP_DIR="$withval"
+	  fi
+	]
+)
+AC_SUBST(TEMP_DIR)
+
+dnl Path for bluetooth library
+gsm_bt_dir=""
+AC_ARG_WITH(bluedir,
+	[  --with-bluedir=DIR      Specifies the base libbluetooth],
+	[ if test x$withval = xyes; then
+		AC_MSG_WARN(Usage is: --with-bluedir=DIR)
 	  else
 		LDLIBS="-L$withval/lib/"
 		CFLAGS="-I$withval/include/"
+		gsm_bt_dir="$withval"
 	  fi
 	]
 )
@@ -170,18 +201,24 @@ echo "
   G A M M U (GNU All Mobiles Management Utilities)
   (c) 2002 by Marcin Wiacek (www.mwiacek.com)
   Version $VERSION
+
+  Directories
+  -----------
+  Prefix                                        - $prefix
+  Executable prefix                             - $exec_prefix
+  
+  Man pages                                     - $mandir/man1
+  Shared .so library                            - $libdir
+  Docs and examples                             - $prefix/doc/gammu
+  Binaries                                      - $bindir
+  RPM making directory                          - $RPM_DIR
+  Temporary directory                           - $TEMP_DIR
   
   General options
   ---------------
   Debug                                         - $debug
   CB messages                                   - $gsm_enable_cellbroadcast
   Backup functions                              - $gsm_enable_backup
-  Install path                                  - $prefix
-
-  Phone specific functions
-  ------------------------
-  Nokia 51xx/61xx authentication                - $gsm_enable_6110_authentication
-  Nokia 62xx/71xx/9xxx incoming call/SMS info   - $gsm_enable_71_92incominginfo
 
   Phone protocols
   ---------------
@@ -189,23 +226,28 @@ echo "
   Nokia FBUS2                                   - $gsm_enable_fbus2
   Nokia (FBUS2 over) DLR3 cable                 - $gsm_enable_dlr3
   Nokia (FBUS2 over) Bluetooth                  - $gsm_enable_dlr3blue
+           Bluetooth library path               - $gsm_bt_dir
   Nokia direct infrared                         - $gsm_enable_irda
   Nokia infrared over sockets                   - $gsm_enable_infrared
   AT                                            - $gsm_enable_at
   AT commands over Bluetooth                    - $gsm_enable_atblue
+           Bluetooth library path               - $gsm_bt_dir
 
   Phone modules
   -------------
   Nokia 3210/33xx/3410/51xx/5210/5510/61xx/82xx - $gsm_enable_nokia6110
+           Nokia 51xx/61xx authentication       - $gsm_enable_6110_authentication
   Nokia 3510/6310(i)/6510/8310                  - $gsm_enable_nokia6510
   Nokia 62xx/71xx                               - $gsm_enable_nokia7110
+           Incoming call/SMS info               - $gsm_enable_71_92incominginfo
   Nokia 92xx                                    - $gsm_enable_nokia9210
+           Incoming call/SMS info               - $gsm_enable_71_92incominginfo
   (Siemens, Alcatel, Nokia, WaveCom, other) AT  - $gsm_enable_atgen
 
   Please use now:
   
   * "make"            to make static version of Gammu
-  * "make install"    to install Gammu in your system (root account)
-  * "make installlib" to install Gammu with library in your system (root account)
-  * "make makerpm"    to make RPM file (root account)
+  * "make install"    to install Gammu in your system (root)
+  * "make installlib" to install Gammu with library in your system (root)
+  * "make makerpm"    to make RPM file (root)
 "

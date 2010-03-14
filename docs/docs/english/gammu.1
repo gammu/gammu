@@ -1,4 +1,4 @@
-.TH "Gammu" "1" "12.11.2002" "Marcin Wiacek and others" "Cellurar phones utilities"
+.TH "Gammu" "1" "24.11.2002" "Marcin Wiacek and others" "Cellurar phones utilities"
 .SH "NAME"
 .LP 
 Gammu \- Does some neat things with your cellular phone or modem
@@ -287,7 +287,7 @@ will be removed from phone. When will give only filename, operator logo will
 be displayed for your current GSM operator. When give additionaly network
 code, it will be displayed for this operator: \fBgammu \-\-setbitmap OPERATOR file "260 02"\fR
 .TP 
-\fB\-\-setbitmap PICTURE file location\fR
+\fB\-\-setbitmap PICTURE file location [text]\fR
 .TP 
 \fB\-\-setbitmap TEXT text\fR
 .TP 
@@ -438,31 +438,31 @@ want have full animation). Size of each frame is 16x16 or 8x8.
 \fB\-\-savesms EMSBITMAP file [\-folder number] [\-reply] [\-smscset number] [\-smscnumber number] [\-sender number] [\-unread] [\-read] [\-unsent]\fR
 Saves SMS with EMS bitmap (32x32 or 16x16 or 8x8)
 .TP 
-\fB\-\-sendsms TEXT destination [\-reply] [\-flash] [\-smscset number] [\-smscnumber number] [\-len len] [\-autolen len] [\-enablefax] [\-disablefax] [\-enablevoice] [\-disablevoice] [\-enableemail] [\-report] [\-disableemail] [\-voidsms] [\-unicode] [\-inputunicode] [-replacemessages ID] [-replacefile file]\fR
+\fB\-\-sendsms TEXT destination [\-reply] [\-flash] [\-smscset number] [\-smscnumber number] [\-len len] [\-autolen len] [\-enablefax] [\-disablefax] [\-enablevoice] [\-disablevoice] [\-enableemail] [\-report] [\-disableemail] [\-voidsms] [\-unicode] [\-inputunicode] [-replacemessages ID] [-replacefile file] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms RINGTONE destination file [\-reply] [\-smscset number] [\-long] [\-smscnumber number] [\-report] [\-scale]\fR
+\fB\-\-sendsms RINGTONE destination file [\-reply] [\-smscset number] [\-long] [\-smscnumber number] [\-report] [\-scale] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms OPERATOR destination file [\-reply] [\-smscset number] [\-netcode netcode] [\-report] [\-smscnumber number] [-biglogo]\fR
+\fB\-\-sendsms OPERATOR destination file [\-reply] [\-smscset number] [\-netcode netcode] [\-report] [\-smscnumber number] [-biglogo] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms CALLER destination file [\-reply] [\-smscset number] [\-report] [\-smscnumber number]\fR
+\fB\-\-sendsms CALLER destination file [\-reply] [\-smscset number] [\-report] [\-smscnumber number] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms PICTURE destination file [\-reply] [\-smscset number] [\-report] [\-smscnumber number] [\-unicode] [\-text text]\fR
+\fB\-\-sendsms PICTURE destination file [\-reply] [\-smscset number] [\-report] [\-smscnumber number] [\-unicode] [\-text text] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms BOOKMARK destination file location [\-smscset number] [\-reply] [\-report] [\-smscnumber number]\fR
+\fB\-\-sendsms BOOKMARK destination file location [\-smscset number] [\-reply] [\-report] [\-smscnumber number] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms SETTINGS destination file location [\-smscset number] [\-smscnumber number] [\-report] [\-reply]\fR
+\fB\-\-sendsms SETTINGS destination file location [\-smscset number] [\-smscnumber number] [\-report] [\-reply] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms CALENDAR destination file location [\-smscset number] [\-smscnumber number] [\-report] [\-reply]\fR
+\fB\-\-sendsms CALENDAR destination file location [\-smscset number] [\-smscnumber number] [\-report] [\-reply] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms VCARD10|VCARD21 destination file SM|ME location [\-reply] [\-smscset number] [\-smscnumber number] [\-report]\fR
+\fB\-\-sendsms VCARD10|VCARD21 destination file SM|ME location [\-reply] [\-smscset number] [\-smscnumber number] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms PROFILE destination name bitmap ringtone [\-reply] [\-smscset number] [\-smscnumber number] [\-report]\fR
+\fB\-\-sendsms PROFILE destination name bitmap ringtone [\-reply] [\-smscset number] [\-smscnumber number] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms EMSSOUND destination[\-number number] [\-file file] [\-reply] [\-smscset number] [\-smscnumber number] [\-report]\fR
+\fB\-\-sendsms EMSSOUND destination[\-number number] [\-file file] [\-reply] [\-smscset number] [\-smscnumber number] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms EMSANIMATION destination [\-number number] [\-file file] [\-smscset number] [\-reply] [\-smscnumber number] [\-report]\fR
+\fB\-\-sendsms EMSANIMATION destination [\-number number] [\-file file] [\-smscset number] [\-reply] [\-smscnumber number] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms EMSBITMAP destination file [\-reply] [\-smscset number] [\-smscnumber number] [\-report]\fR
+\fB\-\-sendsms EMSBITMAP destination file [\-reply] [\-smscset number] [\-smscnumber number] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
 \fB\-\-nokiagetoperatorname\fR
 6110.c phones have place for name for one GSM network (of course, with flashing it's

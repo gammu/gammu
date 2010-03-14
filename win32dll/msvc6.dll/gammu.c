@@ -23,9 +23,9 @@
 
 typedef struct {
 	GSM_StateMachine 	s;
-	void 			(*PhoneCallBack) 	(int s, boolean connected);
-	void 			(*SecurityCallBack) 	(int s, GSM_SecurityCodeType State);
-	void 			(*SMSCallBack) 		(int s);
+	void 			(**PhoneCallBack) 	(int x, int s, boolean connected);
+	void 			(**SecurityCallBack) 	(int x, int s, GSM_SecurityCodeType State);
+	void 			(**SMSCallBack) 	(int x, int s);
 	HANDLE       		hCommWatchThread;
 	DWORD         		dwThreadID;
     	HANDLE 		 	Mutex;
@@ -52,21 +52,27 @@ BOOL LoopProc(int *i)
 	GSM_Error		error;
 	GSM_SecurityCodeType 	SecurityStatus;
 	GSM_SMSMemoryStatus	SMSStatus;
+	void 			(*PhoneCall) 	(int x, int s, boolean connected);
+	void 			(*SecurityCall) (int x, int s, GSM_SecurityCodeType State);
+	void 			(*SMSCall) 	(int x, int s);
 
 	while(1) {
 		if (s[*i].errors > 1) {
 		        WaitForSingleObject(s[*i].Mutex, INFINITE );
 			if (s[*i].ThreadTerminate) break;
+			PhoneCall = *s[*i].PhoneCallBack;
 			if (s[*i].errors != 255) {
-				s[*i].PhoneCallBack(*i,false);
-				GSM_TerminateConnection(&s[*i].s);
+				PhoneCall(1,*i,false);
+				s[*i].errors = 255;
 			}
+			GSM_TerminateConnection(&s[*i].s);
 			if (s[*i].ThreadTerminate) break;
 			error=GSM_InitConnection(&s[*i].s,2);
 			if (s[*i].ThreadTerminate) break;
 			if (error == GE_NONE) {
 				s[*i].errors = 0;
-				s[*i].PhoneCallBack(*i,true);
+				PhoneCall = *s[*i].PhoneCallBack;
+				PhoneCall(1,*i,true);
 				if (s[*i].ThreadTerminate) break;
 				error=s[*i].s.Phone.Functions->SetAutoNetworkLogin(&s[*i].s);
 				SetErrorCounter(*i, error);
@@ -82,7 +88,8 @@ BOOL LoopProc(int *i)
 				if (SecurityStatus != s[*i].SecurityStatus) {
 					if (s[*i].ThreadTerminate) break;
 					s[*i].SecurityStatus = SecurityStatus;
-					s[*i].SecurityCallBack(*i,SecurityStatus);
+					SecurityCall = *s[*i].SecurityCallBack;
+					SecurityCall(1,*i,SecurityStatus);
 				}
 			        WaitForSingleObject(s[*i].Mutex, INFINITE );
 				if (s[*i].ThreadTerminate) break;
@@ -91,7 +98,10 @@ BOOL LoopProc(int *i)
 				SetErrorCounter(*i, error);
 				if (error == GE_NONE) {
 					if (s[*i].ThreadTerminate) break;
-					if (SMSStatus.SIMUsed+SMSStatus.PhoneUsed != 0) s[*i].SMSCallBack(*i);
+					if (SMSStatus.SIMUsed+SMSStatus.PhoneUsed != 0) {
+						SMSCall = *s[*i].SMSCallBack;
+						SMSCall(1,*i);
+					}
 				}
 			};
 			if (s[*i].ThreadTerminate) break;
@@ -107,23 +117,29 @@ BOOL LoopProc(int *i)
 }
 
 static void CreatePhoneThread(int *phone,
-			      void (*PhoneCallBack)    (int s, boolean connected),
-			      void (*SecurityCallBack) (int s, GSM_SecurityCodeType State),
-			      void (*SMSCallBack)      (int s))
+			      void (**PhoneCallBack)    (int x, int s, boolean connected),
+			      void (**SecurityCallBack) (int x, int s, GSM_SecurityCodeType State),
+			      void (**SMSCallBack)      (int x, int s))
 {
+	void (*PhoneCall) (int x, int s, boolean connected);
+
 	s[*phone].Mutex = CreateMutex( NULL, FALSE, NULL );
 	s[*phone].errors 		= 0;
 	s[*phone].SecurityStatus	= GSCT_None;
 	s[*phone].number 		= *phone;
-	s[*phone].PhoneCallBack		= PhoneCallBack;	
-	s[*phone].SecurityCallBack	= SecurityCallBack;	
-	s[*phone].SMSCallBack		= SMSCallBack;
+	
+	s[*phone].PhoneCallBack 	= PhoneCallBack;
+	s[*phone].SecurityCallBack 	= SecurityCallBack;
+	s[*phone].SMSCallBack 		= SMSCallBack;
 	s[*phone].ThreadTerminate 	= false;
 	s[*phone].hCommWatchThread = CreateThread((LPSECURITY_ATTRIBUTES) NULL,
 				  0,
 				  (LPTHREAD_START_ROUTINE) LoopProc,
 				  (LPVOID) &s[*phone].number,
 				  0, &s[*phone].dwThreadID);
+
+	PhoneCall = *s[*phone].PhoneCallBack;
+	PhoneCall(1,*phone,true);
 }
 
 static void CheckConnectionType(int  *phone,
@@ -131,11 +147,11 @@ static void CheckConnectionType(int  *phone,
 				char *connection_to_check,
 				GSM_Error *error,
 				GSM_Error *error2,
-			        void (*PhoneCallBack)    (int s, boolean connected),
-			        void (*SecurityCallBack) (int s, GSM_SecurityCodeType State),
-			        void (*SMSCallBack)      (int s))
+			        void (**PhoneCallBack)    (int x, int s, boolean connected),
+			        void (**SecurityCallBack) (int x, int s, GSM_SecurityCodeType State),
+			        void (**SMSCallBack)      (int x, int s))
 {
-		s[*phone].s.CFGConnection = connection_to_check;
+		s[*phone].s.Config.Connection = connection_to_check;
 		*error=GSM_InitConnection(&s[*phone].s,2);
 		switch (*error) {
 		case GE_NONE:
@@ -154,9 +170,9 @@ GSM_Error WINAPI mystartconnection(int *phone,
 				   char *model,
 				   char *logfile,
 				   char *logfiletype,
-				   void (*PhoneCallBack)    (int s, boolean connected),
-				   void (*SecurityCallBack) (int s, GSM_SecurityCodeType State),
-				   void (*SMSCallBack) 	    (int s))
+				   void (**PhoneCallBack)    (int x, int s, boolean connected),
+				   void (**SecurityCallBack) (int x, int s, GSM_SecurityCodeType State),
+				   void (**SMSCallBack)	     (int x, int s))
 {
 	int 		i;
 	GSM_Error 	error,error2;
@@ -178,17 +194,17 @@ GSM_Error WINAPI mystartconnection(int *phone,
 	if (*phone == 0) return GE_MOREMEMORY;
 
 	s[*phone].s.msg	 		= NULL;
-        s[*phone].s.CFGLocalize 	= "";
-	s[*phone].s.CFGSyncTime		= "";
-	s[*phone].s.CFGDebugFile 	= malloc( strlen(logfile)+1 );
-	if (s[*phone].s.CFGDebugFile == NULL) return GE_MOREMEMORY;
-	strcpy(s[*phone].s.CFGDebugFile,logfile);
-	strcpy(s[*phone].s.CFGDebugLevel,logfiletype);
-	s[*phone].s.CFGLockDevice	= "";
-	s[*phone].s.CFGDevice 		= malloc( strlen(device)+1 );
-	if (s[*phone].s.CFGDevice == NULL) return GE_MOREMEMORY;
-	strcpy(s[*phone].s.CFGDevice,device);
-	strcpy(s[*phone].s.CFGModel,model);
+    	s[*phone].s.Config.Localize 	= "";
+	s[*phone].s.Config.SyncTime	= "";
+	s[*phone].s.Config.DebugFile 	= malloc( strlen(logfile)+1 );
+	if (s[*phone].s.Config.DebugFile == NULL) return GE_MOREMEMORY;
+	strcpy(s[*phone].s.Config.DebugFile,logfile);
+	strcpy(s[*phone].s.Config.DebugLevel,logfiletype);
+	s[*phone].s.Config.LockDevice	= "";
+	s[*phone].s.Config.Device 	= malloc( strlen(device)+1 );
+	if (s[*phone].s.Config.Device == NULL) return GE_MOREMEMORY;
+	strcpy(s[*phone].s.Config.Device,device);
+	strcpy(s[*phone].s.Config.Model,model);
 
 	if (connection[0] == 0) {
 		CheckConnectionType(phone,connection,"at115200",&error,&error2,PhoneCallBack,SecurityCallBack,SMSCallBack);
@@ -218,9 +234,9 @@ GSM_Error WINAPI mystartconnection(int *phone,
 		strcpy(connection,"");
 		return GE_NOTCONNECTED;
 	} else {
-		s[*phone].s.CFGConnection = malloc( strlen(connection)+1 );
-		if (s[*phone].s.CFGConnection == NULL) return GE_MOREMEMORY;
-		strcpy(s[*phone].s.CFGConnection,connection);
+		s[*phone].s.Config.Connection = malloc( strlen(connection)+1 );
+		if (s[*phone].s.Config.Connection == NULL) return GE_MOREMEMORY;
+		strcpy(s[*phone].s.Config.Connection,connection);
 		CreatePhoneThread(phone,PhoneCallBack,SecurityCallBack,SMSCallBack);
 		return GE_NONE;
 	}
@@ -313,7 +329,7 @@ void SendSMSStatus (char *Device, int status)
 
 	for (i=0;i<10;i++) {
 		if (s[i].s.opened) {
-			if (strcmp(s[i].s.CFGDevice,Device)==0) {
+			if (strcmp(s[i].s.Config.Device,Device)==0) {
 				if (status == 0) {
 					s[i].SendSMSStatus = GE_NONE;
 				} else {

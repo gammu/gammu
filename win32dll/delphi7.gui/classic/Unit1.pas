@@ -28,6 +28,7 @@ type
     GetInfoButton: TButton;
     ResetButton: TButton;
     TerminateButton: TButton;
+    Button1: TButton;
     procedure GetNetInfoButtonClick(Sender: TObject);
     procedure GetAllInboxSMSButtonClick(Sender: TObject);
     procedure InitButtonClick(Sender: TObject);
@@ -35,10 +36,14 @@ type
     procedure GetInfoButtonClick(Sender: TObject);
     procedure ResetButtonClick(Sender: TObject);
     procedure TerminateButtonClick(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
-        PhoneID         : integer;
-        SendSMS         : GSM_SMSMessage;
+        PhoneID                        : integer;
+        SendSMS                        : GSM_SMSMessage;
+        PhoneCallBackPointer           : PPhoneCallBackProc;
+        SecurityCallBackPointer        : PSecurityCallBackProc;
+        SMSCallBackPointer             : PSMSCallBackProc;
   public
     { Public declarations }
   end;
@@ -136,9 +141,9 @@ begin
 end;
 
 //called, when phone is connected or disconnected
-procedure ChangePhoneState(ID:integer;status:boolean);stdcall;
+procedure ChangePhoneState1(x:integer;ID:integer;status:boolean);stdcall;
 begin
-   Form1.StatusBar1.Panels.Items[0].Text:='';
+   Form1.StatusBar1.Panels.Items[0].Text:='Not connected';
    if (status=True) then
    begin
         Form1.StatusBar1.Panels.Items[0].Text:='Connected';
@@ -147,7 +152,7 @@ begin
 end;
 
 //called, when phone needs PIN, PUK, etc.
-procedure ChangeSecurityState(ID:integer;SecurityState:GSM_SecurityCodeType);stdcall;
+procedure ChangeSecurityState(x:integer;ID:integer;SecurityState:GSM_SecurityCodeType);stdcall;
 var
         Code    : GSM_SecurityCode;
         i       : integer;
@@ -185,7 +190,7 @@ begin
 end;
 
 //called, where there are ANY SMS on SIM
-procedure HandleIncomingSMS(ID:integer);stdcall;
+procedure HandleIncomingSMS(x:integer;ID:integer);stdcall;
 begin
         Form1.InfoListBox.Items.Add('SMS on sim');
         Form1.GetAllInboxSMSButtonClick(nil);
@@ -203,7 +208,10 @@ begin
 
    GetMem(Connection,50);
    Connection[0] := chr(0);
-   error:=GSM_StartConnection(@PhoneID,Device,Connection,'','logfile','text',@ChangePhoneState,@ChangeSecurityState,@HandleIncomingSMS);
+   PhoneCallBackPointer    := @ChangePhoneState1;
+   SecurityCallBackPointer := @ChangeSecurityState;
+   SMSCallBackPointer      := @HandleIncomingSMS;
+   error:=GSM_StartConnection(@PhoneID,Device,Connection,'','logfile','text',@PhoneCallBackPointer,@SecurityCallBackPointer,@SMSCallBackPointer);
    if (error=GE_NONE) then
    begin
            ConnectionLabel.Caption:=Connection;
@@ -303,6 +311,21 @@ begin
    begin
         application.MessageBox(pchar('GSM device not found, error '+inttostr(integer(error))),'',0);
    end;
+end;
+
+//called, when phone is connected or disconnected
+procedure ChangePhoneState2(ID:integer;status:boolean);stdcall;
+begin
+   Form1.StatusBar1.Panels.Items[0].Text:='Not connected - CallBack2';
+   if (status=True) then
+   begin
+        Form1.StatusBar1.Panels.Items[0].Text:='Connected - CallBack2';
+   end;
+end;
+
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+   PhoneCallBackPointer := @ChangePhoneState2;
 end;
 
 end.

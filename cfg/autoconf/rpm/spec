@@ -1,0 +1,57 @@
+
+%define ver      0.64
+%define rel      1
+%define bin_dir  /usr/local/bin
+%define doc_dir  /usr/local/doc/gammu
+%define lib_dir  /lib
+%define man_dir  /usr/local/man/man1
+
+Summary: 	 Mobile phones tools for Unix (Linux) and Win32
+Name: 		 gammu
+Version: 	 %ver
+Release: 	 %rel
+License: 	 GPL
+Group:		 Applications/Communications
+Packager:	 Marcin Wiacek <marcin@mwiacek.com>
+Source: 	 %name-%{version}.tar.gz
+URL:		 http://www.mwiacek.com
+Buildroot: 	 %{_tmppath}/%{name}-%{version}-root
+
+%description
+Gammu can do such things with cellular phones as making data calls,
+updating the address book, changing calendar and ToDo entries, sending and
+receiving SMS messages, loading and getting ring tones and pictures (different
+types of logos), synchronizing time, enabling NetMonitor, managing WAP
+settings and bookmarks and much more. Functions depend on the phone model.
+
+%prep
+%setup -q
+%build
+%install
+rm -rf $RPM_BUILD_ROOT
+./configure
+make installlib INSTALL_BIN_DIR=$RPM_BUILD_ROOT%bin_dir	\
+	        INSTALL_DOC_DIR=$RPM_BUILD_ROOT%doc_dir	\
+	        INSTALL_LIB_DIR=$RPM_BUILD_ROOT%lib_dir \
+	        INSTALL_MAN_DIR=$RPM_BUILD_ROOT%man_dir
+make clean
+
+%files
+%defattr(-,root,root)
+%bin_dir/*
+%lib_dir/*
+%doc %man_dir/*
+%doc %doc_dir/*
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%changelog
+* Sun Nov 10 2002 Marcin Wiacek <marcin@mwiacek.com>
+- topnet.pl email no more available
+
+* Sun Sep 30 2002 Marcin Wiacek <marcin-wiacek@topnet.pl>
+- build system is now really working OK
+
+* Sat Sep 15 2002 R P Herrold <herrold@owlriver.com>
+- initial packaging

@@ -53,16 +53,16 @@ type
         	GSM_NoNetwork);         //no network found
 
 	GSM_NetworkInfo = record
-		NetworkName	: array[1..30] of char; //network name showed in some phones on display
-		State		: GSM_NetworkInfo_State; //network state
-      		NetworkCode 	: array[1..10] of char; // GSM network code
-		CellID	  	: array[1..10] of char; // CellID
-		LAC	  	: array[1..10] of char; // LAC
+		NetworkName	: array[1..30] of char;  // network name showed in some phones on display
+		State		: GSM_NetworkInfo_State; // network state
+      		NetworkCode 	: array[1..10] of char;  // GSM network code
+		CellID	  	: array[1..10] of char;  // CellID
+		LAC	  	: array[1..10] of char;  // LAC
 	end;
 	PGSM_NetworkInfo = ^GSM_NetworkInfo;
 
 	GSM_DateTime = record
-		Year	 : integer; //full year (foe example,2002)
+		Year	 : integer; //full year (for example,2002)
 		Month	 : integer;
 		Day	 : integer;
 		Hour	 : integer;
@@ -217,15 +217,28 @@ type
 
 type
         //callback, which is called, when phone is connected or disconnected
-        PhoneCallBackProc       = procedure(ID:integer;connected:boolean);stdcall;
+        PhoneCallBackProc          = procedure(x:integer;ID:integer;connected:boolean);stdcall;
+        PPhoneCallBackProc         = ^PhoneCallBackProc;
+        //this definition is used, when call back is defined under Class
+        PhoneCallBackProcClass     = procedure(ID:integer;connected:boolean);stdcall;
+        PPhoneCallBackProcClass    = ^PhoneCallBackProcClass;
 
         //called, when phone needs PIN, PUK, etc.
-        SecurityCallBackProc    = procedure(ID:integer;SecurityState:GSM_SecurityCodeType);stdcall;
+        SecurityCallBackProc       = procedure(x:integer;ID:integer;SecurityState:GSM_SecurityCodeType);stdcall;
+        PSecurityCallBackProc      = ^SecurityCallBackProc;
+        //this definition is used, when call back is defined under Class
+        SecurityCallBackProcClass  = procedure(ID:integer;SecurityState:GSM_SecurityCodeType);stdcall;
+        PSecurityCallBackProcClass = ^SecurityCallBackProcClass;
 
         //called, when there are ANY SMS on sim
-        SMSCallBackProc            = procedure(ID:integer);stdcall;
+        SMSCallBackProc            = procedure(x:integer;ID:integer);stdcall;
+        PSMSCallBackProc           = ^SMSCallBackProc;
+        //this definition is used, when call back is defined under Class
+        SMSCallBackProcClass       = procedure(ID:integer);stdcall;
+        PSMSCallBackProcClass      = ^SMSCallBackProcClass;
 
-function GSM_StartConnection	        (Phone : Pinteger; Device: PChar;Connection: PChar; Model : PChar; LogFile: PChar; LogFileType: PChar; CallBack1 : PhoneCallBackProc; CallBack2: SecurityCallBackProc; CallBack3: SMSCallBackProc): GSM_Error; stdcall; external 'gammu.dll' name 'mystartconnection';
+function GSM_StartConnection	        (Phone : Pinteger; Device: PChar;Connection: PChar; Model : PChar; LogFile: PChar; LogFileType: PChar; CallBack1 : PPhoneCallBackProc; CallBack2: PSecurityCallBackProc; CallBack3: PSMSCallBackProc): GSM_Error; stdcall; external 'gammu.dll' name 'mystartconnection';
+function GSM_StartConnectionClass	(Phone : Pinteger; Device: PChar;Connection: PChar; Model : PChar; LogFile: PChar; LogFileType: PChar; CallBack1 : PPhoneCallBackProcClass; CallBack2: PSecurityCallBackProcClass; CallBack3: PSMSCallBackProcClass): GSM_Error; stdcall; external 'gammu.dll' name 'mystartconnection';
 function GSM_EndConnection	        (Phone : integer): GSM_Error; stdcall; external 'gammu.dll' name 'myendconnection';
 function GSM_GetNetworkInfo	        (Phone : integer; NetworkInfo : PGSM_NetworkInfo): GSM_Error; stdcall; external 'gammu.dll' name 'mygetnetworkinfo';
 function GSM_GetSMSStatus	        (Phone : integer; status : PGSM_SMSMemoryStatus): GSM_Error; stdcall; external 'gammu.dll' name 'mygetsmsstatus';

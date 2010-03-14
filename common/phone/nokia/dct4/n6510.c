@@ -291,11 +291,11 @@ static GSM_Error N6510_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 		return GE_UNKNOWN;
 	}
 	req[count+1] = req[count] - 1;
-	count += 9;
+	count += 13;
 
 	/* Block 1. Default Number */
 	req[count++] 		 = 0x82; 		/* type: number */
-	req[count++] 		 = 0x10;		/* offset to next block starting from start of block */
+	req[count++] 		 = 0x14;		/* offset to next block starting from start of block */
 	req[count++] 		 = 0x01; 		/* first number field => default number */
 	req[count] = GSM_PackSemiOctetNumber(smsc->DefaultNumber, req+count+2, true) + 1;
 	if (req[count]*2>12) {
@@ -303,16 +303,16 @@ static GSM_Error N6510_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 		return GE_UNKNOWN;
 	}
 	req[count+1] = req[count] - 1;
-	count += 13;
+	count += 17;
 
 	/* Block 3. SMSC name */
 	req[count++] 		 = 0x81;
-	req[count++] 		 = 0x10;
+	req[count++] 		 = strlen(DecodeUnicodeString(smsc->Name))*2 + 2 + 4;
 	req[count++] 		 = strlen(DecodeUnicodeString(smsc->Name))*2 + 2;
 	req[count++] 		 = 0x00;
 	CopyUnicodeString(req+count,smsc->Name);
 	count += strlen(DecodeUnicodeString(smsc->Name))*2 + 2;
-
+	
 	dprintf("Setting SMSC\n");
 	return GSM_WaitFor (s, req, count, 0x02, 4, ID_SetSMSC);
 }

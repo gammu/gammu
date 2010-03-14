@@ -1,10 +1,10 @@
 object Form1: TForm1
   Left = 217
-  Top = 211
+  Top = 146
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Example'
-  ClientHeight = 318
+  ClientHeight = 365
   ClientWidth = 498
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -17,14 +17,14 @@ object Form1: TForm1
   TextHeight = 13
   object Pin: TLabel
     Left = 392
-    Top = 264
+    Top = 312
     Width = 15
     Height = 13
     Caption = 'Pin'
   end
   object ConnectionLabel: TLabel
     Left = 392
-    Top = 240
+    Top = 280
     Width = 89
     Height = 13
     Caption = '>>>connection<<<'
@@ -33,14 +33,15 @@ object Form1: TForm1
     Left = 8
     Top = 8
     Width = 377
-    Height = 193
+    Height = 233
     Caption = 'Events'
     TabOrder = 0
     object InfoListBox: TListBox
-      Left = 8
-      Top = 16
-      Width = 361
-      Height = 169
+      Left = 2
+      Top = 15
+      Width = 373
+      Height = 216
+      Align = alClient
       ItemHeight = 13
       TabOrder = 0
     end
@@ -74,7 +75,7 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 293
+    Top = 340
     Width = 498
     Height = 25
     Panels = <
@@ -84,11 +85,10 @@ object Form1: TForm1
       item
         Width = 100
       end>
-    SimplePanel = False
   end
   object DeviceComboBox: TComboBox
     Left = 392
-    Top = 216
+    Top = 256
     Width = 97
     Height = 21
     ItemHeight = 13
@@ -106,14 +106,14 @@ object Form1: TForm1
   end
   object PINEdit: TEdit
     Left = 424
-    Top = 264
+    Top = 304
     Width = 65
     Height = 21
     TabOrder = 6
   end
   object GroupBox1: TGroupBox
     Left = 8
-    Top = 208
+    Top = 248
     Width = 377
     Height = 81
     Caption = 'Send sms'
@@ -192,5 +192,14 @@ object Form1: TForm1
     Caption = 'Terminate'
     TabOrder = 10
     OnClick = TerminateButtonClick
+  end
+  object Button1: TButton
+    Left = 392
+    Top = 208
+    Width = 97
+    Height = 25
+    Caption = 'ChangePointer'
+    TabOrder = 11
+    OnClick = Button1Click
   end
 end

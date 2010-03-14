@@ -73,7 +73,7 @@ static bool irda_discover_device(GSM_StateMachine *state)
 			if (strcmp(GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number,"") != 0) {
 				founddevice = true;
 				/* Model AUTO */
-				if (state->CFGModel[0]==0) strcpy(state->Model,GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number);
+				if (state->Config.Model[0]==0) strcpy(state->Model,GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number);
 			}
 			if (founddevice) {				
 			    dprintf("correct\n");

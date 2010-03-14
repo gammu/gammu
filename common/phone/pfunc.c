@@ -113,13 +113,13 @@ GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool fir
 			mili_sleep (7500);
 			error=s->Phone.Functions->PlayTone(s,0,0,false);	
 			if (error != GE_NONE) return error;
-			mili_sleep ((1500000/note.Tempo*duration)-(7500));
+			mili_sleep ((1400000/note.Tempo*duration)-(7500));
 			break;
 		case ContinuousStyle:
-			mili_sleep  (1500000/note.Tempo*duration);
+			mili_sleep  (1400000/note.Tempo*duration);
 			break;
 		case NaturalStyle:
-			mili_sleep  (1500000/note.Tempo*duration-50);
+			mili_sleep  (1400000/note.Tempo*duration-50);
 			error=s->Phone.Functions->PlayTone(s,0,0,false);	
 			if (error != GE_NONE) return error;
 			mili_sleep (50);

@@ -67,8 +67,8 @@ extern GSM_Error NotSupportedFunction	(void);
 #define NOTIMPLEMENTED 	(void *) NotImplementedFunction
 #define NOTSUPPORTED 	(void *) NotSupportedFunction
 
-char *GetMsg 		(CFG_Header *cfg, char *default_string);
-char *print_error	(GSM_Error e, FILE *df, CFG_Header *cfg);
+unsigned char *GetMsg 		(CFG_Header *cfg, unsigned char *default_string);
+unsigned char *print_error	(GSM_Error e, FILE *df, CFG_Header *cfg);
 
 void GSM_GetCurrentDateTime 	(GSM_DateTime *Date);
 char *OSDateTime 		(GSM_DateTime dt, bool TimeZone);

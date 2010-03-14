@@ -81,11 +81,11 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 
 		if (Unicode) {
 	                /* Strip leading, trailing whitespace */
-	                while(iswspace((wint_t) (line[0]*256+line[1]))) line+=2;
+	                while(myiswspace(line)) line+=2;
 
 			while(1) {
 				i = strlen(DecodeUnicodeString(line))*2;
-				if (i>0 && iswspace((wint_t) (line[i-2]*256+line[i-1])))
+				if (i>0 && myiswspace(line+i-2))
 				{
 					line[i - 2] = '\0';
 		                        line[i - 1] = '\0';
@@ -188,7 +188,7 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 			if (Unicode) {
 				value = line;
 				while(1) {
-					if (*value == 0 && *(value+1) == '=') break;
+					if (*(value) == 0 && *(value+1) == '=') break;
 					value += 2;
 				}
 	                        *(value) = 0;                /* Split string */
@@ -196,14 +196,14 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 	                        value+=2;
             
 				/* Remove leading white */
-	                        while(iswspace((wint_t) *value)) value+=2;
+	                        while(myiswspace(value)) value+=2;
 
 				entry->value = (char *)malloc(strlen(DecodeUnicodeString(value))*2+2);
 				memcpy(entry->value,value,strlen(DecodeUnicodeString(value))*2+2);
 
 				while(1) {
 					i = strlen(DecodeUnicodeString(line))*2;
-					if (i>0 && iswspace((wint_t) (line[i-2]*256+line[i-1])))
+					if (i>0 && myiswspace(line+i-2))
 					{
 						line[i - 2] = '\0';
 			                        line[i - 1] = '\0';
@@ -239,7 +239,10 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 
                         cfg_info->entries = entry;
 
-//			if (Unicode) dprintf("CFG file - adding key/value \"%s/%s\"\n", DecodeUnicodeString(entry->key), DecodeUnicodeString(entry->value));
+//			if (Unicode) {
+//			    dprintf("CFG file - adding key/value \"%s/",DecodeUnicodeString(entry->key));
+//			    dprintf("%s\"\n", DecodeUnicodeString(entry->value));
+//			}
 
                         /* Go on to next line */
                         continue;
@@ -269,12 +272,14 @@ unsigned char *CFG_Get(CFG_Header *cfg, unsigned char *section, unsigned char *k
         }
 
 	if (Unicode) {
+//		printf("searching for %s",DecodeUnicodeString(section));
+//		printf("/%s\n",DecodeUnicodeString(key));
 	        /* Search for section name */
 	        for (h = cfg; h != NULL; h = h->next) {
-	                if (wcscmp(((const wchar_t *)section), ((const wchar_t *)h->section)) == 0) {
+	                if (mywstrncasecmp(section, h->section, 0)) {
 	                        /* Search for key within section */
 	                        for (e = h->entries; e != NULL; e = e->next) {
-	                                if (wcscmp(((const wchar_t *)key), ((const wchar_t *)e->key)) == 0) {
+	                                if (mywstrncasecmp(key,e->key,0)) {
 	                                        /* Found! */
 	                                        return e->value;
 	                                }
@@ -284,10 +289,10 @@ unsigned char *CFG_Get(CFG_Header *cfg, unsigned char *section, unsigned char *k
 	} else {
 	        /* Search for section name */
 	        for (h = cfg; h != NULL; h = h->next) {
-	                if (strcmp(section, h->section) == 0) {
+	                if (mystrncasecmp(section, h->section, 0)) {
 	                        /* Search for key within section */
 	                        for (e = h->entries; e != NULL; e = e->next) {
-	                                if (strcmp(key, e->key) == 0) {
+	                                if (mystrncasecmp(key, e->key, 0)) {
 	                                        /* Found! */
 	                                        return e->value;
 	                                }
@@ -309,12 +314,12 @@ CFG_Entry *CFG_FindLastSectionEntry(CFG_Header *file_info, unsigned char *sectio
 	/* First find our section */
         for (h = file_info; h != NULL; h = h->next) {
 		if (Unicode) {
-			if (wcscmp(((const wchar_t *)section), ((const wchar_t *)h->section)) == 0) {
+			if (mywstrncasecmp(section, h->section, 0)) {
 				e = h->entries;
 				break;
 			}
 		} else {
-			if (strcmp(section, h->section) == 0) {
+			if (mystrncasecmp(section, h->section, 0)) {
 				e = h->entries;
 				break;
 			}

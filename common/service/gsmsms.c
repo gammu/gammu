@@ -504,6 +504,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 		/* Bits 4 and 3: 10. TP-VP field present and integer represent (relative) */
 		buffer[Layout.firstbyte] |= 0x10;
 		buffer[Layout.TPVP]=((unsigned char)SMS->SMSC.Validity.Relative);
+		dprintf("SMS validity %02x\n",SMS->SMSC.Validity.Relative);
 	}
 
 	if (Layout.DateTime != 255) {
@@ -905,7 +906,9 @@ void GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		DecodeDefault(Buffer,  Buffer2, smslen);
 #ifdef DEBUG
 		if (di.dl == DL_TEXTALL) {
+			dprintf("Info->Buffer:\n");
 			DumpMessage(di.df, Info->Buffer, strlen(DecodeUnicodeString(Info->Buffer))*2);
+			dprintf("Buffer:\n");
 			DumpMessage(di.df, Buffer, 	 strlen(DecodeUnicodeString(Buffer))*2);
 		}
 #endif
@@ -913,7 +916,7 @@ void GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		for (smslen=0;smslen<(int)(strlen(DecodeUnicodeString(Info->Buffer))*2);smslen++) {
 			if (Info->Buffer[smslen] != Buffer[smslen]) {
 				Info->UnicodeCoding = true;
-				dprintf("Setting to Unicode\n");
+				dprintf("Setting to Unicode %i\n",smslen);
 				break;
 			}
 		}

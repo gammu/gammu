@@ -1,4 +1,4 @@
-Gammu README version 20.10.2002
+Gammu README version 24.11.2002
 -------------------------------
 Q. What is this ?
 
@@ -271,7 +271,7 @@ A. Here are all supported models:
      9110|9210:
 
      They all should work (excluding maybe some details) now/in the future.
-     I personally tested 3210, 3310, 5110, 6150, 6210, 6250, 6310i, 9210
+     I personally tested 3210, 3310, 3410, 5110, 6150, 6210, 6250, 6310i, 9210.
 
    5.various Siemens (like M20, MC35), Nokia (like 6150, 6210, 6310i), Alcatel
      and IPAQ:
@@ -452,6 +452,54 @@ A. The best is always the most simple device. So, I think that using Nokia 3310
    Another way is is to use special cellular modem especially equiped to
    continuous work. I recommend Siemens devices - for example Siemens MC35. It
    has GPRS and can be used to many tasks.
+-------------------------------------------------------------------------------
+Q. What phone could be recommended by Gammu author(s) ? (19.11.02)
+
+A. It's difficult to say. Everyone needs something different according to own
+   needs.
+
+   Start from Nokia:
+     If you want to be visible, buy 7650 or 9210. Very visible, very expensive,
+     and parts for it are very expensive. Many small stability problems,
+     no GPRS (in 9210). Weak battery in 7650.
+
+     If you need phone for calls, no WAP, but requires extended pbk, buy 6210
+     or 6250 (second is for any weather and hard environment). Will be able
+     to "repair" (flash) it - it repairs each phone in majority problems.
+     These phones are very slow and has some other small problems.
+
+     When want WAP, GPRS, buy rather 6310i than 6310. Remember, that firmware
+     inside has still many small bugs and it possible, phone can go often to
+     service to flashing. Some things are still not useable (like CB messages
+     - can't change tone to it), no netmon in this moment. This family has
+     Bluetooth.
+
+     For WAP, GPRS is also good 8310 - first DCT4 phone.
+
+     When don't have too much money and need calendar/extended pbk, buy 3510
+     (the same flashing and netmon story to 6310, 6310i). 
+
+     The cheapiest 3410 is for people, who don't need anything - only device
+     for making calls, nothing more. It's (like old 3310 or 5110) very good to
+     making SMS gateway.
+
+     Phones with colour display are not very good for me. IMHO, I will wait
+     some time, until they will have all problems removed.
+
+  Siemens:
+     Very good AT support, very stable with it, available netmon and many,
+     many other functions (not like with Nokia). Worse user interface than
+     Nokia.
+
+  Panasonic:
+     GD96 - weak battery, many, many functions. Nice for many people.
+
+  Ericsson:
+     T65 - very small, good, if you will like its' interface. T68i - MMS.
+
+  I will not say about other - for example, I don't like Morotola or Alcatel
+  user interfaces at all.
+
 -------------------------------------------------------------------------------
 Q. How to make national version of Gammu ?
 
