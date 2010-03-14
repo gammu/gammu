@@ -55,6 +55,8 @@ GSM_Error			error 			= ERR_NONE;
 static int			i;
 
 volatile bool 			gshutdown 		= false;
+volatile bool 			wasincomingsms 		= false;
+GSM_MultiSMSMessage		IncomingSMSData;
 
 void interrupt(int sign)
 {
@@ -1138,12 +1140,45 @@ static void NetworkInfo(int argc, char *argv[])
 
 static void IncomingSMS(char *Device, GSM_SMSMessage sms)
 {
-	GSM_MultiSMSMessage SMS;
-
 	printmsg("SMS message received\n");
-	SMS.Number = 1;
-	memcpy(&SMS.SMS[0],&sms,sizeof(GSM_SMSMessage));	
-	displaymultismsinfo(SMS,false,false);
+ 	if (wasincomingsms) {
+ 		printmsg("We already have one pending, ignoring!\n");
+ 		return;
+ 	}
+ 	wasincomingsms = true;
+ 	memcpy(&IncomingSMSData.SMS[0],&sms,sizeof(GSM_SMSMessage));
+ 	IncomingSMSData.Number = 1;
+}
+ 
+static void DisplayIncomingSMS()
+{
+ 	GSM_SMSFolders folders;
+	
+ 	if (IncomingSMSData.SMS[0].State == 0) {
+ 		error=Phone->GetSMSFolders(&s, &folders);
+ 		Print_Error(error);
+ 
+ 		error=Phone->GetSMS(&s, &IncomingSMSData);
+ 		switch (error) {
+ 		case ERR_EMPTY:
+ 			printmsg("Location %i\n",IncomingSMSData.SMS[0].Location);
+ 			printmsg("Empty\n");
+ 			break;
+ 		default:
+ 			Print_Error(error);
+ 			printmsg("Location %i, folder \"%s\"",IncomingSMSData.SMS[0].Location,DecodeUnicodeConsole(folders.Folder[IncomingSMSData.SMS[0].Folder-1].Name));
+ 			switch(IncomingSMSData.SMS[0].Memory) {
+ 				case MEM_SM: printmsg(", SIM memory"); 		break;
+ 				case MEM_ME: printmsg(", phone memory"); 	break;
+ 				case MEM_MT: printmsg(", phone or SIM memory"); break;
+ 				default    : break;
+ 			}
+ 			if (IncomingSMSData.SMS[0].InboxFolder) printmsg(", Inbox folder");
+ 			printf("\n");
+ 		}
+ 	}
+ 	displaymultismsinfo(IncomingSMSData,false,false);
+ 	wasincomingsms = false;
 }
 
 static void IncomingCB(char *Device, GSM_CBMessage CB)
@@ -1308,6 +1343,7 @@ static void Monitor(int argc, char *argv[])
 				}
 			}
 		}
+		if (wasincomingsms) DisplayIncomingSMS();
 		printf("\n");
 	}
 
@@ -5215,15 +5251,44 @@ static void AddNew(int argc, char *argv[])
 			if (MemStatus.MemoryFree < max) {
 				printmsgerr("Memory has only %i free locations.Exiting\n",MemStatus.MemoryFree);
 			} else if (answer_yes("Add phone phonebook entries")) {
-				for (i=0;i<max;i++) {
-					Pbk 		= *Backup.PhonePhonebook[i];
-					Pbk.MemoryType 	= MEM_ME;
-					error=Phone->AddMemory(&s, &Pbk);
-					Print_Error(error);
-					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-					if (gshutdown) {
-						GSM_Terminate();
-						exit(0);
+				if (Phone->AddMemory == NOTIMPLEMENTED) {
+					j = 1;
+					for (i=0;i<max;i++) {
+						error = ERR_UNKNOWN;
+						while (true) {
+							Pbk.MemoryType  = MEM_ME;
+							Pbk.Location 	= j;
+							error=Phone->GetMemory(&s, &Pbk);
+							if (error == ERR_EMPTY) break;
+							if (error != ERR_NONE) Print_Error(error);
+							j++;
+							if (gshutdown) {
+								GSM_Terminate();
+								exit(0);
+							}
+						}
+						Pbk 		= *Backup.PhonePhonebook[i];
+						Pbk.MemoryType 	= MEM_ME;
+						Pbk.Location 	= j;										
+						error=Phone->SetMemory(&s, &Pbk);
+						Print_Error(error);
+						printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+						if (gshutdown) {
+							GSM_Terminate();
+							exit(0);
+						}
+					}					
+				} else {
+					for (i=0;i<max;i++) {
+						Pbk 		= *Backup.PhonePhonebook[i];
+						Pbk.MemoryType 	= MEM_ME;
+						error=Phone->AddMemory(&s, &Pbk);
+						Print_Error(error);
+						printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+						if (gshutdown) {
+							GSM_Terminate();
+							exit(0);
+						}
 					}
 				}
 				printmsgerr("\n");
@@ -5240,16 +5305,44 @@ static void AddNew(int argc, char *argv[])
 			if (MemStatus.MemoryFree < max) {
 				printmsgerr("Memory has only %i free locations.Exiting\n",MemStatus.MemoryFree);
 			} else if (answer_yes("Add SIM phonebook entries")) {
-				j = 1;
-				for (i=0;i<max;i++) {
-					Pbk 		= *Backup.SIMPhonebook[i];
-					Pbk.MemoryType 	= MEM_SM;
-					error=Phone->AddMemory(&s, &Pbk);
-					Print_Error(error);
-					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-					if (gshutdown) {
-						GSM_Terminate();
-						exit(0);
+				if (Phone->AddMemory == NOTIMPLEMENTED) {
+					j = 1;
+					for (i=0;i<max;i++) {
+						error = ERR_UNKNOWN;
+						while (true) {
+							Pbk.MemoryType  = MEM_SM;
+							Pbk.Location 	= j;
+							error=Phone->GetMemory(&s, &Pbk);
+							if (error == ERR_EMPTY) break;
+							if (error != ERR_NONE) Print_Error(error);
+							j++;
+							if (gshutdown) {
+								GSM_Terminate();
+								exit(0);
+							}
+						}
+						Pbk 		= *Backup.SIMPhonebook[i];
+						Pbk.MemoryType 	= MEM_SM;
+						Pbk.Location 	= j;										
+						error=Phone->SetMemory(&s, &Pbk);
+						Print_Error(error);
+						printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+						if (gshutdown) {
+							GSM_Terminate();
+							exit(0);
+						}
+					}					
+				} else {
+					for (i=0;i<max;i++) {
+						Pbk 		= *Backup.SIMPhonebook[i];
+						Pbk.MemoryType 	= MEM_SM;
+						error=Phone->AddMemory(&s, &Pbk);
+						Print_Error(error);
+						printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+						if (gshutdown) {
+							GSM_Terminate();
+							exit(0);
+						}
 					}
 				}
 				printmsgerr("\n");
@@ -6988,7 +7081,7 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 	bool			start;
 	unsigned char		buffer[5000];
 	struct utimbuf		filedate;
-	int			Handle,Size;
+	int			Handle,Size,j;
 
 	if (File->Buffer != NULL) {
 		free(File->Buffer);
@@ -7025,28 +7118,36 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 	    	Print_Error(error);
 	}
 	printf("\n");
-	if (File->Used != 0) {
-		sprintf(buffer,"%s",DecodeUnicodeConsole(File->Name));
-		file = fopen(buffer,"wb");
-		if (file == NULL) {
-			sprintf(buffer,"file%s",File->ID_FullName);
+	if (error == ERR_NONE || error == ERR_EMPTY || error == ERR_WRONGCRC) {
+		if (File->Used != 0) {
+			sprintf(buffer,"%s",DecodeUnicodeConsole(File->Name));
+			for (j=strlen(buffer)-1;j>0;j--) {
+				if (buffer[j] == '\\' || buffer[j] == '/') break;
+			}
+			if (buffer[j] == '\\' || buffer[j] == '/') {
+				sprintf(buffer,"%s",DecodeUnicodeConsole(File->Name+j*2+2));
+			}			
 			file = fopen(buffer,"wb");
-		}
-		if (file == NULL) {
-			sprintf(buffer,"file%i",i);
-			file = fopen(buffer,"wb");
-		}
-		printmsg("  Saving to %s\n",buffer);
-		if (!file) Print_Error(ERR_CANTOPENFILE);
-		fwrite(File->Buffer,1,File->Used,file);
-		fclose(file);
-		if (!newtime && !File->ModifiedEmpty) {
-			/* access time */
-			filedate.actime  = Fill_Time_T(File->Modified, 8);
-			/* modification time */
-			filedate.modtime = Fill_Time_T(File->Modified, 8);
-			dbgprintf("Setting date of %s\n",buffer);
-			utime(buffer,&filedate);
+			if (file == NULL) {
+				sprintf(buffer,"file%s",File->ID_FullName);
+				file = fopen(buffer,"wb");
+			}
+			if (file == NULL) {
+				sprintf(buffer,"file%i",i);
+				file = fopen(buffer,"wb");
+			}
+			printmsg("  Saving to %s\n",buffer);
+			if (!file) Print_Error(ERR_CANTOPENFILE);
+			fwrite(File->Buffer,1,File->Used,file);
+			fclose(file);
+			if (!newtime && !File->ModifiedEmpty) {
+				/* access time */
+				filedate.actime  = Fill_Time_T(File->Modified, 8);
+				/* modification time */
+				filedate.modtime = Fill_Time_T(File->Modified, 8);
+				dbgprintf("Setting date of %s\n",buffer);
+				utime(buffer,&filedate);
+			}
 		}
 	}
 }
@@ -7153,6 +7254,13 @@ static void AddFile(int argc, char *argv[])
 	error = GSM_ReadFile(argv[3], &File);
 	Print_Error(error);
 	EncodeUnicode(File.Name,argv[3],strlen(argv[3]));
+	for (i=strlen(argv[3])-1;i>0;i--) {
+		if (argv[3][i] == '\\' || argv[3][i] == '/') break;
+	}
+	if (argv[3][i] == '\\' || argv[3][i] == '/') {
+		EncodeUnicode(File.Name,argv[3]+i+1,strlen(argv[3])-i-1);
+	}			
+
 	GSM_IdentifyFileFormat(&File);
 
 	File.Protected 	= false;
@@ -7267,43 +7375,49 @@ struct NokiaFolderInfo {
 };
 
 static struct NokiaFolderInfo Folder[] = {
-	/* Language indepedent in DCT4 */
-	{"",	 "MMSUnreadInbox",	"INBOX",	"3"},
-	{"",	 "MMSReadInbox",	"INBOX",	"3"},
-	{"",	 "MMSOutbox",		"OUTBOX",	"3"},
-	{"",	 "MMSSent",		"SENT",		"3"},
-	{"",	 "MMSDrafts",		"DRAFTS",	"3"},
-	{"",	 "Application",		"applications",	"3"},
-	{"",	 "Game",		"games",	"3"},
-	/* Language depedent in DCT4 */
-	{"",	 "Gallery",		"Pictures",	"2"}, /* 3510  */
-	{"",	 "Gallery",		"Graphics",	"3"}, /* 3510i */
-	{"",	 "Gallery",		"Images",	"3"}, /* 6610  */
-	{"3510", "Gallery",		"",		"8"},
-	{"3510i","Gallery",		"",		"3"},
-	{"5100", "Gallery",		"",		"3"},
-	{"6220", "Gallery",		"",		"5"},
-	{"6610", "Gallery",		"",		"2"},
-	{"7210", "Gallery",		"",		"2"},
-	{"",	 "Tones",		"Tones",	"3"},
-	{"3510i","Tones",		"",		"4"},
-	{"5100", "Tones",		"",		"4"},
-	{"6220", "Tones",		"",		"6"},
-	{"6610", "Tones",		"",		"4"},
-	{"7210", "Tones",		"",		"4"},
+	/* Language indepedent in DCT4 in filesystem 1 */
+	{"",	 "MMSUnreadInbox", "INBOX",		"3"},
+	{"",	 "MMSReadInbox",   "INBOX",		"3"},
+	{"",	 "MMSOutbox",	   "OUTBOX",		"3"},
+	{"",	 "MMSSent",	   "SENT",		"3"},
+	{"",	 "MMSDrafts",	   "DRAFTS",		"3"},
+	{"",	 "Application",	   "applications",	"3"},
+	{"",	 "Game",	   "games",		"3"},
+	/* Language indepedent in DCT4 in filesystem 2 */
+	{"", 	 "Gallery",	   "a:/predefgallery/predefgraphics",			""},
+	{"", 	 "Gallery2",	   "a:/predefgallery/predefgraphics/predefcliparts",	""},
+	{"", 	 "Camera",	   "a:/predefgallery/predefphotos",			""},
+	{"", 	 "Tones",	   "a:/predefgallery/predeftones",			""},
+	{"", 	 "Tones2",	   "a:/predefgallery/predefmusic",			""},
+	{"", 	 "Records",	   "a:/predefgallery/predefrecordings",			""},
+	{"", 	 "Video",	   "a:/predefgallery/predefvideos",			""},
+	/* Language depedent in DCT4 filesystem 1 */
+	{"",	 "Gallery",	   "Clip-arts",					"3"},
+	{"",	 "Gallery",	   "004F006200720061007A006B0069",		"3"},//obrazki PL 6220
+	{"",	 "Gallery2",	   "Graphics",					"3"},
+	{"",	 "Gallery2",	   "00470072006100660069006B0061",		"3"},//grafika PL 6220
+	{"",	 "Camera",	   "Images",					"3"},
+	{"",	 "Camera",	   "005A0064006A0119006300690061",		"3"},//zdjecia PL 6220
+	{"",	 "Tones",	   "Tones",					"3"},
+	{"",	 "Tones",	   "0044017A007700690119006B0069",		"3"},//dzwieki pl 6220
+	{"",	 "Records",	   "Recordings",				"3"},
+	{"",	 "Records",	   "004E0061006700720061006E00690061",		"3"},//nagrania pl 6220
+	{"",	 "Video",	   "Video clips",				"3"},
+	{"",	 "Video",	   "0057006900640065006F006B006C006900700079",	"3"},//wideoklipy pl 6220
+
 	/* Language indepedent in OBEX */
-	{"obex", "MMSUnreadInbox",	"",		"predefMessages\\predefINBOX"	},
-	{"obex", "MMSReadInbox",	"",		"predefMessages\\predefINBOX"	},
-	{"obex", "MMSOutbox",		"",		"predefMessages\\predefOUTBOX"	},
-	{"obex", "MMSSent",		"",		"predefMessages\\predefSENT"	}, 	
-	{"obex", "MMSDrafts",		"",		"predefMessages\\predefDRAFTS"	},
-//	{"obex", "Application,		"",		"predefjava\\predefapplications"},
-//	{"obex", "Game",		"",		"predefjava\\predefgames"	},
-	{"obex", "Gallery",		"",		"predefgallery\\predefgraphics"	},
-	{"obex", "Tones",		"",		"predefgallery\\predeftones"	},
+	{"obex", "MMSUnreadInbox", "predefMessages\\predefINBOX", 		""},
+	{"obex", "MMSReadInbox",   "predefMessages\\predefINBOX", 		""},
+	{"obex", "MMSOutbox",	   "predefMessages\\predefOUTBOX", 		""},
+	{"obex", "MMSSent",	   "predefMessages\\predefSENT", 		""}, 	
+	{"obex", "MMSDrafts",	   "predefMessages\\predefDRAFTS", 		""},
+//	{"obex", "Application,	   "predefjava\\predefapplications", 		""},
+//	{"obex", "Game",	   "predefjava\\predefgames", 			""},
+	{"obex", "Gallery",	   "predefgallery\\predefgraphics", 		""},
+	{"obex", "Tones",	   "predefgallery\\predeftones", 		""},
 
 	/* End of list */
-	{"",	 "",			"",		""}
+	{"",	 "",		   "",		""}
 };
 
 static void NokiaAddFile(int argc, char *argv[])
@@ -7317,7 +7431,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	bool			ModEmpty = false;
 	int			i = 0, Pos, Size, Size2, nextlong, Handle;
 	
-	while (Folder[i].level[0] != 0) {
+	while (Folder[i].parameter[0] != 0) {
 		if (mystrncasecmp(argv[2],Folder[i].parameter,0)) {
 			Found = true;
 			break;
@@ -7334,10 +7448,10 @@ static void NokiaAddFile(int argc, char *argv[])
     	if (s.ConnectionType == GCT_IRDAOBEX || s.ConnectionType == GCT_BLUEOBEX) {
 		Found 	= false;
 		i 	= 0;
-		while (Folder[i].level[0] != 0) {
-			if (!strcmp("obex",Folder[i].model) 			&&
+		while (Folder[i].parameter[0] != 0) {
+			if (!strcmp("obex",Folder[i].model) &&
 			     mystrncasecmp(argv[2],Folder[i].parameter,0)) {
-				strcpy(Files.ID_FullName,Folder[i].level);
+				strcpy(Files.ID_FullName,Folder[i].folder);
 				Found = true;
 				break;
 			}
@@ -7349,32 +7463,46 @@ static void NokiaAddFile(int argc, char *argv[])
 			error = Phone->GetNextFileFolder(&s,&Files,Start);
 			if (error == ERR_EMPTY) break;
 		    	Print_Error(error);
-
+	
 			if (Files.Folder) {
 				dbgprintf("folder %s level %i\n",DecodeUnicodeConsole(Files.Name),Files.Level);
 				Found 	= false;
 				i 	= 0;
-				while (Folder[i].level[0] != 0) {
+				while (Folder[i].parameter[0] != 0) {
 					EncodeUnicode(buffer,Folder[i].folder,strlen(Folder[i].folder));
 					dbgprintf("comparing \"%s\" \"%s\" \"%s\"\n",s.Phone.Data.ModelInfo->model,Files.ID_FullName,Folder[i].level);
 					if (mystrncasecmp(argv[2],Folder[i].parameter,0)  &&
 					    mywstrncasecmp(Files.Name,buffer,0) &&
 					    Files.Level == atoi(Folder[i].level)) {
+						dbgprintf("found 1\n");
 						Found = true;
 						break;
 					}
-					if (!strcmp(s.Phone.Data.ModelInfo->model,Folder[i].model) &&
-					     mystrncasecmp(argv[2],Folder[i].parameter,0)  	   &&
-					     !strcmp(Files.ID_FullName,Folder[i].level)) {
+					if (mystrncasecmp(argv[2],Folder[i].parameter,0) &&
+					    !strcmp(Files.ID_FullName,Folder[i].folder) &&
+					    Folder[i].level[0] == 0x00) {
 						Found = true;
+						dbgprintf("found 2\n");
 						break;
+					}
+					if (Folder[i].folder[0]>='0'&&Folder[i].folder[0] <='9') {
+						DecodeHexUnicode (buffer, Folder[i].folder,strlen(Folder[i].folder));
+						dbgprintf("comparing \"%s\"",DecodeUnicodeString(buffer));
+						dbgprintf("and \"%s\"\n",DecodeUnicodeString(Files.Name));
+						if (mystrncasecmp(argv[2],Folder[i].parameter,0)  &&
+						    mywstrncasecmp(Files.Name,buffer,0) &&
+						    Files.Level == atoi(Folder[i].level)) {
+							Found = true;
+							dbgprintf("found 3\n");
+							break;
+						}
 					}
 					i++;
 				}
 				if (Found) break;
 			}
 			printmsgerr("*");
-
+	
 			Start = false;
 		}
 		printmsgerr("\n");
@@ -7535,7 +7663,13 @@ static void NokiaAddFile(int argc, char *argv[])
 		return;
 	}
 
-	if (mystrncasecmp(argv[2],"Gallery",0) || mystrncasecmp(argv[2],"Tones",0)) {
+	if (mystrncasecmp(argv[2],"Gallery" ,0) ||
+	    mystrncasecmp(argv[2],"Gallery2",0) ||
+	    mystrncasecmp(argv[2],"Camera"  ,0) || 
+	    mystrncasecmp(argv[2],"Tones"   ,0) ||
+	    mystrncasecmp(argv[2],"Tones2"  ,0) ||
+	    mystrncasecmp(argv[2],"Records" ,0) ||
+	    mystrncasecmp(argv[2],"Video"   ,0)) {
 		strcpy(buffer,argv[3]);
 		if (argc > 4) {
 			nextlong = 0;
@@ -7622,6 +7756,13 @@ static void NokiaAddFile(int argc, char *argv[])
 
 	strcpy(File.ID_FullName,Files.ID_FullName);
 	EncodeUnicode(File.Name,buffer,strlen(buffer));
+	for (i=strlen(buffer)-1;i>0;i--) {
+		if (buffer[i] == '\\' || buffer[i] == '/') break;
+	}
+	if (buffer[i] == '\\' || buffer[i] == '/') {
+		EncodeUnicode(File.Name,buffer+i+1,strlen(buffer)-i-1);
+	}			
+
 	GSM_IdentifyFileFormat(&File);
 #ifdef DEVELOP
 	if (mystrncasecmp(argv[2],"Gallery",0) || mystrncasecmp(argv[2],"Tones",0)) {
@@ -8057,7 +8198,7 @@ static GSM_Parameters Parameters[] = {
 	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent file sender title"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly]"},
-	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Tones file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
+	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
 	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 	{"--playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
 	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			"number"},

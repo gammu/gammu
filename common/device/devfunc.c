@@ -35,6 +35,9 @@ GSM_Error bluetooth_checkservicename(GSM_StateMachine *s, char *name)
 	if (s->ConnectionType == GCT_BLUEOBEX 	&& strstr(name,"OBEX")		     !=NULL) return ERR_NONE;
         if (s->ConnectionType == GCT_BLUEAT 	&& strstr(name,"COM 1")		     !=NULL) return ERR_NONE;
 
+	/* Sony-Ericsson */
+        if (s->ConnectionType == GCT_BLUEAT 	&& strstr(name,"Serial Port 1")	     !=NULL) return ERR_NONE;
+
 	/* Quesses for Siemens. Thomas Eitzenberger */
 	if (s->ConnectionType == GCT_BLUEOBEX 	&& strstr(name,"OBEX File Transfer") !=NULL) return ERR_NONE;
         if (s->ConnectionType == GCT_BLUEAT 	&& strstr(name,"SerialPort")	     !=NULL) return ERR_NONE;

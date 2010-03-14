@@ -1407,8 +1407,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	sprintf(buffer,"Type");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	note->Type = GSM_CAL_REMINDER;
-	if (readvalue!=NULL)
-	{
+	if (readvalue!=NULL) {
 		if (mystrncasecmp(readvalue,"Call",0)) {
 			note->Type = GSM_CAL_CALL;
 		} else if (mystrncasecmp(readvalue,"Meeting",0)) {
@@ -2745,13 +2744,13 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
         for (h = file_info; h != NULL; h = h->Next) {
 		found = false;
 		if (UseUnicode) {
-			EncodeUnicode(buffer,"Backup",4);
+			EncodeUnicode(buffer,"Backup",6);
 			if (mywstrncasecmp(buffer, h->SectionName, 6)) found = true;
 		} else {
 	                if (mystrncasecmp("Backup", h->SectionName, 6)) found = true;
 		}
 		if (UseUnicode) {
-			EncodeUnicode(buffer,"Checksum",4);
+			EncodeUnicode(buffer,"Checksum",8);
 			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 		} else {
 	                if (mystrncasecmp("Checksum", h->SectionName, 8)) found = true;
@@ -2843,7 +2842,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	                if (mystrncasecmp("Startup", h->SectionName, 7)) found = true;
 		}
 		if (UseUnicode) {
-			EncodeUnicode(buffer,"Operator",7);
+			EncodeUnicode(buffer,"Operator",8);
 			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 		} else {
 	                if (mystrncasecmp("Operator", h->SectionName, 8)) found = true;

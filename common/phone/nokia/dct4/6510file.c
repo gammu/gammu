@@ -44,13 +44,21 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 	GSM_File		*File = s->Phone.Data.FileInfo;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	int		     	i;
+	unsigned		char buffer[500];
 
 	switch (msg.Buffer[3]) {
 	case 0x15:
 		smprintf(s,"File or folder details received\n");
 		CopyUnicodeString(File->Name,msg.Buffer+10);
+		if (msg.Length == 14) {
+			smprintf(s,"File not exist\n");
+			return ERR_FILENOTEXIST;
+		}
 		if (!strncmp(DecodeUnicodeString(File->Name),"GMSTemp",7)) return ERR_EMPTY;
 		if (File->Name[0] == 0x00 && File->Name[1] == 0x00) return ERR_UNKNOWN;
+
+		EncodeHexUnicode (buffer, File->Name, UnicodeLength(File->Name));
+		smprintf(s,"Name encoded: %s\n",buffer);
 
 		i = msg.Buffer[8]*256+msg.Buffer[9];
 		dbgprintf("%02x %02x %02x %02x %02x %02x %02x %02x %02x\n",
@@ -611,7 +619,7 @@ static GSM_Error N6510_AddFolder1(GSM_StateMachine *s, GSM_File *File)
 		0x00, 0x00, 0x00, 0xE8};
 
 	error = N6510_SearchForFileName1(s,File);
-	if (error == ERR_NONE) return ERR_INVALIDLOCATION;
+	if (error == ERR_NONE) return ERR_FILEALREADYEXIST;
 	if (error != ERR_EMPTY) return error;
 
 	Header[8] = atoi(File->ID_FullName) / 256;
@@ -653,6 +661,9 @@ GSM_Error N6510_ReplyOpenFile2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				msg.Buffer[8]*256+
 				msg.Buffer[9]);
 		return ERR_NONE;
+	} else if (msg.Buffer[4] == 0x06) {
+		smprintf(s,"File not exist\n");
+		return ERR_FILENOTEXIST;		
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
@@ -711,6 +722,16 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 			return ERR_NONE;			
 		case 0x00:
 		case 0x0D:
+			switch (msg.Buffer[5]) {
+			case 0x06:
+				smprintf(s,"File not exist\n");
+				return ERR_FILENOTEXIST;
+			case 0x00:
+				break;
+			default:
+				smprintf(s,"unknown status code\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
 			smprintf(s,"File or folder details received\n");
 
 			if (msg.Buffer[3] == 0x69) {
@@ -933,6 +954,17 @@ static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, int *Po
 	if (*Pos == 0) {
 		sprintf(buffer,"%s/%s",File->ID_FullName,DecodeUnicodeString(File->Name));
 		strcpy(File->ID_FullName,buffer);
+
+		error = N6510_GetFileFolderInfo2(s, File);
+		switch (error) {
+		case ERR_FILENOTEXIST:
+			break;
+		case ERR_NONE:
+			return ERR_FILEALREADYEXIST;
+		default:
+			return error;
+		}
+
 		error = N6510_OpenFile2(s, File->ID_FullName, Handle, true);
 		if (error != ERR_NONE) return error;
 	}
@@ -971,7 +1003,7 @@ GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool star
 {
 	GSM_Error	       	error;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
-	char		    	buf[20];
+	char		    	buf[200];
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
@@ -1000,7 +1032,7 @@ GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool star
 GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
 {
 	GSM_File	File2;
-	char	    	buf[20];
+	char	    	buf[200];
 	GSM_Error       error;
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
@@ -1011,6 +1043,7 @@ GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, in
 			strcpy(buf,File2.ID_FullName+3);
 			sprintf(File2.ID_FullName,"%s",buf);
 			error = N6510_GetFilePart1(s,&File2, Handle, Size);
+			if (error!=ERR_NONE) return error;
 			memcpy(File,&File2,sizeof(GSM_File));
 			strcpy(buf,File->ID_FullName);
 			sprintf(File->ID_FullName,"c:\\%s",buf);
@@ -1026,7 +1059,7 @@ GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, in
 GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
 	GSM_File	File2;
-	char	    	buf[20];
+	char	    	buf[200];
 	GSM_Error       error;
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
@@ -1051,7 +1084,7 @@ GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *
 
 GSM_Error N6510_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 {
-	char buf[20];
+	char buf[200];
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
@@ -1070,7 +1103,7 @@ GSM_Error N6510_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 GSM_Error N6510_AddFolder(GSM_StateMachine *s, GSM_File *File)
 {
 	GSM_File	File2;
-	char	    	buf[20];
+	char	    	buf[200];
 	GSM_Error       error;
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
@@ -1089,7 +1122,7 @@ GSM_Error N6510_AddFolder(GSM_StateMachine *s, GSM_File *File)
 			return ERR_NOTSUPPORTED;
 		}
 	} else {
-		return N6510_AddFolder(s,File);
+		return N6510_AddFolder1(s,File);
 	}
 }
 

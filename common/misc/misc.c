@@ -234,12 +234,14 @@ char *OSDate (GSM_DateTime dt)
 
 bool CheckDate(GSM_DateTime *date)
 {
-	const unsigned int days[]={31,29,31,30,31,30,31,31,30,31,30,31};
+	const unsigned int days[]={31,28,31,30,31,30,31,31,30,31,30,31};
 
+	if (date->Month == 2 && 
+	    !(date->Year % 4 == 0 && date->Year % 100 != 0) && 
+            date->Day > 29) return false;
 	return date->Year != 0 &&
 	       date->Month >= 1 && date->Month <= 12 &&
-	       (date->Month != 2 || date->Day <= 28 || (date->Year % 4 == 0 && date->Year % 100 != 0)) &&
-	       date->Day >= 1 && date->Day <= days[date->Month];
+	       date->Day >= 1 && date->Day <= days[date->Month-1];
 }
 
 bool CheckTime(GSM_DateTime *date)

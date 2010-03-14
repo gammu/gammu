@@ -24,11 +24,56 @@ This software was sponsored (in time order) by:
  8. Lorenzo Ciani
  9. Adam Lange
 10. Michele Rossetti
+11. Alain Bitam
+12. Johan Helsingius
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20050208 - 1.00.00
+* new functionality:
+  * dct4: 
+    * support for 3220 features                                    (Joe Neeman)
+    * filesystems return info, when you try to get non existing file
+  * blueat works for some SE                                     (Michal Cihar)
+
+* fixes and improvements:
+  * dct4:
+    * fix for 7250/7250i features                              (Dmitry Vukolov)
+    * fixed bug with adding folders (bug available in 0.99.22)
+    * overwriting files not possible with filesystem 2
+  * fix for checking date (bug available in 0.99.22)
+  * filesystems:
+    * when you try to upload file, it's saved without path         (Joe Neeman)
+    * you have new options with --nokiaaddfile:
+      * camera - for folder with camera pictures
+      * video - for folder with video clips
+      * records - for folder with sound records
+      * tones, tones2 - music, tones, etc. folders
+      * gallery, gallery2 - pictures, images etc.
+      Earlier getting folder ID in filesystem1 (older dct4) was based for
+      some models on concrete ID. It was done, because folder name was 
+      different for each language version. It was wrong - Nokia for example
+      in 6220 changed ID's from 5.15 to 6.29. Now it will be handled 
+      differently.
+      BIG REQUEST: if you have national name for folder in your 
+                   phone and --nokiaaddfile doesn't find folder, please 
+                   report "textall --getfilesystem" output
+    * when you get file, it's saved to local folder under original name
+      without path
+  * * better handling Siemens                                    (Michal Cihar)
+    * calling nested functions which work on static buffer can lead to crash
+    * fix for restoring Unicode files
+    * AT: enabling incoming SMS info now works with most phones, 
+      we don't have any hardcoded parameters
+    * AT: improved charset handling in AT module. It now reads 
+      available and set values in phone and uses the best one instead of 
+      hardcoding charset for some phones and trying all known charsets 
+      for the others.
+    * user function can now get ONLY location instead of complete message
+      (incoming sms)
+
 20050116 - 0.99.22
 * new functionality:
   * partial support for 6230 filesystem. You can:                       (Intra)

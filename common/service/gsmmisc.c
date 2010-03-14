@@ -198,8 +198,16 @@ bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 	/* FIXME */
 	dt->Timezone	= 0;
 
-	if (!CheckTime(dt)) return false;
-	if (dt->Year!=0) return CheckDate(dt);
+	if (!CheckTime(dt)) {
+		dbgprintf("incorrect date %d-%d-%d %d:%d:%d\n",dt->Day,dt->Month,dt->Year,dt->Hour,dt->Minute,dt->Second);
+		return false;
+	}
+	if (dt->Year!=0) {
+		if (!CheckDate(dt)) {
+			dbgprintf("incorrect date %d-%d-%d %d:%d:%d\n",dt->Day,dt->Month,dt->Year,dt->Hour,dt->Minute,dt->Second);
+			return false;
+		}
+	}
 	return true;
 }
 
