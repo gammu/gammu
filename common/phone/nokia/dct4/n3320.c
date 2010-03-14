@@ -15,7 +15,127 @@
 #include "../../pfunc.h"
 #include "n3320.h"
 
+static GSM_Error N3320_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "Phonebook entry received\n");
+	switch (msg.Buffer[6]) {
+	case 0x0f:
+		return N71_65_ReplyGetMemoryError(msg.Buffer[10], s);
+	default:
+		return N71_65_DecodePhonebook(s, s->Phone.Data.Memory, s->Phone.Data.Bitmap, s->Phone.Data.SpeedDial, msg.Buffer+22, msg.Length-22,true);
+	}
+	return ERR_UNKNOWN;
+}
+
+static GSM_Error N3320_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x07, 0x01, 0x01, 0x00, 0x01,
+			       0xfe, 0x10, 	/* memory type */
+			       0x00, 0x00, 0x00, 0x00, 
+			       0x00, 0x01, 	/* location */
+			       0x00, 0x00, 0x01};
+
+	req[9] = NOKIA_GetMemoryType(s, entry->MemoryType,N71_65_MEMORY_TYPES);
+	if (entry->MemoryType == MEM_SM) return ERR_NOTSUPPORTED;
+	if (req[9]==0xff) return ERR_NOTSUPPORTED;
+
+	if (entry->Location==0x00) return ERR_INVALIDLOCATION;
+
+	req[14] = entry->Location / 256;
+	req[15] = entry->Location % 256;
+
+	s->Phone.Data.Memory=entry;
+	smprintf(s, "Getting phonebook entry\n");
+	return GSM_WaitFor (s, req, 19, 0x03, 4, ID_GetMemory);
+}
+
+static GSM_Error N3320_ReplyGetMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
+	smprintf(s, "Memory status received\n");
+	/* Quess ;-)) */
+	if (msg.Buffer[14]==0x10) {
+		Data->MemoryStatus->MemoryFree = msg.Buffer[18]*256 + msg.Buffer[19];
+	} else {
+		Data->MemoryStatus->MemoryFree = msg.Buffer[17];
+	}
+	smprintf(s, "Size       : %i\n",Data->MemoryStatus->MemoryFree);
+	Data->MemoryStatus->MemoryUsed = msg.Buffer[20]*256 + msg.Buffer[21];
+	smprintf(s, "Used       : %i\n",Data->MemoryStatus->MemoryUsed);
+	Data->MemoryStatus->MemoryFree -= Data->MemoryStatus->MemoryUsed;
+	smprintf(s, "Free       : %i\n",Data->MemoryStatus->MemoryFree);
+	return ERR_NONE;
+}
+
+static GSM_Error N3320_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x03, 0x02,
+			       0x00,		/* memory type */
+			       0x55, 0x55, 0x55, 0x00};
+
+	req[5] = NOKIA_GetMemoryType(s, Status->MemoryType,N71_65_MEMORY_TYPES);
+	if (Status->MemoryType == MEM_SM) return ERR_NOTSUPPORTED;
+	if (req[5]==0xff) return ERR_NOTSUPPORTED;
+
+	s->Phone.Data.MemoryStatus=Status;
+	smprintf(s, "Getting memory status\n");
+	return GSM_WaitFor (s, req, 10, 0x03, 4, ID_GetMemoryStatus);
+}
+
+static GSM_Error N3320_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "Date & time received\n");
+	if (msg.Buffer[4]==0x01) {
+		NOKIA_DecodeDateTime(s, msg.Buffer+10, s->Phone.Data.DateTime);
+		return ERR_NONE;
+	}
+	smprintf(s, "Not set in phone\n");
+	return ERR_EMPTY;
+}
+
+static GSM_Error N3320_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x0A, 0x00, 0x00};
+
+	s->Phone.Data.DateTime=date_time;
+	smprintf(s, "Getting date & time\n");
+	return GSM_WaitFor (s, req, 6, 0x19, 4, ID_GetDateTime);
+}
+
+static GSM_Error N3320_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, bool start)
+{
+	return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N3320.LastCalendar,&s->Phone.Data.Priv.N3320.LastCalendarYear,&s->Phone.Data.Priv.N3320.LastCalendarPos);
+}
+
+static GSM_Error N3320_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
+{
+	GSM_Error error;
+
+        /* Method 1 */
+	error=N71_65_GetCalendarInfo1(s, &s->Phone.Data.Priv.N3320.LastCalendar);
+	if (error!=ERR_NONE) return error;
+	Status->Used = s->Phone.Data.Priv.N3320.LastCalendar.Number;
+	return ERR_NONE;
+}
+
+static GSM_Error N3320_ReplyGetCalendarInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	return N71_65_ReplyGetCalendarInfo1(msg, s, &s->Phone.Data.Priv.N3320.LastCalendar);
+}
+
 static GSM_Reply_Function N3320ReplyFunctions[] = {
+	{N3320_ReplyGetMemoryStatus,	  "\x03",0x03,0x04,ID_GetMemoryStatus	  },
+	{N3320_ReplyGetMemory,		  "\x03",0x03,0x08,ID_GetMemory		  },
+
+	{N71_65_ReplyGetNextCalendar1,	  "\x13",0x03,0x1A,ID_GetCalendarNote	  },/*method 1*/
+	{N3320_ReplyGetCalendarInfo,	  "\x13",0x03,0x3B,ID_GetCalendarNotesInfo},/*method 1*/
+
+	{N3320_ReplyGetDateTime,	  "\x19",0x03,0x0B,ID_GetDateTime	  },
+
+	{DCT3DCT4_ReplyGetModelFirmware,  "\xD2",0x02,0x00,ID_GetModel		  },
+	{DCT3DCT4_ReplyGetModelFirmware,  "\xD2",0x02,0x00,ID_GetFirmware	  },
+
 	{NULL,				  "\x00",0x00,0x00,ID_None		  }
 };
 
@@ -36,7 +156,7 @@ GSM_Phone_Functions N3320Phone = {
 	NOTSUPPORTED,			/*	GetHardware		*/
 	NOTSUPPORTED,			/*	GetPPM			*/
 	NOTSUPPORTED,			/*	GetSIMIMSI		*/
-	NOTSUPPORTED,			/*	GetDateTime		*/
+	N3320_GetDateTime,
 	NOTSUPPORTED,			/*	SetDateTime		*/
 	NOTSUPPORTED,			/*	GetAlarm		*/
 	NOTSUPPORTED,			/*	SetAlarm		*/
@@ -55,8 +175,8 @@ GSM_Phone_Functions N3320Phone = {
 	NOTSUPPORTED,     		/*  	GetCategory 		*/
  	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/	
-	NOTSUPPORTED,			/*	GetMemoryStatus		*/
-	NOTSUPPORTED,			/*	GetMemory		*/
+	N3320_GetMemoryStatus,
+	N3320_GetMemory,
 	NOTSUPPORTED,			/*	GetNextMemory		*/
 	NOTSUPPORTED,			/*	SetMemory		*/
 	NOTSUPPORTED,			/*	AddMemory		*/
@@ -115,9 +235,9 @@ GSM_Phone_Functions N3320Phone = {
 	NOTSUPPORTED,			/*	AddToDo			*/
 	NOTSUPPORTED,			/*	DeleteToDo		*/
 	NOTSUPPORTED,			/*	DeleteAllToDo		*/
-	NOTIMPLEMENTED,			/*	GetCalendarStatus	*/
+	N3320_GetCalendarStatus,
 	NOTIMPLEMENTED,			/*	GetCalendar		*/
-    	NOTSUPPORTED,			/*  	GetNextCalendar		*/
+    	N3320_GetNextCalendar,
 	NOTIMPLEMENTED,			/*	SetCalendar		*/
 	NOTSUPPORTED,			/*	AddCalendar		*/
 	NOTSUPPORTED,			/*	DeleteCalendar		*/

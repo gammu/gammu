@@ -13,19 +13,24 @@
 
 int socket_read(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
 {
-#ifndef WIN32
-	fd_set readfds;
+	fd_set 		readfds;
+#ifdef WIN32
+	struct timeval 	timer;
+#endif
 
 	FD_ZERO(&readfds);
 	FD_SET(hPhone, &readfds);
+#ifndef WIN32
 	if (select(hPhone+1, &readfds, NULL, NULL, 0)) {
 		return(read(hPhone, buf, nbytes));
-	} else {
-		return 0;
 	}
 #else
-	return(recv(hPhone, buf, nbytes, 0));
+	memset(&timer,0,sizeof(timer));
+	if (select(0, &readfds, NULL, NULL, &timer) != 0) {
+		return(recv(hPhone, buf, nbytes, 0));
+	}
 #endif
+	return 0;
 }
 
 #ifdef WIN32

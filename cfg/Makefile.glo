@@ -51,11 +51,11 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
             $(TOPDIR)/common/phone/at/siemens.o \
             $(TOPDIR)/common/phone/at/sonyeric.o \
             $(TOPDIR)/common/phone/alcatel/alcatel.o \
-            $(TOPDIR)/common/phone/nokia/dct3/n3320.o \
             $(TOPDIR)/common/phone/nokia/dct3/n6110.o \
             $(TOPDIR)/common/phone/nokia/dct3/n7110.o \
             $(TOPDIR)/common/phone/nokia/dct3/n9210.o \
             $(TOPDIR)/common/phone/nokia/dct3/dct3func.o \
+            $(TOPDIR)/common/phone/nokia/dct4/n3320.o \
             $(TOPDIR)/common/phone/nokia/dct4/n3650.o \
             $(TOPDIR)/common/phone/nokia/dct4/n6510.o \
             $(TOPDIR)/common/phone/nokia/dct4/dct4func.o \

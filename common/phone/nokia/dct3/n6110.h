@@ -22,7 +22,7 @@ typedef struct {
 
 typedef enum {
 	N6110_Auto = 1,
-	N6110_Europe,
+	N6110_Europe
 } N6110_Language;
 
 #ifndef GSM_USED_MBUS2

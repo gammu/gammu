@@ -200,7 +200,7 @@ typedef enum {
 	/**
 	 * Repeating end.
 	 */
-	CAL_REPEAT_STOPDATE,
+	CAL_REPEAT_STOPDATE
 } GSM_CalendarType;
 
 /**

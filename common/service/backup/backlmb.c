@@ -298,7 +298,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	dbgprintf("Location : %i\n",buffer2[0]+buffer2[1]*256);
 #endif
 
-	N71_65_DecodePhonebook(NULL, &pbk, NULL,NULL,buffer2+4,(buffer[4]+buffer[5]*256)-4);
+	N71_65_DecodePhonebook(NULL, &pbk, NULL,NULL,buffer2+4,(buffer[4]+buffer[5]*256)-4,false);
 
 	pbk.MemoryType=MEM_SM;
 	if (buffer[10]==2) pbk.MemoryType=MEM_ME;

@@ -172,7 +172,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				 GSM_Bitmap 		*bitmap,
 				 GSM_SpeedDial 		*speed,
 				 unsigned char 		*MessageBuffer,
-				 int 			MessageLength)
+				 int 			MessageLength,
+				 bool			DayMonthReverse)
 {
 	unsigned char 				*Block;
 	int					length = 0, i;
@@ -237,6 +238,11 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		if (Block[0] == N7110_PBK_DATETIME) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
 			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date);
+			if (DayMonthReverse) {
+				i = entry->Entries[entry->EntriesNum].Date.Month;
+				entry->Entries[entry->EntriesNum].Date.Month = entry->Entries[entry->EntriesNum].Date.Day;
+				entry->Entries[entry->EntriesNum].Date.Day   = i;
+			}
 			entry->EntriesNum ++;
 
 			length = length + Block[3];

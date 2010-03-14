@@ -8,6 +8,7 @@
 
 #include "dct4.h"
 #include "../../gammu.h"
+#include "../../../common/phone/pfunc.h"
 #include "../../../common/phone/nokia/nfunc.h"
 #include "../../../common/phone/nokia/dct4/dct4func.h"
 #include "../../../common/misc/coding/coding.h"
@@ -26,6 +27,9 @@ GSM_Error CheckDCT4Only()
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
  	if (strstr(N6510Phone.models, s.Phone.Data.ModelInfo->model) != NULL) found = true;
+#endif
+#ifdef GSM_ENABLE_NOKIA3320
+ 	if (strstr(N3320Phone.models, s.Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
 	if (!found) return ERR_NOTSUPPORTED;
 
@@ -1171,6 +1175,39 @@ void DCT4TuneRadio(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+void DCT4PlaySavedRingtone(int argc, char *argv[])
+{
+	unsigned char req[] =  {N6110_FRAME_HEADER, 
+			      	0x01,
+				0x00,0x64,	//id
+				0x01,		//group
+				0x01,0x00,0x00,
+				0x0A,		//volume
+				0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+	GSM_AllRingtonesInfo Info;
+
+	GSM_Init(true);
+
+        CheckDCT4();
+
+	s.User.UserReplyFunctions=UserReplyFunctions4;
+
+	error=Phone->GetRingtonesInfo(&s,&Info);
+	Print_Error(error);
+
+//	if (atoi(argv[0]) > Info.Number) exit;
+	req[4] = Info.Ringtone[atoi(argv[2])].ID / 256;
+	req[5] = Info.Ringtone[atoi(argv[2])].ID % 256;
+	req[6] = Info.Ringtone[atoi(argv[2])].Group;
+
+	error=GSM_WaitFor (&s, req, 18, 0x1F, 4, ID_User3);
+	Print_Error(error);
+
+//	for (i=0;i<Info.Number;i++) printmsg("%i. \"%s\"\n",i,DecodeUnicodeConsole(Info.Ringtone[i].Name));
+
+	GSM_Terminate();
+}
+
 static GSM_Reply_Function UserReplyFunctions4[] = {
 
 #ifdef DEBUG
@@ -1186,6 +1223,8 @@ static GSM_Reply_Function UserReplyFunctions4[] = {
 
 	{DCT4_ReplyVibra,		"\x1C",0x03,0x0D,ID_User3	},
 	{DCT4_ReplyVibra,		"\x1C",0x03,0x0F,ID_User3	},
+
+	{NoneReply,			"\x1F",0x03,0x02,ID_User3	},
 
 	{DCT4_ReplyGetSecurityCode,	"\x23",0x03,0x05,ID_User1	},
 	{DCT4_ReplyGetT9,		"\x23",0x03,0x05,ID_User3	},

@@ -85,7 +85,8 @@ GSM_Error N71_65_DecodePhonebook		(GSM_StateMachine	*s,
   				 		 GSM_Bitmap 		*bitmap,
   				 		 GSM_SpeedDial 		*speed,
   				 		 unsigned char 		*MessageBuffer,
-  				 		 int 			MessageLength);
+  				 		 int 			MessageLength,
+						 bool			DayMonthReverse);
 int 		N71_65_EncodePhonebookFrame	(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry entry, int *block2, bool DCT4, bool VoiceTag);
 int 		N71_65_PackPBKBlock		(GSM_StateMachine *s, int id, int size, int no, unsigned char *buf, unsigned char *block);
 

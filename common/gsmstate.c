@@ -866,6 +866,11 @@ static OnePhoneModel allmodels[] = {
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"3310" ,"NHM-5" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},
+#endif
+#ifdef GSM_ENABLE_NOKIA3320
+	{"3320" ,"NPC-1" ,"Nokia 3320", {F_CAL62,F_DAYMONTH,0}},//fixme
+#endif
+#ifdef GSM_ENABLE_NOKIA6110
 	{"3330" ,"NHM-6" ,"",           {F_NOCALLER,F_RING_SM,F_CAL33,F_PROFILES33,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
 	{"3390" ,"NPB-1" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_PROFILES33,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
 	{"3410" ,"NHM-2" ,"",           {F_RING_SM,F_CAL33,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},
@@ -874,6 +879,7 @@ static OnePhoneModel allmodels[] = {
 	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
 	{"3510i","RH-9"  ,"",           {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
 	{"3530" ,"RH-9"  ,"",           {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
+	{"3589i","RH-44" ,"",		{F_VOICETAGS,0}},
 	{"3590" ,"NPM-8" ,"",		{0}},//irda?
 	{"3595" ,"NPM-10" ,"",		{0}},//irda?
 #endif

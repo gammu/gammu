@@ -52,14 +52,21 @@
 /* Infrared. OBEX */
 #undef GSM_ENABLE_IRDAOBEX
 
+#ifdef WIN32
+#  define GSM_ENABLE_BLUEFBUS2 1
+#  define GSM_ENABLE_BLUEPHONET 1
+#  define GSM_ENABLE_BLUEAT 1
+#  define GSM_ENABLE_BLUEOBEX 1
+#else
 /* Bluetooth stack (like Bluez). FBUS2 (init done using AT commands) */
-#undef GSM_ENABLE_BLUEFBUS2
+#  undef GSM_ENABLE_BLUEFBUS2
 /* Bluetooth stack (like Bluez). PHONET FBUS */
-#undef GSM_ENABLE_BLUEPHONET
+#  undef GSM_ENABLE_BLUEPHONET
 /* Blueooth stack (like Bluez). AT commands */
-#undef GSM_ENABLE_BLUEAT
+#  undef GSM_ENABLE_BLUEAT
 /* Blueooth stack (like Bluez). OBEX */
-#undef GSM_ENABLE_BLUEOBEX
+#  undef GSM_ENABLE_BLUEOBEX
+#endif
 
 /* --------------------------- Phone modules (specific) ----------------- */
 
@@ -144,5 +151,11 @@
 
 #undef HAVE_ISWSPACE
 #undef HAVE_TOWLOWER
+
+#ifdef _MSC_VER
+/* Uncomment to build full support for Bluetooth stack by Microsoft */
+/* Required irprops.lib from Platform SDK */
+//#define MS_VC_BLUETOOTH_IRPROPS_LIB 1
+#endif
 
 #endif

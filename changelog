@@ -26,7 +26,45 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
-200405xx - 0.95.0
+20040615 - 0.96.0
+* new functionality:
+  * ID & initial support for 3589i                                      (bgeer)
+  * 3320: getting phonebook, datetime, calendar
+  * new --playsavedringtones (sets dct4 to play many tones saved in phone -
+    it includes ringtones and some phones sounds)
+  * --getringtoneslist get much more from dct4 than only names of ringtones
+  * with MS Platform SDK (available for free                            (Intra)
+    http://www.microsoft.com/msdownload/platformsdk/sdkupdate/psdk-full.htm)
+    and MS Visual Studio compiler available commercialy (or for free
+    http://msdn.microsoft.com/visualc/vctoolkit2003/) it's possible to
+    get much better support for Bluetooth with MS Bluetooth stack planned
+    for Windows XP SP2:
+    * when you give phone address in "Port", Gammu checks all possible
+      phone services and connects to some of them according to their name
+      (earlier it was based on RF channel number)
+    * when you don't give phone address, Gammu searches for first device
+      with adequate service and connects to it. it means, that you need
+      to give only connection type and nothing more. Please note, that
+      searching for all devices will need more time than connecting to
+      specified one
+    Similiar functionality is planned for BlueZ stack (for now RF channel for 
+    PHONET and Nokia is by default 15, which is good and not; in the future
+    it will be detected)
+  * win32 builds are created by default with bt support
+  * new script for better handling phone filesystem             (Egor Kobylkin)
+
+* fixes and improvements:
+  * win32: after receiving unknown frame over irda gammu doesn't hang.
+  * some fixes required for C++ compilers                     (Markus Brueffer)
+  * better output with -flatall from --getfilesystem            (Egor Kobylkin)
+
+INFO: Many planned things still stay in queue. But you know: exams (I'm still
+      student) and no too much free time (some time need to be spent on more
+      profitable things than Gammu). When exams will end soon, I will have
+      a lot free time :-) Will start from Symbian (Thomas Lussnig files)
+      and BlueTooth (BlueZ)
+
+20040502 - 0.95.0
 * new functionality:
   * enabling new menu features for 6220
   * NGAGE ID
