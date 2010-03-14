@@ -1,0 +1,6 @@
+ppp-6210-modem		Basic chat script to use with AT modem (eg. Nokia 6210)
+ppp-gnokii		Basic chat script to make a connection with gnokiid and at-emulator (eg. Nokia 6110)
+ppp-hscsd		Sample chat script to make a hscsd connection
+ppp-on			Sample ppp script to estabilish a dialup connection
+options			Sample ppp options file
+pap-secrets		Sample pap-secrets file

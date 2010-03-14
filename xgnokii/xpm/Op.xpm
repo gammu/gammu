@@ -1,0 +1,50 @@
+/* XPM */
+/*
+
+  G N O K I I
+
+  A Linux/Unix toolset and driver for Nokia mobile phones.
+
+  Copyright (C) 1999 Pavel Janík ml. & Hugh Blemings.
+
+  Released under the terms of the GNU GPL, see file COPYING for more details.
+
+  This is the icon for Operator Logo.
+
+  Last modification: Sat Jul 24 14:30:37 CEST 1999
+  Modified by Pavel Janík ml. <Pavel.Janik@linux.cz>
+
+*/
+
+static char *Op_xpm[] = {
+
+"20 19 7 1",
+
+"* c #000000",
+"# c #800000",
+"b c #008000",
+"c c #00ff00",
+"i c #808080",
+"  c None",
+"l c #ffffff",
+
+"                    ",
+"                    ",
+"     **********     ",
+"    ************    ",
+"   **          **   ",
+"   **          **   ",
+"   **          **   ",
+"   **          **   ",
+"   **          **   ",
+"   **          **   ",
+"   **          **   ",
+"   **          **   ",
+"   **          **   ",
+"   **          **   ",
+"    ************    ",
+"     **********     ",
+"                    ",
+"                    ",
+"                    "
+};

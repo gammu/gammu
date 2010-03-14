@@ -1,0 +1,233 @@
+
+Last update 01.03.2001
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Assembled by
+	Marcin Wiacek (Marcin-Wiacek@TOPNET.PL)
+	... and other members of gnokii mailing list
+            and authors of some WWW pages.
+
+The data provided is for information purposes only. 
+Some of the frames might be hazardous to your phone. Be careful!!! 
+We do not take any responsibility or liability for damages, etc.
+
+NOTE: this information isn't (and can't be) complete.  If you know anything
+about features not listed here or you noticed a bug in this list, please
+notify us via e-mail.  Thank you.
+
+Document describing frames used in
+GSM Nokia 3110 and derivatives (3810,8110,8110i):
+Correct format is FBUS version 1/MBUS version 1 (?)
+(see nokia.txt for protocol details):
+
+ List:
+
+0x02:
+    r RLP ?                 {....}
+0x0a:
+    s Make call             {+type of call, type of number?, numlen, number, uk1, uk2, uk3 }
+                            where type of call: see 0x0b
+                            Note: If destination number is "1" - "9",
+                                  call for number in corresponding memory location is made.
+0x0b:
+    r Incoming call         {+type of call, 0x00, namelen, name }
+                            where type of call:
+                                    0x01 Data 
+                                    0x02 ?? 
+                                    0x03 ?? 
+                                    0x04 ?? 
+                                    0x05 Voice 
+0x0c:
+    s Answer incoming call  {}
+0x0d:
+    r Incoming call answered{}
+      from ME
+0x0e:
+    r Call established      {+type of call, 0x00, 0x00 }
+                            where type of call: see 0x0b
+0x0f:
+    s Call hang up          {}
+0x10:
+    r Call hanged up from ME{}
+      seq1
+0x11:
+   r CallClosed-by other end{+unknown, reason}
+                            where:
+                              unknown reason
+                              0x65    0x10   Hanged up by other end 
+                                      0x1c   virheellinen numero 
+                              0x65    0x1f   Number is not in use 
+                              0x65    0x4f   Check operator services 
+                              0x65    0xa6   No destination number (sms sending) 
+                              0x65    0xe4   --''-- 
+                              0x6f    0x6f  
+                              0x7d    0x7d  
+                              0x7f    0x7f  
+                              0x83    0x83 
+0x12:
+    r Call hanged up from ME{}
+      seq2
+0x13:
+    r Power ON seq          {}
+0x15:
+    s Initialization        {}
+0x16:
+    r Initialization OK     {+simstate }
+                            where simstate:
+                                    0x01 No SIM present, or waiting for PIN 
+                                    0x02 SIM present and ready. 
+0x17:
+    r Initialization err    {+error }
+0x20:
+    s Send DTMF             {+length,string}
+0x21:
+    r Send DTMF OK          {}
+0x22:
+    r Send DTMF err         {+error }
+                            where error:
+                                    0x70: invalid location
+0x23:
+    s Send SMS Header       {+first octet, PID, DCS, validity(7 bytes), UDL, SMSClen, SMSC, receiverlen, receiver}
+0x24:
+    s Save SMS Header       {+memtype,status(2bytes),PID, DCS, validity(7 bytes), UDL, SMSClen, SMSC, receiverlen, receiver, receivertype }
+                            where: memtype:
+                                     2=SIM
+                                     3=ME 
+                                   status: see 0x2c
+0x25:
+    s Get SMS message       {+memtype, location }
+                            where: memtype - see 0x30
+                            Note: In successful request, phone sends one "SMS Header" and one or more "SMS Data" packets.
+                                  In failure, phone sends "Get SMS message err" packet
+0x26:
+    s Delete SMS message    {+memtype, location }
+                            where: memtype - see 0x30
+0x27:
+    r SMS Data              {+seq,block}
+                            where: seq: starts from 0x01 and is increased by 1 after each block transmitted. 
+                                   block: Block of User Data (max 55 chars)
+    s Send/Save SMS Data    {+seq,block}
+0x28:
+    r SMS sent OK           {+reference?}
+0x29:
+    r SMS sent error        {+error1, error2}
+0x2a:
+    r SMS saved OK          {+memtype}
+                            where: memtype - memory, where SMS was saved
+0x2b:
+    r SMS saving err        {+error}
+0x2c:
+    r SMS Header            {+memtype, location, status(2 bytes), PID, DCS, date (7 bytes), UDL, senderlen, sender, SMSClen, SMSC, sendertype}
+                            where:
+                              memtype, PID, DCS, date, UDL, sender, SMSC, sendertype - see 0x30
+                              status: 0701: Saved, not sent
+                                      0501: Sent
+                                      0304: Received, unread
+                                      0204: Unread
+                                      0104: Received, read 
+0x2d:
+    r Get SMS message err   {+error}
+0x2e:
+    r Delere SMS message OK {}
+0x2f:
+    r Delete SMS message err{+error}
+0x30:
+    r SMS message received  {+memtype, location, unknown, PID, DCS, date(7 bytes), UDL, senderlen, sender, SMSClen, SMSC, sendertype}
+                            where: memtype:
+                                     0x01 Phone Selected 
+                                     0x02 SIM 
+                                     0x03 ME 
+                                   location: Memory location (1...) 
+                                   unknown: most of time 0x04 
+                                   PID: Protocol Identifier 
+                                   DCS: Data Coding Scheme 
+                                   date: sending date in BCD
+                                   UDL: User Data Length 
+                                   sender: sender number
+                                   SMSC: SMSC number
+                                   sendertype: type of sender number:
+                                                0x31 International without leading '+' ??? 
+                                                0x91 International 
+0x32:
+    r Delivery report receiv{+unknown,delivery time(7 bytes),report time(7 bytes),0x00,MR,
+                             destinationlen,destination,SMSClen,SMSC,destinationtype}
+0x3c:
+    s Set SMSC              {+bitmask,format,unknown1,validity,reply,reports,unusedlen,unused,SMSClen,SMSC}
+                            where:
+                              bitmask: info, what we change
+                                7 ?? 
+                                6 reports
+                                5 reply
+                                4 SMSC number
+                                3 unused
+                                2 validity
+                                1 unknown
+                                0 format
+                              format:
+                                0x00 Text 
+                                0x22 Fax 
+                                0x24 Voice 
+                                0x25 ERMES 
+                                0x26 Paging 
+                                0x2d E-mail 
+                                0x31 X.400 
+                              validity:
+                                 0 to 143    (validity + 1) * 5 minutes (i.e. 5 minutes intervals up to 12 hours) 
+                                 144 to 167  12 hours + ((validity - 143) * 30 minutes) 
+                                 168 to 196  (validity - 166) * 1 day 
+                                 197 to 255  (validity - 192) * 1 week 
+0x3d:
+    r Set SMSC OK           {}
+0x3e:
+    r Set SMSC err          {}
+0x3f:
+    s Get SMSC              {}
+0x40:
+    r Get SMSC              {+memory,AllSMSphone,unreadSMSphone,AllSMSSIM,unreadSMSSIM,
+                             format,unknown1,validity,reply,reports,unusedlen,unused,SMSClen,SMSC}
+                            where: format,unknown1,validity,reply,reports,unusedlen,unused,SMSClen,SMSC - see 0x3c
+                                   memory: selected memory
+                                   AllSMSphone: number of all SMS in phone
+                                   unreadSMSphone: number of unread SMS in phone
+                                   AllSMSSIM: number of all SMS on SIM
+                                   unreadSMSSIM: number of unread SMS on SIM
+0x42:
+    s Set mem location      {+memtype, location, namelen, name, numlen, number }
+                            where memtype: see 0x43
+0x43:
+    s Get mem location      {+memtype, location }
+                            where: memtype:
+                                     0x01 Phone Selected
+                                     0x02 SIM
+                                     0x03 ME
+                                     0x04 Own numbers (at SIM) 
+0x44:
+    r Set mem location OK   {}
+0x45:
+    r Set mem location err  {+error }
+0x46:
+    r Get mem location OK   {+namelen, name, numlen, number }
+0x47:
+    r Get mem location err  {+error }
+0x48:
+    r PIN entered           {}
+0x49:
+    r Power OFF seq         {}
+0x4a:
+    s Status request        {}
+0x4b:
+    r Status request        {+status, network, battery }
+                            where status:
+                                    0x01 Idle 
+                                    0x02 Network interworking 
+                                    0x03 Call open 
+                                    0x04 No Network Access (Waiting for PIN or
+                                         Unaccessable Operator selected) 
+                                  network and battery - signal level
+0x4c:
+    s Get phone info        {}
+0x4d:
+    r Get phone info        {+IMEI, 0x00, Code, 0x00, HW, 0x00 }
+                            where IMEI: IMEI Code 
+                                  CODE: Same as Code in phones back side 
+                                  HW: hardware version

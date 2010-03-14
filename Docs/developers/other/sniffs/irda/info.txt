@@ -1,0 +1,13 @@
+To irda sniffs use irda_intercept.tgz
+(http://www.dev-thomynet.de/nokworld/noktrace/index.html or tools directory
+- unpacked source is there) from Thomas Schneider
+
+how to use it:
+you MUST stop irda support  ('rcirda stop' fur SUSE)
+to free the infrared tty port.
+just type irda_intercept and you should see
+irda packages of port /dv/ttyS1 (hardcoded in source).
+The tool writes also to file 'out.trc'.
+Use this file to decode: 'gnokii --decodefile out.trc'
+(mygnokii have to be compiled with debug)
+

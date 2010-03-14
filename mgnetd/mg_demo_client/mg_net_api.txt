@@ -1,0 +1,142 @@
+mg_net_api
+a simple network api for (my)gnokii
+
+(have also a look at demo-prg:
+ mg_demo_client.c)
+
+You need latest mygnokii-tarball, look at:
+Marcin Wiacek -> mailto:marcin-wiacek@topnet.pl
+http://marcin-wiacek.topnet.pl (http://marcin-wiacek.fkn.pl/) -> netmonitor,
+firmware, mygnokii (GSM & Nokia)
+http://www.mds.mdh.se/~cel95eig/mygnokii/ &
+http://grumble.zereau.com/gnokii/ & http://reinhold.bachrain.de/ -> mygnokii
+mirrors
+
+- install mygnokii
+- customize .gnokii.rc (at least gnokii --identify should run)
+- run udp network daeon with: mgnetd <password>
+
+--------------------------------------------------------------------------------
+
+
+
+Version 0.3
+
+All functions return a negative value if there is an error.
+
+--------------------------------------------------------------------------------
+
+int mg_init(char *hostname, char *passwd);
+char *hostname - Hostname or IP-Address of Server with running mygnokii server.
+		 (could be 'localhost' if mygnokii runs on same machine)
+char *passwd - password of running mygnokii server
+
+This function MUST be called first in your program.
+
+--------------------------------------------------------------------------------
+
+int mg_exit(void);
+
+Kill the running mygnokii server
+
+--------------------------------------------------------------------------------
+
+int mg_version(MG_rq_version *version);
+typedef struct {
+        int major;
+        int minor;
+} MG_rq_version;
+
+Get versioninformation from running mygnokii server
+
+--------------------------------------------------------------------------------
+
+int mg_identify(MG_rq_identify *ident);
+typedef struct {
+        char imei[64];
+        char model[64];
+        char rev[64];
+} MG_rq_identify;
+
+Get imei, model and revision from phone connected to mygnokii server
+
+--------------------------------------------------------------------------------
+
+int mg_memorystatus(MG_rq_memorystatus *stats);
+typedef struct {
+        char memtype[3];	-> ME for internal phonememory, SM for SIM-Card 
+        int used;		-> free entrys within selected memory 
+        int free;		-> used entrys within selected memory    
+} MG_rq_memorystatus;
+
+Get memory status from phone connected to mygnokii server
+
+--------------------------------------------------------------------------------
+
+int mg_get_memory_location(MG_rq_phonebook_location *rph);
+typedef struct {
+        char memtype[3];		-> ME for internal phonememory, SM for SIM-Card
+        int location;			-> location of entry within selected memory
+        char name[51];
+        char group[49];
+        char nr_general[49];
+        char nr_mobile[49];
+        char nr_work[49];
+        char nr_fax[49];
+        char nr_home[49];
+        char note[51];
+        char postal[51];
+        char email[51];
+} MG_rq_phonebook_location;
+
+Get phonebook entry at location-number from phone connected to mygnokii server
+
+--------------------------------------------------------------------------------
+
+int mg_write_phonebook_location(MG_rq_phonebook_location *wph);
+typedef struct {
+        char memtype[3];                -> ME for internal phonememory, SM for SIM-Card
+        int location;                   -> location of entry within selected memory
+        char name[51];
+        char group[49];
+        char nr_general[49];
+        char nr_mobile[49];
+        char nr_work[49];
+        char nr_fax[49];
+        char nr_home[49];
+        char note[51];
+        char postal[51];
+        char email[51];
+} MG_rq_phonebook_location;
+ 
+Write phonebook entry to location-number from phone connected to mygnokii server
+
+--------------------------------------------------------------------------------
+
+int mg_delete_phonebook_location(int location)
+int location - Location of phonebookentry to delete
+
+Delete phonebook entry at location-number from phone connected to mygnokii server
+
+--------------------------------------------------------------------------------
+
+int mg_send_sms(MG_rq_send_sms *sms);
+typedef struct {
+        char destination[12];                           /* destination */
+        char message[161];                              /* the message */
+        char SMSCNumber[100];                           /* SMSC number (could be NULL)*/
+        int  SMSCenter;                                 /* SMSC number index in phone memory */
+        int  SMSValidity;                               /* validity of sms eg: 4320 -> 3 days !*/
+        char longsms;                                   /* long messages, NOT USED ! */
+        char enablevoice;                               /* SMS enables voice indicator TRUE/FALSE*/
+        char disablevoice;                              /* SMS disables voice indicator TRUE/FALSE*/
+        char enableemail;                               /* SMS enables email indicator TRUE/FALSE*/
+        char disableemail;                              /* SMS disables email indicator TRUE/FALSE*/
+        char enablefax;                                 /* SMS enables fax indicator TRUE/FALSE*/
+        char disablefax;                                /* SMS disables fax indicator TRUE/FALSE*/
+        char unicode;                                   /* SMS coding type TRUE/FALSE*/
+        char delivery;                                  /* we want delivery report TRUE/FALSE*/
+} MG_send_sms;
+Send sms message 'message' to destination at 'destination' via phone connected to mygnokii server
+
+--------------------------------------------------------------------------------

@@ -1,0 +1,56 @@
+
+ TODO: write me!
+
+ For package building see the 'Docs/packaging-howto' file.
+
+0/	If you got an CVS version
+
+	autoconf
+
+1/
+	./configure [ option ]
+
+	where basic options:
+
+		--prefix=DIR
+			Install path prefix. Default /usr/local/
+
+		--without-x
+			Compile without GTK (X11) programs
+		
+		--disable-nls
+			Set if you don't have/want GNU gettext support
+		
+		--enable-security
+			Set if you want to enable all security features
+
+		--enable-debug
+			Set if you want debug code in gnokii
+
+		--help		
+			show all options
+
+
+	Good default (example):
+
+		./configure --prefix=/usr \
+			    --enable-security
+
+2/
+	compilation:
+	
+		make (or make gnokii-debug to create staticlly linked binary
+			-- mainly for debugging)
+		groupadd gnokii  - it is really needed
+		(make dep - if you want/need) 
+		make install or make install-suid or make install-strip or
+			make install-ss (suid + strip)
+		make install-docs
+
+	clean source:
+	
+		make clean	 - standard clean
+		make distclean   - clean all ./configure outputs
+				   (after this command you must run
+				    ./configure again if you need use
+                                    any Makefile)

@@ -1,0 +1,9 @@
+#!/bin/sh
+/usr/sbin/chat -v                                       \
+        TIMEOUT         30                              \
+        ABORT           '\nBUSY\r'                      \
+        ABORT           '\nNO ANSWER\r'                 \
+        ABORT           '\nRINGING\r\n\r\nRINGING\r'    \
+        ABORT           '\nNO CARRIER\r'                \
+        ''              ATDT$TELEPHONE                  \
+        CONNECT         ''                              

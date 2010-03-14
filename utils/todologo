@@ -1,0 +1,99 @@
+#!/usr/bin/perl
+# $Id: todologo,v 1.1 2000/11/03 13:18:08 pavel Exp $
+#
+# Author: Tomi Ollila <Tomi.Ollila@iki.fi>
+#
+# Created: Tue Oct 10 18:04:02 2000 too
+# Last modified: Wed Oct 25 22:41:50 2000 too
+#
+# HISTORY
+# $Log: todologo,v $
+# Revision 1.1  2000/11/03 13:18:08  pavel
+#
+# Tomi's todologo.
+#
+
+
+$a1= " a  b    c dd  ee ff  gg h h i   j k   l  m m nn   o  pp   q  r r ss ";
+$a2= "a a bb  c  d d ee f  g   hhh i   j k k l  mmm n n o o p p q q rr  s  ";
+$a3= "aaa b b c  d d e  ff g g hhh i j j kk  l  m m n n o o pp   q  r    s ";
+$a4= "a a bb   c dd   e f   gg h h i  j  k k ll m m n n  o  p     q r   ss ";
+
+$a1 .= "ttt u u v v w w x x y y zz 333 4   55   6 777  88  9  ";
+$a2 .= " t  u u v v w w  x  y y  z  3  4 4 5   6    7  88 9 9 ";
+$a3 .= " t  u u v v www  x   y  z    3 444  5 6 6  7  88   9  ";
+$a4 .= " t  uuu  v  w w x x  y  zz 33    4 5   6   7  88  9   ";
+
+$a1 =~ tr/ /0/;
+$a2 =~ tr/ /0/;
+$a3 =~ tr/ /0/;
+$a4 =~ tr/ /0/;
+
+
+sub searchalpha
+{
+    $_ = $_[0];
+    tr/A-Z/a-z/;
+    tr/210/zio/;
+
+    $width = 1;
+    $aa1 = $aa2 = $aa3 = $aa4 = '0';
+    
+    $i = index $a4, $_; return if ($i < 0);
+    $m = index $a3, $_; $i = $m if ($i >= 0 && $m < $i);
+    $m = index $a2, $_; $i = $m if ($i >= 0 && $m < $i);
+    $m = index $a1, $_; $i = $m if ($i >= 0 && $m < $i);
+
+    $j = rindex $a4, $_;
+    $m = rindex $a3, $_; $j = $m if ($m > $j);
+    $m = rindex $a2, $_; $j = $m if ($m > $j);
+    $m = rindex $a1, $_; $j = $m if ($m > $j);
+    
+
+    $width = $j - $i + 2;
+    
+    $aa1 = substr $a1, $i, $width; $aa1 =~ tr/0/1/c;
+    $aa2 = substr $a2, $i, $width; $aa2 =~ tr/0/1/c;
+    $aa3 = substr $a3, $i, $width; $aa3 =~ tr/0/1/c;
+    $aa4 = substr $a4, $i, $width; $aa4 =~ tr/0/1/c;
+}
+
+@ilines = split /\s*-\s*/, "@ARGV";
+
+for ($i = 0; $i < 14; $i++)
+{
+    $line[$i] = "0" x 72;
+}
+
+$l = 0;
+foreach (@ilines)
+{
+    $p = 0;
+
+    @lc = split //, $_;
+
+    foreach (@lc)
+    {
+	searchalpha($_);
+	$l1 .= $aa1;
+	$l2 .= $aa2;
+	$l3 .= $aa3;
+	$l4 .= $aa4;
+    }
+
+    $line[$l++] = substr $l1 . "0" x 72, 0, 72;
+    $line[$l++] = substr $l2 . "0" x 72, 0, 72;
+    $line[$l++] = substr $l3 . "0" x 72, 0, 72;
+    $line[$l++] = substr $l4 . "0" x 72, 0, 72;
+    $line[$l++] = "0" x 72;
+
+    undef $l1;  undef $l2;  undef $l3;  undef $l4; 
+}
+
+# header is just copied from gnokii.nol.
+print "NOL\000\001\000\346\000\001\000\110\000\016\000\001\000\001\000\126\000";
+
+for ($i = 0; $i < 14; $i++)
+{
+    print "$line[$i]";
+}

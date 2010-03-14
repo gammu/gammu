@@ -1,0 +1,14 @@
+# Add these to magic file (located in /etc or /usr/share/misc)
+# to let the file command recognize NOL and NGG files
+#
+# Pawe³ Kot <pkot@linuxnews.pl>
+# Based on the gnokii (http://www.gnokii.org/) sources
+
+# GSM Operator Logos - NOL
+0       string  NOL     GSM Operator Logo, NOL format
+>10     byte    x       (size %d x
+>12     byte    x       %d)
+# GSM Caller Icons - NGG
+0	string	NGG	GSM Caller Icon, NGG format
+>6	byte	x	(size %d x
+>8	byte	x	%d)

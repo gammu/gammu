@@ -1,0 +1,60 @@
+
+ Common information:
+	
+	For more install/compilation information see the INSTALL file.
+	
+	(!) Makefiles support make install prefix=<your_directory> 
+	    for package building. You can use it example in for .spec:
+		
+		./configure --prefix=/usr
+		make install prefix=$RPM_BUILD_ROOT/usr
+
+	    (You not need create any dirs - all make make install.)
+
+	    For a installation procedure is used 'make install' or
+	    'make install prefix=', and all outputs from this routine must be 
+	    correct. Please, not make any correction in your package specific 
+	    build system (example use 'cp' in package routines - .spec - 
+	    it is job for Makefiles). Write more different routines for 
+	    instalation is good way to hell...
+	
+	 'make install' not install documentation, because for this use 
+	 any distribution itself routines. If you want install docs via
+	 Makefile you must type 'make install-docs'  
+
+ Debian:
+	
+	1/ Add new lines to Debian/changelog and set corect verion in this
+           file.
+
+	2/ Check files: rules, menu, docs
+
+	3/ Well, because gnokii's debian directory is in subdirectory 
+	   'packaging' and it is total non-standard for Debian package 
+	   building system, you must firstly type in top directory:
+
+	   # ln -s packaging/Debian debian	
+  
+	3/ In source type:
+
+	   # debian/rules binary
+	   # debian/rules clean
+
+	4/ Delete symlink
+
+           # rm debian
+
+ 
+
+ FreeBSD:
+
+ 
+
+ RedHat:
+
+
+
+
+
+ Win32:
+	

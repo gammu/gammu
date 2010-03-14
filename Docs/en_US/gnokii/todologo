@@ -1,0 +1,52 @@
+
+
+todologo.perl                  GNOKII Tools                  todologo.perl
+
+
+NAME
+	todologo.perl - Create operator logo that contains 3 lines of text
+
+SYNOPSIS
+	todologo.perl <text of line> - <text of line 2> - <text of line 3>
+
+DESCRIPTION
+	The `todologo.perl' program is used to create three lines of text 
+	that fits to the standard Nokia operator logo space (i.e. 72x14 
+	pixel space). This is achieved by using a proportional tiny font 
+	which most elements have size of 3x4 pixels (some are thinner). 
+
+	The name comes from an original intention that this program is
+	used to create todo entries to one's mobile phone screen so that
+	those are always visible and thus in user's memory. But the tool
+	can just be used to print arbitrary text to the space provided
+	by an operator logo.
+
+	The hand-crafted font currently supports the following characters:
+	abcdefghijklmnopqrstuvwxyz and 0123456789
+
+OUTPUT
+	The standard `.nol' formatted operator logo is printed to 
+	standard output. The header information of that output is taken 
+	from `gnokii.nol' that is distributed with Gnokii -- so you most
+	probably need to give your operator code when uploading it to your
+	mobile phone. Use `Gnokii' or `Xlogos' to do the uploading.
+
+EXAMPLES
+	First example writes some todo entries to todo.nol:
+
+	  todologo.perl pick up kids - call wife - order chinese >todo.nol
+
+	This last example writes some wisdom to the stdout:
+
+	  todologo.perl Never underestimate - the power of the dork - \
+			side of the force
+
+SEE ALSO
+	Gnokii, Xlogos
+
+COPYING
+	This program is distributed under the GNU Public License.
+
+
+
+Gnokii Tools			25oct2000

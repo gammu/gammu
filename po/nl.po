@@ -1,0 +1,2643 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gnokii\n"
+"POT-Creation-Date: 1999-03-13 18:25:30+0100\n"
+"PO-Revision-Date: 1999-03-13 18:25:30+0100\n"
+"Last-Translator: Pavel Janik ml. <Pavel.Janik@inet.cz>\n"
+"Language-Team: gnokii\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Xgettext-Options: -a -k_ -s -v -d gnokii\n"
+"Files: fbus-3810.h fbus-6110.h gsm-api.h gsm-common.h misc.h fbus-3810.c fbus-6110.c gnokii.c gsm-api.c\n"
+
+#: fbus-6110.c:2545
+msgid "   %d. SMS Center name is %s\n"
+msgstr "   %d. Naam SMS dienst is %s\n"
+
+#: fbus-6110.c:3490 gnokii.c:1510
+msgid "   Alarm date: %d-%02d-%02d\n"
+msgstr "   Alarm datum ingesteld op: %d-%02d-%02d\n"
+
+#: fbus-6110.c:3372
+msgid "   Alarm is %s\n"
+msgstr ""
+
+#: fbus-6110.c:3494 gnokii.c:1514
+msgid "   Alarm time: %02d:%02d:%02d\n"
+msgstr "   Alarm tijd ingesteld op: %02d:%02d:%02d\n"
+
+#: fbus-6110.c:3371
+msgid "   Alarm: %02d:%02d\n"
+msgstr ""
+
+#: fbus-6110.c:2993
+msgid "   Battery Level: %d\n"
+msgstr "   Batterij niveau: %d\n"
+
+#: gnokii.c:1585
+msgid "   Calendar note deleted.\n"
+msgstr ""
+
+#: fbus-6110.c:3217
+msgid "   CellID: %s\n"
+msgstr ""
+
+#: fbus-6110.c:3334
+msgid "   Date: %4d/%02d/%02d\n"
+msgstr "   Datum: %4d/%02d/%02d\n"
+
+#: fbus-6110.c:3479 gnokii.c:1501
+msgid "   Date: %d-%02d-%02d\n"
+msgstr "   Datum: %d-%02d-%02d\n"
+
+#: fbus-6110.c:2512
+msgid "   Date: %s\n"
+msgstr "   Datum: %s\n"
+
+#: fbus-6110.c:3714
+msgid "   Date: %s GMT"
+msgstr ""
+
+#: fbus-6110.c:4016
+msgid "   Empty SMS location.\n"
+msgstr "   Geen SMS bericht.\n"
+
+#: fbus-6110.c:2363 fbus-6110.c:2458
+msgid "   Exact meaning not known yet, sorry :-(\n"
+msgstr "   Betekenis onbekend, sorry :(\n"
+
+#: fbus-6110.c:4142
+msgid "   Firmware: %s\n"
+msgstr ""
+
+#: fbus-6110.c:2764
+msgid "   Free: %d\n"
+msgstr "   Beschikbaar: %d\n"
+
+#: fbus-6110.c:4140
+msgid "   HW: %s\n"
+msgstr ""
+
+#: fbus-3810.c:2274
+msgid "   IMEI:     %s\n"
+msgstr ""
+
+#: fbus-6110.c:4134
+msgid "   IMEI: %s\n"
+msgstr ""
+
+#: fbus-6110.c:4006
+msgid "   Invalid location!\n"
+msgstr ""
+
+#: fbus-6110.c:2701
+msgid "   Invalid memory type!\n"
+msgstr "   Geheugentype fout!\n"
+
+#: fbus-6110.c:3583
+msgid "   Item number: %d\n"
+msgstr ""
+
+#: fbus-6110.c:3218
+msgid "   LAC: %s\n"
+msgstr ""
+
+#: fbus-6110.c:2875
+msgid "   Location: %d\n"
+msgstr ""
+
+#: fbus-6110.c:4147
+msgid "   Magic bytes: %02x %02x %02x %02x\n"
+msgstr ""
+
+#: fbus-6110.c:2762
+msgid "   Memory Type: %s\n"
+msgstr "   Geheugentype: %s\n"
+
+#: fbus-6110.c:2876
+msgid "   MemoryType: %s\n"
+msgstr ""
+
+#: fbus-6110.c:2934
+msgid "   Mode: "
+msgstr ""
+
+#: fbus-3810.c:2276
+msgid "   Model:    %s\n"
+msgstr ""
+
+#: fbus-6110.c:4136
+msgid "   Model: %s\n"
+msgstr ""
+
+#: fbus-3810.c:2180
+msgid "   Msg Length %d, Msg number %d,  Unknown bytes: %02x %02x %02x %02x %02x %02x\n"
+msgstr "   Lengte bericht %d, Nummer bericht %d,  Onbekende Bytes: %02x %02x %02x %02x %02x %02x\n"
+
+#: fbus-6110.c:2401 fbus-6110.c:2656
+msgid "   Name: "
+msgstr "   Naam: "
+
+#: fbus-6110.c:3219
+msgid "   Network code: %s\n"
+msgstr "   Netwerk Code: %s\n"
+
+#: fbus-6110.c:3220
+msgid "   Network name: %s (%s)\n"
+msgstr ""
+
+#: fbus-6110.c:3235
+msgid "   Network selection: %s\n"
+msgstr ""
+
+#: fbus-6110.c:2393 fbus-6110.c:2672
+msgid "   Number: "
+msgstr "   Nummer: "
+
+#: fbus-6110.c:2877
+msgid "   Number: %d\n"
+msgstr "   Nummer: %d\n"
+
+#: fbus-6110.c:3503 gnokii.c:1522
+msgid "   Phone: %s\n"
+msgstr ""
+
+#: fbus-6110.c:2971
+msgid "   Power source: "
+msgstr "   Voeding type: "
+
+#: fbus-6110.c:4138
+msgid "   Production Code: %s\n"
+msgstr "   Productie Code: %s\n"
+
+#: fbus-6110.c:2511 fbus-6110.c:3746
+msgid "   Remote number: %s\n"
+msgstr "   Nummer inkomend gesprek: %s\n"
+
+#: fbus-3810.c:2278
+msgid "   Revision: %s\n"
+msgstr ""
+
+#: fbus-6110.c:2548
+msgid "   SMS Center message format is "
+msgstr ""
+
+#: fbus-6110.c:2574
+msgid "   SMS Center message validity is "
+msgstr ""
+
+#: fbus-6110.c:2546
+msgid "   SMS Center number is %s\n"
+msgstr ""
+
+#: fbus-6110.c:2507 fbus-6110.c:3745
+msgid "   SMS center number: %s\n"
+msgstr "   Nummer SMS dienst: %s\n"
+
+#: fbus-6110.c:2513
+msgid "   SMS: "
+msgstr ""
+
+#: fbus-6110.c:3729
+msgid "   SMSC response date: %s GMT"
+msgstr ""
+
+#: fbus-6110.c:2362 fbus-6110.c:2375 fbus-6110.c:2392 fbus-6110.c:2422 fbus-6110.c:2433 fbus-6110.c:2457
+msgid "   Sequence nr. of the call: %d\n"
+msgstr "   Rijnummmer van oproep: %d\n"
+
+#: fbus-6110.c:2994
+msgid "   Signal strength: %d\n"
+msgstr "   Signaal sterkte: %d\n"
+
+#: fbus-6110.c:3223
+msgid "   Status: "
+msgstr ""
+
+#: fbus-6110.c:3500 gnokii.c:1519
+msgid "   Text: %s\n"
+msgstr ""
+
+#: fbus-6110.c:4040
+msgid "   The number of messages: %d\n"
+msgstr "   Aantal berichten: %d\n"
+
+#: fbus-6110.c:2622
+msgid "   The request for SMS Center failed.\n"
+msgstr "   Oproep naar SMS dienst mislukt.\n"
+
+#: fbus-6110.c:3333 fbus-6110.c:3483 gnokii.c:1505
+msgid "   Time: %02d:%02d:%02d\n"
+msgstr "   Tijd: %02d:%02d:%02d\n"
+
+#: gnokii.c:1476
+msgid "   Type of the note: "
+msgstr ""
+
+#: fbus-6110.c:3499
+msgid "   Type: %d\n"
+msgstr ""
+
+#: fbus-6110.c:2711 fbus-6110.c:2749
+msgid "   Unknown error!\n"
+msgstr "   Onbekende fout!\n"
+
+#: fbus-6110.c:4041
+msgid "   Unread messages: %d\n"
+msgstr "   Ongelezen berichten: %d\n"
+
+#: fbus-6110.c:2763
+msgid "   Used: %d\n"
+msgstr "   Gebruikt: %d\n"
+
+#: gnokii.c:86
+msgid ""
+"   usage: gnokii [--help|--monitor|--version]\n"
+"          gnokii --getmemory memory_type start end\n"
+"          gnokii --writephonebook\n"
+"          gnokii --getspeeddial number\n"
+"          gnokii --setspeeddial number memory_type location\n"
+"          gnokii --getsms memory_type start end\n"
+"          gnokii --deletesms memory_type start end\n"
+"          gnokii --sendsms destination [--smsc message_center_number |\n"
+"                 --smscno message_center_index] [-r] [-C n] [-v n]\n"
+"          gnokii --getsmsc message_center_number\n"
+"          gnokii --sendoplogoviasms destionation logofile [network code]\n"
+"          gnokii --setdatetime [YYYY MM DD HH MM]\n"
+"          gnokii --getdatetime\n"
+"          gnokii --setalarm HH MM\n"
+"          gnokii --getalarm\n"
+"          gnokii --dialvoice number\n"
+"          gnokii --getcalendarnote index\n"
+"          gnokii --writecalendarnote\n"
+"          gnokii --deletecalendarnote index\n"
+"          gnokii --getdisplaystatus\n"
+"          gnokii --netmonitor {reset|off|field|devel|next|nr}\n"
+"          gnokii --identify\n"
+"          gnokii --senddtmf string\n"
+"          gnokii --setlogo logofile [network code]\n"
+"          gnokii --setlogo logofile [caller group number] [group name]\n"
+"          gnokii --setlogo text [startup text]\n"
+"          gnokii --getlogo logofile {caller|op|startup} [caller group number]\n"
+"          gnokii --reset [soft|hard]\n"
+"\n"
+"          --help            display usage information.\n"
+"\n"
+"          --monitor         continually updates phone status to stderr.\n"
+"\n"
+"          --version         displays version and copyright information.\n"
+"\n"
+"          --getmemory       reads specificed memory location from phone.\n"
+"                            Valid memory types are:\n"
+"                            ME, SM, FD, ON, EN, DC, RC, MC, LD\n"
+"\n"
+"          --writephonebook  reads data from stdin and writes to phonebook.\n"
+"                            Uses the same format as provided by the output of\n"
+"                            the getphonebook command.\n"
+"\n"
+"          --getspeeddial    reads speed dial from the specified location.\n"
+"\n"
+"          --setspeeddial    specify speed dial.\n"
+"\n"
+"          --getsms          gets SMS messages from specified memory type\n"
+"                            starting at entry [start] and ending at [end].\n"
+"                            Entries are dumped to stdout.\n"
+"\n"
+"          --deletesms       deletes SMS messages from specified memory type\n"
+"                            starting at entry [start] and ending at [end].\n"
+"\n"
+"          --sendsms         sends an SMS message to [destination] via\n"
+"                            [message_center_number] or SMSC number taken from\n"
+"                            phone memory from address [message_center_index].\n"
+"                            If this argument is ommited SMSC number is taken\n"
+"                            from phone memory from location 1. Message text\n"
+"                            is taken from stdin.  This function has had\n"
+"                            limited testing and may not work at all on your\n"
+"                            network. Meaning of other optional parameters:\n"
+"                             [-r] - request for delivery report\n"
+"                             [-C n] - Class Message n, where n can be 0..3\n"
+"                             [-v n] - validity in minutes\n"
+"\n"
+"          --getsmsc         show the SMSC number from location\n"
+"                            [message_center_number].\n"
+"\n"
+"          --sendoplogoviasms send the logofile to destination as operator\n"
+"                             logo\n"
+"\n"
+"          --setdatetime     set the date and the time of the phone.\n"
+"\n"
+"          --getdatetime     shows current date and time in the phone.\n"
+"\n"
+"          --setalarm        set the alarm of the phone.\n"
+"\n"
+"          --getalarm        shows current alarm.\n"
+"\n"
+"          --dialvoice       initiate voice call.\n"
+"\n"
+"          --getcalendarnote get the note with number [index] from calendar.\n"
+"\n"
+"          --writecalendarnote write the note to calendar.\n"
+"\n"
+"          --deletecalendarnote  delete the note with number [index]\n"
+"                                from calendar.\n"
+"\n"
+"          --getdisplaystatus shows what icons are displayed.\n"
+"\n"
+"          --netmonitor      setting/querying netmonitor mode.\n"
+"\n"
+"          --identify        get IMEI, model and revision\n"
+"\n"
+"          --senddtmf        send DTMF sequence\n"
+"\n"
+"          --setlogo         set caller, startup or operator logo\n"
+"\n"
+"          --getlogo         get caller, startup or operator logo\n"
+"\n"
+"          --reset [soft|hard] resets the phone.\n"
+"\n"
+msgstr ""
+
+#: gnokiid.c:63
+msgid "   usage: gnokiid {--help|--version}"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:81
+msgid "%02d/%02d/%02d %02d:%02d:%02d GMT"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:76
+msgid "%02d/%02d/%02d %02d:%02d:%02d GMT%+dh"
+msgstr ""
+
+#: gnokii.c:992 gnokii.c:1005 gnokii.c:1032
+msgid "%d"
+msgstr ""
+
+#: gnokii.c:978
+msgid "%d. Delivery Report "
+msgstr ""
+
+#: gnokii.c:1017
+msgid "%d. Inbox Message "
+msgstr ""
+
+#: gnokii.c:965
+msgid "%d. Outbox Message "
+msgstr ""
+
+#: gnokii.c:802
+msgid "%d. SMS center (%s) number is %s\n"
+msgstr ""
+
+#: fbus-6110.c:3722 fbus-6110.c:3738
+msgid "%dh"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1536 xgnokii/xgnokii_contacts.c:1581 xgnokii/xgnokii_contacts.c:2012 xgnokii/xgnokii_contacts.c:2035
+msgid "%s: line %d: Can't allocate memory!\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1548 xgnokii/xgnokii_contacts.c:1553
+msgid "%s: line %d: Can't get ME memory entry number %d! %d\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1593 xgnokii/xgnokii_contacts.c:1598
+msgid "%s: line %d: Can't get SM memory entry number %d! %d\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1343
+msgid "%s: line %d:Can't write SM memory entry number %d! Error: %d\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1310
+msgid "%s: line: %d:Can't write ME memory entry number %d! Error: %d\n"
+msgstr ""
+
+#: gnokii.c:1893
+msgid "%s|%d|Bad location or other error!(%d)\n"
+msgstr "%s|%d|Foute locatie of andere fout!(%d)\n"
+
+#: gnokii.c:982 gnokii.c:1022
+msgid "(not read)\n"
+msgstr ""
+
+#: gnokii.c:970
+msgid "(not sent)\n"
+msgstr ""
+
+#: gnokii.c:980 gnokii.c:1020
+msgid "(read)\n"
+msgstr ""
+
+#: gnokii.c:968
+msgid "(sent)\n"
+msgstr ""
+
+#: gnokii.c:990 gnokii.c:1003 gnokii.c:1030
+msgid "+%dh"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:78
+msgid "/help/contacts.html"
+msgstr ""
+
+#: xgnokii/xgnokii_dtmf.c:35
+msgid "/help/dtmf.html"
+msgstr ""
+
+#: xgnokii/xgnokii.c:153
+msgid "/help/index.html"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:38
+msgid "/help/netmon.html"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:38
+msgid "/help/sms.html"
+msgstr ""
+
+#: fbus-3810.c:1946
+msgid "0x10 Write failed!"
+msgstr "0x10 Opslaan mislukt!"
+
+#: fbus-3810.c:1222
+msgid "0x15 Registration Response 0x%02x\n"
+msgstr "0x15 Registratie Respons 0x%02x\n"
+
+#: fbus-3810.c:1783
+msgid "0x15 Write failed!"
+msgstr "0x15 Opslaan mislukt!"
+
+#: fbus-3810.c:1236
+msgid "0x16 Registration Response 0x%02x 0x%02x\n"
+msgstr "0x16 Registratie Response 0x%02x 0x%02x\n"
+
+#: fbus-3810.c:1879
+msgid "0x27 Write failed!"
+msgstr "0x27 Opslaan mislukt!"
+
+#: fbus-3810.c:2022
+msgid "0x2c Write failed!"
+msgstr "0x2c Opslaan mislukt!"
+
+#: fbus-3810.c:1574
+msgid "0x3f Write failed!"
+msgstr "0x3f Opslaan mislukt!"
+
+#: fbus-3810.c:1549
+msgid "0x4a Write failed!"
+msgstr "0x4a Opslaan mislukt!"
+
+#: fbus-3810.c:1917
+msgid "0x4b Write failed!"
+msgstr "0x4b Opslaan mislukt!"
+
+#: xgnokii/xgnokii.c:432 xgnokii/xgnokii.c:1090
+msgid "1 h"
+msgstr ""
+
+#: fbus-6110.c:2579 gnokii.c:835
+msgid "1 hour"
+msgstr ""
+
+#: fbus-6110.c:2595 gnokii.c:851 xgnokii/xgnokii.c:448 xgnokii/xgnokii.c:1118
+msgid "1 week"
+msgstr ""
+
+#: xgnokii/xgnokii.c:440 xgnokii/xgnokii.c:456 xgnokii/xgnokii.c:1104
+msgid "24 h"
+msgstr ""
+
+#: fbus-6110.c:2587 gnokii.c:843
+msgid "24 hours"
+msgstr ""
+
+#: xgnokii/xgnokii.c:436 xgnokii/xgnokii.c:1097
+msgid "6 h"
+msgstr ""
+
+#: fbus-6110.c:2583 gnokii.c:839
+msgid "6 hours"
+msgstr ""
+
+#: xgnokii/xgnokii.c:444 xgnokii/xgnokii.c:1111
+msgid "72 h"
+msgstr ""
+
+#: fbus-6110.c:2591 gnokii.c:847
+msgid "72 hours"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:387
+msgid "?Battery full detection"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:424
+msgid "?Block display 1"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:384
+msgid "?Constant voltage charging display"
+msgstr ""
+
+#: gnokii.c:1747
+msgid "AC/DC"
+msgstr "Lader"
+
+#: fbus-6110.c:2977
+msgid "AC/DC\n"
+msgstr "Lader\n"
+
+#: xgnokii/xgnokii_netmon.c:496
+msgid "ACT"
+msgstr ""
+
+#: xgnokii/xgnokii.c:791 xgnokii/xgnokii.c:807
+msgid "About"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:390
+msgid "Accumulator"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:381
+msgid "Accumulator, Charge status"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:335 xgnokii/xgnokii_netmon.c:338
+msgid "Active cell"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1725
+msgid "Address:"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1344 xgnokii/xgnokii.c:1351
+msgid "Alarm"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1337
+msgid "Alarm setting"
+msgstr ""
+
+#: gnokii.c:1687
+msgid "Alarm: %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1227
+msgid "Apply"
+msgstr ""
+
+#: rlp-common.c:509
+msgid "BAD"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:375
+msgid "BTS TEST"
+msgstr ""
+
+#: fbus-6110.c:4341
+msgid "Bad checksum!\n"
+msgstr ""
+
+#: gnokii.c:1744
+msgid "Battery: %d\n"
+msgstr "Batterij: %d\n"
+
+#: xgnokii/xgnokii.c:1309
+msgid "Bindir:"
+msgstr ""
+
+#: gnokii.c:1493
+msgid "Birthday\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1812
+msgid "Busines Cards"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1552
+msgid "Business Card"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:494
+msgid "C1"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:495
+msgid "C2"
+msgstr ""
+
+#: fbus-6110.c:2136
+msgid "CAR is %s.\n"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:378
+msgid "CELL BARR-Flag"
+msgstr ""
+
+#: fbus-3810.c:1115
+msgid "CS Fail %02x != %02x"
+msgstr "Cs-Fout %02x != %02x"
+
+#: fbus-6110.c:2137
+msgid "CTS is %s.\n"
+msgstr ""
+
+#: gnokii.c:1485
+msgid "Call\n"
+msgstr ""
+
+#: gnokii.c:2096
+msgid "Call in progress: %s\n"
+msgstr ""
+
+#: fbus-6110.c:2818
+msgid "Caller group name: %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:752
+msgid "Caller group:"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:449
+msgid "Calls"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:188 xgnokii/xgnokii_contacts.c:221 xgnokii/xgnokii_contacts.c:382 xgnokii/xgnokii_contacts.c:407 xgnokii/xgnokii_contacts.c:540 xgnokii/xgnokii_contacts.c:562
+msgid "Can't change memory type!"
+msgstr ""
+
+#: xgnokii/xgnokii_common.c:182
+msgid "Can't exec %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:958 xgnokii/xgnokii_contacts.c:968 xgnokii/xgnokii_contacts.c:993
+msgid "Can't find free memory."
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:652
+msgid "Can't find pattern!"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1988
+msgid ""
+"Can't get SM memory status!\n"
+"\n"
+"Setting max SIM entries set to 100!\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1503
+msgid ""
+"Can't get SM memory status!\n"
+"\n"
+"Setting max SIM entries to 100!\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1951 xgnokii/xgnokii_dtmf.c:74
+msgid "Can't open file %s for reading!"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1701 xgnokii/xgnokii_dtmf.c:110
+msgid "Can't open file %s for writing!"
+msgstr ""
+
+#: xgnokii/xgnokii.c:992 xgnokii/xgnokii_common.c:51 xgnokii/xgnokii_common.c:105 xgnokii/xgnokii_contacts.c:695 xgnokii/xgnokii_contacts.c:856 xgnokii/xgnokii_contacts.c:1050 xgnokii/xgnokii_contacts.c:1095 xgnokii/xgnokii_contacts.c:1387 xgnokii/xgnokii_contacts.c:2303
+msgid "Cancel"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:399
+msgid "Cause codes for last connection abortion"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:359
+msgid "Cells info"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1219
+msgid "Center number"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1018
+msgid "Center:"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:492
+msgid "Chan"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1034
+msgid "Changing memory type"
+msgstr ""
+
+#: fbus-3810.c:1446
+msgid ""
+"Checksum: %02x \n"
+"   "
+msgstr ""
+"Prüfsumme: %02x \n"
+"   "
+
+#: xgnokii/xgnokii.c:1243
+msgid "Close"
+msgstr ""
+
+#: gnokii.c:1221
+msgid "Code ok.\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:2007
+msgid "Colleagues"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1627
+msgid "Company:"
+msgstr ""
+
+#: fbus-6110.c:3840 fbus-6110.c:3933
+msgid "Congestion"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1265
+msgid "Connection"
+msgstr ""
+
+#: fbus-6110.c:3884
+msgid "Connection rejected by SME"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1321
+msgid "Connection:"
+msgstr ""
+
+#: xgnokii/xgnokii.c:740 xgnokii/xgnokii_contacts.c:2437
+msgid "Contacts"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1041
+msgid "Continue"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:455
+msgid "Control of task information displays"
+msgstr ""
+
+#: fbus-3810.c:977
+msgid "Couldn't open FB38 device: "
+msgstr "Openen FB38-Device mislukt: "
+
+#: fbus-6110.c:2206
+msgid "Couldn't open FB61 device: "
+msgstr "Openen FB61-Device mislukt: "
+
+#: fbus-6110.c:658
+msgid "Couldn't open FB61 infrared device: "
+msgstr ""
+
+#: virtmodem.c:179
+msgid "Couldn't open pty!\n"
+msgstr ""
+
+#: gnokii.c:679
+msgid "Couldn't read from stdin!\n"
+msgstr "Lezen van stdin mislukt!\n"
+
+#: xgnokii/xgnokii_netmon.c:436
+msgid "Counter for PLMN Search and Cell reselection (Singleband)"
+msgstr ""
+
+#: gnokii.c:1756
+msgid "DC: Used %d, Free %d\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:765
+msgid "DTMF"
+msgstr ""
+
+#: fbus-6110.c:2134
+msgid "DTR is %s.\n"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:362
+msgid "DTX, Cipher, Hopping"
+msgstr ""
+
+#: gnokii.c:2101
+msgid "Data call active: %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:254
+msgid "Date"
+msgstr ""
+
+#: gnokii.c:1024
+msgid "Date/time: %d/%d/%d %d:%02d:%02d GMT"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:206
+msgid "Date: "
+msgstr ""
+
+#: gnokii.c:1650
+msgid "Date: %4d/%02d/%02d\n"
+msgstr "Datum: %4d/%02d/%02d\n"
+
+#: fbus-3810.c:1764
+msgid "Delete SMS Mem Loc write failed!"
+msgstr "Verwijderen SMS van geheugenlocatie mislukt!"
+
+#: xgnokii/xgnokii_contacts.c:842
+msgid "Delete entries"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:2502
+msgid "Delete entry"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:303
+msgid "Delete message"
+msgstr ""
+
+#: gnokii.c:1162
+msgid ""
+"DeleteSMS %s %d failed!(%d)\n"
+"\n"
+msgstr "Verwijderen SMS %s %d mislukt!(%d)\n\n"
+
+#: gnokii.c:1155
+msgid "Deleted SMS %s %d\n"
+msgstr "SMS %s %d verwijderd.\n"
+
+#: fbus-6110.c:3809
+msgid "Delivered"
+msgstr ""
+
+#: fbus-6110.c:3705
+msgid "Delivery Report\n"
+msgstr ""
+
+#: xgnokii/xgnokii_dtmf.c:207
+msgid "Dial Tone"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:2509
+msgid "Dial voice"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:873
+msgid "Do you want delete selected entries?"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1380
+msgid "Don't save"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:910 xgnokii/xgnokii_contacts.c:2494
+msgid "Duplicate entry"
+msgstr ""
+
+#: xgnokii/xgnokii.c:421 xgnokii/xgnokii.c:1060
+msgid "E-Mail"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1700
+msgid "E-Mail:"
+msgstr ""
+
+#: gnokii.c:1759
+msgid "EN: Used %d, Free %d\n"
+msgstr ""
+
+#: xgnokii/xgnokii_cfg.c:158 xgnokii/xgnokii_cfg.c:176
+msgid "ERROR: Can't allocate memory for config writing!\n"
+msgstr ""
+
+#: xgnokii/xgnokii_cfg.c:152
+msgid "ERROR: Can't find HOME enviroment variable!\n"
+msgstr ""
+
+#: xgnokii/xgnokii_cfg.c:164
+msgid "ERROR: Can't open file %s for writing!\n"
+msgstr ""
+
+#: xgnokii/xgnokii_cfg.c:182
+msgid "ERROR: Can't write file config file!\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1411
+msgid "Edit"
+msgstr ""
+
+#: xgnokii/xgnokii.c:978
+msgid "Edit SMS Setting"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:813 xgnokii/xgnokii_contacts.c:2498
+msgid "Edit entry"
+msgstr ""
+
+#: fbus-6110.c:2565 gnokii.c:821
+msgid "Email"
+msgstr ""
+
+#: gnokii.c:1213
+msgid "Enter your code: "
+msgstr ""
+
+#: gnokii.c:1729
+msgid "Entering monitor mode...\n"
+msgstr "Monitor modus wordt gestart...\n"
+
+#: xgnokii/xgnokii_common.c:45
+msgid "Error"
+msgstr ""
+
+#: fbus-6110.c:3860 fbus-6110.c:3953
+msgid "Error in SME"
+msgstr ""
+
+#: xgnokii/xgnokii.c:722
+msgid "Error saving SMS centers!"
+msgstr ""
+
+#: xgnokii/xgnokii.c:728
+msgid "Error writing configuration file!"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:2327 xgnokii/xgnokii_contacts.c:2538
+msgid "Error: %s: line %d: Can't allocate memory!\n"
+msgstr ""
+
+#: gnokii.c:1219
+msgid "Error: invalid code\n"
+msgstr ""
+
+#: fbus-3810.c:1564
+msgid "Explore Write failed!"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1791
+msgid "Export"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:2483
+msgid "Export to file"
+msgstr ""
+
+#: gnokii.c:1762
+msgid "FD: Used %d, Free %d\n"
+msgstr ""
+
+#: fbus-6110.c:3828
+msgid "Failed"
+msgstr ""
+
+#: xgnokii/xgnokii.c:2004
+msgid "Familly"
+msgstr ""
+
+#: fbus-6110.c:2561 gnokii.c:817 xgnokii/xgnokii.c:417 xgnokii/xgnokii.c:1046
+msgid "Fax"
+msgstr ""
+
+#: gnokii.c:2100
+msgid "Fax call active: %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1676
+msgid "Fax:"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1773 xgnokii/xgnokii_dtmf.c:143
+msgid ""
+"File %s already exist.\n"
+"Overwrite?"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1080 xgnokii/xgnokii_contacts.c:1086
+msgid "Find"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1219
+msgid "Format"
+msgstr ""
+
+#: gnokii.c:1960
+msgid "Format problem on line %d [%s]\n"
+msgstr "Opmaakprobleem op regel %d [%s]\n"
+
+#: xgnokii/xgnokii_sms.c:292
+msgid "Forward Message"
+msgstr ""
+
+#: rlp-common.c:621
+msgid "Frame FCS is bad. Ignoring...\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:2006
+msgid "Friends"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:198
+msgid "From: "
+msgstr ""
+
+#: gnokii.c:1047 gnokii.c:1158 gnokii.c:1883
+msgid "Function not implemented in %s model!\n"
+msgstr "Funktie is (nog) niet beschikbaar op model %s!\n"
+
+#: gnokii.c:72
+msgid ""
+"GNOKII Version %s\n"
+"Copyright (C) Hugh Blemings <hugh@linuxcare.com>, 1999, 2000\n"
+"Copyright (C) Pavel Jan\355k ml. <Pavel.Janik@linux.cz>, 1999, 2000\n"
+"Built %s %s for %s on %s \n"
+msgstr ""
+
+#: gnokii.c:210 gnokii.c:2244 virtmodem.c:243 xgnokii/xgnokii.c:176 xkeyb.c:181 xlogos.c:130
+msgid "GSM/FBUS init failed! (Unknown model ?). Quitting.\n"
+msgstr "GSM/FBUS int mislukt! (Model niet ondersteund?). Stop.\n"
+
+#: gnokii.c:1065
+msgid ""
+"GetSMS %s %d failed!(%d)\n"
+"\n"
+msgstr "GetSMS %s %d mislukt!(%d)\n"
+
+#: gnokii.c:1403
+msgid "Getting Logo.\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1527
+msgid "Getting entries"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:2433
+msgid "Group"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1766
+msgid "Group %d:"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1757
+msgid "Groups"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1750
+msgid "Groups names"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:412
+msgid "Handover Counter"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:415
+msgid "Handover Counter (Dual)"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:473
+msgid "Hardware version"
+msgstr ""
+
+#: xgnokii/xgnokii.c:785 xgnokii/xgnokii.c:1786
+msgid "Help"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1779
+msgid "Help viewer"
+msgstr ""
+
+#: gnokii.c:221 virtmodem.c:255 xkeyb.c:192 xlogos.c:141
+msgid "Hmmm... GSM_LinkOK never went true. Quitting. \n"
+msgstr "Hmmm... GSM Link niet geinitialiseerd. Stop. \n"
+
+#: gnokii.c:2150
+msgid "IMEI:     %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1061
+msgid ""
+"If you change from phone memory to SIM memory\n"
+"some entries may be truncated."
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:2099
+msgid "Import"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:2479
+msgid "Import from file"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:337
+msgid "Inbox"
+msgstr ""
+
+#: fbus-3810.c:2178
+msgid "Incoming SMS %d/%d/%d %d:%02d:%02d Sender: %s Msg Center: %s\n"
+msgstr "Inkomend SMS-bericht %d/%d/%d %d:%02d:%02d Afzender: %s SMS-Dienst: %s\n"
+
+#: fbus-3810.c:1853
+msgid "Incoming call - status %02x %02x %02x, Number %s.\n"
+msgstr ""
+
+#: fbus-3810.c:1992
+msgid "Incoming call answered.\n"
+msgstr "Inkomende oproep beantwoord.\n"
+
+#: fbus-3810.c:1964
+msgid "Incoming call terminated.\n"
+msgstr "Inkomende oproep beeindigd.\n"
+
+#: gnokii.c:1780
+msgid "Incoming call: %s\n"
+msgstr "Inkomende oproep: %s\n"
+
+#: fbus-6110.c:3880
+msgid "Incompatibile destination"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:467
+msgid "Information of OS_SYSTEM_STACK"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:458
+msgid "Information of task numbers 0-7"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:464
+msgid "Information of task numbers 16-23"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:461
+msgid "Information of task numbers 8-15"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:470
+msgid "Information of the current MCU and DSP software versions"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1297
+msgid "Init length:"
+msgstr ""
+
+#: gnokii.c:1730
+msgid "Initialising GSM interface...\n"
+msgstr "Bezig met initialiseren GSM interface...\n"
+
+#: fbus-6110.c:4281
+msgid "Interrupted MultiFrame-Message - Ingnoring it !!!\n"
+msgstr ""
+
+#: gnokii.c:1053
+msgid "Invalid location: %s %d\n"
+msgstr ""
+
+#: gnokii.c:2102
+msgid "Keyboard lock: %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:418
+msgid "L2-Timeouts"
+msgstr ""
+
+#: gnokii.c:1765
+msgid "LD: Used %d, Free %d\n"
+msgstr ""
+
+#: gnokii.c:1788
+msgid "Leaving monitor mode...\n"
+msgstr "Monitor modus wordt beeindigd...\n"
+
+#: xgnokii/xgnokii_dtmf.c:91
+msgid "Load"
+msgstr ""
+
+#: gnokii.c:1448
+msgid "Logo file error.\n"
+msgstr ""
+
+#: gnokii.c:1768
+msgid "MC: Used %d, Free %d\n"
+msgstr ""
+
+#: fbus-3810.c:1108
+msgid "MT Fail %02x"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1083
+msgid "Max. Time"
+msgstr ""
+
+#: xgnokii/xgnokii.c:452
+msgid "Max. time"
+msgstr ""
+
+#: fbus-6110.c:2599 gnokii.c:855
+msgid "Maximum time"
+msgstr ""
+
+#: gnokii.c:1489
+msgid "Meeting\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:2433
+msgid "Memory"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:430
+msgid "Memory status before reset"
+msgstr ""
+
+#: gnokii.c:1888
+msgid "Memory type %s not supported!\n"
+msgstr "Geheugentype %s wordt niet ondersteund!\n"
+
+#: xgnokii/xgnokii_contacts.c:733
+msgid "Memory:"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:254
+msgid "Message"
+msgstr ""
+
+#: gnokii.c:830
+msgid "Message validity is "
+msgstr ""
+
+#: fbus-6110.c:3370
+msgid "Message: Alarm\n"
+msgstr "Bericht: Alarm\n"
+
+#: fbus-6110.c:3348
+msgid "Message: Alarm set correctly\n"
+msgstr "Bericht: Alarm correct ingesteld\n"
+
+#: fbus-6110.c:3582
+msgid "Message: Calendar Alarm active\n"
+msgstr ""
+
+#: fbus-6110.c:3556
+msgid "Message: Calendar note can't be deleted\n"
+msgstr ""
+
+#: fbus-6110.c:3545
+msgid "Message: Calendar note deleted\n"
+msgstr ""
+
+#: fbus-6110.c:3566
+msgid "Message: Calendar note deleting error\n"
+msgstr ""
+
+#: fbus-6110.c:3523
+msgid "Message: Calendar note error\n"
+msgstr ""
+
+#: fbus-6110.c:3513
+msgid "Message: Calendar note not available\n"
+msgstr ""
+
+#: fbus-6110.c:3477
+msgid "Message: Calendar note received.\n"
+msgstr "Bericht: Kalender niet ontvangen.\n"
+
+#: fbus-6110.c:3421 fbus-6110.c:3431
+msgid "Message: Calendar note write failed!\n"
+msgstr ""
+
+#: fbus-6110.c:3411
+msgid "Message: Calendar note write succesfull!\n"
+msgstr ""
+
+#: fbus-6110.c:2421
+msgid "Message: Call answered.\n"
+msgstr "Bericht: Oproep beantwoord.\n"
+
+#: fbus-6110.c:2432
+msgid "Message: Call ended by your phone.\n"
+msgstr "Bericht: Oproep verbroken door toestel.\n"
+
+#: fbus-6110.c:2361
+msgid "Message: Call message, type 0x03:"
+msgstr ""
+
+#: fbus-6110.c:2456
+msgid "Message: Call message, type 0x0a:"
+msgstr ""
+
+#: fbus-6110.c:2837
+msgid "Message: Caller group data received but not requested!\n"
+msgstr ""
+
+#: fbus-6110.c:2855
+msgid "Message: Caller group data set correctly.\n"
+msgstr ""
+
+#: fbus-6110.c:2817
+msgid "Message: Caller group logo etc.\n"
+msgstr ""
+
+#: fbus-6110.c:3332
+msgid "Message: Date and time\n"
+msgstr "Bericht: Datum en tijd\n"
+
+#: fbus-6110.c:3302
+msgid "Message: Date and time set correctly\n"
+msgstr "Bericht: Datum en tijd correct ingesteld\n"
+
+#: fbus-6110.c:3312 fbus-6110.c:3358
+msgid "Message: Date and time set error\n"
+msgstr ""
+
+#: fbus-6110.c:2847
+msgid "Message: Error attempting to get caller group data.\n"
+msgstr ""
+
+#: fbus-6110.c:2863
+msgid "Message: Error attempting to set caller group data\n"
+msgstr ""
+
+#: fbus-6110.c:3113
+msgid "Message: Error getting operator logo!\n"
+msgstr ""
+
+#: fbus-6110.c:3078
+msgid "Message: Error setting operator logo!\n"
+msgstr ""
+
+#: fbus-6110.c:2387
+msgid "Message: Incoming call alert:\n"
+msgstr "Bericht: Inkomende oproep:\n"
+
+#: fbus-6110.c:2786
+msgid "Message: Memory status error, memory type not supported by phone model.\n"
+msgstr ""
+
+#: fbus-6110.c:2779
+msgid "Message: Memory status error, phone is probably powered off.\n"
+msgstr ""
+
+#: fbus-6110.c:2793
+msgid "Message: Memory status error, waiting for security code.\n"
+msgstr ""
+
+#: fbus-6110.c:2760
+msgid "Message: Memory status received:\n"
+msgstr "Bericht: Geheugenstatus ontvangen:\n"
+
+#: fbus-6110.c:4133
+msgid "Message: Mobile phone identification received:\n"
+msgstr ""
+
+#: fbus-6110.c:4084
+msgid "Message: Netmonitor correctly set.\n"
+msgstr ""
+
+#: fbus-6110.c:4094
+msgid "Message: Netmonitor menu %d received:\n"
+msgstr ""
+
+#: fbus-6110.c:3215
+msgid "Message: Network informations:\n"
+msgstr ""
+
+#: fbus-6110.c:3088
+msgid "Message: Operator Logo received.\n"
+msgstr ""
+
+#: fbus-6110.c:3069
+msgid "Message: Operator logo correctly set.\n"
+msgstr ""
+
+#: fbus-6110.c:3104
+msgid "Message: Operator logo received but not requested!\n"
+msgstr ""
+
+#: fbus-6110.c:3693
+msgid "Message: Outbox message (mobile originated)\n"
+msgstr ""
+
+#: fbus-6110.c:2933
+msgid "Message: Phone status received:\n"
+msgstr ""
+
+#: fbus-6110.c:2655
+msgid "Message: Phonebook entry received:\n"
+msgstr ""
+
+#: fbus-6110.c:2739
+msgid "Message: Phonebook not written - name is too long.\n"
+msgstr ""
+
+#: fbus-6110.c:2693
+msgid "Message: Phonebook read entry error received:\n"
+msgstr ""
+
+#: fbus-6110.c:2722
+msgid "Message: Phonebook written correctly.\n"
+msgstr ""
+
+#: fbus-6110.c:3702
+msgid "Message: Received SMS (mobile terminated)\n"
+msgstr ""
+
+#: fbus-6110.c:2374
+msgid "Message: Remote end hang up.\n"
+msgstr ""
+
+#: fbus-6110.c:2528
+msgid "Message: SMS Center correctly set.\n"
+msgstr ""
+
+#: fbus-6110.c:2621
+msgid "Message: SMS Center error received:\n"
+msgstr ""
+
+#: fbus-6110.c:2544
+msgid "Message: SMS Center received:\n"
+msgstr ""
+
+#: fbus-6110.c:2506
+msgid "Message: SMS Message Received\n"
+msgstr ""
+
+#: fbus-6110.c:2486
+msgid "Message: SMS Message correctly sent.\n"
+msgstr ""
+
+#: fbus-6110.c:4039
+msgid "Message: SMS Status Received\n"
+msgstr ""
+
+#: fbus-6110.c:4053
+msgid "Message: SMS Status error, probably not authorized by PIN\n"
+msgstr ""
+
+#: fbus-6110.c:4029
+msgid "Message: SMS deleted successfully.\n"
+msgstr ""
+
+#: fbus-6110.c:3998
+msgid "Message: SMS reading failed.\n"
+msgstr ""
+
+#: fbus-6110.c:3131
+msgid "Message: Security Code status received: "
+msgstr ""
+
+#: fbus-6110.c:3179
+msgid "Message: Security code accepted.\n"
+msgstr ""
+
+#: fbus-6110.c:3189
+msgid "Message: Security code is wrong. You're not my big owner :-)\n"
+msgstr ""
+
+#: fbus-6110.c:2497
+msgid "Message: Sending SMS Message failed.\n"
+msgstr ""
+
+#: fbus-6110.c:2887
+msgid "Message: Speed dial entry error\n"
+msgstr ""
+
+#: fbus-6110.c:2874
+msgid "Message: Speed dial entry received:\n"
+msgstr ""
+
+#: fbus-6110.c:2897
+msgid "Message: Speed dial entry set.\n"
+msgstr ""
+
+#: fbus-6110.c:2907
+msgid "Message: Speed dial entry setting error.\n"
+msgstr ""
+
+#: fbus-6110.c:3024
+msgid "Message: Startup Logo received.\n"
+msgstr ""
+
+#: fbus-6110.c:3062
+msgid "Message: Startup logo correctly set.\n"
+msgstr ""
+
+#: fbus-6110.c:3053
+msgid "Message: Startup logo received but not requested!\n"
+msgstr ""
+
+#: fbus-6110.c:4177
+msgid "Message: The phone is powered on - seq 1.\n"
+msgstr ""
+
+#: fbus-6110.c:4195
+msgid "Message: The phone is powered on - seq 2.\n"
+msgstr ""
+
+#: fbus-6110.c:2800
+msgid "Message: Unknown Memory status error, subtype (MessageBuffer[4]) = %02x\n"
+msgstr ""
+
+#: fbus-6110.c:2468
+msgid "Message: Unknown message of type 0x01\n"
+msgstr ""
+
+#: fbus-6110.c:2917
+msgid "Message: Unknown message of type 0x03\n"
+msgstr ""
+
+#: fbus-6110.c:3006
+msgid "Message: Unknown message of type 0x04\n"
+msgstr ""
+
+#: fbus-6110.c:3245
+msgid "Message: Unknown message of type 0x0a\n"
+msgstr ""
+
+#: fbus-6110.c:3388
+msgid "Message: Unknown message of type 0x11\n"
+msgstr ""
+
+#: fbus-6110.c:3591
+msgid "Message: Unknown message of type 0x13\n"
+msgstr ""
+
+#: fbus-6110.c:4206
+msgid "Message: Unknown message.\n"
+msgstr ""
+
+#: fbus-6110.c:3606
+msgid "Message: the rest of the SMS message received.\n"
+msgstr ""
+
+#: gnokii.c:804
+msgid "Messages sent as "
+msgstr ""
+
+#: fbus-3810.c:2273
+msgid "Mobile phone identification received:\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1285
+msgid "Model:"
+msgstr ""
+
+#: gnokii.c:2151
+msgid "Model:    %s\n"
+msgstr ""
+
+#: fbus-6110.c:4419
+msgid "Msg Dest: %s\n"
+msgstr ""
+
+#: fbus-6110.c:4425
+msgid ""
+"Msg Len: %02x\n"
+"Phone: "
+msgstr ""
+
+#: fbus-3810.c:1444
+msgid "Msg Len: %02x "
+msgstr "Lengte bericht: %02x"
+
+#: fbus-6110.c:4420
+msgid "Msg Source: %s\n"
+msgstr ""
+
+#: fbus-6110.c:4422
+msgid "Msg Type: %02x\n"
+msgstr "Bericht type: %02x\n"
+
+#: fbus-3810.c:1443
+msgid "Msg Type: %02x "
+msgstr "Type bericht: %02x"
+
+#: fbus-6110.c:4424
+msgid "Msg Unknown: %02x\n"
+msgstr "Bericht onbekend: %02x\n"
+
+#: xgnokii/xgnokii_netmon.c:497
+msgid "NC2"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:498
+msgid "NC3"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:499
+msgid "NC4"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:500
+msgid "NC5"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:501
+msgid "NC6"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:502
+msgid "NC7"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:341
+msgid "NCELL list I"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:344
+msgid "NCELL list II"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:347
+msgid "NCELL list III"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1121 xgnokii/xgnokii_contacts.c:2433
+msgid "Name"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1577 xgnokii/xgnokii_contacts.c:708
+msgid "Name:"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:446
+msgid "Neighbourhood measurement"
+msgstr ""
+
+#: xgnokii/xgnokii.c:759 xgnokii/xgnokii_netmon.c:271
+msgid "Net Monitor"
+msgstr ""
+
+#: gnokii.c:1783
+msgid "Network: %s (%s), LAC: %s, CellID: %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:886 xgnokii/xgnokii_contacts.c:2490
+msgid "New entry"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:288
+msgid "New message"
+msgstr ""
+
+#: xgnokii/xgnokii_common.c:98
+msgid "No"
+msgstr ""
+
+#: xgnokii/xgnokii.c:2009
+msgid "No group"
+msgstr ""
+
+#: fbus-6110.c:3896
+msgid "No internetworking available"
+msgstr ""
+
+#: fbus-6110.c:3848 fbus-6110.c:3941
+msgid "No response from SME"
+msgstr ""
+
+#: fbus-6110.c:3888
+msgid "Not obtainable"
+msgstr ""
+
+#: fbus-6110.c:3712
+msgid "Not read\n"
+msgstr ""
+
+#: fbus-6110.c:3698
+msgid "Not sent\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1127 xgnokii/xgnokii_contacts.c:2433
+msgid "Number"
+msgstr ""
+
+#: fbus-3810.c:2338
+msgid "Number field empty."
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:721
+msgid "Number:"
+msgstr ""
+
+#: fbus-3810.c:2341
+msgid "Number: "
+msgstr "Nummer: "
+
+#: fbus-6110.c:3688
+msgid "Number: %d\n"
+msgstr ""
+
+#: gnokii.c:1771
+msgid "ON: Used %d, Free %d\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:811 xgnokii/xgnokii.c:984 xgnokii/xgnokii_contacts.c:687 xgnokii/xgnokii_contacts.c:848 xgnokii/xgnokii_contacts.c:2296
+msgid "Ok"
+msgstr ""
+
+#: xgnokii/xgnokii.c:775 xgnokii/xgnokii.c:1222
+msgid "Options"
+msgstr ""
+
+#: xgnokii/xgnokii.c:2008
+msgid "Other"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:343
+msgid "Outbox"
+msgstr ""
+
+#: fbus-3810.c:2006
+msgid "Outgoing call answered - status bytes %02x %02x %02x.\n"
+msgstr "Abgehender Anruf beantwortet - Statusbytes %02x %02x %02x.\n"
+
+#: fbus-3810.c:1950
+msgid "Outgoing call terminated (0x10 message).\n"
+msgstr "Abgehender Anruf beendet (0x10 Nachricht).\n"
+
+#: fbus-3810.c:1978
+msgid "Outgoing call terminated (0x12 message).\n"
+msgstr "Abgehender Anruf beendet (0x12 Nachricht).\n"
+
+#: xgnokii/xgnokii_contacts.c:1772 xgnokii/xgnokii_dtmf.c:142
+msgid "Overwrite file?"
+msgstr ""
+
+#: fbus-6110.c:4401
+msgid "PC"
+msgstr ""
+
+#: fbus-6110.c:4496
+msgid "PC: "
+msgstr ""
+
+#: fbus-3810.c:1377
+msgid "PIN [possibly] entered.\n"
+msgstr "PIN-Code is (wellicht) ingegeven.\n"
+
+#: xgnokii/xgnokii_netmon.c:533
+msgid "Page:"
+msgstr ""
+
+#: fbus-6110.c:2557 gnokii.c:813 xgnokii/xgnokii.c:413 xgnokii/xgnokii.c:1053
+msgid "Paging"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1108
+msgid "Pattern:"
+msgstr ""
+
+#: fbus-6110.c:3925
+msgid "Pending"
+msgstr ""
+
+#: fbus-6110.c:3871
+msgid "Permanent error, SC is not making any more transfer attempts\n"
+msgstr ""
+
+#: fbus-6110.c:4398
+msgid "Phone"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1258
+msgid "Phone and connection type"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1247
+msgid "Phone memory..."
+msgstr ""
+
+#: fbus-3810.c:1386
+msgid "Phone powering off..."
+msgstr "Toestel schakelt uit..."
+
+#: gnokii.c:1753
+msgid "Phone: Used %d, Free %d\n"
+msgstr "Toestel: Gebruikt %d, beschikbaar %d\n"
+
+#: fbus-6110.c:4282
+msgid "Please report it ...\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1272
+msgid "Port:"
+msgstr ""
+
+#: gnokii.c:1747
+msgid "Power Source: %s\n"
+msgstr "Voedingstype: %s\n"
+
+#: xgnokii/xgnokii_netmon.c:350
+msgid "Prefered/Denied networks"
+msgstr ""
+
+#: fbus-6110.c:3856 fbus-6110.c:3892 fbus-6110.c:3949
+msgid "Quality of service not aviable"
+msgstr ""
+
+#: gnokii.c:1774
+msgid "RC: Used %d, Free %d\n"
+msgstr ""
+
+#: gnokii.c:1741
+msgid "RFLevel: %d\n"
+msgstr "Signaalniveau: %d\n"
+
+#: rlp-common.c:643
+msgid "RLP state 0.\n"
+msgstr ""
+
+#: rlp-common.c:660
+msgid "RLP state 1.\n"
+msgstr ""
+
+#: fbus-6110.c:2135
+msgid "RTS is %s.\n"
+msgstr ""
+
+#: fbus-6110.c:3710
+msgid "Read\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:2468
+msgid "Read from phone"
+msgstr ""
+
+#: gnokii.c:1010
+msgid "Receiver: %s Msg Center: %s\n"
+msgstr ""
+
+#: gnokii.c:1481
+msgid "Reminder\n"
+msgstr ""
+
+#: fbus-6110.c:3876
+msgid "Remote procedure error"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:296
+msgid "Reply message"
+msgstr ""
+
+#: fbus-3810.c:1647
+msgid "Request IMEI/Revision/Model Write failed!"
+msgstr ""
+
+#: fbus-3810.c:1634
+msgid "Request Mem Loc Write failed!"
+msgstr ""
+
+#: fbus-3810.c:1741
+msgid "Request SMS Mem Loc Write failed!"
+msgstr ""
+
+#: fbus-6110.c:3864 fbus-6110.c:3916 fbus-6110.c:3957 fbus-6110.c:3967
+msgid "Reserved/Specific to SC: %x"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:433
+msgid "Reset Counters"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:409
+msgid "Reset handover counters"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:396
+msgid "Reset-Counter"
+msgstr ""
+
+#: gnokii.c:997
+msgid "Response date/time: %d/%d/%d %d:%02d:%02d GMT"
+msgstr ""
+
+#: gnokii.c:2152
+msgid "Revision: %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:493
+msgid "RxLv"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:421
+msgid "SIM"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1258
+msgid "SIM memory..."
+msgstr ""
+
+#: gnokii.c:1750
+msgid "SIM: Used %d, Free %d\n"
+msgstr ""
+
+#: fbus-6110.c:3908
+msgid "SM Deleted by SC Administration"
+msgstr ""
+
+#: fbus-6110.c:3900
+msgid "SM Validity Period Expired"
+msgstr ""
+
+#: fbus-6110.c:3904
+msgid "SM deleted by originating SME"
+msgstr ""
+
+#: fbus-6110.c:3912
+msgid "SM does not exist"
+msgstr ""
+
+#: fbus-6110.c:3817
+msgid "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
+msgstr ""
+
+#: fbus-6110.c:3814
+msgid "SM received by the SME"
+msgstr ""
+
+#: fbus-6110.c:3820
+msgid "SM replaced by the SC"
+msgstr ""
+
+#: fbus-6110.c:3844 fbus-6110.c:3937
+msgid "SME busy"
+msgstr ""
+
+#: xgnokii/xgnokii.c:746 xgnokii/xgnokii.c:1382
+msgid "SMS"
+msgstr ""
+
+#: fbus-3810.c:2332
+msgid "SMS Message Center Data status bytes ="
+msgstr ""
+
+#: gnokii.c:1777
+msgid "SMS Messages: UnRead %d, Number %d\n"
+msgstr "SMS Berichten: Ongelezen %d, Aantal %d\n"
+
+#: fbus-3810.c:559
+msgid "SMS Send attempt failed, trying again (%d of %d)\n"
+msgstr ""
+
+#: gnokii.c:782 gnokii.c:1360
+msgid "SMS Send failed (error=%d)\n"
+msgstr ""
+
+#: gnokii.c:866
+msgid "SMS center can not be found :-(\n"
+msgstr ""
+
+#: gnokii.c:1059
+msgid "SMS location %s %d empty.\n"
+msgstr ""
+
+#: gnokii.c:2103
+msgid "SMS storage full: %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:328
+msgid "SMS's"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:393
+msgid "SW-Resets"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1236 xgnokii/xgnokii_contacts.c:1371 xgnokii/xgnokii_dtmf.c:158
+msgid "Save"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1365
+msgid "Save changes?"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:2472
+msgid "Save to phone"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1285
+msgid "Saving entries"
+msgstr ""
+
+#: gnokii.c:1237
+msgid "Security code status: "
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:2293
+msgid "Select contacts"
+msgstr ""
+
+#: fbus-3810.c:1718
+msgid "Send SMS block %d failed!"
+msgstr "Verzenden SMS-Block %d mislukt!"
+
+#: fbus-3810.c:1691
+msgid "Send SMS header failed!"
+msgstr "Verzenden SMS-Header mislukt!"
+
+#: gnokii.c:780 gnokii.c:1358
+msgid "Send succeeded!\n"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:254
+msgid "Sender"
+msgstr ""
+
+#: gnokii.c:1037
+msgid "Sender: %s Msg Center: %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1031
+msgid "Sending Format:"
+msgstr ""
+
+#: gnokii.c:1454
+msgid "Sending Logo.\n"
+msgstr ""
+
+#: fbus-3810.c:456 fbus-6110.c:1870
+msgid "Sending SMS to %s via message center %s\n"
+msgstr "Verzend SMS naar %s via SMS-Dienst %s\n"
+
+#: gnokii.c:984
+msgid "Sending date/time: %d/%d/%d %d:%02d:%02d GMT"
+msgstr ""
+
+#: fbus-6110.c:3696
+msgid "Sent\n"
+msgstr ""
+
+#: fbus-3810.c:1445
+msgid "Sequence Number: %02x "
+msgstr "Volgnummer: %02x"
+
+#: fbus-3810.c:1008
+msgid "Serial TIOCMGET failed: "
+msgstr ""
+
+#: fbus-3810.c:1015
+msgid "Serial TIOCMSET failed: "
+msgstr ""
+
+#: fbus-6110.c:2133
+msgid "Serial flags dump:\n"
+msgstr ""
+
+#: fbus-6110.c:3852 fbus-6110.c:3945
+msgid "Service rejected"
+msgstr ""
+
+#: xgnokii/xgnokii.c:399
+msgid "Set %d"
+msgstr ""
+
+#: fbus-3810.c:1535 fbus-3810.c:1610
+msgid "Set Mem Loc Write failed!"
+msgstr "Opslaan geheugenlocatie mislukt!"
+
+#: xgnokii/xgnokii.c:1219
+msgid "Set name"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1005
+msgid "Set name:"
+msgstr ""
+
+
+#: fbus-6110.c:2175
+msgid "Setting FBUS communication...\n"
+msgstr "Bezig met FBUS Communicatie initialiseren...\n"
+
+#: xgnokii/xgnokii.c:1375 xgnokii/xgnokii_sms.c:258
+msgid "Short Message Service"
+msgstr ""
+
+#: xgnokii/xgnokii.c:272
+msgid "Short Message received"
+msgstr ""
+
+#: virtmodem.c:191
+msgid "Slave pty is %s, calling %s to create /dev/gnokii.\n"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:418 xgnokii/xgnokii_contacts.c:457
+msgid ""
+"Sorry, phonebook name will be truncated\n"
+"because you save it into SIM memory!"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:232 xgnokii/xgnokii_contacts.c:279
+msgid ""
+"Sorry, phonebook name will be truncated,\n"
+"because you save it into SIM memory!"
+msgstr ""
+
+#: gnokii.c:1996
+msgid "SpeedDial nr. %d: %d:%d\n"
+msgstr ""
+
+#: fbus-3810.c:1415
+msgid "Standard Ack write failed!"
+msgstr "Standaard bevestiging (ACK) sturen mislukt!"
+
+#: fbus-6110.c:764
+msgid "Starting IR mode...!\n"
+msgstr ""
+
+#: fbus-6110.c:3041
+msgid "Startup Text: %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:254
+msgid "Status"
+msgstr ""
+
+#: fbus-3810.c:1936
+msgid "Status: Connection Status %02x Batt %02x RF %02x.\n"
+msgstr ""
+
+#: gnokii.c:1565 gnokii.c:2034
+msgid "Succesfully written!\n"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:353
+msgid "System information bits"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:356
+msgid "TMSI, Paging, PLU"
+msgstr ""
+
+#: fbus-3810.c:1800
+msgid "TX_SendMessage - message too long!\n"
+msgstr ""
+
+#: fbus-3810.c:1826
+msgid "TX_SendMessage - write:"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1652
+msgid "Telephone:"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:452
+msgid "Temporary counters of DSP"
+msgstr ""
+
+#: fbus-6110.c:3835
+msgid "Temporary error, SC is not making any more transfer attempts\n"
+msgstr ""
+
+#: fbus-6110.c:3929
+msgid "Temporary error, SC still trying to transfer SM\n"
+msgstr ""
+
+#: fbus-6110.c:2553 gnokii.c:809 xgnokii/xgnokii.c:409 xgnokii/xgnokii.c:425 xgnokii/xgnokii.c:1039
+msgid "Text"
+msgstr ""
+
+#: gnokii.c:972 gnokii.c:1011 gnokii.c:1038
+msgid ""
+"Text: %s\n"
+"\n"
+msgstr "Text: %s\n"
+
+#: gnokii.c:1588
+msgid "The calendar note can not be deleted\n"
+msgstr ""
+
+#: gnokii.c:1526
+msgid "The calendar note can not be read\n"
+msgstr ""
+
+#: gnokii.c:1688
+msgid "Time: %02d:%02d\n"
+msgstr "Tijd: %02d:%02d\n"
+
+#: gnokii.c:1651
+msgid "Time: %02d:%02d:%02d\n"
+msgstr "Tijd: %02d:%02d:%02d\n"
+
+#: fbus-6110.c:633
+msgid "Timeout in IR-mode\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1602
+msgid "Title:"
+msgstr ""
+
+#: fbus-6110.c:2569 fbus-6110.c:2603 fbus-6110.c:3963 fbus-6110.c:4404 gnokii.c:825 gnokii.c:859
+msgid "Unknown"
+msgstr "Onbekend"
+
+#: gnokii.c:1497
+msgid "Unknown\n"
+msgstr ""
+
+#: gnokii.c:938 gnokii.c:1135 gnokii.c:1860 gnokii.c:2023
+msgid "Unknown memory type %s!\n"
+msgstr "Onbekend geheugentype %2!\n"
+
+#: fbus-6110.c:3283
+msgid "Unknown message of type 0x0d.\n"
+msgstr ""
+
+#: fbus-6110.c:3440
+msgid "Unknown message of type 0x13 and subtype 0x65\n"
+msgstr ""
+
+#: fbus-6110.c:4110
+msgid "Unknown message of type 0x40.\n"
+msgstr ""
+
+#: fbus-6110.c:2633
+msgid "Unknown message!\n"
+msgstr ""
+
+#: gnokii.c:641
+msgid "Unknown option: %d\n"
+msgstr ""
+
+#: fbus-6110.c:3707
+msgid "Unknown type\n"
+msgstr ""
+
+#: fbus-6110.c:3167 gnokii.c:1273
+msgid "Unknown!\n"
+msgstr ""
+
+#: rlp-common.c:448
+msgid "Unknown!!! "
+msgstr ""
+
+#: fbus-3810.c:1441
+msgid "Unknown: "
+msgstr "Onbekend: "
+
+#: gnokii.c:2097
+msgid "Unknown: %s\n"
+msgstr ""
+
+#: gnokii.c:2098
+msgid "Unread SMS: %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii_netmon.c:372
+msgid "Uplink DTX"
+msgstr ""
+
+#: gnokii.c:467
+msgid "Use '%s --help' for usage informations.\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1559
+msgid "User"
+msgstr ""
+
+#: xgnokii/xgnokii.c:2005
+msgid "VIP"
+msgstr ""
+
+#: virtmodem.c:87
+msgid "VM_Initialise - ATEM_Initialise failed!\n"
+msgstr ""
+
+#: virtmodem.c:77
+msgid "VM_Initialise - VM_GSMInitialise failed!\n"
+msgstr ""
+
+#: virtmodem.c:82
+msgid "VM_Initialise - VM_PtySetup failed!\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1219
+msgid "Validity"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1075
+msgid "Validity Period:"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1793
+msgid "Viewer:"
+msgstr ""
+
+#: gnokii.c:2099
+msgid "Voice call: %s\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1955 xgnokii/xgnokii_cfg.c:73 xgnokii/xgnokii_cfg.c:88
+msgid "WARNING: Can't allocate memory for config reading!\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1950 xgnokii/xgnokii_cfg.c:67
+msgid "WARNING: Can't find HOME enviroment variable!\n"
+msgstr ""
+
+#: gnokii.c:2184
+msgid "What kind of reset do you want??\n"
+msgstr ""
+
+#: gnokii.c:1976
+msgid "Write FAILED(%d): memory type: %s, loc: %d, name: %s, number: %s\n"
+msgstr ""
+
+#: gnokii.c:1974
+msgid "Write Succeeded: memory type: %s, loc: %d, name: %s, number: %s\n"
+msgstr ""
+
+#: fbus-3810.c:1839 fbus-3810.c:1960 fbus-3810.c:1974 fbus-3810.c:1988 fbus-3810.c:2002 fbus-3810.c:2139 fbus-3810.c:2198 fbus-3810.c:2257 fbus-3810.c:2298
+msgid "Write failed!"
+msgstr "Opslaan mislukt!"
+
+#: gnokii.c:651
+msgid "Wrong number of arguments\n"
+msgstr ""
+
+#: xgnokii/xgnokii_common.c:89
+msgid "Yes"
+msgstr ""
+
+#: xgnokii/xgnokii_contacts.c:1404
+msgid ""
+"You have made changes in your\n"
+"contacts directory.\n"
+"\n"
+"\n"
+"Want you save these changes into phone?\n"
+msgstr ""
+
+#: fbus-6110.c:4164
+msgid "[Received Ack of type %02x, seq: %2x]\n"
+msgstr ""
+
+#: fbus-6110.c:4570
+msgid "[Sending Ack of type %02x, seq: %x]\n"
+msgstr ""
+
+#: fbus-6110.c:3235
+msgid "automatic"
+msgstr ""
+
+#: gnokii.c:1747
+msgid "battery"
+msgstr ""
+
+#: fbus-6110.c:2983
+msgid "battery\n"
+msgstr ""
+
+#: fbus-6110.c:2949
+msgid "call in progress\n"
+msgstr "Oproep gaande\n"
+
+#: fbus-6110.c:2134 fbus-6110.c:2135 fbus-6110.c:2136 fbus-6110.c:2137
+msgid "down"
+msgstr ""
+
+#: gnokii.c:2064 xgnokii/xgnokii.c:1962 xkeyb.c:112 xlogos.c:94
+msgid "error opening %s, using default config\n"
+msgstr ""
+
+#: gnokiid.c:51
+msgid "gnokiid Version %s"
+msgstr ""
+
+#: virtmodem.c:187
+msgid "gnokiid should not be installed setuid root!\n"
+msgstr ""
+
+#: fbus-6110.c:3226
+msgid "home network selected"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1325
+msgid "infrared"
+msgstr ""
+
+#: fbus-6110.c:3235
+msgid "manual"
+msgstr ""
+
+#: fbus-6110.c:3229
+msgid "not registered in the network"
+msgstr ""
+
+#: fbus-6110.c:3162 gnokii.c:1268
+msgid "nothing to enter.\n"
+msgstr ""
+
+#: fbus-6110.c:3372 gnokii.c:2096 gnokii.c:2097 gnokii.c:2098 gnokii.c:2099 gnokii.c:2100 gnokii.c:2101 gnokii.c:2102 gnokii.c:2103
+msgid "off"
+msgstr "uit"
+
+#: fbus-6110.c:3372 gnokii.c:2096 gnokii.c:2097 gnokii.c:2098 gnokii.c:2099 gnokii.c:2100 gnokii.c:2101 gnokii.c:2102 gnokii.c:2103
+msgid "on"
+msgstr "on-line"
+
+#: xgnokii/xgnokii_contacts.c:737
+msgid "phone"
+msgstr ""
+
+#: fbus-6110.c:2961
+msgid "powered off\n"
+msgstr "off-line\n"
+
+#: xgnokii/xgnokii_sms.c:71
+msgid "read"
+msgstr ""
+
+#: fbus-6110.c:2940
+msgid "registered within the network\n"
+msgstr "geregistreerd op het netwerk\n"
+
+#: xgnokii/xgnokii_sms.c:69
+msgid "report"
+msgstr ""
+
+#: fbus-6110.c:3228
+msgid "requesting network"
+msgstr ""
+
+#: fbus-3810.c:1052
+msgid "restarting.\n"
+msgstr "Herstart.\n"
+
+#: fbus-6110.c:3227
+msgid "roaming network"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:119
+msgid "sent"
+msgstr ""
+
+#: xgnokii/xgnokii.c:1329
+msgid "serial"
+msgstr ""
+
+#: fbus-6110.c:3230
+msgid "unknown"
+msgstr ""
+
+#: fbus-6110.c:2967 fbus-6110.c:2989
+msgid "unknown\n"
+msgstr "onbekend\n"
+
+#: xgnokii/xgnokii_sms.c:73
+msgid "unread"
+msgstr ""
+
+#: xgnokii/xgnokii_sms.c:121
+msgid "unsent"
+msgstr ""
+
+#: fbus-6110.c:2134 fbus-6110.c:2135 fbus-6110.c:2136 fbus-6110.c:2137
+msgid "up"
+msgstr ""
+
+#: fbus-6110.c:3142 gnokii.c:1248
+msgid "waiting for PIN.\n"
+msgstr ""
+
+#: fbus-6110.c:3147 gnokii.c:1253
+msgid "waiting for PIN2.\n"
+msgstr ""
+
+#: fbus-6110.c:3152 gnokii.c:1258
+msgid "waiting for PUK.\n"
+msgstr ""
+
+#: fbus-6110.c:3157 gnokii.c:1263
+msgid "waiting for PUK2.\n"
+msgstr ""
+
+#: fbus-6110.c:3137 gnokii.c:1243
+msgid "waiting for Security Code.\n"
+msgstr ""
+
+#: fbus-6110.c:2955
+msgid "waiting for security code\n"
+msgstr ""
+
+#: xgnokii/xgnokii.c:824
+msgid ""
+"xgnokii version: %s\n"
+"gnokii version: %s\n"
+"\n"
+"Copyright (C) 1999 Pavel Jan\355k ml.,\n"
+"Hugh Blemings & Jan Derfinak\n"
+msgstr ""
+# msgid "Number field emtpy."
+# msgstr "Nummer veld leeg."
+# 
+# msgid "locked"
+# msgstr "uit"
+# 
+# msgid "unlocked"
+# msgstr "aan"
+# 
+# msgid "GNOKII Version %s"
+# msgstr "GNOKII Versie %s"
+# 
+# msgid "Enter your PIN: "
+# msgstr "Geef uw PIN-Code:"
+# 
+# msgid "   %d. SMS Center number is %s\n"
+# msgstr "   %d. Nummer SMS dienst is %s\n"
+# 
+# msgid "Date/time: %d/%d/%d %d:%02d:%02d Sender: %s Msg Center: %s\n"
+# msgstr "Datum/tijd %d/%d/%d %d:%02d:%02d Afzender: %s SMS-Dienst: %s\n"
+# 
+# msgid "Error: invalid PIN\n"
+# msgstr "Fout: Ongedige PIN-Code\n"
+# 
+# msgid "   Text: "
+# msgstr "   Tekst: "
+# 
+# msgid "   usage: gnokii {--help|--monitor|--version}"
+# msgstr "   gebruik: gnokii {--help|--monitor|--version}"
+# 
+# msgid "waiting for pin\n"
+# msgstr "bezig met wachten op PIN"
+# 
+# msgid ""
+# "   Code Error\n"
+# "   You're not my big owner :-)\n"
+# msgstr "   Code fout!\n"
+# 
+# msgid "   Code Accepted\n"
+# msgstr "   Code Ok\n"
+# 
+# msgid "Message: Keyboard lock\n"
+# msgstr "Bericht: Toetsenbord uit\n"
+# 
+# msgid "   Keyboard is %s\n"
+# msgstr "   Toetsen zijn %s\n"
+# 
+# msgid "   Network name: %s\n"
+# msgstr "   Netwerk Naam: %s\n"
+# 
+# msgid "Status: RF %02x, Batt %02x, Connection Status %02x.\n"
+# msgstr "Status: Signaal %02x, Batt %02x, Verbindingsstatus %02x.\n"
+# 
+# msgid "Empty location: %s %d!\n"
+# msgstr "Geen SMS bericht op Locatie: %s %d!\n"
+# 
+# msgid "Message: Memory status error, probably not authorized by PIN\n"
+# msgstr "Bericht: Geheugenstatus fout, waarschijnlijk niet geauthoriserd door PIN\n"
+# 
+# msgid "SMS Send attempt failed, trying again (%d)\n"
+# msgstr "SMS verzenden mislukt, automatische herhaling (%d)\n"
+# 
+# msgid "Incomming call - status %02x %02x %02x, Number %s.\n"
+# msgstr "Inkomende oproep - Status %02x %02x %02x, Nummer %s.\n"
+# 
+#  This was the dutch version 
+#  
+#  ARE THESE NECESSARY? If so, somebody should do 'em some day :)
+#
+#		goran (@8hz.com)
+#
+#
+# msgid "GSM/fbus init failed! (Unknown model ?).  Quitting. \n"
+# msgstr "Initialisierung des GSM/fbus fehlgeschlagen! (Unbekanntes Modell?). Beenden. \n"
+# 
+# msgid "SMS %s %d Unknown bytes: %02x %02x %02x %02x %02x %02x Length: %d\n"
+# msgstr "SMS %s %d unbekannte Bytes: %02x %02x %02x %02x %02x %02x Länge: %d\n"
+# 
+# msgid "SMS Send OK. Result code  0x%02x\n"
+# msgstr "SMS-Versand erfolgreich. Ergebnis-Code 0x%02x\n"
+# 
+# msgid "0x65 0x15 means SMS sending not enabled by network (probably...)\n"
+# msgstr "0x65 0x15: Verschicken von SMS-Nachrichten nicht vom Provider freigeschaltet (wahrscheinlich...)\n"
+# 
+# msgid "Write Succeeded: memory type:%s, loc:%d, name: %s, number: %s\n"
+# msgstr "Speichern erfolgreich: Speichertyp:%s, Zelle:%d, Name: %s, Nummer %s\n"
+# 
+# msgid "GNOKII Version 0.3.1 Copyright (C) Hugh Blemings 1999. <hugh@linuxcare.com>\n"
+# msgstr "GNOKII Version 0.3.1 Copyright (C) Hugh Blemings 1999. <hugh@linuxcare.com>\n"
+# 
+# msgid "SMS Send failed, gnokii error code was %d, network returned 0x%02x 0x%02x\n"
+# msgstr "Senden der SMS-Nachricht fehlgeschlagen, gnokii Fehler-Nummer war %d, Netz antwortete mit 0x%02x 0x%02x\n"
+# 
+# msgid "Hmmm... GSM_LinkOK never went true.  Quitting. \n"
+# msgstr "Hmmm... GSM_LinkOK nie erhalten. Beenden. \n"
+# 
+# msgid "Interrupted\n"
+# msgstr "Unterbrochen\n"
+# 
+# msgid "Monitor mode...\n"
+# msgstr "Monitor Modus...\n"
+# 
+# msgid "Write FAILED(%d): memory type:%s, loc:%d, name: %s, number: %s\n"
+# msgstr "Speichern erfolglos(%d): Speichertyp:%s, Zelle:%d, Name: %s, Nummer %s\n"
+# 
+# msgid "       Built %s %s for %s on %s \n"
+# msgstr "       Kompiliert: %s %s für Modell %s an Port %s \n"
+# 
+# msgid "%s|%d|Bad location or other error!\n"
+# msgstr "%s|%d|Falsche Zelle oder anderer Fehler!\n"
+# 

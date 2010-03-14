@@ -1,0 +1,130 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Marcin Wiacek">
+   <title>Cables FAQ</title>
+   <link REL=stylesheet HREF="../../styl.css" TYPE="text/css">
+</head>
+<body>
+
+<a NAME="Top"></a>
+<p align="RIGHT"><a class="autoremail" href="../../index.htm">Main page</a></p>
+<center><font color="#1F409F" size=+2 class="tytul">Cables FAQ</font></center>
+
+<p><hr size="2" noshade width="60%" align="center" style="color: #004080">
+
+<p><font color="#1F409F" size=+2 class="dzial">What cables are used for Nokia phones ?</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>Nokia phone can support three protocols of transmission over cable:
+
+<p>
+<ul>
+<li>M2BUS (called often simply MBUS) - 9600,N,...</li>
+<li>FBUS - 115200</li>
+<li>AT mode - 19600</li>
+</ul>
+
+<p>You cable can support each of them...and phone must be compatible with it
+(for example, CAN'T use DLR-3 with phone, which show "headset connected"
+after connecting it)...
+
+<p><font color="#1F409F" size=+2 class="dzial">Schematics</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>Simple M2BUS (only) cable:
+<p><img src=cable1.gif>
+<p>Note:
+<br>
+<ul>
+<li>74HC04 must be in HC version</li>
+<li>Dioda Zenera 3,2 V it required for phones different than 21xx, 3110</li>
+</ul>
+
+<p>FBUS cable:
+<p><img src=cable2.gif>
+
+<p>Switch for M2BUS/FBUS for cable above:
+<p><img src=switch.gif>
+
+<p>Cable for AT mode is unavailable here, because it needs programmed chip
+and I don't know, what programm should be inside...
+
+<p>To make FBUS/MBUS cable you have to connect:
+<p>
+<ul>
+<li>FBUS - GND, TX and RX</li>
+<li>M2BUS - MBUS and GND</li>
+</ul>
+
+<p><font color="#1F409F" size=+2 class="dzial">Phone connectors</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+
+
+<p><font color="#1F409F" size=+2 class="dzial">What are original cables for Nokia phones ?</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>
+<ul>
+<li>DAU-3 (or DAU-3H) - cable for Nokia series 2100. 
+Sell with Nokia Cellularware (it isn't produced now).
+</li>
+
+<li>
+DAU-4S - cable for Nokia 3110 and all models in series 8100 (8110, 8110i, 8148 and 8148i).
+Sell with Nokia Cellularware (it isn't produced now).
+</li>
+
+<li>
+DAU-4F - uniwersal (FBUS/M2BUS) cable without switch,
+for Nokia 3110 and all models in series 8100 (8110, 8110i, 8148 and 8148i).
+Sell with Nokia Cellular Data Suite 1.0 (it isn't produced now).
+</li>
+
+<li>
+DAU-9P - uniwersal (FBUS/M2BUS) cable without switch, for Nokia 51x0/61x0.
+Sell with Nokia Cellular Data Suite 1.2 - 3.0a.
+</li>
+
+<li>
+DLR-1 - cable sell with Nokia 9000 Communicator. It can be used
+to exchange date between phone and computer and installing software into phone.
+It's M2BUS cable.
+</li>
+
+<li>
+DLR-2 - cable sell with Nokia 9110 Communicator. It can be used
+to exchange date between phone and computer and installing software into phone.
+It's M2BUS cable, but can't be used with programs working with this protocol (needs
+some small changes - after them will not work original Communicator programms).
+
+<li>
+DLR-3 and DLR-3P - cables for Nokia 7110/6210. Supports AT mode and FBUS.
+FIXME: MBUS too ?
+</li>
+</ul>
+
+<p><font color="#1F409F" size=+2 class="dzial">Can I use DLR-3 cable with my phone ?</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>See post from gnokii maillist:
+
+<p>The dlr-3 CAN'T work with the older phones. this is because the 
+converter in the cable is powered by the phone. this is done by the 
+phone by raising the !mic-gnd! pin to vcc. if the cable doesn't 
+repond on the mbus after 1 second, the power is dropped. a older 
+phone doesn't do this, so the converter is unpowered.
+
+<p>To decide if a phone needs a dau-9 (the old one, powered by pc) or 
+the new one (dlr-3) simply connect a dlr-3 to the phone. if the 
+phone says "headset connected" it isn't capable of using a dlr-3 
+and you have to change to a dau-9.
+
+<p><hr size="2" noshade width="60%" align="center" style="color: #004080">
+
+<p>Page created from materials from <a href=http://www.fkn.pl>www.fkn.pl</a>
+
+</div>
+</body>
+</html>

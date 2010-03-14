@@ -1,0 +1,1 @@
+?package(gnokii):needs=text section="Apps/Comm" title="XGnokii" command="/usr/bin/xgnokii"

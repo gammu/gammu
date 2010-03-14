@@ -1,0 +1,41 @@
+/* XPM */
+/*
+
+  G N O K I I
+
+  A Linux/Unix toolset and driver for Nokia mobile phones.
+
+  Copyright (C) 1999 Pavel Janík ml. & Hugh Blemings.
+
+  Released under the terms of the GNU GPL, see file COPYING for more details.
+
+  This is the icon for Open.
+
+  Last modification: Wed Jun 14 18:04:00 CEST 2000
+  Modified by Marcel Köppen <jojo@jojosoft.de>
+
+*/
+
+static char*NewCall_xpm[]={
+"20 18 3 1",
+"# c #000000",
+". c None",
+"a c #ffffff",
+"....................",
+"...##########.......",
+"...#aaaaaaaa##......",
+"...#aaaaaaaa#a#.....",
+"...#aaaaaaaa####....",
+"...#aa###aaaaaa#....",
+"...#a######aaaa#....",
+"...#a#######aaa#....",
+"...#aa##a####aa#....",
+"...#aaaaaa###aa#....",
+"...#aaaaaaa###a#....",
+"...#aaaaaa####a#....",
+"...#aaaaaa####a#....",
+"...#aaaaaaa##aa#....",
+"...#aaaaaaaaaaa#....",
+"...#aaaaaaaaaaa#....",
+"...#############....",
+"...................."};

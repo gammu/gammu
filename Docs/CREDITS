@@ -1,0 +1,111 @@
+- Credits -
+
+Thank you to, in no particular order...
+
+*  Everyone on the gnokii mailing list for their interest
+   and input into the project.
+
+*  Pavel Janík ml. for the majority of work on gnokii 6110 series
+   support, spelling corrections and miscellaneous code cleanups.
+
+*  Serge Odinokov for 6110 series authentication protocol and
+   example Delphi RLP code. Many thanks...
+
+*  Nick Lamb for operator logos, CLI uploading and AT*C command support.
+
+*  Francois Dessart, Brendan O'Dea, Tony Lindstrom, Steffan Henke
+   and Cobus Van Eeden for dumps (and in some cases interpretation!)
+   of unknown messages, bug reports and prompt feedback of being
+   able to build new releases.
+
+*  Staffan Ulfberg for taking care of the website and for instigating
+   the 6110 project which has now been merged with the gnokii effort.
+
+*  Martin Hamilton for looking after the mailing list.
+
+*  Tim Potter for some of the ideas that are now incorporated in gnokii
+   to provide multiple model support and config file code.
+
+*  Paul Mackerras and Andrew Tridgell for discussions about pseudo
+   ttys, setuid programs and such.  Tridge kindly reviewed the
+   mgnokiidev.c code.
+
+*  Richard Kalton for his excellent page about Nokia 6110 protocol.
+
+*  Colin Paton for his mail with subject "Dumps of phone<>PC traffic".
+   It helped a lot.
+
+*  Juan Altmayer Pizzorno for his help with MBUS/FBUS and other
+   debugging.
+
+*  Gary Reuter for his help when looking for a bug in phone numbers,
+   for the set-time function debugging.
+
+*  Jiri Meloun for voice calling.
+
+*  Emilio Brambilla for SMS notification fixes, setdatetime implementation
+   and typing GSM_Default_Alphabet.
+
+*  Pawe³ Kot for EnterPIN on 6110 Series changes and other things.
+
+*  Konstantinos Agouros for gnokii-perl module.
+
+*  Czech Linux Users' group for it's CVS server which hosted our
+   development repository.
+
+*  Goran Dokic, Samuli Sorvakko and anonymous for gettext files for
+   Dutch, Finnish and German translations.
+   
+*  Marcel Holtmann for RLP FCS code and misc stuff.
+
+*  Chris Kemp for logo stuff and a big part of the RLP code.
+  
+*  Andrew Kozin for the model 640 support (NMT 450 network).
+ 
+*  Karel Zak for his enthusiasm (and patches) for the autoconf stuff.
+  
+*  Harri Yli-Torkko for investigative work & code on the 3810/8110. 
+
+*  Stano Meduna for misc code and build process work.
+  
+*  Alfred Nurnberger for some information on the 5160/6160 MBUS
+   protocol.  
+   
+*  Alessandro Zummo for reset and getopts code.
+
+*  Mark Looi for Cell Broadcast code - based on protocol decoded by
+   Colin Paton
+
+*  Sebastian Zagrodzki and Jacek Fiok for Polish .po file
+
+*  Lucy for making pizza and putting up with Hugh disappearing to
+   work on this.  Rachael for new parent induced insomnia...
+
+*  Last not least: Mirka for allowing Pavel to work on gnokii
+   and for _great_ gnokii operator logos...
+
+*  Hendrik Spohr for getting 7110 functions and DLR-3 to work (one small step
+   for Hendrik, big step for (my)gnokii :-))
+   
+*  Balazs Nagy for frames list and long hacker's work...
+
+*  Ladislav Michl & Manfred Jonsson for support for various AT phones...
+
+*  Manfred Jonsson for idea of programming, which looks for me good
+
+*  Michael Hund for many improvements and progress in 7110/6210 source...
+
+*  Ralf Thelen for very required by many, many people patch and getting
+   infrared sockets to work -> small changes, few days of hard searching :-).
+   Also sms stuff is OK now
+
+*  Gabriele Zappi for many 6210 improvements and big calendar source
+
+*  Andrea Scopece for 61xx source for netmonitor and other improvements
+
+*  ....and other people, who reported me bugs or want(ed) to use mygnokii
+   and help me in making it the best !
+
+We tried to mentioned everyone who contributed to gnokii project but we
+might to forgot someone. If anyone does feel that we missed him and his
+name should be mentioned here do not hesitate to contact us :-)

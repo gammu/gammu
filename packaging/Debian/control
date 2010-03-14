@@ -1,0 +1,11 @@
+Source: gnokii
+Section: comm
+Priority: optional
+Maintainer: Karel Zak <zakkr@zf.jcu.cz>
+Standards-Version: 2.4.0.0
+
+Package: gnokii
+Architecture: any
+Depends: ${shlibs:Depends}
+Description:  Gnokii is a Linux/Unix tool suite and (eventually) 
+ modem/fax driver for Nokia mobile phones, released under the GPL.
