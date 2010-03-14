@@ -7,7 +7,8 @@
 #  include <fcntl.h>
 #endif
 
-#include "../misc/coding.h"
+#include "../misc/coding/coding.h"
+#include "../misc/coding/md5.h"
 #include "../gsmcomon.h"
 #include "gsmmisc.h"
 
@@ -62,6 +63,7 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 	int 		i = 1000;
 	FILE		*file;
 	struct stat	fileinfo;
+//	unsigned char	checksum[200];
 
 	if (FileName[0] == 0x00) return GE_UNKNOWN;
 	file = fopen(FileName,"rb");
@@ -71,9 +73,9 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 	File->Buffer 	= NULL;
 	File->Used 	= 0;
 	while (i == 1000) {
-		File->Buffer = realloc(File->Buffer,File->Used + 1000);
-		i = fread(File->Buffer+File->Used,1,1000,file);
-		File->Used = File->Used + i;
+		File->Buffer 	= realloc(File->Buffer,File->Used + 1000);
+		i 		= fread(File->Buffer+File->Used,1,1000,file);
+		File->Used 	= File->Used + i;
 	}
 	File->Buffer = realloc(File->Buffer,File->Used);
 	fclose(file);
@@ -91,6 +93,8 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 	}
 
 	File->CRC16 = 0;
+//	CalculateMD5(File->Buffer, File->Used, checksum);
+//	dprintf("MD5 is %s\n",checksum);
 
 	return GE_NONE;
 }

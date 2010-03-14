@@ -23,7 +23,7 @@
 #include "../common/gsmstate.h"
 #include "../common/misc/cfg.h"
 #include "../common/misc/misc.h"
-#include "../common/misc/coding.h"
+#include "../common/misc/coding/coding.h"
 #include "../common/service/gsmpbk.h"
 #include "../common/service/gsmring.h"
 #include "../common/service/gsmlogo.h"
@@ -3258,6 +3258,42 @@ static void SaveFile(int argc, char *argv[])
 		}
 		j = 0;
 		GSM_EncodeVCALENDAR(Buffer, &j, Backup.Calendar[i],true,Nokia_VCalendar);
+	} else if (mystrncasecmp(argv[2],"BOOKMARK",0)) {
+		if (argc<5) {
+			printmsg("Where is backup filename and location ?\n");
+			exit(-1);
+		}
+		error=GSM_ReadBackupFile(argv[4],&Backup);
+		Print_Error(error);
+		i = 0;
+		while (Backup.WAPBookmark[i]!=NULL) {
+			if (i == atoi(argv[5])-1) break;
+			i++;
+		}
+		if (i != atoi(argv[5])-1) {
+			printmsg("WAP bookmark not found in file\n");
+			exit(-1);
+		}
+		j = 0;
+		GSM_EncodeURLFile(Buffer, &j, Backup.WAPBookmark[i]);
+	} else if (mystrncasecmp(argv[2],"NOTE",0)) {
+		if (argc<5) {
+			printmsg("Where is backup filename and location ?\n");
+			exit(-1);
+		}
+		error=GSM_ReadBackupFile(argv[4],&Backup);
+		Print_Error(error);
+		i = 0;
+		while (Backup.Note[i]!=NULL) {
+			if (i == atoi(argv[5])-1) break;
+			i++;
+		}
+		if (i != atoi(argv[5])-1) {
+			printmsg("Note not found in file\n");
+			exit(-1);
+		}
+		j = 0;
+		GSM_EncodeVNTFile(Buffer, &j, Backup.Note[i]);
 	} else if (mystrncasecmp(argv[2],"TODO",0)) {
 		if (argc<5) {
 			printmsg("Where is backup filename and location ?\n");
@@ -3862,6 +3898,12 @@ static void Restore(int argc, char *argv[])
 	if (Backup.DateTimeAvailable) 	printmsgerr("Time of backup : %s\n",OSDateTime(Backup.DateTime,false));
 	if (Backup.Model[0]!=0) 	printmsgerr("Phone          : %s\n",Backup.Model);
 	if (Backup.IMEI[0]!=0) 		printmsgerr("IMEI           : %s\n",Backup.IMEI);
+
+	if (Backup.MD5Calculated[0]!=0) {
+		if (strcmp(Backup.MD5Original,Backup.MD5Calculated)) {
+			if (!answer_yes("Checksum in backup file do not match. Continue")) return;			
+		}
+	}
 
 	GSM_Init(true);
 
@@ -5242,6 +5284,34 @@ static void GetToDo(int argc, char *argv[])
 	GSM_Terminate();        	
 }
 
+static void GetNote(int argc, char *argv[])
+{
+	GSM_NoteEntry		Note;
+	int			start,stop;
+	bool			refresh=true;
+
+	GetStartStop(&start, &stop, 2, argc, argv);
+
+	GSM_Init(true);
+
+	for (i=start;i<=stop;i++) {
+		Note.Location=i;
+		printmsg("Location  : %i\n",i);
+		error=Phone->GetNote(&s,&Note,refresh);
+		if (error != GE_EMPTY) Print_Error(error);
+
+		if (error == GE_EMPTY) {
+			printmsg("Entry is empty\n\n");
+		} else {
+                       	printmsg("Text         : \"%s\"\n",DecodeUnicodeString2(Note.Text));
+        	    	printmsg("\n");
+	            	refresh=false;
+	        }
+	}
+
+	GSM_Terminate();        	
+}
+
 static void GetSecurityStatus(int argc, char *argv[])
 {
 	GSM_SecurityCodeType Status;
@@ -5819,6 +5889,10 @@ static void GetFiles(int argc, char *argv[])
 			file = fopen(buffer,"wb");
 			if (file == NULL) {
 				sprintf(buffer,"file%s",File.ID_FullName);
+				file = fopen(buffer,"wb");
+			}
+			if (file == NULL) {
+				sprintf(buffer,"file%i",i);
 				file = fopen(buffer,"wb");
 			}
 			printmsg("  Saving to %s\n",buffer);
@@ -6627,6 +6701,15 @@ static void SearchPhone(int argc, char *argv[])
 		SearchDevices[dev2].Connections[4].Connection[0] = 0;
 		dev2++;
 	}
+        for(i=0;i<4;i++) {
+		sprintf(SearchDevices[dev2].Device,"/dev/usb/tts/%i",i);
+		sprintf(SearchDevices[dev2].Connections[0].Connection,"fbusdlr3");
+		sprintf(SearchDevices[dev2].Connections[1].Connection,"fbus");
+		sprintf(SearchDevices[dev2].Connections[2].Connection,"at19200");
+		sprintf(SearchDevices[dev2].Connections[3].Connection,"mbus");
+		SearchDevices[dev2].Connections[4].Connection[0] = 0;
+		dev2++;
+	}
 #  endif
 #endif
 	for(i=0;i<dev;i++) MakeSearchThread(i);
@@ -6761,7 +6844,8 @@ static void usage(void)
 	printf("gammu --gettodo start [stop]\n");
 	printf("gammu --deletetodo start [stop]\n");
 	printf("gammu --getcalendarnotes\n");
-	printf("gammu --getcalendarsettings\n\n");
+	printf("gammu --getcalendarsettings\n");
+	printf("gammu --getnote start [stop]\n\n");
 	
 	printf("gammu --getcategory TODO|PHONEBOOK start [stop]\n");
 	printf("gammu --getallcategories TODO|PHONEBOOK\n\n");
@@ -6794,7 +6878,8 @@ static void usage(void)
 #ifdef GSM_ENABLE_BACKUP
 	printf("gammu --savefile CALENDAR target.vcs file location\n");
 	printf("gammu --savefile TODO target.vcs file location\n");
-	printf("gammu --savefile VCARD10|VCARD21 target.vcf file SM|ME location\n\n");
+	printf("gammu --savefile VCARD10|VCARD21 target.vcf file SM|ME location\n");
+	printf("gammu --savefile BOOKMARK target.url file location\n\n");
 #endif
 
 	printf("gammu --getsms folder start [stop]\n");
@@ -7051,6 +7136,7 @@ static GSM_Parameters Parameters[] = {
 	{"--getcalendarsettings",	0, 0, GetCalendarSettings	},
 	{"--gettodo",			1, 2, GetToDo			},
 	{"--deletetodo",		1, 2, DeleteToDo		},
+	{"--getnote",			1, 2, GetNote			},
 	{"--getcategory",       	2, 3, GetCategory       	},
 	{"--getallcategories",  	1, 1, GetAllCategories  	},
 	{"--reset",			1, 1, Reset			},

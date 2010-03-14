@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 
-#include "misc.h"
+#include "../misc.h"
 
 #ifdef __OpenBSD__
 typedef		int wint_t;

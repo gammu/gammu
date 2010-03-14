@@ -5,7 +5,7 @@
 #include <time.h>
 
 #include "../../../gsmcomon.h"
-#include "../../../misc/coding.h"
+#include "../../../misc/coding/coding.h"
 #include "../../../service/gsmlogo.h"
 #include "../nfunc.h"
 #include "../nfuncold.h"

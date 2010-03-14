@@ -180,11 +180,6 @@ typedef struct {
 
 /* ------------------------------------------------------------------------ */
 
-void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start);
-bool ReadVCALText(char *Buffer, char *Start, char *Value);
-
-/* ------------------------------------------------------------------------ */
-
 typedef enum {
 	GSM_Date_DDMMYYYY = 1,
 	GSM_Date_MMDDYYYY,

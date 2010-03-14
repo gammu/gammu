@@ -7,7 +7,7 @@
 #include "smsdcore.h"
 #include "../gammu.h"
 #include "s_files.h"
-#include "../../common/misc/coding.h"
+#include "../../common/misc/coding/coding.h"
 
 FILE 		 *smsd_log_file = NULL;
 static GSM_Error SendingSMSStatus;

@@ -22,12 +22,15 @@
 #define GSM_BACKUP_MAX_PROFILES		10
 #define GSM_BACKUP_MAX_FMSTATIONS	20
 #define GSM_BACKUP_MAX_GPRSPOINT	10
+#define GSM_BACKUP_MAX_NOTE		10	/* FIXME */
 
 typedef struct {
 	char			IMEI		[MAX_IMEI_LENGTH];
 	char			Model		[MAX_MODEL_LENGTH+MAX_VERSION_LENGTH];
 	GSM_DateTime		DateTime;
 	bool			DateTimeAvailable;
+	char			MD5Original	[100];
+	char			MD5Calculated	[100];
 	GSM_PhonebookEntry	*PhonePhonebook	[GSM_BACKUP_MAX_PHONEPHONEBOOK + 1];
 	GSM_PhonebookEntry	*SIMPhonebook	[GSM_BACKUP_MAX_SIMPHONEBOOK + 1];
 	GSM_CalendarEntry	*Calendar	[GSM_MAXCALENDARTODONOTES + 1];
@@ -41,6 +44,7 @@ typedef struct {
 	GSM_Profile		*Profiles	[GSM_BACKUP_MAX_PROFILES + 1];
  	GSM_FMStation		*FMStation	[GSM_BACKUP_MAX_FMSTATIONS +1];
 	GSM_GPRSAccessPoint	*GPRSPoint	[GSM_BACKUP_MAX_GPRSPOINT + 1];
+	GSM_NoteEntry		*Note		[GSM_BACKUP_MAX_NOTE + 1];
 	GSM_Bitmap		*StartupLogo;
 	GSM_Bitmap		*OperatorLogo;
 } GSM_Backup;

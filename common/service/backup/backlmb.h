@@ -3,7 +3,7 @@
 
 #include "backgen.h"
 
-GSM_Error SaveLMB(FILE *file, 	  GSM_Backup *backup);
+GSM_Error SaveLMB(char *FileName, GSM_Backup *backup);
 GSM_Error LoadLMB(char *FileName, GSM_Backup *backup);
 
 #endif

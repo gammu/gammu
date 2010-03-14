@@ -8,7 +8,7 @@
 #endif
 
 #include "../gsmcomon.h"
-#include "../misc/coding.h"
+#include "../misc/coding/coding.h"
 #include "../gsmstate.h"
 #include "gsmring.h"
 #include "gsmsms.h"

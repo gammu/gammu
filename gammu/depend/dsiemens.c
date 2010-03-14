@@ -5,7 +5,7 @@
 
 #include <string.h>
 
-#include "../../common/misc/coding.h"
+#include "../../common/misc/coding/coding.h"
 #include "../../common/gsmcomon.h"
 #include "../../common/service/gsmnet.h"
 #include "../../common/phone/at/atgen.h"

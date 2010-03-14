@@ -6,12 +6,65 @@
 #include "../../phone/nokia/nfunc.h"
 #include "../../phone/nokia/dct3/n7110.h"
 #include "../../misc/cfg.h"
-#include "../../misc/coding.h"
+#include "../../misc/coding/coding.h"
+#include "../../misc/coding/md5.h"
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
 #include "backtext.h"
 
 #ifdef GSM_ENABLE_BACKUP
+
+GSM_Error FindBackupChecksum(char *FileName, bool UseUnicode, char *checksum)
+{
+	CFG_Header		*file_info, *h;
+	CFG_Entry		*e;
+	char			*buffer = NULL,buff[100];
+	int			len=0;
+
+	file_info = CFG_ReadFile(FileName, UseUnicode);
+
+        for (h = file_info; h != NULL; h = h->next) {
+		if (UseUnicode) {
+			EncodeUnicode(buff,"Checksum",8);
+			if (mywstrncasecmp(buff, h->section, 8)) continue;
+		} else {
+	                if (mystrncasecmp("Checksum", h->section, 8)) continue;
+		}
+
+		if (UseUnicode) {
+			buffer = (unsigned char *)realloc(buffer,len+UnicodeLength(h->section)*2+2);
+			CopyUnicodeString(buffer+len,h->section);
+			len+=UnicodeLength(h->section)*2;
+		} else {
+			buffer = (unsigned char *)realloc(buffer,len+strlen(h->section)+1);
+			strcpy(buffer+len,h->section);
+			len+=strlen(h->section);
+		}
+	        for (e = h->entries; e != NULL; e = e->next) {
+			if (UseUnicode) {
+				buffer = (unsigned char *)realloc(buffer,len+UnicodeLength(e->key)*2+2);
+				CopyUnicodeString(buffer+len,e->key);
+				len+=UnicodeLength(e->key)*2;
+				buffer = (unsigned char *)realloc(buffer,len+UnicodeLength(e->value)*2+2);
+				CopyUnicodeString(buffer+len,e->value);
+				len+=UnicodeLength(e->value)*2;
+			} else {
+				dprintf("%s=%s\n",e->key,e->value);
+				buffer = (unsigned char *)realloc(buffer,len+strlen(e->key)+1);
+				strcpy(buffer+len,e->key);
+				len+=strlen(e->key);
+				buffer = (unsigned char *)realloc(buffer,len+strlen(e->value)+1);
+				strcpy(buffer+len,e->value);
+				len+=strlen(e->value);
+			}
+		}
+	}
+
+	CalculateMD5(buffer, len, checksum);
+	free(buffer);
+
+	return GE_NONE;
+}
 
 static unsigned char *ReadCFGText(CFG_Header *cfg, unsigned char *section, unsigned char *key, bool Unicode)
 {
@@ -918,10 +971,14 @@ static void SaveGPRSPointEntry(FILE *file, GSM_GPRSAccessPoint *GPRSPoint, bool 
 	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
-GSM_Error SaveBackup(FILE *file, GSM_Backup *backup, bool UseUnicode)
+GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 {
 	int 		i;
-	unsigned char 	buffer[1000];
+	unsigned char 	buffer[1000],checksum[200];
+	FILE 		*file;
+ 
+	file = fopen(FileName, "wb");      
+	if (file == NULL) return GE_CANTOPENFILE;
 
 	if (UseUnicode) {
 		sprintf(buffer,"%c%c", 0xFE, 0xFF);
@@ -1043,6 +1100,18 @@ GSM_Error SaveBackup(FILE *file, GSM_Backup *backup, bool UseUnicode)
 	if (backup->OperatorLogo!=NULL) {
 		SaveOperatorEntry(file, backup->OperatorLogo, UseUnicode);
 	}
+
+	fclose(file);
+
+	FindBackupChecksum(FileName, UseUnicode, checksum);
+
+	file = fopen(FileName, "ab");      
+	if (file == NULL) return GE_CANTOPENFILE;
+	sprintf(buffer,"[Checksum]%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"MD5=%s%c%c",checksum,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	fclose(file);
 
 	return GE_NONE;
 }
@@ -2037,6 +2106,14 @@ static void ReadGPRSPointEntry(CFG_Header *file_info, char *section, GSM_GPRSAcc
 	ReadBackupText(file_info, section, buffer, GPRSPoint->URL,UseUnicode);
 }
 
+static void ReadNoteEntry(CFG_Header *file_info, char *section, GSM_NoteEntry *Note, bool UseUnicode)
+{
+	unsigned char buffer[100];
+
+	sprintf(buffer,"Text");
+	ReadBackupText(file_info, section, buffer, Note->Text,UseUnicode);
+}
+
 GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 {
 	CFG_Header		*file_info, *h;
@@ -2065,6 +2142,11 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 		ReadVCALDateTime(readvalue, &backup->DateTime);
 		backup->DateTimeAvailable = true;
 	}
+
+	sprintf(buffer,"Checksum");
+	if (UseUnicode) EncodeUnicode(buffer,"Checksum",8);
+	readvalue = ReadCFGText(file_info, buffer, "MD5", UseUnicode);
+	if (readvalue!=NULL) strcpy(backup->MD5Original,readvalue);
 
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
@@ -2453,6 +2535,34 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			num++;
                 }
         }
+	num = 0;
+        for (h = file_info; h != NULL; h = h->next) {
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Note",4);
+			if (mywstrncasecmp(buffer, h->section, 4)) found = true;
+		} else {
+	                if (mystrncasecmp("Note", h->section, 4)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Text", UseUnicode);
+			if (readvalue==NULL) break;
+			if (num < GSM_BACKUP_MAX_NOTE) {
+				backup->Note[num] = malloc(sizeof(GSM_NoteEntry));
+			        if (backup->Note[num] == NULL) return GE_MOREMEMORY;
+				backup->Note[num + 1] = NULL;
+			} else {
+				dprintf("Increase GSM_BACKUP_MAX_NOTE\n");
+				return GE_MOREMEMORY;
+			}
+			ReadNoteEntry(file_info, h->section, backup->Note[num],UseUnicode);
+			num++;
+                }
+        }
+	if (backup->MD5Original[0]!=0) {
+		FindBackupChecksum(FileName, UseUnicode, backup->MD5Calculated);
+	}
+
 	return GE_NONE;
 }
 

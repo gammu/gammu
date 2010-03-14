@@ -16,7 +16,7 @@
 #endif
 
 #include "gsmcomon.h"
-#include "misc/coding.h"
+#include "misc/coding/coding.h"
 
 GSM_Error NoneFunction(void)
 {

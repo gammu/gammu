@@ -5,7 +5,7 @@
 #include "../../../cfg/config.h"
 #include "../../phone/nokia/nfunc.h"
 #include "../../phone/nokia/dct3/n7110.h"
-#include "../../misc/coding.h"
+#include "../../misc/coding/coding.h"
 #include "../../misc/cfg.h"
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
@@ -20,95 +20,100 @@
 
 void GSM_FreeBackup(GSM_Backup *backup)
 {
-    int i;
+	int i;
 
-    i=0;
-    while (backup->PhonePhonebook[i]!=NULL) {
-        free(backup->PhonePhonebook[i]);
-        backup->PhonePhonebook[i] = NULL;
-        i++;
-    }
-    i=0;
-    while (backup->SIMPhonebook[i]!=NULL) {
-        free(backup->SIMPhonebook[i]);
-        backup->SIMPhonebook[i] = NULL;
-        i++;
-    }
-    i=0;
-    while (backup->Calendar[i]!=NULL) {
-        free(backup->Calendar[i]);
-        backup->Calendar[i] = NULL;
-        i++;
-    }
-    i=0;
-    while (backup->CallerLogos[i]!=NULL) {
-        free(backup->CallerLogos[i]);
-        backup->CallerLogos[i] = NULL;
-        i++;
-    }
-    i=0;
-    while (backup->SMSC[i]!=NULL) {
-        free(backup->SMSC[i]);
-        backup->SMSC[i] = NULL;
-        i++;
-    }
-    i=0;
-    while (backup->WAPBookmark[i]!=NULL) {
-        free(backup->WAPBookmark[i]);
-        backup->WAPBookmark[i] = NULL;
-        i++;
-    }
-    i=0;
-    while (backup->WAPSettings[i]!=NULL) {
-        free(backup->WAPSettings[i]);
-        backup->WAPSettings[i] = NULL;
-        i++;
-    }
-    i=0;
-    while (backup->MMSSettings[i]!=NULL) {
-        free(backup->MMSSettings[i]);
-        backup->MMSSettings[i] = NULL;
-        i++;
-    }
-    i=0;
-    while (backup->Ringtone[i]!=NULL) {
-        free(backup->Ringtone[i]);
-        backup->Ringtone[i] = NULL;
-        i++;
-    }
-    i=0;
-    while (backup->ToDo[i]!=NULL) {
-        free(backup->ToDo[i]);
-        backup->ToDo[i] = NULL;
-        i++;
-    }
-    i=0;
-    while (backup->Profiles[i]!=NULL) {
-        free(backup->Profiles[i]);
-        backup->Profiles[i] = NULL;
-        i++;
-    }
-    i=0;
-    while (backup->FMStation[i]!=NULL) {
-        free(backup->FMStation[i]);
-        backup->FMStation[i] = NULL;
-        i++;
-    }
-
-    if (backup->StartupLogo!=NULL) {
-        free(backup->StartupLogo);
-        backup->StartupLogo = NULL;
-    }
-    if (backup->OperatorLogo!=NULL) {
-        free(backup->OperatorLogo);
-        backup->OperatorLogo = NULL;
-    }
-    i=0;
-    while (backup->GPRSPoint[i]!=NULL) {
-        free(backup->GPRSPoint[i]);
-        backup->GPRSPoint[i] = NULL;
-        i++;
-    }
+	i=0;
+	while (backup->PhonePhonebook[i]!=NULL) {
+		free(backup->PhonePhonebook[i]);
+		backup->PhonePhonebook[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->SIMPhonebook[i]!=NULL) {
+		free(backup->SIMPhonebook[i]);
+		backup->SIMPhonebook[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->Calendar[i]!=NULL) {
+		free(backup->Calendar[i]);
+		backup->Calendar[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->CallerLogos[i]!=NULL) {
+		free(backup->CallerLogos[i]);
+		backup->CallerLogos[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->SMSC[i]!=NULL) {
+		free(backup->SMSC[i]);
+		backup->SMSC[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->WAPBookmark[i]!=NULL) {
+		free(backup->WAPBookmark[i]);
+		backup->WAPBookmark[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->WAPSettings[i]!=NULL) {
+		free(backup->WAPSettings[i]);
+		backup->WAPSettings[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->MMSSettings[i]!=NULL) {
+		free(backup->MMSSettings[i]);
+		backup->MMSSettings[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->Ringtone[i]!=NULL) {
+		free(backup->Ringtone[i]);
+		backup->Ringtone[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->ToDo[i]!=NULL) {
+		free(backup->ToDo[i]);
+		backup->ToDo[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->Profiles[i]!=NULL) {
+		free(backup->Profiles[i]);
+		backup->Profiles[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->FMStation[i]!=NULL) {
+		free(backup->FMStation[i]);
+		backup->FMStation[i] = NULL;
+		i++;
+	}
+	if (backup->StartupLogo!=NULL) {
+		free(backup->StartupLogo);
+		backup->StartupLogo = NULL;
+	}
+	if (backup->OperatorLogo!=NULL) {
+		free(backup->OperatorLogo);
+		backup->OperatorLogo = NULL;
+	}
+	i=0;
+	while (backup->GPRSPoint[i]!=NULL) {
+		free(backup->GPRSPoint[i]);
+		backup->GPRSPoint[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->Note[i]!=NULL) {
+		free(backup->Note[i]);
+		backup->Note[i] = NULL;
+		i++;
+	}
 }
 
 void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
@@ -132,6 +137,7 @@ void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
 	backup->Profiles 	= false;
 	backup->FMStation 	= false;
 	backup->GPRSPoint	= false;
+	backup->Note		= false;
 
 	if (strstr(FileName,".lmb")) {
 		backup->PhonePhonebook 	= true;
@@ -165,42 +171,32 @@ void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
 		backup->Profiles 	= true;
  		backup->FMStation 	= true;
 		backup->GPRSPoint	= true;
+		backup->Note		= true;
 	}
 }
 
 GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode)
 {
-	FILE *file;
- 
-	file = fopen(FileName, "wb");      
-	if (file == NULL) return GE_CANTOPENFILE;
-
 	if (strstr(FileName,".lmb")) {
-		SaveLMB(file,backup);
+		return SaveLMB(FileName,backup);
 	} else if (strstr(FileName,".vcs")) {
-		SaveVCalendar(file,backup);
+		return SaveVCalendar(FileName,backup);
 	} else if (strstr(FileName,".vcf")) {
-		SaveVCard(file,backup);
+		return SaveVCard(FileName,backup);
 	} else if (strstr(FileName,".ldif")) {
-		SaveLDIF(file,backup);
+		return SaveLDIF(FileName,backup);
 	} else {
-		SaveBackup(file,backup, UseUnicode);
+		return SaveBackup(FileName,backup, UseUnicode);
 	}
-
-	fclose(file);
-   
-	return GE_NONE;
 }
 
 GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 {
 	FILE		*file;
 	unsigned char	buffer[300];
-	GSM_Error	error;
 
 	file = fopen(FileName, "rb");
 	if (file == NULL) return(GE_CANTOPENFILE);
-
 	fread(buffer, 1, 9, file); /* Read the header of the file. */
 	fclose(file);
 
@@ -208,22 +204,20 @@ GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 
 	/* Attempt to identify filetype */
 	if (strstr(FileName,".vcs")) {
-		error=LoadVCalendar(FileName,backup);
+		return LoadVCalendar(FileName,backup);
 	} else if (strstr(FileName,".vcf")) {
-		error=LoadVCard(FileName,backup);
+		return LoadVCard(FileName,backup);
 	} else if (strstr(FileName,".ldif")) {
-		error=LoadLDIF(FileName,backup);
+		return LoadLDIF(FileName,backup);
 	} else if (memcmp(buffer, "LMB ",4)==0) {
-		error=LoadLMB(FileName,backup);
+		return LoadLMB(FileName,backup);
 	} else if (buffer[0] == 0xFE && buffer[1] == 0xFF) {
-		error=LoadBackup(FileName,backup,true);
+		return LoadBackup(FileName,backup,true);
 	} else if (buffer[0] == 0xFF && buffer[1] == 0xFE) {
-		error=LoadBackup(FileName,backup,true);
+		return LoadBackup(FileName,backup,true);
 	} else {
-		error=LoadBackup(FileName,backup,false);
+		return LoadBackup(FileName,backup,false);
 	}
-
-	return error;
 }
 
 void GSM_ClearBackup(GSM_Backup *backup)
@@ -241,12 +235,15 @@ void GSM_ClearBackup(GSM_Backup *backup)
 	backup->ToDo		[0] = NULL;
 	backup->GPRSPoint	[0] = NULL;
 	backup->FMStation	[0] = NULL;
+	backup->Note		[0] = NULL;
 	backup->StartupLogo	    = NULL;
 	backup->OperatorLogo	    = NULL;
 
 	backup->IMEI		[0] = 0;
 	backup->Model		[0] = 0;
 	backup->DateTimeAvailable   = false;
+	backup->MD5Original	[0] = 0;
+	backup->MD5Calculated	[0] = 0;
 }
 
 #endif

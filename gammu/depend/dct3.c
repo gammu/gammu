@@ -6,7 +6,7 @@
 #include <string.h>
 #include <signal.h>
 
-#include "../../common/misc/coding.h"
+#include "../../common/misc/coding/coding.h"
 #include "../../common/gsmcomon.h"
 #include "../../common/service/gsmpbk.h"
 #include "../../common/phone/nokia/dct3/dct3func.h"

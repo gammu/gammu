@@ -113,7 +113,11 @@ SOURCE=..\..\common\misc\cfg.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\misc\coding.c
+SOURCE=..\..\common\misc\coding\coding.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\misc\coding\md5.c
 # End Source File
 # Begin Source File
 
@@ -341,7 +345,11 @@ SOURCE=..\..\common\misc\cfg.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\misc\coding.h
+SOURCE=..\..\common\misc\coding\coding.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\misc\coding\md5.h
 # End Source File
 # Begin Source File
 

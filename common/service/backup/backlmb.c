@@ -5,7 +5,7 @@
 #include "../../../cfg/config.h"
 #include "../../phone/nokia/nfunc.h"
 #include "../../phone/nokia/dct3/n7110.h"
-#include "../../misc/coding.h"
+#include "../../misc/coding/coding.h"
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
 #include "backlmb.h"
@@ -119,19 +119,24 @@ void SaveLMBPBKEntry(FILE *file, GSM_PhonebookEntry *entry)
 	fwrite(req, 1, count, file);	    
 }
 
-GSM_Error SaveLMB(FILE *file, GSM_Backup *backup)
+GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
 {
-	int i;
-	char LMBHeader[] = {'L','M','B',' '}; /*file identifier*/    
-	char PBKHeader[] = {		      /* Phonebook header block */
-		'P','B','K',' ', /*block identifier*/
-		0x08,00,         /*block data size*/
-		0x02,00,         
-		03,              /*memory type. ME=02;SM=03*/
-		00,00,00,
-		00,00,           /*size of phonebook*/
-		14,              /*max length of each position*/
-		00,00,00,00,00};
+	FILE 	*file;
+	int 	i;
+	char 	LMBHeader[] = {'L','M','B',' '}; /*file identifier*/    
+	char 	PBKHeader[] = {		      	 /*Phonebook header block */
+			'P','B','K',' ', 	 /*block identifier*/
+			0x08,00,         	 /*block data size*/
+			0x02,00,         
+			03,              	 /*memory type. ME=02;SM=03*/
+			00,00,00,
+			00,00,           	 /*size of phonebook*/
+			14,              	 /*max length of each position*/
+			00,00,00,00,00};
+
+ 
+	file = fopen(FileName, "wb");      
+	if (file == NULL) return GE_CANTOPENFILE;
 
 	/* Write the header of the file. */		    		      
 	fwrite(LMBHeader, 1, sizeof(LMBHeader), file);
@@ -168,6 +173,7 @@ GSM_Error SaveLMB(FILE *file, GSM_Backup *backup)
 		SaveLMBStartupEntry(file, *backup->StartupLogo);
 	}
 
+	fclose(file);
 	return GE_NONE;
 }
 

@@ -1,7 +1,7 @@
 
 #include <string.h>
 
-#include "../misc/coding.h"
+#include "../misc/coding/coding.h"
 #include "gsmpbk.h"
 #include "gsmmisc.h"
 

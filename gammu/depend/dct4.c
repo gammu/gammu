@@ -9,7 +9,7 @@
 #include "../gammu.h"
 #include "../../common/phone/nokia/nfunc.h"
 #include "../../common/phone/nokia/dct4/dct4func.h"
-#include "../../common/misc/coding.h"
+#include "../../common/misc/coding/coding.h"
 
 extern GSM_Reply_Function UserReplyFunctions4[];
 

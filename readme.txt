@@ -1,4 +1,4 @@
-Gammu README version 28.06.2003
+Gammu README version 10.10.2003
 -------------------------------
 Q. What is this ?
 
@@ -62,16 +62,21 @@ A. * these things can be done without anything (it will be done everything
      * SyncML
      * .... (other)
    * this things can be done after getting some hardware help:
-     * N3410 Java support
-     * N5510 radio/MP3 support
-     * N3300 MP3 support
-     * for Series 40 SyncML & camera settings, OMA provisioning, full media
-       rights support, SMS distribution lists, assigning pictures to pbk
+     * Nokia:
+       * N3410 Java support
+       * N5510 radio/MP3 support
+       * N3300 MP3 support
+       * for Series 40 SyncML & camera settings, OMA provisioning, full media
+         rights support, SMS distribution lists, assigning pictures to pbk,
+         Notes
+     * Other:
+       * more EMS features: polyphonic ringtones, more text features, etc.
      * .... (other)
    * these things will be probably never done:
-     * CRC16 for filesystem in DCT4 phones (although it's called CRC16 by
-       Nokia, none of possible CRC16 polynoms give correct results. Alghoritm
-       used by Nokia uses initial value 0xffff)
+     * Nokia:
+       * CRC16 for filesystem in DCT4 phones (although it's called CRC16 by
+         Nokia, none of possible CRC16 polynoms give correct results.
+         Alghoritm used by Nokia uses initial value 0xffff)
 -------------------------------------------------------------------------------
 Q. Where to get latest versions and support ?
 
@@ -357,6 +362,8 @@ A. 1.Nokia DCT3 (3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|
      Tested with Nokia Series40/Series60 and SonyEricsson. Works according to
      device capabilities (can be folder browsing/getting/uploading files/
      uploading files to Inbox)
+
+   9.Sony Ericsson
 -------------------------------------------------------------------------------
 Q. How to report bugs ?
 
@@ -690,3 +697,31 @@ A. They require GSM 6.10 codec to be played. In Win XP it's included by
    11. now You can be asked if want to install unsigned driver (YES), about
        select codec configuration (select what you want) and rebotting PC (make
        it)
+-------------------------------------------------------------------------------
+Q. I have problems with GPRS Online in my Nokia phone (Series 40, not Symbian)
+
+A. In first Nokia phones with GPRS (like 8310, 6310, 6310i, 6510, 3510 and
+   maybe some other) phone was able to display "G" char instead of char
+   displayed below network level. It was clear, that phone is in continuous
+   GPRS session and downloading some data won't be connected with starting new
+   session (in many networks connected with new money for operator).
+   If phone end GPRS session after leaving WAP browser or data connection
+   (no "G" char), it had disabled continuous GPRS sessions (it was done
+   for example after upgrading firmware in service). Simple
+   "gammu --nokiasetphomenus" "repaired" it.
+
+   Nokia 3510i seems to have disabled possibility of using continous GPRS
+   sessions at all. Probably the same will be in other cheap Nokia models.
+
+   All other new models seems to have ability of making continuous GPRS
+   sessions - at least some documents from Nokia say, that the same setting
+   (the same, which was set for first models) should be set to enable
+   this behaviour. "gammu --nokiasetphonemenus" sets it, but it looks, that or
+   this info is wrong or new models continues GPRS sessions without informing
+   users about it (no "G" char). I haven't checked it deeply. Maybe in free
+   moment...
+
+   Short summary: GPRS was chance to save some money. It was wrong for
+   cellular operators. Probably on their requests Nokia made sessions more
+   enpensive (it's not possible to use continuous sessions or they're more
+   hidden). Welcome in new connected world :-(

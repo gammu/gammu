@@ -10,8 +10,9 @@ DOCS      = docs\
 COMMON    = $(TOPDIR)/common/gsmcomon.o \
 	    $(TOPDIR)/common/gsmstate.o \
 	    $(TOPDIR)/common/misc/misc.o \
-	    $(TOPDIR)/common/misc/coding.o \
 	    $(TOPDIR)/common/misc/cfg.o \
+	    $(TOPDIR)/common/misc/coding/coding.o \
+	    $(TOPDIR)/common/misc/coding/md5.o \
 	    $(TOPDIR)/common/service/gsmsms.o \
 	    $(TOPDIR)/common/service/gsmcal.o \
 	    $(TOPDIR)/common/service/gsmwap.o \
@@ -66,8 +67,8 @@ GAMMU     = $(TOPDIR)/gammu/depend/dct3.o \
 	    $(TOPDIR)/gammu/gammu.o
 
 LOCALE    = $(TOPDIR)/common/misc/misc.o \
-	    $(TOPDIR)/common/misc/coding.o \
 	    $(TOPDIR)/common/misc/cfg.o \
+	    $(TOPDIR)/common/misc/coding/coding.o \
 	    $(TOPDIR)/cfg/locale/locale.o
 	    
 LOCALE2   = $(TOPDIR)/cfg/locale

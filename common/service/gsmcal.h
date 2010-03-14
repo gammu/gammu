@@ -138,11 +138,20 @@ typedef struct {
 	int		Used;		/* Number of used positions */
 } GSM_ToDoStatus;
 
-/* ------------------------------ both ------------------------------------- */
+/* --------------------------- note ---------------------------------------- */
+
+typedef struct {
+	int		Location;
+	char 		Text[100];
+} GSM_NoteEntry;
+
+GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *Note);
+
+/* --------------------------- calendar & todo ----------------------------- */
 
 GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer);
 
-#endif	/* __gsm_calendar_h */
+#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

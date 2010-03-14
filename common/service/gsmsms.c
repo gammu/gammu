@@ -4,7 +4,7 @@
 #include <time.h>
 
 #include "../gsmcomon.h"
-#include "../misc/coding.h"
+#include "../misc/coding/coding.h"
 #include "gsmsms.h"
 #include "gsmcal.h"
 #include "gsmpbk.h"

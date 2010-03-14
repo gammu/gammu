@@ -8,16 +8,15 @@
 #include <string.h>
 #include <time.h>
 
+#include "../../misc/coding/coding.h"
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
-#include "../../misc/coding.h"
 #include "../../service/gsmmisc.h"
 #include "../../protocol/obex/obex.h"
 
 #ifdef GSM_ENABLE_OBEXGEN
 
 static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start);
-static GSM_Error OBEXGEN_GetFilePart	  (GSM_StateMachine *s, GSM_File *File);
 
 static void OBEXGEN_FindNextDir(unsigned char *Path, int *Pos, unsigned char *Return)
 {
@@ -36,19 +35,27 @@ static void OBEXGEN_FindNextDir(unsigned char *Path, int *Pos, unsigned char *Re
 	}
 	EncodeUnicode(Return,buff,strlen(buff));
 }
-                                    	
+
 static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {                
 	switch (msg.Type) {
 	case 0xA0:
-		smprintf(s,"Connected OK\n");
-		s->Phone.Data.Priv.OBEXGEN.FrameSize = msg.Buffer[2]*256+msg.Buffer[3];
-		smprintf(s,"Maximal size of frame is %i 0x%x\n",s->Phone.Data.Priv.OBEXGEN.FrameSize,s->Phone.Data.Priv.OBEXGEN.FrameSize);
+		smprintf(s,"Connected/disconnected OK\n");
+		if (msg.Length != 0) {
+			s->Phone.Data.Priv.OBEXGEN.FrameSize = msg.Buffer[2]*256+msg.Buffer[3];
+			smprintf(s,"Maximal size of frame is %i 0x%x\n",s->Phone.Data.Priv.OBEXGEN.FrameSize,s->Phone.Data.Priv.OBEXGEN.FrameSize);
+		}
 		return GE_NONE;
 	}
 	return GE_UNKNOWNRESPONSE;
 }
 
+GSM_Error OBEXGEN_Disconnect(GSM_StateMachine *s)
+{
+	smprintf(s, "Disconnecting\n");
+	return GSM_WaitFor (s, NULL, 0, 0x81, 2, ID_Initialise);
+}
+                                    	
 GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 {
 	int		Current=4;
@@ -139,6 +146,8 @@ static GSM_Error OBEXGEN_ChangePath(GSM_StateMachine *s, char *Name, unsigned ch
 	if (Name != NULL && UnicodeLength(Name) != 0) {
 		OBEXAddBlock(req, &Current, 0x01, Name, UnicodeLength(Name)*2+2);
 	} else {
+		/* SE T310 doesn't support changing folder */
+		if (!strcmp(s->CurrentConfig->Model,"seobex")) return GE_NONE;
 		OBEXAddBlock(req, &Current, 0x01, NULL, 0);
 	}
 
@@ -272,6 +281,8 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 
 static GSM_Error OBEXGEN_ReplyGetFileInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	int old;
+
 	switch (msg.Type) {
 	case 0x83:
 		smprintf(s,"Not available ?\n");
@@ -279,6 +290,17 @@ static GSM_Error OBEXGEN_ReplyGetFileInfo(GSM_Protocol_Message msg, GSM_StateMac
 	case 0x90:
 		smprintf(s,"Last part of file info received\n");
 		return GE_NONE;
+	case 0xA0:
+		/* SE T310 */
+		smprintf(s,"File part received\n");
+		old = s->Phone.Data.File->Used;
+		s->Phone.Data.File->Used += msg.Buffer[1]*256+msg.Buffer[2]-3;
+		smprintf(s,"Length of file part: %i\n",
+				msg.Buffer[1]*256+msg.Buffer[2]-3);
+
+		s->Phone.Data.File->Buffer = (unsigned char *)realloc(s->Phone.Data.File->Buffer,s->Phone.Data.File->Used);
+		memcpy(s->Phone.Data.File->Buffer+old,msg.Buffer+3,s->Phone.Data.File->Used-old);
+		return GE_EMPTY;
 	}
 	return GE_UNKNOWNRESPONSE;
 }
@@ -326,6 +348,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 				/* Type block */
 				OBEXAddBlock(req, &Current, 0x42, req2, strlen(req2)+1);
 			} else {
+//				error = OBEXGEN_Connect(s,OBEX_None);
 				error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
 				if (error != GE_NONE) return error;
 
@@ -382,7 +405,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 	return GE_EMPTY;
 }
 
-static GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File)
+GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File)
 {
 	return OBEXGEN_PrivGetFilePart(s,File,false);
 }
@@ -629,7 +652,7 @@ static GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	return OBEXGEN_ChangePath(s, File->Name, 0);
 }
 
-static GSM_Reply_Function OBEXGENReplyFunctions[] = {
+GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	/* CONTINUE block */
 	{OBEXGEN_ReplyAddFilePart,	"\x90",0x00,0x00,ID_AddFile			},
 	{OBEXGEN_ReplyGetFilePart,	"\x90",0x00,0x00,ID_GetFile			},
@@ -640,6 +663,7 @@ static GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	{OBEXGEN_ReplyConnect,		"\xA0",0x00,0x00,ID_Initialise			},
 	{OBEXGEN_ReplyAddFilePart,	"\xA0",0x00,0x00,ID_AddFile			},
 	{OBEXGEN_ReplyGetFilePart,	"\xA0",0x00,0x00,ID_GetFile			},
+	{OBEXGEN_ReplyGetFileInfo,	"\xA0",0x00,0x00,ID_GetFileInfo			},
 
 	/* FOLDER CREATED block */
 	{OBEXGEN_ReplyChangePath,	"\xA1",0x00,0x00,ID_SetPath			},
@@ -658,7 +682,7 @@ static GSM_Reply_Function OBEXGENReplyFunctions[] = {
 };
 
 GSM_Phone_Functions OBEXGENPhone = {
-	"obex",
+	"obex|seobex",
 	OBEXGENReplyFunctions,
 	OBEXGEN_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/
@@ -760,7 +784,8 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTSUPPORTED,			/* 	GetLocale		*/
 	NOTSUPPORTED,			/* 	SetLocale		*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
-	NOTSUPPORTED			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED			/*	GetNote			*/
 };
 
 #endif

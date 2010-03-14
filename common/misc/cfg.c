@@ -10,8 +10,8 @@
 #endif
 
 #include "../../cfg/config.h"
+#include "coding/coding.h"
 #include "cfg.h"
-#include "coding.h"
 #include "misc.h"
 
 /* Read configuration information from a ".INI" style file */

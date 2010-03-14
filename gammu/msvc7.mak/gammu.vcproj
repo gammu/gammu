@@ -154,7 +154,7 @@
 				RelativePath="..\..\common\misc\cfg.c">
 			</File>
 			<File
-				RelativePath="..\..\common\misc\coding.c">
+				RelativePath="..\..\common\misc\coding\coding.c">
 			</File>
 			<File
 				RelativePath="..\depend\dct3.c">
@@ -233,6 +233,9 @@
 			</File>
 			<File
 				RelativePath="..\..\common\protocol\nokia\mbus2.c">
+			</File>
+			<File
+				RelativePath="..\..\common\misc\coding\md5.c">
 			</File>
 			<File
 				RelativePath="..\..\common\misc\misc.c">
@@ -341,7 +344,7 @@
 				RelativePath="..\..\common\misc\cfg.h">
 			</File>
 			<File
-				RelativePath="..\..\common\misc\coding.h">
+				RelativePath="..\..\common\misc\coding\coding.h">
 			</File>
 			<File
 				RelativePath="..\depend\dct3.h">
@@ -411,6 +414,9 @@
 			</File>
 			<File
 				RelativePath="..\..\common\protocol\nokia\mbus2.h">
+			</File>
+			<File
+				RelativePath="..\..\common\misc\coding\md5.h">
 			</File>
 			<File
 				RelativePath="..\..\common\misc\misc.h">

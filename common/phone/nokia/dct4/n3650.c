@@ -7,7 +7,7 @@
 #include <time.h>
 
 #include "../../../gsmcomon.h"
-#include "../../../misc/coding.h"
+#include "../../../misc/coding/coding.h"
 #include "../../../service/gsmlogo.h"
 #include "../nfunc.h"
 #include "../nfuncold.h"
@@ -362,7 +362,8 @@ GSM_Phone_Functions N3650Phone = {
 	NOTSUPPORTED,			/* 	GetLocale		*/
 	NOTSUPPORTED,			/* 	SetLocale		*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
-	NOTSUPPORTED			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED			/*	GetNote			*/
 };
 
 #endif

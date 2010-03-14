@@ -81,6 +81,9 @@ typedef struct {
 	GSM_AT_PHONE_SMSMemory	PhoneSMSMemory;	  /* Is phone SMS memory available ? 		*/
 	GSM_MemoryType		SMSMemory;	  /* Last read SMS memory 			*/
 	GSM_AT_SMS_Modes	SMSMode;	  /* PDU or TEXT mode for SMS ? 		*/
+
+	bool			OBEX;
+	GSM_File		file;
 } GSM_Phone_ATGENData;
 
 #endif

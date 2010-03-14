@@ -22,116 +22,258 @@
 # define GSM_USED_ALCABUS
 #endif
 
-/* in which mode we are currently? */
+/**
+ * Determines which mode is phone currently using.
+ */
 typedef enum {
+	/**
+	 * Phone accepts normal AT commands.
+	 */
 	ModeAT = 1,
+	/**
+	 * Binary mode using proprietary protocol.
+	 */
 	ModeBinary
 } GSM_Alcatel_Mode;
 
-/* protocol version */
+/**
+ * Protocol version being used for binary mode.
+ */
 typedef enum {
+	/**
+	 * Version 1.0 used in BE5 phones (501, 701).
+	 */
 	V_1_0 = 1,
+	/**
+	 * Version 1.1 used in BF5 phones (715).
+	 */
 	V_1_1
 } GSM_Alcatel_ProtocolVersion;
 
-/* state of binary mode */
+/**
+ * State of binary mode.
+ */
 typedef enum {
-	StateAttached = 1,	/* Attached */
-	StateSession,	/* Active session of BinaryType type */
-	StateEdit		/* Active editing of some type, BinaryItem incicates which item is being edited */
+	/**
+	 * Binary mode is active. No type selected.
+	 */
+	StateAttached = 1,
+	/**
+	 * Opened session of some type.
+	 */
+	StateSession,
+	/**
+	 * Some item is being edited.
+	 */
+	StateEdit
 } GSM_Alcatel_BinaryState;
 
-/* type of active binary session */
+/**
+ * Type of active binary session.
+ */
 typedef enum {
+	/**
+	 * Calendar events.
+	 */
 	TypeCalendar = 1,
+	/**
+	 * Contacts.
+	 */
 	TypeContacts,
+	/**
+	 * To do items.
+	 */
 	TypeToDo
 } GSM_Alcatel_BinaryType;
 
-/* Alcatel internal types */
+/**
+ * Alcatel internal types.
+ */
 typedef enum {
-	Alcatel_date,	/* DATE	*/
-	Alcatel_time,	/* TIME	*/
+	/**
+	 * Date, stored as @ref GSM_DateTime.
+	 */
+	Alcatel_date,
+	/**
+	 * Time, stored as @ref GSM_DateTime.
+	 */
+	Alcatel_time,
+	/**
+	 * String, strored as chars
+	 */
 	Alcatel_string,	/* char	*/
-	Alcatel_phone,	/* char	*/
-	Alcatel_enum,	/* int	*/
-	Alcatel_bool,	/* int	*/
-	Alcatel_int,	/* int	*/
-	Alcatel_byte	/* int	*/
+	/**
+	 * Phone number (can contain anything, but dialling it then may cause
+	 * strange problems to phone) strored as chars.
+	 */
+	Alcatel_phone,
+	/**
+	 * Enumeration, usually used for user defined values (categories),
+	 * stored as int.
+	 */
+	Alcatel_enum,
+	/**
+	 * Boolean, stored as int.
+	 */
+	Alcatel_bool,
+	/**
+	 * 32-bit unsigned integer, stored as int.
+	 */
+	Alcatel_int,
+	/**
+	 * 8-bit usigned integer, stored as int.
+	 */
+	Alcatel_byte
 } GSM_Alcatel_FieldType;
 
-/* timeout for GSM_WaitFor */
-#define ALCATEL_TIMEOUT			32
-/* what is returned as free memory by GetMemoryStatus */
-/* XXX: what should be returned by it, when there is no way how to determine
- * this from phone.
+/**
+ * Return value for GetMemoryStatus. There is no way ho to determine free
+ * memory so we have to return some fixed value.
  */
 #define ALCATEL_FREE_MEMORY		100
+/**
+ * Maximum location, that will driver attempt to read. Because phone can have
+ * up to 2^32 locations, we want to limit this a bit.
+ */
 /* There COULD be 0xffffffff on next line, but this is IMHO enough */
 #define ALCATEL_MAX_LOCATION		0xffff
+/**
+ * Maximum category count. Used for static cache size.
+ */
 #define ALCATEL_MAX_CATEGORIES		100
 
+/**
+ * Alcatel driver private data.
+ */
 typedef struct {
 	/***********************************/
 	/* Communication state information */
 	/***********************************/
+	/**
+	 * Mode of current communication.
+	 */
 	GSM_Alcatel_Mode	Mode;
+	/**
+	 * State of current communication if phone is in binary mode.
+	 */
 	GSM_Alcatel_BinaryState	BinaryState;
-	GSM_Alcatel_BinaryType	BinaryType;	/* 0 when N/A (StateAttached) */
-	int			BinaryItem;	/* 0 when N/A (StateAttached, StateSession) */
-	GSM_Alcatel_ProtocolVersion	ProtocolVersion; /* Alcatel protocol version */
+	/**
+	 * Type of current communication if phone is in session or edit state,
+	 * zero otherwise.
+	 */
+	GSM_Alcatel_BinaryType	BinaryType;
+	/**
+	 * Currently edited item when phone is in edit state, zero otherwise.
+	 */
+	int			BinaryItem;
+	/**
+	 * Protocol version being used.
+	 */
+	GSM_Alcatel_ProtocolVersion	ProtocolVersion;
 
 	/*****************/
 	/* Return values */
 	/*****************/
+	/**
+	 * Return value for commited record position.
+	 */
 	int			CommitedRecord;
+	/**
+	 * Used for detecting end of large data data, that don't fit in one
+	 * message.
+	 */
 	bool			TransferCompleted;
-	GSM_Alcatel_FieldType	ReturnType;					/* Type of received data */
-	GSM_DateTime		ReturnDateTime; 				/* For date and time */
-	unsigned int		ReturnInt;					/* For enum, bool, int and byte */
-	unsigned char		ReturnString[(GSM_PHONEBOOK_TEXT_LENGTH+1)*2];	/* For string and phone */
+	/**
+	 * Type of currently received field.
+	 */
+	GSM_Alcatel_FieldType	ReturnType;
+	/**
+	 * Value of currently returned field (if it can be saved in DateTime).
+	 */
+	GSM_DateTime		ReturnDateTime;
+	/**
+	 * Value of currently returned field (if it can be saved in int).
+	 */
+	unsigned int		ReturnInt;
+	/**
+	 * Value of currently returned field (if it can be saved in string).
+	 */
+	unsigned char		ReturnString[(GSM_PHONEBOOK_TEXT_LENGTH+1)*2];
 
 	/***********/
 	/* Caches: */
 	/***********/
 	/* Listings of available items for each type */
+	/**
+	 * Pointer to list of active items.
+	 */
 	int			**CurrentList;
+	/**
+	 * Pointer to currently count of active items.
+	 */
 	int			*CurrentCount;
+	/**
+	 * Items locations in calendar.
+	 */
 	int			*CalendarItems;
+	/**
+	 * Items locations in to do list.
+	 */
 	int			*ToDoItems;
+	/**
+	 * Items locations in contacts.
+	 */
 	int			*ContactsItems;
+	/**
+	 * Count of calendar items stored in @ref CalendarItems.
+	 */
 	int			CalendarItemsCount;
+	/**
+	 * Count of todo items stored in @ref ToDoItems.
+	 */
 	int			ToDoItemsCount;
+	/**
+	 * Count of contacts items stored in @ref ContactsItems.
+	 */
 	int			ContactsItemsCount;
+	/**
+	 * Fields of currently active item.
+	 */
 	int			CurrentFields[GSM_PHONEBOOK_ENTRIES+1];
+	/**
+	 * Count of fields listed in @ref CurrentFields.
+	 */
 	int			CurrentFieldsCount;
+	/**
+	 * Location of current (eg. which identifies @ref CurrentFieldsCount
+	 * and @ref CurrentFields) item.
+	 */
 	int			CurrentFieldsItem;
+	/**
+	 * Type of current (eg. which identifies @ref CurrentFieldsCount
+	 * and @ref CurrentFields) item.
+	 */
 	GSM_Alcatel_BinaryType	CurrentFieldsType;
 
+	/**
+	 * Listing of categories of current type.
+	 */
 	int			CurrentCategories[ALCATEL_MAX_CATEGORIES+1];
+	/**
+	 * Cache for category names of current type. The index here is not
+	 * same as in @ref CurrentCategories, it is id of category here.
+	 */
+	char			CurrentCategoriesCache[ALCATEL_MAX_CATEGORIES+1][(GSM_MAX_CATEGORY_NAME_LENGTH + 1)*2];
+	/**
+	 * Count of entries in @ref CurrentCategories.
+	 */
 	int			CurrentCategoriesCount;
+	/**
+	 * Type of current categories in @ref CurrentCategories etc.
+	 */
 	GSM_Alcatel_BinaryType	CurrentCategoriesType;
 
 } GSM_Phone_ALCATELData;
-
-/*****************************/
-/* Some magic numbers follow */
-/*****************************/
-
-/* synchronisation types (for everything except begin transfer): */
-#define ALCATEL_SYNC_TYPE_CALENDAR	0x64
-#define ALCATEL_SYNC_TYPE_TODO		0x68
-#define ALCATEL_SYNC_TYPE_CONTACTS	0x6C
-
-/* synchronisation types (for begin transfer): */
-#define ALCATEL_BEGIN_SYNC_CALENDAR	0x00
-#define ALCATEL_BEGIN_SYNC_TODO		0x02
-#define ALCATEL_BEGIN_SYNC_CONTACTS	0x01
-
-/* category types */
-#define ALCATEL_LIST_TODO_CAT		0x9B
-#define ALCATEL_LIST_CONTACTS_CAT	0x96
-
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

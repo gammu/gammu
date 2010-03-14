@@ -22,10 +22,32 @@
 #include <time.h>
 
 #include "../../gsmcomon.h"
-#include "../../misc/coding.h"
+#include "../../misc/coding/coding.h"
 #include "../../service/gsmsms.h"
 #include "../pfunc.h"
 #include "alcatel.h"
+
+/* Timeout for GSM_WaitFor calls. */
+#define ALCATEL_TIMEOUT			32
+
+/* Some magic numbers for protocol follow */
+
+/* synchronisation types (for everything except begin transfer): */
+#define ALCATEL_SYNC_TYPE_CALENDAR	0x64
+#define ALCATEL_SYNC_TYPE_TODO		0x68
+#define ALCATEL_SYNC_TYPE_CONTACTS	0x6C
+
+/* synchronisation types (for begin transfer): */
+#define ALCATEL_BEGIN_SYNC_CALENDAR	0x00
+#define ALCATEL_BEGIN_SYNC_TODO		0x02
+#define ALCATEL_BEGIN_SYNC_CONTACTS	0x01
+
+/* category types */
+#define ALCATEL_LIST_TODO_CAT		0x9B
+#define ALCATEL_LIST_CONTACTS_CAT	0x96
+
+
+/* We need lot of ATGEN functions, because Alcatel is an AT device. */
 
 extern GSM_Reply_Function ALCATELReplyFunctions[];
 extern GSM_Reply_Function ATGENReplyFunctions[];
@@ -63,7 +85,8 @@ extern GSM_Error ATGEN_HandleCMSError		(GSM_StateMachine *s);
 
 extern GSM_Error ATGEN_DispatchMessage		(GSM_StateMachine *s);
 
-/* Alcatel uses some 8-bit characters in contacts, calendar etc.. This table
+/**
+ * Alcatel uses some 8-bit characters in contacts, calendar etc.. This table
  * attempts to decode it, it is probably not complete, here are just chars
  * that I found...
  */
@@ -919,6 +942,8 @@ static GSM_Error ALCATEL_ReplyGetCategories(GSM_Protocol_Message msg, GSM_StateM
 
 	for (i = 0; i < Priv->CurrentCategoriesCount; i++) {
 		Priv->CurrentCategories[i] = msg.Buffer[13 + i];
+		Priv->CurrentCategoriesCache[i][0] = '\000';
+		Priv->CurrentCategoriesCache[i][1] = '\000';
 	}
 
 	return GE_NONE;
@@ -935,6 +960,7 @@ static GSM_Error ALCATEL_GetAvailableCategoryIds(GSM_StateMachine *s) {
 					 0x00 /* list */};
 
 	if (Priv->BinaryState != StateSession) return GE_UNKNOWN;
+	if (Priv->CurrentCategoriesType == Priv->BinaryType) return GE_NONE;
 	switch (Priv->BinaryType) {
 		case TypeContacts:
 			buffer[2] = ALCATEL_SYNC_TYPE_CONTACTS;
@@ -948,7 +974,6 @@ static GSM_Error ALCATEL_GetAvailableCategoryIds(GSM_StateMachine *s) {
 			return GE_NOTSUPPORTED;
 	}
 
-	if (Priv->CurrentCategoriesType == Priv->BinaryType) return GE_NONE;
 	Priv->CurrentCategoriesType = Priv->BinaryType;
 
 	smprintf(s,"Reading category list\n");
@@ -1007,6 +1032,11 @@ static GSM_Error ALCATEL_GetCategoryText(GSM_StateMachine *s, int id) {
 	unsigned char		buffer[] = {0x00, 0x04, 0x00 /*type*/, 0x0c, 0x00 /*list*/, 0x0A, 0x01, 0x00 /*item*/ };
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	GSM_Error		error;
+	
+	if (Priv->CurrentCategoriesCache[id][0] != '\000' || Priv->CurrentCategoriesCache[id][1] != '\000') {
+		CopyUnicodeString(Priv->ReturnString, Priv->CurrentCategoriesCache[id]);
+		return GE_NONE;
+	}
 
 	switch (Priv->BinaryType) {
 		case TypeContacts:
@@ -1027,6 +1057,8 @@ static GSM_Error ALCATEL_GetCategoryText(GSM_StateMachine *s, int id) {
 	if (error != GE_NONE) return error;
 	error=GSM_WaitFor (s, 0, 0, 0x00, ALCATEL_TIMEOUT, ID_AlcatelGetCategoryText2);
 	if (error != GE_NONE) return error;
+	
+	CopyUnicodeString(Priv->CurrentCategoriesCache[id], Priv->ReturnString);
 
 	return GE_NONE;
 }
@@ -2995,7 +3027,8 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/* 	GetLocale		*/
 	NOTSUPPORTED,			/* 	SetLocale		*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
-	NOTSUPPORTED			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED			/*	GetNote			*/
 };
 
 #endif
