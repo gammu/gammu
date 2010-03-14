@@ -23,6 +23,7 @@ unsigned char N71_65_MEMORY_TYPES[] = {
 	MEM7110_CG,	 0x10,
 	MEM_ON,		 0x17,
 	MEM6510_CG2, 	 0x23,
+	MEM_SL,		 0x27,
 	  0x00,		 0x00
 };
 
@@ -359,6 +360,12 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			continue;
 		}
 		//to checking
+		if (Block[0] == S4030_PBK_CALLLENGTH) {
+			entry->Entries[entry->EntriesNum].CallLength = Block[9]*256*256+Block[10]*256+Block[11];
+			entry->Entries[entry->EntriesNum].EntryType=PBK_CallLength;
+			entry->EntriesNum ++;
+			continue;			
+		}
 		if (Block[0] == S4030_PBK_POSTAL) {
 			if (Block[5] == S4030_PBK_POSTAL_EXTADDRESS) {
 				Type = PBK_Text_Custom1;    	smprintf(s,"Address extension ? ");
@@ -496,7 +503,12 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				bitmap->RingtoneID		= Block[10]*256+Block[11];
 				bitmap->DefaultRingtone 	= false;
 			} else {
-				return ERR_UNKNOWNRESPONSE;
+				//series 40 3.0
+				smprintf(s, "Filesystem ringtone ID: %02x\n",Block[10]*256+Block[11]);
+				entry->Entries[entry->EntriesNum].EntryType=PBK_RingtoneID;
+				entry->Entries[entry->EntriesNum].Number=Block[10]*256+Block[11];
+				entry->EntriesNum ++;
+//				return ERR_UNKNOWNRESPONSE;
 			}
 			continue;
 		}

@@ -276,7 +276,7 @@ while ($row0 = mysql_fetch_object($result0)) {
 	$rekord = @mysql_fetch_row($result);
 	if (!$rekord) continue;
 	mysql_free_result($result);
-	if ($rekord[0]!='6') continue;
+	if ($rekord[0]!='7') continue;
 
 	$result2 = @mysql_list_tables($row0->Database);
 	if (!$result2) continue;

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 2.8.0
+-- version 2.8.0.3
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Apr 18, 2006 at 10:28 PM
+-- Generation Time: Jun 10, 2006 at 11:08 PM
 -- Server version: 5.0.18
--- PHP Version: 5.1.2
+-- PHP Version: 5.1.3
 -- 
 -- Database: `smsd`
 -- 
@@ -40,7 +40,7 @@ CREATE TABLE `gammu` (
 -- Dumping data for table `gammu`
 -- 
 
-INSERT INTO `gammu` (`Version`) VALUES (6);
+INSERT INTO `gammu` (`Version`) VALUES (7);
 
 -- --------------------------------------------------------
 
@@ -62,11 +62,12 @@ CREATE TABLE `inbox` (
   `RecipientID` text NOT NULL,
   `Processed` enum('false','true') NOT NULL default 'false',
   UNIQUE KEY `ID` (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `inbox`
 -- 
+
 
 -- --------------------------------------------------------
 
@@ -90,12 +91,14 @@ CREATE TABLE `outbox` (
   `SenderID` text,
   `SendingTimeOut` timestamp NULL default '0000-00-00 00:00:00',
   `DeliveryReport` enum('default','yes','no') default 'default',
+  `CreatorID` text NOT NULL,
   UNIQUE KEY `ID` (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 -- 
 -- Dumping data for table `outbox`
 -- 
+
 
 -- --------------------------------------------------------
 
@@ -197,9 +200,11 @@ CREATE TABLE `sentitems` (
   `Status` enum('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending','DeliveryUnknown','Error') NOT NULL default 'SendingOK',
   `StatusError` int(11) NOT NULL default '-1',
   `TPMR` int(11) NOT NULL default '-1',
-  `RelativeValidity` int(11) NOT NULL default '-1'
+  `RelativeValidity` int(11) NOT NULL default '-1',
+  `CreatorID` text NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 
 -- Dumping data for table `sentitems`
 -- 
+

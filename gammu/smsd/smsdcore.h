@@ -43,6 +43,7 @@ typedef struct {
 	GSM_SMSC	SMSC;
 #ifdef HAVE_MYSQL_MYSQL_H
 	MYSQL 		DB;		 char 		DT[20];
+	char		CreatorID[200];
 #endif
 } GSM_SMSDConfig;
 

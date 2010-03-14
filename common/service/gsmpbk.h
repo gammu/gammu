@@ -168,7 +168,8 @@ typedef enum {
 	/**
 	 * User ID. (Text)
 	 */
-	PBK_Text_UserID
+	PBK_Text_UserID,
+	PBK_CallLength
 } GSM_EntryType;
 
 #define GSM_PHONEBOOK_TEXT_LENGTH       200
@@ -199,6 +200,7 @@ typedef struct {
 	 */
 	int		     	VoiceTag;
 	int			SMSList[20];
+	int			CallLength;
 } GSM_SubMemoryEntry;
 
 /**

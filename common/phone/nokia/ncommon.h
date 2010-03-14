@@ -45,6 +45,7 @@ typedef enum {
 	N6510_PBK_GROUP2_ID	 = 0x43, /* Caller group type 2 ID (6230i,later)*/
 
 	/* Series 40 3.0 */
+	S4030_PBK_CALLLENGTH	 = 0x44,
 	S4030_PBK_FIRSTNAME	 = 0x46,
 	S4030_PBK_LASTNAME	 = 0x47,
 	S4030_PBK_POSTAL	 = 0x4A

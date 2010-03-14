@@ -834,6 +834,9 @@ static void PrintMemoryEntry(GSM_MemoryEntry *entry)
 	for (i=0;i<entry->EntriesNum;i++) {
 		unknown = false;
 		switch (entry->Entries[i].EntryType) {
+			case PBK_CallLength:
+				printmsg("Call length      : %02i:%02i:%02i\n",entry->Entries[i].CallLength/(60*60),entry->Entries[i].CallLength/60,entry->Entries[i].CallLength%60);
+				continue;				
 			case PBK_Date:
 				printmsg("Date and time    : %s\n",OSDateTime(entry->Entries[i].Date,false));
 				continue;
@@ -953,6 +956,7 @@ static void GetAllMemory(int argc, char *argv[])
 	if (mystrncasecmp(argv[2],"SM",0)) Entry.MemoryType=MEM_SM;
 	if (mystrncasecmp(argv[2],"VM",0)) Entry.MemoryType=MEM_VM;
 	if (mystrncasecmp(argv[2],"FD",0)) Entry.MemoryType=MEM_FD;
+	if (mystrncasecmp(argv[2],"SL",0)) Entry.MemoryType=MEM_SL;
 	if (Entry.MemoryType==0) {
 		printmsg("ERROR: unknown memory type (\"%s\")\n",argv[2]);
 		exit (-1);
@@ -991,6 +995,7 @@ static void GetMemory(int argc, char *argv[])
 	if (mystrncasecmp(argv[2],"SM",0)) entry.MemoryType=MEM_SM;
 	if (mystrncasecmp(argv[2],"VM",0)) entry.MemoryType=MEM_VM;
 	if (mystrncasecmp(argv[2],"FD",0)) entry.MemoryType=MEM_FD;
+	if (mystrncasecmp(argv[2],"SL",0)) entry.MemoryType=MEM_SL;
 	if (entry.MemoryType==0) {
 		printmsg("ERROR: unknown memory type (\"%s\")\n",argv[2]);
 		exit (-1);
@@ -1050,6 +1055,7 @@ static void GetMemory(int argc, char *argv[])
 	x == MEM_MC ? "MC" :			\
 	x == MEM_ME ? "ME" :			\
 	x == MEM_SM ? "SM" :			\
+	x == MEM_SL ? "SL" :			\
 	x == MEM_VM ? "VM" :			\
 	x == MEM_FD ? "FD" : "XX")
 
@@ -1162,8 +1168,9 @@ static void SearchMemory(int argc, char *argv[])
 	if (!gshutdown) SearchOneMemory(MEM_DC, "Dialled numbers", 	Text);
 	if (!gshutdown) SearchOneMemory(MEM_RC, "Received numbers", 	Text);
 	if (!gshutdown) SearchOneMemory(MEM_MC, "Missed numbers", 	Text);
-	if (!gshutdown) SearchOneMemory(MEM_FD, "Fix dialling", 		Text);
+	if (!gshutdown) SearchOneMemory(MEM_FD, "Fix dialling", 	Text);
 	if (!gshutdown) SearchOneMemory(MEM_VM, "Voice mailbox", 	Text);
+	if (!gshutdown) SearchOneMemory(MEM_SL, "Sent SMS log", 	Text);
 
 	GSM_Terminate();
 }
@@ -5275,7 +5282,7 @@ static void Restore(int argc, char *argv[])
 			while (Backup.Calendar[max] != NULL) max++;
 			printmsgerr("%i entries in backup file\n",max);
 			if (answer_yes("Restore phone calendar notes")) {
-				Past    = ! answer_yes("  Skip notes from the past");
+				Past    = answer_yes("  Restore notes from the past");
 				DoRestore = true;
 			}
 		}
@@ -8064,7 +8071,7 @@ static struct NokiaFolderInfo Folder[] = {
 	/* Language indepedent in DCT4 in filesystem 1 */
 	{"",	 "Application",	   "applications",	"3"},
 	{"",	 "Game",	   "games",		"3"},
-	/* Language indepedent in DCT4 in filesystem 2 */
+	/* Language indepedent in DCT4/TIKU/BB5 in filesystem 2 */
 	{"", 	 "Gallery",	   "a:/predefgallery/predefgraphics",			""},
 	{"", 	 "Gallery2",	   "a:/predefgallery/predefgraphics/predefcliparts",	""},
 	{"", 	 "Camera",	   "a:/predefgallery/predefphotos",			""},
@@ -8074,6 +8081,10 @@ static struct NokiaFolderInfo Folder[] = {
 	{"", 	 "Video",	   "a:/predefgallery/predefvideos",			""},
 	{"", 	 "Playlist",	   "a:/predefplaylist",					""},
 	{"", 	 "MemoryCard",	   "b:",						""},
+	    //now values first seen in S40 3.0
+	{"",	 "Application",	   "a:/predefjava/predefcollections",			""},
+	{"",	 "Game",	   "a:/predefjava/predefgames",				""},
+
 	/* Language depedent in DCT4 filesystem 1 */
 	{"",	 "Gallery",	   "Clip-arts",					"3"},
 	{"",	 "Gallery",	   "004F006200720061007A006B0069",		"3"},//obrazki PL 6220
@@ -8159,19 +8170,22 @@ static void NokiaAddFile(int argc, char *argv[])
 			GSM_Terminate();
 			exit(-1);
 		}
-	} else {
-		if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_FILES2)) {
-			i = 0;
-			while (Folder[i].parameter[0] != 0) {
-				if ((Folder[i].folder[0] == 'a' || Folder[i].folder[0] == 'b') &&
-				    Folder[i].level[0] == 0x00 &&
-				    mystrncasecmp(argv[2],Folder[i].parameter,0)) {
-					EncodeUnicode(Files.ID_FullName,Folder[i].folder,strlen(Folder[i].folder));
-					Found = true;
-					break;
+	} else if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_FILES2)) {
+		i = 0;
+		while (Folder[i].parameter[0] != 0) {
+			if ((Folder[i].folder[0] == 'a' || Folder[i].folder[0] == 'b') &&
+			    Folder[i].level[0] == 0x00 &&
+			    mystrncasecmp(argv[2],Folder[i].parameter,0)) {
+				if (strstr(Folder[i].folder,"a:/predefjava/")!= NULL &&
+				    !IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_SERIES40_30)) {
+					i++;
+					continue;
 				}
-				i++;
+				EncodeUnicode(Files.ID_FullName,Folder[i].folder,strlen(Folder[i].folder));
+				Found = true;
+				break;
 			}
+			i++;
 		}
 	}
 	if (!Found) {
@@ -8342,46 +8356,51 @@ static void NokiaAddFile(int argc, char *argv[])
 		}
 
 		/* adding folder */
-		strcpy(buffer,Vendor);
-		strcat(buffer,Name);
-		EncodeUnicode(File.Name,buffer,strlen(buffer));
-		CopyUnicodeString(File.ID_FullName,Files.ID_FullName);
-		error = Phone->AddFolder(&s,&File);
-		if (Overwrite && (error == ERR_FILEALREADYEXIST)) {
-			printmsgerr("INFO: Application already exist. Deleting by Gammu\n");
+		if (strstr(DecodeUnicodeString(Files.ID_FullName),"a:/predefjava/")== NULL) {
+			strcpy(buffer,Vendor);
+			strcat(buffer,Name);
+			EncodeUnicode(File.Name,buffer,strlen(buffer));
+			CopyUnicodeString(File.ID_FullName,Files.ID_FullName);
+			error = Phone->AddFolder(&s,&File);
+			if (Overwrite && (error == ERR_FILEALREADYEXIST)) {
+				printmsgerr("INFO: Application already exist. Deleting by Gammu\n");
 
-			Start = true;
-			CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
-			while (1) {
-				error = Phone->GetFolderListing(&s,&File2,Start);
-				if (error == ERR_EMPTY) break;
-				Print_Error(error);
-
-				if (File2.Folder && !strcmp(DecodeUnicodeString(File2.Name),buffer)) {
-					break;
+				Start = true;
+				CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
+				while (1) {
+					error = Phone->GetFolderListing(&s,&File2,Start);
+					if (error == ERR_EMPTY) break;
+					Print_Error(error);
+	
+					if (File2.Folder && !strcmp(DecodeUnicodeString(File2.Name),buffer)) {
+						break;
+					}
+	
+					Start = false;
 				}
 
-				Start = false;
+				CopyUnicodeString(buffer,File2.ID_FullName);
+				while (1) {
+					CopyUnicodeString(File2.ID_FullName,buffer);
+					error = Phone->GetFolderListing(&s,&File2,true);
+					if (error == ERR_EMPTY) break;
+					Print_Error(error);
+
+					printmsgerr("  Deleting %s\n",DecodeUnicodeString(File2.Name));
+
+					error = Phone->DeleteFile(&s,File2.ID_FullName);
+					Print_Error(error);
+				}
+
+				CopyUnicodeString(File.ID_FullName,buffer);
+			} else {
+			    	Print_Error(error);
 			}
-
-			CopyUnicodeString(buffer,File2.ID_FullName);
-			while (1) {
-				CopyUnicodeString(File2.ID_FullName,buffer);
-				error = Phone->GetFolderListing(&s,&File2,true);
-				if (error == ERR_EMPTY) break;
-				Print_Error(error);
-
-				printmsgerr("  Deleting %s\n",DecodeUnicodeString(File2.Name));
-
-				error = Phone->DeleteFile(&s,File2.ID_FullName);
-				Print_Error(error);
-			}
-
-			CopyUnicodeString(File.ID_FullName,buffer);
+			CopyUnicodeString(FileID,File.ID_FullName);
 		} else {
-		    	Print_Error(error);
+			CopyUnicodeString(FileID,Files.ID_FullName);
+			CopyUnicodeString(File.ID_FullName,Files.ID_FullName);
 		}
-		CopyUnicodeString(FileID,File.ID_FullName);
 
 		/* adding jad file */
 		strcpy(buffer,JAR);
@@ -8869,8 +8888,8 @@ static GSM_Parameters Parameters[] = {
 	{"--getalarm",			0, 0, GetAlarm,			{H_DateTime,0},			""},
 	{"--setalarm",			2, 2, SetAlarm,			{H_DateTime,0},			"hour minute"},
 	{"--resetphonesettings",	1, 1, ResetPhoneSettings,	{H_Settings,0},			"PHONE|DEV|UIF|ALL|FACTORY"},
-	{"--getmemory",			2, 4, GetMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD start [stop [-nonempty]]"},
-	{"--getallmemory",		1, 2, GetAllMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD"},
+	{"--getmemory",			2, 4, GetMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL start [stop [-nonempty]]"},
+	{"--getallmemory",		1, 2, GetAllMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL"},
 	{"--searchmemory",		1, 1, SearchMemory,		{H_Memory,0},			"text"},
 	{"--listmemorycategory",	1, 1, ListMemoryCategory,	{H_Memory, H_Category,0},	"text|number"},
 	{"--getfmstation",		1, 2, GetFMStation,		{H_FM,0},			"start [stop]"},

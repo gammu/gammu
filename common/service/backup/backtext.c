@@ -388,6 +388,7 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 			case PBK_SMSListID:
 			case PBK_RingtoneFileSystemID:
 			case PBK_Date:
+			case PBK_CallLength:
 				break;
         	}
 		if (text) {
