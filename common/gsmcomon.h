@@ -74,7 +74,8 @@ typedef enum {
 	ERR_NOSIM,			/* Can not access SIM card */
 	ERR_GNAPPLETWRONG,
 	ERR_FOLDERPART,
-	ERR_FOLDERNOTEMPTY
+	ERR_FOLDERNOTEMPTY,
+	ERR_DATACONVERTED
 } GSM_Error;
 
 extern GSM_Error NoneFunction		(void);

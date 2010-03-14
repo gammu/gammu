@@ -1135,7 +1135,7 @@ static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	req[12] = entry->Location / 256;
 	req[13] = entry->Location % 256;
 
-	count = count + N71_65_EncodePhonebookFrame(s, req+22, *entry, &blocks, true, IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_VOICETAGS));
+	count = count + N71_65_EncodePhonebookFrame(s, req+22, entry, &blocks, true, IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_VOICETAGS));
 	req[21] = blocks;
 
 	smprintf(s, "Writing phonebook entry\n");
@@ -1764,6 +1764,8 @@ static GSM_Error N6510_GetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 	GSM_Error 		error;
 	unsigned char 		req[] = {N6110_FRAME_HEADER, 0x15,
 				 	 0x00};		/* Location */
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
 
 	error = N6510_EnableConnectionFunctions(s, Type);
 	if (error!=ERR_NONE) return error;
@@ -3870,6 +3872,8 @@ GSM_Error N6510_DeleteWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark
 GSM_Error N6510_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
 	GSM_Error error;
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
 
 	/* We have to enable WAP frames in phone */
 	error=N6510_EnableConnectionFunctions(s,N6510_WAP_SETTINGS);

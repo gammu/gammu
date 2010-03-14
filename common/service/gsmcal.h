@@ -219,6 +219,10 @@ typedef struct {
 	 * Number of value, if applicable.
 	 */
 	 unsigned int	    	Number;
+	/**
+	 * During adding SubEntry Gammu can return here info, if it was done OK
+	 */
+	GSM_Error		AddError;
 } GSM_SubCalendarEntry;
 
 /**

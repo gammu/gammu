@@ -201,6 +201,11 @@ typedef struct {
 	int		     	VoiceTag;
 	int			SMSList[20];
 	int			CallLength;
+
+	/**
+	 * During adding SubEntry Gammu can return here info, if it was done OK
+	 */
+	GSM_Error		AddError;
 } GSM_SubMemoryEntry;
 
 /**

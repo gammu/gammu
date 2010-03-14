@@ -1430,7 +1430,7 @@ static GSM_Error N6110_ReplySetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 
 static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-        int             current, Group, Name, Number;
+        int             current, Group, Name, Number, i;
         unsigned char   req[128] = {N6110_FRAME_HEADER, 0x04,
                                     0x00,               /* memory type  */
                                     0x00};              /* location     */
@@ -1445,17 +1445,23 @@ static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
         current = 7;
 
+	for (i=0;i<entry->EntriesNum;i++) {
+		entry->Entries[i].AddError = ERR_NOTSUPPORTED;
+	}
+
         if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOPBKUNICODE)) {
                 if (Name != -1) {
                         req[6] = UnicodeLength(entry->Entries[Name].Text);
                         memcpy(req+current,DecodeUnicodeString(entry->Entries[Name].Text),UnicodeLength(entry->Entries[Name].Text));
                         current += UnicodeLength(entry->Entries[Name].Text);
+			entry->Entries[Name].AddError = ERR_NONE;
                 } else req[6] = 0;
         } else {
                 if (Name != -1) {
                         req[6] = UnicodeLength(entry->Entries[Name].Text)*2+2;
                         memcpy(req+current,entry->Entries[Name].Text,UnicodeLength(entry->Entries[Name].Text)*2);
                         current += UnicodeLength(entry->Entries[Name].Text)*2;
+			entry->Entries[Name].AddError = ERR_NONE;
                 } else req[6] = 0;
                 req[current++]=0x00;
                 req[current++]=0x00;
@@ -1465,6 +1471,7 @@ static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
                 req[current++]=UnicodeLength(entry->Entries[Number].Text);
                 memcpy(req+current,DecodeUnicodeString(entry->Entries[Number].Text),UnicodeLength(entry->Entries[Number].Text));
                 current += UnicodeLength(entry->Entries[Number].Text);
+		entry->Entries[Number].AddError = ERR_NONE;
         } else req[current++] = 0;
 
         /* This allow to save 14 characters name into SIM memory, when
@@ -1473,6 +1480,7 @@ static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
                 req[current++] = 0xff;
         } else {
                 req[current++] = entry->Entries[Group].Number-1;
+		entry->Entries[Group].AddError = ERR_NONE;
         }
 
         smprintf(s, "Writing phonebook entry\n");

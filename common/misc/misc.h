@@ -133,13 +133,12 @@ typedef struct {
 	int			Timezone;
 
 	int			Second;
-	int 		Minute;
+	int 			Minute;
 	int			Hour;
 
-	int 		Day;
-	int 		Month;
+	int 			Day;
+	int 			Month;
 	int			Year;
-
 } GSM_DeltaTime;
 
 void GSM_GetCurrentDateTime 	(GSM_DateTime *Date);

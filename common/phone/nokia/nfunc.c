@@ -42,46 +42,107 @@ int N71_65_PackPBKBlock(GSM_StateMachine *s, int id, int size, int no, unsigned 
 	return (size + 6);
 }
 
-int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry entry, int *block2, bool DCT4, bool VoiceTag)
+int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry *entry, int *block2, bool DCT4, bool VoiceTag)
 {
 	int		count=0, len, i, block=0, j;
 	char		string[500];
 	unsigned char	type;
+	bool		found;
 
+	for (i = 0; i < entry->EntriesNum; i++) {
+		entry->Entries[i].AddError = ERR_NOTSUPPORTED;
+	}
 	memset(string,0,sizeof(string));
-	for (i = 0; i < entry.EntriesNum; i++) {
-		if (entry.Entries[i].EntryType == PBK_Text_LastName ||
-		    entry.Entries[i].EntryType == PBK_Text_FirstName) {
-			CopyUnicodeString(string+UnicodeLength(string+1)*2+1,entry.Entries[i].Text);
+	found = false;
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+ 		for (i = 0; i < entry->EntriesNum; i++) {
+			if (entry->Entries[i].EntryType == PBK_Text_LastName ||
+			    entry->Entries[i].EntryType == PBK_Text_FirstName) {
+				if (entry->Entries[i].EntryType==PBK_Text_LastName) {
+					type = S4030_PBK_LASTNAME;
+				} else {
+					type = S4030_PBK_FIRSTNAME;
+				}
+				found = true;
+				entry->Entries[i].AddError = ERR_NONE;
+				len = UnicodeLength(entry->Entries[i].Text);
+				string[0] = len*2+2;
+				CopyUnicodeString(string+1,entry->Entries[i].Text);
+				string[len*2+1] = 0;
+				count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
+			}
+		}
+ 		for (i = 0; i < entry->EntriesNum; i++) {
+			if(entry->Entries[i].EntryType==PBK_Text_Name) {
+				if (!found) {
+					entry->Entries[i].AddError = ERR_NONE;
+					type = N7110_PBK_NAME;
+					len = UnicodeLength(entry->Entries[i].Text);
+					string[0] = len*2+2;
+					CopyUnicodeString(string+1,entry->Entries[i].Text);
+					string[len*2+1] = 0;
+					count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
+					found = true;
+				} else {
+					entry->Entries[i].AddError = ERR_INVALIDDATA;
+				}
+			}
+		}
+	} else {
+ 		for (i = 0; i < entry->EntriesNum; i++) {
+			if (entry->Entries[i].EntryType == PBK_Text_LastName ||
+			    entry->Entries[i].EntryType == PBK_Text_FirstName) {
+				CopyUnicodeString(string+UnicodeLength(string+1)*2+1,entry->Entries[i].Text);
+				entry->Entries[i].AddError = ERR_DATACONVERTED;
+				found=true;
+			}
+		}
+		if (UnicodeLength(string+1) != 0) {
+			type = N7110_PBK_NAME;
+			len = UnicodeLength(string+1);
+			string[0] = len*2+2;
+			string[len*2+1] = 0;
+			count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
+		}
+ 		for (i = 0; i < entry->EntriesNum; i++) {
+			if (entry->Entries[i].EntryType==PBK_Text_Name) {
+				if (!found) {
+					entry->Entries[i].AddError = ERR_NONE;
+					type = N7110_PBK_NAME;
+					len = UnicodeLength(entry->Entries[i].Text);
+					string[0] = len*2+2;
+					CopyUnicodeString(string+1,entry->Entries[i].Text);
+					string[len*2+1] = 0;
+					count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
+					found = true;
+				} else {
+					entry->Entries[i].AddError = ERR_INVALIDDATA;
+				}
+			}
 		}
 	}
-	if (UnicodeLength(string+1) != 0) {
-		type = N7110_PBK_NAME;
-		len = UnicodeLength(string+1);
-		string[0] = len*2+2;
-		string[len*2+1] = 0;
-		count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
-	}
-	for (i = 0; i < entry.EntriesNum; i++) {
+	for (i = 0; i < entry->EntriesNum; i++) {
 		type = 0;
-		if (entry.Entries[i].EntryType == PBK_Number_General) type = N7110_PBK_NUMBER_GENERAL;
-		if (entry.Entries[i].EntryType == PBK_Number_Mobile)  type = N7110_PBK_NUMBER_MOBILE;
-		if (entry.Entries[i].EntryType == PBK_Number_Work)    type = N7110_PBK_NUMBER_WORK;
-		if (entry.Entries[i].EntryType == PBK_Number_Fax)     type = N7110_PBK_NUMBER_FAX;
-		if (entry.Entries[i].EntryType == PBK_Number_Home)    type = N7110_PBK_NUMBER_HOME;
+		if (entry->Entries[i].EntryType == PBK_Number_General) type = N7110_PBK_NUMBER_GENERAL;
+		if (entry->Entries[i].EntryType == PBK_Number_Mobile)  type = N7110_PBK_NUMBER_MOBILE;
+		if (entry->Entries[i].EntryType == PBK_Number_Work)    type = N7110_PBK_NUMBER_WORK;
+		if (entry->Entries[i].EntryType == PBK_Number_Fax)     type = N7110_PBK_NUMBER_FAX;
+		if (entry->Entries[i].EntryType == PBK_Number_Home)    type = N7110_PBK_NUMBER_HOME;
 		if (type != 0) {
+			entry->Entries[i].AddError = ERR_NONE;
+
 			string[0] = type;
-			len = UnicodeLength(entry.Entries[i].Text);
+			len = UnicodeLength(entry->Entries[i].Text);
 
 			string[1] = 0;
 			string[2] = 0;
 
 			/* DCT 3 */
-			if (!DCT4) string[2] = entry.Entries[i].VoiceTag;
+			if (!DCT4) string[2] = entry->Entries[i].VoiceTag;
 
 			string[3] = 0;
 			string[4] = len*2+2;
-			CopyUnicodeString(string+5,entry.Entries[i].Text);
+			CopyUnicodeString(string+5,entry->Entries[i].Text);
 			string[len * 2 + 5] = 0;
 			count += N71_65_PackPBKBlock(s, N7110_PBK_NUMBER, len*2+6, block++, string, req+count);
 
@@ -95,16 +156,16 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 				req[count++] = 0x00;
 				req[count++] = i+1;
 				req[count++] = 0x00;
-				req[count++] = entry.Entries[i].VoiceTag;
+				req[count++] = entry->Entries[i].VoiceTag;
 			}
 			if (DCT4) {
 				j = 0;
-				while (entry.Entries[i].SMSList[j] != 0) {
+				while (entry->Entries[i].SMSList[j] != 0) {
 					string[0] = i+1;
 					string[1] = 0x00;
 					string[2] = 0x02;
 					string[3] = 0x00;
-					string[4] = entry.Entries[i].SMSList[j];
+					string[4] = entry->Entries[i].SMSList[j];
 					string[5] = 0x00;
 					count += N71_65_PackPBKBlock(s, N6510_PBK_SMSLIST_ID, 6, block++, string, req+count);
 
@@ -113,59 +174,63 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 			}
 			continue;
 		}
-		dbgprintf("entry num %i %i\n",i,entry.EntriesNum);
-		if (entry.Entries[i].EntryType == PBK_Text_Note)   type = N7110_PBK_NOTE;
-		if (entry.Entries[i].EntryType == PBK_Text_Postal) type = N7110_PBK_POSTAL;
-		if (entry.Entries[i].EntryType == PBK_Text_Email)  type = N7110_PBK_EMAIL;
-		if (entry.Entries[i].EntryType == PBK_Text_Email2) type = N7110_PBK_EMAIL;
-		if (entry.Entries[i].EntryType == PBK_Text_Name)   type = N7110_PBK_NAME;
-		if (entry.Entries[i].EntryType == PBK_Text_URL) {
+		dbgprintf("entry num %i %i\n",i,entry->EntriesNum);
+		if (entry->Entries[i].EntryType == PBK_Text_Note)   type = N7110_PBK_NOTE;
+		if (entry->Entries[i].EntryType == PBK_Text_Postal) type = N7110_PBK_POSTAL;
+		if (entry->Entries[i].EntryType == PBK_Text_Email)  type = N7110_PBK_EMAIL;
+		if (entry->Entries[i].EntryType == PBK_Text_Email2) type = N7110_PBK_EMAIL;
+		if (entry->Entries[i].EntryType == PBK_Text_URL) {
+			entry->Entries[i].AddError = ERR_DATACONVERTED;
 			type = N7110_PBK_NOTE;
 			if (DCT4) type = N6510_PBK_URL;
 		}
 		if (type != 0) {
-			len = UnicodeLength(entry.Entries[i].Text);
+			if (entry->Entries[i].AddError==ERR_NOTSUPPORTED) entry->Entries[i].AddError = ERR_NONE;
+			len = UnicodeLength(entry->Entries[i].Text);
 			string[0] = len*2+2;
-			CopyUnicodeString(string+1,entry.Entries[i].Text);
+			CopyUnicodeString(string+1,entry->Entries[i].Text);
 			string[len*2+1] = 0;
 			count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
 			continue;
 		}
-		if (entry.Entries[i].EntryType == PBK_Caller_Group) {
+		if (entry->Entries[i].EntryType == PBK_Caller_Group) {
 			if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) {
+				entry->Entries[i].AddError = ERR_NONE;
 				if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
 					string[0] = 0;
 					string[1] = 0;
 					count += N71_65_PackPBKBlock(s, N6510_PBK_GROUP2_ID, 2, block++, string, req + count);
-					req[count-1] = entry.Entries[i].Number;
+					req[count-1] = entry->Entries[i].Number;
 				} else {
-					string[0] = entry.Entries[i].Number;
+					string[0] = entry->Entries[i].Number;
 					string[1] = 0;
 					count += N71_65_PackPBKBlock(s, N7110_PBK_GROUP, 2, block++, string, req + count);
 				}
 			}
 			continue;
 		}
-		if (entry.Entries[i].EntryType == PBK_RingtoneID) {
+		if (entry->Entries[i].EntryType == PBK_RingtoneID) {
 			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) {
+				entry->Entries[i].AddError = ERR_NONE;
 				string[0] = 0x00;
 				string[1] = 0x00;
-				string[2] = entry.Entries[i].Number;
+				string[2] = entry->Entries[i].Number;
 				count += N71_65_PackPBKBlock(s, N7110_PBK_RINGTONE_ID, 3, block++, string, req + count);
 				count --;
 				req[count-5] = 8;
 			}
 			continue;
 		}
-		if (entry.Entries[i].EntryType == PBK_PictureID) {
+		if (entry->Entries[i].EntryType == PBK_PictureID) {
 			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKIMG)) {
+				entry->Entries[i].AddError = ERR_NONE;
 				string[0] = 0x00;
 				string[1] = 0x00;
 				string[2] = 0x00;
 				string[3] = 0x00;
 				string[4] = 0x01;
-				string[5] = entry.Entries[i].Number / 256;
-				string[6] = entry.Entries[i].Number % 256;
+				string[5] = entry->Entries[i].Number / 256;
+				string[6] = entry->Entries[i].Number % 256;
 				string[7] = 0x00;
 				string[8] = 0x00;
 				string[9] = 0x00;
@@ -174,10 +239,11 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 			}
 			continue;
 		}
-		if (entry.Entries[i].EntryType == PBK_Text_UserID) {
+		if (entry->Entries[i].EntryType == PBK_Text_UserID) {
 			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKUSER)) {
-				string[0] = UnicodeLength(entry.Entries[i].Text)*2;
-				CopyUnicodeString(string+1,entry.Entries[i].Text);
+				entry->Entries[i].AddError = ERR_NONE;
+				string[0] = UnicodeLength(entry->Entries[i].Text)*2;
+				CopyUnicodeString(string+1,entry->Entries[i].Text);
 				count += N71_65_PackPBKBlock(s, N6510_PBK_USER_ID, string[0]+2, block++, string, req+count);
 				req[count-1]--;
 			}
@@ -201,6 +267,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	unsigned char 				*Block;
 	int					length = 0, i, bs = 0;
 	GSM_71_65_Phonebook_Entries_Types	Type;
+	bool					found=false;
 
 	entry->EntriesNum 	= 0;
 
@@ -238,15 +305,53 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 
 		Type = 0;
-		if (Block[0] == N7110_PBK_NAME) {
-			Type = PBK_Text_Name;   smprintf(s,"Name ");
-		}
 		if (Block[0] == S4030_PBK_FIRSTNAME) {
 			Type = PBK_Text_FirstName;   smprintf(s,"First name ");
 		}
 		if (Block[0] == S4030_PBK_LASTNAME) {
 			Type = PBK_Text_LastName;   smprintf(s,"Last name ");
 		}
+		if (Type != 0) {
+			found=true;
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			entry->Entries[entry->EntriesNum].EntryType=Type;
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
+		}
+	}
+
+	Block = &MessageBuffer[0];
+	bs=0;
+	length=0;
+	while (true) {
+		if (bs != 0) {
+			length = length + bs;
+//			if (length == MessageLength) break;
+			//bb5
+			if (length >= MessageLength-1) break;
+			Block = &Block[bs];
+		}
+		bs = 256*Block[2]+Block[3];
+#ifdef DEBUG
+		smprintf(s, "Phonebook entry block - length %i", bs-6);
+		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Block+5, bs-6);
+#endif
+		if (entry->EntriesNum==GSM_PHONEBOOK_ENTRIES) {
+			smprintf(s, "Too many entries\n");
+			return ERR_UNKNOWNRESPONSE;
+		}
+
+		Type = 0;
+		if (Block[0] == N7110_PBK_NAME) {
+			if (found) continue;
+			Type = PBK_Text_Name;   smprintf(s,"Name ");
+		}
+		if (Block[0] == S4030_PBK_FIRSTNAME) continue;
+		if (Block[0] == S4030_PBK_LASTNAME) continue;
 		if (Block[0] == N7110_PBK_EMAIL) {
 			Type = PBK_Text_Email;  smprintf(s,"Email ");
 		}
