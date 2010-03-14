@@ -3,19 +3,14 @@
 #ifndef _config_h_
 #define _config_h_
 
+/* -------------------------- Gammu specific ---------------------------- */
+
 /* Version of package */
-#define VERSION "0.64"
+#define VERSION "0.65"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
 /* #undef DEBUG */
-#endif
-
-#ifndef WIN32
-/* are the scandir functions available */
-#define HAVE_DIRENT_H 1
-#define HAVE_SCANDIR 1
-#define HAVE_ALPHASORT 1
 #endif
 
 /* MBUS2 over cable */
@@ -92,5 +87,17 @@
  * like changing logo in phone (like in Logo Manager)
  */
 //#define GSM_ENABLE_BEEP
+
+/* ------------------------ Language specific --------------------------- */
+
+#ifndef WIN32
+/* are the scandir functions available */
+#define HAVE_DIRENT_H 1
+#define HAVE_SCANDIR 1
+#define HAVE_ALPHASORT 1
+#endif
+
+#define HAVE_ISWSPACE 1
+#define HAVE_TOWLOWER 1
 
 #endif

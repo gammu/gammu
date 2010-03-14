@@ -259,7 +259,7 @@ static GSM_Error N6510_ReplySetSMSC(GSM_Protocol_Message msg, GSM_Phone_Data *Da
 
 static GSM_Error N6510_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
-	int count = 13;
+	int count = 13,i;
 	unsigned char req[64] = {
 		N6110_FRAME_HEADER,
 		0x12, 0x55, 0x01, 0x0B, 0x34,
@@ -310,7 +310,11 @@ static GSM_Error N6510_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	req[count++] 		 = strlen(DecodeUnicodeString(smsc->Name))*2 + 2 + 4;
 	req[count++] 		 = strlen(DecodeUnicodeString(smsc->Name))*2 + 2;
 	req[count++] 		 = 0x00;
-	CopyUnicodeString(req+count,smsc->Name);
+	/* Can't make CopyUnicodeString(req+count,sms->Name) !!!!
+	 * with MSVC6 count is changed then
+	 */
+	i = count;
+	CopyUnicodeString(req+i,smsc->Name);
 	count += strlen(DecodeUnicodeString(smsc->Name))*2 + 2;
 	
 	dprintf("Setting SMSC\n");
@@ -1072,7 +1076,7 @@ static GSM_Error N6510_Reset(GSM_StateMachine *s, bool hard)
 {
 	GSM_Error 	error;
 	GSM_DateTime	Date;
-	int		i,j;
+	unsigned int	i,j;
 	unsigned char 	req[] = {0x00, 0x06, 0x00, 0x01, 0x04, 0x00};
 
 	if (s->connectiontype == GCT_DLR3AT) return GE_NOTSUPPORTED;
@@ -1621,7 +1625,7 @@ static GSM_Error N6510_SetToDo(GSM_StateMachine *s, GSM_TODO *ToDo)
 		return GE_NOTSUPPORTED;
 	}
 	reqSet[4] = ToDo->Priority;
-	reqSet[5] = strlen(DecodeUnicodeString(ToDo->Text));
+	reqSet[5] = strlen(DecodeUnicodeString(ToDo->Text))+1;
 	CopyUnicodeString(reqSet+10,ToDo->Text);
 	reqSet[10+strlen(DecodeUnicodeString(ToDo->Text))*2] 	= 0x00;
 	reqSet[10+strlen(DecodeUnicodeString(ToDo->Text))*2+1] 	= 0x00;
@@ -2296,7 +2300,7 @@ static GSM_Error N6510_ReplyGetProfile(GSM_Protocol_Message msg, GSM_Phone_Data 
 	for (i = 0; i < 11; i++) {
 		dprintf("Profile feature %02x ",blockstart[1]);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL) DumpMessage(di.df, blockstart, blockstart[0]);
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, blockstart, blockstart[0]);
 #endif
 
 		switch (blockstart[1]) {

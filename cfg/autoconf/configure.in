@@ -6,12 +6,15 @@ dnl define([AC_CACHE_SAVE], )dnl
 
 dnl Default C source file
 AC_INIT(../../gammu/gammu.c)
+
 dnl Default prefix for package
 AC_PREFIX_DEFAULT("/usr/local")
+
 dnl Version
 VERSION=`cat VERSION`
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
 AC_SUBST(VERSION)
+
 dnl Compiler flags
 CFLAGS="-O2 -Wall"
 
@@ -27,14 +30,20 @@ AC_PROG_GCC_TRADITIONAL
 AC_FUNC_MEMCMP
 AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(mktime select socket strdup strerror strstr scandir alphasort)
-AC_SUBST(HAVE_SCANDIR)
-AC_SUBST(HAVE_ALPHASORT)
+AC_CHECK_FUNCS(scandir alphasort iswspace towlower)
+
+dnl Now this is checking is not used
+dnl AC_CHECK_FUNCS(mktime select socket strdup strerror strstr)
+dnl AC_SUBST(HAVE_SCANDIR)
+dnl AC_SUBST(HAVE_ALPHASORT)
 
 dnl Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS(fcntl.h sys/file.h sys/ioctl.h sys/time.h unistd.h dirent.h)
-AC_SUBST(HAVE_DIRENT_H)
+AC_CHECK_HEADERS(dirent.h)
+
+dnl Now this is checking is not used
+dnl AC_CHECK_HEADERS(fcntl.h sys/file.h sys/ioctl.h sys/time.h unistd.h)
+dnl AC_SUBST(HAVE_DIRENT_H)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

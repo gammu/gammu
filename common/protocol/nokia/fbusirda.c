@@ -53,7 +53,8 @@ static GSM_Error FBUS2IRDA_StateMachine(GSM_StateMachine *s, unsigned char rx_by
 		d->Msg.Count = 0;
 		d->MsgRXState = RX_GetDestination;	
 	} else {
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 			smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, FBUS2IRDA_FRAME_ID);
 		}		
 	}
@@ -63,7 +64,8 @@ static GSM_Error FBUS2IRDA_StateMachine(GSM_StateMachine *s, unsigned char rx_by
 
 	if (rx_byte != FBUS2IRDA_DEVICE_PC) {
 		d->MsgRXState = RX_Sync;
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 		    smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, FBUS2IRDA_DEVICE_PC);
 		}
 	} else {
@@ -76,7 +78,8 @@ static GSM_Error FBUS2IRDA_StateMachine(GSM_StateMachine *s, unsigned char rx_by
 
 	if (rx_byte != FBUS2IRDA_DEVICE_PHONE) {
 		d->MsgRXState = RX_Sync;
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 		    smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, FBUS2IRDA_DEVICE_PHONE);
 		}
 	} else {

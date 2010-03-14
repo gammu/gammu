@@ -220,7 +220,7 @@ static GSM_Error DCT4_ReplyVibra(GSM_Protocol_Message msg, GSM_Phone_Data *Data,
 void DCT4SetVibraLevel(int argc, char *argv[])
 {
 	GSM_DateTime	Date;
-	int		i,j;
+	unsigned int	i,j;
 
 	/* Set vibra level */
 	unsigned char 	SetLevel[6] = {N7110_FRAME_HEADER,0x0E,
@@ -309,9 +309,11 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_Phone_Da
 		}
 		return GE_NONE;
 	case 0x0D:
-		dprintf("Voice record token received: %02x\n",msg.Buffer[13]);
-		if (msg.Length == 6) return GE_EMPTY;
-		Data->PhoneString[0] = msg.Buffer[13];
+		dprintf("Last part of voice record is %02x %02x\n",msg.Buffer[11],msg.Buffer[12]);
+		dprintf("Token is %02x\n",msg.Buffer[13]);
+		Data->PhoneString[0] = msg.Buffer[11];
+		Data->PhoneString[1] = msg.Buffer[12];
+		Data->PhoneString[2] = msg.Buffer[13];
 		return GE_NONE;
 		break;
 	case 0x31:
@@ -323,11 +325,14 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_Phone_Da
 			Buffer[msg.Buffer[j]+1] = 0;
 			dprintf("%i. \"%s\"\n",i+1,DecodeUnicodeString(Buffer));	
 			if (i==*Data->NetworkLevel) {
-				*Data->NetworkLevel=msg.Buffer[9];
 				sprintf(Data->PhoneString,"%s.wav",DecodeUnicodeString(Buffer));
 				return GE_NONE;
 			}
-			j+=msg.Buffer[j]+24;
+			if (i != msg.Buffer[9] - 1) {
+				j+=msg.Buffer[j] + 1;
+				if (msg.Buffer[j] == 0x00 && msg.Buffer[j+1]==0x00) j+=2;
+				j+=23;
+			}
 		}
 		return GE_EMPTY;
 	}
@@ -347,11 +352,13 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		0x55,0x55};
 	/* Voice record part */
 	unsigned char 	ReqGet[200] = {
-		N7110_FRAME_HEADER,0x04,0x00,0x44,0x00,
-		0x00,		/* Location: 0, 1, ... */
-		0x55,0x55,0x00,0x00,
-		0x00, /* 0x00, 0x04, 0x08 */
-		0x00,0x00,0x00,0x04,0x00};
+		N7110_FRAME_HEADER,0x04,0x00,0x44,
+		0x00,0x00,	/* Location: 0, 1, ...  */
+		0x55,0x55,0x00,
+		0x00,0x00,	/* Part Location	*/
+		0x00,0x00,0x00,
+		0x04,		/* ???			*/
+		0x00};		/* Token		*/
 
 	/* WAV file headers */
 	unsigned char 	WAV_Header[] = {
@@ -369,8 +376,9 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 			0x00,0x00,0x00,0x00};	/* Length */
 
 	long		wavfilesize=0;
-	unsigned char	FileName[100], PartToken, Buffer[10000];
-	int 		Location, AllLocations, size=0;
+	unsigned char	FileName[100], Buffer[10000], Token;
+	unsigned int 	Location, size=0, CurrentLocation = 0, TokenLocation;
+	int		i;
 	FILE		*WAVFile;
 
 	Location = atoi(argv[2]);
@@ -386,18 +394,19 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
-	AllLocations 			= Location;
-	s.Phone.Data.NetworkLevel 	= &AllLocations;
+	s.Phone.Data.NetworkLevel 	= &Location;
 	s.Phone.Data.PhoneString 	= FileName;
 	dprintf("Getting voice record name\n");
 	error=GSM_WaitFor (&s, ReqNames, 14, 0x4A, 4, ID_User4);
 	Print_Error(error);
 	
+	s.Phone.Data.PhoneString 	= Buffer;
 	ReqToken[7] 			= Location;
-	s.Phone.Data.PhoneString 	= &PartToken;
 	dprintf("Getting voice record token\n");
 	error=GSM_WaitFor (&s, ReqToken, 18, 0x23, 4, ID_User4);
 	Print_Error(error);
+	TokenLocation 			= Buffer[0] * 256 + Buffer[1];
+	Token				= Buffer[2];
 
 	WAVFile = fopen(FileName, "wb");      
 
@@ -413,25 +422,43 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		dprintf("Getting next part of voice record\n");
 		fprintf(stderr,".");
 		error=GSM_WaitFor (&s, ReqGet, 18, 0x23, 4, ID_User4);
-		if (error == GE_EMPTY) {
-			ReqGet[16] = AllLocations - Location - 1;
-			ReqGet[17] = PartToken;
-			error=GSM_WaitFor (&s, ReqGet, 18, 0x23, 4, ID_User4);
-			if (error == GE_EMPTY) {
-				printf("\nWarning: can't get last part !\n");
-			}
-			if (error == GE_NONE) {
-				wavfilesize += size;
-				fwrite(Buffer,1,size,WAVFile);
-			}
-			break;
-		}
 		if (error == GE_NONE) {
 			wavfilesize += size;
 			fwrite(Buffer,1,size,WAVFile);
 		}
+		if (error == GE_EMPTY) break;
 		Print_Error(error);
-		ReqGet[12] += 4;
+		CurrentLocation += 4;
+		ReqGet[11] = CurrentLocation / 256;
+		ReqGet[12] = CurrentLocation % 256;
+		if (CurrentLocation+4 > TokenLocation) break;
+	}
+	dprintf("Getting first part in last sequence of voice record\n");
+	for (i=255;i>=0;i--) {
+		ReqGet[16] = i;
+		ReqGet[17] = Token;
+		fprintf(stderr,".");
+		error=GSM_WaitFor (&s, ReqGet, 18, 0x23, 4, ID_User4);
+		if (error == GE_NONE) {
+			wavfilesize += size;
+			fwrite(Buffer,1,size,WAVFile);
+			break;
+		}
+		if (error != GE_EMPTY) Print_Error(error);
+	}
+	while (1) {
+		dprintf("Getting next part of last sequence in voice record\n");
+		CurrentLocation += 4;
+		ReqGet[11] = CurrentLocation / 256;
+		ReqGet[12] = CurrentLocation % 256;
+		fprintf(stderr,".");
+		error=GSM_WaitFor (&s, ReqGet, 18, 0x23, 4, ID_User4);
+		if (error == GE_NONE) {
+			wavfilesize += size;
+			fwrite(Buffer,1,size,WAVFile);
+		}
+		if (error == GE_EMPTY) break;
+		Print_Error(error);
 	}
 	fprintf(stderr,"\n");
 

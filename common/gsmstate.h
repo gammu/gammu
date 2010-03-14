@@ -4,6 +4,7 @@
 
 #include "../cfg/config.h"
 #include "misc/cfg.h"
+#include <time.h>
 
 #ifdef GSM_ENABLE_NOKIA6110
 #  include "phone/nokia/dct3/n6110.h"
@@ -305,7 +306,7 @@ typedef enum {
 } GSM_Phone_RequestID;
 
 typedef struct {
-	char			*IMEI;
+	unsigned char		*IMEI;
 	GSM_SpeedDial		*SpeedDial;
 	GSM_DateTime		*DateTime;
 	GSM_DateTime		*Alarm;
@@ -321,11 +322,11 @@ typedef struct {
 	GSM_NetworkInfo		*NetworkInfo;
 	GSM_Ringtone		*Ringtone;
 	GSM_CalendarNote	*Calendar;
-	char			*SecurityCode;
+	unsigned char		*SecurityCode;
 	GSM_WAPBookmark		*WAPBookmark;
 	GSM_MultiWAPSettings	*WAPSettings;
 	GSM_Bitmap		*Bitmap;
-	char			*Netmonitor;
+	unsigned char		*Netmonitor;
 	GSM_TODO		*ToDo;
 	bool			PressKey;
 	GSM_SecurityCodeType	*SecurityStatus;
@@ -333,7 +334,7 @@ typedef struct {
 	GSM_AllRingtonesInfo	*RingtonesInfo;
 	GSM_DisplayFeatures	*DisplayFeatures;
 
-	char			*PhoneString;
+	unsigned char		*PhoneString;
 	int			StartPhoneString;
 
 	bool			EnableIncomingSMS;	/* notify about incoming sms ? 	*/

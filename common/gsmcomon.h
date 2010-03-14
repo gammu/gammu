@@ -44,20 +44,10 @@ typedef enum {
 /*25*/	GE_EMPTYSMSC,			/* SMSC number is empty */
 	GE_INSIDEPHONEMENU,		/* Inside phone menu - can't make something */
 	GE_NOTCONNECTED,		/* Phone NOT connected - can't make something */
-	GE_WORKINPROGRESS		/* Work in progress */
+	GE_WORKINPROGRESS,		/* Work in progress */
+	GE_PHONEOFF,			/* Phone is disabled and connected to charger */
+	GE_FILENOTSUPPORTED		/* File format not supported by Gammu */
 } GSM_Error;
-
-/* Structure used for passing dates/times to date/time functions such as
-   GSM_GetTime and GSM_GetAlarm etc. */
-typedef struct {
-	int	Year;		/* The complete year specification - e.g.1999.Y2K :-) */
-	int 	Month;		/* January = 1 */
-	int 	Day;
-	int	Hour;
-	int 	Minute;
-	int	Second;
-	int	Timezone;	/* The difference between local time and GMT */
-} GSM_DateTime;
 
 extern GSM_Error NoneFunction		(void);
 extern GSM_Error NotImplementedFunction	(void);
@@ -70,14 +60,11 @@ extern GSM_Error NotSupportedFunction	(void);
 unsigned char *GetMsg 		(CFG_Header *cfg, unsigned char *default_string);
 unsigned char *print_error	(GSM_Error e, FILE *df, CFG_Header *cfg);
 
-void GSM_GetCurrentDateTime 	(GSM_DateTime *Date);
-char *OSDateTime 		(GSM_DateTime dt, bool TimeZone);
-
 GSM_Error 	lock_device	(const char* port, char **lock_device);
 bool 		unlock_device	(char *lock_file);
 
-char *GetGammuVersion();
-
 GSM_Error GSM_SetDebugFile(char *info, Debug_Info *di);
+
+char *GetGammuVersion();
 
 #endif

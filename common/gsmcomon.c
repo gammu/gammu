@@ -119,7 +119,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{GE_DEVICEPARITYERROR,		"Can't set parity on device"},
 	{GE_TIMEOUT,			"No response in specified timeout. Probably phone not connected."},
 	/* Some missed */
-	{GE_UNKNOWNRESPONSE,		"Unknown response from phone. See /readme, how to report it."},
+	{GE_UNKNOWNRESPONSE,		"Unknown response from phone. See /readme.txt, how to report it."},
 	/* Some missed */
 	{GE_UNKNOWNCONNECTIONTYPESTRING,"Unknown connection type string. Check config file."},
 	{GE_UNKNOWNMODELSTRING,		"Unknown model type string. Check config file."},
@@ -138,6 +138,8 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{GE_EMPTYSMSC,			"Empty SMSC number. Set in phone or use -smscnumber"},
 	{GE_INSIDEPHONEMENU,		"You're inside phone menu (during editing ?). Leave it and try again."},
 	{GE_WORKINPROGRESS,		"Function is during writing. If want help, please contact with authors."},
+	{GE_PHONEOFF,			"Phone is disabled and connected to charger"},
+	{GE_FILENOTSUPPORTED,		"File format not supported by Gammu"},
 
 	{0,				""}
 };
@@ -166,28 +168,6 @@ char *GetGammuVersion()
 
 	sprintf(Buffer, "%s",VERSION);
 	return Buffer;
-}
-
-void GSM_GetCurrentDateTime (GSM_DateTime *Date)
-{
-	struct tm		*now;
-	time_t			nowh;
-
-	nowh = time(NULL);
-	now  = localtime(&nowh);
-
-	Date->Year	= now->tm_year;
-	Date->Month	= now->tm_mon+1;
-	Date->Day	= now->tm_mday;
-	Date->Hour	= now->tm_hour;
-	Date->Minute	= now->tm_min;
-	Date->Second	= now->tm_sec;
-
-	if (Date->Year<1900)
-	{
-		if (Date->Year>90) Date->Year = Date->Year+1900;
-			      else Date->Year = Date->Year+2000;
-	}
 }
 
 #define max_buf_len 	128
@@ -327,6 +307,7 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *di)
 			di->df = fopen(info,"wcb");
 			break;
 		case DL_TEXTERROR:
+		case DL_TEXTERRORDATE:
 			di->df = fopen(info,"ac");
 			if (!di->df) {
 				di->df = file;
@@ -334,7 +315,7 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *di)
 				return GE_CANTOPENFILE;
 			}
 			fseek(di->df, 0, SEEK_END);
-			if (ftell(di->df) > 100000) {
+			if (ftell(di->df) > 5000000) {
 				fclose(di->df);
 				di->df = fopen(info,"wc");
 			}
@@ -350,52 +331,3 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *di)
 	}
 	return GE_NONE;
 }
-
-char *OSDateTime (GSM_DateTime dt, bool TimeZone)
-{
-	struct tm 	timeptr;
-	static char 	retval[200],retval2[200];
-	int 		p,q,r,w;
-
-	/* Based on article in Polish PC-Kurier 8/1998 page 104
-	 * Archive on http://www.pckurier.pl
-	 */
-	p=(14-dt.Month) / 12;
-	q=dt.Month+12*p-2;
-	r=dt.Year-p;
-	w=(dt.Day+(31*q) / 12 + r + r / 4 - r / 100 + r / 400) % 7;
-
-	timeptr.tm_yday 	= 0; 			/* FIXME */
-	timeptr.tm_isdst 	= -1; 			/* FIXME */
-	timeptr.tm_year 	= dt.Year - 1900;
-	timeptr.tm_mon  	= dt.Month - 1;
-	timeptr.tm_mday 	= dt.Day;
-	timeptr.tm_hour 	= dt.Hour;
-	timeptr.tm_min  	= dt.Minute;
-	timeptr.tm_sec  	= dt.Second;
-	timeptr.tm_wday 	= w;
-
-#ifdef WIN32
-	strftime(retval2, 200, "%#c", &timeptr);
-#else
-	strftime(retval2, 200, "%c", &timeptr);
-#endif
-	if (TimeZone) {
-		if (dt.Timezone >= 0) {
-			sprintf(retval," +%02i",dt.Timezone);
-		} else {
-			sprintf(retval," -%02i",dt.Timezone);
-		}
-		strcat(retval2,retval);
-	}
-	/* If don't have weekday name, include it */
-	strftime(retval, 200, "%A", &timeptr);
-	if (strstr(retval2,retval)==NULL) {
-		strcat(retval2," (");
-		strcat(retval2,retval);
-		strcat(retval2,")");
-	}
-
-	return retval2;
-}
-

@@ -24,3 +24,4 @@ EXPORTS
 	mygetmodel		@16
 	mygetfirmwareversion	@17
 	myreset			@18
+	mygetmodelname		@19

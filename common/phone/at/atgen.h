@@ -29,6 +29,7 @@ typedef enum {
 	AT_Alcatel,
 	AT_Siemens,
 	AT_HP,
+	AT_Falcom,
 	AT_Unknown
 } GSM_AT_Manufacturer;
 

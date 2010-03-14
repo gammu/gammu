@@ -15,7 +15,7 @@
 /* Convert Unicode char saved in src to dest */
 unsigned int EncodeWithUnicodeAlphabet(const unsigned char *src, wchar_t *dest)
 {
-	unsigned char retval;
+	char retval;
 
         switch (retval = mbtowc(dest, src, MB_CUR_MAX)) {
                 case -1 :
@@ -27,7 +27,7 @@ unsigned int EncodeWithUnicodeAlphabet(const unsigned char *src, wchar_t *dest)
 /* Convert Unicode char saved in src to dest */
 unsigned int DecodeWithUnicodeAlphabet(wchar_t src, unsigned char *dest)
 {
-        unsigned int retval;
+        int retval;
         
         switch (retval = wctomb(dest, src)) {
                 case -1:
@@ -291,7 +291,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, int len)
 	bool	FoundSpecial = false;
 
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL) DumpMessage(di.df, src, len);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, src, len);
 #endif
 
 	for (i = 0; i < len; i++) {
@@ -318,7 +318,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, int len)
 	dest[current++]=0;
 	dest[current++]=0;
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL) DumpMessage(di.df, dest, strlen(DecodeUnicodeString(dest))*2);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, dest, strlen(DecodeUnicodeString(dest))*2);
 #endif
 }
 
@@ -338,7 +338,7 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len)
 	bool	FoundSpecial,FoundNormal;
 
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL) DumpMessage(di.df, src, (*len)*2);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, src, (*len)*2);
 #endif
 
 	for (i = 0; i < *len; i++) {
@@ -398,7 +398,7 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len)
 	}
 	dest[current]=0;
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL) DumpMessage(di.df, dest, current);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, dest, current);
 #endif
 
 	*len = current;
@@ -833,7 +833,7 @@ bool mywstrncasecmp(unsigned char *a, unsigned char *b, int num)
 		}
 		wc  = a[i*2+1] | (a[i*2] << 8);
 		wc2 = b[i*2+1] | (b[i*2] << 8);
-		if (towlower(((wint_t)wc)) != towlower(((wint_t)wc2))) return false;
+		if (mytowlower(((wint_t)wc)) != mytowlower(((wint_t)wc2))) return false;
 		i++;
 		if (num == i) return true;
 	}
@@ -855,15 +855,35 @@ bool mywstrncmp(unsigned char *a, unsigned char *b, int num)
 /* FreeBSD boxes 4.7-STABLE does't have it, although it's ANSI standard */
 bool myiswspace(unsigned char *src)
 {
- 	wchar_t 	wc;
+#ifndef HAVE_ISWSPACE
  	int 		o;
 	unsigned char	dest[10];
- 
+#endif
+ 	wchar_t 	wc;
+
 	wc = src[1] | (src[0] << 8);
+
+#ifndef HAVE_ISWSPACE
 	o = DecodeWithUnicodeAlphabet(wc, dest);
 	if (o == 1) {
 		if (isspace(((int)dest[0]))!=0) return true;
 		return false;
 	}
 	return false;
+#else
+	return iswspace(wc);
+#endif
+}
+
+/* FreeBSD boxes 4.7-STABLE does't have it, although it's ANSI standard */
+int mytowlower(wint_t c)
+{
+#ifndef HAVE_TOWLOWER
+	unsigned char dest[10];
+
+	DecodeWithUnicodeAlphabet(c, dest);
+	return tolower(dest[0]);
+#else
+	return towlower(c);
+#endif
 }

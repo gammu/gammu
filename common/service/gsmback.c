@@ -1045,7 +1045,7 @@ static void ReadStartupEntry(CFG_Header *file_info, char *section, GSM_Bitmap *b
 		bitmap->Location = 1;
 		ReadBitmapEntry(file_info, section, bitmap);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL) GSM_PrintBitmap(di.df,bitmap);
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,bitmap);
 #endif
 	}
 }
@@ -1466,7 +1466,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 
 	readvalue = CFG_Get(file_info, buffer, "Format", false);
 	/* Is this format version supported ? */
-	if (strcmp(readvalue,"1.01")!=0) return GE_NOTSUPPORTED;
+	if (strcmp(readvalue,"1.01")!=0) return GE_FILENOTSUPPORTED;
 
 	GSM_ClearBackup(backup);
 
@@ -1743,7 +1743,7 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer, unsigned char *buffer
 
 #ifdef DEBUG
 	dprintf("Caller logo\n");
-	if (di.dl == DL_TEXTALL) GSM_PrintBitmap(di.df,&bitmap);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&bitmap);
 #endif
 
 	num = 0;
@@ -1786,7 +1786,7 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer, unsigned char *buffe
 				}
 				PHONE_DecodeBitmap(Type, buffer2+j, backup->StartupLogo);
 #ifdef DEBUG
-				if (di.dl == DL_TEXTALL) GSM_PrintBitmap(di.df,backup->StartupLogo);
+				if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,backup->StartupLogo);
 #endif
 				j = j + PHONE_GetBitmapSize(Type);
 				break;            

@@ -1,2 +1,2 @@
 
-extern GSM_SMSDaemonService SMSDFiles;
+extern GSM_SMSDService SMSDFiles;

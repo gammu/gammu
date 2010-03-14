@@ -242,7 +242,7 @@ int main(int argc, char *argv[])
 	WriteOutput("F0004=\"Error setting device speed. Maybe speed not supported.\"");
 	WriteOutput("F0005=\"Error writing device.\"");
 	WriteOutput("F0006=\"No response in specified timeout. Probably phone not connected.\"");
-	WriteOutput("F0007=\"Unknown response from phone. See /readme, how to report it.\"");
+	WriteOutput("F0007=\"Unknown response from phone. See /readme.txt, how to report it.\"");
 	WriteOutput("F0008=\"Unknown connection type string. Check config file.\"");
 	WriteOutput("F0009=\"Unknown model type string. Check config file.\"");
 	WriteOutput("F0010=\"Some required functions not compiled for your OS. Please contact.\"");
@@ -280,7 +280,9 @@ int main(int argc, char *argv[])
 	WriteOutput("F0042=\"Function is during writing. If want help, please contact with authors.\"");
 	WriteOutput("F0043=\"Error during reading device\"");                               
 	WriteOutput("F0044=\"Can't set parity on device\"");
-	outputnum=45;
+	WriteOutput("F0045=\"Phone is disabled and connected to charger\"");
+	WriteOutput("F0046=\"File format not supported by Gammu\"");
+	outputnum=47;
 #ifdef WIN32
 	ProcessSourceFile("../../../../gammu/gammu.c");
 #else
