@@ -203,6 +203,12 @@ static GSM_Error N9210_Initialise (GSM_StateMachine *s)
 	return GE_NONE;
 }
 
+GSM_Error N9210_AnswerCall(GSM_StateMachine *s, int ID, bool all)
+{
+	if (!all) return DCT3DCT4_AnswerCall(s,ID);
+	return DCT3_AnswerAllCalls(s);
+}
+
 static GSM_Reply_Function N9210ReplyFunctions[] = {
 	{DCT3_ReplySendSMSMessage,	"\x02",0x03,0x02,ID_IncomingFrame	},
 	{DCT3_ReplySendSMSMessage,	"\x02",0x03,0x03,ID_IncomingFrame	},
@@ -267,85 +273,100 @@ GSM_Phone_Functions N9210Phone = {
 	DCT3DCT4_GetFirmware,
 	DCT3_GetIMEI,
 	N71_92_GetDateTime,
-	NOTIMPLEMENTED,		/*	GetAlarm		*/
-	NOTIMPLEMENTED,		/*	GetMemory		*/
-	NOTIMPLEMENTED,		/*	GetMemoryStatus		*/
+	NOTIMPLEMENTED,			/*	GetAlarm		*/
+	NOTIMPLEMENTED,			/*	GetMemory		*/
+	NOTIMPLEMENTED,			/*	GetMemoryStatus		*/
 	DCT3_GetSMSC,
-	NOTIMPLEMENTED,		/*	GetSMSMessage		*/
-	NOTIMPLEMENTED,		/*	GetSMSFolders		*/
+	NOTIMPLEMENTED,			/*	GetSMSMessage		*/
+	NOTIMPLEMENTED,			/*	GetSMSFolders		*/
 	NOKIA_GetManufacturer,
-	NOTIMPLEMENTED,		/*	GetNextSMSMessage	*/
-	NOTIMPLEMENTED,		/*	GetSMSStatus		*/
+	NOTIMPLEMENTED,			/*	GetNextSMSMessage	*/
+	NOTIMPLEMENTED,			/*	GetSMSStatus		*/
 	N9210_SetIncomingSMS,
 	DCT3_GetNetworkInfo,
-	NOTIMPLEMENTED,		/*	Reset			*/
+	NOTIMPLEMENTED,			/*	Reset			*/
 	DCT3_DialVoice,
-	DCT3_AnswerCall,
+	N9210_AnswerCall,
 	DCT3_CancelCall,
-	NOTIMPLEMENTED,		/*	GetRingtone		*/
-	NOTIMPLEMENTED,		/*	GetWAPBookmark		*/
+	NOTIMPLEMENTED,			/*	GetRingtone		*/
+	NOTIMPLEMENTED,			/*	GetWAPBookmark		*/
 	N9210_GetBitmap,
-	NOTIMPLEMENTED,		/*	SetRingtone		*/
-	NOTIMPLEMENTED,		/*	SaveSMSMessage		*/
+	NOTIMPLEMENTED,			/*	SetRingtone		*/
+	NOTIMPLEMENTED,			/*	SaveSMSMessage		*/
 	DCT3_SendSMSMessage,
 	N71_92_SetDateTime,
-	NOTIMPLEMENTED,		/*	SetAlarm		*/
+	NOTIMPLEMENTED,			/*	SetAlarm		*/
 	N9210_SetBitmap,
-	NOTIMPLEMENTED,		/* 	SetMemory 		*/
-	NOTIMPLEMENTED,		/* 	DeleteSMS 		*/
-	NOTIMPLEMENTED,		/* 	SetWAPBookmark 		*/
-	NOTIMPLEMENTED, 	/* 	DeleteWAPBookmark 	*/
-	NOTIMPLEMENTED,		/* 	GetWAPSettings 		*/
+	NOTIMPLEMENTED,			/* 	SetMemory 		*/
+	NOTIMPLEMENTED,			/* 	DeleteSMS 		*/
+	NOTIMPLEMENTED,			/* 	SetWAPBookmark 		*/
+	NOTIMPLEMENTED, 		/* 	DeleteWAPBookmark 	*/
+	NOTIMPLEMENTED,			/* 	GetWAPSettings 		*/
 	DCT3_SetIncomingCB,
-	DCT3_SetSMSC,		/* 	FIXME: test it		*/
+	DCT3_SetSMSC,			/* 	FIXME: test it		*/
 	DCT3_GetManufactureMonth,
 	DCT3_GetProductCode,
 	DCT3_GetOriginalIMEI,
 	DCT3_GetHardware,
 	DCT3_GetPPM,
-	NOTIMPLEMENTED,		/*	PressKey		*/
-	NOTSUPPORTED,		/*	GetToDo			*/
-	NOTSUPPORTED,		/*	DeleteAllToDo		*/
-	NOTSUPPORTED,		/*	SetToDo			*/
-	NOTSUPPORTED,		/*	GetToDoStatus		*/
-	NOTSUPPORTED,		/*	PlayTone		*/
-	NOTSUPPORTED,		/*	EnterSecurityCode	*/
-	NOTSUPPORTED,		/*	GetSecurityStatus	*/
-	NOTIMPLEMENTED, 	/*	GetProfile		*/
-	NOTSUPPORTED,		/*	GetRingtonesInfo	*/
-	NOTSUPPORTED,		/* 	SetWAPSettings 		*/
-	NOTIMPLEMENTED,		/*	GetSpeedDial		*/
-	NOTIMPLEMENTED,		/*	SetSpeedDial		*/
-	NOTIMPLEMENTED,		/*	ResetPhoneSettings	*/
-	NOTSUPPORTED,		/*	SendDTMF		*/
-	NOTSUPPORTED,		/*	GetDisplayStatus	*/
-	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
-	NOTSUPPORTED, 		/*	SetProfile		*/
-	NOTSUPPORTED,		/*	GetSIMIMSI		*/
-	NOTSUPPORTED,		/*	SetIncomingCall		*/
-    	NOTSUPPORTED,		/*  	GetNextCalendar		*/
-	NOTSUPPORTED,		/*	DelCalendar		*/
-	NOTSUPPORTED,		/*	AddCalendar		*/
+	NOTIMPLEMENTED,			/*	PressKey		*/
+	NOTSUPPORTED,			/*	GetToDo			*/
+	NOTSUPPORTED,			/*	DeleteAllToDo		*/
+	NOTSUPPORTED,			/*	SetToDo			*/
+	NOTSUPPORTED,			/*	GetToDoStatus		*/
+	NOTSUPPORTED,			/*	PlayTone		*/
+	NOTSUPPORTED,			/*	EnterSecurityCode	*/
+	NOTSUPPORTED,			/*	GetSecurityStatus	*/
+	NOTIMPLEMENTED, 		/*	GetProfile		*/
+	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
+	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
+	NOTIMPLEMENTED,			/*	GetSpeedDial		*/
+	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
+	NOTIMPLEMENTED,			/*	ResetPhoneSettings	*/
+	NOTSUPPORTED,			/*	SendDTMF		*/
+	NOTSUPPORTED,			/*	GetDisplayStatus	*/
+	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
+	NOTSUPPORTED, 			/*	SetProfile		*/
+	NOTSUPPORTED,			/*	GetSIMIMSI		*/
+	NOTSUPPORTED,			/*	SetIncomingCall		*/
+    	NOTSUPPORTED,			/*  	GetNextCalendar		*/
+	NOTSUPPORTED,			/*	DelCalendar		*/
+	NOTSUPPORTED,			/*	AddCalendar		*/
 	N71_92_GetBatteryCharge,
 	N71_92_GetSignalQuality,
-	NOTSUPPORTED,       	/*  	GetCategory 		*/
-        NOTSUPPORTED,        	/*  	GetCategoryStatus 	*/
-    	NOTSUPPORTED,		/*  	GetFMStation        	*/
-    	NOTSUPPORTED,		/*  	SetFMStation        	*/
-        NOTSUPPORTED,           /*      ClearFMStations         */
-        NOTIMPLEMENTED,         /*      SetIncomingUSSD         */
-	NOTSUPPORTED,		/* 	DeleteUserRingtones	*/
-	NOTSUPPORTED,		/* 	ShowStartInfo		*/
-	NOTSUPPORTED,		/* 	GetNextFileFolder	*/
-	NOTSUPPORTED,		/*	GetFilePart		*/
-	NOTSUPPORTED,		/* 	AddFile			*/
-	NOTSUPPORTED, 		/* 	GetFreeFileMemory 	*/
-	NOTSUPPORTED,		/*	DeleteFile		*/
-	NOTSUPPORTED,		/*	AddFolder		*/
-	NOTSUPPORTED,		/* 	GetMMSSettings		*/
-	NOTSUPPORTED,		/* 	SetMMSSettings		*/
-	NOTSUPPORTED,		/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED		/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,       		/*  	GetCategory 		*/
+        NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
+    	NOTSUPPORTED,			/*  	GetFMStation        	*/
+    	NOTSUPPORTED,			/*  	SetFMStation        	*/
+        NOTSUPPORTED,           	/*      ClearFMStations         */
+        NOTIMPLEMENTED,         	/*      SetIncomingUSSD         */
+	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
+	NOTSUPPORTED,			/* 	ShowStartInfo		*/
+	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/*	GetFilePart		*/
+	NOTSUPPORTED,			/* 	AddFile			*/
+	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
+	NOTSUPPORTED,			/*	DeleteFile		*/
+	NOTSUPPORTED,			/*	AddFolder		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+ 	NOTSUPPORTED,			/* 	HoldCall 		*/
+ 	NOTSUPPORTED,			/* 	UnholdCall 		*/
+ 	NOTSUPPORTED,			/* 	ConferenceCall 		*/
+ 	NOTSUPPORTED,			/* 	SplitCall		*/
+ 	NOTSUPPORTED,			/* 	TransferCall		*/
+ 	NOTSUPPORTED,			/* 	SwitchCall		*/
+ 	NOTSUPPORTED,			/* 	GetCallDivert		*/
+ 	NOTSUPPORTED,			/* 	SetCallDivert		*/
+ 	NOTSUPPORTED,			/* 	CancelAllDiverts	*/
+ 	NOTSUPPORTED,			/* 	AddSMSFolder		*/
+ 	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
+	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	GetLocale		*/
+	NOTSUPPORTED,			/* 	SetLocale		*/
+	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
+	NOTSUPPORTED			/* 	SetCalendarSettings	*/
 };
 
 #endif

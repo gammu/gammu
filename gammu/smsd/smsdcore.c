@@ -217,7 +217,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	start=true;
 	while (error == GE_NONE && !bshutdown) {
 		sms.SMS[0].Folder=0x00;
-		error=Phone->GetNextSMSMessage(&s, &sms, start);
+		error=Phone->GetNextSMS(&s, &sms, start);
 		switch (error) {
 		case GE_EMPTY:
 			break;
@@ -339,7 +339,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		}
 		for (i=0;i<sms.Number;i++) {
 			if (strcmp(Config->deliveryreport, "no") != 0) sms.SMS[i].PDU = SMS_Status_Report;
-			error=Phone->SendSMSMessage(&s, &sms.SMS[i]);
+			error=Phone->SendSMS(&s, &sms.SMS[i]);
 			if (error!=GE_NONE) {
 				WriteSMSDLog("Error sending SMS %s (%i): %s", Config->SMSID, error,print_error(error,s.di.df,s.msg));
 				return false;

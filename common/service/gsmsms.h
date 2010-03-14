@@ -105,13 +105,14 @@ typedef enum {
 	UDH_EnableEmail,
 	UDH_VoidSMS,
 	UDH_NokiaRingtone,
+	UDH_NokiaRingtoneLong,
 	UDH_NokiaOperatorLogo,
-	UDH_NokiaCallerLogo,
-	UDH_NokiaWAPBookmark,
-	UDH_NokiaCalendarLong,
 	UDH_NokiaOperatorLogoLong,
-	UDH_NokiaProfileLong,
+	UDH_NokiaCallerLogo,
+	UDH_NokiaWAP,
 	UDH_NokiaWAPLong,
+	UDH_NokiaCalendarLong,
+	UDH_NokiaProfileLong,
 	UDH_NokiaPhonebookLong,
 	UDH_UserUDH,			/* Other user UDH */
 	UDH_MMSIndicatorLong
@@ -260,12 +261,14 @@ typedef struct {
 } GSM_MultiSMSMessage;
 
 GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
-			      GSM_Coding_Type		Coding,
-		    	      char 			*Buffer,
-			      int			BufferLen,
-			      bool 			UDH,
-			      int 			*UsedText);
-										     
+		      		GSM_Coding_Type		Coding,
+		      		char 			*Buffer,
+		      		int			BufferLen,
+		      		bool 			UDH,
+		      		int 			*UsedText,
+		      		int			*CopiedText,
+		      		int			*CopiedSMSText);
+
 void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 			  unsigned char		*MessageBuffer,
 			  int			MessageLength,
@@ -283,7 +286,7 @@ typedef enum {
 	SMS_NokiaPictureImageLong,	/* Nokia Picture Image + (text)			 */
 	SMS_NokiaScreenSaverLong,	/* Nokia screen saver + (text)			 */
 	SMS_NokiaRingtone,		/* Nokia ringtone - old SM2.0 format, 1 SMS	 */
-	SMS_NokiaRingtoneLong,		/* Nokia ringtone in profile SMS, when very long */
+	SMS_NokiaRingtoneLong,		/* Nokia ringtone contacenated, when very long   */
 	SMS_NokiaOperatorLogo,		/* Nokia 72x14 operator logo, 1 SMS 		 */
 	SMS_NokiaOperatorLogoLong,	/* Nokia 72x14 op logo or 78x21 in 2 SMS	 */
 	SMS_NokiaCallerLogo,		/* Nokia 72x14 caller logo, 1 SMS 		 */
@@ -328,8 +331,18 @@ typedef struct {
 	GSM_PhonebookEntry	*Phonebook;
 	GSM_CalendarEntry	*Calendar;
 	GSM_ToDoEntry		*ToDo;
-	unsigned char		*Buffer;
 	bool			Protected;
+
+	unsigned char		*Buffer;
+	bool			Left;
+	bool			Right;
+	bool			Center;
+	bool			Large;
+	bool			Small;
+	bool			Bold;
+	bool			Italic;
+	bool			Underlined;
+	bool			Strikethrough;
 
 	/* Return values */
 	int			RingtoneNotes;

@@ -1,6 +1,8 @@
 #ifndef __gsm_wap_h
 #define __gsm_wap_h
 
+
+#include "gsmmisc.h"
 #include "../misc/misc.h"
 
 /* --------------------------- WAP or MMS settings ------------------------- */
@@ -57,7 +59,7 @@ typedef struct {
 	WAPSettings_Bearer	ActiveBearer;
 } GSM_MultiWAPSettings;
 
-void NOKIA_EncodeWAPMMSSettingsSMSText(char *Buffer, int *Length, GSM_WAPSettings *settings, bool MMS);
+void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, int *Length, GSM_WAPSettings *settings, bool MMS);
 
 /* -------------------------------- WAP Bookmark --------------------------- */
 
@@ -67,7 +69,7 @@ typedef struct {
 	int	Location;
 } GSM_WAPBookmark;
 
-void NOKIA_EncodeWAPBookmarkSMSText(char *Buffer, int *Length, GSM_WAPBookmark *bookmark);
+void NOKIA_EncodeWAPBookmarkSMSText(unsigned char *Buffer, int *Length, GSM_WAPBookmark *bookmark);
 
 /* ------------------------------ MMS Indicator ---------------------------- */
 
@@ -77,7 +79,36 @@ typedef struct {
 	unsigned char	Sender[200];
 } GSM_MMSIndicator;
 
-void GSM_EncodeMMSIndicatorSMSText(char *Buffer, int *Length, GSM_MMSIndicator Indicator);
+void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, int *Length, GSM_MMSIndicator Indicator);
+
+/* ------------------------------ MMS file --------------------------------- */
+
+#define MAX_MULTI_MMS 20
+
+typedef enum {
+	MMS_Text = 1,
+	MMS_Bitmap_JPG
+} EncodeMultiPartMMSID;
+
+typedef struct {
+	EncodeMultiPartMMSID    ID;
+
+	GSM_File		File;
+	unsigned char		*Buffer;
+} EncodeMultiPartMMSEntry;
+
+typedef struct {
+	/* Input values */
+	EncodeMultiPartMMSEntry Entries[MAX_MULTI_MMS];
+	int			EntriesNum;
+
+	unsigned char		Source[200];
+	unsigned char		Destination[200];
+	unsigned char		Subject[200];
+} GSM_EncodeMultiPartMMSInfo;
+
+void GSM_EncodeMMSFile		(GSM_EncodeMultiPartMMSInfo *Info, unsigned char *Buffer, int *Length);
+void GSM_ClearMultiPartMMSInfo	(GSM_EncodeMultiPartMMSInfo *Info);
 
 #endif
 

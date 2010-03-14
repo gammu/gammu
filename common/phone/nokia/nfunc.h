@@ -18,9 +18,11 @@ GSM_Error N71_65_ReplyGetCalendarNotePos1	(GSM_Protocol_Message msg, GSM_StateMa
 GSM_Error N71_65_ReplyAddCalendar1		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N71_65_ReplyAddCalendar2		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N71_65_ReplyDelCalendar		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error N71_65_ReplyDeleteMemory		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N71_65_ReplyCallInfo			(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N71_65_ReplyUSSDInfo			(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error DCT3DCT4_ReplyCallDivert		(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error DCT3DCT4_ReplyGetActiveWAPMMSSet	(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error DCT3DCT4_ReplySetActiveWAPMMSSet	(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3DCT4_ReplyGetWAPBookmark		(GSM_Protocol_Message msg, GSM_StateMachine *s, bool FullLength);
 GSM_Error DCT3DCT4_ReplySetWAPBookmark		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3DCT4_ReplyDelWAPBookmark		(GSM_Protocol_Message msg, GSM_StateMachine *s);
@@ -38,13 +40,19 @@ GSM_Error N71_65_GetNextCalendar1		(GSM_StateMachine *s, GSM_CalendarEntry *Note
 GSM_Error N71_65_AddCalendar2			(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past);
 GSM_Error N71_65_AddCalendar1			(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *FirstCalendarPos, bool Past);
 GSM_Error N71_65_DelCalendar			(GSM_StateMachine *s, GSM_CalendarEntry *Note);
-GSM_Error N71_65_DeleteMemory			(GSM_StateMachine *s, GSM_PhonebookEntry *entry, unsigned char *memory);
 GSM_Error DCT3DCT4_SendDTMF			(GSM_StateMachine *s, char *sequence);
 GSM_Error DCT3DCT4_DeleteWAPBookmark		(GSM_StateMachine *s, GSM_WAPBookmark 	  *bookmark);
 GSM_Error DCT3DCT4_EnableWAP			(GSM_StateMachine *s);
 GSM_Error DCT3DCT4_GetModel			(GSM_StateMachine *s);
 GSM_Error DCT3DCT4_GetFirmware			(GSM_StateMachine *s);
 GSM_Error DCT3DCT4_GetWAPBookmark		(GSM_StateMachine *s, GSM_WAPBookmark	  *bookmark	);
+GSM_Error DCT3DCT4_AnswerCall			(GSM_StateMachine *s, int ID);
+GSM_Error DCT3DCT4_CancelCall			(GSM_StateMachine *s, int ID);
+GSM_Error DCT3DCT4_GetActiveWAPMMSSet		(GSM_StateMachine *s);
+GSM_Error DCT3DCT4_SetActiveWAPMMSSet		(GSM_StateMachine *s, GSM_MultiWAPSettings *settings, bool MMS);
+GSM_Error DCT3DCT4_CancelAllDiverts		(GSM_StateMachine *s);
+GSM_Error DCT3DCT4_SetCallDivert		(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
+GSM_Error DCT3DCT4_GetCallDivert		(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
 
 GSM_CalendarNoteType N71_65_FindCalendarType(GSM_CalendarNoteType Type, OnePhoneModel *model);
 void 		N71_65_GetCalendarRecurrance	(GSM_StateMachine *s, unsigned char *buffer, GSM_CalendarEntry *entry);

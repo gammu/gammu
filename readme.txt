@@ -27,6 +27,10 @@ A. Gammu is currently licensed under GNU GPL license. It means, that each
 
    If you think, that I break GNU GPL and situation is not clear, I could maybe
    change license to different (like LGPL).
+
+   NOTE: If you want to use Gammu in own (commercional) applications, it will
+         be fair to give some gift like small sum of money, old phone, etc.
+         to author(s). It will be used for improving this software.
 -------------------------------------------------------------------------------
 Q. How can I help in writing this software ?
 
@@ -35,25 +39,31 @@ A. HELP IS VERY REQUIRED. Methods are many:
    1. writing support for some models or fixing source (I can give tips many
       times). Format and method of creating patch files is described in develop
       docs.
-
-      There are still few general topics TODO:
-
-      * uploading some things over WAP
-      * MMS
-      * ending win32 dll
-      * writing really usefull GUI
-      * giving support for more formats (like Ericsson WAP settings over SMS)
-        Note: I have in my library specs for many models (example: Morotola,
-              Sagen, Siemens xx45) and it's only required to code few 
-              functions into current source to have support for them...
-      * AT modem emulator
-
    2. reporting bugs (see "How to report bugs ?" question)
    3. help in documentation or translations
    4. help in discovering phone protocols
    5. suggesting some changes to better :-)
+   6. giving some software (specs, tools, etc.) or hardware help
 
    etc.
+-------------------------------------------------------------------------------
+Q. What are things ToDo ?
+
+A. * these things can be done without anything:
+     * MMS
+     * giving support for more formats
+     * writing really usefull GUI
+     * ending win32 dll
+     * uploading some things over WAP
+     * AT modem emulator
+     * .... (other)
+   * after getting some hardware help:
+     * DKU-5 driver
+     * Symbian support
+     * SyncML
+     * N3410 Java support
+     * N5510 radio/MP3 support
+     * .... (other)
 -------------------------------------------------------------------------------
 Q. Where to get latest versions and support ?
 
@@ -85,6 +95,15 @@ A. Method 1:
          first do "./configure" and then ""make makerpm"
          resulting rpm package could be installed via rpm --install <package>
    Method 3:
+     * under Linux based on Debian packages
+         There are currently two ways how to build Debian package.
+
+         If you want to use standard Debian way, copy directory cfg/debian
+         into main source directory and build it as any other Debian package
+         (dpkg-buildpackage, or fakeroot make -f debian/rules binary).
+
+         The other way is to simple run make makedeb.  
+   Method 4:
      * change parameters in /cfg/config.h
      * compile it:
        * under MS Visual C++ 6.0 for MS Windows
@@ -274,10 +293,6 @@ A  Nokia section
       When make ./configure, use --newcalendar. If this works for Your
       phone, please report model and firmware version.
 
-   15.7250i, 6800
-      * I don't have phone with SyncMl settings & Notes. You need to provide
-        sniffs
-
    AT section
 
     1.Siemens M20
@@ -323,7 +338,7 @@ A. 1.Nokia DCT3 (3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|
 
    8.OBEX devices
 
-     Work in progress
+     Tested with Nokia and SonyEricsson. Works according to device capabilities
 -------------------------------------------------------------------------------
 Q. How to report bugs ?
 
@@ -449,8 +464,7 @@ A. Using cable. Each phone has connector on bottom (like in 5110) or under
                      "/dev/ircomm0" or similiar (you have to add access to
                      this device to user)
 
-   Using bluetooth. Works OK in all situations exluding one (Microsoft stack
-                    and AT commands).
+   Using bluetooth. Works OK in all situations
 
                     Example of using USB dongle for Linux (Bluez stack from
                     http://bluez.sourceforge.net):
@@ -586,16 +600,6 @@ A. 1. go into docs/docs/locale
    3. open gammu_XX.txt in editor supporting Unicode (in win32 Notepad)
    4. to each "Fxxxx = "text"" line add "Txxxx = "text"" line
    5. send to me updated file
--------------------------------------------------------------------------------
-Q. How can I build Debian package for Gammu ?
-
-A. There are currently two ways how to build Debian package.
-
-   If you want to use standard Debian way, copy directory cfg/debian
-   into main source directory and build it as any other Debian package
-   (dpkg-buildpackage, or fakeroot make -f debian/rules binary).
-
-   The other way is to simple run make makedeb.  
 -------------------------------------------------------------------------------
 Q. Where can I find additional info ?
 

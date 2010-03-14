@@ -24,6 +24,97 @@ static unsigned char N6110_MEMORY_TYPES[] = {
 	  0x00, 0x00
 };
 
+static GSM_Error N6110_ReplyGetPhoneLanguage(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	N6110_Language lang = N6110_Auto;
+
+	smprintf(s, "Phone language is %02x\n",msg.Buffer[6]);
+	switch (msg.Buffer[6]) {
+		case 0x21: lang = N6110_Europe; break; //Polish
+	}
+	s->Phone.Data.Priv.N6110.PhoneLanguage = lang;
+	return GE_NONE;
+}
+
+static GSM_Error N6110_GetPhoneLanguage(GSM_StateMachine *s)
+{
+	unsigned char feat_req[] = {
+		N6110_FRAME_HEADER, 0x13, 0x01,
+		0x00,		/* Profile location 	*/
+		0x00};		/* Feature number	*/
+
+	s->Phone.Data.Priv.N6110.PhoneLanguage = N6110_Auto;
+
+	feat_req[5] = 0; 
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES33)) {
+		feat_req[6] = 0x1E;
+	} else {
+		feat_req[6] = 0x21;
+	}
+	smprintf(s, "Getting profile feature\n");
+	return GSM_WaitFor (s, feat_req, 7, 0x05, 4, ID_GetLanguage);
+}
+
+struct N6110_Lang_Char {
+	N6110_Language 	Lang;
+	unsigned char 	Phone;
+	unsigned char	Unicode1;
+	unsigned char 	Unicode2;
+};
+
+static struct N6110_Lang_Char N6110_Lang_Table[] = {
+//Polish small chars acelnoszz with ogonek
+{N6110_Europe,0x14,0x01,0x05},{N6110_Europe,0x17,0x01,0x07},
+{N6110_Europe,0x1E,0x01,0x19},{N6110_Europe,0x90,0x01,0x42},
+{N6110_Europe,0x93,0x01,0x44},{N6110_Europe,0x9A,0x00,0xF3},
+{N6110_Europe,0xB6,0x01,0x5B},{N6110_Europe,0xF4,0x01,0x7C},
+{N6110_Europe,0xEE,0x01,0x7A},
+//Polish large chars acelnoszz with ogonek
+{N6110_Europe,0x13,0x01,0x04},{N6110_Europe,0x15,0x01,0x06},
+{N6110_Europe,0x1D,0x01,0x18},{N6110_Europe,0x8E,0x01,0x41},
+{N6110_Europe,0x92,0x01,0x43},{N6110_Europe,0x83,0x00,0xD3},
+{N6110_Europe,0xB5,0x01,0x5A},{N6110_Europe,0xF0,0x01,0x7B},
+{N6110_Europe,0xE7,0x01,0x79},
+//euro
+{N6110_Europe,0xB2,0x20,0xAC},
+{0,0,0,0}
+};
+
+static void N6110_EncodeUnicode(GSM_StateMachine *s, unsigned char *dest, const unsigned char *src, int len)
+{
+	int 			i_len = 0, o_len, i;
+ 	wchar_t 		wc;
+	GSM_Phone_N6110Data 	*Priv = &s->Phone.Data.Priv.N6110;
+	bool			found;
+ 
+	for (o_len = 0; i_len < len; o_len++) {
+		found = false;
+		if (Priv->PhoneLanguage != N6110_Auto) {
+			i 	= 0;
+			while(1) {
+				if (N6110_Lang_Table[i].Lang == 0) break;
+				if (N6110_Lang_Table[i].Lang == Priv->PhoneLanguage &&
+				    N6110_Lang_Table[i].Phone == src[i_len]) {
+					dest[o_len*2]		= N6110_Lang_Table[i].Unicode1;
+					dest[(o_len*2)+1]	= N6110_Lang_Table[i].Unicode2;
+					i_len++;
+					found = true;
+					break;
+				} 
+				i++;
+			}
+		}
+		if (!found) {
+			i_len += EncodeWithUnicodeAlphabet(&src[i_len], &wc);
+			dest[o_len*2]		= (wc >> 8) & 0xff;
+			dest[(o_len*2)+1]	= wc & 0xff;
+		}
+ 	}
+	dest[o_len*2]		= 0;
+	dest[(o_len*2)+1]	= 0;
+}
+
+
 /* This function provides Nokia authentication protocol.
  * This code is written specially for Gnokii project by Odinokov Serge.
  * If you have some special requests for Serge just write him to
@@ -155,7 +246,7 @@ static GSM_Error N6110_Initialise (GSM_StateMachine *s)
 #ifdef DEBUG
 	DCT3_SetIncomingCB(s,true);
 #endif
-
+	N6110_GetPhoneLanguage(s);
 	return GE_NONE;
 }
 
@@ -198,8 +289,16 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 			}
 			Data->Memory->Entries[Data->Memory->EntriesNum].EntryType=PBK_Name;
 			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOPBKUNICODE)) {
-				EncodeUnicode(Data->Memory->Entries[Data->Memory->EntriesNum].Text,
+				if (Data->Memory->MemoryType==GMT_DC ||
+		  		    Data->Memory->MemoryType==GMT_RC ||
+		    		    Data->Memory->MemoryType==GMT_MC ||
+				    Data->Memory->MemoryType==GMT_ME) {
+					N6110_EncodeUnicode(s,Data->Memory->Entries[Data->Memory->EntriesNum].Text,
 					msg.Buffer+count+1,msg.Buffer[count]);
+				} else {
+					EncodeUnicode(Data->Memory->Entries[Data->Memory->EntriesNum].Text,
+					msg.Buffer+count+1,msg.Buffer[count]);
+				}
 			} else {
 				memcpy(Data->Memory->Entries[Data->Memory->EntriesNum].Text,
 					msg.Buffer+count+1,msg.Buffer[count]);
@@ -228,11 +327,13 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 		Data->Memory->EntriesNum++;
 		count=count+msg.Buffer[count]+1;
 
-		if (msg.Buffer[count]>0 && msg.Buffer[count]<6) {
-			Data->Memory->Entries[Data->Memory->EntriesNum].EntryType=PBK_Caller_Group;
-			smprintf(s, "Caller group \"%i\"\n",msg.Buffer[count]);
-			Data->Memory->Entries[Data->Memory->EntriesNum].Number=msg.Buffer[count];
-			Data->Memory->EntriesNum++;
+		if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOCALLER)) {
+			if (msg.Buffer[count]<5) {
+				Data->Memory->Entries[Data->Memory->EntriesNum].EntryType=PBK_Caller_Group;
+				smprintf(s, "Caller group \"%i\"\n",msg.Buffer[count]);
+				Data->Memory->Entries[Data->Memory->EntriesNum].Number=msg.Buffer[count]+1;
+				Data->Memory->EntriesNum++;
+			}
 		}
 		count++;
 
@@ -448,7 +549,7 @@ static GSM_Error N6110_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 	while (true) {
 		sms->SMS[0].Location++;
 		if (Priv->LastSMSRead>=(Priv->LastSMSStatus.SIMUsed+Priv->LastSMSStatus.PhoneUsed+Priv->LastSMSStatus.TemplatesUsed)) return GE_EMPTY;
-		error=s->Phone.Functions->GetSMSMessage(s, sms);
+		error=s->Phone.Functions->GetSMS(s, sms);
 		if (error==GE_NONE) {
 			Priv->LastSMSRead++;
 			break;
@@ -1021,6 +1122,7 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 			} else {
 				error = N6110_SetProfileFeature(s,0,0x29,((unsigned char)(Bitmap->Location-1)));
 			}
+			if (error == GE_NOTSUPPORTED) error = GE_SECURITYERROR;
 			if (error != GE_NONE) return error;
 			if (Bitmap->Location != 1) return GE_NONE;
 		}
@@ -1142,59 +1244,115 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 static GSM_Error N6110_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data		*Data = &s->Phone.Data;
-#ifdef DEBUG
 	int 			tmp, count;
-#endif
 	GSM_Call 		call;
 
-	call.Status = 0;
+	call.CallIDAvailable 	= true;
+	call.Status 		= 0;	
+	smprintf(s, "Call info, ");
 	switch (msg.Buffer[3]) {
 	case 0x02:
-		smprintf(s, "Call going, sequence %d\n",msg.Buffer[4]);
+		smprintf(s, "Call established, waiting for answer\n");
 		call.Status = GN_CALL_CallEstablished;
 		break;
 	case 0x03:
-		smprintf(s, "Call in progress, sequence %d\n",msg.Buffer[4]);
+		smprintf(s, "Call started\n");
+		/* no phone number in frame */
 		call.Status = GN_CALL_CallStart;
 		break;
 	case 0x04:
-		smprintf(s, "Remote end hang up, sequence %d, cause type %i, CC %i\n",msg.Buffer[4],msg.Buffer[5],msg.Buffer[6]);
+		smprintf(s, "Remote end hang up\n");
+		smprintf(s, "CC         : %i\n",msg.Buffer[6]);
 		call.Status 	= GN_CALL_CallRemoteEnd;
-		call.Code	= msg.Buffer[6];
+		call.StatusCode	= msg.Buffer[6];
 		break;	
 	case 0x05:
-#ifdef DEBUG
-		smprintf(s, "Incoming call, sequence %d, number \"",msg.Buffer[4]);
+		smprintf(s, "Incoming call\n");
+		smprintf(s, "Number     : \"");
 		count=msg.Buffer[6];
 		for (tmp=0; tmp <count; tmp++) smprintf(s, "%c", msg.Buffer[7+tmp]);
-		smprintf(s, "\", name \"");
+		smprintf(s, "\"\nName       : \"");
 		for (tmp=0; tmp<msg.Buffer[7+count]; tmp++) smprintf(s, "%c", msg.Buffer[8+count+tmp]);
 		smprintf(s, "\"\n");
-#endif
-		if (Data->EnableIncomingCall && s->User.IncomingCall!=NULL) {
-			call.Status = GN_CALL_IncomingCall;
-			EncodeUnicode(call.PhoneNumber, msg.Buffer+7, msg.Buffer[6]);
-		}
+
+		call.Status = GN_CALL_IncomingCall;
+		EncodeUnicode(call.PhoneNumber, msg.Buffer+7, msg.Buffer[6]);
 		break;
 	case 0x07:
-		smprintf(s, "Call answered, sequence %d\n",msg.Buffer[4]);
+		smprintf(s, "Call answer initiated\n");
 		break;
 	case 0x09:
-		smprintf(s, "Call end from your phone, sequence %d\n",msg.Buffer[4]);
+		smprintf(s, "Call released\n");
 		call.Status = GN_CALL_CallLocalEnd;
 		break;
 	case 0x0a:
-		smprintf(s, "Call info, meaning not known, sequence %d\n",msg.Buffer[4]);
+		smprintf(s, "Call is being released\n");
 		break;
 	case 0x23:
-		smprintf(s, "Call held, meaning not known, sequence %d\n",msg.Buffer[4]);
+		smprintf(s, "Call held\n");
+		call.Status = GN_CALL_CallHeld;
 		break;
 	case 0x25:
-		smprintf(s, "Call resumed, meaning not known, sequence %d\n",msg.Buffer[4]);
+		smprintf(s, "Call resumed\n");
+		call.Status = GN_CALL_CallResumed;
+		break;
+	case 0x27:
+		smprintf(s, "Call switched\n");
+		/* incorrect call id in frame - 6150 5.22 */
+		call.CallIDAvailable 	= false;
+		call.Status 		= GN_CALL_CallSwitched;
+		break;
+	case 0x29:
+		smprintf(s, "Joining call to the conference (conference)\n");
+		break;
+	case 0x2A:
+		smprintf(s, "Removing call from the conference (split)\n");
 		break;
 	}
+	if (call.CallIDAvailable) smprintf(s, "Call ID    : %d\n",msg.Buffer[4]);
 	if (Data->EnableIncomingCall && s->User.IncomingCall!=NULL && call.Status != 0) {
+		if (call.CallIDAvailable) call.CallID = msg.Buffer[4];
 		s->User.IncomingCall(s->Config.Device, call);
+	}
+	if (s->Phone.Data.RequestID == ID_CancelCall) {
+		if (msg.Buffer[3] == 0x09) {
+			if (s->Phone.Data.CallID == msg.Buffer[4]) return GE_NONE;
+			/* when we canceled call and see frame about other
+			 * call releasing, we don't give GE_NONE for "our"
+			 * call release command
+			 */
+			return GE_NEEDANOTHERANSWER;
+		}
+	}
+	if (s->Phone.Data.RequestID == ID_AnswerCall) {
+		if (msg.Buffer[3] == 0x07) {
+			if (s->Phone.Data.CallID == msg.Buffer[4]) return GE_NONE;
+			return GE_NEEDANOTHERANSWER;
+		}
+	}
+	if (s->Phone.Data.RequestID == ID_UnholdCall) {
+		if (msg.Buffer[3] == 0x25) {
+			if (s->Phone.Data.CallID == msg.Buffer[4]) return GE_NONE;
+			return GE_NEEDANOTHERANSWER;
+		}
+	}
+	if (s->Phone.Data.RequestID == ID_HoldCall) {
+		if (msg.Buffer[3] == 0x23) {
+			if (s->Phone.Data.CallID == msg.Buffer[4]) return GE_NONE;
+			return GE_NEEDANOTHERANSWER;
+		}
+	}
+	if (s->Phone.Data.RequestID == ID_ConferenceCall) {
+		if (msg.Buffer[3] == 0x29) {
+			if (s->Phone.Data.CallID == msg.Buffer[4]) return GE_NONE;
+			return GE_NEEDANOTHERANSWER;
+		}
+	}
+	if (s->Phone.Data.RequestID == ID_SplitCall) {
+		if (msg.Buffer[3] == 0x2B) {
+			if (s->Phone.Data.CallID == msg.Buffer[4]) return GE_NONE;
+			return GE_NEEDANOTHERANSWER;
+		}
 	}
 	return GE_NONE;
 }
@@ -1278,7 +1436,7 @@ static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 	if (Group == -1) {
 		req[current++] = 0xff;
 	} else {
-		req[current++] = entry->Entries[Group].Number;
+		req[current++] = entry->Entries[Group].Number-1;
 	}
 
 	smprintf(s, "Writing phonebook entry\n");
@@ -1663,6 +1821,10 @@ static GSM_Error N6110_ReplyGetProfileFeature(GSM_Protocol_Message msg, GSM_Stat
 				Data->Profile->FeatureValue	[Data->Profile->FeaturesNumber] = msg.Buffer[8] + 1;
 				Data->Profile->FeaturesNumber++;
 				break;
+			case 0x24:
+				smprintf(s, "selected profile\n");
+				if (msg.Buffer[8] + 1 == Data->Profile->Location) Data->Profile->Active = true;
+				break;
 			default:
 				NOKIA_FindFeatureValue(s, Profile3310,msg.Buffer[6],msg.Buffer[8],Data,false);
 			}
@@ -1690,6 +1852,10 @@ static GSM_Error N6110_ReplyGetProfileFeature(GSM_Protocol_Message msg, GSM_Stat
 				NOKIA_FindFeatureValue(s, Profile6110,msg.Buffer[6],msg.Buffer[8],Data,false);
 			}
 			break;
+		case 0x2A:
+			smprintf(s, "selected profile\n");
+			if (msg.Buffer[8] + 1 == Data->Profile->Location) Data->Profile->Active = true;
+			break;
 		default:
 			NOKIA_FindFeatureValue(s, Profile6110,msg.Buffer[6],msg.Buffer[8],Data,false);
 		}
@@ -1698,10 +1864,14 @@ static GSM_Error N6110_ReplyGetProfileFeature(GSM_Protocol_Message msg, GSM_Stat
 		smprintf(s, "Invalid profile location\n");
 		return GE_INVALIDLOCATION;
 	case 0x1b:
+		Data->Profile->Name[0] = 0;
+		Data->Profile->Name[1] = 0;
 		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES33)) {
 			EncodeUnicode(Data->Profile->Name,msg.Buffer+10,msg.Buffer[9]);
 		} else {
-			CopyUnicodeString(Data->Profile->Name,msg.Buffer+10);
+			if (msg.Length > 0x0A) {
+				CopyUnicodeString(Data->Profile->Name,msg.Buffer+10);
+			}	
 		}
 		smprintf(s, "Profile name: \"%s\"\n",Data->Profile->Name);
 		Data->Profile->DefaultName = false;
@@ -1722,6 +1892,7 @@ static GSM_Error N6110_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 		0x00};		/* Feature number	*/
 
 	s->Phone.Data.Profile=Profile;
+
 	smprintf(s, "Getting profile name\n");
 	error = GSM_WaitFor (s, name_req, 5, 0x05, 4, ID_GetProfile);
 	if (error!=GE_NONE) return error;
@@ -1784,6 +1955,16 @@ static GSM_Error N6110_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 			for (j=0;j<5;j++) Profile->CallerGroups[j] = true;
 		}
 	}
+
+	Profile->Active = false;
+	feat_req[5] 	= 0; 
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES33)) {
+		feat_req[6] = 0x24;
+	} else {
+		feat_req[6] = 0x2A;
+	}	
+	smprintf(s, "Getting profile feature\n");
+	error = GSM_WaitFor (s, feat_req, 7, 0x05, 4, ID_GetProfile);
 
 	return error;
 }
@@ -1875,6 +2056,9 @@ static GSM_Error N6110_ReplyAddCalendar(GSM_Protocol_Message msg, GSM_StateMachi
 		case 0x7d:
 			smprintf(s, "- error\n");
 			return GE_UNKNOWN;
+		case 0x81:
+			smprintf(s,"- during editing notes in phone menu\n");
+			return GE_INSIDEPHONEMENU;
 		default:
 			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 	}
@@ -2017,6 +2201,9 @@ static GSM_Error N6110_ReplyDeleteCalendar(GSM_Protocol_Message msg, GSM_StateMa
 	case 0x01:
 		smprintf(s, "Done OK\n");
 		return GE_NONE;
+	case 0x81:
+		smprintf(s,"- during editing notes in phone menu\n");
+		return GE_INSIDEPHONEMENU;
 	case 0x93:
 		smprintf(s, "Can't be done - too high location ?\n");
 		return GE_INVALIDLOCATION;
@@ -2037,7 +2224,7 @@ static GSM_Error N6110_DeleteCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry
 	req[4] = Note->Location;
 
 	smprintf(s, "Deleting calendar note\n");
-	return GSM_WaitFor (s, req, 6, 0x13, 5, ID_DeleteCalendarNote);
+	return GSM_WaitFor (s, req, 5, 0x13, 5, ID_DeleteCalendarNote);
 }
 
 /* for example: "Euro_char" text */
@@ -2178,7 +2365,7 @@ static GSM_Error N6110_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateM
 				}
 			}
 			if (!SpecialSubSet) {
-				EncodeUnicode(Entry->Entries[Entry->EntriesNum].Text,msg.Buffer+24+i,msg.Buffer[23]-i);
+				N6110_EncodeUnicode(s,Entry->Entries[Entry->EntriesNum].Text,msg.Buffer+24+i,msg.Buffer[23]-i);
 			}
 		}
 		smprintf(s, "Text \"%s\"\n",DecodeUnicodeString(Entry->Entries[Entry->EntriesNum].Text));
@@ -2256,17 +2443,165 @@ GSM_Error N6110_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return GE_NONE;
 }
 
+GSM_Error N6110_AnswerCall(GSM_StateMachine *s, int ID, bool all)
+{
+	GSM_Error	error;
+	unsigned char req1[] = {N6110_FRAME_HEADER, 0x42, 0x05, 0x01,
+				0x07, 0xa2, 0x88, 0x81, 0x21, 0x15, 0x63, 0xa8,
+				0x00, 0x00,
+				0x07, 0xa3, 0xb8, 0x81, 0x20, 0x15, 0x63, 0x80};
+
+	if (!all) {
+		smprintf(s, "Answering call part 1\n");
+		error = GSM_WaitFor (s, req1, 24, 0x01, 5, ID_AnswerCall);
+		if (error != GE_NONE) return error;
+		return DCT3DCT4_AnswerCall(s,ID);
+	}
+
+	return DCT3_AnswerAllCalls(s);
+}
+
+static GSM_Error N6110_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber)
+{
+	unsigned int	pos = 4;
+	unsigned char 	req[100] = {N6110_FRAME_HEADER,0x01,
+		0x0c};			/* Number length in chars */
+
+	if (ShowNumber == GN_CALL_Default) return DCT3_DialVoice(s,number,ShowNumber);
+
+	req[pos++] = strlen(number);
+	memcpy(req+pos,number,strlen(number));
+	pos += strlen(number);
+	req[pos++] = 0x05; /* call type: voice - 0x05, data - 0x01 */
+	req[pos++] = 0x01;
+	req[pos++] = 0x01;
+	req[pos++] = 0x05;
+	req[pos++] = 0x81;
+	switch (ShowNumber) {
+	case GN_CALL_HideNumber:
+		req[pos++] = 0x02;
+		break;
+	case GN_CALL_ShowNumber:
+		req[pos++] = 0x03;
+		break;
+	case GN_CALL_Default:
+		req[pos++] = 0x01;
+		break;
+	}
+	req[pos++] = 0x00;
+	req[pos++] = 0x00;
+
+	smprintf(s, "Making voice call\n");
+	return GSM_WaitFor (s, req, pos, 0x01, 4, ID_DialVoice);
+}
+
+GSM_Error N6110_UnholdCall(GSM_StateMachine *s, int ID)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x24, 0x00, 0x02};
+
+	req[4] 			= (unsigned char)ID;
+	s->Phone.Data.CallID 	= ID;
+
+	smprintf(s, "Unholding call\n");
+	return GSM_WaitFor (s, req, 6, 0x01, 4, ID_UnholdCall);
+}
+
+GSM_Error N6110_HoldCall(GSM_StateMachine *s, int ID)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x22, 0x00, 0x00};
+
+	req[4] 			= (unsigned char)ID;
+	s->Phone.Data.CallID 	= ID;
+
+	smprintf(s, "Unholding call\n");
+	return GSM_WaitFor (s, req, 6, 0x01, 4, ID_HoldCall);
+}
+
+/* Joining selected call to current (and making conference) */
+GSM_Error N6110_ConferenceCall(GSM_StateMachine *s, int ID)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x28, 0x00, 0x01};
+
+	req[4] 			= (unsigned char)ID;
+	s->Phone.Data.CallID 	= ID;
+
+	smprintf(s, "Conference call\n");
+	return GSM_WaitFor (s, req, 6, 0x01, 4, ID_ConferenceCall);
+}
+
+/* Removing selected call from conference and making private call with it
+ * (conference call is on hold) */
+GSM_Error N6110_SplitCall(GSM_StateMachine *s, int ID)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x2A, 0x00, 0x01};
+
+	req[4] 			= (unsigned char)ID;
+	s->Phone.Data.CallID 	= ID;
+
+	smprintf(s, "Split call\n");
+	return GSM_WaitFor (s, req, 6, 0x01, 4, ID_SplitCall);
+}
+
+/* This probably need more investigation */
+GSM_Error N6110_SwitchCall(GSM_StateMachine *s, int ID, bool next)
+{
+//	unsigned char req[] = {N6110_FRAME_HEADER, 0x20};  calls info
+  	unsigned char req[] = {N6110_FRAME_HEADER, 0x26, 0x00};
+
+	s->Phone.Data.CallID = ID;
+
+	if (next) {
+		smprintf(s, "Switch call\n");
+		return GSM_WaitFor (s, req, 4, 0x01, 4, ID_SwitchCall);
+	} else {
+		req[4] = (unsigned char)ID;
+	
+		smprintf(s, "Switch call\n");
+		return GSM_WaitFor (s, req, 5, 0x01, 4, ID_SwitchCall);
+	}
+}
+
+/* This probably need more investigation */
+GSM_Error N6110_TransferCall(GSM_StateMachine *s, int ID, bool next)
+{
+  	unsigned char req[] = {N6110_FRAME_HEADER, 0x2C, 0x00};
+
+	s->Phone.Data.CallID = ID;
+
+	if (next) {
+		smprintf(s, "Transfer call\n");
+		return GSM_WaitFor (s, req, 4, 0x01, 4, ID_TransferCall);
+	} else {
+		req[4] = (unsigned char)ID;
+	
+		smprintf(s, "Transfer call\n");
+		return GSM_WaitFor (s, req, 5, 0x01, 4, ID_TransferCall);
+	}
+}
+
 static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x02,ID_IncomingFrame	},
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x03,ID_IncomingFrame	},
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x04,ID_IncomingFrame	},
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x05,ID_IncomingFrame	},
+	{N6110_ReplyCallInfo,		"\x01",0x03,0x07,ID_AnswerCall		},
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x07,ID_IncomingFrame	},
+	{N6110_ReplyCallInfo,		"\x01",0x03,0x09,ID_CancelCall		},
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x09,ID_IncomingFrame	},
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x0A,ID_IncomingFrame	},
+	{N6110_ReplyCallInfo,		"\x01",0x03,0x23,ID_HoldCall		},
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x23,ID_IncomingFrame	},
+	{N6110_ReplyCallInfo,		"\x01",0x03,0x25,ID_UnholdCall		},
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x25,ID_IncomingFrame	},
+	{N6110_ReplyCallInfo,		"\x01",0x03,0x27,ID_IncomingFrame	},
+	{N6110_ReplyCallInfo,		"\x01",0x03,0x29,ID_ConferenceCall	},
+	{N6110_ReplyCallInfo,		"\x01",0x03,0x29,ID_IncomingFrame	},
+	{N6110_ReplyCallInfo,		"\x01",0x03,0x2B,ID_SplitCall		},
+	{N6110_ReplyCallInfo,		"\x01",0x03,0x2B,ID_IncomingFrame	},
 	{N6110_ReplySendDTMF,		"\x01",0x03,0x40,ID_SendDTMF		},
+	{NONEFUNCTION,			"\x01",0x03,0x40,ID_DialVoice		},
+	{NONEFUNCTION,			"\x01",0x03,0x40,ID_IncomingFrame	},
+	{NONEFUNCTION,			"\x01",0x03,0x43,ID_AnswerCall		},
 	{N6110_ReplySendDTMF,		"\x01",0x03,0x51,ID_SendDTMF		},
 
 	{DCT3_ReplySendSMSMessage,	"\x02",0x03,0x02,ID_IncomingFrame	},
@@ -2301,6 +2636,7 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{N6110_ReplySetProfileFeature,	"\x05",0x03,0x11,ID_SetProfile		},
 	{N6110_ReplySetProfileFeature,	"\x05",0x03,0x12,ID_SetProfile		},
 	{N6110_ReplyGetProfileFeature,	"\x05",0x03,0x14,ID_GetProfile		},
+	{N6110_ReplyGetPhoneLanguage,	"\x05",0x03,0x14,ID_GetLanguage		},
 	{N6110_ReplyGetProfileFeature,	"\x05",0x03,0x15,ID_GetProfile		},
 	{N6110_ReplyGetStartup,		"\x05",0x03,0x17,ID_GetBitmap		},
 	{N6110_ReplySetStartup,		"\x05",0x03,0x19,ID_SetBitmap		},
@@ -2311,6 +2647,8 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{N6110_ReplySetRingtone,	"\x05",0x03,0x37,ID_SetRingtone		},
 	{N6110_ReplySetRingtone,	"\x05",0x03,0x38,ID_SetRingtone		},
 
+	{DCT3DCT4_ReplyCallDivert,	"\x06",0x03,0x02,ID_Divert		},
+	{DCT3DCT4_ReplyCallDivert,	"\x06",0x03,0x03,ID_Divert		},
 	{N6110_ReplyUSSDInfo,		"\x06",0x03,0x05,ID_IncomingFrame	},
 
 	{N6110_ReplyGetSecurityStatus,	"\x08",0x03,0x08,ID_GetSecurityStatus	},
@@ -2354,6 +2692,8 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{DCT3DCT4_ReplySetWAPBookmark,	"\x3f",0x03,0x0B,ID_SetWAPBookmark	},
 	{DCT3DCT4_ReplyDelWAPBookmark,	"\x3f",0x03,0x0D,ID_DeleteWAPBookmark	},
 	{DCT3DCT4_ReplyDelWAPBookmark,	"\x3f",0x03,0x0E,ID_DeleteWAPBookmark	},
+	{DCT3DCT4_ReplyGetActiveWAPMMSSet,"\x3f",0x03,0x10,ID_GetWAPSettings	},
+	{DCT3DCT4_ReplySetActiveWAPMMSSet,"\x3f",0x03,0x13,ID_SetWAPSettings	},
 	{DCT3_ReplyGetWAPSettings,	"\x3f",0x03,0x16,ID_GetWAPSettings	},
 	{DCT3_ReplyGetWAPSettings,	"\x3f",0x03,0x17,ID_GetWAPSettings	},
 	{DCT3_ReplySetWAPSettings,	"\x3f",0x03,0x19,ID_SetWAPSettings	},
@@ -2415,8 +2755,8 @@ GSM_Phone_Functions N6110Phone = {
 	NOKIA_SetIncomingSMS,
 	DCT3_GetNetworkInfo,
 	DCT3_Reset,
-	DCT3_DialVoice,
-	DCT3_AnswerCall,
+	N6110_DialVoice,
+	N6110_AnswerCall,
 	DCT3_CancelCall,
 	N6110_GetRingtone,
 	DCT3DCT4_GetWAPBookmark,
@@ -2440,48 +2780,63 @@ GSM_Phone_Functions N6110Phone = {
 	DCT3_GetHardware,
 	DCT3_GetPPM,
 	DCT3_PressKey,
-	NOTSUPPORTED,		/*	GetToDo			*/
-	NOTSUPPORTED,		/*	DeleteAllToDo		*/
-	NOTSUPPORTED,		/*	SetToDo			*/
-	NOTSUPPORTED,		/*	GetToDoStatus		*/
+	NOTSUPPORTED,			/*	GetToDo			*/
+	NOTSUPPORTED,			/*	DeleteAllToDo		*/
+	NOTSUPPORTED,			/*	SetToDo			*/
+	NOTSUPPORTED,			/*	GetToDoStatus		*/
 	DCT3_PlayTone,
 	N6110_EnterSecurityCode,
 	N6110_GetSecurityStatus,
 	N6110_GetProfile,
-	NOTSUPPORTED,		/*	GetRingtonesInfo	*/
+	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
 	DCT3_SetWAPSettings,
 	N6110_GetSpeedDial,
-	NOTIMPLEMENTED,		/*	SetSpeedDial		*/
+	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
 	N61_71_ResetPhoneSettings,
 	DCT3DCT4_SendDTMF,
 	N6110_GetDisplayStatus,
-	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
+	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
 	N6110_SetProfile,
-	NOTSUPPORTED,		/*	GetSIMIMSI		*/
+	NOTSUPPORTED,			/*	GetSIMIMSI		*/
 	NOKIA_SetIncomingCall,
     	N6110_GetNextCalendarNote,
 	N6110_DeleteCalendarNote,
 	N6110_AddCalendarNote,
 	N6110_GetBatteryCharge,
 	N6110_GetSignalQuality,
-	NOTSUPPORTED,       	/*  	GetCategory 		*/
-        NOTSUPPORTED,        	/*  	GetCategoryStatus 	*/
-    	NOTSUPPORTED,		/*  	GetFMStation        	*/
-    	NOTSUPPORTED,		/*  	SetFMStation        	*/
-    	NOTSUPPORTED,		/*  	ClearFMStations       	*/	
+	NOTSUPPORTED,       		/*  	GetCategory 		*/
+        NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
+    	NOTSUPPORTED,			/*  	GetFMStation        	*/
+    	NOTSUPPORTED,			/*  	SetFMStation        	*/
+    	NOTSUPPORTED,			/*  	ClearFMStations       	*/	
 	NOKIA_SetIncomingUSSD,
-	NOTSUPPORTED,		/* 	DeleteUserRingtones	*/
+	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
 	N6110_ShowStartInfo,
-	NOTSUPPORTED,		/* 	GetNextFileFolder	*/
-	NOTSUPPORTED,		/*	GetFilePart		*/
-	NOTSUPPORTED,		/* 	AddFile			*/
-	NOTSUPPORTED, 		/* 	GetFreeFileMemory 	*/
-	NOTSUPPORTED,		/*	DeleteFile		*/
-	NOTSUPPORTED,		/*	AddFolder		*/
-	NOTSUPPORTED,		/* 	GetMMSSettings		*/
-	NOTSUPPORTED,		/* 	SetMMSSettings		*/
-	NOTSUPPORTED,		/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED		/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/*	GetFilePart		*/
+	NOTSUPPORTED,			/* 	AddFile			*/
+	NOTSUPPORTED, 			/* 	GetFileSystemStatus 	*/
+	NOTSUPPORTED,			/*	DeleteFile		*/
+	NOTSUPPORTED,			/*	AddFolder		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+ 	N6110_HoldCall,
+ 	N6110_UnholdCall,
+ 	N6110_ConferenceCall,
+ 	N6110_SplitCall,
+ 	N6110_TransferCall,
+ 	N6110_SwitchCall,
+ 	DCT3DCT4_GetCallDivert,
+ 	DCT3DCT4_SetCallDivert,
+ 	DCT3DCT4_CancelAllDiverts,
+ 	NOTSUPPORTED,			/* 	AddSMSFolder		*/
+ 	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
+	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	GetLocale		*/
+	NOTSUPPORTED,			/* 	SetLocale		*/
+	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
+	NOTSUPPORTED			/* 	SetCalendarSettings	*/
 };
 
 #endif

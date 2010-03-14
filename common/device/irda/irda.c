@@ -137,7 +137,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 
     /* Connect to service "Nokia:PhoNet" or other */
     if (connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
-	dprintf("Can't connect to service\n");
+	dprintf("Can't connect to service %s\n",d->peer.irdaServiceName);
 	close(fd);
 	return GE_NOTSUPPORTED;
     }

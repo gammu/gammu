@@ -62,6 +62,8 @@ typedef enum {
 
 /* Structure to hold profile entries. */
 typedef struct {
+	bool			Active;
+
 	int 			Location;	 /* The number of the profile. 			*/
 	char 			Name[40*2];	 /* The name of the profile. 			*/
 	bool 			DefaultName;	 /* Default name for profile ?			*/

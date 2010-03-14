@@ -141,17 +141,18 @@ typedef enum {
 typedef struct {
 	int		Used;		/* how many bytes used 	*/
 	unsigned char 	Name[300];	/* Name			*/
-	int		ID;		/* ID 			*/
-	int		ParentID;
 	bool 		Folder;		/* true, when folder 	*/
 	int		Level;
 	GSM_FileType	Type;
-	bool		Protected;
+	unsigned char	ID_FullName[400];
+	unsigned char	*Buffer;
 
 	GSM_DateTime	Modified;
 	bool		ModifiedEmpty;
 
-	unsigned char	*Buffer;
+	/* File attributes */
+	bool		Protected;
+	bool		ReadOnly;
 } GSM_File;
 
 GSM_Error GSM_ReadFile(char *FileName, GSM_File *File);
@@ -160,18 +161,38 @@ GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR, ch
 
 void GSM_IdentifyFileFormat(GSM_File *File);
 
+typedef struct {
+	int		Free;
+	int		Used;
+} GSM_FileSystemStatus;
+
 /* ----------------------------- GPRS access points ----------------------- */
 
 typedef struct {
 	int		Location;
 	unsigned char 	Name[300];
 	unsigned char 	URL[500];
+	bool		Active;
 } GSM_GPRSAccessPoint;
 
 /* ------------------------------------------------------------------------ */
 
 void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start);
 bool ReadVCALText(char *Buffer, char *Start, char *Value);
+
+/* ------------------------------------------------------------------------ */
+
+typedef enum {
+	GSM_Date_DDMMYYYY = 1,
+	GSM_Date_MMDDYYYY,
+	GSM_Date_YYYYMMDD
+} GSM_DateFormat;
+
+typedef struct {
+	unsigned char 	DateSeparator;
+	GSM_DateFormat	DateFormat;
+	bool		AMPMTime;
+} GSM_Locale;
 
 #endif
 

@@ -1027,7 +1027,7 @@ GSM_Error ATGEN_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms,
 		} else {
 			if (Priv->LastSMSRead>=Priv->LastSMSStatus.PhoneUsed) return GE_EMPTY;
 		}
-		error=s->Phone.Functions->GetSMSMessage(s, sms);
+		error=s->Phone.Functions->GetSMS(s, sms);
 		if (error==GE_NONE) {
 			Priv->LastSMSRead++;
 			break;
@@ -2088,10 +2088,11 @@ GSM_Error ATGEN_ReplyDialVoice(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return GE_UNKNOWNRESPONSE;
 }
 
-GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number)
+GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber)
 {
 	char req[39] = "ATDT";  
 
+	if (ShowNumber != GN_CALL_Default) return GE_NOTSUPPORTED;
 	if (strlen(number) > 32) return (GE_UNKNOWN);
 
 	strcat(req, number);
@@ -2182,10 +2183,13 @@ GSM_Error ATGEN_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Sta
 	return GSM_WaitFor (s, "AT+CPIN?\r", 9, 0x00, 4, ID_GetSecurityStatus);
 }
 
-GSM_Error ATGEN_AnswerCall(GSM_StateMachine *s)
+GSM_Error ATGEN_AnswerCall(GSM_StateMachine *s, int ID, bool all)
 {
-	smprintf(s, "Answering calls\n");
-	return GSM_WaitFor (s, "ATA\r", 4, 0x00, 4, ID_AnswerCall);
+	if (all) {
+		smprintf(s, "Answering all calls\n");
+		return GSM_WaitFor (s, "ATA\r", 4, 0x00, 4, ID_AnswerCall);
+	}
+	return GE_NOTSUPPORTED;
 }
 
 GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2195,8 +2199,8 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch(s->Phone.Data.Priv.ATGEN.ReplyState) {
         case AT_Reply_OK:
      	    smprintf(s, "Calls canceled\n");
- 
-            call.Status = GN_CALL_CallLocalEnd;
+            call.CallIDAvailable = false;
+            call.Status 	 = GN_CALL_CallLocalEnd;
             if (s->User.IncomingCall) s->User.IncomingCall(s->Config.Device, call);
  
             return GE_NONE;
@@ -2207,16 +2211,19 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 }
 
-GSM_Error ATGEN_CancelCall(GSM_StateMachine *s)
+GSM_Error ATGEN_CancelCall(GSM_StateMachine *s, int ID, bool all)
 {
 	GSM_Error error;
 	
-	smprintf(s, "Dropping calls\n");
-	error = GSM_WaitFor (s, "ATH\r", 4, 0x00, 4, ID_CancelCall);
-	if (error == GE_UNKNOWN) {
-	    return GSM_WaitFor (s, "AT+CHUP\r", 8, 0x00, 4, ID_CancelCall);
+	if (all) {
+		smprintf(s, "Dropping all calls\n");
+		error = GSM_WaitFor (s, "ATH\r", 4, 0x00, 4, ID_CancelCall);
+		if (error == GE_UNKNOWN) {
+		    return GSM_WaitFor (s, "AT+CHUP\r", 8, 0x00, 4, ID_CancelCall);
+		}
+		return error;
 	}
-	return error;
+	return GE_NOTSUPPORTED;
 }
 
 GSM_Error ATGEN_ReplyReset(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2448,7 +2455,8 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 	char 			num[128];
 	GSM_Call 		call;
 
-	num[0] = 0;
+	call.CallIDAvailable 	= false;
+	num[0] 			= 0;
 	smprintf(s, "Incoming call info\n");
 	if (strstr(msg.Buffer, "RING")) {
 		call.Status = GN_CALL_IncomingCall;
@@ -2783,7 +2791,7 @@ GSM_Phone_Functions ATGENPhone = {
 	"A2D|iPAQ|at|M20|MC35|C35i|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8390|8850|8855|8890|8910|9110|9210",
 	ATGENReplyFunctions,
 	ATGEN_Initialise,
-	NONEFUNCTION,		/*	Terminate		*/
+	NONEFUNCTION,			/*	Terminate		*/
 	ATGEN_DispatchMessage,
 	ATGEN_GetModel,
 	ATGEN_GetFirmware,
@@ -2798,76 +2806,91 @@ GSM_Phone_Functions ATGENPhone = {
 	ATGEN_GetManufacturer,
 	ATGEN_GetNextSMSMessage,
 	ATGEN_GetSMSStatus,
-	NOTIMPLEMENTED,		/*	SetIncomingSMS		*/
+	NOTIMPLEMENTED,			/* 	SetIncomingSMS		*/
 	ATGEN_GetNetworkInfo,
 	ATGEN_Reset,
 	ATGEN_DialVoice,
 	ATGEN_AnswerCall,
 	ATGEN_CancelCall,
 	ATGEN_GetRingtone,
-	NOTSUPPORTED,		/*	GetWAPBookmark		*/
-	ATGEN_GetBitmap,	/*	GetBitmap		*/
+	NOTSUPPORTED,			/* 	GetWAPBookmark		*/
+	ATGEN_GetBitmap,		/* 	GetBitmap		*/
 	ATGEN_SetRingtone,
 	ATGEN_SaveSMSMessage,
 	ATGEN_SendSMSMessage,
 	ATGEN_SetDateTime,
-	NOTIMPLEMENTED,		/*	SetAlarm		*/
-	ATGEN_SetBitmap,	/*	SetBitmap		*/
+	NOTIMPLEMENTED,			/*	SetAlarm		*/
+	ATGEN_SetBitmap,		/*	SetBitmap		*/
 	ATGEN_SetMemory,
 	ATGEN_DeleteSMSMessage,
-	NOTSUPPORTED,		/* 	SetWAPBookmark 		*/
-	NOTSUPPORTED,	 	/* 	DeleteWAPBookmark 	*/
-	NOTSUPPORTED,		/* 	GetWAPSettings 		*/
-	NOTIMPLEMENTED,		/*	SetIncomingCB		*/
+	NOTSUPPORTED,			/* 	SetWAPBookmark 		*/
+	NOTSUPPORTED,	 		/* 	DeleteWAPBookmark 	*/
+	NOTSUPPORTED,			/* 	GetWAPSettings 		*/
+	NOTIMPLEMENTED,			/*	SetIncomingCB		*/
 	ATGEN_SetSMSC,
-	NOTSUPPORTED,		/*	GetManufactureMonth	*/
-	NOTSUPPORTED,		/*	GetProductCode		*/
-	NOTSUPPORTED,		/*	GetOriginalIMEI		*/
-	NOTSUPPORTED,		/*	GetHardware		*/
-	NOTSUPPORTED,		/*	GetPPM			*/
+	NOTSUPPORTED,			/*	GetManufactureMonth	*/
+	NOTSUPPORTED,			/*	GetProductCode		*/
+	NOTSUPPORTED,			/*	GetOriginalIMEI		*/
+	NOTSUPPORTED,			/*	GetHardware		*/
+	NOTSUPPORTED,			/*	GetPPM			*/
 	ATGEN_PressKey,
-	NOTSUPPORTED,		/*	GetToDo			*/
-	NOTSUPPORTED,		/*	DeleteAllToDo		*/
-	NOTSUPPORTED,		/*	SetToDo			*/
-	NOTSUPPORTED,		/*	GetToDoStatus		*/
-	NOTSUPPORTED,		/*	PlayTone		*/
+	NOTSUPPORTED,			/*	GetToDo			*/
+	NOTSUPPORTED,			/*	DeleteAllToDo		*/
+	NOTSUPPORTED,			/*	SetToDo			*/
+	NOTSUPPORTED,			/*	GetToDoStatus		*/
+	NOTSUPPORTED,			/*	PlayTone		*/
 	ATGEN_EnterSecurityCode,
 	ATGEN_GetSecurityStatus,
-	NOTSUPPORTED, 		/*	GetProfile		*/
-	NOTSUPPORTED,		/*	GetRingtonesInfo	*/
-	NOTSUPPORTED,		/* 	SetWAPSettings 		*/
-	NOTSUPPORTED,		/*	GetSpeedDial		*/
-	NOTSUPPORTED,		/*	SetSpeedDial		*/
+	NOTSUPPORTED, 			/*	GetProfile		*/
+	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
+	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
+	NOTSUPPORTED,			/*	GetSpeedDial		*/
+	NOTSUPPORTED,			/*	SetSpeedDial		*/
 	ATGEN_ResetPhoneSettings,
 	ATGEN_SendDTMF,
 	ATGEN_GetDisplayStatus,
 	ATGEN_SetAutoNetworkLogin,
-	NOTSUPPORTED, 		/*	SetProfile		*/
+	NOTSUPPORTED, 			/*	SetProfile		*/
 	ATGEN_GetSIMIMSI,
-	NONEFUNCTION,		/*	SetIncomingCall		*/
+	NONEFUNCTION,			/*	SetIncomingCall		*/
     	ATGEN_GetNextCalendar,
 	ATGEN_DelCalendarNote,
 	ATGEN_AddCalendarNote,
 	ATGEN_GetBatteryCharge,
 	ATGEN_GetSignalQuality,
- 	NOTSUPPORTED,       	/*  	GetCategory 		*/
- 	NOTSUPPORTED,        	/*  	GetCategoryStatus 	*/
-    	NOTSUPPORTED,		/*  	GetFMStation        	*/
-    	NOTSUPPORTED,		/*  	SetFMStation        	*/
-    	NOTSUPPORTED,		/*  	ClearFMStations       	*/
-	NOTSUPPORTED,		/*  	SetIncomingUSSD		*/
-	NOTSUPPORTED,		/* 	DeleteUserRingtones	*/
-	NOTSUPPORTED,		/* 	ShowStartInfo		*/
-	NOTSUPPORTED,		/* 	GetNextFileFolder	*/
-	NOTSUPPORTED,		/* 	GetFilePart		*/
-	NOTSUPPORTED,		/* 	AddFile			*/
-	NOTSUPPORTED, 		/* 	GetFreeFileMemory 	*/
-	NOTSUPPORTED,		/*	DeleteFile		*/
-	NOTSUPPORTED,		/* 	AddFolder		*/
-	NOTSUPPORTED,		/* 	GetMMSSettings		*/
-	NOTSUPPORTED,		/* 	SetMMSSettings		*/
-	NOTSUPPORTED,		/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED		/* 	SetGPRSAccessPoint	*/
+ 	NOTSUPPORTED,       		/*  	GetCategory 		*/
+ 	NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
+    	NOTSUPPORTED,			/*  	GetFMStation        	*/
+    	NOTSUPPORTED,			/* 	SetFMStation        	*/
+    	NOTSUPPORTED,			/* 	ClearFMStations       	*/
+	NOTSUPPORTED,			/* 	SetIncomingUSSD		*/
+	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
+	NOTSUPPORTED,			/* 	ShowStartInfo		*/
+	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/* 	GetFilePart		*/
+	NOTSUPPORTED,			/* 	AddFile			*/
+	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
+	NOTSUPPORTED,			/* 	DeleteFile		*/
+	NOTSUPPORTED,			/* 	AddFolder		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+ 	NOTSUPPORTED,			/* 	HoldCall 		*/
+ 	NOTSUPPORTED,			/* 	UnholdCall 		*/
+ 	NOTSUPPORTED,			/* 	ConferenceCall 		*/
+ 	NOTSUPPORTED,			/* 	SplitCall		*/
+ 	NOTSUPPORTED,			/* 	TransferCall		*/
+ 	NOTSUPPORTED,			/* 	SwitchCall		*/
+ 	NOTSUPPORTED,			/* 	GetCallDivert		*/
+ 	NOTSUPPORTED,			/* 	SetCallDivert		*/
+ 	NOTSUPPORTED,			/* 	CancelAllDiverts	*/
+ 	NOTSUPPORTED,			/* 	AddSMSFolder		*/
+ 	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
+	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	GetLocale		*/
+	NOTSUPPORTED,			/* 	SetLocale		*/
+	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
+	NOTSUPPORTED			/* 	SetCalendarSettings	*/
 };
 
 #endif

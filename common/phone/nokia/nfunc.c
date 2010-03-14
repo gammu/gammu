@@ -540,6 +540,180 @@ void NOKIA_GetDefaultProfileName(GSM_StateMachine *s, GSM_Profile *Profile)
 
 /* - Shared for DCT3 (n6110.c, n7110.c, n9110.c) and DCT4 (n6510.c) phones - */
 
+GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_MultiCallDivert 	*cd = s->Phone.Data.Divert;
+	int			i,pos = 11,j;
+
+	switch (msg.Buffer[3]) {
+  	case 0x02:
+		smprintf(s,"Message: Call divert status received\n");
+  	  	smprintf(s,"   Divert type: ");
+    		switch (msg.Buffer[6]) {
+      			case 0x43: smprintf(s,"when busy");			break;
+	      		case 0x3d: smprintf(s,"when not answered");		break;
+      			case 0x3e: smprintf(s,"when phone off or no coverage");	break;
+	      		case 0x15: smprintf(s,"all types of diverts");		break;
+	      		default:   smprintf(s,"unknown %i",msg.Buffer[6]);	break;
+	    	}
+		/* 6150 */
+		if (msg.Length == 0x0b) {
+			cd->Response.EntriesNum = 0;
+			return GE_NONE;
+		}
+		cd->Response.EntriesNum = msg.Buffer[10];
+		for (i=0;i<cd->Response.EntriesNum;i++) {
+		    	smprintf(s,"\n   Calls type : ");
+		      	switch (msg.Buffer[pos]) {
+        			case 0x0b:
+					smprintf(s,"voice");
+					cd->Response.Entries[i].CType = GSM_CDV_VoiceCalls;
+					break;
+        			case 0x0d:
+					smprintf(s,"fax");
+					cd->Response.Entries[i].CType = GSM_CDV_FaxCalls;
+					break;
+ 		       		case 0x19:
+					smprintf(s,"data");
+					cd->Response.Entries[i].CType = GSM_CDV_DataCalls;
+					break;
+        			default:
+					smprintf(s,"unknown %i",msg.Buffer[pos]);
+					/* 6310i */
+					cd->Response.EntriesNum = 0;
+					return GE_NONE;
+					break;
+	    		}
+		    	smprintf(s,"\n");
+			j = pos + 2;
+			while (msg.Buffer[j] != 0x00) j++;
+			msg.Buffer[pos+1] = j - pos - 2;
+			GSM_UnpackSemiOctetNumber(cd->Response.Entries[i].Number,msg.Buffer+(pos+1),false);
+	      		smprintf(s,"   Number     : %s\n",DecodeUnicodeString(cd->Response.Entries[i].Number));
+	        	cd->Response.Entries[i].Timeout = msg.Buffer[pos+34];
+	 	     	smprintf(s,"   Timeout    : %i seconds\n",msg.Buffer[pos+34]);
+			pos+=35;
+	    	}
+    		return GE_NONE;
+  	case 0x03:
+    		smprintf(s,"Message: Call divert status receiving error ?\n");
+    		return GE_UNKNOWN;
+  	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+static GSM_Error DCT3DCT4_CallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert, bool get)
+{
+	int 		length = 0x09;
+	unsigned char 	req[55] = {N6110_FRAME_HEADER, 0x01,
+			   0x05, /* operation = Query */
+ 			   0x00,
+ 			   0x00, /* divert type */
+ 			   0x00, /* call type */
+ 			   0x00};
+
+	if (!get) {
+		if (UnicodeLength(divert->Request.Number) == 0) {
+			req[4]  = 0x04;
+		} else {
+			req[4]  = 0x03;
+			req[8]  = 0x01;
+			req[29] = GSM_PackSemiOctetNumber(divert->Request.Number, req + 9, false);
+			req[52] = divert->Request.Timeout;
+			length  = 55;
+		}
+	}
+  	switch (divert->Request.DType) {
+    		case GSM_CDV_AllTypes  : req[6] = 0x15; break;
+    		case GSM_CDV_Busy      : req[6] = 0x43; break;
+    		case GSM_CDV_NoAnswer  : req[6] = 0x3d; break;
+    		case GSM_CDV_OutOfReach: req[6] = 0x3e; break;
+    		default                : return GE_NOTIMPLEMENTED;
+  	}
+
+  	switch (divert->Request.CType) {
+    		case GSM_CDV_AllCalls  :                break;
+    		case GSM_CDV_VoiceCalls: req[7] = 0x0b; break;
+    		case GSM_CDV_FaxCalls  : req[7] = 0x0d; break;
+    		case GSM_CDV_DataCalls : req[7] = 0x19; break;
+    		default                : return GE_NOTIMPLEMENTED;
+  	}
+
+	s->Phone.Data.Divert = divert;
+	smprintf(s, "Call divert\n");
+	return GSM_WaitFor (s, req, length, 0x06, 10, ID_Divert);
+}
+
+GSM_Error DCT3DCT4_GetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
+{
+	return DCT3DCT4_CallDivert(s,divert,true);
+}
+
+GSM_Error DCT3DCT4_SetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
+{
+	return DCT3DCT4_CallDivert(s,divert,false);
+}
+
+GSM_Error DCT3DCT4_CancelAllDiverts(GSM_StateMachine *s)
+{
+	GSM_MultiCallDivert 	divert;
+	unsigned char 		req[55] = {N6110_FRAME_HEADER, 0x01,
+			   0x04, /* operation = Disable */
+ 			   0x00,
+ 			   0x02, /* divert type */
+ 			   0x00, /* call type */
+ 			   0x00};
+
+	s->Phone.Data.Divert = &divert;
+	smprintf(s, "Call divert\n");
+	return GSM_WaitFor (s, req, 0x09, 0x06, 10, ID_Divert);
+}
+
+GSM_Error DCT3DCT4_ReplyGetActiveWAPMMSSet(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
+	Data->WAPSettings->Active = false;
+	if (Data->WAPSettings->Location - 1 == msg.Buffer[4]) {
+		Data->WAPSettings->Active = true;
+	}
+	return GE_NONE;
+}
+
+GSM_Error DCT3DCT4_GetActiveWAPMMSSet(GSM_StateMachine *s)
+{
+	unsigned char GetSetreq[] = {N6110_FRAME_HEADER, 0x0F};
+
+	smprintf(s, "Checking, if WAP/MMS settings are active\n");
+	return GSM_WaitFor (s, GetSetreq, 4, 0x3f, 4, ID_GetWAPSettings);
+}
+
+GSM_Error DCT3DCT4_ReplySetActiveWAPMMSSet(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "WAP settings activated\n");
+	return GE_NONE;		
+}
+
+GSM_Error DCT3DCT4_SetActiveWAPMMSSet(GSM_StateMachine *s, GSM_MultiWAPSettings *settings, bool MMS)
+{
+	unsigned char	reqActivate[] = {
+		N6110_FRAME_HEADER, 0x12,
+		0x00};		/* Location */
+
+	if (settings->Active) {
+		reqActivate[4] = settings->Location-1;
+		if (MMS) {
+			smprintf(s, "Activating MMS settings\n");
+			return GSM_WaitFor (s, reqActivate, 5, 0x3f, 4, ID_SetMMSSettings);
+		} else {
+			smprintf(s, "Activating WAP settings\n");
+			return GSM_WaitFor (s, reqActivate, 5, 0x3f, 4, ID_SetWAPSettings);
+		}
+	}
+	return GE_NONE;
+}
+
+
 GSM_Error DCT3DCT4_SendDTMF(GSM_StateMachine *s, char *sequence)
 {
 	unsigned char length = strlen(sequence);
@@ -697,6 +871,28 @@ GSM_Error DCT3DCT4_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark
 	return GSM_WaitFor (s, req, 6, 0x3f, 4, ID_GetWAPBookmark);
 }
 
+GSM_Error DCT3DCT4_CancelCall(GSM_StateMachine *s, int ID)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x08, 0x00, 0x85};
+	                                             
+	req[4] 			= (unsigned char)ID;
+	s->Phone.Data.CallID 	= ID;
+
+	smprintf(s, "Canceling single call\n");
+	return GSM_WaitFor (s, req, 6, 0x01, 4, ID_CancelCall);
+}            
+
+GSM_Error DCT3DCT4_AnswerCall(GSM_StateMachine *s, int ID)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x06, 0x00, 0x00};
+
+	req[4] 			= (unsigned char)ID;
+	s->Phone.Data.CallID 	= ID;
+
+	smprintf(s, "Answering single call\n");
+	return GSM_WaitFor (s, req, 6, 0x01, 4, ID_AnswerCall);
+}
+
 GSM_Error DCT3DCT4_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Lines	lines;
@@ -760,37 +956,16 @@ GSM_Error DCT3DCT4_GetFirmware (GSM_StateMachine *s)
 
 /* ---------- Shared for n7110.c and n6510.c ------------------------------- */
 
-GSM_Error N71_65_ReplyDeleteMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{
-	smprintf(s, "Phonebook entry deleted\n");
-	return GE_NONE;
-}
-
-GSM_Error N71_65_DeleteMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry, unsigned char *memory)
-{
-	unsigned char req[] = {
-		N7110_FRAME_HEADER, 0x0f, 0x00, 0x01,
-		0x04, 0x00, 0x00, 0x0c, 0x01, 0xff,
-		0x00, 0x01,		/* location	*/
-		0x05, 			/* memory type	*/
-		0x00, 0x00, 0x00};
-
-	req[12] = (entry->Location >> 8);
-	req[13] = entry->Location & 0xff;
-
-	req[14] = NOKIA_GetMemoryType(s, entry->MemoryType,memory);
-	if (req[14]==0xff) return GE_NOTSUPPORTED;
-
-	smprintf(s, "Deleting phonebook entry\n");
-	return GSM_WaitFor (s, req, 18, 0x03, 4, ID_SetMemory);
-}
-
 GSM_Error N71_65_ReplyGetMemoryError(unsigned char error, GSM_StateMachine *s)
 {
 	switch (error) {
+	case 0x27:
+		smprintf(s, "No PIN\n");
+		return GE_SECURITYERROR;
 	case 0x30:
 		smprintf(s, "Invalid memory type\n");
 		if (s->Phone.Data.Memory->MemoryType == GMT_ME) return GE_EMPTY;
+		if (s->Phone.Data.Memory->MemoryType == GMT_SM) return GE_EMPTY;
 		return GE_NOTSUPPORTED;
 	case 0x33:
 		smprintf(s, "Empty location\n");
@@ -959,6 +1134,8 @@ GSM_Error N71_65_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	unsigned char buffer[2000],buffer2[4000];
 
+	if (s->Phone.Data.RequestID == ID_Divert) return GE_NONE;
+
 	memcpy(buffer,msg.Buffer+8,msg.Buffer[7]);
 	buffer[msg.Buffer[7]] = 0x00;
 
@@ -1004,79 +1181,111 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Call 	call;
 	int		tmp;
-#ifdef DEBUG
 	unsigned char 	buffer[200];
 
+	call.Status 		= 0;
+	call.CallIDAvailable 	= true;
+	smprintf(s, "Call info, ");
 	switch (msg.Buffer[3]) {
-	case 0x02 : smprintf(s, "Call established, remote phone is ringing.\n");		 	break;
-	case 0x03 : smprintf(s, "Call complete\n"); 				 			break;
-	case 0x04 : smprintf(s, "Call hangup!\n"); 							break;
-	case 0x05 : smprintf(s, "Incoming call\n"); 				 			break;
-	case 0x07 : smprintf(s, "Call answer initiated.\n"); 			 			break;
-	case 0x09 : smprintf(s, "Call released.\n"); 				 			break;
-	case 0x0a : smprintf(s, "Call is being released.\n"); 			 			break;
-	case 0x0b : smprintf(s, "Meaning not known\n");							break;
-	case 0x0c : smprintf(s, "Audio status\n"); 				 			break;
-	case 0x53 : smprintf(s, "Outgoing call\n");  				 			break;
-	}
-
-	if (msg.Buffer[3] != 0x0c) smprintf(s, "Call ID   : %i\n",msg.Buffer[4]);
-
-	switch (msg.Buffer[3]) {
+	case 0x02:
+		smprintf(s, "Call established, waiting for answer\n");
+		call.Status = GN_CALL_CallEstablished;
+		break;
 	case 0x03:
-	case 0x05:
-	case 0x53:		
-		smprintf(s, "Call mode : %i\n",msg.Buffer[5]);
+		smprintf(s, "Call started\n");
+		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);//after gnokii
 		tmp = 6;
 		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,false);
-		smprintf(s, "Number    : \"%s\"\n",DecodeUnicodeString(buffer));
-		break;
+		smprintf(s, "Number     : \"%s\"\n",DecodeUnicodeString(buffer));
+		/* FIXME: read name from frame */
+
+		call.Status = GN_CALL_CallStart;
+		break;			
 	case 0x04:
-		smprintf(s, "Cause Type : %i\n", msg.Buffer[5]);
-		smprintf(s, "CC         : %i\n", msg.Buffer[6]);
-		smprintf(s, "MM(?)      : %i\n", msg.Buffer[7]);
-		smprintf(s, "RR(?)      : %i\n", msg.Buffer[8]);
+		smprintf(s, "Remote end hang up\n");
+		smprintf(s, "Cause Type : %i\n",msg.Buffer[5]);//after gnokii
+		smprintf(s, "CC         : %i\n",msg.Buffer[6]);
+		smprintf(s, "MM(?)      : %i\n",msg.Buffer[7]);
+		smprintf(s, "RR(?)      : %i\n",msg.Buffer[8]);
+		call.Status 	= GN_CALL_CallRemoteEnd;
+		call.StatusCode = msg.Buffer[6];
+		break;
+	case 0x05:
+		smprintf(s, "Incoming call\n");
+		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);//after gnokii
+		tmp = 6;
+		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,false);
+		smprintf(s, "Number     : \"%s\"\n",DecodeUnicodeString(buffer));
+		/* FIXME: read name from frame */
+		call.Status = GN_CALL_IncomingCall;
+		tmp = 6;
+		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,false);
+		break;
+	case 0x07:
+		smprintf(s, "Call answer initiated\n");
+		break;
+	case 0x09:
+		smprintf(s, "Call released\n");
+		call.Status = GN_CALL_CallLocalEnd;
+		break;
+	case 0x0a:
+		smprintf(s, "Call is being released\n");
+		break;
+	case 0x0b:
+		smprintf(s, "Meaning not known\n");
+		call.CallIDAvailable = false;
 		break;
 	case 0x0c:
+		smprintf(s, "Audio status\n");
 		if (msg.Buffer[4] == 0x01) smprintf(s, "Audio enabled\n");
 				      else smprintf(s, "Audio disabled\n");
+		call.CallIDAvailable = false;
 		break;
-	default:
+	case 0x23:
+		smprintf(s, "Call held\n");
+		call.Status = GN_CALL_CallHeld;
+		break;
+	case 0x25:
+		smprintf(s, "Call resumed\n");
+		call.Status = GN_CALL_CallResumed;
+		break;
+	case 0x27:
+		smprintf(s, "Call switched\n");
+		call.Status = GN_CALL_CallSwitched;
+		break;
+	case 0x53:
+		smprintf(s, "Outgoing call\n");
+		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);//after gnokii
+		tmp = 6;
+		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,false);
+		smprintf(s, "Number     : \"%s\"\n",DecodeUnicodeString(buffer));
+		/* FIXME: read name from frame */
+		call.Status = GN_CALL_OutgoingCall;
+		tmp = 6;
+		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,false);
 		break;
 	}
-#endif
-	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL) {
-		switch (msg.Buffer[3]) {
-		case 0x02:
-			call.Status = GN_CALL_CallEstablished;
-			break;
-		case 0x03:
-			call.Status = GN_CALL_CallStart;
-			break;			
-		case 0x04:
-			call.Status = GN_CALL_CallRemoteEnd;
-			call.Code   = msg.Buffer[6];
-			break;
-		case 0x05:
-			call.Status = GN_CALL_IncomingCall;
-			tmp = 6;
-			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,false);
-			break;
-		case 0x09:
-			call.Status = GN_CALL_CallLocalEnd;
-			break;
-		case 0x53:
-			call.Status = GN_CALL_OutgoingCall;
-			tmp = 6;
-			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,false);
-			break;
-		default:
-			return GE_NONE;
-		}
-		call.CallID = msg.Buffer[4];
+	if (call.CallIDAvailable) smprintf(s, "Call ID    : %d\n",msg.Buffer[4]);
+	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL && call.Status != 0) {
+		if (call.CallIDAvailable) call.CallID = msg.Buffer[4];
 		s->User.IncomingCall(s->Config.Device, call);
 	}
-
+	if (s->Phone.Data.RequestID == ID_CancelCall) {
+		if (msg.Buffer[3] == 0x09) {
+			if (s->Phone.Data.CallID == msg.Buffer[4]) return GE_NONE;
+			/* when we canceled call and see frame about other
+			 * call releasing, we don't give GE_NONE for "our"
+			 * call release command
+			 */
+			return GE_NEEDANOTHERANSWER;
+		}
+	}
+	if (s->Phone.Data.RequestID == ID_AnswerCall) {
+		if (msg.Buffer[3] == 0x07) {
+			if (s->Phone.Data.CallID == msg.Buffer[4]) return GE_NONE;
+			return GE_NEEDANOTHERANSWER;
+		}
+	}
 	return GE_NONE;
 }
 

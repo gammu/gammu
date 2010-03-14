@@ -107,8 +107,18 @@ GSM_Error DCT3_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 GSM_Error DCT3_ReplySetIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	smprintf(s, "CB set\n");
-	return GE_NONE;
+	switch (msg.Buffer[3]) {
+	case 0x21:
+		smprintf(s, "CB set\n");
+		return GE_NONE;
+	case 0x22:
+		smprintf(s, "CB not set\n");
+		return GE_UNKNOWN;
+	case 0xCA:
+		smprintf(s, "No network and no CB\n");
+		return GE_SECURITYERROR;
+	}
+	return GE_UNKNOWNRESPONSE;
 }
 
 #endif
@@ -504,13 +514,15 @@ GSM_Error DCT3_ReplyDialCommand(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return GE_NONE;
 }
 
-GSM_Error DCT3_DialVoice(GSM_StateMachine *s, char *number)
+GSM_Error DCT3_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber)
 {
 	unsigned int	i = 0;
 	GSM_Error	error;
 	unsigned char req[64] = {
 		0x00, 0x01, 0x7c,
                 0x01}; 			/* call command */
+
+	if (ShowNumber != GN_CALL_Default) return GE_NOTSUPPORTED;
 
 	error=DCT3_EnableSecurity (s, 0x01);
 	if (error!=GE_NONE) return error;
@@ -522,7 +534,7 @@ GSM_Error DCT3_DialVoice(GSM_StateMachine *s, char *number)
 	return GSM_WaitFor (s, req, 4+strlen(number)+1, 0x40, 4, ID_DialVoice);
 }
 
-GSM_Error DCT3_CancelCall(GSM_StateMachine *s)
+static GSM_Error DCT3_CancelAllCalls(GSM_StateMachine *s)
 {
 	GSM_Error	error;
 	unsigned char req[64] = {
@@ -536,7 +548,13 @@ GSM_Error DCT3_CancelCall(GSM_StateMachine *s)
 	return GSM_WaitFor (s, req, 4, 0x40, 4, ID_CancelCall);
 }
 
-GSM_Error DCT3_AnswerCall(GSM_StateMachine *s)
+GSM_Error DCT3_CancelCall(GSM_StateMachine *s, int ID, bool all)
+{
+	if (!all) return DCT3DCT4_CancelCall(s,ID);
+	return DCT3_CancelAllCalls(s);
+}            
+
+GSM_Error DCT3_AnswerAllCalls(GSM_StateMachine *s)
 {
 	GSM_Error	error;
 	unsigned char 	req[64] = {
@@ -624,8 +642,7 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 	case 0x16:
 		smprintf(s, "WAP settings part 1 received OK\n");
 
-		Data->WAPSettings->Active = false;
-		tmp 			  = 4;
+		tmp = 4;
 
 		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[0].Title,false);
 		smprintf(s, "Title: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[0].Title));
@@ -817,7 +834,7 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 
 	req[4] = settings->Location-1;
 	smprintf(s, "Getting WAP settings part 1\n");
-	error = GSM_WaitFor (s, req, 6, 0x3f, 4, ID_GetWAPSettings);
+	error = GSM_WaitFor (s, req, 5, 0x3f, 4, ID_GetWAPSettings);
 	if (error != GE_NONE) return error;
 
 #ifdef GSM_ENABLE_NOKIA7110
@@ -825,7 +842,7 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		for (i=0;i<4;i++) {
 			req2[4] = Priv7110->WAPLocations.Locations[i];
 			smprintf(s, "Getting WAP settings part 2\n");
-			error=GSM_WaitFor (s, req2, 6, 0x3f, 4, ID_GetWAPSettings);
+			error=GSM_WaitFor (s, req2, 5, 0x3f, 4, ID_GetWAPSettings);
 			if (error != GE_NONE) return error;
 			if (Priv7110->WAPLocations.Locations[i] == Priv7110->WAPLocations.CurrentLocation) {
 				settings->ActiveBearer = settings->Settings[settings->Number-1].Bearer;
@@ -838,7 +855,7 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		for (i=0;i<4;i++) {
 			req2[4] = Priv6110->WAPLocations.Locations[i];
 			smprintf(s, "Getting WAP settings part 2\n");
-			error=GSM_WaitFor (s, req2, 6, 0x3f, 4, ID_GetWAPSettings);
+			error=GSM_WaitFor (s, req2, 5, 0x3f, 4, ID_GetWAPSettings);
 			if (error != GE_NONE) return error;
 			if (Priv6110->WAPLocations.Locations[i] == Priv6110->WAPLocations.CurrentLocation) {
 				settings->ActiveBearer = settings->Settings[settings->Number-1].Bearer;
@@ -853,6 +870,7 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 			settings->Settings[i].IsContinuous = settings->Settings[0].IsContinuous;
 			settings->Settings[i].IsSecurity   = settings->Settings[0].IsSecurity;
 		}
+		error = DCT3DCT4_GetActiveWAPMMSSet(s);
 	}
 	return error;
 }
@@ -1141,7 +1159,7 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		error=GSM_WaitFor (s, SetReq2, pos, 0x3f, 4, ID_SetWAPSettings);
 		if (error != GE_NONE) return error;
 	}
- 	return error;
+	return DCT3DCT4_SetActiveWAPMMSSet(s, settings, false);
 }
 
 GSM_Error DCT3_ReplySendSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)

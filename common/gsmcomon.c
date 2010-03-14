@@ -144,6 +144,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{GE_FILENOTSUPPORTED,		"File format not supported by Gammu"},
 	{GE_BUG,			"Nobody is perfect, some bug appeared in protocol implementation. Please contact authors."},
 	{GE_CANCELED,			"Transfer was canceled by phone (you pressed cancel on phone?)."},
+	/* Some missed */
 
 	{0,				""}
 };

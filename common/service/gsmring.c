@@ -323,7 +323,7 @@ static void saveimelody(FILE *file, GSM_Ringtone *ringtone)
 	char 	Buffer[2000];
   	int 	i=2000;
     
-	GSM_EncodeEMSSound(*ringtone, Buffer, &i, (float)1.2);
+	GSM_EncodeEMSSound(*ringtone, Buffer, &i, (float)1.2, true);
   
 	fwrite(Buffer, 1, i, file);
 }
@@ -1423,9 +1423,9 @@ GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_Rington
 	return GE_NOTIMPLEMENTED;
 }
 
-/* 0 = SonyEricsson, 0.1 = SonyEricsson with beats and style
+/* 0 = No header and footer, 0.5 = partial header and footer,
  * 1.0 = IMelody 1.0, 1.2 = IMelody 1.2 */
-unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, int *maxlength, double version)
+unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, int *maxlength, double version, bool start)
 {
 	int 			i, NrNotes = 0, Len, Max = *maxlength;
 
@@ -1439,17 +1439,12 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 
 	*maxlength = 0;
 
-	if (version >= 1.0) {
-		*maxlength+=sprintf(package,"BEGIN:IMELODY%c%c",13,10);
-		if (version == 1.0) {
-			*maxlength+=sprintf(package+(*maxlength),"VERSION:1.0%c%c",13,10);
-		} else {
-			*maxlength+=sprintf(package+(*maxlength),"VERSION:1.2%c%c",13,10);
-		}
-		*maxlength+=sprintf(package+(*maxlength),"FORMAT:CLASS1.0%c%c",13,10);
-	}
-	if (version == 1.2) {
-		*maxlength+=sprintf(package+(*maxlength),"NAME:%s%c%c",DecodeUnicodeString(ringtone.Name),13,10);
+	if (start) {
+		if (version != 0)   *maxlength+=sprintf(package,"BEGIN:IMELODY%c%c",13,10);
+		if (version == 1.0) *maxlength+=sprintf(package+(*maxlength),"VERSION:1.0%c%c",13,10);
+		if (version == 1.2) *maxlength+=sprintf(package+(*maxlength),"VERSION:1.2%c%c",13,10);
+		if (version >= 1.0) *maxlength+=sprintf(package+(*maxlength),"FORMAT:CLASS1.0%c%c",13,10);
+		if (version == 1.2) *maxlength+=sprintf(package+(*maxlength),"NAME:%s%c%c",DecodeUnicodeString(ringtone.Name),13,10);
 	}
 
 	DefNoteScale = Scale_880; /* by iMelody definition */
@@ -1459,7 +1454,7 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
 			Note = &ringtone.NoteTone.Commands[i].Note;
 			if (Note->Note != Note_Pause) {
-				if (version == 1.2 || version == 0.1) {
+				if (version == 1.2 && start) {
 					/* Save the default tempo */
 					DefNoteTempo = Note->Tempo;
 					Len+=sprintf(package+Len,"BEAT:%i%c%c",DefNoteTempo,13,10);
@@ -1474,7 +1469,7 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 					}
 				}
 				Len+=sprintf(package+Len,"MELODY:");
-				if (version >= 0) {
+				if (version != 0) {
 					/* 15 = Len of END:IMELODY... */
 					if ((Len+15) > Max) { end = true; break; }
 				} else {
@@ -1528,7 +1523,7 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 					case Length_2_3		: package[Len++] = ';'; break;
 					default		   	:			break;
 				}
-				if (version >= 0) {
+				if (version != 0) {
 					/* 15 = Len of END:IMELODY... */
 					if ((Len+15) > Max) { end = true; break; }
 				} else {
@@ -1568,9 +1563,7 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 		NrNotes ++;
 	}
 
-	if (version >= 1.0) {
-		*maxlength+=sprintf(package+(*maxlength),"%c%cEND:IMELODY%c%c",13,10,13,10);
-	}
+	if (version != 0) *maxlength+=sprintf(package+(*maxlength),"%c%cEND:IMELODY%c%c",13,10,13,10);
 
 	return NrNotes;
 }
