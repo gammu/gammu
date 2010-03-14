@@ -279,8 +279,8 @@ type
         SMSCallBackProcClass       = procedure(ID:integer);stdcall;
         PSMSCallBackProcClass      = ^SMSCallBackProcClass;
 
-function GSM_StartConnection	        (Phone : Pinteger; Device: PChar;Connection: PChar; Model : PChar; LogFile: PChar; LogFileType: PChar; CallBack1 : PPhoneCallBackProc; CallBack2: PSecurityCallBackProc; CallBack3: PSMSCallBackProc): GSM_Error; stdcall; external 'gammu.dll' name 'mystartconnection';
-function GSM_StartConnectionClass	(Phone : Pinteger; Device: PChar;Connection: PChar; Model : PChar; LogFile: PChar; LogFileType: PChar; CallBack1 : PPhoneCallBackProcClass; CallBack2: PSecurityCallBackProcClass; CallBack3: PSMSCallBackProcClass): GSM_Error; stdcall; external 'gammu.dll' name 'mystartconnection';
+function GSM_StartConnection	        (Phone : Pinteger; Device: PChar;Connection: PChar; Model : PChar; LogFile: PChar; LogFileType: PChar; thread:ByteBool; CallBack1 : PPhoneCallBackProc; CallBack2: PSecurityCallBackProc; CallBack3: PSMSCallBackProc): GSM_Error; stdcall; external 'gammu.dll' name 'mystartconnection';
+function GSM_StartConnectionClass	(Phone : Pinteger; Device: PChar;Connection: PChar; Model : PChar; LogFile: PChar; LogFileType: PChar; thread:ByteBool; CallBack1 : PPhoneCallBackProcClass; CallBack2: PSecurityCallBackProcClass; CallBack3: PSMSCallBackProcClass): GSM_Error; stdcall; external 'gammu.dll' name 'mystartconnection';
 function GSM_EndConnection	        (Phone : integer): GSM_Error; stdcall; external 'gammu.dll' name 'myendconnection';
 function GSM_GetNetworkInfo	        (Phone : integer; NetworkInfo : PGSM_NetworkInfo): GSM_Error; stdcall; external 'gammu.dll' name 'mygetnetworkinfo';
 function GSM_GetSMSStatus	        (Phone : integer; status : PGSM_SMSMemoryStatus): GSM_Error; stdcall; external 'gammu.dll' name 'mygetsmsstatus';
@@ -313,6 +313,11 @@ function GSM_StartBackup		(Phone: Integer; Info:PGSM_Backup_Info):GSM_Error; std
 function GSM_BackupPhonePBK		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackupphonepbk';
 function GSM_BackupSIMPBK		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackupsimpbk';
 function GSM_BackupCalendar		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackupcalendar';
+function GSM_BackupWAPBookmark		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackupwapbookmark';
+function GSM_BackupWAPSettings		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackupwapsettings';
+function GSM_BackupMMSSettings		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackupmmssettings';
+function GSM_BackupGPRSPoint		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackupgprspoint';
+function GSM_BackupFMRadio		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackupfmradio';
 function GSM_BackupToDo			(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackuptodo';
 function GSM_EndBackup			(FileName:PChar; UseUnicode: Boolean):GSM_Error; stdcall; external 'gammu.dll' name 'myendbackup';
 function GSM_RestorePhonePBK		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'myrestorephonepbk';
@@ -368,7 +373,7 @@ begin
   fSecurityCallBackPointer := SecurityCallBack;
   fSMSCallBackPointer      := SMSCallback;
 
-  StartConnection:=GSM_StartConnection(@fDeviceID,fDevice,fConnection,'',PChar(LogFile),PChar(LogFormat),@fPhoneCallBackPointer,@fSecurityCallBackPointer,@fSMSCallBackPointer);
+  StartConnection:=GSM_StartConnection(@fDeviceID,fDevice,fConnection,'',PChar(LogFile),PChar(LogFormat),true,@fPhoneCallBackPointer,@fSecurityCallBackPointer,@fSMSCallBackPointer);
 end;
 
 function GetGammuUnicodeString(Source:AnsiString):string;

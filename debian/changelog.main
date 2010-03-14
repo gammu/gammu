@@ -1,3 +1,12 @@
+gammu (0.92.9-1) unstable; urgency=low
+
+  * New upstream version.
+  * Cleaned up directory creating.
+  * Devel libs (.so and .a) moved to devel package.
+  * libgammu0 suggests gammu, gammu suggests wammu.
+
+ -- Michal Čihař <michal@cihar.com>  Wed, 21 Jan 2004 22:04:11 +0100
+
 gammu (0.92.0-1) unstable; urgency=low
 
   * New upstream version.

@@ -5,6 +5,6 @@ includedir=${prefix}/include
 
 Name: gammu
 Description: Gammu library
-Version: 0.92.9
+Version: 0.93.0
 Libs: -L${libdir} -lGammu
 Cflags: -I${includedir}/gammu

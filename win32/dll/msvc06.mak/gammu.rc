@@ -54,8 +54,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 0,92,9,0
- PRODUCTVERSION 0,92,9,0
+ FILEVERSION 0,93,0,0
+ PRODUCTVERSION 0,93,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -63,7 +63,7 @@ VS_VERSION_INFO VERSIONINFO
  FILEFLAGS 0x0L
 #endif
  FILEOS 0x4L
- FILETYPE 0x1L
+ FILETYPE 0x2L
  FILESUBTYPE 0x0L
 BEGIN
     BLOCK "StringFileInfo"
@@ -72,15 +72,15 @@ BEGIN
         BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", "http://www.mwiacek.com\0"
-            VALUE "FileDescription", "Gammu - manager for cellular modems and phones\0"
-            VALUE "FileVersion", "0,92,9,0\0"
+            VALUE "FileDescription", "Gammu DLL\0"
+            VALUE "FileVersion", "0,93,0,0\0"
             VALUE "InternalName", "Gammu\0"
-            VALUE "LegalCopyright", "Copyright © 2002-2003 Marcin Wiacek\0"
+            VALUE "LegalCopyright", "Copyright © 2002 - 2003 by Marcin Wiacek\0"
             VALUE "LegalTrademarks", "\0"
-            VALUE "OriginalFilename", "gammu.exe\0"
+            VALUE "OriginalFilename", "gammu.dll\0"
             VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "Gammu (GNU All Mobile Management Utilities)\0"
-            VALUE "ProductVersion", "0,92,9,0\0"
+            VALUE "ProductName", "Gammu (GNU All Mobile Management Utilities) DLL\0"
+            VALUE "ProductVersion", "0,93,0,0\0"
             VALUE "SpecialBuild", "\0"
         END
     END

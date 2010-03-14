@@ -290,7 +290,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				bitmap->RingtoneID=Block[5];
 				if (Block[5] == 0x00) bitmap->RingtoneID=Block[7];
 				smprintf(s, "Ringtone ID : %i\n",bitmap->RingtoneID);
-				bitmap->DefaultRingtone = false;
+				bitmap->DefaultRingtone 	= false;
+				bitmap->FileSystemRingtone 	= false;
 			} else {
 				entry->Entries[entry->EntriesNum].EntryType=PBK_RingtoneID;
 				smprintf(s, "Ringtone ID \"%i\"\n",Block[7]);
@@ -389,6 +390,26 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
 			continue;			
+		}
+		if (Block[0] == N6510_PBK_RINGTONEFILE_ID) {
+			smprintf(s, "Ringtone ID with possibility of using filesystem\n");
+			if (entry->MemoryType==MEM7110_CG) {
+				if (Block[9] == 0x01) {
+					smprintf(s, "Filesystem ringtone ID: %02x\n",Block[10]*256+Block[11]);
+					bitmap->FileSystemRingtone = true;
+				} else {
+					smprintf(s, "Internal ringtone ID: %02x\n",Block[10]*256+Block[11]);
+					bitmap->FileSystemRingtone = false;
+				}
+				bitmap->RingtoneID	= Block[10]*256+Block[11];
+				bitmap->DefaultRingtone = false;
+			} else {
+				return ERR_UNKNOWNRESPONSE;
+			}
+			
+			length = length + Block[3];
+			Block  = &Block[(int) Block[3]];
+			continue;						
 		}
 		if (Block[0] == N7110_PBK_UNKNOWN1) {
 			smprintf(s,"Unknown entry\n");

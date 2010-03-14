@@ -1069,12 +1069,15 @@ static GSM_Error N6510_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 
 	/* Ringtone */
 	if (!bitmap->DefaultRingtone) {
-		string[0] = 0x00; 
-		string[1] = 0x00;
-		string[2] = bitmap->RingtoneID;
-		count += N71_65_PackPBKBlock(s, N7110_PBK_RINGTONE_ID, 3, block++, string, req + count);
-		count --;
-		req[count-5] = 8;
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKTONEGAL)) {
+		} else {
+			string[0] = 0x00; 
+			string[1] = 0x00;
+			string[2] = bitmap->RingtoneID;
+			count += N71_65_PackPBKBlock(s, N7110_PBK_RINGTONE_ID, 3, block++, string, req + count);
+			count --;
+			req[count-5] = 8;
+		}
 	}
 
 	/* Number of group */

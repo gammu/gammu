@@ -153,9 +153,13 @@ typedef enum {
 	 */
 	PBK_Text_Custom4,
 	/**
-	 * Ringtone ID. (Text)
+	 * Ringtone ID. (Number)
 	 */
 	PBK_RingtoneID,
+	/**
+	 * Ringtone ID in phone filesystem. (Number)
+	 */
+	PBK_RingtoneFileSystemID,
 	/**
 	 * Picture ID. (Number)
 	 */

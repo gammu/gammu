@@ -380,11 +380,11 @@ AC_OUTPUT(Makefile.cfg
 	  ../pkgconfig/gammu.pc
 	  ../doxygen/Doxyfile
 	  ../rpm/gammu.spec
-	  ../../gammu/msvc6.mak/gammu.rc
-	  ../../gammu/msvc7.mak/gammu.rc
           ../../gammu/bcc06.mak/gammu.bpr
-	  ../../win32/dll/msvc6.mak/gammu.rc
-	  ../../win32/dll/msvc7.mak/gammu.rc)
+	  ../../gammu/msvc06.mak/gammu.rc
+	  ../../gammu/msvc2003.mak/gammu.rc
+	  ../../win32/dll/msvc06.mak/gammu.rc
+	  ../../win32/dll/msvc2003.mak/gammu.rc)
 
 mv ../rpm/gammu.spec ../../
 

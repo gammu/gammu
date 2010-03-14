@@ -30,18 +30,25 @@ EXPORTS
 	mygetdct4simlocknetwork 	@23
 	mygetdct4securitycode		@24
 
-	myreadbackupfile		@25
-	mygetbackupfileimei		@26
-	mygetbackupfilemodel		@27
-	mygetbackupdatetime		@28
-	mygetbackupfeaturesforbackup 	@29
-	mystartbackup			@30
-	mybackupphonepbk		@31
-	mybackupsimpbk			@32
-	mybackupcalendar		@33
-	mybackuptodo			@34
-	myendbackup			@35
-	mygetbackupformatfeatures	@36
-	myrestorephonepbk		@37
-	myrestoresimpbk			@38
+	mygetbackupformatfeatures	@25
+	mygetbackupfeaturesforbackup 	@26
+
+	mystartbackup			@27
+	mybackupphonepbk		@28
+	mybackupsimpbk			@29
+	mybackupcalendar		@30
+	mybackuptodo			@31
+	mybackupwapbookmark		@32
+	mybackupwapsettings		@33
+	mybackupmmssettings		@34
+	mybackupfmradio			@35
+	mybackupgprspoint		@36
+	myendbackup			@37
+
+	myreadbackupfile		@38
 	mygetbackupfilecreator		@39
+	mygetbackupfileimei		@40
+	mygetbackupfilemodel		@41
+	mygetbackupdatetime		@42
+	myrestorephonepbk		@43
+	myrestoresimpbk			@44

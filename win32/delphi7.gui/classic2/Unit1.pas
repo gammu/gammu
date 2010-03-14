@@ -89,7 +89,7 @@ begin
    SecurityCallBackPointer := nil;
    SMSCallBackPointer      := nil;
 
-   error:=GSM_StartConnection(@PhoneID,Device,Connection,'','','',@PhoneCallBackPointer,@SecurityCallBackPointer,@SMSCallBackPointer);
+   error:=GSM_StartConnection(@PhoneID,Device,Connection,'','','',false,@PhoneCallBackPointer,@SecurityCallBackPointer,@SMSCallBackPointer);
    if (error<>ERR_NONE) then application.MessageBox(pchar('Start: error '+inttostr(integer(error))),'',0);
 
    FreeMem(Device);

@@ -1,10 +1,10 @@
 [FileVersion]
 Version=7.0
 [Compiler]
-A=4
+A=8
 B=0
-C=0
-D=0
+C=1
+D=1
 E=0
 F=0
 G=1
@@ -12,7 +12,7 @@ H=1
 I=1
 J=0
 K=0
-L=0
+L=1
 M=0
 N=1
 O=1
@@ -25,7 +25,7 @@ U=0
 V=1
 W=0
 X=1
-Y=0
+Y=1
 Z=1
 ShowHints=1
 ShowWarnings=1
@@ -76,9 +76,9 @@ LocaleToUnicode=1
 ImagebaseMultiple=1
 SuspiciousTypecast=1
 PrivatePropAccessor=1
-UnsafeType=1
-UnsafeCode=1
-UnsafeCast=1
+UnsafeType=0
+UnsafeCode=0
+UnsafeCast=0
 [Linker]
 MapFile=0
 OutputObjs=0
@@ -96,11 +96,11 @@ PackageDLLOutputDir=
 PackageDCPOutputDir=
 SearchPath=
 Packages=vcl;rtl;vclx;VclSmp;vclshlctrls
-Conditionals=
+Conditionals=DLL
 DebugSourceDirs=
 UsePackages=0
 [Parameters]
-RunParams=-connection irdaphonet
+RunParams=
 HostApplication=
 Launcher=
 UseLauncher=0
@@ -130,9 +130,9 @@ OriginalFilename=
 ProductName=
 ProductVersion=1.0.0.0
 Comments=
+[HistoryLists\hlConditionals]
+Count=1
+Item0=DLL
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;
-[HistoryLists\hlSearchPath]
-Count=1
-Item0=$(DELPHI)\Lib\Debug

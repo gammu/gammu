@@ -22,7 +22,17 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
-20040120 - 0.92.7
+20040203 - 0.93.0
+* new functionality:
+  * MSVC 2002 projects updated to MSVC 2003
+  * getting new entry in Nokia phonebook for DCT4              (Gareth Rylance)
+    (assigning tones in caller groups from gallery)
+
+* fixes and improvements:
+  * when use serial port higher than com9: in win32, Gammu works OK
+  * rewritten detecting DKU5 in win32
+
+20040120 - 0.92.9
 * new functionality:
   * * Debian:                                                    (Michal Cihar)
       * added devel docs into devel package

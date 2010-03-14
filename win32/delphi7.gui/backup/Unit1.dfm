@@ -1,11 +1,11 @@
-object Form1: TForm1
-  Left = 274
-  Top = 156
+object BackupForm: TBackupForm
+  Left = 247
+  Top = 143
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Backup from phone to file'
-  ClientHeight = 313
-  ClientWidth = 360
+  ClientHeight = 311
+  ClientWidth = 395
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,19 +20,20 @@ object Form1: TForm1
   object PageControl1: TPageControl
     Left = 0
     Top = 0
-    Width = 360
-    Height = 257
-    ActivePage = TabSheet4
+    Width = 395
+    Height = 265
+    ActivePage = TabSheet3
     Align = alTop
     Style = tsFlatButtons
     TabOrder = 0
-    object TabSheet0: TTabSheet
+    object TabSheet1: TTabSheet
       Caption = 'Step 1/5'
       ImageIndex = 4
+      OnShow = TabSheet1Show
       object GroupBox2: TGroupBox
         Left = 0
         Top = 0
-        Width = 352
+        Width = 387
         Height = 73
         Align = alTop
         Caption = 'Please select operation'
@@ -59,112 +60,12 @@ object Form1: TForm1
         end
       end
     end
-    object TabSheet1: TTabSheet
-      Caption = 'Step 2/5'
-      object GroupBox4: TGroupBox
-        Left = 0
-        Top = 0
-        Width = 352
-        Height = 145
-        Align = alTop
-        Caption = 'File details'
-        TabOrder = 0
-        object Label1: TLabel
-          Left = 8
-          Top = 16
-          Width = 31
-          Height = 13
-          Caption = 'Name:'
-        end
-        object Label2: TLabel
-          Left = 8
-          Top = 40
-          Width = 70
-          Height = 13
-          Caption = 'Source phone:'
-          Enabled = False
-        end
-        object Label3: TLabel
-          Left = 8
-          Top = 64
-          Width = 95
-          Height = 13
-          Caption = 'Source phone IMEI:'
-          Enabled = False
-        end
-        object Label4: TLabel
-          Left = 8
-          Top = 88
-          Width = 66
-          Height = 13
-          Caption = 'Date and time'
-          Enabled = False
-        end
-        object Label9: TLabel
-          Left = 8
-          Top = 112
-          Width = 37
-          Height = 13
-          Caption = 'Creator:'
-          Enabled = False
-        end
-        object FileNameEdit: TEdit
-          Left = 112
-          Top = 16
-          Width = 161
-          Height = 21
-          ReadOnly = True
-          TabOrder = 0
-        end
-        object Button6: TButton
-          Left = 280
-          Top = 16
-          Width = 65
-          Height = 25
-          Caption = 'Select'
-          TabOrder = 1
-          OnClick = Button6Click
-        end
-        object Edit1: TEdit
-          Left = 112
-          Top = 40
-          Width = 161
-          Height = 21
-          Enabled = False
-          TabOrder = 2
-        end
-        object Edit4: TEdit
-          Left = 112
-          Top = 64
-          Width = 161
-          Height = 21
-          Enabled = False
-          TabOrder = 3
-        end
-        object Edit7: TEdit
-          Left = 112
-          Top = 88
-          Width = 161
-          Height = 21
-          Enabled = False
-          TabOrder = 4
-        end
-        object Edit10: TEdit
-          Left = 112
-          Top = 112
-          Width = 161
-          Height = 21
-          ReadOnly = True
-          TabOrder = 5
-        end
-      end
-    end
     object TabSheet2: TTabSheet
-      Caption = 'Step 3/5'
+      Caption = 'Step 2/4'
       ImageIndex = 1
       OnShow = TabSheet2Show
       object Button1: TButton
-        Left = 224
+        Left = 256
         Top = 176
         Width = 121
         Height = 25
@@ -175,7 +76,7 @@ object Form1: TForm1
       object GroupBox3: TGroupBox
         Left = 0
         Top = 97
-        Width = 352
+        Width = 387
         Height = 72
         Align = alTop
         Caption = 'Connection parameters'
@@ -195,7 +96,7 @@ object Form1: TForm1
           Caption = 'Device:'
         end
         object ConnectionComboBox: TComboBox
-          Left = 112
+          Left = 144
           Top = 16
           Width = 233
           Height = 21
@@ -212,7 +113,7 @@ object Form1: TForm1
             'Nokia DLR3 cable')
         end
         object DeviceComboBox: TComboBox
-          Left = 112
+          Left = 144
           Top = 40
           Width = 233
           Height = 21
@@ -235,7 +136,7 @@ object Form1: TForm1
       object GroupBox1: TGroupBox
         Left = 0
         Top = 0
-        Width = 352
+        Width = 387
         Height = 97
         Align = alTop
         Caption = 'Phone details'
@@ -262,7 +163,7 @@ object Form1: TForm1
           Caption = 'Firmware:'
         end
         object ModelEdit: TEdit
-          Left = 112
+          Left = 144
           Top = 16
           Width = 233
           Height = 21
@@ -270,7 +171,7 @@ object Form1: TForm1
           TabOrder = 0
         end
         object IMEIEdit: TEdit
-          Left = 112
+          Left = 144
           Top = 40
           Width = 233
           Height = 21
@@ -278,7 +179,7 @@ object Form1: TForm1
           TabOrder = 1
         end
         object Edit2: TEdit
-          Left = 112
+          Left = 144
           Top = 64
           Width = 233
           Height = 21
@@ -288,85 +189,238 @@ object Form1: TForm1
       end
     end
     object TabSheet3: TTabSheet
-      Caption = 'Step 4/5'
+      Caption = 'Step 3/4'
       ImageIndex = 2
       OnShow = TabSheet3Show
       object GroupBox5: TGroupBox
         Left = 0
         Top = 0
-        Width = 352
-        Height = 161
+        Width = 387
+        Height = 233
         Align = alTop
-        Caption = 'Please select features'
+        Caption = 'File and features'
         TabOrder = 0
-        object CheckBox1: TCheckBox
+        object Label11: TLabel
           Left = 8
           Top = 16
+          Width = 48
+          Height = 13
+          Caption = 'File name:'
+        end
+        object Label2: TLabel
+          Left = 8
+          Top = 32
+          Width = 70
+          Height = 13
+          Caption = 'Source phone:'
+          Enabled = False
+        end
+        object Label3: TLabel
+          Left = 8
+          Top = 48
+          Width = 95
+          Height = 13
+          Caption = 'Source phone IMEI:'
+          Enabled = False
+        end
+        object Label4: TLabel
+          Left = 8
+          Top = 64
+          Width = 69
+          Height = 13
+          Caption = 'Date and time:'
+          Enabled = False
+        end
+        object Label9: TLabel
+          Left = 8
+          Top = 80
+          Width = 37
+          Height = 13
+          Caption = 'Creator:'
+          Enabled = False
+        end
+        object CheckBox1: TCheckBox
+          Left = 8
+          Top = 120
           Width = 201
           Height = 17
           Caption = 'Phone phonebook'
           TabOrder = 0
+          OnClick = CheckBox1Click
         end
         object CheckBox2: TCheckBox
           Left = 8
-          Top = 32
+          Top = 136
           Width = 217
           Height = 17
           Caption = 'SIM card phonebook'
           TabOrder = 1
+          OnClick = CheckBox2Click
         end
         object CheckBox3: TCheckBox
           Left = 8
-          Top = 48
+          Top = 152
           Width = 241
           Height = 17
           Caption = 'Calendar/reminder notes'
           TabOrder = 2
+          OnClick = CheckBox3Click
         end
         object CheckBox4: TCheckBox
           Left = 8
-          Top = 64
+          Top = 168
           Width = 201
           Height = 17
           Caption = 'ToDo'
           TabOrder = 3
+          OnClick = CheckBox4Click
         end
         object Button5: TButton
-          Left = 264
-          Top = 16
-          Width = 73
-          Height = 25
+          Left = 312
+          Top = 120
+          Width = 65
+          Height = 17
           Caption = 'Select all'
           TabOrder = 4
           OnClick = Button5Click
         end
         object Button7: TButton
-          Left = 264
-          Top = 48
-          Width = 73
-          Height = 25
+          Left = 312
+          Top = 136
+          Width = 65
+          Height = 17
           Caption = 'Unselect all'
           TabOrder = 5
           OnClick = Button7Click
         end
+        object CheckBox5: TCheckBox
+          Left = 168
+          Top = 120
+          Width = 129
+          Height = 17
+          Caption = 'WAP bookmarks'
+          TabOrder = 6
+          OnClick = CheckBox5Click
+        end
+        object CheckBox6: TCheckBox
+          Left = 168
+          Top = 136
+          Width = 129
+          Height = 17
+          Caption = 'WAP settings'
+          TabOrder = 7
+          OnClick = CheckBox6Click
+        end
+        object CheckBox7: TCheckBox
+          Left = 8
+          Top = 184
+          Width = 169
+          Height = 17
+          Caption = 'MMS settings'
+          TabOrder = 8
+          OnClick = CheckBox7Click
+        end
+        object FileNameEdit: TEdit
+          Left = 112
+          Top = 16
+          Width = 193
+          Height = 21
+          ReadOnly = True
+          TabOrder = 9
+        end
+        object Button2: TButton
+          Left = 312
+          Top = 16
+          Width = 65
+          Height = 17
+          Caption = 'Select'
+          TabOrder = 10
+          OnClick = Button2Click
+        end
+        object Edit1: TEdit
+          Left = 112
+          Top = 32
+          Width = 193
+          Height = 21
+          ReadOnly = True
+          TabOrder = 11
+        end
+        object Edit4: TEdit
+          Left = 112
+          Top = 48
+          Width = 193
+          Height = 21
+          ReadOnly = True
+          TabOrder = 12
+        end
+        object Edit7: TEdit
+          Left = 112
+          Top = 64
+          Width = 193
+          Height = 21
+          ReadOnly = True
+          TabOrder = 13
+        end
+        object Edit10: TEdit
+          Left = 112
+          Top = 80
+          Width = 193
+          Height = 21
+          ReadOnly = True
+          TabOrder = 14
+        end
+        object Panel1: TPanel
+          Left = 24
+          Top = 112
+          Width = 337
+          Height = 2
+          TabOrder = 15
+        end
+        object CheckBox8: TCheckBox
+          Left = 168
+          Top = 152
+          Width = 121
+          Height = 17
+          Caption = 'FM radio'
+          TabOrder = 16
+          OnClick = CheckBox8Click
+        end
+        object CheckBox9: TCheckBox
+          Left = 168
+          Top = 168
+          Width = 137
+          Height = 17
+          Caption = 'GPRS access points'
+          TabOrder = 17
+          OnClick = CheckBox9Click
+        end
+        object CheckBox10: TCheckBox
+          Left = 168
+          Top = 184
+          Width = 129
+          Height = 17
+          Caption = 'Phone profiles'
+          TabOrder = 18
+          OnClick = CheckBox10Click
+        end
       end
     end
     object TabSheet4: TTabSheet
-      Caption = 'Step 5/5'
+      Caption = 'Step 4/4'
       ImageIndex = 3
       OnShow = TabSheet4Show
       object Memo1: TMemo
         Left = 0
         Top = 0
-        Width = 352
-        Height = 205
+        Width = 387
+        Height = 213
         Align = alClient
         TabOrder = 0
       end
       object ProgressBar1: TProgressBar
         Left = 0
-        Top = 205
-        Width = 352
+        Top = 213
+        Width = 387
         Height = 21
         Align = alBottom
         Smooth = True
@@ -376,7 +430,7 @@ object Form1: TForm1
     end
   end
   object NextButton: TButton
-    Left = 272
+    Left = 304
     Top = 264
     Width = 81
     Height = 25
@@ -385,7 +439,7 @@ object Form1: TForm1
     OnClick = NextButtonClick
   end
   object PrevButton: TButton
-    Left = 184
+    Left = 216
     Top = 264
     Width = 81
     Height = 25
@@ -405,23 +459,29 @@ object Form1: TForm1
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 295
-    Width = 360
+    Top = 293
+    Width = 395
     Height = 18
     Panels = <
       item
-        Text = 'Phone DISCONECTED'
+        Alignment = taCenter
+        Text = 'Please select operation and click Next'
+        Width = 50
+      end
+      item
+        Alignment = taCenter
+        Text = 'DISCONECTED'
         Width = 150
       end>
   end
   object OpenRestoreDialog: TOpenDialog
     Options = [ofPathMustExist, ofFileMustExist, ofEnableSizing, ofForceShowHidden]
-    Left = 100
+    Left = 116
     Top = 264
   end
   object SaveBackupDialog: TSaveDialog
     Options = [ofOverwritePrompt, ofHideReadOnly, ofPathMustExist, ofCreatePrompt, ofNoReadOnlyReturn, ofEnableSizing]
-    Left = 128
+    Left = 152
     Top = 264
   end
 end

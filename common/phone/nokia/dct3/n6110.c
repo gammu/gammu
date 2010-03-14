@@ -904,9 +904,10 @@ static GSM_Error N6110_ReplyGetCallerLogo(GSM_Protocol_Message msg, GSM_StateMac
 		smprintf(s, "Name : \"%s\"\n",DecodeUnicodeString(Data->Bitmap->Text));
 		Data->Bitmap->DefaultName = false;
 		if (msg.Buffer[5] == 0x00) Data->Bitmap->DefaultName = true;
-		count 				= msg.Buffer[5] + 6;
-		Data->Bitmap->RingtoneID 	= msg.Buffer[count++];
-		Data->Bitmap->DefaultRingtone 	= false;
+		count 				 = msg.Buffer[5] + 6;
+		Data->Bitmap->RingtoneID 	 = msg.Buffer[count++];
+		Data->Bitmap->DefaultRingtone 	 = false;
+		Data->Bitmap->FileSystemRingtone = false;
 		if (Data->Bitmap->RingtoneID == 16) Data->Bitmap->DefaultRingtone = true;
 		smprintf(s, "Ringtone ID: %02x\n",Data->Bitmap->RingtoneID);
 		Data->Bitmap->BitmapEnabled=(msg.Buffer[count++]==1);

@@ -48,26 +48,51 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 {
 	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
 	DCB 			dcb;
-	unsigned char 		DeviceName[80];
+	unsigned char 		DeviceName[80],DeviceName2[80];
 	int			i;
 #ifdef GSM_ENABLE_FBUS2DKU5
 	HKEY 			hKey;
-	DWORD 			DeviceNameLen;
+	DWORD 			DeviceNameLen, KeyNameLen;
+	unsigned char		KeyName[100];
 #endif
 
-	strcpy(DeviceName,s->CurrentConfig->Device);
+	strcpy(DeviceName2,s->CurrentConfig->Device);
 
 #ifdef GSM_ENABLE_FBUS2DKU5
 	if (s->ConnectionType == GCT_FBUS2DKU5) {
-		DeviceName[0] = 0;
-		RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\DEVICEMAP\\SERIALCOMM", 0, KEY_QUERY_VALUE, &hKey);
-		RegQueryValueEx(hKey, "\\Device\\AtmelVirtualPort000", NULL, NULL, (LPBYTE) DeviceName, &DeviceNameLen);
+		smprintf(s,"Reading DKU5 device\n");
+		DeviceName2[0] = 0;
+		if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\DEVICEMAP\\SERIALCOMM", 0, KEY_QUERY_VALUE, &hKey) != ERROR_SUCCESS) {
+			smprintf(s,"Error opening key\n");
+			return ERR_DEVICENOTWORK;
+		}
+		i = 0;
+		while(1) {
+			DeviceNameLen = 80;
+			KeyNameLen = 100;
+			if (RegEnumValue(hKey,i,KeyName,&KeyNameLen,NULL,NULL,DeviceName2,&DeviceNameLen) != ERROR_SUCCESS) {
+				smprintf(s,"Error reading key value\n");
+				return ERR_DEVICENOTWORK;
+			}
+//			smprintf(s,"Key name is %s, value is %s\n",KeyName,DeviceName2);
+			if (!strncmp(KeyName,"\\Device\\AtmelVirtualPort",24)) break;
+			i++;
+		}
 		RegCloseKey(hKey);
-		if (strlen(DeviceName) == 0) return ERR_DEVICENOTWORK;
-		smprintf(s,"DKU5 device is \"%s\"\n",DeviceName);
+		if (strlen(DeviceName2) == 0) return ERR_DEVICENOTWORK;
+		smprintf(s,"DKU5 device is \"%s\"\n",DeviceName2);
 		//nodriver
 	}
 #endif
+
+	if ((s->ConnectionType == GCT_FBUS2DKU5) ||
+	    (!strncmp(DeviceName2,"com",3) && strlen(DeviceName2)>3)) {
+		sprintf(DeviceName,"\\\\.\\COM%i",atoi(DeviceName2+3));
+	} else {
+		strcpy(DeviceName,DeviceName2);
+	}
+
+	smprintf(s,"Device is %s\n",DeviceName);
 
 	/* Allows for reading/writing, no device sharing */
 	d->hPhone = CreateFile(DeviceName,
