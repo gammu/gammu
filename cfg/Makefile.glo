@@ -108,43 +108,50 @@ uninstall:
 	@$(RM) $(DESTDIR)$(INSTALL_BIN_DIR)/gammu $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so
 	@$(RM) $(DESTDIR)$(INSTALL_MAN_DIR)/gammu.1
 	@$(RM) -r $(DESTDIR)$(INSTALL_DOC_DIR)/
+	@$(RM) -r $(DESTDIR)$(INSTALL_LOC_DIR)/
+
+installlocales:
+	@echo Installing locales to $(INSTALL_LOC_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LOC_DIR)
+	@$(FIND) docs/docs/locale -type f -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_LOC_DIR) \;
 
 installdocs:
 	@echo Installing docs to $(INSTALL_DOC_DIR)
-	@$(INSTALL) -d $(DESTDIR)$(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_DOC_DIR)
 	@for xxx in $(DOCS); do \
 		( cd $(TOPDIR)/docs/$$xxx; \
 		  $(FIND) . -type d \! -path "*CVS*" \
-		       -exec $(INSTALL) -d $(DESTDIR)$(INSTALL_DOC_DIR)/$$xxx/{} \; ; \
+		       -exec $(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_DOC_DIR)/$$xxx/{} \; ; \
 		  $(FIND) . -type f \! -path "*CVS*" \
-		       -exec $(INSTALL) -m 0666 {} $(DESTDIR)$(INSTALL_DOC_DIR)/$$xxx/{} \; \
+		       -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_DOC_DIR)/$$xxx/{} \; \
 		) \
 	done
-	@$(INSTALL) -m 0666 $(TOPDIR)/changelog $(DESTDIR)$(INSTALL_DOC_DIR)
-	@$(INSTALL) -m 0666 $(TOPDIR)/readme.txt $(DESTDIR)$(INSTALL_DOC_DIR)
-	@$(INSTALL) -m 0666 $(TOPDIR)/copying $(DESTDIR)$(INSTALL_DOC_DIR)
+	@$(RM) -rf $(DESTDIR)$(INSTALL_DOC_DIR)/docs/locale
+	@$(INSTALL) -m 0644 $(TOPDIR)/changelog $(DESTDIR)$(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/readme.txt $(DESTDIR)$(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/copying $(DESTDIR)$(INSTALL_DOC_DIR)
 	@echo Installing man to $(DESTDIR)$(INSTALL_MAN_DIR)
-	@$(INSTALL) -d $(DESTDIR)$(INSTALL_MAN_DIR)
-	@$(INSTALL) -m 0666 $(TOPDIR)/docs/docs/english/gammu.1 $(DESTDIR)$(INSTALL_MAN_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_MAN_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/docs/docs/english/gammu.1 $(DESTDIR)$(INSTALL_MAN_DIR)
 	@$(RM) $(DESTDIR)$(INSTALL_DOC_DIR)/docs/english/gammu.1
 	
-install: uninstall all installdocs installonly
+install: uninstall all installdocs installlocales installonly
 
 installonly: all
 	@echo Installing binaries to $(DESTDIR)$(INSTALL_BIN_DIR)
-	@$(INSTALL) -d $(DESTDIR)$(INSTALL_BIN_DIR)
-	@$(INSTALL) $(TOPDIR)/gammu/gammu $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) -m 0755 $(TOPDIR)/gammu/gammu $(DESTDIR)$(INSTALL_BIN_DIR)
 
-installlib: uninstall makelib installdocs installlibonly
+installlib: uninstall makelib installdocs installlocales installlibonly
 
 installlibonly: all
 	@echo Installing binaries to $(DESTDIR)$(INSTALL_BIN_DIR)
-	@$(INSTALL) -d $(DESTDIR)$(INSTALL_BIN_DIR)
-	@$(INSTALL) $(TOPDIR)/gammu/gammulib $(DESTDIR)$(INSTALL_BIN_DIR)/gammu
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) -m 0755 $(TOPDIR)/gammu/gammulib $(DESTDIR)$(INSTALL_BIN_DIR)/gammu
 
 	@echo Installing shared library to $(DESTDIR)$(INSTALL_LIB_DIR)
-	@$(INSTALL) -d $(DESTDIR)$(INSTALL_LIB_DIR)
-	@$(INSTALL) -m 0444 $(TOPDIR)/common/libGammu.so $(DESTDIR)$(INSTALL_LIB_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LIB_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/common/libGammu.so $(DESTDIR)$(INSTALL_LIB_DIR)
 
 tags: $(shell find . -name '*.[ch]' -o -name '*.cpp')
 	@echo Generating tags file
@@ -156,9 +163,9 @@ makecleantree:
 	@for xxx in '.'; do \
 		( cd $(TOPDIR)/$$xxx; \
 		  $(FIND) . -type d \! -path "*CVS*" \
-		       -exec $(INSTALL) -d $(TEMP_DIR)/gammu-$(VERSION)/{} \; ; \
+		       -exec $(INSTALL) -m 0755 -d $(TEMP_DIR)/gammu-$(VERSION)/{} \; ; \
 		  $(FIND) . -type f \! -path "*CVS*" \
-		       -exec $(INSTALL) -m 0444 {} $(TEMP_DIR)/gammu-$(VERSION)/{} \; \
+		       -exec $(INSTALL) -m 0644 {} $(TEMP_DIR)/gammu-$(VERSION)/{} \; \
 		) \
 	done
 	@$(RM) -rf gammu-$(VERSION)/
@@ -177,7 +184,7 @@ makerpm: makecleantree
 	@echo Installing $(RPM_DIR)/SPECS/gammu.spec
 	@$(INSTALL) -m 0444 $(TOPDIR)/cfg/rpm/gammu.spec $(RPM_DIR)/SPECS/gammu.spec
 	@echo Making packages
-	@rpm -ba -v $(RPM_DIR)/SPECS/gammu.spec
+	@rpmbuild -ba -v $(RPM_DIR)/SPECS/gammu.spec
 	@rm -rf $(RPM_DIR)/SPECS/gammu.spec
 	@rm -rf $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz
 	@rm -rf $(RPM_DIR)/BUILD/gammu-$(VERSION)

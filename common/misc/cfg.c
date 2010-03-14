@@ -334,3 +334,7 @@ CFG_Entry *CFG_FindLastSectionEntry(CFG_Header *file_info, unsigned char *sectio
 	}
 	return e;
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

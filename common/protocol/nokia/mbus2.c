@@ -61,7 +61,7 @@ static GSM_Error MBUS2_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 	GSM_DumpMessageLevel2(s, out_buffer+6, length, type);
 
 	/* Send it out... */
-	mili_sleep(10);
+	my_sleep(10);
 	sent=s->Device.Functions->WriteDevice(s,out_buffer,current);
 	if (sent!=current) return GE_DEVICEWRITEERROR;
 
@@ -90,7 +90,7 @@ static GSM_Error MBUS2_SendAck(GSM_StateMachine *s, unsigned char type, unsigned
 	}
 
 	/* Send it out... */
-	mili_sleep(10);
+	my_sleep(10);
 	if (Device->WriteDevice(s,out_buffer,6)!=6) return GE_DEVICEWRITEERROR;
 
 	return GE_NONE;
@@ -221,7 +221,7 @@ static GSM_Error MBUS2_Initialise(GSM_StateMachine *s)
 
 	error=Device->DeviceSetDtrRts(s,false,true); /*DTR low,RTS high*/
 	if (error!=GE_NONE) return error; 
-        mili_sleep(200);
+        my_sleep(200);
 
 	return GE_NONE;
 }
@@ -234,3 +234,7 @@ GSM_Protocol_Functions MBUS2Protocol = {
 };
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

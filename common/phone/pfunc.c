@@ -39,27 +39,27 @@ GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 	return GE_NONE;
 }
 
-void GSM_CreateFirmwareNumber(GSM_Phone_Data *Data)
+void GSM_CreateFirmwareNumber(GSM_StateMachine *s)
 {
 	bool 		before=true;
 	double		ala = 0, multiply = 1;
 	unsigned int 	i;
 
-	for (i=0;i<strlen(Data->Version);i++) {
-		if (isdigit(Data->Version[i])) {
+	for (i=0;i<strlen(s->Phone.Data.Version);i++) {
+		if (isdigit(s->Phone.Data.Version[i])) {
 			if (before) {
-				ala=ala*10+(Data->Version[i]-'0');
+				ala=ala*10+(s->Phone.Data.Version[i]-'0');
 			} else {
 				multiply=multiply*0.1;
-				ala=ala+(Data->Version[i]-'0')*multiply;
+				ala=ala+(s->Phone.Data.Version[i]-'0')*multiply;
 			}
 		}
-		if (Data->Version[i]=='.') {
+		if (s->Phone.Data.Version[i]=='.') {
 			before=false;
 		}
 	}
-	*Data->VersionNum=ala;
-	dprintf("Number version is \"%f\"\n",*Data->VersionNum);
+	s->Phone.Data.VerNum = ala;
+	dprintf("Number version is \"%f\"\n", s->Phone.Data.VerNum);
 }
 
 GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear)
@@ -110,19 +110,19 @@ GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool fir
 	/* Is it correct ? Experimental values here */
 	switch (note.Style) {
 		case StaccatoStyle:
-			mili_sleep (7500);
+			my_sleep (7500);
 			error=s->Phone.Functions->PlayTone(s,0,0,false);	
 			if (error != GE_NONE) return error;
-			mili_sleep ((1400000/note.Tempo*duration)-(7500));
+			my_sleep ((1400000/note.Tempo*duration)-(7500));
 			break;
 		case ContinuousStyle:
-			mili_sleep  (1400000/note.Tempo*duration);
+			my_sleep  (1400000/note.Tempo*duration);
 			break;
 		case NaturalStyle:
-			mili_sleep  (1400000/note.Tempo*duration-50);
+			my_sleep  (1400000/note.Tempo*duration-50);
 			error=s->Phone.Functions->PlayTone(s,0,0,false);	
 			if (error != GE_NONE) return error;
-			mili_sleep (50);
+			my_sleep (50);
 			break;	
 	}
 	return GE_NONE;
@@ -135,7 +135,11 @@ GSM_Error PHONE_Beep(GSM_StateMachine *s)
 	error=s->Phone.Functions->PlayTone(s, 4000, 5,true);
 	if (error!=GE_NONE) return error;
 
-	mili_sleep(500);
+	my_sleep(500);
 
 	return s->Phone.Functions->PlayTone(s,255*255,0,false);
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

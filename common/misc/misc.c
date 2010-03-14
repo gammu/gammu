@@ -104,9 +104,13 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 	/* If don't have weekday name, include it */
 	strftime(retval, 200, "%A", &timeptr);
 	if (strstr(retval2,retval)==NULL) {
-		strcat(retval2," (");
-		strcat(retval2,retval);
-		strcat(retval2,")");
+		/* Check for abbreviated weekday */
+		strftime(retval, 200, "%a", &timeptr);
+		if (strstr(retval2,retval)==NULL) {
+			strcat(retval2," (");
+			strcat(retval2,retval);
+			strcat(retval2,")");
+		}
 	}
 
 	return retval2;
@@ -179,7 +183,7 @@ void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsig
 	int 	i,number=0,j;
 	bool 	whitespace=true, nowwhite;
 
-	for (i=0;i<40;i++) lines->numbers[i]=0;
+	for (i=0;i<MAX_LINES*2;i++) lines->numbers[i]=0;
 
 	for (i=0;i<messagesize;i++) {
 		nowwhite = false;
@@ -385,3 +389,7 @@ int FindSerialSpeed(char *buffer)
 		default		: return 0;	
 	}
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

@@ -12,15 +12,17 @@
 
 #if defined(GSM_ENABLE_NOKIA_DCT3)
 
-GSM_Error DCT3_ReplyPressKey(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyPressKey(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
 	switch (msg.Buffer[2]) {
 	case 0x46:
-		dprintf("Pressing key OK\n");
+		smprintf(s, "Pressing key OK\n");
 		if (Data->PressKey) return GE_NONE;
 		break;
 	case 0x47:
-		dprintf("Releasing key OK\n");
+		smprintf(s, "Releasing key OK\n");
 		if (!Data->PressKey) return GE_NONE;
 		break;
 	}
@@ -37,18 +39,18 @@ GSM_Error DCT3_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 	if (Press) {
 		PressReq[5] = Key;
 		s->Phone.Data.PressKey = true;
-		dprintf("Pressing key\n");
+		smprintf(s, "Pressing key\n");
 		return GSM_WaitFor (s, PressReq, 6, 0xd1, 4, ID_PressKey);
 	} else {
 		s->Phone.Data.PressKey = false;
-		dprintf("Releasing key\n");
+		smprintf(s, "Releasing key\n");
 		return GSM_WaitFor (s, ReleaseReq, 6, 0xd1, 4, ID_PressKey);
 	}
 }
 
-GSM_Error DCT3_ReplyPlayTone(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyPlayTone(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("Tone played\n");
+	smprintf(s, "Tone played\n");
 	return GE_NONE;
 }
 
@@ -82,13 +84,13 @@ GSM_Error DCT3_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, boo
 
 #ifdef GSM_ENABLE_CELLBROADCAST
 
-GSM_Error DCT3_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_CBMessage 	CB;
 	int		i;
 	char		Buffer[300];
 
-	dprintf("CB received\n");
+	smprintf(s, "CB received\n");
 	CB.Channel = msg.Buffer[7];
 	i=GSM_UnpackEightBitsToSeven(0, msg.Buffer[9], msg.Buffer[9], msg.Buffer+10, Buffer);
 	i = msg.Buffer[9] - 1;
@@ -96,16 +98,16 @@ GSM_Error DCT3_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_Phone_Data *Data, G
 		if (Buffer[i] == 13) i = i - 1; else break;
 	}
 	DecodeDefault(CB.Text, Buffer, i + 1, false, NULL);
-	dprintf("Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
-	if (Data->EnableIncomingCB && User->IncomingCB!=NULL) {
-		User->IncomingCB(Data->Device,CB);
+	smprintf(s, "Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
+	if (Data->EnableIncomingCB && s->User.IncomingCB!=NULL) {
+		s->User.IncomingCB(s->Config.Device,CB);
 	}
 	return GE_NONE;
 }
 
-GSM_Error DCT3_ReplySetIncomingCB(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplySetIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("CB set\n");
+	smprintf(s, "CB set\n");
 	return GE_NONE;
 }
 
@@ -124,10 +126,10 @@ GSM_Error DCT3_SetIncomingCB(GSM_StateMachine *s, bool enable)
 	if (s->Phone.Data.EnableIncomingCB!=enable) {
 		s->Phone.Data.EnableIncomingCB 	= enable;
 		if (enable) {
-			dprintf("Enabling incoming CB\n");
+			smprintf(s, "Enabling incoming CB\n");
 			return GSM_WaitFor(s, reqOn, 10, 0x02, 4, ID_SetIncomingCB);
 		} else {
-			dprintf("Disabling incoming CB\n");
+			smprintf(s, "Disabling incoming CB\n");
 			return GSM_WaitFor(s, reqOff, 10, 0x02, 4, ID_SetIncomingCB);
 		}
 	}
@@ -137,9 +139,9 @@ GSM_Error DCT3_SetIncomingCB(GSM_StateMachine *s, bool enable)
 #endif
 }
 
-GSM_Error DCT3_ReplySetSMSC(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplySetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("SMSC set\n");
+	smprintf(s, "SMSC set\n");
 	return GE_NONE;
 }
 
@@ -166,13 +168,13 @@ GSM_Error DCT3_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	req[10] = GSM_PackSemiOctetNumber(smsc->DefaultNumber, req+11, true);
 	req[22] = GSM_PackSemiOctetNumber(smsc->Number, req+23, false);
 	memcpy (req + 34, DecodeUnicodeString(smsc->Name),strlen(DecodeUnicodeString(smsc->Name)));
-	dprintf("Setting SMSC\n");
+	smprintf(s, "Setting SMSC\n");
 	return GSM_WaitFor (s, req, 35+strlen(DecodeUnicodeString(smsc->Name)), 0x02, 4, ID_SetSMSC);
 }
 
-GSM_Error DCT3_ReplyEnableSecurity(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyEnableSecurity(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("State of security commands set\n");
+	smprintf(s, "State of security commands set\n");
 	return GE_NONE;
 }
 
@@ -197,55 +199,51 @@ GSM_Error DCT3_EnableSecurity (GSM_StateMachine *s, unsigned char status)
 	 * or disable clock on the screen
 	 */
 	if (status!=0x06) req[3] = status;
-	dprintf("Setting state of security commands\n");
+	smprintf(s, "Setting state of security commands\n");
 	return GSM_WaitFor (s, req, 4, 0x40, 4, ID_EnableSecurity);
 }
 
-GSM_Error DCT3_ReplyGetIMEI(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyGetIMEI(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	memcpy(Data->IMEI,msg.Buffer + 4, 16);
-	dprintf("Received IMEI %s\n",Data->IMEI);
+	memcpy(s->Phone.Data.IMEI,msg.Buffer + 4, 16);
+	smprintf(s, "Received IMEI %s\n",s->Phone.Data.IMEI);
 	return GE_NONE;
 }
 
-GSM_Error DCT3_GetIMEI (GSM_StateMachine *s, unsigned char *imei)
+GSM_Error DCT3_GetIMEI (GSM_StateMachine *s)
 {
 	unsigned char 	req[4] = {0x00, 0x01, 0x66, 0x00};  
 	GSM_Error 	error;
 
-	if (strlen(s->Phone.Data.IMEICache)!=0) {
-		strcpy(imei,s->Phone.Data.IMEICache);
-		return GE_NONE;
-	}
+	if (strlen(s->Phone.Data.IMEI)!=0) return GE_NONE;
 
 	error=DCT3_EnableSecurity (s, 0x01);
 	if (error!=GE_NONE) return error;
 
-	s->Phone.Data.IMEI=imei;
-	dprintf("Getting IMEI\n");
+	smprintf(s, "Getting IMEI\n");
 	return GSM_WaitFor (s, req, 4, 0x40, 2, ID_GetIMEI);
 }
 
-GSM_Error DCT3_ReplySIMLogin(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplySIMLogin(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("SIM card login\n");
+	smprintf(s, "SIM card login\n");
 	return GE_NONE;
 }
 
-GSM_Error DCT3_ReplySIMLogout(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplySIMLogout(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("SIM card logout\n");
+	smprintf(s, "SIM card logout\n");
 	return GE_NONE;
 }
 
-GSM_Error DCT3_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("Date & time received\n");
+	smprintf(s, "Date & time received\n");
 	if (msg.Buffer[4]==0x01) {
-		NOKIA_DecodeDateTime(msg.Buffer+8, Data->DateTime);
+		NOKIA_DecodeDateTime(s, msg.Buffer+8, s->Phone.Data.DateTime);
 		return GE_NONE;
 	}
-	dprintf("Not set in phone\n");
+	smprintf(s, "Not set in phone\n");
 	return GE_EMPTY;
 }
 
@@ -254,21 +252,22 @@ GSM_Error DCT3_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, unsigne
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x62};
 
 	s->Phone.Data.DateTime=date_time;
-	dprintf("Getting date & time\n");
+	smprintf(s, "Getting date & time\n");
 	return GSM_WaitFor (s, req, 4, msgtype, 4, ID_GetDateTime);
 }
 
-GSM_Error DCT3_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("Alarm received\n");
+	GSM_Phone_Data	*Data = &s->Phone.Data;
+	smprintf(s, "Alarm received\n");
 	if (msg.Buffer[8]==0x02) {
-		dprintf("   Alarm: %02d:%02d\n", msg.Buffer[9], msg.Buffer[10]);
+		smprintf(s, "   Alarm: %02d:%02d\n", msg.Buffer[9], msg.Buffer[10]);
 		Data->Alarm->Hour	= msg.Buffer[9];
 		Data->Alarm->Minute	= msg.Buffer[10];
 		Data->Alarm->Second	= 0;
 		return GE_NONE;
 	}
-	dprintf("   Not set in phone\n");
+	smprintf(s, "   Not set in phone\n");
 	return GE_EMPTY;
 }
 
@@ -279,18 +278,18 @@ GSM_Error DCT3_GetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int alarm_numb
 	if (alarm_number!=1) return GE_NOTSUPPORTED;
 
 	s->Phone.Data.Alarm=alarm;
-	dprintf("Getting alarm\n");
+	smprintf(s, "Getting alarm\n");
 	return GSM_WaitFor (s, req, 4, msgtype, 4, ID_GetAlarm);
 }
 
-GSM_Error DCT3_ReplySetDateTime(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplySetDateTime(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("Date & time set\n");
+	smprintf(s, "Date & time set\n");
 	if (msg.Buffer[4]==0x01) {
-		dprintf("Set OK\n");
+		smprintf(s, "Set OK\n");
 		return GE_NONE;
 	}
-	dprintf("Error\n");
+	smprintf(s, "Error\n");
 	return GE_UNKNOWN;
 }
 
@@ -303,19 +302,19 @@ GSM_Error DCT3_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, unsigne
 		0x00, 0x00,	/* Hours & Minutes */
 		0x00 };		/* Unknown, but not seconds - try 59 and wait 1 sec. */
 
-	NOKIA_EncodeDateTime(req+7, date_time);
-	dprintf("Setting date & time\n");
+	NOKIA_EncodeDateTime(s, req+7, date_time);
+	smprintf(s, "Setting date & time\n");
 	return GSM_WaitFor (s, req, 14, msgtype, 4, ID_SetDateTime);
 }
 
-GSM_Error DCT3_ReplySetAlarm(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplySetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("Alarm set\n");
+	smprintf(s, "Alarm set\n");
 	if (msg.Buffer[4]==0x01) {
-		dprintf("Set OK\n");
+		smprintf(s, "Set OK\n");
 		return GE_NONE;
 	}
-	dprintf("Error\n");
+	smprintf(s, "Error\n");
 	return GE_UNKNOWN;
 }
 
@@ -332,15 +331,16 @@ GSM_Error DCT3_SetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int alarm_numb
 	req[8] = alarm->Hour;
 	req[9] = alarm->Minute;
 
-	dprintf("Setting alarm\n");
+	smprintf(s, "Setting alarm\n");
 	return GSM_WaitFor (s, req, 11, msgtype, 4, ID_SetAlarm);
 }
 
-GSM_Error DCT3_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int i;
+	GSM_Phone_Data	*Data = &s->Phone.Data;
 
-	dprintf("SMSC received\n");
+	smprintf(s, "SMSC received\n");
 	switch (msg.Buffer[3]) {
 	case 0x34:
 		Data->SMSC->Format = GSMF_Text;
@@ -357,20 +357,20 @@ GSM_Error DCT3_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_
 		while (msg.Buffer[i]!=0) {i++;}
 		i=i-33;
 		if (i>GSM_MAX_SMSC_NAME_LENGTH) {
-			dprintf("Too long name\n");
+			smprintf(s, "Too long name\n");
 			return GE_UNKNOWNRESPONSE;
 		}
 		EncodeUnicode(Data->SMSC->Name,msg.Buffer+33,i);
-		dprintf("   Name \"%s\"\n", DecodeUnicodeString(Data->SMSC->Name));
+		smprintf(s, "   Name \"%s\"\n", DecodeUnicodeString(Data->SMSC->Name));
 	
 		GSM_UnpackSemiOctetNumber(Data->SMSC->DefaultNumber,msg.Buffer+9,true);
-		dprintf("   Default number \"%s\"\n", DecodeUnicodeString(Data->SMSC->DefaultNumber));
+		smprintf(s, "   Default number \"%s\"\n", DecodeUnicodeString(Data->SMSC->DefaultNumber));
 		GSM_UnpackSemiOctetNumber(Data->SMSC->Number,msg.Buffer+21,false);
-		dprintf("   Number \"%s\"\n", DecodeUnicodeString(Data->SMSC->Number));
+		smprintf(s, "   Number \"%s\"\n", DecodeUnicodeString(Data->SMSC->Number));
 	
 		return GE_NONE;
 	case 0x35:
-		dprintf("Getting SMSC failed\n");
+		smprintf(s, "Getting SMSC failed\n");
 		return GE_INVALIDLOCATION;
 	}
 	return GE_UNKNOWNRESPONSE;
@@ -387,51 +387,52 @@ GSM_Error DCT3_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	req[5]=smsc->Location;
 
 	s->Phone.Data.SMSC=smsc;
-	dprintf("Getting SMSC\n");
+	smprintf(s, "Getting SMSC\n");
 	return GSM_WaitFor (s, req, 6, 0x02, 4, ID_GetSMSC);
 }
 
-GSM_Error DCT3_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int		count;
+	GSM_Phone_Data	*Data = &s->Phone.Data;
 #ifdef DEBUG
 	GSM_NetworkInfo NetInfo;
 	char		name[100];
 
-	dprintf("Network info received\n");
-	dprintf("   Status                    : ");
+	smprintf(s, "Network info received\n");
+	smprintf(s, "   Status                    : ");
 	switch (msg.Buffer[8]) {
-		case 0x01: dprintf("home network selected");		break;
-		case 0x02: dprintf("roaming network");			break;
-		case 0x03: dprintf("requesting network");		break;
-		case 0x04: dprintf("not registered in the network");	break;
-		default  : dprintf("unknown");
+		case 0x01: smprintf(s, "home network selected");		break;
+		case 0x02: smprintf(s, "roaming network");			break;
+		case 0x03: smprintf(s, "requesting network");			break;
+		case 0x04: smprintf(s, "not registered in the network");	break;
+		default  : smprintf(s, "unknown");
 	}
-	dprintf("\n");
-	dprintf("   Network selection         : %s\n", msg.Buffer[9]==1?"manual":"automatic");
+	smprintf(s, "\n");
+	smprintf(s, "   Network selection         : %s\n", msg.Buffer[9]==1?"manual":"automatic");
 	if (msg.Buffer[8]<0x03) {
 		NOKIA_DecodeNetworkCode(msg.Buffer+14,NetInfo.NetworkCode);
 		sprintf(NetInfo.CellID, "%02x%02x", msg.Buffer[10], msg.Buffer[11]);
 		sprintf(NetInfo.LAC,	"%02x%02x", msg.Buffer[12], msg.Buffer[13]);
-		dprintf("   CellID                    : %s\n", NetInfo.CellID);
-		dprintf("   LAC                       : %s\n", NetInfo.LAC);
-		dprintf("   Network code              : %s\n", NetInfo.NetworkCode);
-		dprintf("   Network name for Gammu    : %s ",
+		smprintf(s, "   CellID                    : %s\n", NetInfo.CellID);
+		smprintf(s, "   LAC                       : %s\n", NetInfo.LAC);
+		smprintf(s, "   Network code              : %s\n", NetInfo.NetworkCode);
+		smprintf(s, "   Network name for Gammu    : %s ",
 				DecodeUnicodeString(GSM_GetNetworkName(NetInfo.NetworkCode)));
-		dprintf("(%s)\n",DecodeUnicodeString(GSM_GetCountryName(NetInfo.NetworkCode)));
+		smprintf(s, "(%s)\n",DecodeUnicodeString(GSM_GetCountryName(NetInfo.NetworkCode)));
 		if (msg.Buffer[18]==0x00) {
 			/* In 6210 name is in "normal" Unicode */
 			memcpy(name,msg.Buffer+18,msg.Buffer[17]*2);
 			name[msg.Buffer[17]*2]	=0x00;
 			name[msg.Buffer[17]*2+1]=0x00;
-			dprintf("   Network name for phone    : %s\n",DecodeUnicodeString(name));
+			smprintf(s, "   Network name for phone    : %s\n",DecodeUnicodeString(name));
 		} else {
 			/* In 9210 first 0x00 is cut from Unicode string */
 			name[0] = 0;
 			memcpy(name+1,msg.Buffer+18,msg.Buffer[17]*2);
 			name[msg.Buffer[17]*2+1]=0x00;
 			name[msg.Buffer[17]*2+2]=0x00;
-			dprintf("   Network name for phone    : %s\n",DecodeUnicodeString(name));
+			smprintf(s, "   Network name for phone    : %s\n",DecodeUnicodeString(name));
 		}
 	}
 #endif
@@ -466,7 +467,7 @@ GSM_Error DCT3_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Dat
 	/* 6210/6250/7110 */
 	if (Data->RequestID==ID_GetBitmap) {
 		if (msg.Buffer[4]==0x02) {
-			dprintf("Operator logo available\n");
+			smprintf(s, "Operator logo available\n");
 			count = 7;
 			/* skip network info */
 			count += msg.Buffer[count];
@@ -491,13 +492,13 @@ GSM_Error DCT3_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x70};
 
 	s->Phone.Data.NetworkInfo=netinfo;
-	dprintf("Getting network info\n");
+	smprintf(s, "Getting network info\n");
 	return GSM_WaitFor (s, req, 4, 0x0a, 4, ID_GetNetworkInfo);
 }
 
-GSM_Error DCT3_ReplyDialCommand(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyDialCommand(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("Answer for call commands\n");
+	smprintf(s, "Answer for call commands\n");
 	return GE_NONE;
 }
 
@@ -515,7 +516,7 @@ GSM_Error DCT3_DialVoice(GSM_StateMachine *s, char *number)
 	for (i=0; i < strlen(number) ; i++) req[4+i]=number[i];  
 	req[4+i+1]=0;
 
-	dprintf("Making voice call\n");
+	smprintf(s, "Making voice call\n");
 	return GSM_WaitFor (s, req, 4+strlen(number)+1, 0x40, 4, ID_DialVoice);
 }
 
@@ -529,7 +530,7 @@ GSM_Error DCT3_CancelCall(GSM_StateMachine *s)
 	error=DCT3_EnableSecurity (s, 0x01);
 	if (error!=GE_NONE) return error;
 
-	dprintf("Canceling calls\n");
+	smprintf(s, "Canceling calls\n");
 	return GSM_WaitFor (s, req, 4, 0x40, 4, ID_CancelCall);
 }
 
@@ -543,7 +544,7 @@ GSM_Error DCT3_AnswerCall(GSM_StateMachine *s)
 	error=DCT3_EnableSecurity (s, 0x01);
 	if (error!=GE_NONE) return error;
 
-	dprintf("Answering calls\n");
+	smprintf(s, "Answering calls\n");
 	return GSM_WaitFor (s, req, 4, 0x40, 4, ID_AnswerCall);
 }
 
@@ -563,9 +564,9 @@ GSM_Error DCT3_Reset(GSM_StateMachine *s, bool hard)
 	return error;
 }
 
-GSM_Error DCT3_ReplyGetWAPBookmark(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyGetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return DCT3DCT4_ReplyGetWAPBookmark (msg,Data,User,false);
+	return DCT3DCT4_ReplyGetWAPBookmark (msg,s,false);
 }
 
 GSM_Error DCT3_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
@@ -601,43 +602,44 @@ GSM_Error DCT3_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 	req[count++] = 0x00; req[count++] = 0x00; req[count++] = 0x00;
 	req[count++] = 0x00; req[count++] = 0x00; req[count++] = 0x00;
 
-	dprintf("Setting WAP bookmark\n");
+	smprintf(s, "Setting WAP bookmark\n");
 	return GSM_WaitFor (s, req, count, 0x3f, 4, ID_SetWAPBookmark);
 }
 
-GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int 			tmp,Number;
+	GSM_Phone_Data		*Data = &s->Phone.Data;
 #ifdef GSM_ENABLE_NOKIA6110
-	GSM_Phone_N6110Data 	*Priv6110 = &Data->Priv.N6110;
+	GSM_Phone_N6110Data 	*Priv6110 = &s->Phone.Data.Priv.N6110;
 #endif
 #ifdef GSM_ENABLE_NOKIA7110
-	GSM_Phone_N7110Data 	*Priv7110 = &Data->Priv.N7110;
+	GSM_Phone_N7110Data 	*Priv7110 = &s->Phone.Data.Priv.N7110;
 #endif
 
 	switch(msg.Buffer[3]) {
 	case 0x16:
-		dprintf("WAP settings part 1 received OK\n");
+		smprintf(s, "WAP settings part 1 received OK\n");
 
 		tmp = 4;
 
-		NOKIA_GetUnicodeString(&tmp, msg.Buffer, Data->WAPSettings->Settings[0].Title,false);
-		dprintf("Title: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[0].Title));
+		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[0].Title,false);
+		smprintf(s, "Title: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[0].Title));
 
-		NOKIA_GetUnicodeString(&tmp, msg.Buffer, Data->WAPSettings->Settings[0].HomePage,false);
-		dprintf("Homepage: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[0].HomePage));
+		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[0].HomePage,false);
+		smprintf(s, "Homepage: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[0].HomePage));
 #ifdef DEBUG
-		dprintf("Connection type: ");      
+		smprintf(s, "Connection type: ");      
 		switch (msg.Buffer[tmp]) {
-			case 0x00: dprintf("temporary\n"); 	break;
-			case 0x01: dprintf("continuous\n"); 	break;
-			default:   dprintf("unknown\n");
+			case 0x00: smprintf(s, "temporary\n"); 	break;
+			case 0x01: smprintf(s, "continuous\n"); break;
+			default:   smprintf(s, "unknown\n");
 		}
-		dprintf("Connection security: ");
+		smprintf(s, "Connection security: ");
 		switch (msg.Buffer[tmp+13]) {
-			case 0x00: dprintf("off\n");		break;
-			case 0x01: dprintf("on\n");		break;
-			default:   dprintf("unknown\n");
+			case 0x00: smprintf(s, "off\n");	break;
+			case 0x01: smprintf(s, "on\n");		break;
+			default:   smprintf(s, "unknown\n");
 		}
 #endif
 		Data->WAPSettings->Settings[0].IsContinuous = false;
@@ -649,16 +651,16 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_Phone_Data *Dat
 		if (!(strlen(DecodeUnicodeString(Data->WAPSettings->Settings[0].Title))) % 2) tmp++;
 		if (strlen(DecodeUnicodeString(Data->WAPSettings->Settings[0].HomePage))!=0) tmp++;
 
-		dprintf("ID for writing %i\n",msg.Buffer[tmp+5]);
+		smprintf(s, "ID for writing %i\n",msg.Buffer[tmp+5]);
 
-		dprintf("Current set location in phone %i\n",msg.Buffer[tmp+6]);
+		smprintf(s, "Current set location in phone %i\n",msg.Buffer[tmp+6]);
 
-		dprintf("1 location %i\n",msg.Buffer[tmp+8]);
-		dprintf("2 location %i\n",msg.Buffer[tmp+9]);
-		dprintf("3 location %i\n",msg.Buffer[tmp+10]);
-		dprintf("4 location %i\n",msg.Buffer[tmp+11]);
+		smprintf(s, "1 location %i\n",msg.Buffer[tmp+8]);
+		smprintf(s, "2 location %i\n",msg.Buffer[tmp+9]);
+		smprintf(s, "3 location %i\n",msg.Buffer[tmp+10]);
+		smprintf(s, "4 location %i\n",msg.Buffer[tmp+11]);
 #ifdef GSM_ENABLE_NOKIA7110
-		if (strstr(N7110Phone.models, GetModelData(NULL,Data->Model,NULL)->model) != NULL) {
+		if (strstr(N7110Phone.models, Data->ModelInfo->model) != NULL) {
 			Priv7110->WAPLocations.ID 		= msg.Buffer[tmp+5];
 			Priv7110->WAPLocations.CurrentLocation	= msg.Buffer[tmp+6];
 			Priv7110->WAPLocations.Locations[0] 	= msg.Buffer[tmp+8];
@@ -668,7 +670,7 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_Phone_Data *Dat
 		}
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
-		if (strstr(N6110Phone.models, GetModelData(NULL,Data->Model,NULL)->model) != NULL) {
+		if (strstr(N6110Phone.models, Data->ModelInfo->model) != NULL) {
 			Priv6110->WAPLocations.ID 		= msg.Buffer[tmp+5];
 			Priv6110->WAPLocations.CurrentLocation	= msg.Buffer[tmp+6];
 			Priv6110->WAPLocations.Locations[0] 	= msg.Buffer[tmp+8];
@@ -679,69 +681,69 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_Phone_Data *Dat
 #endif
 		return GE_NONE;
 	case 0x17:
-		dprintf("WAP settings part 1 receiving error\n");
+		smprintf(s, "WAP settings part 1 receiving error\n");
 		switch (msg.Buffer[4]) {
 		case 0x01:
-			dprintf("Security error. Inside WAP settings menu\n");
+			smprintf(s, "Security error. Inside WAP settings menu\n");
 			return GE_INSIDEPHONEMENU;
 		case 0x02:
-			dprintf("Invalid or empty\n");
+			smprintf(s, "Invalid or empty\n");
 			return GE_INVALIDLOCATION;
 		default:
-			dprintf("ERROR: unknown %i\n",msg.Buffer[4]);
+			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 			return GE_UNKNOWNRESPONSE;
 		}
 		break;
 	case 0x1c:
-		dprintf("WAP settings part 2 received OK\n");
+		smprintf(s, "WAP settings part 2 received OK\n");
 		Number = Data->WAPSettings->Number;
 		switch (msg.Buffer[5]) {
 		case 0x00:
 			Data->WAPSettings->Settings[Number].Bearer = WAPSETTINGS_BEARER_SMS;
-			dprintf("Settings for SMS bearer:\n");
+			smprintf(s, "Settings for SMS bearer:\n");
 			tmp = 6;
 
-			NOKIA_GetUnicodeString(&tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Service,false);
-			dprintf("Service number: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Service));
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Service,false);
+			smprintf(s, "Service number: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Service));
 
-			NOKIA_GetUnicodeString(&tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Server,false);
-			dprintf("Server number: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Server));
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Server,false);
+			smprintf(s, "Server number: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Server));
 			break;
 		case 0x01:
 			Data->WAPSettings->Settings[Number].Bearer = WAPSETTINGS_BEARER_DATA;
-			dprintf("Settings for data bearer:\n");
+			smprintf(s, "Settings for data bearer:\n");
 			Data->WAPSettings->Settings[Number].ManualLogin = false;
 			tmp = 10;
 
-			NOKIA_GetUnicodeString(&tmp, msg.Buffer, Data->WAPSettings->Settings[Number].IPAddress,false);
-			dprintf("IP address: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].IPAddress));
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].IPAddress,false);
+			smprintf(s, "IP address: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].IPAddress));
 
-			NOKIA_GetUnicodeString(&tmp, msg.Buffer, Data->WAPSettings->Settings[Number].DialUp,false);
-			dprintf("Dial-up number: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].DialUp));
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].DialUp,false);
+			smprintf(s, "Dial-up number: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].DialUp));
 
-			NOKIA_GetUnicodeString(&tmp, msg.Buffer, Data->WAPSettings->Settings[Number].User,false);
-			dprintf("User name: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].User));
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].User,false);
+			smprintf(s, "User name: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].User));
 
-			NOKIA_GetUnicodeString(&tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Password,false);
-			dprintf("Password: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Password));
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Password,false);
+			smprintf(s, "Password: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Password));
 #ifdef DEBUG
-			dprintf("Authentication type: ");
+			smprintf(s, "Authentication type: ");
 			switch (msg.Buffer[6]) {
-				case 0x00: dprintf("normal\n");	 break;
-				case 0x01: dprintf("secure\n");	 break;
-				default:   dprintf("unknown\n"); break;
+				case 0x00: smprintf(s, "normal\n");	 break;
+				case 0x01: smprintf(s, "secure\n");	 break;
+				default:   smprintf(s, "unknown\n"); 	 break;
 			}
-			dprintf("Data call type: ");
+			smprintf(s, "Data call type: ");
 			switch (msg.Buffer[7]) {
-				case 0x00: dprintf("analogue\n");break;
-				case 0x01: dprintf("ISDN\n");	 break;
-				default:   dprintf("unknown\n"); break;
+				case 0x00: smprintf(s, "analogue\n");	 break;
+				case 0x01: smprintf(s, "ISDN\n");	 break;
+				default:   smprintf(s, "unknown\n"); 	 break;
 			}
-			dprintf("Data call speed: ");
+			smprintf(s, "Data call speed: ");
 			switch (msg.Buffer[9]) {
-				case 0x01: dprintf("9600\n");	 break;
-				case 0x02: dprintf("14400\n");	 break;
-				default:   dprintf("unknown\n"); break;
+				case 0x01: smprintf(s, "9600\n");	 break;
+				case 0x02: smprintf(s, "14400\n");	 break;
+				default:   smprintf(s, "unknown\n"); 	 break;
 			}
 #endif
 			Data->WAPSettings->Settings[Number].IsNormalAuthentication=true;
@@ -753,24 +755,24 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_Phone_Data *Dat
 			break;	
 		case 0x02:
 			Data->WAPSettings->Settings[Number].Bearer=WAPSETTINGS_BEARER_USSD;
-			dprintf("Settings for USSD bearer:\n");
+			smprintf(s, "Settings for USSD bearer:\n");
 			tmp = 7;
-			NOKIA_GetUnicodeString(&tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Service,false);
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Service,false);
 #ifdef DEBUG
 			if (msg.Buffer[6]==0x01) 
-				dprintf("Service number: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Service));
+				smprintf(s, "Service number: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Service));
 			else 
-				dprintf("IP address: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Service));
+				smprintf(s, "IP address: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Service));
 #endif
 			Data->WAPSettings->Settings[Number].IsIP=true;
 			if (msg.Buffer[6]==0x01) Data->WAPSettings->Settings[Number].IsIP=false;
-			NOKIA_GetUnicodeString(&tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Code,false);
-			dprintf("Service code: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Code));
+			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[Number].Code,false);
+			smprintf(s, "Service code: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[Number].Code));
 		}
 		Data->WAPSettings->Number++;
 		return GE_NONE;
 	case 0x1d:
-		dprintf("Incorrect WAP settings location\n");
+		smprintf(s, "Incorrect WAP settings location\n");
 		return GE_NONE;
 	}
 	return GE_UNKNOWNRESPONSE;
@@ -801,25 +803,25 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 	settings->Number = 0;
 
 	req[4] = settings->Location-1;
-	dprintf("Getting WAP settins part 1\n");
+	smprintf(s, "Getting WAP settins part 1\n");
 	error = GSM_WaitFor (s, req, 6, 0x3f, 4, ID_GetWAPSettings);
 	if (error != GE_NONE) return error;
 
 #ifdef GSM_ENABLE_NOKIA7110
-	if (strstr(N7110Phone.models, GetModelData(NULL,s->Model,NULL)->model) != NULL) {
+	if (strstr(N7110Phone.models, s->Phone.Data.ModelInfo->model) != NULL) {
 		for (i=0;i<4;i++) {
 			req2[4] = Priv7110->WAPLocations.Locations[i];
-			dprintf("Getting WAP settins part 2\n");
+			smprintf(s, "Getting WAP settins part 2\n");
 			error=GSM_WaitFor (s, req2, 6, 0x3f, 4, ID_GetWAPSettings);
 			if (error != GE_NONE) return error;
 		}
 	}
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
-	if (strstr(N6110Phone.models, GetModelData(NULL,s->Model,NULL)->model) != NULL) {
+	if (strstr(N6110Phone.models, s->Phone.Data.ModelInfo->model) != NULL) {
 		for (i=0;i<4;i++) {
 			req2[4] = Priv6110->WAPLocations.Locations[i];
-			dprintf("Getting WAP settins part 2\n");
+			smprintf(s, "Getting WAP settins part 2\n");
 			error=GSM_WaitFor (s, req2, 6, 0x3f, 4, ID_GetWAPSettings);
 			if (error != GE_NONE) return error;
 		}
@@ -836,27 +838,27 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 	return error;
 }
 
-GSM_Error DCT3_ReplySetWAPSettings(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplySetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch(msg.Buffer[3]) {
 	case 0x19:
-		dprintf("WAP settings part 1 set OK\n");
+		smprintf(s, "WAP settings part 1 set OK\n");
 		return GE_NONE;
 	case 0x1a:
-		dprintf("WAP settings part 1 setting error\n");
+		smprintf(s, "WAP settings part 1 setting error\n");
 		switch (msg.Buffer[4]) {
 		case 0x01:
-			dprintf("Security error. Inside WAP settings menu\n");
+			smprintf(s, "Security error. Inside WAP settings menu\n");
 			return GE_INSIDEPHONEMENU;
 		case 0x02:
-			dprintf("Incorrect data\n");
+			smprintf(s, "Incorrect data\n");
 			return GE_UNKNOWN;
 		default:
-			dprintf("ERROR: unknown %i\n",msg.Buffer[4]);
+			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 			return GE_UNKNOWNRESPONSE;
 		}
 	case 0x1F:
-		dprintf("WAP settings part 2 set OK\n");
+		smprintf(s, "WAP settings part 2 set OK\n");
 		return GE_NONE;
 	}
 	return GE_UNKNOWNRESPONSE;
@@ -895,18 +897,18 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 	settings2.Number 	  = 0;
 
 	req[4] = settings->Location-1;
-	dprintf("Getting WAP settings part 1\n");
+	smprintf(s, "Getting WAP settings part 1\n");
 	error = GSM_WaitFor (s, req, 6, 0x3f, 4, ID_GetWAPSettings);
 	if (error != GE_NONE) return error;
 
 #ifdef GSM_ENABLE_NOKIA6110
-	if (strstr(N6110Phone.models, GetModelData(NULL,s->Model,NULL)->model) != NULL) {
+	if (strstr(N6110Phone.models, s->Phone.Data.ModelInfo->model) != NULL) {
 		for (i=0;i<4;i++) locations[i] = Priv6110->WAPLocations.Locations[i];
 		ID = Priv6110->WAPLocations.ID;
 	}
 #endif
 #ifdef GSM_ENABLE_NOKIA7110
-	if (strstr(N7110Phone.models, GetModelData(NULL,s->Model,NULL)->model) != NULL) {
+	if (strstr(N7110Phone.models, s->Phone.Data.ModelInfo->model) != NULL) {
 		for (i=0;i<4;i++) locations[i] = Priv7110->WAPLocations.Locations[i];
 		ID = Priv7110->WAPLocations.ID;
 	}
@@ -917,7 +919,7 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		settings2.Number = 0;
 		settings2.Settings[0].Bearer = 0;
 		req2[4] = locations[i];
-		dprintf("Getting WAP settins part 2\n");
+		smprintf(s, "Getting WAP settins part 2\n");
 		error=GSM_WaitFor (s, req2, 6, 0x3f, 4, ID_GetWAPSettings);
 		if (error != GE_NONE) return error;
 		switch (settings2.Settings[0].Bearer) {
@@ -949,9 +951,9 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 	SetReq[4] = settings->Location - 1;
 	if (loc1 != -1) {
 		/* Name */
-		pos += NOKIA_SetUnicodeString(SetReq + pos, settings->Settings[loc1].Title, false);
+		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc1].Title, false);
 		/* HomePage */
-		pos += NOKIA_SetUnicodeString(SetReq + pos, settings->Settings[loc1].HomePage, false);
+		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc1].HomePage, false);
 		if (settings->Settings[loc1].IsContinuous) SetReq[pos] = 0x01;
 		pos++;
 		SetReq[pos++] = ID;
@@ -960,9 +962,9 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		pos++;
 	} else if (loc2 != -1) {
 		/* Name */
-		pos += NOKIA_SetUnicodeString(SetReq + pos, settings->Settings[loc2].Title, false);
+		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc2].Title, false);
 		/* HomePage */
-		pos += NOKIA_SetUnicodeString(SetReq + pos, settings->Settings[loc2].HomePage, false);
+		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc2].HomePage, false);
 		if (settings->Settings[loc2].IsContinuous) SetReq[pos] = 0x01;
 		pos++;
 		SetReq[pos++] = ID;
@@ -971,9 +973,9 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		pos++;
 	} else if (loc3 != -1) {
 		/* Name */
-		pos += NOKIA_SetUnicodeString(SetReq + pos, settings->Settings[loc3].Title, false);
+		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc3].Title, false);
 		/* HomePage */
-		pos += NOKIA_SetUnicodeString(SetReq + pos, settings->Settings[loc3].HomePage, false);
+		pos += NOKIA_SetUnicodeString(s, SetReq + pos, settings->Settings[loc3].HomePage, false);
 		if (settings->Settings[loc3].IsContinuous) SetReq[pos] = 0x01;
 		pos++;
 		SetReq[pos++] = ID;
@@ -986,7 +988,7 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 	memcpy(SetReq + pos, "\x01\x80\x00\x00\x00\x00\x00\x00\x00", 9);
 	pos += 9;
 
-	dprintf("Writing WAP settings part 1\n");
+	smprintf(s, "Writing WAP settings part 1\n");
 	error=GSM_WaitFor (s, SetReq, pos, 0x3f, 4, ID_SetWAPSettings);
 	if (error != GE_NONE) return error;
 
@@ -1019,17 +1021,17 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		} else pos+=2;
 		if (loc1 != -1) {
 			/* IP */
-			pos += NOKIA_SetUnicodeString(SetReq2 + pos, settings->Settings[loc1].IPAddress, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc1].IPAddress, false);
 			/* Number */
-			pos += NOKIA_SetUnicodeString(SetReq2 + pos, settings->Settings[loc1].DialUp, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc1].DialUp, false);
 			/* Username  */
-			pos += NOKIA_SetUnicodeString(SetReq2 + pos, settings->Settings[loc1].User, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc1].User, false);
 			/* Password */
-			pos += NOKIA_SetUnicodeString(SetReq2 + pos, settings->Settings[loc1].Password, false);		
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc1].Password, false);		
 		} else pos+=5;
 		memcpy(SetReq2 + pos, "\x80\x00\x00\x00\x00\x00\x00\x00", 8);
 		pos += 8;
-		dprintf("Writing WAP settings part 2 (Data bearer)\n");
+		smprintf(s, "Writing WAP settings part 2 (Data bearer)\n");
 		error=GSM_WaitFor (s, SetReq2, pos, 0x3f, 4, ID_SetWAPSettings);
 		if (error != GE_NONE) return error;
 	}
@@ -1042,13 +1044,13 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		SetReq2[pos++] = 0x00; /* SMS */
 		if (loc2 != -1) {
 			/* Service number */
-			pos += NOKIA_SetUnicodeString(SetReq2 + pos, settings->Settings[loc2].Service, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc2].Service, false);
 			/* Server number */
-			pos += NOKIA_SetUnicodeString(SetReq2 + pos, settings->Settings[loc2].Server, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc2].Server, false);
 		} else pos += 2;
 		memcpy(SetReq2 + pos, "\x80\x00\x00\x00\x00\x00\x00\x00", 8);
 		pos += 8;
-		dprintf("Writing WAP settings part 2 (SMS bearer)\n");
+		smprintf(s, "Writing WAP settings part 2 (SMS bearer)\n");
 		error=GSM_WaitFor (s, SetReq2, pos, 0x3f, 4, ID_SetWAPSettings);
 		if (error != GE_NONE) return error;
 	}
@@ -1065,29 +1067,29 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		pos++;
 		if (loc3 != -1) {
 			/* Service number or IP address */
-			pos += NOKIA_SetUnicodeString(SetReq2 + pos, settings->Settings[loc3].Service, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc3].Service, false);
 			/* Code number */
-			pos += NOKIA_SetUnicodeString(SetReq2 + pos, settings->Settings[loc3].Code, false);
+			pos += NOKIA_SetUnicodeString(s, SetReq2 + pos, settings->Settings[loc3].Code, false);
 		} else pos+=2;
 		memcpy(SetReq2 + pos, "\x80\x00\x00\x00\x00\x00\x00\x00", 8);
 		pos += 8;
-		dprintf("Writing WAP settings part 2 (USSD bearer)\n");
+		smprintf(s, "Writing WAP settings part 2 (USSD bearer)\n");
 		error=GSM_WaitFor (s, SetReq2, pos, 0x3f, 4, ID_SetWAPSettings);
 		if (error != GE_NONE) return error;
 	}
  	return error;
 }
 
-GSM_Error DCT3_ReplySendSMSMessage(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplySendSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Buffer[3]) {
 	case 0x02:
-		dprintf("SMS sent OK\n");
-		if (User->SendSMSStatus!=NULL) User->SendSMSStatus(Data->Device,0);
+		smprintf(s, "SMS sent OK\n");
+		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->Config.Device,0);
 		return GE_NONE;
 	case 0x03:
-		dprintf("Error %i\n",msg.Buffer[6]);
-		if (User->SendSMSStatus!=NULL) User->SendSMSStatus(Data->Device,msg.Buffer[6]);
+		smprintf(s, "Error %i\n",msg.Buffer[6]);
+		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->Config.Device,msg.Buffer[6]);
 		return GE_NONE;
 	}
 	return GE_UNKNOWNRESPONSE;
@@ -1102,20 +1104,20 @@ GSM_Error DCT3_SendSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	error=PHONE_EncodeSMSFrame(s,sms,req+6,PHONE_SMSSubmit,&length, true);
 	if (error != GE_NONE) return error;
 
-	dprintf("Sending sms\n");
+	smprintf(s, "Sending sms\n");
 	return s->Protocol.Functions->WriteMessage(s, req, 6+length, 0x02);
 }
 
-GSM_Error DCT3_ReplyNetmonitor(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyNetmonitor(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Buffer[3]) {
 	case 0x00:
-		dprintf("Netmonitor correctly set\n");
+		smprintf(s, "Netmonitor correctly set\n");
 		break;
 	default:
-		dprintf("Menu %i\n",msg.Buffer[3]);
-		dprintf("%s\n",msg.Buffer+4);
-		strcpy(Data->Netmonitor,msg.Buffer+4);
+		smprintf(s, "Menu %i\n",msg.Buffer[3]);
+		smprintf(s, "%s\n",msg.Buffer+4);
+		strcpy(s->Phone.Data.Netmonitor,msg.Buffer+4);
 		break;		
 	}
 	return GE_NONE;
@@ -1135,7 +1137,7 @@ GSM_Error DCT3_Netmonitor(GSM_StateMachine *s, int testnumber, char *value)
 
 	req[3] = testnumber;
 
-	dprintf("Getting netmonitor test\n");
+	smprintf(s, "Getting netmonitor test\n");
 	s->Phone.Data.Netmonitor = value;
 	return GSM_WaitFor (s, req, 4, 0x40, 4, ID_Netmonitor);
 }
@@ -1200,7 +1202,7 @@ GSM_Error DCT3_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x36, 0x64};
 
 	s->Phone.Data.SMSStatus=status;
-	dprintf("Getting SMS status\n");
+	smprintf(s, "Getting SMS status\n");
 	return GSM_WaitFor (s, req, 5, 0x14, 2, ID_GetSMSStatus);
 
 	/* Nokia 6210 and family does not show not "fixed" messages from the
@@ -1210,38 +1212,39 @@ GSM_Error DCT3_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 	 */
 }
 
-GSM_Error DCT3_ReplyDeleteSMSMessage(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error DCT3_ReplyDeleteSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch(msg.Buffer[3]) {
 	case 0x0b:
-		dprintf("SMS deleted\n");
+		smprintf(s, "SMS deleted\n");
 		return GE_NONE;
 	case 0x0c:
-		dprintf("Error deleting SMS\n");
+		smprintf(s, "Error deleting SMS\n");
 		switch (msg.Buffer[4]) {
 			case 0x00:
 				/* Not tested on 6210 */
-				dprintf("Unknown meaning, SMS seems to be deleted\n");
+				smprintf(s, "Unknown meaning, SMS seems to be deleted\n");
 				return GE_NONE;				
 			case 0x02:
 				/* Not tested on 6210 */
-				dprintf("Invalid location\n");
+				smprintf(s, "Invalid location\n");
 				return GE_INVALIDLOCATION;
 			case 0x06:
 				/* Not tested on 6210 */
-				dprintf("Phone is OFF\n");
+				smprintf(s, "Phone is OFF\n");
 				return GE_PHONEOFF;
 			default:
-				dprintf("Unknown error: %02x\n",msg.Buffer[4]);
+				smprintf(s, "Unknown error: %02x\n",msg.Buffer[4]);
 				return GE_UNKNOWNRESPONSE;
 		}
 	}
 	return GE_UNKNOWNRESPONSE;
 }
 
-GSM_Error N71_92_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error N71_92_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("Network level received: %i\n",msg.Buffer[4]);
+	GSM_Phone_Data	*Data = &s->Phone.Data;
+	smprintf(s, "Network level received: %i\n",msg.Buffer[4]);
    	Data->SignalQuality->SignalStrength 	= -1;
     	Data->SignalQuality->SignalPercent 	= ((int)msg.Buffer[4]);
     	Data->SignalQuality->BitErrorRate 	= -1;
@@ -1253,13 +1256,14 @@ GSM_Error N71_92_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x81};
 
 	s->Phone.Data.SignalQuality = sig;
-	dprintf("Getting network level\n");
+	smprintf(s, "Getting network level\n");
 	return GSM_WaitFor (s, req, 4, 0x0a, 4, ID_GetSignalQuality);
 }
 
-GSM_Error N71_92_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error N71_92_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("Battery level received: %i\n",msg.Buffer[5]);
+	GSM_Phone_Data	*Data = &s->Phone.Data;
+	smprintf(s, "Battery level received: %i\n",msg.Buffer[5]);
     	Data->BatteryCharge->BatteryPercent 	= ((int)msg.Buffer[5]);
     	Data->BatteryCharge->ChargeState 	= 0;
 	return GE_NONE;
@@ -1270,29 +1274,30 @@ GSM_Error N71_92_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x02};
 
 	s->Phone.Data.BatteryCharge = bat;
-	dprintf("Getting battery level\n");
+	smprintf(s, "Getting battery level\n");
 	return GSM_WaitFor (s, req, 4, 0x17, 4, ID_GetBatteryCharge);
 }
 
-GSM_Error N71_92_ReplyPhoneSetting(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error N71_92_ReplyPhoneSetting(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Bitmap_Types BmpType;
+	GSM_Phone_Bitmap_Types	BmpType;
+	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	switch (msg.Buffer[4]) {
 	case 0x02:
 		if (Data->RequestID == ID_GetBitmap || Data->RequestID == ID_EachFrame) {
-			dprintf("Welcome note text received\n");
+			smprintf(s, "Welcome note text received\n");
 			CopyUnicodeString(Data->Bitmap->Text,msg.Buffer+5);
-			dprintf("Text is \"%s\"\n",DecodeUnicodeString(Data->Bitmap->Text));
+			smprintf(s, "Text is \"%s\"\n",DecodeUnicodeString(Data->Bitmap->Text));
 			return GE_NONE;
 		}
 		if (Data->RequestID == ID_SetBitmap || Data->RequestID == ID_EachFrame) {
-			dprintf("Startup text set\n");
+			smprintf(s, "Startup text set\n");
 			return GE_NONE;
 		}
 	case 0x15:
 		if (Data->RequestID == ID_GetBitmap || Data->RequestID == ID_EachFrame) {
-			dprintf("Startup logo received\n");
+			smprintf(s, "Startup logo received\n");
 			BmpType=GSM_Nokia7110StartupLogo;
 			if (msg.Buffer[17]==0x60) BmpType=GSM_Nokia6210StartupLogo;
 			if (msg.Buffer[17]==0xc0) BmpType=GSM_NokiaStartupLogo;
@@ -1300,7 +1305,7 @@ GSM_Error N71_92_ReplyPhoneSetting(GSM_Protocol_Message msg, GSM_Phone_Data *Dat
 			return GE_NONE;
 		}
 		if (Data->RequestID == ID_SetBitmap || Data->RequestID == ID_EachFrame) {
-			dprintf("Startup logo set\n");
+			smprintf(s, "Startup logo set\n");
 			return GE_NONE;
 		}
 	}
@@ -1327,47 +1332,47 @@ GSM_Error N71_92_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 	return DCT3_SetDateTime(s, date_time, 0x19);
 }
 
-GSM_Error DCT3_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer)
+GSM_Error DCT3_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer)
 {
 	switch (buffer[12] & 0x03) {
 	case 0x00:
-		dprintf("SMS type - deliver\n");
+		smprintf(s, "SMS type - deliver\n");
 		SMS->PDU = SMS_Deliver;
 		return GSM_DecodeSMSFrame(SMS,buffer,PHONE_SMSDeliver);
 	case 0x01:
-		dprintf("SMS type - submit\n");
+		smprintf(s, "SMS type - submit\n");
 		SMS->PDU = SMS_Submit;
 		return GSM_DecodeSMSFrame(SMS,buffer,PHONE_SMSSubmit);
 	case 0x02:
-		dprintf("SMS type - delivery report\n");
+		smprintf(s, "SMS type - delivery report\n");
 		SMS->PDU = SMS_Status_Report;
 		return GSM_DecodeSMSFrame(SMS,buffer,PHONE_SMSStatusReport);
 	}
 	return GE_UNKNOWN;
 }
 
-GSM_Error N61_91_ReplySetOpLogo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error N61_91_ReplySetOpLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Buffer[3]) {
 	case 0x31:
-		dprintf("Operator logo set OK\n");
+		smprintf(s, "Operator logo set OK\n");
 		return GE_NONE;
 	case 0x32:
-		dprintf("Error setting operator logo\n");
+		smprintf(s, "Error setting operator logo\n");
 		switch (msg.Buffer[4]) {
 		case 0x7d:
-			dprintf("Too high location ?\n");
+			smprintf(s, "Too high location ?\n");
 			return GE_INVALIDLOCATION;
 		default:
-			dprintf("ERROR: unknown %i\n",msg.Buffer[4]);
+			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 		}
 	}
 	return GE_UNKNOWNRESPONSE;
 }
 
-GSM_Error N61_71_ReplyResetPhoneSettings(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error N61_71_ReplyResetPhoneSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("Phone settings cleaned OK\n");
+	smprintf(s, "Phone settings cleaned OK\n");
 	return GE_NONE;
 }
 
@@ -1393,3 +1398,7 @@ GSM_Error N61_71_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType T
 }
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

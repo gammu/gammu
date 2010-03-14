@@ -5,8 +5,8 @@
 
 /* ---------------------------- calendar ----------------------------------- */
 
-#define GSM_CALENDAR_ENTRIES		10
-#define MAX_CALENDAR_TEXT_LENGTH	257*2 /* In 6310 max. 256 chars */
+#define GSM_CALENDAR_ENTRIES		16
+#define MAX_CALENDAR_TEXT_LENGTH	256 /* In 6310 max. 256 chars */
 
 /* Define enums for Calendar Note types */
 typedef enum {
@@ -59,7 +59,7 @@ typedef enum {
 
 typedef struct {
 	GSM_CalendarType       	EntryType;
-	unsigned char       	Text[MAX_CALENDAR_TEXT_LENGTH];
+	unsigned char       	Text[(MAX_CALENDAR_TEXT_LENGTH + 1)*2];
 	GSM_DateTime        	Date;
 	int         		Number;
 } GSM_SubCalendarEntry;
@@ -114,3 +114,7 @@ typedef struct {
 } GSM_ToDoEntry;
 
 #endif	/* __gsm_calendar_h */
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

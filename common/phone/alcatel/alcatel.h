@@ -62,7 +62,7 @@ typedef enum {
  */
 #define ALCATEL_FREE_MEMORY             100
 #define ALCATEL_MAX_LOCATION            0x0fffffff
-#define ALCATEL_MAX_CATEGORIES          255
+#define ALCATEL_MAX_CATEGORIES          100
 
 typedef struct {
     /***********************************/
@@ -125,3 +125,7 @@ typedef struct {
 #define ALCATEL_LIST_CONTACTS_CAT       0x96
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

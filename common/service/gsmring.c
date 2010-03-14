@@ -805,7 +805,7 @@ static int BeatsPerMinute[] = {
 
 int GSM_RTTLGetTempo(int Beats)
 {
-	int i=0;
+	size_t i=0;
 
 	while ( i < sizeof(BeatsPerMinute)/sizeof(BeatsPerMinute[0])) {
 		if (Beats<=BeatsPerMinute[i]) break;
@@ -1142,7 +1142,7 @@ static void RTTL2Binary(GSM_Ringtone *dest, GSM_Ringtone *src)
 			break;
 		}
 	}
-	for (i = 0; i < sizeof(tail); i++) dest->NokiaBinary.Frame[current++] = tail[i];
+	for (i = 0; i < (int)sizeof(tail); i++) dest->NokiaBinary.Frame[current++] = tail[i];
 	dest->NokiaBinary.Length=current;
 }
 
@@ -1515,3 +1515,7 @@ char *GSM_GetRingtoneName(GSM_AllRingtonesInfo *Info, int ID)
 	ala[1] = 0;
 	return ala;
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

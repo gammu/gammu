@@ -41,6 +41,7 @@ static bool irda_discover_device(GSM_StateMachine *state)
     struct irda_device_list	*list;
     unsigned char		*buf;
     unsigned int		sec;
+
     int				s, z, len, fd, i;
     GSM_DateTime		Date;
     bool			founddevice = false;
@@ -74,7 +75,8 @@ static bool irda_discover_device(GSM_StateMachine *state)
 			if (strcmp(GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number,"") != 0) {
 				founddevice = true;
 				/* Model AUTO */
-				if (state->Config.Model[0]==0) strcpy(state->Model,GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number);
+				if (state->Config.Model[0]==0) strcpy(state->Phone.Data.Model,GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number);
+				state->Phone.Data.ModelInfo = GetModelData(NULL,state->Phone.Data.Model,NULL);
 			}
 			if (founddevice) {				
 			    dprintf("correct\n");
@@ -90,7 +92,7 @@ static bool irda_discover_device(GSM_StateMachine *state)
 		    }
 		}
 		if (founddevice) break;
-		mili_sleep(10);
+		my_sleep(10);
 		GSM_GetCurrentDateTime(&Date);
 	    }
             if (founddevice) break;
@@ -177,3 +179,7 @@ GSM_Device_Functions IrdaDevice = {
 
 #endif
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

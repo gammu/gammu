@@ -38,7 +38,7 @@ unsigned char *GetMsg (CFG_Header *cfg, unsigned char *default_string)
 	static unsigned char	def_str[2000];
 	CFG_Entry		*e;
 	CFG_Header 		*h;
-	unsigned int		num;
+	int			num;
 
 	if (cfg==NULL) return default_string;
 
@@ -80,8 +80,8 @@ unsigned char *GetMsg (CFG_Header *cfg, unsigned char *default_string)
 					/* Set all \n to 0x0a */
 					memset(def_str,0,sizeof(def_str));
 					num = 0;
-					while (num != strlen(buff)) {
-						if (num < strlen(buff) - 1) {
+					while (num != (int)strlen(buff)) {
+						if (num < (int)strlen(buff) - 1) {
 							if (buff[num] == '\\' && buff[num+1] == 'n') {
 								def_str[strlen(def_str)] = 0x0a;
 								num+=2;
@@ -350,3 +350,6 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 	return GE_NONE;
 }
 
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

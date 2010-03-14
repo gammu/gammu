@@ -6,12 +6,13 @@
 #include "gsmcomon.h"
 #include "gsmstate.h"
 #include "misc/cfg.h"
+
 #include "misc/coding.h"
 
-static void GSM_RegisterConnection(GSM_StateMachine *s, int connection,
+static void GSM_RegisterConnection(GSM_StateMachine *s, unsigned int connection,
 		GSM_Device_Functions *device, GSM_Protocol_Functions *protocol)
 {
-	if (s->ConnectionType == connection)
+	if ((unsigned int)s->ConnectionType == connection)
 	{
 		s->Device.Functions	= device;	
 		s->Protocol.Functions	= protocol;
@@ -32,7 +33,12 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("atblue"	,connection,0)) s->ConnectionType = GCT_ATBLUE;
 	if (mystrncasecmp("dlr3blue"	,connection,0)) s->ConnectionType = GCT_DLR3BLUE;
 	if (mystrncasecmp("at"		,connection,2)) {
-		s->Speed = FindSerialSpeed(connection+2);
+		/* Use some resonable default, when no speed defined */
+		if (strlen(connection) == 2) {
+			s->Speed = 19200;
+		} else {
+			s->Speed = FindSerialSpeed(connection+2);
+		}
 		if (s->Speed != 0) s->ConnectionType = GCT_AT;
 	}
 	if (s->ConnectionType==0) return GE_UNKNOWNCONNECTIONTYPESTRING;
@@ -75,7 +81,7 @@ static void GSM_RegisterModule(GSM_StateMachine *s,GSM_Phone_Functions *phone)
 {
 	/* Auto model */
 	if (s->Config.Model[0] == 0) {
-		if (strstr(phone->models,GetModelData(NULL,s->Model,NULL)->model) != NULL) {
+		if (strstr(phone->models,GetModelData(NULL,s->Phone.Data.Model,NULL)->model) != NULL) {
 			smprintf(s,"[Module           - \"%s\"]\n",phone->models);
 			s->Phone.Functions = phone;
 		}
@@ -91,7 +97,15 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 {
 	/* Auto model */
 	if (s->Config.Model[0] == 0) {
-		if (GetModelData(NULL,s->Model,NULL)->model[0] == 0) return GE_UNKNOWNMODELSTRING;
+#ifdef GSM_ENABLE_ATGEN
+		/* With ATgen and auto model we can work with unknown models too */
+		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_ATBLUE) {
+			smprintf(s,"[Module           - \"%s\"]\n",ATGENPhone.models);
+			s->Phone.Functions = &ATGENPhone;
+			return GE_NONE;
+		}
+#endif
+		if (GetModelData(NULL,s->Phone.Data.Model,NULL)->model[0] == 0) return GE_UNKNOWNMODELSTRING;
 	}
 	s->Phone.Functions=NULL;
 #ifdef GSM_ENABLE_ATGEN
@@ -123,24 +137,17 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 {
 	GSM_Error	error;
-	bool		opened = false;
 	GSM_DateTime	time;
-	char		buffer[100];
 
 	s->Speed			  = 0;
 	s->ReplyNum			  = ReplyNum;
-	s->Model[0]			  = 0;
-	s->Ver[0]			  = 0;
-	s->VerDate[0]			  = 0;
-	s->VerNum			  = 0;
+	s->Phone.Data.ModelInfo		  = GetModelData("unknown",NULL,NULL);
+	s->Phone.Data.Manufacturer[0]	  = 0;
+	s->Phone.Data.Model[0]		  = 0;
+	s->Phone.Data.Version[0]	  = 0;
+	s->Phone.Data.VerDate[0]	  = 0;
+	s->Phone.Data.VerNum		  = 0;
 
-	s->Phone.Data.Model		  = s->Model;
-	s->Phone.Data.Version		  = s->Ver;
-	s->Phone.Data.VersionDate	  = s->VerDate;
-	s->Phone.Data.VersionNum	  = &s->VerNum;
-	s->Phone.Data.Device		  = s->Config.Device;
-
-	s->Phone.Data.IMEICache[0]	  = 0;
 	s->Phone.Data.HardwareCache[0]	  = 0;
 	s->Phone.Data.ProductCodeCache[0] = 0;
 	s->Phone.Data.EnableIncomingCall  = false;
@@ -154,6 +161,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	s->User.IncomingUSSD		  = NULL;
 	s->User.SendSMSStatus		  = NULL;
 	s->LockFile			  = NULL;
+	s->opened			  = false;
 
 	s->di 				  = di;
 	s->di.use_global 		  = s->Config.UseGlobalDebugFile;
@@ -249,13 +257,12 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		if (error!=GE_NONE) return error;
 
 		s->opened = true;
-		opened 	  = true;
 
 		error=s->Protocol.Functions->Initialise(s);
 		if (error!=GE_NONE) return error;
 
 		/* If still auto model, try to get model by asking phone for it */
-		if (s->Model[0]==0)
+		if (s->Phone.Data.Model[0]==0)
 		{
 			smprintf(s,"[Module           - \"auto\"]\n");
 			switch (s->ConnectionType) {
@@ -301,7 +308,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	if (error!=GE_NONE) return error;
 
 	/* We didn't open device earlier ? Make it now */
-	if (!opened) {
+	if (!s->opened) {
 		if (mystrncasecmp(s->Config.LockDevice,"yes",0)) {
 			error = lock_device(s->Config.Device, &(s->LockFile));
 			if (error != GE_NONE) return error;
@@ -325,7 +332,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	}
 
 	/* For debug it's good to have firmware and real model version and manufacturer */
-	error=s->Phone.Functions->GetManufacturer(s,buffer);
+	error=s->Phone.Functions->GetManufacturer(s);
 	if (error!=GE_NONE) return error;
 	error=s->Phone.Functions->GetModel(s);
 	if (error!=GE_NONE) return error;
@@ -339,6 +346,7 @@ int GSM_ReadDevice (GSM_StateMachine *s)
 {
 	unsigned char	buff[255];
 	int		res = 0, count;
+
 	unsigned int	i;
 	GSM_DateTime	Date;
 
@@ -347,7 +355,7 @@ int GSM_ReadDevice (GSM_StateMachine *s)
 	while (i==Date.Second) {
 		res = s->Device.Functions->ReadDevice(s, buff, 255);
 		if (res > 0) break;
-		mili_sleep(5);
+		my_sleep(5);
 		GSM_GetCurrentDateTime(&Date);
 	}
 
@@ -359,21 +367,30 @@ int GSM_ReadDevice (GSM_StateMachine *s)
 
 GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 {
-	GSM_Error	error;
+	GSM_Error error;
 
-	s->Model[0]	= 0;
-	s->Ver[0]	= 0;
-	s->VerNum	= 0;
+	s->Phone.Data.ModelInfo		  = NULL;
+	s->Phone.Data.Manufacturer[0]	  = 0;
+	s->Phone.Data.Model[0]		  = 0;
+	s->Phone.Data.Version[0]	  = 0;
+	s->Phone.Data.VerDate[0]	  = 0;
+	s->Phone.Data.VerNum		  = 0;
 	
-	error=s->Phone.Functions->Terminate(s);
-	if (error!=GE_NONE) return error;
+	if (!s->opened) return GE_UNKNOWN;
+
+	smprintf(s,"[Closing]\n");
+
+	if (s->Phone.Functions != NULL) {
+		error=s->Phone.Functions->Terminate(s);
+		if (error!=GE_NONE) return error;
+	}
 
 	error=s->Protocol.Functions->Terminate(s);	
 	if (error!=GE_NONE) return error;
 
 	error = s->Device.Functions->CloseDevice(s);
 	if (error!=GE_NONE) return error;
-	
+
 	if (s->LockFile!=NULL) unlock_device(&(s->LockFile));
 
 	s->opened = false;
@@ -494,8 +511,8 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 
 		if (execute) {
 			*reply=i;
-			if (Reply[i].requestID	== ID_IncomingFrame ||
-			    Reply[i].requestID	== Data->RequestID ||
+			if ((unsigned int)Reply[i].requestID == ID_IncomingFrame ||
+			    (unsigned int)Reply[i].requestID == Data->RequestID ||
 			    Data->RequestID	== ID_EachFrame) {
 				return GE_NONE;
 			}
@@ -545,8 +562,8 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	}                                
 
 	if (error==GE_NONE) {
-		error=Reply[reply].Function(*msg,Data,&s->User);
-		if (Reply[reply].requestID==Data->RequestID) Data->RequestID=ID_None;
+		error=Reply[reply].Function(*msg, s);
+		if ((unsigned int)Reply[reply].requestID==Data->RequestID) Data->RequestID=ID_None;
 	}
 
 	return error;
@@ -624,35 +641,45 @@ void CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg)
 
 	if (cfg_info==NULL) return;
 	
-        cfg->Device 	 = CFG_Get(cfg_info, "gammu", "port", 		false);
-        if (!cfg->Device) {
+	cfg->Device 	 = CFG_Get(cfg_info, "gammu", "port", 		false);
+	if (!cfg->Device) {
 		cfg->Device		 	 = DefaultPort;
-	} else cfg->DefaultDevice 		 = false;
-        cfg->Connection  = CFG_Get(cfg_info, "gammu", "connection", 	false);
-        if (!cfg->Connection) {
+	} else {
+		cfg->DefaultDevice 		 = false;
+	}
+	cfg->Connection  = CFG_Get(cfg_info, "gammu", "connection", 	false);
+	if (!cfg->Connection) {
 		cfg->Connection	 		 = DefaultConnection;
-	} else cfg->DefaultConnection		 = false;
-        cfg->SyncTime 	 = CFG_Get(cfg_info, "gammu", "synchronizetime",false);
-        if (!cfg->SyncTime) {
+	} else {
+		cfg->DefaultConnection		 = false;
+	}
+	cfg->SyncTime 	 = CFG_Get(cfg_info, "gammu", "synchronizetime",false);
+	if (!cfg->SyncTime) {
 		cfg->SyncTime		 	 = DefaultSynchronizeTime;
-	} else cfg->DefaultSyncTime		 = false;
-        cfg->DebugFile   = CFG_Get(cfg_info, "gammu", "logfile", 	false);
-        if (!cfg->DebugFile) {
+	} else {
+		cfg->DefaultSyncTime		 = false;
+	}
+	cfg->DebugFile   = CFG_Get(cfg_info, "gammu", "logfile", 	false);
+	if (!cfg->DebugFile) {
 		cfg->DebugFile		 	 = DefaultDebugFile;
-	} else cfg->DefaultDebugFile 		 = false;
-        cfg->LockDevice  = CFG_Get(cfg_info, "gammu", "use_locking", 	false);
-        if (!cfg->LockDevice) {
+	} else {
+		cfg->DefaultDebugFile 		 = false;
+	}
+	cfg->LockDevice  = CFG_Get(cfg_info, "gammu", "use_locking", 	false);
+	if (!cfg->LockDevice) {
 		cfg->LockDevice	 		 = DefaultLockDevice;
-	} else cfg->DefaultLockDevice		 = false;
-        Temp		 = CFG_Get(cfg_info, "gammu", "model", 		false);
-        if (!Temp) {
+	} else {
+		cfg->DefaultLockDevice		 = false;
+	}
+	Temp		 = CFG_Get(cfg_info, "gammu", "model", 		false);
+	if (!Temp) {
 		strcpy(cfg->Model,DefaultModel);
 	} else {
 		cfg->DefaultModel 		 = false;
 		strcpy(cfg->Model,Temp);
 	}
-        Temp		 = CFG_Get(cfg_info, "gammu", "logformat", 	false);
-        if (!Temp) {
+	Temp		 = CFG_Get(cfg_info, "gammu", "logformat", 	false);
+	if (!Temp) {
 		strcpy(cfg->DebugLevel,DefaultDebugLevel);
 	} else {
 		cfg->DefaultDebugLevel 		 = false;
@@ -662,31 +689,41 @@ void CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg)
 
 static OnePhoneModel allmodels[] = {
 #ifdef GSM_ENABLE_NOKIA6110
-	{"3210" ,"NSE-8" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,0}},
-	{"3210" ,"NSE-9" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,0}},
-	{"3310" ,"NHM-5" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,0}},
-	{"3330" ,"NHM-6" ,"",           {F_NOCALLER,F_RING_SM,F_CAL33,F_PROFILES33,F_NOPICTUREUNI,F_NOCALLINFO,0}},
-	{"3390" ,"NPB-1" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_PROFILES33,F_NOPICTUREUNI,F_NOCALLINFO,0}},
-	{"3410" ,"NHM-2" ,"",           {F_RING_SM,F_CAL33,F_PROFILES33,F_NOCALLINFO,0}},
+	{"3210" ,"NSE-8" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
+	{"3210" ,"NSE-9" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
+	{"3310" ,"NHM-5" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},
+	{"3330" ,"NHM-6" ,"",           {F_NOCALLER,F_RING_SM,F_CAL33,F_PROFILES33,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
+	{"3390" ,"NPB-1" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_PROFILES33,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
+	{"3410" ,"NHM-2" ,"",           {F_RING_SM,F_CAL33,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-	{"3510" ,"NHM-8" ,"",           {F_CAL35,0}},
+	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_NOTODO,0}},
+	{"3510i","RH-9"  ,"",           {F_CAL35,F_NOTODO,0}},
+	{"3530" ,"RH-9"  ,"",           {F_CAL35,F_NOTODO,0}},
+#endif
+#if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
+	{"5100" ,"NPM-6" ,"Nokia 5100", {F_RADIO,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
-	{"5110" ,"NSE-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DTMF,F_DISPSTATUS,0}},
-	{"5110i","NSE-2" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DTMF,F_DISPSTATUS,0}},
-	{"5130" ,"NSK-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DTMF,F_DISPSTATUS,0}},
-	{"5190" ,"NSB-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DTMF,F_DISPSTATUS,0}},
+	{"5110" ,"NSE-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DISPSTATUS,0}},
+	{"5110i","NSE-2" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DISPSTATUS,0}},
+	{"5130" ,"NSK-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DISPSTATUS,0}},
+	{"5190" ,"NSB-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DISPSTATUS,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6110)
-	{"5210" ,"NSM-5" ,"Nokia 5210", {F_CAL52,F_NOSTARTANI,F_NOPICTUREUNI,}},
+	{"5210" ,"NSM-5" ,"Nokia 5210", {F_CAL52,F_NOSTARTANI,F_NOPICTUREUNI,F_NODTMF,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"5510" ,"NPM-5" ,"",           {F_NOCALLER,F_PROFILES33,F_NOPICTUREUNI,0}},
-	{"6110" ,"NSE-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DTMF,F_DISPSTATUS,0}},
-	{"6130" ,"NSK-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DTMF,F_DISPSTATUS,0}},
-	{"6150" ,"NSM-1" ,"",           {F_NOWAP,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DTMF,F_DISPSTATUS,F_NOPICTUREUNI,0}},
-	{"6190" ,"NSB-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DTMF,F_DISPSTATUS,0}},
+#endif
+#if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
+	{"6100" ,"NPL-2" ,"Nokia 6100", {F_RADIO,0}},
+#endif
+#ifdef GSM_ENABLE_NOKIA6110
+	{"6110" ,"NSE-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
+	{"6130" ,"NSK-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
+	{"6150" ,"NSM-1" ,"",           {F_NOWAP,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,F_NOPICTUREUNI,0}},
+	{"6190" ,"NSB-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"6210" ,"NPE-3" ,"Nokia 6210", {0}},
@@ -695,7 +732,9 @@ static OnePhoneModel allmodels[] = {
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"6310" ,"NPE-4" ,"Nokia 6310", {0}},
 	{"6310i","NPL-1" ,"Nokia 6310i",{0}},
-	{"6510" ,"NPM-9" ,"Nokia 6510", {F_RADIO,0}},
+	{"6510" ,"NPM-9" ,"Nokia 6510", {F_RADIO,F_NOTODO,0}},
+	{"6610" ,"NHL-4" ,"Nokia 6610", {F_RADIO,0}},
+	{"7210" ,"NHL-4" ,"Nokia 7210", {F_RADIO,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"7110" ,"NSE-5" ,"Nokia 7110", {0}},
@@ -710,8 +749,8 @@ static OnePhoneModel allmodels[] = {
 	{"8290" ,"NSB-7" ,"Nokia 8290", {F_NOWAP,F_NOSTARTANI,F_NOPBKUNICODE,F_NOPICTUREUNI,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"8310" ,"NHM-7" ,"Nokia 8310", {F_RADIO,0}},
-	{"8390" ,"NSB-8" ,"Nokia 8390", {0}},
+	{"8310" ,"NHM-7" ,"Nokia 8310", {F_RADIO,F_NOTODO,0}},
+	{"8390" ,"NSB-8" ,"Nokia 8390", {F_NOTODO,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6110)
 	{"8850" ,"NSM-2" ,"Nokia 8850", {0}},
@@ -726,16 +765,16 @@ static OnePhoneModel allmodels[] = {
 #endif
 #ifdef GSM_ENABLE_ATGEN
 	{"at"   ,	  "at",		  "",				   {0}},
-	{"M20"  ,	  "M20",	  "",				   {0}},
+	{"M20"  ,	  "M20",	  "",				   {F_M20SMS,0}},
 	{"MC35" ,	  "MC35",	  "",				   {0}},
 	{"iPAQ" ,	  "iPAQ"  ,	  "",				   {0}},
-	{"A2D" ,	  "A2D"  ,	  "",				   {0}},
-	{"9210",	  "RAE-3",	  "Nokia Communicator GSM900/1800",{0}},
+	{"A2D"  ,	  "A2D"  ,	  "",				   {0}},
+	{"9210" ,	  "RAE-3",	  "Nokia Communicator GSM900/1800",{0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)
-	{"BE5", 	  "ONE TOUCH 500","",				   {0}},
+	{"BE5", 	  "ONE TOUCH 500","",				   {F_SMSONLYSENT,F_BROKENCPBS,0}},
 #endif
-	{""     ,""      ,"",           {0}}
+	{"unknown",	  ""      ,"",           {0}}
 };
 
 OnePhoneModel *GetModelData(char *model, char *number, char *irdamodel)
@@ -763,13 +802,13 @@ OnePhoneModel *GetModelData(char *model, char *number, char *irdamodel)
 	return (&allmodels[i]);
 }
 
-bool IsPhoneFeatureAvailable(char *model, int feature)
+bool IsPhoneFeatureAvailable(OnePhoneModel *model, int feature)
 {
 	int	i	= 0;
 	bool	retval  = false;
 
-	while (GetModelData(NULL,model,NULL)->features[i] != 0) {
-		if (GetModelData(NULL,model,NULL)->features[i] == feature) {
+	while (model->features[i] != 0) {
+		if (model->features[i] == feature) {
 			retval = true;
 			break;
 		}
@@ -808,19 +847,27 @@ int smprintf(GSM_StateMachine *s, const char *format, ...)
 	int 		result=0;
 	unsigned char	buffer[2000];
 
-	if (s->di.dl != 0 && s->di.df) {
-		va_start(argp, format);
-		result = vsprintf(buffer, format, argp);
-		result = smfprintf(s->di.df, buffer);
-		va_end(argp);
+	va_start(argp, format);
+	if (s == NULL) {
+		if (di.dl != 0 && di.df) {
+			result = vsprintf(buffer, format, argp);
+			result = smfprintf(di.df, buffer);
+		}
+	} else {
+		if (s->di.dl != 0 && s->di.df) {
+			result = vsprintf(buffer, format, argp);
+			result = smfprintf(s->di.df, buffer);
+		}
 	}
+	va_end(argp);
 	return result;
 }
 
 void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 {
 #ifdef WIN32
-	LPVOID lpMsgBuf;
+	int 		i;
+	unsigned char 	*lpMsgBuf;
 
 	/* We don't use errno in win32 - GetLastError gives better info */	
 	if (GetLastError()!=-1) {
@@ -837,6 +884,11 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 				0,
 				NULL 
 			);
+			for (i=0;i<(int)strlen(lpMsgBuf);i++) {
+				if (lpMsgBuf[i] == 13 || lpMsgBuf[i] == 10) {
+					lpMsgBuf[i] = ' ';
+				}
+			}
 			smprintf(s,"[System error     - %s, %i, \"%s\"]\n",description,GetLastError(),(LPCTSTR)lpMsgBuf);
 			LocalFree(lpMsgBuf);
 		}
@@ -851,3 +903,7 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 		}
 	}
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

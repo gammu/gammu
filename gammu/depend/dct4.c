@@ -18,7 +18,7 @@ GSM_Error CheckDCT4Only()
 
 	/* Checking if phone is DCT4 */
 #ifdef GSM_ENABLE_NOKIA6510
-	if (strstr(N6510Phone.models, GetModelData(NULL,s.Model,NULL)->model) != NULL) found = true;
+ 	if (strstr(N6510Phone.models, s.Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
 	if (!found) return GE_NOTSUPPORTED;
 
@@ -51,7 +51,7 @@ static void CheckDCT4()
 
 /* ------------------- functions ------------------------------------------- */
 
-static GSM_Error DCT4_ReplySetPPS(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT4_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Setting done OK\n");
 	return GE_NONE;
@@ -73,10 +73,10 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 	reqSet[current++] = 1; 		/* Feature number */
 	reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
 
-	if (!strcmp(GetModelData(NULL,s.Model,NULL)->model,"6310")  ||
-	    !strcmp(GetModelData(NULL,s.Model,NULL)->model,"6310i") ||
-	    !strcmp(GetModelData(NULL,s.Model,NULL)->model,"6510")  ||
-	    !strcmp(GetModelData(NULL,s.Model,NULL)->model,"3510")) {
+ 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6310")  ||
+ 	    !strcmp(s.Phone.Data.ModelInfo->model,"6310i") ||
+ 	    !strcmp(s.Phone.Data.ModelInfo->model,"6510")  ||
+ 	    !strcmp(s.Phone.Data.ModelInfo->model,"3510")) {
 		printf("Enabling ciphering algorithm A52\n");
 		reqSet[9]++;			/* Number of features */
 		reqSet[current++] = 3; 		/* Feature number */
@@ -101,9 +101,9 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 	/* Impossible, but my data says, that 6510 has Bluetooth at least
 	 * in firmware. For checking
 	 */
-	if (!strcmp(GetModelData(NULL,s.Model,NULL)->model,"6310") ||
-	    !strcmp(GetModelData(NULL,s.Model,NULL)->model,"6310i") ||
-	    !strcmp(GetModelData(NULL,s.Model,NULL)->model,"6510")) {
+ 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6310") ||
+ 	    !strcmp(s.Phone.Data.ModelInfo->model,"6310i") ||
+ 	    !strcmp(s.Phone.Data.ModelInfo->model,"6510")) {
 		printf("Enabling Bluetooth menu\n");
 		reqSet[9]++;			/* Number of features */
 		reqSet[current++] = 10; 	/* Feature number */
@@ -120,34 +120,34 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 //	reqSet[current++] = 14; 	/* Feature number */
 //	reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
 
-	if (!strcmp(GetModelData(NULL,s.Model,NULL)->model,"6310")  ||
-	    !strcmp(GetModelData(NULL,s.Model,NULL)->model,"6310i") ||
-	    !strcmp(GetModelData(NULL,s.Model,NULL)->model,"6510")  ||
-	    !strcmp(GetModelData(NULL,s.Model,NULL)->model,"3510")) {
+ 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6310")  ||
+ 	    !strcmp(s.Phone.Data.ModelInfo->model,"6310i") ||
+ 	    !strcmp(s.Phone.Data.ModelInfo->model,"6510")  ||
+ 	    !strcmp(s.Phone.Data.ModelInfo->model,"3510")) {
 		printf("Enabling GEA1 support indication\n");
 		reqSet[9]++;			/* Number of features */
 		reqSet[current++] = 15; 	/* Feature number */
 		reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
 	}
 
-	if (!strcmp(GetModelData(NULL,s.Model,NULL)->model,"6310i")) {
+ 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6310i")) {
 		printf("Enabling EOTD support\n");
 		reqSet[9]++;			/* Number of features */
 		reqSet[current++] = 16; 	/* Feature number */
 		reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
 	}
 
-	if (!strcmp(GetModelData(NULL,s.Model,NULL)->model,"6310") ||
-	    !strcmp(GetModelData(NULL,s.Model,NULL)->model,"8310") ||
-	    !strcmp(GetModelData(NULL,s.Model,NULL)->model,"6510") ||
-	    !strcmp(GetModelData(NULL,s.Model,NULL)->model,"3510")) {
+ 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6310") ||
+ 	    !strcmp(s.Phone.Data.ModelInfo->model,"8310") ||
+ 	    !strcmp(s.Phone.Data.ModelInfo->model,"6510") ||
+ 	    !strcmp(s.Phone.Data.ModelInfo->model,"3510")) {
 		printf("Enabling GPRS always online\n");
 		reqSet[9]++;			/* Number of features */
 		reqSet[current++] = 18; 	/* Feature number */
 		reqSet[current++] = 0x00; 	/* 0x00 = Context, 0x01 = Attach */
 	}
 
-	if (!strcmp(GetModelData(NULL,s.Model,NULL)->model,"6310i")) {
+ 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6310i")) {
 		printf("Enabling GPRS always online\n");
 		reqSet[9]++;			/* Number of features */
 		reqSet[current++] = 17; 	/* Feature number */
@@ -206,7 +206,7 @@ void DCT4tests(int argc, char *argv[])
 	error = s.Protocol.Functions->WriteMessage(&s, buffer, 6, 0x35);
 }
 
-static GSM_Error DCT4_ReplyVibra(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT4_ReplyVibra(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 #ifdef DEBUG
 	switch (msg.Buffer[3]) {
@@ -248,7 +248,7 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 		GSM_GetCurrentDateTime (&Date);
 		j=Date.Second;
 		while (j==Date.Second) {
-			mili_sleep(10);
+			my_sleep(10);
 			GSM_GetCurrentDateTime(&Date);
 		}
 	}
@@ -260,7 +260,7 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Error DCT4_ReplyResetSecurityCode(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT4_ReplyResetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Buffer[3]) {
 	case 0x05:
@@ -289,7 +289,7 @@ void DCT4ResetSecurityCode(int argc, char *argv[])
 	Print_Error(error);
 }
 
-static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int 		i=18,j;
 	unsigned char	Buffer[100];
@@ -301,19 +301,19 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_Phone_Da
 			dprintf("Empty\n");
 			return GE_EMPTY;
 		}
-		*Data->VoiceRecord = 0;
+ 		*s->Phone.Data.VoiceRecord = 0;
 		while (i<msg.Length) {
-			Data->PhoneString[(*Data->VoiceRecord)++] = msg.Buffer[i+1];
-			Data->PhoneString[(*Data->VoiceRecord)++] = msg.Buffer[i];
+ 			s->Phone.Data.PhoneString[(*s->Phone.Data.VoiceRecord)++] = msg.Buffer[i+1];
+ 			s->Phone.Data.PhoneString[(*s->Phone.Data.VoiceRecord)++] = msg.Buffer[i];
 			i += 2;
 		}
 		return GE_NONE;
 	case 0x0D:
 		dprintf("Last part of voice record is %02x %02x\n",msg.Buffer[11],msg.Buffer[12]);
 		dprintf("Token is %02x\n",msg.Buffer[13]);
-		Data->PhoneString[0] = msg.Buffer[11];
-		Data->PhoneString[1] = msg.Buffer[12];
-		Data->PhoneString[2] = msg.Buffer[13];
+ 		s->Phone.Data.PhoneString[0] = msg.Buffer[11];
+ 		s->Phone.Data.PhoneString[1] = msg.Buffer[12];
+ 		s->Phone.Data.PhoneString[2] = msg.Buffer[13];
 		return GE_NONE;
 		break;
 	case 0x31:
@@ -324,8 +324,8 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_Phone_Da
 			Buffer[msg.Buffer[j]] 	= 0;
 			Buffer[msg.Buffer[j]+1] = 0;
 			dprintf("%i. \"%s\"\n",i+1,DecodeUnicodeString(Buffer));	
-			if (i==*Data->VoiceRecord) {
-				sprintf(Data->PhoneString,"%s.wav",DecodeUnicodeString(Buffer));
+ 			if (i==*s->Phone.Data.VoiceRecord) {
+ 				sprintf(s->Phone.Data.PhoneString,"%s.wav",DecodeUnicodeString(Buffer));
 				return GE_NONE;
 			}
 			if (i != msg.Buffer[9] - 1) {
@@ -355,9 +355,12 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		N7110_FRAME_HEADER,0x04,0x00,0x44,
 		0x00,0x00,	/* Location: 0, 1, ...  */
 		0x55,0x55,0x00,
+
 		0x00,0x00,	/* Part Location	*/
 		0x00,0x00,0x00,
+
 		0x04,		/* ???			*/
+
 		0x00};		/* Token		*/
 
 	/* WAV file headers */
@@ -509,3 +512,7 @@ static GSM_Reply_Function UserReplyFunctions4[] = {
 };
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

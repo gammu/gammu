@@ -102,7 +102,8 @@ typedef struct {
     int                 Used;
 } GSM_CategoryStatus;
 
-#define	GSM_MAX_FMSTATION_LENGTH 20
+#define	GSM_MAX_FMSTATION_LENGTH 12
+#define	GSM_MAX_FM_STATION 	 20
 
 typedef struct {
 	int			Location;
@@ -111,3 +112,7 @@ typedef struct {
 } GSM_FMStation;
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

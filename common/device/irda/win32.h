@@ -289,3 +289,7 @@ struct 	irda_device_info 	{IRDA_DEVICE_INFO;};
 struct 	sockaddr_irda 		{SOCKADDR_IRDA;};
 
 #endif // __AFIRDA__
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

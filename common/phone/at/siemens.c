@@ -12,7 +12,9 @@
 #include "../../service/gsmsms.h"
 #include "../pfunc.h"
 
-int cut_str (const unsigned char *source, unsigned char *dest, const unsigned char *findstr)
+extern GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s);
+
+static int cut_str (const unsigned char *source, unsigned char *dest, const unsigned char *findstr)
 {
 	unsigned char 	*find;
 	int 	  	pos;
@@ -25,21 +27,21 @@ int cut_str (const unsigned char *source, unsigned char *dest, const unsigned ch
 	return pos;
 }
 
-GSM_Error ATGEN_CMS35ReplyGetBitmap(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error ATGEN_CMS35ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	dprintf ("CMS35ReplyGetBitmap \n");
 	return GE_NONE;
 }
 
-GSM_Error ATGEN_CMS35ReplySetBitmap(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error ATGEN_CMS35ReplySetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	dprintf ("CMS35ReplySetBitmap \n");
 	return GE_NONE;
 }
 
-GSM_Error ATGEN_CMS35ReplyGetRingtone(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error ATGEN_CMS35ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_ATGENData 	*Priv = &Data->Priv.ATGEN;
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char 		buffer[512];
 	int			i=2, pos=0, length=0;
 
@@ -53,15 +55,15 @@ GSM_Error ATGEN_CMS35ReplyGetRingtone(GSM_Protocol_Message msg, GSM_Phone_Data *
 			length = strlen(GetLineString(msg.Buffer,Priv->Lines,i+1));
 			DecodeHexBin(buffer, GetLineString(msg.Buffer,Priv->Lines,i+1),length);
 			length = length/2;
-			memcpy (Data->Ringtone->NokiaBinary.Frame+pos,buffer,length);
+			memcpy (s->Phone.Data.Ringtone->NokiaBinary.Frame+pos,buffer,length);
 			pos+=length;
 		} 
 		i++;
 	}
-	Data->Ringtone->Format			= RING_MIDI;
-	Data->Ringtone->NokiaBinary.Length	= pos;
+	s->Phone.Data.Ringtone->Format			= RING_MIDI;
+	s->Phone.Data.Ringtone->NokiaBinary.Length	= pos;
 	sprintf(buffer,"Individual");
-	EncodeUnicode (Data->Ringtone->Name,buffer,strlen(buffer));
+	EncodeUnicode (s->Phone.Data.Ringtone->Name,buffer,strlen(buffer));
 	return GE_NONE;
 }
 
@@ -74,13 +76,13 @@ GSM_Error ATGEN_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool Ph
 	
 	s->Phone.Data.Ringtone=Ringtone;
 	sprintf(req, "AT^SBNR=\"mid\",%i\r", Ringtone->Location-1);
-	dprintf("Getting RingTone\n");
+	smprintf(s, "Getting RingTone\n");
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetRingtone);
 }
 
-GSM_Error ATGEN_CMS35ReplySetRingtone(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error ATGEN_CMS35ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_ATGENData *Priv = &Data->Priv.ATGEN;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	dprintf ("Written Ringtone");
   	if (Priv->ReplyState == AT_Reply_OK)
@@ -121,7 +123,7 @@ GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *ma
 	 		Ringtone->Location-1, CurrentFrame+1,MaxFrame);
 	 	error = s->Protocol.Functions->WriteMessage(s, req, strlen(req), 0x00);
 	     	if (error!=GE_NONE) return error;
-		mili_sleep(200);
+		my_sleep(200);
 	 	    
 	 	memcpy (req1,hexreq+pos,sz);
 	 	    
@@ -130,18 +132,19 @@ GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *ma
 	 
 		error = s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
 	 	if (error!=GE_NONE) return error;
-	 	mili_sleep (500);
+	 	my_sleep (500);
 	 	    
 		error = GSM_WaitForOnce(s, NULL, 0x00, 0x00, 4);
 	 	if (error == GE_TIMEOUT) return error;
 	 }
-	 mili_sleep (600);
+	 my_sleep (600);
 	 return Phone->DispatchError;
 }
 
-GSM_Error ATGEN_CMS35ReplyGetNextCal(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error ATGEN_CMS35ReplyGetNextCal(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_ATGENData 	*Priv = &Data->Priv.ATGEN;
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Phone_Data		*Data = &s->Phone.Data;
 	unsigned char 		buffer[354], tmp_buff[354];
 	int			pos, len, no=0;
 
@@ -260,7 +263,7 @@ GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bo
 	if (start) Note->Location=Priv->FirstCalendarPos;
 	s->Phone.Data.Cal 	= Note;
 	Note->EntriesNum 	= 0;
-	dprintf("Getting VCALENDAR\n");
+	smprintf(s, "Getting VCALENDAR\n");
 	Location = Note->Location;
 	while (1)
 	{
@@ -275,9 +278,9 @@ GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bo
 	return GE_NONE;
 }
 
-GSM_Error ATGEN_CMS35ReplySetCalendar(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error ATGEN_CMS35ReplySetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_ATGENData *Priv = &Data->Priv.ATGEN;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	dprintf ("Written Calendar Note");
 	if (Priv->ReplyState == AT_Reply_OK)
@@ -290,20 +293,21 @@ GSM_Error ATGEN_CMS35ReplySetCalendar(GSM_Protocol_Message msg, GSM_Phone_Data *
 	}
 }
 
-GSM_Error ATGEN_CMS35ReplyDeleteCalendar(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error ATGEN_CMS35ReplyDeleteCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_ATGENData *Priv = &Data->Priv.ATGEN;
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Phone_Data		*Data = &s->Phone.Data;
 	if (Data->Cal->Location > 30) return GE_UNKNOWN;
 	if (Priv->ReplyState== AT_Reply_OK) {
-		dprintf("Calendar note deleted\n");
+		smprintf(s, "Calendar note deleted\n");
 		return GE_NONE;
 	} else {
-		dprintf("Can't delete calendar note\n");
+		smprintf(s, "Can't delete calendar note\n");
 		return GE_UNKNOWN;
 	}
 }
 
-GSM_Error ATGEN_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char 		req[32];
@@ -311,7 +315,7 @@ GSM_Error ATGEN_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	if (Priv->Manufacturer!=AT_Siemens) return GE_NOTSUPPORTED;
 	s->Phone.Data.Cal = Note;
 	sprintf(req, "AT^SBNW=\"vcs\",%i,0\r",Note->Location);
-	dprintf("Deleting calendar note\n");
+	smprintf(s, "Deleting calendar note\n");
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_DeleteCalendarNote);
 }
 
@@ -329,9 +333,9 @@ GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bo
 	if (Note->Location==0x00) return GE_INVALIDLOCATION;	
 	if (!Past && IsNoteFromThePast(*Note)) return GE_NONE;
 
-	error = ATGEN_DelCalendar(s, Note);
+	error = ATGEN_DelCalendarNote(s, Note);
     	if (error!=GE_NONE) return error;
-	mili_sleep (500);
+	my_sleep (500);
 	
 	s->Phone.Data.Cal = Note;
 	
@@ -408,17 +412,45 @@ GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bo
 		Phone->Cal = Note;
 		error = s->Protocol.Functions->WriteMessage(s, req, strlen(req), 0x00);
     		if (error!=GE_NONE) return error;
-		mili_sleep (200);
+		my_sleep (200);
     		error = s->Protocol.Functions->WriteMessage(s, hexreq+pos, sz, 0x00);
 		if (error!=GE_NONE) return error;
 		error = s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
 		if (error!=GE_NONE) return error;
-	 	mili_sleep (600);
+	 	my_sleep (600);
 		error = GSM_WaitForOnce(s, NULL, 0x00, 0x00, 4);
 	 	if (error == GE_TIMEOUT) return error;
 	 }
 	 return Phone->DispatchError;
 }
 
+GSM_Error ATGEN_SL45ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+ 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+ 	GSM_PhonebookEntry	*Memory = s->Phone.Data.Memory;
+	unsigned char		buffer[500],buffer2[500];
+
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+ 		smprintf(s, "Phonebook entry received\n");
+		CopyLineString(buffer, msg.Buffer, Priv->Lines, 3);
+		DecodeHexBin(buffer2,buffer,strlen(buffer));
+ 		Memory->EntriesNum = 0;
+                DecodeVCARD21Text(buffer2, Memory);
+		return GE_NONE;
+	case AT_Reply_Error:
+                smprintf(s, "Error - too high location ?\n");
+                return GE_INVALIDLOCATION;
+	case AT_Reply_CMSError:
+ 	        return ATGEN_HandleCMSError(s);
+	default:
+		break;
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
 #endif
 
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

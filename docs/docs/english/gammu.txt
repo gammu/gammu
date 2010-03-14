@@ -74,7 +74,11 @@ A. First of all, here are described all possible parameters for this software.
 
    gammu --getfmstation start [stop]
        Show info about FM stations in phone
-    
+
+   gammu --setfmstation location frequency StationName
+
+   gammu --clearfmstations
+
    gammu --getdatetime
        Get date and time from phone
 
@@ -192,7 +196,7 @@ A. First of all, here are described all possible parameters for this software.
 
    gammu --getcategory TODO|PHONEBOOK start [stop]
 
-   gammu --getallcategies TODO|PHONEBOOK
+   gammu --getallcategories TODO|PHONEBOOK
 
    gammu --getwapbookmark start [stop]
        Get WAP bookmark(s) from phone. Locations are numerated from 1.
@@ -411,6 +415,8 @@ A. First of all, here are described all possible parameters for this software.
 
    gammu --savesms EMS [-text "text"][-defanimation ID][-defsound ID]
                        [-tone10 file][-tone12 file][-animation frames file1 ..]
+                       [-variablebitmap file][-fixedbitmap file]
+
                        [-folder number][-reply][-smscset number][-unsent]
                        [-smscnumber number][-read][-sender number][-unread]
 
@@ -419,8 +425,9 @@ A. First of all, here are described all possible parameters for this software.
        (adds number of default sound, which depend on phone), -tone10
        (adds IMelody version 1.0 read from RTTL or other compatible file),
        -tone12 (adds IMelody version 1.2 read from RTTL or other compatible
-       file), -animation (it adds "frames" frames read from file1, file2, etc.)
-       can be used few times.
+       file), -animation (it adds "frames" frames read from file1, file2,
+       etc.), -variablebitmap (bitmap saved in one sms in any size),
+       -fixedbitmap (16x16 or 32x32) can be used few times.
 
        Example: gammu --savesms EMS -text "Greetings" -defsound 1
                 -text "from Gammu" -tone10 axelf.txt -animation 2 file1.bmp
@@ -476,6 +483,7 @@ A. First of all, here are described all possible parameters for this software.
                                    [-animation frames file1 ...][-report]
                                    [-smscset number][-smscnumber number]
                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
+                                   [-variablebitmap file][-fixedbitmap file]
 
    gammu --nokiagetoperatorname
        6110.c phones have place for name for one GSM network (of course,

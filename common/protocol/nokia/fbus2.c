@@ -288,7 +288,7 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, char *command, int length, int 
 		} else {
 			if (s->Device.Functions->ReadDevice(s, buff, 255)>0) wassomething = true;
 		}
-		mili_sleep(50);
+		my_sleep(50);
 	}
 }
 #endif
@@ -324,7 +324,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	case GCT_DLR3AT:
 		error=Device->DeviceSetDtrRts(s,false,false);
 	    	if (error!=GE_NONE) return error; 
-		mili_sleep(1000);
+		my_sleep(1000);
 
 		error=Device->DeviceSetDtrRts(s,true,true);
 	    	if (error!=GE_NONE) return error; 
@@ -337,7 +337,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 
 		error=Device->CloseDevice(s);
 		if (error!=GE_NONE) return error;
-		mili_sleep(1000);
+		my_sleep(1000);
 
 		error=Device->OpenDevice(s);
 		if (error!=GE_NONE) return error;
@@ -362,7 +362,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 
 		for (count = 0; count < 55; count ++) {
 			if (Device->WriteDevice(s,&init_char,1)!=1) return GE_DEVICEWRITEERROR;
-			mili_sleep(10);
+			my_sleep(10);
 		}
 		break;
 #ifdef GSM_ENABLE_INFRARED
@@ -372,11 +372,11 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 
 		for (count = 0; count < 55; count ++) {
 			if (Device->WriteDevice(s,&init_char,1)!=1) return GE_DEVICEWRITEERROR;
-			mili_sleep(10);
+			my_sleep(10);
 		}
 
 		if (Device->WriteDevice(s,&end_init_char,1)!=1) return GE_DEVICEWRITEERROR;
-		mili_sleep(20);
+		my_sleep(20);
 
 		error=Device->DeviceSetSpeed(s,115200);
 		if (error!=GE_NONE) return error;
@@ -392,7 +392,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 
 static GSM_Error FBUS2_Terminate(GSM_StateMachine *s)
 {
-	mili_sleep(200);
+	my_sleep(200);
 	return GE_NONE;
 }
 
@@ -404,3 +404,7 @@ GSM_Protocol_Functions FBUS2Protocol = {
 };
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

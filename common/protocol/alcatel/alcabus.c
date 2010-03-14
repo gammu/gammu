@@ -81,10 +81,10 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned char *data,
 
     	if (type == ALCATEL_CONNECT || type == ALCATEL_DISCONNECT) {
         	/* For connect and disconnect we need a bit larger delay */
-        	mili_sleep(10);
+        	my_sleep(10);
         	while (d->busy) {
             		GSM_ReadDevice(s);
-            		mili_sleep(1);
+            		my_sleep(1);
             		i++;
             		if (i == 10) return GE_TIMEOUT;
         	}
@@ -241,3 +241,6 @@ GSM_Protocol_Functions ALCABUSProtocol = {
 
 #endif
 
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

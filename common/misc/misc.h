@@ -23,15 +23,17 @@
 #endif
 
 #ifdef WIN32
-#  define mili_sleep(x) Sleep(((x) < 1000) ? 1 : ((x) / 1000))
+#  define my_sleep(x) Sleep(((x) < 1000) ? 1 : ((x) / 1000))
 #else
-#  define mili_sleep(x) usleep(x)
+#  define my_sleep(x) usleep(x)
 #endif
+
+#define MAX_LINES 50
 
 int GetLine(FILE *File, char *Line, int count);
 
 typedef struct {
-	int numbers[40];
+	int numbers[MAX_LINES*2];
 } GSM_Lines;
 
 void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsigned char *whitespaces, int spaceslen, bool eot);
@@ -97,3 +99,7 @@ char *DayOfWeek 		(int year, int month, int day);
 int FindSerialSpeed(char *buffer);
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

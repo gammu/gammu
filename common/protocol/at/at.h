@@ -8,6 +8,8 @@ typedef struct {
 	GSM_Protocol_Message 	Msg;
 	bool 			wascrlf;
 	char 			*linestart;
+
+	bool			EditMode;	/* wait for modem answer or not */
 } GSM_Protocol_ATData;
 
 #ifndef GSM_USED_SERIALDEVICE
@@ -20,3 +22,7 @@ typedef struct {
 #endif
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */
