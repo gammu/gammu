@@ -351,7 +351,7 @@ void ATSIEMENSNetmonitor(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Reply_Function UserReplyFunctionsAtS[] = {
+GSM_Reply_Function UserReplyFunctionsAtS[] = {
 	{ATSIEMENS_Reply_GetSAT,	"AT^SSTK",	0x00,0x00,ID_User1	},
 	{ATSIEMENS_Reply_GetNetmon,	"AT^S^MI",	0x00,0x00,ID_User2	},
 	{NULL,				"\x00",		0x00,0x00,ID_None	}

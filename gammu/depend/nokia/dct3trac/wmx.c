@@ -462,7 +462,7 @@ void DCT3SetDebug(int argc, char *argv[])
 	GSMDecoder_free(gsmdec);
 }
 
-static GSM_Reply_Function UserReplyFunctionsX[] = {
+GSM_Reply_Function UserReplyFunctionsX[] = {
 	{DCT3_ReplySwitchDebug,		"\x40",0x02,0x70,ID_DebugSwitch		},
 	{DCT3_ReplySwitchDebug,		"\x40",0x02,0x71,ID_DebugSwitch		},
 	{DCT3_ReplyDebugTrace,		"\x00",0x00,0x00,ID_IncomingFrame	},
