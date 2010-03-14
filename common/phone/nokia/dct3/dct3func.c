@@ -828,7 +828,8 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 	if (error!=ERR_NONE) return error;
 
 	s->Phone.Data.WAPSettings = settings;
-	settings->Number = 0;
+	settings->Number   = 0;
+	settings->ReadOnly = false;
 
 	req[4] = settings->Location-1;
 	smprintf(s, "Getting WAP settings part 1\n");

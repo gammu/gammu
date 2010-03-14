@@ -548,8 +548,12 @@ static void SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, boo
 		case WAPSETTINGS_BEARER_GPRS: sprintf(buffer,"Bearer = GPRS%c%c",13,10); break;
 		case WAPSETTINGS_BEARER_DATA: sprintf(buffer,"Bearer = Data%c%c",13,10); break;
 		case WAPSETTINGS_BEARER_USSD: sprintf(buffer,"Bearer = USSD%c%c",13,10);
-	}
+	}	
 	SaveBackupText(file, "", buffer, UseUnicode);
+	if (settings->ReadOnly) {
+		sprintf(buffer,"ReadOnly = Yes%c%c",13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
+	}
 	sprintf(buffer,"%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
 	for (i=0;i<settings->Number;i++) {
@@ -1769,6 +1773,13 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		if (mystrncasecmp(readvalue,"Yes",0)) settings->Active = true;
+	}
+
+	settings->ReadOnly = false;
+	sprintf(buffer,"ReadOnly");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue!=NULL) {
+		if (mystrncasecmp(readvalue,"Yes",0)) settings->ReadOnly = true;
 	}
 
 	settings->Number = 0;

@@ -5276,13 +5276,13 @@ static void GetWAPMMSSettings(int argc, char *argv[])
 		Print_Error(error);
 		for (j=0;j<settings.Number;j++) {
 			printmsg("%i. ",i);
-			if (settings.Settings[j].Title[0]==0 && settings.Settings[j].Title[1]==0)
-			{
+			if (settings.Settings[j].Title[0]==0 && settings.Settings[j].Title[1]==0) {
 				printmsg("Set %i",i);
 			} else {
 				printmsg("%s",DecodeUnicodeConsole(settings.Settings[j].Title));
 			}
 			if (settings.Active) printmsg(" (active)");
+			if (settings.ReadOnly) printmsg("\nRead only           : yes");
 			printmsg("\nHomepage            : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].HomePage));
 			if (settings.Settings[j].IsContinuous) {
 				printmsg("Connection type     : Continuous\n");
@@ -6814,6 +6814,8 @@ static void AddFile(int argc, char *argv[])
                                         File.Type = GSM_File_Sound_MIDI;
                                 } else if (mystrncasecmp(argv[i],"AMR",0)) {
                                         File.Type = GSM_File_Sound_AMR;
+                                } else if (mystrncasecmp(argv[i],"NRT",0)) {
+                                        File.Type = GSM_File_Sound_NRT;
                                 } else if (mystrncasecmp(argv[i],"3GP",0)) {
                                         File.Type = GSM_File_Video_3GP;
 				} else {
@@ -6886,9 +6888,11 @@ static struct NokiaFolderInfo Folder[] = {
 	{"3510", "Gallery",		"",		"8"},
 	{"3510i","Gallery",		"",		"3"},
 	{"5100", "Gallery",		"",		"3"},
+	{"6220", "Gallery",		"",		"5"},
 	{"",	 "Tones",		"Tones",	"3"},
 	{"3510i","Tones",		"",		"4"},
 	{"5100", "Tones",		"",		"4"},
+	{"6220", "Tones",		"",		"6"},
 	/* Language indepedent in OBEX */
 	{"obex", "MMSUnreadInbox",	"",		"predefMessages\\predefINBOX"	},
 	{"obex", "MMSReadInbox",	"",		"predefMessages\\predefINBOX"	},
@@ -6954,6 +6958,7 @@ static void NokiaAddFile(int argc, char *argv[])
 				i 	= 0;
 				while (Folder[i].level[0] != 0) {
 					EncodeUnicode(buffer,Folder[i].folder,strlen(Folder[i].folder));
+					dbgprintf("comparing \"%s\" \"%s\" \"%s\"\n",s.Phone.Data.ModelInfo->model,Files.ID_FullName,Folder[i].level);
 					if (mystrncasecmp(argv[2],Folder[i].parameter,0)  &&
 					    mywstrncasecmp(Files.Name,buffer,0) &&
 					    Files.Level == atoi(Folder[i].level)) {
@@ -6966,7 +6971,6 @@ static void NokiaAddFile(int argc, char *argv[])
 						Found = true;
 						break;
 					}
-					dbgprintf("comparing \"%s\" \"%s\" \"%s\"\n",s.Phone.Data.ModelInfo->model,Files.ID_FullName,Folder[i].level);
 					i++;
 				}
 				if (Found) break;
@@ -7649,7 +7653,7 @@ static GSM_Parameters Parameters[] = {
 	{"--getfilesystemstatus",	0, 0, GetFileSystemStatus,	{H_Filesystem,0},		""},
 	{"--getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
 	{"--getfilefolder",		1,40, GetFileFolder,		{H_Filesystem,0},		"ID1, ID2, ..."},
-	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP][-readonly][-protected][-system][-hidden][-newtime]"},
+	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent file sender title"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly]"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Tones file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
@@ -7725,7 +7729,10 @@ static GSM_Parameters Parameters[] = {
 	{"--displaysms",		2,30, SendSaveDisplaySMS,	{H_SMS,0},			"... (options like in sendsms)"},
 
 	{"--addsmsfolder",		1, 1, AddSMSFolder,		{H_SMS,0},			"name"},
-	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"FILES|MYSQL configfile"},
+#ifdef HAVE_MYSQL_MYSQL_H
+	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"MYSQL configfile"},
+#endif
+	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"FILES configfile"},
 	{"--sendsmsdsms",		2,30, SendSaveDisplaySMS,	{H_SMS,H_Other,0},		"TEXT|WAPSETTINGS|... destination FILES|MYSQL configfile ... (options like in sendsms)"},
 	{"--getringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
 	{"--getphoneringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},

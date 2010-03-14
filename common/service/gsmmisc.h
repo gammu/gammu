@@ -240,6 +240,7 @@ typedef enum {
 	GSM_File_Image_WBMP,
         GSM_File_Video_3GP,
         GSM_File_Sound_AMR,
+	GSM_File_Sound_NRT,		/* DCT4 binary format   */
         GSM_File_Sound_MIDI,
 #ifdef DEVELOP
 	GSM_File_MMS,
