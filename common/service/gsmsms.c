@@ -84,13 +84,15 @@ static GSM_Error GSM_DecodeSMSDateTime(GSM_DateTime *DT, unsigned char *req)
 	DT->Minute  = DecodeWithBCDAlphabet(req[4]);
 	DT->Second  = DecodeWithBCDAlphabet(req[5]);
 
+	/* The timezone is given in quarters. The base is GMT. */
 	DT->Timezone=(10*(req[6]&0x07)+(req[6]>>4))/4;
+
 	if (req[6]&0x08) DT->Timezone = -DT->Timezone;
 
 	dbgprintf("Decoding date & time: ");
 	dbgprintf("%s %4d/%02d/%02d ", DayOfWeek(DT->Year, DT->Month, DT->Day),
 		DT->Year, DT->Month, DT->Day);
-	dbgprintf("%02d:%02d:%02d %04d\n", DT->Hour, DT->Minute, DT->Second, DT->Timezone);
+	dbgprintf("%02d:%02d:%02d %02d00\n", DT->Hour, DT->Minute, DT->Second, DT->Timezone);
 
 	return GE_NONE;
 }
@@ -1572,6 +1574,20 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 			UDH = UDH_NokiaPhonebookLong;
 			/* Here can be also 8 bit coding */
 		}
+		Coding = GSM_Coding_Default;
+		memcpy(Buffer2,Buffer,Length);
+		EncodeUnicode(Buffer,Buffer2,Length);
+		break;
+	case SMS_VCARD10Long:
+		GSM_EncodeVCARD(Buffer,&Length,Info->Entries[0].Phonebook,true,Nokia_VCard10);
+		if (Length>GSM_MAX_SMS_LENGTH) UDH = UDH_ConcatenatedMessages;
+		Coding = GSM_Coding_Default;
+		memcpy(Buffer2,Buffer,Length);
+		EncodeUnicode(Buffer,Buffer2,Length);
+		break;
+	case SMS_VCARD21Long:
+		GSM_EncodeVCARD(Buffer,&Length,Info->Entries[0].Phonebook,true,Nokia_VCard21);
+		if (Length>GSM_MAX_SMS_LENGTH) UDH = UDH_ConcatenatedMessages;
 		Coding = GSM_Coding_Default;
 		memcpy(Buffer2,Buffer,Length);
 		EncodeUnicode(Buffer,Buffer2,Length);

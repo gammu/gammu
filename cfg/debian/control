@@ -20,7 +20,7 @@ Description: Mobile phone management utility
  Currently supported phones are:
  .
   * Many Nokia phones.
-  * Alcatel BE5 (501/701), BF5 (715).
+  * Alcatel BE5 (501/701), BF5 (715), BH4 (535/735).
   * Any AT capable phone (Siemens, Nokia, Alcatel, IPAQ).
  .
  This package contains gammu binary.
@@ -41,7 +41,7 @@ Description: Header files for Gammu
  Currently supported phones are:
  .
   * Many Nokia phones.
-  * Alcatel BE5 (501/701), BF5 (715).
+  * Alcatel BE5 (501/701), BF5 (715), BH4 (535/735).
   * Any AT capable phone (Siemens, Nokia, Alcatel, IPAQ).
  .
  This package contains header files needed for compiling programs with Gammu.
@@ -62,7 +62,7 @@ Description:  Mobile phone management library
  Currently supported phones are:
  .
   * Many Nokia phones.
-  * Alcatel BE5 (501/701), BF5 (715).
+  * Alcatel BE5 (501/701), BF5 (715), BH4 (535/735).
   * Any AT capable phone (Siemens, Nokia, Alcatel, IPAQ).
  .
  This package contains Gammu library.

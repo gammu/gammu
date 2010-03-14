@@ -2872,6 +2872,7 @@ static GSM_Error N6510_ReplyGetCalendarInfo3(GSM_Protocol_Message msg, GSM_State
 	smprintf(s, "\nNumber of Entries in frame: %i\n",i);
 	Last->Location[j] = 0;
 	smprintf(s, "\n");
+	if (i == 1 && msg.Buffer[12+0*4]*256+msg.Buffer[13+0*4] == 0) return GE_EMPTY;
 	if (i == 0) return GE_EMPTY;
 	return GE_NONE;
 }
@@ -2951,6 +2952,7 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	Date.Year 	= msg.Buffer[28]*256+msg.Buffer[29];	
 	if (entry->Type == GCN_BIRTHDAY) {
 		Date.Year = entry->Entries[0].Date.Year;
+		smprintf(s,"%i\n",Date.Year);		
 	}
 	Date.Month 	= msg.Buffer[30];
 	Date.Day 	= msg.Buffer[31];
@@ -3020,7 +3022,11 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	N71_65_GetCalendarRecurrance(s, msg.Buffer+40, entry);
 
 	if (entry->Type == GCN_BIRTHDAY) {
-		entry->Entries[0].Date.Year = msg.Buffer[42]*256+msg.Buffer[43];
+		if (msg.Buffer[42] == 0xff && msg.Buffer[43] == 0xff) {
+			entry->Entries[0].Date.Year = 0;
+		} else {
+			entry->Entries[0].Date.Year = msg.Buffer[42]*256+msg.Buffer[43];
+		}
 	}
 
 	memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+54, msg.Buffer[51]*2);
@@ -3316,12 +3322,15 @@ GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *
 			default:
 				return error;
 		}
-	}
-	if (NoteType == GCN_BIRTHDAY) {
 		req[28]	= date_time.Year >> 8;
 		req[29]	= date_time.Year & 0xff;		
-		req[42]	= DT.Year >> 8;
-		req[43]	= DT.Year & 0xff;
+		if (DT.Year == 0) {
+			req[42]	= 0xff;
+			req[43]	= 0xff;
+		} else {
+			req[42]	= DT.Year >> 8;
+			req[43]	= DT.Year & 0xff;
+		}
 	}
 
 	if (EndTime != -1) memcpy(&DT,&Note->Entries[EndTime].Date,sizeof(GSM_DateTime));

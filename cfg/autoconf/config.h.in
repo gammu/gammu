@@ -6,6 +6,7 @@
 
 /* Version of package */
 #undef VERSION
+#undef VERSION_WIN
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */

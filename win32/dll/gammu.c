@@ -38,6 +38,7 @@ bool SetErrorCounter(int i, GSM_Error error)
 		s[i].errors++;
 		break;
 	case GE_NOTSUPPORTED:
+	case GE_NOTIMPLEMENTED:
 		break;
 	default:
 		if (s[i].errors > 0) s[i].errors--;
@@ -57,67 +58,81 @@ BOOL LoopProc(int *i)
 
 	while(1) {
 		if (s[*i].errors > 1) {
-		        WaitForSingleObject(s[*i].Mutex, INFINITE );
 			if (s[*i].ThreadTerminate) break;
-			if (s[*i].errors < 250) {
+			if (*s[*i].PhoneCallBack != NULL && s[*i].errors < 250) {
 				PhoneCall = *s[*i].PhoneCallBack;
 				PhoneCall(1,*i,false);
 			}
 			if (s[*i].errors != 250) {
+			        WaitForSingleObject(s[*i].Mutex, INFINITE );
 				GSM_TerminateConnection(&s[*i].s);
+			        ReleaseMutex(s[*i].Mutex);
 			}
 			s[*i].errors = 251;
 			if (s[*i].ThreadTerminate) break;
+		        WaitForSingleObject(s[*i].Mutex, INFINITE );
 			error=GSM_InitConnection(&s[*i].s,2);
+		        ReleaseMutex(s[*i].Mutex);
 			if (s[*i].ThreadTerminate) break;
 //			if (error == GE_DEVICEOPENERROR) break;
 			if (error == GE_NONE) {
 				s[*i].errors = 0;
-				PhoneCall = *s[*i].PhoneCallBack;
-				PhoneCall(1,*i,true);
+				if (*s[*i].PhoneCallBack != NULL) {
+					PhoneCall = *s[*i].PhoneCallBack;
+					PhoneCall(1,*i,true);
+				}
 				if (s[*i].ThreadTerminate) break;
+			        WaitForSingleObject(s[*i].Mutex, INFINITE );
 				error=s[*i].s.Phone.Functions->SetAutoNetworkLogin(&s[*i].s);
+			        ReleaseMutex(s[*i].Mutex);
 				SetErrorCounter(*i, error);
 			}
-		        ReleaseMutex(s[*i].Mutex);
 		} else {
-		        WaitForSingleObject(s[*i].Mutex, INFINITE );
 			if (s[*i].ThreadTerminate) break;
-			error=s[*i].s.Phone.Functions->GetSecurityStatus(&s[*i].s,&SecurityStatus);
-		        ReleaseMutex(s[*i].Mutex);
-			if (SetErrorCounter(*i, error)) continue;
-			switch (error) {
-			case GE_NONE:
-				if (SecurityStatus != s[*i].SecurityStatus) {
+			if (*s[*i].SecurityCallBack != NULL) {
+			        WaitForSingleObject(s[*i].Mutex, INFINITE );
+				error=s[*i].s.Phone.Functions->GetSecurityStatus(&s[*i].s,&SecurityStatus);
+			        ReleaseMutex(s[*i].Mutex);
+				if (SetErrorCounter(*i, error)) continue;
+				switch (error) {
+				case GE_NONE:
 					if (s[*i].ThreadTerminate) break;
-					s[*i].SecurityStatus = SecurityStatus;
-					SecurityCall = *s[*i].SecurityCallBack;
-					SecurityCall(1,*i,SecurityStatus);
+					if (SecurityStatus != s[*i].SecurityStatus) {
+						if (*s[*i].SecurityCallBack != NULL) {
+							s[*i].SecurityStatus = SecurityStatus;
+							SecurityCall = *s[*i].SecurityCallBack;
+							SecurityCall(1,*i,SecurityStatus);
+						}
+					}
+					break;
+				case GE_NOTSUPPORTED:
+					if (s[*i].ThreadTerminate) break;
+					if (*s[*i].SecurityCallBack != NULL) {
+						SecurityStatus		= 0;
+						s[*i].SecurityStatus 	= 0;
+						SecurityCall = *s[*i].SecurityCallBack;
+						SecurityCall(1,*i,SecurityStatus);
+					}
+				default:
+					break;
 				}
-				break;
-			case GE_NOTSUPPORTED:
+			}
+			if (s[*i].ThreadTerminate) break;
+			if (*s[*i].SMSCallBack!=NULL) {
+				WaitForSingleObject(s[*i].Mutex, INFINITE );
+				error=s[*i].s.Phone.Functions->GetSMSStatus(&s[*i].s,&SMSStatus);
+				ReleaseMutex(s[*i].Mutex);
+				if (SetErrorCounter(*i, error)) continue;
 				if (s[*i].ThreadTerminate) break;
-				SecurityStatus		= 0;
-				s[*i].SecurityStatus 	= 0;
-				SecurityCall = *s[*i].SecurityCallBack;
-				SecurityCall(1,*i,SecurityStatus);
-			default:
-				break;
-			}
-			WaitForSingleObject(s[*i].Mutex, INFINITE );
-			if (s[*i].ThreadTerminate) break;
-			error=s[*i].s.Phone.Functions->GetSMSStatus(&s[*i].s,&SMSStatus);
-			ReleaseMutex(s[*i].Mutex);
-			if (SetErrorCounter(*i, error)) continue;
-			if (error == GE_NONE) {
-				if (SMSStatus.SIMUsed+SMSStatus.PhoneUsed != 0) {
-					if (s[*i].ThreadTerminate) break;
-					SMSCall = *s[*i].SMSCallBack;
-					SMSCall(1,*i);
+				if (error == GE_NONE) {
+					if (SMSStatus.SIMUsed+SMSStatus.PhoneUsed != 0) {
+						SMSCall = *s[*i].SMSCallBack;
+						SMSCall(1,*i);
+					}
 				}
 			}
 			if (s[*i].ThreadTerminate) break;
-			my_sleep(500);
+			my_sleep(200);
 			if (s[*i].ThreadTerminate) break;
 		}
 	}
@@ -134,7 +149,7 @@ static void CreatePhoneThread(int *phone,
 			      void (**SecurityCallBack) (int x, int s, GSM_SecurityCodeType State),
 			      void (**SMSCallBack)      (int x, int s))
 {
-	s[*phone].Mutex = CreateMutex( NULL, FALSE, NULL );
+	s[*phone].Mutex 		= CreateMutex( NULL, FALSE, NULL );
 	s[*phone].SecurityStatus	= 0;
 	s[*phone].number 		= *phone;
 	
@@ -142,7 +157,7 @@ static void CreatePhoneThread(int *phone,
 	s[*phone].SecurityCallBack 	= SecurityCallBack;
 	s[*phone].SMSCallBack 		= SMSCallBack;
 	s[*phone].ThreadTerminate 	= false;
-	s[*phone].hCommWatchThread = CreateThread((LPSECURITY_ATTRIBUTES) NULL,
+	s[*phone].hCommWatchThread 	= CreateThread((LPSECURITY_ATTRIBUTES) NULL,
 				  0,
 				  (LPTHREAD_START_ROUTINE) LoopProc,
 				  (LPVOID) &s[*phone].number,
@@ -167,8 +182,10 @@ static void CheckConnectionType(int  *phone,
 		strcpy(connection,connection_to_check);
 		s[*phone].errors = 0;
 		CreatePhoneThread(phone,PhoneCallBack,SecurityCallBack,SMSCallBack);
-		PhoneCall = *s[*phone].PhoneCallBack;
-		PhoneCall(1,*phone,true);
+		if (*s[*phone].PhoneCallBack != NULL) {
+			PhoneCall = *s[*phone].PhoneCallBack;
+			PhoneCall(1,*phone,true);
+		}
 	case GE_DEVICEOPENERROR:
 		break;
 	default:
@@ -543,6 +560,47 @@ GSM_Error WINAPI mymakemultipartsms(unsigned char		*MessageBuffer,
 	}
 	return GE_NONE;
 }
+
+/* ------------------ see dct4.c ------------------------------------------- */
+
+static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	int i,j=0;
+
+	switch (msg.Buffer[3]) {
+	case 0x0D:
+		for (i=14;i<22;i++) {
+			sprintf(s->Phone.Data.PhoneString+j,"%02x",msg.Buffer[i]);
+			j=j+2;
+		}
+		return GE_NONE;
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+static GSM_Reply_Function UserReplyFunctions4[] = {
+	{DCT4_ReplyGetSimlock,		"\x53",0x03,0x0D,ID_User6	},
+	{NULL,				"\x00",0x00,0x00,ID_None	}
+};
+
+GSM_Error WINAPI mygetdct4simlocknetwork(int phone, char *network)
+{
+	unsigned char 	GetSimlock[4] = {N6110_FRAME_HEADER, 0x0C};
+	GSM_Error 	error;
+
+	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+	s[phone].s.User.UserReplyFunctions = UserReplyFunctions4;
+	network[0]			   = 0;
+	s[phone].s.Phone.Data.PhoneString  = network;
+	error=GSM_WaitFor (&s[phone].s, GetSimlock, 4, 0x53, 4, ID_User6);
+	SetErrorCounter(phone, error);
+        ReleaseMutex(s[phone].Mutex);
+	return error;
+}
+
+/* ------------------------------------------------------------------------- */
 
 int WINAPI mygetstructuresize(int i)
 {

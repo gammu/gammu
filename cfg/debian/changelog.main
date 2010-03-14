@@ -1,3 +1,9 @@
+gammu (0.88-1) unstable; urgency=low
+
+  * Fixed docs installation.
+
+ -- Michal Cihar <michal@cihar.com>  Mon,  3 Nov 2003 12:08:45 +0100
+
 gammu (0.85-1) unstable; urgency=low
 
   * Split to binary, library and devel packages.

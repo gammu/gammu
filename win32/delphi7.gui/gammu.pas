@@ -14,7 +14,7 @@ const	GSM_MAX_SMSC_NAME_LENGTH	= 30;
 
 	MAX_MULTI_SMS			= 10;
 
-{$MINENUMSIZE 2}
+{$MINENUMSIZE 4}
 
 type    GSM_NetworkInfo_State = (
         	GSM_HomeNetwork = 1,    //phone logged into home network
@@ -25,14 +25,11 @@ type    GSM_NetworkInfo_State = (
 	GSM_NetworkInfo = record
 		NetworkName	: array[1..30] of char;  // network name showed in some phones on display
 		State		: GSM_NetworkInfo_State; // network state
-		xxx		: array[1..2] of byte;
       		NetworkCode 	: array[1..10] of char;  // GSM network code
 		CellID	  	: array[1..10] of char;  // CellID
 		LAC	  	: array[1..10] of char;  // LAC
 	end;
 	PGSM_NetworkInfo = ^GSM_NetworkInfo;
-
-{$MINENUMSIZE 4}
 
 type	GSM_Error = (
 	        GE_NONE = 1,
@@ -265,6 +262,7 @@ function GSM_SendSMSMessage	        (Phone : integer; SMS : PGSM_SMSMessage;time
 function GSM_AddSMSMessage	        (Phone : integer; SMS : PGSM_SMSMessage): GSM_Error; stdcall; external 'gammu.dll' name 'myaddsmsmessage';
 function GSM_EnterSecurityCode	        (Phone : integer; Code : PGSM_SecurityCode): GSM_Error; stdcall	; external 'gammu.dll' name 'myentersecuritycode';
 function GSM_GetIMEI	                (Phone : integer; IMEI:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetimei';
+function GSM_GetDCT4SimlockNetwork	(Phone : integer; Info:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetdct4simlocknetwork';
 function GSM_GetManufacturer	        (Phone : integer; IMEI:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmanufacturer';
 function GSM_GetModel	                (Phone : integer; Model:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmodel';
 function GSM_GetModelName	        (Phone : integer; Model:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmodelname';

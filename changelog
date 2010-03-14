@@ -22,6 +22,42 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20031109 - 0.89.0.0
+* new functionality:
+  * encoder for VCARDS can save info about default number
+  * --save/sendsms VCARD10|VCARD21 by default uses "normal" VCARD (Michael Kim)
+    formats (text of vcard is included into sms without any headers).
+    It's used in SE phones. When add new switch -nokia, there is used
+    Nokia format (Nokia UDH). In earlier versions there was used Nokia
+    format by default
+  * QUEUESMS version 1.3                                          (Peter Nixon)
+  * added czech translation                                      (Michal Cihar)
+  * new network 425 02                                       (Gilad Ben-Yossef)
+
+* fixes and improvements:
+  * improved handling birthday calendar notes with 0 birthday year in some
+    DCT4 models
+  * some options were not included into help system
+  * * fixed passing LDFLAGS and LDFLAGS under some conditions    (Michal Cihar)
+      in Makefile.cfg
+    * updated info about supported Alcatel models
+    * in gammu.c:
+      * printmsg("\n") replaced with printf("\n"). There is no need
+        to translate \n anyway
+      * no need to translate xml so s/printmsg/printf/
+      * unified message for increasing some constant to "   Increase %s\n"
+      * open debug file just once, even when there are more config sections
+      * much simplified content of while (Parameters[z].Function != NULL)
+        loop
+      * a bit more helpful error messages for options
+  * internals of win32 dll thread rewritten (faster, better, can handle
+    more error situations, can have null callbacks, etc.)
+  * closing sockets made using closesocket in win32
+  * improved timezones support for sms                             (Vita Samel)
+  * versions in win32 are again with ",", not with "."
+  * improved handling calendar locations for some concrete    (Darko Obradovic)
+    phones 
+
 20031102 - 0.88.0.0
 * new functionality:
   * * added error for invalid date/time + functions to check it  (Michal Cihar)

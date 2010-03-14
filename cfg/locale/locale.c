@@ -243,7 +243,7 @@ int main(int argc, char *argv[])
 	WriteOutput("F0004=\"Error setting device speed. Maybe speed not supported.\"");
 	WriteOutput("F0005=\"Error writing device.\"");
 	WriteOutput("F0006=\"No response in specified timeout. Probably phone not connected.\"");
-	WriteOutput("F0007=\"Unknown response from phone. See /readme.txt, how to report it.\"");
+	WriteOutput("F0007=\"Unknown response from phone. See readme.txt, how to report it.\"");
 	WriteOutput("F0008=\"Unknown connection type string. Check config file.\"");
 	WriteOutput("F0009=\"Unknown model type string. Check config file.\"");
 	WriteOutput("F0010=\"Some required functions not compiled for your OS. Please contact.\"");
@@ -297,12 +297,14 @@ int main(int argc, char *argv[])
 
 	ProcessLangFile("../../../../docs/docs/locale/gammu_pl.txt");
 	ProcessLangFile("../../../../docs/docs/locale/gammu_de.txt");
+	ProcessLangFile("../../../../docs/docs/locale/gammu_cs.txt");
 #else
 	RemoveDuplicatedStrings("../../docs/docs/locale/gammu_us.txt");
 	cfg_info = CFG_ReadFile("../../docs/docs/locale/gammu_us.txt",true);
 
 	ProcessLangFile("../../docs/docs/locale/gammu_pl.txt");
 	ProcessLangFile("../../docs/docs/locale/gammu_de.txt");
+	ProcessLangFile("../../docs/docs/locale/gammu_cs.txt");
 #endif
 	printf("\n");
 	
