@@ -1514,7 +1514,7 @@ void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len)
 	int 		i=0,j=0,z;
 	wchar_t		ret;
 
-	while (i<=len) {
+	while (i < len) {
 		z = DecodeWithUTF8Alphabet2((unsigned char *)src+i,&ret,len-i);
 		if (z<2) {
 			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);

@@ -1,13 +1,15 @@
 /* (c) 2003 by Marcin Wiacek */
 /* (c) 2006 by Michal Cihar */
 
-/**
+/** \file obexgen.c
+ * \defgroup OBEXPhone OBEX phones communication
  * Generic OBEX access to phones, made addording to OBEX specification
  * version 1.3 and IrMC specification version 1.1 as available from IrDA
  * <http://www.irda.org>.
  *
  * @author Michal Cihar
  * @author Marcin Wiacek
+ * @{
  */
 
 #include <string.h>
@@ -22,26 +24,17 @@
 
 #ifdef GSM_ENABLE_OBEXGEN
 
+/* Forward definitions */
 GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start);
+GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer);
+GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s);
 
-static void OBEXGEN_FindNextDir(unsigned char *Path, int *Pos, unsigned char *Return)
-{
-	int Retlen = 0;
 
-	while(1) {
-		if (Path[(*Pos)*2] == 0 && Path[(*Pos)*2+1] == 0) break;
-		if (Path[(*Pos)*2] == 0 && Path[(*Pos)*2+1] == '/') {
-			(*Pos)++;
-			break;
-		}
-		Return[Retlen*2]     = Path[(*Pos)*2];
-		Return[Retlen*2+1]   = Path[(*Pos)*2+1];
-		(*Pos)++;
-		Retlen++;
-	}
-	Return[Retlen*2]     = 0;
-	Return[Retlen*2+1]   = 0;
-}
+/**
+ * \defgroup OBEXinit OBEX initialisation and terminating
+ * \ingroup OBEXPhone
+ * @{
+ */
 
 static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -60,12 +53,18 @@ static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine
 	return ERR_UNKNOWNRESPONSE;
 }
 
+/**
+ * Disconnects from OBEX service
+ */
 GSM_Error OBEXGEN_Disconnect(GSM_StateMachine *s)
 {
 	smprintf(s, "Disconnecting\n");
 	return GSM_WaitFor (s, NULL, 0, 0x81, 2, ID_Initialise);
 }
 
+/**
+ * Connects to OBEX using selected service
+ */
 GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 {
 	GSM_Error	error = ERR_NONE;
@@ -165,9 +164,6 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-/* Defined later */
-GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer);
-GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s);
 
 /**
  * Initializes OBEX connection in desired mode as defined by config.
@@ -226,11 +222,36 @@ GSM_Error OBEXGEN_Terminate(GSM_StateMachine *s)
 	return OBEXGEN_Disconnect(s);
 }
 
+/*@}*/
+
 /**
  * \defgroup OBEXfiles OBEX transfer implementation
+ * \ingroup OBEXPhone
+ * @{
  */
 
-/*@{*/
+/**
+ * Grabs path part from complete path
+ */
+static void OBEXGEN_FindNextDir(unsigned char *Path, int *Pos, unsigned char *Return)
+{
+	int Retlen = 0;
+
+	while(1) {
+		if (Path[(*Pos)*2] == 0 && Path[(*Pos)*2+1] == 0) break;
+		if (Path[(*Pos)*2] == 0 && Path[(*Pos)*2+1] == '/') {
+			(*Pos)++;
+			break;
+		}
+		Return[Retlen*2]     = Path[(*Pos)*2];
+		Return[Retlen*2+1]   = Path[(*Pos)*2+1];
+		(*Pos)++;
+		Retlen++;
+	}
+	Return[Retlen*2]     = 0;
+	Return[Retlen*2+1]   = 0;
+}
+
 
 static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -943,9 +964,9 @@ GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 
 /**
  * \defgroup OBEXhelper OBEX helper functions which are used in IrMC code
+ * \ingroup OBEXPhone
+ * @{
  */
-
-/*@{*/
 
 /**
  * Grabs complete single file
@@ -1030,9 +1051,9 @@ GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 
 /**
  * \defgroup IrMChelper Generic IrMC helper functions
+ * \ingroup OBEXPhone
+ * @{
  */
-
-/*@{*/
 
 /**
  * Parses selected information from IrMC info.log. Information parsed:
@@ -1133,6 +1154,10 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 	/* Level 0 or 1 phones do not have to expose information */
 	if (error == ERR_BUG || error == ERR_FILENOTEXIST) {
 		if (free == NULL) {
+			/* Some phones do not follow IrMC specs and do not provide info.log for level 2 */
+			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_IRMC_LEVEL_2)) {
+				*IEL = 2;
+			}
 			/* We were asked only for IEL, so don't bail out */
 			return ERR_NONE;
 		} else {
@@ -1252,9 +1277,9 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const bool Rec
 
 /**
  * \defgroup IrMCphonebook IrMC phonebook support
+ * \ingroup OBEXPhone
+ * @{
  */
-
-/*@{*/
 
 /**
  * Parses pb/info.log (phonebook IrMC information log).
@@ -1633,9 +1658,9 @@ GSM_Error OBEXGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType
 
 /**
  * \defgroup IrMCcaltodo IrMC common calendar and todo functions
+ * \ingroup OBEXPhone
+ * @{
  */
-
-/*@{*/
 
 /**
  * Parses cal/info.log (calendar IrMC information log).
@@ -1668,9 +1693,9 @@ GSM_Error OBEXGEN_InitCalLUID(GSM_StateMachine *s)
 
 /**
  * \defgroup IrMCcalendar IrMC calendar support
+ * \ingroup OBEXPhone
+ * @{
  */
-
-/*@{*/
 
 /**
  * Grabs calendar memory status
@@ -2025,9 +2050,9 @@ GSM_Error OBEXGEN_DeleteAllCalendar(GSM_StateMachine *s)
 
 /**
  * \defgroup IrMCtodo IrMC todo support
+ * \ingroup OBEXPhone
+ * @{
  */
-
-/*@{*/
 
 /**
  * Grabs todo memory status
@@ -2382,9 +2407,9 @@ GSM_Error OBEXGEN_DeleteAllTodo(GSM_StateMachine *s)
 
 /**
  * \defgroup OBEXcap Phone information using OBEX capability XML or IrMC devinfo
+ * \ingroup OBEXPhone
+ * @{
  */
-
-/*@{*/
 
 GSM_Error OBEXGEN_GetDevinfoField(GSM_StateMachine *s, const char *Name, char *Dest)
 {
@@ -2716,6 +2741,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 };
 
 #endif
+/*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

@@ -1621,6 +1621,7 @@ typedef enum {
 	F_SMSME900,	/* SMS in ME start from location 900 - case of Sagem		*/
 	F_ALCATEL,	/* Phone supports Alcatel protocol				*/
 	F_OBEX,		/* Phone can switch to OBEX protocol from AT mode		*/
+	F_IRMC_LEVEL_2,	/* Phone supports IrMC level 2 even if it doesn't report it	*/
 } Feature;
 
 /* For models table */

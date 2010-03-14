@@ -1,5 +1,16 @@
 /* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 
+/** \file atgen.c
+ * \defgroup ATPhone AT phones communication
+ *
+ * This module implements standard AT commands.
+ *
+ * \see http://www.etsi.org
+ * \see http://www.3gpp.org
+ *
+ * @{
+ */
+
 #include "../../gsmstate.h"
 
 #ifdef GSM_ENABLE_ATGEN
@@ -2946,6 +2957,45 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			}
 		}
 
+		/* Optional date */
+		if (Priv->Manufacturer == AT_Ericsson) {
+			pos += ATGEN_ExtractOneParameter(pos, buffer);
+			if (strlen(buffer) > 0) {
+				smprintf(s, "Date text: %s\n",buffer);
+
+				if (buffer[0] == '"') offset = 1;
+				else offset = 0;
+
+				/* Decode text */
+				switch (Priv->Charset) {
+				case AT_CHARSET_HEX:
+					DecodeHexBin(buffer2, buffer + offset, strlen(buffer) - (offset * 2));
+					DecodeDefault(Memory->Entries[2].Text,buffer2,strlen(buffer2),false,NULL);
+					break;
+				case AT_CHARSET_GSM:
+					DecodeDefault(Memory->Entries[2].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
+					break;
+				case AT_CHARSET_UCS2:
+					DecodeHexUnicode(Memory->Entries[2].Text, buffer + offset, strlen(buffer) - (offset * 2));
+					break;
+				case AT_CHARSET_IRA: /* IRA is ASCII only, so it's safe to treat is as UTF-8 */
+				case AT_CHARSET_UTF8:
+					DecodeUTF8(Memory->Entries[2].Text, buffer + offset, strlen(buffer) - (offset * 2));
+					break;
+				case AT_CHARSET_PCCP437:
+					/* FIXME: correctly decode PCCP437 */
+					DecodeDefault(Memory->Entries[2].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
+					break;
+				}
+
+				/* Decode date */
+				if (ATGEN_DecodeDateTime(s, &(Memory->Entries[2].Date), buffer) == ERR_NONE) {
+					Memory->Entries[2].EntryType = PBK_Date;
+					Memory->EntriesNum++;
+				}
+			}
+		}
+
 		return ERR_NONE;
 	case AT_Reply_CMEError:
 		return ATGEN_HandleCMEError(s);
@@ -4624,6 +4674,7 @@ GSM_Phone_Functions ATGENPhone = {
 };
 
 #endif
+/*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

@@ -1,7 +1,12 @@
 /* (c) 2006 by Michal Cihar */
 
-/**
+/** \file sonyeric.c
+ * \defgroup SEPhone Sony-Ericsson phones communication
  * High level functions for communication with Sony-Ericsson phones.
+ *
+ * This module heavily uses \ref ATPhone and \ref OBEXPhone modules.
+ *
+ * @{
  */
 
 #include "../../gsmstate.h"
@@ -233,7 +238,11 @@ GSM_Error SONYERICSSON_GetProductCode(GSM_StateMachine *s, char *value)
 }
 
 
-/* Wrapper functions for using AT module functionality */
+/**
+ * \defgroup SEAT Wrapper functions for using AT module functionality
+ * \ingroup SEPhone
+ * @{
+ */
 
 GSM_Error SONYERICSSON_GetIMEI (GSM_StateMachine *s)
 {
@@ -367,7 +376,9 @@ GSM_Error SONYERICSSON_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press
 {
 	GSM_Error error;
 
-	/* @todo: Implement completely using AT*EKEY */
+	/**
+	 * @todo Implement completely using AT*EKEY
+	 */
 	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_PressKey(s, Key, Press);
 }
@@ -556,7 +567,12 @@ GSM_Error SONYERICSSON_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	return ATGEN_SetBitmap(s, Bitmap);
 }
 
-/* OBEX native functions for filesystem */
+/*@}*/
+/**
+ * \defgroup SEOBEX OBEX native functions for filesystem
+ * \ingroup SEPhone
+ * @{
+ */
 
 GSM_Error SONYERICSSON_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
@@ -598,7 +614,12 @@ GSM_Error SONYERICSSON_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	return OBEXGEN_AddFolder(s, File);
 }
 
-/* Mixed AT mode/IrMC functions */
+/*@}*/
+/**
+ * \defgroup SEATIrMC Mixed AT mode/IrMC functions
+ * \ingroup SEPhone
+ * @{
+ */
 
 GSM_Error SONYERICSSON_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 {
@@ -690,7 +711,13 @@ GSM_Error SONYERICSSON_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 		return ATGEN_DeleteAllMemory(s, type);
 	}
 }
-/* Native IrMC functions using OBEX connection */
+
+/*@}*/
+/**
+ * \defgroup SEIrMC Native IrMC functions using OBEX connection
+ * \ingroup SEPhone
+ * @{
+ */
 
 GSM_Error SONYERICSSON_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
@@ -804,14 +831,22 @@ GSM_Error SONYERICSSON_DeleteAllCalendar (GSM_StateMachine *s)
 	return OBEXGEN_DeleteAllCalendar(s);
 }
 
-/* Native AT mode functions */
+/*@}*/
+/**
+ * \defgroup SENativeAT Native AT mode functions
+ * \ingroup SEPhone
+ * @{
+ */
 
+/**
+ * \author Peter Ondraska, based on code by Marcin Wiacek and Michal Cihar
+ *
+ * License: Whatever the current maintainer of gammulib chooses, as long as there
+ * is an easy way to obtain the source under GPL, otherwise the author's parts
+ * of this function are GPL 2.0.
+ */
 GSM_Error SONYERICSSON_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{ /*	Author: Peter Ondraska, based on code by Marcin Wiacek and Michal Cihar
-	License: Whatever the current maintainer of gammulib chooses, as long as there
-	is an easy way to obtain the source under GPL, otherwise the author's parts
-	of this function are GPL 2.0.
-  */
+{
 	GSM_Locale	*locale = s->Phone.Data.Locale;
 	int		format;
 	char		*pos;
@@ -854,13 +889,15 @@ GSM_Error SONYERICSSON_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMac
 	}
 }
 
+/**
+ * \author Peter Ondraska, based on code by Marcin Wiacek and Michal Cihar
+ *
+ * License: Whatever the current maintainer of gammulib chooses, as long as there
+ * is an easy way to obtain the source under GPL, otherwise the author's parts
+ * of this function are GPL 2.0.
+ */
 GSM_Error SONYERICSSON_ReplyGetTimeLocale(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-/*	Author: Peter Ondraska
-	License: Whatever the current maintainer of gammulib chooses, as long as there
-	is an easy way to obtain the source under GPL, otherwise the author's parts
-	of this function are GPL 2.0.
- */
 	int		format;
 	char		*pos;
 
@@ -880,6 +917,13 @@ GSM_Error SONYERICSSON_ReplyGetTimeLocale(GSM_Protocol_Message msg, GSM_StateMac
 	}
 }
 
+/**
+ * \author Peter Ondraska, based on code by Marcin Wiacek and Michal Cihar
+ *
+ * License: Whatever the current maintainer of gammulib chooses, as long as there
+ * is an easy way to obtain the source under GPL, otherwise the author's parts
+ * of this function are GPL 2.0.
+ */
 GSM_Error SONYERICSSON_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 {
 	GSM_Error error;
@@ -897,13 +941,15 @@ GSM_Error SONYERICSSON_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 	return GSM_WaitFor (s, "AT*ESTF?\r", 9, 0x00, 3, ID_GetLocale);
 }
 
+/**
+ * \author Peter Ondraska, based on code by Marcin Wiacek and Michal Cihar
+ *
+ * License: Whatever the current maintainer of gammulib chooses, as long as there
+ * is an easy way to obtain the source under GPL, otherwise the author's parts
+ * of this function are GPL 2.0.
+ */
 GSM_Error SONYERICSSON_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 {
-/*	Author: Peter Ondraska
-	License: Whatever the current maintainer of gammulib chooses, as long as there
-	is an easy way to obtain the source under GPL, otherwise the author's parts
-	of this function are GPL 2.0.
- */
 	/* this is not yet supported by gammu.c */
 	int	format=0;
 	char	req[12];
@@ -1109,6 +1155,8 @@ GSM_Error SONYERICSSON_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *
 	return error;
 }
 
+/*@}*/
+
 
 GSM_Phone_Functions SONYERICSSONPhone = {
 	/* There is much more SE phones which support this! */
@@ -1251,6 +1299,7 @@ GSM_Phone_Functions SONYERICSSONPhone = {
 
 #endif
 #endif
+/*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
