@@ -29,7 +29,7 @@ endif
 DEBVER=$(shell head -1 debian/changelog.main | tr -d \n | cut -d\( -f2|cut -d \) -f1)
 OLDVER=$(shell echo $(DEBVER) | cut -d- -f1)
 OLDREL=$(shell echo $(DEBVER) | cut -d- -f2)
-VER=$(shell cat version)
+VER=$(shell sed -e 's!\(,0\)$$!!' -e 's!,!.!g' version)
 ifeq ($(OLDVER),$(VER))
 		REL=$(OLDREL).0
 else

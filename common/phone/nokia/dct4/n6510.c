@@ -428,9 +428,20 @@ static GSM_Error N6510_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMac
 			}
 			CopyUnicodeString(Data->SMSFolders->Folder[num].Name,msg.Buffer + pos);
 			smprintf(s, ", folder name: \"%s\"\n",DecodeUnicodeString(Data->SMSFolders->Folder[num].Name));
+			Data->SMSFolders->Folder[num].InboxFolder = false;
+			Data->SMSFolders->Folder[num].Memory 	  = GMT_ME;
 			if (num == 0x00 || num == 0x02) {
+				if (num == 0x00) {
+					Data->SMSFolders->Folder[num].InboxFolder=true;
+				}
+				Data->SMSFolders->Folder[num].Memory = GMT_SM;
 				num++;
 				CopyUnicodeString(Data->SMSFolders->Folder[num].Name,msg.Buffer + pos);
+				Data->SMSFolders->Folder[num].Memory 	  = GMT_ME;
+				Data->SMSFolders->Folder[num].InboxFolder = false;
+				if (num == 0x01) {
+					Data->SMSFolders->Folder[num].InboxFolder=true;
+				}
 			}
 			num++;
 		}
@@ -700,6 +711,8 @@ static GSM_Error N6510_PrivGetSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 			sms->SMS[i].Folder 	= folderid;
 			sms->SMS[i].InboxFolder = true;
 			if (folderid != 0x01 && folderid != 0x02) sms->SMS[i].InboxFolder = false;
+			sms->SMS[i].Memory	= GMT_ME;
+			if (folderid == 0x01 || folderid == 0x03) sms->SMS[i].Memory = GMT_SM;
 			CopyUnicodeString(sms->SMS[i].Name,namebuffer);
 		}
 	}

@@ -20,6 +20,7 @@ typedef struct {
 	GSM_SAT_ChInfo	NeighbourCell[8];
 } GSM_SAT_Measure_results;
 
+void ATSIEMENSSATNetmon(int argc, char *argv[]);
 void ATSIEMENSNetmonitor(int argc, char *argv[]);
 #include "../../common/gsmstate.h"
 

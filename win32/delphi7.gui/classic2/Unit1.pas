@@ -17,6 +17,8 @@ type
     Label4: TLabel;
     Edit4: TEdit;
     Button1: TButton;
+    Label5: TLabel;
+    Edit5: TEdit;
     procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
@@ -45,7 +47,15 @@ begin
 	begin
 		error:=GSM_GetDCT4SimlockNetwork(Form1.PhoneID,@buffer);
     if (error <> GE_NONE) then application.MessageBox(pchar('Get simlock: error '+inttostr(integer(error))),'',0);
-    if (error = GE_NONE) then Form1.Edit3.Text:=buffer;
+    if (error = GE_NONE) then
+    begin
+      buffer[6]:=chr(0);
+      Form1.Edit3.Text:=buffer;
+    end;
+
+    error:=GSM_GetModelName(Form1.PhoneID,@buffer);
+    if (error = GE_NONE) then Form1.Edit5.Text:=buffer;
+    if (error <> GE_NONE) then application.MessageBox(pchar('Get model: error '+inttostr(integer(error))),'',0);
 
 		error:=GSM_GetIMEI(Form1.PhoneID,@buffer);
     if (error <> GE_NONE) then application.MessageBox(pchar('Get IMEI: error '+inttostr(integer(error))),'',0);

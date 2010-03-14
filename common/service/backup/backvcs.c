@@ -95,7 +95,7 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 		}
 	}
 
-	return GE_UNKNOWN;
+	return GE_NONE;
 }
 
 #endif

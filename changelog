@@ -22,6 +22,76 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20031125 - 0.90.0
+* new functionality:
+  * * added lots of API documentation                            (Michal Cihar)
+    * support for GetProductCode in Alcatel
+  * * support for AT^MI for Siemens                                     (Walek)
+    * --siemensnetmonitor renamed to --Siemenssatnetmon and extended 
+      with decoding in Mensure result info in 128, 256, 512 and 1024 format
+      ranges
+  * ADDED PART OF BLACKSPHERE PROJECT (THE MAIN FOR TASK IS UNDERSTANDING (W.J)
+    DCT3 PHONES FIRMWARE AND PREPARING OPEN SOURCE REPLACEMENT FOR IT).
+    CURRENTLY YOU NEED FILE WITH DEBUG TRACES (LIKE nhm5_587.txt).
+    gammu --nokiadebug nhm5_587.txt v20-25,v18-19 will enable displaying
+    traces for types 20-25 and 18-19 (you can give more ranges of course).
+    When use types 18-19, out.xml file is additionaly created. It can be parsed
+    later with OpenGPA.
+    For more about these things see http://zope.achterklap.nl:8080/nokia/
+  * new parameter "gammucoding" in gammurc. In Linux value (SMS WebMaster, ...)
+    "utf8" will force using UTF8 console support, in win32
+    can give codepage ("852", "1250", etc.) and specified
+    codepage will be used. Without it default values will
+    be used (default console coding). I haven't tested utf8 yet
+  * structure with sms folders contains info, whether folder is on SIM or
+    not and whether it's Inbox or not
+  * SMS structure contains info about memory, where SMS is saved
+  * 2 new GSM networks                                           (Timo Metsala)
+
+* fixes and improvements:
+  * * use soname in library                                      (Michal Cihar)
+    * makefile modified, so it now links only when needed
+    * makecleantree, makerpm and makedeb renamed to cleantree, rpm and deb
+    * configure uses cat <<EOT instead of several echos
+    * fixed version parsing in configure and debian/rules
+    * fixed pkgconfig files (contained bad path to includes)
+    * rename PBK_Name to PBK_Text_Name (all other text entries have such name)
+    * GSM_SecurityCode.Code has now len GSM_SECURITY_CODE_LEN and not
+      some hardcoded number
+    * Alcatel:
+      * fixed reading of alarms without date
+      * call ATGEN_Terminate from ALCATEL_Terminate
+      * alcabus now works okay over IrDA, the phone didn't like
+        fragmented packets
+    * AT models are separated to slow (M20) and fast (other). Fast work
+      fast now.
+    * fixed displaying of PictureID in gammu
+  * rpm changes:                                     (Michal Cihar, Soos Peter)
+    * should work on both Redhat and SUSE with correct Group,
+      path names etc.
+    * build requires bluez (can be disabled)
+    * added ldconfig to post/postun
+    * use a bit more rpm macros
+    * spec file moved to root of sources, this allows direct build of rpm
+      from tarball: `rpmbuild -ta tarball' 
+  * fix for n7110.c and 0xf8 sms folder during saving sms
+  * fix for incorrect folder name for --addnokiafile
+  * fix in decoding BASE64 and SE T68i calendar encoding                (Walek)
+  * removed stupid bug, which didn't allow to restore VCF and VCS files
+
+NOTE: Changed license of project. Before saying something see copying file for
+      info, why and how it's done.
+
+      I'm searching hard for any Siemens x35 or x45 (x means any) now and
+      maybe Nokia 3200 (6220 will be probably very expensive).
+
+      Maybe somebody will be interesting in giving (for some time ?) any cheap
+      DCT4 phone (maybe 6310i, maybe 3510i) to author of BlackSphere project.
+      He is a student, lives in The Netherlands and could start reversing DCT4
+      phones with it
+
+      Please expect big progress in AT commands in 0.91 version
+      
 20031109 - 0.89.0.0
 * new functionality:
   * encoder for VCARDS can save info about default number
@@ -315,7 +385,7 @@ NEWS: CVS available, Michal Cihar added md5 checksums and bzip2 files
   * debug is much more usable for unknown/incorrect frames. They're displayed
     too, when GSM_ReadDevice is used only
   * removed some overflow possibility with dll
-  * * GSM_PHONEBOOK_TEXT_LENGTH	= 200                            (Michal Cihar)
+  * * GSM_PHONEBOOK_TEXT_LENGTH = 200                            (Michal Cihar)
     * EncodeDefault works differently
   * international SMSC/Phonebook number without "+" is changed     (Jonathan L)
     to number with "+" (AT mode, Sony Ericsson)
@@ -1255,7 +1325,7 @@ NOTE: These days were very hard for me:
 
     NOTE: this is first version of Autoconf build system.
           Probably many things inside will be changed to better.
-	  All ideas very welcome.
+          All ideas very welcome.
 
   * dialvoice for DCT4
 

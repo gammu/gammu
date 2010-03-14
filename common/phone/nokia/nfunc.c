@@ -88,7 +88,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 				req[count++] = entry.Entries[i].VoiceTag;
 			}
 			break;
-		case PBK_Name:
+		case PBK_Text_Name:
 		case PBK_Text_Note:
 		case PBK_Text_Postal:
 		case PBK_Text_Email:
@@ -110,7 +110,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 					type = N7110_ENTRYTYPE_NOTE;
 					if (DCT4) type = N6510_ENTRYTYPE_URL;
 					break;
-				case PBK_Name:
+				case PBK_Text_Name:
 					type = N7110_ENTRYTYPE_NAME;	break;
 				default:				break;
 			}
@@ -189,7 +189,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
 			switch (Block[0]) {
 			case N7110_ENTRYTYPE_NAME:
-				entry->Entries[entry->EntriesNum].EntryType=PBK_Name;
+				entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Name;
 				if (entry->MemoryType==GMT7110_CG) {
 					memcpy(bitmap->Text,Block+6,Block[5]);
 				}

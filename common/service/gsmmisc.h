@@ -3,6 +3,52 @@
 
 #include "../gsmcomon.h"
 
+/* Define an enum for specifying memory types for retrieving phonebook
+ * entries, SMS messages etc. This type is not mobile specific - the model
+ * code should take care of translation to mobile specific numbers - see 6110
+ * code.
+ */
+typedef enum {
+	/* 01/07/99:    Two letter codes follow GSM 07.07 release 6.2.0 */
+	/**
+	 * Internal memory of the mobile equipment
+	 */
+	GMT_ME=1,
+	/**
+	 * SIM card memory
+	 */
+	GMT_SM,
+	/**
+	 * Own numbers
+	 */
+	GMT_ON,
+	/**
+	 * Dialled calls
+	 */
+	GMT_DC,
+	/**
+	 * Received calls
+	 */
+	GMT_RC,
+	/**
+	 * Missed calls
+	 */
+	GMT_MC,
+	/**
+	 * Combined ME and SIM phonebook
+	 */
+	GMT_MT,
+	/**
+	 * Fixed dial
+	 */
+	GMT_FD,
+
+	/**
+	 * Voice mailbox
+	 */
+	GMT_VM
+} GSM_MemoryType;
+
 /* --------------------------- resetting phone settings  ------------------- */
 
 typedef enum {
@@ -25,10 +71,14 @@ typedef enum {
 	GSCT_None                 /* Code not needed. 	*/
 } GSM_SecurityCodeType;
 
+#define GSM_SECURITY_CODE_LEN	15
+
 /* Security code definition. */
 typedef struct {
-	GSM_SecurityCodeType 	Type; 		/* Type of the code. 	*/
-	char 			Code[10];       /* Actual code. 	*/
+	/* Type of the code. */
+	GSM_SecurityCodeType 	Type;
+	/* Actual code. */
+	char 			Code[GSM_SECURITY_CODE_LEN+1];
 } GSM_SecurityCode;
 
 /* ---------------------------- keyboard ----------------------------------- */

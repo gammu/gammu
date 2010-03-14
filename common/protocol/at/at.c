@@ -12,19 +12,27 @@
 static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 				     int length, unsigned char type)
 {
-	int i;
+	int i,sent = 0;
 
 	GSM_DumpMessageLevel2(s, buffer, length, type);
 	GSM_DumpMessageLevel3(s, buffer, length, type);
-	for (i=0;i<length;i++) {
-		if (s->Device.Functions->WriteDevice(s,buffer+i,1)!=1) return GE_DEVICEWRITEERROR;
-		/* For some phones like Siemens M20 we need to wait a little
-		 * after writing each char. Possible reason: these phones
-		 * can't receive so fast chars or there is bug here in Gammu */
-		my_sleep(1);
+	if (s->Protocol.Data.AT.FastWrite) {
+		while (sent != length) {
+			if ((i = s->Device.Functions->WriteDevice(s,buffer + sent, length - sent)) == 0) {
+				return GE_DEVICEWRITEERROR;
+			}
+			sent += i;
+		}
+	} else {
+		for (i=0;i<length;i++) {
+			if (s->Device.Functions->WriteDevice(s,buffer+i,1)!=1) return GE_DEVICEWRITEERROR;
+			/* For some phones like Siemens M20 we need to wait a little
+			 * after writing each char. Possible reason: these phones
+			 * can't receive so fast chars or there is bug here in Gammu */
+			my_sleep(1);
+		} 
+		my_sleep(400);
 	}
-
-	my_sleep(400);
 
 	return GE_NONE;
 }
@@ -118,6 +126,7 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 	d->linestart 		= NULL;
 	d->EditMode		= false;
 	d->Msg.Type		= 0;
+	d->FastWrite		= false;
 
 	s->Device.Functions->DeviceSetDtrRts(s,true,true);
 

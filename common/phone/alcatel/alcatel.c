@@ -33,7 +33,7 @@
 #include "alcatel.h"
 
 /* Timeout for GSM_WaitFor calls. */
-#define ALCATEL_TIMEOUT			128
+#define ALCATEL_TIMEOUT			64
 
 /* Some magic numbers for protocol follow */
 
@@ -58,6 +58,7 @@ extern GSM_Reply_Function ALCATELReplyFunctions[];
 extern GSM_Reply_Function ATGENReplyFunctions[];
 
 extern GSM_Error ATGEN_Initialise		(GSM_StateMachine *s);
+extern GSM_Error ATGEN_Terminate		(GSM_StateMachine *s);
 extern GSM_Error ATGEN_GetIMEI 			(GSM_StateMachine *s);
 extern GSM_Error ATGEN_GetFirmware		(GSM_StateMachine *s);
 extern GSM_Error ATGEN_GetModel			(GSM_StateMachine *s);
@@ -588,12 +589,14 @@ static GSM_Error ALCATEL_Initialise(GSM_StateMachine *s)
 
 static GSM_Error ALCATEL_Terminate(GSM_StateMachine *s)
 {
+	GSM_Error 		error;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
 	free(Priv->CalendarItems);
 	free(Priv->ContactsItems);
 	free(Priv->ToDoItems);
-	return ALCATEL_SetATMode(s);
+	error = ALCATEL_SetATMode(s);
+	return ATGEN_Terminate(s);
 }
 
 /* finds whether id is set in the phone */
@@ -1796,7 +1799,7 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 					}
 					break;
 
-				case PBK_Name: NamePosition = i; break;
+				case PBK_Text_Name: NamePosition = i; break;
 				/* Following fields are not supported: */
 				case PBK_Date:
 				case PBK_Caller_Group:
@@ -1961,7 +1964,7 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 					}
 					break;
 
-				case PBK_Name: NamePosition = i; break;
+				case PBK_Text_Name: NamePosition = i; break;
 				/* Following fields are not supported: */
 				case PBK_Date:
 				case PBK_Caller_Group:
@@ -2995,7 +2998,9 @@ static GSM_Error ALCATEL_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int			i;
 	bool			Found = false;
+	bool			DateSet = false;
 	int			alarm_number = alarm->Location;
+	static GSM_DateTime	nulldt = {0,0,0,0,0,0,0};
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= GE_NONE) return error;
 	if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
@@ -3035,7 +3040,11 @@ static GSM_Error ALCATEL_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 			CopyUnicodeString(alarm->Text, Note.Entries[i].Text);
 		} else if (Note.Entries[i].EntryType == CAL_ALARM_DATETIME) {
 			alarm->DateTime = Note.Entries[i].Date;
+			DateSet = false;
 		}
+	}
+	if (!DateSet) {
+		alarm->DateTime = nulldt;
 	}
 
 	return GE_NONE;
@@ -3651,6 +3660,12 @@ static GSM_Error ALCATEL_GetCategory(GSM_StateMachine *s, GSM_Category *Category
 	return GE_NONE;
 }
 
+static GSM_Error ALCATEL_GetProductCode(GSM_StateMachine *s, char *value)
+{
+       strcpy(value, s->Phone.Data.ModelInfo->model);
+       return GE_NONE;
+}
+
 static GSM_Error ALCATEL_DispatchMessage(GSM_StateMachine *s)
 {
 	if (s->Phone.Data.Priv.ALCATEL.Mode == ModeBinary) {
@@ -3704,6 +3719,7 @@ static GSM_Error ALCATEL_ReplyCommit(GSM_Protocol_Message msg, GSM_StateMachine 
 	return GE_NONE;
 }
 
+
 static GSM_Reply_Function ALCATELReplyFunctions[] = {
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelAttach		},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelDetach		},
@@ -3751,7 +3767,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	ALCATEL_GetIMEI,
 	NOTSUPPORTED,			/* 	GetOriginalIMEI		*/
 	NOTSUPPORTED,			/* 	GetManufactureMonth	*/
-	NOTSUPPORTED,			/* 	GetProductCode		*/
+        ALCATEL_GetProductCode,
 	NOTSUPPORTED,			/* 	GetHardware		*/
 	NOTSUPPORTED,			/* 	GetPPM			*/
 	ALCATEL_GetSIMIMSI,

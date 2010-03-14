@@ -1,6 +1,11 @@
 USEUNIT("..\gammu.c");
 USEUNIT("..\sniff.c");
 USEUNIT("..\depend\dct3.c");
+USEUNIT("..\depend\dct3trac\wmx.c");
+USEUNIT("..\depend\dct3trac\wmx-gsm.c");
+USEUNIT("..\depend\dct3trac\wmx-list.c");
+USEUNIT("..\depend\dct3trac\wmx-sim.c");
+USEUNIT("..\depend\dct3trac\wmx-util.c");
 USEUNIT("..\depend\dct4.c");
 USEUNIT("..\depend\dsiemens.c");
 USEUNIT("..\smsd\s_files.c");

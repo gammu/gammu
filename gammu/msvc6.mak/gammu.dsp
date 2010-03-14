@@ -125,6 +125,26 @@ SOURCE=..\depend\dct3.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\depend\dct3trac\wmx.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\wmx-gsm.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\wmx-list.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\wmx-sim.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\wmx-util.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\phone\nokia\dct3\dct3func.c
 # End Source File
 # Begin Source File
@@ -358,6 +378,46 @@ SOURCE=..\..\common\misc\coding\md5.h
 # Begin Source File
 
 SOURCE=..\depend\dct3.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\wmx.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\wmx-gsm.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\wmx-list.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\wmx-sim.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\wmx-util.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\type-cc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\type-mm.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\type-rr.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\type-sms.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dct3trac\type-ss.h
 # End Source File
 # Begin Source File
 

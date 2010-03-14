@@ -3,7 +3,7 @@ Gammu README version 10.10.2003
 Q. What is this ?
 
 A. This is package with different tools and drivers for Nokia and other mobile
-   phones released under GNU GPL license (see /copying file).
+   phones released under GNU GPL/LGPL license (see /copying file).
 
    It's created by Marcin Wiacek and other people and based on some experiences
    from Gnokii (www.gnokii.org) and MyGnokii (www.mwiacek.com) projects.
@@ -16,21 +16,17 @@ A. This is package with different tools and drivers for Nokia and other mobile
 -------------------------------------------------------------------------------
 Q. Can I use Gammu (Gammu dll or library) in own (commercial) applications ?
 
-A. Gammu is currently licensed under GNU GPL license. It means, that each
-   application using it have to be published with source. So, when you link
-   Gammu source in own, you should inform me and publish it with source.
+A. Gammu is currently licensed under GNU GPL license for normal users. It
+   means, that each application using it have to be published with source.
+   So, when you link Gammu source in own, you should inform me and publish
+   it with source. When use Gammu dll or library, you also HAVE to publish
+   your source.
 
-   When use Gammu dll or library, you also should publish your source. This
-   is how many people see GNU GPL. I won't make any problems, if your source
-   will be unavailable (of course, still show somewhere link to Gammu source
-   and info about it).
+   If You want LGPL for some project(s), You HAVE to donate.
 
-   If you think, that I break GNU GPL and situation is not clear, I could maybe
-   change license to different (like LGPL).
-
-   NOTE: If you want to use Gammu in own (commercional) applications, it will
-         be fair to give some gift like small sum of money, old phone, etc.
-         to author(s). It will be used for improving this software.
+   NOTE: If you want to use Gammu in own applications, it will be fair to give
+         some gift like small sum of money, old phone, etc. to author(s). It
+         will be used for improving this software.
 -------------------------------------------------------------------------------
 Q. How can I help in writing this software ?
 
@@ -47,7 +43,7 @@ A. HELP IS VERY REQUIRED. Methods are many:
 
    etc.
 -------------------------------------------------------------------------------
-Q. What are things ToDo ?
+Q. What are things ToDo/planned ?
 
 A. * these things can be done without anything (it will be done everything
      to make them):
@@ -75,6 +71,8 @@ A. * these things can be done without anything (it will be done everything
          that new phones probably have new features in FM radio), notes
      * Other:
        * more EMS features: polyphonic ringtones, more text features, etc.
+       * all Siemens features
+       * all Motorola features
      * .... (other)
 -------------------------------------------------------------------------------
 Q. Where to get latest versions and support ?
@@ -659,6 +657,8 @@ A. * www.mwiacek.com
      * GSM EQUIPMENT & HARDWARE
      * FREE FLASHES, LOGO'S, RINGTONES
      * FREE INSTRUCTIONS, SCHEMES
+   * http://zope.achterklap.nl:8080/nokia/
+     * reversing DCT3 phones
 -------------------------------------------------------------------------------
 Q. Nokia and other manufactures provides original software. What original
    applications can be replaced with Gammu ?

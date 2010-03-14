@@ -1,3 +1,9 @@
+gammu (0.89-1) unstable; urgency=low
+
+  * Fixed version parsing.
+
+ -- Michal Cihar <michal@cihar.com>  Mon, 10 Nov 2003 21:10:11 +0100
+
 gammu (0.88-1) unstable; urgency=low
 
   * Fixed docs installation.

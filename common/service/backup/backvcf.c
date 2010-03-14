@@ -64,7 +64,7 @@ GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
 		numPbk++;
 	}
 
-	return GE_UNKNOWN;
+	return GE_NONE;
 }
 
 #endif

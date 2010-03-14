@@ -281,7 +281,7 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				sprintf(buffer,"Entry%02iType = URL%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
-			case PBK_Name:
+			case PBK_Text_Name:
 				sprintf(buffer,"Entry%02iType = Name%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
@@ -1213,7 +1213,7 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_MemoryEntry *
 			} else if (mystrncasecmp(readvalue,"Custom4",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom4;
 			} else if (mystrncasecmp(readvalue,"Name",0)) {
-				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Name;
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Name;
 			} else if (mystrncasecmp(readvalue,"Category",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Category;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;

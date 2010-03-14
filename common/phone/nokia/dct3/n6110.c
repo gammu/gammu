@@ -118,10 +118,6 @@ static void N6110_EncodeUnicode(GSM_StateMachine *s, unsigned char *dest, const 
 
 
 /* This function provides Nokia authentication protocol.
- * This code is written specially for Gnokii project by Odinokov Serge.
- * If you have some special requests for Serge just write him to
- * apskaita@post.omnitel.net or serge@takas.lt
- * Reimplemented in C by Pavel Janík ml.
  * Nokia authentication protocol is used in the communication between Nokia
  * mobile phones (e.g. Nokia 6110) and Nokia Cellular Data Suite software,
  * commercially sold by Nokia Corp.
@@ -289,7 +285,7 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 				smprintf(s, "Too long text\n");
 				return GE_UNKNOWNRESPONSE;
 			}
-			Data->Memory->Entries[Data->Memory->EntriesNum].EntryType=PBK_Name;
+			Data->Memory->Entries[Data->Memory->EntriesNum].EntryType=PBK_Text_Name;
 			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOPBKUNICODE)) {
 				if (Data->Memory->MemoryType==GMT_DC ||
 		  		    Data->Memory->MemoryType==GMT_RC ||
