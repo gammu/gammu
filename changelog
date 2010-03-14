@@ -31,12 +31,22 @@ This software was sponsored (in time order) by:
 16. Mattias Sjosvard
 17. Jackpot
 18. Thomas Vill
+19. Michael Hansen
+20. Saul Kato
 
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20050727 - 1.02.00
+* new functionality:
+  * some support for 6230i caller groups in pbk
+  * some things disabled for 6230i for now
+
+* fixes and improvements:
+  * startup fix for SE based AT modems                            (Michal Cihar)
+
 20050711 - 1.01.25
 * new functionality:
   * simple daemon (other/sqlreply) for making SQL actions and running programs 

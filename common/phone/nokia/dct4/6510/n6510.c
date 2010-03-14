@@ -1407,6 +1407,8 @@ static GSM_Error N6510_EnableConnectionFunctions(GSM_StateMachine *s, N6510_Conn
 	unsigned char 	req3[] = {N6110_FRAME_HEADER, 0x00, 0x03};
 	unsigned char 	req4[] = {N6110_FRAME_HEADER, 0x00, 0x04};
 
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iWAP)) return ERR_NOTSUPPORTED;
+
 	if (Type == N6510_MMS_SETTINGS    && IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOMMS)) return ERR_NOTSUPPORTED;
 	if (Type == N6510_CHAT_SETTINGS   && !IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CHAT)) return ERR_NOTSUPPORTED;
 	if (Type == N6510_SYNCML_SETTINGS && !IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SYNCML)) return ERR_NOTSUPPORTED;
@@ -3011,6 +3013,9 @@ static GSM_Error N6510_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 		return ERR_NOTSUPPORTED;
 	}
 	if (!strcmp(s->Phone.Data.ModelInfo->model,"5140")) {
+		return ERR_NOTSUPPORTED;
+	}
+	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230i")) {
 		return ERR_NOTSUPPORTED;
 	}
 
