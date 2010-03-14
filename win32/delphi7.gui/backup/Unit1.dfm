@@ -70,7 +70,7 @@ object BackupForm: TBackupForm
         Width = 121
         Height = 25
         Caption = 'Try to connect'
-        TabOrder = 0
+        TabOrder = 1
         OnClick = Button1Click
       end
       object GroupBox3: TGroupBox
@@ -80,7 +80,7 @@ object BackupForm: TBackupForm
         Height = 72
         Align = alTop
         Caption = 'Connection parameters'
-        TabOrder = 1
+        TabOrder = 0
         object Label7: TLabel
           Left = 8
           Top = 16
@@ -167,14 +167,16 @@ object BackupForm: TBackupForm
           Top = 16
           Width = 233
           Height = 21
+          TabStop = False
           ReadOnly = True
-          TabOrder = 0
+          TabOrder = 2
         end
         object IMEIEdit: TEdit
           Left = 144
           Top = 40
           Width = 233
           Height = 21
+          TabStop = False
           ReadOnly = True
           TabOrder = 1
         end
@@ -183,8 +185,9 @@ object BackupForm: TBackupForm
           Top = 64
           Width = 233
           Height = 21
+          TabStop = False
           ReadOnly = True
-          TabOrder = 2
+          TabOrder = 0
         end
       end
     end
@@ -394,15 +397,6 @@ object BackupForm: TBackupForm
           TabOrder = 17
           OnClick = CheckBox9Click
         end
-        object CheckBox10: TCheckBox
-          Left = 168
-          Top = 184
-          Width = 129
-          Height = 17
-          Caption = 'Phone profiles'
-          TabOrder = 18
-          OnClick = CheckBox10Click
-        end
       end
     end
     object TabSheet4: TTabSheet
@@ -435,7 +429,7 @@ object BackupForm: TBackupForm
     Width = 81
     Height = 25
     Caption = 'Next'
-    TabOrder = 1
+    TabOrder = 4
     OnClick = NextButtonClick
   end
   object PrevButton: TButton
@@ -454,7 +448,7 @@ object BackupForm: TBackupForm
     Width = 81
     Height = 25
     Caption = 'About'
-    TabOrder = 3
+    TabOrder = 1
     OnClick = Button8Click
   end
   object StatusBar1: TStatusBar

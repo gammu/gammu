@@ -1,16 +1,16 @@
 /* (c) 2002-2003 by Marcin Wiacek */
 
-#include "../../common/gsmstate.h"
+#include "../../../common/gsmstate.h"
 
 #ifdef GSM_ENABLE_NOKIA_DCT4
 
 #include <string.h>
 
 #include "dct4.h"
-#include "../gammu.h"
-#include "../../common/phone/nokia/nfunc.h"
-#include "../../common/phone/nokia/dct4/dct4func.h"
-#include "../../common/misc/coding/coding.h"
+#include "../../gammu.h"
+#include "../../../common/phone/nokia/nfunc.h"
+#include "../../../common/phone/nokia/dct4/dct4func.h"
+#include "../../../common/misc/coding/coding.h"
 
 extern GSM_Reply_Function UserReplyFunctions4[];
 

@@ -3725,10 +3725,14 @@ static GSM_Error N6510_ReplyGetFileFolderInfo(GSM_Protocol_Message msg, GSM_Stat
 				File->Type = GSM_File_Image_GIF;
 			else if (msg.Buffer[i]==0x02 && msg.Buffer[i+2]==0x09)
 				File->Type = GSM_File_Image_WBMP;
-			else if (msg.Buffer[i]==0x10 && msg.Buffer[i+2]==0x01)
-				File->Type = GSM_File_Java_JAR;
-			else if (msg.Buffer[i]==0x04 && msg.Buffer[i+2]==0x02)
-				File->Type = GSM_File_Ringtone_MIDI;
+                        else if (msg.Buffer[i]==0x04 && msg.Buffer[i+2]==0x01)
+                                File->Type = GSM_File_Sound_AMR;
+                        else if (msg.Buffer[i]==0x04 && msg.Buffer[i+2]==0x02)
+                                File->Type = GSM_File_Sound_MIDI;
+                        else if (msg.Buffer[i]==0x08 && msg.Buffer[i+2]==0x05)
+                                File->Type = GSM_File_Video_3GP;
+                        else if (msg.Buffer[i]==0x10 && msg.Buffer[i+2]==0x01)
+                                File->Type = GSM_File_Java_JAR;
 #if DEVELOP
 			else if (msg.Buffer[i]==0x00 && msg.Buffer[i+2]==0x01)
 				File->Type = GSM_File_MMS;
@@ -3766,7 +3770,7 @@ static GSM_Error N6510_ReplyGetFileFolderInfo(GSM_Protocol_Message msg, GSM_Stat
 		return ERR_NONE;		
 	case 0x43:
 		Priv->FileCheckSum = msg.Buffer[6] * 256 + msg.Buffer[7];
-		smprintf(s,"File checksum from phone is %i\n",Priv->FileCheckSum);
+		smprintf(s,"File checksum from phone is %04X\n",Priv->FileCheckSum);
 		return ERR_NONE;
 	}
 	return ERR_UNKNOWNRESPONSE;
@@ -3979,11 +3983,10 @@ static GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File)
 	GSM_Error		error;
 	unsigned char 		req[] = {
 		N7110_FRAME_HEADER, 0x0E, 0x00, 0x00, 0x00, 0x01,
-		0x00, 0x01,	/* Folder or file number */
+		0x00, 0x01,		/* Folder or file number */
+		0x00, 0x00, 0x00, 0x00,	/* Start from xxx byte */
 		0x00, 0x00,
-		0x00, 0x00,	/* Start from xxx byte */
-		0x00, 0x00,
-		0x03, 0xE8};	/* Read xxx bytes */
+		0x03, 0xE8};		/* Read xxx bytes */
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
@@ -3993,11 +3996,13 @@ static GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File)
 		File->Used = 0;
 	}
 
+	old			= File->Used;
 	req[8] 			= atoi(File->ID_FullName) / 256;
 	req[9] 			= atoi(File->ID_FullName) % 256;
-	old			= File->Used;
-	req[12] 		= old / 256;
-	req[13] 		= old % 256;
+        req[10]                 = old / (256*256*256);
+        req[11]                 = old / (256*256);
+        req[12]                 = old / 256;
+        req[13]                 = old % 256;
 
 	s->Phone.Data.File 	= File;
 	smprintf(s, "Getting file part from filesystem\n");
@@ -4078,16 +4083,20 @@ static GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos
 		Header[9] = atoi(File->ID_FullName) % 256;
 		memset(Header+14, 0x00, 300);
 		CopyUnicodeString(Header+14,File->Name);
-		Header[224] = File->Used / 256;
-		Header[225] = File->Used % 256;
+                Header[222] = File->Used / (256*256*256);
+                Header[223] = File->Used / (256*256);
+                Header[224] = File->Used / 256;
+                Header[225] = File->Used % 256;
 		switch(File->Type) {
 			case GSM_File_Image_JPG    : Header[231]=0x02; Header[233]=0x01; break;
 			case GSM_File_Image_BMP    : Header[231]=0x02; Header[233]=0x02; break;
 			case GSM_File_Image_PNG    : Header[231]=0x02; Header[233]=0x03; break;
 			case GSM_File_Image_GIF    : Header[231]=0x02; Header[233]=0x05; break;
 			case GSM_File_Image_WBMP   : Header[231]=0x02; Header[233]=0x09; break;
-			case GSM_File_Ringtone_MIDI: Header[231]=0x04; Header[233]=0x05; break; //Header[238]=0x01; 
-			case GSM_File_Java_JAR     : Header[231]=0x10; Header[233]=0x01; break;
+            case GSM_File_Sound_AMR    : Header[231]=0x04; Header[233]=0x01; break;
+            case GSM_File_Sound_MIDI   : Header[231]=0x04; Header[233]=0x05; break; //Header[238]=0x01; 
+            case GSM_File_Video_3GP    : Header[231]=0x08; Header[233]=0x05; break;
+            case GSM_File_Java_JAR     : Header[231]=0x10; Header[233]=0x01; break;
 #ifdef DEVELOP
 			case GSM_File_MMS:
 				Header[214]=0x07;
@@ -4161,8 +4170,10 @@ static GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos
 			case GSM_File_Image_PNG    : Header[231]=0x02; Header[233]=0x03; break;
 			case GSM_File_Image_GIF    : Header[231]=0x02; Header[233]=0x05; break;
 			case GSM_File_Image_WBMP   : Header[231]=0x02; Header[233]=0x09; break;
-			case GSM_File_Ringtone_MIDI: Header[231]=0x04; Header[233]=0x05; break; //Header[238]=0x01; 
-			case GSM_File_Java_JAR     : Header[231]=0x10; Header[233]=0x01; break;
+            case GSM_File_Sound_AMR    : Header[231]=0x04; Header[233]=0x01; break;
+            case GSM_File_Sound_MIDI   : Header[231]=0x04; Header[233]=0x05; break; //Header[238]=0x01; 
+            case GSM_File_Video_3GP    : Header[231]=0x08; Header[233]=0x05; break;
+            case GSM_File_Java_JAR     : Header[231]=0x10; Header[233]=0x01; break;
 #ifdef DEVELOP
 			case GSM_File_MMS:
 				Header[214]=0x07;
@@ -4715,7 +4726,7 @@ static GSM_Error N6510_DeleteToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 
 	if (ToDo->Location > LastToDo->Number || ToDo->Location == 0) return ERR_INVALIDLOCATION;
 
-	Note.Location = LastToDo->Location[ToDo->Location];
+	Note.Location = LastToDo->Location[ToDo->Location-1];
 	return N71_65_DelCalendar(s,&Note);
 }
 

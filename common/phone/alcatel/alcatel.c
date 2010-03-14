@@ -1434,7 +1434,8 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 		for (i=0; i<Priv->CurrentFieldsCount; i++) {
 			if ((error = ALCATEL_GetFieldValue(s, entry->Location, Priv->CurrentFields[i]))!= ERR_NONE) return error;
-			entry->Entries[i].VoiceTag = 0;
+			entry->Entries[i].VoiceTag   = 0;
+			entry->Entries[i].SMSList[0] = 0;
 			switch (Priv->CurrentFields[i]) {
 				case 0:
 					if (Priv->ReturnType != Alcatel_string) {
@@ -1854,6 +1855,7 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 				case PBK_Text_Name: NamePosition = i; break;
 				/* Following fields are not supported: */
+				case PBK_SMSListID:
 				case PBK_RingtoneFileSystemID:
 				case PBK_Date:
 				case PBK_Caller_Group:
@@ -2020,6 +2022,7 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 				case PBK_Text_Name: NamePosition = i; break;
 				/* Following fields are not supported: */
+				case PBK_SMSListID:
 				case PBK_RingtoneFileSystemID:
 				case PBK_Date:
 				case PBK_Caller_Group:

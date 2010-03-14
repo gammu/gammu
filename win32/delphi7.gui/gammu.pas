@@ -322,6 +322,13 @@ function GSM_BackupToDo			(Phone: Integer; Percent: PInteger):GSM_Error; stdcall
 function GSM_EndBackup			(FileName:PChar; UseUnicode: Boolean):GSM_Error; stdcall; external 'gammu.dll' name 'myendbackup';
 function GSM_RestorePhonePBK		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'myrestorephonepbk';
 function GSM_RestoreSIMPBK		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'myrestoresimpbk';
+function GSM_RestoreCalendar		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'myrestorecalendar';
+function GSM_RestoreToDo		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'myrestoretodo';
+function GSM_RestoreWAPBookmark		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'myrestorewapbookmark';
+function GSM_RestoreWAPSettings		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'myrestorewapsettings';
+function GSM_RestoreMMSSettings		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'myrestoremmssettings';
+function GSM_RestoreFMRadio		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'myrestorefmradio';
+function GSM_RestoreGPRSPoint		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'myrestoregprspoint';
 
 function GetGammuUnicodeString		(Source : AnsiString):string;
 

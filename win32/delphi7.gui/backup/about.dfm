@@ -1,9 +1,9 @@
 object AboutForm: TAboutForm
-  Left = 321
-  Top = 222
+  Left = 336
+  Top = 267
   BorderStyle = bsDialog
   Caption = 'About...'
-  ClientHeight = 159
+  ClientHeight = 114
   ClientWidth = 247
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -12,11 +12,12 @@ object AboutForm: TAboutForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton
     Left = 80
-    Top = 128
+    Top = 80
     Width = 97
     Height = 25
     Caption = '&OK'
@@ -27,46 +28,23 @@ object AboutForm: TAboutForm
     Left = 8
     Top = 8
     Width = 233
-    Height = 105
+    Height = 65
     TabOrder = 1
     object Label1: TLabel
       Left = 8
       Top = 16
-      Width = 217
+      Width = 179
       Height = 13
       Alignment = taCenter
       Caption = 'Created by Marcin Wi'#261'cek and others'
     end
-    object Label2: TLabel
-      Left = 8
-      Top = 32
-      Width = 217
-      Height = 13
-      Alignment = taCenter
-      Caption = 'Sponsored by MatrixFlasher team'
-    end
     object Label3: TLabel
       Left = 8
-      Top = 48
-      Width = 217
+      Top = 40
+      Width = 35
       Height = 13
       Alignment = taCenter
       Caption = 'Version'
-    end
-    object Label4: TLabel
-      Left = 8
-      Top = 80
-      Width = 217
-      Height = 13
-      Alignment = taCenter
-      Caption = 'Homepage'
-    end
-    object Panel1: TPanel
-      Left = 8
-      Top = 72
-      Width = 217
-      Height = 2
-      TabOrder = 0
     end
   end
 end

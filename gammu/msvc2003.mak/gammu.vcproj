@@ -174,13 +174,13 @@
 				RelativePath="..\..\common\misc\coding\coding.c">
 			</File>
 			<File
-				RelativePath="..\depend\dct3.c">
+				RelativePath="..\depend\nokia\dct3.c">
 			</File>
 			<File
 				RelativePath="..\..\common\phone\nokia\dct3\dct3func.c">
 			</File>
 			<File
-				RelativePath="..\depend\dct4.c">
+				RelativePath="..\depend\nokia\dct4.c">
 			</File>
 			<File
 				RelativePath="..\..\common\phone\nokia\dct4\dct4func.c">
@@ -189,19 +189,10 @@
 				RelativePath="..\..\common\device\devfunc.c">
 			</File>
 			<File
-				RelativePath="..\depend\dsiemens.c">
-				<FileConfiguration
-					Name="Release|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32">
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)/$(InputName)1.obj"/>
-				</FileConfiguration>
+				RelativePath="..\depend\siemens\dsiemens.c">
+			</File>
+			<File
+				RelativePath="..\depend\siemens\chiffre.c">
 			</File>
 			<File
 				RelativePath="..\..\common\protocol\nokia\fbus2.c">
@@ -324,19 +315,19 @@
 				RelativePath="..\..\common\phone\at\sonyeric.c">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\wmx-gsm.c">
+				RelativePath="..\depend\nokia\dct3trac\wmx-gsm.c">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\wmx-list.c">
+				RelativePath="..\depend\nokia\dct3trac\wmx-list.c">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\wmx-sim.c">
+				RelativePath="..\depend\nokia\dct3trac\wmx-sim.c">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\wmx-util.c">
+				RelativePath="..\depend\nokia\dct3trac\wmx-util.c">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\wmx.c">
+				RelativePath="..\depend\nokia\dct3trac\wmx.c">
 			</File>
 		</Filter>
 		<Filter
@@ -388,7 +379,7 @@
 				RelativePath="..\..\common\misc\coding\coding.h">
 			</File>
 			<File
-				RelativePath="..\depend\dct3.h">
+				RelativePath="..\depend\nokia\dct3.h">
 			</File>
 			<File
 				RelativePath="..\..\common\phone\nokia\dct3\dct3comm.h">
@@ -397,7 +388,7 @@
 				RelativePath="..\..\common\phone\nokia\dct3\dct3func.h">
 			</File>
 			<File
-				RelativePath="..\depend\dct4.h">
+				RelativePath="..\depend\nokia\dct4.h">
 			</File>
 			<File
 				RelativePath="..\..\common\phone\nokia\dct4\dct4func.h">
@@ -406,7 +397,10 @@
 				RelativePath="..\..\common\device\devfunc.h">
 			</File>
 			<File
-				RelativePath="..\depend\dsiemens.h">
+				RelativePath="..\depend\siemens\dsiemens.h">
+			</File>
+			<File
+				RelativePath="..\depend\siemens\chiffre.h">
 			</File>
 			<File
 				RelativePath="..\..\common\protocol\nokia\fbus2.h">
@@ -526,34 +520,34 @@
 				RelativePath="..\sniff.h">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\type-cc.h">
+				RelativePath="..\depend\nokia\dct3trac\type-cc.h">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\type-mm.h">
+				RelativePath="..\depend\nokia\dct3trac\type-mm.h">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\type-rr.h">
+				RelativePath="..\depend\nokia\dct3trac\type-rr.h">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\type-sms.h">
+				RelativePath="..\depend\nokia\dct3trac\type-sms.h">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\type-ss.h">
+				RelativePath="..\depend\nokia\dct3trac\type-ss.h">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\wmx-gsm.h">
+				RelativePath="..\depend\nokia\dct3trac\wmx-gsm.h">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\wmx-list.h">
+				RelativePath="..\depend\nokia\dct3trac\wmx-list.h">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\wmx-sim.h">
+				RelativePath="..\depend\nokia\dct3trac\wmx-sim.h">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\wmx-util.h">
+				RelativePath="..\depend\nokia\dct3trac\wmx-util.h">
 			</File>
 			<File
-				RelativePath="..\depend\dct3trac\wmx.h">
+				RelativePath="..\depend\nokia\dct3trac\wmx.h">
 			</File>
 		</Filter>
 	</Files>

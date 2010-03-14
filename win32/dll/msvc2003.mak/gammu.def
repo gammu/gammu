@@ -52,3 +52,10 @@ EXPORTS
 	mygetbackupdatetime		@42
 	myrestorephonepbk		@43
 	myrestoresimpbk			@44
+	myrestorecalendar		@45
+	myrestoretodo			@46
+	myrestorewapbookmark		@47
+	myrestorewapsettings		@48
+	myrestoremmssettings		@49
+	myrestoregprspoint		@50
+	myrestorefmradio		@51

@@ -13,7 +13,7 @@ void DCT3GetT9		 (int argc, char *argv[]);
 
 GSM_Error CheckDCT3Only();
 
-#include "../../common/gsmstate.h"
+#include "../../../common/gsmstate.h"
 
 #ifdef GSM_ENABLE_NOKIA6110
 void DCT3GetOperatorName (int argc, char *argv[]);

@@ -949,8 +949,7 @@ GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT,
 		while (INPUT[i] != NULL) {
 			if (INPUT[i]->SMS[0].UDH.Type == UDH_UserUDH) {
 				w=1;
-				while (1) {
-					if (w >= INPUT[i]->SMS[0].UDH.Length) break;
+				while (w < INPUT[i]->SMS[0].UDH.Length) {
 					switch(INPUT[i]->SMS[0].UDH.Text[w]) {
 					case 0x00:
 						dbgprintf("Adding ID to user UDH - linked SMS with 8 bit ID\n");

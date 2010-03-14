@@ -1,6 +1,6 @@
 /* (c) 2002-2003 by Marcin Wiacek */
 
-#include "../../common/gsmstate.h"
+#include "../../../common/gsmstate.h"
 
 void DCT4SetPhoneMenus	   (int argc, char *argv[]);
 void DCT4SelfTests	   (int argc, char *argv[]);

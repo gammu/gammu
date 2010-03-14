@@ -299,8 +299,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	SplitLines(msg->Buffer, msg->Length, &Priv->Lines, "\x0D\x0A", 2, true);
 
 	/* Find number of lines */
-	while (1) {
-		if (Priv->Lines.numbers[i*2+1]==0) break;
+	while (Priv->Lines.numbers[i*2+1] != 0) {
 		/* FIXME: handle special chars correctly */
 		smprintf(s, "%i \"%s\"\n",i+1,GetLineString(msg->Buffer,Priv->Lines,i+1));
 		i++;
@@ -1653,10 +1652,11 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		smprintf(s, "Error %i\n",Priv->ErrorCode);
  		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,Priv->ErrorCode,0);
  		return ATGEN_HandleCMSError(s);
+	case AT_Reply_Error:
+		return ERR_UNKNOWN;
 	default:
-		break;
+		return ERR_UNKNOWNRESPONSE;
 	}
-	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
@@ -1884,8 +1884,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 		&Lines, ",", 1, true);
 
 	/* Find number of lines */
-	while (1) {
-		if (Lines.numbers[i*2+1]==0) break;
+	while (Lines.numbers[i*2+1] != 0) {
 		/* FIXME: handle special chars correctly */
 		smprintf(s, "%i \"%s\"\n",i+1,GetLineString(GetLineString(msg.Buffer,Priv->Lines,2),Lines,i+1));
 		i++;
@@ -2218,7 +2217,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 		if (end > Priv->MemorySize) end = Priv->MemorySize;
 		sprintf(req, "AT+CPBR=%i,%i\r", start, end);
 		error	= GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemoryStatus);
-		if (error != ERR_NONE) return ERR_NONE;
+		if (error != ERR_NONE) return error;
 		if (NeededInfo == AT_NextEmpty && Priv->NextMemoryEntry != 0 && Priv->NextMemoryEntry != end + 1) return ERR_NONE;
 		if (end == Priv->MemorySize) {
 			Status->MemoryFree = Priv->MemorySize - Status->MemoryUsed;
@@ -2339,8 +2338,9 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		pos += ATGEN_ExtractOneParameter(pos, buffer);
  		smprintf(s, "Number: %s\n",buffer);
  		Memory->EntriesNum++;
- 		Memory->Entries[0].EntryType=PBK_Number_General;
- 		Memory->Entries[0].VoiceTag =0;
+ 		Memory->Entries[0].EntryType  = PBK_Number_General;
+ 		Memory->Entries[0].VoiceTag   = 0;
+ 		Memory->Entries[0].SMSList[0] = 0;
 
 		len = strlen(buffer + 1) - 1;
 		if (Priv->PBKCharset == AT_PBK_HEX && (len > 10) && (len % 2 == 0) && (strchr(buffer + 1, '+') == NULL)) {
@@ -3368,8 +3368,7 @@ GSM_Error ATGEN_IncomingSMSDeliver(GSM_Protocol_Message msg, GSM_StateMachine *s
 		/* T310 with larger SMS goes crazy and mix this incoming
                  * frame with normal answers. PDU is always last frame
 		 * We find its' number and parse it */
-		while (1) {
-			if (Data->Priv.ATGEN.Lines.numbers[i*2+1]==0) break;
+		while (Data->Priv.ATGEN.Lines.numbers[i*2+1] != 0) {
 			/* FIXME: handle special chars correctly */
 			i++;
 		}

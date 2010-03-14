@@ -163,7 +163,8 @@ typedef enum {
 	/**
 	 * Picture ID. (Number)
 	 */
-	PBK_PictureID
+	PBK_PictureID,
+	PBK_SMSListID
 } GSM_EntryType;
 
 #define GSM_PHONEBOOK_TEXT_LENGTH       200
@@ -193,6 +194,7 @@ typedef struct {
 	 * Voice dialling tag.
 	 */
 	int		     	VoiceTag;
+	int			SMSList[20];
 } GSM_SubMemoryEntry;
 
 /**

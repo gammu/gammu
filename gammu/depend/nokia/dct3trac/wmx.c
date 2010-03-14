@@ -8,19 +8,19 @@
  * (v=verbose)
  */
 
-#include "../../../common/gsmstate.h"
+#include "../../../../common/gsmstate.h"
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 
 #include <string.h>
 #include <signal.h>
 
-#include "../../../common/misc/coding/coding.h"
-#include "../../../common/gsmcomon.h"
-#include "../../../common/gsmstate.h"
-#include "../../../common/service/gsmpbk.h"
-#include "../../../common/phone/nokia/dct3/dct3func.h"
-#include "../../gammu.h"
+#include "../../../../common/misc/coding/coding.h"
+#include "../../../../common/gsmcomon.h"
+#include "../../../../common/gsmstate.h"
+#include "../../../../common/service/gsmpbk.h"
+#include "../../../../common/phone/nokia/dct3/dct3func.h"
+#include "../../../gammu.h"
 #include "../dct3.h"
 #include "wmx.h"
 #include "wmx-util.h"

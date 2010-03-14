@@ -23,7 +23,9 @@ typedef struct {
 
 void ATSIEMENSSATNetmon(int argc, char *argv[]);
 void ATSIEMENSNetmonitor(int argc, char *argv[]);
-#include "../../common/gsmstate.h"
+void ATSIEMENSActivateNetmon(int argc, char *argv[]);
+
+#include "../../../common/gsmstate.h"
 
 #endif
 

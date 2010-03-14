@@ -121,27 +121,27 @@ SOURCE=..\..\common\misc\coding\md5.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3.c
+SOURCE=..\depend\nokia\dct3.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\wmx.c
+SOURCE=..\depend\nokia\dct3trac\wmx.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\wmx-gsm.c
+SOURCE=..\depend\nokia\dct3trac\wmx-gsm.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\wmx-list.c
+SOURCE=..\depend\nokia\dct3trac\wmx-list.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\wmx-sim.c
+SOURCE=..\depend\nokia\dct3trac\wmx-sim.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\wmx-util.c
+SOURCE=..\depend\nokia\dct3trac\wmx-util.c
 # End Source File
 # Begin Source File
 
@@ -149,7 +149,7 @@ SOURCE=..\..\common\phone\nokia\dct3\dct3func.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct4.c
+SOURCE=..\depend\nokia\dct4.c
 # End Source File
 # Begin Source File
 
@@ -157,7 +157,11 @@ SOURCE=..\..\common\device\devfunc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dsiemens.c
+SOURCE=..\depend\siemens\dsiemens.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\siemens\chiffre.c
 # End Source File
 # Begin Source File
 
@@ -385,47 +389,47 @@ SOURCE=..\..\common\misc\coding\md5.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3.h
+SOURCE=..\depend\nokia\dct3.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\wmx.h
+SOURCE=..\depend\nokia\dct3trac\wmx.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\wmx-gsm.h
+SOURCE=..\depend\nokia\dct3trac\wmx-gsm.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\wmx-list.h
+SOURCE=..\depend\nokia\dct3trac\wmx-list.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\wmx-sim.h
+SOURCE=..\depend\nokia\dct3trac\wmx-sim.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\wmx-util.h
+SOURCE=..\depend\nokia\dct3trac\wmx-util.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\type-cc.h
+SOURCE=..\depend\nokia\dct3trac\type-cc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\type-mm.h
+SOURCE=..\depend\nokia\dct3trac\type-mm.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\type-rr.h
+SOURCE=..\depend\nokia\dct3trac\type-rr.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\type-sms.h
+SOURCE=..\depend\nokia\dct3trac\type-sms.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct3trac\type-ss.h
+SOURCE=..\depend\nokia\dct3trac\type-ss.h
 # End Source File
 # Begin Source File
 
@@ -437,7 +441,7 @@ SOURCE=..\..\common\phone\nokia\dct3\dct3func.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dct4.h
+SOURCE=..\depend\nokia\dct4.h
 # End Source File
 # Begin Source File
 
@@ -445,7 +449,11 @@ SOURCE=..\..\common\device\devfunc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dsiemens.h
+SOURCE=..\depend\siemens\dsiemens.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\siemens\chiffre.h
 # End Source File
 # Begin Source File
 

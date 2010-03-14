@@ -502,8 +502,7 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 	ringtone->NoteTone.NrCommands = 0;
 
 	/* -------------- name ---------------- */
-	while(1) {
-		if (buffer[i] == ':') break;
+	while (buffer[i] != ':') {
 		if (buffer[i] == 0x00) return ERR_NONE;
 		i++;
 	}
@@ -559,10 +558,8 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 			}
 			break;
 		}
-		while (1) {
+		while (buffer[i] != ':' && buffer[i] != ',') {
 			if (buffer[i] == 0x00) return ERR_NONE;
-			if (buffer[i] == ':') break;
-			if (buffer[i] == ',') break;
 			i++;
 		}
 		if (buffer[i] == ',') i++;
@@ -573,10 +570,7 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 	i++;
 
 	/* ------------------------- notes ------------------------------ */
-	while (1) {
-		if (buffer[i] == 0x00) break;
-		if (ringtone->NoteTone.NrCommands == MAX_RINGTONE_NOTES) break;
-
+	while (buffer[i] != 0x00 && ringtone->NoteTone.NrCommands != MAX_RINGTONE_NOTES) {
 		switch(buffer[i]) {
 		case 'z': case 'Z':
 			switch (buffer[i+1]) {
@@ -700,9 +694,8 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 			ringtone->NoteTone.NrCommands++;
 			break;
 		}
-		while (1) {
+		while (buffer[i] != ',') {
 			if (buffer[i] == 0x00) return ERR_NONE;
-			if (buffer[i] == ',') break;
 			i++;
 		}
 		if (buffer[i] == ',') i++;
@@ -863,10 +856,8 @@ int GSM_RTTLGetTempo(int Beats)
 {
 	int i=0;
 
-	while (1) {		
-		if (Beats<=SM_BeatsPerMinute[i] || SM_BeatsPerMinute[i] == 900) break;
-		i++;
-	}
+	while (Beats > SM_BeatsPerMinute[i] && SM_BeatsPerMinute[i] != 900) i++;
+
 	return i<<3;
 }    
 
