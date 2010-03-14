@@ -1,4 +1,4 @@
-/* (c) 2002-2004 by Marcin Wiacek */
+/* (c) 2002-2006 by Marcin Wiacek */
 
 #include <ctype.h>
 #include <string.h>

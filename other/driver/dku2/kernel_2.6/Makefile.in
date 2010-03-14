@@ -11,11 +11,11 @@
 ##########################################################################
 
 MODULE_NAME   := nokia_dku2
-MODULE_ROOT   := /lib/modules/$(shell uname -r)/kernel/drivers/usb/serial
+MODULE_ROOT   := @MODULESDIR@/kernel/drivers/usb/serial
 
-KERN_SOURCE   := /lib/modules/$(shell uname -r)/build
+KERN_SOURCE   := @SOURCESDIR@
 PWD           := $(shell pwd)
-EXTRA_CFLAGS  := -I/usr/src/linux-2.6/drivers/usb/serial
+EXTRA_CFLAGS  := -I@SOURCESDIR@/drivers/usb/serial
 
 obj-m         := $(MODULE_NAME).o
 MODULE_OBJECT := $(MODULE_NAME).ko

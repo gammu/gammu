@@ -1,4 +1,4 @@
-/* (c) 2001-2004 by Marcin Wiacek */
+/* (c) 2001-2006 by Marcin Wiacek */
 /* Based on some Pawel Kot and others work from Gnokii (www.gnokii.org)
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
@@ -499,6 +499,21 @@ typedef struct {
 	 */
         unsigned char	   	Number;
 } GSM_SMSFolders;
+
+typedef struct {
+	unsigned long	SequenceID;
+	unsigned int	PacketsNum;
+	unsigned int	PacketNum;
+	unsigned long	AllDataLen;
+
+	unsigned char	DataType[10];	
+	unsigned char	DataName[40];
+	unsigned int 	DataLen;
+	unsigned char	Data[140];
+} GSM_SiemensOTASMSInfo;
+
+bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo	*Info,
+			     GSM_SMSMessage 		*SMS);
 
 #endif
 

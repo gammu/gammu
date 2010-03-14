@@ -35,6 +35,18 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20060312 - 1.05.00
+* new functionality:
+  * getting Siemens OTA sequences in SMS + decoding VCARDS
+  * 3220b ID                                                      (Dan Lizotte)
+  * taken current DKU2 drivers from gnokii
+
+* fixes and improvements:
+  * * better discovering Bluetooth services                      (Michal Cihar)
+
+Like you know www.gammu.net is currently unavailable. For support please
+use mailing list.
+
 20060222 - 1.04.11
 * new functionality:
   * 5140i ID
@@ -48,7 +60,7 @@ For additionals materials and links to them see readme.txt
     * wrong pointers have been passed in some functions, so pointer value
       was shown instead of text
     * SE phones return error while deleting empty entry, so treat this as okay
-  * SMS for 6150 driver
+  * SMS for 6510 driver
 
 20060205 - 1.04.07
 * new functionality:

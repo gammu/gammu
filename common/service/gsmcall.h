@@ -64,7 +64,7 @@ typedef struct {
 	/**
 	 * Remote phone number.
 	 */
-	char		   	PhoneNumber [(GSM_MAX_NUMBER_LENGTH+1)*2];
+	unsigned char	   	PhoneNumber [(GSM_MAX_NUMBER_LENGTH+1)*2];
 	/**
 	 * Call ID
 	 */

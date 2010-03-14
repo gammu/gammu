@@ -1,4 +1,4 @@
-/* (c) 2002-2004 by Marcin Wiacek */
+/* (c) 2002-2006 by Marcin Wiacek */
 
 #ifndef __gsm_multi_h
 #define __gsm_multi_h
@@ -203,7 +203,11 @@ typedef enum {
 	 * Variable animation with black and white colors
 	 */
 	SMS_AlcatelMonoAnimationLong,
-	SMS_AlcatelSMSTemplateName
+	SMS_AlcatelSMSTemplateName,
+	/**
+	 * Siemens OTA
+	 */
+	SMS_SiemensFile
 } EncodeMultiPartSMSID;
 
 typedef struct {
@@ -218,6 +222,7 @@ typedef struct {
 	GSM_MemoryEntry 	*Phonebook;
 	GSM_CalendarEntry       *Calendar;
 	GSM_ToDoEntry	   	*ToDo;
+	GSM_File		*File;
 	bool		    	Protected;
 
 	unsigned char	   	*Buffer;
