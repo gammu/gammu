@@ -38,11 +38,16 @@ int socket_write(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
 	size_t		actual = 0;
 
 	do {
-		if ((ret = send(hPhone, buf, nbytes - actual, 0)) < 0) return(actual);
+		ret = send(hPhone, buf, nbytes - actual, 0);
+        	if (ret < 0) {
+            		if (actual != nbytes) GSM_OSErrorInfo(s,"socket_write");
+            		return actual;
+        	}
 		actual 	+= ret;
 		buf 	+= ret;
 	} while (actual < nbytes);
-	return (actual);
+
+	return actual;
 }
 
 GSM_Error socket_close(GSM_StateMachine *s, int hPhone)

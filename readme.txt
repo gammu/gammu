@@ -22,7 +22,8 @@ A. Gammu is currently licensed under GNU GPL license for normal users. It
    it with source. When use Gammu dll or library, you also HAVE to publish
    your source.
 
-   If You want LGPL for some project(s), You HAVE to donate.
+   In the future probably it will be possible to get LGPL for Gammu or next
+   project from Marcin Wiacek called Gammu+.
 
    NOTE: If you want to use Gammu in own applications, it will be fair to give
          some gift like small sum of money, old phone, etc. to author(s). It

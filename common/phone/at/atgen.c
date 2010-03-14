@@ -145,6 +145,7 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 	/* For error codes descriptions see table a bit above */
 	switch (Priv->ErrorCode) {
 	case 304:
+            	return ERR_NOTSUPPORTED; 
         case 305:
             	return ERR_BUG; 
         case 311:
@@ -218,9 +219,8 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 	GSM_Protocol_Message	*msg	= s->Phone.Data.RequestMsg;
-	int 			i	= 0;
-	int                     j,k;
-	char                    *err;
+	int 			i	= 0, j, k;
+	char                    *err, *line;
 
 	SplitLines(msg->Buffer, msg->Length, &Priv->Lines, "\x0D\x0A", 2, true);
 
@@ -236,13 +236,15 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	Priv->ErrorText     	= NULL;
 	Priv->ErrorCode     	= 0;
 
-	if (!strcmp(GetLineString(msg->Buffer,Priv->Lines,i),"OK"     )) Priv->ReplyState = AT_Reply_OK;
-	if (!strcmp(GetLineString(msg->Buffer,Priv->Lines,i),"CONNECT")) Priv->ReplyState = AT_Reply_Connect;
-	if (!strcmp(GetLineString(msg->Buffer,Priv->Lines,i),"ERROR"  )) Priv->ReplyState = AT_Reply_Error;
-	if (!strncmp(GetLineString(msg->Buffer,Priv->Lines,i),"+CMS ERROR:",11)) {
+	line = GetLineString(msg->Buffer,Priv->Lines,i);
+	if (!strcmp(line,"OK"))		Priv->ReplyState = AT_Reply_OK;
+	if (!strcmp(line,"> "))		Priv->ReplyState = AT_Reply_SMSEdit;
+	if (!strcmp(line,"CONNECT"))	Priv->ReplyState = AT_Reply_Connect;
+	if (!strcmp(line,"ERROR"  ))	Priv->ReplyState = AT_Reply_Error;
+	if (!strncmp(line,"+CMS ERROR:",11)) {
 	        j = 0;
 		/* One char behind +CMS ERROR */
-		err = GetLineString(msg->Buffer,Priv->Lines,i) + 12;
+		err = line + 12;
 		while (err[j] && !isalnum(err[j])) j++;
 		if (isdigit(err[j])) {
 			Priv->ErrorCode = atoi(&(err[j]));
@@ -267,9 +269,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 		}
 		Priv->ReplyState = AT_Reply_CMSError;
 	}
-	if (!strncmp(GetLineString(msg->Buffer,Priv->Lines,i),"+CME ERROR:",11)) {
-		Priv->ReplyState = AT_Reply_CMEError;
-	}
+	if (!strncmp(line,"+CME ERROR:",11)) Priv->ReplyState = AT_Reply_CMEError;
 	return GSM_DispatchMessage(s);
 }
 
@@ -553,6 +553,7 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 	case AT_Reply_OK:
 		dbgprintf("Memory status received\n");
 		if (strncmp(msg.Buffer, "ME", 2) == 0) s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_PHONE_SMS_AVAILABLE;
+		else s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_PHONE_SMS_NOTAVAILABLE;
 		return ERR_NONE;
 	case AT_Reply_Error:
 	case AT_Reply_CMSError:
@@ -587,6 +588,10 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, bool SIM)
 		if (error != ERR_NONE) return error;
 		Priv->SMSMemory = MEM_SM;
 	} else {
+		if (Priv->PhoneSMSMemory == 0) {
+			/* We silently ignore error here, because when this fails, we can try to set ME anyway */
+			ATGEN_GetSMSMemories(s);
+		}
 		if (Priv->PhoneSMSMemory == AT_PHONE_SMS_NOTAVAILABLE) {
 			return ERR_NOTSUPPORTED;
 		}
@@ -1163,6 +1168,9 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 	int	i;
 
 	if (s->Protocol.Data.AT.EditMode) {
+		if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_SMSEdit) {
+			return ATGEN_HandleCMSError(s);
+		}
 		s->Protocol.Data.AT.EditMode = false;
 		return ERR_NONE;
 	}
@@ -1174,6 +1182,7 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 			if (msg.Buffer[i] == 0x00) msg.Buffer[i] = 0x20;
 		}
 		start = strstr(msg.Buffer, "+CMGW: ");
+		if (start == NULL) return ERR_UNKNOWN;
 		s->Phone.Data.SaveSMSMessage->Location = atoi(start+7);
 		smprintf(s, "Saved at location %i\n",s->Phone.Data.SaveSMSMessage->Location);
 		return ERR_NONE;
@@ -1299,7 +1308,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 
 GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	GSM_Error 		error;
+	GSM_Error 		error, error2;
 	int			state,Replies,reply, current, current2;
 	unsigned char		buffer[1000], hexreq[1000];
 	GSM_Phone_Data		*Phone = &s->Phone.Data;
@@ -1410,8 +1419,9 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 			if (error != ERR_TIMEOUT) return error;
 		} else {
 			smprintf(s, "Escaping SMS mode\n");
-			error = s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
-			if (error!=ERR_NONE) return error;
+			error2 = s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
+			if (error2 != ERR_NONE) return error2;
+			return error;
 		}
         }
 
@@ -1423,6 +1433,9 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (s->Protocol.Data.AT.EditMode) {
+		if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_SMSEdit) {
+			return ERR_UNKNOWN;
+		}
 		s->Protocol.Data.AT.EditMode = false;
 		return ERR_NONE;
 	}

@@ -30,7 +30,8 @@ typedef enum {
 	AT_Reply_Error,
 	AT_Reply_Unknown,
 	AT_Reply_CMSError,
-	AT_Reply_CMEError
+	AT_Reply_CMEError,
+	AT_Reply_SMSEdit
 } GSM_AT_Reply_State;
 
 typedef enum {

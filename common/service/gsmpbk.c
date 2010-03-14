@@ -75,33 +75,26 @@ void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, 
                                 case PBK_Number_Home:
                                 case PBK_Number_Pager:
                                 case PBK_Number_Other:
-                                        if (*Number == -1) *Number = i;
+                                        *Number = i;
                                         break;
                                 default:
                                         break;
                         }
+                        if (*Number != -1) break;
                 }
         }
         if ((*Name) == -1) {
                 for (i = 0; i < entry->EntriesNum; i++) {
-                        switch (entry->Entries[i].EntryType) {
-                                case PBK_Text_LastName:
-                                        if (*Name == -1) *Name = i;
-					break;
-                                default:
-                                        break;
-                        }
+			if (entry->Entries[i].EntryType != PBK_Text_LastName) continue;
+                        *Name = i;
+			break;
                 }
         }
         if ((*Name) == -1) {
                 for (i = 0; i < entry->EntriesNum; i++) {
-                        switch (entry->Entries[i].EntryType) {
-                                case PBK_Text_FirstName:
-                                        if (*Name == -1) *Name = i;
-					break;
-                                default:
-                                        break;
-                        }
+                        if (entry->Entries[i].EntryType != PBK_Text_FirstName) continue;
+                        *Name = i;
+                        break;
 		}
 	}
 }

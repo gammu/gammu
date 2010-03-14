@@ -388,6 +388,8 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
 
 	/* We're editing, but the next state is not the same. so commit editing */
 	if (Priv->BinaryState == StateEdit) {
+		/* Something has changed, we will have to reread fields! */
+		Priv->CurrentFieldsItem  = -1;
 		switch (Priv->BinaryType) {
 			case TypeCalendar:
 				commit_buffer[2] = ALCATEL_SYNC_TYPE_CALENDAR;
@@ -571,6 +573,7 @@ static GSM_Error ALCATEL_Initialise(GSM_StateMachine *s)
 	Priv->CurrentFieldsItem			= 0;
 	Priv->CurrentFieldsType			= 0;
 	Priv->ProtocolVersion			= V_1_0;
+	Priv->CurrentFieldsItem			= -1;
 
 	Priv->CurrentCategoriesCount		= 0;
 	Priv->CurrentCategoriesType		= 0;

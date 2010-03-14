@@ -719,17 +719,17 @@ void ReadUnicodeFile(unsigned char *Dest, unsigned char *Source)
 
 int GetBit(unsigned char *Buffer, int BitNum)
 {
-	return Buffer[(BitNum)/8] & 1<<(7-(BitNum%8));
+	return Buffer[BitNum/8] & 1<<(7-(BitNum%8));
 }
 
 int SetBit(unsigned char *Buffer, int BitNum)
 {
-	return Buffer[(BitNum)/8] |= 1<<(7-(BitNum%8));
+	return Buffer[BitNum/8] |= 1<<(7-(BitNum%8));
 }
 
 int ClearBit(unsigned char *Buffer, int BitNum)
 {
-	return Buffer[(BitNum)/8] &= 255 - (1 << (7-(BitNum%8)));
+	return Buffer[BitNum/8] &= 255 - (1 << (7-(BitNum%8)));
 }
 
 void BufferAlign(unsigned char *Destination, int *CurrentBit)
@@ -909,18 +909,18 @@ void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 
 bool mystrncasecmp(unsigned char *a, unsigned char *b, int num)
 {
-	int i=0;
-  
-//	printf("comparing \"%s\" and \"%s\"\n",a,b);
-	while (1) {
-		if (a[i] == 0x00) {
-			if (b[i] == 0x00) return true;
-			return false;
-		}
+	int i;
+
+	if (a == NULL || b == NULL) return false;
+
+	num--;
+   
+	for (i = 0; i != num; i++) {
+		if (a[i] == 0x00 && b[i] == 0x00) return true;
+		if (a[i] == 0x00 || b[i] == 0x00) return false;
 		if (tolower(a[i]) != tolower(b[i])) return false;
-		i++;
-		if (num == i) return true;
-	}
+ 	}
+	return true;
 }
 
 /* Compares two Unicode strings without regarding to case.
@@ -928,20 +928,21 @@ bool mystrncasecmp(unsigned char *a, unsigned char *b, int num)
  */
 bool mywstrncasecmp(unsigned char *a, unsigned char *b, int num)
 {
-	int 		i=0;
- 	wchar_t 	wc,wc2;
-  
-	while (1) {
-		if (a[i*2] == 0x00 && a[i*2+1] == 0x00) {
-			if (b[i*2] == 0x00 && b[i*2+1] == 0x00) return true;
-			return false;
-		}
-		wc  = a[i*2+1] | (a[i*2] << 8);
-		wc2 = b[i*2+1] | (b[i*2] << 8);
-		if (mytowlower(wc) != mytowlower(wc2)) return false;
-		i++;
-		if (num == i) return true;
-	}
+ 	int 		i;
+  	wchar_t 	wc,wc2;
+
+        if (a == NULL || b == NULL) return false;
+
+	num--;
+	
+	for (i = 0; i != num; i++) {
+		if ((a[i*2] == 0x00 && a[i*2+1] == 0x00) && (b[i*2] == 0x00 && b[i*2+1] == 0x00)) return true;
+		if ((a[i*2] == 0x00 && a[i*2+1] == 0x00) || (b[i*2] == 0x00 && b[i*2+1] == 0x00)) return false;
+ 		wc  = a[i*2+1] | (a[i*2] << 8);
+ 		wc2 = b[i*2+1] | (b[i*2] << 8);
+ 		if (mytowlower(wc) != mytowlower(wc2)) return false;
+ 	}
+	return true;
 }
 
 /* wcscmp in Mandrake 9.0 is wrong */

@@ -41,6 +41,8 @@ connection = fbusblue
 # "fbusirda"/"infrared"  | serial    | Nokia FBUS2 over direct infrared device
 # "fbusdlr3"/"dlr3"      | serial    | Nokia FBUS2 with DLR3 cable
 # "fbusdku5"             | dku5      | Nokia FBUS2 with DKU5 cable. WIN32 ONLY
+# "fbuspl2303"           | usb       | Nokia FBUS2 with USB cable based on
+#                        |           | PL2303 chip.
 # "fbusblue"             | serial    | Nokia FBUS2 over Bluetooth serial device
 # "phonetblue"           | serial    | Nokia PHONET FBUS over Bluetooth serial
 #                        |           | device
@@ -72,6 +74,8 @@ connection = fbusblue
 #           |                 (example "")
 # ----------|---------------------------------|--------------------------------
 # dku5      | ignored (can be empty)          | connection with it not possible
+# ----------|---------------------------------|--------------------------------
+# usb       | connection with it not possible | "/dev/ttyUSB*"
 #
 # Other config parameters
 # -----------------------------------------------------------------------------

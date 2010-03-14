@@ -199,6 +199,11 @@ AC_ARG_ENABLE(fbusdku5,
 	                  with DKU5 cable (Nokia with Pop-Port)],
 	[gsm_enable_fbus2dku5="no"],
 	[AC_DEFINE(GSM_ENABLE_FBUS2DKU5) gsm_enable_fbus2dku5="yes"])
+AC_ARG_ENABLE(fbuspl2303,
+	[  --disable-fbuspl2303    Disable Nokia FBUS2 protocol
+	                  with USB cable with PL2303 chip (Nokia with Pop-Port)],
+	[gsm_enable_fbus2pl2303="no"],
+	[AC_DEFINE(GSM_ENABLE_FBUS2PL2303) gsm_enable_fbus2pl2303="yes"])
 AC_ARG_ENABLE(fbusblue,
 	[  --disable-fbusblue      Disable Nokia FBUS2 protocol
 	                  over Bluetooth legacy device (Nokia 6210)],
@@ -419,6 +424,7 @@ cat <<EOT
   Nokia MBUS2                                   - $gsm_enable_mbus2
   Nokia FBUS2                                   - $gsm_enable_fbus2
   Nokia FBUS2 for DLR3 cable                    - $gsm_enable_fbus2dlr3
+  Nokia FBUS2 for PL2303 based USB cable        - $gsm_enable_fbus2pl2303
 dnl Add info about DKU5
   Nokia FBUS2 for Bluetooth legacy device       - $gsm_enable_fbus2blue
   Nokia FBUS2 for direct infrared device        - $gsm_enable_fbus2irda

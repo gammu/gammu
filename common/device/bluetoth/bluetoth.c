@@ -42,7 +42,7 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 		i = GetLastError();
 		GSM_OSErrorInfo(s, "Socket in bluetooth_open");
 		if (i == 10041) return ERR_DEVICENODRIVER;//unknown socket type
-		return GE_UNKNOWN;
+		return ERR_UNKNOWN;
 	}
 
 	memset (&sab, 0, sizeof(sab));
@@ -69,11 +69,11 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 	if (connect (d->hPhone, (struct sockaddr *)&sab, sizeof(sab)) != 0) {
 		i = GetLastError();
 		GSM_OSErrorInfo(s, "Connect in bluetooth_open");
-		if (i == 10060) return GE_TIMEOUT;	 //remote device failed to respond
+		if (i == 10060) return ERR_TIMEOUT;	 //remote device failed to respond
 		if (i == 10050) return ERR_DEVICENOTWORK; //socket operation connected with dead network
 		//noauth
 		close(d->hPhone);
-		return GE_UNKNOWN;
+		return ERR_UNKNOWN;
 	}
 
 	return ERR_NONE;
@@ -128,7 +128,7 @@ static GSM_Error bluetooth_open (GSM_StateMachine *s)
 	case GCT_BLUEPHONET:
 		return bluetooth_connect(s,14);
 	default:
-		return GE_UNKNOWN;
+		return ERR_UNKNOWN;
 	}
 }
 
