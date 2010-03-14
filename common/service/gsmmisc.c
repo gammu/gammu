@@ -89,7 +89,7 @@ static void GSM_JADFindLine(GSM_File File, char *Name, char *Value)
 	}
 	if (!found) return;
 	i = i + strlen(Name);
-	while (File.Buffer[i] != 13 && File.Buffer[i] != 10) {
+	while (File.Buffer[i] != 13 && File.Buffer[i] != 10 && i < File.Used) {
 		if (strlen(Value) == 0 && File.Buffer[i] == 0x20) {
 			i++;
 			continue;
@@ -100,8 +100,10 @@ static void GSM_JADFindLine(GSM_File File, char *Name, char *Value)
 	}
 }
 
-GSM_Error GSM_JavaFindData(GSM_File File, char *Vendor, char *Name, char *JAR, char *Version)
+GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR, char *Version, int *Size)
 {
+	char Size2[200];
+
 	GSM_JADFindLine(File, "MIDlet-Vendor:", Vendor);
 	if (Vendor[0] == 0x00) return GE_FILENOTSUPPORTED;
 	dprintf("Vendor: \"%s\"\n",Vendor);
@@ -113,6 +115,12 @@ GSM_Error GSM_JavaFindData(GSM_File File, char *Vendor, char *Name, char *JAR, c
 	GSM_JADFindLine(File, "MIDlet-Jar-URL:", JAR);
 	if (JAR[0] == 0x00) return GE_FILENOTSUPPORTED;
 	dprintf("JAR file URL: \"%s\"\n",JAR);
+
+	GSM_JADFindLine(File, "MIDlet-Jar-Size:", Size2);
+	*Size = -1;
+	if (Size2[0] == 0x00) return GE_FILENOTSUPPORTED;
+	dprintf("JAR size: \"%s\"\n",Size2);
+	(*Size) = atoi(Size2);
 
 	GSM_JADFindLine(File, "MIDlet-Version:", Version);
 	dprintf("Version: \"%s\"\n",Version);

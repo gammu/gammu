@@ -4,7 +4,7 @@
 #include "gsmcal.h"
 #include "../misc/coding.h"
 
-void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime)
+void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime, int *Location)
 {
 	int i;
 
@@ -14,6 +14,7 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entr
 	*Phone		= -1;
 	*Recurrance	= -1;
 	*EndTime	= -1;
+	*Location	= -1;
 	for (i = 0; i < entry->EntriesNum; i++)
 	{
 		switch (entry->Entries[i].EntryType) {
@@ -36,6 +37,9 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entr
 		case CAL_PHONE:
 			if (*Phone == -1) *Phone = i;
 			break;
+		case CAL_LOCATION:
+			if (*Location == -1) *Location = i;
+			break;
 		default:
 			break;
 		}
@@ -45,9 +49,9 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entr
 GSM_Error NOKIA_EncodeVCALENDAR10SMSText(char *Buffer, int *Length, GSM_CalendarEntry *note)
 {
 	char 	buffer[1000];
- 	int 	Text, Time, Alarm, Phone, Recurrance, EndTime;
+ 	int 	Text, Time, Alarm, Phone, Recurrance, EndTime, Location;
 
-	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime);
+	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime, &Location);
 
 	*Length+=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
 	*Length+=sprintf(Buffer+(*Length), "VERSION:1.0%c%c",13,10);

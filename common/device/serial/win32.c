@@ -217,7 +217,7 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 		fReadStat = ReadFile(d->hPhone, buf, dwLength, &dwLength, &d->osRead);
 		if (!fReadStat) {
 			if (GetLastError() == ERROR_IO_PENDING) {
-				dprintf("IO Pending\n");
+//				dprintf("IO Pending\n");
 				/* We have to wait for read to complete.
 				 * This function will timeout according to the
 				 * CommTimeOuts.ReadTotalTimeoutConstant variable

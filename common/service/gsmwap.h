@@ -52,6 +52,7 @@ typedef struct {
 	int			Location;
 	unsigned char		Number;
 	GSM_WAPSettings		Settings[4];
+	bool			Active;
 
 	WAPSettings_Bearer	ActiveBearer;
 } GSM_MultiWAPSettings;

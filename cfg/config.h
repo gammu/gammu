@@ -6,7 +6,7 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.77"
+#define VERSION "0.78"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -38,6 +38,8 @@
 
 /* Infrared. PHONET FBUS */
 #define GSM_ENABLE_IRDAPHONET 1
+/* Infrared. AT commands */
+#define GSM_ENABLE_IRDAAT 1
 
 /* Bluetooth stack (like Bluez). FBUS2 (init done using AT commands) */
 #define GSM_ENABLE_BLUEFBUS2 1
@@ -66,8 +68,8 @@
 
 /* n6510.c (DCT4) models */
 #define GSM_ENABLE_NOKIA6510 1
-/* Force using old frames for calendar. Required by some older DCT4 */
-/* #undef GSM_FORCE_DCT4_OLD_CALENDAR */
+/* Force using 6210 frames for calendar. Required by some older DCT4 */
+/* #undef GSM_FORCE_DCT4_CALENDAR_6210 */
 
 /* AT generic models */
 #define GSM_ENABLE_ATGEN 1

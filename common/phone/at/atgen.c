@@ -225,16 +225,17 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	Priv->ErrorText			= NULL;
 
-	/* We try to escape AT+CMGS mode, at least Siemens M20
-	 * then needs to get some rest
-	 */
-	smprintf(s, "Escaping SMS mode\n");
-	error = s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
-	if (error!=GE_NONE) return error;
-	my_sleep(200);
+	if (s->ConnectionType != GCT_IRDAAT && s->ConnectionType != GCT_BLUEAT) {
+		/* We try to escape AT+CMGS mode, at least Siemens M20
+		 * then needs to get some rest
+		 */
+		smprintf(s, "Escaping SMS mode\n");
+		error = s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
+		if (error!=GE_NONE) return error;
 
-    	/* Grab any possible garbage */
-    	while (s->Device.Functions->ReadDevice(s, buff, 2) > 0) my_sleep(10);
+	    	/* Grab any possible garbage */
+	    	while (s->Device.Functions->ReadDevice(s, buff, 2) > 0) my_sleep(10);
+	}
 
     	/* When some phones (Alcatel BE5) is first time connected, it needs extra
      	 * time to react, sending just AT wakes up the phone and it then can react
@@ -242,22 +243,10 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
      	 * wake up the phone and does nothing.
      	 */
     	smprintf(s, "Sending simple AT command to wake up some devices\n");
-	error = s->Protocol.Functions->WriteMessage(s, "AT\r", 3, 0x00);
-	if (error!=GE_NONE) return error;
-	my_sleep(200);
+	GSM_WaitFor (s, "AT\r", 3, 0x00, 2, ID_IncomingFrame);
 
-    	/* Grab any possible garbage */
-    	while (s->Device.Functions->ReadDevice(s, buff, 2) > 0) my_sleep(10);
-    
 	smprintf(s, "Enabling echo\n");
-	error = s->Protocol.Functions->WriteMessage(s, "ATE1\r", 5, 0x00);
-	if (error!=GE_NONE) return error;
-	my_sleep(200);
-
-    	/* Grab any possible garbage */
-    	while (s->Device.Functions->ReadDevice(s, buff, 2) > 0) my_sleep(10);
-
-	return GE_NONE;
+	return GSM_WaitFor (s, "ATE1\r", 5, 0x00, 3, ID_EnableEcho);
 }
 
 GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
@@ -382,14 +371,90 @@ GSM_Error ATGEN_GetModel(GSM_StateMachine *s)
 	return error;
 }
 
-GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+		smprintf(s, "Manufacturer info received\n");
+		Priv->Manufacturer = AT_Unknown;
+		if (strlen(GetLineString(msg.Buffer, Priv->Lines, 2)) <= MAX_MANUFACTURER_LENGTH) {
+			CopyLineString(s->Phone.Data.Manufacturer, msg.Buffer, Priv->Lines, 2);
+		} else {
+			smprintf(s, "WARNING: Manufacturer name too long, increase MAX_MANUFACTURER_LENGTH to at least %d\n", GetLineString(msg.Buffer, Priv->Lines, 2));
+			s->Phone.Data.Manufacturer[0] = 0;
+		}
+		if (strstr(msg.Buffer,"Falcom")) {
+			smprintf(s, "Falcom\n");
+			strcpy(s->Phone.Data.Manufacturer,"Falcom");
+			Priv->Manufacturer = AT_Falcom;
+			if (strstr(msg.Buffer,"A2D")) {
+				strcpy(s->Phone.Data.Model,"A2D");
+				s->Phone.Data.ModelInfo = GetModelData(NULL,s->Phone.Data.Model,NULL);
+				smprintf(s, "Model A2D\n");
+			}
+		}
+		if (strstr(msg.Buffer,"Nokia")) {
+			smprintf(s, "Nokia\n");
+			strcpy(s->Phone.Data.Manufacturer,"Nokia");
+			Priv->Manufacturer = AT_Nokia;
+		}
+		if (strstr(msg.Buffer,"SIEMENS")) {
+			smprintf(s, "Siemens\n");
+			strcpy(s->Phone.Data.Manufacturer,"Siemens");
+			Priv->Manufacturer = AT_Siemens;
+		}
+		if (strstr(msg.Buffer,"ERICSSON")) {
+			smprintf(s, "Ericsson\n");
+			strcpy(s->Phone.Data.Manufacturer,"Ericsson");
+			Priv->Manufacturer = AT_Ericsson;
+		}
+		if (strstr(msg.Buffer,"iPAQ")) {
+			smprintf(s, "iPAQ\n");
+			strcpy(s->Phone.Data.Manufacturer,"HP");
+			Priv->Manufacturer = AT_HP;
+		}
+		if (strstr(msg.Buffer,"ALCATEL")) {
+			smprintf(s, "Alcatel\n");
+			strcpy(s->Phone.Data.Manufacturer,"Alcatel");
+			Priv->Manufacturer = AT_Alcatel;
+		}
+		return GE_NONE;
+	case AT_Reply_CMSError:
+		return ATGEN_HandleCMSError(s);
+	default:
+		break;
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+GSM_Error ATGEN_GetManufacturer(GSM_StateMachine *s)
+{
+	if (s->Phone.Data.Manufacturer[0] != 0) return GE_NONE;
+
+	return GSM_WaitFor (s, "AT+CGMI\r", 8, 0x00, 4, ID_GetManufacturer);
+}
+
+GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	int			i = 0;
 
 	strcpy(s->Phone.Data.Version,"unknown");
 	s->Phone.Data.VerNum = 0;
 	if (Priv->ReplyState == AT_Reply_OK) {
 		CopyLineString(s->Phone.Data.Version, msg.Buffer, Priv->Lines, 2);
+	}
+	if (Priv->Manufacturer == AT_Ericsson) {
+		while (1) {
+			if (s->Phone.Data.Version[i] == 0x20) {
+				s->Phone.Data.Version[i] = 0x00;
+				break;
+			}
+			if (i == strlen(s->Phone.Data.Version)) break;
+			i++;
+		}
 	}
 	smprintf(s, "Received firmware version: \"%s\"\n",s->Phone.Data.Version);
 	GSM_CreateFirmwareNumber(s);
@@ -426,6 +491,9 @@ GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 
 	if (s->Phone.Data.Version[0] != 0) return GE_NONE;
 
+	error=ATGEN_GetManufacturer(s);
+	if (error != GE_NONE) return error;
+
 //	smprintf(s, "Getting firmware - method 1\n");
 //	error=GSM_WaitFor (s, "ATI\r", 4, 0x00, 3, ID_GetFirmware);
 //	if (error != GE_NONE) {
@@ -439,66 +507,6 @@ GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 		}
 	}
 	return error;
-}
-
-GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{
-	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
-
-	switch (Priv->ReplyState) {
-	case AT_Reply_OK:
-		smprintf(s, "Manufacturer info received\n");
-		Priv->Manufacturer = AT_Unknown;
-		if (strlen(GetLineString(msg.Buffer, Priv->Lines, 2)) <= MAX_MANUFACTURER_LENGTH) {
-			CopyLineString(s->Phone.Data.Manufacturer, msg.Buffer, Priv->Lines, 2);
-		} else {
-			smprintf(s, "WARNING: Manufacturer name too long, increase MAX_MANUFACTURER_LENGTH to at least %d\n", GetLineString(msg.Buffer, Priv->Lines, 2));
-			s->Phone.Data.Manufacturer[0] = 0;
-		}
-		if (strstr(msg.Buffer,"Falcom")) {
-			smprintf(s, "Falcom\n");
-			strcpy(s->Phone.Data.Manufacturer,"Falcom");
-			Priv->Manufacturer = AT_Falcom;
-			if (strstr(msg.Buffer,"A2D")) {
-				strcpy(s->Phone.Data.Model,"A2D");
-				s->Phone.Data.ModelInfo = GetModelData(NULL,s->Phone.Data.Model,NULL);
-				smprintf(s, "Model A2D\n");
-			}
-		}
-		if (strstr(msg.Buffer,"Nokia")) {
-			smprintf(s, "Nokia\n");
-			strcpy(s->Phone.Data.Manufacturer,"Nokia");
-			Priv->Manufacturer = AT_Nokia;
-		}
-		if (strstr(msg.Buffer,"SIEMENS")) {
-			smprintf(s, "Siemens\n");
-			strcpy(s->Phone.Data.Manufacturer,"Siemens");
-			Priv->Manufacturer = AT_Siemens;
-		}
-		if (strstr(msg.Buffer,"iPAQ")) {
-			smprintf(s, "iPAQ\n");
-			strcpy(s->Phone.Data.Manufacturer,"HP");
-			Priv->Manufacturer = AT_HP;
-		}
-		if (strstr(msg.Buffer,"ALCATEL")) {
-			smprintf(s, "Alcatel\n");
-			strcpy(s->Phone.Data.Manufacturer,"Alcatel");
-			Priv->Manufacturer = AT_Alcatel;
-		}
-		return GE_NONE;
-	case AT_Reply_CMSError:
-		return ATGEN_HandleCMSError(s);
-	default:
-		break;
-	}
-	return GE_UNKNOWNRESPONSE;
-}
-
-GSM_Error ATGEN_GetManufacturer(GSM_StateMachine *s)
-{
-	if (s->Phone.Data.Manufacturer[0] != 0) return GE_NONE;
-
-	return GSM_WaitFor (s, "AT+CGMI\r", 8, 0x00, 4, ID_GetManufacturer);
 }
 
 GSM_Error ATGEN_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
@@ -2741,10 +2749,12 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
  *  XXX: AT+IFC could later move outside this ifdef, because it is not Alcatel
  *  specific and it's part of ETSI specifications 
  */
-{ATGEN_GenericReply,		"AT+IFC" 	 	,0x00,0x00,   ID_SetFlowControl},
-{ALCATEL_ProtocolVersionReply,	"AT+CPROT=?" 	 	,0x00,0x00,   ID_AlcatelProtocol},
-{ATGEN_GenericReply,		"AT+CPROT" 	 	,0x00,0x00,   ID_AlcatelConnect},
+{ATGEN_GenericReply,		"AT+IFC" 	 	,0x00,0x00,   ID_SetFlowControl  },
+{ALCATEL_ProtocolVersionReply,	"AT+CPROT=?" 	 	,0x00,0x00,   ID_AlcatelProtocol },
+{ATGEN_GenericReply,		"AT+CPROT" 	 	,0x00,0x00,   ID_AlcatelConnect	 },
 #endif
+
+{ATGEN_GenericReply,		"ATE1" 	 		,0x00,0x00,   ID_EnableEcho	 },
 
 {ATGEN_ReplyIncomingCallInfo,	"+CLIP"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_ReplyIncomingCallInfo,	"\x0D\x0ARING"		,0x00,0x00,ID_IncomingFrame	 },

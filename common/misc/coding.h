@@ -21,6 +21,7 @@ unsigned int 	DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);
 
 unsigned int	UnicodeLength			(const unsigned char *str);
 unsigned char	*DecodeUnicodeString		(const unsigned char *src);
+unsigned char   *DecodeUnicodeString2		(const unsigned char *src);
 void		DecodeUnicode			(const unsigned char *src, unsigned char *dest);
 void		EncodeUnicode			(unsigned char *dest, const unsigned char *src, int len);
 

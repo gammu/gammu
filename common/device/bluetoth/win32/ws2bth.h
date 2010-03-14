@@ -1,7 +1,5 @@
 /*++
 
-Copyright (c) 2000  Microsoft Corporation
-
 Module Name:
 
         ws2bth.h

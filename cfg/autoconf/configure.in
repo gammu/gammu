@@ -186,6 +186,12 @@ AC_ARG_ENABLE(irdaphonet,
 	[AC_CHECK_HEADER(linux/irda.h,
 		[AC_DEFINE(GSM_ENABLE_IRDAPHONET) gsm_enable_irdaphonet="yes"],
 		[gsm_enable_irdaphonet="no"])])
+AC_ARG_ENABLE(irdaat,
+	[  --disable-irdaat        Disable AT commands over irda sockets],
+	[gsm_enable_irdaat="no"],
+	[AC_CHECK_HEADER(linux/irda.h,
+		[AC_DEFINE(GSM_ENABLE_IRDAAT) gsm_enable_irdaat="yes"],
+		[gsm_enable_irdaat="no"])])
 
 AC_CACHE_CHECK([for the Bluez Bluetooth stack], ac_cv_have_sockaddr_rc,
      [AC_TRY_COMPILE([#include <sys/socket.h>
@@ -240,10 +246,10 @@ AC_ARG_ENABLE(7110incoming,
 	[  --enable-7110incoming   Enable Nokia 62xx/71xx/9xxx incoming call/SMS info],
 	[AC_DEFINE(GSM_ENABLE_N71_92INCOMINGINFO) gsm_enable_71_92incominginfo="yes"],
 	[gsm_enable_71_92incominginfo="no"])
-AC_ARG_ENABLE(oldcalendar,
-	[  --enable-oldcalendar    Force using old frames for calendar for DCT4 phones],
-	[AC_DEFINE(GSM_FORCE_DCT4_OLD_CALENDAR) gsm_force_dct4_old_calendar="yes"],
-	[gsm_force_dct4_old_calendar="no"])
+AC_ARG_ENABLE(6210calendar,
+	[  --enable-6210calendar   Force using 6210 frames for calendar for DCT4 phones],
+	[AC_DEFINE(GSM_FORCE_DCT4_CALENDAR_6210) gsm_force_dct4_calendar_6210="yes"],
+	[gsm_force_dct4_calendar_6210="no"])
 AC_ARG_ENABLE(backup,
 	[  --disable-backup        Disable backup/restore functions],
 	[gsm_enable_backup="no"],
@@ -322,6 +328,7 @@ echo "
 
   Phone protocols with infrared stack
   -----------------------------------
+  AT commands                                   - $gsm_enable_irdaat
   Nokia PHONET FBUS                             - $gsm_enable_irdaphonet
 
   Phone protocols with Bluez Bluetooth stack
@@ -335,8 +342,8 @@ echo "
   Alcatel                                       - $gsm_enable_alcatel
   AT (Siemens, Alcatel, Nokia, WaveCom, other)  - $gsm_enable_atgen
   Nokia 3210/33xx/3410/51xx/5210/5510/61xx/82xx - $gsm_enable_nokia6110
-  Nokia 3510/6310(i)/6510/8310                  - $gsm_enable_nokia6510
-           Use always old frames for calendar   - $gsm_force_dct4_old_calendar
+  Nokia 35xx/5100/6100/63xx/65xx/6610/72x0/83xx - $gsm_enable_nokia6510
+           Use always 6210 frames for calendar  - $gsm_force_dct4_calendar_6210
   Nokia 62xx/71xx                               - $gsm_enable_nokia7110
            Incoming call/SMS info               - $gsm_enable_71_92incominginfo
   Nokia 92xx                                    - $gsm_enable_nokia9210

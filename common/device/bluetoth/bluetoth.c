@@ -44,8 +44,6 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 
 	memset (&sab, 0, sizeof(sab));
 	sab.port 		= port;
-//	sab.port 		= 0;
-//	sab.serviceClassId	= FaxServiceClass_UUID;
 	sab.addressFamily 	= AF_BTH;
 	sab.btAddr 		= 0;
 	for (i=0;i<(int)strlen(s->Config.Device);i++) {
@@ -120,9 +118,6 @@ static GSM_Error bluetooth_open (GSM_StateMachine *s)
 	if (s->ConnectionType == GCT_BLUEPHONET) {
 		return bluetooth_connect(s,14);
 	} else {
-#ifdef WIN32
-		return GE_SOURCENOTAVAILABLE;
-#endif
 		return bluetooth_connect(s,1);
 	}
 }

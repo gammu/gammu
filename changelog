@@ -13,10 +13,49 @@ This software was sponsored (in time order) by:
    * GSM EQUIPMENT & HARDWARE
    * FREE FLASHES, LOGO'S, RINGTONES
    * FREE INSTRUCTIONS, SCHEMES
+4. Tom Nelson (www.kaseysdoghouse.com)
 and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20030616 - 0.78
+* new functionality:
+  * support for calendar is changed for new phones. Currently:
+    * supports phones with 5 types of notes (like N5100)
+    * tries to find automatically ID for calendar notes for DCT4
+    * replace not existing types of notes with existing
+    * support for Location in meetings
+    NOTE: No problems with exchanging notes among N3310, N3510, N6110,
+          N6210, N6310, N5100, N5210 and compatible (there is support for
+          about 7 families now). if Nokia will use longer current formats,
+          automatic calendar support in the future can be problematic
+  * new connections:
+    * AT commands over Bluetooth with MicroSoft stack ("blueat" connection)
+    * AT commands over socket infrared (new "irdaat" connection working
+      in Windows for now)
+  * added searching in phonebook memories for specified words    (Michal Cihar)
+    or sentences
+  * support for enabling 2 new features in DCT4:
+    * disabling selected WAP profile name instead of Home in Services menu
+    * confirming SAT actions
+  * getting active MMS/WAP set number for DCT4
+
+* fixes and improvements:
+  * WAP settings work with DCT4 without MMS
+  * MMS set support is available also for 3510
+  * filesystem in DCT4:
+    * improved support for some JAD files
+    * parsing JAD files allows to avoid some errors before uploading applets
+      to phone
+    * fix for getting bigger files over irda
+  * in win32 console texts are written using console locale, all other using
+    windows locale
+  * can restore phonebook on DCT4 without voice tags (like N5100)
+  * entries in backup files are numbered from 1
+
+NOTE: created archive of mailing list:
+      http://news.gmane.org/thread.php?group=gmane.linux.drivers.gammu
+
 20030608 - 0.77
 * new functionality:
   * * new UnicodeLength instead of strlen(DecodeUnicodeString))  (Michal Cihar)

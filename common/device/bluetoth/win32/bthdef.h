@@ -1,7 +1,5 @@
 /*++
 
-Copyright (c) 2000  Microsoft Corporation
-
 Module Name:
 
    bthdef.h

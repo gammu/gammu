@@ -1,4 +1,4 @@
-Gammu README version 08.06.2003
+Gammu README version 16.06.2003
 -------------------------------
 Q. What is this ?
 
@@ -62,7 +62,9 @@ A. Latest versions are on www.mwiacek.com.
    For support contact Marcin Wiacek (currently marcin@mwiacek.com, DO NOT USE
    marcin-wiacek@topnet.pl). You can also subscribe mailing list (see
    www.mwiacek.com and subpage about Gammu) and get help there. List is used
-   also for annoucements about new versions.
+   also for annoucements about new versions. Archive of list (starting
+   11 June 2003) is available under
+   http://news.gmane.org/thread.php?group=gmane.linux.drivers.gammu
 
    TIP: If you want to have only general info about new versions, you can
         subscibe http://freshmeat.net/projects/gammu/ annoucements.
@@ -370,7 +372,7 @@ A. Here are some people, who somehow helped in this project. Probably not
    * Marcel Holtmann - Bluetooth tests
    * Michal Cihar - general discussions, tries into making one
      big and good GSM manager (many changes and suggestions), Alcatel support
-   * Ondrej Rybin & Tomasz Motylewski - hardware help
+   * Ondrej Rybin & Tomasz Motylewski & Tom Nelson - hardware help
    * Joergen Thomsen - SMS daemon
 -------------------------------------------------------------------------------
 Q. What file formats are supported ?
@@ -602,3 +604,15 @@ A. * www.mwiacek.com
      * GSM EQUIPMENT & HARDWARE
      * FREE FLASHES, LOGO'S, RINGTONES
      * FREE INSTRUCTIONS, SCHEMES
+-------------------------------------------------------------------------------
+Q. Nokia and other manufactures provides original software. What original
+   applications can be replaced with Gammu ?
+
+A. Nokia:
+   * Nokia Cellular Data Suite 2.0 - 3.0 (N5110, N6110)
+   * PC-Suite for N5210
+   * PC-Suite 4.06 (N6210)
+   * PC-Suite 4.3 - 4.88 (DCT4 mono: N6310, N6310i, N6510, N8310, N8910)
+   * PC-Suite 5.0 - 5.1 (DCT4 color: N5100, N6610, N6800, N7210)
+     * PC-Suite 5.12 (N6800)
+     * PC-Suite 5.16 (N7210)

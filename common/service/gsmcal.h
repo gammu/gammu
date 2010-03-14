@@ -14,6 +14,7 @@ typedef enum {
 	GCN_CALL,       /* Call 		     */
 	GCN_MEETING,    /* Meeting 		     */
 	GCN_BIRTHDAY,   /* Birthday 		     */
+	GCN_MEMO,
 	GCN_T_ATHL,     /* Training - Athletism      */
         GCN_T_BALL,     /* Training - Ball Games     */
         GCN_T_CYCL,     /* Training - Cycling        */
@@ -45,6 +46,7 @@ typedef enum {
 	CAL_SILENT_ALARM_DATETIME,
 	CAL_RECURRANCE,
 	CAL_TEXT,
+	CAL_LOCATION,
 	CAL_PHONE,
 	CAL_PRIVATE,
 	CAL_CONTACTID,
@@ -71,7 +73,7 @@ typedef struct {
 	GSM_SubCalendarEntry   	Entries[GSM_CALENDAR_ENTRIES];
 } GSM_CalendarEntry;
 
-void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime);
+void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime, int *Location);
 
 GSM_Error NOKIA_EncodeVCALENDAR10SMSText(char *Buffer, int *Length, GSM_CalendarEntry *note);
 

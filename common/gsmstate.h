@@ -62,6 +62,9 @@
 #ifndef GSM_USED_BLUEAT
 #  undef GSM_ENABLE_BLUEAT
 #endif
+#ifndef GSM_USED_IRDAAT
+#  undef GSM_ENABLE_IRDAAT
+#endif
 
 #if defined(GSM_ENABLE_NOKIA6110) || defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9210)
 #  define GSM_ENABLE_NOKIA_DCT3
@@ -80,7 +83,7 @@
 #if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
 #  include "protocol/nokia/phonet.h"
 #endif
-#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT)
+#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT)
 #  include "protocol/at/at.h"
 #endif
 #ifdef GSM_ENABLE_ALCABUS
@@ -108,6 +111,7 @@
 #  undef GSM_ENABLE_BLUEFBUS2
 #  undef GSM_ENABLE_BLUEPHONET
 #  undef GSM_ENABLE_BLUEAT
+#  undef GSM_ENABLE_IRDAAT
 #  undef GSM_ENABLE_PHONETBLUE
 #  undef GSM_ENABLE_FBUS2BLUE
 #endif
@@ -190,7 +194,7 @@ typedef struct {
 #if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
 	extern GSM_Protocol_Functions PHONETProtocol;
 #endif
-#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT)
+#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT)
 	extern GSM_Protocol_Functions ATProtocol;
 #endif
 #ifdef GSM_ENABLE_ALCABUS
@@ -209,7 +213,7 @@ typedef struct {
 #if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
 		GSM_Protocol_PHONETData		PHONET;
 #endif
-#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT)
+#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT)
 		GSM_Protocol_ATData		AT;
 #endif
 #ifdef GSM_ENABLE_ALCABUS
@@ -233,6 +237,7 @@ typedef enum {
 	ID_GetMemoryStatus,
 	ID_GetSMSC,
 	ID_GetSMSMessage,
+	ID_EnableEcho,
 	ID_GetSignalQuality,
 	ID_GetBatteryCharge,
 	ID_GetSMSFolders,
@@ -585,6 +590,7 @@ typedef enum {
 	GCT_PHONETBLUE,
 	GCT_AT,
 
+	GCT_IRDAAT,
 	GCT_IRDAPHONET,
 	GCT_BLUEFBUS2,
 	GCT_BLUEAT,
@@ -682,15 +688,19 @@ typedef enum {
 
 	/* n6510.c */
 	F_PBK35,	/* Phonebook in 3510 style with ringtones ID			*/
-	F_CAL35,	/* Reminders in calendar saved in 3510 style			*/
 	F_RADIO,	/* Phone with FM radio						*/
 	F_NOTODO,	/* No ToDo in phone						*/
 	F_NOMIDI,	/* No ringtones in MIDI						*/
 	F_BLUETOOTH,	/* Bluetooth support						*/
 	F_NOFILESYSTEM,	/* No images, ringtones, java saved in special filesystem	*/
-	F_NONEWCALENDAR,/* Use old frames for calendar 					*/
 	F_NOMMS,	/* No MMS sets in phone						*/
 	F_NOGPRSPOINT,	/* GPRS point are not useable					*/
+	F_CAL35,	/* Calendar,3510 style - Reminder,Call,Birthday			*/
+	F_CAL65,	/* Calendar,6510 style - CBMM, method 3				*/
+
+	/* n6510.c && n7110.c */
+	F_VOICETAGS,	/* Voice tags available						*/
+	F_CAL62,	/* Calendar,6210 style - Call,Birthday,Memo,Meeting		*/
 
 	/* AT modules */
 	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/
