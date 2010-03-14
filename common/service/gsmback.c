@@ -124,7 +124,7 @@ static void SaveVCalTime(FILE *file, GSM_DateTime *dt)
 static void SavePbkEntry(FILE *file, GSM_PhonebookEntry *Pbk)
 {
 	bool	text;
-	char	buffer[50];
+	char	buffer[100];
 	int	j;
 
 	fprintf(file,"Location = %03i\n",Pbk->Location);
@@ -145,6 +145,12 @@ static void SavePbkEntry(FILE *file, GSM_PhonebookEntry *Pbk)
 				break;
 			case PBK_Number_Home:
 				fprintf(file,"Entry%02iType = NumberHome\n",j);
+				break;
+			case PBK_Number_Pager:
+				fprintf(file,"Entry%02iType = NumberPager\n",j);
+				break;
+			case PBK_Number_Other:
+				fprintf(file,"Entry%02iType = NumberOther\n",j);
 				break;
 			case PBK_Text_Note:
 				fprintf(file,"Entry%02iType = Note\n",j);
@@ -168,7 +174,56 @@ static void SavePbkEntry(FILE *file, GSM_PhonebookEntry *Pbk)
 				break;
 			case PBK_Date:
 				break;
-		}
+			case PBK_Category:
+				fprintf(file,"Entry%02iType = Category\n",j);
+				fprintf(file,"Entry%02iNumber = %i\n",j,Pbk->Entries[j].Number);
+				text = false;
+				break;
+			case PBK_Private:
+				fprintf(file,"Entry%02iType = Private\n",j);
+				fprintf(file,"Entry%02iNumber = %i\n",j,Pbk->Entries[j].Number);
+				text = false;
+				break;
+			case PBK_Text_LastName:
+				fprintf(file,"Entry%02iType = LastName\n",j);
+				break;
+			case PBK_Text_FirstName:
+				fprintf(file,"Entry%02iType = FirstName\n",j);
+				break;
+			case PBK_Text_Company:
+				fprintf(file,"Entry%02iType = Company\n",j);
+				break;
+			case PBK_Text_JobTitle:
+				fprintf(file,"Entry%02iType = JobTitle\n",j);
+				break;
+			case PBK_Text_StreetAddress:
+				fprintf(file,"Entry%02iType = Address\n",j);
+				break;
+			case PBK_Text_City:
+				fprintf(file,"Entry%02iType = City\n",j);
+				break;
+			case PBK_Text_State:
+				fprintf(file,"Entry%02iType = State\n",j);
+				break;
+			case PBK_Text_Zip:
+				fprintf(file,"Entry%02iType = Zip\n",j);
+				break;
+			case PBK_Text_Country:
+				fprintf(file,"Entry%02iType = Country\n",j);
+				break;
+			case PBK_Text_Custom1:
+				fprintf(file,"Entry%02iType = Custom1\n",j);
+				break;
+			case PBK_Text_Custom2:
+				fprintf(file,"Entry%02iType = Custom2\n",j);
+				break;
+			case PBK_Text_Custom3:
+				fprintf(file,"Entry%02iType = Custom3\n",j);
+				break;
+			case PBK_Text_Custom4:
+				fprintf(file,"Entry%02iType = Custom4\n",j);
+				break;
+        }
 		if (text) {
 			sprintf(buffer,"Entry%02iText",j);
 			SaveBackupText(file,buffer,Pbk->Entries[j].Text);
@@ -179,6 +234,8 @@ static void SavePbkEntry(FILE *file, GSM_PhonebookEntry *Pbk)
 			case PBK_Number_Work:
 			case PBK_Number_Fax:
 			case PBK_Number_Home:
+			case PBK_Number_Other:
+			case PBK_Number_Pager:
 				if (Pbk->Entries[j].VoiceTag!=0)
 					fprintf(file,"Entry%02iVoiceTag = %i\n",j,Pbk->Entries[j].VoiceTag);
 				break;
@@ -406,6 +463,11 @@ static void SaveRingtoneEntry(FILE *file, GSM_Ringtone *ringtone)
 		EncodeHexBin(buffer,ringtone->NokiaBinary.Frame,ringtone->NokiaBinary.Length);
 		SaveLinkedBackupText(file, "NokiaBinary", buffer);
 		break;
+	case RING_MIDI:
+		j = 0; i = 0;
+		EncodeHexBin(buffer,ringtone->NokiaBinary.Frame,ringtone->NokiaBinary.Length);
+		SaveLinkedBackupText(file, "Pure Midi", buffer);
+		break;
 	case RING_NOTETONE:
 		break;
 	}
@@ -527,6 +589,81 @@ static void SaveProfileEntry(FILE *file, GSM_Profile *Profile)
 		}
 	}
     	fprintf(file,"\n");
+}
+
+void GSM_FreeBackup(GSM_Backup *backup)
+{
+    int i;
+
+    i=0;
+    while (backup->PhonePhonebook[i]!=NULL) {
+        free(backup->PhonePhonebook[i]);
+        backup->PhonePhonebook[i] = NULL;
+        i++;
+    }
+    i=0;
+    while (backup->SIMPhonebook[i]!=NULL) {
+        free(backup->SIMPhonebook[i]);
+        backup->SIMPhonebook[i] = NULL;
+        i++;
+    }
+    i=0;
+    while (backup->Calendar[i]!=NULL) {
+        free(backup->Calendar[i]);
+        backup->Calendar[i] = NULL;
+        i++;
+    }
+    i=0;
+    while (backup->CallerLogos[i]!=NULL) {
+        free(backup->CallerLogos[i]);
+        backup->CallerLogos[i] = NULL;
+        i++;
+    }
+    i=0;
+    while (backup->SMSC[i]!=NULL) {
+        free(backup->SMSC[i]);
+        backup->SMSC[i] = NULL;
+        i++;
+    }
+    i=0;
+    while (backup->WAPBookmark[i]!=NULL) {
+        free(backup->WAPBookmark[i]);
+        backup->WAPBookmark[i] = NULL;
+        i++;
+    }
+    i=0;
+    while (backup->WAPSettings[i]!=NULL) {
+        free(backup->WAPSettings[i]);
+        backup->WAPSettings[i] = NULL;
+        i++;
+    }
+    i=0;
+    while (backup->Ringtone[i]!=NULL) {
+        free(backup->Ringtone[i]);
+        backup->Ringtone[i] = NULL;
+        i++;
+    }
+    i=0;
+    while (backup->ToDo[i]!=NULL) {
+        free(backup->ToDo[i]);
+        backup->ToDo[i] = NULL;
+        i++;
+    }
+    i=0;
+    while (backup->Profiles[i]!=NULL) {
+        free(backup->Profiles[i]);
+        backup->Profiles[i] = NULL;
+        i++;
+    }
+
+    if (backup->StartupLogo!=NULL) {
+        free(backup->StartupLogo);
+        backup->StartupLogo = NULL;
+    }
+    if (backup->OperatorLogo!=NULL) {
+        free(backup->OperatorLogo);
+        backup->OperatorLogo = NULL;
+    }
 }
 
 static GSM_Error SaveBackup(FILE *file, GSM_Backup *backup)
@@ -803,7 +940,7 @@ void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
 GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup)
 {
 	FILE *file;
-  
+ 
 	file = fopen(FileName, "wb");      
 	if (!file) return(GE_CANTOPENFILE);
 
@@ -850,6 +987,10 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Fax;
 			} else if (mystrncasecmp(readvalue,"NumberHome",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Home;
+			} else if (mystrncasecmp(readvalue,"NumberOther",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Other;
+			} else if (mystrncasecmp(readvalue,"NumberPager",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Pager;
 			} else if (mystrncasecmp(readvalue,"Note",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Note;
 			} else if (mystrncasecmp(readvalue,"Postal",0)) {
@@ -858,8 +999,54 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
 			} else if (mystrncasecmp(readvalue,"URL",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_URL;
+			} else if (mystrncasecmp(readvalue,"FirstName",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FirstName;
+			} else if (mystrncasecmp(readvalue,"LastName",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LastName;
+			} else if (mystrncasecmp(readvalue,"Company",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Company;
+			} else if (mystrncasecmp(readvalue,"JobTitle",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_JobTitle;
+			} else if (mystrncasecmp(readvalue,"StreetAddress",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_StreetAddress;
+			} else if (mystrncasecmp(readvalue,"City",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_City;
+			} else if (mystrncasecmp(readvalue,"State",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_State;
+			} else if (mystrncasecmp(readvalue,"Zip",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Zip;
+			} else if (mystrncasecmp(readvalue,"Country",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Country;
+			} else if (mystrncasecmp(readvalue,"Custom1",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom1;
+			} else if (mystrncasecmp(readvalue,"Custom2",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom2;
+			} else if (mystrncasecmp(readvalue,"Custom3",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom3;
+			} else if (mystrncasecmp(readvalue,"Custom4",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom4;
 			} else if (mystrncasecmp(readvalue,"Name",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Name;
+			} else if (mystrncasecmp(readvalue,"Category",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Category;
+				Pbk->Entries[Pbk->EntriesNum].Number = 0;
+				sprintf(buffer,"Entry%02iNumber",num);
+				readvalue = CFG_Get(file_info, section, buffer, false);
+				if (readvalue!=NULL) {
+					Pbk->Entries[Pbk->EntriesNum].Number = atoi(readvalue);
+				}
+				Pbk->EntriesNum ++;
+				continue;
+			} else if (mystrncasecmp(readvalue,"Private",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Private;
+				Pbk->Entries[Pbk->EntriesNum].Number = 0;
+				sprintf(buffer,"Entry%02iNumber",num);
+				readvalue = CFG_Get(file_info, section, buffer, false);
+				if (readvalue!=NULL) {
+					Pbk->Entries[Pbk->EntriesNum].Number = atoi(readvalue);
+				}
+				Pbk->EntriesNum ++;
+				continue;
 			} else if (mystrncasecmp(readvalue,"CallerGroup",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Caller_Group;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;

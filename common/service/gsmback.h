@@ -25,16 +25,16 @@ typedef struct {
 	char			IMEI		[50];
 	char			Model		[50];
 	char			DateTime	[200];
-	GSM_PhonebookEntry	*PhonePhonebook	[GSM_BACKUP_MAX_PHONEPHONEBOOK];
-	GSM_PhonebookEntry	*SIMPhonebook	[GSM_BACKUP_MAX_SIMPHONEBOOK];
-	GSM_CalendarNote	*Calendar	[GSM_BACKUP_MAX_CALENDAR];
-	GSM_Bitmap		*CallerLogos	[GSM_BACKUP_MAX_CALLER];
-	GSM_SMSC		*SMSC		[GSM_BACKUP_MAX_SMSC];
-	GSM_WAPBookmark		*WAPBookmark	[GSM_BACKUP_MAX_WAPBOOKMARK];
-	GSM_MultiWAPSettings	*WAPSettings	[GSM_BACKUP_MAX_WAPSETTINGS];
-	GSM_Ringtone		*Ringtone	[GSM_BACKUP_MAX_RINGTONES];
-	GSM_TODO		*ToDo		[GSM_BACKUP_MAX_TODO];
-	GSM_Profile		*Profiles	[GSM_BACKUP_MAX_PROFILES];
+	GSM_PhonebookEntry	*PhonePhonebook	[GSM_BACKUP_MAX_PHONEPHONEBOOK + 1];
+	GSM_PhonebookEntry	*SIMPhonebook	[GSM_BACKUP_MAX_SIMPHONEBOOK + 1];
+	GSM_CalendarNote	*Calendar	[GSM_BACKUP_MAX_CALENDAR + 1];
+	GSM_Bitmap		*CallerLogos	[GSM_BACKUP_MAX_CALLER + 1];
+	GSM_SMSC		*SMSC		[GSM_BACKUP_MAX_SMSC + 1];
+	GSM_WAPBookmark		*WAPBookmark	[GSM_BACKUP_MAX_WAPBOOKMARK + 1];
+	GSM_MultiWAPSettings	*WAPSettings	[GSM_BACKUP_MAX_WAPSETTINGS + 1];
+	GSM_Ringtone		*Ringtone	[GSM_BACKUP_MAX_RINGTONES + 1];
+	GSM_TODO		*ToDo		[GSM_BACKUP_MAX_TODO + 1];
+	GSM_Profile		*Profiles	[GSM_BACKUP_MAX_PROFILES + 1];
 	GSM_Bitmap		*StartupLogo;
 	GSM_Bitmap		*OperatorLogo;
 } GSM_Backup;
@@ -43,6 +43,7 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup);
 GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup);
 
 void GSM_ClearBackup(GSM_Backup *backup);
+void GSM_FreeBackup(GSM_Backup *backup);
 
 typedef struct {
 	bool IMEI;

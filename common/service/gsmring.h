@@ -125,7 +125,8 @@ typedef struct {
 
 typedef enum {
 	RING_NOTETONE = 1,
-	RING_NOKIABINARY
+	RING_NOKIABINARY,
+	RING_MIDI
 } GSM_RingtoneFormat;
 
 typedef struct {
@@ -152,7 +153,7 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone);
 GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone);
 
 unsigned char	GSM_EncodeNokiaRTTLRingtone	(GSM_Ringtone ringtone, unsigned char *package, int *maxlength);
-unsigned char   GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *package, int *maxlength);
+unsigned char   GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *package, int *maxlength, float version);
 
 GSM_Error	GSM_DecodeNokiaRTTLRingtone	(GSM_Ringtone *ringtone, unsigned char *package, int maxlength);
 

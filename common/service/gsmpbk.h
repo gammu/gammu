@@ -40,13 +40,30 @@ typedef enum {
 	PBK_Number_Work,
 	PBK_Number_Fax,
 	PBK_Number_Home,
+	PBK_Number_Pager,
+	PBK_Number_Other,
 	PBK_Text_Note,
-	PBK_Text_Postal,
+	PBK_Text_Postal, /* Complete postal address */
 	PBK_Text_Email,
 	PBK_Text_URL,
 	PBK_Name,
 	PBK_Date,
-	PBK_Caller_Group
+	PBK_Caller_Group,
+    	PBK_Text_LastName,
+    	PBK_Text_FirstName,
+    	PBK_Text_Company,
+    	PBK_Text_JobTitle,
+	PBK_Category,
+    	PBK_Private,
+    	PBK_Text_StreetAddress,
+    	PBK_Text_City,
+    	PBK_Text_State,
+    	PBK_Text_Zip,
+    	PBK_Text_Country,
+    	PBK_Text_Custom1,
+    	PBK_Text_Custom2,
+    	PBK_Text_Custom3,
+    	PBK_Text_Custom4
 } GSM_EntryType;
 
 /* Limits for sizing of array in GSM_PhonebookEntry.
@@ -54,11 +71,11 @@ typedef enum {
  * so they have their own limits set.
  */
 #define GSM_PHONEBOOK_TEXT_LENGTH	(62)
-#define GSM_PHONEBOOK_ENTRIES		(9)
+#define GSM_PHONEBOOK_ENTRIES		(26)
 
 typedef struct {
 	GSM_EntryType		EntryType;
-	unsigned char		Text[GSM_PHONEBOOK_TEXT_LENGTH*2];
+	unsigned char		Text[(GSM_PHONEBOOK_TEXT_LENGTH+1)*2];
 	GSM_DateTime		Date;
 	int			Number;
 	int			VoiceTag;

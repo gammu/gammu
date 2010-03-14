@@ -1,10 +1,5 @@
-
-%define ver      0.65
+%define ver      0.66
 %define rel      1
-%define bin_dir  /usr/local/bin
-%define doc_dir  /usr/local/doc/gammu
-%define lib_dir  /lib
-%define man_dir  /usr/local/man/man1
 
 Summary: 	 Mobile phones tools for Unix (Linux) and Win32
 Name: 		 gammu
@@ -29,24 +24,24 @@ settings and bookmarks and much more. Functions depend on the phone model.
 %build
 %install
 rm -rf $RPM_BUILD_ROOT
-./configure
-make installlib INSTALL_BIN_DIR=$RPM_BUILD_ROOT%bin_dir	\
-	        INSTALL_DOC_DIR=$RPM_BUILD_ROOT%doc_dir	\
-	        INSTALL_LIB_DIR=$RPM_BUILD_ROOT%lib_dir \
-	        INSTALL_MAN_DIR=$RPM_BUILD_ROOT%man_dir
+%configure
+make installlib INSTALL_DOC_DIR=%_defaultdocdir/gammu/ DESTDIR=$RPM_BUILD_ROOT
 make clean
 
 %files
 %defattr(-,root,root)
-%bin_dir/*
-%lib_dir/*
-%doc %man_dir/*
-%doc %doc_dir/*
+%_bindir/*
+%_libdir/*
+%doc %_mandir/man1/*
+%doc %_defaultdocdir/gammu/*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Thu Jan 02 2003 Michal Cihar <cihar@liten.cz>
+- made it install in directories that are defined in rpm
+
 * Sun Nov 10 2002 Marcin Wiacek <marcin@mwiacek.com>
 - topnet.pl email no more available
 

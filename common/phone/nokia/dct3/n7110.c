@@ -266,7 +266,7 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_Phone_Da
 				Data->Bitmap->Text[1] = 0;
 				if (msg.Length!=304) {
 					GSM_UnpackEightBitsToSeven(0, msg.Length-304, msg.Length-304, msg.Buffer+52+PHONE_GetBitmapSize(GSM_NokiaPictureImage),output);
-					DecodeDefault(Data->Bitmap->Text, output, msg.Length - 304);
+					DecodeDefault(Data->Bitmap->Text, output, msg.Length - 304, true, NULL);
 				}
 				return GE_NONE;
 			case ID_GetSMSMessage:
@@ -288,7 +288,7 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_Phone_Da
 					output[i++] = 0;
 					output[i++] = 0; /* Length - later changed */
 					GSM_UnpackEightBitsToSeven(0, msg.Length-304, msg.Length-304, msg.Buffer+52+PHONE_GetBitmapSize(GSM_NokiaPictureImage),output2);
-					DecodeDefault(output+i, output2, msg.Length - 304);
+					DecodeDefault(output+i, output2, msg.Length - 304, true, NULL);
 					output[i - 1] = strlen(DecodeUnicodeString(output+i)) * 2;
 					i = i + output[i-1];
 				}
@@ -494,6 +494,8 @@ static GSM_Error N7110_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		s->Phone.Data.Ringtone=Ringtone;
 		dprintf("Getting binary ringtone\n");
 		return GSM_WaitFor (s, req, 6, 0x1f, 4, ID_GetRingtone);
+	case RING_MIDI:
+		return GE_NOTSUPPORTED;
 	}
 	return GE_NOTSUPPORTED;
 }
@@ -1272,6 +1274,11 @@ static GSM_Error N7110_Initialise (GSM_StateMachine *s)
 	return GE_NONE;
 }
 
+static GSM_Error N7110_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarNote *Note, bool start)
+{
+	return N71_65_GetNextCalendarNote(s,Note,start,&s->Phone.Data.Priv.N7110.LastCalendarYear,&s->Phone.Data.Priv.N7110.LastCalendarPos);
+}
+
 static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x02,ID_IncomingFrame	},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x03,ID_IncomingFrame	},
@@ -1319,6 +1326,7 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{N71_65_ReplyGetCalendarNote,	"\x13",0x03,0x1A,ID_GetCalendarNote	},
 	{N7110_ReplyGetCalendarNotePos,	"\x13",0x03,0x32,ID_GetCalendarNotePos	},
 	{N7110_ReplyGetCalendarInfo,	"\x13",0x03,0x3B,ID_GetCalendarNotesInfo},
+	{N71_65_ReplyGetNextNote,	"\x13",0x03,0x3F,ID_GetCalendarNote	},
 
 	{N7110_ReplySaveSMSMessage,	"\x14",0x03,0x05,ID_SaveSMSMessage	},
 	{N7110_ReplySaveSMSMessage,	"\x14",0x03,0x06,ID_SaveSMSMessage	},
@@ -1462,7 +1470,8 @@ GSM_Phone_Functions N7110Phone = {
 	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
 	N7110_SetProfile,
 	NOTSUPPORTED,		/*	GetSIMIMSI		*/
-	NONEFUNCTION		/*	SetIncomingCall		*/
+	NONEFUNCTION,		/*	SetIncomingCall		*/
+    	N7110_GetNextCalendarNote
 };
 
 #endif

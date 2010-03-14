@@ -5,15 +5,7 @@
 #include <stdio.h>
 #include <conio.h>
 #include <process.h>
-
 #include <ctype.h>
-
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#ifdef WIN32
-#  include <windows.h>
-#endif
 #include <locale.h>
 #include <signal.h>
 
@@ -252,6 +244,7 @@ GSM_Error WINAPI myendconnection(int phone)
 	s[phone].ThreadTerminate = true;
 	while (1) {
 		if (s[phone].dwThreadID == 0) break;
+		mili_sleep(20);
 	}
 	if (s[phone].s.opened) error=GSM_TerminateConnection(&s[phone].s);
 	s[phone].Used=false;
@@ -491,6 +484,38 @@ GSM_Error WINAPI myreset(int phone, bool hard)
         ReleaseMutex(s[phone].Mutex);
 	return error;
 
+}
+
+GSM_Error WINAPI mysmscounter(int 		MessageLength,
+			      unsigned char 	*MessageBuffer,
+		    	      GSM_UDHHeader 	UDH,
+		    	      GSM_Coding_Type 	Coding,
+		    	      int 		*SMSNum,
+		    	      int 		*CharsLeft)
+{
+	/* FIXME. Reverse MessageBuffer */
+	GSM_SMSCounter(MessageLength,MessageBuffer,UDH,Coding,SMSNum,CharsLeft);
+	return GE_NONE;
+}
+
+GSM_Error WINAPI mymakemultipartsms(unsigned char		*MessageBuffer,
+			  	    int				MessageLength,
+			  	    GSM_UDH			UDHType,
+			  	    GSM_Coding_Type		Coding,
+			  	    int				Class,
+			  	    unsigned char		ReplaceMessage,
+				    GSM_MultiSMSMessage		*SMS)
+{
+	int i;
+
+	/* FIXME. Reverse MessageBuffer */
+	GSM_MakeMultiPartSMS(SMS,MessageBuffer,MessageLength,UDHType,Coding,Class,ReplaceMessage);
+	for (i=0;i<SMS->Number;i++) {
+		if (SMS->SMS[i].Coding == GSM_Coding_Unicode || SMS->SMS[i].Coding == GSM_Coding_Default) {
+			ReverseUnicodeString(SMS->SMS[i].Text);
+		}
+	}
+	return GE_NONE;
 }
 
 BOOL WINAPI DllMain  ( HANDLE hModule, 

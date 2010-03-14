@@ -95,6 +95,7 @@ int NOKIA_SetUnicodeString(unsigned char *dest, unsigned char *string, bool Full
 GSM_MemoryType NOKIA_GetMemoryType(GSM_MemoryType memory_type, unsigned char *ID)
 {
 	int i=0;
+
 	while (ID[i+1]!=0x00) {
 		if (ID[i]==memory_type) return ID[i+1];
 		i=i+2;
@@ -306,7 +307,7 @@ GSM_Error DCT3DCT4_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_Phone_Dat
 {
 	GSM_Lines lines;
 
-	SplitLines(msg.Buffer, msg.Length, &lines, "\x20\x0A", 2);
+	SplitLines(msg.Buffer, msg.Length, &lines, "\x20\x0A", 2, false);
 
 	strcpy(Data->Model,GetLineString(msg.Buffer, lines, 4));
 	dprintf("Received model %s\n",Data->Model);
@@ -1175,6 +1176,8 @@ int N71_65_EncodePhonebookFrame(unsigned char *req, GSM_PhonebookEntry entry, in
 			break;
 		case PBK_Date:
 			break;
+		default:
+			break;
 		}
 	}
 
@@ -1367,6 +1370,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_PhonebookEntry 	*entry,
 	/* In DCT4 default caller logos are NOT return */
 	if (!WasBitmap && entry->MemoryType==GMT7110_CG) return GE_SECURITYERROR;
 
+	if (entry->EntriesNum == 0) return GE_EMPTY;
+
 	return GE_NONE;
 }
 
@@ -1410,4 +1415,118 @@ void NOKIA_DecodeDateTime(unsigned char* buffer, GSM_DateTime *datetime)
 		datetime->Hour, datetime->Minute, datetime->Second);
 	dprintf("   Date: %4d/%02d/%02d\n",
 		datetime->Year, datetime->Month, datetime->Day);
+}
+/*--------------------------*/
+
+GSM_Error N71_65_ReplyGetNextNote(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+	unsigned long 	alarm;
+	time_t     	t_alarm;
+	GSM_DateTime 	alarm2;
+	struct tm  	tm_time;
+	struct tm  	*tm_alarm;
+
+#ifdef GSM_ENABLE_NOKIA7110
+	GSM_Phone_N7110Data 	*Priv7110 = &Data->Priv.N7110;
+#endif
+#ifdef GSM_ENABLE_NOKIA6510
+	GSM_Phone_N6510Data 	*Priv6510 = &Data->Priv.N6510;
+#endif
+
+#ifdef GSM_ENABLE_NOKIA7110
+	if (strstr(N7110Phone.models, GetModelData(NULL,Data->Model,NULL)->model) != NULL) {
+		Priv7110->LastCalendarPos = msg.Buffer[4]*256 + msg.Buffer[5];
+		dprintf("Next calendar position: %i\n",msg.Buffer[4]*256 + msg.Buffer[5]);
+	}
+#endif
+
+#ifdef GSM_ENABLE_NOKIA6510
+	if (strstr(N6510Phone.models, GetModelData(NULL,Data->Model,NULL)->model) != NULL) {
+		Priv6510->LastCalendarPos = msg.Buffer[4]*256 + msg.Buffer[5];
+		dprintf("Next calendar position: %i\n",msg.Buffer[4]*256 + msg.Buffer[5]);
+	}
+#endif
+
+	alarm  = ((unsigned int)msg.Buffer[12]) << 24;
+	alarm += ((unsigned int)msg.Buffer[13]) << 16;
+	alarm += ((unsigned int)msg.Buffer[14]) << 8;
+	alarm += msg.Buffer[15];
+	dprintf("difference %i\n",alarm);
+	memset(&tm_time, 0, sizeof(tm_time));
+	tm_time.tm_year = 2029 - 1900;
+	tm_time.tm_mon  = 12 - 1;
+	tm_time.tm_mday = 31;
+	tm_time.tm_hour = 22;
+	tm_time.tm_min  = 59;
+	tm_time.tm_sec  = 58;
+	//daylight=0;
+	//timezone =0;
+
+	tzset();
+	t_alarm  	= mktime(&tm_time);
+	dprintf("r_alarm %i\n",t_alarm);
+
+	t_alarm 	+= alarm;
+	dprintf("r_alarm %i\n",t_alarm);
+
+	tm_alarm 	= localtime(&t_alarm);
+
+	alarm2.Year   	= tm_alarm->tm_year + 1900;
+	alarm2.Month  	= tm_alarm->tm_mon + 1;
+	alarm2.Day    	= tm_alarm->tm_mday;
+	alarm2.Hour   	= tm_alarm->tm_hour;
+	alarm2.Minute 	= tm_alarm->tm_min;
+	alarm2.Second 	= tm_alarm->tm_sec;
+	dprintf("after    : %02i-%02i-%04i %02i:%02i:%02i\n",
+		alarm2.Day,alarm2.Month,alarm2.Year,
+		alarm2.Hour,alarm2.Minute,alarm2.Second);
+
+	return GE_NONE;
+}
+
+GSM_Error N71_65_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarNote *Note, bool start, int *LastCalendarYear, int *LastCalendarPos)
+{
+	GSM_Error		error;
+	GSM_DateTime		date_time;
+	unsigned char 		req[] = {
+		N6110_FRAME_HEADER, 0x3e, 
+		0xFF, 0xFE};		/* Location */
+
+	if (start) {
+		/* We have to get current year. It's NOT written in frame for Birthday */
+		error=s->Phone.Functions->GetDateTime(s,&date_time);
+		switch (error) {
+			case GE_EMPTY:
+			case GE_NOTIMPLEMENTED:
+				GSM_GetCurrentDateTime (&date_time);
+				break;
+			case GE_NONE:
+				break;
+			default:
+				return error;
+		}
+		*LastCalendarYear = date_time.Year;
+
+		/* First location at all */
+		req[4] = 0xFF;
+		req[5] = 0xFE;
+	} else {
+		req[4] = *LastCalendarPos >> 8;
+		req[5] = *LastCalendarPos & 0xff;
+	}
+	Note->Time.Year = *LastCalendarYear;
+
+	s->Phone.Data.Calendar=Note;
+	dprintf("Getting calendar note location\n");
+
+	error=GSM_WaitFor (s, req, 6, 0x13, 4, ID_GetCalendarNote);
+	if (error != GE_NONE) return error;
+
+	if (*LastCalendarPos == 0x00) return GE_EMPTY;
+
+	req[3] = 0x19;
+	req[4] = *LastCalendarPos >> 8;
+	req[5] = *LastCalendarPos & 0xff;
+	dprintf("Getting calendar note\n");
+	return GSM_WaitFor (s, req, 6, 0x13, 4, ID_GetCalendarNote);
 }

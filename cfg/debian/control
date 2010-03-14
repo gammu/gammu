@@ -1,0 +1,24 @@
+Source: gammu
+Section: comm
+Priority: optional
+Maintainer: Michal Cihar <cihar@email.cz>
+Build-Depends: debhelper (>> 3.0.0)
+Standards-Version: 3.5.2
+
+Package: gammu
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: Mobile phone management utility
+ Gammu (GNU All Mobile Management Utility) is program to manage mobile phone.
+ .
+ Gammu can do such things with cellular phones as making data calls,
+ updating the address book, changing calendar and ToDo entries, sending and
+ receiving SMS messages, loading and getting ring tones and pictures (different
+ types of logos), synchronizing time, enabling NetMonitor, managing WAP
+ settings and bookmarks and much more. Functions depend on the phone model.
+ .
+ Currently supported phones are:
+ .
+  * Many Nokia phones.
+  * Alcatel BE5 (501/701).
+  * Any AT capable phone (Siemens, Nokia, Alcatel, IPAQ).

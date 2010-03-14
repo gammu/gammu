@@ -11,6 +11,9 @@ typedef struct {
 	unsigned char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
 	unsigned char   *errorsmspath, 	 *inboxformat,  *transmitformat;
 	unsigned char   *deliveryreport, *logfilename,  *PINCode;
+
+	unsigned char 	SMSID[200],prevSMSID[200];
+	unsigned int 	retries;
 } GSM_SMSDConfig;
 
 typedef struct {

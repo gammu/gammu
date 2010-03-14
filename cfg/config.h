@@ -6,7 +6,7 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.65"
+#define VERSION "0.66"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -25,7 +25,8 @@
 #define GSM_ENABLE_INFRARED 1
 /* AT protocol */
 #define GSM_ENABLE_AT 1
-//#define GSM_ENABLE_ALCABUS
+/* Alcatel protocol */
+#define GSM_ENABLE_ALCABUS 1
 /* Works only in Linux.
  * you need bluez-kernel-2.3-pre2 or greater, bluez-libs-2.1 
  * and bluez-utils-2.1 (not yet released) to have Bluetooth in OS
@@ -76,7 +77,8 @@
 #define GSM_ENABLE_NOKIA9210 1
 /* AT generic models */
 #define GSM_ENABLE_ATGEN 1
-//#define GSM_ENABLE_ALCATEL
+/* Alcatel BE5 */
+#define GSM_ENABLE_ALCATEL 1
 
 /* Bu default commented: some parts of source are not ready or not tested
  * at all (or aren't good tested). Uncomment, if want them

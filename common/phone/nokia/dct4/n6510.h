@@ -6,6 +6,9 @@
 #include "../../../service/gsmsms.h"
 
 typedef struct {
+	int				LastCalendarYear;
+	int				LastCalendarPos;
+
 	GSM_NOKIASMSFolder		LastSMSFolder;
 	GSM_SMSFolders			LastSMSFolders;
 	GSM_NOKIACalendarLocations	LastCalendar;

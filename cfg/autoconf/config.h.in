@@ -24,7 +24,8 @@
 #undef GSM_ENABLE_INFRARED
 /* AT protocol */
 #undef GSM_ENABLE_AT
-//#define GSM_ENABLE_ALCABUS
+/* Alcatel protocol */
+#undef GSM_ENABLE_ALCABUS
 /* Works only in Linux.
  * you need bluez-kernel-2.3-pre2 or greater, bluez-libs-2.1 
  * and bluez-utils-2.1 (not yet released) to have Bluetooth in OS
@@ -75,7 +76,8 @@
 #undef GSM_ENABLE_NOKIA9210
 /* AT generic models */
 #undef GSM_ENABLE_ATGEN
-//#define GSM_ENABLE_ALCATEL
+/* Alcatel BE5 */
+#undef GSM_ENABLE_ALCATEL
 
 /* Bu default commented: some parts of source are not ready or not tested
  * at all (or aren't good tested). Uncomment, if want them

@@ -9,13 +9,14 @@ uses Classes,Forms,SysUtils;
 type GSM_Error = (
         GE_NONE = 1,
         GE_DEVICEOPENERROR,		// Error during opening device
+	GE_DEVICELOCKED,
         GE_DEVICEDTRRTSERROR,		// Error during setting DTR/RTS in device
         GE_DEVICECHANGESPEEDERROR,	// Error during changing speed in device
         GE_DEVICEWRITEERROR,		// Error during writing device 
 	GE_DEVICEREADERROR,		// Error during reading device
 	GE_DEVICEPARITYERROR,		// Can't set parity on device
         GE_TIMEOUT,			// Command timed out 
-        GE_FRAMENOTREQUESTED,		// Frame handled, but not requested in this moment
+        GE_FRAMENOTREQUESTED,		// Frame handled, but not requested in this moment //10
         GE_UNKNOWNRESPONSE,		// Response not handled by gammu
 	GE_UNKNOWNFRAME,		// Frame not handled by gammu
 	GE_UNKNOWNCONNECTIONTYPESTRING,	// Unknown connection type given by user 
@@ -25,7 +26,7 @@ type GSM_Error = (
 	GE_EMPTY,			// Empty phonebook entry, ...
 	GE_SECURITYERROR,		// Not allowed
 	GE_INVALIDLOCATION,		// Too high or too low location...
-	GE_NOTIMPLEMENTED,		// Function not implemented 
+	GE_NOTIMPLEMENTED,		// Function not implemented //20
 	GE_FULL,			// Memory is full 
 	GE_UNKNOWN,
 	GE_CANTOPENFILE, 		// Error during opening file
@@ -34,7 +35,10 @@ type GSM_Error = (
 	GE_EMPTYSMSC,			// SMSC number is empty
 	GE_INSIDEPHONEMENU,		// Inside phone menu - can't make something
 	GE_NOTCONNECTED,		// Phone NOT connected - can't make something 
-	GE_WORKINPROGRESS);		// Work in progress
+	GE_WORKINPROGRESS,		// Work in progress
+      	GE_PHONEOFF,			// Phone is disabled and connected to charger //30
+	GE_FILENOTSUPPORTED,		// File format not supported by Gammu
+	GE_BUG);                  	// Found bug in implementation or phone //32
 
 const
 	GSM_MAX_SMSC_NAME_LENGTH	= 30;
@@ -99,12 +103,12 @@ type
 
 	// Define datatype for SMS Message Center
 	GSM_SMSC = record
-		Location 	: integer;		// Number of the SMSC in the phone memory.
-		Name		: array[1..GSM_MAX_SMSC_NAME_LENGTH*2] of char; // Name of the SMSC.
-		Format		: GSM_SMSFormat;	// SMS is sent as text/fax/paging/email.
-		Validity	: GSM_SMSValidity;	// Validity of SMS Message.
-		Number		: array[1..GSM_MAX_NUMBER_LENGTH*2] of char;	// Number of the SMSC.
-		DefaultNumber	: array[1..GSM_MAX_NUMBER_LENGTH*2] of char;	// Number of default recipient
+		Location 	: integer;		                            // Number of the SMSC in the phone memory.
+		Name		: array[1..(GSM_MAX_SMSC_NAME_LENGTH+1)*2] of char; // Name of the SMSC.
+		Format		: GSM_SMSFormat;	                            // SMS is sent as text/fax/paging/email.
+		Validity	: GSM_SMSValidity;	                            // Validity of SMS Message.
+		Number		: array[1..(GSM_MAX_NUMBER_LENGTH+1)*2] of char;    // Number of the SMSC.
+		DefaultNumber	: array[1..(GSM_MAX_NUMBER_LENGTH+1)*2] of char;    // Number of default recipient
 	end;
 
 	// types of UDH (User Data Header)
@@ -159,24 +163,24 @@ type
 		SMSC		 : GSM_SMSC;		// Message center
 		UDH		 : GSM_UDHHeader;       // User Data Header
 		Folder		 : integer;             // Inbox or Outbox message
-		InboxFolder	 : Boolean;		// true, when sms is from inbox
+		InboxFolder	 : LongBool;		// true, when sms is from inbox
 		Location	 : integer;             // location of sms in sim memory (for example)
 		Length		 : integer;		// Length of the SMS message.
                                                         // for 8 bit sms number of 8 bit chars
-		Name		 : array[1..GSM_MAX_SMS_NAME_LENGTH*2] 	of char; // Name in Nokia 6210/7110, etc. Ignored in other
-		Number		 : array[1..GSM_MAX_NUMBER_LENGTH*2] 	of char; // Sender or recipient number
-		Text		 : array[1..(GSM_MAX_SMS_LENGTH+1)*2] 	of char; // Text for SMS
+		Name		 : array[1..(GSM_MAX_SMS_NAME_LENGTH+1)*2] of char; // Name in Nokia 6210/7110, etc. Ignored in other
+		Number		 : array[1..(GSM_MAX_NUMBER_LENGTH+1)*2]   of char; // Sender or recipient number
+		Text		 : array[1..(GSM_MAX_SMS_LENGTH+1)*2] 	   of char; // Text for SMS
 		PDU		 : GSM_SMSMessageType;	// Type of message
 		Coding		 : GSM_Coding_Type;	// Type of coding
 		DateTime	 : GSM_DateTime;	// Date of reception/response of messages.
 		SMSCTime	 : GSM_DateTime;	// Date of SMSC response if DeliveryReport messages.
 		DeliveryStatus	 : char;		// In delivery reports: status
-		ReplyViaSameSMSC : boolean;		// Indicates whether "Reply via same center" is set
+		ReplyViaSameSMSC : LongBool;		// Indicates whether "Reply via same center" is set
 		State		 : GSM_SMS_State;	// Read, UnRead, etc.
 		SMSClass	 : shortint;		// SMS class. Normally -1.
                 MessageReference : char;		// SMS Reference Number in SMS_Submit. 0, when don't used
                 ReplaceMessage   : char;		// 0, when don't use this feature. 1 - 7 set SMS ID
-		RejectDuplicates : boolean;		// true, if set this flag. Normally false
+		RejectDuplicates : LongBool;		// true, if set this flag. Normally false
 	end;
 	PGSM_SMSMessage = ^GSM_SMSMessage;
 
@@ -217,10 +221,10 @@ type
 
 type
         //callback, which is called, when phone is connected or disconnected
-        PhoneCallBackProc          = procedure(x:integer;ID:integer;connected:boolean);stdcall;
+        PhoneCallBackProc          = procedure(x:integer;ID:integer;connected:LongBool);stdcall;
         PPhoneCallBackProc         = ^PhoneCallBackProc;
         //this definition is used, when call back is defined under Class
-        PhoneCallBackProcClass     = procedure(ID:integer;connected:boolean);stdcall;
+        PhoneCallBackProcClass     = procedure(ID:integer;connected:LongBool);stdcall;
         PPhoneCallBackProcClass    = ^PhoneCallBackProcClass;
 
         //called, when phone needs PIN, PUK, etc.
@@ -242,7 +246,7 @@ function GSM_StartConnectionClass	(Phone : Pinteger; Device: PChar;Connection: P
 function GSM_EndConnection	        (Phone : integer): GSM_Error; stdcall; external 'gammu.dll' name 'myendconnection';
 function GSM_GetNetworkInfo	        (Phone : integer; NetworkInfo : PGSM_NetworkInfo): GSM_Error; stdcall; external 'gammu.dll' name 'mygetnetworkinfo';
 function GSM_GetSMSStatus	        (Phone : integer; status : PGSM_SMSMemoryStatus): GSM_Error; stdcall; external 'gammu.dll' name 'mygetsmsstatus';
-function GSM_GetNextSMSMessage	        (Phone : integer; SMS : PGSM_MultiSMSMessage;start : Boolean): GSM_Error; stdcall; external 'gammu.dll' name 'mygetnextsmsmessage';
+function GSM_GetNextSMSMessage	        (Phone : integer; SMS : PGSM_MultiSMSMessage;start : LongBool): GSM_Error; stdcall; external 'gammu.dll' name 'mygetnextsmsmessage';
 function GSM_DeleteSMSMessage	        (Phone : integer; SMS : PGSM_SMSMessage): GSM_Error; stdcall; external 'gammu.dll' name 'mydeletesmsmessage';
 function GSM_SendSMSMessage	        (Phone : integer; SMS : PGSM_SMSMessage;timeout:integer): GSM_Error; stdcall; external 'gammu.dll' name 'mysendsmsmessage';
 function GSM_SaveSMSMessage	        (Phone : integer; SMS : PGSM_SMSMessage): GSM_Error; stdcall; external 'gammu.dll' name 'mysavesmsmessage';
@@ -252,7 +256,9 @@ function GSM_GetManufacturer	        (Phone : integer; IMEI:PAnsiString): GSM_Er
 function GSM_GetModel	                (Phone : integer; Model:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmodel';
 function GSM_GetModelName	        (Phone : integer; Model:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmodelname';
 function GSM_GetFirmwareVersion         (Phone : integer; Version: PDouble): GSM_Error; stdcall; external 'gammu.dll' name 'mygetfirmwareversion';
-function GSM_Reset                      (Phone : integer; Hard: Boolean): GSM_Error; stdcall; external 'gammu.dll' name 'myreset';
+function GSM_Reset                      (Phone : integer; Hard: LongBool): GSM_Error; stdcall; external 'gammu.dll' name 'myreset';
+function GSM_SMSCounter			(MessageLength:Integer;MessageBuffer:PAnsiString;UDH:GSM_UDHHeader;Coding:GSM_Coding_Type;SMSNum:PInteger;CharsLeft:PInteger): GSM_Error; stdcall; external 'gammu.dll' name 'mysmscounter';
+function GSM_MakeMultiPartSMS           (MessageBuffer:PAnsiString;MessageLength:Integer;UDHType:GSM_UDH;Coding:GSM_Coding_Type;MyClass:Integer;ReplaceMessage:ShortInt;SMS:PGSM_MultiSMSMessage): GSM_Error; stdcall; external 'gammu.dll' name 'mymakemultipartsms';
 procedure GSM_GetNetworkName	        (NetworkCode: PAnsiString; NetworkName: PAnsiString); stdcall; external 'gammu.dll' name 'mygetnetworkname';
 procedure GSM_GetGammuVersion		(Version: PAnsiString); stdcall; external 'gammu.dll' name 'mygetgammuversion';
 

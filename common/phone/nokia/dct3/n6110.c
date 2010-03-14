@@ -103,7 +103,7 @@ static GSM_Error N6110_ReplyGetMagicBytes(GSM_Protocol_Message msg, GSM_Phone_Da
 	 * messages on the phone when trying to emulate NCDS... I hope....
 	 * UPDATE: of course, now we have the authentication algorithm.
 	 */
-	dprintf("   Magic bytes: %02x %02x %02x %02x\n", msg.Buffer[50], msg.Buffer[51], msg.Buffer[52], msg.Buffer[53]);
+	dprintf("   Magic bytes     : %02x %02x %02x %02x\n", msg.Buffer[50], msg.Buffer[51], msg.Buffer[52], msg.Buffer[53]);
 
 	Priv->MagicBytes[0]=msg.Buffer[50];
 	Priv->MagicBytes[1]=msg.Buffer[51];
@@ -213,7 +213,7 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_Phone_Data *
 		count=count+msg.Buffer[count]+1;
 
 		/* If number is empty */
-		if (msg.Buffer[count]==0x00) return GE_NONE;
+		if (msg.Buffer[count]==0x00) return GE_EMPTY;
 
 		if (msg.Buffer[count]>GSM_PHONEBOOK_TEXT_LENGTH) {
 			dprintf("Too long text\n");
@@ -389,6 +389,9 @@ static GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_Phone_Da
 		return GE_NONE;
 	case 0x09:
 		switch (msg.Buffer[4]) {
+		case 0x00:
+			dprintf("Unknown. Probably phone too busy\n");
+			return GE_UNKNOWN;
 		case 0x02:
 			dprintf("Too high location ?\n");
 			return GE_INVALIDLOCATION;
@@ -675,6 +678,8 @@ static GSM_Error N6110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		if (!strcmp(GetModelData(NULL,s->Model,NULL)->model,"3210")) reqBin[5]=0x10;
 		dprintf("Setting binary ringtone\n");
 		return GSM_WaitFor (s, reqBin, current, 0x40, 4, ID_SetRingtone);
+	case RING_MIDI: 
+		return GE_NOTSUPPORTED;
 	}
 	return GE_NOTSUPPORTED;
 }
@@ -1610,6 +1615,8 @@ static GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_Phone_Data
 			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, Data->Ringtone->NokiaBinary.Frame, Data->Ringtone->NokiaBinary.Length);
 #endif
 			return GE_NONE;
+    		case RING_MIDI: 
+			return GE_NOTSUPPORTED;
 		}
 		dprintf("Ringtone format is %i\n",Data->Ringtone->Format);		
 		break;
@@ -1646,6 +1653,8 @@ static GSM_Error N6110_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 	case RING_NOKIABINARY:
 		if (IsPhoneFeatureAvailable(s->Model,F_RING_SM)) return GE_NOTSUPPORTED;
 		break;
+	case RING_MIDI: 
+		return GE_NOTSUPPORTED;
 	}
 
 	error=DCT3_EnableSecurity (s, 0x01);
@@ -2351,7 +2360,8 @@ GSM_Phone_Functions N6110Phone = {
 	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
 	N6110_SetProfile,
 	NOTSUPPORTED,		/*	GetSIMIMSI		*/
-	NONEFUNCTION		/*	SetIncomingCall		*/
+	NONEFUNCTION,		/*	SetIncomingCall		*/
+    	NOTIMPLEMENTED		/*  	GetNextCalendarNote	*/
 };
 
 #endif

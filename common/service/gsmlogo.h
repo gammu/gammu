@@ -18,18 +18,18 @@ typedef enum {
 
 /* Structure to hold incoming/outgoing bitmaps (and welcome-notes). */
 typedef struct {
-	unsigned char		Location;                	/* Caller group number */
-	unsigned char		Height;				/* Bitmap height (pixels) */
-	unsigned char		Width;				/* Bitmap width (pixels) */
-	GSM_Bitmap_Types	Type;				/* Bitmap type */
-	char			NetworkCode[7];			/* Network operator code */
-	char			Text	[256];			/* Text used for (dealer) welcome-note
-								 * or callergroup name or Picture Image text */
-	bool			DefaultName;			/* When get caller group - is default name ? */
-	unsigned char		Bitmap	[GSM_BITMAP_SIZE];	/* Actual Bitmap ((65+7)/8*96=864) */ 
-	unsigned char		Ringtone;			/* Ringtone ID sent with caller group */
-	bool			Enabled;                       	/* With caller logos = displayed or not */
-	char			Sender	[GSM_MAX_NUMBER_LENGTH];/* For Picture Images - number of sender */
+	unsigned char		Location;                	  /* Caller group number */
+	unsigned char		Height;				  /* Bitmap height (pixels) */
+	unsigned char		Width;				  /* Bitmap width (pixels) */
+	GSM_Bitmap_Types	Type;				  /* Bitmap type */
+	char			NetworkCode[7];			  /* Network operator code */
+	char			Text	[256];			  /* Text used for (dealer) welcome-note
+								   * or callergroup name or Picture Image text */
+	bool			DefaultName;			  /* When get caller group - is default name ? */
+	unsigned char		Bitmap	[GSM_BITMAP_SIZE];	  /* Actual Bitmap ((65+7)/8*96=864) */ 
+	unsigned char		Ringtone;			  /* Ringtone ID sent with caller group */
+	bool			Enabled;                       	  /* With caller logos = displayed or not */
+	char			Sender	[GSM_MAX_NUMBER_LENGTH+1];/* For Picture Images - number of sender */
 } GSM_Bitmap;
 
 #define MAX_MULTI_BITMAP 6

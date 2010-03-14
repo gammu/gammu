@@ -3,6 +3,7 @@
 #define atgen_h
 
 #include "../../gsmcomon.h"
+#include "../../gsmstate.h"
 #include "../../service/gsmsms.h"
 
 #ifndef GSM_USED_AT
@@ -19,9 +20,11 @@ typedef enum {
 
 typedef enum {
 	AT_Reply_OK = 1,
+	AT_Reply_Connect,
 	AT_Reply_Error,
 	AT_Reply_Unknown,
-	AT_Reply_CMSError
+	AT_Reply_CMSError,
+	AT_Reply_CMEError
 } GSM_AT_Reply_State;
 
 typedef enum {
@@ -54,6 +57,7 @@ typedef struct {
 	GSM_Lines		Lines;		  /* Allow to simply get each line in response 	*/
 	GSM_AT_Reply_State	ReplyState;	  /* What response type - error, OK, etc. 	*/
 	int			ErrorCode;	  /* Error codes from responses			*/
+    	char			*ErrorText;    	  /* Error description */
 
 	GSM_MemoryType		PBKMemory;	  /* Last read PBK memory			*/
 	char			PBKMemories[200]; /* Supported by phone PBK memories		*/

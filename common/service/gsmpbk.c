@@ -188,6 +188,9 @@ void NOKIA_EncodeVCARD21SMSText(char *Buffer, int *Length, GSM_PhonebookEntry pb
 			case PBK_Text_URL	:
 				*Length+=sprintf(Buffer+(*Length),"URL");
 				break;
+			default	:
+				ignore = true;
+				break;
 			}
 			if (!ignore) {
 				EncodeUTF8(buffer,pbk.Entries[i].Text);

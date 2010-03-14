@@ -672,7 +672,7 @@ static GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_Phone_Da
 //				output[i++] = 0;
 //				output[i++] = 0; /* Length - later changed */
 //				GSM_UnpackEightBitsToSeven(0, msg.Length-282, msg.Length-304, msg.Buffer+282,output2);
-//				DecodeDefault(output+i, output2, msg.Length - 282);
+//				DecodeDefault(output+i, output2, msg.Length - 282, true);
 //				output[i - 1] = strlen(DecodeUnicodeString(output+i)) * 2;
 //				i = i + output[i-1];
 //			}
@@ -2189,6 +2189,8 @@ static GSM_Error N6510_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		req2[5] = Info.Ringtone[Ringtone->Location-1].ID % 256;
 		dprintf("Getting binary ringtone\n");
 		return GSM_WaitFor (s, req2, 6, 0x1f, 4, ID_GetRingtone);
+	case RING_MIDI:
+		return GE_NOTSUPPORTED;
 	}
 	return GE_NOTSUPPORTED;
 }
@@ -2526,6 +2528,11 @@ static GSM_Error N6510_DialVoice(GSM_StateMachine *s, char *number)
 	return GSM_WaitFor (s, req, pos, 0x01, 4, ID_DialVoice);
 }
 
+static GSM_Error N6510_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarNote *Note, bool start)
+{
+	return N71_65_GetNextCalendarNote(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
+}
+
 static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x02,ID_IncomingFrame	},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x03,ID_IncomingFrame	},
@@ -2572,6 +2579,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyGetCalendarNote,	"\x13",0x03,0x1A,ID_GetCalendarNote	},
 	{N6510_ReplyGetCalendarNotePos,	"\x13",0x03,0x32,ID_GetCalendarNotePos	},
 	{N6510_ReplyGetCalendarInfo,	"\x13",0x03,0x3B,ID_GetCalendarNotesInfo},
+	{N71_65_ReplyGetNextNote,	"\x13",0x03,0x3F,ID_GetCalendarNote	},
 
 	{N6510_ReplySaveSMSMessage,	"\x14",0x03,0x01,ID_SaveSMSMessage	},
 	{N6510_ReplyGetSMSMessage,	"\x14",0x03,0x03,ID_GetSMSMessage	},
@@ -2710,7 +2718,8 @@ GSM_Phone_Functions N6510Phone = {
 	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
 	N6510_SetProfile,
 	NOTSUPPORTED,		/*	GetSIMIMSI		*/
-	NONEFUNCTION		/*	SetIncomingCall		*/
+	NONEFUNCTION,		/*	SetIncomingCall		*/
+    	N6510_GetNextCalendarNote
 };
 
 #endif

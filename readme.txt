@@ -35,9 +35,19 @@ A. HELP IS VERY REQUIRED. Methods are many:
    1. writing support for some models or fixing source (I can give tips many
       times). Format and method of creating patch files is described in develop
       docs.
-      In this I have in my library specs for many models (example:
-      Morotola, Sagen, Siemens xx45) and it's only required to code few 
-      functions into current source to have support for them...
+
+      There are still few general topics TODO:
+
+      * uploading some things over WAP
+      * MMS
+      * ending win32 dll
+      * writing really usefull GUI
+      * giving support for more formats (like Ericsson WAP settings over SMS)
+        Note: I have in my library specs for many models (example: Morotola,
+              Sagen, Siemens xx45) and it's only required to code few 
+              functions into current source to have support for them...
+      * AT modem emulator
+
    2. reporting bugs (see "How to report bugs ?" question)
    3. help in documentation or translations
    4. help in discovering phone protocols
@@ -266,12 +276,13 @@ A. Here are all supported models:
 
      6210|6250|7110:
 
-     3510|6310|6310i|6510|8310|8910:
+     3510|3510i|6310|6310i|6510|8310|8910:
 
      9110|9210:
 
      They all should work (excluding maybe some details) now/in the future.
-     I personally tested 3210, 3310, 3410, 5110, 6150, 6210, 6250, 6310i, 9210.
+     I personally tested 3210, 3310, 3410, 3510, 5110, 6150, 6210, 6250, 6310i,
+     9210.
 
    5.various Siemens (like M20, MC35), Nokia (like 6150, 6210, 6310i), Alcatel
      and IPAQ:
@@ -508,3 +519,13 @@ A. 1. go into docs/docs/locale
    3. open gammu_XX.txt in editor supporting Unicode (in win32 Notepad)
    4. to each "Fxxxx = "text"" line add "Txxxx = "text"" line
    5. send to me updated file
+-------------------------------------------------------------------------------
+Q. How can I build Debian package for Gammu ?
+
+A. There are currently two ways how to build Debian package.
+
+   If you want to use standard Debian way, copy directory cfg/debian
+   into main source directory and build it as any other Debian package
+   (dpkg-buildpackage, or fakeroot make -f debian/rules binary).
+
+   The other way is to simple run make makedeb.  

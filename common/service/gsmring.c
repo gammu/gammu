@@ -142,6 +142,12 @@ static GSM_Error savebin(FILE *file, GSM_Ringtone *ringtone)
 	return GE_NONE;
 }
 
+static GSM_Error savepuremidi(FILE *file, GSM_Ringtone *ringtone)
+{
+ 	fwrite(ringtone->NokiaBinary.Frame,1,ringtone->NokiaBinary.Length,file);
+	return GE_NONE;
+}
+
 GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone)
 {
 	GSM_RingNoteScale	DefNoteScale;
@@ -318,7 +324,7 @@ static void saveimelody(FILE *file, GSM_Ringtone *ringtone)
 	char 	Buffer[2000];
   	int 	i=2000;
     
-	GSM_EncodeEMSSound(*ringtone, Buffer, &i);
+	GSM_EncodeEMSSound(*ringtone, Buffer, &i, (float)1.2);
   
 	fwrite(Buffer, 1, i, file);
 }
@@ -458,6 +464,9 @@ GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 		break;
 	case RING_NOKIABINARY:
 		savebin(file, ringtone);
+		break;
+	case RING_MIDI: 
+		savepuremidi(file, ringtone);
 		break;
 	}   	
 
@@ -758,6 +767,9 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 		{
 			error=loadre(file,ringtone);
 		}
+		break;
+	case RING_MIDI:
+		error = GE_NOTSUPPORTED;
 		break;
 	}
 	fclose(file);
@@ -1362,7 +1374,7 @@ GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_Rington
 }
 
 
-unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, int *maxlength)
+unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, int *maxlength, float version)
 {
 	int 			i, NrNotes = 0, Len, Max = *maxlength, j, k=0;
 
@@ -1376,45 +1388,54 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 	bool 			started = false;
 
 	*maxlength=sprintf(package,"BEGIN:IMELODY%c%c",13,10);
-	*maxlength+=sprintf(package+(*maxlength),"VERSION:1.2%c%c",13,10);
+	if (version == 1.0) {
+		*maxlength+=sprintf(package+(*maxlength),"VERSION:1.0%c%c",13,10);
+	} else {
+		*maxlength+=sprintf(package+(*maxlength),"VERSION:1.2%c%c",13,10);
+	}
+
 	*maxlength+=sprintf(package+(*maxlength),"FORMAT:CLASS1.0%c%c",13,10);
-	*maxlength+=sprintf(package+(*maxlength),"NAME:%s%c%c",DecodeUnicodeString(ringtone.Name),13,10);
 
-	/* Find the most frequently used style */ 
-	for (i=0;i<3;i++) buffer[i]=0;
-	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
-		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
-			Note = &ringtone.NoteTone.Commands[i].Note;
-			buffer[Note->Style]++; // Styles: 0;1;2
+	if (version == 1.2) {
+		*maxlength+=sprintf(package+(*maxlength),"NAME:%s%c%c",DecodeUnicodeString(ringtone.Name),13,10);
+
+		/* Find the most frequently used style */ 
+		for (i=0;i<3;i++) buffer[i]=0;
+		for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
+			if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
+				buffer[ringtone.NoteTone.Commands[i].Note.Style]++; // Styles: 0;1;2
+			}
 		}
-	}
-	/* Now find the most frequently used */
-	j=0;
-	for (i=0;i<3;i++) {
-		if (buffer[i]>j) {
-			k=i; 
-			j=buffer[i];
-          	}
+		/* Now find the most frequently used */
+		j=0;
+		for (i=0;i<3;i++) {
+			if (buffer[i]>j) {
+				k=i; 
+				j=buffer[i];
+	          	}
+		}
+		DefNoteStyle = k; /* Save default style */
 	}
 
-	DefNoteStyle	= k;			/* Save default style    */
-	DefNoteScale 	= Scale_880; 		/* by iMelody definition */
+	DefNoteScale = Scale_880; /* by iMelody definition */
 
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
 			Note = &ringtone.NoteTone.Commands[i].Note;
 			Len  = *maxlength;
 			if (!started) {
-				DefNoteTempo=Note->Tempo;
-				/* Save the default tempo */
-				Len+=sprintf(package+Len,"BEAT:%i%c%c",DefNoteTempo,13,10);
-				dprintf("DefNoteTempo=%d\n",DefNoteTempo);
+				if (version == 1.2) {
+					DefNoteTempo=Note->Tempo;
+					/* Save the default tempo */
+					Len+=sprintf(package+Len,"BEAT:%i%c%c",DefNoteTempo,13,10);
+					dprintf("DefNoteTempo=%d\n",DefNoteTempo);
 				
-				/* Save default style */
-				switch (DefNoteStyle) {
-					case NaturalStyle   :Len+=sprintf(package+Len,"STYLE:S0%c%c",13,10); break;
-					case ContinuousStyle:Len+=sprintf(package+Len,"STYLE:S1%c%c",13,10); break;
-					case StaccatoStyle  :Len+=sprintf(package+Len,"STYLE:S2%c%c",13,10); break;
+					/* Save default style */
+					switch (DefNoteStyle) {
+						case NaturalStyle   :Len+=sprintf(package+Len,"STYLE:S0%c%c",13,10); break;
+						case ContinuousStyle:Len+=sprintf(package+Len,"STYLE:S1%c%c",13,10); break;
+						case StaccatoStyle  :Len+=sprintf(package+Len,"STYLE:S2%c%c",13,10); break;
+					}
 				}
 				Len+=sprintf(package+Len,"MELODY:");
 				started = true;

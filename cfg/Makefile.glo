@@ -58,6 +58,8 @@ LOCALE2   = $(TOPDIR)/cfg/locale
 
 include $(TOPDIR)/cfg/Makefile.cfg
 
+DESTDIR = 
+
 # --------------------------- internal source ---------------------------------
 
 %.o: %.c
@@ -102,42 +104,46 @@ distclean: makelocale clean
 	
 uninstall:
 	@echo Uninstalling Gammu
-	@$(RM) $(INSTALL_BIN_DIR)/gammu $(INSTALL_LIB_DIR)/libGammu.so
-	@$(RM) $(INSTALL_MAN_DIR)/gammu.1
-	@$(RM) -r $(INSTALL_DOC_DIR)/
+	@$(RM) $(DESTDIR)$(INSTALL_BIN_DIR)/gammu $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so
+	@$(RM) $(DESTDIR)$(INSTALL_MAN_DIR)/man1/gammu.1
+	@$(RM) -r $(DESTDIR)$(INSTALL_DOC_DIR)/
 
 installdocs:
 	@echo Installing docs to $(INSTALL_DOC_DIR)
-	@$(INSTALL) -d $(INSTALL_DOC_DIR)
+	@$(INSTALL) -d $(DESTDIR)$(INSTALL_DOC_DIR)
 	@for xxx in $(DOCS); do \
 		( cd $(TOPDIR)/docs/$$xxx; \
 		  $(FIND) . -type d \! -path "*CVS*" \
-		       -exec $(INSTALL) -d ${INSTALL_DOC_DIR}/$$xxx/{} \; ; \
+		       -exec $(INSTALL) -d $(DESTDIR)$(INSTALL_DOC_DIR)/$$xxx/{} \; ; \
 		  $(FIND) . -type f \! -path "*CVS*" \
-		       -exec $(INSTALL) -m 0666 {} $(INSTALL_DOC_DIR)/$$xxx/{} \; \
+		       -exec $(INSTALL) -m 0666 {} $(DESTDIR)$(INSTALL_DOC_DIR)/$$xxx/{} \; \
 		) \
 	done
-	@$(INSTALL) -m 0666 $(TOPDIR)/changelog $(INSTALL_DOC_DIR)
-	@$(INSTALL) -m 0666 $(TOPDIR)/readme.txt $(INSTALL_DOC_DIR)
-	@$(INSTALL) -m 0666 $(TOPDIR)/copying $(INSTALL_DOC_DIR)
-	@echo Installing man to $(INSTALL_MAN_DIR)
-	@$(INSTALL) -d $(INSTALL_MAN_DIR)
-	@$(INSTALL) -m 0666 $(TOPDIR)/docs/docs/english/gammu.1 $(INSTALL_MAN_DIR)
-	@$(RM) $(INSTALL_DOC_DIR)/docs/english/gammu.1
+	@$(INSTALL) -m 0666 $(TOPDIR)/changelog $(DESTDIR)$(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0666 $(TOPDIR)/readme.txt $(DESTDIR)$(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0666 $(TOPDIR)/copying $(DESTDIR)$(INSTALL_DOC_DIR)
+	@echo Installing man to $(DESTDIR)$(INSTALL_MAN_DIR)
+	@$(INSTALL) -d $(DESTDIR)$(INSTALL_MAN_DIR)
+	@$(INSTALL) -m 0666 $(TOPDIR)/docs/docs/english/gammu.1 $(DESTDIR)$(INSTALL_MAN_DIR)/man1
+	@$(RM) $(DESTDIR)$(INSTALL_DOC_DIR)/docs/english/gammu.1
 	
-install: uninstall all installdocs
-	@echo Installing binaries to $(INSTALL_BIN_DIR)
-	@$(INSTALL) -d $(INSTALL_BIN_DIR)
-	@$(INSTALL) $(TOPDIR)/gammu/gammu $(INSTALL_BIN_DIR)
+install: uninstall all installdocs installonly
 
-installlib: uninstall makelib installdocs
-	@echo Installing binaries to $(INSTALL_BIN_DIR)
-	@$(INSTALL) -d $(INSTALL_BIN_DIR)
-	@$(INSTALL) $(TOPDIR)/gammu/gammulib $(INSTALL_BIN_DIR)/gammu
+installonly: all
+	@echo Installing binaries to $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) -d $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) $(TOPDIR)/gammu/gammu $(DESTDIR)$(INSTALL_BIN_DIR)
 
-	@echo Installing shared library to $(INSTALL_LIB_DIR)
-	@$(INSTALL) -d $(INSTALL_LIB_DIR)
-	@$(INSTALL) -m 0444 $(TOPDIR)/common/libGammu.so $(INSTALL_LIB_DIR)
+installlib: uninstall makelib installdocs installlibonly
+
+installlibonly: all
+	@echo Installing binaries to $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) -d $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) $(TOPDIR)/gammu/gammulib $(DESTDIR)$(INSTALL_BIN_DIR)/gammu
+
+	@echo Installing shared library to $(DESTDIR)$(INSTALL_LIB_DIR)
+	@$(INSTALL) -d $(DESTDIR)$(INSTALL_LIB_DIR)
+	@$(INSTALL) -m 0444 $(TOPDIR)/common/libGammu.so $(DESTDIR)$(INSTALL_LIB_DIR)
 
 tags: $(shell find . -name '*.[ch]' -o -name '*.cpp')
 	@echo Generating tags file
@@ -154,6 +160,7 @@ makecleantree:
 		       -exec $(INSTALL) -m 0444 {} $(TEMP_DIR)/gammu-$(VERSION)/{} \; \
 		) \
 	done
+	@$(RM) -rf gammu-$(VERSION)/
 	@$(INSTALL) -d gammu-$(VERSION)
 	@cp $(TEMP_DIR)/gammu-$(VERSION)/* --target-directory=gammu-$(VERSION) -r
 	@$(RM) $(TEMP_DIR)/gammu-$(VERSION) -r 
@@ -161,13 +168,25 @@ makecleantree:
 	make -C gammu-$(VERSION) clean
 
 makerpm: makecleantree
+	@find gammu-$(VERSION)/ -exec chmod u+w {} \;
 	@echo Creating $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz file
 	@tar cvfz $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz gammu-$(VERSION) > /dev/null
 	@echo Removing Gammu tree snapshot
-	@$(RM) -r gammu-$(VERSION)/
-	@echo Installing $(RPM_DIR)/SPECS/gammu.specs
-	@$(INSTALL) -m 0444 $(TOPDIR)/cfg/autoconf/rpm/spec $(RPM_DIR)/SPECS/gammu.specs
+	@$(RM) -rf gammu-$(VERSION)/
+	@echo Installing $(RPM_DIR)/SPECS/gammu.spec
+	@$(INSTALL) -m 0444 $(TOPDIR)/cfg/rpm/gammu.spec $(RPM_DIR)/SPECS/gammu.spec
 	@echo Making packages
-	@rpm -ba -v $(RPM_DIR)/SPECS/gammu.specs -rmsource -rmspec -clean
+	@rpm -ba -v $(RPM_DIR)/SPECS/gammu.spec
+	@rm -rf $(RPM_DIR)/SPECS/gammu.spec
+	@rm -rf $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz
+	@rm -rf $(RPM_DIR)/BUILD/gammu-$(VERSION)
 	@echo Source tarball is in $(RPM_DIR)/SRPMS, binary in $(RPM_DIR)/RPMS
 
+makedeb: makecleantree
+	@echo Copying debian directory
+	@cp -r cfg/debian gammu-$(VERSION)/
+	@find gammu-$(VERSION)/ -exec chmod u+w {} \;
+	@echo Building Debian package
+	@fakeroot make -C gammu-$(VERSION)/ -f debian/rules binary
+	@echo Removing Gammu tree snapshot
+	@$(RM) -rf gammu-$(VERSION)/

@@ -25,7 +25,7 @@
 #ifdef WIN32
 #  define mili_sleep(x) Sleep(((x) < 1000) ? 1 : ((x) / 1000))
 #else
-#  define mili_sleep(x) usleep(x*1000)
+#  define mili_sleep(x) usleep(x)
 #endif
 
 char *DayOfWeek (int year, int month, int day);
@@ -36,7 +36,7 @@ typedef struct {
 	int numbers[40];
 } GSM_Lines;
 
-void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsigned char *whitespaces, int spaceslen);
+void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsigned char *whitespaces, int spaceslen, bool eot);
 char *GetLineString(unsigned char *message, GSM_Lines lines, int start);
 void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, int start);
 
@@ -53,6 +53,7 @@ typedef enum {
 typedef struct {
 	Debug_Level	dl;
 	FILE		*df;
+	bool        	use_global;
 } Debug_Info;
 
 extern Debug_Info	di;
@@ -87,5 +88,10 @@ typedef struct {
 
 void GSM_GetCurrentDateTime 	(GSM_DateTime *Date);
 char *OSDateTime 		(GSM_DateTime dt, bool TimeZone);
+
+#undef MAX
+#define MAX(a,b) ((a)>(b)?(a):(b))
+#undef MIN
+#define MIN(a,b) ((a)<(b)?(a):(b))
 
 #endif
