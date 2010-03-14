@@ -1,10 +1,10 @@
 object ConfigForm: TConfigForm
-  Left = 235
-  Top = 103
+  Left = 237
+  Top = 47
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Configuration'
-  ClientHeight = 438
+  ClientHeight = 498
   ClientWidth = 475
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -21,7 +21,7 @@ object ConfigForm: TConfigForm
     Left = 0
     Top = 0
     Width = 475
-    Height = 401
+    Height = 457
     Align = alTop
     BevelOuter = bvNone
     Caption = 'Panel1'
@@ -30,25 +30,29 @@ object ConfigForm: TConfigForm
       Left = 0
       Top = 0
       Width = 137
-      Height = 401
+      Height = 457
       Align = alLeft
       Indent = 19
       ReadOnly = True
       TabOrder = 0
+      OnKeyPress = TreeView1KeyPress
       OnMouseDown = TreeView1MouseDown
       Items.Data = {
-        02000000200000000000000000000000FFFFFFFFFFFFFFFF0000000002000000
+        03000000200000000000000000000000FFFFFFFFFFFFFFFF0000000002000000
         0744657669636573200000000100000000000000FFFFFFFFFFFFFFFF00000000
         00000000074D6F64656D2031200000000200000000000000FFFFFFFFFFFFFFFF
-        0000000000000000074D6F64656D20321E0000000600000000000000FFFFFFFF
-        FFFFFFFF0000000000000000054F74686572}
+        0000000000000000074D6F64656D20322E0000000000000000000000FFFFFFFF
+        FFFFFFFF00000000010000001553656E64696E6720616E642072656365697669
+        6E671E0000000600000000000000FFFFFFFFFFFFFFFF0000000000000000054F
+        746865721E0000000700000000000000FFFFFFFFFFFFFFFF0000000000000000
+        054F74686572}
     end
     object PageControl1: TPageControl
       Left = 137
       Top = 0
       Width = 338
-      Height = 401
-      ActivePage = OtherTabSheet
+      Height = 457
+      ActivePage = SendingTabSheet
       Align = alClient
       TabOrder = 1
       object ModemTabSheet: TTabSheet
@@ -58,74 +62,86 @@ object ConfigForm: TConfigForm
           Left = 0
           Top = 217
           Width = 330
-          Height = 96
+          Height = 112
           Align = alTop
           Caption = 'Modem configuration'
           TabOrder = 0
           object Label4: TLabel
             Left = 8
-            Top = 16
+            Top = 40
             Width = 50
             Height = 13
             Caption = 'Serial port:'
           end
           object Label5: TLabel
             Left = 8
-            Top = 40
+            Top = 16
             Width = 57
             Height = 13
             Caption = 'Connection:'
           end
           object Label10: TLabel
             Left = 8
-            Top = 64
-            Width = 45
+            Top = 80
+            Width = 48
             Height = 13
-            Caption = 'PIN code'
+            Caption = 'PIN code:'
           end
           object PortComboBox: TComboBox
-            Left = 72
-            Top = 16
-            Width = 121
+            Left = 96
+            Top = 40
+            Width = 153
             Height = 21
-            Style = csDropDownList
             ItemHeight = 13
-            ItemIndex = 0
             TabOrder = 0
-            Text = 'COM1:'
             OnSelect = PortComboBoxSelect
             Items.Strings = (
               'COM1:'
               'COM2:'
               'COM3:'
-              'COM4:')
+              'COM4:'
+              'COM5:'
+              'COM6:'
+              'COM7:'
+              'COM8:'
+              'COM9:'
+              'COM10:')
           end
           object ConnectionComboBox: TComboBox
-            Left = 72
-            Top = 40
-            Width = 121
+            Left = 96
+            Top = 16
+            Width = 153
             Height = 21
             Style = csDropDownList
             ItemHeight = 13
-            ItemIndex = 0
             TabOrder = 1
-            Text = 'Nokia FBUS'
             OnSelect = ConnectionComboBoxSelect
             Items.Strings = (
-              'Nokia FBUS'
-              'Nokia MBUS'
-              'Nokia DLR3'
+              'Nokia device (FBUS)'
+              'Nokia device (MBUS)'
+              'Nokia device (DLR3)'
+              'Nokia device (BlueTooth)'
+              'Nokia device (Infrared)'
               'AT device (19200)'
-              'AT device (115200)')
+              'AT device (115200)'
+              'AT device (BlueTooth)'
+              'AT device (Infrared)')
           end
           object PINEdit: TEdit
-            Left = 72
-            Top = 64
-            Width = 121
+            Left = 96
+            Top = 80
+            Width = 153
             Height = 21
             TabOrder = 2
             Text = 'PINEdit'
             OnChange = PINEditChange
+          end
+          object Panel5: TPanel
+            Left = 16
+            Top = 70
+            Width = 297
+            Height = 2
+            TabOrder = 3
           end
         end
         object GroupBox1: TGroupBox
@@ -296,14 +312,14 @@ object ConfigForm: TConfigForm
           end
         end
       end
-      object OtherTabSheet: TTabSheet
-        Caption = 'Other'
+      object SendingTabSheet: TTabSheet
+        Caption = 'Sending'
         ImageIndex = 2
         object GroupBox3: TGroupBox
           Left = 0
-          Top = 121
+          Top = 0
           Width = 330
-          Height = 120
+          Height = 272
           Align = alTop
           Caption = 'Sending SMS'
           TabOrder = 0
@@ -327,6 +343,27 @@ object ConfigForm: TConfigForm
             Width = 211
             Height = 13
             Caption = 'How many second wait during sending SMS:'
+          end
+          object Label8: TLabel
+            Left = 8
+            Top = 120
+            Width = 127
+            Height = 13
+            Caption = 'Special SMS sending cost:'
+          end
+          object Label9: TLabel
+            Left = 8
+            Top = 216
+            Width = 118
+            Height = 13
+            Caption = 'Other SMS sending cost:'
+          end
+          object Label11: TLabel
+            Left = 8
+            Top = 240
+            Width = 45
+            Height = 13
+            Caption = 'Currency:'
           end
           object SMSNum: TEdit
             Left = 272
@@ -360,48 +397,140 @@ object ConfigForm: TConfigForm
             TabOrder = 3
             Text = 'SendingTimeoutEdit'
           end
+          object SpecialSMSCostListView: TListView
+            Left = 8
+            Top = 136
+            Width = 201
+            Height = 73
+            Columns = <
+              item
+                Caption = 'Number'
+                Width = 130
+              end
+              item
+                Caption = 'Cost'
+                Width = 65
+              end>
+            MultiSelect = True
+            ReadOnly = True
+            RowSelect = True
+            SortType = stText
+            TabOrder = 4
+            ViewStyle = vsReport
+            OnClick = SpecialSMSCostListViewClick
+          end
+          object SpecialSMSCostAddButton: TButton
+            Left = 224
+            Top = 136
+            Width = 97
+            Height = 25
+            Caption = 'Add'
+            TabOrder = 5
+            OnClick = SpecialSMSCostAddButtonClick
+          end
+          object SpecialSMSCostEditButton: TButton
+            Left = 224
+            Top = 160
+            Width = 97
+            Height = 25
+            Caption = 'Edit'
+            TabOrder = 6
+            OnClick = SpecialSMSCostEditButtonClick
+          end
+          object SpecialSMSCostRemoveButton: TButton
+            Left = 224
+            Top = 184
+            Width = 97
+            Height = 25
+            Caption = 'Remove'
+            TabOrder = 7
+            OnClick = SpecialSMSCostRemoveButtonClick
+          end
+          object OtherSMSCostEdit: TEdit
+            Left = 224
+            Top = 216
+            Width = 97
+            Height = 21
+            TabOrder = 8
+            Text = 'OtherSMSCostEdit'
+          end
+          object Panel6: TPanel
+            Left = 16
+            Top = 116
+            Width = 297
+            Height = 2
+            TabOrder = 9
+          end
+          object SMSCostCurrencyEdit: TEdit
+            Left = 224
+            Top = 240
+            Width = 97
+            Height = 21
+            TabOrder = 10
+            Text = 'SMSCostCurrencyEdit'
+          end
         end
-        object GroupBox5: TGroupBox
+      end
+      object OtherTabSheet: TTabSheet
+        Caption = 'Other settings'
+        ImageIndex = 3
+        object GroupBox4: TGroupBox
           Left = 0
-          Top = 73
+          Top = 169
           Width = 330
-          Height = 48
+          Height = 96
           Align = alTop
-          Caption = 'Directories with temporary files'
-          TabOrder = 1
-          object Label20: TLabel
+          Caption = 'Other'
+          TabOrder = 0
+          object Label16: TLabel
+            Left = 32
+            Top = 40
+            Width = 19
+            Height = 13
+            Caption = 'File:'
+          end
+          object GatewayLogCheckBox: TCheckBox
             Left = 8
             Top = 16
-            Width = 68
-            Height = 13
-            Caption = 'Outgoing msg:'
-          end
-          object OutgoingEdit: TEdit
-            Left = 80
-            Top = 16
-            Width = 185
-            Height = 21
+            Width = 233
+            Height = 17
+            Caption = 'Log general Gateway issues (like resetting)'
             TabOrder = 0
-            Text = 'OutgoingEdit'
           end
-          object Button12: TButton
+          object GatewayLogFileEdit: TEdit
+            Left = 56
+            Top = 40
+            Width = 209
+            Height = 21
+            TabOrder = 1
+            Text = 'GatewayLogFileEdit'
+          end
+          object Button5: TButton
             Left = 272
-            Top = 16
+            Top = 40
             Width = 49
             Height = 25
             Caption = 'Find'
-            TabOrder = 1
-            OnClick = Button12Click
+            TabOrder = 2
+            OnClick = Button5Click
+          end
+          object TrayCheckBox: TCheckBox
+            Left = 8
+            Top = 72
+            Width = 225
+            Height = 17
+            Caption = 'Use System Tray'
+            TabOrder = 3
           end
         end
         object GroupBox7: TGroupBox
           Left = 0
-          Top = 241
+          Top = 73
           Width = 330
           Height = 96
           Align = alTop
           Caption = 'Phonebook'
-          TabOrder = 2
+          TabOrder = 1
           object PhonebookListBox: TListBox
             Left = 8
             Top = 16
@@ -440,45 +569,61 @@ object ConfigForm: TConfigForm
             OnClick = PhonebookRemoveButtonClick
           end
         end
-        object GroupBox4: TGroupBox
+        object GroupBox5: TGroupBox
           Left = 0
           Top = 0
           Width = 330
           Height = 73
           Align = alTop
-          Caption = 'Log'
-          TabOrder = 3
-          object Label16: TLabel
-            Left = 32
-            Top = 40
-            Width = 19
-            Height = 13
-            Caption = 'File:'
-          end
-          object GatewayLogCheckBox: TCheckBox
+          Caption = 'Directories with temporary files'
+          TabOrder = 2
+          object Label19: TLabel
             Left = 8
             Top = 16
-            Width = 233
-            Height = 17
-            Caption = 'General Gateway issues (like resetting)'
-            TabOrder = 0
+            Width = 68
+            Height = 13
+            Caption = 'Incoming msg:'
           end
-          object GatewayLogFileEdit: TEdit
-            Left = 56
+          object Label20: TLabel
+            Left = 8
             Top = 40
-            Width = 209
-            Height = 21
-            TabOrder = 1
-            Text = 'GatewayLogFileEdit'
+            Width = 68
+            Height = 13
+            Caption = 'Outgoing msg:'
           end
-          object Button5: TButton
+          object IncomingEdit: TEdit
+            Left = 80
+            Top = 16
+            Width = 185
+            Height = 21
+            TabOrder = 0
+            Text = 'IncomingEdit'
+          end
+          object Button10: TButton
+            Left = 272
+            Top = 16
+            Width = 49
+            Height = 25
+            Caption = 'Find'
+            TabOrder = 1
+            OnClick = Button7Click
+          end
+          object OutgoingEdit: TEdit
+            Left = 80
+            Top = 40
+            Width = 185
+            Height = 21
+            TabOrder = 2
+            Text = 'OutgoingEdit'
+          end
+          object Button12: TButton
             Left = 272
             Top = 40
             Width = 49
             Height = 25
             Caption = 'Find'
-            TabOrder = 2
-            OnClick = Button5Click
+            TabOrder = 3
+            OnClick = Button12Click
           end
         end
       end
@@ -486,7 +631,7 @@ object ConfigForm: TConfigForm
   end
   object Button3: TButton
     Left = 304
-    Top = 408
+    Top = 464
     Width = 81
     Height = 25
     Caption = '&OK'
@@ -495,7 +640,7 @@ object ConfigForm: TConfigForm
   end
   object Button4: TButton
     Left = 392
-    Top = 408
+    Top = 464
     Width = 75
     Height = 25
     Caption = '&Cancel'

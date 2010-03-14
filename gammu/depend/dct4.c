@@ -7,6 +7,7 @@
 
 #include "dct4.h"
 #include "../gammu.h"
+#include "../../common/phone/nokia/nfunc.h"
 #include "../../common/misc/coding.h"
 
 extern GSM_Reply_Function UserReplyFunctions4[];
@@ -256,6 +257,20 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static bool answer_yes2(char *text)
+{
+    	int         len;
+    	char        ans[99];
+
+	while (1) {
+		printf("%s (yes/no) ? ",text);
+		len=GetLine(stdin, ans, 99);
+		if (len==-1) exit(-1);
+		if (mystrncasecmp(ans, "yes",0)) return true;
+		if (mystrncasecmp(ans, "no" ,0)) return false;
+	}
+}
+
 static GSM_Error DCT4_ReplyResetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Buffer[3]) {
@@ -264,25 +279,37 @@ static GSM_Error DCT4_ReplyResetSecurityCode(GSM_Protocol_Message msg, GSM_State
 		return GE_NONE;
 	case 0x06:
 		printf("Unknown reason. Can't reset your security code\n");
-		return GE_NONE;
+		return GE_UNKNOWN;
 	}
 	return GE_UNKNOWNRESPONSE;
 }
 
 void DCT4ResetSecurityCode(int argc, char *argv[])
 {
-	unsigned char ResetCode[22] = {0x00,0x06,0x03,0x04,0x01,
+	unsigned int	i;
+	unsigned char 	ResetCode[30] = {0x00,0x06,0x03,0x04,0x01,
 		'1','2','3','4','5','6','7','8','9','0',	/* Old code */
 		0x00,
-		'1','2','3','4','5',				/* New code */
+		'1','2','3','4','5',0x00,0x00,0x00,0x00,0x00,   /* New code */
 		0x00};
 
 	if (CheckDCT4Only()!=GE_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
-	error=GSM_WaitFor (&s, ResetCode, 22, 0x08, 4, ID_User2);
-	Print_Error(error);
+	error=GSM_WaitFor (&s, ResetCode, 27, 0x08, 4, ID_User2);
+	if (error == GE_UNKNOWN) {
+		if (answer_yes2("Try brutal force ?")) {
+			for (i=10000;i<9999999;i++) {
+				printf("Trying %i\n",i);
+				memset(ResetCode+6,0,22);
+				sprintf(ResetCode+5,"%i",i);
+				sprintf(ResetCode+16,"12345");
+				error=GSM_WaitFor (&s, ResetCode, 27, 0x08, 4, ID_User2);
+				if (error == GE_NONE) break;
+			}
+		}
+	} else Print_Error(error);
 }
 
 static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -538,13 +565,13 @@ void DCT4Info(int argc, char *argv[])
 {
 	unsigned char GetBTAddress[8] = {N6110_FRAME_HEADER, 0x09, 0x19, 0x01, 0x03, 0x06};
 	unsigned char GetSimlock[5] = {N6110_FRAME_HEADER, 0x12, 0x0D};
+	unsigned char value[10];
 
         if (CheckDCT4Only()!=GE_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
-	if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_BLUETOOTH))
-	{
+	if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_BLUETOOTH)) {
 		printf("Bluetooth     : ");
 
 		error=GSM_WaitFor (&s, GetBTAddress, 8, 0xD7, 4, ID_User6);
@@ -559,6 +586,63 @@ void DCT4Info(int argc, char *argv[])
 	GetSimlock[3] = 0x0C;
 	error=GSM_WaitFor (&s, GetSimlock, 4, 0x53, 4, ID_User6);
 	Print_Error(error);
+	error=NOKIA_GetPhoneString(&s,"\x00\x03\x02\x07\x00\x08",6,0x1b,value,ID_User6,10);
+	Print_Error(error);
+	printf("UEM           : %s\n",value);
+}
+
+static FILE 	*T9File;
+int 		T9Size;
+int 		T9FullSize;
+
+static GSM_Error DCT4_ReplyGetT9(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	T9FullSize 	= msg.Buffer[18] * 256 + msg.Buffer[19];
+	T9Size 		= msg.Length - 18;
+	fwrite(msg.Buffer+18,1,T9Size,T9File);
+	return GE_NONE;
+}
+
+void DCT4GetT9(int argc, char *argv[])
+{
+	int	      i,T9Dictionary=0;
+	unsigned char req[] = {N7110_FRAME_HEADER, 0x04, 0x00, 0x5B,
+			       0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+			       0x00, 0x00,	/* Start position */
+			       0x00, 0x00,
+			       0x02, 0xBC};	/* How many bytes to read */
+
+	T9File = fopen("T9", "w");      
+	if (T9File == NULL) return;
+
+	GSM_Init(true);
+
+        CheckDCT4();
+
+	s.User.UserReplyFunctions=UserReplyFunctions4;
+
+	i = 0;
+	while (1) {
+		req[12] = i / 256;
+		req[13] = i % 256;
+		if (i != 0) {
+			if (T9Dictionary - i < req[16]*256+req[17]) {
+				req[16] = (T9Dictionary - i) / 256;
+				req[17] = (T9Dictionary - i) % 256;
+			}
+			if (T9Dictionary - i == 0) break;
+		}
+		error=GSM_WaitFor (&s, req, 18, 0x23, 4, ID_User3);		
+		Print_Error(error);
+		if (i==0) {
+			T9Dictionary = T9FullSize;
+			dprintf("T9 dictionary size is %i\n",T9Dictionary);
+		}
+		i+=T9Size;
+	}
+
+	GSM_Terminate();
+	fclose(T9File);
 }
 
 static GSM_Reply_Function UserReplyFunctions4[] = {
@@ -567,10 +651,12 @@ static GSM_Reply_Function UserReplyFunctions4[] = {
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x06,ID_User2	},
 
 	{DCT4_ReplySetPPS,		"\x1b",0x03,0x05,ID_User1	},
+	{NOKIA_ReplyGetPhoneString,	"\x1B",0x03,0x08,ID_User6	},
 
 	{DCT4_ReplyVibra,		"\x1C",0x03,0x0D,ID_User3	},
 	{DCT4_ReplyVibra,		"\x1C",0x03,0x0F,ID_User3	},
 
+	{DCT4_ReplyGetT9,		"\x23",0x03,0x05,ID_User3	},
 	{DCT4_ReplyGetVoiceRecord,	"\x23",0x03,0x05,ID_User4	},
 	{DCT4_ReplyGetVoiceRecord,	"\x23",0x03,0x0D,ID_User4	},
 

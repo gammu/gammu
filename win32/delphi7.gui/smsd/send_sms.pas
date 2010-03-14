@@ -16,10 +16,12 @@ type
     Button3: TButton;
     Button4: TButton;
     Memo: TMemo;
+    PriceLabel: TLabel;
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure MemoChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,6 +31,7 @@ type
 var
   SendSMSForm: TSendSMSForm;
   OldSMSText : String;
+  Price      : Extended;
 
 implementation
 
@@ -52,9 +55,11 @@ begin
   if AddNumberForm.ShowModal = mrOK then
   begin
     RecipientsListBox.Items.Add(AddNumberForm.ComboBox1.Text);
+    Price:=Price+FindPrice(AddNumberForm.ComboBox1.Text);
   end;
   OKButton.Enabled:=false;
   if RecipientsListBox.Items.Count <> 0 then OKButton.Enabled:=true;
+  PriceLabel.Caption:='Sending price: '+FloatToStr(Price)+' '+GatewayINIFile.ReadString('general', 'SMSCurrency','');
 end;
 
 procedure TSendSMSForm.Button4Click(Sender: TObject);
@@ -66,6 +71,7 @@ begin
     if i>RecipientsListBox.Items.Count then break;
     if RecipientsListBox.Selected[i-1] then
     begin
+      Price:=Price-FindPrice(RecipientsListBox.Items.Strings[i-1]);
       RecipientsListBox.Items.Delete(i-1);
       i:=1;
     end else
@@ -75,6 +81,7 @@ begin
   end;
   OKButton.Enabled:=false;
   if RecipientsListBox.Items.Count <> 0 then OKButton.Enabled:=true;
+  PriceLabel.Caption:='Sending price: '+FloatToStr(Price)+' '+GatewayINIFile.ReadString('general', 'SMSCurrency','');
 end;
 
 procedure TSendSMSForm.MemoChange(Sender: TObject);
@@ -130,8 +137,14 @@ end;
 
 procedure TSendSMSForm.FormShow(Sender: TObject);
 begin
+  PriceLabel.Caption:='';
   Memo.OnChange(Sender);
   OKButton.Enabled:=false;
+end;
+
+procedure TSendSMSForm.FormCreate(Sender: TObject);
+begin
+  Price:=0;
 end;
 
 end.

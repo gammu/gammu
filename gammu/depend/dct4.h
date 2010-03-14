@@ -5,6 +5,7 @@ void DCT4SetVibraLevel	   (int argc, char *argv[]);
 void DCT4ResetSecurityCode (int argc, char *argv[]);
 void DCT4GetVoiceRecord	   (int argc, char *argv[]);
 void DCT4Info		   (int argc, char *argv[]);
+void DCT4GetT9		   (int argc, char *argv[]);
 
 /* ------------------- features matrix ------------------------------------- */
 

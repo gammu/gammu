@@ -2788,7 +2788,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 };                                                                                      
 
 GSM_Phone_Functions ATGENPhone = {
-	"A2D|iPAQ|at|M20|MC35|C35i|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8390|8850|8855|8890|8910|9110|9210",
+	"A2D|iPAQ|at|M20|S25|MC35|C35i|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8390|8850|8855|8890|8910|9110|9210",
 	ATGENReplyFunctions,
 	ATGEN_Initialise,
 	NONEFUNCTION,			/*	Terminate		*/

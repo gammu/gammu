@@ -30,6 +30,9 @@ typedef struct {
 
 	unsigned char			FMStatus[4000];
 	int				FMStatusLength;
+
+	unsigned char			GPRSPoints[4000];
+	int				GPRSPointsLength;	
 } GSM_Phone_N6510Data;
 
 #ifndef GSM_USED_MBUS2

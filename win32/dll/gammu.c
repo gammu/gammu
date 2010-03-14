@@ -542,6 +542,21 @@ GSM_Error WINAPI mymakemultipartsms(unsigned char		*MessageBuffer,
 	return GE_NONE;
 }
 
+int WINAPI mygetstructuresize(int i)
+{
+	switch (i) {
+		case 0: return sizeof(GSM_SMSMessage);
+		case 1: return sizeof(GSM_SMSC);
+		case 2: return sizeof(GSM_SMS_State);
+		case 3: return sizeof(GSM_UDHHeader);
+		case 4: return sizeof(bool);
+		case 5: return sizeof(GSM_DateTime);
+		case 6: return sizeof(int);
+		case 7: return sizeof(GSM_NetworkInfo);
+	}
+	return 0;
+}
+
 BOOL WINAPI DllMain  ( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
                        LPVOID lpReserved )

@@ -597,7 +597,7 @@ GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	GSM_Error 	error=GE_NONE;
   
 	file = fopen(FileName, "wb");      
-	if (!file) return(GE_CANTOPENFILE);
+	if (file == NULL) return(GE_CANTOPENFILE);
 
 	/* Attempt to identify filetype */
 	if (strstr(FileName,".nlm")) {
@@ -935,7 +935,7 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	unsigned char	buffer[300];
 
 	file = fopen(FileName, "rb");
-	if (!file) return(GE_CANTOPENFILE);
+	if (file == NULL) return(GE_CANTOPENFILE);
 
 	fread(buffer, 1, 9, file); /* Read the header of the file. */
 	rewind(file);

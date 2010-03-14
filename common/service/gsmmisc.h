@@ -146,6 +146,7 @@ typedef struct {
 	GSM_FileType	Type;
 	unsigned char	ID_FullName[400];
 	unsigned char	*Buffer;
+	unsigned int	CRC16;
 
 	GSM_DateTime	Modified;
 	bool		ModifiedEmpty;

@@ -1,11 +1,12 @@
 object MainForm: TMainForm
-  Left = 225
-  Top = 119
+  Left = 219
+  Top = 110
   Width = 554
   Height = 422
   HelpType = htKeyword
   HelpKeyword = '0'
-  Caption = 'SMS daemon'
+  BorderIcons = [biSystemMenu, biMaximize]
+  Caption = 'Gammu Gateway'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,6 +17,7 @@ object MainForm: TMainForm
   OldCreateOrder = False
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   OnResize = FormResize
   PixelsPerInch = 96
@@ -49,6 +51,14 @@ object MainForm: TMainForm
       item
         Alignment = taCenter
         Width = 150
+      end
+      item
+        Alignment = taCenter
+        Width = 150
+      end
+      item
+        Alignment = taCenter
+        Width = 150
       end>
     OnDblClick = Getinfoaboutdevices1Click
   end
@@ -69,6 +79,8 @@ object MainForm: TMainForm
       Columns = <
         item
           Caption = 'Text'
+          MaxWidth = 100
+          Width = 100
         end
         item
           Caption = 'Device'
@@ -109,6 +121,8 @@ object MainForm: TMainForm
       Columns = <
         item
           Caption = 'Text'
+          MaxWidth = 100
+          Width = 100
         end
         item
           Caption = 'Device'

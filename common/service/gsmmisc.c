@@ -1,9 +1,9 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 #ifdef WIN32
 #  include <io.h>
-#  include <sys/stat.h>
 #  include <fcntl.h>
 #endif
 
@@ -61,13 +61,10 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 {
 	int 		i = 1000;
 	FILE		*file;
-#ifdef WIN32
-	struct _stat	fileinfo;
-	int		fh;
-#endif
+	struct stat	fileinfo;
 
 	file = fopen(FileName,"rb");
-	if (!file) return(GE_CANTOPENFILE);
+	if (file == NULL) return(GE_CANTOPENFILE);
 
 	free(File->Buffer);
 	File->Buffer 	= NULL;
@@ -81,22 +78,18 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 	fclose(file);
 
 	File->ModifiedEmpty = true;
-#ifdef WIN32
-	fh = _open(FileName,_O_RDONLY);
-	if (fh != -1) {
-		if (_fstat(fh,&fileinfo) == 0) {
-			File->ModifiedEmpty = false;
-			dprintf("File info read correctly\n");
-			//st_mtime is time of last modification of file
-			Fill_GSM_DateTime(&File->Modified, fileinfo.st_mtime);
-			File->Modified.Year = File->Modified.Year + 1900;
-			dprintf("FileTime: %02i-%02i-%04i %02i:%02i:%02i\n",
-				File->Modified.Day,File->Modified.Month,File->Modified.Year,
-				File->Modified.Hour,File->Modified.Minute,File->Modified.Second);
-		}
-		_close(fh);
+	if (stat(FileName,&fileinfo) == 0) {
+		File->ModifiedEmpty = false;
+		dprintf("File info read correctly\n");
+		//st_mtime is time of last modification of file
+		Fill_GSM_DateTime(&File->Modified, fileinfo.st_mtime);
+		File->Modified.Year = File->Modified.Year + 1900;
+		dprintf("FileTime: %02i-%02i-%04i %02i:%02i:%02i\n",
+			File->Modified.Day,File->Modified.Month,File->Modified.Year,
+			File->Modified.Hour,File->Modified.Minute,File->Modified.Second);
 	}
-#endif
+
+	File->CRC16 = 0;
 
 	return GE_NONE;
 }

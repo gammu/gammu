@@ -202,6 +202,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		s->User.SendSMSStatus		  = NULL;
 		s->LockFile			  = NULL;
 		s->opened			  = false;
+		s->Phone.Functions		  = NULL;
 
 		s->di 				  = di;
 		s->di.use_global 		  = s->CurrentConfig->UseGlobalDebugFile;
@@ -791,9 +792,18 @@ bool CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg, int num)
 }
 
 static OnePhoneModel allmodels[] = {
+#ifdef GSM_ENABLE_NOKIA6510
+	{"3100" ,"RH-19" ,"",           {0}},
+#endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"3210" ,"NSE-8" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
 	{"3210" ,"NSE-9" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
+#endif
+#ifdef GSM_ENABLE_NOKIA6510
+	{"3300" ,"NEM-1" ,"Nokia 3300", {0}},
+	{"3300" ,"NEM-2" ,"Nokia 3300", {0}},
+#endif
+#ifdef GSM_ENABLE_NOKIA6110
 	{"3310" ,"NHM-5" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},
 	{"3330" ,"NHM-6" ,"",           {F_NOCALLER,F_RING_SM,F_CAL33,F_PROFILES33,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
 	{"3390" ,"NPB-1" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_PROFILES33,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
@@ -801,8 +811,10 @@ static OnePhoneModel allmodels[] = {
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
 	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
-	{"3510i","RH-9"   ,"",          {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
-	{"3530" ,"RH-9"   ,"",          {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
+	{"3510i","RH-9"  ,"",           {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
+	{"3530" ,"RH-9"  ,"",           {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
+	{"3590" ,"NPM-8" ,"",		{0}},//irda?
+	{"3595" ,"NPM-10" ,"",		{0}},//irda?
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"3650" ,"NHL-8" ,"Nokia 3650", {F_RADIO,0}},
@@ -828,6 +840,9 @@ static OnePhoneModel allmodels[] = {
 	{"6130" ,"NSK-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
 	{"6150" ,"NSM-1" ,"",           {F_NOWAP,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,F_NOPICTUREUNI,0}},
 	{"6190" ,"NSB-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
+#endif
+#if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
+	{"6200" ,"NPL-3" ,"Nokia 6200", {0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"6210" ,"NPE-3" ,"Nokia 6210", {F_VOICETAGS,F_CAL62,0}},
@@ -877,6 +892,7 @@ static OnePhoneModel allmodels[] = {
 	{"at"   ,	  "at",		  "",				   {0}},
 	{"M20"  ,	  "M20",	  "",				   {F_M20SMS,0}},
 	{"MC35" ,	  "MC35",	  "",				   {0}},
+	{"S25",		  "S25",  	  "SIEMENS S25",		   {0}},
 	{"C35i" ,	  "C35i",	  "",				   {0}},
 	{"S35i" ,	  "S35i",	  "",				   {0}},
 	{"M35i" ,	  "M35i",	  "",				   {0}},

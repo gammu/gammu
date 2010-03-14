@@ -30,12 +30,18 @@ type
     Button2: TButton;
     Label10: TLabel;
     PINEdit: TEdit;
-    OtherTabSheet: TTabSheet;
+    SendingTabSheet: TTabSheet;
     OpenDialog1: TOpenDialog;
     TransmissionCheckBox: TCheckBox;
     Label14: TLabel;
     TransmissionFileEdit: TEdit;
     Button6: TButton;
+    OtherTabSheet: TTabSheet;
+    GroupBox4: TGroupBox;
+    GatewayLogCheckBox: TCheckBox;
+    Label16: TLabel;
+    GatewayLogFileEdit: TEdit;
+    Button5: TButton;
     ReceiveCheckBox: TCheckBox;
     SendCheckBox: TCheckBox;
     Panel3: TPanel;
@@ -50,25 +56,36 @@ type
     CollectCheckBox: TCheckBox;
     SendingRetriesEdit: TEdit;
     SendingTimeoutEdit: TEdit;
-    GroupBox5: TGroupBox;
-    Label20: TLabel;
-    OutgoingEdit: TEdit;
-    Button12: TButton;
     GroupBox7: TGroupBox;
     PhonebookListBox: TListBox;
     PhonebookAddButton: TButton;
     PhonebookEditButton: TButton;
     PhonebookRemoveButton: TButton;
-    GroupBox4: TGroupBox;
-    Label16: TLabel;
-    GatewayLogCheckBox: TCheckBox;
-    GatewayLogFileEdit: TEdit;
-    Button5: TButton;
+    Panel5: TPanel;
+    Label8: TLabel;
+    SpecialSMSCostListView: TListView;
+    Label9: TLabel;
+    SpecialSMSCostAddButton: TButton;
+    SpecialSMSCostEditButton: TButton;
+    SpecialSMSCostRemoveButton: TButton;
+    OtherSMSCostEdit: TEdit;
+    Panel6: TPanel;
+    Label11: TLabel;
+    SMSCostCurrencyEdit: TEdit;
+    GroupBox5: TGroupBox;
+    Label19: TLabel;
+    Label20: TLabel;
+    IncomingEdit: TEdit;
+    Button10: TButton;
+    OutgoingEdit: TEdit;
+    Button12: TButton;
+    TrayCheckBox: TCheckBox;
     procedure FormCreate(Sender: TObject);
     procedure TreeView1MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure RefreshScreenVariables;
     procedure Button3Click(Sender: TObject);
+    procedure Button7Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -91,6 +108,11 @@ type
     procedure PhonebookListBoxClick(Sender: TObject);
     procedure PhonebookRemoveButtonClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure TreeView1KeyPress(Sender: TObject; var Key: Char);
+    procedure SpecialSMSCostAddButtonClick(Sender: TObject);
+    procedure SpecialSMSCostEditButtonClick(Sender: TObject);
+    procedure SpecialSMSCostRemoveButtonClick(Sender: TObject);
+    procedure SpecialSMSCostListViewClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -99,22 +121,26 @@ type
 
 var
   ConfigForm : TConfigForm;
-  PhonebookNames            : array[1..200] of string;
-  PhonebookNumbers          : array[1..200] of string;
-  PhonebookEntriesNum       : integer;
+  PhonebookNames              : array[1..200] of string;
+  PhonebookNumbers            : array[1..200] of string;
+  PhonebookEntriesNum         : integer;
+  SpecialSMSNumber            : array[1..200] of string;
+  SpecialSMSCost              : array[1..200] of string;
+  SpecialSMSNum               : integer;
 
 implementation
 
-uses Main;
+uses Main, sms_cost;
 
 {$R *.dfm}
 
 procedure TConfigForm.RefreshScreenVariables;
-var i:integer;
+var i,j:integer;
 begin
   with GatewayIniFile do
   begin
     //CommonSettings sheet can be read to screen
+    IncomingEdit.Text:=ReadString('general', 'receivedir', ExtractFilePath(Application.ExeName));
     OutgoingEdit.Text:=ReadString('general', 'senddir', ExtractFilePath(Application.ExeName));
 
     PhonebookEntriesNum:=0;
@@ -139,6 +165,27 @@ begin
     CollectCheckBox.Checked         :=ReadBool  ('general', 'CollectSMS', false);
     SendingRetriesEdit.Text         :=ReadString('general', 'SMSSendingRetries','2');
     SendingTimeoutEdit.Text         :=ReadString('general', 'SMSSendingTimeout','30');
+    TrayCheckBox.Checked            :=ReadBool  ('general', 'UseTray', false);
+
+    SpecialSMSNum := 0;
+    SpecialSMScostListView.Items.Clear;
+    i:=1;
+    while true do
+    begin
+      if ReadString('general', 'SpecialSMSNumber'+inttostr(i),'') = '' then break;
+      if ReadString('general', 'SpecialSMSCost'+inttostr(i),'') = '' then break;
+      SpecialSMSCostListView.Items.Add;
+      SpecialSMSCostListView.Items.Item[SpecialSMSCostListView.Items.Count-1].Caption:=ReadString('general', 'SpecialSMSNumber'+inttostr(i),'');
+      SpecialSMSCostListView.Items.Item[SpecialSMSCostListView.Items.Count-1].SubItems.Add(ReadString('general', 'SpecialSMSCost'+inttostr(i),''));
+      SpecialSMSNum:=SpecialSMSNum+1;
+      SpecialSMSNumber[SpecialSMSNum]:=ReadString('general', 'SpecialSMSNumber'+inttostr(i),'');
+      SpecialSMSCost[SpecialSMSNum]:=ReadString('general', 'SpecialSMSCost'+inttostr(i),'');
+      i:=i+1;
+    end;
+    SpecialSMSCostRemoveButton.Enabled   :=False;
+    SpecialSMSCostEditButton.Enabled     :=False;
+    OtherSMSCostEdit.Text:=ReadString('general', 'OtherSMSCost','');
+    SMSCostCurrencyEdit.Text:=ReadString('general', 'SMSCurrency','');
 
     //modem options should be readed separately
     //there is one screen tab and MODEMNUM modems
@@ -176,16 +223,27 @@ begin
                  IncomingLogCheckBox.Checked:=CFGReceiveLog;
                  OutgoingLogCheckBox.Checked:=CFGSendLog;
 
-                 PortComboBox.ItemIndex:=0;
+                 PortComboBox.ItemIndex:=-1;
+                 if CFGPort='com1:' then PortComboBox.ItemIndex:=0;
                  if CFGPort='com2:' then PortComboBox.ItemIndex:=1;
                  if CFGPort='com3:' then PortComboBox.ItemIndex:=2;
                  if CFGPort='com4:' then PortComboBox.ItemIndex:=3;
+                 if CFGPort='com5:' then PortComboBox.ItemIndex:=4;
+                 if CFGPort='com6:' then PortComboBox.ItemIndex:=5;
+                 if CFGPort='com7:' then PortComboBox.ItemIndex:=6;
+                 if CFGPort='com8:' then PortComboBox.ItemIndex:=7;
+                 if CFGPort='com9:' then PortComboBox.ItemIndex:=8;
+                 if CFGPort='com10:' then PortComboBox.ItemIndex:=9;
 
                  ConnectionComboBox.ItemIndex:=0;
                  if CFGConnection = 'mbus' then ConnectionComboBox.ItemIndex:=1;
                  if CFGConnection = 'dlr3' then ConnectionComboBox.ItemIndex:=2;
-                 if CFGConnection = 'at19200' then ConnectionComboBox.ItemIndex:=3;
-                 if CFGConnection = 'at115200' then ConnectionComboBox.ItemIndex:=4;
+                 if CFGConnection = 'bluephonet' then ConnectionComboBox.ItemIndex:=3;
+                 if CFGConnection = 'irdaphonet' then ConnectionComboBox.ItemIndex:=4;
+                 if CFGConnection = 'at19200' then ConnectionComboBox.ItemIndex:=5;
+                 if CFGConnection = 'at115200' then ConnectionComboBox.ItemIndex:=6;
+                 if CFGConnection = 'blueat' then ConnectionComboBox.ItemIndex:=7;
+                 if CFGConnection = 'irdaat' then ConnectionComboBox.ItemIndex:=8;
 
                  TransmissionFileEdit.Text:=CFGGammuLogFile;
                  TransmissionFormatComboBox.ItemIndex:=3;
@@ -202,7 +260,8 @@ begin
                end;
                PageControl1.ActivePage:=ModemTabSheet;
              end;
-      6    : PageControl1.ActivePage:=OtherTabSheet;
+      6    : PageControl1.ActivePage:=SendingTabSheet;
+      7    : PageControl1.ActivePage:=OtherTabSheet;
     end;
   end;
 end;
@@ -227,6 +286,7 @@ procedure TConfigForm.Button3Click(Sender: TObject);
 var
   i,j      : integer;
   TheSame  : Boolean;
+  P        : Extended;
 begin
   TheSame:=False;
   for i:=1 to MODEMNUM do
@@ -254,17 +314,16 @@ begin
   end;
   with GatewayIniFile do
   begin
+    i:=1;
     for i:=1 to PhonebookEntriesNum do
     begin
       WriteString('general', 'PhonebookName'+inttostr(i),PhonebookNames[i]);
       WriteString('general', 'PhonebookNumber'+inttostr(i),PhonebookNumbers[i]);
     end;
-    for i:=PhonebookEntriesNum+1 to 100 do
-    begin
-       DeleteKey('general', 'PhonebookName'+inttostr(i));
-       DeleteKey('general', 'PhonebookNumber'+inttostr(i));
-    end;
+    DeleteKey('general', 'PhonebookName'+inttostr(i+1));
+    DeleteKey('general', 'PhonebookNumber'+inttostr(i+1));
 
+    WriteString('general', 'receivedir', IncomingEdit.Text);
     WriteString('general', 'senddir', OutgoingEdit.Text);
 
     WriteBool  ('general', 'UseGatewayLog'       , GatewayLogCheckBox.Checked);
@@ -273,6 +332,7 @@ begin
     WriteBool  ('general', 'CollectSMS'          , CollectCheckBox.Checked);
     WriteString('general', 'SMSSendingRetries'   , SendingRetriesEdit.Text);
     WriteString('general', 'SMSSendingTimeout'   , SendingTimeoutEdit.Text);
+    WriteBool  ('general', 'UseTray'             , TrayCheckBox.Checked);
 
     for i:=1 to MODEMNUM do
     begin
@@ -289,8 +349,54 @@ begin
       WriteString('modem'+inttostr(i), 'GammuLogLevel', GSMDevice[i].CFGGammuLogFormat);
       WriteBool  ('modem'+inttostr(i), 'UseGammuLog'  , GSMDevice[i].CFGGammuLog);
     end;
+
+    i:=1;
+    for i:=1 to SpecialSMSNum do
+    begin
+      if (SPecialSMSCost[i] <> '') then
+      begin
+        if not TryStrToFloat(SpecialSMSCost[i],P) then
+        begin
+          Application.MessageBox(PChar(SpecialSMSCost[i]+' SMS cost is not valid'),'',0);
+          exit;
+        end;
+      end;
+      WriteString('general', 'SpecialSMSNumber'+inttostr(i),SpecialSMSNumber[i]);
+      WriteString('general', 'SpecialSMSCost'+inttostr(i),SpecialSMSCost[i]);
+    end;
+    DeleteKey('general', 'SpecialSMSNumber'+inttostr(i+1));
+    DeleteKey('general', 'SpecialSMSCost'+inttostr(i+1));
+    if OtherSMSCostEdit.Text <> '' then
+    begin
+      if not TryStrToFloat(OtherSMSCostEdit.Text,P) then
+      begin
+        Application.MessageBox(PChar(OtherSMSCostEdit.Text+' SMS cost is not valid'),'',0);
+        exit;
+      end;
+    end;
+    WriteString('general', 'OtherSMSCost',OtherSMSCostEdit.Text);
+    WriteString('general', 'SMSCurrency',SMSCostCurrencyEdit.Text);
   end;
   ModalResult:=mrOk;
+end;
+
+procedure TConfigForm.Button7Click(Sender: TObject);
+begin
+  with DirectoryForm do
+  begin
+    ShellTreeView1.Root:='rfMyComputer';
+    ShellTreeView1.FullCollapse;
+    ShellTreeView1.Path:='c:\';
+    if DirectoryExists(IncomingEdit.Text) then ShellTreeView1.Path:=IncomingEdit.Text;
+    if ShowModal = mrOK then
+    begin
+      IncomingEdit.Text:=ShellTreeView1.Path;
+      if (IncomingEdit.Text[strlen(PChar(IncomingEdit.Text))] <> '\') then
+      begin
+        IncomingEdit.Text:=IncomingEdit.Text+'\';
+      end;
+    end;
+  end;
 end;
 
 procedure TConfigForm.Button5Click(Sender: TObject);
@@ -361,9 +467,32 @@ begin
       0: CFGConnection := 'fbus';
       1: CFGConnection := 'mbus';
       2: CFGConnection := 'dlr3';
-      3: CFGConnection := 'at19200';
-      4: CFGConnection := 'at115200';
+      3: CFGConnection := 'bluephonet';
+      4: CFGConnection := 'irdaphonet';
+      5: CFGConnection := 'at19200';
+      6: CFGConnection := 'at115200';
+      7: CFGConnection := 'blueat';
+      8: CFGConnection := 'irdaat';
     end;
+  end;
+  Label4.Enabled:=true;
+  PortComboBox.Enabled:=true;
+  if (ConnectionComboBox.ItemIndex < 3) or
+     (ConnectionComboBox.ItemIndex = 5) or
+     (ConnectionComboBox.ItemIndex = 6) then
+  begin
+    Label4.Caption:='Serial port:';
+  end;
+  if (ConnectionComboBox.ItemIndex = 3) or
+     (ConnectionComboBox.ItemIndex = 7) then
+  begin
+    Label4.Caption:='Device address:';
+  end;
+  if (ConnectionComboBox.ItemIndex = 4) or
+     (ConnectionComboBox.ItemIndex = 8) then
+  begin
+    Label4.Enabled:=false;
+    PortComboBox.Enabled:=false;
   end;
 end;
 
@@ -376,6 +505,12 @@ begin
       1: CFGPort := 'com2:';
       2: CFGPort := 'com3:';
       3: CFGPort := 'com4:';
+      4: CFGPort := 'com5:';
+      5: CFGPort := 'com6:';
+      6: CFGPort := 'com7:';
+      7: CFGPort := 'com8:';
+      8: CFGPort := 'com9:';
+      9: CFGPort := 'com10:';
     end;
   end;
 end;
@@ -528,6 +663,107 @@ end;
 procedure TConfigForm.FormShow(Sender: TObject);
 begin
   RefreshScreenVariables;
+end;
+
+procedure TConfigForm.TreeView1KeyPress(Sender: TObject; var Key: Char);
+begin
+  ShowConfigValues(TreeView1.Selected.ImageIndex);
+end;
+
+procedure TConfigForm.SpecialSMSCostAddButtonClick(Sender: TObject);
+var i,j:integer;
+begin
+  with SMSPriceForm do
+  begin
+    Caption:='New SMS price set';
+    NumberEdit.Text:='';
+    PriceEdit.Text:='';
+    CurrencyLabel.Caption:=SMSCostCurrencyEdit.Text;
+    if ShowModal = mrOK then
+    begin
+      SpecialSMSNum:=SpecialSMSNum+1;
+      SpecialSMSCost[SpecialSMSNum]:=PriceEdit.Text;
+      SpecialSMSNumber[SpecialSMSNum]:=NumberEdit.Text;
+      SpecialSMSCostListView.Items.Add;
+      SpecialSMSCostListView.Items.Item[SpecialSMSCostListView.Items.Count-1].Caption:=NumberEdit.Text;
+      SpecialSMSCostListView.Items.Item[SpecialSMSCostListView.Items.Count-1].SubItems.Add(PriceEdit.Text);
+    end;
+  end;
+end;
+
+procedure TConfigForm.SpecialSMSCostEditButtonClick(Sender: TObject);
+var i:integer;
+begin
+  i:=1;
+  while true do
+  begin
+    if i>SpecialSMSNum then break;
+    if SpecialSMSCostListView.Items[i-1].Selected then
+    begin
+      with SMSPriceForm do
+      begin
+        Caption:='Edit SMS price set';
+        NumberEdit.Text:=SpecialSMSNumber[i];
+        PriceEdit.Text:=SpecialSMSCost[i];
+        CurrencyLabel.Caption:=SMSCostCurrencyEdit.Text;
+        if ShowModal = mrOK then
+        begin
+          SpecialSMSNumber[i]:=NumberEdit.Text;
+          SpecialSMSCost[i]:=PriceEdit.Text;
+          SpecialSMSCostListView.Items.Delete(i-1);
+          SpecialSMSCostListView.Items.Add;
+          SpecialSMSCostListView.Items.Item[SpecialSMSCostListView.Items.Count-1].Caption:=NumberEdit.Text;
+          SpecialSMSCostListView.Items.Item[SpecialSMSCostListView.Items.Count-1].SubItems.Add(PriceEdit.Text);
+        end;
+      end;
+      break;
+    end else
+    begin
+      i:=i+1;
+    end;
+  end;
+end;
+
+procedure TConfigForm.SpecialSMSCostRemoveButtonClick(Sender: TObject);
+var i,j:integer;
+begin
+  i:=1;
+  while true do
+  begin
+    if i>SpecialSMSNum then break;
+    if SpecialSMSCostListView.Items[i-1].Selected then
+    begin
+      for j:=i to SpecialSMSNum-1 do
+      begin
+        SpecialSMSNumber[j]:=SpecialSMSNumber[j+1];
+        SpecialSMSCost[j]:=SpecialSMSCost[j+1];
+      end;
+      SpecialSMSNum:=SpecialSMSNum-1;
+      SpecialSMSCostListView.Items.Delete(i-1);
+      i:=1;
+    end else
+    begin
+      i:=i+1;
+    end;
+  end;
+  SpecialSMSCostListView.OnClick(Sender);
+end;
+
+procedure TConfigForm.SpecialSMSCostListViewClick(Sender: TObject);
+var i,j:integer;
+begin
+  j:=0;
+  SpecialSMSCostRemoveButton.Enabled:=False;
+  for i:=1 to SpecialSMSCostListView.Items.Count do
+  begin
+    if SpecialSMSCostListView.Items[i-1].Selected then
+    begin
+      SpecialSMSCostRemoveButton.Enabled:=True;
+      j:=j+1;
+    end;
+  end;
+  SpecialSMSCostEditButton.Enabled:=false;
+  if (j=1) then SpecialSMSCostEditButton.Enabled:=true;
 end;
 
 end.

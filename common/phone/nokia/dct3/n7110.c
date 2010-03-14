@@ -1054,6 +1054,7 @@ static GSM_Error N7110_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 		0x00, 0x00, 		/* location	*/
 		0x00, 0x00, 0x00};
 
+	if (entry->Location == 0) return GE_NOTSUPPORTED;
 	if (entry->EntriesNum!=0) {
 		req[11] = NOKIA_GetMemoryType(s, entry->MemoryType,N71_65_MEMORY_TYPES);
 		if (req[11]==0xff) return GE_NOTSUPPORTED;
@@ -1401,153 +1402,153 @@ GSM_Error N7110_CancelAllDiverts(GSM_StateMachine *s)
 }
 
 static GSM_Reply_Function N7110ReplyFunctions[] = {
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x02,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x03,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x04,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x05,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x07,ID_AnswerCall		},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x07,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x09,ID_CancelCall		},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x09,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0A,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0B,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0C,ID_IncomingFrame	},
-	{N71_65_ReplySendDTMF,		"\x01",0x03,0x51,ID_SendDTMF		},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x53,ID_IncomingFrame	},
-	{N71_65_ReplySendDTMF,		"\x01",0x03,0x59,ID_SendDTMF		},
-	{N71_65_ReplySendDTMF,		"\x01",0x03,0x5E,ID_SendDTMF		},
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x02,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x03,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x04,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x05,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x07,ID_AnswerCall	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x07,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x09,ID_CancelCall	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x09,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x0A,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x0B,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x0C,ID_IncomingFrame	  },
+	{N71_65_ReplySendDTMF,		  "\x01",0x03,0x51,ID_SendDTMF		  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x53,ID_IncomingFrame	  },
+	{N71_65_ReplySendDTMF,		  "\x01",0x03,0x59,ID_SendDTMF		  },
+	{N71_65_ReplySendDTMF,		  "\x01",0x03,0x5E,ID_SendDTMF		  },
 
-	{DCT3_ReplySendSMSMessage,	"\x02",0x03,0x02,ID_IncomingFrame	},
-	{DCT3_ReplySendSMSMessage,	"\x02",0x03,0x03,ID_IncomingFrame	},
-	{N7110_ReplyIncomingSMS,	"\x02",0x03,0x10,ID_IncomingFrame	},
+	{DCT3_ReplySendSMSMessage,	  "\x02",0x03,0x02,ID_IncomingFrame  	  },
+	{DCT3_ReplySendSMSMessage,	  "\x02",0x03,0x03,ID_IncomingFrame	  },
+	{N7110_ReplyIncomingSMS,	  "\x02",0x03,0x10,ID_IncomingFrame	  },
 #ifdef GSM_ENABLE_CELLBROADCAST
-	{DCT3_ReplySetIncomingCB,	"\x02",0x03,0x21,ID_SetIncomingCB	},
-	{DCT3_ReplySetIncomingCB,	"\x02",0x03,0x22,ID_SetIncomingCB	},
-	{DCT3_ReplyIncomingCB,		"\x02",0x03,0x23,ID_IncomingFrame	},
+	{DCT3_ReplySetIncomingCB,	  "\x02",0x03,0x21,ID_SetIncomingCB	  },
+	{DCT3_ReplySetIncomingCB,	  "\x02",0x03,0x22,ID_SetIncomingCB	  },
+	{DCT3_ReplyIncomingCB,		  "\x02",0x03,0x23,ID_IncomingFrame	  },
 #endif
-	{DCT3_ReplySetSMSC,		"\x02",0x03,0x31,ID_SetSMSC		},
-	{DCT3_ReplyGetSMSC,		"\x02",0x03,0x34,ID_GetSMSC		},
-	{DCT3_ReplyGetSMSC,		"\x02",0x03,0x35,ID_GetSMSC		},
+	{DCT3_ReplySetSMSC,		  "\x02",0x03,0x31,ID_SetSMSC		  },
+	{DCT3_ReplyGetSMSC,		  "\x02",0x03,0x34,ID_GetSMSC		  },
+	{DCT3_ReplyGetSMSC,		  "\x02",0x03,0x35,ID_GetSMSC		  },
 #ifdef GSM_ENABLE_CELLBROADCAST
-	{DCT3_ReplySetIncomingCB,	"\x02",0x03,0xCA,ID_SetIncomingCB	},
+	{DCT3_ReplySetIncomingCB,	  "\x02",0x03,0xCA,ID_SetIncomingCB	  },
 #endif
 
-	{N7110_ReplyGetMemoryStatus,	"\x03",0x03,0x04,ID_GetMemoryStatus	},
-	{N7110_ReplyGetMemory,		"\x03",0x03,0x08,ID_GetMemory		},
-	{N7110_ReplyDeleteMemory,	"\x03",0x03,0x10,ID_SetMemory		},
-	{N71_65_ReplyWritePhonebook,	"\x03",0x03,0x0C,ID_SetBitmap		},
-	{N71_65_ReplyWritePhonebook,	"\x03",0x03,0x0C,ID_SetMemory		},
+	{N7110_ReplyGetMemoryStatus,	  "\x03",0x03,0x04,ID_GetMemoryStatus	  },
+	{N7110_ReplyGetMemory,		  "\x03",0x03,0x08,ID_GetMemory		  },
+	{N7110_ReplyDeleteMemory,	  "\x03",0x03,0x10,ID_SetMemory		  },
+	{N71_65_ReplyWritePhonebook,	  "\x03",0x03,0x0C,ID_SetBitmap		  },
+	{N71_65_ReplyWritePhonebook,	  "\x03",0x03,0x0C,ID_SetMemory		  },
 
-	{N71_65_ReplyUSSDInfo,		"\x06",0x03,0x03,ID_IncomingFrame	},
-	{NONEFUNCTION,			"\x06",0x03,0x06,ID_IncomingFrame	},
+	{N71_65_ReplyUSSDInfo,		  "\x06",0x03,0x03,ID_IncomingFrame	  },
+	{NONEFUNCTION,			  "\x06",0x03,0x06,ID_IncomingFrame	  },
 
-	{DCT3_ReplySIMLogin,		"\x09",0x03,0x80,ID_IncomingFrame	},
-	{DCT3_ReplySIMLogout,		"\x09",0x03,0x81,ID_IncomingFrame	},
+	{DCT3_ReplySIMLogin,		  "\x09",0x03,0x80,ID_IncomingFrame	  },
+	{DCT3_ReplySIMLogout,		  "\x09",0x03,0x81,ID_IncomingFrame	  },
 
-	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_GetNetworkInfo	},
-	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_GetBitmap		},
-	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_IncomingFrame	},
-	{N7110_ReplyGetNetworkInfoError,"\x0A",0x03,0x72,ID_GetNetworkInfo	},
-	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x73,ID_IncomingFrame	},
-	{N71_92_ReplyGetSignalQuality,	"\x0A",0x03,0x82,ID_GetSignalQuality	},
-	{N7110_ReplySetOperatorLogo,	"\x0A",0x03,0xA4,ID_SetBitmap		},
-	{N7110_ReplyClearOperatorLogo,	"\x0A",0x03,0xB0,ID_SetBitmap		},
-	{NONEFUNCTION,			"\x0A",0x03,0xB5,ID_IncomingFrame	},
+	{DCT3_ReplyGetNetworkInfo,	  "\x0A",0x03,0x71,ID_GetNetworkInfo	  },
+	{DCT3_ReplyGetNetworkInfo,	  "\x0A",0x03,0x71,ID_GetBitmap		  },
+	{DCT3_ReplyGetNetworkInfo,	  "\x0A",0x03,0x71,ID_IncomingFrame	  },
+	{N7110_ReplyGetNetworkInfoError,  "\x0A",0x03,0x72,ID_GetNetworkInfo	  },
+	{DCT3_ReplyGetNetworkInfo,	  "\x0A",0x03,0x73,ID_IncomingFrame	  },
+	{N71_92_ReplyGetSignalQuality,	  "\x0A",0x03,0x82,ID_GetSignalQuality	  },
+	{N7110_ReplySetOperatorLogo,	  "\x0A",0x03,0xA4,ID_SetBitmap		  },
+	{N7110_ReplyClearOperatorLogo,	  "\x0A",0x03,0xB0,ID_SetBitmap		  },
+	{NONEFUNCTION,			  "\x0A",0x03,0xB5,ID_IncomingFrame	  },
 
 #ifdef DEBUG
-	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x02,ID_SetCalendarNote	},/*method 1*/
-	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x04,ID_SetCalendarNote	},/*method 1*/
-	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x06,ID_SetCalendarNote	},/*method 1*/
-	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x08,ID_SetCalendarNote	},/*method 1*/
+	{N71_65_ReplyAddCalendar1,	  "\x13",0x03,0x02,ID_SetCalendarNote	  },/*method 1*/
+	{N71_65_ReplyAddCalendar1,	  "\x13",0x03,0x04,ID_SetCalendarNote	  },/*method 1*/
+	{N71_65_ReplyAddCalendar1,	  "\x13",0x03,0x06,ID_SetCalendarNote	  },/*method 1*/
+	{N71_65_ReplyAddCalendar1,	  "\x13",0x03,0x08,ID_SetCalendarNote	  },/*method 1*/
 #endif
-	{N71_65_ReplyDelCalendar,	"\x13",0x03,0x0C,ID_DeleteCalendarNote	},
-	{N71_65_ReplyGetNextCalendar1,	"\x13",0x03,0x1A,ID_GetCalendarNote	},/*method 1*/
+	{N71_65_ReplyDelCalendar,	  "\x13",0x03,0x0C,ID_DeleteCalendarNote  },
+	{N71_65_ReplyGetNextCalendar1,	  "\x13",0x03,0x1A,ID_GetCalendarNote	  },/*method 1*/
 #ifdef DEBUG
-	{N7110_ReplyGetCalendarNotePos,	"\x13",0x03,0x32,ID_GetCalendarNotePos	},/*method 1*/
+	{N7110_ReplyGetCalendarNotePos,	  "\x13",0x03,0x32,ID_GetCalendarNotePos  },/*method 1*/
 #endif
-	{N7110_ReplyGetCalendarInfo,	"\x13",0x03,0x3B,ID_GetCalendarNotesInfo},/*method 1*/
+	{N7110_ReplyGetCalendarInfo,	  "\x13",0x03,0x3B,ID_GetCalendarNotesInfo},/*method 1*/
 #ifdef DEBUG
-	{N71_65_ReplyGetNextCalendar2,	"\x13",0x03,0x3F,ID_GetCalendarNote	},/*method 2*/
+	{N71_65_ReplyGetNextCalendar2,	  "\x13",0x03,0x3F,ID_GetCalendarNote	  },/*method 2*/
 #endif
-	{N71_65_ReplyAddCalendar2,	"\x13",0x03,0x41,ID_SetCalendarNote	},/*method 2*/
+	{N71_65_ReplyAddCalendar2,	  "\x13",0x03,0x41,ID_SetCalendarNote	  },/*method 2*/
 
-	{N7110_ReplySaveSMSMessage,	"\x14",0x03,0x05,ID_SaveSMSMessage	},
-	{N7110_ReplySaveSMSMessage,	"\x14",0x03,0x06,ID_SaveSMSMessage	},
-	{N7110_ReplyGetSMSMessage,	"\x14",0x03,0x08,ID_GetSMSMessage	},
-	{N7110_ReplyGetSMSMessage,	"\x14",0x03,0x08,ID_GetBitmap		},
-	{N7110_ReplyGetSMSMessage,	"\x14",0x03,0x09,ID_GetSMSMessage	},
-	{DCT3_ReplyDeleteSMSMessage,	"\x14",0x03,0x0B,ID_DeleteSMSMessage	},
-	{DCT3_ReplyDeleteSMSMessage,	"\x14",0x03,0x0C,ID_DeleteSMSMessage	},
-	{N7110_ReplyGetSMSStatus,	"\x14",0x03,0x37,ID_GetSMSStatus	},
-	{N7110_ReplyGetSMSStatus,	"\x14",0x03,0x38,ID_GetSMSStatus	},
-	{N7110_ReplySetPicture,		"\x14",0x03,0x51,ID_SetBitmap		},
-	{N7110_ReplyGetSMSFolderStatus,	"\x14",0x03,0x6C,ID_GetSMSFolderStatus	},
-	{N7110_ReplyGetSMSMessage,	"\x14",0x03,0x6F,ID_GetSMSMessage	},
-	{N7110_ReplyGetSMSFolders,	"\x14",0x03,0x7B,ID_GetSMSFolders	},
-	{N7110_ReplyGetSMSFolders,	"\x14",0x03,0x7C,ID_GetSMSFolders	},
-	{N7110_ReplySaveSMSMessage,	"\x14",0x03,0x84,ID_SaveSMSMessage	},
-	{N7110_ReplyGetPictureImageInfo,"\x14",0x03,0x97,ID_GetBitmap		},
-	{N7110_ReplyGetSMSFolders,	"\x14",0x03,0xCA,ID_GetSMSFolders	},
+	{N7110_ReplySaveSMSMessage,	  "\x14",0x03,0x05,ID_SaveSMSMessage	  },
+	{N7110_ReplySaveSMSMessage,	  "\x14",0x03,0x06,ID_SaveSMSMessage	  },
+	{N7110_ReplyGetSMSMessage,	  "\x14",0x03,0x08,ID_GetSMSMessage	  },
+	{N7110_ReplyGetSMSMessage,	  "\x14",0x03,0x08,ID_GetBitmap		  },
+	{N7110_ReplyGetSMSMessage,	  "\x14",0x03,0x09,ID_GetSMSMessage	  },
+	{DCT3_ReplyDeleteSMSMessage,	  "\x14",0x03,0x0B,ID_DeleteSMSMessage	  },
+	{DCT3_ReplyDeleteSMSMessage,	  "\x14",0x03,0x0C,ID_DeleteSMSMessage	  },
+	{N7110_ReplyGetSMSStatus,	  "\x14",0x03,0x37,ID_GetSMSStatus	  },
+	{N7110_ReplyGetSMSStatus,	  "\x14",0x03,0x38,ID_GetSMSStatus	  },
+	{N7110_ReplySetPicture,		  "\x14",0x03,0x51,ID_SetBitmap		  },
+	{N7110_ReplyGetSMSFolderStatus,	  "\x14",0x03,0x6C,ID_GetSMSFolderStatus  },
+	{N7110_ReplyGetSMSMessage,	  "\x14",0x03,0x6F,ID_GetSMSMessage	  },
+	{N7110_ReplyGetSMSFolders,	  "\x14",0x03,0x7B,ID_GetSMSFolders	  },
+	{N7110_ReplyGetSMSFolders,	  "\x14",0x03,0x7C,ID_GetSMSFolders	  },
+	{N7110_ReplySaveSMSMessage,	  "\x14",0x03,0x84,ID_SaveSMSMessage	  },
+	{N7110_ReplyGetPictureImageInfo,  "\x14",0x03,0x97,ID_GetBitmap		  },
+	{N7110_ReplyGetSMSFolders,	  "\x14",0x03,0xCA,ID_GetSMSFolders	  },
 
-	{N71_92_ReplyGetBatteryCharge,	"\x17",0x03,0x03,ID_GetBatteryCharge	},
+	{N71_92_ReplyGetBatteryCharge,	  "\x17",0x03,0x03,ID_GetBatteryCharge	  },
 
-	{DCT3_ReplySetDateTime,		"\x19",0x03,0x61,ID_SetDateTime		},
-	{DCT3_ReplyGetDateTime,		"\x19",0x03,0x63,ID_GetDateTime		},
-	{DCT3_ReplySetAlarm,		"\x19",0x03,0x6C,ID_SetAlarm		},
-	{DCT3_ReplyGetAlarm,		"\x19",0x03,0x6E,ID_GetAlarm		},
+	{DCT3_ReplySetDateTime,		  "\x19",0x03,0x61,ID_SetDateTime	  },
+	{DCT3_ReplyGetDateTime,		  "\x19",0x03,0x63,ID_GetDateTime	  },
+	{DCT3_ReplySetAlarm,		  "\x19",0x03,0x6C,ID_SetAlarm		  },
+	{DCT3_ReplyGetAlarm,		  "\x19",0x03,0x6E,ID_GetAlarm		  },
 
-	{N7110_ReplyGetRingtone,	"\x1f",0x03,0x23,ID_GetRingtone		},
-	{N7110_ReplyGetRingtone,	"\x1f",0x03,0x24,ID_GetRingtone		},
+	{N7110_ReplyGetRingtone,	  "\x1f",0x03,0x23,ID_GetRingtone	  },
+	{N7110_ReplyGetRingtone,	  "\x1f",0x03,0x24,ID_GetRingtone	  },
 
-	{DCT3DCT4_ReplyEnableWAP,	"\x3f",0x03,0x01,ID_EnableWAP		},
-	{DCT3DCT4_ReplyEnableWAP,	"\x3f",0x03,0x02,ID_EnableWAP		},
-	{DCT3_ReplyGetWAPBookmark,	"\x3f",0x03,0x07,ID_GetWAPBookmark	},
-	{DCT3_ReplyGetWAPBookmark,	"\x3f",0x03,0x08,ID_GetWAPBookmark	},
-	{DCT3DCT4_ReplySetWAPBookmark,	"\x3f",0x03,0x0A,ID_SetWAPBookmark	},
-	{DCT3DCT4_ReplySetWAPBookmark,	"\x3f",0x03,0x0B,ID_SetWAPBookmark	},
-	{DCT3DCT4_ReplyDelWAPBookmark,	"\x3f",0x03,0x0D,ID_DeleteWAPBookmark	},
-	{DCT3DCT4_ReplyDelWAPBookmark,	"\x3f",0x03,0x0E,ID_DeleteWAPBookmark	},
-	{DCT3DCT4_ReplyGetActiveWAPMMSSet,"\x3f",0x03,0x10,ID_GetWAPSettings	},
-	{DCT3DCT4_ReplySetActiveWAPMMSSet,"\x3f",0x03,0x13,ID_SetWAPSettings	},
-	{DCT3_ReplyGetWAPSettings,	"\x3f",0x03,0x16,ID_GetWAPSettings	},
-	{DCT3_ReplyGetWAPSettings,	"\x3f",0x03,0x17,ID_GetWAPSettings	},
-	{DCT3_ReplySetWAPSettings,	"\x3f",0x03,0x19,ID_SetWAPSettings	},
-	{DCT3_ReplySetWAPSettings,	"\x3f",0x03,0x1A,ID_SetWAPSettings	},
-	{DCT3_ReplyGetWAPSettings,	"\x3f",0x03,0x1C,ID_GetWAPSettings	},
-	{DCT3_ReplyGetWAPSettings,	"\x3f",0x03,0x1D,ID_GetWAPSettings	},
-	{DCT3_ReplySetWAPSettings,	"\x3f",0x03,0x1F,ID_SetWAPSettings	},
+	{DCT3DCT4_ReplyEnableWAP,	  "\x3f",0x03,0x01,ID_EnableWAP		  },
+	{DCT3DCT4_ReplyEnableWAP,	  "\x3f",0x03,0x02,ID_EnableWAP		  },
+	{DCT3_ReplyGetWAPBookmark,	  "\x3f",0x03,0x07,ID_GetWAPBookmark	  },
+	{DCT3_ReplyGetWAPBookmark,	  "\x3f",0x03,0x08,ID_GetWAPBookmark	  },
+	{DCT3DCT4_ReplySetWAPBookmark,	  "\x3f",0x03,0x0A,ID_SetWAPBookmark	  },
+	{DCT3DCT4_ReplySetWAPBookmark,	  "\x3f",0x03,0x0B,ID_SetWAPBookmark	  },
+	{DCT3DCT4_ReplyDelWAPBookmark,	  "\x3f",0x03,0x0D,ID_DeleteWAPBookmark	  },
+	{DCT3DCT4_ReplyDelWAPBookmark,	  "\x3f",0x03,0x0E,ID_DeleteWAPBookmark	  },
+	{DCT3DCT4_ReplyGetActiveWAPMMSSet,"\x3f",0x03,0x10,ID_GetWAPSettings	  },
+	{DCT3DCT4_ReplySetActiveWAPMMSSet,"\x3f",0x03,0x13,ID_SetWAPSettings	  },
+	{DCT3_ReplyGetWAPSettings,	  "\x3f",0x03,0x16,ID_GetWAPSettings	  },
+	{DCT3_ReplyGetWAPSettings,	  "\x3f",0x03,0x17,ID_GetWAPSettings	  },
+	{DCT3_ReplySetWAPSettings,	  "\x3f",0x03,0x19,ID_SetWAPSettings	  },
+	{DCT3_ReplySetWAPSettings,	  "\x3f",0x03,0x1A,ID_SetWAPSettings	  },
+	{DCT3_ReplyGetWAPSettings,	  "\x3f",0x03,0x1C,ID_GetWAPSettings	  },
+	{DCT3_ReplyGetWAPSettings,	  "\x3f",0x03,0x1D,ID_GetWAPSettings	  },
+	{DCT3_ReplySetWAPSettings,	  "\x3f",0x03,0x1F,ID_SetWAPSettings	  },
 
-	{N7110_ReplyGetProfileFeature,	"\x39",0x03,0x02,ID_GetProfile		},
-	{N7110_ReplySetProfileFeature,	"\x39",0x03,0x04,ID_SetProfile		},
+	{N7110_ReplyGetProfileFeature,	  "\x39",0x03,0x02,ID_GetProfile	  },
+	{N7110_ReplySetProfileFeature,	  "\x39",0x03,0x04,ID_SetProfile	  },
 
-	{DCT3_ReplyEnableSecurity,	"\x40",0x02,0x64,ID_EnableSecurity	},
-	{N61_71_ReplyResetPhoneSettings,"\x40",0x02,0x65,ID_ResetPhoneSettings	},
-	{DCT3_ReplyGetIMEI,		"\x40",0x02,0x66,ID_GetIMEI		},
-	{DCT3_ReplyDialCommand,		"\x40",0x02,0x7C,ID_DialVoice		},
-	{DCT3_ReplyDialCommand,		"\x40",0x02,0x7C,ID_CancelCall		},
-	{DCT3_ReplyDialCommand,		"\x40",0x02,0x7C,ID_AnswerCall		},
-	{DCT3_ReplyNetmonitor,		"\x40",0x02,0x7E,ID_Netmonitor		},
-	{DCT3_ReplyPlayTone,		"\x40",0x02,0x8F,ID_PlayTone		},
-	{NOKIA_ReplyGetPhoneString,	"\x40",0x02,0xC8,ID_GetHardware		},
-	{NOKIA_ReplyGetPhoneString,	"\x40",0x02,0xC8,ID_GetPPM		},
-	{NOKIA_ReplyGetPhoneString,	"\x40",0x02,0xCA,ID_GetProductCode	},
-	{NOKIA_ReplyGetPhoneString,	"\x40",0x02,0xCC,ID_GetManufactureMonth	},
-	{NOKIA_ReplyGetPhoneString,	"\x40",0x02,0xCC,ID_GetOriginalIMEI	},
-	{NONEFUNCTION,			"\x40",0x02,0xFF,ID_IncomingFrame	},
+	{DCT3_ReplyEnableSecurity,	  "\x40",0x02,0x64,ID_EnableSecurity	  },
+	{N61_71_ReplyResetPhoneSettings,  "\x40",0x02,0x65,ID_ResetPhoneSettings  },
+	{DCT3_ReplyGetIMEI,		  "\x40",0x02,0x66,ID_GetIMEI		  },
+	{DCT3_ReplyDialCommand,		  "\x40",0x02,0x7C,ID_DialVoice		  },
+	{DCT3_ReplyDialCommand,		  "\x40",0x02,0x7C,ID_CancelCall	  },
+	{DCT3_ReplyDialCommand,		  "\x40",0x02,0x7C,ID_AnswerCall	  },
+	{DCT3_ReplyNetmonitor,		  "\x40",0x02,0x7E,ID_Netmonitor	  },
+	{DCT3_ReplyPlayTone,		  "\x40",0x02,0x8F,ID_PlayTone		  },
+	{NOKIA_ReplyGetPhoneString,	  "\x40",0x02,0xC8,ID_GetHardware	  },
+	{NOKIA_ReplyGetPhoneString,	  "\x40",0x02,0xC8,ID_GetPPM		  },
+	{NOKIA_ReplyGetPhoneString,	  "\x40",0x02,0xCA,ID_GetProductCode	  },
+	{NOKIA_ReplyGetPhoneString,	  "\x40",0x02,0xCC,ID_GetManufactureMonth },
+	{NOKIA_ReplyGetPhoneString,	  "\x40",0x02,0xCC,ID_GetOriginalIMEI	  },
+	{NONEFUNCTION,			  "\x40",0x02,0xFF,ID_IncomingFrame	  },
 
-	{N71_92_ReplyPhoneSetting,	"\x7a",0x04,0x02,ID_GetBitmap		},
-	{N71_92_ReplyPhoneSetting,	"\x7a",0x04,0x02,ID_SetBitmap		},
-	{N71_92_ReplyPhoneSetting,	"\x7a",0x04,0x15,ID_GetBitmap		},
-	{N71_92_ReplyPhoneSetting,	"\x7a",0x04,0x15,ID_SetBitmap		},
-	{N71_92_ReplyPhoneSetting,	"\x7a",0x04,0x17,ID_GetBitmap		},
-	{N71_92_ReplyPhoneSetting,	"\x7a",0x04,0x17,ID_SetBitmap		},
+	{N71_92_ReplyPhoneSetting,	  "\x7a",0x04,0x02,ID_GetBitmap		  },
+	{N71_92_ReplyPhoneSetting,	  "\x7a",0x04,0x02,ID_SetBitmap		  },
+	{N71_92_ReplyPhoneSetting,	  "\x7a",0x04,0x15,ID_GetBitmap		  },
+	{N71_92_ReplyPhoneSetting,	  "\x7a",0x04,0x15,ID_SetBitmap		  },
+	{N71_92_ReplyPhoneSetting,	  "\x7a",0x04,0x17,ID_GetBitmap		  },
+	{N71_92_ReplyPhoneSetting,	  "\x7a",0x04,0x17,ID_SetBitmap		  },
 
-	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetModel		},
-	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetFirmware		},
-	{DCT3_ReplyPressKey,		"\xD2",0x02,0x46,ID_PressKey		},
-	{DCT3_ReplyPressKey,		"\xD2",0x02,0x47,ID_PressKey		},
+	{DCT3DCT4_ReplyGetModelFirmware,  "\xD2",0x02,0x00,ID_GetModel		  },
+	{DCT3DCT4_ReplyGetModelFirmware,  "\xD2",0x02,0x00,ID_GetFirmware	  },
+	{DCT3_ReplyPressKey,		  "\xD2",0x02,0x46,ID_PressKey		  },
+	{DCT3_ReplyPressKey,		  "\xD2",0x02,0x47,ID_PressKey		  },
 
-	{NULL,				"\x00",0x00,0x00,ID_None		}
+	{NULL,				  "\x00",0x00,0x00,ID_None		  }
 };
 
 GSM_Phone_Functions N7110Phone = {

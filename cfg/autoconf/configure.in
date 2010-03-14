@@ -34,6 +34,7 @@ AC_PATH_PROG(RPMBUILD, rpmbuild)
 AC_PATH_PROG(RPMBUILD, rpm, no)
 
 dnl Checks for libraries.
+LDLIBS="$LDLIBS -lpthread"
 
 dnl Checks for library functions.
 AC_PROG_GCC_TRADITIONAL

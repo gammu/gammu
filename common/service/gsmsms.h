@@ -97,6 +97,7 @@ typedef enum {
 typedef enum {
 	UDH_NoUDH = 1,
 	UDH_ConcatenatedMessages,
+	UDH_ConcatenatedMessages16bit,	/* Linked SMS with 16 bit reference */
 	UDH_DisableVoice,
 	UDH_DisableFax,
 	UDH_DisableEmail,
@@ -123,7 +124,8 @@ typedef struct {
 	GSM_UDH		Type;				/* Type 		     */
 	int		Length;				/* Length 		     */
 	unsigned char	Text[GSM_MAX_UDH_LENGTH];	/* Text 		     */
-	int		ID;				/* ID for some headers or -1 */
+	int		ID8bit;				/* ID for some headers or -1 */
+	int		ID16bit;
 	int		PartNumber;
 	int		AllParts;
 } GSM_UDHHeader;
@@ -279,23 +281,25 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 
 /* ID during packing SMS */
 typedef enum {
-	SMS_Text = 1,			/* 1 text SMS				    	 */
-	SMS_ConcatenatedTextLong,	/* Contacenated SMS, when longer than 1 SMS	 */
-	SMS_ConcatenatedAutoTextLong,	/* Contacenated SMS, auto Default/Unicode coding */
-	SMS_NokiaProfileLong,		/* Nokia profile = Name, Ringtone, ScreenSaver 	 */
-	SMS_NokiaPictureImageLong,	/* Nokia Picture Image + (text)			 */
-	SMS_NokiaScreenSaverLong,	/* Nokia screen saver + (text)			 */
-	SMS_NokiaRingtone,		/* Nokia ringtone - old SM2.0 format, 1 SMS	 */
-	SMS_NokiaRingtoneLong,		/* Nokia ringtone contacenated, when very long   */
-	SMS_NokiaOperatorLogo,		/* Nokia 72x14 operator logo, 1 SMS 		 */
-	SMS_NokiaOperatorLogoLong,	/* Nokia 72x14 op logo or 78x21 in 2 SMS	 */
-	SMS_NokiaCallerLogo,		/* Nokia 72x14 caller logo, 1 SMS 		 */
-	SMS_NokiaWAPBookmarkLong,	/* Nokia WAP bookmark in 1 or 2 SMS 		 */
-	SMS_NokiaWAPSettingsLong,	/* Nokia WAP settings in 2 SMS			 */
-	SMS_NokiaMMSSettingsLong,	/* Nokia MMS settings in 2 SMS			 */
-	SMS_NokiaVCARD10Long,		/* Nokia VCARD 1.0 - only name and default number*/
-	SMS_NokiaVCARD21Long,		/* Nokia VCARD 2.1 - all numbers + text		 */
-	SMS_NokiaVCALENDAR10Long,	/* Nokia VCALENDAR 1.0 - can be in few sms	 */
+	SMS_Text = 1,			   /* 1 text SMS				    	 */
+	SMS_ConcatenatedTextLong,	   /* Contacenated SMS, when longer than 1 SMS	 */
+	SMS_ConcatenatedAutoTextLong,	   /* Contacenated SMS, auto Default/Unicode coding */
+	SMS_ConcatenatedTextLong16bit,
+	SMS_ConcatenatedAutoTextLong16bit,
+	SMS_NokiaProfileLong,		   /* Nokia profile = Name, Ringtone, ScreenSaver 	 */
+	SMS_NokiaPictureImageLong,	   /* Nokia Picture Image + (text)			 */
+	SMS_NokiaScreenSaverLong,	   /* Nokia screen saver + (text)			 */
+	SMS_NokiaRingtone,		   /* Nokia ringtone - old SM2.0 format, 1 SMS	 */
+	SMS_NokiaRingtoneLong,		   /* Nokia ringtone contacenated, when very long   */
+	SMS_NokiaOperatorLogo,		   /* Nokia 72x14 operator logo, 1 SMS 		 */
+	SMS_NokiaOperatorLogoLong,	   /* Nokia 72x14 op logo or 78x21 in 2 SMS	 */
+	SMS_NokiaCallerLogo,		   /* Nokia 72x14 caller logo, 1 SMS 		 */
+	SMS_NokiaWAPBookmarkLong,	   /* Nokia WAP bookmark in 1 or 2 SMS 		 */
+	SMS_NokiaWAPSettingsLong,	   /* Nokia WAP settings in 2 SMS			 */
+	SMS_NokiaMMSSettingsLong,	   /* Nokia MMS settings in 2 SMS			 */
+	SMS_NokiaVCARD10Long,		   /* Nokia VCARD 1.0 - only name and default number*/
+	SMS_NokiaVCARD21Long,		   /* Nokia VCARD 2.1 - all numbers + text		 */
+	SMS_NokiaVCALENDAR10Long,	   /* Nokia VCALENDAR 1.0 - can be in few sms	 */
 	SMS_NokiaVTODOLong,
 	SMS_DisableVoice,
 	SMS_DisableFax,

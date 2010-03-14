@@ -73,7 +73,7 @@ A. Latest versions are on www.mwiacek.com.
    marcin-wiacek@topnet.pl). You can also subscribe mailing list (see
    www.mwiacek.com and subpage about Gammu) and get help there. List is used
    also for annoucements about new versions. Archive of list (starting
-   11 June 2003) is available under
+   28 Sept 2002) is available under
    http://news.gmane.org/thread.php?group=gmane.linux.drivers.gammu
 
    TIP: If you want to have only general info about new versions, you can

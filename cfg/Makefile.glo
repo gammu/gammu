@@ -109,7 +109,9 @@ makelocale: $(LOCALE)
 distclean: makelocale clean
 	@echo Setting default config
 	@chmod a+x $(TOPDIR)/docs/examples/ppp/*
+	@chmod a+x $(TOPDIR)/docs/examples/fax/*
 	@chmod a+x $(TOPDIR)/other/config/*
+	@chmod a+x $(TOPDIR)/other/smsdutil/*
 	@chmod a+x $(TOPDIR)/other/perms/perms
 	@chmod a+x $(TOPDIR)/configure
 	@$(TOPDIR)/configure

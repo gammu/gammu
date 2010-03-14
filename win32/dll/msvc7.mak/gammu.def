@@ -26,3 +26,4 @@ EXPORTS
 	mygetmodelname		@19
 	mysmscounter		@20
 	mymakemultipartsms	@21
+	mygetstructuresize	@22
