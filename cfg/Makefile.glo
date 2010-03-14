@@ -167,6 +167,17 @@ installlibonly: all
 	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LIB_DIR)
 	@$(INSTALL) -m 0644 $(TOPDIR)/common/libGammu.so $(DESTDIR)$(INSTALL_LIB_DIR)
 
+	@echo Installing include files to $(DESTDIR)$(INSTALL_H_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_H_DIR)
+	@for xxx in '$(TOPDIR)/common'; do \
+		( cd $(TOPDIR)/$$xxx; \
+		  $(FIND) . -type d \! -path "*CVS*" \
+		       -exec $(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_H_DIR)/{} \; ; \
+		  $(FIND) . -type f \! -path "*CVS*" -name '*.h' \
+		       -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_H_DIR)/{} \; \
+		) \
+	done
+
 tags: $(shell find . -name '*.[ch]' -o -name '*.cpp')
 	@echo Generating tags file
 	@ctags $(shell find . -name '*.[ch]' -o -name '*.cpp')

@@ -2019,7 +2019,7 @@ static GSM_Error N6510_SendSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	int			length = 11;
 	GSM_Error		error;
 	GSM_SMSMessageLayout 	Layout;
-	unsigned char req [256] = {
+	unsigned char req [300] = {
 		N6110_FRAME_HEADER, 0x02, 0x00, 0x00, 0x00, 0x55, 0x55};
 
 	if (sms->PDU == SMS_Deliver) sms->PDU = SMS_Submit;
@@ -2154,7 +2154,7 @@ static GSM_Error N6510_SaveSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	unsigned char		folderid, folder;
 	GSM_SMSMessageLayout 	Layout;
 	GSM_Error		error;
-	unsigned char req [256] = {
+	unsigned char req [300] = {
 		N6110_FRAME_HEADER, 0x00,
 		0x01,			/* 1 = SIM, 2 = ME 	*/
 		0x02,			/* Folder   		*/
@@ -3525,8 +3525,8 @@ static GSM_Error N6510_GetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
  	if (error != GE_NONE) return error;	
  
  	location = FMStation->Location-1;
-  	if (s->Phone.Data.Priv.N6510.FMStatus[14+location] != location) return GE_EMPTY;
- 	req[4]   = location;
+  	if (s->Phone.Data.Priv.N6510.FMStatus[14+location] == 0xFF) return GE_EMPTY;
+ 	req[4]   = s->Phone.Data.Priv.N6510.FMStatus[14+location];
 
  	smprintf(s, "Getting FM Station %i\n",FMStation->Location);
  	return GSM_WaitFor (s, req, 7, 0x3E, 2, ID_GetFMStation);
@@ -3585,7 +3585,8 @@ static GSM_Error N6510_SetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
 
  	memcpy(setstatus+14,s->Phone.Data.Priv.N6510.FMStatus+14,20);
  	setstatus [14+location] = location;
-
+	
+ 	smprintf(s, "Setting FM status %i\n",FMStation->Location);
  	error = GSM_WaitFor (s, setstatus, 36 , 0x3E, 2, ID_SetFMStation);
  	if (error != GE_NONE) return error;	
 
@@ -5059,8 +5060,8 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	{DCT3DCT4_ReplyCallDivert,	  "\x06",0x03,0x02,ID_Divert		  },
 	{N71_65_ReplyUSSDInfo,		  "\x06",0x03,0x03,ID_IncomingFrame	  },
-	{NONEFUNCTION,			  "\x06",0x03,0x06,ID_IncomingFrame	  },
-	{NONEFUNCTION,			  "\x06",0x03,0x09,ID_IncomingFrame	  },
+	{NoneReply,			  "\x06",0x03,0x06,ID_IncomingFrame	  },
+	{NoneReply,			  "\x06",0x03,0x09,ID_IncomingFrame	  },
 
 	{N6510_ReplyEnterSecurityCode,	  "\x08",0x03,0x08,ID_EnterSecurityCode	  },
 	{N6510_ReplyEnterSecurityCode,	  "\x08",0x03,0x09,ID_EnterSecurityCode	  },
@@ -5071,13 +5072,13 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyLogIntoNetwork,	  "\x0A",0x03,0x02,ID_IncomingFrame	  },
 	{N6510_ReplyGetSignalQuality,	  "\x0A",0x03,0x0C,ID_GetSignalQuality	  },
 	{N6510_ReplyGetIncSignalQuality,  "\x0A",0x03,0x1E,ID_IncomingFrame	  },
-	{NONEFUNCTION,			  "\x0A",0x03,0x20,ID_IncomingFrame	  },
+	{NoneReply,			  "\x0A",0x03,0x20,ID_IncomingFrame	  },
 	{N6510_ReplyGetOperatorLogo,	  "\x0A",0x03,0x24,ID_GetBitmap		  },
 	{N6510_ReplySetOperatorLogo,	  "\x0A",0x03,0x26,ID_SetBitmap		  },
 
-	{NONEFUNCTION,			  "\x0B",0x03,0x01,ID_PlayTone		  },
-	{NONEFUNCTION,			  "\x0B",0x03,0x15,ID_PlayTone		  },
-	{NONEFUNCTION,			  "\x0B",0x03,0x16,ID_PlayTone		  },
+	{NoneReply,			  "\x0B",0x03,0x01,ID_PlayTone		  },
+	{NoneReply,			  "\x0B",0x03,0x15,ID_PlayTone		  },
+	{NoneReply,			  "\x0B",0x03,0x16,ID_PlayTone		  },
 
 	{N71_65_ReplyAddCalendar1,	  "\x13",0x03,0x02,ID_SetCalendarNote	  },
 	{N71_65_ReplyAddCalendar1,	  "\x13",0x03,0x04,ID_SetCalendarNote	  },
@@ -5116,7 +5117,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplySaveSMSMessage,	  "\x14",0x03,0x17,ID_SaveSMSMessage	  },
 	{N6510_ReplyGetSMSStatus,	  "\x14",0x03,0x1a,ID_GetSMSStatus	  },
 
-	{NONEFUNCTION,			  "\x15",0x01,0x31,ID_Reset		  },
+	{NoneReply,			  "\x15",0x01,0x31,ID_Reset		  },
 
 	{N6510_ReplyGetBatteryCharge,	  "\x17",0x03,0x0B,ID_GetBatteryCharge	  },
 
@@ -5153,8 +5154,8 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	{DCT3DCT4_ReplyEnableWAP,	  "\x3f",0x03,0x01,ID_EnableWAP		  },
 	{DCT3DCT4_ReplyEnableWAP,	  "\x3f",0x03,0x02,ID_EnableWAP		  },
-	{NONEFUNCTION,			  "\x3f",0x03,0x04,ID_EnableWAP		  },
-	{NONEFUNCTION,			  "\x3f",0x03,0x05,ID_EnableWAP		  },
+	{NoneReply,			  "\x3f",0x03,0x04,ID_EnableWAP		  },
+	{NoneReply,			  "\x3f",0x03,0x05,ID_EnableWAP		  },
 	{N6510_ReplyGetWAPBookmark,	  "\x3f",0x03,0x07,ID_GetWAPBookmark	  },
 	{N6510_ReplyGetWAPBookmark,	  "\x3f",0x03,0x08,ID_GetWAPBookmark	  },
 	{DCT3DCT4_ReplySetWAPBookmark,	  "\x3f",0x03,0x0A,ID_SetWAPBookmark	  },
@@ -5184,7 +5185,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 #ifdef DEVELOP
 	{N6510_ReplyEnableGPRSAccessPoint,"\x43",0x03,0x06,ID_EnableGPRSPoint	  },
 #endif
-	{NONEFUNCTION,			  "\x43",0x03,0x08,ID_SetGPRSPoint	  },
+	{NoneReply,			  "\x43",0x03,0x08,ID_SetGPRSPoint	  },
 
 	/* 0x4A - voice records */
 
@@ -5212,6 +5213,8 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x33,ID_GetFileInfo	  },
 	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x33,ID_GetFile		  },
 	{N6510_ReplyAddFilePart,	  "\x6D",0x03,0x41,ID_AddFile		  },
+	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x43,ID_AddFile		  },
+	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x43,ID_GetFile		  },
 	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x43,ID_GetFileInfo	  },
 
 	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x01,ID_GetBitmap		  },

@@ -76,7 +76,7 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 		OBEXAddBlock(req, &Current, 0x46, req2, 16);
 	}
 
-#ifdef xxxx
+#ifndef xxxx
 	//disconnect old service
 #else
 	if (s->Phone.Data.Priv.OBEXGEN.Service != 0) return GE_NONE;
@@ -177,7 +177,7 @@ static GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *P
 
 	if (*Pos == 0) {
 		if (!strcmp(File->ID_FullName,"")) {
-#ifdef xxxx
+#ifndef xxxx
 			error = OBEXGEN_Connect(s,OBEX_None);
 #else
 			error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
@@ -261,6 +261,8 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 		s->Phone.Data.File->Buffer = (unsigned char *)realloc(s->Phone.Data.File->Buffer,s->Phone.Data.File->Used);
 		memcpy(s->Phone.Data.File->Buffer+old,msg.Buffer+3,s->Phone.Data.File->Used-old);
 		return GE_NONE;
+	case 0xC3:
+		return GE_NOTSUPPORTED;
 	case 0xC4:
 		smprintf(s,"Not found\n");
 		return GE_SECURITYERROR;
@@ -310,7 +312,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 			File->Folder = false;
 
 			if (File->ID_FullName[0] == 0x00) {
-#ifdef xxxx
+#ifndef xxxx
 				error = OBEXGEN_Connect(s,OBEX_None);
 #else
 				error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
@@ -320,6 +322,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 				EncodeUnicode(File->Name,"one",3);
 	
 				strcpy(req2,"x-obex/capability");
+//				strcpy(req2,"x-obex/object-profile");
 				/* Type block */
 				OBEXAddBlock(req, &Current, 0x42, req2, strlen(req2)+1);
 			} else {
@@ -334,13 +337,13 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 				do {
 					OBEXGEN_FindNextDir(File->ID_FullName, &Pos, req2);
 					smprintf(s,"%s %i %i\n",DecodeUnicodeString(req2),Pos,strlen(File->ID_FullName));
-					if (Pos == strlen(File->ID_FullName)) break;					
+					if (Pos == strlen(File->ID_FullName)) break;
 					smprintf(s,"Changing path down\n");
 					error=OBEXGEN_ChangePath(s, req2, 255);
 					if (error != GE_NONE) return error;
 				} while (1);
 
-				EncodeUnicode(File->Name,"one",3);
+				CopyUnicodeString(File->Name,req2);
 
 				s->Phone.Data.File = File;
 	
@@ -550,11 +553,16 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 			Priv->FileLev = File->Level;
 			free(File->Buffer);
 		} else {
-			File->Used 	    = Priv->Files[Priv->FilesLocationsCurrent-1].Used;
-			File->ModifiedEmpty = Priv->Files[Priv->FilesLocationsCurrent-1].ModifiedEmpty;
+			File->Used 	    	= Priv->Files[Priv->FilesLocationsCurrent-1].Used;
+			File->ModifiedEmpty 	= Priv->Files[Priv->FilesLocationsCurrent-1].ModifiedEmpty;
 			if (!File->ModifiedEmpty) {
 				memcpy(&File->Modified,&Priv->Files[Priv->FilesLocationsCurrent-1].Modified,sizeof(GSM_DateTime));
 			}
+			File->ReadOnly 		= false;
+			File->Protected 	= false;
+			File->Hidden		= false;
+			File->System		= false;
+
 		}
 		return GE_NONE;
 	}
@@ -641,6 +649,7 @@ static GSM_Reply_Function OBEXGENReplyFunctions[] = {
 
 	/* FORBIDDEN block */
 	{OBEXGEN_ReplyChangePath,	"\xC3",0x00,0x00,ID_SetPath			},
+	{OBEXGEN_ReplyGetFilePart,	"\xC3",0x00,0x00,ID_GetFile			},
 
 	/* NOT FOUND block */
 	{OBEXGEN_ReplyGetFilePart,	"\xC4",0x00,0x00,ID_GetFile			},

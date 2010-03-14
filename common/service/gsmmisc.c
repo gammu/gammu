@@ -63,6 +63,7 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 	FILE		*file;
 	struct stat	fileinfo;
 
+	if (FileName[0] == 0x00) return GE_UNKNOWN;
 	file = fopen(FileName,"rb");
 	if (file == NULL) return(GE_CANTOPENFILE);
 

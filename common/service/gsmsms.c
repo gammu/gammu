@@ -739,12 +739,14 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
 			memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer,i*2);
 			*CopiedText 	= i;
 			*CopiedSMSText 	= j;
+			SMS->SMS[SMS->Number].Length += i;
 			break;
 		case GSM_Coding_Unicode:
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2]   = 0;
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2+1] = 0;
 			memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer,Copy*2);
 			*CopiedText = *CopiedSMSText = Copy;
+			SMS->SMS[SMS->Number].Length += Copy;
 			break;
 		case GSM_Coding_8bit:
 			memcpy(SMS->SMS[SMS->Number].Text+SMS->SMS[SMS->Number].Length,Buffer,Copy);
@@ -769,22 +771,19 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 			  int			Class,
 			  unsigned char		ReplaceMessage)
 {
-	int 		j,i,Len,UsedText,CopiedText,CopiedSMSText;
+	int 		j,Len,UsedText,CopiedText,CopiedSMSText;
 	unsigned char 	UDHID;
 	GSM_DateTime 	Date;
 
-	/* Cleaning on the start */
-	for (i=0;i<MAX_MULTI_SMS;i++)
-	{
-		GSM_SetDefaultSMSData(&SMS->SMS[i]);
-		SMS->SMS[i].Class    = Class;
-		SMS->SMS[i].Coding   = Coding;
-		SMS->SMS[i].UDH.Type = UDHType;
-		GSM_EncodeUDHHeader(&SMS->SMS[i].UDH);
-	}
-
 	Len = 0;
 	while(1) {
+		GSM_SetDefaultSMSData(&SMS->SMS[SMS->Number]);
+		SMS->SMS[SMS->Number].Class    = Class;
+		SMS->SMS[SMS->Number].Coding   = Coding;
+
+		SMS->SMS[SMS->Number].UDH.Type = UDHType;
+		GSM_EncodeUDHHeader(&SMS->SMS[SMS->Number].UDH);
+
 		if (Coding == GSM_Coding_8bit) {
 			GSM_AddSMS_Text_UDH(SMS,Coding,MessageBuffer+Len,MessageLength - Len,false,&UsedText,&CopiedText,&CopiedSMSText);
 		} else {
@@ -793,6 +792,8 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 		Len += CopiedText;
 		dprintf("%i %i\n",Len,MessageLength);
 		if (Len == MessageLength) break;
+		if (SMS->Number == MAX_MULTI_SMS) break;
+		SMS->Number++;
 	}
 
 	SMS->Number++;
@@ -801,9 +802,7 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 	GSM_GetCurrentDateTime (&Date);	
 	for (j=0;j<SMS->Number;j++)
 	{
-		SMS->SMS[j].MessageReference 	= 0;
-		SMS->SMS[j].RejectDuplicates 	= false;
-		SMS->SMS[j].ReplaceMessage 	= 0;
+		SMS->SMS[j].UDH.Type 		= UDHType;
 		SMS->SMS[j].UDH.ID8bit 		= UDHID;
 		SMS->SMS[j].UDH.ID16bit		= UDHID + 256 * Date.Hour;
 		SMS->SMS[j].UDH.PartNumber 	= j+1;

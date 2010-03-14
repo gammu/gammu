@@ -386,7 +386,6 @@ begin
   ShowStatistics()
 end;
 
-
 procedure TSendSMSThread.Execute;
 var
   FoundFile,WasSearch,found : Boolean;
@@ -394,13 +393,13 @@ var
   sr                        : TSearchRec;
   FileAttrs,num,retries     : Integer;
   i,j,z                     : word;
-  S,S2                      : String;
+  S                         : String;
+  S2                        : AnsiString;
   F                         : TextFile;
   SendText,Temp,SendNumber  : array[1..5000] of char;
   MultiSMS                  : GSM_MultiSMSMessage;
   error                     : GSM_Error;
   CurrentDate,CurrentTime   : TDateTime;
-  tmp                       : String;
 begin
   error:=GE_UNKNOWN;
   WasSearch:=false;
@@ -565,10 +564,13 @@ begin
           end;
           MultiSMS.SMS[j].Number[i*2+1]:=chr(0);
           MultiSMS.SMS[j].Number[i*2+2]:=chr(0);
+        end;
 
+        for j:=1 to Ord(MultiSMS.Number) do
+        begin
           MainForm.OutgoingSMSListView.Items.Item[MainForm.OutgoingSMSListView.Items.Count-1].SubItems.Strings[3]:=IntToStr(j)+'/'+IntToStr(Ord(MultiSMS.Number));
 
-          //MultiSMS.SMS[j].PDU:=SMS_Deliver;
+          //MultiSMS.SMS[j].PDU:=SMS_Submit;
           //MultiSMS.SMS[j].Folder:=1;
           //MultiSMS.SMS[j].Location:=0;
           //error:=GSM_SaveSMSMessage(GSMDevice[num].DeviceID,@MultiSMS.SMS[j]);
@@ -756,11 +758,11 @@ var
   error       : GSM_Error;
   sms         : GSM_MultiSMSMessage;
   start       : Boolean;
-  F           : TextFile;
-  S4,S3       : string;
+  F,F2        : TextFile;
+  S4,S3,S5    : AnsiString;
   wasnumber   : boolean;
-  KeyPhones   : array[1..200] of string;
-  KeyText     : array[1..200] of string;
+  KeyPhones   : array[1..2000] of string;
+  KeyText     : array[1..2000] of string;
   KeyNum      : integer;
   FoundKey    : boolean;
 begin
@@ -883,7 +885,7 @@ var
 begin
   if (CreateMutex(nil, false, 'GammuGatewayMutex') = 0) or (GetLastError = ERROR_ALREADY_EXISTS) then
   begin
-    if MessageDlg('Another instance of Gammu Gateway active. Do you want to continue ?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then halt;
+    if MessageDlg('Another instance of Gateway active. Do you want to continue ?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then halt;
   end;
 
   ReceivedNum    := 0;
@@ -916,7 +918,7 @@ begin
   MainForm.Show;
 
   GSM_GetGammuVersion(@buffer);
-  AddTextToGatewayLog(i,'Starting gateway, DLL version '+buffer);
+  AddTextToGatewayLog(-1,'Starting gateway, DLL version '+buffer);
   for i:=1 to MODEMNUM do GSMDevice[i]:=TGSMModem.Create;
   RestartAllConnections(@ChangePhoneState,@ChangeSecurityState,@HandleIncomingSMS);
   SendSMSThread:=TSendSMSThread.Create(True);

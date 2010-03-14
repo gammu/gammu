@@ -371,19 +371,6 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len, bool
 			}
 			j++;
 		}
-       		if (ExtraAlphabet!=NULL && !FoundSpecial) {
- 			j = 0;
-        		while (ExtraAlphabet[j] != 0x00 || ExtraAlphabet[j+1] != 0x00 || ExtraAlphabet[j+2] != 0x00) {
-                		if (ExtraAlphabet[j+1] == src[i*2] &&
-				    ExtraAlphabet[j+2] == src[i*2 + 1])
-				{
-                    			dest[current++] = ExtraAlphabet[j];
-                    			FoundSpecial 	= true;
-                    			break;
-                		}
-                		j=j+3;
-            		}
-        	}
 		if (!FoundSpecial) {
 			ret 		= '?';
 			FoundNormal 	= false;
@@ -399,7 +386,20 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len, bool
 				}
 				j++;
 			}
-			if (!FoundNormal) {
+			if (ExtraAlphabet!=NULL && !FoundNormal) {
+				j = 0;
+				while (ExtraAlphabet[j] != 0x00 || ExtraAlphabet[j+1] != 0x00 || ExtraAlphabet[j+2] != 0x00) {
+					if (ExtraAlphabet[j+1] == src[i*2] &&
+					    ExtraAlphabet[j+2] == src[i*2 + 1])
+					{
+						ret		= ExtraAlphabet[j];
+						FoundSpecial	= true;
+						break;
+					}
+					j=j+3;
+				}
+			}
+			if (!FoundNormal && !FoundSpecial) {
 				j = 0;
 				FoundNormal = false;
 				while (ConvertTable[j*4]   != 0x00 ||

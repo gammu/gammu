@@ -718,7 +718,7 @@ static void ListMemoryCategory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext)
+static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool displayudh)
 {
 	switch (sms.PDU) {
 	case SMS_Status_Report:
@@ -837,12 +837,10 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext)
 			if (sms.UDH.Type != UDH_NoUDH) {
 				if (sms.UDH.ID8bit != -1) printmsg(", ID (8 bit) %i",sms.UDH.ID8bit);
 				if (sms.UDH.ID16bit != -1) printmsg(", ID (16 bit) %i",sms.UDH.ID16bit);
-				if (displaytext) {
-					if (sms.UDH.PartNumber != -1 && sms.UDH.AllParts != -1) {
+				if (sms.UDH.PartNumber != -1 && sms.UDH.AllParts != -1) {
+					if (displayudh) {
 						printmsg(", part %i of %i",sms.UDH.PartNumber,sms.UDH.AllParts);
-					}
-				} else {
-					if (sms.UDH.PartNumber != -1 && sms.UDH.AllParts != -1) {
+					} else {
 						printmsg(", %i parts",sms.UDH.AllParts);
 					}
 				}
@@ -866,8 +864,8 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms)
 	GSM_EncodeMultiPartSMSInfo	SMSInfo;
 	GSM_MultiBitmap			Bitmap;
 	GSM_Ringtone			Ringtone;
-	char				Buffer[500];
-	bool				RetVal;
+	char				Buffer[5000];
+	bool				RetVal,udhinfo=true;
 	int				j;
 
 	SMSInfo.Entries[0].Bitmap 	= &Bitmap;
@@ -877,12 +875,20 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms)
 	/* GSM_DecodeMultiPartSMS returns if decoded SMS contenst correctly */
 	RetVal = GSM_DecodeMultiPartSMS(&SMSInfo,&sms);
 
-	if (eachsms && RetVal) {
-		displaysinglesmsinfo(sms.SMS[0],!RetVal);
-		printmsg("\n");
+	if (eachsms) {
+		if (sms.SMS[0].UDH.Type != UDH_NoUDH && sms.SMS[0].UDH.AllParts == sms.Number) udhinfo = false;
+		if (RetVal && !udhinfo) {
+			displaysinglesmsinfo(sms.SMS[0],false,false);
+			printmsg("\n");
+		} else {
+			for (j=0;j<sms.Number;j++) {
+				displaysinglesmsinfo(sms.SMS[j],false,udhinfo);
+				printmsg("\n");
+			}
+		}
 	} else {
 		for (j=0;j<sms.Number;j++) {
-			displaysinglesmsinfo(sms.SMS[j],!RetVal);
+			displaysinglesmsinfo(sms.SMS[j],!RetVal,true);
 			printmsg("\n");
 		}
 	}
@@ -890,17 +896,17 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms)
 		if (SMSInfo.Entries[0].Bitmap != NULL) {
 			switch (SMSInfo.Entries[0].Bitmap->Bitmap[0].Type) {
 			case GSM_CallerLogo:
-				printmsg("Caller logo\n");
+				printmsg("Caller logo\n\n");
 				break;
 			case GSM_OperatorLogo:
-				printmsg("Operator logo for %s network (%s, %s)\n",
+				printmsg("Operator logo for %s network (%s, %s)\n\n",
 					SMSInfo.Entries[0].Bitmap->Bitmap[0].NetworkCode,
 					DecodeUnicodeString2(GSM_GetNetworkName(SMSInfo.Entries[0].Bitmap->Bitmap[0].NetworkCode)),
 					DecodeUnicodeString2(GSM_GetCountryName(SMSInfo.Entries[0].Bitmap->Bitmap[0].NetworkCode)));
 				break;
 			case GSM_PictureImage:
 				printmsg("Picture Image\n");
-				printmsg("Text: \"%s\"\n",DecodeUnicodeString2(SMSInfo.Entries[0].Bitmap->Bitmap[0].Text));
+				printmsg("Text: \"%s\"\n\n",DecodeUnicodeString2(SMSInfo.Entries[0].Bitmap->Bitmap[0].Text));
 				break;
 			default:
 				break;
@@ -5705,7 +5711,7 @@ static void GetFiles(int argc, char *argv[])
 	int			i;
 	FILE			*file;
 	bool			start,newtime = false;
-	unsigned char		buffer[50];
+	unsigned char		buffer[500];
 	struct utimbuf		filedate;
 
 	File.Buffer = NULL;

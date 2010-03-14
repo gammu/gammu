@@ -123,6 +123,11 @@ GSM_Error PHONE_Beep(GSM_StateMachine *s)
 	return s->Phone.Functions->PlayTone(s,255*255,0,false);
 }
 
+GSM_Error NoneReply(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	return GE_NONE;
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

@@ -57,9 +57,9 @@ A. * these things can be done without anything:
      * uploading some things over WAP
      * AT modem emulator
      * DKU-5 driver
+     * Symbian support
      * .... (other)
    * after getting some hardware help:
-     * Symbian support
      * SyncML
      * N3410 Java support
      * N5510 radio/MP3 support
@@ -67,7 +67,8 @@ A. * these things can be done without anything:
 -------------------------------------------------------------------------------
 Q. Where to get latest versions and support ?
 
-A. Latest versions are on www.mwiacek.com.
+A. Latest versions are on www.mwiacek.com. Michal Cihar prepared mirror
+   available under http://cihar.liten.cz/gammu/zips/
 
    For support contact Marcin Wiacek (currently marcin@mwiacek.com, DO NOT USE
    marcin-wiacek@topnet.pl). You can also subscribe mailing list (see
@@ -78,9 +79,6 @@ A. Latest versions are on www.mwiacek.com.
 
    TIP: If you want to have only general info about new versions, you can
         subscibe http://freshmeat.net/projects/gammu/ annoucements.
-
-   NOTE: Michal Cihar prepared mirror available under
-         http://cihar.liten.cz/gammu/zips/
 -------------------------------------------------------------------------------
 Q. How to compile it ?
 
@@ -345,7 +343,9 @@ A. 1.Nokia DCT3 (3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|
 
    8.OBEX devices
 
-     Tested with Nokia and SonyEricsson. Works according to device capabilities
+     Tested with Nokia Series40/Series60 and SonyEricsson. Works according to
+     device capabilities (can be folder browsing/getting/uploading files/
+     uploading files to Inbox)
 -------------------------------------------------------------------------------
 Q. How to report bugs ?
 

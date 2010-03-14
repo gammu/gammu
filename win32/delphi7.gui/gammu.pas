@@ -346,4 +346,5 @@ begin
   if (GSM_GetStructureSize(5) <> sizeof(gsm_datetime))    then application.MessageBox('gsm_datetime','',0);
   if (GSM_GetStructureSize(6) <> sizeof(integer))         then application.MessageBox('int','',0);
   if (GSM_GetStructureSize(7) <> sizeof(gsm_networkinfo)) then application.MessageBox('gsm_networinfo','',0);
+  if (GSM_GetStructureSize(8) <> sizeof(gsm_UDH))   then application.MessageBox('gsm_udhtype','',0);
 end.

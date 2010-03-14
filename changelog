@@ -22,6 +22,31 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20030908 - 0,83,0,0
+* new functionality:
+  * 6220, 8910i ID                                                      (Intra)
+  * can read phone tests results from DCT4                        (GriffinTeam)
+  * config matrix added for 3300/6800/7250/7250i
+  * when use "make installlib", there is created directory with
+    Gammu include files
+    
+* fixes and improvements:
+  * getting files in DCT4                                           (Christian)
+  * getallsms and geteachsms output fixes                            (Jomin Yu)
+  * FM stations from DCT4 are backup correctly, when there is       (Didi Dada)
+    one empty entry inside
+  * OBEX module (both irda and bluetooth):
+    * compatible with Inbox in Series60 (3650)
+    * doesn't display file attributes with --getfilesystem
+    * uses original filename with --getfiles 
+  * debug is much more usable for unknown/incorrect frames. They're displayed
+    too, when GSM_ReadDevice is used only
+  * removed some overflow possibility with dll
+  * * GSM_PHONEBOOK_TEXT_LENGTH	= 200                            (Michal Cihar)
+    * EncodeDefault works differently
+  * international SMSC/Phonebook number without "+" is changed     (Jonathan L)
+    to number with "+" (AT mode, Sony Ericsson)
+
 20030815 - 0,82,0,0
 * new functionality:
   * getting/setting file date/time with DCT4 filesystem done also in Linux

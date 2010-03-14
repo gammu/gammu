@@ -2600,9 +2600,9 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{N6110_ReplyCallInfo,		  "\x01",0x03,0x2B,ID_SplitCall		 },
 	{N6110_ReplyCallInfo,		  "\x01",0x03,0x2B,ID_IncomingFrame	 },
 	{N6110_ReplySendDTMF,		  "\x01",0x03,0x40,ID_SendDTMF		 },
-	{NONEFUNCTION,			  "\x01",0x03,0x40,ID_DialVoice		 },
-	{NONEFUNCTION,			  "\x01",0x03,0x40,ID_IncomingFrame	 },
-	{NONEFUNCTION,			  "\x01",0x03,0x43,ID_AnswerCall	 },
+	{NoneReply,			  "\x01",0x03,0x40,ID_DialVoice		 },
+	{NoneReply,			  "\x01",0x03,0x40,ID_IncomingFrame	 },
+	{NoneReply,			  "\x01",0x03,0x43,ID_AnswerCall	 },
 	{N6110_ReplySendDTMF,		  "\x01",0x03,0x51,ID_SendDTMF		 },
 
 	{DCT3_ReplySendSMSMessage,	  "\x02",0x03,0x02,ID_IncomingFrame	 },

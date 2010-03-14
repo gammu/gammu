@@ -1440,7 +1440,7 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{N71_65_ReplyWritePhonebook,	  "\x03",0x03,0x0C,ID_SetMemory		  },
 
 	{N71_65_ReplyUSSDInfo,		  "\x06",0x03,0x03,ID_IncomingFrame	  },
-	{NONEFUNCTION,			  "\x06",0x03,0x06,ID_IncomingFrame	  },
+	{NoneReply,			  "\x06",0x03,0x06,ID_IncomingFrame	  },
 
 	{DCT3_ReplySIMLogin,		  "\x09",0x03,0x80,ID_IncomingFrame	  },
 	{DCT3_ReplySIMLogout,		  "\x09",0x03,0x81,ID_IncomingFrame	  },
@@ -1453,7 +1453,7 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{N71_92_ReplyGetSignalQuality,	  "\x0A",0x03,0x82,ID_GetSignalQuality	  },
 	{N7110_ReplySetOperatorLogo,	  "\x0A",0x03,0xA4,ID_SetBitmap		  },
 	{N7110_ReplyClearOperatorLogo,	  "\x0A",0x03,0xB0,ID_SetBitmap		  },
-	{NONEFUNCTION,			  "\x0A",0x03,0xB5,ID_IncomingFrame	  },
+	{NoneReply,			  "\x0A",0x03,0xB5,ID_IncomingFrame	  },
 
 #ifdef DEBUG
 	{N71_65_ReplyAddCalendar1,	  "\x13",0x03,0x02,ID_SetCalendarNote	  },/*method 1*/
@@ -1534,7 +1534,7 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{NOKIA_ReplyGetPhoneString,	  "\x40",0x02,0xCA,ID_GetProductCode	  },
 	{NOKIA_ReplyGetPhoneString,	  "\x40",0x02,0xCC,ID_GetManufactureMonth },
 	{NOKIA_ReplyGetPhoneString,	  "\x40",0x02,0xCC,ID_GetOriginalIMEI	  },
-	{NONEFUNCTION,			  "\x40",0x02,0xFF,ID_IncomingFrame	  },
+	{NoneReply,			  "\x40",0x02,0xFF,ID_IncomingFrame	  },
 
 	{N71_92_ReplyPhoneSetting,	  "\x7a",0x04,0x02,ID_GetBitmap		  },
 	{N71_92_ReplyPhoneSetting,	  "\x7a",0x04,0x02,ID_SetBitmap		  },

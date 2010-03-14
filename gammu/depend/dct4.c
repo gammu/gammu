@@ -51,6 +51,20 @@ static void CheckDCT4()
 	}
 }
 
+static bool answer_yes2(char *text)
+{
+    	int         len;
+    	char        ans[99];
+
+	while (1) {
+		printf("%s (yes/no) ? ",text);
+		len=GetLine(stdin, ans, 99);
+		if (len==-1) exit(-1);
+		if (mystrncasecmp(ans, "yes",0)) return true;
+		if (mystrncasecmp(ans, "no" ,0)) return false;
+	}
+}
+
 /* ------------------- functions ------------------------------------------- */
 
 static DCT4_Feature DCT4Features[] = {
@@ -87,52 +101,76 @@ static DCT4_Feature DCT4Features[] = {
 };
 
 static DCT4_Phone_Features DCT4PhoneFeatures[] = {
-/*NHM-8*/ {"3510",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},
+/*3300*/ {"NEM-1",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
+			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
+			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
+			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
+			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
+		/*MORE*/ {0,0}}},
+/*3510*/ {"NHM-8",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},
 			 {DCT4_GAMES_WAP_DOWNLOAD,7},{DCT4_GAMES_SCORE_SEND,8},
 			 {DCT4_GAMES_URL_CHECK,9},{DCT4_GPRS_PCCH,13},
 			 {DCT4_GEA1,15},{DCT4_ALWAYS_ONLINE,18},{0,0}}},
-/*RH-9*/  {"3510i",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,4},{DCT4_GPRS_PCCH,9},
+/*3510i*/{"RH-9",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,4},{DCT4_GPRS_PCCH,9},
  			 {DCT4_DISPLAY_PHONE_NAME,14},{DCT4_WAP_GOTO_MENU,15},
 			 {DCT4_WAP_SETTINGS_MENU,16},{DCT4_SERVICES_GAMES_APP_GALLERY,19},
 			 {DCT4_DISPLAY_WAP_PROFILE,25},{0,0}}},
-/*NPM-6*/ {"5100",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
+/*5100*/ {"NPM-6",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
 			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
 			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
 			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
 			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
 			 {0,0}}},
-/*NPL-2*/ {"6100",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
+/*6100*/ {"NPL-2",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
 			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
 			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
 			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
 			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
 			 {0,0}}},
-/*NPE-4*/ {"6310",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
+/*6310*/ {"NPE-4",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
 			 {DCT4_GAMES_SCORE_SEND,8},{DCT4_GAMES_URL_CHECK,9},{DCT4_BLUETOOTH_MENU,10},
 			 {DCT4_GPRS_PCCH,13},{DCT4_GEA1,15},{DCT4_ALWAYS_ONLINE,18},{0,0}}},
-/*NPL-1*/ {"6310i",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
+/*6310i*/{"NPL-1",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
 			 {DCT4_GAMES_SCORE_SEND,8},{DCT4_GAMES_URL_CHECK,9},
 			 {DCT4_BLUETOOTH_MENU,10},{DCT4_USE_PREF_SIM_NET,11},
 			 {DCT4_GPRS_PCCH,13},{DCT4_GEA1,15},{DCT4_EOTD,16},
 			 {DCT4_ALWAYS_ONLINE,17},{DCT4_JAVA_GAMES_MENU,18},
       			 {DCT4_WAP_BOOKMARKS_MENU,20},{DCT4_WAP_SETTINGS_MENU,21},
 			 {DCT4_WAP_PUSH,28},{DCT4_WAP_GOTO_MENU,29},{0,0}}},
-/*NPM-9*/ {"6510",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
+/*6510*/ {"NPM-9",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
 			 {DCT4_GAMES_SCORE_SEND,8},{DCT4_GAMES_URL_CHECK,9},
 			 {DCT4_GPRS_PCCH,13},{DCT4_GEA1,15},{DCT4_ALWAYS_ONLINE,18},{0,0}}},
-/*NHL-4U*/{"6610",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
+/*6610*/ {"NHL-4U",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
 			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
 			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
 			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
 			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
 			 {0,0}}},
-/*NHL-4*/ {"7210",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
+/*6800*/ {"NHL-6",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
+			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
+			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
+			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
+			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
+		/*MORE*/ {0,0}}},
+/*7210*/ {"NHL-4",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
 			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
 			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
 			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
 			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
 			 {0,0}}},
-/*NHM-7*/ {"8310",	{{DCT4_ALS,1},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
+/*7250*/ {"NHL-4J",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
+			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
+			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
+			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
+			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
+			 {0,0}}},
+/*7250i*/{"NHL-4JX",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
+			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
+			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
+			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
+			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
+		/*MORE*/ {0,0}}},
+/*8310*/{"NHM-7",	{{DCT4_ALS,1},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
 			 {DCT4_GAMES_SCORE_SEND,8},{DCT4_GAMES_URL_CHECK,9},{DCT4_GPRS_PCCH,13},
 			 {DCT4_ALWAYS_ONLINE,18},{0,0}}},
 	{"",		{{0,0}}}
@@ -156,7 +194,7 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
 	while (DCT4PhoneFeatures[i].Model[0] != 0x00) {
-		if (!strcmp(DCT4PhoneFeatures[i].Model,s.Phone.Data.ModelInfo->model)) {
+		if (!strcmp(DCT4PhoneFeatures[i].Model,s.Phone.Data.Model)) {
 			j = 0;
 			while (DCT4PhoneFeatures[i].Features[j].Name != 0x00) {
 				z = 0;
@@ -188,19 +226,112 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 	Print_Error(error);
 }
 
+DCT4_Phone_Tests DCT4Tests;
+
+static GSM_Error DCT4_ReplyTestsNames(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	int i,pos;
+
+	DCT4Tests.Num   = msg.Buffer[5];
+	pos 		= 6;
+
+	smprintf(s,"%i names for phone tests received\n",msg.Buffer[5]);
+	for (i=0;i<msg.Buffer[5];i++) {
+		strcpy(DCT4Tests.Tests[i].Name,msg.Buffer+pos+4);
+		DCT4Tests.Tests[i].ID = msg.Buffer[pos+2];
+		smprintf(s,"%x.\"%s\"\n",DCT4Tests.Tests[i].ID,DCT4Tests.Tests[i].Name);
+		pos+=msg.Buffer[pos+1];
+	}
+
+	return GE_NONE;
+}
+
+static GSM_Error DCT4_ReplyTestsStartup(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	int 	 i,pos,j;
+	bool	 found;
+
+	pos = 10;
+
+	for (i=0;i<msg.Buffer[8];i++) {
+		found = false;
+		for (j=0;j<DCT4Tests.Num;j++) {
+			if (DCT4Tests.Tests[j].ID == msg.Buffer[pos]) {
+				DCT4Tests.Tests[j].Startup 	= true;
+				found 				= true;
+				break;
+			}
+		}
+		if (!found) printf("%x ",msg.Buffer[pos]);
+		pos++;
+	}
+
+	return GE_NONE;
+}
+
+static GSM_Error DCT4_ReplyTestsStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	int i,pos,j;
+
+	pos = 6;
+
+	smprintf(s,"%i status entries for phone tests received\n",msg.Buffer[5]);
+	for (i=0;i<msg.Buffer[5];i++) {
+		for (j=0;j<DCT4Tests.Num;j++) {
+			if (DCT4Tests.Tests[j].ID == msg.Buffer[pos+2]) {
+				printf("\"%40s\" : ",DCT4Tests.Tests[j].Name);
+				switch(msg.Buffer[pos+3]) {
+					case 0x00: printf("Passed"); 		break;
+					case 0x01: printf("Fail");   		break;
+					case 0x03: printf("Not executed"); 	break;
+					case 0x0D: printf("Timeout");		break;
+					default  : printf("Unknown (%x)",msg.Buffer[pos+3]);
+				}
+				if (DCT4Tests.Tests[j].Startup) printf(" (startup)");
+				printf("\n");				
+				break;
+			}
+		}
+		pos+=msg.Buffer[pos+1];
+	}
+
+	return GE_NONE;
+}
+
 void DCT4tests(int argc, char *argv[])
 {
-	unsigned char buffer[6]  = {0x00,0x06,0x04,0x00,0x03,0x00};
+	int j;
+	unsigned char GetDoneST[6]    = {0x00, 0x08, 0x01, 0x04, 0x01, 0x00};
+	unsigned char GetDoneST2[6]   = {0x00, 0x08, 0x02, 0x04, 0x02, 0x00};
+	unsigned char GetNames[6]     = {0x00, 0x08, 0x03, 0x06, 0x03, 0x00};
+	unsigned char GetStatus[6]    = {0x00, 0x08, 0x04, 0x02, 0x03, 0x00}; 
 
-#ifndef DEBUG
-	return;
-#endif
+	unsigned char RunALL[6]       = {0x00, 0x06, 0x04, 0x00, 0x03, 0x00};
+
+//	unsigned char GetID[6]        = {0x00, 0x08, 0x00, 0x04, 0x03, 0x00};//tests ID
 
 	if (CheckDCT4Only()!=GE_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
-	error = s.Protocol.Functions->WriteMessage(&s, buffer, 6, 0x35);
+	if (answer_yes2("Run all tests now ?")) {
+		error=GSM_WaitFor (&s, RunALL, 6, 0x35, 4, ID_User1);
+		Print_Error(error);
+	}
+
+	error=GSM_WaitFor (&s, GetNames, 6, 0x35, 4, ID_User1);
+	Print_Error(error);
+
+	for (j=0;j<DCT4Tests.Num;j++) DCT4Tests.Tests[j].Startup = false;
+
+	error=GSM_WaitFor (&s, GetDoneST, 6, 0x35, 4, ID_User3);
+	Print_Error(error);
+
+	error=GSM_WaitFor (&s, GetDoneST2, 6, 0x35, 4, ID_User3);
+	Print_Error(error);
+
+	error=GSM_WaitFor (&s, GetStatus, 6, 0x35, 4, ID_User2);
+	Print_Error(error);
 }
 
 static GSM_Error DCT4_ReplyVibra(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -255,20 +386,6 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 	Print_Error(error);
 
 	GSM_Terminate();
-}
-
-static bool answer_yes2(char *text)
-{
-    	int         len;
-    	char        ans[99];
-
-	while (1) {
-		printf("%s (yes/no) ? ",text);
-		len=GetLine(stdin, ans, 99);
-		if (len==-1) exit(-1);
-		if (mystrncasecmp(ans, "yes",0)) return true;
-		if (mystrncasecmp(ans, "no" ,0)) return false;
-	}
 }
 
 static GSM_Error DCT4_ReplyResetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -659,6 +776,11 @@ static GSM_Reply_Function UserReplyFunctions4[] = {
 	{DCT4_ReplyGetT9,		"\x23",0x03,0x05,ID_User3	},
 	{DCT4_ReplyGetVoiceRecord,	"\x23",0x03,0x05,ID_User4	},
 	{DCT4_ReplyGetVoiceRecord,	"\x23",0x03,0x0D,ID_User4	},
+
+	{DCT4_ReplyTestsStartup,	"\x35",0x02,0x01,ID_User3	},
+	{DCT4_ReplyTestsStartup,	"\x35",0x02,0x02,ID_User3	},
+	{DCT4_ReplyTestsNames,		"\x35",0x02,0x03,ID_User1	},
+	{DCT4_ReplyTestsStatus,		"\x35",0x02,0x04,ID_User2	},
 
 	{DCT4_ReplyGetVoiceRecord,	"\x4A",0x03,0x31,ID_User4	},
 

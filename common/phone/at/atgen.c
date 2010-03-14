@@ -1519,17 +1519,18 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "SMSC info received\n");
+
 		current = 0;
 		while (msg.Buffer[current]!='"') current++;
+
 		/* SMSC number */
 		/* FIXME: support for all formats */
 		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
-
 		/* 
 		 * Some phones return this as unicode encoded when they are
 		 * switched to UCS2 mode, so we try to solve this correctly.
 		 */
-		len = strlen(buffer + 1) - 1;
+		len 		= strlen(buffer + 1) - 1;
 		buffer[len + 1] = 0;
 		if ((len > 20) && (len % 4 == 0) && (strchr(buffer + 1, '+') == NULL)) {
 			/* This is probably unicode encoded number */
@@ -1537,11 +1538,23 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		} else  {
 			EncodeUnicode(SMSC->Number,buffer + 1,len);
 		}
-			
 		smprintf(s, "Number: \"%s\"\n",DecodeUnicodeString(SMSC->Number));
+
 		/* Format of SMSC number */
 		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
-		SMSC->Format = GSMF_Text;
+		smprintf(s, "Format %s\n",buffer);
+		/* International number */
+		if (!strcmp(buffer,"145")) {
+			sprintf(buffer+1,"%s",DecodeUnicodeString(SMSC->Number));
+			if (strlen(buffer+1)!=0 && buffer[1] != '+') {
+				/* Sony Ericsson issue */
+				/* International number is without + */
+				buffer[0] = '+';
+				EncodeUnicode(SMSC->Number,buffer,strlen(buffer));
+			}
+		}
+		
+		SMSC->Format 		= GSMF_Text;
 		SMSC->Validity.VPF	= GSM_RelativeFormat;
 		SMSC->Validity.Relative	= GSMV_Max_Time;
 		SMSC->Name[0]		= 0;
@@ -1978,6 +1991,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		if (Priv->Lines.numbers[4]==0) return GE_EMPTY;
 		current = 0;
 		while (msg.Buffer[current]!='"') current++;
+
 		/* Number */
 		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
  		smprintf(s, "Number: %s\n",buffer);
@@ -1987,6 +2001,17 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Number format */
 		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
  		smprintf(s, "Number format: %s\n",buffer);
+		/* International number */
+		if (!strcmp(buffer,"145")) {
+			sprintf(buffer+1,"%s",DecodeUnicodeString(Memory->Entries[0].Text));
+			if (strlen(buffer+1)!=0 && buffer[1] != '+') {
+				/* Sony Ericsson issue */
+				/* International number is without + */
+				buffer[0] = '+';
+				EncodeUnicode(Memory->Entries[0].Text,buffer,strlen(buffer));
+			}
+		}
+
 		/* Name */
 		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
  		smprintf(s, "Name text: %s\n",buffer);

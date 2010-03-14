@@ -333,6 +333,7 @@ echo "
   Shared .so library                            - $libdir
   Docs and examples                             - $DOC_DIR
   Localisation files                            - $LOCALE_DIR
+  Include files                                 - $includedir/gammu
   Binaries                                      - $bindir
   RPM making directory                          - $RPM_DIR
   Temporary directory                           - $TEMP_DIR

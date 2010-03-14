@@ -55,6 +55,16 @@ typedef struct {
 	} Features[25];
 } DCT4_Phone_Features;
 
+typedef struct {
+	struct {
+		char			Name[100];
+		unsigned char		ID;
+		unsigned char		Value;
+		bool			Startup;
+	} Tests[50];
+	int				Num;
+} DCT4_Phone_Tests;
+
 /* ------------------------------------------------------------------------- */
 
 /* How should editor hadle tabs in this file? Add editor commands here.
