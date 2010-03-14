@@ -1,4 +1,4 @@
-ChangeLog for Gammu project (www.gammu.org, www.mwiacek.com)
+ChangeLog for Gammu project (www.gammu.org)
 Few last versions (the highest) will be described more detailed, older less.
 
 In brackets names of people, who told about error/problem or helped in fixing
@@ -6,7 +6,7 @@ or inspired me to make it.
 
 This software was sponsored (in time order) by:
  1. 2002-2006 Tomasz Motylewski
- 2. 2002-2006 Ondrej Rybin (http://business.nabit.cz)
+ 2. 2002-2007 Ondrej Rybin (http://business.nabit.cz)
               * SMS service(s) and gateway(s)
  3. 2003-2004 Multi-COM
  4. 2003-2004 Tom Nelson (www.pocketderelict.com)
@@ -45,6 +45,23 @@ For additionals materials and links to them see readme.txt
 [+] New functionality
 [*] Changes in existing functionality
 [-] Fixed error
+
+20070119 - 1.09.16
+
+There was changed project leader. After few years
+Marcin Wiacek (www.mwiacek.com) decided to give free hand for
+Michal Cihar (www.cihar.com) for making new releases.
+
+It was forced by many reasons - for example Marcin had less and
+less time for project (everything is described in Marcin's blog
+on www.gammu.org). He decided, that Gammu will be of course
+still supported from his side, but currently all Marcin's patches
+will be sent to Michal for applying. We hope, that this will be
+very good for project and it will be extended much faster than
+it was since few releases.
+
+There will be changed some projects links soon (for example RSS
+channel). See www.gammu.org for more details.
 
 20070110 - 1.09.15
 [-] * SMSC reported wrong on N6280                        (BT 44, Michal Cihar)
