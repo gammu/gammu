@@ -27,7 +27,7 @@ typedef struct {
 	char			DateTime	[200];
 	GSM_PhonebookEntry	*PhonePhonebook	[GSM_BACKUP_MAX_PHONEPHONEBOOK + 1];
 	GSM_PhonebookEntry	*SIMPhonebook	[GSM_BACKUP_MAX_SIMPHONEBOOK + 1];
-	GSM_CalendarNote	*Calendar	[GSM_BACKUP_MAX_CALENDAR + 1];
+	GSM_CalendarEntry	*Calendar	[GSM_BACKUP_MAX_CALENDAR + 1];
 	GSM_Bitmap		*CallerLogos	[GSM_BACKUP_MAX_CALLER + 1];
 	GSM_SMSC		*SMSC		[GSM_BACKUP_MAX_SMSC + 1];
 	GSM_WAPBookmark		*WAPBookmark	[GSM_BACKUP_MAX_WAPBOOKMARK + 1];

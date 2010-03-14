@@ -4,10 +4,11 @@
 
 DIALOG_SIZE="7 70"
 MENU_SIZE="0 0 0"
+INPUT_SIZE="0 0"
 FILE_SIZE="20 60"
 CONFIG=~/.gammurc
 NAME="Gammu configurator"
-VERSION="0.1"
+VERSION="0.2"
 COPYRIGHT="Copyright (C) 2003 Michal Cihar <cihar at email dot cz>"
 FORCE=0
 
@@ -106,7 +107,13 @@ mainmenu() {
 }
 
 editP() {
-    if ( dialog --fselect "${PORT:-$D_PORT}" $FILE_SIZE 2>"$TEMPFILE" ) ; then
+    dialog --fselect "${PORT:-$D_PORT}" $FILE_SIZE 2>"$TEMPFILE"
+    err=$?
+    if [ $err = 255 ] ; then
+        if ( dialog --inputbox "Enter phone port" $INPUT_SIZE "${PORT:-$D_PORT}" 2>"$TEMPFILE" ) ; then
+            PORT=`cat "$TEMPFILE"`
+        fi
+    elif [ $err = 0] ; then
         PORT=`cat "$TEMPFILE"`
     fi
 }
@@ -186,7 +193,13 @@ editD() {
 }
 
 editF() {
-    if ( dialog --fselect "${LOGFILE:-$D_LOGFILE}" $FILE_SIZE 2>"$TEMPFILE" ) ; then
+    dialog --fselect "${LOGFILE:-$D_LOGFILE}" $FILE_SIZE 2>"$TEMPFILE"
+    err=$?
+    if [ $err = 255 ] ; then
+        if ( dialog --inputbox "Enter log file" $INPUT_SIZE "${LOGFILE:-$D_LOG_FILE}" 2>"$TEMPFILE" ) ; then
+            LOGFILE=`cat "$TEMPFILE"`
+        fi
+    elif [ $err = 0] ; then
         LOGFILE=`cat "$TEMPFILE"`
     fi
 }
@@ -210,8 +223,14 @@ editL() {
 }
 
 editG() {
-    if ( dialog --fselect "${GAMMULOC:-${D_GAMMULOC:-/}}" $FILE_SIZE 2>"$TEMPFILE" ) ; then
-        GAMMULOC=`cat "$TEMPFILE"`
+    dialog --fselect "${GAMMULOC:-${D_GAMMULOC:-/}}" $FILE_SIZE 2>"$TEMPFILE"
+    err=$?
+    if [ $err = 255 ] ; then
+        if ( dialog --inputbox "Enter localisation file" $INPUT_SIZE "${GAMMULOC:-${D_GAMMULOC:-/}}" 2>"$TEMPFILE" ) ; then
+            LOGFILE=`cat "$TEMPFILE"`
+        fi
+    elif [ $err = 0] ; then
+        LOGFILE=`cat "$TEMPFILE"`
     fi
 }
 

@@ -316,7 +316,12 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_Phone_Da
 		}
 	case 0x6F:
 		dprintf("SMS message info received\n");
-		CopyUnicodeString(Data->GetSMSMessage->SMS[0].Name,msg.Buffer+43);
+		if (msg.Length == 43) {
+			Data->GetSMSMessage->SMS[0].Name[0] = 0;
+			Data->GetSMSMessage->SMS[0].Name[1] = 0;
+		} else {
+			CopyUnicodeString(Data->GetSMSMessage->SMS[0].Name,msg.Buffer+43);
+		}
 		dprintf("Name: \"%s\"\n",DecodeUnicodeString(Data->GetSMSMessage->SMS[0].Name));
 		return GE_NONE;		
 	}
@@ -1072,31 +1077,6 @@ static GSM_Error N7110_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *st
 	return GE_NONE;
 }
 
-static GSM_Error N7110_ReplyGetCalendarInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
-{
-	return N71_65_ReplyGetCalendarInfo(msg, Data, User, &Data->Priv.N7110.LastCalendar);
-}
-
-static GSM_Error N7110_GetCalendarNote(GSM_StateMachine *s, GSM_CalendarNote *Note, bool start)
-{
-	return N71_65_GetCalendarNote(s,Note,start,&s->Phone.Data.Priv.N7110.LastCalendar);
-}
-
-static GSM_Error N7110_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarNote *Note)
-{
-	return N71_65_DelCalendarNote(s, Note,&s->Phone.Data.Priv.N7110.LastCalendar);
-}
-
-static GSM_Error N7110_ReplyGetCalendarNotePos(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
-{
-	return N71_65_ReplyGetCalendarNotePos(msg, Data, User,&Data->Priv.N7110.FirstCalendarPos);
-}
-
-static GSM_Error N7110_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarNote *Note)
-{
-	return N71_65_SetCalendarNote(s, Note, NULL);
-}
-
 static GSM_Error N7110_ReplyGetProfileFeature(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	switch (msg.Buffer[3]) {
@@ -1274,9 +1254,34 @@ static GSM_Error N7110_Initialise (GSM_StateMachine *s)
 	return GE_NONE;
 }
 
-static GSM_Error N7110_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarNote *Note, bool start)
+/* Old method 1 for accessing calendar */
+static GSM_Error N7110_ReplyGetCalendarInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
-	return N71_65_GetNextCalendarNote(s,Note,start,&s->Phone.Data.Priv.N7110.LastCalendarYear,&s->Phone.Data.Priv.N7110.LastCalendarPos);
+	return N71_65_ReplyGetCalendarInfo(msg, Data, User, &Data->Priv.N7110.LastCalendar);
+}
+
+/* Old method 1 for accessing calendar */
+static GSM_Error N7110_ReplyGetCalendarNotePos(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+	return N71_65_ReplyGetCalendarNotePos(msg, Data, User,&Data->Priv.N7110.FirstCalendarPos);
+}
+
+static GSM_Error N7110_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, bool start)
+{
+	return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N7110.LastCalendar,&s->Phone.Data.Priv.N7110.LastCalendarYear,&s->Phone.Data.Priv.N7110.LastCalendarPos);
+//	return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N7110.LastCalendarYear,&s->Phone.Data.Priv.N7110.LastCalendarPos);
+}
+
+static GSM_Error N7110_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+{
+//	return N71_65_AddCalendar1(s, Note, NULL);
+	return N71_65_AddCalendar2(s,Note);
+}
+
+static GSM_Error N7110_ReplyGetNetworkInfoError(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+	dprintf("Probably means no PIN\n");
+	return GE_SECURITYERROR;
 }
 
 static GSM_Reply_Function N7110ReplyFunctions[] = {
@@ -1314,19 +1319,21 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_GetNetworkInfo	},
 	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_GetBitmap		},
 	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_IncomingFrame	},
+	{N7110_ReplyGetNetworkInfoError,"\x0A",0x03,0x72,ID_GetNetworkInfo	},
 	{N71_92_ReplyGetNetworkLevel,	"\x0A",0x03,0x82,ID_GetNetworkLevel	},
 	{N7110_ReplySetOperatorLogo,	"\x0A",0x03,0xA4,ID_SetBitmap		},
 	{N7110_ReplyClearOperatorLogo,	"\x0A",0x03,0xB0,ID_SetBitmap		},
 
-	{N71_65_ReplySetCalendarNote,	"\x13",0x03,0x02,ID_SetCalendarNote	},
-	{N71_65_ReplySetCalendarNote,	"\x13",0x03,0x04,ID_SetCalendarNote	},
-	{N71_65_ReplySetCalendarNote,	"\x13",0x03,0x06,ID_SetCalendarNote	},
-	{N71_65_ReplySetCalendarNote,	"\x13",0x03,0x08,ID_SetCalendarNote	},
-	{N71_65_ReplyDeleteCalendarNote,"\x13",0x03,0x0C,ID_DeleteCalendarNote	},
-	{N71_65_ReplyGetCalendarNote,	"\x13",0x03,0x1A,ID_GetCalendarNote	},
-	{N7110_ReplyGetCalendarNotePos,	"\x13",0x03,0x32,ID_GetCalendarNotePos	},
-	{N7110_ReplyGetCalendarInfo,	"\x13",0x03,0x3B,ID_GetCalendarNotesInfo},
-	{N71_65_ReplyGetNextNote,	"\x13",0x03,0x3F,ID_GetCalendarNote	},
+	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x02,ID_SetCalendarNote	},/*method 1*/
+	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x04,ID_SetCalendarNote	},/*method 1*/
+	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x06,ID_SetCalendarNote	},/*method 1*/
+	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x08,ID_SetCalendarNote	},/*method 1*/
+	{N71_65_ReplyDelCalendar,	"\x13",0x03,0x0C,ID_DeleteCalendarNote	},
+	{N71_65_ReplyGetNextCalendar1,	"\x13",0x03,0x1A,ID_GetCalendarNote	},/*method 1*/
+	{N7110_ReplyGetCalendarNotePos,	"\x13",0x03,0x32,ID_GetCalendarNotePos	},/*method 1*/
+	{N7110_ReplyGetCalendarInfo,	"\x13",0x03,0x3B,ID_GetCalendarNotesInfo},/*method 1*/
+	{N71_65_ReplyGetNextCalendar2,	"\x13",0x03,0x3F,ID_GetCalendarNote	},/*method 2*/
+	{N71_65_ReplyAddCalendar2,	"\x13",0x03,0x41,ID_SetCalendarNote	},/*method 2*/
 
 	{N7110_ReplySaveSMSMessage,	"\x14",0x03,0x05,ID_SaveSMSMessage	},
 	{N7110_ReplySaveSMSMessage,	"\x14",0x03,0x06,ID_SaveSMSMessage	},
@@ -1429,7 +1436,6 @@ GSM_Phone_Functions N7110Phone = {
 	DCT3_AnswerCall,
 	DCT3_CancelCall,
 	N7110_GetRingtone,
-	N7110_GetCalendarNote,
 	DCT3DCT4_GetWAPBookmark,
 	N7110_GetBitmap,
 	N7110_SetRingtone,
@@ -1440,8 +1446,6 @@ GSM_Phone_Functions N7110Phone = {
 	N7110_SetBitmap,
 	N7110_SetMemory,
 	N7110_DeleteSMS,
-	N7110_DelCalendarNote,
-	N7110_SetCalendarNote,
 	DCT3_SetWAPBookmark,
 	DCT3DCT4_DeleteWAPBookmark,
 	DCT3_GetWAPSettings,
@@ -1471,7 +1475,9 @@ GSM_Phone_Functions N7110Phone = {
 	N7110_SetProfile,
 	NOTSUPPORTED,		/*	GetSIMIMSI		*/
 	NONEFUNCTION,		/*	SetIncomingCall		*/
-    	N7110_GetNextCalendarNote
+    	N7110_GetNextCalendar,
+	N71_65_DelCalendar,
+	N7110_AddCalendar
 };
 
 #endif

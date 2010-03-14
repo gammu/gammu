@@ -860,7 +860,7 @@ bool mywstrncasecmp(unsigned char *a, unsigned char *b, int num)
 		}
 		wc  = a[i*2+1] | (a[i*2] << 8);
 		wc2 = b[i*2+1] | (b[i*2] << 8);
-		if (mytowlower(((wint_t)wc)) != mytowlower(((wint_t)wc2))) return false;
+		if (mytowlower(wc) != mytowlower(wc2)) return false;
 		i++;
 		if (num == i) return true;
 	}

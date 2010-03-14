@@ -18,7 +18,7 @@ static GSM_Error FBUS2_WriteFrame(GSM_StateMachine *s, unsigned char *buffer,
 	int 		sent;
 
 	/* Now construct the message header. */
-	if (s->connectiontype==GCT_INFRARED) {
+	if (s->ConnectionType==GCT_INFRARED) {
     	    out_buffer[current++] = FBUS2_IR_FRAME_ID;	/* Start of the frame indicator */
 	} else {
     	    out_buffer[current++] = FBUS2_FRAME_ID;	/* Start of the frame indicator */
@@ -123,7 +123,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 	case RX_Sync:
 
 	correct = false;
-	switch (s->connectiontype) {
+	switch (s->ConnectionType) {
 		case GCT_FBUS2:
 		case GCT_DLR3AT:
 		case GCT_DLR3BLUE:
@@ -145,7 +145,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 	} else {
 		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
 		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-		    if (s->connectiontype==GCT_INFRARED) {
+		    if (s->ConnectionType==GCT_INFRARED) {
 			smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, FBUS2_IR_FRAME_ID);
 		    } else {
 			smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, FBUS2_FRAME_ID);
@@ -312,7 +312,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	error=Device->DeviceSetParity(s,false);
 	if (error!=GE_NONE) return error;
 
-	switch (s->connectiontype) {
+	switch (s->ConnectionType) {
 #ifdef GSM_ENABLE_DLR3BLUETOOTH
 	case GCT_DLR3BLUE:
 		FBUS2_WriteDLR3(s,"AT\r\n",		 4,10);

@@ -63,7 +63,7 @@ static void SaveBackupText(FILE *file, char *myname, char *myvalue)
 	fprintf(file,"%sUnicode = %s\n",myname,buffer);
 }
 
-static void ReadBackupText(CFG_Header *file_info, char *section, char *myname, char *myvalue)
+static bool ReadBackupText(CFG_Header *file_info, char *section, char *myname, char *myvalue)
 {
 	unsigned char 	paramname[10000];
 	char		*readvalue;
@@ -84,8 +84,10 @@ static void ReadBackupText(CFG_Header *file_info, char *section, char *myname, c
 		} else {
 			myvalue[0]=0;
 			myvalue[1]=0;
+			return false;
 		}
 	}
+	return true;
 }
 
 static void ReadvCalTime(GSM_DateTime *dt, char *time)
@@ -246,8 +248,10 @@ static void SavePbkEntry(FILE *file, GSM_PhonebookEntry *Pbk)
 	fprintf(file,"\n");
 }
 
-static void SaveCalendarEntry(FILE *file, GSM_CalendarNote *Note)
+static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note)
 {
+	int i;
+
 	fprintf(file,"Type = ");
 	switch (Note->Type) {
 		case GCN_REMINDER : fprintf(file,"Reminder\n");			break;
@@ -274,23 +278,32 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarNote *Note)
                 case GCN_T_TRAV   : fprintf(file,"Training/Travels\n"); 	break;
                 case GCN_T_WINT   : fprintf(file,"Training/WinterGames\n"); 	break;
 	}
-	fprintf(file, "Time");
-	SaveVCalTime(file, &Note->Time);
-	if (Note->Alarm.Year != 0) {
-		fprintf(file, "Alarm");
-		SaveVCalTime(file, &Note->Alarm);
-		if (Note->SilentAlarm) {
-			fprintf(file, "AlarmType = Silent\n");
-		} else {
+	for (i=0;i<Note->EntriesNum;i++) {
+		switch (Note->Entries[i].EntryType) {
+		case CAL_START_DATETIME:
+			fprintf(file, "Time");
+			SaveVCalTime(file, &Note->Entries[i].Date);
+			break;
+		case CAL_ALARM_DATETIME:
+			fprintf(file, "Alarm");
+			SaveVCalTime(file, &Note->Entries[i].Date);
 			fprintf(file, "AlarmType = Tone\n");
+			break;
+		case CAL_SILENT_ALARM_DATETIME:
+			fprintf(file, "Alarm");
+			SaveVCalTime(file, &Note->Entries[i].Date);
+			fprintf(file, "AlarmType = Silent\n");
+			break;
+		case CAL_RECURRANCE:
+			fprintf(file, "Recurrance = %d\n",Note->Entries[i].Number/24);
+			break;
+		case CAL_TEXT:
+			SaveBackupText(file, "Text", Note->Entries[i].Text);
+			break;
+		case CAL_PHONE:
+			SaveBackupText(file, "Phone", Note->Entries[i].Text);
+			break;               
 		}
-	}
-	if (Note->Recurrance != 0) {
-		fprintf(file, "Recurrance = %d\n",Note->Recurrance/24);
-	}
-	SaveBackupText(file, "Text", Note->Text);
-	if (Note->Type == GCN_CALL) {
-		SaveBackupText(file, "Phone", Note->Phone);
 	}
 	fprintf(file,"\n");
 }
@@ -823,7 +836,7 @@ static void SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
 	fwrite(req, 1, count, file);
 }		     
 
-static void SaveLMBPBKEntry(FILE *file, GSM_PhonebookEntry entry)
+void SaveLMBPBKEntry(FILE *file, GSM_PhonebookEntry *entry)
 {
 	int count = 16, blocks;
 	char req[500] = {
@@ -837,13 +850,13 @@ static void SaveLMBPBKEntry(FILE *file, GSM_PhonebookEntry entry)
 		03,              /*memory type. ME=02;SM=03*/
 		00};
 
-	count=count+N71_65_EncodePhonebookFrame(req+16, entry, &blocks, true);
+	count=count+N71_65_EncodePhonebookFrame(req+16, *entry, &blocks, true);
 
 	req[4]=(count-12)%256;
 	req[5]=(count-12)/256;
-	req[8]=req[12] = entry.Location & 0xff;
-	req[9]=req[13] = (entry.Location >> 8);
-	if (entry.MemoryType==GMT_ME) req[10]=req[14]=2;
+	req[8]=req[12] = entry->Location & 0xff;
+	req[9]=req[13] = (entry->Location >> 8);
+	if (entry->MemoryType==GMT_ME) req[10]=req[14]=2;
             
 	fwrite(req, 1, count, file);	    
 }
@@ -872,7 +885,7 @@ static GSM_Error SaveLMB(FILE *file, GSM_Backup *backup)
 		fwrite(PBKHeader, 1, sizeof(PBKHeader), file);
 		i=0;
 		while (backup->PhonePhonebook[i]!=NULL) {
-			SaveLMBPBKEntry(file, *backup->PhonePhonebook[i]);
+			SaveLMBPBKEntry(file, backup->PhonePhonebook[i]);
 			i++;
 		}
 	}
@@ -884,7 +897,7 @@ static GSM_Error SaveLMB(FILE *file, GSM_Backup *backup)
 		fwrite(PBKHeader, 1, sizeof(PBKHeader), file);
 		i=0;
 		while (backup->SIMPhonebook[i]!=NULL) {
-			SaveLMBPBKEntry(file, *backup->SIMPhonebook[i]);
+			SaveLMBPBKEntry(file, backup->SIMPhonebook[i]);
 			i++;
 		}
 	}
@@ -1072,7 +1085,7 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 	}
 }
 
-static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_CalendarNote *note)
+static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_CalendarEntry *note)
 {
 	unsigned char		buffer[10000];
 	char			*readvalue;
@@ -1128,30 +1141,46 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 			note->Type = GCN_T_WINT;
 		}
 	}
+	note->EntriesNum = 0;
 	sprintf(buffer,"Text");
-	ReadBackupText(file_info, section, buffer, note->Text);
+	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text)) {
+		note->Entries[note->EntriesNum].EntryType = CAL_TEXT;
+		note->EntriesNum++;
+	}
 	sprintf(buffer,"Phone");
-	ReadBackupText(file_info, section, buffer, note->Phone);
-	note->Recurrance = 0;
+	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text)) {
+		note->Entries[note->EntriesNum].EntryType = CAL_PHONE;
+		note->EntriesNum++;
+	}
 	sprintf(buffer,"Recurrance");
 	readvalue = CFG_Get(file_info, section, buffer, false);
-	if (readvalue!=NULL) note->Recurrance = atoi(readvalue) * 24;
+	if (readvalue!=NULL) {
+		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue) * 24;
+		note->Entries[note->EntriesNum].EntryType = CAL_RECURRANCE;
+		note->EntriesNum++;
+	}
 	sprintf(buffer,"Time");
 	readvalue = CFG_Get(file_info, section, buffer, false);
-	if (readvalue!=NULL) ReadvCalTime(&note->Time, readvalue);
-	note->Alarm.Year = 0;
+	if (readvalue!=NULL) {
+		ReadvCalTime(&note->Entries[note->EntriesNum].Date, readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_START_DATETIME;
+		note->EntriesNum++;
+	}
 	sprintf(buffer,"Alarm");
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL)
 	{
-		ReadvCalTime(&note->Alarm, readvalue);
-		note->SilentAlarm = false;
+		ReadvCalTime(&note->Entries[note->EntriesNum].Date, readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_ALARM_DATETIME;
 		sprintf(buffer,"AlarmType");
 		readvalue = CFG_Get(file_info, section, buffer, false);
 		if (readvalue!=NULL)
 		{
-			if (mystrncasecmp(readvalue,"Silent",0)) note->SilentAlarm = true;
+			if (mystrncasecmp(readvalue,"Silent",0)) {
+				note->Entries[note->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
+			}
 		}
+		note->EntriesNum++;
 	}
 }
 
@@ -1427,6 +1456,15 @@ static void ReadRingtoneEntry(CFG_Header *file_info, char *section, GSM_Ringtone
 		DecodeHexBin (ringtone->NokiaBinary.Frame, buffer2, strlen(buffer2));
 		ringtone->NokiaBinary.Length = strlen(buffer2)/2;
 	}
+	sprintf(buffer,"Pure Midi00");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		ringtone->Format = RING_MIDI;
+		ReadLinkedBackupText(file_info, section, "Pure Midi", buffer2);
+		DecodeHexBin (ringtone->NokiaBinary.Frame, buffer2, strlen(buffer2));
+		ringtone->NokiaBinary.Length = strlen(buffer2)/2;
+	}
+
 }
 
 static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *Profile)
@@ -1754,7 +1792,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			readvalue = CFG_Get(file_info, h->section, "Type", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_CALENDAR) {
-				backup->Calendar[num] = malloc(sizeof(GSM_CalendarNote));
+				backup->Calendar[num] = malloc(sizeof(GSM_CalendarEntry));
 			        if (backup->Calendar[num] == NULL) return GE_MOREMEMORY;
 				backup->Calendar[num + 1] = NULL;
 			} else {
@@ -1763,7 +1801,6 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			}
 			backup->Calendar[num]->Location = num + 1;
 			ReadCalendarEntry(file_info, h->section, backup->Calendar[num]);
-			dprintf("Note text \"%s\"\n",DecodeUnicodeString(backup->Calendar[num]->Text));
 			num++;
                 }
         }

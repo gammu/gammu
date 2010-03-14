@@ -96,10 +96,10 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 	error=s->Device.Functions->DeviceSetDtrRts(s,true,true);
     	if (error!=GE_NONE) return error; 
 
-	if (s->connectiontype==GCT_AT19200) {
+	if (s->ConnectionType==GCT_AT19200) {
 		error=s->Device.Functions->DeviceSetSpeed(s,19200);
 	}
-	if (s->connectiontype==GCT_AT115200) {
+	if (s->ConnectionType==GCT_AT115200) {
 		error=s->Device.Functions->DeviceSetSpeed(s,115200);
 	}
 

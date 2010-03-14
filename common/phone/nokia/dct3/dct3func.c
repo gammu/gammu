@@ -1199,7 +1199,7 @@ GSM_Error DCT3_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 
 	s->Phone.Data.SMSStatus=status;
 	dprintf("Getting SMS status\n");
-	return GSM_WaitFor (s, req, 5, 0x14, 3, ID_GetSMSStatus);
+	return GSM_WaitFor (s, req, 5, 0x14, 2, ID_GetSMSStatus);
 
 	/* Nokia 6210 and family does not show not "fixed" messages from the
 	 * Templates folder, ie. when you save a message to the Templates folder,

@@ -180,11 +180,24 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
     }
 
     switch (speed) {
+        case 50:     speed2 = B50;     break;
+        case 75:     speed2 = B75;     break;
+        case 110:    speed2 = B110;    break;
+        case 134:    speed2 = B134;    break;
+        case 150:    speed2 = B150;    break;
+        case 200:    speed2 = B200;    break;
+        case 300:    speed2 = B300;    break;
+        case 600:    speed2 = B600;    break;
+        case 1200:   speed2 = B1200;   break;
+        case 1800:   speed2 = B1800;   break;
+        case 2400:   speed2 = B2400;   break;
+        case 4800:   speed2 = B4800;   break;
         case 9600:   speed2 = B9600;   break;
         case 19200:  speed2 = B19200;  break;
         case 38400:  speed2 = B38400;  break;
         case 57600:  speed2 = B57600;  break;
         case 115200: speed2 = B115200; break;
+        case 230400: speed2 = B230400; break;
     }
 
     /* This should work on all systems because it is done according to POSIX */

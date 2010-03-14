@@ -31,13 +31,19 @@ typedef struct {
 
 GSM_StateMachineExt s[10];
 
-void SetErrorCounter(int i, GSM_Error error)
+bool SetErrorCounter(int i, GSM_Error error)
 {
-	if (error == GE_TIMEOUT) {
+	switch (error) {
+	case GE_TIMEOUT:
 		s[i].errors++;
-	} else {
+		break;
+	case GE_NOTSUPPORTED:
+		break;
+	default:
 		if (s[i].errors > 0) s[i].errors--;
 	}
+	if (s[i].errors > 1) return true;
+	return false;
 }
 
 BOOL LoopProc(int *i)
@@ -78,20 +84,30 @@ BOOL LoopProc(int *i)
 			if (s[*i].ThreadTerminate) break;
 			error=s[*i].s.Phone.Functions->GetSecurityStatus(&s[*i].s,&SecurityStatus);
 		        ReleaseMutex(s[*i].Mutex);
-			SetErrorCounter(*i, error);
-			if (error == GE_NONE) {
+			if (SetErrorCounter(*i, error)) continue;
+			switch (error) {
+			case GE_NONE:
 				if (SecurityStatus != s[*i].SecurityStatus) {
 					if (s[*i].ThreadTerminate) break;
 					s[*i].SecurityStatus = SecurityStatus;
 					SecurityCall = *s[*i].SecurityCallBack;
 					SecurityCall(1,*i,SecurityStatus);
 				}
+				break;
+			case GE_NOTSUPPORTED:
+				if (s[*i].ThreadTerminate) break;
+				SecurityStatus		= 0;
+				s[*i].SecurityStatus 	= 0;
+				SecurityCall = *s[*i].SecurityCallBack;
+				SecurityCall(1,*i,SecurityStatus);
+			default:
+				break;
 			}
 			WaitForSingleObject(s[*i].Mutex, INFINITE );
 			if (s[*i].ThreadTerminate) break;
 			error=s[*i].s.Phone.Functions->GetSMSStatus(&s[*i].s,&SMSStatus);
 			ReleaseMutex(s[*i].Mutex);
-			SetErrorCounter(*i, error);
+			if (SetErrorCounter(*i, error)) continue;
 			if (error == GE_NONE) {
 				if (SMSStatus.SIMUsed+SMSStatus.PhoneUsed != 0) {
 					if (s[*i].ThreadTerminate) break;
@@ -117,7 +133,7 @@ static void CreatePhoneThread(int *phone,
 			      void (**SMSCallBack)      (int x, int s))
 {
 	s[*phone].Mutex = CreateMutex( NULL, FALSE, NULL );
-	s[*phone].SecurityStatus	= GSCT_None;
+	s[*phone].SecurityStatus	= 0;
 	s[*phone].number 		= *phone;
 	
 	s[*phone].PhoneCallBack 	= PhoneCallBack;
