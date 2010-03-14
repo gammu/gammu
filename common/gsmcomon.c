@@ -2,6 +2,8 @@
 #include <ctype.h>
 #include <string.h>
 #include <time.h>
+#include <stdio.h>
+#include <wchar.h>
 #ifdef WIN32
 #  include <windows.h>
 #else
@@ -13,6 +15,7 @@
 #endif
 
 #include "gsmcomon.h"
+#include "misc/coding.h"
 
 GSM_Error NoneFunction(void)
 {
@@ -29,60 +32,90 @@ GSM_Error NotSupportedFunction(void)
 	return GE_NOTSUPPORTED;
 }
 
-char *GetMsg (CFG_Header *cfg, int number, char *default_string)
+char *GetMsg (CFG_Header *cfg, char *default_string)
 {
-	char *retval;
-	char buffer[10];
+	char 		*retval, buffer[40], buff[200],buff2[40];
+	CFG_Entry	*e;
+	CFG_Header 	*h;
+	int		num;
 
 	if (cfg==NULL) return default_string;
-	sprintf(buffer,"%06i",number);
-        retval = CFG_Get(cfg, "common", buffer);
-        if (!retval) {
-		retval = default_string;
-	} else {
-		retval=retval+1;
-		retval[strlen(retval)-1]=0;
+
+	EncodeUnicode (buff2, "common", 6);
+
+	e = NULL;
+	/* First find our section */
+        for (h = cfg; h != NULL; h = h->next) {
+		if (wcscmp(((const wchar_t *)buff2), ((const wchar_t *)h->section)) == 0) {
+			e = h->entries;
+			break;
+		}
 	}
-	return retval;
+	while (1) {
+		if (e == NULL) break;
+		num = -1;
+		sprintf(buffer,"%s",DecodeUnicodeString(e->key));
+		if (strlen(buffer) == 5 && strncmp("F", buffer, 1) == 0) {
+			num = atoi(buffer+2);
+		}
+		if (num!=-1) {
+			sprintf(buff,"F%04i",num);
+			EncodeUnicode (buffer, buff, 5);
+		        retval = CFG_Get(cfg, buff2, buffer, true);
+			if (retval && !strncmp(DecodeUnicodeString(retval)+1,default_string,strlen(default_string)-1)) {
+				sprintf(buff,"T%04i",num);
+				EncodeUnicode (buffer, buff, 5);
+			        retval = CFG_Get(cfg, buff2, buffer, true);
+			        if (retval) {
+					retval=DecodeUnicodeString(retval)+1;
+					retval[strlen(retval)-1]=0;
+				} else {
+					retval = default_string;
+				}
+				return retval;
+			}
+		}
+		e = e->next;
+	}
+	return default_string;
 }
 
 typedef struct {
 	GSM_Error	ErrorNum;
-	int		LocalizationNum;
 	char		*ErrorText;
 } PrintErrorEntry;
 
 static PrintErrorEntry PrintErrorEntries[] = {
-	{GE_NONE,			 1,"No error."},
-	{GE_DEVICEOPENERROR,		 2,"Error opening device. Unknown or busy device."},
-	{GE_DEVICEDTRRTSERROR,		 3,"Error setting device DTR or RTS."},
-	{GE_DEVICECHANGESPEEDERROR,	 4,"Error setting device speed. Maybe speed not supported."},
-	{GE_DEVICEWRITEERROR,		 5,"Error writing device."},
-	{GE_DEVICEREADERROR,		43,"Error during reading device"},
-	{GE_DEVICEPARITYERROR,		44,"Can't set parity on device"},
-	{GE_TIMEOUT,			 6,"No response in specified timeout. Probably phone not connected."},
+	{GE_NONE,			"No error."},
+	{GE_DEVICEOPENERROR,		"Error opening device. Unknown or busy device."},
+	{GE_DEVICEDTRRTSERROR,		"Error setting device DTR or RTS."},
+	{GE_DEVICECHANGESPEEDERROR,	"Error setting device speed. Maybe speed not supported."},
+	{GE_DEVICEWRITEERROR,		"Error writing device."},
+	{GE_DEVICEREADERROR,		"Error during reading device"},
+	{GE_DEVICEPARITYERROR,		"Can't set parity on device"},
+	{GE_TIMEOUT,			"No response in specified timeout. Probably phone not connected."},
 	/* Some missed */
-	{GE_UNKNOWNRESPONSE,		 7,"Unknown response from phone. See /readme, how to report it."},
+	{GE_UNKNOWNRESPONSE,		"Unknown response from phone. See /readme, how to report it."},
 	/* Some missed */
-	{GE_UNKNOWNCONNECTIONTYPESTRING, 8,"Unknown connection type string. Check config file."},
-	{GE_UNKNOWNMODELSTRING,		 9,"Unknown model type string. Check config file."},
-	{GE_SOURCENOTAVAILABLE,		10,"Some required functions not compiled for your OS. Please contact."},
-	{GE_NOTSUPPORTED,		11,"Function not supported by phone."},
-	{GE_EMPTY,			12,"Entry is empty"},
-	{GE_SECURITYERROR,		15,"Security error. Maybe no PIN ?"},
-	{GE_INVALIDLOCATION,		16,"Invalid location. Maybe too high ?"},
-	{GE_NOTIMPLEMENTED,		17,"Function not implemented. Help required."},
-	{GE_FULL,			19,"Memory full."},
-	{GE_UNKNOWN,			13,"Unknown error."},
+	{GE_UNKNOWNCONNECTIONTYPESTRING,"Unknown connection type string. Check config file."},
+	{GE_UNKNOWNMODELSTRING,		"Unknown model type string. Check config file."},
+	{GE_SOURCENOTAVAILABLE,		"Some required functions not compiled for your OS. Please contact."},
+	{GE_NOTSUPPORTED,		"Function not supported by phone."},
+	{GE_EMPTY,			"Entry is empty"},
+	{GE_SECURITYERROR,		"Security error. Maybe no PIN ?"},
+	{GE_INVALIDLOCATION,		"Invalid location. Maybe too high ?"},
+	{GE_NOTIMPLEMENTED,		"Function not implemented. Help required."},
+	{GE_FULL,			"Memory full."},
+	{GE_UNKNOWN,			"Unknown error."},
 	/* Some missed */
-	{GE_CANTOPENFILE,		18,"Can't open specified file. Read only ?"},
-	{GE_MOREMEMORY,			20,"More memory required..."},
-	{GE_PERMISSION,			21,"Permission to file/device required..."},
-	{GE_EMPTYSMSC,			29,"Empty SMSC number. Set in phone or use -smscnumber"},
-	{GE_INSIDEPHONEMENU,		30,"You're inside phone menu (during editing ?). Leave it and try again."},
-	{GE_WORKINPROGRESS,		42,"Function is during writing. If want help, please contact with authors."},
+	{GE_CANTOPENFILE,		"Can't open specified file. Read only ?"},
+	{GE_MOREMEMORY,			"More memory required..."},
+	{GE_PERMISSION,			"Permission to file/device required..."},
+	{GE_EMPTYSMSC,			"Empty SMSC number. Set in phone or use -smscnumber"},
+	{GE_INSIDEPHONEMENU,		"You're inside phone menu (during editing ?). Leave it and try again."},
+	{GE_WORKINPROGRESS,		"Function is during writing. If want help, please contact with authors."},
 
-	{0,				 0,""}
+	{0,				""}
 };
 
 char *print_error(GSM_Error e, FILE *df, CFG_Header *cfg)
@@ -90,21 +123,17 @@ char *print_error(GSM_Error e, FILE *df, CFG_Header *cfg)
 	char 	*def 	= NULL;
 	int 	i	= 0;
 
-	while (PrintErrorEntries[i].LocalizationNum != 0) {
+	while (PrintErrorEntries[i].ErrorNum != 0) {
 		if (PrintErrorEntries[i].ErrorNum == e) {
 			def 	= PrintErrorEntries[i].ErrorText;
-			i	= PrintErrorEntries[i].LocalizationNum;
 			break;
 		}
 		i++;
 	}
-	if (def == NULL) {
-		def 	= "Unknown error.";
-		i 	= 14;
-	}
+	if (def == NULL) def = "Unknown error.";
 	if (df!=NULL) fprintf(df,"[ERROR %i: %s]\n",e,def);
 
-	return GetMsg(cfg,i,def);
+	return GetMsg(cfg,def);
 }
 
 char *GetGammuVersion()
@@ -297,3 +326,48 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *di)
 	}
 	return GE_NONE;
 }
+
+char *OSDateTime (GSM_DateTime dt, bool TimeZone)
+{
+	struct tm 	timeptr;
+	static char 	retval[200],retval2[200];
+	int 		p,q,r,w;
+
+	/* Based on article in Polish PC-Kurier 8/1998 page 104
+	 * Archive on http://www.pckurier.pl
+	 */
+	p=(14-dt.Month) / 12;
+	q=dt.Month+12*p-2;
+	r=dt.Year-p;
+	w=(dt.Day+(31*q) / 12 + r + r / 4 - r / 100 + r / 400) % 7;
+
+	timeptr.tm_yday 	= 0; 			/* FIXME */
+	timeptr.tm_isdst 	= -1; 			/* FIXME */
+	timeptr.tm_year 	= dt.Year - 1900;
+	timeptr.tm_mon  	= dt.Month - 1;
+	timeptr.tm_mday 	= dt.Day;
+	timeptr.tm_hour 	= dt.Hour;
+	timeptr.tm_min  	= dt.Minute;
+	timeptr.tm_sec  	= dt.Second;
+	timeptr.tm_wday 	= w;
+
+	strftime(retval2, 200, "%#c", &timeptr);
+	if (TimeZone) {
+		if (dt.Timezone >= 0) {
+			sprintf(retval," +%02i",dt.Timezone);
+		} else {
+			sprintf(retval," -%02i",dt.Timezone);
+		}
+		strcat(retval2,retval);
+	}
+	/* If don't have weekday name, include it */
+	strftime(retval, 200, "%A", &timeptr);
+	if (strstr(retval2,retval)==NULL) {
+		strcat(retval2," (");
+		strcat(retval2,retval);
+		strcat(retval2,")");
+	}
+
+	return retval2;
+}
+

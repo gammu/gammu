@@ -4,7 +4,7 @@ Last update 28.07.2002
 
 Assembled by
         Markus Plail <plail@web.de>
-	Marcin Wiacek (Marcin-Wiacek@TOPNET.PL)
+	Marcin Wiacek (Marcin@MWiacek.com)
 	              <tibor.harsszegi@essnet.se>
 	... and other members of gnokii mailing list
             and authors of some WWW pages.

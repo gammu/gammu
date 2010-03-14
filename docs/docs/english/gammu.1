@@ -1,4 +1,4 @@
-.TH "Gammu" "1" "18.10.2002" "Marcin Wiacek and others" "Cellurar phones utilities"
+.TH "Gammu" "1" "12.11.2002" "Marcin Wiacek and others" "Cellurar phones utilities"
 .SH "NAME"
 .LP 
 Gammu \- Does some neat things with your cellular phone or modem
@@ -114,6 +114,9 @@ Show, if phone wait for security code (like PIN, PUK, etc.) or not
 .TP
 \fB\-\-entersecuritycode PIN|PUK|PIN2|PUK2 code\fR
 Allow to enter security code from PC			     
+.TP
+\fB\-\-listnetworks\fR
+Show names/codes of GSM networks known for Gammu
 .TP 
 \fB\-\-getdatetime\fR
 Get date and time from phone
@@ -188,6 +191,11 @@ Get SMSC settings from SIM card. Numerate locations from 1.
 .TP 
 \fB\-\-getsmsfolders\fR
 Get names for SMS folders in phone
+.TP
+
+\fB\-\-smsd FILES configfile\fR
+SMS Deaemon. See smsdrc config file for more options
+
 .TP
 \fB\-\-getphoneringtone location [file]\fR
 .TP 
@@ -291,7 +299,7 @@ be written to stdout using ASCII art. When give output file and format, in
 some file formats (like NLM) will be set indicator informing about logo type
 to given.
 .TP 
-\fB\-\-savesms TEXT [\-folder number] [\-reply] [\-sender number] [\-flash] [\-smscset number] [\-smscnumber number] [\-len len] [\-enablefax] [\-disablefax] [\-enablevoice] [\-unsent] [\-disablevoice] [\-enableemail] [\-disableemail] [\-read] [\-voidsms] [\-unicode] [\-inputunicode] [\-unread] [-replacemessages ID] [-replacefile file]\fR
+\fB\-\-savesms TEXT [\-folder number] [\-reply] [\-sender number] [\-flash] [\-smscset number] [\-smscnumber number] [\-len len] [\-autolen len][\-enablefax] [\-disablefax] [\-enablevoice] [\-unsent][\-disablevoice] [\-enableemail] [\-disableemail] [\-read] [\-voidsms] [\-unicode] [\-inputunicode] [\-unread] [-replacemessages ID] [-replacefile file]\fR
 Take text from stdin and save as text SMS into SIM/phone memory. 
 
 \fB\-folder number\fR \- save to specified folder. Numerate folders from 1.
@@ -317,7 +325,13 @@ SMS memory (like 6210) after using it SIM SMS memory will be used
 \fB\-smscnumber number\fR \- SMSC number
 
 \fB\-len len\fR \- specify, how many chars will be read. When use this
-option and text will be longer than 1 SMS, will be splitted into morelinked SMS
+option and text will be longer than 1 SMS, will be splitted into more
+linked SMS
+
+\fB\-autolen len\fR \- specify, how many chars will be read. When use this
+option and text will be longer than 1 SMS, will be splitted into more
+linked SMS.Coding type (SMS default alphabet/Unicode) is set according
+to input text
 
 \fB\-enablevoice\fR | \fB\-disablevoice\fR | \fB\-enablefax \fR |
 \fB\-disablefax \fR | \fB\-enableemail \fR | \fB\-disableemail \fR \-
@@ -424,7 +438,7 @@ want have full animation). Size of each frame is 16x16 or 8x8.
 \fB\-\-savesms EMSBITMAP file [\-folder number] [\-reply] [\-smscset number] [\-smscnumber number] [\-sender number] [\-unread] [\-read] [\-unsent]\fR
 Saves SMS with EMS bitmap (32x32 or 16x16 or 8x8)
 .TP 
-\fB\-\-sendsms TEXT destination [\-reply] [\-flash] [\-smscset number] [\-smscnumber number] [\-len len] [\-enablefax] [\-disablefax] [\-enablevoice] [\-disablevoice] [\-enableemail] [\-report] [\-disableemail] [\-voidsms] [\-unicode] [\-inputunicode] [-replacemessages ID] [-replacefile file]\fR
+\fB\-\-sendsms TEXT destination [\-reply] [\-flash] [\-smscset number] [\-smscnumber number] [\-len len] [\-autolen len] [\-enablefax] [\-disablefax] [\-enablevoice] [\-disablevoice] [\-enableemail] [\-report] [\-disableemail] [\-voidsms] [\-unicode] [\-inputunicode] [-replacemessages ID] [-replacefile file]\fR
 .TP 
 \fB\-\-sendsms RINGTONE destination file [\-reply] [\-smscset number] [\-long] [\-smscnumber number] [\-report] [\-scale]\fR
 .TP 
@@ -461,7 +475,7 @@ name using this option.
 Takes output or set netmonitor for Nokia DCT3 phones.
 
 \fITIP:\fR For more info about this option, please visit
-\fIhttp://marcin\-wiacek.topnet.pl\fR and read netmonitor manual.
+\fIhttp://www.mwiacek.com\fR and read netmonitor manual.
 
 \fITIP:\fR test \fB243\fR enables all tests (after using command
 \fBgammu \-\-nokianetmonitor 243\fR in some phones like 6210 or 9210 have to
@@ -471,7 +485,7 @@ reboot them to see netmonitor menu)
 Reset counters from netmonitor test 36 in Nokia DCT3 phones.
 
 \fITIP:\fR For more info about this option, please visit
-\fIhttp://marcin\-wiacek.topnet.pl\fR and read netmonitor manual.
+\fIhttp://www.mwiacek.com\fR and read netmonitor manual.
 .TP
 \fB\-\-nokiasetvibralevel level\fR
 Set vibra power to "level" (given in percent)
@@ -621,9 +635,9 @@ and try \fBgammu \-\-identify\fR
 .LP 
 \fIMarcin Wiacek\fR
 .br
-<marcin\-wiacek@topnet.pl>
+<marcin@mwiacek.com>
 .br
-http://marcin\-wiacek.topnet.pl
+http://www.mwiacek.com
 
 Here are some people, who somehow helped in this project. Probably not
 everyone is mentioned. If you think, you're missed, please let us know:
@@ -656,4 +670,4 @@ xgnokii(2)
 
 http://www.gnokii.org
 
-http://marcin\-wiacek.topnet.pl
+http://www.mwiacek.com

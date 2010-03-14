@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.06.00"/>
+    <PROJECT value="Output\gammu.exe"/>
+    <OBJFILES value="Output\gammu.obj Output\sniff.obj Output\dct3.obj Output\dct4.obj 
+      Output\s_files.obj Output\smsdcore.obj Output\cfg.obj Output\coding.obj 
+      Output\misc.obj Output\at.obj Output\fbus2.obj Output\alcabus.obj 
+      Output\fbusirda.obj Output\mbus2.obj Output\gsmback.obj Output\gsmcal.obj 
+      Output\gsmlogo.obj Output\gsmnet.obj Output\gsmpbk.obj Output\gsmring.obj 
+      Output\gsmsms.obj Output\gsmwap.obj Output\gsmcomon.obj 
+      Output\gsmstate.obj Output\n6110.obj Output\n6510.obj Output\n7110.obj 
+      Output\n9210.obj Output\dct3func.obj Output\nauto.obj Output\nfunc.obj 
+      Output\alcatel.obj Output\pfunc.obj Output\atgen.obj Output\irda.obj 
+      Output\unixblue.obj Output\win32.obj"/>
+    <RESFILES value=""/>
+    <IDLFILES value=""/>
+    <IDLGENFILES value=""/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES)"/>
+    <LIBFILES value=""/>
+    <LIBRARIES value=""/>
+    <SPARELIBS value=""/>
+    <PACKAGES value="rtl.bpi vcl.bpi vclx.bpi bcbsmp.bpi dbrtl.bpi vcldb.bpi adortl.bpi 
+      ibsmp.bpi bdertl.bpi vcldbx.bpi qrpt.bpi teeui.bpi teedb.bpi tee.bpi 
+      dss.bpi teeqr.bpi ibxpress.bpi dsnap.bpi vclie.bpi inetdb.bpi inet.bpi 
+      nmfast.bpi webdsnap.bpi bcbie.bpi dclocx.bpi bcb2kaxserver.bpi"/>
+    <PATHCPP value=".;..;..;..\depend;..\depend;..\smsd;..\smsd;..\..\common\misc;..\..\common\misc;..\..\common\misc;..\..\common\protocol\at;..\..\common\protocol\nokia;..\..\common\protocol\alcatel;..\..\common\protocol\nokia;..\..\common\protocol\nokia;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common;..\..\common;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone;..\..\common\phone\at;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common\device\serial"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value="WIN32;NDEBUG;_CONSOLE"/>
+    <SYSDEFINES value="_NO_VCL;_ASSERTE;NO_STRICT"/>
+    <MAINSOURCE value="gammu.bpf"/>
+    <INCLUDEPATH value="..\;..\smsd;..\depend;..\..\common\device\serial;..\..\common\protocol\alcatel;..\..\common\phone\alcatel;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl"/>
+    <LIBPATH value="..\smsd;..\depend;..\..\common\phone\alcatel;..\..\common\protocol\alcatel;..\;..;..\..\common\device\serial;..\..\common\device\bluetoth;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\lib;$(RELEASELIBPATH);$(BCB)\lib\psdk"/>
+    <WARNINGS value="-w-par -w-8027 -w-8026 -w-csu"/>
+    <OTHERFILES value=""/>
+  </MACROS>
+  <OPTIONS>
+    <IDLCFLAGS value="-src_suffix cpp -DWIN32 -DNDEBUG -D_CONSOLE -I..\. -I.. 
+      -I..\..\common\device\serial -I..\smsd -I..\..\common\phone -I..\depend 
+      -I..\..\common\protocol\alcatel -I..\..\common\device\bluetoth 
+      -I..\..\common\phone\nokia -I..\..\common\phone\alcatel 
+      -I..\..\common\phone\nokia\dct4 -I..\..\common\phone\nokia\dct3 
+      -I..\..\common\device\irda -I..\..\common -I..\..\common\service 
+      -I..\..\common\protocol\nokia -I..\..\common\misc -I..\..\common\phone\at 
+      -I..\..\common\protocol\at -I$(BCB)\include -I$(BCB)\include\mfc 
+      -I$(BCB)\include\atl"/>
+    <CFLAG1 value="-O2 -w- -VF -X- -a8 -b -k -vi -q -c"/>
+    <PFLAGS value="-N2Output -N0Output -$YD -$A8"/>
+    <RFLAGS value="/l 0x415 /d &quot;NDEBUG&quot; /i$(BCB)\include;$(BCB)\include\mfc"/>
+    <AFLAGS value="/mx /w2 /zd"/>
+    <LFLAGS value="-IOutput -D&quot;&quot; -ap -Tpe -x -Gn -v -q"/>
+    <OTHERFILES value=""/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0x32.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cw32.lib"/>
+    <OTHERFILES value=""/>
+  </LINKER>
+  <FILELIST>
+      <FILE FILENAME="gammu.bpf" FORMNAME="" UNITNAME="gammu" CONTAINERID="BPF" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\gammu.c" FORMNAME="" UNITNAME="gammu" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\sniff.c" FORMNAME="" UNITNAME="sniff" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\depend\dct3.c" FORMNAME="" UNITNAME="dct3" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\depend\dct4.c" FORMNAME="" UNITNAME="dct4" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\smsd\s_files.c" FORMNAME="" UNITNAME="s_files" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\smsd\smsdcore.c" FORMNAME="" UNITNAME="smsdcore" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\misc\cfg.c" FORMNAME="" UNITNAME="cfg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\misc\coding.c" FORMNAME="" UNITNAME="coding" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\misc\misc.c" FORMNAME="" UNITNAME="misc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\protocol\at\at.c" FORMNAME="" UNITNAME="at" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\protocol\nokia\fbus2.c" FORMNAME="" UNITNAME="fbus2" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\protocol\alcatel\alcabus.c" FORMNAME="" UNITNAME="alcabus" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\protocol\nokia\fbusirda.c" FORMNAME="" UNITNAME="fbusirda" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\protocol\nokia\mbus2.c" FORMNAME="" UNITNAME="mbus2" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\service\gsmback.c" FORMNAME="" UNITNAME="gsmback" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\service\gsmcal.c" FORMNAME="" UNITNAME="gsmcal" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\service\gsmlogo.c" FORMNAME="" UNITNAME="gsmlogo" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\service\gsmnet.c" FORMNAME="" UNITNAME="gsmnet" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\service\gsmpbk.c" FORMNAME="" UNITNAME="gsmpbk" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\service\gsmring.c" FORMNAME="" UNITNAME="gsmring" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\service\gsmsms.c" FORMNAME="" UNITNAME="gsmsms" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\service\gsmwap.c" FORMNAME="" UNITNAME="gsmwap" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\gsmcomon.c" FORMNAME="" UNITNAME="gsmcomon" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\gsmstate.c" FORMNAME="" UNITNAME="gsmstate" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct3\n6110.c" FORMNAME="" UNITNAME="n6110" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct4\n6510.c" FORMNAME="" UNITNAME="n6510" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct3\n7110.c" FORMNAME="" UNITNAME="n7110" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct3\n9210.c" FORMNAME="" UNITNAME="n9210" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct3\dct3func.c" FORMNAME="" UNITNAME="dct3func" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\nauto.c" FORMNAME="" UNITNAME="nauto" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\nfunc.c" FORMNAME="" UNITNAME="nfunc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\alcatel\alcatel.c" FORMNAME="" UNITNAME="alcatel" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\pfunc.c" FORMNAME="" UNITNAME="pfunc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\at\atgen.c" FORMNAME="" UNITNAME="atgen" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\device\irda\irda.c" FORMNAME="" UNITNAME="irda" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\device\bluetoth\unixblue.c" FORMNAME="" UNITNAME="unixblue" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\device\serial\win32.c" FORMNAME="" UNITNAME="win32" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+  </FILELIST>
+  <BUILDTOOLS>
+  </BUILDTOOLS>
+
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=0
+AutoIncBuild=0
+MajorVer=1
+MinorVer=0
+Release=0
+Build=0
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=1033
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=
+FileDescription=
+FileVersion=1.0.0.0
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
+Comments=
+
+[HistoryLists\hlIncludePath]
+Count=3
+Item0=..\;..\depend;..\smsd;..;..\..\common\device\serial;..\..\common\protocol\alcatel;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;..\..\common\device\bluetoth;$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl
+Item1=..\;..\..\common\device\serial;..\..\common\phone;..\..\common\phone\alcatel;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;..;$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl
+Item2=..\..\common\device\serial;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;..\;$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl;
+
+[HistoryLists\hlLibraryPath]
+Count=3
+Item0=..\;..;..\depend;..\smsd;..\..\common\device\serial;..\..\common\device\bluetoth;..\..\common\protocol\alcatel;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\lib;$(RELEASELIBPATH);$(BCB)\lib\psdk
+Item1=..\;..\..\common\device\serial;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;..;$(BCB)\lib;$(RELEASELIBPATH);$(BCB)\lib\psdk
+Item2=..\..\common\device\serial;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;..\;$(BCB)\lib;$(RELEASELIBPATH);;$(BCB)\lib\psdk;
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=2
+Item0=WIN32;NDEBUG;_CONSOLE
+Item1=WIN32;NDEBUG;_CONSOLE;_MBCS
+
+[HistoryLists\hlIntOutputDir]
+Count=2
+Item0=Output
+Item1=Release
+
+[HistoryLists\hlFinalOutputDir]
+Count=1
+Item0=Output\
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=--identify
+Launcher=
+UseLauncher=0
+DebugCWD=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteLauncher=
+RemoteCWD=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=0
+LinkDebugVcl=0
+  </IDEOPTIONS>
+</PROJECT>

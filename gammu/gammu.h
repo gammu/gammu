@@ -17,6 +17,10 @@ extern	GSM_StateMachine	s;
 extern	GSM_Phone_Functions	*Phone;
 extern	GSM_Error		error;
 
+extern volatile bool 		bshutdown;
+
+void interrupted(int sig);
+
 #ifdef GSM_ENABLE_BEEP
 void	GSM_PhoneBeep		(void);
 #endif

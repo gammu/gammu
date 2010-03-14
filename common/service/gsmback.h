@@ -23,7 +23,7 @@
 typedef struct {
 	char			IMEI		[50];
 	char			Model		[50];
-	char			DateTime	[50];
+	char			DateTime	[200];
 	GSM_PhonebookEntry	*PhonePhonebook	[GSM_BACKUP_MAX_PHONEPHONEBOOK];
 	GSM_PhonebookEntry	*SIMPhonebook	[GSM_BACKUP_MAX_SIMPHONEBOOK];
 	GSM_CalendarNote	*Calendar	[GSM_BACKUP_MAX_CALENDAR];

@@ -1,4 +1,4 @@
-Gammu README version 18.10.2002
+Gammu README version 12.11.2002
 -------------------------------
 Q. How to use it ?
 
@@ -68,6 +68,9 @@ A. First of all, here are described all possible parameters for this software.
 
    gammu --entersecuritycode PIN|PUK|PIN2|PUK2 code
        Allow to enter security code from PC
+
+   gammu --listnetworks
+       Show names/codes of GSM networks known for Gammu
        
    gammu --getdatetime
        Get date and time from phone
@@ -135,6 +138,9 @@ A. First of all, here are described all possible parameters for this software.
 
    gammu --getsmsfolders
        Get names for SMS folders in phone
+
+   gammu --smsd FILES configfile
+       SMS Deaemon. See smsdrc config file for more options
 
    gammu --getphoneringtone location [file]
 
@@ -247,7 +253,7 @@ A. First of all, here are described all possible parameters for this software.
                         [-enablefax][-disablefax][-enablevoice][-unsent]
                         [-disablevoice][-enableemail][-disableemail][-read]
                         [-voidsms][-unicode][-inputunicode][-unread]
-                        [-replacemessages ID][-replacefile file]
+                        [-replacemessages ID][-replacefile file][-autolen len]
 
        Take text from stdin and save as text SMS into SIM/phone memory.
        -folder number     - save to specified folder. Numerate folders from 1.
@@ -269,6 +275,11 @@ A. First of all, here are described all possible parameters for this software.
        -len len           - specify, how many chars will be read. When use this
                             option and text will be longer than 1 SMS, will be
                             splitted into more linked SMS
+       -autolen len       - specify, how many chars will be read. When use this
+                            option and text will be longer than 1 SMS, will be
+                            splitted into more linked SMS. Coding type
+                            (SMS default alphabet/Unicode) is set according
+                            to input text
        -enablevoice       - sms will set such indicators. Text will be cut to 1
        -disablevoice        sms.
        -enablefax
@@ -421,7 +432,7 @@ A. First of all, here are described all possible parameters for this software.
                                     [-disablevoice][-enableemail][-report]
                                     [-disableemail][-voidsms][-unicode]
                                     [-inputunicode][-replacemessages ID]
-                                    [-replacefile file]
+                                    [-replacefile file][-autolen len]
    gammu --sendsms RINGTONE destination file [-reply][-smscset number]
                                              [-long][-smscnumber number]
                                              [-report][-scale]
@@ -465,7 +476,7 @@ A. First of all, here are described all possible parameters for this software.
    gammu --nokianetmonitor test
        Takes output or set netmonitor for Nokia DCT3 phones.
        TIP: For more info about this option, please visit
-            http://marcin-wiacek.topnet.pl and read netmonitor manual.
+            http://www.mwiacek.com and read netmonitor manual.
        TIP: test 243 enables all tests (after using command
             "gammu --nokianetmonitor 243" in some phones like 6210 or 9210
             have to reboot them to see netmonitor menu)
@@ -473,7 +484,7 @@ A. First of all, here are described all possible parameters for this software.
    gammu --nokianetmonitor36
        Reset counters from netmonitor test 36 in Nokia DCT3 phones.
        TIP: For more info about this option, please visit
-            http://marcin-wiacek.topnet.pl and read netmonitor manual.
+            http://www.mwiacek.com and read netmonitor manual.
 
    gammu --nokiasetvibralevel level
        Set vibra power to "level" (given in percent)

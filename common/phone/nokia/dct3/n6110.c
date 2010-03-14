@@ -1975,25 +1975,25 @@ static GSM_Error N6110_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 		NOKIA_GetDefaultProfileName(s, Profile);
 		if (IsPhoneFeatureAvailable(s->Phone.Data.Model, F_PROFILES51)) {
 			switch(Profile->Location) {
-			case 1:	EncodeUnicode(Profile->Name,GetMsg(s->msg,31,"Personal"),strlen(GetMsg(s->msg,31,"Personal")));
+			case 1:	EncodeUnicode(Profile->Name,GetMsg(s->msg,"Personal"),strlen(GetMsg(s->msg,"Personal")));
 				break;
-			case 2: EncodeUnicode(Profile->Name,GetMsg(s->msg,32,"Car"),strlen(GetMsg(s->msg,32,"Car")));
+			case 2: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Car"),strlen(GetMsg(s->msg,"Car")));
 				break;
-			case 3: EncodeUnicode(Profile->Name,GetMsg(s->msg,33,"Headset"),strlen(GetMsg(s->msg,33,"Headset")));
+			case 3: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Headset"),strlen(GetMsg(s->msg,"Headset")));
 				break;
 			}
 		}
 		if (IsPhoneFeatureAvailable(s->Phone.Data.Model, F_PROFILES33)) {
 			switch(Profile->Location) {
-			case 1:	EncodeUnicode(Profile->Name,GetMsg(s->msg,34,"General"),strlen(GetMsg(s->msg,34,"General")));
+			case 1:	EncodeUnicode(Profile->Name,GetMsg(s->msg,"General"),strlen(GetMsg(s->msg,"General")));
 				break;
-			case 2: EncodeUnicode(Profile->Name,GetMsg(s->msg,35,"Silent"),strlen(GetMsg(s->msg,35,"Silent")));
+			case 2: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Silent"),strlen(GetMsg(s->msg,"Silent")));
 				break;
-			case 3: EncodeUnicode(Profile->Name,GetMsg(s->msg,39,"Discreet"),strlen(GetMsg(s->msg,39,"Discreet")));
+			case 3: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Discreet"),strlen(GetMsg(s->msg,"Discreet")));
 				break;
-			case 4:	EncodeUnicode(Profile->Name,GetMsg(s->msg,40,"Loud"),strlen(GetMsg(s->msg,40,"Loud")));
+			case 4:	EncodeUnicode(Profile->Name,GetMsg(s->msg,"Loud"),strlen(GetMsg(s->msg,"Loud")));
 				break;
-			case 5: EncodeUnicode(Profile->Name,GetMsg(s->msg,41,"My style"),strlen(GetMsg(s->msg,41,"My style")));
+			case 5: EncodeUnicode(Profile->Name,GetMsg(s->msg,"My style"),strlen(GetMsg(s->msg,"My style")));
 				break;
 			case 6: Profile->Name[0] = 0; Profile->Name[1] = 0;
 				break;
@@ -2246,7 +2246,7 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6110Phone = {
-	"3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|6130|6150|8210|8250|8290|8850|8855|8890",
+	"3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|6130|6150|6190|8210|8250|8290|8850|8855|8890",
 	N6110ReplyFunctions,
 	N6110_Initialise,
 	PHONE_Terminate,
@@ -2313,7 +2313,8 @@ GSM_Phone_Functions N6110Phone = {
 	N6110_GetDisplayStatus,
 	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
 	N6110_SetProfile,
-	NOTSUPPORTED		/*	GetSIMIMSI		*/
+	NOTSUPPORTED,		/*	GetSIMIMSI		*/
+	NONEFUNCTION		/*	SetIncomingCall		*/
 };
 
 #endif

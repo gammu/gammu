@@ -264,6 +264,7 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 typedef enum {
 	SMS_Text = 1,			/* 1 text SMS				    	 */
 	SMS_ConcatenatedTextLong,	/* Contacenated SMS, when longer than 1 SMS	 */
+	SMS_ConcatenatedAutoTextLong,	/* Contacenated SMS, auto Default/Unicode coding */
 	SMS_NokiaProfileLong,		/* Nokia profile = Name, Ringtone, ScreenSaver 	 */
 	SMS_NokiaPictureImageLong,	/* Nokia Picture Image + (text)			 */
 	SMS_NokiaScreenSaverLong,	/* Nokia screen saver + (text)			 */

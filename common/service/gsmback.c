@@ -45,7 +45,7 @@ static void ReadLinkedBackupText(CFG_Header *file_info, char *section, char *myn
 	myvalue[0] = 0;
 	while (true) {
 		sprintf(buffer2,"%s%02i",myname,i);
-		readvalue = CFG_Get(file_info, section, buffer2);
+		readvalue = CFG_Get(file_info, section, buffer2, false);
 		if (readvalue!=NULL) {
 			myvalue[strlen(myvalue)+strlen(readvalue)]=0;
 			memcpy(myvalue+strlen(myvalue),readvalue,strlen(readvalue));
@@ -70,7 +70,7 @@ static void ReadBackupText(CFG_Header *file_info, char *section, char *myname, c
 
 	strcpy(paramname,myname);
 	strcat(paramname,"Unicode");
-	readvalue = CFG_Get(file_info, section, paramname);
+	readvalue = CFG_Get(file_info, section, paramname, false);
 	if (readvalue!=NULL) {
 		dprintf("%s %i\n",readvalue,strlen(readvalue));
 		DecodeHexBin (myvalue, readvalue, strlen(readvalue));
@@ -78,7 +78,7 @@ static void ReadBackupText(CFG_Header *file_info, char *section, char *myname, c
 		myvalue[strlen(readvalue)/2+1]=0;
 	} else {
 		strcpy(paramname,myname);
-		readvalue = CFG_Get(file_info, section, paramname);
+		readvalue = CFG_Get(file_info, section, paramname, false);
 		if (readvalue!=NULL) {
 			EncodeUnicode(myvalue,readvalue+1,strlen(readvalue)-2);
 		} else {
@@ -826,7 +826,7 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 	CFG_Entry		*e;
 
 	Pbk->EntriesNum = 0;
-	e = CFG_FindLastSectionEntry(file_info, section);
+	e = CFG_FindLastSectionEntry(file_info, section, false);
 	while (1) {
 		if (e == NULL) break;
 		num = -1;
@@ -839,7 +839,7 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 		e = e->prev;
 		if (num != -1) {
 			sprintf(buffer,"Entry%02iType",num);
-			readvalue = CFG_Get(file_info, section, buffer);
+			readvalue = CFG_Get(file_info, section, buffer, false);
 			if (!strcmp(readvalue,"NumberGeneral")) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
 			} else if (!strcmp(readvalue,"NumberMobile")) {
@@ -864,7 +864,7 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Caller_Group;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
-				readvalue = CFG_Get(file_info, section, buffer);
+				readvalue = CFG_Get(file_info, section, buffer, false);
 				if (readvalue!=NULL) {
 					Pbk->Entries[Pbk->EntriesNum].Number = atoi(readvalue);
 				}
@@ -876,7 +876,7 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 			dprintf("text \"%s\", type %i\n",DecodeUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text),Pbk->Entries[Pbk->EntriesNum].EntryType);
 			Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 			sprintf(buffer,"Entry%02iVoiceTag",num);
-			readvalue = CFG_Get(file_info, section, buffer);
+			readvalue = CFG_Get(file_info, section, buffer, false);
 			if (readvalue!=NULL) {
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = atoi(readvalue);
 			}
@@ -891,7 +891,7 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 	char			*readvalue;
 
 	sprintf(buffer,"Type");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	note->Type = GCN_REMINDER;
 	if (readvalue!=NULL)
 	{
@@ -947,20 +947,20 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 	ReadBackupText(file_info, section, buffer, note->Phone);
 	note->Recurrance = 0;
 	sprintf(buffer,"Recurrance");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) note->Recurrance = atoi(readvalue) * 24;
 	sprintf(buffer,"Time");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) ReadvCalTime(&note->Time, readvalue);
 	note->Alarm.Year = 0;
 	sprintf(buffer,"Alarm");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL)
 	{
 		ReadvCalTime(&note->Alarm, readvalue);
 		note->SilentAlarm = false;
 		sprintf(buffer,"AlarmType");
-		readvalue = CFG_Get(file_info, section, buffer);
+		readvalue = CFG_Get(file_info, section, buffer, false);
 		if (readvalue!=NULL)
 		{
 			if (!strcmp(readvalue,"Silent")) note->SilentAlarm = true;
@@ -977,7 +977,7 @@ static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_TODO *ToDo)
 	ReadBackupText(file_info, section, buffer, ToDo->Text);
 	ToDo->Priority = 1;
 	sprintf(buffer,"Priority");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) ToDo->Priority = atoi(readvalue);
 }
 
@@ -990,15 +990,15 @@ static void ReadBitmapEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bi
 
 	GSM_GetMaxBitmapWidthHeight(bitmap->Type, &Width, &Height);
 	sprintf(buffer,"Width");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue==NULL) bitmap->Width = Width; else bitmap->Width = atoi(readvalue);
 	sprintf(buffer,"Height");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue==NULL) bitmap->Height = Height; else bitmap->Height = atoi(readvalue);
 	GSM_ClearBitmap(bitmap);
 	for (y=0;y<bitmap->Height;y++) {
 		sprintf(buffer,"Bitmap%02i",y);
-		readvalue = CFG_Get(file_info, section, buffer);
+		readvalue = CFG_Get(file_info, section, buffer, false);
 		if (readvalue!=NULL) {
 			for (x=0;x<bitmap->Width;x++) {
 				if (readvalue[x+1]=='#') GSM_SetPointBitmap(bitmap,x,y);
@@ -1022,10 +1022,10 @@ static void ReadCallerEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bi
 		bitmap->DefaultName = false;
 	}
 	sprintf(buffer,"Ringtone");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue==NULL) bitmap->Ringtone = 0xff; else DecodeHexBin (&bitmap->Ringtone, readvalue, 2);
 	sprintf(buffer,"Enabled");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
         bitmap->Enabled = true;
 	if (readvalue!=NULL) {
 		if (!strcmp(readvalue,"False")) bitmap->Enabled = false;
@@ -1066,7 +1066,7 @@ static void ReadOperatorEntry(CFG_Header *file_info, char *section, GSM_Bitmap *
 	char			*readvalue;
 
 	sprintf(buffer,"Network");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	memcpy(bitmap->NetworkCode, readvalue + 1, 6);
 	bitmap->NetworkCode[6] = 0;
 	bitmap->Type = GSM_OperatorLogo;
@@ -1086,7 +1086,7 @@ static void ReadSMSCEntry(CFG_Header *file_info, char *section, GSM_SMSC *SMSC)
 	ReadBackupText(file_info, section, buffer, SMSC->DefaultNumber);
 	sprintf(buffer,"Format");
 	SMSC->Format = GSMF_Text;
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		if (!strcmp(readvalue,"Fax")) {
 			SMSC->Format = GSMF_Fax;
@@ -1098,7 +1098,7 @@ static void ReadSMSCEntry(CFG_Header *file_info, char *section, GSM_SMSC *SMSC)
 	}
 	sprintf(buffer,"Validity");
 	SMSC->Validity.Relative = GSMV_Max_Time;
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) 
 	{
 		if (!strcmp(readvalue,"1hour")) {
@@ -1123,7 +1123,7 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 	CFG_Entry		*e;
 
 	settings->Number = 0;
-	e = CFG_FindLastSectionEntry(file_info, section);
+	e = CFG_FindLastSectionEntry(file_info, section, false);
 	while (1) {
 		if (e == NULL) break;
 		num = -1;
@@ -1138,20 +1138,20 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 			ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].HomePage);
 			sprintf(buffer,"Type%02i",num);
 			settings->Settings[settings->Number].IsContinuous = true;
-			readvalue = CFG_Get(file_info, section, buffer);
+			readvalue = CFG_Get(file_info, section, buffer, false);
 			if (readvalue!=NULL) 
 			{
 				if (!strcmp(readvalue,"Temporary")) settings->Settings[settings->Number].IsContinuous = false;
 			}
 			sprintf(buffer,"Security%02i",num);
 			settings->Settings[settings->Number].IsSecurity = true;
-			readvalue = CFG_Get(file_info, section, buffer);
+			readvalue = CFG_Get(file_info, section, buffer, false);
 			if (readvalue!=NULL) 
 			{
 				if (!strcmp(readvalue,"Off")) settings->Settings[settings->Number].IsSecurity = false;
 			}
 			sprintf(buffer,"Bearer%02i",num);
-			readvalue = CFG_Get(file_info, section, buffer);
+			readvalue = CFG_Get(file_info, section, buffer, false);
 			if (readvalue!=NULL) 
 			{
 				if (!strcmp(readvalue,"SMS")) {
@@ -1173,14 +1173,14 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Password);
 					sprintf(buffer,"Authentication%02i",num);
 					settings->Settings[settings->Number].IsNormalAuthentication = true;
-					readvalue = CFG_Get(file_info, section, buffer);
+					readvalue = CFG_Get(file_info, section, buffer, false);
 					if (readvalue!=NULL) 
 					{
 						if (!strcmp(readvalue,"Secure")) settings->Settings[settings->Number].IsNormalAuthentication = false;
 					}
 					sprintf(buffer,"CallSpeed%02i",num);
 					settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_14400;
-					readvalue = CFG_Get(file_info, section, buffer);
+					readvalue = CFG_Get(file_info, section, buffer, false);
 					if (readvalue!=NULL) 
 					{
 						if (!strcmp(readvalue,"9600")) settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_9600;
@@ -1188,14 +1188,14 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 					}
 					sprintf(buffer,"Login%02i",num);
 					settings->Settings[settings->Number].ManualLogin = false;
-					readvalue = CFG_Get(file_info, section, buffer);
+					readvalue = CFG_Get(file_info, section, buffer, false);
 					if (readvalue!=NULL) 
 					{
 						if (!strcmp(readvalue,"Manual")) settings->Settings[settings->Number].ManualLogin = true;
 					}	
 					sprintf(buffer,"CallType%02i",num);
 					settings->Settings[settings->Number].IsISDNCall = true;
-					readvalue = CFG_Get(file_info, section, buffer);
+					readvalue = CFG_Get(file_info, section, buffer, false);
 					if (readvalue!=NULL) 
 					{
 						if (!strcmp(readvalue,"Analogue")) settings->Settings[settings->Number].IsISDNCall = false;
@@ -1205,7 +1205,7 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 					sprintf(buffer,"ServiceCode%02i",num);
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Code);
 					sprintf(buffer,"IP%02i",num);
-					readvalue = CFG_Get(file_info, section, buffer);
+					readvalue = CFG_Get(file_info, section, buffer, false);
 					if (readvalue!=NULL) {
 						settings->Settings[settings->Number].IsIP = true;
 						sprintf(buffer,"IP%02i",num);
@@ -1230,10 +1230,10 @@ static void ReadRingtoneEntry(CFG_Header *file_info, char *section, GSM_Ringtone
 	ReadBackupText(file_info, section, buffer, ringtone->Name);
 	ringtone->Location = 0;
 	sprintf(buffer,"Location");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) ringtone->Location = atoi(readvalue);
 	sprintf(buffer,"NokiaBinary00");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		ringtone->Format = RING_NOKIABINARY;
 		ReadLinkedBackupText(file_info, section, "NokiaBinary", buffer2);
@@ -1254,26 +1254,26 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 	ReadBackupText(file_info, section, buffer, Profile->Name);
 
 	sprintf(buffer,"Location");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	Profile->Location = atoi(readvalue);
 
 	Profile->DefaultName = false;
 	sprintf(buffer,"DefaultName");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL && !strcmp(buffer,"true")) Profile->DefaultName = true;
 
 	Profile->HeadSetProfile = false;
 	sprintf(buffer,"HeadSetProfile");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL && !strcmp(buffer,"true")) Profile->HeadSetProfile = true;
 
 	Profile->CarKitProfile = false;
 	sprintf(buffer,"CarKitProfile");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL && !strcmp(buffer,"true")) Profile->CarKitProfile = true;
 
 	Profile->FeaturesNumber = 0;
-	e = CFG_FindLastSectionEntry(file_info, section);
+	e = CFG_FindLastSectionEntry(file_info, section, false);
 	while (1) {
 		if (e == NULL) break;
 		num = -1;
@@ -1283,31 +1283,31 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 		e = e->prev;
 		if (num != -1) {
 			sprintf(buffer,"Feature%02i",num);
-			readvalue = CFG_Get(file_info, section, buffer);
+			readvalue = CFG_Get(file_info, section, buffer, false);
 			if (readvalue==NULL) break;
 			unknown = true;
 			if (!strcmp(readvalue,"RingtoneID")) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_RingtoneID;
 				sprintf(buffer,"Value%02i",num);
-				readvalue = CFG_Get(file_info, section, buffer);
+				readvalue = CFG_Get(file_info, section, buffer, false);
 				Profile->FeatureValue[Profile->FeaturesNumber]=atoi(readvalue);
 				Profile->FeaturesNumber++;
 			} else if (!strcmp(readvalue,"MessageToneID")) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_MessageToneID;
 				sprintf(buffer,"Value%02i",num);
-				readvalue = CFG_Get(file_info, section, buffer);
+				readvalue = CFG_Get(file_info, section, buffer, false);
 				Profile->FeatureValue[Profile->FeaturesNumber]=atoi(readvalue);
 				Profile->FeaturesNumber++;
 			} else if (!strcmp(readvalue,"ScreenSaverNumber")) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_ScreenSaverNumber;
 				sprintf(buffer,"Value%02i",num);
-				readvalue = CFG_Get(file_info, section, buffer);
+				readvalue = CFG_Get(file_info, section, buffer, false);
 				Profile->FeatureValue[Profile->FeaturesNumber]=atoi(readvalue);
 				Profile->FeaturesNumber++;
 			} else if (!strcmp(readvalue,"CallerGroups")) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_CallerGroups;
 				sprintf(buffer,"Value%02i",num);
-				readvalue = CFG_Get(file_info, section, buffer);
+				readvalue = CFG_Get(file_info, section, buffer, false);
 				for (j=0;j<5;j++) {
 					Profile->CallerGroups[j]=false;
 					if (strstr(readvalue,"1"+j)!=NULL) Profile->CallerGroups[j]=true;
@@ -1346,7 +1346,7 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 			}
 			if (!unknown) {
 				sprintf(buffer,"Value%02i",num);
-				readvalue = CFG_Get(file_info, section, buffer);
+				readvalue = CFG_Get(file_info, section, buffer, false);
 				if (!strcmp(readvalue,"Level1")) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL1;
 					if (Profile->FeatureID[Profile->FeaturesNumber]==Profile_KeypadTone) {
@@ -1454,26 +1454,27 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 
 static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 {
-	CFG_Header	*file_info, *h;
-	char		buffer[100];
-	char		*readvalue;
-	int		num;
+	CFG_Header		*file_info, *h;
+	char			buffer[100];
+	char			*readvalue;
+	int			num;
+	GSM_PhonebookEntry 	PBK;
 
-	file_info = CFG_ReadFile(FileName);
+	file_info = CFG_ReadFile(FileName, false);
 
 	sprintf(buffer,"Backup");
 
-	readvalue = CFG_Get(file_info, buffer, "Format");
+	readvalue = CFG_Get(file_info, buffer, "Format", false);
 	/* Is this format version supported ? */
 	if (strcmp(readvalue,"1.01")!=0) return GE_NOTSUPPORTED;
 
-	readvalue = CFG_Get(file_info, buffer, "IMEI");
+	readvalue = CFG_Get(file_info, buffer, "IMEI", false);
 	backup->IMEI[0] = 0;
 	if (readvalue!=NULL) strcpy(backup->IMEI,readvalue);
-	readvalue = CFG_Get(file_info, buffer, "Phone");
+	readvalue = CFG_Get(file_info, buffer, "Phone", false);
 	backup->Model[0] = 0;
 	if (readvalue!=NULL) strcpy(backup->Model,readvalue);
-	readvalue = CFG_Get(file_info, buffer, "Time");
+	readvalue = CFG_Get(file_info, buffer, "Time", false);
 	backup->DateTime[0] = 0;
 	if (readvalue!=NULL) strcpy(backup->DateTime,readvalue);
 
@@ -1482,7 +1483,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
                 if (strncmp("Profile", h->section, 7) == 0) {
-			readvalue = CFG_Get(file_info, h->section, "Location");
+			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_PROFILES) {
 				backup->Profiles[num] = malloc(sizeof(GSM_Profile));
@@ -1499,7 +1500,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
                 if (strncmp("PhonePBK", h->section, 8) == 0) {
-			readvalue = CFG_Get(file_info, h->section, "Location");
+			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
 				backup->PhonePhonebook[num] = malloc(sizeof(GSM_PhonebookEntry));
@@ -1517,9 +1518,23 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
                 }
         }
 	num = 0;
+	while (0) {
+		if (backup->PhonePhonebook[num] == NULL) break;
+		if (backup->PhonePhonebook[num+1] != NULL) {
+			if (backup->PhonePhonebook[num+1]->Location < backup->PhonePhonebook[num]->Location) {
+				memcpy(&PBK,backup->PhonePhonebook[num+1],sizeof(GSM_PhonebookEntry));
+				memcpy(backup->PhonePhonebook[num+1],backup->PhonePhonebook[num],sizeof(GSM_PhonebookEntry));
+				memcpy(backup->PhonePhonebook[num],&PBK,sizeof(GSM_PhonebookEntry));
+				num = 0;
+				continue;
+			}
+		}
+		num++;
+	}
+	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
                 if (strncmp("SIMPBK", h->section, 6) == 0) {
-			readvalue = CFG_Get(file_info, h->section, "Location");
+			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SIMPHONEBOOK) {
 				backup->SIMPhonebook[num] = malloc(sizeof(GSM_PhonebookEntry));
@@ -1536,9 +1551,23 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
                 }
         }
 	num = 0;
+	while (0) {
+		if (backup->SIMPhonebook[num] == NULL) break;
+		if (backup->SIMPhonebook[num+1] != NULL) {
+			if (backup->SIMPhonebook[num+1]->Location < backup->SIMPhonebook[num]->Location) {
+				memcpy(&PBK,backup->SIMPhonebook[num+1],sizeof(GSM_PhonebookEntry));
+				memcpy(backup->SIMPhonebook[num+1],backup->SIMPhonebook[num],sizeof(GSM_PhonebookEntry));
+				memcpy(backup->SIMPhonebook[num],&PBK,sizeof(GSM_PhonebookEntry));
+				num = 0;
+				continue;
+			}
+		}
+		num++;
+	}
+	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
                 if (strncmp("Calendar", h->section, 8) == 0) {
-			readvalue = CFG_Get(file_info, h->section, "Type");
+			readvalue = CFG_Get(file_info, h->section, "Type", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_CALENDAR) {
 				backup->Calendar[num] = malloc(sizeof(GSM_CalendarNote));
@@ -1557,7 +1586,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
                 if (strncmp("Caller", h->section, 6) == 0) {
-			readvalue = CFG_Get(file_info, h->section, "Location");
+			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_CALLER) {
 				backup->CallerLogos[num] = malloc(sizeof(GSM_Bitmap));
@@ -1575,7 +1604,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
                 if (strncmp("SMSC", h->section, 4) == 0) {
-			readvalue = CFG_Get(file_info, h->section, "Location");
+			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SMSC) {
 				backup->SMSC[num] = malloc(sizeof(GSM_SMSC));
@@ -1593,7 +1622,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
                 if (strncmp("Bookmark", h->section, 8) == 0) {
-			readvalue = CFG_Get(file_info, h->section, "URL");
+			readvalue = CFG_Get(file_info, h->section, "URL", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_WAPBOOKMARK) {
 				backup->WAPBookmark[num] = malloc(sizeof(GSM_WAPBookmark));
@@ -1611,7 +1640,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
                 if (strncmp("Settings", h->section, 8) == 0) {
-			readvalue = CFG_Get(file_info, h->section, "Title00");
+			readvalue = CFG_Get(file_info, h->section, "Title00", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_WAPSETTINGS) {
 				backup->WAPSettings[num] = malloc(sizeof(GSM_MultiWAPSettings));
@@ -1629,7 +1658,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
                 if (strncmp("Ringtone", h->section, 8) == 0) {
-			readvalue = CFG_Get(file_info, h->section, "Location");
+			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_RINGTONES) {
 				backup->Ringtone[num] = malloc(sizeof(GSM_Ringtone));
@@ -1646,7 +1675,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
                 if (strncmp("TODO", h->section, 4) == 0) {
-			readvalue = CFG_Get(file_info, h->section, "Location");
+			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_TODO) {
 				backup->ToDo[num] = malloc(sizeof(GSM_TODO));
@@ -1662,9 +1691,9 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
                 }
         }
 	sprintf(buffer,"Startup");
-	readvalue = CFG_Get(file_info, buffer, "Text");
+	readvalue = CFG_Get(file_info, buffer, "Text", false);
 	if (readvalue==NULL) {
-		readvalue = CFG_Get(file_info, buffer, "Width");
+		readvalue = CFG_Get(file_info, buffer, "Width", false);
 	}
 	if (readvalue!=NULL) {
 		backup->StartupLogo = malloc(sizeof(GSM_Bitmap));
@@ -1672,7 +1701,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 		ReadStartupEntry(file_info, buffer, backup->StartupLogo);
 	}
 	sprintf(buffer,"Operator");
-	readvalue = CFG_Get(file_info, buffer, "Network");
+	readvalue = CFG_Get(file_info, buffer, "Network", false);
 	if (readvalue!=NULL) {
 		backup->OperatorLogo = malloc(sizeof(GSM_Bitmap));
 	        if (backup->OperatorLogo == NULL) return GE_MOREMEMORY;
@@ -1968,37 +1997,37 @@ static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMess
 	ReadBackupText(file_info, section, buffer, SMS->SMSC.Number);
 	sprintf(buffer,"ReplySMSC");
 	SMS->ReplyViaSameSMSC = false;
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		if (!strcmp(readvalue,"True")) SMS->ReplyViaSameSMSC = true;
 	}
 	sprintf(buffer,"Class");
 	SMS->Class = -1;
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->Class = atoi(readvalue);
 	sprintf(buffer,"Sent");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		ReadvCalTime(&SMS->DateTime, readvalue);
 		SMS->PDU = SMS_Deliver;
 	}
 	sprintf(buffer,"RejectDuplicates");
 	SMS->RejectDuplicates = false;
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		if (!strcmp(readvalue,"True")) SMS->RejectDuplicates = true;
 	}
 	sprintf(buffer,"ReplaceMessage");
 	SMS->ReplaceMessage = 0;
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->ReplaceMessage = atoi(readvalue);
 	sprintf(buffer,"MessageReference");
 	SMS->MessageReference = 0;
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->MessageReference = atoi(readvalue);
 	sprintf(buffer,"State");
 	SMS->State = GSM_UnRead;
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		if (!strcmp(readvalue,"Read"))		SMS->State = GSM_Read;
 		else if (!strcmp(readvalue,"Sent"))	SMS->State = GSM_Sent;
@@ -2010,11 +2039,11 @@ static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMess
 	ReadBackupText(file_info, section, buffer, SMS->Name);
 	sprintf(buffer,"Length");
 	SMS->Length = 0;
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->Length = atoi(readvalue);
 	sprintf(buffer,"Coding");
 	SMS->Coding = GSM_Coding_Default;
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		if (!strcmp(readvalue,"Unicode")) {
 			SMS->Coding = GSM_Coding_Unicode;
@@ -2027,7 +2056,7 @@ static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMess
 	SMS->Text[strlen(buffer)/2]	= 0;
 	SMS->Text[strlen(buffer)/2+1] 	= 0;
 	sprintf(buffer,"Folder");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->Folder = atoi(readvalue);
 	SMS->UDH.Type		= UDH_NoUDH;
 	SMS->UDH.Length 	= 0;
@@ -2035,7 +2064,7 @@ static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMess
 	SMS->UDH.PartNumber	= -1;
 	SMS->UDH.AllParts	= -1;
 	sprintf(buffer,"UDH");
-	readvalue = CFG_Get(file_info, section, buffer);
+	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		DecodeHexBin (SMS->UDH.Text, readvalue, strlen(readvalue));
 		SMS->UDH.Length = strlen(readvalue)/2;
@@ -2051,12 +2080,12 @@ static GSM_Error GSM_ReadSMSBackupTextFile(char *FileName, GSM_SMS_Backup *backu
 
 	backup->SMS[0] = NULL;
 
-	file_info = CFG_ReadFile(FileName);
+	file_info = CFG_ReadFile(FileName, false);
 
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
                 if (strncmp("SMSBackup", h->section, 9) == 0) {
-			readvalue = CFG_Get(file_info, h->section, "Number");
+			readvalue = CFG_Get(file_info, h->section, "Number", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SMS) {
 				backup->SMS[num] = malloc(sizeof(GSM_SMSMessage));

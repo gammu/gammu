@@ -12,7 +12,7 @@ Assembled by
 	Pavel Janik <Pavel@Janik.cz>
         BORBELY Zoltan (bozo@andrews.hu)
 	Pawel Kot <pkot@linuxnews.pl>
-	Marcin Wiacek (Marcin-Wiacek@TOPNET.PL)
+	Marcin Wiacek (Marcin@MWiacek.com)
         Walek [walek@pa98.opole.sdi.tpnet.pl]
 	... and other members of gnokii mailing list
             and authors of some WWW pages.

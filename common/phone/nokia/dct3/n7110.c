@@ -578,10 +578,10 @@ static GSM_Error N7110_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	switch (Bitmap->Type) {
 	case GSM_StartupLogo:
 		dprintf("Getting startup logo\n");
-		return N71_91_GetPhoneSetting(s, ID_GetBitmap, 0x15);
+		return N71_92_GetPhoneSetting(s, ID_GetBitmap, 0x15);
 	case GSM_WelcomeNoteText:
 		dprintf("Getting welcome note\n");
-		return N71_91_GetPhoneSetting(s, ID_GetBitmap, 0x02);
+		return N71_92_GetPhoneSetting(s, ID_GetBitmap, 0x02);
 	case GSM_CallerLogo:
 		pbk.MemoryType = GMT7110_CG;
 		pbk.Location   = Bitmap->Location;
@@ -1256,7 +1256,7 @@ static GSM_Error N7110_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_Phone_Data
 
 static GSM_Error N7110_Initialise (GSM_StateMachine *s)
 {
-#ifdef GSM_ENABLE_N71_91INCOMINGINFO
+#ifdef GSM_ENABLE_N71_92INCOMINGINFO
 	unsigned char Info[] = {N6110_FRAME_HEADER,0x10,0x05,0x01,0x02,0x0A,0x14,0x17};
 #endif
 #ifdef DEBUG
@@ -1265,7 +1265,7 @@ static GSM_Error N7110_Initialise (GSM_StateMachine *s)
 	error=DCT3_SetIncomingCB(s,true);
 	if (error!=GE_NONE) return error;
 #endif
-#ifdef GSM_ENABLE_N71_91INCOMINGINFO
+#ifdef GSM_ENABLE_N71_92INCOMINGINFO
 	/* Enables various things like call info, sms info, etc. */
 	return s->Protocol.Functions->WriteMessage(s, Info, 10, 0x10);
 #endif
@@ -1307,7 +1307,7 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_GetNetworkInfo	},
 	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_GetBitmap		},
 	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_IncomingFrame	},
-	{N71_91_ReplyGetNetworkLevel,	"\x0A",0x03,0x82,ID_GetNetworkLevel	},
+	{N71_92_ReplyGetNetworkLevel,	"\x0A",0x03,0x82,ID_GetNetworkLevel	},
 	{N7110_ReplySetOperatorLogo,	"\x0A",0x03,0xA4,ID_SetBitmap		},
 	{N7110_ReplyClearOperatorLogo,	"\x0A",0x03,0xB0,ID_SetBitmap		},
 
@@ -1337,7 +1337,7 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{N7110_ReplyGetPictureImageInfo,"\x14",0x03,0x97,ID_GetBitmap		},
 	{N7110_ReplyGetSMSFolders,	"\x14",0x03,0xCA,ID_GetSMSFolders	},
 
-	{N71_91_ReplyGetBatteryLevel,	"\x17",0x03,0x03,ID_GetBatteryLevel	},
+	{N71_92_ReplyGetBatteryLevel,	"\x17",0x03,0x03,ID_GetBatteryLevel	},
 
 	{DCT3_ReplySetDateTime,		"\x19",0x03,0x61,ID_SetDateTime		},
 	{DCT3_ReplyGetDateTime,		"\x19",0x03,0x63,ID_GetDateTime		},
@@ -1380,9 +1380,9 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{NOKIA_ReplyGetPhoneString,	"\x40",0x02,0xCC,ID_GetManufactureMonth	},
 	{NOKIA_ReplyGetPhoneString,	"\x40",0x02,0xCC,ID_GetOriginalIMEI	},
 
-	{N71_91_ReplyPhoneSetting,	"\x7a",0x04,0x02,ID_GetBitmap		},
-	{N71_91_ReplyPhoneSetting,	"\x7a",0x04,0x15,ID_GetBitmap		},
-	{N71_91_ReplyPhoneSetting,	"\x7a",0x04,0x15,ID_SetBitmap		},
+	{N71_92_ReplyPhoneSetting,	"\x7a",0x04,0x02,ID_GetBitmap		},
+	{N71_92_ReplyPhoneSetting,	"\x7a",0x04,0x15,ID_GetBitmap		},
+	{N71_92_ReplyPhoneSetting,	"\x7a",0x04,0x15,ID_SetBitmap		},
 
 	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetModel		},
 	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetFirmware		},
@@ -1401,14 +1401,14 @@ GSM_Phone_Functions N7110Phone = {
 	DCT3DCT4_GetModel,
 	DCT3DCT4_GetFirmware,
 	DCT3_GetIMEI,
-	N71_91_GetDateTime,
+	N71_92_GetDateTime,
 	N7110_GetAlarm,
 	N7110_GetMemory,
 	N7110_GetMemoryStatus,
 	DCT3_GetSMSC,
 	N7110_GetSMSMessage,
-	N71_91_GetBatteryLevel,
-	N71_91_GetNetworkLevel,
+	N71_92_GetBatteryLevel,
+	N71_92_GetNetworkLevel,
 	N7110_GetSMSFolders,
 	NOKIA_GetManufacturer,
 	N7110_GetNextSMSMessage,
@@ -1426,7 +1426,7 @@ GSM_Phone_Functions N7110Phone = {
 	N7110_SetRingtone,
 	N7110_SaveSMSMessage,
 	DCT3_SendSMSMessage,
-	N71_91_SetDateTime,
+	N71_92_SetDateTime,
 	N7110_SetAlarm,
 	N7110_SetBitmap,
 	N7110_SetMemory,
@@ -1460,7 +1460,8 @@ GSM_Phone_Functions N7110Phone = {
 	NOTSUPPORTED,		/*	GetDisplayStatus	*/
 	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
 	N7110_SetProfile,
-	NOTSUPPORTED		/*	GetSIMIMSI		*/
+	NOTSUPPORTED,		/*	GetSIMIMSI		*/
+	NONEFUNCTION		/*	SetIncomingCall		*/
 };
 
 #endif

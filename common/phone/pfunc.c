@@ -34,8 +34,8 @@ GSM_SMSMessageLayout PHONE_SMSStatusReport = {
 GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 {
 	folders->Number=2;
-	EncodeUnicode(folders->Folder[0].Name,GetMsg(s->msg,27,"Inbox"),strlen(GetMsg(s->msg,27,"Inbox")));
-	EncodeUnicode(folders->Folder[1].Name,GetMsg(s->msg,28,"Outbox"),strlen(GetMsg(s->msg,28,"Outbox")));
+	EncodeUnicode(folders->Folder[0].Name,GetMsg(s->msg,"Inbox"),strlen(GetMsg(s->msg,"Inbox")));
+	EncodeUnicode(folders->Folder[1].Name,GetMsg(s->msg,"Outbox"),strlen(GetMsg(s->msg,"Outbox")));
 	return GE_NONE;
 }
 

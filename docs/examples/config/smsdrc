@@ -1,0 +1,31 @@
+# This is a sample smsdrc file. It's required for --smsd option in Gammu
+
+# This section is like section "gammu" in "gammurc" file. See info there
+# for more details
+[gammu]
+#port = /dev/ttyS1
+#model = 6110
+#connection = dlr3
+#synchronizetime = yes
+#logfile = gammulog
+#logformat = textall
+#use_locking = yes
+#gammuloc = gammu.us
+
+# This section contains PIN for SIM card, logfile for info about smsd actions
+[smsd]
+PIN = 1234
+logfile = smsdlog
+
+# When uncomment this section and insert numbers here, smsd will process
+# incoming sms only from numbers written here (incoming sms from all other
+# numbers will be deleted)
+#[include_numbers]
+#number1 = 1234
+
+# When uncomment this section and insert numbers here, smsd will process
+# incoming sms from all numbers not written here (incoming sms from numbers
+# written here will be deleted). This is "black" list.
+# Note: after using "include_numbers" section this one will be ignored
+#[exclude_numbers]
+#number1 = 1234

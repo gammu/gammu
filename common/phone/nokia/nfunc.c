@@ -144,19 +144,19 @@ void NOKIA_GetDefaultProfileName(GSM_StateMachine *s, GSM_Profile *Profile)
 {
 	if (Profile->DefaultName) {
 		switch(Profile->Location) {
-			case 1:	EncodeUnicode(Profile->Name,GetMsg(s->msg,34,"General"),strlen(GetMsg(s->msg,34,"General")));
+			case 1:	EncodeUnicode(Profile->Name,GetMsg(s->msg,"General"),strlen(GetMsg(s->msg,"General")));
 				break;
-			case 2: EncodeUnicode(Profile->Name,GetMsg(s->msg,35,"Silent"),strlen(GetMsg(s->msg,35,"Silent")));
+			case 2: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Silent"),strlen(GetMsg(s->msg,"Silent")));
 				break;
-			case 3: EncodeUnicode(Profile->Name,GetMsg(s->msg,36,"Meeting"),strlen(GetMsg(s->msg,36,"Meeting")));
+			case 3: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Meeting"),strlen(GetMsg(s->msg,"Meeting")));
 				break;
-			case 4:	EncodeUnicode(Profile->Name,GetMsg(s->msg,37,"Outdoor"),strlen(GetMsg(s->msg,37,"Outdoor")));
+			case 4:	EncodeUnicode(Profile->Name,GetMsg(s->msg,"Outdoor"),strlen(GetMsg(s->msg,"Outdoor")));
 				break;
-			case 5:	EncodeUnicode(Profile->Name,GetMsg(s->msg,38,"Pager"),strlen(GetMsg(s->msg,38,"Pager")));
+			case 5:	EncodeUnicode(Profile->Name,GetMsg(s->msg,"Pager"),strlen(GetMsg(s->msg,"Pager")));
 				break;
-			case 6: EncodeUnicode(Profile->Name,GetMsg(s->msg,32,"Car"),strlen(GetMsg(s->msg,32,"Car")));
+			case 6: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Car"),strlen(GetMsg(s->msg,"Car")));
 				break;
-			case 7: EncodeUnicode(Profile->Name,GetMsg(s->msg,33,"Headset"),strlen(GetMsg(s->msg,33,"Headset")));
+			case 7: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Headset"),strlen(GetMsg(s->msg,"Headset")));
 				break;
 		}
 	}
@@ -989,9 +989,10 @@ GSM_Error NOKIA_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 
 GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
+	GSM_Call 	call;
+	int			tmp;
 #ifdef DEBUG
 	unsigned char 	buffer[200];
-	int		tmp;
 
 	switch (msg.Buffer[3]) {
 	case 0x02 : dprintf("Call established, remote phone is ringing.\n"); 	break;
@@ -1028,6 +1029,33 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, G
 		break;
 	}
 #endif
+	if (User->IncomingCall) {
+		switch (msg.Buffer[3]) {
+		case 0x02:
+			call.Status = GN_CALL_CallStart;
+			break;
+		case 0x04:
+			call.Status = GN_CALL_CallRemoteEnd;
+			break;
+		case 0x05:
+			call.Status = GN_CALL_IncomingCall;
+			tmp = 6;
+			NOKIA_GetUnicodeString(&tmp, msg.Buffer,call.PhoneNumber,false);
+			break;
+		case 0x09:
+			call.Status = GN_CALL_CallLocalEnd;
+			break;
+		case 0x53:
+			call.Status = GN_CALL_OutgoingCall;
+			tmp = 6;
+			NOKIA_GetUnicodeString(&tmp, msg.Buffer,call.PhoneNumber,false);
+			break;
+		default:
+			return GE_NONE;
+		}
+		User->IncomingCall(Data->Device, call);
+	}
+
 	return GE_NONE;
 }
 
@@ -1347,19 +1375,19 @@ void NOKIA_GetDefaultCallerGroupName(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		Bitmap->DefaultName = true;
 		switch(Bitmap->Location) {
 		case 1:
-			EncodeUnicode(Bitmap->Text,GetMsg(s->msg,22,"Family"),strlen(GetMsg(s->msg,22,"Family")));
+			EncodeUnicode(Bitmap->Text,GetMsg(s->msg,"Family"),strlen(GetMsg(s->msg,"Family")));
 			break;
 		case 2:
-			EncodeUnicode(Bitmap->Text,GetMsg(s->msg,23,"VIP"),strlen(GetMsg(s->msg,23,"VIP")));
+			EncodeUnicode(Bitmap->Text,GetMsg(s->msg,"VIP"),strlen(GetMsg(s->msg,"VIP")));
 			break;
 		case 3:
-			EncodeUnicode(Bitmap->Text,GetMsg(s->msg,24,"Friends"),strlen(GetMsg(s->msg,24,"Friends")));
+			EncodeUnicode(Bitmap->Text,GetMsg(s->msg,"Friends"),strlen(GetMsg(s->msg,"Friends")));
 			break;
 		case 4:
-			EncodeUnicode(Bitmap->Text,GetMsg(s->msg,25,"Colleagues"),strlen(GetMsg(s->msg,25,"Colleagues")));
+			EncodeUnicode(Bitmap->Text,GetMsg(s->msg,"Colleagues"),strlen(GetMsg(s->msg,"Colleagues")));
 			break;
 		case 5:
-			EncodeUnicode(Bitmap->Text,GetMsg(s->msg,26,"Other"),strlen(GetMsg(s->msg,26,"Other")));
+			EncodeUnicode(Bitmap->Text,GetMsg(s->msg,"Other"),strlen(GetMsg(s->msg,"Other")));
 			break;
 		}
 	}

@@ -106,8 +106,8 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #ifdef GSM_ENABLE_NOKIA7110
 	GSM_RegisterModule(s,&N7110Phone);
 #endif
-#ifdef GSM_ENABLE_NOKIA9110
-	GSM_RegisterModule(s,&N9110Phone);
+#ifdef GSM_ENABLE_NOKIA9210
+	GSM_RegisterModule(s,&N9210Phone);
 #endif
 #ifdef GSM_ENABLE_ALCATEL
 	GSM_RegisterModule(s,&AlcatelPhone);
@@ -551,14 +551,14 @@ CFG_Header *CFG_FindGammuRC()
         strncat(rcfile, "/.gammurc", 200);
 #endif
 
-        if ((cfg_info = CFG_ReadFile(rcfile)) == NULL) {
+        if ((cfg_info = CFG_ReadFile(rcfile, false)) == NULL) {
 #if defined(WIN32) || defined(DJGPP)
-                if ((cfg_info = CFG_ReadFile("gammurc")) == NULL) {
+                if ((cfg_info = CFG_ReadFile("gammurc", false)) == NULL) {
 //			dprintf("CFG file - No config files. Using defaults.\n");
                         return NULL;
                 }
 #else
-                if ((cfg_info = CFG_ReadFile("/etc/gammurc")) == NULL) {
+                if ((cfg_info = CFG_ReadFile("/etc/gammurc", false)) == NULL) {
 //			dprintf("CFG file - No config files. Using defaults.\n");
                         return NULL;
                 }
@@ -594,25 +594,25 @@ void CFG_ReadConfig(CFG_Header *cfg_info, char **model, char **port,
 
 	if (cfg_info==NULL) return;
 	
-        (char *)*port = CFG_Get(cfg_info, "gammu", "port");
+        (char *)*port = CFG_Get(cfg_info, "gammu", "port", false);
         if (!*port)		(char *)*port		 = DefaultPort;
 
-        (char *)*model = CFG_Get(cfg_info, "gammu", "model");
+        (char *)*model = CFG_Get(cfg_info, "gammu", "model", false);
         if (!*model)		(char *)*model		 = DefaultModel;
 
-        (char *)*connection = CFG_Get(cfg_info, "gammu", "connection");
+        (char *)*connection = CFG_Get(cfg_info, "gammu", "connection", false);
         if (!*connection)	(char *)*connection	 = DefaultConnection;
 
-        (char *)*synchronizetime = CFG_Get(cfg_info, "gammu", "synchronizetime");
+        (char *)*synchronizetime = CFG_Get(cfg_info, "gammu", "synchronizetime", false);
         if (!*synchronizetime) 	(char *)*synchronizetime = DefaultSynchronizeTime;
 
-        (char *)*debugfile = CFG_Get(cfg_info, "gammu", "logfile");
+        (char *)*debugfile = CFG_Get(cfg_info, "gammu", "logfile", false);
         if (!*debugfile)	(char *)*debugfile	 = DefaultDebugFile;
 
-        (char *)*debuglevel = CFG_Get(cfg_info, "gammu", "logformat");
+        (char *)*debuglevel = CFG_Get(cfg_info, "gammu", "logformat", false);
         if (!*debuglevel)	(char *)*debuglevel	 = DefaultDebugLevel;
 
-        (char *)*lockdevice = CFG_Get(cfg_info, "gammu", "use_locking");
+        (char *)*lockdevice = CFG_Get(cfg_info, "gammu", "use_locking", false);
         if (!*lockdevice)	(char *)*lockdevice	 = DefaultLockDevice;
 }
 
@@ -676,8 +676,7 @@ static OnePhoneModel allmodels[] = {
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"8910" ,"NHM-4" ,"Nokia 8910", {0}},
 #endif
-#ifdef GSM_ENABLE_NOKIA9110
-	{"9110" ,"RAE-2" ,"",           {0}},
+#ifdef GSM_ENABLE_NOKIA9210
 	{"9210" ,"RAE-3" ,"",           {0}},
 #endif
 #ifdef GSM_ENABLE_ATGEN
@@ -685,7 +684,7 @@ static OnePhoneModel allmodels[] = {
 	{"M20"  ,	  "M20",	  "",				   {0}},
 	{"MC35" ,	  "MC35",	  "",				   {0}},
 	{"iPAQ" ,	  "iPAQ"  ,	  "",				   {0}},
-	{"ONE TOUCH 500", "ONE TOUCH 500","",				   {0}},
+	{"A500", 	  "ONE TOUCH 500","",				   {0}},
 	{"9210",	  "RAE-3",	  "Nokia Communicator GSM900/1800",{0}},
 #endif
 	{""     ,""      ,"",           {0}}

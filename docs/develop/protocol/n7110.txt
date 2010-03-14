@@ -4,7 +4,7 @@ Last update 04.07.2002
 
 Assembled by
 	Balazs Nagy (js@iksz.hu)
-	Marcin Wiacek (Marcin-Wiacek@TOPNET.PL)
+	Marcin Wiacek (Marcin@MWiacek.com)
         Jens Bennfors <jens.bennfors@ing.hj.se>
         Michael Hund <michael@drhund.de>
         Jay Bertrand <jay.bertrand@libertysurf.fr>
