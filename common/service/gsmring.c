@@ -451,6 +451,8 @@ GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 			savemid(file,ringtone);
 		} else if (strstr(FileName,".ott")) {
 			saveott(file,ringtone);
+		} else if (strstr(FileName,".rng")) {
+			saveott(file,ringtone);
 		} else if (strstr(FileName,".imy")) {
 			saveimelody(file,ringtone);
 		} else if (strstr(FileName,".ime")) {

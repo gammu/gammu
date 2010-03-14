@@ -1,15 +1,15 @@
 #ifndef __gsm_backup_h
 #define __gsm_backup_h
 
-#include "../misc/misc.h"
-#include "gsmpbk.h"
-#include "gsmcal.h"
-#include "gsmlogo.h"
-#include "gsmring.h"
-#include "gsmsms.h"
-#include "gsmwap.h"
-#include "gsmprof.h"
-#include "gsmmisc.h"
+#include "../../misc/misc.h"
+#include "../gsmpbk.h"
+#include "../gsmcal.h"
+#include "../gsmlogo.h"
+#include "../gsmring.h"
+#include "../gsmsms.h"
+#include "../gsmwap.h"
+#include "../gsmprof.h"
+#include "../gsmmisc.h"
 
 #define GSM_BACKUP_MAX_PHONEPHONEBOOK 	501
 #define GSM_BACKUP_MAX_SIMPHONEBOOK 	251
@@ -45,47 +45,16 @@ typedef struct {
 	GSM_Bitmap		*OperatorLogo;
 } GSM_Backup;
 
-GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode);
-GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup);
-
-void GSM_ClearBackup(GSM_Backup *backup);
-void GSM_FreeBackup(GSM_Backup *backup);
-
-typedef struct {
-	bool UseUnicode;
-
-	bool IMEI;
-	bool Model;
-	bool DateTime;
-	bool ToDo;
-	bool PhonePhonebook;
-	bool SIMPhonebook;
-	bool Calendar;
-	bool CallerLogos;
-	bool SMSC;
-	bool WAPBookmark;
-	bool Profiles;
-	bool WAPSettings;
-	bool MMSSettings;
-	bool Ringtone;
-	bool StartupLogo;
-	bool OperatorLogo;
- 	bool FMStation;
-	bool GPRSPoint;
-} GSM_Backup_Info;
-
-void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup);
-
 #define GSM_BACKUP_MAX_SMS	500
 
 typedef struct {
 	GSM_SMSMessage		*SMS[GSM_BACKUP_MAX_SMS];
 } GSM_SMS_Backup;
 
-GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup);
-GSM_Error GSM_SaveSMSBackupFile(char *FileName, GSM_SMS_Backup *backup);
+extern GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup);
+extern GSM_Error GSM_SaveSMSBackupFile(char *FileName, GSM_SMS_Backup *backup);
 
-#endif	/* __gsm_backup_h */
+#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

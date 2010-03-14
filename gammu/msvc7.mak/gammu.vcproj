@@ -133,6 +133,21 @@
 				RelativePath="..\..\common\phone\at\atgen.c">
 			</File>
 			<File
+				RelativePath="..\..\common\service\backup\backldif.c">
+			</File>
+			<File
+				RelativePath="..\..\common\service\backup\backlmb.c">
+			</File>
+			<File
+				RelativePath="..\..\common\service\backup\backtext.c">
+			</File>
+			<File
+				RelativePath="..\..\common\service\backup\backvcf.c">
+			</File>
+			<File
+				RelativePath="..\..\common\service\backup\backvcs.c">
+			</File>
+			<File
 				RelativePath="..\..\common\device\bluetoth\bluetoth.c">
 			</File>
 			<File
@@ -149,6 +164,9 @@
 			</File>
 			<File
 				RelativePath="..\depend\dct4.c">
+			</File>
+			<File
+				RelativePath="..\..\common\phone\nokia\dct4\dct4func.c">
 			</File>
 			<File
 				RelativePath="..\..\common\device\devfunc.c">
@@ -178,7 +196,7 @@
 				RelativePath=".\gammu.rc">
 			</File>
 			<File
-				RelativePath="..\..\common\service\gsmback.c">
+				RelativePath="..\..\common\service\backup\gsmback.c">
 			</File>
 			<File
 				RelativePath="..\..\common\service\gsmcal.c">
@@ -206,9 +224,6 @@
 			</File>
 			<File
 				RelativePath="..\..\common\gsmstate.c">
-			</File>
-			<File
-				RelativePath="..\..\common\service\gsmvcal.c">
 			</File>
 			<File
 				RelativePath="..\..\common\service\gsmwap.c">
@@ -299,6 +314,24 @@
 				RelativePath="..\..\common\phone\at\atgen.h">
 			</File>
 			<File
+				RelativePath="..\..\common\service\backup\backgen.h">
+			</File>
+			<File
+				RelativePath="..\..\common\service\backup\backldif.h">
+			</File>
+			<File
+				RelativePath="..\..\common\service\backup\backlmb.h">
+			</File>
+			<File
+				RelativePath="..\..\common\service\backup\backtext.h">
+			</File>
+			<File
+				RelativePath="..\..\common\service\backup\backvcf.h">
+			</File>
+			<File
+				RelativePath="..\..\common\service\backup\backvcs.h">
+			</File>
+			<File
 				RelativePath="..\..\common\device\bluetoth\blue_w32.h">
 			</File>
 			<File
@@ -323,6 +356,9 @@
 				RelativePath="..\depend\dct4.h">
 			</File>
 			<File
+				RelativePath="..\..\common\phone\nokia\dct4\dct4func.h">
+			</File>
+			<File
 				RelativePath="..\..\common\device\devfunc.h">
 			</File>
 			<File
@@ -335,7 +371,7 @@
 				RelativePath="..\gammu.h">
 			</File>
 			<File
-				RelativePath="..\..\common\service\gsmback.h">
+				RelativePath="..\..\common\service\backup\gsmback.h">
 			</File>
 			<File
 				RelativePath="..\..\common\service\gsmcal.h">
@@ -363,9 +399,6 @@
 			</File>
 			<File
 				RelativePath="..\..\common\gsmstate.h">
-			</File>
-			<File
-				RelativePath="..\..\common\service\gsmvcal.h">
 			</File>
 			<File
 				RelativePath="..\..\common\service\gsmwap.h">

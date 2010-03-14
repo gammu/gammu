@@ -10,7 +10,7 @@
 #include "../nfunc.h"
 #include "dct3func.h"
 
-#if defined(GSM_ENABLE_NOKIA_DCT3)
+#ifdef GSM_ENABLE_NOKIA_DCT3
 
 GSM_Error DCT3_ReplyPressKey(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {

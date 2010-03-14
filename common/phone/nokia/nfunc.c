@@ -224,6 +224,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			case 0x00:
 			case 0x01:	/* Not assigned dialed number */
 			case 0x0b:
+			case 0x55:	/* In many firmwares 0x55 visible after using
+			                 * Save from Call Register menu and saving number
+					 * to existing phonebook entry */
 			case N7110_NUMBER_GENERAL:
 				smprintf(s, "  General number");
 				entry->Entries[entry->EntriesNum].EntryType=PBK_Number_General;

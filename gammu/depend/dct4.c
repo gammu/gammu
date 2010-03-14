@@ -8,6 +8,7 @@
 #include "dct4.h"
 #include "../gammu.h"
 #include "../../common/phone/nokia/nfunc.h"
+#include "../../common/phone/nokia/dct4/dct4func.h"
 #include "../../common/misc/coding.h"
 
 extern GSM_Reply_Function UserReplyFunctions4[];
@@ -19,6 +20,9 @@ GSM_Error CheckDCT4Only()
 	bool found = false;
 
 	/* Checking if phone is DCT4 */
+#ifdef GSM_ENABLE_NOKIA3650
+ 	if (strstr(N3650Phone.models, s.Phone.Data.ModelInfo->model) != NULL) found = true;
+#endif
 #ifdef GSM_ENABLE_NOKIA6510
  	if (strstr(N6510Phone.models, s.Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
@@ -117,6 +121,7 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
  			 {DCT4_DISPLAY_PHONE_NAME,14},{DCT4_WAP_GOTO_MENU,15},
 			 {DCT4_WAP_SETTINGS_MENU,16},{DCT4_SERVICES_GAMES_APP_GALLERY,19},
 			 {DCT4_DISPLAY_WAP_PROFILE,25},{0,0}}},
+/*3650*/ {"NHL-8",	{{DCT4_ALS,1},{0,0}}},
 /*5100*/ {"NPM-6",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
 			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
 			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
@@ -498,7 +503,7 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMac
 			memcpy(Buffer,msg.Buffer+(j+1),msg.Buffer[j]);
 			Buffer[msg.Buffer[j]] 	= 0;
 			Buffer[msg.Buffer[j]+1] = 0;
-			dprintf("%i. \"%s\"\n",i+1,DecodeUnicodeString(Buffer));	
+			dprintf("%i. \"%s\"\n",i+1,DecodeUnicodeString(Buffer));
  			if (i==*s->Phone.Data.VoiceRecord) {
  				sprintf(s->Phone.Data.PhoneString,"%s.wav",DecodeUnicodeString(Buffer));
 				return GE_NONE;
@@ -581,7 +586,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	s.Phone.Data.PhoneString 	= Buffer;
 	ReqToken[7] 			= Location;
 	dprintf("Getting voice record token\n");
-	error=GSM_WaitFor (&s, ReqToken, 18, 0x23, 4, ID_User4);
+	error=GSM_WaitFor (&s, ReqToken, 10, 0x23, 4, ID_User4);
 	Print_Error(error);
 	TokenLocation 			= Buffer[0] * 256 + Buffer[1];
 	Token				= Buffer[2];
@@ -652,7 +657,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	FMT_Header[38]	= (unsigned char)(((wavfilesize - 238) * 5 ) / (256*256));
 	FMT_Header[39]	= (unsigned char)(((wavfilesize - 238) * 5 ) / (256*256*256));
 
-	wavfilesize 	= (unsigned char)(wavfilesize - 54 - 6);
+	wavfilesize 	= wavfilesize - 54 - 6;
 	DATA_Header[4] 	= (unsigned char)(wavfilesize % 256);
 	DATA_Header[5] 	= (unsigned char)(wavfilesize / 256);
 	DATA_Header[6] 	= (unsigned char)(wavfilesize / (256*256));
@@ -831,8 +836,6 @@ void DCT4SetLight(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-extern GSM_Error N6510_SetPhoneMode(GSM_StateMachine *s, N6510_PHONE_MODE mode);
-
 void DCT4DisplayTest(int argc, char *argv[])
 {
 	unsigned char ans[200];
@@ -845,7 +848,7 @@ void DCT4DisplayTest(int argc, char *argv[])
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
-	N6510_SetPhoneMode(&s, N6510_MODE_TEST);
+	DCT4_SetPhoneMode(&s, DCT4_MODE_TEST);
 
 	s.Protocol.Functions->WriteMessage(&s, req0, 6, 0x40);
 
@@ -855,7 +858,7 @@ void DCT4DisplayTest(int argc, char *argv[])
 	printf("Press any key to continue...\n");
 	GetLine(stdin, ans, 99);
 
-	N6510_SetPhoneMode(&s, N6510_MODE_NORMAL);
+	DCT4_SetPhoneMode(&s, DCT4_MODE_NORMAL);
 }
 
 int ADC;
@@ -932,6 +935,160 @@ void DCT4GetADC(int argc, char *argv[])
 	}
 }
 
+static double 		RadioFreq;
+static unsigned char 	RadioName[100];
+
+static GSM_Error DCT4_ReplyTuneRadio(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	int 		length;
+	unsigned char 	name[100];
+
+	switch (msg.Buffer[3]) {
+	case 0x09:
+		N6510_DecodeFMFrequency(&RadioFreq, msg.Buffer+16);
+
+ 		length = msg.Buffer[8];
+ 		memcpy(name,msg.Buffer+18,length*2);
+ 		name[length*2]	 = 0x00;
+ 		name[length*2+1] = 0x00;
+ 		CopyUnicodeString(RadioName,name);
+		smprintf(s,"Station name: \"%s\"\n",DecodeUnicodeString(RadioName));
+		return GE_NONE;
+	case 0x15:
+	case 0x16:
+		smprintf(s,"Response for enabling radio/headset status received\n");
+		if (msg.Buffer[5] == 0) {
+			smprintf(s,"Connected\n");
+			return GE_NONE;
+		}
+		smprintf(s,"Probably not connected\n");
+		return GE_PERMISSION;
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+void DCT4TuneRadio(int argc, char *argv[])
+{
+	double		Freq, diff;
+ 	GSM_FMStation 	FMStation[50],FMStat;
+	int		i, j, num;
+	bool		found;
+
+	unsigned char Enable[]     = {N6110_FRAME_HEADER, 0x00, 0x00, 0x00};
+	unsigned char Disable[]    = {N6110_FRAME_HEADER, 0x01, 0x0E, 0x00};
+//	unsigned char SetVolume[]  = {N6110_FRAME_HEADER, 0x14,
+//				      0x00,	/* Volume level */
+//				      0x00};
+//	unsigned char MuteUnMute[] = {N6110_FRAME_HEADER, 0x0F,
+//				      0x0C,	/* 0x0B = mute, 0x0C = unmute */
+//				      0x00};
+	unsigned char SetFreq[]	   = {N6110_FRAME_HEADER, 0x08,
+				      0x08, 0x14, 0x00, 0x01,
+				      0x9A, 0x28};  /* Frequency */
+//	unsigned char Find1[]	   = {N6110_FRAME_HEADER, 0x08,
+//				      0x04, 0x14, 0x00, 0x00, 0x00, 0x00};
+	unsigned char Find2[]	   = {N6110_FRAME_HEADER, 0x08,
+				      0x05, 0x14, 0x00, 0x00, 0x00, 0x00};
+//	unsigned char SetStereo[]  = {N6110_FRAME_HEADER, 0x19,
+//				      0x0A, 0x00, 0x15};
+//	unsigned char SetMono[]    = {N6110_FRAME_HEADER, 0x19,
+//				      0x09, 0x00, 0x96};
+
+	GSM_Init(true);
+
+        CheckDCT4();
+
+	s.User.UserReplyFunctions=UserReplyFunctions4;
+
+	FMStat.Location = 1;
+	error = Phone->GetFMStation(&s,&FMStat);
+	if (error != GE_NONE && error != GE_EMPTY) {
+		printf("Phone seems not to support radio\n");
+		GSM_Terminate();
+		exit(-1);		
+	}
+
+	error=GSM_WaitFor (&s, Enable, 6, 0x3E, 4, ID_User3);
+	if (error == GE_PERMISSION) {
+		printf("Please connect headset. Required as antenna\n");
+		GSM_Terminate();
+		exit(-1);
+	}
+	Print_Error(error);
+
+	num=0;
+	for (i=88;i<108;i++) {
+		fprintf(stderr,"%cSearching: %i percent",13,(i-88)*100/(108-88));
+		Freq = i;
+		N6510_EncodeFMFrequency(Freq, SetFreq+8);
+		error=GSM_WaitFor (&s, SetFreq, 10, 0x3E, 4, ID_User3);
+		Print_Error(error);
+
+		error=GSM_WaitFor (&s, Find2, 10, 0x3E, 4, ID_User3);
+		Print_Error(error);
+		found = false;
+		for (j=0;j<num;j++) {
+			if (FMStation[j].Frequency > RadioFreq) {
+				diff = FMStation[j].Frequency - RadioFreq;
+			} else {
+				diff = RadioFreq - FMStation[j].Frequency;
+			}
+			if (diff <= 0.2) {
+				dprintf("diff is %f\n",diff);
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			dprintf("Adding %f, num %i\n",RadioFreq,num);
+			FMStation[num].Frequency = RadioFreq;
+			CopyUnicodeString(FMStation[num].StationName,RadioName);
+			num++;
+		}
+	}
+	fprintf(stderr,"%cSearching: %i percent",13,100);
+	fprintf(stderr,"\n\n");
+
+	i=0;
+	while(1) {
+		if (i==num || i==num-1) break;
+		if (FMStation[i].Frequency > FMStation[i+1].Frequency) {
+			memcpy(&FMStat,&FMStation[i],sizeof(GSM_FMStation));
+			memcpy(&FMStation[i],&FMStation[i+1],sizeof(GSM_FMStation));
+			memcpy(&FMStation[i+1],&FMStat,sizeof(GSM_FMStation));
+			i = 0;
+			continue;
+		}
+		i++;
+	}
+	for (i=0;i<num;i++) {
+		fprintf(stderr,"%02i.",i+1);
+		if (FMStation[i].Frequency < 100) fprintf(stderr," ");
+		fprintf(stderr,"%.1f MHz - \"%s\" \n",
+			FMStation[i].Frequency,
+			DecodeUnicodeString(FMStation[i].StationName));
+	}
+
+	if (answer_yes2("Do you want to save found stations")) {
+		fprintf(stderr,"Deleting old FM stations: ");
+		error=Phone->ClearFMStations(&s);
+		Print_Error(error);
+		fprintf(stderr,"Done\n");
+		for (i=0;i<num;i++) {
+			FMStation[i].Location = i+1;
+			error=Phone->SetFMStation(&s,&FMStation[i]);
+			Print_Error(error);
+			fprintf(stderr,"%cWriting: %i percent",13,(i+1)*100/num);
+		}
+		fprintf(stderr,"\n");
+	}
+
+	error=GSM_WaitFor (&s, Disable, 6, 0x3E, 4, ID_User3);
+	Print_Error(error);
+
+	GSM_Terminate();
+}
+
 static GSM_Reply_Function UserReplyFunctions4[] = {
 
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x05,ID_User2	},
@@ -954,6 +1111,11 @@ static GSM_Reply_Function UserReplyFunctions4[] = {
 	{DCT4_ReplyTestsStartup,	"\x35",0x02,0x02,ID_User3	},
 	{DCT4_ReplyTestsNames,		"\x35",0x02,0x03,ID_User1	},
 	{DCT4_ReplyTestsStatus,		"\x35",0x02,0x04,ID_User2	},
+
+	{DCT4_ReplyTuneRadio,		"\x3E",0x03,0x09,ID_User3	},
+	{DCT4_ReplyTuneRadio,		"\x3E",0x03,0x15,ID_User3	},
+	{DCT4_ReplyTuneRadio,		"\x3E",0x03,0x15,ID_SetFMStation},
+	{DCT4_ReplyTuneRadio,		"\x3E",0x03,0x16,ID_User3	},
 
 	{DCT4_ReplyGetVoiceRecord,	"\x4A",0x03,0x31,ID_User4	},
 

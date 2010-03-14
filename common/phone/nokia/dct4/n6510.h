@@ -6,12 +6,6 @@
 #include "../../../service/gsmsms.h"
 
 typedef enum {
-	N6510_MODE_NORMAL = 0x01,
-	N6510_MODE_TEST   = 0x04,	
-	N6510_MODE_LOCAL  = 0x05
-} N6510_PHONE_MODE;
-
-typedef enum {
 	N6510_LIGHT_DISPLAY = 0x01,
 	N6510_LIGHT_KEYPAD  = 0x03,
 	N6510_LIGHT_TORCH   = 0x10
@@ -48,6 +42,9 @@ typedef struct {
 
 	unsigned char			PhoneMode;
 } GSM_Phone_N6510Data;
+
+void N6510_EncodeFMFrequency(double freq, unsigned char *buff);
+void N6510_DecodeFMFrequency(double *freq, unsigned char *buff);
 
 #ifndef GSM_USED_MBUS2
 #  define GSM_USED_MBUS2

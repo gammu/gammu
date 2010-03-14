@@ -11,54 +11,8 @@
 #include "../nfunc.h"
 #include "../nfuncold.h"
 #include "../../pfunc.h"
+#include "dct4func.h"
 #include "n6510.h"
-
-
-static GSM_Error N6510_ReplyGetPhoneMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{
-	s->Phone.Data.Priv.N6510.PhoneMode = msg.Buffer[4];
-	return GE_NONE;
-}
-
-static GSM_Error N6510_GetPhoneMode(GSM_StateMachine *s)
-{
-	unsigned char req[] = {N6110_FRAME_HEADER, 0x02, 0x00, 0x00};
-
-	smprintf(s,"Getting phone mode\n");
-
-	return GSM_WaitFor (s, req, 6, 0x15, 4, ID_Reset);
-}
-
-static GSM_Error N6510_ReplySetPhoneMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{
-	return GE_NONE;
-}
-
-GSM_Error N6510_SetPhoneMode(GSM_StateMachine *s, N6510_PHONE_MODE mode)
-{
-	int	      i;
-	GSM_Error     error;
-	unsigned char req[] = {N6110_FRAME_HEADER, 0x01,
-			       0x04,		/* phone mode */
-			       0x00};
-
-	if (s->ConnectionType != GCT_FBUS2) return GE_OTHERCONNECTIONREQUIRED;
-
-	req[4] = mode;
-
-	while (1) {
-		smprintf(s,"Going to phone mode %i\n",mode);
-		error = GSM_WaitFor (s, req, 6, 0x15, 4, ID_Reset);
-		if (error != GE_NONE) return error;
-		for (i=0;i<20;i++) {
-			error=N6510_GetPhoneMode(s);
-			if (error != GE_NONE) return error;
-			if (s->Phone.Data.Priv.N6510.PhoneMode == mode) return GE_NONE;
-			my_sleep(500);
-		}
-	}
-	return GE_NONE;
-}
 
 static GSM_Error N6510_Initialise (GSM_StateMachine *s)
 {
@@ -66,21 +20,6 @@ static GSM_Error N6510_Initialise (GSM_StateMachine *s)
 
 	/* Enables various things like incoming SMS, call info, etc. */
 	return N71_65_EnableFunctions (s, "\x01\x02\x06\x0A\x14\x17\x39", 7);
-}
-
-static GSM_Error N6510_ReplyGetIMEI(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{
-	memcpy(s->Phone.Data.IMEI,msg.Buffer + 10, 16);
-	smprintf(s, "Received IMEI %s\n",s->Phone.Data.IMEI);
-	return GE_NONE;
-}
-
-static GSM_Error N6510_GetIMEI (GSM_StateMachine *s)
-{
-	unsigned char req[5] = {N6110_FRAME_HEADER, 0x00, 0x41};
-
-	smprintf(s, "Getting IMEI\n");
-	return GSM_WaitFor (s, req, 5, 0x1B, 2, ID_GetIMEI);
 }
 
 static GSM_Error N6510_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1377,34 +1316,6 @@ static GSM_Error N6510_DeleteUserRingtones(GSM_StateMachine *s)
 
 	smprintf(s, "Deleting all user ringtones\n");
 	return GSM_WaitFor (s, DelAllRingtoneReq, 6, 0x1F, 4, ID_SetRingtone);
-}
-
-static GSM_Error N6510_GetProductCode(GSM_StateMachine *s, char *value)
-{
-	return NOKIA_GetPhoneString(s,"\x00\x03\x04\x0b\x00\x02",6,0x1b,value,ID_GetProductCode,10);
-}
-
-static GSM_Error N6510_GetHardware(GSM_StateMachine *s, char *value)
-{
-	return NOKIA_GetPhoneString(s,"\x00\x03\x02\x07\x00\x02",6,0x1b,value,ID_GetHardware,10);
-}
-
-static GSM_Error N6510_Reset(GSM_StateMachine *s, bool hard)
-{
-	GSM_Error error;
-
-	if (hard) return GE_NOTSUPPORTED;
-
-	error = N6510_SetPhoneMode(s, N6510_MODE_TEST);
-	if (error != GE_NONE) return error;
-
-	error = N6510_SetPhoneMode(s, N6510_MODE_NORMAL);
-	if (error != GE_NONE) return error;
-
-	s->Phone.Data.EnableIncomingSMS = false;
-	s->Phone.Data.EnableIncomingCB  = false;
-
-	return GE_NONE;
 }
 
 static GSM_Error N6510_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
@@ -3489,6 +3400,34 @@ static GSM_Error N6510_ReplyLogIntoNetwork(GSM_Protocol_Message msg, GSM_StateMa
 	return GE_NONE;
 }
 
+void N6510_EncodeFMFrequency(double freq, unsigned char *buff)
+{
+	double			freq0;
+	unsigned char		buffer[20];
+	unsigned int		i,freq2;
+
+	sprintf(buffer,"%.3f",freq);
+	for (i=0;i<strlen(buffer);i++) {
+		if (buffer[i] == ',' || buffer[i] == '.') buffer[i] = ' ';
+	}
+	StringToDouble(buffer, &freq0);
+ 	freq2 = (unsigned int)freq0;
+	dprintf("Frequency: %s %i\n",buffer,freq2);	
+ 	freq2	= freq2 - 0xffff;
+ 	buff[0] = freq2 / 0x100;
+ 	buff[1] = freq2 % 0x100;
+}
+
+void N6510_DecodeFMFrequency(double *freq, unsigned char *buff)
+{
+	unsigned char buffer[20];
+
+	sprintf(buffer,"%i.%i",(0xffff + buff[0] * 0x100 + buff[1])/1000,
+			       (0xffff + buff[0] * 0x100 + buff[1])%1000);
+	dprintf("Frequency: %s\n",buffer);
+	StringToDouble(buffer, freq);
+}
+
 static GSM_Error N6510_ReplyGetFMStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
   	smprintf(s, "getting FM status OK\n");
@@ -3520,11 +3459,7 @@ static GSM_Error N6510_ReplyGetFMStation(GSM_Protocol_Message msg, GSM_StateMach
  		name[length*2+1] = 0x00;
  		CopyUnicodeString(Data->FMStation->StationName,name);
 		smprintf(s,"Station name: \"%s\"\n",DecodeUnicodeString(Data->FMStation->StationName));
-		sprintf(name,"%i.%i",(0xffff + msg.Buffer[16] * 0x100 + msg.Buffer[17])/1000,
-				     (0xffff + msg.Buffer[16] * 0x100 + msg.Buffer[17])%1000);
-		smprintf(s,"Frequency: %s\n",name);
-		StringToDouble(name, &Data->FMStation->Frequency);
-		smprintf(s,"Frequency: %f\n",Data->FMStation->Frequency);
+		N6510_DecodeFMFrequency(&Data->FMStation->Frequency, msg.Buffer+16);
 		return GE_NONE;
 	case 0x16:
 	  	smprintf(s, "Received FM station. Empty ?\n");
@@ -3581,9 +3516,7 @@ static GSM_Error N6510_ClearFMStations (GSM_StateMachine *s)
  
 static GSM_Error N6510_SetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStation)
 {
-	unsigned char		buff[20];
- 	unsigned int 		len, freq, location;	
-	double			freq0;
+	unsigned int 		len, location;	
  	GSM_Error 		error;
  	unsigned char setstatus[36] = {N6110_FRAME_HEADER,0x11,0x00,0x01,0x01,
  	    			0x00,0x00,0x1c,0x00,0x14,0x00,0x00,
@@ -3624,16 +3557,7 @@ static GSM_Error N6510_SetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
  	memcpy (req+18,FMStation->StationName,len*2);
 
 	/* Frequency */
-	sprintf(buff,"%.3f",FMStation->Frequency);
-	for (freq=0;freq<strlen(buff);freq++) {
-		if (buff[freq] == ',' || buff[freq] == '.') buff[freq] = ' ';
-	}
-	StringToDouble(buff, &freq0);
- 	freq = (unsigned int)freq0;
-	smprintf(s,"Frequency: %s %i\n",buff,freq);	
- 	freq	= freq - 0xffff;
- 	req[16] = freq / 0x100;
- 	req[17] = freq % 0x100;
+	N6510_EncodeFMFrequency(FMStation->Frequency, req+16);
 
  	smprintf(s, "Setting FM Station %i\n",FMStation->Location);
  	return GSM_WaitFor (s, req, 0x13+len*2, 0x3E, 2, ID_SetFMStation);
@@ -5149,8 +5073,8 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplySaveSMSMessage,	  "\x14",0x03,0x17,ID_SaveSMSMessage	  },
 	{N6510_ReplyGetSMSStatus,	  "\x14",0x03,0x1a,ID_GetSMSStatus	  },
 
-	{N6510_ReplySetPhoneMode,	  "\x15",0x03,0x64,ID_Reset		  },
-	{N6510_ReplyGetPhoneMode,	  "\x15",0x03,0x65,ID_Reset		  },
+	{DCT4_ReplySetPhoneMode,	  "\x15",0x03,0x64,ID_Reset		  },
+	{DCT4_ReplyGetPhoneMode,	  "\x15",0x03,0x65,ID_Reset		  },
 
 	{N6510_ReplyGetBatteryCharge,	  "\x17",0x03,0x0B,ID_GetBatteryCharge	  },
 
@@ -5160,7 +5084,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetAlarm,		  "\x19",0x03,0x1A,ID_GetAlarm		  },
 	{N6510_ReplyGetAlarm,		  "\x19",0x03,0x20,ID_GetAlarm		  },
 
-	{N6510_ReplyGetIMEI,		  "\x1B",0x03,0x01,ID_GetIMEI		  },
+	{DCT4_ReplyGetIMEI,		  "\x1B",0x03,0x01,ID_GetIMEI		  },
 	{NOKIA_ReplyGetPhoneString,	  "\x1B",0x03,0x08,ID_GetHardware	  },
 	{N6510_ReplyGetPPM,		  "\x1B",0x03,0x08,ID_GetPPM		  },
 	{NOKIA_ReplyGetPhoneString,	  "\x1B",0x03,0x0C,ID_GetProductCode	  },
@@ -5269,14 +5193,14 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"3100|3300|3510|3510i|3530|3590|3595|5100|6100|6200|6310|6310i|6510|6610|6800|7210|7250|7250i|8310|8390|8910|8910i",
+	"3100|3300|3510|3510i|3530|3590|3595|5100|6100|6200|6220|6310|6310i|6510|6610|6800|7210|7250|7250i|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/
 	GSM_DispatchMessage,
 	DCT3DCT4_GetModel,
 	DCT3DCT4_GetFirmware,
-	N6510_GetIMEI,
+	DCT4_GetIMEI,
 	N6510_GetDateTime,
 	N6510_GetAlarm,
 	N6510_GetMemory,
@@ -5289,7 +5213,7 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_GetSMSStatus,
 	NOKIA_SetIncomingSMS,
 	N6510_GetNetworkInfo,
-	N6510_Reset,
+	DCT4_Reset,
 	N6510_DialVoice,
  	N6510_AnswerCall,
  	N6510_CancelCall,
@@ -5310,9 +5234,9 @@ GSM_Phone_Functions N6510Phone = {
 	NOTIMPLEMENTED,			/* 	SetIncomingCB		*/
 	N6510_SetSMSC,
 	N6510_GetManufactureMonth,
-	N6510_GetProductCode,
+	DCT4_GetProductCode,
 	N6510_GetOriginalIMEI,
-	N6510_GetHardware,
+	DCT4_GetHardware,
 	N6510_GetPPM,
 	N6510_PressKey,
 	N6510_GetToDo,

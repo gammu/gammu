@@ -256,27 +256,42 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_PhonebookEntry *P
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Name;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "TEL", Buff)) {
+			if (ReadVCALText(Line, "TEL", 			Buff) ||
+			    ReadVCALText(Line, "TEL;VOICE", 		Buff) ||
+			    ReadVCALText(Line, "TEL;PREF", 		Buff) ||
+			    ReadVCALText(Line, "TEL;PREF;VOICE", 	Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "TEL;CELL", Buff)) {
+			if (ReadVCALText(Line, "TEL;CELL", 		Buff) ||
+			    ReadVCALText(Line, "TEL;CELL;VOICE", 	Buff) ||
+			    ReadVCALText(Line, "TEL;PREF;CELL", 	Buff) ||
+			    ReadVCALText(Line, "TEL;PREF;CELL;VOICE", 	Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "TEL;WORK;VOICE", Buff)) {
+			if (ReadVCALText(Line, "TEL;WORK", 		Buff) ||
+			    ReadVCALText(Line, "TEL;PREF;WORK", 	Buff) ||
+			    ReadVCALText(Line, "TEL;WORK;VOICE", 	Buff) ||
+			    ReadVCALText(Line, "TEL;PREF;WORK;VOICE", 	Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Work;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "TEL;FAX", Buff)) {
+			if (ReadVCALText(Line, "TEL;FAX", 		Buff) ||
+			    ReadVCALText(Line, "TEL;PREF;FAX", 		Buff) ||
+			    ReadVCALText(Line, "TEL;FAX;VOICE", 	Buff) ||
+			    ReadVCALText(Line, "TEL;PREF;FAX;VOICE", 	Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Fax;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "TEL;HOME;VOICE", Buff)) {
+			if (ReadVCALText(Line, "TEL;HOME", 		Buff) ||
+			    ReadVCALText(Line, "TEL;PREF;HOME", 	Buff) ||
+			    ReadVCALText(Line, "TEL;HOME;VOICE", 	Buff) ||
+			    ReadVCALText(Line, "TEL;PREF;HOME;VOICE", 	Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Home;
 				Pbk->EntriesNum++;

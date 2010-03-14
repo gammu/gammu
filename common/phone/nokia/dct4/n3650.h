@@ -15,7 +15,11 @@
 #endif
 
 typedef struct {
-	int fake;
+	int				FileLev;
+	int				FilesLocationsUsed;
+	int				FilesLocationsCurrent;
+	GSM_File			*Files[10000];
+	int				FileEntries;
 } GSM_Phone_N3650Data;
 
 #endif

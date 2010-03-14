@@ -16,12 +16,16 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
 	    $(TOPDIR)/common/service/gsmcal.o \
 	    $(TOPDIR)/common/service/gsmwap.o \
 	    $(TOPDIR)/common/service/gsmpbk.o \
-	    $(TOPDIR)/common/service/gsmback.o \
 	    $(TOPDIR)/common/service/gsmring.o \
 	    $(TOPDIR)/common/service/gsmlogo.o \
 	    $(TOPDIR)/common/service/gsmmisc.o \
 	    $(TOPDIR)/common/service/gsmnet.o \
-	    $(TOPDIR)/common/service/gsmvcal.o \
+	    $(TOPDIR)/common/service/backup/gsmback.o \
+	    $(TOPDIR)/common/service/backup/backldif.o \
+	    $(TOPDIR)/common/service/backup/backlmb.o \
+	    $(TOPDIR)/common/service/backup/backtext.o \
+	    $(TOPDIR)/common/service/backup/backvcs.o \
+	    $(TOPDIR)/common/service/backup/backvcf.o \
 	    $(TOPDIR)/common/device/bluetoth/bluetoth.o \
 	    $(TOPDIR)/common/device/serial/ser_unx.o \
 	    $(TOPDIR)/common/device/serial/ser_djg.o \
@@ -45,6 +49,7 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
 	    $(TOPDIR)/common/phone/nokia/dct3/dct3func.o \
 	    $(TOPDIR)/common/phone/nokia/dct4/n3650.o \
 	    $(TOPDIR)/common/phone/nokia/dct4/n6510.o \
+	    $(TOPDIR)/common/phone/nokia/dct4/dct4func.o \
 	    $(TOPDIR)/common/phone/nokia/nauto.o \
 	    $(TOPDIR)/common/phone/nokia/nfunc.o \
 	    $(TOPDIR)/common/phone/nokia/nfuncold.o \

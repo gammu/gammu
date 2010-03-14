@@ -874,6 +874,7 @@ static OnePhoneModel allmodels[] = {
 	{"3650" ,"NHL-8" ,"Nokia 3650", {F_RADIO,0}},
 	{"5100" ,"NPM-6" ,"Nokia 5100", {F_TODO66,F_RADIO,0}},
 	{"5100" ,"NPM-6U","Nokia 5100", {F_TODO66,F_RADIO,0}},
+	{"5100" ,"NPM-6X","Nokia 5100", {F_TODO66,F_RADIO,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"5110" ,"NSE-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DISPSTATUS,0}},
@@ -944,6 +945,7 @@ static OnePhoneModel allmodels[] = {
 #endif
 #ifdef GSM_ENABLE_NOKIA9210
 	{"9210" ,"RAE-3" ,"",           {0}},
+	{"9210i","RAE-5" ,"",           {0}},
 #endif
 #ifdef GSM_ENABLE_ATGEN
 	{"at"   ,	  "at",		  "",				   {0}},

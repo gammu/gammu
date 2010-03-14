@@ -11,17 +11,6 @@
 #include "../../gsmcomon.h"
 #include "obex.h"
 
-void OBEXAddBlock(char *Buffer, int *Pos, unsigned char ID, char *AddBuffer, int AddLength)
-{
-	Buffer[(*Pos)++] = ID;
-	Buffer[(*Pos)++] = (AddLength+3)/256;
-	Buffer[(*Pos)++] = (AddLength+3)%256;
-	if (AddBuffer != NULL) {
-		memcpy(Buffer+(*Pos),AddBuffer,AddLength);
-		(*Pos) += AddLength;
-	}
-}
-
 static GSM_Error OBEX_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 				    int length, unsigned char type)
 {
@@ -114,6 +103,17 @@ GSM_Protocol_Functions OBEXProtocol = {
 };
 
 #endif
+
+void OBEXAddBlock(char *Buffer, int *Pos, unsigned char ID, char *AddBuffer, int AddLength)
+{
+	Buffer[(*Pos)++] = ID;
+	Buffer[(*Pos)++] = (AddLength+3)/256;
+	Buffer[(*Pos)++] = (AddLength+3)%256;
+	if (AddBuffer != NULL) {
+		memcpy(Buffer+(*Pos),AddBuffer,AddLength);
+		(*Pos) += AddLength;
+	}
+}
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

@@ -22,6 +22,37 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20031002 - 0,85,0,0
+* new functionality:
+  * DCT4:
+    * automatic tuning FM radio (new --nokiatuneradio)
+    * 5100 NPM-6X ID                                               (Tom Nelson)
+    * 9210i ID                                                   (Otto Waltari)
+    * support for 3650 in FBUS mode:
+      * enabling ALS
+      * phone info
+      * getting list of files/files from C: drive (phone memory),
+        E: drive (MMC) and Z: drive (phone memory read-only)
+  * Solaris 8 compilation support                              (Joeri Golsteyn)
+  * VCARD/VCALENDAR can read more formats and variants
+  * support for more UTF8 variants
+  * workaround for Nokia firmware bug (various models) connected    (Didi Dada)
+    with saving numbers from Call Register lists to existing pbk
+    entries using Save option
+  * full support for LDIF files (Mozilla/Netscape Address Book). Please note,
+    that this format doesn't support for example few numbers of the same type
+  * full support for rng files
+
+* fixes and improvements:
+  * 6220 ID, OBEX SetPath command is used with better flag              (Intra)
+  * compilation fixes                                          (Joeri Golsteyn)
+  * removed unnecessary source in support for filesystems
+  * getting voice records again fixed. Added info how to reinstall      (Vadim)
+    GSM 6.10 codec in WinXP (see readme.txt)
+
+NEWS: CVS available, Michal Cihar added md5 checksums and bzip2 files
+      on his mirror (see readme.txt for links)
+
 20030917 - 0,84,0,0
 * new functionality:
   * DCT3 & DCT4:
