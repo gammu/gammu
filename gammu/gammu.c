@@ -588,27 +588,26 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext)
 		if (sms.UDH.Type != UDH_NoUDH) {
 			printmsg("User Data Header : ");
 			switch (sms.UDH.Type) {
-			case UDH_ConcatenatedMessages:	printmsg("Concatenated (linked) message"); break;
-			case UDH_DisableVoice:		printmsg("Disables voice indicator");	 break;
-			case UDH_EnableVoice:		printmsg("Enables voice indicator");	 break;
-			case UDH_DisableFax:		printmsg("Disables fax indicator");	 break;
-			case UDH_EnableFax:		printmsg("Enables fax indicator");	 break;
-			case UDH_DisableEmail:		printmsg("Disables email indicator");	 break;
-			case UDH_EnableEmail:		printmsg("Enables email indicator");	 break;
-			case UDH_VoidSMS:		printmsg("Void SMS");			 break;
-			case UDH_NokiaWAPBookmark:	printmsg("Nokia WAP Bookmark");		 break;
-			case UDH_NokiaOperatorLogoLong:	printmsg("Nokia operator logo");	 break;
-			case UDH_NokiaWAPBookmarkLong:	printmsg("Nokia WAP Bookmark");		 break;
-			case UDH_NokiaWAPSettingsLong:	printmsg("Nokia WAP Settings");		 break;
-			case UDH_NokiaRingtone:		printmsg("Nokia ringtone");		 break;
-			case UDH_NokiaOperatorLogo:	printmsg("Nokia GSM operator logo");	 break;
-			case UDH_NokiaCallerLogo:	printmsg("Nokia caller logo");		 break;  	
-			case UDH_NokiaProfileLong:	printmsg("Nokia profile");		 break;
-			case UDH_NokiaCalendarLong:	printmsg("Nokia calendar note");	 break;
-			case UDH_NokiaPhonebookLong:	printmsg("Nokia phonebook entry");	 break;
-			case UDH_UserUDH:		printmsg("User UDH");			 break;
-			case UDH_MMSIndicatorLong:						 break;
-			case UDH_NoUDH:								 break;
+			case UDH_ConcatenatedMessages:	printmsg("Concatenated (linked) message"); 		break;
+			case UDH_DisableVoice:		printmsg("Disables voice indicator");	 		break;
+			case UDH_EnableVoice:		printmsg("Enables voice indicator");	 		break;
+			case UDH_DisableFax:		printmsg("Disables fax indicator");	 		break;
+			case UDH_EnableFax:		printmsg("Enables fax indicator");	 		break;
+			case UDH_DisableEmail:		printmsg("Disables email indicator");	 		break;
+			case UDH_EnableEmail:		printmsg("Enables email indicator");	 		break;
+			case UDH_VoidSMS:		printmsg("Void SMS");			 		break;
+			case UDH_NokiaWAPBookmark:	printmsg("Nokia WAP bookmark");		 		break;
+			case UDH_NokiaOperatorLogoLong:	printmsg("Nokia operator logo");	 		break;
+			case UDH_NokiaWAPLong:		printmsg("Nokia WAP bookmark or WAP/MMS settings");	break;
+			case UDH_NokiaRingtone:		printmsg("Nokia ringtone");		 		break;
+			case UDH_NokiaOperatorLogo:	printmsg("Nokia GSM operator logo");	 		break;
+			case UDH_NokiaCallerLogo:	printmsg("Nokia caller logo");		 		break;  	
+			case UDH_NokiaProfileLong:	printmsg("Nokia profile");		 		break;
+			case UDH_NokiaCalendarLong:	printmsg("Nokia calendar note");	 		break;
+			case UDH_NokiaPhonebookLong:	printmsg("Nokia phonebook entry");	 		break;
+			case UDH_UserUDH:		printmsg("User UDH");			 		break;
+			case UDH_MMSIndicatorLong:						 		break;
+			case UDH_NoUDH:								 		break;
 			}
 			if (sms.UDH.Type != UDH_NoUDH) {
 				if (sms.UDH.ID != -1) printmsg(", ID %i",sms.UDH.ID);
@@ -732,6 +731,7 @@ static void Monitor(int argc, char *argv[])
 {
 	GSM_MemoryStatus	MemStatus;
 	GSM_SMSMemoryStatus	SMSStatus;
+	GSM_ToDoStatus		ToDoStatus;
 	GSM_NetworkInfo		NetInfo;
     	GSM_BatteryCharge   	BatteryCharge;
     	GSM_SignalQuality   	SignalQuality;
@@ -778,6 +778,9 @@ static void Monitor(int argc, char *argv[])
 		CHECKMEMORYSTATUS(MemStatus,GMT_RC,"Received numbers  : Used","Free");
 		CHECKMEMORYSTATUS(MemStatus,GMT_MC,"Missed numbers    : Used","Free");
 		CHECKMEMORYSTATUS(MemStatus,GMT_ON,"Own numbers       : Used","Free");
+		if (Phone->GetToDoStatus(&s, &ToDoStatus) == GE_NONE) {
+			printmsg("ToDos             : Used %d\n", ToDoStatus.Used);
+		}
 		if (Phone->GetBatteryCharge(&s,&BatteryCharge)==GE_NONE) {
             		if (BatteryCharge.BatteryPercent != -1) printmsg("Battery level     : %i percent\n", BatteryCharge.BatteryPercent);
             		if (BatteryCharge.ChargeState != 0) {
@@ -1159,6 +1162,8 @@ static void GetCalendarNotes(int argc, char *argv[])
 	bool			refresh			= true;
 	int			i_age			= 0,i;
 	GSM_DateTime		Alarm,DateTime;
+	GSM_PhonebookEntry	entry;
+	unsigned char		*name;
 
     	bool 			repeating 		= false;
     	int 			repeat_dayofweek 	= -1;
@@ -1248,7 +1253,19 @@ static void GetCalendarNotes(int argc, char *argv[])
                 		printmsg("Private      : %s\n",Note.Entries[i].Number == 1 ? "Yes" : "No");
                 		break;
             		case CAL_CONTACTID:
-                		printmsg("Contact ID   : %d\n",Note.Entries[i].Number);
+				entry.Location = Note.Entries[i].Number;
+				entry.MemoryType = GMT_ME;
+				error=Phone->GetMemory(&s, &entry);
+				if (error == GE_NONE) {
+					name = GSM_PhonebookGetEntryName(&entry);
+					if (name != NULL) {
+						printmsg("Contact ID   : \"%s\" (%d)\n", DecodeUnicodeString(name), Note.Entries[i].Number);
+					} else {
+						printmsg("Contact ID   : %d\n",Note.Entries[i].Number);
+					}
+				} else {
+					printmsg("Contact ID   : %d\n",Note.Entries[i].Number);
+				}
                 		break;                
             		case CAL_REPEAT_DAYOFWEEK:
                 		repeat_dayofweek 	= Note.Entries[i].Number;
@@ -1416,6 +1433,26 @@ static void DeleteWAPBookmark(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void GetGPRSPoint(int argc, char *argv[])
+{
+	GSM_GPRSAccessPoint	point;
+	int			start,stop;
+
+	GetStartStop(&start, &stop, 2, argc, argv);
+
+	GSM_Init(true);
+
+	for (i=start;i<=stop;i++) {
+		point.Location=i;
+		error=Phone->GetGPRSAccessPoint(&s,&point);
+		Print_Error(error);
+		printmsg("%i. \"%s\"\n",point.Location,DecodeUnicodeString(point.Name));
+		printmsg("Address : \"%s\"\n\n",DecodeUnicodeString(point.URL));
+	}
+
+	GSM_Terminate();
+}
+
 static void GetBitmap(int argc, char *argv[])
 {
 	GSM_MultiBitmap 	MultiBitmap;
@@ -1468,7 +1505,7 @@ static void GetBitmap(int argc, char *argv[])
 			error = GE_NONE;
 
 			printmsg("Ringtone    : ");
-			if (strlen(DecodeUnicodeString(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].Ringtone)))!=0) {
+			if (UnicodeLength(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].Ringtone))!=0) {
 				printmsg("\"%s\"\n",DecodeUnicodeString(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].Ringtone)));
 			} else {
 				printmsg("%i\n",MultiBitmap.Bitmap[0].Ringtone);
@@ -1896,8 +1933,8 @@ static void SendSaveSMS(int argc, char *argv[])
 			EncodeUnicode(Name,"WAP Bookmark",12);
 		}
 		startarg += 5;
-	} else if (mystrncasecmp(argv[2],"SETTINGS",0)) {
-		if (argc<5+startarg) {
+	} else if (mystrncasecmp(argv[2],"WAPSETTINGS",0)) {
+		if (argc<6+startarg) {
 			printmsg("Where is backup filename and location ?\n");
 			exit(-1);
 		}
@@ -1912,16 +1949,67 @@ static void SendSaveSMS(int argc, char *argv[])
 			printmsg("WAP settings not found in file\n");
 			exit(-1);
 		}
-		if (Backup.WAPSettings[i]->Settings[0].Bearer != WAPSETTINGS_BEARER_DATA &&
-		    Backup.WAPSettings[i]->Settings[0].Bearer != WAPSETTINGS_BEARER_SMS) {
-			printmsg("Sorry. This bearer in WAP settings not supported now\n");
+		SMSInfo.Entries[0].Settings = NULL;
+		for (j=0;j<Backup.WAPSettings[i]->Number;j++) {
+			switch (Backup.WAPSettings[i]->Settings[j].Bearer) {
+			case WAPSETTINGS_BEARER_GPRS:
+				if (mystrncasecmp(argv[5+startarg],"GPRS",0)) {
+					SMSInfo.Entries[0].Settings = &Backup.WAPSettings[i]->Settings[j];
+					break;
+				}
+			case WAPSETTINGS_BEARER_DATA:
+				if (mystrncasecmp(argv[5+startarg],"DATA",0)) {
+					SMSInfo.Entries[0].Settings = &Backup.WAPSettings[i]->Settings[j];
+					break;
+				}
+			default:
+				break;
+			}
+		}
+		if (SMSInfo.Entries[0].Settings == NULL) {
+			printmsg("Sorry. For now there is only support for GPRS or DATA bearers end\n");
 			exit(-1);
 		}
-		SMSInfo.Entries[0].ID 	 = SMS_NokiaWAPSettingsLong;
-		SMSInfo.Entries[0].Settings = &Backup.WAPSettings[i]->Settings[0];		
+		SMSInfo.Entries[0].ID = SMS_NokiaWAPSettingsLong;
 		if (mystrncasecmp(argv[1],"--savesms",0)) {
 			EncodeUnicode(Sender, "Settings",8);
 			EncodeUnicode(Name,"WAP Settings",12);
+		}
+		startarg += 6;
+	} else if (mystrncasecmp(argv[2],"MMSSETTINGS",0)) {
+		if (argc<5+startarg) {
+			printmsg("Where is backup filename and location ?\n");
+			exit(-1);
+		}
+		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
+		Print_Error(error);
+		i = 0;
+		while (Backup.MMSSettings[i]!=NULL) {
+			if (i == atoi(argv[4+startarg])-1) break;
+			i++;
+		}
+		if (i != atoi(argv[4+startarg])-1) {
+			printmsg("MMS settings not found in file\n");
+			exit(-1);
+		}
+		SMSInfo.Entries[0].Settings = NULL;
+		for (j=0;j<Backup.MMSSettings[i]->Number;j++) {
+			switch (Backup.MMSSettings[i]->Settings[j].Bearer) {
+			case WAPSETTINGS_BEARER_GPRS:
+				SMSInfo.Entries[0].Settings = &Backup.MMSSettings[i]->Settings[j];
+				break;
+			default:
+				break;
+			}
+		}
+		if (SMSInfo.Entries[0].Settings == NULL) {
+			printmsg("Sorry. No GPRS bearer found in MMS settings\n");
+			exit(-1);
+		}
+		SMSInfo.Entries[0].ID = SMS_NokiaMMSSettingsLong;
+		if (mystrncasecmp(argv[1],"--savesms",0)) {
+			EncodeUnicode(Sender, "Settings",8);
+			EncodeUnicode(Name,"MMS Settings",12);
 		}
 		startarg += 5;
 	} else if (mystrncasecmp(argv[2],"CALENDAR",0)) {
@@ -2315,7 +2403,7 @@ static void SendSaveSMS(int argc, char *argv[])
 				EncodeUnicode(Sender, "OpLogo",6);
 				EncodeUnicode(Sender+6*2,bitmap[0].Bitmap[0].NetworkCode,3);
 				EncodeUnicode(Sender+6*2+3*2,bitmap[0].Bitmap[0].NetworkCode+4,2);
-				if (strlen(DecodeUnicodeString(GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode)))<GSM_MAX_SMS_NAME_LENGTH-7) {
+				if (UnicodeLength(GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode))<GSM_MAX_SMS_NAME_LENGTH-7) {
 					EncodeUnicode(Name,"OpLogo ",7);
 					CopyUnicodeString(Name+7*2,GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode));
 				} else {
@@ -2339,8 +2427,8 @@ static void SendSaveSMS(int argc, char *argv[])
 			fread(ReplaceBuffer,1,sizeof(ReplaceBuffer),ReplaceFile);
 			fclose(ReplaceFile);
 			ReadUnicodeFile(ReplaceBuffer2,ReplaceBuffer);
-			for(j=0;j<(int)(strlen(DecodeUnicodeString(Buffer[0])));j++) {
-				for (z=0;z<(int)(strlen(DecodeUnicodeString(ReplaceBuffer2))/2);z++) {
+			for(j=0;j<(int)(UnicodeLength(Buffer[0]));j++) {
+				for (z=0;z<(int)(UnicodeLength(ReplaceBuffer2)/2);z++) {
 					if (ReplaceBuffer2[z*4]   == Buffer[j][0] &&
 					    ReplaceBuffer2[z*4+1] == Buffer[j+1][0]) {
 						Buffer[j][0]   = ReplaceBuffer2[z*4+2];
@@ -2457,7 +2545,7 @@ static void SendSaveSMS(int argc, char *argv[])
 				EncodeUnicode(Sender, "OpLogo",6);
 				EncodeUnicode(Sender+6*2,bitmap[0].Bitmap[0].NetworkCode,3);
 				EncodeUnicode(Sender+6*2+3*2,bitmap[0].Bitmap[0].NetworkCode+4,2);
-				if (strlen(DecodeUnicodeString(GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode)))<GSM_MAX_SMS_NAME_LENGTH-7) {
+				if (UnicodeLength(GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode))<GSM_MAX_SMS_NAME_LENGTH-7) {
 					EncodeUnicode(Name,"OpLogo ",7);
 					CopyUnicodeString(Name+7*2,GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode));
 				} else {
@@ -2467,7 +2555,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		}
 	}
 	if (mystrncasecmp(argv[2],"TEXT",0)) {
-		chars_read = strlen(DecodeUnicodeString(Buffer[0]));
+		chars_read = UnicodeLength(Buffer[0]);
 		if (chars_read != 0) {
 			/* Trim \n at the end of string */
 			if (Buffer[0][chars_read*2-1] == '\n' && Buffer[0][chars_read*2-2] == 0)
@@ -2563,11 +2651,86 @@ static void SendSaveSMS(int argc, char *argv[])
 }
 
 #ifdef GSM_ENABLE_BACKUP
+static void SaveFile(int argc, char *argv[])
+{
+	GSM_Backup		Backup;
+	int			i;
+	FILE			*file;
+	unsigned char		Buffer[10000];
+	GSM_PhonebookEntry	*pbk;
+
+	if (mystrncasecmp(argv[2],"CALENDAR",0)) {
+		if (argc<5) {
+			printmsg("Where is backup filename and location ?\n");
+			exit(-1);
+		}
+		error=GSM_ReadBackupFile(argv[4],&Backup);
+		Print_Error(error);
+		i = 0;
+		while (Backup.Calendar[i]!=NULL) {
+			if (i == atoi(argv[5])-1) break;
+			i++;
+		}
+		if (i != atoi(argv[5])-1) {
+			printmsg("Calendar note not found in file\n");
+			exit(-1);
+		}
+		i = 0;
+		NOKIA_EncodeVCALENDAR10SMSText(Buffer, &i, Backup.Calendar[i]);
+	} else if (mystrncasecmp(argv[2],"VCARD10",0) || mystrncasecmp(argv[2],"VCARD21",0)) {
+		if (argc<6) {
+			printmsg("Where is backup filename and location and memory type ?\n");
+			exit(-1);
+		}
+		error=GSM_ReadBackupFile(argv[4],&Backup);
+		Print_Error(error);
+		i = 0;
+		if (mystrncasecmp(argv[5],"SM",0)) {
+			while (Backup.SIMPhonebook[i]!=NULL) {
+				if (i == atoi(argv[6])-1) break;
+				i++;
+			}
+			if (i != atoi(argv[6])-1) {
+				printmsg("Phonebook entry not found in file\n");
+				exit(-1);
+			}
+			pbk = Backup.SIMPhonebook[i];
+		} else if (mystrncasecmp(argv[5],"ME",0)) {
+			while (Backup.PhonePhonebook[i]!=NULL) {
+				if (i == atoi(argv[6])-1) break;
+				i++;
+			}
+			if (i != atoi(argv[6])-1) {
+				printmsg("Phonebook entry not found in file\n");
+				exit(-1);
+			}
+			pbk = Backup.PhonePhonebook[i];
+		} else {
+			printmsg("Unknown memory type: \"%s\"\n",argv[5]);
+			exit(-1);
+		}
+		i = 0;
+		if (mystrncasecmp(argv[2],"VCARD10",0)) {
+			NOKIA_EncodeVCARD10SMSText(Buffer,&i,pbk);
+		} else {
+			NOKIA_EncodeVCARD21SMSText(Buffer,&i,pbk);
+		}
+	} else {
+		printmsg("What format of file (\"%s\") ?\n",argv[2]);
+		exit(-1);
+	}
+
+	file = fopen(argv[3],"wb");
+	fwrite(Buffer,1,i,file);
+	fclose(file);
+}
+
 static void Backup(int argc, char *argv[])
 {
 	int			i, used;
 	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoEntry		ToDo;
+	GSM_ToDoStatus		ToDoStatus;
 	GSM_PhonebookEntry	Pbk;
 	GSM_CalendarEntry	Note;
 	GSM_Bitmap		Bitmap;
@@ -2691,7 +2854,7 @@ static void Backup(int argc, char *argv[])
 		error=Phone->GetNextCalendarNote(&s,&Note,true);
 		if (error==GE_NONE) {
 			if (answer_yes("   Backup calendar notes")) {
-				used = 0;
+				used 		= 0;
 				printmsgerr("   Reading : ");
 				while (error == GE_NONE) {
 					if (used < GSM_BACKUP_MAX_CALENDAR) {
@@ -2718,14 +2881,15 @@ static void Backup(int argc, char *argv[])
 	if (Info.ToDo) {
 		printmsg("Checking ToDo\n");
 		ToDo.Location = 1;
-		error=Phone->GetToDo(&s,&ToDo,true);
-		if (error == GE_NONE || error == GE_EMPTY) {
+		error=Phone->GetToDoStatus(&s,&ToDoStatus);
+		if (error == GE_NONE && ToDoStatus.Used != 0) {
 			if (answer_yes("   Backup ToDo")) {
 				used = 0;
-				printmsgerr("   Reading : ");
-				while (error == GE_NONE || error == GE_EMPTY) {
+				i = 1;
+				while (used != ToDoStatus.Used) {
+					ToDo.Location = i;
+					error=Phone->GetToDo(&s, &ToDo, false);
 					if (error != GE_EMPTY) {
-						printmsgerr("*");
 						if (used < GSM_BACKUP_MAX_TODO) {
 							Backup.ToDo[used] = malloc(sizeof(GSM_ToDoEntry));
 							if (Backup.ToDo[used] == NULL) Print_Error(GE_MOREMEMORY);
@@ -2737,8 +2901,8 @@ static void Backup(int argc, char *argv[])
 						*Backup.ToDo[used]=ToDo;
 						used ++;
 					}
-					ToDo.Location++;
-					error=Phone->GetToDo(&s,&ToDo,false);
+					printmsgerr("%c   Reading: %i percent",13,used*100/ToDoStatus.Used);
+					i++;
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
@@ -3047,6 +3211,7 @@ static void Restore(int argc, char *argv[])
 	GSM_PhonebookEntry	Pbk;
 	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoEntry		ToDo;
+	GSM_ToDoStatus		ToDoStatus;
 	GSM_Profile		Profile;
 	GSM_MultiWAPSettings	Settings;
 	GSM_WAPBookmark		Bookmark;
@@ -3194,8 +3359,8 @@ static void Restore(int argc, char *argv[])
 	}
 	if (Backup.ToDo[0] != NULL) {
 		ToDo.Location = 1;
-		error = Phone->GetToDo(&s,&ToDo,true);
-		if (error == GE_NONE || error == GE_INVALIDLOCATION) {
+		error=Phone->GetToDoStatus(&s,&ToDoStatus);
+		if (error == GE_NONE) {
 			if (answer_yes("Restore ToDo")) {
 				printmsgerr("Deleting old ToDo: ");
 				error=Phone->DeleteAllToDo(&s);
@@ -3411,6 +3576,7 @@ static void AddNew(int argc, char *argv[])
 	GSM_PhonebookEntry	Pbk;
 	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoEntry		ToDo;
+	GSM_ToDoStatus		ToDoStatus;
 	GSM_WAPBookmark		Bookmark;
 	int			i, max;
 
@@ -3508,7 +3674,7 @@ static void AddNew(int argc, char *argv[])
 	}
 	if (Backup.ToDo[0] != NULL) {
 		ToDo.Location = 1;
-		error = Phone->GetToDo(&s,&ToDo,true);
+		error=Phone->GetToDoStatus(&s,&ToDoStatus);
 		if (error == GE_NONE || error == GE_INVALIDLOCATION) {
 			if (answer_yes("Add ToDo")) {
 				max = 0;
@@ -3560,7 +3726,7 @@ static void ClearAll(int argc, char *argv[])
 	GSM_CalendarEntry	Calendar;
 	GSM_PhonebookEntry	Pbk;
 	GSM_MemoryStatus	MemStatus;
-	GSM_ToDoEntry		ToDo;
+	GSM_ToDoStatus		ToDoStatus;
 	GSM_WAPBookmark		Bookmark;
 
 	GSM_Init(true);
@@ -3618,9 +3784,8 @@ static void ClearAll(int argc, char *argv[])
 			printmsgerr("\n");
 		}
 	}
-	ToDo.Location = 1;
-	error = Phone->GetToDo(&s,&ToDo,true);
-	if (error == GE_NONE || error == GE_INVALIDLOCATION) {
+	error = Phone->GetToDoStatus(&s,&ToDoStatus);
+	if (error == GE_NONE) {
 		if (answer_yes("Delete ToDo")) {
 			printmsgerr("Deleting: ");
 			error=Phone->DeleteAllToDo(&s);
@@ -4194,11 +4359,42 @@ static void GetCategory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetToDo(int argc, char *argv[])
+static void DeleteToDo(int argc, char *argv[])
 {
 	GSM_ToDoEntry	ToDo;
-	int		start,stop,j;
-	bool		refresh=true;
+	int		i;
+	int		start,stop;
+
+	GetStartStop(&start, &stop, 2, argc, argv);
+
+	GSM_Init(true);
+
+	for (i=start;i<=stop;i++) {
+		ToDo.Location=i;
+		ToDo.EntriesNum=0;
+		printmsg("Location  : %i\n",i);
+		error=Phone->SetToDo(&s,&ToDo);
+		if (error != GE_EMPTY) Print_Error(error);
+
+		if (error == GE_EMPTY) {
+			printmsg("Entry was empty\n");
+		} else {
+			printmsg("Entry was deleted\n");
+	       	}
+		printmsg("\n");
+	}
+
+	GSM_Terminate();        	
+}
+
+static void GetToDo(int argc, char *argv[])
+{
+	GSM_ToDoEntry		ToDo;
+	int			start,stop,j;
+	bool			refresh=true;
+	GSM_PhonebookEntry	entry;
+	unsigned char		*name;
+	GSM_Category		Category;
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
@@ -4211,7 +4407,7 @@ static void GetToDo(int argc, char *argv[])
 		if (error != GE_EMPTY) Print_Error(error);
 
 		if (error == GE_EMPTY) {
-			printmsg("Entry is empty\n");
+			printmsg("Entry is empty\n\n");
 		} else {
             		printmsg("Priority  : ");
             		switch (ToDo.Priority) {
@@ -4238,10 +4434,29 @@ static void GetToDo(int argc, char *argv[])
 	                        	printmsg("Private   : %s\n",ToDo.Entries[j].Number == 1 ? "Yes" : "No");
 	                        	break;
 	                    	case TODO_CATEGORY:
-	                        	printmsg("Category  : %i\n",ToDo.Entries[j].Number);
+					Category.Location = ToDo.Entries[j].Number;
+					Category.Type = Category_ToDo;
+					error=Phone->GetCategory(&s, &Category);
+					if (error == GE_NONE) {
+						printmsg("Category  : \"%s\" (%i)\n", DecodeUnicodeString(Category.Name), ToDo.Entries[j].Number);
+					} else {
+						printmsg("Category  : %i\n", ToDo.Entries[j].Number);
+					}
 	                        	break;
 	                    	case TODO_CONTACTID:
-	                        	printmsg("Contact ID: %i\n",ToDo.Entries[j].Number);
+					entry.Location = ToDo.Entries[j].Number;
+					entry.MemoryType = GMT_ME;
+					error=Phone->GetMemory(&s, &entry);
+					if (error == GE_NONE) {
+						name = GSM_PhonebookGetEntryName(&entry);
+						if (name != NULL) {
+							printmsg("Contact ID: \"%s\" (%d)\n", DecodeUnicodeString(name), ToDo.Entries[j].Number);
+						} else {
+							printmsg("Contact ID: %d\n",ToDo.Entries[j].Number);
+						}
+					} else {
+						printmsg("Contact: %d\n",ToDo.Entries[j].Number);
+					}
         	                	break;
 	                    	case TODO_PHONE:
 	                        	printmsg("Phone     : \"%s\"\n",DecodeUnicodeString(ToDo.Entries[j].Text));
@@ -4338,7 +4553,7 @@ static void GetProfile(int argc, char *argv[])
 				} else {
 					printmsg("Message alert tone ID : ");
 				}
-				if (strlen(DecodeUnicodeString(GSM_GetRingtoneName(&Info,Profile.FeatureValue[j])))!=0) {
+				if (UnicodeLength(GSM_GetRingtoneName(&Info,Profile.FeatureValue[j]))!=0) {
 					printmsg("\"%s\"\n",DecodeUnicodeString(GSM_GetRingtoneName(&Info,Profile.FeatureValue[j])));
 				} else {
 					printmsg("%i\n",Profile.FeatureValue[j]);
@@ -4459,7 +4674,7 @@ static void GetSpeedDial(int argc, char *argv[])
 			Phonebook.MemoryType 	= SpeedDial.MemoryType;
 			error=Phone->GetMemory(&s,&Phonebook);
 
-			GSM_PhonebookFindDefaultNameNumberGroup(Phonebook, &Name, &Number, &Group);
+			GSM_PhonebookFindDefaultNameNumberGroup(&Phonebook, &Name, &Number, &Group);
 	
 			if (Name != -1) printmsg(" Name \"%s\",",DecodeUnicodeString(Phonebook.Entries[Name].Text));
 			printmsg(" Number \"%s\"",DecodeUnicodeString(Phonebook.Entries[SpeedDial.MemoryNumberID-1].Text));
@@ -4643,7 +4858,7 @@ static void MakeConvertTable(int argc, char *argv[])
 
 	ReadUnicodeFile(Buffer,InputBuffer);
 
-	for(i=0;i<((int)strlen(DecodeUnicodeString(Buffer)));i++) {
+	for(i=0;i<((int)UnicodeLength(Buffer));i++) {
 		j++;
 		if (j==100) {
 			printf("\"\\\n\"");
@@ -4836,6 +5051,8 @@ static void AddFile(int argc, char *argv[])
 			File.Type = GSM_File_Image_JPG;
 		} else if (mystrncasecmp(argv[4],"BMP",0)) {
 			File.Type = GSM_File_Image_BMP;
+		} else if (mystrncasecmp(argv[4],"WBMP",0)) {
+			File.Type = GSM_File_Image_WBMP;
 		} else if (mystrncasecmp(argv[4],"GIF",0)) {
 			File.Type = GSM_File_Image_GIF;
 		} else if (mystrncasecmp(argv[4],"PNG",0)) {
@@ -4906,7 +5123,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	FILE			*file;
 	GSM_DateTime		DT,DT2;
 	time_t     		t_time1,t_time2;
-	unsigned char 		buffer[2000],JAR[500],Vendor[500],Name[500];
+	unsigned char 		buffer[2000],JAR[500],Vendor[500],Name[500],Version[500];
 	bool 			Start = true, Found = false;
 	int			FilesNum = 0, i = 0, FileID, Pos;
 
@@ -4975,8 +5192,11 @@ static void NokiaAddFile(int argc, char *argv[])
 		Print_Error(error);
 
 		/* Getting values from JAD file */
-		error = GSM_JavaFindData(File, Vendor, Name, JAR);
+		error = GSM_JavaFindData(File, Vendor, Name, JAR, Version);
 		Print_Error(error);
+  		printmsgerr("Adding \"%s\"",Name);
+		if (Version[0] != 0x00) printmsgerr(" version %s",Version);
+		printmsgerr(" created by %s\n",Vendor);
 
 		/* adding folder */
 		strcpy(buffer,Vendor);
@@ -5040,7 +5260,10 @@ static void NokiaAddFile(int argc, char *argv[])
 		GSM_GetCurrentDateTime(&DT);
 		t_time1    = Fill_Time_T(DT,8);
 
-		sprintf(buffer,"%07X %07X ",(int)(t_time1-t_time2),(int)(t_time1-t_time2));
+		sprintf(buffer,"%07X %07X ",(int)(t_time1-t_time2-40),(int)(t_time1-t_time2-40));
+#ifdef DEVELOP
+		sprintf(buffer,"2A947BD 2A947DB ");
+#endif
 		/* 40 = inbox "multimedia message received" message */
 		/* 30 = outbox sending failed */
 		if (mystrncasecmp(argv[2],"MMSUnreadInbox",0)) 	  strcat(buffer,"43 ");
@@ -5067,6 +5290,12 @@ static void NokiaAddFile(int argc, char *argv[])
 	File.ID	= Files[FilesNum].ID;
 	EncodeUnicode(File.Name,buffer,strlen(buffer));
 	GSM_IdentifyFileFormat(&File);
+#ifdef DEVELOP
+	if (mystrncasecmp(argv[2],"Gallery",0) || mystrncasecmp(argv[2],"Tones",0)) {
+	} else { /* MMS things */
+		File.Type = GSM_File_MMS;
+	}
+#endif
 
 	error 	= GE_NONE;
 	Pos	= 0;
@@ -5111,13 +5340,14 @@ static void usage(void)
 	printf("gammu --getsecuritystatus\n");
 	printf("gammu --entersecuritycode PIN|PUK|PIN2|PUK2 code\n");
 	printf("gammu --listnetworks\n");
- 	printf("gammu --getfmstation start [stop]\n\n");
+ 	printf("gammu --getfmstation start [stop]\n");
+ 	printf("gammu --getgprspoint start [stop]\n\n");
 
 	printf("gammu --getfiles file1ID file2ID ...\n");
 	printf("gammu --getfilesystem [-flatall|-flat]\n");
 	printf("gammu --deletefile fileID\n");
 	printf("gammu --addfolder parentfolderID name\n");
-	printf("gammu --addfile folderID name [JAR|BMP|PNG|GIF|JPG|MIDI]\n");
+	printf("gammu --addfile folderID name [JAR|BMP|PNG|GIF|JPG|MIDI|WBMP]\n");
 	printf("gammu --nokiaaddfile MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent\n");
 	printf("                     file sender title\n");
 	printf("gammu --nokiaaddfile Application|Game file\n");
@@ -5154,6 +5384,7 @@ static void usage(void)
 	printf("gammu --cancelcall\n\n");
 
 	printf("gammu --gettodo start [stop]\n");
+	printf("gammu --deletetodo start [stop]\n");
 	printf("gammu --getcalendarnotes\n\n");
 	
 	printf("gammu --getcategory TODO|PHONEBOOK start [stop]\n");
@@ -5183,6 +5414,11 @@ static void usage(void)
 
 	printf("gammu --copybitmap inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]\n\n");
 
+#ifdef GSM_ENABLE_BACKUP
+	printf("gammu --savefile CALENDAR target.vcs file location\n");
+	printf("gammu --savefile VCARD10|VCARD21 target.vcf file SM|ME location\n\n");
+#endif
+
 	printf("gammu --savesms TEXT [-folder number][-reply][-sender number][-flash]\n");
 	printf("                     [-smscset number][-smscnumber number][-len len]\n");
 	printf("                     [-enablefax][-disablefax][-enablevoice][-unsent]\n");
@@ -5210,10 +5446,14 @@ static void usage(void)
 	printf("                                       [-sender number][-smscset number]\n");
 	printf("                                       [-smscnumber number][-unread]\n");
 	printf("                                       [-read]\n");
-	printf("gammu --savesms SETTINGS file location [-folder number][-reply][-unsent]\n");
+	printf("gammu --savesms WAPSETTINGS file location DATA|GPRS [-reply][-unsent]\n");
 	printf("                                       [-sender number][-smscset number]\n");
 	printf("                                       [-smscnumber number][-unread]\n");
-	printf("                                       [-read]\n");
+	printf("                                       [-read][-folder number]\n");
+	printf("gammu --savesms MMSSETTINGS file location [-reply][-unsent]\n");
+	printf("                                       [-sender number][-smscset number]\n");
+	printf("                                       [-smscnumber number][-unread]\n");
+	printf("                                       [-read][-folder number]\n");
 	printf("gammu --savesms CALENDAR file location [-folder number][-sender number]\n");
 	printf("                                       [-smscset number][-unsent][-reply]\n");
 	printf("                                       [-smscnumber number][-unread]\n");
@@ -5271,9 +5511,15 @@ static void usage(void)
 	printf("                                                   [-reply][-report]\n");
 	printf("                                                   [-smscnumber number]\n");
 	printf("                                [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\n");
-	printf("gammu --sendsms SETTINGS destination file location [-smscset number]\n");
+	printf("gammu --sendsms WAPSETTINGS destination file location DATA|GPRS\n");
 	printf("                                                   [-smscnumber number]\n");
 	printf("                                                   [-report][-reply]\n");
+        printf("                                                   [-smscset number]\n");
+	printf("                                [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\n");
+	printf("gammu --sendsms MMSSETTINGS destination file location\n");
+	printf("                                                   [-smscnumber number]\n");
+	printf("                                                   [-report][-reply]\n");
+        printf("                                                   [-smscset number]\n");
 	printf("                                [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\n");
 	printf("gammu --sendsms CALENDAR destination file location [-smscset number]\n");
 	printf("                                                   [-smscnumber number]\n");
@@ -5368,6 +5614,8 @@ static GSM_Parameters Parameters[] = {
 	{"--nokiatests",		0, 0, NokiaTests		},
 	{"--nokiasetphonemenus",	0, 0, NokiaSetPhoneMenus	},
 #endif
+	{"--savefile",			4, 5, SaveFile			},
+	{"--getgprspoint",		1, 2, GetGPRSPoint		},
 	{"--addfolder",			2, 2, AddFolder			},
 	{"--getfilesystem",		0, 1, GetFileSystem		},
 	{"--getfiles",			1,20, GetFiles			},
@@ -5405,6 +5653,7 @@ static GSM_Parameters Parameters[] = {
 	{"--answercall",		0, 0, AnswerCall		},
 	{"--getcalendarnotes",		0, 0, GetCalendarNotes		},
 	{"--gettodo",			1, 2, GetToDo			},
+	{"--deletetodo",		1, 2, DeleteToDo		},
 	{"--getcategory",       	2, 3, GetCategory       	},
 	{"--getallcategories",  	1, 1, GetAllCategories  	},
 	{"--reset",			1, 1, Reset			},

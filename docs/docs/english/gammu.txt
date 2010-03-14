@@ -206,6 +206,8 @@ A. First of all, here are described all possible parameters for this software.
 
    gammu --gettodo start [stop]
 
+   gammu --deletetodo start [stop]
+
    gammu --getcalendarnotes
        Get calendar notes from phone. In Nokia 3310 and 3330 they're named
        "Reminders" and have some limitations (they depends on phone firmware
@@ -279,6 +281,10 @@ A. First of all, here are described all possible parameters for this software.
        output will be written to stdout using ASCII art. When give output
        file and format, in some file formats (like NLM) will be set indicator
        informing about logo type to given.
+
+   gammu --savefile CALENDAR target.vcs file location
+
+   gammu --savefile VCARD10|VCARD21 target.vcf file SM|ME location
 
    gammu --savesms TEXT [-folder number][-reply][-sender number][-flash]
                         [-smscset number][-smscnumber number][-len len]
@@ -409,13 +415,19 @@ A. First of all, here are described all possible parameters for this software.
        Read WAP bookmark from file created by --backup option and saves in
        Nokia format as SMS
 
-   gammu --savesms SETTINGS file location [-folder number][-reply][-unsent]
+   gammu --savesms WAPSETTINGS file location GPRS|DATA
+                                          [-folder number][-reply][-unsent]
                                           [-sender number][-smscset number]
                                           [-smscnumber number][-unread]
                                           [-read]
 
        Read WAP settings from file created by --backup option and saves in
        Nokia format as SMS
+
+   gammu --savesms MMSSETTINGS file location [-folder number][-reply][-unsent]
+                                          [-sender number][-smscset number]
+                                          [-smscnumber number][-unread]
+                                          [-read]
 
    gammu --savesms CALENDAR file location [-folder number][-sender number]
                                           [-smscset number][-unsent][-reply]
@@ -531,7 +543,12 @@ A. First of all, here are described all possible parameters for this software.
                                                       [-reply][-report]
                                                       [-smscnumber number]
                                     [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
-   gammu --sendsms SETTINGS destination file location [-smscset number]
+   gammu --sendsms WAPSETTINGS destination file location GPRS|DATA
+                                                      [-smscset number]
+                                                      [-smscnumber number]
+                                                      [-report][-reply]
+                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
+   gammu --sendsms MMSSETTINGS destination file location [-smscset number]
                                                       [-smscnumber number]
                                                       [-report][-reply]
                                     [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]

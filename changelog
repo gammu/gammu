@@ -17,6 +17,48 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20030608 - 0.77
+* new functionality:
+  * * new UnicodeLength instead of strlen(DecodeUnicodeString))  (Michal Cihar)
+    * new function GSM_PhonebookGetEntryName to get Entry name. Returns
+      either Name (if set) or "LastName, FirstName" (or just part that is set)
+    * GetToDoStatus implemented for both Alcatel and 6510
+    * added --deletetodo (works with Alcatel only)
+    * in ToDo reading show Category name and Contact name
+    * automatically searching for RPM directory                 (David Peterac)
+  * scripts, which really allow to connect to Internet over AT phone
+    (using GPRS or HSCSD or "normal" 9600 data). You don't have to know
+    AT commands, just call script with operator settings
+  * setting Picture Images in DCT4 using --setbitmap PICTURE
+    (NOTE: for now or at all it's not possible to replace default
+           templates)
+  * getting GPRS access points (new --getgprspoint)
+  * new --savefile can extract VCARD and VCALENDAR from backup   (Bharat Varma)
+    files. Later such files can be send to phone.
+    Example: gammu --savefile VCARD21 backupfile d:\ala.vcf ME 1
+             irftp d:\ala.vcf
+    (irftp is part of Windows XP) will create VCARD file and send it to phone
+  * full support for wbmp files (reading, creating, correctly adding
+    to DCT4 filesystem)
+  * support for GPRS and DATA bearer over SMS is now complete
+    (it includes MMS settings over SMS)
+
+    NOTE: NOKIA PHONES SEEMS TO IGNORE GPRS ONLINE SETTING. YOU HAVE TO
+          SET IT MANUALLY
+
+  * during uploading midlets Gammu displays info about uploaded midlet
+  * Gammu GUI 0.0.34                                            (Luca Cassioli)
+  * support for enabling/disabling LED, enabling/disabling light
+    and enabling/disabling vibra supported by Imelody and EMS. Just use
+    zD/zd/zL/zl/zV/zv commands in RTTL file.
+
+* fixes and improvements:
+  * many functions in service/* now gets pointer to structure    (Michal Cihar)
+    instead whole structure (this should reduce memory usage)
+  * by default new DCT4 use new calendar frames again
+  * smaller buffer during adding files to DCT4                   (Jorge Bardok)
+  * improved getting values from JAD files                       (Lim Swee Tat)
+
 20030525 - 0.76
 * new functionality:
   * auto model for Nokia doesn't report unknown frames

@@ -6,7 +6,7 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.76"
+#define VERSION "0.77"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -66,10 +66,8 @@
 
 /* n6510.c (DCT4) models */
 #define GSM_ENABLE_NOKIA6510 1
-/* Force using new frames for calendar. Can be not compatible with all phones,
- * but gives full calendar info
- */
-/* #undef GSM_FORCE_DCT4_NEW_CALENDAR */
+/* Force using old frames for calendar. Required by some older DCT4 */
+/* #undef GSM_FORCE_DCT4_OLD_CALENDAR */
 
 /* AT generic models */
 #define GSM_ENABLE_ATGEN 1

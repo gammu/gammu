@@ -17,7 +17,7 @@
 #                                              stack)
 #                  "bluefbus"   or "dlr3blue" (Nokia FBUS2 with Bluetooth
 #                                              stack)
-#                  "bluetat"    or "atblue"   (AT commands with Bluetooth
+#                  "blueat"     or "atblue"   (AT commands with Bluetooth
 #                                              stack)
 #                  "mbus"                     (Nokia MBUS2)
 #                  "at19200","at115200",...   (AT commands.8 bits, None parity,

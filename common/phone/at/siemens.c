@@ -374,7 +374,7 @@ GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bo
 
 	if (Priv->Manufacturer!=AT_Siemens) return GE_NOTSUPPORTED;
 	if (Note->Location==0x00) return GE_INVALIDLOCATION;	
-	if (!Past && IsNoteFromThePast(*Note)) return GE_NONE;
+	if (!Past && IsNoteFromThePast(Note)) return GE_NONE;
 
 	error = ATGEN_DelCalendarNote(s, Note);
     	if (error!=GE_NONE) return error;

@@ -65,6 +65,7 @@ GSM_Phone_Functions NAUTOPhone = {
 	NOTIMPLEMENTED,		/*	GetToDo			*/
 	NOTIMPLEMENTED,		/*	DeleteAllToDo		*/
 	NOTIMPLEMENTED,		/*	SetToDo			*/
+	NOTIMPLEMENTED,		/*	GetToDoStatus		*/
 	NOTIMPLEMENTED,		/*	PlayTone		*/
 	NOTIMPLEMENTED,		/*	EnterSecurityCode	*/
 	NOTIMPLEMENTED,		/*	GetSecurityStatus	*/
@@ -99,7 +100,9 @@ GSM_Phone_Functions NAUTOPhone = {
 	NOTIMPLEMENTED, 	/* 	GetFreeFileMemory 	*/
 	NOTIMPLEMENTED,		/*	DeleteFile		*/
 	NOTIMPLEMENTED,		/*	AddFolder		*/
-	NOTIMPLEMENTED		/* 	GetMMSSettings		*/
+	NOTIMPLEMENTED,		/* 	GetMMSSettings		*/
+	NOTIMPLEMENTED,		/* 	GetGPRSAccessPoint	*/
+	NOTIMPLEMENTED		/* 	SetGPRSAccessPoint	*/
 };
 
 #endif

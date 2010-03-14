@@ -73,58 +73,49 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 	return GE_NONE;
 }
 
-GSM_Error GSM_JavaFindData(GSM_File File, char *Vendor, char *Name, char *JAR)
+static void GSM_JADFindLine(GSM_File File, char *Name, char *Value)
 {
 	int 	i;
 	bool 	found;
 
-	found = false;
-	Vendor[0] = 0;
-	for (i=0;i<File.Used - 14;i++) {
-		if (!strncmp(File.Buffer+i,"MIDlet-Vendor: ",14)) {
-			found = true;
-			break;
-		}
-	}
-	if (!found) return GE_UNKNOWN;
-	i = i + 15;
-	while (File.Buffer[i] != 13 && File.Buffer[i] != 10) {
-		Vendor[strlen(Vendor)+1] = 0;
-		Vendor[strlen(Vendor)]   = File.Buffer[i];
-		i++;
-	}
+	Value[0] = 0;
 
 	found = false;
-	for (i=0;i<File.Used - 13;i++) {
-		if (!strncmp(File.Buffer+i,"MIDlet-Name: ",13)) {
+	for (i=0;i<File.Used - (int)strlen(Name);i++) {
+		if (!strncmp(File.Buffer+i,Name,strlen(Name))) {
 			found = true;
 			break;
 		}
 	}
-	if (!found) return GE_UNKNOWN;
-	i = i + 13;
-	Name[0] = 0;
+	if (!found) return;
+	i = i + strlen(Name);
 	while (File.Buffer[i] != 13 && File.Buffer[i] != 10) {
-		Name[strlen(Name)+1] = 0;
-		Name[strlen(Name)]   = File.Buffer[i];
+		if (strlen(Value) == 0 && File.Buffer[i] == 0x20) {
+			i++;
+			continue;
+		}
+		Value[strlen(Value)+1] = 0;
+		Value[strlen(Value)]   = File.Buffer[i];
 		i++;
 	}
+}
 
-	found = false;
-	for (i=0;i<File.Used - 16;i++) {
-		if (!strncmp(File.Buffer+i,"MIDlet-Jar-URL: ",16)) {
-			found = true;
-			break;
-		}
-	}
-	if (!found) return GE_UNKNOWN;
-	i = i + 16;
-	JAR[0] = 0;
-	while (File.Buffer[i] != 13 && File.Buffer[i] != 10) {
-		JAR[strlen(JAR)+1] = 0;
-		JAR[strlen(JAR)]   = File.Buffer[i];
-		i++;
-	}
+GSM_Error GSM_JavaFindData(GSM_File File, char *Vendor, char *Name, char *JAR, char *Version)
+{
+	GSM_JADFindLine(File, "MIDlet-Vendor:", Vendor);
+	if (Vendor[0] == 0x00) return GE_FILENOTSUPPORTED;
+	dprintf("Vendor: \"%s\"\n",Vendor);
+
+	GSM_JADFindLine(File, "MIDlet-Name:", Name);
+	if (Name[0] == 0x00) return GE_FILENOTSUPPORTED;
+	dprintf("Name: \"%s\"\n",Name);
+
+	GSM_JADFindLine(File, "MIDlet-Jar-URL:", JAR);
+	if (JAR[0] == 0x00) return GE_FILENOTSUPPORTED;
+	dprintf("JAR file URL: \"%s\"\n",JAR);
+
+	GSM_JADFindLine(File, "MIDlet-Version:", Version);
+	dprintf("Version: \"%s\"\n",Version);
 
 	return GE_NONE;
 }
@@ -136,6 +127,8 @@ void GSM_IdentifyFileFormat(GSM_File *File)
 		File->Type = GSM_File_Image_BMP;
 	} else if (memcmp(File->Buffer, "GIF",3)==0) {
 		File->Type = GSM_File_Image_GIF;
+	} else if (File->Buffer[0] == 0x00 && File->Buffer[1] == 0x00) {
+		File->Type = GSM_File_Image_WBMP;
 	} else if (memcmp(File->Buffer+1, "PNG",3)==0) {
 		File->Type = GSM_File_Image_PNG;
 	} else if (File->Buffer[0] == 0xFF && File->Buffer[1] == 0xD8) {

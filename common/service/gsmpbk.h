@@ -95,10 +95,11 @@ typedef struct {
 	GSM_SubPhonebookEntry	Entries[GSM_PHONEBOOK_ENTRIES];
 } GSM_PhonebookEntry;
 
-void GSM_PhonebookFindDefaultNameNumberGroup(GSM_PhonebookEntry entry, int *Name, int *Number, int *Group);
+void GSM_PhonebookFindDefaultNameNumberGroup(GSM_PhonebookEntry *entry, int *Name, int *Number, int *Group);
+unsigned char *GSM_PhonebookGetEntryName (GSM_PhonebookEntry *entry);
 
-void NOKIA_EncodeVCARD10SMSText(char *Buffer, int *Length, GSM_PhonebookEntry pbk);
-void NOKIA_EncodeVCARD21SMSText(char *Buffer, int *Length, GSM_PhonebookEntry pbk);
+void NOKIA_EncodeVCARD10SMSText(char *Buffer, int *Length, GSM_PhonebookEntry *pbk);
+void NOKIA_EncodeVCARD21SMSText(char *Buffer, int *Length, GSM_PhonebookEntry *pbk);
 void DecodeVCARD21Text(char *VCard, GSM_PhonebookEntry *pbk);
 
 /* This define speed dialing entries. */

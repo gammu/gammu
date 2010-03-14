@@ -91,7 +91,7 @@ static void SaveBackupText(FILE *file, char *myname, char *myvalue, bool UseUnic
 			EncodeUnicode(buffer2,buffer,strlen(buffer));
 			fwrite(buffer2,1,strlen(buffer)*2,file);
 
-			fwrite(myvalue,1,strlen(DecodeUnicodeString(myvalue))*2,file);
+			fwrite(myvalue,1,UnicodeLength(myvalue)*2,file);
 
 			sprintf(buffer,"\"%c%c",13,10);
 			EncodeUnicode(buffer2,buffer,strlen(buffer));
@@ -100,7 +100,7 @@ static void SaveBackupText(FILE *file, char *myname, char *myvalue, bool UseUnic
 			sprintf(buffer,"%s = \"%s\"%c%c",myname,DecodeUnicodeString(myvalue),13,10);
 			fprintf(file,"%s",buffer);
 
-			EncodeHexBin(buffer,myvalue,strlen(DecodeUnicodeString(myvalue))*2);
+			EncodeHexBin(buffer,myvalue,UnicodeLength(myvalue)*2);
 			fprintf(file,"%sUnicode = %s%c%c",myname,buffer,13,10);
 		}
 	}
@@ -115,8 +115,9 @@ static bool ReadBackupText(CFG_Header *file_info, char *section, char *myname, c
 		readvalue = CFG_Get(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
 			CopyUnicodeString(myvalue,readvalue+2);
-			myvalue[strlen(DecodeUnicodeString(readvalue))*2-4]=0;
-			myvalue[strlen(DecodeUnicodeString(readvalue))*2-3]=0;
+			myvalue[UnicodeLength(readvalue)*2-4]=0;
+			myvalue[UnicodeLength(readvalue)*2-3]=0;
+			dprintf("%s\n",DecodeUnicodeString(readvalue));
 		} else {
 			myvalue[0]=0;
 			myvalue[1]=0;
@@ -752,7 +753,7 @@ static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
     	
 	sprintf(buffer,"Location = %i%c%c",ToDo->Location,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
-	sprintf(buffer,"Priority = %02x%c%c",ToDo->Priority,13,10);
+	sprintf(buffer,"Priority = %i%c%c",ToDo->Priority,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
 	
 	for (j=0;j<ToDo->EntriesNum;j++) {
@@ -1168,9 +1169,9 @@ static void SaveLMBStartupEntry(FILE *file, GSM_Bitmap bitmap)
 	}
 	if (bitmap.Type == GSM_WelcomeNoteText) {
 		req[count++]=0x02;
-		req[count++]=strlen(DecodeUnicodeString(bitmap.Text));
-		memcpy(req+count,DecodeUnicodeString(bitmap.Text),strlen(DecodeUnicodeString(bitmap.Text)));
-		count=count+strlen(DecodeUnicodeString(bitmap.Text));
+		req[count++]=UnicodeLength(bitmap.Text);
+		memcpy(req+count,DecodeUnicodeString(bitmap.Text),UnicodeLength(bitmap.Text));
+		count=count+UnicodeLength(bitmap.Text);
 
 		req[12]++;
 	}
@@ -1195,7 +1196,7 @@ static void SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
 	if (bitmap.DefaultName) {
 		req[count++] = 0;
 	} else {
-		textlen = strlen(DecodeUnicodeString(bitmap.Text));
+		textlen = UnicodeLength(bitmap.Text);
 		req[count++] = textlen;
 		memcpy(req+count,DecodeUnicodeString(bitmap.Text),textlen);
 		count += textlen;

@@ -3,11 +3,7 @@
 
 #include "../misc/misc.h"
 
-typedef struct {
-	char	Address		[(255+1)*2];
-	char	Title		[(50+1)*2];
-	int	Location;
-} GSM_WAPBookmark;
+/* --------------------------- WAP or MMS settings ------------------------- */
 
 typedef enum {
 	WAPSETTINGS_SPEED_9600,
@@ -60,8 +56,27 @@ typedef struct {
 	WAPSettings_Bearer	ActiveBearer;
 } GSM_MultiWAPSettings;
 
-void NOKIA_EncodeWAPBookmarkSMSText(char *Buffer, int *Length, GSM_WAPBookmark bookmark);
-void NOKIA_EncodeWAPSettingsSMSText(char *Buffer, int *Length, GSM_WAPSettings settings);
+void NOKIA_EncodeWAPMMSSettingsSMSText(char *Buffer, int *Length, GSM_WAPSettings *settings, bool MMS);
+
+/* -------------------------------- WAP Bookmark --------------------------- */
+
+typedef struct {
+	char	Address		[(255+1)*2];
+	char	Title		[(50+1)*2];
+	int	Location;
+} GSM_WAPBookmark;
+
+void NOKIA_EncodeWAPBookmarkSMSText(char *Buffer, int *Length, GSM_WAPBookmark *bookmark);
+
+/* ------------------------------ MMS Indicator ---------------------------- */
+
+typedef struct {
+	unsigned char	Address[500];
+	unsigned char	Title[200];
+	unsigned char	Sender[200];
+} GSM_MMSIndicator;
+
+void GSM_EncodeMMSIndicatorSMSText(char *Buffer, int *Length, GSM_MMSIndicator Indicator);
 
 #endif
 

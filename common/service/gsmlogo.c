@@ -189,6 +189,11 @@ void GSM_SetPointBitmap(GSM_Bitmap *bmp, int x, int y)
 	SetBit(bmp->Bitmap,y*bmp->Width+x);
 }
 
+void GSM_ClearPointBitmap(GSM_Bitmap *bmp, int x, int y)
+{
+	ClearBit(bmp->Bitmap,y*bmp->Width+x);
+}
+
 bool GSM_IsPointBitmap(GSM_Bitmap *bmp, int x, int y)
 {
 	if (GetBit(bmp->Bitmap,y*bmp->Width+x)) return true; else return false;
@@ -217,6 +222,21 @@ void GSM_PrintBitmap(FILE *file, GSM_Bitmap *bitmap)
 			}
 		}
 		fprintf(file,"\n");
+	}
+}
+
+void GSM_ReverseBitmap(GSM_Bitmap *Bitmap)
+{
+	int x, y;
+
+	for (x=0;x<Bitmap->Width;x++) {
+		for (y=0;y<Bitmap->Height;y++) {
+			if (GSM_IsPointBitmap(Bitmap,x,y)) {
+				GSM_ClearPointBitmap(Bitmap, x, y);
+			} else {
+				GSM_SetPointBitmap(Bitmap, x, y);
+			}
+		}
 	}
 }
 
@@ -392,11 +412,35 @@ static GSM_Error savebmp(FILE *file, GSM_MultiBitmap *bitmap)
 	return error;
 }
 
-static GSM_Error savenlm(FILE *file, GSM_MultiBitmap *bitmap)
+static void PrivSaveNLMWBMP(FILE *file, GSM_Bitmap *Bitmap)
 {
 	unsigned char	buffer[1000];
-	int		x,y,pos,pos2,i;
+	int		x,y,pos,pos2;
 	div_t		division;
+
+	pos=0;pos2=7;
+	for (y=0;y<Bitmap->Height;y++) {
+		for (x=0;x<Bitmap->Width;x++) {
+			if (pos2==7) buffer[pos]=0;
+      			if (GSM_IsPointBitmap(Bitmap,x,y)) buffer[pos]|=(1<<pos2);
+			pos2--;
+			/* going to new line */
+			if (pos2<0) {pos2=7;pos++;}
+		}
+		/* for startup logos - new line with new byte */
+		if (pos2!=7) {pos2=7;pos++;}
+	}
+	  
+	division=div(Bitmap->Width,8);
+	/* For startup logos */
+	if (division.rem!=0) division.quot++;
+	  
+	fwrite(buffer,1,(division.quot*Bitmap->Height),file);
+}
+
+static GSM_Error savenlm(FILE *file, GSM_MultiBitmap *bitmap)
+{
+	int  i;
 	char header[]={
 		'N','L','M',' ', /* Nokia Logo Manager file ID. */
 		0x01,
@@ -419,24 +463,7 @@ static GSM_Error savenlm(FILE *file, GSM_MultiBitmap *bitmap)
 	fwrite(header,1,sizeof(header),file);
   
 	for (i=0;i<bitmap->Number;i++) {
-		pos=0;pos2=7;
-		for (y=0;y<bitmap->Bitmap[i].Height;y++) {
-			for (x=0;x<bitmap->Bitmap[i].Width;x++) {
-				if (pos2==7) buffer[pos]=0;
-	      			if (GSM_IsPointBitmap(&bitmap->Bitmap[i],x,y)) buffer[pos]|=(1<<pos2);
-				pos2--;
-				/* going to new line */
-				if (pos2<0) {pos2=7;pos++;}
-			}
-			/* for startup logos - new line with new byte */
-			if (pos2!=7) {pos2=7;pos++;}
-		}
-	  
-		division=div(bitmap->Bitmap[i].Width,8);
-		/* For startup logos */
-		if (division.rem!=0) division.quot++;
-	  
-		fwrite(buffer,1,(division.quot*bitmap->Bitmap[i].Height),file);
+		PrivSaveNLMWBMP(file, &bitmap->Bitmap[i]);
 	}
 
 	return GE_NONE;
@@ -549,6 +576,21 @@ static GSM_Error savensl(FILE *file, GSM_MultiBitmap *bitmap)
 	return GE_NONE;
 }
 
+static GSM_Error savewbmp(FILE *file, GSM_MultiBitmap *bitmap)
+{
+	unsigned char buffer[4];
+
+	buffer[0] = 0x00;
+	buffer[1] = 0x00;
+	buffer[2] = bitmap->Bitmap[0].Width;
+	buffer[3] = bitmap->Bitmap[0].Height;
+	fwrite(buffer,1,4,file);
+
+	PrivSaveNLMWBMP(file, &bitmap->Bitmap[0]);
+
+	return GE_NONE;
+}
+
 GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 {
 	FILE		*file;
@@ -568,6 +610,8 @@ GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 		error=savexpm(file,bitmap);
 	} else if (strstr(FileName,".nsl")) {
 		error=savensl(file,bitmap);
+	} else if (strstr(FileName,".wbmp")) {
+		error=savewbmp(file,bitmap);
 	} else {
 		error=savebmp(file,bitmap);
 	}
@@ -657,12 +701,11 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
  
 	pos=7;
 	/* lines are written from the last to the first */
-	for (y=h-1;y>=0;y--) {
+	for (y=h-1;y>=0;y--) 	{
 		i=1;
-		for (x=0;x<w;x++) {
+		for (x=0;x<w;x++) 		{
 			/* new byte ! */
-			if (pos==7){
-
+			if (pos==7)			{
 				if (isfile) fread(buff, 1, 1, file);
 				    else {
 					    memcpy (buff,buffer+buffpos,1);
@@ -676,7 +719,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 				if(i==5) i=1;
 			}
 			/* we have top left corner ! */
-			if (x<=bitmap->Width && y<=bitmap->Height) {
+			if (x<=bitmap->Width && y<=bitmap->Height) 			{
 				if (first_white) {
 					if ((buff[0]&(1<<pos))<=0) GSM_SetPointBitmap(bitmap,x,y);
 				} else {
@@ -691,7 +734,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 		pos=7;
 		if (i!=1) {
 			/* each line is written in multiply of 4 bytes */
-			while (i!=5) {
+			while (i!=5) 			{
 
 				if (isfile) fread(buff, 1, 1, file);
 				    else {
@@ -713,7 +756,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 
 static GSM_Error loadbmp(FILE *file, GSM_MultiBitmap *bitmap)
 {
-	GSM_Error	error;
+	GSM_Error error;
 
 	error=BMP2Bitmap(NULL,file,&bitmap->Bitmap[0]);
 	bitmap->Number = 1;
@@ -870,6 +913,22 @@ static GSM_Error loadnsl(FILE *file, GSM_MultiBitmap *bitmap)
 	return(GE_NONE);
 }
 
+static GSM_Error loadwbmp(FILE *file, GSM_MultiBitmap *bitmap)
+{
+	unsigned char buffer[10000];
+
+	fread(buffer,1,4,file);
+	bitmap->Bitmap[0].Width  = buffer[2];
+	bitmap->Bitmap[0].Height = buffer[3];
+	bitmap->Number 		 = 1;
+
+	fread(buffer,1,10000,file);
+	PHONE_DecodeBitmap(GSM_Nokia7110OperatorLogo, buffer, &bitmap->Bitmap[0]);
+	GSM_ReverseBitmap(&bitmap->Bitmap[0]);
+
+	return(GE_NONE);
+}
+
 GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 {
 	FILE		*file;
@@ -886,6 +945,8 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	/* Attempt to identify filetype */
 	if (memcmp(buffer, "BM",2)==0) { 
 		return loadbmp(file,bitmap);
+	} else if (buffer[0] == 0x00 && buffer[1] == 0x00) { 
+		return loadwbmp(file,bitmap);
 	} else if (memcmp(buffer, "NLM",3)==0) {
 		return loadnlm(file,bitmap);
 	} else if (memcmp(buffer, "NOL",3)==0) {

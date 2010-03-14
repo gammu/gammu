@@ -1,4 +1,4 @@
-Gammu README version 27.04.2003
+Gammu README version 08.06.2003
 -------------------------------
 Q. What is this ?
 
@@ -17,7 +17,7 @@ A. This is package with different tools and drivers for Nokia and other mobile
 Q. Can I use Gammu (Gammu dll or library) in own (commercial) applications ?
 
 A. Gammu is currently licensed under GNU GPL license. It means, that each
-   application using it have to be published with source. So, when link
+   application using it have to be published with source. So, when you link
    Gammu source in own, you should inform me and publish it with source.
 
    When use Gammu dll or library, you also should publish your source. This
@@ -25,7 +25,7 @@ A. Gammu is currently licensed under GNU GPL license. It means, that each
    will be unavailable (of course, still show somewhere link to Gammu source
    and info about it).
 
-   If you think, I break GNU GPL and situation is not clear, I could maybe
+   If you think, that I break GNU GPL and situation is not clear, I could maybe
    change license to different (like LGPL).
 -------------------------------------------------------------------------------
 Q. How can I help in writing this software ?
@@ -375,7 +375,7 @@ A. Here are some people, who somehow helped in this project. Probably not
 -------------------------------------------------------------------------------
 Q. What file formats are supported ?
 
-A. for logos              : xpm (only saving), bmp, nlm, nsl, ngg, nol
+A. for logos              : xpm (only saving), bmp, nlm, nsl, ngg, nol, wbmp
    for ringtones          : rttl, binary format created for Gammu,
                             mid (saving), re (reading), ott, communicator,
                             ringtones format found in fkn.pl, wav (saving),
@@ -410,7 +410,9 @@ A. Using cable. Each phone has connector on bottom (like in 5110) or under
                    Good choice, if won't use MBUS protocol and have modern
                    model.
 
-                Gammu supports each of these protocols.
+                Gammu supports each of these protocols. Just give access to
+                used serial device, set it as "port" in gammurc and set
+                "connection" according to protocol
 
    Using infrared. There are two versions: with direct communicating with
                    phone or using some functions from operating system.
@@ -422,10 +424,39 @@ A. Using cable. Each phone has connector on bottom (like in 5110) or under
 
                    Second is much better, compatible with ALL modern operating
                    systems, in Linux requires enabling infrared in kernel.
-                   Used in all new phones. "irda" in gammurc.
+                   Called socket infrared. Used in all new phones.
+                   "irda" in gammurc.
+
+                   Example of using socket infrared in Linux (based on USB
+                   dongle):
+                   1.compile kernel with USB and infrared protocols
+                   3.if required, start USB module (example:
+                     "modprobe irda-usb")
+                   2.use "irattach irda0 -s" or similiar
+                   3.set "connection" in gammurc to "irda", "port" to
+                     "/dev/ircomm0" or similiar (you have to add access to
+                     this device to user)
 
    Using bluetooth. Works OK in all situations exluding one (Microsoft stack
-   and AT commands)
+                    and AT commands).
+
+                    Example of using USB dongle for Linux (Bluez stack from
+                    http://bluez.sourceforge.net):
+                    1.compile kernel with USB and Bluetooth (don't use
+                      BT in USB section !)
+                    2.load kernel driver ("modprobe hci_usb")
+                    3."hciconfig hci0 up" enables dongle
+                    4.in /etc/bluetooth create "givepin" file. It should be
+                      executable ("chmod a+x /etc/bluetooth/givepin")
+                    5.write inside:
+                      #!/bin/sh
+                      echo "PIN:5432"
+                    6.in /etc/bluetooth/hcid.conf set "pin_helper" to
+                      "/etc/bluetooth/givepin;"
+                    7."hcid" (will send options from hcid.conf to BT device)
+                    8.set "device" in gammurc to phone address (see "hcitool
+                      scan" for it) and protocol to "bluephonet" or similiar
+                    9.during first connection give PIN 5432 in phone
 
    I will also write few words about flasher cable. It's different and
    connected to paraller (LPT) port and allows to read/write flash (internal
