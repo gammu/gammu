@@ -292,12 +292,20 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 	}
 }
 
+static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, int Part, bool OK)
+{
+	if (OK) WriteSMSDLog("Transmitted %s (%s: %i) to %s", Config->SMSID, (Part == sms->Number?"total":"part"),Part,DecodeUnicodeString(sms->SMS[0].Number));
+
+  	return ERR_NONE;
+}
+
 GSM_SMSDService SMSDFiles = {
-	NONEFUNCTION,			/* Init */
+	NONEFUNCTION,			/* Init 		*/
 	SMSDFiles_SaveInboxSMS,
 	SMSDFiles_FindOutboxSMS,
 	SMSDFiles_MoveSMS,
-	NOTSUPPORTED
+	NOTSUPPORTED,			/* CreateOutboxSMS	*/
+	SMSDFiles_AddSentSMSInfo
 };
 
 /* How should editor hadle tabs in this file? Add editor commands here.

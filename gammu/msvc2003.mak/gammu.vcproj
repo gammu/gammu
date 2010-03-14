@@ -135,6 +135,9 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
+				RelativePath="..\..\common\device\bluetoth\affix.c">
+			</File>
+			<File
 				RelativePath="..\..\common\protocol\alcatel\alcabus.c">
 			</File>
 			<File
@@ -165,19 +168,19 @@
 				RelativePath="..\..\common\service\backup\backvcs.c">
 			</File>
 			<File
-				RelativePath="..\..\common\device\bluetoth\bluetoth.c">
-			</File>
-			<File
 				RelativePath="..\..\common\device\bluetoth\blue_w32.c">
 			</File>
 			<File
-				RelativePath="..\..\common\device\bluetoth\affix.c">
+				RelativePath="..\..\common\device\bluetoth\bluetoth.c">
 			</File>
 			<File
 				RelativePath="..\..\common\device\bluetoth\bluez.c">
 			</File>
 			<File
 				RelativePath="..\..\common\misc\cfg.c">
+			</File>
+			<File
+				RelativePath="..\depend\siemens\chiffre.c">
 			</File>
 			<File
 				RelativePath="..\..\common\misc\coding\coding.c">
@@ -201,9 +204,6 @@
 				RelativePath="..\depend\siemens\dsiemens.c">
 			</File>
 			<File
-				RelativePath="..\depend\siemens\chiffre.c">
-			</File>
-			<File
 				RelativePath="..\..\common\protocol\nokia\fbus2.c">
 			</File>
 			<File
@@ -220,6 +220,9 @@
 			</File>
 			<File
 				RelativePath="..\..\common\gsmcomon.c">
+			</File>
+			<File
+				RelativePath="..\..\common\service\gsmdata.c">
 			</File>
 			<File
 				RelativePath="..\..\common\service\sms\gsmems.c">
@@ -249,9 +252,6 @@
 				RelativePath="..\..\common\gsmstate.c">
 			</File>
 			<File
-				RelativePath="..\..\common\service\gsmdata.c">
-			</File>
-			<File
 				RelativePath="..\..\common\device\irda\irda.c">
 			</File>
 			<File
@@ -270,13 +270,13 @@
 				RelativePath="..\..\common\phone\symbian\mroutgen.c">
 			</File>
 			<File
+				RelativePath="..\..\common\phone\nokia\dct4\n3320.c">
+			</File>
+			<File
 				RelativePath="..\..\common\phone\nokia\dct4\n3650.c">
 			</File>
 			<File
 				RelativePath="..\..\common\phone\nokia\dct3\n6110.c">
-			</File>
-			<File
-				RelativePath="..\..\common\phone\nokia\dct4\n3320.c">
 			</File>
 			<File
 				RelativePath="..\..\common\phone\nokia\dct4\n6510.c">
@@ -312,6 +312,9 @@
 				RelativePath="..\smsd\s_files.c">
 			</File>
 			<File
+				RelativePath="..\smsd\s_mysql.c">
+			</File>
+			<File
 				RelativePath="..\..\common\device\serial\ser_w32.c">
 			</File>
 			<File
@@ -345,6 +348,9 @@
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl">
+			<File
+				RelativePath="..\..\common\device\bluetoth\affix.h">
+			</File>
 			<File
 				RelativePath="..\..\common\protocol\alcatel\alcabus.h">
 			</File>
@@ -382,17 +388,16 @@
 				RelativePath="..\..\common\device\bluetoth\blue_w32.h">
 			</File>
 			<File
-				RelativePath="..\..\common\device\bluetoth\affix.h">
+				RelativePath="..\..\common\device\bluetoth\bluetoth.h">
 			</File>
 			<File
 				RelativePath="..\..\common\device\bluetoth\bluez.h">
 			</File>
-
-			<File
-				RelativePath="..\..\common\device\bluetoth\bluetoth.h">
-			</File>
 			<File
 				RelativePath="..\..\common\misc\cfg.h">
+			</File>
+			<File
+				RelativePath="..\depend\siemens\chiffre.h">
 			</File>
 			<File
 				RelativePath="..\..\common\misc\coding\coding.h">
@@ -419,9 +424,6 @@
 				RelativePath="..\depend\siemens\dsiemens.h">
 			</File>
 			<File
-				RelativePath="..\depend\siemens\chiffre.h">
-			</File>
-			<File
 				RelativePath="..\..\common\protocol\nokia\fbus2.h">
 			</File>
 			<File
@@ -435,6 +437,9 @@
 			</File>
 			<File
 				RelativePath="..\..\common\gsmcomon.h">
+			</File>
+			<File
+				RelativePath="..\..\common\service\gsmdata.h">
 			</File>
 			<File
 				RelativePath="..\..\common\service\sms\gsmems.h">
@@ -464,9 +469,6 @@
 				RelativePath="..\..\common\gsmstate.h">
 			</File>
 			<File
-				RelativePath="..\..\common\service\gsmdata.h">
-			</File>
-			<File
 				RelativePath="..\..\common\device\irda\irda.h">
 			</File>
 			<File
@@ -488,13 +490,13 @@
 				RelativePath="..\..\common\phone\symbian\mroutgen.h">
 			</File>
 			<File
+				RelativePath="..\..\common\phone\nokia\dct4\n3320.h">
+			</File>
+			<File
 				RelativePath="..\..\common\phone\nokia\dct4\n3650.h">
 			</File>
 			<File
 				RelativePath="..\..\common\phone\nokia\dct3\n6110.h">
-			</File>
-			<File
-				RelativePath="..\..\common\phone\nokia\dct4\n3320.h">
 			</File>
 			<File
 				RelativePath="..\..\common\phone\nokia\dct4\n6510.h">
@@ -531,6 +533,9 @@
 			</File>
 			<File
 				RelativePath="..\smsd\s_files.h">
+			</File>
+			<File
+				RelativePath="..\smsd\s_mysql.h">
 			</File>
 			<File
 				RelativePath="..\..\common\device\serial\ser_w32.h">

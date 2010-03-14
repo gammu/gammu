@@ -333,6 +333,9 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	if (error != ERR_NONE) {
 		/* Unknown error - escape */
 		WriteSMSDLog("Error in outbox on %s", Config->SMSID);
+		for (i=0;i<sms.Number;i++) {
+			Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, false);
+		}
 		Service->MoveSMS(&sms,Config, Config->SMSID, true,false);
 		return false;
 	}
@@ -343,6 +346,9 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				Config->retries = 0;
 				strcpy(Config->prevSMSID, "");
 				WriteSMSDLog("Moved to errorbox: %s", Config->SMSID);
+				for (i=0;i<sms.Number;i++) {
+					Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, false);
+				}
 				Service->MoveSMS(&sms,Config, Config->SMSID, true,false);
 				return false;
 			}
@@ -376,7 +382,14 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				WriteSMSDLog("Error getting send status of %s (%i): %s", Config->SMSID, SendingSMSStatus,print_error(SendingSMSStatus,s.di.df,s.msg));
 				return false;
 			}
-			WriteSMSDLog("Transmitted %s (%s: %i) to %s", Config->SMSID, (i+1 == sms.Number?"total":"part"),i+1,DecodeUnicodeString(sms.SMS[0].Number));
+			error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, true);
+			if (error!=ERR_NONE) {
+				return false;
+			}
+		}
+		while ((int)i<sms.Number-1) {
+			Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, false);
+			i++;
 		}
 		strcpy(Config->prevSMSID, "");
 		if (Service->MoveSMS(&sms,Config, Config->SMSID, false, true) != ERR_NONE) {
@@ -487,7 +500,7 @@ GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *s
 	error = Service->Init(&Config);
 	if (error!=ERR_NONE) return ERR_UNKNOWN;
 	
-	return Service->CreateOutboxSMS(sms);
+	return Service->CreateOutboxSMS(sms,&Config);
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

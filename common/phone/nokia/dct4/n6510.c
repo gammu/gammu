@@ -2283,12 +2283,12 @@ static GSM_Error N6510_ReplySendSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 {
 	switch (msg.Buffer[8]) {
 	case 0x00:
-		smprintf(s, "SMS sent OK\n");
-		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,0,0);
+		smprintf(s, "SMS sent OK, TPMR for sent sms is %02x\n",msg.Buffer[10]);
+		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,0,msg.Buffer[10]);
 		return ERR_NONE;
 	default:
 		smprintf(s, "SMS not sent OK, error code probably %i\n",msg.Buffer[8]);
-		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,msg.Buffer[8],0);
+		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,msg.Buffer[8],msg.Buffer[10]);
 		return ERR_NONE;
 	}
 }
@@ -2982,6 +2982,9 @@ static GSM_Error N6510_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 	/* For now !!! */
 	if (!strcmp(s->Phone.Data.ModelInfo->model,"3510")) {
 		if (s->Phone.Data.VerNum>3.37) return ERR_NOTSUPPORTED;
+	}
+	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230")) {
+		return ERR_NOTSUPPORTED;
 	}
 
 	if (Profile->Location>5) return ERR_INVALIDLOCATION;

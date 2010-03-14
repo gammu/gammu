@@ -165,12 +165,13 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 	}
 }
 
+bool always_answer_yes = false;
+bool always_answer_no  = false;
+
 static bool answer_yes(char *text)
 {
     	int         len;
     	char        ans[99];
-    	static bool always_answer_yes   =   false;
-    	static bool always_answer_no    =   false;
 
 	while (1) {
 		printmsgerr("%s (yes/no/ALL/ONLY/NONE) ? ",text);
@@ -2571,7 +2572,6 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		SMSInfo.Entries[0].Buffer  		= Buffer[0];
 		SMSInfo.Entries[0].ID			= SMS_Text;
 		SMSInfo.UnicodeCoding   		= false;
-		SMSInfo.Class				= -1;
 		startarg += 3;
 	} else if (mystrncasecmp(argv[2],"SMSTEMPLATE",0)) {
 		SMSInfo.UnicodeCoding   		= false;
@@ -2678,6 +2678,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 		bitmap[0].Bitmap[0].Type=GSM_PictureImage;
 		error=GSM_ReadBitmapFile(argv[3+startarg],&bitmap[0]);
+		printmsg("File \"%s\"\n",argv[3+startarg]);
 		Print_Error(error);
 		SMSInfo.Entries[0].ID 	 	= SMS_NokiaPictureImageLong;
 		SMSInfo.Entries[0].Bitmap   	= &bitmap[0];
@@ -3928,6 +3929,8 @@ static void Backup(int argc, char *argv[])
  	GSM_FMStation		FMStation;
  	GSM_GPRSAccessPoint	GPRSPoint;
 	bool			DoBackup;
+
+	if (argc == 4 && mystrncasecmp(argv[3],"-yes",0)) always_answer_yes = true;
 
 	GSM_ClearBackup(&Backup);
 	GSM_GetBackupFormatFeatures(argv[2],&Info);
@@ -7927,7 +7930,7 @@ static GSM_Parameters Parameters[] = {
 	{"--savefile",			4, 5, SaveFile,			{H_Backup,H_ToDo,0},		"TODO target.vcs file location"},
 	{"--savefile",			4, 5, SaveFile,			{H_Backup,H_Memory,0},		"VCARD10|VCARD21 target.vcf file SM|ME location"},
 	{"--savefile",			4, 5, SaveFile,			{H_Backup,H_WAP,0},		"BOOKMARK target.url file location"},
-	{"--backup",			1, 1, Backup,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file"},
+	{"--backup",			1, 2, Backup,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
 	{"--backupsms",			1, 1, BackupSMS,		{H_Backup,H_SMS,0},		"file"},
 	{"--restore",			1, 1, Restore,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file"},
 	{"--addnew",			1, 1, AddNew,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file"},

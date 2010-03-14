@@ -13,6 +13,7 @@
 #include <windows.h>
 #include <io.h>
 
+#include "../../misc/coding/coding.h"
 #include "../../gsmcomon.h"
 #include "../devfunc.h"
 #include "bluetoth.h"
@@ -25,7 +26,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	SOCKADDR_BTH 			sab;
 	int				i;
 
-	dbgprintf("Connecting to RF channel %i\n",port);
+	smprintf(s, "Connecting to RF channel %i\n",port);
 
     	WSAStartup(MAKEWORD(1,1), &wsaData);
 
@@ -88,6 +89,7 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, char *address, WSAPR
 	DWORD 				bufferLength, addressSize;
 	WSAQUERYSET 			*pResults = (WSAQUERYSET*)&buffer;
 	HANDLE				handle;
+	GSM_Error			error;
 
 	memset(&querySet, 0, sizeof(querySet));
 	querySet.dwSize 	  = sizeof(querySet);
@@ -96,7 +98,7 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, char *address, WSAPR
 	querySet.dwNameSpace 	  = NS_BTH;
 	querySet.lpszContext 	  = address;
 
-	flags = LUP_FLUSHCACHE |LUP_RETURN_NAME |
+	flags = LUP_FLUSHCACHE  | LUP_RETURN_NAME |
 		LUP_RETURN_TYPE | LUP_RETURN_ADDR |
 		LUP_RETURN_BLOB | LUP_RETURN_COMMENT;
 
@@ -112,15 +114,17 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, char *address, WSAPR
 		if (WSAAddressToString(pResults->lpcsaBuffer->RemoteAddr.lpSockaddr,
 			pResults->lpcsaBuffer->RemoteAddr.iSockaddrLength, protocolInfo, 
 			addressAsString,&addressSize)==0) {
-                	dbgprintf("%s - ", addressAsString);
+                	smprintf(s, "%s - ", addressAsString);
 		}
-		dbgprintf("\"%s\"\n", pResults->lpszServiceInstanceName);
+		smprintf(s, "\"%s\"\n", pResults->lpszServiceInstanceName);
 		if (addressAsString[0] != 0) {
 			for (i=strlen(addressAsString)-1;i>0;i--) {
 				if (addressAsString[i] == ':') break;
 			}
 			if (bluetooth_checkservicename(s, pResults->lpszServiceInstanceName) == ERR_NONE) {
-				return bluetooth_connect(s,atoi(addressAsString+i+1),address+1);
+				error = bluetooth_connect(s,atoi(addressAsString+i+1),address+1);
+				result = WSALookupServiceEnd(handle);
+				return error;
 			}
 		}
 	}
@@ -157,8 +161,10 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
       	if (getsockopt(d->hPhone, SOL_SOCKET, SO_PROTOCOL_INFO,
 		(char*)&protocolInfo, &protocolInfoSize) != 0)
 	{
+		close(d->hPhone);
 		return ERR_UNKNOWN;		
 	}
+	close(d->hPhone);
 
 	if (!strcmp(s->CurrentConfig->Device,"com2:")) {
 		bufferLength = sizeof(buffer);
@@ -178,17 +184,20 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 			result = WSALookupServiceNext(handle, flags, &bufferLength, pResults);
 			if (result != 0) break;
 
- 	                dbgprintf("\"%s\"", pResults->lpszServiceInstanceName);
+ 	                smprintf(s, "\"%s\"", pResults->lpszServiceInstanceName);
 
 	 		addressSize 		= sizeof(addressAsString);
 			addressAsString[0] 	= 0;
 			if (WSAAddressToString(pResults->lpcsaBuffer->RemoteAddr.lpSockaddr,
 				pResults->lpcsaBuffer->RemoteAddr.iSockaddrLength, &protocolInfo, 
 				addressAsString,&addressSize)==0) {
-	                	dbgprintf("- %s\n", addressAsString);
+	                	smprintf(s, " - %s\n", addressAsString);
 				error = bluetooth_checkdevice(s, addressAsString,&protocolInfo);
-				if (error == ERR_NONE) return error;
-			} else dbgprintf("\n");
+				if (error == ERR_NONE) {
+					result = WSALookupServiceEnd(handle);
+					return error;
+				}
+			} else smprintf(s, "\n");
 		}
 
 		result = WSALookupServiceEnd(handle);

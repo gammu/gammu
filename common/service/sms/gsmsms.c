@@ -372,10 +372,10 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 		if ((buffer[Layout.TPDCS] & 0xF3)==0xF3) SMS->Class = 3;
 	}
 	dbgprintf("SMS class: %i\n",SMS->Class);
+
 	SMS->MessageReference = 0;
-	if (Layout.TPMR != 255) {
-		SMS->MessageReference = buffer[Layout.TPMR];
-	}
+	if (Layout.TPMR != 255) SMS->MessageReference = buffer[Layout.TPMR];
+
 	SMS->ReplaceMessage = 0;
 	if (Layout.TPPID != 255) {
 		if (buffer[Layout.TPPID] > 0x40 && buffer[Layout.TPPID] < 0x48) {
@@ -529,6 +529,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
 	if (Layout.TPDCS != 255) {
 		if (SMS->Class>=0 && SMS->Class<5) buffer[Layout.TPDCS] |= (240+SMS->Class);
+		dbgprintf("SMS class %i\n",SMS->Class);
 	}
 
 	if (Layout.TPVP != 255) {
@@ -544,6 +545,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	}
 
 	if (Layout.TPMR != 255) {
+		dbgprintf("TPMR: %02x %i\n",SMS->MessageReference,SMS->MessageReference);
 		buffer[Layout.TPMR] = SMS->MessageReference;
 	}
 
