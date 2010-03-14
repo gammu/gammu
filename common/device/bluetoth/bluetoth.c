@@ -37,7 +37,9 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 
     	d->hPhone = socket(AF_BTH, SOCK_STREAM, BTHPROTO_RFCOMM);
 	if (d->hPhone == INVALID_SOCKET) {
+		i = GetLastError();
 		GSM_OSErrorInfo(s, "Socket in bluetooth_open");
+		if (i == 10041) return GE_DEVICENODRIVER;//unknown socket type
 		return GE_UNKNOWN;
 	}
 
@@ -65,8 +67,9 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 	if (connect (d->hPhone, (struct sockaddr *)&sab, sizeof(sab)) != 0) {
 		i = GetLastError();
 		GSM_OSErrorInfo(s, "Connect in bluetooth_open");
-		if (i == 10060) return GE_TIMEOUT;
-		if (i == 10050) return GE_DEVICEOPENERROR;
+		if (i == 10060) return GE_TIMEOUT;	 //remote device failed to respond
+		if (i == 10050) return GE_DEVICENOTWORK; //socket operation connected with dead network
+		//noauth
 		close(d->hPhone);
 		return GE_UNKNOWN;
 	}
@@ -83,7 +86,7 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 
 	if ((fd = socket(PF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM)) < 0) {
 		dprintf("Can't create socket\n");
-		return GE_DEVICEOPENERROR;;
+		return GE_DEVICENODRIVER;
 	}
 
 	bacpy(&laddr.rc_bdaddr, BDADDR_ANY);

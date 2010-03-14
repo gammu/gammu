@@ -98,6 +98,10 @@ SOURCE=..\..\..\common\protocol\obex\obex.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\protocol\symbian\mrouter.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\gammu.c
 # End Source File
 # Begin Source File
@@ -158,6 +162,10 @@ SOURCE=..\..\..\common\phone\obex\obexgen.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\phone\symbian\mroutgen.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\common\gsmstate.c
 # End Source File
 # Begin Source File
@@ -187,6 +195,10 @@ SOURCE=..\..\..\common\phone\nokia\dct3\n6110.c
 # Begin Source File
 
 SOURCE=..\..\..\common\phone\nokia\dct4\n6510.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\nokia\dct4\n3650.c
 # End Source File
 # Begin Source File
 
@@ -334,6 +346,10 @@ SOURCE=..\..\..\common\protocol\obex\obex.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\protocol\symbian\mrouter.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\common\misc\misc.h
 # End Source File
 # Begin Source File
@@ -343,6 +359,10 @@ SOURCE=..\..\..\common\phone\nokia\dct3\n6110.h
 # Begin Source File
 
 SOURCE=..\..\..\common\phone\nokia\dct4\n6510.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\nokia\dct4\n3650.h
 # End Source File
 # Begin Source File
 
@@ -359,6 +379,10 @@ SOURCE=..\..\..\common\phone\nokia\ncommon.h
 # Begin Source File
 
 SOURCE=..\..\..\common\phone\obex\obexgen.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\symbian\mroutgen.h
 # End Source File
 # Begin Source File
 

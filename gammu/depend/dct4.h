@@ -1,11 +1,15 @@
 
 void DCT4SetPhoneMenus	   (int argc, char *argv[]);
-void DCT4tests		   (int argc, char *argv[]);
+void DCT4SelfTests	   (int argc, char *argv[]);
 void DCT4SetVibraLevel	   (int argc, char *argv[]);
 void DCT4ResetSecurityCode (int argc, char *argv[]);
 void DCT4GetVoiceRecord	   (int argc, char *argv[]);
 void DCT4Info		   (int argc, char *argv[]);
 void DCT4GetT9		   (int argc, char *argv[]);
+void DCT4SetLight	   (int argc, char *argv[]);
+void DCT4DisplayTest	   (int argc, char *argv[]);
+void DCT4GetADC		   (int argc, char *argv[]);
+void DCT4VibraTest	   (int argc, char *argv[]);
 
 /* ------------------- features matrix ------------------------------------- */
 
@@ -34,6 +38,8 @@ typedef enum {
 	DCT4_SERVICES_GAMES_APP_GALLERY,
 	DCT4_JAVA_GAMES_MENU,
 	DCT4_SAT_CONFIRM_MENU,
+
+	DCT4_5100_IDENTIFY,
 
 	DCT4_TEST
 } DCT4_Feature_Name;

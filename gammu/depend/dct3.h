@@ -1,10 +1,14 @@
 
-void DCT3tests		 (int argc, char *argv[]);
+void DCT3SelfTests	 (int argc, char *argv[]);
 void DCT3netmonitor	 (int argc, char *argv[]);
 void DCT3Info		 (int argc, char *argv[]);
 void DCT3ResetTest36	 (int argc, char *argv[]);
 void DCT3SetPhoneMenus	 (int argc, char *argv[]);
 void DCT3GetSecurityCode (int argc, char *argv[]);
+void DCT3GetADC		 (int argc, char *argv[]);
+void DCT3DisplayTest	 (int argc, char *argv[]);
+void DCT3VibraTest	 (int argc, char *argv[]);
+void DCT3GetT9		 (int argc, char *argv[]);
 
 #include "../../common/gsmstate.h"
 

@@ -21,6 +21,8 @@
 #undef GSM_ENABLE_FBUS2
 /* FBUS2 to use with DLR3 cable (init done using AT commands) */
 #undef GSM_ENABLE_FBUS2DLR3
+/* FBUS2 to use with DKU5 cable (init done using AT commands) */
+#undef GSM_ENABLE_FBUS2DKU5
 /* FBUS2 to use with bluetooth legacy device (init done using AT commands) */
 #undef GSM_ENABLE_FBUS2BLUE
 /* FBUS2 to use with direct infrared device */
@@ -28,6 +30,9 @@
 
 /* PHONET FBUS to use with bluetooth legacy device */
 #undef GSM_ENABLE_PHONETBLUE
+
+/* Symbian with m-router (TCPIP based) to use with bluetooth legacy device */
+#undef GSM_ENABLE_MROUTERBLUE
 
 /* AT protocol */
 #undef GSM_ENABLE_AT
@@ -74,6 +79,9 @@
 /* Force using 6210 frames for calendar. Required by some older DCT4 */
 #undef GSM_FORCE_DCT4_CALENDAR_6210
 
+/* n3650.c (DCT4 with Symbian) models */
+#undef GSM_ENABLE_NOKIA3650
+
 /* AT generic models */
 #undef GSM_ENABLE_ATGEN
 
@@ -82,6 +90,9 @@
 
 /* OBEX generic models */
 #undef GSM_ENABLE_OBEXGEN
+
+/* Symbian with m-router generic models */
+#undef GSM_ENABLE_MROUTERGEN
 
 /* ---------------------- General settings -------------------------------- */
 

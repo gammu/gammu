@@ -38,6 +38,11 @@ type	GSM_Error = (
 	        GE_NONE = 1,
        	 	GE_DEVICEOPENERROR,		// Error during opening device
 		GE_DEVICELOCKED,
+		GE_DEVICENOTEXIST,
+		GE_DEVICEBUSY,
+		GE_DEVICENOPERMISSION,
+		GE_DEVICENODRIVER,
+		GE_DEVICENOTWORK,
         	GE_DEVICEDTRRTSERROR,		// Error during setting DTR/RTS in device
         	GE_DEVICECHANGESPEEDERROR,	// Error during changing speed in device
        		GE_DEVICEWRITEERROR,		// Error during writing device 
@@ -68,7 +73,8 @@ type	GSM_Error = (
 		GE_FILENOTSUPPORTED,		// File format not supported by Gammu
 		GE_BUG,                  	// Found bug in implementation or phone //32
 		GE_CANCELED,
-		GE_NEEDANOTHERANSWER);
+		GE_NEEDANOTHERANSWER,
+		GE_OTHERCONNECTIONREQUIRED);
 
 	GSM_DateTime = record
 		Year	 : integer; //full year (for example,2002)

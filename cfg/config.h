@@ -6,7 +6,7 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0,83,0,0"
+#define VERSION "0,84,0,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -22,6 +22,8 @@
 #define GSM_ENABLE_FBUS2 1
 /* FBUS2 to use with DLR3 cable (init done using AT commands) */
 #define GSM_ENABLE_FBUS2DLR3 1
+/* FBUS2 to use with DKU5 cable (init done using AT commands) */
+#define GSM_ENABLE_FBUS2DKU5 1
 /* FBUS2 to use with bluetooth legacy device (init done using AT commands) */
 #define GSM_ENABLE_FBUS2BLUE 1
 /* FBUS2 to use with direct infrared device */
@@ -29,6 +31,9 @@
 
 /* PHONET FBUS to use with bluetooth legacy device */
 #define GSM_ENABLE_PHONETBLUE 1
+
+/* Symbian with m-router (TCPIP based) to use with bluetooth legacy device */
+#define GSM_ENABLE_MROUTERBLUE 1
 
 /* AT protocol */
 #define GSM_ENABLE_AT 1
@@ -75,6 +80,9 @@
 /* Force using 6210 frames for calendar. Required by some older DCT4 */
 /* #undef GSM_FORCE_DCT4_CALENDAR_6210 */
 
+/* n3650.c (DCT4 with Symbian) models */
+#define GSM_ENABLE_NOKIA3650 1
+
 /* AT generic models */
 #define GSM_ENABLE_ATGEN 1
 
@@ -83,6 +91,9 @@
 
 /* OBEX generic models */
 #define GSM_ENABLE_OBEXGEN 1
+
+/* Symbian with m-router generic models */
+#define GSM_ENABLE_MROUTERGEN 1
 
 /* ---------------------- General settings -------------------------------- */
 

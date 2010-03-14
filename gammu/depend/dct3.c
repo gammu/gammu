@@ -10,6 +10,7 @@
 #include "../../common/gsmcomon.h"
 #include "../../common/service/gsmpbk.h"
 #include "../../common/phone/nokia/dct3/dct3func.h"
+#include "../../common/phone/pfunc.h"
 #include "../gammu.h"
 
 extern GSM_Reply_Function UserReplyFunctions3[];
@@ -37,7 +38,7 @@ GSM_Error CheckDCT3Only()
 	    s.ConnectionType!=GCT_FBUS2IRDA && s.ConnectionType!=GCT_IRDAPHONET &&
 	    s.ConnectionType!=GCT_BLUEFBUS2)
 	{
-		return GE_UNKNOWNCONNECTIONTYPESTRING;
+		return GE_OTHERCONNECTIONREQUIRED;
 	}
 	return GE_NONE;
 }
@@ -51,7 +52,7 @@ static void CheckDCT3()
 	case GE_NOTSUPPORTED:
 		Print_Error(GE_NOTSUPPORTED);
 		break;
-	case GE_UNKNOWNCONNECTIONTYPESTRING:
+	case GE_OTHERCONNECTIONREQUIRED:
 		printf("Can't do it with current phone protocol\n");
 		GSM_TerminateConnection(&s);
 		exit(-1);
@@ -60,7 +61,79 @@ static void CheckDCT3()
 	}
 }
 
+static bool answer_yes3(char *text)
+{
+    	int         len;
+    	char        ans[99];
+
+	while (1) {
+		printf("%s (yes/no) ? ",text);
+		len=GetLine(stdin, ans, 99);
+		if (len==-1) exit(-1);
+		if (mystrncasecmp(ans, "yes",0)) return true;
+		if (mystrncasecmp(ans, "no" ,0)) return false;
+	}
+}
+
 /* ------------------- functions ------------------------------------------- */
+
+static FILE *DCT3T9File;
+
+static GSM_Error DCT3_ReplyGetT9(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	int DCT3T9Size;
+
+	DCT3T9Size = msg.Length - 6;
+	fwrite(msg.Buffer+6,1,DCT3T9Size,DCT3T9File);
+	return GE_NONE;
+}
+
+void DCT3GetT9(int argc, char *argv[])
+{
+	int	      i;
+	unsigned char req[] = {0x00, 0x01, 0xAE, 0x02, 0x00,
+			       0x00};	/* Part number */
+
+//"00 01 AE 00" gets some control values
+
+	if (CheckDCT3Only()!=GE_NONE) return;
+
+	DCT3T9File = fopen("T9", "w");      
+	if (DCT3T9File == NULL) return;
+
+	s.User.UserReplyFunctions=UserReplyFunctions3;
+
+	for (i=0;i<5;i++) {
+		req[5] = i;
+		error=GSM_WaitFor (&s, req, 6, 0x40, 4, ID_User3);		
+		Print_Error(error);
+	}
+
+	fclose(DCT3T9File);
+}
+
+void DCT3VibraTest(int argc, char *argv[])
+{
+	unsigned char ans[200];
+	unsigned char SetLevel[4] = {0x00, 0x01, 0xA3,
+				     0xff};	/* Level */
+
+	if (CheckDCT3Only()!=GE_NONE) return;
+
+	s.User.UserReplyFunctions=UserReplyFunctions3;
+
+	error=DCT3_EnableSecurity (&s, 0x01);
+	Print_Error(error);
+
+	error=GSM_WaitFor (&s, SetLevel, 4, 0x40, 4, ID_User3);
+	Print_Error(error);
+
+	printf("Press any key to continue...\n");
+	GetLine(stdin, ans, 99);
+
+	SetLevel[3] = 0x00;
+	error=GSM_WaitFor (&s, SetLevel, 4, 0x40, 4, ID_User3);
+}
 
 static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -68,35 +141,35 @@ static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message msg, GSM_StateMachine
 
 	for (i=0;i<msg.Buffer[3];i++) {
 		switch (i) {
-		case 0: printf("Unknown(%02i)             ",i);	break;
-		case 1: printf("MCU ROM checksum        ");	break;
-		case 2: printf("MCU RAM interface       ");	break;
-		case 3: printf("MCU RAM component       ");	break;
-		case 4: printf("MCU EEPROM interface    ");	break;
-		case 5: printf("MCU EEPROM component    ");	break;
-		case 6: printf("Real Time Clock battery ");	break;
-		case 7: printf("CCONT interface         ");	break;
-		case 8: printf("AD converter            ");	break;
-		case 9: printf("SW Reset                ");	break;
-		case 10:printf("Power Off               ");	break;
-		case 11:printf("Security Data           ");	break;
-		case 12:printf("EEPROM Tune checksum    ");	break;
-		case 13:printf("PPM checksum            ");	break;
-		case 14:printf("MCU download DSP        ");	break;
-		case 15:printf("DSP alive               ");	break;
-		case 16:printf("COBBA serial            ");	break;
-		case 17:printf("COBBA paraller          ");	break;
-		case 18:printf("EEPROM security checksum");	break;
-		case 19:printf("PPM validity            ");	break;
-		case 20:printf("Warranty state          ");	break;
-		case 21:printf("Simlock check           ");	break;
-		case 22:printf("IMEI check?             ");	break;/*from PC-Locals1.3.is OK?*/
-		default:printf("Unknown(%02i)             ",i);	break;
+		case 0: printf("Unknown(%02i)                       ",i);break;
+		case 1: printf("MCU ROM checksum         (startup)");	break;
+		case 2: printf("MCU RAM interface        (startup)");	break;
+		case 3: printf("MCU RAM component                 ");	break;
+		case 4: printf("MCU EEPROM interface     (startup)");	break;
+		case 5: printf("MCU EEPROM component              ");	break;
+		case 6: printf("Real Time Clock battery  (startup)");	break;
+		case 7: printf("CCONT interface          (startup)");	break;
+		case 8: printf("AD converter             (startup)");	break;
+		case 9: printf("SW Reset                          ");	break;
+		case 10:printf("Power Off                         ");	break;
+		case 11:printf("Security Data                     ");	break;
+		case 12:printf("EEPROM Tune checksum     (startup)");	break;
+		case 13:printf("PPM checksum             (startup)");	break;
+		case 14:printf("MCU download DSP         (startup)");	break;
+		case 15:printf("DSP alive                (startup)");	break;
+		case 16:printf("COBBA serial             (startup)");	break;
+		case 17:printf("COBBA paraller           (startup)");	break;
+		case 18:printf("EEPROM security checksum (startup)");	break;
+		case 19:printf("PPM validity             (startup)");	break;
+		case 20:printf("Warranty state           (startup)");	break;
+		case 21:printf("Simlock check/SW version (startup)");	break;
+		case 22:printf("IMEI check?                       ");	break;/*from PC-Locals1.3.is OK?*/
+		default:printf("Unknown(%02i)                       ",i);break;
 		}
 		switch (msg.Buffer[4+i]) {
-		case 0:   printf(" : done, result OK");				break;
-		case 0xff:printf(" : not done, result unknown");		break;
-		case 254: printf(" : done, result NOT OK");			break;
+		case 0:   printf(" : passed");					break;
+		case 0xff:printf(" : not executed");				break;
+		case 254: printf(" : fail");					break;
 		default:  printf(" : result unknown(%i)",msg.Buffer[4+i]);	break;
     		}
 		printf("\n");
@@ -105,7 +178,7 @@ static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message msg, GSM_StateMachine
 	return GE_NONE;
 }
 
-void DCT3tests(int argc, char *argv[])
+void DCT3SelfTests(int argc, char *argv[])
 {
 	unsigned char 	buffer[3]  = {0x00,0x01,0xcf};
 	unsigned char 	buffer3[8] = {0x00,0x01,0xce,0x1d,0xfe,0x23,0x00,0x00};
@@ -116,19 +189,21 @@ void DCT3tests(int argc, char *argv[])
 	error=DCT3_EnableSecurity (&s, 0x01);
 	Print_Error(error);
 
-	/* make almost all tests */
-	error = s.Protocol.Functions->WriteMessage(&s, buffer3, 8, 0x40);
-	Print_Error(error);
+	if (answer_yes3("Run all tests now ?")) {
+		/* make almost all tests */
+		error = s.Protocol.Functions->WriteMessage(&s, buffer3, 8, 0x40);
+		Print_Error(error);
 	
-	GSM_Terminate();
-
-	while (!false) {
-		GSM_Init(false);
-		if (error==GE_NONE) break;
 		GSM_Terminate();
-	}
 
-	my_sleep(400);
+		while (!false) {
+			GSM_Init(false);
+			if (error==GE_NONE) break;
+			GSM_Terminate();
+		}
+
+		my_sleep(400);
+	}
 
 	s.User.UserReplyFunctions=UserReplyFunctions3;
 
@@ -136,6 +211,114 @@ void DCT3tests(int argc, char *argv[])
 		error=GSM_WaitFor (&s, buffer, 3, 0x40, 4, ID_User1);	
 		if (error == GE_NONE) break;
 	}
+}
+
+struct DCT3ADCInfo {
+	char 	*name;
+	char 	*unit;
+	int 	x;
+	int	pos1;
+	int	pos2;
+};
+
+static struct DCT3ADCInfo DCT3ADC[] = {
+	{"Battery voltage:",			"mV",  1,  3,  2},
+//	{"Charger voltage:",			"mV",  1, -1,  7},  	
+//	{"Charger current:",			"mA",  1, -1,  5},
+	{"Battery type:",			"mAh", 1,  4,  3},
+	{"Battery temperature:",		"mK", 10,  5,  4},
+//	{"Accessory detection:",		"mV",  1, -1, -1},
+	{"RSSI:",				"",    1,  2, -1},
+//	{"VCXO temperature:",			"mV",  1, -1, -1},
+//	{"Hook information:",			"mV",  1, -1, -1},
+
+	{"", "", 1, -1, -1}
+};
+
+unsigned char 	DCT3ADCBuf[200];
+int		DCT3ADCInt;
+
+static GSM_Error DCT3_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	switch (msg.Buffer[2]) {
+	case 0x68:
+		memcpy(DCT3ADCBuf,msg.Buffer+4,msg.Length-4);
+		return GE_NONE;
+	case 0x91:
+		DCT3ADCInt = msg.Buffer[4]*256+msg.Buffer[5];
+		return GE_NONE;
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+void DCT3GetADC(int argc, char *argv[])
+{
+	int		i = 0;
+	unsigned char	GetRaw[] = {0x00, 0x01, 0x68};
+	unsigned char	GetUnit[] = {0x00, 0x01, 0x91,
+				     0x02};		/* Test number */
+
+	if (CheckDCT3Only()!=GE_NONE) return;
+
+	s.User.UserReplyFunctions=UserReplyFunctions3;
+
+	error=DCT3_EnableSecurity (&s, 0x02);
+	Print_Error(error);
+
+	error=GSM_WaitFor (&s, GetRaw, 3, 0x40, 6, ID_User3);		
+	Print_Error(error);
+
+	while (1) {
+		printf(" %30s ",DCT3ADC[i].name);
+		if (DCT3ADC[i].pos1 != -1) {
+			printf("raw ");
+			printf("%10i ",
+				DCT3ADCBuf[(DCT3ADC[i].pos1-1)*2]*256+
+				DCT3ADCBuf[(DCT3ADC[i].pos1-1)*2+1]);
+		}
+		if (DCT3ADC[i].pos2 != -1) {
+			printf("unit result ");
+			GetUnit[3] = DCT3ADC[i].pos2;
+			error=GSM_WaitFor (&s, GetUnit, 6, 0x40, 4, ID_User3);		
+			Print_Error(error);
+			printf("%10i ",DCT3ADCInt*DCT3ADC[i].x);
+			printf("%s\n",DCT3ADC[i].unit);
+		}
+		i++;
+		if (DCT3ADC[i].name[0] == 0x00) break;
+	}
+
+	error=DCT3_EnableSecurity (&s, 0x01);
+	Print_Error(error);
+}
+
+void DCT3DisplayTest(int argc, char *argv[])
+{
+	unsigned char ans[200];
+	unsigned char req[] =  {0x00, 0x01, 0xD3,
+				0x03,          	/* 3=set, 2=clear */
+				0x03};	 	/* test number */
+
+	if (CheckDCT3Only()!=GE_NONE) return;
+
+	if (atoi(argv[2]) != 1 && atoi(argv[2]) != 2) {
+		printf("Give 1 or 2 as test number\n");
+	}
+
+	s.User.UserReplyFunctions=UserReplyFunctions3;
+
+	req[4] = atoi(argv[2]);
+	s.Protocol.Functions->WriteMessage(&s, req, 5, 0x40);
+
+	printf("Press any key to continue...\n");
+	GetLine(stdin, ans, 99);
+
+	req[3] = 0x02;
+	req[4] = 0x03;
+	s.Protocol.Functions->WriteMessage(&s, req, 5, 0x40);
+
+	error=DCT3_EnableSecurity (&s, 0x03);
+	Print_Error(error);
 }
 
 void DCT3netmonitor(int argc, char *argv[])
@@ -363,6 +546,10 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 	printf("ALS : enabling menu\n");
 	PPS[10] = '1';
 
+	if (!strcmp(s.Phone.Data.ModelInfo->model,"3310") && s.Phone.Data.VerNum>5.87) {
+		printf("3310: enabling control of SMS charsets\n");
+		PPS[11] = '0';//0 = ON, 1 = OFF
+	}
 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6150")) {
 		printf("6150: enabling WellMate menu\n");
 		PPS[18] = '1';
@@ -600,6 +787,7 @@ static GSM_Reply_Function UserReplyFunctions3[] = {
 
 	{DCT3_ReplyEnableSecurity2,	"\x40",0x02,0x64,ID_EnableSecurity	},
 	{DCT3_ReplyResetTest36,		"\x40",0x02,0x65,ID_User2 	 	},
+	{DCT3_ReplyGetADC,		"\x40",0x02,0x68,ID_User3 	 	},
 	{DCT3_ReplyGetPPS,		"\x40",0x02,0x6A,ID_User4 	 	},
 	{DCT3_ReplySetPPS,		"\x40",0x02,0x6B,ID_User4 	 	},
 	{DCT3_Reply61GetSecurityCode,	"\x40",0x02,0x6E,ID_User6 	 	},
@@ -608,6 +796,9 @@ static GSM_Reply_Function UserReplyFunctions3[] = {
 	{DCT3_ReplySetOperatorName,	"\x40",0x02,0x8B,ID_User7	 	},
 	{DCT3_ReplyGetOperatorName,	"\x40",0x02,0x8C,ID_User5	 	},
 #endif
+	{DCT3_ReplyGetADC,		"\x40",0x02,0x91,ID_User3 	 	},
+	{NoneReply,			"\x40",0x02,0xA3,ID_User3		},
+	{DCT3_ReplyGetT9,		"\x40",0x02,0xAE,ID_User3		},
 	{DCT3_ReplyGetMSID,		"\x40",0x02,0xb5,ID_User8	 	},
 	{DCT3_ReplyGetDSPROM,		"\x40",0x02,0xC8,ID_User10	 	},
 	{DCT3_ReplyGetMCUchkSum,	"\x40",0x02,0xC8,ID_User9	 	},

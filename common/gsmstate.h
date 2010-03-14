@@ -7,6 +7,9 @@
 #include "../cfg/config.h"
 #include "misc/cfg.h"
 
+#ifdef GSM_ENABLE_NOKIA3650
+#  include "phone/nokia/dct4/n3650.h"
+#endif
 #ifdef GSM_ENABLE_NOKIA6110
 #  include "phone/nokia/dct3/n6110.h"
 #endif
@@ -28,6 +31,9 @@
 #ifdef GSM_ENABLE_OBEXGEN
 #  include "phone/obex/obexgen.h"
 #endif
+#ifdef GSM_ENABLE_MROUTERGEN
+#  include "phone/symbian/mroutgen.h"
+#endif
 
 #ifndef GSM_USED_MBUS2
 #  undef GSM_ENABLE_MBUS2
@@ -37,6 +43,9 @@
 #endif
 #ifndef GSM_USED_FBUS2DLR3
 #  undef GSM_ENABLE_FBUS2DLR3
+#endif
+#ifndef GSM_USED_FBUS2DKU5
+#  undef GSM_ENABLE_FBUS2DKU5
 #endif
 #ifndef GSM_USED_FBUS2BLUE
 #  undef GSM_ENABLE_FBUS2BLUE
@@ -74,16 +83,19 @@
 #ifndef GSM_USED_IRDAAT
 #  undef GSM_ENABLE_IRDAAT
 #endif
+#ifndef GSM_USED_MROUTERBLUE
+#  undef GSM_ENABLE_MROUTERBLUE
+#endif
 
 #if defined(GSM_ENABLE_NOKIA6110) || defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9210)
 #  define GSM_ENABLE_NOKIA_DCT3
 #endif
-#if defined(GSM_ENABLE_NOKIA6510)
+#if defined(GSM_ENABLE_NOKIA3650) || defined(GSM_ENABLE_NOKIA6510)
 #  define GSM_ENABLE_NOKIA_DCT4
 #endif
 
 #include "protocol/protocol.h"
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2DKU5)
 #  include "protocol/nokia/fbus2.h"
 #endif
 #ifdef GSM_ENABLE_MBUS2
@@ -100,6 +112,9 @@
 #endif
 #if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX)
 #  include "protocol/obex/obex.h"
+#endif
+#if defined(GSM_ENABLE_MROUTERBLUE)
+#  include "protocol/symbian/mrouter.h"
 #endif
 
 #define GSM_ENABLE_SERIALDEVICE
@@ -128,6 +143,7 @@
 #  undef GSM_ENABLE_FBUS2BLUE
 #  undef GSM_ENABLE_IRDAOBEX
 #  undef GSM_ENABLE_BLUEOBEX
+#  undef GSM_ENABLE_MROUTERBLUE
 #endif
 
 #include "device/serial/ser_w32.h"
@@ -202,7 +218,7 @@ typedef struct {
 #ifdef GSM_ENABLE_MBUS2
 	extern GSM_Protocol_Functions MBUS2Protocol;
 #endif
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
 	extern GSM_Protocol_Functions FBUS2Protocol;
 #endif
 #if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
@@ -217,6 +233,9 @@ typedef struct {
 #if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX)
 	extern GSM_Protocol_Functions OBEXProtocol;
 #endif
+#if defined(GSM_ENABLE_MROUTERBLUE)
+	extern GSM_Protocol_Functions MROUTERProtocol;
+#endif
 
 typedef struct {
 	struct {
@@ -224,7 +243,7 @@ typedef struct {
 #ifdef GSM_ENABLE_MBUS2
 		GSM_Protocol_MBUS2Data		MBUS2;
 #endif
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
 		GSM_Protocol_FBUS2Data		FBUS2;
 #endif
 #if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
@@ -238,6 +257,9 @@ typedef struct {
 #endif
 #if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX)
 		GSM_Protocol_OBEXData		OBEX;
+#endif
+#if defined(GSM_ENABLE_MROUTERBLUE)
+		GSM_Protocol_MROUTERData	MROUTER;
 #endif
 	} Data;
 	GSM_Protocol_Functions *Functions;
@@ -466,24 +488,30 @@ typedef struct {
 	GSM_Error		DispatchError;		/* error returned by function	*/
 							/* in phone module		*/
 	struct {
-		int			fake;
+		int			 fake;
+#ifdef GSM_ENABLE_NOKIA3650
+		GSM_Phone_N3650Data	 N3650;
+#endif
 #ifdef GSM_ENABLE_NOKIA6110
-		GSM_Phone_N6110Data	N6110;
+		GSM_Phone_N6110Data	 N6110;
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-		GSM_Phone_N6510Data	N6510;
+		GSM_Phone_N6510Data	 N6510;
 #endif
 #ifdef GSM_ENABLE_NOKIA7110
-		GSM_Phone_N7110Data	N7110;
+		GSM_Phone_N7110Data	 N7110;
 #endif
 #ifdef GSM_ENABLE_ATGEN
-		GSM_Phone_ATGENData	ATGEN;
+		GSM_Phone_ATGENData	 ATGEN;
 #endif
 #ifdef GSM_ENABLE_ALCATEL
-		GSM_Phone_ALCATELData	ALCATEL;
+		GSM_Phone_ALCATELData	 ALCATEL;
 #endif
 #ifdef GSM_ENABLE_OBEXGEN
-		GSM_Phone_OBEXGENData	OBEXGEN;
+		GSM_Phone_OBEXGENData	 OBEXGEN;
+#endif
+#ifdef GSM_ENABLE_MROUTERGEN
+		GSM_Phone_MROUTERGENData MROUTERGEN;
 #endif
 	} Priv;
 } GSM_Phone_Data;
@@ -602,6 +630,9 @@ typedef struct {
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;
+#ifdef GSM_ENABLE_NOKIA3650
+	extern GSM_Phone_Functions N3650Phone;
+#endif
 #ifdef GSM_ENABLE_NOKIA6110
 	extern GSM_Phone_Functions N6110Phone;
 #endif
@@ -622,6 +653,9 @@ typedef struct {
 #endif
 #ifdef GSM_ENABLE_OBEXGEN
 	extern GSM_Phone_Functions OBEXGENPhone;
+#endif
+#ifdef GSM_ENABLE_MROUTERGEN
+	extern GSM_Phone_Functions MROUTERGENPhone;
 #endif
 
 typedef struct {
@@ -647,10 +681,12 @@ typedef enum {
 	GCT_MBUS2=1,
 	GCT_FBUS2,
 	GCT_FBUS2DLR3,
+	GCT_FBUS2DKU5,
 	GCT_FBUS2BLUE,
 	GCT_FBUS2IRDA,
 	GCT_PHONETBLUE,
 	GCT_AT,
+	GCT_MROUTERBLUE,
 
 	GCT_IRDAOBEX,
 	GCT_IRDAAT,

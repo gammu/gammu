@@ -13,6 +13,53 @@
 #include "../../pfunc.h"
 #include "n6510.h"
 
+
+static GSM_Error N6510_ReplyGetPhoneMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	s->Phone.Data.Priv.N6510.PhoneMode = msg.Buffer[4];
+	return GE_NONE;
+}
+
+static GSM_Error N6510_GetPhoneMode(GSM_StateMachine *s)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x02, 0x00, 0x00};
+
+	smprintf(s,"Getting phone mode\n");
+
+	return GSM_WaitFor (s, req, 6, 0x15, 4, ID_Reset);
+}
+
+static GSM_Error N6510_ReplySetPhoneMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	return GE_NONE;
+}
+
+GSM_Error N6510_SetPhoneMode(GSM_StateMachine *s, N6510_PHONE_MODE mode)
+{
+	int	      i;
+	GSM_Error     error;
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x01,
+			       0x04,		/* phone mode */
+			       0x00};
+
+	if (s->ConnectionType != GCT_FBUS2) return GE_OTHERCONNECTIONREQUIRED;
+
+	req[4] = mode;
+
+	while (1) {
+		smprintf(s,"Going to phone mode %i\n",mode);
+		error = GSM_WaitFor (s, req, 6, 0x15, 4, ID_Reset);
+		if (error != GE_NONE) return error;
+		for (i=0;i<20;i++) {
+			error=N6510_GetPhoneMode(s);
+			if (error != GE_NONE) return error;
+			if (s->Phone.Data.Priv.N6510.PhoneMode == mode) return GE_NONE;
+			my_sleep(500);
+		}
+	}
+	return GE_NONE;
+}
+
 static GSM_Error N6510_Initialise (GSM_StateMachine *s)
 {
 	s->Phone.Data.Priv.N6510.CalendarIconsNum = 0;
@@ -1344,42 +1391,20 @@ static GSM_Error N6510_GetHardware(GSM_StateMachine *s, char *value)
 
 static GSM_Error N6510_Reset(GSM_StateMachine *s, bool hard)
 {
-	GSM_Error 	error;
-	GSM_DateTime	Date;
-	unsigned int	i,j;
-	unsigned char 	req[] = {0x00, 0x06, 0x00, 0x01, 0x04, 0x00};
+	GSM_Error error;
 
-	if (s->ConnectionType != GCT_FBUS2 || hard) return GE_NOTSUPPORTED;
+	if (hard) return GE_NOTSUPPORTED;
 
-	/* Going to test mode */
-	error=GSM_WaitFor (s, req, 6, 0x15, 4, ID_Reset);
+	error = N6510_SetPhoneMode(s, N6510_MODE_TEST);
 	if (error != GE_NONE) return error;
-	for (i=0;i<6;i++) {
-		GSM_GetCurrentDateTime (&Date);
-		j=Date.Second;
-		while (j==Date.Second) {
-			my_sleep(10);
-			GSM_GetCurrentDateTime(&Date);
-		}
-	}
 
-	GSM_TerminateConnection(s);
+	error = N6510_SetPhoneMode(s, N6510_MODE_NORMAL);
+	if (error != GE_NONE) return error;
 
-	while (!false) {
-		error=GSM_InitConnection(s,s->ReplyNum);
-		if (error==GE_NONE) break;
-		GSM_TerminateConnection(s);
-	}
+	s->Phone.Data.EnableIncomingSMS = false;
+	s->Phone.Data.EnableIncomingCB  = false;
 
-	/* Going to normal mode */
-	req[4] = 0x01;
-	error=GSM_WaitFor (s, req, 6, 0x15, 4, ID_Reset);
-
-	if (error == GE_NONE) {
-		s->Phone.Data.EnableIncomingSMS = false;
-		s->Phone.Data.EnableIncomingCB  = false;
-	}
-	return error;
+	return GE_NONE;
 }
 
 static GSM_Error N6510_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
@@ -3620,34 +3645,41 @@ static GSM_Error N6510_ReplySetLight(GSM_Protocol_Message msg, GSM_StateMachine 
 	return GE_NONE;
 }
 
-static GSM_Error N6510_ShowStartInfo(GSM_StateMachine *s, bool enable)
+GSM_Error N6510_SetLight(GSM_StateMachine *s, N6510_PHONE_LIGHTS light, bool enable)
 {
-	GSM_Error	error;
-	unsigned char 	req[14] = {
+	unsigned char req[14] = {
 		N6110_FRAME_HEADER, 0x05,
 		0x01,		/* 0x01 = Display, 0x03 = keypad */
 		0x01,		/* 0x01 = Enable, 0x02 = disable */
 		0x00, 0x00, 0x00, 0x01,
 		0x05, 0x04, 0x02, 0x00};
 
+	req[4] = light;
+	if (!enable) req[5] = 0x02;
+ 	smprintf(s, "Setting light\n");
+	return GSM_WaitFor (s, req, 14, 0x3A, 4, ID_SetLight);
+}
+
+static GSM_Error N6510_ShowStartInfo(GSM_StateMachine *s, bool enable)
+{
+	GSM_Error error;
+
 	if (enable) {
-	 	smprintf(s, "Enabling display light\n");
-		error=s->Protocol.Functions->WriteMessage(s, req, 14, 0x3A);
+		error=N6510_SetLight(s,N6510_LIGHT_DISPLAY,true);
 		if (error != GE_NONE) return error;
 
-	 	smprintf(s, "Enabling keypad light\n");
-		req[4] = 0x03;
-		return s->Protocol.Functions->WriteMessage(s, req, 14, 0x3A);
+		error=N6510_SetLight(s,N6510_LIGHT_TORCH,true);
+		if (error != GE_NONE) return error;
+
+		return N6510_SetLight(s,N6510_LIGHT_KEYPAD,true);
 	} else {
-		req[5] = 0x02;
-
-	 	smprintf(s, "Disabling display light\n");
-		error=s->Protocol.Functions->WriteMessage(s, req, 14, 0x3A);
+		error=N6510_SetLight(s,N6510_LIGHT_DISPLAY,false);
 		if (error != GE_NONE) return error;
-	
-	 	smprintf(s, "Disabling keypad light\n");
-		req[4] = 0x03;
-		return s->Protocol.Functions->WriteMessage(s, req, 14, 0x3A);
+
+		error=N6510_SetLight(s,N6510_LIGHT_TORCH,false);
+		if (error != GE_NONE) return error;
+
+		return N6510_SetLight(s,N6510_LIGHT_KEYPAD,false);
 	}
 }
 
@@ -5117,7 +5149,8 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplySaveSMSMessage,	  "\x14",0x03,0x17,ID_SaveSMSMessage	  },
 	{N6510_ReplyGetSMSStatus,	  "\x14",0x03,0x1a,ID_GetSMSStatus	  },
 
-	{NoneReply,			  "\x15",0x01,0x31,ID_Reset		  },
+	{N6510_ReplySetPhoneMode,	  "\x15",0x03,0x64,ID_Reset		  },
+	{N6510_ReplyGetPhoneMode,	  "\x15",0x03,0x65,ID_Reset		  },
 
 	{N6510_ReplyGetBatteryCharge,	  "\x17",0x03,0x0B,ID_GetBatteryCharge	  },
 
@@ -5145,7 +5178,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplySetProfile,		  "\x39",0x03,0x04,ID_SetProfile	  },
 	{N6510_ReplyGetProfile,		  "\x39",0x03,0x06,ID_GetProfile	  },
 
-	{N6510_ReplySetLight,		  "\x3A",0x03,0x06,ID_IncomingFrame	  },
+	{N6510_ReplySetLight,		  "\x3A",0x03,0x06,ID_SetLight		  },
 
  	{N6510_ReplyGetFMStation,	  "\x3E",0x03,0x06,ID_GetFMStation	  },
  	{N6510_ReplyGetFMStatus,	  "\x3E",0x03,0x0E,ID_GetFMStation	  },

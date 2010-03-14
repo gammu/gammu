@@ -44,8 +44,27 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 {
 	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
 	DCB 			dcb;
+	unsigned char 		DeviceName[80];
+	int			i;
+#ifdef GSM_ENABLE_FBUS2DKU5
+	HKEY 			hKey;
+	DWORD 			DeviceNameLen;
+#endif
 
-	d->hPhone = CreateFile(	s->CurrentConfig->Device,
+	strcpy(DeviceName,s->CurrentConfig->Device);
+
+#ifdef GSM_ENABLE_FBUS2DKU5
+	if (s->ConnectionType == GCT_FBUS2DKU5) {
+		DeviceName[0] = 0;
+		RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\DEVICEMAP\\SERIALCOMM", 0, KEY_QUERY_VALUE, &hKey);
+		RegQueryValueEx(hKey, "\\Device\\AtmelVirtualPort000", NULL, NULL, (LPBYTE) DeviceName, &DeviceNameLen);
+		RegCloseKey(hKey);
+		if (strlen(DeviceName) == 0) return GE_DEVICENOTWORK;
+		//nodriver
+	}
+#endif
+
+	d->hPhone = CreateFile(	DeviceName,
 				GENERIC_READ | GENERIC_WRITE,
 				0,                    /* exclusive access */
 				NULL,                 /* no security attrs */
@@ -55,7 +74,12 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 			NULL);
 
 	if (d->hPhone == INVALID_HANDLE_VALUE) {
+		i = GetLastError();
 		GSM_OSErrorInfo(s, "CreateFile in serial_open");
+		if (i == 2)   return GE_DEVICENOTWORK; //can't find specified file
+		if (i == 5)   return GE_DEVICEBUSY;    //access denied
+		if (i == 31)  return GE_DEVICENOTWORK; //attached device not working
+		if (i == 123) return GE_DEVICENOTEXIST;
 		return GE_DEVICEOPENERROR;
 	}
 
@@ -95,7 +119,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	if (SetCommState(d->hPhone, &dcb)==0) {
 		GSM_OSErrorInfo(s, "WriteDevice in serial_open");
 		return GE_DEVICEOPENERROR;
-	}
+	}       	
 
 	return GE_NONE;
 }

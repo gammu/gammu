@@ -28,9 +28,11 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("mbus"	,connection,0)) s->ConnectionType = GCT_MBUS2;
 	if (mystrncasecmp("fbus"	,connection,0)) s->ConnectionType = GCT_FBUS2;
 	if (mystrncasecmp("fbusdlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
+	if (mystrncasecmp("fbusdku5"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU5;
 	if (mystrncasecmp("fbusblue"	,connection,0)) s->ConnectionType = GCT_FBUS2BLUE;
 	if (mystrncasecmp("fbusirda"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
 	if (mystrncasecmp("phonetblue"	,connection,0)) s->ConnectionType = GCT_PHONETBLUE;
+	if (mystrncasecmp("mrouterblue"	,connection,0)) s->ConnectionType = GCT_MROUTERBLUE;
 	if (mystrncasecmp("irdaphonet"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
 	if (mystrncasecmp("irdaat"	,connection,0)) s->ConnectionType = GCT_IRDAAT;
 	if (mystrncasecmp("irdaobex"	,connection,0)) s->ConnectionType = GCT_IRDAOBEX;
@@ -71,6 +73,9 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #ifdef GSM_ENABLE_FBUS2DLR3
 	GSM_RegisterConnection(s, GCT_FBUS2DLR3, &SerialDevice,   &FBUS2Protocol);
 #endif
+#ifdef GSM_ENABLE_FBUS2DKU5
+	GSM_RegisterConnection(s, GCT_FBUS2DKU5, &SerialDevice,   &FBUS2Protocol);
+#endif
 #ifdef GSM_ENABLE_FBUS2BLUE
 	GSM_RegisterConnection(s, GCT_FBUS2BLUE, &SerialDevice,   &FBUS2Protocol);
 #endif
@@ -79,6 +84,9 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #endif
 #ifdef GSM_ENABLE_PHONETBLUE
 	GSM_RegisterConnection(s, GCT_PHONETBLUE,&SerialDevice,	  &PHONETProtocol);
+#endif
+#ifdef GSM_ENABLE_MROUTERBLUE
+	GSM_RegisterConnection(s, GCT_MROUTERBLUE,&SerialDevice,  &MROUTERProtocol);
 #endif
 #ifdef GSM_ENABLE_IRDAPHONET
 	GSM_RegisterConnection(s, GCT_IRDAPHONET,&IrdaDevice, 	  &PHONETProtocol);
@@ -149,6 +157,12 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #endif
 #ifdef GSM_ENABLE_OBEXGEN
 	GSM_RegisterModule(s,&OBEXGENPhone);
+#endif
+#ifdef GSM_ENABLE_MROUTERGEN
+	GSM_RegisterModule(s,&MROUTERGENPhone);
+#endif
+#ifdef GSM_ENABLE_NOKIA3650
+	GSM_RegisterModule(s,&N3650Phone);
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	GSM_RegisterModule(s,&N6110Phone);
@@ -295,7 +309,15 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 			/* Irda devices can set now model to some specific and
 			 * we don't have to make auto detection later */
 			error=s->Device.Functions->OpenDevice(s);
-			if (error == GE_DEVICEOPENERROR && i != s->ConfigNum - 1) continue;
+			if (i != s->ConfigNum - 1) {
+				if (error == GE_DEVICEOPENERROR) 	continue;
+				if (error == GE_DEVICELOCKED) 	 	continue;
+				if (error == GE_DEVICENOTEXIST)  	continue;
+				if (error == GE_DEVICEBUSY) 		continue;
+				if (error == GE_DEVICENOPERMISSION) 	continue;
+				if (error == GE_DEVICENODRIVER) 	continue;
+				if (error == GE_DEVICENOTWORK) 		continue;
+			}
 			if (error!=GE_NONE) return error;
 
 			s->opened = true;
@@ -320,10 +342,16 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 						s->Phone.Functions = &OBEXGENPhone;
 						break;
 #endif
+#ifdef GSM_ENABLE_MROUTERGEN
+					case GCT_MROUTERBLUE:
+						s->Phone.Functions = &MROUTERGENPhone;
+						break;
+#endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 					case GCT_MBUS2:
 					case GCT_FBUS2:
 					case GCT_FBUS2DLR3:
+					case GCT_FBUS2DKU5:
 					case GCT_FBUS2BLUE:
 					case GCT_FBUS2IRDA:
 					case GCT_PHONETBLUE:
@@ -363,7 +391,15 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 			}
 
 			error=s->Device.Functions->OpenDevice(s);
-			if (error == GE_DEVICEOPENERROR && i != s->ConfigNum - 1) continue;
+			if (i != s->ConfigNum - 1) {
+				if (error == GE_DEVICEOPENERROR) 	continue;
+				if (error == GE_DEVICELOCKED) 	 	continue;
+				if (error == GE_DEVICENOTEXIST)  	continue;
+				if (error == GE_DEVICEBUSY) 		continue;
+				if (error == GE_DEVICENOPERMISSION) 	continue;
+				if (error == GE_DEVICENODRIVER) 	continue;
+				if (error == GE_DEVICENOTWORK) 		continue;
+			}
 			if (error!=GE_NONE) return error;
 
 			s->opened = true;
@@ -837,6 +873,7 @@ static OnePhoneModel allmodels[] = {
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"3650" ,"NHL-8" ,"Nokia 3650", {F_RADIO,0}},
 	{"5100" ,"NPM-6" ,"Nokia 5100", {F_TODO66,F_RADIO,0}},
+	{"5100" ,"NPM-6U","Nokia 5100", {F_TODO66,F_RADIO,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"5110" ,"NSE-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DISPSTATUS,0}},

@@ -22,6 +22,40 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20030917 - 0,84,0,0
+* new functionality:
+  * DCT3 & DCT4:
+    * new --nokiagetadc for getting ADC
+    * new --nokiadisplaytest displays phone display test
+    * new --nokiavibratest
+  * DCT4:
+    * support for 5100 NPM-6U
+    * getting phone modes
+    * new --nokiasetlights allows to control phone lights (includes support
+      for 5100 torch)
+    * new connection "fbusdku5" working in win32. It finds automatically
+      serial port assigned to cable in DKU5 driver settings.
+  * DCT3:
+    * getting T9 with --nokiagett9
+    * can enable/disable SMS charset menu for 3310/3315 6.07           (Mikesz)
+  * new error code for handling situations, when some functions are not
+    supported with some connection types
+  * started work on Symbian based phones (Symbian 6.1 and other with mrouter
+    interface/phones with 3650 FBUS)
+  * new --displaysms with the same options like --sendsms.       (Ondrej Rybin)
+    It makes sms from input data and displays them as they're packed for
+    AT frames (or in any other format, if You will change DisplaySMSFrame)
+
+* fixes and improvements:
+  * DCT4:
+    * rewritten setting phone modes (soft reset should work OK now)
+    * controling phone lights works OK over irda
+    * getting voice records works again OK            (Vadim + Wojciech Opieka)
+  * --nokiatests -> --nokiaselftests
+  * no problems with n6110 and phone without PIN
+  * changed code errors for opening device. New should be much more clear
+  * compilation fixes for Borland compilers
+
 20030908 - 0,83,0,0
 * new functionality:
   * 6220, 8910i ID                                                      (Intra)

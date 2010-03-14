@@ -49,7 +49,8 @@ A. HELP IS VERY REQUIRED. Methods are many:
 -------------------------------------------------------------------------------
 Q. What are things ToDo ?
 
-A. * these things can be done without anything:
+A. * these things can be done without anything (it will be done everything
+     to make them):
      * MMS
      * giving support for more formats
      * writing really usefull GUI
@@ -58,11 +59,14 @@ A. * these things can be done without anything:
      * AT modem emulator
      * DKU-5 driver
      * Symbian support
+     * SyncML
      * .... (other)
    * after getting some hardware help:
-     * SyncML
      * N3410 Java support
      * N5510 radio/MP3 support
+     * N3300 MP3 support
+     * for Series 40 SyncML & camera settings, OMA provisioning, full media
+       rights support, SMS distribution lists
      * .... (other)
 -------------------------------------------------------------------------------
 Q. Where to get latest versions and support ?
