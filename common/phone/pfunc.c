@@ -61,6 +61,7 @@ GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigne
 	}
 	if (SMS->PDU == SMS_Deliver) {
 		if (SMS->SMSC.Number[0] == 0x00 && SMS->SMSC.Number[1] == 0x00) {
+			smprintf(s,"No SMSC in SMS Deliver\n");
 			return ERR_EMPTYSMSC;
 		}
 	}

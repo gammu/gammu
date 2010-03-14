@@ -6,6 +6,15 @@
  * (C) 1991,1992,1993,1994,1995,1996 by Miquel van Smoorenburg
  * GNU GPL version 2
  */
+/* Due to a problem in the source code management, the names of some of
+ * the authors have unfortunately been lost. We do not mean to belittle
+ * their efforts and hope they will contact us to see their names
+ * properly added to the Copyright notice above.
+ * Having published their contributions under the terms of the GNU
+ * General Public License (GPL) [version 2], the Copyright of these
+ * authors will remain respected by adhering to the license they chose
+ * to publish their code under.
+ */
 
 #include <string.h>
 #ifdef WIN32

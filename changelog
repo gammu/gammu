@@ -22,11 +22,55 @@ This software was sponsored (in time order) by:
 7. KompuNet (www.kompu.net)
    * SMS services, PC shop and other
 8. Lorenzo Ciani
+9. Adam Lange
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20041024 - 0.99.0
+* new functionality:
+  * DJGPP:
+    * serial driver for DJGPP. Tested with fbus (works) and dlr3 (fails).
+      This is rather hack solution. If somebody will be interested, it will be
+      extended to real driver.
+    * for compiling under DJGPP set some variables in cfg/makefile.cfg
+      and use new "make djgpp"
+  * partial solution for making prerequisites files for GCC. By default
+    commented. If you want to work with it (and have correct results), please 
+    uncomment lines with "-include" in cfg/makefile.glo & make buliding from
+    one directory only
+  * 3105 features                                                (Vincent Chau)
+  * 6810/6820 have notes too                                 (Johan Helsingius)
+  * --backupsms && --restoresms with bigger functionality
+  * savesms returns memory full for dct4                         (Adi Goldberg)
+  * support for notes is complete in dct4 - Gammu can restore them too
+  * better (c) info
+
+* fixes and improvements:
+  * help for --playsavedringtone
+  * updated gammu.mak for BCC5
+  * dynamic memory allocation for some ringtones functions       (Vincent Chau)
+  * removed memory leak in FBUS2 driver
+  * LAC, CID is written using big chars only
+  * uncommented setting Picture Images for DCT4
+  * fixed setting todo method 2 for dct4
+  * SMSD - PIN is not required in config file                    (Michal Cihar)
+  * 6820 doesn't have FM Radio                              (Tomasz Motylewski)
+  * added RNG to list of supported ringtones                            (Zibri)
+
+Note: if you restore sms to DCT4 using --restoresms: some Gammu versions 
+      contained bug: numbers for sms folders were mixed. If you have this 
+      problem, make such replacements: "Folder = 3" with "Folder = 4",
+      "Folder = 1" with "Folder = 3", etc.
+
+Note2: waiting in queue for such things:
+       * Ace's patch
+       * tones of smsd patches: support for incoming sms handler, 
+         RejectDuplicates, Inbox sms and others
+       * checking some 6110 calendar & 6310i sms related reports
+       * .....
+
 20041003 - 0.98.9
 * new functionality:
   * support for USSD codes in AT module. You can get USSD codes now using 

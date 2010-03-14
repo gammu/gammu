@@ -4,6 +4,15 @@
  * GNU GPL version 2 or later
  */
 /* function for making CRC for filesystem (c) 2003 by Michael Schroeder */
+/* Due to a problem in the source code management, the names of some of
+ * the authors have unfortunately been lost. We do not mean to belittle
+ * their efforts and hope they will contact us to see their names
+ * properly added to the Copyright notice above.
+ * Having published their contributions under the terms of the GNU
+ * General Public License (GPL) [version 2], the Copyright of these
+ * authors will remain respected by adhering to the license they chose
+ * to publish their code under.
+ */
 
 #include "../../../gsmstate.h"
 
@@ -286,10 +295,10 @@ static GSM_Error N6510_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMa
 			DecodeUnicodeString(GSM_GetNetworkName(NetInfo.NetworkCode)));
 		smprintf(s, "(%s)\n",DecodeUnicodeString(GSM_GetCountryName(NetInfo.NetworkCode)));
 
-		sprintf(NetInfo.LAC,	"%02x%02x", msg.Buffer[current+1], msg.Buffer[current+2]);
+		sprintf(NetInfo.LAC,	"%02X%02X", msg.Buffer[current+1], msg.Buffer[current+2]);
 		smprintf(s, "LAC                       : %s\n", NetInfo.LAC);
 
-		sprintf(NetInfo.CID, "%02x%02x", msg.Buffer[current+5], msg.Buffer[current+6]);
+		sprintf(NetInfo.CID, "%02X%02X", msg.Buffer[current+5], msg.Buffer[current+6]);
 		smprintf(s, "CID                       : %s\n", NetInfo.CID);
 
 		tmp = 10;
@@ -311,8 +320,8 @@ static GSM_Error N6510_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMa
 		if (Data->NetworkInfo->State == GSM_HomeNetwork || Data->NetworkInfo->State == GSM_RoamingNetwork) {
 			tmp = 10;
 			NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,Data->NetworkInfo->NetworkName,true);
-			sprintf(Data->NetworkInfo->LAC,	"%02x%02x", 	msg.Buffer[current+1], msg.Buffer[current+2]);
-			sprintf(Data->NetworkInfo->CID, "%02x%02x", 	msg.Buffer[current+5], msg.Buffer[current+6]);
+			sprintf(Data->NetworkInfo->LAC,	"%02X%02X", 	msg.Buffer[current+1], msg.Buffer[current+2]);
+			sprintf(Data->NetworkInfo->CID, "%02X%02X", 	msg.Buffer[current+5], msg.Buffer[current+6]);
 			NOKIA_DecodeNetworkCode(msg.Buffer + (current+7),Data->NetworkInfo->NetworkCode);
 		}
 	}
@@ -1127,10 +1136,8 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	GSM_SMSMessage		sms;
 	GSM_Phone_Bitmap_Types	Type;
 	int			Width, Height, i, count;
-#ifdef DEVELOP
 	unsigned char		folderid;
-	int					location;
-#endif
+	int			location;
 	GSM_NetworkInfo 	NetInfo;
 	GSM_Error		error;
 	unsigned char reqStartup[1000] = {
@@ -1255,7 +1262,6 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	case GSM_PictureImage:
 		error = N6510_GetPictureImage(s, Bitmap, &sms.Location);
 		if (error == ERR_NONE) {
-#ifdef DEVELOP
 			sms.Folder = 0;
 			N6510_GetSMSLocation(s, &sms, &folderid, &location);
 			switch (folderid) {
@@ -1265,9 +1271,6 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 			}
 			reqPicture[6]=location / 256;
 			reqPicture[7]=location;
-#else
-			return ERR_NOTSUPPORTED;
-#endif
 		}
 		Type = GSM_NokiaPictureImage;
 		count = 78;
@@ -2419,6 +2422,9 @@ static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 		case 0x02:
 			printf("Incorrect location\n");
 			return ERR_INVALIDLOCATION;
+		case 0x03:
+			printf("Memory full (for example no empty space in SIM)\n");
+			return ERR_FULL;
 		case 0x05:
 			printf("Incorrect folder\n");
 			return ERR_INVALIDLOCATION;
@@ -2676,6 +2682,8 @@ static GSM_Error N6510_ReplyGetRingtonesInfo(GSM_Protocol_Message msg, GSM_State
 	memset(Data->RingtonesInfo,0,sizeof(GSM_AllRingtonesInfo));
 	if (msg.Buffer[4] * 256 + msg.Buffer[5] == 0x00) return ERR_EMPTY;
 	Data->RingtonesInfo->Number = msg.Buffer[4] * 256 + msg.Buffer[5];
+	// allocate array of ringtones based on number
+	Data->RingtonesInfo->Ringtone = calloc(Data->RingtonesInfo->Number, sizeof(GSM_RingtoneInfo));
 	tmp = 6;
 	for (i=0;i<Data->RingtonesInfo->Number;i++) {			
 		Data->RingtonesInfo->Ringtone[i].Group = msg.Buffer[tmp+4];
@@ -2754,7 +2762,7 @@ static GSM_Error N6510_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachi
 
 static GSM_Error N6510_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
 {
-	GSM_AllRingtonesInfo 	Info;
+ 	GSM_AllRingtonesInfo 	Info = {0, NULL};
 	GSM_Error		error;
 	unsigned char 		req2[6] = {N7110_FRAME_HEADER, 0x12,
 					   0x00, 0xe7}; 	/* Location */
@@ -2774,7 +2782,9 @@ static GSM_Error N6510_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		req2[4] = Info.Ringtone[Ringtone->Location-1].ID / 256;
 		req2[5] = Info.Ringtone[Ringtone->Location-1].ID % 256;
 		smprintf(s, "Getting binary ringtone\n");
-		return GSM_WaitFor (s, req2, 6, 0x1f, 4, ID_GetRingtone);
+ 		error = GSM_WaitFor (s, req2, 6, 0x1f, 4, ID_GetRingtone);
+ 		if (Info.Ringtone) free(Info.Ringtone);
+ 		return error;
 	case RING_MIDI:
 	case RING_MMF:
 		return ERR_NOTSUPPORTED;
@@ -4054,6 +4064,97 @@ GSM_Error N6510_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start
 	return N6510_PrivGetGenericCalendar3(s, LastNote->Location[Note->Location-1], ID_GetNote);
 }
 
+static GSM_Error N6510_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *Not)
+{
+	GSM_Error 			error;
+	GSM_NOKIACalToDoLocations	*LastNote = &s->Phone.Data.Priv.N6510.LastNote;	
+	GSM_CalendarEntry		Note;
+
+	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOTES)) return ERR_NOTSUPPORTED;
+
+	error=N6510_GetCalendarInfo3(s,LastNote,2);
+	if (error!=ERR_NONE) return error;
+
+	smprintf(s, "Deleting Note\n");
+
+	if (Not->Location > LastNote->Number || Not->Location == 0) return ERR_INVALIDLOCATION;
+
+	Note.Location = LastNote->Location[Not->Location-1];
+	return N71_65_DelCalendar(s,&Note);
+}
+
+static GSM_Error N6510_ReplyGetNoteFirstLoc(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "First Note location: %i\n",msg.Buffer[8]*256+msg.Buffer[9]);
+	s->Phone.Data.Note->Location = msg.Buffer[8]*256+msg.Buffer[9];
+	return ERR_NONE;
+}
+
+static GSM_Error N6510_ReplyAddNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "ToDo added\n");
+	return ERR_NONE;
+}
+
+static GSM_Error N6510_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Not)
+{
+	GSM_Error		error;
+	int 			count=54;
+	unsigned char 		reqLoc[] = {N6110_FRAME_HEADER, 0x95, 
+					    0x02};	/* 1 = todo, 2 = note */
+	unsigned char 		req[5000] = {
+		N6110_FRAME_HEADER, 0x65,
+		0x02,					/* 0 = calendar, 1 = todo, 2 = note 	*/
+		0x00, 0x00, 0x00,
+		0x00, 0x00,                             /* location 	    			*/
+		0x00, 0x00, 0x00, 0x00, 		
+		0xFF, 0xFF, 0xFF, 0xFF,			/* alarm 	    			*/
+		0x80, 0x00, 0x00,
+		0xA9,					/* note icon	    			*/
+		0x00, 0x00, 0x00, 0x00,			/* alarm type       			*/
+		0x00,					/* 0x02 or 0x00     			*/
+		0x80, 					/* note type	    			*/
+		0x07, 0xD2, 0x01, 0x01, 0x00, 0x00, 	/* start date/time  			*/
+		0x07, 0xD2, 0x01, 0x11, 0x00, 0x00, 	/* end date/time    			*/
+		0x00, 0x00,				/* recurrance	    			*/
+		0xFF, 0xFF,				/* birth year	    			*/
+		0x00,					/* ToDo priority 			*/
+		0x00,					/* ToDo completed ?			*/
+		0x00, 0x00, 0x00,
+		0x00,					/* note text length 			*/
+		0x00,					/* phone length/meeting place		*/
+		0x00, 0x00, 0x00};
+
+	s->Phone.Data.Note = Not;
+
+	smprintf(s, "Getting first free Note location\n");
+	error = GSM_WaitFor (s, reqLoc, 5, 0x13, 4, ID_SetNote);
+	if (error!=ERR_NONE) return error;
+	req[8] = Not->Location/256;
+	req[9] = Not->Location%256;
+
+	req[49] = UnicodeLength(Not->Text);
+	CopyUnicodeString(req+54,Not->Text);
+	count+= req[49]*2;
+
+	req[count++] = 0x00;
+
+	smprintf(s, "Adding Note\n");
+	return GSM_WaitFor (s, req, count, 0x13, 4, ID_SetNote);
+}
+
+static GSM_Error N6510_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
+{
+	GSM_NOKIACalToDoLocations	*LastNote = &s->Phone.Data.Priv.N6510.LastNote;
+	GSM_Error			error;
+
+	error = N6510_GetCalendarInfo3(s,LastNote,2);
+	if (error!=ERR_NONE) return error;
+
+	status->Used = LastNote->Number;
+	return ERR_NONE;
+}
+
 static int N6510_FindFileCheckSum(unsigned char *ptr, int len)
 {
 	int acc, i, accx;
@@ -5189,7 +5290,7 @@ static GSM_Error N6510_ReplyAddToDo2(GSM_Protocol_Message msg, GSM_StateMachine 
 static GSM_Error N6510_ReplyGetToDoFirstLoc2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "First ToDo location method 2: %i\n",msg.Buffer[8]*256+msg.Buffer[9]);
-	s->Phone.Data.ToDo->Location = msg.Buffer[9];
+	s->Phone.Data.ToDo->Location = msg.Buffer[8]*256+msg.Buffer[9];
 	return ERR_NONE;
 }
 
@@ -5201,7 +5302,8 @@ static GSM_Error N6510_AddToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
  	GSM_Error		error;
 	GSM_DateTime		DT;
  	int 			Text, Alarm, EndTime, Completed, count=54, Phone;
-	unsigned char 		reqLoc[] = {N6110_FRAME_HEADER, 0x95, 0x01};
+	unsigned char 		reqLoc[] = {N6110_FRAME_HEADER, 0x95, 
+					    0x01};	/* 1 = todo, 2 = note */
 	unsigned char 		req[5000] = {
 		N6110_FRAME_HEADER, 0x65,
 		0x01,					/* 0 = calendar, 1 = todo 	*/
@@ -5585,6 +5687,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyAddCalendar2,	  "\x13",0x03,0x41,ID_SetCalendarNote	  },/*method 2*/
 	{N6510_ReplyAddCalendar3,	  "\x13",0x03,0x66,ID_SetCalendarNote	  },/*method 3*/
 	{N6510_ReplyAddToDo2,		  "\x13",0x03,0x66,ID_SetToDo		  },
+	{N6510_ReplyAddNote,		  "\x13",0x03,0x66,ID_SetNote		  },
 	{N6510_ReplyGetCalendar3,	  "\x13",0x03,0x7E,ID_GetCalendarNote	  },/*method 3*/
 	{N6510_ReplyGetToDo2,		  "\x13",0x03,0x7E,ID_GetToDo		  },
 	{N6510_ReplyGetNote,		  "\x13",0x03,0x7E,ID_GetNote		  },
@@ -5593,6 +5696,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetCalendarSettings,  "\x13",0x03,0x8E,ID_GetCalendarSettings },
 	{N6510_ReplyGetCalendarNotePos,	  "\x13",0x03,0x96,ID_GetCalendarNotePos  },/*method 3*/
 	{N6510_ReplyGetToDoFirstLoc2,	  "\x13",0x03,0x96,ID_SetToDo		  },
+	{N6510_ReplyGetNoteFirstLoc,	  "\x13",0x03,0x96,ID_SetNote		  },
 	{N6510_ReplyGetCalendarInfo,	  "\x13",0x03,0x9F,ID_GetCalendarNotesInfo},/*method 3*/
 	{N6510_ReplyGetToDoStatus2,	  "\x13",0x03,0x9F,ID_GetToDo		  },
 	{N6510_ReplyGetNoteInfo,	  "\x13",0x03,0x9F,ID_GetNote		  },
@@ -5732,7 +5836,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|3100|3100b|3108|3200|3200a|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6100|6200|6220|6230|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7210|7250|7250i|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|3100|3100b|3105|3108|3200|3200a|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6100|6200|6220|6230|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7210|7250|7250i|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/
@@ -5841,7 +5945,13 @@ GSM_Phone_Functions N6510Phone = {
 	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
 	N6510_GetCalendarSettings,
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
+	N6510_GetNoteStatus,
+	NOTIMPLEMENTED,			/*	GetNote			*/
 	N6510_GetNextNote,
+	NOTIMPLEMENTED,			/*	SetNote			*/
+	N6510_AddNote,
+	N6510_DeleteNote,
+	NOTSUPPORTED,			/*	DeleteAllNotes		*/
 	N6510_GetProfile,
 	N6510_SetProfile,
     	N6510_GetFMStation,

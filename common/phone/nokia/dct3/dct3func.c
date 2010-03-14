@@ -4,6 +4,15 @@
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
  * GNU GPL version 2 or later
  */
+/* Due to a problem in the source code management, the names of some of
+ * the authors have unfortunately been lost. We do not mean to belittle
+ * their efforts and hope they will contact us to see their names
+ * properly added to the Copyright notice above.
+ * Having published their contributions under the terms of the GNU
+ * General Public License (GPL) [version 2], the Copyright of these
+ * authors will remain respected by adhering to the license they chose
+ * to publish their code under.
+ */
 
 #include <string.h> /* memcpy only */
 #include <stdio.h>
@@ -457,10 +466,10 @@ GSM_Error DCT3_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 	smprintf(s, "\n");
 	smprintf(s, "Network selection      : %s\n", msg.Buffer[9]==1?"manual":"automatic");
 	if (msg.Buffer[8]<0x03) {
-		sprintf(NetInfo.CID, "%02x%02x", msg.Buffer[10], msg.Buffer[11]);
+		sprintf(NetInfo.CID, "%02X%02X", msg.Buffer[10], msg.Buffer[11]);
 		smprintf(s, "CID                    : %s\n", NetInfo.CID);
 
-		sprintf(NetInfo.LAC, "%02x%02x", msg.Buffer[12], msg.Buffer[13]);
+		sprintf(NetInfo.LAC, "%02X%02X", msg.Buffer[12], msg.Buffer[13]);
 		smprintf(s, "LAC                    : %s\n", NetInfo.LAC);
 
 		NOKIA_DecodeNetworkCode(msg.Buffer+14,NetInfo.NetworkCode);
@@ -511,8 +520,8 @@ GSM_Error DCT3_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 				Data->NetworkInfo->NetworkName[msg.Buffer[17]*2+2]=0x00;
 			}
 			NOKIA_DecodeNetworkCode(msg.Buffer+14,Data->NetworkInfo->NetworkCode);
-			sprintf(Data->NetworkInfo->CID, "%02x%02x", msg.Buffer[10], msg.Buffer[11]);
-			sprintf(Data->NetworkInfo->LAC, "%02x%02x", msg.Buffer[12], msg.Buffer[13]);
+			sprintf(Data->NetworkInfo->CID, "%02X%02X", msg.Buffer[10], msg.Buffer[11]);
+			sprintf(Data->NetworkInfo->LAC, "%02X%02X", msg.Buffer[12], msg.Buffer[13]);
 		}
 	}
 	/* 6210/6250/7110 */

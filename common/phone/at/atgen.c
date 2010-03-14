@@ -696,7 +696,7 @@ GSM_Error ATGEN_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
 	unsigned char req[50];
 
-	if (smsc->Location!=1) return ERR_NOTSUPPORTED;
+	if (smsc->Location!=1) return ERR_INVALIDLOCATION;
 
 	sprintf(req, "AT+CSCA=\"%s\"\r",DecodeUnicodeString(smsc->Number));
 
@@ -3839,7 +3839,13 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED,			/*	GetNoteStatus		*/
+	NOTSUPPORTED,			/*	GetNote			*/
 	NOTSUPPORTED,			/*	GetNextNote		*/
+	NOTSUPPORTED,			/*	SetNote			*/
+	NOTSUPPORTED,			/*	AddNote			*/
+	NOTSUPPORTED,			/* 	DeleteNote		*/
+	NOTSUPPORTED,			/*	DeleteAllNotes		*/
 	NOTSUPPORTED, 			/*	GetProfile		*/
 	NOTSUPPORTED, 			/*	SetProfile		*/
     	NOTSUPPORTED,			/*  	GetFMStation        	*/

@@ -66,7 +66,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 			if (mystrncasecmp(Config->inboxformat, "detail", 0)) {
 				for (j=0;j<sms.Number;j++) backup.SMS[j] = &sms.SMS[j];
 				backup.SMS[sms.Number] = NULL;
-				error = GSM_SaveSMSBackupFile(FullName, &backup);
+				error = GSM_AddSMSBackupFile(FullName, &backup);
 				done = true;
 			}
 #endif
