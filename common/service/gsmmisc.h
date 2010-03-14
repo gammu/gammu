@@ -125,12 +125,14 @@ typedef struct {
 /* ----------------------- filesystem ------------------------------------- */
 
 typedef struct {
-	bool 		Folder;		/* true, when folder 	*/
 	int		Used;		/* how many bytes used 	*/
 	unsigned char 	Name[300];	/* Name			*/
 	int		ID;		/* ID 			*/
 	int		ParentID;
-} GSM_FileFolderInfo;
+	bool 		Folder;		/* true, when folder 	*/
+
+	char		*Buffer;
+} GSM_File;
 
 /* ------------------------------------------------------------------------ */
 

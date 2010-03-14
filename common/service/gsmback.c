@@ -13,10 +13,26 @@
 
 /* -------- Some general functions ---------------------------------------- */
 
-static void SaveLinkedBackupText(FILE *file, char *myname, char *myvalue)
+static unsigned char *ReadCFGText(CFG_Header *cfg, unsigned char *section, unsigned char *key, bool Unicode)
+{
+	unsigned char Buffer[500],Buffer2[500],*retval;
+
+	if (Unicode) {
+		EncodeUnicode(Buffer2,key,strlen(key));
+		retval = CFG_Get(cfg,section,Buffer2,Unicode);
+		if (retval != NULL) return DecodeUnicodeString(retval);
+		return NULL;
+	} else {
+		strcpy(Buffer,section);
+		strcpy(Buffer2,key);
+		return CFG_Get(cfg,section,key,Unicode);
+	}
+}
+
+static void SaveLinkedBackupText(FILE *file, char *myname, char *myvalue, bool UseUnicode)
 {
 	int 		w,current;
-	unsigned char 	buffer2[300];
+	unsigned char 	buffer2[1000],buffer3[1000];
 
 	current = strlen(myvalue); w = 0;
 	while (true) {
@@ -29,13 +45,19 @@ static void SaveLinkedBackupText(FILE *file, char *myname, char *myvalue)
 			buffer2[current] = 0;
 			current = 0;
 		}
-		fprintf(file,"%s%02i = %s\n",myname,w,buffer2);
+		if (UseUnicode) {
+			sprintf(buffer3,"%s%02i = %s%c%c",myname,w,buffer2,13,10);
+			EncodeUnicode(buffer2,buffer3,strlen(buffer3));
+			fwrite(buffer2,1,strlen(buffer3)*2,file);
+		} else {
+			fprintf(file,"%s%02i = %s%c%c",myname,w,buffer2,13,10);
+		}
 		if (current == 0) break;
 		w++;
 	}		
 }
 
-static void ReadLinkedBackupText(CFG_Header *file_info, char *section, char *myname, char *myvalue)
+static void ReadLinkedBackupText(CFG_Header *file_info, char *section, char *myname, char *myvalue, bool UseUnicode)
 {
 	unsigned char		buffer2[300];
 	char			*readvalue;
@@ -45,7 +67,7 @@ static void ReadLinkedBackupText(CFG_Header *file_info, char *section, char *myn
 	myvalue[0] = 0;
 	while (true) {
 		sprintf(buffer2,"%s%02i",myname,i);
-		readvalue = CFG_Get(file_info, section, buffer2, false);
+		readvalue = ReadCFGText(file_info, section, buffer2, UseUnicode);
 		if (readvalue!=NULL) {
 			myvalue[strlen(myvalue)+strlen(readvalue)]=0;
 			memcpy(myvalue+strlen(myvalue),readvalue,strlen(readvalue));
@@ -56,38 +78,70 @@ static void ReadLinkedBackupText(CFG_Header *file_info, char *section, char *myn
 
 static void SaveBackupText(FILE *file, char *myname, char *myvalue, bool UseUnicode)
 {
-	unsigned char buffer[10000];
+	unsigned char buffer[10000], buffer2[10000];
 
-	fprintf(file,"%s = \"%s\"\n",myname,DecodeUnicodeString(myvalue));
-	if (UseUnicode) {
-		EncodeHexBin(buffer,myvalue,strlen(DecodeUnicodeString(myvalue))*2);
-		fprintf(file,"%sUnicode = %s\n",myname,buffer);
+	if (myname[0] == 0x00) {
+		if (UseUnicode) {
+			EncodeUnicode(buffer,myvalue,strlen(myvalue));
+			fwrite(buffer,1,strlen(myvalue)*2,file);
+		} else fprintf(file,"%s",myvalue);
+	} else {
+		if (UseUnicode) {
+			sprintf(buffer,"%s = \"",myname);
+			EncodeUnicode(buffer2,buffer,strlen(buffer));
+			fwrite(buffer2,1,strlen(buffer)*2,file);
+
+			fwrite(myvalue,1,strlen(DecodeUnicodeString(myvalue))*2,file);
+
+			sprintf(buffer,"\"%c%c",13,10);
+			EncodeUnicode(buffer2,buffer,strlen(buffer));
+			fwrite(buffer2,1,strlen(buffer)*2,file);
+		} else {
+			sprintf(buffer,"%s = \"%s\"%c%c",myname,DecodeUnicodeString(myvalue),13,10);
+			fprintf(file,"%s",buffer);
+
+			EncodeHexBin(buffer,myvalue,strlen(DecodeUnicodeString(myvalue))*2);
+			fprintf(file,"%sUnicode = %s%c%c",myname,buffer,13,10);
+		}
 	}
 }
 
-static bool ReadBackupText(CFG_Header *file_info, char *section, char *myname, char *myvalue)
+static bool ReadBackupText(CFG_Header *file_info, char *section, char *myname, char *myvalue, bool UseUnicode)
 {
-	unsigned char 	paramname[10000];
-	char		*readvalue;
+	unsigned char 	paramname[10000],*readvalue;
 
-	strcpy(paramname,myname);
-	strcat(paramname,"Unicode");
-	readvalue = CFG_Get(file_info, section, paramname, false);
-	if (readvalue!=NULL) {
-		dprintf("%s %i\n",readvalue,strlen(readvalue));
-		DecodeHexBin (myvalue, readvalue, strlen(readvalue));
-		myvalue[strlen(readvalue)/2]=0;
-		myvalue[strlen(readvalue)/2+1]=0;
-		dprintf("%s\n",DecodeUnicodeString(myvalue));
-	} else {
-		strcpy(paramname,myname);
-		readvalue = CFG_Get(file_info, section, paramname, false);
+	if (UseUnicode) {
+		EncodeUnicode(paramname,myname,strlen(myname));
+		readvalue = CFG_Get(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
-			EncodeUnicode(myvalue,readvalue+1,strlen(readvalue)-2);
+			CopyUnicodeString(myvalue,readvalue+2);
+			myvalue[strlen(DecodeUnicodeString(readvalue))*2-4]=0;
+			myvalue[strlen(DecodeUnicodeString(readvalue))*2-3]=0;
 		} else {
 			myvalue[0]=0;
 			myvalue[1]=0;
 			return false;
+		}
+	} else {
+		strcpy(paramname,myname);
+		strcat(paramname,"Unicode");
+		readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
+		if (readvalue!=NULL) {
+			dprintf("%s %i\n",readvalue,strlen(readvalue));
+			DecodeHexBin (myvalue, readvalue, strlen(readvalue));
+			myvalue[strlen(readvalue)/2]=0;
+			myvalue[strlen(readvalue)/2+1]=0;
+			dprintf("%s\n",DecodeUnicodeString(myvalue));
+		} else {
+			strcpy(paramname,myname);
+			readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
+			if (readvalue!=NULL) {
+				EncodeUnicode(myvalue,readvalue+1,strlen(readvalue)-2);
+			} else {
+				myvalue[0]=0;
+				myvalue[1]=0;
+				return false;
+			}
 		}
 	}
 	return true;
@@ -135,17 +189,23 @@ static void ReadvCalDate(GSM_DateTime *dt, char *time)
 	dt->Timezone	= 0;
 }
 
-static void SaveVCalDateTime(FILE *file, GSM_DateTime *dt)
+static void SaveVCalDateTime(FILE *file, GSM_DateTime *dt, bool UseUnicode)
 {
-	fprintf(file, " = %04d%02d%02dT%02d%02d%02d\n",
+	unsigned char buffer[100];
+
+	sprintf(buffer, " = %04d%02d%02dT%02d%02d%02d%c%c",
 		dt->Year, dt->Month, dt->Day,
-		dt->Hour, dt->Minute, dt->Second);
+		dt->Hour, dt->Minute, dt->Second,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
-static void SaveVCalDate(FILE *file, GSM_DateTime *dt)
+static void SaveVCalDate(FILE *file, GSM_DateTime *dt, bool UseUnicode)
 {
-	fprintf(file, " = %04d%02d%02d\n",
-		dt->Year, dt->Month, dt->Day);
+	unsigned char buffer[100];
+
+	sprintf(buffer, " = %04d%02d%02d%c%c",
+		dt->Year, dt->Month, dt->Day,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 /* ------------------- Backup text files ----------------------------------- */
@@ -153,117 +213,154 @@ static void SaveVCalDate(FILE *file, GSM_DateTime *dt)
 static void SavePbkEntry(FILE *file, GSM_PhonebookEntry *Pbk, bool UseUnicode)
 {
 	bool	text;
-	char	buffer[100];
+	char	buffer[1000];
 	int	j;
 
-	fprintf(file,"Location = %03i\n",Pbk->Location);
-	fprintf(file,"PreferUnicode = %s\n",Pbk->PreferUnicode ? "yes" : "no");
+	sprintf(buffer,"Location = %03i%c%c",Pbk->Location,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"PreferUnicode = %s%c%c",Pbk->PreferUnicode ? "yes" : "no",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 	for (j=0;j<Pbk->EntriesNum;j++) {
 		text = true;
 		switch (Pbk->Entries[j].EntryType) {
 			case PBK_Number_General:
-				fprintf(file,"Entry%02iType = NumberGeneral\n",j);
+				sprintf(buffer,"Entry%02iType = NumberGeneral%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Number_Mobile:
-				fprintf(file,"Entry%02iType = NumberMobile\n",j);
+				sprintf(buffer,"Entry%02iType = NumberMobile%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Number_Work:
-				fprintf(file,"Entry%02iType = NumberWork\n",j);
+				sprintf(buffer,"Entry%02iType = NumberWork%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Number_Fax:
-				fprintf(file,"Entry%02iType = NumberFax\n",j);
+				sprintf(buffer,"Entry%02iType = NumberFax%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Number_Home:
-				fprintf(file,"Entry%02iType = NumberHome\n",j);
+				sprintf(buffer,"Entry%02iType = NumberHome%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Number_Pager:
-				fprintf(file,"Entry%02iType = NumberPager\n",j);
+				sprintf(buffer,"Entry%02iType = NumberPager%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Number_Other:
-				fprintf(file,"Entry%02iType = NumberOther\n",j);
+				sprintf(buffer,"Entry%02iType = NumberOther%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_Note:
-				fprintf(file,"Entry%02iType = Note\n",j);
+				sprintf(buffer,"Entry%02iType = Note%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_Postal:
-				fprintf(file,"Entry%02iType = Postal\n",j);
+				sprintf(buffer,"Entry%02iType = Postal%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_Email:
-				fprintf(file,"Entry%02iType = Email\n",j);
+				sprintf(buffer,"Entry%02iType = Email%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_URL:
-				fprintf(file,"Entry%02iType = URL\n",j);
+				sprintf(buffer,"Entry%02iType = URL%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Name:
-				fprintf(file,"Entry%02iType = Name\n",j);
+				sprintf(buffer,"Entry%02iType = Name%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Caller_Group:
-				fprintf(file,"Entry%02iType = CallerGroup\n",j);
-				fprintf(file,"Entry%02iNumber = %i\n",j,Pbk->Entries[j].Number);
+				sprintf(buffer,"Entry%02iType = CallerGroup%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				text = false;
 				break;
 			case PBK_RingtoneID:
-				fprintf(file,"Entry%02iType = RingtoneID\n",j);
-				fprintf(file,"Entry%02iNumber = %i\n",j,Pbk->Entries[j].Number);
+				sprintf(buffer,"Entry%02iType = RingtoneID%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				text = false;
 				break;
 			case PBK_PictureID:
-				fprintf(file,"Entry%02iType = PictureID\n",j);
-				fprintf(file,"Entry%02iNumber = %i\n",j,Pbk->Entries[j].Number);
+				sprintf(buffer,"Entry%02iType = PictureID%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				text = false;
 				break;
 			case PBK_Date:
 				break;
 			case PBK_Category:
-				fprintf(file,"Entry%02iType = Category\n",j);
-				fprintf(file,"Entry%02iNumber = %i\n",j,Pbk->Entries[j].Number);
+				sprintf(buffer,"Entry%02iType = Category%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				text = false;
 				break;
 			case PBK_Private:
-				fprintf(file,"Entry%02iType = Private\n",j);
-				fprintf(file,"Entry%02iNumber = %i\n",j,Pbk->Entries[j].Number);
+				sprintf(buffer,"Entry%02iType = Private%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				text = false;
 				break;
 			case PBK_Text_LastName:
-				fprintf(file,"Entry%02iType = LastName\n",j);
+				sprintf(buffer,"Entry%02iType = LastName%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_FirstName:
-				fprintf(file,"Entry%02iType = FirstName\n",j);
+				sprintf(buffer,"Entry%02iType = FirstName%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_Company:
-				fprintf(file,"Entry%02iType = Company\n",j);
+				sprintf(buffer,"Entry%02iType = Company%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_JobTitle:
-				fprintf(file,"Entry%02iType = JobTitle\n",j);
+				sprintf(buffer,"Entry%02iType = JobTitle%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_StreetAddress:
-				fprintf(file,"Entry%02iType = Address\n",j);
+				sprintf(buffer,"Entry%02iType = Address%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_City:
-				fprintf(file,"Entry%02iType = City\n",j);
+				sprintf(buffer,"Entry%02iType = City%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_State:
-				fprintf(file,"Entry%02iType = State\n",j);
+				sprintf(buffer,"Entry%02iType = State%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_Zip:
-				fprintf(file,"Entry%02iType = Zip\n",j);
+				sprintf(buffer,"Entry%02iType = Zip%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_Country:
-				fprintf(file,"Entry%02iType = Country\n",j);
+				sprintf(buffer,"Entry%02iType = Country%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_Custom1:
-				fprintf(file,"Entry%02iType = Custom1\n",j);
+				sprintf(buffer,"Entry%02iType = Custom1%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_Custom2:
-				fprintf(file,"Entry%02iType = Custom2\n",j);
+				sprintf(buffer,"Entry%02iType = Custom2%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_Custom3:
-				fprintf(file,"Entry%02iType = Custom3\n",j);
+				sprintf(buffer,"Entry%02iType = Custom3%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_Custom4:
-				fprintf(file,"Entry%02iType = Custom4\n",j);
+				sprintf(buffer,"Entry%02iType = Custom4%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
-        }
+        	}
 		if (text) {
 			sprintf(buffer,"Entry%02iText",j);
 			SaveBackupText(file,buffer,Pbk->Entries[j].Text, UseUnicode);
@@ -276,77 +373,88 @@ static void SavePbkEntry(FILE *file, GSM_PhonebookEntry *Pbk, bool UseUnicode)
 			case PBK_Number_Home:
 			case PBK_Number_Other:
 			case PBK_Number_Pager:
-				if (Pbk->Entries[j].VoiceTag!=0)
-					fprintf(file,"Entry%02iVoiceTag = %i\n",j,Pbk->Entries[j].VoiceTag);
+				if (Pbk->Entries[j].VoiceTag!=0) {
+					sprintf(buffer,"Entry%02iVoiceTag = %i%c%c",j,Pbk->Entries[j].VoiceTag,13,10);
+					SaveBackupText(file, "", buffer, UseUnicode);
+				}
 				break;
 			default:
 				break;
 		}
 	}
-	fprintf(file,"\n");
+	sprintf(buffer,"%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnicode)
 {
-	int i;
+	int 	i;
+	char	buffer[1000];
 
-	fprintf(file,"Location = %d\n", Note->Location);
-	fprintf(file,"Type = ");
+	sprintf(buffer,"Location = %d%c%c", Note->Location,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);	
+	SaveBackupText(file, "", "Type = ", UseUnicode);
 	switch (Note->Type) {
-		case GCN_REMINDER 	: fprintf(file,"Reminder\n");			break;
-		case GCN_CALL     	: fprintf(file,"Call\n");			break;
-		case GCN_MEETING  	: fprintf(file,"Meeting\n");			break;
-		case GCN_BIRTHDAY 	: fprintf(file,"Birthday\n");			break;
-		case GCN_ALARM    	: fprintf(file,"Alarm\n");			break;
-		case GCN_DAILY_ALARM 	: fprintf(file,"DailyAlarm\n");			break;
-		case GCN_T_ATHL   	: fprintf(file,"Training/Athletism\n"); 	break;
-       		case GCN_T_BALL   	: fprintf(file,"Training/BallGames\n"); 	break;
-                case GCN_T_CYCL   	: fprintf(file,"Training/Cycling\n"); 	break;
-                case GCN_T_BUDO   	: fprintf(file,"Training/Budo\n"); 		break;
-                case GCN_T_DANC   	: fprintf(file,"Training/Dance\n"); 		break;
-                case GCN_T_EXTR   	: fprintf(file,"Training/ExtremeSports\n");	break;
-                case GCN_T_FOOT   	: fprintf(file,"Training/Football\n"); 	break;
-                case GCN_T_GOLF   	: fprintf(file,"Training/Golf\n"); 		break;
-                case GCN_T_GYM    	: fprintf(file,"Training/Gym\n"); 		break;
-                case GCN_T_HORS   	: fprintf(file,"Training/HorseRaces\n"); 	break;
-                case GCN_T_HOCK   	: fprintf(file,"Training/Hockey\n"); 		break;
-                case GCN_T_RACE   	: fprintf(file,"Training/Races\n"); 		break;
-                case GCN_T_RUGB   	: fprintf(file,"Training/Rugby\n"); 		break;
-                case GCN_T_SAIL   	: fprintf(file,"Training/Sailing\n"); 	break;
-                case GCN_T_STRE   	: fprintf(file,"Training/StreetGames\n"); 	break;
-                case GCN_T_SWIM   	: fprintf(file,"Training/Swimming\n"); 	break;
-                case GCN_T_TENN   	: fprintf(file,"Training/Tennis\n"); 		break;
-                case GCN_T_TRAV   	: fprintf(file,"Training/Travels\n"); 	break;
-                case GCN_T_WINT   	: fprintf(file,"Training/WinterGames\n"); 	break;
+		case GCN_REMINDER 	: sprintf(buffer,"Reminder%c%c", 		13,10); break;
+		case GCN_CALL     	: sprintf(buffer,"Call%c%c", 			13,10); break;
+		case GCN_MEETING  	: sprintf(buffer,"Meeting%c%c", 		13,10); break;
+		case GCN_BIRTHDAY 	: sprintf(buffer,"Birthday%c%c", 		13,10); break;
+		case GCN_ALARM    	: sprintf(buffer,"Alarm%c%c", 			13,10); break;
+		case GCN_DAILY_ALARM 	: sprintf(buffer,"DailyAlarm%c%c", 		13,10); break;
+		case GCN_T_ATHL   	: sprintf(buffer,"Training/Athletism%c%c", 	13,10); break;
+       		case GCN_T_BALL   	: sprintf(buffer,"Training/BallGames%c%c", 	13,10); break;
+                case GCN_T_CYCL   	: sprintf(buffer,"Training/Cycling%c%c", 	13,10); break;
+                case GCN_T_BUDO   	: sprintf(buffer,"Training/Budo%c%c", 		13,10); break;
+                case GCN_T_DANC   	: sprintf(buffer,"Training/Dance%c%c", 		13,10); break;
+                case GCN_T_EXTR   	: sprintf(buffer,"Training/ExtremeSports%c%c", 	13,10); break;
+                case GCN_T_FOOT   	: sprintf(buffer,"Training/Football%c%c", 	13,10); break;
+                case GCN_T_GOLF   	: sprintf(buffer,"Training/Golf%c%c", 		13,10); break;
+                case GCN_T_GYM    	: sprintf(buffer,"Training/Gym%c%c", 		13,10); break;
+                case GCN_T_HORS   	: sprintf(buffer,"Training/HorseRaces%c%c", 	13,10); break;
+                case GCN_T_HOCK   	: sprintf(buffer,"Training/Hockey%c%c", 	13,10); break;
+                case GCN_T_RACE   	: sprintf(buffer,"Training/Races%c%c", 		13,10); break;
+                case GCN_T_RUGB   	: sprintf(buffer,"Training/Rugby%c%c", 		13,10); break;
+                case GCN_T_SAIL   	: sprintf(buffer,"Training/Sailing%c%c", 	13,10); break;
+                case GCN_T_STRE   	: sprintf(buffer,"Training/StreetGames%c%c",	13,10); break;
+                case GCN_T_SWIM   	: sprintf(buffer,"Training/Swimming%c%c", 	13,10); break;
+                case GCN_T_TENN   	: sprintf(buffer,"Training/Tennis%c%c", 	13,10); break;
+                case GCN_T_TRAV   	: sprintf(buffer,"Training/Travels%c%c", 	13,10); break;
+                case GCN_T_WINT   	: sprintf(buffer,"Training/WinterGames%c%c", 	13,10); break;
 	}
+	SaveBackupText(file, "", buffer, UseUnicode);	
 	for (i=0;i<Note->EntriesNum;i++) {
 		switch (Note->Entries[i].EntryType) {
 		case CAL_START_DATETIME:
-			fprintf(file, "StartTime");
-			SaveVCalDateTime(file, &Note->Entries[i].Date);
+			SaveBackupText(file, "", "StartTime", UseUnicode);
+			SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
 			break;
 		case CAL_STOP_DATETIME:
-			fprintf(file, "StopTime");
-			SaveVCalDateTime(file, &Note->Entries[i].Date);
+			SaveBackupText(file, "", "StopTime", UseUnicode);
+			SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
 			break;
 		case CAL_ALARM_DATETIME:
-			fprintf(file, "Alarm");
-			SaveVCalDateTime(file, &Note->Entries[i].Date);
-			fprintf(file, "AlarmType = Tone\n");
+			SaveBackupText(file, "", "Alarm", UseUnicode);
+			SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			sprintf(buffer,"AlarmType = Tone%c%c",13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
 		case CAL_SILENT_ALARM_DATETIME:
-			fprintf(file, "Alarm");
-			SaveVCalDateTime(file, &Note->Entries[i].Date);
-			fprintf(file, "AlarmType = Silent\n");
+			SaveBackupText(file, "", "Alarm", UseUnicode);
+			SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			sprintf(buffer,"AlarmType = Silent%c%c",13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
 		case CAL_PRIVATE:
-			fprintf(file, "Private = %d\n",Note->Entries[i].Number);
+			sprintf(buffer, "Private = %d%c%c",Note->Entries[i].Number,13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
 		case CAL_CONTACTID:
-			fprintf(file, "ContactID = %d\n",Note->Entries[i].Number);
+			sprintf(buffer, "ContactID = %d%c%c",Note->Entries[i].Number,13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
 		case CAL_RECURRANCE:
-			fprintf(file, "Recurrance = %d\n",Note->Entries[i].Number/24);
+			sprintf(buffer, "Recurrance = %d%c%c",Note->Entries[i].Number/24,13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
 		case CAL_TEXT:
 			SaveBackupText(file, "Text", Note->Entries[i].Text, UseUnicode);
@@ -355,37 +463,43 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 			SaveBackupText(file, "Phone", Note->Entries[i].Text, UseUnicode);
 			break;               
 		case CAL_REPEAT_STOPDATE:
-			fprintf(file, "RepeatStopDate");
-			SaveVCalDate(file, &Note->Entries[i].Date);
+			SaveBackupText(file, "", "RepeatStopDate", UseUnicode);
+			SaveVCalDate(file, &Note->Entries[i].Date, UseUnicode);
 			break;
 		case CAL_REPEAT_STARTDATE:
-			fprintf(file, "RepeatStartDate");
-			SaveVCalDate(file, &Note->Entries[i].Date);
+			SaveBackupText(file, "", "RepeatStartDate", UseUnicode);
+			SaveVCalDate(file, &Note->Entries[i].Date, UseUnicode);
 			break;
 		case CAL_REPEAT_DAYOFWEEK:
-			fprintf(file, "RepeatDayOfWeek = %d\n",Note->Entries[i].Number);
+			sprintf(buffer, "RepeatDayOfWeek = %d%c%c",Note->Entries[i].Number,13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
 		case CAL_REPEAT_DAY:
-			fprintf(file, "RepeatDay = %d\n",Note->Entries[i].Number);
+			sprintf(buffer, "RepeatDay = %d%c%c",Note->Entries[i].Number,13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
 		case CAL_REPEAT_WEEKOFMONTH:
-			fprintf(file, "RepeatWeekOfMonth = %d\n",Note->Entries[i].Number);
+			sprintf(buffer, "RepeatWeekOfMonth = %d%c%c",Note->Entries[i].Number,13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
 		case CAL_REPEAT_MONTH:
-			fprintf(file, "RepeatMonth = %d\n",Note->Entries[i].Number);
+			sprintf(buffer, "RepeatMonth = %d%c%c",Note->Entries[i].Number,13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
 		case CAL_REPEAT_FREQUENCY:
-			fprintf(file, "RepeatFrequency = %d\n",Note->Entries[i].Number);
+			sprintf(buffer, "RepeatFrequency = %d%c%c",Note->Entries[i].Number,13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
 		}
 	}
-	fprintf(file,"\n");
+	sprintf(buffer, "%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 static void SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, bool UseUnicode)
 {
 	int 	i;
-	char 	buffer[50];
+	char 	buffer[10000];
 
 	for (i=0;i<settings->Number;i++) {
 		sprintf(buffer,"Title%02i",i);
@@ -393,52 +507,68 @@ static void SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, boo
 		sprintf(buffer,"HomePage%02i",i);
 		SaveBackupText(file, buffer, settings->Settings[i].HomePage, UseUnicode);
 		if (settings->Settings[i].IsContinuous) {
-			fprintf(file,"Type%02i = Continuous\n",i);
+			sprintf(buffer,"Type%02i = Continuous%c%c",i,13,10);
 		} else {
-			fprintf(file,"Type%02i = Temporary\n",i);
+			sprintf(buffer,"Type%02i = Temporary%c%c",i,13,10);
 		}
+		SaveBackupText(file, "", buffer, UseUnicode);
 		if (settings->Settings[i].IsSecurity) {
-			fprintf(file,"Security%02i = On\n",i);
+			sprintf(buffer,"Security%02i = On%c%c",i,13,10);
 		} else {
-			fprintf(file,"Security%02i = Off\n",i);
+			sprintf(buffer,"Security%02i = Off%c%c",i,13,10);
 		}
+		SaveBackupText(file, "", buffer, UseUnicode);
 		switch (settings->Settings[i].Bearer) {
 			case WAPSETTINGS_BEARER_SMS:
-				fprintf(file,"Bearer%02i = SMS\n",i);
+				sprintf(buffer,"Bearer%02i = SMS%c%c",i,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				sprintf(buffer,"Server%02i",i);
 				SaveBackupText(file, buffer, settings->Settings[i].Server, UseUnicode);
 				sprintf(buffer,"Service%02i",i);
 				SaveBackupText(file, buffer, settings->Settings[i].Service, UseUnicode);
 				break;
 			case WAPSETTINGS_BEARER_GPRS:
-				fprintf(file,"Bearer%02i = GPRS\n",i);
+				sprintf(buffer,"Bearer%02i = GPRS%c%c",i,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 			case WAPSETTINGS_BEARER_DATA:
 				if (settings->Settings[i].Bearer == WAPSETTINGS_BEARER_DATA) {
-					fprintf(file,"Bearer%02i = Data\n",i);
+					sprintf(buffer,"Bearer%02i = Data%c%c",i,13,10);
+					SaveBackupText(file, "", buffer, UseUnicode);
 					if (settings->Settings[i].IsISDNCall) {
-						fprintf(file,"CallType%02i = ISDN\n",i);
+						sprintf(buffer,"CallType%02i = ISDN%c%c",i,13,10);
 					} else {
-						fprintf(file,"CallType%02i = Analogue\n",i);
+						sprintf(buffer,"CallType%02i = Analogue%c%c",i,13,10);
 					}
+					SaveBackupText(file, "", buffer, UseUnicode);
 				}
 				sprintf(buffer,"Number%02i",i);
 				SaveBackupText(file, buffer, settings->Settings[i].DialUp, UseUnicode);
 				sprintf(buffer,"IP%02i",i);
 				SaveBackupText(file, buffer, settings->Settings[i].IPAddress, UseUnicode);
 				if (settings->Settings[i].ManualLogin) {
-					fprintf(file,"Login%02i = Manual\n",i);
+					sprintf(buffer,"Login%02i = Manual%c%c",i,13,10);
 				} else {
-					fprintf(file,"Login%02i = Automatic\n",i);
+					sprintf(buffer,"Login%02i = Automatic%c%c",i,13,10);
 				}
+				SaveBackupText(file, "", buffer, UseUnicode);
 				if (settings->Settings[i].IsNormalAuthentication) {
-					fprintf(file,"Authentication%02i = Normal\n",i);
+					sprintf(buffer,"Authentication%02i = Normal%c%c",i,13,10);
 				} else {
-					fprintf(file,"Authentication%02i = Secure\n",i);
+					sprintf(buffer,"Authentication%02i = Secure%c%c",i,13,10);
+				}
+				SaveBackupText(file, "", buffer, UseUnicode);
+				switch (settings->Settings[i].Speed) {
+					case WAPSETTINGS_SPEED_9600 : sprintf(buffer,"CallSpeed%02i = 9600%c%c" ,i,13,10); break;
+					case WAPSETTINGS_SPEED_14400: sprintf(buffer,"CallSpeed%02i = 14400%c%c",i,13,10); break;
+					case WAPSETTINGS_SPEED_AUTO : sprintf(buffer,"CallSpeed%02i = auto%c%c" ,i,13,10); break;
 				}
 				switch (settings->Settings[i].Speed) {
-					case WAPSETTINGS_SPEED_9600 : fprintf(file,"CallSpeed%02i = 9600\n",i);  break;
-					case WAPSETTINGS_SPEED_14400: fprintf(file,"CallSpeed%02i = 14400\n",i); break;
-					case WAPSETTINGS_SPEED_AUTO : fprintf(file,"CallSpeed%02i = auto\n",i);  break;
+					case WAPSETTINGS_SPEED_9600 :
+					case WAPSETTINGS_SPEED_14400:
+					case WAPSETTINGS_SPEED_AUTO :
+						SaveBackupText(file, "", buffer, UseUnicode);
+					default:
+						break;
 				}
 				sprintf(buffer,"User%02i",i);
 				SaveBackupText(file, buffer, settings->Settings[i].User, UseUnicode);
@@ -446,95 +576,121 @@ static void SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, boo
 				SaveBackupText(file, buffer, settings->Settings[i].Password, UseUnicode);
 				break;
 			case WAPSETTINGS_BEARER_USSD:
-				fprintf(file,"Bearer%02i = USSD\n",i);
+				sprintf(buffer,"Bearer%02i = USSD%c%c",i,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 				sprintf(buffer,"ServiceCode%02i",i);
 				SaveBackupText(file, buffer, settings->Settings[i].Code, UseUnicode);
 				if (settings->Settings[i].IsIP) {
 					sprintf(buffer,"IP%02i",i);
-					SaveBackupText(file, buffer, settings->Settings[i].Service, UseUnicode);
 				} else {
 					sprintf(buffer,"Number%02i",i);
-					SaveBackupText(file, buffer, settings->Settings[i].Service, UseUnicode);
 				}
+				SaveBackupText(file, buffer, settings->Settings[i].Service, UseUnicode);
 		}
-		fprintf(file,"\n");
+		sprintf(buffer,"%c%c",13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
 	}
 }
 
 static void SaveBitmapEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
 {
-	unsigned char 	buffer[10000];
+	unsigned char 	buffer[10000],buffer2[10000];
 	int		x,y;
 
-	fprintf(file,"Width = %i\n",bitmap->Width);
-	fprintf(file,"Height = %i\n",bitmap->Height);
+	sprintf(buffer,"Width = %i%c%c",bitmap->Width,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"Height = %i%c%c",bitmap->Height,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 	for (y=0;y<bitmap->Height;y++) {
 		for (x=0;x<bitmap->Width;x++) {
 			buffer[x] = ' ';
 			if (GSM_IsPointBitmap(bitmap,x,y)) buffer[x]='#';
 		}
 		buffer[bitmap->Width] = 0;
-		fprintf(file,"Bitmap%02i = \"%s\"\n",y,buffer);
+		sprintf(buffer2,"Bitmap%02i = \"%s\"%c%c",y,buffer,13,10);
+		SaveBackupText(file, "", buffer2, UseUnicode);
 	}
 }
 
 static void SaveCallerEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
 {
-	fprintf(file,"Location = %03i\n",bitmap->Location);
-	if (!bitmap->DefaultName) 	SaveBackupText(file, "Name", bitmap->Text, UseUnicode);
-	if (!bitmap->DefaultRingtone) 	fprintf(file,"Ringtone = %02x\n",bitmap->Ringtone);
-	if (bitmap->Enabled) {
-		fprintf(file,"Enabled = True\n");
-	} else {
-		fprintf(file,"Enabled = False\n");
+	unsigned char buffer[1000];
+
+	sprintf(buffer,"Location = %03i%c%c",bitmap->Location,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	if (!bitmap->DefaultName) SaveBackupText(file, "Name", bitmap->Text, UseUnicode);
+	if (!bitmap->DefaultRingtone) 	{
+		sprintf(buffer,"Ringtone = %02x%c%c",bitmap->Ringtone,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
 	}
-	if (!bitmap->DefaultBitmap)	SaveBitmapEntry(file, bitmap, UseUnicode);
-	fprintf(file,"\n");
+	if (bitmap->Enabled) {
+		sprintf(buffer,"Enabled = True%c%c",13,10);
+	} else {
+		sprintf(buffer,"Enabled = False%c%c",13,10);
+	}
+	SaveBackupText(file, "", buffer, UseUnicode);
+	if (!bitmap->DefaultBitmap) SaveBitmapEntry(file, bitmap, UseUnicode);
+	sprintf(buffer,"%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 static void SaveWAPBookmarkEntry(FILE *file, GSM_WAPBookmark *bookmark, bool UseUnicode)
 {
+	unsigned char buffer[1000];
+
 	SaveBackupText(file, "URL", bookmark->Address, UseUnicode);
 	SaveBackupText(file, "Title", bookmark->Title, UseUnicode);
-	fprintf(file,"\n");
+	sprintf(buffer,"%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 static void SaveStartupEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
 {
-	fprintf(file,"[Startup]\n");	
+	unsigned char buffer[1000];
+
+	sprintf(buffer,"[Startup]%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 	if (bitmap->Type == GSM_WelcomeNoteText) {
 		SaveBackupText(file, "Text", bitmap->Text, UseUnicode);
 	}
 	if (bitmap->Type == GSM_StartupLogo) {
 		SaveBitmapEntry(file, bitmap, UseUnicode);
 	}
-	fprintf(file,"\n");
+	sprintf(buffer,"%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 static void SaveSMSCEntry(FILE *file, GSM_SMSC *SMSC, bool UseUnicode)
 {
-	fprintf(file,"Location = %03i\n",SMSC->Location);
+	unsigned char buffer[1000];
+
+	sprintf(buffer,"Location = %03i%c%c",SMSC->Location,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 	SaveBackupText(file, "Name", SMSC->Name, UseUnicode);
 	SaveBackupText(file, "Number", SMSC->Number, UseUnicode);
 	SaveBackupText(file, "DefaultNumber", SMSC->DefaultNumber, UseUnicode);
-	fprintf(file,"Format = ");
+	SaveBackupText(file, "", "Format = ", UseUnicode);
 	switch (SMSC->Format) {
-		case GSMF_Text	: fprintf(file,"Text");		break;
-		case GSMF_Fax	: fprintf(file,"Fax");		break;
-		case GSMF_Email	: fprintf(file,"Email");	break;
-		case GSMF_Pager	: fprintf(file,"Pager");	break;
+		case GSMF_Text	: sprintf(buffer,"Text");  break;
+		case GSMF_Fax	: sprintf(buffer,"Fax");   break;
+		case GSMF_Email	: sprintf(buffer,"Email"); break;
+		case GSMF_Pager	: sprintf(buffer,"Pager"); break;
 	}
-	fprintf(file,"\nValidity = ");
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"%c%cValidity = ",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 	switch (SMSC->Validity.Relative) {
-		case GSMV_1_Hour	: fprintf(file,"1hour");	break;
-		case GSMV_6_Hours 	: fprintf(file,"6hours");	break;
-		case GSMV_24_Hours	: fprintf(file,"24hours");	break;
-		case GSMV_72_Hours	: fprintf(file,"72hours");	break;
-		case GSMV_1_Week  	: fprintf(file,"1week");	break;
-		case GSMV_Max_Time	: fprintf(file,"MaximumTime");	break;
-		default			: fprintf(file,"MaximumTime");	break;
+		case GSMV_1_Hour	: sprintf(buffer, "1hour"	); break;
+		case GSMV_6_Hours 	: sprintf(buffer, "6hours"	); break;
+		case GSMV_24_Hours	: sprintf(buffer, "24hours"	); break;
+		case GSMV_72_Hours	: sprintf(buffer, "72hours"	); break;
+		case GSMV_1_Week  	: sprintf(buffer, "1week"	); break;
+		case GSMV_Max_Time	:
+		default			: sprintf(buffer,"MaximumTime"	); break;
 	}
-	fprintf(file,"\n\n");
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"%c%c%c%c",13,10,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 static void SaveRingtoneEntry(FILE *file, GSM_Ringtone *ringtone, bool UseUnicode)
@@ -542,138 +698,175 @@ static void SaveRingtoneEntry(FILE *file, GSM_Ringtone *ringtone, bool UseUnicod
 	unsigned char 	buffer[45000];
 	int		i,j;
 
-	fprintf(file,"Location = %i\n",ringtone->Location);
+	sprintf(buffer,"Location = %i%c%c",ringtone->Location,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 	SaveBackupText(file, "Name", ringtone->Name, UseUnicode);
 	switch (ringtone->Format) {
 	case RING_NOKIABINARY:
 		j = 0; i = 0;
 		EncodeHexBin(buffer,ringtone->NokiaBinary.Frame,ringtone->NokiaBinary.Length);
-		SaveLinkedBackupText(file, "NokiaBinary", buffer);
+		SaveLinkedBackupText(file, "NokiaBinary", buffer, UseUnicode);
 		break;
 	case RING_MIDI:
 		j = 0; i = 0;
 		EncodeHexBin(buffer,ringtone->NokiaBinary.Frame,ringtone->NokiaBinary.Length);
-		SaveLinkedBackupText(file, "Pure Midi", buffer);
+		SaveLinkedBackupText(file, "Pure Midi", buffer, UseUnicode);
 		break;
 	case RING_NOTETONE:
 		break;
 	}
-	fprintf(file,"\n");
+	sprintf(buffer,"%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 static void SaveOperatorEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
 {
-	fprintf(file,"[Operator]\n");
-	fprintf(file,"Network = \"%s\"\n", bitmap->NetworkCode);
+	unsigned char buffer[1000];
+
+	sprintf(buffer,"[Operator]%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"Network = \"%s\"%c%c", bitmap->NetworkCode,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 	SaveBitmapEntry(file, bitmap, UseUnicode);
-	fprintf(file,"\n");
+	sprintf(buffer,"%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
 {
-    	int j;
-
-	fprintf(file,"Location = %i\n",ToDo->Location);
-	fprintf(file,"Priority = %02x\n",ToDo->Priority);
+	unsigned char 	buffer[1000];
+    	int 		j;
+    	
+	sprintf(buffer,"Location = %i%c%c",ToDo->Location,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"Priority = %02x%c%c",ToDo->Priority,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 	
 	for (j=0;j<ToDo->EntriesNum;j++) {
         switch (ToDo->Entries[j].EntryType) {
             case TODO_DUEDATE:
-                fprintf(file, "DueDate");
-                SaveVCalDate(file, &ToDo->Entries[j].Date);
+		SaveBackupText(file, "", "DueDate", UseUnicode);
+                SaveVCalDate(file, &ToDo->Entries[j].Date, UseUnicode);
                 break;
             case TODO_COMPLETED:
-	        fprintf(file,"Completed = %i\n",ToDo->Entries[j].Number);
+	        sprintf(buffer,"Completed = %i%c%c",ToDo->Entries[j].Number,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
                 break;
             case TODO_ALARM_DATETIME:
-                fprintf(file, "Alarm");
-                SaveVCalDateTime(file, &ToDo->Entries[j].Date);
+		SaveBackupText(file, "", "Alarm", UseUnicode);
+                SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
                 break;
             case TODO_TEXT:
 	        SaveBackupText(file, "Text", ToDo->Entries[j].Text, UseUnicode);
                 break;
             case TODO_PRIVATE:
-	        fprintf(file,"Private = %i\n",ToDo->Entries[j].Number);
+	        sprintf(buffer,"Private = %i%c%c",ToDo->Entries[j].Number,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
                 break;
             case TODO_CATEGORY:
-	        fprintf(file,"Category = %i\n",ToDo->Entries[j].Number);
+	        sprintf(buffer,"Category = %i%c%c",ToDo->Entries[j].Number,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
                 break;
             case TODO_CONTACTID:
-	        fprintf(file,"ContactID = %i\n",ToDo->Entries[j].Number);
+	        sprintf(buffer,"ContactID = %i%c%c",ToDo->Entries[j].Number,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
                 break;
             case TODO_PHONE:
 	        SaveBackupText(file, "Phone", ToDo->Entries[j].Text, UseUnicode);
                 break;
         }
     }
-    fprintf(file,"\n");
+    sprintf(buffer,"%c%c",13,10);
+    SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 static void SaveProfileEntry(FILE *file, GSM_Profile *Profile, bool UseUnicode)
 {
-	int	j,k;
-	bool	special;
+	int			j,k;
+	bool			special;
+	unsigned char 		buffer[1000];
 		
-	fprintf(file,"Location = %i\n",Profile->Location);
+	sprintf(buffer,"Location = %i%c%c",Profile->Location,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 	SaveBackupText(file, "Name",Profile->Name, UseUnicode);
 
-	if (Profile->DefaultName) fprintf(file,"DefaultName = true\n");
-	if (Profile->HeadSetProfile) fprintf(file,"HeadSetProfile = true\n");
-	if (Profile->CarKitProfile) fprintf(file,"CarKitProfile = true\n");
+	if (Profile->DefaultName) {
+		sprintf(buffer,"DefaultName = true%c%c",13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
+	}
+	if (Profile->HeadSetProfile) {
+		sprintf(buffer,"HeadSetProfile = true%c%c",13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
+	}
+	if (Profile->CarKitProfile) {
+		sprintf(buffer,"CarKitProfile = true%c%c",13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
+	}
 
 	for (j=0;j<Profile->FeaturesNumber;j++) {
-		fprintf(file,"Feature%02i = ",j);
+		sprintf(buffer,"Feature%02i = ",j);
+		SaveBackupText(file, "", buffer, UseUnicode);
 		special = false;
 		switch (Profile->FeatureID[j]) {
 		case Profile_MessageToneID:
 		case Profile_RingtoneID:
 			special = true;
 			if (Profile->FeatureID[j] == Profile_RingtoneID) {
-				fprintf(file,"RingtoneID\n");
+				sprintf(buffer,"RingtoneID%c%c",13,10);
 			} else {
-				fprintf(file,"MessageToneID\n");
+				sprintf(buffer,"MessageToneID%c%c",13,10);
 			}
-			fprintf(file,"Value%02i = %i\n",j,Profile->FeatureValue[j]);
+			SaveBackupText(file, "", buffer, UseUnicode);
+			sprintf(buffer,"Value%02i = %i%c%c",j,Profile->FeatureValue[j],13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;	
 		case Profile_CallerGroups:
 			special = true;
-			fprintf(file,"CallerGroups\n");
-			fprintf(file,"Value%02i = ",j);
+			sprintf(buffer,"CallerGroups%c%c",13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
+			sprintf(buffer,"Value%02i = ",j);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			for (k=0;k<5;k++) {
 				if (Profile->CallerGroups[k]) {
-					fprintf(file,"%i",k);
+					sprintf(buffer,"%i",k);
+					SaveBackupText(file, "", buffer, UseUnicode);
 				}
 			}
-			fprintf(file,"\n");
+			sprintf(buffer,"%c%c",13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
 		case Profile_ScreenSaverNumber:
 			special = true;
-			fprintf(file,"ScreenSaverNumber\n");
-			fprintf(file,"Value%02i = %i\n",j,Profile->FeatureValue[j]);
+			sprintf(buffer,"ScreenSaverNumber%c%c",13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
+			sprintf(buffer,"Value%02i = %i%c%c",j,Profile->FeatureValue[j],13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
-		case Profile_CallAlert  	: fprintf(file,"IncomingCallAlert\n"); 	break;
-		case Profile_RingtoneVolume 	: fprintf(file,"RingtoneVolume\n"); 	break;
-		case Profile_Vibration		: fprintf(file,"Vibrating\n"); 		break;
-		case Profile_MessageTone	: fprintf(file,"MessageTone\n"); 	break;
-		case Profile_KeypadTone		: fprintf(file,"KeypadTones\n"); 	break;
-		case Profile_WarningTone	: fprintf(file,"WarningTones\n"); 	break;
-		case Profile_ScreenSaver	: fprintf(file,"ScreenSaver\n"); 	break;
-		case Profile_ScreenSaverTime	: fprintf(file,"ScreenSaverTimeout\n"); break;
-		case Profile_AutoAnswer		: fprintf(file,"AutomaticAnswer\n"); 	break;
-		case Profile_Lights		: fprintf(file,"Lights\n"); 		break;
+		case Profile_CallAlert  	: sprintf(buffer,"IncomingCallAlert%c%c",13,10); 		break;
+		case Profile_RingtoneVolume 	: sprintf(buffer,"RingtoneVolume%c%c",13,10); 			break;
+		case Profile_Vibration		: sprintf(buffer,"Vibrating%c%c",13,10); 			break;
+		case Profile_MessageTone	: sprintf(buffer,"MessageTone%c%c",13,10); 			break;
+		case Profile_KeypadTone		: sprintf(buffer,"KeypadTones%c%c",13,10); 			break;
+		case Profile_WarningTone	: sprintf(buffer,"WarningTones%c%c",13,10); 			break;
+		case Profile_ScreenSaver	: sprintf(buffer,"ScreenSaver%c%c",13,10); 			break;
+		case Profile_ScreenSaverTime	: sprintf(buffer,"ScreenSaverTimeout%c%c",13,10); 		break;
+		case Profile_AutoAnswer		: sprintf(buffer,"AutomaticAnswer%c%c",13,10); 			break;
+		case Profile_Lights		: sprintf(buffer,"Lights%c%c",13,10); 				break;
 		default				: special = true;
 		}
 		if (!special) {
-			fprintf(file,"Value%02i = ",j);
+			SaveBackupText(file, "", buffer, UseUnicode);
+			sprintf(buffer,"Value%02i = ",j);
+			SaveBackupText(file, "", buffer, UseUnicode);
 			switch (Profile->FeatureValue[j]) {
 			case PROFILE_VOLUME_LEVEL1 		:
-			case PROFILE_KEYPAD_LEVEL1 		: fprintf(file,"Level1\n"); 		break;
+			case PROFILE_KEYPAD_LEVEL1 		: sprintf(buffer,"Level1%c%c",13,10); 		break;
 			case PROFILE_VOLUME_LEVEL2 		:
-			case PROFILE_KEYPAD_LEVEL2 		: fprintf(file,"Level2\n");		break;
+			case PROFILE_KEYPAD_LEVEL2 		: sprintf(buffer,"Level2%c%c",13,10);		break;
 			case PROFILE_VOLUME_LEVEL3 		:
-			case PROFILE_KEYPAD_LEVEL3 		: fprintf(file,"Level3\n"); 		break;
-			case PROFILE_VOLUME_LEVEL4 		: fprintf(file,"Level4\n"); 		break;
-			case PROFILE_VOLUME_LEVEL5 		: fprintf(file,"Level5\n"); 		break;
+			case PROFILE_KEYPAD_LEVEL3 		: sprintf(buffer,"Level3%c%c",13,10); 		break;
+			case PROFILE_VOLUME_LEVEL4 		: sprintf(buffer,"Level4%c%c",13,10); 		break;
+			case PROFILE_VOLUME_LEVEL5 		: sprintf(buffer,"Level5%c%c",13,10); 		break;
 			case PROFILE_MESSAGE_NOTONE 		:
 			case PROFILE_AUTOANSWER_OFF		:
 			case PROFILE_LIGHTS_OFF  		:
@@ -681,42 +874,49 @@ static void SaveProfileEntry(FILE *file, GSM_Profile *Profile, bool UseUnicode)
 			case PROFILE_WARNING_OFF		:
 			case PROFILE_CALLALERT_OFF	 	:
 			case PROFILE_VIBRATION_OFF 		:
-			case PROFILE_KEYPAD_OFF	   		: fprintf(file,"Off\n");	  	break;
-			case PROFILE_CALLALERT_RINGING   	: fprintf(file,"Ringing\n");		break;
-			case PROFILE_CALLALERT_RINGONCE  	: fprintf(file,"RingOnce\n");		break;
-			case PROFILE_CALLALERT_ASCENDING 	: fprintf(file,"Ascending\n");        	break;
-			case PROFILE_CALLALERT_CALLERGROUPS	: fprintf(file,"CallerGroups\n");	break;
-			case PROFILE_MESSAGE_STANDARD 		: fprintf(file,"Standard\n");  		break;
-			case PROFILE_MESSAGE_SPECIAL 		: fprintf(file,"Special\n");	 	break;
+			case PROFILE_KEYPAD_OFF	   		: sprintf(buffer,"Off%c%c",13,10);	  	break;
+			case PROFILE_CALLALERT_RINGING   	: sprintf(buffer,"Ringing%c%c",13,10);		break;
+			case PROFILE_CALLALERT_RINGONCE  	: sprintf(buffer,"RingOnce%c%c",13,10);		break;
+			case PROFILE_CALLALERT_ASCENDING 	: sprintf(buffer,"Ascending%c%c",13,10);        break;
+			case PROFILE_CALLALERT_CALLERGROUPS	: sprintf(buffer,"CallerGroups%c%c",13,10);	break;
+			case PROFILE_MESSAGE_STANDARD 		: sprintf(buffer,"Standard%c%c",13,10);  	break;
+			case PROFILE_MESSAGE_SPECIAL 		: sprintf(buffer,"Special%c%c",13,10);	 	break;
 			case PROFILE_MESSAGE_BEEPONCE		:
-			case PROFILE_CALLALERT_BEEPONCE  	: fprintf(file,"BeepOnce\n");		break;
-			case PROFILE_MESSAGE_ASCENDING		: fprintf(file,"Ascending\n"); 		break;
-			case PROFILE_MESSAGE_PERSONAL		: fprintf(file,"Personal\n");		break;
+			case PROFILE_CALLALERT_BEEPONCE  	: sprintf(buffer,"BeepOnce%c%c",13,10);		break;
+			case PROFILE_MESSAGE_ASCENDING		: sprintf(buffer,"Ascending%c%c",13,10); 	break;
+			case PROFILE_MESSAGE_PERSONAL		: sprintf(buffer,"Personal%c%c",13,10);		break;
 			case PROFILE_AUTOANSWER_ON		:
 			case PROFILE_WARNING_ON			:
 			case PROFILE_SAVER_ON			:
-			case PROFILE_VIBRATION_ON 		: fprintf(file,"On\n");  		break;
-			case PROFILE_VIBRATION_FIRST 		: fprintf(file,"VibrateFirst\n");	break;
-			case PROFILE_LIGHTS_AUTO 		: fprintf(file,"Auto\n"); 		break;
-			case PROFILE_SAVER_TIMEOUT_5SEC	 	: fprintf(file,"5Seconds\n"); 		break;
-			case PROFILE_SAVER_TIMEOUT_20SEC 	: fprintf(file,"20Seconds\n"); 		break;
-			case PROFILE_SAVER_TIMEOUT_1MIN	 	: fprintf(file,"1Minute\n");		break;
-			case PROFILE_SAVER_TIMEOUT_2MIN	 	: fprintf(file,"2Minutes\n");		break;
-			case PROFILE_SAVER_TIMEOUT_5MIN	 	: fprintf(file,"5Minutes\n");		break;
-			case PROFILE_SAVER_TIMEOUT_10MIN 	: fprintf(file,"10Minutes\n");		break;
-			default					: fprintf(file,"UNKNOWN\n");
+			case PROFILE_VIBRATION_ON 		: sprintf(buffer,"On%c%c",13,10);  		break;
+			case PROFILE_VIBRATION_FIRST 		: sprintf(buffer,"VibrateFirst%c%c",13,10);	break;
+			case PROFILE_LIGHTS_AUTO 		: sprintf(buffer,"Auto%c%c",13,10); 		break;
+			case PROFILE_SAVER_TIMEOUT_5SEC	 	: sprintf(buffer,"5Seconds%c%c",13,10); 	break;
+			case PROFILE_SAVER_TIMEOUT_20SEC 	: sprintf(buffer,"20Seconds%c%c",13,10); 	break;
+			case PROFILE_SAVER_TIMEOUT_1MIN	 	: sprintf(buffer,"1Minute%c%c",13,10);		break;
+			case PROFILE_SAVER_TIMEOUT_2MIN	 	: sprintf(buffer,"2Minutes%c%c",13,10);		break;
+			case PROFILE_SAVER_TIMEOUT_5MIN	 	: sprintf(buffer,"5Minutes%c%c",13,10);		break;
+			case PROFILE_SAVER_TIMEOUT_10MIN 	: sprintf(buffer,"10Minutes%c%c",13,10);	break;
+			default					: sprintf(buffer,"UNKNOWN%c%c",13,10);
 			}	
+			SaveBackupText(file, "", buffer, UseUnicode);
 		}
 	}
-    	fprintf(file,"\n");
+	sprintf(buffer,"%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 static void SaveFMStationEntry(FILE *file, GSM_FMStation *FMStation, bool UseUnicode)
 {
- 	fprintf(file,"Location = %i\n",FMStation->Location);
+	unsigned char buffer[1000];
+
+ 	sprintf(buffer,"Location = %i%c%c",FMStation->Location,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
         SaveBackupText(file, "StationName", FMStation->StationName, UseUnicode);
-        fprintf(file,"Frequency = %i\n",FMStation->Frequency);
-     	fprintf(file,"\n");
+        sprintf(buffer,"Frequency = %i%c%c",FMStation->Frequency,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 void GSM_FreeBackup(GSM_Backup *backup)
@@ -802,81 +1002,105 @@ void GSM_FreeBackup(GSM_Backup *backup)
 
 static GSM_Error SaveBackup(FILE *file, GSM_Backup *backup, bool UseUnicode)
 {
-	int i;
+	int 		i;
+	unsigned char 	buffer[1000];
 
-	fprintf(file,"[Backup]\n");
-	fprintf(file,"IMEI = \"%s\"\n",backup->IMEI);
-	fprintf(file,"Phone = \"%s\"\n",backup->Model);
-	if (backup->DateTimeAvailable) {
-		fprintf(file,"DateTime");
-		SaveVCalDateTime(file, &backup->DateTime);
+	if (UseUnicode) {
+		sprintf(buffer,"%c%c", 0xFE, 0xFF);
+		SaveBackupText(file, "", buffer, false);
 	}
-	fprintf(file,"Format = 1.01\n");
-	fprintf(file,"\n");
+
+	sprintf(buffer,"# Backup file created by Gammu (www.mwiacek.com) version %s%c%c%c%c",VERSION,13,10,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"[Backup]%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"IMEI = \"%s\"%c%c",backup->IMEI,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"Phone = \"%s\"%c%c",backup->Model,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	if (backup->DateTimeAvailable) {
+		SaveBackupText(file, "", "DateTime", UseUnicode);
+		SaveVCalDateTime(file, &backup->DateTime, UseUnicode);
+	}
+	sprintf(buffer,"Format = 1.01%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 
 	i=0;
 	while (backup->PhonePhonebook[i]!=NULL) {
-		fprintf(file,"[PhonePBK%03i]\n",i);
+		sprintf(buffer,"[PhonePBK%03i]%c%c",i,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
 		SavePbkEntry(file, backup->PhonePhonebook[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->SIMPhonebook[i]!=NULL) {
-		fprintf(file,"[SIMPBK%03i]\n",i);
+		sprintf(buffer,"[SIMPBK%03i]%c%c",i,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
 		SavePbkEntry(file, backup->SIMPhonebook[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->Calendar[i]!=NULL) {
-		fprintf(file,"[Calendar%03i]\n",i);
+		sprintf(buffer,"[Calendar%03i]%c%c",i,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveCalendarEntry(file, backup->Calendar[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->CallerLogos[i]!=NULL) {
-		fprintf(file,"[Caller%03i]\n",i);
+		sprintf(buffer,"[Caller%03i]%c%c",i,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveCallerEntry(file, backup->CallerLogos[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->SMSC[i]!=NULL) {
-		fprintf(file,"[SMSC%03i]\n",i);
+		sprintf(buffer,"[SMSC%03i]%c%c",i,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveSMSCEntry(file, backup->SMSC[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->WAPBookmark[i]!=NULL) {
-		fprintf(file,"[Bookmark%03i]\n",i);
+		sprintf(buffer,"[Bookmark%03i]%c%c",i,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveWAPBookmarkEntry(file, backup->WAPBookmark[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->WAPSettings[i]!=NULL) {
-		fprintf(file,"[Settings%03i]\n",i);
+		sprintf(buffer,"[Settings%03i]%c%c",i,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveWAPSettingsEntry(file, backup->WAPSettings[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->Ringtone[i]!=NULL) {
-		fprintf(file,"[Ringtone%03i]\n",i);
+		sprintf(buffer,"[Ringtone%03i]%c%c",i,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveRingtoneEntry(file, backup->Ringtone[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->ToDo[i]!=NULL) {
-		fprintf(file,"[TODO%03i]\n",i);
+		sprintf(buffer,"[TODO%03i]%c%c",i,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveToDoEntry(file, backup->ToDo[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->Profiles[i]!=NULL) {
-		fprintf(file,"[Profile%03i]\n",i);
+		sprintf(buffer,"[Profile%03i]%c%c",i,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveProfileEntry(file, backup->Profiles[i], UseUnicode);
 		i++;
 	}
  	i=0;
  	while (backup->FMStation[i]!=NULL) {
- 		fprintf(file,"[FMStation%03i]\n",i);
+ 		sprintf(buffer,"[FMStation%03i]%c%c",i,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
  		SaveFMStationEntry(file, backup->FMStation[i], UseUnicode);
  		i++;
  	}
@@ -1109,7 +1333,7 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode
 	return GE_NONE;
 }
 
-static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntry *Pbk)
+static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntry *Pbk, bool UseUnicode)
 {
 	unsigned char		buffer[10000];
 	char			*readvalue;
@@ -1117,10 +1341,10 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 	CFG_Entry		*e;
 
 	Pbk->EntriesNum = 0;
-	e = CFG_FindLastSectionEntry(file_info, section, false);
+	e = CFG_FindLastSectionEntry(file_info, section, UseUnicode);
 	
 	sprintf(buffer,"PreferUnicode");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	Pbk->PreferUnicode = false;
 	if (readvalue!=NULL) {
 		if (strncmp(readvalue, "yes", 3) == 0) Pbk->PreferUnicode = true;
@@ -1129,16 +1353,21 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 	while (1) {
 		if (e == NULL) break;
 		num = -1;
-		if (strlen(e->key) == 11) {
-			if (mystrncasecmp("Entry", e->key,   5) &&
-			    mystrncasecmp("Type",  e->key+7, 4)) {
-				num = atoi(e->key+5);
+		if (UseUnicode) {
+			sprintf(buffer,"%s",DecodeUnicodeString(e->key));
+		} else {
+			sprintf(buffer,"%s",e->key);
+		}
+		if (strlen(buffer) == 11) {
+			if (mystrncasecmp("Entry", buffer,   5) &&
+			    mystrncasecmp("Type",  buffer+7, 4)) {
+				num = atoi(buffer+5);
 			}
 		}
 		e = e->prev;
 		if (num != -1) {
 			sprintf(buffer,"Entry%02iType",num);
-			readvalue = CFG_Get(file_info, section, buffer, false);
+			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 			if (mystrncasecmp(readvalue,"NumberGeneral",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
 			} else if (mystrncasecmp(readvalue,"NumberMobile",0)) {
@@ -1193,7 +1422,7 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Category;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
-				readvalue = CFG_Get(file_info, section, buffer, false);
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				if (readvalue!=NULL) {
 					Pbk->Entries[Pbk->EntriesNum].Number = atoi(readvalue);
 				}
@@ -1203,7 +1432,7 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Private;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
-				readvalue = CFG_Get(file_info, section, buffer, false);
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				if (readvalue!=NULL) {
 					Pbk->Entries[Pbk->EntriesNum].Number = atoi(readvalue);
 				}
@@ -1213,7 +1442,7 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Caller_Group;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
-				readvalue = CFG_Get(file_info, section, buffer, false);
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				if (readvalue!=NULL) {
 					Pbk->Entries[Pbk->EntriesNum].Number = atoi(readvalue);
 				}
@@ -1223,7 +1452,7 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_RingtoneID;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
-				readvalue = CFG_Get(file_info, section, buffer, false);
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				if (readvalue!=NULL) {
 					Pbk->Entries[Pbk->EntriesNum].Number = atoi(readvalue);
 				}
@@ -1233,7 +1462,7 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_PictureID;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
-				readvalue = CFG_Get(file_info, section, buffer, false);
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				if (readvalue!=NULL) {
 					Pbk->Entries[Pbk->EntriesNum].Number = atoi(readvalue);
 				}
@@ -1241,11 +1470,11 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 				continue;
 			}
 			sprintf(buffer,"Entry%02iText",num);
-			ReadBackupText(file_info, section, buffer, Pbk->Entries[Pbk->EntriesNum].Text);
+			ReadBackupText(file_info, section, buffer, Pbk->Entries[Pbk->EntriesNum].Text,UseUnicode);
 			dprintf("text \"%s\", type %i\n",DecodeUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text),Pbk->Entries[Pbk->EntriesNum].EntryType);
 			Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 			sprintf(buffer,"Entry%02iVoiceTag",num);
-			readvalue = CFG_Get(file_info, section, buffer, false);
+			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 			if (readvalue!=NULL) {
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = atoi(readvalue);
 			}
@@ -1254,17 +1483,17 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 	}
 }
 
-static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_CalendarEntry *note)
+static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_CalendarEntry *note, bool UseUnicode)
 {
 	unsigned char		buffer[10000];
 	char			*readvalue;
 
 	sprintf(buffer,"Location");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) note->Location = atoi(readvalue);
 
 	sprintf(buffer,"Type");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	note->Type = GCN_REMINDER;
 	if (readvalue!=NULL)
 	{
@@ -1320,58 +1549,58 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 	}
 	note->EntriesNum = 0;
 	sprintf(buffer,"Text");
-	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text)) {
+	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_TEXT;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"Phone");
-	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text)) {
+	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_PHONE;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"Private");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_PRIVATE;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"ContactID");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_CONTACTID;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"Recurrance");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue) * 24;
 		note->Entries[note->EntriesNum].EntryType = CAL_RECURRANCE;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"StartTime");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		ReadVCalDateTime(&note->Entries[note->EntriesNum].Date, readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_START_DATETIME;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"StopTime");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		ReadVCalDateTime(&note->Entries[note->EntriesNum].Date, readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_STOP_DATETIME;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"Alarm");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL)
 	{
 		ReadVCalDateTime(&note->Entries[note->EntriesNum].Date, readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_ALARM_DATETIME;
 		sprintf(buffer,"AlarmType");
-		readvalue = CFG_Get(file_info, section, buffer, false);
+		readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 		if (readvalue!=NULL)
 		{
 			if (mystrncasecmp(readvalue,"Silent",0)) {
@@ -1381,49 +1610,49 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"RepeatStartDate");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		ReadVCalDateTime(&note->Entries[note->EntriesNum].Date, readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STARTDATE;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"RepeatStopDate");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		ReadVCalDateTime(&note->Entries[note->EntriesNum].Date, readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"RepeatDayOfWeek");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_DAYOFWEEK;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"RepeatDay");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_DAY;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"RepeatWeekOfMonth");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_WEEKOFMONTH;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"RepeatMonth");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_MONTH;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"RepeatFrequency");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
@@ -1431,7 +1660,7 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 	}
 }
 
-static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_ToDoEntry *ToDo)
+static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_ToDoEntry *ToDo, bool UseUnicode)
 {
 	unsigned char		buffer[10000];
 	char			*readvalue;
@@ -1440,23 +1669,23 @@ static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_ToDoEntry *T
 
 	ToDo->Priority = 1;
 	sprintf(buffer,"Priority");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) ToDo->Priority = atoi(readvalue);
 
 	sprintf(buffer,"Text");
-	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text)) {
+	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
   	      	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
         	ToDo->EntriesNum++;
     	}
 
 	sprintf(buffer,"Phone");
-	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text)) {
+	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_PHONE;
         	ToDo->EntriesNum++;
     	}
     
 	sprintf(buffer,"Private");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
         	ToDo->Entries[ToDo->EntriesNum].Number 		= atoi(readvalue);
         	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_PRIVATE;
@@ -1464,7 +1693,7 @@ static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_ToDoEntry *T
     	}
     
 	sprintf(buffer,"Completed");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
         	ToDo->Entries[ToDo->EntriesNum].Number 		= atoi(readvalue);
         	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_COMPLETED;
@@ -1472,7 +1701,7 @@ static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_ToDoEntry *T
     	}
     
 	sprintf(buffer,"Category");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
         	ToDo->Entries[ToDo->EntriesNum].Number		= atoi(readvalue);
         	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_CATEGORY;
@@ -1480,7 +1709,7 @@ static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_ToDoEntry *T
     	}
 
 	sprintf(buffer,"ContactID");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
        	 	ToDo->Entries[ToDo->EntriesNum].Number 		= atoi(readvalue);
         	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_CONTACTID;
@@ -1488,7 +1717,7 @@ static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_ToDoEntry *T
     	}
 
 	sprintf(buffer,"DueDate");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		ReadvCalDate(&ToDo->Entries[ToDo->EntriesNum].Date, readvalue);
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_DUEDATE;
@@ -1496,7 +1725,7 @@ static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_ToDoEntry *T
    	}
     
 	sprintf(buffer,"Alarm");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		ReadVCalDateTime(&ToDo->Entries[ToDo->EntriesNum].Date, readvalue);
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_ALARM_DATETIME;
@@ -1504,7 +1733,7 @@ static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_ToDoEntry *T
     	}
 }
 
-static bool ReadBitmapEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bitmap)
+static bool ReadBitmapEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bitmap, bool UseUnicode)
 {
 	char		*readvalue;
 	unsigned char	buffer[10000];
@@ -1513,15 +1742,15 @@ static bool ReadBitmapEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bi
 
 	GSM_GetMaxBitmapWidthHeight(bitmap->Type, &Width, &Height);
 	sprintf(buffer,"Width");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue==NULL) bitmap->Width = Width; else bitmap->Width = atoi(readvalue);
 	sprintf(buffer,"Height");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue==NULL) bitmap->Height = Height; else bitmap->Height = atoi(readvalue);
 	GSM_ClearBitmap(bitmap);
 	for (y=0;y<bitmap->Height;y++) {
 		sprintf(buffer,"Bitmap%02i",y);
-		readvalue = CFG_Get(file_info, section, buffer, false);
+		readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 		if (readvalue!=NULL) {
 			for (x=0;x<bitmap->Width;x++) {
 				if (readvalue[x+1]=='#') GSM_SetPointBitmap(bitmap,x,y);
@@ -1531,27 +1760,27 @@ static bool ReadBitmapEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bi
 	return true;
 }
 
-static void ReadCallerEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bitmap)
+static void ReadCallerEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bitmap, bool UseUnicode)
 {
 	unsigned char		buffer[10000];
 	char			*readvalue;
 
 	bitmap->Type 		= GSM_CallerLogo;
-	bitmap->DefaultBitmap 	= !ReadBitmapEntry(file_info, section, bitmap);
+	bitmap->DefaultBitmap 	= !ReadBitmapEntry(file_info, section, bitmap, UseUnicode);
 	if (bitmap->DefaultBitmap) {
 		bitmap->Width  = 72;
 		bitmap->Height = 14;
 		GSM_ClearBitmap(bitmap);
 	}
 	sprintf(buffer,"Name");
-	ReadBackupText(file_info, section, buffer, bitmap->Text);
+	ReadBackupText(file_info, section, buffer, bitmap->Text,UseUnicode);
 	if (bitmap->Text[0] == 0x00 && bitmap->Text[1] == 0x00) {
 		bitmap->DefaultName = true;
 	} else {
 		bitmap->DefaultName = false;
 	}
 	sprintf(buffer,"Ringtone");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue==NULL) {
 		bitmap->DefaultRingtone = true;
 	} else {
@@ -1559,68 +1788,68 @@ static void ReadCallerEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bi
 		bitmap->DefaultRingtone = false;
 	}
 	sprintf(buffer,"Enabled");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
         bitmap->Enabled = true;
 	if (readvalue!=NULL) {
 		if (mystrncasecmp(readvalue,"False",0)) bitmap->Enabled = false;
 	}
 }
 
-static void ReadStartupEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bitmap)
+static void ReadStartupEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bitmap, bool UseUnicode)
 {
-	unsigned char		buffer[10000];
+	unsigned char buffer[10000];
 
 	sprintf(buffer,"Text");
-	ReadBackupText(file_info, section, buffer, bitmap->Text);
+	ReadBackupText(file_info, section, buffer, bitmap->Text,UseUnicode);
 	if (bitmap->Text[0]!=0 || bitmap->Text[1]!=0) {
 		bitmap->Type = GSM_WelcomeNoteText;
 	} else {
 		bitmap->Type 	 = GSM_StartupLogo;
 		bitmap->Location = 1;
-		ReadBitmapEntry(file_info, section, bitmap);
+		ReadBitmapEntry(file_info, section, bitmap, UseUnicode);
 #ifdef DEBUG
 		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,bitmap);
 #endif
 	}
 }
 
-static void ReadWAPBookmarkEntry(CFG_Header *file_info, char *section, GSM_WAPBookmark *bookmark)
+static void ReadWAPBookmarkEntry(CFG_Header *file_info, char *section, GSM_WAPBookmark *bookmark, bool UseUnicode)
 {
 	unsigned char		buffer[10000];
 
 	sprintf(buffer,"URL");
-	ReadBackupText(file_info, section, buffer, bookmark->Address);
+	ReadBackupText(file_info, section, buffer, bookmark->Address,UseUnicode);
 	sprintf(buffer,"Title");
-	ReadBackupText(file_info, section, buffer, bookmark->Title);
+	ReadBackupText(file_info, section, buffer, bookmark->Title,UseUnicode);
 }
 
-static void ReadOperatorEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bitmap)
+static void ReadOperatorEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bitmap, bool UseUnicode)
 {
 	unsigned char		buffer[10000];
 	char			*readvalue;
 
 	sprintf(buffer,"Network");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	memcpy(bitmap->NetworkCode, readvalue + 1, 6);
 	bitmap->NetworkCode[6] = 0;
 	bitmap->Type = GSM_OperatorLogo;
-	ReadBitmapEntry(file_info, section, bitmap);
+	ReadBitmapEntry(file_info, section, bitmap, UseUnicode);
 }
 
-static void ReadSMSCEntry(CFG_Header *file_info, char *section, GSM_SMSC *SMSC)
+static void ReadSMSCEntry(CFG_Header *file_info, char *section, GSM_SMSC *SMSC, bool UseUnicode)
 {
 	unsigned char		buffer[10000];
 	char			*readvalue;
 
 	sprintf(buffer,"Name");
-	ReadBackupText(file_info, section, buffer, SMSC->Name);
+	ReadBackupText(file_info, section, buffer, SMSC->Name,UseUnicode);
 	sprintf(buffer,"Number");
-	ReadBackupText(file_info, section, buffer, SMSC->Number);
+	ReadBackupText(file_info, section, buffer, SMSC->Number,UseUnicode);
 	sprintf(buffer,"DefaultNumber");
-	ReadBackupText(file_info, section, buffer, SMSC->DefaultNumber);
+	ReadBackupText(file_info, section, buffer, SMSC->DefaultNumber,UseUnicode);
 	sprintf(buffer,"Format");
 	SMSC->Format = GSMF_Text;
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		if (mystrncasecmp(readvalue,"Fax",0)) {
 			SMSC->Format = GSMF_Fax;
@@ -1632,7 +1861,7 @@ static void ReadSMSCEntry(CFG_Header *file_info, char *section, GSM_SMSC *SMSC)
 	}
 	sprintf(buffer,"Validity");
 	SMSC->Validity.Relative = GSMV_Max_Time;
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) 
 	{
 		if (mystrncasecmp(readvalue,"1hour",0)) {
@@ -1649,72 +1878,75 @@ static void ReadSMSCEntry(CFG_Header *file_info, char *section, GSM_SMSC *SMSC)
 	}
 }
 
-static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_MultiWAPSettings *settings)
+static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_MultiWAPSettings *settings, bool UseUnicode)
 {
-	unsigned char		buffer[10000];
-	char			*readvalue;
+	unsigned char		buffer[10000], *readvalue;
 	int			num;
 	CFG_Entry		*e;
 
 	settings->Number = 0;
-	e = CFG_FindLastSectionEntry(file_info, section, false);
+	e = CFG_FindLastSectionEntry(file_info, section, UseUnicode);
 	while (1) {
 		if (e == NULL) break;
 		num = -1;
-		if (strlen(e->key) == 7) {
-			if (mystrncasecmp("Title", e->key,5)) num = atoi(e->key+5);
+		if (UseUnicode) {
+			sprintf(buffer,"%s",DecodeUnicodeString(e->key));
+		} else {
+			sprintf(buffer,"%s",e->key);
+		}
+		if (strlen(buffer) == 7) {
+			if (mystrncasecmp("Title", buffer,5)) num = atoi(buffer+5);
 		}
 		e = e->prev;
 		if (num != -1) {
 			sprintf(buffer,"Title%02i",num);
-			ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Title);
+			ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Title,UseUnicode);
 			sprintf(buffer,"HomePage%02i",num);
-			ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].HomePage);
+			ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].HomePage,UseUnicode);
 			sprintf(buffer,"Type%02i",num);
 			settings->Settings[settings->Number].IsContinuous = true;
-			readvalue = CFG_Get(file_info, section, buffer, false);
-			if (readvalue!=NULL) 
-			{
+			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+			if (readvalue!=NULL) {
 				if (mystrncasecmp(readvalue,"Temporary",0)) settings->Settings[settings->Number].IsContinuous = false;
 			}
 			sprintf(buffer,"Security%02i",num);
 			settings->Settings[settings->Number].IsSecurity = true;
-			readvalue = CFG_Get(file_info, section, buffer, false);
+			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 			if (readvalue!=NULL) 
 			{
 				if (mystrncasecmp(readvalue,"Off",0)) settings->Settings[settings->Number].IsSecurity = false;
 			}
 			sprintf(buffer,"Bearer%02i",num);
-			readvalue = CFG_Get(file_info, section, buffer, false);
+			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 			if (readvalue!=NULL) 
 			{
 				if (mystrncasecmp(readvalue,"SMS",0)) {
 					settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_SMS;
 					sprintf(buffer,"Server%02i",num);
-					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Server);
+					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Server,UseUnicode);
 					sprintf(buffer,"Service%02i",num);
-					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Service);
+					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Service,UseUnicode);
 				} else if ((mystrncasecmp(readvalue,"Data",0) || mystrncasecmp(readvalue,"GPRS",0))) {
 					settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_DATA;
 					if (mystrncasecmp(readvalue,"GPRS",0)) settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_GPRS;
 					sprintf(buffer,"Number%02i",num);
-					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].DialUp);
+					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].DialUp,UseUnicode);
 					sprintf(buffer,"IP%02i",num);
-					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].IPAddress);
+					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].IPAddress,UseUnicode);
 					sprintf(buffer,"User%02i",num);
-					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].User);
+					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].User,UseUnicode);
 					sprintf(buffer,"Password%02i",num);
-					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Password);
+					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Password,UseUnicode);
 					sprintf(buffer,"Authentication%02i",num);
 					settings->Settings[settings->Number].IsNormalAuthentication = true;
-					readvalue = CFG_Get(file_info, section, buffer, false);
+					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 					if (readvalue!=NULL) 
 					{
 						if (mystrncasecmp(readvalue,"Secure",0)) settings->Settings[settings->Number].IsNormalAuthentication = false;
 					}
 					sprintf(buffer,"CallSpeed%02i",num);
 					settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_14400;
-					readvalue = CFG_Get(file_info, section, buffer, false);
+					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 					if (readvalue!=NULL) 
 					{
 						if (mystrncasecmp(readvalue,"9600",0)) settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_9600;
@@ -1722,14 +1954,14 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 					}
 					sprintf(buffer,"Login%02i",num);
 					settings->Settings[settings->Number].ManualLogin = false;
-					readvalue = CFG_Get(file_info, section, buffer, false);
+					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 					if (readvalue!=NULL) 
 					{
 						if (mystrncasecmp(readvalue,"Manual",0)) settings->Settings[settings->Number].ManualLogin = true;
 					}	
 					sprintf(buffer,"CallType%02i",num);
 					settings->Settings[settings->Number].IsISDNCall = true;
-					readvalue = CFG_Get(file_info, section, buffer, false);
+					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 					if (readvalue!=NULL) 
 					{
 						if (mystrncasecmp(readvalue,"Analogue",0)) settings->Settings[settings->Number].IsISDNCall = false;
@@ -1737,9 +1969,9 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 				} else if (mystrncasecmp(readvalue,"USSD",0)) {
 					settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_USSD;
 					sprintf(buffer,"ServiceCode%02i",num);
-					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Code);
+					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Code,UseUnicode);
 					sprintf(buffer,"IP%02i",num);
-					readvalue = CFG_Get(file_info, section, buffer, false);
+					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 					if (readvalue!=NULL) {
 						settings->Settings[settings->Number].IsIP = true;
 						sprintf(buffer,"IP%02i",num);
@@ -1747,7 +1979,7 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 						settings->Settings[settings->Number].IsIP = false;
 						sprintf(buffer,"Number%02i",num);
 					}
-					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Service);
+					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Service,UseUnicode);
 				}
 			}
 			settings->Number++;
@@ -1755,37 +1987,36 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 	}
 }
 
-static void ReadRingtoneEntry(CFG_Header *file_info, char *section, GSM_Ringtone *ringtone)
+static void ReadRingtoneEntry(CFG_Header *file_info, char *section, GSM_Ringtone *ringtone, bool UseUnicode)
 {
-	unsigned char		buffer[10000], buffer2[10000];
-	char			*readvalue;
+	unsigned char buffer[10000], buffer2[10000], *readvalue;
 
 	sprintf(buffer,"Name");
-	ReadBackupText(file_info, section, buffer, ringtone->Name);
+	ReadBackupText(file_info, section, buffer, ringtone->Name,UseUnicode);
 	ringtone->Location = 0;
 	sprintf(buffer,"Location");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) ringtone->Location = atoi(readvalue);
 	sprintf(buffer,"NokiaBinary00");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		ringtone->Format = RING_NOKIABINARY;
-		ReadLinkedBackupText(file_info, section, "NokiaBinary", buffer2);
+		ReadLinkedBackupText(file_info, section, "NokiaBinary", buffer2, UseUnicode);
 		DecodeHexBin (ringtone->NokiaBinary.Frame, buffer2, strlen(buffer2));
 		ringtone->NokiaBinary.Length = strlen(buffer2)/2;
 	}
 	sprintf(buffer,"Pure Midi00");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		ringtone->Format = RING_MIDI;
-		ReadLinkedBackupText(file_info, section, "Pure Midi", buffer2);
+		ReadLinkedBackupText(file_info, section, "Pure Midi", buffer2, UseUnicode);
 		DecodeHexBin (ringtone->NokiaBinary.Frame, buffer2, strlen(buffer2));
 		ringtone->NokiaBinary.Length = strlen(buffer2)/2;
 	}
 
 }
 
-static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *Profile)
+static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *Profile, bool UseUnicode)
 {
 	unsigned char		buffer[10000];
 	char			*readvalue;
@@ -1794,63 +2025,68 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 	CFG_Entry		*e;
 
 	sprintf(buffer,"Name");
-	ReadBackupText(file_info, section, buffer, Profile->Name);
+	ReadBackupText(file_info, section, buffer, Profile->Name,UseUnicode);
 
 	sprintf(buffer,"Location");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	Profile->Location = atoi(readvalue);
 
 	Profile->DefaultName = false;
 	sprintf(buffer,"DefaultName");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL && mystrncasecmp(buffer,"true",0)) Profile->DefaultName = true;
 
 	Profile->HeadSetProfile = false;
 	sprintf(buffer,"HeadSetProfile");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL && mystrncasecmp(buffer,"true",0)) Profile->HeadSetProfile = true;
 
 	Profile->CarKitProfile = false;
 	sprintf(buffer,"CarKitProfile");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL && mystrncasecmp(buffer,"true",0)) Profile->CarKitProfile = true;
 
 	Profile->FeaturesNumber = 0;
-	e = CFG_FindLastSectionEntry(file_info, section, false);
+	e = CFG_FindLastSectionEntry(file_info, section, UseUnicode);
 	while (1) {
 		if (e == NULL) break;
 		num = -1;
-		if (strlen(e->key) == 9) {
-			if (mystrncasecmp("Feature", e->key, 7)) num = atoi(e->key+7);
+		if (UseUnicode) {
+			sprintf(buffer,"%s",DecodeUnicodeString(e->key));
+		} else {
+			sprintf(buffer,"%s",e->key);
+		}
+		if (strlen(buffer) == 9) {
+			if (mystrncasecmp("Feature", buffer, 7)) num = atoi(buffer+7);
 		}
 		e = e->prev;
 		if (num != -1) {
 			sprintf(buffer,"Feature%02i",num);
-			readvalue = CFG_Get(file_info, section, buffer, false);
+			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 			if (readvalue==NULL) break;
 			unknown = true;
 			if (mystrncasecmp(readvalue,"RingtoneID",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_RingtoneID;
 				sprintf(buffer,"Value%02i",num);
-				readvalue = CFG_Get(file_info, section, buffer, false);
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				Profile->FeatureValue[Profile->FeaturesNumber]=atoi(readvalue);
 				Profile->FeaturesNumber++;
 			} else if (mystrncasecmp(readvalue,"MessageToneID",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_MessageToneID;
 				sprintf(buffer,"Value%02i",num);
-				readvalue = CFG_Get(file_info, section, buffer, false);
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				Profile->FeatureValue[Profile->FeaturesNumber]=atoi(readvalue);
 				Profile->FeaturesNumber++;
 			} else if (mystrncasecmp(readvalue,"ScreenSaverNumber",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_ScreenSaverNumber;
 				sprintf(buffer,"Value%02i",num);
-				readvalue = CFG_Get(file_info, section, buffer, false);
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				Profile->FeatureValue[Profile->FeaturesNumber]=atoi(readvalue);
 				Profile->FeaturesNumber++;
 			} else if (mystrncasecmp(readvalue,"CallerGroups",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_CallerGroups;
 				sprintf(buffer,"Value%02i",num);
-				readvalue = CFG_Get(file_info, section, buffer, false);
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				for (j=0;j<5;j++) {
 					Profile->CallerGroups[j]=false;
 					if (strstr(readvalue,"1"+j)!=NULL) Profile->CallerGroups[j]=true;
@@ -1889,7 +2125,7 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 			}
 			if (!unknown) {
 				sprintf(buffer,"Value%02i",num);
-				readvalue = CFG_Get(file_info, section, buffer, false);
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				if (mystrncasecmp(readvalue,"Level1",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL1;
 					if (Profile->FeatureID[Profile->FeaturesNumber]==Profile_KeypadTone) {
@@ -1995,36 +2231,36 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 	}
 }
 
-static void ReadFMStationEntry(CFG_Header *file_info, char *section, GSM_FMStation *FMStation)
+static void ReadFMStationEntry(CFG_Header *file_info, char *section, GSM_FMStation *FMStation, bool UseUnicode)
 {
-	unsigned char		buffer[10000];
-	char			*readvalue;
+	unsigned char buffer[10000], *readvalue;
 
 	sprintf(buffer,"Location");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) FMStation->Location = atoi(readvalue);
 
 	sprintf(buffer,"StationName");
-	ReadBackupText(file_info, section, buffer, FMStation->StationName);
+	ReadBackupText(file_info, section, buffer, FMStation->StationName,UseUnicode);
 
 	sprintf(buffer,"Frequency");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) FMStation->Frequency = atoi(readvalue);
 }
 
-static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
+static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 {
 	CFG_Header		*file_info, *h;
-	char			buffer[100];
-	char			*readvalue;
+	char			buffer[100], *readvalue;
 	int			num;
 	GSM_PhonebookEntry 	PBK;
+	bool			found;
 
-	file_info = CFG_ReadFile(FileName, false);
+	file_info = CFG_ReadFile(FileName, UseUnicode);
 
 	sprintf(buffer,"Backup");
+	if (UseUnicode) EncodeUnicode(buffer,"Backup",6);
 
-	readvalue = CFG_Get(file_info, buffer, "Format", false);
+	readvalue = ReadCFGText(file_info, buffer, "Format", UseUnicode);
 	/* Did we read anything? */
 	if (readvalue == NULL) return GE_FILENOTSUPPORTED;
 	/* Is this format version supported ? */
@@ -2032,11 +2268,11 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 
 	GSM_ClearBackup(backup);
 
-	readvalue = CFG_Get(file_info, buffer, "IMEI", false);
+	readvalue = ReadCFGText(file_info, buffer, "IMEI", UseUnicode);
 	if (readvalue!=NULL) strcpy(backup->IMEI,readvalue);
-	readvalue = CFG_Get(file_info, buffer, "Phone", false);
+	readvalue = ReadCFGText(file_info, buffer, "Phone", UseUnicode);
 	if (readvalue!=NULL) strcpy(backup->Model,readvalue);
-	readvalue = CFG_Get(file_info, buffer, "DateTime", false);
+	readvalue = ReadCFGText(file_info, buffer, "DateTime", UseUnicode);
 	if (readvalue!=NULL) {
 		ReadVCalDateTime(&backup->DateTime, readvalue);
 		backup->DateTimeAvailable = true;
@@ -2044,8 +2280,15 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (mystrncasecmp("Profile", h->section, 7)) {
-			readvalue = CFG_Get(file_info, h->section, "Location", false);
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Profile",7);
+			if (mywstrncasecmp(buffer, h->section, 7)) found = true;
+		} else {
+	                if (mystrncasecmp("Profile", h->section, 7)) found = true;
+		}
+		if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Location", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_PROFILES) {
 				backup->Profiles[num] = malloc(sizeof(GSM_Profile));
@@ -2055,14 +2298,21 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 				dprintf("Increase GSM_BACKUP_MAX_PROFILES\n");
 				return GE_MOREMEMORY;
 			}
-			ReadProfileEntry(file_info, h->section, backup->Profiles[num]);
+			ReadProfileEntry(file_info, h->section, backup->Profiles[num], UseUnicode);
 			num++;
                 }
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (mystrncasecmp("PhonePBK", h->section, 8)) {
-			readvalue = CFG_Get(file_info, h->section, "Location", false);
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"PhonePBK",8);
+			if (mywstrncasecmp(buffer, h->section, 8)) found = true;
+		} else {
+	                if (mystrncasecmp("PhonePBK", h->section, 8)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Location", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
 				backup->PhonePhonebook[num] = malloc(sizeof(GSM_PhonebookEntry));
@@ -2074,7 +2324,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			}
 			backup->PhonePhonebook[num]->Location	= atoi (readvalue);
 			backup->PhonePhonebook[num]->MemoryType	= GMT_ME;
-			ReadPbkEntry(file_info, h->section, backup->PhonePhonebook[num]);
+			ReadPbkEntry(file_info, h->section, backup->PhonePhonebook[num],UseUnicode);
 			dprintf("number of entries = %i\n",backup->PhonePhonebook[num]->EntriesNum);
 			num++;
                 }
@@ -2095,8 +2345,15 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	}
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (mystrncasecmp("SIMPBK", h->section, 6)) {
-			readvalue = CFG_Get(file_info, h->section, "Location", false);
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"SIMPBK",6);
+			if (mywstrncasecmp(buffer, h->section, 6)) found = true;
+		} else {
+	                if (mystrncasecmp("SIMPBK", h->section, 6)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Location", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SIMPHONEBOOK) {
 				backup->SIMPhonebook[num] = malloc(sizeof(GSM_PhonebookEntry));
@@ -2108,7 +2365,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			}
 			backup->SIMPhonebook[num]->Location	= atoi (readvalue);
 			backup->SIMPhonebook[num]->MemoryType	= GMT_SM;
-			ReadPbkEntry(file_info, h->section, backup->SIMPhonebook[num]);
+			ReadPbkEntry(file_info, h->section, backup->SIMPhonebook[num],UseUnicode);
 			num++;
                 }
         }
@@ -2128,8 +2385,15 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	}
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (mystrncasecmp("Calendar", h->section, 8)) {
-			readvalue = CFG_Get(file_info, h->section, "Type", false);
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Calendar",8);
+			if (mywstrncasecmp(buffer, h->section, 8)) found = true;
+		} else {
+	                if (mystrncasecmp("Calendar", h->section, 8)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Type", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_CALENDAR) {
 				backup->Calendar[num] = malloc(sizeof(GSM_CalendarEntry));
@@ -2140,14 +2404,21 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 				return GE_MOREMEMORY;
 			}
 			backup->Calendar[num]->Location = num + 1;
-			ReadCalendarEntry(file_info, h->section, backup->Calendar[num]);
+			ReadCalendarEntry(file_info, h->section, backup->Calendar[num],UseUnicode);
 			num++;
                 }
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (mystrncasecmp("Caller", h->section, 6)) {
-			readvalue = CFG_Get(file_info, h->section, "Location", false);
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Caller",6);
+			if (mywstrncasecmp(buffer, h->section, 6)) found = true;
+		} else {
+	                if (mystrncasecmp("Caller", h->section, 6)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Location", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_CALLER) {
 				backup->CallerLogos[num] = malloc(sizeof(GSM_Bitmap));
@@ -2158,14 +2429,21 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 				return GE_MOREMEMORY;
 			}
 			backup->CallerLogos[num]->Location = atoi (readvalue);
-			ReadCallerEntry(file_info, h->section, backup->CallerLogos[num]);
+			ReadCallerEntry(file_info, h->section, backup->CallerLogos[num],UseUnicode);
 			num++;
                 }
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (mystrncasecmp("SMSC", h->section, 4)) {
-			readvalue = CFG_Get(file_info, h->section, "Location", false);
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"SMSC",4);
+			if (mywstrncasecmp(buffer, h->section, 4)) found = true;
+		} else {
+	                if (mystrncasecmp("SMSC", h->section, 4)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Location", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SMSC) {
 				backup->SMSC[num] = malloc(sizeof(GSM_SMSC));
@@ -2176,14 +2454,21 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 				return GE_MOREMEMORY;
 			}
 			backup->SMSC[num]->Location = atoi (readvalue);
-			ReadSMSCEntry(file_info, h->section, backup->SMSC[num]);
+			ReadSMSCEntry(file_info, h->section, backup->SMSC[num],UseUnicode);
 			num++;
                 }
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (mystrncasecmp("Bookmark", h->section, 8)) {
-			readvalue = CFG_Get(file_info, h->section, "URL", false);
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Bookmark",8);
+			if (mywstrncasecmp(buffer, h->section, 8)) found = true;
+		} else {
+	                if (mystrncasecmp("Bookmark", h->section, 8)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "URL", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_WAPBOOKMARK) {
 				backup->WAPBookmark[num] = malloc(sizeof(GSM_WAPBookmark));
@@ -2194,14 +2479,21 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 				return GE_MOREMEMORY;
 			}
 			backup->WAPBookmark[num]->Location = num + 1;
-			ReadWAPBookmarkEntry(file_info, h->section, backup->WAPBookmark[num]);
+			ReadWAPBookmarkEntry(file_info, h->section, backup->WAPBookmark[num],UseUnicode);
 			num++;
                 }
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (mystrncasecmp("Settings", h->section, 8)) {
-			readvalue = CFG_Get(file_info, h->section, "Title00", false);
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Settings",8);
+			if (mywstrncasecmp(buffer, h->section, 8)) found = true;
+		} else {
+	                if (mystrncasecmp("Settings", h->section, 8)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Title00", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_WAPSETTINGS) {
 				backup->WAPSettings[num] = malloc(sizeof(GSM_MultiWAPSettings));
@@ -2212,14 +2504,22 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 				return GE_MOREMEMORY;
 			}
 			backup->WAPSettings[num]->Location = num + 1;
-			ReadWAPSettingsEntry(file_info, h->section, backup->WAPSettings[num]);
+			dprintf("reading wap settings\n");
+			ReadWAPSettingsEntry(file_info, h->section, backup->WAPSettings[num],UseUnicode);
 			num++;
                 }
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (mystrncasecmp("Ringtone", h->section, 8)) {
-			readvalue = CFG_Get(file_info, h->section, "Location", false);
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Ringtone",8);
+			if (mywstrncasecmp(buffer, h->section, 8)) found = true;
+		} else {
+	                if (mystrncasecmp("Ringtone", h->section, 8)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Location", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_RINGTONES) {
 				backup->Ringtone[num] = malloc(sizeof(GSM_Ringtone));
@@ -2229,14 +2529,21 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 				dprintf("Increase GSM_BACKUP_MAX_RINGTONES\n");
 				return GE_MOREMEMORY;
 			}
-			ReadRingtoneEntry(file_info, h->section, backup->Ringtone[num]);
+			ReadRingtoneEntry(file_info, h->section, backup->Ringtone[num],UseUnicode);
 			num++;
                 }
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (mystrncasecmp("TODO", h->section, 4)) {
-			readvalue = CFG_Get(file_info, h->section, "Location", false);
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"TODO",4);
+			if (mywstrncasecmp(buffer, h->section, 4)) found = true;
+		} else {
+	                if (mystrncasecmp("TODO", h->section, 4)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Location", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_TODO) {
 				backup->ToDo[num] = malloc(sizeof(GSM_ToDoEntry));
@@ -2247,31 +2554,38 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 				return GE_MOREMEMORY;
 			}
 			backup->ToDo[num]->Location = num + 1;
-			ReadToDoEntry(file_info, h->section, backup->ToDo[num]);
+			ReadToDoEntry(file_info, h->section, backup->ToDo[num],UseUnicode);
 			num++;
                 }
         }
 	sprintf(buffer,"Startup");
-	readvalue = CFG_Get(file_info, buffer, "Text", false);
+	readvalue = ReadCFGText(file_info, buffer, "Text", UseUnicode);
 	if (readvalue==NULL) {
-		readvalue = CFG_Get(file_info, buffer, "Width", false);
+		readvalue = ReadCFGText(file_info, buffer, "Width", UseUnicode);
 	}
 	if (readvalue!=NULL) {
 		backup->StartupLogo = malloc(sizeof(GSM_Bitmap));
 	        if (backup->StartupLogo == NULL) return GE_MOREMEMORY;
-		ReadStartupEntry(file_info, buffer, backup->StartupLogo);
+		ReadStartupEntry(file_info, buffer, backup->StartupLogo,UseUnicode);
 	}
 	sprintf(buffer,"Operator");
-	readvalue = CFG_Get(file_info, buffer, "Network", false);
+	readvalue = ReadCFGText(file_info, buffer, "Network", UseUnicode);
 	if (readvalue!=NULL) {
 		backup->OperatorLogo = malloc(sizeof(GSM_Bitmap));
 	        if (backup->OperatorLogo == NULL) return GE_MOREMEMORY;
-		ReadOperatorEntry(file_info, buffer, backup->OperatorLogo);
+		ReadOperatorEntry(file_info, buffer, backup->OperatorLogo,UseUnicode);
 	}
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (mystrncasecmp("FMStation", h->section, 4)) {
-			readvalue = CFG_Get(file_info, h->section, "Location", false);
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"FMStation",9);
+			if (mywstrncasecmp(buffer, h->section, 9)) found = true;
+		} else {
+	                if (mystrncasecmp("FMStation", h->section, 9)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Location", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_FMSTATIONS) {
 				backup->FMStation[num] = malloc(sizeof(GSM_FMStation));
@@ -2282,7 +2596,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 				return GE_MOREMEMORY;
 			}
 			backup->FMStation[num]->Location = num + 1;
-			ReadFMStationEntry(file_info, h->section, backup->FMStation[num]);
+			ReadFMStationEntry(file_info, h->section, backup->FMStation[num],UseUnicode);
 			num++;
                 }
         }
@@ -2535,8 +2849,12 @@ GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 	/* Attempt to identify filetype */
 	if (memcmp(buffer, "LMB ",4)==0) {
 		error=loadlmb(FileName,backup);
+	} else if (buffer[0] == 0xFE && buffer[1] == 0xFF) {
+		error=LoadBackup(FileName,backup,true);
+	} else if (buffer[0] == 0xFF && buffer[1] == 0xFE) {
+		error=LoadBackup(FileName,backup,true);
 	} else {
-		error=LoadBackup(FileName,backup);
+		error=LoadBackup(FileName,backup,false);
 	}
 
 	return error;
@@ -2567,64 +2885,63 @@ void GSM_ClearBackup(GSM_Backup *backup)
 
 static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMessage *SMS)
 {
-	unsigned char		buffer[10000];
-	char			*readvalue;
+	unsigned char buffer[10000], *readvalue;
 
 	GSM_SetDefaultSMSData(SMS);
 
 	SMS->PDU = SMS_Submit;
 	SMS->SMSC.Location = 0;
 	sprintf(buffer,"SMSC");
-	ReadBackupText(file_info, section, buffer, SMS->SMSC.Number);
+	ReadBackupText(file_info, section, buffer, SMS->SMSC.Number, false);
 	sprintf(buffer,"ReplySMSC");
 	SMS->ReplyViaSameSMSC = false;
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		if (mystrncasecmp(readvalue,"True",0)) SMS->ReplyViaSameSMSC = true;
 	}
 	sprintf(buffer,"Class");
 	SMS->Class = -1;
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->Class = atoi(readvalue);
 	sprintf(buffer,"Sent");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		ReadVCalDateTime(&SMS->DateTime, readvalue);
 		SMS->PDU = SMS_Deliver;
 	}
 	sprintf(buffer,"RejectDuplicates");
 	SMS->RejectDuplicates = false;
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		if (mystrncasecmp(readvalue,"True",0)) SMS->RejectDuplicates = true;
 	}
 	sprintf(buffer,"ReplaceMessage");
 	SMS->ReplaceMessage = 0;
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->ReplaceMessage = atoi(readvalue);
 	sprintf(buffer,"MessageReference");
 	SMS->MessageReference = 0;
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->MessageReference = atoi(readvalue);
 	sprintf(buffer,"State");
 	SMS->State = GSM_UnRead;
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		if (mystrncasecmp(readvalue,"Read",0))		SMS->State = GSM_Read;
 		else if (mystrncasecmp(readvalue,"Sent",0))	SMS->State = GSM_Sent;
 		else if (mystrncasecmp(readvalue,"UnSent",0))	SMS->State = GSM_UnSent;
 	}
 	sprintf(buffer,"Number");
-	ReadBackupText(file_info, section, buffer, SMS->Number);
+	ReadBackupText(file_info, section, buffer, SMS->Number, false);
 	sprintf(buffer,"Name");
-	ReadBackupText(file_info, section, buffer, SMS->Name);
+	ReadBackupText(file_info, section, buffer, SMS->Name, false);
 	sprintf(buffer,"Length");
 	SMS->Length = 0;
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->Length = atoi(readvalue);
 	sprintf(buffer,"Coding");
 	SMS->Coding = GSM_Coding_Default;
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		if (mystrncasecmp(readvalue,"Unicode",0)) {
 			SMS->Coding = GSM_Coding_Unicode;
@@ -2632,12 +2949,12 @@ static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMess
 			SMS->Coding = GSM_Coding_8bit;
 		}
 	}
-	ReadLinkedBackupText(file_info, section, "Text", buffer);
+	ReadLinkedBackupText(file_info, section, "Text", buffer, false);
 	DecodeHexBin (SMS->Text, buffer, strlen(buffer));
 	SMS->Text[strlen(buffer)/2]	= 0;
 	SMS->Text[strlen(buffer)/2+1] 	= 0;
 	sprintf(buffer,"Folder");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->Folder = atoi(readvalue);
 	SMS->UDH.Type		= UDH_NoUDH;
 	SMS->UDH.Length 	= 0;
@@ -2645,7 +2962,7 @@ static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMess
 	SMS->UDH.PartNumber	= -1;
 	SMS->UDH.AllParts	= -1;
 	sprintf(buffer,"UDH");
-	readvalue = CFG_Get(file_info, section, buffer, false);
+	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		DecodeHexBin (SMS->UDH.Text, readvalue, strlen(readvalue));
 		SMS->UDH.Length = strlen(readvalue)/2;
@@ -2666,7 +2983,7 @@ static GSM_Error GSM_ReadSMSBackupTextFile(char *FileName, GSM_SMS_Backup *backu
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
                 if (mystrncasecmp("SMSBackup", h->section, 9)) {
-			readvalue = CFG_Get(file_info, h->section, "Number", false);
+			readvalue = ReadCFGText(file_info, h->section, "Number", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SMS) {
 				backup->SMS[num] = malloc(sizeof(GSM_SMSMessage));
@@ -2686,7 +3003,7 @@ static GSM_Error GSM_ReadSMSBackupTextFile(char *FileName, GSM_SMS_Backup *backu
 
 GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 {
-	FILE		*file;
+	FILE *file;
 
 	backup->SMS[0] = NULL;
 
@@ -2740,7 +3057,7 @@ GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 			SaveBackupText(file, "SMSC", backup->SMS[i]->SMSC.Number, true);
 			if (backup->SMS[i]->ReplyViaSameSMSC) fprintf(file,"SMSCReply = true\n");
 			fprintf(file,"Sent");
-			SaveVCalDateTime(file,&backup->SMS[i]->DateTime);
+			SaveVCalDateTime(file,&backup->SMS[i]->DateTime, false);
 		}
 		fprintf(file,"State = ");
 		switch (backup->SMS[i]->State) {
@@ -2764,7 +3081,7 @@ GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 				EncodeHexBin(buffer,backup->SMS[i]->Text,backup->SMS[i]->Length);
 				break;
 		}
-		SaveLinkedBackupText(file, "Text", buffer);
+		SaveLinkedBackupText(file, "Text", buffer, false);
 		switch (backup->SMS[i]->Coding) {
 			case GSM_Coding_Unicode	: fprintf(file,"Coding = Unicode\n"); 	break;
 			case GSM_Coding_Default	: fprintf(file,"Coding = Default\n"); 	break;

@@ -1,8 +1,6 @@
 #ifndef protocol_common_h
 #define protocol_common_h
 
-#define PROTOCOL_MAX_RECEIVE_LENGTH	20000
-
 typedef enum {
 	RX_Sync,
 	RX_GetDestination,
@@ -19,8 +17,9 @@ typedef struct {
 	unsigned char 	Type;
 	unsigned char 	Source;
 	unsigned char 	Destination;
-	unsigned char 	Buffer		[PROTOCOL_MAX_RECEIVE_LENGTH];
-	unsigned char 	CheckSum	[2];
+	unsigned char	*Buffer;
+	int		BufferUsed;
+	unsigned char 	CheckSum[2];
 } GSM_Protocol_Message;
 
 #endif

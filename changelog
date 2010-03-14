@@ -17,6 +17,33 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+
+20030511 - 0.74
+* new functionality:
+  * getting files from filesystem in DCT4 phones (--getfiles)
+  * added 3650, 7250 ID
+  * FULL support for Bluetooth
+    * in WinXP using Microsoft stack    : FBUS (DCT4)
+      (NOTE  : MSVC must be used for compiling)
+      (NOTE2 : it will be included in SP2, for now available here and there
+               in Net)
+    * in Linux using Bluez              : full AT mode and FBUS (6210 and DCT4)
+    * using stacks with legacy serial ports (for example for win32 use
+      BTSoftware from www.d-link.com)   : full AT mode and FBUS (6210 and DCT4)
+  * Gammu GUI 0.0.26                                            (Luca Cassioli)
+  * can make backup and restore using new Unicode format of backup files.
+    No more duplicated (once in ASCII and once in coded Unicode) strings in
+    backup files with this format and no problems with national chars.
+
+* fixes and improvements:
+  * new "206 20" network                                            (Jo Tytgat)
+  * memory in protocol drivers is allocated dynamically - no more
+    size limits for frames
+  * 6610 ID, compilation fix, few info                    (Vladimir Kondratiev)
+  * PPM char is correctly get from DCT4
+  * some things disabled for 8910                                  (Liviu Daia)
+  * ToDo and FM things disabled for new models. NEED SNIFFS.
+
 20030427 - 0.73
 * new functionality:
   * added --nokiadisplayoutput for old DCT3 phones (Nokia 51xx/61xx)
@@ -36,7 +63,7 @@ For additionals materials and links to them see readme.txt
 
 * fixes and improvements:
   * too small buffer during setting SMSC for DCT4 increased  (Fotis D. Zagoras)
-  * increased GSM_BACKUP_MAX_RINGTONES                           (Igor Savokic)
+  * increased GSM_BACKUP_MAX_RINGTONES                          (Igor Savokich)
   * increased buffers for phone numbers for SMS                      (jomin yu)
   * fix for loading RTTL files
   * improvements for packing EMS
@@ -975,7 +1002,8 @@ Summary: test version. Many fixes. WAP settings not work for DCT4
 * 9210 module can set startup logo/text, show incoming cb/sms
 * new --copyringtone
 
-20020610 - 0.0.39DCT3 support seems to be close to be ready.
+20020610 - 0.0.39
+DCT3 support seems to be close to be ready.
 
 ........
 

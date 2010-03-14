@@ -12,13 +12,13 @@
 static GSM_Error MBUS2_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 				     int length, unsigned char type)
 {
-	unsigned char 		out_buffer[MBUS2_MAX_TRANSMIT_LENGTH];
+	unsigned char 		*out_buffer, checksum = 0;
 	GSM_Protocol_MBUS2Data 	*d = &s->Protocol.Data.MBUS2;
-	unsigned char 		checksum = 0;
-	int 			count, current=0;
-	int 			sent;
+	int 			count, current=0, sent;
 
 	GSM_DumpMessageLevel3(s, buffer, length, type);
+
+	out_buffer = (unsigned char *)malloc(length + 6);
 
 	/* Now construct the message header. */
 	out_buffer[current++] = MBUS2_FRAME_ID;     /* Start of the frame indicator */
@@ -63,8 +63,10 @@ static GSM_Error MBUS2_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 	/* Send it out... */
 	my_sleep(10);
 	sent=s->Device.Functions->WriteDevice(s,out_buffer,current);
-	if (sent!=current) return GE_DEVICEWRITEERROR;
 
+	free(out_buffer);
+
+	if (sent!=current) return GE_DEVICEWRITEERROR;
 	return GE_NONE;
 }
 
@@ -171,7 +173,11 @@ static GSM_Error MBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 		d->MsgRXState = RX_Sync;
 	} else {
 		d->Msg.Length = d->Msg.Length + rx_byte;
-		d->MsgRXState = RX_GetMessage;
+		if (d->Msg.BufferUsed < d->Msg.Length+2) {
+			d->Msg.BufferUsed 	= d->Msg.Length+2;
+			d->Msg.Buffer 		= (unsigned char *)realloc(d->Msg.Buffer,d->Msg.BufferUsed);
+		}
+		d->MsgRXState 	= RX_GetMessage;
 	}    
 	break;
     
@@ -186,8 +192,8 @@ static GSM_Error MBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 		if (d->Msg.CheckSum[0] == rx_byte) {
 			if (d->Msg.Destination != MBUS2_DEVICE_PHONE) {
 				MBUS2_SendAck(s, d->Msg.Type, d->Msg.Buffer[d->Msg.Count-2]);
-				s->Phone.Data.RequestMsg=&d->Msg;
-				s->Phone.Data.DispatchError=Phone->DispatchMessage(s);
+				s->Phone.Data.RequestMsg	= &d->Msg;
+				s->Phone.Data.DispatchError	= Phone->DispatchMessage(s);
 			}
 		} else {
 			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
@@ -210,6 +216,10 @@ static GSM_Error MBUS2_Initialise(GSM_StateMachine *s)
 	GSM_Protocol_MBUS2Data 	*d	= &s->Protocol.Data.MBUS2;
 	GSM_Error 		error;
 
+	d->Msg.Length		= 0;
+	d->Msg.BufferUsed	= 0;
+	d->Msg.Buffer		= NULL;
+
 	d->MsgSequenceNumber	= 0;
 	d->MsgRXState		= RX_Sync;
 
@@ -226,11 +236,17 @@ static GSM_Error MBUS2_Initialise(GSM_StateMachine *s)
 	return GE_NONE;
 }
 
+static GSM_Error MBUS2_Terminate(GSM_StateMachine *s)
+{
+	free(s->Protocol.Data.MBUS2.Msg.Buffer);
+	return GE_NONE;
+}
+
 GSM_Protocol_Functions MBUS2Protocol = {
 	MBUS2_WriteMessage,
 	MBUS2_StateMachine,
 	MBUS2_Initialise,
-	NONEFUNCTION
+	MBUS2_Terminate
 };
 
 #endif

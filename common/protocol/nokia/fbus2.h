@@ -4,11 +4,11 @@
 
 #include "../protocol.h"
 
-#define FBUS2_FRAME_ID       0x1e
-#define FBUS2_IR_FRAME_ID    0x1c
-#define FBUS2_DEVICE_PHONE   0x00 /* Nokia mobile phone */
-#define FBUS2_DEVICE_PC      0x0c /* Our PC */
-#define FBUS2_ACK_BYTE	     0x7f /* Acknowledge of the received frame */
+#define FBUS2_FRAME_ID       	0x1e
+#define FBUS2_IRDA_FRAME_ID    	0x1c
+#define FBUS2_DEVICE_PHONE   	0x00 /* Nokia mobile phone */
+#define FBUS2_DEVICE_PC      	0x0c /* Our PC */
+#define FBUS2_ACK_BYTE	     	0x7f /* Acknowledge of the received frame */
 
 #define FBUS2_MAX_TRANSMIT_LENGTH 120
 
@@ -23,7 +23,7 @@ typedef struct {
 #ifndef GSM_USED_SERIALDEVICE
 #  define GSM_USED_SERIALDEVICE
 #endif
-#if defined(GSM_ENABLE_ATBLUETOOTH) || defined(GSM_ENABLE_DLR3BLUETOOTH)
+#if defined(GSM_ENABLE_BLUEFBUS2)
 #  ifndef GSM_USED_BLUETOOTHDEVICE
 #    define GSM_USED_BLUETOOTHDEVICE
 #  endif

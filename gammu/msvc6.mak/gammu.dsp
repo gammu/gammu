@@ -133,7 +133,7 @@ SOURCE=..\..\common\protocol\nokia\fbus2.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\nokia\fbusirda.c
+SOURCE=..\..\common\protocol\nokia\phonet.c
 # End Source File
 # Begin Source File
 
@@ -225,6 +225,10 @@ SOURCE=..\..\common\phone\nokia\nfunc.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\device\devfunc.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\phone\nokia\nfuncold.c
 # End Source File
 # Begin Source File
@@ -249,7 +253,7 @@ SOURCE=..\sniff.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\bluetoth\unixblue.c
+SOURCE=..\..\common\device\bluetoth\bluetoth.c
 # End Source File
 # Begin Source File
 
@@ -309,7 +313,7 @@ SOURCE=..\..\common\protocol\nokia\fbus2.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\nokia\fbusirda.h
+SOURCE=..\..\common\protocol\nokia\phonet.h
 # End Source File
 # Begin Source File
 
@@ -425,11 +429,27 @@ SOURCE=..\sniff.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\bluetoth\unixblue.h
+SOURCE=..\..\common\device\bluetoth\bluetoth.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\device\bluetoth\win32\bthdef.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\device\bluetoth\win32\bthsdpdef.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\device\bluetoth\win32\ws2bth.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\common\device\irda\win32.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\device\devfunc.h
 # End Source File
 # Begin Source File
 

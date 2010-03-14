@@ -3,21 +3,33 @@
 #                  or into /etc and name it gammurc
 # In Win32       : copy it into directory with Gammu.exe and name gammurc
 
-# Port           : in Windows/DOS: "com*:",
-#                  (instead of "*" please put "1", "2", etc.)
-#                  in other (Linux/Unix) "/dev/ttyS%"
-                                      or "/dev/tts/XX" (when use DevFS)
-#                                     or "/dev/ircomm%" ("irda" connection)
-#                  (instead of "%" please put "0", "1", "2", etc.)
+# Connection     : "fbus"                     (Nokia FBUS2)
+#                  "fbusirda"   or "infrared" (Nokia FBUS2 over direct infrared
+#                                              device)
+#                  "fbusdlr3"   or "dlr3"     (Nokia FBUS2 with DLR3 cable)
+#                  "fbusblue"                 (Nokia FBUS2 over Bluetooth
+#                                              serial device)
+#                  "phonetblue"               (Nokia PHONET FBUS over Bluetooth
+#                                              serial device)
+#                  "irdaphonet" or "irda"     (Nokia PHONET FBUS over socket
+#                                              infrared)
+#                  "bluephonet"               (Nokia PHONET FBUS with Bluetooth
+#                                              stack)
+#                  "bluefbus"   or "dlr3blue" (Nokia FBUS2 with Bluetooth
+#                                              stack)
+#                  "bluetat"    or "atblue"   (AT commands with Bluetooth
+#                                              stack)
+#                  "mbus"                     (Nokia MBUS2)
+#                  "at19200","at115200",...   (AT commands.8 bits, None parity,
+#                                              1 stop bit, no flow control)
+# Port           : for Windows/DOS            : "com*:"
+#                  for Linux/Unix             :
+#                                "irdaphonet" : "/dev/ircomm*"
+#                                     "blue*" : device address
+#                                   all other : "/dev/ttyS*" or
+#                                               "/dev/tts/**" (with DevFS)
 # Model          : use only, when Gammu doesn't recognize your phone model.
 #                  Put it here. Example values: "6110", "6150", "6210", "8210"
-# Connection     : type of connection. Use "fbus" or "mbus" or "dlr3" or
-#                  "irda" (Infrared over sockets) or "infrared" (DirectIR)
-#                  or "at19200" (AT commands on 19200, 8 bits, None parity,
-#                  1 stop bit, no flow control) or "at115200" (AT commands on
-#                  115200, 8 bits, None parity, 1 stop bit, no flow control)
-#                  or "atblue" (AT over BlueTooth) or "dlr3blue" (FBUS
-#                  over BlueTooth)
 # SynchronizeTime: if you want to set time from computer to phone during
 #                  starting connection. Do not rather use this option when want
 #                  to reset phone during connection (in some phones need to
@@ -38,9 +50,9 @@
 
 [gammu]
 
-#port = /dev/ttyS1
+port = com8:
 #model = 6110
-#connection = dlr3
+connection = fbusblue
 #synchronizetime = yes
 #logfile = gammulog
 #logformat = textall

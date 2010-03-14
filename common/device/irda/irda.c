@@ -23,17 +23,8 @@
 #endif
 
 #include "../../gsmcomon.h"
+#include "../devfunc.h"
 #include "irda.h"
-
-static GSM_Error irda_close(GSM_StateMachine *s)
-{
-	GSM_Device_IrdaData *d = &s->Device.Data.Irda;
-
-	shutdown(d->hPhone, 0);
-	close(d->hPhone); /*FIXME: error checking */
-
-	return GE_NONE;
-}
 
 static bool irda_discover_device(GSM_StateMachine *state)
 {
@@ -133,20 +124,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 
 static int irda_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
-    GSM_Device_IrdaData *d = &s->Device.Data.Irda;
-#ifndef WIN32
-    fd_set 		readfds;
-
-    FD_ZERO(&readfds);
-    FD_SET(d->hPhone, &readfds);
-    if (select(d->hPhone+1, &readfds, NULL, NULL, 0)) {
-	return(read(d->hPhone, buf, nbytes));
-    } else {
-	return 0;
-    }
-#else
-    return(recv(d->hPhone, buf, nbytes, 0));
-#endif
+	return socket_read(s, buf, nbytes, s->Device.Data.Irda.hPhone);
 }
 
 #ifdef WIN32
@@ -155,16 +133,12 @@ static int irda_write(GSM_StateMachine *s, unsigned char *buf, size_t nbytes)
 static int irda_write(GSM_StateMachine *s, void *buf, size_t nbytes)
 #endif
 {
-    GSM_Device_IrdaData *d = &s->Device.Data.Irda;
-    int			ret;
-    size_t		actual = 0;
+	return socket_write(s, buf, nbytes, s->Device.Data.Irda.hPhone);
+}
 
-    do {
-	if ((ret = send(d->hPhone, buf, nbytes - actual, 0)) < 0) return(actual);
-	actual 	+= ret;
-	buf 	+= ret;
-    } while (actual < nbytes);
-    return (actual);
+static GSM_Error irda_close(GSM_StateMachine *s)
+{
+	return socket_close(s, s->Device.Data.Irda.hPhone);
 }
 
 GSM_Device_Functions IrdaDevice = {

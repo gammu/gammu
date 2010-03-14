@@ -9,10 +9,12 @@
 #ifndef GSM_USED_AT
 #  define GSM_USED_AT
 #endif
-#ifndef GSM_USED_ATBLUETOOTH
-#  define GSM_USED_ATBLUETOOTH
+#ifndef GSM_USED_BLUEAT
+#  define GSM_USED_BLUEAT
 #endif
+
 #define MAX_VCALENDAR_LOCATION 50
+
 typedef enum {
 	SMS_AT_PDU = 1,
 	SMS_AT_TXT

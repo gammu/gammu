@@ -24,20 +24,23 @@ typedef struct {
 	int				FilesLocationsCurrent;
 } GSM_Phone_N6510Data;
 
-#ifndef GSM_USED_FBUS2
-#  define GSM_USED_FBUS2
-#endif
 #ifndef GSM_USED_MBUS2
 #  define GSM_USED_MBUS2
 #endif
-#ifndef GSM_USED_IRDA
-#  define GSM_USED_IRDA
+#ifndef GSM_USED_FBUS2
+#  define GSM_USED_FBUS2
 #endif
-#ifndef GSM_USED_DLR3AT
-#  define GSM_USED_DLR3AT
+#ifndef GSM_USED_FBUS2DLR3
+#  define GSM_USED_FBUS2DLR3
 #endif
-#ifndef GSM_USED_DLR3BLUETOOTH
-#  define GSM_USED_DLR3BLUETOOTH
+#ifndef GSM_USED_PHONETBLUE
+#  define GSM_USED_PHONETBLUE
+#endif
+#ifndef GSM_USED_IRDAPHONET
+#  define GSM_USED_IRDAPHONET
+#endif
+#ifndef GSM_USED_BLUEPHONET
+#  define GSM_USED_BLUEPHONET
 #endif
 
 #endif

@@ -18,20 +18,23 @@ typedef struct {
 	DCT3_WAPSettings_Locations	WAPLocations;
 } GSM_Phone_N7110Data;
 
-#ifndef GSM_USED_FBUS2
-#  define GSM_USED_FBUS2
-#endif
 #ifndef GSM_USED_MBUS2
 #  define GSM_USED_MBUS2
 #endif
-#ifndef GSM_USED_IRDA
-#  define GSM_USED_IRDA
+#ifndef GSM_USED_FBUS2
+#  define GSM_USED_FBUS2
 #endif
-#ifndef GSM_USED_DLR3AT
-#  define GSM_USED_DLR3AT
+#ifndef GSM_USED_FBUS2DLR3
+#  define GSM_USED_FBUS2DLR3
 #endif
-#ifndef GSM_USED_DLR3BLUETOOTH
-#  define GSM_USED_DLR3BLUETOOTH
+#ifndef GSM_USED_FBUS2BLUE
+#  define GSM_USED_FBUS2BLUE
+#endif
+#ifndef GSM_USED_IRDAPHONET
+#  define GSM_USED_IRDAPHONET
+#endif
+#ifndef GSM_USED_BLUEFBUS2
+#  define GSM_USED_BLUEFBUS2
 #endif
 
 #endif

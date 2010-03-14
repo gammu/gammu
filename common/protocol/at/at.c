@@ -1,7 +1,7 @@
 
 #include "../../gsmstate.h"
 
-#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_ATBLUETOOTH)
+#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT)
 
 #include <stdio.h>
 #include <string.h>
@@ -51,7 +51,11 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 
     	/* Ignore leading CR, LF and ESC */
     	if (d->Msg.Length == 0 && (rx_byte == 10 || rx_byte == 13 || rx_byte == 27)) return GE_NONE;
-        
+
+	if (d->Msg.BufferUsed < d->Msg.Length + 2) {
+		d->Msg.BufferUsed	= d->Msg.Length + 2;
+		d->Msg.Buffer 	= (unsigned char *)realloc(d->Msg.Buffer,d->Msg.BufferUsed);
+	}
 	d->Msg.Buffer[d->Msg.Length++] = rx_byte;
 	d->Msg.Buffer[d->Msg.Length  ] = 0;
 
@@ -95,17 +99,20 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 			}
 		}
 	}
-	if (d->Msg.Length == PROTOCOL_MAX_RECEIVE_LENGTH - 2) d->Msg.Length = 0;
 	return GE_NONE;
 }
 
 static GSM_Error AT_Initialise(GSM_StateMachine *s)
 {
-	GSM_Error error	= GE_UNKNOWN;
+	GSM_Protocol_ATData 	*d = &s->Protocol.Data.AT;
+	GSM_Error 		error;
 
-	s->Protocol.Data.AT.linestart 	= NULL;
-	s->Protocol.Data.AT.EditMode	= false;
-	s->Protocol.Data.AT.Msg.Type	= 0;
+	d->Msg.BufferUsed	= 0;
+	d->Msg.Buffer 		= NULL;
+
+	d->linestart 		= NULL;
+	d->EditMode		= false;
+	d->Msg.Type		= 0;
 
 	error=s->Device.Functions->DeviceSetDtrRts(s,true,true);
     	if (error!=GE_NONE) return error; 
@@ -113,11 +120,17 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 	return s->Device.Functions->DeviceSetSpeed(s,s->Speed);
 }
 
+static GSM_Error AT_Terminate(GSM_StateMachine *s)
+{
+	free(s->Protocol.Data.AT.Msg.Buffer);
+	return GE_NONE;
+}
+
 GSM_Protocol_Functions ATProtocol = {
 	AT_WriteMessage,
 	AT_StateMachine,
 	AT_Initialise,
-	NONEFUNCTION
+	AT_Terminate
 };
 
 #endif

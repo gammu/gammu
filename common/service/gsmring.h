@@ -123,6 +123,11 @@ typedef struct {
 	int			Length;
 } GSM_NokiaBinaryRingtone;
 
+typedef struct {
+	unsigned char		*Frame;
+	int			Length;
+} GSM_BinaryTone;
+
 typedef enum {
 	RING_NOTETONE = 1,
 	RING_NOKIABINARY,
@@ -131,6 +136,8 @@ typedef enum {
 
 typedef struct {
 	GSM_NokiaBinaryRingtone	NokiaBinary;
+
+	GSM_BinaryTone		BinaryTone;
 	GSM_NoteRingtone	NoteTone;
 	GSM_RingtoneFormat	Format;
 	char			Name[20*2];

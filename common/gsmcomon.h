@@ -67,9 +67,6 @@ extern GSM_Error NotSupportedFunction	(void);
 unsigned char *GetMsg 		(CFG_Header *cfg, unsigned char *default_string);
 unsigned char *print_error	(GSM_Error e, FILE *df, CFG_Header *cfg);
 
-GSM_Error 	lock_device	(const char* port, char **lock_device);
-bool 		unlock_device	(char **lock_file);
-
 GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi);
 
 char *GetGammuVersion();

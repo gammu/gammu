@@ -134,6 +134,7 @@ GSM_Network GSM_Networks[] = {
 	{ "204 20", "Dutchtone NV" },
 	{ "206 01", "PROXIMUS" },
 	{ "206 10", "Mobistar" },
+	{ "206 20", "Base" },
 	{ "208 01", "ITINERIS" },
 	{ "208 10", "SFR" },
 	{ "208 20", "Bouygues Telecom" },

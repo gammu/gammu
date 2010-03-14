@@ -21,15 +21,16 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
 	    $(TOPDIR)/common/service/gsmlogo.o \
 	    $(TOPDIR)/common/service/gsmmisc.o \
 	    $(TOPDIR)/common/service/gsmnet.o \
-	    $(TOPDIR)/common/device/bluetoth/unixblue.o \
+	    $(TOPDIR)/common/device/bluetoth/bluetoth.o \
 	    $(TOPDIR)/common/device/serial/unix.o \
 	    $(TOPDIR)/common/device/serial/djgpp.o \
 	    $(TOPDIR)/common/device/irda/irda.o \
+	    $(TOPDIR)/common/device/devfunc.o \
 	    $(TOPDIR)/common/protocol/at/at.o \
 	    $(TOPDIR)/common/protocol/alcatel/alcabus.o \
 	    $(TOPDIR)/common/protocol/nokia/mbus2.o \
 	    $(TOPDIR)/common/protocol/nokia/fbus2.o \
-	    $(TOPDIR)/common/protocol/nokia/fbusirda.o \
+	    $(TOPDIR)/common/protocol/nokia/phonet.o \
 	    $(TOPDIR)/common/phone/pfunc.o \
 	    $(TOPDIR)/common/phone/at/atgen.o \
 	    $(TOPDIR)/common/phone/at/siemens.o \
