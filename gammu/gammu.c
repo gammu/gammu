@@ -3,14 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
-#ifdef WIN32
-#  include <windows.h>
-#  include <process.h>
-#endif
 #include <locale.h>
 #include <signal.h>
 #include <ctype.h>
 #include <wchar.h>
+#ifdef WIN32
+#  include <windows.h>
+#  include <process.h>
+#  include <sys/utime.h>
+#endif
 
 #include "../common/gsmcomon.h"
 #include "../common/gsmstate.h"
@@ -1054,10 +1055,10 @@ static void Monitor(int argc, char *argv[])
 		if (Phone->GetNetworkInfo(&s,&NetInfo)==GE_NONE) {
 			printmsg("Network state     : ");
                         switch (NetInfo.State) {
-				case GSM_HomeNetwork		: printmsg("home network\n"); 		break;
-				case GSM_RoamingNetwork		: printmsg("roaming network\n"); 		break;
-				case GSM_RequestingNetwork	: printmsg("requesting network\n"); 	break;
-				case GSM_NoNetwork		: printmsg("not logged into network\n"); 	break;
+				case GSM_HomeNetwork		: printmsg("home network\n"); 		 break;
+				case GSM_RoamingNetwork		: printmsg("roaming network\n"); 	 break;
+				case GSM_RequestingNetwork	: printmsg("requesting network\n"); 	 break;
+				case GSM_NoNetwork		: printmsg("not logged into network\n"); break;
 				default				: printmsg("unknown\n");
 			}
 			if (NetInfo.State == GSM_HomeNetwork || NetInfo.State == GSM_RoamingNetwork) {
@@ -1216,7 +1217,7 @@ static void GetAllSMS(int argc, char *argv[])
 
 static void GetEachSMS(int argc, char *argv[])
 {
-	GSM_MultiSMSMessage	*GetSMS[150],*SortedSMS[150],sms;
+	GSM_MultiSMSMessage	*GetSMS[PHONE_MAXSMSINFOLDER],*SortedSMS[PHONE_MAXSMSINFOLDER],sms;
 	int			GetSMSNumber = 0,i,j;
 	GSM_SMSFolders		folders;
 	bool			start = true;
@@ -3828,7 +3829,7 @@ static void Restore(int argc, char *argv[])
 		}
 	}
 	
-	if (!mystrncasecmp(s.Config.SyncTime,"yes",0)) {
+	if (!mystrncasecmp(s.CurrentConfig->SyncTime,"yes",0)) {
 		if (answer_yes("Do you want to set date/time in phone (NOTE: in some phones it's required to correctly restore calendar notes and other items)")) {
 			GSM_GetCurrentDateTime(&date_time);
 
@@ -4181,7 +4182,7 @@ static void AddNew(int argc, char *argv[])
 		}
 	}
 
-	if (!mystrncasecmp(s.Config.SyncTime,"yes",0)) {
+	if (!mystrncasecmp(s.CurrentConfig->SyncTime,"yes",0)) {
 		if (answer_yes("Do you want to set date/time in phone (NOTE: in some phones it's required to correctly restore calendar notes and other items)")) {
 			GSM_GetCurrentDateTime(&date_time);
 
@@ -5435,13 +5436,14 @@ static void Version(int argc, char *argv[])
 	printmsg("[Gammu version %s built %s %s]\n\n",VERSION,__TIME__,__DATE__);
 
 #ifdef DEBUG
-	printf("GSM_SMSMessage - %i\n",sizeof(GSM_SMSMessage));
-	printf("GSM_SMSC       - %i\n",sizeof(GSM_SMSC));
-	printf("GSM_SMS_State  - %i\n",sizeof(GSM_SMS_State));
-	printf("GSM_UDHHeader  - %i\n",sizeof(GSM_UDHHeader));
-	printf("bool           - %i\n",sizeof(bool));
-	printf("GSM_DateTime   - %i\n",sizeof(GSM_DateTime));
-	printf("int            - %i\n",sizeof(int));
+	printf("GSM_SMSMessage  - %i\n",sizeof(GSM_SMSMessage));
+	printf("GSM_SMSC        - %i\n",sizeof(GSM_SMSC));
+	printf("GSM_SMS_State   - %i\n",sizeof(GSM_SMS_State));
+	printf("GSM_UDHHeader   - %i\n",sizeof(GSM_UDHHeader));
+	printf("bool            - %i\n",sizeof(bool));
+	printf("GSM_DateTime    - %i\n",sizeof(GSM_DateTime));
+	printf("int             - %i\n",sizeof(int));
+	printf("GSM_NetworkInfo - %i\n",sizeof(GSM_NetworkInfo));
 #endif
 }
 
@@ -5500,6 +5502,16 @@ static void GetFileSystem(int argc, char *argv[])
 		} else {
 			printf(" ");
 		}
+		if (Files[FilesNum].Hidden) {
+			printf("H");
+		} else {
+			printf(" ");
+		}
+		if (Files[FilesNum].System) {
+			printf("S");
+		} else {
+			printf(" ");
+		}
 		if (argc > 2 && (mystrncasecmp(argv[2],"-flatall",0) || mystrncasecmp(argv[2],"-flat",0))) {
 			if (!Files[FilesNum].Folder) {
 				if (mystrncasecmp(argv[2],"-flatall",0)) {
@@ -5538,14 +5550,22 @@ static void GetFiles(int argc, char *argv[])
 	GSM_File		File;
 	int			i;
 	FILE			*file;
-	bool			start;
+	bool			start,newtime = false;
 	unsigned char		buffer[50];
+#ifdef WIN32
+	struct _utimbuf		filedate;
+#endif
 
 	File.Buffer = NULL;
 
 	GSM_Init(true);
 
 	for (i=2;i<argc;i++) {
+		if (mystrncasecmp(argv[i],"-newtime",0)) {
+			newtime = true;		
+			continue;
+		}
+
 		if (File.Buffer != NULL) {
 			free(File.Buffer);
 			File.Buffer = NULL;
@@ -5576,17 +5596,26 @@ static void GetFiles(int argc, char *argv[])
 		printmsg("\n");
 
 		if (File.Used != 0) {
-			file = fopen(DecodeUnicodeString2(File.Name),"wb");
+			sprintf(buffer,"%s",DecodeUnicodeString2(File.Name));
+			file = fopen(buffer,"wb");
 			if (!file) {
 				sprintf(buffer,"file%s",File.ID_FullName);
 				file = fopen(buffer,"wb");
-				printmsg("  Saving to %s\n",buffer);
-			} else {
-				printmsg("  Saving to %s\n",DecodeUnicodeString2(File.Name));
 			}
+			printmsg("  Saving to %s\n",buffer);
 			if (!file) Print_Error(GE_CANTOPENFILE);
 			fwrite(File.Buffer,1,File.Used,file);
 			fclose(file);
+#ifdef WIN32
+			if (!newtime && !File.ModifiedEmpty) {
+				/* access time */
+				filedate.actime  = Fill_Time_T(File.Modified, 8);				
+				/* modification time */
+				filedate.modtime = Fill_Time_T(File.Modified, 8);
+				dprintf("Setting date of %s\n",buffer);
+				_utime(buffer,&filedate);
+			}
+#endif
 		}
 	}
 
@@ -5608,6 +5637,8 @@ static void AddFile(int argc, char *argv[])
 
 	File.Protected 	= false;
 	File.ReadOnly	= false;
+	File.Hidden	= false;
+	File.System	= false;
 
 	if (argc > 4) {
 		nextlong = 0;
@@ -5624,6 +5655,18 @@ static void AddFile(int argc, char *argv[])
 				}
 				if (mystrncasecmp(argv[i],"-readonly",0)) {
 					File.ReadOnly = true;		
+					continue;
+				}
+				if (mystrncasecmp(argv[i],"-hidden",0)) {
+					File.Hidden = true;		
+					continue;
+				}
+				if (mystrncasecmp(argv[i],"-system",0)) {
+					File.System = true;		
+					continue;
+				}
+				if (mystrncasecmp(argv[i],"-newtime",0)) {
+					File.ModifiedEmpty = true;		
 					continue;
 				}
 				printmsg("Parameter \"%s\" unknown\n",argv[i]);
@@ -5736,8 +5779,9 @@ static void NokiaAddFile(int argc, char *argv[])
 	time_t     		t_time1,t_time2;
 	unsigned char 		buffer[10000],JAR[500],Vendor[500],Name[500],Version[500],FileID[400];
 	bool 			Start = true, Found = false, wasclr;
+	bool			ModEmpty = false;
 	int			FilesNum = 0, i = 0, Pos, Size, Size2, nextlong;
-
+	
 	while (Folder[i].level != 0) {
 		if (mystrncasecmp(argv[2],Folder[i].parameter,0)) {
 			Found = true;
@@ -5809,6 +5853,8 @@ static void NokiaAddFile(int argc, char *argv[])
 	File.Buffer 	= NULL;
 	File.Protected  = false;
 	File.ReadOnly   = false;
+	File.Hidden	= false;
+	File.System	= false;
 
 	if (mystrncasecmp(argv[2],"Application",0) || mystrncasecmp(argv[2],"Game",0)) {
 		sprintf(buffer,"%s.jad",argv[3]);
@@ -5891,7 +5937,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		strcat(buffer,Name);
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		strcpy(File.ID_FullName,Files[FilesNum].ID_FullName);
-		error 	= Phone->AddFolder(&s,&File);
+		error = Phone->AddFolder(&s,&File);
 	    	Print_Error(error);
 		strcpy(FileID,File.ID_FullName);
 
@@ -5899,9 +5945,10 @@ static void NokiaAddFile(int argc, char *argv[])
 		strcpy(buffer,JAR);
 		buffer[strlen(buffer) - 1] = 'd';
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
-		File.Type = GSM_File_Other;
-		error 	= GE_NONE;
-		Pos	= 0;
+		File.Type 	   = GSM_File_Other;
+		File.ModifiedEmpty = true;
+		error 		   = GE_NONE;
+		Pos		   = 0;
 		while (error == GE_NONE) {
 			error = Phone->AddFilePart(&s,&File,&Pos);
 		    	if (error != GE_EMPTY) Print_Error(error);
@@ -5922,9 +5969,10 @@ static void NokiaAddFile(int argc, char *argv[])
 		strcpy(File.ID_FullName,FileID);
 		strcpy(buffer,JAR);
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
-		File.Type = GSM_File_Java_JAR;
-		error 	= GE_NONE;
-		Pos	= 0;
+		File.Type 	   = GSM_File_Java_JAR;
+		File.ModifiedEmpty = true;
+		error 		   = GE_NONE;
+		Pos		   = 0;
 		while (error == GE_NONE) {
 			error = Phone->AddFilePart(&s,&File,&Pos);
 		    	if (error != GE_EMPTY) Print_Error(error);
@@ -5954,6 +6002,18 @@ static void NokiaAddFile(int argc, char *argv[])
 					}
 					if (mystrncasecmp(argv[i],"-readonly",0)) {
 						File.ReadOnly = true;		
+						continue;
+					}
+					if (mystrncasecmp(argv[i],"-hidden",0)) {
+						File.Hidden = true;		
+						continue;
+					}
+					if (mystrncasecmp(argv[i],"-system",0)) {
+						File.System = true;		
+						continue;
+					}
+					if (mystrncasecmp(argv[i],"-newtime",0)) {
+						ModEmpty = true;		
 						continue;
 					}
 					printmsg("Parameter \"%s\" unknown\n",argv[i]);
@@ -6003,10 +6063,12 @@ static void NokiaAddFile(int argc, char *argv[])
 				strcat(buffer,Name);
 			}
 		}
+		ModEmpty = true;
 	}
 
 	error = GSM_ReadFile(argv[3], &File);
 	Print_Error(error);
+	if (ModEmpty) File.ModifiedEmpty = true;
 
 	strcpy(File.ID_FullName,Files[FilesNum].ID_FullName);
 	EncodeUnicode(File.Name,buffer,strlen(buffer));
@@ -6219,11 +6281,12 @@ void SearchPhoneThread(int i)
 
 	while(strlen(SearchDevices[i].Connections[j]) != 0) {
 		memcpy(&s2,&s,sizeof(GSM_StateMachine));
-		s2.Config.SyncTime		= "no";
-		s2.Config.LockDevice		= "";
-		s2.Config.StartInfo		= "no";		
-		s2.Config.Device 		= SearchDevices[i].Device;
-		s2.Config.Connection		= SearchDevices[i].Connections[j];
+		s2.Config[0].SyncTime		= "no";
+		s2.Config[0].LockDevice		= "";
+		s2.Config[0].StartInfo		= "no";		
+		s2.Config[0].Device 		= SearchDevices[i].Device;
+		s2.Config[0].Connection		= SearchDevices[i].Connections[j];
+		s2.ConfigNum			= 1;
 		error = GSM_InitConnection(&s2,1);
 		printf("Connection \"%s\" on device \"%s\"\n",SearchDevices[i].Connections[j],SearchDevices[i].Device);
 		if (error != GE_NONE) {
@@ -6321,16 +6384,17 @@ static void usage(void)
  	printf("gammu --getfmstation start [stop]\n");
  	printf("gammu --getgprspoint start [stop]\n\n");
 
-	printf("gammu --getfiles file1ID file2ID ...\n");
+	printf("gammu --getfiles file1ID ... [-newtime] ... file2ID ...\n");
 	printf("gammu --getfilesystem [-flatall|-flat]\n");
 	printf("gammu --deletefiles fileID\n");
 	printf("gammu --addfolder parentfolderID name\n");
-	printf("gammu --addfile folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP] [-readonly]\n");
-	printf("                              [-protected]\n");
+	printf("gammu --addfile folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP][-readonly]\n");
+	printf("                              [-protected][-system][-hidden][-newtime]\n");
 	printf("gammu --nokiaaddfile MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent\n");
 	printf("                     file sender title\n");
 	printf("gammu --nokiaaddfile Application|Game file [-readonly]\n");
-	printf("gammu --nokiaaddfile Gallery|Tones file [-name name] [-protected] [-readonly]\n\n");
+	printf("gammu --nokiaaddfile Gallery|Tones file [-name name][-protected][-readonly]\n");
+	printf("                     [-system][-hidden][-newtime]\n");
 
 	printf("gammu --getdatetime\n");
 	printf("gammu --setdatetime\n");
@@ -6711,51 +6775,55 @@ int main(int argc, char *argv[])
 	char	*locale, locale_file[201];
 #endif
 
-	s.opened = false;
-	s.msg	 = NULL;
+	s.opened 	= false;
+	s.msg	 	= NULL;
+	s.ConfigNum 	= 0;
 
 	setlocale(LC_ALL, "");
 #ifdef DEBUG
-	di.dl	 = DL_TEXTALL;
-	di.df 	 = stdout;
+	di.dl		= DL_TEXTALL;
+	di.df	 	= stdout;
 #endif
 
 	cfg=CFG_FindGammuRC();
-	if (cfg!=NULL) {
-	        s.Config.Localize = CFG_Get(cfg, "gammu", "gammuloc", false);
-        	if (s.Config.Localize) {
-			s.msg=CFG_ReadFile(s.Config.Localize, true);
-		} else {
+	for (i=0;i<5;i++) {
+		if (cfg!=NULL) {
+		        s.Config[i].Localize = CFG_Get(cfg, "gammu", "gammuloc", false);
+        		if (s.Config[i].Localize) {
+				s.msg=CFG_ReadFile(s.Config[i].Localize, true);
+			} else {
 #if !defined(WIN32) && defined(LOCALE_PATH)
-			locale = setlocale(LC_MESSAGES, "");
-			if (locale) {
-				snprintf(locale_file, 200, "%s/gammu_%c%c.txt",
-						LOCALE_PATH,
-						tolower(locale[0]),
-						tolower(locale[1]));
-				s.msg = CFG_ReadFile(locale_file, true);
-			}
+				locale = setlocale(LC_MESSAGES, "");
+				if (locale) {
+					snprintf(locale_file, 200, "%s/gammu_%c%c.txt",
+							LOCALE_PATH,
+							tolower(locale[0]),
+							tolower(locale[1]));
+					s.msg = CFG_ReadFile(locale_file, true);
+				}
 #endif
+			}
 		}
+		if (!CFG_ReadConfig(cfg, &s.Config[i], i) && i != 0) break;
+		s.ConfigNum++;
+
+    		/* We want to use only one file descriptor for global and state machine debug output */
+	    	s.Config[i].UseGlobalDebugFile = true;
+
+		/* When user gave debug level on command line */
+		if (argc > 1 && GSM_SetDebugLevel(argv[1], &di)) {
+			/* Debug level from command line will be used with phone too */
+			strcpy(s.Config[i].DebugLevel,argv[1]);
+			start = 1;
+		} else {
+			/* Try to set debug level from config file */
+			GSM_SetDebugLevel(s.Config[i].DebugLevel, &di);
+		}
+
+		/* If user gave debug file in gammurc, we will use it */
+		error=GSM_SetDebugFile(s.Config[i].DebugFile, &di);
+		Print_Error(error);
 	}
-	CFG_ReadConfig(cfg, &s.Config);
-
-    	/* We want to use only one file descriptor for global and state machine debug output */
-    	s.Config.UseGlobalDebugFile = true;
-
-	/* When user gave debug level on command line */
-	if (argc > 1 && GSM_SetDebugLevel(argv[1], &di)) {
-		/* Debug level from command line will be used with phone too */
-		strcpy(s.Config.DebugLevel,argv[1]);
-		start = 1;
-	} else {
-		/* Try to set debug level from config file */
-		GSM_SetDebugLevel(s.Config.DebugLevel, &di);
-	}
-
-	/* If user gave debug file in gammurc, we will use it */
-	error=GSM_SetDebugFile(s.Config.DebugFile, &di);
-	Print_Error(error);
 
 	if (argc == 1 + start) {
 		usage();

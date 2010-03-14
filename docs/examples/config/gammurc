@@ -65,3 +65,15 @@ connection = fbusblue
 #use_locking = yes
 #gammuloc = locfile
 #startinfo = yes
+
+[gammu2]
+
+port = com8:
+#model = 6110
+connection = fbusblue
+#synchronizetime = yes
+#logfile = gammulog
+#logformat = textall
+#use_locking = yes
+#gammuloc = locfile
+#startinfo = yes

@@ -28,6 +28,13 @@
 #  define my_sleep(x) usleep(x)
 #endif
 
+#undef MAX
+#define MAX(a,b) ((a)>(b)?(a):(b))
+#undef MIN
+#define MIN(a,b) ((a)<(b)?(a):(b))
+
+/* ------------------------------------------------------------------------- */
+
 #define MAX_LINES 50
 
 int GetLine(FILE *File, char *Line, int count);
@@ -39,6 +46,8 @@ typedef struct {
 void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsigned char *whitespaces, int spaceslen, bool eot);
 char *GetLineString(unsigned char *message, GSM_Lines lines, int start);
 void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, int start);
+
+/* ------------------------------------------------------------------------- */
 
 typedef enum {
 	DL_BINARY = 1,		/* Binary transmission dump 	*/
@@ -74,6 +83,8 @@ void DumpMessage(FILE *df, const unsigned char *message, int messagesize);
 
 bool GSM_SetDebugLevel(char *info, Debug_Info *di);
 
+/* ------------------------------------------------------------------------- */
+
 /* Structure used for passing dates/times to date/time functions such as
    GSM_GetTime and GSM_GetAlarm etc. */
 typedef struct {
@@ -91,13 +102,8 @@ char *OSDateTime 		(GSM_DateTime dt, bool TimeZone);
 char *OSDate 			(GSM_DateTime dt);
 char *DayOfWeek 		(int year, int month, int day);
 time_t Fill_Time_T		(GSM_DateTime DT, int TZ);
-
-#undef MAX
-#define MAX(a,b) ((a)>(b)?(a):(b))
-#undef MIN
-#define MIN(a,b) ((a)<(b)?(a):(b))
-
-int FindSerialSpeed(char *buffer);
+void GetTimeDifference		(unsigned long diff, GSM_DateTime *DT, bool Plus, int multi);
+void Fill_GSM_DateTime		(GSM_DateTime *Date, time_t timet);
 
 #endif
 

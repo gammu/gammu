@@ -81,7 +81,6 @@ procedure TSendSMSForm.MemoChange(Sender: TObject);
 var
   SMSText,Temp     : array[1..10000] of char;
   i,c              : integer;
-  UDH              : GSM_UDHHeader;
   SMSNum,CharsLeft : integer;
   MultiSMS         : GSM_MultiSMSMessage;
   tmp              : string;
@@ -120,8 +119,7 @@ begin
     SMSText[i*2+2]:=chr(0);
   end;
   //now calculate sms counter
-  UDH.Length:=MultiSMS.SMS[1].UDH.Length;
-  GSM_SMSCounter(i,@SMSText,UDH,GSM_Coding_Default,@SMSNum,@CharsLeft);
+  GSM_SMSCounter(i,@SMSText,MultiSMS.SMS[1].UDH.UDHType,GSM_Coding_Default,@SMSNum,@CharsLeft);
   //delete chars from Memo, if required
   Memo.SelStart:=i;
   Memo.SelLength:=C;

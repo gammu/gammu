@@ -168,7 +168,8 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 static GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos)
 {
 	GSM_Error		error;
-	int			j, Current = 0,Pos2;
+	int			j;
+	unsigned int		Pos2, Current = 0;
 	unsigned char 		req[2000],req2[200];
 
 	s->Phone.Data.File = File;
@@ -281,13 +282,15 @@ static GSM_Error OBEXGEN_ReplyGetFileInfo(GSM_Protocol_Message msg, GSM_StateMac
 
 static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bool FolderList)
 {
-	int 			Current = 0, Pos;
+	unsigned int 		Current = 0, Pos;
 	GSM_Error		error;
 	unsigned char 		req[2000], req2[200];
 
 	s->Phone.Data.File 	= File;
 	File->ReadOnly 		= false;
 	File->Protected 	= false;
+	File->Hidden		= false;
+	File->System		= false;
 
 	if (File->Used == 0x00) {
 		if (FolderList) {
@@ -559,7 +562,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 static GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 {
 	GSM_Error		error;
-	int			Current = 0, Pos;
+	unsigned int		Current = 0, Pos;
 	unsigned char		req[200],req2[200];
 
 	error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
@@ -594,7 +597,7 @@ static GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 {
 	GSM_Error		error;
 	unsigned char		req2[200];
-	int			Pos;
+	unsigned int		Pos;
 
 	error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
 	if (error != GE_NONE) return error;

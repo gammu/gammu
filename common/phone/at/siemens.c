@@ -14,19 +14,6 @@
 
 extern GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s);
 
-static int cut_str (const unsigned char *source, unsigned char *dest, const unsigned char *findstr)
-{
-	unsigned char 	*find;
-	int 	  	pos;
-
-	find = (unsigned char *)strstr(source,findstr); 
-	if (find==NULL) return -1;
-	pos = (int)(find - source);
-	while ((*dest++=*find++)!='\n');
-	*(--dest)='\0';
-	return pos;
-}
-
 GSM_Error ATGEN_CMS35ReplySetFunction (GSM_Protocol_Message msg, GSM_StateMachine *s,char *function)
 {
 	if (s->Protocol.Data.AT.EditMode)
@@ -148,7 +135,6 @@ GSM_Error ATGEN_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	error = Bitmap2BMP (buffer,NULL,Bitmap);
 	if (error!=GE_NONE) return error;
 	length = 0x100 * buffer[3] + buffer[2];
-	printf ("WALEK Buff=%i\n",length);
 	buffer[58]=0xff; buffer[59]=0xff; buffer[60]=0xff;
 	if (Bitmap->Location-1 < 0) Bitmap->Location++;
 	s->Phone.Data.Bitmap=Bitmap;
@@ -209,100 +195,19 @@ GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *ma
 GSM_Error ATGEN_CMS35ReplyGetNextCal(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_CalendarEntry	*Calendar = Data->Cal;
+	GSM_ToDoEntry		ToDo;
 	GSM_Error		error;
-	unsigned char 		buffer[354], tmp_buff[354];
-	int			pos, len, no=0;
+	unsigned char 		buffer[354];
+	int			len, pos=0;
 
 	if (Data->Priv.ATGEN.ReplyState != AT_Reply_OK) return GE_UNKNOWN;
 
 	error = GetSiemensFrame(msg,s,"vcs",buffer,&len);
 	if (error!=GE_NONE) return error;
-
- 	pos = cut_str(buffer,tmp_buff,"CATEGORIES:");
- 	if (pos > -1) {
-    		if (strstr(tmp_buff,"MISCELLANEOUS"))   Data->Cal->Type=GCN_REMINDER;
-   		if (strstr(tmp_buff,"MEETING")) 	Data->Cal->Type=GCN_MEETING;
-    		if (strstr(tmp_buff,"PHONE CALL"))	Data->Cal->Type=GCN_CALL;
-    		if (strstr(tmp_buff,"ANNIVERSARY"))	Data->Cal->Type=GCN_BIRTHDAY;
-    	}
-	pos = cut_str (buffer,tmp_buff,"DESCRIPTION:");
- 	if (pos > -1) {
- 		len=strlen(tmp_buff)-13;
- 		memcpy (tmp_buff,buffer+pos+12,len);
- 		tmp_buff[len]='\0';
- 		if (Data->Cal->Type==GCN_CALL) Data->Cal->Entries[no].EntryType=CAL_PHONE;
-		else Data->Cal->Entries[no].EntryType=CAL_TEXT;
- 		EncodeUnicode (Data->Cal->Entries[no].Text,tmp_buff,strlen(tmp_buff));
-		no++;
-	}
-	pos = cut_str (buffer,tmp_buff,"DTSTART:");
-	if (pos > -1) {
-		Data->Cal->Entries[no].EntryType = CAL_START_DATETIME;
-    		memcpy (tmp_buff,buffer+pos+8,4);
-		tmp_buff[4]='\0';
-    		Data->Cal->Entries[no].Date.Year = atoi(tmp_buff);
-    		memcpy (tmp_buff,buffer+pos+12,2);
-		tmp_buff[2]='\0';
-    		Data->Cal->Entries[no].Date.Month = atoi(tmp_buff);
-    		memcpy (tmp_buff,buffer+pos+14,2);
-		tmp_buff[2]='\0';
-    		Data->Cal->Entries[no].Date.Day = atoi(tmp_buff);
-    		memcpy (tmp_buff,buffer+pos+17,2);
-		tmp_buff[2]='\0';
-    		Data->Cal->Entries[no].Date.Hour = atoi(tmp_buff);
-    		memcpy (tmp_buff,buffer+pos+19,2);
-		tmp_buff[2]='\0';
-    		Data->Cal->Entries[no].Date.Minute = atoi(tmp_buff);
-    		memcpy (tmp_buff,buffer+pos+21,2);
-		tmp_buff[2]='\0';
-    		Data->Cal->Entries[no].Date.Second = atoi(tmp_buff);
-		no++;
- 	}
-	pos = cut_str (buffer,tmp_buff,"DALARM:");
-	if (pos > -1) {
-		Data->Cal->Entries[no].EntryType = CAL_ALARM_DATETIME;
-    		memcpy (tmp_buff,buffer+pos+7,4);
-		tmp_buff[4]='\0';
-    		Data->Cal->Entries[no].Date.Year= atoi(tmp_buff);
-    		memcpy (tmp_buff,buffer+pos+11,2);
-		tmp_buff[2]='\0';
-    		Data->Cal->Entries[no].Date.Month= atoi(tmp_buff);
-    		memcpy (tmp_buff,buffer+pos+13,2);
-		tmp_buff[2]='\0';
-    		Data->Cal->Entries[no].Date.Day= atoi(tmp_buff);
-    		memcpy (tmp_buff,buffer+pos+16,2);
-		tmp_buff[2]='\0';
-    		Data->Cal->Entries[no].Date.Hour= atoi(tmp_buff);
-    		memcpy (tmp_buff,buffer+pos+18,2);
-		tmp_buff[2]='\0';
-    		Data->Cal->Entries[no].Date.Minute= atoi(tmp_buff);
-    		memcpy (tmp_buff,buffer+pos+20,2);
-		tmp_buff[2]='\0';
-    		Data->Cal->Entries[no].Date.Second= atoi(tmp_buff);
-		no++;			
- 	}
-	pos = cut_str (buffer,tmp_buff,"RRULE:");
-	if (pos > -1) {
-		if (strstr(tmp_buff,"D1")) { 	//daily
-		    Data->Cal->Entries[no].EntryType 	= CAL_RECURRANCE;
-		    Data->Cal->Entries[no].Number 	= 24;
-		}
-   		if (strstr(tmp_buff,"D7")) { 	//weekly
-		    Data->Cal->Entries[no].EntryType 	= CAL_RECURRANCE;
-		    Data->Cal->Entries[no].Number 	= 7 * 24;
-		}
-    		if (strstr(tmp_buff,"MD1")) { 	//monthly 
-		    Data->Cal->Entries[no].EntryType 	= CAL_RECURRANCE;
-		    Data->Cal->Entries[no].Number 	= 30 * 24; //fix-me
-		}
-    		if (strstr(tmp_buff,"YD1")) { 	//yearly
-		    Data->Cal->Entries[no].EntryType 	= CAL_RECURRANCE;
-		    Data->Cal->Entries[no].Number 	= 365 * 24; //fix-me
-		}
-		no++;			
-    	}
-	Data->Cal->EntriesNum = no;
-	return GE_NONE;
+	error=GSM_DecodeVCALENDAR_VTODO(buffer,&pos,Calendar,&ToDo,Siemens_VCalendar,0);
+	
+ 	return error;
 }
 
 GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
@@ -320,7 +225,7 @@ GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bo
 	smprintf(s, "Getting VCALENDAR\n");
 	Location = Note->Location;
 	while (1){
-	    Location++;	    	
+	    Location++;
 	    sprintf(req, "AT^SBNR=\"vcs\",%i\r",Location);  
 	    error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetCalendarNote);
 	    if ((error!=GE_NONE) && (error!=GE_EMPTY)) return GE_INVALIDLOCATION;
@@ -367,74 +272,17 @@ GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bo
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
-	unsigned char 		req[500], category[20], recurr[20], datetime[20],
-				datealarm[20], description[20];
-	int			size, day=0, no=0;
-	bool			alarm = false;
+	unsigned char 		req[500];
+	int			size=0;
 
 	if (Priv->Manufacturer!=AT_Siemens) return GE_NOTSUPPORTED;
 	if (Note->Location==0x00) return GE_INVALIDLOCATION;	
+
 	if (!Past && IsCalendarNoteFromThePast(Note)) return GE_NONE;
 
-	error = ATGEN_DelCalendarNote(s, Note);
-    	if (error!=GE_NONE) return error;
-	
 	s->Phone.Data.Cal = Note;
-	
-	switch(Note->Type) {
-		case GCN_REMINDER : sprintf(category,"MISCELLANEOUS"); 	break;
-		case GCN_CALL     : sprintf(category,"PHONE CALL"); 	break;
-    		case GCN_MEETING  : sprintf(category,"MEETING");	break;
-		case GCN_BIRTHDAY : sprintf(category,"ANNIVERSARY");	break;
-		default		  : sprintf(category,"MISCELLANEOUS");  break;
-	}
-	recurr[0] = '\0';
-	
-	while (no < Note->EntriesNum) {
-	switch (Note->Entries[no].EntryType) {
-	    case CAL_ALARM_DATETIME:
-	        sprintf(datealarm,"%04d%02d%02dT%02d%02d%02d", Note->Entries[no].Date.Year,
-							Note->Entries[no].Date.Month,
-							Note->Entries[no].Date.Day,
-							Note->Entries[no].Date.Hour,
-							Note->Entries[no].Date.Minute,
-							Note->Entries[no].Date.Second);
-		alarm = true;
-		break;
-	    case CAL_START_DATETIME:
-	        sprintf(datetime,"%04d%02d%02dT%02d%02d%02d", Note->Entries[no].Date.Year,
-							Note->Entries[no].Date.Month,
-							Note->Entries[no].Date.Day,
-							Note->Entries[no].Date.Hour,
-							Note->Entries[no].Date.Minute,
-							Note->Entries[no].Date.Second);
-		day = Note->Entries[no].Date.Day;
-		break;
-	    case CAL_TEXT:
-	        sprintf(description,DecodeUnicodeString(Note->Entries[no].Text));
-	        break;
-	    case CAL_RECURRANCE:
-		switch (Note->Entries[no].Number){
-		    case 24: 		sprintf (recurr,"RRULE:D1\r\n"); break;
-		    case (7*24): 	sprintf (recurr,"RRULE:D7\r\n"); break;
-		    case (30*24):	sprintf (recurr,"RRULE:MD1 %02d\r\n",day); break;
-		    case (365*24): 	sprintf (recurr,"RRULE:YD1\r\n"); break;
-		    default: break;
-		}
-		break;
-	    default: break;
-	    }
-	    no++;
-	}
+	error=GSM_EncodeVCALENDAR(req,&size,Note,true,Siemens_VCalendar);
 		
-	if (alarm)
-	 sprintf(req,"BEGIN:VCALENDAR\r\nVERSION:1.0\r\nBEGIN:VEVENT\r\nCATEGORIES:%s\r\nDALARM:%s\r\nDTSTART:%s\r\n%sDESCRIPTION:%s\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
-		 category,datealarm,datetime,recurr,description); 
-	else 
-	 sprintf(req,"BEGIN:VCALENDAR\r\nVERSION:1.0\r\nBEGIN:VEVENT\r\nCATEGORIES:%s\r\nDTSTART:%s\r\n%sDESCRIPTION:%s\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
-		 category,datetime,recurr,description);
-	size = strlen(req);
-	
 	return SetSiemensFrame (s,req,"vcs",Note->Location,ID_SetCalendarNote,size);
 }
 

@@ -45,18 +45,18 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 	sab.port 		= port;
 	sab.addressFamily 	= AF_BTH;
 	sab.btAddr 		= 0;
-	for (i=0;i<(int)strlen(s->Config.Device);i++) {
-		if (s->Config.Device[i] >='0' && s->Config.Device[i] <='9') {
+	for (i=0;i<(int)strlen(s->CurrentConfig->Device);i++) {
+		if (s->CurrentConfig->Device[i] >='0' && s->CurrentConfig->Device[i] <='9') {
 			sab.btAddr = sab.btAddr * 16;
-			sab.btAddr = sab.btAddr + (s->Config.Device[i]-'0');
+			sab.btAddr = sab.btAddr + (s->CurrentConfig->Device[i]-'0');
 		}
-		if (s->Config.Device[i] >='a' && s->Config.Device[i] <='f') {
+		if (s->CurrentConfig->Device[i] >='a' && s->CurrentConfig->Device[i] <='f') {
 			sab.btAddr = sab.btAddr * 16;
-			sab.btAddr = sab.btAddr + (s->Config.Device[i]-'a'+10);
+			sab.btAddr = sab.btAddr + (s->CurrentConfig->Device[i]-'a'+10);
 		}
-		if (s->Config.Device[i] >='A' && s->Config.Device[i] <='F') {
+		if (s->CurrentConfig->Device[i] >='A' && s->CurrentConfig->Device[i] <='F') {
 			sab.btAddr = sab.btAddr * 16;
-			sab.btAddr = sab.btAddr + (s->Config.Device[i]-'A'+10);
+			sab.btAddr = sab.btAddr + (s->CurrentConfig->Device[i]-'A'+10);
 		}
 	}
 	dprintf("Remote Bluetooth device is %04x%08x\n",
@@ -96,7 +96,7 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 		return GE_DEVICEOPENERROR;
 	}
 
-	str2ba(s->Config.Device, &bdaddr);
+	str2ba(s->CurrentConfig->Device, &bdaddr);
 	bacpy(&raddr.rc_bdaddr, &bdaddr);
 	raddr.rc_family 	= AF_BLUETOOTH;
 	raddr.rc_channel 	= port;

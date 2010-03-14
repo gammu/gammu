@@ -4,47 +4,7 @@ interface
 
 uses Classes,Forms,SysUtils;
 
-{$MINENUMSIZE 4}
-
-type GSM_Error = (
-        GE_NONE = 1,
-        GE_DEVICEOPENERROR,		// Error during opening device
-	GE_DEVICELOCKED,
-        GE_DEVICEDTRRTSERROR,		// Error during setting DTR/RTS in device
-        GE_DEVICECHANGESPEEDERROR,	// Error during changing speed in device
-        GE_DEVICEWRITEERROR,		// Error during writing device 
-	GE_DEVICEREADERROR,		// Error during reading device
-	GE_DEVICEPARITYERROR,		// Can't set parity on device
-        GE_TIMEOUT,			// Command timed out 
-        GE_FRAMENOTREQUESTED,		// Frame handled, but not requested in this moment //10
-        GE_UNKNOWNRESPONSE,		// Response not handled by gammu
-	GE_UNKNOWNFRAME,		// Frame not handled by gammu
-	GE_UNKNOWNCONNECTIONTYPESTRING,	// Unknown connection type given by user 
-	GE_UNKNOWNMODELSTRING,		// Unknown model given by user 
-	GE_SOURCENOTAVAILABLE,		// Some functions not compiled in your OS
-	GE_NOTSUPPORTED,		// Not supported by phone
-	GE_EMPTY,			// Empty phonebook entry, ...
-	GE_SECURITYERROR,		// Not allowed
-	GE_INVALIDLOCATION,		// Too high or too low location...
-	GE_NOTIMPLEMENTED,		// Function not implemented //20
-	GE_FULL,			// Memory is full 
-	GE_UNKNOWN,
-	GE_CANTOPENFILE, 		// Error during opening file
-	GE_MOREMEMORY,			// More memory required
-	GE_PERMISSION,			// No permission
-	GE_EMPTYSMSC,			// SMSC number is empty
-	GE_INSIDEPHONEMENU,		// Inside phone menu - can't make something
-	GE_NOTCONNECTED,		// Phone NOT connected - can't make something 
-	GE_WORKINPROGRESS,		// Work in progress
-      	GE_PHONEOFF,			// Phone is disabled and connected to charger //30
-	GE_FILENOTSUPPORTED,		// File format not supported by Gammu
-	GE_BUG,                  	// Found bug in implementation or phone //32
-	GE_CANCELED,
-	GE_NEEDANOTHERANSWER);
-
-
-const
-	GSM_MAX_SMSC_NAME_LENGTH	= 30;
+const	GSM_MAX_SMSC_NAME_LENGTH	= 30;
 	GSM_MAX_SMS_NAME_LENGTH		= 40;
 	GSM_MAX_NUMBER_LENGTH		= 50;
 
@@ -52,8 +12,11 @@ const
 	GSM_MAX_SMS_LENGTH		= 160;
 	GSM_MAX_8BIT_SMS_LENGTH		= 140;
 
-type
-        GSM_NetworkInfo_State = (
+	MAX_MULTI_SMS			= 10;
+
+{$MINENUMSIZE 4}
+
+type    GSM_NetworkInfo_State = (
         	GSM_HomeNetwork = 1,    //phone logged into home network
         	GSM_RoamingNetwork,     //phone logged into other than home network
         	GSM_RequestingNetwork,  //phone tries to log into network
@@ -67,6 +30,42 @@ type
 		LAC	  	: array[1..10] of char;  // LAC
 	end;
 	PGSM_NetworkInfo = ^GSM_NetworkInfo;
+
+	GSM_Error = (
+	        GE_NONE = 1,
+       	 	GE_DEVICEOPENERROR,		// Error during opening device
+		GE_DEVICELOCKED,
+        	GE_DEVICEDTRRTSERROR,		// Error during setting DTR/RTS in device
+        	GE_DEVICECHANGESPEEDERROR,	// Error during changing speed in device
+       		GE_DEVICEWRITEERROR,		// Error during writing device 
+		GE_DEVICEREADERROR,		// Error during reading device
+		GE_DEVICEPARITYERROR,		// Can't set parity on device
+        	GE_TIMEOUT,			// Command timed out 
+        	GE_FRAMENOTREQUESTED,		// Frame handled, but not requested in this moment //10
+        	GE_UNKNOWNRESPONSE,		// Response not handled by gammu
+		GE_UNKNOWNFRAME,		// Frame not handled by gammu
+		GE_UNKNOWNCONNECTIONTYPESTRING,	// Unknown connection type given by user 
+		GE_UNKNOWNMODELSTRING,		// Unknown model given by user 
+		GE_SOURCENOTAVAILABLE,		// Some functions not compiled in your OS
+		GE_NOTSUPPORTED,		// Not supported by phone
+		GE_EMPTY,			// Empty phonebook entry, ...
+		GE_SECURITYERROR,		// Not allowed
+		GE_INVALIDLOCATION,		// Too high or too low location...
+		GE_NOTIMPLEMENTED,		// Function not implemented //20
+		GE_FULL,			// Memory is full 
+		GE_UNKNOWN,
+		GE_CANTOPENFILE, 		// Error during opening file
+		GE_MOREMEMORY,			// More memory required
+		GE_PERMISSION,			// No permission
+		GE_EMPTYSMSC,			// SMSC number is empty
+		GE_INSIDEPHONEMENU,		// Inside phone menu - can't make something
+		GE_NOTCONNECTED,		// Phone NOT connected - can't make something 
+		GE_WORKINPROGRESS,		// Work in progress
+      		GE_PHONEOFF,			// Phone is disabled and connected to charger //30
+		GE_FILENOTSUPPORTED,		// File format not supported by Gammu
+		GE_BUG,                  	// Found bug in implementation or phone //32
+		GE_CANCELED,
+		GE_NEEDANOTHERANSWER);
 
 	GSM_DateTime = record
 		Year	 : integer; //full year (for example,2002)
@@ -126,13 +125,14 @@ type
 		UDH_EnableEmail,
 		UDH_VoidSMS,
 		UDH_NokiaRingtone,
+		UDH_NokiaRingtoneLong,
 		UDH_NokiaOperatorLogo,
-		UDH_NokiaCallerLogo,
-		UDH_NokiaWAPBookmark,
-		UDH_NokiaCalendarLong,
 		UDH_NokiaOperatorLogoLong,
-		UDH_NokiaProfileLong,
+		UDH_NokiaCallerLogo,
+		UDH_NokiaWAP,
 		UDH_NokiaWAPLong,
+		UDH_NokiaCalendarLong,
+		UDH_NokiaProfileLong,
 		UDH_NokiaPhonebookLong,
 		UDH_UserUDH,			// Other user UDH
 		UDH_MMSIndicatorLong);
@@ -188,10 +188,6 @@ type
 	end;
 	PGSM_SMSMessage = ^GSM_SMSMessage;
 
-const
-	MAX_MULTI_SMS			= 6;
-
-type
 	GSM_MultiSMSMessage = record
 		Number		 : char;  //how many sms we have in collection now
 		SMS		 : array[1..MAX_MULTI_SMS] of GSM_SMSMessage;
@@ -262,7 +258,7 @@ function GSM_GetModel	                (Phone : integer; Model:PAnsiString): GSM_
 function GSM_GetModelName	        (Phone : integer; Model:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmodelname';
 function GSM_GetFirmwareVersion         (Phone : integer; Version: PDouble): GSM_Error; stdcall; external 'gammu.dll' name 'mygetfirmwareversion';
 function GSM_Reset                      (Phone : integer; Hard: LongBool): GSM_Error; stdcall; external 'gammu.dll' name 'myreset';
-function GSM_SMSCounter			(MessageLength:Integer;MessageBuffer:PAnsiString;UDH:GSM_UDHHeader;Coding:GSM_Coding_Type;SMSNum:PInteger;CharsLeft:PInteger): GSM_Error; stdcall; external 'gammu.dll' name 'mysmscounter';
+function GSM_SMSCounter			(MessageLength:Integer;MessageBuffer:PAnsiString;UDH:GSM_UDH;Coding:GSM_Coding_Type;SMSNum:PInteger;CharsLeft:PInteger): GSM_Error; stdcall; external 'gammu.dll' name 'mysmscounter';
 function GSM_MakeMultiPartSMS           (MessageBuffer:PAnsiString;MessageLength:Integer;UDHType:GSM_UDH;Coding:GSM_Coding_Type;MyClass:Integer;ReplaceMessage:ShortInt;SMS:PGSM_MultiSMSMessage): GSM_Error; stdcall; external 'gammu.dll' name 'mymakemultipartsms';
 procedure GSM_GetNetworkName	        (NetworkCode: PAnsiString; NetworkName: PAnsiString); stdcall; external 'gammu.dll' name 'mygetnetworkname';
 procedure GSM_GetGammuVersion		(Version: PAnsiString); stdcall; external 'gammu.dll' name 'mygetgammuversion';

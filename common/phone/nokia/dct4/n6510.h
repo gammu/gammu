@@ -25,6 +25,8 @@ typedef struct {
 	int				FilesLevels[500];
 	int				FilesLocationsUsed;
 	int				FilesLocationsCurrent;
+	int				FileToken;
+	int				ParentID;
 
 	unsigned char			FMStatus[4000];
 	int				FMStatusLength;

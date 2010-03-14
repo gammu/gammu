@@ -17,8 +17,9 @@ unsigned char N71_65_MEMORY_TYPES[] = {
 	GMT_ME,		0x05,
 	GMT_SM,		0x06,
 	GMT_VM,		0x09,
-	GMT7110_CG,	0x10,
 	GMT7110_SP,	0x0e,
+	GMT7110_CG,	0x10,
+	GMT_ON,		0x17,
 	  0x00,		0x00
 };
 
@@ -1143,7 +1144,7 @@ GSM_Error N71_65_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	if (s->Phone.Data.EnableIncomingUSSD && s->User.IncomingUSSD!=NULL) {
 		EncodeUnicode(buffer2,buffer,strlen(buffer));
-		s->User.IncomingUSSD(s->Config.Device, buffer2);
+		s->User.IncomingUSSD(s->CurrentConfig->Device, buffer2);
 	}
 
 	return GE_NONE;
@@ -1268,7 +1269,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (call.CallIDAvailable) smprintf(s, "Call ID    : %d\n",msg.Buffer[4]);
 	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL && call.Status != 0) {
 		if (call.CallIDAvailable) call.CallID = msg.Buffer[4];
-		s->User.IncomingCall(s->Config.Device, call);
+		s->User.IncomingCall(s->CurrentConfig->Device, call);
 	}
 	if (s->Phone.Data.RequestID == ID_CancelCall) {
 		if (msg.Buffer[3] == 0x09) {
@@ -1287,30 +1288,6 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		}
 	}
 	return GE_NONE;
-}
-
-void N71_65_GetTimeDiffence(GSM_StateMachine *s, unsigned long diff, GSM_DateTime *DT, bool Plus, int multi)
-{
-	time_t     	t_time;
-	struct tm  	*tm_endtime;
-
-	t_time = Fill_Time_T(*DT,8);
-
-	if (Plus) {
-		t_time 		+= diff*multi;
-	} else {
-		t_time 		-= diff*multi;
-	}
-
-	tm_endtime 		= localtime(&t_time);
-	DT->Year   		= tm_endtime->tm_year + 1900;
-	DT->Month  		= tm_endtime->tm_mon + 1;
-	DT->Day    		= tm_endtime->tm_mday;
-	DT->Hour   		= tm_endtime->tm_hour;
-	DT->Minute 		= tm_endtime->tm_min;
-	DT->Second 		= tm_endtime->tm_sec;
-	smprintf(s, "  EndTime    : %02i-%02i-%04i %02i:%02i:%02i\n",
-		DT->Day,DT->Month,DT->Year,DT->Hour,DT->Minute,DT->Second);
 }
 
 void N71_65_GetCalendarRecurrance(GSM_StateMachine *s, unsigned char *buffer, GSM_CalendarEntry *entry)
@@ -1801,7 +1778,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		if (alarm != 0xffff) {
 			smprintf(s, "  Difference : %i seconds\n", alarm);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
-			N71_65_GetTimeDiffence(s, alarm, &entry->Entries[1].Date, false, 60);
+			GetTimeDifference(alarm, &entry->Entries[1].Date, false, 60);
 			entry->Entries[1].EntryType = CAL_ALARM_DATETIME;
 			entry->EntriesNum++;
 		}
@@ -1822,7 +1799,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		if (alarm != 0xffff) {
 			smprintf(s, "  Difference : %i seconds\n", alarm);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
-			N71_65_GetTimeDiffence(s, alarm, &entry->Entries[1].Date, false, 60);
+			GetTimeDifference(alarm, &entry->Entries[1].Date, false, 60);
 			entry->Entries[1].EntryType = CAL_ALARM_DATETIME;
 			entry->EntriesNum++;
 		}
@@ -1860,7 +1837,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		if (alarm != 0xffff) {
 			smprintf(s, "  Difference : %i seconds\n", alarm);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
-			N71_65_GetTimeDiffence(s, alarm, &entry->Entries[1].Date, false, 1);
+			GetTimeDifference(alarm, &entry->Entries[1].Date, false, 1);
 			entry->Entries[1].EntryType = CAL_ALARM_DATETIME;
 			if (msg.Buffer[20]!=0x00) {
 				entry->Entries[1].EntryType = CAL_SILENT_ALARM_DATETIME;

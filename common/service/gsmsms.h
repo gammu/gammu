@@ -248,7 +248,7 @@ typedef struct {
 
 void GSM_SMSCounter(int 		MessageLength,
 		    unsigned char 	*MessageBuffer,
-		    GSM_UDHHeader 	UDH,
+		    GSM_UDH	 	UDHType,
 		    GSM_Coding_Type 	Coding,
 		    int 		*SMSNum,
 		    int 		*CharsLeft);

@@ -616,57 +616,6 @@ void GSM_EncodeUDHHeader(GSM_UDHHeader *UDH)
 	}
 }
 
-/* Calculates number of SMS and number of left chars in SMS */
-void GSM_SMSCounter(int 		MessageLength,
-		    unsigned char 	*MessageBuffer,
-		    GSM_UDHHeader 	UDH,
-		    GSM_Coding_Type 	Coding,
-		    int 		*SMSNum,
-		    int 		*CharsLeft)
-{
-	int pos=0,maxlen,smslen;
-
-	*SMSNum = 0;
-	maxlen  = 0;
-	smslen  = 0;
-	if (MessageLength == 0) *SMSNum = 1;
-	while (true) {
-		if (pos==MessageLength) break;
-
-		switch (Coding) {
-			case GSM_Coding_8bit:
-				/*max=140*/
-				maxlen=(GSM_MAX_8BIT_SMS_LENGTH-UDH.Length);
-				break;
-			case GSM_Coding_Default:
-				/*max=160*/
-				FindDefaultAlphabetLen(MessageBuffer+pos*2,&maxlen,&smslen,(GSM_MAX_8BIT_SMS_LENGTH-UDH.Length)*8/7);
-				break;
-			case GSM_Coding_Unicode:
-				/*max=70*/
-				maxlen=(GSM_MAX_8BIT_SMS_LENGTH-UDH.Length)/2;
-				break;
-		}
-		if ((MessageLength-pos)<maxlen) maxlen=MessageLength-pos;
-		pos=pos+maxlen;
-		(*SMSNum)++;
-	}
-	switch (Coding) {
-		case GSM_Coding_8bit:
-			/*max=140*/
-			(*CharsLeft)=GSM_MAX_8BIT_SMS_LENGTH-UDH.Length-maxlen;
-			break;
-		case GSM_Coding_Default:
-			/*max=160*/
-			(*CharsLeft)=(GSM_MAX_8BIT_SMS_LENGTH-UDH.Length)*8/7-smslen;
-			break;
-		case GSM_Coding_Unicode:
-			/*max=70*/
-			(*CharsLeft)=(GSM_MAX_8BIT_SMS_LENGTH-UDH.Length)/2-maxlen;
-			break;
-	}	
-}
-
 /* ----------------- Splitting SMS into parts ------------------------------ */
 
 static unsigned char GSM_MakeSMSIDFromTime()
@@ -835,6 +784,23 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 	if (SMS->Number == 1) SMS->SMS[0].ReplaceMessage = ReplaceMessage;
 }
 
+/* Calculates number of SMS and number of left chars in SMS */
+void GSM_SMSCounter(int 		MessageLength,
+		    unsigned char 	*MessageBuffer,
+		    GSM_UDH	 	UDHType,
+		    GSM_Coding_Type 	Coding,
+		    int 		*SMSNum,
+		    int 		*CharsLeft)
+{
+	int			UsedText,FreeBytes;
+	GSM_MultiSMSMessage 	MultiSMS;
+
+	MultiSMS.Number = 0;
+	GSM_MakeMultiPartSMS(&MultiSMS,MessageBuffer,MessageLength,UDHType,Coding,-1,false);
+	GSM_Find_Free_Used_SMS2(Coding,MultiSMS.SMS[MultiSMS.Number-1], &UsedText, CharsLeft, &FreeBytes);
+	*SMSNum = MultiSMS.Number;
+}
+
 /* Nokia Smart Messaging 3.0 */
 static void GSM_EncodeSMS30MultiPartSMS(GSM_EncodeMultiPartSMSInfo *Info,
 					char *Buffer, int *Length)
@@ -906,7 +872,8 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 					   bool 			linked)
 {
 	unsigned char		Buffer[GSM_MAX_SMS_LENGTH*2*MAX_MULTI_SMS];
-	int 			i,UsedText,j,Length,Width,Height,z,x,y,Len;
+	int 			i,UsedText,j,Length,Width,Height,z,x,y;
+	unsigned int	Len;
 	int 			Used,FreeText,FreeBytes,Width2,CopiedText,CopiedSMSText;
 	unsigned char		UDHID;
 	GSM_Bitmap		Bitmap,Bitmap2;

@@ -29,20 +29,20 @@ static void N71_65_GetCalendarAlarm(GSM_StateMachine *s, unsigned char *buffer, 
 
 		switch (entry->Type) {
 		case GCN_MEETING:
-			N71_65_GetTimeDiffence(s, diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
+			GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
 			break;
 		case GCN_MEMO:
 			if (!IsPhoneFeatureAvailable(Data->ModelInfo, F_CAL35)) {
-				N71_65_GetTimeDiffence(s, diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
+				GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
 				break;
 			}
 		case GCN_CALL:
 			if (!IsPhoneFeatureAvailable(Data->ModelInfo, F_CAL35)) {
-				N71_65_GetTimeDiffence(s, diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
+				GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
 				break;
 			}
 		default:
-			N71_65_GetTimeDiffence(s, diff, &entry->Entries[entry->EntriesNum].Date, false, 1);
+			GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 1);
 		}
 		smprintf(s, "Alarm date   : %02i-%02i-%04i %02i:%02i:%02i\n",
 			entry->Entries[entry->EntriesNum].Date.Day,   entry->Entries[entry->EntriesNum].Date.Month,
@@ -88,7 +88,7 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 	diff += ((unsigned int)msg.Buffer[14]) << 8;
 	diff += msg.Buffer[15];
 	smprintf(s, "  Difference : %i seconds\n", diff);
-	N71_65_GetTimeDiffence(s, diff, &Date, true, 1);
+	GetTimeDifference(diff, &Date, true, 1);
 	Date.Year += 20;
 	entry->Entries[0].EntryType = CAL_START_DATETIME;
 

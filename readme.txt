@@ -56,9 +56,9 @@ A. * these things can be done without anything:
      * ending win32 dll
      * uploading some things over WAP
      * AT modem emulator
+     * DKU-5 driver
      * .... (other)
    * after getting some hardware help:
-     * DKU-5 driver
      * Symbian support
      * SyncML
      * N3410 Java support
@@ -292,6 +292,13 @@ A  Nokia section
         and output
       When make ./configure, use --newcalendar. If this works for Your
       phone, please report model and firmware version.
+
+   15.DCT4 phones with filesystem
+      * I uploaded file to phone, phone says "format unknown".
+      Unfortunately, if there is communication problem during uploading file
+      and (for example) some file part is resent by Gammu, phone can recognize
+      it incorrectly. Please try to upload file again and (if problem still
+      happen) report to Gammu author(s).
 
    AT section
 
@@ -630,3 +637,23 @@ A. Nokia:
    * PC-Suite 5.0 - 5.1 (DCT4 color: N5100, N6610, N6800, N7210)
      * PC-Suite 5.12 (N6800)
      * PC-Suite 5.16 (N7210)
+-------------------------------------------------------------------------------
+Q. Does Gammu support Chinese SMS ?
+
+A. If I understand correctly, they're saved with Unicode alphabet in SMS. Gammu
+   is prepared for it. For example for sending/saving SMS just create Unicode
+   file and use switch -inputunicode, when use send/savesms
+-------------------------------------------------------------------------------
+Q. Can I use Nokia 6110/6130/6150 and infrared ?
+
+A. Unfortunately, connecting to Nokia:Phonet service in these phones doesn't
+   end with success. Probably there is no other way and you can't use socket
+   infrared here.
+
+   In Linux disable infrared in kernel, connect your infrared device to serial
+   port (other won't be supported in this mode) and try Gammu with "infrared"
+   connection. If doesn't work, there will be required some modifications of
+   sources. Please contact authors.
+
+   In Windows ANY infrared device can be assigned to serial port with driver
+   written by Jan Kiszka.

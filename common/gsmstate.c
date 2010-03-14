@@ -112,13 +112,13 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 static void GSM_RegisterModule(GSM_StateMachine *s,GSM_Phone_Functions *phone)
 {
 	/* Auto model */
-	if (s->Config.Model[0] == 0) {
+	if (s->CurrentConfig->Model[0] == 0) {
 		if (strstr(phone->models,GetModelData(NULL,s->Phone.Data.Model,NULL)->model) != NULL) {
 			smprintf(s,"[Module           - \"%s\"]\n",phone->models);
 			s->Phone.Functions = phone;
 		}
 	} else {
-		if (strstr(phone->models,s->Config.Model) != NULL) {
+		if (strstr(phone->models,s->CurrentConfig->Model) != NULL) {
 			smprintf(s,"[Module           - \"%s\"]\n",phone->models);
 			s->Phone.Functions = phone;
 		}
@@ -128,7 +128,7 @@ static void GSM_RegisterModule(GSM_StateMachine *s,GSM_Phone_Functions *phone)
 GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 {
 	/* Auto model */
-	if (s->Config.Model[0] == 0) {
+	if (s->CurrentConfig->Model[0] == 0) {
 #ifdef GSM_ENABLE_ATGEN
 		/* With ATgen and auto model we can work with unknown models too */
 		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT) {
@@ -173,219 +173,228 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 {
 	GSM_Error	error;
 	GSM_DateTime	time;
+	int		i;
 
-	s->Speed			  = 0;
-	s->ReplyNum			  = ReplyNum;
-	s->Phone.Data.ModelInfo		  = GetModelData("unknown",NULL,NULL);
-	s->Phone.Data.Manufacturer[0]	  = 0;
-	s->Phone.Data.Model[0]		  = 0;
-	s->Phone.Data.Version[0]	  = 0;
-	s->Phone.Data.VerDate[0]	  = 0;
-	s->Phone.Data.VerNum		  = 0;
-	s->Phone.Data.StartInfoCounter	  = 0;
+	for (i=0;i<s->ConfigNum;i++) {
+		s->CurrentConfig		  = &s->Config[i];
 
-	s->Phone.Data.HardwareCache[0]	  = 0;
-	s->Phone.Data.ProductCodeCache[0] = 0;
-	s->Phone.Data.EnableIncomingCall  = false;
-	s->Phone.Data.EnableIncomingSMS	  = false;
-	s->Phone.Data.EnableIncomingCB	  = false;
-	s->Phone.Data.EnableIncomingUSSD  = false;
-	s->User.UserReplyFunctions	  = NULL;
-	s->User.IncomingCall		  = NULL;
-	s->User.IncomingSMS		  = NULL;
-	s->User.IncomingCB		  = NULL;
-	s->User.IncomingUSSD		  = NULL;
-	s->User.SendSMSStatus		  = NULL;
-	s->LockFile			  = NULL;
-	s->opened			  = false;
+		s->Speed			  = 0;
+		s->ReplyNum			  = ReplyNum;
+		s->Phone.Data.ModelInfo		  = GetModelData("unknown",NULL,NULL);
+		s->Phone.Data.Manufacturer[0]	  = 0;
+		s->Phone.Data.Model[0]		  = 0;
+		s->Phone.Data.Version[0]	  = 0;
+		s->Phone.Data.VerDate[0]	  = 0;
+		s->Phone.Data.VerNum		  = 0;
+		s->Phone.Data.StartInfoCounter	  = 0;
 
-	s->di 				  = di;
-	s->di.use_global 		  = s->Config.UseGlobalDebugFile;
-	GSM_SetDebugLevel(s->Config.DebugLevel, &s->di);
-	error=GSM_SetDebugFile(s->Config.DebugFile, &s->di);
-	if (error != GE_NONE) return error;
+		s->Phone.Data.HardwareCache[0]	  = 0;
+		s->Phone.Data.ProductCodeCache[0] = 0;
+		s->Phone.Data.EnableIncomingCall  = false;
+		s->Phone.Data.EnableIncomingSMS	  = false;
+		s->Phone.Data.EnableIncomingCB	  = false;
+		s->Phone.Data.EnableIncomingUSSD  = false;
+		s->User.UserReplyFunctions	  = NULL;
+		s->User.IncomingCall		  = NULL;
+		s->User.IncomingSMS		  = NULL;
+		s->User.IncomingCB		  = NULL;
+		s->User.IncomingUSSD		  = NULL;
+		s->User.SendSMSStatus		  = NULL;
+		s->LockFile			  = NULL;
+		s->opened			  = false;
 
-	if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTERROR ||
-	    s->di.dl == DL_TEXTALLDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTERRORDATE)
-	{
-		smprintf(s,"[Gammu            - version %s built %s %s]\n",VERSION,__TIME__,__DATE__);
-		smprintf(s,"[Connection       - \"%s\"]\n",s->Config.Connection);
-		smprintf(s,"[Model type       - \"%s\"]\n",s->Config.Model);
-		smprintf(s,"[Device           - \"%s\"]\n",s->Config.Device);
+		s->di 				  = di;
+		s->di.use_global 		  = s->CurrentConfig->UseGlobalDebugFile;
+		GSM_SetDebugLevel(s->CurrentConfig->DebugLevel, &s->di);
+		error=GSM_SetDebugFile(s->CurrentConfig->DebugFile, &s->di);
+		if (error != GE_NONE) return error;
+
+		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTERROR ||
+	    	    s->di.dl == DL_TEXTALLDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTERRORDATE)
+		{
+			smprintf(s,"[Gammu            - version %s built %s %s]\n",VERSION,__TIME__,__DATE__);
+			smprintf(s,"[Connection       - \"%s\"]\n",s->CurrentConfig->Connection);
+			smprintf(s,"[Model type       - \"%s\"]\n",s->CurrentConfig->Model);
+			smprintf(s,"[Device           - \"%s\"]\n",s->CurrentConfig->Device);
 #ifdef WIN32
 #  ifdef _MSC_VER
-		smprintf(s,"[OS/compiler      - Windows %i.%i.%i, MS VC version %i]\n",_winmajor,_winminor,_osver,_MSC_VER);
+			smprintf(s,"[OS/compiler      - Windows %i.%i.%i, MS VC version %i]\n",_winmajor,_winminor,_osver,_MSC_VER);
 #  else
-		smprintf(s,"[OS/compiler      - win32]\n");
+			smprintf(s,"[OS/compiler      - win32]\n");
 #  endif
 #elif defined(DJGPP)
-		smprintf(s,"[OS/compiler      - djgpp]\n");
+			smprintf(s,"[OS/compiler      - djgpp]\n");
 #else
-		smprintf(s,"[OS/compiler      - "
+			smprintf(s,"[OS/compiler      - "
 // Detect some Unix-like OSes:
 #  if defined(linux) || defined(__linux) || defined(__linux__)
-		"Linux"
+			"Linux"
 #  elif defined(__FreeBSD__)
-		"FreeBSD"
+			"FreeBSD"
 #  elif defined(__NetBSD__)
-		"NetBSD"
+			"NetBSD"
 #  elif defined(__OpenBSD__)
-		"OpenBSD"
+			"OpenBSD"
 #  elif defined(__GNU__)
-		"GNU/Hurd"
+			"GNU/Hurd"
 #  elif defined(sun) || defined(__sun) || defined(__sun__)
 #    if defined(__SVR4)
-		"Sun Solaris"
+			"Sun Solaris"
 #    else
-		"SunOS"
+			"SunOS"
 #    endif
 #  elif defined(hpux) || defined(__hpux) || defined(__hpux__)
-		"HP-UX"
+			"HP-UX"
 #  elif defined(ultrix) || defined(__ultrix) || defined(__ultrix__)
-		"DEC Ultrix"
+			"DEC Ultrix"
 #  elif defined(sgi) || defined(__sgi)
-		"SGI Irix"
+			"SGI Irix"
 #  elif defined(__osf__)
-		"OSF Unix"
+			"OSF Unix"
 #  elif defined(bsdi) || defined(__bsdi__)
-		"BSDI Unix"
+			"BSDI Unix"
 #  elif defined(_AIX)
-		"AIX Unix"
+			"AIX Unix"
 #  elif defined(_UNIXWARE)
-		"SCO Unixware"
+			"SCO Unixware"
 #  elif defined(DGUX)
-		"DG Unix"
+			"DG Unix"
 #  elif defined(__QNX__)
-		"QNX"
+			"QNX"
 #  else
-		"Unknown"
+			"Unknown"
 #endif
 // Show info for some compilers:
 #  if defined(__GNUC__)
-		", gcc %i.%i]\n", __GNUC__, __GNUC_MINOR__
+			", gcc %i.%i]\n", __GNUC__, __GNUC_MINOR__
 #  elif defined(__SUNPRO_CC)
-		", Sun C++ %x]\n", __SUNPRO_CC
+			", Sun C++ %x]\n", __SUNPRO_CC
 #  else
-		"]\n"
+			"]\n"
 #  endif
-            	);
+            		);
 #endif
-	}
-	if (s->di.dl==DL_BINARY) {
-		smprintf(s,"%c",((unsigned char)strlen(VERSION)));
-		smprintf(s,"%s",VERSION);
-	}
-
-	error=GSM_RegisterAllConnections(s, s->Config.Connection);
-	if (error!=GE_NONE) return error;
-
-	/* Model auto */
-	if (s->Config.Model[0]==0)
-	{
-		if (mystrncasecmp(s->Config.LockDevice,"yes",0)) {
-			error = lock_device(s->Config.Device, &(s->LockFile));
-			if (error != GE_NONE) return error;
+		}
+		if (s->di.dl==DL_BINARY) {
+			smprintf(s,"%c",((unsigned char)strlen(VERSION)));
+			smprintf(s,"%s",VERSION);
 		}
 
-		/* Irda devices can set now model to some specific and
-		 * we don't have to make auto detection later */
-		error=s->Device.Functions->OpenDevice(s);
+		error=GSM_RegisterAllConnections(s, s->CurrentConfig->Connection);
 		if (error!=GE_NONE) return error;
 
-		s->opened = true;
+		/* Model auto */
+		if (s->CurrentConfig->Model[0]==0) {
+			if (mystrncasecmp(s->CurrentConfig->LockDevice,"yes",0)) {
+				error = lock_device(s->CurrentConfig->Device, &(s->LockFile));
+				if (error != GE_NONE) return error;
+			}
 
-		error=s->Protocol.Functions->Initialise(s);
-		if (error!=GE_NONE) return error;
+			/* Irda devices can set now model to some specific and
+			 * we don't have to make auto detection later */
+			error=s->Device.Functions->OpenDevice(s);
+			if (error == GE_DEVICEOPENERROR && i != s->ConfigNum - 1) continue;
+			if (error!=GE_NONE) return error;
 
-		/* If still auto model, try to get model by asking phone for it */
-		if (s->Phone.Data.Model[0]==0)
-		{
-			smprintf(s,"[Module           - \"auto\"]\n");
-			switch (s->ConnectionType) {
+			s->opened = true;
+
+			error=s->Protocol.Functions->Initialise(s);
+			if (error!=GE_NONE) return error;
+
+			/* If still auto model, try to get model by asking phone for it */
+			if (s->Phone.Data.Model[0]==0) {      
+				smprintf(s,"[Module           - \"auto\"]\n");
+				switch (s->ConnectionType) {
 #ifdef GSM_ENABLE_ATGEN
-				case GCT_AT:
-				case GCT_BLUEAT:
-				case GCT_IRDAAT:
-					s->Phone.Functions = &ATGENPhone;
-					break;
+					case GCT_AT:
+					case GCT_BLUEAT:
+					case GCT_IRDAAT:
+						s->Phone.Functions = &ATGENPhone;
+						break;
 #endif
 #ifdef GSM_ENABLE_OBEXGEN
-				case GCT_IRDAOBEX:
-				case GCT_BLUEOBEX:
-					s->Phone.Functions = &OBEXGENPhone;
-					break;
+					case GCT_IRDAOBEX:
+					case GCT_BLUEOBEX:
+						s->Phone.Functions = &OBEXGENPhone;
+						break;
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
-				case GCT_MBUS2:
-				case GCT_FBUS2:
-				case GCT_FBUS2DLR3:
-				case GCT_FBUS2BLUE:
-				case GCT_FBUS2IRDA:
-				case GCT_PHONETBLUE:
-				case GCT_IRDAPHONET:
-				case GCT_BLUEFBUS2:
-				case GCT_BLUEPHONET:
-					s->Phone.Functions = &NAUTOPhone;
-					break;
+					case GCT_MBUS2:
+					case GCT_FBUS2:
+					case GCT_FBUS2DLR3:
+					case GCT_FBUS2BLUE:
+					case GCT_FBUS2IRDA:
+					case GCT_PHONETBLUE:
+					case GCT_IRDAPHONET:
+					case GCT_BLUEFBUS2:
+					case GCT_BLUEPHONET:
+						s->Phone.Functions = &NAUTOPhone;
+						break;
 #endif
-				default:
-					s->Phone.Functions = NULL;
-			}
-			if (s->Phone.Functions == NULL) return GE_UNKNOWN;
+					default:
+						s->Phone.Functions = NULL;
+				}
+				if (s->Phone.Functions == NULL) return GE_UNKNOWN;
 
-			/* Please note, that AT module need to send first
-			 * command for enabling echo
-			 */
-			error=s->Phone.Functions->Initialise(s);
-			if (error!=GE_NONE) return error;
+				/* Please note, that AT module need to send first
+				 * command for enabling echo
+				 */
+				error=s->Phone.Functions->Initialise(s);
+				if (error == GE_TIMEOUT && i != s->ConfigNum - 1) continue;
+				if (error!=GE_NONE) return error;
 			
-			error=s->Phone.Functions->GetModel(s);
+				error=s->Phone.Functions->GetModel(s);
+				if (error == GE_TIMEOUT && i != s->ConfigNum - 1) continue;
+				if (error!=GE_NONE) return error;
+			}
+		}
+
+		/* Switching to "correct" module */
+		error=GSM_RegisterAllPhoneModules(s);
+		if (error!=GE_NONE) return error;
+
+		/* We didn't open device earlier ? Make it now */
+		if (!s->opened) {
+			if (mystrncasecmp(s->CurrentConfig->LockDevice,"yes",0)) {
+				error = lock_device(s->CurrentConfig->Device, &(s->LockFile));
+				if (error != GE_NONE) return error;
+			}
+
+			error=s->Device.Functions->OpenDevice(s);
+			if (error == GE_DEVICEOPENERROR && i != s->ConfigNum - 1) continue;
+			if (error!=GE_NONE) return error;
+
+			s->opened = true;
+
+			error=s->Protocol.Functions->Initialise(s);
 			if (error!=GE_NONE) return error;
 		}
-	}
 
-	/* Switching to "correct" module */
-	error=GSM_RegisterAllPhoneModules(s);
-	if (error!=GE_NONE) return error;
+		error=s->Phone.Functions->Initialise(s);
+		if (error == GE_TIMEOUT && i != s->ConfigNum - 1) continue;
+		if (error!=GE_NONE) return error;
 
-	/* We didn't open device earlier ? Make it now */
-	if (!s->opened) {
-		if (mystrncasecmp(s->Config.LockDevice,"yes",0)) {
-			error = lock_device(s->Config.Device, &(s->LockFile));
-			if (error != GE_NONE) return error;
+		if (mystrncasecmp(s->CurrentConfig->StartInfo,"yes",0)) {
+			s->Phone.Functions->ShowStartInfo(s,true);
+			s->Phone.Data.StartInfoCounter = 30;
 		}
 
-		error=s->Device.Functions->OpenDevice(s);
+		if (mystrncasecmp(s->CurrentConfig->SyncTime,"yes",0)) {
+			GSM_GetCurrentDateTime (&time);
+			s->Phone.Functions->SetDateTime(s,&time);
+		}
+
+		/* For debug it's good to have firmware and real model version and manufacturer */
+		error=s->Phone.Functions->GetManufacturer(s);
+		if (error == GE_TIMEOUT && i != s->ConfigNum - 1) continue;
 		if (error!=GE_NONE) return error;
-
-		s->opened = true;
-
-		error=s->Protocol.Functions->Initialise(s);
+		error=s->Phone.Functions->GetModel(s);
 		if (error!=GE_NONE) return error;
+		error=s->Phone.Functions->GetFirmware(s);
+		if (error!=GE_NONE) return error;
+		return GE_NONE;
 	}
-
-	error=s->Phone.Functions->Initialise(s);
-	if (error!=GE_NONE) return error;
-
-	if (mystrncasecmp(s->Config.StartInfo,"yes",0)) {
-		s->Phone.Functions->ShowStartInfo(s,true);
-		s->Phone.Data.StartInfoCounter = 30;
-	}
-
-	if (mystrncasecmp(s->Config.SyncTime,"yes",0)) {
-		GSM_GetCurrentDateTime (&time);
-		s->Phone.Functions->SetDateTime(s,&time);
-	}
-
-	/* For debug it's good to have firmware and real model version and manufacturer */
-	error=s->Phone.Functions->GetManufacturer(s);
-	if (error!=GE_NONE) return error;
-	error=s->Phone.Functions->GetModel(s);
-	if (error!=GE_NONE) return error;
-	error=s->Phone.Functions->GetFirmware(s);
-	if (error!=GE_NONE) return error;
-
-	return GE_NONE;
+	return GE_UNKNOWN;
 }
 
 int GSM_ReadDevice (GSM_StateMachine *s, bool wait)
@@ -420,7 +429,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 
 	smprintf(s,"[Closing]\n");
 
-	if (mystrncasecmp(s->Config.StartInfo,"yes",0)) {
+	if (mystrncasecmp(s->CurrentConfig->StartInfo,"yes",0)) {
 		if (s->Phone.Data.StartInfoCounter > 0) s->Phone.Functions->ShowStartInfo(s,false);
 	}
 
@@ -515,7 +524,7 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned char *buffer,
 	GSM_Error		error;
 	int			reply;
 
-	if (mystrncasecmp(s->Config.StartInfo,"yes",0)) {
+	if (mystrncasecmp(s->CurrentConfig->StartInfo,"yes",0)) {
 		if (s->Phone.Data.StartInfoCounter > 0) {
 			s->Phone.Data.StartInfoCounter--;
 			if (s->Phone.Data.StartInfoCounter == 0) s->Phone.Functions->ShowStartInfo(s,false);
@@ -671,8 +680,12 @@ CFG_Header *CFG_FindGammuRC()
 	return cfg_info;
 }
 
-void CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg)
+bool CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg, int num)
 {
+	CFG_Header 	*h;
+	unsigned char 	section[50];
+	bool		found = false;
+
 #if defined(WIN32) || defined(DJGPP)
         char *DefaultPort		= "com2:";
 #else
@@ -709,58 +722,72 @@ void CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg)
 
 	cfg->UseGlobalDebugFile	 = DefaultUseGlobalDebugFile;
 
-	if (cfg_info==NULL) return;
-	
-	cfg->Device 	 = CFG_Get(cfg_info, "gammu", "port", 		false);
+	if (cfg_info==NULL) return false;
+
+	if (num == 0) {
+		sprintf(section,"gammu");
+	} else {
+		sprintf(section,"gammu%i",num);
+	}
+        for (h = cfg_info; h != NULL; h = h->next) {
+                if (mystrncasecmp(section, h->section, strlen(section))) {
+			found = true;
+			break;
+		}
+        }
+	if (!found) return false;
+
+	cfg->Device 	 = CFG_Get(cfg_info, section, "port", 		false);
 	if (!cfg->Device) {
 		cfg->Device		 	 = DefaultPort;
 	} else {
 		cfg->DefaultDevice 		 = false;
 	}
-	cfg->Connection  = CFG_Get(cfg_info, "gammu", "connection", 	false);
+	cfg->Connection  = CFG_Get(cfg_info, section, "connection", 	false);
 	if (!cfg->Connection) {
 		cfg->Connection	 		 = DefaultConnection;
 	} else {
 		cfg->DefaultConnection		 = false;
 	}
-	cfg->SyncTime 	 = CFG_Get(cfg_info, "gammu", "synchronizetime",false);
+	cfg->SyncTime 	 = CFG_Get(cfg_info, section, "synchronizetime",false);
 	if (!cfg->SyncTime) {
 		cfg->SyncTime		 	 = DefaultSynchronizeTime;
 	} else {
 		cfg->DefaultSyncTime		 = false;
 	}
-	cfg->DebugFile   = CFG_Get(cfg_info, "gammu", "logfile", 	false);
+	cfg->DebugFile   = CFG_Get(cfg_info, section, "logfile", 	false);
 	if (!cfg->DebugFile) {
 		cfg->DebugFile		 	 = DefaultDebugFile;
 	} else {
 		cfg->DefaultDebugFile 		 = false;
 	}
-	cfg->LockDevice  = CFG_Get(cfg_info, "gammu", "use_locking", 	false);
+	cfg->LockDevice  = CFG_Get(cfg_info, section, "use_locking", 	false);
 	if (!cfg->LockDevice) {
 		cfg->LockDevice	 		 = DefaultLockDevice;
 	} else {
 		cfg->DefaultLockDevice		 = false;
 	}
-	Temp		 = CFG_Get(cfg_info, "gammu", "model", 		false);
+	Temp		 = CFG_Get(cfg_info, section, "model", 		false);
 	if (!Temp) {
 		strcpy(cfg->Model,DefaultModel);
 	} else {
 		cfg->DefaultModel 		 = false;
 		strcpy(cfg->Model,Temp);
 	}
-	Temp		 = CFG_Get(cfg_info, "gammu", "logformat", 	false);
+	Temp		 = CFG_Get(cfg_info, section, "logformat", 	false);
 	if (!Temp) {
 		strcpy(cfg->DebugLevel,DefaultDebugLevel);
 	} else {
 		cfg->DefaultDebugLevel 		 = false;
 		strcpy(cfg->DebugLevel,Temp);
 	}
-	cfg->StartInfo   = CFG_Get(cfg_info, "gammu", "startinfo", 	false);
+	cfg->StartInfo   = CFG_Get(cfg_info, section, "startinfo", 	false);
 	if (!cfg->StartInfo) {
 		cfg->StartInfo	 		 = DefaultStartInfo;
 	} else {
 		cfg->DefaultStartInfo 		 = false;
 	}
+	return true;
 }
 
 static OnePhoneModel allmodels[] = {
@@ -821,6 +848,7 @@ static OnePhoneModel allmodels[] = {
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"7210" ,"NHL-4" ,"Nokia 7210", {F_TODO66,F_RADIO,0}},
 	{"7250" ,"NHL-4J","Nokia 7250", {F_TODO66,F_RADIO,0}},
+	{"7250i","NHL-4JX","Nokia 7250i",{F_TODO66,F_RADIO,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN)
 	{"7650" ,"NHL-2" ,"Nokia 7650", {0}},
