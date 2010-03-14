@@ -1,7 +1,6 @@
-const version="GammuGUI v. 0.2.26  ",
+const version="GammuGUI v. 0.3.30w ",
 		STARTUP = 1,
 		OPERATOR = 2
-
 
 dim Debug[6]
 dim DebugTypes[6]
@@ -44,10 +43,12 @@ Global bmpStartup, bmpOperator, bmpStartupDC, bmpOperatorDC
 
 Global Result$, LogoType, LogoFileName="", LogoFileNameOp="", LogoFilePath="",LogoFilePathOp=""
 
-Global CLI = "[nothing]"
+Global CLI = "[nothing]" , OSVer , Slash ,CR
+
+Global RingtoneSource, RingtonePath
 
 	' Create main window
-frame=New wxFrame(0,-1,version,wxPoint(10,10),wxSize(10,10),wxSYSTEM_MENU+wxCAPTION)
+frame=New wxFrame(Null,-1,version+" loading...",wxPoint(10,10),wxSize(10,10),wxSYSTEM_MENU+wxCAPTION)
 frame.SetSize(640,441) 	
 frame.Center
 
@@ -173,9 +174,8 @@ Tabs.AddPage( tabAdvanced, "Advanced" )
 	' Create a window for GAMMU output, and make it not-editable
 OutputText = new wxTextCtrl(frame, -1, "", wxPoint(0,276),wxSize( 633, 100 ), wxTE_MULTILINE | wxVSCROLL )
 OutputText.SetEditable(False) 
-test= New wxStaticText(frame,-1,"GAMMU output",wxPoint(270,262),wxSize(77,15),1,"")
-test.SetBackgroundColor(wxColor(0xffff,0xffff,0xffff))
-OutputSaveButton = new wxButton(panel,-1,"Save output",wxPoint(350,262),wxSize(70,15))
+test= New wxStaticText(panel,-1,"GAMMU output",wxPoint(260,262),wxSize(85,15),1,"")
+OutputSaveButton = new wxButton(panel,-1,"Save output",wxPoint(350,260),wxSize(80,20))
 sub SaveOutput ( event )
 	Open "gammu.tmp" For Input As #2
 	Open "output.txt" For Output As #1
@@ -216,12 +216,20 @@ Debug[5]= new wxRadioButton( tabMain, -1, "binary",wxPoint(30,110) )
 function GammuShowOutput()
 OutputText.Clear
 ' shell("gammu "+DebugLevel+" "+param$+" > gammu.tmp")
+if !FileExists("gammu.tmp") then
+	wxMessageBox("Error in reading gammu's output: gammu.tmp not found!","Error")
+	exit function
+end if
  open "gammu.tmp" for input as #1
 conta=0
  While (Not Eof( 1 )) And (conta<100)
   conta=conta+1
   Line Input #1,riga
-  OutputText.AppendText(left$(riga,len(riga)-1)+chr$(13)+chr$(10))
+ if !Instr(UCase$(OSVer),"LINUX") then
+	  OutputText.AppendText(left$(riga,len(riga)-1)+CR)
+	else
+	  OutputText.AppendText(riga+CR)
+   end if
  End While
  Close(1)
 end function
@@ -232,17 +240,7 @@ function Identify(event)
 	CLI="gammu "+DebugLevel+" --identify > gammu.tmp"
 	frame.SetStatusText("GAMMU command line:  "+CLI)
 	shell(CLI)
-	 open "gammu.tmp" for input as #1
-	conta=0
- 	While (Not Eof( 1 )) And (conta<100)
-  		conta=conta+1
-  		Line Input #1,riga
-  		OutputText.AppendText(riga+chr$(13))
-		if len(riga)<40 then
-	 		test=New wxStaticText(tabMain,-1,riga,wxPoint(310,10+conta*15),wxSize(250,15),1,"")
- 		end if
- 	End While
- Close(1)
+	GammuShowOutput
 end function
 connect (button,wxEVT_COMMAND_BUTTON_CLICKED,"Identify")
 
@@ -267,7 +265,7 @@ PanelResetPhone=New wxPanel(tabMain,-1,wxPoint(135,140),wxSize(115,130))
 BoxReset=New wxStaticBox(PanelResetPhone, -1,"Phone reset",wxPoint(0,0),wxSize(115,60),1,"") 
 Reset[6]= new wxRadioButton( PanelResetPhone, -1, "SOFT",wxPoint(10,15) )
 Reset[7]= new wxRadioButton( PanelResetPhone, -1, "HARD",wxPoint(10,35) )
-ResetPhoneButton = new wxButton( PanelResetPhone, -1,"GO!",wxPoint(63,17),wxSize(40,35))
+ResetPhoneButton = new wxButton( PanelResetPhone, -1,"GO!",wxPoint(65,17),wxSize(40,35))
 
 Function DebugClicked( event )
  for x = 1 to 5
@@ -373,26 +371,26 @@ GetProfileButton = new wxButton(tabConfig,-1,"Get profile",wxPoint(10,55))
 
 SetAutonetworkLoginButton = new wxButton(tabConfig,-1,"Set auto network login",wxPoint(10,100))
 GetSecurityStatusButton = new wxButton(tabConfig,-1,"Get security status",wxPoint(10,145))
-EnterSecurityCodeButton = new wxButton(tabConfig,-1,"Eneter security code",wxPoint(10,180))
-	EnterSecurityStatusText = new wxTextCtrl(tabConfig,-1,"1",wxPoint(130,180),wxSize(40,20))
-	EnterSecurityRadioPIN = new wxRadioButton(tabConfig,-1,"PIN",wxPoint(10,205))
+EnterSecurityCodeButton = new wxButton(tabConfig,-1,"Eneter security code",wxPoint(10,175))
+	EnterSecurityStatusText = new wxTextCtrl(tabConfig,-1,"1",wxPoint(130,175),wxSize(40,20))
+	EnterSecurityRadioPIN = new wxRadioButton(tabConfig,-1,"PIN",wxPoint(10,200))
 		EnterSecurityRadioPIN.SetValue(1)
-	EnterSecurityRadioPIN2 = new wxRadioButton(tabConfig,-1,"PIN2",wxPoint(60,205))
-	EnterSecurityRadioPUK = new wxRadioButton(tabConfig,-1,"PUK",wxPoint(110,205))
-	EnterSecurityRadioPUK2 = new wxRadioButton(tabConfig,-1,"PUK2",wxPoint(160,205))
+	EnterSecurityRadioPIN2 = new wxRadioButton(tabConfig,-1,"PIN2",wxPoint(60,200))
+	EnterSecurityRadioPUK = new wxRadioButton(tabConfig,-1,"PUK",wxPoint(110,200))
+	EnterSecurityRadioPUK2 = new wxRadioButton(tabConfig,-1,"PUK2",wxPoint(160,200))
 
-GetFMStationButton = new wxButton(tabConfig,-1,"Get FM station",wxPoint(200,10))
-	GetFMLabels = new wxStaticText(tabConfig,-1,"From   to",wxPoint(296,2))
-	GetFMStartText = new wxTextCtrl(tabConfig,-1,"1",wxPoint(295,15),wxSize(30,20))
-	GetFMStopText = new wxTextCtrl(tabConfig,-1,"1",wxPoint(325,15),wxSize(30,20))
-GetDateTimeButton = new wxButton(tabConfig,-1,"Get phone date/time from phone",wxPoint(200,55))
-SetDateTimeButton = new wxButton(tabConfig,-1,"Set phone to PC date/time",wxPoint(200,100))
-GetAlarmButton = new wxButton(tabConfig,-1,"Get phone alarm",wxPoint(200,145))
-SetAlarmButton = new wxButton(tabConfig,-1,"Set phone alarm to ",wxPoint(200,180))
-	SetAlarmHourLabel = new wxStaticText(tabConfig,-1,"H",wxPoint(315,186))
-	SetAlarmHourInput = new wxTextCtrl(tabConfig,-1,"00",wxPoint(325,183),wxSize(30,20))
-	SetAlarmMinLabel = new wxStaticText(tabConfig,-1,"M",wxPoint(358,186))
-	SetAlarmMinInput = new wxTextCtrl(tabConfig,-1,"00",wxPoint(368,183),wxSize(30,20))
+GetFMStationButton = new wxButton(tabConfig,-1,"Get FM station",wxPoint(220,10))
+	GetFMLabels = new wxStaticText(tabConfig,-1,"From   to",wxPoint(316,2))
+	GetFMStartText = new wxTextCtrl(tabConfig,-1,"1",wxPoint(315,15),wxSize(30,20))
+	GetFMStopText = new wxTextCtrl(tabConfig,-1,"1",wxPoint(345,15),wxSize(30,20))
+GetDateTimeButton = new wxButton(tabConfig,-1,"Get phone date/time from phone",wxPoint(220,55))
+SetDateTimeButton = new wxButton(tabConfig,-1,"Set phone to PC date/time",wxPoint(220,100))
+GetAlarmButton = new wxButton(tabConfig,-1,"Get phone alarm",wxPoint(220,145))
+SetAlarmButton = new wxButton(tabConfig,-1,"Set phone alarm to ",wxPoint(220,180))
+	SetAlarmHourLabel = new wxStaticText(tabConfig,-1,"H",wxPoint(335,186))
+	SetAlarmHourInput = new wxTextCtrl(tabConfig,-1,"00",wxPoint(345,183),wxSize(30,20))
+	SetAlarmMinLabel = new wxStaticText(tabConfig,-1,"M",wxPoint(378,186))
+	SetAlarmMinInput = new wxTextCtrl(tabConfig,-1,"00",wxPoint(388,183),wxSize(30,20))
 
 sub GetDisplayStatus ( event ) 
  OutputText.Clear
@@ -518,26 +516,26 @@ GetCalendarButton = new wxButton(tabBackup,-1,"Get calendar",wxPoint(10,105))
 GetCategoryButton = new wxButton(tabBackup,-1,"Get category",wxPoint(10,130))
 GetCategoryStart= new wxTextCtrl(tabBackup,-1,"1",wxPoint(95,130),wxSize(20,20))
 GetCategoryStop= new wxTextCtrl(tabBackup,-1,"1",wxPoint(120,130),wxSize(20,20))
-GetCategoryPanel = new wxPanel(tabBackup,-1,wxPoint(140,120),wxSize(130,40))
+GetCategoryPanel = new wxPanel(tabBackup,-1,wxPoint(140,120),wxSize(150,40))
 GetCategoryTodo = new wxRadioButton(GetCategoryPanel,-1,"ToDo",wxPoint(0,10))
-GetCategoryPhonebook = new wxRadioButton(GetCategoryPanel,-1,"Phonebook",wxPoint(50,10))
-GetAllCategoriesButton = new wxButton(tabBackup,-1,"Get all categories",wxPoint(10,155))
-GetAllCategoriesPanel = new wxPanel(tabBackup,-1,wxPoint(115,155),wxSize(130,30))
+GetCategoryPhonebook = new wxRadioButton(GetCategoryPanel,-1,"Phonebook",wxPoint(50,10),wxSize(120,20))
+GetAllCategoriesButton = new wxButton(tabBackup,-1,"Get all categories",wxPoint(10,155),wxSize(120,20))
+GetAllCategoriesPanel = new wxPanel(tabBackup,-1,wxPoint(140,155),wxSize(150,30))
 GetAllCategoriesTodo = new wxRadioButton(GetAllCategoriesPanel,-1,"ToDo",wxPoint(0,5))
-GetAllCategoriesPhonebook = new wxRadioButton(GetAllCategoriesPanel,-1,"Phonebook",wxPoint(50,5))
-GetMemoryPanel = new wxPanel(tabBackup,-1,wxPoint(270,10),wxSize(150,100))
-GetMemoryBox = new wxStaticBox(tabBackup,-1,"Get memory",wxPoint(270,10),wxSize(150,100))
-GetMemDC= new wxRadioButton(GetMemoryPanel,-1,"DC",wxPoint(10,15))
-GetMemMC= new wxRadioButton(GetMemoryPanel,-1,"MC",wxPoint(10,35))
-GetMemRC= new wxRadioButton(GetMemoryPanel,-1,"RC",wxPoint(10,55))
-GetMemON= new wxRadioButton(GetMemoryPanel,-1,"ON",wxPoint(10,75))
-GetMemVM= new wxRadioButton(GetMemoryPanel,-1,"VM",wxPoint(50,15))
-GetMemSM= new wxRadioButton(GetMemoryPanel,-1,"SM",wxPoint(50,35))
-GetMemME= new wxRadioButton(GetMemoryPanel,-1,"ME",wxPoint(50,55))
-GetMemoryStart=new wxTextCtrl(GetMemoryPanel,-1,"1",wxPoint(80,75),wxSize(20,20))
-GetMemoryStop=new wxTextCtrl(GetMemoryPanel,-1,"1",wxPoint(110,75),wxSize(20,20))
-GetMemoryButton = new wxButton(GetMemoryPanel,-1,"GET",wxPoint(100,25),wxSize(30,30))
-GetSMSFoldersButton = new wxButton(tabBackup,-1,"Get SMS folders",wxPoint(470,45))
+GetAllCategoriesPhonebook = new wxRadioButton(GetAllCategoriesPanel,-1,"Phonebook",wxPoint(50,5),wxSize(120,20))
+GetMemoryPanel = new wxPanel(tabBackup,-1,wxPoint(275,25),wxSize(140,90))
+GetMemoryBox = new wxStaticBox(tabBackup,-1,"Get memory",wxPoint(270,10),wxSize(155,110))
+GetMemDC= new wxRadioButton(GetMemoryPanel,-1,"DC",wxPoint(10,5))
+GetMemMC= new wxRadioButton(GetMemoryPanel,-1,"MC",wxPoint(10,25))
+GetMemRC= new wxRadioButton(GetMemoryPanel,-1,"RC",wxPoint(10,45))
+GetMemON= new wxRadioButton(GetMemoryPanel,-1,"ON",wxPoint(10,65))
+GetMemVM= new wxRadioButton(GetMemoryPanel,-1,"VM",wxPoint(50,5))
+GetMemSM= new wxRadioButton(GetMemoryPanel,-1,"SM",wxPoint(50,25))
+GetMemME= new wxRadioButton(GetMemoryPanel,-1,"ME",wxPoint(50,45))
+GetMemoryStart=new wxTextCtrl(GetMemoryPanel,-1,"1",wxPoint(80,65),wxSize(20,20))
+GetMemoryStop=new wxTextCtrl(GetMemoryPanel,-1,"1",wxPoint(110,65),wxSize(20,20))
+GetMemoryButton = new wxButton(GetMemoryPanel,-1,"GET",wxPoint(100,15),wxSize(35,30))
+GetSMSFoldersButton = new wxButton(tabBackup,-1,"Get SMS folders",wxPoint(470,40))
 GetSMSButton=new wxButton(tabBackup,-1,"Get SMS",wxPoint(430,70))
 GetSMSFolderName=new wxTextCtrl(tabBackup,-1,"folder",wxPoint(510,71),wxSize(50,20))
 GetSMSFolderStart=new wxTextCtrl(tabBackup,-1,"1",wxPoint(560,71),wxSize(20,20))
@@ -550,13 +548,19 @@ GetWapBookmarkStop=new wxTextCtrl(tabBackup,-1,"1",wxPoint(585,135),wxSize(20,20
 GetWapSettingsButton = new wxButton(tabBackup,-1,"Get WAP settings",wxPoint(450,160))
 GetWapSettingsStart=new wxTextCtrl(tabBackup,-1,"1",wxPoint(560,160),wxSize(20,20))
 GetWapSettingsStop=new wxTextCtrl(tabBackup,-1,"1",wxPoint(585,160),wxSize(20,20))
-GetRingtonesListButton= new wxButton(tabBackup,-1,"Get ringtones list",wxPoint(280,125))
-GetRingtoneButton= new wxButton(tabBackup,-1,"Get ringtone",wxPoint(280,150))
-GetRingtoneLocation=new wxTextCtrl(tabBackup,-1,"1",wxPoint(360,152),wxSize(20,20))
+GetRingtonesListButton= new wxButton(tabBackup,-1,"Get ringtones list",wxPoint(290,125))
+GetRingtoneButton= new wxButton(tabBackup,-1,"Get ringtone",wxPoint(290,150))
+GetRingtoneLocation=new wxTextCtrl(tabBackup,-1,"1",wxPoint(370,152),wxSize(20,20))
 'GetRingtoneFile = new wxButton(tabBackup,-1,"...",wxPoint(385,154),wxSize(20,15))
-GetPhoneRingtoneButton= new wxButton(tabBackup,-1,"Get phone ringtone",wxPoint(280,175))
-GetPhoneRingtoneLocation=new wxTextCtrl(tabBackup,-1,"1",wxPoint(390,177),wxSize(20,20))
+GetPhoneRingtoneButton= new wxButton(tabBackup,-1,"Get phone ringtone",wxPoint(290,175))
+GetPhoneRingtoneLocation=new wxTextCtrl(tabBackup,-1,"1",wxPoint(400,177),wxSize(20,20))
 'GetPhoneRingtoneFile = new wxButton(tabBackup,-1,"...",wxPoint(415,179),wxSize(20,15))
+'**** Buttons in RINGTONES SECTION
+GetRingtonesListButton2= new wxButton(tabRingtones,-1,"Get ringtones list",wxPoint(10,10))
+GetRingtoneButton2= new wxButton(tabRingtones,-1,"Get ringtone",wxPoint(10,35))
+GetRingtoneLocation2=new wxTextCtrl(tabRingtones,-1,"1",wxPoint(90,35),wxSize(20,20))
+GetPhoneRingtoneButton2= new wxButton(tabRingtones,-1,"Get phone ringtone",wxPoint(10,60))
+GetPhoneRingtoneLocation2=new wxTextCtrl(tabRingtones,-1,"1",wxPoint(120,60),wxSize(20,20))
 
 function BackupSMS ( event )
 	OutputText.Clear
@@ -733,6 +737,7 @@ sub GetRingtonesList ( event )
 	GammuShowOutput
 end sub
 connect( GetRingtonesListButton, wxEVT_COMMAND_BUTTON_CLICKED, "GetRingtonesList")
+connect( GetRingtonesListButton2, wxEVT_COMMAND_BUTTON_CLICKED, "GetRingtonesList")
 
 sub GetRingtone ( event )
 	OutputText.Clear
@@ -742,6 +747,7 @@ sub GetRingtone ( event )
 	GammuShowOutput
 end sub
 connect( GetRingtoneButton, wxEVT_COMMAND_BUTTON_CLICKED, "GetRingtone")
+connect( GetRingtoneButton2, wxEVT_COMMAND_BUTTON_CLICKED, "GetRingtone")
 
 sub GetPhoneRingtone ( event )
 	OutputText.Clear
@@ -751,6 +757,7 @@ sub GetPhoneRingtone ( event )
 	GammuShowOutput
 end sub
 connect( GetPhoneRingtoneButton, wxEVT_COMMAND_BUTTON_CLICKED, "GetPhoneRingtone")
+connect( GetPhoneRingtoneButton2, wxEVT_COMMAND_BUTTON_CLICKED, "GetPhoneRingtone")
 
 
 
@@ -767,22 +774,22 @@ SMSOptionBox=New wxStaticBox(tabSMS, -1,"Special options",wxPoint(5,110),wxSize(
 SMSClass0CheckBox = new wxCheckBox(tabSMS,-1,"Class 0 (blinking)",wxPoint(10,122))
 SMSVoidCheckBox = new wxCheckBox(tabSMS,-1,"Void message",wxPoint(10,138))
 
-SMSOptionsLabel=new wxStaticText(tabSMS,-1,"On  Off",wxPoint(144,154),wxSize(35,18))
+SMSOptionsLabel=new wxStaticText(tabSMS,-1,"On  Off",wxPoint(130,152),wxSize(45,20))
 
 SMSFaxCheckBoxPanel=new wxPanel(tabSMS,-1,wxPoint(10,165),wxSize(170,18))
 SMSFaxCheckBox = new wxCheckBox(SMSFaxCheckBoxPanel,-1,"Fax indicator",wxPoint(0,0))
-SMSFaxRadioOn=new wxRadioButton(SMSFaxCheckBoxPanel,-1,"",wxPoint(135,0))
-SMSFaxRadioOff=new wxRadioButton(SMSFaxCheckBoxPanel,-1,"",wxPoint(155,00))
+SMSFaxRadioOn=new wxRadioButton(SMSFaxCheckBoxPanel,-1,"",wxPoint(125,0))
+SMSFaxRadioOff=new wxRadioButton(SMSFaxCheckBoxPanel,-1,"",wxPoint(145,00))
 
 SMSMailCheckBoxPanel=new wxPanel(tabSMS,-1,wxPoint(10,183),wxSize(170,18))
 SMSMailCheckBox = new wxCheckBox(SMSMailCheckBoxPanel,-1,"Mail indicator",wxPoint(0,0))
-SMSMailRadioOn=new wxRadioButton(SMSMailCheckBoxPanel,-1,"",wxPoint(135,0))
-SMSMailRadioOff=new wxRadioButton(SMSMailCheckBoxPanel,-1,"",wxPoint(155,0))
+SMSMailRadioOn=new wxRadioButton(SMSMailCheckBoxPanel,-1,"",wxPoint(125,0))
+SMSMailRadioOff=new wxRadioButton(SMSMailCheckBoxPanel,-1,"",wxPoint(145,0))
 
 SMSVoiceCheckBoxPanel=new wxPanel(tabSMS,-1,wxPoint(10,201),wxSize(170,18))
 SMSVoiceCheckBox = new wxCheckBox(SMSVoiceCheckBoxPanel,-1,"Voice indicator",wxPoint(0,0))
-SMSVoiceRadioOn=new wxRadioButton(SMSVoiceCheckBoxPanel,-1,"",wxPoint(135,0))
-SMSVoiceRadioOff=new wxRadioButton(SMSVoiceCheckBoxPanel,-1,"",wxPoint(155,0))
+SMSVoiceRadioOn=new wxRadioButton(SMSVoiceCheckBoxPanel,-1,"",wxPoint(125,0))
+SMSVoiceRadioOff=new wxRadioButton(SMSVoiceCheckBoxPanel,-1,"",wxPoint(145,0))
 
 'SMS flags panel
 SMSFlagBox=New wxStaticBox(tabSMS, -1,"Saved message flags",wxPoint(190,110),wxSize(120,110),1,"") 
@@ -1069,11 +1076,28 @@ Function SMSReplyChecked ( event )
 end function
 connect (SMSReplyCheckBox,wxEVT_COMMAND_CHECKBOX_CLICKED, "SMSReplyChecked")
 
+'***************************************
 ' ***** ADVANCED SECTION *****
+'***************************************
 NetMonitorButton = new wxButton(tabAdvanced, -1,"Start test",wxPoint(10,10),wxSize(60,40))
 NetMonitorTestText =New wxTextCtrl(tabAdvanced,-1,"",wxPoint(80,20),wxSize(40,20))
 NetMonitorResultText = New wxTextCtrl(tabAdvanced,-1,"",wxPoint(130,20),wxSize(80,80))
 DEBUG= new wxStaticText(tabAdvanced,-1,"Results visualization not yet implemented, \nplease send me GAMMU output.",wxPoint(10,100))
+NokiaBox=new wxStaticBox(tabAdvanced,-1,"Nokia",wxPoint(300,5),wxSize(300,210))
+NokiaGetOperatorButton=new wxButton(tabAdvanced,-1,"Get operator name",wxPoint(310,20),wxSize(120,20))
+NokiaSetOperatorButton=new wxButton(tabAdvanced,-1,"Set operator name",wxPoint(310,45),wxSize(120,20))
+	NokiaSetOperatorName=new wxTextCtrl(tabAdvanced,-1,"",wxPoint(440,45),wxSize(60,20))
+NokiaNetMonitor36Button=new wxButton(tabAdvanced,-1,"Netmonitor36",wxPoint(310,70),wxSize(120,20))
+NokiaSetVibraLevelButton=new wxButton(tabAdvanced,-1,"Set vibra level",wxPoint(310,95),wxSize(120,20))
+	NokiaSetVibraLevelValue=new wxTextCtrl(tabAdvanced,-1,"",wxPoint(440,95),wxSize(30,20))
+NokiaGetVoiceRecordButton=new wxButton(tabAdvanced,-1,"Get voice record",wxPoint(310,120),wxSize(120,20))
+	NokiaGetVoiceRecordName=new wxTextCtrl(tabAdvanced,-1,"",wxPoint(440,120),wxSize(60,20))
+NokiaGetFileSystemButton=new wxButton(tabAdvanced,-1,"Get filesystem",wxPoint(310,145),wxSize(120,20))
+NokiaTestsButton=new wxButton(tabAdvanced,-1,"Tests",wxPoint(310,170),wxSize(120,20))
+NokiaSetPhoneMenusButton=new wxButton(tabAdvanced,-1,"Set phone menus",wxPoint(310,195),wxSize(120,20))
+'SiemensNetMonitorButton=new wxButton(tabAdvanced,-1,"Get operator name",wxPoint(10,205),wxSize(120,20))
+SendCommandLineButton=new wxButton(tabAdvanced,-1,"Send command line",wxPoint(70,160),wxSize(120,20))
+	SendCommandLineText=new wxTextCtrl(tabAdvanced,-1,"",wxPoint(10,185),wxSize(280,20))
 
 Function NetMonitor ( event )
 	OutputText.Clear
@@ -1084,19 +1108,103 @@ Function NetMonitor ( event )
 	CLI="gammu "+DebugLevel+" --nokianetmonitor "+NetMonitorTestText.GetLineText(0)+" > gammu.tmp"
 	frame.SetStatusText(CLI)
 	shell(CLI)
-	 open "gammu.tmp" for input as #1
-	conta=0
- 	While (Not Eof( 1 )) And (conta<100)
-  		conta=conta+1
-  		Line Input #1,riga
-  		OutputText.AppendText(riga+chr$(13))
-		if len(riga)<40 then
-	 		test=New wxStaticText(tabMain,-1,riga,wxPoint(310,10+conta*15),wxSize(250,15),1,"")
- 		end if
- 	End While
- Close(1)	
+	 GammuShowOutput
 end function
 connect (NetMonitorButton,wxEVT_COMMAND_BUTTON_CLICKED, "NetMonitor")
+
+Function NokiaGetOperator ( event )
+	kill("gammu.tmp")
+	OutputText.Clear
+	CLI="gammu "+DebugLevel+" --nokiagetoperator  > gammu.tmp"
+	frame.SetStatusText(CLI)
+	shell(CLI)
+	GammuShowOutput
+end function
+connect (NokiaGetOperatorButton,wxEVT_COMMAND_BUTTON_CLICKED, "NokiaGetOperator")
+
+Function NokiaSetOperator ( event )
+	kill("gammu.tmp")
+	OutputText.Clear
+	CLI="gammu "+DebugLevel+" --nokiasetoperator "+NokiaSetOperatorName.GetLineText(0)+" > gammu.tmp"
+	frame.SetStatusText(CLI)
+	shell(CLI)
+	GammuShowOutput
+end function
+connect (NokiaSetOperatorButton,wxEVT_COMMAND_BUTTON_CLICKED, "NokiaSetOperator")
+
+Function NokiaNetMonitor36 ( event )
+	kill("gammu.tmp")
+	OutputText.Clear
+	CLI="gammu "+DebugLevel+" --nokianetmonitor36  > gammu.tmp"
+	frame.SetStatusText(CLI)
+	shell(CLI)
+	GammuShowOutput
+end function
+connect (NokiaNetMonitor36Button, wxEVT_COMMAND_BUTTON_CLICKED, "NokiaNetMonitor36")
+
+Function NokiaSetVibraLevel ( event )
+	kill("gammu.tmp")
+	OutputText.Clear
+	CLI="gammu "+DebugLevel+" --nokiasetvibralevel "+NokiaSetVibraLevelValue.GetLineText(0)+" > gammu.tmp"
+	frame.SetStatusText(CLI)
+	shell(CLI)
+	GammuShowOutput
+end function
+connect (NokiaSetVibraLevelButton, wxEVT_COMMAND_BUTTON_CLICKED, "NokiaSetVibraLevel")
+
+Function GetVoiceRecord ( event )
+	kill("gammu.tmp")
+	OutputText.Clear
+	CLI="gammu "+DebugLevel+" --nokiagetvoicerecord "+NokiaGetVoiceRecordName.GetLineText(0)+" > gammu.tmp"
+	frame.SetStatusText(CLI)
+	shell(CLI)
+	GammuShowOutput
+end function
+connect (NokiaGetVoiceRecordButton, wxEVT_COMMAND_BUTTON_CLICKED, "GetVoiceRecord")
+
+Function GetFileSystem ( event )
+	kill("gammu.tmp")
+	OutputText.Clear
+	CLI="gammu "+DebugLevel+" --nokiagetfilesystem  > gammu.tmp"
+	frame.SetStatusText(CLI)
+	shell(CLI)
+	GammuShowOutput
+end function
+connect (NokiaGetFileSystemButton, wxEVT_COMMAND_BUTTON_CLICKED, "GetFileSystem")
+
+Function NokiaTests ( event )
+	kill("gammu.tmp")
+	OutputText.Clear
+	CLI="gammu "+DebugLevel+" --nokiatests  > gammu.tmp"
+	frame.SetStatusText(CLI)
+	shell(CLI)
+	GammuShowOutput
+end function
+connect (NokiaTestsButton, wxEVT_COMMAND_BUTTON_CLICKED, "NokiaTests")
+
+Function NokiaSetPhoneMenus ( event )
+	kill("gammu.tmp")
+	OutputText.Clear
+	CLI="gammu "+DebugLevel+" --nokiasetphonemenus  > gammu.tmp"
+	frame.SetStatusText(CLI)
+	shell(CLI)
+	GammuShowOutput
+end function
+connect (NokiaSetPhoneMenusButton, wxEVT_COMMAND_BUTTON_CLICKED, "NokiaSetPhoneMenus")
+
+Function SendCommandLine ( event )
+	kill("gammu.tmp")
+	OutputText.Clear
+	CLI="gammu "+DebugLevel+" --nokiasetphonemenus "+SendCommandLineText.GetLineText(0)+" > gammu.tmp"
+	frame.SetStatusText(CLI)
+	shell(CLI)
+	GammuShowOutput
+end function
+connect (SendCommandLineButton, wxEVT_COMMAND_BUTTON_CLICKED, "SendCommandLine")
+
+
+
+
 
 '****************************
 '******* LOGO SECTION *******
@@ -1104,49 +1212,20 @@ connect (NetMonitorButton,wxEVT_COMMAND_BUTTON_CLICKED, "NetMonitor")
 
 LogoStartupBox = new wxStaticBox(tabLogo,-1,"Startup logo",wxPoint(10,5),wxSize(225,116))
 LogoStartupGetButton = new wxButton(tabLogo,-1,"Get",wxPoint(20,20),wxSize(40,20))
-LogoStartupLoadButton=new wxButton(tabLogo,-1,"Load from file",wxPoint(20,95),wxSize(90,20))
-LogoStartupSaveButton=new wxButton(tabLogo,-1,"Save/convert to file",wxPoint(115,95),wxSize(106,20))
+LogoStartupLoadButton=new wxButton(tabLogo,-1,"Load from file",wxPoint(15,95),wxSize(90,20))
+LogoStartupSaveButton=new wxButton(tabLogo,-1,"Save/convert to file",wxPoint(110,95),wxSize(120,20))
 LogoStartupSetButton = new wxButton(tabLogo,-1,"Set",wxPoint(180,20),wxSize(40,20))
-LogoStartupNameLabel = new wxStaticText(tabLogo,-1,"File name: ",wxPoint(50,75))
-LogoStartupNameText = new wxStaticText(tabLogo,-1,"xxxx",wxPoint(100,75))
-LogoStartupPreview = new wxCheckBox(tabLogo,-1,"Preview",wxPoint(15,50))
-sub ShowStartupPreview ( event )
-	if len(LogoFileName)>0 and LogoStartupPreview.GetValue()=1 then
-		OpenLogoStartup("gammu.tmp")
-	end if
-	if LogoStartupPreview.GetValue()=0 then
-	    bmpStartupDC.Clear()
-		dc = wxClientDC( tabLogo )
-		dc.BeginDrawing()
-		dc.Blit( 77, 20, 100,50, bmpStartupDC, 0, 0 )
-		dc.EndDrawing()		
-	end if
-end sub
-connect(LogoStartupPreview,-1,wxEVT_COMMAND_CHECKBOX_CLICKED,"ShowStartupPreview")
-
+LogoStartupNameLabel = new wxStaticText(tabLogo,-1,"File name: ",wxPoint(40,75))
+LogoStartupNameText = new wxStaticText(tabLogo,-1,"xxxx",wxPoint(110,75))
 LogoOperatorBox = new wxStaticBox(tabLogo,-1,"Operator logo",wxPoint(10,122),wxSize(225,100))
 LogoOperatorGetButton = new wxButton(tabLogo,-1,"Get",wxPoint(20,137),wxSize(40,20))
-LogoOperatorLoadButton=new wxButton(tabLogo,-1,"Load from file",wxPoint(20,192),wxSize(90,20))
-LogoOperatorSaveButton=new wxButton(tabLogo,-1,"Save/convert to file",wxPoint(120,192),wxSize(100,20))
+LogoOperatorLoadButton=new wxButton(tabLogo,-1,"Load from file",wxPoint(15,192),wxSize(90,20))
+LogoOperatorSaveButton=new wxButton(tabLogo,-1,"Save/convert to file",wxPoint(110,192),wxSize(120,20))
 LogoOperatorSetButton = new wxButton(tabLogo,-1,"Set",wxPoint(180,137),wxSize(40,20))
-LogoOperatorNameLabel = new wxStaticText(tabLogo,-1,"File name: ",wxPoint(50,162))
-LogoOperatorNameText = new wxStaticText(tabLogo,-1,"xxxx",wxPoint(100,162))
-LogoOperatorPreview = new wxCheckBox(tabLogo,-1,"Preview",wxPoint(23,175))
+LogoOperatorNameLabel = new wxStaticText(tabLogo,-1,"File name: ",wxPoint(40,162))
+LogoOperatorNameText = new wxStaticText(tabLogo,-1,"xxxx",wxPoint(110,162))
 LogoOperatorNetCodeLabel = new wxStaticText(tabLogo,-1,"NetCode",wxPoint(105,175),wxSize(60,20))
 LogoOperatorNetCode = new wxTextCtrl(tabLogo,-1,"000 00",wxPoint(155,174),wxSize(60,20))
-sub ShowOperatorPreview ( event )
-	if len(LogoFileNameOp)>0 and LogoOperatorPreview.GetValue()=1 then
-		OpenLogoOperator("gammu.tmp")
-	end if
-	if LogoOperatorPreview.GetValue()=0 then
-	    bmpOperatorDC.Clear()
-		dc = wxClientDC( tabLogo )
-		dc.BeginDrawing()
-		dc.Blit( 84, 140, 100,50, bmpOperatorDC, 0, 0 )
-		dc.EndDrawing()		
-	end if
-end sub
-connect(LogoOperatorPreview,-1,wxEVT_COMMAND_CHECKBOX_CLICKED,"ShowOperatorPreview")
 
 LogoCallerGetButton = new wxButton(tabLogo,-1,"Get",wxPoint(330,20),wxSize(40,20))
 LogoCallerSetButton = new wxButton(tabLogo,-1,"Set",wxPoint(490,20),wxSize(40,20))
@@ -1184,7 +1263,9 @@ sub StartupGetClick ( event )
 		end if
 		close #2
 	end if
-	OpenLogoStartup("gammu.tmp")
+		if !Instr(UCase$(OSVer),"LINUX") then 
+			OpenLogoStartup("gammu.tmp") 'Display logo only if PREVIEW enabled
+		end if
 	LogoFileName="logo.nlm"
 end sub
 connect (LogoStartupGetButton,-1,wxEVT_COMMAND_BUTTON_CLICKED,"StartupGetClick")
@@ -1216,7 +1297,9 @@ sub OperatorGetClick ( event )
 		end if
 		close #2
 	end if
-	OpenLogoOperator("gammu.tmp")'Show logo on monitor
+		if !Instr(UCase$(OSVer),"LINUX") then 
+			OpenLogoOperator("gammu.tmp") 'Display logo only if PREVIEW enabled
+		end if
 	LogoFileNameOp="logo-op.nlm"
 end sub
 connect (LogoOperatorGetButton,-1,wxEVT_COMMAND_BUTTON_CLICKED,"OperatorGetClick")
@@ -1327,7 +1410,7 @@ function onFileOpenStartup( event ) 'Open and display startup logo
     fileDialog.SetStyle( wxOPEN )
     If fileDialog.ShowModal() = wxID_OK Then
 		LogoFileName=fileDialog.GetFilename()
-		LogoFilePath=fileDialog.GetDirectory()+"\\"
+		LogoFilePath=fileDialog.GetDirectory()+Slash
 		'Always convert logo to ASCII format (easier to display on the PC)
 		if right$(LogoFileName,4)=".bmp" or right$(LogoFileName,4)=".nlm" then
 			shell("gammu "+DebugLevel+" --copybitmap "+LogoFilePath+LogoFileName+" >gammu.tmp")
@@ -1335,7 +1418,7 @@ function onFileOpenStartup( event ) 'Open and display startup logo
 			'LogoFileName="gammu.tmp" ' GAMMU.TMP contains ASCII logo
 		end if
 	LogoStartupNameText.SetLabel(LogoFileName) ' Show logo filename
-		if LogoStartupPreview.GetValue()=1 then 
+		if !Instr(UCase$(OSVer),"LINUX") then 
 			OpenLogoStartup("gammu.tmp") 'Display logo only if PREVIEW enabled
 		end if
     End If
@@ -1389,7 +1472,7 @@ function onFileOpenOperator( event )
     fileDialog.SetStyle( wxOPEN )
     If fileDialog.ShowModal() = wxID_OK Then
         LogoFileNameOp = fileDialog.GetFilename()
-		LogoFilePathOp= fileDialog.GetDirectory()+"\\"
+		LogoFilePathOp= fileDialog.GetDirectory()+Slash
 '		wxMessageBox( "Selected "+fileName, "Selection", wxOK + wxICON_INFORMATION, frame )
 		'Always convert logo to ASCII format
 		if right$(LogoFileNameOp,4)=".bmp" or right$(LogoFileNameOp,4)=".nlm" then
@@ -1398,7 +1481,7 @@ function onFileOpenOperator( event )
 			'LogoFileName="gammu.tmp" 'GAMMU.TMP contains ASCII logo
 		end if
 	LogoOperatorNameText.SetLabel(LogoFileNameOp)
-	if len(LogoFileNameOp)>0 and LogoOperatorPreview.GetValue()=1 then
+	if len(LogoFileNameOp)>0 and !Instr(UCase$(OSVer),"LINUX") then
 		OpenLogoOperator("gammu.tmp")
 	end if
     End If
@@ -1463,17 +1546,173 @@ sub ShowSaveDialogOperator ( event )
 end sub
 Connect( LogoOperatorSaveButton, -1, wxEVT_COMMAND_BUTTON_CLICKED, "ShowSaveDialogOperator" )
 
+
+'***************************************
+'***** RINGTONES SECTION *****
+'***************************************
+RingtoneConvertFrame = new wxFrame(frame,-1,"File format",wxPoint(10,10),wxSize(200,150))
+RingtoneFormatPanel=new wxPanel(RingtoneConvertFrame,-1,wxPoint(0,0),wxSize(200,150))
+RTTLRadio = new wxRadioButton(RingtoneFormatPanel,-1,"RTTL",wxPoint(70,20))
+BinaryRadio = new wxRadioButton(RingtoneFormatPanel,-1,"BInary",wxPoint(70,40))
+okButtonRingtone=new wxButton(RingtoneFormatPanel,-1,"Save",wxPoint(10,80))
+CancelButtonRingtone=new wxButton(RingtoneFormatPanel,-1,"Cancel",wxPoint(100,80))
+RTTLRadio.SetValue(1)
+RingtoneConvertFrame.Center()
+
+LoadRingtoneButton= new wxButton(tabRingtones,-1,"Load ringtone",wxPoint(30,100))
+SetRingtoneButton= new wxButton(tabRingtones,-1,"Upload to phone",wxPoint(120,100))
+SetRingtoneMemoryLabel=new wxStaticText(tabRingtones,-1,"In memory:",wxPoint(35,130))
+SetRingtoneMemory=new wxStaticText(tabRingtones,-1,"xxxxxx",wxPoint(35,150))
+SetRingtoneName=new wxTextCtrl(tabRingtones,-1,"",wxPoint(120,140),wxSize(80,20))
+SetRingtoneNameLabel=new wxStaticText(tabRingtones,-1,"Name (on phone):",wxPoint(120,125))
+SetRingtoneLocation=new wxTextCtrl(tabRingtones,-1,"",wxPoint(120,170),wxSize(20,20))
+SetRingtoneLocationLabel=new wxStaticText(tabRingtones,-1,"Location",wxPoint(150,170))
+SetRingtoneScale=new wxTextCtrl(tabRingtones,-1,"",wxPoint(120,200),wxSize(20,20))
+SetRingtoneScaleLabel=new wxStaticText(tabRingtones,-1,"Scale",wxPoint(150,200))
+RingtoneConvertButton=new wxButton(tabRingtones,-1,"Convert ringtone",wxPoint(200,10))
+RingtoneComposerButton=new wxButton(tabRingtones,-1,"Nokia Composer",wxPoint(200,35))
+
+Sub onLoadRingtone( event ) 
+    fileDialog.SetMessage("Select ringtone to be uploaded to phone")
+	fileDialog.SetWildcard("*.txt")
+    fileDialog.SetStyle( wxOPEN )
+	fileDialog.SetFilename("")
+    If fileDialog.ShowModal() = wxID_OK Then
+		RingtoneSource=fileDialog.GetFilename()
+		RingtonePath=fileDialog.GetDirectory()+Slash
+		SetRingtoneName.SetLabel(RingtoneSource)
+		SetRingtoneMemory.SetLabel(RingtoneSource)
+    End If
+End sub
+Connect( LoadRingtoneButton, -1, wxEVT_COMMAND_BUTTON_CLICKED, "onLoadRingtone" )
+
+Sub onSetRingtone( event ) 
+	kill("gammu.tmp")
+	if len(SetRingtoneLocation.GetLineText(0))>0 then
+		location=" -location "+SetRingtoneLocation.GetLineText(0)
+	else
+		location=" "
+	end if
+	if len(SetRingtoneScale.GetLineText(0))>0 then
+		scale=" -scale "+SetRingtoneScale.GetLineText(0)
+	else
+		scale=" "
+	end if
+	if len(SetRingtoneName.GetLineText(0))>0 then
+		name=" -name "+SetRingtoneName.GetLineText(0)
+	else
+		name=" "
+	end if
+	CLI="gammu "+DebugLevel+" --setringtone "+RingtoneSource+" "+location+" "+scale+" "+name+" >gammu.tmp"
+    frame.SetStatusText("GAMMU command line:   "+CLI)
+	shell(CLI)
+	GammuShowOutput()
+End sub
+Connect( SetRingtoneButton, -1, wxEVT_COMMAND_BUTTON_CLICKED, "onSetRingtone" )
+
+
+Sub onRingtoneConvert( event ) 
+    fileDialog.SetMessage("Select ringtone to be converted")
+	fileDialog.SetWildcard("*.txt")
+    fileDialog.SetStyle( wxOPEN )
+	fileDialog.SetFilename("")
+    If fileDialog.ShowModal() = wxID_OK Then
+		RingtoneSource=fileDialog.GetFilename()
+		RingtonePath=fileDialog.GetDirectory()+Slash
+		SetRingtoneName.SetLabel(RingtoneSource)
+		SetRingtoneMemory.SetLabel(RingtoneSource)
+		RingtoneConvertFrame.Show(True)
+    End If
+End sub
+Connect( RingtoneConvertButton, -1, wxEVT_COMMAND_BUTTON_CLICKED, "onRingtoneConvert" )
+
+sub okClickedRingtone ( event )
+	RingtoneConvertFrame.Show(False) 'Turn off dialog window
+	fileDialog.SetMessage("Save File As") 'Show "Save" dialog window
+	fileDialog.SetFilename( "" )
+	fileDialog.SetStyle( wxSAVE )
+	fileDialog.SetWildcard("")
+	If fileDialog.ShowModal() != wxID_OK Then
+	  exit sub
+	end if
+		fileName = fileDialog.GetPath()  'Store selected filename
+'Select extension of destination file
+	if RTTLRadio.GetValue()=1 then
+		exten=".rtt"
+		add="RTTL"
+	else
+		exten=".bin"
+		add="BINARY"
+	end if
+'Add extension if not already present
+	if right$(fileName,4)<>exten then
+		fileName=fileName+exten 'Destination file
+	end if
+'Use GAMMU to convert logo to desired format
+	kill("gammu.tmp")
+	CLI="gammu "+DebugLevel+" --copyringtone "+RingtoneSource+" "+fileName+" "+add+" >gammu.tmp"
+    frame.SetStatusText("GAMMU command line:   "+CLI)
+	shell(CLI)
+	GammuShowOutput()
+end sub
+Connect( okButtonRingtone, -1, wxEVT_COMMAND_BUTTON_CLICKED, "okClickedRingtone" )
+
+
+sub CancelClickedRingtone ( event )
+	RingtoneConvertFrame.Show(False)
+end sub
+Connect( CancelButtonRingtone, -1, wxEVT_COMMAND_BUTTON_CLICKED, "CancelClickedRingtone" )
+
+Sub onRingtoneComposer( event ) 
+    fileDialog.SetMessage("Select ringtone to be displayed in Nokia Composer format")
+	fileDialog.SetWildcard("*.txt")
+    fileDialog.SetStyle( wxOPEN )
+	fileDialog.SetFilename("")
+    If fileDialog.ShowModal() = wxID_OK Then
+		RingtoneSource=fileDialog.GetFilename()
+		SetRingtoneName.SetLabel(RingtoneSource)
+		SetRingtoneMemory.SetLabel(RingtoneSource)
+	kill("gammu.tmp")
+	CLI="gammu "+DebugLevel+" --nokiacomposer "+RingtoneSource+" >gammu.tmp"
+    frame.SetStatusText("GAMMU command line:   "+CLI)
+	shell(CLI)
+	GammuShowOutput()
+    End If
+End sub
+Connect( RingtoneComposerButton, -1, wxEVT_COMMAND_BUTTON_CLICKED, "onRingtoneComposer" )
+
+
+
+'*************************
+' PROGRAM BODY
+'*************************
+'Write gammu's version into titlebar - give error if gammu is not found
+kill("gammu.tmp")
 shell("gammu --version > gammu.tmp")
 if FileExists("gammu.tmp") then
 	open "gammu.tmp" for input as #1
+	if lof(1)=0 then
+		wxMessageBox( "Error: GAMMU executable must be into\n GammuGUI folder or in your PATH!", "GAMMU not found!", wxOK + wxICON_INFORMATION, frame )
+	    end
+	end if		
 	Line Input #1,riga
-	frame.SetTitle(version+riga)
 	close #1
+    OSVer=wxGetOsDescription()
+	if Instr(UCase$(OSVer),"LINUX") then
+		Slash="/"
+		CR=chr$(10)
+	else
+		Slash="\\"
+		CR=chr$(13)+chr$(10)
+	end if
+	frame.SetTitle(version+"running on "+OSVer+" "+riga)
 else 
 		wxMessageBox( "Error: GAMMU executable must be into\n GammuGUI folder or in your PATH!", "GAMMU not found!", wxOK + wxICON_INFORMATION, frame )
 	end
 end if
 
+
+'Initialize radio buttons
 for x=1 to 5
   a=Debug[x].SetValue(0)
 next
@@ -1506,14 +1745,19 @@ a=GetAllCategoriesTodo.SetValue(1)
 
 a=GetMemDC.SetValue(1)
 
-frame.Show(True)
-sub LogoFrameDraw2 ( event )
-	if LogoTabSelected=3 then
-		LogoFrame.Raise()
-	end if
-end sub
-connect (frame, wxEVT_COMMAND_SET_FOCUS, "LogoFrameDraw2")
+a=RTTLRadio.SetValue(1)
 
+frame.Show(True)
+
+
+'sub LogoFrameDraw2 ( event )
+'	if LogoTabSelected=3 then
+'		LogoFrame.Raise()
+'	end if
+'end sub
+'connect (frame, wxEVT_COMMAND_SET_FOCUS, "LogoFrameDraw2")
+
+'Show gammu's last command line in a box, if status bar is clicked
 sub OnClickStatus ( event )
 if len(CLI)<2 then 
 	CLI="[nothing]"
@@ -1521,6 +1765,6 @@ end if
 wxMessageBox( "Last GAMMU command line:\n\n"+CLI, "Gammu command line", wxOK + wxICON_INFORMATION, frame )
 end
 end sub
-
 connect( GammuCli, wxEVT_LEFT_UP, "OnClickStatus" )
 connect( GammuCli, wxEVT_RIGHT_UP, "OnClickStatus" )
+

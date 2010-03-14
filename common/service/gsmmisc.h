@@ -134,6 +134,10 @@ typedef struct {
 	char		*Buffer;
 } GSM_File;
 
+GSM_Error GSM_ReadFile(char *FileName, GSM_File *File);
+
+GSM_Error GSM_JavaFindData(GSM_File File, char *Vendor, char *Name, char *JAR);
+
 /* ------------------------------------------------------------------------ */
 
 #endif

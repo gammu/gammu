@@ -67,7 +67,8 @@ typedef enum {
  * this from phone.
  */
 #define ALCATEL_FREE_MEMORY		100
-#define ALCATEL_MAX_LOCATION		0x0fffffff
+/* There COULD be 0xffffffff on next line, but this is IMHO enough */
+#define ALCATEL_MAX_LOCATION		0xffff
 #define ALCATEL_MAX_CATEGORIES		100
 
 typedef struct {

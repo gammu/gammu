@@ -96,7 +96,9 @@ GSM_Phone_Functions NAUTOPhone = {
 	NOTIMPLEMENTED,		/* 	GetNextFileFolder	*/
 	NOTIMPLEMENTED,		/*	GetFilePart		*/
 	NOTIMPLEMENTED,		/* 	AddFile			*/
-	NOTIMPLEMENTED 		/* 	GetFreeFileMemory 	*/
+	NOTIMPLEMENTED, 	/* 	GetFreeFileMemory 	*/
+	NOTIMPLEMENTED,		/*	DeleteFile		*/
+	NOTIMPLEMENTED		/*	AddFolder		*/
 };
 
 #endif

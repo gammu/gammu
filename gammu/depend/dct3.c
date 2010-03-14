@@ -175,8 +175,7 @@ static GSM_Error DCT3_ReplyGetDSPROM(GSM_Protocol_Message msg, GSM_StateMachine 
 static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int	i, j;  
-	char	uni[100];
-	char	buffer[50];    
+	char	uni[100], buffer[50];    
 
 	j=0;
 	for (i=0; i < 12; i++)
@@ -242,28 +241,34 @@ static GSM_Error DCT3_ReplyGetMCUchkSum(GSM_Protocol_Message msg, GSM_StateMachi
 	return GE_NONE;
 }
 
+static unsigned char MSID1;
+
+GSM_Error DCT3_ReplyEnableSecurity2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "State of security commands set\n");
+	MSID1 = msg.Buffer[5];
+	return GE_NONE;
+}
+
 void DCT3Info(int argc, char *argv[])
 {
 	unsigned char 		req[]  	= {0x00, 0x01, 0x8A, 0x00}; 	  /* Get simlock info */
 	unsigned char 		req2[]  = {0x00, 0x01, 0xb4, 0x00, 0x00}; /* Get MSID */
 	unsigned char 		req3[]  = {0x00, 0x01, 0xc8, 0x02}; 	  /* Get MCU chksum */
 	unsigned char 		req4[]  = {0x00, 0x01, 0xc8, 0x09}; 	  /* Get DSP ROM */
-	GSM_Protocol_Message 	msg;	
 
         if (CheckDCT3Only()!=GE_NONE) return;
+
+	s.User.UserReplyFunctions=UserReplyFunctions3;
 
 	error=DCT3_EnableSecurity (&s, 0x01);
 	Print_Error(error);
 
-	msg = *(s.Phone.Data.RequestMsg);
-	req2[3] = msg.Buffer[5];
-	req2[4] = req2[2] + req2[3];
-
-	s.User.UserReplyFunctions=UserReplyFunctions3;
-
 	error=GSM_WaitFor (&s, req, 4, 0x40, 4, ID_User3);
 	Print_Error(error);
 
+	req2[3] = MSID1;
+	req2[4] = req2[2] + req2[3];
  	error=GSM_WaitFor (&s, req2, 5, 0x40, 4, ID_User8);
 	Print_Error(error);
 
@@ -590,27 +595,28 @@ void DCT3DisplayOutput(int argc, char *argv[])
 #endif
 
 static GSM_Reply_Function UserReplyFunctions3[] = {
-	{DCT3_ReplyDisplayOutput,	"\x0D",0x03,0x50,ID_IncomingFrame},
-	{DCT3_ReplyDisplayOutput,	"\x0D",0x03,0x54,ID_User7	 },
+	{DCT3_ReplyDisplayOutput,	"\x0D",0x03,0x50,ID_IncomingFrame	},
+	{DCT3_ReplyDisplayOutput,	"\x0D",0x03,0x54,ID_User7	 	},
 
-	{DCT3_ReplyResetTest36,		"\x40",0x02,0x65,ID_User2 	 },
-	{DCT3_ReplyGetPPS,		"\x40",0x02,0x6A,ID_User4 	 },
-	{DCT3_ReplySetPPS,		"\x40",0x02,0x6B,ID_User4 	 },
-	{DCT3_Reply61GetSecurityCode,	"\x40",0x02,0x6E,ID_User6 	 },
-	{DCT3_ReplySimlockInfo,		"\x40",0x02,0x8A,ID_User3	 },
+	{DCT3_ReplyEnableSecurity2,	"\x40",0x02,0x64,ID_EnableSecurity	},
+	{DCT3_ReplyResetTest36,		"\x40",0x02,0x65,ID_User2 	 	},
+	{DCT3_ReplyGetPPS,		"\x40",0x02,0x6A,ID_User4 	 	},
+	{DCT3_ReplySetPPS,		"\x40",0x02,0x6B,ID_User4 	 	},
+	{DCT3_Reply61GetSecurityCode,	"\x40",0x02,0x6E,ID_User6 	 	},
+	{DCT3_ReplySimlockInfo,		"\x40",0x02,0x8A,ID_User3	 	},
 #ifdef GSM_ENABLE_NOKIA6110
-	{DCT3_ReplySetOperatorName,	"\x40",0x02,0x8B,ID_User7	 },
-	{DCT3_ReplyGetOperatorName,	"\x40",0x02,0x8C,ID_User5	 },
+	{DCT3_ReplySetOperatorName,	"\x40",0x02,0x8B,ID_User7	 	},
+	{DCT3_ReplyGetOperatorName,	"\x40",0x02,0x8C,ID_User5	 	},
 #endif
-	{DCT3_ReplyGetMSID,		"\x40",0x02,0xb5,ID_User8	 },
-	{DCT3_ReplyGetDSPROM,		"\x40",0x02,0xC8,ID_User10	 },
-	{DCT3_ReplyGetMCUchkSum,	"\x40",0x02,0xC8,ID_User9	 },
-	{DCT3_ReplyPhoneTests,		"\x40",0x02,0xCF,ID_User1	 },
+	{DCT3_ReplyGetMSID,		"\x40",0x02,0xb5,ID_User8	 	},
+	{DCT3_ReplyGetDSPROM,		"\x40",0x02,0xC8,ID_User10	 	},
+	{DCT3_ReplyGetMCUchkSum,	"\x40",0x02,0xC8,ID_User9	 	},
+	{DCT3_ReplyPhoneTests,		"\x40",0x02,0xCF,ID_User1	 	},
 
-	{DCT3_Reply7191GetSecurityCode,	"\x7a",0x04,0x1C,ID_User6	 },
+	{DCT3_Reply7191GetSecurityCode,	"\x7a",0x04,0x1C,ID_User6	 	},
 
-	{NULL,				"\x00",0x00,0x00,ID_None	 }
-};
+	{NULL,				"\x00",0x00,0x00,ID_None	 	}
+};                                                                       	
 
 #endif
 

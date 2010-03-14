@@ -11,7 +11,9 @@ typedef enum {
 	GSM_CallerLogo,
 	GSM_PictureImage,
 	GSM_WelcomeNoteText,
-	GSM_DealerNoteText
+	GSM_DealerNoteText,
+	GSM_ColourOperatorLogo,
+	GSM_ColourStartupLogo
 } GSM_Bitmap_Types;
 
 #define GSM_BITMAP_SIZE	864
@@ -32,6 +34,7 @@ typedef struct {
 	bool			DefaultRingtone;
 	bool			Enabled;                       	  /* With caller logos = displayed or not */
 	char			Sender	[GSM_MAX_NUMBER_LENGTH+1];/* For Picture Images - number of sender */
+	unsigned char		ID;
 } GSM_Bitmap;
 
 #define MAX_MULTI_BITMAP 6

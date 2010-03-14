@@ -1,5 +1,6 @@
 
 #include <string.h>
+#include <stdlib.h>
 
 #include "gsmmisc.h"
 #include "../gsmcomon.h"
@@ -47,6 +48,84 @@ GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, int *Length)
 		}
 	}
 	*Length = i;
+	return GE_NONE;
+}
+
+GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
+{
+	int 		i = 1000;
+	FILE		*file;
+
+	file = fopen(FileName,"rb");
+	if (!file) return(GE_CANTOPENFILE);
+
+	free(File->Buffer);
+	File->Buffer 	= NULL;
+	File->Used 	= 0;
+	while (i == 1000) {
+		File->Buffer = realloc(File->Buffer,File->Used + 1000);
+		i = fread(File->Buffer+File->Used,1,1000,file);
+		File->Used = File->Used + i;
+	}
+	File->Buffer = realloc(File->Buffer,File->Used);
+
+	fclose(file);
+	return GE_NONE;
+}
+
+GSM_Error GSM_JavaFindData(GSM_File File, char *Vendor, char *Name, char *JAR)
+{
+	int 	i;
+	bool 	found;
+
+	found = false;
+	Vendor[0] = 0;
+	for (i=0;i<File.Used - 14;i++) {
+		if (!strncmp(File.Buffer+i,"MIDlet-Vendor: ",14)) {
+			found = true;
+			break;
+		}
+	}
+	if (!found) return GE_UNKNOWN;
+	i = i + 15;
+	while (File.Buffer[i] != 13 && File.Buffer[i] != 10) {
+		Vendor[strlen(Vendor)+1] = 0;
+		Vendor[strlen(Vendor)]   = File.Buffer[i];
+		i++;
+	}
+
+	found = false;
+	for (i=0;i<File.Used - 13;i++) {
+		if (!strncmp(File.Buffer+i,"MIDlet-Name: ",13)) {
+			found = true;
+			break;
+		}
+	}
+	if (!found) return GE_UNKNOWN;
+	i = i + 13;
+	Name[0] = 0;
+	while (File.Buffer[i] != 13 && File.Buffer[i] != 10) {
+		Name[strlen(Name)+1] = 0;
+		Name[strlen(Name)]   = File.Buffer[i];
+		i++;
+	}
+
+	found = false;
+	for (i=0;i<File.Used - 16;i++) {
+		if (!strncmp(File.Buffer+i,"MIDlet-Jar-URL: ",16)) {
+			found = true;
+			break;
+		}
+	}
+	if (!found) return GE_UNKNOWN;
+	i = i + 16;
+	JAR[0] = 0;
+	while (File.Buffer[i] != 13 && File.Buffer[i] != 10) {
+		JAR[strlen(JAR)+1] = 0;
+		JAR[strlen(JAR)]   = File.Buffer[i];
+		i++;
+	}
+
 	return GE_NONE;
 }
 

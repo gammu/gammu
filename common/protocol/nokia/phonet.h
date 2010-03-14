@@ -15,8 +15,10 @@ typedef struct {
 	GSM_Protocol_Message	Msg;
 } GSM_Protocol_PHONETData;
 
-#ifndef GSM_USED_IRDADEVICE
-#  define GSM_USED_IRDADEVICE
+#if defined(GSM_ENABLE_IRDAPHONET)
+#  ifndef GSM_USED_IRDADEVICE
+#    define GSM_USED_IRDADEVICE
+#  endif
 #endif
 #if defined(GSM_ENABLE_BLUEPHONET)
 #  ifndef GSM_USED_BLUETOOTHDEVICE

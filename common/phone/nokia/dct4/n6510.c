@@ -804,6 +804,7 @@ static GSM_Error N6510_ReplyStartupNoteLogo(GSM_Protocol_Message msg, GSM_StateM
 			case 0x01:
 			case 0x10:
 			case 0x0f:
+			case 0x25:
 				return GE_NONE;
 		}
 	}
@@ -1050,6 +1051,8 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		0x04, 0xC0, 0x02, 0x00,
 		0x41, 0xC0, 0x03, 0x00,
 		0x60, 0xC0, 0x04};
+	unsigned char reqColourStartup[200] = {
+		N6110_FRAME_HEADER, 0x04, 0x25, 0x00, 0x01, 0x00, 0x18};
 	unsigned char reqOp[1000] = {
 		N7110_FRAME_HEADER, 0x25, 0x01,
 		0x55, 0x00, 0x00, 0x55,
@@ -1057,6 +1060,13 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		0x0C, 0x08,
 		0x62, 0xF0, 0x10,	/* Network code */
 		0x03, 0x55, 0x55};
+	unsigned char reqColourOp[200] = {
+		N6110_FRAME_HEADER,
+		0x07, 0x00, 0x00, 0x00, 0xE7, 0x00, 0x00, 0x00, 0xF9, 0x00,
+		0x08, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x01, 0x00,
+		0x18,			/* File ID */
+		0x00,
+		0x00, 0x00, 0x00};	/* Network code */
 	unsigned char reqNote[200] = {N6110_FRAME_HEADER, 0x04, 0x01};
 	unsigned char reqPicture[2000] = {
 		N6110_FRAME_HEADER, 0x00, 0x02, 0x04, 0x00, 0x00,
@@ -1124,6 +1134,28 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 			NOKIA_EncodeNetworkCode(reqOp+12, NetInfo.NetworkCode);
 			smprintf(s, "Clearing operator logo\n");
 			return GSM_WaitFor (s, reqOp, 18, 0x0A, 4, ID_SetBitmap);
+		}
+	case GSM_ColourOperatorLogo:
+		/* We want to set operator logo, not clear */
+		if (strcmp(Bitmap->NetworkCode,"000 00")) {
+			EncodeBCD(reqColourOp+23, Bitmap->NetworkCode, 6, false);
+			reqColourOp[21] = Bitmap->ID;
+		}
+		smprintf(s, "Setting colour operator logo\n");
+		return GSM_WaitFor (s, reqColourOp, 26, 0x43, 4, ID_SetBitmap);
+	case GSM_ColourStartupLogo:
+		switch (Bitmap->Location) {
+			case 0:
+				reqColourStartup[6] = 0x00;
+				reqColourStartup[8] = 0x00;
+				smprintf(s, "Setting colour startup logo\n");
+				return GSM_WaitFor (s, reqColourStartup, 9, 0x7A, 4, ID_SetBitmap);
+			case 1:
+				reqColourStartup[8] = Bitmap->ID;
+				smprintf(s, "Setting colour startup logo\n");
+				return GSM_WaitFor (s, reqColourStartup, 9, 0x7A, 4, ID_SetBitmap);
+			default:
+				return GE_NOTSUPPORTED;
 		}
 	case GSM_CallerLogo:
 		return N6510_SetCallerLogo(s,Bitmap);
@@ -2819,6 +2851,7 @@ static GSM_Error N6510_ReplyGetCalendarInfo3(GSM_Protocol_Message msg, GSM_State
 	smprintf(s, "\nNumber of Entries in frame: %i\n",i);
 	LastCalendar->Location[j] = 0;
 	smprintf(s, "\n");
+	if (i == 0) return GE_EMPTY;
 	return GE_NONE;
 }
 
@@ -2836,18 +2869,23 @@ static GSM_Error N6510_GetCalendarInfo3(GSM_StateMachine *s, GSM_NOKIACalendarLo
 
 	smprintf(s, "Getting locations for calendar\n");
 	error = GSM_WaitFor (s, req, 11, 0x13, 4, ID_GetCalendarNotesInfo);
-	if (error != GE_NONE) return error;
+	if (error != GE_NONE && error != GE_EMPTY) return error;
 
 	while (1) {
 		i=0;
 		while (LastCalendar->Location[i] != 0x00) i++;
-		if (i == LastCalendar->Number) break;
 		smprintf(s, "i = %i %i\n",i,LastCalendar->Number);
+		if (i == LastCalendar->Number) break;
+		if (i != LastCalendar->Number && error == GE_EMPTY) {
+			smprintf(s, "Probably phone firmware is buggy. Workaround\n");
+			LastCalendar->Number = i;
+			break;
+		}
 		req[8] = LastCalendar->Location[i-1] / 256;
 		req[9] = LastCalendar->Location[i-1] % 256;
 		smprintf(s, "Getting locations for calendar\n");
 		error = GSM_WaitFor (s, req, 11, 0x13, 4, ID_GetCalendarNotesInfo);
-		if (error != GE_NONE) return error;
+		if (error != GE_NONE && error != GE_EMPTY) return error;
 	}
 	return GE_NONE;
 }
@@ -3269,23 +3307,31 @@ static GSM_Error N6510_GetFM_Reply(GSM_Protocol_Message msg, GSM_StateMachine *s
   	int		length;
   	GSM_Phone_Data	*Data = &s->Phone.Data;
   
-  	smprintf(s, "Received FM station\n");
- 	if (msg.Buffer[3]==0x16) return GE_UNKNOWN;
- 	if (msg.Buffer[3]==0x06) {
+	switch (msg.Buffer[3]) {
+	case 0x06:
+	  	smprintf(s, "Received FM station\n");
  		length = msg.Buffer[8];
  		memcpy(name,msg.Buffer+18,length*2);
  		name[length*2]	 = 0x00;
  		name[length*2+1] = 0x00;
  		CopyUnicodeString(Data->FMStation->StationName,name);
  		Data->FMStation->Frequency = 0xffff + msg.Buffer[16] * 0x100 + msg.Buffer[17];
- 	}
- 	if (msg.Buffer[3]==0x0e) smprintf(s, "getting FM status OK\n");
-	return GE_NONE;
+		return GE_NONE;
+ 	case 0x0e:
+		memcpy(s->Phone.Data.Priv.N6510.FMStatus,msg.Buffer,msg.Length);
+		s->Phone.Data.Priv.N6510.FMStatusLength = msg.Length;
+		smprintf(s, "getting FM status OK\n");
+		return GE_NONE;
+	case 0x16:
+	  	smprintf(s, "Received FM station. Unknown\n");
+		return GE_UNKNOWN;
+	}
+	return GE_UNKNOWNRESPONSE;
 }
   
 static GSM_Error N6510_GetFMStatus (GSM_StateMachine *s)
 {
- 	unsigned char req[7] = {N6110_FRAME_HEADER, 0x0d, 0x00, 0x00,0x01};
+ 	unsigned char req[7] = {N6110_FRAME_HEADER, 0x0d, 0x00, 0x00, 0x01};
  	
  	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return GE_NOTSUPPORTED;
  	return GSM_WaitFor (s, req, 7, 0x3E, 2, ID_GetFMStation);
@@ -3294,7 +3340,6 @@ static GSM_Error N6510_GetFMStatus (GSM_StateMachine *s)
 static GSM_Error N6510_GetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStation)
 {
  	GSM_Error 		error;
- 	GSM_Protocol_Message	msg;
  	int			location;
   	unsigned char req[7] = {N6110_FRAME_HEADER, 0x05,
  				0x00, 		// location
@@ -3303,14 +3348,14 @@ static GSM_Error N6510_GetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
   	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return GE_NOTSUPPORTED;
    	if (FMStation->Location > GSM_MAX_FM_STATION) return GE_INVALIDLOCATION;
 
-  	s->Phone.Data.FMStation=FMStation;
+  	s->Phone.Data.FMStation = FMStation;
+
  	error = N6510_GetFMStatus(s);
  	if (error != GE_NONE) return error;	
  
  	location = FMStation->Location-1;
- 	msg = *(s->Phone.Data.RequestMsg);
-  	if (msg.Buffer[14+location] != location) return GE_EMPTY;
- 	req[4] = location;
+  	if (s->Phone.Data.Priv.N6510.FMStatus[14+location] != location) return GE_EMPTY;
+ 	req[4]   = location;
 
  	smprintf(s, "Getting FM Station %i\n",FMStation->Location);
  	return GSM_WaitFor (s, req, 7, 0x3E, 2, ID_GetFMStation);
@@ -3330,7 +3375,6 @@ static GSM_Error N6510_SetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
 {
  	int 			len, freq, location;	
  	GSM_Error 		error;
- 	GSM_Protocol_Message	msg;    
  	unsigned char setstatus[36] = {N6110_FRAME_HEADER,0x11,0x00,0x01,0x01,
  	    			0x00,0x00,0x1c,0x00,0x14,0x00,0x00,
  				0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
@@ -3345,16 +3389,16 @@ static GSM_Error N6510_SetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
  				0x00, 			// freqHi
  				0x00, 			// freqLo
  				0x01};
+
  	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return GE_NOTSUPPORTED;
  
- 	s->Phone.Data.FMStation=FMStation;
+ 	s->Phone.Data.FMStation = FMStation;
  	location = FMStation->Location-1;
 
  	error = N6510_GetFMStatus(s);
  	if (error != GE_NONE) return error;
 
- 	msg = *(s->Phone.Data.RequestMsg);
- 	memcpy(setstatus+14,msg.Buffer+14,20);
+ 	memcpy(setstatus+14,s->Phone.Data.Priv.N6510.FMStatus+14,20);
  	setstatus [14+location] = location;
 
  	error = GSM_WaitFor (s, setstatus, 36 , 0x3E, 2, ID_GetFMStation);
@@ -3603,6 +3647,124 @@ static GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File)
 	return GE_NONE;
 }
 
+static GSM_Error N6510_ReplyAddFileHeader(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s,"File header added\n");
+	s->Phone.Data.File->ID = msg.Buffer[9];
+	return GE_NONE;
+}
+
+static GSM_Error N6510_ReplyAddFile(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	return GE_NONE;
+}
+
+static GSM_Error N6510_AddFile(GSM_StateMachine *s, GSM_File *File)
+{
+	GSM_Error		error;
+	int			i = 0, j;
+	unsigned char 		Header[400] = {
+		N7110_FRAME_HEADER, 0x02, 0x00, 0x00, 0x00, 0x01, 0x00,
+		0x0C, 			/* parent folder ID */
+ 		0x00, 0x00, 0x00, 0xE8};
+	unsigned char		Add[15000] = {
+		N7110_FRAME_HEADER, 0x40, 0x00, 0x00, 0x00, 0x01, 0x00,
+		0x04, 			/* file ID */
+		0x00, 0x00, 
+		0x01, 0x28}; 		/* length */
+	unsigned char end[30] = {
+		N7110_FRAME_HEADER, 0x40, 0x00, 0x00, 0x00, 0x01, 0x00,
+		0x04, 			/* file ID */
+		0x00, 0x00, 0x00, 0x00};
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return GE_NOTSUPPORTED;
+
+	Header[9] = File->ID;
+	memset(Header+14, 0x00, 300);
+	CopyUnicodeString(Header+14,File->Name);
+	Header[224] = File->Used / 256;
+	Header[225] = File->Used % 256;
+	Header[231] = 0x01;
+	Header[233] = 0x05;
+	Header[235] = 0x01;
+	Header[237] = File->ID;
+
+	if (!strcmp(s->Phone.Data.ModelInfo->model,"3510") && File->ID == 0x08) {
+		/* Gallery in 3510 */
+		Header[231] = 0x02;
+	}
+	if (strstr(DecodeUnicodeString(File->Name),".jar")!=NULL) {
+		/* Checked with 3510i and 6310i */
+		Header[231] = 0x10;
+		Header[233] = 0x01;
+	}
+
+	s->Phone.Data.File = File;
+	smprintf(s, "Adding file header\n");
+	error=GSM_WaitFor (s, Header, 246, 0x6D, 4, ID_AddFile);
+	if (error != GE_NONE) return error;
+
+	while (i != File->Used) {
+		j = 10000;
+		if (File->Used - i < 10000) j = File->Used - i;
+		Add[ 9] = File->ID;
+		Add[12] = j / 256;
+		Add[13] = j % 256;
+		memcpy(Add+14,File->Buffer+i,j);
+		smprintf(s, "Adding file part %i %i\n",i,j);
+		error=GSM_WaitFor (s, Add, 14+j, 0x6D, 4, ID_AddFile);
+		if (error != GE_NONE) return error;
+		i = i + j;
+	}
+
+	end[9] = File->ID;
+	smprintf(s, "Frame for ending adding file\n");
+	return GSM_WaitFor (s, end, 14, 0x6D, 4, ID_AddFile);
+}
+
+static GSM_Error N6510_ReplyDeleteFile(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	return GE_NONE;
+}
+
+static GSM_Error N6510_DeleteFile(GSM_StateMachine *s, int ID)
+{
+	unsigned char Delete[40] = {
+		N7110_FRAME_HEADER, 0x1E, 0x00, 0x00, 0x00, 0x01, 0x00, 0x35};
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return GE_NOTSUPPORTED;
+
+	Delete[9] = ID % 256;
+	return GSM_WaitFor (s, Delete, 11, 0x6D, 4, ID_DeleteFile);
+}
+
+static GSM_Error N6510_ReplyAddFolder(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	s->Phone.Data.File->ID = msg.Buffer[9];
+	return GE_NONE;
+}
+
+static GSM_Error N6510_AddFolder(GSM_StateMachine *s, GSM_File *File)
+{
+	unsigned char Header[400] = {
+		N7110_FRAME_HEADER, 0x04, 0x00, 0x00, 0x00, 0x01, 0x00,
+		0x0C, 			/* parent folder ID */
+ 		0x00, 0x00, 0x00, 0xE8};
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return GE_NOTSUPPORTED;
+
+	Header[9] = File->ID;
+	memset(Header+14, 0x00, 300);
+	CopyUnicodeString(Header+14,File->Name);
+	Header[233] = 0x02;
+	Header[235] = 0x01;
+	Header[237] = File->ID;
+	
+	s->Phone.Data.File = File;
+	smprintf(s, "Adding folder\n");
+	return GSM_WaitFor (s, Header, 246, 0x6D, 4, ID_AddFolder);
+}
+
 static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x02,ID_IncomingFrame	},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x03,ID_IncomingFrame	},
@@ -3731,6 +3893,8 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetOriginalIMEI,	"\x42",0x07,0x01,ID_GetOriginalIMEI	},
 	{N6510_ReplyGetManufactureMonth,"\x42",0x07,0x02,ID_GetManufactureMonth	},
 
+	{N6510_ReplySetOperatorLogo,	"\x43",0x03,0x08,ID_SetBitmap		},
+
 	/* 0x4A - voice records */
 
 	/* 0x53 - simlock */
@@ -3741,14 +3905,18 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyDeleteAllToDo,	"\x55",0x03,0x12,ID_DeleteAllToDo	},
 	{N6510_ReplyGetToDoLocations,	"\x55",0x03,0x16,ID_GetToDo		},
 
+	{N6510_ReplyAddFileHeader,	"\x6D",0x03,0x03,ID_AddFile		},
+	{N6510_ReplyAddFolder,		"\x6D",0x03,0x05,ID_AddFolder		},
 	{N6510_ReplyGetFilePart,	"\x6D",0x03,0x0F,ID_GetFile		},
 	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x15,ID_GetFileInfo		},
 	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x15,ID_GetFile		},
+	{N6510_ReplyDeleteFile,		"\x6D",0x03,0x1F,ID_DeleteFile		},
 	{N6510_ReplyGetFreeFileMemory,	"\x6D",0x03,0x23,ID_GetFileFree		},
 	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x2F,ID_GetFileInfo		},
 	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x2F,ID_GetFile		},
 	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x33,ID_GetFileInfo		},
 	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x33,ID_GetFile		},
+	{N6510_ReplyAddFile,		"\x6D",0x03,0x41,ID_AddFile		},
 
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x01,ID_GetBitmap		},
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x01,ID_SetBitmap		},
@@ -3756,6 +3924,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x0F,ID_SetBitmap		},
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x10,ID_GetBitmap		},
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x10,ID_SetBitmap		},
+	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x25,ID_SetBitmap		},
 
 	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetModel		},
 	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetFirmware		},
@@ -3847,8 +4016,10 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_ShowStartInfo,
 	N6510_GetNextFileFolder,
 	N6510_GetFilePart,
-	NOTIMPLEMENTED,		/* 	AddFile			*/
-	N6510_GetFreeFileMemory
+	N6510_AddFile,
+	N6510_GetFreeFileMemory,
+	N6510_DeleteFile,
+	N6510_AddFolder
 };
 
 #endif
