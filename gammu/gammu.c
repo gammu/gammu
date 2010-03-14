@@ -19,18 +19,7 @@
 #  include <utime.h>
 #endif
 
-#include "../common/gsmcomon.h"
-#include "../common/gsmstate.h"
-#include "../common/misc/cfg.h"
-#include "../common/misc/misc.h"
-#include "../common/misc/coding/coding.h"
-#include "../common/service/gsmpbk.h"
-#include "../common/service/gsmring.h"
-#include "../common/service/gsmlogo.h"
-#include "../common/service/gsmnet.h"
-#include "../common/service/backup/gsmback.h"
-#include "../common/phone/pfunc.h"
-#include "../common/phone/nokia/nfunc.h"
+#include "../common/gammu.h"
 #include "gammu.h"
 #include "smsd/smsdcore.h"
 #ifdef DEBUG
@@ -889,7 +878,7 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms)
 			printmsg("\n");
 		} else {
 			for (j=0;j<sms.Number;j++) {
-				displaysinglesmsinfo(sms.SMS[j],false,udhinfo);
+				displaysinglesmsinfo(sms.SMS[j],!RetVal,udhinfo);
 				printmsg("\n");
 			}
 		}
@@ -1544,11 +1533,13 @@ static void GetCalendarNotes(int argc, char *argv[])
 		printmsg("Location     : %d\n", Note.Location);
 		printmsg("Note type    : ");
 		switch (Note.Type) {
-			case GCN_REMINDER 	: printmsg("Reminder\n");		   	break;
+			case GCN_REMINDER 	: printmsg("Reminder (Date)\n");		break;
 			case GCN_CALL     	: printmsg("Call\n");			   	break;
 			case GCN_MEETING  	: printmsg("Meeting\n");		   	break;
-			case GCN_BIRTHDAY 	: printmsg("Birthday\n");		   	break;
-			case GCN_MEMO		: printmsg("Memo\n");			   	break;
+			case GCN_BIRTHDAY 	: printmsg("Birthday (Anniversary)\n");		break;
+			case GCN_MEMO		: printmsg("Memo (Miscellaneous)\n");		break;
+			case GCN_TRAVEL		: printmsg("Travel\n");			   	break;
+			case GCN_VACATION	: printmsg("Vacation\n");			break;
 			case GCN_ALARM    	: printmsg("Alarm\n");		   		break;
 			case GCN_DAILY_ALARM 	: printmsg("Daily alarm\n");		   	break;
 			case GCN_T_ATHL   	: printmsg("Training/Athletism\n"); 	   	break;
@@ -5725,6 +5716,9 @@ static void ListNetworks(int argc, char *argv[])
 
 static void Version(int argc, char *argv[])
 {
+//	unsigned char 	buff[10];
+//	int		len;
+
 	printmsg("[Gammu version %s built %s %s]\n\n",VERSION,__TIME__,__DATE__);
 
 #ifdef DEBUG
@@ -5737,6 +5731,9 @@ static void Version(int argc, char *argv[])
 	printf("int             - %i\n",sizeof(int));
 	printf("GSM_NetworkInfo - %i\n",sizeof(GSM_NetworkInfo));
 #endif
+
+//	len=DecodeBASE64("AXw", buff, 3);
+//	DumpMessage(stdout, buff, len);
 }
 
 static void GetFMStation(int argc, char *argv[])
@@ -5866,7 +5863,7 @@ static void GetFiles(int argc, char *argv[])
 		error = GE_NONE;
 		while (error == GE_NONE) {
 			error = Phone->GetFilePart(&s,&File);
-			if (error == GE_NONE || error == GE_EMPTY) {
+			if (error == GE_NONE || error == GE_EMPTY || error == GE_WRONGCRC) {
 				if (start) {
 					printmsg("Getting \"%s\": ", DecodeUnicodeString2(File.Name));
 					start = false;
@@ -5879,6 +5876,10 @@ static void GetFiles(int argc, char *argv[])
 				}
 				printmsg("*");
 				if (error == GE_EMPTY) break;
+				if (error == GE_WRONGCRC) {
+					printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
+					break;
+				}
 			}
 		    	Print_Error(error);
 		}
@@ -5996,10 +5997,13 @@ static void AddFile(int argc, char *argv[])
 	error = GE_NONE;
 	while (error == GE_NONE) {
 		error = Phone->AddFilePart(&s,&File,&Pos);
-	    	if (error != GE_EMPTY) Print_Error(error);
+	    	if (error != GE_EMPTY && error != GE_WRONGCRC) Print_Error(error);
 		printmsgerr("%cWriting: %i percent",13,Pos*100/File.Used);
 	}
 	printmsgerr("\n");
+	if (error == GE_WRONGCRC) {
+		printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
+	}
 
 	free(File.Buffer);
 	GSM_Terminate();
@@ -6241,10 +6245,13 @@ static void NokiaAddFile(int argc, char *argv[])
 		Pos		   = 0;
 		while (error == GE_NONE) {
 			error = Phone->AddFilePart(&s,&File,&Pos);
-		    	if (error != GE_EMPTY) Print_Error(error);
+		    	if (error != GE_EMPTY && error != GE_WRONGCRC) Print_Error(error);
 			printmsgerr("%cWriting JAD file: %i percent",13,Pos*100/File.Used);
 		}
 		printmsgerr("\n");
+		if (error == GE_WRONGCRC) {
+			printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
+		}
 
 		if (argc > 4) {
 			if (mystrncasecmp(argv[4],"-readonly",0)) File.ReadOnly = true;
@@ -6265,10 +6272,13 @@ static void NokiaAddFile(int argc, char *argv[])
 		Pos		   = 0;
 		while (error == GE_NONE) {
 			error = Phone->AddFilePart(&s,&File,&Pos);
-		    	if (error != GE_EMPTY) Print_Error(error);
+		    	if (error != GE_EMPTY && error != GE_WRONGCRC) Print_Error(error);
 			printmsgerr("%cWriting JAR file: %i percent",13,Pos*100/File.Used);
 		}
 		printmsgerr("\n");
+		if (error == GE_WRONGCRC) {
+			printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
+		}
 
 		free(File.Buffer);
 		GSM_Terminate();
@@ -6375,10 +6385,13 @@ static void NokiaAddFile(int argc, char *argv[])
 	Pos	= 0;
 	while (error == GE_NONE) {
 		error = Phone->AddFilePart(&s,&File,&Pos);
-	    	if (error != GE_EMPTY) Print_Error(error);
+	    	if (error != GE_EMPTY && error != GE_WRONGCRC) Print_Error(error);
 		if (File.Used != 0) printmsgerr("%cWriting file: %i percent",13,Pos*100/File.Used);
 	}
 	printmsgerr("\n");
+	if (error == GE_WRONGCRC) {
+		printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
+	}
 
 	free(File.Buffer);
 	GSM_Terminate();
@@ -7081,7 +7094,6 @@ static GSM_Parameters Parameters[] = {
 	{"--monitor",			0, 1, Monitor			},
 	{"--listnetworks",		0, 0, ListNetworks		},
 	{"--getgprspoint",		1, 2, GetGPRSPoint		},
-	{"--savefile",			4, 5, SaveFile			},
 	{"--addfolder",			2, 2, AddFolder			},
 	{"--getfilesystem",		0, 1, GetFileSystem		},
 	{"--getfiles",			1,40, GetFiles			},
@@ -7148,7 +7160,6 @@ static GSM_Parameters Parameters[] = {
 	{"--getwapsettings",		1, 2, GetWAPMMSSettings		},
 	{"--getmmssettings",		1, 2, GetWAPMMSSettings		},
 	{"--savemmsfile",		3, 15,SaveMMSFile		},
-	{"--savefile",			4, 5, SaveFile			},
 	{"--getbitmap",			1, 3, GetBitmap			},
 	{"--setbitmap",			1, 4, SetBitmap			},
 	{"--copybitmap",		1, 3, CopyBitmap		},
@@ -7157,6 +7168,7 @@ static GSM_Parameters Parameters[] = {
 	{"--searchphone",		0, 1, SearchPhone		},
 #endif
 #ifdef GSM_ENABLE_BACKUP
+	{"--savefile",			4, 5, SaveFile			},
 	{"--backup",			1, 1, Backup			},
 	{"--backupsms",			1, 1, BackupSMS			},
 	{"--restore",			1, 1, Restore			},

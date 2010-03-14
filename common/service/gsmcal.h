@@ -10,11 +10,13 @@
 
 /* Define enums for Calendar Note types */
 typedef enum {
-	GCN_REMINDER=1, /* Reminder 		     */
+	GCN_REMINDER=1, /* Reminder or Date 	     */
 	GCN_CALL,       /* Call 		     */
 	GCN_MEETING,    /* Meeting 		     */
-	GCN_BIRTHDAY,   /* Birthday 		     */
-	GCN_MEMO,
+	GCN_BIRTHDAY,   /* Birthday or Anniversary or Special Occasion */
+	GCN_MEMO,       /* Memo or Miscellaneous     */
+	GCN_TRAVEL,
+	GCN_VACATION,
 	GCN_T_ATHL,     /* Training - Athletism      */
         GCN_T_BALL,     /* Training - Ball Games     */
         GCN_T_CYCL,     /* Training - Cycling        */
@@ -77,7 +79,8 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entr
 
 typedef enum {
 	Nokia_VCalendar = 1,
-	Siemens_VCalendar
+	Siemens_VCalendar,
+	SonyEricsson_VCalendar
 } GSM_VCalendarVersion;
 
 GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version);
@@ -126,10 +129,11 @@ typedef struct {
 	GSM_SubToDoEntry   	Entries[GSM_TODO_ENTRIES];
 } GSM_ToDoEntry;
 
-void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, int *Alarm, int *Completed, int *EndTime);
+void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, int *Alarm, int *Completed, int *EndTime, int *Phone);
 
 typedef enum {
-	Nokia_VToDo = 1
+	Nokia_VToDo = 1,
+	SonyEricsson_VToDo
 } GSM_VToDoVersion;
 
 GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version);

@@ -7,7 +7,7 @@
 #  include <unistd.h>
 #endif
 
-#include "../cfg/config.h"
+#include "config.h"
 #include "misc/misc.h"
 #include "misc/cfg.h"
 
@@ -61,7 +61,8 @@ typedef enum {
 	GE_BUG,                  	/* Found bug in implementation or phone */
     	GE_CANCELED,                 	/* Action was canceled by user */
 	GE_NEEDANOTHERANSWER,   	/* Inside Gammu: phone module need to send another answer frame */
-/*40*/	GE_OTHERCONNECTIONREQUIRED
+/*40*/	GE_OTHERCONNECTIONREQUIRED,
+	GE_WRONGCRC
 } GSM_Error;
 
 extern GSM_Error NoneFunction		(void);

@@ -125,6 +125,9 @@
 				RelativePath="..\..\..\common\service\backup\backvcs.c">
 			</File>
 			<File
+				RelativePath="..\..\..\common\service\backup\backics.c">
+			</File>
+			<File
 				RelativePath="..\..\..\common\service\backup\backvcf.c">
 			</File>
 			<File
@@ -274,6 +277,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\common\service\backup\backvcs.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\service\backup\backics.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\service\backup\backvcf.h">

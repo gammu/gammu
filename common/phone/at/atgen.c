@@ -31,12 +31,16 @@ extern GSM_Error ATGEN_SetRingtone		(GSM_StateMachine *s, GSM_Ringtone *Ringtone
 extern GSM_Error ATGEN_GetBitmap		(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
 extern GSM_Error ATGEN_SetBitmap		(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
 extern GSM_Error SIEMENS_GetNextCalendar	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start);
-extern GSM_Error ATGEN_DelCalendarNote		(GSM_StateMachine *s, GSM_CalendarEntry *Note);
-extern GSM_Error ATGEN_AddCalendarNote		(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past);
+extern GSM_Error SIEMENS_AddCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past);
+extern GSM_Error SIEMENS_DelCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 
 extern GSM_Error SONYERIC_GetNextCalendar	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start);
 extern GSM_Error SONYERIC_GetToDo		(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refresh);
 extern GSM_Error SONYERIC_GetToDoStatus		(GSM_StateMachine *s, GSM_ToDoStatus *status);
+extern GSM_Error SONYERIC_AddCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past);
+extern GSM_Error SONYERIC_SetToDo		(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
+extern GSM_Error SONYERIC_DeleteAllToDo		(GSM_StateMachine *s);
+extern GSM_Error SONYERIC_DelCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 
 typedef struct {
     int     Number;
@@ -2736,6 +2740,24 @@ static GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
 	return GE_NONE;
 }
 
+GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_AddCalendarNote(s, Note, Past);
+	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_AddCalendarNote(s, Note, Past);
+	return GE_NOTSUPPORTED;
+}
+
+GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_DelCalendarNote(s, Note);
+	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_DelCalendarNote(s, Note);
+	return GE_NOTSUPPORTED;
+}
+
 GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyOK,			"OK"			,0x00,0x00,ID_IncomingFrame	 },
 
@@ -2888,8 +2910,8 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/*	GetPPM			*/
 	ATGEN_PressKey,
 	SONYERIC_GetToDo,
-	NOTSUPPORTED,			/*	DeleteAllToDo		*/
-	NOTSUPPORTED,			/*	SetToDo			*/
+	SONYERIC_DeleteAllToDo,
+	SONYERIC_SetToDo,
 	SONYERIC_GetToDoStatus,
 	NOTSUPPORTED,			/*	PlayTone		*/
 	ATGEN_EnterSecurityCode,

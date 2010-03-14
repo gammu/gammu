@@ -72,11 +72,6 @@ A. * these things can be done without anything (it will be done everything
      * Other:
        * more EMS features: polyphonic ringtones, more text features, etc.
      * .... (other)
-   * these things will be probably never done:
-     * Nokia:
-       * CRC16 for filesystem in DCT4 phones (although it's called CRC16 by
-         Nokia, none of possible CRC16 polynoms give correct results.
-         Alghoritm used by Nokia uses initial value 0xffff)
 -------------------------------------------------------------------------------
 Q. Where to get latest versions and support ?
 
@@ -321,6 +316,12 @@ A  Nokia section
       Well, M20 doesn't have correctly support for such numbers at all.
       Gammu tries to avoid it and construct SMS from such incorrect frame.
       Many times it ends with success in 99%
+
+   SonyEricsson
+
+    1.T310
+      * I can't backup Notes & I don't have numbers in PhoneCall ToDo
+      Phone firmware issues. Thanks SE
    ---------
    TIP: if you want to know more about changes and bugs in firmware in Nokia
         phones, visit www.mwiacek.com and check firmware subpage
@@ -364,6 +365,8 @@ A. 1.Nokia DCT3 (3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|
      uploading files to Inbox)
 
    9.Sony Ericsson
+
+     Tested with T310 (or rather T300 with R3B firmware from T310)
 -------------------------------------------------------------------------------
 Q. How to report bugs ?
 

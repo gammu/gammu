@@ -2,7 +2,6 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "../../../cfg/config.h"
 #include "../../phone/nokia/nfunc.h"
 #include "../../phone/nokia/dct3/n7110.h"
 #include "../../misc/coding/coding.h"
@@ -176,7 +175,7 @@ static GSM_Error GSM_DecodeLDIFEntry(unsigned char *Buffer, int *Pos, GSM_Phoneb
 	Pbk->EntriesNum = 0;
 
 	while (1) {
-		MyGetLine(Buffer, Pos, Line);
+		MyGetLine(Buffer, Pos, Line, strlen(Buffer));
 		if (strlen(Line) == 0) break;
 		switch (Level) {
 		case 0:

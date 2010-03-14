@@ -27,5 +27,5 @@ INSTALL_H_DIR	= @includedir@/gammu
 RPM_DIR         = @RPM_DIR@
 TEMP_DIR	= @TEMP_DIR@
 
-LDFLAGS         += -Wl,--rpath -Wl,@libdir@
-CFLAGS          += '-DLOCALE_PATH="@LOCALE_DIR@"'
+LDFLAGS         += -Wl,--rpath -Wl,$INSTALL_LIB_DIR
+CFLAGS          += '-DLOCALE_PATH="$INSTALL_LOC_DIR"'

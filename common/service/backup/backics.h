@@ -1,11 +1,11 @@
-#ifndef __gsm_backupvcs_h
-#define __gsm_backupvcs_h
+#ifndef __gsm_backupics_h
+#define __gsm_backupics_h
 
 #include "backgen.h"
 
 #ifdef GSM_ENABLE_BACKUP
-GSM_Error SaveVCalendar(char *FileName, GSM_Backup *backup);
-GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup);
+GSM_Error SaveICS(char *FileName, GSM_Backup *backup);
+GSM_Error LoadICS(char *FileName, GSM_Backup *backup);
 #endif
 
 #endif

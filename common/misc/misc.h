@@ -8,7 +8,7 @@
 #  include <windows.h>
 #endif
 
-#include "../../cfg/config.h"
+#include "../config.h"
 
 #ifndef false
 #  define false (0)

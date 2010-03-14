@@ -22,6 +22,35 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20031019 - 0.87.0.0
+* new functionality:
+  * simple decoder for UTF7 (used in SE files)
+  * SE:
+    * can backup/restore Calendar & ToDo with all (?) features: full support
+      for all calendar notes types, priority, etc. etc.
+      NOTE: phones don't give info about number in PhoneCall ToDo
+    * OBEX module can get & set files
+  * new backup file format 1.03 uses word descriptions for ToDo priority
+  * IT WAS ALMOST IMPOSSIBLE TODO, BUT NOW GAMMU            (Michael Schroeder)
+    CAN CALCULATE CHECKSUMS FOR FILES IN DCT4 SERIES 40 PHONES.
+    IT'S KNOWN, IF FILE WAS OK UPLOADED TO/GOT FROM PHONE. MAIN THANKS
+    FOR HELP GO TO MICHAEL AND SOME TO MICHAL CIHAR.
+  * config.h in common in sources just wraps cfg/config.h        (Michal Cihar)
+    (when installed headers cfg/config.h is placed into include/gammu)
+  * started work on ICS files support (Mozilla Calendar)
+
+* fixes and improvements:
+  * installation fix in MakeFile                               (Dmitry Vukolov)
+  * * modifies Makefile.cfg(.in) to contain path specified       (Michal Cihar)
+      sooner in this file and not these by configure
+    * configure doesn't print ugly errors if cfg/autoconf/configure
+      fails (eg. unknown parameter)
+    * fixes compilation with disabled backup support
+  * --geteachsms displays again text of not linked sms,       (Vitezslav Samel)
+    Gammu links correctly sequences of linked sms saved from phone menu
+    and displays date and time of their saving (DCT4 phones function)
+  * SMSD doesn't hangup during displaying device in debug output  (many people)
+
 20031010 - 0.86.0.0
 * new functionality:
   * Alcatel:

@@ -257,7 +257,7 @@ GSM_Error ATGEN_CMS35ReplyDeleteCalendar(GSM_Protocol_Message msg, GSM_StateMach
 	}
 }
 
-GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error SIEMENS_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	unsigned char req[32];
 
@@ -268,7 +268,7 @@ GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_DeleteCalendarNote);
 }
 
-GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
+GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
@@ -276,7 +276,7 @@ GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bo
 	int			size=0;
 
 	if (Priv->Manufacturer!=AT_Siemens) return GE_NOTSUPPORTED;
-	if (Note->Location==0x00) return GE_INVALIDLOCATION;	
+//	if (Note->Location==0x00) return GE_INVALIDLOCATION;	
 
 	if (!Past && IsCalendarNoteFromThePast(Note)) return GE_NONE;
 

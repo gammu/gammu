@@ -6,7 +6,7 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.86.0.0"
+#define VERSION "0.87.0.0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -49,13 +49,13 @@
 #define GSM_ENABLE_IRDAOBEX 1
 
 /* Bluetooth stack (like Bluez). FBUS2 (init done using AT commands) */
-#define GSM_ENABLE_BLUEFBUS2 1
+/* #undef GSM_ENABLE_BLUEFBUS2 */
 /* Bluetooth stack (like Bluez). PHONET FBUS */
-#define GSM_ENABLE_BLUEPHONET 1
+/* #undef GSM_ENABLE_BLUEPHONET */
 /* Blueooth stack (like Bluez). AT commands */
-#define GSM_ENABLE_BLUEAT 1
+/* #undef GSM_ENABLE_BLUEAT */
 /* Blueooth stack (like Bluez). OBEX */
-#define GSM_ENABLE_BLUEOBEX 1
+/* #undef GSM_ENABLE_BLUEOBEX */
 
 /* --------------------------- Phone modules (specific) ----------------- */
 

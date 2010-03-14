@@ -27,6 +27,7 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
 	    $(TOPDIR)/common/service/backup/backtext.o \
 	    $(TOPDIR)/common/service/backup/backvcs.o \
 	    $(TOPDIR)/common/service/backup/backvcf.o \
+	    $(TOPDIR)/common/service/backup/backics.o \
 	    $(TOPDIR)/common/device/bluetoth/bluetoth.o \
 	    $(TOPDIR)/common/device/serial/ser_unx.o \
 	    $(TOPDIR)/common/device/serial/ser_djg.o \
@@ -81,8 +82,9 @@ DESTDIR =
 
 %.o: %.c
 	@( echo Making $<; \
+	  curdir=`pwd`; \
 	  cd $(@D); \
-	  $(CC) -c $(CFLAGS) $(CPPFLAGS) $(<F) -o $(@F) \
+	  $(CC) -c $(CFLAGS) -I$${curdir}/common/ $(CPPFLAGS) $(<F) -o $(@F) \
 	)
     
 all: gammu
@@ -95,7 +97,7 @@ makelib: $(COMMON) $(GAMMU)
 	@echo Linking libGammu.so
 	@$(CC) $(LDLIBS) -shared -o $(TOPDIR)/common/libGammu.so $(COMMON)
 	@echo Linking
-	@$(CC) $(LDFLAGS) $(GAMMU) -lm -L$(TOPDIR)/common -lGammu -o $(TOPDIR)/gammu/gammulib
+	@$(CC) $(LDFLAGS) $(LDLIBS) $(GAMMU) -lm -L$(TOPDIR)/common -lGammu -o $(TOPDIR)/gammu/gammulib
 
 clean:
 	@echo Cleaning binaries and object files
@@ -197,10 +199,11 @@ installlibonly: makelib
 		       -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_H_DIR)/{} \; \
 		) \
 	done
+	@$(INSTALL) -m 0644 cfg/config.h $(DESTDIR)$(INSTALL_H_DIR)/config.h
 
 	@echo Installing pkgconfig file
-	$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LIB_DIR)/pkgconfig
-	$(INSTALL) -m 0644 cfg/pkgconfig/gammu.pc $(DESTDIR)$(INSTALL_LIB_DIR)/pkgconfig
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LIB_DIR)/pkgconfig
+	@$(INSTALL) -m 0644 cfg/pkgconfig/gammu.pc $(DESTDIR)$(INSTALL_LIB_DIR)/pkgconfig
 
 apidoc:
 	@if test -z "$(DOXYGEN)" ; then \

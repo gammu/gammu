@@ -202,6 +202,46 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 		} else {
 			SaveVCALText(Buffer, Length, note->Entries[Text].Text, "DESCRIPTION");
 		}
+	} else if (Version == SonyEricsson_VCalendar) {
+		*Length+=sprintf(Buffer+(*Length), "CATEGORIES:");
+		switch (note->Type) {
+		case GCN_MEETING:
+			*Length+=sprintf(Buffer+(*Length), "MEETING%c%c",13,10);
+			break;
+		case GCN_REMINDER:
+			*Length+=sprintf(Buffer+(*Length), "DATE%c%c",13,10);
+			break;
+		case GCN_TRAVEL:
+			*Length+=sprintf(Buffer+(*Length), "TRAVEL%c%c",13,10);
+			break;
+		case GCN_VACATION:
+			*Length+=sprintf(Buffer+(*Length), "VACATION%c%c",13,10);
+			break;
+		case GCN_BIRTHDAY:
+			*Length+=sprintf(Buffer+(*Length), "ANNIVERSARY%c%c",13,10);
+			break;
+		case GCN_MEMO:
+		default:
+			*Length+=sprintf(Buffer+(*Length), "MISCELLANEOUS%c%c",13,10);
+			break;
+		}
+		
+		if (Time == -1) return GE_UNKNOWN;
+		SaveVCALDateTime(Buffer, Length, &note->Entries[Time].Date, "DTSTART");
+
+		if (EndTime != -1) {
+			SaveVCALDateTime(Buffer, Length, &note->Entries[EndTime].Date, "DTEND");
+		}
+
+		if (Alarm != -1) {
+			SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "AALARM");
+		}
+	
+		SaveVCALText(Buffer, Length, note->Entries[Text].Text, "SUMMARY");
+
+		if (Location != -1) {
+			SaveVCALText(Buffer, Length, note->Entries[Location].Text, "LOCATION");
+		}
 	}
 	
 	*Length+=sprintf(Buffer+(*Length), "END:VEVENT%c%c",13,10);
@@ -210,7 +250,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	return GE_NONE;
 }
 
-void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, int *Alarm, int *Completed, int *EndTime)
+void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, int *Alarm, int *Completed, int *EndTime, int *Phone)
 {
 	int i;
 
@@ -218,6 +258,7 @@ void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, 
 	*EndTime	= -1;
 	*Alarm		= -1;
 	*Completed	= -1;
+	*Phone		= -1;
 	for (i = 0; i < entry->EntriesNum; i++)
 	{
 		switch (entry->Entries[i].EntryType) {
@@ -234,6 +275,9 @@ void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, 
 		case TODO_COMPLETED:
 			if (*Completed == -1) *Completed = i;
 			break;
+		case TODO_PHONE:
+			if (*Phone == -1) *Phone = i;
+			break;
 		default:
 			break;
 		}
@@ -242,9 +286,9 @@ void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, 
 
 GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version)
 {
- 	int Text, Alarm, Completed, EndTime;
+ 	int Text, Alarm, Completed, EndTime, Phone;
 
-	GSM_ToDoFindDefaultTextTimeAlarmCompleted(note, &Text, &Alarm, &Completed, &EndTime);
+	GSM_ToDoFindDefaultTextTimeAlarmCompleted(note, &Text, &Alarm, &Completed, &EndTime, &Phone);
 
 	if (header) {
 		*Length+=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
@@ -253,31 +297,52 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VTODO%c%c",13,10);
 
-	if (Text == -1) return GE_UNKNOWN;
-	SaveVCALText(Buffer, Length, note->Entries[Text].Text, "SUMMARY");
+	if (Version == Nokia_VToDo) {
+		if (Text == -1) return GE_UNKNOWN;
+		SaveVCALText(Buffer, Length, note->Entries[Text].Text, "SUMMARY");
 
-	if (Completed == -1) {
-		*Length+=sprintf(Buffer+(*Length), "STATUS:NEEDS ACTION%c%c",13,10);
-	} else {
-		*Length+=sprintf(Buffer+(*Length), "STATUS:COMPLETED%c%c",13,10);
-	}
-
-	switch (note->Priority) {
-		case GSM_Priority_Low	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:1%c%c",13,10); break;
-		case GSM_Priority_Medium: *Length+=sprintf(Buffer+(*Length), "PRIORITY:2%c%c",13,10); break;
-		case GSM_Priority_High	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:3%c%c",13,10); break;
-	}
-
-	if (EndTime != -1) {
-		SaveVCALDateTime(Buffer, Length, &note->Entries[EndTime].Date, "DUE");
-	}
-
-	if (Alarm != -1) {
-		if (note->Entries[Alarm].EntryType == CAL_SILENT_ALARM_DATETIME) {
-			SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "DALARM");
+		if (Completed == -1) {
+			*Length+=sprintf(Buffer+(*Length), "STATUS:NEEDS ACTION%c%c",13,10);
 		} else {
-			SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "AALARM");
+			*Length+=sprintf(Buffer+(*Length), "STATUS:COMPLETED%c%c",13,10);
 		}
+	
+		switch (note->Priority) {
+			case GSM_Priority_Low	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:1%c%c",13,10); break;
+			case GSM_Priority_Medium: *Length+=sprintf(Buffer+(*Length), "PRIORITY:2%c%c",13,10); break;
+			case GSM_Priority_High	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:3%c%c",13,10); break;
+		}
+
+		if (EndTime != -1) {
+			SaveVCALDateTime(Buffer, Length, &note->Entries[EndTime].Date, "DUE");
+		}
+
+		if (Alarm != -1) {
+			if (note->Entries[Alarm].EntryType == CAL_SILENT_ALARM_DATETIME) {
+				SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "DALARM");
+			} else {
+				SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "AALARM");
+			}
+		}
+	} else if (Version == SonyEricsson_VToDo) {
+		if (Text == -1) return GE_UNKNOWN;
+		SaveVCALText(Buffer, Length, note->Entries[Text].Text, "SUMMARY");
+
+		if (Completed == -1) {
+			*Length+=sprintf(Buffer+(*Length), "STATUS:NEEDS ACTION%c%c",13,10);
+		} else {
+			*Length+=sprintf(Buffer+(*Length), "STATUS:COMPLETED%c%c",13,10);
+		}
+	
+		switch (note->Priority) {
+			case GSM_Priority_Low	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:3%c%c",13,10); break;
+			case GSM_Priority_Medium: *Length+=sprintf(Buffer+(*Length), "PRIORITY:2%c%c",13,10); break;
+			case GSM_Priority_High	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:1%c%c",13,10); break;
+		}
+
+		if (Alarm != -1) {
+			SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "AALARM");
+		}		
 	}
 
 	*Length+=sprintf(Buffer+(*Length), "END:VTODO%c%c",13,10);
@@ -297,7 +362,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 	ToDo->EntriesNum 	= 0;
 
 	while (1) {
-		MyGetLine(Buffer, Pos, Line);
+		MyGetLine(Buffer, Pos, Line, strlen(Buffer));
 		if (strlen(Line) == 0) break;
 		switch (Level) {
 		case 0:
@@ -316,6 +381,9 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				return GE_NONE;
 			}
 			if (strstr(Line,"CATEGORIES:REMINDER")) 	Calendar->Type = GCN_REMINDER;
+			if (strstr(Line,"CATEGORIES:DATE"))	 	Calendar->Type = GCN_REMINDER;//SE
+			if (strstr(Line,"CATEGORIES:TRAVEL"))	 	Calendar->Type = GCN_TRAVEL;  //SE
+			if (strstr(Line,"CATEGORIES:VACATION"))	 	Calendar->Type = GCN_VACATION;//SE
 			if (strstr(Line,"CATEGORIES:MISCELLANEOUS")) 	Calendar->Type = GCN_MEMO;
 			if (strstr(Line,"CATEGORIES:PHONE CALL")) 	Calendar->Type = GCN_CALL;
 			if (strstr(Line,"CATEGORIES:SPECIAL OCCASION")) Calendar->Type = GCN_BIRTHDAY;
@@ -352,7 +420,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
 				Calendar->EntriesNum++;
 			}
-			if (Calendar->Type == GCN_MEETING && ReadVCALText(Line, "LOCATION", Buff)) {
+			if (ReadVCALText(Line, "LOCATION", Buff)) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_LOCATION;
 				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
 				Calendar->EntriesNum++;
@@ -403,9 +471,18 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,Buff);
 				ToDo->EntriesNum++;
 			}
-			if (strstr(Line,"PRIORITY:1")) ToDo->Priority = GSM_Priority_Low;
-			if (strstr(Line,"PRIORITY:2")) ToDo->Priority = GSM_Priority_Medium;
-			if (strstr(Line,"PRIORITY:3")) ToDo->Priority = GSM_Priority_High;
+			if (ReadVCALText(Line, "PRIORITY", Buff)) {
+				if (ToDoVer == SonyEricsson_VToDo) {
+					ToDo->Priority = GSM_Priority_Low;
+					if (atoi(DecodeUnicodeString(Buff))==2) ToDo->Priority = GSM_Priority_Medium;
+					if (atoi(DecodeUnicodeString(Buff))==1) ToDo->Priority = GSM_Priority_High;
+					dprintf("atoi is %i %s\n",atoi(DecodeUnicodeString(Buff)),DecodeUnicodeString(Buff));
+				} else if (ToDoVer == Nokia_VToDo) {
+					ToDo->Priority = GSM_Priority_Low;
+					if (atoi(DecodeUnicodeString(Buff))==2) ToDo->Priority = GSM_Priority_Medium;
+					if (atoi(DecodeUnicodeString(Buff))==3) ToDo->Priority = GSM_Priority_High;
+				}
+			}
 			if (strstr(Line,"STATUS:COMPLETED")) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_COMPLETED;
 				ToDo->Entries[ToDo->EntriesNum].Number	  = 1;

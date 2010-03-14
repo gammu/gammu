@@ -9,7 +9,7 @@
 #  include <wctype.h>
 #endif
 
-#include "../../cfg/config.h"
+#include "../config.h"
 #include "coding/coding.h"
 #include "cfg.h"
 #include "misc.h"
