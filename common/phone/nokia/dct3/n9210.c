@@ -331,7 +331,10 @@ GSM_Phone_Functions N9210Phone = {
         NOTSUPPORTED,        	/*  	GetCategoryStatus 	*/
     	NOTSUPPORTED,		/*  	GetFMStation        	*/
     	NOTSUPPORTED,		/*  	SetFMStation        	*/
-    	NOTSUPPORTED,		/*  	ClearFMStations       	*/	NOTIMPLEMENTED		/*  	SetIncomingUSSD		*/
+        NOTSUPPORTED,           /*      ClearFMStations         */
+        NOTIMPLEMENTED,         /*      SetIncomingUSSD         */
+	NOTSUPPORTED,		/* 	DeleteUserRingtones	*/
+	NOTSUPPORTED		/* 	ShowStartInfo		*/
 };
 
 #endif

@@ -147,6 +147,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	s->Phone.Data.Version[0]	  = 0;
 	s->Phone.Data.VerDate[0]	  = 0;
 	s->Phone.Data.VerNum		  = 0;
+	s->Phone.Data.StartInfoCounter	  = 0;
 
 	s->Phone.Data.HardwareCache[0]	  = 0;
 	s->Phone.Data.ProductCodeCache[0] = 0;
@@ -326,6 +327,11 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	error=s->Phone.Functions->Initialise(s);
 	if (error!=GE_NONE) return error;
 
+	if (mystrncasecmp(s->Config.StartInfo,"yes",0)) {
+		s->Phone.Functions->ShowStartInfo(s,true);
+		s->Phone.Data.StartInfoCounter = 30;
+	}
+
 	if (mystrncasecmp(s->Config.SyncTime,"yes",0)) {
 		GSM_GetCurrentDateTime (&time);
 		s->Phone.Functions->SetDateTime(s,&time);
@@ -377,6 +383,10 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 	s->Phone.Data.VerNum		  = 0;
 	
 	if (!s->opened) return GE_UNKNOWN;
+
+	if (mystrncasecmp(s->Config.StartInfo,"yes",0)) {
+		if (s->Phone.Data.StartInfoCounter > 0) s->Phone.Functions->ShowStartInfo(s,false);
+	}
 
 	smprintf(s,"[Closing]\n");
 
@@ -461,6 +471,11 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned char *buffer,
 	GSM_Phone_Data		*Phone		= &s->Phone.Data;
 	GSM_Error		error;
 	int			reply;
+
+	if (mystrncasecmp(s->Config.StartInfo,"yes",0)) {
+		if (s->Phone.Data.StartInfoCounter > 0)  s->Phone.Data.StartInfoCounter--;
+		if (s->Phone.Data.StartInfoCounter == 0) s->Phone.Functions->ShowStartInfo(s,false);
+	}
 
 	Phone->RequestID	= request;
 	Phone->DispatchError	= GE_TIMEOUT;
@@ -617,6 +632,7 @@ void CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg)
 	char *DefaultDebugFile		= "";
 	char *DefaultDebugLevel		= "";
 	char *DefaultLockDevice		= "no";
+	char *DefaultStartInfo		= "yes";
 	char *Temp;
 
 	/* By default all debug output will go to one filedescriptor */
@@ -629,6 +645,7 @@ void CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg)
         strcpy(cfg->Model,DefaultModel);
 	strcpy(cfg->DebugLevel,DefaultDebugLevel);
 	cfg->LockDevice	 	 = DefaultLockDevice;
+	cfg->StartInfo		 = DefaultStartInfo;
 	cfg->DefaultDevice	 = true;
 	cfg->DefaultModel	 = true;
 	cfg->DefaultConnection	 = true;
@@ -636,6 +653,7 @@ void CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg)
 	cfg->DefaultDebugFile	 = true;
 	cfg->DefaultDebugLevel	 = true;
 	cfg->DefaultLockDevice	 = true;
+	cfg->DefaultStartInfo	 = true;
 
 	cfg->UseGlobalDebugFile	 = DefaultUseGlobalDebugFile;
 
@@ -685,6 +703,12 @@ void CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg)
 		cfg->DefaultDebugLevel 		 = false;
 		strcpy(cfg->DebugLevel,Temp);
 	}
+	cfg->StartInfo   = CFG_Get(cfg_info, "gammu", "startinfo", 	false);
+	if (!cfg->StartInfo) {
+		cfg->StartInfo	 		 = DefaultStartInfo;
+	} else {
+		cfg->DefaultStartInfo 		 = false;
+	}
 }
 
 static OnePhoneModel allmodels[] = {
@@ -697,9 +721,9 @@ static OnePhoneModel allmodels[] = {
 	{"3410" ,"NHM-2" ,"",           {F_RING_SM,F_CAL33,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_NOTODO,F_CALENDAR35,0}},
-	{"3510i","RH-9"  ,"",           {F_CAL35,F_NOTODO,F_CALENDAR35,0}},
-	{"3530" ,"RH-9"  ,"",           {F_CAL35,F_NOTODO,F_CALENDAR35,0}},
+	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_NOTODO,F_CALENDAR35,F_PBK35,F_NOJAVA,0}},
+	{"3510i","RH-9"  ,"",           {F_CAL35,F_NOTODO,F_CALENDAR35,F_PBK35,0}},
+	{"3530" ,"RH-9"  ,"",           {F_CAL35,F_NOTODO,F_CALENDAR35,F_PBK35,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"5100" ,"NPM-6" ,"Nokia 5100", {F_RADIO,0}},
@@ -730,9 +754,9 @@ static OnePhoneModel allmodels[] = {
 	{"6250" ,"NHM-3" ,"Nokia 6250", {0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"6310" ,"NPE-4" ,"Nokia 6310", {0}},
-	{"6310i","NPL-1" ,"Nokia 6310i",{0}},
-	{"6510" ,"NPM-9" ,"Nokia 6510", {F_RADIO,F_NOTODO,0}},
+	{"6310" ,"NPE-4" ,"Nokia 6310", {F_NOMIDI,F_NOJAVA,0}},
+	{"6310i","NPL-1" ,"Nokia 6310i",{F_NOMIDI,F_BLUETOOTH,0}},
+	{"6510" ,"NPM-9" ,"Nokia 6510", {F_NOMIDI,F_RADIO,F_NOJAVA,0}},
 	{"6610" ,"NHL-4" ,"Nokia 6610", {F_RADIO,0}},
 	{"7210" ,"NHL-4" ,"Nokia 7210", {F_RADIO,0}},
 #endif
@@ -749,8 +773,8 @@ static OnePhoneModel allmodels[] = {
 	{"8290" ,"NSB-7" ,"Nokia 8290", {F_NOWAP,F_NOSTARTANI,F_NOPBKUNICODE,F_NOPICTUREUNI,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"8310" ,"NHM-7" ,"Nokia 8310", {F_RADIO,F_NOTODO,0}},
-	{"8390" ,"NSB-8" ,"Nokia 8390", {F_NOTODO,0}},
+	{"8310" ,"NHM-7" ,"Nokia 8310", {F_NOMIDI,F_RADIO,F_NOTODO,F_NOJAVA,0}},
+	{"8390" ,"NSB-8" ,"Nokia 8390", {F_NOMIDI,F_NOTODO,F_NOJAVA,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6110)
 	{"8850" ,"NSM-2" ,"Nokia 8850", {0}},
@@ -758,7 +782,7 @@ static OnePhoneModel allmodels[] = {
 	{"8890" ,"NSB-6" ,"Nokia 8890", {0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"8910" ,"NHM-4" ,"Nokia 8910", {0}},
+	{"8910" ,"NHM-4" ,"Nokia 8910", {F_NOMIDI,F_NOJAVA,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA9210
 	{"9210" ,"RAE-3" ,"",           {0}},

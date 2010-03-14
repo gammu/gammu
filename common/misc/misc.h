@@ -90,7 +90,7 @@ void GSM_GetCurrentDateTime 	(GSM_DateTime *Date);
 char *OSDateTime 		(GSM_DateTime dt, bool TimeZone);
 char *OSDate 			(GSM_DateTime dt);
 char *DayOfWeek 		(int year, int month, int day);
-time_t Fill_Time_T		(FILE *df, GSM_DateTime DT);
+time_t Fill_Time_T		(GSM_DateTime DT, int TZ);
 
 #undef MAX
 #define MAX(a,b) ((a)>(b)?(a):(b))

@@ -549,3 +549,21 @@ A. There are currently two ways how to build Debian package.
    (dpkg-buildpackage, or fakeroot make -f debian/rules binary).
 
    The other way is to simple run make makedeb.  
+-------------------------------------------------------------------------------
+Q. Where can I find additional info ?
+
+A. * www.mwiacek.com
+     * manual for Nokia netmonitor
+     * info about firmware in Nokia phones (changes, bugs, ...)
+     * info about protocols in Nokia phones
+     * default ringtones and logos from Nokia phones
+   * www.gnokii.org
+     * another "free" manager for GSM phones. It was core for first manager
+       created by Marcin Wiacek (the main reason of creating it was eliminating
+       Gnokii problems) called MyGnokii. Gammu was created from rewriting
+       MyGnokii. You can now compare quality in Gnokii and Gammu meaning ;-)
+   * http://gsm-technology.com
+     * GSM DATA AND SERVICE CABLES
+     * GSM EQUIPMENT & HARDWARE
+     * FREE FLASHES, LOGO'S, RINGTONES
+     * FREE INSTRUCTIONS, SCHEMES

@@ -2,14 +2,13 @@
 #define _gsm_call_h
 
 typedef enum {
-        GN_CALL_IncomingCall,	 /* Somebody calls to us 	 			*/
+        GN_CALL_IncomingCall=1,	 /* Somebody calls to us 	 			*/
         GN_CALL_OutgoingCall,	 /* We call somewhere 		 			*/
         GN_CALL_CallStart,	 /* Call started 	 				*/
         GN_CALL_CallEnd,	 /* End of call from unknown side 			*/
         GN_CALL_CallRemoteEnd,	 /* End of call from remote side  			*/
         GN_CALL_CallLocalEnd, 	 /* End of call from our side	 			*/
-	GN_CALL_CallEstablished, /* Call established. Waiting for answer or dropping 	*/
-	GN_CALL_OutgoingFreeCall /* Outgoing call will be for free			*/
+	GN_CALL_CallEstablished  /* Call established. Waiting for answer or dropping 	*/
 } GSM_CallStatus;
 
 typedef struct {

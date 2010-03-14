@@ -277,15 +277,14 @@ typedef enum {
 	ID_GetToDo,
 	ID_PressKey,
 	ID_DeleteAllToDo,
+	ID_SetLight,
 	ID_SetToDo,
 	ID_PlayTone,
 	ID_GetSecurityStatus,
 	ID_EnterSecurityCode,
 	ID_GetProfile,
 	ID_GetRingtonesInfo,
-#ifdef GSM_ENABLE_6110_AUTHENTICATION
 	ID_MakeAuthentication,
-#endif
 	ID_GetSpeedDial,
 	ID_ResetPhoneSettings,
 	ID_SendDTMF,
@@ -337,12 +336,6 @@ typedef enum {
 	ID_EachFrame
 } GSM_Phone_RequestID;
 
-#define MAX_MANUFACTURER_LENGTH	50
-#define MAX_MODEL_LENGTH	50
-#define MAX_VERSION_LENGTH	50
-#define MAX_VERSION_DATE_LENGTH	50
-#define	MAX_IMEI_LENGTH		20
-
 typedef struct {
 	char			IMEI[MAX_IMEI_LENGTH];			/* IMEI 				*/
 	char			Manufacturer[MAX_MANUFACTURER_LENGTH];	/* Real connected phone manufacturer	*/
@@ -354,6 +347,8 @@ typedef struct {
 	/* Some modules can cache these variables */
 	char			HardwareCache[50];			/* Hardware version			*/
 	char			ProductCodeCache[50];			/* Product code version			*/
+
+	int			StartInfoCounter;
 
 	GSM_SpeedDial		*SpeedDial;
 	GSM_DateTime		*DateTime;
@@ -395,7 +390,6 @@ typedef struct {
 	unsigned int		RequestID;		/* what operation is done now	*/
 	GSM_Error		DispatchError;		/* error returned by function	*/
 							/* in phone module		*/
-
 	struct {
 		int			fake;
 #ifdef GSM_ENABLE_NOKIA6110
@@ -499,6 +493,8 @@ typedef struct {
 	GSM_Error (*GetFMStation)	(GSM_StateMachine *s, GSM_FMStation	    *FMStation	);
 	GSM_Error (*SetFMStation)	(GSM_StateMachine *s, GSM_FMStation	    *FMStation	);	GSM_Error (*ClearFMStations)	(GSM_StateMachine *s);
 	GSM_Error (*SetIncomingUSSD)	(GSM_StateMachine *s, bool		    enable	);
+	GSM_Error (*DeleteUserRingtones)(GSM_StateMachine *s);
+	GSM_Error (*ShowStartInfo)	(GSM_StateMachine *s, bool 		    enable	);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;
@@ -561,6 +557,7 @@ typedef struct {
 	char			*LockDevice;	   /* Lock device ? (Unix)		*/
 	char			*DebugFile;        /* Name of debug file		*/
 	char 			*Localize;	   /* Name of localisation file		*/
+	char			*StartInfo;	   /* Display something during start ?  */
 	bool			UseGlobalDebugFile;/* Should we use global debug file?	*/
 	bool			DefaultModel;
 	bool			DefaultDebugLevel;
@@ -570,6 +567,7 @@ typedef struct {
 	bool			DefaultLockDevice;
 	bool			DefaultDebugFile;
 	bool			DefaultLocalize;
+	bool			DefaultStartInfo;
 } GSM_Config;
 
 struct _GSM_StateMachine {
@@ -616,6 +614,7 @@ void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned char *message, int
 /* ---------------------- Phone features ----------------------------------- */
 
 typedef enum {
+	/* n6110.c */
 	F_CAL33 = 1,	/* Calendar,3310 style - 10 reminders, Unicode, 3 coding types	*/
 	F_CAL52,	/* Calendar,5210 style - full Unicode, etc.			*/
 	F_CAL82,	/* Calendar,8250 style - "normal", but with Unicode		*/
@@ -637,11 +636,17 @@ typedef enum {
 	F_DISPSTATUS,	/* Phone return display status					*/
 	F_NOCALLINFO,
 
+	/* n6510.c */
 	F_CALENDAR35,	/* We have to get calendar using 3510 style			*/
+	F_PBK35,	/* Phonebook in 3510 style with ringtones ID			*/
 	F_CAL35,	/* Reminders in calendar saved in 3510 style			*/
 	F_RADIO,	/* Phone with FM radio						*/
 	F_NOTODO,	/* No ToDo in phone						*/
+	F_NOMIDI,	/* No ringtones in MIDI						*/
+	F_NOJAVA,	/* No Java support						*/
+	F_BLUETOOTH,	/* Bluetooth support						*/
 
+	/* AT modules */
 	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/
 	F_BROKENCPBS, 	/* CPBS on some memories can hang phone				*/
 	F_M20SMS	/* Siemens M20 like SMS handling				*/

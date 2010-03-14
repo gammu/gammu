@@ -2745,7 +2745,9 @@ GSM_Phone_Functions ATGENPhone = {
     	NOTSUPPORTED,		/*  	GetFMStation        	*/
     	NOTSUPPORTED,		/*  	SetFMStation        	*/
     	NOTSUPPORTED,		/*  	ClearFMStations       	*/
-	NOTSUPPORTED		/*  	SetIncomingUSSD		*/
+	NOTSUPPORTED,		/*  	SetIncomingUSSD		*/
+	NOTSUPPORTED,		/* 	DeleteUserRingtones	*/
+	NOTSUPPORTED		/* 	ShowStartInfo		*/
 };
 
 #endif

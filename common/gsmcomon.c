@@ -112,7 +112,7 @@ typedef struct {
 
 static PrintErrorEntry PrintErrorEntries[] = {
 	{GE_NONE,			"No error."},
-	{GE_DEVICEOPENERROR,		"Error opening device. Unknown or busy device."},
+	{GE_DEVICEOPENERROR,		"Error opening device. Unknown/busy or no permissions."},
 	{GE_DEVICELOCKED,		"Error opening device. Device locked."},
 	{GE_DEVICEDTRRTSERROR,		"Error setting device DTR or RTS."},
 	{GE_DEVICECHANGESPEEDERROR,	"Error setting device speed. Maybe speed not supported."},
@@ -185,13 +185,19 @@ GSM_Error lock_device(const char* port, char **lock_device)
 #ifndef WIN32
 	char 		*lock_file = NULL;
 	char 		buffer[max_buf_len];
-	const char 	*aux = strrchr(port, '/');
-	int 		fd, len = strlen(aux) + strlen(lock_path);
+	const char 	*aux;
+	int 		fd, len;
 	GSM_Error	error = GE_NONE;
 
+	aux = strrchr(port, '/');
 	/* Remove leading '/' */
-	if (aux) aux++;
-	else aux = port;
+	if (aux) {
+		aux++;
+	} else {
+		/* No / in port */
+		aux = port;
+	}
+	len = strlen(aux) + strlen(lock_path);
 
 	memset(buffer, 0, sizeof(buffer));
 	lock_file = calloc(len + 1, 1);

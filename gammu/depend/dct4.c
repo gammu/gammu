@@ -493,6 +493,69 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static GSM_Error DCT4_ReplyGetJavaInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	switch (msg.Buffer[3]) {
+	case 0x23:
+		printf("%i bytes free",
+			msg.Buffer[6]*256*256*256+
+			msg.Buffer[7]*256*256+
+			msg.Buffer[8]*256+
+			msg.Buffer[9]);
+		return GE_NONE;
+	case 0x2F:
+		printf(", %i bytes used\n",
+			msg.Buffer[6]*256*256*256+
+			msg.Buffer[7]*256*256+
+			msg.Buffer[8]*256+
+			msg.Buffer[9]);
+		return GE_NONE;
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+static GSM_Error DCT4_ReplyGetBTInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	printf("device address %02x%02x%02x%02x%02x%02x\n",
+		msg.Buffer[9],msg.Buffer[10],msg.Buffer[11],
+		msg.Buffer[12],msg.Buffer[13],msg.Buffer[14]);
+	return GE_NONE;
+}
+
+void DCT4Info(int argc, char *argv[])
+{
+	unsigned char GetJavaMemory[10] = {
+		N6110_FRAME_HEADER,
+		0x22,		/* 0x22 - free, 0x2E - used */
+		0x01, 0x00, 0x00, 0x01, 0x00, 0x05};
+	unsigned char GetBTAddress[8] = {
+		N6110_FRAME_HEADER,
+		0x09, 0x19, 0x01, 0x03, 0x06};
+
+        if (CheckDCT4Only()!=GE_NONE) return;
+
+	s.User.UserReplyFunctions=UserReplyFunctions4;
+
+	if (!IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_NOJAVA))
+	{
+		printf("Java          : ");
+
+		error=GSM_WaitFor (&s, GetJavaMemory, 10, 0x6D, 4, ID_User5);
+		Print_Error(error);
+
+		GetJavaMemory[3] = 0x2E;
+		error=GSM_WaitFor (&s, GetJavaMemory, 10, 0x6D, 4, ID_User5);
+		Print_Error(error);
+	}
+	if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_BLUETOOTH))
+	{
+		printf("Bluetooth     : ");
+
+		error=GSM_WaitFor (&s, GetBTAddress, 8, 0xD7, 4, ID_User6);
+		Print_Error(error);
+	}
+}
+
 static GSM_Reply_Function UserReplyFunctions4[] = {
 
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x05,ID_User2	},
@@ -507,6 +570,11 @@ static GSM_Reply_Function UserReplyFunctions4[] = {
 	{DCT4_ReplyGetVoiceRecord,	"\x23",0x03,0x0D,ID_User4	},
 
 	{DCT4_ReplyGetVoiceRecord,	"\x4A",0x03,0x31,ID_User4	},
+
+	{DCT4_ReplyGetJavaInfo,		"\x6D",0x03,0x23,ID_User5	},
+	{DCT4_ReplyGetJavaInfo,		"\x6D",0x03,0x2F,ID_User5	},
+
+	{DCT4_ReplyGetBTInfo,		"\xD7",0x03,0x0A,ID_User6	},
 
 	{NULL,				"\x00",0x00,0x00,ID_None	}
 };

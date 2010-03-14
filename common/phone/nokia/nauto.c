@@ -90,7 +90,9 @@ GSM_Phone_Functions NAUTOPhone = {
     	NOTIMPLEMENTED,		/*  	GetFMStation        	*/
     	NOTIMPLEMENTED,		/*  	SetFMStation        	*/
     	NOTIMPLEMENTED,		/*  	ClearFMStations       	*/
-	NOTIMPLEMENTED		/*  	SetIncomingUSSD		*/
+	NOTIMPLEMENTED,		/*  	SetIncomingUSSD		*/
+	NOTIMPLEMENTED,		/* 	DeleteUserRingtones	*/
+	NOTIMPLEMENTED		/* 	ShowStartInfo		*/
 };
 
 #endif

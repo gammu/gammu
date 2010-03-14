@@ -1,9 +1,80 @@
 ChangeLog for Gammu project (www.mwiacek.com)
 Few last versions (the highest) will be described more detailed, older less.
+
 In brackets names of people, who told about error/problem or helped in fixing
 or inspired me to make it.
 
+This software was sponsored (in time order) by:
+1. Tomasz Motylewski
+2. Ondrej Rybin (http://business.nabit.cz)
+   * SMS service(s) and gateway(s)
+3. Multi-COM (http://gsm-technology.com)
+   * GSM DATA AND SERVICE CABLES
+   * GSM EQUIPMENT & HARDWARE
+   * FREE FLASHES, LOGO'S, RINGTONES
+   * FREE INSTRUCTIONS, SCHEMES
+and others...
+
+For additionals materials and links to them see readme.txt
 --------------------
+20030321 - 0.71
+* new functionality:
+  * INSTEAD OF OBJECT DELPHI EXAMPLE THERE IS AVAILABLE FULL SMS GATEWAY
+  * DCT4:
+    * full caller logo support                                          (Walek)
+    * full MIDI (polyphonic ringtones) support. Limit for one
+      MIDI file is 30000 bytes now.
+
+      Please note, that Gammu only upload MIDI file "as is". Ringtone
+      inside is played (or not) correctly according to phone firmware
+      limitations.
+
+    * full support for assigning ringtones to phonebook entries (N35xx)
+    * full dealer welcome note support
+    * setting startup note text
+    * getting Picture Images using --getbitmap
+    * clearing user ringtones using --clearall and during restore process
+    * getting Java free/used memory and Bluetooth device address in --identify
+  * 6210: full dealer welcome note support
+  * new parameter in gammurc. You can now decide, if phone should show
+    something during starting connection (for now for 51xx/61xx message
+    "Accessory connected", DCT4 will blink with their lights)
+  * during backup you can decide, if backup file should       (Marek Wagrodzki)
+    have Unicode strings inside
+  * started example of GUI for Win32 written using RapidQ       (Luca Cassioli)
+    (www.basicguru.com/rapidq)
+  * new options in MakeFile for converting Unix end line chars   (Michal Cihar)
+    to Windows and vice verse
+
+* fixes and improvements:
+  * few releases ago during changing SMS API to EMS needs I forgotten   (Nicke, 
+    to change one thing in SMSD. It didn't sent any SMS. Fixed.   yit-chun lai,
+                                                                  Ari Ryynanen)
+  * rewritten support for caller logos. Easier and better.
+  * clearing FM stations moved to --clearall
+  * deleted --setfmstation
+  * ToDo are working for 6510, fix for priority                   (Karel Polak)
+  * no more questions for making backup of caller logos for 35xx
+  * no more segfaults during locking device in some situations   (Michal Cihar)
+  * RTTL files can have "." before note                                (ReGGiD)
+  * when use --setringtone, can add ringtone name
+  
+* other
+  * default Nokia images and sound moved to separate file on my www.
+    See Download subpage. File contains things from 3510i, 6100, 6610, 7210
+  * when enter http://www.mwiacek.com/english/zips in your www browser,
+    you can see directory listing. You have older Gammu packages there.
+
+NOTE: I had MANY hardware problems. I hope, that everything will be OK now.
+
+      It's time for filling some missed things and adding new features.
+      Gammu is prepared to have full support for Java, colour images and
+      polyphonic ringtones and OTHER...
+
+      This is release, which will be quite fast (not after month ;-)) replaced
+      with 0.72. Please let me know, when it makes ANY problems.
+      I haven't seen ANY compiler from longer time (7 last days) ;-)
+
 20030223 - 0.70
 * new functionality:
   * full OpenBSD compatibility                                  (Ian McWilliam)

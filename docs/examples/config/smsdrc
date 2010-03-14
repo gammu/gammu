@@ -11,6 +11,7 @@
 #logformat = textall
 #use_locking = yes
 #gammuloc = gammu.us
+#startinfo = yes
 
 # This section contains general settings
 # PIN         - PIN for SIM card

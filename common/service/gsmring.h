@@ -119,7 +119,7 @@ typedef struct {
 
 /* Structure to hold Nokia binary ringtones. */
 typedef struct {
-	unsigned char		Frame[1000];
+	unsigned char		Frame[30000];
 	int			Length;
 } GSM_NokiaBinaryRingtone;
 

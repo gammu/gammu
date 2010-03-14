@@ -31,14 +31,19 @@
 # Use_Locking    : under Unix/Linux use "yes", if want to lock used device
 #                  to prevent using it by other applications
 # GammuLoc       : name of localisation file
+# StartInfo      : this option allow to set, that you want (setting "yes")
+                   to see message on the phone screen or phone should enable
+                   light for a moment during starting connection. Phone
+                   WON'T beep during starting connection with this option.
 
 [gammu]
 
 #port = /dev/ttyS1
 #model = 6110
-connection = dlr3
+#connection = dlr3
 #synchronizetime = yes
 #logfile = gammulog
 #logformat = textall
 #use_locking = yes
 #gammuloc = locfile
+#startinfo = yes

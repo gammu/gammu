@@ -94,9 +94,9 @@ typedef enum {
 } GSM_ToDoType;
 
 typedef enum {
-	GSM_Priority_Low = 1,
+	GSM_Priority_High = 1,
 	GSM_Priority_Medium,
-	GSM_Priority_High
+	GSM_Priority_Low
 } GSM_ToDo_Priority;
 
 typedef struct {

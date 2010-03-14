@@ -24,8 +24,8 @@
 #define GSM_BACKUP_MAX_FMSTATIONS	20
 
 typedef struct {
-	char			IMEI		[50];
-	char			Model		[50];
+	char			IMEI		[MAX_IMEI_LENGTH];
+	char			Model		[MAX_MODEL_LENGTH+MAX_VERSION_LENGTH];
 	GSM_DateTime		DateTime;
 	bool			DateTimeAvailable;
 	GSM_PhonebookEntry	*PhonePhonebook	[GSM_BACKUP_MAX_PHONEPHONEBOOK + 1];
@@ -43,13 +43,15 @@ typedef struct {
 	GSM_Bitmap		*OperatorLogo;
 } GSM_Backup;
 
-GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup);
+GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode);
 GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup);
 
 void GSM_ClearBackup(GSM_Backup *backup);
 void GSM_FreeBackup(GSM_Backup *backup);
 
 typedef struct {
+	bool UseUnicode;
+
 	bool IMEI;
 	bool Model;
 	bool DateTime;

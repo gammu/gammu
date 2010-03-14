@@ -237,7 +237,7 @@ int main(int argc, char *argv[])
 	WriteOutput("");
 	WriteOutput("[common]");
 	WriteOutput("F0001=\"No error.\"");
-	WriteOutput("F0002=\"Error opening device. Unknown or busy device.\"");
+	WriteOutput("F0002=\"Error opening device. Unknown/busy or no permissions.\"");
 	WriteOutput("F0003=\"Error setting device DTR or RTS\"");
 	WriteOutput("F0004=\"Error setting device speed. Maybe speed not supported.\"");
 	WriteOutput("F0005=\"Error writing device.\"");

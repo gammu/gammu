@@ -99,7 +99,7 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 {
 	*start=atoi(argv[num]);
 	if (*start==0) {
-		printmsg("ERROR: enumerate locations from 1");
+		printmsg("ERROR: enumerate locations from 1\n");
 		exit (-1);
 	}
 
@@ -107,7 +107,7 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 		*stop=*start;
 		if (argc>=num+2) *stop=atoi(argv[num+1]);
 		if (*stop==0) {
-			printmsg("ERROR: enumerate locations from 1");
+			printmsg("ERROR: enumerate locations from 1\n");
 			exit (-1);
 		}
 	}
@@ -273,6 +273,9 @@ static void Identify(int argc, char *argv[])
 #ifdef GSM_ENABLE_NOKIA_DCT3
 	DCT3Info(argc, argv);
 #endif
+#ifdef GSM_ENABLE_NOKIA_DCT4
+	DCT4Info(argc, argv);
+#endif
 
 	GSM_Terminate();
 }
@@ -352,9 +355,10 @@ static void GetMemory(int argc, char *argv[])
 {
 	GSM_PhonebookEntry	entry;
 	GSM_Bitmap		caller[5];
-	bool			callerinit[5];
-	int			j, start, stop;
+	bool			callerinit[5],ringinit;
+	int			j, start, stop, z;
 	bool			unknown;
+	GSM_AllRingtonesInfo 	Info;
 
 	entry.MemoryType=0;
 	if (mystrncasecmp(argv[2],"DC",0)) entry.MemoryType=GMT_DC;
@@ -372,6 +376,7 @@ static void GetMemory(int argc, char *argv[])
 	GetStartStop(&start, &stop, 3, argc, argv);
 
 	for (i=0;i<5;i++) callerinit[i] = false;
+	ringinit = false;
 
 	GSM_Init(true);
 
@@ -434,14 +439,31 @@ static void GetMemory(int argc, char *argv[])
 						caller[entry.Entries[i].Number].Type	 = GSM_CallerLogo;
 						caller[entry.Entries[i].Number].Location = entry.Entries[i].Number;
 						error=Phone->GetBitmap(&s,&caller[entry.Entries[i].Number]);
-						if (error == GE_SECURITYERROR) {
+						Print_Error(error);
+						if (caller[entry.Entries[i].Number].DefaultName) {
 							NOKIA_GetDefaultCallerGroupName(&s,&caller[entry.Entries[i].Number]);
-						} else {
-							Print_Error(error);
 						}
 						callerinit[entry.Entries[i].Number]=true;
 					}
 					printmsg("Caller group    : \"%s\"\n",DecodeUnicodeString(caller[entry.Entries[i].Number].Text));
+					break;
+				case PBK_RingtoneID	     :
+					unknown = true;
+					if (!ringinit) {					
+						error=Phone->GetRingtonesInfo(&s,&Info);
+						if (error != GE_NOTSUPPORTED) Print_Error(error);
+						if (error == GE_NONE) ringinit = true;
+					}
+					if (ringinit) {
+						for (z=0;z<Info.Number;z++) {
+							if (Info.Ringtone[z].ID == entry.Entries[i].Number) {
+								printmsg("Ringtone        : \"%s\"\n",DecodeUnicodeString(Info.Ringtone[z].Name));
+								break;
+							}
+						}
+					} else {
+						printmsg("Ringtone ID     : %i\n",entry.Entries[i].Number);
+					}
 					break;
 				default		       :
 					printmsg("UNKNOWN\n");
@@ -597,9 +619,9 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms)
 	bool				RetVal;
 	int				j;
 
-	SMSInfo.Entries[0].Bitmap 		= &Bitmap;
+	SMSInfo.Entries[0].Bitmap 	= &Bitmap;
 	SMSInfo.Entries[0].Ringtone 	= &Ringtone;
-	SMSInfo.Entries[0].Buffer		= Buffer;
+	SMSInfo.Entries[0].Buffer	= Buffer;
 
 	/* GSM_DecodeMultiPartSMS returns if decoded SMS contenst correctly */
 	RetVal = GSM_DecodeMultiPartSMS(&SMSInfo,&sms);
@@ -670,9 +692,8 @@ static void IncomingCall(char *Device, GSM_Call call)
 		case GN_CALL_CallStart     	: printmsg("outgoing call started\n"); 					  	  break;
 		case GN_CALL_CallEnd	   	: printmsg("end of call (unknown side)\n"); 					  break;
 		case GN_CALL_CallLocalEnd  	: printmsg("call end from our side\n");						  break;
-		case GN_CALL_CallRemoteEnd 	: printmsg("call end from remote side\n");					  break;
+		case GN_CALL_CallRemoteEnd 	: printmsg("call end from remote side (code %i)\n",call.Code);			  break;
 		case GN_CALL_CallEstablished   	: printmsg("call established. Waiting for answer\n");				  break;
-		case GN_CALL_OutgoingFreeCall   : printmsg("this outgoing call will be for free\n");				  break;
 	}
 }
 
@@ -923,6 +944,7 @@ static void GetAllSMS(int argc, char *argv[])
 	error=Phone->GetSMSFolders(&s, &folders);
 	Print_Error(error);
 
+	fprintf(stderr,"Reading: ");
 	while (error == GE_NONE) {
 		sms.SMS[0].Folder=0x00;
 		error=Phone->GetNextSMSMessage(&s, &sms, start);
@@ -934,8 +956,10 @@ static void GetAllSMS(int argc, char *argv[])
 			printmsg("Location %i, folder \"%s\"\n",sms.SMS[0].Location,DecodeUnicodeString(folders.Folder[sms.SMS[0].Folder-1].Name));
 			displaymultismsinfo(sms);
 		}
+		fprintf(stderr,"*");
 		start=false;
 	}
+	fprintf(stderr,"\n");
 
 #ifdef GSM_ENABLE_BEEP
 	GSM_PhoneBeep();
@@ -957,6 +981,7 @@ static void GetEachSMS(int argc, char *argv[])
 	error=Phone->GetSMSFolders(&s, &folders);
 	Print_Error(error);
 
+	fprintf(stderr,"Reading: ");
 	while (error == GE_NONE) {
 		sms.SMS[0].Folder=0x00;
 		error=Phone->GetNextSMSMessage(&s, &sms, start);
@@ -971,8 +996,10 @@ static void GetEachSMS(int argc, char *argv[])
 			memcpy(GetSMS[GetSMSNumber],&sms,sizeof(GSM_MultiSMSMessage));
 			GetSMSNumber++;
 		}
+		fprintf(stderr,"*");
 		start=false;
 	}
+	fprintf(stderr,"\n");
 
 #ifdef GSM_ENABLE_BEEP
 	GSM_PhoneBeep();
@@ -1409,15 +1436,16 @@ static void GetBitmap(int argc, char *argv[])
 	error=GE_NONE;
 	switch (MultiBitmap.Bitmap[0].Type) {
 	case GSM_CallerLogo:
-		GSM_PrintBitmap(stdout,&MultiBitmap.Bitmap[0]);
+		if (!MultiBitmap.Bitmap[0].DefaultBitmap) GSM_PrintBitmap(stdout,&MultiBitmap.Bitmap[0]);
 		printmsg("Group name  : \"%s\"",DecodeUnicodeString(MultiBitmap.Bitmap[0].Text));
 		if (MultiBitmap.Bitmap[0].DefaultName) printmsg(" (default)");
 		printmsg("\n");
-		if (MultiBitmap.Bitmap[0].Ringtone == 0xff) {
+		if (MultiBitmap.Bitmap[0].DefaultRingtone) {
 			printmsg("Ringtone    : default\n");
 		} else {
-			error=Phone->GetRingtonesInfo(&s,&Info);
+			error = Phone->GetRingtonesInfo(&s,&Info);
 			if (error != GE_NONE) Info.Number = 0;
+			error = GE_NONE;
 
 			printmsg("Ringtone    : ");
 			if (strlen(DecodeUnicodeString(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].Ringtone)))!=0) {
@@ -1431,7 +1459,7 @@ static void GetBitmap(int argc, char *argv[])
 		} else {
 			printmsg("Bitmap      : disabled\n");
 		}
-		if (argc>4) error=GSM_SaveBitmapFile(argv[4],&MultiBitmap);
+		if (argc>4 && !MultiBitmap.Bitmap[0].DefaultBitmap) error=GSM_SaveBitmapFile(argv[4],&MultiBitmap);
 		break;
 	case GSM_StartupLogo:
 		GSM_PrintBitmap(stdout,&MultiBitmap.Bitmap[0]);
@@ -1525,8 +1553,10 @@ static void SetBitmap(int argc, char *argv[])
 			NewBitmap.Location = i;
 			error=Phone->GetBitmap(&s,&NewBitmap);
 			Print_Error(error);
-			Bitmap.Ringtone = NewBitmap.Ringtone;
+			Bitmap.Ringtone		= NewBitmap.Ringtone;
+			Bitmap.DefaultRingtone 	= NewBitmap.DefaultRingtone;
 			CopyUnicodeString(Bitmap.Text, NewBitmap.Text);
+			Bitmap.DefaultName	= NewBitmap.DefaultName;
 		}
 	} else if (mystrncasecmp(argv[2],"PICTURE",0)) {
 		if (argc<5) {
@@ -1580,27 +1610,50 @@ static void SetBitmap(int argc, char *argv[])
 
 static void SetRingtone(int argc, char *argv[])
 {
-	GSM_Ringtone ringtone;
+	GSM_Ringtone 	ringtone;
+	int		i,nextlong=0;
 
 	ringtone.Format	= 0;
 	error=GSM_ReadRingtoneFile(argv[2],&ringtone);
 	Print_Error(error);
 	ringtone.Location = 255;
-	if (argc>3) ringtone.Location=atoi(argv[3]);
-	if (argc>4) {
-		if (mystrncasecmp(argv[4],"-scale",0)) {
-			ringtone.NoteTone.AllNotesScale = true;
-		} else {
-			printmsg("Unknown parameter \"%s\"",argv[4]);
+	for (i=3;i<argc;i++) {
+		switch (nextlong) {
+		case 0:
+			if (mystrncasecmp(argv[i],"-scale",0)) {
+				ringtone.NoteTone.AllNotesScale = true;	
+				break;
+			}
+			if (mystrncasecmp(argv[i],"-location",0)) {
+				nextlong = 1;
+				break;
+			}
+			if (mystrncasecmp(argv[i],"-name",0)) {
+				nextlong = 2;
+				break;
+			}
+			printmsg("Unknown parameter \"%s\"",argv[i]);
 			exit(-1);
+		case 1:
+			ringtone.Location=atoi(argv[i]);
+			nextlong = 0;
+			break;
+		case 2:
+			EncodeUnicode(ringtone.Name,argv[i],strlen(argv[i]));
+			nextlong = 0;
+			break;
 		}
 	}
+	if (nextlong!=0) {
+		printmsg("Parameter missed...\n");
+		exit(-1);
+	}
 	if (ringtone.Location==0) {
-		printmsg("ERROR: enumerate locations from 1");
+		printmsg("ERROR: enumerate locations from 1\n");
 		exit (-1);
 	}
-	GSM_Init(true);
 
+	GSM_Init(true);
 	error=Phone->SetRingtone(&s, &ringtone, &i);
 	Print_Error(error);
 #ifdef GSM_ENABLE_BEEP
@@ -2370,12 +2423,12 @@ static void Backup(int argc, char *argv[])
 
 	GSM_Init(true);
 
+	if (Info.UseUnicode) {
+		Info.UseUnicode=answer_yes("Do you want to write Unicode info to backup file");
+	}
 	if (Info.DateTime) {
-
 		GSM_GetCurrentDateTime (&Backup.DateTime);
-
 		Backup.DateTimeAvailable=true;
-
 	}
 	if (Info.Model) {
 		error=Phone->GetManufacturer(&s);
@@ -2768,7 +2821,7 @@ static void Backup(int argc, char *argv[])
 
 	GSM_Terminate();
 
-	GSM_SaveBackupFile(argv[2],&Backup);
+	GSM_SaveBackupFile(argv[2],&Backup, Info.UseUnicode);
     	GSM_FreeBackup(&Backup);
 }
 
@@ -3039,6 +3092,14 @@ static void Restore(int argc, char *argv[])
 		Ringtone.Format		= 0;
 		error = Phone->GetRingtone(&s,&Ringtone,false);
 		if (error == GE_NONE || error ==GE_EMPTY) {
+			if (Phone->DeleteUserRingtones != NOTSUPPORTED) {
+				if (answer_yes("Delete all user ringtones")) {
+					printmsgerr("Deleting: ");
+					error=Phone->DeleteUserRingtones(&s);
+					Print_Error(error);
+					printmsgerr("Done\n");
+				}		
+			}
 			if (answer_yes("Restore user ringtones")) {
 				max = 0;
 				while (Backup.Ringtone[max]!=NULL) max++;
@@ -3347,6 +3408,18 @@ static void ClearAll(int argc, char *argv[])
 			printmsgerr("\n");
 		}
 	}
+	if (Phone->DeleteUserRingtones != NOTSUPPORTED) {
+		if (answer_yes("Delete all user ringtones")) {
+			printmsgerr("Deleting: ");
+			error=Phone->DeleteUserRingtones(&s);
+			Print_Error(error);
+			printmsgerr("Done\n");
+		}		
+	}
+ 	if (answer_yes("Delete all FM station")) {
+ 		error=Phone->ClearFMStations(&s);
+ 		Print_Error(error);
+ 	}
 
 	GSM_Terminate();
 }
@@ -4421,32 +4494,6 @@ static void GetFMStation(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void SetFMStation(int argc, char *argv[])
-{
- 	GSM_FMStation 	Station;
- 
- 	GSM_Init(true);
-
- 	Station.Location	= atoi(argv[2]);
- 	Station.Frequency	= atoi(argv[3]);
- 	EncodeUnicode(Station.StationName,argv[4],strlen(argv[4]));
-
- 	error=Phone->SetFMStation(&s,&Station);
-        Print_Error(error);
-
- 	GSM_Terminate();
-}
- 
-static void ClearFMStations(int argc, char *argv[])
-{
- 	GSM_Init(true);
- 	if (answer_yes("Delete all FM station")) {
- 		error=Phone->ClearFMStations(&s);
- 		Print_Error(error);
- 	}
-  	GSM_Terminate();
-}
-
 static void usage(void)
 {
 	printmsg("[Gammu version %s built %s %s]\n\n",VERSION,__TIME__,__DATE__);
@@ -4462,11 +4509,8 @@ static void usage(void)
 	printf("gammu --setautonetworklogin\n");
 	printf("gammu --getsecuritystatus\n");
 	printf("gammu --entersecuritycode PIN|PUK|PIN2|PUK2 code\n");
-	printf("gammu --listnetworks\n\n");
-
- 	printf("gammu --getfmstation start [stop]\n");
- 	printf("gammu --setfmstation location frequency StationName\n");
- 	printf("gammu --clearfmstations\n\n");
+	printf("gammu --listnetworks\n");
+ 	printf("gammu --getfmstation start [stop]\n\n");
 
 	printf("gammu --getdatetime\n");
 	printf("gammu --setdatetime\n");
@@ -4488,7 +4532,7 @@ static void usage(void)
 
 	printf("gammu --getphoneringtone location [file]\n");
 	printf("gammu --getringtone location [file]\n");
-	printf("gammu --setringtone file [location] [-scale]\n");
+	printf("gammu --setringtone file [-location location][-scale][-name name]\n");
 	printf("gammu --copyringtone source destination [RTTL|BINARY]\n");
 	printf("gammu --playringtone file\n");
 	printf("gammu --getringtoneslist\n");
@@ -4698,8 +4742,6 @@ static GSM_Parameters Parameters[] = {
 	{"--resetphonesettings",	1, 1, ResetPhoneSettings	},
 	{"--getmemory",			2, 3, GetMemory			},
 	{"--getfmstation",		1, 2, GetFMStation		},
- 	{"--setfmstation",		3, 3, SetFMStation		},	
- 	{"--clearfmstations",		0, 0, ClearFMStations		},
 	{"--getsmsc",			1, 2, GetSMSC			},
 	{"--getsms",			2, 3, GetSMS			},
 	{"--deletesms",			2, 3, DeleteSMS			},
@@ -4710,7 +4752,7 @@ static GSM_Parameters Parameters[] = {
 	{"--getringtone",		1, 2, GetRingtone		},
 	{"--getphoneringtone",		1, 2, GetRingtone		},
 	{"--getringtoneslist",		0, 0, GetRingtonesList		},
-	{"--setringtone",		1, 3, SetRingtone		},
+	{"--setringtone",		1, 6, SetRingtone		},
 	{"--nokiacomposer",		1, 1, NokiaComposer		},
 	{"--copyringtone",		2, 3, CopyRingtone		},
 	{"--dialvoice",			1, 1, DialVoice			},

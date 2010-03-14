@@ -38,7 +38,7 @@ int N71_65_PackPBKBlock(GSM_StateMachine *s, int id, int size, int no, unsigned 
 	return (size + 6);
 }
 
-int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_PhonebookEntry entry, int *block2, bool URL)
+int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_PhonebookEntry entry, int *block2, bool DCT4)
 {
 	int		count=0, len, i, block=0;
 	char		string[500];
@@ -68,16 +68,14 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Pho
 			len = strlen(DecodeUnicodeString(entry.Entries[i].Text));
 			string[1] = 0;
 			/* DCT 3 */			
-			if (!URL) {
-				string[2] = entry.Entries[i].VoiceTag;
-			}
+			if (!DCT4) string[2] = entry.Entries[i].VoiceTag;
 			string[3] = 0;
 			string[4] = len * 2 + 2;     	/* length (with Termination) */
 			CopyUnicodeString(string+5,entry.Entries[i].Text);
 			string[len * 2 + 5] = 0; 	/* Terminating 0		 */
 			count += N71_65_PackPBKBlock(s, N7110_ENTRYTYPE_NUMBER, len * 2 + 6, block++, string, req + count);
 			/* DCT 4 */
-			if (URL) {
+			if (DCT4) {
 				block++;
 				req[count++] = N6510_ENTRYTYPE_VOICETAG;
 				req[count++] = 0;
@@ -107,7 +105,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Pho
 					type = N7110_ENTRYTYPE_EMAIL;	break;
 				case PBK_Text_URL:
 					type = N7110_ENTRYTYPE_NOTE;
-					if (URL) type = N6510_ENTRYTYPE_URL;
+					if (DCT4) type = N6510_ENTRYTYPE_URL;
 					break;
 				case PBK_Name:
 					type = N7110_ENTRYTYPE_NAME;	break;
@@ -116,9 +114,21 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Pho
 			count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
 			break;
 		case PBK_Caller_Group:
-			string[0] = entry.Entries[i].Number;
-			string[1] = 0;
-			count += N71_65_PackPBKBlock(s, N7110_ENTRYTYPE_GROUP, 2, block++, string, req + count);
+			if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) {
+				string[0] = entry.Entries[i].Number;
+				string[1] = 0;
+				count += N71_65_PackPBKBlock(s, N7110_ENTRYTYPE_GROUP, 2, block++, string, req + count);
+			}
+			break;
+		case PBK_RingtoneID:
+			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) {
+				string[0] = 0x00; 
+				string[1] = 0x00;
+				string[2] = entry.Entries[i].Number;
+				count += N71_65_PackPBKBlock(s, N7110_ENTRYTYPE_RINGTONE, 3, block++, string, req + count);
+				count --;
+				req[count-5] = 8;
+			}
 			break;
 		case PBK_Date:
 			break;
@@ -141,13 +151,14 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 {
 	unsigned char 	*Block;
 	int		length = 0;
-	bool		WasBitmap = false;
 	            
 	entry->EntriesNum = 0;
 
 	if (entry->MemoryType==GMT7110_CG) {
-		bitmap->Text[0] = 0x00;
-		bitmap->Text[1] = 0x00;
+		bitmap->Text[0] 	= 0x00;
+		bitmap->Text[1] 	= 0x00;
+		bitmap->DefaultBitmap 	= true;
+		bitmap->DefaultRingtone = true;
 	}
 
 	Block = &MessageBuffer[0];
@@ -249,8 +260,15 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		case N7110_ENTRYTYPE_RINGTONE:
 			if (entry->MemoryType==GMT7110_CG) {
 				bitmap->Ringtone=Block[5];
-				smprintf(s, "Ringtone ID : %i\n",Block[5]);
-			} else return GE_UNKNOWNRESPONSE;
+				if (Block[5] == 0x00) bitmap->Ringtone=Block[7];
+				smprintf(s, "Ringtone ID : %i\n",bitmap->Ringtone);
+				bitmap->DefaultRingtone = false;
+			} else {
+				entry->Entries[entry->EntriesNum].EntryType=PBK_RingtoneID;
+				smprintf(s, "Ringtone ID \"%i\"\n",Block[7]);
+				entry->Entries[entry->EntriesNum].Number=Block[7];
+				entry->EntriesNum ++;
+			}
 			break;
 		case N7110_ENTRYTYPE_LOGOON:
 			if (entry->MemoryType==GMT7110_CG) {
@@ -262,7 +280,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (entry->MemoryType==GMT7110_CG) {
 				smprintf(s, "Caller logo\n");
 				PHONE_DecodeBitmap(GSM_NokiaCallerLogo, Block+10, bitmap);
-				WasBitmap = true;
+				bitmap->DefaultBitmap = false;
 			} else return GE_UNKNOWNRESPONSE;
 			break;
 		case N7110_ENTRYTYPE_GROUP:
@@ -316,9 +334,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		length=length + Block[3];
 		Block = &Block[(int) Block[3]];
 	}
-
-	/* In DCT4 default caller logos are NOT return */
-	if (!WasBitmap && entry->MemoryType==GMT7110_CG) return GE_SECURITYERROR;
 
 	if (entry->EntriesNum == 0) return GE_EMPTY;
 
@@ -1002,7 +1017,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case 0x07 : smprintf(s, "Call answer initiated.\n"); 			 			break;
 	case 0x09 : smprintf(s, "Call released.\n"); 				 			break;
 	case 0x0a : smprintf(s, "Call is being released.\n"); 			 			break;
-	case 0x0b : smprintf(s, "Meaning not known - probably info, that you connect for free\n");	break;
+	case 0x0b : smprintf(s, "Meaning not known\n");							break;
 	case 0x0c : smprintf(s, "Audio status\n"); 				 			break;
 	case 0x53 : smprintf(s, "Outgoing call\n");  				 			break;
 	}
@@ -1039,8 +1054,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			break;
 		case 0x03:
 			call.Status = GN_CALL_CallStart;
-			break;
-			
+			break;			
 		case 0x04:
 			call.Status = GN_CALL_CallRemoteEnd;
 			call.Code   = msg.Buffer[6];
@@ -1052,9 +1066,6 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			break;
 		case 0x09:
 			call.Status = GN_CALL_CallLocalEnd;
-			break;
-		case 0x0b:
-			call.Status = GN_CALL_OutgoingFreeCall;
 			break;
 		case 0x53:
 			call.Status = GN_CALL_OutgoingCall;
@@ -1076,7 +1087,7 @@ static void N71_65_GetTimeDiffence(GSM_StateMachine *s, unsigned long diff, GSM_
 	time_t     	t_time;
 	struct tm  	*tm_endtime;
 
-	t_time = Fill_Time_T(s->di.df, *DT);
+	t_time = Fill_Time_T(*DT,8);
 
 	if (Plus) {
 		t_time 		+= diff*multi;
@@ -1365,7 +1376,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 		Date.Year 	= 2029; Date.Month 	= 12; Date.Day 	  = 31;
 		Date.Hour 	= 22;   Date.Minute 	= 59; Date.Second = 58;
 	}
-	t_time1 = Fill_Time_T(s->di.df, Date);
+	t_time1 = Fill_Time_T(Date,8);
 	memcpy(&Date,&Note->Entries[Time].Date,sizeof(GSM_DateTime));
 	if (Note->Type != GCN_BIRTHDAY) {
 		Date.Year -= 20;
@@ -1373,7 +1384,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 		Date.Year = 1980;
 		Date.Hour = 22; Date.Minute = 58; Date.Second = 58;
 	}
-	t_time2 = Fill_Time_T(s->di.df, Date);
+	t_time2 = Fill_Time_T(Date,8);
 	diff	= t_time1-t_time2;
 	smprintf(s, "  Difference : %i seconds\n", -diff);
 	req[9]  = (unsigned char)(-diff >> 24);
@@ -1414,8 +1425,8 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 		} else {
 			Date.Year += 20;
 		}
-		t_time2   = Fill_Time_T(s->di.df, Date);
-		t_time1   = Fill_Time_T(s->di.df, Note->Entries[Alarm].Date);
+		t_time2   = Fill_Time_T(Date,8);
+		t_time1   = Fill_Time_T(Note->Entries[Alarm].Date,8);
 		diff	  = t_time1-t_time2;
 
 		/* Sometimes we have difference in minutes */
@@ -1805,10 +1816,10 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 			 * a year. (eg. Birthday on 2001-01-10 and Alarm on 2000-12-27)
 			 */
 			DT.Year = Note->Entries[Alarm].Date.Year;
-			if((seconds = Fill_Time_T(s->di.df, DT)-Fill_Time_T(s->di.df, Note->Entries[Alarm].Date))<0L)
+			if((seconds = Fill_Time_T(DT,8)-Fill_Time_T(Note->Entries[Alarm].Date,8))<0L)
 			{
 				DT.Year++;
-				seconds = Fill_Time_T(s->di.df, DT)-Fill_Time_T(s->di.df, Note->Entries[Alarm].Date);
+				seconds = Fill_Time_T(DT,8)-Fill_Time_T(Note->Entries[Alarm].Date,8);
 			}
 			if(seconds>=0L)
 			{
@@ -1864,7 +1875,7 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		req[count++] = 0xff;	  /* 14 */
 		req[count++] = 0xff;	  /* 15 */
 		if (Alarm != -1) {
-			seconds=Fill_Time_T(s->di.df, DT)-Fill_Time_T(s->di.df, Note->Entries[Alarm].Date);
+			seconds=Fill_Time_T(DT,8)-Fill_Time_T(Note->Entries[Alarm].Date,8);
 			if(seconds>=0L)
 			{
 				count -= 2;

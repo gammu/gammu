@@ -571,9 +571,14 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 			default:
 				ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_Note;
 				Note = &ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Note;
+				Note->Style		= DefNoteStyle;
+				Note->Tempo		= DefNoteTempo;
+				Note->Scale 		= DefNoteScale;
+				Note->Duration 		= DefNoteDuration;
+				Note->DurationSpec 	= NoSpecialDuration;
+				Note->Note 		= Note_Pause;
 
 				/* [<duration>] */
-				Note->Duration = DefNoteDuration;
 				switch (atoi(ptr)) {
 					case  1: Note->Duration = Duration_Full  ; break;
 					case  2: Note->Duration = Duration_1_2   ; break;
@@ -585,10 +590,16 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 				/* Skip all numbers in duration specification. */
 				while(isdigit(*ptr)) ptr++;
 
+				/* Check for dodgy rttl */
+				/* [<special-duration>] */
+				if (*ptr=='.') {
+					Note->DurationSpec = DottedNote;
+					ptr++;
+				}
+
 				/* <note> */
 				/* B or b is not in specs, but I decided to put it, because
 				 * it's in some RTTL files. It's the same to H note */
-				Note->Note = Note_Pause;
 				switch (*ptr) {
 					case 'A': case 'a': Note->Note = Note_A; break;
 					case 'B': case 'b': Note->Note = Note_H; break;
@@ -615,7 +626,6 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 
 				/* Check for dodgy rttl */
 				/* [<special-duration>] */
-				Note->DurationSpec = NoSpecialDuration;
 				if (*ptr=='.') {
 					Note->DurationSpec = DottedNote;
 					ptr++;
@@ -623,7 +633,6 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 
 				/* [<scale>] */
 				if (Note->Note!=Note_Pause) {
-					Note->Scale = DefNoteScale;
 					if (isdigit(*ptr)) {
 						switch (atoi(ptr)) {
 							case  4: Note->Scale = Scale_440 ; break;
@@ -634,11 +643,6 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 						ptr++;
 					}
 				}
-
-				/* Style */
-				Note->Style=DefNoteStyle;
-				/* Tempo */
-				Note->Tempo=DefNoteTempo;
 
 				ringtone->NoteTone.NrCommands++;
 				break;
@@ -698,10 +702,11 @@ static GSM_Error loadbin(FILE *file, GSM_Ringtone *ringtone)
 
 static GSM_Error loadpuremidi(FILE *file, GSM_Ringtone *ringtone)
 {
-	unsigned char	buffer[1024];
+	unsigned char buffer[30000];
 
 	dprintf("loading midi\n");
-	ringtone->NokiaBinary.Length=fread(buffer, 1, 1024, file);
+	EncodeUnicode(ringtone->Name,"MIDI",4);
+	ringtone->NokiaBinary.Length=fread(buffer, 1, 30000, file);
 	memcpy(ringtone->NokiaBinary.Frame,buffer,ringtone->NokiaBinary.Length);
 	dprintf("Length %i name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
 	return GE_NONE;

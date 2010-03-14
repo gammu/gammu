@@ -6,9 +6,7 @@
 #include "dct3comm.h"
 
 typedef struct {
-#ifdef GSM_ENABLE_6110_AUTHENTICATION
 	unsigned char			MagicBytes[4];
-#endif
 	int				LastCalendarPos;
 	GSM_SMSMemoryStatus		LastSMSStatus;
 	int				LastSMSRead;
