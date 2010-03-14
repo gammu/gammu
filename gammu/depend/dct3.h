@@ -11,6 +11,7 @@ void DCT3GetSecurityCode (int argc, char *argv[]);
 #ifdef GSM_ENABLE_NOKIA6110
 void DCT3GetOperatorName (int argc, char *argv[]);
 void DCT3SetOperatorName (int argc, char *argv[]);
+void DCT3DisplayOutput	 (int argc, char *argv[]);
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

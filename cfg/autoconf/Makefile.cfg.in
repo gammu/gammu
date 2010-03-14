@@ -7,6 +7,7 @@ VERSION		= @VERSION@
 RM               = @RM@ -f
 CC               = @CC@
 CFLAGS           = @CFLAGS@
+LDLIBS           = @LDLIBS@
 INSTALL          = @INSTALL@
 FIND             = @FIND@
 

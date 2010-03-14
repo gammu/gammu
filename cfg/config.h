@@ -6,12 +6,14 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.72"
+#define VERSION "0.73"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
 /* #undef DEBUG */
 #endif
+
+/* ---------------------- Connections and general settings -------------- */
 
 /* MBUS2 over cable */
 #define GSM_ENABLE_MBUS2 1
@@ -53,28 +55,6 @@
  */
 #define GSM_ENABLE_BACKUP 1
 
-/* It allows to show incoming call and SMS info for 7110 family phones.
- * By default commented: you can have some problems, when using it.
- * Example: with my 6210 after using it info about incoming sms is shown much
- * earlier than sms in phone and phone restart (once and random) later after
- * connection. Seems phone firmware isn't too good here
- */
-/* Show incoming Data for 7110/9210 */
-/* #undef GSM_ENABLE_N71_92INCOMINGINFO */
-
-/* n6110.c models */
-#define GSM_ENABLE_NOKIA6110 1
-/* n6510.c (DCT4) models */
-#define GSM_ENABLE_NOKIA6510 1
-/* n7110.c models */
-#define GSM_ENABLE_NOKIA7110 1
-/* n9210.c models */
-#define GSM_ENABLE_NOKIA9210 1
-/* AT generic models */
-#define GSM_ENABLE_ATGEN 1
-/* Alcatel BE5 */
-#define GSM_ENABLE_ALCATEL 1
-
 /* Bu default commented: some parts of source are not ready or not tested
  * at all (or aren't good tested). Uncomment, if want them
  */
@@ -85,7 +65,39 @@
  */
 //#define GSM_ENABLE_BEEP
 
-/* ------------------------ Language specific --------------------------- */
+/* --------------------------- Phone modules (specific) ----------------- */
+
+/* n6110.c models */
+#define GSM_ENABLE_NOKIA6110 1
+
+/* n7110.c models */
+#define GSM_ENABLE_NOKIA7110 1
+
+/* It allows to show incoming call and SMS info for 7110 family phones.
+ * By default commented: you can have some problems, when using it.
+ * Example: with my 6210 after using it info about incoming sms is shown much
+ * earlier than sms in phone and phone restart (once and random) later after
+ * connection. Seems phone firmware isn't too good here
+ */
+/* Show incoming Data for 7110/9210 */
+/* #undef GSM_ENABLE_N71_92INCOMINGINFO */
+
+/* n6510.c (DCT4) models */
+#define GSM_ENABLE_NOKIA6510 1
+
+/* Force using new frames for calendar. Can be not compatible with all phones,
+ * but gives full calendar info
+ */
+/* #undef GSM_FORCE_DCT4_NEW_CALENDAR */
+
+/* n9210.c models */
+#define GSM_ENABLE_NOKIA9210 1
+/* AT generic models */
+#define GSM_ENABLE_ATGEN 1
+/* Alcatel BE5 */
+#define GSM_ENABLE_ALCATEL 1
+
+/* ---------------------- C language specific --------------------------- */
 
 #ifndef WIN32
 /* are the scandir functions available */

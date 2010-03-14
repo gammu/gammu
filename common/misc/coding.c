@@ -577,7 +577,7 @@ int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *ou
 
 void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, bool semioctet)
 {
-	unsigned char	Buffer[20]	= "";
+	unsigned char	Buffer[50]	= "";
 	int		length		= Number[0];
 
 	if (semioctet) {
@@ -626,7 +626,7 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 /* 1 semioctet = 4 bits = half of byte */
 int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool semioctet)
 {
-	unsigned char	buffer[40];
+	unsigned char	buffer[50];
 	unsigned char	*OUTPUT=Output;		/* Pointer to the output */
 	int		length=0,j;
 	unsigned char	format=GNT_UNKNOWN;	/* format of number used by us */

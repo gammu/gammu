@@ -18,6 +18,7 @@ USEUNIT("..\..\common\service\gsmcal.c");
 USEUNIT("..\..\common\service\gsmlogo.c");
 USEUNIT("..\..\common\service\gsmnet.c");
 USEUNIT("..\..\common\service\gsmpbk.c");
+USEUNIT("..\..\common\service\gsmmisc.c");
 USEUNIT("..\..\common\service\gsmring.c");
 USEUNIT("..\..\common\service\gsmsms.c");
 USEUNIT("..\..\common\service\gsmwap.c");

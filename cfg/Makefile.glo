@@ -3,8 +3,7 @@
 
 # these subdirectories from /docs are copied to docs dir
 # ("\" CHAR IS AFTER NAME WITHOUT SPACE)
-DOCS      = default\
-	    docs\
+DOCS      = docs\
 	    examples
 
 # common files
@@ -20,6 +19,7 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
 	    $(TOPDIR)/common/service/gsmback.o \
 	    $(TOPDIR)/common/service/gsmring.o \
 	    $(TOPDIR)/common/service/gsmlogo.o \
+	    $(TOPDIR)/common/service/gsmmisc.o \
 	    $(TOPDIR)/common/service/gsmnet.o \
 	    $(TOPDIR)/common/device/bluetoth/unixblue.o \
 	    $(TOPDIR)/common/device/serial/unix.o \
@@ -75,11 +75,11 @@ all: gammu
 
 gammu: $(COMMON) $(GAMMU)
 	@echo Linking
-	@$(CC) $(COMMON) $(GAMMU) -lm -o $(TOPDIR)/gammu/gammu
+	@$(CC) $(LDLIBS) $(COMMON) $(GAMMU) -lm -o $(TOPDIR)/gammu/gammu
 	
 makelib: $(COMMON) $(GAMMU)
 	@echo Linking libGammu.so
-	@$(CC) -shared -o $(TOPDIR)/common/libGammu.so $(COMMON)
+	@$(CC) $(LDLIBS) -shared -o $(TOPDIR)/common/libGammu.so $(COMMON)
 	@echo Linking
 	@$(CC) $(LDFLAGS) $(GAMMU) -lm -L$(TOPDIR)/common -lGammu -o $(TOPDIR)/gammu/gammulib
 

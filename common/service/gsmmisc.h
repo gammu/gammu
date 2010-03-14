@@ -1,6 +1,10 @@
 #ifndef __gsm_misc_h
 #define __gsm_misc_h
 
+#include "../gsmcomon.h"
+
+/* --------------------------- resetting phone settings  ------------------- */
+
 typedef enum {
 	GSM_RESET_PHONESETTINGS = 1,
 	GSM_RESET_USERINTERFACE,
@@ -8,6 +12,8 @@ typedef enum {
 	GSM_RESET_DEVICE,
 	GSM_RESET_FULLFACTORY
 } GSM_ResetSettingsType;
+
+/* --------------------------- security codes ------------------------------ */
 
 /* Definition of security codes. */
 typedef enum {
@@ -24,6 +30,8 @@ typedef struct {
 	GSM_SecurityCodeType 	Type; 		/* Type of the code. 	*/
 	char 			Code[10];       /* Actual code. 	*/
 } GSM_SecurityCode;
+
+/* ---------------------------- keyboard ----------------------------------- */
 
 typedef enum {
 	GSM_KEY_NONE = 0x00,
@@ -50,6 +58,10 @@ typedef enum {
 	GSM_KEY_NAMES		/* doesn't available in some phone: ie. N5110 */
 } GSM_KeyCode;
 
+GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, int *Length);
+
+/* ------------------------------- display features ------------------------ */
+
 typedef enum {
 	GSM_CallActive = 1,
 	GSM_UnreadSMS,
@@ -65,12 +77,7 @@ typedef struct {
 	GSM_DisplayFeature 	Feature[7];
 } GSM_DisplayFeatures;
 
-typedef struct {
-    /* All these should be -1 when unknown */
-    int 	SignalStrength; /* Signal strength in dBm */
-    int 	SignalPercent;  /* Signal strength in percent */
-    int 	BitErrorRate;   /* Bit error rate in percent */
-} GSM_SignalQuality;
+/* ----------------------------- power source ------------------------------ */
 
 typedef enum {
     GSM_BatteryPowered = 1,
@@ -83,6 +90,8 @@ typedef struct {
     int 		BatteryPercent; /* Signal strength in percent, -1 = unknown */
     GSM_ChargeState 	ChargeState;    /* Charge state */
 } GSM_BatteryCharge;
+
+/* ------------------------------ categories ------------------------------- */
 
 #define GSM_MAX_CATEGORY_NAME_LENGTH 50
 
@@ -102,14 +111,28 @@ typedef struct {
     int                 Used;
 } GSM_CategoryStatus;
 
+/* ------------------- radio FM stations ---------------------------------- */
+
 #define	GSM_MAX_FMSTATION_LENGTH 12
-#define	GSM_MAX_FM_STATION 	 20
+#define	GSM_MAX_FM_STATION 	 20
 
 typedef struct {
 	int			Location;
         char 			StationName [(GSM_MAX_FMSTATION_LENGTH+1)*2];
 	int			Frequency;
 } GSM_FMStation;
+
+/* ----------------------- filesystem ------------------------------------- */
+
+typedef struct {
+	bool 		Folder;		/* true, when folder 	*/
+	int		Used;		/* how many bytes used 	*/
+	unsigned char 	Name[300];	/* Name			*/
+	int		ID;		/* ID 			*/
+	int		ParentID;
+} GSM_FileFolderInfo;
+
+/* ------------------------------------------------------------------------ */
 
 #endif
 

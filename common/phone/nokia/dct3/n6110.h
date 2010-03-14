@@ -8,9 +8,10 @@
 typedef struct {
 	unsigned char			MagicBytes[4];
 	int				LastCalendarPos;
+	DCT3_WAPSettings_Locations	WAPLocations;
+
 	GSM_SMSMemoryStatus		LastSMSStatus;
 	int				LastSMSRead;
-	DCT3_WAPSettings_Locations	WAPLocations;
 } GSM_Phone_N6110Data;
 
 #ifndef GSM_USED_FBUS2

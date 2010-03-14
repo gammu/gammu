@@ -17,6 +17,40 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20030427 - 0.73
+* new functionality:
+  * added --nokiadisplayoutput for old DCT3 phones (Nokia 51xx/61xx)
+  * support for new EMS features:
+    * SonyEricsson short form of IMelody (-toneSE switch)
+    * linked melodies (-toneSElong, -tone10long, -tone12long switches) saved
+      with User Prompt Indicator
+    * linked bitmaps (-variablebitmaplong) saved with UPI
+    * protection for bitmaps and ringtones saved using Object Distribution
+      Indicator (-protected)
+  * Gammu GUI written in wxBasic (wxbasic.sourceforge.net)      (Luca Cassioli)
+    See http://www.geocities.com/lcassioli/gammugui/ for it,
+    source is also included in source tarball
+  * rewritten function for changing phone features for DCT4. Now includes
+    also 3510i, 5100, 6100, 6610/7210.
+    NOTE: 3510i DOESN'T HAVE GPRS ALWAYS ONLINE SETTING
+
+* fixes and improvements:
+  * too small buffer during setting SMSC for DCT4 increased  (Fotis D. Zagoras)
+  * increased GSM_BACKUP_MAX_RINGTONES                           (Igor Savokic)
+  * increased buffers for phone numbers for SMS                      (jomin yu)
+  * fix for loading RTTL files
+  * improvements for packing EMS
+  * frames from method 3 for calendar for DCT4 phones are used     (Liviu Daia)
+    only, when phone is marked as compatible or when is
+    used configure option --enable-newcalendar.
+    Please check compatibility with Your phone and report it
+  * updated Italian readme                                      (Luca Cassioli)
+  * * fix for building with bluetooth support                    (Michal Cihar)
+    * allows to pass CFLAGS to configure as is usual
+    * fix docs installing
+  * getting file list for DCT4 phones rewritten and moved to
+    common. First step for making OBEX support done.
+
 20030417 - 0.72
 * new functionality:
   * German translation                                        (Stefan Beermann)

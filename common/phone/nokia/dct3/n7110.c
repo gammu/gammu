@@ -1560,7 +1560,11 @@ GSM_Phone_Functions N7110Phone = {
 	NOTSUPPORTED,		/*  	ClearFMStations       	*/
 	N7110_SetIncomingUSSD,
 	NOTSUPPORTED,		/* 	DeleteUserRingtones	*/
-	NOTSUPPORTED		/* 	ShowStartInfo		*/
+	NOTSUPPORTED,		/* 	ShowStartInfo		*/
+	NOTSUPPORTED,		/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,		/*	GetFile			*/
+	NOTSUPPORTED,		/* 	AddFile			*/
+	NOTSUPPORTED 		/* 	GetFreeFileMemory 	*/
 };
 
 #endif

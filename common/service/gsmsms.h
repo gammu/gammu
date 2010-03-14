@@ -301,11 +301,16 @@ typedef enum {
 	SMS_VoidSMS,
 	SMS_EMSSound10,			/* IMelody 1.0 */
 	SMS_EMSSound12,			/* IMelody 1.2 */
+	SMS_EMSSonyEricssonSound,	/* IMelody without header - SonyEricsson extension */
+	SMS_EMSSound10Long,		/* IMelody 1.0 with UPI */
+	SMS_EMSSound12Long,		/* IMelody 1.2 with UPI */
+	SMS_EMSSonyEricssonSoundLong,	/* IMelody without header with UPI */
 	SMS_EMSPredefinedSound,
 	SMS_EMSPredefinedAnimation,
 	SMS_EMSAnimation,
 	SMS_EMSFixedBitmap,		/* 16x16 or 32x32 */
-	SMS_EMSVariableBitmap
+	SMS_EMSVariableBitmap,
+	SMS_EMSVariableBitmapLong
 } EncodeMultiPartSMSID;
 
 typedef struct {
@@ -319,6 +324,7 @@ typedef struct {
 	GSM_PhonebookEntry	*Phonebook;
 	GSM_CalendarEntry	*Calendar;
 	unsigned char		*Buffer;
+	bool			Protected;
 
 	/* Return values */
 	int			RingtoneNotes;

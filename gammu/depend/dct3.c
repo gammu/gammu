@@ -4,6 +4,7 @@
 #ifdef GSM_ENABLE_NOKIA_DCT3
 
 #include <string.h>
+#include <signal.h>
 
 #include "../../common/misc/coding.h"
 #include "../../common/gsmcomon.h"
@@ -527,26 +528,87 @@ void DCT3SetOperatorName(int argc, char *argv[])
 
 	GSM_Terminate();
 }
+
+static GSM_Error DCT3_ReplyDisplayOutput(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	unsigned char buf[100];
+
+	switch (msg.Buffer[3]) {
+	case 0x50:
+		dprintf("Display string received\n");
+		memcpy(buf,msg.Buffer+8,msg.Buffer[7]*2);
+		buf[msg.Buffer[7]*2]   = 0;
+		buf[msg.Buffer[7]*2+1] = 0;
+		printf("X=%i, Y=%i, Text=\"%s\"\n",msg.Buffer[6],msg.Buffer[5],DecodeUnicodeString(buf));
+		return GE_NONE;
+	case 0x54:
+		dprintf("Display output set\n");
+		return GE_NONE;
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+void DCT3DisplayOutput(int argc, char *argv[])
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x53,
+			       0x01}; //1 = enable, 2 = disable
+
+	GSM_Init(true);
+
+	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) == NULL) Print_Error(GE_NOTSUPPORTED);
+	CheckDCT3();
+
+	s.User.UserReplyFunctions=UserReplyFunctions3;
+
+	error=GSM_WaitFor (&s, req, 5, 0x0d, 4, ID_User7);
+	Print_Error(error);
+
+	/* We do not want to monitor serial line forever -
+	 * press Ctrl+C to stop the monitoring mode.
+	 */
+	signal(SIGINT, interrupted);
+	printf("If you want break, press Ctrl+C...\n");
+	printf("Entering monitor mode...\n\n");
+
+	/* Loop here indefinitely -
+	 * allows you to see messages from GSM code in
+	 * response to unknown messages etc.
+	 * The loops ends after pressing the Ctrl+C.
+	 */
+	while (!bshutdown) {
+		GSM_ReadDevice(&s,true);
+		my_sleep(10);
+	}
+
+	req[4] = 0x02;
+	error=GSM_WaitFor (&s, req, 5, 0x0d, 4, ID_User7);
+	Print_Error(error);
+
+	GSM_Terminate();
+}
 #endif
 
 static GSM_Reply_Function UserReplyFunctions3[] = {
-	{DCT3_ReplyResetTest36,		"\x40",0x02,0x65,ID_User2 	},
-	{DCT3_ReplyGetPPS,		"\x40",0x02,0x6A,ID_User4 	},
-	{DCT3_ReplySetPPS,		"\x40",0x02,0x6B,ID_User4 	},
-	{DCT3_Reply61GetSecurityCode,	"\x40",0x02,0x6E,ID_User6 	},
-	{DCT3_ReplySimlockInfo,		"\x40",0x02,0x8A,ID_User3	},
+	{DCT3_ReplyDisplayOutput,	"\x0D",0x03,0x50,ID_IncomingFrame},
+	{DCT3_ReplyDisplayOutput,	"\x0D",0x03,0x54,ID_User7	 },
+
+	{DCT3_ReplyResetTest36,		"\x40",0x02,0x65,ID_User2 	 },
+	{DCT3_ReplyGetPPS,		"\x40",0x02,0x6A,ID_User4 	 },
+	{DCT3_ReplySetPPS,		"\x40",0x02,0x6B,ID_User4 	 },
+	{DCT3_Reply61GetSecurityCode,	"\x40",0x02,0x6E,ID_User6 	 },
+	{DCT3_ReplySimlockInfo,		"\x40",0x02,0x8A,ID_User3	 },
 #ifdef GSM_ENABLE_NOKIA6110
-	{DCT3_ReplySetOperatorName,	"\x40",0x02,0x8B,ID_User7	},
-	{DCT3_ReplyGetOperatorName,	"\x40",0x02,0x8C,ID_User5	},
+	{DCT3_ReplySetOperatorName,	"\x40",0x02,0x8B,ID_User7	 },
+	{DCT3_ReplyGetOperatorName,	"\x40",0x02,0x8C,ID_User5	 },
 #endif
-	{DCT3_ReplyGetMSID,		"\x40",0x02,0xb5,ID_User8	},
-	{DCT3_ReplyGetDSPROM,		"\x40",0x02,0xC8,ID_User10	},
-	{DCT3_ReplyGetMCUchkSum,	"\x40",0x02,0xC8,ID_User9	},
-	{DCT3_ReplyPhoneTests,		"\x40",0x02,0xCF,ID_User1	},
+	{DCT3_ReplyGetMSID,		"\x40",0x02,0xb5,ID_User8	 },
+	{DCT3_ReplyGetDSPROM,		"\x40",0x02,0xC8,ID_User10	 },
+	{DCT3_ReplyGetMCUchkSum,	"\x40",0x02,0xC8,ID_User9	 },
+	{DCT3_ReplyPhoneTests,		"\x40",0x02,0xCF,ID_User1	 },
 
-	{DCT3_Reply7191GetSecurityCode,	"\x7a",0x04,0x1C,ID_User6	},
+	{DCT3_Reply7191GetSecurityCode,	"\x7a",0x04,0x1C,ID_User6	 },
 
-	{NULL,				"\x00",0x00,0x00,ID_None	}
+	{NULL,				"\x00",0x00,0x00,ID_None	 }
 };
 
 #endif

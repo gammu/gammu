@@ -1,5 +1,23 @@
-Gammu README versione 2.agosto.2002
+Gammu README versione 3.febbraio.2003
 -----------------------------------
+D. Come si usa?
+
+R. Prima di tutto, qui vengono descritti tutti i possibili parametri accettati dal programma. 
+Se desiderate modificare il livello di debugging dopo aver compilato il programma con l'opzione 
+"debug" attivata, interponete una delle seguenti parole tra il nome del programma e i parametri 
+passati allo stesso:
+
+	nothing	-	nessuna informazione di debug
+	text		-	"dump" della trasmissione, in formato testo
+	textall	-	fornisce tutte le possibili informazioni, in formato testo
+	errors	-	mostra gli errori, in formato testo
+	binary	-	"dump" della trasmissione, in formato binario
+
+Esempio:
+gammu --nothing --identify
+
+------------------------
+
 Qui di seguito e' riportato l'elenco di tutte le opzioni disponibili per il
 programma Gammu, secondo il seguente formato:
 
@@ -26,8 +44,49 @@ programma Gammu, secondo il seguente formato:
 	Nota: alcuni telefoni effettueranno un "hard reset" anche specificando
         l'opzione SOFT.
 
-   gammu --getsecuritycode
-  	Legge il codice di sicurezza del telefono
+   gammu --resetphonesettings PHONE|DEV|UIF|ALL|FACTORY
+	Reimposta il telefono. PRESTARE ATTENZIONE!!!
+
+	PHONE:
+
+	DEV:
+
+	ALL: Cancella le impostazioni dell'utente
+		* rimuove i loghi, o impota quelli di default
+		* imposta la rubrica di default e altre impostazioni di menu
+		* cancella vocabolario T9
+		* cancella registro chiamate
+		* imposta profilo di default
+		* cancella suonerie utente
+
+	UIF:	* come "ALL", ma in piu' disabilita NetMonitor, PPS e tutti i menu "segreti"
+
+	FACTORY:	* come "ALL", in piu' reimposta data/ora
+
+   gammu --presskeysequence mMnNpPuUdD+-123456789*0#gGrRwW
+	Invia al telefono una sequenza che fa credere al telefono stesso che
+        siano stati premuti certi tasti.
+      mM = menu
+	nN = names (rubrica)
+	pP = power (accensione)
+	uU = up (su),	
+	dD = down (giu')
+	+- = + o -
+ 	123456789*0 = tasti numerici, 
+      gR = green (verde,rispondi a chiamata)
+	rR = red (rosso, riaggancia), 
+	wW =wait (pausa)
+
+	ESEMPIO: per chiamare  il terzo nominativo della rubrica:
+	gammu --presskeysequence NDDG
+	Il comando "preme" il tasto RUBRICA, due volte il tasto GIU', e infine
+        chiama il numero selezionato.       
+
+   gammu --getdisplaystatus
+
+   gammu --getprofile start [stop]
+
+   gammu --setautonetworklogin
 
    gammu --getsecuritystatus
         Mostra se il telefono e' impostato per richiedere i codici di
@@ -36,24 +95,11 @@ programma Gammu, secondo il seguente formato:
    gammu --entersecuritycode PIN|PUK|PIN2|PUK2 code
         Immette da PC i codici di sicurezza.
 
-   gammu --presskeysequence mMnNpPuUdD+-123456789*0#gGrRwW
-	Invia al telefono una sequenza che fa credere al telefono stesso che
-        siano stati premuti certi tasti.
-        mM = menu
-	nN = names (rubrica)
-	pP = power (accensione)
-	uU = up (su),	
-	dD = down (giu')
-	+- = + o -
- 	123456789*0 = tasti numerici, 
-        gR = green (verde,rispondi a chiamata)
-	rR = red (rosso, riaggancia), 
-	wW =wait (pausa)
+   gammu --listnetworks
+       Mostra nomi/codici delle reti GSM riconosciute da GAMMU
 
-	ESEMPIO: per chiamare  il terzo nominativo della rubrica:
-	gammu --presskeysequence NDDG
-	Il comando "preme" il tasto RUBRICA, due volte il tasto GIU', e infine
-        chiama il numero selezionato.       
+   gammu --getfmstation start [stop]
+       Mostra info sulle stazioni FM del telefono
 
    gammu --getdatetime
 	Legge data e ora dal telefono.
@@ -84,6 +130,11 @@ programma Gammu, secondo il seguente formato:
 	SM = SIM phonebook (rubrica SIM)
 	ME = rubrica del telefono
 
+   gammu --senddtmf sequence
+       Invia sequenza DTMF. In alcuni telefoni e' possibile farlo solo durante una chiamata.
+
+   gammu --getspeeddial start [stop]
+	 Legge elenco chiamate rapide
 
    gammu --getsms folder start [stop]
 	 Legge gli SMS. 
@@ -91,16 +142,17 @@ programma Gammu, secondo il seguente formato:
 	start  = posizione di partenza (le posizioni sono numerate a partire da 1)
 	stop   = posizione finale
 
+      Specificando la cartella "0", gli SMS sono considerati come se appartenessero tutti alla
+	stessa cartella, e ognuno di essi sara' identificato da un numero diverso, indipendentemente
+	dalla cartella di provenienza. Questa opzione funziona con qualunque telefono.
+
 	Specificando la cartella 1, 2 ecc., gli SMS sono presi da Inbox (in arrivo), Outbox (in uscita),
 	ecc., e ogni SMS ha un numero unico nella sua cartella. I nomi delle cartelle possono
 	variare da telefono a telefono (il piu' delle volte, 1="Inbox", 2="Outbox", ecc.).
 	Questo metodo non e' supportato da tutti i telefoni (per esempio, non da Nokia 3310, 5110, 6110).
 	Se col tuo telefono funziona, usa --getsmsfolders per avere una lista delle cartelle.
 
-      Specificando la cartella "0", gli SMS sono considerati come se appartenessero tutti alla
-	stessa cartella, e ognuno di essi sara' identificato da un numero diverso, indipendentemente
-	dalla cartella di provenienza. Questa opzione funziona con qualunque telefono.
-
+  
 
    gammu --deletesms folder start [stop]
 	 Cancella gli SMS dal telefono.
@@ -118,23 +170,25 @@ programma Gammu, secondo il seguente formato:
 	 leggere un unico SMS dal telefono, usa 
 	 gammu --getsms 0 posizione
 
+   gammu --geteachsms
+        Simile a --getallsms. La differenza e' che collega tutti gli SMS concatenati.
+
    gammu --getsmsc start [stop]
         Legge le impostazioni del centro messaggi (SMSC) dalla SIM.
 	 start = posizione di partenza (le posizioni sono numerate a partire da 1)
 	 stop  = posizione finale
 
    gammu --getsmsfolders
-       Legge i nomi delle cartelle degli SMS.
+        Legge i nomi delle cartelle degli SMS.
+
+   gammu --smsd FILES configfile
+        SMS Deaemon. Vedere il file di configurazione "smsdrc" per ulteriori opzioni.
 
    gammu --getphoneringtone location [file]
 	  Legge la suoneria predefinita e la salva su "file".
 	 location = posizione della suoneria
 	 file = nome del file in cui verra' salvata la suoneria letta
 	 Le posizioni sono numerate da 1.
-
-   gammu --getringtoneslist
-	 Legge lista delle suonerie del telefono.
-
 
    gammu --getringtone location [file]
 	  Legge suoneria dal telefono in formato RTTL o BINARIO.
@@ -160,9 +214,12 @@ programma Gammu, secondo il seguente formato:
 	  Copia la suoneria "source" del telefono su quella "destination".
 	 RTTL|BINARY= specifica se la suoneria e' in formato RTTL o BINARIO
 
-   gammu --nokiaplayringtone file
+   gammu --playringtone file
         Suona sul cicalino del telefono un'approssimazione della suoneria.
  	 file = nome del file da cui leggere la suoneria
+
+   gammu --getringtoneslist
+	 Legge lista delle suonerie del telefono.
 
    gammu --nokiacomposer file
 	  Mostra come inserire una suoneria in formato RTTL nel Compositore che si trova in molti
@@ -183,17 +240,10 @@ programma Gammu, secondo il seguente formato:
        start = posizione iniziale (numerate a partire da 1)
 	 stop = posizione finale
 
-   gammu --getcalendarnote start [stop]
+   gammu --getcalendarnotes 
         Prende gli appuntamenti dall'agenda del telefono.
 	 Sui Nokia 3310 e 3330 sono chiamati "promemoria" e hanno alcune limitazioni
        (che dipendono dalla versione del telefono)
-       start = posizione iniziale (numerate a partire da 1)
-	 stop = posizione finale
-
-   gammu --deletecalendarnote start [stop]
-        Cancella appuntamenti o promemoria dal telefono.
-       start = posizione iniziale (numerate a partire da 1)
-	 stop = posizione finale
 
    gammu --getwapbookmark start [stop]
         Legge i preferiti WAP dal telefono.
@@ -295,43 +345,42 @@ programma Gammu, secondo il seguente formato:
                            [-enablefax][-disablefax][-enablevoice][-unsent]
                            [-disablevoice][-enableemail][-disableemail][-read]
                            [-voidsms][-unicode][-inputunicode][-unread]
+				   [-replacemessages ID][-replacefile file][-autolen len]
+
 
 	 Legge il testo da STDIN e lo salva come SMS di testo sulla SIM o sul telefono. Per inserire
 	il testo,dopo aver dato il comando scrivere il testo desiderato, e al termine premere 
 	CTRL+Z (in MS-DOS).
-	-folder number     	- salva nella cartella specificata (numerate a partire da 1). Il piu' 
+      -folder number     	- salva nella cartella specificata (numerate a partire da 1). Il piu' 
 					  delle volte, 1="Inbox", 2="Outbox" ecc... Usare --getsmsfolders per 
 					  la lista delle cartelle.
-	-unread			- imposta il messaggio come NON LETTO. In alcuni telefoni (come il 
-					  6210) non si vedra' il simbolo di SMS non letto dopo aver salvato in
-					  questa modalita'. In alcuni telefoni con memoria interna per gli SMS
-					  (come il 6210), dopo aver usato questo comando sara' tale memoria a 
-					  risultare utilizzata.
-       -read              	- imposta il messaggio come LETTO. In alcuni telefoni con memoria 
-					  interna per gli SMS (come il 6210), dopo aver usato questo comando 
-					  sara' tale memoria a risultare utilizzata.
-       -unsent            	- imposta il messaggio come NON INVIATO
-       -reply             	- imposta il Centro Messaggi per la risposta
-       -sender number     	- imposta il numero del mittente (default: "Gammu")
-       -flash             	- SMS di Classe 0 (visualizzato immediatamente sul display)
-       -smscset number    	- il numero del Centro Messaggi (SMSC) e' preso dal set "number". 
-					  Default set:1
-       -smscnumber number 	- Imposta Centro Messaggi (SMSC)
-       -len len           	- specifica quanti caratteri verranno letti. Usando questa opzione, 
-					  se il testo risultera'  piu' lungo di 1 SMS, verra' suddiviso in piu'
+      -reply             	- imposta il Centro Messaggi per la risposta
+      -sender number     	- imposta il numero del mittente (default: "Gammu")
+      -flash             	- SMS di Classe 0 (visualizzato immediatamente sul display)
+      -smscset number    	- il numero del Centro Messaggi (SMSC) e' preso dal set "number".
+					  Default set:1 
+      -smscnumber number 	- Imposta Centro Messaggi (SMSC)
+      -len len           	- specifica quanti caratteri verranno letti. Usando questa opzione, 
+  					  se il testo risultera'  piu' lungo di 1 SMS, verra' suddiviso in piu'
 					  SMS collegati.
-       -enablevoice       	- il messaggio impostera' questi indicatori. Il testo verra' tagliato
+      -enablefax			- il messaggio impostera' sul display l'indicatore "fax ricevuto". 
+					  Il testo del messaggio verra' tagliato.
+      -disablefax			- il messaggio cancellera' sul display l'indicatore "fax ricevuto". 
+      -enablevoice       	- il messaggio impostera' sul display l'indicatore  "messaggio vocale ricevuto".	
+      -disablevoice      	- il messaggio cancellera' sul display l'indicatore "messaggio vocale ricevuto".
+      -enableemail		- il messaggio impostera' sul display l'indicatore "email ricevuta"
+      -disableemail		- il messaggio cancellera' sul display l'indicatore "email ricevuta"
+      -unsent            	- imposta il messaggio come NON INVIATO
+					  
 				 	  a 1 messaggio.
-       -disablevoice        
-       -enablefax
-       -disablefax
-       -enableemail
-       -disableemail
-       -voidsms           	- molti telefoni dopo aver ricevuto un SMS di questo tipo, non 
+      -read              	- imposta il messaggio come LETTO. In alcuni telefoni con memoria 
+ 					  interna per gli SMS (come il 6210), dopo aver usato questo comando 
+					  sara' tale memoria a risultare utilizzata.
+      -voidsms           	- molti telefoni dopo aver ricevuto un SMS di questo tipo, non 
 					  mostreranno niente, ma si limiteranno a emettere un segnale, vibrare
 					  o accendere il display. Il testo verra' tagliato a 1 sms.
-       -unicode           	- il messaggio verra' salvato in formato UNICODE
-       -inputunicode      	- il messaggio e' immesso in formato UNICODE.
+      -unicode           	- il messaggio verra' salvato in formato UNICODE
+      -inputunicode      	- il messaggio e' immesso in formato UNICODE.
                             CONSIGLIO: Si puo' creare un file di tipo UNICODE in Windows utilizzando
 						   WordPad e salvando appunto in formato Unicode. In Unix si
 						   puo' ad esempio usare YUdit.
@@ -339,7 +388,31 @@ programma Gammu, secondo il seguente formato:
        			    CONSIGLIO: Usando il carattere ~ nel testo del messaggio, e specificando
 					 	   l'opzione -unicode, il testo che segue il simbolo
 						   ~ lampeggera' su alcuni telefoni (come i Nokia 33xx).
- 
+	-unread			- imposta il messaggio come NON LETTO. In alcuni telefoni (come il 
+					  6210) non si vedra' il simbolo di SMS non letto dopo aver salvato in
+					  questa modalita'. In alcuni telefoni con memoria interna per gli SMS
+					  (come il 6210), dopo aver usato questo comando sara' tale memoria a 
+					  risultare utilizzata.
+	-replacemessages ID	- ID puo' valere da 1 a 7. Quando usate questa opzione e spedite piu' SMS
+					  singoli a un destinatario con lo stesso ID, ogni SMS rimpiazzera' il
+					  prcedente con stesso ID.
+	-replacefile file	- E' possibile creare un file con questo formato:
+                                 src_unicode_char1, dest_unicode_char1, src_unicode_char2, dest_unicode_char2
+					  Specificando questo file come parametro, ogni carattere dell'SMS immesso 
+					  verra' convertito secondo quanto specificato nel file: 
+					  src_unicode_char1 diventa dest_unicode_char1, 
+					  src_unicode_char2 diventa dest_unicode_char2 e cosi' via per tutti i
+					  caratteri  definiti nel file. Nella documentazione e' presente un file di 
+					  esempio (replace.txt) che sostituisce le "a" con "1".
+	-autolen len		- come "-len len", ma il tipo di codifica (SMS o Unicode) e' impostato in base
+					  al tipo di testo inserito.
+
+      			    CONSIGLIO: Usando il carattere ~ nel testo del messaggio, e specificando
+					 	   l'opzione -unicode, il testo che segue il simbolo
+						   ~ lampeggera' su alcuni telefoni (come i Nokia 33xx).
+				    ESEMPIO: echo messagg.txt | gammu --savesms TEXT
+					 Il messaggio contenuto nel file "messagg.txt" verra' salvato nel telefono.
+
 
    gammu --savesms RINGTONE file [-folder number][-sender number][-reply]
                                     [-smscset number][-smscnumber number]
@@ -373,8 +446,11 @@ programma Gammu, secondo il seguente formato:
    gammu --savesms OPERATOR file [-folder number][-sender number][-reply]
                                     [-netcode netcode][-smscset number][-read]
                                     [-smscnumber number][-unread][-unsent]
+						[-biglogo]
 	 Salva il logo operatore come SMS (In formato Nokia - 72x14).
 	Per il significato dei parametri vedi il comando --savesms RINGTONE.
+	-biglogo		- Dimensioni 78x21 anziche 72x14, sui Nokia.
+
 
    gammu --savesms CALLER file [-folder number][-sender number][-unread]
                                   [-reply][-smscset number][-smscnumber number]
@@ -430,29 +506,19 @@ programma Gammu, secondo il seguente formato:
 	"bitmap" e il nome "name".
 	Per il significato degli altri parametri vedi il comando --savesms RINGTONE.
 
-   gammu --savesms EMSSOUND [-number number][-file file][-folder number]
-                               [-reply][-smscset number][-smscnumber number]
-                               [-sender number][-unread][-read][-unsent]
-	Salva un SMS con un suono EMS predefinito (quando si usa -number) o una suoneria data
-	dall'utente (l'opzione -file legge una suoneria da unfile RTTL o compatibile).
-	Per il significato dei parametri vedi il comando --savesms RINGTONE.
-
-   gammu --savesms EMSANIMATION [-number number][-file file][-folder number]
-                                   [-smscset number][-smscnumber number][-read]
-                                   [-sender number][-unread][-unsent][-reply]
-	Con l'opzione -number, viene salvato un SMS con l'animazione EMS predefinita.
-	Con l'opzione -file, il sucessivo fotogramma dell'animazione viene letto da file;
-	percio', bisognera' usare "-file" 4 volte, se si usano file da un fotogramma
-	ciascuno e si vuole avere un'animazione completa. Le dimensioni di ogni fotogramma
-	sono 16x16 o 8x8.
-	Per il significato dei parametri vedi il comando --savesms RINGTONE.
-
-   gammu --savesms EMSBITMAP file [-folder number][-reply][-smscset number]
-                                     [-smscnumber number][-sender number]
-                                     [-unread][-read][-unsent]
-	Salva SMS con una bitmap EMS (dimensioni 32x32, 16x16 o 8x8).
-
-
+   gammu --savesms EMS [-text "text"][-defanimation ID][-defsound ID]
+                       [-tone10 file][-tone12 file][-animation frames file1 ..]
+                       [-folder number][-reply][-smscset number][-unsent]
+                       [-smscnumber number][-read][-sender number][-unread]
+	
+	 Salva sequenza EMS. I parametri-text, -defanimation, -defsound, -tone10, -tone12, -animation possono
+	  essere ripetuti.
+       ESEMPIO: gammu --savesms EMS -text "Greetings" -defsound 1
+                -text "from Gammu" -tone10 axelf.txt -animation 2 file1.bmp
+                file2.bmp
+		   L'esempio crea una sequenza EMS con il testo "Greetings", suono di default "1", testo
+		   "from Gammu" a e suoneria "axelf.txt" e due fotogrammi di animazione letti da "file1.bmp"
+		   (primo fotogramma) e file2.bmp (secondo fotogramma). 
 
    gammu --sendsms TEXT destination [-reply][-flash][-smscset number]
                                        [-smscnumber number][-len len]
@@ -460,6 +526,8 @@ programma Gammu, secondo il seguente formato:
                                        [-disablevoice][-enableemail][-report]
                                        [-disableemail][-voidsms][-unicode]
                                        [-inputunicode]
+						   [-replacemessages ID][-replacefile file][-autolen len]
+			
 	 Legge il testo da STDIN e lo invia come SMS di testo. Per inserire il testo,dopo aver dato 
 	il comando scrivere il testo desiderato, e al termine premere CTRL+Z (in MS-DOS).
        -reply             	- imposta il Centro MEssaggi per la risposta
@@ -482,6 +550,22 @@ programma Gammu, secondo il seguente formato:
 					  o accendere il display. Il testo verra' tagliato a 1 sms.
        -unicode           	- il messaggio verra' salvato in formato UNICODE
        -inputunicode      	- il messaggio e' immesso in formato UNICODE.
+	-replacemessages ID	- ID puo' valere da 1 a 7. Quando usate questa opzione e spedite piu' SMS
+					  singoli a un destinatario con lo stesso ID, ogni SMS rimpiazzera' il
+					  prcedente con stesso ID
+	-replacefile file		- E' possibile creare un file con questo formato:
+                                src_unicode_char1, dest_unicode_char1, src_unicode_char2, dest_unicode_char2
+					  Specificando questo file come parametro, ogni carattere dell'SMS immesso verra'
+					  convertito secondo quanto specificato nel file: 
+					  src_unicode_char1 diventa dest_unicode_char1, 
+					  src_unicode_char2 diventa dest_unicode_char2 e cosi' via per tutti i caratteri
+					  definiti nel file. Nella documentazione e' presente un file di esempio (replace.txt)
+					  che sostituisce le "a" con "1".
+	-autolen len		- come "-len len", ma il tipo di codifica (SMS o Unicode) e' impostato in base
+					  al tipo di testo inserito.
+
+
+
                             CONSIGLIO: Si puo' creare un file di tipo UNICODE in Windows utilizzando
 						   WordPad e salvando appunto in formato Unicode. In Unix si
 						   puo' ad esempio usare YUdit.
@@ -493,6 +577,8 @@ programma Gammu, secondo il seguente formato:
    gammu --sendsms RINGTONE destination file [-reply][-smscset number]
                                                 [-long][-smscnumber number]
                                                 [-report][-scale]
+								[-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
+
 	 Invia suoneria al numero "destination" leggendola da "file".
 	-reply             	- imposta il Centro MEssaggi per la risposta
 	-smscset number    	- il numero del Centro Messaggi (SMSC) e' preso dal set "number". 
@@ -505,11 +591,19 @@ programma Gammu, secondo il seguente formato:
 	-scale              	- nella suoneria verranno memorizzate informazioni sulla Scala accanto
 			    	  	  a ogni nota. Questo permettera' in seguito di modificarla correttamente
 			    	  	  con il Compositore del telefono (ad esempio, nel 33xx)
+	-validity			- Imposta la validita' del messaggio
+					HOUR	=	1 ora
+					6HOURS=	6 ore
+					DAY	=	1 giorno
+					3DAYS	=	3 giorni
+					WEEK	=	1 settimana
+					MAX	=	tempo massimo
 
 
    gammu --sendsms OPERATOR destination file [-reply][-smscset number]
                                                 [-netcode netcode][-report]
                                                 [-smscnumber number]
+								[-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
 	 Invia logo operatore al numero "destination" leggendolo da "file".
 	-reply             	- imposta il Centro Messaggi per la risposta
 	-smscset number    	- il numero del Centro Messaggi (SMSC) e' preso dal set "number". 
@@ -526,6 +620,7 @@ programma Gammu, secondo il seguente formato:
 
    gammu --sendsms CALLER destination file [-reply][-smscset number]
                                               [-report][-smscnumber number]
+							    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
 	 Invia logo gruppo chiamante a numero "destination" leggendolo da "file".
 	-reply             	- imposta il Centro Messaggi per la risposta
 	-smscset number    	- il numero del Centro Messaggi (SMSC) e' preso dal set "number". 
@@ -536,6 +631,7 @@ programma Gammu, secondo il seguente formato:
    gammu --sendsms PICTURE destination file [-reply][-smscset number]
                                                [-report][-smscnumber number]
                                                [-unicode][-text text]
+								[-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
 	 Invia messaggio con disegno a numero "destination" leggendolo da "file".
 	-reply             	- imposta il Centro Messaggi per la risposta
 	-smscset number    	- il numero del Centro Messaggi (SMSC) e' preso dal set "number". 
@@ -557,6 +653,7 @@ programma Gammu, secondo il seguente formato:
    gammu --sendsms SETTINGS destination file location [-smscset number]
                                                          [-smscnumber number]
                                                          [-report][-reply]
+								[-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
 	 Invia impostazioni WAP a numero "destination" leggendolo da "file" e memorizzandolo sul telefono
 	in "location".
 	-reply             	- imposta il Centro Messaggi per la risposta
@@ -567,6 +664,7 @@ programma Gammu, secondo il seguente formato:
    gammu --sendsms CALENDAR destination file location [-smscset number]
                                                          [-smscnumber number]
                                                          [-report][-reply]
+								[-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
 	 Invia appuntamento agenda a numero "destination" leggendolo da "file" e memorizzandolo sul telefono
 	in "location".
 	-reply             	- imposta il Centro Messaggi per la risposta
@@ -577,6 +675,7 @@ programma Gammu, secondo il seguente formato:
 
    gammu --sendsms VCARD10|VCARD21 destination file SM|ME location
                         [-reply][-smscset number][-smscnumber number][-report]
+								[-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
 	 Invia nominativo in formato VCARD 1.0 (solo nome e numero) o VCARD 2.1 (tutti i dati)
 	al numero "destination" leggendolo da "file", e memorizzandolo sul telefono nella
 	posizione "location" della memoria SIM (SM) o del telefono (ME).
@@ -588,7 +687,8 @@ programma Gammu, secondo il seguente formato:
 
    gammu --sendsms PROFILE destination name bitmap ringtone
                         [-reply][-smscset number][-smscnumber number][-report]
-       Invia un profilo nokia leggendo la suoneria "ringtone" (RTTL), il messaggio grafico
+  								[-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
+     Invia un profilo nokia leggendo la suoneria "ringtone" (RTTL), il messaggio grafico
 	"bitmap" e il nome "name".
 	-reply             	- imposta il Centro Messaggi per la risposta
 	-smscset number    	- il numero del Centro Messaggi (SMSC) e' preso dal set "number". 
@@ -596,37 +696,11 @@ programma Gammu, secondo il seguente formato:
 	-smscnumber number 	- Imposta Centro Messaggi (SMSC)
 
 
-   gammu --sendsms EMSSOUND destination[-number number][-file file][-reply]
-                                          [-smscset number][-smscnumber number]
-                                          [-report]
-	Invia un SMS con un suono EMS predefinito (quando si usa -number) o una suoneria data
-	dall'utente (l'opzione -file legge una suoneria da unfile RTTL o compatibile).
-	-reply             	- imposta il Centro Messaggi per la risposta
-	-smscset number    	- il numero del Centro Messaggi (SMSC) e' preso dal set "number". 
-	-report			- Richiede ricevuta di ritorno.
-	-smscnumber number 	- Imposta Centro Messaggi (SMSC)
-
-
-   gammu --sendsms EMSANIMATION destination [-number number][-file file]
-                                               [-smscset number][-reply]
-                                               [-smscnumber number][-report]
-	Con l'opzione -number, viene inviato un SMS con l'animazione EMS predefinita.
-	Con l'opzione -file, il sucessivo fotogramma dell'animazione viene letto da file;
-	percio', bisognera' usare "-file" 4 volte, se si usano file da un fotogramma
-	ciascuno e si vuole avere un'animazione completa. Le dimensioni di ogni fotogramma
-	sono 16x16 o 8x8.
-	-reply             	- imposta il Centro Messaggi per la risposta
-	-smscset number    	- il numero del Centro Messaggi (SMSC) e' preso dal set "number". 
-	-report			- Richiede ricevuta di ritorno.
-	-smscnumber number 	- Imposta Centro Messaggi (SMSC)
-
-   gammu --sendsms EMSBITMAP destination file [-reply][-smscset number]
-                                                 [-smscnumber number][-report]
-	 Invia SMS con una bitmap EMS (dimensioni 32x32, 16x16 o 8x8).
-	-reply             	- imposta il Centro Messaggi per la risposta
-	-smscset number    	- il numero del Centro Messaggi (SMSC) e' preso dal set "number". 
-	-report			- Richiede ricevuta di ritorno.
-	-smscnumber number 	- Imposta Centro Messaggi (SMSC)
+   gammu --sendsms EMS destination [-text "text"][-defanimation ID][-defsound
+                                   ID][-tone10 file][-tone12 file][-reply]
+                                   [-animation frames file1 ...][-report]
+                                   [-smscset number][-smscnumber number]
+                                   [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
 
    gammu --nokiagetoperatorname
 	I telefoni 6110.c hanno posto per un nome di rete GSM (ovviamente, tramite il "flashing"
@@ -635,12 +709,6 @@ programma Gammu, secondo il seguente formato:
 
    gammu --nokiasetoperatorname networkcode name
 	Imposta il netcode "networkcode" per l'operatore "name"
-
-   gammu --nokiatests
-	Effettua i test per i telefoni Nokia DCT3
-	Nota: Il test della EEPROM puo' mostrare un errore, se il tuo telefono
-	ha la EEPROM in flash (come nei modelli 82xx/7110/62xx/33xx). Lo stesso "Clock test"
-	mostrera' un errore se il telefono non ha la batteria tampone per l'orologio (3xxx).
 
    gammu --nokianetmonitor test
 	Legge l'output del Netmonitor o imposta il Netmonitor sui telefoni DCT3.
@@ -655,12 +723,38 @@ programma Gammu, secondo il seguente formato:
 	CONSIGLIO: Per maggiori informazioni relative a questa opzioni, visita il sito
 	  	     http://marcin-wiacek.topnet.pl  e leggi quanto riguarda il NetMonitor.
 
+   gammu --nokiasetvibralevel level
+       Imposta intensita' della vibrazione in percentuale.
+
+   gammu --nokiagetvoicerecord location
+	 Legge registrazione vocale da "location" e la salva in file WAV. Il file e'
+	 codificato con il codec GSM 6.10 (disponibile ad esempio per Win32). Il nome del
+	 file e' lo stesso della registrazione.
+
+   gammu --nokiasecuritycode
+       Legge il codice o lo reimposta a "12345"
+
+   gammu --nokiatests
+	Effettua i test per i telefoni Nokia DCT3
+	Nota: Il test della EEPROM puo' mostrare un errore, se il tuo telefono
+	ha la EEPROM in flash (come nei modelli 82xx/7110/62xx/33xx). Lo stesso "Clock test"
+	mostrera' un errore se il telefono non ha la batteria tampone per l'orologio (3xxx).
+
    gammu --nokiasetphonemenus
 	Abilita tutti(?) i possibili menu nei telefoni Nokia DCTœ:
 	 1. ALS (Alternative Line Service) option menu
 	 2. vibra menu for 3210
 	 3. abilita caratteristiche del 3315 sui 3310 versione 5.45 o successive
 	 4. aggiunge due giochi (React e Logic) ai 3210 ver. 5.31 o superiori.
+       5. WellMate menu per 6150
+       6. NetMonitor
+
+       Peri i DCT4:
+
+       1. ALS (Alternative Line Service) option menu
+       2. Bluetooth, WAP bookmarks and settings menu,...(6310i)
+       3. GPRS Always Online
+       ...
 
    gammu --backup file
 	Effettua il backup dei dati del telefono su un file. E' possibile fare
@@ -687,6 +781,23 @@ programma Gammu, secondo il seguente formato:
 			il ripristino e' indipendente dalle Impostazioni Internazionali del
 			Sistema Operativo, e non viene effettuata nessuna conversione da
 			Unicode a ASCII e viceversa.
+	CONSIGLIO:	Si può usare un qualunque editor che supporti le "regular expressions" per
+			modificare il file di backup, ad esempio TextPad 4.2.2 (http://www.textpad.com/),
+			con "regular expressions" basate sullo standard POSIX P1003.2. Esempi:
+            * Per rimuovere info sulle "voice tags":
+              FROM: ^Entry\([0-9][0-9]\)VoiceTag = \(.*\)\n
+              TO:
+            * per modificare tutti i nmueri che iniziano per +3620, +3630, +3660, +3670, +3620
+              Find: Type = NumberGeneral\nEntry\([0-9][0-9]\)Text =
+                    "\+36\(20\|30\|60\|70\)
+              Repl: Type = NumberMobile\nEntry\1Text = "\+3620
+            * to change phone numbers type to mobile for numbers starting from
+              +3620, +3630,... and removing the corresponding TextUnicode
+              line
+              F: Type = NumberGeneral\nEntry\([0-9][0-9]\)Text =
+                 "\+36\(20\|30\|60\|70\)\([^\"]*\)"\nEntry\([0-9][0-9]\)TextUnicode = \([^\n]*\)\n
+              R: Type = NumberMobile\nEntry\1Text = "\+36\2\3"\n
+
 
    gammu --backupsms file
 		Effettua il backup su file di testo di tutti gli SMS.
@@ -698,6 +809,8 @@ programma Gammu, secondo il seguente formato:
 
    gammu --restoresms file
 		Ripristina gli SMS salvati con l'opzione --backupsms.
+
+   gammu --addnew file
 
    gammu --decodesniff MBUS2|IRDA file [phonemodel]
 		Questa opzione e' disponibile solo se il programma e' stato compilato

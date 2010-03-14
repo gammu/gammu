@@ -2846,7 +2846,11 @@ GSM_Phone_Functions ATGENPhone = {
     	NOTSUPPORTED,		/*  	ClearFMStations       	*/
 	NOTSUPPORTED,		/*  	SetIncomingUSSD		*/
 	NOTSUPPORTED,		/* 	DeleteUserRingtones	*/
-	NOTSUPPORTED		/* 	ShowStartInfo		*/
+	NOTSUPPORTED,		/* 	ShowStartInfo		*/
+	NOTSUPPORTED,		/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,		/* 	GetFile			*/
+	NOTSUPPORTED,		/* 	AddFile			*/
+	NOTSUPPORTED 		/* 	GetFreeFileMemory 	*/
 };
 
 #endif

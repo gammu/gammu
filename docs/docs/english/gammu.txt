@@ -1,4 +1,4 @@
-Gammu README version 05.02.2003
+Gammu README version 27.04.2003
 -------------------------------
 Q. How to use it ?
 
@@ -71,6 +71,8 @@ A. First of all, here are described all possible parameters for this software.
 
    gammu --listnetworks
        Show names/codes of GSM networks known for Gammu
+
+   gammu --getfilesystem
 
    gammu --getfmstation start [stop]
        Show info about FM stations in phone
@@ -409,21 +411,48 @@ A. First of all, here are described all possible parameters for this software.
        Read ringtone (RTTL) format and bitmap (Picture Image size) and name
        and save as Nokia profile.
 
-   gammu --savesms EMS [-text "text"][-defanimation ID][-defsound ID]
+   gammu --savesms EMS [-folder number][-reply][-smscset number][-unsent]
+                       [-smscnumber number][-read][-sender number][-unread]
+                       [-text "text"][-defanimation ID][-defsound ID]
                        [-tone10 file][-tone12 file][-animation frames file1 ..]
                        [-variablebitmap file][-fixedbitmap file]
-                       [-folder number][-reply][-smscset number][-unsent]
-                       [-smscnumber number][-read][-sender number][-unread]
-                       [-unicodefiletext file]
+                       [-unicodefiletext file][-tone10long file]
+                       [-tone12long file][-toneSElong file][-toneSE file]
+                       [-protected number][-variablebitmaplong file]
 
-       Saves EMS sequence. Parameters -text (it adds text), -defanimation
-       (adds number of default animation, which depend on phone), -defsound
-       (adds number of default sound, which depend on phone), -tone10
-       (adds IMelody version 1.0 read from RTTL or other compatible file),
-       -tone12 (adds IMelody version 1.2 read from RTTL or other compatible
-       file), -animation (it adds "frames" frames read from file1, file2,
-       etc.), -variablebitmap (bitmap saved in one sms in any size),
-       -fixedbitmap (16x16 or 32x32) can be used few times.
+       Saves EMS sequence. All parameters after "-unread" (like "-defsound")
+       can be used few times.
+
+       -text               - adds text
+       -unicodefiletext    - adds text from Unicode file
+       -defanimation       - adds default animation with ID specified by user.
+                             ID for different phones are different.
+       -animation          - adds "frames" frames read from file1, file2, etc.
+       -defsound           - adds default sound with ID specified by user.
+                             ID for different phones are different.
+       -tone10             - adds IMelody version 1.0 read from RTTL or other 
+                             compatible file
+       -tone10long         - IMelody version 1.0 saved in one of few SMS with
+                             UPI. Phones compatible with UPI (like SonyEricsson
+                             phones) will read such ringtone as one
+       -tone12             - adds IMelody version 1.2 read from RTTL or other
+                             compatible file
+       -tone12long         - IMelody version 1.0 saved in one of few SMS with
+                             UPI. Phones compatible with UPI (like SonyEricsson
+                             phones) will read such ringtone as one
+       -toneSE             - adds IMelody in "short" form supported by
+                             SonyEricsson phones
+       -tone10long         - SonyEricsson IMelody saved in one or few SMS with
+                             UPI
+       -variablebitmap     - bitmap in any size saved in one SMS
+       -variablebitmaplong - bitmap with maximal size 96x128 saved in one or
+                             few sms
+       -fixedbitmap        - bitmap 16x16 or 32x32
+       -protected          - all ringtones and bitmaps after this parameter
+                             (excluding default ringtones and logos) will be
+                             "protected" (in phones compatible with ODI like
+                             SonyEricsson products it won't be possible to
+                             forward them from phone menu)
 
        Example: gammu --savesms EMS -text "Greetings" -defsound 1
                 -text "from Gammu" -tone10 axelf.txt -animation 2 file1.bmp
@@ -432,6 +461,11 @@ A. First of all, here are described all possible parameters for this software.
        will create EMS sequence with text "Greetings" and default sound 1
        and text "from Gammu" and ringtone axelf.txt and 2 frame animation read
        from (1'st frame) file1.bmp and (2'nd frame) file2.bmp
+
+       Example: gammu --savesms EMS -protected 2 -variablebitmaplong ala.bmp
+                -toneSElong axelf.txt -toneSE ring.txt
+
+       ala.bmp and axelf.txt will be "protected"
 
    gammu --sendsms TEXT destination [-reply][-flash][-smscset number]
                                     [-smscnumber number][-len len]
@@ -480,7 +514,10 @@ A. First of all, here are described all possible parameters for this software.
                                    [-smscset number][-smscnumber number]
                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
                                    [-variablebitmap file][-fixedbitmap file]
-                                   [-unicodefiletext file]
+                                   [-unicodefiletext file][-toneSElong file]
+                                   [-tone10long file][-tone12long file]
+                                   [-protected number][-variablebitmaplong
+                                   file][-toneSE file]
 
    gammu --nokiagetoperatorname
        6110.c phones have place for name for one GSM network (of course,
@@ -488,19 +525,6 @@ A. First of all, here are described all possible parameters for this software.
        flasher ;-)). You can get this name using this option.
 
    gammu --nokiasetoperatorname networkcode name
-
-   gammu --nokianetmonitor test
-       Takes output or set netmonitor for Nokia DCT3 phones.
-       TIP: For more info about this option, please visit
-            http://www.mwiacek.com and read netmonitor manual.
-       TIP: test 243 enables all tests (after using command
-            "gammu --nokianetmonitor 243" in some phones like 6210 or 9210
-            have to reboot them to see netmonitor menu)
-
-   gammu --nokianetmonitor36
-       Reset counters from netmonitor test 36 in Nokia DCT3 phones.
-       TIP: For more info about this option, please visit
-            http://www.mwiacek.com and read netmonitor manual.
 
    gammu --nokiasetvibralevel level
        Set vibra power to "level" (given in percent)
@@ -537,6 +561,19 @@ A. First of all, here are described all possible parameters for this software.
        2. Bluetooth, WAP bookmarks and settings menu,...(6310i)
        3. GPRS Always Online
        ...
+
+   gammu --nokianetmonitor test
+       Takes output or set netmonitor for Nokia DCT3 phones.
+       TIP: For more info about this option, please visit
+            http://www.mwiacek.com and read netmonitor manual.
+       TIP: test 243 enables all tests (after using command
+            "gammu --nokianetmonitor 243" in some phones like 6210 or 9210
+            have to reboot them to see netmonitor menu)
+
+   gammu --nokianetmonitor36
+       Reset counters from netmonitor test 36 in Nokia DCT3 phones.
+       TIP: For more info about this option, please visit
+            http://www.mwiacek.com and read netmonitor manual.
 
    gammu --siemensnetmonitor
 

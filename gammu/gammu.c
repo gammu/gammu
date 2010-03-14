@@ -1409,7 +1409,7 @@ static void DeleteWAPBookmark(int argc, char *argv[])
 static void GetBitmap(int argc, char *argv[])
 {
 	GSM_MultiBitmap 	MultiBitmap;
-	int			location;
+	int			location=0;
 	GSM_AllRingtonesInfo 	Info;
 
 	if (mystrncasecmp(argv[2],"STARTUP",0)) {
@@ -1693,7 +1693,8 @@ static void SendSaveSMS(int argc, char *argv[])
 #ifdef GSM_ENABLE_BACKUP
 	GSM_Backup			Backup;
 #endif
-	int				i,j,z,FramesNum=0;
+	int				i,j,z,FramesNum = 0;
+	int				Protected = 0;
 	GSM_SMSFolders			folders;
 	GSM_MultiSMSMessage		sms;
 	GSM_Ringtone			ringtone[MAX_MULTI_SMS];
@@ -2009,6 +2010,10 @@ static void SendSaveSMS(int argc, char *argv[])
 				nextlong=4;
 				continue;
 			}
+			if (mystrncasecmp(argv[i],"-protected",0)) {
+				nextlong=19;
+				continue;
+			}
 			if (mystrncasecmp(argv[i],"-reply",0)) {
 				ReplyViaSameSMSC=true;
 				continue;
@@ -2114,26 +2119,91 @@ static void SendSaveSMS(int argc, char *argv[])
 				}
 				if (mystrncasecmp(argv[i],"-tone10",0)) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound10;
+					if (Protected != 0) {
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						Protected --;
+					}
+					nextlong = 14;
+					break;
+				}
+				if (mystrncasecmp(argv[i],"-tone10long",0)) {
+					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound10Long;
+					if (Protected != 0) {
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						Protected --;
+					}
 					nextlong = 14;
 					break;
 				}
 				if (mystrncasecmp(argv[i],"-tone12",0)) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound12;
+					if (Protected != 0) {
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						Protected --;
+					}
+					nextlong = 14;
+					break;
+				}
+				if (mystrncasecmp(argv[i],"-tone12long",0)) {
+					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound12Long;
+					if (Protected != 0) {
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						Protected --;
+					}
+					nextlong = 14;
+					break;
+				}
+				if (mystrncasecmp(argv[i],"-toneSE",0)) {
+					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSonyEricssonSound;
+					if (Protected != 0) {
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						Protected --;
+					}
+					nextlong = 14;
+					break;
+				}
+				if (mystrncasecmp(argv[i],"-toneSElong",0)) {
+					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSonyEricssonSoundLong;
+					if (Protected != 0) {
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						Protected --;
+					}
 					nextlong = 14;
 					break;
 				}
 				if (mystrncasecmp(argv[i],"-fixedbitmap",0)) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSFixedBitmap;
+					if (Protected != 0) {
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						Protected --;
+					}
 					nextlong = 15;
 					break;
 				}
 				if (mystrncasecmp(argv[i],"-variablebitmap",0)) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSVariableBitmap;
+					if (Protected != 0) {
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						Protected --;
+					}
+					nextlong = 15;
+					break;
+				}
+				if (mystrncasecmp(argv[i],"-variablebitmaplong",0)) {
+					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSVariableBitmapLong;
+					if (Protected != 0) {
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						Protected --;
+					}
 					nextlong = 15;
 					break;
 				}
 				if (mystrncasecmp(argv[i],"-animation",0)) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID  = SMS_EMSAnimation;
+					if (Protected != 0) {
+						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
+						Protected --;
+					}
 					bitmap[SMSInfo.EntriesNum].Number 	= 0;
 					nextlong = 16;
 					break;
@@ -2313,6 +2383,10 @@ static void SendSaveSMS(int argc, char *argv[])
 			SMSInfo.EntriesNum++;
 			nextlong = 0;
 			break;
+		case 19:/* Number of protected items */
+			Protected 	= atoi(argv[i]);
+			nextlong 	= 0;
+			break;
 		}
 	}
 	if (nextlong!=0) {
@@ -2488,11 +2562,13 @@ static void Backup(int argc, char *argv[])
 		strcpy(Backup.IMEI, s.Phone.Data.IMEI);
 		Print_Error(error);
 	}
+	printmsg("\n");
 	if (Info.PhonePhonebook) {
+		printmsg("Checking phone phonebook\n");
 		MemStatus.MemoryType = GMT_ME;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
 		if (error==GE_NONE && MemStatus.Used != 0) {
-			if (answer_yes("Backup phone phonebook")) {
+			if (answer_yes("   Backup phone phonebook")) {
 				Pbk.MemoryType  = GMT_ME;
 				i		= 1;
 				used 		= 0;
@@ -2506,13 +2582,13 @@ static void Backup(int argc, char *argv[])
 						        if (Backup.PhonePhonebook[used] == NULL) Print_Error(GE_MOREMEMORY);
 							Backup.PhonePhonebook[used+1] = NULL;
 						} else {
-							printmsg("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
+							printmsg("   Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
 							exit(-1);
 						}
 						*Backup.PhonePhonebook[used]=Pbk;
 						used++;
 					}
-					printmsgerr("%cReading: %i percent",13,used*100/MemStatus.Used);
+					printmsgerr("%c   Reading: %i percent",13,used*100/MemStatus.Used);
 					i++;
 					if (bshutdown) {
 						GSM_Terminate();
@@ -2524,10 +2600,11 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.SIMPhonebook) {
-		MemStatus.MemoryType 	= GMT_SM;
+		printmsg("Checking SIM phonebook\n");
+		MemStatus.MemoryType = GMT_SM;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
 		if (error==GE_NONE && MemStatus.Used != 0) {
-			if (answer_yes("Backup SIM phonebook")) {
+			if (answer_yes("   Backup SIM phonebook")) {
 				Pbk.MemoryType 	= GMT_SM;
 				i		= 1;
 				used 		= 0;
@@ -2541,13 +2618,13 @@ static void Backup(int argc, char *argv[])
 						        if (Backup.SIMPhonebook[used] == NULL) Print_Error(GE_MOREMEMORY);
 							Backup.SIMPhonebook[used + 1] = NULL;
 						} else {
-							printmsg("Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
+							printmsg("   Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
 							exit(-1);
 						}
 						*Backup.SIMPhonebook[used]=Pbk;
 						used++;
 					}
-					printmsgerr("%cReading: %i percent",13,used*100/MemStatus.Used);
+					printmsgerr("%c   Reading: %i percent",13,used*100/MemStatus.Used);
 					i++;
 					if (bshutdown) {
 						GSM_Terminate();
@@ -2559,18 +2636,19 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.Calendar) {
+		printmsg("Checking calendar\n");
 		error=Phone->GetNextCalendarNote(&s,&Note,true);
 		if (error==GE_NONE) {
-			if (answer_yes("Backup calendar notes")) {
+			if (answer_yes("   Backup calendar notes")) {
 				used = 0;
-				printmsgerr("Reading : ");
+				printmsgerr("   Reading : ");
 				while (error == GE_NONE) {
 					if (used < GSM_BACKUP_MAX_CALENDAR) {
 						Backup.Calendar[used] = malloc(sizeof(GSM_CalendarEntry));
 					        if (Backup.Calendar[used] == NULL) Print_Error(GE_MOREMEMORY);
 						Backup.Calendar[used+1] = NULL;
 					} else {
-						printmsg("Increase GSM_BACKUP_MAX_CALENDAR\n");
+						printmsg("   Increase GSM_BACKUP_MAX_CALENDAR\n");
 						exit(-1);
 					}
 					*Backup.Calendar[used]=Note;
@@ -2587,12 +2665,13 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.ToDo) {
+		printmsg("Checking ToDo\n");
 		ToDo.Location = 1;
 		error=Phone->GetToDo(&s,&ToDo,true);
 		if (error == GE_NONE || error == GE_EMPTY) {
-			if (answer_yes("Backup ToDo")) {
+			if (answer_yes("   Backup ToDo")) {
 				used = 0;
-				printmsgerr("Reading : ");
+				printmsgerr("   Reading : ");
 				while (error == GE_NONE || error == GE_EMPTY) {
 					if (error != GE_EMPTY) {
 						printmsgerr("*");
@@ -2601,7 +2680,7 @@ static void Backup(int argc, char *argv[])
 							if (Backup.ToDo[used] == NULL) Print_Error(GE_MOREMEMORY);
 							Backup.ToDo[used+1] = NULL;
 						} else {
-							printmsg("Increase GSM_BACKUP_MAX_TODO\n");
+							printmsg("   Increase GSM_BACKUP_MAX_TODO\n");
 							exit(-1);
 						}
 						*Backup.ToDo[used]=ToDo;
@@ -2619,12 +2698,13 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.CallerLogos) {
+		printmsg("Checking caller logos\n");
 		Bitmap.Type 	= GSM_CallerLogo;
 		Bitmap.Location = 1;
 		error=Phone->GetBitmap(&s,&Bitmap);
 		if (error == GE_NONE) {
-			if (answer_yes("Backup caller groups and logos")) {
-				printmsgerr("Reading : ");
+			if (answer_yes("   Backup caller groups and logos")) {
+				printmsgerr("   Reading : ");
 				error = GE_NONE;
 				used  = 0;
 				while (error == GE_NONE) {
@@ -2633,7 +2713,7 @@ static void Backup(int argc, char *argv[])
 					        if (Backup.CallerLogos[used] == NULL) Print_Error(GE_MOREMEMORY);
 						Backup.CallerLogos[used+1] = NULL;
 					} else {
-						printmsg("Increase GSM_BACKUP_MAX_CALLER\n");
+						printmsg("   Increase GSM_BACKUP_MAX_CALLER\n");
 						exit(-1);
 					}
 					*Backup.CallerLogos[used] = Bitmap;
@@ -2651,9 +2731,10 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.SMSC) {
-		if (answer_yes("Backup SMS profiles")) {
+		printmsg("Checking SMS profiles\n");
+		if (answer_yes("   Backup SMS profiles")) {
 			used = 0;
-			printmsgerr("Reading: ");
+			printmsgerr("   Reading: ");
 			while (true)
 			{
 				SMSC.Location = used + 1;
@@ -2664,7 +2745,7 @@ static void Backup(int argc, char *argv[])
 				        if (Backup.SMSC[used] == NULL) Print_Error(GE_MOREMEMORY);
 					Backup.SMSC[used + 1] = NULL;
 				} else {
-					printmsg("Increase GSM_BACKUP_MAX_SMSC\n");
+					printmsg("   Increase GSM_BACKUP_MAX_SMSC\n");
 					exit(-1);
 				}
 				*Backup.SMSC[used]=SMSC;
@@ -2675,10 +2756,11 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.StartupLogo) {
+		printmsg("Checking startup text\n");
 		Bitmap.Type = GSM_WelcomeNoteText;
 		error = Phone->GetBitmap(&s,&Bitmap);
 		if (error == GE_NONE) {
-			if (answer_yes("Backup startup logo/text")) {
+			if (answer_yes("   Backup startup logo/text")) {
 				Backup.StartupLogo = malloc(sizeof(GSM_Bitmap));
 			        if (Backup.StartupLogo == NULL) Print_Error(GE_MOREMEMORY);
 				*Backup.StartupLogo = Bitmap;
@@ -2691,11 +2773,12 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.OperatorLogo) {
+		printmsg("Checking operator logo\n");
 		Bitmap.Type = GSM_OperatorLogo;
 		error=Phone->GetBitmap(&s,&Bitmap);
 		if (error == GE_NONE) {
 			if (strcmp(Bitmap.NetworkCode,"000 00")!=0) {
-				if (answer_yes("Backup operator logo")) {
+				if (answer_yes("   Backup operator logo")) {
 					Backup.OperatorLogo = malloc(sizeof(GSM_Bitmap));
 				        if (Backup.OperatorLogo == NULL) Print_Error(GE_MOREMEMORY);
 					*Backup.OperatorLogo = Bitmap;
@@ -2704,19 +2787,20 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.WAPBookmark) {
+		printmsg("Checking WAP bookmarks\n");
 		Bookmark.Location = 1;
 		error=Phone->GetWAPBookmark(&s,&Bookmark);
 		if (error==GE_NONE) {
-			if (answer_yes("Backup WAP bookmarks")) {
+			if (answer_yes("   Backup WAP bookmarks")) {
 				used = 0;
-				printmsgerr("Reading : ");
+				printmsgerr("   Reading : ");
 				while (error == GE_NONE) {
 					if (used < GSM_BACKUP_MAX_WAPBOOKMARK) {
 						Backup.WAPBookmark[used] = malloc(sizeof(GSM_WAPBookmark));
 					        if (Backup.WAPBookmark[used] == NULL) Print_Error(GE_MOREMEMORY);
 						Backup.WAPBookmark[used+1] = NULL;
 					} else {
-						printmsg("Increase GSM_BACKUP_MAX_WAPBOOKMARK\n");
+						printmsg("   Increase GSM_BACKUP_MAX_WAPBOOKMARK\n");
 						exit(-1);
 					}
 					*Backup.WAPBookmark[used]=Bookmark;
@@ -2734,19 +2818,20 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.WAPSettings) {
+		printmsg("Checking WAP settings\n");
 		Settings.Location = 1;
 		error=Phone->GetWAPSettings(&s,&Settings);
 		if (error==GE_NONE) {
-			if (answer_yes("Backup WAP settings")) {
+			if (answer_yes("   Backup WAP settings")) {
 				used = 0;
-				printmsgerr("Reading : ");
+				printmsgerr("   Reading : ");
 				while (error == GE_NONE) {
 					if (used < GSM_BACKUP_MAX_WAPSETTINGS) {
 						Backup.WAPSettings[used] = malloc(sizeof(GSM_MultiWAPSettings));
 					        if (Backup.WAPSettings[used] == NULL) Print_Error(GE_MOREMEMORY);
 						Backup.WAPSettings[used+1] = NULL;
 					} else {
-						printmsg("Increase GSM_BACKUP_MAX_WAPSETTINGS\n");
+						printmsg("   Increase GSM_BACKUP_MAX_WAPSETTINGS\n");
 						exit(-1);
 					}
 					*Backup.WAPSettings[used]=Settings;
@@ -2764,14 +2849,15 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.Ringtone) {
+		printmsg("Checking user ringtones\n");
 		Ringtone.Location 	= 1;
 		Ringtone.Format		= 0;
 		error=Phone->GetRingtone(&s,&Ringtone,false);
 		if (error==GE_EMPTY || error == GE_NONE) {
-			if (answer_yes("Backup user ringtones")) {
+			if (answer_yes("   Backup user ringtones")) {
 				used 	= 0;
 				i	= 1;
-				printmsgerr("Reading : ");
+				printmsgerr("   Reading : ");
 				while (error == GE_NONE || error == GE_EMPTY) {
 					if (error == GE_NONE) {
 						if (used < GSM_BACKUP_MAX_RINGTONES) {
@@ -2779,7 +2865,7 @@ static void Backup(int argc, char *argv[])
 						        if (Backup.Ringtone[used] == NULL) Print_Error(GE_MOREMEMORY);
 							Backup.Ringtone[used+1] = NULL;
 						} else {
-							printmsg("Increase GSM_BACKUP_MAX_RINGTONES\n");
+							printmsg("   Increase GSM_BACKUP_MAX_RINGTONES\n");
 							exit(-1);
 						}
 						*Backup.Ringtone[used]=Ringtone;
@@ -2801,12 +2887,13 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.Profiles) {
+		printmsg("Checking phone profiles\n");
 		Profile.Location = 1;
 		error = Phone->GetProfile(&s,&Profile);
 	        if (error == GE_NONE) {
-			if (answer_yes("Backup phone profiles")) {
+			if (answer_yes("   Backup phone profiles")) {
 				used = 0;
-				printmsgerr("Reading: ");
+				printmsgerr("   Reading: ");
 				while (true)
 				{
 					Profile.Location = used + 1;
@@ -2814,10 +2901,10 @@ static void Backup(int argc, char *argv[])
 					if (error != GE_NONE) break;
 					if (used < GSM_BACKUP_MAX_PROFILES) {
 						Backup.Profiles[used] = malloc(sizeof(GSM_Profile));
-							if (Backup.Profiles[used] == NULL) Print_Error(GE_MOREMEMORY);
+						if (Backup.Profiles[used] == NULL) Print_Error(GE_MOREMEMORY);
 						Backup.Profiles[used + 1] = NULL;
 					} else {
-						printmsg("Increase GSM_BACKUP_MAX_PROFILES\n");
+						printmsg("   Increase GSM_BACKUP_MAX_PROFILES\n");
 						exit(-1);
 					}
 					*Backup.Profiles[used]=Profile;
@@ -2829,10 +2916,11 @@ static void Backup(int argc, char *argv[])
 		}
 	}
  	if (Info.FMStation) {
+		printmsg("Checking FM stations\n");
  		FMStation.Location = 1;
  		error = Phone->GetFMStation(&s,&FMStation);
  	        if (error == GE_NONE || error == GE_EMPTY) {
- 			if (answer_yes("Backup phone FM stations")) {
+ 			if (answer_yes("   Backup phone FM stations")) {
  				used	= 0;
  				i	= 1;				
  				printmsgerr("Reading: ");
@@ -2845,7 +2933,7 @@ static void Backup(int argc, char *argv[])
 						if (Backup.FMStation[used] == NULL) Print_Error(GE_MOREMEMORY);
  						Backup.FMStation[used + 1] = NULL;
  					} else {
- 						printmsg("Increase GSM_BACKUP_MAX_FMSTATIONS\n");
+ 						printmsg("   Increase GSM_BACKUP_MAX_FMSTATIONS\n");
  						exit(-1);
  					}
  					*Backup.FMStation[used]=FMStation;
@@ -3896,58 +3984,24 @@ static void CopyRingtone(int argc, char *argv[])
 	Print_Error(error);
 }
 
-struct keys_table_position {
-	char 	whatchar;
-	int 	whatcode;
-};
-
-static struct keys_table_position Keys[] = {
-	{'m',GSM_KEY_MENU},		{'M',GSM_KEY_MENU},
-	{'n',GSM_KEY_NAMES},		{'N',GSM_KEY_NAMES},
-	{'p',GSM_KEY_POWER},		{'P',GSM_KEY_POWER},
-	{'u',GSM_KEY_UP},		{'U',GSM_KEY_UP},
-	{'d',GSM_KEY_DOWN},		{'D',GSM_KEY_DOWN},
-	{'+',GSM_KEY_INCREASEVOLUME},	{'-',GSM_KEY_DECREASEVOLUME},
-	{'1',GSM_KEY_1},		{'2',GSM_KEY_2},	{'3',GSM_KEY_3},
-	{'4',GSM_KEY_4},		{'5',GSM_KEY_5},	{'6',GSM_KEY_6},
-	{'7',GSM_KEY_7},		{'8',GSM_KEY_8},	{'9',GSM_KEY_9},
-	{'*',GSM_KEY_ASTERISK},		{'0',GSM_KEY_0},	{'#',GSM_KEY_HASH},
-	{'g',GSM_KEY_GREEN},		{'G',GSM_KEY_GREEN},
-	{'r',GSM_KEY_RED},		{'R',GSM_KEY_RED},
-	{' ',0}
-};
-
 static void PressKeySequence(int argc, char *argv[])
 {
-	int 		i,j;
-	unsigned char 	key;
-	GSM_KeyCode	KeyCode;
+	int 		i,Length;
+	GSM_KeyCode	KeyCode[500];
+
+	error = MakeKeySequence(argv[2], KeyCode, &Length);
+	if (error == GE_NOTSUPPORTED) {
+		printmsg("Unknown key/function name: \"%c\"\n",argv[2][Length]);
+		exit(-1);
+	}
 
 	GSM_Init(true);
 
-	for (i=0;i<(int)(strlen(argv[2]));i++) {
-		key = argv[2][i];
-		if (key == 'w' || key == 'W') {
-		} else {
-			KeyCode = GSM_KEY_NONE;
-			j = 0;
-			while (Keys[j].whatchar!=' ') {
-		        	if (Keys[j].whatchar==key) {    
-					KeyCode=Keys[j].whatcode;
-					break;
-				}
-				j++;
-			}
-			if (KeyCode == GSM_KEY_NONE) {
-				printmsg("Unknown key/function name: \"%c\"\n",key);
-				GSM_Terminate();
-				exit(-1);
-			}
-			error=Phone->PressKey(&s, KeyCode, true);
-			Print_Error(error);			
-			error=Phone->PressKey(&s, KeyCode, false);
-			Print_Error(error);			
-		}
+	for (i=0;i<Length;i++) {
+		error=Phone->PressKey(&s, KeyCode[i], true);
+		Print_Error(error);
+		error=Phone->PressKey(&s, KeyCode[i], false);
+		Print_Error(error);
 	}
 
 	GSM_Terminate();
@@ -3960,11 +4014,11 @@ static void GetAllCategories(int argc, char *argv[])
 	int			j, count;
 
 	if (mystrncasecmp(argv[2],"TODO",0)) {
-        	Category.Type = Category_ToDo;
-        	Status.Type = Category_ToDo;
+        	Category.Type 	= Category_ToDo;
+        	Status.Type 	= Category_ToDo;
 	} else if (mystrncasecmp(argv[2],"PHONEBOOK",0)) {
-	        Category.Type = Category_Phonebook;
-        	Status.Type = Category_Phonebook;
+	        Category.Type 	= Category_Phonebook;
+        	Status.Type 	= Category_Phonebook;
 	} else {
 		printmsg("What type of categories do you want to get (\"%s\") ?\n",argv[2]);
 		exit(-1);
@@ -4443,7 +4497,7 @@ static void GetDisplayStatus(int argc, char *argv[])
 		case GSM_CallActive	: printmsg("Call active\n");	break;
 		case GSM_UnreadSMS	: printmsg("Unread SMS\n");	break;
 		case GSM_VoiceCall	: printmsg("Voice call\n");	break;
-		case GSM_FaxCall	: printmsg("Fax call\n");		break;
+		case GSM_FaxCall	: printmsg("Fax call\n");	break;
 		case GSM_DataCall	: printmsg("Data call\n");	break;
 		case GSM_KeypadLocked	: printmsg("Keypad locked\n");	break;
 		case GSM_SMSMemoryFull	: printmsg("SMS memory full\n");
@@ -4545,6 +4599,58 @@ static void GetFMStation(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void GetFileSystem(int argc, char *argv[])
+{
+	bool 			Start = true;
+	GSM_FileFolderInfo 	Files[500];
+	int			FilesNum = 0, Level = 1, j, Free;
+
+	GSM_Init(true);
+
+	while (1) {
+		error = Phone->GetNextFileFolder(&s,&Files[FilesNum],Start);
+		if (error == GE_EMPTY) break;
+	    	Print_Error(error);
+
+		printf("%03i.",FilesNum);
+//		printf(" %03i %03i ",Files[FilesNum].ID,Files[FilesNum].ParentID);
+		if (FilesNum != 0) {
+			if (Files[FilesNum].ParentID != Files[FilesNum-1].ParentID) {
+				if (Files[FilesNum].ParentID == Files[FilesNum-1].ID) {
+					Level++;
+				} else {	
+					Level--;
+				}
+			}
+		}
+		if (Level != 1) {
+			j = 1;
+			while (j != Level-1) {
+				printf(" |   ");
+				j++;
+			};
+			printf(" |-- ");
+		}
+		if (Files[FilesNum].Folder) printf("Folder ");
+		printf("\"%s\"",DecodeUnicodeString(Files[FilesNum].Name));
+		if (!Files[FilesNum].Folder) {
+			printf(" (size %i)",Files[FilesNum].Used);
+		}
+		printf("\n");
+
+		Start = false;
+		FilesNum++;
+	}
+
+	error = Phone->GetFreeFileMemory(&s,&Free);
+	if (error != GE_NOTSUPPORTED && error != GE_NOTIMPLEMENTED) {
+	    	Print_Error(error);
+		printmsg("\nFree memory: %i\n",Free);
+	}
+
+	GSM_Terminate();
+}
+
 static void usage(void)
 {
 	printmsg("[Gammu version %s built %s %s]\n\n",VERSION,__TIME__,__DATE__);
@@ -4561,6 +4667,7 @@ static void usage(void)
 	printf("gammu --getsecuritystatus\n");
 	printf("gammu --entersecuritycode PIN|PUK|PIN2|PUK2 code\n");
 	printf("gammu --listnetworks\n");
+	printf("gammu --getfilesystem\n");
  	printf("gammu --getfmstation start [stop]\n\n");
 
 	printf("gammu --getdatetime\n");
@@ -4662,11 +4769,13 @@ static void usage(void)
 	printf("                                             [-smscnumber number][-read]\n");
 	printf("                                             [-sender number][-unread]\n");
 	printf("gammu --savesms EMS [-text \"text\"][-defanimation ID][-defsound ID]\n");
-	printf("                    [-tone10 file][-tone12 file][-animation frames file1 ...]\n");
+	printf("                    [-animation frames file1 ...][-unicodefiletext file]\n");
 	printf("                    [-folder number][-reply][-smscset number][-unsent]\n");
 	printf("                    [-smscnumber number][-read][-sender number][-unread]\n");
+	printf("                    [-tone10long file][-tone12long file][-toneSElong file]\n");
+	printf("                    [-tone10 file][-tone12 file][-toneSE file]\n");
+	printf("                    [-protected number][-variablebitmaplong file]\n");
 	printf("                    [-variablebitmap file][-fixedbitmap file]\n");
-	printf("                    [-unicodefiletext file]\n\n");
 
 	printf("gammu --sendsms TEXT destination [-reply][-flash][-smscset number]\n");
 	printf("                                 [-smscnumber number][-len len]\n");
@@ -4718,8 +4827,10 @@ static void usage(void)
 	printf("                                [-smscset number][-smscnumber number]\n");
 	printf("                                [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\n");
 	printf("                                [-variablebitmap file][-fixedbitmap file]\n");
-	printf("                                [-unicodefiletext file]\n");
-
+	printf("                                [-unicodefiletext file][-toneSElong file]\n");
+	printf("                                [-tone10long file][-tone12long file]\n");
+	printf("                                [-protected number][-variablebitmaplong file]\n");
+	printf("                                [-toneSE file]\n");
 
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 	printf("\n");
@@ -4727,23 +4838,25 @@ static void usage(void)
 #ifdef GSM_ENABLE_NOKIA6110
 	printf("gammu --nokiagetoperatorname\n");
 	printf("gammu --nokiasetoperatorname [networkcode name]\n");
-#endif
-#ifdef GSM_ENABLE_NOKIA_DCT3
-	printf("gammu --nokianetmonitor test\n");
-	printf("gammu --nokianetmonitor36\n");
+	printf("gammu --nokiadisplayoutput\n");
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
 	printf("gammu --nokiasetvibralevel level\n");
 	printf("gammu --nokiagetvoicerecord location\n");
-	printf("gammu --nokiagetfilesystem\n");
-//	printf("gammu --nokiagetfiles location1 location2...\n");
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 	printf("gammu --nokiasecuritycode\n");
 	printf("gammu --nokiatests\n");
 	printf("gammu --nokiasetphonemenus\n");
 #endif
+#ifdef GSM_ENABLE_NOKIA_DCT3
+	printf("\ngammu --nokianetmonitor test\n");
+	printf("gammu --nokianetmonitor36\n");
+#endif
 #ifdef GSM_ENABLE_AT
+#  ifndef GSM_ENABLE_NOKIA_DCT3
+	printf("\n");
+#  endif
 	printf("gammu --siemensnetmonitor\n");
 #endif	
 #ifdef GSM_ENABLE_BACKUP
@@ -4775,6 +4888,7 @@ static GSM_Parameters Parameters[] = {
 #ifdef GSM_ENABLE_NOKIA6110
 	{"--nokiagetoperatorname", 	0, 0, DCT3GetOperatorName	},
 	{"--nokiasetoperatorname", 	0, 2, DCT3SetOperatorName	},
+	{"--nokiadisplayoutput", 	0, 0, DCT3DisplayOutput		},
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT3
 	{"--nokianetmonitor",		1, 1, DCT3netmonitor		},
@@ -4783,14 +4897,13 @@ static GSM_Parameters Parameters[] = {
 #ifdef GSM_ENABLE_NOKIA_DCT4
 	{"--nokiasetvibralevel",	1, 1, DCT4SetVibraLevel		},
 	{"--nokiagetvoicerecord",	1, 1, DCT4GetVoiceRecord	},
-	{"--nokiagetfilesystem",	0, 0, DCT4GetFileSystem		},
-	{"--nokiagetfiles",		1,10, DCT4GetFiles		},
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 	{"--nokiasecuritycode",		0, 0, NokiaSecurityCode		},
 	{"--nokiatests",		0, 0, NokiaTests		},
 	{"--nokiasetphonemenus",	0, 0, NokiaSetPhoneMenus	},
 #endif
+	{"--getfilesystem",		0, 0, GetFileSystem		},
 	{"--playringtone",		1, 1, PlayRingtone 		},
 	{"--setautonetworklogin",	0, 0, SetAutoNetworkLogin	},
 	{"--getdisplaystatus",		0, 0, GetDisplayStatus		},

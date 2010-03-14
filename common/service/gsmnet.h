@@ -39,6 +39,13 @@ typedef struct {
 void NOKIA_EncodeNetworkCode (unsigned char* buffer, unsigned char* output);
 void NOKIA_DecodeNetworkCode (unsigned char* buffer, unsigned char* output);
 
+typedef struct {
+    /* All these should be -1 when unknown */
+    int 	SignalStrength; /* Signal strength in dBm 	*/
+    int 	SignalPercent;  /* Signal strength in percent 	*/
+    int 	BitErrorRate;   /* Bit error rate in percent 	*/
+} GSM_SignalQuality;
+
 #endif	/* __gsm_networks_h */
 
 /* How should editor hadle tabs in this file? Add editor commands here.

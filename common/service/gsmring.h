@@ -112,7 +112,7 @@ typedef struct {
 } GSM_RingCommand;
 
 typedef struct {
-	unsigned char		NrCommands;
+	int			NrCommands;
 	GSM_RingCommand		Commands[MAX_RINGTONE_NOTES];
 	bool			AllNotesScale;
 } GSM_NoteRingtone;
@@ -144,7 +144,7 @@ typedef struct {
 
 typedef struct {
 	int			Number;
-	GSM_RingtoneInfo	Ringtone[50];
+	GSM_RingtoneInfo	Ringtone[100];
 } GSM_AllRingtonesInfo;
 
 GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone);

@@ -5,7 +5,7 @@
     <VERSION value="BCB.06.00"/>
     <PROJECT value="Output\gammu.exe"/>
     <OBJFILES value="Output\gammu.obj Output\sniff.obj Output\dct3.obj Output\dct4.obj 
-      Output\s_files.obj Output\smsdcore.obj Output\cfg.obj Output\coding.obj 
+      Output\s_files.obj Output\smsdcore.obj Output\cfg.obj Output\coding.obj Output\gsmmisc.obj 
       Output\misc.obj Output\at.obj Output\fbus2.obj Output\alcabus.obj Output\dsiemens.obj
       Output\fbusirda.obj Output\mbus2.obj Output\gsmback.obj Output\gsmcal.obj 
       Output\gsmlogo.obj Output\gsmnet.obj Output\gsmpbk.obj Output\gsmring.obj 
@@ -89,6 +89,7 @@
       <FILE FILENAME="..\..\common\service\gsmring.c" FORMNAME="" UNITNAME="gsmring" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\gsmsms.c" FORMNAME="" UNITNAME="gsmsms" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\gsmwap.c" FORMNAME="" UNITNAME="gsmwap" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\service\gsmmisc.c" FORMNAME="" UNITNAME="gsmmisc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\gsmcomon.c" FORMNAME="" UNITNAME="gsmcomon" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\gsmstate.c" FORMNAME="" UNITNAME="gsmstate" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\n6110.c" FORMNAME="" UNITNAME="n6110" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>

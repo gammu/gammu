@@ -52,6 +52,83 @@ static void CheckDCT4()
 
 /* ------------------- functions ------------------------------------------- */
 
+static DCT4_Feature DCT4Features[] = {
+	{DCT4_ALS,		 	 "Alternate Line Service (ALS)", {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_A52,		 	 "Ciphering alghoritm A52", 	 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_CSP,		 	 "Customer Service Profile",	 {{0,"off"},{1,"on"},{0,""}}},
+	{DCT4_DISPLAY_PHONE_NAME,	 "Display both number and name for incoming calls",{{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_USE_PREF_SIM_NET,		 "Use SIM preffered network list",{{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_WAP_PUSH,			 "WAP push",			 {{1,"on"},{0,"off"},{0,""}}},
+
+	{DCT4_GPRS_PCCH,	 	 "PCCH support for GPRS",	 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_ALWAYS_ONLINE,     	 "GPRS Always Online",		 {{0,"on (Context)"},{1,"off (Attach)"},{0,""}}},///??
+	{DCT4_GEA1,			 "GEA1 support indication",	 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_EOTD,			 "EOTD support",		 {{1,"on"},{0,"off"},{0,""}}},
+
+	{DCT4_GAMES_WAP_DOWNLOAD,	 "Games WAP download",		 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_GAMES_SCORE_SEND,		 "Games WAP score send",	 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_GAMES_URL_CHECK,		 "Games URL check",		 {{1,"on"},{0,"off"},{0,""}}},
+
+	{DCT4_BLUETOOTH_MENU,	 	 "Bluetooth menu",		 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_WAP_BOOKMARKS_MENU,	 "Bookmarks menu in Services", 	 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_WAP_GOTO_MENU,	 	 "GoTo menu in Services",	 {{0,"on"},{1,"off"},{0,""}}},
+	{DCT4_WAP_SETTINGS_MENU,	 "Profiles menu in Services",	 {{0,"on"},{1,"off"},{0,""}}},
+	{DCT4_SERVICES_GAMES_APP_GALLERY,"Services menu in Games/Apps/Gallery",{{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_JAVA_GAMES_MENU,		 "Java games menu in Games",	 {{1,"on"},{0,"off"},{0,""}}},
+
+//	{DCT4_TEST,"",{{0,"0"},{1,"1"}}},
+
+	{0,			 	 "",				 {{0,""}}}
+};
+
+static DCT4_Phone_Features DCT4PhoneFeatures[] = {
+	{"3510",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},
+			 {DCT4_GAMES_WAP_DOWNLOAD,7},{DCT4_GAMES_SCORE_SEND,8},
+			 {DCT4_GAMES_URL_CHECK,9},{DCT4_GPRS_PCCH,13},
+			 {DCT4_GEA1,15},{DCT4_ALWAYS_ONLINE,18},{0,0}}},
+	{"3510i",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,4},{DCT4_GPRS_PCCH,9},
+ 			 {DCT4_DISPLAY_PHONE_NAME,14},{DCT4_WAP_GOTO_MENU,15},
+			 {DCT4_WAP_SETTINGS_MENU,16},{DCT4_SERVICES_GAMES_APP_GALLERY,19},{0,0}}},
+	{"5100",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
+			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
+			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
+			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
+			 {0,0}}},
+	{"6100",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
+			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
+			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
+			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
+			 {0,0}}},
+	{"6310",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
+			 {DCT4_GAMES_SCORE_SEND,8},{DCT4_GAMES_URL_CHECK,9},{DCT4_BLUETOOTH_MENU,10},
+			 {DCT4_GPRS_PCCH,13},{DCT4_GEA1,15},{DCT4_ALWAYS_ONLINE,18},{0,0}}},
+	{"6310i",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
+			 {DCT4_GAMES_SCORE_SEND,8},{DCT4_GAMES_URL_CHECK,9},
+			 {DCT4_BLUETOOTH_MENU,10},{DCT4_USE_PREF_SIM_NET,11},
+			 {DCT4_GPRS_PCCH,13},{DCT4_GEA1,15},{DCT4_EOTD,16},
+			 {DCT4_ALWAYS_ONLINE,17},{DCT4_JAVA_GAMES_MENU,18},
+      			 {DCT4_WAP_BOOKMARKS_MENU,20},{DCT4_WAP_SETTINGS_MENU,21},
+			 //Services menu visible ???? = 23
+			 {DCT4_WAP_PUSH,28},{DCT4_WAP_GOTO_MENU,29},{0,0}}},
+	{"6510",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
+			 {DCT4_GAMES_SCORE_SEND,8},{DCT4_GAMES_URL_CHECK,9},
+			 {DCT4_GPRS_PCCH,13},{DCT4_GEA1,15},{DCT4_ALWAYS_ONLINE,18},{0,0}}},
+	{"6610",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
+			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
+			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
+			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
+			 {0,0}}},
+	{"7210",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
+			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
+			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
+			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
+			 {0,0}}},
+	{"8310",	{{DCT4_ALS,1},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
+			 {DCT4_GAMES_SCORE_SEND,8},{DCT4_GAMES_URL_CHECK,9},{DCT4_GPRS_PCCH,13},
+			 {DCT4_ALWAYS_ONLINE,18},{0,0}}},
+	{"",		{{0,0}}}
+};
+
 static GSM_Error DCT4_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Setting done OK\n");
@@ -60,7 +137,7 @@ static GSM_Error DCT4_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 void DCT4SetPhoneMenus(int argc, char *argv[])
 {
-	int 		current = 10;
+	int 		current = 10,i=0,j,z;
 	unsigned char 	reqSet[200] = {
 		N7110_FRAME_HEADER,0x04,0x00,0x01,0x47,0x48,0x02,
 		0x00};		/* Number of changed features */
@@ -69,120 +146,30 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
-	printf("ALS : enabling menu\n");
-	reqSet[9]++;			/* Number of features */
-	reqSet[current++] = 1; 		/* Feature number */
-	reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-
- 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6310")  ||
- 	    !strcmp(s.Phone.Data.ModelInfo->model,"6310i") ||
- 	    !strcmp(s.Phone.Data.ModelInfo->model,"6510")  ||
- 	    !strcmp(s.Phone.Data.ModelInfo->model,"3510")) {
-		printf("Enabling ciphering algorithm A52\n");
-		reqSet[9]++;			/* Number of features */
-		reqSet[current++] = 3; 		/* Feature number */
-		reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
+	while (DCT4PhoneFeatures[i].Model[0] != 0x00) {
+		if (!strcmp(DCT4PhoneFeatures[i].Model,s.Phone.Data.ModelInfo->model)) {
+			j = 0;
+			while (DCT4PhoneFeatures[i].Features[j].Name != 0x00) {
+				z = 0;
+				while (DCT4Features[z].Name != 0x00) {
+					if (DCT4Features[z].Name == DCT4PhoneFeatures[i].Features[j].Name) {
+						printf("%s : %s\n",DCT4Features[z].Text,DCT4Features[z].Values[0].Text);
+						reqSet[9]++;							/* Number of features */
+						reqSet[current++] = DCT4PhoneFeatures[i].Features[j].Number; 	/* Feature number */
+						reqSet[current++] = DCT4Features[z].Values[0].Value;		/* Value */
+						break;
+					}
+					z++;
+				}
+				j++;
+			}
+		}
+		i++;
 	}
 
-	printf("Enabling games WAP download\n");
-	reqSet[9]++;			/* Number of features */
-	reqSet[current++] = 7; 		/* Feature number */
-	reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-
-	printf("Enabling games WAP score send\n");
-	reqSet[9]++;			/* Number of features */
-	reqSet[current++] = 8; 		/* Feature number */
-	reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-
-	printf("Enabling games WAP URL check\n");
-	reqSet[9]++;			/* Number of features */
-	reqSet[current++] = 9;	 	/* Feature number */
-	reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-
-	/* Impossible, but my data says, that 6510 has Bluetooth at least
-	 * in firmware. For checking
-	 */
- 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6310") ||
- 	    !strcmp(s.Phone.Data.ModelInfo->model,"6310i") ||
- 	    !strcmp(s.Phone.Data.ModelInfo->model,"6510")) {
-		printf("Enabling Bluetooth menu\n");
-		reqSet[9]++;			/* Number of features */
-		reqSet[current++] = 10; 	/* Feature number */
-		reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-	}
-
-	printf("Enabling GPRS PCCCH support\n");
-	reqSet[9]++;			/* Number of features */
-	reqSet[current++] = 13; 	/* Feature number */
-	reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-
-//	printf("Enabling GPRS automatic attach\n");
-//	reqSet[9]++;			/* Number of features */
-//	reqSet[current++] = 14; 	/* Feature number */
-//	reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-
- 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6310")  ||
- 	    !strcmp(s.Phone.Data.ModelInfo->model,"6310i") ||
- 	    !strcmp(s.Phone.Data.ModelInfo->model,"6510")  ||
- 	    !strcmp(s.Phone.Data.ModelInfo->model,"3510")) {
-		printf("Enabling GEA1 support indication\n");
-		reqSet[9]++;			/* Number of features */
-		reqSet[current++] = 15; 	/* Feature number */
-		reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-	}
-
- 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6310i")) {
-		printf("Enabling EOTD support\n");
-		reqSet[9]++;			/* Number of features */
-		reqSet[current++] = 16; 	/* Feature number */
-		reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-	}
-
- 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6310") ||
- 	    !strcmp(s.Phone.Data.ModelInfo->model,"8310") ||
- 	    !strcmp(s.Phone.Data.ModelInfo->model,"6510") ||
- 	    !strcmp(s.Phone.Data.ModelInfo->model,"3510")) {
-		printf("Enabling GPRS always online\n");
-		reqSet[9]++;			/* Number of features */
-		reqSet[current++] = 18; 	/* Feature number */
-		reqSet[current++] = 0x00; 	/* 0x00 = Context, 0x01 = Attach */
-	}
-
- 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6310i")) {
-		printf("Enabling GPRS always online\n");
-		reqSet[9]++;			/* Number of features */
-		reqSet[current++] = 17; 	/* Feature number */
-		reqSet[current++] = 0x00; 	/* 0x00 = Context, 0x01 = Attach */
-
-		printf("Enabling Java games in Games menu\n");
-		reqSet[9]++;			/* Number of features */
-		reqSet[current++] = 18; 	/* Feature number */
-		reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-
-		printf("Enabling bookmarks menu in Services\n");
-		reqSet[9]++;			/* Number of features */
-		reqSet[current++] = 20; 	/* Feature number */
-		reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-
-		printf("Enabling Services setting menu\n");
-		reqSet[9]++;			/* Number of features */
-		reqSet[current++] = 21; 	/* Feature number */
-		reqSet[current++] = 0x00; 	/* 0x01 = hidden, 0x00 = visible */
-
-		printf("Enabling Service menu item (?)\n");
-		reqSet[9]++;			/* Number of features */
-		reqSet[current++] = 23; 	/* Feature number */
-		reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-
-		printf("Enabling WAP push on/off\n");
-		reqSet[9]++;			/* Number of features */
-		reqSet[current++] = 28; 	/* Feature number */
-		reqSet[current++] = 0x01; 	/* 0x01 = ON, 0x00 = OFF */
-
-		printf("Enabling GoTo in Services menu\n");
-		reqSet[9]++;			/* Number of features */
-		reqSet[current++] = 29; 	/* Feature number */
-		reqSet[current++] = 0x00; 	/* 0x01 = hidden, 0x00 = visible */
+	if (current == 10) {
+		printf("Sorry, but configuration matrix for this model is not added yet. Please report\n");
+		return;
 	}
 
 	reqSet[current++] = 0x00;
@@ -566,195 +553,6 @@ void DCT4Info(int argc, char *argv[])
 	Print_Error(error);
 }
 
-DCT4_FileFolderInfo *CurrentFile;
-
-GSM_Error DCT4_ReplyGetFileInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{
-	unsigned int i;
-
-	switch (msg.Buffer[3]) {
-	case 0x15:
-		smprintf(s,"File or folder details received\n");
-		CopyUnicodeString(CurrentFile->Name,msg.Buffer+10);
-		if (!strncmp(DecodeUnicodeString(CurrentFile->Name),"GMSTemp",7)) return GE_EMPTY;
-		CurrentFile->Folder = false;
-		i = msg.Buffer[8]*256+msg.Buffer[9];
-		dprintf("%02x %02x %02x %02x\n",msg.Buffer[i],msg.Buffer[i+1],msg.Buffer[i+2],msg.Buffer[i+3]);
-		if (msg.Buffer[i+3] == 0x01 || CurrentFile->Locations[0] != 0x00)
-		{
-			CurrentFile->Folder = true;
-		}
-		return GE_NONE;	
-	case 0x23:
-		smprintf(s,"File or folder free bytes received: ");
-		CurrentFile->Free = msg.Buffer[6]*256*256*256+
-				    msg.Buffer[7]*256*256+
-				    msg.Buffer[8]*256+
-				    msg.Buffer[9];
-		smprintf(s,"%i\n",CurrentFile->Free);
-		return GE_NONE;
-	case 0x2F:
-		smprintf(s,"File or folder used bytes received\n");
-		CurrentFile->Used = msg.Buffer[6]*256*256*256+
-				    msg.Buffer[7]*256*256+
-				    msg.Buffer[8]*256+
-				    msg.Buffer[9];
-		return GE_NONE;
-	case 0x33:
-		for (i=0;i<msg.Buffer[9];i++) {
-			CurrentFile->Locations[i] = msg.Buffer[13+i*4];
-			dprintf("%i ",CurrentFile->Locations[i]);
-		}
-		dprintf("\n");
-		CurrentFile->Locations[i] = 0x00;
-		return GE_NONE;		
-	}
-	return GE_UNKNOWNRESPONSE;
-}
-
-GSM_Error DCT4_GetFileInfo(DCT4_FileFolderInfo Files[100], int *FilesNum, DCT4_FileFolderInfo Parent)
-{
-	int 		i;
-	GSM_Error	error;
-	unsigned char 	req[10] = {
-		N7110_FRAME_HEADER,
-		0x14,           /* 0x14 - info, 0x22 - free, 0x2E - used, 0x32 - sublocations */
-		0x01,		/* 0x00 for sublocations reverse sorting, 0x01 for free */
-		0x00, 0x00, 0x01, 0x00,
-		0x01};		/* Folder or file number */
-
-	i=0;
-	while (Parent.Locations[i] != 0x00) {
-		CurrentFile 		= &Files[*FilesNum];
-		CurrentFile->Level 	= Parent.Level+1;
-		fprintf(stderr,"*");
-		req[9] 			= Parent.Locations[i];
-
-		req[3] = 0x32;
-		req[4] = 0x00;
-		dprintf("Getting subfolders for filesystem\n");
-		error=GSM_WaitFor (&s, req, 10, 0x6D, 4, ID_User5);
-		if (error != GE_NONE) return error;
-
-		req[3] = 0x14;
-		req[4] = 0x01;
-		dprintf("Getting info for file in filesystem\n");
-		error=GSM_WaitFor (&s, req, 10, 0x6D, 4, ID_User5);
-		i++;
-		if (error == GE_EMPTY) continue;
-		if (error != GE_NONE) return error;
-
-		req[3] = 0x2E;
-		dprintf("Getting used memory for file in filesystem\n");
-		error=GSM_WaitFor (&s, req, 10, 0x6D, 4, ID_User5);
-		if (error != GE_NONE) return error;
-
-		if (Parent.Level == 1) {
-			req[3] = 0x22;
-			dprintf("Getting free memory for file in filesystem\n");
-			error=GSM_WaitFor (&s, req, 10, 0x6D, 4, ID_User5);
-			if (error != GE_NONE) return error;
-		}
-
-		(*FilesNum)++;
-
-		if (CurrentFile->Locations[0] != 0x00) {
-			dprintf("Getting subfolders\n");
-			error=DCT4_GetFileInfo(Files, FilesNum, Files[(*FilesNum)-1]);
-			if (error != GE_NONE) return error;
-		}
-	}
-	return GE_NONE;
-}
-
-GSM_Error DCT4_GetAllFilesInfo(DCT4_FileFolderInfo *Files, int *FilesNum)
-{
-	DCT4_FileFolderInfo 	StartFile;
-	GSM_Error		error;
-
-	*FilesNum		= 0x00;
-	StartFile.Locations[0]  = 0x01;
-	StartFile.Locations[1]  = 0x00;
-	StartFile.Level		= 0x01;
-
-	if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_NOFILESYSTEM)) return GE_NOTSUPPORTED;
-
-	fprintf(stderr,"Reading : ");
-	error=DCT4_GetFileInfo(Files, FilesNum, StartFile);
-	fprintf(stderr,"\n");
-	return error;
-}
-
-void DCT4GetFileSystem(int argc, char *argv[])
-{
-	DCT4_FileFolderInfo 	Files[500];
-	int			FilesNum,i,j;
-
-	GSM_Init(true);
-
-        CheckDCT4();
-
-	s.User.UserReplyFunctions=UserReplyFunctions4;
-
-	error=DCT4_GetAllFilesInfo(Files,&FilesNum);
-	Print_Error(error);
-	printf("\n");
-
-	for (i=0;i<FilesNum;i++) {
-		printf("%03i.",i);
-		if (Files[i].Level != 1) {
-			j = 1;
-			while (j!=Files[i].Level-1) {
-				printf(" |   ");
-				j++;
-			};
-			printf(" |-- ");
-		}
-		if (Files[i].Folder) printf("Folder ");
-		printf("\"%s\"",DecodeUnicodeString(Files[i].Name));
-		if (i==0) {
-			printf(" (free %i, used %i)",Files[i].Free,Files[i].Used);
-		} else {
-			if (Files[i].Folder) {
-				printf(" (used %i)",Files[i].Used);
-			} else {
-				printf(" (size %i)",Files[i].Used);
-			}
-		}
-		printf("\n");
-	}
-
-	GSM_Terminate();
-}
-
-void DCT4GetFiles(int argc, char *argv[])
-{
-//	DCT4_FileFolderInfo 	Files[500];
-	//int			FilesNum;
-	unsigned char 	req[18] = {
-		N7110_FRAME_HEADER, 0x0E, 0x00, 0x00, 0x00, 0x01, 0x00,
-		0x12,		/* Folder or file number */
-		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-	unsigned char 	req1[10] = {
-		N7110_FRAME_HEADER, 0x06, 0x00, 0x00, 0x00, 0x01, 0x00,
-		0x12};		/* Folder or file number */
-	GSM_Init(true);
-
-        CheckDCT4();
-
-	s.User.UserReplyFunctions=UserReplyFunctions4;
-
-//	error=DCT4_GetAllFilesInfo(Files,&FilesNum);
-//	Print_Error(error);
-//	printf("\n");
-
-	error=GSM_WaitFor (&s, req1, 10, 0x6D, 4, ID_User5);
-
-	error=GSM_WaitFor (&s, req, 10, 0x6D, 4, ID_User5);
-
-	GSM_Terminate();
-}
-
 static GSM_Reply_Function UserReplyFunctions4[] = {
 
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x05,ID_User2	},
@@ -772,12 +570,6 @@ static GSM_Reply_Function UserReplyFunctions4[] = {
 
 	{DCT4_ReplyGetSimlock,		"\x53",0x03,0x0D,ID_User6	},
 	{DCT4_ReplyGetSimlock,		"\x53",0x03,0x13,ID_User6	},
-
-	{DCT4_ReplyGetFileInfo,		"\x6D",0x03,0x15,ID_User5	},
-	{DCT4_ReplyGetFileInfo,		"\x6D",0x03,0x23,ID_User5	},
-	{DCT4_ReplyGetFileInfo,		"\x6D",0x03,0x2F,ID_User5	},
-	{DCT4_ReplyGetFileInfo,		"\x6D",0x03,0x33,ID_User5	},
-	{NONEFUNCTION,			"\x6D",0x00,0x00,ID_User5	},
 
 	{DCT4_ReplyGetBTInfo,		"\xD7",0x03,0x0A,ID_User6	},
 

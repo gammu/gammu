@@ -334,7 +334,11 @@ GSM_Phone_Functions N9210Phone = {
         NOTSUPPORTED,           /*      ClearFMStations         */
         NOTIMPLEMENTED,         /*      SetIncomingUSSD         */
 	NOTSUPPORTED,		/* 	DeleteUserRingtones	*/
-	NOTSUPPORTED		/* 	ShowStartInfo		*/
+	NOTSUPPORTED,		/* 	ShowStartInfo		*/
+	NOTSUPPORTED,		/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,		/*	GetFile			*/
+	NOTSUPPORTED,		/* 	AddFile			*/
+	NOTSUPPORTED 		/* 	GetFreeFileMemory 	*/
 };
 
 #endif

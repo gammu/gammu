@@ -110,6 +110,10 @@ SOURCE=..\..\..\common\service\gsmback.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\service\gsmmisc.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\common\service\gsmcal.c
 # End Source File
 # Begin Source File
@@ -267,6 +271,10 @@ SOURCE=..\..\..\common\service\gsmprof.h
 # Begin Source File
 
 SOURCE=..\..\..\common\service\gsmring.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\service\gsmmisc.h
 # End Source File
 # Begin Source File
 
