@@ -12,8 +12,8 @@
       Output\gsmsms.obj Output\gsmwap.obj Output\gsmcomon.obj 
       Output\gsmstate.obj Output\n6110.obj Output\n6510.obj Output\n7110.obj 
       Output\n9210.obj Output\dct3func.obj Output\nauto.obj Output\nfunc.obj 
-      Output\alcatel.obj Output\pfunc.obj Output\atgen.obj Output\irda.obj 
-      Output\unixblue.obj Output\win32.obj"/>
+      Output\alcatel.obj Output\pfunc.obj Output\atgen.obj Output\siemens.obj 
+      Output\irda.obj Output\unixblue.obj Output\win32.obj"/>
     <RESFILES value=""/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -26,7 +26,7 @@
       ibsmp.bpi bdertl.bpi vcldbx.bpi qrpt.bpi teeui.bpi teedb.bpi tee.bpi 
       dss.bpi teeqr.bpi ibxpress.bpi dsnap.bpi vclie.bpi inetdb.bpi inet.bpi 
       nmfast.bpi webdsnap.bpi bcbie.bpi dclocx.bpi bcb2kaxserver.bpi"/>
-    <PATHCPP value=".;..;..;..\depend;..\depend;..\smsd;..\smsd;..\..\common\misc;..\..\common\misc;..\..\common\misc;..\..\common\protocol\at;..\..\common\protocol\nokia;..\..\common\protocol\alcatel;..\..\common\protocol\nokia;..\..\common\protocol\nokia;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common;..\..\common;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone;..\..\common\phone\at;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common\device\serial"/>
+    <PATHCPP value=".;..;..;..\depend;..\depend;..\smsd;..\smsd;..\..\common\misc;..\..\common\misc;..\..\common\misc;..\..\common\protocol\at;..\..\common\protocol\nokia;..\..\common\protocol\alcatel;..\..\common\protocol\nokia;..\..\common\protocol\nokia;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common;..\..\common;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone;..\..\common\phone\at;..\..\common\phone\at;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common\device\serial"/>
     <PATHPAS value=".;"/>
     <PATHRC value=".;"/>
     <PATHASM value=".;"/>
@@ -100,6 +100,7 @@
       <FILE FILENAME="..\..\common\phone\alcatel\alcatel.c" FORMNAME="" UNITNAME="alcatel" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\pfunc.c" FORMNAME="" UNITNAME="pfunc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\at\atgen.c" FORMNAME="" UNITNAME="atgen" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\at\siemens.c" FORMNAME="" UNITNAME="siemens" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\device\irda\irda.c" FORMNAME="" UNITNAME="irda" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\device\bluetoth\unixblue.c" FORMNAME="" UNITNAME="unixblue" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\device\serial\win32.c" FORMNAME="" UNITNAME="win32" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>

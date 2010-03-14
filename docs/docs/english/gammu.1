@@ -1,4 +1,4 @@
-.TH "Gammu" "1" "24.11.2002" "Marcin Wiacek and others" "Cellurar phones utilities"
+.TH "Gammu" "1" "05.02.2003" "Marcin Wiacek and others" "Cellurar phones utilities"
 .SH "NAME"
 .LP 
 Gammu \- Does some neat things with your cellular phone or modem
@@ -117,6 +117,9 @@ Allow to enter security code from PC
 .TP
 \fB\-\-listnetworks\fR
 Show names/codes of GSM networks known for Gammu
+.TP
+\fB\-\-getfmstation start [stop]\fR
+Show info about FM stations in phone
 .TP 
 \fB\-\-getdatetime\fR
 Get date and time from phone
@@ -235,14 +238,16 @@ Cancel incoming call
 .TP
 \fB\-\-gettodo start [stop]\fR
 .TP 
-\fB\-\-getcalendarnote start [stop]\fR
-Get calendar note(s) from phone. In Nokia 3310 and 3330 they're named
+\fB\-\-getcalendarnotes\fR
+Get calendar notes from phone. In Nokia 3310 and 3330 they're named
 "Reminders" and have some limitations (they depends on phone firmware version).
-Locations are numerated from 1.
-.TP 
-\fB\-\-deletecalendarnote start [stop]\fR
-Delete calendar notes (or "Reminders") from phone. Locations are numerated
-from 1.
+
+.TP
+\fB\-\-getcategory TODO|PHONEBOOK start [stop]\fR
+
+.TP
+\fB\-\-getallcategies TODO|PHONEBOOK\fR
+
 .TP 
 \fB\-\-getwapbookmark start [stop]\fR
 Get WAP bookmark(s) from phone. Locations are numerated from 1.
@@ -425,18 +430,12 @@ all numbers, text and name) format as SMS
 Read ringtone (RTTL) format and bitmap (Picture Image size) and name and save
 as Nokia profile.
 .TP 
-\fB\-\-savesms EMSSOUND [\-number number] [\-file file] [\-folder number] [\-reply] [\-smscset number] [\-smscnumber number] [\-sender number] [\-unread] [\-read] [\-unsent]\fR
-Save SMS with predefined EMS sound (when use \fB\-number\fR) or ringtone given
-by user (\fB\-file\fR option reads ringtone from RTTL or compatible file)
-.TP 
-\fB\-\-savesms EMSANIMATION [\-number number] [\-file file] [\-folder number] [\-smscset number] [\-smscnumber number] [\-read] [\-sender number] [\-unread] [\-unsent] [\-reply]\fR
-When use \fB\-number\fR, there is saved SMS with predefined EMS animation
-number. When use option \fB\-file\fR, next frame of animation is read from
-file (so, you have to use \fB\-file\fR 4 times, when use 1 frame files and
-want have full animation). Size of each frame is 16x16 or 8x8.
-.TP 
-\fB\-\-savesms EMSBITMAP file [\-folder number] [\-reply] [\-smscset number] [\-smscnumber number] [\-sender number] [\-unread] [\-read] [\-unsent]\fR
-Saves SMS with EMS bitmap (32x32 or 16x16 or 8x8)
+\fB\-\-savesms EMS [\-text "text"][\-defanimation ID][\-defsound ID][\-tone10 file][\-tone12 file][\-animation frames file1 ..][\-folder number][\-reply][\-smscset number][\-unsent][\-smscnumber number][\-read][\-sender number][\-unread]
+Saves EMS sequence. Parameters \-text (it adds text), \-defanimation (adds number of default animation, which depend on phone), \-defsound (adds number of default sound, which depend on phone), \-tone10 (adds IMelody version 1.0 read from RTTL or other compatible file), \-tone12 (adds IMelody version 1.2 read from RTTL or other compatiblefile), \-animation (it adds "frames" frames read from file1, file2, etc.) can be used few times.
+
+\fIExample:\fR gammu \-\-savesms EMS \-text "Greetings" \-defsound 1 \-text "from Gammu" \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
+
+will create EMS sequence with text "Greetings" and default sound 1 and text "from Gammu" and ringtone axelf.txt and 2 frame animation read from (1'st frame) file1.bmp and (2'nd frame) file2.bmp
 .TP 
 \fB\-\-sendsms TEXT destination [\-reply] [\-flash] [\-smscset number] [\-smscnumber number] [\-len len] [\-autolen len] [\-enablefax] [\-disablefax] [\-enablevoice] [\-disablevoice] [\-enableemail] [\-report] [\-disableemail] [\-voidsms] [\-unicode] [\-inputunicode] [-replacemessages ID] [-replacefile file] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
@@ -458,11 +457,7 @@ Saves SMS with EMS bitmap (32x32 or 16x16 or 8x8)
 .TP 
 \fB\-\-sendsms PROFILE destination name bitmap ringtone [\-reply] [\-smscset number] [\-smscnumber number] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
-\fB\-\-sendsms EMSSOUND destination[\-number number] [\-file file] [\-reply] [\-smscset number] [\-smscnumber number] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
-.TP 
-\fB\-\-sendsms EMSANIMATION destination [\-number number] [\-file file] [\-smscset number] [\-reply] [\-smscnumber number] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
-.TP 
-\fB\-\-sendsms EMSBITMAP destination file [\-reply] [\-smscset number] [\-smscnumber number] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
+\fB\-\-sendsms EMS destination [\-text "text"][\-defanimation ID][\-defsound ID][\-tone10 file][\-tone12 file][\-animation frames file1 ..][\-folder number][\-reply][\-smscset number][\-unsent][\-smscnumber number][\-read][\-sender number][\-unread]
 .TP 
 \fB\-\-nokiagetoperatorname\fR
 6110.c phones have place for name for one GSM network (of course, with flashing it's
@@ -602,6 +597,10 @@ In some phones restoring calendar notes will not show error, but won't
 be done, when phone doesn't have set clock inside.	      
 .TP
 \fB\-\-restoresms file\fR
+.TP
+\fB\-\-addnew file\fR
+.TP
+\fB\-\-clearall\fR
 .TP 
 \fB\-\-decodesniff MBUS2|IRDA file [phonemodel]\fR
 Option available only, if Gammu was compiled with debug. Allows to decode

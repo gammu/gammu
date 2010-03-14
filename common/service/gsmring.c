@@ -1391,7 +1391,7 @@ GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_Rington
 }
 
 
-unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, int *maxlength, float version)
+unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, int *maxlength, double version)
 {
 	int 			i, NrNotes = 0, Len, Max = *maxlength, j, k=0;
 

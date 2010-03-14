@@ -28,8 +28,6 @@
 #  define mili_sleep(x) usleep(x)
 #endif
 
-char *DayOfWeek (int year, int month, int day);
-
 int GetLine(FILE *File, char *Line, int count);
 
 typedef struct {
@@ -88,10 +86,14 @@ typedef struct {
 
 void GSM_GetCurrentDateTime 	(GSM_DateTime *Date);
 char *OSDateTime 		(GSM_DateTime dt, bool TimeZone);
+char *OSDate 			(GSM_DateTime dt);
+char *DayOfWeek 		(int year, int month, int day);
 
 #undef MAX
 #define MAX(a,b) ((a)>(b)?(a):(b))
 #undef MIN
 #define MIN(a,b) ((a)<(b)?(a):(b))
+
+int FindSerialSpeed(char *buffer);
 
 #endif

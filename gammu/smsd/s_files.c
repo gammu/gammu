@@ -177,17 +177,17 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	ReadUnicodeFile(Buffer2,Buffer);
 
   	SMSInfo.ReplaceMessage  = 0;
-  	SMSInfo.Buffer		= Buffer2;
+  	SMSInfo.Entries[0].Buffer		= Buffer2;
   	SMSInfo.Class		= -1;
  	if (mystrncasecmp(Config->transmitformat, "unicode", 0)) {
- 		SMSInfo.ID = SMS_ConcatenatedTextLong;
+ 		SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
  		SMSInfo.UnicodeCoding = true;
  	} else if (mystrncasecmp(Config->transmitformat, "7bit", 0)) {
- 		SMSInfo.ID = SMS_ConcatenatedTextLong;
+ 		SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
  		SMSInfo.UnicodeCoding = false;
  	} else {
 		/* auto */
- 		SMSInfo.ID = SMS_ConcatenatedAutoTextLong;
+ 		SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
 	}
 
   	GSM_EncodeMultiPartSMS(&SMSInfo,sms);

@@ -223,8 +223,8 @@ typedef enum {
 	ID_GetMemoryStatus,
 	ID_GetSMSC,
 	ID_GetSMSMessage,
-	ID_GetNetworkLevel,
-	ID_GetBatteryLevel,
+	ID_GetSignalQuality,
+	ID_GetBatteryCharge,
 	ID_GetSMSFolders,
 	ID_GetSMSFolderStatus,
 	ID_GetSMSStatus,
@@ -268,6 +268,7 @@ typedef enum {
 	ID_SetMemoryType,
 	ID_SetMemoryCharset,
 	ID_SetSMSParameters,
+	ID_GetFMStation,
 	ID_Reset,
 	ID_GetToDo,
 	ID_PressKey,
@@ -307,6 +308,10 @@ typedef enum {
    	ID_AlcatelBegin2,
     	ID_AlcatelGetIds1,
     	ID_AlcatelGetIds2,
+        ID_AlcatelGetCategories1,
+        ID_AlcatelGetCategories2,
+        ID_AlcatelGetCategoryText1,
+        ID_AlcatelGetCategoryText2,
     	ID_AlcatelGetFields1,
     	ID_AlcatelGetFields2,
     	ID_AlcatelGetFieldValue1,
@@ -340,8 +345,9 @@ typedef struct {
 	GSM_SMSMessage		*SaveSMSMessage;
 	GSM_SMSMemoryStatus	*SMSStatus;
 	GSM_SMSFolders		*SMSFolders;
-	int			*NetworkLevel;
-	int			*BatteryLevel;
+	int                 	*VoiceRecord;
+	GSM_SignalQuality	*SignalQuality;
+	GSM_BatteryCharge	*BatteryCharge;
 	GSM_NetworkInfo		*NetworkInfo;
 	GSM_Ringtone		*Ringtone;
 	GSM_CalendarEntry	*Cal;
@@ -350,18 +356,21 @@ typedef struct {
 	GSM_MultiWAPSettings	*WAPSettings;
 	GSM_Bitmap		*Bitmap;
 	unsigned char		*Netmonitor;
-	GSM_TODO		*ToDo;
+	GSM_ToDoEntry		*ToDo;
 	bool			PressKey;
 	GSM_SecurityCodeType	*SecurityStatus;
 	GSM_Profile		*Profile;
 	GSM_AllRingtonesInfo	*RingtonesInfo;
 	GSM_DisplayFeatures	*DisplayFeatures;
+	GSM_FMStation		*FMStation;
 
 	unsigned char		*PhoneString;
 	int			StartPhoneString;
 
+	bool			EnableIncomingCall;
 	bool			EnableIncomingSMS;	/* notify about incoming sms ? 	*/
 	bool			EnableIncomingCB;	/* notify about incoming cb ?	*/
+	bool			EnableIncomingUSSD;
 	char			*Model;			/* model codename string	*/
 	char			*Version;		/* version of firmware		*/
 	char			*VersionDate;		/* version date			*/
@@ -420,8 +429,6 @@ typedef struct {
 	GSM_Error (*GetMemoryStatus)	(GSM_StateMachine *s, GSM_MemoryStatus	    *status	);
 	GSM_Error (*GetSMSC)		(GSM_StateMachine *s, GSM_SMSC		    *smsc	);
 	GSM_Error (*GetSMSMessage)	(GSM_StateMachine *s, GSM_MultiSMSMessage   *sms	);
-	GSM_Error (*GetBatteryLevel)	(GSM_StateMachine *s, int		    *level	);
-	GSM_Error (*GetNetworkLevel)	(GSM_StateMachine *s, int		    *level	);
 	GSM_Error (*GetSMSFolders)	(GSM_StateMachine *s, GSM_SMSFolders	    *folders	);
 	GSM_Error (*GetManufacturer)	(GSM_StateMachine *s, char		    *manufacturer);
 	GSM_Error (*GetNextSMSMessage)	(GSM_StateMachine *s, GSM_MultiSMSMessage   *sms,		bool	start		);
@@ -454,9 +461,9 @@ typedef struct {
 	GSM_Error (*GetHardware)	(GSM_StateMachine *s, char		    *value	);
 	GSM_Error (*GetPPM)		(GSM_StateMachine *s, char		    *value	);
 	GSM_Error (*PressKey)		(GSM_StateMachine *s, GSM_KeyCode	    Key,	bool 	Press);
-	GSM_Error (*GetToDo)		(GSM_StateMachine *s, GSM_TODO		    *ToDo,	bool	refresh);
+	GSM_Error (*GetToDo)		(GSM_StateMachine *s, GSM_ToDoEntry	    *ToDo,	bool	refresh);
 	GSM_Error (*DeleteAllToDo)	(GSM_StateMachine *s);
-	GSM_Error (*SetToDo)		(GSM_StateMachine *s, GSM_TODO		    *ToDo	);
+	GSM_Error (*SetToDo)		(GSM_StateMachine *s, GSM_ToDoEntry	    *ToDo	);
 	GSM_Error (*PlayTone)		(GSM_StateMachine *s, int 		    Herz, 	unsigned char Volume, bool start);
 	GSM_Error (*EnterSecurityCode)	(GSM_StateMachine *s, GSM_SecurityCode 	    Code	);
 	GSM_Error (*GetSecurityStatus)	(GSM_StateMachine *s, GSM_SecurityCodeType  *Status	);
@@ -474,7 +481,13 @@ typedef struct {
 	GSM_Error (*SetIncomingCall)	(GSM_StateMachine *s, bool		    enable	);
 	GSM_Error (*GetNextCalendarNote)(GSM_StateMachine *s, GSM_CalendarEntry	    *Note,	bool	start		);
 	GSM_Error (*DeleteCalendar)	(GSM_StateMachine *s, GSM_CalendarEntry     *Note	);
-	GSM_Error (*AddCalendarNote)	(GSM_StateMachine *s, GSM_CalendarEntry	    *Note);
+	GSM_Error (*AddCalendarNote)	(GSM_StateMachine *s, GSM_CalendarEntry	    *Note, bool Past);
+	GSM_Error (*GetBatteryCharge)	(GSM_StateMachine *s, GSM_BatteryCharge     *bat	);
+	GSM_Error (*GetSignalQuality)	(GSM_StateMachine *s, GSM_SignalQuality     *sig	);
+ 	GSM_Error (*GetCategory)	(GSM_StateMachine *s, GSM_Category	    *Category	);
+ 	GSM_Error (*GetCategoryStatus)	(GSM_StateMachine *s, GSM_CategoryStatus    *Status	);
+	GSM_Error (*GetFMStation)	(GSM_StateMachine *s, GSM_FMStation	    *FMStation	);
+	GSM_Error (*SetIncomingUSSD)	(GSM_StateMachine *s, bool		    enable	);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;
@@ -510,6 +523,7 @@ struct _GSM_User {
 	void	  (*IncomingCall)	(char *Device, GSM_Call	      call);
 	void 	  (*IncomingSMS)	(char *Device, GSM_SMSMessage sms);
 	void 	  (*IncomingCB)		(char *Device, GSM_CBMessage  cb);
+	void 	  (*IncomingUSSD)	(char *Device, char	      *Text);
 	void 	  (*SendSMSStatus)	(char *Device, int 	      status);
 };
 
@@ -521,8 +535,7 @@ typedef enum {
 	GCT_INFRARED,
 	GCT_DLR3AT,
 	GCT_IRDA,
-	GCT_AT19200,
-	GCT_AT115200,
+	GCT_AT,
 	GCT_ATBLUE,
 	GCT_DLR3BLUE,
 	GCT_ALCABUS
@@ -561,6 +574,7 @@ struct _GSM_StateMachine {
 	GSM_Config		Config;		   /* Config file (or Registry or...) variables */
 	CFG_Header 		*msg;		   /* Localisation strings structure    	*/
 	int			ReplyNum;	   /* How many times make sth. 			*/
+	int			Speed;		   /* For some protocols used speed		*/
 
 	GSM_Device		Device;
 	GSM_Protocol		Protocol;
@@ -616,7 +630,11 @@ typedef enum {
 	F_DTMF,		/* Phone can send DTMF						*/
 	F_DISPSTATUS,	/* Phone return display status					*/
 
-	F_CAL35		/* Reminders in calendar saved in 3510 style			*/
+	F_CAL35,	/* Reminders in calendar saved in 3510 style			*/
+	F_RADIO,	/* Phone with FM radio						*/
+	F_NOTODO,
+
+	F_NOCALLINFO
 } Feature61_65;
 
 /* For models table */

@@ -183,21 +183,21 @@ static GSM_Error N9210_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 			dprintf("Disabling incoming SMS\n");
 		}
 	}
-#endif
 	return GE_NONE;
+#else
+	return GE_SOURCENOTAVAILABLE;
+#endif
 }
 
 static GSM_Error N9210_Initialise (GSM_StateMachine *s)
 {
 #ifdef DEBUG
-	GSM_Error error;
+	DCT3_SetIncomingCB(s,true);
 
-	error=DCT3_SetIncomingCB(s,true);
-	if (error!=GE_NONE) return error;
 #ifdef GSM_ENABLE_N71_92INCOMINGINFO
-	error=N9210_SetIncomingSMS(s,true);
-	if (error!=GE_NONE) return error;
+	N9210_SetIncomingSMS(s,true);
 #endif
+
 #endif
 	return GE_NONE;
 }
@@ -224,11 +224,11 @@ static GSM_Reply_Function N9210ReplyFunctions[] = {
 
 	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_GetNetworkInfo	},
 	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_IncomingFrame	},
-	{N71_92_ReplyGetNetworkLevel,	"\x0A",0x03,0x82,ID_GetNetworkLevel	},
+	{N71_92_ReplyGetSignalQuality,	"\x0A",0x03,0x82,ID_GetSignalQuality	},
 	{N9210_ReplySetOpLogo,		"\x0A",0x03,0xA4,ID_SetBitmap		},
 	{N9210_ReplySetOpLogo,		"\x0A",0x03,0xB0,ID_SetBitmap		},
 
-	{N71_92_ReplyGetBatteryLevel,	"\x17",0x03,0x03,ID_GetBatteryLevel	},
+	{N71_92_ReplyGetBatteryCharge,	"\x17",0x03,0x03,ID_GetBatteryCharge	},
 
 	{DCT3_ReplySetDateTime,		"\x19",0x03,0x61,ID_SetDateTime		},
 	{DCT3_ReplyGetDateTime,		"\x19",0x03,0x63,ID_GetDateTime		},
@@ -271,8 +271,6 @@ GSM_Phone_Functions N9210Phone = {
 	NOTIMPLEMENTED,		/*	GetMemoryStatus		*/
 	DCT3_GetSMSC,
 	NOTIMPLEMENTED,		/*	GetSMSMessage		*/
-	N71_92_GetBatteryLevel,
-	N71_92_GetNetworkLevel,
 	NOTIMPLEMENTED,		/*	GetSMSFolders		*/
 	NOKIA_GetManufacturer,
 	NOTIMPLEMENTED,		/*	GetNextSMSMessage	*/
@@ -322,10 +320,16 @@ GSM_Phone_Functions N9210Phone = {
 	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
 	NOTSUPPORTED, 		/*	SetProfile		*/
 	NOTSUPPORTED,		/*	GetSIMIMSI		*/
-	NONEFUNCTION,		/*	SetIncomingCall		*/
+	NOTSUPPORTED,		/*	SetIncomingCall		*/
     	NOTSUPPORTED,		/*  	GetNextCalendar		*/
 	NOTSUPPORTED,		/*	DelCalendar		*/
-	NOTSUPPORTED		/*	AddCalendar		*/
+	NOTSUPPORTED,		/*	AddCalendar		*/
+	N71_92_GetBatteryCharge,
+	N71_92_GetSignalQuality,
+	NOTSUPPORTED,       	/*  	GetCategory 		*/
+        NOTSUPPORTED,        	/*  	GetCategoryStatus 	*/
+    	NOTSUPPORTED,		/*  	GetFMStation        	*/
+	NOTIMPLEMENTED		/*  	SetIncomingUSSD		*/
 };
 
 #endif

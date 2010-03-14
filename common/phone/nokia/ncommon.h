@@ -42,7 +42,7 @@ typedef struct {
 	int		Number;				/* number of SMS messages in that folder */
 } GSM_NOKIASMSFolder;
 
-#define NOKIA_MAXCALENDARNOTES	150
+#define NOKIA_MAXCALENDARNOTES	200
 
 typedef struct {
 	int		Location[NOKIA_MAXCALENDARNOTES];/* locations of calendar notes */

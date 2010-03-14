@@ -15,10 +15,10 @@
 
 static GSM_Error N6510_Initialise (GSM_StateMachine *s)
 {
-	unsigned char Info[] = {N6110_FRAME_HEADER,0x10,0x06,0x01,0x02,0x0a,0x14,0x17,0x39};
+	unsigned char Info[] = {N6110_FRAME_HEADER,0x10,0x06,0x01,0x02,0x06,0x0a,0x14,0x17,0x39};
 
 	/* Enables various things like incoming SMS, call info, etc. */
-	return s->Protocol.Functions->WriteMessage(s, Info, 11, 0x10);
+	return s->Protocol.Functions->WriteMessage(s, Info, 12, 0x10);
 }
 
 static GSM_Error N6510_ReplyGetIMEI(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
@@ -814,42 +814,45 @@ static GSM_Error N6510_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 	return N6510_PrivGetSMSMessage(s, sms);
 }
 
-static GSM_Error N6510_ReplyGetIncomingNetLevel(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error N6510_ReplyGetIncSignalQuality(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	dprintf("Network level changed to: %i\n",msg.Buffer[4]);
 	return GE_NONE;
 }
 
-static GSM_Error N6510_ReplyGetNetworkLevel(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error N6510_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	dprintf("Network level received: %i\n",msg.Buffer[8]);
-	*Data->NetworkLevel=((int)msg.Buffer[8]);
+    	Data->SignalQuality->SignalStrength 	= -1;
+    	Data->SignalQuality->SignalPercent 	= ((int)msg.Buffer[8]);
+    	Data->SignalQuality->BitErrorRate 	= -1;
 	return GE_NONE;
 }
 
-static GSM_Error N6510_GetNetworkLevel(GSM_StateMachine *s, int *level)
+static GSM_Error N6510_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x0B, 0x00, 0x02, 0x00, 0x00, 0x00};
 
-	s->Phone.Data.NetworkLevel=level;
+	s->Phone.Data.SignalQuality = sig;
 	dprintf("Getting network level\n");
-	return GSM_WaitFor (s, req, 9, 0x0a, 4, ID_GetNetworkLevel);
+	return GSM_WaitFor (s, req, 9, 0x0a, 4, ID_GetSignalQuality);
 }
 
-static GSM_Error N6510_ReplyGetBatteryLevel(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error N6510_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	dprintf("Battery level received: %i\n",msg.Buffer[9]*100/7);
-	*Data->BatteryLevel=((int)(msg.Buffer[9]*100/7));
+    	Data->BatteryCharge->BatteryPercent 	= ((int)(msg.Buffer[9]*100/7));
+    	Data->BatteryCharge->ChargeState 	= 0;
 	return GE_NONE;
 }
 
-static GSM_Error N6510_GetBatteryLevel(GSM_StateMachine *s, int *level)
+static GSM_Error N6510_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x0A, 0x02, 0x00};
 
-	s->Phone.Data.BatteryLevel=level;
+	s->Phone.Data.BatteryCharge = bat;
 	dprintf("Getting battery level\n");
-	return GSM_WaitFor (s, req, 6, 0x17, 4, ID_GetBatteryLevel);
+	return GSM_WaitFor (s, req, 6, 0x17, 4, ID_GetBatteryCharge);
 }
 
 static GSM_Error N6510_ReplyGetWAPBookmark(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
@@ -1102,8 +1105,11 @@ static GSM_Error N6510_ReplyGetToDo(GSM_Protocol_Message msg, GSM_Phone_Data *Da
 		Data->ToDo->Priority = msg.Buffer[4];
 	}
 	dprintf("Priority: %i\n",msg.Buffer[4]);
-	CopyUnicodeString(Data->ToDo->Text,msg.Buffer+14);
-	dprintf("Text: \"%s\"\n",DecodeUnicodeString(Data->ToDo->Text));
+
+	CopyUnicodeString(Data->ToDo->Entries[0].Text,msg.Buffer+14);
+    	Data->ToDo->Entries[0].EntryType = TODO_TEXT;
+	Data->ToDo->EntriesNum		 = 1;
+	dprintf("Text: \"%s\"\n",DecodeUnicodeString(Data->ToDo->Entries[0].Text));
 	return GE_NONE;
 }
 
@@ -1124,7 +1130,7 @@ static GSM_Error N6510_ReplyGetToDoLocations(GSM_Protocol_Message msg, GSM_Phone
 	return GE_NONE;
 }
 
-static GSM_Error N6510_GetToDo(GSM_StateMachine *s, GSM_TODO *ToDo, bool refresh)
+static GSM_Error N6510_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refresh)
 {
 	GSM_Error 		error;
 	GSM_NOKIAToDoLocations	*LastToDo = &s->Phone.Data.Priv.N6510.LastToDo;
@@ -1136,6 +1142,8 @@ static GSM_Error N6510_GetToDo(GSM_StateMachine *s, GSM_TODO *ToDo, bool refresh
 			N6110_FRAME_HEADER,
 			0x03, 0x00, 0x00, 0x80, 0x00,
 			0x00, 0x17};		/* Location */
+
+	if (IsPhoneFeatureAvailable(s->Model, F_NOTODO)) return GE_NOTSUPPORTED;
 
 	if (refresh) {
 		dprintf("Getting ToDo locations\n");
@@ -1573,6 +1581,8 @@ static GSM_Error N6510_DeleteAllToDo(GSM_StateMachine *s)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x11};
 
+	if (IsPhoneFeatureAvailable(s->Model, F_NOTODO)) return GE_NOTSUPPORTED;
+
 	dprintf("Deleting all ToDo\n");
 	return GSM_WaitFor (s, req, 4, 0x55, 4, ID_DeleteAllToDo);
 }
@@ -1590,9 +1600,11 @@ static GSM_Error N6510_ReplySetToDo(GSM_Protocol_Message msg, GSM_Phone_Data *Da
 	return GE_NONE;
 }
 
-static GSM_Error N6510_SetToDo(GSM_StateMachine *s, GSM_TODO *ToDo)
+static GSM_Error N6510_SetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error		error;
+    	int 			ulen,i;
+    	char 			*txt=NULL;
 	unsigned char 		reqLoc[] 	= {N6110_FRAME_HEADER, 0x0F};
 	unsigned char 		reqSet[500] 	= {
 		N6110_FRAME_HEADER, 0x01,
@@ -1600,6 +1612,8 @@ static GSM_Error N6510_SetToDo(GSM_StateMachine *s, GSM_TODO *ToDo)
 		0x00,		/* Length of text */
 		0x80,0x00,0x00,
 		0x18};		/* Location */
+
+	if (IsPhoneFeatureAvailable(s->Model, F_NOTODO)) return GE_NOTSUPPORTED;
 
 	s->Phone.Data.ToDo = ToDo;
 
@@ -1612,12 +1626,20 @@ static GSM_Error N6510_SetToDo(GSM_StateMachine *s, GSM_TODO *ToDo)
 		return GE_NOTSUPPORTED;
 	}
 	reqSet[4] = ToDo->Priority;
-	reqSet[5] = strlen(DecodeUnicodeString(ToDo->Text))+1;
-	CopyUnicodeString(reqSet+10,ToDo->Text);
-	reqSet[10+strlen(DecodeUnicodeString(ToDo->Text))*2] 	= 0x00;
-	reqSet[10+strlen(DecodeUnicodeString(ToDo->Text))*2+1] 	= 0x00;
+    	for (i=0; i<ToDo->EntriesNum; i++) {
+        	if (ToDo->Entries[i].EntryType == TODO_TEXT) {
+            		txt = ToDo->Entries[i].Text;
+            		break;
+        	}
+    	}
+    	if (txt == NULL) return GE_NOTSUPPORTED; /* XXX: shouldn't this be handled different way? */
+    	ulen = strlen(DecodeUnicodeString(txt));
+	reqSet[5] = +1;
+	CopyUnicodeString(reqSet+10,txt);
+	reqSet[10+ulen*2] 	= 0x00;
+	reqSet[10+ulen*2+1] 	= 0x00;
 	dprintf("Setting ToDo\n");
-	return GSM_WaitFor (s, reqSet, 12+strlen(DecodeUnicodeString(ToDo->Text))*2, 0x55, 4, ID_SetToDo);
+	return GSM_WaitFor (s, reqSet, 12+ulen*2, 0x55, 4, ID_SetToDo);
 }
 
 static GSM_Error N6510_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
@@ -2559,16 +2581,50 @@ static GSM_Error N6510_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *
 	return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
 }
 
-static GSM_Error N6510_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+static GSM_Error N6510_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
 {
-//	return N71_65_AddCalendar1(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos);
-	return N71_65_AddCalendar2(s,Note);
+//	return N71_65_AddCalendar1(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos, Past);
+	return N71_65_AddCalendar2(s,Note,Past);
 }
 
 static GSM_Error N6510_ReplyLogIntoNetwork(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	dprintf("Probably phone says: I log into network\n");
 	return GE_NONE;
+}
+
+static GSM_Error N6510_ReplyGetFMStation(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+	unsigned char 	name[GSM_MAX_FMSTATION_LENGTH*2+1];
+	int		length;
+
+	dprintf("Received FM station\n");
+	
+	if (msg.Buffer[3]==0x16) return GE_EMPTY;
+
+	length = msg.Buffer[8];
+	memcpy(name,msg.Buffer+18,length*2);
+	name[length*2]	 = 0x00;
+	name[length*2+1] = 0x00;
+	CopyUnicodeString(Data->FMStation->StationName,name);
+
+	Data->FMStation->Frequency = 0xffff + msg.Buffer[16] * 0x100 + msg.Buffer[17];
+
+	return GE_NONE;
+}
+
+static GSM_Error N6510_GetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStation)
+{
+	unsigned char req[7] = {N6110_FRAME_HEADER, 0x05,
+				0x02, 		// location
+				0x00,0x01};
+	
+	if (!IsPhoneFeatureAvailable(s->Model, F_RADIO)) return GE_NOTSUPPORTED;
+
+	s->Phone.Data.FMStation=FMStation;
+	req[4] = FMStation->Location;
+	dprintf("Getting FM Station %i\n",FMStation->Location);
+	return GSM_WaitFor (s, req, 7, 0x3E, 2, ID_GetFMStation);
 }
 
 static GSM_Reply_Function N6510ReplyFunctions[] = {
@@ -2594,6 +2650,9 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyWritePhonebook,	"\x03",0x03,0x0C,ID_SetBitmap		},
 	{N71_65_ReplyWritePhonebook,	"\x03",0x03,0x0C,ID_SetMemory		},
 
+	{N71_65_ReplyUSSDInfo,		"\x06",0x03,0x03,ID_IncomingFrame	},
+	{NONEFUNCTION,			"\x06",0x03,0x06,ID_IncomingFrame	},
+
 	{N6510_ReplyEnterSecurityCode,	"\x08",0x03,0x08,ID_EnterSecurityCode	},
 	{N6510_ReplyEnterSecurityCode,	"\x08",0x03,0x09,ID_EnterSecurityCode	},
 	{N6510_ReplyGetSecurityStatus,	"\x08",0x03,0x12,ID_GetSecurityStatus	},
@@ -2601,8 +2660,8 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetNetworkInfo,	"\x0A",0x03,0x01,ID_GetNetworkInfo	},
 	{N6510_ReplyGetNetworkInfo,	"\x0A",0x03,0x01,ID_IncomingFrame	},
 	{N6510_ReplyLogIntoNetwork,	"\x0A",0x03,0x02,ID_IncomingFrame	},
-	{N6510_ReplyGetNetworkLevel,	"\x0A",0x03,0x0C,ID_GetNetworkLevel	},
-	{N6510_ReplyGetIncomingNetLevel,"\x0A",0x03,0x1E,ID_IncomingFrame	},
+	{N6510_ReplyGetSignalQuality,	"\x0A",0x03,0x0C,ID_GetSignalQuality	},
+	{N6510_ReplyGetIncSignalQuality,"\x0A",0x03,0x1E,ID_IncomingFrame	},
 	{N6510_ReplyGetOperatorLogo,	"\x0A",0x03,0x24,ID_GetBitmap		},
 	{N6510_ReplySetOperatorLogo,	"\x0A",0x03,0x26,ID_SetBitmap		},
 
@@ -2634,7 +2693,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	{NONEFUNCTION,			"\x15",0x01,0x31,ID_Reset		},
 
-	{N6510_ReplyGetBatteryLevel,	"\x17",0x03,0x0B,ID_GetBatteryLevel	},
+	{N6510_ReplyGetBatteryCharge,	"\x17",0x03,0x0B,ID_GetBatteryCharge	},
 
 	{N6510_ReplySetDateTime,	"\x19",0x03,0x02,ID_SetDateTime		},
 	{N6510_ReplyGetDateTime,	"\x19",0x03,0x0B,ID_GetDateTime		},
@@ -2653,6 +2712,8 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	{N6510_ReplyGetProfile,		"\x39",0x03,0x02,ID_GetProfile		},
 	{N6510_ReplySetProfile,		"\x39",0x03,0x04,ID_SetProfile		},
+
+	{N6510_ReplyGetFMStation,	"\x3E",0x02,0x00,ID_GetFMStation	},
 
 	{DCT3DCT4_ReplyEnableWAP,	"\x3f",0x03,0x01,ID_EnableWAP		},
 	{DCT3DCT4_ReplyEnableWAP,	"\x3f",0x03,0x02,ID_EnableWAP		},
@@ -2705,8 +2766,6 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_GetMemoryStatus,
 	N6510_GetSMSC,
 	N6510_GetSMSMessage,
-	N6510_GetBatteryLevel,
-	N6510_GetNetworkLevel,
 	N6510_GetSMSFolders,
 	NOKIA_GetManufacturer,
 	N6510_GetNextSMSMessage,
@@ -2756,10 +2815,16 @@ GSM_Phone_Functions N6510Phone = {
 	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
 	N6510_SetProfile,
 	NOTSUPPORTED,		/*	GetSIMIMSI		*/
-	NONEFUNCTION,		/*	SetIncomingCall		*/
+	NOKIA_SetIncomingCall,
     	N6510_GetNextCalendar,
 	N71_65_DelCalendar,
-	N6510_AddCalendar
+	N6510_AddCalendar,
+	N6510_GetBatteryCharge,
+	N6510_GetSignalQuality,
+	NOTSUPPORTED,       	/*  	GetCategory 		*/
+	NOTSUPPORTED,        	/*  	GetCategoryStatus 	*/
+    	N6510_GetFMStation,
+	NOKIA_SetIncomingUSSD
 };
 
 #endif

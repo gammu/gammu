@@ -153,7 +153,7 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone);
 GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone);
 
 unsigned char	GSM_EncodeNokiaRTTLRingtone	(GSM_Ringtone ringtone, unsigned char *package, int *maxlength);
-unsigned char   GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *package, int *maxlength, float version);
+unsigned char   GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *package, int *maxlength, double version);
 
 GSM_Error	GSM_DecodeNokiaRTTLRingtone	(GSM_Ringtone *ringtone, unsigned char *package, int maxlength);
 

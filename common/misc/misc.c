@@ -112,6 +112,53 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 	return retval2;
 }
 
+char *OSDate (GSM_DateTime dt)
+{
+	struct tm 	timeptr;
+	static char 	retval[200],retval2[200];
+	int 		p,q,r,w;
+
+	/* Based on article in Polish PC-Kurier 8/1998 page 104
+	 * Archive on http://www.pckurier.pl
+	 */
+	p=(14-dt.Month) / 12;
+	q=dt.Month+12*p-2;
+	r=dt.Year-p;
+	w=(dt.Day+(31*q) / 12 + r + r / 4 - r / 100 + r / 400) % 7;
+
+	timeptr.tm_yday 	= 0; 			/* FIXME */
+	timeptr.tm_isdst 	= -1; 			/* FIXME */
+	timeptr.tm_year 	= dt.Year - 1900;
+	timeptr.tm_mon  	= dt.Month - 1;
+	timeptr.tm_mday 	= dt.Day;
+	timeptr.tm_hour 	= dt.Hour;
+	timeptr.tm_min  	= dt.Minute;
+	timeptr.tm_sec  	= dt.Second;
+	timeptr.tm_wday 	= w;
+#ifdef _BSD_SOURCE
+	timeptr.tm_zone		= NULL;
+#endif
+
+#ifdef WIN32
+	strftime(retval2, 200, "%#x", &timeptr);
+#else
+	strftime(retval2, 200, "%x", &timeptr);
+#endif
+	/* If don't have weekday name, include it */
+	strftime(retval, 200, "%A", &timeptr);
+	if (strstr(retval2,retval)==NULL) {
+            /* Check also for short name */
+	    strftime(retval, 200, "%a", &timeptr);
+	    if (strstr(retval2,retval)==NULL) {
+            	strcat(retval2," (");
+            	strcat(retval2,retval);
+            	strcat(retval2,")");
+            }
+	}
+
+	return retval2;
+}
+
 int GetLine(FILE *File, char *Line, int count)
 {
 	char *ptr;
@@ -285,7 +332,7 @@ void DumpMessage(FILE *df, const unsigned char *message, int messagesize)
 	int 	i;
 	char 	buf[17];
 
-	if (df==NULL) return;
+	if (df==NULL || messagesize == 0) return;
 
 	buf[16] = 0;
 
@@ -312,4 +359,29 @@ void DumpMessage(FILE *df, const unsigned char *message, int messagesize)
 		smfprintf(df, "%*s %s", 4 * (16 - i % 16) - 1, "", buf);
 	}
 	smfprintf(df, "\n");
+}
+
+int FindSerialSpeed(char *buffer)
+{
+	switch (atoi(buffer)) {
+		case 50		: return 50;
+		case 75		: return 75;
+		case 110	: return 110;
+		case 134	: return 134;
+		case 150	: return 150;
+		case 200	: return 200;
+		case 300	: return 300;
+		case 600	: return 600;
+		case 1200	: return 1200;
+		case 1800	: return 1800;
+		case 2400	: return 2400;
+		case 4800	: return 4800;
+		case 9600	: return 9600;
+		case 19200	: return 19200;
+		case 38400	: return 38400;
+		case 57600	: return 57600;
+		case 115200	: return 115200;
+		case 230400	: return 230400;
+		default		: return 0;	
+	}
 }

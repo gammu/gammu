@@ -95,7 +95,7 @@ GSM_Error DCT3_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_Phone_Data *Data, G
 	while (i!=0) {
 		if (Buffer[i] == 13) i = i - 1; else break;
 	}
-	DecodeDefault(CB.Text, Buffer, i + 1);
+	DecodeDefault(CB.Text, Buffer, i + 1, false, NULL);
 	dprintf("Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
 	if (Data->EnableIncomingCB && User->IncomingCB!=NULL) {
 		User->IncomingCB(Data->Device,CB);
@@ -131,8 +131,10 @@ GSM_Error DCT3_SetIncomingCB(GSM_StateMachine *s, bool enable)
 			return GSM_WaitFor(s, reqOff, 10, 0x02, 4, ID_SetIncomingCB);
 		}
 	}
-#endif
 	return GE_NONE;
+#else
+	return GE_SOURCENOTAVAILABLE;
+#endif
 }
 
 GSM_Error DCT3_ReplySetSMSC(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
@@ -1237,36 +1239,39 @@ GSM_Error DCT3_ReplyDeleteSMSMessage(GSM_Protocol_Message msg, GSM_Phone_Data *D
 	return GE_UNKNOWNRESPONSE;
 }
 
-GSM_Error N71_92_ReplyGetNetworkLevel(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error N71_92_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	dprintf("Network level received: %i\n",msg.Buffer[4]);
-	*Data->NetworkLevel=((int)msg.Buffer[4]);
+   	Data->SignalQuality->SignalStrength 	= -1;
+    	Data->SignalQuality->SignalPercent 	= ((int)msg.Buffer[4]);
+    	Data->SignalQuality->BitErrorRate 	= -1;
 	return GE_NONE;
 }
 
-GSM_Error N71_92_GetNetworkLevel(GSM_StateMachine *s, int *level)
+GSM_Error N71_92_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x81};
 
-	s->Phone.Data.NetworkLevel=level;
+	s->Phone.Data.SignalQuality = sig;
 	dprintf("Getting network level\n");
-	return GSM_WaitFor (s, req, 4, 0x0a, 4, ID_GetNetworkLevel);
+	return GSM_WaitFor (s, req, 4, 0x0a, 4, ID_GetSignalQuality);
 }
 
-GSM_Error N71_92_ReplyGetBatteryLevel(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error N71_92_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	dprintf("Battery level received: %i\n",msg.Buffer[5]);
-	*Data->BatteryLevel=((int)msg.Buffer[5]);
+    	Data->BatteryCharge->BatteryPercent 	= ((int)msg.Buffer[5]);
+    	Data->BatteryCharge->ChargeState 	= 0;
 	return GE_NONE;
 }
 
-GSM_Error N71_92_GetBatteryLevel(GSM_StateMachine *s, int *level)
+GSM_Error N71_92_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x02};
 
-	s->Phone.Data.BatteryLevel=level;
+	s->Phone.Data.BatteryCharge = bat;
 	dprintf("Getting battery level\n");
-	return GSM_WaitFor (s, req, 4, 0x17, 4, ID_GetBatteryLevel);
+	return GSM_WaitFor (s, req, 4, 0x17, 4, ID_GetBatteryCharge);
 }
 
 GSM_Error N71_92_ReplyPhoneSetting(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)

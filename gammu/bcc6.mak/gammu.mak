@@ -22,8 +22,8 @@ OBJFILES = Output\gammu.obj Output\sniff.obj Output\dct3.obj Output\dct4.obj \
     Output\gsmsms.obj Output\gsmwap.obj Output\gsmcomon.obj \
     Output\gsmstate.obj Output\n6110.obj Output\n6510.obj Output\n7110.obj \
     Output\n9210.obj Output\dct3func.obj Output\nauto.obj Output\nfunc.obj \
-    Output\alcatel.obj Output\pfunc.obj Output\atgen.obj Output\irda.obj \
-    Output\unixblue.obj Output\win32.obj
+    Output\alcatel.obj Output\pfunc.obj Output\atgen.obj Output\siemens.obj \
+    Output\irda.obj Output\unixblue.obj Output\win32.obj
 RESFILES = 
 MAINSOURCE = gammu.bpf
 RESDEPEN = $(RESFILES)
@@ -46,7 +46,7 @@ SYSDEFINES = _NO_VCL;_ASSERTE;NO_STRICT
 INCLUDEPATH = ..\;..\smsd;..\depend;..\..\common\device\serial;..\..\common\protocol\alcatel;..\..\common\phone\alcatel;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl
 LIBPATH = ..\smsd;..\depend;..\..\common\phone\alcatel;..\..\common\protocol\alcatel;..\;..;..\..\common\device\serial;..\..\common\device\bluetoth;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\lib;$(RELEASELIBPATH);$(BCB)\lib\psdk
 WARNINGS= -w-par -w-8027 -w-8026 -w-csu
-PATHCPP = .;..;..;..\depend;..\depend;..\smsd;..\smsd;..\..\common\misc;..\..\common\misc;..\..\common\misc;..\..\common\protocol\at;..\..\common\protocol\nokia;..\..\common\protocol\alcatel;..\..\common\protocol\nokia;..\..\common\protocol\nokia;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common;..\..\common;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone;..\..\common\phone\at;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common\device\serial
+PATHCPP = .;..;..;..\depend;..\depend;..\smsd;..\smsd;..\..\common\misc;..\..\common\misc;..\..\common\misc;..\..\common\protocol\at;..\..\common\protocol\nokia;..\..\common\protocol\alcatel;..\..\common\protocol\nokia;..\..\common\protocol\nokia;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common;..\..\common;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone;..\..\common\phone\at;..\..\common\phone\at;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common\device\serial
 PATHASM = .;
 PATHPAS = .;
 PATHRC = .;

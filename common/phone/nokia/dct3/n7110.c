@@ -1239,17 +1239,14 @@ static GSM_Error N7110_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_Phone_Data
 static GSM_Error N7110_Initialise (GSM_StateMachine *s)
 {
 #ifdef GSM_ENABLE_N71_92INCOMINGINFO
-	unsigned char Info[] = {N6110_FRAME_HEADER,0x10,0x05,0x01,0x02,0x0A,0x14,0x17};
+	unsigned char Info[] = {N6110_FRAME_HEADER,0x01,0x02,0x05,0x06,0x0A,0x10,0x14,0x17};
 #endif
 #ifdef DEBUG
-	GSM_Error error;
-
-	error=DCT3_SetIncomingCB(s,true);
-	if (error!=GE_NONE) return error;
+	DCT3_SetIncomingCB(s,true);
 #endif
 #ifdef GSM_ENABLE_N71_92INCOMINGINFO
 	/* Enables various things like call info, sms info, etc. */
-	return s->Protocol.Functions->WriteMessage(s, Info, 10, 0x10);
+	return s->Protocol.Functions->WriteMessage(s, Info, 11, 0x10);
 #endif
 	return GE_NONE;
 }
@@ -1272,16 +1269,40 @@ static GSM_Error N7110_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *
 //	return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N7110.LastCalendarYear,&s->Phone.Data.Priv.N7110.LastCalendarPos);
 }
 
-static GSM_Error N7110_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+static GSM_Error N7110_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
 {
-//	return N71_65_AddCalendar1(s, Note, NULL);
-	return N71_65_AddCalendar2(s,Note);
+//	return N71_65_AddCalendar1(s, Note, NULL, Past);
+	return N71_65_AddCalendar2(s,Note,Past);
 }
 
 static GSM_Error N7110_ReplyGetNetworkInfoError(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	dprintf("Probably means no PIN\n");
 	return GE_SECURITYERROR;
+}
+
+static GSM_Error N7110_SetIncomingCall(GSM_StateMachine *s, bool enable)
+{
+#ifndef GSM_ENABLE_N71_92INCOMINGINFO
+	return GE_SOURCENOTAVAILABLE;
+#endif
+	return NOKIA_SetIncomingCall(s,enable);
+}
+
+static GSM_Error N7110_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
+{
+#ifndef GSM_ENABLE_N71_92INCOMINGINFO
+	return GE_SOURCENOTAVAILABLE;
+#endif
+	return NOKIA_SetIncomingUSSD(s,enable);
+}
+
+static GSM_Error N7110_SetIncomingSMS(GSM_StateMachine *s, bool enable)
+{
+#ifndef GSM_ENABLE_N71_92INCOMINGINFO
+	return GE_SOURCENOTAVAILABLE;
+#endif
+	return NOKIA_SetIncomingSMS(s,enable);
 }
 
 static GSM_Reply_Function N7110ReplyFunctions[] = {
@@ -1313,6 +1334,9 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{N71_65_ReplyWritePhonebook,	"\x03",0x03,0x0C,ID_SetBitmap		},
 	{N71_65_ReplyWritePhonebook,	"\x03",0x03,0x0C,ID_SetMemory		},
 
+	{N71_65_ReplyUSSDInfo,		"\x06",0x03,0x03,ID_IncomingFrame	},
+	{NONEFUNCTION,			"\x06",0x03,0x06,ID_IncomingFrame	},
+
 	{DCT3_ReplySIMLogin,		"\x09",0x03,0x80,ID_IncomingFrame	},
 	{DCT3_ReplySIMLogout,		"\x09",0x03,0x81,ID_IncomingFrame	},
 
@@ -1320,7 +1344,7 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_GetBitmap		},
 	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_IncomingFrame	},
 	{N7110_ReplyGetNetworkInfoError,"\x0A",0x03,0x72,ID_GetNetworkInfo	},
-	{N71_92_ReplyGetNetworkLevel,	"\x0A",0x03,0x82,ID_GetNetworkLevel	},
+	{N71_92_ReplyGetSignalQuality,	"\x0A",0x03,0x82,ID_GetSignalQuality	},
 	{N7110_ReplySetOperatorLogo,	"\x0A",0x03,0xA4,ID_SetBitmap		},
 	{N7110_ReplyClearOperatorLogo,	"\x0A",0x03,0xB0,ID_SetBitmap		},
 
@@ -1353,7 +1377,7 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{N7110_ReplyGetPictureImageInfo,"\x14",0x03,0x97,ID_GetBitmap		},
 	{N7110_ReplyGetSMSFolders,	"\x14",0x03,0xCA,ID_GetSMSFolders	},
 
-	{N71_92_ReplyGetBatteryLevel,	"\x17",0x03,0x03,ID_GetBatteryLevel	},
+	{N71_92_ReplyGetBatteryCharge,	"\x17",0x03,0x03,ID_GetBatteryCharge	},
 
 	{DCT3_ReplySetDateTime,		"\x19",0x03,0x61,ID_SetDateTime		},
 	{DCT3_ReplyGetDateTime,		"\x19",0x03,0x63,ID_GetDateTime		},
@@ -1423,13 +1447,11 @@ GSM_Phone_Functions N7110Phone = {
 	N7110_GetMemoryStatus,
 	DCT3_GetSMSC,
 	N7110_GetSMSMessage,
-	N71_92_GetBatteryLevel,
-	N71_92_GetNetworkLevel,
 	N7110_GetSMSFolders,
 	NOKIA_GetManufacturer,
 	N7110_GetNextSMSMessage,
 	N7110_GetSMSStatus,
-	NOKIA_SetIncomingSMS,
+	N7110_SetIncomingSMS,
 	DCT3_GetNetworkInfo,
 	DCT3_Reset,
 	DCT3_DialVoice,
@@ -1474,10 +1496,16 @@ GSM_Phone_Functions N7110Phone = {
 	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
 	N7110_SetProfile,
 	NOTSUPPORTED,		/*	GetSIMIMSI		*/
-	NONEFUNCTION,		/*	SetIncomingCall		*/
+	N7110_SetIncomingCall,
     	N7110_GetNextCalendar,
 	N71_65_DelCalendar,
-	N7110_AddCalendar
+	N7110_AddCalendar,
+	N71_92_GetBatteryCharge,
+	N71_92_GetSignalQuality,
+	NOTSUPPORTED,       	/*  	GetCategory 		*/
+        NOTSUPPORTED,        	/*  	GetCategoryStatus 	*/
+    	NOTSUPPORTED,		/*  	GetFMStation        	*/
+	N7110_SetIncomingUSSD
 };
 
 #endif

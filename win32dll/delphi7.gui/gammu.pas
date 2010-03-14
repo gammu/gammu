@@ -38,7 +38,9 @@ type GSM_Error = (
 	GE_WORKINPROGRESS,		// Work in progress
       	GE_PHONEOFF,			// Phone is disabled and connected to charger //30
 	GE_FILENOTSUPPORTED,		// File format not supported by Gammu
-	GE_BUG);                  	// Found bug in implementation or phone //32
+	GE_BUG,                  	// Found bug in implementation or phone //32
+	GE_CANCELED);
+
 
 const
 	GSM_MAX_SMSC_NAME_LENGTH	= 30;

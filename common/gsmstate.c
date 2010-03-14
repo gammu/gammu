@@ -29,10 +29,12 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("dlr3"	,connection,0)) s->ConnectionType = GCT_DLR3AT;
 	if (mystrncasecmp("irda"	,connection,0)) s->ConnectionType = GCT_IRDA;
 	if (mystrncasecmp("infrared"	,connection,0)) s->ConnectionType = GCT_INFRARED;
-	if (mystrncasecmp("at19200"	,connection,0)) s->ConnectionType = GCT_AT19200;
-	if (mystrncasecmp("at115200"	,connection,0)) s->ConnectionType = GCT_AT115200;
 	if (mystrncasecmp("atblue"	,connection,0)) s->ConnectionType = GCT_ATBLUE;
 	if (mystrncasecmp("dlr3blue"	,connection,0)) s->ConnectionType = GCT_DLR3BLUE;
+	if (mystrncasecmp("at"		,connection,2)) {
+		s->Speed = FindSerialSpeed(connection+2);
+		if (s->Speed != 0) s->ConnectionType = GCT_AT;
+	}
 	if (s->ConnectionType==0) return GE_UNKNOWNCONNECTIONTYPESTRING;
 
 	/* We check now if user gave connection type compiled & available
@@ -62,8 +64,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	GSM_RegisterConnection(s, GCT_ATBLUE, 	&BlueToothDevice,&ATProtocol);
 #endif
 #ifdef GSM_ENABLE_AT
-	GSM_RegisterConnection(s, GCT_AT19200, 	&SerialDevice, 	 &ATProtocol);
-	GSM_RegisterConnection(s, GCT_AT115200, &SerialDevice, 	 &ATProtocol);
+	GSM_RegisterConnection(s, GCT_AT, 	&SerialDevice, 	 &ATProtocol);
 #endif
 	if (s->Device.Functions==NULL || s->Protocol.Functions==NULL)
 			return GE_SOURCENOTAVAILABLE;
@@ -95,7 +96,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 	s->Phone.Functions=NULL;
 #ifdef GSM_ENABLE_ATGEN
 	/* AT module can have the same models ID to "normal" Nokia modules */
-	if (s->ConnectionType==GCT_AT19200 || s->ConnectionType==GCT_AT115200 || s->ConnectionType==GCT_ATBLUE) {
+	if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_ATBLUE) {
 		GSM_RegisterModule(s,&ATGENPhone);
 		if (s->Phone.Functions!=NULL) return GE_NONE;
 	}
@@ -126,6 +127,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	GSM_DateTime	time;
 	char		buffer[100];
 
+	s->Speed			  = 0;
 	s->ReplyNum			  = ReplyNum;
 	s->Model[0]			  = 0;
 	s->Ver[0]			  = 0;
@@ -141,12 +143,15 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	s->Phone.Data.IMEICache[0]	  = 0;
 	s->Phone.Data.HardwareCache[0]	  = 0;
 	s->Phone.Data.ProductCodeCache[0] = 0;
+	s->Phone.Data.EnableIncomingCall  = false;
 	s->Phone.Data.EnableIncomingSMS	  = false;
 	s->Phone.Data.EnableIncomingCB	  = false;
+	s->Phone.Data.EnableIncomingUSSD  = false;
 	s->User.UserReplyFunctions	  = NULL;
 	s->User.IncomingCall		  = NULL;
 	s->User.IncomingSMS		  = NULL;
 	s->User.IncomingCB		  = NULL;
+	s->User.IncomingUSSD		  = NULL;
 	s->User.SendSMSStatus		  = NULL;
 	s->LockFile			  = NULL;
 
@@ -255,8 +260,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 			smprintf(s,"[Module           - \"auto\"]\n");
 			switch (s->ConnectionType) {
 #ifdef GSM_ENABLE_ATGEN
-				case GCT_AT19200:
-				case GCT_AT115200:
+				case GCT_AT:
 				case GCT_ATBLUE:
 					s->Phone.Functions = &ATGENPhone;
 					break;
@@ -658,12 +662,12 @@ void CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg)
 
 static OnePhoneModel allmodels[] = {
 #ifdef GSM_ENABLE_NOKIA6110
-	{"3210" ,"NSE-8" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,0}},
-	{"3210" ,"NSE-9" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,0}},
-	{"3310" ,"NHM-5" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,0}},
-	{"3330" ,"NHM-6" ,"",           {F_NOCALLER,F_RING_SM,F_CAL33,F_PROFILES33,F_NOPICTUREUNI,0}},
-	{"3390" ,"NPB-1" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_PROFILES33,F_NOPICTUREUNI,0}},
-	{"3410" ,"NHM-2" ,"",           {F_RING_SM,F_CAL33,F_PROFILES33,0}},
+	{"3210" ,"NSE-8" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,0}},
+	{"3210" ,"NSE-9" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,0}},
+	{"3310" ,"NHM-5" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,0}},
+	{"3330" ,"NHM-6" ,"",           {F_NOCALLER,F_RING_SM,F_CAL33,F_PROFILES33,F_NOPICTUREUNI,F_NOCALLINFO,0}},
+	{"3390" ,"NPB-1" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_PROFILES33,F_NOPICTUREUNI,F_NOCALLINFO,0}},
+	{"3410" ,"NHM-2" ,"",           {F_RING_SM,F_CAL33,F_PROFILES33,F_NOCALLINFO,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
 	{"3510" ,"NHM-8" ,"",           {F_CAL35,0}},
@@ -691,7 +695,7 @@ static OnePhoneModel allmodels[] = {
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"6310" ,"NPE-4" ,"Nokia 6310", {0}},
 	{"6310i","NPL-1" ,"Nokia 6310i",{0}},
-	{"6510" ,"NPM-9" ,"Nokia 6510", {0}},
+	{"6510" ,"NPM-9" ,"Nokia 6510", {F_RADIO,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"7110" ,"NSE-5" ,"Nokia 7110", {0}},
@@ -706,7 +710,8 @@ static OnePhoneModel allmodels[] = {
 	{"8290" ,"NSB-7" ,"Nokia 8290", {F_NOWAP,F_NOSTARTANI,F_NOPBKUNICODE,F_NOPICTUREUNI,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"8310" ,"NHM-7" ,"Nokia 8310", {0}},
+	{"8310" ,"NHM-7" ,"Nokia 8310", {F_RADIO,0}},
+	{"8390" ,"NSB-8" ,"Nokia 8390", {0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6110)
 	{"8850" ,"NSM-2" ,"Nokia 8850", {0}},

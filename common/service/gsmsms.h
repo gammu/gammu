@@ -252,7 +252,7 @@ void GSM_SMSCounter(int 		MessageLength,
 		    int 		*SMSNum,
 		    int 		*CharsLeft);
 
-#define MAX_MULTI_SMS 6
+#define MAX_MULTI_SMS 10
 
 typedef struct {
 	unsigned char	Number;
@@ -292,17 +292,17 @@ typedef enum {
 	SMS_EnableFax,
 	SMS_EnableEmail,
 	SMS_VoidSMS,
-	SMS_EMSSound10,			/* IMelody */
-	SMS_EMSSound12,			/* IMelody */
+	SMS_EMSSound10,			/* IMelody 1.0 */
+	SMS_EMSSound12,			/* IMelody 1.2 */
 	SMS_EMSPredefinedSound,
 	SMS_EMSPredefinedAnimation,
 	SMS_EMSAnimation,
-	SMS_EMSBitmap
+	SMS_EMSFixedBitmap		/* 8x8 or 16x16 or 32x32 */
 } EncodeMultiPartSMSID;
 
 typedef struct {
-	/* Input values */
 	EncodeMultiPartSMSID    ID;
+
 	int			Number;
 	GSM_Ringtone		*Ringtone;
 	GSM_MultiBitmap		*Bitmap;
@@ -311,12 +311,18 @@ typedef struct {
 	GSM_PhonebookEntry	*Phonebook;
 	GSM_CalendarEntry	*Calendar;
 	unsigned char		*Buffer;
-	bool			UnicodeCoding;
-	int			Class;
-	unsigned char		ReplaceMessage;
 
 	/* Return values */
 	int			RingtoneNotes;
+} EncodeMultiPartSMSEntry;
+
+typedef struct {
+	/* Input values */
+	EncodeMultiPartSMSEntry Entries[MAX_MULTI_SMS];
+	int			EntriesNum;
+	bool			UnicodeCoding;
+	int			Class;
+	unsigned char		ReplaceMessage;
 } GSM_EncodeMultiPartSMSInfo;
 
 GSM_Error GSM_EncodeMultiPartSMS	(GSM_EncodeMultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS);

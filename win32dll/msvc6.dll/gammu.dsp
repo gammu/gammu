@@ -186,6 +186,10 @@ SOURCE=..\..\common\phone\pfunc.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\phone\at\siemens.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\device\serial\win32.c
 # End Source File
 # End Group

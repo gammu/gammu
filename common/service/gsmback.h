@@ -12,7 +12,7 @@
 
 #define GSM_BACKUP_MAX_PHONEPHONEBOOK 	501
 #define GSM_BACKUP_MAX_SIMPHONEBOOK 	251
-#define GSM_BACKUP_MAX_CALENDAR 	151
+#define GSM_BACKUP_MAX_CALENDAR 	200
 #define GSM_BACKUP_MAX_CALLER	 	6
 #define GSM_BACKUP_MAX_SMSC		10
 #define GSM_BACKUP_MAX_WAPBOOKMARK	40
@@ -24,7 +24,8 @@
 typedef struct {
 	char			IMEI		[50];
 	char			Model		[50];
-	char			DateTime	[200];
+	GSM_DateTime		DateTime;
+	bool			DateTimeAvailable;
 	GSM_PhonebookEntry	*PhonePhonebook	[GSM_BACKUP_MAX_PHONEPHONEBOOK + 1];
 	GSM_PhonebookEntry	*SIMPhonebook	[GSM_BACKUP_MAX_SIMPHONEBOOK + 1];
 	GSM_CalendarEntry	*Calendar	[GSM_BACKUP_MAX_CALENDAR + 1];
@@ -33,7 +34,7 @@ typedef struct {
 	GSM_WAPBookmark		*WAPBookmark	[GSM_BACKUP_MAX_WAPBOOKMARK + 1];
 	GSM_MultiWAPSettings	*WAPSettings	[GSM_BACKUP_MAX_WAPSETTINGS + 1];
 	GSM_Ringtone		*Ringtone	[GSM_BACKUP_MAX_RINGTONES + 1];
-	GSM_TODO		*ToDo		[GSM_BACKUP_MAX_TODO + 1];
+	GSM_ToDoEntry		*ToDo		[GSM_BACKUP_MAX_TODO + 1];
 	GSM_Profile		*Profiles	[GSM_BACKUP_MAX_PROFILES + 1];
 	GSM_Bitmap		*StartupLogo;
 	GSM_Bitmap		*OperatorLogo;

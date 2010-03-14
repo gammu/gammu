@@ -90,7 +90,7 @@ static bool ReadBackupText(CFG_Header *file_info, char *section, char *myname, c
 	return true;
 }
 
-static void ReadvCalTime(GSM_DateTime *dt, char *time)
+static void ReadVCalDateTime(GSM_DateTime *dt, char *time)
 {
 	char year[5]="", month[3]="", day[3]="", hour[3]="", minute[3]="", second[3]="";
 
@@ -114,11 +114,35 @@ static void ReadvCalTime(GSM_DateTime *dt, char *time)
 	dt->Timezone	= 0;
 }
 
-static void SaveVCalTime(FILE *file, GSM_DateTime *dt)
+static void ReadvCalDate(GSM_DateTime *dt, char *time)
+{
+	char year[5]="", month[3]="", day[3]="";
+
+	dt->Year=dt->Month=dt->Day=dt->Hour=dt->Minute=dt->Second=dt->Timezone=0;
+
+	strncpy(year, 	time, 		4);
+	strncpy(month, 	time+4, 	2);
+	strncpy(day, 	time+6, 	2);
+
+	/* FIXME: Should check ranges... */
+	dt->Year	= atoi(year);
+	dt->Month	= atoi(month);
+	dt->Day		= atoi(day);
+	/* FIXME */
+	dt->Timezone	= 0;
+}
+
+static void SaveVCalDateTime(FILE *file, GSM_DateTime *dt)
 {
 	fprintf(file, " = %04d%02d%02dT%02d%02d%02d\n",
 		dt->Year, dt->Month, dt->Day,
 		dt->Hour, dt->Minute, dt->Second);
+}
+
+static void SaveVCalDate(FILE *file, GSM_DateTime *dt)
+{
+	fprintf(file, " = %04d%02d%02d\n",
+		dt->Year, dt->Month, dt->Day);
 }
 
 /* ------------------- Backup text files ----------------------------------- */
@@ -252,12 +276,15 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note)
 {
 	int i;
 
+	fprintf(file,"Location = %d\n", Note->Location);
 	fprintf(file,"Type = ");
 	switch (Note->Type) {
 		case GCN_REMINDER : fprintf(file,"Reminder\n");			break;
 		case GCN_CALL     : fprintf(file,"Call\n");			break;
 		case GCN_MEETING  : fprintf(file,"Meeting\n");			break;
 		case GCN_BIRTHDAY : fprintf(file,"Birthday\n");			break;
+		case GCN_ALARM    : fprintf(file,"Alarm\n");			break;
+		case GCN_DAILY_ALARM : fprintf(file,"DailyAlarm\n");			break;
 		case GCN_T_ATHL   : fprintf(file,"Training/Athletism\n"); 	break;
        		case GCN_T_BALL   : fprintf(file,"Training/BallGames\n"); 	break;
                 case GCN_T_CYCL   : fprintf(file,"Training/Cycling\n"); 	break;
@@ -281,18 +308,28 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note)
 	for (i=0;i<Note->EntriesNum;i++) {
 		switch (Note->Entries[i].EntryType) {
 		case CAL_START_DATETIME:
-			fprintf(file, "Time");
-			SaveVCalTime(file, &Note->Entries[i].Date);
+			fprintf(file, "StartTime");
+			SaveVCalDateTime(file, &Note->Entries[i].Date);
+			break;
+		case CAL_STOP_DATETIME:
+			fprintf(file, "StopTime");
+			SaveVCalDateTime(file, &Note->Entries[i].Date);
 			break;
 		case CAL_ALARM_DATETIME:
 			fprintf(file, "Alarm");
-			SaveVCalTime(file, &Note->Entries[i].Date);
+			SaveVCalDateTime(file, &Note->Entries[i].Date);
 			fprintf(file, "AlarmType = Tone\n");
 			break;
 		case CAL_SILENT_ALARM_DATETIME:
 			fprintf(file, "Alarm");
-			SaveVCalTime(file, &Note->Entries[i].Date);
+			SaveVCalDateTime(file, &Note->Entries[i].Date);
 			fprintf(file, "AlarmType = Silent\n");
+			break;
+		case CAL_PRIVATE:
+			fprintf(file, "Private = %d\n",Note->Entries[i].Number);
+			break;
+		case CAL_CONTACTID:
+			fprintf(file, "ContactID = %d\n",Note->Entries[i].Number);
 			break;
 		case CAL_RECURRANCE:
 			fprintf(file, "Recurrance = %d\n",Note->Entries[i].Number/24);
@@ -303,6 +340,29 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note)
 		case CAL_PHONE:
 			SaveBackupText(file, "Phone", Note->Entries[i].Text);
 			break;               
+		case CAL_REPEAT_STOPDATE:
+			fprintf(file, "RepeatStopDate");
+			SaveVCalDate(file, &Note->Entries[i].Date);
+			break;
+		case CAL_REPEAT_STARTDATE:
+			fprintf(file, "RepeatStartDate");
+			SaveVCalDate(file, &Note->Entries[i].Date);
+			break;
+		case CAL_REPEAT_DAYOFWEEK:
+			fprintf(file, "RepeatDayOfWeek = %d\n",Note->Entries[i].Number);
+			break;
+		case CAL_REPEAT_DAY:
+			fprintf(file, "RepeatDay = %d\n",Note->Entries[i].Number);
+			break;
+		case CAL_REPEAT_WEEKOFMONTH:
+			fprintf(file, "RepeatWeekOfMonth = %d\n",Note->Entries[i].Number);
+			break;
+		case CAL_REPEAT_MONTH:
+			fprintf(file, "RepeatMonth = %d\n",Note->Entries[i].Number);
+			break;
+		case CAL_REPEAT_FREQUENCY:
+			fprintf(file, "RepeatFrequency = %d\n",Note->Entries[i].Number);
+			break;
 		}
 	}
 	fprintf(file,"\n");
@@ -495,11 +555,43 @@ static void SaveOperatorEntry(FILE *file, GSM_Bitmap *bitmap)
 	fprintf(file,"\n");
 }
 
-static void SaveToDoEntry(FILE *file, GSM_TODO *ToDo)
+static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo)
 {
+    	int j;
+
 	fprintf(file,"Location = %i\n",ToDo->Location);
-	SaveBackupText(file, "Text", ToDo->Text);
-	fprintf(file,"Priority = %02x\n\n",ToDo->Priority);
+	fprintf(file,"Priority = %02x\n",ToDo->Priority);
+	
+	for (j=0;j<ToDo->EntriesNum;j++) {
+        switch (ToDo->Entries[j].EntryType) {
+            case TODO_DUEDATE:
+                fprintf(file, "DueDate");
+                SaveVCalDate(file, &ToDo->Entries[j].Date);
+                break;
+            case TODO_COMPLETED:
+	        fprintf(file,"Completed = %i\n",ToDo->Entries[j].Number);
+                break;
+            case TODO_ALARM_DATETIME:
+                fprintf(file, "Alarm");
+                SaveVCalDateTime(file, &ToDo->Entries[j].Date);
+                break;
+            case TODO_TEXT:
+	        SaveBackupText(file, "Text", ToDo->Entries[j].Text);
+                break;
+            case TODO_PRIVATE:
+	        fprintf(file,"Private = %i\n",ToDo->Entries[j].Number);
+                break;
+            case TODO_CATEGORY:
+	        fprintf(file,"Category = %i\n",ToDo->Entries[j].Number);
+                break;
+            case TODO_CONTACTID:
+	        fprintf(file,"ContactID = %i\n",ToDo->Entries[j].Number);
+                break;
+            case TODO_PHONE:
+	        SaveBackupText(file, "Phone", ToDo->Entries[j].Text);
+                break;
+        }
+    }
 }
 
 static void SaveProfileEntry(FILE *file, GSM_Profile *Profile)
@@ -686,7 +778,10 @@ static GSM_Error SaveBackup(FILE *file, GSM_Backup *backup)
 	fprintf(file,"[Backup]\n");
 	fprintf(file,"IMEI = \"%s\"\n",backup->IMEI);
 	fprintf(file,"Phone = \"%s\"\n",backup->Model);
-	fprintf(file,"Time = \"%s\"\n",backup->DateTime);
+	if (backup->DateTimeAvailable) {
+		fprintf(file,"DateTime");
+		SaveVCalDateTime(file, &backup->DateTime);
+	}
 	fprintf(file,"Format = 1.01\n");
 	fprintf(file,"\n");
 
@@ -1090,6 +1185,10 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 	unsigned char		buffer[10000];
 	char			*readvalue;
 
+	sprintf(buffer,"Location");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) note->Location = atoi(readvalue);
+
 	sprintf(buffer,"Type");
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	note->Type = GCN_REMINDER;
@@ -1101,6 +1200,10 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 			note->Type = GCN_MEETING;
 		} else if (mystrncasecmp(readvalue,"Birthday",0)) {
 			note->Type = GCN_BIRTHDAY;
+		} else if (mystrncasecmp(readvalue,"DailyAlarm",0)) {
+			note->Type = GCN_DAILY_ALARM;
+		} else if (mystrncasecmp(readvalue,"Alarm",0)) {
+			note->Type = GCN_ALARM;
 		} else if (mystrncasecmp(readvalue,"Training/Athletism",0)) {
 			note->Type = GCN_T_ATHL;
 		} else if (mystrncasecmp(readvalue,"Training/BallGames",0)) {
@@ -1152,6 +1255,20 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 		note->Entries[note->EntriesNum].EntryType = CAL_PHONE;
 		note->EntriesNum++;
 	}
+	sprintf(buffer,"Private");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_PRIVATE;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"ContactID");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_CONTACTID;
+		note->EntriesNum++;
+	}
 	sprintf(buffer,"Recurrance");
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
@@ -1159,18 +1276,25 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 		note->Entries[note->EntriesNum].EntryType = CAL_RECURRANCE;
 		note->EntriesNum++;
 	}
-	sprintf(buffer,"Time");
+	sprintf(buffer,"StartTime");
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
-		ReadvCalTime(&note->Entries[note->EntriesNum].Date, readvalue);
+		ReadVCalDateTime(&note->Entries[note->EntriesNum].Date, readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_START_DATETIME;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"StopTime");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		ReadVCalDateTime(&note->Entries[note->EntriesNum].Date, readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_STOP_DATETIME;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"Alarm");
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL)
 	{
-		ReadvCalTime(&note->Entries[note->EntriesNum].Date, readvalue);
+		ReadVCalDateTime(&note->Entries[note->EntriesNum].Date, readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_ALARM_DATETIME;
 		sprintf(buffer,"AlarmType");
 		readvalue = CFG_Get(file_info, section, buffer, false);
@@ -1182,19 +1306,128 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 		}
 		note->EntriesNum++;
 	}
+	sprintf(buffer,"RepeatStartDate");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		ReadVCalDateTime(&note->Entries[note->EntriesNum].Date, readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STARTDATE;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"RepeatStopDate");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		ReadVCalDateTime(&note->Entries[note->EntriesNum].Date, readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"RepeatDayOfWeek");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_DAYOFWEEK;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"RepeatDay");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_DAY;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"RepeatWeekOfMonth");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_WEEKOFMONTH;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"RepeatMonth");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_MONTH;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"RepeatFrequency");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
+		note->EntriesNum++;
+	}
 }
 
-static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_TODO *ToDo)
+static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_ToDoEntry *ToDo)
 {
 	unsigned char		buffer[10000];
 	char			*readvalue;
 
-	sprintf(buffer,"Text");
-	ReadBackupText(file_info, section, buffer, ToDo->Text);
+    	ToDo->EntriesNum = 0;
+
 	ToDo->Priority = 1;
 	sprintf(buffer,"Priority");
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) ToDo->Priority = atoi(readvalue);
+
+	sprintf(buffer,"Text");
+	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text)) {
+  	      	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
+        	ToDo->EntriesNum++;
+    	}
+
+	sprintf(buffer,"Phone");
+	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text)) {
+        	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_PHONE;
+        	ToDo->EntriesNum++;
+    	}
+    
+	sprintf(buffer,"Private");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+        	ToDo->Entries[ToDo->EntriesNum].Number 		= atoi(readvalue);
+        	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_PRIVATE;
+        	ToDo->EntriesNum++;
+    	}
+    
+	sprintf(buffer,"Completed");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+        	ToDo->Entries[ToDo->EntriesNum].Number 		= atoi(readvalue);
+        	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_COMPLETED;
+        	ToDo->EntriesNum++;
+    	}
+    
+	sprintf(buffer,"Category");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+        	ToDo->Entries[ToDo->EntriesNum].Number		= atoi(readvalue);
+        	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_CATEGORY;
+        	ToDo->EntriesNum++;
+    	}
+
+	sprintf(buffer,"ContactID");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+       	 	ToDo->Entries[ToDo->EntriesNum].Number 		= atoi(readvalue);
+        	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_CONTACTID;
+        	ToDo->EntriesNum++;
+    	}
+
+	sprintf(buffer,"DueDate");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		ReadvCalDate(&ToDo->Entries[ToDo->EntriesNum].Date, readvalue);
+        	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_DUEDATE;
+        	ToDo->EntriesNum++;
+   	}
+    
+	sprintf(buffer,"Alarm");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) {
+		ReadVCalDateTime(&ToDo->Entries[ToDo->EntriesNum].Date, readvalue);
+        	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_ALARM_DATETIME;
+        	ToDo->EntriesNum++;
+    	}
 }
 
 static void ReadBitmapEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bitmap)
@@ -1699,8 +1932,11 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	if (readvalue!=NULL) strcpy(backup->IMEI,readvalue);
 	readvalue = CFG_Get(file_info, buffer, "Phone", false);
 	if (readvalue!=NULL) strcpy(backup->Model,readvalue);
-	readvalue = CFG_Get(file_info, buffer, "Time", false);
-	if (readvalue!=NULL) strcpy(backup->DateTime,readvalue);
+	readvalue = CFG_Get(file_info, buffer, "DateTime", false);
+	if (readvalue!=NULL) {
+		ReadVCalDateTime(&backup->DateTime, readvalue);
+		backup->DateTimeAvailable = true;
+	}
 
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
@@ -1899,7 +2135,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_TODO) {
-				backup->ToDo[num] = malloc(sizeof(GSM_TODO));
+				backup->ToDo[num] = malloc(sizeof(GSM_ToDoEntry));
 			        if (backup->ToDo[num] == NULL) return GE_MOREMEMORY;
 				backup->ToDo[num + 1] = NULL;
 			} else {
@@ -2200,7 +2436,7 @@ void GSM_ClearBackup(GSM_Backup *backup)
 
 	backup->IMEI		[0] = 0;
 	backup->Model		[0] = 0;
-	backup->DateTime	[0] = 0;
+	backup->DateTimeAvailable   = false;
 }
 
 /* ----------------------- SMS Backup functions ---------------------------- */
@@ -2229,7 +2465,7 @@ static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMess
 	sprintf(buffer,"Sent");
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
-		ReadvCalTime(&SMS->DateTime, readvalue);
+		ReadVCalDateTime(&SMS->DateTime, readvalue);
 		SMS->PDU = SMS_Deliver;
 	}
 	sprintf(buffer,"RejectDuplicates");
@@ -2380,7 +2616,7 @@ GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 			SaveBackupText(file, "SMSC", backup->SMS[i]->SMSC.Number);
 			if (backup->SMS[i]->ReplyViaSameSMSC) fprintf(file,"SMSCReply = true\n");
 			fprintf(file,"Sent");
-			SaveVCalTime(file,&backup->SMS[i]->DateTime);
+			SaveVCalDateTime(file,&backup->SMS[i]->DateTime);
 		}
 		fprintf(file,"State = ");
 		switch (backup->SMS[i]->State) {

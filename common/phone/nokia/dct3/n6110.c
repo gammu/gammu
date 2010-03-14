@@ -154,8 +154,7 @@ static GSM_Error N6110_Initialise (GSM_StateMachine *s)
 	}
 #endif
 #ifdef DEBUG
-	error=DCT3_SetIncomingCB(s,true);
-	if (error!=GE_NONE) return error;
+	DCT3_SetIncomingCB(s,true);
 #endif
 
 	return GE_NONE;
@@ -473,13 +472,18 @@ static GSM_Error N6110_ReplyGetStatus(GSM_Protocol_Message msg, GSM_Phone_Data *
 	dprintf("Signal strength       : %d\n", msg.Buffer[5]);
 #endif
 
-	switch (Data->RequestID) {
-	case ID_GetBatteryLevel:
-		*Data->BatteryLevel=((int)msg.Buffer[8])*25;
-		return GE_NONE;
-	case ID_GetNetworkLevel:
-		*Data->NetworkLevel=((int)msg.Buffer[5])*25;
-		return GE_NONE;
+  	switch (Data->RequestID) {
+ 	case ID_GetBatteryCharge:
+		Data->BatteryCharge->BatteryPercent = ((int)msg.Buffer[8])*25;
+		switch (msg.Buffer[7]) {
+			case 0x01: Data->BatteryCharge->ChargeState = GSM_BatteryConnected; 	break;
+			case 0x02: Data->BatteryCharge->ChargeState = GSM_BatteryPowered;	break;
+			default  : Data->BatteryCharge->ChargeState = 0;
+		}
+ 		return GE_NONE;
+ 	case ID_GetSignalQuality:
+ 		Data->SignalQuality->SignalPercent  = ((int)msg.Buffer[5])*25;
+  		return GE_NONE;
 	}
 	return GE_UNKNOWNRESPONSE;
 }
@@ -490,29 +494,32 @@ static GSM_Error N6110_GetStatus(GSM_StateMachine *s, int ID)
 	return GSM_WaitFor (s, req, 4, 0x04, 4, ID);
 }
 
-static GSM_Error N6110_GetNetworkLevel(GSM_StateMachine *s, int *level)
+static GSM_Error N6110_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
 {
 	char 		value[100];
 	GSM_Error 	error;
+
+	sig->BitErrorRate   = -1;
+	sig->SignalStrength = -1; /* TODO for netmon */
 
 	dprintf("Getting network level\n");
 	if (IsPhoneFeatureAvailable(s->Model, F_POWER_BATT)) {
 		error = DCT3_Netmonitor(s, 1, value);
 		if (error!=GE_NONE) return error;
-		*level = 100;
+		sig->SignalPercent = 100;
 		if (value[4]!='-') {
-			if (value[5]=='9' && value[6]>'4') *level = 25;
-			if (value[5]=='9' && value[6]<'5') *level = 50;
-			if (value[5]=='8' && value[6]>'4') *level = 75;      
-		} else *level = 0;
+			if (value[5]=='9' && value[6]>'4') sig->SignalPercent = 25;
+			if (value[5]=='9' && value[6]<'5') sig->SignalPercent = 50;
+			if (value[5]=='8' && value[6]>'4') sig->SignalPercent = 75;      
+		} else sig->SignalPercent = 0;
 		return GE_NONE;
 	} else {
-		s->Phone.Data.NetworkLevel=level;
-		return N6110_GetStatus(s, ID_GetNetworkLevel);
+ 		s->Phone.Data.SignalQuality = sig;
+		return N6110_GetStatus(s, ID_GetSignalQuality);
 	}
 }
 
-static GSM_Error N6110_GetBatteryLevel(GSM_StateMachine *s, int *level)
+static GSM_Error N6110_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 {
 	char 		value[100];
 	GSM_Error 	error;
@@ -521,14 +528,15 @@ static GSM_Error N6110_GetBatteryLevel(GSM_StateMachine *s, int *level)
 	if (IsPhoneFeatureAvailable(s->Model, F_POWER_BATT)) {
 		error = DCT3_Netmonitor(s, 23, value);
 		if (error!=GE_NONE) return error;
-		*level = 100;
-		if (value[29]=='7') *level = 75;
-		if (value[29]=='5') *level = 50;
-		if (value[29]=='2') *level = 25;
-		return GE_NONE;
-	} else {
-		s->Phone.Data.BatteryLevel=level;
-		return N6110_GetStatus(s, ID_GetBatteryLevel);
+		bat->BatteryPercent 	= 100;
+		bat->ChargeState 	= 0;
+ 		if (value[29]=='7') bat->BatteryPercent = 75;
+ 		if (value[29]=='5') bat->BatteryPercent = 50;
+ 		if (value[29]=='2') bat->BatteryPercent = 25;
+  		return GE_NONE;
+  	} else {
+ 		s->Phone.Data.BatteryCharge = bat;
+ 		return N6110_GetStatus(s, ID_GetBatteryCharge);
 	}
 }
 
@@ -1091,17 +1099,21 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 static GSM_Error N6110_ReplyCallInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 #ifdef DEBUG
-	int tmp, count;
+	int 		tmp, count;
 #endif
+	GSM_Call 	call;
+
 	switch (msg.Buffer[3]) {
 	case 0x02:
 		dprintf("Call going, sequence %d\n",msg.Buffer[4]);
 		break;
 	case 0x03:
 		dprintf("Call in progress, sequence %d\n",msg.Buffer[4]);
+		call.Status = GN_CALL_CallStart;
 		break;
 	case 0x04:
 		dprintf("Remote end hang up, sequence %d, error %i\n",msg.Buffer[4],msg.Buffer[6]);
+		call.Status = GN_CALL_CallRemoteEnd;
 		break;	
 	case 0x05:
 #ifdef DEBUG
@@ -1112,12 +1124,17 @@ static GSM_Error N6110_ReplyCallInfo(GSM_Protocol_Message msg, GSM_Phone_Data *D
 		for (tmp=0; tmp<msg.Buffer[7+count]; tmp++) dprintf("%c", msg.Buffer[8+count+tmp]);
 		dprintf("\"\n");
 #endif
+		if (Data->EnableIncomingCall && User->IncomingCall!=NULL) {
+			call.Status = GN_CALL_IncomingCall;
+			EncodeUnicode(call.PhoneNumber, msg.Buffer+7, msg.Buffer[6]);
+		}
 		break;
 	case 0x07:
 		dprintf("Call answered, sequence %d\n",msg.Buffer[4]);
 		break;
 	case 0x09:
 		dprintf("Call end from your phone, sequence %d\n",msg.Buffer[4]);
+		call.Status = GN_CALL_CallLocalEnd;
 		break;
 	case 0x0a:
 		dprintf("Call info, meaning not known, sequence %d\n",msg.Buffer[4]);
@@ -1128,6 +1145,9 @@ static GSM_Error N6110_ReplyCallInfo(GSM_Protocol_Message msg, GSM_Phone_Data *D
 	case 0x25:
 		dprintf("Call resumed, meaning not known, sequence %d\n",msg.Buffer[4]);
 		break;
+	}
+	if (Data->EnableIncomingCall && User->IncomingCall!=NULL) {
+		User->IncomingCall(Data->Device, call);
 	}
 	return GE_NONE;
 }
@@ -1823,7 +1843,7 @@ static GSM_Error N6110_ReplyAddCalendar(GSM_Protocol_Message msg, GSM_Phone_Data
 	return GE_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6110_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+static GSM_Error N6110_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
 {
 	bool		Reminder3310 = false;
  	int 		Text, Time, Alarm, Phone, Recurrance, i, current;
@@ -1836,6 +1856,7 @@ static GSM_Error N6110_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 		0x00, 0x00, 0x00, 0x01, 0x00, 0x66, 0x01};
 
 	if (IsPhoneFeatureAvailable(s->Model, F_NOCALENDAR)) return GE_NOTSUPPORTED;
+	if (!Past && IsNoteFromThePast(*Note)) return GE_NONE;
 
 	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(*Note, &Text, &Time, &Alarm, &Phone, &Recurrance);
 
@@ -1864,6 +1885,7 @@ static GSM_Error N6110_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 		        case GCN_T_TENN  : req[7]=0x15; break;
 		        case GCN_T_TRAV  : req[7]=0x16; break;
 		        case GCN_T_WINT  : req[7]=0x17; break;	
+			default		 : req[7]=0x01; break;
 		}
 	} else {
 		switch(Note->Type) {
@@ -2178,6 +2200,24 @@ static GSM_Error N6110_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *N
 	return error;
 }
 
+GSM_Error N6110_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+	unsigned char buffer[2000],buffer2[4000];
+	int tmp;
+
+	tmp=GSM_UnpackEightBitsToSeven(0, 82, 82, msg.Buffer+8, buffer);
+	msg.Buffer[tmp] = 0;
+
+	dprintf("USSD reply: \"%s\"\n",buffer);
+
+	if (Data->EnableIncomingUSSD && User->IncomingUSSD!=NULL) {
+		EncodeUnicode(buffer2,buffer,strlen(buffer));
+		User->IncomingUSSD(Data->Device, buffer2);
+	}
+
+	return GE_NONE;
+}
+
 static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x02,ID_IncomingFrame	},
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x03,ID_IncomingFrame	},
@@ -2217,8 +2257,8 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{N6110_ReplyGetSpeedDial,	"\x03",0x03,0x18,ID_GetSpeedDial	},
 	/* 0x1A, 0x1B - reply set speed dial */
 
-	{N6110_ReplyGetStatus,		"\x04",0x03,0x02,ID_GetNetworkLevel	},
-	{N6110_ReplyGetStatus,		"\x04",0x03,0x02,ID_GetBatteryLevel	},
+	{N6110_ReplyGetStatus,		"\x04",0x03,0x02,ID_GetSignalQuality	},
+	{N6110_ReplyGetStatus,		"\x04",0x03,0x02,ID_GetBatteryCharge	},
 
 	{N6110_ReplySetProfileFeature,	"\x05",0x03,0x11,ID_SetProfile		},
 	{N6110_ReplySetProfileFeature,	"\x05",0x03,0x12,ID_SetProfile		},
@@ -2233,7 +2273,7 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{N6110_ReplySetRingtone,	"\x05",0x03,0x37,ID_SetRingtone		},
 	{N6110_ReplySetRingtone,	"\x05",0x03,0x38,ID_SetRingtone		},
 
-	/* msg type 0x06 - call divert */
+	{N6110_ReplyUSSDInfo,		"\x06",0x03,0x05,ID_IncomingFrame	},
 
 	{N6110_ReplyGetSecurityStatus,	"\x08",0x03,0x08,ID_GetSecurityStatus	},
 	{N6110_ReplyEnterSecurityCode,	"\x08",0x03,0x0b,ID_EnterSecurityCode	},
@@ -2332,8 +2372,6 @@ GSM_Phone_Functions N6110Phone = {
 	N6110_GetMemoryStatus,
 	DCT3_GetSMSC,
 	N6110_GetSMSMessage,
-	N6110_GetBatteryLevel,
-	N6110_GetNetworkLevel,
 	PHONE_GetSMSFolders,
 	NOKIA_GetManufacturer,
 	N6110_GetNextSMSMessage,
@@ -2383,10 +2421,16 @@ GSM_Phone_Functions N6110Phone = {
 	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
 	N6110_SetProfile,
 	NOTSUPPORTED,		/*	GetSIMIMSI		*/
-	NONEFUNCTION,		/*	SetIncomingCall		*/
+	NOKIA_SetIncomingCall,
     	N6110_GetNextCalendar,
 	N6110_DeleteCalendar,
-	N6110_AddCalendar
+	N6110_AddCalendar,
+	N6110_GetBatteryCharge,
+	N6110_GetSignalQuality,
+	NOTSUPPORTED,       	/*  	GetCategory 		*/
+        NOTSUPPORTED,        	/*  	GetCategoryStatus 	*/
+    	NOTSUPPORTED,		/*  	GetFMStation        	*/
+	NOKIA_SetIncomingUSSD
 };
 
 #endif

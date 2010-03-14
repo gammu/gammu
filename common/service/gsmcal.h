@@ -32,16 +32,29 @@ typedef enum {
         GCN_T_SWIM,     /* Training - Swimming       */
         GCN_T_TENN,     /* Training - Tennis         */
         GCN_T_TRAV,     /* Training - Travels        */
-        GCN_T_WINT      /* Training - Winter Games   */
+        GCN_T_WINT,     /* Training - Winter Games   */
+
+	GCN_ALARM,
+	GCN_DAILY_ALARM
 } GSM_CalendarNoteType;
 
 typedef enum {
 	CAL_START_DATETIME = 1,
+	CAL_STOP_DATETIME,
 	CAL_ALARM_DATETIME,
 	CAL_SILENT_ALARM_DATETIME,
 	CAL_RECURRANCE,
 	CAL_TEXT,
-	CAL_PHONE
+	CAL_PHONE,
+	CAL_PRIVATE,
+	CAL_CONTACTID,
+	CAL_REPEAT_DAYOFWEEK,
+	CAL_REPEAT_DAY,
+	CAL_REPEAT_WEEKOFMONTH,
+	CAL_REPEAT_MONTH,
+	CAL_REPEAT_FREQUENCY,
+	CAL_REPEAT_STARTDATE,
+	CAL_REPEAT_STOPDATE,
 } GSM_CalendarType;
 
 typedef struct {
@@ -62,18 +75,42 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry entry
 
 GSM_Error NOKIA_EncodeVCALENDAR10SMSText(char *Buffer, int *Length, GSM_CalendarEntry note);
 
+bool IsNoteFromThePast(GSM_CalendarEntry note);
+
 /* ------------------------------ to-do ------------------------------------ */
+
+#define GSM_TODO_ENTRIES		7
+#define MAX_TODO_TEXT_LENGTH    	50 /* Alcatel BE5 50 chars */
+
+typedef enum {
+	TODO_DUEDATE = 1,
+    	TODO_COMPLETED,
+	TODO_ALARM_DATETIME,
+	TODO_TEXT,
+    	TODO_PRIVATE,
+    	TODO_CATEGORY,
+    	TODO_CONTACTID,
+	TODO_PHONE
+} GSM_ToDoType;
 
 typedef enum {
 	GSM_Priority_Low = 1,
 	GSM_Priority_Medium,
 	GSM_Priority_High
-} GSM_TODO_Priority;
+} GSM_ToDo_Priority;
 
 typedef struct {
-	int			Location;
-	GSM_TODO_Priority	Priority;
-	unsigned char		Text[50*2];	/* text. 6310i = max. 48 chars */
-} GSM_TODO;
+	GSM_ToDoType        EntryType;
+	unsigned char       Text[(MAX_TODO_TEXT_LENGTH + 1)*2];
+	GSM_DateTime        Date;
+	int                 Number;
+} GSM_SubToDoEntry;
+
+typedef struct {
+	GSM_ToDo_Priority	Priority;
+	int 			Location;           /* Location */
+	int 			EntriesNum;         /* Number of entries */
+	GSM_SubToDoEntry   	Entries[GSM_TODO_ENTRIES];
+} GSM_ToDoEntry;
 
 #endif	/* __gsm_calendar_h */
