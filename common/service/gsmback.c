@@ -37,7 +37,7 @@ static void SaveLinkedBackupText(FILE *file, char *myname, char *myvalue)
 
 static void ReadLinkedBackupText(CFG_Header *file_info, char *section, char *myname, char *myvalue)
 {
-	unsigned char		buffer2[50];
+	unsigned char		buffer2[500];
 	char			*readvalue;
 	int			i;
 
@@ -76,6 +76,7 @@ static bool ReadBackupText(CFG_Header *file_info, char *section, char *myname, c
 		DecodeHexBin (myvalue, readvalue, strlen(readvalue));
 		myvalue[strlen(readvalue)/2]=0;
 		myvalue[strlen(readvalue)/2+1]=0;
+		dprintf("%s\n",DecodeUnicodeString(myvalue));
 	} else {
 		strcpy(paramname,myname);
 		readvalue = CFG_Get(file_info, section, paramname, false);
@@ -279,31 +280,31 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note)
 	fprintf(file,"Location = %d\n", Note->Location);
 	fprintf(file,"Type = ");
 	switch (Note->Type) {
-		case GCN_REMINDER : fprintf(file,"Reminder\n");			break;
-		case GCN_CALL     : fprintf(file,"Call\n");			break;
-		case GCN_MEETING  : fprintf(file,"Meeting\n");			break;
-		case GCN_BIRTHDAY : fprintf(file,"Birthday\n");			break;
-		case GCN_ALARM    : fprintf(file,"Alarm\n");			break;
-		case GCN_DAILY_ALARM : fprintf(file,"DailyAlarm\n");			break;
-		case GCN_T_ATHL   : fprintf(file,"Training/Athletism\n"); 	break;
-       		case GCN_T_BALL   : fprintf(file,"Training/BallGames\n"); 	break;
-                case GCN_T_CYCL   : fprintf(file,"Training/Cycling\n"); 	break;
-                case GCN_T_BUDO   : fprintf(file,"Training/Budo\n"); 		break;
-                case GCN_T_DANC   : fprintf(file,"Training/Dance\n"); 		break;
-                case GCN_T_EXTR   : fprintf(file,"Training/ExtremeSports\n");	break;
-                case GCN_T_FOOT   : fprintf(file,"Training/Football\n"); 	break;
-                case GCN_T_GOLF   : fprintf(file,"Training/Golf\n"); 		break;
-                case GCN_T_GYM    : fprintf(file,"Training/Gym\n"); 		break;
-                case GCN_T_HORS   : fprintf(file,"Training/HorseRaces\n"); 	break;
-                case GCN_T_HOCK   : fprintf(file,"Training/Hockey\n"); 		break;
-                case GCN_T_RACE   : fprintf(file,"Training/Races\n"); 		break;
-                case GCN_T_RUGB   : fprintf(file,"Training/Rugby\n"); 		break;
-                case GCN_T_SAIL   : fprintf(file,"Training/Sailing\n"); 	break;
-                case GCN_T_STRE   : fprintf(file,"Training/StreetGames\n"); 	break;
-                case GCN_T_SWIM   : fprintf(file,"Training/Swimming\n"); 	break;
-                case GCN_T_TENN   : fprintf(file,"Training/Tennis\n"); 		break;
-                case GCN_T_TRAV   : fprintf(file,"Training/Travels\n"); 	break;
-                case GCN_T_WINT   : fprintf(file,"Training/WinterGames\n"); 	break;
+		case GCN_REMINDER 	: fprintf(file,"Reminder\n");			break;
+		case GCN_CALL     	: fprintf(file,"Call\n");			break;
+		case GCN_MEETING  	: fprintf(file,"Meeting\n");			break;
+		case GCN_BIRTHDAY 	: fprintf(file,"Birthday\n");			break;
+		case GCN_ALARM    	: fprintf(file,"Alarm\n");			break;
+		case GCN_DAILY_ALARM 	: fprintf(file,"DailyAlarm\n");			break;
+		case GCN_T_ATHL   	: fprintf(file,"Training/Athletism\n"); 	break;
+       		case GCN_T_BALL   	: fprintf(file,"Training/BallGames\n"); 	break;
+                case GCN_T_CYCL   	: fprintf(file,"Training/Cycling\n"); 	break;
+                case GCN_T_BUDO   	: fprintf(file,"Training/Budo\n"); 		break;
+                case GCN_T_DANC   	: fprintf(file,"Training/Dance\n"); 		break;
+                case GCN_T_EXTR   	: fprintf(file,"Training/ExtremeSports\n");	break;
+                case GCN_T_FOOT   	: fprintf(file,"Training/Football\n"); 	break;
+                case GCN_T_GOLF   	: fprintf(file,"Training/Golf\n"); 		break;
+                case GCN_T_GYM    	: fprintf(file,"Training/Gym\n"); 		break;
+                case GCN_T_HORS   	: fprintf(file,"Training/HorseRaces\n"); 	break;
+                case GCN_T_HOCK   	: fprintf(file,"Training/Hockey\n"); 		break;
+                case GCN_T_RACE   	: fprintf(file,"Training/Races\n"); 		break;
+                case GCN_T_RUGB   	: fprintf(file,"Training/Rugby\n"); 		break;
+                case GCN_T_SAIL   	: fprintf(file,"Training/Sailing\n"); 	break;
+                case GCN_T_STRE   	: fprintf(file,"Training/StreetGames\n"); 	break;
+                case GCN_T_SWIM   	: fprintf(file,"Training/Swimming\n"); 	break;
+                case GCN_T_TENN   	: fprintf(file,"Training/Tennis\n"); 		break;
+                case GCN_T_TRAV   	: fprintf(file,"Training/Travels\n"); 	break;
+                case GCN_T_WINT   	: fprintf(file,"Training/WinterGames\n"); 	break;
 	}
 	for (i=0;i<Note->EntriesNum;i++) {
 		switch (Note->Entries[i].EntryType) {
@@ -1932,6 +1933,23 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 	}
 }
 
+static void ReadFMStationEntry(CFG_Header *file_info, char *section, GSM_FMStation *FMStation)
+{
+	unsigned char		buffer[10000];
+	char			*readvalue;
+
+	sprintf(buffer,"Location");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) FMStation->Location = atoi(readvalue);
+
+	sprintf(buffer,"StationName");
+	ReadBackupText(file_info, section, buffer, FMStation->StationName);
+
+	sprintf(buffer,"Frequency");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	if (readvalue!=NULL) FMStation->Frequency = atoi(readvalue);
+}
+
 static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 {
 	CFG_Header		*file_info, *h;
@@ -2186,7 +2204,24 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	        if (backup->OperatorLogo == NULL) return GE_MOREMEMORY;
 		ReadOperatorEntry(file_info, buffer, backup->OperatorLogo);
 	}
-
+	num = 0;
+        for (h = file_info; h != NULL; h = h->next) {
+                if (mystrncasecmp("FMStation", h->section, 4)) {
+			readvalue = CFG_Get(file_info, h->section, "Location", false);
+			if (readvalue==NULL) break;
+			if (num < GSM_BACKUP_MAX_FMSTATIONS) {
+				backup->FMStation[num] = malloc(sizeof(GSM_FMStation));
+			        if (backup->FMStation[num] == NULL) return GE_MOREMEMORY;
+				backup->FMStation[num + 1] = NULL;
+			} else {
+				dprintf("Increase GSM_BACKUP_MAX_FMSTATIONS\n");
+				return GE_MOREMEMORY;
+			}
+			backup->FMStation[num]->Location = num + 1;
+			ReadFMStationEntry(file_info, h->section, backup->FMStation[num]);
+			num++;
+                }
+        }
 	return GE_NONE;
 }
 

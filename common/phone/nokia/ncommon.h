@@ -21,6 +21,7 @@ typedef enum {
 	N7110_ENTRYTYPE_NUMBER 		= 0x0b, /* Phonenumber 				*/
 	N7110_ENTRYTYPE_RINGTONE	= 0x0c, /* Ringtone number 			*/
 	N7110_ENTRYTYPE_DATE    	= 0x13, /* Date for a Called List 		*/
+	N7110_ENTRYTYPE_UNKNOWN1	= 0x19, /* With Missed Calls			*/
 	N7110_ENTRYTYPE_SPEEDDIAL	= 0x1a,	/* Speed Dial 				*/
 	N7110_ENTRYTYPE_GROUPLOGO	= 0x1b,	/* Caller group logo 			*/
 	N7110_ENTRYTYPE_LOGOON		= 0x1c,	/* Logo On? 				*/

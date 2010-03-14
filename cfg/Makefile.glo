@@ -111,12 +111,12 @@ uninstall:
 	@$(RM) -r $(DESTDIR)$(INSTALL_LOC_DIR)/
 
 installlocales:
-	@echo Installing locales to $(INSTALL_LOC_DIR)
+	@echo Installing locales to $(DESTDIR)$(INSTALL_LOC_DIR)
 	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LOC_DIR)
 	@$(FIND) docs/docs/locale -type f -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_LOC_DIR) \;
 
 installdocs:
-	@echo Installing docs to $(INSTALL_DOC_DIR)
+	@echo Installing docs to $(DESTDIR)$(INSTALL_DOC_DIR)
 	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_DOC_DIR)
 	@for xxx in $(DOCS); do \
 		( cd $(TOPDIR)/docs/$$xxx; \
@@ -184,7 +184,7 @@ makerpm: makecleantree
 	@echo Installing $(RPM_DIR)/SPECS/gammu.spec
 	@$(INSTALL) -m 0444 $(TOPDIR)/cfg/rpm/gammu.spec $(RPM_DIR)/SPECS/gammu.spec
 	@echo Making packages
-	@rpmbuild -ba -v $(RPM_DIR)/SPECS/gammu.spec
+	@rpm -ba -v $(RPM_DIR)/SPECS/gammu.spec
 	@rm -rf $(RPM_DIR)/SPECS/gammu.spec
 	@rm -rf $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz
 	@rm -rf $(RPM_DIR)/BUILD/gammu-$(VERSION)

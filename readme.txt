@@ -275,6 +275,9 @@ A  1. Nokia 3310 (3315):
        * notes with different start date/time than end date/time. Don't have
          info about end date/time
 
+       Additionaly method used for getting calendar notes from N35xx return
+       only 50 first chars of note text from each note.
+
        Current DCT4 phones with extended (when compare to 62xx/7110) calendar
        have only such API for accesing calendar like 62xx/7110. This is not
        Gammu fault. Thank Nokia for it.

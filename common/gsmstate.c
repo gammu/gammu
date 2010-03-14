@@ -697,9 +697,9 @@ static OnePhoneModel allmodels[] = {
 	{"3410" ,"NHM-2" ,"",           {F_RING_SM,F_CAL33,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_NOTODO,0}},
-	{"3510i","RH-9"  ,"",           {F_CAL35,F_NOTODO,0}},
-	{"3530" ,"RH-9"  ,"",           {F_CAL35,F_NOTODO,0}},
+	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_NOTODO,F_CALENDAR35,0}},
+	{"3510i","RH-9"  ,"",           {F_CAL35,F_NOTODO,F_CALENDAR35,0}},
+	{"3530" ,"RH-9"  ,"",           {F_CAL35,F_NOTODO,F_CALENDAR35,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"5100" ,"NPM-6" ,"Nokia 5100", {F_RADIO,0}},

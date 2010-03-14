@@ -3,7 +3,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
-
 #ifdef WIN32
 #  include <windows.h>
 #endif

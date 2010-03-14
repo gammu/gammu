@@ -3,8 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include <wctype.h>
-
+#ifndef __OpenBSD__
+#  include <wctype.h>
+#endif
 #ifdef WIN32
 #  include "windows.h"
 #endif

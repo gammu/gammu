@@ -420,19 +420,21 @@ GSM_Error DCT3_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 		smprintf(s, "   Network name for Gammu    : %s ",
 				DecodeUnicodeString(GSM_GetNetworkName(NetInfo.NetworkCode)));
 		smprintf(s, "(%s)\n",DecodeUnicodeString(GSM_GetCountryName(NetInfo.NetworkCode)));
-		if (msg.Buffer[18]==0x00) {
-			/* In 6210 name is in "normal" Unicode */
-			memcpy(name,msg.Buffer+18,msg.Buffer[17]*2);
-			name[msg.Buffer[17]*2]	=0x00;
-			name[msg.Buffer[17]*2+1]=0x00;
-			smprintf(s, "   Network name for phone    : %s\n",DecodeUnicodeString(name));
-		} else {
-			/* In 9210 first 0x00 is cut from Unicode string */
-			name[0] = 0;
-			memcpy(name+1,msg.Buffer+18,msg.Buffer[17]*2);
-			name[msg.Buffer[17]*2+1]=0x00;
-			name[msg.Buffer[17]*2+2]=0x00;
-			smprintf(s, "   Network name for phone    : %s\n",DecodeUnicodeString(name));
+		if (msg.Length>18) {
+			if (msg.Buffer[18]==0x00) {
+				/* In 6210 name is in "normal" Unicode */
+				memcpy(name,msg.Buffer+18,msg.Buffer[17]*2);
+				name[msg.Buffer[17]*2]	=0x00;
+				name[msg.Buffer[17]*2+1]=0x00;
+				smprintf(s, "   Network name for phone    : %s\n",DecodeUnicodeString(name));
+			} else {
+				/* In 9210 first 0x00 is cut from Unicode string */
+				name[0] = 0;
+				memcpy(name+1,msg.Buffer+18,msg.Buffer[17]*2);
+				name[msg.Buffer[17]*2+1]=0x00;
+				name[msg.Buffer[17]*2+2]=0x00;
+				smprintf(s, "   Network name for phone    : %s\n",DecodeUnicodeString(name));
+			}
 		}
 	}
 #endif

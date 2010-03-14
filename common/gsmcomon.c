@@ -3,11 +3,12 @@
 #include <string.h>
 #include <time.h>
 #include <stdio.h>
-#include <wchar.h>
+#ifndef __OpenBSD__
+#  include <wchar.h>
+#endif
 #ifdef WIN32
 #  include <windows.h>
 #else
-#  include <string.h>
 #  include <stdlib.h>
 #  include <errno.h>
 #  include <fcntl.h>

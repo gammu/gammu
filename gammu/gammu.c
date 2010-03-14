@@ -665,12 +665,14 @@ static void IncomingCall(char *Device, GSM_Call call)
 {
 	printmsg("Call info : ");
 	switch(call.Status) {
-		case GN_CALL_IncomingCall  : printmsg("incoming call from \"%s\"\n",DecodeUnicodeString(call.PhoneNumber)); break;
-		case GN_CALL_OutgoingCall  : printmsg("outgoing call to \"%s\"\n",DecodeUnicodeString(call.PhoneNumber));   break;
-		case GN_CALL_CallStart     : printmsg("outgoing call started\n"); 					  break;
-		case GN_CALL_CallEnd	   : printmsg("end of call (unknown side)\n"); 					  break;
-		case GN_CALL_CallLocalEnd  : printmsg("call end from our side\n");					  break;
-		case GN_CALL_CallRemoteEnd : printmsg("call end from remote side\n");					  break;
+		case GN_CALL_IncomingCall  	: printmsg("incoming call from \"%s\"\n",DecodeUnicodeString(call.PhoneNumber));  break;
+		case GN_CALL_OutgoingCall  	: printmsg("outgoing call to \"%s\"\n",DecodeUnicodeString(call.PhoneNumber));    break;
+		case GN_CALL_CallStart     	: printmsg("outgoing call started\n"); 					  	  break;
+		case GN_CALL_CallEnd	   	: printmsg("end of call (unknown side)\n"); 					  break;
+		case GN_CALL_CallLocalEnd  	: printmsg("call end from our side\n");						  break;
+		case GN_CALL_CallRemoteEnd 	: printmsg("call end from remote side\n");					  break;
+		case GN_CALL_CallEstablished   	: printmsg("call established. Waiting for answer\n");				  break;
+		case GN_CALL_OutgoingFreeCall   : printmsg("this outgoing call will be for free\n");				  break;
 	}
 }
 
@@ -1112,7 +1114,6 @@ static void GetCalendarNotes(int argc, char *argv[])
 	GSM_DateTime		Alarm,DateTime;
 
     	bool 			repeating 		= false;
-    	char 			s1[200], s2[100];
     	int 			repeat_dayofweek 	= -1;
     	int 			repeat_day 		= -1;
     	int 			repeat_weekofmonth 	= -1;
@@ -1232,85 +1233,85 @@ static void GetCalendarNotes(int argc, char *argv[])
                 		break;
 			}
 		}
-        	s1[0] = 0;
-        	s2[0] = 0;
-        	if (repeating) {
-           		if ((repeat_startdate.Day == 0) && (repeat_stopdate.Day == 0)) {
-                		strcpy(s1, "Forever");
-            		} else if (repeat_startdate.Day == 0) {
-                		sprintf(s1, "Till %s", OSDate(repeat_stopdate));
-            		} else if (repeat_stopdate.Day == 0) {
-                		sprintf(s1, "Since %s", OSDate(repeat_startdate));
-           		} else {
-                		sprintf(s2, "Since %s", OSDate(repeat_startdate));
-                		sprintf(s1, "%s till %s", s2, OSDate(repeat_stopdate));
-            		}
-            		if (repeat_frequency != -1) {
-                		if (repeat_frequency == 1) {
-                    			strcat (s1, " on each ");
-                		} else {
-                    			sprintf(s2, " on each %d. ", repeat_frequency);
-                    			strcat (s1, s2);
-	                	}
-	                	if (repeat_dayofweek > 0) {
-	                    		strcat (s1, 
-	                            		repeat_dayofweek == 1 ? "Monday" :
-	                            		repeat_dayofweek == 2 ? "Tuesday" :
-	                            		repeat_dayofweek == 3 ? "Wednesday" :
-	                            		repeat_dayofweek == 4 ? "Thursday" :
-	                            		repeat_dayofweek == 5 ? "Friday" :
-	                            		repeat_dayofweek == 6 ? "Saturday" :
-	                            		repeat_dayofweek == 7 ? "Sunday" :
-	                            		"Unknown day!");
-	                    	if (repeat_weekofmonth > 0) {
-	                        	sprintf(s1, " in %d. week of ", repeat_weekofmonth);
-	                        	strcat (s1, s2);
-	                   	}
-	                    	if (repeat_month > 0) {
-	                        	strcat (s1, 
-	                                	repeat_month ==  1 ? "January" :
-	                                	repeat_month ==  2 ? "February" :
-	                                	repeat_month ==  3 ? "March" :
-	                                	repeat_month ==  4 ? "April" :
-	                                	repeat_month ==  5 ? "May" :
-	                                	repeat_month ==  6 ? "June" :
-	                                	repeat_month ==  7 ? "July" :
-                                		repeat_month ==  8 ? "August" :
-                                		repeat_month ==  9 ? "September" :
-                                		repeat_month == 10 ? "October" :
-                                		repeat_month == 11 ? "November" :
-                                		repeat_month == 12 ? "December" :
-                                		"Unknown month!");
-                    		} else {
-                        		strcat (s1, "each month");
-                    		}
-                	} else if (repeat_day > 0) {
-                   		sprintf(s2, " %d. day of ", repeat_day);
-                    		strcat(s1, s2); 
-                    		if (repeat_month > 0) {
-                       			strcat (s1, 
-                                		repeat_month ==  1 ? "January" :
-                                		repeat_month ==  2 ? "February" :
-                                		repeat_month ==  3 ? "March" :
-                                		repeat_month ==  4 ? "April" :
-                                		repeat_month ==  5 ? "May" :
-                                		repeat_month ==  6 ? "June" :
-                                		repeat_month ==  7 ? "July" :
-                                		repeat_month ==  8 ? "August" :
-                                		repeat_month ==  9 ? "September" :
-                                		repeat_month == 10 ? "October" :
-                                		repeat_month == 11 ? "November" :
-                                		repeat_month == 12 ? "December" :
-                                		"Unknown month!");
-                    			} else {
-                       			 	strcat (s1, "each month");
-                   			}
-                		} else {
-                    			strcat (s1, "day");
-                		}
-            		}
-            		printmsg("Repeating    : %s\n", s1);
-        	}
+		if (repeating) {
+			printmsg("Repeating    : ");
+			if ((repeat_startdate.Day == 0) && (repeat_stopdate.Day == 0)) {
+				printmsg("Forever");
+			} else if (repeat_startdate.Day == 0) {
+				printmsg("Till %s", OSDate(repeat_stopdate));
+			} else if (repeat_stopdate.Day == 0) {
+				printmsg("Since %s", OSDate(repeat_startdate));
+			} else {
+				printmsg("Since %s till %s", OSDate(repeat_startdate), OSDate(repeat_stopdate));
+			}
+			if (repeat_frequency != -1) {
+				if (repeat_frequency == 1) {
+					printmsg (" on each ");
+				} else {
+					printmsg(" on each %d. ", repeat_frequency);
+				}
+				if (repeat_dayofweek > 0) {
+					switch (repeat_dayofweek) {
+						case 1 : printmsg("Monday"); 	break;
+						case 2 : printmsg("Tuesday"); 	break;
+						case 3 : printmsg("Wednesday"); break;
+						case 4 : printmsg("Thursday"); 	break;
+						case 5 : printmsg("Friday"); 	break;
+						case 6 : printmsg("Saturday"); 	break;
+						case 7 : printmsg("Sunday"); 	break;
+						default: printmsg("Bad day!"); 	break;
+					}
+					if (repeat_weekofmonth > 0) {
+						printmsg(" in %d. week of ", repeat_weekofmonth);
+					} else {
+						printmsg(" in ");
+					}
+					if (repeat_month > 0) {
+						switch(repeat_month) {
+							case 1 : printmsg("January"); 	 break;
+							case 2 : printmsg("February"); 	 break;
+							case 3 : printmsg("March"); 	 break;
+							case 4 : printmsg("April"); 	 break;
+							case 5 : printmsg("May"); 	 break;
+							case 6 : printmsg("June"); 	 break;
+							case 7 : printmsg("July"); 	 break;
+							case 8 : printmsg("August"); 	 break;
+							case 9 : printmsg("September");  break;
+							case 10: printmsg("October"); 	 break;
+							case 11: printmsg("November"); 	 break;
+							case 12: printmsg("December"); 	 break;
+							default: printmsg("Bad month!"); break;
+						}
+					} else {
+						printmsg("each month");
+					}
+				} else if (repeat_day > 0) {
+					printmsg("%d. day of ", repeat_day);
+					if (repeat_month > 0) {
+						switch(repeat_month) {
+							case 1 : printmsg("January"); 	break;
+							case 2 : printmsg("February"); 	break;
+							case 3 : printmsg("March");	break;
+							case 4 : printmsg("April"); 	break;
+							case 5 : printmsg("May"); 	break;
+							case 6 : printmsg("June"); 	break;
+							case 7 : printmsg("July"); 	break;
+							case 8 : printmsg("August"); 	break;
+							case 9 : printmsg("September"); break;
+							case 10: printmsg("October"); 	break;
+							case 11: printmsg("November"); 	break;
+							case 12: printmsg("December"); 	break;
+							default: printmsg("Bad month!");break;
+						}
+					} else {
+						printmsg("each month");
+					}
+				} else {
+					printmsg("day");
+				}
+			}
+			printmsg("\n");
+		}
 		if (Note.Type == GCN_BIRTHDAY) {
 			if (Alarm.Year == 0x00) GSM_GetCurrentDateTime (&Alarm);
 			if (DateTime.Year != 0) {
@@ -2774,6 +2775,7 @@ static void Backup(int argc, char *argv[])
 static void Restore(int argc, char *argv[])
 {
 	GSM_Backup		Backup;
+	GSM_FMStation		FMStation;
 	GSM_DateTime 		date_time;
 	GSM_CalendarEntry	Calendar;
 	GSM_Bitmap		Bitmap;
@@ -3067,6 +3069,31 @@ static void Restore(int argc, char *argv[])
 					Profile	= *Backup.Profiles[i];
 					error=Phone->SetProfile(&s,&Profile);
 					Print_Error(error);
+					if (bshutdown) {
+						GSM_Terminate();
+						exit(0);
+					}
+				}
+				printmsgerr("\n");
+			}
+		}
+	}
+	if (Backup.FMStation[0] != NULL) {
+		FMStation.Location = 1;
+		error = Phone->GetFMStation(&s,&FMStation);
+		if (error == GE_NONE || error == GE_EMPTY) {
+			if (answer_yes("Restore FM stations")) {
+				printmsgerr("Deleting old FM stations: ");
+				error=Phone->ClearFMStations(&s);
+				Print_Error(error);
+				printmsgerr("Done\n");
+				max = 0;
+				while (Backup.FMStation[max]!=NULL) max++;
+				for (i=0;i<max;i++) {
+					FMStation = *Backup.FMStation[i];
+					error=Phone->SetFMStation(&s,&FMStation);
+					Print_Error(error);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);

@@ -306,6 +306,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				speed->MemoryNumberID = Block[14];
 			} else return GE_UNKNOWNRESPONSE;
 			break;
+		case N7110_ENTRYTYPE_UNKNOWN1:
+			smprintf(s,"Unknown entry\n");
+			break;
 		default:
 			smprintf(s, "ERROR: unknown pbk entry %i\n",Block[0]);
 			return GE_UNKNOWNRESPONSE;
@@ -992,15 +995,16 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	unsigned char 	buffer[200];
 
 	switch (msg.Buffer[3]) {
-	case 0x02 : smprintf(s, "Call established, remote phone is ringing.\n"); 	break;
-	case 0x03 : smprintf(s, "Call complete\n"); 				break;
-	case 0x04 : smprintf(s, "Call hangup!\n"); 					break;
-	case 0x05 : smprintf(s, "Incoming call\n"); 				break;
-	case 0x07 : smprintf(s, "Call answer initiated.\n"); 			break;
-	case 0x09 : smprintf(s, "Call released.\n"); 				break;
-	case 0x0a : smprintf(s, "Call is being released.\n"); 			break;
-	case 0x0c : smprintf(s, "Audio status\n"); 					break;
-	case 0x53 : smprintf(s, "Outgoing call\n");  				break;
+	case 0x02 : smprintf(s, "Call established, remote phone is ringing.\n");		 	break;
+	case 0x03 : smprintf(s, "Call complete\n"); 				 			break;
+	case 0x04 : smprintf(s, "Call hangup!\n"); 							break;
+	case 0x05 : smprintf(s, "Incoming call\n"); 				 			break;
+	case 0x07 : smprintf(s, "Call answer initiated.\n"); 			 			break;
+	case 0x09 : smprintf(s, "Call released.\n"); 				 			break;
+	case 0x0a : smprintf(s, "Call is being released.\n"); 			 			break;
+	case 0x0b : smprintf(s, "Meaning not known - probably info, that you connect for free\n");	break;
+	case 0x0c : smprintf(s, "Audio status\n"); 				 			break;
+	case 0x53 : smprintf(s, "Outgoing call\n");  				 			break;
 	}
 
 	if (msg.Buffer[3] != 0x0c) smprintf(s, "Call ID   : %i\n",msg.Buffer[4]);
@@ -1017,8 +1021,8 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case 0x04:
 		smprintf(s, "Cause Type : %i\n", msg.Buffer[5]);
 		smprintf(s, "CC         : %i\n", msg.Buffer[6]);
-		smprintf(s, "MM         : %i\n", msg.Buffer[7]);
-		smprintf(s, "RR         : %i\n", msg.Buffer[8]);
+		smprintf(s, "MM(?)      : %i\n", msg.Buffer[7]);
+		smprintf(s, "RR(?)      : %i\n", msg.Buffer[8]);
 		break;
 	case 0x0c:
 		if (msg.Buffer[4] == 0x01) smprintf(s, "Audio enabled\n");
@@ -1031,8 +1035,12 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL) {
 		switch (msg.Buffer[3]) {
 		case 0x02:
+			call.Status = GN_CALL_CallEstablished;
+			break;
+		case 0x03:
 			call.Status = GN_CALL_CallStart;
 			break;
+			
 		case 0x04:
 			call.Status = GN_CALL_CallRemoteEnd;
 			call.Code   = msg.Buffer[6];
@@ -1044,6 +1052,9 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			break;
 		case 0x09:
 			call.Status = GN_CALL_CallLocalEnd;
+			break;
+		case 0x0b:
+			call.Status = GN_CALL_OutgoingFreeCall;
 			break;
 		case 0x53:
 			call.Status = GN_CALL_OutgoingCall;
@@ -1060,38 +1071,12 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return GE_NONE;
 }
 
-static time_t Fill_Time_T(GSM_StateMachine *s, GSM_DateTime DT)
-{
-	struct tm tm_starttime;
-
-	smprintf(s, "  StartTime  : %02i-%02i-%04i %02i:%02i:%02i\n",
-		DT.Day,DT.Month,DT.Year,DT.Hour,DT.Minute,DT.Second);
-
-#ifdef WIN32
-	putenv("TZ=PST+8");
-#else
-	setenv("TZ","PST+8",1);
-#endif
-	tzset();
-
-	memset(&tm_starttime, 0, sizeof(tm_starttime));
-	tm_starttime.tm_year 	= DT.Year - 1900;
-	tm_starttime.tm_mon  	= DT.Month - 1;
-	tm_starttime.tm_mday 	= DT.Day;
-	tm_starttime.tm_hour 	= DT.Hour;
-	tm_starttime.tm_min  	= DT.Minute;
-	tm_starttime.tm_sec  	= DT.Second;
-	tm_starttime.tm_isdst	= 0;
-	
-	return mktime(&tm_starttime);
-}
-
 static void N71_65_GetTimeDiffence(GSM_StateMachine *s, unsigned long diff, GSM_DateTime *DT, bool Plus, int multi)
 {
 	time_t     	t_time;
 	struct tm  	*tm_endtime;
 
-	t_time = Fill_Time_T(s, *DT);
+	t_time = Fill_Time_T(s->di.df, *DT);
 
 	if (Plus) {
 		t_time 		+= diff*multi;
@@ -1289,6 +1274,7 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 }
 
 /* method 2 */
+/* Note: in known phones texts of notes cut to 50 chars */
 GSM_Error N71_65_GetNextCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, int *LastCalendarYear, int *LastCalendarPos)
 {
 	GSM_Error		error;
@@ -1346,7 +1332,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
  	GSM_Error		error;
 	long			diff;
  	int 			Text, Time, Alarm, Phone, Recurrance, length=25;
-	unsigned char 		req[200] = {
+	unsigned char 		req[5000] = {
 		N6110_FRAME_HEADER,
 		0x40,
 		0x00,				/* frame length - 7 */
@@ -1379,7 +1365,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 		Date.Year 	= 2029; Date.Month 	= 12; Date.Day 	  = 31;
 		Date.Hour 	= 22;   Date.Minute 	= 59; Date.Second = 58;
 	}
-	t_time1 = Fill_Time_T(s, Date);
+	t_time1 = Fill_Time_T(s->di.df, Date);
 	memcpy(&Date,&Note->Entries[Time].Date,sizeof(GSM_DateTime));
 	if (Note->Type != GCN_BIRTHDAY) {
 		Date.Year -= 20;
@@ -1387,7 +1373,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 		Date.Year = 1980;
 		Date.Hour = 22; Date.Minute = 58; Date.Second = 58;
 	}
-	t_time2 = Fill_Time_T(s, Date);
+	t_time2 = Fill_Time_T(s->di.df, Date);
 	diff	= t_time1-t_time2;
 	smprintf(s, "  Difference : %i seconds\n", -diff);
 	req[9]  = (unsigned char)(-diff >> 24);
@@ -1428,8 +1414,8 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 		} else {
 			Date.Year += 20;
 		}
-		t_time2   = Fill_Time_T(s, Date);
-		t_time1   = Fill_Time_T(s, Note->Entries[Alarm].Date);
+		t_time2   = Fill_Time_T(s->di.df, Date);
+		t_time1   = Fill_Time_T(s->di.df, Note->Entries[Alarm].Date);
 		diff	  = t_time1-t_time2;
 
 		/* Sometimes we have difference in minutes */
@@ -1637,6 +1623,8 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		}
 
 		entry->Entries[0].Date.Year = msg.Buffer[18]*256 + msg.Buffer[19];
+		if (entry->Entries[0].Date.Year == 65535) entry->Entries[0].Date.Year = 0;
+		smprintf(s, "Age          : %i\n",entry->Entries[0].Date.Year);
 
 		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+22, msg.Buffer[21]*2);
 		entry->Entries[entry->EntriesNum].Text[msg.Buffer[21]*2]   = 0;
@@ -1765,7 +1753,7 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
  	GSM_Error		error;
 	GSM_DateTime		DT;
  	int 			Text, Time, Alarm, Phone, Recurrance, count=12;
-	unsigned char 		req[200] = {
+	unsigned char 		req[5000] = {
 		N6110_FRAME_HEADER,
 		0x01,				/* note type */
 		0x00, 0x00,			/* location ? */
@@ -1817,10 +1805,10 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 			 * a year. (eg. Birthday on 2001-01-10 and Alarm on 2000-12-27)
 			 */
 			DT.Year = Note->Entries[Alarm].Date.Year;
-			if((seconds = Fill_Time_T(s, DT)-Fill_Time_T(s, Note->Entries[Alarm].Date))<0L)
+			if((seconds = Fill_Time_T(s->di.df, DT)-Fill_Time_T(s->di.df, Note->Entries[Alarm].Date))<0L)
 			{
 				DT.Year++;
-				seconds = Fill_Time_T(s, DT)-Fill_Time_T(s, Note->Entries[Alarm].Date);
+				seconds = Fill_Time_T(s->di.df, DT)-Fill_Time_T(s->di.df, Note->Entries[Alarm].Date);
 			}
 			if(seconds>=0L)
 			{
@@ -1876,7 +1864,7 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		req[count++] = 0xff;	  /* 14 */
 		req[count++] = 0xff;	  /* 15 */
 		if (Alarm != -1) {
-			seconds=Fill_Time_T(s, DT)-Fill_Time_T(s, Note->Entries[Alarm].Date);
+			seconds=Fill_Time_T(s->di.df, DT)-Fill_Time_T(s->di.df, Note->Entries[Alarm].Date);
 			if(seconds>=0L)
 			{
 				count -= 2;
