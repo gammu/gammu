@@ -27,7 +27,6 @@ typedef struct {
 	unsigned int	resetfrequency;
 	unsigned char   *deliveryreport, *logfilename,  *PINCode;
 	unsigned char	*PhoneID;
-	int		relativevalidity;
 
 	/* options for FILES */
 	unsigned char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
@@ -38,6 +37,7 @@ typedef struct {
 	unsigned char	*PC;
 
 	/* private variables required for work */
+	int		relativevalidity;
 	unsigned int 	retries,	 currdeliveryreport;
 	unsigned char 	SMSID[200],	 prevSMSID[200];
 	GSM_SMSC	SMSC;
@@ -57,12 +57,15 @@ typedef enum {
 } GSM_SMSDSendingError;
 
 typedef struct {
-	GSM_Error	(*Init) 	   (GSM_SMSDConfig *Config);
-	GSM_Error	(*SaveInboxSMS)    (GSM_MultiSMSMessage  sms, GSM_SMSDConfig *Config);
-	GSM_Error	(*FindOutboxSMS)   (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID);
-	GSM_Error	(*MoveSMS)  	   (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, bool alwaysDelete, bool sent);
-	GSM_Error	(*CreateOutboxSMS) (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config);
-	GSM_Error	(*AddSentSMSInfo)  (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, int Part, GSM_SMSDSendingError err, int TPMR);
+	GSM_Error	(*Init) 	      (GSM_SMSDConfig *Config);
+	GSM_Error	(*InitAfterConnect)   (GSM_SMSDConfig *Config);
+	GSM_Error	(*SaveInboxSMS)       (GSM_MultiSMSMessage  sms, GSM_SMSDConfig *Config);
+	GSM_Error	(*FindOutboxSMS)      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID);
+	GSM_Error	(*MoveSMS)  	      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, bool alwaysDelete, bool sent);
+	GSM_Error	(*CreateOutboxSMS)    (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config);
+	GSM_Error	(*AddSentSMSInfo)     (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, int Part, GSM_SMSDSendingError err, int TPMR);
+	GSM_Error	(*RefreshSendStatus)  (GSM_SMSDConfig *Config, unsigned char *ID);
+	GSM_Error	(*RefreshPhoneStatus) (GSM_SMSDConfig *Config);
 } GSM_SMSDService;
 
 #ifdef __GNUC__

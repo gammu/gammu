@@ -120,15 +120,15 @@ void GSM_FreeBackup(GSM_Backup *backup)
 
 GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode)
 {
-	if (strstr(FileName,".lmb")) {
+	if (mystrcasestr(FileName,".lmb")) {
 		return SaveLMB(FileName,backup);
-	} else if (strstr(FileName,".vcs")) {
+	} else if (mystrcasestr(FileName,".vcs")) {
 		return SaveVCalendar(FileName,backup);
-	} else if (strstr(FileName,".vcf")) {
+	} else if (mystrcasestr(FileName,".vcf")) {
 		return SaveVCard(FileName,backup);
-	} else if (strstr(FileName,".ldif")) {
+	} else if (mystrcasestr(FileName,".ldif")) {
 		return SaveLDIF(FileName,backup);
-	} else if (strstr(FileName,".ics")) {
+	} else if (mystrcasestr(FileName,".ics")) {
 		return SaveICS(FileName,backup);
 	} else {
 		return SaveBackup(FileName,backup, UseUnicode);
@@ -148,13 +148,13 @@ GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 	GSM_ClearBackup(backup);
 
 	/* Attempt to identify filetype */
-	if (strstr(FileName,".vcs")) {
+	if (mystrcasestr(FileName,".vcs")) {
 		return LoadVCalendar(FileName,backup);
-	} else if (strstr(FileName,".vcf")) {
+	} else if (mystrcasestr(FileName,".vcf")) {
 		return LoadVCard(FileName,backup);
-	} else if (strstr(FileName,".ldif")) {
+	} else if (mystrcasestr(FileName,".ldif")) {
 		return LoadLDIF(FileName,backup);
-	} else if (strstr(FileName,".ics")) {
+	} else if (mystrcasestr(FileName,".ics")) {
 		return LoadICS(FileName,backup);
 	} else if (memcmp(buffer, "LMB ",4)==0) {
 		return LoadLMB(FileName,backup);

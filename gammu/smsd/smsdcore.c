@@ -191,10 +191,10 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 		}
 	}
 
-	Config->retries 	 = 0;
-	Config->prevSMSID[0] 	 = 0;
-	Config->SMSC.Location    = 0;
-	Config->relativevalidity = -1;
+	Config->retries 	  = 0;
+	Config->prevSMSID[0] 	  = 0;
+	Config->SMSC.Location     = 0;
+	Config->relativevalidity  = -1;
 }
 
 bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
@@ -211,6 +211,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	}
 	/* No supported - do not check more */
 	if (error == ERR_NOTSUPPORTED) return true;
+
 	/* If PIN, try to enter */
 	switch (SecurityCode.Type) {
 	case SEC_Pin:
@@ -345,6 +346,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				my_sleep(10);
 				GSM_GetCurrentDateTime(&Date);
 			}
+			Service->RefreshPhoneStatus(Config);
 		}
 		return true;
 	}
@@ -375,8 +377,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			Config->retries = 0;
 			strcpy(Config->prevSMSID, Config->SMSID);
 		}
-		for (i=0;i<sms.Number;i++) {
-		
+		for (i=0;i<sms.Number;i++) {		
 			if (sms.SMS[i].SMSC.Location == 1) {
 			    	if (Config->SMSC.Location == 0) {
 					Config->SMSC.Location = 1;
@@ -395,14 +396,19 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				}
 			}
 		
-			if ((strcmp(Config->deliveryreport, "no") != 0 || (Config->currdeliveryreport != 0))) sms.SMS[i].PDU = SMS_Status_Report;
-
+			if (Config->currdeliveryreport == 1) {
+				sms.SMS[i].PDU = SMS_Status_Report;
+			} else {
+				if ((strcmp(Config->deliveryreport, "no") != 0 && (Config->currdeliveryreport == -1))) sms.SMS[i].PDU = SMS_Status_Report;
+			}
+			
 			error=Phone->SendSMS(&s, &sms.SMS[i]);
 			if (error!=ERR_NONE) {
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, -1);
 				WriteSMSDLog("Error sending SMS %s (%i): %s", Config->SMSID, error,print_error(error,s.di.df,s.msg));
 				return false;
 			}
+			Service->RefreshPhoneStatus(Config);
 			j    = 0;
 			TPMR = -1;
 			SendingSMSStatus = ERR_TIMEOUT;
@@ -415,6 +421,8 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 					GSM_ReadDevice(&s,true);
 					if (SendingSMSStatus != ERR_TIMEOUT) break;
 				}
+				Service->RefreshSendStatus(Config, Config->SMSID);
+				Service->RefreshPhoneStatus(Config);
 				if (SendingSMSStatus != ERR_TIMEOUT) break;
 				j++;
 				if (j>Config->sendtimeout) break;
@@ -442,7 +450,7 @@ void SMSDaemon(int argc, char *argv[])
 	int                     errors = 255, initerrors=0;
 	GSM_SMSDService		*Service;
 	GSM_Error		error;
- 	time_t				lastreceive, lastreset = 0;
+ 	time_t			lastreceive, lastreset = 0;
 	GSM_SMSDConfig		Config;
 
 	if (!strcmp(argv[2],"FILES")) {
@@ -467,8 +475,8 @@ void SMSDaemon(int argc, char *argv[])
 	signal(SIGTERM, interrupt);
 	fprintf(stderr,"Press Ctrl+C to stop the program ...\n");
 
-	lastreceive			= time(NULL);
-	lastreset			= time(NULL);
+	lastreceive		= time(NULL);
+	lastreset		= time(NULL);
 	SendingSMSStatus 	= ERR_UNKNOWN;
 
 	while (!gshutdown) {
@@ -485,7 +493,20 @@ void SMSDaemon(int argc, char *argv[])
 			case ERR_NONE:
 				s.User.SendSMSStatus 	= SMSSendingSMSStatus;
 				Phone			= s.Phone.Functions;
-				errors 			= 0;
+				if (errors == 255) {
+					errors = 0;
+					s.Phone.Data.IMEI[0] = 0;
+					if (!(Phone->GetIMEI(&s))) {
+						errors++;
+					} else {
+						error = Service->InitAfterConnect(&Config);
+						if (error!=ERR_NONE) {
+							GSM_Terminate_SMSD("Stop GAMMU smsd (%i)", error, true, -1);
+						}
+					}
+				} else {
+					errors = 0;
+				}
 				if (initerrors > 3 || initerrors < 0) {
 					error=Phone->Reset(&s, false); /* soft reset */
 					WriteSMSDLog("Reset return code: %s (%i) ", error == ERR_NONE? "OK":"ERROR", error);

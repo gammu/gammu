@@ -35,7 +35,8 @@ GSM_Error CheckDCT4Only()
 
 	if (s.ConnectionType!=GCT_MBUS2	     && s.ConnectionType!=GCT_FBUS2      &&
 	    s.ConnectionType!=GCT_FBUS2DLR3  && s.ConnectionType!=GCT_PHONETBLUE &&
-	    s.ConnectionType!=GCT_IRDAPHONET && s.ConnectionType!=GCT_BLUEPHONET) {
+	    s.ConnectionType!=GCT_IRDAPHONET && s.ConnectionType!=GCT_BLUEPHONET &&
+	    s.ConnectionType!=GCT_FBUS2DKU5) {
 		return ERR_OTHERCONNECTIONREQUIRED;
 	}
 	return ERR_NONE;

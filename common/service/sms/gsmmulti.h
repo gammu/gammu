@@ -172,7 +172,7 @@ typedef enum {
 	 * IMelody 1.0 with UPI.
 	 */
 	SMS_EMSSound10Long,
-	/***
+	/**
 	 * IMelody 1.2 with UPI.
 	 */
 	SMS_EMSSound12Long,

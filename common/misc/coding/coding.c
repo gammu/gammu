@@ -20,6 +20,19 @@
 #include "../misc.h"
 #include "coding.h"
 
+char *mystrcasestr(unsigned const char *a, unsigned const char *b)
+{
+	unsigned char 	A[2000], B[200];
+	int 		i;
+
+	memset(A,0,sizeof(A));
+	memset(B,0,sizeof(B));
+	for (i=0;i<(int)strlen(a);i++) A[i] = tolower(a[i]);
+	for (i=0;i<(int)strlen(b);i++) B[i] = tolower(b[i]);
+
+	return strstr(A,B);
+}
+
 unsigned int UnicodeLength(const unsigned char *str)
 {
 	unsigned int len = 0;
@@ -1019,7 +1032,7 @@ int mytowlower(wchar_t c)
  *
  * Stephen R. van den Berg, berg@pool.informatik.rwth-aachen.de */
 
-unsigned char *mystrstr (const unsigned char *haystack, const unsigned char *needle)
+unsigned char *mywstrstr (const unsigned char *haystack, const unsigned char *needle)
 {
 /* One crazy define to convert unicode used in Gammu to standard wchar_t */
 #define tolowerwchar(x) (mytowlower((wchar_t)( (((&(x))[0] & 0xff) << 8) | (((&(x))[1] & 0xff)) )))

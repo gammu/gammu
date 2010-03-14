@@ -1212,7 +1212,7 @@ GSM_Error DCT3_ReplySendSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 	switch (msg.Buffer[3]) {
 	case 0x02:
 		smprintf(s, "SMS sent OK\n");
-		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,0,-1);
+		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,0,msg.Buffer[5]);
 		return ERR_NONE;
 	case 0x03:
 		smprintf(s, "Error %i\n",msg.Buffer[6]);

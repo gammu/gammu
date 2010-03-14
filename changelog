@@ -21,11 +21,73 @@ This software was sponsored (in time order) by:
    * DCT3/DCT4 flasher
 7. KompuNet (www.kompu.net)
    * SMS services, PC shop and other
-
-and others...
+and others... If you like this project, please help too (see www.mwiacek.com
+for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20040909 - 0.98.0
+* new functionality:
+  * DCT3 phones know TPMR during sending SMS too. You can use them
+    to full handling Delivery Reports for MySQL SMSD too.
+  * 7200 ID                                                             (Intra)
+  * 5140 ID, 6610i ID
+  * SMSD:
+    * MYSQL:
+      * everything connected with SMS sending time is synchronized from
+        MYSQL server time
+      * many phones can send SMS from one DB. It's done this way, that
+        even if some phone will hang during sending, other phones will get his
+        SMS after some time of inactivity
+      * SMS for sending can be redirected to concrete phone
+      * DB contains info, if SMS was sent with Delivery Report request or not
+      * DB contains info about connected phones
+      * SMS can have forced Delivery Report
+    * PHP:
+      * support for many DB
+      * ability to log to MySQL from various users
+      * info about software versions
+      * info about connected phones
+      * outgoing SMS:
+        * ability to send using concrete phone
+        * sms chars counter
+        * limiting to specifed number of SMS (linked SMS will be supported
+          later)
+        * forcing Delivery Report
+      and many other
+    * new MFC application for WIN32: initial MDI version with displaying
+      DB info only and drawn menus. See win32/smsd_mfc
+  * new mystrcasestr
+
+* fixes and improvements:
+  * updated doxygen configuration, some fixes                    (Michal Cihar)
+  * --restoresms works OK                                         (many people)
+  * fixes with locales
+  * during replacing existing file in DCT4 filesystem           (Cvetan Ivanov)
+    Gammu returns correct error info
+  * mystrstr renamed to mywstrstr (it's operating on Unicode)
+  * file types are not case sensitive
+  * 0 and 1 char text long SMS can be sent using SMSD --files     (Jozef Uhler)
+
+Note: Some time outside home and a lot of phisical work inside home made, that
+      some things still waiting in queue:
+      * TODO 5140 FBUS
+      * some parts of patch from Joergen Thomsen
+      * finding how to link Bluez properly (solution from Michal Cihar
+        doesn't work)
+      * Symbian
+      * AT+CMMS
+      * notes and chat/syncml settings for series 40
+      * serial driver for djgpp
+      * affix
+      ... (and many others)
+Note: * BT checked with final version of Win XP SP2 (both with virtual COM 
+        ports and native support). Works fine
+      * excluding privileges MySQL support is complete
+      * like promised I started to look into known bugs. I'm testing 6210 
+        with release version in win32 and still can't find any problems with 
+        --getallsms
+
 20040801 - 0.97.7
 * new functionality:
   * support for ringtones, logos, pbk and others for         (Claudio Matsuoka)
@@ -367,9 +429,9 @@ ToDo: 1.ending support for all features in new Series 40 models
 
 NOTE: Many exams (happily passed), a lot of work and no time for anything.
 
-      Also many speeches with various people about sponsoring Gammu work (happily
-      probably it will end with success - backup/restore for win32 will be
-      probably first sponsored Gammu app).
+      Also many speeches with various people about sponsoring Gammu work
+      (happily probably it will end with success - backup/restore for win32
+      will be probably first sponsored Gammu app).
       
       Please test this version. It should fix probably all found problems.
       
