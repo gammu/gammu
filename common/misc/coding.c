@@ -206,13 +206,22 @@ unsigned char EncodeWithHexBinAlphabet (int digit)
 
 void DecodeHexUnicode (unsigned char *dest, const unsigned char *src, int len)
 {
-	int i,current=0;
+	int 	i,current=0;
+	bool 	first = false;
 
+	if (len != 0 && src[0] == '0' && src[1] == '0') first = true;
 	for (i = 0; i < len/4 ; i++) {
-		dest[current++] = DecodeWithHexBinAlphabet(src[i*4+2])*16+
-				  DecodeWithHexBinAlphabet(src[i*4+3]);
-		dest[current++] = DecodeWithHexBinAlphabet(src[i*4+0])*16+
-				  DecodeWithHexBinAlphabet(src[i*4+1]);
+		if (first) {
+			dest[current++] = DecodeWithHexBinAlphabet(src[i*4+0])*16+
+					  DecodeWithHexBinAlphabet(src[i*4+1]);
+			dest[current++] = DecodeWithHexBinAlphabet(src[i*4+2])*16+
+					  DecodeWithHexBinAlphabet(src[i*4+3]);
+		} else {
+			dest[current++] = DecodeWithHexBinAlphabet(src[i*4+2])*16+
+					  DecodeWithHexBinAlphabet(src[i*4+3]);
+			dest[current++] = DecodeWithHexBinAlphabet(src[i*4+0])*16+
+					  DecodeWithHexBinAlphabet(src[i*4+1]);
+		}
 	}
 	dest[current++] = 0;
 	dest[current++] = 0;

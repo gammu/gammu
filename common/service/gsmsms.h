@@ -8,6 +8,7 @@
 #include "gsmpbk.h"
 #include "gsmwap.h"
 #include "gsmring.h"
+#include "gsmmms.h"
 
 /* --------------------- Some general definitions ------------------------- */
 
@@ -114,7 +115,8 @@ typedef enum {
 	UDH_NokiaWAPBookmarkLong,
 	UDH_NokiaWAPSettingsLong,
 	UDH_NokiaPhonebookLong,
-	UDH_UserUDH			/* Other user UDH */
+	UDH_UserUDH,			/* Other user UDH */
+	UDH_MMSIndicatorLong
 } GSM_UDH;
 
 /* Structure to hold UDH Header */
@@ -310,7 +312,8 @@ typedef enum {
 	SMS_EMSAnimation,
 	SMS_EMSFixedBitmap,		/* 16x16 or 32x32 */
 	SMS_EMSVariableBitmap,
-	SMS_EMSVariableBitmapLong
+	SMS_EMSVariableBitmapLong,
+	SMS_MMSIndicatorLong
 } EncodeMultiPartSMSID;
 
 typedef struct {
@@ -321,6 +324,7 @@ typedef struct {
 	GSM_MultiBitmap		*Bitmap;
 	GSM_WAPBookmark		*Bookmark;
 	GSM_WAPSettings		*Settings;
+	GSM_MMSIndicator	*MMSIndicator;
 	GSM_PhonebookEntry	*Phonebook;
 	GSM_CalendarEntry	*Calendar;
 	unsigned char		*Buffer;

@@ -340,7 +340,9 @@ GSM_Phone_Functions N9210Phone = {
 	NOTSUPPORTED,		/* 	AddFile			*/
 	NOTSUPPORTED, 		/* 	GetFreeFileMemory 	*/
 	NOTSUPPORTED,		/*	DeleteFile		*/
-	NOTSUPPORTED		/*	AddFolder		*/
+	NOTSUPPORTED,		/*	AddFolder		*/
+	NOTSUPPORTED,		/* 	GetMMSSettings		*/
+	NOTSUPPORTED		/* 	SetMMSSettings		*/
 };
 
 #endif

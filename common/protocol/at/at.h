@@ -8,6 +8,7 @@ typedef struct {
 	GSM_Protocol_Message 	Msg;
 	bool 			wascrlf;
 	char 			*linestart;
+	int			linestartnum;
 
 	bool			EditMode;	/* wait for modem answer or not */
 } GSM_Protocol_ATData;

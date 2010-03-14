@@ -100,7 +100,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
     int			fd = -1;
 
     /* discover the devices */
-    if (irda_discover_device(s)==false) return GE_DEVICEOPENERROR;
+    if (irda_discover_device(s)==false) return GE_TIMEOUT;
 
     /* Create socket */
     fd = socket(AF_IRDA, SOCK_STREAM, 0);

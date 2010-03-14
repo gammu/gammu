@@ -17,7 +17,8 @@
 #define GSM_BACKUP_MAX_CALLER	 	6
 #define GSM_BACKUP_MAX_SMSC		10
 #define GSM_BACKUP_MAX_WAPBOOKMARK	40
-#define GSM_BACKUP_MAX_WAPSETTINGS	6
+#define GSM_BACKUP_MAX_WAPSETTINGS	15
+#define GSM_BACKUP_MAX_MMSSETTINGS	15
 #define GSM_BACKUP_MAX_RINGTONES	30
 #define GSM_BACKUP_MAX_TODO		100
 #define GSM_BACKUP_MAX_PROFILES		10
@@ -35,6 +36,7 @@ typedef struct {
 	GSM_SMSC		*SMSC		[GSM_BACKUP_MAX_SMSC + 1];
 	GSM_WAPBookmark		*WAPBookmark	[GSM_BACKUP_MAX_WAPBOOKMARK + 1];
 	GSM_MultiWAPSettings	*WAPSettings	[GSM_BACKUP_MAX_WAPSETTINGS + 1];
+	GSM_MultiWAPSettings	*MMSSettings	[GSM_BACKUP_MAX_MMSSETTINGS + 1];
 	GSM_Ringtone		*Ringtone	[GSM_BACKUP_MAX_RINGTONES + 1];
 	GSM_ToDoEntry		*ToDo		[GSM_BACKUP_MAX_TODO + 1];
 	GSM_Profile		*Profiles	[GSM_BACKUP_MAX_PROFILES + 1];
@@ -64,6 +66,7 @@ typedef struct {
 	bool WAPBookmark;
 	bool Profiles;
 	bool WAPSettings;
+	bool MMSSettings;
 	bool Ringtone;
 	bool StartupLogo;
 	bool OperatorLogo;

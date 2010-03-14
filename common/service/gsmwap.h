@@ -56,6 +56,8 @@ typedef struct {
 	int			Location;
 	unsigned char		Number;
 	GSM_WAPSettings		Settings[4];
+
+	WAPSettings_Bearer	ActiveBearer;
 } GSM_MultiWAPSettings;
 
 void NOKIA_EncodeWAPBookmarkSMSText(char *Buffer, int *Length, GSM_WAPBookmark bookmark);

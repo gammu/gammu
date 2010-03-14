@@ -505,6 +505,15 @@ static void SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, boo
 	int 	i;
 	char 	buffer[10000];
 
+	switch (settings->ActiveBearer) {
+		case WAPSETTINGS_BEARER_SMS : sprintf(buffer,"Bearer = SMS%c%c",13,10);  break;
+		case WAPSETTINGS_BEARER_GPRS: sprintf(buffer,"Bearer = GPRS%c%c",13,10); break;
+		case WAPSETTINGS_BEARER_DATA: sprintf(buffer,"Bearer = Data%c%c",13,10); break;
+		case WAPSETTINGS_BEARER_USSD: sprintf(buffer,"Bearer = USSD%c%c",13,10);
+	}
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
 	for (i=0;i<settings->Number;i++) {
 		sprintf(buffer,"Title%02i",i);
 		SaveBackupText(file, buffer, settings->Settings[i].Title, UseUnicode);
@@ -970,6 +979,12 @@ void GSM_FreeBackup(GSM_Backup *backup)
         i++;
     }
     i=0;
+    while (backup->MMSSettings[i]!=NULL) {
+        free(backup->MMSSettings[i]);
+        backup->MMSSettings[i] = NULL;
+        i++;
+    }
+    i=0;
     while (backup->Ringtone[i]!=NULL) {
         free(backup->Ringtone[i]);
         backup->Ringtone[i] = NULL;
@@ -1078,6 +1093,13 @@ static GSM_Error SaveBackup(FILE *file, GSM_Backup *backup, bool UseUnicode)
 		sprintf(buffer,"[Settings%03i]%c%c",i,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveWAPSettingsEntry(file, backup->WAPSettings[i], UseUnicode);
+		i++;
+	}
+	i=0;
+	while (backup->MMSSettings[i]!=NULL) {
+		sprintf(buffer,"[MMSSettings%03i]%c%c",i,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
+		SaveWAPSettingsEntry(file, backup->MMSSettings[i], UseUnicode);
 		i++;
 	}
 	i=0;
@@ -1293,6 +1315,7 @@ void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
 		backup->SMSC 		= false;
 		backup->WAPBookmark 	= false;
 		backup->WAPSettings 	= false;
+		backup->MMSSettings 	= false;
 		backup->Ringtone 	= false;
 		backup->StartupLogo 	= true;
 		backup->OperatorLogo 	= false;
@@ -1311,6 +1334,7 @@ void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
 		backup->SMSC 		= true;
 		backup->WAPBookmark 	= true;
 		backup->WAPSettings 	= true;
+		backup->MMSSettings 	= true;
 		backup->Ringtone 	= true;
 		backup->StartupLogo 	= true;
 		backup->OperatorLogo 	= true;
@@ -1889,6 +1913,20 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 	unsigned char		buffer[10000], *readvalue;
 	int			num;
 	CFG_Entry		*e;
+
+	settings->ActiveBearer = WAPSETTINGS_BEARER_DATA;
+	sprintf(buffer,"Bearer");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue!=NULL) 
+	{
+		if (mystrncasecmp(readvalue,"SMS",0)) {
+			settings->ActiveBearer = WAPSETTINGS_BEARER_SMS;
+		} else if (mystrncasecmp(readvalue,"GPRS",0)) {
+			settings->ActiveBearer = WAPSETTINGS_BEARER_GPRS;
+		} else if (mystrncasecmp(readvalue,"USSD",0)) {
+			settings->ActiveBearer = WAPSETTINGS_BEARER_USSD;
+		}
+	}
 
 	settings->Number = 0;
 	e = CFG_FindLastSectionEntry(file_info, section, UseUnicode);
@@ -2519,6 +2557,32 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
         for (h = file_info; h != NULL; h = h->next) {
 		found = false;
 		if (UseUnicode) {
+			EncodeUnicode(buffer,"MMSSettings",8);
+			if (mywstrncasecmp(buffer, h->section, 8)) found = true;
+		} else {
+	                if (mystrncasecmp("MMSSettings", h->section, 8)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Title00", UseUnicode);
+			if (readvalue==NULL) break;
+			if (num < GSM_BACKUP_MAX_MMSSETTINGS) {
+				backup->MMSSettings[num] = malloc(sizeof(GSM_MultiWAPSettings));
+			        if (backup->MMSSettings[num] == NULL) return GE_MOREMEMORY;
+				backup->MMSSettings[num + 1] = NULL;
+			} else {
+				dprintf("Increase GSM_BACKUP_MAX_MMSSETTINGS\n");
+				return GE_MOREMEMORY;
+			}
+			backup->MMSSettings[num]->Location = num + 1;
+			dprintf("reading mms settings\n");
+			ReadWAPSettingsEntry(file_info, h->section, backup->MMSSettings[num],UseUnicode);
+			num++;
+                }
+        }
+	num = 0;
+        for (h = file_info; h != NULL; h = h->next) {
+		found = false;
+		if (UseUnicode) {
 			EncodeUnicode(buffer,"Ringtone",8);
 			if (mywstrncasecmp(buffer, h->section, 8)) found = true;
 		} else {
@@ -2875,6 +2939,7 @@ void GSM_ClearBackup(GSM_Backup *backup)
 	backup->SMSC		[0] = NULL;
 	backup->WAPBookmark	[0] = NULL;
 	backup->WAPSettings	[0] = NULL;
+	backup->MMSSettings	[0] = NULL;
 	backup->Ringtone	[0] = NULL;
 	backup->Profiles	[0] = NULL;
 	backup->ToDo		[0] = NULL;
@@ -3025,6 +3090,11 @@ GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 {
 	int 		i,w,current;
 	unsigned char 	buffer[10000];
+	GSM_DateTime	DT;
+
+	fprintf(file,"\n# File created by Gammu (www.mwiacek.com) version %s\n",VERSION);
+	GSM_GetCurrentDateTime (&DT);
+	fprintf(file,"# Saved %s\n\n",OSDateTime(DT,false));
 
 	i=0;
 	while (backup->SMS[i]!=NULL) {
@@ -3060,7 +3130,7 @@ GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 				break;
 		}
 		if (backup->SMS[i]->PDU == SMS_Deliver) {
-			SaveBackupText(file, "SMSC", backup->SMS[i]->SMSC.Number, true);
+			SaveBackupText(file, "SMSC", backup->SMS[i]->SMSC.Number, false);
 			if (backup->SMS[i]->ReplyViaSameSMSC) fprintf(file,"SMSCReply = true\n");
 			fprintf(file,"Sent");
 			SaveVCalDateTime(file,&backup->SMS[i]->DateTime, false);
@@ -3072,8 +3142,8 @@ GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 			case GSM_Sent	: fprintf(file,"Sent\n");	break;
 			case GSM_UnSent	: fprintf(file,"UnSent\n");	break;
 		}
-		SaveBackupText(file, "Number", backup->SMS[i]->Number, true);
-		SaveBackupText(file, "Name", backup->SMS[i]->Name, true);
+		SaveBackupText(file, "Number", backup->SMS[i]->Number, false);
+		SaveBackupText(file, "Name", backup->SMS[i]->Name, false);
 		if (backup->SMS[i]->UDH.Type != UDH_NoUDH) {
 			EncodeHexBin(buffer,backup->SMS[i]->UDH.Text,backup->SMS[i]->UDH.Length);
 			fprintf(file,"UDH = %s\n",buffer);

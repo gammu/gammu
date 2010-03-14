@@ -124,19 +124,36 @@ typedef struct {
 
 /* ----------------------- filesystem ------------------------------------- */
 
+typedef enum {
+	GSM_File_Java_JAR = 1,
+	GSM_File_Image_JPG,
+	GSM_File_Image_BMP,
+	GSM_File_Image_GIF,
+	GSM_File_Image_PNG,
+	GSM_File_Ringtone_MIDI,
+	GSM_File_Other
+} GSM_FileType;
+
 typedef struct {
 	int		Used;		/* how many bytes used 	*/
 	unsigned char 	Name[300];	/* Name			*/
 	int		ID;		/* ID 			*/
 	int		ParentID;
 	bool 		Folder;		/* true, when folder 	*/
+	int		Level;
+	GSM_FileType	Type;
 
-	char		*Buffer;
+	GSM_DateTime	Modified;
+	bool		ModifiedEmpty;
+
+	unsigned char	*Buffer;
 } GSM_File;
 
 GSM_Error GSM_ReadFile(char *FileName, GSM_File *File);
 
 GSM_Error GSM_JavaFindData(GSM_File File, char *Vendor, char *Name, char *JAR);
+
+void GSM_IdentifyFileFormat(GSM_File *File);
 
 /* ------------------------------------------------------------------------ */
 

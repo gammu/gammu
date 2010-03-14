@@ -2612,7 +2612,9 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/* AddFile		*/
 	NOTSUPPORTED, 			/* GetFreeFileMemory 	*/
 	NOTSUPPORTED,			/* DeleteFile		*/
-	NOTSUPPORTED			/* AddFolder		*/
+	NOTSUPPORTED,			/* AddFolder		*/
+	NOTSUPPORTED,			/* GetMMSSettings	*/
+	NOTSUPPORTED			/* SetMMSSettings	*/
 };
 
 #endif

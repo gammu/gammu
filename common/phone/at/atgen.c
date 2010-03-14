@@ -1961,7 +1961,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
  	GSM_PhonebookEntry	*Memory = s->Phone.Data.Memory;
 	int			current;
-	unsigned char		buffer[50],buffer2[50];
+	unsigned char		buffer[500],buffer2[500];
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -2852,7 +2852,9 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,		/* 	AddFile			*/
 	NOTSUPPORTED, 		/* 	GetFreeFileMemory 	*/
 	NOTSUPPORTED,		/*	DeleteFile		*/
-	NOTSUPPORTED		/* 	AddFolder		*/
+	NOTSUPPORTED,		/* 	AddFolder		*/
+	NOTSUPPORTED,		/* 	GetMMSSettings		*/
+	NOTSUPPORTED		/* 	SetMMSSettings		*/
 };
 
 #endif
