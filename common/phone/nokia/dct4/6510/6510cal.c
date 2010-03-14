@@ -183,7 +183,7 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			entry->Entries[entry->EntriesNum].Date.Year,  entry->Entries[entry->EntriesNum].Date.Hour,
 			entry->Entries[entry->EntriesNum].Date.Minute,entry->Entries[entry->EntriesNum].Date.Second);
 
-		entry->Entries[entry->EntriesNum].EntryType = CAL_ALARM_DATETIME;
+		entry->Entries[entry->EntriesNum].EntryType = CAL_TONE_ALARM_DATETIME;
 		if (msg.Buffer[22]==0x00 && msg.Buffer[23]==0x00 &&
 		    msg.Buffer[24]==0x00 && msg.Buffer[25]==0x00) {
 			entry->Entries[entry->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;

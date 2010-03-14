@@ -180,11 +180,13 @@ typedef enum {
 	/**
 	 * Unicode
 	 */
-	SMS_Coding_Unicode = 1,
+	SMS_Coding_Unicode_No_Compression = 1,
+	SMS_Coding_Unicode_Compression,
 	/**
-	 * Default GSM aplhabet.
+	 * Default GSM alphabet.
 	 */
-	SMS_Coding_Default,
+	SMS_Coding_Default_No_Compression,
+	SMS_Coding_Default_Compression,
 	/**
 	 * 8-bit.
 	 */
@@ -392,7 +394,8 @@ typedef struct {
 	 */
 	unsigned char SMSCNumber;
 	/**
-	 * TP-Data-Coding-Scheme. GSM 03.40 section 9.2.3.10
+	 * TP-Data-Coding-Scheme. GSM 03.40 section 9.2.3.10.
+	 * Contains alphabet type, SMS class (and some others)
 	 */
 	unsigned char TPDCS;
 	/**

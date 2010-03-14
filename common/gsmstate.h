@@ -1587,6 +1587,7 @@ typedef enum {
 	F_FILES2,	/* filesystem version 2 					*/
 	F_6230iWAP,	/* WAP, MMS, etc. settings like in 6230i - unknown now		*/
 	F_6230iCALLER,	/* Caller groups like in 6230i					*/
+	F_PROFILES,	/* Profiles support available					*/
 
 	/* n6510.c && n7110.c */
 	F_VOICETAGS,	/* Voice tags available						*/

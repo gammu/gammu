@@ -481,7 +481,7 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 			SaveBackupText(file, "", "StopTime", UseUnicode);
 			SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
 			break;
-		case CAL_ALARM_DATETIME:
+		case CAL_TONE_ALARM_DATETIME:
 			SaveBackupText(file, "", "Alarm", UseUnicode);
 			SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
 			sprintf(buffer,"AlarmType = Tone%c%c",13,10);
@@ -1541,7 +1541,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	sprintf(buffer,"Alarm");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
-		note->Entries[note->EntriesNum].EntryType = CAL_ALARM_DATETIME;
+		note->Entries[note->EntriesNum].EntryType = CAL_TONE_ALARM_DATETIME;
 		sprintf(buffer,"AlarmType");
 		readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 		if (readvalue!=NULL)
@@ -2931,13 +2931,13 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->Length = atoi(readvalue);
 	sprintf(buffer,"Coding");
-	SMS->Coding = SMS_Coding_Default;
+	SMS->Coding  = SMS_Coding_8bit;
 	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
 		if (mystrncasecmp(readvalue,"Unicode",0)) {
-			SMS->Coding = SMS_Coding_Unicode;
-		} else if (mystrncasecmp(readvalue,"8bit",0)) {
-			SMS->Coding = SMS_Coding_8bit;
+			SMS->Coding = SMS_Coding_Unicode_No_Compression;
+		} else if (mystrncasecmp(readvalue,"Default",0)) {
+			SMS->Coding = SMS_Coding_Default_No_Compression;
 		}
 	}
 	ReadLinkedBackupText(file_info, section, "Text", buffer, false);
@@ -3026,8 +3026,8 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 	while (backup->SMS[i]!=NULL) {
 		fprintf(file,"[SMSBackup%03i]\n",i);
 		switch (backup->SMS[i]->Coding) {
-			case SMS_Coding_Unicode:
-			case SMS_Coding_Default:
+			case SMS_Coding_Unicode_No_Compression:
+			case SMS_Coding_Default_No_Compression:
 				sprintf(buffer,"%s",DecodeUnicodeString(backup->SMS[i]->Text));
 				fprintf(file,"#");
 				current = 0;
@@ -3075,8 +3075,8 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 			fprintf(file,"UDH = %s\n",buffer);
 		}
 		switch (backup->SMS[i]->Coding) {
-			case SMS_Coding_Unicode:
-			case SMS_Coding_Default:
+			case SMS_Coding_Unicode_No_Compression:
+			case SMS_Coding_Default_No_Compression:
 				EncodeHexBin(buffer,backup->SMS[i]->Text,backup->SMS[i]->Length*2);
 				break;
 			default:
@@ -3085,9 +3085,10 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 		}
 		SaveLinkedBackupText(file, "Text", buffer, false);
 		switch (backup->SMS[i]->Coding) {
-			case SMS_Coding_Unicode	: fprintf(file,"Coding = Unicode\n"); 	break;
-			case SMS_Coding_Default	: fprintf(file,"Coding = Default\n"); 	break;
-			case SMS_Coding_8bit	: fprintf(file,"Coding = 8bit\n"); 	break;
+			case SMS_Coding_Unicode_No_Compression	: fprintf(file,"Coding = Unicode\n"); 	break;
+			case SMS_Coding_Default_No_Compression	: fprintf(file,"Coding = Default\n"); 	break;
+			case SMS_Coding_8bit			: fprintf(file,"Coding = 8bit\n"); 	break;
+			default					: break;
 		}
 		fprintf(file,"Folder = %i\n",backup->SMS[i]->Folder);
 		fprintf(file,"Length = %i\n",backup->SMS[i]->Length);

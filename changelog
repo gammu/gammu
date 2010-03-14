@@ -40,6 +40,28 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20051017 - 1.03.00
+* new functionality:
+  * changed names of some constants to make them more clear
+  * SMS:
+    * Gammu by default uses 8 bit encoding for SMS now (and changes it only,
+      when detect ANY known Default Alphabet or Unicode encoding in TPDCS).
+      It will avoid decoding SMS text, when unknown/incorrect TPDCS is used.
+      Please note, that all tools, which think, that Default encoding is
+      default, should be changed
+    * better recognizing SMS classes
+    * Gammu correctly recognizes SMS with compressed texts (like specified
+      in GSM 3.42). Unfortunately, decompression source is not available yet
+      and you will not see SMS text now.
+    * SMSD MySQL DB format updated to version 5. Changes made to PHP and SMSD.
+      Changed alphabet info entries and some others.
+
+* fixes and improvements:
+  * profiles are enabled for some DCT4 models only now
+  * fix for --deletecalendar
+  * -lm was not added correctly and no detection has             (Michal Cihar)
+    been done before
+
 20051010 - 1.02.25
 * new functionality:
   * MMS:

@@ -215,7 +215,7 @@ unsigned char *GSM_Networks[] = {
 	"259 01", "VOXTEL",
 	"260 01", "PLUS GSM",
 	"260 02", "ERA GSM",
-	"260 03", "IDEA Centertel",
+	"260 03", "Orange PL",
 	"262 01", "T-Mobile D",
 	"262 02", "D2 PRIVAT",
 	"262 03", "E-Plus",
