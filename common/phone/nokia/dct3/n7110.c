@@ -227,7 +227,7 @@ static GSM_SMSMessageLayout N7110_SMSTemplate = {
 	255 	/*	SendingDateTime	*/,	255 /*	SMSCDateTime	*/,
 	255	/*	TPStatus	*/,	16  /*	TPUDL		*/,
 	255	/*	TPVP		*/,	12  /*	firstbyte	*/,
-	255	/*	TPMR		*/,	255 /*  TPPID??		*/};
+	13	/*	TPMR		*/,	255 /*  TPPID??		*/};
 
 static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -1643,6 +1643,7 @@ GSM_Phone_Functions N7110Phone = {
 	N7110_AddSMS,
 	N7110_DeleteSMS,
 	DCT3_SendSMSMessage,
+	NOTSUPPORTED,			/*	SendSavedSMS		*/
 	N7110_SetIncomingSMS,
 	DCT3_SetIncomingCB,
 	N7110_GetSMSFolders,

@@ -20,6 +20,8 @@ unsigned int UnicodeLength(const unsigned char *str)
 {
 	unsigned int len = 0;
 
+	if (str == NULL) return 0;
+
 	while(1) {
 		if (str[len*2] == 0 && str[len*2+1] == 0) break;
 		len++;
@@ -302,7 +304,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, int len, bool
 	bool	FoundSpecial = false;
 
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, src, len);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, src, len);
 #endif
 
 	for (i = 0; i < len; i++) {
@@ -341,7 +343,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, int len, bool
 	dest[current++]=0;
 	dest[current++]=0;
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, dest, UnicodeLength(dest)*2);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, dest, UnicodeLength(dest)*2);
 #endif
 }
 
@@ -367,7 +369,7 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len, bool
 	bool	FoundSpecial,FoundNormal;
 
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, src, (*len)*2);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, src, (*len)*2);
 #endif
 
 	for (i = 0; i < *len; i++) {
@@ -435,7 +437,7 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len, bool
 	}
 	dest[current]=0;
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, dest, current);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, dest, current);
 #endif
 
 	*len = current;
@@ -907,7 +909,7 @@ void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 	dest[current++] = 0x00;
 }
 
-bool mystrncasecmp(unsigned char *a, unsigned char *b, int num)
+bool mystrncasecmp(unsigned const char *a, unsigned const char *b, int num)
 {
 	int i;
 
@@ -926,7 +928,7 @@ bool mystrncasecmp(unsigned char *a, unsigned char *b, int num)
 /* Compares two Unicode strings without regarding to case.
  * Return true, when they're equal
  */
-bool mywstrncasecmp(unsigned char *a, unsigned char *b, int num)
+bool mywstrncasecmp(unsigned const  char *a, unsigned const  char *b, int num)
 {
  	int 		i;
   	wchar_t 	wc,wc2;
@@ -946,7 +948,7 @@ bool mywstrncasecmp(unsigned char *a, unsigned char *b, int num)
 }
 
 /* wcscmp in Mandrake 9.0 is wrong */
-bool mywstrncmp(unsigned char *a, unsigned char *b, int num)
+bool mywstrncmp(unsigned const  char *a, unsigned const  char *b, int num)
 {
 	int i=0;
   
@@ -959,7 +961,7 @@ bool mywstrncmp(unsigned char *a, unsigned char *b, int num)
 }
 
 /* FreeBSD boxes 4.7-STABLE does't have it, although it's ANSI standard */
-bool myiswspace(unsigned char *src)
+bool myiswspace(unsigned const char *src)
 {
 #ifndef HAVE_ISWSPACE
  	int 		o;

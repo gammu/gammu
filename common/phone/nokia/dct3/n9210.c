@@ -317,6 +317,7 @@ GSM_Phone_Functions N9210Phone = {
 	NOTIMPLEMENTED,			/*	AddSMS			*/
 	NOTIMPLEMENTED,			/* 	DeleteSMS 		*/
 	DCT3_SendSMSMessage,
+	NOTSUPPORTED,			/*	SendSavedSMS		*/
 	N9210_SetIncomingSMS,
 	DCT3_SetIncomingCB,
 	NOTIMPLEMENTED,			/*	GetSMSFolders		*/

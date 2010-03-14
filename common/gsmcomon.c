@@ -154,6 +154,8 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_OTHERCONNECTIONREQUIRED,	"Current connection type doesn't support called function."},
 	/* Some missed */
 	{ERR_INVALIDDATETIME,		"Invalid date or time specified."},
+	{ERR_MEMORY,			"Phone memory error, maybe it is read only"},
+	{ERR_INVALIDDATA,		"Invalid data"},
 
 	{0,				""}
 };
@@ -176,11 +178,19 @@ unsigned char *print_error(GSM_Error e, FILE *df, INI_Section *cfg)
 	return GetMsg(cfg,def);
 }
 
-char *GetGammuVersion(void)
+const char *GetGammuLocalePath(void)
 {
-	static char Buffer[1000]="";
+#ifdef LOCALE_PATH
+	static const char Buffer[] = LOCALE_PATH;
+	return Buffer;
+#else
+	return NULL;
+#endif
+}
 
-	sprintf(Buffer, "%s",VERSION);
+const char *GetGammuVersion(void)
+{
+	static const char Buffer[] = VERSION;
 	return Buffer;
 }
 
@@ -192,7 +202,12 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 	if (privdi->use_global) {
 		/* Aren't we the changing the global di? */
 		if (privdi != &di) {
-			if (privdi->df == stdout) privdi->df = di.df;
+			if (privdi->df != di.df && 
+					privdi->dl!=0 && 
+					fileno(privdi->df) != 1 && 
+					fileno(privdi->df) != 2)
+				fclose(privdi->df);
+			privdi->df = di.df;
 			return ERR_NONE;
         	}
     	} else {

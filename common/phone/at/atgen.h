@@ -60,6 +60,13 @@ typedef enum {
 	AT_SBNR_NOTAVAILABLE
 } GSM_AT_SBNR;
 
+typedef enum {
+	AT_Status,
+	AT_NextEmpty,
+	AT_Total,
+	AT_Sizes
+} GSM_AT_NeededMemoryInfo;
+
 #define AT_PBK_MAX_MEMORIES	200
 
 typedef struct {
@@ -76,6 +83,9 @@ typedef struct {
 	bool			UCS2CharsetFailed;	/* Whether setting of UCS2 charset has already failed 		*/
 	bool			NonUCS2CharsetFailed;	/* Whether setting of non-UCS2 charset has already failed 	*/
 	GSM_AT_SBNR		PBKSBNR;
+	int			NumberLength;
+	int			TextLength;
+	int			MemorySize;
 
 	GSM_SMSMemoryStatus	LastSMSStatus;
 	int			LastSMSRead;

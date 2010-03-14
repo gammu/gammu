@@ -365,6 +365,7 @@ typedef enum {
 	ID_GetSMSC,
 	ID_GetSMSMessage,
 	ID_EnableEcho,
+	ID_EnableErrorInfo,
 	ID_SetOBEX,
 	ID_GetSignalQuality,
 	ID_GetBatteryCharge,
@@ -1036,6 +1037,10 @@ typedef struct {
 	 */
 	GSM_Error (*SendSMS)	    	(GSM_StateMachine *s, GSM_SMSMessage *sms);
 	/**
+	 * Sends SMS already saved in phone.
+	 */
+	GSM_Error (*SendSavedSMS)	(GSM_StateMachine *s, int Folder, int Location);
+	/**
 	 * Enable/disable notification on incoming SMS.
 	 */
 	GSM_Error (*SetIncomingSMS)     (GSM_StateMachine *s, bool enable);
@@ -1337,7 +1342,7 @@ struct _GSM_User {
 	void 	  (*IncomingSMS)	(char *Device, GSM_SMSMessage sms);
 	void 	  (*IncomingCB)		(char *Device, GSM_CBMessage  cb);
 	void 	  (*IncomingUSSD)	(char *Device, char	      *Text);
-	void 	  (*SendSMSStatus)	(char *Device, int 	      status);
+	void 	  (*SendSMSStatus)	(char *Device, int 	      status, int MessageReference);
 };
 
 /* --------------------------- Statemachine layer -------------------------- */
@@ -1386,12 +1391,14 @@ typedef struct {
 	bool			DefaultStartInfo;
 } GSM_Config;
 
+#define MAX_CONFIG_NUM		5
+
 struct _GSM_StateMachine {
 	GSM_ConnectionType 	ConnectionType;				/* Type of connection as int			*/
 	char			*LockFile;				/* Lock file name for Unix 			*/
 	Debug_Info		di;					/* Debug information				*/
 	bool			opened;					/* Is connection opened ?			*/
-	GSM_Config		Config[5];
+	GSM_Config		Config[MAX_CONFIG_NUM + 1];
 	GSM_Config		*CurrentConfig;				/* Config file (or Registry or...) variables 	*/
 	int			ConfigNum;
 	INI_Section 		*msg;			/* Localisation strings structure    		*/
@@ -1490,6 +1497,9 @@ struct _OnePhoneModel {
 bool 		IsPhoneFeatureAvailable	(OnePhoneModel *model, int feature);
 OnePhoneModel 	*GetModelData		(char *model, char *number, char *irdamodel);
 
+#ifdef __GNUC__
+__attribute__((format(printf, 2, 3)))
+#endif
 int smprintf(GSM_StateMachine *s, const char *format, ...);
 
 void GSM_OSErrorInfo(GSM_StateMachine *s, char *description);

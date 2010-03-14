@@ -49,6 +49,7 @@ typedef enum {
 } GSM_Bitmap_Types;
 
 #define GSM_BITMAP_SIZE	(65+7)/8*96
+#define GSM_BITMAP_TEXT_LENGTH 128
 
 /**
  * Structure for all possible bitmaps, which are not saved in various filesystems
@@ -68,7 +69,7 @@ typedef struct {
 	 * For caller group logo: name of group
          * For picture images: text assigned to it
 	 */
-	unsigned char 		Text[256];
+	unsigned char 		Text[2 * (GSM_BITMAP_TEXT_LENGTH + 1)];
 	/**
 	 * For caller group logo: true, when logo is enabled in group
 	 */
@@ -104,11 +105,11 @@ typedef struct {
 	/**
 	 * For operator logos: Network operator code
 	 */
-	unsigned char 		NetworkCode[7];
+	char			NetworkCode[7];
 	/**
 	 * For picture images: number of sender
 	 */
-	unsigned char 		Sender[GSM_MAX_NUMBER_LENGTH+1];
+	unsigned char 		Sender[2 * (GSM_MAX_NUMBER_LENGTH + 1)];
 	/**
 	 * For colour bitmaps: ID
 	 */
@@ -140,6 +141,7 @@ typedef enum {
 	GSM_NokiaPictureImage,		/*size 72*28*/
 	GSM_Nokia7110StartupLogo,	/*size 96*65*/
 	GSM_Nokia6210StartupLogo,	/*size 96*60*/
+	GSM_AlcatelBMMIPicture,
 	GSM_EMSSmallPicture,		/*size  8* 8*/
 	GSM_EMSMediumPicture,		/*size 16*16*/
 	GSM_EMSBigPicture,		/*size 32*32*/

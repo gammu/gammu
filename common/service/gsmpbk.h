@@ -204,10 +204,6 @@ typedef struct {
 	 */
 	int		     	Location;
 	/**
-	 * Whether to prefer unicode for storing this entry.
-	 */
-	bool		    	PreferUnicode;
-	/**
 	 * Number of SubEntries in Entries table.
 	 */
 	int		     	EntriesNum;

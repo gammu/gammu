@@ -25,6 +25,7 @@ void PHONE_GetBitmapWidthHeight(GSM_Phone_Bitmap_Types Type, int *width, int *he
 		case GSM_Nokia6210StartupLogo	: *width=96; *height=60; break;
 		case GSM_Nokia7110StartupLogo	: *width=96; *height=65; break;
 		case GSM_EMSVariablePicture	: 			 break;
+		case GSM_AlcatelBMMIPicture	:			 break;
 	}
 }
 
@@ -55,6 +56,8 @@ int PHONE_GetBitmapSize(GSM_Phone_Bitmap_Types Type, int Width, int Height)
 		case GSM_Nokia7110StartupLogo:
 		case GSM_Nokia6210StartupLogo:
 			return (height+7)/8*width;
+		case GSM_AlcatelBMMIPicture:
+			return width*((height+7)/8);
 	}
 	return 0;
 }
@@ -83,6 +86,8 @@ static bool PHONE_IsPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x
 	case GSM_NokiaPictureImage:
 		i=(buffer[9*y + x/8] & 1<<(7-(x%8)));
 		break;
+	case GSM_AlcatelBMMIPicture:
+		break;
 	}
 	if (i) return true; else return false;
 }
@@ -96,7 +101,7 @@ static void PHONE_SetPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int 
 	case GSM_Nokia6210StartupLogo:
 	case GSM_Nokia7110StartupLogo:
 	case GSM_Nokia6510OperatorLogo:
-		buffer[(y/8*width)+x] |= 1 << (y%8);		
+		buffer[(y/8*width)+x] |= 1 << (y%8);
 		break;
 	case GSM_NokiaOperatorLogo:
 	case GSM_Nokia7110OperatorLogo:
@@ -111,6 +116,11 @@ static void PHONE_SetPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int 
 	case GSM_NokiaPictureImage:
 		buffer[9*y + x/8] |= 1 << (7-(x%8));
 		break;
+	case GSM_AlcatelBMMIPicture:
+		pixel = height / 8;
+		if ((height % 8) != 0) pixel++;
+		buffer[pixel*x + y/8] |= 1 << (7 - (y%8));
+		break;		
 	}
 }
 
@@ -127,7 +137,8 @@ void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 		case GSM_NokiaOperatorLogo	:
 		case GSM_Nokia7110OperatorLogo	:
 		case GSM_Nokia6510OperatorLogo	: Bitmap->Type=GSM_OperatorLogo;	break;
-		case GSM_NokiaCallerLogo	: Bitmap->Type=GSM_CallerGroupLogo;		break;
+		case GSM_NokiaCallerLogo	: Bitmap->Type=GSM_CallerGroupLogo;	break;
+		case GSM_AlcatelBMMIPicture     :
 		case GSM_NokiaStartupLogo	:
 		case GSM_Nokia7110StartupLogo	:
 		case GSM_Nokia6210StartupLogo	: Bitmap->Type=GSM_StartupLogo;		break;
@@ -137,6 +148,19 @@ void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 		case GSM_EMSMediumPicture	:
 		case GSM_EMSBigPicture		: Bitmap->Type=GSM_PictureImage;	break;
 	}
+
+	Bitmap->Location		= 0;
+	Bitmap->Text[0]			= 0;
+	Bitmap->Text[1]			= 0;
+	Bitmap->BitmapEnabled		= false;
+	Bitmap->DefaultName		= false;
+	Bitmap->DefaultBitmap		= false;
+	Bitmap->DefaultRingtone		= false;
+	Bitmap->RingtoneID		= 0;
+	Bitmap->NetworkCode[0]		= 0;
+	Bitmap->Sender[0]		= 0;
+	Bitmap->Sender[1]		= 0;
+	Bitmap->ID			= 0;
 
 	GSM_ClearBitmap(Bitmap);
 	for (x=0;x<Bitmap->BitmapWidth;x++) {
@@ -155,8 +179,7 @@ void PHONE_ClearBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int width, int
 
 void PHONE_EncodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *Bitmap)
 {
-	int		width, height;
-	int		x, y;
+	int		width, height, x, y;
 	GSM_Bitmap	dest;
 
 	PHONE_GetBitmapWidthHeight(Type, &width, &height);
@@ -243,9 +266,7 @@ void GSM_ReverseBitmap(GSM_Bitmap *Bitmap)
 
 void GSM_ResizeBitmap(GSM_Bitmap *dest, GSM_Bitmap *src, int width, int height)
 {
-	int startx=0,endx=0,setx=0;
-	int starty=0,endy=0,sety=0;
-	int x, y;
+	int startx=0,endx=0,setx=0, starty=0,endy=0,sety=0, x, y;
 
 	if (src->BitmapWidth<=width) {
 		startx	= 0;
@@ -455,7 +476,7 @@ static GSM_Error savenlm(FILE *file, GSM_MultiBitmap *bitmap)
 		 
 	switch (bitmap->Bitmap[0].Type) {
 		case GSM_OperatorLogo    : header[5]=0x00; break;
-		case GSM_CallerGroupLogo      : header[5]=0x01; break;
+		case GSM_CallerGroupLogo : header[5]=0x01; break;
 		case GSM_StartupLogo     : header[5]=0x02; break;
 		case GSM_PictureImage    : header[5]=0x03; break;
 		default			 : return ERR_UNKNOWN;
@@ -551,15 +572,17 @@ static GSM_Error savexpm(FILE *file, GSM_MultiBitmap *bitmap)
 	for (y=0;y<bitmap->Bitmap[0].BitmapHeight;y++) {
 		fprintf(file,"\"");
 		for (x=0;x<bitmap->Bitmap[0].BitmapWidth;x++)
-			if (GSM_IsPointBitmap(&bitmap->Bitmap[0],x,y))
+			if (GSM_IsPointBitmap(&bitmap->Bitmap[0],x,y)) {
 				fprintf(file,".");
-			else
+			} else {
 				fprintf(file,"#");
+			}
 		fprintf(file,"\"");
-		if (y==bitmap->Bitmap[0].BitmapHeight-1)
+		if (y==bitmap->Bitmap[0].BitmapHeight-1) {
 			fprintf(file,"};\n");
-		else
+		} else {
 			fprintf(file,",\n");
+		}
 	}
 
 	return ERR_NONE;

@@ -92,16 +92,13 @@ DESTDIR =
 # --------------------------- internal source ---------------------------------
 
 %.o: %.c
-	@( echo Making $<; \
-	    curdir=`pwd`; \
-	    cd $(@D); \
-	    $(CC) -c $(CFLAGS) -I$${curdir}/common/ $(CPPFLAGS) $(<F) -o $(@F) \
-	)
+	@echo Making $<
+	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $(<) -o $(@)
     
 all: gammu
 
 $(TOPDIR)/gammu/gammu: $(COMMON) $(GAMMU)
-	@echo Linking
+	@echo Linking gammu
 	@$(CC) $(LDLIBS) $(COMMON) $(GAMMU) -lm -o $(TOPDIR)/gammu/gammu
   
 gammu: $(TOPDIR)/gammu/gammu
@@ -119,7 +116,7 @@ $(TOPDIR)/common/libGammu.a: $(COMMON)
 	@$(RANLIB) $(TOPDIR)/common/libGammu.a
  
 $(TOPDIR)/gammu/gammu-shared: $(COMMON) $(GAMMU) $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
-	@echo Linking
+	@echo Linking gammu-shared
 	@$(CC) $(LDFLAGS) $(LDLIBS) $(GAMMU) -lm -L$(TOPDIR)/common -lGammu -o $(TOPDIR)/gammu/gammu-shared
  
 shared: $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(TOPDIR)/common/libGammu.a $(TOPDIR)/gammu/gammu-shared

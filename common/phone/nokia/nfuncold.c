@@ -25,7 +25,7 @@ static void N71_65_GetCalendarAlarm(GSM_StateMachine *s, unsigned char *buffer, 
 		diff += ((unsigned int)buffer[1]) << 16;
 		diff += ((unsigned int)buffer[2]) << 8;
 		diff += buffer[3];
-		smprintf(s, "  Difference : %i seconds\n", diff);
+		smprintf(s, "  Difference : %li seconds\n", diff);
 
 		switch (entry->Type) {
 		case GSM_CAL_MEETING:
@@ -87,7 +87,7 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 	diff += ((unsigned int)msg.Buffer[13]) << 16;
 	diff += ((unsigned int)msg.Buffer[14]) << 8;
 	diff += msg.Buffer[15];
-	smprintf(s, "  Difference : %i seconds\n", diff);
+	smprintf(s, "  Difference : %li seconds\n", diff);
 	GetTimeDifference(diff, &Date, true, 1);
 	Date.Year += 20;
 	entry->Entries[0].EntryType = CAL_START_DATETIME;

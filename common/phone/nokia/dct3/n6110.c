@@ -293,7 +293,6 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 	switch (msg.Buffer[3]) {
 	case 0x02:
 		Data->Memory->EntriesNum = 0;
-		Data->Memory->PreferUnicode = false;
 		count=5;
 		/* If name is not empty */
 		if (msg.Buffer[count]!=0x00) {
@@ -1518,7 +1517,7 @@ static GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachi
 			memcpy(Data->Ringtone->NokiaBinary.Frame,msg.Buffer+start,end-start);
 			Data->Ringtone->NokiaBinary.Length=end-start;
 #ifdef DEBUG
-			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, Data->Ringtone->NokiaBinary.Frame, Data->Ringtone->NokiaBinary.Length);
+			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, Data->Ringtone->NokiaBinary.Frame, Data->Ringtone->NokiaBinary.Length);
 #endif
 			return ERR_NONE;
     		case RING_MIDI: 
@@ -2800,6 +2799,7 @@ GSM_Phone_Functions N6110Phone = {
 	N6110_AddSMS,
 	N6110_DeleteSMSMessage,
 	DCT3_SendSMSMessage,
+	NOTSUPPORTED,			/*	SendSavedSMS		*/
 	NOKIA_SetIncomingSMS,
 	DCT3_SetIncomingCB,
 	PHONE_GetSMSFolders,

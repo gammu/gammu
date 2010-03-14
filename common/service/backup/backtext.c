@@ -236,8 +236,6 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 
 	sprintf(buffer,"Location = %03i%c%c",Pbk->Location,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
-	sprintf(buffer,"PreferUnicode = %s%c%c",Pbk->PreferUnicode ? "yes" : "no",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
 	for (j=0;j<Pbk->EntriesNum;j++) {
 		text = true;
 		switch (Pbk->Entries[j].EntryType) {
@@ -723,8 +721,8 @@ static void SaveSMSCEntry(FILE *file, GSM_SMSC *SMSC, bool UseUnicode)
 	switch (SMSC->Validity.Relative) {
 		case SMS_VALID_1_Hour	: sprintf(buffer, "1hour"	); break;
 		case SMS_VALID_6_Hours 	: sprintf(buffer, "6hours"	); break;
-		case SMS_VALID_24_Hours	: sprintf(buffer, "24hours"	); break;
-		case SMS_VALID_72_Hours	: sprintf(buffer, "72hours"	); break;
+		case SMS_VALID_1_Day	: sprintf(buffer, "24hours"	); break;
+		case SMS_VALID_3_Days	: sprintf(buffer, "72hours"	); break;
 		case SMS_VALID_1_Week  	: sprintf(buffer, "1week"	); break;
 		case SMS_VALID_Max_Time	:
 		default			: sprintf(buffer,"MaximumTime"	); break;
@@ -1145,15 +1143,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 	Pbk->EntriesNum = 0;
 	e = INI_FindLastSectionEntry(file_info, section, UseUnicode);
 	
-	sprintf(buffer,"PreferUnicode");
-	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	Pbk->PreferUnicode = false;
-	if (readvalue!=NULL) {
-		if (strncmp(readvalue, "yes", 3) == 0) Pbk->PreferUnicode = true;
-	}
-	
-	while (1) {
-		if (e == NULL) break;
+	while (e != NULL) {
 		num = -1;
 		if (UseUnicode) {
 			sprintf(buffer,"%s",DecodeUnicodeString(e->EntryName));
@@ -1706,9 +1696,9 @@ static void ReadSMSCEntry(INI_Section *file_info, char *section, GSM_SMSC *SMSC,
 		} else if (mystrncasecmp(readvalue,"6hours",0)) {
 			SMSC->Validity.Relative = SMS_VALID_6_Hours;
 		} else if (mystrncasecmp(readvalue,"24hours",0)) {
-			SMSC->Validity.Relative = SMS_VALID_24_Hours;
+			SMSC->Validity.Relative = SMS_VALID_1_Day;
 		} else if (mystrncasecmp(readvalue,"72hours",0)) {
-			SMSC->Validity.Relative = SMS_VALID_72_Hours;
+			SMSC->Validity.Relative = SMS_VALID_3_Days;
 		} else if (mystrncasecmp(readvalue,"1week",0)) {
 			SMSC->Validity.Relative = SMS_VALID_1_Week;
 		}

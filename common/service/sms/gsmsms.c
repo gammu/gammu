@@ -174,7 +174,7 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 		dbgprintf(", part %i of %i",UDH->PartNumber,UDH->AllParts);
 	}
 	dbgprintf("\n");
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, UDH->Text, UDH->Length);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, UDH->Text, UDH->Length);
 #endif
 }
 
@@ -220,7 +220,7 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 			memcpy(SMS->Text,buffer+(Layout.Text+off),SMS->Length);
 #ifdef DEBUG
 			dbgprintf("8 bit SMS, length %i\n",SMS->Length);
-			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, SMS->Text, SMS->Length);
+			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, SMS->Text, SMS->Length);
 #endif
 			break;
 		case SMS_Coding_Unicode:
@@ -228,7 +228,7 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 			DecodeUnicodeSpecialNOKIAChars(SMS->Text,buffer+(Layout.Text+off), SMS->Length);
 #ifdef DEBUG
 			dbgprintf("Unicode SMS, length %i\n",SMS->Length);
-			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df,buffer+(Layout.Text+off), SMS->Length*2);
+			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, buffer+(Layout.Text+off), SMS->Length*2);
 			dbgprintf("%s\n",DecodeUnicodeString(SMS->Text));
 #endif
 			break;
@@ -305,6 +305,7 @@ GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_SMSMessage *SMS, unsigned char 
 
 GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
 {
+	GSM_DateTime	zerodt = {0,0,0,0,0,0,0};
 #ifdef DEBUG
 	if (Layout.firstbyte == 255) {
 		dbgprintf("ERROR: firstbyte in SMS layout not set\n");
@@ -318,16 +319,18 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	if (Layout.Text      != 255) dbgprintf("Text      : %02x %i\n",buffer[Layout.Text]     ,buffer[Layout.Text]);
 #endif
 
-	SMS->UDH.Type 		= UDH_NoUDH;
-	SMS->Coding 		= SMS_Coding_Default;
-	SMS->Length		= 0;
-	SMS->SMSC.Number[0] 	= 0;
-	SMS->SMSC.Number[1] 	= 0;
-	SMS->Number[0] 		= 0;
-	SMS->Number[1] 		= 0;
-	SMS->Name[0] 		= 0;
-	SMS->Name[1] 		= 0;
-	SMS->ReplyViaSameSMSC	= false;
+	SMS->UDH.Type 			= UDH_NoUDH;
+	SMS->Coding 			= SMS_Coding_Default;
+	SMS->Length			= 0;
+	SMS->SMSC.Number[0] 		= 0;
+	SMS->SMSC.Number[1] 		= 0;
+	SMS->SMSC.Validity.Format	= SMS_Validity_NotAvailable;
+	SMS->SMSC.Format		= SMS_FORMAT_Text;
+	SMS->Number[0] 			= 0;
+	SMS->Number[1] 			= 0;
+	SMS->Name[0] 			= 0;
+	SMS->Name[1] 			= 0;
+	SMS->ReplyViaSameSMSC		= false;
 	if (Layout.SMSCNumber!=255) {
 		GSM_UnpackSemiOctetNumber(SMS->SMSC.Number,buffer+Layout.SMSCNumber,false);
 		dbgprintf("SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
@@ -345,12 +348,16 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	}
 	if (Layout.DateTime != 255) {
 		GSM_DecodeSMSDateTime(&SMS->DateTime,buffer+(Layout.DateTime));
+	} else {
+		SMS->DateTime = zerodt;
 	}
 	if (Layout.SMSCTime != 255 && Layout.TPStatus != 255) {
 		/* GSM 03.40 section 9.2.3.11 (TP-Service-Centre-Time-Stamp) */
 		dbgprintf("SMSC response date: ");
 		GSM_DecodeSMSDateTime(&SMS->SMSCTime, buffer+(Layout.SMSCTime));
 		GSM_DecodeSMSFrameStatusReportData(SMS,buffer,Layout);
+	} else {
+		SMS->SMSCTime = zerodt;
 	}
 	SMS->Class = -1;
 	if (Layout.TPDCS != 255) {
@@ -417,7 +424,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 		memcpy(buffer+Layout.Text, SMS->UDH.Text, off);		/* we copy the udh */
 #ifdef DEBUG
 		dbgprintf("UDH, length %i\n",off);
-		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, SMS->UDH.Text, off);
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, SMS->UDH.Text, off);
 #endif
 	}
 	switch (SMS->Coding) {
@@ -430,7 +437,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			size2 = size = SMS->Length+off;
 #ifdef DEBUG
 			dbgprintf("8 bit SMS, length %i\n",SMS->Length);
-			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df,SMS->Text,SMS->Length);
+			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, SMS->Text, SMS->Length);
 #endif
 			break;
 		case SMS_Coding_Default:
@@ -458,7 +465,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			size=size2=UnicodeLength(buffer+(Layout.Text+off))*2+off;
 #ifdef DEBUG
 			dbgprintf("Unicode SMS, length %i\n",(size2-off)/2);
-			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df,buffer+(Layout.Text+off), size2-off);
+			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, buffer+(Layout.Text+off), size2-off);
 			dbgprintf("%s\n",DecodeUnicodeString(buffer+(Layout.Text+off)));
 #endif
 			break;
@@ -561,6 +568,7 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 {
 	SMS->Class			= -1;
 	SMS->SMSC.Location		= 1;
+	SMS->SMSC.Format		= SMS_FORMAT_Text;
 	SMS->SMSC.Validity.Format	= SMS_Validity_RelativeFormat;
 	SMS->SMSC.Validity.Relative	= SMS_VALID_Max_Time;
 	SMS->ReplyViaSameSMSC		= false;

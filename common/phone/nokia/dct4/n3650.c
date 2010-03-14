@@ -313,6 +313,7 @@ GSM_Phone_Functions N3650Phone = {
 	NOTSUPPORTED,			/*	AddSMS			*/
 	NOTSUPPORTED,			/* 	DeleteSMS 		*/
 	NOTSUPPORTED,			/*	SendSMS			*/
+	NOTSUPPORTED,			/*	SendSavedSMS		*/
 	NOTSUPPORTED,			/*	SetIncomingSMS		*/
 	NOTSUPPORTED,			/* 	SetIncomingCB		*/
 	NOTSUPPORTED,			/*	GetSMSFolders		*/

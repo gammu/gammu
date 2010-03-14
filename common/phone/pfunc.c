@@ -30,7 +30,7 @@ GSM_SMSMessageLayout PHONE_SMSStatusReport = {
 	27 	/*	SendingDateTime	*/,	34  /*	SMSCDateTime	*/,
 	14	/*	TPStatus	*/,	255 /*	TPUDL		*/,
 	255	/*	TPVP		*/,	12  /*	firstbyte	*/,
-	255	/*	TPMR		*/,	255 /*  TPPID??		*/};
+	13	/*	TPMR		*/,	255 /*  TPPID??		*/};
 
 GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 {

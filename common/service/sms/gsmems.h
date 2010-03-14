@@ -6,11 +6,11 @@
 #include "../../gsmcomon.h"
 #include "gsmmulti.h"
 
-GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
+GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				    GSM_MultiSMSMessage 	*SMS,
 				    GSM_UDH			UDHType);
 
-bool GSM_DecodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
+bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 		*Info,
 			       GSM_MultiSMSMessage 		*SMS);
 
 #endif

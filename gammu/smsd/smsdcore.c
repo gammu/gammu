@@ -13,9 +13,9 @@
 FILE 		 *smsd_log_file = NULL;
 static GSM_Error SendingSMSStatus;
 
-static void SMSSendingSMSStatus (char *Device, int status)
+static void SMSSendingSMSStatus (char *Device, int status, int mr)
 {
-	dbgprintf("Incoming SMS device: \"%s\" status=%d\n",Device, status);
+	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%d\n",Device, status, mr);
 	if (status==0) {
 		SendingSMSStatus = ERR_NONE;
 	} else {
@@ -46,7 +46,10 @@ void GSM_Terminate_SMSD(char *msg, int error, bool exitprogram, int rc)
 	}
 }
 
-void WriteSMSDLog(unsigned char *format, ...)
+#ifdef __GNUC__
+__attribute__((format(printf, 1, 2)))
+#endif
+void WriteSMSDLog(char *format, ...)
 {
 	GSM_DateTime 	date_time;
 	char 		Buffer[2000];

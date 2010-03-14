@@ -12,10 +12,10 @@ typedef		int wint_t;
 #endif
 
 /* ---------------------------- Unicode ------------------------------------ */
-bool 		mywstrncasecmp			(unsigned char *a, unsigned char *b, int num);
-unsigned char	*mystrstr			(const unsigned char *haystack, const unsigned char *needle);
-bool 		mywstrncmp			(unsigned char *a, unsigned char *b, int num);
-bool 		myiswspace	  		(unsigned char *src);
+bool 		mywstrncasecmp			(unsigned const char *a, unsigned const char *b, int num);
+unsigned char	*mystrstr			(unsigned const char *haystack, unsigned const char *needle);
+bool 		mywstrncmp			(unsigned const char *a, unsigned const char *b, int num);
+bool 		myiswspace	  		(unsigned const char *src);
 int 		mytowlower			(wchar_t c);
 
 unsigned int 	EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
@@ -122,7 +122,7 @@ int ClearBit (unsigned char *Buffer, int BitNum);
 
 void StringToDouble	(char *text, double *d);
 
-bool mystrncasecmp (unsigned char *a, unsigned char *b, int num);
+bool mystrncasecmp (unsigned const char *a, unsigned const char *b, int num);
 
 void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen);
 

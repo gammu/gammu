@@ -110,7 +110,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID)
 {
   	GSM_Error			error = ERR_NOTSUPPORTED;
-  	GSM_EncodeMultiPartSMSInfo	SMSInfo;
+  	GSM_MultiPartSMSInfo		SMSInfo;
  	unsigned char 			FileName[100],FullName[400];
 	unsigned char			Buffer[(GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS+1)*2];
  	unsigned char			Buffer2[(GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS+1)*2];
@@ -165,8 +165,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	if (len<2) return ERR_EMPTY;
 
  	if ((Buffer[0] != 0xFF || Buffer[1] != 0xFE) &&
-	    (Buffer[0] != 0xFE || Buffer[1] != 0xFF))
-	{
+	    (Buffer[0] != 0xFE || Buffer[1] != 0xFF)) {
  		if (len > GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS) len = GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS;
  		EncodeUnicode(Buffer2, Buffer, len);
  		len = len*2;

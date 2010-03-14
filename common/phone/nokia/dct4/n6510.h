@@ -69,6 +69,9 @@ void N6510_DecodeFMFrequency(double *freq, unsigned char *buff);
 #ifndef GSM_USED_BLUEPHONET
 #  define GSM_USED_BLUEPHONET
 #endif
+#ifndef GSM_USED_FBUS2PL2303
+#  define GSM_USED_FBUS2PL2303
+#endif
 
 #endif
 

@@ -20,7 +20,13 @@
 #define SM30_OTA	  2
 #define SM30_RINGTONE     3
 #define SM30_PROFILENAME  4
+/* ... */
 #define SM30_SCREENSAVER  6
+
+/* Identifiers for Alcatel Terminal Data Download */
+#define ALCATELTDD_PICTURE     4
+#define ALCATELTDD_ANIMATION   5
+#define ALCATELTDD_SMSTEMPLATE 6
 
 void GSM_SMSCounter(int		 	MessageLength,
 		    unsigned char       *MessageBuffer,
@@ -64,7 +70,7 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage   *SMS,
 
 void GSM_Find_Free_Used_SMS2(GSM_Coding_Type Coding,GSM_SMSMessage SMS, int *UsedText, int *FreeText, int *FreeBytes);
 
-unsigned char GSM_MakeSMSIDFromTime();
+unsigned char GSM_MakeSMSIDFromTime(void);
 
 /**
  * ID during packing SMS for Smart Messaging 3.0, EMS and other
@@ -183,7 +189,16 @@ typedef enum {
 	SMS_EMSFixedBitmap,
 	SMS_EMSVariableBitmap,
 	SMS_EMSVariableBitmapLong,
-	SMS_MMSIndicatorLong
+	SMS_MMSIndicatorLong,
+	/**
+	 * Variable bitmap with black and white colors
+	 */
+	SMS_AlcatelMonoBitmapLong,
+	/**
+	 * Variable animation with black and white colors
+	 */
+	SMS_AlcatelMonoAnimationLong,
+	SMS_AlcatelSMSTemplateName
 } EncodeMultiPartSMSID;
 
 typedef struct {
@@ -213,24 +228,41 @@ typedef struct {
 
 	/* Return values */
 	int		     	RingtoneNotes;
-} EncodeMultiPartSMSEntry;
+} MultiPartSMSEntry;
 
 typedef struct {
-	/* Input values */
-	EncodeMultiPartSMSEntry Entries[MAX_MULTI_SMS];
-	int		     	EntriesNum;
-	bool		    	UnicodeCoding;
-	int		     	Class;
-	unsigned char	   	ReplaceMessage;
-
+	MultiPartSMSEntry	Entries[MAX_MULTI_SMS];
+	int			EntriesNum;
+	bool			UnicodeCoding;
+	int			Class;
+	unsigned char		ReplaceMessage;
 	bool			Unknown;
-} GSM_EncodeMultiPartSMSInfo;
+} GSM_MultiPartSMSInfo;
 
-GSM_Error GSM_EncodeMultiPartSMS	(GSM_EncodeMultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS);
-bool      GSM_DecodeMultiPartSMS	(GSM_EncodeMultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS, bool ems);
-void      GSM_ClearMultiPartSMSInfo     (GSM_EncodeMultiPartSMSInfo *Info);
+/**
+ * Encodes multi part SMS from "readable" format.
+ */
+GSM_Error GSM_EncodeMultiPartSMS (GSM_MultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS);
 
-GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage *INPUT[200], GSM_MultiSMSMessage *OUTPUT[200], bool ems);
+/**
+ * Decodes multi part SMS to "readable" format.
+ */
+bool GSM_DecodeMultiPartSMS (GSM_MultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS, bool ems);
+
+/**
+ * Clears @ref GSM_MultiPartSMSInfo to default values.
+ */
+void GSM_ClearMultiPartSMSInfo (GSM_MultiPartSMSInfo *Info);
+
+/**
+ * Frees any allocated structures inside @ref GSM_MultiPartSMSInfo.
+ */
+void GSM_FreeMultiPartSMSInfo (GSM_MultiPartSMSInfo *Info);
+
+/**
+ * Links SMS messages according to IDs.
+ */
+GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT, bool ems);
 
 #endif
 
