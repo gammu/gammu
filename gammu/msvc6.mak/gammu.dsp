@@ -97,7 +97,15 @@ SOURCE=..\..\common\phone\alcatel\alcatel.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\phone\obex\obexgen.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\protocol\at\at.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\protocol\obex\obex.c
 # End Source File
 # Begin Source File
 
@@ -154,6 +162,10 @@ SOURCE=..\..\common\service\gsmmisc.c
 # Begin Source File
 
 SOURCE=..\..\common\service\gsmcal.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\gsmvcal.c
 # End Source File
 # Begin Source File
 
@@ -261,7 +273,7 @@ SOURCE=..\..\common\device\bluetoth\bluetoth.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\serial\win32.c
+SOURCE=..\..\common\device\serial\ser_w32.c
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -305,6 +317,10 @@ SOURCE=..\..\common\phone\nokia\dct3\dct3comm.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\phone\obex\obexgen.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\phone\nokia\dct3\dct3func.h
 # End Source File
 # Begin Source File
@@ -314,6 +330,10 @@ SOURCE=..\depend\dct4.h
 # Begin Source File
 
 SOURCE=..\..\common\protocol\nokia\fbus2.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\protocol\obex\obex.h
 # End Source File
 # Begin Source File
 
@@ -366,6 +386,10 @@ SOURCE=..\..\common\gsmstate.h
 # Begin Source File
 
 SOURCE=..\..\common\service\gsmwap.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\gsmvcal.h
 # End Source File
 # Begin Source File
 
@@ -437,19 +461,11 @@ SOURCE=..\..\common\device\bluetoth\bluetoth.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\bluetoth\win32\bthdef.h
+SOURCE=..\..\common\device\bluetoth\blue_w32.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\bluetoth\win32\bthsdpdef.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\common\device\bluetoth\win32\ws2bth.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\common\device\irda\win32.h
+SOURCE=..\..\common\device\irda\irda_w32.h
 # End Source File
 # Begin Source File
 
@@ -457,7 +473,7 @@ SOURCE=..\..\common\device\devfunc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\serial\win32.h
+SOURCE=..\..\common\device\serial\ser_w32.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

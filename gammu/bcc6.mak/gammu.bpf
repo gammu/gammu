@@ -9,11 +9,13 @@ USEUNIT("..\..\common\misc\cfg.c");
 USEUNIT("..\..\common\misc\coding.c");
 USEUNIT("..\..\common\misc\misc.c");
 USEUNIT("..\..\common\protocol\at\at.c");
+USEUNIT("..\..\common\protocol\obex\obex.c");
 USEUNIT("..\..\common\protocol\nokia\fbus2.c");
 USEUNIT("..\..\common\protocol\alcatel\alcabus.c");
 USEUNIT("..\..\common\protocol\nokia\phonet.c");
 USEUNIT("..\..\common\protocol\nokia\mbus2.c");
 USEUNIT("..\..\common\service\gsmback.c");
+USEUNIT("..\..\common\service\gsmvcal.c");
 USEUNIT("..\..\common\service\gsmcal.c");
 USEUNIT("..\..\common\service\gsmlogo.c");
 USEUNIT("..\..\common\service\gsmnet.c");
@@ -35,10 +37,11 @@ USEUNIT("..\..\common\phone\nokia\nfuncold.c");
 USEUNIT("..\..\common\phone\alcatel\alcatel.c");
 USEUNIT("..\..\common\phone\pfunc.c");
 USEUNIT("..\..\common\phone\at\atgen.c");
+USEUNIT("..\..\common\phone\obex\obexgen.c");
 USEUNIT("..\..\common\phone\at\sonyeric.c");
 USEUNIT("..\..\common\device\devfunc.c");
 USEUNIT("..\..\common\device\irda\irda.c");
 USEUNIT("..\..\common\device\bluetoth\bluetoth.c");
-USEUNIT("..\..\common\device\serial\win32.c");
+USEUNIT("..\..\common\device\serial\ser_w32.c");
 
 #define WinMain

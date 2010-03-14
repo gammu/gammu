@@ -439,7 +439,7 @@ GSM_Error ATGEN_GetManufacturer(GSM_StateMachine *s)
 GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	int			i = 0;
+	unsigned int		i = 0;
 
 	strcpy(s->Phone.Data.Version,"unknown");
 	s->Phone.Data.VerNum = 0;

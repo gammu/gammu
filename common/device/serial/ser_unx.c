@@ -11,7 +11,7 @@
 #include <termios.h>
 
 #include "../../gsmcomon.h"
-#include "unix.h"
+#include "ser_unx.h"
 
 /* Close the serial port and restore old settings. */
 static GSM_Error serial_close(GSM_StateMachine *s)

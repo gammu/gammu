@@ -293,6 +293,7 @@ typedef enum {
 	SMS_NokiaVCARD10Long,		/* Nokia VCARD 1.0 - only name and default number*/
 	SMS_NokiaVCARD21Long,		/* Nokia VCARD 2.1 - all numbers + text		 */
 	SMS_NokiaVCALENDAR10Long,	/* Nokia VCALENDAR 1.0 - can be in few sms	 */
+	SMS_NokiaVTODOLong,
 	SMS_DisableVoice,
 	SMS_DisableFax,
 	SMS_DisableEmail,
@@ -326,6 +327,7 @@ typedef struct {
 	GSM_MMSIndicator	*MMSIndicator;
 	GSM_PhonebookEntry	*Phonebook;
 	GSM_CalendarEntry	*Calendar;
+	GSM_ToDoEntry		*ToDo;
 	unsigned char		*Buffer;
 	bool			Protected;
 

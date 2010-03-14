@@ -21,9 +21,10 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
 	    $(TOPDIR)/common/service/gsmlogo.o \
 	    $(TOPDIR)/common/service/gsmmisc.o \
 	    $(TOPDIR)/common/service/gsmnet.o \
+	    $(TOPDIR)/common/service/gsmvcal.o \
 	    $(TOPDIR)/common/device/bluetoth/bluetoth.o \
-	    $(TOPDIR)/common/device/serial/unix.o \
-	    $(TOPDIR)/common/device/serial/djgpp.o \
+	    $(TOPDIR)/common/device/serial/ser_unx.o \
+	    $(TOPDIR)/common/device/serial/ser_djg.o \
 	    $(TOPDIR)/common/device/irda/irda.o \
 	    $(TOPDIR)/common/device/devfunc.o \
 	    $(TOPDIR)/common/protocol/at/at.o \
@@ -31,6 +32,7 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
 	    $(TOPDIR)/common/protocol/nokia/mbus2.o \
 	    $(TOPDIR)/common/protocol/nokia/fbus2.o \
 	    $(TOPDIR)/common/protocol/nokia/phonet.o \
+	    $(TOPDIR)/common/protocol/obex/obex.o \
 	    $(TOPDIR)/common/phone/pfunc.o \
 	    $(TOPDIR)/common/phone/at/atgen.o \
 	    $(TOPDIR)/common/phone/at/siemens.o \
@@ -43,7 +45,8 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
 	    $(TOPDIR)/common/phone/nokia/dct4/n6510.o \
 	    $(TOPDIR)/common/phone/nokia/nauto.o \
 	    $(TOPDIR)/common/phone/nokia/nfunc.o \
-	    $(TOPDIR)/common/phone/nokia/nfuncold.o
+	    $(TOPDIR)/common/phone/nokia/nfuncold.o \
+	    $(TOPDIR)/common/phone/obex/obexgen.o
 
 # files for command line gammu
 GAMMU     = $(TOPDIR)/gammu/depend/dct3.o \
@@ -90,6 +93,8 @@ clean:
 	@$(RM) $(COMMON) $(GAMMU) core $(TOPDIR)/common/libGammu.so
 	@$(RM) $(TOPDIR)/gammu/gammu $(TOPDIR)/gammu/gammulib tags
 	@$(RM) $(TOPDIR)/cfg/locale/locale.o $(TOPDIR)/cfg/locale/locale
+	@echo Cleaning autoconf cache
+	@$(RM) -r $(TOPDIR)/cfg/autoconf/*.cache
 
 makelocale: $(LOCALE)
 	@echo Linking locale application
@@ -105,6 +110,7 @@ distclean: makelocale clean
 	@echo Setting default config
 	@chmod a+x $(TOPDIR)/docs/examples/ppp/*
 	@chmod a+x $(TOPDIR)/other/config/*
+	@chmod a+x $(TOPDIR)/other/perms/perms
 	@chmod a+x $(TOPDIR)/configure
 	@$(TOPDIR)/configure
 	@$(RM) $(TOPDIR)/cfg/autoconf/config.cache
@@ -227,15 +233,17 @@ makerpm: makecleantree
 	@echo Creating $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz file
 	@tar cvfz $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz gammu-$(VERSION) > /dev/null
 	@echo Removing Gammu tree snapshot
-	@$(RM) -rf gammu-$(VERSION)/
+	@$(RM) -r gammu-$(VERSION)/
 	@echo Installing $(RPM_DIR)/SPECS/gammu.spec
 	@$(INSTALL) -m 0444 $(TOPDIR)/cfg/rpm/gammu.spec $(RPM_DIR)/SPECS/gammu.spec
 	@echo Making packages
-	@rpm -ba -v $(RPM_DIR)/SPECS/gammu.spec
-	@rm -rf $(RPM_DIR)/SPECS/gammu.spec
-	@rm -rf $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz
-	@rm -rf $(RPM_DIR)/BUILD/gammu-$(VERSION)
-	@echo Source tarball is in $(RPM_DIR)/SRPMS, binary in $(RPM_DIR)/RPMS
+	@$(RPMBUILD) -ba -v $(RPM_DIR)/SPECS/gammu.spec
+	@$(RM) -r $(RPM_DIR)/SPECS/gammu.spec
+	@$(RM) -r $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz
+	@$(RM) -r $(RPM_DIR)/BUILD/gammu-$(VERSION)
+	@$(MV) $(RPM_DIR)/SRPMS/gammu-$(VERSION)*.rpm ..
+	@$(MV) $(RPM_DIR)/RPMS/*/gammu-*$(VERSION)*.rpm ..
+	@ls -l ../gammu-*$(VERSION)*.rpm
 
 makedeb: makecleantree
 	@echo Copying debian directory

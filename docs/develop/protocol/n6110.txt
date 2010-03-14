@@ -3,17 +3,17 @@ Last update 04.07.2002
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Assembled by
-	Balazs Nagy (js@iksz.hu)
-        Harri Yli-Torkko (hyt@surfeu.fi)
+	Balazs Nagy          <js@iksz.hu>
+        Harri Yli-Torkko     <hyt@surfeu.fi>
 	Alfred R. Nurnberger <arnu@flosys.com>
-	Hugh Blemings <Hugh.Blemings@vsb.com.au>
-	Mike Bradley <mike@trumpington.st>
-	Odinokov Serge <serge@takas.lt>
-	Pavel Janik <Pavel@Janik.cz>
-        BORBELY Zoltan (bozo@andrews.hu)
-	Pawel Kot <pkot@linuxnews.pl>
-	Marcin Wiacek (Marcin@MWiacek.com)
-        Walek [walek@pa98.opole.sdi.tpnet.pl]
+	Hugh Blemings        <Hugh.Blemings@vsb.com.au>
+	Mike Bradley         <mike@trumpington.st>
+	Odinokov Serge       <serge@takas.lt>
+	Pavel Janik          <Pavel@Janik.cz>
+        BORBELY Zoltan       <bozo@andrews.hu>
+	Pawel Kot            <pkot@linuxnews.pl>
+	Marcin Wiacek        <Marcin@MWiacek.com>
+        Walek                <walek@pa98.opole.sdi.tpnet.pl>
 	... and other members of gnokii mailing list
             and authors of some WWW pages.
 

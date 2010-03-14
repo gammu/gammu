@@ -119,7 +119,7 @@ typedef struct {
 typedef struct {
 	int			Location;
         char 			StationName [(GSM_MAX_FMSTATION_LENGTH+1)*2];
-	int			Frequency;
+	double			Frequency;
 } GSM_FMStation;
 
 /* ----------------------- filesystem ------------------------------------- */
@@ -169,6 +169,9 @@ typedef struct {
 } GSM_GPRSAccessPoint;
 
 /* ------------------------------------------------------------------------ */
+
+void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start);
+bool ReadVCALText(char *Buffer, char *Start, char *Value);
 
 #endif
 

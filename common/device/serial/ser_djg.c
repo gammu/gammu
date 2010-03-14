@@ -5,7 +5,7 @@
 #ifdef DJGPP
 
 #include "../../gsmcomon.h"
-#include "djgpp.h"
+#include "ser_djg.h"
 
 /* Close the serial port and restore old settings. */
 static GSM_Error serial_close(GSM_StateMachine *s)

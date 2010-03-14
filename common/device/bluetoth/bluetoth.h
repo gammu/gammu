@@ -3,6 +3,10 @@
 #ifndef unixbluetooth_h
 #define unixbluetooth_h
 
+#ifdef WIN32
+#  include "blue_w32.h"
+#endif
+
 typedef struct {
     int hPhone;
 } GSM_Device_BlueToothData;

@@ -18,11 +18,15 @@
 #                                              infrared)
 #                  "irdaat"                   (AT commands with socket
 #                                              infrared)
+#                  "irdaobex"                 (OBEX over socket infrared and
+#                                              model "obex")
 #                  "bluephonet"               (Nokia PHONET FBUS with Bluetooth
 #                                              stack)
 #                  "bluefbus"   or "dlr3blue" (Nokia FBUS2 with Bluetooth
 #                                              stack)
 #                  "blueat"     or "atblue"   (AT commands with Bluetooth
+#                  "blueobex"                 (OBEX with Bluetooth and
+#                                              model "obex")
 #                                              stack)
 # Port           : for Windows/DOS            : "com*:"
 #                  for Linux/Unix             :

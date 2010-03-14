@@ -25,6 +25,9 @@
 #ifdef GSM_ENABLE_ALCATEL
 #  include "phone/alcatel/alcatel.h"
 #endif
+#ifdef GSM_ENABLE_OBEXGEN
+#  include "phone/obex/obexgen.h"
+#endif
 
 #ifndef GSM_USED_MBUS2
 #  undef GSM_ENABLE_MBUS2
@@ -46,6 +49,12 @@
 #endif
 #ifndef GSM_USED_AT
 #  undef GSM_ENABLE_AT
+#endif
+#ifndef GSM_USED_IRDAOBEX
+#  undef GSM_ENABLE_IRDAOBEX
+#endif
+#ifndef GSM_USED_BLUEOBEX
+#  undef GSM_ENABLE_BLUEOBEX
 #endif
 #ifndef GSM_USED_ALCABUS
 #  undef GSM_ENABLE_ALCABUS
@@ -89,6 +98,9 @@
 #ifdef GSM_ENABLE_ALCABUS
 #  include "protocol/alcatel/alcabus.h"
 #endif
+#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX)
+#  include "protocol/obex/obex.h"
+#endif
 
 #define GSM_ENABLE_SERIALDEVICE
 #ifndef GSM_USED_SERIALDEVICE
@@ -114,11 +126,13 @@
 #  undef GSM_ENABLE_IRDAAT
 #  undef GSM_ENABLE_PHONETBLUE
 #  undef GSM_ENABLE_FBUS2BLUE
+#  undef GSM_ENABLE_IRDAOBEX
+#  undef GSM_ENABLE_BLUEOBEX
 #endif
 
-#include "device/serial/win32.h"
-#include "device/serial/unix.h"
-#include "device/serial/djgpp.h"
+#include "device/serial/ser_w32.h"
+#include "device/serial/ser_unx.h"
+#include "device/serial/ser_djg.h"
 #include "device/irda/irda.h"
 #include "device/bluetoth/bluetoth.h"
 
@@ -200,6 +214,9 @@ typedef struct {
 #ifdef GSM_ENABLE_ALCABUS
 	extern GSM_Protocol_Functions ALCABUSProtocol;
 #endif
+#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX)
+	extern GSM_Protocol_Functions OBEXProtocol;
+#endif
 
 typedef struct {
 	struct {
@@ -218,6 +235,9 @@ typedef struct {
 #endif
 #ifdef GSM_ENABLE_ALCABUS
 		GSM_Protocol_ALCABUSData	ALCABUS;
+#endif
+#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX)
+		GSM_Protocol_OBEXData		OBEX;
 #endif
 	} Data;
 	GSM_Protocol_Functions *Functions;
@@ -441,6 +461,9 @@ typedef struct {
 #ifdef GSM_ENABLE_ALCATEL
 		GSM_Phone_ALCATELData	ALCATEL;
 #endif
+#ifdef GSM_ENABLE_OBEXGEN
+		GSM_Phone_OBEXGENData	OBEXGEN;
+#endif
 	} Priv;
 } GSM_Phone_Data;
 
@@ -561,6 +584,9 @@ typedef struct {
 #ifdef GSM_ENABLE_ALCATEL
 	extern GSM_Phone_Functions ALCATELPhone;
 #endif
+#ifdef GSM_ENABLE_OBEXGEN
+	extern GSM_Phone_Functions OBEXGENPhone;
+#endif
 
 typedef struct {
 	GSM_Phone_Data		 Data;
@@ -590,11 +616,13 @@ typedef enum {
 	GCT_PHONETBLUE,
 	GCT_AT,
 
+	GCT_IRDAOBEX,
 	GCT_IRDAAT,
 	GCT_IRDAPHONET,
 	GCT_BLUEFBUS2,
 	GCT_BLUEAT,
-	GCT_BLUEPHONET
+	GCT_BLUEPHONET,
+	GCT_BLUEOBEX
 } GSM_ConnectionType;
 
 typedef struct {
@@ -689,7 +717,8 @@ typedef enum {
 	/* n6510.c */
 	F_PBK35,	/* Phonebook in 3510 style with ringtones ID			*/
 	F_RADIO,	/* Phone with FM radio						*/
-	F_NOTODO,	/* No ToDo in phone						*/
+	F_TODO63,	/* ToDo in 6310 style - 0x55 msg type				*/
+	F_TODO66,	/* ToDo in 6610 style - like calendar, with date and other	*/
 	F_NOMIDI,	/* No ringtones in MIDI						*/
 	F_BLUETOOTH,	/* Bluetooth support						*/
 	F_NOFILESYSTEM,	/* No images, ringtones, java saved in special filesystem	*/

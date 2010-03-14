@@ -1,4 +1,4 @@
-Gammu README version 27.04.2003
+Gammu README version 28.06.2003
 -------------------------------
 Q. How to use it ?
 
@@ -75,6 +75,8 @@ A. First of all, here are described all possible parameters for this software.
    gammu --getfmstation start [stop]
        Show info about FM stations in phone
 
+   gammu --getgprspoint start [stop]
+
    gammu --getfiles file1ID file2ID ...
 
    gammu --getfilesystem [-flatall|-flat]
@@ -83,7 +85,7 @@ A. First of all, here are described all possible parameters for this software.
 
    gammu --addfolder parentfolderID name
 
-   gammu --addfile folderID name [JAR|BMP|PNG|GIF|JPG|MIDI]
+   gammu --addfile folderID name [JAR|BMP|PNG|GIF|JPG|MIDI|WBMP]
 
    gammu --nokiaaddfile MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent
                      file sender title
@@ -121,6 +123,10 @@ A. First of all, here are described all possible parameters for this software.
        VM = voice mailbox
        SM = SIM phonebook
        ME = phone internal phonebook
+
+   gammu --searchmemory text
+
+   gammu --listmemorycategory text|number
 
    gammu --senddtmf sequence
        Plays DTMF sequence. In some phones available only during calls
@@ -284,6 +290,8 @@ A. First of all, here are described all possible parameters for this software.
 
    gammu --savefile CALENDAR target.vcs file location
 
+   gammu --savefile TODO target.vcs file location
+
    gammu --savefile VCARD10|VCARD21 target.vcf file SM|ME location
 
    gammu --savesms TEXT [-folder number][-reply][-sender number][-flash]
@@ -437,6 +445,11 @@ A. First of all, here are described all possible parameters for this software.
        Read calendar note from file created by --backup option and saves in
        VCALENDAR 1.0 format as SMS
 
+   gammu --savesms TODO file location [-folder number][-sender number]
+                                      [-smscset number][-unsent][-reply]
+                                      [-smscnumber number][-unread]
+                                      [-read]
+
    gammu --savesms VCARD10|VCARD21 file SM|ME location [-folder number]
                                                        [-smscset number]
                                                        [-reply][-unread]
@@ -556,6 +569,10 @@ A. First of all, here are described all possible parameters for this software.
                                                       [-smscnumber number]
                                                       [-report][-reply]
                                     [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
+   gammu --sendsms TODO destination file location [-smscset number]
+                                                  [-smscnumber number]
+                                                  [-report][-reply]
+                                   [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms VCARD10|VCARD21 destination file SM|ME location
                         [-reply][-smscset number][-smscnumber number][-report]
                         [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]

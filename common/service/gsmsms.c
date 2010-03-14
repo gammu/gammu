@@ -536,7 +536,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 
 	/* size is the length of the data in octets including udh */
 	*length=GSM_EncodeSMSFrameText(SMS,buffer,Layout);
-	if (*length == 0) return GE_UNKNOWN;
+//	if (*length == 0) return GE_UNKNOWN;
 	*length += Layout.Text;	
 
 	return GE_NONE;
@@ -696,7 +696,6 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 	unsigned char 	UDHID;
 
 	while (true) {
-		if (pos==MessageLength) break;
 		MySMS = &SMS->SMS[SMS->Number];
 		GSM_SetDefaultSMSData(MySMS);
 		MySMS->UDH.Type = UDHType;
@@ -734,6 +733,7 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 		pos 		= pos+maxlen;
 		SMS->Number++;
 		if (SMS->Number==MAX_MULTI_SMS) break;
+		if (pos==MessageLength) break;
 	}
 	UDHID = GSM_MakeSMSIDFromTime();
 	for (j=0;j<SMS->Number;j++)
@@ -1508,12 +1508,12 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		NOKIA_EncodeWAPMMSSettingsSMSText(Buffer,&Length,Info->Entries[0].Settings,true);
 		break;
 	case SMS_NokiaVCARD10Long:
-		NOKIA_EncodeVCARD10SMSText(Buffer,&Length,Info->Entries[0].Phonebook);
+		GSM_EncodeVCARD(Buffer,&Length,Info->Entries[0].Phonebook,true,Nokia_VCard10);
 		/* is 1 SMS ? 8 = length of ..SCKE2 */
 		if (Length<=GSM_MAX_SMS_LENGTH-8) {
 			sprintf(Buffer,"//SCKE2 ");
 			Length = 8;
-			NOKIA_EncodeVCARD10SMSText(Buffer,&Length,Info->Entries[0].Phonebook);
+			GSM_EncodeVCARD(Buffer,&Length,Info->Entries[0].Phonebook,true,Nokia_VCard10);
 		} else {
 			/* FIXME: It wasn't checked */
 			UDH = UDH_NokiaPhonebookLong;
@@ -1523,12 +1523,12 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
 	case SMS_NokiaVCARD21Long:
-		NOKIA_EncodeVCARD21SMSText(Buffer,&Length,Info->Entries[0].Phonebook);
+		GSM_EncodeVCARD(Buffer,&Length,Info->Entries[0].Phonebook,true,Nokia_VCard21);
 		/* Is 1 SMS ? 12 = length of ..SCKL23F4 */
 		if (Length<=GSM_MAX_SMS_LENGTH-12) {
 			sprintf(Buffer,"//SCKL23F4%c%c",13,10);
 			Length = 12;
-			NOKIA_EncodeVCARD21SMSText(Buffer,&Length,Info->Entries[0].Phonebook);
+			GSM_EncodeVCARD(Buffer,&Length,Info->Entries[0].Phonebook,true,Nokia_VCard21);
 		} else {
 			UDH = UDH_NokiaPhonebookLong;
 			/* Here can be also 8 bit coding */
@@ -1538,17 +1538,25 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
 	case SMS_NokiaVCALENDAR10Long:
-		error=NOKIA_EncodeVCALENDAR10SMSText(Buffer,&Length,Info->Entries[0].Calendar);
+		error=GSM_EncodeVCALENDAR(Buffer,&Length,Info->Entries[0].Calendar,true,Nokia_VCalendar);
 		if (error != GE_NONE) return error;
 		/* Is 1 SMS ? 8 = length of ..SCKE4 */
 		if (Length<=GSM_MAX_SMS_LENGTH-8) {
 			sprintf(Buffer,"//SCKE4 ");  
 			Length = 8;
-			NOKIA_EncodeVCALENDAR10SMSText(Buffer,&Length,Info->Entries[0].Calendar);
+			GSM_EncodeVCALENDAR(Buffer,&Length,Info->Entries[0].Calendar,true,Nokia_VCalendar);
 		} else {
 			UDH = UDH_NokiaCalendarLong;
 			/* can be here 8 bit coding ? */
 		}
+		Coding = GSM_Coding_Default;
+		memcpy(Buffer2,Buffer,Length);
+		EncodeUnicode(Buffer,Buffer2,Length);
+		break;
+	case SMS_NokiaVTODOLong:
+		error=GSM_EncodeVTODO(Buffer,&Length,Info->Entries[0].ToDo,true,Nokia_VToDo);
+		if (error != GE_NONE) return error;
+		UDH = UDH_NokiaCalendarLong;
 		Coding = GSM_Coding_Default;
 		memcpy(Buffer2,Buffer,Length);
 		EncodeUnicode(Buffer,Buffer2,Length);
@@ -1639,6 +1647,7 @@ void GSM_ClearMultiPartSMSInfo(GSM_EncodeMultiPartSMSInfo *Info)
 		Info->Entries[i].Bookmark	= NULL;
 		Info->Entries[i].Settings	= NULL;
 		Info->Entries[i].Calendar	= NULL;
+		Info->Entries[i].ToDo		= NULL;
 		Info->Entries[i].MMSIndicator	= NULL;
 
 		Info->Entries[i].Protected	= false;

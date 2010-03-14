@@ -8,7 +8,7 @@
 typedef struct {
 	int				LastCalendarYear;
 	int				LastCalendarPos;
-	GSM_NOKIACalendarLocations	LastCalendar;
+	GSM_NOKIACalToDoLocations	LastCalendar;
 	int				FirstCalendarPos;
 
 	GSM_NOKIASMSFolder		LastSMSFolder;

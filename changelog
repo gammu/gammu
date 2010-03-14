@@ -18,6 +18,64 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20030628 - 0,79,0,0
+* new functionality:
+  * full support for ToDo available in new Nokia (support for DueDate,
+    alarm, marking as done, sending over sms, creating files with it, etc.)
+  * support for VCALENDAR over SMS includes all Nokia features
+  * --nokiaaddfile finds Gallery & Tones folder according to folder ID
+    (currently for 3510, 3510i, 5100)
+  * it's possible to save to backup file, which WAP/MMS settings set is used
+    and later activate it during restore (currently DCT4)
+  * version info of package is in format major_build,minor_build,release,build
+  * actual version of project is put during "make distclean" for win32 projects
+    automatically
+  * changes connected with RPM building:            (Ivo Panacek, Michal Cihar)
+    * info in readme.txt, that rpm package can be built and how
+    * there are two principle rpm versions (3.x and 4.x) in use (SuSE, RedHat)
+      and they differs in (among others) binary, which is used for building;
+      so new check is done in configure (= configure.in) and proper binary
+      is then put into variable in Makefile.cfg
+    * newly build rpms are moved from building directory (tree) to parent
+      of current directory (to be found more easily)
+    * added removing of autoconf cache directory into "make clean"
+  * VERY EXPERIMENTAL:
+    * when use vcs extension during backup, there is created VCALENDAR file
+      with Calendar and ToDo. It's first step for making exchanging data
+      with various PIM managers
+    * started work on OBEX ("irdaobex"/"blueobex" connection            (Intra)
+      with "obex" model). Tested with Nokia 5100, 6310i and SonyEricsson T300:
+      * can upload files to phone default inbox with --addfile (folderID = 0)
+      * can get file with phone features info with --getfiles (folderID = 0)
+        Doesn't work with T300 (not supported by phone ?)
+      * --getfilesystem will display folder and file list.
+        Doesn't work with 6310i (yet) and T300 (not supported by phone ?)
+
+* fixes and improvements:
+  * FM stations support improved:
+    * operates on double type
+    * frequency displayed for user are with one digit after comma
+    * removed some hangups
+  * can save and send empty SMS
+  * MSVC7 project for DLL recreated. Few fixes
+  * --savefile used always first location. Fixed
+  * removed all unnecessary definitions from Bluetooth and Irda dirs
+  * updated developers docs (Bluetooth format)
+  * * Gammu don't segfault when only debuglevel specified        (Michal Cihar)
+      and no parameters
+    * compile time warnings in atgen about comparison between signed and
+      unsigned removed
+    * -autolen in send/savesms fixed
+  * better allocating memory in MBUS2 driver                     (John Fremlin)
+  * docs synchronized with source
+
+NOTE: currently development will be connected with such things:
+      1. OBEX & SyncML (after getting some hardware ?)
+      2. full compatibility with various PIM managers
+      3. Symbian support (after getting some hardware ?)
+      4. DKU-5 support (after getting some hardware ?)
+      5. other ;-)
+
 20030616 - 0.78
 * new functionality:
   * support for calendar is changed for new phones. Currently:

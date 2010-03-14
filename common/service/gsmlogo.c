@@ -2,9 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "gsmlogo.h"
 #include "../misc/misc.h"
 #include "../misc/coding.h"
+#include "gsmlogo.h"
 #include "gsmnet.h"
 
 void PHONE_GetBitmapWidthHeight(GSM_Phone_Bitmap_Types Type, int *width, int *height)

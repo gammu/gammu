@@ -116,21 +116,30 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 #ifndef WIN32
     d->peer.sir_lsap_sel 	= LSAP_ANY;
 #endif
-    if (s->ConnectionType == GCT_IRDAAT) {
+    switch (s->ConnectionType) {
+    case GCT_IRDAAT:
     	strcpy(d->peer.irdaServiceName, "IrDA:IrCOMM");
 
 #ifdef WIN32
 	if (setsockopt(fd, SOL_IRLMP, IRLMP_9WIRE_MODE, (const char *) &Enable9WireMode,
                sizeof(int))==SOCKET_ERROR) return GE_UNKNOWN;
 #endif
-    } else {
+	break;
+    case GCT_IRDAPHONET:
     	strcpy(d->peer.irdaServiceName, "Nokia:PhoNet");
+	break;
+    case GCT_IRDAOBEX:
+    	strcpy(d->peer.irdaServiceName, "IrDA:OBEX");
+	break;
+    default:
+	return GE_UNKNOWN;
     }
 
     /* Connect to service "Nokia:PhoNet" or other */
     if (connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
+	dprintf("Can't connect to service\n");
 	close(fd);
-	return GE_DEVICEOPENERROR;
+	return GE_NOTSUPPORTED;
     }
 
     d->hPhone=fd;

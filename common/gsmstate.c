@@ -33,6 +33,8 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("phonetblue"	,connection,0)) s->ConnectionType = GCT_PHONETBLUE;
 	if (mystrncasecmp("irdaphonet"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
 	if (mystrncasecmp("irdaat"	,connection,0)) s->ConnectionType = GCT_IRDAAT;
+	if (mystrncasecmp("irdaobex"	,connection,0)) s->ConnectionType = GCT_IRDAOBEX;
+	if (mystrncasecmp("blueobex"	,connection,0)) s->ConnectionType = GCT_BLUEOBEX;
 	if (mystrncasecmp("bluefbus"	,connection,0)) s->ConnectionType = GCT_BLUEFBUS2;
 	if (mystrncasecmp("bluephonet"	,connection,0)) s->ConnectionType = GCT_BLUEPHONET;
 	if (mystrncasecmp("blueat"	,connection,0)) s->ConnectionType = GCT_BLUEAT;
@@ -96,6 +98,12 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #ifdef GSM_ENABLE_IRDAAT
 	GSM_RegisterConnection(s, GCT_IRDAAT, 	 &IrdaDevice,     &ATProtocol);
 #endif
+#ifdef GSM_ENABLE_IRDAOBEX
+	GSM_RegisterConnection(s, GCT_IRDAOBEX,  &IrdaDevice,     &OBEXProtocol);
+#endif
+#ifdef GSM_ENABLE_BLUEOBEX
+	GSM_RegisterConnection(s, GCT_BLUEOBEX,  &BlueToothDevice,&OBEXProtocol);
+#endif
 	if (s->Device.Functions==NULL || s->Protocol.Functions==NULL)
 			return GE_SOURCENOTAVAILABLE;
 	return GE_NONE;
@@ -138,6 +146,9 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 		GSM_RegisterModule(s,&ATGENPhone);
 		if (s->Phone.Functions!=NULL) return GE_NONE;
 	}
+#endif
+#ifdef GSM_ENABLE_OBEXGEN
+	GSM_RegisterModule(s,&OBEXGENPhone);
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	GSM_RegisterModule(s,&N6110Phone);
@@ -296,6 +307,12 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 				case GCT_BLUEAT:
 				case GCT_IRDAAT:
 					s->Phone.Functions = &ATGENPhone;
+					break;
+#endif
+#ifdef GSM_ENABLE_OBEXGEN
+				case GCT_IRDAOBEX:
+				case GCT_BLUEOBEX:
+					s->Phone.Functions = &OBEXGENPhone;
 					break;
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
@@ -584,6 +601,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 		smprintf(s, "Received frame ");
 		smprintf(s, "0x%02x / 0x%04x", msg->Type, msg->Length);
 		DumpMessage(s->di.df, msg->Buffer, msg->Length);
+		if (msg->Length == 0) smprintf(s, "\n");
 		fflush(s->di.df);
 	}
 	if (s->di.dl==DL_BINARY) {
@@ -749,13 +767,13 @@ static OnePhoneModel allmodels[] = {
 	{"3410" ,"NHM-2" ,"",           {F_RING_SM,F_CAL33,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_NOTODO,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
-	{"3510i","RH-9"   ,"",          {F_CAL35,F_NOTODO,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
-	{"3530" ,"RH-9"   ,"",          {F_CAL35,F_NOTODO,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
+	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
+	{"3510i","RH-9"   ,"",          {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
+	{"3530" ,"RH-9"   ,"",          {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"3650" ,"NHL-8" ,"Nokia 3650", {F_RADIO,0}},
-	{"5100" ,"NPM-6" ,"Nokia 5100", {F_RADIO,F_NOTODO,0}},
+	{"5100" ,"NPM-6" ,"Nokia 5100", {F_TODO66,F_RADIO,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"5110" ,"NSE-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DISPSTATUS,0}},
@@ -770,7 +788,7 @@ static OnePhoneModel allmodels[] = {
 	{"5510" ,"NPM-5" ,"",           {F_NOCALLER,F_PROFILES33,F_NOPICTUREUNI,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"6100" ,"NPL-2" ,"Nokia 6100", {F_RADIO,F_NOTODO,0}},
+	{"6100" ,"NPL-2" ,"Nokia 6100", {F_RADIO,F_TODO66,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"6110" ,"NSE-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
@@ -783,20 +801,20 @@ static OnePhoneModel allmodels[] = {
 	{"6250" ,"NHM-3" ,"Nokia 6250", {F_VOICETAGS,F_CAL62,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"6310" ,"NPE-4" ,"Nokia 6310", {F_CAL65,F_NOMIDI,F_NOMMS,F_VOICETAGS,0}},
-	{"6310i","NPL-1" ,"Nokia 6310i",{F_CAL65,F_NOMIDI,F_BLUETOOTH,F_NOMMS,F_VOICETAGS,0}},
-	{"6510" ,"NPM-9" ,"Nokia 6510", {F_CAL65,F_NOMIDI,F_RADIO,F_NOFILESYSTEM,F_NOMMS,F_VOICETAGS,0}},
-	{"6610" ,"NHL-4U","Nokia 6610", {F_RADIO,F_NOTODO,0}},
-	{"6800" ,"NSB-9" ,"Nokia 6800", {F_RADIO,F_NOTODO,0}},
-	{"6800" ,"NHL-6" ,"Nokia 6800", {F_RADIO,F_NOTODO,0}},
+	{"6310" ,"NPE-4" ,"Nokia 6310", {F_TODO63,F_CAL65,F_NOMIDI,F_NOMMS,F_VOICETAGS,0}},
+	{"6310i","NPL-1" ,"Nokia 6310i",{F_TODO63,F_CAL65,F_NOMIDI,F_BLUETOOTH,F_NOMMS,F_VOICETAGS,0}},
+	{"6510" ,"NPM-9" ,"Nokia 6510", {F_TODO63,F_CAL65,F_NOMIDI,F_RADIO,F_NOFILESYSTEM,F_NOMMS,F_VOICETAGS,0}},
+	{"6610" ,"NHL-4U","Nokia 6610", {F_TODO66,F_RADIO,0}},
+	{"6800" ,"NSB-9" ,"Nokia 6800", {F_TODO66,F_RADIO,0}},
+	{"6800" ,"NHL-6" ,"Nokia 6800", {F_TODO66,F_RADIO,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"7110" ,"NSE-5" ,"Nokia 7110", {F_CAL62,0}},
 	{"7190" ,"NSB-5" ,"Nokia 7190", {F_CAL62,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"7210" ,"NHL-4" ,"Nokia 7210", {F_RADIO,F_NOTODO,0}},
-	{"7250" ,"NHL-4J","Nokia 7250", {F_RADIO,F_NOTODO,0}},
+	{"7210" ,"NHL-4" ,"Nokia 7210", {F_TODO66,F_RADIO,0}},
+	{"7250" ,"NHL-4J","Nokia 7250", {F_TODO66,F_RADIO,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN)
 	{"7650" ,"NHL-2" ,"Nokia 7650", {0}},
@@ -807,8 +825,8 @@ static OnePhoneModel allmodels[] = {
 	{"8290" ,"NSB-7" ,"Nokia 8290", {F_NOWAP,F_NOSTARTANI,F_NOPBKUNICODE,F_NOPICTUREUNI,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"8310" ,"NHM-7" ,"Nokia 8310", {F_CAL62,F_NOMIDI,F_RADIO,F_NOTODO,F_NOFILESYSTEM,F_NOMMS,F_VOICETAGS,0}},
-	{"8390" ,"NSB-8" ,"Nokia 8390", {F_CAL62,F_NOMIDI,F_RADIO,F_NOTODO,F_NOFILESYSTEM,F_NOMMS,F_VOICETAGS,0}},
+	{"8310" ,"NHM-7" ,"Nokia 8310", {F_CAL62,F_NOMIDI,F_RADIO,F_NOFILESYSTEM,F_NOMMS,F_VOICETAGS,0}},
+	{"8390" ,"NSB-8" ,"Nokia 8390", {F_CAL62,F_NOMIDI,F_RADIO,F_NOFILESYSTEM,F_NOMMS,F_VOICETAGS,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6110)
 	{"8850" ,"NSM-2" ,"Nokia 8850", {0}},
@@ -905,6 +923,7 @@ void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned char *message, int mess
 		smprintf(s,"Sending frame ");
 		smprintf(s,"0x%02x / 0x%04x", type, messagesize);
 		DumpMessage(s->di.df, message, messagesize);
+		if (messagesize == 0) smprintf(s,"\n");
 		if (s->di.df) fflush(s->di.df);
 	}
 }

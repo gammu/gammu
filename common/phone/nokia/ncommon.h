@@ -43,19 +43,10 @@ typedef struct {
 	int		Number;				/* number of SMS messages in that folder */
 } GSM_NOKIASMSFolder;
 
-#define NOKIA_MAXCALENDARNOTES	300
-
 typedef struct {
-	int		Location[NOKIA_MAXCALENDARNOTES];/* locations of calendar notes */
-	int		Number;				 /* number of calendar notes */
-} GSM_NOKIACalendarLocations;
-
-#define NOKIA_MAXTODONOTES	150
-
-typedef struct {
-	int		Location[NOKIA_MAXTODONOTES];	/* locations of todo notes */
-	int		Number;				/* number of todo notes */
-} GSM_NOKIAToDoLocations;
+	int		Location[GSM_MAXCALENDARTODONOTES];
+	int		Number;	
+} GSM_NOKIACalToDoLocations;
 
 #define NOKIA_PRESSPHONEKEY   0x01
 #define NOKIA_RELEASEPHONEKEY 0x02

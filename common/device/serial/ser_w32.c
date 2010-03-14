@@ -11,7 +11,7 @@
 #include <memory.h>
 
 #include "../../gsmcomon.h"
-#include "win32.h"
+#include "ser_w32.h"
 
 /* Close the serial port and restore old settings. */
 static GSM_Error serial_close(GSM_StateMachine *s)

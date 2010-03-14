@@ -129,11 +129,12 @@ type
 		UDH_NokiaCallerLogo,
 		UDH_NokiaWAPBookmark,
 		UDH_NokiaCalendarLong,
+		UDH_NokiaOperatorLogoLong,
 		UDH_NokiaProfileLong,
-		UDH_NokiaWAPBookmarkLong,
-		UDH_NokiaWAPSettingsLong,
+		UDH_NokiaWAPLong,
 		UDH_NokiaPhonebookLong,
-		UDH_UserUDH);			// Other user UDH
+		UDH_UserUDH,			// Other user UDH
+		UDH_MMSIndicatorLong);
 
         // Structure to hold UDH Header
         GSM_UDHHeader = record

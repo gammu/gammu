@@ -41,24 +41,7 @@ GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 
 void GSM_CreateFirmwareNumber(GSM_StateMachine *s)
 {
-	bool 		before=true;
-	double		ala = 0, multiply = 1;
-	unsigned int 	i;
-
-	for (i=0;i<strlen(s->Phone.Data.Version);i++) {
-		if (isdigit(s->Phone.Data.Version[i])) {
-			if (before) {
-				ala=ala*10+(s->Phone.Data.Version[i]-'0');
-			} else {
-				multiply=multiply*0.1;
-				ala=ala+(s->Phone.Data.Version[i]-'0')*multiply;
-			}
-		}
-		if (s->Phone.Data.Version[i]=='.') {
-			before=false;
-		}
-	}
-	s->Phone.Data.VerNum = ala;
+	StringToDouble(s->Phone.Data.Version, &s->Phone.Data.VerNum);
 	dprintf("Number version is \"%f\"\n", s->Phone.Data.VerNum);
 }
 

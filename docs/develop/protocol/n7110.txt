@@ -3,15 +3,15 @@ Last update 04.07.2002
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Assembled by
-	Balazs Nagy (js@iksz.hu)
-	Marcin Wiacek (Marcin@MWiacek.com)
-        Jens Bennfors <jens.bennfors@ing.hj.se>
-        Michael Hund <michael@drhund.de>
-        Jay Bertrand <jay.bertrand@libertysurf.fr>
+	Balazs Nagy    <js@iksz.hu>
+	Marcin Wiacek  <Marcin@MWiacek.com>
+        Jens Bennfors  <jens.bennfors@ing.hj.se>
+        Michael Hund   <michael@drhund.de>
+        Jay Bertrand   <jay.bertrand@libertysurf.fr>
         Gabriele Zappi <gzappi@inwind.it>
-        Markus Plail <plail@web.de>
-	Ralf Thelen <ralf@mythelen.de>
-        Walek [walek@pa98.opole.sdi.tpnet.pl]
+        Markus Plail   <plail@web.de>
+	Ralf Thelen    <ralf@mythelen.de>
+        Walek          <walek@pa98.opole.sdi.tpnet.pl>
 	... and other members of gnokii mailing list
             and authors of some WWW pages.
 

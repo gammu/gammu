@@ -1,4 +1,4 @@
-.TH "Gammu" "1" "27.04.2003" "Marcin Wiacek and others" "Cellurar phones utilities"
+.TH "Gammu" "1" "28.06.2003" "Marcin Wiacek and others" "Cellurar phones utilities"
 .SH "NAME"
 .LP
 Gammu \- Does some neat things with your cellular phone or modem
@@ -121,6 +121,8 @@ Show names/codes of GSM networks known for Gammu
 \fB\-\-getfmstation start [stop]\fR
 Show info about FM stations in phone
 .TP
+\fB\-\-getgprspoint start [stop]\fR
+.TP
 \fB\-\-getfiles file1ID file2ID ...\fR
 .TP
 \fB\-\-getfilesystem [\-flatall|\-flat]\fR
@@ -129,7 +131,7 @@ Show info about FM stations in phone
 .TP
 \fB\-\-addfolder parentfolderID name\fR
 .TP
-\fB\-\-addfile folderID name [JAR|BMP|PNG|GIF|JPG|MIDI]\fR
+\fB\-\-addfile folderID name [JAR|BMP|PNG|GIF|JPG|MIDI|WBMP]\fR
 .TP
 \fB\-\-nokiaaddfile MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent file sender title\fR
 .TP
@@ -172,6 +174,10 @@ Get memory location from phone. Numerate locations from 1.
 .br
 \fBME\fR = phone internal phonebook
 .TP
+\fB\-\-searchmemory text\fR
+.TP
+\fB\-\-listmemorycategory text|number\fR
+.TP
 \fB\-\-senddtmf sequence\fR
 Plays DTMF sequence. In some phones available only during calls
 .TP
@@ -189,15 +195,15 @@ and each sms has unique number in his folder. Name of folders can
 depend on your phone (the most often 1="Inbox", 2="Outbox", etc.).
 This method is not supported by all phones (for example, not supported
 by Nokia 3310, 5110, 6110). If work with your phone, use
-\fB\-\-getsmsfolders\fR to get folders list.
+\fB\-\-getsmsfolders\fR to get folders list.
 .TP 
 \fB\-\-deletesms folder start [stop]\fR
 Delete SMS from phone. See description for \fB\-\-getsms\fR for info about
 sms folders naming convention. Locations are numerated from 1.
 .TP
 \fB\-\-deleteallsms folder\fR
-Delete all SMS from specified SMS folder.	  
-.TP 
+Delete all SMS from specified SMS folder.
+.TP
 \fB\-\-getallsms\fR
 Get all SMS from phone. In some phones you will have also SMS templates
 and info about locations used to save Picture Images. With each sms you
@@ -205,15 +211,14 @@ will see location. If you want to get such sms from phone alone, use
 \fBgammu \-\-getsms 0 location\fR
 .TP
 \fB\-\-geteachsms\fR
-Similiary to \fB\-\-getallsms\fR. Difference is, that links all contacenated sms	  
-.TP 
+Similiary to \fB\-\-getallsms\fR. Difference is, that links all contacenated sms
+.TP
 \fB\-\-getsmsc start [stop]\fR
 Get SMSC settings from SIM card. Numerate locations from 1.
 .TP 
 \fB\-\-getsmsfolders\fR
 Get names for SMS folders in phone
 .TP
-
 \fB\-\-smsd FILES configfile\fR
 SMS Deaemon. See smsdrc config file for more options
 .TP
@@ -221,7 +226,7 @@ SMS Deaemon. See smsdrc config file for more options
 .TP 
 \fB\-\-getringtone location [file]\fR
 Get ringtone from phone in RTTL or BINARY format. Locations are numerated from 1.
-.TP 
+.TP
 \fB\-\-setringtone file [-location location] [\-scale] [-name name]\fR
 Set ringtone in phone. When don't give location, it will be written
 "with preview" (in phones supporting this feature like 61xx or 6210).
@@ -231,15 +236,15 @@ editing ringtone in composer from phone menu (for example, in N33xx).
 
 \fITIP:\fR when use ~ char in ringtone name, in some phones (like 33xx)
 name will blink later in phone menus
-.TP 
+.TP
 \fB\-\-copyringtone source destination [RTTL|BINARY]\fR
 Copy source ringtone to destination.
-.TP 
+.TP
 \fB\-\-playringtone file\fR
 Play aproximation of ringtone over phone buzzer.
 .TP
 \fB\-\-getringtoneslist\fR
-.TP 
+.TP
 \fB\-\-nokiacomposer file\fR
 Show, how to enter RTTL ringtone in composer existing in many Nokia phones
 (and how should it look like).
@@ -249,12 +254,14 @@ Make voice call from SIM card line set in phone.
 .TP 
 \fB\-\-answercall\fR
 Answer incoming call.
-.TP 
+.TP
 \fB\-\-cancelcall\fR
 Cancel incoming call
 .TP
 \fB\-\-gettodo start [stop]\fR
-.TP 
+.TP
+\fB\-\-deletetodo start [stop]\fR
+.TP
 \fB\-\-getcalendarnotes\fR
 Get calendar notes from phone. In Nokia 3310 and 3330 they're named
 "Reminders" and have some limitations (they depends on phone firmware version).
@@ -279,7 +286,7 @@ Get static startup logo from phone. Allow to save it in file.
 .TP
 \fB\-\-getbitmap CALLER location [file]\fR
 Get caller group logo from phone. Locations 1\-5.
-.TP 
+.TP
 \fB\-\-getbitmap OPERATOR [file]\fR
 Get operator logo (picture displayed instead of operator name) from phone.
 .TP 
@@ -298,7 +305,7 @@ get it.
 Set startup logo in phone. It can be static (then you will have to give file
 name) or one of predefined animated (only some phones like Nokia 3310 or 3330
 supports it)
-.TP 
+.TP
 \fB\-\-setbitmap COLOURSTARTUP [fileID]\fR
 .TP
 \fB\-\-setbitmap WALLPAPER fileID\fR
@@ -325,9 +332,15 @@ Allow to convert logos files to another. When give ONLY inputfile, output will
 be written to stdout using ASCII art. When give output file and format, in
 some file formats (like NLM) will be set indicator informing about logo type
 to given.
+.TP
+\fB\-\-savefile CALENDAR target.vcs file location\fR
+.TP
+\fB\-\-savefile TODO target.vcs file location\fR
+.TP
+\fB\-\-savefile VCARD10|VCARD21 target.vcf file SM|ME location\fR
 .TP 
 \fB\-\-savesms TEXT [\-folder number] [\-reply] [\-sender number] [\-flash] [\-smscset number] [\-smscnumber number] [\-len len] [\-autolen len] [\-enablefax] [\-disablefax] [\-enablevoice] [\-unsent] [\-disablevoice] [\-enableemail] [\-disableemail] [\-read] [\-voidsms] [\-unicode] [\-inputunicode] [\-unread] [-replacemessages ID] [-replacefile file]\fR
-Take text from stdin and save as text SMS into SIM/phone memory. 
+Take text from stdin and save as text SMS into SIM/phone memory.
 
 \fB\-folder number\fR \- save to specified folder. Numerate folders from 1.
 The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use \fB\-\-getsmsfolders\fR to get folder list.
@@ -339,6 +352,7 @@ sms. In some phones with internal SMS memory (like
 
 \fB\-read\fR \- makes message read. In some phones with internal
 SMS memory (like 6210) after using it SIM SMS memory will be used
+
 \fB\-unsent\fR \- makes message unsent
 
 \fB\-reply\fR \- reply SMSC is set
@@ -438,23 +452,26 @@ Save Picture Image as sms (Nokia format \- size 72x28).
 Read WAP bookmark from file created by \fB\-\-backup\fR option and saves in
 Nokia format as SMS
 .TP
-\fB\-\-savesms SETTINGS file location [\-folder number] [\-reply] [\-unsent] [\-sender number] [\-smscset number] [\-smscnumber number] [\-unread] [\-read]\fR
-Read WAP settings from file created by \fB\-\-backup\fR option and saves in
-Nokia format as SMS
+\fB\-\-savesms WAPSETTINGS file location GPRS|DATA [\-folder number] [\-reply] [\-unsent] [\-sender number] [\-smscset number] [\-smscnumber number] [\-unread] [\-read]\fR
+Read WAP settings from file created by \fB\-\-backup\fR option and saves in Nokia format as SMS
+.TP
+\fB\-\-savesms MMSSETTINGS file location [\-folder number] [\-reply] [\-unsent] [\-sender number] [\-smscset number] [\-smscnumber number] [\-unread] [\-read]\fR
 .TP 
 \fB\-\-savesms CALENDAR file location [\-folder number] [\-sender number] [\-smscset number] [\-unsent] [\-reply] [\-smscnumber number] [\-unread] [\-read]\fR
 Read calendar note from file created by \fB\-\-backup\fR option and saves in
 VCALENDAR 1.0 format as SMS
 .TP
+\fB\-\-savesms TODO file location [\-folder number] [\-sender number] [\-smscset number] [\-unsent] [\-reply] [\-smscnumber number] [\-unread] [\-read]\fR
+.TP
 \fB\-\-savesms VCARD10|VCARD21 file SM|ME location [\-folder number] [\-smscset number] [\-reply] [\-unread] [\-smscnumber number] [\-sender number] [\-read] [\-unsent]\fR
 Read phonebook entry from file created by \fB\-\-backup\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
 all numbers, text and name) format as SMS
-.TP 
+.TP
 \fB\-\-savesms PROFILE name bitmap ringtone [\-folder number] [\-reply] [\-smscset number] [\-unsent] [\-smscnumber number] [\-read] [\-sender number] [\-unread]\fR
 Read ringtone (RTTL) format and bitmap (Picture Image size) and name and save
 as Nokia profile.
-.TP 
+.TP
 \fB\-\-savesms EMS [\-folder number] [\-reply] [\-smscset number] [\-unsent] [\-smscnumber number] [\-read] [\-sender number] [\-unread] [\-text "text"] [\-defanimation ID] [\-defsound ID] [\-tone10 file] [\-tone12 file] [\-animation frames file1 ..] [\-variablebitmap file] [\-fixedbitmap file] [\-unicodefiletext file] [\-tone10long file] [\-tone12long file] [\-toneSElong file] [\-toneSE file] [\-protected number] [\-variablebitmaplong file]\fR
 
 Saves EMS sequence. All parameters after \fB\-unread\fR (like \fB\-defsound\fR) can be used few times.
@@ -496,13 +513,13 @@ will create EMS sequence with text "Greetings" and default sound 1 and text "fro
 \fIExample:\fR gammu \-\-savesms EMS \-protected 2 \-variablebitmaplong ala.bmp \-toneSElong axelf.txt \-toneSE ring.txt
 
 ala.bmp and axelf.txt will be "protected"
-.TP 
+.TP
 \fB\-\-sendsms TEXT destination [\-reply] [\-flash] [\-smscset number] [\-smscnumber number] [\-len len] [\-autolen len] [\-enablefax] [\-disablefax] [\-enablevoice] [\-disablevoice] [\-enableemail] [\-report] [\-disableemail] [\-voidsms] [\-unicode] [\-inputunicode] [-replacemessages ID] [-replacefile file] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
-.TP 
+.TP
 \fB\-\-sendsms RINGTONE destination file [\-reply] [\-smscset number] [\-long] [\-smscnumber number] [\-report] [\-scale] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
-.TP 
+.TP
 \fB\-\-sendsms OPERATOR destination file [\-reply] [\-smscset number] [\-netcode netcode] [\-report] [\-smscnumber number] [-biglogo] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
-.TP 
+.TP
 \fB\-\-sendsms CALLER destination file [\-reply] [\-smscset number] [\-report] [\-smscnumber number] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
 \fB\-\-sendsms PICTURE destination file [\-reply] [\-smscset number] [\-report] [\-smscnumber number] [\-unicode] [\-text text] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
@@ -510,11 +527,15 @@ ala.bmp and axelf.txt will be "protected"
 \fB\-\-sendsms MMSINDICATOR destination URL Title Sender [\-reply] [\-report] [\-smscnumber number] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-smscset number]
 .TP
 \fB\-\-sendsms BOOKMARK destination file location [\-smscset number] [\-reply] [\-report] [\-smscnumber number] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
-.TP 
-\fB\-\-sendsms SETTINGS destination file location [\-smscset number] [\-smscnumber number] [\-report] [\-reply] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
+.TP
+\fB\-\-sendsms WAPSETTINGS destination file location GPRS|DATA [\-smscset number] [\-smscnumber number] [\-report] [\-reply] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
+.TP
+\fB\-\-sendsms MMSSETTINGS destination file location [\-smscset number] [\-smscnumber number] [\-report] [\-reply] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
 \fB\-\-sendsms CALENDAR destination file location [\-smscset number] [\-smscnumber number] [\-report] [\-reply] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
-.TP 
+.TP
+\fB\-\-sendsms TODO destination file location [\-smscset number] [\-smscnumber number] [\-report] [\-reply] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
+.TP
 \fB\-\-sendsms VCARD10|VCARD21 destination file SM|ME location [\-reply] [\-smscset number] [\-smscnumber number] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
 \fB\-\-sendsms PROFILE destination name bitmap ringtone [\-reply] [\-smscset number] [\-smscnumber number] [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
@@ -548,7 +569,7 @@ Make tests for Nokia DCT3 phones
 (like in 82xx/7110/62xx/33xx). The same Clock test will show error
 when phone doesn't have internal battery for clock (like 3xxx)
 ...and for DCT4 (work in progress)
-.TP 
+.TP
 \fB\-\-nokiasetphonemenus\fR
 Enable all (?) possible menus for DCT3 Nokia phones:
 
@@ -565,14 +586,14 @@ Enable all (?) possible menus for DCT3 Nokia phones:
 6. NetMonitor
 
 and for DCT4:
-       
+
 1. ALS (Alternative Line Service) option menu
 .br
 2. Bluetooth, WAP bookmarks and settings menu, ... (6310i)
 .br
 3. GPRS Always Online
 .br
-...				   	      
+...
 .TP
 \fB\-\-nokianetmonitor test\fR
 Takes output or set netmonitor for Nokia DCT3 phones.
@@ -588,7 +609,7 @@ reboot them to see netmonitor menu)
 Reset counters from netmonitor test 36 in Nokia DCT3 phones.
 
 \fITIP:\fR For more info about this option, please visit
-\fIhttp://www.mwiacek.com\fR and read netmonitor manual.
+\fIwww.mwiacek.com\fR and read netmonitor manual.
 .TP
 \fB\-\-siemensnetmonitor\fR
 .TP 
@@ -651,7 +672,7 @@ Repl: Type = NumberMobile\\nEntry\\1Text = "\\+3620
 F: Type = NumberGeneral\\nEntry\\([0\-9][0\-9]\\)Text = "\\+36\\(20\\|30\\|60\\|70\\)\\([^\\"]*\\)"\\nEntry\\([0\-9][0\-9]\\)TextUnicode = \\([^\\n]*\\)\\n
 .br
 R: Type = NumberMobile\nEntry\1Text = "\\+36\\2\\3"\\n
-.TP 
+.TP
 \fB\-\-backupsms file\fR
 .TP 
 \fB\-\-restore file\fR
@@ -660,7 +681,7 @@ backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
 
 In some phones restoring calendar notes will not show error, but won't
-be done, when phone doesn't have set clock inside.	      
+be done, when phone doesn't have set clock inside.
 .TP
 \fB\-\-restoresms file\fR
 .TP
@@ -705,7 +726,7 @@ and try \fBgammu \-\-identify\fR
 .br
 <marcin@mwiacek.com>
 .br
-http://www.mwiacek.com
+www.mwiacek.com
 
 Here are some people, who somehow helped in this project. Probably not
 everyone is mentioned. If you think, you're missed, please let us know:
@@ -736,13 +757,13 @@ like \fIGabriele Zappi\fR, \fIRalf Thelen\fR, .... (see CREDITS from MyGnokii)
 11.\fIJoergen Thomsen\fR \- SMS daemon
 
 .SH "SEE ALSO"
-.LP 
+.LP
 readme.txt
 
-http://www.mwiacek.com
+www.mwiacek.com
 
 gnokii(1)
 
 xgnokii(2)
 
-http://www.gnokii.org
+http://www.gnokii.org
