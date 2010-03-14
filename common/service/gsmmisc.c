@@ -340,8 +340,11 @@ bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *
 		memcpy(file->Buffer+file->Used,buff,len);
 		file->Used += len;
 	}
-
+#ifdef WIN32
+	closesocket(s);
+#else
 	close(s);
+#endif
 	
 	if (file->Buffer == NULL) return false;
 	if (strstr(file->Buffer,"HTTP/1.1 200 OK")==NULL) {

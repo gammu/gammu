@@ -18,6 +18,7 @@ connection = fbusblue
 #startinfo = yes
 #gammucoding = utf8
 #rsslevel = teststable
+#usephonedb = yes
 
 [gammu1]
 
@@ -145,11 +146,24 @@ connection = fbusblue
 #                 | to prevent using it by other applications. In win32 ignored
 # ----------------|------------------------------------------------------------
 # RSSLevel        | Should Gammu connect to www.mwiacek.com and check for new
-#                 | versions ? if yes, there will be taken 
+#                 | versions ?
+#                 | if yes, there will be taken 
 #                 | www.mwiacek.com/gsm/soft/gammu.rss file, read latest version
 #                 | numbers and (if any exist) displayed info to user on each
 #                 | application startup
 #                 |   "teststable" - check for latest stable and test versions
 #                 |   "stable"     - check for latest stable versions
-#                 | No private data are sent to server, Internet connection required
+#                 | No private data are sent to server, Internet connection
+#                 | to www.mwiacek.com on port 80 required
+#                 | By default option not active
+# ----------------|------------------------------------------------------------
+# UsePhoneDB      | Should Gammu connect to www.gammu.net and check for latest
+#                 | firmware versions for device ?
+#                 | if yes (value "yes"), there will be taken 
+#                 |www.gammu.net/gammunet/support/phones/phonedbxml.php?model=x
+#                 | file, read all phone details from it and (if any
+#                 | higher firmware exist) displayed info to user on each
+#                 | application startup
+#                 | No private data are sent to server, Internet connection
+#                 | to www.gammu.net on port 80 required
 #                 | By default option not active
