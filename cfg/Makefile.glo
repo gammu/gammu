@@ -40,11 +40,13 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
 	    $(TOPDIR)/common/phone/nokia/dct3/dct3func.o \
 	    $(TOPDIR)/common/phone/nokia/dct4/n6510.o \
 	    $(TOPDIR)/common/phone/nokia/nauto.o \
-	    $(TOPDIR)/common/phone/nokia/nfunc.o
+	    $(TOPDIR)/common/phone/nokia/nfunc.o \
+	    $(TOPDIR)/common/phone/nokia/nfuncold.o
 
 # files for command line gammu
 GAMMU     = $(TOPDIR)/gammu/depend/dct3.o \
 	    $(TOPDIR)/gammu/depend/dct4.o \
+	    $(TOPDIR)/gammu/depend/dsiemens.o \
 	    $(TOPDIR)/gammu/smsd/smsdcore.o \
 	    $(TOPDIR)/gammu/smsd/s_files.o \
 	    $(TOPDIR)/gammu/sniff.o \

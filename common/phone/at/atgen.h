@@ -12,7 +12,7 @@
 #ifndef GSM_USED_ATBLUETOOTH
 #  define GSM_USED_ATBLUETOOTH
 #endif
-#define MAX_VCALENDAR_LOCATION 30
+#define MAX_VCALENDAR_LOCATION 50
 typedef enum {
 	SMS_AT_PDU = 1,
 	SMS_AT_TXT
@@ -52,6 +52,8 @@ typedef enum {
 	AT_SBNR_NOTAVAILABLE
 } GSM_AT_SBNR;
 
+#define AT_PBK_MAX_MEMORIES	200
+
 typedef struct {
 	GSM_AT_Manufacturer	Manufacturer;	  /* Who is manufacturer			*/
 	GSM_Lines		Lines;		  /* Allow to simply get each line in response 	*/
@@ -60,8 +62,11 @@ typedef struct {
     	char			*ErrorText;    	  /* Error description */
 
 	GSM_MemoryType		PBKMemory;	  /* Last read PBK memory			*/
-	char			PBKMemories[200]; /* Supported by phone PBK memories		*/
+	char			PBKMemories[AT_PBK_MAX_MEMORIES + 1]; /* Supported by phone PBK memories		*/
+	int			NextMemoryEntry;  /* Next empty memory entry			*/
 	GSM_AT_PBK_Charset	PBKCharset;	  /* Last read PBK charset			*/
+	bool			UCS2CharsetFailed;/* Whether setting of UCS2 charset has already failed */
+	bool			NonUCS2CharsetFailed;/* Whether setting of non-UCS2 charset has already failed */
 	GSM_AT_SBNR		PBKSBNR;
 
 	GSM_SMSMemoryStatus	LastSMSStatus;

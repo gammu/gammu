@@ -386,7 +386,7 @@ GSM_Error WINAPI mysendsmsmessage (int phone, GSM_SMSMessage *sms, unsigned int 
 		GSM_GetCurrentDateTime(&Date);
 		i=Date.Second;
 		while (i==Date.Second) {
-			GSM_ReadDevice(&s[phone].s);
+			GSM_ReadDevice(&s[phone].s,true);
 			if (s[phone].SendSMSStatus != GE_TIMEOUT) break;
 			GSM_GetCurrentDateTime(&Date);
 			my_sleep(20);

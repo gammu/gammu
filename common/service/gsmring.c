@@ -109,15 +109,15 @@ static GSM_Error savewav(FILE *file, GSM_Ringtone *ringtone)
 	}
 
 	wavfilesize 	= sizeof(WAV_Header) + sizeof(FMT_Header) + sizeof(DATA_Header) + length*2;
-	WAV_Header[4] 	= wavfilesize % 256;
-	WAV_Header[5] 	= wavfilesize / 256;
-	WAV_Header[6] 	= wavfilesize / (256*256);
-	WAV_Header[7] 	= wavfilesize / (256*256*256);
+	WAV_Header[4] 	= ((unsigned char)wavfilesize % 256);
+	WAV_Header[5] 	= ((unsigned char)wavfilesize / 256);
+	WAV_Header[6] 	= ((unsigned char)wavfilesize / (256*256));
+	WAV_Header[7] 	= ((unsigned char)wavfilesize / (256*256*256));
 	wavfilesize 	= wavfilesize - 54;
-	DATA_Header[4] 	= wavfilesize % 256;
-	DATA_Header[5] 	= wavfilesize / 256;
-	DATA_Header[6] 	= wavfilesize / (256*256);
-	DATA_Header[7] 	= wavfilesize / (256*256*256);
+	DATA_Header[4] 	= ((unsigned char)wavfilesize % 256);
+	DATA_Header[5] 	= ((unsigned char)wavfilesize / 256);
+	DATA_Header[6] 	= ((unsigned char)wavfilesize / (256*256));
+	DATA_Header[7] 	= ((unsigned char)wavfilesize / (256*256*256));
 
 	fseek( file, 0, SEEK_SET);
 	fwrite(&WAV_Header,	1, sizeof(WAV_Header),	file);

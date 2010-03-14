@@ -1,4 +1,4 @@
-Gammu README version 17.01.2003
+Gammu README version 17.04.2003
 -------------------------------
 Q. What is this ?
 
@@ -78,8 +78,10 @@ A. Method 1:
    Method 2:
      * change parameters in /cfg/config.h
      * compile it:
-       * under MS Visual C++ 6.0 (7.0) for MS Windows
+       * under MS Visual C++ 6.0 for MS Windows
            enter into /gammu/msvc6.mak directory and run gammu.dsw
+       * under MS Visual C++ 7.0 (.NET) for MS Windows
+           enter into /gammu/msvc7.mak directory and run gammu.vcproj
        * under Unix (Linux)
            change compiler in /cfg/makefile.cfg (if required) and use "make" or
            "make makelib"
@@ -116,6 +118,8 @@ Q. Where to get compilers to make Gammu ?
 
 A. * MS Visual C++ 6.0
          go to the shop ;-). It's commercional software.
+   * MS Visual C++ 7.0 (.NET)
+         go to the shop ;-). It's commercional software.
    * compilers for Unix (Linux) like gcc or kgcc (for free)
          available in Net and in Linux distributions included into CD
          for many newspapers. Installation depends on distribution.
@@ -149,48 +153,56 @@ A. * MS Visual C++ 6.0
 -------------------------------------------------------------------------------
 Q. What are known problems and weak things of current version ?
 
-A  1. Nokia 3310 (3315):
+A  Nokia section
 
+    1.3210
+      * 2'nd ringtone can't be set
+      Well, I don't know, how to avoid it. Use --nokiacomposer to enter
+      manually ringtone.
+
+    2.3310/3315
       * names from phonebook are empty.
-
       To avoid it you need to have higher than 4.06 firmware in phone.
 
-      * can't save to phone calendar notes other than reminder (after upgrading
-        firmware in service)
-
+      * can't save to phone calendar notes other than reminder
       5.11 and higher seems not to be able to save notes other than reminder
       (in older firmware it was unofficial too).
 
-   2. Nokia 6210 (6250/7110 too ?):
-
+    3.6210 (6250/7110 too ?)
       * when save some SMS like logo or ringtone to phone and forward them
         from phone's menu, they're damaged.
-
-        It's NOT Gammu fault. Easy test show it: save such SMS to SIM
-        inside older Nokia phone like 6150. Forward from 6150 menu. It's OK.
-        Put SIM to 6210. Forward from 6210 menu. It's NOT OK.
+      It's NOT Gammu fault. Easy test show it: save such SMS to SIM
+      inside older Nokia phone like 6150. Forward from 6150 menu. It's OK.
+      Put SIM to 6210. Forward from 6210 menu. It's NOT OK.
 
       * when save unread sms to phone, no unread sms envelope is shown. 
-
-        Sorry. Ask Nokia, if it's possible to have it.
+      Sorry. Ask Nokia, if it's possible to have it.
 
       * after removing operator logo, it's still visible
-
-        Have to reboot phone. Thank Nokia for it.
+      Have to reboot phone. Thank Nokia for it.
 
       * No info about incoming calls or SMS.
+      Use option in config.h to enable it. Prepare for some small problems
+      with phone then. This series is very weak here.
 
-        Use option in config.h to enable it. Prepare for some small problems
-        with phone then. This series is very weak here.
+      * Phone restarts few seconds after ending connection (before restart
+      phone display is frozen)
+      I don't know how to avoid it. It's visible only sometimes.
 
-   3. Nokia 7110: can't get binary ringtones from phone.
+    4.6310i 4.80
+      * Gammu shows more SMS saved than phone in menu
+      Phone firmware is buggy. Gammu show the truth. You can get
+      locations of these SMS and delete them, if want. Update firmware to 5.10
+      to avoid problems
 
+    5.7110
+      * can't get binary ringtones from phone.
       upgrade firmware in phone. Last one is 5.01 and it can do it.
 
-   4. all Nokia phones with caller groups: I had backup file from another
-      model (with caller groups too). After restoring my backup I can't
-      set ringtone from phone menu or they're different than in source phone.
-
+    6.all Nokia phones with caller groups
+      * I had backup file from another model (with caller groups too).
+        After restoring my backup I can't set ringtone from phone menu or
+        they're different than in source phone.
       Each Nokia model can have different ID for (the same) ringtones.
       ID are not saved in Gammu source for each model, because now
       (for DCT3 phones) it's idiotic easy to change them and such list
@@ -198,116 +210,99 @@ A  1. Nokia 3310 (3315):
       backup file and remove lines with ringtone ID. When will restore it,
       will be able to select it from phone menu.
 
-   5. Phone (or rather Gammu) doesn't inform about CB (Cell Broadcast)
-      messages.
-
-      By default this feature is disabled (see option in config.h), because
-      some people had problems with it - their phones didn't answer for command
-      enabling this feature or enabled after (too) long timeout. I personally
-      didn't have such problems. If want, test it. If works, be happy :-)
-
-   6. 3210 and 2'nd ringtone, which can't be set.
-
-      Well, I don't know, how to avoid it. Use --nokiacomposer to enter
-      manually ringtone.
-
-   7. DCT3 phones (3210, 33xx, 3410, 51xx, 5210, 5510, 61xx, 62xx, ...)
-      and WAP settings. 
-
-      Getting/setting was done with 6210 5.56. It's very messy in these phones
-      and probably in other models and some concrete firmware can be different.
-      Please inform about incompatibilities.
-
-   8. Restore for profiles
-
+    7.all Nokia phones with profiles
       TODO few details - caller groups and names
 
-   9. after restore I've lost my voice tags
-
+    8.all Nokia phones with voice tags
+      * after restore I've lost my voice tags
       Well, current version of Gammu contains backup/restore for voice
       tags for all Nokia phones with SMS memory (like 6210 or 6310). If you
       made backup using earlier versions, it can happen, that they're lost
       (not visible in phonebook and phone show problems during editing or
       using voice tags). This is very weak thing in Nokia firmware.
 
-      When it happened with DCT3 phone (like 6210), the best solution is
-      flashing phone again.
+      When it happened with DCT3 phone (like 6210):
+      * the best solution is flashing phone again.
 
       With DCT4 (6310i 4.80) I resolved it this way (it can be tried with
       DCT3 too):
+      * made backup of phonebook. Added many voice tags info to backup file
+        (with numbers 1,2,3,4,...,20). Later made restore. Entered in phone
+        menu to each such entry and changed voice tag, later deleted it. After
+        it voice tag memory was clean.
 
-      made backup of phonebook. Added many voice tags info to backup file
-      (with numbers 1,2,3,4,...,20). Later made restore. Entered in phone
-      menu to each such entry and changed voice tag, later deleted it. After
-      it voice tag memory was clean.
+    9.all Nokia phones with SMS memory
+      * Gammu shows in AT mode Outbox sms as Inbox
+      Well, in fact the only returned in phone info is, that SMS is
+      Read/UnRead/Sent/UnSent. Normally Read/Unread can be only in Inbox
+      and Sent/UnSent in Outbox.
 
-   10. Gammu shows more SMS saved than phone in menu (example: 6310i 4.80)
+      Firmware in Nokia 6310/6310i (probably other too) show received SMS
+      from other than Inbox folders and there is no way to check, where they
+      are saved. Gammu establish (like normally), that Read/Unread is Inbox
+      and other Outbox. It can make such problems, but it's better than
+      nothing.
 
-       Phone firmware is buggy. Gammu show the truth. You can get
-       locations of these SMS and delete them, if want.
+   10.all DCT3 phones
+      * Phone (or rather Gammu) doesn't inform about CB (Cell Broadcast)
+      By default this feature is disabled (see option in config.h), because
+      some people had problems with it - their phones didn't answer for command
+      enabling this feature or enabled after (too) long timeout. I personally
+      didn't have such problems. If want, test it. If works, be happy :-)
 
-   11. Gammu read incorrectly SMS with alphanumeric numbers (Siemens M20)
+   11.DCT3 phones (3330, 3410, 5210, 5510, 62xx, ...) with WAP settings
+      Getting/setting was done with 6210 5.56. It's very messy in these phones
+      and probably in other models and some concrete firmware can be different.
+      Please inform about incompatibilities.
 
-       Well, M20 doesn't have correctly support for such numbers at all.
-       Gammu tries to avoid it and construct SMS from such incorrect frame.
-       Many times it ends with success in 99%
+   12.can't transfer ringtones in binary format from DCT3 to DCT4 phone
+      * You can only try to convert binary DCT3 ringtone to RTTL (using
+      --copyringtone or other than Gammu software) and upload to DCT4 phone
+      as RTTL ringtone. No binary DCT3 -> binary DCT4 converter available
+      for now.
 
-   12. Gammu shows in AT mode Outbox sms as Inbox...
+   AT section
 
-       Well, in fact the only returned in phone info is, that SMS is
-       Read/UnRead/Sent/UnSent. Normally Read/Unread can be only in Inbox
-       and Sent/UnSent in Outbox.
-
-       Firmware in Nokia 6310/6310i (probably other too) show received SMS
-       from other than Inbox folders and there is no way to check, where they
-       are saved. Gammu establish (like normally), that Read/Unread is Inbox
-       and other Outbox. It can make such problems, but it's better than
-       nothing.
-
-   13. (all DCT4 phones like 6310, 6310i, 3510...). Can't  correctly backup
-       and restore such calendar notes:
-
-       * Birthday with alarm. When set in phone, it always set it (time) to
-         23:59.
-       * Reminders with alarm. Can't get/set alarm time
-       * notes other than Birthday with alarm. Can't get/set alarm type (silent
-         or with tone)
-       * notes with different start date/time than end date/time. Don't have
-         info about end date/time
-
-       Additionaly method used for getting calendar notes from N35xx return
-       only 50 first chars of note text from each note.
-
-       Current DCT4 phones with extended (when compare to 62xx/7110) calendar
-       have only such API for accesing calendar like 62xx/7110. This is not
-       Gammu fault. Thank Nokia for it.
+    1.Siemens M20
+      * Gammu read incorrectly SMS with alphanumeric numbers
+      Well, M20 doesn't have correctly support for such numbers at all.
+      Gammu tries to avoid it and construct SMS from such incorrect frame.
+      Many times it ends with success in 99%
    ---------
    TIP: if you want to know more about changes and bugs in firmware in Nokia
         phones, visit www.mwiacek.com and check firmware subpage
 -------------------------------------------------------------------------------
 Q. What models are supported ?
 
-A. Here are all supported models:
+A. 1.Nokia DCT3 (3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|
+     6130|6150|6190|8210|8250|8290|8850|8855|8890
+     6210|6250|7110
+     9110) and compatible.
 
-   1.3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|6130|6150|
-     6190|8210|8250|8290|8850|8855|8890:
+     There is supported MBUS, FBUS, DLR3, Infrared, Bluetooth, at19200.
+     For all (excluding 9110) there is supported almost everything.
 
-     6210|6250|7110:
+   2.Nokia DCT4 (3510|3510i|3530|5100|6100|6310|6310i|6510|6610|7210|8310|8910)
+     and compatible
 
-     3510|3510i|3530|5100|6100|6310|6310i|6510|6610|7210|8310|8910:
+     There is supported MBUS, FBUS, DLR3, Infrared, at19200. No support for
+     DKU5 and Bluetooth. No support for colour things, locking WAP settings,
+     WAP bookmarks, enabling netmonitor.
 
-     9110|9210:
+   3.Siemens M20, MC35, SL45 and compatible
 
-     They all should work (excluding maybe some details) now/in the future.
-     I personally tested 3210, 3310, 3410, 3510, 5110, 6150, 6210, 6250, 6310i,
-     9210.
+     Support for AT mode and many extensions (calendar, logos, netmonitor...)
 
-   5.various Siemens (like M20, MC35), Nokia (like 6150, 6210, 6310i), Alcatel
-     IPAQ, Falcom A2D-1:
+   4.Alcatel OT 500, 501, 701, 715
+     
+   5.Falcom A2D-1
 
-     Support written according to ETSI specs. Other compatible devices should
-     work too. Made many things like 100% SMS support (both in text and PDU
-     mode), phonebook...
+   6.IPAQ
+
+   7.AT compatible devices
+
+     If device is compatible with ETSI specs, SMS (both in text and PDU),
+     phonebook and some other will work with AT module
 -------------------------------------------------------------------------------
 Q. How to report bugs ?
 

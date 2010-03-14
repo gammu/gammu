@@ -259,6 +259,13 @@ typedef struct {
 	GSM_SMSMessage	SMS[MAX_MULTI_SMS];
 } GSM_MultiSMSMessage;
 
+GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
+			      GSM_Coding_Type		Coding,
+		    	      char 			*Buffer,
+			      int			BufferLen,
+			      bool 			UDH,
+			      int 			*UsedText);
+										     
 void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 			  unsigned char		*MessageBuffer,
 			  int			MessageLength,

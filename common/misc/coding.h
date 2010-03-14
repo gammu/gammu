@@ -48,6 +48,10 @@ void		EncodeUTF8			(unsigned char *dest, const unsigned char *src);
 void		DecodeHexBin			(unsigned char *dest, const unsigned char *src, int len);
 void		EncodeHexBin			(unsigned char *dest, const unsigned char *src, int len);
 
+/* ----------------------------- HexUnicode -------------------------------- */
+void		DecodeHexUnicode		(unsigned char *dest, const unsigned char *src, int len);
+void		EncodeHexUnicode		(unsigned char *dest, const unsigned char *src, int len);
+
 /* ---------------------- DefaultAlphabet for SMS -------------------------- */
 void 		EncodeDefault			(unsigned char *dest, const unsigned char *src, int *len, bool UseExtensions, unsigned char *ExtraAlphabet);
 void		DecodeDefault			(unsigned char *dest, const unsigned char *src, int len, bool UseExtensions,  unsigned char *ExtraAlphabet);
@@ -79,6 +83,7 @@ int BitPackByte(unsigned char *Dest, int CurrentBit, unsigned char Command, int 
 
 int BitUnPack(unsigned char *Dest, int CurrentBit, unsigned char *Source, int Bits);
 int BitUnPackInt(unsigned char *Src, int CurrentBit, int *integer, int Bits);
+int BitUnPackI(unsigned char *Src, int CurrentBit, int *integer, int Bits);
 int OctetUnAlign(int CurrentBit);
 
 #define GetBit(Stream,BitNr)	Stream[(BitNr)/8] & 1<<(7-((BitNr)%8))

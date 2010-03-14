@@ -6,12 +6,12 @@
     <PROJECT value="Output\gammu.exe"/>
     <OBJFILES value="Output\gammu.obj Output\sniff.obj Output\dct3.obj Output\dct4.obj 
       Output\s_files.obj Output\smsdcore.obj Output\cfg.obj Output\coding.obj 
-      Output\misc.obj Output\at.obj Output\fbus2.obj Output\alcabus.obj 
+      Output\misc.obj Output\at.obj Output\fbus2.obj Output\alcabus.obj Output\dsiemens.obj
       Output\fbusirda.obj Output\mbus2.obj Output\gsmback.obj Output\gsmcal.obj 
       Output\gsmlogo.obj Output\gsmnet.obj Output\gsmpbk.obj Output\gsmring.obj 
       Output\gsmsms.obj Output\gsmwap.obj Output\gsmcomon.obj 
       Output\gsmstate.obj Output\n6110.obj Output\n6510.obj Output\n7110.obj 
-      Output\n9210.obj Output\dct3func.obj Output\nauto.obj Output\nfunc.obj 
+      Output\n9210.obj Output\dct3func.obj Output\nauto.obj Output\nfunc.obj  Output\nfuncold.obj 
       Output\alcatel.obj Output\pfunc.obj Output\atgen.obj Output\siemens.obj 
       Output\irda.obj Output\unixblue.obj Output\win32.obj"/>
     <RESFILES value=""/>
@@ -70,6 +70,7 @@
       <FILE FILENAME="..\sniff.c" FORMNAME="" UNITNAME="sniff" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\depend\dct3.c" FORMNAME="" UNITNAME="dct3" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\depend\dct4.c" FORMNAME="" UNITNAME="dct4" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\depend\dsiemens.c" FORMNAME="" UNITNAME="dsiemens" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\smsd\s_files.c" FORMNAME="" UNITNAME="s_files" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\smsd\smsdcore.c" FORMNAME="" UNITNAME="smsdcore" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\misc\cfg.c" FORMNAME="" UNITNAME="cfg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
@@ -97,6 +98,7 @@
       <FILE FILENAME="..\..\common\phone\nokia\dct3\dct3func.c" FORMNAME="" UNITNAME="dct3func" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\nauto.c" FORMNAME="" UNITNAME="nauto" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\nfunc.c" FORMNAME="" UNITNAME="nfunc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\nfuncold.c" FORMNAME="" UNITNAME="nfuncold" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\alcatel\alcatel.c" FORMNAME="" UNITNAME="alcatel" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\pfunc.c" FORMNAME="" UNITNAME="pfunc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\at\atgen.c" FORMNAME="" UNITNAME="atgen" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>

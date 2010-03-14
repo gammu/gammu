@@ -17,6 +17,54 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20030417 - 0.72
+* new functionality:
+  * German translation                                        (Stefan Beermann)
+  * initial support for internal system available in new DCT4 phones
+    used for saving Java applications, (Gallery or Pictures) images,
+    ringtones and other (depends on phone model): can get files info using
+    --nokiagetfilesystem
+  * new -unicodefiletext switch for EMS sequences
+  * added makefiles for MS Visual Studio 7.0 (.NET)
+  * new method of accesing calendar in Nokia phones. It's used for DCT4
+    and can handle all calendar features. Getting and setting. With this method
+    it's possible to assign any icon to any note type !
+  * getting simlock info for DCT4. Experimantal.
+  * * Alcatel:                                                   (Michal Cihar)
+      * initial support for OT 715 and support for one additional Pbk entry
+    * AT module
+      * support for storing pbk to Location = 0 (it gets first empty location
+        from phone and stores it there)
+    * questions for setting date and time are asked in gammu only,
+      when it wasn't set on the start of connection
+  * Siemens:                                                            (Walek)
+    * getting and setting bitmaps
+    * support for netmonitor
+
+* fixes and improvements:
+  * when compile with CB source, no more errors                  (Ari Ryynanen)
+  * fix in smfprintf
+  * closing connection made sometimes problems    (Luca Cassioli, Sulung Chang)
+  * correct ID for 8390                                           (Nick Mossie)
+  * improved packing EMS sequences
+  * StartInfo in gammurc by default set to "no"
+  * Siemens: rewritten support for calendar                             (Walek)
+  * * Alcatel:                                                   (Michal Cihar)
+      * more detailed info on failures when reading Alcatel phonebook
+      * cleared Alcatel error states return values
+    * AT module
+      * fixed reading of SMSC number, for some phones in UCS2 mode
+      * fixed reading UCS2 phonebook entries
+      * fixed saving of phonebook entries in GSM alphabet
+      * avoided some possible buffer overflows
+  * old methods of accesing Nokia calendar (in the future also some other)
+    moved to nfuncold.*. Thye're available only with DEBUG (maybe will be
+    usefull in the future)
+  * removed some problems with 3510 4.24 and higher (restarting after
+    adding new WAP bookmarks and changing WAP settings)
+  * new empty line with --getsms and displaying sms          (Fredrik Wanglund)
+  * improvement for T68i and getting sms                    (Soeren Sonnenburg)
+
 20030321 - 0.71
 * new functionality:
   * INSTEAD OF OBJECT DELPHI EXAMPLE THERE IS AVAILABLE FULL SMS GATEWAY

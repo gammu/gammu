@@ -188,6 +188,7 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 	switch (msg.Buffer[3]) {
 	case 0x02:
 		Data->Memory->EntriesNum = 0;
+		Data->Memory->PreferUnicode = false;
 		count=5;
 		/* If name is not empty */
 		if (msg.Buffer[count]!=0x00) {
@@ -1883,7 +1884,7 @@ static GSM_Error N6110_ReplyAddCalendar(GSM_Protocol_Message msg, GSM_StateMachi
 static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
 {
 	bool		Reminder3310 = false;
- 	int 		Text, Time, Alarm, Phone, Recurrance, i, current;
+ 	int 		Text, Time, Alarm, Phone, Recurrance, EndTime, i, current;
 	unsigned char 	mychar1,mychar2;
 	unsigned char 	req[200] = {
 		N6110_FRAME_HEADER, 0x64, 0x01, 0x10,
@@ -1895,7 +1896,7 @@ static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *N
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOCALENDAR)) return GE_NOTSUPPORTED;
 	if (!Past && IsNoteFromThePast(*Note)) return GE_NONE;
 
-	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(*Note, &Text, &Time, &Alarm, &Phone, &Recurrance);
+	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(*Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime);
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_CAL52)) {
 		switch(Note->Type) {
@@ -2205,7 +2206,7 @@ static GSM_Error N6110_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateM
 
 static GSM_Error N6110_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
- 	int 				Text, Time, Alarm, Phone, Recurrance;
+ 	int 				Text, Time, Alarm, Phone, Recurrance, EndTime;
 	GSM_Error			error;
 	GSM_DateTime			date_time;
 	GSM_Phone_N6110Data 		*Priv = &s->Phone.Data.Priv.N6110;
@@ -2228,7 +2229,7 @@ static GSM_Error N6110_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarEntr
 	smprintf(s, "Getting calendar note\n");
 	error=GSM_WaitFor (s, req, 5, 0x13, 4, ID_GetCalendarNote);
 
-	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(*Note, &Text, &Time, &Alarm, &Phone, &Recurrance);
+	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(*Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime);
 	/* 2090 year is set for example in 3310 */
 	if (error == GE_NONE && Note->Entries[Time].Date.Year == 2090) {
 		error=N6110_GetDateTime(s, &date_time);

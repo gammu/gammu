@@ -157,6 +157,7 @@ static void SavePbkEntry(FILE *file, GSM_PhonebookEntry *Pbk, bool UseUnicode)
 	int	j;
 
 	fprintf(file,"Location = %03i\n",Pbk->Location);
+	fprintf(file,"PreferUnicode = %s\n",Pbk->PreferUnicode ? "yes" : "no");
 	for (j=0;j<Pbk->EntriesNum;j++) {
 		text = true;
 		switch (Pbk->Entries[j].EntryType) {
@@ -203,6 +204,11 @@ static void SavePbkEntry(FILE *file, GSM_PhonebookEntry *Pbk, bool UseUnicode)
 				break;
 			case PBK_RingtoneID:
 				fprintf(file,"Entry%02iType = RingtoneID\n",j);
+				fprintf(file,"Entry%02iNumber = %i\n",j,Pbk->Entries[j].Number);
+				text = false;
+				break;
+			case PBK_PictureID:
+				fprintf(file,"Entry%02iType = PictureID\n",j);
 				fprintf(file,"Entry%02iNumber = %i\n",j,Pbk->Entries[j].Number);
 				text = false;
 				break;
@@ -1112,6 +1118,14 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 
 	Pbk->EntriesNum = 0;
 	e = CFG_FindLastSectionEntry(file_info, section, false);
+	
+	sprintf(buffer,"PreferUnicode");
+	readvalue = CFG_Get(file_info, section, buffer, false);
+	Pbk->PreferUnicode = false;
+	if (readvalue!=NULL) {
+		if (strncmp(readvalue, "yes", 3) == 0) Pbk->PreferUnicode = true;
+	}
+	
 	while (1) {
 		if (e == NULL) break;
 		num = -1;
@@ -1207,6 +1221,16 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 				continue;
 			} else if (mystrncasecmp(readvalue,"RingtoneID",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_RingtoneID;
+				Pbk->Entries[Pbk->EntriesNum].Number = 0;
+				sprintf(buffer,"Entry%02iNumber",num);
+				readvalue = CFG_Get(file_info, section, buffer, false);
+				if (readvalue!=NULL) {
+					Pbk->Entries[Pbk->EntriesNum].Number = atoi(readvalue);
+				}
+				Pbk->EntriesNum ++;
+				continue;
+			} else if (mystrncasecmp(readvalue,"PictureID",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_PictureID;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
 				readvalue = CFG_Get(file_info, section, buffer, false);
@@ -1976,20 +2000,16 @@ static void ReadFMStationEntry(CFG_Header *file_info, char *section, GSM_FMStati
 	unsigned char		buffer[10000];
 	char			*readvalue;
 
-
 	sprintf(buffer,"Location");
 	readvalue = CFG_Get(file_info, section, buffer, false);
-	if (readvalue!=NULL) 
-FMStation->Location = atoi(readvalue);
+	if (readvalue!=NULL) FMStation->Location = atoi(readvalue);
 
 	sprintf(buffer,"StationName");
 	ReadBackupText(file_info, section, buffer, FMStation->StationName);
 
-
 	sprintf(buffer,"Frequency");
 	readvalue = CFG_Get(file_info, section, buffer, false);
-	if (readvalue!=NULL) 
-FMStation->Frequency = atoi(readvalue);
+	if (readvalue!=NULL) FMStation->Frequency = atoi(readvalue);
 }
 
 static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
@@ -2005,6 +2025,8 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	sprintf(buffer,"Backup");
 
 	readvalue = CFG_Get(file_info, buffer, "Format", false);
+	/* Did we read anything? */
+	if (readvalue == NULL) return GE_FILENOTSUPPORTED;
 	/* Is this format version supported ? */
 	if (strcmp(readvalue,"1.01")!=0) return GE_FILENOTSUPPORTED;
 

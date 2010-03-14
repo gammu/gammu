@@ -33,6 +33,10 @@
 #ifdef GSM_ENABLE_NOKIA_DCT4
 #  include "depend/dct4.h"
 #endif
+#ifdef GSM_ENABLE_ATGEN
+#  include "depend/dsiemens.h"
+#endif
+
                 			
 GSM_StateMachine		s;
 GSM_Phone_Functions		*Phone;
@@ -465,6 +469,9 @@ static void GetMemory(int argc, char *argv[])
 						printmsg("Ringtone ID     : %i\n",entry.Entries[i].Number);
 					}
 					break;
+				case PBK_PictureID	     :
+					printmsg("Picture ID      : %i\n",entry.Entries[i].Number);
+					break;
 				default		       :
 					printmsg("UNKNOWN\n");
 					unknown = true;
@@ -569,34 +576,37 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext)
 			case GSM_UnSent	:	printmsg("UnSent");	break;
 		}
 		printmsg("\nRemote number    : \"%s\"\n",DecodeUnicodeString(sms.Number));
-		if (sms.UDH.Type != UDH_NoUDH) printmsg("User Data Header : ");
-		switch (sms.UDH.Type) {
-		case UDH_ConcatenatedMessages:	printmsg("Concatenated (linked) message"); break;
-		case UDH_DisableVoice:		printmsg("Disables voice indicator");	 break;
-		case UDH_EnableVoice:		printmsg("Enables voice indicator");	 break;
-		case UDH_DisableFax:		printmsg("Disables fax indicator");	 break;
-		case UDH_EnableFax:		printmsg("Enables fax indicator");	 break;
-		case UDH_DisableEmail:		printmsg("Disables email indicator");	 break;
-		case UDH_EnableEmail:		printmsg("Enables email indicator");	 break;
-		case UDH_VoidSMS:		printmsg("Void SMS");			 break;
-		case UDH_NokiaWAPBookmark:	printmsg("Nokia WAP Bookmark");		 break;
-		case UDH_NokiaOperatorLogoLong:	printmsg("Nokia operator logo");		 break;
-		case UDH_NokiaWAPBookmarkLong:	printmsg("Nokia WAP Bookmark");		 break;
-		case UDH_NokiaWAPSettingsLong:	printmsg("Nokia WAP Settings");		 break;
-		case UDH_NokiaRingtone:		printmsg("Nokia ringtone");		 break;
-		case UDH_NokiaOperatorLogo:	printmsg("Nokia GSM operator logo");	 break;
-		case UDH_NokiaCallerLogo:	printmsg("Nokia caller logo");		 break;  	
-		case UDH_NokiaProfileLong:	printmsg("Nokia profile");		 break;
-		case UDH_NokiaCalendarLong:	printmsg("Nokia calendar note");		 break;
-		case UDH_NokiaPhonebookLong:	printmsg("Nokia phonebook entry");	 break;
-		case UDH_UserUDH:		printmsg("User UDH");			 break;
-		case UDH_NoUDH:								 break;
-		}
 		if (sms.UDH.Type != UDH_NoUDH) {
-			if (sms.UDH.ID != -1) printmsg(", ID %i",sms.UDH.ID);
-			if (sms.UDH.PartNumber != -1 && sms.UDH.AllParts != -1) {
-				printmsg(", part %i of %i",sms.UDH.PartNumber,sms.UDH.AllParts);
+			printmsg("User Data Header : ");
+			switch (sms.UDH.Type) {
+			case UDH_ConcatenatedMessages:	printmsg("Concatenated (linked) message"); break;
+			case UDH_DisableVoice:		printmsg("Disables voice indicator");	 break;
+			case UDH_EnableVoice:		printmsg("Enables voice indicator");	 break;
+			case UDH_DisableFax:		printmsg("Disables fax indicator");	 break;
+			case UDH_EnableFax:		printmsg("Enables fax indicator");	 break;
+			case UDH_DisableEmail:		printmsg("Disables email indicator");	 break;
+			case UDH_EnableEmail:		printmsg("Enables email indicator");	 break;
+			case UDH_VoidSMS:		printmsg("Void SMS");			 break;
+			case UDH_NokiaWAPBookmark:	printmsg("Nokia WAP Bookmark");		 break;
+			case UDH_NokiaOperatorLogoLong:	printmsg("Nokia operator logo");		 break;
+			case UDH_NokiaWAPBookmarkLong:	printmsg("Nokia WAP Bookmark");		 break;
+			case UDH_NokiaWAPSettingsLong:	printmsg("Nokia WAP Settings");		 break;
+			case UDH_NokiaRingtone:		printmsg("Nokia ringtone");		 break;
+			case UDH_NokiaOperatorLogo:	printmsg("Nokia GSM operator logo");	 break;
+			case UDH_NokiaCallerLogo:	printmsg("Nokia caller logo");		 break;  	
+			case UDH_NokiaProfileLong:	printmsg("Nokia profile");		 break;
+			case UDH_NokiaCalendarLong:	printmsg("Nokia calendar note");		 break;
+			case UDH_NokiaPhonebookLong:	printmsg("Nokia phonebook entry");	 break;
+			case UDH_UserUDH:		printmsg("User UDH");			 break;
+			case UDH_NoUDH:								 break;
 			}
+			if (sms.UDH.Type != UDH_NoUDH) {
+				if (sms.UDH.ID != -1) printmsg(", ID %i",sms.UDH.ID);
+				if (sms.UDH.PartNumber != -1 && sms.UDH.AllParts != -1) {
+					printmsg(", part %i of %i",sms.UDH.PartNumber,sms.UDH.AllParts);
+				}
+			}
+			printmsg("\n");
 		}
 		printmsg("\n");
 		if (displaytext) {
@@ -1690,7 +1700,7 @@ static void SendSaveSMS(int argc, char *argv[])
 	GSM_MultiBitmap			bitmap[MAX_MULTI_SMS],bitmap2;
 	GSM_EncodeMultiPartSMSInfo	SMSInfo;
 	GSM_NetworkInfo			NetInfo;
-	FILE 				*ReplaceFile;
+	FILE 				*ReplaceFile,*f;
 	char				ReplaceBuffer2	[200],ReplaceBuffer[200];
 	char				InputBuffer	[SEND_SAVE_SMS_BUFFER_SIZE/2+1];
 	char				Buffer		[SEND_SAVE_SMS_BUFFER_SIZE][MAX_MULTI_SMS];
@@ -2088,6 +2098,10 @@ static void SendSaveSMS(int argc, char *argv[])
 					nextlong = 11;
 					break;
 				}
+				if (mystrncasecmp(argv[i],"-unicodefiletext",0)) {
+					nextlong = 18;
+					break;
+				}
 				if (mystrncasecmp(argv[i],"-defsound",0)) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSPredefinedSound;
 					nextlong = 12;
@@ -2281,7 +2295,24 @@ static void SendSaveSMS(int argc, char *argv[])
 				SMSInfo.EntriesNum++;
 				nextlong = 0;
 			}
-
+			break;
+		case 18:/* EMS text from Unicode file */
+			f = fopen(argv[i],"rb");
+			if (!f) {
+				printmsg("Can't open file \"%s\"\n",argv[i]);
+				exit(-1);			    
+			}
+			z=fread(InputBuffer,1,2000,f);
+			InputBuffer[z]   = 0;
+			InputBuffer[z+1] = 0;
+			fclose(f);
+			ReadUnicodeFile(Buffer[SMSInfo.EntriesNum],InputBuffer);
+			dprintf("buffer is \"%s\"\n",DecodeUnicodeString(Buffer[SMSInfo.EntriesNum]));
+			SMSInfo.Entries[SMSInfo.EntriesNum].ID 		= SMS_ConcatenatedTextLong;
+			SMSInfo.Entries[SMSInfo.EntriesNum].Buffer 	= Buffer[SMSInfo.EntriesNum];
+			SMSInfo.EntriesNum++;
+			nextlong = 0;
+			break;
 		}
 	}
 	if (nextlong!=0) {
@@ -2310,6 +2341,17 @@ static void SendSaveSMS(int argc, char *argv[])
 			}
 		}
 	}
+	if (mystrncasecmp(argv[2],"TEXT",0)) {
+		chars_read = strlen(DecodeUnicodeString(Buffer[0]));
+		if (chars_read != 0) {
+			/* Trim \n at the end of string */
+			if (Buffer[0][chars_read*2-1] == '\n' && Buffer[0][chars_read*2-2] == 0)
+			{
+				Buffer[0][chars_read*2-1] = 0;
+			}
+		}
+	}
+
 	if (mystrncasecmp(argv[1],"--savesms",0)) {
 		error=Phone->GetSMSFolders(&s, &folders);
 		Print_Error(error);
@@ -2325,7 +2367,6 @@ static void SendSaveSMS(int argc, char *argv[])
 
 	error=GSM_EncodeMultiPartSMS(&SMSInfo,&sms);
 	Print_Error(error);
-
 
 	for (i=0;i<SMSInfo.EntriesNum;i++) {
 		switch (SMSInfo.Entries[i].ID) {
@@ -2383,7 +2424,7 @@ static void SendSaveSMS(int argc, char *argv[])
 			Print_Error(error);
 			printmsg("....waiting for network answer");
 			while (!bshutdown) {
-				GSM_ReadDevice(&s);
+				GSM_ReadDevice(&s,true);
 				if (SMSStatus == GE_UNKNOWN) {
 					GSM_Terminate();
 					exit(-1);
@@ -2942,12 +2983,16 @@ static void Restore(int argc, char *argv[])
 			}
 		}
 	}
-	if (answer_yes("Do you want to set date/time in phone (NOTE: in some phones it's required to correctly restore calendar notes and other items)")) {
-		GSM_GetCurrentDateTime(&date_time);
+	
+	if (!mystrncasecmp(s.Config.SyncTime,"yes",0)) {
+		if (answer_yes("Do you want to set date/time in phone (NOTE: in some phones it's required to correctly restore calendar notes and other items)")) {
+			GSM_GetCurrentDateTime(&date_time);
 
-		error=Phone->SetDateTime(&s, &date_time);
-		Print_Error(error);
+			error=Phone->SetDateTime(&s, &date_time);
+			Print_Error(error);
+		}
 	}
+
 	if (Backup.Calendar[0] != NULL) {
 		error = Phone->GetNextCalendarNote(&s,&Calendar,true);
 		if (error == GE_NONE || error == GE_INVALIDLOCATION || error == GE_EMPTY) {
@@ -3173,8 +3218,8 @@ static void AddNew(int argc, char *argv[])
 	GSM_Backup		Backup;
 	GSM_DateTime 		date_time;
 	GSM_CalendarEntry	Calendar;
-//	GSM_PhonebookEntry	Pbk;
-//	GSM_MemoryStatus	MemStatus;
+	GSM_PhonebookEntry	Pbk;
+	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoEntry		ToDo;
 	GSM_WAPBookmark		Bookmark;
 	int			i, max;
@@ -3192,60 +3237,65 @@ static void AddNew(int argc, char *argv[])
 
 	GSM_Init(true);
 
-//	if (Backup.PhonePhonebook[0] != NULL) {
-//		MemStatus.MemoryType = GMT_ME;
-//		error=Phone->GetMemoryStatus(&s, &MemStatus);
-//		if (error==GE_NONE) {
-//			max = 0;
-//			while (Backup.PhonePhonebook[max]!=NULL) max++;
-//			printmsgerr("%i entries in backup file\n",max);
-//			if (answer_yes("Add phone phonebook entries")) {
-//				for (i=0;i<max;i++) {
-//					Pbk 		= *Backup.PhonePhonebook[i];
-//					Pbk.MemoryType 	= GMT_ME;
-//					Pbk.Location	= 0;
-//					error=Phone->SetMemory(&s, &Pbk);
-//					Print_Error(error);
-//					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-//					if (bshutdown) {
-//						GSM_Terminate();
-//						exit(0);
-//					}
-//				}
-//				printmsgerr("\n");
-//			}
-//		}
-//	}
-//	if (Backup.SIMPhonebook[0] != NULL) {
-//		MemStatus.MemoryType = GMT_SM;
-//		error=Phone->GetMemoryStatus(&s, &MemStatus);
-//		if (error==GE_NONE) {
-//			max = 0;
-//			while (Backup.SIMPhonebook[max]!=NULL) max++;
-//			printmsgerr("%i entries in backup file\n",max);
-//			if (answer_yes("Add SIM phonebook entries")) {
-//				for (i=0;i<max;i++) {
-//					Pbk 		= *Backup.SIMPhonebook[i];
-//					Pbk.MemoryType 	= GMT_SM;
-//					Pbk.Location	= 0;
-//					error=Phone->SetMemory(&s, &Pbk);
-//					Print_Error(error);
-//					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-//					if (bshutdown) {
-//						GSM_Terminate();
-//						exit(0);
-//					}
-//				}
-//				printmsgerr("\n");
-//			}
-//		}
-//	}
-	if (answer_yes("Do you want to set date/time in phone (NOTE: in some phones it's required to correctly restore calendar notes and other items)")) {
-		GSM_GetCurrentDateTime(&date_time);
-
-		error=Phone->SetDateTime(&s, &date_time);
-		Print_Error(error);
+	if (Backup.PhonePhonebook[0] != NULL) {
+		MemStatus.MemoryType = GMT_ME;
+		error=Phone->GetMemoryStatus(&s, &MemStatus);
+		if (error==GE_NONE) {
+			max = 0;
+			while (Backup.PhonePhonebook[max]!=NULL) max++;
+			printmsgerr("%i entries in backup file\n",max);
+			if (answer_yes("Add phone phonebook entries")) {
+				for (i=0;i<max;i++) {
+					Pbk 		= *Backup.PhonePhonebook[i];
+					Pbk.MemoryType 	= GMT_ME;
+					Pbk.Location	= 0;
+					error=Phone->SetMemory(&s, &Pbk);
+					Print_Error(error);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+					if (bshutdown) {
+						GSM_Terminate();
+						exit(0);
+					}
+				}
+				printmsgerr("\n");
+			}
+		}
 	}
+
+	if (Backup.SIMPhonebook[0] != NULL) {
+		MemStatus.MemoryType = GMT_SM;
+		error=Phone->GetMemoryStatus(&s, &MemStatus);
+		if (error==GE_NONE) {
+			max = 0;
+			while (Backup.SIMPhonebook[max]!=NULL) max++;
+			printmsgerr("%i entries in backup file\n",max);
+			if (answer_yes("Add SIM phonebook entries")) {
+				for (i=0;i<max;i++) {
+					Pbk 		= *Backup.SIMPhonebook[i];
+					Pbk.MemoryType 	= GMT_SM;
+					Pbk.Location	= 0;
+					error=Phone->SetMemory(&s, &Pbk);
+					Print_Error(error);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+					if (bshutdown) {
+						GSM_Terminate();
+						exit(0);
+					}
+				}
+				printmsgerr("\n");
+			}
+		}
+	}
+
+	if (!mystrncasecmp(s.Config.SyncTime,"yes",0)) {
+		if (answer_yes("Do you want to set date/time in phone (NOTE: in some phones it's required to correctly restore calendar notes and other items)")) {
+			GSM_GetCurrentDateTime(&date_time);
+
+			error=Phone->SetDateTime(&s, &date_time);
+			Print_Error(error);
+		}
+	}
+
 	if (Backup.Calendar[0] != NULL) {
 		error = Phone->GetNextCalendarNote(&s,&Calendar,true);
 		if (error == GE_NONE || error == GE_INVALIDLOCATION || error == GE_EMPTY) {
@@ -4004,6 +4054,7 @@ static void GetToDo(int argc, char *argv[])
                 		case GSM_Priority_Low	 : printmsg("Low\n");	 	break;
                 		case GSM_Priority_Medium : printmsg("Medium\n"); 	break;
                 		case GSM_Priority_High	 : printmsg("High\n");		break;
+                		default			 : printmsg("Unknown\n");	break;
 	            	}
 	            	for (j=0;j<ToDo.EntriesNum;j++) {
 	                	switch (ToDo.Entries[j].EntryType) {
@@ -4614,7 +4665,8 @@ static void usage(void)
 	printf("                    [-tone10 file][-tone12 file][-animation frames file1 ...]\n");
 	printf("                    [-folder number][-reply][-smscset number][-unsent]\n");
 	printf("                    [-smscnumber number][-read][-sender number][-unread]\n");
-	printf("                    [-variablebitmap file][-fixedbitmap file]\n\n");
+	printf("                    [-variablebitmap file][-fixedbitmap file]\n");
+	printf("                    [-unicodefiletext file]\n\n");
 
 	printf("gammu --sendsms TEXT destination [-reply][-flash][-smscset number]\n");
 	printf("                                 [-smscnumber number][-len len]\n");
@@ -4666,6 +4718,7 @@ static void usage(void)
 	printf("                                [-smscset number][-smscnumber number]\n");
 	printf("                                [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\n");
 	printf("                                [-variablebitmap file][-fixedbitmap file]\n");
+	printf("                                [-unicodefiletext file]\n");
 
 
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
@@ -4682,13 +4735,17 @@ static void usage(void)
 #ifdef GSM_ENABLE_NOKIA_DCT4
 	printf("gammu --nokiasetvibralevel level\n");
 	printf("gammu --nokiagetvoicerecord location\n");
+	printf("gammu --nokiagetfilesystem\n");
+//	printf("gammu --nokiagetfiles location1 location2...\n");
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 	printf("gammu --nokiasecuritycode\n");
 	printf("gammu --nokiatests\n");
 	printf("gammu --nokiasetphonemenus\n");
 #endif
-
+#ifdef GSM_ENABLE_AT
+	printf("gammu --siemensnetmonitor\n");
+#endif	
 #ifdef GSM_ENABLE_BACKUP
 	printf("\ngammu --backup file\n");
 	printf("gammu --backupsms file\n");
@@ -4712,6 +4769,9 @@ static GSM_Parameters Parameters[] = {
 	{"--version",			0, 0, Version			},
 	{"--monitor",			0, 1, Monitor			},
 	{"--listnetworks",		0, 0, ListNetworks		},
+#ifdef GSM_ENABLE_AT	
+	{"--siemensnetmonitor",		0, 0, ATSIEMENSNetmonitor	},	
+#endif	
 #ifdef GSM_ENABLE_NOKIA6110
 	{"--nokiagetoperatorname", 	0, 0, DCT3GetOperatorName	},
 	{"--nokiasetoperatorname", 	0, 2, DCT3SetOperatorName	},
@@ -4723,6 +4783,8 @@ static GSM_Parameters Parameters[] = {
 #ifdef GSM_ENABLE_NOKIA_DCT4
 	{"--nokiasetvibralevel",	1, 1, DCT4SetVibraLevel		},
 	{"--nokiagetvoicerecord",	1, 1, DCT4GetVoiceRecord	},
+	{"--nokiagetfilesystem",	0, 0, DCT4GetFileSystem		},
+	{"--nokiagetfiles",		1,10, DCT4GetFiles		},
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 	{"--nokiasecuritycode",		0, 0, NokiaSecurityCode		},

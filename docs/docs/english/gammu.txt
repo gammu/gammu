@@ -412,9 +412,9 @@ A. First of all, here are described all possible parameters for this software.
    gammu --savesms EMS [-text "text"][-defanimation ID][-defsound ID]
                        [-tone10 file][-tone12 file][-animation frames file1 ..]
                        [-variablebitmap file][-fixedbitmap file]
-
                        [-folder number][-reply][-smscset number][-unsent]
                        [-smscnumber number][-read][-sender number][-unread]
+                       [-unicodefiletext file]
 
        Saves EMS sequence. Parameters -text (it adds text), -defanimation
        (adds number of default animation, which depend on phone), -defsound
@@ -480,6 +480,7 @@ A. First of all, here are described all possible parameters for this software.
                                    [-smscset number][-smscnumber number]
                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
                                    [-variablebitmap file][-fixedbitmap file]
+                                   [-unicodefiletext file]
 
    gammu --nokiagetoperatorname
        6110.c phones have place for name for one GSM network (of course,
@@ -536,6 +537,8 @@ A. First of all, here are described all possible parameters for this software.
        2. Bluetooth, WAP bookmarks and settings menu,...(6310i)
        3. GPRS Always Online
        ...
+
+   gammu --siemensnetmonitor
 
    gammu --backup file
        Backup your phone to file. It's possible to backup (depends on phone):

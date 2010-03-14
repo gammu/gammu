@@ -28,6 +28,12 @@ typedef enum {
 	ModeBinary
 } GSM_Alcatel_Mode;
 
+/* protocol version */
+typedef enum {
+	V_1_0 = 1,
+	V_1_1
+} GSM_Alcatel_ProtocolVersion;
+
 /* state of binary mode */
 typedef enum {
 	StateAttached = 1,	/* Attached */
@@ -72,6 +78,7 @@ typedef struct {
 	GSM_Alcatel_BinaryState	BinaryState;
 	GSM_Alcatel_BinaryType	BinaryType;	/* 0 when N/A (StateAttached) */
 	int			BinaryItem;	/* 0 when N/A (StateAttached, StateSession) */
+	GSM_Alcatel_ProtocolVersion	ProtocolVersion; /* Alcatel protocol version */
 
 	/*****************/
 	/* Return values */
@@ -80,7 +87,7 @@ typedef struct {
 	bool			TransferCompleted;
 	GSM_Alcatel_FieldType	ReturnType;					/* Type of received data */
 	GSM_DateTime		ReturnDateTime; 				/* For date and time */
-	int			ReturnInt;					/* For enum, bool, int and byte */
+	unsigned int		ReturnInt;					/* For enum, bool, int and byte */
 	unsigned char		ReturnString[(GSM_PHONEBOOK_TEXT_LENGTH+1)*2];	/* For string and phone */
 
 	/***********/

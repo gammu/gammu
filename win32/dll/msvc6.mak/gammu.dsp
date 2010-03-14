@@ -58,43 +58,43 @@ LINK32=link.exe
 # PROP Default_Filter "cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 # Begin Source File
 
-SOURCE=..\..\common\protocol\alcatel\alcabus.c
+SOURCE=..\..\..\common\protocol\alcatel\alcabus.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\alcatel\alcatel.c
+SOURCE=..\..\..\common\phone\alcatel\alcatel.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\at\at.c
+SOURCE=..\..\..\common\protocol\at\at.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\at\atgen.c
+SOURCE=..\..\..\common\phone\at\atgen.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\misc\cfg.c
+SOURCE=..\..\..\common\misc\cfg.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\misc\coding.c
+SOURCE=..\..\..\common\misc\coding.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\dct3\dct3func.c
+SOURCE=..\..\..\common\phone\nokia\dct3\dct3func.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\nokia\fbus2.c
+SOURCE=..\..\..\common\protocol\nokia\fbus2.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\nokia\fbusirda.c
+SOURCE=..\..\..\common\protocol\nokia\fbusirda.c
 # End Source File
 # Begin Source File
 
-SOURCE=.\gammu.c
+SOURCE=..\gammu.c
 # End Source File
 # Begin Source File
 
@@ -106,91 +106,95 @@ SOURCE=.\gammu.rc
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmback.c
+SOURCE=..\..\..\common\service\gsmback.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmcal.c
+SOURCE=..\..\..\common\service\gsmcal.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\gsmcomon.c
+SOURCE=..\..\..\common\gsmcomon.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmlogo.c
+SOURCE=..\..\..\common\service\gsmlogo.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmnet.c
+SOURCE=..\..\..\common\service\gsmnet.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmpbk.c
+SOURCE=..\..\..\common\service\gsmpbk.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmring.c
+SOURCE=..\..\..\common\service\gsmring.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmsms.c
+SOURCE=..\..\..\common\service\gsmsms.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\gsmstate.c
+SOURCE=..\..\..\common\gsmstate.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmwap.c
+SOURCE=..\..\..\common\service\gsmwap.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\irda\irda.c
+SOURCE=..\..\..\common\device\irda\irda.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\nokia\mbus2.c
+SOURCE=..\..\..\common\protocol\nokia\mbus2.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\misc\misc.c
+SOURCE=..\..\..\common\misc\misc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\dct3\n6110.c
+SOURCE=..\..\..\common\phone\nokia\dct3\n6110.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\dct4\n6510.c
+SOURCE=..\..\..\common\phone\nokia\dct4\n6510.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\dct3\n7110.c
+SOURCE=..\..\..\common\phone\nokia\dct3\n7110.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\dct3\n9210.c
+SOURCE=..\..\..\common\phone\nokia\dct3\n9210.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\nauto.c
+SOURCE=..\..\..\common\phone\nokia\nauto.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\nfunc.c
+SOURCE=..\..\..\common\phone\nokia\nfunc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\pfunc.c
+SOURCE=..\..\..\common\phone\nokia\nfuncold.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\at\siemens.c
+SOURCE=..\..\..\common\phone\pfunc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\serial\win32.c
+SOURCE=..\..\..\common\phone\at\siemens.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\device\serial\win32.c
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -198,139 +202,143 @@ SOURCE=..\..\common\device\serial\win32.c
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=..\..\common\protocol\alcatel\alcabus.h
+SOURCE=..\..\..\common\protocol\alcatel\alcabus.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\alcatel\alcatel.h
+SOURCE=..\..\..\common\phone\alcatel\alcatel.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\at\at.h
+SOURCE=..\..\..\common\protocol\at\at.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\at\atgen.h
+SOURCE=..\..\..\common\phone\at\atgen.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\misc\cfg.h
+SOURCE=..\..\..\common\misc\cfg.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\misc\coding.h
+SOURCE=..\..\..\common\misc\coding.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\dct3\dct3func.h
+SOURCE=..\..\..\common\phone\nokia\dct3\dct3func.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\nokia\fbus2.h
+SOURCE=..\..\..\common\protocol\nokia\fbus2.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\nokia\fbusirda.h
+SOURCE=..\..\..\common\protocol\nokia\fbusirda.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmback.h
+SOURCE=..\..\..\common\service\gsmback.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmcal.h
+SOURCE=..\..\..\common\service\gsmcal.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\gsmcomon.h
+SOURCE=..\..\..\common\gsmcomon.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmlogo.h
+SOURCE=..\..\..\common\service\gsmlogo.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmnet.h
+SOURCE=..\..\..\common\service\gsmnet.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmpbk.h
+SOURCE=..\..\..\common\service\gsmpbk.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmprof.h
+SOURCE=..\..\..\common\service\gsmprof.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmring.h
+SOURCE=..\..\..\common\service\gsmring.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmsms.h
+SOURCE=..\..\..\common\service\gsmsms.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\gsmstate.h
+SOURCE=..\..\..\common\gsmstate.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmwap.h
+SOURCE=..\..\..\common\service\gsmwap.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\irda\irda.h
+SOURCE=..\..\..\common\device\irda\irda.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\nokia\mbus2.h
+SOURCE=..\..\..\common\protocol\nokia\mbus2.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\misc\misc.h
+SOURCE=..\..\..\common\misc\misc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\dct3\n6110.h
+SOURCE=..\..\..\common\phone\nokia\dct3\n6110.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\dct4\n6510.h
+SOURCE=..\..\..\common\phone\nokia\dct4\n6510.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\dct3\n7110.h
+SOURCE=..\..\..\common\phone\nokia\dct3\n7110.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\dct3\n9210.h
+SOURCE=..\..\..\common\phone\nokia\dct3\n9210.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\ncommon.h
+SOURCE=..\..\..\common\phone\nokia\ncommon.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\nfunc.h
+SOURCE=..\..\..\common\phone\nokia\nfunc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\pcommon.h
+SOURCE=..\..\..\common\phone\nokia\nfuncold.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\pfunc.h
+SOURCE=..\..\..\common\phone\pcommon.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\protocol.h
+SOURCE=..\..\..\common\phone\pfunc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\irda\win32.h
+SOURCE=..\..\..\common\protocol\protocol.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\serial\win32.h
+SOURCE=..\..\..\common\device\irda\win32.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\device\serial\win32.h
 # End Source File
 # End Group
 # End Target

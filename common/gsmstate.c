@@ -348,7 +348,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	return GE_NONE;
 }
 
-int GSM_ReadDevice (GSM_StateMachine *s)
+int GSM_ReadDevice (GSM_StateMachine *s, bool wait)
 {
 	unsigned char	buff[255];
 	int		res = 0, count;
@@ -360,6 +360,7 @@ int GSM_ReadDevice (GSM_StateMachine *s)
 	i=Date.Second;
 	while (i==Date.Second) {
 		res = s->Device.Functions->ReadDevice(s, buff, 255);
+		if (!wait) break;
 		if (res > 0) break;
 		my_sleep(5);
 		GSM_GetCurrentDateTime(&Date);
@@ -374,21 +375,14 @@ int GSM_ReadDevice (GSM_StateMachine *s)
 GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 {
 	GSM_Error error;
-
-	s->Phone.Data.ModelInfo		  = NULL;
-	s->Phone.Data.Manufacturer[0]	  = 0;
-	s->Phone.Data.Model[0]		  = 0;
-	s->Phone.Data.Version[0]	  = 0;
-	s->Phone.Data.VerDate[0]	  = 0;
-	s->Phone.Data.VerNum		  = 0;
 	
 	if (!s->opened) return GE_UNKNOWN;
+
+	smprintf(s,"[Closing]\n");
 
 	if (mystrncasecmp(s->Config.StartInfo,"yes",0)) {
 		if (s->Phone.Data.StartInfoCounter > 0) s->Phone.Functions->ShowStartInfo(s,false);
 	}
-
-	smprintf(s,"[Closing]\n");
 
 	if (s->Phone.Functions != NULL) {
 		error=s->Phone.Functions->Terminate(s);
@@ -400,6 +394,13 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 
 	error = s->Device.Functions->CloseDevice(s);
 	if (error!=GE_NONE) return error;
+
+	s->Phone.Data.ModelInfo		  = NULL;
+	s->Phone.Data.Manufacturer[0]	  = 0;
+	s->Phone.Data.Model[0]		  = 0;
+	s->Phone.Data.Version[0]	  = 0;
+	s->Phone.Data.VerDate[0]	  = 0;
+	s->Phone.Data.VerNum		  = 0;
 
 	if (s->LockFile!=NULL) unlock_device(&(s->LockFile));
 
@@ -420,7 +421,7 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned char *buffer,
 	i=0;
 	do {
 		/* Some data received. Reset timer */
-		if (GSM_ReadDevice(s)!=0) i=0;
+		if (GSM_ReadDevice(s,true)!=0) i=0;
 
 		msg = s->Phone.Data.RequestMsg;
 
@@ -473,8 +474,10 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned char *buffer,
 	int			reply;
 
 	if (mystrncasecmp(s->Config.StartInfo,"yes",0)) {
-		if (s->Phone.Data.StartInfoCounter > 0)  s->Phone.Data.StartInfoCounter--;
-		if (s->Phone.Data.StartInfoCounter == 0) s->Phone.Functions->ShowStartInfo(s,false);
+		if (s->Phone.Data.StartInfoCounter > 0) {
+			s->Phone.Data.StartInfoCounter--;
+			if (s->Phone.Data.StartInfoCounter == 0) s->Phone.Functions->ShowStartInfo(s,false);
+		}
 	}
 
 	Phone->RequestID	= request;
@@ -632,7 +635,7 @@ void CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg)
 	char *DefaultDebugFile		= "";
 	char *DefaultDebugLevel		= "";
 	char *DefaultLockDevice		= "no";
-	char *DefaultStartInfo		= "yes";
+	char *DefaultStartInfo		= "no";
 	char *Temp;
 
 	/* By default all debug output will go to one filedescriptor */
@@ -721,9 +724,9 @@ static OnePhoneModel allmodels[] = {
 	{"3410" ,"NHM-2" ,"",           {F_RING_SM,F_CAL33,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_NOTODO,F_CALENDAR35,F_PBK35,F_NOJAVA,0}},
-	{"3510i","RH-9"  ,"",           {F_CAL35,F_NOTODO,F_CALENDAR35,F_PBK35,0}},
-	{"3530" ,"RH-9"  ,"",           {F_CAL35,F_NOTODO,F_CALENDAR35,F_PBK35,0}},
+	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_NOTODO,F_PBK35,0}},
+	{"3510i","RH-9"   ,"",          {F_CAL35,F_NOTODO,F_PBK35,0}},
+	{"3530" ,"RH-9"   ,"",          {F_CAL35,F_NOTODO,F_PBK35,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"5100" ,"NPM-6" ,"Nokia 5100", {F_RADIO,0}},
@@ -754,9 +757,9 @@ static OnePhoneModel allmodels[] = {
 	{"6250" ,"NHM-3" ,"Nokia 6250", {0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"6310" ,"NPE-4" ,"Nokia 6310", {F_NOMIDI,F_NOJAVA,0}},
+	{"6310" ,"NPE-4" ,"Nokia 6310", {F_NOMIDI,0}},
 	{"6310i","NPL-1" ,"Nokia 6310i",{F_NOMIDI,F_BLUETOOTH,0}},
-	{"6510" ,"NPM-9" ,"Nokia 6510", {F_NOMIDI,F_RADIO,F_NOJAVA,0}},
+	{"6510" ,"NPM-9" ,"Nokia 6510", {F_NOMIDI,F_RADIO,F_NOFILESYSTEM,0}},
 	{"6610" ,"NHL-4" ,"Nokia 6610", {F_RADIO,0}},
 	{"7210" ,"NHL-4" ,"Nokia 7210", {F_RADIO,0}},
 #endif
@@ -773,8 +776,8 @@ static OnePhoneModel allmodels[] = {
 	{"8290" ,"NSB-7" ,"Nokia 8290", {F_NOWAP,F_NOSTARTANI,F_NOPBKUNICODE,F_NOPICTUREUNI,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"8310" ,"NHM-7" ,"Nokia 8310", {F_NOMIDI,F_RADIO,F_NOTODO,F_NOJAVA,0}},
-	{"8390" ,"NSB-8" ,"Nokia 8390", {F_NOMIDI,F_NOTODO,F_NOJAVA,0}},
+	{"8310" ,"NHM-7" ,"Nokia 8310", {F_NOMIDI,F_RADIO,F_NOTODO,F_NOFILESYSTEM,0}},
+	{"8390" ,"NSB-8" ,"Nokia 8390", {F_NOMIDI,F_NOTODO,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6110)
 	{"8850" ,"NSM-2" ,"Nokia 8850", {0}},
@@ -782,7 +785,7 @@ static OnePhoneModel allmodels[] = {
 	{"8890" ,"NSB-6" ,"Nokia 8890", {0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"8910" ,"NHM-4" ,"Nokia 8910", {F_NOMIDI,F_NOJAVA,0}},
+	{"8910" ,"NHM-4" ,"Nokia 8910", {F_NOMIDI,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA9210
 	{"9210" ,"RAE-3" ,"",           {0}},
@@ -791,12 +794,35 @@ static OnePhoneModel allmodels[] = {
 	{"at"   ,	  "at",		  "",				   {0}},
 	{"M20"  ,	  "M20",	  "",				   {F_M20SMS,0}},
 	{"MC35" ,	  "MC35",	  "",				   {0}},
-	{"iPAQ" ,	  "iPAQ"  ,	  "",				   {0}},
-	{"A2D"  ,	  "A2D"  ,	  "",				   {0}},
+	{"C35i" ,	  "C35i",	  "",				   {0}},
+	{"S35i" ,	  "S35i",	  "",				   {0}},
+	{"M35i" ,	  "M35i",	  "",				   {0}},
+	{"C45" ,	  "C45",	  "",				   {0}},
+	{"S45" ,	  "S45",	  "",				   {0}},
+	{"ME45" ,	  "ME45",	  "",				   {0}},
+	{"SL45" ,	  "SL45",	  "",				   {0}},
+	{"SL45i" ,	  "SL45i",	  "",				   {0}},
+	{"M50" ,	  "M50",	  "",				   {0}},
+	{"S45"	,	  "6618" ,	  "",				   {0}},
+	{"ME45" ,	  "3618" ,	  "",				   {0}},
+	{"R320s" ,	"1101201-BV R320s","",				   {0}},
+	{"R380s",	"7100101-BVR380s" ,"",				   {0}},
+	{"R520m",	"1130101-BVR520m" ,"",				   {0}},
+	{"T39m",	"1130102-BVT39m" ,"",				   {0}},
+	{"T65",		"1101901-BVT65" , "",				   {0}},
+	{"T68",		"1130201-BVT68" , "",				   {0}},
+	{"T68i",	"1130202-BVT68" , "",				   {0}},
+	{"R600",	"102001-BVR600" , "",				   {0}},
+	{"T200",	"1130501-BVT200" ,"",				   {0}},
+	{"T300",	"1030601-BVT300" ,"",				   {0}},
+	{"P800",	"7130501-BVP800" ,"",				   {0}},
+	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},
+	{"A2D"  ,	  "A2D"  ,	  "" ,				   {0}},
 	{"9210" ,	  "RAE-3",	  "Nokia Communicator GSM900/1800",{0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)
 	{"BE5", 	  "ONE TOUCH 500","",				   {F_SMSONLYSENT,F_BROKENCPBS,0}},
+	{"BF5", 	  "ONE TOUCH 715","",				   {F_SMSONLYSENT,F_BROKENCPBS,0}},
 #endif
 	{"unknown",	  ""      ,"",           {0}}
 };
