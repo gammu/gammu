@@ -24,6 +24,8 @@ set (DEVELDOCS
     examples/Makefile
     examples/phone-info.c
     examples/sms-send.c
+    examples/smsd.c
+    examples/sms-read.c
     )
 
 foreach (DOC ${DEVELDOCS})
