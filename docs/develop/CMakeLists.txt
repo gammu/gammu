@@ -4,18 +4,10 @@
 
 project (Gammu-doc-devel C)
 
+file(GLOB_RECURSE DOCSRC RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "*.rst")
+
 set (DEVELDOCS
-    Gammu.htm
-    PORTING
-    develop.txt
-    gammu_hints.txt
-    protocol/TDMA_5120.txt
-    protocol/carkit.txt
-    protocol/n6110.txt
-    protocol/n6510.txt
-    protocol/n7110.txt
-    protocol/nokia.txt
-    protocol/readme
+    ${DOCSRC}
     sms/charset.txt
     sms/convert.txt
     sms/readme
