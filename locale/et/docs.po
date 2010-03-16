@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-03-16 13:37+0100\n"
+"POT-Creation-Date: 2010-03-16 15:46+0100\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -85,7 +85,7 @@ msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu.1:13 docs/user/gammurc.5:11 docs/user/gammu-smsdrc.5:9
+#: docs/user/gammu.1:13 docs/user/gammurc.5:20 docs/user/gammu-smsdrc.5:9
 #: docs/user/gammu-smsd.1:7 docs/user/gammu-smsd-inject.1:9
 #: docs/user/gammu-smsd-monitor.1:7 docs/user/jadmaker.1:8
 #: docs/user/gammu-config.1:7 docs/user/gammu-smsd-files.7:6
@@ -4935,7 +4935,7 @@ msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu.1:2833 docs/user/gammurc.5:197 docs/user/gammu-smsdrc.5:417
+#: docs/user/gammu.1:2833 docs/user/gammurc.5:206 docs/user/gammu-smsdrc.5:417
 #: docs/user/gammu-smsd.1:73 docs/user/gammu-smsd-inject.1:36
 #: docs/user/gammu-smsd-files.7:75 docs/user/gammu-smsd-tables.7:395
 #: docs/user/gammu-smsd-run.7:93
@@ -5127,7 +5127,7 @@ msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu.1:2971 docs/user/gammurc.5:291 docs/user/gammu-smsdrc.5:495
+#: docs/user/gammu.1:2971 docs/user/gammurc.5:300 docs/user/gammu-smsdrc.5:495
 #: docs/user/gammu-smsd.1:203 docs/user/gammu-smsd-inject.1:136
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:112
@@ -5148,7 +5148,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:2978 docs/user/gammurc.5:297 docs/user/gammu-smsdrc.5:501
+#: docs/user/gammu.1:2978 docs/user/gammurc.5:306 docs/user/gammu-smsdrc.5:501
 #: docs/user/gammu-smsd.1:209 docs/user/gammu-smsd-inject.1:142
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:118
@@ -5162,7 +5162,7 @@ msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu.1:2979 docs/user/gammurc.5:297 docs/user/gammu-smsdrc.5:501
+#: docs/user/gammu.1:2979 docs/user/gammurc.5:306 docs/user/gammu-smsdrc.5:501
 #: docs/user/gammu-smsd.1:209 docs/user/gammu-smsd-inject.1:142
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:118
@@ -5218,7 +5218,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammu.1:3009 docs/user/gammurc.5:298 docs/user/gammu-smsdrc.5:503
+#: docs/user/gammu.1:3009 docs/user/gammurc.5:307 docs/user/gammu-smsdrc.5:503
 #: docs/user/gammu-smsd.1:211 docs/user/gammu-smsd-inject.1:144
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:119
@@ -5230,7 +5230,7 @@ msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu.1:3010 docs/user/gammurc.5:289 docs/user/gammu-smsdrc.5:493
+#: docs/user/gammu.1:3010 docs/user/gammurc.5:298 docs/user/gammu-smsdrc.5:493
 #: docs/user/gammu-smsd.1:201 docs/user/gammu-smsd-inject.1:134
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:110
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
@@ -5281,7 +5281,7 @@ msgstr ""
 
 # type: SH
 #. type: SH
-#: docs/user/gammu.1:3036 docs/user/gammurc.5:287 docs/user/gammu-smsdrc.5:488
+#: docs/user/gammu.1:3036 docs/user/gammurc.5:296 docs/user/gammu-smsdrc.5:488
 #: docs/user/gammu-smsd.1:192 docs/user/gammu-smsd-inject.1:132
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:108
@@ -5359,15 +5359,31 @@ msgstr ""
 msgid "gammurc - gammu(1) configuration file"
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:11
-msgid "I</etc/gammurc> or I<~/.gammurc>"
+#: docs/user/gammurc.5:9
+msgid "On Linux, MacOS X, BSD and other Unix-like systems:"
+msgstr ""
+
+#. type: Plain text
+#: docs/user/gammurc.5:13
+msgid "I<~/.gammurc> or I</etc/gammurc>"
+msgstr ""
+
+#. type: Plain text
+#: docs/user/gammurc.5:15
+msgid "On Microsoft Windows:"
+msgstr ""
+
+#. type: Plain text
+#: docs/user/gammurc.5:19
+msgid ""
+"I<C:\\eDocuments and Settings\\eusername\\eApplication Data\\egammurc> or I<."
+"\\egammurc>"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:15
+#: docs/user/gammurc.5:24
 msgid ""
 "gammu(1) reads configuration from a config file. It's location is determined "
 "on runtime. On Unix systems, it first tries ~/.gammurc and then falls back "
@@ -5376,14 +5392,14 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:18
+#: docs/user/gammurc.5:27
 msgid ""
 "On Windows, user configuration is tried at profile/Application Data/gammurc "
 "and then gammu falls back to current directory (./gammurc)."
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammurc.5:22 docs/user/gammu-smsdrc.5:18
+#: docs/user/gammurc.5:31 docs/user/gammu-smsdrc.5:18
 msgid ""
 "This file use ini file syntax, with comment parts being marked with both ; "
 "and #. Sections of config file are identified in square brackets line "
@@ -5392,7 +5408,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:28
+#: docs/user/gammurc.5:37
 msgid ""
 "Configuration file for gammu can contain several sections - [gammu], "
 "[gammu1], [gammuN], ... Each section configures one connection setup and in "
@@ -5404,32 +5420,32 @@ msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammurc.5:29
+#: docs/user/gammurc.5:38
 #, no-wrap
 msgid "B<Connection>"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:33
+#: docs/user/gammurc.5:42
 msgid "Protocol which will be used to talk to your phone."
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:35
+#: docs/user/gammurc.5:44
 msgid "For Nokia cables you want to use one of following:"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:37
+#: docs/user/gammurc.5:46
 msgid "B<fbus> - serial FBUS connection"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:39
+#: docs/user/gammurc.5:48
 msgid ""
 "B<fbususb> - FBUS over USB cable (experimental, for Nokia cables on Linux, "
 "including DKU-2)"
@@ -5437,31 +5453,31 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:41
+#: docs/user/gammurc.5:50
 msgid "B<dlr3> - DLR-3 and compatible cables"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:43
+#: docs/user/gammurc.5:52
 msgid "B<dku2> - DKU-2 and compatible cables"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:45
+#: docs/user/gammurc.5:54
 msgid "B<dku5> - DKU-5 and compatible cables"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:47
+#: docs/user/gammurc.5:56
 msgid "B<mbus> - serial MBUS connection"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:51
+#: docs/user/gammurc.5:60
 msgid ""
 "If you use some non original cable, you might need to append -nodtr (eg. for "
 "ARK3116 based cables) or -nopower, but Gammu should be able to detect this "
@@ -5470,19 +5486,19 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:53
+#: docs/user/gammurc.5:62
 msgid "For non-Nokia phones connected using cable you generally want:"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:55
+#: docs/user/gammurc.5:64
 msgid "B<at> - generic AT commands based connection"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:58
+#: docs/user/gammurc.5:67
 msgid ""
 "You can optionally specify speed of the connection, eg. at19200, but it is "
 "not needed for modern USB cables."
@@ -5490,19 +5506,19 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:60
+#: docs/user/gammurc.5:69
 msgid "For IrDA connections use one of following:"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:62
+#: docs/user/gammurc.5:71
 msgid "B<irdaphonet> - Phonet connection for Nokia phones."
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:64
+#: docs/user/gammurc.5:73
 msgid ""
 "B<irdaat> - AT commands connection for most of phones (this is not supported "
 "on Linux)."
@@ -5510,64 +5526,64 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:66
+#: docs/user/gammurc.5:75
 msgid ""
 "B<irdaobex> - OBEX (IrMC or file transfer) connection for most of phones."
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:68
+#: docs/user/gammurc.5:77
 msgid "B<irdagnapbus> - GNapplet based connection for Symbian phones"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:70
+#: docs/user/gammurc.5:79
 msgid "For Bluetooth connection use one of following:"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:72
+#: docs/user/gammurc.5:81
 msgid "B<bluephonet> - Phonet connection for Nokia phones."
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:74
+#: docs/user/gammurc.5:83
 msgid "B<blueat> - AT commands connection for most of phones."
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:76
+#: docs/user/gammurc.5:85
 msgid ""
 "B<blueobex> - OBEX (IrMC or file transfer) connection for most of phones."
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:78
+#: docs/user/gammurc.5:87
 msgid "B<bluerfgnapbus> - GNapplet based connection for Symbian phones"
 msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammurc.5:79
+#: docs/user/gammurc.5:88
 #, no-wrap
 msgid "B<Port>"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:83
+#: docs/user/gammurc.5:92
 msgid "Device node or address of phone. It depends on used connection."
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:89
+#: docs/user/gammurc.5:98
 msgid ""
 "For cables or emulated serial ports, you enter device name (for example /dev/"
 "ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux, /dev/cuad0 on "
@@ -5578,7 +5594,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:94
+#: docs/user/gammurc.5:103
 msgid ""
 "For Bluetooth connection you have to enter Bluetooth address of your phone "
 "(you can list Bluetooth devices in range on Linux using \"hcitool scan\" "
@@ -5588,7 +5604,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:97
+#: docs/user/gammurc.5:106
 msgid ""
 "Before using Gammu, your device should be paired with computer or you should "
 "have set up automatic pairing."
@@ -5596,13 +5612,13 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:99
+#: docs/user/gammurc.5:108
 msgid "For IrDA connections, this parameters is not used at all."
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:102
+#: docs/user/gammurc.5:111
 msgid ""
 "If IrDA does not work on Linux, you might need to bring up the interface and "
 "enable discovery (you need to run these commands as root):"
@@ -5610,7 +5626,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:105
+#: docs/user/gammurc.5:114
 #, no-wrap
 msgid ""
 "    ip l s dev irda0 up\n"
@@ -5619,14 +5635,14 @@ msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammurc.5:106
+#: docs/user/gammurc.5:115
 #, no-wrap
 msgid "B<Model>"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:111
+#: docs/user/gammurc.5:120
 msgid ""
 "Do not use this parameter unless really needed! The only use case for this "
 "is when Gammu does not know your phone and misdetects it's features."
@@ -5634,7 +5650,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:115
+#: docs/user/gammurc.5:124
 msgid ""
 "The only special case for using model is to force special type of OBEX "
 "connection instead of letting Gammu try the best suited for selected "
@@ -5643,13 +5659,13 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:117
+#: docs/user/gammurc.5:126
 msgid "B<obexfs> - force using of file browsing service (file system support)"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:120
+#: docs/user/gammurc.5:129
 msgid ""
 "B<obexirmc> - force using of IrMC service (contacts, calendar and notes "
 "support)"
@@ -5657,7 +5673,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:123
+#: docs/user/gammurc.5:132
 msgid ""
 "B<obexnone> - none service chosen, this has only limited use for sending "
 "file (B<sendfile> command)"
@@ -5665,27 +5681,27 @@ msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammurc.5:124
+#: docs/user/gammurc.5:133
 #, no-wrap
 msgid "B<SynchronizeTime>"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:128
+#: docs/user/gammurc.5:137
 msgid ""
 "If you want to set time from computer to phone during starting connection."
 msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammurc.5:129
+#: docs/user/gammurc.5:138
 #, no-wrap
 msgid "B<StartInfo>"
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammurc.5:136
+#: docs/user/gammurc.5:145
 msgid ""
 "This option allow to set, that you want (setting \"yes\") to see message on "
 "the phone screen or phone should enable light for a moment during starting "
@@ -5695,14 +5711,14 @@ msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammurc.5:137
+#: docs/user/gammurc.5:146
 #, no-wrap
 msgid "B<GammuCoding>"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:143
+#: docs/user/gammurc.5:152
 msgid ""
 "Forces using specified codepage (for example \"1250\" will force CP-1250 or "
 "\"utf8\" for UTF-8). This should not be needed in most cases, Gammu should "
@@ -5711,14 +5727,14 @@ msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammurc.5:144
+#: docs/user/gammurc.5:153
 #, no-wrap
 msgid "B<GammuLoc>"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:150
+#: docs/user/gammurc.5:159
 msgid ""
 "Path to directory with localisation files (the directory should contain LANG/"
 "LC_MESSAGES/gammu.mo). If gammu is properly installed it should find these "
@@ -5727,75 +5743,75 @@ msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammurc.5:151 docs/user/gammu-smsdrc.5:74
+#: docs/user/gammurc.5:160 docs/user/gammu-smsdrc.5:74
 #, no-wrap
 msgid "B<LogFile>"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:155
+#: docs/user/gammurc.5:164
 msgid "Path to file where information about communication will be stored."
 msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammurc.5:156
+#: docs/user/gammurc.5:165
 #, no-wrap
 msgid "B<LogFormat>"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:160
+#: docs/user/gammurc.5:169
 msgid "Determines what all will be logged to LogFile. Possible values are:"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:162
+#: docs/user/gammurc.5:171
 msgid "B<nothing> - no debug level"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:164
+#: docs/user/gammurc.5:173
 msgid "B<text> - transmission dump in text format"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:166
+#: docs/user/gammurc.5:175
 msgid "B<textall> - all possible info in text format"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:168
+#: docs/user/gammurc.5:177
 msgid "B<textalldate> - all possible info in text format, with time stamp"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:170
+#: docs/user/gammurc.5:179
 msgid "B<errors> - errors in text format"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:172
+#: docs/user/gammurc.5:181
 msgid "B<errorsdate> - errors in text format, with time stamp"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:174
+#: docs/user/gammurc.5:183
 msgid "B<binary> - transmission dump in binary format"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:177
+#: docs/user/gammurc.5:186
 msgid ""
 "For debugging use either B<textalldate> or B<textall>, it contains all "
 "needed information to diagnose problems."
@@ -5803,14 +5819,14 @@ msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammurc.5:178
+#: docs/user/gammurc.5:187
 #, no-wrap
 msgid "B<Features>"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:185
+#: docs/user/gammurc.5:194
 msgid ""
 "Custom features for phone. This can be used as override when values coded in "
 "common/gsmphones.c are bad or missing. Consult include/gammu-info.h for "
@@ -5820,14 +5836,14 @@ msgstr ""
 
 # type: TP
 #. type: TP
-#: docs/user/gammurc.5:186
+#: docs/user/gammurc.5:195
 #, no-wrap
 msgid "B<Use_Locking>"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:194
+#: docs/user/gammurc.5:203
 msgid ""
 "On Posix systems, you might want to lock serial device when it is being used "
 "using UUCP-style lock files. Enabling this option (setting to yes) will make "
@@ -5838,25 +5854,25 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:196
+#: docs/user/gammurc.5:205
 msgid "This option has no meaning on Windows."
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:200
+#: docs/user/gammurc.5:209
 msgid "There is more complete example available in Gammu documentation."
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:202
+#: docs/user/gammurc.5:211
 msgid "Gammu configuration for Nokia phone using DLR-3 cable:"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:210
+#: docs/user/gammurc.5:219
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -5865,7 +5881,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammurc.5:217
+#: docs/user/gammurc.5:226
 msgid ""
 "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
 "phone) connected using USB cable:"
@@ -5873,7 +5889,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:225
+#: docs/user/gammurc.5:234
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -5882,7 +5898,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammurc.5:232
+#: docs/user/gammurc.5:241
 msgid ""
 "Gammu configuration for Sony-Ericsson (or any other AT compatible phone) "
 "connected using bluetooth:"
@@ -5890,7 +5906,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:240
+#: docs/user/gammurc.5:249
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -5900,7 +5916,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:246
+#: docs/user/gammurc.5:255
 msgid ""
 "Gammu configuration for phone which needs to manually adjust Bluetooth "
 "channel to use channel 42:"
@@ -5908,7 +5924,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:254
+#: docs/user/gammurc.5:263
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -5917,13 +5933,13 @@ msgid ""
 msgstr ""
 
 #. type: SS
-#: docs/user/gammurc.5:259
+#: docs/user/gammurc.5:268
 #, no-wrap
 msgid "Working with multiple phones"
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammurc.5:265
+#: docs/user/gammurc.5:274
 msgid ""
 "Gammu can be configured for multiple phones (however only one connection is "
 "used at one time, you can choose which one to use with --section parameter). "
@@ -5931,7 +5947,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammurc.5:273
+#: docs/user/gammurc.5:282
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -5940,7 +5956,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammurc.5:277
+#: docs/user/gammurc.5:286
 #, no-wrap
 msgid ""
 "[gammmu1]\n"
@@ -5949,7 +5965,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: docs/user/gammurc.5:281
+#: docs/user/gammurc.5:290
 #, no-wrap
 msgid ""
 "[gammmu2]\n"
@@ -5959,13 +5975,13 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:289 docs/user/gammu-smsdrc.5:490
+#: docs/user/gammurc.5:298 docs/user/gammu-smsdrc.5:490
 msgid "gammu-smsd(1), gammu(1), gammurc(5)"
 msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:291 docs/user/gammu-smsdrc.5:495
+#: docs/user/gammurc.5:300 docs/user/gammu-smsdrc.5:495
 #: docs/user/gammu-smsd.1:203 docs/user/gammu-smsd-inject.1:136
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:112
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
@@ -5978,7 +5994,7 @@ msgstr ""
 
 # type: Plain text
 #. type: Plain text
-#: docs/user/gammurc.5:294 docs/user/gammu-smsdrc.5:498
+#: docs/user/gammurc.5:303 docs/user/gammu-smsdrc.5:498
 #: docs/user/gammu-smsd.1:206 docs/user/gammu-smsd-inject.1:139
 #: docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:115
 #: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24

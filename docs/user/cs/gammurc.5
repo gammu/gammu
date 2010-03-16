@@ -10,7 +10,15 @@
 gammurc \- konfigurační soubor gammu(1)
 
 .SH SYNTAXE
-\fI/etc/gammurc\fP nebo \fI~/.gammurc\fP
+Na Linuxu, MacOS X, BSD a dalších systéme Unixového typu:
+
+\fI~/.gammurc\fP nebo \fI/etc/gammurc\fP
+
+Na Microsoft Windows:
+
+\fIC:\eDocuments and Settings\eusername\eApplication Data\egammurc\fP nebo
+\&\fI.\egammurc\fP
+
 .SH POPIS
 gammu(1) načítá konfiguraci z konfiguračního souboru. Jeho umístění je
 zjištěno přispuštění. Na Unixových sytémech se nejdříve zkouší ~/.gammurc a
@@ -268,7 +276,7 @@ connection = blueat
 .RE
 .PP
 
-.SS "Working with multiple phones"
+.SS "Práce s více telefony"
 
 Gammu can be configured for multiple phones (however only one connection is
 used at one time, you can choose which one to use with \-\-section
