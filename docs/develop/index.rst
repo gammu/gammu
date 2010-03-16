@@ -19,6 +19,7 @@ Contents
     python/index
     c/index
     internal/index
+    testing/index
     protocol/index
 
 Indices and tables
