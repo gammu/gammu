@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-02-28 00:12+0100\n"
+"POT-Creation-Date: 2010-03-16 13:37+0100\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -9725,7 +9725,7 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
-#: README:127 INSTALL:300
+#: README:127 INSTALL:255
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 msgstr ""
 
@@ -10294,108 +10294,6 @@ msgstr ""
 msgid ""
 "For CURL support, you need curl-7.19.0-devel-mingw32.zip from <http://curl."
 "haxx.se/>."
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:255
-#, no-wrap
-msgid ""
-"Testing\n"
-"=======\n"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:263
-msgid ""
-"Gammu comes with testsuite which should be run after build. You can do this "
-"using 'make test'. CMake build system uses for testing CTest, which also "
-"includes option to connect to dashboard and submit test results there, so "
-"that they can be reviewed and fixed by others. To participate in this "
-"testing, you need just to run 'make Experimental'. It will compile current "
-"version, run tests and submit data to dashboard:"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:265
-msgid "http://cdash.cihar.com/index.php?project=Gammu"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:267
-msgid "There are some more options for testing:"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:269
-msgid "- make ExperimentalMemCheck"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:273
-#, no-wrap
-msgid ""
-"    This checks memory accesses using valgrind during tests and submits\n"
-"    report. You need to do this after 'make Experimental' and you can\n"
-"    submit results using 'make ExperimentalSubmit'.\n"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:275
-msgid "- coverage reports"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:278
-#, no-wrap
-msgid ""
-"    To get test coverage reports, you need to configure project using \n"
-"    'cmake -DCOVERAGE=ON'\n"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:280
-msgid "- nightly testing"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:287
-#, no-wrap
-msgid ""
-"    Currently several machines do compile and test Gammu every night. If\n"
-"    you want to tak part of this, just ensure that your machine executes\n"
-"    test suite every night (preferably after 3:00 CET). You can select\n"
-"    either 'make Nightly' to do regullar testing or 'make\n"
-"    NightlyMemoryCheck' to test with valgrind. Also you can enable\n"
-"    coverage tests as described above.\n"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:289
-msgid "- special cases:"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:292
-#, no-wrap
-msgid ""
-"    You can enable some additional tests, which require some external\n"
-"    components to be setup and are disabled by default:\n"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:295
-#, no-wrap
-msgid ""
-"    MYSQL_TESTING - you need to have setup MySQL server with database\n"
-"    where SMSD can play.\n"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:298
-#, no-wrap
-msgid ""
-"    PSQL_TESTING - you need to have setup PostgreSQL server with\n"
-"    database where SMSD can play.\n"
 msgstr ""
 
 #~ msgid "Permission to file/device required..."

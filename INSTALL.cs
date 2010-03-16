@@ -250,50 +250,5 @@ Pro podporu CURL potřebujete curl-7.19.0-devel-mingw32.zip z
 <http://curl.haxx.se/>.
 
 
-Testování
-=========
-
-Gammu comes with testsuite which should be run after build. You can do this
-using 'make test'. CMake build system uses for testing CTest, which also
-includes option to connect to dashboard and submit test results there, so
-that they can be reviewed and fixed by others. To participate in this
-testing, you need just to run 'make Experimental'. It will compile current
-version, run tests and submit data to dashboard:
-
-http://cdash.cihar.com/index.php?project=Gammu
-
-Existují další možnosti ovlivnit testování:
-
-- make ExperimentalMemCheck
-
-    Provede také kontrolování přístupů do paměti pomocí valgrindu a
-    odešle informace. Musíte to provést po 'make Experimental' a můžete
-    odeslat výsledky pomocí 'make ExperimentalSubmit'.
-
-- pokrytí testy
-
-    Pro získání informací o pokrytí testy, musíte zkonfigurovat
-    projekt pomocí 'cmake -DCOVERAGE=ON'
-
-- noční testování
-
-    Currently several machines do compile and test Gammu every night. If
-    you want to tak part of this, just ensure that your machine executes
-    test suite every night (preferably after 3:00 CET). You can select
-    either 'make Nightly' to do regullar testing or 'make
-    NightlyMemoryCheck' to test with valgrind. Also you can enable
-    coverage tests as described above.
-
-- zvláštní případy:
-
-    Dále můžete provést nějaké testy, které vyžadují externí
-    komponenty a jsou ve výchozím nastavení vypnuté:
-
-    MYSQL_TESTING - potřebujete mít nastavený MySQL server s databází,
-    ve které může SMSD pracovat.
-
-    PSQL_TESTING - potřebujete mít nastavený PostgreSQL server
-    s databází, ve které může SMSD pracovat.
-
 
 # vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
