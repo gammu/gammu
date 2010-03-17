@@ -444,7 +444,7 @@ msgstr "Tipe memori tidak diketahui (\"%s\")\n"
 #: helper/message-cmdline.c:1031
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
-msgstr ""
+msgstr "Parameter tidak diketahui (\"%s\")\n"
 
 #: gammu/backup.c:1604 gammu/backup.c:1632
 #, c-format
