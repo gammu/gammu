@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-28 00:12+0100\n"
-"PO-Revision-Date: 2010-03-17 17:56+0200\n"
+"PO-Revision-Date: 2010-03-17 18:28+0200\n"
 "Last-Translator: Azhari Harahap <azhari.harahap@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -438,7 +438,7 @@ msgstr "Pulihkan titik GPRS telepon?"
 #: gammu/memory.c:172
 #, c-format
 msgid "Unknown memory type (\"%s\")\n"
-msgstr ""
+msgstr "Tipe memori tidak diketahui (\"%s\")\n"
 
 #: gammu/backup.c:1576 gammu/memory.c:74 gammu/misc.c:713 gammu/misc.c:742
 #: helper/message-cmdline.c:1031
