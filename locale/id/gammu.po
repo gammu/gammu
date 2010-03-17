@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-28 00:12+0100\n"
-"PO-Revision-Date: 2010-03-17 18:28+0200\n"
+"PO-Revision-Date: 2010-03-17 18:30+0200\n"
 "Last-Translator: Azhari Harahap <azhari.harahap@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -449,7 +449,7 @@ msgstr "Parameter tidak diketahui (\"%s\")\n"
 #: gammu/backup.c:1604 gammu/backup.c:1632
 #, c-format
 msgid "Memory has only %i free locations.Exiting\n"
-msgstr "Memori hanya %i bebas lokasi. Tersedia \n"
+msgstr "Memori hanya memiliki %i lokasi bebas. Keluar\n"
 
 #: gammu/backup.c:1605
 msgid "Add phone phonebook entries?"
