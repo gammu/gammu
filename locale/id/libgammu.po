@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-03-16 13:37+0100\n"
-"PO-Revision-Date: 2010-03-17 17:48+0200\n"
+"PO-Revision-Date: 2010-03-17 17:49+0200\n"
 "Last-Translator: Azhari Harahap <azhari.harahap@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -229,9 +229,8 @@ msgid "Invalid data given to phone."
 msgstr "Data tidak valid diberikan ke telepon"
 
 #: libgammu/gsmcomon.c:128
-#, fuzzy
 msgid "File with specified name already exists."
-msgstr "File dengan nama yang ditentukan sudah tersedia."
+msgstr "File dengan nama yang ditentukan sudah ada."
 
 #: libgammu/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
