@@ -97,12 +97,11 @@ msgstr ""
 "<http://wammu.eu/support/bugs/> untuk informasi bagaimana melaporkannya."
 
 #: libgammu/gsmcomon.c:100
-#, fuzzy
 msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Bingkai tidak diketahui. Lihat <http://cihar.com/gammu/report> untuk "
+"Bingkai tidak diketahui. Lihat <http://wammu.eu/support/bugs/> untuk "
 "informasi bagaimana melaporkannya."
 
 #: libgammu/gsmcomon.c:101
