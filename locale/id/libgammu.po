@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-03-16 13:37+0100\n"
-"PO-Revision-Date: 2010-03-17 17:51+0200\n"
+"PO-Revision-Date: 2010-03-17 17:52+0200\n"
 "Last-Translator: Azhari Harahap <azhari.harahap@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -326,7 +326,7 @@ msgstr "Tidak dapat mengartikan nama host"
 
 #: libgammu/gsmcomon.c:184
 msgid "Unknown error description."
-msgstr "Kesalahan pengartian tidak diketahui."
+msgstr "Deskripsi kesalahan tidak diketahui."
 
 #: libgammu/phone/dummy/dummy.c:583
 msgid "Templates"
