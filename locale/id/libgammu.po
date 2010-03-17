@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-03-16 13:37+0100\n"
-"PO-Revision-Date: 2010-03-17 17:44+0200\n"
+"PO-Revision-Date: 2010-03-17 17:45+0200\n"
 "Last-Translator: Azhari Harahap <azhari.harahap@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -89,13 +89,12 @@ msgstr ""
 "informasi bagaimana melaporkannya."
 
 #: libgammu/gsmcomon.c:99
-#, fuzzy
 msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Tanggapan dari telepon tidak diketahui. Lihat <http://cihar.com/gammu/"
-"report> untuk informasi bagaimana melaporkannya."
+"Tanggapan dari telepon tidak diketahui. Lihat "
+"<http://wammu.eu/support/bugs/> untuk informasi bagaimana melaporkannya."
 
 #: libgammu/gsmcomon.c:100
 #, fuzzy
