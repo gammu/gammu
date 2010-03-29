@@ -28,6 +28,7 @@ ChangeLog
 [-] * Fix compilation while disabling some features.
 [-] * Include message reference in FILES backend logs for SMSD.
 [-] * Fix crash when adding file to Nokia (bug #1163).
+[+] * Added function EncodePDU to python-gammu.
     
 20100217 - 1.27.92
 

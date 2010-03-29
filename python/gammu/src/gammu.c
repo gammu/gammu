@@ -6157,6 +6157,52 @@ gammu_DecodePDU(PyObject *self, PyObject *args, PyObject *kwds)
     return result;
 }
 
+static char gammu_EncodePDU__doc__[] =
+"EncodePDU(SMS, Layout = Submit)\n\n"
+"Creates PDU packet.\n\n"
+"@param SMS: SMS dictionary\n"
+"@type SMS: dict\n"
+"@param Layout: Layout (one of Submit, Deliver, StatusReport), Submit is default\n"
+"@type Layout: string\n"
+"@return: Message data\n"
+"@rtype: string\n"
+;
+
+static PyObject *
+gammu_EncodePDU(PyObject *self, PyObject *args, PyObject *kwds)
+{
+    static char *kwlist[] = {"SMS", "Layout", NULL};
+    GSM_Error error;
+    PyObject *value;
+    unsigned char buffer[1000];
+    int length = 0;
+    GSM_SMSMessage sms;
+    char *layout = NULL;
+    GSM_SMSMessageLayout msg_layout;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "O!|s", kwlist,
+                &PyDict_Type, &(value), &layout))
+        return NULL;
+
+    if (!SMSFromPython(value, &sms, 0, 1, 0)) return NULL;
+
+    if (layout == NULL || strcmp(layout, "Submit") == 0) {
+        msg_layout = PHONE_SMSSubmit;
+    } else if(strcmp(layout, "Deliver") == 0) {
+        msg_layout = PHONE_SMSDeliver;
+    } else if(strcmp(layout, "StatusReport") == 0) {
+        msg_layout = PHONE_SMSStatusReport;
+    } else {
+        PyErr_Format(PyExc_ValueError, "Wrong value for SMS layout: %s", layout);
+        return NULL;
+    }
+
+    error = GSM_EncodeSMSFrame(NULL, &sms, buffer, msg_layout, &length, TRUE);
+    if (!checkError(NULL, error, "EncodeSMSFrame")) return NULL;
+
+    return PyString_FromStringAndSize(buffer, length);
+}
+
 /* List of methods defined in the module */
 
 static struct PyMethodDef gammu_methods[] = {
@@ -6191,6 +6237,7 @@ static struct PyMethodDef gammu_methods[] = {
 #endif
 
     {"DecodePDU",       (PyCFunction)gammu_DecodePDU,       METH_VARARGS|METH_KEYWORDS,   gammu_DecodePDU__doc__},
+    {"EncodePDU",       (PyCFunction)gammu_EncodePDU,       METH_VARARGS|METH_KEYWORDS,   gammu_EncodePDU__doc__},
 
     {NULL,	 (PyCFunction)NULL, 0, NULL}		/* sentinel */
 };
