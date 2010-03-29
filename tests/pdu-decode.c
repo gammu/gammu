@@ -168,7 +168,7 @@ int pdu_decode(const char *buffer)
 			report = 1;
 			break;
 		case 3:
-			printf("Reserverd\n");
+			printf("Reserved\n");
 			return -1;
 	}
 	if (submit || deliver) {
