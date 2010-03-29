@@ -41,3 +41,4 @@ API documentation
     data
     worker
     exceptions
+    examples
