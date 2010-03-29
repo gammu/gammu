@@ -1799,8 +1799,8 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, gboolean exit_on_failure, int ma
 		if ((Config->statusfrequency > 0) && (difftime(time(NULL), laststatus) >= Config->statusfrequency)) {
 			SMSD_PhoneStatus(Config);
 			laststatus = time(NULL);
+			Service->RefreshPhoneStatus(Config);
 		}
-		Service->RefreshPhoneStatus(Config);
 
 		/* Sleep some time before another loop */
 		sleep(Config->loopsleep);
