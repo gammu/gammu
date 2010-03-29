@@ -399,7 +399,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 			SMS->PDU = SMS_Status_Report;
 			break;
 		case 3:
-			smfprintf(di, "SMS type: Reserverd, aborting!\n");
+			smfprintf(di, "SMS type: Reserved message type, aborting!\n");
 			return ERR_UNKNOWN;;
 	}
 
