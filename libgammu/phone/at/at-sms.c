@@ -2032,7 +2032,7 @@ GSM_Error ATGEN_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	/* By reading SMS we check if it is really inbox/outbox */
 	error = ATGEN_GetSMS(s, &msms);
 
-	if (error != ERR_NONE) {
+	if (error != ERR_NONE && error != ERR_CORRUPTED) {
 		return error;
 	}
 	error = ATGEN_GetSMSLocation(s, sms, &folderid, &location, TRUE);
