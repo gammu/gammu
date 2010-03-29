@@ -97,6 +97,19 @@ Message processing
     :return: Message data
     :rtype: dict
 
+.. function:: EncodePDU(SMS, Layout = Submit)
+
+    Creates PDU packet.
+
+    :param SMS: SMS dictionary
+    :type SMS: dict
+    :param Layout: Layout (one of Submit, Deliver, StatusReport), Submit is default
+    :type Layout: string
+    :return: Message data
+    :rtype: string
+
+    .. versionadded:: 1.27.93
+
 Encoding and decoding entries
 -----------------------------
 
