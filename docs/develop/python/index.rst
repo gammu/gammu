@@ -29,6 +29,10 @@ to phone based on your Gammu configuration (usually stored in
     print 'LAC: %s' % netinfo['LAC']
     print 'CID: %s' % netinfo['CID']
 
+.. toctree::
+    :maxdepth: 3
+
+    examples
 
 API documentation
 -----------------
@@ -41,4 +45,4 @@ API documentation
     data
     worker
     exceptions
-    examples
+

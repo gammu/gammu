@@ -1,5 +1,5 @@
-Examples
-========
+More Examples
+=============
 
 All these (and some more) examples are also available in python/examples/
 directory in Gammu sources.
