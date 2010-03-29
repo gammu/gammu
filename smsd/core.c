@@ -1249,8 +1249,8 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 					}
 
 					*(GetSMSData[GetSMSNumber]) = sms;
-					GetSMSData[GetSMSNumber + 1] = NULL;
 					GetSMSNumber++;
+					GetSMSData[GetSMSNumber] = NULL;
 				}
 				break;
 			default:
