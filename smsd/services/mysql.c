@@ -281,7 +281,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				sprintf(buffer+strlen(buffer),"', `StatusError` = '%i'",sms->SMS[i].DeliveryStatus);
 				sprintf(buffer+strlen(buffer)," WHERE `ID` = '%s' AND `TPMR` = '%i'",Row[0],sms->SMS[i].MessageReference);
 				if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
-					SMSD_Log(DEBUG_INFO, Config, "Error updating sent item i ndatabase (%s)", __FUNCTION__);
+					SMSD_Log(DEBUG_INFO, Config, "Error updating sent item into database (%s)", __FUNCTION__);
 					return ERR_UNKNOWN;
 				}
 			}
