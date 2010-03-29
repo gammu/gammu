@@ -5785,7 +5785,6 @@ msgstr "GAMMURC"
 #. type: TH
 #: docs/user/gammurc.5:1
 #, fuzzy, no-wrap
-#| msgid "January 31, 2010"
 msgid "March 16, 2010"
 msgstr "Leden 31, 2010"
 
