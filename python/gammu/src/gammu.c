@@ -6124,7 +6124,7 @@ static char gammu_DecodePDU__doc__[] =
 static PyObject *
 gammu_DecodePDU(PyObject *self, PyObject *args, PyObject *kwds)
 {
-    static char *kwlist[] = {"Filename", "SMSC", NULL};
+    static char *kwlist[] = {"Data", "SMSC", NULL};
     GSM_Error error;
     PyObject *result;
     PyObject *o = Py_None;
