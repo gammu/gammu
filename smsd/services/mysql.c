@@ -265,9 +265,15 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				}
 			}
 			if (found) {
-				sprintf(buffer,"UPDATE `sentitems` SET `DeliveryDateTime`='%04i-%02i-%02i %02i:%02i:%02i', `Status`='",
-					sms->SMS[i].SMSCTime.Year,sms->SMS[i].SMSCTime.Month,sms->SMS[i].SMSCTime.Day,
-					sms->SMS[i].SMSCTime.Hour,sms->SMS[i].SMSCTime.Minute,sms->SMS[i].SMSCTime.Second);
+				sprintf(buffer,"UPDATE `sentitems` SET ");
+				if (!strcmp(buffer3,"Delivered")) {
+					strcat(buffer, "`DeliveryDateTime` = '");
+					sprintf(buffer + strlen(buffer),"%04i-%02i-%02i %02i:%02i:%02i",
+						sms->SMS[i].SMSCTime.Year,sms->SMS[i].SMSCTime.Month,sms->SMS[i].SMSCTime.Day,
+						sms->SMS[i].SMSCTime.Hour,sms->SMS[i].SMSCTime.Minute,sms->SMS[i].SMSCTime.Second);
+					strcat(buffer, "', ");
+				}
+				strcat(buffer, "`Status` = '");
 				sprintf(buffer3,"%s",DecodeUnicodeString(sms->SMS[i].Text));
 				if (!strcmp(buffer3,"Delivered")) {
 					sprintf(buffer+strlen(buffer),"DeliveryOK");

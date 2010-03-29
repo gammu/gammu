@@ -324,14 +324,19 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			}
 
 			if (found) {
-				strcpy(buffer, "UPDATE sentitems SET DeliveryDateTime = ");
+				strcpy(buffer, "UPDATE sentitems SET ");
 
-				sprintf(buffer + strlen(buffer), "'%04d-%02d-%02d %02d:%02d:%02d'",
-					sms->SMS[i].SMSCTime.Year, sms->SMS[i].SMSCTime.Month,
-					sms->SMS[i].SMSCTime.Day, sms->SMS[i].SMSCTime.Hour,
-					sms->SMS[i].SMSCTime.Minute, sms->SMS[i].SMSCTime.Second);
+				if (!strcmp(buffer3, "Delivered")) {
+					strcat(buffer, "DeliveryDateTime = ");
 
-				strcat(buffer, ", Status = '");
+					sprintf(buffer + strlen(buffer), "'%04d-%02d-%02d %02d:%02d:%02d'",
+						sms->SMS[i].SMSCTime.Year, sms->SMS[i].SMSCTime.Month,
+						sms->SMS[i].SMSCTime.Day, sms->SMS[i].SMSCTime.Hour,
+						sms->SMS[i].SMSCTime.Minute, sms->SMS[i].SMSCTime.Second);
+
+					strcat(buffer, ", ");
+				}
+				strcat(buffer, "Status = '");
 
 				sprintf(buffer3, "%s",
 					DecodeUnicodeString(sms->SMS[i].Text));

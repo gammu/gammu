@@ -533,15 +533,19 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			}
 
 			if (found) {
-				strcpy(buffer, "UPDATE sentitems SET DeliveryDateTime = '");
-				timestamp = Fill_Time_T(sms->SMS[i].SMSCTime);
-				if (strcmp(dbi_driver_get_name(dbi_conn_get_driver(Config->DBConnDBI)), "pgsql") == 0) {
-					timestruct = gmtime(&timestamp);
-					strftime(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%Y-%m-%d %H:%M:%S GMT", timestruct);
-				} else {
-					sprintf(buffer + strlen(buffer), "%ld", (long)timestamp);
+				strcpy(buffer, "UPDATE sentitems SET ");
+				if (!strcmp(smstext, "Delivered")) {
+					strcat(buffer, "DeliveryDateTime = '");
+					timestamp = Fill_Time_T(sms->SMS[i].SMSCTime);
+					if (strcmp(dbi_driver_get_name(dbi_conn_get_driver(Config->DBConnDBI)), "pgsql") == 0) {
+						timestruct = gmtime(&timestamp);
+						strftime(buffer + strlen(buffer), sizeof(buffer) - strlen(buffer), "%Y-%m-%d %H:%M:%S GMT", timestruct);
+					} else {
+						sprintf(buffer + strlen(buffer), "%ld", (long)timestamp);
+					}
+					strcat(buffer, "', ");
 				}
-				strcat(buffer, "', Status = '");
+				strcat(buffer, "Status = '");
 
 				if (!strcmp(smstext, "Delivered")) {
 					strcat(buffer, "DeliveryOK");
