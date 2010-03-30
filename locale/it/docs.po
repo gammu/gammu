@@ -48,7 +48,6 @@ msgstr ""
 msgid "Gammu Documentation"
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:3 docs/user/gammurc.5:2 docs/user/gammu-smsdrc.5:2
 #: docs/user/gammu-smsd.1:2 docs/user/gammu-smsd-inject.1:2
@@ -59,7 +58,7 @@ msgstr ""
 #: docs/user/gammu-smsd-null.7:2 docs/user/gammu-smsd-run.7:2
 #, no-wrap
 msgid "NAME"
-msgstr ""
+msgstr "NOME"
 
 # type: Plain text
 #. type: Plain text
@@ -67,7 +66,6 @@ msgstr ""
 msgid "Gammu - Does some neat things with your cellular phone or modem."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:8 docs/user/gammurc.5:7 docs/user/gammu-smsdrc.5:7
 #: docs/user/gammu-smsd.1:4 docs/user/gammu-smsd-inject.1:4
@@ -75,7 +73,7 @@ msgstr ""
 #: docs/user/gammu-config.1:4
 #, no-wrap
 msgid "SYNOPSIS"
-msgstr ""
+msgstr "SINOSSI"
 
 # type: Plain text
 #. type: Plain text
@@ -83,7 +81,6 @@ msgstr ""
 msgid "Usage: gammu [I<parameters>] E<lt>commandE<gt> [I<options>]"
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:13 docs/user/gammurc.5:20 docs/user/gammu-smsdrc.5:9
 #: docs/user/gammu-smsd.1:7 docs/user/gammu-smsd-inject.1:9
@@ -94,7 +91,7 @@ msgstr ""
 #: docs/user/gammu-smsd-null.7:6 docs/user/gammu-smsd-run.7:6
 #, no-wrap
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "DESCRIZIONE"
 
 #. type: Plain text
 #: docs/user/gammu.1:19
@@ -103,12 +100,11 @@ msgid ""
 "supported, for actual listing see E<lt>http://wammu.eu/phones/E<gt>."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:21
 #, no-wrap
 msgid "OPTIONS"
-msgstr ""
+msgstr "OPZIONI"
 
 # type: Plain text
 #. type: Plain text
@@ -5168,7 +5164,6 @@ msgstr ""
 msgid "Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+36\\e2\\e3\"\\en"
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:2971 docs/user/gammurc.5:300 docs/user/gammu-smsdrc.5:495
 #: docs/user/gammu-smsd.1:203 docs/user/gammu-smsd-inject.1:136
@@ -5179,7 +5174,7 @@ msgstr ""
 #: docs/user/gammu-smsd-null.7:18 docs/user/gammu-smsd-run.7:122
 #, no-wrap
 msgid "COPYRIGHT"
-msgstr ""
+msgstr "COPYRIGHT"
 
 #. type: Plain text
 #: docs/user/gammu.1:2975
@@ -5203,7 +5198,6 @@ msgid ""
 "NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:2979 docs/user/gammurc.5:306 docs/user/gammu-smsdrc.5:501
 #: docs/user/gammu-smsd.1:209 docs/user/gammu-smsd-inject.1:142
@@ -5214,7 +5208,7 @@ msgstr ""
 #: docs/user/gammu-smsd-null.7:24 docs/user/gammu-smsd-run.7:128
 #, no-wrap
 msgid "REPORTING BUGS"
-msgstr ""
+msgstr "SEGNALAZIONE DEI BUG"
 
 # type: Plain text
 #. type: Plain text
@@ -5271,7 +5265,6 @@ msgstr ""
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:3010 docs/user/gammurc.5:298 docs/user/gammu-smsdrc.5:493
 #: docs/user/gammu-smsd.1:201 docs/user/gammu-smsd-inject.1:134
@@ -5281,7 +5274,7 @@ msgstr ""
 #: docs/user/gammu-smsd-null.7:16 docs/user/gammu-smsd-run.7:120
 #, no-wrap
 msgid "AUTHOR"
-msgstr ""
+msgstr "AUTORE"
 
 # type: Plain text
 #. type: Plain text
@@ -5322,7 +5315,6 @@ msgid ""
 "more details."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:3036 docs/user/gammurc.5:296 docs/user/gammu-smsdrc.5:488
 #: docs/user/gammu-smsd.1:192 docs/user/gammu-smsd-inject.1:132
@@ -5333,7 +5325,7 @@ msgstr ""
 #: docs/user/gammu-smsd-null.7:14 docs/user/gammu-smsd-run.7:118
 #, no-wrap
 msgid "SEE ALSO"
-msgstr ""
+msgstr "VEDI ANCHE"
 
 # type: Plain text
 #. type: Plain text
@@ -7827,18 +7819,16 @@ msgid ""
 "starting with two dashes (`-'). A summary of options is included below."
 msgstr ""
 
-# type: TP
 #. type: TP
 #: docs/user/jadmaker.1:14 docs/user/gammu-config.1:13
 #, no-wrap
 msgid "B<-h, --help>"
-msgstr ""
+msgstr "B<-h, --help>"
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/jadmaker.1:17 docs/user/gammu-config.1:16
 msgid "Show summary of options."
-msgstr ""
+msgstr "Mostra un riepilogo delle opzioni."
 
 # type: TP
 #. type: TP
@@ -7866,11 +7856,10 @@ msgstr ""
 msgid "Define URL to be included in JAD file."
 msgstr ""
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/jadmaker.1:29 docs/user/gammu-config.1:28
 msgid "gammu(1)"
-msgstr ""
+msgstr "gammu(1)"
 
 # type: Plain text
 #. type: Plain text
@@ -9771,7 +9760,7 @@ msgstr ""
 #. type: Plain text
 #: README:127 INSTALL:255
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
-msgstr ""
+msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=it_it"
 
 #. type: Plain text
 #: INSTALL:2
