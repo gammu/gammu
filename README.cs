@@ -13,14 +13,14 @@ mnoha přispěvovatelů.
 
 
 Více informací
-==============
+================
 
 Na stránkách <http://www.gammu.org/> naleznete wiki a systém pro hlášení
 chyb, současný správce Gammu udržuje infromace na <http://wammu.eu/gammu/>.
 
 
 Stáhnutí
-========
+==========
 
 Aktuální vydání můžete stáhnout z mnoha zrcadel, hlavní stránky pro stažení
 jsou v současné době na <http://dl.cihar.com/gammu/releases/>.
@@ -44,7 +44,7 @@ ale všechno ještě nemusí být stabilní a plně funkční.
 
 
 Nastavení
-=========
+==========
 
 Gammu potřebuje konfigurační soubor aby bylo schopné komunikovat s vaším
 telefonem.  Můžete ho vytvořit třeba tím, že vyjdete z příkadů v
@@ -64,7 +64,7 @@ Nějaké rady jak nastavit telefon můžete nalézt v Databázi telefonů Gammu
 
 
 Problémy
-========
+=========
 
 Pro hlášení chyb používejte <http://bugs.cihar.com/> ne mailing list.  Je
 užitečné k hlášení připojit log Gammu se zapnutým laděním. Můžete to provés
@@ -74,7 +74,7 @@ přidáním parametrů --debug textall, např.:
 
 
 Vývojáři
-========
+===========
 
 Nějaké informace jsou dostupné na wiki a v docs/develop/ folder. Můžete si
 také vygenerovat dokumentaci pomocí Doxygenu. Dokumentaci API vytvoříte
@@ -93,7 +93,7 @@ backtrace obsahuje nesmyslné informace.
 
 
 Překlady
-========
+=========
 
 Pro překlad programu je používánGettext. Jazyk můžete vybrat pomocí
 proměnných prostředí LANG nebo LC_* (na Linuxu se o to obvykle nestaráte, na
@@ -109,14 +109,14 @@ adresáři locale/ a poslání změn do bug trackeru.
 
 
 Poznámka
-========
+=========
 
 Jméno Gammu nemá nic společného s Gammu z knihy "Kacíři Duny" od Franka
 Herberta.
 
 
 Připomínky
-==========
+============
 
 Jakékoliv připomínky jsou vítány, pokud jste našli chybu, prosím řiďte se
 instrukcemi v sekci "Problémy". Vývojáře můžete kontaktovat na mailing listu

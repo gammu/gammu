@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-03-16 15:53+0100\n"
-"PO-Revision-Date: 2010-03-16 15:48+0100\n"
+"POT-Creation-Date: 2010-03-31 13:47+0300\n"
+"PO-Revision-Date: 2010-03-31 13:59+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5784,9 +5784,9 @@ msgstr "GAMMURC"
 # type: TH
 #. type: TH
 #: docs/user/gammurc.5:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "March 16, 2010"
-msgstr "Leden 31, 2010"
+msgstr "16. březen 2010"
 
 # type: TH
 #. type: TH
@@ -10549,15 +10549,11 @@ msgstr ""
 "    echo \"$DECODED_1_MMS_ADDRESS\" \"$DECODED_1_MMS_SENDER\" \"$DECODED_1_MMS_TITLE\" E<gt>E<gt> /tmp/smsd-mms.log\n"
 "fi\n"
 
-#. type: Plain text
+#. type: Title =
 #: README:2
 #, no-wrap
-msgid ""
-"Gammu All Mobile Management Utilities\n"
-"=====================================\n"
-msgstr ""
-"Gammu All Mobile Management Utilities\n"
-"=====================================\n"
+msgid "Gammu All Mobile Management Utilities\n"
+msgstr "Gammu All Mobile Management Utilities\n"
 
 #. type: Plain text
 #: README:6
@@ -10589,15 +10585,11 @@ msgstr ""
 "V současné době projekt spravuje Michal Čihař <michal@cihar.com> s pomocí "
 "mnoha přispěvovatelů."
 
-#. type: Plain text
+#. type: Title =
 #: README:17
 #, no-wrap
-msgid ""
-"More information\n"
-"================\n"
-msgstr ""
-"Více informací\n"
-"==============\n"
+msgid "More information\n"
+msgstr "Více informací\n"
 
 #. type: Plain text
 #: README:21
@@ -10608,15 +10600,11 @@ msgstr ""
 "Na stránkách <http://www.gammu.org/> naleznete wiki a systém pro hlášení "
 "chyb, současný správce Gammu udržuje infromace na <http://wammu.eu/gammu/>."
 
-#. type: Plain text
+#. type: Title =
 #: README:24
 #, no-wrap
-msgid ""
-"Downloading\n"
-"===========\n"
-msgstr ""
-"Stáhnutí\n"
-"========\n"
+msgid "Downloading\n"
+msgstr "Stáhnutí\n"
 
 #. type: Plain text
 #: README:28
@@ -10649,15 +10637,11 @@ msgstr ""
 "org/gammu/mainline.git> a prohlížet si jí můžete na stránkách <http://"
 "gitorious.org/gammu/mainline/trees>."
 
-#. type: Plain text
+#. type: Title =
 #: README:39
 #, no-wrap
-msgid ""
-"Versions\n"
-"========\n"
-msgstr ""
-"Verze\n"
-"=====\n"
+msgid "Versions\n"
+msgstr "Verze\n"
 
 #. type: Plain text
 #: README:45
@@ -10672,15 +10656,11 @@ msgstr ""
 "naopak mají z >= 90. Testovací vydání obvykle poskytují poslední novinky, "
 "ale všechno ještě nemusí být stabilní a plně funkční."
 
-#. type: Plain text
+#. type: Title =
 #: README:48
 #, no-wrap
-msgid ""
-"Configuration\n"
-"=============\n"
-msgstr ""
-"Nastavení\n"
-"=========\n"
+msgid "Configuration\n"
+msgstr "Nastavení\n"
 
 #. type: Plain text
 #: README:54
@@ -10725,15 +10705,11 @@ msgstr ""
 "Nějaké rady jak nastavit telefon můžete nalézt v Databázi telefonů Gammu "
 "<http://wammu.eu/phones/>, kam uživatelé zapisují svoje zkušenosti."
 
-#. type: Plain text
+#. type: Title =
 #: README:69
 #, no-wrap
-msgid ""
-"Problems\n"
-"========\n"
-msgstr ""
-"Problémy\n"
-"========\n"
+msgid "Problems\n"
+msgstr "Problémy\n"
 
 #. type: Plain text
 #: README:74
@@ -10752,15 +10728,11 @@ msgstr ""
 msgid "   gammu --debug textall --identify\n"
 msgstr "   gammu --debug textall --identify\n"
 
-#. type: Plain text
+#. type: Title =
 #: README:79
 #, no-wrap
-msgid ""
-"Developers\n"
-"==========\n"
-msgstr ""
-"Vývojáři\n"
-"========\n"
+msgid "Developers\n"
+msgstr "Vývojáři\n"
 
 #. type: Plain text
 #: README:87
@@ -10801,15 +10773,11 @@ msgstr ""
 "jinak jsou ladicí nástroje zmatené z ochran, které GCC do kódu vloží a "
 "backtrace obsahuje nesmyslné informace."
 
-#. type: Plain text
+#. type: Title =
 #: README:98
 #, no-wrap
-msgid ""
-"Localization\n"
-"============\n"
-msgstr ""
-"Překlady\n"
-"========\n"
+msgid "Localization\n"
+msgstr "Překlady\n"
 
 #. type: Plain text
 #: README:103
@@ -10842,15 +10810,11 @@ msgstr ""
 "Můžete také překládat tradiční cestou vytváření/aktualizací po souborů v "
 "adresáři locale/ a poslání změn do bug trackeru."
 
-#. type: Plain text
+#. type: Title =
 #: README:114
 #, no-wrap
-msgid ""
-"Note\n"
-"====\n"
-msgstr ""
-"Poznámka\n"
-"========\n"
+msgid "Note\n"
+msgstr "Poznámka\n"
 
 #. type: Plain text
 #: README:118
@@ -10861,15 +10825,11 @@ msgstr ""
 "Jméno Gammu nemá nic společného s Gammu z knihy \"Kacíři Duny\" od Franka "
 "Herberta."
 
-#. type: Plain text
+#. type: Title =
 #: README:121
 #, no-wrap
-msgid ""
-"Feedback\n"
-"========\n"
-msgstr ""
-"Připomínky\n"
-"==========\n"
+msgid "Feedback\n"
+msgstr "Připomínky\n"
 
 #. type: Plain text
 #: README:126
@@ -10887,25 +10847,17 @@ msgstr ""
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:2
 #, no-wrap
-msgid ""
-"Gammu All Mobile Management Utilities - Installation\n"
-"====================================================\n"
-msgstr ""
-"Gammu All Mobile Management Utilities - Instalace\n"
-"=================================================\n"
+msgid "Gammu All Mobile Management Utilities - Installation\n"
+msgstr "Gammu All Mobile Management Utilities - Instalace\n"
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:6
 #, no-wrap
-msgid ""
-"Binaries - Linux\n"
-"================\n"
-msgstr ""
-"Binárky - Linux\n"
-"===============\n"
+msgid "Binaries - Linux\n"
+msgstr "Binárky - Linux\n"
 
 #. type: Plain text
 #: INSTALL:12
@@ -10919,15 +10871,11 @@ msgstr ""
 "bude to pro vás nejjednodušší. Binární balíčky posledních verzí pro mnoho "
 "distribucí naleznete také na stránkách Gammu - <http://cs.wammu.eu/gammu/>."
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:15
 #, no-wrap
-msgid ""
-"Binaries - Windows\n"
-"==================\n"
-msgstr ""
-"Binárky - Windows\n"
-"=================\n"
+msgid "Binaries - Windows\n"
+msgstr "Binárky - Windows\n"
 
 #. type: Plain text
 #: INSTALL:20
@@ -10949,15 +10897,11 @@ msgstr ""
 "http://www.microsoft.com/downloads/details.aspx?"
 "displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F"
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:25
 #, no-wrap
-msgid ""
-"From Sources - Requirements\n"
-"===========================\n"
-msgstr ""
-"Ze zdrojového kódu - požadavky\n"
-"==============================\n"
+msgid "From Sources - Requirements\n"
+msgstr "Ze zdrojového kódu - požadavky\n"
 
 #. type: Plain text
 #: INSTALL:29
@@ -10969,138 +10913,170 @@ msgstr ""
 "postrádat některé funkce. Volitelné závislosti jsou:"
 
 #. type: Plain text
+#: INSTALL:31
+msgid "Bluez-libs"
+msgstr "Bluez-libs"
+
+#. type: Plain text
+#: INSTALL:32
+msgid "http://www.bluez.org/"
+msgstr "http://www.bluez.org/"
+
+#. type: Plain text
 #: INSTALL:33
-#, no-wrap
-msgid ""
-"Bluez-libs \n"
-"    - http://www.bluez.org/\n"
-"    - Bluetooth support on Linux.\n"
-msgstr ""
-"Bluez-libs \n"
-"    - http://www.bluez.org/\n"
-"    - Podpora Bluetooth na Linuxu.\n"
+msgid "Bluetooth support on Linux."
+msgstr "Podpora Bluetooth na Linuxu."
+
+#. type: Plain text
+#: INSTALL:35
+msgid "libusb-1.0"
+msgstr "libusb-1.0"
+
+#. type: Plain text
+#: INSTALL:36
+msgid "http://libusb.sourceforge.net/"
+msgstr "http://libusb.sourceforge.net/"
 
 #. type: Plain text
 #: INSTALL:37
-#, no-wrap
-msgid ""
-"libusb-1.0\n"
-"    - http://libusb.sourceforge.net/\n"
-"    - fbususb connection support\n"
-msgstr ""
-"libusb-1.0\n"
-"    - http://libusb.sourceforge.net/\n"
-"    - připojení fbususb\n"
+msgid "fbususb connection support"
+msgstr "připojení fbususb"
+
+#. type: Plain text
+#: INSTALL:39
+msgid "libCURL"
+msgstr "libCURL"
+
+#. type: Plain text
+#: INSTALL:40
+msgid "http://curl.haxx.se/libcurl/"
+msgstr "http://curl.haxx.se/libcurl/"
 
 #. type: Plain text
 #: INSTALL:41
-#, no-wrap
-msgid ""
-"libCURL\n"
-"    - http://curl.haxx.se/libcurl/\n"
-"    - New versions notification and phonedb access.\n"
-msgstr ""
-"libCURL\n"
-"    - http://curl.haxx.se/libcurl/\n"
-"    - Notifikace o nových verzích a přístup do databáze telefonů.\n"
+msgid "New versions notification and phonedb access."
+msgstr "Notifikace o nových verzích a přístup do databáze telefonů."
+
+#. type: Plain text
+#: INSTALL:43
+msgid "libiconv"
+msgstr "libiconv"
+
+#. type: Plain text
+#: INSTALL:44
+msgid "http://www.gnu.org/software/libiconv/"
+msgstr "http://www.gnu.org/software/libiconv/"
 
 #. type: Plain text
 #: INSTALL:45
-#, no-wrap
-msgid ""
-"libiconv\n"
-"    - http://www.gnu.org/software/libiconv/\n"
-"    - Support for more charsets in AT engine.\n"
-msgstr ""
-"libiconv\n"
-"    - http://www.gnu.org/software/libiconv/\n"
-"    - Podpora pro víc kódování v AT subsystému.\n"
+msgid "Support for more charsets in AT engine."
+msgstr "Podpora pro více znakových sad pro AT telefony."
+
+#. type: Plain text
+#: INSTALL:47
+msgid "Gettext"
+msgstr "Gettext"
+
+#. type: Plain text
+#: INSTALL:48
+msgid "http://www.gnu.org/software/gettext/"
+msgstr "http://www.gnu.org/software/gettext/"
 
 #. type: Plain text
 #: INSTALL:49
-#, no-wrap
-msgid ""
-"Gettext\n"
-"    - http://www.gnu.org/software/gettext/\n"
-"    - Localization of strings.\n"
-msgstr ""
-"Gettext\n"
-"    - http://www.gnu.org/software/gettext/\n"
-"    - Překlady textů.\n"
+msgid "Localization of strings."
+msgstr "Překlad uživatelského rozhraní."
+
+#. type: Plain text
+#: INSTALL:51
+msgid "MySQL"
+msgstr "MySQL"
+
+#. type: Plain text
+#: INSTALL:52
+msgid "http://mysql.com/"
+msgstr "http://mysql.com/"
 
 #. type: Plain text
 #: INSTALL:53
-#, no-wrap
-msgid ""
-"MySQL\n"
-"    - http://mysql.com/\n"
-"    - MySQL support in SMSD.\n"
-msgstr ""
-"MySQL\n"
-"    - http://mysql.com/\n"
-"    - podpora MySQL v SMSD.\n"
+msgid "MySQL support in SMSD."
+msgstr "Podpora pro MySQL v SMSD."
+
+#. type: Plain text
+#: INSTALL:55
+msgid "PostgreSQL"
+msgstr "PostgreSQL\n"
+
+#. type: Plain text
+#: INSTALL:56
+msgid "http://www.postgresql.org/"
+msgstr "http://www.postgresql.org/"
 
 #. type: Plain text
 #: INSTALL:57
-#, no-wrap
-msgid ""
-"PostgreSQL\n"
-"    - http://www.postgresql.org/\n"
-"    - PostgreSQL support in SMSD.\n"
-msgstr ""
-"PostgreSQL\n"
-"    - http://www.postgresql.org/\n"
-"    - podpora PostgreSQL v SMSD.\n"
+msgid "PostgreSQL support in SMSD."
+msgstr "Podpora pro PostgreSQL v SMSD."
+
+#. type: Plain text
+#: INSTALL:59
+msgid "libdbi"
+msgstr "libdbi"
+
+#. type: Plain text
+#: INSTALL:60
+msgid "http://libdbi.sourceforge.net/"
+msgstr "http://libdbi.sourceforge.net/"
+
+#. type: Plain text
+#: INSTALL:61
+msgid "required at least version 0.8.2"
+msgstr "je potřeba alespoň verze 0.8.2"
+
+#. type: Plain text
+#: INSTALL:62
+msgid "DBI support in SMSD."
+msgstr "Podpora pro DBI v SMSD."
 
 #. type: Plain text
 #: INSTALL:63
-#, no-wrap
-msgid ""
-"libdbi\n"
-"    - http://libdbi.sourceforge.net/\n"
-"    - required at least version 0.8.2\n"
-"    - DBI support in SMSD.\n"
-"        - For testing, please install libdbd-sqlite3\n"
-msgstr ""
-"libdbi\n"
-"    - http://libdbi.sourceforge.net/\n"
-"    - je nutná alespoň verze 0.8.2\n"
-"    - podpora DBI v SMSD.\n"
-"        - pro testování prosím nainstalujte libdbd-sqlite3\n"
+msgid "For testing, please install libdbd-sqlite3"
+msgstr "Pro testování si prosím nainstalujte libdbd-sqlite3"
+
+#. type: Plain text
+#: INSTALL:65
+msgid "Python"
+msgstr "Python"
+
+#. type: Plain text
+#: INSTALL:66
+msgid "http://www.python.org/"
+msgstr "http://www.python.org/"
 
 #. type: Plain text
 #: INSTALL:67
-#, no-wrap
-msgid ""
-"Python\n"
-"    - http://www.python.org/\n"
-"    - Gammu has a Python bindings\n"
-msgstr ""
-"Python\n"
-"    - http://www.python.org/\n"
-"    - Gammu poskytuje rozhraní v Pythonu\n"
+msgid "Gammu has a Python bindings"
+msgstr "Gammu má rozhraní pro Python"
+
+#. type: Plain text
+#: INSTALL:69
+msgid "SQLite + libdbi-drivers with SQLite"
+msgstr "SQLite + libdbi-drivers se SQLite"
+
+#. type: Plain text
+#: INSTALL:70
+msgid "http://www.sqlite.org/"
+msgstr "http://www.sqlite.org/"
 
 #. type: Plain text
 #: INSTALL:71
-#, no-wrap
-msgid ""
-"SQLite + libdbi-drivers with SQLite\n"
-"    - http://www.sqlite.org/\n"
-"    - needed for testing of SMSD using libdbi driver\n"
-msgstr ""
-"SQLite + libdbi-drivers se SQLite\n"
-"    - http://www.sqlite.org/\n"
-"    - potřeba pro testování SMSD s ovladačem libdbi\n"
+msgid "needed for testing of SMSD using libdbi driver"
+msgstr "potřebné pro testování SMSD za použití ovladače libdbi"
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:74
 #, no-wrap
-msgid ""
-"From Sources - Linux\n"
-"====================\n"
-msgstr ""
-"Ze zdrojového kódu - Linux\n"
-"==========================\n"
+msgid "From Sources - Linux\n"
+msgstr "Ze zdrojového kódu - Linux\n"
 
 #. type: Plain text
 #: INSTALL:77
@@ -11136,9 +11112,14 @@ msgstr ""
 "kompilaci:"
 
 #. type: Plain text
+#: INSTALL:90
+msgid "mkdir build"
+msgstr "mkdir build"
+
+#. type: Plain text
 #: INSTALL:91
-msgid "> mkdir build > cd build"
-msgstr "> mkdir build > cd build"
+msgid "cd build"
+msgstr "cd build"
 
 #. type: Plain text
 #: INSTALL:93
@@ -11147,8 +11128,8 @@ msgstr "Poté zkonfigurujte projekt:"
 
 #. type: Plain text
 #: INSTALL:95
-msgid "> cmake .."
-msgstr "> cmake .."
+msgid "cmake .."
+msgstr "cmake .."
 
 #. type: Plain text
 #: INSTALL:97
@@ -11157,8 +11138,8 @@ msgstr "Zkompilujte ho:"
 
 #. type: Plain text
 #: INSTALL:99
-msgid "> make"
-msgstr "> make"
+msgid "make"
+msgstr "make"
 
 #. type: Plain text
 #: INSTALL:101
@@ -11167,8 +11148,8 @@ msgstr "Otestujte jestli je všechno v pořádku:"
 
 #. type: Plain text
 #: INSTALL:103
-msgid "> make test"
-msgstr "> make test"
+msgid "make test"
+msgstr "make test"
 
 #. type: Plain text
 #: INSTALL:105
@@ -11177,8 +11158,8 @@ msgstr "A nakonec ho nainstalujte:"
 
 #. type: Plain text
 #: INSTALL:107
-msgid "> sudo make install"
-msgstr "> sudo make install"
+msgid "sudo make install"
+msgstr "sudo make install"
 
 #. type: Plain text
 #: INSTALL:110
@@ -11194,23 +11175,23 @@ msgstr ""
 msgid "Useful cmake parameters:"
 msgstr "Užitečné parametry cmake:"
 
-#. type: Bullet: '* '
-#: INSTALL:121
+#. type: Plain text
+#: INSTALL:114
 msgid "-DBUILD_SHARED_LIBS=ON enables shared library"
 msgstr "-DBUILD_SHARED_LIBS=ON povolí sdílenou knihovnu"
 
-#. type: Bullet: '* '
-#: INSTALL:121
+#. type: Plain text
+#: INSTALL:115
 msgid "-DCMAKE_BUILD_TYPE=\"Debug\" enables debug build"
 msgstr "-DCMAKE_BUILD_TYPE=\"Debug\" zapne ladicí build"
 
-#. type: Bullet: '* '
-#: INSTALL:121
+#. type: Plain text
+#: INSTALL:116
 msgid "-DCMAKE_INSTALL_PREFIX=\"/usr\" change installation prefix"
 msgstr "-DCMAKE_INSTALL_PREFIX=\"/usr\" změní prefix pro instalaci"
 
-#. type: Bullet: '* '
-#: INSTALL:121
+#. type: Plain text
+#: INSTALL:118
 msgid ""
 "-DENABLE_PROTECTION=OFF disables various compile time protections against "
 "buffer overflows and similar attacks"
@@ -11218,15 +11199,15 @@ msgstr ""
 "-DENABLE_PROTECTION=OFF vypne různé ochrany proti přetečení bufferu a "
 "podobným útokům"
 
-#. type: Bullet: '* '
-#: INSTALL:121
+#. type: Plain text
+#: INSTALL:120
 msgid ""
 "-DBUILD_PYTHON=/usr/bin/python2.6 changes Python used for build Python module"
 msgstr ""
 "-DBUILD_PYTHON=/usr/bin/python2.6 změní Python, který bude použit pro "
 "kompilaci modulu pro Python"
 
-#. type: Bullet: '* '
+#. type: Plain text
 #: INSTALL:121
 msgid "-DWITH_PYTHON=OFF disables build of python-gammu"
 msgstr "-DWITH_PYTHON=OFF vypne kompilaci python-gammu"
@@ -11236,30 +11217,26 @@ msgstr "-DWITH_PYTHON=OFF vypne kompilaci python-gammu"
 msgid "You can also disable support for whole set of phones, e.g.:"
 msgstr "Můžete také vypnout podporu pro různé druhy telefonů, např.:"
 
-#. type: Bullet: '* '
-#: INSTALL:127
+#. type: Plain text
+#: INSTALL:125
 msgid "-DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support"
 msgstr "-DWITH_NOKIA_SUPPORT=OFF vypne podporu pro Nokie"
 
-#. type: Bullet: '* '
-#: INSTALL:127
+#. type: Plain text
+#: INSTALL:126
 msgid "-DWITH_BLUETOOTH=OFF disables Bluetooth support"
 msgstr "-DWITH_BLUETOOTH=OFF vypne podporu pro Bluetooth"
 
-#. type: Bullet: '* '
+#. type: Plain text
 #: INSTALL:127
 msgid "-DWITH_IRDA=OFF disables IrDA support"
 msgstr "-DWITH_IRDA=OFF vypne podporu pro IrDA"
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:129
 #, no-wrap
-msgid ""
-"Limiting set of installed data\n"
-"==============================\n"
-msgstr ""
-"Omezení nainstalovaných věcí\n"
-"============================\n"
+msgid "Limiting set of installed data\n"
+msgstr "Omezení nainstalovaných věcí\n"
 
 #. type: Plain text
 #: INSTALL:133
@@ -11270,39 +11247,39 @@ msgstr ""
 "Nastavením následujících parametrů můžete ovlivnit které volitelné části "
 "budou nainstalovány:"
 
-#. type: Bullet: '* '
-#: INSTALL:141
+#. type: Plain text
+#: INSTALL:135
 msgid "INSTALL_GNAPPLET - Install Gnapplet binaries"
 msgstr "INSTALL_GNAPPLET - instalovat binárky Gnappletu"
 
-#. type: Bullet: '* '
-#: INSTALL:141
+#. type: Plain text
+#: INSTALL:136
 msgid "INSTALL_MEDIA - Install sample media files"
 msgstr "INSTALL_MEDIA - instalovat ukázkové soubory s logy a vyzváněními"
 
-#. type: Bullet: '* '
-#: INSTALL:141
+#. type: Plain text
+#: INSTALL:137
 msgid "INSTALL_PHP_EXAMPLES - Install PHP example scripts"
 msgstr "INSTALL_PHP_EXAMPLES - instalovat ukázkové skripty v PHP"
 
-#. type: Bullet: '* '
-#: INSTALL:141
+#. type: Plain text
+#: INSTALL:138
 msgid "INSTALL_BASH_COMPLETION - Install bash completion script for Gammu"
 msgstr ""
 "INSTALL_BASH_COMPLETION - instalovat skript na doplňování parametrů Gammu v "
 "bashi"
 
-#. type: Bullet: '* '
-#: INSTALL:141
+#. type: Plain text
+#: INSTALL:139
 msgid "INSTALL_LSB_INIT - Install LSB compatible init script for Gammu"
 msgstr "INSTALL_LSB_INIT - instalovat LSB kompatibilní init skript pro Gammu"
 
-#. type: Bullet: '* '
-#: INSTALL:141
+#. type: Plain text
+#: INSTALL:140
 msgid "INSTALL_DOC - Install documentation"
 msgstr "INSTALL_DOC - instalovat dokumentaci"
 
-#. type: Bullet: '* '
+#. type: Plain text
 #: INSTALL:141
 msgid "INSTALL_LOC - Install locales data"
 msgstr "INSTALL_LOC - instalovat data překladu aplikace"
@@ -11317,15 +11294,11 @@ msgstr "Například:"
 msgid "-DINSTALL_DOC=OFF"
 msgstr "-DINSTALL_DOC=OFF"
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:148
 #, no-wrap
-msgid ""
-"From Sources - Windows\n"
-"======================\n"
-msgstr ""
-"Ze zdrojového kódu - Windows\n"
-"============================\n"
+msgid "From Sources - Windows\n"
+msgstr "Ze zdrojového kódu - Windows\n"
 
 #. type: Plain text
 #: INSTALL:157
@@ -11365,15 +11338,11 @@ msgid ""
 "CMake (otherwise compilation fails)."
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:169
 #, no-wrap
-msgid ""
-"From Sources - Mac OS X\n"
-"=======================\n"
-msgstr ""
-"Ze zdrojového kódu - Mac OS X\n"
-"=============================\n"
+msgid "From Sources - Mac OS X\n"
+msgstr "Ze zdrojového kódu - Mac OS X\n"
 
 #. type: Plain text
 #: INSTALL:173
@@ -11392,15 +11361,11 @@ msgstr ""
 "http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/"
 "installing_on_Mac_OS_X"
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:178
 #, no-wrap
-msgid ""
-"Cross compilation for Windows on Linux\n"
-"======================================\n"
-msgstr ""
-"Křížová kompilace pro Windows na Linuxu\n"
-"=======================================\n"
+msgid "Cross compilation for Windows on Linux\n"
+msgstr "Křížová kompilace pro Windows na Linuxu\n"
 
 #. type: Plain text
 #: INSTALL:183
@@ -11465,15 +11430,11 @@ msgid ""
 "to tune it for your environment."
 msgstr ""
 
-#. type: Plain text
+#. type: Title -
 #: INSTALL:210
 #, no-wrap
-msgid ""
-"Third party libraries\n"
-"---------------------\n"
-msgstr ""
-"Externí knihovny\n"
-"----------------\n"
+msgid "Third party libraries\n"
+msgstr "Externí knihovny\n"
 
 #. type: Plain text
 #: INSTALL:215
@@ -11486,15 +11447,11 @@ msgstr ""
 "Toolchain-mingw32.cmake nebo jejich zadáním v parametru CMAKE_FIND_ROOT_PATH "
 "při spuštění cmake."
 
-#. type: Plain text
+#. type: Title -
 #: INSTALL:218
 #, no-wrap
-msgid ""
-"MySQL\n"
-"-----\n"
-msgstr ""
-"MySQL\n"
-"-----\n"
+msgid "MySQL\n"
+msgstr "MySQL\n"
 
 #. type: Plain text
 #: INSTALL:222
@@ -11528,15 +11485,11 @@ msgstr ""
 "reimp.exe is part of mingw-utils and can be run through wine, I didn't try "
 "to compile native binary from it."
 
-#. type: Plain text
+#. type: Title -
 #: INSTALL:233
 #, no-wrap
-msgid ""
-"PostgreSQL\n"
-"----------\n"
-msgstr ""
-"PostgreSQL\n"
-"----------\n"
+msgid "PostgreSQL\n"
+msgstr "PostgreSQL\n"
 
 #. type: Plain text
 #: INSTALL:237
@@ -11547,15 +11500,11 @@ msgstr ""
 "Můžete si stáhnout binární balíčky PostgreSQL z <http://www.postgresql.org/"
 ">, ale budete muset odjinud přidat knihovnu wldap32.dll do adresáře bin."
 
-#. type: Plain text
+#. type: Title -
 #: INSTALL:240
 #, no-wrap
-msgid ""
-"Gettext\n"
-"-------\n"
-msgstr ""
-"Gettext\n"
-"-------\n"
+msgid "Gettext\n"
+msgstr "Gettext\n"
 
 #. type: Plain text
 #: INSTALL:245
@@ -11568,15 +11517,11 @@ msgstr ""
 "0.14.4-dep.zip, gettext-0.14.4-lib.zip z <http://gnuwin32.sourceforge.net/>. "
 "Rozbalte je všechny do jednoho adresáře."
 
-#. type: Plain text
+#. type: Title -
 #: INSTALL:248
 #, no-wrap
-msgid ""
-"CURL\n"
-"----\n"
-msgstr ""
-"CURL\n"
-"----\n"
+msgid "CURL\n"
+msgstr "CURL\n"
 
 #. type: Plain text
 #: INSTALL:252
@@ -11586,6 +11531,103 @@ msgid ""
 msgstr ""
 "Pro podporu CURL potřebujete curl-7.19.0-devel-mingw32.zip z <http://curl."
 "haxx.se/>."
+
+#~ msgid ""
+#~ "More information\n"
+#~ "================\n"
+#~ msgstr ""
+#~ "Více informací\n"
+#~ "==============\n"
+
+#~ msgid ""
+#~ "Configuration\n"
+#~ "=============\n"
+#~ msgstr ""
+#~ "Nastavení\n"
+#~ "=========\n"
+
+#~ msgid ""
+#~ "Note\n"
+#~ "====\n"
+#~ msgstr ""
+#~ "Poznámka\n"
+#~ "========\n"
+
+#~ msgid ""
+#~ "Bluez-libs \n"
+#~ "    - http://www.bluez.org/\n"
+#~ "    - Bluetooth support on Linux.\n"
+#~ msgstr ""
+#~ "Bluez-libs \n"
+#~ "    - http://www.bluez.org/\n"
+#~ "    - Podpora Bluetooth na Linuxu.\n"
+
+#~ msgid ""
+#~ "libusb-1.0\n"
+#~ "    - http://libusb.sourceforge.net/\n"
+#~ "    - fbususb connection support\n"
+#~ msgstr ""
+#~ "libusb-1.0\n"
+#~ "    - http://libusb.sourceforge.net/\n"
+#~ "    - připojení fbususb\n"
+
+#~ msgid ""
+#~ "libiconv\n"
+#~ "    - http://www.gnu.org/software/libiconv/\n"
+#~ "    - Support for more charsets in AT engine.\n"
+#~ msgstr ""
+#~ "libiconv\n"
+#~ "    - http://www.gnu.org/software/libiconv/\n"
+#~ "    - Podpora pro víc kódování v AT subsystému.\n"
+
+#~ msgid ""
+#~ "MySQL\n"
+#~ "    - http://mysql.com/\n"
+#~ "    - MySQL support in SMSD.\n"
+#~ msgstr ""
+#~ "MySQL\n"
+#~ "    - http://mysql.com/\n"
+#~ "    - podpora MySQL v SMSD.\n"
+
+#~ msgid ""
+#~ "PostgreSQL\n"
+#~ "    - http://www.postgresql.org/\n"
+#~ "    - PostgreSQL support in SMSD.\n"
+#~ msgstr ""
+#~ "PostgreSQL\n"
+#~ "    - http://www.postgresql.org/\n"
+#~ "    - podpora PostgreSQL v SMSD.\n"
+
+#~ msgid ""
+#~ "libdbi\n"
+#~ "    - http://libdbi.sourceforge.net/\n"
+#~ "    - required at least version 0.8.2\n"
+#~ "    - DBI support in SMSD.\n"
+#~ "        - For testing, please install libdbd-sqlite3\n"
+#~ msgstr ""
+#~ "libdbi\n"
+#~ "    - http://libdbi.sourceforge.net/\n"
+#~ "    - je nutná alespoň verze 0.8.2\n"
+#~ "    - podpora DBI v SMSD.\n"
+#~ "        - pro testování prosím nainstalujte libdbd-sqlite3\n"
+
+#~ msgid ""
+#~ "Python\n"
+#~ "    - http://www.python.org/\n"
+#~ "    - Gammu has a Python bindings\n"
+#~ msgstr ""
+#~ "Python\n"
+#~ "    - http://www.python.org/\n"
+#~ "    - Gammu poskytuje rozhraní v Pythonu\n"
+
+#~ msgid ""
+#~ "SQLite + libdbi-drivers with SQLite\n"
+#~ "    - http://www.sqlite.org/\n"
+#~ "    - needed for testing of SMSD using libdbi driver\n"
+#~ msgstr ""
+#~ "SQLite + libdbi-drivers se SQLite\n"
+#~ "    - http://www.sqlite.org/\n"
+#~ "    - potřeba pro testování SMSD s ovladačem libdbi\n"
 
 #~ msgid ""
 #~ "Testing\n"

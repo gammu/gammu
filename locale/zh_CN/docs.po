@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-03-16 15:53+0100\n"
+"POT-Creation-Date: 2010-03-31 13:47+0300\n"
 "PO-Revision-Date: 2009-01-27 14:06+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -9481,12 +9481,10 @@ msgid ""
 "fi\n"
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: README:2
 #, no-wrap
-msgid ""
-"Gammu All Mobile Management Utilities\n"
-"=====================================\n"
+msgid "Gammu All Mobile Management Utilities\n"
 msgstr ""
 
 #. type: Plain text
@@ -9512,13 +9510,11 @@ msgid ""
 "of many contributors."
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: README:17
-#, no-wrap
-msgid ""
-"More information\n"
-"================\n"
-msgstr ""
+#, fuzzy, no-wrap
+msgid "More information\n"
+msgstr "手机信息"
 
 #. type: Plain text
 #: README:21
@@ -9527,12 +9523,10 @@ msgid ""
 "maintainer keeps information available on <http://wammu.eu/gammu/>."
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: README:24
 #, no-wrap
-msgid ""
-"Downloading\n"
-"===========\n"
+msgid "Downloading\n"
 msgstr ""
 
 #. type: Plain text
@@ -9558,12 +9552,10 @@ msgid ""
 "mainline/trees>."
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: README:39
 #, no-wrap
-msgid ""
-"Versions\n"
-"========\n"
+msgid "Versions\n"
 msgstr ""
 
 #. type: Plain text
@@ -9575,12 +9567,10 @@ msgid ""
 "everything does not have to be stabilized yet."
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: README:48
 #, fuzzy, no-wrap
-msgid ""
-"Configuration\n"
-"=============\n"
+msgid "Configuration\n"
 msgstr "手机信息"
 
 #. type: Plain text
@@ -9614,12 +9604,10 @@ msgid ""
 "<http://wammu.eu/phones/> to see what user users experienced."
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: README:69
 #, no-wrap
-msgid ""
-"Problems\n"
-"========\n"
+msgid "Problems\n"
 msgstr ""
 
 #. type: Plain text
@@ -9636,12 +9624,10 @@ msgstr ""
 msgid "   gammu --debug textall --identify\n"
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: README:79
 #, no-wrap
-msgid ""
-"Developers\n"
-"==========\n"
+msgid "Developers\n"
 msgstr ""
 
 #. type: Plain text
@@ -9671,12 +9657,10 @@ msgid ""
 "and produce bogus back traces."
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: README:98
 #, no-wrap
-msgid ""
-"Localization\n"
-"============\n"
+msgid "Localization\n"
 msgstr ""
 
 #. type: Plain text
@@ -9702,12 +9686,10 @@ msgid ""
 "locale/ folder and then sending updated ones to bug tracker."
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: README:114
 #, no-wrap
-msgid ""
-"Note\n"
-"====\n"
+msgid "Note\n"
 msgstr ""
 
 #. type: Plain text
@@ -9717,12 +9699,10 @@ msgid ""
 "Frank Herbert."
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: README:121
 #, no-wrap
-msgid ""
-"Feedback\n"
-"========\n"
+msgid "Feedback\n"
 msgstr ""
 
 #. type: Plain text
@@ -9738,20 +9718,16 @@ msgstr ""
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:2
 #, no-wrap
-msgid ""
-"Gammu All Mobile Management Utilities - Installation\n"
-"====================================================\n"
+msgid "Gammu All Mobile Management Utilities - Installation\n"
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:6
 #, no-wrap
-msgid ""
-"Binaries - Linux\n"
-"================\n"
+msgid "Binaries - Linux\n"
 msgstr ""
 
 #. type: Plain text
@@ -9763,12 +9739,10 @@ msgid ""
 "wammu.eu/gammu/>."
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:15
 #, no-wrap
-msgid ""
-"Binaries - Windows\n"
-"==================\n"
+msgid "Binaries - Windows\n"
 msgstr ""
 
 #. type: Plain text
@@ -9786,12 +9760,10 @@ msgid ""
 "displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F"
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:25
 #, no-wrap
-msgid ""
-"From Sources - Requirements\n"
-"===========================\n"
+msgid "From Sources - Requirements\n"
 msgstr ""
 
 #. type: Plain text
@@ -9802,103 +9774,169 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
+#: INSTALL:31
+msgid "Bluez-libs"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:32
+msgid "http://www.bluez.org/"
+msgstr ""
+
+#. type: Plain text
 #: INSTALL:33
-#, no-wrap
-msgid ""
-"Bluez-libs \n"
-"    - http://www.bluez.org/\n"
-"    - Bluetooth support on Linux.\n"
+msgid "Bluetooth support on Linux."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:35
+msgid "libusb-1.0"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:36
+msgid "http://libusb.sourceforge.net/"
 msgstr ""
 
 #. type: Plain text
 #: INSTALL:37
-#, no-wrap
-msgid ""
-"libusb-1.0\n"
-"    - http://libusb.sourceforge.net/\n"
-"    - fbususb connection support\n"
+msgid "fbususb connection support"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:39
+msgid "libCURL"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:40
+msgid "http://curl.haxx.se/libcurl/"
 msgstr ""
 
 #. type: Plain text
 #: INSTALL:41
-#, no-wrap
-msgid ""
-"libCURL\n"
-"    - http://curl.haxx.se/libcurl/\n"
-"    - New versions notification and phonedb access.\n"
+msgid "New versions notification and phonedb access."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:43
+msgid "libiconv"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:44
+msgid "http://www.gnu.org/software/libiconv/"
 msgstr ""
 
 #. type: Plain text
 #: INSTALL:45
-#, no-wrap
-msgid ""
-"libiconv\n"
-"    - http://www.gnu.org/software/libiconv/\n"
-"    - Support for more charsets in AT engine.\n"
+msgid "Support for more charsets in AT engine."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:47
+msgid "Gettext"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:48
+msgid "http://www.gnu.org/software/gettext/"
 msgstr ""
 
 #. type: Plain text
 #: INSTALL:49
-#, no-wrap
-msgid ""
-"Gettext\n"
-"    - http://www.gnu.org/software/gettext/\n"
-"    - Localization of strings.\n"
+msgid "Localization of strings."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:51
+msgid "MySQL"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:52
+msgid "http://mysql.com/"
 msgstr ""
 
 #. type: Plain text
 #: INSTALL:53
-#, no-wrap
-msgid ""
-"MySQL\n"
-"    - http://mysql.com/\n"
-"    - MySQL support in SMSD.\n"
+msgid "MySQL support in SMSD."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:55
+msgid "PostgreSQL"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:56
+msgid "http://www.postgresql.org/"
 msgstr ""
 
 #. type: Plain text
 #: INSTALL:57
-#, no-wrap
-msgid ""
-"PostgreSQL\n"
-"    - http://www.postgresql.org/\n"
-"    - PostgreSQL support in SMSD.\n"
+msgid "PostgreSQL support in SMSD."
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:59
+msgid "libdbi"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:60
+msgid "http://libdbi.sourceforge.net/"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:61
+msgid "required at least version 0.8.2"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:62
+msgid "DBI support in SMSD."
 msgstr ""
 
 #. type: Plain text
 #: INSTALL:63
-#, no-wrap
-msgid ""
-"libdbi\n"
-"    - http://libdbi.sourceforge.net/\n"
-"    - required at least version 0.8.2\n"
-"    - DBI support in SMSD.\n"
-"        - For testing, please install libdbd-sqlite3\n"
+msgid "For testing, please install libdbd-sqlite3"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:65
+msgid "Python"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:66
+msgid "http://www.python.org/"
 msgstr ""
 
 #. type: Plain text
 #: INSTALL:67
-#, no-wrap
-msgid ""
-"Python\n"
-"    - http://www.python.org/\n"
-"    - Gammu has a Python bindings\n"
+msgid "Gammu has a Python bindings"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:69
+msgid "SQLite + libdbi-drivers with SQLite"
+msgstr ""
+
+#. type: Plain text
+#: INSTALL:70
+msgid "http://www.sqlite.org/"
 msgstr ""
 
 #. type: Plain text
 #: INSTALL:71
-#, no-wrap
-msgid ""
-"SQLite + libdbi-drivers with SQLite\n"
-"    - http://www.sqlite.org/\n"
-"    - needed for testing of SMSD using libdbi driver\n"
+msgid "needed for testing of SMSD using libdbi driver"
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:74
 #, no-wrap
-msgid ""
-"From Sources - Linux\n"
-"====================\n"
+msgid "From Sources - Linux\n"
 msgstr ""
 
 #. type: Plain text
@@ -9925,8 +9963,13 @@ msgid ""
 msgstr ""
 
 #. type: Plain text
+#: INSTALL:90
+msgid "mkdir build"
+msgstr ""
+
+#. type: Plain text
 #: INSTALL:91
-msgid "> mkdir build > cd build"
+msgid "cd build"
 msgstr ""
 
 #. type: Plain text
@@ -9936,7 +9979,7 @@ msgstr ""
 
 #. type: Plain text
 #: INSTALL:95
-msgid "> cmake .."
+msgid "cmake .."
 msgstr ""
 
 #. type: Plain text
@@ -9946,7 +9989,7 @@ msgstr ""
 
 #. type: Plain text
 #: INSTALL:99
-msgid "> make"
+msgid "make"
 msgstr ""
 
 #. type: Plain text
@@ -9956,7 +9999,7 @@ msgstr ""
 
 #. type: Plain text
 #: INSTALL:103
-msgid "> make test"
+msgid "make test"
 msgstr ""
 
 #. type: Plain text
@@ -9966,7 +10009,7 @@ msgstr ""
 
 #. type: Plain text
 #: INSTALL:107
-msgid "> sudo make install"
+msgid "sudo make install"
 msgstr ""
 
 #. type: Plain text
@@ -9981,35 +10024,35 @@ msgstr ""
 msgid "Useful cmake parameters:"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:121
+#. type: Plain text
+#: INSTALL:114
 msgid "-DBUILD_SHARED_LIBS=ON enables shared library"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:121
+#. type: Plain text
+#: INSTALL:115
 msgid "-DCMAKE_BUILD_TYPE=\"Debug\" enables debug build"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:121
+#. type: Plain text
+#: INSTALL:116
 msgid "-DCMAKE_INSTALL_PREFIX=\"/usr\" change installation prefix"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:121
+#. type: Plain text
+#: INSTALL:118
 msgid ""
 "-DENABLE_PROTECTION=OFF disables various compile time protections against "
 "buffer overflows and similar attacks"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:121
+#. type: Plain text
+#: INSTALL:120
 msgid ""
 "-DBUILD_PYTHON=/usr/bin/python2.6 changes Python used for build Python module"
 msgstr ""
 
-#. type: Bullet: '* '
+#. type: Plain text
 #: INSTALL:121
 msgid "-DWITH_PYTHON=OFF disables build of python-gammu"
 msgstr ""
@@ -10019,27 +10062,25 @@ msgstr ""
 msgid "You can also disable support for whole set of phones, e.g.:"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:127
+#. type: Plain text
+#: INSTALL:125
 msgid "-DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:127
+#. type: Plain text
+#: INSTALL:126
 msgid "-DWITH_BLUETOOTH=OFF disables Bluetooth support"
 msgstr ""
 
-#. type: Bullet: '* '
+#. type: Plain text
 #: INSTALL:127
 msgid "-DWITH_IRDA=OFF disables IrDA support"
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:129
 #, no-wrap
-msgid ""
-"Limiting set of installed data\n"
-"==============================\n"
+msgid "Limiting set of installed data\n"
 msgstr ""
 
 #. type: Plain text
@@ -10049,37 +10090,37 @@ msgid ""
 "installed:"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:141
+#. type: Plain text
+#: INSTALL:135
 msgid "INSTALL_GNAPPLET - Install Gnapplet binaries"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:141
+#. type: Plain text
+#: INSTALL:136
 msgid "INSTALL_MEDIA - Install sample media files"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:141
+#. type: Plain text
+#: INSTALL:137
 msgid "INSTALL_PHP_EXAMPLES - Install PHP example scripts"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:141
+#. type: Plain text
+#: INSTALL:138
 msgid "INSTALL_BASH_COMPLETION - Install bash completion script for Gammu"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:141
+#. type: Plain text
+#: INSTALL:139
 msgid "INSTALL_LSB_INIT - Install LSB compatible init script for Gammu"
 msgstr ""
 
-#. type: Bullet: '* '
-#: INSTALL:141
+#. type: Plain text
+#: INSTALL:140
 msgid "INSTALL_DOC - Install documentation"
 msgstr ""
 
-#. type: Bullet: '* '
+#. type: Plain text
 #: INSTALL:141
 msgid "INSTALL_LOC - Install locales data"
 msgstr ""
@@ -10094,12 +10135,10 @@ msgstr ""
 msgid "-DINSTALL_DOC=OFF"
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:148
 #, no-wrap
-msgid ""
-"From Sources - Windows\n"
-"======================\n"
+msgid "From Sources - Windows\n"
 msgstr ""
 
 #. type: Plain text
@@ -10131,12 +10170,10 @@ msgid ""
 "CMake (otherwise compilation fails)."
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:169
 #, no-wrap
-msgid ""
-"From Sources - Mac OS X\n"
-"=======================\n"
+msgid "From Sources - Mac OS X\n"
 msgstr ""
 
 #. type: Plain text
@@ -10152,12 +10189,10 @@ msgid ""
 "installing_on_Mac_OS_X"
 msgstr ""
 
-#. type: Plain text
+#. type: Title =
 #: INSTALL:178
 #, no-wrap
-msgid ""
-"Cross compilation for Windows on Linux\n"
-"======================================\n"
+msgid "Cross compilation for Windows on Linux\n"
 msgstr ""
 
 #. type: Plain text
@@ -10211,12 +10246,10 @@ msgid ""
 "to tune it for your environment."
 msgstr ""
 
-#. type: Plain text
+#. type: Title -
 #: INSTALL:210
 #, no-wrap
-msgid ""
-"Third party libraries\n"
-"---------------------\n"
+msgid "Third party libraries\n"
 msgstr ""
 
 #. type: Plain text
@@ -10227,12 +10260,10 @@ msgid ""
 "CMAKE_FIND_ROOT_PATH when invoking cmake."
 msgstr ""
 
-#. type: Plain text
+#. type: Title -
 #: INSTALL:218
 #, no-wrap
-msgid ""
-"MySQL\n"
-"-----\n"
+msgid "MySQL\n"
 msgstr ""
 
 #. type: Plain text
@@ -10259,12 +10290,10 @@ msgid ""
 "to compile native binary from it."
 msgstr ""
 
-#. type: Plain text
+#. type: Title -
 #: INSTALL:233
 #, no-wrap
-msgid ""
-"PostgreSQL\n"
-"----------\n"
+msgid "PostgreSQL\n"
 msgstr ""
 
 #. type: Plain text
@@ -10274,12 +10303,10 @@ msgid ""
 "then you need to add wldap32.dll library to bin."
 msgstr ""
 
-#. type: Plain text
+#. type: Title -
 #: INSTALL:240
 #, no-wrap
-msgid ""
-"Gettext\n"
-"-------\n"
+msgid "Gettext\n"
 msgstr ""
 
 #. type: Plain text
@@ -10290,12 +10317,10 @@ msgid ""
 "sourceforge.net/>. Unpack these to same directory."
 msgstr ""
 
-#. type: Plain text
+#. type: Title -
 #: INSTALL:248
 #, no-wrap
-msgid ""
-"CURL\n"
-"----\n"
+msgid "CURL\n"
 msgstr ""
 
 #. type: Plain text
@@ -10304,6 +10329,12 @@ msgid ""
 "For CURL support, you need curl-7.19.0-devel-mingw32.zip from <http://curl."
 "haxx.se/>."
 msgstr ""
+
+#, fuzzy
+#~ msgid ""
+#~ "Configuration\n"
+#~ "=============\n"
+#~ msgstr "手机信息"
 
 #~ msgid "Permission to file/device required..."
 #~ msgstr "没有文件/设备的权限"

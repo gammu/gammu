@@ -3,7 +3,7 @@ Gammu All Mobile Management Utilities - Instalace
 
 
 Binárky - Linux
-===============
+================
 
 Mnoho distribucí již obsahuje Gammu, takže pokud můžete použít tuto verzi,
 bude to pro vás nejjednodušší. Binární balíčky posledních verzí pro mnoho
@@ -11,7 +11,7 @@ distribucí naleznete také na stránkách Gammu - <http://cs.wammu.eu/gammu/>.
 
 
 Binárky - Windows
-=================
+==================
 
 Binárky pro Windows si můžete stáhnout z <http://cs.wammu.eu/gammu/>. Pro
 Windows 95, 98 a NT 4.0 budete také potřebovat ShFolder DLL, která může být
@@ -21,12 +21,12 @@ http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=6AE02498
 
 
 Ze zdrojového kódu - požadavky
-==============================
+=================================
 
 Gammu je možné zkompilovat bez jakýchkoliv dalších knihoven, ale můžete
 postrádat některé funkce. Volitelné závislosti jsou:
 
-Bluez-libs 
+Bluez-libs
     - http://www.bluez.org/
     - Podpora Bluetooth na Linuxu.
 
@@ -40,37 +40,38 @@ libCURL
 
 libiconv
     - http://www.gnu.org/software/libiconv/
-    - Podpora pro víc kódování v AT subsystému.
+    - Podpora pro více znakových sad pro AT telefony.
 
 Gettext
     - http://www.gnu.org/software/gettext/
-    - Překlady textů.
+    - Překlad uživatelského rozhraní.
 
 MySQL
     - http://mysql.com/
-    - podpora MySQL v SMSD.
+    - Podpora pro MySQL v SMSD.
 
 PostgreSQL
+
     - http://www.postgresql.org/
-    - podpora PostgreSQL v SMSD.
+    - Podpora pro PostgreSQL v SMSD.
 
 libdbi
     - http://libdbi.sourceforge.net/
-    - je nutná alespoň verze 0.8.2
-    - podpora DBI v SMSD.
-        - pro testování prosím nainstalujte libdbd-sqlite3
+    - je potřeba alespoň verze 0.8.2
+    - Podpora pro DBI v SMSD.
+        - Pro testování si prosím nainstalujte libdbd-sqlite3
 
 Python
     - http://www.python.org/
-    - Gammu poskytuje rozhraní v Pythonu
+    - Gammu má rozhraní pro Python
 
 SQLite + libdbi-drivers se SQLite
     - http://www.sqlite.org/
-    - potřeba pro testování SMSD s ovladačem libdbi
+    - potřebné pro testování SMSD za použití ovladače libdbi
 
 
 Ze zdrojového kódu - Linux
-==========================
+============================
 
 Pro kompilaci Gammu potřebujete CMake ze stránek <http://www.cmake.org>.
 
@@ -85,7 +86,8 @@ pro configure, musíte použít přímo CMake. V současné době je podporován
 kompilace mimo zdrojový strom, takže musíte vytvořit samostatný adresář pro
 kompilaci:
 
-> mkdir build > cd build
+> mkdir build
+> cd build
 
 Poté zkonfigurujte projekt:
 
@@ -124,7 +126,7 @@ Můžete také vypnout podporu pro různé druhy telefonů, např.:
 * -DWITH_IRDA=OFF vypne podporu pro IrDA
 
 Omezení nainstalovaných věcí
-============================
+================================
 
 Nastavením následujících parametrů můžete ovlivnit které volitelné části
 budou nainstalovány:
@@ -132,8 +134,8 @@ budou nainstalovány:
 * INSTALL_GNAPPLET - instalovat binárky Gnappletu
 * INSTALL_MEDIA - instalovat ukázkové soubory s logy a vyzváněními
 * INSTALL_PHP_EXAMPLES - instalovat ukázkové skripty v PHP
-* INSTALL_BASH_COMPLETION - instalovat skript na doplňování parametrů Gammu
-  v bashi
+* INSTALL_BASH_COMPLETION - instalovat skript na doplňování parametrů Gammu v
+  bashi
 * INSTALL_LSB_INIT - instalovat LSB kompatibilní init skript pro Gammu
 * INSTALL_DOC - instalovat dokumentaci
 * INSTALL_LOC - instalovat data překladu aplikace
@@ -144,7 +146,7 @@ Například:
 
 
 Ze zdrojového kódu - Windows
-============================
+==============================
 
 Pro vytvoření projektu pro kompilaci Gammu bude potřebovat CMake z
 <http://www.cmake.org>. CMake umí vytvořit projekty pro většinu běžně
@@ -166,7 +168,7 @@ and add -Lc:/Borland/BCC55/Lib -Ic:/Borland/BCC55/Include
 fails).
 
 Ze zdrojového kódu - Mac OS X
-=============================
+===============================
 
 Gammu by mělo jít zkompilovat na Mac OS X, aktuální informace by měly být na
 wiki:
@@ -175,7 +177,7 @@ http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/installing_on_Mac_OS_X
 
 
 Křížová kompilace pro Windows na Linuxu
-=======================================
+===========================================
 
 Only cross compilation using CMake has been tested. You need to install
 MinGW cross tool chain and run time. On Debian you can do it by apt-get
@@ -205,7 +207,7 @@ shown in cmake/mingw.spec, which is used by CMakeLists.txt. You might need
 to tune it for your environment.
 
 Externí knihovny
-----------------
+-----------------
 
 Nejsnazší způsob zadání cest k používaným knihovnám je v souboru
 cmake/Toolchain-mingw32.cmake nebo jejich zadáním v parametru
