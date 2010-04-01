@@ -21,7 +21,7 @@ Serial port
 Download `Portmon`_, which allows to capture bytes sent and received by
 ready binary software.
 
-.. _Portmon: http://www.sysinternals.com/ntw2k/freeware/portmon.shtml
+.. _Portmon: http://technet.microsoft.com/en-us/sysinternals/bb896644.aspx
 
 If you have log saved by PortMon and protocol is the same to "old" Nokia
 protocols, can use Gammu to decode it. It's simple::
