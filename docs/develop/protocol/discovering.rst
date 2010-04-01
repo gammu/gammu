@@ -12,6 +12,9 @@ For USB there exist various tools to dump USB communication. The dumps
 can be later analyzed and used to discover protocol details or unknown
 commands. One of the best free tools available currently is `UsbSnoop`_.
 
+In directory ``contrib/usbsnoop`` in Gammu sources you can find some tools to
+decode the output.
+
 .. _UsbSnoop: http://www.pcausa.com/Utilities/UsbSnoop/
 
 Serial port
