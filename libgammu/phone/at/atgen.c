@@ -2896,6 +2896,13 @@ GSM_Error ATGEN_CheckSBNR(GSM_StateMachine *s)
 {
 	GSM_Error 	error;
 	char		req[] = "AT^SBNR=?\r";
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SIEMENS_PBK)) {
+		smprintf(s, "Forcing AT^SBNR support\n");
+		Priv->PBKSBNR = AT_AVAILABLE;
+		return ERR_NONE;
+	}
 
 	smprintf(s, "Checking availability of SBNR\n");
 	ATGEN_WaitForAutoLen(s, req, 0x00, 4, ID_GetMemory);

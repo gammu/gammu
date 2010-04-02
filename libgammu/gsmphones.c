@@ -114,6 +114,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"FOUR_DIGIT_YEAR", F_FOUR_DIGIT_YEAR},
 	{"SMS_NO_ME", F_SMS_NO_ME},
 	{"SMS_NO_SM", F_SMS_NO_SM},
+	{"SIEMENS_PBK", F_SIEMENS_PBK},
 	{"", 0},
 };
 
@@ -408,6 +409,7 @@ GSM_PhoneModel allmodels[] = {
 	{"S55" ,	  "S55" ,	  "",				   {0}},
 	{"S65" ,	  "S65" ,	  "SIEMENS S65",		   {0}},
 	{"MC75" ,	  "MC75",	  "",				   {F_NO_ATOBEX, 0}},
+	{"AX75",	  "AX75",	  "SIEMENS AX75",		   {F_SIEMENS_PBK, 0}},
 
 	/* Samsung */
 	{"E250",	  "SAMSUNG SGH-E250" , "",			   {F_FORCE_UTF8, F_SMS_SM, F_SMS_ME, 0}},

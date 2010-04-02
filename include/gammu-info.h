@@ -620,6 +620,11 @@ typedef enum {
 	 * Phone does not have a SIM SMS memory even if it reports so.
 	 */
 	F_SMS_NO_SM,
+	/**
+	 * Phone supports Siemens style phonebook even if it does not
+	 * tell so.
+	 */
+	F_SIEMENS_PBK,
 
 	/**
 	 * Just marker of highest feature code, should not be used.
