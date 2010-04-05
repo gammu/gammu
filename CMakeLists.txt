@@ -99,6 +99,7 @@ else (HAVE_WCHAR_H)
     check_symbol_exists (iswspace "wctype.h" HAVE_ISWSPACE)
     check_symbol_exists (towlower "wctype.h" HAVE_TOWLOWER)
 endif (HAVE_WCHAR_H)
+check_symbol_exists (I_SETSIG "stropts.h" HAVE_I_SETSIG)
 check_include_file (strings.h HAVE_STRINGS_H)
 # These checks are required for check_type_size() on cmake < 2.6.0
 check_include_file (sys/types.h HAVE_SYS_TYPES_H)

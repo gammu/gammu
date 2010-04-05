@@ -300,6 +300,9 @@
 #ifndef HAVE_GETUID
 #cmakedefine HAVE_GETUID
 #endif
+#ifndef HAVE_I_SETSIG
+#cmakedefine HAVE_I_SETSIG
+#endif
 
 /**
  * __FUNCTION__ support

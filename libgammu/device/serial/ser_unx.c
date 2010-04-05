@@ -26,6 +26,9 @@
 #include <termios.h>
 #include <errno.h>
 #include <assert.h>
+#ifdef HAVE_I_SETSIG
+#include <stropts.h>
+#endif
 
 #include "../../gsmcomon.h"
 #include "ser_unx.h"
@@ -182,6 +185,10 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 #ifdef TIOCEXCL
 	/* open() calls from other applications shall fail now */
 	ioctl(d->hPhone, TIOCEXCL, (char *) 0);
+#endif
+#ifdef HAVE_I_SETSIG
+	/* Disable any signals from this file */
+	ioctl(d->hPhone, I_SETSIG, (char *) 0);
 #endif
 
 	if (tcgetattr(d->hPhone, &d->old_settings) == -1) {
