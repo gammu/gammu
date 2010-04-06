@@ -63,6 +63,7 @@ include (CheckFunctionExists)
 include (CheckSymbolExists)
 include (CheckTypeSize)
 include (CheckLibraryExists)
+include (FindPkgConfig)
 
 # Packages in our sources (mostly taken from KDE)
 include (MacroOptionalFindPackage)
