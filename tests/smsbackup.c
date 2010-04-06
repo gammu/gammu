@@ -53,9 +53,15 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Sort linked messages */
 	error = GSM_LinkSMS(debug_info, InputSMS, SortedSMS, TRUE);
 
+	/* Free memory */
+	for (i = 0; i < count; i++) {
+		free(InputSMS[i]);
+	}
+
 	/* Display messages */
 	for (i = 0; SortedSMS[i] != NULL; i++) {
 		DisplayMultiSMSInfo(SortedSMS[i], TRUE, TRUE, NULL, NULL);
+		free(SortedSMS[i]);
 	}
 
 	/* We don't need this anymore */
