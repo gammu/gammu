@@ -2348,7 +2348,10 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	/* Process structured data */
 	pos = 176 + FFF->Buffer[7];
 
-	if (pos >= FFF->Used) return ERR_NONE;
+	/* No structured data? */
+	if (pos >= FFF->Used) {
+		goto done;
+	}
 
 	/* First master block - 0x01 <WORD LENGTH> */
 	if (FFF->Buffer[pos] != 0x01) {
@@ -2482,6 +2485,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		pos += 3 + (FFF->Buffer[pos + 1] << 8) + FFF->Buffer[pos + 2];
 	}
 
+done:
 	sms->SMS[0].DateTime = FFF->Modified;
 	sms->SMS[0].DateTime.Timezone = 0;
 
