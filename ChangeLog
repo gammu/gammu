@@ -19,6 +19,8 @@ the issue.
 ChangeLog
 =========
     
+2010???? - 1.27.94
+    
 20100413 - 1.27.93
 
 [-] * Fix crash when SMS in Nokia has too many recipients (bug #1136).
