@@ -25,7 +25,11 @@
 
 /* Win32 compatibility */
 #ifndef PATH_MAX
+#ifdef MAX_PATH
 #define PATH_MAX (MAX_PATH)
+#else
+#define PATH_MAX (4069)
+#endif
 #endif
 
 #define DUMMY_MAX_LOCATION (10000)
