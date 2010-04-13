@@ -3710,6 +3710,10 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 			if (Priv->MotorolaFirstMemoryEntry == -1) {
 				ATGEN_CheckMPBR(s);
 			}
+			if (entry->Location > Priv->MotorolaMemorySize) {
+				/* Reached end of memory, phone silently returns OK */
+				return ERR_EMPTY;
+			}
 			len = sprintf(req, "AT+MPBR=%i\r", entry->Location + Priv->MotorolaFirstMemoryEntry - 1);
 			goto read_memory;
 		}
