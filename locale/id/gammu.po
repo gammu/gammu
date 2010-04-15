@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-09 16:41+0200\n"
-"PO-Revision-Date: 2010-04-15 04:28+0200\n"
+"PO-Revision-Date: 2010-04-15 04:30+0200\n"
 "Last-Translator:  <asphalt@disposable.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1248,7 +1248,7 @@ msgstr "Charger tegangan:"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Charger current:"
-msgstr "Charger saat ini:"
+msgstr "Catu daya saat ini:"
 
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
