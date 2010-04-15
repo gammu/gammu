@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-09 16:41+0200\n"
-"PO-Revision-Date: 2010-04-15 04:23+0200\n"
+"PO-Revision-Date: 2010-04-15 04:24+0200\n"
 "Last-Translator:  <asphalt@disposable.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1306,7 +1306,7 @@ msgstr "Awal tegangan baterai:"
 
 #: gammu/depend/nokia/dct4.c:1051
 msgid "Battery Current:"
-msgstr ""
+msgstr "Baterai sekarang:"
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
