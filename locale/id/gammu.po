@@ -1290,7 +1290,7 @@ msgstr "Suhu penguat daya:"
 
 #: gammu/depend/nokia/dct4.c:1047
 msgid "VCXO temperature:"
-msgstr "Suhu  VCXO:"
+msgstr "Suhu VCXO:"
 
 #: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/headint2:"
