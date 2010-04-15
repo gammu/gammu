@@ -1286,7 +1286,7 @@ msgstr "Sensor cahaya:"
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
-msgstr ""
+msgstr "Suhu power amplifier:"
 
 #: gammu/depend/nokia/dct4.c:1047
 msgid "VCXO temperature:"
