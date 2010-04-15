@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-09 16:41+0200\n"
-"PO-Revision-Date: 2010-04-15 04:31+0200\n"
+"PO-Revision-Date: 2010-04-15 04:32+0200\n"
 "Last-Translator:  <asphalt@disposable.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1420,7 +1420,7 @@ msgstr "(ID daftar kehadiran)"
 
 #: gammu/depend/nokia/dct4.c:1389
 msgid " (SIP Address (Push to Talk address))"
-msgstr "(Alamat SIP (Alamat Tekan untuk Bicara))"
+msgstr "(Alamat SIP (Tekan untuk Bicara))"
 
 #: gammu/depend/nokia/dct4.c:1390
 msgid " (Group ID (6230i or later))"
