@@ -1282,7 +1282,7 @@ msgstr "Interkoneksi dibelokkan"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
-msgstr ""
+msgstr "Sensor cahaya:"
 
 #: gammu/depend/nokia/dct4.c:1046
 msgid "Power amplifier temperature:"
