@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-09 16:41+0200\n"
-"PO-Revision-Date: 2010-04-15 04:20+0200\n"
+"PO-Revision-Date: 2010-04-15 04:21+0200\n"
 "Last-Translator:  <asphalt@disposable.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1294,7 +1294,7 @@ msgstr "Suhu  VCXO:"
 
 #: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/headint2:"
-msgstr ""
+msgstr "Hambatan papan ketik 1/headint2:"
 
 #: gammu/depend/nokia/dct4.c:1049
 msgid "Resistive keyboard 1/auxdet:"
