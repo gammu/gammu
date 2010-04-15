@@ -1244,7 +1244,7 @@ msgstr "Tegangan baterai, diskala:"
 
 #: gammu/depend/nokia/dct4.c:1039
 msgid "Charger voltage:"
-msgstr "Charger tegangan:"
+msgstr "Tegangan catu daya:"
 
 #: gammu/depend/nokia/dct4.c:1040
 msgid "Charger current:"
