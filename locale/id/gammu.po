@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-09 16:41+0200\n"
-"PO-Revision-Date: 2010-04-15 04:30+0200\n"
+"PO-Revision-Date: 2010-04-15 04:31+0200\n"
 "Last-Translator:  <asphalt@disposable.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1335,9 +1335,8 @@ msgid " (Speed dial on SIM)"
 msgstr "(Panggilan cepat pada SIM)"
 
 #: gammu/depend/nokia/dct4.c:1366
-#, fuzzy
 msgid " (Text: name (always the only one))"
-msgstr "(teks: nama (selalu hanya satu)"
+msgstr "(teks: nama (hanya satu saja)"
 
 #: gammu/depend/nokia/dct4.c:1367
 msgid " (Text: email address)"
