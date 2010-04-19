@@ -2,8 +2,8 @@ Contributing
 ============
 
 We welcome contribution in any area, if you don't have developer skills, you
-can always contribute to :doc:`source/localization`. In case you are
-interested in fixing some code, please read :doc:`source/index` to
+can always contribute to :doc:`localization`. In case you are
+interested in fixing some code, please read :doc:`../internal/index` to
 understand structure of Gammu code. We also maintain list of 
 `wanted skills <http://wammu.eu/contribute/wanted/>`_ where you can find in
 which areas we currently mostly lack manpower.
