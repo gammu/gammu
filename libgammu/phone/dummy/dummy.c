@@ -734,6 +734,27 @@ GSM_Error DUMMY_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 
 GSM_Error DUMMY_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
+	unsigned char buffer[1000] = {'\0'};
+	int length = 0;
+	GSM_Error error;
+
+	if (sms->PDU == SMS_Deliver) {
+		smprintf(s, "SMS Deliver\n");
+
+		error = PHONE_EncodeSMSFrame(s, sms, buffer, PHONE_SMSDeliver, &length, TRUE);
+
+		if (error != ERR_NONE) {
+			return error;
+		}
+	} else {
+		smprintf(s, "SMS Submit\n");
+
+		error = PHONE_EncodeSMSFrame(s, sms, buffer, PHONE_SMSSubmit, &length, TRUE);
+
+		if (error != ERR_NONE) {
+			return error;
+		}
+	}
 	s->User.SendSMSStatus(s, 0, 0xff, s->User.SendSMSStatusUserData);
 	return ERR_NONE;
 }
