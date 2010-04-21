@@ -59,7 +59,7 @@ GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigne
 {
 	GSM_Error error;
 
-	if (SMS->SMSC.Location!=0) {
+	if (SMS->SMSC.Location != 0) {
 		error = s->Phone.Functions->GetSMSC(s, &SMS->SMSC);
 		if (error != ERR_NONE) return ERR_EMPTYSMSC;
 		SMS->SMSC.Location = 0;
