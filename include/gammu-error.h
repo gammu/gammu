@@ -301,6 +301,10 @@ typedef enum {
 	 * Can not resolve host name.
 	 */
 	ERR_COULDNT_RESOLVE,
+	/**
+	 * Failed to get SMSC number from phone.
+	 */
+	ERR_GETTING_SMSC,
 
 	/**
 	 * Just marker of highest error code, should not be used.
