@@ -4,16 +4,23 @@
 import gammu
 import sys
 
+# Create object for talking with phone
+sm = gammu.StateMachine()
+
+# Optionally load config file as defined by first parameter
+if len(sys.argv) >= 2:
+    # Read the configuration from given file
+    sm.ReadConfig(Filename = sys.argv[1])
+    # Remove file name from args list
+    del sys.argv[1]
+else:
+    # Read the configuration (~/.gammurc)
+    sm.ReadConfig()
+
 # Check parameters
 if len(sys.argv) != 2:
     print 'This requires one parameter containing number!'
     sys.exit(1)
-
-# Create object for talking with phone
-sm = gammu.StateMachine()
-
-# Read the configuration (~/.gammurc)
-sm.ReadConfig()
 
 # Connect to the phone
 sm.Init()
