@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-03-16 13:37+0100\n"
+"POT-Creation-Date: 2010-04-21 15:57+0200\n"
 "PO-Revision-Date: 2010-02-11 10:00+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -320,7 +320,11 @@ msgstr "Nepodařilo se připojit k serveru."
 msgid "Could not resolve the host name."
 msgstr "Nepodařilo se přeložit jméno počítače."
 
-#: libgammu/gsmcomon.c:184
+#: libgammu/gsmcomon.c:152
+msgid "Failed to get SMSC number from phone."
+msgstr ""
+
+#: libgammu/gsmcomon.c:185
 msgid "Unknown error description."
 msgstr "Neznámý popis chyby."
 

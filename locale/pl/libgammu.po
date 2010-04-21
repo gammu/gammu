@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-03-16 13:37+0100\n"
+"POT-Creation-Date: 2010-04-21 15:57+0200\n"
 "PO-Revision-Date: 2009-01-30 17:11+0100\n"
 "Last-Translator: Rafał Ślubowski <RafalSlubowski@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -358,7 +358,11 @@ msgstr "Łączy się z serwerem IMAP..."
 msgid "Could not resolve the host name."
 msgstr "Problem z odczytem zapisanej wiadomości!"
 
-#: libgammu/gsmcomon.c:184
+#: libgammu/gsmcomon.c:152
+msgid "Failed to get SMSC number from phone."
+msgstr ""
+
+#: libgammu/gsmcomon.c:185
 #, fuzzy
 msgid "Unknown error description."
 msgstr "Nieznany błąd."
