@@ -1,15 +1,13 @@
 # Gammu translation.
 # Copyright (C) 2003 - 2009 Michal Čihař
 # This file is distributed under the same license as the Gammu package.
-#
-#
-# Michal Čihař <michal@cihar.com>, 20, 20, 2010.
+# Michal <michal@cihar.com>, 20, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-02-28 00:12+0100\n"
-"PO-Revision-Date: 2010-02-07 22:49+0100\n"
+"PO-Revision-Date: 2010-04-21 15:59+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3697,7 +3695,7 @@ msgstr "V souboru nebyl nalezen žádný úkol"
 
 #: helper/message-cmdline.c:573
 msgid "Backup functionality not compiled in!"
-msgstr ""
+msgstr "Podpora pro zálohy nebyla zkompilována!"
 
 #: helper/message-cmdline.c:1054
 #, c-format

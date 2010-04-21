@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-21 15:57+0200\n"
-"PO-Revision-Date: 2010-02-11 10:00+0100\n"
+"PO-Revision-Date: 2010-04-21 15:58+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -322,7 +322,7 @@ msgstr "Nepodařilo se přeložit jméno počítače."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
-msgstr ""
+msgstr "Nepodařilo se z telefonu načíst číslo SMS centra."
 
 #: libgammu/gsmcomon.c:185
 msgid "Unknown error description."

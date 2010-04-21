@@ -5326,7 +5326,7 @@ msgstr "106"
 #. type: Plain text
 #: docs/user/gammu.1:2834
 msgid "Failed to get SMSC number from phone."
-msgstr ""
+msgstr "Nepodařilo se z telefonu načíst číslo SMS centra."
 
 # type: SH
 #. type: SH
