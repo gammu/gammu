@@ -1301,9 +1301,12 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 							 Config->IncompleteMessageID = SortedSMS[i]->SMS[0].UDH.ID8bit;
 						}
 						Config->IncompleteMessageTime = time(NULL);
+						SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts",
+							Config->IncompleteMessageID);
+					} else {
+						SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts (waited %.0f seconds)",
+							Config->IncompleteMessageID, difftime(time(NULL), Config->IncompleteMessageTime));
 					}
-					SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts (waited %.0f seconds)",
-						Config->IncompleteMessageID, difftime(time(NULL), Config->IncompleteMessageTime));
 					goto cleanup;
 				}
 			}
