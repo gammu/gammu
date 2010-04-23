@@ -209,7 +209,7 @@ endif (BUILD_PYTHON)
 
 if (PYTHON_EXECUTABLE)
     execute_process(
-        COMMAND ${PYTHON_EXECUTABLE} -c "import sys; print(sys.version_info.major)"
+        COMMAND ${PYTHON_EXECUTABLE} -c "import sys; print(sys.version_info[0])"
         OUTPUT_VARIABLE PYTHON_MAJOR_VERSION
         OUTPUT_STRIP_TRAILING_WHITESPACE
         )
