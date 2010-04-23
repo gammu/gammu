@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-04-21 15:57+0300\n"
+"POT-Creation-Date: 2010-04-23 13:44+0300\n"
 "PO-Revision-Date: 2010-03-31 13:59+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -4893,8 +4893,11 @@ msgstr "131"
 
 #. type: Plain text
 #: docs/user/gammu.1:2758
-msgid "Empty SMSC number. Set in phone or use -smscnumber."
-msgstr "Prázdné číslo SMSC. Nastavte ho v telefonu nebo použijte -smscnumber."
+msgid ""
+"No SMSC number given. Provide it manually or use the one configured in phone."
+msgstr ""
+"Nebylo zadáno číslo SMSC. Prosím zadejte ho ručně nebo použijte číslo zadané "
+"v telefonu."
 
 #. type: SS
 #: docs/user/gammu.1:2758
@@ -11542,6 +11545,10 @@ msgid ""
 msgstr ""
 "Pro podporu CURL potřebujete curl-7.19.0-devel-mingw32.zip z <http://curl."
 "haxx.se/>."
+
+#~ msgid "Empty SMSC number. Set in phone or use -smscnumber."
+#~ msgstr ""
+#~ "Prázdné číslo SMSC. Nastavte ho v telefonu nebo použijte -smscnumber."
 
 # type: TH
 #~ msgid "Feb 17 2010"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-04-21 15:57+0300\n"
+"POT-Creation-Date: 2010-04-23 13:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4164,7 +4164,9 @@ msgstr ""
 
 #. type: Plain text
 #: docs/user/gammu.1:2758
-msgid "Empty SMSC number. Set in phone or use -smscnumber."
+msgid ""
+"No SMSC number given. Provide it manually or use the one configured in "
+"phone."
 msgstr ""
 
 #. type: SS
