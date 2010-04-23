@@ -207,6 +207,18 @@ else (BUILD_PYTHON)
     endif (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
 endif (BUILD_PYTHON)
 
+if (PYTHON_EXECUTABLE)
+    execute_process(
+        COMMAND ${PYTHON_EXECUTABLE} -c "import sys; print(sys.version_info.major)"
+        OUTPUT_VARIABLE PYTHON_MAJOR_VERSION
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+    if (${PYTHON_MAJOR_VERSION} GREATER 2)
+        message("Python 3.x is not currently supported!")
+        set (WITH_PYTHON FALSE CACHE BOOL "Build Python bindings" FORCE)
+    endif (${PYTHON_MAJOR_VERSION} GREATER 2)
+endif (PYTHON_EXECUTABLE)
+
 # Packages in sources
 macro_optional_find_package (MySQL)
 macro_optional_find_package (Postgres)
