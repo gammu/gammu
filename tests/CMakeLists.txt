@@ -741,6 +741,19 @@ foreach(TESTCONFIG ${CONFIGS})
 endforeach(TESTCONFIG $CONFIGS)
 
 
+# INI file parsing
+add_executable(inifile inifile.c)
+target_link_libraries(inifile libGammu)
+file(GLOB INIFILES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/inifiles"
+    "${Gammu_SOURCE_DIR}/tests/inifiles/*.ini")
+list(SORT INIFILES)
+
+foreach(TESTINIFILE ${INIFILES})
+    add_test(inifile-${TESTINIFILE} "${GAMMU_TEST_PATH}/inifile${GAMMU_TEST_SUFFIX}" "${Gammu_SOURCE_DIR}/tests/inifiles/${TESTINIFILE}")
+endforeach(TESTINIFILE $INIFILES)
+
+
 # Examples
 if (WITH_BACKUP)
     add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.c")
