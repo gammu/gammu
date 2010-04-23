@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-04-21 15:57+0200\n"
+"POT-Creation-Date: 2010-04-23 13:39+0200\n"
 "PO-Revision-Date: 2009-02-03 12:50+0100\n"
 "Last-Translator: Jakob Peterhänsel <jakob@hjemme.dk>\n"
 "Language-Team: none\n"
@@ -151,7 +151,8 @@ msgid "Operation not allowed by phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:114
-msgid "Empty SMSC number. Set in phone or use -smscnumber."
+msgid ""
+"No SMSC number given. Provide it manually or use the one configured in phone."
 msgstr ""
 
 #: libgammu/gsmcomon.c:115

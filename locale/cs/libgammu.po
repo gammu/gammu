@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-04-21 15:57+0200\n"
-"PO-Revision-Date: 2010-04-21 15:58+0200\n"
+"POT-Creation-Date: 2010-04-23 13:39+0200\n"
+"PO-Revision-Date: 2010-04-23 13:41+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -159,8 +159,11 @@ msgid "Operation not allowed by phone."
 msgstr "Operace nebyla povolena telefonem."
 
 #: libgammu/gsmcomon.c:114
-msgid "Empty SMSC number. Set in phone or use -smscnumber."
-msgstr "Prázdné číslo SMSC. Nastavte ho v telefonu nebo použijte -smscnumber."
+msgid ""
+"No SMSC number given. Provide it manually or use the one configured in phone."
+msgstr ""
+"Nebylo zadáno číslo SMSC. Prosím zadejte ho ručně nebo použijte číslo zadané "
+"v telefonu."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
@@ -415,6 +418,10 @@ msgstr "Pager"
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Odchozí"
+
+#~ msgid "Empty SMSC number. Set in phone or use -smscnumber."
+#~ msgstr ""
+#~ "Prázdné číslo SMSC. Nastavte ho v telefonu nebo použijte -smscnumber."
 
 #~ msgid "Permission to file/device required..."
 #~ msgstr "Přístup k souboru nebo zařízení odmítnut..."

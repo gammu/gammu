@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-04-21 15:57+0200\n"
+"POT-Creation-Date: 2010-04-23 13:39+0200\n"
 "PO-Revision-Date: 2009-03-23 19:32+0200\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -179,8 +179,9 @@ msgid "Operation not allowed by phone."
 msgstr "Función no soportada por el teléfono."
 
 #: libgammu/gsmcomon.c:114
-msgid "Empty SMSC number. Set in phone or use -smscnumber."
-msgstr "Numero SMSC vacío. Establézcalo en el teléfono o use -smscnumber."
+msgid ""
+"No SMSC number given. Provide it manually or use the one configured in phone."
+msgstr ""
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
@@ -445,6 +446,9 @@ msgstr "Mensáfono"
 #: libgammu/phone/pfunc.c:42
 msgid "Outbox"
 msgstr "Bandeja de salida"
+
+#~ msgid "Empty SMSC number. Set in phone or use -smscnumber."
+#~ msgstr "Numero SMSC vacío. Establézcalo en el teléfono o use -smscnumber."
 
 #~ msgid "Permission to file/device required..."
 #~ msgstr "Se necesitan más permisos para archivo/dispositivo..."
