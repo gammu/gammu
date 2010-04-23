@@ -33,7 +33,7 @@ endif (MINGW)
 
 execute_process(
     COMMAND
-        ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print sysconfig.get_python_lib(plat_specific=1,prefix='${CMAKE_INSTALL_EXEC_PREFIX}')"
+        ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(plat_specific=1,prefix='${CMAKE_INSTALL_EXEC_PREFIX}'))"
     OUTPUT_VARIABLE PYTHON_SITEDIR
     OUTPUT_STRIP_TRAILING_WHITESPACE
     )
@@ -63,7 +63,7 @@ execute_process(
     COMMAND
         ${PYTHON_EXECUTABLE} -c "import sys
 if hasattr(sys, 'pydebug'):
-    print sys.pydebug"
+    print(sys.pydebug)"
     OUTPUT_VARIABLE PYTHON_DEBUG
     OUTPUT_STRIP_TRAILING_WHITESPACE
     )

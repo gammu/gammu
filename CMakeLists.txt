@@ -174,13 +174,13 @@ if (BUILD_PYTHON)
     set (PYTHON_EXECUTABLE ${BUILD_PYTHON})
     execute_process(
         COMMAND
-            ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"
+            ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print(distutils.sysconfig.get_python_inc())"
         OUTPUT_VARIABLE PYTHON_INCLUDE_PATH
         OUTPUT_STRIP_TRAILING_WHITESPACE
         )
     execute_process(
         COMMAND
-            ${PYTHON_EXECUTABLE} -c "import sys; v=sys.version_info[:2]; print '%d.%d' % v"
+            ${PYTHON_EXECUTABLE} -c "import sys; print('.'.join([str(x) for x in sys.version_info[:2]]))"
         OUTPUT_VARIABLE PYTHON_VERSION
         OUTPUT_STRIP_TRAILING_WHITESPACE
         )
