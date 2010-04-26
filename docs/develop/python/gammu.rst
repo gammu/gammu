@@ -27,10 +27,10 @@ This module wraps all python-gammu functionality.
       
       Adds calendar entry.
       
-      @param Value: Calendar entry data
-      @type Value: hash
-      @return: Location of newly created entry
-      @rtype: int
+      :param Value: Calendar entry data
+      :type Value: hash
+      :return: Location of newly created entry
+      :rtype: int
       
    
    .. attribute:: StateMachine.AddCategory
@@ -40,12 +40,12 @@ This module wraps all python-gammu functionality.
       
       Adds category to phone.
       
-      @param Type: Type of category to read, one of 'ToDo', 'Phonebook'
-      @type Type: string
-      @param Name: Category name
-      @type Name: string
-      @return: Location of created category
-      @rtype: int
+      :param Type: Type of category to read, one of 'ToDo', 'Phonebook'
+      :type Type: string
+      :param Name: Category name
+      :type Name: string
+      :return: Location of created category
+      :rtype: int
       
    
    .. attribute:: StateMachine.AddFilePart
@@ -55,10 +55,10 @@ This module wraps all python-gammu functionality.
       
       Adds file part to filesystem.
       
-      @param File: File data
-      @type File: hash
-      @return: File data for subsequent calls (Finished indicates transfer has been completed)
-      @rtype: hash
+      :param File: File data
+      :type File: hash
+      :return: File data for subsequent calls (Finished indicates transfer has been completed)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.AddFolder
@@ -68,12 +68,12 @@ This module wraps all python-gammu functionality.
       
       Adds folder to filesystem.
       
-      @param ParentFolderID: Folder where to create subfolder
-      @type ParentFolderID: string
-      @param Name: New folder name
-      @type Name: string
-      @return: New folder ID.
-      @rtype: string
+      :param ParentFolderID: Folder where to create subfolder
+      :type ParentFolderID: string
+      :param Name: New folder name
+      :type Name: string
+      :return: New folder ID.
+      :rtype: string
       
    
    .. attribute:: StateMachine.AddMemory
@@ -83,10 +83,10 @@ This module wraps all python-gammu functionality.
       
       Adds memory (phonebooks or calls) entry.
       
-      @param Value: Memory entry
-      @type Value: hash
-      @return: Location of created entry
-      @rtype: int
+      :param Value: Memory entry
+      :type Value: hash
+      :return: Location of created entry
+      :rtype: int
       
    
    .. attribute:: StateMachine.AddSMS
@@ -95,10 +95,10 @@ This module wraps all python-gammu functionality.
       AddSMS(Value)
       
       Adds SMS to specified folder.
-      @param Value: SMS data
-      @type Value: hash
-      @return: Tuple for location and folder.
-      @rtype: tuple
+      :param Value: SMS data
+      :type Value: hash
+      :return: Tuple for location and folder.
+      :rtype: tuple
       
    
    .. attribute:: StateMachine.AddSMSFolder
@@ -108,10 +108,10 @@ This module wraps all python-gammu functionality.
       
       Creates SMS folder.
       
-      @param Name: Name of new folder
-      @type Name: string
-      @return: None
-      @rtype: None
+      :param Name: Name of new folder
+      :type Name: string
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.AddToDo
@@ -121,10 +121,10 @@ This module wraps all python-gammu functionality.
       
       Adds ToDo in phone.
       
-      @param Value: ToDo data
-      @type Value: hash
-      @return: Location of created entry
-      @rtype: int
+      :param Value: ToDo data
+      :type Value: hash
+      :return: Location of created entry
+      :rtype: int
       
    
    .. attribute:: StateMachine.AnswerCall
@@ -133,12 +133,12 @@ This module wraps all python-gammu functionality.
       AnswerCall(ID, All)
       
       Accept current incoming call.
-      @param ID: ID of call
-      @type ID: integer
-      @param All: Answer all calls?
-      @type All: boolean
-      @return: None
-      @rtype: None
+      :param ID: ID of call
+      :type ID: integer
+      :param All: Answer all calls?
+      :type All: boolean
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.CancelCall
@@ -147,12 +147,12 @@ This module wraps all python-gammu functionality.
       CancelCall(ID, All)
       
       Deny current incoming call.
-      @param ID: ID of call
-      @type ID: integer
-      @param All: Cancel all calls?
-      @type All: boolean
-      @return: None
-      @rtype: None
+      :param ID: ID of call
+      :type ID: integer
+      :param All: Cancel all calls?
+      :type All: boolean
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.ConferenceCall
@@ -161,10 +161,10 @@ This module wraps all python-gammu functionality.
       ConferenceCall(ID)
       
       Initiates conference call.
-      @param ID: ID of call
-      @type ID: integer
-      @return: None
-      @rtype: None
+      :param ID: ID of call
+      :type ID: integer
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.DeleteAllCalendar
@@ -174,8 +174,8 @@ This module wraps all python-gammu functionality.
       
       Deletes all calendar entries.
       
-      @return: None
-      @rtype: None
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.DeleteAllMemory
@@ -185,10 +185,10 @@ This module wraps all python-gammu functionality.
       
       Deletes all memory (phonebooks or calls) entries of specified type.
       
-      @param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
-      @type Type: string
-      @return: None
-      @rtype: None
+      :param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
+      :type Type: string
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.DeleteAllToDo
@@ -198,8 +198,8 @@ This module wraps all python-gammu functionality.
       
       Deletes all todo entries in phone.
       
-      @return: None
-      @rtype: None
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.DeleteCalendar
@@ -209,10 +209,10 @@ This module wraps all python-gammu functionality.
       
       Deletes calendar entry.
       
-      @param Location: Calendar entry to delete
-      @type Location: int
-      @return: None
-      @rtype: None
+      :param Location: Calendar entry to delete
+      :type Location: int
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.DeleteFile
@@ -222,10 +222,10 @@ This module wraps all python-gammu functionality.
       
       Deletes file from filesystem.
       
-      @param FileID: File to delete
-      @type FileID: string
-      @return: None
-      @rtype: None
+      :param FileID: File to delete
+      :type FileID: string
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.DeleteFolder
@@ -235,10 +235,10 @@ This module wraps all python-gammu functionality.
       
       Deletes folder on filesystem.
       
-      @param FolderID: Folder to delete
-      @type FolderID: string
-      @return: None
-      @rtype: None
+      :param FolderID: Folder to delete
+      :type FolderID: string
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.DeleteMemory
@@ -248,12 +248,12 @@ This module wraps all python-gammu functionality.
       
       Deletes memory (phonebooks or calls) entry.
       
-      @param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
-      @type Type: string
-      @param Location: Location of entry to delete
-      @type Location: int
-      @return: None
-      @rtype: None
+      :param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
+      :type Type: string
+      :param Location: Location of entry to delete
+      :type Location: int
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.DeleteSMS
@@ -263,12 +263,12 @@ This module wraps all python-gammu functionality.
       
       Deletes SMS.
       
-      @param Folder: Folder where to read entry (0 is emulated flat memory)
-      @type Folder: int
-      @param Location: Location of entry to delete
-      @type Location: int
-      @return: None
-      @rtype: None
+      :param Folder: Folder where to read entry (0 is emulated flat memory)
+      :type Folder: int
+      :param Location: Location of entry to delete
+      :type Location: int
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.DeleteSMSFolder
@@ -278,10 +278,10 @@ This module wraps all python-gammu functionality.
       
       Deletes SMS folder.
       
-      @param ID: Index of folder to delete
-      @type ID: int
-      @return: None
-      @rtype: None
+      :param ID: Index of folder to delete
+      :type ID: int
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.DeleteToDo
@@ -290,10 +290,10 @@ This module wraps all python-gammu functionality.
       DeleteToDo(Location)
       
       Deletes ToDo entry in phone.
-      @param Location: Location of entry to delete
-      @type Location: int
-      @return: None
-      @rtype: None
+      :param Location: Location of entry to delete
+      :type Location: int
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.DialService
@@ -302,10 +302,10 @@ This module wraps all python-gammu functionality.
       DialService(Number)
       
       Dials number and starts voice call.
-      @param Number: Number to dial
-      @type Number: string
-      @return: None
-      @rtype: None
+      :param Number: Number to dial
+      :type Number: string
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.DialVoice
@@ -314,12 +314,12 @@ This module wraps all python-gammu functionality.
       DialVoice(Number, ShowNumber)
       
       Dials number and starts voice call.
-      @param Number: Number to dial
-      @type Number: string
-      @param ShowNumber: Identifies whether to enable CLIR (None = keep default phone settings). Default is None
-      @type ShowNumber: boolean or None
-      @return: None
-      @rtype: None
+      :param Number: Number to dial
+      :type Number: string
+      :param ShowNumber: Identifies whether to enable CLIR (None = keep default phone settings). Default is None
+      :type ShowNumber: boolean or None
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.EnterSecurityCode
@@ -328,12 +328,12 @@ This module wraps all python-gammu functionality.
       EnterSecurityCode(Type, Code)
       
       Entres security code.
-      @param Type: What code to enter, one of 'PIN', 'PUK', 'PIN2', 'PUK2', 'Phone'.
-      @type Type: string
-      @param Code: Code value
-      @type Code: string
-      @return: None
-      @rtype: None
+      :param Type: What code to enter, one of 'PIN', 'PUK', 'PIN2', 'PUK2', 'Phone'.
+      :type Type: string
+      :param Code: Code value
+      :type Code: string
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.GetAlarm
@@ -343,10 +343,10 @@ This module wraps all python-gammu functionality.
       
       Reads alarm set in phone.
       
-      @param Location: Which alarm to read. Many phone support only one alarm. Default is 1.
-      @type Location: int
-      @return: Alarm hash
-      @rtype: hash
+      :param Location: Which alarm to read. Many phone support only one alarm. Default is 1.
+      :type Location: int
+      :return: Alarm hash
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetBatteryCharge
@@ -356,8 +356,8 @@ This module wraps all python-gammu functionality.
       
       Gets information about battery charge and phone charging state.
       
-      @return: Hash containing information about battery state (BatteryPercent and ChargeState)
-      @rtype: hash
+      :return: Hash containing information about battery state (BatteryPercent and ChargeState)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetCalendar
@@ -367,10 +367,10 @@ This module wraps all python-gammu functionality.
       
       Retrieves calendar entry.
       
-      @param Location: Calendar entry to read
-      @type Location: int
-      @return: Hash with calendar values
-      @rtype: hash
+      :param Location: Calendar entry to read
+      :type Location: int
+      :return: Hash with calendar values
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetCalendarStatus
@@ -380,8 +380,8 @@ This module wraps all python-gammu functionality.
       
       Retrieves calendar status (number of used entries).
       
-      @return: Hash with calendar status (Used)
-      @rtype: hash
+      :return: Hash with calendar status (Used)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetCategory
@@ -391,12 +391,12 @@ This module wraps all python-gammu functionality.
       
       Reads category from phone.
       
-      @param Type: Type of category to read, one of 'ToDo', 'Phonebook'
-      @type Type: string
-      @param Location: Location of category to read
-      @type Location: int
-      @return: Category name as string
-      @rtype: string
+      :param Type: Type of category to read, one of 'ToDo', 'Phonebook'
+      :type Type: string
+      :param Location: Location of category to read
+      :type Location: int
+      :return: Category name as string
+      :rtype: string
       
    
    .. attribute:: StateMachine.GetCategoryStatus
@@ -405,10 +405,10 @@ This module wraps all python-gammu functionality.
       GetCategoryStatus(Type)
       
       Reads category status (number of used entries) from phone.
-      @param Type: Type of category to read, one of 'ToDo', 'Phonebook'
-      @type Type: string
-      @return: Hash containing information about category status (Used)
-      @rtype: hash
+      :param Type: Type of category to read, one of 'ToDo', 'Phonebook'
+      :type Type: string
+      :return: Hash containing information about category status (Used)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetConfig
@@ -427,10 +427,10 @@ This module wraps all python-gammu functionality.
        - StartInfo
        - UseGlobalDebugFile
       
-      @param Section: Index of config section to read. Defaults to 0.
-      @type Section: int
-      @return: Hash containing configuration
-      @rtype: hash
+      :param Section: Index of config section to read. Defaults to 0.
+      :type Section: int
+      :return: Hash containing configuration
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetDateTime
@@ -440,8 +440,8 @@ This module wraps all python-gammu functionality.
       
       Reads date and time from phone.
       
-      @return: Date and time from phone as datetime.datetime object.
-      @rtype: datetime.datetime
+      :return: Date and time from phone as datetime.datetime object.
+      :rtype: datetime.datetime
       
    
    .. attribute:: StateMachine.GetDisplayStatus
@@ -450,8 +450,8 @@ This module wraps all python-gammu functionality.
       GetDisplayStatus()
       
       Acquired display status.
-      @return: List of indicators displayed on display
-      @rtype: list
+      :return: List of indicators displayed on display
+      :rtype: list
       
    
    .. attribute:: StateMachine.GetFilePart
@@ -461,10 +461,10 @@ This module wraps all python-gammu functionality.
       
       Gets file part from filesystem.
       
-      @param File: File data
-      @type File: hash
-      @return: File data for subsequent calls (Finished indicates transfer has been completed)
-      @rtype: hash
+      :param File: File data
+      :type File: hash
+      :return: File data for subsequent calls (Finished indicates transfer has been completed)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetFileSystemStatus
@@ -474,8 +474,8 @@ This module wraps all python-gammu functionality.
       
       Acquires filesystem status.
       
-      @return: Hash containing filesystem status (Used and Free)
-      @rtype: hash
+      :return: Hash containing filesystem status (Used and Free)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetFirmware
@@ -485,8 +485,8 @@ This module wraps all python-gammu functionality.
       
       Reads firmware information from phone.
       
-      @return: Tuple from version, date and numeric version.
-      @rtype: tuple
+      :return: Tuple from version, date and numeric version.
+      :rtype: tuple
       
    
    .. attribute:: StateMachine.GetFolderListing
@@ -496,12 +496,12 @@ This module wraps all python-gammu functionality.
       
       Gets next filename from filesystem folder.
       
-      @param Folder: Folder to list
-      @type Folder: string
-      @param Start: Whether we're starting listing. Defaults to False.
-      @type Start: boolean
-      @return: File data as hash
-      @rtype: hash
+      :param Folder: Folder to list
+      :type Folder: string
+      :param Start: Whether we're starting listing. Defaults to False.
+      :type Start: boolean
+      :return: File data as hash
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetHardware
@@ -511,8 +511,8 @@ This module wraps all python-gammu functionality.
       
       Gets hardware information about device.
       
-      @return: Hardware information as string.
-      @rtype: string
+      :return: Hardware information as string.
+      :rtype: string
       
    
    .. attribute:: StateMachine.GetIMEI
@@ -522,8 +522,8 @@ This module wraps all python-gammu functionality.
       
       Reads IMEI/serial number from phone.
       
-      @return: IMEI of phone as string.
-      @rtype: string
+      :return: IMEI of phone as string.
+      :rtype: string
       
    
    .. attribute:: StateMachine.GetLocale
@@ -533,8 +533,8 @@ This module wraps all python-gammu functionality.
       
       Gets locale information from phone.
       
-      @return: Hash of locale settings. L{SetLocale} lists them all.
-      @rtype: hash
+      :return: Hash of locale settings. L{SetLocale} lists them all.
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetManufactureMonth
@@ -544,8 +544,8 @@ This module wraps all python-gammu functionality.
       
       Gets month when device was manufactured.
       
-      @return: Month of manufacture as string.
-      @rtype: string
+      :return: Month of manufacture as string.
+      :rtype: string
       
    
    .. attribute:: StateMachine.GetManufacturer
@@ -555,8 +555,8 @@ This module wraps all python-gammu functionality.
       
       Reads manufacturer from phone.
       
-      @return: String with manufacturer name
-      @rtype: string
+      :return: String with manufacturer name
+      :rtype: string
       
    
    .. attribute:: StateMachine.GetMemory
@@ -565,10 +565,10 @@ This module wraps all python-gammu functionality.
       GetMemory(Type, Location)
       
       Reads entry from memory (phonebooks or calls). Which entry shouldbe read is defined in entry.
-      @param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
-      @type Type: string
-      @return: Memory entry as hash
-      @rtype: hash
+      :param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
+      :type Type: string
+      :return: Memory entry as hash
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetMemoryStatus
@@ -578,10 +578,10 @@ This module wraps all python-gammu functionality.
       
       Gets memory (phonebooks or calls) status (eg. number of used andfree entries).
       
-      @param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
-      @type Type: string
-      @return: Hash with information about memory (Used and Free)
-      @rtype: hash
+      :param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
+      :type Type: string
+      :return: Hash with information about memory (Used and Free)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetModel
@@ -591,8 +591,8 @@ This module wraps all python-gammu functionality.
       
       Reads model from phone.
       
-      @return: Tuple containing gammu identification and real model returned by phone.
-      @rtype: tuple
+      :return: Tuple containing gammu identification and real model returned by phone.
+      :rtype: tuple
       
    
    .. attribute:: StateMachine.GetNetworkInfo
@@ -602,8 +602,8 @@ This module wraps all python-gammu functionality.
       
       Gets network information.
       
-      @return: Hash with information about network (NetworkName, State, NetworkCode, CID and LAC)
-      @rtype: hash
+      :return: Hash with information about network (NetworkName, State, NetworkCode, CID and LAC)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetNextCalendar
@@ -613,12 +613,12 @@ This module wraps all python-gammu functionality.
       
       Retrieves calendar entry. This is useful for continuous reading of all calendar entries.
       
-      @param Start: Whether to start. This can not be used together with Location
-      @type Start: boolean
-      @param Location: Last read location. This can not be used together with Start
-      @type Location: int
-      @return: Hash with calendar values
-      @rtype: hash
+      :param Start: Whether to start. This can not be used together with Location
+      :type Start: boolean
+      :param Location: Last read location. This can not be used together with Start
+      :type Location: int
+      :return: Hash with calendar values
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetNextFileFolder
@@ -628,10 +628,10 @@ This module wraps all python-gammu functionality.
       
       Gets next filename from filesystem.
       
-      @param Start: Whether we're starting listing. Defaults to False.
-      @type Start: boolean
-      @return: File data as hash
-      @rtype: hash
+      :param Start: Whether we're starting listing. Defaults to False.
+      :type Start: boolean
+      :return: File data as hash
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetNextMemory
@@ -641,14 +641,14 @@ This module wraps all python-gammu functionality.
       
       Reads entry from memory (phonebooks or calls). Which entry shouldbe read is defined in entry. This can be easily used for reading all entries.
       
-      @param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
-      @type Type: string
-      @param Start: Whether to start. This can not be used together with Location
-      @type Start: boolean
-      @param Location: Last read location. This can not be used together with Start
-      @type Location: int
-      @return: Memory entry as hash
-      @rtype: hash
+      :param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
+      :type Type: string
+      :param Start: Whether to start. This can not be used together with Location
+      :type Start: boolean
+      :param Location: Last read location. This can not be used together with Start
+      :type Location: int
+      :return: Memory entry as hash
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetNextRootFolder
@@ -658,9 +658,9 @@ This module wraps all python-gammu functionality.
       
       Gets next root folder from filesystem. Start with empty folder name.
       
-      @param Folder: Previous read fodlder. Start with empty folder name.
-      @type Folder: string
-      @return: Structure with folder information
+      :param Folder: Previous read fodlder. Start with empty folder name.
+      :type Folder: string
+      :return: Structure with folder information
       
    
    .. attribute:: StateMachine.GetNextSMS
@@ -670,14 +670,14 @@ This module wraps all python-gammu functionality.
       
       Reads next (or first if start set) SMS message. This might befaster for some phones than using L{GetSMS} for each message.
       
-      @param Folder: Folder where to read entry (0 is emulated flat memory)
-      @type Folder: int
-      @param Start: Whether to start. This can not be used together with Location
-      @type Start: boolean
-      @param Location: Location last read entry. This can not be used together with Start
-      @type Location: int
-      @return: Hash with SMS data
-      @rtype: hash
+      :param Folder: Folder where to read entry (0 is emulated flat memory)
+      :type Folder: int
+      :param Start: Whether to start. This can not be used together with Location
+      :type Start: boolean
+      :param Location: Location last read entry. This can not be used together with Start
+      :type Location: int
+      :return: Hash with SMS data
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetNextToDo
@@ -687,12 +687,12 @@ This module wraps all python-gammu functionality.
       
       Reads ToDo from phone.
       
-      @param Start: Whether to start. This can not be used together with Location
-      @type Start: boolean
-      @param Location: Last read location. This can not be used together with Start
-      @type Location: int
-      @return: Hash with ToDo values
-      @rtype: hash
+      :param Start: Whether to start. This can not be used together with Location
+      :type Start: boolean
+      :param Location: Last read location. This can not be used together with Start
+      :type Location: int
+      :return: Hash with ToDo values
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetOriginalIMEI
@@ -702,8 +702,8 @@ This module wraps all python-gammu functionality.
       
       Gets original IMEI from phone.
       
-      @return: Original IMEI of phone as string.
-      @rtype: string
+      :return: Original IMEI of phone as string.
+      :rtype: string
       
    
    .. attribute:: StateMachine.GetPPM
@@ -713,8 +713,8 @@ This module wraps all python-gammu functionality.
       
       Gets PPM (Post Programmable Memory) from phone.
       
-      @return: PPM as string
-      @rtype: string
+      :return: PPM as string
+      :rtype: string
       
    
    .. attribute:: StateMachine.GetProductCode
@@ -723,8 +723,8 @@ This module wraps all python-gammu functionality.
       GetProductCode()
       
       Gets product code of device.
-      @return: Product code as string.
-      @rtype: string
+      :return: Product code as string.
+      :rtype: string
       
    
    .. attribute:: StateMachine.GetSIMIMSI
@@ -734,8 +734,8 @@ This module wraps all python-gammu functionality.
       
       Gets SIM IMSI from phone.
       
-      @return: SIM IMSI as string
-      @rtype: string
+      :return: SIM IMSI as string
+      :rtype: string
       
    
    .. attribute:: StateMachine.GetSMS
@@ -745,12 +745,12 @@ This module wraps all python-gammu functionality.
       
       Reads SMS message.
       
-      @param Folder: Folder where to read entry (0 is emulated flat memory)
-      @type Folder: int
-      @param Location: Location of entry to read
-      @type Location: int
-      @return: Hash with SMS data
-      @rtype: hash
+      :param Folder: Folder where to read entry (0 is emulated flat memory)
+      :type Folder: int
+      :param Location: Location of entry to read
+      :type Location: int
+      :return: Hash with SMS data
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetSMSC
@@ -760,10 +760,10 @@ This module wraps all python-gammu functionality.
       
       Gets SMS Service Center number and SMS settings.
       
-      @param Location: Location of entry to read. Defaults to 1
-      @type Location: int
-      @return: Hash with SMSC information
-      @rtype: hash
+      :param Location: Location of entry to read. Defaults to 1
+      :type Location: int
+      :return: Hash with SMSC information
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetSMSFolders
@@ -773,8 +773,8 @@ This module wraps all python-gammu functionality.
       
       Returns SMS folders information.
       
-      @return: List of SMS folders.
-      @rtype: list
+      :return: List of SMS folders.
+      :rtype: list
       
    
    .. attribute:: StateMachine.GetSMSStatus
@@ -784,8 +784,8 @@ This module wraps all python-gammu functionality.
       
       Gets information about SMS memory (read/unread/size of memory for both SIM and phone).
       
-      @return: Hash with information about phone memory (SIMUnRead, SIMUsed, SIMSize, PhoneUnRead, PhoneUsed, PhoneSize and TemplatesUsed)
-      @rtype: hash
+      :return: Hash with information about phone memory (SIMUnRead, SIMUsed, SIMSize, PhoneUnRead, PhoneUsed, PhoneSize and TemplatesUsed)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetSecurityStatus
@@ -795,8 +795,8 @@ This module wraps all python-gammu functionality.
       
       Queries whether some security code needs to be entered.
       
-      @return: String indicating which code needs to be entered or None if none is needed
-      @rtype: string
+      :return: String indicating which code needs to be entered or None if none is needed
+      :rtype: string
       
    
    .. attribute:: StateMachine.GetSignalQuality
@@ -806,8 +806,8 @@ This module wraps all python-gammu functionality.
       
       Reads signal quality (strength and error rate).
       
-      @return: Hash containing information about signal state (SignalStrength, SignalPercent and BitErrorRate)
-      @rtype: hash
+      :return: Hash containing information about signal state (SignalStrength, SignalPercent and BitErrorRate)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetSpeedDial
@@ -817,10 +817,10 @@ This module wraps all python-gammu functionality.
       
       Gets speed dial.
       
-      @param Location: Location of entry to read
-      @type Location: int
-      @return: Hash with speed dial (Location, MemoryLocation, MemoryNumberID, MemoryType)
-      @rtype: hash
+      :param Location: Location of entry to read
+      :type Location: int
+      :return: Hash with speed dial (Location, MemoryLocation, MemoryNumberID, MemoryType)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetToDo
@@ -829,10 +829,10 @@ This module wraps all python-gammu functionality.
       GetToDo(Location)
       
       Reads ToDo from phone.
-      @param Location: Location of entry to read
-      @type Location: int
-      @return: Hash with ToDo values
-      @rtype: hash
+      :param Location: Location of entry to read
+      :type Location: int
+      :return: Hash with ToDo values
+      :rtype: hash
       
    
    .. attribute:: StateMachine.GetToDoStatus
@@ -842,8 +842,8 @@ This module wraps all python-gammu functionality.
       
       Gets status of ToDos (count of used entries).
       
-      @return: Hash of status (Used)
-      @rtype: hash
+      :return: Hash of status (Used)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.HoldCall
@@ -852,10 +852,10 @@ This module wraps all python-gammu functionality.
       HoldCall(ID)
       
       Holds call.
-      @param ID: ID of call
-      @type ID: integer
-      @return: None
-      @rtype: None
+      :param ID: ID of call
+      :type ID: integer
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.Init
@@ -865,10 +865,10 @@ This module wraps all python-gammu functionality.
       
       Initialises the connection with phone.
       
-      @param Replies: Number of replies to wait for on each request. Defaults to 3.
-      @type Replies: int
-      @return: None
-      @rtype: None
+      :param Replies: Number of replies to wait for on each request. Defaults to 3.
+      :type Replies: int
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.PressKey
@@ -878,12 +878,12 @@ This module wraps all python-gammu functionality.
       
       Emulates key press.
       
-      @param Key: What key to press
-      @type Key: string
-      @param Press: Whether to emulate press or release.
-      @type Press: boolean
-      @return: None
-      @rtype: None
+      :param Key: What key to press
+      :type Key: string
+      :param Press: Whether to emulate press or release.
+      :type Press: boolean
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.ReadConfig
@@ -893,14 +893,14 @@ This module wraps all python-gammu functionality.
       
       Reads specified section of gammurc
       
-      @param Section: Index of config section to read. Defaults to 0.
-      @type Section: int
-      @param Configuration: Index where config section will be stored. Defaults to Section.
-      @type Configuration: int
-      @param Filename: Path to configuration file (otherwise it is autodetected).
-      @type Filename: string
-      @return: None
-      @rtype: None
+      :param Section: Index of config section to read. Defaults to 0.
+      :type Section: int
+      :param Configuration: Index where config section will be stored. Defaults to Section.
+      :type Configuration: int
+      :param Filename: Path to configuration file (otherwise it is autodetected).
+      :type Filename: string
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.ReadDevice
@@ -910,10 +910,10 @@ This module wraps all python-gammu functionality.
       
       Reads data from device.
       
-      @param Wait: Whether to wait, default is not to wait.
-      @type Wait: boolean
-      @return: Number of bytes read
-      @rtype: int
+      :param Wait: Whether to wait, default is not to wait.
+      :type Wait: boolean
+      :return: Number of bytes read
+      :rtype: int
       
    
    .. attribute:: StateMachine.Reset
@@ -923,10 +923,10 @@ This module wraps all python-gammu functionality.
       
       Performs phone reset.
       
-      @param Hard: Whether to make hard reset
-      @type Hard: boolean
-      @return: None
-      @rtype: None
+      :param Hard: Whether to make hard reset
+      :type Hard: boolean
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.ResetPhoneSettings
@@ -936,10 +936,10 @@ This module wraps all python-gammu functionality.
       
       Resets phone settings.
       
-      @param Type: What to reset, one of 'PHONE', 'UIF', 'ALL', 'DEV', 'FACTORY'
-      @type Type: string
-      @return: None
-      @rtype: None
+      :param Type: What to reset, one of 'PHONE', 'UIF', 'ALL', 'DEV', 'FACTORY'
+      :type Type: string
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SendDTMF
@@ -948,10 +948,10 @@ This module wraps all python-gammu functionality.
       SendDTMF(Number)
       
       Sends DTMF (Dual Tone Multi Frequency) tone.
-      @param Number: Number to dial
-      @type Number: string
-      @return: None
-      @rtype: None
+      :param Number: Number to dial
+      :type Number: string
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SendFilePart
@@ -961,10 +961,10 @@ This module wraps all python-gammu functionality.
       
       Sends file part to phone.
       
-      @param File: File data
-      @type File: hash
-      @return: File data for subsequent calls (Finished indicates transfer has been completed)
-      @rtype: hash
+      :param File: File data
+      :type File: hash
+      :return: File data for subsequent calls (Finished indicates transfer has been completed)
+      :rtype: hash
       
    
    .. attribute:: StateMachine.SendSMS
@@ -974,10 +974,10 @@ This module wraps all python-gammu functionality.
       
       Sends SMS.
       
-      @param Value: SMS data
-      @type Value: hash
-      @return: Message reference as integer
-      @rtype: int
+      :param Value: SMS data
+      :type Value: hash
+      :return: Message reference as integer
+      :rtype: int
       
    
    .. attribute:: StateMachine.SendSavedSMS
@@ -987,12 +987,12 @@ This module wraps all python-gammu functionality.
       
       Sends SMS saved in phone.
       
-      @param Folder: Folder where to read entry (0 is emulated flat memory)
-      @type Folder: int
-      @param Location: Location of entry to send
-      @type Location: int
-      @return: Message reference as integer
-      @rtype: int
+      :param Folder: Folder where to read entry (0 is emulated flat memory)
+      :type Folder: int
+      :param Location: Location of entry to send
+      :type Location: int
+      :return: Message reference as integer
+      :rtype: int
       
    
    .. attribute:: StateMachine.SetAlarm
@@ -1001,16 +1001,16 @@ This module wraps all python-gammu functionality.
       SetAlarm(DateTime, Location, Repeating, Text)
       
       Sets alarm in phone.
-      @param DateTime: When should alarm happen.
-      @type DateTime: datetime.datetime
-      @param Location: Location of alarm to set. Defaults to 1.
-      @type Location: int
-      @param Repeating: Whether alarm should be repeating. Defaults to True.
-      @type Repeating: boolean
-      @param Text: Text to be displayed on alarm. Defaults to empty.
-      @type Text: string
-      @return: None
-      @rtype: None
+      :param DateTime: When should alarm happen.
+      :type DateTime: datetime.datetime
+      :param Location: Location of alarm to set. Defaults to 1.
+      :type Location: int
+      :param Repeating: Whether alarm should be repeating. Defaults to True.
+      :type Repeating: boolean
+      :param Text: Text to be displayed on alarm. Defaults to empty.
+      :type Text: string
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetAutoNetworkLogin
@@ -1020,8 +1020,8 @@ This module wraps all python-gammu functionality.
       
       Enables network auto login.
       
-      @return: None
-      @rtype: None
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetCalendar
@@ -1031,10 +1031,10 @@ This module wraps all python-gammu functionality.
       
       Sets calendar entry
       
-      @param Value: Calendar entry data
-      @type Value: hash
-      @return: Location of set entry
-      @rtype: int
+      :param Value: Calendar entry data
+      :type Value: hash
+      :return: Location of set entry
+      :rtype: int
       
    
    .. attribute:: StateMachine.SetConfig
@@ -1044,12 +1044,12 @@ This module wraps all python-gammu functionality.
       
       Sets specified config section.
       
-      @param Section: Index of config section to modify
-      @type Section: int
-      @param Values: Config values, see L{GetConfig} for description of accepted
-      @type Values: hash
-      @return: None
-      @rtype: None
+      :param Section: Index of config section to modify
+      :type Section: int
+      :param Values: Config values, see L{GetConfig} for description of accepted
+      :type Values: hash
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetDateTime
@@ -1059,10 +1059,10 @@ This module wraps all python-gammu functionality.
       
       Sets date and time in phone.
       
-      @param Date: Date to set
-      @type Date: datetime.datetime
-      @return: None
-      @rtype: None
+      :param Date: Date to set
+      :type Date: datetime.datetime
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetDebugFile
@@ -1072,12 +1072,12 @@ This module wraps all python-gammu functionality.
       
       Sets state machine debug file.
       
-      @param File: File where to write debug stuff (as configured by L{SetDebugLevel}). Can be either None for no file, Python file object or filename.
-      @type File: mixed
-      @param Global: Whether to use global debug structure (overrides File)
-      @type Global: boolean
-      @return: None
-      @rtype: None
+      :param File: File where to write debug stuff (as configured by L{SetDebugLevel}). Can be either None for no file, Python file object or filename.
+      :type File: mixed
+      :param Global: Whether to use global debug structure (overrides File)
+      :type Global: boolean
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetDebugLevel
@@ -1087,8 +1087,8 @@ This module wraps all python-gammu functionality.
       
       Sets state machine debug level accorting to passed string. You need to configure output file using L{SetDebugFile} to activate it.
       
-      @type Level: string
-      @param Level: name of debug level to use, currently one of:
+      :type Level: string
+      :param Level: name of debug level to use, currently one of:
          - nothing
          - text
          - textall
@@ -1097,8 +1097,8 @@ This module wraps all python-gammu functionality.
          - textdate
          - textalldate
          - errorsdate
-      @return: None
-      @rtype: None
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetFileAttributes
@@ -1108,18 +1108,18 @@ This module wraps all python-gammu functionality.
       
       Sets file attributes.
       
-      @param Filename: File to modify
-      @type Filename: string
-      @param ReadOnly: Whether file is read only. Default to False.
-      @type ReadOnly: boolean
-      @param Protected: Whether file is protected. Default to False.
-      @type Protected: boolean
-      @param System: Whether file is system. Default to False.
-      @type System: boolean
-      @param Hidden: Whether file is hidden. Default to False.
-      @type Hidden: boolean
-      @return: None
-      @rtype: None
+      :param Filename: File to modify
+      :type Filename: string
+      :param ReadOnly: Whether file is read only. Default to False.
+      :type ReadOnly: boolean
+      :param Protected: Whether file is protected. Default to False.
+      :type Protected: boolean
+      :param System: Whether file is system. Default to False.
+      :type System: boolean
+      :param Hidden: Whether file is hidden. Default to False.
+      :type Hidden: boolean
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetIncomingCB
@@ -1128,10 +1128,10 @@ This module wraps all python-gammu functionality.
       SetIncomingCB(Enable)
       
       Gets network information from phone.
-      @type Enable: boolean
-      @param Enable: Whether to enable notifications, default is True
-      @return: None
-      @rtype: None
+      :type Enable: boolean
+      :param Enable: Whether to enable notifications, default is True
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetIncomingCall
@@ -1140,10 +1140,10 @@ This module wraps all python-gammu functionality.
       SetIncomingCall(Enable)
       
       Activates/deactivates noticing about incoming calls.
-      @type Enable: boolean
-      @param Enable: Whether to enable notifications, default is True
-      @return: None
-      @rtype: None
+      :type Enable: boolean
+      :param Enable: Whether to enable notifications, default is True
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetIncomingCallback
@@ -1153,10 +1153,10 @@ This module wraps all python-gammu functionality.
       
       Sets callback function which is called whenever any (enabled) incoming event appears. Please note that you have to enable each event type by calling SetIncoming* functions.
       
-      @param Callback: callback function or None for disabling
-      @type Callback: function, it will get three params: StateMachine object, event type and it's data in dictionary
-      @return: None
-      @rtype: None
+      :param Callback: callback function or None for disabling
+      :type Callback: function, it will get three params: StateMachine object, event type and it's data in dictionary
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetIncomingSMS
@@ -1166,10 +1166,10 @@ This module wraps all python-gammu functionality.
       
       Enable/disable notification on incoming SMS.
       
-      @type Enable: boolean
-      @param Enable: Whether to enable notifications, default is True
-      @return: None
-      @rtype: None
+      :type Enable: boolean
+      :param Enable: Whether to enable notifications, default is True
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetIncomingUSSD
@@ -1178,10 +1178,10 @@ This module wraps all python-gammu functionality.
       SetIncomingUSSD(Enable)
       
       Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).
-      @type Enable: boolean
-      @param Enable: Whether to enable notifications, default is True
-      @return: None
-      @rtype: None
+      :type Enable: boolean
+      :param Enable: Whether to enable notifications, default is True
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetLocale
@@ -1191,14 +1191,14 @@ This module wraps all python-gammu functionality.
       
       Sets locale of phone.
       
-      @param DateSeparator: Date separator.
-      @type DateSeparator: string
-      @param DateFormat: Date format, one of 'DDMMYYYY', 'MMDDYYYY', 'YYYYMMDD'
-      @type DateFormat: string
-      @param AMPMTime: Whether to use AM/PM time.
-      @type AMPMTime: boolean
-      @return: None
-      @rtype: None
+      :param DateSeparator: Date separator.
+      :type DateSeparator: string
+      :param DateFormat: Date format, one of 'DDMMYYYY', 'MMDDYYYY', 'YYYYMMDD'
+      :type DateFormat: string
+      :param AMPMTime: Whether to use AM/PM time.
+      :type AMPMTime: boolean
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetMemory
@@ -1208,10 +1208,10 @@ This module wraps all python-gammu functionality.
       
       Sets memory (phonebooks or calls) entry.
       
-      @param Value: Memory entry
-      @type Value: hash
-      @return: Location of created entry
-      @rtype: int
+      :param Value: Memory entry
+      :type Value: hash
+      :return: Location of created entry
+      :rtype: int
       
    
    .. attribute:: StateMachine.SetSMS
@@ -1221,10 +1221,10 @@ This module wraps all python-gammu functionality.
       
       Sets SMS.
       
-      @param Value: SMS data
-      @type Value: hash
-      @return: Tuple for location and folder.
-      @rtype: tuple
+      :param Value: SMS data
+      :type Value: hash
+      :return: Tuple for location and folder.
+      :rtype: tuple
       
    
    .. attribute:: StateMachine.SetSMSC
@@ -1234,10 +1234,10 @@ This module wraps all python-gammu functionality.
       
       Sets SMS Service Center number and SMS settings.
       
-      @param Value: SMSC information
-      @type Value: hash
-      @return: None
-      @rtype: None
+      :param Value: SMSC information
+      :type Value: hash
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetSpeedDial
@@ -1247,10 +1247,10 @@ This module wraps all python-gammu functionality.
       
       Sets speed dial.
       
-      @param Value: Speed dial data, see L{GetSpeedDial} for listing.
-      @type Value: hash
-      @return: None
-      @rtype: None
+      :param Value: Speed dial data, see L{GetSpeedDial} for listing.
+      :type Value: hash
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SetToDo
@@ -1260,10 +1260,10 @@ This module wraps all python-gammu functionality.
       
       Sets ToDo in phone.
       
-      @param Value: ToDo data
-      @type Value: hash
-      @return: Location of created entry
-      @rtype: int
+      :param Value: ToDo data
+      :type Value: hash
+      :return: Location of created entry
+      :rtype: int
       
    
    .. attribute:: StateMachine.SplitCall
@@ -1272,10 +1272,10 @@ This module wraps all python-gammu functionality.
       SplitCall(ID)
       
       Splits call.
-      @param ID: ID of call
-      @type ID: integer
-      @return: None
-      @rtype: None
+      :param ID: ID of call
+      :type ID: integer
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.SwitchCall
@@ -1284,10 +1284,10 @@ This module wraps all python-gammu functionality.
       SwitchCall(ID, Next)
       
       Switches call.
-      @param ID: ID of call
-      @type ID: integer
-      @return: None
-      @rtype: None
+      :param ID: ID of call
+      :type ID: integer
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.Terminate
@@ -1297,8 +1297,8 @@ This module wraps all python-gammu functionality.
       
       Terminates the connection with phone.
       
-      @return: None
-      @rtype: None
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.TransferCall
@@ -1307,10 +1307,10 @@ This module wraps all python-gammu functionality.
       TransferCall(ID, Next)
       
       Transfers call.
-      @param ID: ID of call
-      @type ID: integer
-      @return: None
-      @rtype: None
+      :param ID: ID of call
+      :type ID: integer
+      :return: None
+      :rtype: None
       
    
    .. attribute:: StateMachine.UnholdCall
@@ -1319,10 +1319,10 @@ This module wraps all python-gammu functionality.
       UnholdCall(ID)
       
       Unholds call.
-      @param ID: ID of call
-      @type ID: integer
-      @return: None
-      @rtype: None
+      :param ID: ID of call
+      :type ID: integer
+      :return: None
+      :rtype: None
       
 
 
