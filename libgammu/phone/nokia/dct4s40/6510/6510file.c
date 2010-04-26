@@ -2537,7 +2537,7 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		while (Priv->SMSFileError == ERR_EMPTY) {
 			Priv->SMSFileFolder++;
 			/* Too high folder number */
-			if ((Priv->SMSFileFolder-1) >= Priv->LastSMSFolders.Number) {
+			if (Priv->SMSFileFolder > Priv->LastSMSFolders.Number) {
 				return ERR_EMPTY;
 			}
 
