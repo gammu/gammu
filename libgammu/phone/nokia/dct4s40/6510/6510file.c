@@ -2257,6 +2257,12 @@ GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders 
 			}
 		}
 		folders->Folder[folders->Number].Memory      = MEM_ME;
+		smprintf(s, "Folder \"%s\" (%s), memory: %s, inbox: %d, outbox: %d\n",
+			DecodeUnicodeString(folders->Folder[folders->Number].Name),
+			Files.Name,
+			GSM_MemoryTypeToString(folders->Folder[folders->Number].Memory),
+			folders->Folder[folders->Number].InboxFolder,
+			folders->Folder[folders->Number].OutboxFolder);
 		folders->Number++;
 	}
 }
