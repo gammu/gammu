@@ -145,3 +145,5 @@
     :show-inheritance:
 .. autoexception:: gammu.exception.ERR_COULDNT_RESOLVE
     :show-inheritance:
+.. autoexception:: gammu.exception.ERR_GETTING_SMSC
+    :show-inheritance:
