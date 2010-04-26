@@ -410,7 +410,7 @@ This module wraps all python-gammu functionality.
       
       Gets locale information from phone.
       
-      :return: Hash of locale settings. L{SetLocale} lists them all.
+      :return: Hash of locale settings. :meth:`SetLocale` lists them all.
       :rtype: hash
       
    
@@ -512,7 +512,7 @@ This module wraps all python-gammu functionality.
    
    .. method:: GetNextSMS(Folder, Start, Location)
       
-      Reads next (or first if start set) SMS message. This might befaster for some phones than using L{GetSMS} for each message.
+      Reads next (or first if start set) SMS message. This might befaster for some phones than using :meth:`GetSMS` for each message.
       
       :param Folder: Folder where to read entry (0 is emulated flat memory)
       :type Folder: int
@@ -803,7 +803,7 @@ This module wraps all python-gammu functionality.
       
       :param Section: Index of config section to modify
       :type Section: int
-      :param Values: Config values, see L{GetConfig} for description of accepted
+      :param Values: Config values, see :meth:`GetConfig` for description of accepted
       :type Values: hash
       :return: None
       :rtype: None
@@ -823,7 +823,7 @@ This module wraps all python-gammu functionality.
       
       Sets state machine debug file.
       
-      :param File: File where to write debug stuff (as configured by L{SetDebugLevel}). Can be either None for no file, Python file object or filename.
+      :param File: File where to write debug stuff (as configured by :meth:`SetDebugLevel`). Can be either None for no file, Python file object or filename.
       :type File: mixed
       :param Global: Whether to use global debug structure (overrides File)
       :type Global: boolean
@@ -833,7 +833,7 @@ This module wraps all python-gammu functionality.
    
    .. method:: SetDebugLevel(Level)
       
-      Sets state machine debug level accorting to passed string. You need to configure output file using L{SetDebugFile} to activate it.
+      Sets state machine debug level accorting to passed string. You need to configure output file using :meth:`SetDebugFile` to activate it.
       
       :type Level: string
       :param Level: name of debug level to use, currently one of:
@@ -962,7 +962,7 @@ This module wraps all python-gammu functionality.
       
       Sets speed dial.
       
-      :param Value: Speed dial data, see L{GetSpeedDial} for listing.
+      :param Value: Speed dial data, see :meth:`GetSpeedDial` for listing.
       :type Value: hash
       :return: None
       :rtype: None
@@ -1040,14 +1040,14 @@ Debugging configuration
 
     Sets global debug file.
 
-    :param File: File where to write debug stuff (as configured by L{SetDebugLevel}). Can be either None for no file, Python file object or filename.
+    :param File: File where to write debug stuff (as configured by :meth:`SetDebugLevel`). Can be either None for no file, Python file object or filename.
     :type File: mixed
     :return: None
     :rtype: None
 
 .. function:: SetDebugLevel(Level)
 
-    Sets global debug level accorting to passed string. You need to configure output file using L{SetDebugFile} to activate it.
+    Sets global debug level accorting to passed string. You need to configure output file using :meth:`SetDebugFile` to activate it.
 
     :type Level: string
     :param Level: name of debug level to use, currently one of:
@@ -1218,7 +1218,7 @@ Backup reading and writing
 
     :param Filename: Name of file to read backup from
     :type Filename: string
-    :param Backup: Backup data, see L{ReadBackup} for description
+    :param Backup: Backup data, see :func:`ReadBackup` for description
     :type Backup: dict
     :param Format: File format to use (default is AutoUnicode)
     :type Format: string (Auto, AutoUnicode, LMB, VCalendar, VCard, LDIF, ICS, Gammu, GammuUnicode)
