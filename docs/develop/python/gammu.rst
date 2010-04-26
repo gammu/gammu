@@ -74,6 +74,7 @@ This module wraps all python-gammu functionality.
    .. method:: AddSMS(Value)
       
       Adds SMS to specified folder.
+
       :param Value: SMS data
       :type Value: hash
       :return: Tuple for location and folder.
@@ -103,6 +104,7 @@ This module wraps all python-gammu functionality.
    .. method:: AnswerCall(ID, All)
       
       Accept current incoming call.
+
       :param ID: ID of call
       :type ID: integer
       :param All: Answer all calls?
@@ -114,6 +116,7 @@ This module wraps all python-gammu functionality.
    .. method:: CancelCall(ID, All)
       
       Deny current incoming call.
+
       :param ID: ID of call
       :type ID: integer
       :param All: Cancel all calls?
@@ -125,6 +128,7 @@ This module wraps all python-gammu functionality.
    .. method:: ConferenceCall(ID)
       
       Initiates conference call.
+
       :param ID: ID of call
       :type ID: integer
       :return: None
@@ -224,6 +228,7 @@ This module wraps all python-gammu functionality.
    .. method:: DeleteToDo(Location)
       
       Deletes ToDo entry in phone.
+
       :param Location: Location of entry to delete
       :type Location: int
       :return: None
@@ -233,6 +238,7 @@ This module wraps all python-gammu functionality.
    .. method:: DialService(Number)
       
       Dials number and starts voice call.
+
       :param Number: Number to dial
       :type Number: string
       :return: None
@@ -242,6 +248,7 @@ This module wraps all python-gammu functionality.
    .. method:: DialVoice(Number, ShowNumber)
       
       Dials number and starts voice call.
+
       :param Number: Number to dial
       :type Number: string
       :param ShowNumber: Identifies whether to enable CLIR (None = keep default phone settings). Default is None
@@ -253,6 +260,7 @@ This module wraps all python-gammu functionality.
    .. method:: EnterSecurityCode(Type, Code)
       
       Entres security code.
+
       :param Type: What code to enter, one of 'PIN', 'PUK', 'PIN2', 'PUK2', 'Phone'.
       :type Type: string
       :param Code: Code value
@@ -312,6 +320,7 @@ This module wraps all python-gammu functionality.
    .. method:: GetCategoryStatus(Type)
       
       Reads category status (number of used entries) from phone.
+
       :param Type: Type of category to read, one of 'ToDo', 'Phonebook'
       :type Type: string
       :return: Hash containing information about category status (Used)
@@ -433,6 +442,7 @@ This module wraps all python-gammu functionality.
    .. method:: GetMemory(Type, Location)
       
       Reads entry from memory (phonebooks or calls). Which entry shouldbe read is defined in entry.
+
       :param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
       :type Type: string
       :return: Memory entry as hash
@@ -634,6 +644,7 @@ This module wraps all python-gammu functionality.
    .. method:: GetToDo(Location)
       
       Reads ToDo from phone.
+
       :param Location: Location of entry to read
       :type Location: int
       :return: Hash with ToDo values
@@ -651,6 +662,7 @@ This module wraps all python-gammu functionality.
    .. method:: HoldCall(ID)
       
       Holds call.
+
       :param ID: ID of call
       :type ID: integer
       :return: None
@@ -726,6 +738,7 @@ This module wraps all python-gammu functionality.
    .. method:: SendDTMF(Number)
       
       Sends DTMF (Dual Tone Multi Frequency) tone.
+
       :param Number: Number to dial
       :type Number: string
       :return: None
@@ -767,6 +780,7 @@ This module wraps all python-gammu functionality.
    .. method:: SetAlarm(DateTime, Location, Repeating, Text)
       
       Sets alarm in phone.
+
       :param DateTime: When should alarm happen.
       :type DateTime: datetime.datetime
       :param Location: Location of alarm to set. Defaults to 1.
@@ -870,6 +884,7 @@ This module wraps all python-gammu functionality.
    .. method:: SetIncomingCB(Enable)
       
       Gets network information from phone.
+
       :type Enable: boolean
       :param Enable: Whether to enable notifications, default is True
       :return: None
@@ -879,6 +894,7 @@ This module wraps all python-gammu functionality.
    .. method:: SetIncomingCall(Enable)
       
       Activates/deactivates noticing about incoming calls.
+
       :type Enable: boolean
       :param Enable: Whether to enable notifications, default is True
       :return: None
@@ -908,6 +924,7 @@ This module wraps all python-gammu functionality.
    .. method:: SetIncomingUSSD(Enable)
       
       Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).
+
       :type Enable: boolean
       :param Enable: Whether to enable notifications, default is True
       :return: None
@@ -981,6 +998,7 @@ This module wraps all python-gammu functionality.
    .. method:: SplitCall(ID)
       
       Splits call.
+
       :param ID: ID of call
       :type ID: integer
       :return: None
@@ -990,6 +1008,7 @@ This module wraps all python-gammu functionality.
    .. method:: SwitchCall(ID, Next)
       
       Switches call.
+
       :param ID: ID of call
       :type ID: integer
       :return: None
@@ -1007,6 +1026,7 @@ This module wraps all python-gammu functionality.
    .. method:: TransferCall(ID, Next)
       
       Transfers call.
+
       :param ID: ID of call
       :type ID: integer
       :return: None
@@ -1016,6 +1036,7 @@ This module wraps all python-gammu functionality.
    .. method:: UnholdCall(ID)
       
       Unholds call.
+
       :param ID: ID of call
       :type ID: integer
       :return: None

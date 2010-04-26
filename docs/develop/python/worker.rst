@@ -1,9 +1,8 @@
-:mod:`gammu.worker`
-===================
+:mod:`gammu.worker` - Asynchronous communication to phone.
+==========================================================
 
 .. module:: gammu.worker
-
-Asynchronous communication to phone.
+    :synopsis: Asynchronous communication to phone.
 
 Mostly you should use only :class:`GammuWorker` class, others are only helpers
 which are used by this class.
