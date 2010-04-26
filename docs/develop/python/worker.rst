@@ -5,7 +5,7 @@
 
 Asynchronous communication to phone.
 
-Mostly you should use only L{GammuWorker} class, others are only helpers
+Mostly you should use only :class:`GammuWorker` class, others are only helpers
 which are used by this class.
 
 
@@ -48,7 +48,7 @@ which are used by this class.
    .. method:: GammuTask.get_next()
       :module: gammu.worker
    
-      Returns next command to be executed as L{GammuCommand}.
+      Returns next command to be executed as :class:`GammuCommand`.
       
 
 .. class:: GammuThread(queue, config, callback)
@@ -95,9 +95,8 @@ which are used by this class.
    
       Configures gammu instance according to config.
       
-      @param config: Gammu configuration, same as
-      L{StateMachine.SetConfig} accepts.
-      @type config: hash
+      :param config: Gammu configuration, same as :meth:`gammu.StateMachine.SetConfig` accepts.
+      :type config: hash
       
    
    .. method:: GammuWorker.enqueue(command, params=None, commands=None)
@@ -105,14 +104,12 @@ which are used by this class.
    
       Enqueues command or task.
       
-      @param command: Command(s) to execute. Each command is tuple
-      containing function name and it's parameters.
-      @type command: tuple of list of tuples
-      @param params: Parameters to command.
-      @type params: tuple or string
-      @param commands: List of commands to execute. When this is not
-      none, params are ignored and command is taken as task name.
-      @type commands: list of tuples or strings
+      :param command: Command(s) to execute. Each command is tuple containing function name and it's parameters.
+      :type command: tuple of list of tuples
+      :param params: Parameters to command.
+      :type params: tuple or string
+      :param commands: List of commands to execute. When this is not none, params are ignored and command is taken as task name.
+      :type commands: list of tuples or strings
       
    
    .. method:: GammuWorker.enqueue_command(command, params)
@@ -120,11 +117,10 @@ which are used by this class.
    
       Enqueues command.
       
-      @param command: Command(s) to execute. Each command is tuple
-      containing function name and it's parameters.
-      @type command: tuple of list of tuples
-      @param params: Parameters to command.
-      @type params: tuple or string
+      :param command: Command(s) to execute. Each command is tuple containing function name and it's parameters.
+      :type command: tuple of list of tuples
+      :param params: Parameters to command.
+      :type params: tuple or string
       
    
    .. method:: GammuWorker.enqueue_task(command, commands)
@@ -132,11 +128,10 @@ which are used by this class.
    
       Enqueues task.
       
-      @param command: Command(s) to execute. Each command is tuple
-      containing function name and it's parameters.
-      @type command: tuple of list of tuples
-      @param commands: List of commands to execute.
-      @type commands: list of tuples or strings
+      :param command: Command(s) to execute. Each command is tuple containing function name and it's parameters.
+      :type command: tuple of list of tuples
+      :param commands: List of commands to execute.
+      :type commands: list of tuples or strings
       
    
    .. method:: GammuWorker.initiate()
@@ -162,7 +157,7 @@ which are used by this class.
 
    Checks whether command is valid.
    
-   @param command: Name of command.
-   @type command: string
+   :param command: Name of command.
+   :type command: string
    
 
