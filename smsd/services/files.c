@@ -532,6 +532,8 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			backup.SMS[sms->Number] = NULL;
 			error = GSM_AddSMSBackupFile(FullName, &backup);
 #endif
+			/* Force leaving the loop */
+			i = sms->Number;
 		} else {
 			file = fopen(FullName, "wb");
 			if (file == NULL) {
