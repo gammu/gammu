@@ -1207,6 +1207,63 @@ GSM_Error SMSD_ProcessSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM_
 }
 
 /**
+ * Checks whether to process current (possibly) multipart message.
+ */
+gboolean SMSD_CheckMultipart(GSM_SMSDConfig *Config, GSM_SMSDService *Service, GSM_MultiSMSMessage *MultiSMS)
+{
+	gboolean same_id;
+	/* Does the message have UDH (is multipart)? */
+	if (MultiSMS->SMS[0].UDH.Type != UDH_NoUDH) {
+		return TRUE;
+	}
+
+	/* Do we have same id as last incomplete? */
+	same_id = (Config->IncompleteMessageID == MultiSMS->SMS[0].UDH.ID16bit || Config->IncompleteMessageID == MultiSMS->SMS[0].UDH.ID8bit);
+
+	/* Check if we have all parts */
+	if (MultiSMS->SMS[0].UDH.AllParts != MultiSMS->Number) {
+		goto success;
+	}
+
+
+	/* Have we seen this message recently? */
+	if (same_id) {
+		if (Config->IncompleteMessageTime != 0 && difftime(time(NULL), Config->IncompleteMessageTime) > Config->multiparttimeout) {
+			SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, processing after timeout",
+				Config->IncompleteMessageID);
+		} else {
+			SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts (waited %.0f seconds)",
+				Config->IncompleteMessageID,
+				difftime(time(NULL), Config->IncompleteMessageTime));
+			return FALSE;
+		}
+	} else {
+		if (Config->IncompleteMessageTime == 0) {
+			if (MultiSMS->SMS[0].UDH.ID16bit != -1) {
+				 Config->IncompleteMessageID = MultiSMS->SMS[0].UDH.ID16bit;
+			} else {
+				 Config->IncompleteMessageID = MultiSMS->SMS[0].UDH.ID8bit;
+			}
+			Config->IncompleteMessageTime = time(NULL);
+			SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts",
+				Config->IncompleteMessageID);
+			return FALSE;
+		} else {
+			SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, but waiting for other one",
+				Config->IncompleteMessageID);
+			return FALSE;
+		}
+	}
+
+success:
+	/* Clean multipart wait flag */
+	if (same_id) {
+		Config->IncompleteMessageTime = 0;
+	}
+	return TRUE;
+}
+
+/**
  * Reads message from phone, processes it and delete it from phone afterwards.
  *
  * It tries to link multipart messages together if possible.
@@ -1287,44 +1344,9 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	i=0;
 
 	for (i = 0; SortedSMS[i] != NULL; i++) {
-		/* Does the message have UDH (is multipart)? */
-		if (SortedSMS[i]->SMS[0].UDH.Type != UDH_NoUDH) {
-			/* Check if we have all parts */
-			if (SortedSMS[i]->SMS[0].UDH.AllParts != SortedSMS[i]->Number) {
-				/* Have we seen this message recently? */
-				if (Config->IncompleteMessageID == SortedSMS[i]->SMS[0].UDH.ID16bit || Config->IncompleteMessageID == SortedSMS[i]->SMS[0].UDH.ID8bit) {
-					if (Config->IncompleteMessageTime != 0 && difftime(time(NULL), Config->IncompleteMessageTime) > Config->multiparttimeout) {
-						SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, processing after timeout",
-							Config->IncompleteMessageID);
-					} else {
-						SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts (waited %.0f seconds)",
-							Config->IncompleteMessageID,
-							difftime(time(NULL), Config->IncompleteMessageTime));
-						goto cleanup;
-					}
-				} else {
-					if (Config->IncompleteMessageTime == 0) {
-						if (SortedSMS[i]->SMS[0].UDH.ID16bit != -1) {
-							 Config->IncompleteMessageID = SortedSMS[i]->SMS[0].UDH.ID16bit;
-						} else {
-							 Config->IncompleteMessageID = SortedSMS[i]->SMS[0].UDH.ID8bit;
-						}
-						Config->IncompleteMessageTime = time(NULL);
-						SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts",
-							Config->IncompleteMessageID);
-						goto cleanup;
-					} else {
-						SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, but waiting for other one",
-							Config->IncompleteMessageID);
-						goto cleanup;
-					}
-				}
-			}
-		}
-
-		/* Clean multipart wait flag */
-		if (Config->IncompleteMessageID == SortedSMS[i]->SMS[0].UDH.ID16bit || Config->IncompleteMessageID == SortedSMS[i]->SMS[0].UDH.ID8bit) {
-			Config->IncompleteMessageTime = 0;
+		/* Check multipart message parts */
+		if (!SMSD_CheckMultipart(Config, Service, SortedSMS[i])) {
+			goto cleanup;
 		}
 
 		/* Actually process the message */
