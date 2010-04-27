@@ -1290,23 +1290,25 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		/* Check if we have all parts */
 		if (SortedSMS[i]->SMS[0].UDH.Type != UDH_NoUDH) {
 			if (SortedSMS[i]->SMS[0].UDH.AllParts != SortedSMS[i]->Number) {
-				if (Config->IncompleteMessageTime != 0 && (Config->IncompleteMessageID == SortedSMS[i]->SMS[0].UDH.ID16bit || Config->IncompleteMessageID == SortedSMS[i]->SMS[0].UDH.ID8bit) && difftime(time(NULL), Config->IncompleteMessageTime) > Config->multiparttimeout) {
+				if (Config->IncompleteMessageTime != 0 &&
+						(Config->IncompleteMessageID == SortedSMS[i]->SMS[0].UDH.ID16bit || Config->IncompleteMessageID == SortedSMS[i]->SMS[0].UDH.ID8bit) &&
+						difftime(time(NULL), Config->IncompleteMessageTime) > Config->multiparttimeout) {
 					SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, processing after timeout",
 						Config->IncompleteMessageID);
-				} else {
-					if (Config->IncompleteMessageTime == 0) {
-						if (SortedSMS[i]->SMS[0].UDH.ID16bit != -1) {
-							 Config->IncompleteMessageID = SortedSMS[i]->SMS[0].UDH.ID16bit;
-						} else {
-							 Config->IncompleteMessageID = SortedSMS[i]->SMS[0].UDH.ID8bit;
-						}
-						Config->IncompleteMessageTime = time(NULL);
-						SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts",
-							Config->IncompleteMessageID);
+				} else if (Config->IncompleteMessageTime == 0) {
+					if (SortedSMS[i]->SMS[0].UDH.ID16bit != -1) {
+						 Config->IncompleteMessageID = SortedSMS[i]->SMS[0].UDH.ID16bit;
 					} else {
-						SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts (waited %.0f seconds)",
-							Config->IncompleteMessageID, difftime(time(NULL), Config->IncompleteMessageTime));
+						 Config->IncompleteMessageID = SortedSMS[i]->SMS[0].UDH.ID8bit;
 					}
+					Config->IncompleteMessageTime = time(NULL);
+					SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts",
+						Config->IncompleteMessageID);
+					goto cleanup;
+				} else {
+					SMSD_Log(DEBUG_INFO, Config, "Incomplete multipart message 0x%02X, waiting for other parts (waited %.0f seconds)",
+						Config->IncompleteMessageID,
+						difftime(time(NULL), Config->IncompleteMessageTime));
 					goto cleanup;
 				}
 			}
