@@ -510,7 +510,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			strcat(FullName, FileName);
 			if (file) fclose(file);
 			file = fopen(FullName, "r");
-		} while ((i == 0) && file != NULL && (++j < 100));
+		} while (file != NULL && (++j < 100));
 
 		if (file) {
 			fclose(file);
