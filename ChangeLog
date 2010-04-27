@@ -23,6 +23,7 @@ ChangeLog
 
 [-] * Fixed folder detection for Nokia S40 phones (bug #1191).
 [-] * Fixed smsd-inject for long messages.
+[-] * Fixed waiting for more multipart messages (bug #1193).
     
 20100413 - 1.27.93
 
