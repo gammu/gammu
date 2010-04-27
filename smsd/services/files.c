@@ -530,6 +530,10 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			}
 			backup.SMS[sms->Number] = NULL;
 			error = GSM_AddSMSBackupFile(FullName, &backup);
+
+			if (error != ERR_NONE) {
+				return error;
+			}
 #endif
 			/* Force leaving the loop */
 			i = sms->Number;
@@ -558,10 +562,6 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 					break;
 			}
 			fclose(file);
-		}
-
-		if (error != ERR_NONE) {
-			return error;
 		}
 
 		SMSD_Log(DEBUG_INFO, Config, "Created outbox message %s", FileName);
