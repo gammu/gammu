@@ -476,11 +476,16 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 	int 		i,j;
 	unsigned char 	FileName[100], FullName[400], ext[17], buffer[64],buffer2[400];
 	FILE 		*file;
+	time_t rawtime;
+	struct tm* timeinfo;
+
 #ifdef GSM_ENABLE_BACKUP
 	GSM_SMS_Backup 	backup;
 #endif
 
 	j = 0;
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
 
 	for (i=0;i<sms->Number;i++) {
 		if (strcasecmp(Config->outboxformat, "detail") == 0) {
@@ -492,12 +497,6 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 
 		file = NULL;
 		do {
-			time_t rawtime;
-			struct tm* timeinfo;
-
-			time(&rawtime);
-			timeinfo = localtime(&rawtime);
-
 			sprintf(FileName,
 				"OUTC%04d%02d%02d_%02d%02d%02d_00_%s_sms%d.%s",
 				1900 + timeinfo->tm_year,
