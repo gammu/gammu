@@ -1341,8 +1341,6 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	free(GetSMSData);
 
 	/* Process messages */
-	i=0;
-
 	for (i = 0; SortedSMS[i] != NULL; i++) {
 		/* Check multipart message parts */
 		if (!SMSD_CheckMultipart(Config, Service, SortedSMS[i])) {
