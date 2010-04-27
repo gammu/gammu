@@ -78,6 +78,10 @@ File where SMSD actions are being logged. You can also use special value
 "syslog" which will send all messages to syslog daemon. On Windows another
 special value "eventlog" exists, which will send logs to Windows Event Log.
 
+If you run SMSD as a system daemon (or service), it is recommended to use
+absolute path to log file as startup directory might be different than you
+expect.
+
 Default is to provide no logging.
 
 .TP
