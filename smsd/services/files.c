@@ -487,7 +487,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 	time(&rawtime);
 	timeinfo = localtime(&rawtime);
 
-	for (i=0;i<sms->Number;i++) {
+	for (i = 0; i < sms->Number; i++) {
 		if (strcasecmp(Config->outboxformat, "detail") == 0) {
 			strcpy(ext, "smsbackup");
 		} else {
