@@ -542,14 +542,14 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			switch (sms->SMS[i].Coding) {
 				case SMS_Coding_Unicode_No_Compression:
 				case SMS_Coding_Default_No_Compression:
-					DecodeUnicode(sms->SMS[i].Text,buffer2);
 					if (strcasecmp(Config->outboxformat, "unicode") == 0) {
 						buffer[0] = 0xFE;
 						buffer[1] = 0xFF;
 						chk_fwrite(buffer,1,2,file);
-						chk_fwrite(sms->SMS[i].Text,1,strlen(buffer2)*2,file);
+						chk_fwrite(sms->SMS[i].Text, 1, UnicodeLength(sms->SMS[i].Text) * 2, file);
 					} else {
-						chk_fwrite(buffer2,1,strlen(buffer2),file);
+						DecodeUnicode(sms->SMS[i].Text, buffer2);
+						chk_fwrite(buffer2, 1, strlen(buffer2), file);
 					}
 					break;
 				case SMS_Coding_8bit:
