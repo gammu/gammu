@@ -553,7 +553,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 					}
 					break;
 				case SMS_Coding_8bit:
-					chk_fwrite(sms->SMS[i].Text,1,(size_t)sms->SMS[i].Length,file);
+					chk_fwrite(sms->SMS[i].Text, 1, (size_t)sms->SMS[i].Length, file);
 				default:
 					break;
 			}
