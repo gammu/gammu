@@ -1332,11 +1332,9 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	error = GSM_LinkSMS(GSM_GetDebug(Config->gsm), GetSMSData, SortedSMS, TRUE);
 
 	/* Free memory */
-	i=0;
-	while (GetSMSData[i] != NULL) {
+	for (i = 0; GetSMSData[i] != NULL; i++) {
 		free(GetSMSData[i]);
 		GetSMSData[i] = NULL;
-		i++;
 	}
 	free(GetSMSData);
 
