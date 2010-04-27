@@ -1287,8 +1287,9 @@ gboolean SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	i=0;
 
 	for (i = 0; SortedSMS[i] != NULL; i++) {
-		/* Check if we have all parts */
+		/* Does the message have UDH (is multipart)? */
 		if (SortedSMS[i]->SMS[0].UDH.Type != UDH_NoUDH) {
+			/* Check if we have all parts */
 			if (SortedSMS[i]->SMS[0].UDH.AllParts != SortedSMS[i]->Number) {
 				/* Have we seen this message recently? */
 				if (Config->IncompleteMessageID == SortedSMS[i]->SMS[0].UDH.ID16bit || Config->IncompleteMessageID == SortedSMS[i]->SMS[0].UDH.ID8bit) {
