@@ -472,7 +472,6 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 /* Adds SMS to Outbox */
 static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *NewID)
 {
-	GSM_Error	error = ERR_NONE;
 	int 		i,j;
 	unsigned char 	FileName[100], FullName[400], ext[17], buffer[64],buffer2[400];
 	FILE 		*file;
@@ -480,6 +479,7 @@ static GSM_Error SMSDFiles_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 	struct tm* timeinfo;
 
 #ifdef GSM_ENABLE_BACKUP
+	GSM_Error	error;
 	GSM_SMS_Backup 	backup;
 #endif
 
