@@ -504,6 +504,7 @@ GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
         smprintf(s, "SMS Message received\n");
         switch(msg.Buffer[3]) {
         case 0x08:
+		GSM_SetDefaultReceivedSMSData(&(Data->GetSMSMessage->SMS[0]));
                 Data->GetSMSMessage->Number             = 1;
                 Data->GetSMSMessage->SMS[0].Name[0]     = 0;
                 Data->GetSMSMessage->SMS[0].Name[1]     = 0;
