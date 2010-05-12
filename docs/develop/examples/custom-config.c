@@ -25,11 +25,11 @@ void error_handler(void)
 int main(int argc, char **argv)
 {
 	GSM_Debug_Info *debug_info;
-    GSM_Config *cfg;
+	GSM_Config *cfg;
 
-    if (argc != 4) {
-        printf("Usage: custom-config DEVICE CONNECTION MODEL\n");
-    }
+	if (argc != 4) {
+		printf("Usage: custom-config DEVICE CONNECTION MODEL\n");
+	}
 
 	/*
 	 * We don't need gettext, but need to set locales so that
@@ -53,19 +53,20 @@ int main(int argc, char **argv)
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(TRUE, debug_info);
 
-    /*
-     * Get pointer to config structure.
-     */
-    cfg = GSM_GetConfig(s, 0);
+	/*
+	 * Get pointer to config structure.
+	 */
+	cfg = GSM_GetConfig(s, 0);
 
-    /*
-     * Set configuration, first freeing old values.
-     */
-    free(cfg->Device);
-    cfg->Device = strdup(argv[1]);
-    free(cfg->Connection);
-    cfg->Connection = strdup(argv[2]);
-    strcpy(cfg->Model, argv[3]);
+	/*
+	 * Set configuration, first freeing old values.
+	 */
+	free(cfg->Device);
+	cfg->Device = strdup(argv[1]);
+	free(cfg->Connection);
+	cfg->Connection = strdup(argv[2]);
+	/* For historical reasons this is not a pointer */
+	strcpy(cfg->Model, argv[3]);
 
 	/* We have one valid configuration */
 	GSM_SetConfigNum(s, 1);
