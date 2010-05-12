@@ -28,4 +28,9 @@ SMSD example
 .. literalinclude:: ../examples/smsd.c
    :language: c
 
+Custom configuration
+--------------------
+
+.. literalinclude:: ../examples/custom-config.c
+   :language: c
 
