@@ -224,7 +224,9 @@ GSM_Error GSM_FindGammuRC(INI_Section ** result, const char *force_config);
 GSM_Error GSM_ReadConfig(INI_Section * cfg_info, GSM_Config * cfg, int num);
 
 /**
- * Gets gammu configuration from state machine.
+ * Gets gammu configuration from state machine. This actually returns
+ * pointer to internal configuration storage, so you can use it also for
+ * updating existing settings.
  *
  * \param s State machine data
  * \param num Number of section to read, -1 for currently used.
