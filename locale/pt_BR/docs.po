@@ -67,6 +67,7 @@ msgstr "NOME"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu.1:7
+#, fuzzy
 msgid "Gammu - Does some neat things with your cellular phone or modem."
 msgstr "Gammu - Faz algumas coisas legais com seu celular ou modem"
 
