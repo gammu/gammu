@@ -2615,7 +2615,7 @@ msgstr "Pro ruční zprávu seznamů skladeb:"
 #: docs/user/gammu.1:990 docs/user/gammu.1:1849
 #, no-wrap
 msgid "    gammu addfile a:\\epredefplaylist filename.m3u\n"
-msgstr ""
+msgstr "    gammu addfile a:\\epredefplaylist jméno.m3u\n"
 
 #. type: Plain text
 #: docs/user/gammu.1:992 docs/user/gammu.1:1851
