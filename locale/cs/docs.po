@@ -2637,7 +2637,7 @@ msgstr "Získá seznam všech souborů (včetně souborů se seznamy skladeb)"
 #: docs/user/gammu.1:998 docs/user/gammu.1:1857
 #, no-wrap
 msgid "    gammu deletefiles a:\\epredefplaylist\\efilename.m3u\n"
-msgstr ""
+msgstr "    gammu deletefiles a:\\epredefplaylist\\ejméno.m3u\n"
 
 #. type: Plain text
 #: docs/user/gammu.1:1000 docs/user/gammu.1:1859
