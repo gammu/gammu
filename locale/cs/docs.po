@@ -2642,7 +2642,7 @@ msgstr "    gammu deletefiles a:\\epredefplaylist\\ejméno.m3u\n"
 #. type: Plain text
 #: docs/user/gammu.1:1000 docs/user/gammu.1:1859
 msgid "Will delete playlist filename.m3u"
-msgstr ""
+msgstr "Odstraní seznam skladeb jméno.m3u"
 
 #. type: Plain text
 #: docs/user/gammu.1:1002 docs/user/gammu.1:1861
