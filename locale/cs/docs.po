@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-14 11:49+0200\n"
+"PO-Revision-Date: 2010-05-14 11:50+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -2620,7 +2620,7 @@ msgstr "    gammu addfile a:\\epredefplaylist jméno.m3u\n"
 #. type: Plain text
 #: docs/user/gammu.1:992 docs/user/gammu.1:1851
 msgid "Will add playlist filename.m3u"
-msgstr ""
+msgstr "Přidá seznam skladeb jméno.m3u"
 
 #. type: Plain text
 #: docs/user/gammu.1:994 docs/user/gammu.1:1853
