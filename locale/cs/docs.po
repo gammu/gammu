@@ -2626,7 +2626,7 @@ msgstr "Přidá seznam skladeb jméno.m3u"
 #: docs/user/gammu.1:994 docs/user/gammu.1:1853
 #, no-wrap
 msgid "    gammu getfilesystem\n"
-msgstr ""
+msgstr "    gammu getfilesystem\n"
 
 #. type: Plain text
 #: docs/user/gammu.1:996 docs/user/gammu.1:1855
