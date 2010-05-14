@@ -213,6 +213,7 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 	/* Split code to country and network */
 	if (sscanf(netinfo.NetworkCode, "%ld %ld", &mcc, &mnc) != 2) {
 		printf_err("%s", _("Wrong network code from phone!\n"));
+		GSM_Terminate();
 		return;
 	}
 
@@ -234,60 +235,52 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 	*/
 	if (strstr(OpenCell.Buffer, "stat=\"ok\"") == NULL) {
 		printf_err("%s", _("Request for information from OpenCellID failed!\n"));
-		free(OpenCell.Buffer);
-		return;
+		goto done;
 	}
 	pos = strstr(OpenCell.Buffer, "lat=\"");
 	if (pos == NULL) {
 		printf_err("%s", _("Failed to find latitude in OpenCellID reply!\n"));
-		free(OpenCell.Buffer);
-		return;
+		goto done;
 	}
 	if (sscanf(pos, "lat=\"%f\"", &latitude) == 0) {
 		printf_err("%s", _("Failed to parse latitude from OpenCellID reply!\n"));
-		free(OpenCell.Buffer);
-		return;
+		goto done;
 	}
 	pos = strstr(OpenCell.Buffer, "lon=\"");
 	if (pos == NULL) {
 		printf_err("%s", _("Failed to find longitude in OpenCellID reply!\n"));
-		free(OpenCell.Buffer);
-		return;
+		goto done;
 	}
 	if (sscanf(pos, "lon=\"%f\"", &longitude) == 0) {
 		printf_err("%s", _("Failed to parse longitude from OpenCellID reply!\n"));
-		free(OpenCell.Buffer);
-		return;
+		goto done;
 	}
 	pos = strstr(OpenCell.Buffer, "range=\"");
 	if (pos == NULL) {
 		printf_err("%s", _("Failed to find range in OpenCellID reply!\n"));
-		free(OpenCell.Buffer);
-		return;
+		goto done;
 	}
 	if (sscanf(pos, "range=\"%ld\"", &range) == 0) {
 		printf_err("%s", _("Failed to parse range from OpenCellID reply!\n"));
-		free(OpenCell.Buffer);
-		return;
+		goto done;
 	}
 	pos = strstr(OpenCell.Buffer, "nbSamples=\"");
 	if (pos == NULL) {
 		printf_err("%s", _("Failed to find nbSamples in OpenCellID reply!\n"));
-		free(OpenCell.Buffer);
-		return;
+		goto done;
 	}
 	if (sscanf(pos, "nbSamples=\"%ld\"", &nbSamples) == 0) {
 		printf_err("%s", _("Failed to parse nbSamples from OpenCellID reply!\n"));
-		free(OpenCell.Buffer);
-		return;
+		goto done;
 	}
-	free(OpenCell.Buffer);
 
 	printf(LISTFORMAT "%f\n", _("Latitude"), latitude);
 	printf(LISTFORMAT "%f\n", _("Longitude"), longitude);
 	printf(LISTFORMAT "%ld\n", _("Range"), range);
 	printf(LISTFORMAT "%ld\n", _("Number of samples"), nbSamples);
 
+done:
+	free(OpenCell.Buffer);
 	GSM_Terminate();
 }
 
