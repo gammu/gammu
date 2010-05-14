@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-14 11:47+0200\n"
+"PO-Revision-Date: 2010-05-14 11:48+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -1123,6 +1123,8 @@ msgstr ""
 msgid ""
 "B<-toneSElong> - add SonyEricsson IMelody saved in one or few SMS with UPI"
 msgstr ""
+"B<-toneSElong> - přidá melodii SonyEricsson IMelody uloženou v jedné nebo "
+"více SMS s UPI"
 
 # type: Plain text
 #. type: Plain text
