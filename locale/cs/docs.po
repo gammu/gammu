@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-14 11:50+0200\n"
+"PO-Revision-Date: 2010-05-14 11:52+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -2648,6 +2648,7 @@ msgstr "Odstraní seznam skladeb jméno.m3u"
 #: docs/user/gammu.1:1002 docs/user/gammu.1:1861
 msgid "Format of m3u playlist is easy (standard mp3 playlist):"
 msgstr ""
+"Fomát seznamů skladeb m3u je jednoduchý (standardní seznam skladeb pro mp3):"
 
 #. type: Plain text
 #: docs/user/gammu.1:1006 docs/user/gammu.1:1865
