@@ -2631,7 +2631,7 @@ msgstr "    gammu getfilesystem\n"
 #. type: Plain text
 #: docs/user/gammu.1:996 docs/user/gammu.1:1855
 msgid "Will get list of all files (including names of files with playlists)"
-msgstr ""
+msgstr "Získá seznam všech souborů (včetně souborů se seznamy skladeb)"
 
 #. type: Plain text
 #: docs/user/gammu.1:998 docs/user/gammu.1:1857
