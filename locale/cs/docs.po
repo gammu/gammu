@@ -617,7 +617,7 @@ msgstr "B<Kódování znaků v textu SMS>"
 #. type: Plain text
 #: docs/user/gammu.1:192
 msgid "Text in SMS can be coded using two ways:"
-msgstr ""
+msgstr "Text v SMS zprávě může být zakódován dvěmi způsoby:"
 
 #. type: Plain text
 #: docs/user/gammu.1:200
