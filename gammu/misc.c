@@ -11,6 +11,7 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#include <locale.h>
 
 #include "common.h"
 #include "misc.h"
@@ -199,6 +200,8 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 	GSM_NetworkInfo netinfo;
 	float latitude, longitude;
 	long int mnc, mcc, lac, cellid, nbSamples, range;
+	char *ret, *old_locale = NULL;
+	gboolean failure = FALSE;
 
 	GSM_Init(TRUE);
 
@@ -227,6 +230,12 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 	error = GSM_ReadHTTPFile(url, &OpenCell);
 	Print_Error(error);
 
+	/* We need to reset numeric locales because we parse floats with . as decimal separator */
+	ret = setlocale(LC_NUMERIC, "C");
+	if (ret != NULL) {
+		old_locale = strdup(ret);
+	}
+
 	/* Parse reply:
 		<?xml version="1.0" encoding="UTF-8"?>
 		<rsp stat="ok">
@@ -235,51 +244,66 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 	*/
 	if (strstr(OpenCell.Buffer, "stat=\"ok\"") == NULL) {
 		printf_err("%s", _("Request for information from OpenCellID failed!\n"));
+		failure = TRUE;
 		goto done;
 	}
 	pos = strstr(OpenCell.Buffer, "lat=\"");
 	if (pos == NULL) {
 		printf_err("%s", _("Failed to find latitude in OpenCellID reply!\n"));
+		failure = TRUE;
 		goto done;
 	}
 	if (sscanf(pos, "lat=\"%f\"", &latitude) == 0) {
 		printf_err("%s", _("Failed to parse latitude from OpenCellID reply!\n"));
+		failure = TRUE;
 		goto done;
 	}
 	pos = strstr(OpenCell.Buffer, "lon=\"");
 	if (pos == NULL) {
 		printf_err("%s", _("Failed to find longitude in OpenCellID reply!\n"));
+		failure = TRUE;
 		goto done;
 	}
 	if (sscanf(pos, "lon=\"%f\"", &longitude) == 0) {
 		printf_err("%s", _("Failed to parse longitude from OpenCellID reply!\n"));
+		failure = TRUE;
 		goto done;
 	}
 	pos = strstr(OpenCell.Buffer, "range=\"");
 	if (pos == NULL) {
 		printf_err("%s", _("Failed to find range in OpenCellID reply!\n"));
+		failure = TRUE;
 		goto done;
 	}
 	if (sscanf(pos, "range=\"%ld\"", &range) == 0) {
 		printf_err("%s", _("Failed to parse range from OpenCellID reply!\n"));
+		failure = TRUE;
 		goto done;
 	}
 	pos = strstr(OpenCell.Buffer, "nbSamples=\"");
 	if (pos == NULL) {
 		printf_err("%s", _("Failed to find nbSamples in OpenCellID reply!\n"));
+		failure = TRUE;
 		goto done;
 	}
 	if (sscanf(pos, "nbSamples=\"%ld\"", &nbSamples) == 0) {
 		printf_err("%s", _("Failed to parse nbSamples from OpenCellID reply!\n"));
+		failure = TRUE;
 		goto done;
 	}
 
-	printf(LISTFORMAT "%f\n", _("Latitude"), latitude);
-	printf(LISTFORMAT "%f\n", _("Longitude"), longitude);
-	printf(LISTFORMAT "%ld\n", _("Range"), range);
-	printf(LISTFORMAT "%ld\n", _("Number of samples"), nbSamples);
-
 done:
+	if (old_locale != NULL) {
+		setlocale(LC_NUMERIC, old_locale);
+		free(old_locale);
+	}
+	if (!failure) {
+		printf(LISTFORMAT "%f\n", _("Latitude"), latitude);
+		printf(LISTFORMAT "%f\n", _("Longitude"), longitude);
+		printf(LISTFORMAT "%ld\n", _("Range"), range);
+		printf(LISTFORMAT "%ld\n", _("Number of samples"), nbSamples);
+	}
+
 	free(OpenCell.Buffer);
 	GSM_Terminate();
 }
