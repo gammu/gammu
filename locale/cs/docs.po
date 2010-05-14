@@ -878,7 +878,7 @@ msgstr "B<nokiagett9>"
 #. type: Plain text
 #: docs/user/gammu.1:292 docs/user/gammu.1:1899
 msgid "This option should display T9 dictionary content from DCT4 phones."
-msgstr ""
+msgstr "Tato volba zobrazí T9 slovík z telefonů DCT4."
 
 # type: TP
 #. type: TP
