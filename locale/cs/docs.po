@@ -11032,7 +11032,7 @@ msgstr "Podpora pro MySQL v SMSD."
 #. type: Plain text
 #: INSTALL:55
 msgid "PostgreSQL"
-msgstr "PostgreSQL\n"
+msgstr "PostgreSQL"
 
 #. type: Plain text
 #: INSTALL:56
