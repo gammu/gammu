@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-04-23 13:39+0200\n"
+"POT-Creation-Date: 2010-05-17 14:54+0200\n"
 "PO-Revision-Date: 2009-02-01 16:32+0100\n"
 "Last-Translator: ObiWahn <obi-wahn@osnanet.de>\n"
 "Language-Team: Language =de\n"
@@ -366,35 +366,35 @@ msgstr "Unbekannte Fehlerbeschreibung."
 msgid "Templates"
 msgstr "%i Vorlagen"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1958
+#: libgammu/phone/nokia/dct3/n6110.c:1959
 msgid "Personal"
 msgstr "Persönlich"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1960 libgammu/phone/nokia/nfunc.c:1144
+#: libgammu/phone/nokia/dct3/n6110.c:1961 libgammu/phone/nokia/nfunc.c:1144
 msgid "Car"
 msgstr "Auto"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1962 libgammu/phone/nokia/nfunc.c:1146
+#: libgammu/phone/nokia/dct3/n6110.c:1963 libgammu/phone/nokia/nfunc.c:1146
 msgid "Headset"
 msgstr "Headset"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1968 libgammu/phone/nokia/nfunc.c:1134
+#: libgammu/phone/nokia/dct3/n6110.c:1969 libgammu/phone/nokia/nfunc.c:1134
 msgid "General"
 msgstr "Allgemein"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1970 libgammu/phone/nokia/nfunc.c:1136
+#: libgammu/phone/nokia/dct3/n6110.c:1971 libgammu/phone/nokia/nfunc.c:1136
 msgid "Silent"
 msgstr "Lautlos"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1972
+#: libgammu/phone/nokia/dct3/n6110.c:1973
 msgid "Discreet"
 msgstr "Unaufdringlich"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1974
+#: libgammu/phone/nokia/dct3/n6110.c:1975
 msgid "Loud"
 msgstr "Laut"
 
-#: libgammu/phone/nokia/dct3/n6110.c:1976
+#: libgammu/phone/nokia/dct3/n6110.c:1977
 msgid "My style"
 msgstr "Mein Stil"
 

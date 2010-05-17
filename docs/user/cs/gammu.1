@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Apr 21 2010" "Gammu 1.27.94" "Dokumentace Gammu"
+.TH GAMMU 1 "12. duben 2010" "Gammu 1.27.94" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -197,9 +197,9 @@ send. Otherwise the phone will not be able to display it or will even crash,
 because firmware of phone did not expect this possibility.
 
 .TP 
-\fBEncoding chars in SMS text\fP
+\fBKódování znaků v textu SMS\fP
 
-Text in SMS can be coded using two ways:
+Text v SMS zprávě může být zakódován dvěmi způsoby:
 
 * with GSM Default Alphabet \- in single SMS you can have maximally 160 chars (Gammu doesn't support compressing such texts according to GSM standards, but it isn't big limit, because there are no phones supporting them), but they're from limited set:
   * all Latin small and large
@@ -297,7 +297,7 @@ Načte s telefonu názvy složek se zprávami.
 
 .TP 
 \fBnokiagett9\fP
-This option should display T9 dictionary content from DCT4 phones.
+Tato volba zobrazí T9 slovík z telefonů DCT4.
 
 .TP 
 \fBrestoresms\fP\fI file [\-yes]\fP
@@ -388,7 +388,8 @@ Sony\-Ericsson) načtou takové vyzvánění jako jedno.
 \fB\-toneSE\fP \- přidá vyzvánění ve formátu iMelody v "krátké" formě jak je
 podporováno telefony Sony\-Ericssonn.
 
-\fB\-toneSElong\fP \- add SonyEricsson IMelody saved in one or few SMS with UPI
+\fB\-toneSElong\fP \- přidá melodii SonyEricsson IMelody uloženou v jedné nebo
+více SMS s UPI
 
 \fB\-variablebitmap\fP \- obrázek libovolné velikosti uložený v jedné SMS
 
@@ -1056,23 +1057,24 @@ Pro vygenerování jad souboru z jar souboru můžete použít jadmaker(1).
 .TP 
 \fBnokiaaddplaylists\fP
 
-Goes through phone memory and generated playlist for all music files found.
+Projde paměť telefonu a vytvoří seznam skladeb se všemi nalezenými hudebními
+soubory.
 
-To manually manage playlists:
+Pro ruční zprávu seznamů skladeb:
 
-    gammu addfile a:\epredefplaylist filename.m3u
+    gammu addfile a:\epredefplaylist jméno.m3u
 
-Will add playlist filename.m3u
+Přidá seznam skladeb jméno.m3u
 
     gammu getfilesystem
 
-Will get list of all files (including names of files with playlists)
+Získá seznam všech souborů (včetně souborů se seznamy skladeb)
 
-    gammu deletefiles a:\epredefplaylist\efilename.m3u
+    gammu deletefiles a:\epredefplaylist\ejméno.m3u
 
-Will delete playlist filename.m3u
+Odstraní seznam skladeb jméno.m3u
 
-Format of m3u playlist is easy (standard mp3 playlist):
+Fomát seznamů skladeb m3u je jednoduchý (standardní seznam skladeb pro mp3):
 
 First line is #EXTM3U, next lines contain names of files (b:\efile1.mp3,
 b:\efolder1\efile2.mp3, etc.). File needs t have '\er\en' terminated
@@ -1924,23 +1926,24 @@ Pro vygenerování jad souboru z jar souboru můžete použít jadmaker(1).
 .TP 
 \fBnokiaaddplaylists\fP
 
-Goes through phone memory and generated playlist for all music files found.
+Projde paměť telefonu a vytvoří seznam skladeb se všemi nalezenými hudebními
+soubory.
 
-To manually manage playlists:
+Pro ruční zprávu seznamů skladeb:
 
-    gammu addfile a:\epredefplaylist filename.m3u
+    gammu addfile a:\epredefplaylist jméno.m3u
 
-Will add playlist filename.m3u
+Přidá seznam skladeb jméno.m3u
 
     gammu getfilesystem
 
-Will get list of all files (including names of files with playlists)
+Získá seznam všech souborů (včetně souborů se seznamy skladeb)
 
-    gammu deletefiles a:\epredefplaylist\efilename.m3u
+    gammu deletefiles a:\epredefplaylist\ejméno.m3u
 
-Will delete playlist filename.m3u
+Odstraní seznam skladeb jméno.m3u
 
-Format of m3u playlist is easy (standard mp3 playlist):
+Fomát seznamů skladeb m3u je jednoduchý (standardní seznam skladeb pro mp3):
 
 First line is #EXTM3U, next lines contain names of files (b:\efile1.mp3,
 b:\efolder1\efile2.mp3, etc.). File needs t have '\er\en' terminated
@@ -1977,7 +1980,7 @@ příkaz vám umožní tuto změnu provést.
 
 .TP 
 \fBnokiagett9\fP
-This option should display T9 dictionary content from DCT4 phones.
+Tato volba zobrazí T9 slovík z telefonů DCT4.
 
 .TP 
 \fBnokiagetvoicerecord\fP\fI location\fP
