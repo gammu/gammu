@@ -51,7 +51,6 @@ MySQL
     - Podpora pro MySQL v SMSD.
 
 PostgreSQL
-
     - http://www.postgresql.org/
     - Podpora pro PostgreSQL v SMSD.
 
