@@ -13,10 +13,10 @@ msgstr ""
 "PO-Revision-Date: 2010-05-14 11:52+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Pootle 2.0.1\n"
 
@@ -5517,11 +5517,11 @@ msgstr "Změnit všechna čísla začínající na +3620, +3630, +3660, +3670 na
 #. type: Plain text
 #: docs/user/gammu.1:2962
 msgid ""
-"Find: Type = NumberGeneral\\enEntry\\e([0-9][0-9]\\e)Text = \"\\e+36\\e(20"
-"\\e|30\\e|60\\e|70\\e)\\en"
+"Find: Type = NumberGeneral\\enEntry\\e([0-9][0-9]\\e)Text = \"\\e+36\\e"
+"(20\\e|30\\e|60\\e|70\\e)\\en"
 msgstr ""
-"Hledat: Type = NumberGeneral\\enEntry\\e([0-9][0-9]\\e)Text = \"\\e+36\\e(20"
-"\\e|30\\e|60\\e|70\\e)\\en"
+"Hledat: Type = NumberGeneral\\enEntry\\e([0-9][0-9]\\e)Text = \"\\e+36\\e"
+"(20\\e|30\\e|60\\e|70\\e)\\en"
 
 # type: Plain text
 #. type: Plain text
@@ -5552,8 +5552,8 @@ msgstr ""
 #: docs/user/gammu.1:2971
 msgid "Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+36\\e2\\e3\"\\en"
 msgstr ""
-"Nahradit: Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e+36\\e2\\e3"
-"\"\\en"
+"Nahradit: Replace: Type = NumberMobile\\enEntry\\e1Text = \"\\e"
+"+36\\e2\\e3\"\\en"
 
 # type: SH
 #. type: SH
@@ -11540,9 +11540,9 @@ msgid ""
 "gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from <http://gnuwin32."
 "sourceforge.net/>. Unpack these to same directory."
 msgstr ""
-"Pro podporu překladu programu potřebujete gettext-0.14.4-bin.zip, gettext-"
-"0.14.4-dep.zip, gettext-0.14.4-lib.zip z <http://gnuwin32.sourceforge.net/>. "
-"Rozbalte je všechny do jednoho adresáře."
+"Pro podporu překladu programu potřebujete gettext-0.14.4-bin.zip, "
+"gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip z <http://gnuwin32."
+"sourceforge.net/>. Rozbalte je všechny do jednoho adresáře."
 
 #. type: Title -
 #: INSTALL:248
