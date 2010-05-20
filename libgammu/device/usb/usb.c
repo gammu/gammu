@@ -352,6 +352,12 @@ int GSM_USB_Read(GSM_StateMachine *s, void *buf, size_t nbytes)
 
 	while (repeat < 10 && (rc == LIBUSB_ERROR_TIMEOUT || rc == LIBUSB_ERROR_INTERRUPTED || rc == LIBUSB_ERROR_OTHER || rc == LIBUSB_ERROR_NO_MEM)) {
 		rc = libusb_bulk_transfer(d->handle, d->ep_read, buf, nbytes, &ret, 10000);
+		/* This seems to be some strange failure on partial data transfer */
+		if (rc == LIBUSB_ERROR_OTHER && ret != 0) {
+			smprintf(s, "Other error while reading, but got some data\n");
+			rc = 0;
+			break;
+		}
 		if (rc == LIBUSB_ERROR_TIMEOUT && ret != 0) {
 			smprintf(s, "Timeout while reading, but got some data\n");
 			rc = 0;
@@ -377,6 +383,12 @@ int GSM_USB_Write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 
 	while (repeat < 10 && (rc == LIBUSB_ERROR_TIMEOUT || rc == LIBUSB_ERROR_INTERRUPTED || rc == LIBUSB_ERROR_OTHER || rc == LIBUSB_ERROR_NO_MEM)) {
 		rc = libusb_bulk_transfer(d->handle, d->ep_write, (void *)buf, nbytes, &ret, 10000);
+		/* This seems to be some strange failure on partial data transfer */
+		if (rc == LIBUSB_ERROR_OTHER && ret != 0) {
+			smprintf(s, "Other error while writing, but got some data\n");
+			rc = 0;
+			break;
+		}
 		if (rc == LIBUSB_ERROR_TIMEOUT && ret != 0) {
 			smprintf(s, "Timeout while write, but some data were written\n");
 			rc = 0;
