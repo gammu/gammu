@@ -25,7 +25,7 @@ ChangeLog
 [-] * Fixed smsd-inject for long messages.
 [-] * Fixed waiting for more multipart messages (bug #1193).
 [-] * Fixed parsing of cellid reply with different locales (bug #1202).
-[-] * Fixed handling of timeouts from libusb.
+[-] * Fixed handling of timeouts from libusb (bug #1207).
     
 20100413 - 1.27.93
 
