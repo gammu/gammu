@@ -75,6 +75,7 @@ static void NORETURN cgi_child(GSM_StateMachine *s) {
 	int x;
 	int errfd;
 	char script_name[300];
+	char *params[2];
 	const char*data;
 	strcpy(script_name, cgi_path); /**<                     prepend script path */
 
@@ -115,7 +116,9 @@ static void NORETURN cgi_child(GSM_StateMachine *s) {
 	smprintf(s, CGI_ENGINE "Executing > %s\n", script_name);
 
 	/* Execute script */
-	execv(script_name, NULL);
+	params[0] = script_name;
+	params[1] = NULL;
+	execv(script_name, params);
 
 	/* ------------------------------------------------------ failed to execute */
 	smprintf(s, CGI_ENGINE "Failed to execure %s : %s\n", script_name, strerror(errno));
