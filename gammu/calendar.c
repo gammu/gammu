@@ -125,6 +125,11 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 #endif
 	}
 	Alarm.Year = 0;
+	Alarm.Month = 0;
+	Alarm.Day = 0;
+	DateTime.Year = 0;
+	DateTime.Month = 0;
+	DateTime.Day = 0;
 
 	repeating = FALSE;
 	repeat_dayofweek = -1;
