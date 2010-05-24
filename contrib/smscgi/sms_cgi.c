@@ -143,7 +143,9 @@ static void NORETURN cgi_child(GSM_StateMachine *s) {
 	smprintf(s, CGI_ENGINE "Executing > %s\n", script_name);
 
 	/* Execute script */
-	execv(script_name, NULL);
+	params[0] = script_name;
+	params[1] = NULL;
+	execv(script_name, params);
 
 	error:
 	/* ------------------------------------------------------ failed to execute */
