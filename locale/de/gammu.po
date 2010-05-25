@@ -381,7 +381,6 @@ msgid "Deleting old todos:"
 msgstr "Lösche alte Aufgaben:"
 
 #: gammu/backup.c:1272
-#, fuzzy
 msgid "Restore phone notes?"
 msgstr "Telefon-Notizen wiederherstellen?"
 
