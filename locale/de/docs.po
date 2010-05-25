@@ -334,7 +334,7 @@ msgstr ""
 #: docs/user/gammu.1:94 docs/user/gammu.1:2032 docs/user/gammu.1:2419
 #, no-wrap
 msgid "B<monitor>I< [times]>"
-msgstr ""
+msgstr "B<monitor>I< [times]>"
 
 # type: Plain text
 #. type: Plain text
