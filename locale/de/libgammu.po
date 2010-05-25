@@ -95,13 +95,12 @@ msgstr ""
 "<http://cihar.com/gammu/report> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:99
-#, fuzzy
 msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
-"gammu/report> wo dieser Fehler zu melden ist."
+"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter "
+"<http://cihar.com/gammu/report> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:100
 #, fuzzy
