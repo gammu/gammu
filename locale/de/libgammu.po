@@ -112,7 +112,8 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
-msgstr "Unbekannter Verbindungstyp. Bitte Konfigurationsdatei überprüfen."
+msgstr ""
+"Unbekannter Verbindungstyp angegeben. Bitte Konfigurationsdatei überprüfen."
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
