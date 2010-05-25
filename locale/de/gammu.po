@@ -422,9 +422,8 @@ msgid "Deleting"
 msgstr "Lösche"
 
 #: gammu/backup.c:1434
-#, fuzzy
 msgid "Restore user ringtones?"
-msgstr "Stelle Telefon-Benutzer-Klingeltöne wieder her"
+msgstr "Benutzer-Klingeltöne wieder herstellen?"
 
 #: gammu/backup.c:1460
 #, fuzzy
