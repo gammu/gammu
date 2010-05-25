@@ -401,7 +401,6 @@ msgid "Restore phone WAP bookmarks?"
 msgstr "Telefon-WAP-Lesezeichen wiederherstellen?"
 
 #: gammu/backup.c:1337
-#, fuzzy
 msgid "Deleting old bookmarks:"
 msgstr "Lösche alte Lesezeichen: "
 
