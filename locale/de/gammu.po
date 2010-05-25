@@ -1489,9 +1489,9 @@ msgid "Phone memory"
 msgstr "Telefonspeicher"
 
 #: gammu/files.c:49
-#, fuzzy, c-format
+#, c-format
 msgid "%i bytes (free %i bytes, used %i bytes)"
-msgstr "Telefonspeicher: %i Bytes (%i Bytes frei, %i Bytes belegt)"
+msgstr " %i Bytes (%i Bytes frei, %i Bytes belegt)"
 
 #: gammu/files.c:55
 #, fuzzy
