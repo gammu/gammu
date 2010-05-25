@@ -73,7 +73,6 @@ msgid "Error writing to the device."
 msgstr "Fehler beim Schreiben auf das Gerät."
 
 #: libgammu/gsmcomon.c:95
-#, fuzzy
 msgid "Error during reading from the device."
 msgstr "Fehler beim Lesen vom Gerät."
 
