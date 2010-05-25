@@ -1804,7 +1804,7 @@ msgstr "Telefoneinstellungen"
 
 #: gammu/gammu.c:774
 msgid "Dumps decoding"
-msgstr ""
+msgstr "Gibt Dekodierung aus"
 
 #: gammu/gammu.c:776
 msgid "Functions that don't fit elsewhere"
