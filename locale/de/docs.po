@@ -437,7 +437,7 @@ msgstr ""
 #: docs/user/gammu.1:130
 #, no-wrap
 msgid "B<Common parameters for sendsms and savesms>"
-msgstr ""
+msgstr "B<Allgemeine Einstellungen für die Befehle sendsms und savesms>"
 
 # type: Plain text
 #. type: Plain text
