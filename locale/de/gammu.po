@@ -1399,7 +1399,6 @@ msgid " (Voice tag assignment)"
 msgstr "(Sprachwahl Zuordnung)"
 
 #: gammu/depend/nokia/dct4.c:1383
-#, fuzzy
 msgid " (Picture ID assignment)"
 msgstr "(Bild ID Zuordnung)"
 
