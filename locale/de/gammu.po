@@ -1391,7 +1391,6 @@ msgid " (Text: URL address)"
 msgstr "(Text: Webadresse)"
 
 #: gammu/depend/nokia/dct4.c:1381
-#, fuzzy
 msgid " (SMS list assignment)"
 msgstr "(SMS Listennummer)"
 
