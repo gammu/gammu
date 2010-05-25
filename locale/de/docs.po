@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-25 08:54+0200\n"
+"PO-Revision-Date: 2010-05-25 08:55+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -150,7 +150,7 @@ msgstr ""
 #: docs/user/gammu.1:32
 msgid ""
 "-f / --debug-file E<lt>filenameE<gt> ... file for logging debug messages"
-msgstr ""
+msgstr "-f / --debug-file E<lt>filenameE<gt> ... Datei für Debug-Meldungen"
 
 # type: SS
 #. type: SS
