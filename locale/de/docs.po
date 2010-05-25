@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-25 09:02+0200\n"
+"PO-Revision-Date: 2010-05-25 09:03+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -253,7 +253,7 @@ msgstr "Rufumleitungen anzeigen oder verwalten."
 #. type: Plain text
 #: docs/user/gammu.1:67
 msgid "B<get|set> - whether to get divert information or to set it."
-msgstr ""
+msgstr "B<get|set> - Rufumleitungen abrufen oder setzen."
 
 #. type: Plain text
 #: docs/user/gammu.1:69
