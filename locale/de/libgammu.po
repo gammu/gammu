@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 09:44+0200\n"
+"PO-Revision-Date: 2010-05-25 09:45+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -317,7 +317,7 @@ msgstr "Die gewünschte Funktionalität wurde bei der Kompilierung ausgeschaltet
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
-msgstr ""
+msgstr "Bluetooth Konfiguration benötigt \"Channel\" Angabe."
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not runnig."
