@@ -1197,9 +1197,8 @@ msgid "Old simlock"
 msgstr "Alte SIM-Sperre"
 
 #: gammu/depend/nokia/dct4.c:845
-#, fuzzy
 msgid "Simlock data"
-msgstr "Daten zur SIM-Sperre:"
+msgstr "Daten zur SIM-Sperre"
 
 #: gammu/depend/nokia/dct4.c:872
 #, fuzzy
