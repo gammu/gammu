@@ -310,7 +310,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:88
 msgid "Holds call."
-msgstr ""
+msgstr "Hält das Gespräch."
 
 # type: TP
 #. type: TP
