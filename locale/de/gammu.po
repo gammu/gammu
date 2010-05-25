@@ -1257,7 +1257,7 @@ msgstr "Ladestrom:"
 #: gammu/depend/nokia/dct4.c:1040 gammu/depend/nokia/dct4.c:1051
 #: gammu/depend/nokia/dct4.c:1052
 msgid "mA"
-msgstr ""
+msgstr " mA"
 
 #: gammu/depend/nokia/dct4.c:1041
 #, fuzzy
