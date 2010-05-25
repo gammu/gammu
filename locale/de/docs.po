@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-25 08:59+0200\n"
+"PO-Revision-Date: 2010-05-25 09:01+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -228,7 +228,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:59
 msgid "Make voice call from SIM card line set in phone."
-msgstr ""
+msgstr "Anruf über auf der SIM-Karte im Mobiltelefon festgelegte \"Leitung\"."
 
 #. type: Plain text
 #: docs/user/gammu.1:61
