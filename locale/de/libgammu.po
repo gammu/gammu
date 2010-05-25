@@ -180,7 +180,7 @@ msgstr ""
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
 "Sie sind innerhalb des Telefon-Menüs (beim Bearbeiten?). Verlassen Sie es "
-"und versuchen es erneut."
+"und versuchen Sie es erneut."
 
 #: libgammu/gsmcomon.c:116
 msgid "Phone is not connected."
