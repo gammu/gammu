@@ -313,7 +313,7 @@ msgstr "Falsche Feature-Angabe in der Konfiguration."
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
-msgstr ""
+msgstr "Die gewünschte Funktionalität wurde bei der Kompilierung ausgeschaltet."
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."
