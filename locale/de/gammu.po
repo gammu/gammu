@@ -1661,6 +1661,8 @@ msgstr "INFO: Es ist eine neuere Testversion von Gammu (%s anstatt %s) verfügba
 msgid ""
 "Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> and other authors."
 msgstr ""
+"Copyright (C) 2003 - 2010 Michal Cihar <michal@cihar.com> und andere "
+"Authoren."
 
 #: gammu/gammu.c:376
 msgid ""
