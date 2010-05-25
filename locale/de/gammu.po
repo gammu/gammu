@@ -497,9 +497,8 @@ msgid "   Increase %s\n"
 msgstr "   Erhöhe %s\n"
 
 #: gammu/backupsms.c:107 gammu/misc.c:1332
-#, fuzzy
 msgid "Deleting:"
-msgstr "Lösche"
+msgstr "Lösche:"
 
 #: gammu/backupsms.c:141
 #, fuzzy
