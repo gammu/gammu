@@ -2060,7 +2060,7 @@ msgstr "Maximale Zeit"
 
 #: gammu/message.c:353 gammu/message.c:428 gammu/message.c:701
 msgid "Corrupted message, skipping"
-msgstr ""
+msgstr "Defekte Nachricht, überspringe"
 
 #: gammu/message.c:367 gammu/message.c:486
 #, fuzzy, c-format
