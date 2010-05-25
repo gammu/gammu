@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 09:28+0200\n"
+"PO-Revision-Date: 2010-05-25 09:29+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -103,13 +103,12 @@ msgstr ""
 "<http://cihar.com/gammu/report> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:100
-#, fuzzy
 msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
-"gammu/report> wo dieser Fehler zu melden ist."
+"Unbekannter Rückantwort-Frame vom Telefon. Lesen Sie bitte unter "
+"<http://cihar.com/gammu/report> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
