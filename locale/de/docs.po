@@ -263,7 +263,7 @@ msgstr "B<all|busy|noans|outofreach> - Bedingung für Rufumleitung wählen."
 #. type: Plain text
 #: docs/user/gammu.1:71
 msgid "B<all|voice|fax|data> - call type when apply divert"
-msgstr ""
+msgstr "B<all|voice|fax|data> - Anruftyp für Rufumleitung wählen."
 
 #. type: Plain text
 #: docs/user/gammu.1:73
