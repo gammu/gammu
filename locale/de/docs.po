@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-25 09:13+0200\n"
+"PO-Revision-Date: 2010-05-25 09:14+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -358,6 +358,8 @@ msgstr ""
 #: docs/user/gammu.1:102
 msgid "Plays DTMF sequence. In some phones available only during calls"
 msgstr ""
+"Sendet eine DTMF-Sequenz. In einigen Mobiltelefonen nur während eines "
+"Gespräch verfügbar."
 
 #. type: TP
 #: docs/user/gammu.1:103
