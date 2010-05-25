@@ -248,7 +248,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:65
 msgid "Manage or display call diverts."
-msgstr ""
+msgstr "Rufumleitungen anzeigen oder verwalten."
 
 #. type: Plain text
 #: docs/user/gammu.1:67
