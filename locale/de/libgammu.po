@@ -117,7 +117,7 @@ msgstr ""
 
 #: libgammu/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
-msgstr "Unbekannter Modelltyp. Bitte Konfigurationsdatei überprüfen."
+msgstr "Unbekannter Modelltyp angegeben. Bitte Konfigurationsdatei überprüfen."
 
 #: libgammu/gsmcomon.c:103
 #, fuzzy
