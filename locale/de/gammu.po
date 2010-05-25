@@ -2222,7 +2222,7 @@ msgstr "Falscher Netz-Code vom Telefon!\n"
 
 #: gammu/misc.c:246
 msgid "Request for information from OpenCellID failed!\n"
-msgstr ""
+msgstr "Informationsabfrage von OpenCellID fehlgeschlagen!\n"
 
 #: gammu/misc.c:252
 msgid "Failed to find latitude in OpenCellID reply!\n"
