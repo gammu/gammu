@@ -1343,7 +1343,6 @@ msgid " (Text: name (always the only one))"
 msgstr "(Text: Name (immer der Einzige))"
 
 #: gammu/depend/nokia/dct4.c:1367
-#, fuzzy
 msgid " (Text: email address)"
 msgstr "(Text: eMail-Adresse)"
 
