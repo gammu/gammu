@@ -110,9 +110,8 @@ msgid "Press Ctrl+C to break..."
 msgstr "Strg+C drücken, um zu unterbrechen..."
 
 #: gammu/backup.c:321
-#, fuzzy
 msgid "Use Unicode subformat of backup file?"
-msgstr "Benutze das Unicode-Format für die Backupdatei"
+msgstr "Soll das Unicode-Format für die Backupdatei genutzt werden?"
 
 #: gammu/backup.c:353
 msgid "Checking phone phonebook"
