@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2009-07-06 14:14+0200\n"
-"Last-Translator: Benedikt Sauer <filmor@gmail.com>\n"
+"PO-Revision-Date: 2010-05-25 14:22+0200\n"
+"Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 1.2.1\n"
+"X-Generator: Pootle 2.0.1\n"
 
 #: gammu/backup.c:33 gammu/backup.c:56 gammu/backup.c:79 gammu/backup.c:100
 #: helper/message-cmdline.c:372 helper/message-cmdline.c:396
@@ -38,9 +38,8 @@ msgid "Note not found in file"
 msgstr "Notiz nicht in Datei gefunden"
 
 #: gammu/backup.c:112
-#, fuzzy
 msgid "Todo note not found in file"
-msgstr "Aufgaben nicht in der Datei gefunden"
+msgstr "Aufgabe nicht in der Datei gefunden"
 
 #: gammu/backup.c:121 helper/message-cmdline.c:524
 msgid "Where is backup filename and location and memory type?"
