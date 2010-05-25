@@ -215,7 +215,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:55
 msgid "Initiates a conference call."
-msgstr ""
+msgstr "Beginnt eine Konferenzschaltung"
 
 # type: TP
 #. type: TP
