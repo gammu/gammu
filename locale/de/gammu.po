@@ -2101,7 +2101,7 @@ msgid "..error %i"
 msgstr "..Fehler %i"
 
 #: gammu/message.c:535
-#, fuzzy, c-format
+#, c-format
 msgid ", message reference=%d"
 msgstr ", Nachricht-Referenz=%d\n"
 
