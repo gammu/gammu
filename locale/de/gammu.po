@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 15:11+0200\n"
+"PO-Revision-Date: 2010-05-25 15:12+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -1485,9 +1485,8 @@ msgid "ERROR: unknown memory type (\"%s\")\n"
 msgstr "FEHLER: Unbekannter Speichertyp (\"%s\")\n"
 
 #: gammu/files.c:48
-#, fuzzy
 msgid "Phone memory"
-msgstr ", Telefonspeicher"
+msgstr "Telefonspeicher"
 
 #: gammu/files.c:49
 #, fuzzy, c-format
