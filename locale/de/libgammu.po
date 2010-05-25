@@ -69,7 +69,6 @@ msgstr ""
 "Unterstützung?"
 
 #: libgammu/gsmcomon.c:94
-#, fuzzy
 msgid "Error writing to the device."
 msgstr "Fehler beim Schreiben auf das Gerät."
 
