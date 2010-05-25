@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 15:21+0200\n"
+"PO-Revision-Date: 2010-05-25 15:22+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -1825,7 +1825,7 @@ msgstr "Parameter vor dem Komando konfigurieren das Verhalten von gammu:"
 
 #: gammu/gammu.c:795
 msgid "-c / --config <filename> ... name of configuration file"
-msgstr ""
+msgstr "-c / --config <filename> ... Name der Konfigurationsdatei"
 
 #: gammu/gammu.c:796
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
