@@ -1201,9 +1201,8 @@ msgid "Simlock data"
 msgstr "Daten zur SIM-Sperre"
 
 #: gammu/depend/nokia/dct4.c:872
-#, fuzzy
 msgid "Bluetooth"
-msgstr "Bluetooth: "
+msgstr "Bluetooth"
 
 #: gammu/depend/nokia/dct4.c:888
 msgid "UEM"
