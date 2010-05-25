@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-25 09:17+0200\n"
+"PO-Revision-Date: 2010-05-25 09:18+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -430,6 +430,8 @@ msgid ""
 "There is also an option to use gammu-smsd(1) when you want to send or "
 "receive more messages and process them automatically."
 msgstr ""
+"Es gibt auch eine Möglichkeit gammu-smsd(1) zu nutzen um mehr Nachrichten zu "
+"senden und zu empfangen und diese Vorgänge zu automatisieren."
 
 #. type: TP
 #: docs/user/gammu.1:130
