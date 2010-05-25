@@ -2103,7 +2103,7 @@ msgstr "..Fehler %i"
 #: gammu/message.c:535
 #, c-format
 msgid ", message reference=%d"
-msgstr ", Nachricht-Referenz=%d\n"
+msgstr ", Nachricht-Referenz=%d"
 
 #: gammu/message.c:568
 msgid "Message number"
