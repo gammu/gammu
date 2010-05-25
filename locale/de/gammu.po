@@ -1568,13 +1568,12 @@ msgid " (%02i:%02i minutes left)"
 msgstr " (%02i:%02i Minuten übrig)"
 
 #: gammu/files.c:410 gammu/files.c:617
-#, fuzzy
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
 "Die vom Telefon errechnete Dateiprüfsumme stimmt nicht mit der von Gammu "
-"ermittelten überein. Entweder ist die Datei korrupt oder in Gammu ist ein "
+"ermittelten überein. Entweder ist die Datei defkt oder in Gammu ist ein "
 "Fehler aufgetreten."
 
 #: gammu/files.c:442
