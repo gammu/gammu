@@ -83,7 +83,7 @@ msgstr "ÜBERSICHT"
 #. type: Plain text
 #: docs/user/gammu.1:11
 msgid "Usage: gammu [I<parameters>] E<lt>commandE<gt> [I<options>]"
-msgstr ""
+msgstr "Benutzung: gammu [I<parameters>] E<lt>commandE<gt> [I<options>]"
 
 #. type: SH
 #: docs/user/gammu.1:13 docs/user/gammurc.5:20 docs/user/gammu-smsdrc.5:9
