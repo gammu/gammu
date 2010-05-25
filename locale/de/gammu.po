@@ -463,9 +463,8 @@ msgid "Add phone phonebook entries?"
 msgstr "Telefonbucheintrag im Telefonspeicher hinzufügen?"
 
 #: gammu/backup.c:1633
-#, fuzzy
 msgid "Add SIM phonebook entries?"
-msgstr "Telefonbucheintrag auf der SIM-Karte hunzufügen"
+msgstr "Telefonbucheintrag auf der SIM-Karte hinzufügen?"
 
 #: gammu/backup.c:1665
 #, fuzzy
