@@ -24,10 +24,9 @@ msgid "No error."
 msgstr "Kein Fehler."
 
 #: libgammu/gsmcomon.c:85
-#, fuzzy
 msgid "Error opening device. Unknown, busy or no permissions."
 msgstr ""
-"Fehler beim Öffnen des Gerätes. Unbekannt/Belegt oder keine Berechtigung"
+"Fehler beim Öffnen des Gerätes. Unbekannt, Belegt oder keine Berechtigung"
 
 #: libgammu/gsmcomon.c:86
 msgid "Error opening device, it is locked."
