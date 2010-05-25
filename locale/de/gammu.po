@@ -1247,9 +1247,8 @@ msgid "Battery voltage, scaled:"
 msgstr "Batteriespannung, skaliert:"
 
 #: gammu/depend/nokia/dct4.c:1039
-#, fuzzy
 msgid "Charger voltage:"
-msgstr "Ladespannung"
+msgstr "Ladespannung:"
 
 #: gammu/depend/nokia/dct4.c:1040
 #, fuzzy
