@@ -479,9 +479,8 @@ msgid "Add phone WAP bookmarks?"
 msgstr "WAP-Lesezeichen hinzufügen?"
 
 #: gammu/backupsms.c:51
-#, fuzzy
 msgid "Delete each sms after backup?"
-msgstr "Lösche jedes SMS im Telefon nach dem Sichern in eine Datei"
+msgstr "Jede SMS im Telefon nach dem Sichern in eine Datei löschen?"
 
 #: gammu/backupsms.c:56
 #, fuzzy, c-format
