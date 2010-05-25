@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-25 08:51+0200\n"
+"PO-Revision-Date: 2010-05-25 08:52+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -118,7 +118,7 @@ msgstr "OPTIONEN"
 #. type: Plain text
 #: docs/user/gammu.1:24
 msgid "Parameters before command configure gammu behaviour:"
-msgstr ""
+msgstr "Parameter vor dem Komando konfigurieren das Verhalten von gammu:"
 
 # type: Plain text
 #. type: Plain text
