@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 15:12+0200\n"
+"PO-Revision-Date: 2010-05-25 15:13+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -1559,9 +1559,8 @@ msgid "Getting \"%s\"\n"
 msgstr "Hole \"%s\"\n"
 
 #: gammu/files.c:379
-#, fuzzy
 msgid "Is a folder. Please give only file names."
-msgstr "Es ist ein Ordner. Bitte nur Dateinamen angeben."
+msgstr "Ist ein Ordner. Bitte nur Dateinamen angeben."
 
 #: gammu/files.c:399 gammu/files.c:606
 #, c-format
