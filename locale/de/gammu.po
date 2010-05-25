@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 15:30+0200\n"
+"PO-Revision-Date: 2010-05-25 15:31+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -2217,9 +2217,8 @@ msgid "Latest version is %s and you run %s.\n"
 msgstr "Die neueste Version ist %s während Sie %s verwenden.\n"
 
 #: gammu/misc.c:218
-#, fuzzy
 msgid "Wrong network code from phone!\n"
-msgstr "Kein Netz-Code"
+msgstr "Falscher Netz-Code vom Telefon!\n"
 
 #: gammu/misc.c:246
 msgid "Request for information from OpenCellID failed!\n"
