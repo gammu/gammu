@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-25 08:52+0200\n"
+"PO-Revision-Date: 2010-05-25 08:54+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -132,6 +132,8 @@ msgstr "-c / --config E<lt>filenameE<gt> ... Name der Konfigurationsdatei"
 msgid ""
 "-s / --section E<lt>confignE<gt> ... section of config file to use, eg. 42"
 msgstr ""
+"-s / --section E<lt>confignE<gt> ... Zu verwendender Abschnitt der  "
+"Konfigurationsdatei, z.B. 42"
 
 # type: Plain text
 #. type: Plain text
