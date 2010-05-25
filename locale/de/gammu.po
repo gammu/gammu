@@ -471,9 +471,8 @@ msgid "Add phone calendar notes?"
 msgstr "Kalendernotiz hinzufügen?"
 
 #: gammu/backup.c:1689
-#, fuzzy
 msgid "Add phone ToDo?"
-msgstr "Aufgaben hinzufügen"
+msgstr "Aufgabe hinzufügen?"
 
 #: gammu/backup.c:1713
 #, fuzzy
