@@ -370,7 +370,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:106
 msgid "Splits call."
-msgstr ""
+msgstr "Teilt das Gespräch auf."
 
 #. type: TP
 #: docs/user/gammu.1:107
