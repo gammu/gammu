@@ -1702,9 +1702,9 @@ msgid "Batch processed, terminating.\n"
 msgstr "Stapelverarbeitungsdatei abgearbeitet. Beende.\n"
 
 #: gammu/gammu.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
-msgstr "Führe Stapelverarbeitungsdatei \"%s\" aus - Kommando %i: %s"
+msgstr "Führe Stapelverarbeitungsdatei \"%s\" aus - Kommando %i: %s\n"
 
 #: gammu/gammu.c:494
 msgid ""
