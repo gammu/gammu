@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 15:15+0200\n"
+"PO-Revision-Date: 2010-05-25 15:16+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -1682,7 +1682,7 @@ msgstr "There is NO WARRANTY, to the extent permitted by law."
 
 #: gammu/gammu.c:384
 msgid "Check <http://wammu.eu/gammu/> for updates."
-msgstr ""
+msgstr "Suche auf <http://wammu.eu/gammu/> nach Updates."
 
 #: gammu/gammu.c:410
 msgid "standard input"
