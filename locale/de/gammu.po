@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 15:28+0200\n"
+"PO-Revision-Date: 2010-05-25 15:29+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -2151,7 +2151,7 @@ msgstr "Sende SMS %i/%i"
 
 #: gammu/message.c:648
 msgid "Something went wrong, uknown message operation!\n"
-msgstr ""
+msgstr "Irgendetwas ging schief, unbekannte Nachrichten Operation!\n"
 
 #: gammu/message.c:684
 #, c-format
