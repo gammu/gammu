@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 14:28+0200\n"
+"PO-Revision-Date: 2010-05-25 14:29+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -314,9 +314,8 @@ msgstr "Telefon-Betreiberlogos wiederherstellen?"
 #: gammu/backup.c:1445 gammu/backup.c:1498 gammu/backup.c:1523
 #: gammu/backup.c:1612 gammu/backup.c:1640 gammu/backup.c:1673
 #: gammu/backup.c:1697 gammu/backup.c:1722 gammu/files.c:743
-#, fuzzy
 msgid "Writing:"
-msgstr "Warnung"
+msgstr "Schreibe:"
 
 #: gammu/backup.c:1000 gammu/backup.c:1068 gammu/backup.c:1129
 #: gammu/backup.c:1177 gammu/backup.c:1270 gammu/backup.c:1602
