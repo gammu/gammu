@@ -285,7 +285,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:80 docs/user/gammu.1:843
 msgid "Gets speed dial choices."
-msgstr ""
+msgstr "Zeige Kurzwahlübersicht."
 
 # type: TP
 #. type: TP
