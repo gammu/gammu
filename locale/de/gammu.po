@@ -438,9 +438,8 @@ msgid "Deleting old FM stations:"
 msgstr "Lösche alte UKW-Radiosender: "
 
 #: gammu/backup.c:1513
-#, fuzzy
 msgid "Restore phone GPRS Points?"
-msgstr "Stelle Telefon-GPRS-Zugangsknoten wieder her"
+msgstr "GPRS-Zugangsknoten wieder herstellen?"
 
 #: gammu/backup.c:1572 gammu/memory.c:30 gammu/memory.c:64 gammu/memory.c:136
 #: gammu/memory.c:172
