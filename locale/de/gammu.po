@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 15:06+0200\n"
+"PO-Revision-Date: 2010-05-25 15:07+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -1289,9 +1289,8 @@ msgid "Light sensor:"
 msgstr "Beleuchtungs Sensor:"
 
 #: gammu/depend/nokia/dct4.c:1046
-#, fuzzy
 msgid "Power amplifier temperature:"
-msgstr "Telefontemperatur"
+msgstr "Temperatur des Leistungsverstärkers:"
 
 #: gammu/depend/nokia/dct4.c:1047
 #, fuzzy
