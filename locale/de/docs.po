@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-25 09:19+0200\n"
+"PO-Revision-Date: 2010-05-25 09:20+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -456,7 +456,7 @@ msgstr "B<-smscnumber number> - SMSC Nummer"
 #. type: Plain text
 #: docs/user/gammu.1:138
 msgid "B<-reply> - reply SMSC is set"
-msgstr ""
+msgstr "B<-reply> - Antwort-SMSC setzen"
 
 #. type: Plain text
 #: docs/user/gammu.1:141
