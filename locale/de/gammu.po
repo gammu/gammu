@@ -2106,9 +2106,8 @@ msgid ", message reference=%d"
 msgstr ", Nachricht-Referenz=%d\n"
 
 #: gammu/message.c:568
-#, fuzzy
 msgid "Message number"
-msgstr "Pagernummer      "
+msgstr "Nachricht Nummer  "
 
 #: gammu/message.c:572
 #, fuzzy
