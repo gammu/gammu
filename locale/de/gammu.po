@@ -134,9 +134,8 @@ msgid "Checking phone calendar"
 msgstr "Überprüfe Telefon-Kalender"
 
 #: gammu/backup.c:368
-#, fuzzy
 msgid "Backup phone calendar notes?"
-msgstr "    Sichere Telefon-Kalender"
+msgstr "Sollen die Kalendereinträge des Telefons gesichert werden?"
 
 #: gammu/backup.c:381 gammu/backup.c:416 gammu/backup.c:453 gammu/backup.c:490
 #: gammu/backup.c:525 gammu/backup.c:591 gammu/backup.c:628 gammu/backup.c:665
