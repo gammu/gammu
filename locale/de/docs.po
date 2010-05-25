@@ -471,7 +471,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:143
 msgid "B<-folder number> - save to specified folder."
-msgstr ""
+msgstr "B<-folder number> - Speichern in der angegebenen Ordner."
 
 # type: Plain text
 #. type: Plain text
