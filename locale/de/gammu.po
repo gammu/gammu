@@ -1206,7 +1206,7 @@ msgstr "Bluetooth"
 
 #: gammu/depend/nokia/dct4.c:888
 msgid "UEM"
-msgstr ""
+msgstr "UEM"
 
 #: gammu/depend/nokia/dct4.c:961
 #, c-format
