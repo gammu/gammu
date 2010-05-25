@@ -163,7 +163,7 @@ msgstr "Kann gewählte Datei nicht öffnen. "
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
-msgstr "Mehr Speicher benötigt."
+msgstr "Mehr Speicher benötigt..."
 
 #: libgammu/gsmcomon.c:113
 #, fuzzy
