@@ -367,7 +367,6 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 	size_t pos = 0;
 	int type;
 	int vpf = 0;
-	int rp = 0;
 	int udh = 0;
 	int i,w;
 	unsigned char	output[161];
@@ -406,7 +405,6 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 	if (SMS->PDU == SMS_Submit || SMS->PDU == SMS_Deliver) {
 		if (type & (1 << 7)) {
 			smfprintf(di, ", Reply path set");
-			rp = 1;
 		}
 		if (type & (1 << 6)) {
 			smfprintf(di, ", UDH included");
