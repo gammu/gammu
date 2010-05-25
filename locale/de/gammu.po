@@ -1843,7 +1843,7 @@ msgstr ""
 
 #: gammu/gammu.c:798
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
-msgstr ""
+msgstr "-f / --debug-file <filename> ...Datei zum loggen der Debug-Meldungen"
 
 #: gammu/gammu.c:800
 msgid "Commands can be specified with or without leading --."
