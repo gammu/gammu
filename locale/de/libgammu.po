@@ -350,9 +350,8 @@ msgid "Unknown error description."
 msgstr "Unbekannte Fehlerbeschreibung."
 
 #: libgammu/phone/dummy/dummy.c:583
-#, fuzzy
 msgid "Templates"
-msgstr "%i Vorlagen"
+msgstr "Vorlagen"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1959
 msgid "Personal"
