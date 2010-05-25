@@ -434,7 +434,6 @@ msgid "Restore phone FM radio stations?"
 msgstr "UKW-Radiosender wieder herstellen?"
 
 #: gammu/backup.c:1487
-#, fuzzy
 msgid "Deleting old FM stations:"
 msgstr "Lösche alte UKW-Radiosender: "
 
