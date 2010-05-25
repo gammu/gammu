@@ -381,7 +381,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:110
 msgid "Switches call."
-msgstr "Schaltet das Gespräch weiter."
+msgstr "Schaltet das Gespräch um."
 
 #. type: TP
 #: docs/user/gammu.1:111
