@@ -919,7 +919,6 @@ msgid "Due time"
 msgstr "Fällig am"
 
 #: gammu/calendar.c:817
-#, fuzzy
 msgid "Start time"
 msgstr "Beginn"
 
