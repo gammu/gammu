@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-25 09:09+0200\n"
+"PO-Revision-Date: 2010-05-25 09:13+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -343,6 +343,8 @@ msgid ""
 "Get phone status and writes continuously to standard output. Press Ctrl+C to "
 "break this state."
 msgstr ""
+"Telefonstatus abfragen und laufend auf die Standardausgabe schreiben. "
+"Abbruch mit  Strg+C."
 
 # type: TP
 #. type: TP
