@@ -1314,7 +1314,7 @@ msgstr "Batterie-Stromstärke:"
 
 #: gammu/depend/nokia/dct4.c:1052
 msgid "Battery Current Fast:"
-msgstr ""
+msgstr "Schnellade-Stromstärke:"
 
 #: gammu/depend/nokia/dct4.c:1158
 msgid "Phone seems not to support radio"
