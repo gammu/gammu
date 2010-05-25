@@ -268,7 +268,6 @@ msgstr ""
 "Version des aktuell verwendeten Gammu."
 
 #: libgammu/gsmcomon.c:134
-#, fuzzy
 msgid "Only part of folder has been listed."
 msgstr "Nur ein Teil des Ordners wurde aufgelistet."
 
