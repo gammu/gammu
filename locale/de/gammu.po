@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 14:37+0200\n"
+"PO-Revision-Date: 2010-05-25 14:38+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -509,9 +509,9 @@ msgid "Do you want to restore binary SMS?"
 msgstr "Möchten Sie binär codierte Kurznachrichten wiederherstellen?"
 
 #: gammu/backupsms.c:180
-#, fuzzy, c-format
+#, c-format
 msgid "Restore %03i sms to folder \"%s\"%s?"
-msgstr "Stelle %03i SMS im Ordner \"%s\" wieder her"
+msgstr "Sollen %03i SMS im Ordner \"%s\"%s wieder hergestellt werden?"
 
 #: gammu/backupsms.c:184
 #, c-format
