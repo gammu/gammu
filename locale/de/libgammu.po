@@ -338,9 +338,8 @@ msgid "Could not connect to the server."
 msgstr "Keine Verbindung zum Server."
 
 #: libgammu/gsmcomon.c:151
-#, fuzzy
 msgid "Could not resolve the host name."
-msgstr "Konnte die gespeicherte Nachricht nicht lesen!"
+msgstr "Konnte den Hostnamen nicht auflösen."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
