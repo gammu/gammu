@@ -292,9 +292,8 @@ msgid "Internal phone error."
 msgstr "Interner Telefonfehler."
 
 #: libgammu/gsmcomon.c:140
-#, fuzzy
 msgid "Error writing file to disk."
-msgstr "Fehler beim Schreiben auf Gerät."
+msgstr "Fehler beim Schreiben auf die Platte."
 
 #: libgammu/gsmcomon.c:141
 msgid "No such section exists."
