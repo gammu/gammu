@@ -146,9 +146,8 @@ msgid "Only part of data saved, please increase %s."
 msgstr "Nur ein Teil der Daten wurde gespeichert - bitte vergrößern Sie %s"
 
 #: gammu/backup.c:399
-#, fuzzy
 msgid "Checking phone todos"
-msgstr "Überprüfe Telefon-Aufgaben"
+msgstr "Überprüfe die Aufgabenliste des Telefons"
 
 #: gammu/backup.c:402
 #, fuzzy
