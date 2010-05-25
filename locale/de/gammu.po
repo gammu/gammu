@@ -2208,9 +2208,8 @@ msgid "detached"
 msgstr "gelöst"
 
 #: gammu/misc.c:184
-#, fuzzy
 msgid "Never version of firmware is available!\n"
-msgstr "INFO: Es ist eine neuere Handy-Firmware (%s anstatt %s) verfügbar!\n"
+msgstr "INFO: Es ist eine neuere Handy-Firmware verfügbar!\n"
 
 #: gammu/misc.c:185
 #, c-format
