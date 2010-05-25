@@ -321,7 +321,7 @@ msgstr "Bluetooth Konfiguration benötigt \"Channel\" Angabe."
 
 #: libgammu/gsmcomon.c:147
 msgid "Service is not runnig."
-msgstr ""
+msgstr "Der Dienst läuft nicht."
 
 #: libgammu/gsmcomon.c:148
 #, fuzzy
