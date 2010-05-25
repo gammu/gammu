@@ -1648,10 +1648,9 @@ msgid "Miscellaneous"
 msgstr "Verschiedenes"
 
 #: gammu/gammu.c:341
-#, fuzzy, c-format
+#, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
-msgstr ""
-"INFO: Es ist eine neuere stabile Gammu-Version (%s anstatt %s) verfügbar!\n"
+msgstr "INFO: Es ist eine neuere stabile Gammu-Version (%s anstatt %s) verfügbar!\n"
 
 #: gammu/gammu.c:359
 #, fuzzy, c-format
