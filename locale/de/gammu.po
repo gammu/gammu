@@ -1278,7 +1278,7 @@ msgstr " K"
 
 #: gammu/depend/nokia/dct4.c:1043
 msgid "Headset interconnection:"
-msgstr "Headset-Verbindung"
+msgstr "Headset-Verbindung:"
 
 #: gammu/depend/nokia/dct4.c:1044
 msgid "Hook interconnection:"
