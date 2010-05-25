@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-25 09:21+0200\n"
+"PO-Revision-Date: 2010-05-25 09:22+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -486,6 +486,8 @@ msgid ""
 "The most often folder 1 = \"Inbox\", 2 = \"Outbox\",etc. Use "
 "B<getsmsfolders> to get folder list."
 msgstr ""
+"Gewöhnlich ist der Ordner 1 = \"Inbox\", 2 = \"Outbox\", usw.. Benutze den "
+"Befehl B<getsmsfolders>, um eine Ordnerliste angezeigt zu bekommen."
 
 # type: Plain text
 #. type: Plain text
