@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-25 09:20+0200\n"
+"PO-Revision-Date: 2010-05-25 09:21+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -464,6 +464,8 @@ msgid ""
 "B<-maxnum number> - Limit maximal number of messages which will be created. "
 "If there are more messages, Gammu will terminate with failure."
 msgstr ""
+"Höchstanzahl der Nachrichten, die erstellt werden. Wenn sich mehr "
+"Nachrichten ergeben, bricht Gammu mit einer Fehlermeldung ab."
 
 # type: Plain text
 #. type: Plain text
