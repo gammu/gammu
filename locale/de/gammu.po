@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 14:25+0200\n"
+"PO-Revision-Date: 2010-05-25 14:26+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -141,11 +141,9 @@ msgstr "Sollen die Kalendereinträge des Telefons gesichert werden?"
 #: gammu/backup.c:525 gammu/backup.c:591 gammu/backup.c:628 gammu/backup.c:665
 #: gammu/backup.c:702 gammu/backup.c:738 gammu/backup.c:778 gammu/backup.c:820
 #: gammu/backup.c:854 gammu/backup.c:891
-#, fuzzy, c-format
+#, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr ""
-"\n"
-"   Nur ein teil der Daten wurde gespeichert - vergrößern Sie %s"
+msgstr "Nur ein Teil der Daten wurde gespeichert - bitte vergrößern Sie %s"
 
 #: gammu/backup.c:399
 #, fuzzy
