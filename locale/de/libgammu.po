@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 09:34+0200\n"
+"PO-Revision-Date: 2010-05-25 09:35+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -144,11 +144,10 @@ msgid "Invalid location. Maybe too high?"
 msgstr "Ungültige Speicherstelle. Vielleicht zu hoch?"
 
 #: libgammu/gsmcomon.c:108
-#, fuzzy
 msgid "Functionality not implemented. You are welcome to help authors with it."
 msgstr ""
-"Die Funktion wird gerade geschrieben. Wenden Sie sich bitte an den Autor, "
-"wenn Sie Hilfe benötigen."
+"Die Funktion ist (noch) nicht implementiert. Sie können sich bitte an den "
+"Autor wenden, wenn Sie dazu beitragen möchten."
 
 #: libgammu/gsmcomon.c:109
 msgid "Memory full."
