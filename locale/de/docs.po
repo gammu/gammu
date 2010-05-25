@@ -142,6 +142,8 @@ msgid ""
 "-d / --debug E<lt>levelE<gt> ... debug level (see gammurc(5) for possible "
 "values)"
 msgstr ""
+"-d / --debug E<lt>levelE<gt> ... debug level (gammurc(5) nennt mögliche "
+"Werte)"
 
 # type: Plain text
 #. type: Plain text
