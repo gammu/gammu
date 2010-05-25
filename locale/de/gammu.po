@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 14:44+0200\n"
+"PO-Revision-Date: 2010-05-25 14:45+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -1240,7 +1240,7 @@ msgstr "Batteriespannung, geteilt:"
 #: gammu/depend/nokia/dct4.c:1048 gammu/depend/nokia/dct4.c:1049
 #: gammu/depend/nokia/dct4.c:1050
 msgid "mV"
-msgstr ""
+msgstr " mV"
 
 #: gammu/depend/nokia/dct4.c:1038
 #, fuzzy
