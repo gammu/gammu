@@ -505,9 +505,8 @@ msgid "Restore message?"
 msgstr "Kurznachricht wieder herstellen?"
 
 #: gammu/backupsms.c:168
-#, fuzzy
 msgid "Do you want to restore binary SMS?"
-msgstr "Möchten Sie binär codierte SMS wiederherstellen"
+msgstr "Möchten Sie binär codierte Kurznachrichten wiederherstellen?"
 
 #: gammu/backupsms.c:180
 #, fuzzy, c-format
