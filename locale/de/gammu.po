@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 14:30+0200\n"
+"PO-Revision-Date: 2010-05-25 14:31+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -363,9 +363,8 @@ msgid "Restore notes from the past?"
 msgstr "In der Vergangenheit liegende Kalendereinträge wiederherstellen?"
 
 #: gammu/backup.c:1137 gammu/backup.c:1276
-#, fuzzy
 msgid "Deleting old notes:"
-msgstr "Lösche alte Notizen:"
+msgstr "Lösche alte Einträge:"
 
 #: gammu/backup.c:1149 gammu/backup.c:1199 gammu/backup.c:1432
 #: gammu/backup.c:1490 gammu/misc.c:1342 gammu/misc.c:1387 gammu/misc.c:1411
