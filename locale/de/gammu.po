@@ -1821,7 +1821,7 @@ msgstr "Verwendung: gammu [parameters] <command> [options]"
 # type: Plain text
 #: gammu/gammu.c:794
 msgid "Parameters before command configure gammu behaviour:"
-msgstr ""
+msgstr "Parameter vor dem Komando konfigurieren das Verhalten von gammu:"
 
 #: gammu/gammu.c:795
 msgid "-c / --config <filename> ... name of configuration file"
