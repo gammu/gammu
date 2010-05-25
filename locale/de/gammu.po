@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 14:39+0200\n"
+"PO-Revision-Date: 2010-05-25 14:40+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -1126,13 +1126,13 @@ msgid "Setting done"
 msgstr "Einstellungen übernommen"
 
 #: gammu/depend/nokia/dct4.c:303
-#, fuzzy
 msgid ""
 "Sorry, but configuration matrix for this model has not yet been added. See "
 "<http://wammu.eu/support/bugs/> for information how to report it."
 msgstr ""
-"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
-"gammu/report> wo dieser Fehler zu melden ist."
+"Entschuldigung, aber die Konfigurations-Matrix für dieses Telefon wurde noch "
+"nicht eingefügt. Lesen Sie bitte unter <http://cihar.com/gammu/report> wo "
+"sie diese melden können"
 
 #: gammu/depend/nokia/dct4.c:369
 msgid "Passed"
