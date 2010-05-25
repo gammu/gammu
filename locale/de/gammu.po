@@ -426,9 +426,8 @@ msgid "Restore user ringtones?"
 msgstr "Benutzer-Klingeltöne wieder herstellen?"
 
 #: gammu/backup.c:1460
-#, fuzzy
 msgid "Restore phone profiles?"
-msgstr "Stelle Telefon-Profile wieder her"
+msgstr "Telefon-Profile wieder herstellen?"
 
 #: gammu/backup.c:1483
 #, fuzzy
