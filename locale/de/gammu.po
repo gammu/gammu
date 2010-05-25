@@ -1498,7 +1498,7 @@ msgid "Usage details"
 msgstr "Details der Nutzung"
 
 #: gammu/files.c:56
-#, fuzzy, c-format
+#, c-format
 msgid "images: %i, sounds: %i, themes: %i"
 msgstr "Belegt von: %i Bildern, %i Tönen, %i Designs"
 
