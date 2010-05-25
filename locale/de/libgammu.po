@@ -77,7 +77,6 @@ msgid "Error during reading from the device."
 msgstr "Fehler beim Lesen vom Gerät."
 
 #: libgammu/gsmcomon.c:96
-#, fuzzy
 msgid "Can't set parity on the device."
 msgstr "Kann die Parität auf dem Gerät nicht setzen."
 
