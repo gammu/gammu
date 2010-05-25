@@ -2201,7 +2201,7 @@ msgstr "GPRS"
 
 #: gammu/misc.c:66
 msgid "attached"
-msgstr ""
+msgstr "angefügt"
 
 #: gammu/misc.c:69
 msgid "detached"
