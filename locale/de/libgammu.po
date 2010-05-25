@@ -82,7 +82,9 @@ msgstr "Kann die Parität auf dem Gerät nicht setzen."
 
 #: libgammu/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
-msgstr "Keine Rückmeldung. Telefon möglicherweise nicht angeschlossen?"
+msgstr ""
+"Keine Rückmeldung in der spezifizierten Zeit. Telefon möglicherweise nicht "
+"angeschlossen?"
 
 #: libgammu/gsmcomon.c:98
 #, fuzzy
