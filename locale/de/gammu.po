@@ -150,9 +150,8 @@ msgid "Checking phone todos"
 msgstr "Überprüfe die Aufgabenliste des Telefons"
 
 #: gammu/backup.c:402
-#, fuzzy
 msgid "Backup phone todos?"
-msgstr "Telefon-Aufgaben sichern?"
+msgstr "Soll die Telefon-Aufgabenliste gesichert werden?"
 
 #: gammu/backup.c:436
 msgid "Checking phone notes"
