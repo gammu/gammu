@@ -1830,6 +1830,8 @@ msgstr "-c / --config <filename> ... Name der Konfigurationsdatei"
 #: gammu/gammu.c:796
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
 msgstr ""
+"-s / --section <confign> ... zu benutzender Abschnitt der "
+"Konfigurationsdatei, z.B. 42"
 
 #: gammu/gammu.c:797
 msgid ""
