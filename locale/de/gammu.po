@@ -377,7 +377,6 @@ msgid "Restore phone todo?"
 msgstr "Telefon-Aufgaben wiederherstellen?"
 
 #: gammu/backup.c:1187
-#, fuzzy
 msgid "Deleting old todos:"
 msgstr "Lösche alte Aufgaben:"
 
