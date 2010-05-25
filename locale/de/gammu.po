@@ -1265,7 +1265,7 @@ msgstr "Batteriegrößen Anzeige:"
 
 #: gammu/depend/nokia/dct4.c:1041
 msgid "Ohms"
-msgstr ""
+msgstr " Ohm"
 
 #: gammu/depend/nokia/dct4.c:1042
 #, fuzzy
