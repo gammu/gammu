@@ -419,6 +419,10 @@ msgid ""
 "be patient, the command line has been written in order to allow almost every "
 "usage. See EXAMPLE section for some hints on usage."
 msgstr ""
+"Das Versenden von Nachrichten mag beim ersten Mal ein wenig schwierig "
+"wirken. Aber haben Sie Geduld, die Befehlszeile wurde geschrieben, um allen "
+"Zwecken gerecht zu werden. Schauen Sie auch in den Abschnitt Beispiele für "
+"einige praktische Anwendungshinweise."
 
 #. type: Plain text
 #: docs/user/gammu.1:129
