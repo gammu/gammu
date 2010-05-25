@@ -915,7 +915,6 @@ msgid "None"
 msgstr "Keine"
 
 #: gammu/calendar.c:812
-#, fuzzy
 msgid "Due time"
 msgstr "Fällig am"
 
