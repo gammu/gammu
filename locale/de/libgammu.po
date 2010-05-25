@@ -158,9 +158,8 @@ msgid "Unknown error."
 msgstr "Unbekannter Fehler."
 
 #: libgammu/gsmcomon.c:111
-#, fuzzy
 msgid "Can not open specified file."
-msgstr "Kann gewählte Datei nicht öffnen. Keine Schreibberechtigung?"
+msgstr "Kann gewählte Datei nicht öffnen. "
 
 #: libgammu/gsmcomon.c:112
 msgid "More memory required..."
