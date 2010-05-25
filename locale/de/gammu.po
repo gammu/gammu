@@ -1699,7 +1699,7 @@ msgstr "Fehler beim Lesen der Stapelverarbeitungsdatei. Breche ab.\n"
 
 #: gammu/gammu.c:434
 msgid "Batch processed, terminating.\n"
-msgstr ""
+msgstr "Stapelverarbeitungsdatei abgearbeitet. Beende.\n"
 
 #: gammu/gammu.c:471
 #, fuzzy, c-format
