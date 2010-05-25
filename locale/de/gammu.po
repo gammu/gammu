@@ -85,9 +85,8 @@ msgstr ""
 "Nur ein Teil der Daten wurde gespeichert - bitte vergrößern Sie das Limit."
 
 #: gammu/backup.c:262 gammu/backup.c:424 gammu/mms.c:182
-#, fuzzy
 msgid "Reading:"
-msgstr "Lese"
+msgstr "Lese:"
 
 #: gammu/backup.c:263 gammu/backup.c:425 gammu/backup.c:975
 #: gammu/backup.c:1050 gammu/backup.c:1103 gammu/backup.c:1161
