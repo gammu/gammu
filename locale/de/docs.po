@@ -124,7 +124,7 @@ msgstr "Parameter vor dem Komando konfigurieren das Verhalten von gammu:"
 #. type: Plain text
 #: docs/user/gammu.1:26
 msgid "-c / --config E<lt>filenameE<gt> ... name of configuration file"
-msgstr ""
+msgstr "-c / --config E<lt>filenameE<gt> ... Name der Konfigurationsdatei"
 
 # type: Plain text
 #. type: Plain text
