@@ -1285,9 +1285,8 @@ msgid "Hook interconnection:"
 msgstr "Telefonverbindung:"
 
 #: gammu/depend/nokia/dct4.c:1045
-#, fuzzy
 msgid "Light sensor:"
-msgstr "Beleuchtung"
+msgstr "Beleuchtungs Sensor:"
 
 #: gammu/depend/nokia/dct4.c:1046
 #, fuzzy
