@@ -373,7 +373,6 @@ msgid "Done"
 msgstr "Fertig"
 
 #: gammu/backup.c:1179
-#, fuzzy
 msgid "Restore phone todo?"
 msgstr "Telefon-Aufgaben wiederherstellen?"
 
