@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-19 17:17+0200\n"
-"PO-Revision-Date: 2010-05-25 14:35+0200\n"
+"PO-Revision-Date: 2010-05-25 14:36+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -483,9 +483,9 @@ msgid "Delete each sms after backup?"
 msgstr "Jede SMS im Telefon nach dem Sichern in eine Datei löschen?"
 
 #: gammu/backupsms.c:56
-#, fuzzy, c-format
+#, c-format
 msgid "Backup sms from folder \"%s\"%s?"
-msgstr "Sende SMS aus dem Ordner \"%s\", Speicherplatz %i\n"
+msgstr "SMS aus Ordner \"%s\"%s sichern?"
 
 #: gammu/backupsms.c:58 gammu/backupsms.c:183
 msgid " (SIM)"
