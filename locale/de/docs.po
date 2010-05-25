@@ -450,7 +450,7 @@ msgstr "B<-smscset number> - SMSC wird aus  set B<number> gelesen. Default: 1"
 #. type: Plain text
 #: docs/user/gammu.1:136
 msgid "B<-smscnumber number> - SMSC number"
-msgstr ""
+msgstr "B<-smscnumber number> - SMSC Nummer"
 
 # type: Plain text
 #. type: Plain text
