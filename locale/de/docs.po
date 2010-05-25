@@ -273,7 +273,7 @@ msgstr "number - Nummer, zu der umgeleitet wird."
 #. type: Plain text
 #: docs/user/gammu.1:75
 msgid "timeout - timeout when the diversion will happen"
-msgstr ""
+msgstr "timeout - Zeit bis zur Rufumleitung"
 
 # type: TP
 #. type: TP
