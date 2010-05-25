@@ -1946,13 +1946,12 @@ msgstr ""
 "Telefonfirmware auf Version 4.06 oder höher"
 
 #: gammu/memory.c:90
-#, fuzzy
 msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 6.00"
 msgstr ""
 "Sie werden keine Namen in den Einträgen erhalten.  Erneuern Sie die "
-"Telefonfirmware auf Version 4.06 oder höher"
+"Telefonfirmware auf Version 6.00 oder höher"
 
 #: gammu/memory.c:108 gammu/misc.c:1866 gammu/misc.c:2231
 msgid "Entry is empty"
