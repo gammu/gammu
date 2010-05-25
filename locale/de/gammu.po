@@ -1293,9 +1293,8 @@ msgid "Power amplifier temperature:"
 msgstr "Temperatur des Leistungsverstärkers:"
 
 #: gammu/depend/nokia/dct4.c:1047
-#, fuzzy
 msgid "VCXO temperature:"
-msgstr "Telefontemperatur"
+msgstr "Temperatur des VCXO:"
 
 #: gammu/depend/nokia/dct4.c:1048
 msgid "Resistive keyboard 1/headint2:"
