@@ -477,7 +477,7 @@ msgstr "B<-folder number> - Speichern in der angegebenen Ordner."
 #. type: Plain text
 #: docs/user/gammu.1:145
 msgid "Folders are numerated from 1."
-msgstr ""
+msgstr "Ordner sind von '1' an durchnummeriert."
 
 # type: Plain text
 #. type: Plain text
