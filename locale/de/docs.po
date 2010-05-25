@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-04-27 10:54+0300\n"
-"PO-Revision-Date: 2010-05-25 08:50+0200\n"
+"PO-Revision-Date: 2010-05-25 08:51+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: none\n"
 "Language: de\n"
@@ -103,6 +103,9 @@ msgid ""
 "This program is a tool for mobile phones. Many vendors and phones are "
 "supported, for actual listing see E<lt>http://wammu.eu/phones/E<gt>."
 msgstr ""
+"Dieses Programm ist ein Werkzeug für Mobiltelefone. Es unterstützt viele "
+"Anbieter und Telefone. Eine Übersicht findet man unter "
+"E<lt>http://wammu.eu/phones/E<gt>."
 
 # type: SH
 #. type: SH
