@@ -99,16 +99,16 @@ msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter "
-"<http://cihar.com/gammu/report> wo dieser Fehler zu melden ist."
+"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
+"gammu/report> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:100
 msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Unbekannter Rückantwort-Frame vom Telefon. Lesen Sie bitte unter "
-"<http://cihar.com/gammu/report> wo dieser Fehler zu melden ist."
+"Unbekannter Rückantwort-Frame vom Telefon. Lesen Sie bitte unter <http://"
+"cihar.com/gammu/report> wo dieser Fehler zu melden ist."
 
 #: libgammu/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
@@ -213,8 +213,8 @@ msgstr ""
 #: libgammu/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
-"Die Übertragung wurde vom Telefon abgebrochen. Vielleicht haben Sie "
-"\"Abbruch\" am Telefon gedrückt."
+"Die Übertragung wurde vom Telefon abgebrochen. Vielleicht haben Sie \"Abbruch"
+"\" am Telefon gedrückt."
 
 #: libgammu/gsmcomon.c:122
 msgid "Phone module need to send another answer frame."
@@ -313,7 +313,8 @@ msgstr "Falsche Feature-Angabe in der Konfiguration."
 
 #: libgammu/gsmcomon.c:145
 msgid "Desired functionality has been disabled on compile time."
-msgstr "Die gewünschte Funktionalität wurde bei der Kompilierung ausgeschaltet."
+msgstr ""
+"Die gewünschte Funktionalität wurde bei der Kompilierung ausgeschaltet."
 
 #: libgammu/gsmcomon.c:146
 msgid "Bluetooth configuration requires channel option."

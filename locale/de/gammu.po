@@ -333,8 +333,8 @@ msgid ""
 "Probably caller group is missing from your backup, add it and use --restore "
 "again."
 msgstr ""
-"Wahrscheinlich fehlt die \"caller group\" in Ihrem Backup, fügen Sie sie hinzu "
-"und führen Sie --restore erneut aus."
+"Wahrscheinlich fehlt die \"caller group\" in Ihrem Backup, fügen Sie sie "
+"hinzu und führen Sie --restore erneut aus."
 
 #: gammu/backup.c:1030 gammu/backup.c:1089
 #, c-format
@@ -1650,12 +1650,14 @@ msgstr "Verschiedenes"
 #: gammu/gammu.c:341
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
-msgstr "INFO: Es ist eine neuere stabile Gammu-Version (%s anstatt %s) verfügbar!\n"
+msgstr ""
+"INFO: Es ist eine neuere stabile Gammu-Version (%s anstatt %s) verfügbar!\n"
 
 #: gammu/gammu.c:359
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
-msgstr "INFO: Es ist eine neuere Testversion von Gammu (%s anstatt %s) verfügbar!\n"
+msgstr ""
+"INFO: Es ist eine neuere Testversion von Gammu (%s anstatt %s) verfügbar!\n"
 
 #: gammu/gammu.c:372
 msgid ""
@@ -1669,12 +1671,13 @@ msgid ""
 "License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
 "GPL/2.0/>."
 msgstr ""
-"License GPLv2: GNU GPL version 2 "
-"<http://creativecommons.org/licenses/GPL/2.0/>."
+"License GPLv2: GNU GPL version 2 <http://creativecommons.org/licenses/"
+"GPL/2.0/>."
 
 #: gammu/gammu.c:378
 msgid "This is free software: you are free to change and redistribute it."
-msgstr "Dies ist freie Software: Sie dürfen sie verändern und weiterverbreiten."
+msgstr ""
+"Dies ist freie Software: Sie dürfen sie verändern und weiterverbreiten."
 
 #: gammu/gammu.c:380
 msgid "There is NO WARRANTY, to the extent permitted by law."
@@ -1719,8 +1722,8 @@ msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
 msgstr ""
-"Der SMS Dämon ist jetzt ein eigenes Programm, bitte gammu-smsd anstelle von "
-" gammu smsd benutzen!"
+"Der SMS Dämon ist jetzt ein eigenes Programm, bitte gammu-smsd anstelle von  "
+"gammu smsd benutzen!"
 
 #: gammu/gammu.c:746
 msgid "Calls"
@@ -1838,8 +1841,8 @@ msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
 msgstr ""
-"-d / --debug <level> ... debug level "
-"(nothing|text|textall|textalldate|binary|errors)"
+"-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
+"binary|errors)"
 
 #: gammu/gammu.c:798
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
