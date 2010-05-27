@@ -1374,9 +1374,9 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	unsigned char *pos = NULL;
 	int code = 0;
 	int gsm7 = 0;
-	char hex_encoded[2 * (GSM_MAX_USSD_LENGTH + 1)]={0};
-	char packed[GSM_MAX_USSD_LENGTH + 1]={0};
-	char decoded[GSM_MAX_USSD_LENGTH + 1]={0};
+	char hex_encoded[2 * (GSM_MAX_USSD_LENGTH + 1)] = {0};
+	char packed[GSM_MAX_USSD_LENGTH + 1] = {0};
+	char decoded[GSM_MAX_USSD_LENGTH + 1] = {0};
 
 	/*
 	 * Reply format:
