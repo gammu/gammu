@@ -26,6 +26,7 @@ ChangeLog
 [-] * Fixed waiting for more multipart messages (bug #1193).
 [-] * Fixed parsing of cellid reply with different locales (bug #1202).
 [-] * Fixed handling of timeouts from libusb (bug #1207).
+[-] * Properly detect birthday on Nokia 2700 (bug #1213).
     
 20100413 - 1.27.93
 
