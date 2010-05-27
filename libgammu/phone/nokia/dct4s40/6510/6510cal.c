@@ -118,7 +118,7 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		case 0x04: smprintf(s,"Birthday\n"); entry->Type = GSM_CAL_BIRTHDAY; break;
 		case 0x08: smprintf(s,"Memo\n");     entry->Type = GSM_CAL_MEMO;     break;
 		case 0x20: smprintf(s,"Birthday\n"); entry->Type = GSM_CAL_BIRTHDAY; break;
-		default  : smprintf(s,"unknown\n");
+		default  : smprintf(s,"unknown\n");  entry->Type = GSM_CAL_MEMO;
 	}
 
 	smprintf(s,"StartTime: %04i-%02i-%02i %02i:%02i\n",
