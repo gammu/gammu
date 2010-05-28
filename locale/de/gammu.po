@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0200\n"
-"PO-Revision-Date: 2010-05-28 14:21+0200\n"
+"PO-Revision-Date: 2010-05-28 14:22+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -2675,9 +2675,8 @@ msgid "Delete phone phonebook?"
 msgstr "Telefonbuch des Telefons löschen?"
 
 #: gammu/misc.c:1363
-#, fuzzy
 msgid "Delete SIM phonebook?"
-msgstr "Lösche das Telefonbuch auf der SIM-Karte"
+msgstr "Telefonbuch auf der SIM-Karte löschen?"
 
 #: gammu/misc.c:1364
 #, fuzzy
