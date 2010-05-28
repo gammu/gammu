@@ -2776,9 +2776,8 @@ msgid "IP address"
 msgstr "IP-Adresse"
 
 #: gammu/misc.c:1506 gammu/misc.c:1508 gammu/misc.c:1552 gammu/misc.c:1554
-#, fuzzy
 msgid "Login type"
-msgstr "Typ des Inhalts"
+msgstr "Login Typ"
 
 #: gammu/misc.c:1506 gammu/misc.c:1552
 #, fuzzy
