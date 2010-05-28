@@ -2796,9 +2796,8 @@ msgid "Normal"
 msgstr "Normal"
 
 #: gammu/misc.c:1513 gammu/misc.c:1559
-#, fuzzy
 msgid "Secure"
-msgstr "Server"
+msgstr "Sicher"
 
 #: gammu/misc.c:1516 gammu/misc.c:1518
 #, fuzzy
