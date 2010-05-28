@@ -31,7 +31,7 @@ msgstr "Kalendernotizen nicht in der Datei gefunden"
 
 #: gammu/backup.c:70
 msgid "WAP bookmark not found in file"
-msgstr "WAP-Lesezeichen nicht in Datei gefunden"
+msgstr "WAP-Lesezeichen nicht in der Datei gefunden"
 
 #: gammu/backup.c:91
 msgid "Note not found in file"
