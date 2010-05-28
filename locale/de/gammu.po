@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0200\n"
-"PO-Revision-Date: 2010-05-28 14:34+0200\n"
+"PO-Revision-Date: 2010-05-28 14:35+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -2942,7 +2942,7 @@ msgstr "Der Text ist zu lang, kürze ihn auf %d Zeichen!\n"
 
 #: gammu/misc.c:1933
 msgid "Invalid security code type"
-msgstr ""
+msgstr "Ungüliger Typ des Sicherheitscodes"
 
 #: gammu/misc.c:1938
 #, c-format
