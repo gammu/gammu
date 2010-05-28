@@ -2394,7 +2394,6 @@ msgid "Enabling info about USSD"
 msgstr "Aktiviere Infos über USSD"
 
 #: gammu/misc.c:507
-#, fuzzy
 msgid "Todos"
 msgstr "Aufgaben"
 
