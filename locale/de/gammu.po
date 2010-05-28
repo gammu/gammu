@@ -2800,9 +2800,8 @@ msgid "Secure"
 msgstr "Sicher"
 
 #: gammu/misc.c:1516 gammu/misc.c:1518
-#, fuzzy
 msgid "Data call type"
-msgstr "Datenanruf"
+msgstr "Typ des Datenanrufs"
 
 #: gammu/misc.c:1516
 msgid "ISDN"
