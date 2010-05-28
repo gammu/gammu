@@ -2809,7 +2809,7 @@ msgstr "ISDN"
 
 #: gammu/misc.c:1518
 msgid "Analogue"
-msgstr ""
+msgstr "Analog"
 
 #: gammu/misc.c:1522 gammu/misc.c:1525 gammu/misc.c:1528
 #, fuzzy
