@@ -48,7 +48,7 @@ msgstr "Wie lautet der Backup-Dateiname, der -Pfad und der Speichertyp?"
 #: gammu/backup.c:134 gammu/backup.c:145 helper/message-cmdline.c:536
 #: helper/message-cmdline.c:546
 msgid "Phonebook entry not found in file"
-msgstr "Kein Telefonbucheintrag in der Datei gefunden"
+msgstr "Telefonbucheintrag nicht in der Datei gefunden"
 
 #: gammu/backup.c:151 helper/message-cmdline.c:551
 #, c-format
