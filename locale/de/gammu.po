@@ -2261,7 +2261,7 @@ msgstr "\"nbSamples\" in der OpenCellID nicht lesbar!\n"
 
 #: gammu/misc.c:301
 msgid "Latitude"
-msgstr ""
+msgstr "Geographische Breite"
 
 #: gammu/misc.c:302
 #, fuzzy
