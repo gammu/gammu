@@ -2882,9 +2882,8 @@ msgid "Homepage"
 msgstr "Homepage"
 
 #: gammu/misc.c:1683
-#, fuzzy
 msgid "active"
-msgstr " (aktiv)"
+msgstr " aktiv"
 
 #: gammu/misc.c:1687
 #, fuzzy
