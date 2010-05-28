@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0200\n"
-"PO-Revision-Date: 2010-05-28 14:22+0200\n"
+"PO-Revision-Date: 2010-05-28 14:23+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -2687,9 +2687,8 @@ msgid "Delete dialled calls?"
 msgstr "Gewählte Rufnummern löschen?"
 
 #: gammu/misc.c:1366
-#, fuzzy
 msgid "Delete received calls?"
-msgstr "Lösche erhaltene Anrufe"
+msgstr "Erhaltene Anrufe löschen?"
 
 #: gammu/misc.c:1371
 #, fuzzy
