@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0200\n"
-"PO-Revision-Date: 2010-05-28 14:20+0200\n"
+"PO-Revision-Date: 2010-05-28 14:21+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -2272,9 +2272,8 @@ msgid "Range"
 msgstr "Abstand"
 
 #: gammu/misc.c:304
-#, fuzzy
 msgid "Number of samples"
-msgstr "Anzahl der SMS: %i"
+msgstr "Anzahl der Messwerte"
 
 #: gammu/misc.c:325
 msgid "Device"
