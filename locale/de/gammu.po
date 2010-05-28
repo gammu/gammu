@@ -2264,9 +2264,8 @@ msgid "Latitude"
 msgstr "Geographische Breite"
 
 #: gammu/misc.c:302
-#, fuzzy
 msgid "Longitude"
-msgstr "Typ des Inhalts"
+msgstr "Geographische Länge"
 
 #: gammu/misc.c:303
 #, fuzzy
