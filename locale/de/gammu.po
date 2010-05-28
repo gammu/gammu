@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0200\n"
-"PO-Revision-Date: 2010-05-28 14:33+0200\n"
+"PO-Revision-Date: 2010-05-28 14:34+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -2812,9 +2812,8 @@ msgid "Analogue"
 msgstr "Analog"
 
 #: gammu/misc.c:1522 gammu/misc.c:1525 gammu/misc.c:1528
-#, fuzzy
 msgid "Data call speed"
-msgstr "Datenanruf"
+msgstr "Geschwindigkeit des Datenanrufs"
 
 #: gammu/misc.c:1528 gammu/misc.c:2086
 msgid "Auto"
