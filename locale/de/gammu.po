@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0200\n"
-"PO-Revision-Date: 2010-05-28 14:23+0200\n"
+"PO-Revision-Date: 2010-05-28 14:24+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -2699,9 +2699,8 @@ msgid "Delete phone todos?"
 msgstr "Aufgaben im Telefon löschen?"
 
 #: gammu/misc.c:1419
-#, fuzzy
 msgid "Delete phone notes?"
-msgstr "Lösche Notizen"
+msgstr "Notizen im Telefon löschen?"
 
 #: gammu/misc.c:1437
 #, fuzzy
