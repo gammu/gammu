@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "12. duben 2010" "Gammu 1.27.94" "Dokumentace Gammu"
+.TH GAMMU 1 "May 12 2010" "Gammu 1.27.94" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -186,11 +186,19 @@ platná (SMSC zruší zprávu po této době pokud se jí nepodařilo doručit).
 
 Gammu podporuje mnoho formátů SMS včetně:
 
- * Nokia Smart Messaging (used for monochromatic picture images, downloadable profiles, monochromatic operator logos, monochromatic caller logos and monophonic ringtones)
- * Linked SMS (both with 8 and 16\-bit identification numbers in headers)
- * EMS (this is SMS format used for saving monochromatic images, monophonic ringtones, animations, text formatting and others)
- * MMS notifications
- * Alcatel logo messages
+\fBNokia Smart Messaging\fP (used for monochromatic picture images,
+downloadable profiles, monochromatic operator logos, monochromatic caller
+logos and monophonic ringtones)
+
+\fBLinked SMS\fP (both with 8 and 16\-bit identification numbers in headers)
+
+\fBEMS\fP (this is SMS format used for saving monochromatic images, monophonic
+ringtones, animations, text formatting and others)
+
+\fBMMS notifications\fP
+
+\fBAlcatel logo messages\fP
+
 
 You need to ensure that the target phone supports message type you want to
 send. Otherwise the phone will not be able to display it or will even crash,
@@ -201,15 +209,24 @@ because firmware of phone did not expect this possibility.
 
 Text v SMS zprávě může být zakódován dvěmi způsoby:
 
-* with GSM Default Alphabet \- in single SMS you can have maximally 160 chars (Gammu doesn't support compressing such texts according to GSM standards, but it isn't big limit, because there are no phones supporting them), but they're from limited set:
+with \fBGSM Default Alphabet\fP \- in single SMS you can have maximally 160
+chars (Gammu doesn't support compressing such texts according to GSM
+standards, but it isn't big limit, because there are no phones supporting
+them), but they're from limited set:
+
   * all Latin small and large
+
   * all digits
+
   * some Greek
+
   * some other national
+
   * some symbols like  @Â\ ! " # & / ( )Â\ % * + = \- , .Â\ :Â\ ; < >Â\ ?
+
   * few others
 
-* with Unicode \- in single SMS you can save at most 70 chars, but these can
+with \fBUnicode\fP \- in single SMS you can save at most 70 chars, but these can
 be any chars including all national and special ones. Please note, that some
 older phones might have problems displaying such message.
 
