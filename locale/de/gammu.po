@@ -2671,9 +2671,8 @@ msgid "Unknown parameter (\"%s\")"
 msgstr "Unbekannter Parameter (\"%s\")"
 
 #: gammu/misc.c:1362
-#, fuzzy
 msgid "Delete phone phonebook?"
-msgstr "Lösche das Telefonbuch des Telefons"
+msgstr "Telefonbuch des Telefons löschen?"
 
 #: gammu/misc.c:1363
 #, fuzzy
