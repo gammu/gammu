@@ -2253,7 +2253,7 @@ msgstr "Abstand in der OpenCellID nicht lesbar!\n"
 
 #: gammu/misc.c:285
 msgid "Failed to find nbSamples in OpenCellID reply!\n"
-msgstr "\"nbSamples\" nicht in der OpenCellID gefunden!\n"
+msgstr "Anzahl der Messwerte nicht in der OpenCellID gefunden!\n"
 
 #: gammu/misc.c:290
 msgid "Failed to parse nbSamples from OpenCellID reply!\n"
