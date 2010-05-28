@@ -2679,9 +2679,8 @@ msgid "Delete SIM phonebook?"
 msgstr "Telefonbuch auf der SIM-Karte löschen?"
 
 #: gammu/misc.c:1364
-#, fuzzy
 msgid "Delete missed calls?"
-msgstr "Lösche verpasste Anrufe"
+msgstr "Verpasste Anrufe löschen?"
 
 #: gammu/misc.c:1365
 #, fuzzy
