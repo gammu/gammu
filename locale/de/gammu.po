@@ -2237,7 +2237,7 @@ msgstr "Geographische Breite in der OpenCellID nicht lesbar!\n"
 
 #: gammu/misc.c:263
 msgid "Failed to find longitude in OpenCellID reply!\n"
-msgstr ""
+msgstr "Geographische Länge nicht in der OpenCellID gefunden!\n"
 
 #: gammu/misc.c:268
 msgid "Failed to parse longitude from OpenCellID reply!\n"
