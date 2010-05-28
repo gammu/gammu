@@ -5,12 +5,13 @@
 # Automatically generated <>, 2009.
 #  <>, 2009.
 # Michal <michal@cihar.com>, 20, 2010.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0300\n"
-"PO-Revision-Date: 2010-05-14 11:52+0200\n"
+"PO-Revision-Date: 2010-05-28 13:32+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -30,9 +31,9 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "May 12 2010"
-msgstr "Květen 2007"
+msgstr "12. Květen 2010"
 
 # type: TH
 #. type: TH
@@ -613,12 +614,12 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:185
 msgid "B<MMS notifications>"
-msgstr ""
+msgstr "B<MMS notifikace>"
 
 #. type: Plain text
 #: docs/user/gammu.1:187
 msgid "B<Alcatel logo messages>"
-msgstr ""
+msgstr "B<Zprávy s logem pro Alcatel>"
 
 #. type: Plain text
 #: docs/user/gammu.1:192
@@ -652,37 +653,37 @@ msgstr ""
 #: docs/user/gammu.1:201
 #, no-wrap
 msgid "  * all Latin small and large\n"
-msgstr ""
+msgstr "  * všechny písmena latinky, malá i velká\n"
 
 #. type: Plain text
 #: docs/user/gammu.1:203
 #, no-wrap
 msgid "  * all digits\n"
-msgstr ""
+msgstr "  * všechna čísla\n"
 
 #. type: Plain text
 #: docs/user/gammu.1:205
 #, no-wrap
 msgid "  * some Greek\n"
-msgstr ""
+msgstr "  * některá řecká písmena\n"
 
 #. type: Plain text
 #: docs/user/gammu.1:207
 #, no-wrap
 msgid "  * some other national\n"
-msgstr ""
+msgstr "  * některé další národní znaky\n"
 
 #. type: Plain text
 #: docs/user/gammu.1:209
 #, no-wrap
 msgid "  * some symbols like  @ ! \" # & / ( ) % * + = - , . : ; E<lt> E<gt> ?\n"
-msgstr ""
+msgstr "  * některé symboly jako  @ ! \" # & / ( ) % * + = - , . : ; E<lt> E<gt> ?\n"
 
 #. type: Plain text
 #: docs/user/gammu.1:211
 #, no-wrap
 msgid "  * few others\n"
-msgstr ""
+msgstr "  * pár dalších\n"
 
 #. type: Plain text
 #: docs/user/gammu.1:215
@@ -1235,6 +1236,16 @@ msgid ""
 "    u - underlined font\n"
 "    t - strikethrough font\n"
 msgstr ""
+"B<-format> lcrasbiut - poslední část textu bude naformátována. Můžete použít následující znaky:\n"
+"    l - zarovnané vlevo\n"
+"    c - zarovnané na střed\n"
+"    r - zarovnané vpravo\n"
+"    a - velké písmo\n"
+"    s - malé písmo\n"
+"    b - tučné\n"
+"    i - kurzíva\n"
+"    u - podtržení\n"
+"    t - přeškrtnutí\n"
 
 # type: Plain text
 #. type: Plain text
@@ -5379,9 +5390,9 @@ msgstr "Nepodařilo se přeložit jméno počítače."
 
 #. type: SS
 #: docs/user/gammu.1:2843
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "169"
-msgstr "106"
+msgstr "169"
 
 #. type: Plain text
 #: docs/user/gammu.1:2845
