@@ -2784,9 +2784,8 @@ msgid "Manual"
 msgstr "Von Hand"
 
 #: gammu/misc.c:1508 gammu/misc.c:1554
-#, fuzzy
 msgid "Automatic"
-msgstr "Automatische Antwort"
+msgstr "Automatisch"
 
 #: gammu/misc.c:1511 gammu/misc.c:1513 gammu/misc.c:1557 gammu/misc.c:1559
 #, fuzzy
