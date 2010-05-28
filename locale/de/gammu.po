@@ -2836,9 +2836,8 @@ msgid "Service code"
 msgstr "Dienst Code"
 
 #: gammu/misc.c:1540 gammu/misc.c:1543
-#, fuzzy
 msgid "Address type"
-msgstr "Adresse"
+msgstr "Adresstyp"
 
 #: gammu/misc.c:1561
 msgid "Access point"
