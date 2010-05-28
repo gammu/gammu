@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0200\n"
-"PO-Revision-Date: 2010-05-28 14:16+0200\n"
+"PO-Revision-Date: 2010-05-28 14:17+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -2241,7 +2241,7 @@ msgstr "Geographische Länge nicht in der OpenCellID gefunden!\n"
 
 #: gammu/misc.c:268
 msgid "Failed to parse longitude from OpenCellID reply!\n"
-msgstr ""
+msgstr "Geographische Länge in der OpenCellID nicht lesbar"
 
 #: gammu/misc.c:274
 msgid "Failed to find range in OpenCellID reply!\n"
