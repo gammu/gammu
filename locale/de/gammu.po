@@ -2692,7 +2692,7 @@ msgstr "Erhaltene Anrufe löschen?"
 
 #: gammu/misc.c:1371
 msgid "Delete phone calendar notes?"
-msgstr "Kalendernotizen löschen?"
+msgstr "Kalendernotizen im Telefon löschen?"
 
 #: gammu/misc.c:1395
 msgid "Delete phone todos?"
