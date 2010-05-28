@@ -39,7 +39,7 @@ msgstr "Notiz nicht in der Datei gefunden"
 
 #: gammu/backup.c:112
 msgid "Todo note not found in file"
-msgstr "Aufgabe nicht in der Datei gefunden"
+msgstr "Aufgabenliste nicht in der Datei gefunden"
 
 #: gammu/backup.c:121 helper/message-cmdline.c:524
 msgid "Where is backup filename and location and memory type?"
