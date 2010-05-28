@@ -2715,9 +2715,8 @@ msgid "Connection type"
 msgstr "Verbindungstyp"
 
 #: gammu/misc.c:1476
-#, fuzzy
 msgid "Continuous"
-msgstr "Stau"
+msgstr "Dauerhaft"
 
 #: gammu/misc.c:1478
 #, fuzzy
