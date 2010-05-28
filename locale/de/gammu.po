@@ -2691,9 +2691,8 @@ msgid "Delete received calls?"
 msgstr "Erhaltene Anrufe löschen?"
 
 #: gammu/misc.c:1371
-#, fuzzy
 msgid "Delete phone calendar notes?"
-msgstr "Lösche Kalendernotiz"
+msgstr "Kalendernotizen löschen?"
 
 #: gammu/misc.c:1395
 #, fuzzy
