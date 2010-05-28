@@ -2696,7 +2696,7 @@ msgstr "Kalendernotizen im Telefon löschen?"
 
 #: gammu/misc.c:1395
 msgid "Delete phone todos?"
-msgstr "Aufgaben löschen?"
+msgstr "Aufgaben im Telefon löschen?"
 
 #: gammu/misc.c:1419
 #, fuzzy
