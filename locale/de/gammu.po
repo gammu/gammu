@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0200\n"
-"PO-Revision-Date: 2010-05-28 14:13+0200\n"
+"PO-Revision-Date: 2010-05-28 14:15+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -2229,7 +2229,7 @@ msgstr "Informationsabfrage von OpenCellID fehlgeschlagen!\n"
 
 #: gammu/misc.c:252
 msgid "Failed to find latitude in OpenCellID reply!\n"
-msgstr ""
+msgstr "Geographische Breite nicht in der OpenCellID gefunden!\n"
 
 #: gammu/misc.c:257
 msgid "Failed to parse latitude from OpenCellID reply!\n"
