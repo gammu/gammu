@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0200\n"
-"PO-Revision-Date: 2010-05-25 15:31+0200\n"
+"PO-Revision-Date: 2010-05-28 14:11+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -23,7 +23,7 @@ msgstr ""
 #: helper/message-cmdline.c:440 helper/message-cmdline.c:477
 #: helper/message-cmdline.c:500
 msgid "Where is backup filename and location?"
-msgstr "Wie lautet der Backupdateiname und der Speicherplatz?"
+msgstr "Wie lautet der Backup-Dateiname und -Pfad?"
 
 #: gammu/backup.c:47 helper/message-cmdline.c:488
 msgid "Calendar note not found in file"
