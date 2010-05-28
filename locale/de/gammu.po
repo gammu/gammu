@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0200\n"
-"PO-Revision-Date: 2010-05-28 14:12+0200\n"
+"PO-Revision-Date: 2010-05-28 14:13+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -43,7 +43,7 @@ msgstr "Aufgabenliste nicht in der Datei gefunden"
 
 #: gammu/backup.c:121 helper/message-cmdline.c:524
 msgid "Where is backup filename and location and memory type?"
-msgstr "Wie lautet der Backupdateiname, der Speicherplatz und der Speichertyp?"
+msgstr "Wie lautet der Backup-Dateiname, der -Pfad und der Speichertyp?"
 
 #: gammu/backup.c:134 gammu/backup.c:145 helper/message-cmdline.c:536
 #: helper/message-cmdline.c:546
