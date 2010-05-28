@@ -2805,7 +2805,7 @@ msgstr "Typ des Datenanrufs"
 
 #: gammu/misc.c:1516
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #: gammu/misc.c:1518
 msgid "Analogue"
