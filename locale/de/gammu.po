@@ -2257,7 +2257,7 @@ msgstr "\"nbSamples\" nicht in der OpenCellID gefunden!\n"
 
 #: gammu/misc.c:290
 msgid "Failed to parse nbSamples from OpenCellID reply!\n"
-msgstr "\"nbSamples\" in der OpenCellID nicht lesbar!\n"
+msgstr "Anzahl der Messwerte in der OpenCellID nicht lesbar!\n"
 
 #: gammu/misc.c:301
 msgid "Latitude"
