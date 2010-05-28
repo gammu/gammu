@@ -2735,9 +2735,8 @@ msgid "Off"
 msgstr "Aus"
 
 #: gammu/misc.c:1485
-#, fuzzy
 msgid "Proxy"
-msgstr "Priorität"
+msgstr "Proxy"
 
 #: gammu/misc.c:1486 gammu/misc.c:1489
 #, fuzzy, c-format
