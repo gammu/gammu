@@ -35,7 +35,7 @@ msgstr "WAP-Lesezeichen nicht in der Datei gefunden"
 
 #: gammu/backup.c:91
 msgid "Note not found in file"
-msgstr "Notiz nicht in Datei gefunden"
+msgstr "Notiz nicht in der Datei gefunden"
 
 #: gammu/backup.c:112
 msgid "Todo note not found in file"
