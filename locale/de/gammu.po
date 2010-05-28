@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0200\n"
-"PO-Revision-Date: 2010-05-28 14:31+0200\n"
+"PO-Revision-Date: 2010-05-28 14:32+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -2745,7 +2745,7 @@ msgstr "Adresse \"%s\", Port %i\n"
 
 #: gammu/misc.c:1488
 msgid "Second proxy"
-msgstr ""
+msgstr "Zweiter Proxy"
 
 #: gammu/misc.c:1493 gammu/misc.c:1500 gammu/misc.c:1535 gammu/misc.c:1548
 msgid "Bearer"
