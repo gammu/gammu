@@ -2947,7 +2947,7 @@ msgstr "Ungüliger Typ des Sicherheitscodes"
 #: gammu/misc.c:1938
 #, c-format
 msgid "Enter %s code: "
-msgstr ""
+msgstr "Code %s eingeben: "
 
 #: gammu/misc.c:1950
 msgid "No PIN code entered!"
