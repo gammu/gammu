@@ -2711,9 +2711,8 @@ msgid "Delete all phone FM radio stations?"
 msgstr "Alle UKW-Radiosender im Telefon löschen?"
 
 #: gammu/misc.c:1476 gammu/misc.c:1478
-#, fuzzy
 msgid "Connection type"
-msgstr "Verbindungssatzname"
+msgstr "Verbindungstyp"
 
 #: gammu/misc.c:1476
 #, fuzzy
