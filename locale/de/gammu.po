@@ -2728,7 +2728,7 @@ msgstr "Verbindungssicherheit"
 
 #: gammu/misc.c:1481 gammu/misc.c:2084
 msgid "On"
-msgstr "An"
+msgstr "Ein"
 
 #: gammu/misc.c:1483 gammu/misc.c:2070
 msgid "Off"
