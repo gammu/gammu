@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 13:22+0300\n"
-"PO-Revision-Date: 2010-05-28 13:36+0200\n"
+"PO-Revision-Date: 2010-05-28 13:37+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -612,6 +612,8 @@ msgid ""
 "B<EMS> (this is SMS format used for saving monochromatic images, monophonic "
 "ringtones, animations, text formatting and others)"
 msgstr ""
+"B<EMS> (formát SMS pro černobílé obrázky, monofonní vyzvánění, animace, "
+"formátování textu a další)"
 
 #. type: Plain text
 #: docs/user/gammu.1:185
