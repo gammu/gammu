@@ -2741,7 +2741,7 @@ msgstr "Proxy"
 #: gammu/misc.c:1486 gammu/misc.c:1489
 #, c-format
 msgid "address \"%s\", port %i"
-msgstr "Adresse \"%s\", Port %i\n"
+msgstr "Adresse \"%s\", Port %i"
 
 #: gammu/misc.c:1488
 msgid "Second proxy"
