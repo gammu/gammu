@@ -2683,9 +2683,8 @@ msgid "Delete missed calls?"
 msgstr "Verpasste Anrufe löschen?"
 
 #: gammu/misc.c:1365
-#, fuzzy
 msgid "Delete dialled calls?"
-msgstr "Lösche gewählte Rufnummern"
+msgstr "Gewählte Rufnummern löschen?"
 
 #: gammu/misc.c:1366
 #, fuzzy
