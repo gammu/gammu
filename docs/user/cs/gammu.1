@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "May 12 2010" "Gammu 1.27.94" "Dokumentace Gammu"
+.TH GAMMU 1 "12. Květen 2010" "Gammu 1.27.94" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -186,18 +186,17 @@ platná (SMSC zruší zprávu po této době pokud se jí nepodařilo doručit).
 
 Gammu podporuje mnoho formátů SMS včetně:
 
-\fBNokia Smart Messaging\fP (used for monochromatic picture images,
-downloadable profiles, monochromatic operator logos, monochromatic caller
-logos and monophonic ringtones)
+\fBNokia Smart Messaging\fP (lze použít pro černobílé obrázky, profily, loga
+operátora, černobílá loga volajících a monofonní vyzvánění)
 
-\fBLinked SMS\fP (both with 8 and 16\-bit identification numbers in headers)
+\fBSpojené SMS\fP (s  8 a 16 bitovými identifikátory v hlavičce)
 
-\fBEMS\fP (this is SMS format used for saving monochromatic images, monophonic
-ringtones, animations, text formatting and others)
+\fBEMS\fP (formát SMS pro černobílé obrázky, monofonní vyzvánění, animace,
+formátování textu a další)
 
-\fBMMS notifications\fP
+\fBMMS notifikace\fP
 
-\fBAlcatel logo messages\fP
+\fBZprávy s logem pro Alcatel\fP
 
 
 You need to ensure that the target phone supports message type you want to
@@ -214,17 +213,17 @@ chars (Gammu doesn't support compressing such texts according to GSM
 standards, but it isn't big limit, because there are no phones supporting
 them), but they're from limited set:
 
-  * all Latin small and large
+  * všechny písmena latinky, malá i velká
 
-  * all digits
+  * všechna čísla
 
-  * some Greek
+  * některá řecká písmena
 
-  * some other national
+  * některé další národní znaky
 
   * some symbols like  @Â\ ! " # & / ( )Â\ % * + = \- , .Â\ :Â\ ; < >Â\ ?
 
-  * few others
+  * pár dalších
 
 with \fBUnicode\fP \- in single SMS you can save at most 70 chars, but these can
 be any chars including all national and special ones. Please note, that some
@@ -422,16 +421,16 @@ jako například SonyEricsson je nebude možné přeposlat)
 \fB\-16bit\fP \- Gammu uses SMS headers with 16\-bit numbers for saving linking
 info in SMS (it means less chars available for user in each SMS)
 
-\fB\-format\fP lcrasbiut \- last text will be formatted. You can use combinations of chars:
-    l \- left aligned
-    c \- centered
-    r \- right aligned
-    a \- large font
-    s \- small font
-    b \- bold font
-    i \- italic font
-    u \- underlined font
-    t \- strikethrough font
+\fB\-format\fP lcrasbiut \- poslední část textu bude naformátována. Můžete použít následující znaky:
+    l \- zarovnané vlevo
+    c \- zarovnané na střed
+    r \- zarovnané vpravo
+    a \- velké písmo
+    s \- malé písmo
+    b \- tučné
+    i \- kurzíva
+    u \- podtržení
+    t \- přeškrtnutí
 
 \fIPříklad:\fP gammu savesms EMS \-text "Pozdrav" \-defsound 1 \-text "od Gammu"
 \-tone10 axelf.txt \-animation 2 file1.bmp file2.bmp
