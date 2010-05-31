@@ -3786,9 +3786,8 @@ msgid "SIM memory"
 msgstr "SIM-Speicher"
 
 #: helper/message-display.c:36
-#, fuzzy
 msgid "phone memory"
-msgstr ", Telefonspeicher"
+msgstr "Telefonspeicher"
 
 #: helper/message-display.c:39
 #, fuzzy
