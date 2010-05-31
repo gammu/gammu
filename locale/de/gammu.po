@@ -3377,9 +3377,8 @@ msgid " created by %s\n"
 msgstr " erstellt von %s\n"
 
 #: gammu/nokia.c:793 gammu/nokia.c:845
-#, fuzzy
 msgid "Application already exists. Deleting by Gammu."
-msgstr "INFO: Die Anwendung existiert bereits. Von Gammu gelöscht"
+msgstr "Die Anwendung existiert bereits. Von Gammu gelöscht."
 
 #: gammu/nokia.c:826 gammu/nokia.c:859
 #, c-format
