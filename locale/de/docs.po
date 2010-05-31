@@ -186,7 +186,7 @@ msgstr "Eingehenden Anruf annehmen."
 #: docs/user/gammu.1:44
 #, no-wrap
 msgid "B<cancelcall>I< [id]>"
-msgstr ""
+msgstr "B<Zu_beendender_Anruf>I< [id]>"
 
 # type: Plain text
 #. type: Plain text
