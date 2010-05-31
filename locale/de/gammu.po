@@ -3639,7 +3639,6 @@ msgid "unknown field type"
 msgstr "unbekannter Feldtyp"
 
 #: helper/message-cmdline.c:183
-#, fuzzy
 msgid "Not enough parameters!"
 msgstr "Zu wenig Parameter!"
 
