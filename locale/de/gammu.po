@@ -3195,11 +3195,8 @@ msgid "data & fax & voice"
 msgstr "Daten & Fax & Stimme"
 
 #: gammu/misc.c:2315
-#, fuzzy
 msgid "Response:"
-msgstr ""
-"\n"
-"Rückmeldung:"
+msgstr "Rückmeldung:"
 
 #: gammu/mms.c:49
 #, fuzzy
