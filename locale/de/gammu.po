@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 16:21+0200\n"
-"PO-Revision-Date: 2010-05-31 13:59+0200\n"
+"PO-Revision-Date: 2010-05-31 14:00+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3412,9 +3412,9 @@ msgid "Number out of range: %s\n"
 msgstr "Anzahl außerhalb des Bereiches: %s\n"
 
 #: helper/cmdline.c:28
-#, fuzzy, c-format
+#, c-format
 msgid "Parameter is not a number: %s\n"
-msgstr "Der Parameter \"%s\" ist unbekannt\n"
+msgstr "Der Parameter %s ist keine Zahl\n"
 
 #: helper/formats.h:2
 #, c-format
