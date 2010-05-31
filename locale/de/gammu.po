@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 16:21+0200\n"
-"PO-Revision-Date: 2010-05-31 13:46+0200\n"
+"PO-Revision-Date: 2010-05-31 13:47+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3350,11 +3350,10 @@ msgid "No JAR URL info in JAD file"
 msgstr "Keine JAR-URL-Informationen in der JAD-Datei gefunden"
 
 #: gammu/nokia.c:707
-#, fuzzy
 msgid "Declared JAR file size is different than real. Fixed by Gammu."
 msgstr ""
-"INFO: Die angegebene JAR-Dateigröße stimmt nicht mit der realen überein. Von "
-"Gammu korrigiert"
+"Die angegebene JAR-Dateigröße stimmt nicht mit der realen überein. Von Gammu "
+"korrigiert."
 
 #: gammu/nokia.c:731
 #, fuzzy
