@@ -4133,9 +4133,8 @@ msgid "Ringtone \"%s\"\n"
 msgstr "Klingelton \"%s\"\n"
 
 #: helper/message-display.c:405
-#, fuzzy
 msgid "Do you want to play it?"
-msgstr "Möchten Sie ihn abspielen"
+msgstr "Möchten Sie ihn abspielen?"
 
 #: helper/message-display.c:410
 msgid "Caller logo"
