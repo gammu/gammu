@@ -3814,7 +3814,6 @@ msgid "pager"
 msgstr "Pager"
 
 #: helper/message-display.c:129
-#, fuzzy
 msgid "general"
 msgstr "Allgemein"
 
