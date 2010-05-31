@@ -4178,7 +4178,6 @@ msgstr "Anzahl Bits"
 # User Data Header, Im Zusammengan mit SMS
 # http://en.wikipedia.org/wiki/Short_message_service
 #: helper/message-display.c:534
-#, fuzzy
 msgid "UDH"
 msgstr "UDH"
 
