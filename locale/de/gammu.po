@@ -3175,9 +3175,8 @@ msgid "unknown %i"
 msgstr "unbekannt %i"
 
 #: gammu/misc.c:2306 gammu/misc.c:2320
-#, fuzzy
 msgid "Call type"
-msgstr "Anruf aktiv"
+msgstr "Anruftyp"
 
 #: gammu/misc.c:2308 gammu/misc.c:2322
 msgid "voice"
