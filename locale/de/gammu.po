@@ -4141,11 +4141,9 @@ msgid "Caller logo"
 msgstr "Anruferlogo"
 
 #: helper/message-display.c:414
-#, fuzzy, c-format
+#, c-format
 msgid "Operator logo for %s network"
-msgstr ""
-"Betreiberlogo für %s-Netzwerk (%s, %s)\n"
-"\n"
+msgstr "Betreiberlogo für %s-Netzwerk"
 
 #: helper/message-display.c:434
 msgid "Profile"
