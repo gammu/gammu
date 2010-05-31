@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 16:21+0200\n"
-"PO-Revision-Date: 2010-05-31 13:48+0200\n"
+"PO-Revision-Date: 2010-05-31 13:49+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3403,9 +3403,8 @@ msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr "Verbindung \"%s\" auf Gerät \"%s\"\n"
 
 #: gammu/search.c:182 gammu/search.c:189
-#, fuzzy
 msgid "Error creating thread\n"
-msgstr "Fehler beim Schreiben auf das Gerät."
+msgstr "Fehler beim Erstellen des Fadens\n"
 
 #: helper/cmdline.c:23
 #, fuzzy, c-format
