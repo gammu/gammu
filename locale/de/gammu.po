@@ -4158,9 +4158,8 @@ msgid "EMS animation ID"
 msgstr "EMS-Animations-ID"
 
 #: helper/message-display.c:464
-#, fuzzy
 msgid "Message size"
-msgstr "Nachrichten"
+msgstr "Nachrichten-Größe"
 
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:497 helper/message-display.c:516
