@@ -3632,7 +3632,7 @@ msgstr "Benutzer-Text 4   "
 
 #: helper/memory-display.c:158
 msgid "Push to talk ID"
-msgstr ""
+msgstr "\"Push to talk\" ID"
 
 #: helper/memory-display.c:161
 msgid "unknown field type"
