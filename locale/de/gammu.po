@@ -4194,7 +4194,7 @@ msgstr "Warnung"
 #. l10n: Generic prefix for informational messages
 #: helper/printing.c:50
 msgid "Information"
-msgstr "Informationen"
+msgstr "Information"
 
 #, fuzzy
 #~ msgid "Reading phone phonebook:"
