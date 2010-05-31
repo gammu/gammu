@@ -3499,9 +3499,8 @@ msgid "Photo"
 msgstr "Foto"
 
 #: helper/memory-display.c:118
-#, fuzzy
 msgid "Displaying not supported"
-msgstr "Nicht unterstützt"
+msgstr "Anzeigen wird nicht unterstützt"
 
 #: helper/memory-display.c:120
 #, fuzzy
