@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 16:21+0200\n"
-"PO-Revision-Date: 2010-05-31 13:41+0200\n"
+"PO-Revision-Date: 2010-05-31 13:42+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3146,11 +3146,8 @@ msgid "Query:"
 msgstr "Abfrage:"
 
 #: gammu/misc.c:2282 gammu/misc.c:2295
-#, fuzzy
 msgid "Divert type"
-msgstr ""
-"Abfrage:\n"
-"    Rufumleitung: "
+msgstr "Typ der  Rufumleitung"
 
 #: gammu/misc.c:2293
 msgid "Changed:"
