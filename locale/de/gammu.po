@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 16:21+0200\n"
-"PO-Revision-Date: 2010-05-31 13:43+0200\n"
+"PO-Revision-Date: 2010-05-31 13:44+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3203,9 +3203,9 @@ msgid "Do you want to save this MMS file?"
 msgstr "Möchten Sie diese MMS-Datei speichern?"
 
 #: gammu/mms.c:53 gammu/mms.c:134
-#, fuzzy, c-format
+#, c-format
 msgid "Error while saving to file %s!\n"
-msgstr "  Speichere nach %s\n"
+msgstr "Fehler beim Speichern nach %s!\n"
 
 #: gammu/mms.c:55 gammu/mms.c:136
 #, c-format
