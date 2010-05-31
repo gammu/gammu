@@ -3151,7 +3151,7 @@ msgstr "Typ der  Rufumleitung"
 
 #: gammu/misc.c:2293
 msgid "Changed:"
-msgstr ""
+msgstr "Verändert:"
 
 #: gammu/misc.c:2299
 msgid "when busy"
