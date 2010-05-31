@@ -3794,9 +3794,8 @@ msgid "phone or SIM memory"
 msgstr "Telefon- oder SIM-Speicher"
 
 #: helper/message-display.c:46
-#, fuzzy
 msgid "Inbox folder"
-msgstr ", Posteingangsordner"
+msgstr "Posteingangsordner"
 
 #: helper/message-display.c:114
 msgid "mobile"
