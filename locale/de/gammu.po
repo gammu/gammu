@@ -3464,9 +3464,9 @@ msgstr "Dauer des Gesprächs"
 
 #. l10n: Call length format string hour:minute:second
 #: helper/memory-display.c:31
-#, fuzzy, c-format
+#, c-format
 msgid "%02i:%02i:%02i\n"
-msgstr "Anruflänge       : %02i:%02i:%02i\n"
+msgstr "%02i:%02i:%02i\n"
 
 #: helper/memory-display.c:37
 msgid "Date and time"
