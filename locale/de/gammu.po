@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 16:21+0200\n"
-"PO-Revision-Date: 2010-05-31 13:54+0200\n"
+"PO-Revision-Date: 2010-05-31 13:55+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3703,9 +3703,9 @@ msgid "Backup functionality not compiled in!"
 msgstr "Backup-Funktion nicht mit einkompiliert!"
 
 #: helper/message-cmdline.c:1054
-#, fuzzy, c-format
+#, c-format
 msgid "Wrong message length (\"%s\")\n"
-msgstr "Schreibe Nachricht(en)..."
+msgstr "Fehlerhafte Nachrichtenlänge (\"%s\")\n"
 
 #: helper/message-cmdline.c:1077
 #, c-format
