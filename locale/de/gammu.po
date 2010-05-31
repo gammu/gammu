@@ -3759,9 +3759,8 @@ msgid "No network code"
 msgstr "Kein Netz-Code"
 
 #: helper/message-cmdline.c:1363
-#, fuzzy
 msgid "You have to set network code!"
-msgstr "Kein Netz-Code"
+msgstr "Sie müssen den  Netz-Code angeben!"
 
 #: helper/message-cmdline.c:1402
 #, c-format
