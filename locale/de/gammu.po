@@ -3996,7 +3996,6 @@ msgstr "Vorgabe-GSM-Alphabet (Kompression)"
 
 #. l10n: 8-bit message coding
 #: helper/message-display.c:256
-#, fuzzy
 msgid "8-bit"
 msgstr "8 Bit"
 
