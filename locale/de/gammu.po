@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 16:21+0200\n"
-"PO-Revision-Date: 2010-05-31 13:45+0200\n"
+"PO-Revision-Date: 2010-05-31 13:46+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3302,9 +3302,9 @@ msgid "  Problem with adding playlist"
 msgstr "    Ein Problem ist aufgetreten bei Anhängen an die Playliste"
 
 #: gammu/nokia.c:383
-#, fuzzy, c-format
+#, c-format
 msgid "Writing file %s:"
-msgstr "Fehler beim Schreiben auf Gerät."
+msgstr "Schreibe Datei %s:"
 
 #: gammu/nokia.c:438
 #, fuzzy
