@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 16:21+0200\n"
-"PO-Revision-Date: 2010-05-31 13:49+0200\n"
+"PO-Revision-Date: 2010-05-31 13:50+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3407,9 +3407,9 @@ msgid "Error creating thread\n"
 msgstr "Fehler beim Erstellen des Fadens\n"
 
 #: helper/cmdline.c:23
-#, fuzzy, c-format
+#, c-format
 msgid "Number out of range: %s\n"
-msgstr "Anzahl der SMS: %i"
+msgstr "Anzahl außerhalb des Bereiches: %s\n"
 
 #: helper/cmdline.c:28
 #, fuzzy, c-format
