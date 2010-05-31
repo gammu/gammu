@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 16:21+0200\n"
-"PO-Revision-Date: 2010-05-31 13:53+0200\n"
+"PO-Revision-Date: 2010-05-31 13:54+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3700,7 +3700,7 @@ msgstr "Aufgaben nicht in der Datei gefunden"
 
 #: helper/message-cmdline.c:573
 msgid "Backup functionality not compiled in!"
-msgstr ""
+msgstr "Backup-Funktion nicht mit einkompiliert!"
 
 #: helper/message-cmdline.c:1054
 #, fuzzy, c-format
