@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 16:21+0200\n"
-"PO-Revision-Date: 2010-05-31 13:44+0200\n"
+"PO-Revision-Date: 2010-05-31 13:45+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3277,12 +3277,8 @@ msgid "length=%i notes, but you will enter only first 50 tones."
 msgstr "Länge=%i Noten, aber Sie können nur die ersten 50 eingeben."
 
 #: gammu/nokia.c:66
-#, fuzzy
 msgid "This ringtone in Nokia Composer in phone should look:"
-msgstr ""
-"\n"
-"\n"
-"Dieser Klingelton sollte im Nokia Composer so aussehen: "
+msgstr "Dieser Klingelton sollte im Nokia Composer der Telefons so aussehen: "
 
 #: gammu/nokia.c:105
 #, fuzzy
