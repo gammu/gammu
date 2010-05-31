@@ -3356,11 +3356,10 @@ msgstr ""
 "korrigiert."
 
 #: gammu/nokia.c:731
-#, fuzzy
 msgid "No JAR size info in JAD file. Added by Gammu."
 msgstr ""
-"INFO: keine JAR-Größeninformation in der JAD-Datei gefunden. Von Gammu "
-"hinzugefügt"
+"Keine JAR-Größeninformation in der JAD-Datei gefunden. Von Gammu "
+"hinzugefügt."
 
 #: gammu/nokia.c:740
 #, c-format
