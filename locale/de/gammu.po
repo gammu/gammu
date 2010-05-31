@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 16:21+0200\n"
-"PO-Revision-Date: 2010-05-31 13:50+0200\n"
+"PO-Revision-Date: 2010-05-31 13:51+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3459,9 +3459,8 @@ msgstr[0] "1 Jahr"
 msgstr[1] "%d Jahre"
 
 #: helper/memory-display.c:29
-#, fuzzy
 msgid "Call length"
-msgstr "Klingelton für"
+msgstr "Dauer des Gesprächs"
 
 #. l10n: Call length format string hour:minute:second
 #: helper/memory-display.c:31
