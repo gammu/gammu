@@ -4108,9 +4108,9 @@ msgid "8 bit SMS, cannot be displayed here"
 msgstr "8-Bit-SMS, kann hier nicht dargestellt werden"
 
 #: helper/message-display.c:332
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown PDU type: 0x%x\n"
-msgstr "Unbekannter Speichertyp: \"%s\"\n"
+msgstr "Unbekannter Speichertyp: 0x%x\n"
 
 #: helper/message-display.c:379
 msgid ""
