@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-05-28 16:21+0200\n"
-"PO-Revision-Date: 2010-05-31 13:56+0200\n"
+"PO-Revision-Date: 2010-05-31 13:57+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "Language: de\n"
@@ -3782,9 +3782,8 @@ msgid "Location %i, folder \"%s\""
 msgstr "Speicherplatz %i, Ordner \"%s\""
 
 #: helper/message-display.c:33
-#, fuzzy
 msgid "SIM memory"
-msgstr ", SIM-Speicher"
+msgstr "SIM-Speicher"
 
 #: helper/message-display.c:36
 #, fuzzy
