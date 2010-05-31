@@ -4183,7 +4183,6 @@ msgstr "UDH"
 
 # "Protocol Data Unit" oder "Payload Data Unit"
 #: helper/message-display.c:550
-#, fuzzy
 msgid "Whole PDU"
 msgstr "Die ganze PDU"
 
