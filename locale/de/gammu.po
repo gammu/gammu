@@ -3307,12 +3307,12 @@ msgid "Writing file %s:"
 msgstr "Schreibe Datei %s:"
 
 #: gammu/nokia.c:438
-#, fuzzy
 msgid ""
 "Your phone model is not supported. Please report it to authors (see <http://"
 "wammu.eu/support/bugs/>). Thank you."
 msgstr ""
-"Ihr Telefonmodell wird nicht unterstützt. Bitte melden Sie das den Autoren"
+"Ihr Telefonmodell wird nicht unterstützt. Bitte melden Sie das den Autoren "
+"unter <http://wammu.eu/support/bugs/> Vielen Dank."
 
 #: gammu/nokia.c:454
 msgid "Problem with deleting playlist"
