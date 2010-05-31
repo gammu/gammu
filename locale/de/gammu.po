@@ -3768,7 +3768,7 @@ msgid "Ringtone too long. %i percent part cut\n"
 msgstr "Warnung: der Klingelton ist zu lang. %i Prozent werden abgeschnitten\n"
 
 #: helper/message-cmdline.c:1413
-#, fuzzy, c-format
+#, c-format
 msgid "There are %i SMS messages packed and the limit is %i. Exiting\n"
 msgstr "Es gibt %i gepackte SMS, Obergrenze ist %i. Abbruch\n"
 
