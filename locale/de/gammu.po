@@ -3511,9 +3511,8 @@ msgid "General number"
 msgstr "Allgemeine Nummer "
 
 #: helper/memory-display.c:123
-#, fuzzy
 msgid "Mobile number (work)"
-msgstr "Handynummer       "
+msgstr "Handynummer (Arbeit)       "
 
 #: helper/memory-display.c:124
 #, fuzzy
