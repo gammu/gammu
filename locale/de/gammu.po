@@ -3143,7 +3143,7 @@ msgstr "Unbekannter Anruftyp (\"%s\")\n"
 
 #: gammu/misc.c:2280
 msgid "Query:"
-msgstr ""
+msgstr "Abfrage:"
 
 #: gammu/misc.c:2282 gammu/misc.c:2295
 #, fuzzy
