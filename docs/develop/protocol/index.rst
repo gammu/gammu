@@ -13,3 +13,4 @@ Phone Protocols
     carkit
     tdma_5120
     samsung
+    samsung-gt
