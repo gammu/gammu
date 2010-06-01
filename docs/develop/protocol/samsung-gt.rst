@@ -1,22 +1,22 @@
 SAMSUNG GT calendar AT commands
 ===============================
 
-CALENDAR ENTRIES
+Calendar Entries
 ----------------
 
-AT+SSHT=1 - selects the Organizer->Calendar->Appointment entries
+``AT+SSHT=1`` - selects the Organizer->Calendar->Appointment entries
 (Spotkania in Polish version)
 
-AT+SSHT=2 - selects the Organizer->Calendar->Anniversary entries
+``AT+SSHT=2`` - selects the Organizer->Calendar->Anniversary entries
 (Rocznice in Polish version)
 
-AT+SSHT=5 - selects the Organizer->Calendar->Holiday entries (Święta
+``AT+SSHT=5`` - selects the Organizer->Calendar->Holiday entries (Święta
 in Polish version)
 
-AT+SSHT=6 - selects the Organizer->Calendar->Important entries (Ważne
+``AT+SSHT=6`` - selects the Organizer->Calendar->Important entries (Ważne
 in Polish version)
 
-AT+SSHT=7 - selects the Organizer->Calendar->Private entries (Prywatne
+``AT+SSHT=7`` - selects the Organizer->Calendar->Private entries (Prywatne
 in Polish version)
 
 After selection of type, we can read all items::
@@ -42,7 +42,7 @@ You can also add or modify an item::
 It seems, that the last number in the above record specifies whether
 it is addition of a new record (0), or modification of the old record
 (then the number is the position of the item, as the first number
-listed after AT+SSHR=0). e.g.::
+listed after ``AT+SSHR=0``). e.g.::
 
     AT+SSHW="13,event1234 new","0,","0,",2010,06,07,2010,06,07,07,00,08,59,0,0,0,0,2010,05,30,,,1
 
@@ -61,10 +61,10 @@ me yet.
 
 I don't know yet how to delete an item.
 
-TASK ENTRIES
+Task Entries
 ------------
 
-There is yet another type, that can be selected by AT+SSHT=3
+There is yet another type, that can be selected by ``AT+SSHT=3``
 This is Organizer->Task::
 
     AT+SSHT=3
@@ -102,10 +102,10 @@ And modify::
 
 I don't kno yet how to delete an item.
 
-MEMO NOTES
+Memo Notes
 ----------
 
-The memo notes are accessible via AT+OMM??? commands::
+The memo notes are accessible via ``AT+OMM???`` commands::
 
     AT+OMMI?
     +OMMI:4,100,100
