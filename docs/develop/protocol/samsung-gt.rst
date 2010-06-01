@@ -153,7 +153,7 @@ To delete entries::
     OK
     AT+OMMD=3
     OK
-    AT+OMMR=3
-    +CME ERROR:28
+    AT+OMMW=3,"New note number 3"
+    +CME ERROR:29
 
     ERROR
