@@ -59,7 +59,9 @@ end time (hour, minutes), four unknown to me (yet?) values, date of
 creation? (year month day) - the meaning of this date is not sure for
 me yet.
 
-I don't know yet how to delete an item.
+To delete entries::
+    AT+SSHD=1
+    OK
 
 Task Entries
 ------------
@@ -100,7 +102,19 @@ And modify::
     +SSHR:2,"9,New task1","11,New details",2010,6,21,2010,6,30,1,2010,6,27,8,7,0,2,0
     OK
 
-I don't kno yet how to delete an item.
+To delete entries::
+    AT+SSHT=3
+    OK
+    AT+SSHR=0
+    +SSHR:1,"10,Test
+    event","10,2010-06-05",60823,11,25,60823,11,26,0,60823,11,26,0,0,0,0,0
+    +SSHR:2,"9,New task1","10,2010-06-30",60823,11,25,60823,11,26,0,60823,11,26,0,0,0,0,0
+    OK
+    AT+SSHD=1
+    OK
+    AT+SSHR=0
+    +SSHR:2,"9,New task1","10,2010-06-30",60823,11,25,60823,11,26,0,0,0,0,0,0,0,0,0
+    OK
 
 Memo Notes
 ----------
@@ -132,3 +146,14 @@ You can modify it::
     AT+OMMR=6
     +OMMR:"This is a new modified note"
     OK
+
+To delete entries::
+    AT+OMMR=3
+    +OMMR:"Note number 3"
+    OK
+    AT+OMMD=3
+    OK
+    AT+OMMR=3
+    +CME ERROR:28
+
+    ERROR
