@@ -1173,7 +1173,7 @@ msgid ""
 "B<-toneSE> - adds IMelody in \"short\" form supported by SonyEricsson phones"
 msgstr ""
 "B<-toneSE> - přidá vyzvánění ve formátu iMelody v \"krátké\" formě jak je "
-"podporováno telefony Sony-Ericssonn."
+"podporováno telefony Sony-Ericsson."
 
 #. type: Plain text
 #: docs/user/gammu.1:378
