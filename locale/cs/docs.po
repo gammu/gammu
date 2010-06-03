@@ -3362,6 +3362,8 @@ msgid ""
 "Note: Not all phones supports this function, especially most Sony Ericsson "
 "phones even if they have notes inside phone."
 msgstr ""
+"Poznámka: Ne všechny telefony toto podporují, i když funkci poznámek "
+"obsahují (například Sony-Ericsson)."
 
 #. type: SS
 #: docs/user/gammu.1:1595
