@@ -3551,7 +3551,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:1923 docs/user/gammu.1:2557
 msgid "1. Control Panel"
-msgstr ""
+msgstr "1. Ovládací panel"
 
 #. type: Plain text
 #: docs/user/gammu.1:1925 docs/user/gammu.1:2559
