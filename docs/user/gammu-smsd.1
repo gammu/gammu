@@ -29,6 +29,10 @@ Shows version information and compiled in features.
 Configuration file to use, default is /etc/gammu\-smsdrc, on Windows there is
 no default and configuration file path has to be always specified.
 
+If you run SMSD as a system daemon (or service), it is recommended to use
+absolute path to log file as startup directory might be different than you
+expect.
+
 See gammu-smsdrc(5) for config file documentation.
 .TP
 \fB\-p\fR, \fB\-\-pid\fR=\fIfile\fR

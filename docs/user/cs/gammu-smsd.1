@@ -32,6 +32,10 @@ Jaký konfigurační soubor se má použít, výchozí je /etc/gammu\-smsdrc, na
 systému Windows není žádná výchozí cesta a cesta ke konfiguračnímu souboru
 musí být zadána vždy.
 
+If you run SMSD as a system daemon (or service), it is recommended to use
+absolute path to log file as startup directory might be different than you
+expect.
+
 Dokumentace konfiguračního souboru je v gammu\-smsdrc(5).
 .TP 
 \fB\-p\fP, \fB\-\-pid\fP=\fIsoubor\fP
