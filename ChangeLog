@@ -28,6 +28,7 @@ ChangeLog
 [-] * Fixed handling of timeouts from libusb (bug #1207).
 [-] * Properly detect birthday on Nokia 2700 (bug #1213).
 [-] * Provide fallback value for note type (bug #1213).
+[-] * Rewritten parsing of CREG: reply to properly parse all replies (bug #1220).
     
 20100413 - 1.27.93
 

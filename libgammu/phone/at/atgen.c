@@ -2526,15 +2526,12 @@ GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_NetworkInfo		*NetworkInfo = s->Phone.Data.NetworkInfo;
-	GSM_CutLines		Lines;
-	int			i = 0;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	const char			*answer;
-	char			*tmp;
-	size_t pos;
+	int i, state;
+	GSM_Error error;
 
   	if (s->Phone.Data.RequestID != ID_GetNetworkInfo) {
-		smprintf(s, "Incoming LAC & CID info\n");
+		smprintf(s, "Incoming LAC & CID info, ignoring\n");
 		return ERR_NONE;
 	}
 
@@ -2549,100 +2546,65 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 		return ERR_UNKNOWNRESPONSE;
 	}
 
-	InitLines(&Lines);
-	SplitLines(GetLineString(msg.Buffer,&Priv->Lines,2),
-		GetLineLength(msg.Buffer,&Priv->Lines,2),
-		&Lines, ",", 1, "", 0, TRUE);
-
-	/* Find number of lines */
-	while (Lines.numbers[i*2+1] != 0) {
-		/* FIXME: handle special chars correctly */
-		tmp = strdup(GetLineString(msg.Buffer,&Priv->Lines,2));
-		smprintf(s, "%i \"%s\"\n",i+1,GetLineString(tmp,&Lines,i+1));
-		free(tmp);
-		tmp = NULL;
-		i++;
-	}
-
 	smprintf(s, "Network LAC & CID & state received\n");
-	tmp = strdup(GetLineString(msg.Buffer,&Priv->Lines,2));
-	answer = GetLineString(tmp,&Lines,2);
-	free(tmp);
-	tmp = NULL;
 
-	while (*answer == 0x20) answer++;
-#ifdef DEBUG
-	switch (answer[0]) {
-		case '0': smprintf(s, "Not registered into any network. Not searching for network\n"); 	  break;
-		case '1': smprintf(s, "Home network\n"); 						  break;
-		case '2': smprintf(s, "Not registered into any network. Searching for network\n"); 	  break;
-		case '3': smprintf(s, "Registration denied\n"); 					  break;
-		case '4': smprintf(s, "Unknown\n"); 							  break;
-		case '5': smprintf(s, "Registered in roaming network\n"); 				  break;
-		default : smprintf(s, "Unknown\n");
+	NetworkInfo->LAC[0] = 0;
+	NetworkInfo->CID[0] = 0;
+
+	/* Full reply */
+	error = ATGEN_ParseReply(s,
+			GetLineString(msg.Buffer, &Priv->Lines, 2),
+			"+CREG: @i, @i, @r, @r",
+			&i, /* Mode, ignored for now */
+			&state,
+			NetworkInfo->LAC, sizeof(NetworkInfo->LAC),
+			NetworkInfo->CID, sizeof(NetworkInfo->CID));
+
+	/* Reply without LAC/CID */
+	if (error == ERR_UNKNOWNRESPONSE) {
+		error = ATGEN_ParseReply(s,
+				GetLineString(msg.Buffer, &Priv->Lines, 2),
+				"+CREG: @i, @i",
+				&i, /* Mode, ignored for now */
+				&state);
 	}
-#endif
-	switch (answer[0]) {
-		case '0': NetworkInfo->State = GSM_NoNetwork;		break;
-		case '1': NetworkInfo->State = GSM_HomeNetwork; 	break;
-		case '2': NetworkInfo->State = GSM_RequestingNetwork; 	break;
-		case '3': NetworkInfo->State = GSM_RegistrationDenied;	break;
-		case '4': NetworkInfo->State = GSM_NetworkStatusUnknown;break;
-		case '5': NetworkInfo->State = GSM_RoamingNetwork; 	break;
-		default : NetworkInfo->State = GSM_NetworkStatusUnknown;break;
+
+	if (error != ERR_NONE) {
+		return error;
 	}
-	if (NetworkInfo->State == GSM_HomeNetwork ||
-	    NetworkInfo->State == GSM_RoamingNetwork) {
-		NetworkInfo->LAC[0] = 0;
-		NetworkInfo->CID[0] = 0;
 
-		if (Lines.numbers[3*2+1]==0) {
-			FreeLines(&Lines);
-			return ERR_NONE;
-		}
-
- 		tmp = strdup(GetLineString(msg.Buffer,&Priv->Lines,2));
- 		answer = GetLineString(tmp,&Lines,3);
- 		free(tmp);
-		tmp = NULL;
-
-		while (*answer == 0x20) answer++;
-		if (*answer == '"') answer++;
-		pos = 0;
-		while (*answer != '"' && *answer != ',' && *answer != 0 && *answer != '\n') {
-			NetworkInfo->LAC[pos++] = *answer;
-			answer++;
-			if (pos >= sizeof(NetworkInfo->LAC)) {
-				smprintf(s, "LAC too big!\n");
-				FreeLines(&Lines);
-				return ERR_MOREMEMORY;
-			}
-		}
-		NetworkInfo->LAC[pos++] = 0;
-
- 		tmp = strdup(GetLineString(msg.Buffer,&Priv->Lines,2));
- 		answer = GetLineString(tmp,&Lines,4);
- 		free(tmp);
-		tmp = NULL;
-
-		while (*answer == 0x20) answer++;
-		if (*answer == '"') answer++;
-		pos = 0;
-		while (*answer != '"' && *answer != ',' && *answer != 0 && *answer != '\n') {
-			NetworkInfo->CID[pos++] = *answer;
-			answer++;
-			if (pos >= sizeof(NetworkInfo->CID)) {
-				smprintf(s, "CID too big!\n");
-				FreeLines(&Lines);
-				return ERR_MOREMEMORY;
-			}
-		}
-		NetworkInfo->CID[pos++] = 0;
-
-		smprintf(s, "LAC   : %s\n",NetworkInfo->LAC);
-		smprintf(s, "CID   : %s\n",NetworkInfo->CID);
+	/* Decode network state */
+	switch (state) {
+		case 0:
+			smprintf(s, "Not registered into any network. Not searching for network\n");
+			NetworkInfo->State = GSM_NoNetwork;
+			break;
+		case 1:
+			smprintf(s, "Home network\n");
+			NetworkInfo->State = GSM_HomeNetwork;
+			break;
+		case 2:
+			smprintf(s, "Not registered into any network. Searching for network\n");
+			NetworkInfo->State = GSM_RequestingNetwork;
+			break;
+		case 3:
+			smprintf(s, "Registration denied\n");
+			NetworkInfo->State = GSM_RegistrationDenied;
+			break;
+		case 4:
+			smprintf(s, "Unknown\n");
+			NetworkInfo->State = GSM_NetworkStatusUnknown;
+			break;
+		case 5:
+			smprintf(s, "Registered in roaming network\n");
+			NetworkInfo->State = GSM_RoamingNetwork;
+			break;
+		default:
+			smprintf(s, "Unknown: %d\n", state);
+			NetworkInfo->State = GSM_NetworkStatusUnknown;
+			break;
 	}
-	FreeLines(&Lines);
+
 	return ERR_NONE;
 }
 
