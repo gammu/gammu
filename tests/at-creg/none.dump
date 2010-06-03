@@ -1,0 +1,4 @@
+AT+CREG?
++CREG: 0,0
+OK
+

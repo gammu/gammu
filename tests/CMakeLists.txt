@@ -419,6 +419,23 @@ if (WITH_ATGEN)
             "${Gammu_SOURCE_DIR}/tests/at-cnmi/${TESTMESSAGE}")
     endforeach(TESTMESSAGE $MESSAGES)
 
+    # AT CREG parsing
+    add_executable(at-creg-reply at-creg-reply.c)
+    target_link_libraries(at-creg-reply libGammu)
+
+    # List test cases
+    file(GLOB MESSAGES
+        RELATIVE "${Gammu_SOURCE_DIR}/tests/at-creg"
+        "${Gammu_SOURCE_DIR}/tests/at-creg/*.dump")
+    list(SORT MESSAGES)
+
+    foreach(TESTMESSAGE ${MESSAGES})
+        string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+        add_test("at-creg-reply-${TESTNAME}"
+            "${GAMMU_TEST_PATH}/at-creg-reply${GAMMU_TEST_SUFFIX}"
+            "${Gammu_SOURCE_DIR}/tests/at-creg/${TESTMESSAGE}")
+    endforeach(TESTMESSAGE $MESSAGES)
+
     # AT memory parsing
     add_executable(at-getmemory-reply at-getmemory-reply.c)
     target_link_libraries(at-getmemory-reply libGammu)
