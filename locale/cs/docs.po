@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-03 11:39+0300\n"
-"PO-Revision-Date: 2010-05-28 13:37+0200\n"
+"PO-Revision-Date: 2010-06-03 13:49+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -632,6 +632,9 @@ msgid ""
 "send. Otherwise the phone will not be able to display it or will even crash, "
 "because firmware of phone did not expect this possibility."
 msgstr ""
+"Je potřeba si předem zjistit, jestli telefon, kam zprávu posíláme, je "
+"schopen ji zobrazit. Některé telefony obsahují chyby, že při přijetí "
+"takovéto zprávy můžou havarovat."
 
 #. type: TP
 #: docs/user/gammu.1:193
