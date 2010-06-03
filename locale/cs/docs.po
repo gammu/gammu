@@ -3571,7 +3571,7 @@ msgstr "4. zvolte \"Ano, hardware už je připojený\""
 #. type: Plain text
 #: docs/user/gammu.1:1931 docs/user/gammu.1:2565
 msgid "5. select \"Add a new hardware device\""
-msgstr ""
+msgstr "5. zvolte \"Přidat nové zařízení\""
 
 #. type: Plain text
 #: docs/user/gammu.1:1933 docs/user/gammu.1:2567
