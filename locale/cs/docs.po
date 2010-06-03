@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-03 11:39+0300\n"
-"PO-Revision-Date: 2010-06-03 13:49+0200\n"
+"PO-Revision-Date: 2010-06-03 13:51+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -655,6 +655,9 @@ msgid ""
 "standards, but it isn't big limit, because there are no phones supporting "
 "them), but they're from limited set:"
 msgstr ""
+"při použití B<GSM Default Alphabet> - v jedné zprávě může být až 160 znaků "
+"(Gammu nepodporuje kompresi podle GSM standardů, protože ji nepodporuje ani "
+"většina telefonů), ale znaky jsou omezeny na:"
 
 #. type: Plain text
 #: docs/user/gammu.1:201
