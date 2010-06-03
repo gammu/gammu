@@ -3556,7 +3556,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:1925 docs/user/gammu.1:2559
 msgid "2. Add hardware"
-msgstr ""
+msgstr "2. Přidat hardware"
 
 #. type: Plain text
 #: docs/user/gammu.1:1927 docs/user/gammu.1:2561
