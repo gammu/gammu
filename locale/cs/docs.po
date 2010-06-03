@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-03 11:39+0300\n"
-"PO-Revision-Date: 2010-06-03 13:52+0200\n"
+"PO-Revision-Date: 2010-06-03 13:53+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -2780,6 +2780,8 @@ msgid ""
 "In new models all bitmaps are saved in filesystem and should go into "
 "filesystem section"
 msgstr ""
+"V současných telefonech jsou obrázky ukládány jakou soubory a je potřeba k "
+"nim i tak přistupovat."
 
 # type: TP
 #. type: TP
