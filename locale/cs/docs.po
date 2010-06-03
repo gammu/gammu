@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-03 11:39+0300\n"
-"PO-Revision-Date: 2010-06-03 13:54+0200\n"
+"PO-Revision-Date: 2010-06-03 13:55+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -3576,7 +3576,7 @@ msgstr "5. zvolte \"Přidat nové zařízení\""
 #. type: Plain text
 #: docs/user/gammu.1:1933 docs/user/gammu.1:2567
 msgid "6. select \"Install the hardware that I manually select from a list\""
-msgstr ""
+msgstr "7. zvolte \"Instalovat ovladač který zvolím ze seznamu\""
 
 #. type: Plain text
 #: docs/user/gammu.1:1935 docs/user/gammu.1:2569
