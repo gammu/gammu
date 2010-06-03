@@ -3576,7 +3576,7 @@ msgstr "5. zvolte \"Přidat nové zařízení\""
 #. type: Plain text
 #: docs/user/gammu.1:1933 docs/user/gammu.1:2567
 msgid "6. select \"Install the hardware that I manually select from a list\""
-msgstr "7. zvolte \"Instalovat ovladač který zvolím ze seznamu\""
+msgstr "6. zvolte \"Instalovat ovladač který zvolím ze seznamu\""
 
 #. type: Plain text
 #: docs/user/gammu.1:1935 docs/user/gammu.1:2569
