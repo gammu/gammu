@@ -3581,7 +3581,7 @@ msgstr "6. zvolte \"Instalovat ovladač který zvolím ze seznamu\""
 #. type: Plain text
 #: docs/user/gammu.1:1935 docs/user/gammu.1:2569
 msgid "7. select \"Sound, video and game controllers\""
-msgstr ""
+msgstr "7. zvolte \"Ovladače zvuku, videa a her\""
 
 #. type: Plain text
 #: docs/user/gammu.1:1937 docs/user/gammu.1:2571
