@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2010???? - 1.27.94
+20100603 - 1.27.94
 
 [-] * Fixed folder detection for Nokia S40 phones (bug #1191).
 [-] * Fixed smsd-inject for long messages.
