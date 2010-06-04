@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-03 11:39+0300\n"
-"PO-Revision-Date: 2010-05-28 13:37+0200\n"
+"PO-Revision-Date: 2010-06-03 13:57+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -632,6 +632,9 @@ msgid ""
 "send. Otherwise the phone will not be able to display it or will even crash, "
 "because firmware of phone did not expect this possibility."
 msgstr ""
+"Je potřeba si předem zjistit, jestli telefon, kam zprávu posíláme, je "
+"schopen ji zobrazit. Některé telefony obsahují chyby, že při přijetí "
+"takovéto zprávy můžou havarovat."
 
 #. type: TP
 #: docs/user/gammu.1:193
@@ -652,6 +655,9 @@ msgid ""
 "standards, but it isn't big limit, because there are no phones supporting "
 "them), but they're from limited set:"
 msgstr ""
+"při použití B<GSM Default Alphabet> - v jedné zprávě může být až 160 znaků "
+"(Gammu nepodporuje kompresi podle GSM standardů, protože ji nepodporuje ani "
+"většina telefonů), ale znaky jsou omezeny na:"
 
 #. type: Plain text
 #: docs/user/gammu.1:201
@@ -696,6 +702,9 @@ msgid ""
 "be any chars including all national and special ones. Please note, that some "
 "older phones might have problems displaying such message."
 msgstr ""
+"při použití B<Unicode> - v jedné zprávě může být nejvýše 70 znaků, ale může "
+"se jednat o libovolné Unicode znaky. Některé starší telefony můžou mít "
+"problém se zobraznením takovéto zprávy."
 
 #. type: Plain text
 #: docs/user/gammu.1:220
@@ -2771,6 +2780,8 @@ msgid ""
 "In new models all bitmaps are saved in filesystem and should go into "
 "filesystem section"
 msgstr ""
+"V současných telefonech jsou obrázky ukládány jakou soubory a je potřeba k "
+"nim i tak přistupovat."
 
 # type: TP
 #. type: TP
@@ -3351,6 +3362,8 @@ msgid ""
 "Note: Not all phones supports this function, especially most Sony Ericsson "
 "phones even if they have notes inside phone."
 msgstr ""
+"Poznámka: Ne všechny telefony toto podporují, i když funkci poznámek "
+"obsahují (například Sony-Ericsson)."
 
 #. type: SS
 #: docs/user/gammu.1:1595
@@ -3538,42 +3551,42 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:1923 docs/user/gammu.1:2557
 msgid "1. Control Panel"
-msgstr ""
+msgstr "1. Ovládací panel"
 
 #. type: Plain text
 #: docs/user/gammu.1:1925 docs/user/gammu.1:2559
 msgid "2. Add hardware"
-msgstr ""
+msgstr "2. Přidat hardware"
 
 #. type: Plain text
 #: docs/user/gammu.1:1927 docs/user/gammu.1:2561
 msgid "3. click Next"
-msgstr ""
+msgstr "3. klikněte na Další"
 
 #. type: Plain text
 #: docs/user/gammu.1:1929 docs/user/gammu.1:2563
 msgid "4. select \"Yes. I have already connected the hardware\""
-msgstr ""
+msgstr "4. zvolte \"Ano, hardware už je připojený\""
 
 #. type: Plain text
 #: docs/user/gammu.1:1931 docs/user/gammu.1:2565
 msgid "5. select \"Add a new hardware device\""
-msgstr ""
+msgstr "5. zvolte \"Přidat nové zařízení\""
 
 #. type: Plain text
 #: docs/user/gammu.1:1933 docs/user/gammu.1:2567
 msgid "6. select \"Install the hardware that I manually select from a list\""
-msgstr ""
+msgstr "6. zvolte \"Instalovat ovladač který zvolím ze seznamu\""
 
 #. type: Plain text
 #: docs/user/gammu.1:1935 docs/user/gammu.1:2569
 msgid "7. select \"Sound, video and game controllers\""
-msgstr ""
+msgstr "7. zvolte \"Ovladače zvuku, videa a her\""
 
 #. type: Plain text
 #: docs/user/gammu.1:1937 docs/user/gammu.1:2571
 msgid "8. select \"Audio codecs\""
-msgstr ""
+msgstr "8. zvolte \"Kodeky zvuku\""
 
 #. type: Plain text
 #: docs/user/gammu.1:1939 docs/user/gammu.1:2573
@@ -6876,6 +6889,9 @@ msgid ""
 "absolute path to log file as startup directory might be different than you "
 "expect."
 msgstr ""
+"Pokud je SMSD spuštěn jako systémový démon (nebo služba), doporučujeme "
+"používat absolutní cestu, protože adresář, kde bude program spuštěn se může "
+"lišit od toho, co očekáváte."
 
 # type: Plain text
 #. type: Plain text
