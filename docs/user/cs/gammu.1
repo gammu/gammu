@@ -199,19 +199,18 @@ formátování textu a další)
 \fBZprávy s logem pro Alcatel\fP
 
 
-You need to ensure that the target phone supports message type you want to
-send. Otherwise the phone will not be able to display it or will even crash,
-because firmware of phone did not expect this possibility.
+Je potřeba si předem zjistit, jestli telefon, kam zprávu posíláme, je
+schopen ji zobrazit. Některé telefony obsahují chyby, že při přijetí
+takovéto zprávy můžou havarovat.
 
 .TP 
 \fBKódování znaků v textu SMS\fP
 
 Text v SMS zprávě může být zakódován dvěmi způsoby:
 
-with \fBGSM Default Alphabet\fP \- in single SMS you can have maximally 160
-chars (Gammu doesn't support compressing such texts according to GSM
-standards, but it isn't big limit, because there are no phones supporting
-them), but they're from limited set:
+při použití \fBGSM Default Alphabet\fP \- v jedné zprávě může být až 160 znaků
+(Gammu nepodporuje kompresi podle GSM standardů, protože ji nepodporuje ani
+většina telefonů), ale znaky jsou omezeny na:
 
   * všechny písmena latinky, malá i velká
 
@@ -225,9 +224,9 @@ them), but they're from limited set:
 
   * pár dalších
 
-with \fBUnicode\fP \- in single SMS you can save at most 70 chars, but these can
-be any chars including all national and special ones. Please note, that some
-older phones might have problems displaying such message.
+při použití \fBUnicode\fP \- v jedné zprávě může být nejvýše 70 znaků, ale může
+se jednat o libovolné Unicode znaky. Některé starší telefony můžou mít
+problém se zobraznením takovéto zprávy.
 
 Gammu tries to do the best to handle non ASCII characters in your message.
 Everything is internally handled in Unicode (the input is converted
@@ -1114,8 +1113,8 @@ These options are mainly (there are few expections) for monochromatic logos
 and images available in older phones. Recognized file formats: xpm (only
 saving), 2\-colors bmp, nlm, nsl, ngg, nol, wbmp, gif (for Samsung).
 
-In new models all bitmaps are saved in filesystem and should go into
-filesystem section
+V současných telefonech jsou obrázky ukládány jakou soubory a je potřeba k
+nim i tak přistupovat.
 
 .TP 
 \fBcopybitmap\fP\fI inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]\fP
@@ -1684,8 +1683,8 @@ sendsms a savesms\fP.
 \fBgetallnotes\fP
 Zobrazí všechny poznámky z telefonu.
 
-Note: Not all phones supports this function, especially most Sony Ericsson
-phones even if they have notes inside phone.
+Poznámka: Ne všechny telefony toto podporují, i když funkci poznámek
+obsahují (například Sony\-Ericsson).
 
 
 .SS "Čas, datum a budíky"
@@ -2009,21 +2008,21 @@ Created WAV files require GSM 6.10 codec to be played. In Win XP it's
 included by Microsoft. If you deleted it by accident in this operating
 system, make such steps:
 
-1. Control Panel
+1. Ovládací panel
 .br
-2. Add hardware
+2. Přidat hardware
 .br
-3. click Next
+3. klikněte na Další
 .br
-4. select "Yes. I have already connected the hardware"
+4. zvolte "Ano, hardware už je připojený"
 .br
-5. select "Add a new hardware device"
+5. zvolte "Přidat nové zařízení"
 .br
-6. select "Install the hardware that I manually select from a list"
+6. zvolte "Instalovat ovladač který zvolím ze seznamu"
 .br
-7. select "Sound, video and game controllers"
+7. zvolte "Ovladače zvuku, videa a her"
 .br
-8. select "Audio codecs"
+8. zvolte "Kodeky zvuku"
 .br
 9.  select "windows\esystem32" directory and file "mmdriver.inf"
 .br
@@ -2651,21 +2650,21 @@ Created WAV files require GSM 6.10 codec to be played. In Win XP it's
 included by Microsoft. If you deleted it by accident in this operating
 system, make such steps:
 
-1. Control Panel
+1. Ovládací panel
 .br
-2. Add hardware
+2. Přidat hardware
 .br
-3. click Next
+3. klikněte na Další
 .br
-4. select "Yes. I have already connected the hardware"
+4. zvolte "Ano, hardware už je připojený"
 .br
-5. select "Add a new hardware device"
+5. zvolte "Přidat nové zařízení"
 .br
-6. select "Install the hardware that I manually select from a list"
+6. zvolte "Instalovat ovladač který zvolím ze seznamu"
 .br
-7. select "Sound, video and game controllers"
+7. zvolte "Ovladače zvuku, videa a her"
 .br
-8. select "Audio codecs"
+8. zvolte "Kodeky zvuku"
 .br
 9.  select "windows\esystem32" directory and file "mmdriver.inf"
 .br
