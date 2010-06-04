@@ -10,3 +10,9 @@ this storage.
    :alt: SMSD interactions
 
    Interaction of SMSD programs
+
+Backend services
+----------------
+
+The backend service is used to store messages (both incoming and queue of
+outgoing ones).
