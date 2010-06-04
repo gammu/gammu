@@ -22,6 +22,7 @@ for line in f:
         if pos == '00000000':
             if output != '':
                 print output.decode('hex')
+                output = ''
         data = ''.join(data.strip().split(' '))
         output += data
 
