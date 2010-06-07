@@ -688,6 +688,36 @@ GSM_Error SAMSUNG_ORG_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_State
 	return ERR_NONE;
 }
 
+GSM_Error SAMSUNG_SSH_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error error;
+	int ignore;
+
+	if (Priv->ReplyState != AT_Reply_OK) {
+		switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+		case AT_Reply_Error:
+			return ERR_NOTSUPPORTED;
+		case AT_Reply_CMSError:
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+			return ERR_UNKNOWNRESPONSE;
+		}
+	}
+
+	error = ATGEN_ParseReply(s,
+		GetLineString(msg.Buffer, &Priv->Lines, 2),
+		"+SSHI: @i, @i, @i",
+		&s->Phone.Data.CalStatus->Used,
+		&s->Phone.Data.CalStatus->Free,
+		&ignore);
+	if (error != ERR_NONE) return error;
+	s->Phone.Data.CalStatus->Free -= s->Phone.Data.CalStatus->Used;
+	return ERR_NONE;
+}
+
 GSM_Error SAMSUNG_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
 {
 	GSM_Error error;
@@ -700,12 +730,14 @@ GSM_Error SAMSUNG_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Sta
 	if (Priv->SamsungCalendar == SAMSUNG_NONE) {
 		return ERR_NOTSUPPORTED;
 	} else if (Priv->SamsungCalendar == SAMSUNG_SSH) {
-		return ERR_NOTIMPLEMENTED;
+		ATGEN_WaitForAutoLen(s, "AT+SSHI?\r", 0x00, 10, ID_GetCalendarNotesInfo);
+		return error;
+	} else if (Priv->SamsungCalendar == SAMSUNG_ORG) {
+		ATGEN_WaitForAutoLen(s, "AT+ORGI?\r", 0x00, 10, ID_GetCalendarNotesInfo);
+		return error;
 	}
 
-	ATGEN_WaitForAutoLen(s, "AT+ORGI?\r", 0x00, 10, ID_GetCalendarNotesInfo);
-
-	return error;
+	return ERR_BUG;
 }
 
 GSM_Error SAMSUNG_ParseAppointment(GSM_StateMachine *s, const char *line)
