@@ -5265,9 +5265,12 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 /* Samsung calendar ORG? */
 {SAMSUNG_ORG_ReplyGetCalendarStatus,"AT+ORGI?"		,0x00,0x00,ID_GetCalendarNotesInfo },
 {SAMSUNG_ORG_ReplyGetCalendar,	"AT+ORGR="		,0x00,0x00,ID_GetCalendarNote },
-{SAMSUNG_SSH_ReplyGetCalendar,	"AT+SSHR="		,0x00,0x00,ID_GetCalendarNote },
 {ATGEN_GenericReply,		"AT+ORGD="		,0x00,0x00,ID_DeleteCalendarNote },
 {SAMSUNG_ORG_ReplySetCalendar,	"AT+ORGW="		,0x00,0x00,ID_SetCalendarNote },
+
+/* Samsung calendar SSH? */
+{SAMSUNG_SSH_ReplyGetCalendar,	"AT+SSHR="		,0x00,0x00,ID_GetCalendarNote },
+{ATGEN_GenericReply,		"AT+SSHD="		,0x00,0x00,ID_DeleteCalendarNote },
 
 {MOTOROLA_ReplyGetCalendarStatus,"AT+MDBR=?"		,0x00,0x00,ID_GetCalendarNotesInfo },
 {MOTOROLA_ReplyGetCalendar,	"AT+MDBR="		,0x00,0x00,ID_GetCalendarNote },

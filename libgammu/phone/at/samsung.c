@@ -1057,8 +1057,10 @@ GSM_Error SAMSUNG_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 		return ERR_NOTSUPPORTED;
 	} else if (Priv->SamsungCalendar == SAMSUNG_ORG) {
 		len = sprintf(req, "AT+ORGD=%d\r", Note->Location);
+	} else if (Priv->SamsungCalendar == SAMSUNG_SSH) {
+		len = sprintf(req, "AT+SSHD=%d\r", Note->Location);
 	} else {
-		return ERR_NOTIMPLEMENTED;
+		return ERR_BUG;
 	}
 
 	ATGEN_WaitFor(s, req, len, 0x00, 10, ID_DeleteCalendarNote);
