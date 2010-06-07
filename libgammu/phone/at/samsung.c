@@ -1056,7 +1056,7 @@ GSM_Error SAMSUNG_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	if (Priv->SamsungCalendar == SAMSUNG_NONE) {
 		return ERR_NOTSUPPORTED;
 	} else if (Priv->SamsungCalendar == SAMSUNG_ORG) {
-		len = sprintf(req, "AT+ORGD=%d\r", Note->Location);
+		len = sprintf(req, "AT+ORGD=%d\r", Note->Location - 1);
 	} else if (Priv->SamsungCalendar == SAMSUNG_SSH) {
 		len = sprintf(req, "AT+SSHD=%d\r", Note->Location);
 	} else {
