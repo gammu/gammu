@@ -979,8 +979,6 @@ GSM_Error SAMSUNG_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 
 	if (Priv->SamsungCalendar == SAMSUNG_NONE) {
 		return ERR_NOTSUPPORTED;
-	} else if (Priv->SamsungCalendar == SAMSUNG_SSH) {
-		return ERR_NOTIMPLEMENTED;
 	}
 
 	if (start) {
