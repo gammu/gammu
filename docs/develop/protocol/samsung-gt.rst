@@ -60,6 +60,7 @@ creation? (year month day) - the meaning of this date is not sure for
 me yet.
 
 To delete entries::
+
     AT+SSHD=1
     OK
 
@@ -103,6 +104,7 @@ And modify::
     OK
 
 To delete entries::
+
     AT+SSHT=3
     OK
     AT+SSHR=0
@@ -148,6 +150,7 @@ You can modify it::
     OK
 
 To delete entries::
+
     AT+OMMR=3
     +OMMR:"Note number 3"
     OK
