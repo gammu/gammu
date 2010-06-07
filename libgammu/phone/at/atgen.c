@@ -1835,6 +1835,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->PBKSBNR			= 0;
 	Priv->PBK_SPBR			= 0;
 	Priv->PBK_MPBR			= 0;
+	Priv->SamsungCalendar		= 0;
 	Priv->Charset			= 0;
 	Priv->EncodedCommands		= FALSE;
 	Priv->NormalCharset		= 0;
@@ -5257,6 +5258,11 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {SAMSUNG_ReplyGetRingtone,	"AT+MELR="		,0x00,0x00,ID_GetRingtone	 },
 {SAMSUNG_ReplySetRingtone,	"SDNDCRC ="		,0x00,0x00,ID_SetRingtone	 },
 
+/* Protocol probing */
+{ATGEN_GenericReply,		"AT+ORGI?"		,0x00,0x00,ID_GetProtocol	 },
+{ATGEN_GenericReply,		"AT+SSHT?"		,0x00,0x00,ID_GetProtocol	 },
+
+/* Samsung calendar ORG? */
 {SAMSUNG_ReplyGetCalendarStatus,"AT+ORGI?"		,0x00,0x00,ID_GetCalendarNotesInfo },
 {SAMSUNG_ReplyGetCalendar,	"AT+ORGR="		,0x00,0x00,ID_GetCalendarNote },
 {ATGEN_GenericReply,		"AT+ORGD="		,0x00,0x00,ID_DeleteCalendarNote },

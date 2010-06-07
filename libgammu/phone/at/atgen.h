@@ -178,6 +178,12 @@ typedef enum {
 } GSM_AT_Feature;
 
 typedef enum {
+	SAMSUNG_NONE = 1,
+	SAMSUNG_ORG,
+	SAMSUNG_SSH,
+} GSM_SamsungCalendar;
+
+typedef enum {
 	AT_Status,
 	AT_NextEmpty,
 	AT_Total,
@@ -280,6 +286,7 @@ typedef struct {
 	GSM_AT_Feature		PBKSBNR;
 	GSM_AT_Feature		PBK_SPBR;
 	GSM_AT_Feature		PBK_MPBR;
+	GSM_SamsungCalendar	SamsungCalendar;
 	size_t			NumberLength;
 	size_t			TextLength;
 	int			MemorySize;

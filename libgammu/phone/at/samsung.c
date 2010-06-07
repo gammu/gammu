@@ -446,6 +446,37 @@ GSM_Error SAMSUNG_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *
 		Ringtone->BinaryTone.Length, ID_SetRingtone);
 }
 
+/**
+ * Check what variant of calendar protocol for Samsung is supported.
+ */
+GSM_Error SAMSUNG_CheckCalendar(GSM_StateMachine *s)
+{
+ 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error error;
+
+	if (Priv->SamsungCalendar != 0) {
+		return ERR_NONE;
+	}
+
+	smprintf(s, "Checking for supported calendar commands\n");
+
+	ATGEN_WaitForAutoLen(s, "AT+ORGI?\r", 0x00, 10, ID_GetProtocol);
+	if (error == ERR_NONE) {
+		Priv->SamsungCalendar = SAMSUNG_ORG;
+		return ERR_NONE;
+	}
+
+	ATGEN_WaitForAutoLen(s, "AT+SSHT?\r", 0x00, 10, ID_GetProtocol);
+	if (error == ERR_NONE) {
+		Priv->SamsungCalendar = SAMSUNG_SSH;
+		return ERR_NONE;
+	}
+
+	Priv->SamsungCalendar = SAMSUNG_NONE;
+	return ERR_NONE;
+
+}
+
 GSM_Error SAMSUNG_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -610,6 +641,16 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 GSM_Error SAMSUNG_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
+ 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	SAMSUNG_CheckCalendar(s);
+
+	if (Priv->SamsungCalendar == SAMSUNG_NONE) {
+		return ERR_NOTSUPPORTED;
+	} else if (Priv->SamsungCalendar == SAMSUNG_SSH) {
+		return ERR_NOTIMPLEMENTED;
+	}
+
 	/* FIXME: Here you have to implement conversion of GSM_MemoryEntry to AT command */
 	smprintf(s, "Setting memory for Samsung not implemented yet!\n");
 	return ERR_NOTIMPLEMENTED;
@@ -650,8 +691,17 @@ GSM_Error SAMSUNG_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMach
 GSM_Error SAMSUNG_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
 {
 	GSM_Error error;
+ 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	s->Phone.Data.CalStatus = Status;
+
+	SAMSUNG_CheckCalendar(s);
+
+	if (Priv->SamsungCalendar == SAMSUNG_NONE) {
+		return ERR_NOTSUPPORTED;
+	} else if (Priv->SamsungCalendar == SAMSUNG_SSH) {
+		return ERR_NOTIMPLEMENTED;
+	}
 
 	ATGEN_WaitForAutoLen(s, "AT+ORGI?\r", 0x00, 10, ID_GetCalendarNotesInfo);
 
@@ -918,7 +968,16 @@ GSM_Error SAMSUNG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s
 GSM_Error SAMSUNG_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
 	GSM_Error error;
-	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+ 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	SAMSUNG_CheckCalendar(s);
+
+	if (Priv->SamsungCalendar == SAMSUNG_NONE) {
+		return ERR_NOTSUPPORTED;
+	} else if (Priv->SamsungCalendar == SAMSUNG_SSH) {
+		return ERR_NOTIMPLEMENTED;
+	}
+
 	if (start) {
 		/* One bellow actual first position */
 		Note->Location = 0;
@@ -955,10 +1014,19 @@ GSM_Error SAMSUNG_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	char req[50];
 	GSM_Error error;
 	size_t len;
+ 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	s->Phone.Data.Cal = Note;
 
-	len = sprintf(req, "AT+ORGR=%d\r", Note->Location - 1);
+	SAMSUNG_CheckCalendar(s);
+
+	if (Priv->SamsungCalendar == SAMSUNG_NONE) {
+		return ERR_NOTSUPPORTED;
+	} else if (Priv->SamsungCalendar == SAMSUNG_ORG) {
+		len = sprintf(req, "AT+ORGR=%d\r", Note->Location - 1);
+	} else {
+		return ERR_NOTIMPLEMENTED;
+	}
 
 	ATGEN_WaitFor(s, req, len, 0x00, 10, ID_GetCalendarNote);
 	return error;
@@ -974,8 +1042,17 @@ GSM_Error SAMSUNG_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	char req[50];
 	GSM_Error error;
 	size_t len;
+ 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	len = sprintf(req, "AT+ORGD=%d\r", Note->Location);
+	SAMSUNG_CheckCalendar(s);
+
+	if (Priv->SamsungCalendar == SAMSUNG_NONE) {
+		return ERR_NOTSUPPORTED;
+	} else if (Priv->SamsungCalendar == SAMSUNG_ORG) {
+		len = sprintf(req, "AT+ORGD=%d\r", Note->Location);
+	} else {
+		return ERR_NOTIMPLEMENTED;
+	}
 
 	ATGEN_WaitFor(s, req, len, 0x00, 10, ID_DeleteCalendarNote);
 	return error;
@@ -983,12 +1060,32 @@ GSM_Error SAMSUNG_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 GSM_Error SAMSUNG_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return ERR_NOTIMPLEMENTED;
+ 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	SAMSUNG_CheckCalendar(s);
+
+	if (Priv->SamsungCalendar == SAMSUNG_NONE) {
+		return ERR_NOTSUPPORTED;
+	} else if (Priv->SamsungCalendar == SAMSUNG_ORG) {
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		return ERR_NOTIMPLEMENTED;
+	}
 }
 
 GSM_Error SAMSUNG_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return ERR_NOTIMPLEMENTED;
+ 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	SAMSUNG_CheckCalendar(s);
+
+	if (Priv->SamsungCalendar == SAMSUNG_NONE) {
+		return ERR_NOTSUPPORTED;
+	} else if (Priv->SamsungCalendar == SAMSUNG_ORG) {
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		return ERR_NOTIMPLEMENTED;
+	}
 }
 #endif
 
