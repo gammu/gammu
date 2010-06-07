@@ -656,7 +656,7 @@ GSM_Error SAMSUNG_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	return ERR_NOTIMPLEMENTED;
 }
 
-GSM_Error SAMSUNG_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ORG_ReplyGetCalendarStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error error;
@@ -911,7 +911,7 @@ par24: Empty
 	return ERR_NONE;
 }
 
-GSM_Error SAMSUNG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ORG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error error;
@@ -1032,7 +1032,7 @@ GSM_Error SAMSUNG_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return error;
 }
 
-GSM_Error SAMSUNG_ReplySetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SAMSUNG_ORG_ReplySetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	return ERR_NOTIMPLEMENTED;
 }

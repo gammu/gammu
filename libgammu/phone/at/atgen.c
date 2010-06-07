@@ -5263,10 +5263,10 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+SSHT?"		,0x00,0x00,ID_GetProtocol	 },
 
 /* Samsung calendar ORG? */
-{SAMSUNG_ReplyGetCalendarStatus,"AT+ORGI?"		,0x00,0x00,ID_GetCalendarNotesInfo },
-{SAMSUNG_ReplyGetCalendar,	"AT+ORGR="		,0x00,0x00,ID_GetCalendarNote },
+{SAMSUNG_ORG_ReplyGetCalendarStatus,"AT+ORGI?"		,0x00,0x00,ID_GetCalendarNotesInfo },
+{SAMSUNG_ORG_ReplyGetCalendar,	"AT+ORGR="		,0x00,0x00,ID_GetCalendarNote },
 {ATGEN_GenericReply,		"AT+ORGD="		,0x00,0x00,ID_DeleteCalendarNote },
-{SAMSUNG_ReplySetCalendar,	"AT+ORGW="		,0x00,0x00,ID_SetCalendarNote },
+{SAMSUNG_ORG_ReplySetCalendar,	"AT+ORGW="		,0x00,0x00,ID_SetCalendarNote },
 
 {MOTOROLA_ReplyGetCalendarStatus,"AT+MDBR=?"		,0x00,0x00,ID_GetCalendarNotesInfo },
 {MOTOROLA_ReplyGetCalendar,	"AT+MDBR="		,0x00,0x00,ID_GetCalendarNote },
