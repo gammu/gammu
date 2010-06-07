@@ -965,6 +965,11 @@ GSM_Error SAMSUNG_ORG_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 	}
 }
 
+GSM_Error SAMSUNG_SSH_ReplyGetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	return ERR_NOTIMPLEMENTED;
+}
+
 GSM_Error SAMSUNG_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, gboolean start)
 {
 	GSM_Error error;
