@@ -1091,7 +1091,7 @@ Message processing
 
     Links multi part SMS messages.
 
-    :type Messages: list
+    :type Messages: list, see :ref:`sms_obj`
     :type EMS: boolean
     :param Messages: List of messages to link
     :param EMS: Whether to detect ems, defauls to True
@@ -1102,7 +1102,7 @@ Message processing
 
     Decodes multi part SMS message.
 
-    :param Messages: Nessages to decode
+    :param Messages: Nessages to decode, see :ref:`sms_obj`
     :type Messages: list
     :param EMS: Whether to use EMS, defalt to True
     :type EMS: boolean
