@@ -13,7 +13,7 @@ This module wraps all python-gammu functionality.
    
    StateMachine object, that is used for communication with phone.
    
-   :param Locale: What locales to use for gammu error messages, default is 'auto' which does autodetection according to user locales
+   :param Locale: What locales to use for gammu error messages, default is ``auto`` which does autodetection according to user locales
    :type Locale: string
    
    
@@ -31,7 +31,7 @@ This module wraps all python-gammu functionality.
       
       Adds category to phone.
       
-      :param Type: Type of category to read, one of 'ToDo', 'Phonebook'
+      :param Type: Type of category to read, one of ``ToDo``, ``Phonebook``
       :type Type: string
       :param Name: Category name
       :type Name: string
@@ -147,7 +147,7 @@ This module wraps all python-gammu functionality.
       
       Deletes all memory (phonebooks or calls) entries of specified type.
       
-      :param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
+      :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
       :type Type: string
       :return: None
       :rtype: None
@@ -195,7 +195,7 @@ This module wraps all python-gammu functionality.
       
       Deletes memory (phonebooks or calls) entry.
       
-      :param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
+      :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
       :type Type: string
       :param Location: Location of entry to delete
       :type Location: int
@@ -261,7 +261,7 @@ This module wraps all python-gammu functionality.
       
       Entres security code.
 
-      :param Type: What code to enter, one of 'PIN', 'PUK', 'PIN2', 'PUK2', 'Phone'.
+      :param Type: What code to enter, one of ``PIN``, ``PUK``, ``PIN2``, ``PUK2``, ``Phone``.
       :type Type: string
       :param Code: Code value
       :type Code: string
@@ -309,7 +309,7 @@ This module wraps all python-gammu functionality.
       
       Reads category from phone.
       
-      :param Type: Type of category to read, one of 'ToDo', 'Phonebook'
+      :param Type: Type of category to read, one of ``ToDo``, ``Phonebook``
       :type Type: string
       :param Location: Location of category to read
       :type Location: int
@@ -321,7 +321,7 @@ This module wraps all python-gammu functionality.
       
       Reads category status (number of used entries) from phone.
 
-      :param Type: Type of category to read, one of 'ToDo', 'Phonebook'
+      :param Type: Type of category to read, one of ``ToDo``, ``Phonebook``
       :type Type: string
       :return: Hash containing information about category status (Used)
       :rtype: hash
@@ -443,7 +443,7 @@ This module wraps all python-gammu functionality.
       
       Reads entry from memory (phonebooks or calls). Which entry shouldbe read is defined in entry.
 
-      :param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
+      :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
       :type Type: string
       :return: Memory entry as hash
       :rtype: hash
@@ -453,7 +453,7 @@ This module wraps all python-gammu functionality.
       
       Gets memory (phonebooks or calls) status (eg. number of used andfree entries).
       
-      :param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
+      :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
       :type Type: string
       :return: Hash with information about memory (Used and Free)
       :rtype: hash
@@ -501,7 +501,7 @@ This module wraps all python-gammu functionality.
       
       Reads entry from memory (phonebooks or calls). Which entry shouldbe read is defined in entry. This can be easily used for reading all entries.
       
-      :param Type: Memory type, one of 'ME', 'SM', 'ON', 'DC', 'RC', 'MC', 'MT', 'FD', 'VM'
+      :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
       :type Type: string
       :param Start: Whether to start. This can not be used together with Location
       :type Start: boolean
@@ -729,7 +729,7 @@ This module wraps all python-gammu functionality.
       
       Resets phone settings.
       
-      :param Type: What to reset, one of 'PHONE', 'UIF', 'ALL', 'DEV', 'FACTORY'
+      :param Type: What to reset, one of ``PHONE``, ``UIF``, ``ALL``, ``DEV``, ``FACTORY``
       :type Type: string
       :return: None
       :rtype: None
@@ -937,7 +937,7 @@ This module wraps all python-gammu functionality.
       
       :param DateSeparator: Date separator.
       :type DateSeparator: string
-      :param DateFormat: Date format, one of 'DDMMYYYY', 'MMDDYYYY', 'YYYYMMDD'
+      :param DateFormat: Date format, one of ``DDMMYYYY``, ``MMDDYYYY``, ``YYYYMMDD``
       :type DateFormat: string
       :param AMPMTime: Whether to use AM/PM time.
       :type AMPMTime: boolean
@@ -1228,7 +1228,7 @@ Backup reading and writing
     :type Filename: string
     :param Ringtone: Ringtone to save
     :type Ringtone: dict
-    :param Format: One of 'ott', 'mid', 'rng', 'imy', 'wav', 'rttl'
+    :param Format: One of ``ott``, ``mid``, ``rng``, ``imy``, ``wav``, ``rttl``
     :type Format: string
     :return: None
     :rtype: None
