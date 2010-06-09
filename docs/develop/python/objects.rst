@@ -484,6 +484,16 @@ Todo entry is a dictionary consisting of following fields:
 
    Actual entries, see :ref:`todo_entry_obj`
 
+Example::
+
+    TODO = {
+        'Type': 'MEMO',
+        'Entries': [
+            {'Type': 'END_DATETIME', 'Value': datetime.datetime.now() + datetime.timedelta(days = 1)},
+            {'Type': 'TEXT', 'Value': 'Buy some milk'},
+            ],
+    }
+
 .. _todo_entry_obj:
 
 Todo Entries Object
@@ -559,6 +569,18 @@ Calendar entry is a dictionary consisting of following fields:
 .. attribute:: Entries
 
    Actual entries, see :ref:`cal_entry_obj`
+
+Example::
+
+    CAL = {
+        'Type': 'MEMO',
+        'Entries': [
+            {'Type': 'START_DATETIME', 'Value': datetime.datetime.now()},
+            {'Type': 'END_DATETIME', 'Value': datetime.datetime.now() + datetime.timedelta(days = 1)},
+            {'Type': 'LOCATION', 'Value': 'Home'},
+            {'Type': 'TEXT', 'Value': 'Relax for one day'},
+            ],
+    }
 
 .. _cal_entry_obj:
 
