@@ -45,4 +45,5 @@ API documentation
     data
     worker
     exceptions
+    objects
 

@@ -75,7 +75,7 @@ This module wraps all python-gammu functionality.
       
       Adds SMS to specified folder.
 
-      :param Value: SMS data
+      :param Value: SMS data, see :ref:`sms_obj`
       :type Value: hash
       :return: Tuple for location and folder.
       :rtype: tuple
@@ -530,7 +530,7 @@ This module wraps all python-gammu functionality.
       :type Start: boolean
       :param Location: Location last read entry. This can not be used together with Start
       :type Location: int
-      :return: Hash with SMS data
+      :return: Hash with SMS data, see :ref:`sms_obj`
       :rtype: hash
       
    
@@ -585,7 +585,7 @@ This module wraps all python-gammu functionality.
       :type Folder: int
       :param Location: Location of entry to read
       :type Location: int
-      :return: Hash with SMS data
+      :return: Hash with SMS data, see :ref:`sms_obj`
       :rtype: hash
       
    
@@ -595,7 +595,7 @@ This module wraps all python-gammu functionality.
       
       :param Location: Location of entry to read. Defaults to 1
       :type Location: int
-      :return: Hash with SMSC information
+      :return: Hash with SMSC information, see :ref:`smsc_obj`
       :rtype: hash
       
    
@@ -759,7 +759,7 @@ This module wraps all python-gammu functionality.
       
       Sends SMS.
       
-      :param Value: SMS data
+      :param Value: SMS data, see :ref:`sms_obj`
       :type Value: hash
       :return: Message reference as integer
       :rtype: int
@@ -959,7 +959,7 @@ This module wraps all python-gammu functionality.
       
       Sets SMS.
       
-      :param Value: SMS data
+      :param Value: SMS data, see :ref:`sms_obj`
       :type Value: hash
       :return: Tuple for location and folder.
       :rtype: tuple
@@ -969,7 +969,7 @@ This module wraps all python-gammu functionality.
       
       Sets SMS Service Center number and SMS settings.
       
-      :param Value: SMSC information
+      :param Value: SMSC information, see :ref:`smsc_obj`
       :type Value: hash
       :return: None
       :rtype: None
@@ -1126,14 +1126,14 @@ Message processing
     :type Data: string
     :param SMSC: Whether PDU includes SMSC.
     :type SMSC: boolean
-    :return: Message data
+    :return: Message data, see :ref:`sms_obj`
     :rtype: dict
 
 .. function:: EncodePDU(SMS, Layout = Submit)
 
     Creates PDU packet.
 
-    :param SMS: SMS dictionary
+    :param SMS: SMS dictionary, see :ref:`sms_obj`
     :type SMS: dict
     :param Layout: Layout (one of Submit, Deliver, StatusReport), Submit is default
     :type Layout: string
