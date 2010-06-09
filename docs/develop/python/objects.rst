@@ -512,3 +512,86 @@ Todo Entries Object
 
    Actual value, corresponding type to Type field.
 
+.. _cal_obj:
+
+Calendar Object
+---------------
+
+Calendar entry is a dictionary consisting of following fields:
+
+.. attribute:: Location
+
+   Location where the entry is stored
+
+.. attribute:: Type
+
+   Type of entry, one of:
+
+* ``REMINDER`` - Reminder or Date
+* ``CALL`` - Call
+* ``MEETING`` - Meeting
+* ``BIRTHDAY`` - Birthday or Anniversary or Special Occasion
+* ``MEMO`` - Memo or Miscellaneous
+* ``TRAVEL`` - Travel
+* ``VACATION`` - Vacation
+* ``T_ATHL`` - Training - Athletism
+* ``T_BALL`` - Training - Ball Games
+* ``T_CYCL`` - Training - Cycling
+* ``T_BUDO`` - Training - Budo
+* ``T_DANC`` - Training - Dance
+* ``T_EXTR`` - Training - Extreme Sports
+* ``T_FOOT`` - Training - Football
+* ``T_GOLF`` - Training - Golf
+* ``T_GYM`` - Training - Gym
+* ``T_HORS`` - Training - Horse Race
+* ``T_HOCK`` - Training - Hockey
+* ``T_RACE`` - Training - Races
+* ``T_RUGB`` - Training - Rugby
+* ``T_SAIL`` - Training - Sailing
+* ``T_STRE`` - Training - Street Games
+* ``T_SWIM`` - Training - Swimming
+* ``T_TENN`` - Training - Tennis
+* ``T_TRAV`` - Training - Travels
+* ``T_WINT`` - Training - Winter Games
+* ``ALARM`` - Alarm
+* ``DAILY_ALARM`` - Alarm repeating each day.
+
+.. attribute:: Entries
+
+   Actual entries, see :ref:`cal_entry_obj`
+
+.. _cal_entry_obj:
+
+Calendar Entries Object
+-----------------------
+
+.. attribute:: Type
+
+   Type of entry, one of:
+
+* ``START_DATETIME`` - Date and time of event start.
+* ``END_DATETIME`` - Date and time of event end.
+* ``TONE_ALARM_DATETIME`` - Alarm date and time.
+* ``SILENT_ALARM_DATETIME`` - Date and time of silent alarm.
+* ``TEXT`` - Text.
+* ``DESCRIPTION`` - Detailed description.
+* ``LOCATION`` - Location.
+* ``PHONE`` - Phone number.
+* ``PRIVATE`` - Whether this entry is private.
+* ``CONTACTID`` - Related contact id.
+* ``REPEAT_DAYOFWEEK`` - Repeat each x'th day of week.
+* ``REPEAT_DAY`` - Repeat each x'th day of month.
+* ``REPEAT_DAYOFYEAR`` - Repeat each x'th day of year.
+* ``REPEAT_WEEKOFMONTH`` - Repeat x'th week of month.
+* ``REPEAT_MONTH`` - Repeat x'th month.
+* ``REPEAT_FREQUENCY`` - Repeating frequency.
+* ``REPEAT_STARTDATE`` - Repeating start.
+* ``REPEAT_STOPDATE`` - Repeating end.
+* ``REPEAT_COUNT`` - Number of repetitions.
+* ``LUID`` - IrMC LUID which can be used for synchronisation.
+* ``LAST_MODIFIED`` - Date and time of last modification.
+
+.. attribute:: Value
+
+   Actual value, corresponding type to Type field.
+
