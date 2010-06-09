@@ -5,6 +5,9 @@ For various (mostly historical) reasons, all objects you get from Gammu are
 not real objects but rather a dictionaries. This has quite a big impact of
 usability and will most likely change in the future.
 
+All the objects basically map to C structures, so you might also refer to
+:ref:`libgammu` chapter.
+
 .. _sms_obj:
 
 SMS Object
