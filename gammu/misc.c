@@ -209,6 +209,12 @@ void GetLocation(int argc UNUSED, char *argv[]UNUSED)
 	error = GSM_GetNetworkInfo(gsm, &netinfo);
 	Print_Error(error);
 
+	if (netinfo.State == GSM_NoNetwork) {
+		printf_err("%s", _("Not logged to network!\n"));
+		GSM_Terminate();
+		return;
+	}
+
 	/* We need decimal numbers */
 	lac = strtol(netinfo.LAC, NULL, 16);
 	cellid = strtol(netinfo.CID, NULL, 16);
