@@ -714,3 +714,96 @@ Phonebook Entries Object
 .. attribute:: PictureType
 
    Type of picture which is stored in Value field (only for Picture fields).
+
+.. _file_obj:
+
+File Object
+-----------
+
+File is a dictionary consisting of following fields:
+
+.. attribute:: Used
+
+   Number of bytes used by this file.
+
+.. attribute:: Name
+
+   File name.
+
+.. attribute:: Folder
+
+   Boolean value indicating whether this is a folder.
+
+.. attribute:: Level
+
+   Depth of file on the filesystem.
+
+.. attribute:: Type
+
+   File type, one of:
+
+* ``Other``
+* ``Java_JAR``
+* ``Image_JPG``
+* ``Image_BMP``
+* ``Image_GIF``
+* ``Image_PNG``
+* ``Image_WBMP``
+* ``Video_3GP``
+* ``Sound_AMR``
+* ``Sound_NRT`` - DCT4 binary format
+* ``Sound_MIDI``
+	GSM_File_MMS
+
+.. attribute:: ID_FullName
+
+   Full file name including path.
+
+.. attribute:: Buffer
+
+   Content of the file.
+
+.. attribute:: Modified
+
+   Timestamp of last change
+
+.. attribute:: Protected
+
+   Boolean value indicating whether file is protected (DRM).
+
+.. attribute:: ReadOnly
+
+   Boolean value indicating whether file is read only.
+
+.. attribute:: Hidden
+
+   Boolean value indicating whether file is hidden.
+
+.. attribute:: System
+
+   Boolean value indicating whether file is system.
+
+.. attribute:: Pos
+
+   Current poosition of file upload
+
+.. attribute:: Finished
+
+   Boolean value indicating completed file transfer.
+
+Example::
+
+    FILE = {
+        'ID_FullName': PATH,
+        'Name': os.path.basename(PATH)
+        'Buffer': data,
+        'Protected': 0,
+        'ReadOnly': 0,
+        'Hidden': 0,
+        'System': 0,
+        'Folder': 0,
+        'Level': 0,
+        'Type': 'Other',
+        'Finished': 0,
+        'Pos': 0,
+    }

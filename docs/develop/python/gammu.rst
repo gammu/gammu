@@ -43,7 +43,7 @@ This module wraps all python-gammu functionality.
       
       Adds file part to filesystem.
       
-      :param File: File data
+      :param File: File data, see :ref:`file_obj`
       :type File: dict
       :return: File data for subsequent calls (Finished indicates transfer has been completed)
       :rtype: dict
@@ -365,9 +365,9 @@ This module wraps all python-gammu functionality.
       
       Gets file part from filesystem.
       
-      :param File: File data
+      :param File: File data, see :ref:`file_obj`
       :type File: dict
-      :return: File data for subsequent calls (Finished indicates transfer has been completed)
+      :return: File data for subsequent calls (Finished indicates transfer has been completed), see :ref:`file_obj`
       :rtype: dict
       
    
@@ -395,7 +395,7 @@ This module wraps all python-gammu functionality.
       :type Folder: string
       :param Start: Whether we're starting listing. Defaults to False.
       :type Start: boolean
-      :return: File data as dict
+      :return: File data as dict, see :ref:`file_obj`
       :rtype: dict
       
    
@@ -493,7 +493,7 @@ This module wraps all python-gammu functionality.
       
       :param Start: Whether we're starting listing. Defaults to False.
       :type Start: boolean
-      :return: File data as dict
+      :return: File data as dict, see :ref:`file_obj`
       :rtype: dict
       
    
@@ -749,9 +749,9 @@ This module wraps all python-gammu functionality.
       
       Sends file part to phone.
       
-      :param File: File data
+      :param File: File data, see :ref:`file_obj`
       :type File: dict
-      :return: File data for subsequent calls (Finished indicates transfer has been completed)
+      :return: File data for subsequent calls (Finished indicates transfer has been completed), see :ref:`file_obj`
       :rtype: dict
       
    
