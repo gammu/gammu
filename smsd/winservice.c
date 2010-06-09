@@ -137,8 +137,6 @@ gboolean install_smsd_service(SMSD_Parameters * params)
 	char description[] = "Gammu SMS Daemon service";
 	SERVICE_DESCRIPTION service_description;
 
-	strcpy(commandline, "\"");
-
 	if (GetModuleFileName(NULL, program_name, sizeof(program_name)) == 0)
 		return FALSE;
 
