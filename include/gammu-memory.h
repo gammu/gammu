@@ -182,7 +182,7 @@ typedef enum {
 	 */
 	PBK_Text_URL,
 	/**
-	 * Date and time of last call.
+	 * Date and time of last call. (Date)
 	 */
 	PBK_Date,
 	/**
@@ -270,11 +270,11 @@ typedef enum {
 	 */
 	PBK_CallLength,
 	/**
-	 * LUID - Unique Identifier used for synchronisation
+	 * LUID - Unique Identifier used for synchronisation (Text)
 	 */
 	PBK_Text_LUID,		/* 35 */
 	/**
-	 * Date of last modification
+	 * Date of last modification (Date)
 	 */
 	PBK_LastModified,
 	/**
