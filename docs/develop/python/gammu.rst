@@ -22,7 +22,7 @@ This module wraps all python-gammu functionality.
       Adds calendar entry.
       
       :param Value: Calendar entry data, see :ref:`cal_obj`
-      :type Value: hash
+      :type Value: dict
       :return: Location of newly created entry
       :rtype: int
       
@@ -44,9 +44,9 @@ This module wraps all python-gammu functionality.
       Adds file part to filesystem.
       
       :param File: File data
-      :type File: hash
+      :type File: dict
       :return: File data for subsequent calls (Finished indicates transfer has been completed)
-      :rtype: hash
+      :rtype: dict
       
    
    .. method:: AddFolder(ParentFolderID, Name)
@@ -66,7 +66,7 @@ This module wraps all python-gammu functionality.
       Adds memory (phonebooks or calls) entry.
       
       :param Value: Memory entry
-      :type Value: hash
+      :type Value: dict
       :return: Location of created entry
       :rtype: int
       
@@ -76,7 +76,7 @@ This module wraps all python-gammu functionality.
       Adds SMS to specified folder.
 
       :param Value: SMS data, see :ref:`sms_obj`
-      :type Value: hash
+      :type Value: dict
       :return: Tuple for location and folder.
       :rtype: tuple
       
@@ -96,7 +96,7 @@ This module wraps all python-gammu functionality.
       Adds ToDo in phone.
       
       :param Value: ToDo data, see :ref:`todo_obj`
-      :type Value: hash
+      :type Value: dict
       :return: Location of created entry
       :rtype: int
       
@@ -275,16 +275,16 @@ This module wraps all python-gammu functionality.
       
       :param Location: Which alarm to read. Many phone support only one alarm. Default is 1.
       :type Location: int
-      :return: Alarm hash
-      :rtype: hash
+      :return: Alarm dict
+      :rtype: dict
       
    
    .. method:: GetBatteryCharge()
       
       Gets information about battery charge and phone charging state.
       
-      :return: Hash containing information about battery state (BatteryPercent and ChargeState)
-      :rtype: hash
+      :return: Dictionary containing information about battery state (BatteryPercent and ChargeState)
+      :rtype: dict
       
    
    .. method:: GetCalendar(Location)
@@ -293,16 +293,16 @@ This module wraps all python-gammu functionality.
       
       :param Location: Calendar entry to read
       :type Location: int
-      :return: Hash with calendar values, see :ref:`cal_obj`
-      :rtype: hash
+      :return: Dictionary with calendar values, see :ref:`cal_obj`
+      :rtype: dict
       
    
    .. method:: GetCalendarStatus()
       
       Retrieves calendar status (number of used entries).
       
-      :return: Hash with calendar status (Used)
-      :rtype: hash
+      :return: Dictionary with calendar status (Used)
+      :rtype: dict
       
    
    .. method:: GetCategory(Type, Location)
@@ -323,8 +323,8 @@ This module wraps all python-gammu functionality.
 
       :param Type: Type of category to read, one of ``ToDo``, ``Phonebook``
       :type Type: string
-      :return: Hash containing information about category status (Used)
-      :rtype: hash
+      :return: Dictionary containing information about category status (Used)
+      :rtype: dict
       
    
    .. method:: GetConfig(Section)
@@ -342,8 +342,8 @@ This module wraps all python-gammu functionality.
       
       :param Section: Index of config section to read. Defaults to 0.
       :type Section: int
-      :return: Hash containing configuration
-      :rtype: hash
+      :return: Dictionary containing configuration
+      :rtype: dict
       
    
    .. method:: GetDateTime()
@@ -366,17 +366,17 @@ This module wraps all python-gammu functionality.
       Gets file part from filesystem.
       
       :param File: File data
-      :type File: hash
+      :type File: dict
       :return: File data for subsequent calls (Finished indicates transfer has been completed)
-      :rtype: hash
+      :rtype: dict
       
    
    .. method:: GetFileSystemStatus()
       
       Acquires filesystem status.
       
-      :return: Hash containing filesystem status (Used and Free)
-      :rtype: hash
+      :return: Dictionary containing filesystem status (Used and Free)
+      :rtype: dict
       
    
    .. method:: GetFirmware()
@@ -395,8 +395,8 @@ This module wraps all python-gammu functionality.
       :type Folder: string
       :param Start: Whether we're starting listing. Defaults to False.
       :type Start: boolean
-      :return: File data as hash
-      :rtype: hash
+      :return: File data as dict
+      :rtype: dict
       
    
    .. method:: GetHardware()
@@ -419,8 +419,8 @@ This module wraps all python-gammu functionality.
       
       Gets locale information from phone.
       
-      :return: Hash of locale settings. :meth:`SetLocale` lists them all.
-      :rtype: hash
+      :return: Dictionary of locale settings. :meth:`SetLocale` lists them all.
+      :rtype: dict
       
    
    .. method:: GetManufactureMonth()
@@ -445,8 +445,8 @@ This module wraps all python-gammu functionality.
 
       :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
       :type Type: string
-      :return: Memory entry as hash
-      :rtype: hash
+      :return: Memory entry as dict
+      :rtype: dict
       
    
    .. method:: GetMemoryStatus(Type)
@@ -455,8 +455,8 @@ This module wraps all python-gammu functionality.
       
       :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
       :type Type: string
-      :return: Hash with information about memory (Used and Free)
-      :rtype: hash
+      :return: Dictionary with information about memory (Used and Free)
+      :rtype: dict
       
    
    .. method:: GetModel()
@@ -471,8 +471,8 @@ This module wraps all python-gammu functionality.
       
       Gets network information.
       
-      :return: Hash with information about network (NetworkName, State, NetworkCode, CID and LAC)
-      :rtype: hash
+      :return: Dictionary with information about network (NetworkName, State, NetworkCode, CID and LAC)
+      :rtype: dict
       
    
    .. method:: GetNextCalendar(Start, Location)
@@ -483,8 +483,8 @@ This module wraps all python-gammu functionality.
       :type Start: boolean
       :param Location: Last read location. This can not be used together with Start
       :type Location: int
-      :return: Hash with calendar values, see :ref:`cal_obj`
-      :rtype: hash
+      :return: Dictionary with calendar values, see :ref:`cal_obj`
+      :rtype: dict
       
    
    .. method:: GetNextFileFolder(Start)
@@ -493,8 +493,8 @@ This module wraps all python-gammu functionality.
       
       :param Start: Whether we're starting listing. Defaults to False.
       :type Start: boolean
-      :return: File data as hash
-      :rtype: hash
+      :return: File data as dict
+      :rtype: dict
       
    
    .. method:: GetNextMemory(Type, Start, Location)
@@ -507,8 +507,8 @@ This module wraps all python-gammu functionality.
       :type Start: boolean
       :param Location: Last read location. This can not be used together with Start
       :type Location: int
-      :return: Memory entry as hash
-      :rtype: hash
+      :return: Memory entry as dict
+      :rtype: dict
       
    
    .. method:: GetNextRootFolder(Folder)
@@ -530,8 +530,8 @@ This module wraps all python-gammu functionality.
       :type Start: boolean
       :param Location: Location last read entry. This can not be used together with Start
       :type Location: int
-      :return: Hash with SMS data, see :ref:`sms_obj`
-      :rtype: hash
+      :return: Dictionary with SMS data, see :ref:`sms_obj`
+      :rtype: dict
       
    
    .. method:: GetNextToDo(Start, Location)
@@ -542,8 +542,8 @@ This module wraps all python-gammu functionality.
       :type Start: boolean
       :param Location: Last read location. This can not be used together with Start
       :type Location: int
-      :return: Hash with ToDo values, see :ref:`todo_obj`
-      :rtype: hash
+      :return: Dictionary with ToDo values, see :ref:`todo_obj`
+      :rtype: dict
       
    
    .. method:: GetOriginalIMEI()
@@ -585,8 +585,8 @@ This module wraps all python-gammu functionality.
       :type Folder: int
       :param Location: Location of entry to read
       :type Location: int
-      :return: Hash with SMS data, see :ref:`sms_obj`
-      :rtype: hash
+      :return: Dictionary with SMS data, see :ref:`sms_obj`
+      :rtype: dict
       
    
    .. method:: GetSMSC(Location)
@@ -595,8 +595,8 @@ This module wraps all python-gammu functionality.
       
       :param Location: Location of entry to read. Defaults to 1
       :type Location: int
-      :return: Hash with SMSC information, see :ref:`smsc_obj`
-      :rtype: hash
+      :return: Dictionary with SMSC information, see :ref:`smsc_obj`
+      :rtype: dict
       
    
    .. method:: GetSMSFolders()
@@ -611,8 +611,8 @@ This module wraps all python-gammu functionality.
       
       Gets information about SMS memory (read/unread/size of memory for both SIM and phone).
       
-      :return: Hash with information about phone memory (SIMUnRead, SIMUsed, SIMSize, PhoneUnRead, PhoneUsed, PhoneSize and TemplatesUsed)
-      :rtype: hash
+      :return: Dictionary with information about phone memory (SIMUnRead, SIMUsed, SIMSize, PhoneUnRead, PhoneUsed, PhoneSize and TemplatesUsed)
+      :rtype: dict
       
    
    .. method:: GetSecurityStatus()
@@ -627,8 +627,8 @@ This module wraps all python-gammu functionality.
       
       Reads signal quality (strength and error rate).
       
-      :return: Hash containing information about signal state (SignalStrength, SignalPercent and BitErrorRate)
-      :rtype: hash
+      :return: Dictionary containing information about signal state (SignalStrength, SignalPercent and BitErrorRate)
+      :rtype: dict
       
    
    .. method:: GetSpeedDial(Location)
@@ -637,8 +637,8 @@ This module wraps all python-gammu functionality.
       
       :param Location: Location of entry to read
       :type Location: int
-      :return: Hash with speed dial (Location, MemoryLocation, MemoryNumberID, MemoryType)
-      :rtype: hash
+      :return: Dictionary with speed dial (Location, MemoryLocation, MemoryNumberID, MemoryType)
+      :rtype: dict
       
    
    .. method:: GetToDo(Location)
@@ -647,16 +647,16 @@ This module wraps all python-gammu functionality.
 
       :param Location: Location of entry to read
       :type Location: int
-      :return: Hash with ToDo values, see :ref:`todo_obj`
-      :rtype: hash
+      :return: Dictionary with ToDo values, see :ref:`todo_obj`
+      :rtype: dict
       
    
    .. method:: GetToDoStatus()
       
       Gets status of ToDos (count of used entries).
       
-      :return: Hash of status (Used)
-      :rtype: hash
+      :return: Dictionary of status (Used)
+      :rtype: dict
       
    
    .. method:: HoldCall(ID)
@@ -750,9 +750,9 @@ This module wraps all python-gammu functionality.
       Sends file part to phone.
       
       :param File: File data
-      :type File: hash
+      :type File: dict
       :return: File data for subsequent calls (Finished indicates transfer has been completed)
-      :rtype: hash
+      :rtype: dict
       
    
    .. method:: SendSMS(Value)
@@ -760,7 +760,7 @@ This module wraps all python-gammu functionality.
       Sends SMS.
       
       :param Value: SMS data, see :ref:`sms_obj`
-      :type Value: hash
+      :type Value: dict
       :return: Message reference as integer
       :rtype: int
       
@@ -806,7 +806,7 @@ This module wraps all python-gammu functionality.
       Sets calendar entry
       
       :param Value: Calendar entry data, see :ref:`cal_obj`
-      :type Value: hash
+      :type Value: dict
       :return: Location of set entry
       :rtype: int
       
@@ -818,7 +818,7 @@ This module wraps all python-gammu functionality.
       :param Section: Index of config section to modify
       :type Section: int
       :param Values: Config values, see :meth:`GetConfig` for description of accepted
-      :type Values: hash
+      :type Values: dict
       :return: None
       :rtype: None
       
@@ -950,7 +950,7 @@ This module wraps all python-gammu functionality.
       Sets memory (phonebooks or calls) entry.
       
       :param Value: Memory entry
-      :type Value: hash
+      :type Value: dict
       :return: Location of created entry
       :rtype: int
       
@@ -960,7 +960,7 @@ This module wraps all python-gammu functionality.
       Sets SMS.
       
       :param Value: SMS data, see :ref:`sms_obj`
-      :type Value: hash
+      :type Value: dict
       :return: Tuple for location and folder.
       :rtype: tuple
       
@@ -970,7 +970,7 @@ This module wraps all python-gammu functionality.
       Sets SMS Service Center number and SMS settings.
       
       :param Value: SMSC information, see :ref:`smsc_obj`
-      :type Value: hash
+      :type Value: dict
       :return: None
       :rtype: None
       
@@ -980,7 +980,7 @@ This module wraps all python-gammu functionality.
       Sets speed dial.
       
       :param Value: Speed dial data, see :meth:`GetSpeedDial` for listing.
-      :type Value: hash
+      :type Value: dict
       :return: None
       :rtype: None
       
@@ -990,7 +990,7 @@ This module wraps all python-gammu functionality.
       Sets ToDo in phone.
       
       :param Value: ToDo data, see :ref:`todo_obj`
-      :type Value: hash
+      :type Value: dict
       :return: Location of created entry
       :rtype: int
       
@@ -1107,7 +1107,7 @@ Message processing
     :param EMS: Whether to use EMS, defalt to True
     :type EMS: boolean
     :return: Multi part message information, see :ref:`sms_info_obj`
-    :rtype: hash
+    :rtype: dict
 
 .. function:: EncodeSMS(MessageInfo)
 
@@ -1152,7 +1152,7 @@ Encoding and decoding entries
     :param Text: String to decode
     :type Text: string
     :return: Memory entry
-    :rtype: hash
+    :rtype: dict
 
 .. function:: EncodeVCARD(Entry)
 
@@ -1170,7 +1170,7 @@ Encoding and decoding entries
     :param Text: String to decode
     :type Text: string
     :return: Calendar or todo entry (whatever one was included in string), see :ref:`cal_obj`, :ref:`todo_obj`
-    :rtype: hash
+    :rtype: dict
 
 .. function:: DecodeICS(Text)
 
@@ -1179,7 +1179,7 @@ Encoding and decoding entries
     :param Text: String to decode
     :type Text: string
     :return: Calendar or todo entry (whatever one was included in string), see :ref:`cal_obj`, :ref:`todo_obj`
-    :rtype: hash
+    :rtype: dict
 
 .. function:: EncodeVCALENDAR(Entry)
 
