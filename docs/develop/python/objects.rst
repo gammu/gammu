@@ -617,3 +617,100 @@ Calendar Entries Object
 
    Actual value, corresponding type to Type field.
 
+.. _pbk_obj:
+
+Phonebook Object
+----------------
+
+Phonebook entry is a dictionary consisting of following fields:
+
+.. attribute:: Location
+
+   Location where the entry is stored
+
+.. attribute:: MemoryType
+
+   Memory where the message is stored
+
+.. attribute:: Entries
+
+   Actual entries, see :ref:`pbk_entry_obj`
+
+Example::
+
+    PBK = {
+        'Location': 1000,
+        'MemoryType': 'ME',
+        'Entries': [
+            {'Type': 'Number_General', 'Value': '+420123456789'},
+            {'Type': 'Text_Name', 'Value': 'Stojan Jakotyc'},
+            ],
+    }
+
+.. _pbk_entry_obj:
+
+Phonebook Entries Object
+------------------------
+
+.. attribute:: Type
+
+   Type of entry, one of:
+
+* ``Number_General`` - General number. (Text)
+* ``Number_Mobile`` - Mobile number. (Text)
+* ``Number_Work`` - Work number. (Text)
+* ``Number_Fax`` - Fax number. (Text)
+* ``Number_Home`` - Home number. (Text)
+* ``Number_Pager`` - Pager number. (Text)
+* ``Number_Other`` - Other number. (Text)
+* ``Text_Note`` - Note. (Text)
+* ``Text_Postal`` - Complete postal address. (Text)
+* ``Text_Email`` - Email. (Text)
+* ``Text_Email2`` - Second email. (Text)
+* ``Text_URL`` - URL (Text)
+* ``Date`` - Date and time of last call. (Date)
+* ``Caller_Group`` - Caller group. (Number)
+* ``Text_Name`` - Name (Text)
+* ``Text_LastName`` - Last name. (Text)
+* ``Text_FirstName`` - First name. (Text)
+* ``Text_Company`` - Company. (Text)
+* ``Text_JobTitle`` - Job title. (Text)
+* ``Category`` - Category. (Number, if -1 then text)
+* ``Private`` - Whether entry is private. (Number)
+* ``Text_StreetAddress`` - Street address. (Text)
+* ``Text_City`` - City. (Text)
+* ``Text_State`` - State. (Text)
+* ``Text_Zip`` - Zip code. (Text)
+* ``Text_Country`` - Country. (Text)
+* ``Text_Custom1`` - Custom information 1. (Text)
+* ``Text_Custom2`` - Custom information 2. (Text)
+* ``Text_Custom3`` - Custom information 3. (Text)
+* ``Text_Custom4`` - Custom information 4. (Text)
+* ``RingtoneID`` - Ringtone ID. (Number)
+* ``PictureID`` - Picture ID. (Number)
+* ``Text_UserID`` - User ID. (Text)
+* ``CallLength`` - Length of call (Number)
+* ``Text_LUID`` - LUID - Unique Identifier used for synchronisation (Text)
+* ``LastModified`` - Date of last modification (Date)
+* ``Text_NickName`` - Nick name (Text)
+* ``Text_FormalName`` - Formal name (Text)
+* ``Text_WorkStreetAddress`` - Work street address. (Text)
+* ``Text_WorkCity`` - Work city. (Text)
+* ``Text_WorkState`` - Work state. (Text)
+* ``Text_WorkZip`` - Work zip code. (Text)
+* ``Text_WorkCountry`` - Work country. (Text)
+* ``Text_WorkPostal`` - Complete work postal address. (Text)
+* ``Text_PictureName`` - Picture name (on phone filesystem). (Text)
+* ``PushToTalkID`` - Push-to-talk ID (Text)
+* ``Number_Messaging`` - Favorite messaging number. (Text)
+* ``Photo`` - Photo (Picture).
+* ``Number_Mobile_Home`` - Home mobile number. (Text)
+* ``Number_Mobile_Work`` - Work mobile number. (Text)
+
+.. attribute:: Value
+
+   Actual value, corresponding type to Type field.
+
+.. attribute:: PictureType
+
+   Type of picture which is stored in Value field (only for Picture fields).

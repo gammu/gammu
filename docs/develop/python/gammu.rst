@@ -65,7 +65,7 @@ This module wraps all python-gammu functionality.
       
       Adds memory (phonebooks or calls) entry.
       
-      :param Value: Memory entry
+      :param Value: Memory entry, see :ref:`pbk_obj`
       :type Value: dict
       :return: Location of created entry
       :rtype: int
@@ -445,7 +445,7 @@ This module wraps all python-gammu functionality.
 
       :param Type: Memory type, one of ``ME``, ``SM``, ``ON``, ``DC``, ``RC``, ``MC``, ``MT``, ``FD``, ``VM``
       :type Type: string
-      :return: Memory entry as dict
+      :return: Memory entry as dict, see :ref:`pbk_obj`
       :rtype: dict
       
    
@@ -507,7 +507,7 @@ This module wraps all python-gammu functionality.
       :type Start: boolean
       :param Location: Last read location. This can not be used together with Start
       :type Location: int
-      :return: Memory entry as dict
+      :return: Memory entry as dict, see :ref:`pbk_obj`
       :rtype: dict
       
    
@@ -949,7 +949,7 @@ This module wraps all python-gammu functionality.
       
       Sets memory (phonebooks or calls) entry.
       
-      :param Value: Memory entry
+      :param Value: Memory entry, see :ref:`pbk_obj`
       :type Value: dict
       :return: Location of created entry
       :rtype: int
@@ -1151,14 +1151,14 @@ Encoding and decoding entries
 
     :param Text: String to decode
     :type Text: string
-    :return: Memory entry
+    :return: Memory entry, see :ref:`pbk_obj`
     :rtype: dict
 
 .. function:: EncodeVCARD(Entry)
 
     Encodes memory entry to a vCard.
 
-    :param Entry: Memory entry
+    :param Entry: Memory entry, see :ref:`pbk_obj`
     :type Entry: dict
     :return: String with vCard
     :rtype: string
