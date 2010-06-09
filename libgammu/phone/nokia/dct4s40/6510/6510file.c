@@ -1117,7 +1117,7 @@ static GSM_Error N6510_PrivGetFolderListing2(GSM_StateMachine *s, GSM_File *File
 
 	while (!Priv->FilesEnd) {
 		usleep(1000);
-		if (GSM_ReadDevice(s,TRUE)==0) {
+		if (GSM_ReadDevice(s,TRUE) <= 0) {
 			i++;
 		} else {
 			i=0;
