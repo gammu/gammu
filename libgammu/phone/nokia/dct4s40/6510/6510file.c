@@ -2503,7 +2503,8 @@ done:
 	N26510_SetSMSLocation(s, &sms->SMS[0], 0, location);
 
 	sms->SMS[0].Folder = Priv->SMSFileFolder;
-	sms->SMS[0].InboxFolder = Priv->LastSMSFolders.Folder[Priv->SMSFileFolder].InboxFolder;
+	smprintf(s, "Folder[%d] %s: %d\n", sms->SMS[0].Folder, DecodeUnicodeString(Priv->LastSMSFolders.Folder[sms->SMS[0].Folder].Name), Priv->LastSMSFolders.Folder[sms->SMS[0].Folder].InboxFolder);
+	sms->SMS[0].InboxFolder = Priv->LastSMSFolders.Folder[sms->SMS[0].Folder].InboxFolder;
 	sms->SMS[0].Location = 0; /* fixme */
 
 	return ERR_NONE;
