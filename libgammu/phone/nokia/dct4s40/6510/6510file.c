@@ -2216,6 +2216,8 @@ GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders 
 
 		Start = FALSE;
 
+		smprintf(s, "Folder name: '%s'\n", DecodeUnicodeString(Files.Name));
+
 		if (!strcmp(DecodeUnicodeString(Files.Name),"exchange")) {
 			continue;
 		} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefdrafts")) {
@@ -2257,9 +2259,9 @@ GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders 
 			}
 		}
 		folders->Folder[folders->Number].Memory      = MEM_ME;
-		smprintf(s, "Folder \"%s\" (%s), memory: %s, inbox: %d, outbox: %d\n",
+		smprintf(s, "Folder[%d] = \"%s\", memory: %s, inbox: %d, outbox: %d\n",
+			folders->Number,
 			DecodeUnicodeString(folders->Folder[folders->Number].Name),
-			Files.Name,
 			GSM_MemoryTypeToString(folders->Folder[folders->Number].Memory),
 			folders->Folder[folders->Number].InboxFolder,
 			folders->Folder[folders->Number].OutboxFolder);
@@ -2501,7 +2503,7 @@ done:
 	N26510_SetSMSLocation(s, &sms->SMS[0], 0, location);
 
 	sms->SMS[0].Folder = Priv->SMSFileFolder;
-	sms->SMS[0].InboxFolder = Priv->LastSMSFolders.Folder[Priv->SMSFileFolder - 1].InboxFolder;
+	sms->SMS[0].InboxFolder = Priv->LastSMSFolders.Folder[Priv->SMSFileFolder].InboxFolder;
 	sms->SMS[0].Location = 0; /* fixme */
 
 	return ERR_NONE;
