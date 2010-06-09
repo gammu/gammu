@@ -21,7 +21,7 @@ This module wraps all python-gammu functionality.
       
       Adds calendar entry.
       
-      :param Value: Calendar entry data
+      :param Value: Calendar entry data, see :ref:`cal_obj`
       :type Value: hash
       :return: Location of newly created entry
       :rtype: int
@@ -95,7 +95,7 @@ This module wraps all python-gammu functionality.
       
       Adds ToDo in phone.
       
-      :param Value: ToDo data
+      :param Value: ToDo data, see :ref:`todo_obj`
       :type Value: hash
       :return: Location of created entry
       :rtype: int
@@ -293,7 +293,7 @@ This module wraps all python-gammu functionality.
       
       :param Location: Calendar entry to read
       :type Location: int
-      :return: Hash with calendar values
+      :return: Hash with calendar values, see :ref:`cal_obj`
       :rtype: hash
       
    
@@ -483,7 +483,7 @@ This module wraps all python-gammu functionality.
       :type Start: boolean
       :param Location: Last read location. This can not be used together with Start
       :type Location: int
-      :return: Hash with calendar values
+      :return: Hash with calendar values, see :ref:`cal_obj`
       :rtype: hash
       
    
@@ -542,7 +542,7 @@ This module wraps all python-gammu functionality.
       :type Start: boolean
       :param Location: Last read location. This can not be used together with Start
       :type Location: int
-      :return: Hash with ToDo values
+      :return: Hash with ToDo values, see :ref:`todo_obj`
       :rtype: hash
       
    
@@ -647,7 +647,7 @@ This module wraps all python-gammu functionality.
 
       :param Location: Location of entry to read
       :type Location: int
-      :return: Hash with ToDo values
+      :return: Hash with ToDo values, see :ref:`todo_obj`
       :rtype: hash
       
    
@@ -805,7 +805,7 @@ This module wraps all python-gammu functionality.
       
       Sets calendar entry
       
-      :param Value: Calendar entry data
+      :param Value: Calendar entry data, see :ref:`cal_obj`
       :type Value: hash
       :return: Location of set entry
       :rtype: int
@@ -989,7 +989,7 @@ This module wraps all python-gammu functionality.
       
       Sets ToDo in phone.
       
-      :param Value: ToDo data
+      :param Value: ToDo data, see :ref:`todo_obj`
       :type Value: hash
       :return: Location of created entry
       :rtype: int
@@ -1169,7 +1169,7 @@ Encoding and decoding entries
 
     :param Text: String to decode
     :type Text: string
-    :return: Calendar or todo entry (whatever one was included in string)
+    :return: Calendar or todo entry (whatever one was included in string), see :ref:`cal_obj`, :ref:`todo_obj`
     :rtype: hash
 
 .. function:: DecodeICS(Text)
@@ -1178,41 +1178,41 @@ Encoding and decoding entries
 
     :param Text: String to decode
     :type Text: string
-    :return: Calendar or todo entry (whatever one was included in string)
+    :return: Calendar or todo entry (whatever one was included in string), see :ref:`cal_obj`, :ref:`todo_obj`
     :rtype: hash
 
 .. function:: EncodeVCALENDAR(Entry)
 
-    Encodes memory entry to a vCalendar.
+    Encodes calendar entry to a vCalendar.
 
-    :param Entry: Memory entry
+    :param Entry: Calendar entry, see :ref:`cal_obj`
     :type Entry: dict
     :return: String with vCalendar
     :rtype: string
 
 .. function:: EncodeICALENDAR(Entry)
 
-    Encodes memory entry to a iCalendar.
+    Encodes calendar entry to a iCalendar.
 
-    :param Entry: Memory entry
+    :param Entry: Calendar entry, see :ref:`cal_obj`
     :type Entry: dict
     :return: String with iCalendar
     :rtype: string
 
 .. function:: EncodeVTODO(Entry)
 
-    Encodes memory entry to a vTodo.
+    Encodes todo entry to a vTodo.
 
-    :param Entry: Memory entry
+    :param Entry: Todo entry, see :ref:`todo_obj`
     :type Entry: dict
     :return: String with vTodo
     :rtype: string
 
 .. function:: EncodeITODO(Entry)
 
-    Encodes memory entry to a iTodo.
+    Encodes todo entry to a iTodo.
 
-    :param Entry: Memory entry
+    :param Entry: Todo entry, see :ref:`todo_obj`
     :type Entry: dict
     :return: String with vCard
     :rtype: string
