@@ -1091,11 +1091,11 @@ Message processing
 
     Links multi part SMS messages.
 
-    :type Messages: list, see :ref:`sms_obj`
+    :type Messages: list
     :type EMS: boolean
-    :param Messages: List of messages to link
+    :param Messages: List of messages to link, see :ref:`sms_obj`
     :param EMS: Whether to detect ems, defauls to True
-    :return: List of linked messages
+    :return: List of linked messages, see :ref:`sms_obj`
     :rtype: list
 
 .. function:: DecodeSMS(Messages, EMS)
@@ -1106,16 +1106,16 @@ Message processing
     :type Messages: list
     :param EMS: Whether to use EMS, defalt to True
     :type EMS: boolean
-    :return: Multi part message information
+    :return: Multi part message information, see :ref:`sms_info_obj`
     :rtype: hash
 
 .. function:: EncodeSMS(MessageInfo)
 
     Encodes multi part SMS message.
 
-    :param MessageInfo: Description of message
+    :param MessageInfo: Description of message, see :ref:`sms_info_obj`
     :type MessageInfo: dict
-    :return: Dictionary with raw message
+    :return: Dictionary with raw message, see :ref:`sms_obj`
     :rtype: dict
 
 .. function:: DecodePDU(Data, SMSC = False)
