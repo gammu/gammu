@@ -356,11 +356,11 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry * entry,
  */
 typedef enum {
 	/**
-	 * Due date. (Date)
+	 * Due date (Date).
 	 */
 	TODO_END_DATETIME = 1,
 	/**
-	 * Whether is completed. (Number)
+	 * Whether is completed (Number).
 	 */
 	TODO_COMPLETED,
 	/**
@@ -400,15 +400,15 @@ typedef enum {
 	 */
 	TODO_PHONE,
 	/**
-	 * IrMC LUID which can be used for synchronisation.
+	 * IrMC LUID which can be used for synchronisation (Text).
 	 */
 	TODO_LUID,
 	/**
-	 * Date and time of last modification.
+	 * Date and time of last modification (Date).
 	 */
 	TODO_LAST_MODIFIED,
 	/**
-	 * Start date. (Date)
+	 * Start date (Date).
 	 */
 	TODO_START_DATETIME,
 } GSM_ToDoType;
