@@ -232,3 +232,12 @@ SMSC dictionary can consist of following fields:
 * ``Max`` - maximal validity allowed by network
 * ``nM``, ``nH``, ``nD``, ``nW`` - period defined in minutes, hours, days or
   weeks, eg. ``3W``
+
+Example::
+
+    SMSC = {
+        'Location': 1,
+        'Number': '+420987654321',
+        'Format': 'Text',
+        'Validity': 'Max',
+    }
