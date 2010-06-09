@@ -244,3 +244,185 @@ Example::
         'Format': 'Text',
         'Validity': 'Max',
     }
+
+.. _sms_info_obj:
+
+SMS Info Object
+---------------
+
+Message info dictionary can consist of following fields:
+
+.. attribute:: Unicode
+
+   Whether to use Unicode for the message.
+
+.. attribute:: ReplaceMessage
+
+   Id of message which this message is supposed to replace
+
+.. attribute:: Unknown
+
+   Boolean flag indicating there was some part which Gammu could not decode.
+
+.. attribute:: Class
+
+   Message class
+
+.. attribute:: Entries
+
+   Actual message data, see :ref:`sms_info_part_obj`.
+
+Example::
+
+    SMSINFO = {
+        'Class': 1,
+        'Entries': [
+            {'ID': 'Text', 'Buffer': 'This is a '},
+            {'ID': 'Text', 'Buffer': 'message', 'Italic': True},
+            {'ID': 'Text', 'Buffer': ' from '},
+            {'ID': 'Text', 'Buffer': 'Gammu', 'Bold': True},
+            ],
+    }
+
+.. _sms_info_part_obj:
+
+SMS Info Part Object
+--------------------
+
+Message component can consist of following fields:
+
+.. attribute:: ID
+
+   Identification of the part type:
+
+* ``Text``
+* ``ConcatenatedTextLong``  - Contacenated SMS, when longer than 1 SMS.
+* ``ConcatenatedAutoTextLong`` - Contacenated SMS, auto Default/Unicode coding.
+* ``ConcatenatedTextLong16bit``
+* ``ConcatenatedAutoTextLong16bit``
+* ``NokiaProfileLong`` -  Nokia profile = Name`` Ringtone`` ScreenSaver
+* ``NokiaPictureImageLong`` -  Nokia Picture Image + (text)
+* ``NokiaScreenSaverLong`` -  Nokia screen saver + (text)
+* ``NokiaRingtone`` -  Nokia ringtone - old SM2.0 format`` 1 SMS
+* ``NokiaRingtoneLong`` -  Nokia ringtone contacenated`` when very long
+* ``NokiaOperatorLogo`` -  Nokia 72x14 operator logo`` 1 SMS
+* ``NokiaOperatorLogoLong`` -  Nokia 72x14 op logo or 78x21 in 2 SMS
+* ``NokiaCallerLogo`` -  Nokia 72x14 caller logo`` 1 SMS
+* ``NokiaWAPBookmarkLong`` -  Nokia WAP bookmark in 1 or 2 SMS
+* ``NokiaWAPSettingsLong`` -  Nokia WAP settings in 2 SMS
+* ``NokiaMMSSettingsLong`` -  Nokia MMS settings in 2 SMS
+* ``NokiaVCARD10Long`` -  Nokia VCARD 1.0 - only name and default number
+* ``NokiaVCARD21Long`` -  Nokia VCARD 2.1 - all numbers + text
+* ``NokiaVCALENDAR10Long`` -  Nokia VCALENDAR 1.0 - can be in few sms
+* ``NokiaVTODOLong``
+* ``VCARD10Long``
+* ``VCARD21Long``
+* ``DisableVoice``
+* ``DisableFax``
+* ``DisableEmail``
+* ``EnableVoice``
+* ``EnableFax``
+* ``EnableEmail``
+* ``VoidSMS``
+* ``EMSSound10`` -  IMelody 1.0
+* ``EMSSound12`` -  IMelody 1.2
+* ``EMSSonyEricssonSound``  -  IMelody without header - SonyEricsson extension
+* ``EMSSound10Long`` -  IMelody 1.0 with UPI.
+* ``EMSSound12Long`` -  IMelody 1.2 with UPI.
+* ``EMSSonyEricssonSoundLong`` -  IMelody without header with UPI.
+* ``EMSPredefinedSound``
+* ``EMSPredefinedAnimation``
+* ``EMSAnimation``
+* ``EMSFixedBitmap`` -  Fixed bitmap of size 16x16 or 32x32.
+* ``EMSVariableBitmap``
+* ``EMSVariableBitmapLong``
+* ``MMSIndicatorLong`` - MMS message indicator.
+* ``WAPIndicatorLong``
+* ``AlcatelMonoBitmapLong`` - Variable bitmap with black and white colors
+* ``AlcatelMonoAnimationLong`` -  Variable animation with black and white colors
+* ``AlcatelSMSTemplateName``
+* ``SiemensFile`` - Siemens OTA
+
+.. attribute:: Left
+
+   Text formatting
+
+.. attribute:: Right
+
+   Text formatting
+
+.. attribute:: Center
+
+   Text formatting
+
+.. attribute:: Large
+
+   Text formatting
+
+.. attribute:: Small
+
+   Text formatting
+
+.. attribute:: Bold
+
+   Text formatting
+
+.. attribute:: Italic
+
+   Text formatting
+
+.. attribute:: Underlined
+
+   Text formatting
+
+.. attribute:: Strikethrough
+
+   Text formatting
+
+.. attribute:: Protected
+
+   Whether message part should be protected (DRM)
+
+.. attribute:: Number
+
+   Number to encode in message.
+
+.. attribute:: Ringtone
+
+   Ringtone to encode in message.
+
+.. attribute:: Bitmap
+
+   Bitmap to encode in message.
+
+.. attribute:: Bookmark
+
+   Bookmark to encode in message.
+
+.. attribute:: Settings
+
+   Settings to encode in message.
+
+.. attribute:: MMSIndicator
+
+   MMS indication to encode in message.
+
+.. attribute:: Phonebook
+
+   Phonebook entry to encode in message, see :ref:`pbk_obj`.
+
+.. attribute:: Calendar
+
+   Calendar entry to encode in message, see :ref:`cal_obj`.
+
+.. attribute:: ToDo
+
+   Todo entry to encode in message, see :ref:`todo_obj`.
+
+.. attribute:: File
+
+   File to encode in message, see :ref:`file_obj`.
+
+.. attribute:: Buffer
+
+   String to encode in message.
