@@ -753,7 +753,7 @@ File is a dictionary consisting of following fields:
 * ``Sound_AMR``
 * ``Sound_NRT`` - DCT4 binary format
 * ``Sound_MIDI``
-	GSM_File_MMS
+* ``MMS``
 
 .. attribute:: ID_FullName
 
