@@ -458,6 +458,7 @@ if (WITH_ATGEN)
     at_getmemory_reply_test(with-date-time UTF8 "60122256476")
     at_getmemory_reply_test(ucs2 UCS2 "Stanley Paul")
     at_getmemory_reply_test(ucs2-motorola UCS2 "Virchow Klinikum St. 31")
+    at_getmemory_reply_test(nokia-2730 UCS2 "Steve  Vinson")
 
     # AT USSD replies parsing
     add_executable(at-ussd-reply at-ussd-reply.c)
