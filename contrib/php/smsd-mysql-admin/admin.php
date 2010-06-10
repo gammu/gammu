@@ -4,6 +4,7 @@
 //$db_serv="127.0.0.1";
 //$db_user="root";
 //$db_pass="";
+//$db_name="smsd"
 
 //these must be defined
 $dokument="admin.php"; //name of current document
@@ -759,4 +760,62 @@ echo ", ".$HTTP_SERVER_VARS['SERVER_SOFTWARE'].", MySQL client ",mysql_get_clien
 echo "MySQL server - IP $db_serv, ",mysql_get_server_info(),"<br>\n";
 echo "</font></b>\n";
 echo "</td>\n</tr>\n</table>";
+
+
+?>
+
+<br />
+<?php
+#MENU 02
+
+$link = mysql_connect ($db_serv, $db_user, $db_pass);
+$result0 = mysql_list_dbs($link);
+$arg = '?';
+
+	if (!isset($_GET['db']) || $_GET['db']!=$row0->Database) {
+		echo "<a href=$dokument$arg"."db=$row0->Database>[>>] $row0->Database</a><br>\n";
+
+	}
+	echo "<a href=$dokument$arg"."x=x>[<<] $row0->Database</a><br>\n";
+
+	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=daemons>DAEMONS</a><br>\n";
+	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=phones>PHONES</a><p>\n";
+
+	echo "<nobr>&nbsp <a href=$dokument$arg"."db=$row0->Database&op=newsms>NEW OUTBOX SMS</a></nobr><br><br>\n";
+
+	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=inbox>INBOX</a><br>\n";
+	if (isset($_GET['op']) && $_GET['op']=="inbox") {
+		$result = mysql_db_query("$db_name","select substring(ReceivingDateTime,1,10) from inbox group by substring(ReceivingDateTime,1,10) order by substring(ReceivingDateTime,1,10) desc");
+		while($rekord = mysql_fetch_row($result)) {
+			$d = dispdate($rekord[0]);
+			echo " &nbsp &nbsp &middot <a href=$dokument$arg"."db=$row0->Database&op=inbox&date=$rekord[0]>$d</a><br>";
+		}
+		mysql_free_result($result);
+	}
+
+	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=outbox>OUTBOX</a><br>\n";
+	if (isset($_GET['op']) && $_GET['op']=="outbox") {
+		$result = mysql_db_query("$db_name","select substring(SendingDateTime,1,10) from outbox group by substring(SendingDateTime,1,10) order by substring(SendingDateTime,1,10) desc");
+		while($rekord = mysql_fetch_row($result)) {
+			$d = dispdate($rekord[0]);
+			echo " &nbsp &nbsp &middot <a href=$dokument$arg"."db=$row0->Database&op=outbox&date=$rekord[0]>$d</a><br>";
+		}
+		mysql_free_result($result);
+	}
+
+	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=sentitems>SENT ITEMS</a><br>\n";
+	if (isset($_GET['op']) && $_GET['op']=="sentitems") {
+		$result = mysql_db_query("$db_name","select $sentitems,substring(SendingDateTime,1,10) from sentitems group by substring(SendingDateTime,1,10) order by substring(SendingDateTime,1,10) desc");
+		while($rekord = mysql_fetch_row($result)) {
+			$d = dispdate($rekord[18]);
+			echo " &nbsp &nbsp &middot <a href=$dokument$arg"."db=$row0->Database&op=sentitems&date=$rekord[18]>$d</a><br>";
+		}
+		mysql_free_result($result);
+	}
+
+mysql_free_result($result0);
+
+# /MENU
+
+
 ?>
