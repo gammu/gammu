@@ -3626,6 +3626,28 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 		}
 
+		/*
+		 * Nokia 2730 adds some extra fields to the end, we ignore
+		 * them for now
+		 */
+		error = ATGEN_ParseReply(s,
+					GetLineString(msg.Buffer, &Priv->Lines, 2),
+					"+CPBR: @i, @p, @I, @e, @0",
+					&Memory->Location,
+					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+					&number_type,
+					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+		if (error == ERR_NONE) {
+			smprintf(s, "Extended AT reply detected\n");
+			/* Adjust location */
+			Memory->Location = Memory->Location + 1 - Priv->FirstMemoryEntry;
+			/* Adjust number */
+			GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
+			/* Set number of entries */
+			Memory->EntriesNum = 2;
+			return ERR_NONE;
+		}
+
 		return ERR_UNKNOWNRESPONSE;
 	case AT_Reply_CMEError:
 		return ATGEN_HandleCMEError(s);

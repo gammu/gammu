@@ -20,6 +20,8 @@ ChangeLog
 =========
     
 2010???? - 1.27.95
+
+[-] * Fix parsing of AT replies from Nokia 2730 (bug #1224).
     
 20100603 - 1.27.94
 
