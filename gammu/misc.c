@@ -44,6 +44,18 @@ void PrintNetworkInfo(GSM_NetworkInfo NetInfo)
 		default				: printf("%s\n", _("unknown"));
 #endif
 	}
+	printf(LISTFORMAT, _("Packet network state"));
+	switch (NetInfo.PacketState) {
+		case GSM_HomeNetwork		: printf("%s\n", _("home network")); 		 	break;
+		case GSM_RoamingNetwork		: printf("%s\n", _("roaming network")); 	 	break;
+		case GSM_RequestingNetwork	: printf("%s\n", _("requesting network")); 	 	break;
+		case GSM_NoNetwork		: printf("%s\n", _("not logged into network")); 	break;
+		case GSM_RegistrationDenied	: printf("%s\n", _("registration to network denied"));	break;
+		case GSM_NetworkStatusUnknown	: printf("%s\n", _("unknown"));			break;
+#ifndef CHECK_CASES
+		default				: printf("%s\n", _("unknown"));
+#endif
+	}
 	if (NetInfo.State == GSM_HomeNetwork || NetInfo.State == GSM_RoamingNetwork) {
 		printf(LISTFORMAT, _("Network"));
 		printf("%s (%s",
@@ -53,6 +65,21 @@ void PrintNetworkInfo(GSM_NetworkInfo NetInfo)
 			DecodeUnicodeConsole(GSM_GetCountryName(NetInfo.NetworkCode)));
 		printf(", LAC %s, CID %s\n",
 			NetInfo.LAC,NetInfo.CID);
+		if (NetInfo.NetworkName[0] != 0x00 || NetInfo.NetworkName[1] != 0x00) {
+			printf(LISTFORMAT "\"%s\"\n",
+				_("Name in phone"),
+				DecodeUnicodeConsole(NetInfo.NetworkName));
+		}
+	}
+	if (NetInfo.PacketState == GSM_HomeNetwork || NetInfo.PacketState == GSM_RoamingNetwork) {
+		printf(LISTFORMAT, _("Packet network"));
+		printf("%s (%s",
+			NetInfo.NetworkCode,
+			DecodeUnicodeConsole(GSM_GetNetworkName(NetInfo.NetworkCode)));
+		printf(", %s)",
+			DecodeUnicodeConsole(GSM_GetCountryName(NetInfo.NetworkCode)));
+		printf(", LAC %s, CID %s\n",
+			NetInfo.PacketLAC, NetInfo.PacketCID);
 		if (NetInfo.NetworkName[0] != 0x00 || NetInfo.NetworkName[1] != 0x00) {
 			printf(LISTFORMAT "\"%s\"\n",
 				_("Name in phone"),

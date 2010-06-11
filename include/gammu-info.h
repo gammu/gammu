@@ -109,6 +109,19 @@ typedef struct {
 	 * GPRS state.
 	 */
 	GSM_GPRS_State GPRS;
+	/**
+	 * Cell ID (CID) for packet network
+	 */
+	char PacketCID[10];
+	/**
+	 * Status of network logging for packet data. If phone is not logged into any network,
+         * some values are not filled
+	 */
+	GSM_NetworkInfo_State PacketState;
+	/**
+	 * LAC (Local Area Code) for packet data.
+	 */
+	char PacketLAC[10];
 } GSM_NetworkInfo;
 
 /**

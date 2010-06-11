@@ -422,6 +422,17 @@ GSM_Error GSM_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 
 	CHECK_PHONE_CONNECTION();
 
+	netinfo->CID[0] = 0;
+	netinfo->LAC[0] = 0;
+	netinfo->PacketCID[0] = 0;
+	netinfo->PacketLAC[0] = 0;
+	netinfo->State = GSM_NetworkStatusUnknown;
+	netinfo->PacketState = GSM_NetworkStatusUnknown;
+	netinfo->NetworkName[0] = 0;
+	netinfo->NetworkName[1] = 0;
+	netinfo->NetworkCode[0] = 0;
+	netinfo->GPRS = 0;
+
 	err = s->Phone.Functions->GetNetworkInfo(s, netinfo);
 	PRINT_LOG_ERROR(err);
 	return err;

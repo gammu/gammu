@@ -2524,6 +2524,91 @@ GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 	return error;
 }
 
+GSM_Error ATGEN_ReplyGetPacketNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_NetworkInfo		*NetworkInfo = s->Phone.Data.NetworkInfo;
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	int i, state;
+	GSM_Error error;
+
+  	if (s->Phone.Data.RequestID != ID_GetNetworkInfo) {
+		smprintf(s, "Incoming LAC & CID info, ignoring\n");
+		return ERR_NONE;
+	}
+
+	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+	case AT_Reply_OK:
+		break;
+	case AT_Reply_CMSError:
+	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
+	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+
+	smprintf(s, "Network LAC & CID & state received\n");
+
+	NetworkInfo->LAC[0] = 0;
+	NetworkInfo->CID[0] = 0;
+
+	/* Full reply */
+	error = ATGEN_ParseReply(s,
+			GetLineString(msg.Buffer, &Priv->Lines, 2),
+			"+CREG: @i, @i, @r, @r",
+			&i, /* Mode, ignored for now */
+			&state,
+			NetworkInfo->PacketLAC, sizeof(NetworkInfo->PacketLAC),
+			NetworkInfo->PacketCID, sizeof(NetworkInfo->PacketCID));
+
+	/* Reply without LAC/CID */
+	if (error == ERR_UNKNOWNRESPONSE) {
+		error = ATGEN_ParseReply(s,
+				GetLineString(msg.Buffer, &Priv->Lines, 2),
+				"+CREG: @i, @i",
+				&i, /* Mode, ignored for now */
+				&state);
+	}
+
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	/* Decode network state */
+	switch (state) {
+		case 0:
+			smprintf(s, "Not registered into any network. Not searching for network\n");
+			NetworkInfo->PacketState = GSM_NoNetwork;
+			break;
+		case 1:
+			smprintf(s, "Home network\n");
+			NetworkInfo->PacketState = GSM_HomeNetwork;
+			break;
+		case 2:
+			smprintf(s, "Not registered into any network. Searching for network\n");
+			NetworkInfo->PacketState = GSM_RequestingNetwork;
+			break;
+		case 3:
+			smprintf(s, "Registration denied\n");
+			NetworkInfo->PacketState = GSM_RegistrationDenied;
+			break;
+		case 4:
+			smprintf(s, "Unknown\n");
+			NetworkInfo->PacketState = GSM_NetworkStatusUnknown;
+			break;
+		case 5:
+			smprintf(s, "Registered in roaming network\n");
+			NetworkInfo->PacketState = GSM_RoamingNetwork;
+			break;
+		default:
+			smprintf(s, "Unknown: %d\n", state);
+			NetworkInfo->PacketState = GSM_NetworkStatusUnknown;
+			break;
+	}
+
+	return ERR_NONE;
+}
+
 GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_NetworkInfo		*NetworkInfo = s->Phone.Data.NetworkInfo;
@@ -2778,6 +2863,12 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	}
 	smprintf(s, "Getting network LAC and CID and state\n");
 	ATGEN_WaitForAutoLen(s, "AT+CREG?\r", 0x00, 4, ID_GetNetworkInfo);
+
+	if (error != ERR_NONE) {
+		return error;
+	}
+	smprintf(s, "Getting packet network LAC and CID and state\n");
+	ATGEN_WaitForAutoLen(s, "AT+CGREG?\r", 0x00, 4, ID_GetNetworkInfo);
 
 	if (error != ERR_NONE) {
 		return error;
@@ -5201,6 +5292,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetAlarm,		"AT+CALA?"		,0x00,0x00,ID_GetAlarm		 },
 
 {ATGEN_ReplyGetNetworkLAC_CID,	"AT+CREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
+{ATGEN_ReplyGetPacketNetworkLAC_CID,	"AT+CGREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_ReplyGetGPRSState,	"AT+CGATT?"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+CREG=2"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_GetNetworkInfo	 },

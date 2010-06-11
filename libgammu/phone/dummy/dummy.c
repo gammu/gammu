@@ -675,11 +675,14 @@ GSM_Error DUMMY_AnswerCall(GSM_StateMachine *s, int ID, gboolean all)
 GSM_Error DUMMY_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 {
 	strcpy(netinfo->CID, "FACE");
+	strcpy(netinfo->PacketCID, "DEAD");
 	strcpy(netinfo->NetworkCode, "999 99");
 	netinfo->State = GSM_HomeNetwork;
 	strcpy(netinfo->LAC, "B00B");
+	strcpy(netinfo->PacketLAC, "BEEF");
+	netinfo->PacketState = GSM_HomeNetwork;
 	EncodeUnicode(netinfo->NetworkName, "GammuT3l", 8);
-	netinfo->GPRS = GSM_GPRS_Detached;
+	netinfo->GPRS = GSM_GPRS_Attached;
 
 	return ERR_NONE;
 }

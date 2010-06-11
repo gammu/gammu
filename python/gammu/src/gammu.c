@@ -1665,7 +1665,7 @@ static PyObject *
 StateMachine_GetNetworkInfo(StateMachineObject *self, PyObject *args, PyObject *kwds) {
     GSM_Error           error;
     GSM_NetworkInfo     netinfo;
-    char                *buffer;
+    char                *buffer, *packet_state;
 
     if (!PyArg_ParseTuple(args, ""))
         return NULL;
@@ -1687,12 +1687,26 @@ StateMachine_GetNetworkInfo(StateMachineObject *self, PyObject *args, PyObject *
         case GSM_NetworkStatusUnknown: buffer = "NetworkStatusUnknown"; break;
     }
 
-    return Py_BuildValue("{s:s,s:s,s:s,s:s,s:s,s:s}",
+    packet_state = "Unknown";
+
+    switch(netinfo.PacketState) {
+        case GSM_HomeNetwork: packet_state = "HomeNetwork"; break;
+        case GSM_RoamingNetwork: packet_state = "RoamingNetwork"; break;
+        case GSM_RequestingNetwork: packet_state = "RequestingNetwork"; break;
+        case GSM_NoNetwork: packet_state = "NoNetwork"; break;
+        case GSM_RegistrationDenied: packet_state = "RegistrationDenied"; break;
+        case GSM_NetworkStatusUnknown: packet_state = "NetworkStatusUnknown"; break;
+    }
+
+    return Py_BuildValue("{s:s,s:s,s:s,s:s,s:s,s:s,s:s,s:s,s:s}",
             "NetworkName", netinfo.NetworkName,
             "State", buffer,
+            "PacketState", packet_state,
             "NetworkCode", netinfo.NetworkCode,
             "CID", netinfo.CID,
+            "PacketCID", netinfo.PacketCID,
             "GPRS", netinfo.GPRS == 0 ? "Unknown" : (netinfo.GPRS == GSM_GPRS_Attached ? "Attached" : "Detached"),
+            "PacketLAC", netinfo.PacketLAC,
             "LAC", netinfo.LAC);
 }
 
