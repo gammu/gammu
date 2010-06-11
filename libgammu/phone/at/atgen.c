@@ -2847,14 +2847,6 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	netinfo->NetworkCode[0] = 0;
 	netinfo->GPRS = 0;
 
-	smprintf(s, "Enable full network info\n");
-	ATGEN_WaitForAutoLen(s, "AT+CREG=2\r", 0x00, 4, ID_GetNetworkInfo);
-
-	if ((error != ERR_NONE) &&
-	    (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Siemens) &&
-	    (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Ericsson)) {
-		return error;
-	}
 	smprintf(s, "Getting GPRS state\n");
 	ATGEN_WaitForAutoLen(s, "AT+CGATT?\r", 0x00, 4, ID_GetNetworkInfo);
 
@@ -2867,12 +2859,14 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	if (error != ERR_NONE) {
 		return error;
 	}
+
 	smprintf(s, "Getting packet network LAC and CID and state\n");
 	ATGEN_WaitForAutoLen(s, "AT+CGREG?\r", 0x00, 4, ID_GetNetworkInfo);
 
 	if (error != ERR_NONE) {
 		return error;
 	}
+
 	if (netinfo->State == GSM_HomeNetwork || netinfo->State == GSM_RoamingNetwork) {
 		/* Set numeric format for AT+COPS? */
 		smprintf(s, "Setting short network name format\n");
@@ -5294,7 +5288,6 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetNetworkLAC_CID,	"AT+CREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_ReplyGetPacketNetworkLAC_CID,	"AT+CGREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_ReplyGetGPRSState,	"AT+CGATT?"		,0x00,0x00,ID_GetNetworkInfo	 },
-{ATGEN_GenericReply,		"AT+CREG=2"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_SetAutoNetworkLogin},
 {ATGEN_ReplyGetNetworkCode,	"AT+COPS"		,0x00,0x00,ID_GetNetworkCode	 },
