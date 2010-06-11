@@ -2549,8 +2549,8 @@ GSM_Error ATGEN_ReplyGetPacketNetworkLAC_CID(GSM_Protocol_Message msg, GSM_State
 
 	smprintf(s, "Network LAC & CID & state received\n");
 
-	NetworkInfo->LAC[0] = 0;
-	NetworkInfo->CID[0] = 0;
+	NetworkInfo->PacketLAC[0] = 0;
+	NetworkInfo->PacketCID[0] = 0;
 
 	/* Full reply */
 	error = ATGEN_ParseReply(s,
