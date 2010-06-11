@@ -2555,7 +2555,7 @@ GSM_Error ATGEN_ReplyGetPacketNetworkLAC_CID(GSM_Protocol_Message msg, GSM_State
 	/* Full reply */
 	error = ATGEN_ParseReply(s,
 			GetLineString(msg.Buffer, &Priv->Lines, 2),
-			"+CREG: @i, @i, @r, @r",
+			"+CGREG: @i, @i, @r, @r",
 			&i, /* Mode, ignored for now */
 			&state,
 			NetworkInfo->PacketLAC, sizeof(NetworkInfo->PacketLAC),
@@ -2565,7 +2565,7 @@ GSM_Error ATGEN_ReplyGetPacketNetworkLAC_CID(GSM_Protocol_Message msg, GSM_State
 	if (error == ERR_UNKNOWNRESPONSE) {
 		error = ATGEN_ParseReply(s,
 				GetLineString(msg.Buffer, &Priv->Lines, 2),
-				"+CREG: @i, @i",
+				"+CGREG: @i, @i",
 				&i, /* Mode, ignored for now */
 				&state);
 	}
