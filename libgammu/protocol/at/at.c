@@ -181,7 +181,8 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 							strlen(SpecialAnswers[i].text)) == 0) {
 					/* We need something better here */
 				  	if (s->Phone.Data.RequestID == ID_GetNetworkInfo &&
-							strcmp(SpecialAnswers[i].text, "+CREG:") == 0) {
+							(strcmp(SpecialAnswers[i].text, "+CREG:") == 0 ||
+							strcmp(SpecialAnswers[i].text, "+CGREG:") == 0)) {
 						i++;
 						continue;
 					}
