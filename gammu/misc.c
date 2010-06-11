@@ -433,12 +433,15 @@ void Identify(int argc, char *argv[])
 void NetworkInfo(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_NetworkInfo		NetInfo;
+	GSM_Error error;
 
 	GSM_Init(TRUE);
 
-	if (GSM_GetNetworkInfo(gsm,&NetInfo)==ERR_NONE) {
-		PrintNetworkInfo(NetInfo);
-	}
+	error = GSM_GetNetworkInfo(gsm,&NetInfo);
+	Print_Error(error);
+
+	PrintNetworkInfo(NetInfo);
+
 	GSM_Terminate();
 }
 
