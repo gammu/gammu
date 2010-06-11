@@ -44,18 +44,6 @@ void PrintNetworkInfo(GSM_NetworkInfo NetInfo)
 		default				: printf("%s\n", _("unknown"));
 #endif
 	}
-	printf(LISTFORMAT, _("Packet network state"));
-	switch (NetInfo.PacketState) {
-		case GSM_HomeNetwork		: printf("%s\n", _("home network")); 		 	break;
-		case GSM_RoamingNetwork		: printf("%s\n", _("roaming network")); 	 	break;
-		case GSM_RequestingNetwork	: printf("%s\n", _("requesting network")); 	 	break;
-		case GSM_NoNetwork		: printf("%s\n", _("not logged into network")); 	break;
-		case GSM_RegistrationDenied	: printf("%s\n", _("registration to network denied"));	break;
-		case GSM_NetworkStatusUnknown	: printf("%s\n", _("unknown"));			break;
-#ifndef CHECK_CASES
-		default				: printf("%s\n", _("unknown"));
-#endif
-	}
 	if (NetInfo.State == GSM_HomeNetwork || NetInfo.State == GSM_RoamingNetwork) {
 		printf(LISTFORMAT, _("Network"));
 		printf("%s (%s",
@@ -70,6 +58,18 @@ void PrintNetworkInfo(GSM_NetworkInfo NetInfo)
 				_("Name in phone"),
 				DecodeUnicodeConsole(NetInfo.NetworkName));
 		}
+	}
+	printf(LISTFORMAT, _("Packet network state"));
+	switch (NetInfo.PacketState) {
+		case GSM_HomeNetwork		: printf("%s\n", _("home network")); 		 	break;
+		case GSM_RoamingNetwork		: printf("%s\n", _("roaming network")); 	 	break;
+		case GSM_RequestingNetwork	: printf("%s\n", _("requesting network")); 	 	break;
+		case GSM_NoNetwork		: printf("%s\n", _("not logged into network")); 	break;
+		case GSM_RegistrationDenied	: printf("%s\n", _("registration to network denied"));	break;
+		case GSM_NetworkStatusUnknown	: printf("%s\n", _("unknown"));			break;
+#ifndef CHECK_CASES
+		default				: printf("%s\n", _("unknown"));
+#endif
 	}
 	if (NetInfo.PacketState == GSM_HomeNetwork || NetInfo.PacketState == GSM_RoamingNetwork) {
 		printf(LISTFORMAT, _("Packet network"));
