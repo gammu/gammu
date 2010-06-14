@@ -2855,6 +2855,13 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	    (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Ericsson)) {
 		return error;
 	}
+
+	smprintf(s, "Enable full packet network info\n");
+	ATGEN_WaitForAutoLen(s, "AT+CGREG=2\r", 0x00, 4, ID_GetNetworkInfo);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
 	smprintf(s, "Getting GPRS state\n");
 	ATGEN_WaitForAutoLen(s, "AT+CGATT?\r", 0x00, 4, ID_GetNetworkInfo);
 
@@ -5295,6 +5302,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetPacketNetworkLAC_CID,	"AT+CGREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_ReplyGetGPRSState,	"AT+CGATT?"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+CREG=2"		,0x00,0x00,ID_GetNetworkInfo	 },
+{ATGEN_GenericReply,		"AT+CGREG=2"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_SetAutoNetworkLogin},
 {ATGEN_ReplyGetNetworkCode,	"AT+COPS"		,0x00,0x00,ID_GetNetworkCode	 },
