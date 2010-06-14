@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.27.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-05-28 16:21+0200\n"
+"POT-Creation-Date: 2010-06-04 15:44+0200\n"
 "PO-Revision-Date: 2010-05-31 14:01+0200\n"
 "Last-Translator:  <torsten.funck@googlemail.com>\n"
 "Language-Team: Language =de\n"
@@ -3358,8 +3358,7 @@ msgstr ""
 #: gammu/nokia.c:731
 msgid "No JAR size info in JAD file. Added by Gammu."
 msgstr ""
-"Keine JAR-Größeninformation in der JAD-Datei gefunden. Von Gammu "
-"hinzugefügt."
+"Keine JAR-Größeninformation in der JAD-Datei gefunden. Von Gammu hinzugefügt."
 
 #: gammu/nokia.c:740
 #, c-format
