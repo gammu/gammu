@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-14 14:49+0200\n"
-"PO-Revision-Date: 2010-06-16 00:52+0200\n"
+"PO-Revision-Date: 2010-06-16 00:56+0200\n"
 "Last-Translator:  <jack.hakim@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1563,13 +1563,12 @@ msgid " (%02i:%02i minutes left)"
 msgstr " (%02i:%02i menit tersisa)"
 
 #: gammu/files.c:410 gammu/files.c:617
-#, fuzzy
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
-"checksum file dikalkulasikan oleh telepon tidak cocok dengan nilai kalkulasi "
-"oleh gammu. File rusak atau kesalahan dalam Gammu"
+"Checksum file yang dikalkulasikan oleh telepon tidak cocok dengan nilai "
+"kalkulasi oleh Gammu. File rusak atau ada kesalahan dalam Gammu"
 
 #: gammu/files.c:442
 #, c-format
