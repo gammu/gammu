@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-14 14:49+0200\n"
-"PO-Revision-Date: 2010-06-16 00:59+0200\n"
+"PO-Revision-Date: 2010-06-16 01:02+0200\n"
 "Last-Translator:  <jack.hakim@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
@@ -1702,7 +1702,7 @@ msgstr "Batch diproses, terminating.\n"
 #: gammu/gammu.c:471
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
-msgstr ""
+msgstr "Eksekusi batch \"%s\" - perintah %i: %s\n"
 
 #: gammu/gammu.c:494
 msgid ""
