@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-14 14:49+0200\n"
-"PO-Revision-Date: 2010-04-15 04:33+0200\n"
-"Last-Translator:  <asphalt@disposable.com>\n"
+"PO-Revision-Date: 2010-06-16 00:52+0200\n"
+"Last-Translator:  <jack.hakim@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
@@ -832,9 +832,8 @@ msgid ", date separator is %c\n"
 msgstr ", pemisah waktu adalah %c\n"
 
 #: gammu/calendar.c:454
-#, fuzzy
 msgid "Setting time in phone to the same time as is set in computer."
-msgstr "Pengaturan waktu dalam telepon ke waktu dalam PC"
+msgstr "Menyamakan waktu di telepon dengan waktu yang ada di dalam komputer"
 
 #: gammu/calendar.c:504
 msgid "Updating specified parts of date and time in phone."
