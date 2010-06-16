@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-14 14:49+0200\n"
-"PO-Revision-Date: 2010-04-15 04:33+0200\n"
-"Last-Translator:  <asphalt@disposable.com>\n"
+"PO-Revision-Date: 2010-06-16 01:43+0200\n"
+"Last-Translator:  <jack.hakim@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
@@ -832,9 +832,8 @@ msgid ", date separator is %c\n"
 msgstr ", pemisah waktu adalah %c\n"
 
 #: gammu/calendar.c:454
-#, fuzzy
 msgid "Setting time in phone to the same time as is set in computer."
-msgstr "Pengaturan waktu dalam telepon ke waktu dalam PC"
+msgstr "Menyamakan waktu di telepon dengan waktu yang ada di dalam komputer"
 
 #: gammu/calendar.c:504
 msgid "Updating specified parts of date and time in phone."
@@ -1564,13 +1563,12 @@ msgid " (%02i:%02i minutes left)"
 msgstr " (%02i:%02i menit tersisa)"
 
 #: gammu/files.c:410 gammu/files.c:617
-#, fuzzy
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File is damaged or there is a error in Gammu."
 msgstr ""
-"checksum file dikalkulasikan oleh telepon tidak cocok dengan nilai kalkulasi "
-"oleh gammu. File rusak atau kesalahan dalam Gammu"
+"Checksum file yang dikalkulasikan oleh telepon tidak cocok dengan nilai "
+"kalkulasi oleh Gammu. File rusak atau ada kesalahan dalam Gammu"
 
 #: gammu/files.c:442
 #, c-format
@@ -1704,23 +1702,27 @@ msgstr "Batch diproses, terminating.\n"
 #: gammu/gammu.c:471
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
-msgstr ""
+msgstr "Eksekusi batch \"%s\" - perintah %i: %s\n"
 
 #: gammu/gammu.c:494
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
 msgstr ""
+"SMS daemon sekarang telah dipisahkan, silahkan gunakan gammu-smsd-inject "
+"bukan gammu sendsmsdsms!"
 
 #: gammu/gammu.c:501
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
 msgstr ""
+"SMS daemon sekarang telah dipisahkan, silahkan gunakan gammu-smsd bukan "
+"gammu smsd!"
 
 #: gammu/gammu.c:746
 msgid "Calls"
-msgstr ""
+msgstr "Panggilan"
 
 #: gammu/gammu.c:747
 msgid "SMS and EMS"
@@ -1728,7 +1730,7 @@ msgstr ""
 
 #: gammu/gammu.c:748
 msgid "Memory (phonebooks and calls)"
-msgstr ""
+msgstr "Memori (buku telepon dan panggilan)"
 
 #: gammu/gammu.c:749
 msgid "Filesystem"
@@ -4014,7 +4016,7 @@ msgstr ""
 
 #: helper/message-display.c:288
 msgid "Enables email indicator"
-msgstr ""
+msgstr "Mengaktifkan indikator email"
 
 #: helper/message-display.c:289
 msgid "Void SMS"
@@ -4050,11 +4052,11 @@ msgstr ""
 
 #: helper/message-display.c:298
 msgid "Nokia calendar note"
-msgstr ""
+msgstr "Catatan kalender Nokia"
 
 #: helper/message-display.c:299
 msgid "Nokia phonebook entry"
-msgstr ""
+msgstr "Buku telepon Nokia"
 
 #: helper/message-display.c:300
 msgid "User UDH"
@@ -4141,9 +4143,8 @@ msgid "EMS animation ID"
 msgstr ""
 
 #: helper/message-display.c:464
-#, fuzzy
 msgid "Message size"
-msgstr "Peninjauan pesan"
+msgstr "Ukuran pesan"
 
 #. l10n: Generic prefix for error messages
 #: helper/message-display.c:497 helper/message-display.c:516
