@@ -153,12 +153,11 @@ msgstr ""
 msgid "Commands can be specified with or without leading --."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:39
 #, no-wrap
 msgid "Calls"
-msgstr ""
+msgstr "Panggilan"
 
 #. type: TP
 #: docs/user/gammu.1:40
@@ -1685,12 +1684,11 @@ msgid ""
 "just changes the SMSC number."
 msgstr ""
 
-# type: SS
 #. type: SS
 #: docs/user/gammu.1:746
 #, no-wrap
 msgid "Memory (phonebooks and calls)"
-msgstr ""
+msgstr "Memori (buku telepon dan panggilan)"
 
 #. type: TP
 #: docs/user/gammu.1:747 docs/user/gammu.1:1464 docs/user/gammu.1:1619
@@ -4580,6 +4578,8 @@ msgstr ""
 msgid ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
 msgstr ""
+"Tidak ada nomor SMSC. Isi secara manual atau gunakan salah satu konfigurasi "
+"dari telepon."
 
 #. type: SS
 #: docs/user/gammu.1:2769
@@ -5011,7 +5011,7 @@ msgstr ""
 #. type: Plain text
 #: docs/user/gammu.1:2845
 msgid "Failed to get SMSC number from phone."
-msgstr ""
+msgstr "Gagal mengambil nomor SMSC dari telepon."
 
 # type: SH
 #. type: SH
