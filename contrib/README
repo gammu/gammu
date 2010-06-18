@@ -65,6 +65,11 @@ sql
 
 Various SQL snippets and triggers useful with SMSD.
 
+testing
+-------
+
+Helper scripts for automatic testing or git bisect.
+
 sqlreply
 --------
 
