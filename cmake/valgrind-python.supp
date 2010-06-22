@@ -608,6 +608,14 @@
    1,000 bytes in 2 blocks are still reachable
    Memcheck:Leak
    fun:malloc
+   fun:PyObject_Malloc
+   fun:PyString_FromStringAndSize
+   fun:initposix
+}
+{
+   1,000 bytes in 2 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
    fun:PyStructSequence_InitType
    fun:initposix
 }
@@ -2253,7 +2261,15 @@
     fun:PyErr_NewException
     fun:gammu_create_errors
 }
-
+{
+    python-gammu exceptions
+    Memcheck:Leak
+    fun:malloc
+    fun:PyObject_Malloc
+    fun:PyString_FromString
+    fun:PyDict_SetItemString
+    fun:gammu_create_errors
+}
 {
     python-gammu exceptions
     Memcheck:Leak
