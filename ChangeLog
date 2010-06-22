@@ -23,6 +23,7 @@ ChangeLog
 
 [+] * Support for getting packet network state (bug #1220).
 [-] * Fix parsing of AT replies from Nokia 2730 (bug #1224).
+[-] * Nokia E61 needs encoded USSD requests (bug #1228).
     
 20100603 - 1.27.94
 
