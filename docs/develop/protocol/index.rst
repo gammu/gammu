@@ -14,3 +14,4 @@ Phone Protocols
     tdma_5120
     samsung
     samsung-gt
+    sonim
