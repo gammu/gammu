@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.27.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-16 09:46+0200\n"
-"PO-Revision-Date: 2010-04-21 15:59+0200\n"
+"PO-Revision-Date: 2010-06-22 11:26+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -2192,14 +2192,12 @@ msgid "Name in phone"
 msgstr "Název v telefonu"
 
 #: gammu/misc.c:62
-#, fuzzy
 msgid "Packet network state"
-msgstr "Stav sítě"
+msgstr "Stav paketové sítě"
 
 #: gammu/misc.c:75
-#, fuzzy
 msgid "Packet network"
-msgstr "domácí síť"
+msgstr "Paketová síť"
 
 #: gammu/misc.c:90 gammu/misc.c:1584
 msgid "GPRS"
@@ -2223,9 +2221,8 @@ msgid "Latest version is %s and you run %s.\n"
 msgstr "Poslední verze je %s a vy používáte %s.\n"
 
 #: gammu/misc.c:240
-#, fuzzy
 msgid "Not logged to network!\n"
-msgstr "není přihlášen do sítě"
+msgstr "Není přihlášen do sítě!\n"
 
 #: gammu/misc.c:251
 msgid "Wrong network code from phone!\n"
