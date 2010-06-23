@@ -6,6 +6,9 @@
 #ifdef WIN32
 #  include <io.h>
 #  include <fcntl.h>
+#else
+#  include <netdb.h>
+#  include <netinet/in.h>
 #endif
 
 #include "../misc/coding/coding.h"
@@ -290,6 +293,65 @@ bool ReadVCALText(char *Buffer, char *Start, char *Value)
 		return true;
 	}
 	return false;
+}
+
+bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *file) 
+{
+	int			s, len;
+	struct sockaddr_in 	address;
+	struct hostent 		*address2;
+	unsigned char 		buff[200];
+#ifdef WIN32
+	WSADATA			wsaData; 
+
+	if (WSAStartup(MAKEWORD(1, 1), &wsaData) != 0) return false; 
+#endif
+
+	s = socket(AF_INET,SOCK_STREAM,0);
+#ifdef WIN32
+	if (s==INVALID_SOCKET) return false;
+#else
+	if (s==-1) return false;
+#endif
+
+	address2 = gethostbyname(server);
+	if (address2 == NULL) return false;    
+    
+	memset((char *) &address, 0, sizeof(address));
+	address.sin_family 	= AF_INET;
+	address.sin_port 	= htons(80);	
+	address.sin_addr.s_addr = *(u_long *) *(address2->h_addr_list);
+
+	if (connect(s,(struct sockaddr *)&address,sizeof(address))<0) return false;
+
+	sprintf(buff,"GET http://%s/%s HTTP/1.0\n\n",server,filename);
+	if (send(s,buff,strlen(buff),0)<0) return false;
+
+	free(file->Buffer);
+	file->Buffer 	= NULL;
+	file->Used 	= 0;
+
+#ifdef WIN32
+	while ((len=recv(s,buff,200,0))>0) {
+#else
+	while ((len=read(s,buff,200))>0) {
+#endif
+		file->Buffer = realloc(file->Buffer,file->Used + len);
+		memcpy(file->Buffer+file->Used,buff,len);
+		file->Used += len;
+	}
+
+	close(s);
+	
+	if (file->Buffer == NULL) return false;
+	if (strstr(file->Buffer,"HTTP/1.1 200 OK")==NULL) {
+		free(file->Buffer);
+		file->Buffer = NULL;
+		file->Used   = 0;
+		return false;
+	}
+
+	return true;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

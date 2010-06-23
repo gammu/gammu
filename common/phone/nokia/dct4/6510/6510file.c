@@ -124,6 +124,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 		File->ModifiedEmpty = false;
 		NOKIA_DecodeDateTime(s, msg.Buffer+i-22, &File->Modified);
 		if (File->Modified.Year == 0x00) File->ModifiedEmpty = true;
+		if (File->Modified.Year == 0xffff) File->ModifiedEmpty = true;
 		dbgprintf("%02x %02x %02x %02x\n",msg.Buffer[i-22],msg.Buffer[i-21],msg.Buffer[i-20],msg.Buffer[i-19]);
 
 		Priv->FileToken = msg.Buffer[i-10]*256+msg.Buffer[i-9];
@@ -674,8 +675,9 @@ static GSM_Error N6510_PrivDeleteFileFolder1(GSM_StateMachine *s, unsigned char 
 	error = N6510_SetReadOnly1(s, ID, false);
 	if (error != ERR_NONE) return error;
 
-	Delete[8] = atoi(ID) / 256;
-	Delete[9] = atoi(ID) % 256;
+	Delete[8] = atoi(DecodeUnicodeString(ID)) / 256;
+	Delete[9] = atoi(DecodeUnicodeString(ID)) % 256;
+
 	return GSM_WaitFor (s, Delete, 10, 0x6D, 4, ID_DeleteFile);
 }
 
@@ -752,16 +754,22 @@ static GSM_Error N6510_GetFolderListing1(GSM_StateMachine *s, GSM_File *File, bo
 		if (!File->Folder) return ERR_SHOULDBEFOLDER;
 	}
 
-	if (Priv->FilesLocationsUsed == 0) return ERR_EMPTY;
+	while (true) {
+		if (Priv->FilesLocationsUsed == 0) return ERR_EMPTY;
 
-	memcpy(File,&Priv->Files[0],sizeof(GSM_File));
-	error = N6510_GetFileFolderInfo1(s, File, false);
+		memcpy(File,&Priv->Files[0],sizeof(GSM_File));
+		error = N6510_GetFileFolderInfo1(s, File, false);
 
-	for(i=1;i<Priv->FilesLocationsUsed;i++) {
-		memcpy(&Priv->Files[i-1],&Priv->Files[i],sizeof(GSM_File));
+		for(i=1;i<Priv->FilesLocationsUsed;i++) {
+			memcpy(&Priv->Files[i-1],&Priv->Files[i],sizeof(GSM_File));
+		}
+		Priv->FilesLocationsUsed--;
+
+		//3510 for example
+		if (error == ERR_EMPTY) continue;
+
+		break;
 	}
-	Priv->FilesLocationsUsed--;
-
 	return error;
 }
 
@@ -937,6 +945,8 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 
 			File->ModifiedEmpty = false;
 			NOKIA_DecodeDateTime(s, msg.Buffer+14, &File->Modified);
+			if (File->Modified.Year == 0x00) File->ModifiedEmpty = true;
+			if (File->Modified.Year == 0xffff) File->ModifiedEmpty = true;
 
 			if (msg.Buffer[3] == 0x69 && msg.Buffer[4] == 0) Priv->FilesEnd = true;
 
@@ -1391,6 +1401,7 @@ GSM_Error N6510_ReplyAddFolder2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 static GSM_Error N6510_AddFolder2(GSM_StateMachine *s, GSM_File *File)
 {
+	GSM_Error	error;
 	unsigned char   req[1000] = {N7110_FRAME_HEADER, 0x64};
 	int		Pos = 6;
 	int		Len = 0;
@@ -1413,7 +1424,9 @@ static GSM_Error N6510_AddFolder2(GSM_StateMachine *s, GSM_File *File)
 	req[4] = Len / 256 ;
 	req[5] = Len % 256 ;
 	smprintf(s,"Adding folder\n");
-	return GSM_WaitFor (s, req, Pos, 0x6D, 4, ID_AddFolder);
+	error=GSM_WaitFor (s, req, Pos, 0x6D, 4, ID_AddFolder);
+	if (error == ERR_NONE) memcpy(File->ID_FullName,req+6,Pos);
+	return error;
 }
 
 GSM_Error N6510_ReplyDeleteFolder2(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1438,7 +1451,7 @@ static GSM_Error N6510_DeleteFolder2(GSM_StateMachine *s, unsigned char *ID)
 	int		Pos = 6;
 
 	//we don't want to allow deleting non empty folders
-	CopyUnicodeString(ID,File2.ID_FullName);
+	CopyUnicodeString(File2.ID_FullName,ID);
 	error = N6510_GetFolderListing2(s, &File2, true);
 	switch (error) {
 		case ERR_EMPTY:
@@ -1681,6 +1694,8 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
+	memset(&File2, 0, sizeof(File2));
+
 	if (UnicodeLength(File->ID_FullName) == 0) {	
 		sprintf(buffer,"%i",0x01);
 		EncodeUnicode(File2.ID_FullName,buffer,strlen(buffer));
@@ -1704,7 +1719,7 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 		} else if (!strcmp(DecodeUnicodeString(File->ID_FullName),"a:")) {
 			EncodeUnicode(File->ID_FullName,"b:",2);
 			error = N6510_GetFolderListing2(s, File, true);
-			if (error != ERR_NONE) return ERR_EMPTY;
+			if (error != ERR_NONE && error != ERR_EMPTY) return ERR_EMPTY;
 			EncodeUnicode(File->Name,"B (Memory card)",15);
 			EncodeUnicode(File->ID_FullName,"b:",2);
 		} else {

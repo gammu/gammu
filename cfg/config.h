@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "1.03.00"
-#define VERSION_WIN "1,03,00,0"
+#define VERSION "1.03.20"
+#define VERSION_WIN "1,03,20,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -135,11 +135,11 @@
 #define GSM_ENABLE_BACKUP 1
 
 /* Bu default commented: some parts of source are not ready or not tested
- * at all (or aren't good tested). Uncomment, if want them
+ * at all (or aren't good tested). Uncomment, if you want them
  */
 //#define DEVELOP
 
-/* By default disabled. It allows to making short beep after such things
+/* By default disabled. It allows to make short beep after such things
  * like changing logo in phone (like in Logo Manager)
  */
 //#define GSM_ENABLE_BEEP
@@ -178,6 +178,14 @@
 //#  define BLUETOOTH_RF_SEARCHING 1
 #else
 #  define BLUETOOTH_RF_SEARCHING 1
+#endif
+
+//MS Visual C++ Express 2005 warnings
+#if _MSC_VER == 1400
+#  pragma warning( disable : 4996 4244 4333)
+#  ifndef _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES
+#    define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES  1
+#  endif
 #endif
 
 #endif

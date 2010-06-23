@@ -126,7 +126,7 @@ all: gammu
 
 $(TOPDIR)/gammu/gammu: $(COMMON) $(GAMMU)
 	@echo Linking gammu
-	@$(CC) $(COMMON) $(GAMMU) $(LDLIBS) $(SMSD_LIBS) -o $(TOPDIR)/gammu/gammu
+	@$(CC) $(COMMON) $(GAMMU) $(LDLIBS) $(SMSD_LIBS) -o $(TOPDIR)/gammu/gammu $(LDFLAGS)
 
 gammu: $(TOPDIR)/gammu/gammu
 
@@ -136,7 +136,7 @@ djgpp: $(COMMON) $(DJGPP) $(GAMMU)
 
 $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR): $(COMMON)
 	@echo Linking libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
-	@$(CC) $(LDLIBS) -shared -Wl,-soname -Wl,libGammu.so.$(SONAME_MAJOR) -o $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(COMMON)
+	@$(CC) $(LDLIBS) -shared -Wl,-soname -Wl,libGammu.so.$(SONAME_MAJOR) -o $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(COMMON) $(LDFLAGS)
 	@$(LN) -s libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR)
 	@$(LN) -s libGammu.so.$(SONAME_MAJOR) $(TOPDIR)/common/libGammu.so
 
@@ -179,7 +179,7 @@ makelocale: $(LOCALE)
 	done
 	@$(RM) $(TOPDIR)/cfg/locale/locale.o $(TOPDIR)/cfg/locale/locale
 
-distclean: makelocale clean
+distclean0:
 	@echo Setting default config
 	@chmod a+x $(TOPDIR)/docs/examples/ppp/*
 	@chmod a+x $(TOPDIR)/docs/examples/fax/*
@@ -197,6 +197,8 @@ distclean: makelocale clean
 	$(TOPDIR)/cfg/autoconf/config.status \
 	$(TOPDIR)/cfg/autoconf/VERSION \
 	$(TOPDIR)/cfg/autoconf/configure
+
+distclean: distclean0 makelocale clean
    
 uninstall:
 	@echo Uninstalling Gammu

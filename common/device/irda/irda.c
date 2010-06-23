@@ -42,20 +42,20 @@
 #include "../devfunc.h"
 #include "irda.h"
 
-static bool irda_discover_device(GSM_StateMachine *state)
+static bool irda_discover_device(GSM_StateMachine *state, int *fd)
 {
 	GSM_Device_IrdaData 	*d = &state->Device.Data.Irda;
 	struct irda_device_list	*list;
     	unsigned char		*buf;
     	unsigned int		sec;
-    	int			s, z, len, fd, i;
+    	int			s, z, len, i;
     	GSM_DateTime		Date;
     	bool			founddevice = false;
 #ifdef WIN32
 	int			index;
 #endif
 
-   	fd = socket(AF_IRDA, SOCK_STREAM, 0);
+   	(*fd) = socket(AF_IRDA, SOCK_STREAM, 0);
 
     	/* can handle maximally 10 devices during discovering */
     	len  = sizeof(struct irda_device_list) + sizeof(struct irda_device_info) * 10;
@@ -70,7 +70,7 @@ static bool irda_discover_device(GSM_StateMachine *state)
 			s = len;
 			memset(buf, 0, s);
 
-			if (getsockopt(fd, SOL_IRLMP, IRLMP_ENUMDEVICES, buf, &s) == 0) {
+			if (getsockopt(*fd, SOL_IRLMP, IRLMP_ENUMDEVICES, buf, &s) == 0) {
 		    		for (i = 0; i < (int)list->numDevice; i++) {
 					dbgprintf("Irda: found device \"%s\" (address %x) - ",list->Device[i].irdaDeviceName,list->Device[i].irdaDeviceID);
 					if (strcmp(GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number,"") != 0) {
@@ -99,8 +99,13 @@ static bool irda_discover_device(GSM_StateMachine *state)
 		if (founddevice) break;
     	}
     	free(buf);
-    	close(fd);
-
+	if (!founddevice) {
+#ifdef WIN32
+	    	closesocket(*fd);
+#else
+	    	close(*fd);
+#endif
+	}
     	return founddevice;
 }
 
@@ -118,10 +123,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 #endif
 
     	/* discovering devices */
-    	if (irda_discover_device(s)==false) return ERR_TIMEOUT;
-
-    	/* Creating socket */
-    	fd = socket(AF_IRDA, SOCK_STREAM, 0);
+    	if (irda_discover_device(s,&fd)==false) return ERR_TIMEOUT;
 
     	d->peer.irdaAddressFamily 	= AF_IRDA;
 #ifndef WIN32

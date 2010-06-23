@@ -339,6 +339,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 	File->Protected 	= false;
 	File->Hidden		= false;
 	File->System		= false;
+	File->ModifiedEmpty	= true;
 
 	if (File->Used == 0x00) {
 		if (FolderList) {
@@ -500,9 +501,11 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 
 			smprintf(s,"Level %i %i\n",File->Level,Priv->FileLev);
 
-			File->Buffer 	= NULL;
-			File->Used 	= 0;
-			OBEXGEN_PrivGetFilePart(s, File,true);
+			File->Buffer		= NULL;
+			File->Used		= 0;
+			File->ModifiedEmpty	= true;
+
+			OBEXGEN_PrivGetFilePart(s, File, true);
 
 			num = 0;
 			Pos = 0;

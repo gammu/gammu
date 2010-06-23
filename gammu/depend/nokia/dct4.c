@@ -793,7 +793,8 @@ static GSM_Error DCT4_ReplyGetBTInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 
 static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int i;
+	int 			i;
+	unsigned char 		buff[7];
 
 	switch (msg.Buffer[3]) {
 	case 0x0D:
@@ -802,6 +803,15 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 		for (i=14;i<22;i++) {
 			dbgprintf("%02x",msg.Buffer[i]);
 		}
+		sprintf(buff,"%02x%02x%02x",msg.Buffer[14],msg.Buffer[15],msg.Buffer[16]);
+		buff[6] = 0;
+		buff[5] = buff[4];
+		buff[4] = buff[3];
+		buff[3] = ' ';
+		if (strcmp(DecodeUnicodeString(GSM_GetNetworkName(buff)),"unknown")) {
+			printf("Old simlock   : %s (%s)\n",DecodeUnicodeString(GSM_GetNetworkName(buff)),buff);
+		}
+
 		dbgprintf("\n");
 		dbgprintf("Profile_Bits: ");
 		for (i=22;i<30;i++) {

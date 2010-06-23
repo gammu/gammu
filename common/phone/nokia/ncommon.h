@@ -10,7 +10,9 @@
 
 typedef enum {
 	MEM7110_CG		 = 0xf0, /* Caller groups memory 		*/
-	MEM7110_SP		 = 0xf1	 /* Speed dial memory 			*/
+	MEM7110_SP		 = 0xf1, /* Speed dial memory 			*/
+
+	MEM6510_CG2		 = 0x23  /* Caller groups 2 memory 		*/
 } GSM_71_65MemoryType;
 
 typedef enum {
