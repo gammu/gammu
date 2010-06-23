@@ -696,6 +696,14 @@ static void SaveProfileEntry(FILE *file, GSM_Profile *Profile)
     	fprintf(file,"\n");
 }
 
+static void SaveFMStationEntry(FILE *file, GSM_FMStation *FMStation)
+{
+ 	fprintf(file,"Location = %i\n",FMStation->Location);
+        SaveBackupText(file, "StationName", FMStation->StationName);
+        fprintf(file,"Frequency = %i\n",FMStation->Frequency);
+     	fprintf(file,"\n");
+}
+
 void GSM_FreeBackup(GSM_Backup *backup)
 {
     int i;
@@ -758,6 +766,12 @@ void GSM_FreeBackup(GSM_Backup *backup)
     while (backup->Profiles[i]!=NULL) {
         free(backup->Profiles[i]);
         backup->Profiles[i] = NULL;
+        i++;
+    }
+    i=0;
+    while (backup->FMStation[i]!=NULL) {
+        free(backup->FMStation[i]);
+        backup->FMStation[i] = NULL;
         i++;
     }
 
@@ -845,6 +859,12 @@ static GSM_Error SaveBackup(FILE *file, GSM_Backup *backup)
 		SaveProfileEntry(file, backup->Profiles[i]);
 		i++;
 	}
+ 	i=0;
+ 	while (backup->FMStation[i]!=NULL) {
+ 		fprintf(file,"[FMStation%03i]\n",i);
+ 		SaveFMStationEntry(file, backup->FMStation[i]);
+ 		i++;
+ 	}
 
 	if (backup->StartupLogo!=NULL) {
 		SaveStartupEntry(file, backup->StartupLogo);
@@ -877,7 +897,7 @@ static void SaveLMBStartupEntry(FILE *file, GSM_Bitmap bitmap)
 			case 60: Type = GSM_Nokia6210StartupLogo; break;
 		}
 		PHONE_EncodeBitmap(Type, req+count, &bitmap);
-		count = count + PHONE_GetBitmapSize(Type);
+		count = count + PHONE_GetBitmapSize(Type, 0, 0);
 
 		req[12]++;
 	}
@@ -919,8 +939,8 @@ static void SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
 	}
 	req[count++] = bitmap.Ringtone;
 	if (bitmap.Enabled) req[count++] = 0x01; else req[count++] = 0x00;
-	req[count++] = (PHONE_GetBitmapSize(GSM_NokiaCallerLogo) + 4) >> 8;
-	req[count++] = (PHONE_GetBitmapSize(GSM_NokiaCallerLogo) + 4) % 0xff;
+	req[count++] = (PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0) + 4) >> 8;
+	req[count++] = (PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0) + 4) % 0xff;
 	NOKIA_CopyBitmap(GSM_NokiaCallerLogo, &bitmap, req, &count);
 	req[count++]=0;
 
@@ -945,7 +965,7 @@ void SaveLMBPBKEntry(FILE *file, GSM_PhonebookEntry *entry)
 		03,              /*memory type. ME=02;SM=03*/
 		00};
 
-	count=count+N71_65_EncodePhonebookFrame(req+16, *entry, &blocks, true);
+	count=count+N71_65_EncodePhonebookFrame(NULL, req+16, *entry, &blocks, true);
 
 	req[4]=(count-12)%256;
 	req[5]=(count-12)/256;
@@ -1026,6 +1046,7 @@ void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
 		backup->StartupLogo 	= true;
 		backup->OperatorLogo 	= false;
 		backup->Profiles 	= false;
+ 		backup->FMStation 	= false;
 	} else {
 		backup->IMEI 		= true;
 		backup->Model 		= true;
@@ -1042,6 +1063,7 @@ void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
 		backup->StartupLogo 	= true;
 		backup->OperatorLogo 	= true;
 		backup->Profiles 	= true;
+ 		backup->FMStation 	= true;
 	}
 }
 
@@ -2248,7 +2270,7 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer, unsigned char *buffe
 #ifdef DEBUG
 				if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,backup->StartupLogo);
 #endif
-				j = j + PHONE_GetBitmapSize(Type);
+				j = j + PHONE_GetBitmapSize(Type,0,0);
 				break;            
 			case 2:
 #ifdef DEBUG
@@ -2287,7 +2309,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	dprintf("Location : %i\n",buffer2[0]+buffer2[1]*256);
 #endif
 
-	N71_65_DecodePhonebook(&pbk, NULL,NULL,buffer2+4,(buffer[4]+buffer[5]*256)-4);
+	N71_65_DecodePhonebook(NULL, &pbk, NULL,NULL,buffer2+4,(buffer[4]+buffer[5]*256)-4);
 
 	pbk.MemoryType=GMT_SM;
 	if (buffer[10]==2) pbk.MemoryType=GMT_ME;
@@ -2431,6 +2453,7 @@ void GSM_ClearBackup(GSM_Backup *backup)
 	backup->Ringtone	[0] = NULL;
 	backup->Profiles	[0] = NULL;
 	backup->ToDo		[0] = NULL;
+	backup->FMStation	[0] = NULL;
 	backup->StartupLogo	    = NULL;
 	backup->OperatorLogo	    = NULL;
 
@@ -2676,3 +2699,7 @@ GSM_Error GSM_SaveSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 }
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

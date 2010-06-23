@@ -12,3 +12,7 @@ void DCT3GetSecurityCode (int argc, char *argv[]);
 void DCT3GetOperatorName (int argc, char *argv[]);
 void DCT3SetOperatorName (int argc, char *argv[]);
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

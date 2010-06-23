@@ -8,6 +8,7 @@
 #endif
 #include <locale.h>
 #include <signal.h>
+#include <ctype.h>
 
 #include "../common/gsmcomon.h"
 #include "../common/gsmstate.h"
@@ -206,19 +207,24 @@ static void Identify(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=Phone->GetManufacturer(&s, buffer);
+	error=Phone->GetManufacturer(&s);
 	Print_Error(error);
-	printmsg("Model         : %s %s (%s)\n",
-			DecodeUnicodeString(buffer),
-			GetModelData(NULL,s.Model,NULL)->model, s.Model);
+	printmsg("Manufacturer  : %s\n", s.Phone.Data.Manufacturer);
+	error=Phone->GetModel(&s);
+	Print_Error(error);
+	printmsg("Model         : %s (%s)\n",
+			s.Phone.Data.ModelInfo->model,
+			s.Phone.Data.Model);
 
-	printmsg("Firmware      : %s",s.Ver);
+	error=Phone->GetFirmware(&s);
+	Print_Error(error);
+	printmsg("Firmware      : %s",s.Phone.Data.Version);
 	error=Phone->GetPPM(&s, buffer);
 	if (error != GE_NOTSUPPORTED) {
 		if (error != GE_NOTIMPLEMENTED) Print_Error(error);
 		if (error == GE_NONE) printmsg(" %s",buffer);
 	}
-	if (s.VerDate[0]!=0) printmsg(" (%s)",s.VerDate);
+	if (s.Phone.Data.VerDate[0]!=0) printmsg(" (%s)",s.Phone.Data.VerDate);
 	printmsg("\n");
 
 	error=Phone->GetHardware(&s, buffer);
@@ -227,10 +233,10 @@ static void Identify(int argc, char *argv[])
 		if (error == GE_NONE) printmsg("Hardware      : %s\n",buffer);
 	}
 
-	error=Phone->GetIMEI(&s, buffer);
+	error=Phone->GetIMEI(&s);
 	if (error != GE_NOTSUPPORTED) {
 		if (error != GE_NOTIMPLEMENTED) Print_Error(error);
-		if (error == GE_NONE) printmsg("IMEI          : %s\n",buffer);
+		if (error == GE_NONE) printmsg("IMEI          : %s\n",s.Phone.Data.IMEI);
 
 		error=Phone->GetOriginalIMEI(&s, buffer);
 		if (error != GE_NOTSUPPORTED && error != GE_SECURITYERROR) {
@@ -369,8 +375,8 @@ static void GetMemory(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (!strcmp(GetModelData(NULL,s.Model,NULL)->model,"3310")) {
-		if (s.VerNum<=4.06) printmsg("WARNING: you will have null names in entries. Upgrade firmware in phone to higher than 4.06\n");
+	if (!strcmp(s.Phone.Data.ModelInfo->model,"3310")) {
+		if (s.Phone.Data.VerNum<=4.06) printmsg("WARNING: you will have null names in entries. Upgrade firmware in phone to higher than 4.06\n");
 	}
 
 	for (j=start;j<=stop;j++)
@@ -759,15 +765,21 @@ static void Monitor(int argc, char *argv[])
             		if (SignalQuality.BitErrorRate   != -1) printmsg("Bit error rate    : %i percent\n", SignalQuality.BitErrorRate);
         	}
 		if (Phone->GetSMSStatus(&s,&SMSStatus)==GE_NONE) {
-			printmsg("SIM SMS status    : %i used, %i unread",
-				SMSStatus.SIMUsed,SMSStatus.SIMUnRead);
-			if (SMSStatus.SIMSize!=0) printmsg(", %i locations", SMSStatus.SIMSize);
-			printmsg("\n");
-			printmsg("Phone SMS status  : %i used, %i unread",
-				SMSStatus.PhoneUsed,SMSStatus.PhoneUnRead);
-			if (SMSStatus.PhoneSize!=0) printmsg(", %i locations", SMSStatus.PhoneSize);
-			if (SMSStatus.TemplatesUsed!=0) printmsg(", %i templates", SMSStatus.TemplatesUsed);
-			printmsg("\n");
+			if (SMSStatus.SIMSize > 0) {
+				printmsg("SIM SMS status    : %i used, %i unread, %i locations\n",
+					SMSStatus.SIMUsed,
+					SMSStatus.SIMUnRead,
+					SMSStatus.SIMSize);
+			}
+
+			if (SMSStatus.PhoneSize > 0) {
+				printmsg("Phone SMS status  : %i used, %i unread, %i locations",
+					SMSStatus.PhoneUsed,
+					SMSStatus.PhoneUnRead,
+					SMSStatus.PhoneSize);
+				if (SMSStatus.TemplatesUsed!=0) printmsg(", %i templates", SMSStatus.TemplatesUsed);
+				printmsg("\n");
+			}
 		}
 		if (Phone->GetNetworkInfo(&s,&NetInfo)==GE_NONE) {
 			printmsg("Network state     : ");
@@ -2032,18 +2044,23 @@ static void SendSaveSMS(int argc, char *argv[])
 					nextlong = 12;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-sound10",0)) {
+				if (mystrncasecmp(argv[i],"-tone10",0)) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound10;
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-sound12",0)) {
+				if (mystrncasecmp(argv[i],"-tone12",0)) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound12;
 					nextlong = 14;
 					break;
 				}
 				if (mystrncasecmp(argv[i],"-fixedbitmap",0)) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSFixedBitmap;
+					nextlong = 15;
+					break;
+				}
+				if (mystrncasecmp(argv[i],"-variablebitmap",0)) {
+					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSVariableBitmap;
 					nextlong = 15;
 					break;
 				}
@@ -2255,6 +2272,7 @@ static void SendSaveSMS(int argc, char *argv[])
 	error=GSM_EncodeMultiPartSMS(&SMSInfo,&sms);
 	Print_Error(error);
 
+
 	for (i=0;i<SMSInfo.EntriesNum;i++) {
 		switch (SMSInfo.Entries[i].ID) {
 			case SMS_NokiaRingtone:
@@ -2268,6 +2286,7 @@ static void SendSaveSMS(int argc, char *argv[])
 				}
 			default:
 				break;
+
 		}
 	}
 
@@ -2337,9 +2356,9 @@ static void Backup(int argc, char *argv[])
 	GSM_MultiWAPSettings	Settings;
 	GSM_Ringtone		Ringtone;
 	GSM_SMSC		SMSC;
-	char			buffer[50];
 	GSM_Backup		Backup;
 	GSM_Backup_Info		Info;
+ 	GSM_FMStation		FMStation;
 
 	GSM_ClearBackup(&Backup);
 	GSM_GetBackupFeatures(argv[2],&Info);
@@ -2351,23 +2370,27 @@ static void Backup(int argc, char *argv[])
 	GSM_Init(true);
 
 	if (Info.DateTime) {
+
 		GSM_GetCurrentDateTime (&Backup.DateTime);
+
 		Backup.DateTimeAvailable=true;
+
 	}
 	if (Info.Model) {
-		error=Phone->GetManufacturer(&s, buffer);
+		error=Phone->GetManufacturer(&s);
 		Print_Error(error);
-		sprintf(Backup.Model,"%s ",DecodeUnicodeString(buffer));	
-		if (GetModelData(NULL,s.Model,NULL)->model[0]!=0) {
-		strcat(Backup.Model,GetModelData(NULL,s.Model,NULL)->model);
+		sprintf(Backup.Model,"%s ",s.Phone.Data.Manufacturer);
+		if (s.Phone.Data.ModelInfo->model[0]!=0) {
+		strcat(Backup.Model,s.Phone.Data.ModelInfo->model);
 		} else {
-			strcat(Backup.Model,s.Model);
+			strcat(Backup.Model,s.Phone.Data.Model);
 		}
 		strcat(Backup.Model," ");
-		strcat(Backup.Model,s.Ver);
+		strcat(Backup.Model,s.Phone.Data.Version);
 	}
 	if (Info.IMEI) {
-		error=Phone->GetIMEI(&s, Backup.IMEI);
+		error=Phone->GetIMEI(&s);
+		strcpy(Backup.IMEI, s.Phone.Data.IMEI);
 		Print_Error(error);
 	}
 	if (Info.PhonePhonebook) {
@@ -2471,24 +2494,26 @@ static void Backup(int argc, char *argv[])
 	if (Info.ToDo) {
 		ToDo.Location = 1;
 		error=Phone->GetToDo(&s,&ToDo,true);
-		if (error==GE_NONE) {
+		if (error == GE_NONE || error == GE_EMPTY) {
 			if (answer_yes("Backup ToDo")) {
 				used = 0;
 				printmsgerr("Reading : ");
-				while (error == GE_NONE) {
-					if (used < GSM_BACKUP_MAX_TODO) {
-						Backup.ToDo[used] = malloc(sizeof(GSM_ToDoEntry));
-					        if (Backup.ToDo[used] == NULL) Print_Error(GE_MOREMEMORY);
-						Backup.ToDo[used+1] = NULL;
-					} else {
-						printmsg("Increase GSM_BACKUP_MAX_TODO\n");
-						exit(-1);
+				while (error == GE_NONE || error == GE_EMPTY) {
+					if (error != GE_EMPTY) {
+						printmsgerr("*");
+						if (used < GSM_BACKUP_MAX_TODO) {
+							Backup.ToDo[used] = malloc(sizeof(GSM_ToDoEntry));
+							if (Backup.ToDo[used] == NULL) Print_Error(GE_MOREMEMORY);
+							Backup.ToDo[used+1] = NULL;
+						} else {
+							printmsg("Increase GSM_BACKUP_MAX_TODO\n");
+							exit(-1);
+						}
+						*Backup.ToDo[used]=ToDo;
+						used ++;
 					}
-					*Backup.ToDo[used]=ToDo;
-					used ++;
-					ToDo.Location = used+1;
+					ToDo.Location++;
 					error=Phone->GetToDo(&s,&ToDo,false);
-					printmsgerr("*");
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
@@ -2708,6 +2733,37 @@ static void Backup(int argc, char *argv[])
 			}
 		}
 	}
+ 	if (Info.FMStation) {
+ 		FMStation.Location = 1;
+ 		error = Phone->GetFMStation(&s,&FMStation);
+ 	        if (error == GE_NONE || error == GE_EMPTY) {
+ 			if (answer_yes("Backup phone FM stations")) {
+ 				used	= 0;
+ 				i	= 1;				
+ 				printmsgerr("Reading: ");
+ 				while (error == GE_NONE || error == GE_EMPTY)
+ 				{
+ 				    error = Phone->GetFMStation(&s,&FMStation);
+ 				    if (error == GE_NONE) {
+ 					if (used < GSM_BACKUP_MAX_FMSTATIONS) {
+ 						Backup.FMStation[used] = malloc(sizeof(GSM_FMStation));
+						if (Backup.FMStation[used] == NULL) Print_Error(GE_MOREMEMORY);
+ 						Backup.FMStation[used + 1] = NULL;
+ 					} else {
+ 						printmsg("Increase GSM_BACKUP_MAX_FMSTATIONS\n");
+ 						exit(-1);
+ 					}
+ 					*Backup.FMStation[used]=FMStation;
+ 					used++;
+ 				    }
+ 				    i++;
+ 				    FMStation.Location = i;					
+ 				    printmsgerr("*");
+ 				}
+ 				printmsgerr("\n");
+ 			}
+ 		}
+ 	}
 
 	GSM_Terminate();
 
@@ -2846,7 +2902,7 @@ static void Restore(int argc, char *argv[])
 				while (error==GE_NONE) {
 					error = Phone->GetNextCalendarNote(&s,&Calendar,true);
 					if (error != GE_NONE) break;
-					error = Phone->DeleteCalendar(&s,&Calendar);
+					error = Phone->DeleteCalendarNote(&s,&Calendar);
 					printmsgerr("*");
 				}
 				printmsgerr("\n");
@@ -3228,7 +3284,7 @@ static void ClearAll(int argc, char *argv[])
 			while (error==GE_NONE) {
 				error = Phone->GetNextCalendarNote(&s,&Calendar,true);
 				if (error != GE_NONE) break;
-				error = Phone->DeleteCalendar(&s,&Calendar);
+				error = Phone->DeleteCalendarNote(&s,&Calendar);
 				printmsgerr("*");
 			}
 			printmsgerr("\n");
@@ -3531,7 +3587,7 @@ static void NokiaComposer(int argc, char *argv[])
 	GSM_RingNote 		*Note;
 	GSM_RingNoteDuration 	Duration;
 	GSM_RingNoteDuration 	DefNoteDuration = 32; /* 32 = Duration_1_4 */
-	int			DefNoteScale 	= Scale_880;
+	unsigned int		DefNoteScale 	= Scale_880;
   
 	ringtone.Format	= 0;
 	error=GSM_ReadRingtoneFile(argv[2],&ringtone);
@@ -3626,8 +3682,8 @@ static void NokiaComposer(int argc, char *argv[])
 						break;
     				}
 				if (Note->Note != Note_Pause) {
-					if (Note->Scale != DefNoteScale) {
-						while (DefNoteScale != Note->Scale) {
+					if ((unsigned int)Note->Scale != DefNoteScale) {
+						while (DefNoteScale != (unsigned int)Note->Scale) {
 							printmsg("*");
 							DefNoteScale++;
 							if (DefNoteScale==Scale_7040) DefNoteScale = Scale_880;
@@ -4324,11 +4380,11 @@ static void GetFMStation(int argc, char *argv[])
 		error=Phone->GetFMStation(&s,&Station);
 		switch (error) {
     		    case GE_EMPTY:
-			    printmsg("Empty entry\n");
+ 			    printmsg("Entry number %i is empty\n",i);
 			    break;
 		    case GE_NONE:
-			    printmsg("Station name: %s\nFrequency: %d.%d MHz\n",
-				    DecodeUnicodeString(Station.StationName),
+ 			    printmsg("Entry number %i\nStation name: %s\nFrequency: %d.%d MHz\n",
+ 				    i,DecodeUnicodeString(Station.StationName),
 				    Station.Frequency/1000,Station.Frequency%1000);
 			    break;
 		    default:
@@ -4336,6 +4392,32 @@ static void GetFMStation(int argc, char *argv[])
 		}
 	}
 	GSM_Terminate();
+}
+
+static void SetFMStation(int argc, char *argv[])
+{
+ 	GSM_FMStation 	Station;
+ 
+ 	GSM_Init(true);
+
+ 	Station.Location	= atoi(argv[2]);
+ 	Station.Frequency	= atoi(argv[3]);
+ 	EncodeUnicode(Station.StationName,argv[4],strlen(argv[4]));
+
+ 	error=Phone->SetFMStation(&s,&Station);
+        Print_Error(error);
+
+ 	GSM_Terminate();
+}
+ 
+static void ClearFMStations(int argc, char *argv[])
+{
+ 	GSM_Init(true);
+ 	if (answer_yes("Delete all FM station")) {
+ 		error=Phone->ClearFMStations(&s);
+ 		Print_Error(error);
+ 	}
+  	GSM_Terminate();
 }
 
 static void usage(void)
@@ -4353,8 +4435,11 @@ static void usage(void)
 	printf("gammu --setautonetworklogin\n");
 	printf("gammu --getsecuritystatus\n");
 	printf("gammu --entersecuritycode PIN|PUK|PIN2|PUK2 code\n");
-	printf("gammu --listnetworks\n");
-	printf("gammu --getfmstation start [stop]\n\n");
+	printf("gammu --listnetworks\n\n");
+
+ 	printf("gammu --getfmstation start [stop]\n");
+ 	printf("gammu --setfmstation location frequency StationName\n");
+ 	printf("gammu --clearfmstations\n\n");
 
 	printf("gammu --getdatetime\n");
 	printf("gammu --setdatetime\n");
@@ -4390,7 +4475,7 @@ static void usage(void)
 	printf("gammu --getcalendarnotes\n\n");
 	
 	printf("gammu --getcategory TODO|PHONEBOOK start [stop]\n");
-	printf("gammu --getallcategies TODO|PHONEBOOK\n\n");
+	printf("gammu --getallcategories TODO|PHONEBOOK\n\n");
 
 	printf("gammu --getwapbookmark start [stop]\n");
 	printf("gammu --deletewapbookmark start [stop]\n");
@@ -4457,7 +4542,8 @@ static void usage(void)
 	printf("gammu --savesms EMS [-text \"text\"][-defanimation ID][-defsound ID]\n");
 	printf("                    [-tone10 file][-tone12 file][-animation frames file1 ...]\n");
 	printf("                    [-folder number][-reply][-smscset number][-unsent]\n");
-	printf("                    [-smscnumber number][-read][-sender number][-unread]\n\n");
+	printf("                    [-smscnumber number][-read][-sender number][-unread]\n");
+	printf("                    [-variablebitmap file][-fixedbitmap file]\n\n");
 
 	printf("gammu --sendsms TEXT destination [-reply][-flash][-smscset number]\n");
 	printf("                                 [-smscnumber number][-len len]\n");
@@ -4508,6 +4594,7 @@ static void usage(void)
         printf("                                [-animation frames file1 ...][-report]\n");
 	printf("                                [-smscset number][-smscnumber number]\n");
 	printf("                                [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\n");
+	printf("                                [-variablebitmap file][-fixedbitmap file]\n");
 
 
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
@@ -4584,6 +4671,8 @@ static GSM_Parameters Parameters[] = {
 	{"--resetphonesettings",	1, 1, ResetPhoneSettings	},
 	{"--getmemory",			2, 3, GetMemory			},
 	{"--getfmstation",		1, 2, GetFMStation		},
+ 	{"--setfmstation",		3, 3, SetFMStation		},	
+ 	{"--clearfmstations",		0, 0, ClearFMStations		},
 	{"--getsmsc",			1, 2, GetSMSC			},
 	{"--getsms",			2, 3, GetSMS			},
 	{"--deletesms",			2, 3, DeleteSMS			},
@@ -4637,6 +4726,9 @@ int main(int argc, char *argv[])
 {
 	int 	z = 0,start=0,i;
 	char	*argv2[50];
+#if !defined(WIN32) && defined(LOCALE_PATH)
+	char	*locale, locale_file[201];
+#endif
 
 	s.opened = false;
 	s.msg	 = NULL;
@@ -4654,7 +4746,20 @@ int main(int argc, char *argv[])
 	cfg=CFG_FindGammuRC();
 	if (cfg!=NULL) {
 	        s.Config.Localize = CFG_Get(cfg, "gammu", "gammuloc", false);
-        	if (s.Config.Localize) s.msg=CFG_ReadFile(s.Config.Localize, true);
+        	if (s.Config.Localize) {
+			s.msg=CFG_ReadFile(s.Config.Localize, true);
+		} else {
+#if !defined(WIN32) && defined(LOCALE_PATH)
+			locale = setlocale(LC_MESSAGES, "");
+			if (locale) {
+				snprintf(locale_file, 200, "%s/gammu_%c%c.txt",
+						LOCALE_PATH,
+						tolower(locale[0]),
+						tolower(locale[1]));
+				s.msg = CFG_ReadFile(locale_file, true);
+			}
+#endif
+		}
 	}
 	CFG_ReadConfig(cfg, &s.Config);
 
@@ -4713,3 +4818,7 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

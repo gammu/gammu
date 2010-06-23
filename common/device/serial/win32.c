@@ -22,16 +22,20 @@ static GSM_Error serial_close(GSM_StateMachine *s)
 	   to halt */
 	SetCommMask(d->hPhone, 0);
 
-	/* drop DTR */
-	EscapeCommFunction(d->hPhone, CLRDTR);
-
 	/* purge any outstanding reads/writes and close device handle */
 	PurgeComm(d->hPhone, PURGE_TXABORT | PURGE_RXABORT |
 			     PURGE_TXCLEAR | PURGE_RXCLEAR);
 
-	SetCommState(d->hPhone, &d->backup_dcb);
+	/* drop DTR */
+	EscapeCommFunction(d->hPhone, CLRDTR);
 
-	CloseHandle(d->hPhone);
+	if (SetCommState(d->hPhone, &d->backup_dcb)==0) {
+		GSM_OSErrorInfo(s, "SetCommState in serial_close");
+	}
+
+	if (CloseHandle(d->hPhone)==0) {
+		GSM_OSErrorInfo(s, "CloseHandle in serial_close");
+	}
 
 	return GE_NONE;
 }
@@ -317,3 +321,7 @@ GSM_Device_Functions SerialDevice = {
 
 #endif
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

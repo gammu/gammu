@@ -311,7 +311,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			GSM_GetCurrentDateTime (&Date);
 			i=Date.Second;
 	 		while (i==Date.Second && !bshutdown) {
-				mili_sleep(10);
+				my_sleep(10);
 				GSM_GetCurrentDateTime(&Date);
 			}
 		}
@@ -350,7 +350,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				GSM_GetCurrentDateTime (&Date);
 				z=Date.Second;
 				while (z==Date.Second) {
-					mili_sleep(10);
+					my_sleep(10);
 					GSM_GetCurrentDateTime(&Date);
 					GSM_ReadDevice(&s);
 					if (SendingSMSStatus != GE_TIMEOUT) break;
@@ -416,7 +416,7 @@ void SMSDaemon(int argc, char *argv[])
 				WriteSMSDLog("Terminating communication (%i,%i)", error, errors);
 				error=GSM_TerminateConnection(&s);
 			}
-			if (initerrors++ > 3) mili_sleep(30000);
+			if (initerrors++ > 3) my_sleep(30000);
 			WriteSMSDLog("Starting communication");
 			error=GSM_InitConnection(&s,2);
 			switch (error) {
@@ -457,3 +457,7 @@ void SMSDaemon(int argc, char *argv[])
 	}
 	GSM_Terminate_SMSD("Stop GAMMU smsd", 0, false, 0);
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

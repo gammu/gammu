@@ -135,3 +135,7 @@ void NOKIA_EncodeWAPSettingsSMSText(char *Buffer, int *Length, GSM_WAPSettings s
 	/* Mark of end */
 	strcpy(Buffer+(*Length),"\x01\x01\x01");				(*Length)=(*Length)+3;
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

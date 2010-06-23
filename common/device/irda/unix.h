@@ -187,3 +187,7 @@ struct if_irda_req {
 #define ifr_rts       ifr_ifru.ifru_line.rts
 
 #endif /* IRDA_H */
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

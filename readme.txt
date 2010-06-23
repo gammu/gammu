@@ -291,7 +291,7 @@ A. Here are all supported models:
 
      6210|6250|7110:
 
-     3510|3510i|6310|6310i|6510|8310|8910:
+     3510|3510i|3530|5100|6100|6310|6310i|6510|6610|7210|8310|8910:
 
      9110|9210:
 
@@ -300,7 +300,7 @@ A. Here are all supported models:
      9210.
 
    5.various Siemens (like M20, MC35), Nokia (like 6150, 6210, 6310i), Alcatel
-     and IPAQ:
+     IPAQ, Falcom A2D-1:
 
      Support written according to ETSI specs. Other compatible devices should
      work too. Made many things like 100% SMS support (both in text and PDU
@@ -359,10 +359,12 @@ A. Here are some people, who somehow helped in this project. Probably not
    * Markus Plail & Tibor Harsszegi - for DCT4 help
    * Frederick Ros - 5210 help
    * Jan Kratochvil - AT commands
-   * Walek - fixes
+   * Walek - fixes, progress in many things
    * Marcel Holtmann - Bluetooth tests
-   * Michal Cihar - general discussions and tries into making one
-     big GSM manager
+   * Michal Cihar - general discussions, tries into making one
+     big and good GSM manager (many changes and suggestions), Alcatel support
+   * Ondrej Rybin & Tomasz Motylewski - hardware help
+   * Joergen Thomsen - SMS daemon
 -------------------------------------------------------------------------------
 Q. What file formats are supported ?
 
@@ -479,7 +481,7 @@ A. The best is always the most simple device. So, I think that using Nokia 3310
    continuous work. I recommend Siemens devices - for example Siemens MC35. It
    has GPRS and can be used to many tasks.
 -------------------------------------------------------------------------------
-Q. What phone could be recommended by Gammu author(s) ? (19.11.02)
+Q. What phone could be recommended by Gammu author(s) ? (generally) (19.11.02)
 
 A. It's difficult to say. Everyone needs something different according to own
    needs.

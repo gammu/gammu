@@ -204,3 +204,7 @@ void NOKIA_EncodeVCARD21SMSText(char *Buffer, int *Length, GSM_PhonebookEntry pb
 	}
 	*Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

@@ -21,14 +21,14 @@ static GSM_Error N9210_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	s->Phone.Data.Bitmap=Bitmap;	
 	switch (Bitmap->Type) {
 	case GSM_OperatorLogo:
-		dprintf("Getting operator logo\n");
+		smprintf(s, "Getting operator logo\n");
 		/* This is like DCT3_GetNetworkInfo */
 		return GSM_WaitFor (s, OpReq, 4, 0x0a, 4, ID_GetBitmap);
 	case GSM_StartupLogo:
-		dprintf("Getting startup logo\n");
+		smprintf(s, "Getting startup logo\n");
 		return N71_92_GetPhoneSetting(s, ID_GetBitmap, 0x15);
 	case GSM_WelcomeNoteText:
-		dprintf("Getting welcome note\n");
+		smprintf(s, "Getting welcome note\n");
 		return N71_92_GetPhoneSetting(s, ID_GetBitmap, 0x02);
 	default:
 		break;
@@ -36,9 +36,9 @@ static GSM_Error N9210_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	return GE_NOTSUPPORTED;
 }
 
-static GSM_Error N9210_ReplySetOpLogo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error N9210_ReplySetOpLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	dprintf("Operator logo clear/set\n");
+	smprintf(s, "Operator logo clear/set\n");
 	return GE_NONE;
 }
 
@@ -67,8 +67,8 @@ static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		Type=GSM_NokiaStartupLogo;
 		PHONE_GetBitmapWidthHeight(Type, &Width, &Height);
 		PHONE_EncodeBitmap(Type, reqStartup + 21, Bitmap);		
-		dprintf("Setting startup logo\n");
-		return GSM_WaitFor (s, reqStartup, 21+PHONE_GetBitmapSize(Type), 0x7A, 4, ID_SetBitmap);
+		smprintf(s, "Setting startup logo\n");
+		return GSM_WaitFor (s, reqStartup, 21+PHONE_GetBitmapSize(Type,0,0), 0x7A, 4, ID_SetBitmap);
 	case GSM_WelcomeNoteText:	
 		/* Nokia bug: Unicode text is moved one char to left */
 		CopyUnicodeString(reqStartupText + 4, Bitmap->Text);
@@ -111,58 +111,59 @@ static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		count = count + 3;
 		req[count++] = 0x00;
 		req[count++] = 0x04;
-		req[count++] = PHONE_GetBitmapSize(Type)+8;
+		req[count++] = PHONE_GetBitmapSize(Type,0,0)+8;
 		PHONE_GetBitmapWidthHeight(Type, &Width, &Height);
 		req[count++] = Width;
 		req[count++] = Height;
-		req[count++] = PHONE_GetBitmapSize(Type);
+		req[count++] = PHONE_GetBitmapSize(Type,0,0);
 		req[count++] = 0x00;
 		req[count++] = 0x00;
 		req[count++] = 0x00;
 		PHONE_EncodeBitmap(Type, req+count, Bitmap);		
-		return GSM_WaitFor (s, req, count+PHONE_GetBitmapSize(Type), 0x0A, 4, ID_SetBitmap);
+		return GSM_WaitFor (s, req, count+PHONE_GetBitmapSize(Type,0,0), 0x0A, 4, ID_SetBitmap);
 	default:
 		break;
 	}
 	return GE_NOTSUPPORTED;
 }
 
-static GSM_Error N9210_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error N9210_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_SMSMessage sms;
+	GSM_SMSMessage		sms;
+	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 #ifdef DEBUG
-	dprintf("SMS message received\n");
+	smprintf(s, "SMS message received\n");
 	sms.State 	= GSM_UnRead;
 	sms.InboxFolder = true;
-	DCT3_DecodeSMSFrame(&sms,msg.Buffer+5);
+	DCT3_DecodeSMSFrame(s, &sms,msg.Buffer+5);
 #endif
-	if (Data->EnableIncomingSMS && User->IncomingSMS!=NULL) {
+	if (Data->EnableIncomingSMS && s->User.IncomingSMS!=NULL) {
 		sms.State 	= GSM_UnRead;
 		sms.InboxFolder = true;
-		DCT3_DecodeSMSFrame(&sms,msg.Buffer+5);
+		DCT3_DecodeSMSFrame(s, &sms,msg.Buffer+5);
 
-		User->IncomingSMS(Data->Device,sms);
+		s->User.IncomingSMS(s->Config.Device,sms);
 	}
 	return GE_NONE;
 }
 
 #ifdef GSM_ENABLE_N71_92INCOMINGINFO
-static GSM_Error N9210_ReplySetIncomingSMS(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error N9210_ReplySetIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Buffer[3]) {
 	case 0x0e:
-		Data->EnableIncomingSMS = true;
-		dprintf("Incoming SMS enabled\n");
+		s->Phone.Data.EnableIncomingSMS = true;
+		smprintf(s, "Incoming SMS enabled\n");
 		return GE_NONE;
 	case 0x0f:
-		dprintf("Error enabling incoming SMS\n");
+		smprintf(s, "Error enabling incoming SMS\n");
 		switch (msg.Buffer[4]) {
 		case 0x0c:
-			dprintf("No PIN ?\n");
+			smprintf(s, "No PIN ?\n");
 			return GE_SECURITYERROR;
 		default:
-			dprintf("ERROR: unknown %i\n",msg.Buffer[4]);
+			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 		}
 	}
 	return GE_UNKNOWNRESPONSE;
@@ -176,11 +177,11 @@ static GSM_Error N9210_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 
 	if (enable!=s->Phone.Data.EnableIncomingSMS) {
 		if (enable) {
-			dprintf("Enabling incoming SMS\n");
+			smprintf(s, "Enabling incoming SMS\n");
 			return GSM_WaitFor (s, req, 7, 0x02, 4, ID_SetIncomingSMS);
 		} else {
 			s->Phone.Data.EnableIncomingSMS = false;
-			dprintf("Disabling incoming SMS\n");
+			smprintf(s, "Disabling incoming SMS\n");
 		}
 	}
 	return GE_NONE;
@@ -329,7 +330,12 @@ GSM_Phone_Functions N9210Phone = {
 	NOTSUPPORTED,       	/*  	GetCategory 		*/
         NOTSUPPORTED,        	/*  	GetCategoryStatus 	*/
     	NOTSUPPORTED,		/*  	GetFMStation        	*/
-	NOTIMPLEMENTED		/*  	SetIncomingUSSD		*/
+    	NOTSUPPORTED,		/*  	SetFMStation        	*/
+    	NOTSUPPORTED,		/*  	ClearFMStations       	*/	NOTIMPLEMENTED		/*  	SetIncomingUSSD		*/
 };
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

@@ -6,6 +6,7 @@
 # Port           : in Windows/DOS: "com*:",
 #                  (instead of "*" please put "1", "2", etc.)
 #                  in other (Linux/Unix) "/dev/ttyS%"
+                                      or "/dev/tts/XX" (when use DevFS)
 #                                     or "/dev/ircomm%" ("irda" connection)
 #                  (instead of "%" please put "0", "1", "2", etc.)
 # Model          : use only, when Gammu doesn't recognize your phone model.

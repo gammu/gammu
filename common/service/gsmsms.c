@@ -893,6 +893,8 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 	unsigned char		Buffer[GSM_MAX_SMS_LENGTH*2*MAX_MULTI_SMS];
 	int 			i,UsedText,j,Length,Width,Height;
 	unsigned char		UDHID;
+	GSM_Bitmap		Bitmap;
+
 	GSM_Phone_Bitmap_Types	BitmapType;
 	EncodeMultiPartSMSEntry *Entry;
 
@@ -911,6 +913,9 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 		Entry = &Info->Entries[i];
 
 		switch (Entry->ID) {
+		case SMS_ConcatenatedTextLong:
+			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Entry->Buffer,strlen(DecodeUnicodeString(Entry->Buffer)),false,&UsedText);
+			break;
 		case SMS_EMSPredefinedSound:
 		case SMS_EMSPredefinedAnimation:
 			if (Entry->ID == SMS_EMSPredefinedSound) {
@@ -947,7 +952,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				BitmapType = GSM_EMSSmallPicture;	/* Bitmap 8x8 */
 				Buffer[0]  = 0x0F;			/* ID for 8x8 animation */
 			}
-			Length = PHONE_GetBitmapSize(BitmapType);
+			Length = PHONE_GetBitmapSize(BitmapType,0,0);
 	
 			Buffer[1] = Length*Entry->Bitmap->Number + 1;	/* Length of rest 	 */
 			Buffer[2] = 0x00; 	 		 	/* Position in EMS msg	 */
@@ -959,26 +964,55 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 			break;
 		case SMS_EMSFixedBitmap:
 			if (Entry->Bitmap->Bitmap[0].Width > 16 || Entry->Bitmap->Bitmap[0].Height > 16) {
-				BitmapType = GSM_EMSBigPicture;		/* Bitmap 32x32 */
-			} else if (Entry->Bitmap->Bitmap[0].Width > 8 || Entry->Bitmap->Bitmap[0].Height > 8) {
-				BitmapType = GSM_EMSMediumPicture;	/* Bitmap 16x16 */
-			} else {		
-				BitmapType = GSM_EMSSmallPicture;	/* Bitmap 8x8 */
+				BitmapType = GSM_EMSBigPicture;		/* Bitmap 32x32 	*/
+				Buffer[0]  = 0x10;			/* ID for EMS bitmap	*/
+			} else {
+				BitmapType = GSM_EMSMediumPicture;	/* Bitmap 16x16 	*/
+				Buffer[0]  = 0x11;			/* ID for EMS bitmap	*/
 			}
-			Length = PHONE_GetBitmapSize(BitmapType);
+			Length = PHONE_GetBitmapSize(BitmapType,0,0);
 			PHONE_GetBitmapWidthHeight(BitmapType, &Width, &Height);
 	
+			Buffer[1] = Length + 1;		/* Length of rest 	*/
+			Buffer[2] = 0x00; 		/* Position in EMS msg	*/
+			PHONE_EncodeBitmap(BitmapType,Buffer+3, &Entry->Bitmap->Bitmap[0]);
+			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,3+Length,true,&UsedText);
+			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-1-Length] = UsedText;
+			break;
+		case SMS_EMSVariableBitmap:
+			BitmapType 	= GSM_EMSVariablePicture;
+			Width 		= Entry->Bitmap->Bitmap[0].Width;
+			Height 		= Entry->Bitmap->Bitmap[0].Height;
+
+			while (1) {
+				/* specs */
+				if (PHONE_GetBitmapSize(BitmapType,Width,Height) <= 128) break;
+
+				/* Width should be multiply of 8 */
+				while (Width % 8 != 0) Width--;
+
+				/* specs */
+				if (PHONE_GetBitmapSize(BitmapType,Width,Height) <= 128) break;
+
+				Height--;
+			}
+
+			Length = PHONE_GetBitmapSize(BitmapType,Width,Height);
+
 			Buffer[0] = 0x12;		/* ID for EMS bitmap	*/
 			Buffer[1] = Length + 3;		/* Length of rest 	*/
 			Buffer[2] = 0x00; 		/* Position in EMS msg	*/
 			Buffer[3] = Width/8;		/* Bitmap width/8 	*/
 			Buffer[4] = Height;		/* Bitmap height  	*/
-			PHONE_EncodeBitmap(BitmapType,Buffer+5, &Entry->Bitmap->Bitmap[0]);
+
+			GSM_ResizeBitmap(&Bitmap, &Entry->Bitmap->Bitmap[0], Width, Height);
+#ifdef DEBUG
+			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Bitmap);
+#endif
+			PHONE_EncodeBitmap(BitmapType,Buffer+5, &Bitmap);
 			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,5+Length,true,&UsedText);
 			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-3-Length] = UsedText;
 			break;
-		case SMS_ConcatenatedTextLong:
-			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Entry->Buffer,strlen(DecodeUnicodeString(Entry->Buffer)),false,&UsedText);
 		default:
 			break;
 		}
@@ -1030,6 +1064,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 			case SMS_EMSSound10:
 			case SMS_EMSSound12:
 			case SMS_EMSFixedBitmap:
+			case SMS_EMSVariableBitmap:
 			case SMS_EMSAnimation:
 				EMS = true;
 			default:
@@ -1453,3 +1488,7 @@ GSM_Error GSM_SortSMS(GSM_MultiSMSMessage *INPUT[150], GSM_MultiSMSMessage *OUTP
 	}
 	return GE_NONE;
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

@@ -55,6 +55,32 @@ AC_TYPE_SIZE_T
 AC_HEADER_TIME
 AC_STRUCT_TM
 
+dnl doc directory
+DOC_DIR="$datadir/doc/gammu"
+AC_ARG_WITH(docdir,
+	[  --with-docdir=DIR       Specifies the documentation directory],
+	[ if test x$withval = xyes; then
+		AC_MSG_WARN(Usage is: --with-docdir=DIR)
+	  else
+		DOC_DIR="$withval"
+	  fi
+	]
+)
+AC_SUBST(DOC_DIR)
+
+dnl locales directory
+LOCALE_DIR="$datadir/gammu"
+AC_ARG_WITH(localedir,
+	[  --with-localedir=DIR       Specifies the localisation directory],
+	[ if test x$withval = xyes; then
+		AC_MSG_WARN(Usage is: --with-localedir=DIR)
+	  else
+		LOCALE_DIR="$withval"
+	  fi
+	]
+)
+AC_SUBST(LOCALE_DIR)
+
 dnl Path for making RPM
 RPM_DIR="/usr/src/RPM"
 AC_ARG_WITH(rpmdir,
@@ -226,7 +252,8 @@ echo "
   
   Man pages                                     - $mandir/man1
   Shared .so library                            - $libdir
-  Docs and examples                             - $prefix/doc/gammu
+  Docs and examples                             - $DOC_DIR
+  Localisation files                            - $LOCALE_DIR
   Binaries                                      - $bindir
   RPM making directory                          - $RPM_DIR
   Temporary directory                           - $TEMP_DIR

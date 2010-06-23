@@ -213,9 +213,9 @@ static GSM_SMSC				SMSC;
 static GSM_MultiSMSMessage		GetSMSMessage;
 static GSM_SMSMessage			SaveSMSMessage;
 static GSM_SMSMemoryStatus		SMSStatus;
-static GSM_SMSFolders			SMSFolders;
-static GSM_SignalQuality		SignalQuality;
-static GSM_BatteryCharge		BatteryCharge;
+static GSM_SMSFolders			SMSFolders;
+static GSM_SignalQuality		SignalQuality;
+static GSM_BatteryCharge		BatteryCharge;
 static GSM_NetworkInfo			NetworkInfo;
 static GSM_Ringtone			Ringtone;
 static GSM_CalendarEntry		Calendar;
@@ -232,7 +232,9 @@ static void prepareStateMachine()
 {
 	GSM_Phone_Data	*Phone = &s.Phone.Data;
 
-	Phone->IMEI			= IMEI;
+	strcpy(Phone->IMEI,		IMEI);
+	strcpy(Phone->Model,		Model);
+	strcpy(Phone->Version,		Version);
 	Phone->DateTime			= &DateTime;
 	Phone->Alarm			= &Alarm;
 	Phone->Memory			= &Memory;
@@ -257,11 +259,9 @@ static void prepareStateMachine()
 
 	Phone->EnableIncomingSMS 	= false;
 	Phone->EnableIncomingCB 	= false;
-	Phone->Model			= Model;
 	Model[0]			= 0;
-	Phone->Version			= Version;
+	Phone->VerNum			= VersionNum;
 	Version[0]			= 0;
-	Phone->VersionNum		= &VersionNum;
 	VersionNum			= 0;
 
 	s.Phone.Functions		= NULL;
@@ -423,3 +423,7 @@ void decodebinarydump(int argc, char *argv[])
 }
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

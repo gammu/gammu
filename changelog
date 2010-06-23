@@ -1,14 +1,60 @@
-
 ChangeLog for Gammu project (www.mwiacek.com)
-
 Few last versions (the highest) will be described more detailed, older less.
-In brackets names of people, who told about error/problem or helped in fixing.
-----------------------
-20030206 - 0.68
+In brackets names of people, who told about error/problem or helped in fixing
+or inspired me to make it.
 
+--------------------
+
+20030216 - 0.69
+* new functionality:
+  * * for atgen GetModel and GetManufacturer return real model   (Michal Cihar)
+      and manufactorer as reported by phone (when it's unknown
+      for Gammu)
+    * Gammu can try to find localisation file according to OS
+      locale
+    * new options for ./configure and localisation and docs
+    * AT+CPBR tries to find number of really used locations. It doesn't work
+      always excellent (N6310i), but...
+    * VIM can automagically indent edited files, when they contains info
+      for them. Added for all *.c and all *.h files (execute "vim" and type
+      ":help modeline" to see more about this feature)
+  * all single #10 replaced with #13#10
+  * added ID for N6610/7210,5100,6100, (Christian Ostheimer && Marcel J.E. Mol)
+    3510i/3530
+  * SendDTMF works for 6210 family and DCT4
+  * EMS: support for variable bitmaps saved in one SMS
+  * FM stations from DCT4 can be cleaned, set and backuped              (Walek)
+  * updated Credits: Ondrej Rybin, Tomasz Motylewski, Walek, etc., etc.
+
+* fixes and improvements:
+  * * in phone modules used smprintf where possible              (Michal Cihar)
+    * removed pointers to phone identification from StateMachine.Phone.Data
+      and moved there real strings from StateMachine
+    * changed getting of IMEI and manufacturer to work same as GetModel
+    * introduced StateMachine.Phone.Data.ModelInfo which contains pointer
+      to current OnePhoneModel
+    * things in atgen that were determined by model are now detemined by
+      features
+    * fixed installation permissions
+    * fixed some compile warnings produced by gcc 3.3
+    * manufacturer name is not in Unicode
+  * "rpm -ba" replaced by "rpmbuild -ba"                                (Chiew)
+  * Win32 DLL: improved closing phone threads
+  * ATGEN:
+    * support for AT+CPIN? in Falcom A2D style
+    * support for waiting for phone prompt (used with sending and saving
+      SMS)
+    * improved reading SMS from different memories
+  * EMS:
+    * sound10 & sound12 changed to tone10 & tone12                (Jozef Uhler)
+    * -fixedbitmap documented. Fixed bitmaps sent as FIXED bitmaps
+  * incoming things are again OK for 6210 family
+  * mili_sleep doesn't use in some OS miliseconds. Renamed    (Joergen Thomsen)
+
+20030206 - 0.68
 * new functionality:
   * added 8390 ID, new network name                             (Michael Smith)
-  * added new Indonesian network names                           (...)
+  * added new Indonesian network names                           (Sulung Chang)
   * * AT connection works with each serial speed                 (Michal Cihar)
     * support for Alcatel BE5 for ToDo and Calendar and getting categories
     * more info about battery and network signal level
@@ -51,8 +97,7 @@ In brackets names of people, who told about error/problem or helped in fixing.
   * added --addnew (adding new calendar, wap bookmarks      (Tomasz Motylewski)
     and todo from backup file without deleting existing)
   * added support for Siemens MIDI ringtones                            (Walek)
-  * added support for empty SMS names for 6210
-
+  * added support for empty SMS names for 6210
 * fixes and improvements:
   * fixed reading SMS for AT mode and Nokia phones
   * removed incorrect reference to man dir (it made problems during
@@ -88,7 +133,7 @@ In brackets names of people, who told about error/problem or helped in fixing.
       info in frames about end date/time
 
     and this is not Gammu fault !
-    
+
 20030105 - 0.66
 * new functionality:
   * some (started) functions for Siemens like support for VCalendar     (Walek)
@@ -142,20 +187,20 @@ NOTE: Summary for 2002
       Things for 2003
       ---------------
       1.There are still few general topics TODO
-
         * uploading some things over WAP
         * MMS
         * ending win32 dll
         * writing really usefull GUI
         * giving support for more formats (like Ericsson WAP settings over SMS)
+
           Note: I have in my library specs for many models (example: Morotola,
                 Sagen, Siemens xx45) and it's only required to code few 
                 functions into current source to have support for them...
+
         * AT modem emulator
         * other :-)
 
       2.Topics for the nearest future
-
         * ending full access to calendar in N3510(i)
         * adding (only) new calendar & pbk notes from file without deleting
           existing
@@ -164,7 +209,6 @@ NOTE: Summary for 2002
         * MySQL support for SMSD
 
 20021223 - 0.65
-
 * new functionality:
   * added first version of developer documentation made by   (Christian Becker)
     somebody not connected with Gammu developer(s). It allows
@@ -200,7 +244,6 @@ NOTE: Summary for 2002
         visible soon (fast, when my flu will end). 
 
 20021202 - 0.64
-
 * new functionality:
   * SMSD and FILES finally end                                (Joergen Thomsen)
   * decoding Siemens xx45 entended phonebook                       (Timo Teras)
@@ -223,7 +266,6 @@ NOTE: Summary for 2002
   * fixed "make makelib" and "make makerpm" on some OS
   
 20021124 - 0.63
-
 * new functionality:
   * Delphi project updated to version 7
   * when start connection with win32dll function, have to give pointers with 
@@ -252,7 +294,6 @@ NOTE: Summary for 2002
   * fix for EMS ringtones                                    (Christian Becker)
 
 20021112 - 0.62
-
 * new functionality:
   * simple API for informing user application about calls. Is more required ?
   * added -autolen to send/savesms TEXT. It allows Gammu to decide about
@@ -289,7 +330,6 @@ NOTE: Summary for 2002
   * Binary->RTTL converter for ringtones works better        (Christian Becker)
 
 NOTE: These days were very hard for me:
-
       1. FKN.PL (also my homepage/Gammu homepage/Gammu list) was down
          during few days. Reason: hardware faults. Sorry for it
       2. my phone was in service
@@ -305,7 +345,6 @@ NOTE: These days were very hard for me:
       still not implemented. Sorry for it.
 
 20021020 - 0.61
-
 * new functionality:
   * getting voice records from such DCT4 like 6310 or 6310i (new
     --nokiagetvoicerecord) (EXPERIMENTAL)
@@ -319,13 +358,16 @@ NOTE: These days were very hard for me:
     all after it are interpreted
   * added possibility of using standard Unix configure
     script for automatic configuring all options    
+
     NOTE: this is first version of Autoconf build system.
           Probably many things inside will be changed to better.
 	  All ideas very welcome.
+
   * dialvoice for DCT4
+
     NOTE: it should be possible to make data calls using FBUS with DCT4,
           probably also with 62xx/7110
-	  
+
 * fixes and improvements:
   * atblue works OK                                           (Marcel Holtmann)
   * some MyGnokii2 names changed to Gammu, display status can   (Krishna Dagli)
@@ -335,7 +377,6 @@ NOTE: These days were very hard for me:
   * setting WAP settings for DCT4 works better for some data
 
 20021012 - 0.60
-
 * new functionality:
   * FBUS works 100% over BlueTooth with 6210                  (Marcel Holtmann)
   * hardware drivers return OS error codes and error info
@@ -351,7 +392,6 @@ NOTE: These days were very hard for me:
   * --identify works OK for DCT4 without SIM card
 
 20021005 - 0.59
-
 CHANGED PROJECT NAME FROM MYGNOKII2 TO GAMMU
 (GNU All Mobile Management Utilities).
 
@@ -381,6 +421,7 @@ If you installed older version into your OS, please uninstall it first
     Distribution)
   * Borland C++ makefile works OK with given for free
     Borland C++ Builder 6 Personal
+
 * fixes and improvements:
   * AT module:
     * Alcatel OT 5xx, 7xx: setting ME memory for SMS             (Michal Cihar)
@@ -414,6 +455,7 @@ If you installed older version into your OS, please uninstall it first
   * backup/restore for sms contains support for all features included few
     releases ago.
   * docs synchronized with source                                (Allan Ortega)
+
 * fixes and improvements:
   * can correctly restore SMS_Submit sms
   * AT module:
@@ -450,6 +492,7 @@ Summary: software is more and more stable, tested and working 100% OK
     First experimental version
   * Bluetooth changes (NOT YET FULL FUNCTIONAL !)             (Marcel Holtmann)
   * added ID for 7650 (will probably work with 6510 module)
+
 * fixes and improvements:
   * many small improvements for getting/setting SMS (UDH headers)
   * 7110 family: getting profiles
@@ -472,6 +515,7 @@ Summary: software is more and more stable, tested and working 100% OK
     and writing)
   * writing phonebook for AT phones
   * better restoring WAP settings for DCT4
+
 * fixes and improvements:
   * GPRS Always Online can be activated for 6510 & 3510 too
   * rewritten playing tones for DCT4 - sometimes it's better, but still
@@ -497,12 +541,12 @@ Summary: software is more and more stable, tested and working 100% OK
     For more info read mygnokii.txt and description for --send(save)sms
     option and --rejectduplicates parameter
 
-    !!! If works according to info in mygnokii.txt with your SMSC, !!!
-                       !!! please tell me !!!
+    !!! If works according to info in mygnokii.txt with your SMSC, !!!                       !!! please tell me !!!
 
   * more possibilities with sms_serv
   * it's IMPOSSIBLE, but HAPPEN. Nokia disables in many phones GPRS Always
     Online. This and many other things are enabled using --nokiasetphonemenus
+
 * fixes and improvements:
   * some things moved inside "common" files and structures
   * getting operator logo, deleting sms for DCT4
@@ -520,6 +564,7 @@ Summary: software is more and more stable, tested and working 100% OK
   * in config.h new option, which enables beeping after making some
     things (like in Logo Manager)
   * reset for DCT4 disabled for DLR3 cable - no way to make it (?)
+
 * fixes and improvements:
   * some unnecessary Unicode <-> normal char conversions removed   (Walek & me)
   * improvements for (especially) linked SMS with Default Alphabet
@@ -544,6 +589,7 @@ Summary: in progress restoring WAP settings for DCT3, ending restoring
   * sms_serv working with AT devices
   * --nokiasetphonemenus enables netmon for DCT3
   * support for big (78x21) operator logos over SMS
+
 * fixes and improvements:
   * small changes in MBUS module
   * DCT3 phone tests are more usable for more damaged phones
@@ -558,6 +604,7 @@ Summary: in progress restoring WAP settings for DCT3, ending restoring
 * new functionality:
   * support for more special Nokia sequences used with GSM Default
     Alphabet in SMS
+
 * fixes & improvements:
   * workaround for some incoming unicode SMS for 6310i 4.80
 
@@ -581,6 +628,7 @@ NOTE: this is security update. In some situations saving SMS for DCT4
   * added getting firmware date
   * getting speed dials works for DCT4 too
   * improvements in getting caller logos, profiles from DCT4
+
 * fixes:
   * sending SMS, getting WAP settings for DCT4.
   * better checking errors with --copyringtone                 (Kresimir Hodak)
@@ -590,6 +638,7 @@ NOTE: this is security update. In some situations saving SMS for DCT4
   * updated config for 8250, improvements for calendar       (Georg Hofstetter)
     (second will improve 5210 calendar too)
   * changed format number of backup files to 1.01                       (Walek)
+
 * other:
   * security code reading moved to dct3.c (it's specific for DCT3)
   * source cleanups
@@ -748,8 +797,7 @@ Summary: test version. Many fixes. WAP settings not work for DCT4
 * 9210 module can set startup logo/text, show incoming cb/sms
 * new --copyringtone
 
-20020610 - 0.0.39
-DCT3 support seems to be close to be ready.
+20020610 - 0.0.39DCT3 support seems to be close to be ready.
 
 ........
 
@@ -762,10 +810,10 @@ Milestone. all important things in 6210 family done. Started DCT4.
 Simply "real" functionality provided.
 
 ........
-
 20020414 - 0.0.1 officialy released
-Works identification and phone tests, MBUS2, FBUS2 and serial port stuff
-for win32/Linux.
+
+Works identification and phone tests, MBUS2,
+FBUS2 and serial port stuff for win32/Linux.
 
 20020404
 I finally end supporting gnokii. Started creating structures.

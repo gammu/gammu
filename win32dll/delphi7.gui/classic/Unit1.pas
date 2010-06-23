@@ -125,7 +125,7 @@ begin
   error:=GSM_GetManufacturer(PhoneID,@buffer);
   if (error = GE_NONE) then
   begin
-          InfoListBox.Items.Add('Device manufacturer is '+GetGammuUnicodeString(buffer));
+          InfoListBox.Items.Add('Device manufacturer is '+buffer);
   end;
   error:=GSM_GetModel(PhoneID,@buffer);
   if (error = GE_NONE) then

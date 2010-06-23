@@ -2,9 +2,10 @@
 #ifndef gsm_statemachine_h
 #define gsm_statemachine_h
 
+#include <time.h>
+
 #include "../cfg/config.h"
 #include "misc/cfg.h"
-#include <time.h>
 
 #ifdef GSM_ENABLE_NOKIA6110
 #  include "phone/nokia/dct3/n6110.h"
@@ -122,6 +123,7 @@
 
 typedef struct _GSM_StateMachine GSM_StateMachine;
 typedef struct _GSM_User	 GSM_User;
+typedef struct _OnePhoneModel	 OnePhoneModel;
 
 /* ------------------------- Device layer ---------------------------------- */
 
@@ -264,11 +266,13 @@ typedef enum {
 	ID_GetHardware,
 	ID_GetPPM,
 	ID_GetSMSMode,
+	ID_GetSMSMemories,
 	ID_GetManufacturer,
 	ID_SetMemoryType,
 	ID_SetMemoryCharset,
 	ID_SetSMSParameters,
 	ID_GetFMStation,
+	ID_SetFMStation,
 	ID_Reset,
 	ID_GetToDo,
 	ID_PressKey,
@@ -333,8 +337,24 @@ typedef enum {
 	ID_EachFrame
 } GSM_Phone_RequestID;
 
+#define MAX_MANUFACTURER_LENGTH	50
+#define MAX_MODEL_LENGTH	50
+#define MAX_VERSION_LENGTH	50
+#define MAX_VERSION_DATE_LENGTH	50
+#define	MAX_IMEI_LENGTH		20
+
 typedef struct {
-	unsigned char		*IMEI;
+	char			IMEI[MAX_IMEI_LENGTH];			/* IMEI 				*/
+	char			Manufacturer[MAX_MANUFACTURER_LENGTH];	/* Real connected phone manufacturer	*/
+	char			Model[MAX_MODEL_LENGTH];		/* Real connected phone model 		*/
+	OnePhoneModel		*ModelInfo;				/* Model information			*/
+	char			Version[MAX_VERSION_LENGTH];		/* Real connected phone version 	*/
+	char			VerDate[MAX_VERSION_DATE_LENGTH];	/* Version date				*/
+	double			VerNum;					/* Phone version as number 		*/
+	/* Some modules can cache these variables */
+	char			HardwareCache[50];			/* Hardware version			*/
+	char			ProductCodeCache[50];			/* Product code version			*/
+
 	GSM_SpeedDial		*SpeedDial;
 	GSM_DateTime		*DateTime;
 	GSM_DateTime		*Alarm;
@@ -363,7 +383,6 @@ typedef struct {
 	GSM_AllRingtonesInfo	*RingtonesInfo;
 	GSM_DisplayFeatures	*DisplayFeatures;
 	GSM_FMStation		*FMStation;
-
 	unsigned char		*PhoneString;
 	int			StartPhoneString;
 
@@ -371,20 +390,11 @@ typedef struct {
 	bool			EnableIncomingSMS;	/* notify about incoming sms ? 	*/
 	bool			EnableIncomingCB;	/* notify about incoming cb ?	*/
 	bool			EnableIncomingUSSD;
-	char			*Model;			/* model codename string	*/
-	char			*Version;		/* version of firmware		*/
-	char			*VersionDate;		/* version date			*/
-	double			*VersionNum;		/* firmware version as number	*/
-	char			*Device;		/* device name			*/
+
 	GSM_Protocol_Message	*RequestMsg;		/* last frame from phone	*/
-	int			RequestID;		/* what operation is done now	*/
+	unsigned int		RequestID;		/* what operation is done now	*/
 	GSM_Error		DispatchError;		/* error returned by function	*/
 							/* in phone module		*/
-
-	/* Some modules can cache these variables */
-	char			IMEICache[50];		/* IMEI				*/
-	char			HardwareCache[50];	/* Hardware version		*/
-	char			ProductCodeCache[50];	/* Product code version		*/
 
 	struct {
 		int			fake;
@@ -407,7 +417,7 @@ typedef struct {
 } GSM_Phone_Data;
 
 typedef struct {
-	GSM_Error (*Function)	(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User);
+	GSM_Error (*Function)	(GSM_Protocol_Message msg, GSM_StateMachine *s);
 	unsigned char		*msgtype;
 	int			subtypechar;
 	unsigned char		subtype;
@@ -422,7 +432,7 @@ typedef struct {
 	GSM_Error (*DispatchMessage)	(GSM_StateMachine *s);
 	GSM_Error (*GetModel)		(GSM_StateMachine *s);
 	GSM_Error (*GetFirmware)	(GSM_StateMachine *s);
-	GSM_Error (*GetIMEI)            (GSM_StateMachine *s, unsigned char	    *imei	);
+	GSM_Error (*GetIMEI)            (GSM_StateMachine *s);
 	GSM_Error (*GetDateTime)	(GSM_StateMachine *s, GSM_DateTime	    *date_time	);
 	GSM_Error (*GetAlarm)		(GSM_StateMachine *s, GSM_DateTime	    *alarm,	int	alarm_number    );
 	GSM_Error (*GetMemory)		(GSM_StateMachine *s, GSM_PhonebookEntry    *entry	);
@@ -430,7 +440,7 @@ typedef struct {
 	GSM_Error (*GetSMSC)		(GSM_StateMachine *s, GSM_SMSC		    *smsc	);
 	GSM_Error (*GetSMSMessage)	(GSM_StateMachine *s, GSM_MultiSMSMessage   *sms	);
 	GSM_Error (*GetSMSFolders)	(GSM_StateMachine *s, GSM_SMSFolders	    *folders	);
-	GSM_Error (*GetManufacturer)	(GSM_StateMachine *s, char		    *manufacturer);
+	GSM_Error (*GetManufacturer)	(GSM_StateMachine *s);
 	GSM_Error (*GetNextSMSMessage)	(GSM_StateMachine *s, GSM_MultiSMSMessage   *sms,		bool	start		);
 	GSM_Error (*GetSMSStatus)	(GSM_StateMachine *s, GSM_SMSMemoryStatus   *status	);
 	GSM_Error (*SetIncomingSMS)	(GSM_StateMachine *s, bool		    enable	);
@@ -480,13 +490,14 @@ typedef struct {
 	GSM_Error (*GetSIMIMSI)		(GSM_StateMachine *s, char		    *IMSI	);
 	GSM_Error (*SetIncomingCall)	(GSM_StateMachine *s, bool		    enable	);
 	GSM_Error (*GetNextCalendarNote)(GSM_StateMachine *s, GSM_CalendarEntry	    *Note,	bool	start		);
-	GSM_Error (*DeleteCalendar)	(GSM_StateMachine *s, GSM_CalendarEntry     *Note	);
+	GSM_Error (*DeleteCalendarNote)	(GSM_StateMachine *s, GSM_CalendarEntry     *Note	);
 	GSM_Error (*AddCalendarNote)	(GSM_StateMachine *s, GSM_CalendarEntry	    *Note, bool Past);
 	GSM_Error (*GetBatteryCharge)	(GSM_StateMachine *s, GSM_BatteryCharge     *bat	);
 	GSM_Error (*GetSignalQuality)	(GSM_StateMachine *s, GSM_SignalQuality     *sig	);
  	GSM_Error (*GetCategory)	(GSM_StateMachine *s, GSM_Category	    *Category	);
  	GSM_Error (*GetCategoryStatus)	(GSM_StateMachine *s, GSM_CategoryStatus    *Status	);
 	GSM_Error (*GetFMStation)	(GSM_StateMachine *s, GSM_FMStation	    *FMStation	);
+	GSM_Error (*SetFMStation)	(GSM_StateMachine *s, GSM_FMStation	    *FMStation	);	GSM_Error (*ClearFMStations)	(GSM_StateMachine *s);
 	GSM_Error (*SetIncomingUSSD)	(GSM_StateMachine *s, bool		    enable	);
 } GSM_Phone_Functions;
 
@@ -537,8 +548,7 @@ typedef enum {
 	GCT_IRDA,
 	GCT_AT,
 	GCT_ATBLUE,
-	GCT_DLR3BLUE,
-	GCT_ALCABUS
+	GCT_DLR3BLUE
 } GSM_ConnectionType;
 
 typedef struct {
@@ -563,18 +573,14 @@ typedef struct {
 } GSM_Config;
 
 struct _GSM_StateMachine {
-	GSM_ConnectionType 	ConnectionType;    /* Type of connection as int			*/
-	char			*LockFile; 	   /* Lock file name for Unix 			*/
-	Debug_Info		di;
-	bool			opened;		   /* Is connection opened ?			*/
-	char			Model[50];	   /* Real connected phone model 		*/
-	char			Ver[50];	   /* Real connected phone version 		*/
-	char			VerDate[50];	   /* Version date				*/
-	double			VerNum;		   /* Phone version as number 			*/
-	GSM_Config		Config;		   /* Config file (or Registry or...) variables */
-	CFG_Header 		*msg;		   /* Localisation strings structure    	*/
-	int			ReplyNum;	   /* How many times make sth. 			*/
-	int			Speed;		   /* For some protocols used speed		*/
+	GSM_ConnectionType 	ConnectionType;				/* Type of connection as int			*/
+	char			*LockFile;				/* Lock file name for Unix 			*/
+	Debug_Info		di;					/* Debug information				*/
+	bool			opened;					/* Is connection opened ?			*/
+	GSM_Config		Config;					/* Config file (or Registry or...) variables 	*/
+	CFG_Header 		*msg;					/* Localisation strings structure    		*/
+	int			ReplyNum;				/* How many times make sth. 			*/
+	int			Speed;					/* For some protocols used speed		*/
 
 	GSM_Device		Device;
 	GSM_Protocol		Protocol;
@@ -627,25 +633,29 @@ typedef enum {
 	F_PROFILES33,	/* Phone profiles in 3310 style					*/
 	F_PROFILES51,	/* Phone profiles in 5110 style					*/
 	F_MAGICBYTES,	/* Phone can make authentication with magic bytes		*/
-	F_DTMF,		/* Phone can send DTMF						*/
+	F_NODTMF,	/* Phone can't send DTMF					*/
 	F_DISPSTATUS,	/* Phone return display status					*/
 
 	F_CAL35,	/* Reminders in calendar saved in 3510 style			*/
 	F_RADIO,	/* Phone with FM radio						*/
 	F_NOTODO,
 
+	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/
+	F_BROKENCPBS, 	/* CPBS on some memories can hang phone				*/
+	F_M20SMS,	/* Siemens M20 like SMS handling				*/
+
 	F_NOCALLINFO
-} Feature61_65;
+} Feature;
 
 /* For models table */
-typedef struct {
+struct _OnePhoneModel {
 	char		*model;
 	char		*number;
 	char		*irdamodel;
 	int		features[12];
-} OnePhoneModel;
+};
 
-bool 		IsPhoneFeatureAvailable	(char *model, int feature);
+bool 		IsPhoneFeatureAvailable	(OnePhoneModel *model, int feature);
 OnePhoneModel 	*GetModelData		(char *model, char *number, char *irdamodel);
 
 int smprintf(GSM_StateMachine *s, const char *format, ...);
@@ -654,3 +664,6 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description);
 
 #endif
 
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

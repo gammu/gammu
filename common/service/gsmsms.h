@@ -297,7 +297,8 @@ typedef enum {
 	SMS_EMSPredefinedSound,
 	SMS_EMSPredefinedAnimation,
 	SMS_EMSAnimation,
-	SMS_EMSFixedBitmap		/* 8x8 or 16x16 or 32x32 */
+	SMS_EMSFixedBitmap,		/* 16x16 or 32x32 */
+	SMS_EMSVariableBitmap
 } EncodeMultiPartSMSID;
 
 typedef struct {
@@ -332,3 +333,7 @@ void 	  GSM_ClearMultiPartSMSInfo	(GSM_EncodeMultiPartSMSInfo *Info);
 GSM_Error GSM_SortSMS(GSM_MultiSMSMessage *INPUT[200], GSM_MultiSMSMessage *OUTPUT[200]);
 
 #endif	/* __gsm_sms_h */
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

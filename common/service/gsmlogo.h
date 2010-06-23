@@ -50,7 +50,8 @@ typedef enum {
 	GSM_Nokia6210StartupLogo,	/*size 96*60*/
 	GSM_EMSSmallPicture,		/*size  8*8 */
 	GSM_EMSMediumPicture,		/*size 16*16*/
-	GSM_EMSBigPicture		/*size 32*32*/
+	GSM_EMSBigPicture,		/*size 32*32*/
+	GSM_EMSVariablePicture
 } GSM_Phone_Bitmap_Types;
 
 bool GSM_IsPointBitmap		(GSM_Bitmap 		*bmp, int x, int y);
@@ -64,12 +65,16 @@ int  GSM_GetBitmapSize		(GSM_Bitmap 		*bmp);
 GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap);
 GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap);
 
-void PHONE_ClearBitmap		(GSM_Phone_Bitmap_Types Type, char *buffer);
+void PHONE_GetBitmapWidthHeight	(GSM_Phone_Bitmap_Types Type, int *width, int *height);
+int  PHONE_GetBitmapSize	(GSM_Phone_Bitmap_Types Type, int width, int height);
+void PHONE_ClearBitmap		(GSM_Phone_Bitmap_Types Type, char *buffer, int width, int height);
 void PHONE_DecodeBitmap		(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *Bitmap);
 void PHONE_EncodeBitmap		(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *Bitmap);
-void PHONE_GetBitmapWidthHeight	(GSM_Phone_Bitmap_Types Type, int *width, int *height);
-int  PHONE_GetBitmapSize	(GSM_Phone_Bitmap_Types Type);
 
 void NOKIA_CopyBitmap		(GSM_Phone_Bitmap_Types Type, GSM_Bitmap *Bitmap, char *Buffer, int *Length);
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

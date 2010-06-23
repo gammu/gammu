@@ -9,6 +9,8 @@
 
 void PHONE_GetBitmapWidthHeight(GSM_Phone_Bitmap_Types Type, int *width, int *height)
 {
+	*width  = 0;
+	*height	= 0;
 	switch (Type) {
 		case GSM_EMSSmallPicture	: *width=8;  *height=8;  break;
 		case GSM_EMSMediumPicture	: *width=16; *height=16; break;
@@ -21,14 +23,19 @@ void PHONE_GetBitmapWidthHeight(GSM_Phone_Bitmap_Types Type, int *width, int *he
 		case GSM_NokiaStartupLogo	: *width=84; *height=48; break;
 		case GSM_Nokia6210StartupLogo	: *width=96; *height=60; break;
 		case GSM_Nokia7110StartupLogo	: *width=96; *height=65; break;
+		case GSM_EMSVariablePicture	: 			 break;
 	}
 }
 
-int PHONE_GetBitmapSize(GSM_Phone_Bitmap_Types Type)
+int PHONE_GetBitmapSize(GSM_Phone_Bitmap_Types Type, int Width, int Height)
 {
 	int width, height, x;
 
 	PHONE_GetBitmapWidthHeight(Type, &width, &height);
+	if (width == 0 && height == 0) {
+		width  = Width;
+		height = Height;
+	}
 	switch (Type) {
 		case GSM_Nokia6510OperatorLogo:
 			x = width * height;
@@ -42,6 +49,7 @@ int PHONE_GetBitmapSize(GSM_Phone_Bitmap_Types Type)
 		case GSM_EMSSmallPicture:
 		case GSM_EMSMediumPicture:
 		case GSM_EMSBigPicture:
+		case GSM_EMSVariablePicture:
 			return height*width/8;
 		case GSM_Nokia7110StartupLogo:
 		case GSM_Nokia6210StartupLogo:
@@ -70,6 +78,7 @@ static bool PHONE_IsPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x
 	case GSM_NokiaPictureImage:
 		i=(buffer[9*y + (x/8)] & 1<<(7-(x%8)));
 		break;
+	case GSM_EMSVariablePicture:
 	case GSM_EMSSmallPicture:
 	case GSM_EMSMediumPicture:
 	case GSM_EMSBigPicture:
@@ -78,11 +87,10 @@ static bool PHONE_IsPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x
 	if (i) return true; else return false;
 }
 
-void PHONE_SetPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x, int y)
+static void PHONE_SetPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x, int y, int width, int height)
 {
-	int pixel, width, height;
+	int pixel;
 
-	PHONE_GetBitmapWidthHeight(Type, &width, &height);
 	switch (Type) {
 	case GSM_NokiaStartupLogo:
 	case GSM_Nokia6210StartupLogo:
@@ -96,6 +104,7 @@ void PHONE_SetPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x, int 
 	case GSM_EMSSmallPicture:
 	case GSM_EMSMediumPicture:
 	case GSM_EMSBigPicture:
+	case GSM_EMSVariablePicture:
 		pixel=width*y + x;
 		buffer[pixel/8] |= 1 << (7-(pixel%8));
 		break;
@@ -123,6 +132,7 @@ void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 		case GSM_Nokia7110StartupLogo	:
 		case GSM_Nokia6210StartupLogo	: Bitmap->Type=GSM_StartupLogo;		break;
 		case GSM_NokiaPictureImage	: Bitmap->Type=GSM_PictureImage;	break;
+		case GSM_EMSVariablePicture	:
     		case GSM_EMSSmallPicture	:
 		case GSM_EMSMediumPicture	:
 		case GSM_EMSBigPicture		:					break;
@@ -137,9 +147,9 @@ void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 	}
 }
 
-void PHONE_ClearBitmap(GSM_Phone_Bitmap_Types Type, char *buffer)
+void PHONE_ClearBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int width, int height)
 {
-	memset(buffer,0,PHONE_GetBitmapSize(Type));
+	memset(buffer,0,PHONE_GetBitmapSize(Type,width,height));
 }
 
 void PHONE_EncodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *Bitmap)
@@ -149,11 +159,16 @@ void PHONE_EncodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 	GSM_Bitmap	dest;
 
 	PHONE_GetBitmapWidthHeight(Type, &width, &height);
+	if (width == 0 && height == 0) {
+		width  = Bitmap->Width;
+		height = Bitmap->Height;
+	}
 	GSM_ResizeBitmap(&dest, Bitmap, width, height);
-	PHONE_ClearBitmap(Type, buffer);
+	PHONE_ClearBitmap(Type, buffer, width, height);
+
 	for (x=0;x<width;x++) {
 		for (y=0;y<height;y++) {
-			if (GSM_IsPointBitmap(&dest,x,y)) PHONE_SetPointBitmap(Type, buffer, x, y);
+			if (GSM_IsPointBitmap(&dest,x,y)) PHONE_SetPointBitmap(Type, buffer, x, y, width, height);
 		}
 	}
 }
@@ -229,8 +244,8 @@ void GSM_ResizeBitmap(GSM_Bitmap *dest, GSM_Bitmap *src, int width, int height)
 		endy	= starty + height;
 		sety	= 0;
 	}
-	dest->Height=height;
-	dest->Width=width;
+	dest->Height	= height;
+	dest->Width	= width;
 	GSM_ClearBitmap(dest);
 	for (x=startx;x<endx;x++) {
 		for (y=starty;y<endy;y++) {
@@ -500,7 +515,7 @@ static GSM_Error savensl(FILE *file, GSM_MultiBitmap *bitmap)
 
 	fwrite(header,1,sizeof(header),file);
 	PHONE_EncodeBitmap(GSM_NokiaStartupLogo, buffer, &bitmap->Bitmap[0]);
-	fwrite(buffer,1,PHONE_GetBitmapSize(GSM_NokiaStartupLogo),file);
+	fwrite(buffer,1,PHONE_GetBitmapSize(GSM_NokiaStartupLogo,0,0),file);
 
 	return GE_NONE;
 }
@@ -843,5 +858,9 @@ void NOKIA_CopyBitmap(GSM_Phone_Bitmap_Types Type, GSM_Bitmap *Bitmap, char *Buf
 	Buffer[(*Length)++] = Height;
 	Buffer[(*Length)++] = 0x01;
 	PHONE_EncodeBitmap(Type, Buffer + (*Length), Bitmap);
-	(*Length) = (*Length) + PHONE_GetBitmapSize(Type);
+	(*Length) = (*Length) + PHONE_GetBitmapSize(Type,0,0);
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

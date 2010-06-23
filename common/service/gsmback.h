@@ -9,6 +9,7 @@
 #include "gsmsms.h"
 #include "gsmwap.h"
 #include "gsmprof.h"
+#include "gsmmisc.h"
 
 #define GSM_BACKUP_MAX_PHONEPHONEBOOK 	501
 #define GSM_BACKUP_MAX_SIMPHONEBOOK 	251
@@ -20,6 +21,7 @@
 #define GSM_BACKUP_MAX_RINGTONES	15
 #define GSM_BACKUP_MAX_TODO		100
 #define GSM_BACKUP_MAX_PROFILES		10
+#define GSM_BACKUP_MAX_FMSTATIONS	20
 
 typedef struct {
 	char			IMEI		[50];
@@ -36,6 +38,7 @@ typedef struct {
 	GSM_Ringtone		*Ringtone	[GSM_BACKUP_MAX_RINGTONES + 1];
 	GSM_ToDoEntry		*ToDo		[GSM_BACKUP_MAX_TODO + 1];
 	GSM_Profile		*Profiles	[GSM_BACKUP_MAX_PROFILES + 1];
+ 	GSM_FMStation		*FMStation	[GSM_BACKUP_MAX_FMSTATIONS +1];
 	GSM_Bitmap		*StartupLogo;
 	GSM_Bitmap		*OperatorLogo;
 } GSM_Backup;
@@ -62,6 +65,7 @@ typedef struct {
 	bool Ringtone;
 	bool StartupLogo;
 	bool OperatorLogo;
+ 	bool FMStation;
 } GSM_Backup_Info;
 
 void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup);
@@ -76,3 +80,7 @@ GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup);
 GSM_Error GSM_SaveSMSBackupFile(char *FileName, GSM_SMS_Backup *backup);
 
 #endif	/* __gsm_backup_h */
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

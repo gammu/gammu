@@ -446,3 +446,7 @@ void NOKIA_DecodeNetworkCode(unsigned char* buffer, unsigned char* output)
 	output[4] = output[3];
 	output[3] = ' ';
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

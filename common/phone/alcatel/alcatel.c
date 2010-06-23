@@ -31,7 +31,7 @@ extern GSM_Reply_Function ALCATELReplyFunctions[];
 extern GSM_Reply_Function ATGENReplyFunctions[];
 
 extern GSM_Error ATGEN_Initialise		(GSM_StateMachine *s);
-extern GSM_Error ATGEN_GetIMEI 			(GSM_StateMachine *s, unsigned char *imei);
+extern GSM_Error ATGEN_GetIMEI 			(GSM_StateMachine *s);
 extern GSM_Error ATGEN_GetFirmware		(GSM_StateMachine *s);
 extern GSM_Error ATGEN_GetModel			(GSM_StateMachine *s);
 extern GSM_Error ATGEN_GetDateTime		(GSM_StateMachine *s, GSM_DateTime *date_time);
@@ -292,7 +292,7 @@ static GSM_Error ALCATEL_SetATMode(GSM_StateMachine *s)
     s->Phone.Functions->ReplyFunctions  = ATGENReplyFunctions;
     Priv->Mode                          = ModeAT;
     
-    mili_sleep(100);
+    my_sleep(100);
 
     /* In case we don't send AT command short after closing binary mode,
      * phone takes VERY long to react next time. The error code in
@@ -328,9 +328,9 @@ static GSM_Error ALCATEL_Initialise(GSM_StateMachine *s)
     s->Protocol.Functions               = &ATProtocol;
     s->Phone.Functions->ReplyFunctions  = ATGENReplyFunctions;
 
-//    if (s->Config.Speed != 19200) { 
-        //smprintf(s, "Warning: Alcatel binary mode works only at 19200 bps\n");
-    //}
+    if (s->Speed != 19200) { 
+		smprintf(s, "Warning: Alcatel binary mode works only at 19200 bps\n");
+	}
     
     if (ATGEN_Initialise(s) != GE_NONE) {
         smprintf(s,"AT initialisation failed, trying to stop binary mode...\n");
@@ -359,6 +359,9 @@ static GSM_Error ALCATEL_Terminate(GSM_StateMachine *s)
 static GSM_Error ALCATEL_IsIdAvailable(GSM_StateMachine *s, int id) {
     GSM_Phone_ALCATELData   	*Priv = &s->Phone.Data.Priv.ALCATEL;
     int 			i = 0;
+    bool            max = true;
+   
+    if (id > ALCATEL_MAX_LOCATION) return GE_INVALIDLOCATION;
     
     switch (Priv->BinaryType) {
         case TypeCalendar:
@@ -377,7 +380,9 @@ static GSM_Error ALCATEL_IsIdAvailable(GSM_StateMachine *s, int id) {
 
     for (i=0; i<*Priv->CurrentCount; i++) {
         if ((*Priv->CurrentList)[i] == id) return GE_NONE;
+        if ((*Priv->CurrentList)[i] > id) max = false;
     }
+    if (max) return  GE_INVALIDLOCATION;
     return GE_EMPTY;
 }
 
@@ -415,9 +420,9 @@ static GSM_Error ALCATEL_GetNextId(GSM_StateMachine *s, int *id) {
     }
 }
 
-static GSM_Error ALCATEL_ReplyGetIds(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error ALCATEL_ReplyGetIds(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-    GSM_Phone_ALCATELData 	*Priv = &Data->Priv.ALCATEL;
+    GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
     int 			count,i,pos;
     
     count 		 = msg.Buffer[10];
@@ -498,13 +503,13 @@ static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s, bool refresh)
     return GE_NONE;
 }
 
-static GSM_Error ALCATEL_ReplyGetFields(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error ALCATEL_ReplyGetFields(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-    GSM_Phone_ALCATELData 	*Priv = &Data->Priv.ALCATEL;
+    GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
     int 			i;
 
     if (msg.Buffer[14] > GSM_PHONEBOOK_ENTRIES) {
-        dprintf("WARNING: Field list truncated, you should increase GSM_PHONEBOOK_ENTRIES to at least %d\n", msg.Buffer[14]);
+        smprintf(s, "WARNING: Field list truncated, you should increase GSM_PHONEBOOK_ENTRIES to at least %d\n", msg.Buffer[14]);
         Priv->CurrentFieldsCount = GSM_PHONEBOOK_ENTRIES;
     } else {
         Priv->CurrentFieldsCount = msg.Buffer[14];
@@ -569,9 +574,9 @@ static GSM_Error ALCATEL_GetFields(GSM_StateMachine *s, int id) {
     return GE_NONE;
 }
 
-static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-    GSM_Phone_ALCATELData 	*Priv = &Data->Priv.ALCATEL;
+    GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
     unsigned char 		*buffer = &(msg.Buffer[16]);
 
     if (buffer[1] == 0x05 && buffer[2] == 0x67) {
@@ -591,13 +596,13 @@ static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_Phone_
         /* string */
         Priv->ReturnType = Alcatel_string;
         if (GSM_PHONEBOOK_TEXT_LENGTH < buffer[3])
-            dprintf("WARNING: Text truncated, you should increase GSM_PHONEBOOK_TEXT_LENGTH to at least %d\n", buffer[3] + 1);
+            smprintf(s, "WARNING: Text truncated, you should increase GSM_PHONEBOOK_TEXT_LENGTH to at least %d\n", buffer[3] + 1);
         DecodeDefault( Priv->ReturnString, buffer + 4, MIN(GSM_PHONEBOOK_TEXT_LENGTH, buffer[3]), false, GSM_AlcatelAlphabet);
     } else if (buffer[1] == 0x07 && buffer[2] == 0x3C) {
         /* phone */
         Priv->ReturnType = Alcatel_phone;
         if (GSM_PHONEBOOK_TEXT_LENGTH < buffer[3])
-            dprintf("WARNING: Text truncated, you should increase GSM_PHONEBOOK_TEXT_LENGTH to at least %d\n", buffer[3] + 1);
+            smprintf(s, "WARNING: Text truncated, you should increase GSM_PHONEBOOK_TEXT_LENGTH to at least %d\n", buffer[3] + 1);
         DecodeDefault( Priv->ReturnString, buffer + 4, MIN(GSM_PHONEBOOK_TEXT_LENGTH, buffer[3]), false, GSM_AlcatelAlphabet);
     } else if (buffer[1] == 0x03 && buffer[2] == 0x3B) {
         /* boolean */
@@ -616,7 +621,7 @@ static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_Phone_
         Priv->ReturnType 	= Alcatel_byte;
         Priv->ReturnInt 	= buffer[3];
     } else {
-        dprintf("WARNING: Uknown data type received (%02X,%02X)\n", buffer[1], buffer[2]);
+        smprintf(s, "WARNING: Uknown data type received (%02X,%02X)\n", buffer[1], buffer[2]);
         return GE_UNKNOWNRESPONSE;
     }
     return GE_NONE;
@@ -660,13 +665,13 @@ static GSM_Error ALCATEL_GetFieldValue(GSM_StateMachine *s, int id, int field)
     return GE_NONE;
 }
 
-static GSM_Error ALCATEL_ReplyGetCategories(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error ALCATEL_ReplyGetCategories(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-    GSM_Phone_ALCATELData 	*Priv = &Data->Priv.ALCATEL;
+    GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
     int 			i;
 
     if (msg.Buffer[12] > ALCATEL_MAX_CATEGORIES) {
-        dprintf("WARNING: Field list truncated, you should increase ALCATEL_MAX_CATEGORIES to at least %d\n", msg.Buffer[12]);
+        smprintf(s, "WARNING: Field list truncated, you should increase ALCATEL_MAX_CATEGORIES to at least %d\n", msg.Buffer[12]);
         Priv->CurrentCategoriesCount = ALCATEL_MAX_CATEGORIES;
     } else {
         Priv->CurrentCategoriesCount = msg.Buffer[12];
@@ -738,14 +743,14 @@ static GSM_Error ALCATEL_IsCategoryIdAvailable(GSM_StateMachine *s, int id) {
     return GE_EMPTY;
 }
 
-static GSM_Error ALCATEL_ReplyGetCategoryText(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error ALCATEL_ReplyGetCategoryText(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-    GSM_Phone_ALCATELData 	*Priv = &Data->Priv.ALCATEL;
+    GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
     int len;
     
     len = msg.Buffer[14];
     if (len > GSM_MAX_CATEGORY_NAME_LENGTH) {
-        dprintf("WARNING: Category name truncated, you should increase GSM_MAX_CATEGORY_NAME_LENGTH to at least %d\n", len);
+        smprintf(s, "WARNING: Category name truncated, you should increase GSM_MAX_CATEGORY_NAME_LENGTH to at least %d\n", len);
     }
     DecodeDefault( Priv->ReturnString, msg.Buffer + 15, MIN(GSM_MAX_CATEGORY_NAME_LENGTH, len), false, GSM_AlcatelAlphabet);
     return GE_NONE;
@@ -780,18 +785,18 @@ static GSM_Error ALCATEL_GetCategoryText(GSM_StateMachine *s, int id) {
 }
 
 
-static GSM_Error ALCATEL_GetManufacturer(GSM_StateMachine *s, char *manufacturer)
+static GSM_Error ALCATEL_GetManufacturer(GSM_StateMachine *s)
 {
-    EncodeUnicode(manufacturer,"Alcatel",7);
+    strcpy(s->Phone.Data.Manufacturer, "Alcatel");
     return GE_NONE;
 }
 
-static GSM_Error ALCATEL_GetIMEI (GSM_StateMachine *s, unsigned char *imei)
+static GSM_Error ALCATEL_GetIMEI (GSM_StateMachine *s)
 {
     GSM_Error error;
 
     if ((error = ALCATEL_SetATMode(s))!= GE_NONE) return error;
-    return ATGEN_GetIMEI(s, imei);
+    return ATGEN_GetIMEI(s);
 }
 
 static GSM_Error ALCATEL_GetFirmware(GSM_StateMachine *s)
@@ -1271,7 +1276,7 @@ static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_DateTime *alarm, int
     return GE_WORKINPROGRESS;
 }
 
-static GSM_Error ALCATEL_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+static GSM_Error ALCATEL_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
     GSM_Error error;
     GSM_DateTime *dt = NULL, evdate;
@@ -1504,7 +1509,7 @@ static GSM_Error ALCATEL_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry 
     return GE_NONE;
 }
 
-static GSM_Error ALCATEL_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+static GSM_Error ALCATEL_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
     GSM_Error error;
 
@@ -1514,7 +1519,7 @@ static GSM_Error ALCATEL_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
     return GE_WORKINPROGRESS;
 }
 
-static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
+static GSM_Error ALCATEL_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
 {
     GSM_Error error;
 
@@ -1753,7 +1758,7 @@ static GSM_Error ALCATEL_DispatchMessage(GSM_StateMachine *s)
     }
 }
 
-static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
     unsigned char c;
 
@@ -1765,7 +1770,11 @@ static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_Phone_Data *
         switch (c) {
             case 0x10: /* same thing opened in phone menus */
                 return GE_INSIDEPHONEMENU;
-            case 0x13:
+			case 0x13: /* This appears in more cases:
+						  	- phone needs PIN code
+							- we want to close not opened session
+						  For normal users the second case shouldn't occur...
+						*/
                 return GE_SECURITYERROR;
             case 0x14: /* Bad data */
             case 0x2f: /* Closing session when not opened */
@@ -1782,13 +1791,13 @@ static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_Phone_Data *
             case 0x82: /* Transfer canceled */
                 return GE_CANCELED;
             default:
-                dprintf("WARNING: Packet seems to indicate some status by %02X, ignoring!\n", c);
+                smprintf(s, "WARNING: Packet seems to indicate some status by %02X, ignoring!\n", c);
         }
     }
     return GE_NONE;
 }
 
-static GSM_Error ALCATEL_ReplyCommit(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error ALCATEL_ReplyCommit(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
     /* TODO: read received id */
     return GE_NONE;
@@ -1890,15 +1899,21 @@ GSM_Phone_Functions ALCATELPhone = {
     NOTSUPPORTED,               /*  SetProfile          */
     ALCATEL_GetSIMIMSI,
     NONEFUNCTION,               /*  SetIncomingCall     */
-    ALCATEL_GetNextCalendar,
-    ALCATEL_DelCalendar,
-    ALCATEL_AddCalendar,
+    ALCATEL_GetNextCalendarNote,
+    ALCATEL_DelCalendarNote,
+    ALCATEL_AddCalendarNote,
     ALCATEL_GetBatteryCharge,
     ALCATEL_GetSignalStrength,
     ALCATEL_GetCategory,
     ALCATEL_GetCategoryStatus,
     NOTSUPPORTED,		/*  GetFMStation        */
+    NOTSUPPORTED,		/*  SetFMStation        */
+    NOTSUPPORTED,		/*  ClearFMStations     */	
     NOTSUPPORTED		/*  SetIncomingUSSD	*/
 };
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

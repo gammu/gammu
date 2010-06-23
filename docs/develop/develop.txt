@@ -192,3 +192,4 @@ A. When phone gives answers, we check if we requested received info and we
    there is ReplyFunction, it has access to s->Phone.Data and decodes answer.
    Returns error or not (and this is value for GSM_WaitFor). If there is
    no requested answer during time, GSM_WaitFor returns GE_TIMEOUT.
+

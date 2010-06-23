@@ -21,13 +21,13 @@ GSM_Error CheckDCT3Only()
 
 	/* Checking if phone is DCT3 */
 #ifdef GSM_ENABLE_NOKIA6110
-	if (strstr(N6110Phone.models, GetModelData(NULL,s.Model,NULL)->model) != NULL) found = true;
+	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
 #ifdef GSM_ENABLE_NOKIA7110
-	if (strstr(N7110Phone.models, GetModelData(NULL,s.Model,NULL)->model) != NULL) found = true;
+	if (strstr(N7110Phone.models, s.Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
 #ifdef GSM_ENABLE_NOKIA9210
-	if (strstr(N9210Phone.models, GetModelData(NULL,s.Model,NULL)->model) != NULL) found = true;
+	if (strstr(N9210Phone.models, s.Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
 	if (!found) return GE_NOTSUPPORTED;
 
@@ -60,7 +60,7 @@ static void CheckDCT3()
 
 /* ------------------- functions ------------------------------------------- */
 
-static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int i;
 
@@ -126,7 +126,7 @@ void DCT3tests(int argc, char *argv[])
 		GSM_Terminate();
 	}
 
-	mili_sleep(400);
+	my_sleep(400);
 
 	s.User.UserReplyFunctions=UserReplyFunctions3;
 
@@ -154,7 +154,7 @@ if (atoi(argv[2]) == 243) GSM_PhoneBeep();
 	GSM_Terminate();
 }
 
-static GSM_Error DCT3_ReplyGetMSID(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT3_ReplyGetMSID(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int i;
 
@@ -164,13 +164,13 @@ static GSM_Error DCT3_ReplyGetMSID(GSM_Protocol_Message msg, GSM_Phone_Data *Dat
 	return GE_NONE;
 }
 
-static GSM_Error DCT3_ReplyGetDSPROM(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT3_ReplyGetDSPROM(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("DSP ROM       : %c\n",msg.Buffer[5]);
 	return GE_NONE;
 }
 
-static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int	i, j;  
 	char	uni[100];
@@ -226,7 +226,7 @@ static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_Phone_Data 
 	return GE_NONE;
 }
 
-static GSM_Error DCT3_ReplyGetMCUchkSum(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT3_ReplyGetMCUchkSum(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int i;
 	
@@ -272,7 +272,7 @@ void DCT3Info(int argc, char *argv[])
 	Print_Error(error);
 }
 
-static GSM_Error DCT3_ReplyResetTest36(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT3_ReplyResetTest36(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Netmonitor test 36 cleaned OK\n");
 	return GE_NONE;
@@ -302,7 +302,7 @@ void DCT3ResetTest36(int argc, char *argv[])
 
 static unsigned char PPS[32]; /* Product Profile Settings */
 
-static GSM_Error DCT3_ReplyGetPPS(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT3_ReplyGetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int i,j,z;
 
@@ -328,7 +328,7 @@ static GSM_Error DCT3_ReplyGetPPS(GSM_Protocol_Message msg, GSM_Phone_Data *Data
 	return GE_NONE;
 }
 
-static GSM_Error DCT3_ReplySetPPS(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT3_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Setting done OK\n");
 	return GE_NONE;
@@ -356,21 +356,21 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 	printf("ALS : enabling menu\n");
 	PPS[10] = '1';
 
-	if (!strcmp(GetModelData(NULL,s.Model,NULL)->model,"6150")) {
+	if (!strcmp(s.Phone.Data.ModelInfo->model,"6150")) {
 		printf("6150: enabling WellMate menu\n");
 		PPS[18] = '1';
 	}
 	/* FIXME */
-	if (!strcmp(GetModelData(NULL,s.Model,NULL)->model,"3210")) {
+	if (!strcmp(s.Phone.Data.ModelInfo->model,"3210")) {
 		printf("3210: enabling vibra menu\n");
 		PPS[24] = '1';
 	}
-	if (!strcmp(GetModelData(NULL,s.Model,NULL)->model,"3310") && s.VerNum>5.13) {
+	if (!strcmp(s.Phone.Data.ModelInfo->model,"3310") && s.Phone.Data.VerNum>5.13) {
 		printf("3310: enabling 3315 features\n");
 		PPS[25] = '1';
 	}
 	/* FIXME */
-	if (!strcmp(GetModelData(NULL,s.Model,NULL)->model,"3210") && s.VerNum>=5.31) {
+	if (!strcmp(s.Phone.Data.ModelInfo->model,"3210") && s.Phone.Data.VerNum>=5.31) {
 		printf("3210: enabling React and Logic game\n");
 		PPS[26] = '1';		
 	}
@@ -403,13 +403,13 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 	Print_Error(error);
 }
 
-static GSM_Error DCT3_Reply61GetSecurityCode(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT3_Reply61GetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Security Code is \"%s\"\n",msg.Buffer+5);
 	return GE_NONE;
 }
 
-static GSM_Error DCT3_Reply7191GetSecurityCode(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT3_Reply7191GetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Security Code is \"%s\"\n",msg.Buffer+6);
 	return GE_NONE;
@@ -432,19 +432,19 @@ void DCT3GetSecurityCode(int argc, char *argv[])
 	s.User.UserReplyFunctions=UserReplyFunctions3;
 
 #ifdef GSM_ENABLE_NOKIA6110
-	if (strstr(N6110Phone.models, GetModelData(NULL,s.Model,NULL)->model) != NULL)
+	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) != NULL)
 	{
 		error=GSM_WaitFor (&s, req6110, 4, 0x40, 4, ID_User6);
 	}
 #endif
 #ifdef GSM_ENABLE_NOKIA7110
-	if (strstr(N7110Phone.models, GetModelData(NULL,s.Model,NULL)->model) != NULL)
+	if (strstr(N7110Phone.models, s.Phone.Data.ModelInfo->model) != NULL)
 	{
 		error=GSM_WaitFor (&s, req71_91, 5, 0x7a, 4, ID_User6);
 	}
 #endif
 #ifdef GSM_ENABLE_NOKIA9210
-	if (strstr(N9210Phone.models, GetModelData(NULL,s.Model,NULL)->model) != NULL)
+	if (strstr(N9210Phone.models, s.Phone.Data.ModelInfo->model) != NULL)
 	{
 		error=GSM_WaitFor (&s, req71_91, 5, 0x7a, 4, ID_User6);
 	}
@@ -454,7 +454,7 @@ void DCT3GetSecurityCode(int argc, char *argv[])
 
 #ifdef GSM_ENABLE_NOKIA6110
 
-static GSM_Error DCT3_ReplyGetOperatorName(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT3_ReplyGetOperatorName(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	unsigned char buffer[10];
 
@@ -473,7 +473,7 @@ void DCT3GetOperatorName(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (strstr(N6110Phone.models, GetModelData(NULL,s.Model,NULL)->model) == NULL) Print_Error(GE_NOTSUPPORTED);
+	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) == NULL) Print_Error(GE_NOTSUPPORTED);
 	CheckDCT3();
 
 	error=DCT3_EnableSecurity (&s, 0x01);
@@ -487,7 +487,7 @@ void DCT3GetOperatorName(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Error DCT3_ReplySetOperatorName(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error DCT3_ReplySetOperatorName(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Operator name set OK\n");
 	return GE_NONE;
@@ -503,7 +503,7 @@ void DCT3SetOperatorName(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (strstr(N6110Phone.models, GetModelData(NULL,s.Model,NULL)->model) == NULL) Print_Error(GE_NOTSUPPORTED);
+	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) == NULL) Print_Error(GE_NOTSUPPORTED);
 	CheckDCT3();
 
 	error=DCT3_EnableSecurity (&s, 0x01);
@@ -550,3 +550,7 @@ static GSM_Reply_Function UserReplyFunctions3[] = {
 };
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */
