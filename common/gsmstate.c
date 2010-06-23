@@ -11,7 +11,7 @@
 static void GSM_RegisterConnection(GSM_StateMachine *s, int connection,
 		GSM_Device_Functions *device, GSM_Protocol_Functions *protocol)
 {
-	if (s->connectiontype == connection)
+	if (s->ConnectionType == connection)
 	{
 		s->Device.Functions	= device;	
 		s->Protocol.Functions	= protocol;
@@ -23,17 +23,17 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	/* We check here is used connection string type is correct for ANY
 	 * OS. If not, we return with error, that string is incorrect at all
 	 */
-	s->connectiontype=0;
-	if (mystrncasecmp("fbus"	,connection,0)) s->connectiontype = GCT_FBUS2;
-	if (mystrncasecmp("mbus"	,connection,0)) s->connectiontype = GCT_MBUS2;
-	if (mystrncasecmp("dlr3"	,connection,0)) s->connectiontype = GCT_DLR3AT;
-	if (mystrncasecmp("irda"	,connection,0)) s->connectiontype = GCT_IRDA;
-	if (mystrncasecmp("infrared"	,connection,0)) s->connectiontype = GCT_INFRARED;
-	if (mystrncasecmp("at19200"	,connection,0)) s->connectiontype = GCT_AT19200;
-	if (mystrncasecmp("at115200"	,connection,0)) s->connectiontype = GCT_AT115200;
-	if (mystrncasecmp("atblue"	,connection,0)) s->connectiontype = GCT_ATBLUE;
-	if (mystrncasecmp("dlr3blue"	,connection,0)) s->connectiontype = GCT_DLR3BLUE;
-	if (s->connectiontype==0) return GE_UNKNOWNCONNECTIONTYPESTRING;
+	s->ConnectionType=0;
+	if (mystrncasecmp("fbus"	,connection,0)) s->ConnectionType = GCT_FBUS2;
+	if (mystrncasecmp("mbus"	,connection,0)) s->ConnectionType = GCT_MBUS2;
+	if (mystrncasecmp("dlr3"	,connection,0)) s->ConnectionType = GCT_DLR3AT;
+	if (mystrncasecmp("irda"	,connection,0)) s->ConnectionType = GCT_IRDA;
+	if (mystrncasecmp("infrared"	,connection,0)) s->ConnectionType = GCT_INFRARED;
+	if (mystrncasecmp("at19200"	,connection,0)) s->ConnectionType = GCT_AT19200;
+	if (mystrncasecmp("at115200"	,connection,0)) s->ConnectionType = GCT_AT115200;
+	if (mystrncasecmp("atblue"	,connection,0)) s->ConnectionType = GCT_ATBLUE;
+	if (mystrncasecmp("dlr3blue"	,connection,0)) s->ConnectionType = GCT_DLR3BLUE;
+	if (s->ConnectionType==0) return GE_UNKNOWNCONNECTIONTYPESTRING;
 
 	/* We check now if user gave connection type compiled & available
 	 * for used OS (if not, we return, that source not available)
@@ -74,9 +74,15 @@ static void GSM_RegisterModule(GSM_StateMachine *s,GSM_Phone_Functions *phone)
 {
 	/* Auto model */
 	if (s->Config.Model[0] == 0) {
-		if (strstr(phone->models,GetModelData(NULL,s->Model,NULL)->model) != NULL) s->Phone.Functions = phone;
+		if (strstr(phone->models,GetModelData(NULL,s->Model,NULL)->model) != NULL) {
+			smprintf(s,"[Module           - \"%s\"]\n",phone->models);
+			s->Phone.Functions = phone;
+		}
 	} else {
-		if (strstr(phone->models,s->Config.Model) != NULL) s->Phone.Functions = phone;
+		if (strstr(phone->models,s->Config.Model) != NULL) {
+			smprintf(s,"[Module           - \"%s\"]\n",phone->models);
+			s->Phone.Functions = phone;
+		}
 	}
 }
 
@@ -89,7 +95,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 	s->Phone.Functions=NULL;
 #ifdef GSM_ENABLE_ATGEN
 	/* AT module can have the same models ID to "normal" Nokia modules */
-	if (s->connectiontype==GCT_AT19200 || s->connectiontype==GCT_AT115200 || s->connectiontype==GCT_ATBLUE) {
+	if (s->ConnectionType==GCT_AT19200 || s->ConnectionType==GCT_AT115200 || s->ConnectionType==GCT_ATBLUE) {
 		GSM_RegisterModule(s,&ATGENPhone);
 		if (s->Phone.Functions!=NULL) return GE_NONE;
 	}
@@ -142,7 +148,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	s->User.IncomingSMS		  = NULL;
 	s->User.IncomingCB		  = NULL;
 	s->User.SendSMSStatus		  = NULL;
-	s->lockfile			  = NULL;
+	s->LockFile			  = NULL;
 
 	s->di 				  = di;
 	s->di.use_global 		  = s->Config.UseGlobalDebugFile;
@@ -169,51 +175,51 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		smprintf(s,"[OS/compiler      - "
 // Detect some Unix-like OSes:
 #  if defined(linux) || defined(__linux) || defined(__linux__)
-            "Linux"
+		"Linux"
 #  elif defined(__FreeBSD__)
-            "FreeBSD"
+		"FreeBSD"
 #  elif defined(__NetBSD__)
-            "NetBSD"
+		"NetBSD"
 #  elif defined(__OpenBSD__)
-            "OpenBSD"
+		"OpenBSD"
 #  elif defined(__GNU__)
-            "GNU/Hurd"
+		"GNU/Hurd"
 #  elif defined(sun) || defined(__sun) || defined(__sun__)
 #    if defined(__SVR4)
-            "Sun Solaris"
+		"Sun Solaris"
 #    else
-            "SunOS"
+		"SunOS"
 #    endif
 #  elif defined(hpux) || defined(__hpux) || defined(__hpux__)
-            "HP-UX"
+		"HP-UX"
 #  elif defined(ultrix) || defined(__ultrix) || defined(__ultrix__)
-            "DEC Ultrix"
+		"DEC Ultrix"
 #  elif defined(sgi) || defined(__sgi)
-            "SGI Irix"
+		"SGI Irix"
 #  elif defined(__osf__)
-            "OSF Unix"
+		"OSF Unix"
 #  elif defined(bsdi) || defined(__bsdi__)
-            "BSDI Unix"
+		"BSDI Unix"
 #  elif defined(_AIX)
-            "AIX Unix"
+		"AIX Unix"
 #  elif defined(_UNIXWARE)
-            "SCO Unixware"
+		"SCO Unixware"
 #  elif defined(DGUX)
-            "DG Unix"
+		"DG Unix"
 #  elif defined(__QNX__)
-            "QNX"
+		"QNX"
 #  else
-            "Unknown"
-#  endif
+		"Unknown"
+#endif
 // Show info for some compilers:
 #  if defined(__GNUC__)
-		    ", gcc %i.%i]\n", __GNUC__, __GNUC_MINOR__
+		", gcc %i.%i]\n", __GNUC__, __GNUC_MINOR__
 #  elif defined(__SUNPRO_CC)
-		    ", Sun C++ %x]\n", __SUNPRO_CC
+		", Sun C++ %x]\n", __SUNPRO_CC
 #  else
-            "]\n"
+		"]\n"
 #  endif
-            );
+            	);
 #endif
 	}
 	if (s->di.dl==DL_BINARY) {
@@ -228,7 +234,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	if (s->Config.Model[0]==0)
 	{
 		if (mystrncasecmp(s->Config.LockDevice,"yes",0)) {
-			error = lock_device(s->Config.Device, &(s->lockfile));
+			error = lock_device(s->Config.Device, &(s->LockFile));
 			if (error != GE_NONE) return error;
 		}
 
@@ -237,15 +243,17 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		error=s->Device.Functions->OpenDevice(s);
 		if (error!=GE_NONE) return error;
 
+		s->opened = true;
+		opened 	  = true;
+
 		error=s->Protocol.Functions->Initialise(s);
 		if (error!=GE_NONE) return error;
-
-		opened = true;
 
 		/* If still auto model, try to get model by asking phone for it */
 		if (s->Model[0]==0)
 		{
-			switch (s->connectiontype) {
+			smprintf(s,"[Module           - \"auto\"]\n");
+			switch (s->ConnectionType) {
 #ifdef GSM_ENABLE_ATGEN
 				case GCT_AT19200:
 				case GCT_AT115200:
@@ -291,12 +299,14 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	/* We didn't open device earlier ? Make it now */
 	if (!opened) {
 		if (mystrncasecmp(s->Config.LockDevice,"yes",0)) {
-			error = lock_device(s->Config.Device, &(s->lockfile));
+			error = lock_device(s->Config.Device, &(s->LockFile));
 			if (error != GE_NONE) return error;
 		}
 
 		error=s->Device.Functions->OpenDevice(s);
 		if (error!=GE_NONE) return error;
+
+		s->opened = true;
 
 		error=s->Protocol.Functions->Initialise(s);
 		if (error!=GE_NONE) return error;
@@ -317,8 +327,6 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	if (error!=GE_NONE) return error;
 	error=s->Phone.Functions->GetFirmware(s);
 	if (error!=GE_NONE) return error;
-
-	s->opened=true;
 
 	return GE_NONE;
 }
@@ -349,7 +357,6 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 {
 	GSM_Error	error;
 
-	s->opened	= false;
 	s->Model[0]	= 0;
 	s->Ver[0]	= 0;
 	s->VerNum	= 0;
@@ -363,7 +370,9 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 	error = s->Device.Functions->CloseDevice(s);
 	if (error!=GE_NONE) return error;
 	
-	if (s->lockfile!=NULL) unlock_device(&(s->lockfile));
+	if (s->LockFile!=NULL) unlock_device(&(s->LockFile));
+
+	s->opened = false;
 
 	if (!s->di.use_global && s->di.dl!=0 && s->di.df!=stdout) fclose(s->di.df);
 
@@ -657,7 +666,7 @@ static OnePhoneModel allmodels[] = {
 	{"3410" ,"NHM-2" ,"",           {F_RING_SM,F_CAL33,F_PROFILES33,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-	{"3510" ,"NHM-8" ,"",           {0}},
+	{"3510" ,"NHM-8" ,"",           {F_CAL35,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"5110" ,"NSE-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DTMF,F_DISPSTATUS,0}},

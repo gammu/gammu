@@ -1,4 +1,4 @@
-Gammu README version 24.11.2002
+Gammu README version 17.01.2003
 -------------------------------
 Q. What is this ?
 
@@ -263,6 +263,21 @@ A  1. Nokia 3310 (3315):
        are saved. Gammu establish (like normally), that Read/Unread is Inbox
        and other Outbox. It can make such problems, but it's better than
        nothing.
+
+   13. (all DCT4 phones like 6310, 6310i, 3510...). Can't  correctly backup
+       and restore such calendar notes:
+
+       * Birthday with alarm. When set in phone, it always set it (time) to
+         23:59.
+       * Reminders with alarm. Can't get/set alarm time
+       * notes other than Birthday with alarm. Can't get/set alarm type (silent
+         or with tone)
+       * notes with different start date/time than end date/time. Don't have
+         info about end date/time
+
+       Current DCT4 phones with extended (when compare to 62xx/7110) calendar
+       have only such API for accesing calendar like 62xx/7110. This is not
+       Gammu fault. Thank Nokia for it.
    ---------
    TIP: if you want to know more about changes and bugs in firmware in Nokia
         phones, visit www.mwiacek.com and check firmware subpage

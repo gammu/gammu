@@ -208,6 +208,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->PBKSBNR		 = 0;
 	Priv->PBKCharset   	 = 0;
 	Priv->PBKMemories[0]	 = 0;
+	Priv->FirstCalendarPos 	 = 1;
 
 	Priv->ErrorText 	 = NULL;
 
@@ -988,7 +989,7 @@ GSM_Error ATGEN_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms,
 			Priv->LastSMSRead++;
 			break;
 		}
-		if (error != GE_EMPTY) return error;
+		if (error != GE_EMPTY && error != GE_INVALIDLOCATION) return error;
 	}
 	return error;
 }
@@ -2488,12 +2489,6 @@ static GSM_Error ATGEN_CMS35ReplyGetRingtone(GSM_Protocol_Message msg, GSM_Phone
 	return GE_NONE;
 }
 
-static GSM_Error ATGEN_CMS35ReplySetRingtone(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
-{
-	dprintf ("CMS35ReplySetRingtone \n");
-	return GE_NONE;
-}
-
 static GSM_Error ATGEN_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -2507,81 +2502,201 @@ static GSM_Error ATGEN_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetRingtone);
 }
 
-static GSM_Error ATGEN_CMS35ReplyGetCalendar(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+static GSM_Error ATGEN_CMS35ReplySetRingtone(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
-	GSM_Phone_ATGENData 	*Priv 	= &Data->Priv.ATGEN;
-	unsigned char 		buffer[300], tmp_buff[300];
-	int			pos, len;
+	GSM_Phone_ATGENData *Priv = &Data->Priv.ATGEN;
+
+	dprintf ("Written Ringtone");
+  	if (Priv->ReplyState == AT_Reply_OK)
+  	{
+  		dprintf (" - OK\n");
+  		return GE_NONE;
+	} else {
+  		dprintf (" - error\n");
+  		return GE_UNKNOWN;
+	}
+}
+  
+static GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
+{
+	GSM_Phone_ATGENData	*Priv  = &s->Phone.Data.Priv.ATGEN;
+	GSM_Phone_Data		*Phone = &s->Phone.Data;
+	GSM_Error		error;
+	unsigned char 		req[20],req1[500],hexreq[2000];
+	int			MaxFrame,CurrentFrame,size,sz,pos=0;
+	 
+	if (Priv->Manufacturer!=AT_Siemens) return GE_NOTSUPPORTED;
+	s->Phone.Data.Ringtone=Ringtone;
+	 
+	EncodeHexBin(hexreq,Ringtone->NokiaBinary.Frame,Ringtone->NokiaBinary.Length);
+	size 	 = Ringtone->NokiaBinary.Length*2;
+	MaxFrame = size / 352;
+	if (size % 352) MaxFrame++;
+	 
+	for (CurrentFrame=0;CurrentFrame<MaxFrame;CurrentFrame++)
+	{
+		pos=CurrentFrame*352;
+	 	if (pos+352 < size) sz = 352; else sz = size - pos;
+	 
+	 	Phone->DispatchError 	= GE_TIMEOUT;
+	 	Phone->RequestID 	= ID_SetRingtone;
+	 	Phone->Ringtone		= Ringtone;
+		sprintf(req, "AT^SBNW=\"mid\",%i,%i,%i\r",
+	 		Ringtone->Location-1, CurrentFrame+1,MaxFrame);
+	 	error = s->Protocol.Functions->WriteMessage(s, req, strlen(req), 0x00);
+	     	if (error!=GE_NONE) return error;
+		mili_sleep(200);
+	 	    
+	 	memcpy (req1,hexreq+pos,sz);
+	 	    
+	 	error = s->Protocol.Functions->WriteMessage(s, req1, sz, 0x00);
+	 	if (error!=GE_NONE) return error;
+	 
+		error = s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
+	 	if (error!=GE_NONE) return error;
+	 	mili_sleep (500);
+	 	    
+		error = GSM_WaitForOnce(s, NULL, 0x00, 0x00, 4);
+	 	if (error == GE_TIMEOUT) return error;
+	 }
+	 mili_sleep (600);
+	 return Phone->DispatchError;
+}
+
+static GSM_Error ATGEN_CMS35ReplyGetNextCal(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+	GSM_Phone_ATGENData 	*Priv = &Data->Priv.ATGEN;
+	unsigned char 		buffer[354], tmp_buff[354];
+	int			pos, len, no=0;
 
 	if (Priv->ReplyState == AT_Reply_OK) {
 		if (strstr(GetLineString(msg.Buffer,Priv->Lines,2),"OK")) return GE_EMPTY;
-
-	 	DecodeHexBin  (buffer, GetLineString(msg.Buffer,Priv->Lines,3), strlen(GetLineString(msg.Buffer,Priv->Lines,3)));
+	 	DecodeHexBin(buffer, GetLineString(msg.Buffer,Priv->Lines,3), 
+			     strlen(GetLineString(msg.Buffer,Priv->Lines,3)));
+		if (strstr(GetLineString(msg.Buffer,Priv->Lines,4),"^SBNR"))
+		{
+		    DecodeHexBin(tmp_buff, GetLineString(msg.Buffer,Priv->Lines,5), strlen(GetLineString(msg.Buffer,Priv->Lines,5)));
+		    pos = strlen(GetLineString(msg.Buffer,Priv->Lines,3)) / 2;
+		    len = strlen(GetLineString(msg.Buffer,Priv->Lines,5)) / 2;
+		    memcpy (buffer+pos,tmp_buff,len+1);
+		}
  	 	pos = cut_str(buffer,tmp_buff,"CATEGORIES:");
-	 	if (pos) {
-	    		if (strstr(tmp_buff,"MISCELLANEOUS")) 	Data->Calendar->Type=GCN_REMINDER;
-	   		if (strstr(tmp_buff,"MEETING")) 	Data->Calendar->Type=GCN_MEETING;
-	    		if (strstr(tmp_buff,"PHONE CALL"))	Data->Calendar->Type=GCN_CALL;
-	    		if (strstr(tmp_buff,"ANNIVERSARY"))	Data->Calendar->Type=GCN_BIRTHDAY;
+	 	if (pos > -1) {
+	    		if (strstr(tmp_buff,"MISCELLANEOUS"))   Data->Cal->Type=GCN_REMINDER;
+	   		if (strstr(tmp_buff,"MEETING")) 	Data->Cal->Type=GCN_MEETING;
+	    		if (strstr(tmp_buff,"PHONE CALL"))	Data->Cal->Type=GCN_CALL;
+	    		if (strstr(tmp_buff,"ANNIVERSARY"))	Data->Cal->Type=GCN_BIRTHDAY;
 	    	}
-		pos = cut_str (buffer,tmp_buff,"DTSTART:");
-		if (pos) {
-	    		memcpy (tmp_buff,buffer+pos+8,4);
-			tmp_buff[4]='\0';
-	    		Data->Calendar->Time.Year = atoi(tmp_buff);
-	    		memcpy (tmp_buff,buffer+pos+12,2);
-			tmp_buff[2]='\0';
-	    		Data->Calendar->Time.Month = atoi(tmp_buff);
-	    		memcpy (tmp_buff,buffer+pos+14,2);
-			tmp_buff[2]='\0';
-	    		Data->Calendar->Time.Day = atoi(tmp_buff);
-	    		memcpy (tmp_buff,buffer+pos+17,2);
-			tmp_buff[2]='\0';
-	    		Data->Calendar->Time.Hour = atoi(tmp_buff);
-	    		memcpy (tmp_buff,buffer+pos+19,2);
-			tmp_buff[2]='\0';
-	    		Data->Calendar->Time.Minute = atoi(tmp_buff);
-	    		memcpy (tmp_buff,buffer+pos+21,2);
-			tmp_buff[2]='\0';
-	    		Data->Calendar->Time.Second = atoi(tmp_buff);
-	 	}
-
-		pos = cut_str (buffer,tmp_buff,"DALARM:");
-		if (pos) {
-	    		memcpy (tmp_buff,buffer+pos+7,4);
-			tmp_buff[4]='\0';
-	    		Data->Calendar->Alarm.Year= atoi(tmp_buff);
-	    		memcpy (tmp_buff,buffer+pos+11,2);
-			tmp_buff[2]='\0';
-	    		Data->Calendar->Alarm.Month= atoi(tmp_buff);
-	    		memcpy (tmp_buff,buffer+pos+13,2);
-			tmp_buff[2]='\0';
-	    		Data->Calendar->Alarm.Day= atoi(tmp_buff);
-	    		memcpy (tmp_buff,buffer+pos+16,2);
-			tmp_buff[2]='\0';
-	    		Data->Calendar->Alarm.Hour= atoi(tmp_buff);
-	    		memcpy (tmp_buff,buffer+pos+18,2);
-			tmp_buff[2]='\0';
-	    		Data->Calendar->Alarm.Minute= atoi(tmp_buff);
-	    		memcpy (tmp_buff,buffer+pos+20,2);
-			tmp_buff[2]='\0';
-	    		Data->Calendar->Alarm.Second= atoi(tmp_buff);
-	 	}
-    	 	Data->Calendar->Time.Timezone	= 0;  	/* fix me */
-        	Data->Calendar->Alarm.Timezone	= 0; 	/* fix me */
-	 	Data->Calendar->Recurrance	= 0;
-	 	Data->Calendar->SilentAlarm	= false;
-	 	pos = cut_str (buffer,tmp_buff,"DESCRIPTION:");
-	 	if (pos) {
+		pos = cut_str (buffer,tmp_buff,"DESCRIPTION:");
+	 	if (pos > -1) {
 	 		len=strlen(tmp_buff)-13;
 	 		memcpy (tmp_buff,buffer+pos+12,len);
 	 		tmp_buff[len]='\0';
-	 		if (Data->Calendar->Type==GCN_CALL) 
-	     			EncodeUnicode (Data->Calendar->Phone,tmp_buff,strlen(tmp_buff));
-	 		EncodeUnicode (Data->Calendar->Text,tmp_buff,strlen(tmp_buff));
+	 		if (Data->Cal->Type==GCN_CALL) Data->Cal->Entries[no].EntryType=CAL_PHONE;
+			else Data->Cal->Entries[no].EntryType=CAL_TEXT;
+	 		EncodeUnicode (Data->Cal->Entries[no].Text,tmp_buff,strlen(tmp_buff));
+			no++;
+		}
+		pos = cut_str (buffer,tmp_buff,"DTSTART:");
+		if (pos > -1) {
+			Data->Cal->Entries[no].EntryType = CAL_START_DATETIME;
+	    		memcpy (tmp_buff,buffer+pos+8,4);
+			tmp_buff[4]='\0';
+	    		Data->Cal->Entries[no].Date.Year = atoi(tmp_buff);
+	    		memcpy (tmp_buff,buffer+pos+12,2);
+			tmp_buff[2]='\0';
+	    		Data->Cal->Entries[no].Date.Month = atoi(tmp_buff);
+	    		memcpy (tmp_buff,buffer+pos+14,2);
+			tmp_buff[2]='\0';
+	    		Data->Cal->Entries[no].Date.Day = atoi(tmp_buff);
+	    		memcpy (tmp_buff,buffer+pos+17,2);
+			tmp_buff[2]='\0';
+	    		Data->Cal->Entries[no].Date.Hour = atoi(tmp_buff);
+	    		memcpy (tmp_buff,buffer+pos+19,2);
+			tmp_buff[2]='\0';
+	    		Data->Cal->Entries[no].Date.Minute = atoi(tmp_buff);
+	    		memcpy (tmp_buff,buffer+pos+21,2);
+			tmp_buff[2]='\0';
+	    		Data->Cal->Entries[no].Date.Second = atoi(tmp_buff);
+			no++;
 	 	}
+		pos = cut_str (buffer,tmp_buff,"DALARM:");
+		if (pos > -1) {
+			Data->Cal->Entries[no].EntryType = CAL_ALARM_DATETIME;
+	    		memcpy (tmp_buff,buffer+pos+7,4);
+			tmp_buff[4]='\0';
+	    		Data->Cal->Entries[no].Date.Year= atoi(tmp_buff);
+	    		memcpy (tmp_buff,buffer+pos+11,2);
+			tmp_buff[2]='\0';
+	    		Data->Cal->Entries[no].Date.Month= atoi(tmp_buff);
+	    		memcpy (tmp_buff,buffer+pos+13,2);
+			tmp_buff[2]='\0';
+	    		Data->Cal->Entries[no].Date.Day= atoi(tmp_buff);
+	    		memcpy (tmp_buff,buffer+pos+16,2);
+			tmp_buff[2]='\0';
+	    		Data->Cal->Entries[no].Date.Hour= atoi(tmp_buff);
+	    		memcpy (tmp_buff,buffer+pos+18,2);
+			tmp_buff[2]='\0';
+	    		Data->Cal->Entries[no].Date.Minute= atoi(tmp_buff);
+	    		memcpy (tmp_buff,buffer+pos+20,2);
+			tmp_buff[2]='\0';
+	    		Data->Cal->Entries[no].Date.Second= atoi(tmp_buff);
+			no++;			
+	 	}
+		pos = cut_str (buffer,tmp_buff,"RRULE:");
+		if (pos > -1) {
+			if (strstr(tmp_buff,"D1")) 	//daily
+			{
+			    Data->Cal->Entries[no].EntryType 	= CAL_RECURRANCE;
+			    Data->Cal->Entries[no].Number 	= 24;
+			}
+	   		if (strstr(tmp_buff,"D7"))  	//weekly
+			{
+			    Data->Cal->Entries[no].EntryType 	= CAL_RECURRANCE;
+			    Data->Cal->Entries[no].Number 	= 7 * 24;
+			}
+	    		if (strstr(tmp_buff,"MD1"))  	//monthly 
+			{
+			    Data->Cal->Entries[no].EntryType 	= CAL_RECURRANCE;
+			    Data->Cal->Entries[no].Number 	= 30 * 24; //fix-me
+			}
+	    		if (strstr(tmp_buff,"YD1"))  	//yearly
+			{
+			    Data->Cal->Entries[no].EntryType 	= CAL_RECURRANCE;
+			    Data->Cal->Entries[no].Number 	= 365 * 24; //fix-me
+			}
+			no++;			
+	    	}
        	}
-      	return GE_NONE;
+	Data->Cal->EntriesNum = no;
+	return GE_NONE;
+}
+
+static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error		error;
+	unsigned char 		req[32];
+	int			Location;
+
+	if (Priv->Manufacturer!=AT_Siemens) return GE_NOTSUPPORTED;
+
+	if (start) Note->Location=Priv->FirstCalendarPos;
+	s->Phone.Data.Cal 	= Note;
+	Note->EntriesNum 	= 0;
+	dprintf("Getting VCALENDAR\n");
+	Location = Note->Location;
+	while (1)
+	{
+		sprintf(req, "AT^SBNR=\"vcs\",%i\r",Location);  
+		error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetCalendarNote);
+		Location++;
+		Priv->FirstCalendarPos 	= Location;
+		Note->Location 		= Location;
+	  	if (Location > 30) return GE_EMPTY;
+	  	if (error==GE_NONE) return error;
+	}
+	return GE_NONE;
 }
 
 static GSM_Error ATGEN_CMS35ReplySetCalendar(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
@@ -2602,7 +2717,7 @@ static GSM_Error ATGEN_CMS35ReplySetCalendar(GSM_Protocol_Message msg, GSM_Phone
 static GSM_Error ATGEN_CMS35ReplyDeleteCalendar(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	GSM_Phone_ATGENData *Priv = &Data->Priv.ATGEN;
-
+	if (Data->Cal->Location > 30) return GE_UNKNOWN;
 	if (Priv->ReplyState== AT_Reply_OK) {
 		dprintf("Calendar note deleted\n");
 		return GE_NONE;
@@ -2612,44 +2727,38 @@ static GSM_Error ATGEN_CMS35ReplyDeleteCalendar(GSM_Protocol_Message msg, GSM_Ph
 	}
 }
 
-static GSM_Error ATGEN_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarNote *Note)
+static GSM_Error ATGEN_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char 		req[32];
 
 	if (Priv->Manufacturer!=AT_Siemens) return GE_NOTSUPPORTED;
-
-	s->Phone.Data.Calendar=Note;
+	s->Phone.Data.Cal = Note;
 	sprintf(req, "AT^SBNW=\"vcs\",%i,0\r",Note->Location);
 	dprintf("Deleting calendar note\n");
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_DeleteCalendarNote);
 }
 
-static GSM_Error ATGEN_GetCalendarNote(GSM_StateMachine *s, GSM_CalendarNote *Note, bool start)
+static GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
-	unsigned char 		req[32];
 
-	if (Priv->Manufacturer!=AT_Siemens) return GE_NOTSUPPORTED;
-
-	s->Phone.Data.Calendar=Note;
-	sprintf(req, "AT^SBNR=\"vcs\",%i\r",Note->Location);
-	dprintf("Getting VCALENDAR \n");
-	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetCalendarNote);
-}
-
-static GSM_Error ATGEN_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarNote *Note)
-{
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Phone_Data		*Phone = &s->Phone.Data;
 	GSM_Error		error;
-	unsigned char 		req[500], hexreq[500],
-				category[20], datetime[20], description[20];	
-	int			size;
-	
+	unsigned char 		req[500], hexreq[500], category[20], recurr [20],
+				datetime[20], datealarm[20], description[20];
+	int			MaxFrame,CurrentFrame,size,sz,day=0,no=0,pos=0;
+	bool			alarm = false;
+
 	if (Priv->Manufacturer!=AT_Siemens) return GE_NOTSUPPORTED;
 	if (Note->Location==0x00) return GE_INVALIDLOCATION;	
 
+	error = ATGEN_DelCalendar(s, Note);
+    	if (error!=GE_NONE) return error;
+	mili_sleep (500);
+	
+	s->Phone.Data.Cal = Note;
+	
 	switch(Note->Type) {
 		case GCN_REMINDER : sprintf(category,"MISCELLANEOUS"); 	break;
 		case GCN_CALL     : sprintf(category,"PHONE CALL"); 	break;
@@ -2657,32 +2766,82 @@ static GSM_Error ATGEN_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarNote *No
 		case GCN_BIRTHDAY : sprintf(category,"ANNIVERSARY");	break;
 		default		  : sprintf(category,"MISCELLANEOUS");  break;
 	}
-	sprintf(datetime,"%04d%02d%02dT%02d%02d%02d", Note->Time.Year,
-						Note->Time.Month,
-						Note->Time.Day,
-						Note->Time.Hour,
-						Note->Time.Minute,
-						Note->Time.Second);
-	sprintf(description,DecodeUnicodeString(Note->Text));
-	sprintf(req,"BEGIN:VCALENDAR\r\nVERSION:1.0\r\nBEGIN:VEVENT\r\nCATEGORIES:%s\r\nDTSTART:%s\r\nDESCRIPTION:%s\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
-		category,datetime,description); 
-	size=strlen(req);
+	recurr[0] = '\0';
+	
+	while (no < Note->EntriesNum) {
+	switch (Note->Entries[no].EntryType) {
+	    case CAL_ALARM_DATETIME:
+	        sprintf(datealarm,"%04d%02d%02dT%02d%02d%02d", Note->Entries[no].Date.Year,
+							Note->Entries[no].Date.Month,
+							Note->Entries[no].Date.Day,
+							Note->Entries[no].Date.Hour,
+							Note->Entries[no].Date.Minute,
+							Note->Entries[no].Date.Second);
+		alarm = true;
+		break;
+	    case CAL_START_DATETIME:
+	        sprintf(datetime,"%04d%02d%02dT%02d%02d%02d", Note->Entries[no].Date.Year,
+							Note->Entries[no].Date.Month,
+							Note->Entries[no].Date.Day,
+							Note->Entries[no].Date.Hour,
+							Note->Entries[no].Date.Minute,
+							Note->Entries[no].Date.Second);
+		day = Note->Entries[no].Date.Day;
+		break;
+	    case CAL_TEXT:
+	        sprintf(description,DecodeUnicodeString(Note->Entries[no].Text));
+	        break;
+	    case CAL_RECURRANCE:
+		switch (Note->Entries[no].Number){
+		    case 24: 		sprintf (recurr,"RRULE:D1\r\n"); break;
+		    case (7*24): 	sprintf (recurr,"RRULE:D7\r\n"); break;
+		    case (30*24):	sprintf (recurr,"RRULE:MD1 %02d\r\n",day); break;
+		    case (365*24): 	sprintf (recurr,"RRULE:YD1\r\n"); break;
+		    default: break;
+		}
+		break;
+	    default: break;
+	    }
+	    no++;
+	}
+	
+	
+	if (alarm)
+	 sprintf(req,"BEGIN:VCALENDAR\r\nVERSION:1.0\r\nBEGIN:VEVENT\r\nCATEGORIES:%s\r\nDALARM:%s\r\nDTSTART:%s\r\n%sDESCRIPTION:%s\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
+		 category,datealarm,datetime,recurr,description); 
+	else 
+	 sprintf(req,"BEGIN:VCALENDAR\r\nVERSION:1.0\r\nBEGIN:VEVENT\r\nCATEGORIES:%s\r\nDTSTART:%s\r\n%sDESCRIPTION:%s\r\nEND:VEVENT\r\nEND:VCALENDAR\r\n",
+		 category,datetime,recurr,description);
+	size = strlen(req);
 	EncodeHexBin(hexreq,req,size);
-	sprintf(req,"AT^SBNW=\"vcs\",%d,1,1\r",Note->Location);
-	Phone->DispatchError 	= GE_TIMEOUT;
-	Phone->RequestID 	= ID_SetCalendarNote;
-	Phone->Calendar 	= Note;
-	error = s->Protocol.Functions->WriteMessage(s, req, strlen(req), 0x00);
-    	if (error!=GE_NONE) return error;
-	mili_sleep(100);
-	error = s->Protocol.Functions->WriteMessage(s, hexreq, size*2, 0x00);
-	if (error!=GE_NONE) return error;
-	error = s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
-	if (error!=GE_NONE) return error;
-	error = GSM_WaitForOnce(s, NULL, 0x00, 0x00, 4);
-	if (error != GE_TIMEOUT) return error;
+	size = size * 2;
 
-	return Phone->DispatchError;
+	MaxFrame = size / 352;
+	if (size % 352) MaxFrame++;
+	 
+	for (CurrentFrame=0;CurrentFrame<MaxFrame;CurrentFrame++)
+	{
+		pos=CurrentFrame*352;
+	 	if (pos+352 < size) sz = 352; else sz = size - pos;
+	 
+	 	sprintf(req,"AT^SBNW=\"vcs\",%i,%i,%i\r",
+			Note->Location,CurrentFrame+1,MaxFrame);
+
+		Phone->DispatchError 	= GE_TIMEOUT;
+    		Phone->RequestID 	= ID_SetCalendarNote;
+		Phone->Cal = Note;
+		error = s->Protocol.Functions->WriteMessage(s, req, strlen(req), 0x00);
+    		if (error!=GE_NONE) return error;
+		mili_sleep (200);
+    		error = s->Protocol.Functions->WriteMessage(s, hexreq+pos, sz, 0x00);
+		if (error!=GE_NONE) return error;
+		error = s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
+		if (error!=GE_NONE) return error;
+	 	mili_sleep (600);
+		error = GSM_WaitForOnce(s, NULL, 0x00, 0x00, 4);
+	 	if (error == GE_TIMEOUT) return error;
+	 }
+	 return Phone->DispatchError;
 }
 
 GSM_Reply_Function ATGENReplyFunctions[] = {
@@ -2724,11 +2883,11 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_SL45ReplyGetMemory,	"AT^SBNR"		,0x00,0x00,ID_GetMemory		 },
 {ATGEN_CMS35ReplyGetBitmap,	"AT^SBNR=\"bmp\""	,0x00,0x00,ID_GetBitmap	 	 },
 {ATGEN_CMS35ReplySetBitmap,	"AT^SBNW=\"bmp\""	,0x00,0x00,ID_SetBitmap	 	 },
-{ATGEN_CMS35ReplyGetCalendar,	"AT^SBNR=\"vcs\""	,0x00,0x00,ID_GetCalendarNote 	 },
-{ATGEN_CMS35ReplySetCalendar,	"AT^SBNW=\"vcs\""	,0x00,0x00,ID_SetCalendarNote 	 },
-{ATGEN_CMS35ReplyDeleteCalendar,"AT^SBNW=\"vcs\""	,0x00,0x00,ID_DeleteCalendarNote },
 {ATGEN_CMS35ReplyGetRingtone,	"AT^SBNR=\"mid\""	,0x00,0x00,ID_GetRingtone	 },
 {ATGEN_CMS35ReplySetRingtone,	"AT^SBNW=\"mid\""	,0x00,0x00,ID_SetRingtone	 },
+{ATGEN_CMS35ReplyGetNextCal,	"AT^SBNR=\"vcs\""	,0x00,0x00,ID_GetCalendarNote	 },
+{ATGEN_CMS35ReplySetCalendar,	"AT^SBNW=\"vcs\""	,0x00,0x00,ID_SetCalendarNote	 },
+{ATGEN_CMS35ReplyDeleteCalendar,"AT^SBNW=\"vcs\""	,0x00,0x00,ID_DeleteCalendarNote },
 {ATGEN_ReplyEnterSecurityCode,	"AT+CPIN="		,0x00,0x00,ID_EnterSecurityCode	 },
 {ATGEN_ReplyEnterSecurityCode,	"AT+CPIN2="		,0x00,0x00,ID_EnterSecurityCode	 },
 {ATGEN_ReplyGetSecurityStatus,	"AT+CPIN?"		,0x00,0x00,ID_GetSecurityStatus	 },
@@ -2751,7 +2910,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
  *  some AT commands to start it's binary mode, so this needs to be in AT
  *  related stuff. 
  *
- *  XXX: AT+IFC could later move outside this ifdef, bacause it is not Alcatel
+ *  XXX: AT+IFC could later move outside this ifdef, because it is not Alcatel
  *  specific and it's part of ETSI specifications 
  */
 {ATGEN_GenericReply,		"AT+IFC" 	 	,0x00,0x00,   ID_SetFlowControl},
@@ -2809,10 +2968,9 @@ GSM_Phone_Functions ATGENPhone = {
 	ATGEN_AnswerCall,
 	ATGEN_CancelCall,
 	ATGEN_GetRingtone,
-	ATGEN_GetCalendarNote,
 	NOTSUPPORTED,		/*	GetWAPBookmark		*/
 	NOTSUPPORTED,		/*	GetBitmap		*/
-	NOTSUPPORTED,		/*	SetRingtone		*/
+	ATGEN_SetRingtone,
 	ATGEN_SaveSMSMessage,
 	ATGEN_SendSMSMessage,
 	ATGEN_SetDateTime,
@@ -2820,8 +2978,6 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,		/*	SetBitmap		*/
 	ATGEN_SetMemory,
 	ATGEN_DeleteSMSMessage,
-	ATGEN_DeleteCalendar,
-	ATGEN_SetCalendarNote,
 	NOTSUPPORTED,		/* 	SetWAPBookmark 		*/
 	NOTSUPPORTED,	 	/* 	DeleteWAPBookmark 	*/
 	NOTSUPPORTED,		/* 	GetWAPSettings 		*/
@@ -2851,9 +3007,10 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED, 		/*	SetProfile		*/
 	ATGEN_GetSIMIMSI,
 	NONEFUNCTION,		/*	SetIncomingCall		*/
-	NOTIMPLEMENTED		/*	GetNextCalendarNote	*/
+    	ATGEN_GetNextCalendar,
+	ATGEN_DelCalendar,	/*	DelCalendar		*/
+	ATGEN_AddCalendarNote	/*	AddCalendar		*/
 };
 
 #endif
-
 

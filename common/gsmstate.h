@@ -344,7 +344,7 @@ typedef struct {
 	int			*BatteryLevel;
 	GSM_NetworkInfo		*NetworkInfo;
 	GSM_Ringtone		*Ringtone;
-	GSM_CalendarNote	*Calendar;
+	GSM_CalendarEntry	*Cal;
 	unsigned char		*SecurityCode;
 	GSM_WAPBookmark		*WAPBookmark;
 	GSM_MultiWAPSettings	*WAPSettings;
@@ -433,7 +433,6 @@ typedef struct {
 	GSM_Error (*AnswerCall)		(GSM_StateMachine *s);                     
 	GSM_Error (*CancelCall)		(GSM_StateMachine *s);
 	GSM_Error (*GetRingtone)	(GSM_StateMachine *s, GSM_Ringtone 	    *Ringtone,	bool 	PhoneRingtone);
-	GSM_Error (*GetCalendarNote)	(GSM_StateMachine *s, GSM_CalendarNote	    *Note,	bool	start		);
 	GSM_Error (*GetWAPBookmark)	(GSM_StateMachine *s, GSM_WAPBookmark	    *bookmark	);
 	GSM_Error (*GetBitmap)		(GSM_StateMachine *s, GSM_Bitmap	    *Bitmap	);
 	GSM_Error (*SetRingtone)	(GSM_StateMachine *s, GSM_Ringtone	    *Ringtone,	int 	*maxlength	);
@@ -444,8 +443,6 @@ typedef struct {
 	GSM_Error (*SetBitmap)		(GSM_StateMachine *s, GSM_Bitmap	    *Bitmap	);
 	GSM_Error (*SetMemory)		(GSM_StateMachine *s, GSM_PhonebookEntry    *entry	);
 	GSM_Error (*DeleteSMS)		(GSM_StateMachine *s, GSM_SMSMessage	    *sms	);
-	GSM_Error (*DeleteCalendarNote)	(GSM_StateMachine *s, GSM_CalendarNote	    *Note	);
-	GSM_Error (*SetCalendarNote)	(GSM_StateMachine *s, GSM_CalendarNote	    *Note	);
 	GSM_Error (*SetWAPBookmark)	(GSM_StateMachine *s, GSM_WAPBookmark	    *bookmark	);
 	GSM_Error (*DeleteWAPBookmark)	(GSM_StateMachine *s, GSM_WAPBookmark	    *bookmark	);
 	GSM_Error (*GetWAPSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
@@ -475,7 +472,9 @@ typedef struct {
 	GSM_Error (*SetProfile)		(GSM_StateMachine *s, GSM_Profile	    *Profile	);
 	GSM_Error (*GetSIMIMSI)		(GSM_StateMachine *s, char		    *IMSI	);
 	GSM_Error (*SetIncomingCall)	(GSM_StateMachine *s, bool		    enable	);
-	GSM_Error (*GetNextCalendarNote)(GSM_StateMachine *s, GSM_CalendarNote	    *Note,	bool	start		);
+	GSM_Error (*GetNextCalendarNote)(GSM_StateMachine *s, GSM_CalendarEntry	    *Note,	bool	start		);
+	GSM_Error (*DeleteCalendar)	(GSM_StateMachine *s, GSM_CalendarEntry     *Note	);
+	GSM_Error (*AddCalendarNote)	(GSM_StateMachine *s, GSM_CalendarEntry	    *Note);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;
@@ -551,8 +550,8 @@ typedef struct {
 } GSM_Config;
 
 struct _GSM_StateMachine {
-	GSM_ConnectionType 	connectiontype;    /* Type of connection as int			*/
-	char			*lockfile; 	   /* Lock file name for Unix 			*/
+	GSM_ConnectionType 	ConnectionType;    /* Type of connection as int			*/
+	char			*LockFile; 	   /* Lock file name for Unix 			*/
 	Debug_Info		di;
 	bool			opened;		   /* Is connection opened ?			*/
 	char			Model[50];	   /* Real connected phone model 		*/
@@ -615,8 +614,10 @@ typedef enum {
 	F_PROFILES51,	/* Phone profiles in 5110 style					*/
 	F_MAGICBYTES,	/* Phone can make authentication with magic bytes		*/
 	F_DTMF,		/* Phone can send DTMF						*/
-	F_DISPSTATUS	/* Phone return display status					*/
-} Feature6110;
+	F_DISPSTATUS,	/* Phone return display status					*/
+
+	F_CAL35		/* Reminders in calendar saved in 3510 style			*/
+} Feature61_65;
 
 /* For models table */
 typedef struct {

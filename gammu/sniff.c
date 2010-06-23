@@ -218,7 +218,7 @@ static int				NetworkLevel;
 static int				BatteryLevel;
 static GSM_NetworkInfo			NetworkInfo;
 static GSM_Ringtone			Ringtone;
-static GSM_CalendarNote			Calendar;
+static GSM_CalendarEntry			Calendar;
 static char				SecurityCode;
 static GSM_WAPBookmark			WAPBookmark;
 static GSM_Bitmap			Bitmap;
@@ -248,7 +248,7 @@ static void prepareStateMachine()
 	Phone->NetworkInfo		= &NetworkInfo;
 	Phone->Ringtone			= &Ringtone;
 	Phone->Ringtone->Format		= RING_NOKIABINARY;
-	Phone->Calendar			= &Calendar;
+	Phone->Cal				= &Calendar;
 	Phone->SecurityCode		= &SecurityCode;
 	Phone->WAPBookmark		= &WAPBookmark;
 	Phone->Bitmap			= &Bitmap;

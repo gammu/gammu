@@ -42,7 +42,7 @@ type GSM_Error = (
 
 const
 	GSM_MAX_SMSC_NAME_LENGTH	= 30;
-	GSM_MAX_SMS_NAME_LENGTH		= 26;
+	GSM_MAX_SMS_NAME_LENGTH		= 40;
 	GSM_MAX_NUMBER_LENGTH		= 50;
 
 	GSM_MAX_UDH_LENGTH		= 140;
@@ -206,7 +206,8 @@ type
 	PGSM_SMSMemoryStatus = ^GSM_SMSMemoryStatus;
 
         GSM_SecurityCodeType = (
-                GSCT_SecurityCode = 1, 		// Security code.
+		GSCT_UNKNOWN,
+                GSCT_SecurityCode, 		// Security code.
                 GSCT_Pin,                 	// PIN.
                 GSCT_Pin2,                	// PIN 2.
                 GSCT_Puk,                 	// PUK.

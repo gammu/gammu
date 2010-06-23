@@ -22,9 +22,9 @@ GSM_Error CheckDCT4Only()
 #endif
 	if (!found) return GE_NOTSUPPORTED;
 
-	if (s.connectiontype!=GCT_FBUS2	   && s.connectiontype!=GCT_MBUS2  &&
-	    s.connectiontype!=GCT_INFRARED && s.connectiontype!=GCT_DLR3AT &&
-	    s.connectiontype!=GCT_IRDA)
+	if (s.ConnectionType!=GCT_FBUS2	   && s.ConnectionType!=GCT_MBUS2  &&
+	    s.ConnectionType!=GCT_INFRARED && s.ConnectionType!=GCT_DLR3AT &&
+	    s.ConnectionType!=GCT_IRDA)
 	{
 		return GE_UNKNOWNCONNECTIONTYPESTRING;
 	}

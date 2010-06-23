@@ -284,7 +284,6 @@ GSM_Phone_Functions N9210Phone = {
 	DCT3_AnswerCall,
 	DCT3_CancelCall,
 	NOTIMPLEMENTED,		/*	GetRingtone		*/
-	NOTIMPLEMENTED,		/*	GetCalendarNote		*/
 	NOTIMPLEMENTED,		/*	GetWAPBookmark		*/
 	N9210_GetBitmap,
 	NOTIMPLEMENTED,		/*	SetRingtone		*/
@@ -295,8 +294,6 @@ GSM_Phone_Functions N9210Phone = {
 	N9210_SetBitmap,
 	NOTIMPLEMENTED,		/* 	SetMemory 		*/
 	NOTIMPLEMENTED,		/* 	DeleteSMS 		*/
-	NOTIMPLEMENTED,		/* 	DeleteCalendarNote 	*/
-	NOTIMPLEMENTED, 	/* 	SetCalendarNote 	*/
 	NOTIMPLEMENTED,		/* 	SetWAPBookmark 		*/
 	NOTIMPLEMENTED, 	/* 	DeleteWAPBookmark 	*/
 	NOTIMPLEMENTED,		/* 	GetWAPSettings 		*/
@@ -326,7 +323,9 @@ GSM_Phone_Functions N9210Phone = {
 	NOTSUPPORTED, 		/*	SetProfile		*/
 	NOTSUPPORTED,		/*	GetSIMIMSI		*/
 	NONEFUNCTION,		/*	SetIncomingCall		*/
-    	NOTSUPPORTED		/*  	GetNextCalendarNote	*/
+    	NOTSUPPORTED,		/*  	GetNextCalendar		*/
+	NOTSUPPORTED,		/*	DelCalendar		*/
+	NOTSUPPORTED		/*	AddCalendar		*/
 };
 
 #endif

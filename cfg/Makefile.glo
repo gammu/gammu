@@ -105,7 +105,7 @@ distclean: makelocale clean
 uninstall:
 	@echo Uninstalling Gammu
 	@$(RM) $(DESTDIR)$(INSTALL_BIN_DIR)/gammu $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so
-	@$(RM) $(DESTDIR)$(INSTALL_MAN_DIR)/man1/gammu.1
+	@$(RM) $(DESTDIR)$(INSTALL_MAN_DIR)/gammu.1
 	@$(RM) -r $(DESTDIR)$(INSTALL_DOC_DIR)/
 
 installdocs:
@@ -124,7 +124,7 @@ installdocs:
 	@$(INSTALL) -m 0666 $(TOPDIR)/copying $(DESTDIR)$(INSTALL_DOC_DIR)
 	@echo Installing man to $(DESTDIR)$(INSTALL_MAN_DIR)
 	@$(INSTALL) -d $(DESTDIR)$(INSTALL_MAN_DIR)
-	@$(INSTALL) -m 0666 $(TOPDIR)/docs/docs/english/gammu.1 $(DESTDIR)$(INSTALL_MAN_DIR)/man1
+	@$(INSTALL) -m 0666 $(TOPDIR)/docs/docs/english/gammu.1 $(DESTDIR)$(INSTALL_MAN_DIR)
 	@$(RM) $(DESTDIR)$(INSTALL_DOC_DIR)/docs/english/gammu.1
 	
 install: uninstall all installdocs installonly

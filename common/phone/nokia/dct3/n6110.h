@@ -9,6 +9,7 @@ typedef struct {
 #ifdef GSM_ENABLE_6110_AUTHENTICATION
 	unsigned char			MagicBytes[4];
 #endif
+	int				LastCalendarPos;
 	GSM_SMSMemoryStatus		LastSMSStatus;
 	int				LastSMSRead;
 	DCT3_WAPSettings_Locations	WAPLocations;

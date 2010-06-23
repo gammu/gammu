@@ -697,6 +697,17 @@ static GSM_Error loadbin(FILE *file, GSM_Ringtone *ringtone)
 	return GE_NONE;
 }
 
+static GSM_Error loadpuremidi(FILE *file, GSM_Ringtone *ringtone)
+{
+	unsigned char	buffer[1024];
+
+	dprintf("loading midi\n");
+	ringtone->NokiaBinary.Length=fread(buffer, 1, 1024, file);
+	memcpy(ringtone->NokiaBinary.Frame,buffer,ringtone->NokiaBinary.Length);
+	dprintf("Length %i name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
+	return GE_NONE;
+}
+
 static GSM_Error loadre(FILE *file, GSM_Ringtone *ringtone)
 {
 	unsigned char buffer[2000];
@@ -742,6 +753,12 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 		{
 			ringtone->Format = RING_NOKIABINARY;
 		}
+		if (buffer[0]==0x4D && buffer[1]==0x54 &&
+		    buffer[2]==0x68 && buffer[3]==0x64)
+		{
+			ringtone->Format = RING_MIDI;
+		}
+
 
 	}
 	rewind(file);
@@ -769,8 +786,8 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 		}
 		break;
 	case RING_MIDI:
-		error = GE_NOTSUPPORTED;
-		break;
+		EncodeUnicode(ringtone->Name,FileName,strlen(FileName));
+		error = loadpuremidi(file,ringtone);
 	}
 	fclose(file);
 	return(error);

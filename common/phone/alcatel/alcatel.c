@@ -1089,7 +1089,17 @@ static GSM_Error ALCATEL_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
     return ATGEN_GetSIMIMSI(s, IMSI);
 }
 
-static GSM_Error ALCATEL_GetCalendarNote (GSM_StateMachine *s, GSM_CalendarNote *Note, bool start)
+static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_DateTime *alarm, int alarm_number)
+{
+    GSM_Error error;
+
+    if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= GE_NONE) return error;
+    if ((error = ALCATEL_GetAvailableIds(s))!= GE_NONE) return error;
+    /* TODO: do the real setting */
+    return GE_WORKINPROGRESS;
+}
+
+static GSM_Error ALCATEL_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
     GSM_Error error;
 
@@ -1101,16 +1111,7 @@ static GSM_Error ALCATEL_GetCalendarNote (GSM_StateMachine *s, GSM_CalendarNote 
     return GE_WORKINPROGRESS;
 }
 
-static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_DateTime *alarm, int alarm_number)
-{
-    GSM_Error error;
-
-    if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= GE_NONE) return error;
-    if ((error = ALCATEL_GetAvailableIds(s))!= GE_NONE) return error;
-    /* TODO: do the real setting */
-    return GE_WORKINPROGRESS;
-}
-static GSM_Error ALCATEL_DeleteCalendarNote  (GSM_StateMachine *s, GSM_CalendarNote *Note)
+static GSM_Error ALCATEL_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
     GSM_Error error;
 
@@ -1120,7 +1121,7 @@ static GSM_Error ALCATEL_DeleteCalendarNote  (GSM_StateMachine *s, GSM_CalendarN
     return GE_WORKINPROGRESS;
 }
 
-static GSM_Error ALCATEL_SetCalendarNote (GSM_StateMachine *s, GSM_CalendarNote *Note)
+static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
     GSM_Error error;
 
@@ -1264,7 +1265,6 @@ GSM_Phone_Functions ALCATELPhone = {
     ALCATEL_AnswerCall,
     ALCATEL_CancelCall,
     NOTSUPPORTED,               /*  GetRingtone         */
-    ALCATEL_GetCalendarNote,
     NOTSUPPORTED,               /*  GetWAPBookmark      */
     NOTSUPPORTED,               /*  GetBitmap           */
     NOTSUPPORTED,               /*  SetRingtone         */
@@ -1275,8 +1275,6 @@ GSM_Phone_Functions ALCATELPhone = {
     NOTSUPPORTED,               /*  SetBitmap           */
     ALCATEL_SetMemory,
     ALCATEL_DeleteSMSMessage,
-    ALCATEL_DeleteCalendarNote,
-    ALCATEL_SetCalendarNote,
     NOTSUPPORTED,               /*  SetWAPBookmark      */
     NOTSUPPORTED,               /*  DeleteWAPBookmark   */
     NOTSUPPORTED,               /*  GetWAPSettings      */
@@ -1306,7 +1304,9 @@ GSM_Phone_Functions ALCATELPhone = {
     NOTSUPPORTED,               /*  SetProfile          */
     ALCATEL_GetSIMIMSI,
     NONEFUNCTION,               /*  SetIncomingCall     */
-    NOTIMPLEMENTED		/*  GetNextCalendarNote	*/
+    ALCATEL_GetNextCalendar,
+    ALCATEL_DelCalendar,
+    ALCATEL_AddCalendar
 };
 
 #endif

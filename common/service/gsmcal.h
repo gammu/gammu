@@ -3,6 +3,11 @@
 
 #include "../gsmcomon.h"
 
+/* ---------------------------- calendar ----------------------------------- */
+
+#define GSM_CALENDAR_ENTRIES		10
+#define MAX_CALENDAR_TEXT_LENGTH	257*2 /* In 6310 max. 256 chars */
+
 /* Define enums for Calendar Note types */
 typedef enum {
 	GCN_REMINDER=1, /* Reminder 		     */
@@ -30,22 +35,34 @@ typedef enum {
         GCN_T_WINT      /* Training - Winter Games   */
 } GSM_CalendarNoteType;
 
-#define MAX_CALENDAR_TEXT_LENGTH	257*2 /* In 6310 max. 256 chars */
-#define MAX_CALENDAR_PHONE_LENGTH	72
+typedef enum {
+	CAL_START_DATETIME = 1,
+	CAL_ALARM_DATETIME,
+	CAL_SILENT_ALARM_DATETIME,
+	CAL_RECURRANCE,
+	CAL_TEXT,
+	CAL_PHONE
+} GSM_CalendarType;
 
-/* Calendar note type */
 typedef struct {
-	int			Location;	/* The number of the note in the phone memory */
-	GSM_CalendarNoteType	Type;		/* The type of the note */
-	GSM_DateTime		Time;		/* The time of the note */
-	GSM_DateTime		Alarm;		/* The alarm of the note */
-	unsigned char		Text [MAX_CALENDAR_TEXT_LENGTH];	/* The text of the note */
-  	unsigned char		Phone[MAX_CALENDAR_PHONE_LENGTH];	/* For Call only: the phone number */
-	int			Recurrance;	/* after how many hours note repeats. 0x0000 = No Repeat */
-	bool			SilentAlarm;	/* Silent/Tone alarm */
-} GSM_CalendarNote;
+	GSM_CalendarType       	EntryType;
+	unsigned char       	Text[MAX_CALENDAR_TEXT_LENGTH];
+	GSM_DateTime        	Date;
+	int         		Number;
+} GSM_SubCalendarEntry;
 
-void NOKIA_EncodeVCALENDAR10SMSText(char *Buffer, int *Length, GSM_CalendarNote note);
+typedef struct {
+	GSM_CalendarNoteType	Type;
+	int 			Location;           /* Location */
+	int 			EntriesNum;         /* Number of entries */
+	GSM_SubCalendarEntry   	Entries[GSM_CALENDAR_ENTRIES];
+} GSM_CalendarEntry;
+
+void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance);
+
+GSM_Error NOKIA_EncodeVCALENDAR10SMSText(char *Buffer, int *Length, GSM_CalendarEntry note);
+
+/* ------------------------------ to-do ------------------------------------ */
 
 typedef enum {
 	GSM_Priority_Low = 1,

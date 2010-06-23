@@ -4,6 +4,51 @@ ChangeLog for Gammu project (www.mwiacek.com)
 Few last versions (the highest) will be described more detailed, older less.
 In brackets names of people, who told about error/problem or helped in fixing.
 ----------------------
+20030126 - 0.67
+* new functionality:
+  * added --clearall (cleaning pbk, calendar, wap bookmarks
+    and todo from phone)
+  * added --addnew (adding new calendar, wap bookmarks      (Tomasz Motylewski)
+    and todo from backup file without deleting existing)
+  * added support for Siemens MIDI ringtones                            (Walek)
+  * added support for empty SMS names for 6210
+
+* fixes and improvements:
+  * fixed reading SMS for AT mode and Nokia phones
+  * removed incorrect reference to man dir (it made problems during
+    installing)
+  * win32 dll is more stable in many situations
+  * added info about used phone module to logs
+  * rewritten getting SMS folder names for DCT4 (compatible with 3510
+    3.37)
+  * setting WAP things and getting profiles disabled for 3510 4.24 now.
+    Phone restarts very often after using it. Reason unknown.
+  * maximal length of SMS name is 40 chars
+  * rewritten calendar structures to more portable
+  * made very deep look into calendar in N62xx/71xx and DCT4 phones.
+    There are two ways to access it. Gammu can support them both. However
+    they make sometimes problems:
+
+    * with method 1 can't get/set some calendar notes in 3510 3.37
+    * with method 2 can't get some notes from 6210 (probably firmware here
+      uses some a little different coding)
+
+    I decided, that for setting will be used always method 2, for getting
+    method 1 (for 62xx/71xx) or method 2 (for DCT4).
+
+    Please note, that both method 1 and method 2 have problems in DCT4 with
+    such notes like (tested on 6310i 5.10 and 3510 3.37):
+
+    * Birthday with alarm. When set in phone, it always set it (time) to
+      23:59.
+    * Reminders with alarm. Can't get/set alarm time
+    * notes other than Birthday with alarm. Can't get/set alarm type (silent
+      or with tone)
+    * notes with different start date/time than end date/time. Don't have
+      info in frames about end date/time
+
+    and this is not Gammu fault !
+    
 20030105 - 0.66
 * new functionality:
   * some (started) functions for Siemens like support for VCalendar     (Walek)

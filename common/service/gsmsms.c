@@ -802,12 +802,13 @@ static void GSM_EncodeSMS30MultiPartSMS(GSM_EncodeMultiPartSMSInfo *Info,
 	}
 }
 
-void GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
-			    GSM_MultiSMSMessage		*SMS)
+GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
+			    	 GSM_MultiSMSMessage		*SMS)
 {
 	unsigned char	Buffer[GSM_MAX_SMS_LENGTH*2*MAX_MULTI_SMS];
 	unsigned char	Buffer2[GSM_MAX_SMS_LENGTH*2*MAX_MULTI_SMS];
 	int		Length = 0,smslen;
+	GSM_Error	error;
 
 	GSM_Coding_Type Coding 	= GSM_Coding_8bit;
 	int		Class	= -1;
@@ -905,7 +906,8 @@ void GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
 	case SMS_NokiaVCALENDAR10Long:
-		NOKIA_EncodeVCALENDAR10SMSText(Buffer,&Length,*Info->Calendar);
+		error=NOKIA_EncodeVCALENDAR10SMSText(Buffer,&Length,*Info->Calendar);
+		if (error != GE_NONE) return error;
 		/* Is 1 SMS ? 8 = length of ..SCKE4 */
 		if (Length<=GSM_MAX_SMS_LENGTH-8) {
 			sprintf(Buffer,"//SCKE4 ");  
@@ -1066,6 +1068,7 @@ void GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		break;
 	}
 	GSM_MakeMultiPartSMS(SMS,Buffer,Length,UDH,Coding,Class,Info->ReplaceMessage);
+	return GE_NONE;
 }
 
 void GSM_ClearMultiPartSMSInfo(GSM_EncodeMultiPartSMSInfo *Info)

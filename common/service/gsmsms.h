@@ -136,7 +136,7 @@ typedef enum {
 	/*...*/
 } GSM_SMSMessageType;
 
-#define GSM_MAX_SMS_NAME_LENGTH		26
+#define GSM_MAX_SMS_NAME_LENGTH		40
 
 typedef struct {
 	GSM_SMSC		SMSC;					/* Message center */
@@ -309,7 +309,7 @@ typedef struct {
 	GSM_WAPBookmark		*Bookmark;
 	GSM_WAPSettings		*Settings;
 	GSM_PhonebookEntry	*Phonebook;
-	GSM_CalendarNote	*Calendar;
+	GSM_CalendarEntry	*Calendar;
 	unsigned char		*Buffer;
 	bool			UnicodeCoding;
 	int			Class;
@@ -319,9 +319,9 @@ typedef struct {
 	int			RingtoneNotes;
 } GSM_EncodeMultiPartSMSInfo;
 
-void GSM_EncodeMultiPartSMS	(GSM_EncodeMultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS);
-bool GSM_DecodeMultiPartSMS	(GSM_EncodeMultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS);
-void GSM_ClearMultiPartSMSInfo	(GSM_EncodeMultiPartSMSInfo *Info);
+GSM_Error GSM_EncodeMultiPartSMS	(GSM_EncodeMultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS);
+bool 	  GSM_DecodeMultiPartSMS	(GSM_EncodeMultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS);
+void 	  GSM_ClearMultiPartSMSInfo	(GSM_EncodeMultiPartSMSInfo *Info);
 
 GSM_Error GSM_SortSMS(GSM_MultiSMSMessage *INPUT[200], GSM_MultiSMSMessage *OUTPUT[200]);
 

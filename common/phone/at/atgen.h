@@ -12,7 +12,7 @@
 #ifndef GSM_USED_ATBLUETOOTH
 #  define GSM_USED_ATBLUETOOTH
 #endif
-
+#define MAX_VCALENDAR_LOCATION 30
 typedef enum {
 	SMS_AT_PDU = 1,
 	SMS_AT_TXT
@@ -66,6 +66,7 @@ typedef struct {
 
 	GSM_SMSMemoryStatus	LastSMSStatus;
 	int			LastSMSRead;
+	int			FirstCalendarPos;
 	GSM_AT_PHONE_SMSMemory	PhoneSMSMemory;	  /* Is phone SMS memory available ? 		*/
 	GSM_MemoryType		SMSMemory;	  /* Last read SMS memory 			*/
 	GSM_AT_SMS_Modes	SMSMode;	  /* PDU or TEXT mode for SMS ? 		*/

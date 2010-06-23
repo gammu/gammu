@@ -1046,20 +1046,18 @@ static void Reset(int argc, char *argv[])
 
 static void GetCalendarNotes(int argc, char *argv[])
 {
-#ifdef DEBUG
-	GSM_CalendarNote	Note;
-	bool			refresh=true;
-	int			i_age;
-	GSM_DateTime		DateTime;
+	GSM_CalendarEntry	Note;
+	bool			refresh	= true;
+	int			i_age	= 0,i;
+	GSM_DateTime		Alarm,DateTime;
 
 	GSM_Init(true);
 
-	error = GE_NONE;
 	while (1) {
 		error=Phone->GetNextCalendarNote(&s,&Note,refresh);
 		if (error == GE_EMPTY) break;
 		Print_Error(error);
-		printmsg("Note type  : ");
+		printmsg("Note type    : ");
 		switch (Note.Type) {
 			case GCN_REMINDER : printmsg("Reminder\n");		   break;
 			case GCN_CALL     : printmsg("Call\n");			   break;
@@ -1086,143 +1084,47 @@ static void GetCalendarNotes(int argc, char *argv[])
 	                case GCN_T_WINT   : printmsg("Training/Winter Games\n");   break;
 			default           : printmsg("UNKNOWN\n");
 		}
-		printmsg("Time       : %s\n",OSDateTime (Note.Time,false));
-		if (Note.Alarm.Year!=0) {
-			printmsg("Alarm time : %s\n",OSDateTime(Note.Alarm,false));
-			printmsg("Alarm type : ");
-			if (Note.SilentAlarm) printmsg("silent\n");
-					 else printmsg("with tone\n");
-		}
-		if (Note.Recurrance!=0) {
-			printmsg("Repeat     : %d day%s\n",Note.Recurrance/24,
-				((Note.Recurrance/24)>1) ? "s":"" );
+		Alarm.Year = 0;
+		for (i=0;i<Note.EntriesNum;i++) {
+			switch (Note.Entries[i].EntryType) {
+			case CAL_START_DATETIME:
+				printmsg("Start        : %s\n",OSDateTime(Note.Entries[i].Date,false));
+				memcpy(&DateTime,&Note.Entries[i].Date,sizeof(GSM_DateTime));
+				break;
+			case CAL_ALARM_DATETIME:
+				printmsg("Tone alarm   : %s\n",OSDateTime(Note.Entries[i].Date,false));
+				memcpy(&Alarm,&Note.Entries[i].Date,sizeof(GSM_DateTime));
+				break;
+			case CAL_SILENT_ALARM_DATETIME:
+				printmsg("Silent alarm : %s\n",OSDateTime(Note.Entries[i].Date,false));
+				memcpy(&Alarm,&Note.Entries[i].Date,sizeof(GSM_DateTime));
+				break;
+			case CAL_RECURRANCE:
+				printmsg("Repeat       : %d day%s\n",Note.Entries[i].Number/24,
+					((Note.Entries[i].Number/24)>1) ? "s":"" );
+				break;
+			case CAL_TEXT:
+				printmsg("Text         : \"%s\"\n",DecodeUnicodeString(Note.Entries[i].Text));
+				break;
+			case CAL_PHONE:
+				printmsg("Phone        : \"%s\"\n",DecodeUnicodeString(Note.Entries[i].Text));
+				break;               
+			}
 		}
 		if (Note.Type == GCN_BIRTHDAY) {
-			if (Note.Alarm.Year == 0x00) {
-				GSM_GetCurrentDateTime (&DateTime);
-				memcpy(&Note.Alarm,&DateTime,sizeof(GSM_DateTime));
+			if (Alarm.Year == 0x00) GSM_GetCurrentDateTime (&Alarm);
+			if (DateTime.Year != 0) {
+				i_age = Alarm.Year - DateTime.Year;
+				if (DateTime.Month < Alarm.Month) i_age++;
+				if (DateTime.Month == Alarm.Month &&
+			    	    DateTime.Day < Alarm.Day) {
+					i_age++;
+				}
+				printmsg("Age          : %d %s\n",i_age, (i_age==1)?"year":"years");
 			}
-			i_age = Note.Alarm.Year - Note.Time.Year;
-			if (Note.Time.Month < Note.Alarm.Month) {
-				i_age++;
-			}
-			if (Note.Time.Month == Note.Alarm.Month &&
-			    Note.Time.Day < Note.Alarm.Day) {
-				i_age++;
-			}
-			printmsg("Text       : \"%s\"",DecodeUnicodeString(Note.Text));
-			printmsg(" (%d %s)\n",i_age, (i_age==1)?"year":"years");
-		} else {
-			printmsg("Text       : \"%s\"",DecodeUnicodeString(Note.Text));
-			printmsg("\n");
-		}
-		if (Note.Type == GCN_CALL) {
-			printmsg("Phone      : \"%s\"\n",DecodeUnicodeString(Note.Phone));
 		}
 		printmsg("\n");
 		refresh=false;
-	}
-
-	GSM_Terminate();
-#endif
-}
-
-static void GetCalendarNote(int argc, char *argv[])
-{
-	GSM_CalendarNote	Note;
-	int			start,stop;
-	bool			refresh=true;
-	int			i_age;
-	GSM_DateTime		DateTime;
-
-	GetStartStop(&start, &stop, 2, argc, argv);
-
-	GSM_Init(true);
-
-	for (i=start;i<=stop;i++) {
-		Note.Location=i;
-		error=Phone->GetCalendarNote(&s,&Note,refresh);
-		Print_Error(error);
-		printmsg("Note type  : ");
-		switch (Note.Type) {
-			case GCN_REMINDER : printmsg("Reminder\n");		   break;
-			case GCN_CALL     : printmsg("Call\n");			   break;
-			case GCN_MEETING  : printmsg("Meeting\n");		   break;
-			case GCN_BIRTHDAY : printmsg("Birthday\n");		   break;
-			case GCN_T_ATHL   : printmsg("Training/Athletism\n"); 	   break;
-        		case GCN_T_BALL   : printmsg("Training/Ball Games\n"); 	   break;
-	                case GCN_T_CYCL   : printmsg("Training/Cycling\n"); 	   break;
-	                case GCN_T_BUDO   : printmsg("Training/Budo\n"); 	   break;
-	                case GCN_T_DANC   : printmsg("Training/Dance\n"); 	   break;
-	                case GCN_T_EXTR   : printmsg("Training/Extreme Sports\n"); break;
-	                case GCN_T_FOOT   : printmsg("Training/Football\n"); 	   break;
-	                case GCN_T_GOLF   : printmsg("Training/Golf\n"); 	   break;
-	                case GCN_T_GYM    : printmsg("Training/Gym\n"); 	   break;
-	                case GCN_T_HORS   : printmsg("Training/Horse Races\n");    break;
-	                case GCN_T_HOCK   : printmsg("Training/Hockey\n"); 	   break;
-	                case GCN_T_RACE   : printmsg("Training/Races\n"); 	   break;
-	                case GCN_T_RUGB   : printmsg("Training/Rugby\n"); 	   break;
-	                case GCN_T_SAIL   : printmsg("Training/Sailing\n"); 	   break;
-	                case GCN_T_STRE   : printmsg("Training/Street Games\n");   break;
-	                case GCN_T_SWIM   : printmsg("Training/Swimming\n"); 	   break;
-	                case GCN_T_TENN   : printmsg("Training/Tennis\n"); 	   break;
-	                case GCN_T_TRAV   : printmsg("Training/Travels\n");        break;
-	                case GCN_T_WINT   : printmsg("Training/Winter Games\n");   break;
-			default           : printmsg("UNKNOWN\n");
-		}
-		printmsg("Time       : %s\n",OSDateTime (Note.Time,false));
-		if (Note.Alarm.Year!=0) {
-			printmsg("Alarm time : %s\n",OSDateTime(Note.Alarm,false));
-			printmsg("Alarm type : ");
-			if (Note.SilentAlarm) printmsg("silent\n");
-					 else printmsg("with tone\n");
-		}
-		if (Note.Recurrance!=0) {
-			printmsg("Repeat     : %d day%s\n",Note.Recurrance/24,
-				((Note.Recurrance/24)>1) ? "s":"" );
-		}
-		if (Note.Type == GCN_BIRTHDAY) {
-			if (Note.Alarm.Year == 0x00) {
-				GSM_GetCurrentDateTime (&DateTime);
-				memcpy(&Note.Alarm,&DateTime,sizeof(GSM_DateTime));
-			}
-			i_age = Note.Alarm.Year - Note.Time.Year;
-			if (Note.Time.Month < Note.Alarm.Month) {
-				i_age++;
-			}
-			if (Note.Time.Month == Note.Alarm.Month &&
-			    Note.Time.Day < Note.Alarm.Day) {
-				i_age++;
-			}
-			printmsg("Text       : \"%s\"",DecodeUnicodeString(Note.Text));
-			printmsg(" (%d %s)\n",i_age, (i_age==1)?"year":"years");
-		} else {
-			printmsg("Text       : \"%s\"",DecodeUnicodeString(Note.Text));
-			printmsg("\n");
-		}
-		if (Note.Type == GCN_CALL) {
-			printmsg("Phone      : \"%s\"\n",DecodeUnicodeString(Note.Phone));
-		}
-		printmsg("\n");
-		refresh=false;
-	}
-
-	GSM_Terminate();
-}
-
-static void DeleteCalendarNote(int argc, char *argv[])
-{
-	GSM_CalendarNote	Note;
-	int			start,stop;
-
-	GetStartStop(&start, &stop, 2, argc, argv);
-
-	GSM_Init(true);
-
-	for (i=start;i<=stop;i++) {
-		Note.Location=i;
-		error=Phone->DeleteCalendarNote(&s,&Note);
-		Print_Error(error);
 	}
 
 	GSM_Terminate();
@@ -2131,7 +2033,8 @@ static void SendSaveSMS(int argc, char *argv[])
 		}
 	}
 
-	GSM_EncodeMultiPartSMS(&SMSInfo,&sms);
+	error=GSM_EncodeMultiPartSMS(&SMSInfo,&sms);
+	Print_Error(error);
 
 	switch (SMSInfo.ID) {
 		case SMS_NokiaRingtone:
@@ -2206,7 +2109,7 @@ static void Backup(int argc, char *argv[])
 	GSM_MemoryStatus	MemStatus;
 	GSM_TODO		ToDo;
 	GSM_PhonebookEntry	Pbk;
-	GSM_CalendarNote	Note;
+	GSM_CalendarEntry	Note;
 	GSM_Bitmap		Bitmap;
 	GSM_WAPBookmark		Bookmark;
 	GSM_Profile		Profile;
@@ -2322,15 +2225,14 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.Calendar) {
-		Note.Location = 1;
-		error=Phone->GetCalendarNote(&s,&Note,true);
+		error=Phone->GetNextCalendarNote(&s,&Note,true);
 		if (error==GE_NONE) {
 			if (answer_yes("Backup calendar notes")) {
 				used = 0;
 				printmsgerr("Reading : ");
 				while (error == GE_NONE) {
 					if (used < GSM_BACKUP_MAX_CALENDAR) {
-						Backup.Calendar[used] = malloc(sizeof(GSM_CalendarNote));
+						Backup.Calendar[used] = malloc(sizeof(GSM_CalendarEntry));
 					        if (Backup.Calendar[used] == NULL) Print_Error(GE_MOREMEMORY);
 						Backup.Calendar[used+1] = NULL;
 					} else {
@@ -2339,8 +2241,7 @@ static void Backup(int argc, char *argv[])
 					}
 					*Backup.Calendar[used]=Note;
 					used ++;
-					Note.Location = used+1;
-					error=Phone->GetCalendarNote(&s,&Note,false);
+					error=Phone->GetNextCalendarNote(&s,&Note,false);
 					printmsgerr("*");
 					if (bshutdown) {
 						GSM_Terminate();
@@ -2602,7 +2503,7 @@ static void Restore(int argc, char *argv[])
 {
 	GSM_Backup		Backup;
 	GSM_DateTime 		date_time;
-	GSM_CalendarNote	Calendar;
+	GSM_CalendarEntry	Calendar;
 	GSM_Bitmap		Bitmap;
 	GSM_Ringtone		Ringtone;
 	GSM_PhonebookEntry	Pbk;
@@ -2720,13 +2621,14 @@ static void Restore(int argc, char *argv[])
 		Print_Error(error);
 	}
 	if (Backup.Calendar[0] != NULL) {
-		Calendar.Location = 1;
-		error = Phone->GetCalendarNote(&s,&Calendar,true);
+		error = Phone->GetNextCalendarNote(&s,&Calendar,true);
 		if (error == GE_NONE || error == GE_INVALIDLOCATION || error == GE_EMPTY) {
 			if (answer_yes("Restore calendar notes")) {
 				printmsgerr("Deleting old notes: ");
 				while (error==GE_NONE) {
-					error = Phone->DeleteCalendarNote(&s,&Calendar);
+					error = Phone->GetNextCalendarNote(&s,&Calendar,true);
+					if (error != GE_NONE) break;
+					error = Phone->DeleteCalendar(&s,&Calendar);
 					printmsgerr("*");
 				}
 				printmsgerr("\n");
@@ -2734,7 +2636,7 @@ static void Restore(int argc, char *argv[])
 				while (Backup.Calendar[max]!=NULL) max++;
 				for (i=0;i<max;i++) {
 					Calendar = *Backup.Calendar[i];
-					error=Phone->SetCalendarNote(&s,&Calendar);
+					error=Phone->AddCalendarNote(&s,&Calendar);
 					Print_Error(error);
 					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 					if (bshutdown) {
@@ -2822,7 +2724,7 @@ static void Restore(int argc, char *argv[])
 				max = 0;
 				while (Backup.WAPBookmark[max]!=NULL) max++;
 				for (i=0;i<max;i++) {
-					Bookmark = *Backup.WAPBookmark[i];
+					Bookmark 	  = *Backup.WAPBookmark[i];
 					Bookmark.Location = 0;
 					error=Phone->SetWAPBookmark(&s,&Bookmark);
 					Print_Error(error);
@@ -2903,7 +2805,250 @@ static void Restore(int argc, char *argv[])
 
 	GSM_Terminate();
 }
+
+static void AddNew(int argc, char *argv[])
+{
+	GSM_Backup		Backup;
+	GSM_DateTime 		date_time;
+	GSM_CalendarEntry	Calendar;
+//	GSM_PhonebookEntry	Pbk;
+//	GSM_MemoryStatus	MemStatus;
+	GSM_TODO		ToDo;
+	GSM_WAPBookmark		Bookmark;
+	int			i, max;
+
+	error=GSM_ReadBackupFile(argv[2],&Backup);
+	Print_Error(error);
+
+	/* We do not want to make it forever - press Ctrl+C to stop */
+	signal(SIGINT, interrupted);
+	printmsgerr("If you want break, press Ctrl+C...\n");
+
+	if (Backup.DateTime[0]!=0) 	printmsgerr("Time of backup : %s\n",Backup.DateTime);
+	if (Backup.Model[0]!=0) 	printmsgerr("Phone          : %s\n",Backup.Model);
+	if (Backup.IMEI[0]!=0) 		printmsgerr("IMEI           : %s\n",Backup.IMEI);
+
+	GSM_Init(true);
+
+//	if (Backup.PhonePhonebook[0] != NULL) {
+//		MemStatus.MemoryType = GMT_ME;
+//		error=Phone->GetMemoryStatus(&s, &MemStatus);
+//		if (error==GE_NONE) {
+//			max = 0;
+//			while (Backup.PhonePhonebook[max]!=NULL) max++;
+//			printmsgerr("%i entries in backup file\n",max);
+//			if (answer_yes("Add phone phonebook entries")) {
+//				for (i=0;i<max;i++) {
+//					Pbk 		= *Backup.PhonePhonebook[i];
+//					Pbk.MemoryType 	= GMT_ME;
+//					Pbk.Location	= 0;
+//					error=Phone->SetMemory(&s, &Pbk);
+//					Print_Error(error);
+//					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+//					if (bshutdown) {
+//						GSM_Terminate();
+//						exit(0);
+//					}
+//				}
+//				printmsgerr("\n");
+//			}
+//		}
+//	}
+//	if (Backup.SIMPhonebook[0] != NULL) {
+//		MemStatus.MemoryType = GMT_SM;
+//		error=Phone->GetMemoryStatus(&s, &MemStatus);
+//		if (error==GE_NONE) {
+//			max = 0;
+//			while (Backup.SIMPhonebook[max]!=NULL) max++;
+//			printmsgerr("%i entries in backup file\n",max);
+//			if (answer_yes("Add SIM phonebook entries")) {
+//				for (i=0;i<max;i++) {
+//					Pbk 		= *Backup.SIMPhonebook[i];
+//					Pbk.MemoryType 	= GMT_SM;
+//					Pbk.Location	= 0;
+//					error=Phone->SetMemory(&s, &Pbk);
+//					Print_Error(error);
+//					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+//					if (bshutdown) {
+//						GSM_Terminate();
+//						exit(0);
+//					}
+//				}
+//				printmsgerr("\n");
+//			}
+//		}
+//	}
+	if (answer_yes("Do you want to set date/time in phone (NOTE: in some phones it's required to correctly restore calendar notes and other items)")) {
+		GSM_GetCurrentDateTime(&date_time);
+
+		error=Phone->SetDateTime(&s, &date_time);
+		Print_Error(error);
+	}
+	if (Backup.Calendar[0] != NULL) {
+		error = Phone->GetNextCalendarNote(&s,&Calendar,true);
+		if (error == GE_NONE || error == GE_INVALIDLOCATION || error == GE_EMPTY) {
+			if (answer_yes("Add calendar notes")) {
+				max = 0;
+				while (Backup.Calendar[max]!=NULL) max++;
+				for (i=0;i<max;i++) {
+					Calendar = *Backup.Calendar[i];
+					error=Phone->AddCalendarNote(&s,&Calendar);
+					Print_Error(error);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+					if (bshutdown) {
+						GSM_Terminate();
+						exit(0);
+					}
+				}
+				printmsgerr("\n");
+			}
+		}
+	}
+	if (Backup.ToDo[0] != NULL) {
+		ToDo.Location = 1;
+		error = Phone->GetToDo(&s,&ToDo,true);
+		if (error == GE_NONE || error == GE_INVALIDLOCATION) {
+			if (answer_yes("Add ToDo")) {
+				max = 0;
+				while (Backup.ToDo[max]!=NULL) max++;
+				for (i=0;i<max;i++) {
+					ToDo 		= *Backup.ToDo[i];
+					ToDo.Location 	= 0;
+					error=Phone->SetToDo(&s,&ToDo);
+					Print_Error(error);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+					if (bshutdown) {
+						GSM_Terminate();
+						exit(0);
+					}
+				}
+				printmsgerr("\n");
+			}
+		}
+	}
+	if (Backup.WAPBookmark[0] != NULL) {
+		Bookmark.Location = 1;
+		error = Phone->GetWAPBookmark(&s,&Bookmark);
+		if (error == GE_NONE || error == GE_INVALIDLOCATION) {
+			if (answer_yes("Add WAP bookmarks")) {
+				max = 0;
+				while (Backup.WAPBookmark[max]!=NULL) max++;
+				for (i=0;i<max;i++) {
+					Bookmark 	  = *Backup.WAPBookmark[i];
+					Bookmark.Location = 0;
+					error=Phone->SetWAPBookmark(&s,&Bookmark);
+					Print_Error(error);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+					if (bshutdown) {
+						GSM_Terminate();
+						exit(0);
+					}
+				}
+				printmsgerr("\n");
+			}
+		}
+	}
+
+	GSM_Terminate();
+}
 #endif
+
+static void ClearAll(int argc, char *argv[])
+{
+	GSM_CalendarEntry	Calendar;
+	GSM_PhonebookEntry	Pbk;
+	GSM_MemoryStatus	MemStatus;
+	GSM_TODO		ToDo;
+	GSM_WAPBookmark		Bookmark;
+
+	GSM_Init(true);
+
+	MemStatus.MemoryType = GMT_ME;
+	error=Phone->GetMemoryStatus(&s, &MemStatus);
+	if (error==GE_NONE && MemStatus.Used !=0) {
+		if (answer_yes("Delete phone phonebook")) {
+			for (i=0;i<MemStatus.Used+MemStatus.Free;i++)
+			{
+				Pbk.MemoryType 	= GMT_ME;
+				Pbk.Location	= i + 1;
+				Pbk.EntriesNum	= 0;
+				error=Phone->SetMemory(&s, &Pbk);
+				Print_Error(error);
+				printmsgerr("%cWriting: %i percent",13,(i+1)*100/(MemStatus.Used+MemStatus.Free));
+				if (bshutdown) {
+					GSM_Terminate();
+					exit(0);
+				}
+			}
+			printmsgerr("\n");
+		}
+	}
+	MemStatus.MemoryType = GMT_SM;
+	error=Phone->GetMemoryStatus(&s, &MemStatus);
+	if (error==GE_NONE && MemStatus.Used !=0) {
+		if (answer_yes("Delete SIM phonebook")) {
+			for (i=0;i<MemStatus.Used+MemStatus.Free;i++)
+			{
+				Pbk.MemoryType 	= GMT_SM;
+				Pbk.Location	= i + 1;
+				Pbk.EntriesNum	= 0;
+				error=Phone->SetMemory(&s, &Pbk);
+				Print_Error(error);
+				printmsgerr("%cWriting: %i percent",13,(i+1)*100/(MemStatus.Used+MemStatus.Free));
+				if (bshutdown) {
+					GSM_Terminate();
+					exit(0);
+				}
+			}
+			printmsgerr("\n");
+		}
+	}
+	error = Phone->GetNextCalendarNote(&s,&Calendar,true);
+	if (error == GE_NONE || error == GE_INVALIDLOCATION || error == GE_EMPTY) {
+		if (answer_yes("Delete calendar notes")) {
+			printmsgerr("Deleting : ");
+			while (error==GE_NONE) {
+				error = Phone->GetNextCalendarNote(&s,&Calendar,true);
+				if (error != GE_NONE) break;
+				error = Phone->DeleteCalendar(&s,&Calendar);
+				printmsgerr("*");
+			}
+			printmsgerr("\n");
+		}
+	}
+	ToDo.Location = 1;
+	error = Phone->GetToDo(&s,&ToDo,true);
+	if (error == GE_NONE || error == GE_INVALIDLOCATION) {
+		if (answer_yes("Delete ToDo")) {
+			printmsgerr("Deleting: ");
+			error=Phone->DeleteAllToDo(&s);
+			Print_Error(error);
+			printmsgerr("Done\n");
+		}
+	}
+	Bookmark.Location = 1;
+	error = Phone->GetWAPBookmark(&s,&Bookmark);
+	if (error == GE_NONE || error == GE_INVALIDLOCATION) {
+		if (answer_yes("Delete WAP bookmarks")) {
+			printmsgerr("Deleting: ");
+			/* One thing to explain: DCT4 phones seems to have bug here.
+			 * When delete for example first bookmark, phone change
+			 * numeration for getting frame, not for deleting. So, we try to
+			 * get 1'st bookmark. Inside frame is "correct" location. We use
+			 * it later
+			 */
+			while (error==GE_NONE) {
+				error = Phone->DeleteWAPBookmark(&s,&Bookmark);
+				Bookmark.Location = 1;
+				error = Phone->GetWAPBookmark(&s,&Bookmark);
+				printmsgerr("*");
+			}
+			printmsgerr("\n");
+		}
+	}
+
+	GSM_Terminate();
+}
 
 static void GetWAPSettings(int argc, char *argv[])
 {
@@ -3881,8 +4026,7 @@ static void usage(void)
 	printf("gammu --cancelcall\n\n");
 
 	printf("gammu --gettodo start [stop]\n");
-	printf("gammu --getcalendarnote start [stop]\n");
-	printf("gammu --deletecalendarnote start [stop]\n\n");
+	printf("gammu --getcalendarnotes\n\n");
 
 	printf("gammu --getwapbookmark start [stop]\n");
 	printf("gammu --deletewapbookmark start [stop]\n");
@@ -4038,7 +4182,11 @@ static void usage(void)
 	printf("gammu --backupsms file\n");
 	printf("gammu --restore file\n");
 	printf("gammu --restoresms file\n");
+	printf("gammu --addnew file\n");
+#else
+	printf("\n");
 #endif
+	printf("gammu --clearall\n");
 
 #ifdef DEBUG
 	printf("\ngammu --decodesniff MBUS2|IRDA file [phonemodel]\n");
@@ -4072,6 +4220,7 @@ static GSM_Parameters Parameters[] = {
 	{"--playringtone",		1, 1, PlayRingtone 		},
 	{"--setautonetworklogin",	0, 0, SetAutoNetworkLogin	},
 	{"--getdisplaystatus",		0, 0, GetDisplayStatus		},
+	{"--clearall",			0, 0, ClearAll			},
 	{"--senddtmf",			1, 1, SendDTMF			},
 	{"--getdatetime",		0, 0, GetDateTime		},
 	{"--setdatetime",		0, 0, SetDateTime		},
@@ -4096,10 +4245,8 @@ static GSM_Parameters Parameters[] = {
 	{"--dialvoice",			1, 1, DialVoice			},
 	{"--cancelcall",		0, 0, CancelCall		},
 	{"--answercall",		0, 0, AnswerCall		},
-	{"--getcalendarnote",		1, 2, GetCalendarNote		},
 	{"--getcalendarnotes",		0, 0, GetCalendarNotes		},
 	{"--gettodo",			1, 2, GetToDo			},
-	{"--deletecalendarnote",	1, 2, DeleteCalendarNote	},
 	{"--reset",			1, 1, Reset			},
 	{"--getprofile",		1, 2, GetProfile		},
 	{"--getsecuritystatus",		0, 0, GetSecurityStatus		},
@@ -4116,6 +4263,7 @@ static GSM_Parameters Parameters[] = {
 	{"--backup",			1, 1, Backup			},
 	{"--backupsms",			1, 1, BackupSMS			},
 	{"--restore",			1, 1, Restore			},
+	{"--addnew",			1, 1, AddNew			},
 	{"--restoresms",		1, 1, RestoreSMS		},
 #endif
 	{"--copybitmap",		1, 3, CopyBitmap		},

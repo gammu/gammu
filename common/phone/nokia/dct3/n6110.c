@@ -146,8 +146,8 @@ static GSM_Error N6110_Initialise (GSM_StateMachine *s)
 
 #ifdef GSM_ENABLE_6110_AUTHENTICATION
 	if (IsPhoneFeatureAvailable(s->Phone.Data.Model, F_MAGICBYTES)) {
-		if (s->connectiontype == GCT_FBUS2 ||
-		    s->connectiontype == GCT_INFRARED) {
+		if (s->ConnectionType == GCT_FBUS2 ||
+		    s->ConnectionType == GCT_INFRARED) {
 			error=N6110_MakeAuthentication(s);
 			if (error!=GE_NONE) return error;
 		}
@@ -1088,178 +1088,6 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	return GE_NOTSUPPORTED;
 }
 
-/* for example: "Euro_char" text */
-static void Decode3310Subset3(int j, GSM_Protocol_Message msg, GSM_Phone_Data *Data)
-{
-	wchar_t wc;
-	int	len = 0;
-	int 	i;
-	bool	charfound;
-
-	i = j;
-	while (i!=msg.Buffer[23]) {
-		EncodeWithUnicodeAlphabet(msg.Buffer+24+i,&wc);
-		charfound = false;
-		if (i!=msg.Buffer[23]-2) {
-			if (msg.Buffer[24+i]  ==0xe2 && msg.Buffer[24+i+1]==0x82 &&
-			    msg.Buffer[24+i+2]==0xac) {
-				wc = 0x20 * 256 + 0xac;
-				i+=2;
-				charfound = true;
-			}
-		}
-		if (i!=msg.Buffer[23]-1 && !charfound) {
-			if (msg.Buffer[24+i]>=0xc2) {
-				wc = DecodeWithUTF8Alphabet(msg.Buffer[24+i],msg.Buffer[24+i+1]);
-				i++;
-			}
-		}
-		Data->Calendar->Text[len++] = (wc >> 8) & 0xff;
-		Data->Calendar->Text[len++] = wc & 0xff;
-		i++;
-	}
-	Data->Calendar->Text[len++] = 0;
-	Data->Calendar->Text[len++] = 0;
-}
-
-/* For example: "a with : above" char */
-static void Decode3310Subset2(int j, GSM_Protocol_Message msg, GSM_Phone_Data *Data)
-{
-	int	len = 0;
-	int 	i;
-
-	i = j;
-	while (i!=msg.Buffer[23]) {
-		Data->Calendar->Text[len++] = 0x00;
-		Data->Calendar->Text[len++] = msg.Buffer[24+i];
-		i++;
-	}
-	Data->Calendar->Text[len++] = 0;
-	Data->Calendar->Text[len++] = 0;
-}
-
-static GSM_Error N6110_ReplyGetCalendarNote(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
-{
-	int	i = 0;
-	bool	SpecialSubSet = false;
-
-	switch (msg.Buffer[4]) {
-	case 0x01:
-		dprintf("Calendar note received\n");
-		switch (msg.Buffer[8]) {
-			case 0x01: Data->Calendar->Type = GCN_REMINDER;	break;
-			case 0x02: Data->Calendar->Type = GCN_CALL;	break;
-			case 0x03: Data->Calendar->Type = GCN_MEETING;	break;
-			case 0x04: Data->Calendar->Type = GCN_BIRTHDAY;	break;
-	                case 0x05: Data->Calendar->Type = GCN_T_ATHL;   break;
-	                case 0x06: Data->Calendar->Type = GCN_T_BALL;   break;
-	                case 0x07: Data->Calendar->Type = GCN_T_CYCL;   break;
-	                case 0x08: Data->Calendar->Type = GCN_T_BUDO;   break;
-	                case 0x09: Data->Calendar->Type = GCN_T_DANC;   break;
-	                case 0x0a: Data->Calendar->Type = GCN_T_EXTR;   break;
-	                case 0x0b: Data->Calendar->Type = GCN_T_FOOT;   break;
-	                case 0x0c: Data->Calendar->Type = GCN_T_GOLF;   break;
-	                case 0x0d: Data->Calendar->Type = GCN_T_GYM;    break;
-	                case 0x0e: Data->Calendar->Type = GCN_T_HORS;   break;
-	                case 0x0f: Data->Calendar->Type = GCN_T_HOCK;   break;
-	                case 0x10: Data->Calendar->Type = GCN_T_RACE;   break;
-	                case 0x11: Data->Calendar->Type = GCN_T_RUGB;   break;
-	                case 0x12: Data->Calendar->Type = GCN_T_SAIL;   break;
-	                case 0x13: Data->Calendar->Type = GCN_T_STRE;   break;
-	                case 0x14: Data->Calendar->Type = GCN_T_SWIM;   break;
-	                case 0x15: Data->Calendar->Type = GCN_T_TENN;   break;
-	                case 0x16: Data->Calendar->Type = GCN_T_TRAV;   break;
-	                case 0x17: Data->Calendar->Type = GCN_T_WINT;   break;
-			default  :
-				dprintf("Unknown note type %i\n",msg.Buffer[8]);
-				return GE_UNKNOWNRESPONSE;
-		}
-#ifdef DEBUG
-		switch (msg.Buffer[8]) {
-			case 0x01: dprintf("Reminder\n");	break;
-			case 0x02: dprintf("Call\n");		break;
-			case 0x03: dprintf("Meeting\n");	break;
-			case 0x04: dprintf("Birthday\n");	break;
-		}
-#endif
-		NOKIA_DecodeDateTime(msg.Buffer+9, &Data->Calendar->Time);
-		dprintf("Time        : %02i-%02i-%04i %02i:%02i:%02i\n",
-			Data->Calendar->Time.Day,Data->Calendar->Time.Month,Data->Calendar->Time.Year,
-			Data->Calendar->Time.Hour,Data->Calendar->Time.Minute,Data->Calendar->Time.Second);
-		NOKIA_DecodeDateTime(msg.Buffer+16, &Data->Calendar->Alarm);
-#ifdef DEBUG
-		if (Data->Calendar->Alarm.Year!=0) {
-			dprintf("Alarm       : %02i-%02i-%04i %02i:%02i:%02i\n",
-				Data->Calendar->Alarm.Day,Data->Calendar->Alarm.Month,Data->Calendar->Alarm.Year,
-				Data->Calendar->Alarm.Hour,Data->Calendar->Alarm.Minute,Data->Calendar->Alarm.Second);
-		} else {
-			dprintf("No alarm\n");
-		}
-#endif
-		if (IsPhoneFeatureAvailable(Data->Model,F_CAL52) ||
-		    IsPhoneFeatureAvailable(Data->Model,F_CAL82)) {
-			memcpy(Data->Calendar->Text,msg.Buffer+24,msg.Buffer[23]);
-			Data->Calendar->Text[msg.Buffer[23]  ]=0;
-			Data->Calendar->Text[msg.Buffer[23]+1]=0;
-			dprintf("Text \"%s\"\n",DecodeUnicodeString(Data->Calendar->Text));
-		} else {
-			if (IsPhoneFeatureAvailable(Data->Model,F_CAL33))
-			{
-				/* first char is subset for 33xx and reminders */
-				if (Data->Calendar->Type == GCN_REMINDER) {
-					i=1;
-					dprintf("Subset %i in reminder note !\n",msg.Buffer[24]);
-				}
-				SpecialSubSet = true;
-				switch (msg.Buffer[24]) {
-					case 2  : Decode3310Subset2(i,msg,Data); break;
-					case 3  : Decode3310Subset3(i,msg,Data); break;
-					default : SpecialSubSet = false;	 break;
-				}
-			}
-			if (!SpecialSubSet) {
-				EncodeUnicode(Data->Calendar->Text,msg.Buffer+24+i,msg.Buffer[23]-i);
-			}
-			dprintf("Text       : \"%s\"\n",DecodeUnicodeString(Data->Calendar->Text));
-		}
-		if (Data->Calendar->Type == GCN_CALL)
-		{
-			EncodeUnicode(Data->Calendar->Phone,msg.Buffer+24+msg.Buffer[23]+1,msg.Buffer[24+msg.Buffer[23]]);
-			dprintf("Phone       : \"%s\"\n",DecodeUnicodeString(Data->Calendar->Phone));
-		}
-		Data->Calendar->Recurrance	= 0;
-		Data->Calendar->SilentAlarm	= false;
-		return GE_NONE;
-	case 0x93:
-		dprintf("Can't get calendar note - too high location?\n");
-		return GE_INVALIDLOCATION;
-	}
-	return GE_UNKNOWNRESPONSE;
-}
-
-static GSM_Error N6110_GetCalendarNote(GSM_StateMachine *s, GSM_CalendarNote *Note, bool start)
-{
-	GSM_Error	error;
-	GSM_DateTime	date_time;
-	unsigned char 	req[] = {
-		N6110_FRAME_HEADER, 0x66,
-		0x00};		/* Location */
-
-	if (IsPhoneFeatureAvailable(s->Model, F_NOCALENDAR)) return GE_NOTSUPPORTED;
-
-	req[4]=Note->Location;
-
-	s->Phone.Data.Calendar=Note;
-	dprintf("Getting calendar note\n");
-	error=GSM_WaitFor (s, req, 5, 0x13, 4, ID_GetCalendarNote);
-	/* 2090 year is set for example in 3310 */
-	if (error == GE_NONE && Note->Time.Year == 2090) {
-		error=N6110_GetDateTime(s, &date_time);
-		if (error == GE_NONE) Note->Time.Year = date_time.Year;
-	}
-	return error;
-}
-
 static GSM_Error N6110_ReplyCallInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 #ifdef DEBUG
@@ -1388,180 +1216,6 @@ static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 
 	dprintf("Writing phonebook entry\n");
 	return GSM_WaitFor (s, req, current, 0x03, 4, ID_SetMemory);
-}
-
-static GSM_Error N6110_ReplySetCalendarNote(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
-{
-	dprintf("Written Calendar Note ");
-	switch (msg.Buffer[4]) {
-		case 0x01:
-			dprintf("- OK\n");
-			return GE_NONE;
-		case 0x73:
-		case 0x7d:
-			dprintf("- error\n");
-			return GE_UNKNOWN;
-		default:
-			dprintf("ERROR: unknown %i\n",msg.Buffer[4]);
-	}
-	return GE_UNKNOWNRESPONSE;
-}
-
-static GSM_Error N6110_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarNote *Note)
-{
-	bool		Reminder3310 = false;
-	unsigned char 	mychar1,mychar2;
-	int		i, current;
-	unsigned char req[200] = {
-		N6110_FRAME_HEADER, 0x64, 0x01, 0x10,
-		0x00,		/* Length of the rest of the frame. */
-		0x00,		/* The type of calendar note */
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-		0x00, 0x00, 0x00, 0x01, 0x00, 0x66, 0x01};
-
-	if (IsPhoneFeatureAvailable(s->Model, F_NOCALENDAR)) return GE_NOTSUPPORTED;
-
-	if (Note->Location==0x00) return GE_INVALIDLOCATION;
-
-	if (IsPhoneFeatureAvailable(s->Model,F_CAL52)) {
-		switch(Note->Type) {
-    			case GCN_REMINDER: req[7]=0x01; break;
-			case GCN_CALL    : req[7]=0x02; break;
-	    		case GCN_MEETING : req[7]=0x03; break;
-			case GCN_BIRTHDAY: req[7]=0x04; break;
-    			case GCN_T_ATHL  : req[7]=0x05; break;
-    			case GCN_T_BALL  : req[7]=0x06; break;
-    			case GCN_T_CYCL  : req[7]=0x07; break;
-    			case GCN_T_BUDO  : req[7]=0x08; break;
-		        case GCN_T_DANC  : req[7]=0x09; break;
-		        case GCN_T_EXTR  : req[7]=0x0a; break;
-		        case GCN_T_FOOT  : req[7]=0x0b; break;
-		        case GCN_T_GOLF  : req[7]=0x0c; break;
-		        case GCN_T_GYM   : req[7]=0x0d; break;
-		        case GCN_T_HORS  : req[7]=0x0e; break;
-		        case GCN_T_HOCK  : req[7]=0x0f; break;
-		        case GCN_T_RACE  : req[7]=0x10; break;
-		        case GCN_T_RUGB  : req[7]=0x11; break;
-		        case GCN_T_SAIL  : req[7]=0x12; break;
-		        case GCN_T_STRE  : req[7]=0x13; break;
-		        case GCN_T_SWIM  : req[7]=0x14; break;
-		        case GCN_T_TENN  : req[7]=0x15; break;
-		        case GCN_T_TRAV  : req[7]=0x16; break;
-		        case GCN_T_WINT  : req[7]=0x17; break;	
-		}
-	} else {
-		switch(Note->Type) {
-			case GCN_CALL    : req[7]=0x02; break;
-	    		case GCN_MEETING : req[7]=0x03; break;
-			case GCN_BIRTHDAY: req[7]=0x04; break;
-    			case GCN_REMINDER:
-			default		 : req[7]=0x01; break;
-		}
-	}
-
-	NOKIA_EncodeDateTime(req+8, &Note->Time);
-	req[14] = Note->Time.Second;
-
-	if (Note->Alarm.Year != 0) {
-		NOKIA_EncodeDateTime(req+15, &Note->Alarm);
-		req[21] = Note->Alarm.Second;
-	}
-
-	current = 23;
-
-	if (IsPhoneFeatureAvailable(s->Model,F_CAL52) ||
-	    IsPhoneFeatureAvailable(s->Model,F_CAL82)) {
-		req[22] = strlen(DecodeUnicodeString(Note->Text))*2;
-		memcpy(req+current,Note->Text,strlen(DecodeUnicodeString(Note->Text))*2);
-		current += strlen(DecodeUnicodeString(Note->Text))*2;
-
-		/*TEST2 - 8250*/
-//		req[22] += 2;
-//		req[current++] = 0;
-//		req[current++] = 0;
-	} else {
-		req[22] = strlen(DecodeUnicodeString(Note->Text));
-		if (IsPhoneFeatureAvailable(s->Model,F_CAL33))
-		{
-			Reminder3310 = true;
-			if (!strcmp(GetModelData(NULL,s->Model,NULL)->model,"3310") && s->VerNum<5.11)
-			{
-				if (Note->Type!=GCN_REMINDER) Reminder3310 = false;
-			}
-			if (!strcmp(GetModelData(NULL,s->Model,NULL)->model,"3330") && s->VerNum<=4.50)
-			{
-				if (Note->Type!=GCN_REMINDER) Reminder3310 = false;			
-			}
-			if (Reminder3310) {
-				req[22]++;		/* one additional char */
-				req[current++] = 0x01;	/* we use now subset 1 */
-				for (i=0;i<((int)strlen(DecodeUnicodeString(Note->Text)));i++)
-				{
-					/* Euro char */
-					if (Note->Text[i*2]==0x20 && Note->Text[i*2+1]==0xAC) {
-						req[current++] 	= 0xe2;
-						req[current++] 	= 0x82;
-						req[current++] 	= 0xac;
-						req[23]		= 0x03; /* use subset 3 	*/
-						req[22]+=2;		/* two additional chars	*/
-					} else if (EncodeWithUTF8Alphabet(Note->Text[i*2],Note->Text[i*2+1],&mychar1,&mychar2))
-					{
-						req[current++] 	= mychar1;
-						req[current++] 	= mychar2;
-						req[23]		= 0x03; /* use subset 3 	*/
-						req[22]++;		/* one additional char 	*/
-					} else {
-						current+=DecodeWithUnicodeAlphabet(((wchar_t)(Note->Text[i*2]*256+Note->Text[i*2+1])),req+current);
-					}
-				}
-			}
-		}
-		if (!Reminder3310) {
-			memcpy(req+current,DecodeUnicodeString(Note->Text),strlen(DecodeUnicodeString(Note->Text)));
-			current += strlen(DecodeUnicodeString(Note->Text));
-		}
-	}
-
-	if (Note->Type == GCN_CALL) {
-		req[current++] = strlen(DecodeUnicodeString(Note->Phone));
-		memcpy(req+current,DecodeUnicodeString(Note->Phone),strlen(DecodeUnicodeString(Note->Phone)));
-		current += strlen(DecodeUnicodeString(Note->Phone));
-	}
-
-	req[6] = current - 8;	/*TEST1 - 8250*/
-
-	dprintf("Writing calendar note\n");
-	return GSM_WaitFor (s, req, current, 0x13, 4, ID_SetCalendarNote);
-}
-
-static GSM_Error N6110_ReplyDeleteCalendarNote(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
-{
-	dprintf("Calendar note deleted\n");
-	switch (msg.Buffer[4]) {
-	case 0x01:
-		dprintf("Done OK\n");
-		return GE_NONE;
-	case 0x93:
-		dprintf("Can't be done - too high location ?\n");
-		return GE_INVALIDLOCATION;
-	default:
-		dprintf("ERROR: unknown %i\n",msg.Buffer[4]);
-		return GE_UNKNOWNRESPONSE;
-	}
-}
-
-static GSM_Error N6110_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarNote *Note)
-{
-	unsigned char req[] = {
-		N6110_FRAME_HEADER, 0x68,
-		0x00};		/* Location */
-
-	if (IsPhoneFeatureAvailable(s->Model, F_NOCALENDAR)) return GE_NOTSUPPORTED;
-
-	req[4] = Note->Location;
-
-	dprintf("Deleting calendar note\n");
-	return GSM_WaitFor (s, req, 6, 0x13, 5, ID_DeleteCalendarNote);
 }
 
 static GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
@@ -2152,6 +1806,378 @@ static GSM_Error N6110_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_Phone_Data
 	return GE_NONE;
 }
 
+static GSM_Error N6110_ReplyAddCalendar(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+	dprintf("Written Calendar Note ");
+	switch (msg.Buffer[4]) {
+		case 0x01:
+			dprintf("- OK\n");
+			return GE_NONE;
+		case 0x73:
+		case 0x7d:
+			dprintf("- error\n");
+			return GE_UNKNOWN;
+		default:
+			dprintf("ERROR: unknown %i\n",msg.Buffer[4]);
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+static GSM_Error N6110_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+{
+	bool		Reminder3310 = false;
+ 	int 		Text, Time, Alarm, Phone, Recurrance, i, current;
+	unsigned char 	mychar1,mychar2;
+	unsigned char 	req[200] = {
+		N6110_FRAME_HEADER, 0x64, 0x01, 0x10,
+		0x00,		/* Length of the rest of the frame. */
+		0x00,		/* The type of calendar note */
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x01, 0x00, 0x66, 0x01};
+
+	if (IsPhoneFeatureAvailable(s->Model, F_NOCALENDAR)) return GE_NOTSUPPORTED;
+
+	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(*Note, &Text, &Time, &Alarm, &Phone, &Recurrance);
+
+	if (IsPhoneFeatureAvailable(s->Model,F_CAL52)) {
+		switch(Note->Type) {
+    			case GCN_REMINDER: req[7]=0x01; break;
+			case GCN_CALL    : req[7]=0x02; break;
+	    		case GCN_MEETING : req[7]=0x03; break;
+			case GCN_BIRTHDAY: req[7]=0x04; break;
+    			case GCN_T_ATHL  : req[7]=0x05; break;
+    			case GCN_T_BALL  : req[7]=0x06; break;
+    			case GCN_T_CYCL  : req[7]=0x07; break;
+    			case GCN_T_BUDO  : req[7]=0x08; break;
+		        case GCN_T_DANC  : req[7]=0x09; break;
+		        case GCN_T_EXTR  : req[7]=0x0a; break;
+		        case GCN_T_FOOT  : req[7]=0x0b; break;
+		        case GCN_T_GOLF  : req[7]=0x0c; break;
+		        case GCN_T_GYM   : req[7]=0x0d; break;
+		        case GCN_T_HORS  : req[7]=0x0e; break;
+		        case GCN_T_HOCK  : req[7]=0x0f; break;
+		        case GCN_T_RACE  : req[7]=0x10; break;
+		        case GCN_T_RUGB  : req[7]=0x11; break;
+		        case GCN_T_SAIL  : req[7]=0x12; break;
+		        case GCN_T_STRE  : req[7]=0x13; break;
+		        case GCN_T_SWIM  : req[7]=0x14; break;
+		        case GCN_T_TENN  : req[7]=0x15; break;
+		        case GCN_T_TRAV  : req[7]=0x16; break;
+		        case GCN_T_WINT  : req[7]=0x17; break;	
+		}
+	} else {
+		switch(Note->Type) {
+			case GCN_CALL    : req[7]=0x02; break;
+	    		case GCN_MEETING : req[7]=0x03; break;
+			case GCN_BIRTHDAY: req[7]=0x04; break;
+    			case GCN_REMINDER:
+			default		 : req[7]=0x01; break;
+		}
+	}
+
+	if (Time == -1) return GE_UNKNOWN;
+	NOKIA_EncodeDateTime(req+8, &Note->Entries[Time].Date);
+	req[14] = Note->Entries[Time].Date.Second;
+
+	if (Alarm != -1) {
+		NOKIA_EncodeDateTime(req+15, &Note->Entries[Alarm].Date);
+		req[21] = Note->Entries[Alarm].Date.Second;
+	}
+
+	current = 23;
+
+	if (Text != -1) {
+		if (IsPhoneFeatureAvailable(s->Model,F_CAL52) ||
+		    IsPhoneFeatureAvailable(s->Model,F_CAL82)) {
+			req[22] = strlen(DecodeUnicodeString(Note->Entries[Text].Text))*2;
+			memcpy(req+current,Note->Entries[Text].Text,strlen(DecodeUnicodeString(Note->Entries[Text].Text))*2);
+			current += strlen(DecodeUnicodeString(Note->Entries[Text].Text))*2;
+		} else {
+			req[22] = strlen(DecodeUnicodeString(Note->Entries[Text].Text));
+			if (IsPhoneFeatureAvailable(s->Model,F_CAL33))
+			{
+				Reminder3310 = true;
+				if (!strcmp(GetModelData(NULL,s->Model,NULL)->model,"3310") && s->VerNum<5.11)
+				{
+					if (Note->Type!=GCN_REMINDER) Reminder3310 = false;
+				}
+				if (!strcmp(GetModelData(NULL,s->Model,NULL)->model,"3330") && s->VerNum<=4.50)
+				{
+					if (Note->Type!=GCN_REMINDER) Reminder3310 = false;			
+				}
+				if (Reminder3310) {
+					req[22]++;		/* one additional char */
+					req[current++] = 0x01;	/* we use now subset 1 */
+					for (i=0;i<((int)strlen(DecodeUnicodeString(Note->Entries[Text].Text)));i++)
+					{
+						/* Euro char */
+						if (Note->Entries[Text].Text[i*2]==0x20 && Note->Entries[Text].Text[i*2+1]==0xAC) {
+							req[current++] 	= 0xe2;
+							req[current++] 	= 0x82;
+							req[current++] 	= 0xac;
+							req[23]		= 0x03; /* use subset 3 	*/
+							req[22]+=2;		/* two additional chars	*/
+						} else if (EncodeWithUTF8Alphabet(Note->Entries[Text].Text[i*2],Note->Entries[Text].Text[i*2+1],&mychar1,&mychar2))
+						{
+							req[current++] 	= mychar1;
+							req[current++] 	= mychar2;
+							req[23]		= 0x03; /* use subset 3 	*/
+							req[22]++;		/* one additional char 	*/
+						} else {
+							current+=DecodeWithUnicodeAlphabet(((wchar_t)(Note->Entries[Text].Text[i*2]*256+Note->Entries[Text].Text[i*2+1])),req+current);
+						}
+					}
+				}
+			}
+			if (!Reminder3310) {
+				memcpy(req+current,DecodeUnicodeString(Note->Entries[Text].Text),strlen(DecodeUnicodeString(Note->Entries[Text].Text)));
+				current += strlen(DecodeUnicodeString(Note->Entries[Text].Text));
+			}
+		}
+	} else req[22] = 0x00;
+
+	if (Note->Type == GCN_CALL) {
+		if (Phone != -1) {
+			req[current++] = strlen(DecodeUnicodeString(Note->Entries[Phone].Text));
+			memcpy(req+current,DecodeUnicodeString(Note->Entries[Phone].Text),strlen(DecodeUnicodeString(Note->Entries[Phone].Text)));
+			current += strlen(DecodeUnicodeString(Note->Entries[Phone].Text));
+		} else req[current++] = 0x00;
+	}
+
+	req[6] = current - 8;
+
+	dprintf("Writing calendar note\n");
+	return GSM_WaitFor (s, req, current, 0x13, 4, ID_SetCalendarNote);
+}
+
+static GSM_Error N6110_ReplyDeleteCalendar(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+	dprintf("Calendar note deleted\n");
+	switch (msg.Buffer[4]) {
+	case 0x01:
+		dprintf("Done OK\n");
+		return GE_NONE;
+	case 0x93:
+		dprintf("Can't be done - too high location ?\n");
+		return GE_INVALIDLOCATION;
+	default:
+		dprintf("ERROR: unknown %i\n",msg.Buffer[4]);
+		return GE_UNKNOWNRESPONSE;
+	}
+}
+
+static GSM_Error N6110_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+{
+	unsigned char req[] = {
+		N6110_FRAME_HEADER, 0x68,
+		0x00};		/* Location */
+
+	if (IsPhoneFeatureAvailable(s->Model, F_NOCALENDAR)) return GE_NOTSUPPORTED;
+
+	req[4] = Note->Location;
+
+	dprintf("Deleting calendar note\n");
+	return GSM_WaitFor (s, req, 6, 0x13, 5, ID_DeleteCalendarNote);
+}
+
+/* for example: "Euro_char" text */
+static void Decode3310Subset3(int j, GSM_Protocol_Message msg, GSM_Phone_Data *Data)
+{
+	wchar_t 		wc;
+	int			len = 0;
+	int 			i;
+	bool			charfound;
+	GSM_CalendarEntry	*Entry = Data->Cal;
+
+	i = j;
+	while (i!=msg.Buffer[23]) {
+		EncodeWithUnicodeAlphabet(msg.Buffer+24+i,&wc);
+		charfound = false;
+		if (i!=msg.Buffer[23]-2) {
+			if (msg.Buffer[24+i]  ==0xe2 && msg.Buffer[24+i+1]==0x82 &&
+			    msg.Buffer[24+i+2]==0xac) {
+				wc = 0x20 * 256 + 0xac;
+				i+=2;
+				charfound = true;
+			}
+		}
+		if (i!=msg.Buffer[23]-1 && !charfound) {
+			if (msg.Buffer[24+i]>=0xc2) {
+				wc = DecodeWithUTF8Alphabet(msg.Buffer[24+i],msg.Buffer[24+i+1]);
+				i++;
+			}
+		}
+		Entry->Entries[Entry->EntriesNum].Text[len++] = (wc >> 8) & 0xff;
+		Entry->Entries[Entry->EntriesNum].Text[len++] = wc & 0xff;
+		i++;
+	}
+	Entry->Entries[Entry->EntriesNum].Text[len++] = 0;
+	Entry->Entries[Entry->EntriesNum].Text[len++] = 0;
+}
+
+/* For example: "a with : above" char */
+static void Decode3310Subset2(int j, GSM_Protocol_Message msg, GSM_Phone_Data *Data)
+{
+	int			len = 0;
+	int 			i;
+	GSM_CalendarEntry	*Entry = Data->Cal;
+
+	i = j;
+	while (i!=msg.Buffer[23]) {
+		Entry->Entries[Entry->EntriesNum].Text[len++] = 0x00;
+		Entry->Entries[Entry->EntriesNum].Text[len++] = msg.Buffer[24+i];
+		i++;
+	}
+	Entry->Entries[Entry->EntriesNum].Text[len++] = 0;
+	Entry->Entries[Entry->EntriesNum].Text[len++] = 0;
+}
+
+static GSM_Error N6110_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+	int			i = 0;
+	bool			SpecialSubSet = false;
+	GSM_CalendarEntry	*Entry = Data->Cal;
+
+	switch (msg.Buffer[4]) {
+	case 0x01:
+		dprintf("Calendar note received\n");
+		switch (msg.Buffer[8]) {
+			case 0x01: Entry->Type = GCN_REMINDER;	break;
+			case 0x02: Entry->Type = GCN_CALL;	break;
+			case 0x03: Entry->Type = GCN_MEETING;  	break;
+			case 0x04: Entry->Type = GCN_BIRTHDAY; 	break;
+	                case 0x05: Entry->Type = GCN_T_ATHL;   	break;
+	                case 0x06: Entry->Type = GCN_T_BALL;   	break;
+	                case 0x07: Entry->Type = GCN_T_CYCL;   	break;
+	                case 0x08: Entry->Type = GCN_T_BUDO;   	break;
+	                case 0x09: Entry->Type = GCN_T_DANC;   	break;
+	                case 0x0a: Entry->Type = GCN_T_EXTR;   	break;
+	                case 0x0b: Entry->Type = GCN_T_FOOT;   	break;
+	                case 0x0c: Entry->Type = GCN_T_GOLF;   	break;
+	                case 0x0d: Entry->Type = GCN_T_GYM;    	break;
+	                case 0x0e: Entry->Type = GCN_T_HORS;   	break;
+	                case 0x0f: Entry->Type = GCN_T_HOCK;   	break;
+	                case 0x10: Entry->Type = GCN_T_RACE;   	break;
+	                case 0x11: Entry->Type = GCN_T_RUGB;   	break;
+	                case 0x12: Entry->Type = GCN_T_SAIL;   	break;
+	                case 0x13: Entry->Type = GCN_T_STRE;   	break;
+	                case 0x14: Entry->Type = GCN_T_SWIM;   	break;
+	                case 0x15: Entry->Type = GCN_T_TENN;   	break;
+	                case 0x16: Entry->Type = GCN_T_TRAV;   	break;
+	                case 0x17: Entry->Type = GCN_T_WINT;   	break;
+			default  :
+				dprintf("Unknown note type %i\n",msg.Buffer[8]);
+				return GE_UNKNOWNRESPONSE;
+		}
+#ifdef DEBUG
+		switch (msg.Buffer[8]) {
+			case 0x01: dprintf("Reminder\n");	break;
+			case 0x02: dprintf("Call\n");		break;
+			case 0x03: dprintf("Meeting\n");	break;
+			case 0x04: dprintf("Birthday\n");	break;
+		}
+#endif
+		Entry->EntriesNum = 0;
+
+		NOKIA_DecodeDateTime(msg.Buffer+9, &Entry->Entries[0].Date);
+		dprintf("Time        : %02i-%02i-%04i %02i:%02i:%02i\n",
+			Entry->Entries[0].Date.Day,Entry->Entries[0].Date.Month,Entry->Entries[0].Date.Year,
+			Entry->Entries[0].Date.Hour,Entry->Entries[0].Date.Minute,Entry->Entries[0].Date.Second);
+		Entry->Entries[0].EntryType = CAL_START_DATETIME;
+		Entry->EntriesNum++;
+
+		NOKIA_DecodeDateTime(msg.Buffer+16, &Entry->Entries[1].Date);
+		if (Entry->Entries[1].Date.Year!=0) {
+			dprintf("Alarm       : %02i-%02i-%04i %02i:%02i:%02i\n",
+				Entry->Entries[1].Date.Day,Entry->Entries[1].Date.Month,Entry->Entries[1].Date.Year,
+				Entry->Entries[1].Date.Hour,Entry->Entries[1].Date.Minute,Entry->Entries[1].Date.Second);
+			Entry->Entries[1].EntryType = CAL_ALARM_DATETIME;
+			Entry->EntriesNum++;
+		} else {
+			dprintf("No alarm\n");
+		}
+
+		if (IsPhoneFeatureAvailable(Data->Model,F_CAL52) ||
+		    IsPhoneFeatureAvailable(Data->Model,F_CAL82)) {
+			memcpy(Entry->Entries[Entry->EntriesNum].Text,msg.Buffer+24,msg.Buffer[23]);
+			Entry->Entries[Entry->EntriesNum].Text[msg.Buffer[23]  ]=0;
+			Entry->Entries[Entry->EntriesNum].Text[msg.Buffer[23]+1]=0;
+		} else {
+			if (IsPhoneFeatureAvailable(Data->Model,F_CAL33))
+			{
+				/* first char is subset for 33xx and reminders */
+				if (Entry->Type == GCN_REMINDER) {
+					i=1;
+					dprintf("Subset %i in reminder note !\n",msg.Buffer[24]);
+				}
+				SpecialSubSet = true;
+				switch (msg.Buffer[24]) {
+					case 2  : Decode3310Subset2(i,msg,Data); break;
+					case 3  : Decode3310Subset3(i,msg,Data); break;
+					default : SpecialSubSet = false;	 break;
+				}
+			}
+			if (!SpecialSubSet) {
+				EncodeUnicode(Entry->Entries[Entry->EntriesNum].Text,msg.Buffer+24+i,msg.Buffer[23]-i);
+			}
+		}
+		dprintf("Text \"%s\"\n",DecodeUnicodeString(Entry->Entries[Entry->EntriesNum].Text));
+		if (msg.Buffer[23] != 0x00) {
+			Entry->Entries[Entry->EntriesNum].EntryType = CAL_TEXT;
+			Entry->EntriesNum++;
+		}
+
+		if (Entry->Type == GCN_CALL)
+		{
+			EncodeUnicode(Entry->Entries[Entry->EntriesNum].Text,msg.Buffer+24+msg.Buffer[23]+1,msg.Buffer[24+msg.Buffer[23]]);
+			dprintf("Phone       : \"%s\"\n",DecodeUnicodeString(Entry->Entries[Entry->EntriesNum].Text));
+			if (msg.Buffer[24+msg.Buffer[23]] != 0x00) {
+				Entry->Entries[Entry->EntriesNum].EntryType = CAL_PHONE;
+				Entry->EntriesNum++;
+			}
+		}
+		return GE_NONE;
+	case 0x93:
+		dprintf("Can't get calendar note - too high location?\n");
+		return GE_INVALIDLOCATION;
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+static GSM_Error N6110_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+{
+ 	int 				Text, Time, Alarm, Phone, Recurrance;
+	GSM_Error			error;
+	GSM_DateTime			date_time;
+	GSM_Phone_N6110Data 		*Priv = &s->Phone.Data.Priv.N6110;
+	unsigned char 			req[] = {
+		N6110_FRAME_HEADER, 0x66,
+		0x00};		/* Location */
+
+	if (IsPhoneFeatureAvailable(s->Model, F_NOCALENDAR)) return GE_NOTSUPPORTED;
+
+	if (start) {
+		Priv->LastCalendarPos = 1;
+	} else {
+		Priv->LastCalendarPos++;
+	}
+
+	Note->Location  = Priv->LastCalendarPos;
+	req[4]		= Priv->LastCalendarPos;
+
+	s->Phone.Data.Cal=Note;
+	dprintf("Getting calendar note\n");
+	error=GSM_WaitFor (s, req, 5, 0x13, 4, ID_GetCalendarNote);
+
+	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(*Note, &Text, &Time, &Alarm, &Phone, &Recurrance);
+	/* 2090 year is set for example in 3310 */
+	if (error == GE_NONE && Note->Entries[Time].Date.Year == 2090) {
+		error=N6110_GetDateTime(s, &date_time);
+		if (error == GE_NONE) Note->Entries[Time].Date.Year = date_time.Year;
+	}
+	return error;
+}
+
 static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x02,ID_IncomingFrame	},
 	{N6110_ReplyCallInfo,		"\x01",0x03,0x03,ID_IncomingFrame	},
@@ -2227,11 +2253,11 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{DCT3_ReplySetAlarm,		"\x11",0x03,0x6C,ID_SetAlarm		},
 	{DCT3_ReplyGetAlarm,		"\x11",0x03,0x6E,ID_GetAlarm		},
 
-	{N6110_ReplySetCalendarNote,	"\x13",0x03,0x65,ID_SetCalendarNote	},
-	{N6110_ReplySetCalendarNote,	"\x13",0x03,0x65,ID_IncomingFrame	},
-	{N6110_ReplyGetCalendarNote,	"\x13",0x03,0x67,ID_GetCalendarNote	},
-	{N6110_ReplyDeleteCalendarNote,	"\x13",0x03,0x69,ID_DeleteCalendarNote	},
-	{N6110_ReplyDeleteCalendarNote,	"\x13",0x03,0x69,ID_IncomingFrame	},
+	{N6110_ReplyAddCalendar,	"\x13",0x03,0x65,ID_SetCalendarNote	},
+	{N6110_ReplyAddCalendar,	"\x13",0x03,0x65,ID_IncomingFrame	},
+	{N6110_ReplyGetNextCalendar,	"\x13",0x03,0x67,ID_GetCalendarNote	},
+	{N6110_ReplyDeleteCalendar,	"\x13",0x03,0x69,ID_DeleteCalendarNote	},
+	{N6110_ReplyDeleteCalendar,	"\x13",0x03,0x69,ID_IncomingFrame	},
 
 	{N6110_ReplySaveSMSMessage,	"\x14",0x03,0x05,ID_SaveSMSMessage	},
 	{N6110_ReplySaveSMSMessage,	"\x14",0x03,0x06,ID_SaveSMSMessage	},
@@ -2319,7 +2345,6 @@ GSM_Phone_Functions N6110Phone = {
 	DCT3_AnswerCall,
 	DCT3_CancelCall,
 	N6110_GetRingtone,
-	N6110_GetCalendarNote,
 	DCT3DCT4_GetWAPBookmark,
 	N6110_GetBitmap,
 	N6110_SetRingtone,
@@ -2330,8 +2355,6 @@ GSM_Phone_Functions N6110Phone = {
 	N6110_SetBitmap,
 	N6110_SetMemory,
 	N6110_DeleteSMSMessage,
-	N6110_DeleteCalendar,
-	N6110_SetCalendarNote,
 	DCT3_SetWAPBookmark,
 	DCT3DCT4_DeleteWAPBookmark,
 	DCT3_GetWAPSettings,
@@ -2361,7 +2384,9 @@ GSM_Phone_Functions N6110Phone = {
 	N6110_SetProfile,
 	NOTSUPPORTED,		/*	GetSIMIMSI		*/
 	NONEFUNCTION,		/*	SetIncomingCall		*/
-    	NOTIMPLEMENTED		/*  	GetNextCalendarNote	*/
+    	N6110_GetNextCalendar,
+	N6110_DeleteCalendar,
+	N6110_AddCalendar
 };
 
 #endif
