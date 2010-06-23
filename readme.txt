@@ -66,20 +66,23 @@ A. * these things can be done without anything (it will be done everything
      * N5510 radio/MP3 support
      * N3300 MP3 support
      * for Series 40 SyncML & camera settings, OMA provisioning, full media
-       rights support, SMS distribution lists
+       rights support, SMS distribution lists, assigning pictures to pbk
      * .... (other)
 -------------------------------------------------------------------------------
 Q. Where to get latest versions and support ?
 
-A. Latest versions are on www.mwiacek.com. Michal Cihar prepared mirror
-   available under http://cihar.liten.cz/gammu/zips/
+A. * Latest versions are on www.mwiacek.com (win32 binaries, gzip sources,
+     ChangeLog)
+   * Michal Cihar prepared mirror (win32 binaries, gzip sources, bzip2 sources,
+     md5 checksums, ChangeLog) under www.cihar.com/gammu/zips/
+   * CVS is under https://sourceforge.net/cvs/?group_id=78290
 
-   For support contact Marcin Wiacek (currently marcin@mwiacek.com, DO NOT USE
-   marcin-wiacek@topnet.pl). You can also subscribe mailing list (see
-   www.mwiacek.com and subpage about Gammu) and get help there. List is used
-   also for annoucements about new versions. Archive of list (starting
-   28 Sept 2002) is available under
-   http://news.gmane.org/thread.php?group=gmane.linux.drivers.gammu
+   * For support contact Marcin Wiacek (currently marcin@mwiacek.com,
+     DO NOT USE marcin-wiacek@topnet.pl).
+   * You can also subscribe mailing list (see www.mwiacek.com and subpage
+     about Gammu) and get help there. List is used also for annoucements about
+     new versions. Archive of list (starting 28 Sept 2002) is under
+     http://news.gmane.org/thread.php?group=gmane.linux.drivers.gammu
 
    TIP: If you want to have only general info about new versions, you can
         subscibe http://freshmeat.net/projects/gammu/ annoucements.
@@ -417,9 +420,11 @@ A. for logos              : xpm (only saving), bmp, nlm, nsl, ngg, nol, wbmp
    for ringtones          : rttl, binary format created for Gammu,
                             mid (saving), re (reading), ott, communicator,
                             ringtones format found in fkn.pl, wav (saving),
-                            ime/imy (saving)
-   for backup/restore     : text format created for Gammu, vcs, vcf,
-                            lmb (startup, phonebook, caller groups)
+                            ime/imy (saving), rng
+   for backup/restore     : text format created for Gammu, vcs (VCALENDAR),
+                            vcf (VCARD), lmb (Logo Manager - startup,
+                            phonebook, caller groups entries),
+                            ldif (Mozilla/Netscape Address Book)
    for sms backup/restore : text format created for Gammu
 -------------------------------------------------------------------------------
 Q. How to connect Nokia phone to PC ?
@@ -661,3 +666,23 @@ A. Unfortunately, connecting to Nokia:Phonet service in these phones doesn't
 
    In Windows ANY infrared device can be assigned to serial port with driver
    written by Jan Kiszka.
+-------------------------------------------------------------------------------
+Q. I can't play files produced by --nokiagetvoicerecord
+
+A. They require GSM 6.10 codec to be played. In Win XP it's included by
+   Microsoft. If you deleted it by accident in this operating system, make
+   such steps:
+    1. Control Panel
+    2. Add hardware
+    3. click Next
+    4. select "Yes. I have already connected the hardware"
+    5. select "Add a new hardware device"
+    6. select "Install the hardware that I manually select from a list"
+    7. select "Sound, video and game controllers"
+    8. select "Audio codecs"
+    9. select "windows\system32" directory and file "mmdriver.inf"
+   10. if You will be asked for file msgsm32.acm, it should unpacked from
+       Windows CD
+   11. now You can be asked if want to install unsigned driver (YES), about
+       select codec configuration (select what you want) and rebotting PC (make
+       it)

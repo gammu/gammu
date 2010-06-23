@@ -373,9 +373,9 @@ echo "
 dnl Add info about DKU5
 echo "  Nokia FBUS2 for Bluetooth legacy device       - $gsm_enable_fbus2blue
   Nokia FBUS2 for direct infrared device        - $gsm_enable_fbus2irda
-  Nokia PHONET FBUS for Bluetooth legacy device - $gsm_enable_phonetblue
-  SYMBIAN with m-router for Bluetooth legacy    - $gsm_enable_mrouterblue
-
+  Nokia PHONET FBUS for Bluetooth legacy device - $gsm_enable_phonetblue "
+dnl SYMBIAN with m-router for Bluetooth legacy    - $gsm_enable_mrouterblue
+echo "
   Phone protocols with infrared stack
   -----------------------------------
   AT commands                                   - $gsm_enable_irdaat
@@ -401,9 +401,9 @@ echo "  Nokia FBUS2 for Bluetooth legacy device       - $gsm_enable_fbus2blue
   Nokia 92xx                                    - $gsm_enable_nokia9210
            Incoming call/SMS info               - $gsm_enable_71_92incominginfo
   Nokia 3650                                    - $gsm_enable_nokia3650
-  OBEX (Nokia, SonyEricsson, other)             - $gsm_enable_obexgen
-  Symbian with m-router (3650, other)           - $gsm_enable_mroutergen
-
+  OBEX (Nokia, SonyEricsson, other)             - $gsm_enable_obexgen "
+dnl  Symbian with m-router (3650, other)           - $gsm_enable_mroutergen
+echo "
   Please use now:
   
   * "make"            to make static version of Gammu

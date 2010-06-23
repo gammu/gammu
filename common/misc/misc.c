@@ -70,7 +70,7 @@ time_t Fill_Time_T(GSM_DateTime DT, int TZ)
 		DT.Day,DT.Month,DT.Year,DT.Hour,DT.Minute,DT.Second);
 
 	if (TZ != 0) {
-#ifdef WIN32
+#if defined(WIN32) || defined(__SVR4)
 	    sprintf(buffer,"TZ=PST+%i",TZ);
 	    putenv(buffer);
 #else

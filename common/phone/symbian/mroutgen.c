@@ -1,11 +1,13 @@
 
+/* EXPERIMENTAL. NOT FUNCTIONAL */
+
 #include <string.h>
 #include <time.h>
 
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
 #include "../../misc/coding.h"
-#include "../../service/gsmvcal.h"
+#include "../../service/gsmmisc.h"
 
 #ifdef GSM_ENABLE_MROUTERGEN
 

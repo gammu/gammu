@@ -3,7 +3,6 @@
 
 #include "gsmcal.h"
 #include "gsmmisc.h"
-#include "gsmvcal.h"
 #include "../misc/coding.h"
 
 bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note)

@@ -11,7 +11,7 @@
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
 #include "../../misc/coding.h"
-#include "../../service/gsmvcal.h"
+#include "../../service/gsmmisc.h"
 #include "../../protocol/obex/obex.h"
 
 #ifdef GSM_ENABLE_OBEXGEN
@@ -188,7 +188,7 @@ static GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *P
 			if (error != GE_NONE) return error;
 
 			smprintf(s,"Changing to root\n");
-			error = OBEXGEN_ChangePath(s, NULL, 255);
+			error = OBEXGEN_ChangePath(s, NULL, 2);
 			if (error != GE_NONE) return error;
 
 			Pos2 = 0;
@@ -196,7 +196,7 @@ static GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *P
 				OBEXGEN_FindNextDir(File->ID_FullName, &Pos2, req2);
 				smprintf(s,"%s %i %i\n",DecodeUnicodeString(req2),Pos2,strlen(File->ID_FullName));
 				smprintf(s,"Changing path down\n");
-				error=OBEXGEN_ChangePath(s, req2, 255);
+				error=OBEXGEN_ChangePath(s, req2, 2);
 				if (error != GE_NONE) return error;
 				if (Pos2 == strlen(File->ID_FullName)) break;
 			} while (1);
@@ -330,7 +330,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 				if (error != GE_NONE) return error;
 
 				smprintf(s,"Changing to root\n");
-				error = OBEXGEN_ChangePath(s, NULL, 255);
+				error = OBEXGEN_ChangePath(s, NULL, 2);
 				if (error != GE_NONE) return error;
 
 				Pos = 0;
@@ -339,7 +339,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 					smprintf(s,"%s %i %i\n",DecodeUnicodeString(req2),Pos,strlen(File->ID_FullName));
 					if (Pos == strlen(File->ID_FullName)) break;
 					smprintf(s,"Changing path down\n");
-					error=OBEXGEN_ChangePath(s, req2, 255);
+					error=OBEXGEN_ChangePath(s, req2, 2);
 					if (error != GE_NONE) return error;
 				} while (1);
 
@@ -410,7 +410,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 		if (error != GE_NONE) return error;
 
 		smprintf(s,"Changing to root\n");
-		error = OBEXGEN_ChangePath(s, NULL, 255);
+		error = OBEXGEN_ChangePath(s, NULL, 2);
 		if (error != GE_NONE) return error;
 
 		Current = 0;
@@ -432,7 +432,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 			if (File->Level < Priv->FileLev) {
 				for (i=0;i<File->Level;i++) {
 					smprintf(s,"Changing path up\n");
-					error=OBEXGEN_ChangePath(s, NULL, 255);
+					error=OBEXGEN_ChangePath(s, NULL, 2);
 					if (error != GE_NONE) return error;
 				}
 			}
@@ -541,7 +541,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 					if (Priv->Files[z].Folder) {
 						if (Priv->Files[z].Level > File->Level) {
 							smprintf(s,"Changing path down\n");
-							error=OBEXGEN_ChangePath(s, File->Name, 255);
+							error=OBEXGEN_ChangePath(s, File->Name, 2);
 							if (error != GE_NONE) return error;
 						}
 						break;
@@ -578,7 +578,7 @@ static GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 	if (error != GE_NONE) return error;
 
 	smprintf(s,"Changing to root\n");
-	error = OBEXGEN_ChangePath(s, NULL, 255);
+	error = OBEXGEN_ChangePath(s, NULL, 2);
 	if (error != GE_NONE) return error;
 
 	Pos = 0;
@@ -587,7 +587,7 @@ static GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 		smprintf(s,"%s %i %i\n",DecodeUnicodeString(req2),Pos,strlen(ID));
 		if (Pos == strlen(ID)) break;
 		smprintf(s,"Changing path down\n");
-		error=OBEXGEN_ChangePath(s, req2, 255);
+		error=OBEXGEN_ChangePath(s, req2, 2);
 		if (error != GE_NONE) return error;
 	} while (1);
 
@@ -612,7 +612,7 @@ static GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	if (error != GE_NONE) return error;
 
 	smprintf(s,"Changing to root\n");
-	error = OBEXGEN_ChangePath(s, NULL, 255);
+	error = OBEXGEN_ChangePath(s, NULL, 2);
 	if (error != GE_NONE) return error;
 
 	Pos = 0;
@@ -620,7 +620,7 @@ static GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 		OBEXGEN_FindNextDir(File->ID_FullName, &Pos, req2);
 		smprintf(s,"%s %i %i\n",DecodeUnicodeString(req2),Pos,strlen(File->ID_FullName));
 		smprintf(s,"Changing path down\n");
-		error=OBEXGEN_ChangePath(s, req2, 255);
+		error=OBEXGEN_ChangePath(s, req2, 2);
 		if (error != GE_NONE) return error;
 		if (Pos == strlen(File->ID_FullName)) break;
 	} while (1);

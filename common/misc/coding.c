@@ -1003,20 +1003,42 @@ bool EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsign
 }
 
 /* Make UTF8 string from Unicode input string */
-void EncodeUTF8(unsigned char *dest, const unsigned char *src)
+bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 {
 	int		i,j=0;
 	unsigned char	mychar1, mychar2;
+	bool		retval = false;
 	
 	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
 	    if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
 			sprintf(dest+j, "=%02X=%02X",mychar1,mychar2);
-			j=j+6;
+			j	= j+6;
+			retval  = true;
 	    } else {
 			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
 	    }
 	}
 	dest[j++]=0;
+	return retval;
+}
+
+bool EncodeUTF8(unsigned char *dest, const unsigned char *src)
+{
+	int		i,j=0;
+	unsigned char	mychar1, mychar2;
+	bool		retval = false;
+	
+	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
+	    if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
+			sprintf(dest+j, "%c%c",mychar1,mychar2);
+			j	= j+2;
+			retval  = true;
+	    } else {
+			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
+	    }
+	}
+	dest[j++]=0;
+	return retval;
 }
 
 /* Decode UTF8 char to Unicode char */
@@ -1040,7 +1062,7 @@ wchar_t DecodeWithUTF8Alphabet(unsigned char mychar3, unsigned char mychar4)
 }
 
 /* Make Unicode string from UTF8 string */
-void DecodeUTF8(unsigned char* dest, const unsigned char* src, int len)
+void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, int len)
 {
 	int 		i=0,j=0;
 	unsigned char	mychar1, mychar2;
@@ -1068,6 +1090,105 @@ void DecodeUTF8(unsigned char* dest, const unsigned char* src, int len)
 	}
 	dest[j++] = 0;
 	dest[j++] = 0;
+}
+
+void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len)
+{
+	int 		i=0,j=0;
+	wchar_t		ret;
+	
+	while (i<=len) {
+	    if (len-2>=i) {
+		if (src[i] >= 0xC2) {
+		    ret 	= DecodeWithUTF8Alphabet(src[i],src[i+1]);
+		    i 		= i+2;
+		} else {
+		    i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+		}   
+	    } else {
+		i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+	    }
+	    dest[j++] = (ret >> 8) & 0xff;
+	    dest[j++] = ret & 0xff;
+	}
+	dest[j++] = 0;
+	dest[j++] = 0;
+}
+
+static void EncodeBASE64Block(unsigned char in[3], unsigned char out[4], int len)
+{
+	/* BASE64 translation Table as described in RFC1113 */
+	unsigned char cb64[]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+	out[0] = cb64[ in[0] >> 2 ];
+	out[1] = cb64[ ((in[0] & 0x03) << 4) | ((in[1] & 0xf0) >> 4) ];
+	out[2] = (unsigned char) (len > 1 ? cb64[ ((in[1] & 0x0f) << 2) | ((in[2] & 0xc0) >> 6) ] : '=');
+	out[3] = (unsigned char) (len > 2 ? cb64[ in[2] & 0x3f ] : '=');
+}
+
+void EncodeBASE64(unsigned char *Input, unsigned char *Output, int Length)
+{
+	unsigned char 	in[3], out[4];
+	int 		i, pos = 0, len, outpos = 0;
+
+	while(1) {
+		len = 0;
+		for (i = 0; i < 3; i++) {
+			in[i] = 0;
+			if (pos < Length) {
+				in[i] = Input[pos];
+				len++;
+				pos++;
+			}
+		}
+	        if(len) {
+			EncodeBASE64Block(in, out, len);
+			for (i = 0; i < 4; i++) Output[outpos++] = out[i];
+		}
+		if (pos == Length) break;
+        }
+	Output[outpos++] = 0;
+}
+
+static void DecodeBASE64Block(unsigned char in[4], unsigned char out[3])
+{   
+	out[ 0 ] = (unsigned char) (in[0] << 2 | in[1] >> 4);
+	out[ 1 ] = (unsigned char) (in[1] << 4 | in[2] >> 2);
+	out[ 2 ] = (unsigned char) (((in[2] << 6) & 0xc0) | in[3]);
+}
+
+int DecodeBASE64(unsigned char *Input, unsigned char *Output, int Length)
+{
+	unsigned char 	cd64[]="|$$$}rstuvwxyz{$$$$$$$>?@ABCDEFGHIJKLMNOPQRSTUVW$$$$$$XYZ[\\]^_`abcdefghijklmnopq";
+	unsigned char 	in[4], out[3], v;
+	int 		i, len, pos = 0, outpos = 0;
+
+	while(1) {
+		len = 0;
+	        for(i = 0; i < 4; i++) {
+        		v = 0;
+			while(v == 0) {
+				if (pos == Length) break;
+		                v = (unsigned char) Input[pos++];
+                		v = (unsigned char) ((v < 43 || v > 122) ? 0 : cd64[ v - 43 ]);
+				if (v) v = (unsigned char) ((v == '$') ? 0 : v - 61);
+			}
+			if(pos<Length) {
+				len++;
+				if(v) in[i] = (unsigned char) (v - 1);
+			} else {
+				in[i] = 0;
+				break;
+			}
+		}
+		if (len) {
+			DecodeBASE64Block(in, out);
+			for(i = 0; i < len - 1; i++) Output[outpos++] = out[i];
+		}
+		if (pos == Length) break;
+	}
+	Output[outpos] = 0;
+	return outpos;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

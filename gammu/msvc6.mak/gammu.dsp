@@ -149,7 +149,27 @@ SOURCE=.\gammu.rc
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmback.c
+SOURCE=..\..\common\service\backup\gsmback.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\backup\backldif.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\backup\backlmb.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\backup\backvcs.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\backup\backvcf.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\backup\backtext.c
 # End Source File
 # Begin Source File
 
@@ -189,10 +209,6 @@ SOURCE=..\..\common\gsmstate.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmvcal.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\common\service\gsmwap.c
 # End Source File
 # Begin Source File
@@ -218,6 +234,10 @@ SOURCE=..\..\common\phone\nokia\dct4\n6510.c
 # Begin Source File
 
 SOURCE=..\..\common\phone\nokia\dct4\n3650.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\phone\nokia\dct4\dct4func.c
 # End Source File
 # Begin Source File
 
@@ -357,7 +377,27 @@ SOURCE=..\gammu.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmback.h
+SOURCE=..\..\common\service\backup\gsmback.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\backup\backldif.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\backup\backlmb.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\backup\backvcs.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\backup\backvcf.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\backup\backtext.h
 # End Source File
 # Begin Source File
 
@@ -401,10 +441,6 @@ SOURCE=..\..\common\gsmstate.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmvcal.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\common\service\gsmwap.h
 # End Source File
 # Begin Source File
@@ -438,6 +474,10 @@ SOURCE=..\..\common\phone\nokia\dct4\n6510.h
 # Begin Source File
 
 SOURCE=..\..\common\phone\nokia\dct4\n3650.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\phone\nokia\dct4\dct4func.h
 # End Source File
 # Begin Source File
 

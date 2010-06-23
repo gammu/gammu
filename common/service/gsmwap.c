@@ -250,7 +250,7 @@ void NOKIA_EncodeWAPBookmarkSMSText(unsigned char *Buffer, int *Length, GSM_WAPB
 	unsigned char	buffer[100];
 	bool		UnicodeCoding = false;
 
-	EncodeUTF8(buffer,bookmark->Title);
+	EncodeUTF8QuotedPrintable(buffer,bookmark->Title);
 	if (UnicodeLength(bookmark->Title)!=strlen(buffer)) UnicodeCoding = true;
 
 	Buffer[(*Length)++] = 0x01; 			//Push ID

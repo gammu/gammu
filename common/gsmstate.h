@@ -146,11 +146,17 @@
 #  undef GSM_ENABLE_MROUTERBLUE
 #endif
 
-#include "device/serial/ser_w32.h"
-#include "device/serial/ser_unx.h"
-#include "device/serial/ser_djg.h"
-#include "device/irda/irda.h"
-#include "device/bluetoth/bluetoth.h"
+#ifdef GSM_ENABLE_SERIALDEVICE
+#  include "device/serial/ser_w32.h"
+#  include "device/serial/ser_unx.h"
+#  include "device/serial/ser_djg.h"
+#endif
+#ifdef GSM_ENABLE_IRDADEVICE
+#  include "device/irda/irda.h"
+#endif
+#ifdef GSM_ENABLE_BLUETOOTHDEVICE
+#  include "device/bluetoth/bluetoth.h"
+#endif
 
 #include "service/gsmpbk.h"
 #include "service/gsmsms.h"

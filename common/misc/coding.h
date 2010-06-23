@@ -44,8 +44,15 @@ void		EncodeBCD			(unsigned char *dest, const unsigned char *src, int len, bool 
 wchar_t		DecodeWithUTF8Alphabet		(unsigned char mychar3, unsigned char mychar4);
 bool 		EncodeWithUTF8Alphabet		(unsigned char mychar1, unsigned char mychar2, unsigned char *ret1, unsigned char *ret2);
 
-void		EncodeUTF8			(unsigned char *dest, const unsigned char *src);
-void 		DecodeUTF8			(unsigned char* dest, const unsigned char* src, int len);
+bool		EncodeUTF8QuotedPrintable	(unsigned char *dest, const unsigned char *src);
+void 		DecodeUTF8QuotedPrintable	(unsigned char *dest, const unsigned char *src, int len);
+
+bool 		EncodeUTF8			(unsigned char *dest, const unsigned char *src);
+void 		DecodeUTF8			(unsigned char *dest, const unsigned char *src, int len);
+
+/* ------------------------------- BASE64 ---------------------------------- */
+void 		EncodeBASE64			(unsigned char *Input, unsigned char *Output, int Length);
+int 		DecodeBASE64			(unsigned char *Input, unsigned char *Output, int Length);
 
 /* ----------------------------- HexBin ------------------------------------ */
 void		DecodeHexBin			(unsigned char *dest, const unsigned char *src, int len);

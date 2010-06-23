@@ -12,7 +12,7 @@
 #  include <dirent.h>
 #endif
 
-#include "../../common/service/gsmback.h"
+#include "../../common/service/backup/gsmback.h"
 #include "../../common/misc/coding.h"
 #include "smsdcore.h"
 
