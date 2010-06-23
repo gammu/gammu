@@ -76,15 +76,15 @@ void		GSM_UnpackSemiOctetNumber	(unsigned char *retval, unsigned char *Number, b
 int		GSM_PackSemiOctetNumber		(unsigned char *Number, unsigned char *Output, bool semioctet);
 
 /* ---------------------------- Other -------------------------------------- */
-int OctetAlign(unsigned char *Dest, int CurrentBit);
-int OctetAlignNumber(int CurrentBit);
-int BitPack(unsigned char *Dest, int CurrentBit, unsigned char *Source, int Bits);
-int BitPackByte(unsigned char *Dest, int CurrentBit, unsigned char Command, int Bits);
+int OctetAlign		(unsigned char *Dest, int CurrentBit);
+int OctetAlignNumber	(int CurrentBit);
+int BitPack		(unsigned char *Dest, int CurrentBit, unsigned char *Source, int Bits);
+int BitPackByte		(unsigned char *Dest, int CurrentBit, unsigned char Command, int Bits);
 
-int BitUnPack(unsigned char *Dest, int CurrentBit, unsigned char *Source, int Bits);
-int BitUnPackInt(unsigned char *Src, int CurrentBit, int *integer, int Bits);
-int BitUnPackI(unsigned char *Src, int CurrentBit, int *integer, int Bits);
-int OctetUnAlign(int CurrentBit);
+int BitUnPack		(unsigned char *Dest, int CurrentBit, unsigned char *Source, int Bits);
+int BitUnPackInt	(unsigned char *Src, int CurrentBit, int *integer, int Bits);
+int BitUnPackI		(unsigned char *Src, int CurrentBit, int *integer, int Bits);
+int OctetUnAlign	(int CurrentBit);
 
 #define GetBit(Stream,BitNr)	Stream[(BitNr)/8] & 1<<(7-((BitNr)%8))
 #define SetBit(Stream,BitNr)	Stream[(BitNr)/8] |= 1<<(7-((BitNr)%8))

@@ -2996,11 +2996,9 @@ GSM_Error N6510_GetNextCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note, b
 static GSM_Error N6510_ReplyGetCalendarInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Buffer[3]) {
-#ifdef DEBUG
 	case 0x3B:
 		/* Old method 1 for accessing calendar */
 		return N71_65_ReplyGetCalendarInfo1(msg, s, &s->Phone.Data.Priv.N6510.LastCalendar);
-#endif
 	case 0x9F:
 		return N6510_ReplyGetCalendarInfo3(msg, s, &s->Phone.Data.Priv.N6510.LastCalendar);
 	}
@@ -3199,22 +3197,36 @@ GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *
 
 static GSM_Error N6510_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, bool start)
 {
-	/* Method 3. All DCT4 features supported */
-	return N6510_GetNextCalendar3(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NEWCALENDAR)) {
+	    /* Method 3. All DCT4 features supported. Not supported by 8910 */
+	    return N6510_GetNextCalendar3(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
+	} else {
+#ifdef GSM_FORCE_DCT4_NEW_CALENDAR
+	    /* Method 3. All DCT4 features supported. Not supported by 8910 */
+	    return N6510_GetNextCalendar3(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
+#endif
+	    /* Method 1. Some features missed. Not working with some notes in 3510 */
+	    return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
 
-	/* Method 2. In known phones texts of notes cut to 50 chars. Some features missed */
-//	return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
-	/* Method 1. Some features missed. Not working with some notes in 3510 */
-//	return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
+	    /* Method 2. In known phones texts of notes cut to 50 chars. Some features missed */
+//	    return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
+	}
 }
 
 static GSM_Error N6510_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
 {
-	/* Method 3. All DCT4 features supported */
-	return N6510_AddCalendar3(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos, Past);
-
-//	return N71_65_AddCalendar2(s,Note,Past);
-//	return N71_65_AddCalendar1(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos, Past);
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NEWCALENDAR)) {
+		/* Method 3. All DCT4 features supported. Not supported by 8910 */
+		return N6510_AddCalendar3(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos, Past);
+	} else {
+#ifdef GSM_FORCE_DCT4_NEW_CALENDAR
+		/* Method 3. All DCT4 features supported. Not supported by 8910 */
+		return N6510_AddCalendar3(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos, Past);
+#else
+		return N71_65_AddCalendar2(s,Note,Past);
+//		return N71_65_AddCalendar1(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos, Past);
+	}
+#endif
 }
 
 static GSM_Error N6510_ReplyLogIntoNetwork(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -3382,6 +3394,134 @@ static GSM_Error N6510_ShowStartInfo(GSM_StateMachine *s, bool enable)
 	}
 }
 
+static GSM_Error N6510_ReplyGetNextFileFolder(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_FileFolderInfo 	*File = s->Phone.Data.File;
+	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
+	int			i;
+
+	switch (msg.Buffer[3]) {
+	case 0x15:
+		smprintf(s,"File or folder details received\n");
+		CopyUnicodeString(File->Name,msg.Buffer+10);
+		if (!strncmp(DecodeUnicodeString(File->Name),"GMSTemp",7)) return GE_EMPTY;
+		File->Folder = false;
+		i = msg.Buffer[8]*256+msg.Buffer[9];
+		dprintf("%02x %02x %02x %02x\n",msg.Buffer[i],msg.Buffer[i+1],msg.Buffer[i+2],msg.Buffer[i+3]);
+		if (msg.Buffer[i+3] == 0x01) File->Folder = true;
+		return GE_NONE;	
+	case 0x2F:
+		smprintf(s,"File or folder used bytes received\n");
+		File->Used = msg.Buffer[6]*256*256*256+
+			     msg.Buffer[7]*256*256+
+			     msg.Buffer[8]*256+
+			     msg.Buffer[9];
+		return GE_NONE;
+	case 0x33:
+		i = Priv->FilesLocationsUsed-1;
+		while (1) {
+			if (i==Priv->FilesLocationsCurrent-1) break;
+			dprintf("Copying %i to %i, max %i, current %i\n",
+				i,i+msg.Buffer[9],
+				Priv->FilesLocationsUsed,Priv->FilesLocationsCurrent);
+			Priv->FilesLocations[i+msg.Buffer[9]] 	= Priv->FilesLocations[i];
+			Priv->FilesParents[i+msg.Buffer[9]]	= Priv->FilesParents[i];
+			i--;
+		}
+		Priv->FilesLocationsUsed += msg.Buffer[9];
+		for (i=0;i<msg.Buffer[9];i++) {
+			Priv->FilesLocations[Priv->FilesLocationsCurrent+i] 	= msg.Buffer[13+i*4];
+			Priv->FilesParents[Priv->FilesLocationsCurrent+i] 	= File->ID;
+			dprintf("%i ",Priv->FilesLocations[Priv->FilesLocationsCurrent+i]);
+		}
+		if (msg.Buffer[9] != 0x00) File->Folder = true;
+		dprintf("\n");
+		return GE_NONE;		
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+static GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_FileFolderInfo *File, bool start)
+{
+	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
+	GSM_Error		error;
+	unsigned char 		req[10] = {
+		N7110_FRAME_HEADER,
+		0x14,           /* 0x14 - info, 0x22 - free, 0x2E - used, 0x32 - sublocations */
+		0x01,		/* 0x00 for sublocations reverse sorting, 0x01 for free */
+		0x00, 0x00, 0x01, 0x00,
+		0x01};		/* Folder or file number */
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return GE_NOTSUPPORTED;
+
+	if (start) {
+		Priv->FilesLocationsUsed 	= 1;
+		Priv->FilesLocationsCurrent 	= 0;
+		Priv->FilesParents[0]		= -1;
+		Priv->FilesLocations[0]		= 0x01;
+	}
+
+ 	s->Phone.Data.File = File;
+
+	while (1) {
+		if (Priv->FilesLocationsCurrent == Priv->FilesLocationsUsed) return GE_EMPTY;
+
+		req[9] 		= Priv->FilesLocations[Priv->FilesLocationsCurrent];
+		File->ID	= Priv->FilesLocations[Priv->FilesLocationsCurrent];
+		File->ParentID 	= Priv->FilesParents[Priv->FilesLocationsCurrent];
+		Priv->FilesLocationsCurrent++;
+
+		req[3] = 0x14;
+		req[4] = 0x01;
+		smprintf(s,"Getting info for file in filesystem\n");
+		error=GSM_WaitFor (s, req, 10, 0x6D, 4, ID_GetFileInfo);
+		if (error == GE_EMPTY) continue;
+		if (error != GE_NONE) return error;
+		break;
+	}
+	
+	req[3] = 0x32;
+	req[4] = 0x00;
+	smprintf(s,"Getting subfolders for filesystem\n");
+	error=GSM_WaitFor (s, req, 10, 0x6D, 4, ID_GetFileInfo);
+	if (error != GE_NONE) return error;
+
+	if (!File->Folder) {
+		req[3] = 0x2E;
+		req[4] = 0x01;
+		smprintf(s,"Getting used memory for file in filesystem\n");
+		error=GSM_WaitFor (s, req, 10, 0x6D, 4, ID_GetFileInfo);
+	}
+	return error;
+}
+
+static GSM_Error N6510_ReplyGetFreeFileMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s,"File or folder free bytes received: ");
+	*s->Phone.Data.FileFree = msg.Buffer[6]*256*256*256+
+			    	  msg.Buffer[7]*256*256+
+			    	  msg.Buffer[8]*256+
+			    	  msg.Buffer[9];
+	smprintf(s,"%i\n",*s->Phone.Data.FileFree);
+	return GE_NONE;
+}
+
+static GSM_Error N6510_GetFreeFileMemory(GSM_StateMachine *s, int *Free)
+{
+	unsigned char 		req[10] = {
+		N7110_FRAME_HEADER,
+		0x22,           /* 0x14 - info, 0x22 - free, 0x2E - used, 0x32 - sublocations */
+		0x01,		/* 0x00 for sublocations reverse sorting, 0x01 for free */
+		0x00, 0x00, 0x01, 0x00,
+		0x01};		/* Folder or file number */
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return GE_NOTSUPPORTED;
+
+	s->Phone.Data.FileFree = Free;
+	smprintf(s, "Getting free memory in filesystem\n");
+	return GSM_WaitFor (s, req, 10, 0x6D, 4, ID_GetFileFree);
+}
+
 static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x02,ID_IncomingFrame	},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x03,ID_IncomingFrame	},
@@ -3435,12 +3575,12 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x08,ID_SetCalendarNote	},
 #endif
 	{N71_65_ReplyDelCalendar,	"\x13",0x03,0x0C,ID_DeleteCalendarNote	},
-#ifdef DEBUG
 	{N71_65_ReplyGetNextCalendar1,	"\x13",0x03,0x1A,ID_GetCalendarNote	},/*method 1*/
-#endif
-	{N6510_ReplyGetCalendarNotePos,	"\x13",0x03,0x32,ID_GetCalendarNotePos	},/*method 1*/
 #ifdef DEBUG
+	{N6510_ReplyGetCalendarNotePos,	"\x13",0x03,0x32,ID_GetCalendarNotePos	},/*method 1*/
+#endif
 	{N6510_ReplyGetCalendarInfo,	"\x13",0x03,0x3B,ID_GetCalendarNotesInfo},/*method 1*/
+#ifdef DEBUG
 	{N71_65_ReplyGetNextCalendar2,	"\x13",0x03,0x3F,ID_GetCalendarNote	},
 #endif
 	{N71_65_ReplyAddCalendar2,	"\x13",0x03,0x41,ID_SetCalendarNote	},/*method 2*/
@@ -3520,7 +3660,10 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyDeleteAllToDo,	"\x55",0x03,0x12,ID_DeleteAllToDo	},
 	{N6510_ReplyGetToDoLocations,	"\x55",0x03,0x16,ID_GetToDo		},
 
-	/* 0x6D - File System */
+	{N6510_ReplyGetNextFileFolder,	"\x6D",0x03,0x15,ID_GetFileInfo		},
+	{N6510_ReplyGetFreeFileMemory,	"\x6D",0x03,0x23,ID_GetFileFree		},
+	{N6510_ReplyGetNextFileFolder,	"\x6D",0x03,0x2F,ID_GetFileInfo		},
+	{N6510_ReplyGetNextFileFolder,	"\x6D",0x03,0x33,ID_GetFileInfo		},
 
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x01,ID_GetBitmap		},
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x01,ID_SetBitmap		},
@@ -3616,7 +3759,11 @@ GSM_Phone_Functions N6510Phone = {
  	N6510_ClearFMStations,
 	NOKIA_SetIncomingUSSD,
 	N6510_DeleteUserRingtones,
-	N6510_ShowStartInfo
+	N6510_ShowStartInfo,
+	N6510_GetNextFileFolder,
+	NOTIMPLEMENTED,		/*	GetFile			*/
+	NOTIMPLEMENTED,		/* 	AddFile			*/
+	N6510_GetFreeFileMemory
 };
 
 #endif

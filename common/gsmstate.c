@@ -724,9 +724,9 @@ static OnePhoneModel allmodels[] = {
 	{"3410" ,"NHM-2" ,"",           {F_RING_SM,F_CAL33,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_NOTODO,F_PBK35,0}},
-	{"3510i","RH-9"   ,"",          {F_CAL35,F_NOTODO,F_PBK35,0}},
-	{"3530" ,"RH-9"   ,"",          {F_CAL35,F_NOTODO,F_PBK35,0}},
+	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_NOTODO,F_PBK35,F_NEWCALENDAR,0}},
+	{"3510i","RH-9"   ,"",          {F_CAL35,F_NOTODO,F_PBK35,F_NEWCALENDAR,0}},
+	{"3530" ,"RH-9"   ,"",          {F_CAL35,F_NOTODO,F_PBK35,F_NEWCALENDAR,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"5100" ,"NPM-6" ,"Nokia 5100", {F_RADIO,0}},
@@ -758,7 +758,7 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"6310" ,"NPE-4" ,"Nokia 6310", {F_NOMIDI,0}},
-	{"6310i","NPL-1" ,"Nokia 6310i",{F_NOMIDI,F_BLUETOOTH,0}},
+	{"6310i","NPL-1" ,"Nokia 6310i",{F_NOMIDI,F_NEWCALENDAR,F_BLUETOOTH,0}},
 	{"6510" ,"NPM-9" ,"Nokia 6510", {F_NOMIDI,F_RADIO,F_NOFILESYSTEM,0}},
 	{"6610" ,"NHL-4" ,"Nokia 6610", {F_RADIO,0}},
 	{"7210" ,"NHL-4" ,"Nokia 7210", {F_RADIO,0}},

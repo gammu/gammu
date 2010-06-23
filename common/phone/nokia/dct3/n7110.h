@@ -8,12 +8,13 @@
 typedef struct {
 	int				LastCalendarYear;
 	int				LastCalendarPos;
+	GSM_NOKIACalendarLocations	LastCalendar;
+	int				FirstCalendarPos;
 
 	GSM_NOKIASMSFolder		LastSMSFolder;
 	GSM_SMSFolders			LastSMSFolders;
-	GSM_NOKIACalendarLocations	LastCalendar;
-	int				FirstCalendarPos;
 	GSM_NOKIASMSFolder		LastPictureImageFolder;
+
 	DCT3_WAPSettings_Locations	WAPLocations;
 } GSM_Phone_N7110Data;
 

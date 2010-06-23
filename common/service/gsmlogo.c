@@ -105,7 +105,7 @@ static void PHONE_SetPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int 
 	case GSM_EMSMediumPicture:
 	case GSM_EMSBigPicture:
 	case GSM_EMSVariablePicture:
-		pixel=width*y + x;
+		pixel = width*y + x;
 		buffer[pixel/8] |= 1 << (7-(pixel%8));
 		break;
 	case GSM_NokiaPictureImage:
@@ -177,8 +177,7 @@ void GSM_GetMaxBitmapWidthHeight(GSM_Bitmap_Types Type, unsigned char *width, un
 {
 	switch (Type) {
 		case GSM_CallerLogo	: *width=72; *height=14; break;
-		
-		case GSM_OperatorLogo	: *width=101; *height=21; break;
+		case GSM_OperatorLogo	: *width=101;*height=21; break;
 		case GSM_StartupLogo	: *width=96; *height=65; break;
 		case GSM_PictureImage	: *width=72; *height=28; break;
 		default			:			 break;

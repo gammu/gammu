@@ -113,8 +113,8 @@ AC_ARG_WITH(bluedir,
 	[ if test x$withval = xyes; then
 		AC_MSG_WARN(Usage is: --with-bluedir=DIR)
 	  else
-		LDLIBS="-L$withval/lib/"
-		CFLAGS="-I$withval/include/"
+		LDLIBS="$LDLIBS -L$withval/lib/ -lbluetooth"
+		CFLAGS="$CFLAGS -I$withval/include/"
 		gsm_bt_dir="$withval"
 	  fi
 	]
@@ -136,6 +136,7 @@ AC_ARG_ENABLE(atblue,
 	  if test $ac_cv_have_sockaddr_rc = yes; then
 		AC_DEFINE(GSM_ENABLE_ATBLUETOOTH)
 		gsm_enable_atblue="yes"
+		LDLIBS="$LDLIBS -lbluetooth"
 	  else
 		gsm_enable_atblue="no"
 	  fi])	
@@ -155,6 +156,7 @@ AC_ARG_ENABLE(dlr3blue,
 	  if test $ac_cv_have_sockaddr_rc = yes; then
 		AC_DEFINE(GSM_ENABLE_DLR3BLUETOOTH)
 		gsm_enable_dlr3blue="yes"
+		LDLIBS="$LDLIBS -lbluetooth"
 	  else
 		gsm_enable_dlr3blue="no"
 	  fi])
@@ -182,6 +184,10 @@ AC_ARG_ENABLE(7110incoming,
 	[  --enable-7110incoming   Enable Nokia 62xx/71xx/9xxx incoming call/SMS info],
 	[AC_DEFINE(GSM_ENABLE_N71_92INCOMINGINFO) gsm_enable_71_92incominginfo="yes"],
 	[gsm_enable_71_92incominginfo="no"])
+AC_ARG_ENABLE(newcalendar,
+	[  --enable-newcalendar    Force using new frames for calendar for DCT4 phones],
+	[AC_DEFINE(GSM_FORCE_DCT4_NEW_CALENDAR) gsm_force_dct4_new_calendar="yes"],
+	[gsm_force_dct4_new_calendar="no"])
 AC_ARG_ENABLE(mbus2,
 	[  --disable-mbus2         Disable support for Nokia MBUS2 protocol],
 	[gsm_enable_mbus2="no"],
@@ -228,6 +234,8 @@ AC_ARG_ENABLE(atgen,
 	[  --disable-atgen         Disable generic AT phones support],
 	[gsm_enable_atgen="no"],
 	[AC_DEFINE(GSM_ENABLE_ATGEN) gsm_enable_atgen="yes"])
+
+AC_SUBST(LDLIBS)
 
 dnl Writing output files
 AC_CONFIG_HEADER(config.h)
@@ -279,6 +287,7 @@ echo "
   AT (Siemens, Alcatel, Nokia, WaveCom, other)  - $gsm_enable_atgen
   Nokia 3210/33xx/3410/51xx/5210/5510/61xx/82xx - $gsm_enable_nokia6110
   Nokia 3510/6310(i)/6510/8310                  - $gsm_enable_nokia6510
+           Use always new frames for calendar   - $gsm_force_dct4_new_calendar
   Nokia 62xx/71xx                               - $gsm_enable_nokia7110
            Incoming call/SMS info               - $gsm_enable_71_92incominginfo
   Nokia 92xx                                    - $gsm_enable_nokia9210

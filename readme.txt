@@ -1,4 +1,4 @@
-Gammu README version 17.04.2003
+Gammu README version 27.04.2003
 -------------------------------
 Q. What is this ?
 
@@ -260,6 +260,12 @@ A  Nokia section
       --copyringtone or other than Gammu software) and upload to DCT4 phone
       as RTTL ringtone. No binary DCT3 -> binary DCT4 converter available
       for now.
+
+   14.DCT4 phones
+      * I don't have all info about calendar notes included in Gammu backup
+        and output
+      When make ./configure, use --newcalendar. If this works for Your
+      phone, please report model and firmware version.
 
    AT section
 

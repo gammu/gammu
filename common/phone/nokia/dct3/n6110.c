@@ -2470,7 +2470,11 @@ GSM_Phone_Functions N6110Phone = {
     	NOTSUPPORTED,		/*  	ClearFMStations       	*/	
 	NOKIA_SetIncomingUSSD,
 	NOTSUPPORTED,		/* 	DeleteUserRingtones	*/
-	N6110_ShowStartInfo
+	N6110_ShowStartInfo,
+	NOTSUPPORTED,		/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,		/*	GetFile			*/
+	NOTSUPPORTED,		/* 	AddFile			*/
+	NOTSUPPORTED 		/* 	GetFreeFileMemory 	*/
 };
 
 #endif

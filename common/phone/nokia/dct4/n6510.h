@@ -8,13 +8,20 @@
 typedef struct {
 	int				LastCalendarYear;
 	int				LastCalendarPos;
+	GSM_NOKIACalendarLocations	LastCalendar;
+	int				FirstCalendarPos;
 
 	GSM_NOKIASMSFolder		LastSMSFolder;
 	GSM_SMSFolders			LastSMSFolders;
-	GSM_NOKIACalendarLocations	LastCalendar;
-	int				FirstCalendarPos;
+
 	GSM_NOKIAToDoLocations		LastToDo;
+
 	unsigned char			RingtoneID;	/* When set with preview */
+
+	int				FilesLocations[500];
+	int				FilesParents[500];
+	int				FilesLocationsUsed;
+	int				FilesLocationsCurrent;
 } GSM_Phone_N6510Data;
 
 #ifndef GSM_USED_FBUS2

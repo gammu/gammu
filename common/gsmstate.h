@@ -292,6 +292,8 @@ typedef enum {
 	ID_SetAutoNetworkLogin,
 	ID_SetWAPSettings,
 	ID_GetSIMIMSI,
+	ID_GetFileInfo,
+	ID_GetFileFree,
 #ifdef GSM_ENABLE_ALCATEL
     	/* AT mode */
     	ID_SetFlowControl,
@@ -382,6 +384,8 @@ typedef struct {
 	GSM_FMStation		*FMStation;
 	unsigned char		*PhoneString;
 	int			StartPhoneString;
+	GSM_FileFolderInfo	*File;
+	int			*FileFree;
 
 	bool			EnableIncomingCall;
 	bool			EnableIncomingSMS;	/* notify about incoming sms ? 	*/
@@ -487,7 +491,7 @@ typedef struct {
 	GSM_Error (*SetIncomingCall)	(GSM_StateMachine *s, bool		    enable	);
 	GSM_Error (*GetNextCalendarNote)(GSM_StateMachine *s, GSM_CalendarEntry	    *Note,	bool	start		);
 	GSM_Error (*DeleteCalendarNote)	(GSM_StateMachine *s, GSM_CalendarEntry     *Note	);
-	GSM_Error (*AddCalendarNote)	(GSM_StateMachine *s, GSM_CalendarEntry	    *Note, bool Past);
+	GSM_Error (*AddCalendarNote)	(GSM_StateMachine *s, GSM_CalendarEntry	    *Note, 	bool Past);
 	GSM_Error (*GetBatteryCharge)	(GSM_StateMachine *s, GSM_BatteryCharge     *bat	);
 	GSM_Error (*GetSignalQuality)	(GSM_StateMachine *s, GSM_SignalQuality     *sig	);
  	GSM_Error (*GetCategory)	(GSM_StateMachine *s, GSM_Category	    *Category	);
@@ -497,6 +501,10 @@ typedef struct {
 	GSM_Error (*SetIncomingUSSD)	(GSM_StateMachine *s, bool		    enable	);
 	GSM_Error (*DeleteUserRingtones)(GSM_StateMachine *s);
 	GSM_Error (*ShowStartInfo)	(GSM_StateMachine *s, bool 		    enable	);
+	GSM_Error (*GetNextFileFolder)	(GSM_StateMachine *s, GSM_FileFolderInfo    *File, 	bool start);
+	GSM_Error (*GetFile)		(GSM_StateMachine *s, GSM_FileFolderInfo    *File	);
+	GSM_Error (*AddFile)		(GSM_StateMachine *s, GSM_FileFolderInfo    *File	);
+	GSM_Error (*GetFreeFileMemory)	(GSM_StateMachine *s, int *Free);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;
@@ -646,6 +654,7 @@ typedef enum {
 	F_NOMIDI,	/* No ringtones in MIDI						*/
 	F_BLUETOOTH,	/* Bluetooth support						*/
 	F_NOFILESYSTEM,	/* No images, ringtones, java saved in special filesystem	*/
+	F_NEWCALENDAR,	/* Use new frames for calendar 					*/
 
 	/* AT modules */
 	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/

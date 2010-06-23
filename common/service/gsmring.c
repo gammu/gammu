@@ -490,6 +490,8 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 
 	fread(buffer, 2000, 1, file);
 
+	ringtone->NoteTone.NrCommands = 0;
+
 	/* This is for RTTL ringtones without name. */
 	if (buffer[0] != RTTTL_SEP[0]) {
 		strtok(buffer, RTTTL_SEP);
@@ -1394,48 +1396,33 @@ GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_Rington
 	return GE_NOTIMPLEMENTED;
 }
 
-
+/* 0 = SonyEricsson, 0.1 = SonyEricsson with beats and style
+ * 1.0 = IMelody 1.0, 1.2 = IMelody 1.2 */
 unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, int *maxlength, double version)
 {
-	int 			i, NrNotes = 0, Len, Max = *maxlength, j, k=0;
+	int 			i, NrNotes = 0, Len, Max = *maxlength;
 
 	GSM_RingNote 		*Note;	
 
 	GSM_RingNoteScale	DefNoteScale;
 	GSM_RingNoteStyle	DefNoteStyle=0;
 	int			DefNoteTempo=0;
-	unsigned char 		buffer[15];
 
 	bool 			started = false;
 
-	*maxlength=sprintf(package,"BEGIN:IMELODY%c%c",13,10);
-	if (version == 1.0) {
-		*maxlength+=sprintf(package+(*maxlength),"VERSION:1.0%c%c",13,10);
-	} else {
-		*maxlength+=sprintf(package+(*maxlength),"VERSION:1.2%c%c",13,10);
+	*maxlength = 0;
+
+	if (version >= 1.0) {
+		*maxlength+=sprintf(package,"BEGIN:IMELODY%c%c",13,10);
+		if (version == 1.0) {
+			*maxlength+=sprintf(package+(*maxlength),"VERSION:1.0%c%c",13,10);
+		} else {
+			*maxlength+=sprintf(package+(*maxlength),"VERSION:1.2%c%c",13,10);
+		}
+		*maxlength+=sprintf(package+(*maxlength),"FORMAT:CLASS1.0%c%c",13,10);
 	}
-
-	*maxlength+=sprintf(package+(*maxlength),"FORMAT:CLASS1.0%c%c",13,10);
-
 	if (version == 1.2) {
 		*maxlength+=sprintf(package+(*maxlength),"NAME:%s%c%c",DecodeUnicodeString(ringtone.Name),13,10);
-
-		/* Find the most frequently used style */ 
-		for (i=0;i<3;i++) buffer[i]=0;
-		for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
-			if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
-				buffer[ringtone.NoteTone.Commands[i].Note.Style]++; // Styles: 0;1;2
-			}
-		}
-		/* Now find the most frequently used */
-		j=0;
-		for (i=0;i<3;i++) {
-			if (buffer[i]>j) {
-				k=i; 
-				j=buffer[i];
-	          	}
-		}
-		DefNoteStyle = k; /* Save default style */
 	}
 
 	DefNoteScale = Scale_880; /* by iMelody definition */
@@ -1444,14 +1431,16 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
 			Note = &ringtone.NoteTone.Commands[i].Note;
 			Len  = *maxlength;
-			if (!started) {
-				if (version == 1.2) {
-					DefNoteTempo=Note->Tempo;
+
+			if (!started && Note->Note != Note_Pause) {
+				if (version == 1.2 || version == 0.1) {
 					/* Save the default tempo */
+					DefNoteTempo = Note->Tempo;
 					Len+=sprintf(package+Len,"BEAT:%i%c%c",DefNoteTempo,13,10);
 					dprintf("DefNoteTempo=%d\n",DefNoteTempo);
-				
+
 					/* Save default style */
+					DefNoteStyle = Note->Style;
 					switch (DefNoteStyle) {
 						case NaturalStyle   :Len+=sprintf(package+Len,"STYLE:S0%c%c",13,10); break;
 						case ContinuousStyle:Len+=sprintf(package+Len,"STYLE:S1%c%c",13,10); break;
@@ -1461,48 +1450,57 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 				Len+=sprintf(package+Len,"MELODY:");
 				started = true;
 			}
-
-			if (Note->Note!=Note_Pause && Note->Scale != DefNoteScale)
-			{
-				Len+=sprintf(package+Len,"*%i",Note->Scale-1);
+			if (started) {
+				if (Note->Note!=Note_Pause && Note->Scale != DefNoteScale)
+				{
+					Len+=sprintf(package+Len,"*%i",Note->Scale-1);
+				}
+				switch (Note->Note) {
+					case Note_C  	:Len+=sprintf(package+Len,"c");	break;
+					case Note_Cis	:Len+=sprintf(package+Len,"#c");break;
+					case Note_D  	:Len+=sprintf(package+Len,"d");	break;
+					case Note_Dis	:Len+=sprintf(package+Len,"#d");break;
+					case Note_E  	:Len+=sprintf(package+Len,"e");	break;
+					case Note_F  	:Len+=sprintf(package+Len,"f");	break;
+					case Note_Fis	:Len+=sprintf(package+Len,"#f");break;
+					case Note_G  	:Len+=sprintf(package+Len,"g");	break;
+					case Note_Gis	:Len+=sprintf(package+Len,"#g");break;
+					case Note_A  	:Len+=sprintf(package+Len,"a");	break;
+					case Note_Ais	:Len+=sprintf(package+Len,"#a");break;
+					case Note_H  	:Len+=sprintf(package+Len,"b");	break;
+					case Note_Pause	:Len+=sprintf(package+Len,"r");	break;
+				}
+				switch (Note->Duration) {
+					case Duration_Full : package[Len++]='0';	break;
+					case Duration_1_2  : package[Len++]='1';	break;
+					case Duration_1_4  : package[Len++]='2';	break;
+					case Duration_1_8  : package[Len++]='3';	break;
+					case Duration_1_16 : package[Len++]='4';	break;
+					case Duration_1_32 : package[Len++]='5';	break;
+					default		   :				break;
+				}
+				switch (Note->DurationSpec) {
+					case DottedNote		: package[Len++] = '.'; break;
+					case DoubleDottedNote	: package[Len++] = ':'; break;
+					case Length_2_3		: package[Len++] = ';'; break;
+					default		   	:			break;
+				}
+				if (version >= 0) {
+					/* 15 = Len of END:IMELODY... */
+					if ((Len+15) > Max) break;
+				} else {
+					if (Len > Max) break;
+				}
+				*maxlength = Len;
 			}
-			switch (Note->Note) {
-				case Note_C  	:Len+=sprintf(package+Len,"c");	break;
-				case Note_Cis	:Len+=sprintf(package+Len,"#c");break;
-				case Note_D  	:Len+=sprintf(package+Len,"d");	break;
-				case Note_Dis	:Len+=sprintf(package+Len,"#d");break;
-				case Note_E  	:Len+=sprintf(package+Len,"e");	break;
-				case Note_F  	:Len+=sprintf(package+Len,"f");	break;
-				case Note_Fis	:Len+=sprintf(package+Len,"#f");break;
-				case Note_G  	:Len+=sprintf(package+Len,"g");	break;
-				case Note_Gis	:Len+=sprintf(package+Len,"#g");break;
-				case Note_A  	:Len+=sprintf(package+Len,"a");	break;
-				case Note_Ais	:Len+=sprintf(package+Len,"#a");break;
-				case Note_H  	:Len+=sprintf(package+Len,"b");	break;
-				case Note_Pause	:Len+=sprintf(package+Len,"r");	break;
-			}
-			switch (Note->Duration) {
-				case Duration_Full : package[Len++]='0';	break;
-				case Duration_1_2  : package[Len++]='1';	break;
-				case Duration_1_4  : package[Len++]='2';	break;
-				case Duration_1_8  : package[Len++]='3';	break;
-				case Duration_1_16 : package[Len++]='4';	break;
-				case Duration_1_32 : package[Len++]='5';	break;
-				default		   :				break;
-			}
-			switch (Note->DurationSpec) {
-				case DottedNote		: package[Len++] = '.'; break;
-				case DoubleDottedNote	: package[Len++] = ':'; break;
-				case Length_2_3		: package[Len++] = ';'; break;
-				default		   	:			break;
-			}
-			/* 15 = Len of END:IMELODY... */
-			if ((Len+15) > Max) break;
-			*maxlength = Len;
 		}
 		NrNotes ++;
 	}
-	*maxlength+=sprintf(package+(*maxlength),"%c%cEND:IMELODY%c%c",13,10,13,10);
+
+	if (version >= 1.0) {
+		*maxlength+=sprintf(package+(*maxlength),"%c%cEND:IMELODY%c%c",13,10,13,10);
+	}
+
 	return NrNotes;
 }
 
