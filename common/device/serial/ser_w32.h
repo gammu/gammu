@@ -7,8 +7,8 @@
 
 typedef struct {
 	HANDLE 		hPhone;
-	OVERLAPPED 	osWrite, osRead;
-	DCB 		backup_dcb;
+	DCB 		old_settings;
+	OVERLAPPED 	osWrite,osRead;
 } GSM_Device_SerialData;
 
 #endif

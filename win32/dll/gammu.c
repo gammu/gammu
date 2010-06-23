@@ -34,11 +34,11 @@ GSM_StateMachineExt s[10];
 bool SetErrorCounter(int i, GSM_Error error)
 {
 	switch (error) {
-	case GE_TIMEOUT:
+	case ERR_TIMEOUT:
 		s[i].errors++;
 		break;
-	case GE_NOTSUPPORTED:
-	case GE_NOTIMPLEMENTED:
+	case ERR_NOTSUPPORTED:
+	case ERR_NOTIMPLEMENTED:
 		break;
 	default:
 		if (s[i].errors > 0) s[i].errors--;
@@ -74,8 +74,8 @@ BOOL LoopProc(int *i)
 			error=GSM_InitConnection(&s[*i].s,2);
 		        ReleaseMutex(s[*i].Mutex);
 			if (s[*i].ThreadTerminate) break;
-//			if (error == GE_DEVICEOPENERROR) break;
-			if (error == GE_NONE) {
+//			if (error == ERR_DEVICEOPENERROR) break;
+			if (error == ERR_NONE) {
 				s[*i].errors = 0;
 				if (*s[*i].PhoneCallBack != NULL) {
 					PhoneCall = *s[*i].PhoneCallBack;
@@ -95,7 +95,7 @@ BOOL LoopProc(int *i)
 			        ReleaseMutex(s[*i].Mutex);
 				if (SetErrorCounter(*i, error)) continue;
 				switch (error) {
-				case GE_NONE:
+				case ERR_NONE:
 					if (s[*i].ThreadTerminate) break;
 					if (SecurityStatus != s[*i].SecurityStatus) {
 						if (*s[*i].SecurityCallBack != NULL) {
@@ -105,7 +105,7 @@ BOOL LoopProc(int *i)
 						}
 					}
 					break;
-				case GE_NOTSUPPORTED:
+				case ERR_NOTSUPPORTED:
 					if (s[*i].ThreadTerminate) break;
 					if (*s[*i].SecurityCallBack != NULL) {
 						SecurityStatus		= 0;
@@ -124,7 +124,7 @@ BOOL LoopProc(int *i)
 				ReleaseMutex(s[*i].Mutex);
 				if (SetErrorCounter(*i, error)) continue;
 				if (s[*i].ThreadTerminate) break;
-				if (error == GE_NONE) {
+				if (error == ERR_NONE) {
 					if (SMSStatus.SIMUsed+SMSStatus.PhoneUsed != 0) {
 						SMSCall = *s[*i].SMSCallBack;
 						SMSCall(1,*i);
@@ -178,7 +178,7 @@ static void CheckConnectionType(int  *phone,
 	s[*phone].s.CurrentConfig->Connection = connection_to_check;
 	*error=GSM_InitConnection(&s[*phone].s,2);
 	switch (*error) {
-	case GE_NONE:
+	case ERR_NONE:
 		strcpy(connection,connection_to_check);
 		s[*phone].errors = 0;
 		CreatePhoneThread(phone,PhoneCallBack,SecurityCallBack,SMSCallBack);
@@ -186,7 +186,7 @@ static void CheckConnectionType(int  *phone,
 			PhoneCall = *s[*phone].PhoneCallBack;
 			PhoneCall(1,*phone,true);
 		}
-	case GE_DEVICEOPENERROR:
+	case ERR_DEVICEOPENERROR:
 		break;
 	default:
 		*error2 = GSM_TerminateConnection(&s[*phone].s);
@@ -220,7 +220,7 @@ GSM_Error WINAPI mystartconnection(int *phone,
 			break;
 		}
 	}
-	if (*phone == 0) return GE_MOREMEMORY;
+	if (*phone == 0) return ERR_MOREMEMORY;
 
 	s[*phone].s.ConfigNum			= 1;
 	s[*phone].s.msg	 			= NULL;
@@ -228,56 +228,56 @@ GSM_Error WINAPI mystartconnection(int *phone,
     	s[*phone].s.CurrentConfig->Localize 	= "";
 	s[*phone].s.CurrentConfig->SyncTime	= "";
 	s[*phone].s.CurrentConfig->DebugFile 	= malloc( strlen(logfile)+1 );
-	if (s[*phone].s.CurrentConfig->DebugFile == NULL) return GE_MOREMEMORY;
+	if (s[*phone].s.CurrentConfig->DebugFile == NULL) return ERR_MOREMEMORY;
 	strcpy(s[*phone].s.CurrentConfig->DebugFile,logfile);
 	strcpy(s[*phone].s.CurrentConfig->DebugLevel,logfiletype);
 	s[*phone].s.CurrentConfig->LockDevice	= "";
 	s[*phone].s.CurrentConfig->StartInfo	= "yes";
 	s[*phone].s.CurrentConfig->Device 	= malloc( strlen(device)+1 );
-	if (s[*phone].s.CurrentConfig->Device == NULL) return GE_MOREMEMORY;
+	if (s[*phone].s.CurrentConfig->Device == NULL) return ERR_MOREMEMORY;
 	strcpy(s[*phone].s.CurrentConfig->Device,device);
 	strcpy(s[*phone].s.CurrentConfig->Model,model);
 
 	if (connection[0] == 0) {
 		CheckConnectionType(phone,connection,"at115200",&error,&error2,PhoneCallBack,SecurityCallBack,SMSCallBack);
 		switch (error) {
-			case GE_NONE:
-			case GE_DEVICEOPENERROR:
+			case ERR_NONE:
+			case ERR_DEVICEOPENERROR:
 				return error;
 			default:
-				if (error2 != GE_NONE) return error2;
+				if (error2 != ERR_NONE) return error2;
 		}
 		CheckConnectionType(phone,connection,"at19200",&error,&error2,PhoneCallBack,SecurityCallBack,SMSCallBack);
 		switch (error) {
-			case GE_NONE:
-			case GE_DEVICEOPENERROR:
+			case ERR_NONE:
+			case ERR_DEVICEOPENERROR:
 				return error;
 			default:
-				if (error2 != GE_NONE) return error2;
+				if (error2 != ERR_NONE) return error2;
 		}
 		CheckConnectionType(phone,connection,"fbus",&error,&error2,PhoneCallBack,SecurityCallBack,SMSCallBack);
 		switch (error) {
-			case GE_NONE:
-			case GE_DEVICEOPENERROR:
+			case ERR_NONE:
+			case ERR_DEVICEOPENERROR:
 				return error;
 			default:
-				if (error2 != GE_NONE) return error2;
+				if (error2 != ERR_NONE) return error2;
 		}
 		strcpy(connection,"");
-		return GE_NOTCONNECTED;
+		return ERR_NOTCONNECTED;
 	} else {
 		s[*phone].s.CurrentConfig->Connection = malloc( strlen(connection)+1 );
-		if (s[*phone].s.CurrentConfig->Connection == NULL) return GE_MOREMEMORY;
+		if (s[*phone].s.CurrentConfig->Connection == NULL) return ERR_MOREMEMORY;
 		strcpy(s[*phone].s.CurrentConfig->Connection,connection);
 		s[*phone].errors = 250;
 		CreatePhoneThread(phone,PhoneCallBack,SecurityCallBack,SMSCallBack);
-		return GE_NONE;
+		return ERR_NONE;
 	}
 }
 
 GSM_Error WINAPI myendconnection(int phone)
 {
-	GSM_Error error=GE_NONE;
+	GSM_Error error=ERR_NONE;
 
 	if (s[phone].Used) {
 		s[phone].ThreadTerminate = true;
@@ -294,7 +294,7 @@ GSM_Error WINAPI mygetnetworkinfo (int phone, GSM_NetworkInfo *NetworkInfo)
 {
 	GSM_Error error;
 
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 	error=s[phone].s.Phone.Functions->GetNetworkInfo(&s[phone].s,NetworkInfo);
@@ -308,13 +308,13 @@ GSM_Error WINAPI mygetnextsmsmessage (int phone, GSM_MultiSMSMessage *sms, bool 
 	GSM_Error 	error;
 	int		i;
 
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 	error=s[phone].s.Phone.Functions->GetNextSMS(&s[phone].s,sms,start);
 	SetErrorCounter(phone, error);
         ReleaseMutex(s[phone].Mutex);
-	if (error == GE_NONE) {
+	if (error == ERR_NONE) {
 		for (i=0;i<sms->Number;i++) {
 			if (sms->SMS[i].PDU == SMS_Deliver || sms->SMS[i].PDU == SMS_Status_Report) {
 				ReverseUnicodeString(sms->SMS[i].SMSC.Number);
@@ -323,7 +323,7 @@ GSM_Error WINAPI mygetnextsmsmessage (int phone, GSM_MultiSMSMessage *sms, bool 
 			if (sms->SMS[i].PDU != SMS_Status_Report) {
 				ReverseUnicodeString(sms->SMS[i].Name);
 			}
-			if (sms->SMS[i].Coding == GSM_Coding_Unicode || sms->SMS[i].Coding == GSM_Coding_Default) {
+			if (sms->SMS[i].Coding == SMS_Coding_Unicode || sms->SMS[i].Coding == SMS_Coding_Default) {
 				ReverseUnicodeString(sms->SMS[i].Text);
 			}
 		}
@@ -335,7 +335,7 @@ GSM_Error WINAPI myentersecuritycode(int phone, GSM_SecurityCode *Code)
 {
 	GSM_Error error;
 
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 	error=s[phone].s.Phone.Functions->EnterSecurityCode(&s[phone].s,*Code);
@@ -348,7 +348,7 @@ GSM_Error WINAPI mydeletesmsmessage (int phone, GSM_SMSMessage *sms)
 {
 	GSM_Error error;
 
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 	error=s[phone].s.Phone.Functions->DeleteSMS(&s[phone].s,sms);
@@ -365,9 +365,9 @@ void SendSMSStatus (char *Device, int status)
 		if (s[i].s.opened && s[i].Used) {
 			if (strcmp(s[i].s.CurrentConfig->Device,Device)==0) {
 				if (status == 0) {
-					s[i].SendSMSStatus = GE_NONE;
+					s[i].SendSMSStatus = ERR_NONE;
 				} else {
-					s[i].SendSMSStatus = GE_UNKNOWN;
+					s[i].SendSMSStatus = ERR_UNKNOWN;
 				}
 			}
 		}
@@ -381,24 +381,24 @@ GSM_Error WINAPI mysendsmsmessage (int phone, GSM_SMSMessage *sms, unsigned int 
 	unsigned int	i,j;
 	GSM_SMSMessage	sms2;
 
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
 	memcpy(&sms2,sms,sizeof(GSM_SMSMessage));
 
 	if (sms2.SMSC.Location == 0) ReverseUnicodeString(sms2.SMSC.Number);
 	ReverseUnicodeString(sms2.Number);
 //	ReverseUnicodeString(sms2.Name);
-	if (sms2.Coding == GSM_Coding_Unicode || sms2.Coding == GSM_Coding_Default) {
+	if (sms2.Coding == SMS_Coding_Unicode || sms2.Coding == SMS_Coding_Default) {
 		ReverseUnicodeString(sms2.Text);
 	}
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 	s[phone].s.User.SendSMSStatus 	= SendSMSStatus;
-	s[phone].SendSMSStatus 		= GE_TIMEOUT;
+	s[phone].SendSMSStatus 		= ERR_TIMEOUT;
 
 	error=s[phone].s.Phone.Functions->SendSMS(&s[phone].s,&sms2);
 	SetErrorCounter(phone, error);
-	if (error != GE_NONE) {
+	if (error != ERR_NONE) {
 	        ReleaseMutex(s[phone].Mutex);
 		s[phone].s.User.SendSMSStatus = NULL;
 		return error;
@@ -408,11 +408,11 @@ GSM_Error WINAPI mysendsmsmessage (int phone, GSM_SMSMessage *sms, unsigned int 
 		i=Date.Second;
 		while (i==Date.Second) {
 			GSM_ReadDevice(&s[phone].s,false);
-			if (s[phone].SendSMSStatus != GE_TIMEOUT) break;
+			if (s[phone].SendSMSStatus != ERR_TIMEOUT) break;
 			GSM_GetCurrentDateTime(&Date);
 			my_sleep(20);
 		}
-		if (s[phone].SendSMSStatus != GE_TIMEOUT) break;
+		if (s[phone].SendSMSStatus != ERR_TIMEOUT) break;
 	}
 	ReleaseMutex(s[phone].Mutex);
 	SetErrorCounter(phone, s[phone].SendSMSStatus);
@@ -424,7 +424,7 @@ GSM_Error WINAPI mygetsmsstatus (int phone, GSM_SMSMemoryStatus *status)
 {
 	GSM_Error error;
 
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 	error=s[phone].s.Phone.Functions->GetSMSStatus(&s[phone].s,status);
@@ -438,13 +438,13 @@ GSM_Error WINAPI myaddsmsmessage (int phone, GSM_SMSMessage *sms)
 	GSM_Error 	error;
 	GSM_SMSMessage	sms2;
 
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
 	memcpy(&sms2,sms,sizeof(GSM_SMSMessage));
 	if (sms2.SMSC.Location == 0) ReverseUnicodeString(sms2.SMSC.Number);
 	ReverseUnicodeString(sms2.Number);
 	ReverseUnicodeString(sms2.Name);
-	if (sms2.Coding == GSM_Coding_Unicode || sms2.Coding == GSM_Coding_Default) {
+	if (sms2.Coding == SMS_Coding_Unicode || sms2.Coding == SMS_Coding_Default) {
 		ReverseUnicodeString(sms2.Text);
 	}
 
@@ -470,13 +470,13 @@ GSM_Error WINAPI mygetimei(int phone, char *IMEI)
 {
 	GSM_Error error;
 
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 	error=s[phone].s.Phone.Functions->GetIMEI(&s[phone].s);
 	SetErrorCounter(phone, error);
         ReleaseMutex(s[phone].Mutex);
-	if (error == GE_NONE) strcpy(IMEI,s[phone].s.Phone.Data.IMEI);
+	if (error == ERR_NONE) strcpy(IMEI,s[phone].s.Phone.Data.IMEI);
 	return error;
 }
 
@@ -484,42 +484,42 @@ GSM_Error WINAPI mygetmanufacturer(int phone, char *manufacturer)
 {
 	GSM_Error error;
 
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 	error=s[phone].s.Phone.Functions->GetManufacturer(&s[phone].s);
 	SetErrorCounter(phone, error);
         ReleaseMutex(s[phone].Mutex);
-	if (error == GE_NONE) strcpy(manufacturer,s[phone].s.Phone.Data.Manufacturer);
+	if (error == ERR_NONE) strcpy(manufacturer,s[phone].s.Phone.Data.Manufacturer);
 	return error;
 }
 
 GSM_Error WINAPI mygetmodel(int phone, char *model)
 {
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 	strcpy(model,s[phone].s.Phone.Data.Model);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error WINAPI mygetmodelname(int phone, char *model)
 {
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 	strcpy(model,s[phone].s.Phone.Data.ModelInfo->model);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error WINAPI mygetfirmwareversion(int phone, double *version)
 {
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 	*version = s[phone].s.Phone.Data.VerNum;
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error WINAPI myreset(int phone, bool hard)
 {
 	GSM_Error error;
 
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 	error=s[phone].s.Phone.Functions->Reset(&s[phone].s,hard);
@@ -538,7 +538,7 @@ GSM_Error WINAPI mysmscounter(int 		MessageLength,
 {
 	/* FIXME. Reverse MessageBuffer */
 	GSM_SMSCounter(MessageLength,MessageBuffer,UDH,Coding,SMSNum,CharsLeft);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error WINAPI mymakemultipartsms(unsigned char		*MessageBuffer,
@@ -554,11 +554,11 @@ GSM_Error WINAPI mymakemultipartsms(unsigned char		*MessageBuffer,
 	/* FIXME. Reverse MessageBuffer */
 	GSM_MakeMultiPartSMS(SMS,MessageBuffer,MessageLength,UDHType,Coding,Class,ReplaceMessage);
 	for (i=0;i<SMS->Number;i++) {
-		if (SMS->SMS[i].Coding == GSM_Coding_Unicode || SMS->SMS[i].Coding == GSM_Coding_Default) {
+		if (SMS->SMS[i].Coding == SMS_Coding_Unicode || SMS->SMS[i].Coding == SMS_Coding_Default) {
 			ReverseUnicodeString(SMS->SMS[i].Text);
 		}
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 /* ------------------ see dct4.c ------------------------------------------- */
@@ -573,9 +573,9 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 			sprintf(s->Phone.Data.PhoneString+j,"%02x",msg.Buffer[i]);
 			j=j+2;
 		}
-		return GE_NONE;
+		return ERR_NONE;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 char SecLength;
@@ -588,7 +588,7 @@ static GSM_Error DCT4_ReplyGetSecurityCode(GSM_Protocol_Message msg, GSM_StateMa
 			sprintf(s->Phone.Data.PhoneString,"%s",msg.Buffer+18);
 		}
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Reply_Function UserReplyFunctions4[] = {
@@ -604,7 +604,7 @@ GSM_Error WINAPI mygetdct4simlocknetwork(int phone, char *network)
 	unsigned char 	GetSimlock[4] = {N6110_FRAME_HEADER, 0x0C};
 	GSM_Error 	error;
 
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 	s[phone].s.User.UserReplyFunctions = UserReplyFunctions4;
@@ -630,7 +630,7 @@ GSM_Error WINAPI mygetdct4securitycode(int phone, char *code)
 				0x00, 0x00, 0x00, 0x00,
 				0x00};                  //Length
 
-	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 	s[phone].s.User.UserReplyFunctions = UserReplyFunctions4;

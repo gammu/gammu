@@ -1,3 +1,5 @@
+/* (c) 2001-2003 by Marcin Wiacek */
+
 #include <string.h>
 
 #include "gsmnet.h"
@@ -186,8 +188,8 @@ unsigned char *GSM_Networks[] = {
 	"244 03", "Telia City (Finland)",
 	"244 05", "Radiolinja",
 	"244 09", "Finnet",
-        "244 12", "DNA (FI2G)",
-        "244 14", "Alands Mobiltelefon",
+	"244 12", "DNA (FI2G)",
+	"244 14", "Alands Mobiltelefon",
 	"244 91", "Sonera",
 	"246 01", "OMNITEL",
 	"246 02", "Bite GSM",
@@ -397,7 +399,7 @@ char *GSM_GetNetworkName(char *NetworkCode)
 
 	EncodeUnicode(retval,"unknown",7);
 	while (GSM_Networks[i*2] != NULL) {
-		if (strcmp(GSM_Networks[i*2],NetworkCode)) {
+		if (!strncmp(GSM_Networks[i*2],NetworkCode,6)) {
 			EncodeUnicode(retval, GSM_Networks[i*2+1], strlen(GSM_Networks[i*2+1]));
 			break;
 		}
@@ -413,7 +415,7 @@ char *GSM_GetCountryName(char *CountryCode)
 
 	EncodeUnicode(retval,"unknown",7);
 	while (GSM_Countries[i*2] != NULL) {
-		if (strcmp(GSM_Countries[i*2],CountryCode)) {
+		if (!strncmp(GSM_Countries[i*2],CountryCode,3)) {
 			EncodeUnicode(retval, GSM_Countries[i*2+1], strlen(GSM_Countries[i*2+1]));
 			break;
 		}

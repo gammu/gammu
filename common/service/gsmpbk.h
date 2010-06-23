@@ -1,6 +1,7 @@
+/* (c) 2001-2003 by Marcin Wiacek and Michal Cihar */
 
-#ifndef __gsm_phonebook_h
-#define __gsm_phonebook_h
+#ifndef __gsm_pbk_h
+#define __gsm_pbk_h
 
 #include <stdlib.h>
 
@@ -8,29 +9,28 @@
 #include "gsmmisc.h"
 
 /**
- * This structure contains info about number of used/free entries in phonebook
+ * Structure contains info about number of used/free entries in phonebook
  * memory
  */
 typedef struct {
+	/**
+	 * Number of used entries
+	 */
+	int	     	MemoryUsed;
 	/**
 	 * Memory type
 	 */
 	GSM_MemoryType  MemoryType;
 	/**
-	 * Number of used entries
-	 */
-	int	     	Used;
-	/**
 	 * Number of free entries
 	 */
-	int	     	Free;
+	int	     	MemoryFree;
 } GSM_MemoryStatus;
 
 /**
  * Type of specific phonebook entry. In parenthesis is specified in which
  * member of @ref GSM_SubMemoryEntry value is stored.
  */
-/* Originally created for MyGnokii */
 typedef enum {
 	/**
 	 * General number. (Text)
@@ -162,11 +162,11 @@ typedef enum {
 	PBK_PictureID
 } GSM_EntryType;
 
-#define GSM_PHONEBOOK_TEXT_LENGTH       (200)
-#define GSM_PHONEBOOK_ENTRIES	   	(26)
+#define GSM_PHONEBOOK_TEXT_LENGTH       200
+#define GSM_PHONEBOOK_ENTRIES	   	26
 
 /**
- * One value of memory entry.
+ * One value of phonebook memory entry.
  */
 typedef struct {
 	/**
@@ -191,28 +191,28 @@ typedef struct {
 	int		     	VoiceTag;
 } GSM_SubMemoryEntry;
 
-/* Define datatype for phonebook entry
- * used for getting/writing phonebook entries.
+/**
+ * Structure for saving phonebook entries
  */
 typedef struct {
 	/**
-	 * Type of memory.
+	 * Used memory for phonebook entry
 	 */
 	GSM_MemoryType	  	MemoryType;
 	/**
-	 * Location.
+	 * Used location for phonebook entry
 	 */
 	int		     	Location;
-	/**
-	 * Number of entries.
-	 */
-	int		     	EntriesNum;
 	/**
 	 * Whether to prefer unicode for storing this entry.
 	 */
 	bool		    	PreferUnicode;
 	/**
-	 * Values for this entry.
+	 * Number of SubEntries in Entries table.
+	 */
+	int		     	EntriesNum;
+	/**
+	 * Values of SubEntries.
 	 */
 	GSM_SubMemoryEntry      Entries[GSM_PHONEBOOK_ENTRIES];
 } GSM_MemoryEntry;
@@ -230,28 +230,31 @@ unsigned char *GSM_PhonebookGetEntryName (GSM_MemoryEntry *entry);
 void      GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool header, GSM_VCardVersion Version);
 GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version);
 
+#ifndef ENABLE_LGPL
+/* (c) by Timo Teras */
 void DecodeVCARD21Text(char *VCard, GSM_MemoryEntry *pbk);
+#endif
 
 /**
- * Define datatype for saving speed dials
+ * Structure for saving speed dials
  */
 typedef struct {
 	/**
-	 * Specify number of speed dial
+	 * Number of speed dial: 2,3..,8,9
 	 */
-	int	     	Location;
-	/**
-	 * Memory, where is saved used phonebook entry
-	 */
-	GSM_MemoryType  MemoryType;
-	/**
-	 * Location in memory, where is saved used phonebook entry
-	 */
-	int	     	MemoryLocation;
+	int	     		Location;
 	/**
 	 * ID of phone number used in phonebook entry
 	 */
-	int	     	MemoryNumberID;
+	int	     		MemoryNumberID;
+	/**
+	 * Memory, where is saved used phonebook entry
+	 */
+	GSM_MemoryType  	MemoryType;
+	/**
+	 * Location in memory, where is saved used phonebook entry
+	 */
+	int	     		MemoryLocation;
 } GSM_SpeedDial;
 
 #endif

@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #include <string.h>
 #include <time.h>

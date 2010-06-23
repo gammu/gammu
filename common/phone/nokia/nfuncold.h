@@ -1,3 +1,4 @@
+/* (c) 2003 by Marcin Wiacek */
 
 #ifndef phone_nokia2_h
 #define phone_nokia2_h

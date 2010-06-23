@@ -1,5 +1,5 @@
-#ifndef ___MD5_H___
-#define ___MD5_H___
+#ifndef __md5_h
+#define __md5_h
 
 void CalculateMD5(unsigned char *buffer, int length, unsigned char *checksum);
 

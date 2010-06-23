@@ -1,5 +1,8 @@
-#ifndef __gsm_calendar_h
-#define __gsm_calendar_h
+/* (c) 2002-2003 by Marcin Wiacek */
+/* 5210 calendar IDs by Frederick Ros */
+
+#ifndef __gsm_cal_h
+#define __gsm_cal_h
 
 #include "../gsmcomon.h"
 
@@ -9,121 +12,121 @@
 #define MAX_CALENDAR_TEXT_LENGTH	256 /* In 6310 max. 256 chars */
 
 /**
- * Define enums for Calendar Note types.
+ * Enum defines types of calendar notes
  */
 typedef enum {
 	/**
 	 * Reminder or Date
 	 */
-	GCN_REMINDER=1,
+	GSM_CAL_REMINDER=1,
 	/**
 	 * Call
 	 */
-	GCN_CALL,
+	GSM_CAL_CALL,
 	/**
 	 * Meeting
 	 */
-	GCN_MEETING,
+	GSM_CAL_MEETING,
 	/**
 	 * Birthday or Anniversary or Special Occasion
 	 */
-	GCN_BIRTHDAY,
+	GSM_CAL_BIRTHDAY,
 	/**
 	 * Memo or Miscellaneous
 	 */
-	GCN_MEMO,
+	GSM_CAL_MEMO,
 	/**
 	 * Travel
 	 */
-	GCN_TRAVEL,
+	GSM_CAL_TRAVEL,
 	/**
 	 * Vacation
 	 */
-	GCN_VACATION,
+	GSM_CAL_VACATION,
 	/**
 	 * Training - Athletism
 	 */
-	GCN_T_ATHL,
+	GSM_CAL_T_ATHL,
 	/**
 	 * Training - Ball Games
 	 */
-	GCN_T_BALL,
+	GSM_CAL_T_BALL,
 	/**
 	 * Training - Cycling
 	 */
-	GCN_T_CYCL,
+	GSM_CAL_T_CYCL,
 	/**
 	 * Training - Budo
 	 */
-	GCN_T_BUDO,
+	GSM_CAL_T_BUDO,
 	/**
 	 * Training - Dance
 	 */
-	GCN_T_DANC,
+	GSM_CAL_T_DANC,
 	/**
 	 * Training - Extreme Sports
 	 */
-	GCN_T_EXTR,
+	GSM_CAL_T_EXTR,
 	/**
 	 * Training - Football
 	 */
-	GCN_T_FOOT,
+	GSM_CAL_T_FOOT,
 	/**
 	 * Training - Golf
 	 */
-	GCN_T_GOLF,
+	GSM_CAL_T_GOLF,
 	/**
 	 * Training - Gym
 	 */
-	GCN_T_GYM,
+	GSM_CAL_T_GYM,
 	/**
 	 * Training - Horse Race
 	 */
-	GCN_T_HORS,
+	GSM_CAL_T_HORS,
 	/**
 	 * Training - Hockey
 	 */
-	GCN_T_HOCK,
+	GSM_CAL_T_HOCK,
 	/**
 	 * Training - Races
 	 */
-	GCN_T_RACE,
+	GSM_CAL_T_RACE,
 	/**
 	 * Training - Rugby
 	 */
-	GCN_T_RUGB,
+	GSM_CAL_T_RUGB,
 	/**
 	 * Training - Sailing
 	 */
-	GCN_T_SAIL,
+	GSM_CAL_T_SAIL,
 	/**
 	 * Training - Street Games
 	 */
-	GCN_T_STRE,
+	GSM_CAL_T_STRE,
 	/**
 	 * Training - Swimming
 	 */
-	GCN_T_SWIM,
+	GSM_CAL_T_SWIM,
 	/**
 	 * Training - Tennis
 	 */
-	GCN_T_TENN,
+	GSM_CAL_T_TENN,
 	/**
 	 * Training - Travels
 	 */
-	GCN_T_TRAV,
+	GSM_CAL_T_TRAV,
 	/**
 	 * Training - Winter Games
 	 */
-	GCN_T_WINT,
+	GSM_CAL_T_WINT,
 	/**
 	 * Alarm
 	 */
-	GCN_ALARM,
+	GSM_CAL_ALARM,
 	/**
 	 * Alarm repeating each day.
 	 */
-	GCN_DAILY_ALARM
+	GSM_CAL_DAILY_ALARM
 } GSM_CalendarNoteType;
 
 /**

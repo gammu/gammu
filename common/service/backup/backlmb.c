@@ -1,3 +1,4 @@
+/* (c) 2001-2003 by Marcin Wiacek */
 
 #include <string.h>
 #include <ctype.h>
@@ -24,10 +25,10 @@ static void SaveLMBStartupEntry(FILE *file, GSM_Bitmap bitmap)
 
 	if (bitmap.Type == GSM_StartupLogo) {
 		req[count++] = 0x01;
-		req[count++] = bitmap.Height;
-		req[count++] = bitmap.Width;
+		req[count++] = bitmap.BitmapHeight;
+		req[count++] = bitmap.BitmapWidth;
 		Type = GSM_NokiaStartupLogo;
-	        switch (bitmap.Height) {
+	        switch (bitmap.BitmapHeight) {
 			case 65: Type = GSM_Nokia7110StartupLogo; break;
 			case 60: Type = GSM_Nokia6210StartupLogo; break;
 		}
@@ -36,7 +37,7 @@ static void SaveLMBStartupEntry(FILE *file, GSM_Bitmap bitmap)
 
 		req[12]++;
 	}
-	if (bitmap.Type == GSM_WelcomeNoteText) {
+	if (bitmap.Type == GSM_WelcomeNote_Text) {
 		req[count++]=0x02;
 		req[count++]=UnicodeLength(bitmap.Text);
 		memcpy(req+count,DecodeUnicodeString(bitmap.Text),UnicodeLength(bitmap.Text));
@@ -73,14 +74,14 @@ static void SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
 	if (bitmap.DefaultRingtone) {
 		req[count++] = 0x16;
 	} else {
-		req[count++] = bitmap.Ringtone;
+		req[count++] = bitmap.RingtoneID;
 	}
-	if (bitmap.Enabled) req[count++] = 0x01; else req[count++] = 0x00;
+	if (bitmap.BitmapEnabled) req[count++] = 0x01; else req[count++] = 0x00;
 	req[count++] = (PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0) + 4) >> 8;
 	req[count++] = (PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0) + 4) % 0xff;
 	if (bitmap.DefaultBitmap) {
-		bitmap.Width  = 72;
-		bitmap.Height = 14;
+		bitmap.BitmapWidth  = 72;
+		bitmap.BitmapHeight = 14;
 		GSM_ClearBitmap(&bitmap);
 	}
 	NOKIA_CopyBitmap(GSM_NokiaCallerLogo, &bitmap, req, &count);
@@ -113,7 +114,7 @@ void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 	req[5]=(count-12)/256;
 	req[8]=req[12] = entry->Location & 0xff;
 	req[9]=req[13] = (entry->Location >> 8);
-	if (entry->MemoryType==GMT_ME) req[10]=req[14]=2;
+	if (entry->MemoryType==MEM_ME) req[10]=req[14]=2;
             
 	fwrite(req, 1, count, file);	    
 }
@@ -135,13 +136,13 @@ GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
 
  
 	file = fopen(FileName, "wb");      
-	if (file == NULL) return GE_CANTOPENFILE;
+	if (file == NULL) return ERR_CANTOPENFILE;
 
 	/* Write the header of the file. */		    		      
 	fwrite(LMBHeader, 1, sizeof(LMBHeader), file);
 
 	if (backup->PhonePhonebook[0]!=NULL) {
-		PBKHeader[8]	= 2;		/* memory type=GMT_ME */
+		PBKHeader[8]	= 2;		/* memory type=MEM_ME */
 		PBKHeader[12] 	= (unsigned char)(500 % 256);
 		PBKHeader[13] 	= 500 / 256;
 		fwrite(PBKHeader, 1, sizeof(PBKHeader), file);
@@ -152,7 +153,7 @@ GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
 		}
 	}
 	if (backup->SIMPhonebook[0]!=NULL) {
-		PBKHeader[8]	= 3;		/* memory type=GMT_SM */
+		PBKHeader[8]	= 3;		/* memory type=MEM_SM */
 		PBKHeader[12] 	= (unsigned char)(250 % 256);
 		PBKHeader[13] 	= 250 / 256;
 		PBKHeader[14]	= 0x16;		/* max size of one entry */
@@ -173,7 +174,7 @@ GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
 	}
 
 	fclose(file);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error LoadLMBCallerEntry(unsigned char *buffer, unsigned char *buffer2, GSM_Backup *backup)
@@ -194,9 +195,9 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer, unsigned char *buffer
 #endif
 
   	bitmap.Location		= buffer2[0] + 1;
-	bitmap.Type		= GSM_CallerLogo;
+	bitmap.Type		= GSM_CallerGroupLogo;
 	bitmap.DefaultRingtone 	= false;
-	bitmap.Ringtone		= buffer2[buffer2[1]+2];
+	bitmap.RingtoneID		= buffer2[buffer2[1]+2];
 	
 	EncodeUnicode(bitmap.Text,buffer2+2,buffer2[1]);
 	if (bitmap.Text[0] == 0x00 && bitmap.Text[1] == 0x00) {
@@ -205,8 +206,8 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer, unsigned char *buffer
 		bitmap.DefaultName = false;
 	}
 	
-	bitmap.Enabled = false;
-	if (buffer2[buffer2[1]+3]==1) bitmap.Enabled=true;
+	bitmap.BitmapEnabled = false;
+	if (buffer2[buffer2[1]+3]==1) bitmap.BitmapEnabled=true;
 
 	bitmap.DefaultBitmap = false;
 	PHONE_DecodeBitmap(GSM_NokiaCallerLogo, buffer2+(buffer2[1]+10), &bitmap);
@@ -220,15 +221,15 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer, unsigned char *buffer
 	while (backup->CallerLogos[num] != NULL) num++;
 	if (num < GSM_BACKUP_MAX_CALLER) {
 		backup->CallerLogos[num] = malloc(sizeof(GSM_Bitmap));
-	        if (backup->CallerLogos[num] == NULL) return GE_MOREMEMORY;
+	        if (backup->CallerLogos[num] == NULL) return ERR_MOREMEMORY;
 		backup->CallerLogos[num + 1] = NULL;
 	} else {
 		dbgprintf("Increase GSM_BACKUP_MAX_CALLER\n");
-		return GE_MOREMEMORY;
+		return ERR_MOREMEMORY;
 	}
 	*backup->CallerLogos[num] = bitmap;
 
-	return GE_NONE;
+	return ERR_NONE;
 }		     
 
 static GSM_Error LoadLMBStartupEntry(unsigned char *buffer, unsigned char *buffer2, GSM_Backup *backup)
@@ -245,12 +246,12 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer, unsigned char *buffe
 			case 1:
 				dbgprintf("Block 1 - startup logo\n");
 				backup->StartupLogo = malloc(sizeof(GSM_Bitmap));
-			        if (backup->StartupLogo == NULL) return GE_MOREMEMORY;
+			        if (backup->StartupLogo == NULL) return ERR_MOREMEMORY;
 				backup->StartupLogo->Location	= 1;
-				backup->StartupLogo->Height	= buffer2[j++];
-				backup->StartupLogo->Width	= buffer2[j++];
+				backup->StartupLogo->BitmapHeight	= buffer2[j++];
+				backup->StartupLogo->BitmapWidth	= buffer2[j++];
 				Type = GSM_NokiaStartupLogo;
-			        switch (backup->StartupLogo->Height) {
+			        switch (backup->StartupLogo->BitmapHeight) {
 					case 65: Type = GSM_Nokia7110StartupLogo; break;
 					case 60: Type = GSM_Nokia6210StartupLogo; break;
 				}
@@ -268,8 +269,8 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer, unsigned char *buffe
 #endif
 				if (backup->StartupLogo == NULL) {
 					backup->StartupLogo = malloc(sizeof(GSM_Bitmap));
-				        if (backup->StartupLogo == NULL) return GE_MOREMEMORY;
-					backup->StartupLogo->Type = GSM_WelcomeNoteText;
+				        if (backup->StartupLogo == NULL) return ERR_MOREMEMORY;
+					backup->StartupLogo->Type = GSM_WelcomeNote_Text;
 					EncodeUnicode(backup->StartupLogo->Text,buffer2+j,buffer2[j]);
 				}
 				j = j + buffer2[j];
@@ -279,7 +280,7 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer, unsigned char *buffe
 				break;
 		}
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, GSM_Backup *backup)
@@ -299,8 +300,8 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 
 	N71_65_DecodePhonebook(NULL, &pbk, NULL,NULL,buffer2+4,(buffer[4]+buffer[5]*256)-4);
 
-	pbk.MemoryType=GMT_SM;
-	if (buffer[10]==2) pbk.MemoryType=GMT_ME;
+	pbk.MemoryType=MEM_SM;
+	if (buffer[10]==2) pbk.MemoryType=MEM_ME;
 
 	pbk.Location=buffer2[0]+256*buffer2[1];
 
@@ -309,26 +310,26 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 		while (backup->PhonePhonebook[num] != NULL) num++;
 		if (num < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
 			backup->PhonePhonebook[num] = malloc(sizeof(GSM_MemoryEntry));
-		        if (backup->PhonePhonebook[num] == NULL) return GE_MOREMEMORY;
+		        if (backup->PhonePhonebook[num] == NULL) return ERR_MOREMEMORY;
 			backup->PhonePhonebook[num + 1] = NULL;
 		} else {
 			dbgprintf("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
-			return GE_MOREMEMORY;
+			return ERR_MOREMEMORY;
 		}
 		*backup->PhonePhonebook[num] = pbk;
 	} else {
 		while (backup->SIMPhonebook[num] != NULL) num++;
 		if (num < GSM_BACKUP_MAX_SIMPHONEBOOK) {
 			backup->SIMPhonebook[num] = malloc(sizeof(GSM_MemoryEntry));
-		        if (backup->SIMPhonebook[num] == NULL) return GE_MOREMEMORY;
+		        if (backup->SIMPhonebook[num] == NULL) return ERR_MOREMEMORY;
 			backup->SIMPhonebook[num + 1] = NULL;
 		} else {
 			dbgprintf("Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
-			return GE_MOREMEMORY;
+			return ERR_MOREMEMORY;
 		}
 		*backup->SIMPhonebook[num] = pbk;
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
@@ -341,7 +342,7 @@ GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
 	GSM_Error	error;
 
 	file = fopen(FileName, "rb");
-	if (file == NULL) return(GE_CANTOPENFILE);
+	if (file == NULL) return(ERR_CANTOPENFILE);
 
 	/* Read the header of the file. */
 	fread(buffer, 1, 4, file);
@@ -379,21 +380,21 @@ GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
 #endif        
 		if (memcmp(buffer, "PBE2",4)==0) {
 			error = LoadLMBPbkEntry(buffer,buffer2,backup);
-			if (error != GE_NONE) {
+			if (error != ERR_NONE) {
 				fclose(file);
 				return error;
 			}
 		}
 		if (memcmp(buffer, "CGR ",4)==0) {
 			error = LoadLMBCallerEntry(buffer, buffer2, backup);
-			if (error != GE_NONE) {
+			if (error != ERR_NONE) {
 				fclose(file);
 				return error;
 			}
 		}
 		if (memcmp(buffer, "WEL ",4)==0) {
 			error = LoadLMBStartupEntry(buffer, buffer2, backup);
-			if (error != GE_NONE) {
+			if (error != ERR_NONE) {
 				fclose(file);
 				return error;
 			}
@@ -402,7 +403,7 @@ GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
 
 	fclose(file);
 
-	return(GE_NONE);
+	return ERR_NONE;
 }
 
 #endif

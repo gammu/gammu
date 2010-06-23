@@ -401,7 +401,7 @@ var
   error                     : GSM_Error;
   CurrentDate,CurrentTime   : TDateTime;
 begin
-  error:=GE_UNKNOWN;
+  error:=ERR_UNKNOWN;
   WasSearch:=false;
   FileAttrs:=faAnyFile;
   num:=1;
@@ -578,7 +578,7 @@ begin
           //30 is timeout in seconds. Phone waits so long time for network answer
           error:=GSM_SendSMSMessage(GSMDevice[num].DeviceID,@MultiSMS.SMS[j],StrToInt(GatewayINIFile.ReadString('general', 'SMSSendingTimeout','30')));
 
-          if error <> GE_NONE then
+          if error <> ERR_NONE then
           begin
             //adding info to main screen
             MainForm.OutgoingSMSListView.Items.Item[MainForm.OutgoingSMSListView.Items.Count-1].SubItems.Strings[3]:='ERROR '+IntTostr(integer(error))+', SMS '+IntToStr(j);
@@ -604,7 +604,7 @@ begin
             ShowStatistics();
           end;
         end;
-        if (error = GE_NONE) then
+        if (error = ERR_NONE) then
         begin
           DeleteFile(GatewayINIFile.ReadString('general', 'senddir', ExtractFilePath(Application.ExeName))+sr.Name);
           //adding info to main screen
@@ -674,23 +674,23 @@ begin
     GSMDevice[num].PINWarning:=False;
 
     error:=GSM_GetManufacturer(ID,@buffer);
-    if (error = GE_NONE) then
+    if (error = ERR_NONE) then
     begin
       MainForm.StatusBar.Panels.Items[num-1].Text:=PChar(@buffer);
       error:=GSM_GetModelName(ID,@buffer);
-      if (error = GE_NONE) then
+      if (error = ERR_NONE) then
       begin
         MainForm.StatusBar.Panels.Items[num-1].Text:=MainForm.StatusBar.Panels.Items[num-1].Text+' '+buffer;
       end;
     end;
-    if error <> GE_NONE then
+    if error <> ERR_NONE then
     begin
       MainForm.StatusBar.Panels.Items[num-1].Text:='Connected';
       AddTextToGatewayLog(num,'Device connected');
     end else
     begin
       error:=GSM_GetIMEI(ID,@buffer);
-      if (error = GE_NONE) then
+      if (error = ERR_NONE) then
       begin
         AddTextToGatewayLog(num,PChar('Connected '+MainForm.StatusBar.Panels.Items[num-1].Text)+' with IMEI '+buffer);
       end else
@@ -714,14 +714,14 @@ var
   error     : GSM_Error;
 begin
   num:=FindGammuDevice(ID);
-  if (SecurityState = GSCT_UNKNOWN) and (not GSMDevice[num].PINWarning) then
+  if (SecurityState = SEC_UNKNOWN) and (not GSMDevice[num].PINWarning) then
   begin
     AddTextToGatewayLog(num,'Unknown security state. Probably not supported by phone');
     GSMDevice[num].PINWarning:=True;
     exit;
   end;
   //we want to enter PIN
-  if (SecurityState = GSCT_Pin) then
+  if (SecurityState = SEC_Pin) then
   begin
     buffer:=GatewayIniFile.ReadString('modem'+inttostr(num), 'PIN', '1234');
     if buffer = '' then
@@ -729,7 +729,7 @@ begin
       AddTextToGatewayLog(num,'PIN in config file is shorter than 4 chars. Can not enter');
       Exit;
     end;
-    Code.CodeType:=GSCT_Pin;
+    Code.CodeType:=SEC_Pin;
     for i:=1 to 4 do
     begin
       if buffer[i] = chr(0) then
@@ -742,7 +742,7 @@ begin
     Code.Code[5]:=chr(0);
     AddTextToGatewayLog(num,'Entering PIN');
     error:=GSM_EnterSecurityCode(ID,@Code);
-    if (error <> GE_NONE) and (error <> GE_TIMEOUT) then
+    if (error <> ERR_NONE) and (error <> ERR_TIMEOUT) then
     begin
       AddTextToGatewayLog(num,'Error entering PIN. Probably incorrect');
       AddTextToGatewayLog(num,'Deleting PIN from config file');
@@ -768,13 +768,13 @@ var
 begin
   num := FindGammuDevice(ID);
   if not GatewayIniFile.ReadBool('modem'+inttostr(num), 'Receive', false) then exit;
-  error := GE_NONE;
+  error := ERR_NONE;
   start := True; //first set to true to allow init some internal DLL variables
-  while error = GE_NONE do
+  while error = ERR_NONE do
   begin
     sms.SMS[1].Folder := 0;
     error := GSM_GetNextSMSMessage(ID,@sms,start);
-    if (error = GE_NONE) then
+    if (error = ERR_NONE) then
     begin
       if (sms.SMS[1].InboxFolder) and (sms.SMS[1].Coding <> GSM_Coding_8bit) and (sms.SMS[1].PDU <> SMS_Status_Report) then
       begin
@@ -1028,20 +1028,20 @@ begin
       if (GSMDevice[i].Used) and (GSMDevice[i].Connected) then
       begin
         error:=GSM_GetManufacturer(GSMDevice[i].DeviceID,@buffer);
-        if (error = GE_NONE) then
+        if (error = ERR_NONE) then
         begin
           Add;
           Item[Count-1].Caption:=GatewayINIFile.ReadString('modem'+inttostr(i), 'Port', 'com1:');
           Item[Count-1].SubItems.Add('Device');
           Item[Count-1].SubItems.Add(PChar(@buffer));
           error:=GSM_GetModelName(GSMDevice[i].DeviceID,@buffer);
-          if (error = GE_NONE) then
+          if (error = ERR_NONE) then
           begin
             Item[Count-1].SubItems.Strings[1]:=Item[Count-1].SubItems.Strings[1]+' '+buffer;
           end;
         end;
         error:=GSM_GetIMEI(GSMDevice[i].DeviceID,@buffer);
-        if (error = GE_NONE) then
+        if (error = ERR_NONE) then
         begin
           Add;
           Item[Count-1].Caption:=GatewayINIFile.ReadString('modem'+inttostr(i), 'Port', 'com1:');
@@ -1049,7 +1049,7 @@ begin
           Item[Count-1].SubItems.Add(buffer);
         end;
         error:=GSM_GetFirmwareVersion(GSMDevice[i].DeviceID,@ver);
-        if (error = GE_NONE) then
+        if (error = ERR_NONE) then
         begin
           Add;
           Item[Count-1].Caption:=GatewayINIFile.ReadString('modem'+inttostr(i), 'Port', 'com1:');
@@ -1057,7 +1057,7 @@ begin
           Item[Count-1].SubItems.Add(floattostr(ver));
         end;
         error:=GSM_GetNetworkInfo(GSMDevice[i].DeviceID,@NetInfo);
-        if (error = GE_NONE) then
+        if (error = ERR_NONE) then
         begin
           Add;
           Item[Count-1].Caption:=GatewayINIFile.ReadString('modem'+inttostr(i), 'Port', 'com1:');
@@ -1079,7 +1079,7 @@ begin
                 Add;
                 Item[Count-1].Caption:=GatewayINIFile.ReadString('modem'+inttostr(i), 'Port', 'com1:');
                 Item[Count-1].SubItems.Add('CID');
-                Item[Count-1].SubItems.Add(NetInfo.CellID);
+                Item[Count-1].SubItems.Add(NetInfo.CID);
               end;
             GSM_RoamingNetwork:
               begin
@@ -1096,7 +1096,7 @@ begin
                 Add;
                 Item[Count-1].Caption:=GatewayINIFile.ReadString('modem'+inttostr(i), 'Port', 'com1:');
                 Item[Count-1].SubItems.Add('CID');
-                Item[Count-1].SubItems.Add(NetInfo.CellID);
+                Item[Count-1].SubItems.Add(NetInfo.CID);
               end;
             GSM_RequestingNetwork:
               Item[Count-1].SubItems.Add('Requesting network');

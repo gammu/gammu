@@ -1,3 +1,4 @@
+/* (c) 2003 by Marcin Wiacek */
 
 #ifndef obexgen_h
 #define obexgen_h

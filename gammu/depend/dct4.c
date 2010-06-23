@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #include "../../common/gsmstate.h"
 
@@ -26,15 +27,14 @@ GSM_Error CheckDCT4Only()
 #ifdef GSM_ENABLE_NOKIA6510
  	if (strstr(N6510Phone.models, s.Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
-	if (!found) return GE_NOTSUPPORTED;
+	if (!found) return ERR_NOTSUPPORTED;
 
 	if (s.ConnectionType!=GCT_MBUS2	     && s.ConnectionType!=GCT_FBUS2      &&
 	    s.ConnectionType!=GCT_FBUS2DLR3  && s.ConnectionType!=GCT_PHONETBLUE &&
-	    s.ConnectionType!=GCT_IRDAPHONET && s.ConnectionType!=GCT_BLUEPHONET)
-	{
-		return GE_OTHERCONNECTIONREQUIRED;
+	    s.ConnectionType!=GCT_IRDAPHONET && s.ConnectionType!=GCT_BLUEPHONET) {
+		return ERR_OTHERCONNECTIONREQUIRED;
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static void CheckDCT4()
@@ -43,10 +43,10 @@ static void CheckDCT4()
 
 	error = CheckDCT4Only();
 	switch (error) {
-	case GE_NOTSUPPORTED:
-		Print_Error(GE_NOTSUPPORTED);
+	case ERR_NOTSUPPORTED:
+		Print_Error(ERR_NOTSUPPORTED);
 		break;
-	case GE_OTHERCONNECTIONREQUIRED:
+	case ERR_OTHERCONNECTIONREQUIRED:
 		printf("Can't do it with current phone protocol\n");
 		GSM_TerminateConnection(&s);
 		exit(-1);
@@ -84,6 +84,8 @@ static DCT4_Feature DCT4Features[] = {
 	{DCT4_ALWAYS_ONLINE,     	 "GPRS Always Online",		 {{0,"on (Context)"},{1,"off (Attach)"},{0,""}}},///??
 	{DCT4_GEA1,			 "GEA1 support indication",	 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_EOTD,			 "EOTD support",		 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_EONS,			 "EONS support",		 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_3GINDICATOR,		 "3G indicator",		 {{1,"on"},{0,"off"},{0,""}}},
 
 	{DCT4_GAMES_WAP_DOWNLOAD,	 "Games WAP download",		 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_GAMES_SCORE_SEND,		 "Games WAP score send",	 {{1,"on"},{0,"off"},{0,""}}},
@@ -96,6 +98,8 @@ static DCT4_Feature DCT4Features[] = {
 	{DCT4_SERVICES_GAMES_APP_GALLERY,"Services menu in Games/Apps/Gallery",{{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_JAVA_GAMES_MENU,		 "Java games menu in Games",	 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_SAT_CONFIRM_MENU,		 "Can use confirming SIM service actions", {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_INSTANT_MESS_MENU,	 "Instant Messaging in Messages",{{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_CONFIRM_ALS,		 "Confirm using ALS",            {{1,"on"},{0,"off"},{0,""}}},
 
 	{DCT4_5100_IDENTIFY,		 "Phone identification",         {{1,"NPM-6U"},{0,"NPM-6"},{0,""}}},
 
@@ -107,6 +111,28 @@ static DCT4_Feature DCT4Features[] = {
 };
 
 static DCT4_Phone_Features DCT4PhoneFeatures[] = {
+/*3100*/ {"RH-19",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,4},{DCT4_GPRS_PCCH,8},
+			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
+			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
+			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
+			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
+			 {DCT4_EONS,28},{DCT4_3GINDICATOR,30},{DCT4_INSTANT_MESS_MENU,33},
+			 {DCT4_CONFIRM_ALS,35},
+			 {0,0}}},
+/*3200*/ {"RH-30",	{{DCT4_ALS,2},{DCT4_A52,4},{DCT4_CSP,5},{DCT4_GPRS_PCCH,14},
+			 {DCT4_GEA1,15},{DCT4_EOTD,18},{DCT4_WAP_SETTINGS_MENU,20},
+			 {DCT4_DISPLAY_PHONE_NAME,21},{DCT4_WAP_GOTO_MENU,23},
+			 {DCT4_SERVICES_GAMES_APP_GALLERY,26},{DCT4_3GINDICATOR,28},
+			 {DCT4_DISPLAY_WAP_PROFILE,31},{DCT4_SAT_CONFIRM_MENU,33},
+			 {DCT4_CONFIRM_ALS,34},{DCT4_EONS,40},{DCT4_ALWAYS_ONLINE,45},
+			 {0,0}}},
+/*3200*/ {"RH-31",	{{DCT4_ALS,2},{DCT4_A52,4},{DCT4_CSP,5},{DCT4_GPRS_PCCH,14},
+			 {DCT4_GEA1,15},{DCT4_EOTD,18},{DCT4_WAP_SETTINGS_MENU,20},
+			 {DCT4_DISPLAY_PHONE_NAME,21},{DCT4_WAP_GOTO_MENU,23},
+			 {DCT4_SERVICES_GAMES_APP_GALLERY,26},{DCT4_3GINDICATOR,28},
+			 {DCT4_DISPLAY_WAP_PROFILE,31},{DCT4_SAT_CONFIRM_MENU,33},
+			 {DCT4_CONFIRM_ALS,34},{DCT4_EONS,40},{DCT4_ALWAYS_ONLINE,45},
+			 {0,0}}},
 /*3300*/ {"NEM-1",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
 			 {DCT4_GEA1,9},{DCT4_ALWAYS_ONLINE,11},{DCT4_EOTD,12},
 			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
@@ -127,6 +153,7 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
 			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
 			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
 			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
+			 {DCT4_EONS,28},
 		//	 {DCT4_5100_IDENTIFY,10},
 			 {0,0}}},
 /*5100*/ {"NPM-6U",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
@@ -134,6 +161,7 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
 			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
 			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
 			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
+			 {DCT4_EONS,28},
 		//	 {DCT4_5100_IDENTIFY,10},
 			 {0,0}}},
 /*6100*/ {"NPL-2",	{{DCT4_ALS,1},{DCT4_CSP,4},{DCT4_GAMES_URL_CHECK,5},{DCT4_GPRS_PCCH,8},
@@ -141,6 +169,13 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
 			 {DCT4_DISPLAY_PHONE_NAME,17},{DCT4_WAP_GOTO_MENU,18},
 			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
 			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
+			 {0,0}}},
+/*6220*/ {"RH-20",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,4},{DCT4_GPRS_PCCH,13},
+			 {DCT4_GEA1,14},{DCT4_EOTD,17},{DCT4_WAP_SETTINGS_MENU,19},
+			 {DCT4_DISPLAY_PHONE_NAME,20},{DCT4_WAP_GOTO_MENU,22},
+			 {DCT4_SERVICES_GAMES_APP_GALLERY,25},{DCT4_3GINDICATOR,27},
+			 {DCT4_DISPLAY_WAP_PROFILE,30},{DCT4_SAT_CONFIRM_MENU,32},
+			 {DCT4_CONFIRM_ALS,33},
 			 {0,0}}},
 /*6310*/ {"NPE-4",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
 			 {DCT4_GAMES_SCORE_SEND,8},{DCT4_GAMES_URL_CHECK,9},{DCT4_BLUETOOTH_MENU,10},
@@ -194,7 +229,7 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
 static GSM_Error DCT4_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Setting done OK\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void DCT4SetPhoneMenus(int argc, char *argv[])
@@ -204,7 +239,7 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 		N7110_FRAME_HEADER,0x04,0x00,0x01,0x47,0x48,0x02,
 		0x00};		/* Number of changed features */
 
-	if (CheckDCT4Only()!=GE_NONE) return;
+	if (CheckDCT4Only()!=ERR_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
@@ -258,7 +293,7 @@ static GSM_Error DCT4_ReplyTestsNames(GSM_Protocol_Message msg, GSM_StateMachine
 		pos+=msg.Buffer[pos+1];
 	}
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error DCT4_ReplyTestsStartup(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -281,7 +316,7 @@ static GSM_Error DCT4_ReplyTestsStartup(GSM_Protocol_Message msg, GSM_StateMachi
 		pos++;
 	}
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error DCT4_ReplyTestsStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -311,7 +346,7 @@ static GSM_Error DCT4_ReplyTestsStatus(GSM_Protocol_Message msg, GSM_StateMachin
 		pos+=msg.Buffer[pos+1];
 	}
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void DCT4SelfTests(int argc, char *argv[])
@@ -326,7 +361,7 @@ void DCT4SelfTests(int argc, char *argv[])
 
 //	unsigned char GetID[6]        = {0x00, 0x08, 0x00, 0x04, 0x03, 0x00};//tests ID
 
-	if (CheckDCT4Only()!=GE_NONE) return;
+	if (CheckDCT4Only()!=ERR_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
@@ -358,7 +393,7 @@ static GSM_Error DCT4_ReplyVibra(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		case 0x0F : dbgprintf("Vibra power set OK\n"); break;
 	}
 #endif
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error DCT4EnableVibra(GSM_StateMachine *s, bool enable)
@@ -379,8 +414,8 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 
 	/* Set vibra level */
 	unsigned char 	SetLevel[6] = {N7110_FRAME_HEADER,0x0E,
-		0x64,		/* Vibra power (in percent) */
-		0x00};
+				       0x64,	/* Vibra power (in percent) */
+				       0x00};
 
 	GSM_Init(true);
 
@@ -414,7 +449,7 @@ void DCT4VibraTest(int argc, char *argv[])
 {
 	unsigned char ans[200];
 
-	if (CheckDCT4Only()!=GE_NONE) return;
+	if (CheckDCT4Only()!=ERR_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
@@ -434,12 +469,12 @@ static GSM_Error DCT4_ReplyResetSecurityCode(GSM_Protocol_Message msg, GSM_State
 	switch (msg.Buffer[3]) {
 	case 0x05:
 		printf("Security code set to \"12345\"\n");
-		return GE_NONE;
+		return ERR_NONE;
 	case 0x06:
 		printf("Unknown reason. Can't reset your security code\n");
-		return GE_UNKNOWN;
+		return ERR_UNKNOWN;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 void DCT4ResetSecurityCode(int argc, char *argv[])
@@ -451,12 +486,12 @@ void DCT4ResetSecurityCode(int argc, char *argv[])
 		'1','2','3','4','5',0x00,0x00,0x00,0x00,0x00,   /* New code */
 		0x00};
 
-	if (CheckDCT4Only()!=GE_NONE) return;
+	if (CheckDCT4Only()!=ERR_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
 	error=GSM_WaitFor (&s, ResetCode, 27, 0x08, 4, ID_User2);
-	if (error == GE_UNKNOWN) {
+	if (error == ERR_UNKNOWN) {
 		if (answer_yes2("Try brutal force ?")) {
 			for (i=10000;i<9999999;i++) {
 				printf("Trying %i\n",i);
@@ -464,7 +499,7 @@ void DCT4ResetSecurityCode(int argc, char *argv[])
 				sprintf(ResetCode+5,"%i",i);
 				sprintf(ResetCode+16,"12345");
 				error=GSM_WaitFor (&s, ResetCode, 27, 0x08, 4, ID_User2);
-				if (error == GE_NONE) break;
+				if (error == ERR_NONE) break;
 			}
 		}
 	} else Print_Error(error);
@@ -482,7 +517,7 @@ static GSM_Error DCT4_ReplyGetSecurityCode(GSM_Protocol_Message msg, GSM_StateMa
 //			DumpMessage(stdout, msg.Buffer, msg.Length);
 		}
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void DCT4GetSecurityCode(int argc, char *argv[])
@@ -499,7 +534,7 @@ void DCT4GetSecurityCode(int argc, char *argv[])
 				0x00, 0x00, 0x00, 0x00,
 				0x00};                  //Length
 
-	if (CheckDCT4Only()!=GE_NONE) return;
+	if (CheckDCT4Only()!=ERR_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
@@ -523,7 +558,7 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMac
 		dbgprintf("Part of voice record received\n");
 		if (msg.Length == 6) {
 			dbgprintf("Empty\n");
-			return GE_EMPTY;
+			return ERR_EMPTY;
 		}
  		*s->Phone.Data.VoiceRecord = 0;
 		while (i<msg.Length) {
@@ -531,14 +566,14 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMac
  			s->Phone.Data.PhoneString[(*s->Phone.Data.VoiceRecord)++] = msg.Buffer[i];
 			i += 2;
 		}
-		return GE_NONE;
+		return ERR_NONE;
 	case 0x0D:
 		dbgprintf("Last part of voice record is %02x %02x\n",msg.Buffer[11],msg.Buffer[12]);
 		dbgprintf("Token is %02x\n",msg.Buffer[13]);
  		s->Phone.Data.PhoneString[0] = msg.Buffer[11];
  		s->Phone.Data.PhoneString[1] = msg.Buffer[12];
  		s->Phone.Data.PhoneString[2] = msg.Buffer[13];
-		return GE_NONE;
+		return ERR_NONE;
 		break;
 	case 0x31:
 		dbgprintf("Names of voice records received\n");
@@ -550,7 +585,7 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMac
 			dbgprintf("%i. \"%s\"\n",i+1,DecodeUnicodeString(Buffer));
  			if (i==*s->Phone.Data.VoiceRecord) {
  				sprintf(s->Phone.Data.PhoneString,"%s.wav",DecodeUnicodeString(Buffer));
-				return GE_NONE;
+				return ERR_NONE;
 			}
 			if (i != msg.Buffer[9] - 1) {
 				j+=msg.Buffer[j] + 1;
@@ -558,9 +593,9 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMac
 				j+=23;
 			}
 		}
-		return GE_EMPTY;
+		return ERR_EMPTY;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 void DCT4GetVoiceRecord(int argc, char *argv[])
@@ -649,11 +684,11 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		dbgprintf("Getting next part of voice record\n");
 		fprintf(stderr,".");
 		error=GSM_WaitFor (&s, ReqGet, 18, 0x23, 4, ID_User4);
-		if (error == GE_NONE) {
+		if (error == ERR_NONE) {
 			wavfilesize += size;
 			fwrite(Buffer,1,size,WAVFile);
 		}
-		if (error == GE_EMPTY) break;
+		if (error == ERR_EMPTY) break;
 		Print_Error(error);
 		CurrentLocation += 4;
 		ReqGet[11] = CurrentLocation / 256;
@@ -666,12 +701,12 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		ReqGet[17] = Token;
 		fprintf(stderr,".");
 		error=GSM_WaitFor (&s, ReqGet, 18, 0x23, 4, ID_User4);
-		if (error == GE_NONE) {
+		if (error == ERR_NONE) {
 			wavfilesize += size;
 			fwrite(Buffer,1,size,WAVFile);
 			break;
 		}
-		if (error != GE_EMPTY) Print_Error(error);
+		if (error != ERR_EMPTY) Print_Error(error);
 	}
 	while (1) {
 		dbgprintf("Getting next part of last sequence in voice record\n");
@@ -680,11 +715,11 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		ReqGet[12] = CurrentLocation % 256;
 		fprintf(stderr,".");
 		error=GSM_WaitFor (&s, ReqGet, 18, 0x23, 4, ID_User4);
-		if (error == GE_NONE) {
+		if (error == ERR_NONE) {
 			wavfilesize += size;
 			fwrite(Buffer,1,size,WAVFile);
 		}
-		if (error == GE_EMPTY) break;
+		if (error == ERR_EMPTY) break;
 		Print_Error(error);
 	}
 	fprintf(stderr,"\n");
@@ -722,7 +757,7 @@ static GSM_Error DCT4_ReplyGetBTInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 	printf("device address %02x%02x%02x%02x%02x%02x\n",
 		msg.Buffer[9],msg.Buffer[10],msg.Buffer[11],
 		msg.Buffer[12],msg.Buffer[13],msg.Buffer[14]);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -742,7 +777,7 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 			dbgprintf("%02x",msg.Buffer[i]);
 		}
 		dbgprintf("\n");		
-		return GE_NONE;
+		return ERR_NONE;
 	case 0x13:
 		dbgprintf("Simlock info received\n");
 		if (msg.Buffer[58] == 0x05 && msg.Buffer[59] == 0x02) {
@@ -757,9 +792,9 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 			}
 			printf("\n");
 		}
-		return GE_NONE;
+		return ERR_NONE;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 void DCT4Info(int argc, char *argv[])
@@ -768,7 +803,7 @@ void DCT4Info(int argc, char *argv[])
 	unsigned char GetSimlock[5] = {N6110_FRAME_HEADER, 0x12, 0x0D};
 	unsigned char value[10];
 
-        if (CheckDCT4Only()!=GE_NONE) return;
+        if (CheckDCT4Only()!=ERR_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
@@ -801,7 +836,7 @@ static GSM_Error DCT4_ReplyGetT9(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	T9FullSize 	= msg.Buffer[18] * 256 + msg.Buffer[19];
 	T9Size 		= msg.Length - 18;
 	fwrite(msg.Buffer+18,1,T9Size,T9File);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void DCT4GetT9(int argc, char *argv[])
@@ -813,7 +848,7 @@ void DCT4GetT9(int argc, char *argv[])
 			       0x00, 0x00,
 			       0x02, 0xBC};	/* How many bytes to read */
 
-	if (CheckDCT4Only()!=GE_NONE) return;
+	if (CheckDCT4Only()!=ERR_NONE) return;
 
 	T9File = fopen("T9", "w");      
 	if (T9File == NULL) return;
@@ -888,7 +923,7 @@ void DCT4DisplayTest(int argc, char *argv[])
 				0x09,		/* test number */
 				0x00};
 
-	if (CheckDCT4Only()!=GE_NONE) return;
+	if (CheckDCT4Only()!=ERR_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
@@ -909,7 +944,7 @@ int ADC;
 
 static GSM_Error DCT4_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	if (msg.Buffer[6] == 0xff && msg.Buffer[7] == 0xff) return GE_NONE;
+	if (msg.Buffer[6] == 0xff && msg.Buffer[7] == 0xff) return ERR_NONE;
 	switch (msg.Buffer[3]) {
 	case 0x10:
 		printf("raw ");
@@ -920,7 +955,7 @@ static GSM_Error DCT4_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		printf("%10i ",(msg.Buffer[8]*256+msg.Buffer[9])*ADC);
 		break;
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 struct DCT4ADCInfo {
@@ -954,13 +989,13 @@ void DCT4GetADC(int argc, char *argv[])
 {
 	int		i = 0;
 	unsigned char 	GetRaw[]  = {N6110_FRAME_HEADER, 0x0F,
-				   0x00,		/* Test number */
-			           0x01};
+				     0x00,		/* Test number */
+			             0x01};
 	unsigned char 	GetUnit[] = {N6110_FRAME_HEADER, 0x11,
-				   0x00,		/* Test number */
-				   0x01};
+				     0x00,		/* Test number */
+				     0x01};
 
-	if (CheckDCT4Only()!=GE_NONE) return;
+	if (CheckDCT4Only()!=ERR_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
@@ -997,18 +1032,18 @@ static GSM_Error DCT4_ReplyTuneRadio(GSM_Protocol_Message msg, GSM_StateMachine 
  		name[length*2+1] = 0x00;
  		CopyUnicodeString(RadioName,name);
 		smprintf(s,"Station name: \"%s\"\n",DecodeUnicodeString(RadioName));
-		return GE_NONE;
+		return ERR_NONE;
 	case 0x15:
 	case 0x16:
 		smprintf(s,"Response for enabling radio/headset status received\n");
 		if (msg.Buffer[5] == 0) {
 			smprintf(s,"Connected\n");
-			return GE_NONE;
+			return ERR_NONE;
 		}
 		smprintf(s,"Probably not connected\n");
-		return GE_PERMISSION;
+		return ERR_PERMISSION;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 void DCT4TuneRadio(int argc, char *argv[])
@@ -1046,14 +1081,14 @@ void DCT4TuneRadio(int argc, char *argv[])
 
 	FMStat.Location = 1;
 	error = Phone->GetFMStation(&s,&FMStat);
-	if (error != GE_NONE && error != GE_EMPTY) {
+	if (error != ERR_NONE && error != ERR_EMPTY) {
 		printf("Phone seems not to support radio\n");
 		GSM_Terminate();
 		exit(-1);		
 	}
 
 	error=GSM_WaitFor (&s, Enable, 6, 0x3E, 4, ID_User3);
-	if (error == GE_PERMISSION) {
+	if (error == ERR_PERMISSION) {
 		printf("Please connect headset. Required as antenna\n");
 		GSM_Terminate();
 		exit(-1);

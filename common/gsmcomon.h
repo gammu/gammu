@@ -1,6 +1,7 @@
+/* (c) 2002-2003 by Marcin Wiacek & Michal Cihar */
 
-#ifndef gsm_common_h
-#define gsm_common_h
+#ifndef __gsm_comon_h
+#define __gsm_comon_h
 
 #include <stdio.h>
 #ifndef WIN32
@@ -22,48 +23,48 @@
 
 /* GSM_Error is used to notify about errors */
 typedef enum {
-/* 1*/	GE_NONE=1,
-	GE_DEVICEOPENERROR,		/* Error during opening device */
-	GE_DEVICELOCKED,		/* Device locked */
-	GE_DEVICENOTEXIST,
-	GE_DEVICEBUSY,
-	GE_DEVICENOPERMISSION,
-	GE_DEVICENODRIVER,
-	GE_DEVICENOTWORK,
-	GE_DEVICEDTRRTSERROR,		/* Error during setting DTR/RTS in device */
-/*10*/	GE_DEVICECHANGESPEEDERROR,	/* Error during changing speed in device */
-	GE_DEVICEWRITEERROR,		/* Error during writing device */
-	GE_DEVICEREADERROR,		/* Error during reading device */
-	GE_DEVICEPARITYERROR,		/* Can't set parity on device */
-	GE_TIMEOUT,			/* Command timed out */
-	GE_FRAMENOTREQUESTED,		/* Frame handled, but not requested in this moment */
-	GE_UNKNOWNRESPONSE,		/* Response not handled by gammu */
-	GE_UNKNOWNFRAME,		/* Frame not handled by gammu */
-	GE_UNKNOWNCONNECTIONTYPESTRING,	/* Unknown connection type given by user */
-	GE_UNKNOWNMODELSTRING,		/* Unknown model given by user */
-/*20*/	GE_SOURCENOTAVAILABLE,		/* Some functions not compiled in your OS */
-	GE_NOTSUPPORTED,		/* Not supported by phone */
-	GE_EMPTY,			/* Empty phonebook entry, ... */
-	GE_SECURITYERROR,		/* Not allowed */
-	GE_INVALIDLOCATION,		/* Too high or too low location... */
-	GE_NOTIMPLEMENTED,		/* Function not implemented */
-	GE_FULL,			/* Memory is full */
-	GE_UNKNOWN,
-	GE_CANTOPENFILE, 		/* Error during opening file */
-	GE_MOREMEMORY,			/* More memory required */
-/*30*/	GE_PERMISSION,			/* No permission */
-	GE_EMPTYSMSC,			/* SMSC number is empty */
-	GE_INSIDEPHONEMENU,		/* Inside phone menu - can't make something */
-	GE_NOTCONNECTED,		/* Phone NOT connected - can't make something */
-	GE_WORKINPROGRESS,		/* Work in progress */
-	GE_PHONEOFF,			/* Phone is disabled and connected to charger */
-	GE_FILENOTSUPPORTED,		/* File format not supported by Gammu */
-	GE_BUG,                  	/* Found bug in implementation or phone */
-    	GE_CANCELED,                 	/* Action was canceled by user */
-	GE_NEEDANOTHERANSWER,   	/* Inside Gammu: phone module need to send another answer frame */
-/*40*/	GE_OTHERCONNECTIONREQUIRED,
-	GE_WRONGCRC,
-	GE_INVALIDDATETIME		/* Invalid date/time */
+/* 1*/	ERR_NONE=1,
+	ERR_DEVICEOPENERROR,		/* Error during opening device */
+	ERR_DEVICELOCKED,		/* Device locked */
+	ERR_DEVICENOTEXIST,
+	ERR_DEVICEBUSY,
+	ERR_DEVICENOPERMISSION,
+	ERR_DEVICENODRIVER,
+	ERR_DEVICENOTWORK,
+	ERR_DEVICEDTRRTSERROR,		/* Error during setting DTR/RTS in device */
+/*10*/	ERR_DEVICECHANGESPEEDERROR,	/* Error during changing speed in device */
+	ERR_DEVICEWRITEERROR,		/* Error during writing device */
+	ERR_DEVICEREADERROR,		/* Error during reading device */
+	ERR_DEVICEPARITYERROR,		/* Can't set parity on device */
+	ERR_TIMEOUT,			/* Command timed out */
+	ERR_FRAMENOTREQUESTED,		/* Frame handled, but not requested in this moment */
+	ERR_UNKNOWNRESPONSE,		/* Response not handled by gammu */
+	ERR_UNKNOWNFRAME,		/* Frame not handled by gammu */
+	ERR_UNKNOWNCONNECTIONTYPESTRING,/* Unknown connection type given by user */
+	ERR_UNKNOWNMODELSTRING,		/* Unknown model given by user */
+/*20*/	ERR_SOURCENOTAVAILABLE,		/* Some functions not compiled in your OS */
+	ERR_NOTSUPPORTED,		/* Not supported by phone */
+	ERR_EMPTY,			/* Empty phonebook entry, ... */
+	ERR_SECURITYERROR,		/* Not allowed */
+	ERR_INVALIDLOCATION,		/* Too high or too low location... */
+	ERR_NOTIMPLEMENTED,		/* Function not implemented */
+	ERR_FULL,			/* Memory is full */
+	ERR_UNKNOWN,
+	ERR_CANTOPENFILE, 		/* Error during opening file */
+	ERR_MOREMEMORY,			/* More memory required */
+/*30*/	ERR_PERMISSION,			/* No permission */
+	ERR_EMPTYSMSC,			/* SMSC number is empty */
+	ERR_INSIDEPHONEMENU,		/* Inside phone menu - can't make something */
+	ERR_NOTCONNECTED,		/* Phone NOT connected - can't make something */
+	ERR_WORKINPROGRESS,		/* Work in progress */
+	ERR_PHONEOFF,			/* Phone is disabled and connected to charger */
+	ERR_FILENOTSUPPORTED,		/* File format not supported by Gammu */
+	ERR_BUG,                  	/* Found bug in implementation or phone */
+    	ERR_CANCELED,                 	/* Action was canceled by user */
+	ERR_NEEDANOTHERANSWER,   	/* Inside Gammu: phone module need to send another answer frame */
+/*40*/	ERR_OTHERCONNECTIONREQUIRED,
+	ERR_WRONGCRC,
+	ERR_INVALIDDATETIME		/* Invalid date/time */
 } GSM_Error;
 
 extern GSM_Error NoneFunction		(void);

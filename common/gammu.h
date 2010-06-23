@@ -1,3 +1,5 @@
+/* (c) 2003 by Michal Cihar */
+
 /*
  * This file includes some core Gammu headers, that you will probably need.
  */

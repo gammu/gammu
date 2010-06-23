@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #include "../../../gsmstate.h"
 
@@ -27,19 +28,19 @@ static GSM_Error N9210_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	case GSM_StartupLogo:
 		smprintf(s, "Getting startup logo\n");
 		return N71_92_GetPhoneSetting(s, ID_GetBitmap, 0x15);
-	case GSM_WelcomeNoteText:
+	case GSM_WelcomeNote_Text:
 		smprintf(s, "Getting welcome note\n");
 		return N71_92_GetPhoneSetting(s, ID_GetBitmap, 0x02);
 	default:
 		break;
 	}
-	return GE_NOTSUPPORTED;
+	return ERR_NOTSUPPORTED;
 }
 
 static GSM_Error N9210_ReplySetOpLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Operator logo clear/set\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
@@ -63,13 +64,13 @@ static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 
 	switch (Bitmap->Type) {
 	case GSM_StartupLogo:
-		if (Bitmap->Location!=1) return GE_NOTSUPPORTED;
+		if (Bitmap->Location!=1) return ERR_NOTSUPPORTED;
 		Type=GSM_NokiaStartupLogo;
 		PHONE_GetBitmapWidthHeight(Type, &Width, &Height);
 		PHONE_EncodeBitmap(Type, reqStartup + 21, Bitmap);		
 		smprintf(s, "Setting startup logo\n");
 		return GSM_WaitFor (s, reqStartup, 21+PHONE_GetBitmapSize(Type,0,0), 0x7A, 4, ID_SetBitmap);
-	case GSM_WelcomeNoteText:	
+	case GSM_WelcomeNote_Text:	
 		/* Nokia bug: Unicode text is moved one char to left */
 		CopyUnicodeString(reqStartupText + 4, Bitmap->Text);
 		reqStartupText[4] = 0x02;
@@ -83,7 +84,7 @@ static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 			for (i=0;i<5;i++) {
 				reqClrOp[4] = i;
 				error=GSM_WaitFor (s, reqClrOp, 5, 0x0A, 4, ID_SetBitmap);
-				if (error != GE_NONE) return error;
+				if (error != ERR_NONE) return error;
 			}
 		}
 		Type=GSM_NokiaOperatorLogo;
@@ -98,7 +99,7 @@ static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		memcpy(req+count, "\x00\x00\x00\x00\x00\x00", 6);
 		count += 6;
 		error=GSM_WaitFor (s, req, count, 0x0A, 4, ID_SetBitmap);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 		/* We wanted only clear - now exit */
 		if (!strcmp(Bitmap->NetworkCode,"000 00")) return error;
 
@@ -124,7 +125,7 @@ static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	default:
 		break;
 	}
-	return GE_NOTSUPPORTED;
+	return ERR_NOTSUPPORTED;
 }
 
 static GSM_Error N9210_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -134,18 +135,18 @@ static GSM_Error N9210_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachi
 
 #ifdef DEBUG
 	smprintf(s, "SMS message received\n");
-	sms.State 	= GSM_UnRead;
+	sms.State 	= SMS_UnRead;
 	sms.InboxFolder = true;
 	DCT3_DecodeSMSFrame(s, &sms,msg.Buffer+5);
 #endif
 	if (Data->EnableIncomingSMS && s->User.IncomingSMS!=NULL) {
-		sms.State 	= GSM_UnRead;
+		sms.State 	= SMS_UnRead;
 		sms.InboxFolder = true;
 		DCT3_DecodeSMSFrame(s, &sms,msg.Buffer+5);
 
 		s->User.IncomingSMS(s->CurrentConfig->Device,sms);
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 #ifdef GSM_ENABLE_N71_92INCOMINGINFO
@@ -155,18 +156,18 @@ static GSM_Error N9210_ReplySetIncomingSMS(GSM_Protocol_Message msg, GSM_StateMa
 	case 0x0e:
 		s->Phone.Data.EnableIncomingSMS = true;
 		smprintf(s, "Incoming SMS enabled\n");
-		return GE_NONE;
+		return ERR_NONE;
 	case 0x0f:
 		smprintf(s, "Error enabling incoming SMS\n");
 		switch (msg.Buffer[4]) {
 		case 0x0c:
 			smprintf(s, "No PIN ?\n");
-			return GE_SECURITYERROR;
+			return ERR_SECURITYERROR;
 		default:
 			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 		}
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 #endif
 
@@ -184,9 +185,9 @@ static GSM_Error N9210_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 			smprintf(s, "Disabling incoming SMS\n");
 		}
 	}
-	return GE_NONE;
+	return ERR_NONE;
 #else
-	return GE_SOURCENOTAVAILABLE;
+	return ERR_SOURCENOTAVAILABLE;
 #endif
 }
 
@@ -200,7 +201,7 @@ static GSM_Error N9210_Initialise (GSM_StateMachine *s)
 #endif
 
 #endif
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error N9210_AnswerCall(GSM_StateMachine *s, int ID, bool all)

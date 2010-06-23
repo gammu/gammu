@@ -1,3 +1,5 @@
+/* (c) 2001-2003 by Marcin Wiacek */
+/* based on some work from Pawel Kot, others and Gnokii */
 
 #ifndef __gsm_sms_h
 #define __gsm_sms_h
@@ -18,17 +20,17 @@
 /* -------------------- Cell Broadcast ------------------------------------ */
 
 /**
- * Structure for Cell Broadcast message.
+ * Structure for Cell Broadcast messages.
  */
 typedef struct {
-	/**
-	 * Channel number.
-	 */
-	int     Channel;
 	/**
 	 * Message text.
 	 */
 	char    Text[300];
+	/**
+	 * Channel number.
+	 */
+	int     Channel;
 } GSM_CBMessage;
 
 /* ------------------------ SMS status ------------------------------------ */
@@ -38,11 +40,11 @@ typedef struct {
  */
 typedef struct {
 	/**
-	 * Number of unread messages in SIM.
+	 * Number of unread messages on SIM.
 	 */
 	int     SIMUnRead;
 	/**
-	 * Number of all used messages in SIM.
+	 * Number of all saved messages (including unread) on SIM.
 	 */
 	int     SIMUsed;
 	/**
@@ -50,61 +52,68 @@ typedef struct {
 	 */
 	int     SIMSize;
 	/**
+	 * Number of used templates (62xx/63xx/7110/etc.).
+	 */
+	int     TemplatesUsed;
+	/**
 	 * Number of unread messages in phone.
 	 */
 	int     PhoneUnRead;
 	/**
-	 * Number of all used messages in phone.
+	 * Number of all saved messages in phone.
 	 */
 	int     PhoneUsed;
 	/**
 	 * Number of all possible messages on phone.
 	 */
 	int     PhoneSize;
-	/**
-	 * Number of used templates (62xx/63xx/7110/etc.).
-	 */
-	int     TemplatesUsed;
 } GSM_SMSMemoryStatus;
 
 /* --------------------- SMS Center --------------------------------------- */
 
 /**
- * SMS Messages sent as...
+ * Enum defines format of SMS messages. See GSM 03.40 section 9.2.3.9
  */
 typedef enum {
-	GSMF_Pager = 1,
-	GSMF_Fax,
-	GSMF_Email,
-	GSMF_Text
+	SMS_FORMAT_Pager = 1,
+	SMS_FORMAT_Fax,
+	SMS_FORMAT_Email,
+	SMS_FORMAT_Text
+	/* Some values not handled here */
 } GSM_SMSFormat;
 
 /**
- * Length of validity for SMS messages.
+ * Enum defines some the most often used validity lengths for SMS messages
+ * for relative validity format. See GSM 03.40 section 9.2.3.12.1 - it gives
+ * more values
  */
 typedef enum {
-	GSMV_1_Hour   = 0x0b,
-	GSMV_6_Hours  = 0x47,
-	GSMV_24_Hours = 0xa7,
-	GSMV_72_Hours = 0xa9,
-	GSMV_1_Week   = 0xad,
-	GSMV_Max_Time = 0xff
+	SMS_VALID_1_Hour   = 0x0b,
+	SMS_VALID_6_Hours  = 0x47,
+	SMS_VALID_24_Hours = 0xa7,
+	SMS_VALID_72_Hours = 0xa9,
+	SMS_VALID_1_Week   = 0xad,
+	SMS_VALID_Max_Time = 0xff
 } GSM_ValidityPeriod;
 
 /**
- * Format of validity perion.
+ * Enum defines format of validity period for SMS messages.
+ * See GSM 03.40 section 9.2.3.12
  */
 typedef enum {
-	GSM_NoValidityPeriod = 1,
-	GSM_RelativeFormat
-	/* ... */
+	SMS_Validity_NotAvailable = 1,
+	SMS_Validity_RelativeFormat
+	/* Specification gives also other possibilities */
 } GSM_ValidityPeriodFormat;
 
 /**
- * Validity of SMS message.
+ * Structure for validity of SMS messages
  */
 typedef struct {
-	GSM_ValidityPeriodFormat	VPF;
+	GSM_ValidityPeriodFormat	Format;
+	/**
+	 * Value defines period for relative format
+	 */
 	GSM_ValidityPeriod	      	Relative;
 } GSM_SMSValidity;
 
@@ -115,27 +124,27 @@ typedef struct {
  */
 typedef struct {
 	/**
-	 * Number of the SMSC in the phone memory.
+	 * Number of the SMSC on SIM
 	 */
 	int	     	Location;
 	/**
-	 * Name of the SMSC.
+	 * Name of the SMSC
 	 */
 	unsigned char   Name[(GSM_MAX_SMSC_NAME_LENGTH+1)*2];
 	/**
-	 * Format of sent SMSes.
-	 */
-	GSM_SMSFormat   Format;
-	/**
-	 * Validity of SMS.
-	 */
-	GSM_SMSValidity Validity;
-	/**
-	 * SMSC number.
+	 * SMSC phone number.
 	 */
 	unsigned char   Number[(GSM_MAX_NUMBER_LENGTH+1)*2];
 	/**
-	 * Default recipient number.
+	 * Validity of SMS messages.
+	 */
+	GSM_SMSValidity Validity;
+	/**
+	 * Format of sent SMS messages.
+	 */
+	GSM_SMSFormat   Format;
+	/**
+	 * Default recipient number. In old DCT3 ignored
 	 */
 	unsigned char   DefaultNumber[(GSM_MAX_NUMBER_LENGTH+1)*2];
 } GSM_SMSC;
@@ -146,10 +155,10 @@ typedef struct {
  * Status of SMS message.
  */
 typedef enum {
-	GSM_Sent = 1,
-	GSM_UnSent,
-	GSM_Read,
-	GSM_UnRead
+	SMS_Sent = 1,
+	SMS_UnSent,
+	SMS_Read,
+	SMS_UnRead
 } GSM_SMS_State;
 
 /**
@@ -159,15 +168,15 @@ typedef enum {
 	/**
 	 * Unicode
 	 */
-	GSM_Coding_Unicode = 1,
+	SMS_Coding_Unicode = 1,
 	/**
 	 * Default GSM aplhabet.
 	 */
-	GSM_Coding_Default,
+	SMS_Coding_Default,
 	/**
 	 * 8-bit.
 	 */
-	GSM_Coding_8bit
+	SMS_Coding_8bit
 } GSM_Coding_Type;
 
 /**
@@ -205,7 +214,7 @@ typedef enum {
 } GSM_UDH;
 
 /**
- * Structure to hold UDH Header.
+ * Structure for User Data Header.
  */
 typedef struct {
 	/**
@@ -239,22 +248,22 @@ typedef struct {
 } GSM_UDHHeader;
 
 /**
- * TP-Message-Type-Indicator, see GSM 03.40 version 6.1.0 Release 1997 Section 9.2.3.1.
+ * TP-Message-Type-Indicator. See GSM 03.40 section 9.2.3.1.
  */
 typedef enum {		 
 	/**
-	 * Save SMS in Inbox.
+	 * SMS in Inbox.
 	 */
 	SMS_Deliver = 1,
 	/**
-	 * Delivery Report received by phone.
+	 * Delivery Report
 	 */
 	SMS_Status_Report,
 	/**
-	 * Send SMS or save it in Outbox.
+	 * SMS for sending or in Outbox
 	 */
 	SMS_Submit
-	/*...*/
+	/* specification gives more */
 } GSM_SMSMessageType;
 
 /**
@@ -267,41 +276,53 @@ typedef enum {
  */
 typedef struct {
 	/**
-	 * Message center.
+	 * Message to be replaced.
 	 */
-	GSM_SMSC		SMSC;
+	unsigned char	   	ReplaceMessage;
 	/**
-	 * UDH (User Defined Header).
+	 * Whether to reject duplicates.
+	 */
+	bool		    	RejectDuplicates;
+	/**
+	 * UDH (User Data Header)
 	 */
 	GSM_UDHHeader	   	UDH;
-	/**
-	 * Folder, where SMS is saved.
-	 */
-	int		     	Folder;
-	/**
-	 * Whether it is really inbox.
-	 */
-	bool		    	InboxFolder;
-	/**
-	 * Where exactly it's saved
-	 */
-	GSM_MemoryType		Memory;
-	/**
-	 * Location of SMS in memory.
-	 */
-	int		     	Location;
-	/**
-	 * Length of the SMS message.
-	 */
-	int		     	Length;
-	/**
-	 * Name in Nokia 6210/7110, etc. Ignored in other.
-	 */
-	unsigned char	   	Name[(GSM_MAX_SMS_NAME_LENGTH+1)*2];
 	/**
 	 * Sender or recipient number.
 	 */
 	unsigned char	   	Number[(GSM_MAX_NUMBER_LENGTH+1)*2];
+	/**
+	 * SMSC (SMS Center)
+	 */
+	GSM_SMSC		SMSC;
+	/**
+	 * For saved SMS: where exactly it's saved (SIM/phone)
+	 */
+	GSM_MemoryType		Memory;
+	/**
+	 * For saved SMS: location of SMS in memory.
+	 */
+	int		     	Location;
+	/**
+	 * For saved SMS: number of folder, where SMS is saved
+	 */
+	int		     	Folder;
+	/**
+	 * For saved SMS: whether SMS is really in Inbox.
+	 */
+	bool		    	InboxFolder;
+	/**
+	 * Length of the SMS message.
+	 */
+	int		     	Length;
+	/**                 	
+	 * Status (read/unread/...) of SMS message.
+	 */
+	GSM_SMS_State	   	State;
+	/**
+	 * Name in Nokia with SMS memory (6210/7110, etc.) Ignored in other.
+	 */
+	unsigned char	   	Name[(GSM_MAX_SMS_NAME_LENGTH+1)*2];
 	/**
 	 * Text for SMS.
 	 */
@@ -315,7 +336,7 @@ typedef struct {
 	 */
 	GSM_Coding_Type	 	Coding;
 	/**
-	 * Date of reception/response of messages.
+	 * Date and time, when SMS was saved or sent
 	 */
 	GSM_DateTime	    	DateTime;
 	/**
@@ -330,10 +351,6 @@ typedef struct {
 	 * Indicates whether "Reply via same center" is set.
 	 */
 	bool		    	ReplyViaSameSMSC;
-	/**                 	
-	 * State (read/unread/...) of SMS.
-	 */
-	GSM_SMS_State	   	State;
 	/**
 	 * SMS class.
 	 */
@@ -342,14 +359,6 @@ typedef struct {
 	 * Message reference.
 	 */
 	unsigned char	   	MessageReference;
-	/**
-	 * Message to be replaced.
-	 */
-	unsigned char	   	ReplaceMessage;
-	/**
-	 * Whether to reject duplicates.
-	 */
-	bool		    	RejectDuplicates;
 } GSM_SMSMessage;
 
 /* In layouts are saved locations for some SMS part. Below are listed
@@ -397,19 +406,19 @@ typedef struct {
 	unsigned char TPVP;
 	/**
 	 * Byte contains in SMS-Deliver:
-	 *   - TP-Message-Type-Indicator     (2 bits) GSM 03.40 section 9.2.3.1
-	 *   - TP-More-Messages-To-Send      (1 bit). GSM 03.40 section 9.2.3.2
-	 *   - TP-Reply-Path                 (1 bit). GSM 03.40 section 9.2.3.17
-	 *   - TP-User-Data-Header-Indicator (1 bit). GSM 03.40 section 9.2.3.23
-	 *   - TP-Status-Report-Indicator    (1 bit). GSM 03.40 section 9.2.3.4
+	 * - TP-Message-Type-Indicator     (2 bits) GSM 03.40 section 9.2.3.1
+	 * - TP-More-Messages-To-Send      (1 bit). GSM 03.40 section 9.2.3.2
+	 * - TP-Reply-Path                 (1 bit). GSM 03.40 section 9.2.3.17
+	 * - TP-User-Data-Header-Indicator (1 bit). GSM 03.40 section 9.2.3.23
+	 * - TP-Status-Report-Indicator    (1 bit). GSM 03.40 section 9.2.3.4
 	 *
 	 * Byte contains in SMS-Submit:
-	 *   - TP-Message-Type-Indicator     (2 bits) GSM 03.40 section 9.2.3.1
-	 *   - TP-Reject-Duplicates          (1 bit). GSM 03.40 section
-	 *   - TP-Validity-Period-Format     (2 bits).GSM 03.40 section 9.2.3.3
-	 *   - TP-Reply-Path                 (1 bit). GSM 03.40 section 9.2.3.17
-	 *   - TP-User-Data-Header-Indicator (1 bit). GSM 03.40 section 9.2.3.23
-	 *   - TP-Status-Report-Request      (1 bit). GSM 03.40 section 9.2.3.5
+	 * - TP-Message-Type-Indicator     (2 bits) GSM 03.40 section 9.2.3.1
+	 * - TP-Reject-Duplicates          (1 bit). GSM 03.40 section
+	 * - TP-Validity-Period-Format     (2 bits).GSM 03.40 section 9.2.3.3
+	 * - TP-Reply-Path                 (1 bit). GSM 03.40 section 9.2.3.17
+	 * - TP-User-Data-Header-Indicator (1 bit). GSM 03.40 section 9.2.3.23
+	 * - TP-Status-Report-Request      (1 bit). GSM 03.40 section 9.2.3.5
 	 */
 	unsigned char firstbyte;
 	/**

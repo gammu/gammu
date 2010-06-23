@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek & Michal Cihar */
 
 #include <string.h>
 #include <ctype.h>
@@ -201,7 +202,7 @@ GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 	unsigned char	buffer[300];
 
 	file = fopen(FileName, "rb");
-	if (file == NULL) return(GE_CANTOPENFILE);
+	if (file == NULL) return ERR_CANTOPENFILE;
 	fread(buffer, 1, 9, file); /* Read the header of the file. */
 	fclose(file);
 

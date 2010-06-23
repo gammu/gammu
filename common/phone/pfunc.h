@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #ifndef phone_common2_h
 #define phone_common2_h

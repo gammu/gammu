@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek and others */
 
 #ifndef __coding_h
 #define __coding_h
@@ -76,35 +77,50 @@ int GSM_UnpackEightBitsToSeven	(int offset, int in_length, int out_length,
 				 unsigned char *input, unsigned char *output);
 
 /* ----------------- Phone numbers according to GSM specs ------------------ */
-/* This data-type is used to specify the type of the number.
- * See the official GSM specification 03.40, section 9.1.2.5
+
+/**
+ * Enum to handle types of phones numbers like
+ * specified in GSM 03.40 section 9.1.2.5
  */
 typedef enum {
-	GNT_UNKNOWN		= 0x81,	/* Unknown number */
-	GNT_INTERNATIONAL	= 0x91,	/* International number */
-	GNT_ALPHANUMERIC	= 0xD0	/* Alphanumeric number */
-	/*...*/
+	/**
+	 * Unknown number type
+	 */
+	NUMBER_UNKNOWN		= 0x81,
+	/**
+	 * International number (full number with code of country)
+	 */
+	NUMBER_INTERNATIONAL	= 0x91,
+	/**
+	 * Alphanumeric number (with chars too)
+	 */
+	NUMBER_ALPHANUMERIC	= 0xD0
+
+	/* specification give also other values */
 } GSM_NumberType;
 
 void		GSM_UnpackSemiOctetNumber	(unsigned char *retval, unsigned char *Number, bool semioctet);
 int		GSM_PackSemiOctetNumber		(unsigned char *Number, unsigned char *Output, bool semioctet);
 
+/* ---------------------------- Bits --------------------------------------- */
+
+void BufferAlign      (unsigned char *Destination, int *CurrentBit);
+void BufferAlignNumber(int *CurrentBit);
+
+void AddBuffer	  (unsigned char *Destination, int *CurrentBit, unsigned char *Source, int BitsToProcess);
+void AddBufferByte(unsigned char *Destination, int *CurrentBit, unsigned char Source, int BitsToProcess);
+
+void GetBuffer    (unsigned char *Source, int *CurrentBit, unsigned char *Destination, int BitsToProcess);
+void GetBufferInt (unsigned char *Source, int *CurrentBit, int *integer, int BitsToProcess);
+void GetBufferI   (unsigned char *Source, int *CurrentBit, int *result, int BitsToProcess);
+
+int GetBit   (unsigned char *Buffer, int BitNum);
+int SetBit   (unsigned char *Buffer, int BitNum);
+int ClearBit (unsigned char *Buffer, int BitNum);
+
 /* ---------------------------- Other -------------------------------------- */
+
 void StringToDouble	(char *text, double *d);
-
-int OctetAlign		(unsigned char *Dest, int CurrentBit);
-int OctetAlignNumber	(int CurrentBit);
-int BitPack		(unsigned char *Dest, int CurrentBit, unsigned char *Source, int Bits);
-int BitPackByte		(unsigned char *Dest, int CurrentBit, unsigned char Command, int Bits);
-
-int BitUnPack		(unsigned char *Dest, int CurrentBit, unsigned char *Source, int Bits);
-int BitUnPackInt	(unsigned char *Src, int CurrentBit, int *integer, int Bits);
-int BitUnPackI		(unsigned char *Src, int CurrentBit, int *integer, int Bits);
-int OctetUnAlign	(int CurrentBit);
-
-#define GetBit(Stream,BitNr)	Stream[(BitNr)/8] & 1<<(7-((BitNr)%8))
-#define SetBit(Stream,BitNr)	Stream[(BitNr)/8] |= 1<<(7-((BitNr)%8))
-#define ClearBit(Stream,BitNr)	Stream[(BitNr)/8] &= 255 - (1 << (7-((BitNr)%8)))
 
 bool mystrncasecmp (unsigned char *a, unsigned char *b, int num);
 

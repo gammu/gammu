@@ -1,3 +1,5 @@
+/* (c) 2002-2003 by Marcin Wiacek */
+
 #ifndef _gsm_call_h
 #define _gsm_call_h
 
@@ -6,49 +8,49 @@
 /* ------------------ call info -------------------------------------------- */
 
 /**
- * Status of call.
+ * Enum with status of call.
  */
 typedef enum {
 	/**
 	 * Somebody calls to us
 	 */
-	 GN_CALL_IncomingCall=1,
+	GSM_CALL_IncomingCall=1,
 	/**
 	 * We call somewhere
 	 */
-	 GN_CALL_OutgoingCall,
+	GSM_CALL_OutgoingCall,
 	/**
 	 * Call started
 	 */
-	 GN_CALL_CallStart,
+	GSM_CALL_CallStart,
 	/**
 	 * End of call from unknown side
 	 */
-	 GN_CALL_CallEnd,
+	GSM_CALL_CallEnd,
 	/**
 	 * End of call from remote side
 	 */
-	 GN_CALL_CallRemoteEnd,
+	GSM_CALL_CallRemoteEnd,
 	/**
 	 * End of call from our side
 	 */
-	 GN_CALL_CallLocalEnd,
+	GSM_CALL_CallLocalEnd,
 	/**
 	 * Call established. Waiting for answer or dropping
 	 */
-	GN_CALL_CallEstablished,
+	GSM_CALL_CallEstablished,
 	/**
 	 * Call held
 	 */
-	GN_CALL_CallHeld,
+	GSM_CALL_CallHeld,
 	/**
 	 * Call resumed
 	 */
-	GN_CALL_CallResumed,
+	GSM_CALL_CallResumed,
 	/**
 	 * We switch to call
 	 */
-	GN_CALL_CallSwitched
+	GSM_CALL_CallSwitched
 } GSM_CallStatus;
 
 /**
@@ -86,20 +88,20 @@ typedef enum {
 	/**
 	 * Divert when busy.
 	 */
-	GSM_CDV_Busy = 0x01,
+	GSM_DIVERT_Busy = 0x01,
 	/**
 	 * Divert when not answered.
 	 */
-	GSM_CDV_NoAnswer,
+	GSM_DIVERT_NoAnswer,
 	/**
 	 * Divert when phone off or no coverage.
 	 */
-	GSM_CDV_OutOfReach,
+	GSM_DIVERT_OutOfReach,
 	/**
 	 * Divert all calls without ringing.
 	 */
-	GSM_CDV_AllTypes
-} GSM_CDV_DivertTypes;
+	GSM_DIVERT_AllTypes
+} GSM_Divert_DivertTypes;
 
 /**
  * Which type of calls should be diverted.
@@ -108,20 +110,20 @@ typedef enum {
 	/**
 	 * Voice calls.
 	 */
-	GSM_CDV_VoiceCalls = 0x01,
+	GSM_DIVERT_VoiceCalls = 0x01,
 	/**
 	 * Fax calls.
 	 */
-	GSM_CDV_FaxCalls,
+	GSM_DIVERT_FaxCalls,
 	/**
 	 * Data calls.
 	 */
-	GSM_CDV_DataCalls,
+	GSM_DIVERT_DataCalls,
 	/**
 	 * All calls.
 	 */
-	GSM_CDV_AllCalls
-} GSM_CDV_CallTypes;
+	GSM_DIVERT_AllCalls
+} GSM_Divert_CallTypes;
 
 /**
  * Call diversion definition.
@@ -130,11 +132,11 @@ typedef struct {
 	/**
 	 * When diversion is active.
 	 */
-	GSM_CDV_DivertTypes 	DType;
+	GSM_Divert_DivertTypes 	DivertType;
 	/**
 	 * Type of call to divert.
 	 */
-	GSM_CDV_CallTypes   	CType;
+	GSM_Divert_CallTypes   	CallType;
 	/**
 	 * Number where to divert.
 	 */
@@ -165,15 +167,15 @@ typedef enum {
 	/**
 	 * Show number.
 	 */
-	GN_CALL_ShowNumber = 1,
+	GSM_CALL_ShowNumber = 1,
 	/**
 	 * Hide number.
 	 */
-	GN_CALL_HideNumber,
+	GSM_CALL_HideNumber,
 	/**
 	 * Keep phone default settings.
 	 */
-	GN_CALL_Default
+	GSM_CALL_DefaultNumberPresence
 } GSM_CallShowNumber;
 
 #endif

@@ -1,3 +1,4 @@
+/* (c) 2001-2003 by Marcin Wiacek,... */
 
 #include <string.h>
 
@@ -206,8 +207,8 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                         break;
                 case 1:
                         if (strstr(Line,"END:VCARD")) {
-                                if (Pbk->EntriesNum == 0) return GE_EMPTY;
-                                return GE_NONE;
+                                if (Pbk->EntriesNum == 0) return ERR_EMPTY;
+                                return ERR_NONE;
                         }
                         if (ReadVCALText(Line, "N", Buff)) {
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
@@ -278,11 +279,13 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                 }
         }
 
-        if (Pbk->EntriesNum == 0) return GE_EMPTY;
-        return GE_NONE;
+        if (Pbk->EntriesNum == 0) return ERR_EMPTY;
+        return ERR_NONE;
 }
 
-/* -------------------------------- OLD ------------------------------------ */
+/* -------------- OLD functions (c) by Timo Teras -------------------------- */
+
+#ifndef ENABLE_LGPL
 
 static void ParseVCardLine(char **pos, char *Name, char *Parameters, char *Value)
 {
@@ -366,6 +369,8 @@ void DecodeVCARD21Text(char *VCard, GSM_MemoryEntry *pbk)
                 }
         }
 }
+
+#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

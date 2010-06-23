@@ -1,5 +1,7 @@
-#ifndef __gsm_backupgen_h
-#define __gsm_backupgen_h
+/* (c) 2003 by Marcin Wiacek */
+
+#ifndef __gsm_back_h
+#define __gsm_back_h
 
 #include "backgen.h"
 
@@ -8,8 +10,8 @@
 GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode);
 GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup);
 
-void GSM_ClearBackup(GSM_Backup *backup);
-void GSM_FreeBackup(GSM_Backup *backup);
+void GSM_ClearBackup (GSM_Backup *backup);
+void GSM_FreeBackup  (GSM_Backup *backup);
 
 typedef struct {
 	bool UseUnicode;

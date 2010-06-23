@@ -17,107 +17,110 @@ const	GSM_MAX_SMSC_NAME_LENGTH	= 30;
 {$MINENUMSIZE 4}
 
 type    GSM_NetworkInfo_State = (
-        	GSM_HomeNetwork = 1,    //phone logged into home network
-        	GSM_RoamingNetwork,     //phone logged into other than home network
-        	GSM_RequestingNetwork,  //phone tries to log into network
-        	GSM_NoNetwork);         //no network found
+        	GSM_HomeNetwork = 1,     //Home network for used SIM card.
+        	GSM_NoNetwork,           //No network available for used SIM card.
+        	GSM_RoamingNetwork,      //SIM card uses roaming.
+		GSM_RegistrationDenied,
+		GSM_NetworkStatusUnknown,
+        	GSM_RequestingNetwork);  //Network explicitely requested by user.
 
 	GSM_NetworkInfo = record
-		NetworkName	: array[1..30] of char;  // network name showed in some phones on display
-		State		: GSM_NetworkInfo_State; // network state
+		CID	  	: array[1..10] of char;  // CellID (CID)
       		NetworkCode 	: array[1..10] of char;  // GSM network code
-		CellID	  	: array[1..10] of char;  // CellID
+		State		: GSM_NetworkInfo_State; // network status
 		LAC	  	: array[1..10] of char;  // LAC
+		NetworkName	: array[1..30] of char;  // network name showed in some phones on display
 	end;
 	PGSM_NetworkInfo = ^GSM_NetworkInfo;
 
 type	GSM_Error = (
-	        GE_NONE = 1,
-       	 	GE_DEVICEOPENERROR,		// Error during opening device
-		GE_DEVICELOCKED,
-		GE_DEVICENOTEXIST,
-		GE_DEVICEBUSY,
-		GE_DEVICENOPERMISSION,
-		GE_DEVICENODRIVER,
-		GE_DEVICENOTWORK,
-        	GE_DEVICEDTRRTSERROR,		// Error during setting DTR/RTS in device
-        	GE_DEVICECHANGESPEEDERROR,	// Error during changing speed in device
-       		GE_DEVICEWRITEERROR,		// Error during writing device 
-		GE_DEVICEREADERROR,		// Error during reading device
-		GE_DEVICEPARITYERROR,		// Can't set parity on device
-        	GE_TIMEOUT,			// Command timed out 
-        	GE_FRAMENOTREQUESTED,		// Frame handled, but not requested in this moment //10
-        	GE_UNKNOWNRESPONSE,		// Response not handled by gammu
-		GE_UNKNOWNFRAME,		// Frame not handled by gammu
-		GE_UNKNOWNCONNECTIONTYPESTRING,	// Unknown connection type given by user 
-		GE_UNKNOWNMODELSTRING,		// Unknown model given by user 
-		GE_SOURCENOTAVAILABLE,		// Some functions not compiled in your OS
-		GE_NOTSUPPORTED,		// Not supported by phone
-		GE_EMPTY,			// Empty phonebook entry, ...
-		GE_SECURITYERROR,		// Not allowed
-		GE_INVALIDLOCATION,		// Too high or too low location...
-		GE_NOTIMPLEMENTED,		// Function not implemented //20
-		GE_FULL,			// Memory is full 
-		GE_UNKNOWN,
-		GE_CANTOPENFILE, 		// Error during opening file
-		GE_MOREMEMORY,			// More memory required
-		GE_PERMISSION,			// No permission
-		GE_EMPTYSMSC,			// SMSC number is empty
-		GE_INSIDEPHONEMENU,		// Inside phone menu - can't make something
-		GE_NOTCONNECTED,		// Phone NOT connected - can't make something
-		GE_WORKINPROGRESS,		// Work in progress
-      		GE_PHONEOFF,			// Phone is disabled and connected to charger //30
-		GE_FILENOTSUPPORTED,		// File format not supported by Gammu
-		GE_BUG,                  	// Found bug in implementation or phone //32
-		GE_CANCELED,
-		GE_NEEDANOTHERANSWER,
-		GE_OTHERCONNECTIONREQUIRED,
-		GE_WRONGCRC);
+	        ERR_NONE = 1,
+       	 	ERR_DEVICEOPENERROR,		// Error during opening device
+		ERR_DEVICELOCKED,
+		ERR_DEVICENOTEXIST,
+		ERR_DEVICEBUSY,
+		ERR_DEVICENOPERMISSION,
+		ERR_DEVICENODRIVER,
+		ERR_DEVICENOTWORK,
+        	ERR_DEVICEDTRRTSERROR,		// Error during setting DTR/RTS in device
+        	ERR_DEVICECHANGESPEEDERROR,	// Error during changing speed in device
+       		ERR_DEVICEWRITEERROR,		// Error during writing device 
+		ERR_DEVICEREADERROR,		// Error during reading device
+		ERR_DEVICEPARITYERROR,		// Can't set parity on device
+        	ERR_TIMEOUT,			// Command timed out 
+        	ERR_FRAMENOTREQUESTED,		// Frame handled, but not requested in this moment //10
+        	ERR_UNKNOWNRESPONSE,		// Response not handled by gammu
+		ERR_UNKNOWNFRAME,		// Frame not handled by gammu
+		ERR_UNKNOWNCONNECTIONTYPESTRING,	// Unknown connection type given by user 
+		ERR_UNKNOWNMODELSTRING,		// Unknown model given by user 
+		ERR_SOURCENOTAVAILABLE,		// Some functions not compiled in your OS
+		ERR_NOTSUPPORTED,		// Not supported by phone
+		ERR_EMPTY,			// Empty phonebook entry, ...
+		ERR_SECURITYERROR,		// Not allowed
+		ERR_INVALIDLOCATION,		// Too high or too low location...
+		ERR_NOTIMPLEMENTED,		// Function not implemented //20
+		ERR_FULL,			// Memory is full 
+		ERR_UNKNOWN,
+		ERR_CANTOPENFILE, 		// Error during opening file
+		ERR_MOREMEMORY,			// More memory required
+		ERR_PERMISSION,			// No permission
+		ERR_EMPTYSMSC,			// SMSC number is empty
+		ERR_INSIDEPHONEMENU,		// Inside phone menu - can't make something
+		ERR_NOTCONNECTED,		// Phone NOT connected - can't make something
+		ERR_WORKINPROGRESS,		// Work in progress
+      		ERR_PHONEOFF,			// Phone is disabled and connected to charger //30
+		ERR_FILENOTSUPPORTED,		// File format not supported by Gammu
+		ERR_BUG,                  	// Found bug in implementation or phone //32
+		ERR_CANCELED,
+		ERR_NEEDANOTHERANSWER,
+		ERR_OTHERCONNECTIONREQUIRED,
+		ERR_WRONGCRC);
 
 	GSM_DateTime = record
-		Year	 : integer; //full year (for example,2002)
-		Month	 : integer;
-		Day	 : integer;
-		Hour	 : integer;
-		Minute	 : integer;
-		Second	 : integer;
 		Timezone : integer;
+		Second	 : integer;
+		Minute	 : integer;
+		Hour	 : integer;
+		Day	 : integer;
+		Month	 : integer;
+		Year	 : integer; //full year (for example,2002)
 	end;
 	PGSM_DateTime = ^GSM_DateTime;
 
 	GSM_ValidityPeriodFormat = (
-		GSM_NoValidityPeriod = 1, //sms doesn't have validity info
-		GSM_RelativeFormat);      //sms has relative validity (starting from the sending moment). Example, one day, one week, 1 hour
+		SMS_Validity_NotAvailable = 1, //sms doesn't have validity info
+		SMS_Validity_RelativeFormat);  //sms has relative validity (starting from the sending moment). Example, one day, one week, 1 hour
 
-        // Validity of SMS Messages.
+	// Enum defines some the most often used validity lengths for SMS messages
+	// for relative validity format.
         GSM_ValidityPeriod = (
-        	GSMV_1_Hour   = 11,
-        	GSMV_6_Hours  = 71,
-        	GSMV_24_Hours = 167,
-        	GSMV_72_Hours = 169,
-        	GSMV_1_Week   = 173,
-        	GSMV_Max_Time = 255);
+		SMS_VALID_1_Hour   = 11,
+		SMS_VALID_6_Hours  = 71,
+		SMS_VALID_24_Hours = 167,
+		SMS_VALID_72_Hours = 169,
+		SMS_VALID_1_Week   = 173,
+		SMS_VALID_Max_Time = 255);
 
         GSM_SMSValidity = record
-                VPF      :      GSM_ValidityPeriodFormat; //type of sms validity
-                Relative :      GSM_ValidityPeriod;       //how long is validity. example: 1 week or 3 days
+                Format   :      GSM_ValidityPeriodFormat; //type of sms validity
+                Relative :      GSM_ValidityPeriod;       //how long sms is valid. example: 1 week or 3 days
         end;
 
-	// SMS Messages sent as...
+	// Enum defines format of SMS messages. See GSM 03.40 section 9.2.3.9
 	GSM_SMSFormat = (
-		GSMF_Pager = 1,
-		GSMF_Fax,
-		GSMF_Email,
-		GSMF_Text);     //sms sent as normal text
+		SMS_FORMAT_Pager = 1,
+		SMS_FORMAT_Fax,
+		SMS_FORMAT_Email,
+		SMS_FORMAT_Text);
 
-	// Define datatype for SMS Message Center
+	// Structure for SMSC (SMS Center) information.
 	GSM_SMSC = record
-		Location 	: integer;		                            // Number of the SMSC in the phone memory.
-		Name		: array[1..(GSM_MAX_SMSC_NAME_LENGTH+1)*2] of char; // Name of the SMSC.
-		Format		: GSM_SMSFormat;	                            // SMS is sent as text/fax/paging/email.
-		Validity	: GSM_SMSValidity;	                            // Validity of SMS Message.
-		Number		: array[1..(GSM_MAX_NUMBER_LENGTH+1)*2] of char;    // Number of the SMSC.
-		DefaultNumber	: array[1..(GSM_MAX_NUMBER_LENGTH+1)*2] of char;    // Number of default recipient
+		Location 	: integer;		                            // Number of the SMSC on SIM
+		Name		: array[1..(GSM_MAX_SMSC_NAME_LENGTH+1)*2] of char; // Name of the SMSC
+		Number		: array[1..(GSM_MAX_NUMBER_LENGTH+1)*2] of char;    // SMSC phone number
+		Validity	: GSM_SMSValidity;	                            // Validity of SMS Messages
+		Format		: GSM_SMSFormat;	                            // For of sent SMS messages
+		DefaultNumber	: array[1..(GSM_MAX_NUMBER_LENGTH+1)*2] of char;    // Default recipient number
 	end;
 
 	// types of UDH (User Data Header)
@@ -145,7 +148,7 @@ type	GSM_Error = (
 		UDH_UserUDH,			// Other user UDH
 		UDH_MMSIndicatorLong);
 
-        // Structure to hold UDH Header
+	// Structure for User Data Header.
         GSM_UDHHeader = record
                 UDHType         : GSM_UDH;                              //Type
                 Length          : integer;                              //Length
@@ -173,28 +176,28 @@ type	GSM_Error = (
 		SMS_Submit);		// when we send SMS or save it in Outbox
 
 	GSM_SMSMessage = record
-		SMSC		 : GSM_SMSC;		// Message center
+                ReplaceMessage   : char;		// 0, when don't use this feature. 1 - 7 set SMS ID
+		RejectDuplicates : ByteBool;		// true, if set this flag. Normally false
 		UDH		 : GSM_UDHHeader;       // User Data Header
-		Folder		 : integer;             // Inbox or Outbox message
-		InboxFolder	 : LongBool;		// true, when sms is from inbox
-		Memory		 : integer;
-		Location	 : integer;             // location of sms in sim memory (for example)
+		Number		 : array[1..(GSM_MAX_NUMBER_LENGTH+1)*2]   of char; // Sender or recipient number
+		SMSC		 : GSM_SMSC;		// SMSC (SMS Center)
+		Memory		 : integer;		// For saved SMS: where exactly it's saved (SIM/phone)
+		Location	 : integer;             // For saved SMS: location of SMS in memory.
+		Folder		 : integer;             // For saved SMS: number of folder, where SMS is saved
+		InboxFolder	 : ByteBool;		// For saved SMS: whether SMS is really in Inbox
 		Length		 : integer;		// Length of the SMS message.
                                                         // for 8 bit sms number of 8 bit chars
+		State		 : GSM_SMS_State;	// Read, UnRead, etc.
 		Name		 : array[1..(GSM_MAX_SMS_NAME_LENGTH+1)*2] of char; // Name in Nokia 6210/7110, etc. Ignored in other
-		Number		 : array[1..(GSM_MAX_NUMBER_LENGTH+1)*2]   of char; // Sender or recipient number
 		Text		 : array[1..(GSM_MAX_SMS_LENGTH+1)*2] 	   of char; // Text for SMS
 		PDU		 : GSM_SMSMessageType;	// Type of message
 		Coding		 : GSM_Coding_Type;	// Type of coding
-		DateTime	 : GSM_DateTime;	// Date of reception/response of messages.
-		SMSCTime	 : GSM_DateTime;	// Date of SMSC response if DeliveryReport messages.
+		DateTime	 : GSM_DateTime;	// Date and time, when SMS was saved or sent
+		SMSCTime	 : GSM_DateTime;	// Date of SMSC response in DeliveryReport messages.
 		DeliveryStatus	 : char;		// In delivery reports: status
-		ReplyViaSameSMSC : LongBool;		// Indicates whether "Reply via same center" is set
-		State		 : GSM_SMS_State;	// Read, UnRead, etc.
+		ReplyViaSameSMSC : ByteBool;		// Indicates whether "Reply via same center" is set
 		SMSClass	 : shortint;		// SMS class. Normally -1.
                 MessageReference : char;		// SMS Reference Number in SMS_Submit. 0, when don't used
-                ReplaceMessage   : char;		// 0, when don't use this feature. 1 - 7 set SMS ID
-		RejectDuplicates : LongBool;		// true, if set this flag. Normally false
 	end;
 	PGSM_SMSMessage = ^GSM_SMSMessage;
 
@@ -205,9 +208,9 @@ type	GSM_Error = (
 	PGSM_MultiSMSMessage = ^GSM_MultiSMSMessage;
 
 	GSM_SMSMemoryStatus = record
-		SIMUnRead	 : integer; //unread sms on sim
-		SIMUsed		 : integer; //all used (including unread) locations on sim
-		SIMSize		 : integer; //size of sim memory
+		SIMUnRead	 : integer; //Number of unread messages on SIM.
+		SIMUsed		 : integer; //Number of all saved messages (including unread) on SIM.
+		SIMSize		 : integer; //Number of all possible messages on SIM.
 		PhoneUnRead	 : integer;
 		PhoneUsed	 : integer;
 		PhoneSize	 : integer;
@@ -216,26 +219,26 @@ type	GSM_Error = (
 	PGSM_SMSMemoryStatus = ^GSM_SMSMemoryStatus;
 
         GSM_SecurityCodeType = (
-		GSCT_UNKNOWN,
-                GSCT_SecurityCode, 		// Security code.
-                GSCT_Pin,                 	// PIN.
-                GSCT_Pin2,                	// PIN 2.
-                GSCT_Puk,                 	// PUK.
-                GSCT_Puk2,			// PUK 2.
-                GSCT_None);			// Code not needed.
+		SEC_UNKNOWN,
+                SEC_SecurityCode, 		// Security code.
+                SEC_Pin,                 	// PIN.
+                SEC_Pin2,                	// PIN 2.
+                SEC_Puk,                 	// PUK.
+                SEC_Puk2,			// PUK 2.
+                SEC_None);			// Code not needed.
 
 	GSM_SecurityCode = record
-		CodeType	: GSM_SecurityCodeType; //type of code
 		Code	        : array[1..10] of char; //code (without unicode !)
+		CodeType	: GSM_SecurityCodeType; //type of code
 	end;
 	PGSM_SecurityCode = ^GSM_SecurityCode;
 
 type
         //callback, which is called, when phone is connected or disconnected
-        PhoneCallBackProc          = procedure(x:integer;ID:integer;connected:LongBool);stdcall;
+        PhoneCallBackProc          = procedure(x:integer;ID:integer;connected:ByteBool);stdcall;
         PPhoneCallBackProc         = ^PhoneCallBackProc;
         //this definition is used, when call back is defined under Class
-        PhoneCallBackProcClass     = procedure(ID:integer;connected:LongBool);stdcall;
+        PhoneCallBackProcClass     = procedure(ID:integer;connected:ByteBool);stdcall;
         PPhoneCallBackProcClass    = ^PhoneCallBackProcClass;
 
         //called, when phone needs PIN, PUK, etc.
@@ -257,7 +260,7 @@ function GSM_StartConnectionClass	(Phone : Pinteger; Device: PChar;Connection: P
 function GSM_EndConnection	        (Phone : integer): GSM_Error; stdcall; external 'gammu.dll' name 'myendconnection';
 function GSM_GetNetworkInfo	        (Phone : integer; NetworkInfo : PGSM_NetworkInfo): GSM_Error; stdcall; external 'gammu.dll' name 'mygetnetworkinfo';
 function GSM_GetSMSStatus	        (Phone : integer; status : PGSM_SMSMemoryStatus): GSM_Error; stdcall; external 'gammu.dll' name 'mygetsmsstatus';
-function GSM_GetNextSMSMessage	        (Phone : integer; SMS : PGSM_MultiSMSMessage;start : LongBool): GSM_Error; stdcall; external 'gammu.dll' name 'mygetnextsmsmessage';
+function GSM_GetNextSMSMessage	        (Phone : integer; SMS : PGSM_MultiSMSMessage;start : ByteBool): GSM_Error; stdcall; external 'gammu.dll' name 'mygetnextsmsmessage';
 function GSM_DeleteSMSMessage	        (Phone : integer; SMS : PGSM_SMSMessage): GSM_Error; stdcall; external 'gammu.dll' name 'mydeletesmsmessage';
 function GSM_SendSMSMessage	        (Phone : integer; SMS : PGSM_SMSMessage;timeout:integer): GSM_Error; stdcall; external 'gammu.dll' name 'mysendsmsmessage';
 function GSM_AddSMSMessage	        (Phone : integer; SMS : PGSM_SMSMessage): GSM_Error; stdcall; external 'gammu.dll' name 'myaddsmsmessage';
@@ -269,7 +272,7 @@ function GSM_GetManufacturer	        (Phone : integer; IMEI:PAnsiString): GSM_Er
 function GSM_GetModel	                (Phone : integer; Model:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmodel';
 function GSM_GetModelName	        (Phone : integer; Model:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmodelname';
 function GSM_GetFirmwareVersion         (Phone : integer; Version: PDouble): GSM_Error; stdcall; external 'gammu.dll' name 'mygetfirmwareversion';
-function GSM_Reset                      (Phone : integer; Hard: LongBool): GSM_Error; stdcall; external 'gammu.dll' name 'myreset';
+function GSM_Reset                      (Phone : integer; Hard: ByteBool): GSM_Error; stdcall; external 'gammu.dll' name 'myreset';
 function GSM_SMSCounter			(MessageLength:Integer;MessageBuffer:PAnsiString;UDH:GSM_UDH;Coding:GSM_Coding_Type;SMSNum:PInteger;CharsLeft:PInteger): GSM_Error; stdcall; external 'gammu.dll' name 'mysmscounter';
 function GSM_MakeMultiPartSMS           (MessageBuffer:PAnsiString;MessageLength:Integer;UDHType:GSM_UDH;Coding:GSM_Coding_Type;MyClass:Integer;ReplaceMessage:ShortInt;SMS:PGSM_MultiSMSMessage): GSM_Error; stdcall; external 'gammu.dll' name 'mymakemultipartsms';
 function GSM_GetStructureSize		(i: integer): integer; stdcall; external 'gammu.dll' name 'mygetstructuresize';
@@ -349,7 +352,7 @@ begin
   if (GSM_GetStructureSize(1) <> sizeof(gsm_smsc))        then application.MessageBox('gsm_smsc','',0);
   if (GSM_GetStructureSize(2) <> sizeof(gsm_sms_state))   then application.MessageBox('gsm_sms_state','',0);
   if (GSM_GetStructureSize(3) <> sizeof(gsm_UDHHeader))   then application.MessageBox('gsm_udhheader','',0);
-  if (GSM_GetStructureSize(4) <> sizeof(LongBool))        then application.MessageBox('bool','',0);
+  if (GSM_GetStructureSize(4) <> sizeof(ByteBool))        then application.MessageBox('bool','',0);
   if (GSM_GetStructureSize(5) <> sizeof(gsm_datetime))    then application.MessageBox('gsm_datetime','',0);
   if (GSM_GetStructureSize(6) <> sizeof(integer))         then application.MessageBox('int','',0);
   if (GSM_GetStructureSize(7) <> sizeof(gsm_networkinfo)) then application.MessageBox('gsm_networinfo','',0);

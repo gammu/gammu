@@ -1,3 +1,7 @@
+/* (c) 2001-2003 by Marcin Wiacek */
+/* Based on some work from Ralf Thelen (7110 ringtones),
+ * Gnokii (RTTL and SM) and others
+ */
 
 #include <stdlib.h>
 #include <string.h>
@@ -20,28 +24,28 @@ int GSM_RingNoteGetFrequency(GSM_RingNote Note)
 	/* Values according to the software from http://iki.fi/too/sw/xring/
 	 * generated with:
 	 * perl -e 'print int(4400 * (2 **($_/12)) + .5)/10, "\n" for(3..14)'
-	*/
+ 	 */
 	switch (Note.Note) {
-		case Note_C  : freq = 523.3; break;
-		case Note_Cis: freq = 554.4; break;
-		case Note_D  : freq = 587.3; break;
-		case Note_Dis: freq = 622.3; break;
-		case Note_E  : freq = 659.3; break;
-		case Note_F  : freq = 698.5; break;
-		case Note_Fis: freq = 740;   break;
-		case Note_G  : freq = 784;   break;
-		case Note_Gis: freq = 830.6; break;
-		case Note_A  : freq = 880;   break;
-		case Note_Ais: freq = 932.3; break;
-		case Note_H  : freq = 987.8; break;
-		case Note_Pause:	     break;
+		case Note_C  : freq = 523.3; 				break;
+		case Note_Cis: freq = 554.4; 				break;
+		case Note_D  : freq = 587.3; 				break;
+		case Note_Dis: freq = 622.3; 				break;
+		case Note_E  : freq = 659.3; 				break;
+		case Note_F  : freq = 698.5; 				break;
+		case Note_Fis: freq = 740;   				break;
+		case Note_G  : freq = 784;   				break;
+		case Note_Gis: freq = 830.6; 				break;
+		case Note_A  : freq = 880;   				break;
+		case Note_Ais: freq = 932.3; 				break;
+		case Note_H  : freq = 987.8; 				break;
+		case Note_Pause:	     				break;
 	}
 	switch (Note.Scale) {
-		case Scale_440 : freq = freq / 2;	break;
-		case Scale_880 :			break;
-		case Scale_1760: freq = freq * 2;	break;
-		case Scale_3520: freq = freq * 4;	break;
-		default	       :			break;
+		case Scale_440 : freq = freq / 2;			break;
+		case Scale_880 :					break;
+		case Scale_1760: freq = freq * 2;			break;
+		case Scale_3520: freq = freq * 4;			break;
+		default	       :					break;
 	}
 	return (int)freq;
 }
@@ -51,12 +55,12 @@ int GSM_RingNoteGetFullDuration(GSM_RingNote Note)
 	int duration = 1;
 
 	switch (Note.Duration) {
-		case Duration_Full : duration = 128;	break;
-		case Duration_1_2  : duration = 64;	break;
-		case Duration_1_4  : duration = 32;	break;
-		case Duration_1_8  : duration = 16;	break;
-		case Duration_1_16 : duration = 8;	break;
-		case Duration_1_32 : duration = 4;	break;
+		case Duration_Full : duration = 128;			break;
+		case Duration_1_2  : duration = 64;			break;
+		case Duration_1_4  : duration = 32;			break;
+		case Duration_1_8  : duration = 16;			break;
+		case Duration_1_16 : duration = 8;			break;
+		case Duration_1_32 : duration = 4;			break;
 	}
 	switch (Note.DurationSpec) {
 		case NoSpecialDuration	: 				break;
@@ -124,7 +128,7 @@ static GSM_Error savewav(FILE *file, GSM_Ringtone *ringtone)
 	fwrite(&FMT_Header,	1, sizeof(FMT_Header),	file);
 	fwrite(&DATA_Header,	1, sizeof(DATA_Header),	file);
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error savebin(FILE *file, GSM_Ringtone *ringtone)
@@ -138,13 +142,13 @@ static GSM_Error savebin(FILE *file, GSM_Ringtone *ringtone)
 	fwrite(&nullchar,1,1,file);
 	fwrite(&nullchar,1,1,file);
 	fwrite(ringtone->NokiaBinary.Frame,1,ringtone->NokiaBinary.Length,file);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error savepuremidi(FILE *file, GSM_Ringtone *ringtone)
 {
  	fwrite(ringtone->NokiaBinary.Frame,1,ringtone->NokiaBinary.Length,file);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone)
@@ -222,100 +226,101 @@ GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone)
 	dbgprintf("DefNoteScale=%d\n", DefNoteScale);
 
 	for (i=0;i<ringtone->NoteTone.NrCommands;i++) {
-		if (ringtone->NoteTone.Commands[i].Type == RING_Note) {
-			Note = &ringtone->NoteTone.Commands[i].Note;
+		if (ringtone->NoteTone.Commands[i].Type != RING_Note) continue;
 
-			/* Trick from PPM Edit */
-			if (Note->DurationSpec == DoubleDottedNote) {
-				switch (Note->Duration) {
-					case Duration_Full:Note->Duration = Duration_Full;break;
-					case Duration_1_2 :Note->Duration = Duration_Full;break;
-					case Duration_1_4 :Note->Duration = Duration_1_2; break;
-					case Duration_1_8 :Note->Duration = Duration_1_4; break;
-					case Duration_1_16:Note->Duration = Duration_1_8; break;
-					case Duration_1_32:Note->Duration = Duration_1_16;break;
-				}
-				Note->DurationSpec = NoSpecialDuration;
-			}
+		Note = &ringtone->NoteTone.Commands[i].Note;
 
-			if (!started) {
-				DefNoteTempo=Note->Tempo;
-				DefNoteStyle=Note->Style;
-				switch (Note->Style) {
-					case StaccatoStyle	: fprintf(file,"s=S,"); break;
-					case NaturalStyle 	: fprintf(file,"s=N,"); break;
-					case ContinuousStyle	:			break;
-				}
-				/* Save the default tempo */
-				fprintf(file,"b=%i:",DefNoteTempo);
-				dbgprintf("DefNoteTempo=%d\n", DefNoteTempo);
-				started 	= true;
-				firstcomma 	= true;
+		/* Trick from PPM Edit */
+		if (Note->DurationSpec == DoubleDottedNote) {
+			switch (Note->Duration) {
+				case Duration_Full:Note->Duration = Duration_Full;break;
+				case Duration_1_2 :Note->Duration = Duration_Full;break;
+				case Duration_1_4 :Note->Duration = Duration_1_2; break;
+				case Duration_1_8 :Note->Duration = Duration_1_4; break;
+				case Duration_1_16:Note->Duration = Duration_1_8; break;
+				case Duration_1_32:Note->Duration = Duration_1_16;break;
 			}
-			if (started) {
-				if (Note->Style!=DefNoteStyle) {
-					/* And a separator */
-					if (!firstcomma) fprintf(file,",");
-					firstcomma = false;
-					DefNoteStyle=Note->Style;
-					switch (Note->Style) {
-						case StaccatoStyle  : fprintf(file,"s=S"); break;
-						case NaturalStyle   : fprintf(file,"s=N"); break;
-						case ContinuousStyle: fprintf(file,"s=C"); break;
-					}
-				}    
-				if (Note->Tempo!=DefNoteTempo) {
-					/* And a separator */
-					if (!firstcomma) fprintf(file,",");
-					firstcomma = false;
-					DefNoteTempo=Note->Tempo;
-					fprintf(file,"b=%i",DefNoteTempo);
-				} 
-		    		/* This note has a duration different than the default. We must save it */
-				if (Note->Duration!=DefNoteDuration) {
-					/* And a separator */
-					if (!firstcomma) fprintf(file,",");
-					firstcomma = false;
-					switch (Note->Duration) {
-						case Duration_Full:fprintf(file,"1"); break;
-						case Duration_1_2 :fprintf(file,"2"); break;
-						case Duration_1_4 :fprintf(file,"4"); break;
-						case Duration_1_8 :fprintf(file,"8"); break;
-						case Duration_1_16:fprintf(file,"16");break;
-						case Duration_1_32:fprintf(file,"32");break;
-					}
-				} else {
-					/* And a separator */
-					if (!firstcomma) fprintf(file,",");
-					firstcomma = false;
-				}
-		    		/* Now save the actual note */
-				switch (Note->Note) {
-					case Note_C  :fprintf(file,"c");	break;
-					case Note_Cis:fprintf(file,"c#");	break;
-					case Note_D  :fprintf(file,"d");	break;
-					case Note_Dis:fprintf(file,"d#");	break;
-					case Note_E  :fprintf(file,"e");	break;
-					case Note_F  :fprintf(file,"f");	break;
-					case Note_Fis:fprintf(file,"f#");	break;
-					case Note_G  :fprintf(file,"g");	break;
-					case Note_Gis:fprintf(file,"g#");	break;
-					case Note_A  :fprintf(file,"a");	break;
-					case Note_Ais:fprintf(file,"a#");	break;
-					case Note_H  :fprintf(file,"h");	break;
-					default      :fprintf(file,"p");	break; /*Pause ?*/
-				}
-				switch (Note->DurationSpec) {
-					case DottedNote	: fprintf(file,".");	break;
-					default		:			break;
-				}
-				if (Note->Note!=Note_Pause && Note->Scale != DefNoteScale) {
-					fprintf(file,"%i",Note->Scale);
-				}
+			Note->DurationSpec = NoSpecialDuration;
+		}
+
+		if (!started) {
+			DefNoteTempo=Note->Tempo;
+			DefNoteStyle=Note->Style;
+			switch (Note->Style) {
+				case StaccatoStyle	: fprintf(file,"s=S,"); break;
+				case NaturalStyle 	: fprintf(file,"s=N,"); break;
+				case ContinuousStyle	:			break;
 			}
+			/* Save the default tempo */
+			fprintf(file,"b=%i:",DefNoteTempo);
+			dbgprintf("DefNoteTempo=%d\n", DefNoteTempo);
+			started 	= true;
+			firstcomma 	= true;
+		}
+
+		if (!started) continue;
+
+		if (Note->Style!=DefNoteStyle) {
+			/* And a separator */
+			if (!firstcomma) fprintf(file,",");
+			firstcomma = false;
+			DefNoteStyle=Note->Style;
+			switch (Note->Style) {
+				case StaccatoStyle  : fprintf(file,"s=S"); break;
+				case NaturalStyle   : fprintf(file,"s=N"); break;
+				case ContinuousStyle: fprintf(file,"s=C"); break;
+			}
+		}    
+		if (Note->Tempo!=DefNoteTempo) {
+			/* And a separator */
+			if (!firstcomma) fprintf(file,",");
+			firstcomma = false;
+			DefNoteTempo=Note->Tempo;
+			fprintf(file,"b=%i",DefNoteTempo);
+		} 
+		/* This note has a duration different than the default. We must save it */
+		if (Note->Duration!=DefNoteDuration) {
+			/* And a separator */
+			if (!firstcomma) fprintf(file,",");
+			firstcomma = false;
+			switch (Note->Duration) {
+				case Duration_Full:fprintf(file,"1"); break;
+				case Duration_1_2 :fprintf(file,"2"); break;
+				case Duration_1_4 :fprintf(file,"4"); break;
+				case Duration_1_8 :fprintf(file,"8"); break;
+				case Duration_1_16:fprintf(file,"16");break;
+				case Duration_1_32:fprintf(file,"32");break;
+			}
+		} else {
+			/* And a separator */
+			if (!firstcomma) fprintf(file,",");
+			firstcomma = false;
+		}
+		/* Now save the actual note */
+		switch (Note->Note) {
+			case Note_C  :fprintf(file,"c");	break;
+			case Note_Cis:fprintf(file,"c#");	break;
+			case Note_D  :fprintf(file,"d");	break;
+			case Note_Dis:fprintf(file,"d#");	break;
+			case Note_E  :fprintf(file,"e");	break;
+			case Note_F  :fprintf(file,"f");	break;
+			case Note_Fis:fprintf(file,"f#");	break;
+			case Note_G  :fprintf(file,"g");	break;
+			case Note_Gis:fprintf(file,"g#");	break;
+			case Note_A  :fprintf(file,"a");	break;
+			case Note_Ais:fprintf(file,"a#");	break;
+			case Note_H  :fprintf(file,"h");	break;
+			default      :fprintf(file,"p");	break; /*Pause ?*/
+		}
+		switch (Note->DurationSpec) {
+			case DottedNote	: fprintf(file,".");	break;
+			default		:			break;
+		}
+		if (Note->Note!=Note_Pause && Note->Scale != DefNoteScale) {
+			fprintf(file,"%i",Note->Scale);
 		}
 	}  
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static void saveimelody(FILE *file, GSM_Ringtone *ringtone)
@@ -327,6 +332,8 @@ static void saveimelody(FILE *file, GSM_Ringtone *ringtone)
   
 	fwrite(Buffer, 1, i, file);
 }
+
+#ifndef ENABLE_LGPL
 
 static void WriteVarLen(unsigned char* midifile, int* current, long value)
 {
@@ -342,10 +349,11 @@ static void WriteVarLen(unsigned char* midifile, int* current, long value)
 
 	while (1) {
 		midifile[(*current)++] = (unsigned char)buffer;
-		if (buffer & 0x80)
+		if (buffer & 0x80) {
 			buffer >>= 8;
-		else
+		} else {
 			break;
+		}
 	}
 }
 
@@ -384,42 +392,41 @@ static void savemid(FILE* file, GSM_Ringtone *ringtone)
 					started = true;
 				}
 			}
-			if (started) {
-				duration = GSM_RingNoteGetFullDuration(*Note);
-				if (Note->Note == Note_Pause) {
-					pause += duration;
+			if (!started) continue;
+			duration = GSM_RingNoteGetFullDuration(*Note);
+			if (Note->Note == Note_Pause) {
+				pause += duration;
 #ifdef singlepauses
-					WriteVarLen(midifile,&current,pause);
-					pause=0;
-					midifile[current++]=0x00;   // pause
-					midifile[current++]=0x00;
+				WriteVarLen(midifile,&current,pause);
+				pause=0;
+				midifile[current++]=0x00;   // pause
+				midifile[current++]=0x00;
 #endif
-				} else {
-					if (Note->Note >= Note_C && Note->Note <= Note_H) {
-						note = Note->Note/16 + 12 * Note->Scale - 1;
-					}
-
-					WriteVarLen(midifile,&current,pause);
-					pause=0;
-					midifile[current++]=0x90;   // note on
-					midifile[current++]=note;
-					midifile[current++]=0x64;   // forte
-
-					WriteVarLen(midifile,&current,duration);
-					midifile[current++]=0x80;   // note off
-					midifile[current++]=note;
-					midifile[current++]=0x64; 
+			} else {
+				if (Note->Note >= Note_C && Note->Note <= Note_H) {
+					note = Note->Note/16 + 12 * Note->Scale - 1;
 				}
+
+				WriteVarLen(midifile,&current,pause);
+				pause=0;
+				midifile[current++]=0x90;   // note on
+				midifile[current++]=note;
+				midifile[current++]=0x64;   // forte
+
+				WriteVarLen(midifile,&current,duration);
+				midifile[current++]=0x80;   // note off
+				midifile[current++]=note;
+				midifile[current++]=0x64; 
 			}
 		}
 	}
 	if (pause) {
 		WriteVarLen(midifile,&current,pause);
-		midifile[current++]=0x00;   // pause
-		midifile[current++]=0x00;   //
+		midifile[current++]=0x00;   	// pause
+		midifile[current++]=0x00;   	//
 	}
 	midifile[current++] = 0x00;
-	midifile[current++] = 0xFF;   // track end
+	midifile[current++] = 0xFF;   		// track end
 	midifile[current++] = 0x2F;
 	midifile[current++] = 0x00;
 	midifile[length++] = (current-22) >> 8;
@@ -427,6 +434,8 @@ static void savemid(FILE* file, GSM_Ringtone *ringtone)
 
 	fwrite(midifile,1,current,file);
 }
+
+#endif
 
 static void saveott(FILE *file, GSM_Ringtone *ringtone)
 {
@@ -443,14 +452,16 @@ GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 	FILE *file;
   
 	file = fopen(FileName, "wb");      
-	if (file == NULL) return(GE_CANTOPENFILE);
+	if (file == NULL) return ERR_CANTOPENFILE;
 
 	switch (ringtone->Format) {
 	case RING_NOTETONE:
-		if (strstr(FileName,".mid")) {
-			savemid(file,ringtone);
-		} else if (strstr(FileName,".ott")) {
+		if (strstr(FileName,".ott")) {
 			saveott(file,ringtone);
+#ifndef ENABLE_LGPL
+		} else if (strstr(FileName,".mid")) {
+			savemid(file,ringtone);
+#endif
 		} else if (strstr(FileName,".rng")) {
 			saveott(file,ringtone);
 		} else if (strstr(FileName,".imy")) {
@@ -473,214 +484,231 @@ GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 
 	fclose(file);
    
-	return GE_NONE;
+	return ERR_NONE;
 }
-
-/* Defines the character that separates fields in rtttl files. */
-#define RTTTL_SEP ":"
 
 static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 {
 	GSM_RingNoteScale	DefNoteScale	= Scale_880;
 	GSM_RingNoteDuration	DefNoteDuration	= Duration_1_4;
 	GSM_RingNoteStyle	DefNoteStyle	= NaturalStyle;
-	int			DefNoteTempo	= 63;
+	int			DefNoteTempo	= 63, i=0;
 
 	unsigned char		buffer[2000],Name[100];
-	unsigned char		*def, *notes, *ptr;
 	GSM_RingNote		*Note;
 
 	fread(buffer, 2000, 1, file);
 
 	ringtone->NoteTone.NrCommands = 0;
 
-	/* This is for RTTL ringtones without name. */
-	if (buffer[0] != RTTTL_SEP[0]) {
-		strtok(buffer, RTTTL_SEP);
-		sprintf(Name, "%s", buffer);
-		EncodeUnicode(ringtone->Name,Name,strlen(Name));
-		def=strtok(NULL, RTTTL_SEP);
-		notes=strtok(NULL, RTTTL_SEP);
-	} else {
-		EncodeUnicode(ringtone->Name,"Gammu",5);
-		def=strtok(buffer, RTTTL_SEP);
-		notes=strtok(NULL, RTTTL_SEP);
+	/* -------------- name ---------------- */
+	while(1) {
+		if (buffer[i] == ':') break;
+		if (buffer[i] == 0x00) return ERR_NONE;
+		i++;
 	}
-	ptr=strtok(def, ", ");
-	/* Parsing the <defaults> section. */
-	while (ptr) {
-		switch(*ptr) {
-			case 'd': case 'D':
-				switch (atoi(ptr+2)) {
-					case  1: DefNoteDuration = Duration_Full; break;
-					case  2: DefNoteDuration = Duration_1_2 ; break;
-					case  4: DefNoteDuration = Duration_1_4 ; break;
-					case  8: DefNoteDuration = Duration_1_8 ; break;
-					case 16: DefNoteDuration = Duration_1_16; break;
-					case 32: DefNoteDuration = Duration_1_32; break;
-				}
-				break;
-			case 'o': case 'O':
-				switch (atoi(ptr+2)) {
-					case  4: DefNoteScale = Scale_440 ; break;
-					case  5: DefNoteScale = Scale_880 ; break;
-					case  6: DefNoteScale = Scale_1760; break;
-					case  7: DefNoteScale = Scale_3520; break;
-				}
-				break;
- 			case 'b': case 'B':
-				DefNoteTempo=atoi(ptr+2);
-				dbgprintf("Tempo = %i\n",DefNoteTempo);
-				break;
-			case 's': case 'S':
-				switch (*(ptr+1)) {
-					case 'C': case 'c': DefNoteStyle=ContinuousStyle;	break;
-					case 'N': case 'n': DefNoteStyle=NaturalStyle;		break;
-					case 'S': case 's': DefNoteStyle=StaccatoStyle;		break;	
-				}
-				switch (*(ptr+2)) {
-					case 'C': case 'c': DefNoteStyle=ContinuousStyle;	break;
-					case 'N': case 'n': DefNoteStyle=NaturalStyle;		break;
-					case 'S': case 's': DefNoteStyle=StaccatoStyle;		break;	
-				}
-				break;
+	if (i == 0) {
+		/* This is for RTTL ringtones without name. */
+		EncodeUnicode(ringtone->Name,"Gammu",5);
+	} else {
+		memcpy(Name,buffer,i);
+		Name[i] = 0x00;
+		EncodeUnicode(ringtone->Name,Name,strlen(Name));
+	}
+	i++;
+
+	/* --------- section with default ringtone settings ----------- */
+	while(1) {
+		switch (buffer[i]) {
+		case ':':
+			break;
+		case 0x00:
+			return ERR_NONE;
+		case 'd': case 'D':
+			switch (atoi(buffer+i+2)) {
+				case  1: DefNoteDuration = Duration_Full; break;
+				case  2: DefNoteDuration = Duration_1_2 ; break;
+				case  4: DefNoteDuration = Duration_1_4 ; break;
+				case  8: DefNoteDuration = Duration_1_8 ; break;
+				case 16: DefNoteDuration = Duration_1_16; break;
+				case 32: DefNoteDuration = Duration_1_32; break;
+			}
+			break;
+		case 'o': case 'O':
+			switch (atoi(buffer+i+2)) {
+				case  4: DefNoteScale = Scale_440 ; break;
+				case  5: DefNoteScale = Scale_880 ; break;
+				case  6: DefNoteScale = Scale_1760; break;
+				case  7: DefNoteScale = Scale_3520; break;
+			}
+			break;
+ 		case 'b': case 'B':
+			DefNoteTempo=atoi(buffer+i+2);
+			dbgprintf("Tempo = %i\n",DefNoteTempo);
+			break;
+		case 's': case 'S':
+			switch (buffer[i+1]) {
+				case 'C': case 'c': DefNoteStyle=ContinuousStyle;	break;
+				case 'N': case 'n': DefNoteStyle=NaturalStyle;		break;
+				case 'S': case 's': DefNoteStyle=StaccatoStyle;		break;	
+			}
+			switch (buffer[i+2]) {
+				case 'C': case 'c': DefNoteStyle=ContinuousStyle;	break;
+				case 'N': case 'n': DefNoteStyle=NaturalStyle;		break;
+				case 'S': case 's': DefNoteStyle=StaccatoStyle;		break;	
+			}
+			break;
 		}
-		ptr=strtok(NULL,", ");
+		while (1) {
+			if (buffer[i] == 0x00) return ERR_NONE;
+			if (buffer[i] == ':') break;
+			if (buffer[i] == ',') break;
+			i++;
+		}
+		if (buffer[i] == ',') i++;
+		if (buffer[i] == ':') break;
 	}
 	dbgprintf("DefNoteDuration=%d\n", DefNoteDuration);
 	dbgprintf("DefNoteScale=%d\n", DefNoteScale);
-	ptr=strtok(notes, ", ");
-	/* Parsing the <note-command>+ section. */
-	while (ptr && ringtone->NoteTone.NrCommands<MAX_RINGTONE_NOTES) {
-		switch(*ptr) {
-			case 'z': case 'Z':
-				switch (*(ptr+1)) {
-					case 'd':
-						ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_DisableLED;
-						ringtone->NoteTone.NrCommands++;
-						break;
-					case 'D':
-						ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_EnableLED;
-						ringtone->NoteTone.NrCommands++;
-						break;
-					case 'v':
-						ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_DisableVibra;
-						ringtone->NoteTone.NrCommands++;
-						break;
-					case 'V':
-						ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_EnableVibra;
-						ringtone->NoteTone.NrCommands++;
-						break;
-					case 'l':
-						ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_DisableLight;
-						ringtone->NoteTone.NrCommands++;
-						break;
-					case 'L':
-						ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_EnableLight;
-						ringtone->NoteTone.NrCommands++;
-				}
-				break;
-			case 'o': case 'O':
-				switch (atoi(ptr+2)) {
-					case  4: DefNoteScale = Scale_440 ; break;
-					case  5: DefNoteScale = Scale_880 ; break;
-					case  6: DefNoteScale = Scale_1760; break;
-					case  7: DefNoteScale = Scale_3520; break;
-				}
-			case 's': case 'S':
-				switch (*(ptr+1)) {
-					case 'C': case 'c': DefNoteStyle=ContinuousStyle;	break;
-					case 'N': case 'n': DefNoteStyle=NaturalStyle;		break;
-					case 'S': case 's': DefNoteStyle=StaccatoStyle;		break;	
-				}
-				switch (*(ptr+2)) {
-					case 'C': case 'c': DefNoteStyle=ContinuousStyle;	break;
-					case 'N': case 'n': DefNoteStyle=NaturalStyle;		break;
-					case 'S': case 's': DefNoteStyle=StaccatoStyle;		break;	
-				}
-				break;
-			default:
-				ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_Note;
-				Note = &ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Note;
-				Note->Style		= DefNoteStyle;
-				Note->Tempo		= DefNoteTempo;
-				Note->Scale 		= DefNoteScale;
-				Note->Duration 		= DefNoteDuration;
-				Note->DurationSpec 	= NoSpecialDuration;
-				Note->Note 		= Note_Pause;
+	i++;
 
-				/* [<duration>] */
-				switch (atoi(ptr)) {
-					case  1: Note->Duration = Duration_Full  ; break;
-					case  2: Note->Duration = Duration_1_2   ; break;
-					case  4: Note->Duration = Duration_1_4   ; break;
-					case  8: Note->Duration = Duration_1_8   ; break;
-					case 16: Note->Duration = Duration_1_16  ; break;
-					case 32: Note->Duration = Duration_1_32	 ; break;
-				}
-				/* Skip all numbers in duration specification. */
-				while(isdigit(*ptr)) ptr++;
+	/* ------------------------- notes ------------------------------ */
+	while (1) {
+		if (buffer[i] == 0x00) break;
+		if (ringtone->NoteTone.NrCommands == MAX_RINGTONE_NOTES) break;
 
-				/* Check for dodgy rttl */
-				/* [<special-duration>] */
-				if (*ptr=='.') {
-					Note->DurationSpec = DottedNote;
-					ptr++;
-				}
-
-				/* <note> */
-				/* B or b is not in specs, but I decided to put it, because
-				 * it's in some RTTL files. It's the same to H note */
-				switch (*ptr) {
-					case 'A': case 'a': Note->Note = Note_A; break;
-					case 'B': case 'b': Note->Note = Note_H; break;
-					case 'C': case 'c': Note->Note = Note_C; break;
-					case 'D': case 'd': Note->Note = Note_D; break;
-					case 'E': case 'e': Note->Note = Note_E; break;
-					case 'F': case 'f': Note->Note = Note_F; break;
-					case 'G': case 'g': Note->Note = Note_G; break;
-					case 'H': case 'h': Note->Note = Note_H; break;
-				}
-				ptr++;
-
-				if ((*ptr)=='#') {
-					switch (Note->Note) {
-						case Note_A : Note->Note = Note_Ais; break;
-						case Note_C : Note->Note = Note_Cis; break;
-						case Note_D : Note->Note = Note_Dis; break;
-						case Note_F : Note->Note = Note_Fis; break;
-						case Note_G : Note->Note = Note_Gis; break;
-						default	    :			     break;
-					}
-					ptr++;
-				}
-
-				/* Check for dodgy rttl */
-				/* [<special-duration>] */
-				if (*ptr=='.') {
-					Note->DurationSpec = DottedNote;
-					ptr++;
-				}
-
-				/* [<scale>] */
-				if (Note->Note!=Note_Pause) {
-					if (isdigit(*ptr)) {
-						switch (atoi(ptr)) {
-							case  4: Note->Scale = Scale_440 ; break;
-							case  5: Note->Scale = Scale_880 ; break;
-							case  6: Note->Scale = Scale_1760; break;
-							case  7: Note->Scale = Scale_3520; break;
-						}
-						ptr++;
-					}
-				}
-
+		switch(buffer[i]) {
+		case 'z': case 'Z':
+			switch (buffer[i+1]) {
+			case 'd':
+				ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_DisableLED;
 				ringtone->NoteTone.NrCommands++;
 				break;
+			case 'D':
+				ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_EnableLED;
+				ringtone->NoteTone.NrCommands++;
+				break;
+			case 'v':
+				ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_DisableVibra;
+				ringtone->NoteTone.NrCommands++;
+				break;
+			case 'V':
+				ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_EnableVibra;
+				ringtone->NoteTone.NrCommands++;
+				break;
+			case 'l':
+				ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_DisableLight;
+				ringtone->NoteTone.NrCommands++;
+				break;
+			case 'L':
+				ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_EnableLight;
+				ringtone->NoteTone.NrCommands++;
+			}
+			break;
+		case 'o': case 'O':
+			switch (buffer[i+2]) {
+				case  4: DefNoteScale = Scale_440 ; break;
+				case  5: DefNoteScale = Scale_880 ; break;
+				case  6: DefNoteScale = Scale_1760; break;
+				case  7: DefNoteScale = Scale_3520; break;
+			}
+			break;
+		case 's': case 'S':
+			switch (buffer[i+1]) {
+				case 'C': case 'c': DefNoteStyle=ContinuousStyle;	break;
+				case 'N': case 'n': DefNoteStyle=NaturalStyle;		break;
+				case 'S': case 's': DefNoteStyle=StaccatoStyle;		break;	
+			}
+			switch (buffer[i+2]) {
+				case 'C': case 'c': DefNoteStyle=ContinuousStyle;	break;
+				case 'N': case 'n': DefNoteStyle=NaturalStyle;		break;
+				case 'S': case 's': DefNoteStyle=StaccatoStyle;		break;	
+			}
+			break;
+		default:
+			ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_Note;
+			Note = &ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Note;
+			Note->Style		= DefNoteStyle;
+			Note->Tempo		= DefNoteTempo;
+			Note->Scale 		= DefNoteScale;
+			Note->Duration 		= DefNoteDuration;
+			Note->DurationSpec 	= NoSpecialDuration;
+			Note->Note 		= Note_Pause;
+
+			/* Duration */
+			switch (atoi(buffer+i)) {
+				case  1: Note->Duration = Duration_Full  ; break;
+				case  2: Note->Duration = Duration_1_2   ; break;
+				case  4: Note->Duration = Duration_1_4   ; break;
+				case  8: Note->Duration = Duration_1_8   ; break;
+				case 16: Note->Duration = Duration_1_16  ; break;
+				case 32: Note->Duration = Duration_1_32	 ; break;
+			}
+			/* We skip all numbers from duration specification */
+			while(isdigit(buffer[i])) i++;
+
+			/* Some files can have special duration here */
+			if (buffer[i]=='.') {
+				Note->DurationSpec = DottedNote;
+				i++;
+			}
+
+			/* Note */
+			/* B or b is not in specs, but I decided to put it, because
+			 * it's in some RTTL files. It's the same to H note */
+			switch (buffer[i]) {
+				case 'A': case 'a': Note->Note = Note_A; break;
+				case 'B': case 'b': Note->Note = Note_H; break;
+				case 'C': case 'c': Note->Note = Note_C; break;
+				case 'D': case 'd': Note->Note = Note_D; break;
+				case 'E': case 'e': Note->Note = Note_E; break;
+				case 'F': case 'f': Note->Note = Note_F; break;
+				case 'G': case 'g': Note->Note = Note_G; break;
+				case 'H': case 'h': Note->Note = Note_H; break;
+			}
+			i++;
+
+			if (buffer[i]=='#') {
+				switch (Note->Note) {
+					case Note_A : Note->Note = Note_Ais; break;
+					case Note_C : Note->Note = Note_Cis; break;
+					case Note_D : Note->Note = Note_Dis; break;
+					case Note_F : Note->Note = Note_Fis; break;
+					case Note_G : Note->Note = Note_Gis; break;
+					default	    :			     break;
+				}
+				i++;
+			}
+
+			/* Some files can have special duration here */
+			if (buffer[i]=='.') {
+				Note->DurationSpec = DottedNote;
+				i++;
+			}
+
+			/* Scale */
+			if (Note->Note!=Note_Pause && isdigit(buffer[i])) {
+				switch (atoi(buffer+i)) {
+					case  4: Note->Scale = Scale_440 ; break;
+					case  5: Note->Scale = Scale_880 ; break;
+					case  6: Note->Scale = Scale_1760; break;
+					case  7: Note->Scale = Scale_3520; break;
+				}
+				i++;
+			}
+
+			ringtone->NoteTone.NrCommands++;
+			break;
 		}
-		ptr=strtok(NULL, ", ");
+		while (1) {
+			if (buffer[i] == 0x00) return ERR_NONE;
+			if (buffer[i] == ',') break;
+			i++;
+		}
+		if (buffer[i] == ',') i++;
 	}
-	return GE_NONE;
+
+	return ERR_NONE;
 }
 
 static GSM_Error loadott(FILE *file, GSM_Ringtone *ringtone)
@@ -704,7 +732,7 @@ static GSM_Error loadcommunicator(FILE *file, GSM_Ringtone *ringtone)
 	while (true) {
 		if (Buffer[j]  ==0x00 && Buffer[j+1]==0x02 &&
 		    Buffer[j+2]==0x4a && Buffer[j+3]==0x3a) break;
-		if (j==i-4) return GE_UNKNOWN;
+		if (j==i-4) return ERR_UNKNOWN;
 		j++;
 	}
 	j++;
@@ -728,7 +756,7 @@ static GSM_Error loadbin(FILE *file, GSM_Ringtone *ringtone)
 	ringtone->NokiaBinary.Length=ringtone->NokiaBinary.Length-i;
 	memcpy(ringtone->NokiaBinary.Frame,buffer+i,ringtone->NokiaBinary.Length);
 	dbgprintf("Length %i name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error loadpuremidi(FILE *file, GSM_Ringtone *ringtone)
@@ -740,7 +768,7 @@ static GSM_Error loadpuremidi(FILE *file, GSM_Ringtone *ringtone)
 	ringtone->NokiaBinary.Length=fread(buffer, 1, 30000, file);
 	memcpy(ringtone->NokiaBinary.Frame,buffer,ringtone->NokiaBinary.Length);
 	dbgprintf("Length %i name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error loadre(FILE *file, GSM_Ringtone *ringtone)
@@ -761,40 +789,35 @@ static GSM_Error loadre(FILE *file, GSM_Ringtone *ringtone)
 		memcpy(ringtone->NokiaBinary.Frame,buffer+19+UnicodeLength(ringtone->Name),ringtone->NokiaBinary.Length);
 	}
 	dbgprintf("Name \"%s\"\n",DecodeUnicodeString(ringtone->Name));
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 {
 	FILE		*file;
 	unsigned char	buffer[300];
-	GSM_Error	error = GE_UNKNOWN;
+	GSM_Error	error = ERR_UNKNOWN;
 
 	dbgprintf("Loading ringtone %s\n",FileName);
 	file = fopen(FileName, "rb");
-	if (file == NULL) return(GE_CANTOPENFILE);
+	if (file == NULL) return ERR_CANTOPENFILE;
 
 	/* Read the header of the file. */
 	fread(buffer, 1, 4, file);
 	if (ringtone->Format == 0x00) {
 		ringtone->Format = RING_NOTETONE;
 		if (buffer[0]==0x00 && buffer[1]==0x00 &&
-		    buffer[2]==0x0C && buffer[3]==0x01)
-		{
+		    buffer[2]==0x0C && buffer[3]==0x01) {
 			ringtone->Format = RING_NOKIABINARY;
 		}
 		if (buffer[0]==0x00 && buffer[1]==0x00 &&
-		    buffer[2]==0x00)
-		{
+		    buffer[2]==0x00) {
 			ringtone->Format = RING_NOKIABINARY;
 		}
 		if (buffer[0]==0x4D && buffer[1]==0x54 &&
-		    buffer[2]==0x68 && buffer[3]==0x64)
-		{
+		    buffer[2]==0x68 && buffer[3]==0x64) {
 			ringtone->Format = RING_MIDI;
 		}
-
-
 	}
 	rewind(file);
 	switch (ringtone->Format) {
@@ -810,13 +833,11 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 		break;
 	case RING_NOKIABINARY:
 		if (buffer[0]==0x00 && buffer[1]==0x00 &&
-		    buffer[2]==0x0C && buffer[3]==0x01)
-		{
+		    buffer[2]==0x0C && buffer[3]==0x01) {
 			error=loadbin(file,ringtone);
 		}
 		if (buffer[0]==0x00 && buffer[1]==0x00 &&
-		    buffer[2]==0x00)
-		{
+		    buffer[2]==0x00) {
 			error=loadre(file,ringtone);
 		}
 		break;
@@ -830,8 +851,8 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 
 /* -------------------------- required with Nokia & RTTL ------------------- */
 
-/* Beats-per-Minute Encoding */
-static int BeatsPerMinute[] = {
+/* Beats per Minute like written in Smart Messaging */
+static int SM_BeatsPerMinute[] = {
 	25,	28,	31,	35,	40,	45,	50,	56,	63,	70,
 	80,	90,	100,	112,	125,	140,	160,	180,	200,	225,
 	250,	285,	320,	355,	400,	450,	500,	565,	635,	715,
@@ -840,10 +861,10 @@ static int BeatsPerMinute[] = {
 
 int GSM_RTTLGetTempo(int Beats)
 {
-	size_t i=0;
+	int i=0;
 
-	while ( i < sizeof(BeatsPerMinute)/sizeof(BeatsPerMinute[0])) {
-		if (Beats<=BeatsPerMinute[i]) break;
+	while (1) {		
+		if (Beats<=SM_BeatsPerMinute[i] || SM_BeatsPerMinute[i] == 900) break;
 		i++;
 	}
 	return i<<3;
@@ -863,7 +884,7 @@ unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone ringtone, unsigned char *
 	int			StartBitHowManyCommands;
 	int			HowManyCommands	= 0;	/* How many instructions packed */
 	int			HowManyNotes	= 0;
-	int			i;
+	int			i,j;
 	bool			started;
 	GSM_RingNote 		*Note;
 
@@ -871,25 +892,25 @@ unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone ringtone, unsigned char *
 	GSM_RingNoteStyle 	DefStyle = 255;
 	int			DefTempo = 255;
 	
-	StartBit=BitPackByte(package, StartBit, CommandLength, 8);
-	StartBit=BitPackByte(package, StartBit, RingingToneProgramming, 7);
+	AddBufferByte(package, &StartBit, CommandLength, 8);
+	AddBufferByte(package, &StartBit, SM_Command_RingingToneProgramming, 7);
 
-	/* <command-part> is always octet-aligned. */
-	StartBit=OctetAlign(package, StartBit);
+	/* According to specification we need have next part octet-aligned */
+	BufferAlign(package, &StartBit);
 
-	StartBit=BitPackByte(package, StartBit, Sound, 7);
-	StartBit=BitPackByte(package, StartBit, BasicSongType, 3);
+	AddBufferByte(package, &StartBit, SM_Command_Sound, 7);
+	AddBufferByte(package, &StartBit, SM_Song_BasicSongType, 3);
 
 	/* Packing the name of the tune. */
 	EncodeUnicodeSpecialNOKIAChars(Buffer, ringtone.Name, UnicodeLength(ringtone.Name));
-	StartBit=BitPackByte(package, StartBit, ((unsigned char)(UnicodeLength(Buffer)<<4)), 4);
-	StartBit=BitPack(package, StartBit, DecodeUnicodeString(Buffer), 8*UnicodeLength(Buffer));
+	AddBufferByte(package, &StartBit, ((unsigned char)(UnicodeLength(Buffer)<<4)), 4);
+	AddBuffer(package, &StartBit, DecodeUnicodeString(Buffer), 8*UnicodeLength(Buffer));
 
-	/* Info about song pattern */
-	StartBit=BitPackByte(package, StartBit, 0x01, 8); /* One song pattern */
-	StartBit=BitPackByte(package, StartBit, PatternHeaderId, 3);
-	StartBit=BitPackByte(package, StartBit, A_part, 2);
-	StartBit=BitPackByte(package, StartBit, ((unsigned char)(Loop<<4)), 4);
+	/* Packing info about song pattern */
+	AddBufferByte(package, &StartBit, 0x01, 8); //one pattern
+	AddBufferByte(package, &StartBit, SM_InstructionID_PatternHeaderId, 3);
+	AddBufferByte(package, &StartBit, SM_PatternID_A_part, 2);
+	AddBufferByte(package, &StartBit, ((unsigned char)(Loop<<4)), 4);
 
 	/* Later here will be HowManyCommands */
 	StartBitHowManyCommands=StartBit;
@@ -897,78 +918,90 @@ unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone ringtone, unsigned char *
 
 	started = false;
 	for (i=0; i<ringtone.NoteTone.NrCommands; i++) {
-		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
-			Note = &ringtone.NoteTone.Commands[i].Note;
-			if (!started) {
-				/* First note can't be Pause - it makes problems
-				 * for example with PC Composer
-				 */
-				if (Note->Note != Note_Pause) started = true;
-			}
-			if (started) {
-				OldStartBit = StartBit;
-				/* we don't write Scale & Style info before "Pause" note - it saves place */
-				if (Note->Note!=Note_Pause) {
-					if (DefScale != Note->Scale || ringtone.NoteTone.AllNotesScale) {
-						if ((OctetAlignNumber(StartBit+5+8)/8)>(*maxlength)) {
-							StartBit = OldStartBit;
-							break;
-						}
-						DefScale = Note->Scale;
-						StartBit=BitPackByte(package, StartBit, ScaleInstructionId, 3);
-						StartBit=BitPackByte(package, StartBit, ((unsigned char)((DefScale-4)<<6)), 2);
-						HowManyCommands++;
-					}
-					if (DefStyle != Note->Style) {
-						if ((OctetAlignNumber(StartBit+5+8)/8)>(*maxlength)) {
-							StartBit = OldStartBit;
-							break;
-						}
-						DefStyle = Note->Style;
-						StartBit=BitPackByte(package, StartBit, StyleInstructionId, 3);
-						StartBit=BitPackByte(package, StartBit, ((unsigned char)DefStyle), 2);
-						HowManyCommands++;
-					}
-				}
-				/* Beats per minute/tempo of the tune */
-				if (DefTempo != GSM_RTTLGetTempo(Note->Tempo)) {
-					if ((OctetAlignNumber(StartBit+8+8)/8)>(*maxlength)) {
-						StartBit = OldStartBit;
-						break;
-					}
-					DefTempo=GSM_RTTLGetTempo(Note->Tempo);
-					/* Beats per minute/tempo of the tune */
-					StartBit=BitPackByte(package, StartBit, TempoInstructionId, 3);
-					StartBit=BitPackByte(package, StartBit, ((unsigned char)DefTempo), 5);
-					HowManyCommands++;
-				}     
-				if ((OctetAlignNumber(StartBit+12+8)/8)>(*maxlength)) {
+		if (ringtone.NoteTone.Commands[i].Type != RING_Note) {
+			HowManyNotes++;
+			continue;
+		}
+		Note = &ringtone.NoteTone.Commands[i].Note;
+		if (!started) {
+			/* First note can't be Pause - it makes problems
+			 * for example with PC Composer
+			 */
+			if (Note->Note != Note_Pause) started = true;
+		}
+		if (!started) {
+			HowManyNotes++;
+			continue;
+		}
+		OldStartBit = StartBit;
+		/* we don't write Scale & Style info before "Pause" note - it saves place */
+		if (Note->Note!=Note_Pause) {
+			if (DefScale != Note->Scale || ringtone.NoteTone.AllNotesScale) {
+				j = StartBit+5+8;
+				BufferAlignNumber(&j);
+				if ((j/8)>(*maxlength)) {
 					StartBit = OldStartBit;
 					break;
 				}
-				/* Note */
-				StartBit=BitPackByte(package, StartBit, NoteInstructionId, 3);
-				StartBit=BitPackByte(package, StartBit, ((unsigned char)Note->Note), 4);
-				StartBit=BitPackByte(package, StartBit, ((unsigned char)Note->Duration), 3);
-				StartBit=BitPackByte(package, StartBit, ((unsigned char)Note->DurationSpec), 2);
+				DefScale = Note->Scale;
+				AddBufferByte(package, &StartBit, SM_InstructionID_ScaleInstructionId, 3);
+				AddBufferByte(package, &StartBit, ((unsigned char)((DefScale-4)<<6)), 2);
 				HowManyCommands++;
-				/* We are sure, we pack it for SMS or setting to phone, not for OTT file */    
-				if (*maxlength<1000) {
-					/* Like Pc Composer say - before of phone limitations...*/
-					if (HowManyNotes==130-1) break;
-				}
 			}
+			if (DefStyle != Note->Style) {
+				j = StartBit+5+8;
+				BufferAlignNumber(&j);
+				if ((j/8)>(*maxlength)) {
+					StartBit = OldStartBit;
+					break;
+				}
+				DefStyle = Note->Style;
+				AddBufferByte(package, &StartBit, SM_InstructionID_StyleInstructionId, 3);
+				AddBufferByte(package, &StartBit, ((unsigned char)DefStyle), 2);
+				HowManyCommands++;
+			}
+		}
+		/* Beats per minute/tempo of the tune */
+		if (DefTempo != GSM_RTTLGetTempo(Note->Tempo)) {
+			j = StartBit+8+8;
+			BufferAlignNumber(&j);
+			if ((j/8)>(*maxlength)) {
+				StartBit = OldStartBit;
+				break;
+			}
+			DefTempo=GSM_RTTLGetTempo(Note->Tempo);
+			/* Adding beats per minute (tempo) of the tune */
+			AddBufferByte(package, &StartBit, SM_InstructionID_TempoInstructionId, 3);
+			AddBufferByte(package, &StartBit, ((unsigned char)DefTempo), 5);
+			HowManyCommands++;
+		}     
+		j = StartBit+12+8;
+		BufferAlignNumber(&j);
+		if ((j/8)>(*maxlength)) {
+			StartBit = OldStartBit;
+			break;
+		}
+		/* Note */
+		AddBufferByte(package, &StartBit, SM_InstructionID_NoteInstructionId, 3);
+		AddBufferByte(package, &StartBit, ((unsigned char)Note->Note), 4);
+		AddBufferByte(package, &StartBit, ((unsigned char)Note->Duration), 3);
+		AddBufferByte(package, &StartBit, ((unsigned char)Note->DurationSpec), 2);
+		HowManyCommands++;
+		/* We are sure, we pack it for SMS or setting to phone, not for OTT file */    
+		if (*maxlength<1000) {
+			/* Like Pc Composer say - before of phone limitations...*/
+			if (HowManyNotes==130-1) break;
 		}
 		HowManyNotes++;
 	}
 
-	StartBit=OctetAlign(package, StartBit);
-	StartBit=BitPackByte(package, StartBit, CommandEnd, 8);
+	BufferAlign(package, &StartBit);
+	AddBufferByte(package, &StartBit, SM_CommandEnd_CommandEnd, 8);
 
 	OldStartBit = StartBit;
 	StartBit = StartBitHowManyCommands;
 	/* HowManyCommands */
-	StartBit = BitPackByte(package, StartBit, ((unsigned char)HowManyCommands), 8);
+	AddBufferByte(package, &StartBit, ((unsigned char)HowManyCommands), 8);
 	StartBit = OldStartBit;
 
 	*maxlength=StartBit/8;  
@@ -990,95 +1023,95 @@ GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *pac
 	ringtone->Format 		= RING_NOTETONE;
 	ringtone->NoteTone.NrCommands 	= 0;
       
-	StartBit=BitUnPackInt(package,StartBit,&l,8);
+	GetBufferInt(package,&StartBit,&l,8);
 	if (l!=0x02) {
 		dbgprintf("Not header\n");
-		return GE_NOTSUPPORTED;
+		return ERR_NOTSUPPORTED;
 	}
 
-	StartBit=BitUnPackInt(package,StartBit,&l,7);    
-	if (l!=RingingToneProgramming) {
+	GetBufferInt(package,&StartBit,&l,7);    
+	if (l!=SM_Command_RingingToneProgramming) {
 		dbgprintf("Not RingingToneProgramming\n");
-		return GE_NOTSUPPORTED;
+		return ERR_NOTSUPPORTED;
 	}
     
-	/* <command-part> is always octet-aligned. */
-	StartBit=OctetUnAlign(StartBit);
+	/* According to specification we need have next part octet-aligned */
+	BufferAlignNumber(&StartBit);
 
-	StartBit=BitUnPackInt(package,StartBit,&l,7);    
-	if (l!=Sound) {
+	GetBufferInt(package,&StartBit,&l,7);    
+	if (l!=SM_Command_Sound) {
 		dbgprintf("Not Sound\n");
-		return GE_NOTSUPPORTED;
+		return ERR_NOTSUPPORTED;
 	}
 
-	StartBit=BitUnPackInt(package,StartBit,&l,3);    
-	if (l!=BasicSongType) {
+	GetBufferInt(package,&StartBit,&l,3);    
+	if (l!=SM_Song_BasicSongType) {
 		dbgprintf("Not BasicSongType\n");  
-		return GE_NOTSUPPORTED;
+		return ERR_NOTSUPPORTED;
 	}
 
 	/* Getting length of the tune name */
-	StartBit=BitUnPackInt(package,StartBit,&l,4);
+	GetBufferInt(package,&StartBit,&l,4);
 	l=l>>4;
 
 	/* Unpacking the name of the tune. */
-	StartBit=BitUnPack(package, StartBit, Buffer, 8*l);
+	GetBuffer(package, &StartBit, Buffer, 8*l);
 	Buffer[l]=0;
 	EncodeUnicode(ringtone->Name,Buffer,strlen(Buffer));
 	DecodeUnicodeSpecialNOKIAChars(Buffer, ringtone->Name, UnicodeLength(ringtone->Name));
 	CopyUnicodeString(ringtone->Name,Buffer);
 
-	StartBit=BitUnPackInt(package,StartBit,&l,8);    
+	GetBufferInt(package,&StartBit,&l,8);    
 	dbgprintf("Number of song patterns: %i\n",l);
 	/* we support only one song pattern */
-	if (l!=1) return GE_NOTSUPPORTED;
+	if (l!=1) return ERR_NOTSUPPORTED;
 
-	StartBit=BitUnPackInt(package,StartBit,&l,3);          
-	if (l!=PatternHeaderId) {
+	GetBufferInt(package,&StartBit,&l,3);          
+	if (l!=SM_InstructionID_PatternHeaderId) {
 		dbgprintf("Not PatternHeaderId\n");
-		return GE_NOTSUPPORTED;
+		return ERR_NOTSUPPORTED;
 	}
 
 	/* Pattern ID - we ignore it */
 	StartBit+=2;
 
-	StartBit=BitUnPackInt(package,StartBit,&l,4);          
+	GetBufferInt(package,&StartBit,&l,4);          
 	l=l>>4;
 	dbgprintf("Loop value: %i\n",l);
 
 	HowMany=0;
-	StartBit=BitUnPackInt(package, StartBit, &HowMany, 8);
+	GetBufferInt(package, &StartBit, &HowMany, 8);
 
 	for (i=0;i<HowMany;i++) {
-		StartBit=BitUnPackInt(package,StartBit,&q,3);              
+		GetBufferInt(package,&StartBit,&q,3);              
 		switch (q) {
-		case VolumeInstructionId:
+		case SM_InstructionID_VolumeInstructionId:
 			StartBit+=4;
 			break;
-		case StyleInstructionId:
-			StartBit=BitUnPackInt(package,StartBit,&l,2);
+		case SM_InstructionID_StyleInstructionId:
+			GetBufferInt(package,&StartBit,&l,2);
 			if (l>=NaturalStyle && l<=StaccatoStyle) DefStyle = l;
 			break;
-		case TempoInstructionId:
-			StartBit=BitUnPackInt(package,StartBit,&l,5);              	
-			DefTempo=BeatsPerMinute[l>>3];
+		case SM_InstructionID_TempoInstructionId:
+			GetBufferInt(package,&StartBit,&l,5);              	
+			DefTempo=SM_BeatsPerMinute[l>>3];
 			break;
-		case ScaleInstructionId:
-			StartBit=BitUnPackInt(package,StartBit,&l,2);
+		case SM_InstructionID_ScaleInstructionId:
+			GetBufferInt(package,&StartBit,&l,2);
 			DefScale=(l>>6)+4;
 			break;
-		case NoteInstructionId:
+		case SM_InstructionID_NoteInstructionId:
 			Note = &ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Note;
 			ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_Note;
 
-			StartBit=BitUnPackInt(package,StartBit,&l,4);
+			GetBufferInt(package,&StartBit,&l,4);
 			Note->Note=Note_Pause;
 			if (l >= Note_C && l <= Note_H) Note->Note = l;
 
-			StartBit=BitUnPackInt(package,StartBit,&l,3);
+			GetBufferInt(package,&StartBit,&l,3);
 			if (l >= Duration_Full && l <= Duration_1_32) Note->Duration = l;
 
-			StartBit=BitUnPackInt(package,StartBit,&spec,2);
+			GetBufferInt(package,&StartBit,&spec,2);
 			if (spec >= NoSpecialDuration && spec <= Length_2_3) {
 				Note->DurationSpec = spec;
 			}
@@ -1091,21 +1124,19 @@ GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *pac
 			break;
 		default:
 			dbgprintf("Unsupported block %i %i\n",q,i);  
-			return GE_NOTSUPPORTED;
+			return ERR_NOTSUPPORTED;
 		} 
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static void RTTL2Binary(GSM_Ringtone *dest, GSM_Ringtone *src)
 {
-	int 			current = 0, i, note, lastnote = 0, duration;
-	GSM_RingNote 		*Note;
-
-	unsigned char tail[] =
-			{0x40, 0x7D, 0x40, 0x5C, 0x0A, 0xFE, 0x40,
-			 0x20, 0x40, 0x7D, 0x40, 0x37, 0x0A, 0xFE,
-			 0x0A, 0x0A, 0x40, 0x32, 0x07, 0x0B};
+	int 		current = 0, i, note, lastnote = 0, duration;
+	GSM_RingNote 	*Note;
+	unsigned char 	end[] = {0x40, 0x7D, 0x40, 0x5C, 0x0A, 0xFE, 0x40,
+			 	 0x20, 0x40, 0x7D, 0x40, 0x37, 0x0A, 0xFE,
+			 	 0x0A, 0x0A, 0x40, 0x32, 0x07, 0x0B};
 
 	strcpy(dest->NokiaBinary.Frame+current,"\x02\xFC\x09");	current=current+3;
 	dest->NokiaBinary.Frame[current++]=0x00;
@@ -1120,64 +1151,60 @@ static void RTTL2Binary(GSM_Ringtone *dest, GSM_Ringtone *src)
 	strcpy(dest->NokiaBinary.Frame+current,"\x0A\x01");	current=current+2;
 
 	for (i=0; i<src->NoteTone.NrCommands; i++) {
-		switch (src->NoteTone.Commands[i].Type) {
-		case RING_Note:
-			Note = &src->NoteTone.Commands[i].Note;
-			note = 64; /* Pause */
-			if (Note->Note!=Note_Pause) {
-				if (Note->Note >= Note_C && Note->Note <= Note_H) {
-					note = 113 + Note->Note/16;
-				}
-				switch (Note->Scale) {
-					case Scale_440 : 			break;
-					case Scale_880 : note = note + 12; 	break;
-					case Scale_1760: note = note + 24;	break;
-					case Scale_3520: note = note + 36; 	break;
-					default	       :			break;
-				}
-			}
+		if (src->NoteTone.Commands[i].Type != RING_Note) continue;
 
-			/* in 8 ms ticks of 7110 */
-			duration = 60000 * GSM_RingNoteGetFullDuration(*Note) / Note->Tempo / 256;
-
-			switch (Note->Style) {
-			case StaccatoStyle:
-				if (duration) {
-					/* note only for one tick */
-					dest->NokiaBinary.Frame[current++] = note;
-					dest->NokiaBinary.Frame[current++] = 1;
-					duration--;
-				}
-				/* rest pause */
-				note = 0x40;             
-			case NaturalStyle:
-				if (note != 0x40 && duration) {
-					dest->NokiaBinary.Frame[current++] = 0x40;
-					/* small pause between notes */
-					dest->NokiaBinary.Frame[current++] = 1;      
-					duration--;
-				}
-			default:
-				if (note != 0x40 && note == lastnote && duration) {
-					dest->NokiaBinary.Frame[current++] = 0x40;
-					/* small pause between same notes */
-					dest->NokiaBinary.Frame[current++] = 1;      
-					duration--;
-				}
-				while (duration > 125) {
-					dest->NokiaBinary.Frame[current++] = note;
-					dest->NokiaBinary.Frame[current++] = 125;
-					duration -= 125;
-				}
-				dest->NokiaBinary.Frame[current++] = note;
-				dest->NokiaBinary.Frame[current++] = duration;
+		Note = &src->NoteTone.Commands[i].Note;
+		note = 64; /* Pause */
+		if (Note->Note!=Note_Pause) {
+			if (Note->Note >= Note_C && Note->Note <= Note_H) {
+				note = 113 + Note->Note/16;
 			}
-			lastnote = note;
-		default:
-			break;
+			switch (Note->Scale) {
+				case Scale_440 : 			break;
+				case Scale_880 : note = note + 12; 	break;
+				case Scale_1760: note = note + 24;	break;
+				case Scale_3520: note = note + 36; 	break;
+				default	       :			break;
+			}
 		}
+
+		/* In 7110 we have 8 ms long sounds */
+		duration = 60000 * GSM_RingNoteGetFullDuration(*Note) / Note->Tempo / 256;
+
+		switch (Note->Style) {
+		case StaccatoStyle:
+			if (duration) {
+				/* Note needs only one sound */
+				dest->NokiaBinary.Frame[current++] = note;
+				dest->NokiaBinary.Frame[current++] = 1;
+				duration--;
+			}
+			note = 0x40; /* The rest is pause */
+		case NaturalStyle:
+			if (note != 0x40 && duration) {
+				dest->NokiaBinary.Frame[current++] = 0x40;
+				/* There is small pause between notes */
+				dest->NokiaBinary.Frame[current++] = 1;      
+				duration--;
+			}
+		default:
+			if (note != 0x40 && note == lastnote && duration) {
+				dest->NokiaBinary.Frame[current++] = 0x40;
+				/* There is small pause between same notes */
+				dest->NokiaBinary.Frame[current++] = 1;      
+				duration--;
+			}
+			while (duration > 125) {
+				dest->NokiaBinary.Frame[current++] = note;
+				dest->NokiaBinary.Frame[current++] = 125;
+				duration -= 125;
+			}
+			dest->NokiaBinary.Frame[current++] = note;
+			dest->NokiaBinary.Frame[current++] = duration;
+		}
+		lastnote = note;
 	}
-	for (i = 0; i < (int)sizeof(tail); i++) dest->NokiaBinary.Frame[current++] = tail[i];
+	for (i = 0; i < (int)sizeof(end); i++) dest->NokiaBinary.Frame[current++] = end[i];
 	dest->NokiaBinary.Length=current;
 }
 
@@ -1406,18 +1433,18 @@ GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_Rington
 	CopyUnicodeString(dest->Name,src->Name);
 	if (src->Format==RING_NOTETONE && Format==RING_NOKIABINARY) {
 		RTTL2Binary(dest, src);
-		return GE_NONE;
+		return ERR_NONE;
 	}
 	if (src->Format==RING_NOKIABINARY && Format==RING_NOTETONE) {
 		Binary2RTTL(dest, src);
-		return GE_NONE;
+		return ERR_NONE;
 	}
 	/* The same source and target format */
 	if (src->Format==Format) {
 		memcpy(dest,src,sizeof(GSM_Ringtone));
-		return GE_NONE;
+		return ERR_NONE;
 	}
-	return GE_NOTIMPLEMENTED;
+	return ERR_NOTIMPLEMENTED;
 }
 
 /* 0 = No header and footer, 0.5 = partial header and footer,
@@ -1448,34 +1475,34 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		Len = *maxlength;
-		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
-			Note = &ringtone.NoteTone.Commands[i].Note;
-			if (Note->Note != Note_Pause) {
-				if (version == 1.2 && start) {
-					/* Save the default tempo */
-					DefNoteTempo = Note->Tempo;
-					Len+=sprintf(package+Len,"BEAT:%i%c%c",DefNoteTempo,13,10);
-					dbgprintf("DefNoteTempo=%d\n",DefNoteTempo);
+		if (ringtone.NoteTone.Commands[i].Type != RING_Note) continue;
 
-					/* Save default style */
-					DefNoteStyle = Note->Style;
-					switch (DefNoteStyle) {
-						case NaturalStyle   :Len+=sprintf(package+Len,"STYLE:S0%c%c",13,10); break;
-						case ContinuousStyle:Len+=sprintf(package+Len,"STYLE:S1%c%c",13,10); break;
-						case StaccatoStyle  :Len+=sprintf(package+Len,"STYLE:S2%c%c",13,10); break;
-					}
-				}
-				Len+=sprintf(package+Len,"MELODY:");
-				if (version != 0) {
-					/* 15 = Len of END:IMELODY... */
-					if ((Len+15) > Max) { end = true; break; }
-				} else {
-					if (Len > Max) { end = true; break; }
-				}
-				*maxlength = Len;
-				break;
+		Note = &ringtone.NoteTone.Commands[i].Note;
+		if (Note->Note == Note_Pause) continue;
+
+		if (version == 1.2 && start) {
+			/* Save the default tempo */
+			DefNoteTempo = Note->Tempo;
+			Len+=sprintf(package+Len,"BEAT:%i%c%c",DefNoteTempo,13,10);
+			dbgprintf("DefNoteTempo=%d\n",DefNoteTempo);
+
+			/* Save default style */
+			DefNoteStyle = Note->Style;
+			switch (DefNoteStyle) {
+				case NaturalStyle   :Len+=sprintf(package+Len,"STYLE:S0%c%c",13,10); break;
+				case ContinuousStyle:Len+=sprintf(package+Len,"STYLE:S1%c%c",13,10); break;
+				case StaccatoStyle  :Len+=sprintf(package+Len,"STYLE:S2%c%c",13,10); break;
 			}
 		}
+		Len+=sprintf(package+Len,"MELODY:");
+		if (version != 0) {
+			/* 15 = Len of END:IMELODY... */
+			if ((Len+15) > Max) { end = true; break; }
+		} else {
+			if (Len > Max) { end = true; break; }
+		}
+		*maxlength = Len;
+		break;
 	}
 
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
@@ -1485,49 +1512,47 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 		case RING_Note:
 			Note = &ringtone.NoteTone.Commands[i].Note;
 			if (!started && Note->Note != Note_Pause) started = true;
-			if (started) {
-				if (Note->Note!=Note_Pause && Note->Scale != DefNoteScale)
-				{
-					Len+=sprintf(package+Len,"*%i",Note->Scale-1);
-				}
-				switch (Note->Note) {
-					case Note_C  	:Len+=sprintf(package+Len,"c");	break;
-					case Note_Cis	:Len+=sprintf(package+Len,"#c");break;
-					case Note_D  	:Len+=sprintf(package+Len,"d");	break;
-					case Note_Dis	:Len+=sprintf(package+Len,"#d");break;
-					case Note_E  	:Len+=sprintf(package+Len,"e");	break;
-					case Note_F  	:Len+=sprintf(package+Len,"f");	break;
-					case Note_Fis	:Len+=sprintf(package+Len,"#f");break;
-					case Note_G  	:Len+=sprintf(package+Len,"g");	break;
-					case Note_Gis	:Len+=sprintf(package+Len,"#g");break;
-					case Note_A  	:Len+=sprintf(package+Len,"a");	break;
-					case Note_Ais	:Len+=sprintf(package+Len,"#a");break;
-					case Note_H  	:Len+=sprintf(package+Len,"b");	break;
-					case Note_Pause	:Len+=sprintf(package+Len,"r");	break;
-				}
-				switch (Note->Duration) {
-					case Duration_Full : package[Len++]='0';	break;
-					case Duration_1_2  : package[Len++]='1';	break;
-					case Duration_1_4  : package[Len++]='2';	break;
-					case Duration_1_8  : package[Len++]='3';	break;
-					case Duration_1_16 : package[Len++]='4';	break;
-					case Duration_1_32 : package[Len++]='5';	break;
-					default		   :				break;
-				}
-				switch (Note->DurationSpec) {
-					case DottedNote		: package[Len++] = '.'; break;
-					case DoubleDottedNote	: package[Len++] = ':'; break;
-					case Length_2_3		: package[Len++] = ';'; break;
-					default		   	:			break;
-				}
-				if (version != 0) {
-					/* 15 = Len of END:IMELODY... */
-					if ((Len+15) > Max) { end = true; break; }
-				} else {
-					if (Len > Max) { end = true; break; }
-				}
-				*maxlength = Len;
+			if (!started) break;
+			if (Note->Note!=Note_Pause && Note->Scale != DefNoteScale) {
+				Len+=sprintf(package+Len,"*%i",Note->Scale-1);
 			}
+			switch (Note->Note) {
+				case Note_C  	:Len+=sprintf(package+Len,"c");	break;
+				case Note_Cis	:Len+=sprintf(package+Len,"#c");break;
+				case Note_D  	:Len+=sprintf(package+Len,"d");	break;
+				case Note_Dis	:Len+=sprintf(package+Len,"#d");break;
+				case Note_E  	:Len+=sprintf(package+Len,"e");	break;
+				case Note_F  	:Len+=sprintf(package+Len,"f");	break;
+				case Note_Fis	:Len+=sprintf(package+Len,"#f");break;
+				case Note_G  	:Len+=sprintf(package+Len,"g");	break;
+				case Note_Gis	:Len+=sprintf(package+Len,"#g");break;
+				case Note_A  	:Len+=sprintf(package+Len,"a");	break;
+				case Note_Ais	:Len+=sprintf(package+Len,"#a");break;
+				case Note_H  	:Len+=sprintf(package+Len,"b");	break;
+				case Note_Pause	:Len+=sprintf(package+Len,"r");	break;
+			}
+			switch (Note->Duration) {
+				case Duration_Full : package[Len++]='0';	break;
+				case Duration_1_2  : package[Len++]='1';	break;
+				case Duration_1_4  : package[Len++]='2';	break;
+				case Duration_1_8  : package[Len++]='3';	break;
+				case Duration_1_16 : package[Len++]='4';	break;
+				case Duration_1_32 : package[Len++]='5';	break;
+				default		   :				break;
+			}
+			switch (Note->DurationSpec) {
+				case DottedNote		: package[Len++] = '.'; break;
+				case DoubleDottedNote	: package[Len++] = ':'; break;
+				case Length_2_3		: package[Len++] = ';'; break;
+				default		   	:			break;
+			}
+			if (version != 0) {
+				/* 15 = Len of END:IMELODY... */
+				if ((Len+15) > Max) { end = true; break; }
+			} else {
+				if (Len > Max) { end = true; break; }
+			}
+			*maxlength = Len;
 			break;
 		case RING_DisableLED:
 			if ((Len + 6) > Max) { end = true; break; }

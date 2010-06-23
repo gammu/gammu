@@ -1,3 +1,8 @@
+/* Taken from ReHash (see http://www.reichlsoft.de.vu/) and released
+ * under GPL/LGPL with permission from ReHash author
+ * Dominik Reichl <dominik.reichl@t-online.de>, Germany
+ */
+
 /*
  **********************************************************************
  ** MD5.cpp                                                          **
@@ -11,6 +16,21 @@
  ** RSA Data Security, Inc. MD5 Message Digest Algorithm             **
  ** Created: 2/17/90 RLR                                             **
  ** Revised: 1/91 SRD,AJ,BSK,JT Reference C Version                  **
+ **********************************************************************
+ */
+
+/*
+ **********************************************************************
+ ** MD5.h -- Header file for implementation of MD5                   **
+ ** RSA Data Security, Inc. MD5 Message Digest Algorithm             **
+ ** Created: 2/17/90 RLR                                             **
+ ** Revised: 12/27/90 SRD,AJ,BSK,JT Reference C version              **
+ ** Revised (for MD5): RLR 4/27/91                                   **
+ **   -- G modified to have y&~z instead of y&z                      **
+ **   -- FF, GG, HH modified to add in last register done            **
+ **   -- Access pattern: round 2 works mod 5, round 3 works mod 3    **
+ **   -- distinct additive constant for each step                    **
+ **   -- round 4 added, working mod 7                                **
  **********************************************************************
  */
 

@@ -63,7 +63,7 @@ var
 begin
         InfoListBox.Items.Add('Getting network info');
         error:=GSM_GetNetworkInfo(PhoneID,@NetInfo);
-        if (error = GE_NONE) then
+        if (error = ERR_NONE) then
         begin
                 if ((NetInfo.State = GSM_HomeNetwork) or
                     (NetInfo.State = GSM_RoamingNetwork)) then
@@ -86,13 +86,13 @@ var
         start   : Boolean;
 begin
         InfoListBox.Items.Add('Getting all sms');
-        error := GE_NONE;
+        error := ERR_NONE;
         start := True; //first set to true to allow init some internal DLL variables
-        while error = GE_NONE do
+        while error = ERR_NONE do
         begin
                 sms.SMS[1].Folder := 0;
                 error := GSM_GetNextSMSMessage (PhoneID,@sms,start);
-                if (error = GE_NONE) then
+                if (error = ERR_NONE) then
                 begin
                         if (sms.SMS[1].InboxFolder) then
                         begin
@@ -118,22 +118,22 @@ begin
   GSM_GetGammuVersion(@buffer);
   InfoListBox.Items.Add('Gammu DLL version is '+buffer);
   error:=GSM_GetIMEI(PhoneID,@buffer);
-  if (error = GE_NONE) then
+  if (error = ERR_NONE) then
   begin
           InfoListBox.Items.Add('Device IMEI sent to network is '+buffer);
   end;
   error:=GSM_GetManufacturer(PhoneID,@buffer);
-  if (error = GE_NONE) then
+  if (error = ERR_NONE) then
   begin
           InfoListBox.Items.Add('Device manufacturer is '+buffer);
   end;
   error:=GSM_GetModel(PhoneID,@buffer);
-  if (error = GE_NONE) then
+  if (error = ERR_NONE) then
   begin
           InfoListBox.Items.Add('Device model is '+buffer);
   end;
   error:=GSM_GetFirmwareVersion(PhoneID,@ver);
-  if (error = GE_NONE) then
+  if (error = ERR_NONE) then
   begin
           InfoListBox.Items.Add('Device firmware version is '+floattostr(ver));
   end;
@@ -161,26 +161,26 @@ begin
    //we show type of required code
    Form1.StatusBar1.Panels.Items[1].Text:='';
    case SecurityState of
-        GSCT_SecurityCode:Form1.StatusBar1.Panels.Items[1].Text:='Security code';
-        GSCT_Pin         :Form1.StatusBar1.Panels.Items[1].Text:='PIN';
-        GSCT_Pin2        :Form1.StatusBar1.Panels.Items[1].Text:='PIN2';
-        GSCT_Puk         :Form1.StatusBar1.Panels.Items[1].Text:='PUK';
-        GSCT_Puk2        :Form1.StatusBar1.Panels.Items[1].Text:='PUK2';
-        GSCT_None        :Form1.StatusBar1.Panels.Items[1].Text:='';
+        SEC_SecurityCode:Form1.StatusBar1.Panels.Items[1].Text:='Security code';
+        SEC_Pin         :Form1.StatusBar1.Panels.Items[1].Text:='PIN';
+        SEC_Pin2        :Form1.StatusBar1.Panels.Items[1].Text:='PIN2';
+        SEC_Puk         :Form1.StatusBar1.Panels.Items[1].Text:='PUK';
+        SEC_Puk2        :Form1.StatusBar1.Panels.Items[1].Text:='PUK2';
+        SEC_None        :Form1.StatusBar1.Panels.Items[1].Text:='';
    end;
 
    //we want to enter PIN
-   if (SecurityState = GSCT_Pin) then
+   if (SecurityState = SEC_Pin) then
    begin
         //in PINEdit there was some text possibly with PIN
         if (Form1.PINEdit.Text<>'') then
         begin
-                Code.CodeType:=GSCT_Pin;
+                Code.CodeType:=SEC_Pin;
                 for i:=1 to 4 do Code.Code[i]:=Form1.PINEdit.Text[i];
                 Code.Code[5]:=chr(0);
                 error := GSM_EnterSecurityCode(ID,@Code);
                 //code was probably incorrect
-                if (error <> GE_NONE) then
+                if (error <> ERR_NONE) then
                 begin
                         Form1.InfoListBox.Items.Add('Error '+inttostr(integer(error)));
                         Form1.PINEdit.Text:='';
@@ -212,7 +212,7 @@ begin
    SecurityCallBackPointer := @ChangeSecurityState;
    SMSCallBackPointer      := @HandleIncomingSMS;
    error:=GSM_StartConnection(@PhoneID,Device,Connection,'','logfile','text',@PhoneCallBackPointer,@SecurityCallBackPointer,@SMSCallBackPointer);
-   if (error=GE_NONE) then
+   if (error=ERR_NONE) then
    begin
            ConnectionLabel.Caption:=Connection;
            InitButton.Enabled:=False;
@@ -291,14 +291,14 @@ procedure TForm1.ResetButtonClick(Sender: TObject);
 var error:GSM_Error;
 begin
    error:=GSM_Reset(PhoneID,true);
-   if (error<>GE_NONE) then InfoListBox.Items.Add('Error '+inttostr(integer(error)));
+   if (error<>ERR_NONE) then InfoListBox.Items.Add('Error '+inttostr(integer(error)));
 end;
 
 procedure TForm1.TerminateButtonClick(Sender: TObject);
 var error: GSM_Error;
 begin
    error:=GSM_EndConnection(PhoneID);
-   if (error=GE_NONE) then
+   if (error=ERR_NONE) then
    begin
            ConnectionLabel.Caption:='>>>connection<<<';
            InitButton.Enabled:=True;

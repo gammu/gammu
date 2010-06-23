@@ -1,3 +1,6 @@
+/* (c) 2002-2003 by Marcin Wiacek */
+/* Checking used compiler (c) 2002 by Michal Cihar */
+/* Phones ID (c) partially by Walek */
 
 #include <stdarg.h>
 #include <string.h>
@@ -56,7 +59,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 		}
 		if (s->Speed != 0) s->ConnectionType = GCT_AT;
 	}
-	if (s->ConnectionType==0) return GE_UNKNOWNCONNECTIONTYPESTRING;
+	if (s->ConnectionType==0) return ERR_UNKNOWNCONNECTIONTYPESTRING;
 
 	/* We check now if user gave connection type compiled & available
 	 * for used OS (if not, we return, that source not available)
@@ -112,8 +115,8 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	GSM_RegisterConnection(s, GCT_BLUEOBEX,  &BlueToothDevice,&OBEXProtocol);
 #endif
 	if (s->Device.Functions==NULL || s->Protocol.Functions==NULL)
-			return GE_SOURCENOTAVAILABLE;
-	return GE_NONE;
+			return ERR_SOURCENOTAVAILABLE;
+	return ERR_NONE;
 }
 
 static void GSM_RegisterModule(GSM_StateMachine *s,GSM_Phone_Functions *phone)
@@ -141,17 +144,17 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT) {
 			smprintf(s,"[Module           - \"%s\"]\n",ATGENPhone.models);
 			s->Phone.Functions = &ATGENPhone;
-			return GE_NONE;
+			return ERR_NONE;
 		}
 #endif
-		if (GetModelData(NULL,s->Phone.Data.Model,NULL)->model[0] == 0) return GE_UNKNOWNMODELSTRING;
+		if (GetModelData(NULL,s->Phone.Data.Model,NULL)->model[0] == 0) return ERR_UNKNOWNMODELSTRING;
 	}
 	s->Phone.Functions=NULL;
 #ifdef GSM_ENABLE_ATGEN
 	/* AT module can have the same models ID to "normal" Nokia modules */
 	if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT) {
 		GSM_RegisterModule(s,&ATGENPhone);
-		if (s->Phone.Functions!=NULL) return GE_NONE;
+		if (s->Phone.Functions!=NULL) return ERR_NONE;
 	}
 #endif
 #ifdef GSM_ENABLE_OBEXGEN
@@ -178,8 +181,8 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #ifdef GSM_ENABLE_ALCATEL
 	GSM_RegisterModule(s,&ALCATELPhone);
 #endif
-	if (s->Phone.Functions==NULL) return GE_UNKNOWNMODELSTRING;
-	return GE_NONE;
+	if (s->Phone.Functions==NULL) return ERR_UNKNOWNMODELSTRING;
+	return ERR_NONE;
 }
 
 GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
@@ -222,7 +225,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		s->di.use_global 		  = s->CurrentConfig->UseGlobalDebugFile;
 		GSM_SetDebugLevel(s->CurrentConfig->DebugLevel, &s->di);
 		error=GSM_SetDebugFile(s->CurrentConfig->DebugFile, &s->di);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 
 		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTERROR ||
 	    	    s->di.dl == DL_TEXTALLDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTERRORDATE)
@@ -296,33 +299,33 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		}
 
 		error=GSM_RegisterAllConnections(s, s->CurrentConfig->Connection);
-		if (error!=GE_NONE) return error;
+		if (error!=ERR_NONE) return error;
 
 		/* Model auto */
 		if (s->CurrentConfig->Model[0]==0) {
 			if (mystrncasecmp(s->CurrentConfig->LockDevice,"yes",0)) {
 				error = lock_device(s->CurrentConfig->Device, &(s->LockFile));
-				if (error != GE_NONE) return error;
+				if (error != ERR_NONE) return error;
 			}
 
 			/* Irda devices can set now model to some specific and
 			 * we don't have to make auto detection later */
 			error=s->Device.Functions->OpenDevice(s);
 			if (i != s->ConfigNum - 1) {
-				if (error == GE_DEVICEOPENERROR) 	continue;
-				if (error == GE_DEVICELOCKED) 	 	continue;
-				if (error == GE_DEVICENOTEXIST)  	continue;
-				if (error == GE_DEVICEBUSY) 		continue;
-				if (error == GE_DEVICENOPERMISSION) 	continue;
-				if (error == GE_DEVICENODRIVER) 	continue;
-				if (error == GE_DEVICENOTWORK) 		continue;
+				if (error == ERR_DEVICEOPENERROR) 	continue;
+				if (error == ERR_DEVICELOCKED) 	 	continue;
+				if (error == ERR_DEVICENOTEXIST)  	continue;
+				if (error == ERR_DEVICEBUSY) 		continue;
+				if (error == ERR_DEVICENOPERMISSION) 	continue;
+				if (error == ERR_DEVICENODRIVER) 	continue;
+				if (error == ERR_DEVICENOTWORK) 	continue;
 			}
-			if (error!=GE_NONE) return error;
+			if (error!=ERR_NONE) return error;
 
 			s->opened = true;
 
 			error=s->Protocol.Functions->Initialise(s);
-			if (error!=GE_NONE) return error;
+			if (error!=ERR_NONE) return error;
 
 			/* If still auto model, try to get model by asking phone for it */
 			if (s->Phone.Data.Model[0]==0) {      
@@ -363,53 +366,53 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 					default:
 						s->Phone.Functions = NULL;
 				}
-				if (s->Phone.Functions == NULL) return GE_UNKNOWN;
+				if (s->Phone.Functions == NULL) return ERR_UNKNOWN;
 
 				/* Please note, that AT module need to send first
 				 * command for enabling echo
 				 */
 				error=s->Phone.Functions->Initialise(s);
-				if (error == GE_TIMEOUT && i != s->ConfigNum - 1) continue;
-				if (error!=GE_NONE) return error;
+				if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
+				if (error != ERR_NONE) return error;
 			
 				error=s->Phone.Functions->GetModel(s);
-				if (error == GE_TIMEOUT && i != s->ConfigNum - 1) continue;
-				if (error!=GE_NONE) return error;
+				if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
+				if (error != ERR_NONE) return error;
 			}
 		}
 
 		/* Switching to "correct" module */
 		error=GSM_RegisterAllPhoneModules(s);
-		if (error!=GE_NONE) return error;
+		if (error!=ERR_NONE) return error;
 
 		/* We didn't open device earlier ? Make it now */
 		if (!s->opened) {
 			if (mystrncasecmp(s->CurrentConfig->LockDevice,"yes",0)) {
 				error = lock_device(s->CurrentConfig->Device, &(s->LockFile));
-				if (error != GE_NONE) return error;
+				if (error != ERR_NONE) return error;
 			}
 
 			error=s->Device.Functions->OpenDevice(s);
 			if (i != s->ConfigNum - 1) {
-				if (error == GE_DEVICEOPENERROR) 	continue;
-				if (error == GE_DEVICELOCKED) 	 	continue;
-				if (error == GE_DEVICENOTEXIST)  	continue;
-				if (error == GE_DEVICEBUSY) 		continue;
-				if (error == GE_DEVICENOPERMISSION) 	continue;
-				if (error == GE_DEVICENODRIVER) 	continue;
-				if (error == GE_DEVICENOTWORK) 		continue;
+				if (error == ERR_DEVICEOPENERROR) 	continue;
+				if (error == ERR_DEVICELOCKED) 	 	continue;
+				if (error == ERR_DEVICENOTEXIST)  	continue;
+				if (error == ERR_DEVICEBUSY) 		continue;
+				if (error == ERR_DEVICENOPERMISSION) 	continue;
+				if (error == ERR_DEVICENODRIVER) 	continue;
+				if (error == ERR_DEVICENOTWORK) 	continue;
 			}
-			if (error!=GE_NONE) return error;
+			if (error!=ERR_NONE) return error;
 
 			s->opened = true;
 
 			error=s->Protocol.Functions->Initialise(s);
-			if (error!=GE_NONE) return error;
+			if (error!=ERR_NONE) return error;
 		}
 
 		error=s->Phone.Functions->Initialise(s);
-		if (error == GE_TIMEOUT && i != s->ConfigNum - 1) continue;
-		if (error!=GE_NONE) return error;
+		if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
+		if (error != ERR_NONE) return error;
 
 		if (mystrncasecmp(s->CurrentConfig->StartInfo,"yes",0)) {
 			s->Phone.Functions->ShowStartInfo(s,true);
@@ -423,15 +426,15 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 
 		/* For debug it's good to have firmware and real model version and manufacturer */
 		error=s->Phone.Functions->GetManufacturer(s);
-		if (error == GE_TIMEOUT && i != s->ConfigNum - 1) continue;
-		if (error!=GE_NONE) return error;
+		if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
+		if (error != ERR_NONE) return error;
 		error=s->Phone.Functions->GetModel(s);
-		if (error!=GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 		error=s->Phone.Functions->GetFirmware(s);
-		if (error!=GE_NONE) return error;
-		return GE_NONE;
+		if (error != ERR_NONE) return error;
+		return ERR_NONE;
 	}
-	return GE_UNKNOWN;
+	return ERR_UNKNOWN;
 }
 
 int GSM_ReadDevice (GSM_StateMachine *s, bool wait)
@@ -462,7 +465,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 {
 	GSM_Error error;
 	
-	if (!s->opened) return GE_UNKNOWN;
+	if (!s->opened) return ERR_UNKNOWN;
 
 	smprintf(s,"[Closing]\n");
 
@@ -472,14 +475,14 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 
 	if (s->Phone.Functions != NULL) {
 		error=s->Phone.Functions->Terminate(s);
-		if (error!=GE_NONE) return error;
+		if (error!=ERR_NONE) return error;
 	}
 
 	error=s->Protocol.Functions->Terminate(s);	
-	if (error!=GE_NONE) return error;
+	if (error!=ERR_NONE) return error;
 
 	error = s->Device.Functions->CloseDevice(s);
-	if (error!=GE_NONE) return error;
+	if (error!=ERR_NONE) return error;
 
 	s->Phone.Data.ModelInfo		  = NULL;
 	s->Phone.Data.Manufacturer[0]	  = 0;
@@ -494,7 +497,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 
 	s->opened = false;
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned char *buffer,
@@ -528,7 +531,7 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned char *buffer,
 		i++;
 	} while (i<time);
 
-	return GE_TIMEOUT;
+	return ERR_TIMEOUT;
 }
 
 GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned char *buffer,
@@ -547,21 +550,21 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned char *buffer,
 	}
 
 	Phone->RequestID	= request;
-	Phone->DispatchError	= GE_TIMEOUT;
+	Phone->DispatchError	= ERR_TIMEOUT;
 
 	for (reply=0;reply<s->ReplyNum;reply++) {
 		if (reply!=0) {
 			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl == DL_TEXTERROR ||
 			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl == DL_TEXTERRORDATE)
 			{
-			    smprintf(s, "[Retrying %i type 0x%02x]\n", reply, type);
+				smprintf(s, "[Retrying %i type 0x%02x]\n", reply, type);
 			}
 		}
 		error = s->Protocol.Functions->WriteMessage(s, buffer, length, type);
-		if (error!=GE_NONE) return error;
+		if (error!=ERR_NONE) return error;
 
 		error = GSM_WaitForOnce(s, buffer, length, type, time);
-		if (error != GE_TIMEOUT) return error;
+		if (error != ERR_TIMEOUT) return error;
         }
 
 	return Phone->DispatchError;
@@ -598,7 +601,7 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 			if ((unsigned int)Reply[i].requestID == ID_IncomingFrame ||
 			    (unsigned int)Reply[i].requestID == Data->RequestID ||
 			    Data->RequestID	== ID_EachFrame) {
-				return GE_NONE;
+				return ERR_NONE;
 			}
 			available=true;
 		}
@@ -606,15 +609,15 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 	}
 
 	if (available) {
-		return GE_FRAMENOTREQUESTED;
+		return ERR_FRAMENOTREQUESTED;
 	} else {
-		return GE_UNKNOWNFRAME;
+		return ERR_UNKNOWNFRAME;
 	}
 }
 
 GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 {
-	GSM_Error		error	= GE_UNKNOWNFRAME;
+	GSM_Error		error	= ERR_UNKNOWNFRAME;
 	GSM_Protocol_Message	*msg 	= s->Phone.Data.RequestMsg;
 	GSM_Phone_Data 		*Phone	= &s->Phone.Data;
 	bool			disp    = false;
@@ -642,16 +645,16 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	Reply=s->User.UserReplyFunctions;
 	if (Reply!=NULL) error=CheckReplyFunctions(s,Reply,&reply);
 
-	if (error==GE_UNKNOWNFRAME) {
+	if (error==ERR_UNKNOWNFRAME) {
 		Reply=s->Phone.Functions->ReplyFunctions;
 		error=CheckReplyFunctions(s,Reply,&reply);
 	}                                
 
-	if (error==GE_NONE) {
+	if (error==ERR_NONE) {
 		error=Reply[reply].Function(*msg, s);
 		if ((unsigned int)Reply[reply].requestID==Phone->RequestID) {
-			if (error == GE_NEEDANOTHERANSWER) {
-				error = GE_NONE;
+			if (error == ERR_NEEDANOTHERANSWER) {
+				error = ERR_NONE;
 			} else {
 				Phone->RequestID=ID_None;
 			}
@@ -664,13 +667,13 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 		{
 			disp = true;
 			switch (error) {		
-			case GE_UNKNOWNRESPONSE:
+			case ERR_UNKNOWNRESPONSE:
 				smprintf(s, "\nUNKNOWN response");
 				break;
-			case GE_UNKNOWNFRAME:
+			case ERR_UNKNOWNFRAME:
 				smprintf(s, "\nUNKNOWN frame");
 				break;
-			case GE_FRAMENOTREQUESTED:
+			case ERR_FRAMENOTREQUESTED:
 				smprintf(s, "\nFrame not request now");
 				break;
 			default:
@@ -678,8 +681,8 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 			}
 		}
 
-		if (error == GE_UNKNOWNFRAME || error == GE_FRAMENOTREQUESTED) {
-			error = GE_TIMEOUT;
+		if (error == ERR_UNKNOWNFRAME || error == ERR_FRAMENOTREQUESTED) {
+			error = ERR_TIMEOUT;
 		}
 	}
 
@@ -947,8 +950,8 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"7210" ,"NHL-4" ,"Nokia 7210", {F_TODO66,F_RADIO,0}},
-	{"7250" ,"NHL-4J","Nokia 7250", {F_TODO66,F_RADIO,0}},
-	{"7250i","NHL-4JX","Nokia 7250i",{F_TODO66,F_RADIO,0}},
+	{"7250" ,"NHL-4J","Nokia 7250", {F_TODO66,F_RADIO,F_PBKIMG,0}},
+	{"7250i","NHL-4JX","Nokia 7250i",{F_TODO66,F_RADIO,F_PBKIMG,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN)
 	{"7650" ,"NHL-2" ,"Nokia 7650", {0}},

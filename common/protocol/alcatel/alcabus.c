@@ -1,4 +1,5 @@
-/*
+/* (c) 2002-2003 by Michal Cihar
+ *
  * Low level functions for communication with Alcatel One Touch phones.
  *
  * This code implements the protocol used for synchronisation with PC.
@@ -21,7 +22,7 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned char *data,
 	int				sent = 0;
 	int 				i = 0, checksum = 0;
 
-	if ((type == 0) && (len == 0)) return GE_NONE;
+	if ((type == 0) && (len == 0)) return ERR_NONE;
 
 	buffer[0] = ALCATEL_HEADER;
 	buffer[1] = type;
@@ -62,7 +63,7 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned char *data,
 		default:
 			/* In fact, other types probably can came just from mobile... */
 			smprintf(s,"WARNING: Wanted to send some unknown packet (%02X)\n", type);
-			return GE_NOTIMPLEMENTED;
+			return ERR_NOTIMPLEMENTED;
 	}
 
 	/* Calculate packet checksum */
@@ -75,7 +76,7 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned char *data,
 	GSM_DumpMessageLevel3(s, buffer, size, type);
 	while (sent != size ) {
 		if ((i = s->Device.Functions->WriteDevice(s,buffer + sent, size - sent)) == 0) {
-			return GE_DEVICEWRITEERROR;
+			return ERR_DEVICEWRITEERROR;
 		}
 		sent += i;
 	}
@@ -87,13 +88,13 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned char *data,
 			GSM_ReadDevice(s,true);
 			my_sleep(1);
 			i++;
-			if (i == 10) return GE_TIMEOUT;
+			if (i == 10) return ERR_TIMEOUT;
 		}
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
-static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
+static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 {
 	GSM_Protocol_ALCABUSData 	*d = &s->Protocol.Data.ALCABUS;
 	int				i;
@@ -105,18 +106,18 @@ static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_byte
 	}
 
 	/* Check for header */
-	if ((d->Msg.Length == 0) && (rx_byte != ALCATEL_HEADER)) {
-		smprintf(s,"WARNING: Expecting alcatel header (%02X) but got (%02X)\n", ALCATEL_HEADER, rx_byte);
-		return GE_UNKNOWNRESPONSE;
+	if ((d->Msg.Length == 0) && (rx_char != ALCATEL_HEADER)) {
+		smprintf(s,"WARNING: Expecting alcatel header (%02X) but got (%02X)\n", ALCATEL_HEADER, rx_char);
+		return ERR_UNKNOWNRESPONSE;
 	/* Check for packet type */
 	} else if (d->Msg.Length == 1){
-		d->Msg.Type = rx_byte;
+		d->Msg.Type = rx_char;
 		/* Was it unexpected packet? */
-		if ((rx_byte != d->next_frame) && (rx_byte != ALCATEL_CONTROL)) {
-				smprintf(s,"WARNING: Expecting alcatel packet type (%02X) but got (%02X)\n", d->next_frame, rx_byte);
+		if ((rx_char != d->next_frame) && (rx_char != ALCATEL_CONTROL)) {
+				smprintf(s,"WARNING: Expecting alcatel packet type (%02X) but got (%02X)\n", d->next_frame, rx_char);
 		}
 		/* Determine packet size */
-		switch (rx_byte) {
+		switch (rx_char) {
 			case ALCATEL_ACK:
 				d->expected_size = 4;
 				break;
@@ -134,14 +135,14 @@ static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_byte
 				d->expected_size = 3;
 				break;
 			default:
-				smprintf(s,"WARNING: Something went wrong, unknown packet received (%02X)\n", rx_byte);
-				return GE_UNKNOWNRESPONSE;
+				smprintf(s,"WARNING: Something went wrong, unknown packet received (%02X)\n", rx_char);
+				return ERR_UNKNOWNRESPONSE;
 		}
 	/* Check counter, we can probably ignore error here ;-) */
 	} else if ((d->Msg.Length == 2) && (d->Msg.Type == ALCATEL_DATA)) {
-		if (rx_byte != d->in_counter) {
-			smprintf(s,"WARNING: Unexpected packet number, ignoring (expected %02X, received %02X)\n", d->in_counter, rx_byte);
-			d->in_counter = rx_byte;
+		if (rx_char != d->in_counter) {
+			smprintf(s,"WARNING: Unexpected packet number, ignoring (expected %02X, received %02X)\n", d->in_counter, rx_char);
+			d->in_counter = rx_char;
 		}
 		/* Increase incoming packet counter */
 		if (d->in_counter == ALCATEL_MAX_COUNTER) d->in_counter = 0;
@@ -149,11 +150,11 @@ static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_byte
 	/* Read size for data packet */
 	} else if ((d->Msg.Length == 4) && (d->Msg.Type == ALCATEL_DATA)) {
 	/* Header till now + checksum */
-		d->expected_size = (int)rx_byte + 6;
+		d->expected_size = (int)rx_char + 6;
 	}
 
 	/* Write received byte into buffer */
-	d->Msg.Buffer[d->Msg.Length++] = rx_byte;
+	d->Msg.Buffer[d->Msg.Length++] = rx_char;
 
 	/* Did we received whole packet? */
 	if (d->expected_size == d->Msg.Length) {
@@ -208,11 +209,11 @@ static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_byte
 
 		/* Was it unexpected type? */
 		if ((d->Msg.Type != d->next_frame) && (d->Msg.Type != ALCATEL_CONTROL)) {
-			return GE_FRAMENOTREQUESTED;
+			return ERR_FRAMENOTREQUESTED;
 		}
 	} /* Last byte of packet */
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error ALCABUS_Initialise(GSM_StateMachine *s)

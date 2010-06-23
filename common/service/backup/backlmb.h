@@ -1,5 +1,7 @@
-#ifndef __gsm_backuplmb_h
-#define __gsm_backuplmb_h
+/* (c) 2003 by Marcin Wiacek */
+
+#ifndef __gsm_backlmb_h
+#define __gsm_backlmb_h
 
 #include "backgen.h"
 

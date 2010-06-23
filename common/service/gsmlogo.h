@@ -1,83 +1,134 @@
+/* (c) 2002-2003 by Marcin Wiacek */
+
 #ifndef __gsm_bitmaps_h
 #define __gsm_bitmaps_h
 
 #include "../gsmcomon.h"
 
-/* Bitmap types. */
+/**
+ * Enum to handle all possible bitmaps, which are not saved in various filesystems.
+ */
 typedef enum {
 	GSM_None = 1,
+	/**
+	 * ID of static file in filesystem displayed during startup
+	 */
+	GSM_ColourStartupLogo_ID,
+	/**
+	 * Static mono bitmap/ID of animated mono bitmap displayed during startup
+	 */
 	GSM_StartupLogo,
+	/**
+	 * ID of static file in filesystem displayed instead of operator name
+	 */
+	GSM_ColourOperatorLogo_ID,
+	/**
+	 * Mono bitmap displayed instead of operator name
+	 */
 	GSM_OperatorLogo,
-	GSM_CallerLogo,
-	GSM_PictureImage,
-	GSM_WelcomeNoteText,
-	GSM_DealerNoteText,
-	GSM_ColourOperatorLogo,
-	GSM_ColourStartupLogo,
-	GSM_ColourWallPaper
+	/**
+	 * ID of static file in filesystem displayed as wallpaper
+	 */
+	GSM_ColourWallPaper_ID,
+	/**
+	 * Mono bitmap assigned to caller group
+	 */
+	GSM_CallerGroupLogo,
+	/**
+	 * Text displayed during startup, which can't be removed from phone menu
+	 */
+	GSM_DealerNote_Text,
+	/**
+	 * Text displayed during startup
+	 */
+	GSM_WelcomeNote_Text,
+	/**
+	 * Image defined in Smart Messaging specification
+	 */
+	GSM_PictureImage
 } GSM_Bitmap_Types;
 
-#define GSM_BITMAP_SIZE	864
+#define GSM_BITMAP_SIZE	(65+7)/8*96
 
 /**
- * Structure to hold incoming/outgoing bitmaps (and welcome-notes).
+ * Structure for all possible bitmaps, which are not saved in various filesystems
  */
 typedef struct {
 	/**
-	 * Caller group number
+	 * For all: bitmap type
 	 */
-	unsigned char Location;
+	GSM_Bitmap_Types 	Type;
 	/**
-	 * Bitmap height in pixels
+	 * For caller group logos: number of group
+	 * For startup logos: number of animated bitmap
 	 */
-	unsigned char Height;
+	unsigned char 		Location;
 	/**
-	 * Bitmap width in pixels
+	 * For dealer/welcome note text: text
+	 * For caller group logo: name of group
+         * For picture images: text assigned to it
 	 */
-	unsigned char Width;
+	unsigned char 		Text[256];
 	/**
-	 * Bitmap type
+	 * For caller group logo: true, when logo is enabled in group
 	 */
-	GSM_Bitmap_Types Type;
+	bool 			BitmapEnabled;
 	/**
-	 * Network operator code
+	 * For caller group logo: true, when group has default name
 	 */
-	char NetworkCode[7];
+	bool 			DefaultName;
 	/**
-	 * Text used for (dealer) welcome-note
-         * or callergroup name or Picture Image text
+	 * For caller group logo: true, when group has default bitmap
 	 */
-	char Text [256];
+	bool 			DefaultBitmap;
 	/**
-	 * When get caller group - is default name ?
+	 * For caller group logo: true, when group has default ringtone
 	 */
-	bool DefaultName;
+	bool 			DefaultRingtone;
 	/**
-	 * Actual Bitmap ((65+7)/8*96=864)
+	 * For caller group logo: ringtone ID. Phone model specific
+	 */
+	unsigned char 		RingtoneID;
+	/**
+	 * For mono bitmaps: body of bitmap
 	 */ 
-	unsigned char Bitmap[GSM_BITMAP_SIZE];
-	bool DefaultBitmap;
+	unsigned char 		BitmapPoints[GSM_BITMAP_SIZE];
 	/**
-	 * Ringtone ID sent with caller group
+	 * For mono bitmaps: height specified in pixels
 	 */
-	unsigned char Ringtone;
-	bool DefaultRingtone;
+	unsigned char 		BitmapHeight;
 	/**
-	 * With caller logos = displayed or not
+	 * For mono bitmaps: width specified in pixels
 	 */
-	bool Enabled;
+	unsigned char 		BitmapWidth;
 	/**
-	 * For Picture Images - number of sender
+	 * For operator logos: Network operator code
 	 */
-	char Sender [GSM_MAX_NUMBER_LENGTH+1];
-	unsigned char ID;
+	unsigned char 		NetworkCode[7];
+	/**
+	 * For picture images: number of sender
+	 */
+	unsigned char 		Sender[GSM_MAX_NUMBER_LENGTH+1];
+	/**
+	 * For colour bitmaps: ID
+	 */
+	unsigned char 		ID;
 } GSM_Bitmap;
 
 #define MAX_MULTI_BITMAP 6
 
+/**
+ * Structure to handle more than one bitmap
+ */
 typedef struct {
-	unsigned char	Number;
-	GSM_Bitmap	Bitmap[MAX_MULTI_BITMAP];
+	/**
+	 * Number of bitmaps
+	 */
+	unsigned char		Number;
+	/**
+	 * All bitmaps
+	 */
+	GSM_Bitmap		Bitmap[MAX_MULTI_BITMAP];
 } GSM_MultiBitmap;
 
 typedef enum {
@@ -89,7 +140,7 @@ typedef enum {
 	GSM_NokiaPictureImage,		/*size 72*28*/
 	GSM_Nokia7110StartupLogo,	/*size 96*65*/
 	GSM_Nokia6210StartupLogo,	/*size 96*60*/
-	GSM_EMSSmallPicture,		/*size  8*8 */
+	GSM_EMSSmallPicture,		/*size  8* 8*/
 	GSM_EMSMediumPicture,		/*size 16*16*/
 	GSM_EMSBigPicture,		/*size 32*32*/
 	GSM_EMSVariablePicture
@@ -98,17 +149,19 @@ typedef enum {
 bool GSM_IsPointBitmap		(GSM_Bitmap 		*bmp, int x, int y);
 void GSM_SetPointBitmap		(GSM_Bitmap 		*bmp, int x, int y);
 void GSM_ClearPointBitmap	(GSM_Bitmap 		*bmp, int x, int y);
-void GSM_PrintBitmap		(FILE *file, 		GSM_Bitmap *bitmap);
 void GSM_ClearBitmap		(GSM_Bitmap 		*bmp);
 void GSM_ResizeBitmap		(GSM_Bitmap 		*dest, GSM_Bitmap *src, int width, int height);
+void GSM_ReverseBitmap		(GSM_Bitmap 		*Bitmap);
 void GSM_GetMaxBitmapWidthHeight(GSM_Bitmap_Types 	Type, unsigned char *width, unsigned char *height);
-void GSM_ReverseBitmap		(GSM_Bitmap *Bitmap);
 int  GSM_GetBitmapSize		(GSM_Bitmap 		*bmp);
+void GSM_PrintBitmap		(FILE 			*file, GSM_Bitmap *bitmap);
 
-GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap);
-GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap);
-GSM_Error BMP2Bitmap           (unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
+GSM_Error GSM_SaveBitmapFile	(char *FileName, GSM_MultiBitmap *bitmap);
+GSM_Error GSM_ReadBitmapFile	(char *FileName, GSM_MultiBitmap *bitmap);
+
+GSM_Error BMP2Bitmap            (unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
 GSM_Error Bitmap2BMP            (unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
+
 void PHONE_GetBitmapWidthHeight	(GSM_Phone_Bitmap_Types Type, int *width, int *height);
 int  PHONE_GetBitmapSize	(GSM_Phone_Bitmap_Types Type, int width, int height);
 void PHONE_ClearBitmap		(GSM_Phone_Bitmap_Types Type, char *buffer, int width, int height);

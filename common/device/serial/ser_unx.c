@@ -1,3 +1,5 @@
+/* (c) 2002-2003 by Marcin Wiacek */
+/* locking device and settings all speeds by Michal Cihar */
 
 #include "../../gsmstate.h"
 
@@ -14,16 +16,17 @@
 #include "../../gsmcomon.h"
 #include "ser_unx.h"
 
-/* Close the serial port and restore old settings. */
 static GSM_Error serial_close(GSM_StateMachine *s)
 {
 	GSM_Device_SerialData *d = &s->Device.Data.Serial;
 
-	/*FIXME: error checking */
-	tcsetattr(d->hPhone, TCSANOW, &d->backup_termios);
+	/* Restores old settings */
+	tcsetattr(d->hPhone, TCSANOW, &d->old_settings);
+
+	/* Closes device */
 	close(d->hPhone);
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 #ifndef O_NONBLOCK
@@ -36,16 +39,14 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	struct termios          t;
 	int			    i;
 
-	/* O_NONBLOCK MUST be used here as the CLOCAL may be currently off
-	 * and if DCD is down the "open" syscall would be stuck wating for DCD.
-	 */
+	/* O_NONBLOCK MUST is required to avoid waiting for DCD */
 	d->hPhone = open(s->CurrentConfig->Device, O_RDWR | O_NOCTTY | O_NONBLOCK);
 	if (d->hPhone < 0) {
 		i = errno;
 	        GSM_OSErrorInfo(s,"open in serial_open");
-		if (i ==  2) return GE_DEVICENOTEXIST;		//no such file or directory
-		if (i == 13) return GE_DEVICENOPERMISSION;	//permission denied
-		return GE_DEVICEOPENERROR;
+		if (i ==  2) return ERR_DEVICENOTEXIST;		//no such file or directory
+		if (i == 13) return ERR_DEVICENOPERMISSION;	//permission denied
+		return ERR_DEVICEOPENERROR;
 	}
 
 #ifdef TIOCEXCL
@@ -53,24 +54,21 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	ioctl(d->hPhone, TIOCEXCL, (char *) 0);
 #endif
 
-	if (tcgetattr(d->hPhone, &d->backup_termios) == -1) {
-		/* Don't call serial_close since backup_termios is not valid */
+	if (tcgetattr(d->hPhone, &d->old_settings) == -1) {
 		close(d->hPhone);
 		GSM_OSErrorInfo(s,"tcgetattr in serial_open");
-	        return GE_DEVICEREADERROR;
+	        return ERR_DEVICEREADERROR;
     	}
 
     	if (tcflush(d->hPhone, TCIOFLUSH) == -1) {
         	serial_close(s);
         	GSM_OSErrorInfo(s,"tcflush in serial_open");
-        	return GE_DEVICEOPENERROR;
+        	return ERR_DEVICEOPENERROR;
     	}
 
-    	/* Initialise the port settings */
-    	memcpy(&t, &d->backup_termios, sizeof(struct termios));
+    	memcpy(&t, &d->old_settings, sizeof(struct termios));
 
-    	/* Set port settings for canonical input processing */
-    	/* without parity */
+	/* Opening without parity */
     	t.c_iflag       = IGNPAR;
     	t.c_oflag       = 0;
     	/* disconnect line, 8 bits, enable receiver,
@@ -86,17 +84,17 @@ static GSM_Error serial_open (GSM_StateMachine *s)
     	if (tcsetattr(d->hPhone, TCSANOW, &t) == -1) {
         	serial_close(s);
         	GSM_OSErrorInfo(s,"tcsetattr in serial_open");
-        	return GE_DEVICEOPENERROR;
+        	return ERR_DEVICEOPENERROR;
     	}
 
-    	/* Make filedescriptor asynchronous. */
+    	/* Making file descriptor asynchronous. */
     	if (fcntl(d->hPhone, F_SETFL, FASYNC | FNONBLOCK) == -1) {
         	serial_close(s);
         	GSM_OSErrorInfo(s,"fcntl in serial_open");
-        	return GE_DEVICEOPENERROR;
+        	return ERR_DEVICEOPENERROR;
     	}
 
-    	return GE_NONE;
+    	return ERR_NONE;
 }
 
 static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
@@ -106,7 +104,7 @@ static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
 
     	if (tcgetattr(d->hPhone, &t)) {
         	GSM_OSErrorInfo(s,"tcgetattr in serial_setparity");
-        	return GE_DEVICEREADERROR;
+        	return ERR_DEVICEREADERROR;
     	}
 
     	if (parity) {
@@ -119,13 +117,12 @@ static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
     	if (tcsetattr(d->hPhone, TCSANOW, &t) == -1){
         	serial_close(s);
         	GSM_OSErrorInfo(s,"tcsetattr in serial_setparity");
-        	return GE_DEVICEPARITYERROR;
+        	return ERR_DEVICEPARITYERROR;
     	}
 
-    	return GE_NONE;
+    	return ERR_NONE;
 }
 
-/* Set the DTR and RTS bit of the serial device. */
 static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
@@ -134,27 +131,33 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
 
     	if (tcgetattr(d->hPhone, &t)) {
         	GSM_OSErrorInfo(s,"tcgetattr in serial_setdtrrts");
-        	return GE_DEVICEREADERROR;
+        	return ERR_DEVICEREADERROR;
     	}
 
 #ifdef CRTSCTS
-    	/* Disable hardware flow control */
+    	/* Disabling hardware flow control */
     	t.c_cflag &= ~CRTSCTS;
 #endif
 
     	if (tcsetattr(d->hPhone, TCSANOW, &t) == -1) {
         	serial_close(s);
         	GSM_OSErrorInfo(s,"tcsetattr in serial_setdtrrts");
-        	return GE_DEVICEDTRRTSERROR;
+        	return ERR_DEVICEDTRRTSERROR;
     	}
 
     	flags = TIOCM_DTR;
-    	if (dtr) ioctl(d->hPhone, TIOCMBIS, &flags);
-    	else ioctl(d->hPhone, TIOCMBIC, &flags);
+    	if (dtr) {
+		ioctl(d->hPhone, TIOCMBIS, &flags);
+	} else {
+		ioctl(d->hPhone, TIOCMBIC, &flags);
+	}
 
     	flags = TIOCM_RTS;
-    	if (rts) ioctl(d->hPhone, TIOCMBIS, &flags);
-    	else ioctl(d->hPhone, TIOCMBIC, &flags);
+    	if (rts) {
+		ioctl(d->hPhone, TIOCMBIS, &flags);
+	} else {
+		ioctl(d->hPhone, TIOCMBIC, &flags);
+	}
 
     	flags = 0;
     	ioctl(d->hPhone, TIOCMGET, &flags);
@@ -164,15 +167,12 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
     	dbgprintf(", RTS is %s",      flags&TIOCM_RTS?"up":"down");
     	dbgprintf(", CAR is %s",      flags&TIOCM_CAR?"up":"down");
     	dbgprintf(", CTS is %s\n",    flags&TIOCM_CTS?"up":"down");
-    	if (((flags&TIOCM_DTR)==TIOCM_DTR) != dtr) return GE_DEVICEDTRRTSERROR;
-    	if (((flags&TIOCM_RTS)==TIOCM_RTS) != rts) return GE_DEVICEDTRRTSERROR;
+    	if (((flags&TIOCM_DTR)==TIOCM_DTR) != dtr) return ERR_DEVICEDTRRTSERROR;
+    	if (((flags&TIOCM_RTS)==TIOCM_RTS) != rts) return ERR_DEVICEDTRRTSERROR;
 
-    	return GE_NONE;
+    	return ERR_NONE;
 }
 
-/* Change the speed of the serial device.
- * RETURNS: Success
- */
 static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 {
     	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
@@ -181,7 +181,7 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 
     	if (tcgetattr(d->hPhone, &t)) {
         	GSM_OSErrorInfo(s,"tcgetattr in serial_setspeed");
-        	return GE_DEVICEREADERROR;
+        	return ERR_DEVICEREADERROR;
     	}
 
     	smprintf(s, "Setting speed to %d\n", speed);
@@ -214,13 +214,12 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
     	if (tcsetattr(d->hPhone, TCSADRAIN, &t) == -1) {
         	serial_close(s);
         	GSM_OSErrorInfo(s,"tcsetattr in serial_setspeed");
-        	return GE_DEVICECHANGESPEEDERROR;
+        	return ERR_DEVICECHANGESPEEDERROR;
     	}
 
-    	return GE_NONE;
+    	return ERR_NONE;
 }
 
-/* Read from serial device. */
 static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
     	GSM_Device_SerialData 		*d = &s->Device.Data.Serial;
@@ -241,7 +240,6 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
     	return actual;
 }
 
-/* Write to serial device. */
 static int serial_write(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
@@ -249,14 +247,15 @@ static int serial_write(GSM_StateMachine *s, void *buf, size_t nbytes)
     	size_t                  actual = 0;
 
     	do {
-        	if ((ret = write(d->hPhone, (unsigned char *)buf, nbytes - actual)) < 0) {
-            		if (actual!=nbytes) GSM_OSErrorInfo(s,"serial_write");
-            		return(actual);
+		ret = write(d->hPhone, (unsigned char *)buf, nbytes - actual);
+        	if (ret < 0) {
+            		if (actual != nbytes) GSM_OSErrorInfo(s,"serial_write");
+            		return actual;
         	}
         	actual  += ret;
         	buf     += ret;
     	} while (actual < nbytes);
-    	return (actual);
+    	return actual;
 }
 
 GSM_Device_Functions SerialDevice = {

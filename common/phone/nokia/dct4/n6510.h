@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #ifndef n6510_h
 #define n6510_h
@@ -27,8 +28,8 @@ typedef struct {
 
 	unsigned char			RingtoneID;	/* When set with preview */
 
-	int				FilesLocations[500];
-	int				FilesLevels[500];
+	int				FilesLocations[1000];
+	int				FilesLevels[1000];
 	int				FilesLocationsUsed;
 	int				FilesLocationsCurrent;
 	int				FileToken;

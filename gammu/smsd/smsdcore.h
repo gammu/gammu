@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek and Joergen Thomsen */
 
 #include "../../common/service/sms/gsmsms.h"
 #include "../../common/service/sms/gsmmulti.h"
@@ -22,7 +23,7 @@ typedef struct {
 	GSM_Error	(*SaveInboxSMS)  (GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config);
 	GSM_Error	(*FindOutboxSMS) (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID);
 	GSM_Error	(*MoveSMS)  	 (unsigned char *sourcepath, unsigned char *destpath, unsigned char *ID,
-                             		  int alwaysDelete);
+                             		  bool alwaysDelete);
 } GSM_SMSDService;
 
 void WriteSMSDLog(unsigned char *format, ...);

@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #include <string.h>
 #include <ctype.h>
@@ -38,9 +39,9 @@ GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 	EncodeUnicode(folders->Folder[1].Name,GetMsg(s->msg,"Outbox"),strlen(GetMsg(s->msg,"Outbox")));
 	folders->Folder[0].InboxFolder = true;
 	folders->Folder[1].InboxFolder = false;
-	folders->Folder[0].Memory      = GMT_SM;
-	folders->Folder[1].Memory      = GMT_SM;
-	return GE_NONE;
+	folders->Folder[0].Memory      = MEM_SM;
+	folders->Folder[1].Memory      = MEM_SM;
+	return ERR_NONE;
 }
 
 void GSM_CreateFirmwareNumber(GSM_StateMachine *s)
@@ -55,13 +56,12 @@ GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigne
 
 	if (SMS->SMSC.Location!=0) {
 		error = s->Phone.Functions->GetSMSC(s, &SMS->SMSC);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 		SMS->SMSC.Location = 0;
 	}
 	if (SMS->PDU == SMS_Deliver) {
-		if (SMS->SMSC.Number[0] == 0x00 && SMS->SMSC.Number[1] == 0x00)
-		{
-			return GE_EMPTYSMSC;
+		if (SMS->SMSC.Number[0] == 0x00 && SMS->SMSC.Number[1] == 0x00) {
+			return ERR_EMPTYSMSC;
 		}
 	}
 	return GSM_EncodeSMSFrame(SMS, buffer, Layout, length, clear);
@@ -73,13 +73,13 @@ GSM_Error PHONE_Terminate(GSM_StateMachine *s)
 
 	if (s->Phone.Data.EnableIncomingCB==true) {
 		error=s->Phone.Functions->SetIncomingCB(s,false);
-		if (error!=GE_NONE) return error;
+		if (error!=ERR_NONE) return error;
 	}
 	if (s->Phone.Data.EnableIncomingSMS==true) {
 		error=s->Phone.Functions->SetIncomingSMS(s,false);
-		if (error!=GE_NONE) return error;
+		if (error!=ERR_NONE) return error;
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool first)
@@ -90,7 +90,7 @@ GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool fir
 	Hz=GSM_RingNoteGetFrequency(note);
   	
 	error=s->Phone.Functions->PlayTone(s,Hz,5,first);
-	if (error!=GE_NONE) return error;
+	if (error!=ERR_NONE) return error;
 
 	duration = GSM_RingNoteGetFullDuration(note);
 
@@ -99,7 +99,7 @@ GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool fir
 		case StaccatoStyle:
 			my_sleep (7500);
 			error=s->Phone.Functions->PlayTone(s,0,0,false);	
-			if (error != GE_NONE) return error;
+			if (error != ERR_NONE) return error;
 			my_sleep ((1400000/note.Tempo*duration)-(7500));
 			break;
 		case ContinuousStyle:
@@ -108,11 +108,11 @@ GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool fir
 		case NaturalStyle:
 			my_sleep  (1400000/note.Tempo*duration-50);
 			error=s->Phone.Functions->PlayTone(s,0,0,false);	
-			if (error != GE_NONE) return error;
+			if (error != ERR_NONE) return error;
 			my_sleep (50);
 			break;	
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error PHONE_Beep(GSM_StateMachine *s)
@@ -120,7 +120,7 @@ GSM_Error PHONE_Beep(GSM_StateMachine *s)
 	GSM_Error error;
 
 	error=s->Phone.Functions->PlayTone(s, 4000, 5,true);
-	if (error!=GE_NONE) return error;
+	if (error!=ERR_NONE) return error;
 
 	my_sleep(500);
 
@@ -129,7 +129,8 @@ GSM_Error PHONE_Beep(GSM_StateMachine *s)
 
 GSM_Error NoneReply(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return GE_NONE;
+	smprintf(s,"None answer\n");
+	return ERR_NONE;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

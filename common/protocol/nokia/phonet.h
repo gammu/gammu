@@ -1,3 +1,5 @@
+/* (c) 2002-2003 by Marcin Wiacek */
+/* based on some work from Gnokii */
 
 #ifndef PHONET_h
 #define PHONET_h

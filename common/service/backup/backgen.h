@@ -1,5 +1,7 @@
-#ifndef __gsm_backup_h
-#define __gsm_backup_h
+/* (c) 2002-2003 by Marcin Wiacek */
+
+#ifndef __gsm_backgen_h
+#define __gsm_backgen_h
 
 #include "../../config.h"
 #include "../../misc/misc.h"

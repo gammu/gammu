@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
 
 #ifndef atgen_h
 #define atgen_h

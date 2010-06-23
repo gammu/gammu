@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #include "../../../gsmstate.h"
 
@@ -17,7 +18,7 @@
 GSM_Error DCT4_ReplyGetPhoneMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	s->Phone.Data.PhoneString[0] = msg.Buffer[4];
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error DCT4_GetPhoneMode(GSM_StateMachine *s)
@@ -31,7 +32,7 @@ GSM_Error DCT4_GetPhoneMode(GSM_StateMachine *s)
 
 GSM_Error DCT4_ReplySetPhoneMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error DCT4_SetPhoneMode(GSM_StateMachine *s, DCT4_PHONE_MODE mode)
@@ -43,7 +44,7 @@ GSM_Error DCT4_SetPhoneMode(GSM_StateMachine *s, DCT4_PHONE_MODE mode)
 			       0x04,		/* phone mode */
 			       0x00};
 
-	if (s->ConnectionType != GCT_FBUS2) return GE_OTHERCONNECTIONREQUIRED;
+	if (s->ConnectionType != GCT_FBUS2) return ERR_OTHERCONNECTIONREQUIRED;
 
 	s->Phone.Data.PhoneString 	= PhoneMode;
 	req[4] 				= mode;
@@ -51,22 +52,22 @@ GSM_Error DCT4_SetPhoneMode(GSM_StateMachine *s, DCT4_PHONE_MODE mode)
 	while (1) {
 		smprintf(s,"Going to phone mode %i\n",mode);
 		error = GSM_WaitFor (s, req, 6, 0x15, 4, ID_Reset);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 		for (i=0;i<20;i++) {
 			error=DCT4_GetPhoneMode(s);
-			if (error != GE_NONE) return error;
-			if (PhoneMode[0] == mode) return GE_NONE;
+			if (error != ERR_NONE) return error;
+			if (PhoneMode[0] == mode) return ERR_NONE;
 			my_sleep(500);
 		}
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error DCT4_ReplyGetIMEI(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	memcpy(s->Phone.Data.IMEI,msg.Buffer + 10, 16);
 	smprintf(s, "Received IMEI %s\n",s->Phone.Data.IMEI);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error DCT4_GetIMEI (GSM_StateMachine *s)
@@ -94,12 +95,12 @@ GSM_Error DCT4_Reset(GSM_StateMachine *s, bool hard)
 			       0x00};
 //	unsigned char TimeReq[] = {N6110_FRAME_HEADER, 0x0E, 0x00, 0x00};
 
-	if (hard) return GE_NOTSUPPORTED;
+	if (hard) return ERR_NOTSUPPORTED;
 
 //	error = DCT4_SetPhoneMode(s, DCT4_MODE_TEST);
-//	if (error != GE_NONE) return error;
+//	if (error != ERR_NONE) return error;
 //	error = DCT4_SetPhoneMode(s, DCT4_MODE_NORMAL);
-//	if (error != GE_NONE) return error;
+//	if (error != ERR_NONE) return error;
 
 	s->Phone.Data.EnableIncomingSMS = false;
 	s->Phone.Data.EnableIncomingCB  = false;

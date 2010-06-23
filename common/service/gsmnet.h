@@ -1,70 +1,73 @@
-#ifndef __gsm_networks_h
-#define __gsm_networks_h
+/* (c) 2002-2003 by Marcin Wiacek & Michal Cihar */
+
+#ifndef __gsm_net_h
+#define __gsm_net_h
 
 /**
- * Lookup GSM network by code.
+ * Find network name from given network code.
  */
 char *GSM_GetNetworkName(char *NetworkCode);
 
 /**
- * Lookup GSM country by code.
+ * Find country name from given country code.
  */
 char *GSM_GetCountryName(char *CountryCode);
 
 /**
- * State of network.
+ * Status of network logging
  */
 typedef enum {
 	/**
-	 * Phone home network.
+	 * Home network for used SIM card.
 	 */
 	GSM_HomeNetwork = 1,
 	/**
-	 * Using roaming.
-	 */
-	GSM_RoamingNetwork,
-	/**
-	 * Network explicitely requested by user.
-	 */
-	GSM_RequestingNetwork,
-	/**
-	 * No network available.
+	 * No network available for used SIM card.
 	 */
 	GSM_NoNetwork,
 	/**
-	 * Network registration denied.
+	 * SIM card uses roaming.
+	 */
+	GSM_RoamingNetwork,
+	/**
+	 * Network registration denied - card blocked or expired or disabled.
 	 */
 	GSM_RegistrationDenied,
 	/**
-	 * Uknown network status.
+	 * Unknown network status.
 	 */
-	GSM_NetworkStatusUnknown
+	GSM_NetworkStatusUnknown,
+	/**
+	 * Network explicitely requested by user.
+	 */
+	GSM_RequestingNetwork
 } GSM_NetworkInfo_State;
 
 /**
- * This structure is used to get the current network status.
+ * Structure for getting the current network info.
  */
 typedef struct {
 	/**
-	 * Name of current network.
+	 * Cell ID (CID)
 	 */
-	unsigned char		   NetworkName[15*2];
-	/**
-	 * State of current network.
-	 */
-	GSM_NetworkInfo_State	   State;
+	unsigned char		   CID[10];
 	/**
 	 * GSM network code.
 	 */
 	char			   NetworkCode[10];
 	/**
-	 * Cell ID
+	 * Status of network logging. If phone is not logged into any network,
+         * some values are not filled
 	 */
-	unsigned char		   CellID[10];
+	GSM_NetworkInfo_State	   State;
 	/**
 	 * LAC (Local Area Code).
 	 */
 	unsigned char		   LAC[10];
+	/**
+	 * Name of current network like returned from phone (or empty).
+	 */
+	unsigned char		   NetworkName[15*2];
 } GSM_NetworkInfo;
 
 void NOKIA_EncodeNetworkCode (unsigned char* buffer, unsigned char* output);

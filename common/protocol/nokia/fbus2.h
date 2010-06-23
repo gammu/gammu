@@ -1,3 +1,5 @@
+/* (c) 2002-2003 by Marcin Wiacek */
+/* based on some work from Gnokii and MyGnokii */
 
 #ifndef fbus2_h
 #define fbus2_h

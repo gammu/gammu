@@ -1,6 +1,7 @@
+/* (c) 2003 by Marcin Wiacek */
 
-#ifndef _INI_READER_H
-#define _INI_READER_H
+#ifndef _cfg_h
+#define _cfg_h
 
 #include "misc.h"
 
@@ -13,7 +14,6 @@ typedef struct _INI_Entry INI_Entry;
  */
 struct _INI_Entry {
 	INI_Entry 		*Next, *Prev;
-
 	unsigned char 		*EntryName;
         unsigned char 		*EntryValue;
 };
@@ -26,7 +26,6 @@ typedef struct _INI_Section INI_Section;
 struct _INI_Section {
         INI_Section 		*Next, *Prev;
         INI_Entry 		*SubEntries;
-
         unsigned char		*SectionName;
 };
 

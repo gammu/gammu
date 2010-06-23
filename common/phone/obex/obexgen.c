@@ -1,4 +1,4 @@
-
+/* (c) 2003 by Marcin Wiacek */
 /* www.irda.org OBEX specs 1.3 */
 
 /* Module connects to F9EC7BC4-953c-11d2-984E-525400DC9E09 UUID and in the
@@ -45,9 +45,9 @@ static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine
 			s->Phone.Data.Priv.OBEXGEN.FrameSize = msg.Buffer[2]*256+msg.Buffer[3];
 			smprintf(s,"Maximal size of frame is %i 0x%x\n",s->Phone.Data.Priv.OBEXGEN.FrameSize,s->Phone.Data.Priv.OBEXGEN.FrameSize);
 		}
-		return GE_NONE;
+		return ERR_NONE;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error OBEXGEN_Disconnect(GSM_StateMachine *s)
@@ -65,7 +65,7 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 		0x00,			/* no flags 			*/
 		0x20,0x00};		/* 0x2000 max size of packet 	*/
 
-	if (service == s->Phone.Data.Priv.OBEXGEN.Service) return GE_NONE;
+	if (service == s->Phone.Data.Priv.OBEXGEN.Service) return ERR_NONE;
 
 	switch (service) {
 	case OBEX_None:
@@ -86,7 +86,7 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 #ifndef xxxx
 	//disconnect old service
 #else
-	if (s->Phone.Data.Priv.OBEXGEN.Service != 0) return GE_NONE;
+	if (s->Phone.Data.Priv.OBEXGEN.Service != 0) return ERR_NONE;
 #endif
 
 	s->Phone.Data.Priv.OBEXGEN.Service = service;
@@ -99,7 +99,7 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 {
 //	GSM_File 	File;
-//	GSM_Error	error = GE_NONE;
+//	GSM_Error	error = ERR_NONE;
 
 	s->Phone.Data.Priv.OBEXGEN.Service = 0;
 
@@ -112,9 +112,9 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 //	File.Used 			= 0;
 //	File.ID_FullName[0] 		= 0;
 //	File.Buffer			= NULL;
-//	while (error == GE_NONE) error = OBEXGEN_GetFilePart(s,&File);
+//	while (error == ERR_NONE) error = OBEXGEN_GetFilePart(s,&File);
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -122,15 +122,15 @@ static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMach
 	switch (msg.Type) {
 	case 0xA0:
 		smprintf(s,"Path set OK\n");
-		return GE_NONE;
+		return ERR_NONE;
 	case 0xA1:
 		smprintf(s,"Folder created\n");
-		return GE_NONE;
+		return ERR_NONE;
 	case 0xC3:
 		smprintf(s,"Security error\n");
-		return GE_SECURITYERROR;
+		return ERR_SECURITYERROR;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 static GSM_Error OBEXGEN_ChangePath(GSM_StateMachine *s, char *Name, unsigned char Flag1)
@@ -162,15 +162,15 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	switch (msg.Type) {
 	case 0x90:
 		smprintf(s,"Last part of file added OK\n");
-		return GE_NONE;
+		return ERR_NONE;
 	case 0xA0:
 		smprintf(s,"Part of file added OK\n");
-		return GE_NONE;
+		return ERR_NONE;
 	case 0xC0:
 		smprintf(s,"Not understand. Probably not supported\n");
-		return GE_NOTSUPPORTED;
+		return ERR_NOTSUPPORTED;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos)
@@ -189,15 +189,15 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos)
 #else
 			error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
 #endif
-			if (error != GE_NONE) return error;
+			if (error != ERR_NONE) return error;
 		} else {
 			error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
-			if (error != GE_NONE) return error;
+			if (error != ERR_NONE) return error;
 
 			if (strcmp(s->CurrentConfig->Model,"seobex")) {
 				smprintf(s,"Changing to root\n");
 				error = OBEXGEN_ChangePath(s, NULL, 2);
-				if (error != GE_NONE) return error;
+				if (error != ERR_NONE) return error;
 
 				Pos2 = 0;
 				do {
@@ -205,7 +205,7 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos)
 					smprintf(s,"%s %i %i\n",DecodeUnicodeString(req2),Pos2,strlen(File->ID_FullName));
 					smprintf(s,"Changing path down\n");
 					error=OBEXGEN_ChangePath(s, req2, 2);
-					if (error != GE_NONE) return error;
+					if (error != ERR_NONE) return error;
 					if (Pos2 == strlen(File->ID_FullName)) break;
 				} while (1);
 			}
@@ -239,8 +239,8 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos)
 		smprintf(s, "Adding file part %i %i\n",*Pos,j);
 		*Pos = *Pos + j;
 		error = GSM_WaitFor (s, req, Current, 0x82, 4, ID_AddFile);
-		if (error != GE_NONE) return error;
-		return GE_EMPTY;
+		if (error != ERR_NONE) return error;
+		return ERR_EMPTY;
 	} else {
 		/* File body block */
 		OBEXAddBlock(req, &Current, 0x48, File->Buffer+(*Pos), j);
@@ -260,7 +260,7 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 		smprintf(s,"File part received\n");
 		s->Phone.Data.Priv.OBEXGEN.FileLastPart = true;
 	case 0x90:
-//		if (msg.Length < 11) return GE_NONE;
+//		if (msg.Length < 11) return ERR_NONE;
 		if (msg.Type == 0x90) smprintf(s,"Last file part received\n");
 		while(1) {
 			if (Pos >= msg.Length) break;
@@ -274,20 +274,20 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 						msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2]-3);	
 				s->Phone.Data.File->Buffer = (unsigned char *)realloc(s->Phone.Data.File->Buffer,s->Phone.Data.File->Used);
 				memcpy(s->Phone.Data.File->Buffer+old,msg.Buffer+Pos+3,s->Phone.Data.File->Used-old);
-				return GE_NONE;
+				return ERR_NONE;
 			default:
 				break;
 			}
 			Pos+=msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2];
 		}
-		return GE_UNKNOWNRESPONSE;
+		return ERR_UNKNOWNRESPONSE;
 	case 0xC3:
-		return GE_NOTSUPPORTED;
+		return ERR_NOTSUPPORTED;
 	case 0xC4:
 		smprintf(s,"Not found\n");
-		return GE_SECURITYERROR;
+		return ERR_SECURITYERROR;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 static GSM_Error OBEXGEN_ReplyGetFileInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -297,10 +297,10 @@ static GSM_Error OBEXGEN_ReplyGetFileInfo(GSM_Protocol_Message msg, GSM_StateMac
 	switch (msg.Type) {
 	case 0x83:
 		smprintf(s,"Not available ?\n");
-		return GE_NONE;
+		return ERR_NONE;
 	case 0x90:
 		smprintf(s,"Last part of file info received\n");
-		return GE_NONE;
+		return ERR_NONE;
 	case 0xA0:
 		while(1) {
 			if (Pos >= msg.Length) break;
@@ -315,15 +315,15 @@ static GSM_Error OBEXGEN_ReplyGetFileInfo(GSM_Protocol_Message msg, GSM_StateMac
 						msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2]-3);	
 				s->Phone.Data.File->Buffer = (unsigned char *)realloc(s->Phone.Data.File->Buffer,s->Phone.Data.File->Used);
 				memcpy(s->Phone.Data.File->Buffer+old,msg.Buffer+Pos+3,s->Phone.Data.File->Used-old);
-				return GE_EMPTY;
+				return ERR_EMPTY;
 			default:
 				break;
 			}
 			Pos+=msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2];
 		}
-		return GE_UNKNOWNRESPONSE;
+		return ERR_UNKNOWNRESPONSE;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bool FolderList)
@@ -360,7 +360,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 #else
 				error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
 #endif
-				if (error != GE_NONE) return error;
+				if (error != ERR_NONE) return error;
 
 				EncodeUnicode(File->Name,"one",3);
 
@@ -379,12 +379,12 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 			} else {
 //				error = OBEXGEN_Connect(s,OBEX_None);
 				error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
-				if (error != GE_NONE) return error;
+				if (error != ERR_NONE) return error;
 
 				if (strcmp(s->CurrentConfig->Model,"seobex")) {
 					smprintf(s,"Changing to root\n");
 					error = OBEXGEN_ChangePath(s, NULL, 2);
-					if (error != GE_NONE) return error;
+					if (error != ERR_NONE) return error;
 
 					Pos = 0;
 					do {
@@ -393,7 +393,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 						if (Pos == strlen(File->ID_FullName)) break;
 						smprintf(s,"Changing path down\n");
 						error=OBEXGEN_ChangePath(s, req2, 2);
-						if (error != GE_NONE) return error;
+						if (error != ERR_NONE) return error;
 					} while (1);
 				} else {
 					EncodeUnicode(req2,File->ID_FullName,strlen(File->ID_FullName));
@@ -418,7 +418,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 
 	smprintf(s, "Getting file info from filesystem\n");
 	error=GSM_WaitFor (s, req, Current, 0x03, 4, ID_GetFileInfo);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	s->Phone.Data.Priv.OBEXGEN.FileLastPart = false;
 
@@ -432,9 +432,9 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 		}
 		smprintf(s, "Getting file part from filesystem\n");
 		error=GSM_WaitFor (s, req, Current, 0x83, 4, ID_GetFile);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 	}
-	return GE_EMPTY;
+	return ERR_EMPTY;
 }
 
 GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File)
@@ -450,7 +450,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 	int			Pos,i,j,num,pos2,Current,z;
 
 	if (start) {
-		if (!strcmp(s->CurrentConfig->Model,"seobex")) return GE_NOTSUPPORTED;
+		if (!strcmp(s->CurrentConfig->Model,"seobex")) return ERR_NOTSUPPORTED;
 
 		Priv->Files[0].Folder		= true;
 		Priv->Files[0].Level		= 1;
@@ -464,11 +464,11 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 		Priv->FileLev			= 1;
 		
 		error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 
 		smprintf(s,"Changing to root\n");
 		error = OBEXGEN_ChangePath(s, NULL, 2);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 
 		Current = 0;
 	}
@@ -476,7 +476,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 	while (1) {
 		if (Priv->FilesLocationsCurrent == Priv->FilesLocationsUsed) {
 			dbgprintf("Last file\n");
-			return GE_EMPTY;
+			return ERR_EMPTY;
 		}
 
 		strcpy(File->ID_FullName,Priv->Files[Priv->FilesLocationsCurrent].ID_FullName);
@@ -490,7 +490,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 				for (i=0;i<File->Level;i++) {
 					smprintf(s,"Changing path up\n");
 					error=OBEXGEN_ChangePath(s, NULL, 2);
-					if (error != GE_NONE) return error;
+					if (error != ERR_NONE) return error;
 				}
 			}
 	
@@ -599,7 +599,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 						if (Priv->Files[z].Level > File->Level) {
 							smprintf(s,"Changing path down\n");
 							error=OBEXGEN_ChangePath(s, File->Name, 2);
-							if (error != GE_NONE) return error;
+							if (error != ERR_NONE) return error;
 						}
 						break;
 					} 
@@ -621,7 +621,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 			File->System		= false;
 
 		}
-		return GE_NONE;
+		return ERR_NONE;
 	}
 }
 
@@ -631,14 +631,14 @@ static GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 	unsigned int		Current = 0, Pos;
 	unsigned char		req[200],req2[200];
 
-	if (!strcmp(s->CurrentConfig->Model,"seobex")) return GE_NOTSUPPORTED;
+	if (!strcmp(s->CurrentConfig->Model,"seobex")) return ERR_NOTSUPPORTED;
 
 	error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	smprintf(s,"Changing to root\n");
 	error = OBEXGEN_ChangePath(s, NULL, 2);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	Pos = 0;
 	do {
@@ -647,7 +647,7 @@ static GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 		if (Pos == strlen(ID)) break;
 		smprintf(s,"Changing path down\n");
 		error=OBEXGEN_ChangePath(s, req2, 2);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 	} while (1);
 
 	/* Name block */
@@ -667,14 +667,14 @@ static GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	unsigned char		req2[200];
 	unsigned int		Pos;
 
-	if (!strcmp(s->CurrentConfig->Model,"seobex")) return GE_NOTSUPPORTED;
+	if (!strcmp(s->CurrentConfig->Model,"seobex")) return ERR_NOTSUPPORTED;
 
 	error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	smprintf(s,"Changing to root\n");
 	error = OBEXGEN_ChangePath(s, NULL, 2);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	Pos = 0;
 	do {
@@ -682,7 +682,7 @@ static GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 		smprintf(s,"%s %i %i\n",DecodeUnicodeString(req2),Pos,strlen(File->ID_FullName));
 		smprintf(s,"Changing path down\n");
 		error=OBEXGEN_ChangePath(s, req2, 2);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 		if (Pos == strlen(File->ID_FullName)) break;
 	} while (1);
 

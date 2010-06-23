@@ -1,50 +1,53 @@
+/* (c) 2001-2003 by Marcin Wiacek, Walek and Michal Cihar */
+
 #ifndef __gsm_misc_h
 #define __gsm_misc_h
 
 #include "../gsmcomon.h"
 
-/* Define an enum for specifying memory types for getting phonebook entries,
- * SMS messages etc. Phone modules can translate it to own values
+/**
+ * Enum defines ID for various phone and SIM memories.
+ * Phone modules can translate them to values specific for concrete models
+ * Two letter codes (excluding VM) are from GSM 07.07
  */
 typedef enum {
-	/* Two letter codes are from GSM 07.07 release 6.2.0 */
 	/**
 	 * Internal memory of the mobile equipment
 	 */
-	GMT_ME=1,
+	MEM_ME=1,
 	/**
 	 * SIM card memory
 	 */
-	GMT_SM,
+	MEM_SM,
 	/**
 	 * Own numbers
 	 */
-	GMT_ON,
+	MEM_ON,
 	/**
 	 * Dialled calls
 	 */
-	GMT_DC,
+	MEM_DC,
 	/**
 	 * Received calls
 	 */
-	GMT_RC,
+	MEM_RC,
 	/**
 	 * Missed calls
 	 */
-	GMT_MC,
+	MEM_MC,
 	/**
 	 * Combined ME and SIM phonebook
 	 */
-	GMT_MT,
+	MEM_MT,
 	/**
 	 * Fixed dial
 	 */
-	GMT_FD,
+	MEM_FD,
 
 	/**
 	 * Voice mailbox
 	 */
-	GMT_VM
+	MEM_VM
 } GSM_MemoryType;
 
 /* --------------------------- resetting phone settings  ------------------- */
@@ -66,27 +69,27 @@ typedef enum {
 	/**
 	 * Security code.
 	 */
-	GSCT_SecurityCode = 0x01,
+	SEC_SecurityCode = 0x01,
 	/**
 	 * PIN.
 	 */
-	GSCT_Pin,
+	SEC_Pin,
 	/**
 	 * PIN 2.
 	 */
-	GSCT_Pin2,
+	SEC_Pin2,
 	/**
 	 * PUK.
 	 */
-	GSCT_Puk,
+	SEC_Puk,
 	/**
 	 * PUK 2.
 	 */
-	GSCT_Puk2,
+	SEC_Puk2,
 	/**
 	 * Code not needed.
 	 */
-	GSCT_None 
+	SEC_None 
 } GSM_SecurityCodeType;
 
 #define GSM_SECURITY_CODE_LEN	15
@@ -96,13 +99,13 @@ typedef enum {
  */
 typedef struct {
 	/**
-	 * Type of the code.
-	 */
-	GSM_SecurityCodeType 	Type;
-	/**
 	 * Actual code.
 	 */
 	char 			Code[GSM_SECURITY_CODE_LEN+1];
+	/**
+	 * Type of the code.
+	 */
+	GSM_SecurityCodeType 	Type;
 } GSM_SecurityCode;
 
 /* ---------------------------- keyboard ----------------------------------- */
@@ -159,12 +162,15 @@ GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, int *Length);
 
 typedef enum {
 	GSM_CallActive = 1,
-	GSM_UnreadSMS,
-	GSM_VoiceCall,
+	/**
+	 * blinking envelope
+	 */
+	GSM_SMSMemoryFull,
 	GSM_FaxCall,
+	GSM_UnreadSMS,
 	GSM_DataCall,
-	GSM_KeypadLocked,
-	GSM_SMSMemoryFull	/* blinking envelope */
+	GSM_VoiceCall,
+	GSM_KeypadLocked
 } GSM_DisplayFeature;
 
 typedef struct {

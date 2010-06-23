@@ -1,3 +1,4 @@
+/* (c) by Walek */
 
 #ifndef at_siemens_h
 #define at_siemens_h

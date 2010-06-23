@@ -1,3 +1,5 @@
+/* (c) 2002-2003 by Marcin Wiacek */
+/* MSID by Walek */
 
 #include "../../common/gsmstate.h"
 
@@ -31,16 +33,15 @@ GSM_Error CheckDCT3Only()
 #ifdef GSM_ENABLE_NOKIA9210
 	if (strstr(N9210Phone.models, s.Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
-	if (!found) return GE_NOTSUPPORTED;
+	if (!found) return ERR_NOTSUPPORTED;
 
 	if (s.ConnectionType!=GCT_MBUS2	    && s.ConnectionType!=GCT_FBUS2      &&
 	    s.ConnectionType!=GCT_FBUS2DLR3 && s.ConnectionType!=GCT_FBUS2BLUE  &&
 	    s.ConnectionType!=GCT_FBUS2IRDA && s.ConnectionType!=GCT_IRDAPHONET &&
-	    s.ConnectionType!=GCT_BLUEFBUS2)
-	{
-		return GE_OTHERCONNECTIONREQUIRED;
+	    s.ConnectionType!=GCT_BLUEFBUS2) {
+		return ERR_OTHERCONNECTIONREQUIRED;
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static void CheckDCT3()
@@ -49,10 +50,10 @@ static void CheckDCT3()
 
 	error = CheckDCT3Only();
 	switch (error) {
-	case GE_NOTSUPPORTED:
-		Print_Error(GE_NOTSUPPORTED);
+	case ERR_NOTSUPPORTED:
+		Print_Error(ERR_NOTSUPPORTED);
 		break;
-	case GE_OTHERCONNECTIONREQUIRED:
+	case ERR_OTHERCONNECTIONREQUIRED:
 		printf("Can't do it with current phone protocol\n");
 		GSM_TerminateConnection(&s);
 		exit(-1);
@@ -85,7 +86,7 @@ static GSM_Error DCT3_ReplyGetT9(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	DCT3T9Size = msg.Length - 6;
 	fwrite(msg.Buffer+6,1,DCT3T9Size,DCT3T9File);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void DCT3GetT9(int argc, char *argv[])
@@ -96,7 +97,7 @@ void DCT3GetT9(int argc, char *argv[])
 
 //"00 01 AE 00" gets some control values
 
-	if (CheckDCT3Only()!=GE_NONE) return;
+	if (CheckDCT3Only()!=ERR_NONE) return;
 
 	DCT3T9File = fopen("T9", "w");      
 	if (DCT3T9File == NULL) return;
@@ -118,7 +119,7 @@ void DCT3VibraTest(int argc, char *argv[])
 	unsigned char SetLevel[4] = {0x00, 0x01, 0xA3,
 				     0xff};	/* Level */
 
-	if (CheckDCT3Only()!=GE_NONE) return;
+	if (CheckDCT3Only()!=ERR_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions3;
 
@@ -175,7 +176,7 @@ static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message msg, GSM_StateMachine
 		printf("\n");
 	}
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void DCT3SelfTests(int argc, char *argv[])
@@ -184,7 +185,7 @@ void DCT3SelfTests(int argc, char *argv[])
 	unsigned char 	buffer3[8] = {0x00,0x01,0xce,0x1d,0xfe,0x23,0x00,0x00};
 	int		i;
 
-	if (CheckDCT3Only()!=GE_NONE) return;
+	if (CheckDCT3Only()!=ERR_NONE) return;
 
 	error=DCT3_EnableSecurity (&s, 0x01);
 	Print_Error(error);
@@ -198,7 +199,7 @@ void DCT3SelfTests(int argc, char *argv[])
 
 		while (!false) {
 			GSM_Init(false);
-			if (error==GE_NONE) break;
+			if (error==ERR_NONE) break;
 			GSM_Terminate();
 		}
 
@@ -209,7 +210,7 @@ void DCT3SelfTests(int argc, char *argv[])
 
 	for (i=0;i<10;i++) {
 		error=GSM_WaitFor (&s, buffer, 3, 0x40, 4, ID_User1);	
-		if (error == GE_NONE) break;
+		if (error == ERR_NONE) break;
 	}
 }
 
@@ -243,12 +244,12 @@ static GSM_Error DCT3_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (msg.Buffer[2]) {
 	case 0x68:
 		memcpy(DCT3ADCBuf,msg.Buffer+4,msg.Length-4);
-		return GE_NONE;
+		return ERR_NONE;
 	case 0x91:
 		DCT3ADCInt = msg.Buffer[4]*256+msg.Buffer[5];
-		return GE_NONE;
+		return ERR_NONE;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 void DCT3GetADC(int argc, char *argv[])
@@ -258,7 +259,7 @@ void DCT3GetADC(int argc, char *argv[])
 	unsigned char	GetUnit[] = {0x00, 0x01, 0x91,
 				     0x02};		/* Test number */
 
-	if (CheckDCT3Only()!=GE_NONE) return;
+	if (CheckDCT3Only()!=ERR_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions3;
 
@@ -299,7 +300,7 @@ void DCT3DisplayTest(int argc, char *argv[])
 				0x03,          	/* 3=set, 2=clear */
 				0x03};	 	/* test number */
 
-	if (CheckDCT3Only()!=GE_NONE) return;
+	if (CheckDCT3Only()!=ERR_NONE) return;
 
 	if (atoi(argv[2]) != 1 && atoi(argv[2]) != 2) {
 		printf("Give 1 or 2 as test number\n");
@@ -334,7 +335,7 @@ void DCT3netmonitor(int argc, char *argv[])
 
 	printf("%s\n",value);
 #ifdef GSM_ENABLE_BEEP
-if (atoi(argv[2]) == 243) GSM_PhoneBeep();
+	if (atoi(argv[2]) == 243) GSM_PhoneBeep();
 #endif
 	GSM_Terminate();
 }
@@ -346,13 +347,13 @@ static GSM_Error DCT3_ReplyGetMSID(GSM_Protocol_Message msg, GSM_StateMachine *s
 	printf("MSID          : ");
 	for (i=5;i<18;i++) printf("%02x",msg.Buffer[i]);
 	printf("\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error DCT3_ReplyGetDSPROM(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("DSP ROM       : %c\n",msg.Buffer[5]);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -361,8 +362,7 @@ static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachin
 	char	uni[100], buffer[50];    
 
 	j=0;
-	for (i=0; i < 12; i++)
-	{
+	for (i=0; i < 12; i++) {
 		if (j<24) {
 			uni[j]='0' + (msg.Buffer[9+i] >> 4);
 			j++;
@@ -407,7 +407,7 @@ static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachin
 		((msg.Buffer[5] & 2) != 2)==0?"user   ":"factory",
 		msg.Buffer[22]);
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error DCT3_ReplyGetMCUchkSum(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -415,13 +415,12 @@ static GSM_Error DCT3_ReplyGetMCUchkSum(GSM_Protocol_Message msg, GSM_StateMachi
 	int i;
 	
 	if (msg.Buffer[3] == 0x12) printf("Language Pack: %c\n",msg.Buffer[5]);
-	if (msg.Buffer[3] == 0x02) 
-	{
+	if (msg.Buffer[3] == 0x02) {
 		printf("MCU checksum  : ");
 		for (i=5;i<9;i++) printf("%c",msg.Buffer[i]);
 		printf("\n");
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static unsigned char MSID1;
@@ -430,7 +429,7 @@ GSM_Error DCT3_ReplyEnableSecurity2(GSM_Protocol_Message msg, GSM_StateMachine *
 {
 	smprintf(s, "State of security commands set\n");
 	MSID1 = msg.Buffer[5];
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void DCT3Info(int argc, char *argv[])
@@ -440,7 +439,7 @@ void DCT3Info(int argc, char *argv[])
 	unsigned char 		req3[]  = {0x00, 0x01, 0xc8, 0x02}; 	  /* Get MCU chksum */
 	unsigned char 		req4[]  = {0x00, 0x01, 0xc8, 0x09}; 	  /* Get DSP ROM */
 
-        if (CheckDCT3Only()!=GE_NONE) return;
+        if (CheckDCT3Only()!=ERR_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions3;
 
@@ -465,7 +464,7 @@ void DCT3Info(int argc, char *argv[])
 static GSM_Error DCT3_ReplyResetTest36(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Netmonitor test 36 cleaned OK\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void DCT3ResetTest36(int argc, char *argv[])
@@ -515,13 +514,13 @@ static GSM_Error DCT3_ReplyGetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	for (i=0;i<32;i++) dbgprintf("%c",PPS[i]);
 	dbgprintf("\n");
 #endif
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error DCT3_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Setting done OK\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void DCT3SetPhoneMenus(int argc, char *argv[])
@@ -533,7 +532,7 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 		0x00, 0x01, 0x6b,
 		0x00, 0x00, 0x00, 0x00 }; /* bytes with Product Profile Setings */
 
-	if (CheckDCT3Only()!=GE_NONE) return;
+	if (CheckDCT3Only()!=ERR_NONE) return;
 
 	error=DCT3_EnableSecurity (&s, 0x01);
 	Print_Error(error);
@@ -600,25 +599,23 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 static GSM_Error DCT3_Reply61GetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Security Code is \"%s\"\n",msg.Buffer+5);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error DCT3_Reply7191GetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Security Code is \"%s\"\n",msg.Buffer+6);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void DCT3GetSecurityCode(int argc, char *argv[])
 {
-	unsigned char req6110[] = {
-		0x00, 0x01, 0x6e,
-		0x01};			/* Type of the requested code. */
-	unsigned char req71_91[] = {
-		N7110_FRAME_HEADER, 0xee,
-		0x1c};			/* Setting */
+	unsigned char req6110[] = {0x00, 0x01, 0x6e,
+				   0x01};	/* Code type */
+	unsigned char req71_91[] = {N7110_FRAME_HEADER, 0xee,
+				    0x1c};	/* Setting */
 
-	if (CheckDCT3Only()!=GE_NONE) return;
+	if (CheckDCT3Only()!=ERR_NONE) return;
 
 	error=DCT3_EnableSecurity (&s, 0x01);
 	Print_Error(error);
@@ -626,20 +623,17 @@ void DCT3GetSecurityCode(int argc, char *argv[])
 	s.User.UserReplyFunctions=UserReplyFunctions3;
 
 #ifdef GSM_ENABLE_NOKIA6110
-	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) != NULL)
-	{
+	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) != NULL) {
 		error=GSM_WaitFor (&s, req6110, 4, 0x40, 4, ID_User6);
 	}
 #endif
 #ifdef GSM_ENABLE_NOKIA7110
-	if (strstr(N7110Phone.models, s.Phone.Data.ModelInfo->model) != NULL)
-	{
+	if (strstr(N7110Phone.models, s.Phone.Data.ModelInfo->model) != NULL) {
 		error=GSM_WaitFor (&s, req71_91, 5, 0x7a, 4, ID_User6);
 	}
 #endif
 #ifdef GSM_ENABLE_NOKIA9210
-	if (strstr(N9210Phone.models, s.Phone.Data.ModelInfo->model) != NULL)
-	{
+	if (strstr(N9210Phone.models, s.Phone.Data.ModelInfo->model) != NULL) {
 		error=GSM_WaitFor (&s, req71_91, 5, 0x7a, 4, ID_User6);
 	}
 #endif
@@ -658,7 +652,7 @@ static GSM_Error DCT3_ReplyGetOperatorName(GSM_Protocol_Message msg, GSM_StateMa
 	printf(", %s)\n",			DecodeUnicodeString(GSM_GetCountryName(buffer)));
 	printf("Name              : \"%s\"\n",msg.Buffer+8);
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void DCT3GetOperatorName(int argc, char *argv[])
@@ -667,7 +661,7 @@ void DCT3GetOperatorName(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) == NULL) Print_Error(GE_NOTSUPPORTED);
+	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) == NULL) Print_Error(ERR_NOTSUPPORTED);
 	CheckDCT3();
 
 	error=DCT3_EnableSecurity (&s, 0x01);
@@ -684,20 +678,19 @@ void DCT3GetOperatorName(int argc, char *argv[])
 static GSM_Error DCT3_ReplySetOperatorName(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("Operator name set OK\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void DCT3SetOperatorName(int argc, char *argv[])
 {
 	int 		i = 0;
-	unsigned char 	req[256] = {
-		0x00,0x01,0x8b,0x00,
-		0x00,0x00, /* MCC */
-		0x00};     /* MNC */
+	unsigned char 	req[256] = {0x00,0x01,0x8b,0x00,
+				    0x00,0x00, /* MCC */
+				    0x00};     /* MNC */
 
 	GSM_Init(true);
 
-	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) == NULL) Print_Error(GE_NOTSUPPORTED);
+	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) == NULL) Print_Error(ERR_NOTSUPPORTED);
 	CheckDCT3();
 
 	error=DCT3_EnableSecurity (&s, 0x01);
@@ -733,12 +726,12 @@ static GSM_Error DCT3_ReplyDisplayOutput(GSM_Protocol_Message msg, GSM_StateMach
 		buf[msg.Buffer[7]*2]   = 0;
 		buf[msg.Buffer[7]*2+1] = 0;
 		printf("X=%i, Y=%i, Text=\"%s\"\n",msg.Buffer[6],msg.Buffer[5],DecodeUnicodeString(buf));
-		return GE_NONE;
+		return ERR_NONE;
 	case 0x54:
 		dbgprintf("Display output set\n");
-		return GE_NONE;
+		return ERR_NONE;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 void DCT3DisplayOutput(int argc, char *argv[])
@@ -748,7 +741,7 @@ void DCT3DisplayOutput(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) == NULL) Print_Error(GE_NOTSUPPORTED);
+	if (strstr(N6110Phone.models, s.Phone.Data.ModelInfo->model) == NULL) Print_Error(ERR_NOTSUPPORTED);
 	CheckDCT3();
 
 	s.User.UserReplyFunctions=UserReplyFunctions3;
@@ -756,19 +749,11 @@ void DCT3DisplayOutput(int argc, char *argv[])
 	error=GSM_WaitFor (&s, req, 5, 0x0d, 4, ID_User7);
 	Print_Error(error);
 
-	/* We do not want to monitor serial line forever -
-	 * press Ctrl+C to stop the monitoring mode.
-	 */
-	signal(SIGINT, interrupted);
-	printf("If you want break, press Ctrl+C...\n");
+	signal(SIGINT, interrupt);
+	printf("Press Ctrl+C to break...\n");
 	printf("Entering monitor mode...\n\n");
 
-	/* Loop here indefinitely -
-	 * allows you to see messages from GSM code in
-	 * response to unknown messages etc.
-	 * The loops ends after pressing the Ctrl+C.
-	 */
-	while (!bshutdown) {
+	while (!gshutdown) {
 		GSM_ReadDevice(&s,true);
 		my_sleep(10);
 	}

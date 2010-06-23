@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #include "../common/gsmstate.h"
 
@@ -26,96 +27,85 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 	d->Msg.CheckSum[0] = d->Msg.CheckSum[1];
 	d->Msg.CheckSum[1] ^= rx_byte;
 
-	switch (d->MsgRXState) {
+	if (d->MsgRXState == RX_GetMessage) {
+		d->Msg.Buffer[d->Msg.Count] = rx_byte;
+		d->Msg.Count++;
 
-	case RX_Sync:
+		if (d->Msg.Count != d->Msg.Length+2) return;
 
-	if (rx_byte == MBUS2_FRAME_ID) {
-		d->Msg.CheckSum[1] = MBUS2_FRAME_ID;
-		d->Msg.Count = 0;
-		d->MsgRXState = RX_GetDestination;	
-	} else {
-		printf("[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, MBUS2_FRAME_ID);
-	}
-	break;
-
-	case RX_GetDestination:
-
-	if (rx_byte != MBUS2_DEVICE_PC && rx_byte != MBUS2_DEVICE_PHONE && rx_byte != MBUS2_DEVICE_PC1) {
-		d->MsgRXState = RX_Sync;
-		printf("[ERROR: incorrect char - %02x, not %02x and %02x and %02x]\n",
-			rx_byte, MBUS2_DEVICE_PHONE, MBUS2_DEVICE_PC, MBUS2_DEVICE_PC1);
-	} else {
-		d->Msg.Destination = rx_byte;
-		d->MsgRXState = RX_GetSource;
-	}
-	break;
-
-	case RX_GetSource:
-
-	if (rx_byte != MBUS2_DEVICE_PC && rx_byte != MBUS2_DEVICE_PHONE && rx_byte != MBUS2_DEVICE_PC1) {
-		d->MsgRXState = RX_Sync;
-		printf("[ERROR: incorrect char - %02x, not %02x and %02x and %02x]\n",
-			rx_byte, MBUS2_DEVICE_PHONE, MBUS2_DEVICE_PC, MBUS2_DEVICE_PC1);
-	} else {
-		d->Msg.Source = rx_byte;
-		d->MsgRXState = RX_GetType;
-	}
-	break;
-
-	case RX_GetType:
-
-	d->Msg.Type = rx_byte;
-	d->MsgRXState = RX_GetLength1;
-	break;
-
-	case RX_GetLength1:
-
-	d->Msg.Length = rx_byte * 256;
-	d->MsgRXState = RX_GetLength2;
-	break;
-    
-	case RX_GetLength2:
-
-	if (d->Msg.Type == MBUS2_ACK_BYTE)
-	{
-		d->MsgRXState = RX_Sync;
-	} else {
-		d->Msg.Length = d->Msg.Length + rx_byte;
-		d->MsgRXState = RX_GetMessage;
-	}    
-	break;
-    
-	case RX_GetMessage:
-
-	d->Msg.Buffer[d->Msg.Count] = rx_byte;
-	d->Msg.Count++;
-
-	if (d->Msg.Count == d->Msg.Length+2) {
-		/* When we have last byte, it's the checksum. */
-		if (d->Msg.CheckSum[0] == rx_byte) {
-			if (d->Msg.Destination != MBUS2_DEVICE_PHONE) {
-				printf("Received frame");
-			} else {
-				printf("Sending frame");
-			}
-			printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
-			DumpMessage(stdout, d->Msg.Buffer, d->Msg.Length);
-			if (d->Msg.Destination != MBUS2_DEVICE_PHONE) {
-				if (s.Phone.Functions != NULL) {
-					s.Phone.Data.RequestMsg = &d->Msg;
-					s.Phone.Functions->DispatchMessage(&s);
-				}
-			}
-		} else {
+		if (d->Msg.CheckSum[0] != rx_byte) {
 			printf("[ERROR: checksum]\n");
 			printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
 			DumpMessage(stdout, d->Msg.Buffer, d->Msg.Length);
+			d->MsgRXState = RX_Sync;
+			return;
+		}
+
+		if (d->Msg.Destination != MBUS2_DEVICE_PHONE) {
+			printf("Received frame");
+		} else {
+			printf("Sending frame");
+		}
+		printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
+		DumpMessage(stdout, d->Msg.Buffer, d->Msg.Length);
+		if (d->Msg.Destination != MBUS2_DEVICE_PHONE) {
+			if (s.Phone.Functions != NULL) {
+				s.Phone.Data.RequestMsg = &d->Msg;
+				s.Phone.Functions->DispatchMessage(&s);
+			}
 		}
 		d->MsgRXState = RX_Sync;
+		return;
 	}
-	break;
-
+	if (d->MsgRXState == RX_GetLength2) {
+		if (d->Msg.Type == MBUS2_ACK_BYTE) {
+			d->MsgRXState = RX_Sync;
+		} else {
+			d->Msg.Length = d->Msg.Length + rx_byte;
+			d->MsgRXState = RX_GetMessage;
+		}
+		return;
+	}
+	if (d->MsgRXState == RX_GetLength1) {
+		d->Msg.Length = rx_byte * 256;
+		d->MsgRXState = RX_GetLength2;
+		return;
+	}
+	if (d->MsgRXState == RX_GetType) {
+		d->Msg.Type 	= rx_byte;
+		d->MsgRXState 	= RX_GetLength1;
+		return;
+	}
+	if (d->MsgRXState == RX_GetSource) {
+		if (rx_byte != MBUS2_DEVICE_PC && rx_byte != MBUS2_DEVICE_PHONE && rx_byte != MBUS2_DEVICE_PC1) {
+			d->MsgRXState = RX_Sync;
+			printf("[ERROR: incorrect char - %02x, not %02x and %02x and %02x]\n",
+				rx_byte, MBUS2_DEVICE_PHONE, MBUS2_DEVICE_PC, MBUS2_DEVICE_PC1);
+		} else {
+			d->Msg.Source = rx_byte;
+			d->MsgRXState = RX_GetType;
+		}
+		return;
+	}
+	if (d->MsgRXState == RX_GetDestination) {
+		if (rx_byte != MBUS2_DEVICE_PC && rx_byte != MBUS2_DEVICE_PHONE && rx_byte != MBUS2_DEVICE_PC1) {
+			d->MsgRXState = RX_Sync;
+			printf("[ERROR: incorrect char - %02x, not %02x and %02x and %02x]\n",
+				rx_byte, MBUS2_DEVICE_PHONE, MBUS2_DEVICE_PC, MBUS2_DEVICE_PC1);
+		} else {
+			d->Msg.Destination 	= rx_byte;
+			d->MsgRXState 		= RX_GetSource;
+		}
+		return;
+	}
+	if (d->MsgRXState == RX_Sync) {
+		if (rx_byte == MBUS2_FRAME_ID) {
+			d->Msg.CheckSum[1] 	= MBUS2_FRAME_ID;
+			d->Msg.Count 		= 0;
+			d->MsgRXState 		= RX_GetDestination;	
+		} else {
+			printf("[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, MBUS2_FRAME_ID);
+		}
 	}
 }
 
@@ -125,65 +115,12 @@ static void DecodeInputIRDA(unsigned char rx_byte)
 {
 	GSM_Protocol_PHONETData *d = &PHONETData;
 
-	switch (d->MsgRXState) {
+	if (d->MsgRXState == RX_GetMessage) {
+		d->Msg.Buffer[d->Msg.Count] = rx_byte;
+		d->Msg.Count++;
 
-	case RX_Sync:
+		if (d->Msg.Count != d->Msg.Length) return;
 
-	if (rx_byte == PHONET_FRAME_ID) {
-		d->Msg.Count = 0;
-		d->MsgRXState = RX_GetDestination;	
-	}
-//	} else {
-//		printf("[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, FBUS2IRDA_FRAME_ID);
-//	}
-	break;
-
-	case RX_GetDestination:
-
-	if (rx_byte != PHONETIRDA_DEVICE_PC1 && rx_byte != PHONET_DEVICE_PHONE) {
-		d->MsgRXState = RX_Sync;
-//	    	printf("[ERROR: incorrect char - %02x, not %02x and %02x]\n", rx_byte, FBUS2IRDA_DEVICE_PC1, FBUS2IRDA_DEVICE_PHONE);
-	} else {
-		d->Msg.Destination = rx_byte;
-		d->MsgRXState = RX_GetSource;
-	}
-	break;
-
-	case RX_GetSource:
-
-	if (rx_byte != PHONET_DEVICE_PHONE && rx_byte != PHONETIRDA_DEVICE_PC1) {
-		d->MsgRXState = RX_Sync;
-//		printf("[ERROR: incorrect char - %02x, not %02x and %02x]\n", rx_byte, FBUS2IRDA_DEVICE_PHONE, FBUS2IRDA_DEVICE_PC1);
-	} else {
-		d->Msg.Source = rx_byte;
-		d->MsgRXState = RX_GetType;
-	}
-	break;
-
-	case RX_GetType:
-
-	d->Msg.Type = rx_byte;
-	d->MsgRXState = RX_GetLength1;
-	break;
-
-	case RX_GetLength1:
-
-	d->Msg.Length = rx_byte * 256;
-	d->MsgRXState = RX_GetLength2;
-	break;
-    
-	case RX_GetLength2:
-
-	d->Msg.Length = d->Msg.Length + rx_byte;
-	d->MsgRXState = RX_GetMessage;
-	break;
-    
-	case RX_GetMessage:
-
-	d->Msg.Buffer[d->Msg.Count] = rx_byte;
-	d->Msg.Count++;
-
-	if (d->Msg.Count == d->Msg.Length) {
 		if (d->Msg.Destination != PHONET_DEVICE_PHONE) {
 			printf("Received frame");
 		} else {
@@ -198,9 +135,46 @@ static void DecodeInputIRDA(unsigned char rx_byte)
 			}
 		}
 		d->MsgRXState = RX_Sync;
+		return;
 	}
-	break;
-
+	if (d->MsgRXState == RX_GetLength2) {
+		d->Msg.Length = d->Msg.Length + rx_byte;
+		d->MsgRXState = RX_GetMessage;
+		return;
+	}
+	if (d->MsgRXState == RX_GetLength1) {
+		d->Msg.Length = rx_byte * 256;
+		d->MsgRXState = RX_GetLength2;
+		return;
+	}
+	if (d->MsgRXState == RX_GetType) {
+		d->Msg.Type 	= rx_byte;
+		d->MsgRXState 	= RX_GetLength1;
+		return;
+	}
+	if (d->MsgRXState == RX_GetSource) {
+		if (rx_byte != PHONET_DEVICE_PHONE && rx_byte != PHONETIRDA_DEVICE_PC1) {
+			d->MsgRXState = RX_Sync;
+		} else {
+			d->Msg.Source = rx_byte;
+			d->MsgRXState = RX_GetType;
+		}
+		return;
+	}
+	if (d->MsgRXState == RX_GetDestination) {
+		if (rx_byte != PHONETIRDA_DEVICE_PC1 && rx_byte != PHONET_DEVICE_PHONE) {
+			d->MsgRXState = RX_Sync;
+		} else {
+			d->Msg.Destination 	= rx_byte;
+			d->MsgRXState 		= RX_GetSource;
+		}
+		return;
+	}
+	if (d->MsgRXState == RX_Sync) {
+		if (rx_byte == PHONET_FRAME_ID) {
+			d->Msg.Count = 0;
+			d->MsgRXState = RX_GetDestination;	
+		}
 	}
 }
 
@@ -238,7 +212,7 @@ static void prepareStateMachine()
 	Phone->DateTime			= &DateTime;
 	Phone->Alarm			= &Alarm;
 	Phone->Memory			= &Memory;
-	Phone->Memory->MemoryType	= GMT7110_CG;
+	Phone->Memory->MemoryType	= MEM7110_CG;
 	Phone->MemoryStatus		= &MemoryStatus;
 	Phone->SMSC			= &SMSC;
 	Phone->GetSMSMessage		= &GetSMSMessage;
@@ -295,7 +269,7 @@ void decodesniff(int argc, char *argv[])
 	if (argc > 4) {
 		strcpy(s.CurrentConfig->Model,argv[4]);
 		error=GSM_RegisterAllPhoneModules(&s);
-		if (error!=GE_NONE) Print_Error(error);
+		if (error!=ERR_NONE) Print_Error(error);
 	}
 	/* Irda uses simple "raw" format */
 	if (Protocol == GCT_IRDAPHONET) {
@@ -379,7 +353,7 @@ void decodebinarydump(int argc, char *argv[])
 	if (argc > 3) {
 		strcpy(s.CurrentConfig->Model,argv[3]);
 		error=GSM_RegisterAllPhoneModules(&s);
-		if (error!=GE_NONE) Print_Error(error);
+		if (error!=ERR_NONE) Print_Error(error);
 	}
 	file = fopen(argv[2], "rb");
 	if (!file) {

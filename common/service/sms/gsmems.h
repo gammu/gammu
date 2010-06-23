@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #ifndef __gsm_ems_h
 #define __gsm_ems_h

@@ -1,3 +1,4 @@
+/* (c) 2003 by Marcin Wiacek */
 
 #ifndef n3650_h
 #define n3650_h

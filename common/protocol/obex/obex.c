@@ -1,4 +1,4 @@
-
+/* (c) 2003 by Marcin Wiacek */
 /* www.irda.org OBEX specs 1.3 */
 
 #include "../../gsmstate.h"
@@ -29,26 +29,26 @@ static GSM_Error OBEX_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 
 	free(out_buffer);
 
-	if (sent!=current) return GE_DEVICEWRITEERROR;
-	return GE_NONE;
+	if (sent!=current) return ERR_DEVICEWRITEERROR;
+	return ERR_NONE;
 }
 
-static GSM_Error OBEX_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
+static GSM_Error OBEX_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 {
 	GSM_Phone_Functions 	*Phone	= s->Phone.Functions;
 	GSM_Protocol_OBEXData 	*d	= &s->Protocol.Data.OBEX;
 
 	switch (d->MsgRXState) {
 	case RX_Sync:
-		d->Msg.Type   = rx_byte;
+		d->Msg.Type   = rx_char;
 		d->MsgRXState = RX_GetLength1;
 		break;
 	case RX_GetLength1:
-		d->Msg.Length = rx_byte * 256;
+		d->Msg.Length = rx_char * 256;
 		d->MsgRXState = RX_GetLength2;
 		break;    
 	case RX_GetLength2:
-		d->Msg.Length = d->Msg.Length + rx_byte - 3;
+		d->Msg.Length = d->Msg.Length + rx_char - 3;
 		d->Msg.Count  = 0;
 		if (d->Msg.Count == d->Msg.Length) {
 			s->Phone.Data.RequestMsg	= &d->Msg;
@@ -63,7 +63,7 @@ static GSM_Error OBEX_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 		}
 		break;
 	case RX_GetMessage:
-		d->Msg.Buffer[d->Msg.Count] = rx_byte;
+		d->Msg.Buffer[d->Msg.Count] = rx_char;
 		d->Msg.Count++;
 		if (d->Msg.Count == d->Msg.Length) {
 			s->Phone.Data.RequestMsg	= &d->Msg;
@@ -73,7 +73,7 @@ static GSM_Error OBEX_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 		break;
 	}
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error OBEX_Initialise(GSM_StateMachine *s)
@@ -86,13 +86,13 @@ static GSM_Error OBEX_Initialise(GSM_StateMachine *s)
 
 	d->MsgRXState 		= RX_Sync;
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error OBEX_Terminate(GSM_StateMachine *s)
 {
 	free(s->Protocol.Data.OBEX.Msg.Buffer);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Protocol_Functions OBEXProtocol = {
