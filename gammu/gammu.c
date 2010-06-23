@@ -57,6 +57,7 @@ static int			i;
 volatile bool 			gshutdown 		= false;
 volatile bool 			wasincomingsms 		= false;
 GSM_MultiSMSMessage		IncomingSMSData;
+bool 				phonedb 		= false;
 
 void interrupt(int sign)
 {
@@ -137,10 +138,61 @@ void Print_Error(GSM_Error error)
 
 void GSM_Init(bool checkerror)
 {
+	GSM_File 	PhoneDB;
+	unsigned char 	buff[200],ver[200];
+	int	 	pos=0,oldpos=0,i;
+
 	error=GSM_InitConnection(&s,3);
 	if (checkerror) Print_Error(error);
 
 	Phone=s.Phone.Functions;
+
+	if (!phonedb) return;
+
+	error=Phone->GetModel(&s);
+	Print_Error(error);
+
+	sprintf(buff,"support/phones/phonedbxml.php?model=%s",s.Phone.Data.Model);
+	PhoneDB.Buffer = NULL;
+	if (!GSM_ReadHTTPFile("www.gammu.net",buff,&PhoneDB)) return;
+
+	while (pos < PhoneDB.Used) {
+		if (PhoneDB.Buffer[pos] != 10) {
+			pos++;
+			continue;
+		}
+		PhoneDB.Buffer[pos] = 0;
+		if (strstr(PhoneDB.Buffer+oldpos,"<firmware>")==NULL) {
+			pos++;
+			oldpos = pos;
+			continue;
+		}
+		sprintf(ver,strstr(PhoneDB.Buffer+oldpos,"<version>")+9);
+		for (i=0;i<(int)strlen(ver);i++) {
+			if (ver[i] == '<') {
+				ver[i] = 0;
+				break;
+			}
+		}
+		pos++;
+		oldpos = pos;
+	}
+	free(PhoneDB.Buffer);
+
+	error=Phone->GetFirmware(&s);
+	Print_Error(error);
+	if (s.Phone.Data.Version[0] == '0') {
+		i=1;
+	} else {
+		i=0;
+	}
+	while(i!=strlen(ver)) {
+		if (ver[i] > s.Phone.Data.Version[i]) {
+			printmsg("INFO: there is later phone firmware (%s instead of %s) available !\n",ver,s.Phone.Data.Version);
+			return;
+		}
+		i++;
+	}
 }
 
 void GSM_Terminate(void)
@@ -154,8 +206,8 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 	int tmp;
 
 	if (argc <= num) {
-			printmsg("ERROR: more parameters required\n");
-			exit (-1);
+		printmsg("ERROR: more parameters required\n");
+		exit (-1);
 	}
 
 	*start=atoi(argv[num]);
@@ -6597,6 +6649,38 @@ static void GetCategory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void AddCategory(int argc, char *argv[])
+{
+	GSM_Category	Category;
+	int		Length;
+
+	if (mystrncasecmp(argv[2],"TODO",0)) {
+    		Category.Type = Category_ToDo;
+	} else if (mystrncasecmp(argv[2],"PHONEBOOK",0)) {
+    		Category.Type = Category_Phonebook;
+	} else {
+		printmsg("What type of category do you want to add (\"%s\") ?\n",argv[2]);
+		exit(-1);
+	}
+
+	GSM_Init(true);
+
+	Length = strlen(argv[3]);
+	if (Length > GSM_MAX_CATEGORY_NAME_LENGTH) {
+		printmsg("Text too long, truncating to %d chars!\n", GSM_MAX_CATEGORY_NAME_LENGTH);
+		Length = GSM_MAX_CATEGORY_NAME_LENGTH;
+	}
+	EncodeUnicode(Category.Name, argv[3], Length);
+
+	Category.Location = 0;
+
+	error = Phone->AddCategory(&s, &Category);
+
+	Print_Error(error);
+
+	GSM_Terminate();
+}
+
 static void DeleteToDo(int argc, char *argv[])
 {
 	GSM_ToDoEntry	ToDo;
@@ -7966,11 +8050,11 @@ static struct NokiaFolderInfo Folder[] = {
 
 static void NokiaAddFile(int argc, char *argv[])
 {
-	GSM_File		File, Files;
+	GSM_File		File, Files, File2;
 	FILE			*file;
 	unsigned char 		buffer[10000],JAR[500],Vendor[500],Name[500],Version[500],FileID[400];
 	bool 			Start = true, Found = false, wasclr;
-	bool			ModEmpty = false;
+	bool			ModEmpty = false, Overwrite = false;
 	int			i = 0, Pos, Size, Size2, nextlong;
 
 	while (Folder[i].parameter[0] != 0) {
@@ -8125,16 +8209,40 @@ static void NokiaAddFile(int argc, char *argv[])
 				GSM_Terminate();
 				return;
 			}
-			if (Size == -1) {
-				printmsgerr("No JAR size info in JAD file\n");
-				GSM_Terminate();
-				return;
-			}
 		}
 		if (Size != Size2) {
-			printmsgerr("Declared JAR file size is different than real\n");
-			GSM_Terminate();
-			return;
+			printmsgerr("INFO: declared JAR file size is different than real. Fixed by Gammu\n");
+			for (i=0;i<File.Used;i++) {
+				if (mystrncasecmp(File.Buffer+i,"MIDlet-Jar-Size: ",17)) {
+					break;
+				}
+			}
+			Pos = i;
+			while (true) {
+				if (Pos ==0 || File.Buffer[Pos] == 13 || File.Buffer[Pos] == 10) break;
+				Pos--;
+			}
+			i+= 15;
+			while (true) {
+				if (i == File.Used || File.Buffer[i] == 13 || File.Buffer[i] == 10) break;
+				i++;
+			}
+			while (i != File.Used) {
+				File.Buffer[Pos] = File.Buffer[i];
+				i++;
+				Pos++;
+			}
+			File.Used = File.Used - (i - Pos);
+			File.Buffer = realloc(File.Buffer,File.Used);
+		} else if (Size == -1) {
+			printmsgerr("INFO: no JAR size info in JAD file. Added by Gammu\n");
+		}
+		if (Size != Size2) {
+			sprintf(buffer,"\nMIDlet-Jar-Size: %i",Size2);
+			File.Buffer = realloc(File.Buffer,File.Used + strlen(buffer));
+			memcpy(File.Buffer+File.Used,buffer,strlen(buffer));
+			File.Used += strlen(buffer);
+			Size = Size2;
 		}
   		printmsgerr("Adding \"%s\"",Name);
 		if (Version[0] != 0x00) printmsgerr(" version %s",Version);
@@ -8171,13 +8279,52 @@ static void NokiaAddFile(int argc, char *argv[])
 		File.Used   = Pos;
 		memcpy(File.Buffer,buffer,Pos);
 
+		if (argc > 4) {
+			for (i=4;i<argc;i++) {
+				if (mystrncasecmp(argv[i],"-overwrite",0)) Overwrite = true;
+			}
+		}
+
 		/* adding folder */
 		strcpy(buffer,Vendor);
 		strcat(buffer,Name);
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		CopyUnicodeString(File.ID_FullName,Files.ID_FullName);
 		error = Phone->AddFolder(&s,&File);
-	    	Print_Error(error);
+		if (Overwrite && (error == ERR_FILEALREADYEXIST)) {
+			printmsgerr("INFO: Application already exist. Deleting by Gammu\n");
+
+			Start = true;
+			CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
+			while (1) {
+				error = Phone->GetFolderListing(&s,&File2,Start);
+				if (error == ERR_EMPTY) break;
+				Print_Error(error);
+
+				if (File2.Folder && !strcmp(DecodeUnicodeString(File2.Name),buffer)) {
+					break;
+				}
+
+				Start = false;
+			}
+
+			CopyUnicodeString(buffer,File2.ID_FullName);
+			while (1) {
+				CopyUnicodeString(File2.ID_FullName,buffer);
+				error = Phone->GetFolderListing(&s,&File2,true);
+				if (error == ERR_EMPTY) break;
+				Print_Error(error);
+
+				printmsgerr("  Deleting %s\n",DecodeUnicodeString(File2.Name));
+
+				error = Phone->DeleteFile(&s,File2.ID_FullName);
+				Print_Error(error);
+			}
+
+			CopyUnicodeString(File.ID_FullName,buffer);
+		} else {
+		    	Print_Error(error);
+		}
 		CopyUnicodeString(FileID,File.ID_FullName);
 
 		/* adding jad file */
@@ -8190,7 +8337,9 @@ static void NokiaAddFile(int argc, char *argv[])
 		AddOneFile(&File, "Writing JAD file: ");
 
 		if (argc > 4) {
-			if (mystrncasecmp(argv[4],"-readonly",0)) File.ReadOnly = true;
+			for (i=4;i<argc;i++) {
+				if (mystrncasecmp(argv[i],"-readonly",0)) File.ReadOnly = true;
+			}
 		}
 
 		/* reading jar file */
@@ -8654,7 +8803,7 @@ static GSM_Parameters Parameters[] = {
 	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
 	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
-	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly]"},
+	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly][-overwrite]"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
 	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			"number"},
 #endif
@@ -8684,12 +8833,13 @@ static GSM_Parameters Parameters[] = {
 #define SMS_SMSTEMPLATE_OPTIONS	"[-unicode][-text text][-unicodefiletext file][-defsound ID][-defanimation ID][-tone10 file][-tone10long file][-tone12 file][-tone12long file][-toneSE file][-toneSElong file][-variablebitmap file][-variablebitmaplong file][-animation frames file1 ...]"
 #define SMS_ANIMATION_OPTIONS	""
 #define SMS_OPERATOR_OPTIONS	"[-netcode netcode][-biglogo]"
+#define SMS_RINGTONE_OPTIONS	"[-long][-scale]"
 #define SMS_SAVE_OPTIONS	"[-folder id][-unread][-read][-unsent][-sent][-sender number]"
 #define SMS_SEND_OPTIONS	"[-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]]"
 #define SMS_COMMON_OPTIONS	"[-smscset number][-smscnumber number][-reply][-maxsms num]"
 
 	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,0},			"TEXT " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_TEXT_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Ringtone,0},		"RINGTONE file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
+	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Ringtone,0},		"RINGTONE file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_RINGTONE_OPTIONS},
 	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"OPERATOR file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_OPERATOR_OPTIONS},
 	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"CALLER file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
 	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"PICTURE file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_PICTURE_OPTIONS},
@@ -8709,7 +8859,7 @@ static GSM_Parameters Parameters[] = {
 	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,0},			"SMSTEMPLATE " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_SMSTEMPLATE_OPTIONS},
 
 	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,0},			"TEXT destination " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_TEXT_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Ringtone,0},		"RINGTONE destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
+	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Ringtone,0},		"RINGTONE destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_RINGTONE_OPTIONS},
 	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"OPERATOR destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_OPERATOR_OPTIONS},
 	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"CALLER destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
 	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"PICTURE destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_PICTURE_OPTIONS},
@@ -8771,6 +8921,7 @@ static GSM_Parameters Parameters[] = {
 	{"--deletecalendar",		1, 2, DeleteCalendar,		{H_Calendar,0},			"start [stop]"},
 	{"--getallcalendar",		0, 0, GetAllCalendar,		{H_Calendar,0},			""},
 	{"--getcalendar",		1, 2, GetCalendar,		{H_Calendar,0},			"start [stop]"},
+	{"--addcategory",       	2, 2, AddCategory,       	{H_Category,H_ToDo,H_Memory,0},	"TODO|PHONEBOOK text"},
 	{"--getcategory",       	2, 3, GetCategory,       	{H_Category,H_ToDo,H_Memory,0},	"TODO|PHONEBOOK start [stop]"},
 	{"--getallcategory",	  	1, 1, GetAllCategories,  	{H_Category,H_ToDo,H_Memory,0},	"TODO|PHONEBOOK"},
 	{"--reset",			1, 1, Reset,			{H_Other,0},			"SOFT|HARD"},
@@ -9070,7 +9221,7 @@ static void Help(int argc, char *argv[])
 	}
 }
 
-int FoundVersion(unsigned char *Buffer) 
+int FoundVersion(unsigned char *Buffer)
 {
 	int retval = 0, pos = 0;
 
@@ -9188,7 +9339,7 @@ int main(int argc, char *argv[])
 			error=GSM_SetDebugFile(s.Config[i].DebugFile, &di);
 			Print_Error(error);
  		}
-		
+
 		if (i==0) {
 		        rss = INI_GetValue(cfg, "gammu", "rsslevel", false);
         		if (rss) {
@@ -9198,6 +9349,8 @@ int main(int argc, char *argv[])
 					rsslevel = 1;
 				}
 			}
+		        rss = INI_GetValue(cfg, "gammu", "usephonedb", false);
+        		if (rss && mystrncasecmp(rss,"yes",0)) phonedb = true;
 		}
 
  		/* We wanted to read just user specified configuration. */
@@ -9210,7 +9363,7 @@ int main(int argc, char *argv[])
  		printmsg("Too few parameters!\n");
 		exit(-2);
 	}
-	
+
 	/* Check used version vs. compiled */
 	if (!mystrncasecmp(GetGammuVersion(),VERSION,0)) {
 		printmsg("ERROR: version of installed libGammu.so (%s) is different to version of Gammu (%s)\n",
@@ -9221,7 +9374,6 @@ int main(int argc, char *argv[])
 	if (rsslevel > 0) {
 		RSS.Buffer = NULL;
 		if (GSM_ReadHTTPFile("www.mwiacek.com","gsm/soft/gammu.rss",&RSS)) {
-//		if (GSM_ReadHTTPFile("localhost","gammu.rss",&RSS)) {
 			while (pos < RSS.Used) {
 				if (RSS.Buffer[pos] != 10) {
 					pos++;
@@ -9231,8 +9383,9 @@ int main(int argc, char *argv[])
 				if (strstr(RSS.Buffer+oldpos,"<title>") ==NULL ||
 				    strstr(RSS.Buffer+oldpos,"</title>")==NULL ||
 				    strstr(RSS.Buffer+oldpos,"win32")   != NULL) {
-					oldpos = pos;
 					pos++;
+					oldpos = pos;
+					continue;
 				}
 				if (rsslevel > 0 && strstr(RSS.Buffer+oldpos,"stable version")!=NULL) {
 					sprintf(buff,strstr(RSS.Buffer+oldpos,"stable version")+15);
@@ -9243,7 +9396,7 @@ int main(int argc, char *argv[])
 						}
 					}
 					if (FoundVersion(buff) > FoundVersion(VERSION)) {
-						printmsg("INFO: there is available later Gammu stable version %s. See www.gammu.net\n",buff);
+						printmsg("INFO: there is later stable Gammu (%s instead of %s) available !\n",buff,VERSION);
 						break;
 					}
 				}
@@ -9256,12 +9409,12 @@ int main(int argc, char *argv[])
 						}
 					}
 					if (FoundVersion(buff) > FoundVersion(VERSION)) {
-						printmsg("INFO: there is available later Gammu test version %s. See www.gammu.net\n",buff);
+						printmsg("INFO: there is later test Gammu (%s instead of %s) available !\n",buff,VERSION);
 						break;
 					}
-				}					
-				oldpos = pos;
+				}
 				pos++;
+				oldpos = pos;
 			}
 			free(RSS.Buffer);
 		}

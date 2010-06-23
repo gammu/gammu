@@ -29,7 +29,7 @@ unsigned int	UnicodeLength			(const unsigned char *str);
 unsigned char	*DecodeUnicodeString		(const unsigned char *src);
 unsigned char   *DecodeUnicodeConsole		(const unsigned char *src);
 void		DecodeUnicode			(const unsigned char *src, unsigned char *dest);
-void		EncodeUnicode			(unsigned char *dest, const unsigned char *src, int len);
+void		EncodeUnicode			(unsigned char *dest, const char *src, int len);
 
 void 		CopyUnicodeString		(unsigned char *Dest, unsigned char *Source);
 void 		ReverseUnicodeString		(unsigned char *String);

@@ -24,7 +24,7 @@ GSM_Error N6510_ReplyGetCalendarInfo3(GSM_Protocol_Message msg, GSM_StateMachine
 	while (Last->Location[j] != 0x00) j++;
 	if (j >= GSM_MAXCALENDARTODONOTES) {
 		smprintf(s, "Increase GSM_MAXCALENDARTODONOTES\n");
-		return ERR_UNKNOWN;
+		return ERR_MOREMEMORY;
 	}
 	if (j == 0) {
 		Last->Number=msg.Buffer[8]*256+msg.Buffer[9];

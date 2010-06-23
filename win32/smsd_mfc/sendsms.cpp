@@ -52,9 +52,9 @@ void CSendSMSDlg::OnEnChangeEdit1()
 
 	EncodeUnicode((unsigned char *)text2,(unsigned char *)text,Text.GetLength());
 
-	GSM_SMSCounter(Text.GetLength(),(unsigned char *)text2,UDH_NoUDH,SMS_Coding_Default,&SMSNum,&CharsLeft);
+	GSM_SMSCounter(Text.GetLength(),(unsigned char *)text2,UDH_NoUDH,SMS_Coding_Default_No_Compression,&SMSNum,&CharsLeft);
 	if (SMSNum > 1) {
-		GSM_SMSCounter(Text.GetLength(),(unsigned char *)text2,UDH_ConcatenatedMessages,SMS_Coding_Default,&SMSNum,&CharsLeft);
+		GSM_SMSCounter(Text.GetLength(),(unsigned char *)text2,UDH_ConcatenatedMessages,SMS_Coding_Default_No_Compression,&SMSNum,&CharsLeft);
 	}
 
 	sprintf(buf,"SMS text (%i chars left/%i SMS)",CharsLeft,SMSNum);

@@ -100,10 +100,16 @@ public:
 	MYSQL 	*DB;
 	virtual BOOL OnNewDocument() {
 		DB = NULL;
+ 		unsigned int port = 0;
 
 		if (!CDocument::OnNewDocument()) return FALSE;
 
-		DB = mysql_real_connect(&MainDB,server,user,password,NULL,0,NULL,0);
+ 		char * pport = strstr( server, ":" );
+ 		if (pport) {
+ 			*pport ++ = _T('\0');
+ 			port = atoi( pport );
+ 		} 
+ 		DB = mysql_real_connect(&MainDB,server,user,password,NULL,port,NULL,0);
 		if (DB == NULL) {
 			MessageBox(MainHWND,mysql_error(&MainDB),"Connection error",0);
 			return FALSE;

@@ -32,8 +32,8 @@ int N71_65_PackPBKBlock(GSM_StateMachine *s, int id, int size, int no, unsigned 
 
 	block[0] 	= id;
 	block[1] 	= 0;
-	block[2] 	= 0;
-	block[3] 	= size + 6;
+	block[2] 	= (size + 6) / 256;
+	block[3] 	= (size + 6) % 256;
 	block[4] 	= no + 1;
 	memcpy(block+5, buf, size);
 	block[5+size] 	= 0;
@@ -184,7 +184,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				 bool			DayMonthReverse)
 {
 	unsigned char 				*Block;
-	int					length = 0, i;
+	int					length = 0, i, bs = 0;
 	GSM_71_65_Phonebook_Entries_Types	Type;
 
 	entry->EntriesNum 	= 0;
@@ -204,10 +204,16 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	}
 
 	Block = &MessageBuffer[0];
-	while (length != MessageLength) {
+	while (true) {
+		if (bs != 0) {
+			length = length + bs;
+			if (length == MessageLength) break;
+			Block = &Block[bs];
+		}
+		bs = 256*Block[2]+Block[3];
 #ifdef DEBUG
-		smprintf(s, "Phonebook entry block - length %i", Block[3]-6);
-		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, Block+5, Block[3]-6);
+		smprintf(s, "Phonebook entry block - length %i", bs-6);
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, Block+5, bs-6);
 #endif
 		if (entry->EntriesNum==GSM_PHONEBOOK_ENTRIES) {
 			smprintf(s, "Too many entries\n");
@@ -217,6 +223,12 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		Type = 0;
 		if (Block[0] == N7110_PBK_NAME) {
 			Type = PBK_Text_Name;   smprintf(s,"Name ");
+		}
+		if (Block[0] == S4030_PBK_FIRSTNAME) {
+			Type = PBK_Text_FirstName;   smprintf(s,"First name ");
+		}
+		if (Block[0] == S4030_PBK_LASTNAME) {
+			Type = PBK_Text_LastName;   smprintf(s,"Last name ");
 		}
 		if (Block[0] == N7110_PBK_EMAIL) {
 			Type = PBK_Text_Email;  smprintf(s,"Email ");
@@ -250,12 +262,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				}
 			}
 			entry->EntriesNum ++;
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
-
 		if (Block[0] == N7110_PBK_DATETIME) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
 			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date);
@@ -265,9 +273,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				entry->Entries[entry->EntriesNum].Date.Day   = i;
 			}
 			entry->EntriesNum ++;
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N6510_PBK_PICTURE_ID) {
@@ -281,12 +286,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				entry->Entries[entry->EntriesNum].Number=Block[10]*256+Block[11];
 				entry->EntriesNum ++;
 			}
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
-
 		if (Block[0] == N7110_PBK_NUMBER) {
 			if (Block[5] == 0x00) {
 				Type = PBK_Number_General;    smprintf(s,"General number ");
@@ -337,9 +338,40 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 #endif
 			entry->Entries[entry->EntriesNum].SMSList[0] = 0;
 			entry->EntriesNum ++;
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
+			continue;
+		}
+		//to checking
+		if (Block[0] == S4030_PBK_POSTAL) {
+			if (Block[5] == S4030_PBK_POSTAL_EXTADDRESS) {
+				Type = PBK_Text_Custom1;    	smprintf(s,"Address extension ? ");
+			}
+			if (Block[5] == S4030_PBK_POSTAL_STREET) {
+				Type = PBK_Text_StreetAddress;  smprintf(s,"Street ");
+			}
+			if (Block[5] == S4030_PBK_POSTAL_CITY) {
+				Type = PBK_Text_City;    	smprintf(s,"City ");
+			}
+			if (Block[5] == S4030_PBK_POSTAL_STATE) {
+				Type = PBK_Text_State;    	smprintf(s,"State ");
+			}
+			if (Block[5] == S4030_PBK_POSTAL_POSTAL) {
+				Type = PBK_Text_Postal;    	smprintf(s,"Postal ");
+			}
+			if (Block[5] == S4030_PBK_POSTAL_COUNTRY) {
+				Type = PBK_Text_Country;    	smprintf(s,"Country ");
+			}
+			if (Type == 0x00) {
+				smprintf(s, "Unknown address type %02x\n",Block[5]);
+				return ERR_UNKNOWNRESPONSE;
+			}
+			entry->Entries[entry->EntriesNum].EntryType=Type;
+			if (Block[9]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+10,Block[9]);
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
 			continue;
 		}
 		if (Block[0] == N7110_PBK_RINGTONE_ID) {
@@ -355,9 +387,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				entry->Entries[entry->EntriesNum].Number=Block[7];
 				entry->EntriesNum ++;
 			}
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N7110_PBK_LOGOON) {
@@ -367,9 +396,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			} else {
 				return ERR_UNKNOWNRESPONSE;
 			}
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N7110_PBK_GROUPLOGO) {
@@ -380,9 +406,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			} else {
 				return ERR_UNKNOWNRESPONSE;
 			}
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N7110_PBK_GROUP) {
@@ -390,17 +413,11 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			smprintf(s, "Caller group \"%i\"\n",Block[5]);
 			entry->Entries[entry->EntriesNum].Number=Block[5];
 			if (Block[5]!=0) entry->EntriesNum ++;
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N6510_PBK_VOICETAG_ID) {
 			smprintf(s, "Entry %i has voice tag %i\n",Block[5]-1,Block[7]);
 			entry->Entries[Block[5]-1].VoiceTag = Block[7];
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 
@@ -417,9 +434,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			} else {
 				return ERR_UNKNOWNRESPONSE;
 			}
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 
@@ -443,9 +457,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			} else {
 				return ERR_UNKNOWNRESPONSE;
 			}
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N6510_PBK_RINGTONEFILE_ID) {
@@ -469,9 +480,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			} else {
 				return ERR_UNKNOWNRESPONSE;
 			}
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N6510_PBK_SMSLIST_ID) {
@@ -480,44 +488,26 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			while(entry->Entries[Block[5]-1].SMSList[i] != 0) i++;
 			entry->Entries[Block[5]-1].SMSList[i+1] = 0;
 			entry->Entries[Block[5]-1].SMSList[i]   = Block[9];
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N7110_PBK_UNKNOWN1) {
 			smprintf(s,"Unknown entry\n");
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N6510_PBK_UNKNOWN2) {
 			smprintf(s,"Unknown entry - probably ID for conversation list\n");
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N6510_PBK_UNKNOWN3) {
 			smprintf(s,"Unknown entry - probably ID for Instant Messaging service list\n");
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N6510_PBK_UNKNOWN4) {
 			smprintf(s,"Unknown entry - probably ID for presence list\n");
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N6510_PBK_PUSHTOTALK_ID) {
 			smprintf(s,"SIP Address (Push to Talk address) - ignored\n");
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		if (Block[0] == N6510_PBK_GROUP2_ID) {
@@ -527,9 +517,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			smprintf(s, "Caller group \"%i\"\n",Block[7]);
 			entry->Entries[entry->EntriesNum].Number=Block[7];
 			entry->EntriesNum ++;
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
 			continue;
 		}
 		smprintf(s, "ERROR: unknown pbk entry 0x%02x\n",Block[0]);

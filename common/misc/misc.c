@@ -355,40 +355,24 @@ int smfprintf(FILE *f, Debug_Level dl, const char *format, ...)
 {
         va_list 		argp;
 	int 			result=0;
-	static unsigned char 	prevline[3000] = "", nextline[3000]="";
-	static unsigned int 	linecount=0;
 	unsigned char		buffer[3000];
 	GSM_DateTime 		date_time;
 
 	if (f == NULL) return 0;
 	va_start(argp, format);
 	result = vsprintf(buffer, format, argp);
-	strcat(nextline, buffer);
 	if (strstr(buffer, "\n")) {
 		if (ftell(f) < 40000000) {
 			GSM_GetCurrentDateTime(&date_time);
-			if (linecount > 0) {
-				if (dl == DL_TEXTALLDATE || dl == DL_TEXTERRORDATE || dl == DL_TEXTDATE) {
-			                fprintf(f,"%s %4d/%02d/%02d %02d:%02d:%02d: <%i> %s",
-			                        DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
-			                        date_time.Year, date_time.Month, date_time.Day,
-			                        date_time.Hour, date_time.Minute, date_time.Second,linecount,prevline);
-				} else {
-			                fprintf(f,"%s",prevline);
-				}
-			}
-			linecount=0;
 			if (dl == DL_TEXTALLDATE || dl == DL_TEXTERRORDATE || dl == DL_TEXTDATE) {
 		                fprintf(f,"%s %4d/%02d/%02d %02d:%02d:%02d: %s",
 		                        DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
 		                        date_time.Year, date_time.Month, date_time.Day,
-		                        date_time.Hour, date_time.Minute, date_time.Second,nextline);
+		                        date_time.Hour, date_time.Minute, date_time.Second, buffer);
 			} else {
-		                fprintf(f,"%s",nextline);
+		                fprintf(f, "%s", buffer);
 			}
-			strcpy(prevline, nextline);
 		}
-		strcpy(nextline, "");
 		fflush(f);
 	}
 	va_end(argp);
@@ -424,7 +408,13 @@ void DumpMessage(FILE *df, Debug_Level dl, const unsigned char *message, int mes
 	for (i = 0; i < messagesize; i++) {
 		sprintf(buffer+j*4,"%02X",message[i]);
 		buffer[j*4+2] = 0x20;
-		if (isprint(message[i]) && message[i]!=0x09) {
+		// 9 = tab
+		if (isprint(message[i]) && message[i]!=0x09
+			// 0x01 = beep in windows xp
+			&& message[i]!=0x01
+			// these are empty in windows xp
+			&& message[i]!=0x85 && message[i]!=0x95
+  			&& message[i]!=0xA6 && message[i]!=0xB7) {
 			if (j != len-1) buffer[j*4+2] 	= message[i];
 			buffer[(len-1)*4+j+3]		= message[i];
 		} else {
