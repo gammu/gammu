@@ -1,6 +1,10 @@
 /* (c) 2001-2004 by Marcin Wiacek */
 /* based on some work from Ralf Thelen and MyGnokii */
-/* based on some work from Gnokii and MSDN */
+/* based on some work from MSDN */
+/* based on some work from Gnokii
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * GNU GPL version 2 or later
+ */
 
 /* You have to include wsock32.lib library to MS VC project to compile it */
 

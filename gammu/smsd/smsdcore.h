@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek and Joergen Thomsen */
+/* (c) 2002-2004 by Marcin Wiacek and Joergen Thomsen */
 
 #include "../../cfg/config.h"
 
@@ -24,6 +24,7 @@ typedef struct {
 	/* general options */
 	INI_Entry       *IncludeNumbers, *ExcludeNumbers;
 	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency;
+	unsigned int	resetfrequency;
 	unsigned char   *deliveryreport, *logfilename,  *PINCode;
 	unsigned char	*PhoneID;
 	int		relativevalidity;
@@ -37,7 +38,7 @@ typedef struct {
 	unsigned char	*PC;
 
 	/* private variables required for work */
-	unsigned int 	retries;
+	unsigned int 	retries,	 currdeliveryreport;
 	unsigned char 	SMSID[200],	 prevSMSID[200];
 	GSM_SMSC	SMSC;
 #ifdef HAVE_MYSQL_MYSQL_H

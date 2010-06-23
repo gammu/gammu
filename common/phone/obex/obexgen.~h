@@ -35,6 +35,8 @@ GSM_Error OBEXGEN_GetFilePart	(GSM_StateMachine *s, GSM_File *File);
 GSM_Error OBEXGEN_AddFilePart	(GSM_StateMachine *s, GSM_File *File, int *Pos);
 GSM_Error OBEXGEN_Disconnect	(GSM_StateMachine *s);
 
+extern GSM_Reply_Function	OBEXGENReplyFunctions[];
+
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

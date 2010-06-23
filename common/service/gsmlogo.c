@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <sys/stat.h>
 
 #include "../misc/misc.h"
 #include "../misc/coding/coding.h"
@@ -161,6 +162,7 @@ void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 	Bitmap->Sender[0]		= 0;
 	Bitmap->Sender[1]		= 0;
 	Bitmap->ID			= 0;
+	Bitmap->Name			= NULL;
 
 	GSM_ClearBitmap(Bitmap);
 	for (x=0;x<Bitmap->BitmapWidth;x++) {
@@ -955,6 +957,33 @@ static GSM_Error loadwbmp(FILE *file, GSM_MultiBitmap *bitmap)
 	return ERR_NONE;
 }
 
+static GSM_Error loadgif(FILE *file, GSM_MultiBitmap *bitmap)
+{
+	GSM_Bitmap *bmap = &bitmap->Bitmap[0];
+	char *buffer;
+	struct stat st;
+	int length;
+
+	dbgprintf("loading gif file\n");
+	fstat(fileno(file), &st);
+        bmap->BinaryPic.Length = length = st.st_size;
+	bmap->BinaryPic.Buffer = buffer = malloc(length);
+	if (bmap->BinaryPic.Buffer == NULL)
+		return ERR_MOREMEMORY;
+
+	fread(buffer, 1, length, file);
+        dbgprintf("Length %i name \"%s\"\n", length,
+		DecodeUnicodeString(bmap->Name));
+
+	bmap->Type = GSM_PictureBinary;
+	bmap->BinaryPic.Type = PICTURE_GIF;
+	bmap->BitmapWidth = 256 * buffer[7] + buffer[6];
+	bmap->BitmapHeight = 256 * buffer[9] + buffer[8];
+	bitmap->Number = 1;
+	
+	return ERR_NONE;
+}
+
 GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 {
 	FILE		*file;
@@ -962,6 +991,11 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 
 	file = fopen(FileName, "rb");
 	if (file == NULL) return ERR_CANTOPENFILE;
+
+	bitmap->Bitmap[0].Name = malloc((strlen(FileName) + 1) * 2);
+	if (bitmap->Bitmap[0].Name == NULL)
+		return ERR_MOREMEMORY;
+	EncodeUnicode(bitmap->Bitmap[0].Name, FileName, strlen(FileName));
 
 	fread(buffer, 1, 9, file); /* Read the header of the file. */
 	rewind(file);
@@ -981,6 +1015,8 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 		return loadnolngg(file,bitmap,false);
 	} else if (memcmp(buffer, "FORM",4)==0) {
 		return loadnsl(file,bitmap);
+	} else if (memcmp(buffer, "GIF",3)==0) {
+		return loadgif(file,bitmap);
 	}
 	return ERR_UNKNOWN;
 }

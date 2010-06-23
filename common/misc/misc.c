@@ -11,6 +11,9 @@
 #ifdef WIN32
 #  include "windows.h"
 #endif
+#if defined(linux) || defined(__linux) || defined(__linux__)
+#  include <sys/utsname.h>
+#endif
 
 #include "../gsmstate.h"
 #include "misc.h"
@@ -451,6 +454,9 @@ char *GetOS(void)
 	OSVERSIONINFOEX Ver;
 	bool		Extended = true;
 #endif
+#if defined(linux) || defined(__linux) || defined(__linux__)
+	struct utsname	Ver;
+#endif
 	static char 	Buffer[100] = {0x00};
 
 #ifdef WIN32
@@ -520,7 +526,8 @@ char *GetOS(void)
 		sprintf(Buffer+strlen(Buffer)," SP%i",Ver.wServicePackMajor);
 	}
 #elif defined(linux) || defined(__linux) || defined(__linux__)
-	sprintf(Buffer, "Linux");
+	uname(&Ver);
+	sprintf(Buffer, "Linux, kernel %s",Ver.release);
 #elif defined(__FreeBSD__)
 	sprintf(Buffer, "FreeBSD");
 #elif defined(__NetBSD__)

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Jul 21, 2004 at 11:11 PM
+-- Generation Time: Aug 01, 2004 at 09:23 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.3.8
 -- 
@@ -24,7 +24,7 @@ CREATE TABLE `gammu` (
 -- Dumping data for table `gammu`
 -- 
 
-INSERT INTO `gammu` VALUES (1);
+INSERT INTO `gammu` VALUES (2);
 
 -- --------------------------------------------------------
 
@@ -42,10 +42,11 @@ CREATE TABLE `inbox` (
   `SMSCNumber` varchar(20) NOT NULL default '',
   `Class` int(11) NOT NULL default '-1',
   `TextDecoded` varchar(160) NOT NULL default '',
-  `ID` int(11) NOT NULL auto_increment,
+  `ID` int(11) unsigned NOT NULL auto_increment,
   `RecipientID` text NOT NULL,
+  `Read` enum('true','false') NOT NULL default 'false',
   UNIQUE KEY `ID` (`ID`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) TYPE=MyISAM AUTO_INCREMENT=5 ;
 
 -- 
 -- Dumping data for table `inbox`
@@ -68,11 +69,11 @@ CREATE TABLE `outbox` (
   `UDH` text NOT NULL,
   `Class` int(11) NOT NULL default '-1',
   `TextDecoded` varchar(160) NOT NULL default '',
-  `ID` int(11) NOT NULL default '0',
+  `ID` int(11) unsigned NOT NULL auto_increment,
   `MultiPart` enum('false','true') NOT NULL default 'false',
   `RelativeValidity` int(11) NOT NULL default '-1',
   UNIQUE KEY `ID` (`ID`)
-) TYPE=MyISAM;
+) TYPE=MyISAM AUTO_INCREMENT=5 ;
 
 -- 
 -- Dumping data for table `outbox`
@@ -91,7 +92,7 @@ CREATE TABLE `outbox_multipart` (
   `UDH` text NOT NULL,
   `Class` int(11) NOT NULL default '-1',
   `TextDecoded` varchar(160) NOT NULL default '',
-  `ID` int(11) NOT NULL default '0',
+  `ID` int(11) unsigned NOT NULL default '0',
   `SequencePosition` int(11) NOT NULL default '1'
 ) TYPE=MyISAM;
 
@@ -118,7 +119,7 @@ CREATE TABLE `sentitems` (
   `SMSCNumber` varchar(20) NOT NULL default '',
   `Class` int(11) NOT NULL default '-1',
   `TextDecoded` varchar(160) NOT NULL default '',
-  `ID` int(11) NOT NULL default '0',
+  `ID` int(11) unsigned NOT NULL default '0',
   `SenderID` text NOT NULL,
   `SequencePosition` int(11) NOT NULL default '1',
   `Status` enum('SendingOK','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending','DeliveryUnknown','Error') NOT NULL default 'SendingOK',

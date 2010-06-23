@@ -1,12 +1,15 @@
 /* (c) 2001-2004 by Marcin Wiacek */
-/* Based on some work from Ralf Thelen (7110 ringtones),
- * Gnokii (RTTL and SM) and others
+/* Based on some work from Ralf Thelen (7110 ringtones) and others */
+/* Based on some work (RTTL and SM) from Gnokii
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * GNU GPL version 2 or later
  */
 
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
+#include <sys/stat.h>
 #ifdef WIN32
 #  include <windows.h>
 #endif
@@ -146,6 +149,12 @@ static GSM_Error savebin(FILE *file, GSM_Ringtone *ringtone)
 }
 
 static GSM_Error savepuremidi(FILE *file, GSM_Ringtone *ringtone)
+{
+ 	fwrite(ringtone->NokiaBinary.Frame,1,ringtone->NokiaBinary.Length,file);
+	return ERR_NONE;
+}
+
+static GSM_Error savemmf(FILE *file, GSM_Ringtone *ringtone)
 {
  	fwrite(ringtone->NokiaBinary.Frame,1,ringtone->NokiaBinary.Length,file);
 	return ERR_NONE;
@@ -480,6 +489,9 @@ GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 	case RING_MIDI: 
 		savepuremidi(file, ringtone);
 		break;
+	case RING_MMF:
+		savemmf(file, ringtone);
+		break;
 	}   	
 
 	fclose(file);
@@ -764,6 +776,26 @@ static GSM_Error loadpuremidi(FILE *file, GSM_Ringtone *ringtone)
 	return ERR_NONE;
 }
 
+static GSM_Error loadmmf(FILE *file, GSM_Ringtone *ringtone)
+{
+	struct stat st;
+	char *buffer;
+	int length;
+
+	dbgprintf("loading smaf file\n");
+	fstat(fileno(file), &st);
+	ringtone->BinaryTone.Length = length = st.st_size;
+	ringtone->BinaryTone.Buffer = buffer = malloc(length);
+	if (buffer == NULL)
+		return ERR_MOREMEMORY;
+	fread(buffer, 1, length, file);
+
+	dbgprintf("Length %i name \"%s\"\n", length,
+		DecodeUnicodeString(ringtone->Name));
+
+	return ERR_NONE;
+}
+
 static GSM_Error loadre(FILE *file, GSM_Ringtone *ringtone)
 {
 	unsigned char buffer[2000];
@@ -811,6 +843,10 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 		    buffer[2]==0x68 && buffer[3]==0x64) {
 			ringtone->Format = RING_MIDI;
 		}
+		if (buffer[0]==0x4D && buffer[1]==0x4D &&
+		    buffer[2]==0x4D && buffer[3]==0x44) {
+			ringtone->Format = RING_MMF;
+		}
 	}
 	rewind(file);
 	switch (ringtone->Format) {
@@ -837,6 +873,11 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 	case RING_MIDI:
 		EncodeUnicode(ringtone->Name,FileName,strlen(FileName));
 		error = loadpuremidi(file,ringtone);
+		break;
+	case RING_MMF:
+		EncodeUnicode(ringtone->Name,FileName,strlen(FileName));
+		error = loadmmf(file,ringtone);
+		break;
 	}
 	fclose(file);
 	return(error);

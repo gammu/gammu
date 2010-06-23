@@ -11,17 +11,17 @@
 #include "../../gsmcomon.h"
 #include "../../misc/coding/coding.h"
 
-extern GSM_Reply_Function 		ATGENReplyFunctions[];
-extern GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *s);
+#include "atgen.h"
+#include "sonyeric.h"
 
 #ifdef GSM_ENABLE_OBEXGEN
 
-extern GSM_Reply_Function 		OBEXGENReplyFunctions[];
-extern GSM_Error OBEXGEN_GetFilePart	(GSM_StateMachine *s, GSM_File *File);
-extern GSM_Error OBEXGEN_AddFilePart	(GSM_StateMachine *s, GSM_File *File, int *Pos);
-extern GSM_Error OBEXGEN_Disconnect	(GSM_StateMachine *s);
+#include "../obex/obexgen.h"
 
 #if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
+
+extern GSM_Reply_Function	OBEXGENReplyFunctions[];
+extern GSM_Reply_Function	ATGENReplyFunctions[];
 
 static GSM_Error SONYERIC_SetOBEXMode(GSM_StateMachine *s)
 {

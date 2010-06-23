@@ -26,7 +26,33 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
-200407xx - 0.97.1
+20040801 - 0.97.7
+* new functionality:
+  * support for ringtones, logos, pbk and others for         (Claudio Matsuoka)
+    Samsung S300 and compatible
+  * Gammu displays Linux kernel version in debug output. There could
+    be possibly displayed versions of Free and OpenBSD and other too
+    (see uname)
+  * SMSD:
+    * started work on PHP interface for MYSQL plugin. You       (Michal Kruger)
+      can manage SMS saved in DB (view, delete) and send text
+      sms from www. See other/php
+    * new function - resetting phone from time to time        (Joergen Thomsen)
+  
+* fixes and improvements:
+  * AT source cleanups                                       (Claudio Matsuoka)
+  * better FreeBSD 5.2.1 compatibility                         (Roar Pettersen)
+  * better NetBSD compatibility                                 (Gabor Z. Papp)
+  * AT & SMS fixes (with SMS memories)                             (Jomin N Yu)
+  * mystrncasecmp and mywstrncasecmp fixes                    (Joergen Thomsen)
+  * updated and checked all makefiles
+  * improvements in ID for MySQL and outgoing SMS
+  * better (c) headers
+
+NOTE: please check very deeply AT phonebook stuff. I will ask to check
+      SMS in win32 again - there were reported some problems with T68i
+
+20040722 - 0.97.1
 * new functionality:
   * SMSD
     * --sendsmsdsms doesn't require SMSC number

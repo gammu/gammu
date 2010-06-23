@@ -350,6 +350,16 @@ A  Nokia section
    ---------
    TIP: if you want to know more about changes and bugs in firmware in Nokia
         phones, visit www.mwiacek.com and check firmware subpage
+
+   Samsung
+
+    1.S300
+      * Only GIF pictures supported. Transfer pictures using --setlogo PICTURE,
+      leave location parameter as 0. Data upload from phone not supported,
+      --getbitmap and --getlogo only show location info.
+
+    2.All other models:
+      * Not tested, must verify wallpaper size for different models.
 -------------------------------------------------------------------------------
 Q. What models are supported ?
 
@@ -392,6 +402,11 @@ A. 1.Nokia DCT3 (3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|
    9.Sony Ericsson
 
      Tested with T310 (or rather T300 with R3B firmware from T310)
+
+  10.Samsung
+
+     Experimental support for Samsung AT extensions (ringtones and logos).
+     Pictures are GIF format only. Tested with S300.
 -------------------------------------------------------------------------------
 Q. How to report bugs ?
 
@@ -452,14 +467,16 @@ A. Here are some people, who somehow helped in this project. Probably not
      big and good GSM manager (many changes and suggestions), Alcatel support
    * Ondrej Rybin & Tomasz Motylewski & Tom Nelson - hardware help
    * Joergen Thomsen - SMS daemon
+   * Claudio Matsuoka - Samsung support, some hacks and fixes
 -------------------------------------------------------------------------------
 Q. What file formats are supported ?
 
-A. for logos              : xpm (only saving), bmp, nlm, nsl, ngg, nol, wbmp
+A. for logos              : xpm (only saving), bmp, nlm, nsl, ngg, nol, wbmp,
+			    gif (for Samsung)
    for ringtones          : rttl, binary format created for Gammu,
                             mid (saving), re (reading), ott, communicator,
                             ringtones format found in fkn.pl, wav (saving),
-                            ime/imy (saving), rng
+                            ime/imy (saving), rng, mmf (for Samsung)
    for backup/restore     : text format created for Gammu, vcs (VCALENDAR),
                             vcf (VCARD), lmb (Logo Manager - startup,
                             phonebook, caller groups entries),

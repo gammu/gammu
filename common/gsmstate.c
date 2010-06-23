@@ -975,6 +975,7 @@ static OnePhoneModel allmodels[] = {
 #endif
 #ifdef GSM_ENABLE_ATGEN
 	{"at"   ,	  "at",		  "",				   {0}},
+	/* Siemens */
 	{"M20"  ,	  "M20",	  "",				   {F_M20SMS,F_SLOWWRITE,0}},
 	{"MC35" ,	  "MC35",	  "",				   {0}},
 	{"S25",		  "S25",  	  "SIEMENS S25",		   {0}},
@@ -991,6 +992,15 @@ static OnePhoneModel allmodels[] = {
 	{"S45"	,	  "6618" ,	  "",				   {0}},
 	{"ME45" ,	  "3618" ,	  "",				   {0}},
 	{"S55" ,	  "S55" ,	  "",				   {0}},
+	/* Samsung */
+	{"S100" ,	  "SGH-S100" ,    "",				   {0}},
+	{"S200" ,	  "SGH-S200" ,    "",				   {0}},
+	{"S300" ,	  "SGH-S300" ,    "",				   {0}},
+	{"S500" ,	  "SGH-S500" ,    "",				   {0}},
+	{"V200" ,	  "SGH-V200" ,    "",				   {0}},
+	{"T100" ,	  "SGH-T100" ,    "",				   {0}},
+	{"E700" ,	  "SGH-E700" ,    "",				   {0}},
+	/* Ericsson/Sony Ericsson */
 	{"T28s",	"1101101-BVT28s","",				   {0}},
 	{"R320s" ,	"1101201-BV R320s","",				   {0}},
 	{"R380s",	"7100101-BVR380s" ,"",				   {0}},
@@ -1004,6 +1014,7 @@ static OnePhoneModel allmodels[] = {
 	{"T300",	"1130601-BVT300" ,"T300",			   {0}},
 	{"T310",	"1130602-BVT310" ,"",			   	   {0}},	
 	{"P800",	"7130501-BVP800" ,"",				   {0}},
+	/* Other */
 	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},
 	{"A2D"  ,	  "A2D"  ,	  "" ,				   {0}},
 	{"9210" ,	  "RAE-3",	  "Nokia Communicator GSM900/1800",{0}},

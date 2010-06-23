@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Joergen Thomsen */
+/* (c) 2002-2004 by Joergen Thomsen */
 
 extern GSM_SMSDService SMSDFiles;
 

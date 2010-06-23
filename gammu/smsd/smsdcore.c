@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek and Joergen Thomsen */
+/* (c) 2002-2004 by Marcin Wiacek and Joergen Thomsen */
 
 #include <string.h>
 #include <signal.h>
@@ -105,6 +105,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	if (Config->IncludeNumbers) {
 		GSM_ReadConfig(smsdcfgfile, &smsdcfg, 0);
 		memcpy(&s.Config,&smsdcfg,sizeof(GSM_Config));
+		error=GSM_SetDebugFile(s.Config[0].DebugFile, &di);
 	}
 
 	Config->PINCode=INI_GetValue(smsdcfgfile, "smsd", "PIN", false);
@@ -121,7 +122,10 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	if (str) Config->sendtimeout=atoi(str); else Config->sendtimeout = 10;
 	str = INI_GetValue(smsdcfgfile, "smsd", "receivefrequency", false);
 	if (str) Config->receivefrequency=atoi(str); else Config->receivefrequency = 0;
-	if (log) WriteSMSDLog("commtimeout=%i, sendtimeout=%i, receivefrequency=%i", Config->commtimeout, Config->sendtimeout, Config->receivefrequency);
+	str = INI_GetValue(smsdcfgfile, "smsd", "resetfrequency", false);
+	if (str) Config->resetfrequency=atoi(str); else Config->resetfrequency = 0;
+	if (log) WriteSMSDLog("commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i",
+			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency);
 
 	Config->deliveryreport = INI_GetValue(smsdcfgfile, "smsd", "deliveryreport", false);
 	if (Config->deliveryreport == NULL || (!mystrncasecmp(Config->deliveryreport, "log", 3) && !mystrncasecmp(Config->deliveryreport, "sms", 3))) {
@@ -391,7 +395,8 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				}
 			}
 		
-			if (strcmp(Config->deliveryreport, "no") != 0) sms.SMS[i].PDU = SMS_Status_Report;
+			if ((strcmp(Config->deliveryreport, "no") != 0 || (Config->currdeliveryreport != 0))) sms.SMS[i].PDU = SMS_Status_Report;
+
 			error=Phone->SendSMS(&s, &sms.SMS[i]);
 			if (error!=ERR_NONE) {
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, -1);
@@ -437,7 +442,7 @@ void SMSDaemon(int argc, char *argv[])
 	int                     errors = 255, initerrors=0;
 	GSM_SMSDService		*Service;
 	GSM_Error		error;
- 	time_t                  time1;
+ 	time_t				lastreceive, lastreset = 0;
 	GSM_SMSDConfig		Config;
 
 	if (!strcmp(argv[2],"FILES")) {
@@ -462,7 +467,8 @@ void SMSDaemon(int argc, char *argv[])
 	signal(SIGTERM, interrupt);
 	fprintf(stderr,"Press Ctrl+C to stop the program ...\n");
 
-	time1 			= time(NULL);
+	lastreceive			= time(NULL);
+	lastreset			= time(NULL);
 	SendingSMSStatus 	= ERR_UNKNOWN;
 
 	while (!gshutdown) {
@@ -480,6 +486,12 @@ void SMSDaemon(int argc, char *argv[])
 				s.User.SendSMSStatus 	= SMSSendingSMSStatus;
 				Phone			= s.Phone.Functions;
 				errors 			= 0;
+				if (initerrors > 3 || initerrors < 0) {
+					error=Phone->Reset(&s, false); /* soft reset */
+					WriteSMSDLog("Reset return code: %s (%i) ", error == ERR_NONE? "OK":"ERROR", error);
+					lastreset = time(NULL);
+					my_sleep(5000);
+				}
 				/* Marcin Wiacek: FIXME. To check */
 //				di 			= s.di;
 				break;
@@ -491,8 +503,8 @@ void SMSDaemon(int argc, char *argv[])
 			}
 			continue;
 		}
-		if ((difftime(time(NULL), time1) >= Config.receivefrequency) || (SendingSMSStatus != ERR_NONE)) {
-	 		time1 = time(NULL);
+		if ((difftime(time(NULL), lastreceive) >= Config.receivefrequency) || (SendingSMSStatus != ERR_NONE)) {
+	 		lastreceive = time(NULL);
 
 			if (!SMSD_CheckSecurity(&Config)) {
 				errors++;
@@ -502,10 +514,15 @@ void SMSDaemon(int argc, char *argv[])
 
 			initerrors = 0;
 
-			if (!SMSD_CheckSMSStatus(&Config,Service)) {
+			if (!SMSD_CheckSMSStatus(&Config,Service)) { /* read all incoming SMS */
 				errors++;
 				continue;
 			} else errors=0;
+
+			if (Config.resetfrequency > 0 && difftime(time(NULL), lastreset) >= Config.resetfrequency) { /* time for preventive reset */
+				errors = 254; initerrors = -2;
+				continue;
+			}
 		}
 		if (!SMSD_SendSMS(&Config,Service)) continue;
 	}

@@ -1,5 +1,9 @@
 /* (c) 2002-2004 by Marcin Wiacek, Michal Cihar and others */
-/* based on some work from MyGnokii and Gnokii */
+/* based on some work from MyGnokii */
+/* based on some work from Gnokii
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * GNU GPL version 2 or later
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -919,7 +923,7 @@ bool mystrncasecmp(unsigned const char *a, unsigned const char *b, int num)
 
 	if (a == NULL || b == NULL) return false;
 
-	num--;
+	if (num == 0) num = -1;
    
 	for (i = 0; i != num; i++) {
 		if (a[i] == 0x00 && b[i] == 0x00) return true;
@@ -939,7 +943,7 @@ bool mywstrncasecmp(unsigned const  char *a, unsigned const  char *b, int num)
 
         if (a == NULL || b == NULL) return false;
 
-	num--;
+	if (num == 0) num = -1;
 	
 	for (i = 0; i != num; i++) {
 		if ((a[i*2] == 0x00 && a[i*2+1] == 0x00) && (b[i*2] == 0x00 && b[i*2+1] == 0x00)) return true;

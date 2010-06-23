@@ -8,6 +8,11 @@
 #include "config.h"
 #include "misc/cfg.h"
 
+typedef struct _GSM_StateMachine 	GSM_StateMachine;
+typedef struct _GSM_User	 	GSM_User;
+typedef struct _OnePhoneModel	 	OnePhoneModel;
+typedef struct _GSM_Reply_Function	GSM_Reply_Function;
+
 #ifdef GSM_ENABLE_NOKIA3320
 #  include "phone/nokia/dct4/n3320.h"
 #endif
@@ -199,9 +204,6 @@
 #include "service/sms/gsmmulti.h"
 #include "service/backup/gsmback.h"
 
-typedef struct _GSM_StateMachine GSM_StateMachine;
-typedef struct _GSM_User	 GSM_User;
-typedef struct _OnePhoneModel	 OnePhoneModel;
 
 /* ------------------------- Device layer ---------------------------------- */
 
@@ -804,7 +806,7 @@ typedef struct {
  *
  * Should be used in array with last element containing ID_None as requestID.
  */
-typedef struct {
+struct _GSM_Reply_Function {
 	/**
 	 * Pointer to function that should be executed.
 	 */
@@ -828,7 +830,7 @@ typedef struct {
 	 * you want to use this in any state.
 	 */
 	GSM_Phone_RequestID	requestID;
-} GSM_Reply_Function;
+};
 
 /**
  * Structure defining phone functions.

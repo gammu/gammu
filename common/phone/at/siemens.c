@@ -13,25 +13,11 @@
 #include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
 
-extern GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s);
+#include "atgen.h"
+#include "siemens.h"
 
-GSM_Error ATGEN_CMS35ReplySetFunction (GSM_Protocol_Message msg, GSM_StateMachine *s,char *function)
-{
-	if (s->Protocol.Data.AT.EditMode) {
-	    s->Protocol.Data.AT.EditMode = false;
-	    return ERR_NONE;
-	}
-	dbgprintf ("Written %s",function);
-  	if (s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_OK){
-  		dbgprintf (" - OK\n");
-  		return ERR_NONE;
-	} else {
-  		dbgprintf (" - error\n");
-  		return ERR_UNKNOWN;
-	}
-}
 
-GSM_Error GetSiemensFrame(GSM_Protocol_Message msg, GSM_StateMachine *s, char *templ,
+static GSM_Error GetSiemensFrame(GSM_Protocol_Message msg, GSM_StateMachine *s, char *templ,
 			    unsigned char *buffer, int *len)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -57,7 +43,7 @@ GSM_Error GetSiemensFrame(GSM_Protocol_Message msg, GSM_StateMachine *s, char *t
        return ERR_NONE;	
 }
 
-GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, char *templ,
+static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, char *templ,
 			    int Location, GSM_Phone_RequestID RequestID, int len)
 {
 	GSM_Phone_Data		*Phone = &s->Phone.Data;
@@ -90,7 +76,7 @@ GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, char *templ
 	 return Phone->DispatchError;
 }
 
-GSM_Error ATGEN_CMS35ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	unsigned char 		buffer[4096];
 	int			length;
@@ -104,16 +90,31 @@ GSM_Error ATGEN_CMS35ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *
 	else return ERR_UNKNOWN;
 }
 
-GSM_Error ATGEN_CMS35ReplySetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplySetFunction (GSM_Protocol_Message msg, GSM_StateMachine *s,char *function)
 {
-    return ATGEN_CMS35ReplySetFunction (msg, s, "Operator Logo");	
+	if (s->Protocol.Data.AT.EditMode) {
+	    s->Protocol.Data.AT.EditMode = false;
+	    return ERR_NONE;
+	}
+	dbgprintf ("Written %s",function);
+  	if (s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_OK){
+  		dbgprintf (" - OK\n");
+  		return ERR_NONE;
+	} else {
+  		dbgprintf (" - error\n");
+  		return ERR_UNKNOWN;
+	}
 }
 
-GSM_Error ATGEN_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
+GSM_Error SIEMENS_ReplySetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+    return SIEMENS_ReplySetFunction (msg, s, "Operator Logo");	
+}
+
+GSM_Error SIEMENS_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	unsigned char req[32];
 
-	if (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 	if (Bitmap->Type!=GSM_OperatorLogo) return ERR_NOTSUPPORTED;
 	if (Bitmap->Location-1 < 0) Bitmap->Location++;
 	s->Phone.Data.Bitmap=Bitmap;
@@ -122,13 +123,12 @@ GSM_Error ATGEN_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetBitmap);
 }
 
-GSM_Error ATGEN_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
+GSM_Error SIEMENS_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	unsigned char 	buffer[4096];
 	int 		length;
 	GSM_Error	error;
 	
-	if (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 	if (Bitmap->Type!=GSM_OperatorLogo) return ERR_NOTSUPPORTED;
 
 	error = Bitmap2BMP (buffer,NULL,Bitmap);
@@ -141,7 +141,7 @@ GSM_Error ATGEN_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 				ID_SetBitmap,length);
 }
 
-GSM_Error ATGEN_CMS35ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	unsigned char 		buffer[32];
 	int			length;
@@ -158,29 +158,25 @@ GSM_Error ATGEN_CMS35ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine
 	return ERR_NONE;
 }
 
-GSM_Error ATGEN_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
+GSM_Error SIEMENS_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
 {
 	unsigned char req[32];
 
-	if (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
-	
 	s->Phone.Data.Ringtone=Ringtone;
 	sprintf(req, "AT^SBNR=\"mid\",%i\r", Ringtone->Location-1);
 	smprintf(s, "Getting RingTone\n");
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetRingtone);
 }
 
-GSM_Error ATGEN_CMS35ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return ATGEN_CMS35ReplySetFunction (msg, s, "Ringtone");
+	return SIEMENS_ReplySetFunction (msg, s, "Ringtone");
 }
   
-GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
+GSM_Error SIEMENS_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
 {
 	GSM_Phone_Data *Phone = &s->Phone.Data;
 	 
-	if (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
-
 	if (Ringtone->Location==255) Ringtone->Location=1; 
 	if (Ringtone->Location-1 > 1) return ERR_INVALIDLOCATION;
 
@@ -190,7 +186,7 @@ GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *ma
 				ID_SetRingtone,Ringtone->NokiaBinary.Length);
 }
 
-GSM_Error ATGEN_CMS35ReplyGetNextCal(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 	GSM_CalendarEntry	*Calendar = Data->Cal;
@@ -235,12 +231,12 @@ GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 	return error;
 }
 
-GSM_Error ATGEN_CMS35ReplySetCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyAddCalendarNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-    return ATGEN_CMS35ReplySetFunction (msg, s, "Calendar Note");
+    return SIEMENS_ReplySetFunction (msg, s, "Calendar Note");
 }
 
-GSM_Error ATGEN_CMS35ReplyDeleteCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyDelCalendarNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 	
@@ -283,7 +279,7 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 }
 
 /* (c) by Timo Teras */
-GSM_Error ATGEN_SL45ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 #ifndef ENABLE_LGPL
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;

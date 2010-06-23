@@ -83,13 +83,13 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 		WriteSMSDLog("No version info in Gammu table: %s\n", mysql_error(&Config->DB));
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) > 1) {
+	if (atoi(Row[0]) > 2) {
 		mysql_free_result(Res);
 		WriteSMSDLog("DataBase structures are from higher Gammu version");
 		WriteSMSDLog("Please update this client application");
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) < 1) {
+	if (atoi(Row[0]) < 2) {
 		mysql_free_result(Res);
 		WriteSMSDLog("DataBase structures are from older Gammu version");
 		WriteSMSDLog("Please update DataBase, if you want to use this client application");
@@ -396,9 +396,27 @@ static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 /* Adds SMS to Outbox */
 static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config)
 {
-	unsigned char	buffer[10000],buffer2[200],buffer3[2],buffer4[10000];
-	int 		i,j,z;
-	GSM_DateTime	time;
+	unsigned char		buffer[10000],buffer2[200],buffer3[2],buffer4[10000];
+	int 			i,j,z,ID;
+	MYSQL_RES 		*Res;
+	MYSQL_ROW 		Row;
+
+	sprintf(buffer,"SELECT ID FROM outbox ORDER BY ID DESC LIMIT 1");
+	if (mysql_real_query(&Config->DB,buffer,strlen(buffer))) {
+		WriteSMSDLog("Error reading from database (CreateOutbox): %s\n", mysql_error(&Config->DB));
+		return ERR_UNKNOWN;
+	}
+	if (!(Res = mysql_store_result(&Config->DB))) {
+		WriteSMSDLog("Error reading from database (CreateOutbox): %s\n", mysql_error(&Config->DB));
+		return ERR_UNKNOWN;
+	}
+	if ((Row = mysql_fetch_row(Res))) {
+		sprintf(buffer,"%s",Row[0]);
+		ID = atoi(buffer);
+	} else {
+		ID = 0; 
+	}
+	mysql_free_result(Res);	
 
 	for (i=0;i<sms->Number;i++) {
 		buffer[0]=0;
@@ -483,32 +501,42 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		sprintf(buffer+strlen(buffer),"','");
 		if (i==0) {
 			while (true) {
-				GSM_GetCurrentDateTime(&time);
-				buffer4[0] = 0;
-				strcpy(buffer4,buffer);
-				sprintf(buffer4+strlen(buffer4),"%i')",
-					time.Hour*1000000+
-					time.Minute*10000+
-					time.Second*100+time.Day);
+				ID++;
+				sprintf(buffer4,"SELECT ID FROM sentitems WHERE ID='%i'",ID);
 #ifdef DEBUG
 				fprintf(stdout,"%s\n",buffer4);
 #endif
 				if (mysql_real_query(&Config->DB,buffer4,strlen(buffer4))) {
-					if (mysql_errno(&Config->DB) == ER_DUP_ENTRY) {
-						WriteSMSDLog("Duplicated outgoing SMS ID\n");
-						continue;
-					}
-					WriteSMSDLog("Error writing to database (CreateOutbox): %d %s %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB),buffer4);
+					WriteSMSDLog("Error reading from database (CreateOutbox): %s\n", mysql_error(&Config->DB));
 					return ERR_UNKNOWN;
 				}
-				break;
+				if (!(Res = mysql_store_result(&Config->DB))) {
+					WriteSMSDLog("Error reading from database (CreateOutbox): %s\n", mysql_error(&Config->DB));
+					return ERR_UNKNOWN;
+				}
+				if (!(Row = mysql_fetch_row(Res))) {
+					buffer4[0] = 0;
+					strcpy(buffer4,buffer);
+					sprintf(buffer4+strlen(buffer4),"%i')",ID);
+#ifdef DEBUG
+					fprintf(stdout,"%s\n",buffer4);
+#endif
+					if (mysql_real_query(&Config->DB,buffer4,strlen(buffer4))) {
+						if (mysql_errno(&Config->DB) == ER_DUP_ENTRY) {
+							WriteSMSDLog("Duplicated outgoing SMS ID\n");
+							continue;
+						}
+						WriteSMSDLog("Error writing to database (CreateOutbox): %d %s %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB),buffer4);
+						return ERR_UNKNOWN;
+					}
+					mysql_free_result(Res);	
+					break;
+				}
+				mysql_free_result(Res);	
 			}
 		} else {
 			strcpy(buffer4,buffer);
-			sprintf(buffer4+strlen(buffer4),"%i')",
-				time.Hour*1000000+
-				time.Minute*10000+
-				time.Second*100+time.Day);
+			sprintf(buffer4+strlen(buffer4),"%i')",ID);
 #ifdef DEBUG
 			fprintf(stdout,"%s\n",buffer4);
 #endif

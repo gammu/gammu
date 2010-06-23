@@ -12,37 +12,17 @@
 #include "../../misc/coding/coding.h"
 #include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
+
 #include "atgen.h"
 
+#include "samsung.h"
+#include "siemens.h"
+#include "sonyeric.h"
+
 #ifdef GSM_ENABLE_ALCATEL
-extern GSM_Error ALCATEL_ProtocolVersionReply	(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error ALCATEL_ProtocolVersionReply (GSM_Protocol_Message, GSM_StateMachine *);
 #endif
 
-extern GSM_Error ATGEN_CMS35ReplyGetBitmap	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-extern GSM_Error ATGEN_CMS35ReplySetBitmap	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-extern GSM_Error ATGEN_CMS35ReplyGetRingtone	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-extern GSM_Error ATGEN_CMS35ReplySetRingtone	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-extern GSM_Error ATGEN_CMS35ReplyGetNextCal	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-extern GSM_Error ATGEN_CMS35ReplySetCalendar	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-extern GSM_Error ATGEN_CMS35ReplyDeleteCalendar	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-extern GSM_Error ATGEN_SL45ReplyGetMemory	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-
-extern GSM_Error ATGEN_GetRingtone		(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone);
-extern GSM_Error ATGEN_SetRingtone		(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength);
-extern GSM_Error ATGEN_GetBitmap		(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
-extern GSM_Error ATGEN_SetBitmap		(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
-extern GSM_Error SIEMENS_GetNextCalendar	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start);
-extern GSM_Error SIEMENS_AddCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note);
-extern GSM_Error SIEMENS_DelCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note);
-
-extern GSM_Error SONYERIC_GetNextCalendar	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start);
-extern GSM_Error SONYERIC_GetNextToDo		(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start);
-extern GSM_Error SONYERIC_GetToDoStatus		(GSM_StateMachine *s, GSM_ToDoStatus *status);
-extern GSM_Error SONYERIC_AddCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note);
-extern GSM_Error SONYERIC_AddToDo		(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
-extern GSM_Error SONYERIC_DeleteAllToDo		(GSM_StateMachine *s);
-extern GSM_Error SONYERIC_DelCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note);
-extern GSM_Error SONYERIC_GetCalendarStatus	(GSM_StateMachine *s, GSM_CalendarStatus *Status);
 
 typedef struct {
 	int     Number;
@@ -175,6 +155,8 @@ GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 	}
 	/* For error codes descriptions see table a bit above */
 	switch (Priv->ErrorCode) {
+		case -1:
+			return ERR_EMPTY;
 		case 3:
 			return ERR_PERMISSION;
 		case 4:
@@ -256,8 +238,16 @@ int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
 
 void ATGEN_DecodeDateTime(GSM_DateTime *dt, unsigned char *input)
 {
-	dt->Year=2000+(*input-'0')*10;     input++;
+	/* Samsung phones report year as %d instead of %02d */
+	if (input[2] == '/') {
+		dt->Year=(*input-'0')*10;
+		input++;
+	} else {
+		dt->Year=0;
+	}
+
 	dt->Year=dt->Year+(*input-'0');    input++;
+	dt->Year+=2000;
 
 	input++;
 	dt->Month=(*input-'0')*10;         input++;
@@ -322,6 +312,18 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 		Priv->ReplyState = AT_Reply_CMSError;
 		ErrorCodes = CMSErrorCodes;
 	}
+
+	/* FIXME: Samsung phones can answer +CME ERROR:-1 meaning empty location */
+	if (Priv->ReplyState == AT_Reply_CMEError && Priv->Manufacturer == AT_Samsung) {
+		err = line + 11;
+		Priv->ErrorCode = atoi(err);
+
+		if (Priv->ErrorCode == -1) {
+			Priv->ErrorText = "[Samsung] Empty location";
+			return GSM_DispatchMessage(s);
+		}
+	}
+
 	if (Priv->ReplyState == AT_Reply_CMEError || Priv->ReplyState == AT_Reply_CMSError) {
 	        j = 0;
 		/* One char behind +CM[SE] ERROR */
@@ -480,6 +482,11 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			smprintf(s, "Sagem\n");
 			strcpy(s->Phone.Data.Manufacturer,"Sagem");
 			Priv->Manufacturer = AT_Sagem;
+		}
+		if (strstr(msg.Buffer,"Samsung")) {
+			smprintf(s, "Samsung\n");
+			strcpy(s->Phone.Data.Manufacturer,"Samsung");
+			Priv->Manufacturer = AT_Samsung;
 		}
 		return ERR_NONE;
 	case AT_Reply_CMSError:
@@ -674,12 +681,20 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 		 * phone supports writing to memory. This is done by searching
 		 * for "), (", which will appear between lists.
 		 */
-		s->Phone.Data.Priv.ATGEN.CanSaveSMS = (strstr(msg.Buffer, "), (") != NULL);
+		s->Phone.Data.Priv.ATGEN.CanSaveSMS = false;
+		if (strstr(msg.Buffer, "), (") != NULL || strstr(msg.Buffer, "),(") != NULL) {
+			s->Phone.Data.Priv.ATGEN.CanSaveSMS = true;
+		}
+
 		if (strstr(msg.Buffer, "\"SM\"") != NULL) s->Phone.Data.Priv.ATGEN.SIMSMSMemory = AT_AVAILABLE;
 		else s->Phone.Data.Priv.ATGEN.SIMSMSMemory = AT_NOTAVAILABLE;
+
 		if (strstr(msg.Buffer, "\"ME\"") != NULL) s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_AVAILABLE;
 		else s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_NOTAVAILABLE;
-		smprintf(s, "Available SMS memories received, ME = %d, SM = %d\n", s->Phone.Data.Priv.ATGEN.PhoneSMSMemory, s->Phone.Data.Priv.ATGEN.SIMSMSMemory);
+
+		smprintf(s, "Available SMS memories received, ME = %d, SM = %d, cansavesms =", s->Phone.Data.Priv.ATGEN.PhoneSMSMemory, s->Phone.Data.Priv.ATGEN.SIMSMSMemory);
+		if (s->Phone.Data.Priv.ATGEN.CanSaveSMS) smprintf(s, "true");
+		smprintf(s, "\n");
 		return ERR_NONE;
 	case AT_Reply_Error:
 	case AT_Reply_CMSError:
@@ -2203,6 +2218,8 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	Priv->NumberLength		= 0;
 
 	error = GSM_WaitFor (s, "AT+CPBR=?\r", 10, 0x00, 4, ID_GetMemoryStatus);
+	if (Priv->Manufacturer == AT_Samsung)
+		error = GSM_WaitFor (s, "", 0, 0x00, 4, ID_GetMemoryStatus);
 	if (error != ERR_NONE) return error;
 	if (NeededInfo == AT_Total || NeededInfo == AT_Sizes || NeededInfo == AT_First) return ERR_NONE;
 
@@ -2268,6 +2285,12 @@ GSM_Error ATGEN_SetPBKCharset(GSM_StateMachine *s, bool PreferUnicode)
 
 	error=ATGEN_GetManufacturer(s);
 	if (error != ERR_NONE) return error;
+
+	/* Samsung (and Sagem?) phones use only PCCP437? */
+	if (Priv->Manufacturer == AT_Samsung) {
+		Priv->PBKCharset = AT_PBK_PCCP437;
+		return ERR_NONE;
+	}
 
 	if (PreferUnicode && !Priv->UCS2CharsetFailed) {
 		smprintf(s, "Setting charset to UCS2\n");
@@ -2386,7 +2409,37 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		case AT_PBK_UCS2:
 			DecodeHexUnicode(Memory->Entries[1].Text,buffer+1,strlen(buffer+1) - 1);
 			break;			
+		case AT_PBK_PCCP437:
+			/* FIXME: correctly decode PCCP437 */
+ 			DecodeDefault(Memory->Entries[1].Text,buffer+1,strlen(buffer)-2,false,NULL);
+			break;
 		}
+
+		/* Samsung number type */
+		if (Priv->Manufacturer == AT_Samsung) {
+			int type;
+
+			pos += ATGEN_ExtractOneParameter(pos, buffer);
+ 			smprintf(s, "Number type: %s\n",buffer);
+			type = strtoul(buffer, NULL, 0);
+			switch (type) {
+			case 0:
+ 				Memory->Entries[0].EntryType = PBK_Number_Mobile;
+				break;
+			case 1:
+ 				Memory->Entries[0].EntryType = PBK_Number_Work;
+				break;
+			case 2:
+ 				Memory->Entries[0].EntryType = PBK_Number_Home;
+				break;
+			case 3:
+ 				Memory->Entries[0].EntryType = PBK_Text_Email;
+				break;
+			default:
+ 				Memory->Entries[0].EntryType = PBK_Number_General;
+			}
+		}
+
 		return ERR_NONE;
 	case AT_Reply_CMEError:
 		return ATGEN_HandleCMEError(s);
@@ -2925,6 +2978,12 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			EncodeHexUnicode(name, entry->Entries[Name].Text, UnicodeLength(entry->Entries[Name].Text));
 			len = strlen(name);
 			break;
+		case AT_PBK_PCCP437:
+			/* FIXME: correctly decode PCCP437 */
+			smprintf(s, "str: %s\n", DecodeUnicodeString(entry->Entries[Name].Text));
+			len = UnicodeLength(entry->Entries[Name].Text);
+			EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
+			break;
 		}
 	} else {
 		smprintf(s, "WARNING: No usable name found!\n");
@@ -3253,6 +3312,43 @@ GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return ERR_NOTSUPPORTED;
 }
 
+
+GSM_Error ATGEN_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (Priv->Manufacturer==AT_Siemens) return SIEMENS_GetBitmap(s, Bitmap);
+	if (Priv->Manufacturer==AT_Samsung) return SAMSUNG_GetBitmap(s, Bitmap);
+	return ERR_NOTSUPPORTED;
+}
+
+GSM_Error ATGEN_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (Priv->Manufacturer==AT_Siemens) return SIEMENS_SetBitmap(s, Bitmap);
+	if (Priv->Manufacturer==AT_Samsung) return SAMSUNG_SetBitmap(s, Bitmap);
+	return ERR_NOTSUPPORTED;
+}
+
+GSM_Error ATGEN_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (Priv->Manufacturer==AT_Siemens) return SIEMENS_GetRingtone(s, Ringtone, PhoneRingtone);
+	if (Priv->Manufacturer==AT_Samsung) return SAMSUNG_GetRingtone(s, Ringtone, PhoneRingtone);
+	return ERR_NOTSUPPORTED;
+}
+
+GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (Priv->Manufacturer==AT_Siemens) return SIEMENS_SetRingtone(s, Ringtone, maxlength);
+	if (Priv->Manufacturer==AT_Samsung) return SAMSUNG_SetRingtone(s, Ringtone, maxlength);
+	return ERR_NOTSUPPORTED;
+}
+
 GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 {
 	GSM_Error	error;
@@ -3485,23 +3581,25 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetPBKMemories,	"AT+CPBS=?"		,0x00,0x00,ID_SetMemoryType	 },
 {ATGEN_GenericReply,		"AT+CPBS="		,0x00,0x00,ID_SetMemoryType	 },
 {ATGEN_ReplyGetCPBSMemoryStatus,"AT+CPBS?"		,0x00,0x00,ID_GetMemoryStatus	 },
+// /* Samsung phones reply +CPBR: after OK --claudio*/
 {ATGEN_ReplyGetCPBRMemoryInfo,	"AT+CPBR=?"		,0x00,0x00,ID_GetMemoryStatus	 },
+{ATGEN_ReplyGetCPBRMemoryInfo,	"+CPBR:"		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_ReplyGetCPBRMemoryStatus,"AT+CPBR="		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_GenericReply,		"AT+CSCS="		,0x00,0x00,ID_SetMemoryCharset	 },
 {ATGEN_ReplyGetMemory,		"AT+CPBR="		,0x00,0x00,ID_GetMemory		 },
 {ATGEN_GenericReply,		"AT^SBNR=?"		,0x00,0x00,ID_GetMemory		 },
-{ATGEN_SL45ReplyGetMemory,	"AT^SBNR"		,0x00,0x00,ID_GetMemory		 },
+{SIEMENS_ReplyGetMemory,	"AT^SBNR"		,0x00,0x00,ID_GetMemory		 },
 {ATGEN_ReplySetMemory,		"AT+CPBW"		,0x00,0x00,ID_SetMemory		 },
 
-{ATGEN_CMS35ReplyGetBitmap,	"AT^SBNR=\"bmp\""	,0x00,0x00,ID_GetBitmap	 	 },
-{ATGEN_CMS35ReplySetBitmap,	"AT^SBNW=\"bmp\""	,0x00,0x00,ID_SetBitmap	 	 },
+{SIEMENS_ReplyGetBitmap,	"AT^SBNR=\"bmp\""	,0x00,0x00,ID_GetBitmap	 	 },
+{SIEMENS_ReplySetBitmap,	"AT^SBNW=\"bmp\""	,0x00,0x00,ID_SetBitmap	 	 },
 
-{ATGEN_CMS35ReplyGetRingtone,	"AT^SBNR=\"mid\""	,0x00,0x00,ID_GetRingtone	 },
-{ATGEN_CMS35ReplySetRingtone,	"AT^SBNW=\"mid\""	,0x00,0x00,ID_SetRingtone	 },
+{SIEMENS_ReplyGetRingtone,	"AT^SBNR=\"mid\""	,0x00,0x00,ID_GetRingtone	 },
+{SIEMENS_ReplySetRingtone,	"AT^SBNW=\"mid\""	,0x00,0x00,ID_SetRingtone	 },
 
-{ATGEN_CMS35ReplyGetNextCal,	"AT^SBNR=\"vcs\""	,0x00,0x00,ID_GetCalendarNote	 },
-{ATGEN_CMS35ReplySetCalendar,	"AT^SBNW=\"vcs\""	,0x00,0x00,ID_SetCalendarNote	 },
-{ATGEN_CMS35ReplyDeleteCalendar,"AT^SBNW=\"vcs\""	,0x00,0x00,ID_DeleteCalendarNote },
+{SIEMENS_ReplyGetNextCalendar,	"AT^SBNR=\"vcs\""	,0x00,0x00,ID_GetCalendarNote	 },
+{SIEMENS_ReplyAddCalendarNote,	"AT^SBNW=\"vcs\""	,0x00,0x00,ID_SetCalendarNote	 },
+{SIEMENS_ReplyDelCalendarNote,	"AT^SBNW=\"vcs\""	,0x00,0x00,ID_DeleteCalendarNote },
 
 {ATGEN_ReplyEnterSecurityCode,	"AT+CPIN="		,0x00,0x00,ID_EnterSecurityCode	 },
 {ATGEN_ReplyEnterSecurityCode,	"AT+CPIN2="		,0x00,0x00,ID_EnterSecurityCode	 },
@@ -3522,6 +3620,12 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyReset,		"AT+CFUN=1,1"		,0x00,0x00,ID_Reset		 },
 {ATGEN_ReplyResetPhoneSettings, "AT&F"			,0x00,0x00,ID_ResetPhoneSettings },
 
+{SAMSUNG_ReplyGetBitmap,	"AT+IMGR="		,0x00,0x00,ID_GetBitmap	 	 },
+{SAMSUNG_ReplySetBitmap,	"SDNDCRC ="		,0x00,0x00,ID_SetBitmap		 },
+
+{SAMSUNG_ReplyGetRingtone,	"AT+MELR="		,0x00,0x00,ID_GetRingtone	 },
+{SAMSUNG_ReplySetRingtone,	"SDNDCRC ="		,0x00,0x00,ID_SetRingtone	 },
+
 #ifdef GSM_ENABLE_ALCATEL
 /*  Why do I give Alcatel specific things here? It's simple, Alcatel needs
  *  some AT commands to start it's binary mode, so this needs to be in AT
@@ -3539,7 +3643,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 };                                                                                      
 
 GSM_Phone_Functions ATGENPhone = {
-	"A2D|iPAQ|at|M20|S25|MC35|C35i|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8390|8850|8855|8890|8910|9110|9210",
+	"A2D|iPAQ|at|M20|S25|MC35|C35i|S300|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8390|8850|8855|8890|8910|9110|9210",
 	ATGENReplyFunctions,
 	ATGEN_Initialise,
 	ATGEN_Terminate,

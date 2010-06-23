@@ -1575,7 +1575,8 @@ static void GetRingtone(int argc, char *argv[])
 	switch (ringtone.Format) {
 		case RING_NOTETONE	: printmsg("Smart Messaging");	break;
 		case RING_NOKIABINARY	: printmsg("Nokia binary");	break;
-		case RING_MIDI		: printmsg("Midi format");	break;
+		case RING_MIDI		: printmsg("MIDI");		break;
+		case RING_MMF		: printmsg("SMAF (MMF)");	break;
 	}
 	printmsg(" format, ringtone \"%s\"\n",DecodeUnicodeConsole(ringtone.Name));
 
@@ -2238,6 +2239,8 @@ static void GetBitmap(int argc, char *argv[])
 		GSM_PrintBitmap(stdout,&MultiBitmap.Bitmap[0]);
 		printmsg("Text   : \"%s\"\n",DecodeUnicodeConsole(MultiBitmap.Bitmap[0].Text));
 		printmsg("Sender : \"%s\"\n",DecodeUnicodeConsole(MultiBitmap.Bitmap[0].Sender));
+		if (MultiBitmap.Bitmap[0].Name)
+			printmsg("Name   : \"%s\"\n",DecodeUnicodeConsole(MultiBitmap.Bitmap[0].Name));
 		if (argc>4) error=GSM_SaveBitmapFile(argv[4],&MultiBitmap);
 		break;
 	case GSM_WelcomeNote_Text:
