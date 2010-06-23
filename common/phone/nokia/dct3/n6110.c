@@ -28,6 +28,8 @@ static GSM_Error N6110_ReplyGetPhoneLanguage(GSM_Protocol_Message msg, GSM_State
 {
 	N6110_Language lang = N6110_Auto;
 
+	if (msg.Buffer[3] == 0x15) return GE_NONE;
+
 	smprintf(s, "Phone language is %02x\n",msg.Buffer[6]);
 	switch (msg.Buffer[6]) {
 		case 0x21: lang = N6110_Europe; break; //Polish
@@ -2639,6 +2641,7 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{N6110_ReplyGetProfileFeature,	  "\x05",0x03,0x14,ID_GetProfile	 },
 	{N6110_ReplyGetPhoneLanguage,	  "\x05",0x03,0x14,ID_GetLanguage	 },
 	{N6110_ReplyGetProfileFeature,	  "\x05",0x03,0x15,ID_GetProfile	 },
+	{N6110_ReplyGetPhoneLanguage,	  "\x05",0x03,0x15,ID_GetLanguage	 },
 	{N6110_ReplyGetStartup,		  "\x05",0x03,0x17,ID_GetBitmap		 },
 	{N6110_ReplySetStartup,		  "\x05",0x03,0x19,ID_SetBitmap		 },
 	{N6110_ReplyGetProfileFeature,	  "\x05",0x03,0x1b,ID_GetProfile	 },

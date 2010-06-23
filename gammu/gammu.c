@@ -10,7 +10,11 @@
 #ifdef WIN32
 #  include <windows.h>
 #  include <process.h>
-#  include <sys/utime.h>
+#  ifdef _MSC_VER
+#    include <sys/utime.h>
+#  else
+#    include <utime.h>
+#  endif
 #else
 #  include <utime.h>
 #  include <pthread.h>
@@ -2137,6 +2141,35 @@ static void SetRingtone(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void DisplaySMSFrame(GSM_SMSMessage *SMS)
+{
+	GSM_Error 		error;
+	int			i, length, current = 0;
+	unsigned char		req[1000], buffer[1000], hexreq[1000];
+
+	error=PHONE_EncodeSMSFrame(&s,SMS,buffer,PHONE_SMSSubmit,&length,true);
+	if (error != GE_NONE) {
+		printmsg("Error\n");
+		exit(-1);
+	}
+	length = length - PHONE_SMSSubmit.Text;
+	for (i=0;i<buffer[PHONE_SMSSubmit.SMSCNumber]+1;i++) {
+		req[current++]=buffer[PHONE_SMSSubmit.SMSCNumber+i];
+	}
+	req[current++]=buffer[PHONE_SMSSubmit.firstbyte];
+	req[current++]=buffer[PHONE_SMSSubmit.TPMR];
+	for (i=0;i<((buffer[PHONE_SMSSubmit.Number]+1)/2+1)+1;i++) {
+		req[current++]=buffer[PHONE_SMSSubmit.Number+i];
+	}
+	req[current++]=buffer[PHONE_SMSSubmit.TPPID];
+	req[current++]=buffer[PHONE_SMSSubmit.TPDCS];
+	req[current++]=buffer[PHONE_SMSSubmit.TPVP];
+	req[current++]=buffer[PHONE_SMSSubmit.TPUDL];
+	for(i=0;i<length;i++) req[current++]=buffer[PHONE_SMSSubmit.Text+i];
+	EncodeHexBin(hexreq, req, current);
+	printmsg("%s\n\n",hexreq);
+}
+
 #define SEND_SAVE_SMS_BUFFER_SIZE 10000
 
 static GSM_Error SMSStatus;
@@ -2153,7 +2186,7 @@ static void SendSMSStatus (char *Device, int status)
 	}
 }
 
-static void SendSaveSMS(int argc, char *argv[])
+static void SendSaveDisplaySMS(int argc, char *argv[])
 {
 #ifdef GSM_ENABLE_BACKUP
 	GSM_Backup			Backup;
@@ -3030,8 +3063,6 @@ static void SendSaveSMS(int argc, char *argv[])
 		exit(-1);
 	}
 
-	GSM_Init(true);
-
 	if (mystrncasecmp(argv[2],"EMS",0) && EMS16Bit) {
 		for (i=0;i<SMSInfo.EntriesNum;i++) {
 			switch (SMSInfo.Entries[i].ID) {
@@ -3044,25 +3075,6 @@ static void SendSaveSMS(int argc, char *argv[])
 		}
 
 	}
-	if (mystrncasecmp(argv[2],"OPERATOR",0)) {
-		if (bitmap[0].Bitmap[0].Type==GSM_OperatorLogo && strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0)
-		{
-			error=Phone->GetNetworkInfo(&s,&NetInfo);
-			Print_Error(error);
-			strcpy(bitmap[0].Bitmap[0].NetworkCode,NetInfo.NetworkCode);
-			if (mystrncasecmp(argv[1],"--savesms",0)) {
-				EncodeUnicode(Sender, "OpLogo",6);
-				EncodeUnicode(Sender+6*2,bitmap[0].Bitmap[0].NetworkCode,3);
-				EncodeUnicode(Sender+6*2+3*2,bitmap[0].Bitmap[0].NetworkCode+4,2);
-				if (UnicodeLength(GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode))<GSM_MAX_SMS_NAME_LENGTH-7) {
-					EncodeUnicode(Name,"OpLogo ",7);
-					CopyUnicodeString(Name+7*2,GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode));
-				} else {
-					CopyUnicodeString(Name,Sender);
-				}
-			}
-		}
-	}
 	if (mystrncasecmp(argv[2],"TEXT",0)) {
 		chars_read = UnicodeLength(Buffer[0]);
 		if (chars_read != 0) {
@@ -3074,16 +3086,33 @@ static void SendSaveSMS(int argc, char *argv[])
 		}
 	}
 
-	if (mystrncasecmp(argv[1],"--savesms",0)) {
-		error=Phone->GetSMSFolders(&s, &folders);
-		Print_Error(error);
+	if (mystrncasecmp(argv[1],"--displaysms",0)) {
+		if (mystrncasecmp(argv[2],"OPERATOR",0)) {
+			if (bitmap[0].Bitmap[0].Type==GSM_OperatorLogo && strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0) {
+				printmsg("No network code\n");
+				exit(-1);
+			}
+		}
 	} else {
-		if (Validity.VPF != 0 && SMSCSet != 0) {
-			PhoneSMSC.Location = SMSCSet;
-			error=Phone->GetSMSC(&s,&PhoneSMSC);
-			Print_Error(error);
-			CopyUnicodeString(SMSC,PhoneSMSC.Number);
-			SMSCSet = 0;
+		GSM_Init(true);
+
+		if (mystrncasecmp(argv[2],"OPERATOR",0)) {
+			if (bitmap[0].Bitmap[0].Type==GSM_OperatorLogo && strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0) {
+				error=Phone->GetNetworkInfo(&s,&NetInfo);
+				Print_Error(error);
+				strcpy(bitmap[0].Bitmap[0].NetworkCode,NetInfo.NetworkCode);
+				if (mystrncasecmp(argv[1],"--savesms",0)) {
+					EncodeUnicode(Sender, "OpLogo",6);
+					EncodeUnicode(Sender+6*2,bitmap[0].Bitmap[0].NetworkCode,3);
+					EncodeUnicode(Sender+6*2+3*2,bitmap[0].Bitmap[0].NetworkCode+4,2);
+					if (UnicodeLength(GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode))<GSM_MAX_SMS_NAME_LENGTH-7) {
+						EncodeUnicode(Name,"OpLogo ",7);
+						CopyUnicodeString(Name+7*2,GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode));
+					} else {
+						CopyUnicodeString(Name,Sender);
+					}
+				}
+			}
 		}
 	}
 
@@ -3110,14 +3139,36 @@ static void SendSaveSMS(int argc, char *argv[])
 
 		}
 	}
-
 	if (MaxSMS != -1 && sms.Number > MaxSMS) {
 		printmsg("There is %i SMS packed and %i limit. Exiting\n",sms.Number,MaxSMS);
-		GSM_Terminate();
+		if (!mystrncasecmp(argv[1],"--displaysms",0)) GSM_Terminate();
 		exit(-1);
 	}
 
+	if (mystrncasecmp(argv[1],"--displaysms",0)) {
+		if (SMSCSet != 0) {
+			printmsg("Use -smscnumber option to give SMSC number\n");
+			exit(-1);
+		}
+
+		for (i=0;i<sms.Number;i++) {
+			sms.SMS[i].Location			= 0;
+			sms.SMS[i].ReplyViaSameSMSC		= ReplyViaSameSMSC;
+			sms.SMS[i].SMSC.Location		= 0;
+			sms.SMS[i].PDU				= SMS_Submit;
+			if (DeliveryReport) sms.SMS[i].PDU	= SMS_Status_Report;
+			CopyUnicodeString(sms.SMS[i].Number, Sender);
+			CopyUnicodeString(sms.SMS[i].SMSC.Number, SMSC);
+			if (Validity.VPF != 0) memcpy(&sms.SMS[i].SMSC.Validity,&Validity,sizeof(GSM_SMSValidity));
+			DisplaySMSFrame(&sms.SMS[i]);
+		}
+
+		exit(-1);
+	}
 	if (mystrncasecmp(argv[1],"--savesms",0)) {
+		error=Phone->GetSMSFolders(&s, &folders);
+		Print_Error(error);
+
 		for (i=0;i<sms.Number;i++) {
 			printmsg("Saving SMS %i/%i\n",i+1,sms.Number);
 			sms.SMS[i].Location		= 0;
@@ -3135,6 +3186,14 @@ static void SendSaveSMS(int argc, char *argv[])
 				DecodeUnicodeString2(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
 		}
 	} else {
+		if (Validity.VPF != 0 && SMSCSet != 0) {
+			PhoneSMSC.Location = SMSCSet;
+			error=Phone->GetSMSC(&s,&PhoneSMSC);
+			Print_Error(error);
+			CopyUnicodeString(SMSC,PhoneSMSC.Number);
+			SMSCSet = 0;
+		}
+
 		/* We do not want to make it forever - press Ctrl+C to stop */
 		signal(SIGINT, interrupted);
 		printmsg("If you want break, press Ctrl+C...\n");
@@ -5446,15 +5505,15 @@ static void NokiaSetPhoneMenus(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void NokiaTests(int argc, char *argv[])
+static void NokiaSelfTests(int argc, char *argv[])
 {
 	GSM_Init(true);
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
-	DCT3tests(argc, argv);
+	DCT3SelfTests(argc, argv);
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-	DCT4tests(argc, argv);
+	DCT4SelfTests(argc, argv);
 #endif
 
 	GSM_Terminate();
@@ -6582,6 +6641,62 @@ static void SearchPhone(int argc, char *argv[])
 	while (1) {if (num == 0) break;my_sleep(5);}
 }
 
+static void NokiaGetADC(int argc, char *argv[])
+{
+	GSM_Init(true);
+
+#ifdef GSM_ENABLE_NOKIA_DCT3
+	DCT3GetADC(argc,argv);
+#endif
+#ifdef GSM_ENABLE_NOKIA_DCT4
+	DCT4GetADC(argc, argv);
+#endif
+
+	GSM_Terminate();
+}
+
+static void NokiaDisplayTest(int argc, char *argv[])
+{
+	GSM_Init(true);
+
+#ifdef GSM_ENABLE_NOKIA_DCT3
+	DCT3DisplayTest(argc,argv);
+#endif
+#ifdef GSM_ENABLE_NOKIA_DCT4
+	DCT4DisplayTest(argc, argv);
+#endif
+
+	GSM_Terminate();
+}
+
+static void NokiaGetT9(int argc, char *argv[])
+{
+	GSM_Init(true);
+
+#ifdef GSM_ENABLE_NOKIA_DCT3
+	DCT3GetT9(argc,argv);
+#endif
+#ifdef GSM_ENABLE_NOKIA_DCT4
+	DCT4GetT9(argc, argv);
+#endif
+
+	GSM_Terminate();
+}
+
+static void NokiaVibraTest(int argc, char *argv[])
+{
+	GSM_Init(true);
+
+#ifdef GSM_ENABLE_NOKIA_DCT3
+	DCT3VibraTest(argc,argv);
+#endif
+#ifdef GSM_ENABLE_NOKIA_DCT4
+	DCT4VibraTest(argc, argv);
+#endif
+
+	GSM_Terminate();
+}
+
 static void usage(void)
 {
 	printmsg("[Gammu version %s built %s %s]\n\n",VERSION,__TIME__,__DATE__);
@@ -6839,11 +6954,15 @@ static void usage(void)
 	printf("gammu --nokiagett9\n");
 	printf("gammu --nokiasetvibralevel level\n");
 	printf("gammu --nokiagetvoicerecord location\n");
+	printf("gammu --nokiasetlights keypad|display|torch on|off\n");
+	printf("gammu --nokiadisplaytest number\n");
+	printf("gammu --nokiagetadc\n");
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 	printf("gammu --nokiasecuritycode\n");
-	printf("gammu --nokiatests\n");
+	printf("gammu --nokiaselftests\n");
 	printf("gammu --nokiasetphonemenus\n");
+	printf("gammu --nokiavibratest\n");
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT3
 	printf("\ngammu --nokianetmonitor test\n");
@@ -6908,8 +7027,9 @@ static GSM_Parameters Parameters[] = {
 	{"--getsmsfolders",		0, 0, GetSMSFolders		},
 	{"--getallsms",			0, 0, GetAllSMS			},
 	{"--geteachsms",		0, 0, GetEachSMS		},
-	{"--savesms",			1,30, SendSaveSMS		},
-	{"--sendsms",			2,30, SendSaveSMS		},
+	{"--savesms",			1,30, SendSaveDisplaySMS	},
+	{"--sendsms",			2,30, SendSaveDisplaySMS	},
+	{"--displaysms",		2,30, SendSaveDisplaySMS	},
 	{"--addsmsfolder",		1, 1, AddSMSFolder		},
 	{"--smsd",			2, 2, SMSDaemon			},
 	{"--getringtone",		1, 2, GetRingtone		},
@@ -6970,13 +7090,17 @@ static GSM_Parameters Parameters[] = {
 	{"--nokianetmonitor36",		0, 0, DCT3ResetTest36		},
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-	{"--nokiagett9",		0, 0, DCT4GetT9			},
 	{"--nokiasetvibralevel",	1, 1, DCT4SetVibraLevel		},
 	{"--nokiagetvoicerecord",	1, 1, DCT4GetVoiceRecord	},
+	{"--nokiasetlights",		2, 2, DCT4SetLight		},
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
+	{"--nokiavibratest",		0, 0, NokiaVibraTest		},
+	{"--nokiagett9",		0, 0, NokiaGetT9		},
+	{"--nokiadisplaytest",		1, 1, NokiaDisplayTest		},
+	{"--nokiagetadc",		0, 0, NokiaGetADC		},
 	{"--nokiasecuritycode",		0, 0, NokiaSecurityCode		},
-	{"--nokiatests",		0, 0, NokiaTests		},
+	{"--nokiaselftests",		0, 0, NokiaSelfTests		},
 	{"--nokiasetphonemenus",	0, 0, NokiaSetPhoneMenus	},
 #endif
 #ifdef DEBUG

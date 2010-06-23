@@ -5,10 +5,11 @@
 #ifndef WIN32
 #ifndef DJGPP
 
-#include <string.h>
 #include <sys/file.h>
 #include <sys/time.h>
+#include <string.h>
 #include <termios.h>
+#include <errno.h>
 
 #include "../../gsmcomon.h"
 #include "ser_unx.h"
@@ -33,13 +34,17 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 {
     GSM_Device_SerialData   *d = &s->Device.Data.Serial;
     struct termios          t;
+    int			    i;
 
     /* O_NONBLOCK MUST be used here as the CLOCAL may be currently off
      * and if DCD is down the "open" syscall would be stuck wating for DCD.
      */
     d->hPhone = open(s->CurrentConfig->Device, O_RDWR | O_NOCTTY | O_NONBLOCK);
     if (d->hPhone < 0) {
+	i = errno;
         GSM_OSErrorInfo(s,"open in serial_open");
+	if (i ==  2) return GE_DEVICENOTEXIST;		//no such file or directory
+	if (i == 13) return GE_DEVICENOPERMISSION;	//permission denied
         return GE_DEVICEOPENERROR;
     }
 

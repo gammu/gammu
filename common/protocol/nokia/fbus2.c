@@ -1,7 +1,7 @@
 
 #include "../../gsmstate.h"
 
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2DKU5)
 
 #include <stdio.h>
 #include <string.h>
@@ -126,6 +126,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 	switch (s->ConnectionType) {
 		case GCT_FBUS2:
 		case GCT_FBUS2DLR3:
+		case GCT_FBUS2DKU5:
 		case GCT_FBUS2BLUE:
 		case GCT_BLUEFBUS2:
 			if (rx_byte == FBUS2_FRAME_ID) correct = true;
@@ -298,7 +299,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 	return GE_NONE;
 }
 
-#if defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
+#if defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
 static void FBUS2_WriteDLR3(GSM_StateMachine *s, char *command, int length, int timeout)
 {
 	unsigned char		buff[300];
@@ -352,7 +353,8 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		FBUS2_WriteDLR3(s,"AT*NOKIAFBUS\r\n",	14,10);
 		break;
 #endif
-#ifdef GSM_ENABLE_FBUS2DLR3
+#if defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5)
+	case GCT_FBUS2DKU5:
 	case GCT_FBUS2DLR3:
 		error=Device->DeviceSetDtrRts(s,false,false);
 	    	if (error!=GE_NONE) return error; 

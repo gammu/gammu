@@ -114,6 +114,11 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{GE_NONE,			"No error."},
 	{GE_DEVICEOPENERROR,		"Error opening device. Unknown/busy or no permissions."},
 	{GE_DEVICELOCKED,		"Error opening device. Device locked."},
+	{GE_DEVICENOTEXIST,		"Error opening device. Not exist."},
+	{GE_DEVICEBUSY,			"Error opening device. Already opened by other application."},
+	{GE_DEVICENOPERMISSION,		"Error opening device. No permissions."},
+	{GE_DEVICENODRIVER,		"Error opening device. No required driver in operating system."},
+	{GE_DEVICENOTWORK,		"Error opening device. Some hardware not connected/wrong configured."},
 	{GE_DEVICEDTRRTSERROR,		"Error setting device DTR or RTS."},
 	{GE_DEVICECHANGESPEEDERROR,	"Error setting device speed. Maybe speed not supported."},
 	{GE_DEVICEWRITEERROR,		"Error writing device."},
@@ -145,6 +150,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{GE_BUG,			"Nobody is perfect, some bug appeared in protocol implementation. Please contact authors."},
 	{GE_CANCELED,			"Transfer was canceled by phone (you pressed cancel on phone?)."},
 	/* Some missed */
+	{GE_OTHERCONNECTIONREQUIRED,	"Current connection type doesn't support called function."},
 
 	{0,				""}
 };
