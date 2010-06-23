@@ -1453,6 +1453,7 @@ static GSM_Error N6510_ReplyGetWAPMMSSettings(GSM_Protocol_Message msg, GSM_Stat
 			case 0x03: smprintf(s, "GPRS\n");	break;
 			default:   smprintf(s, "unknown\n");
 		}
+		if (msg.Buffer[tmp+3] == 0x01) smprintf(s, "locked\n");
 #endif
 		Data->WAPSettings->Settings[0].IsContinuous = false;
 		if (msg.Buffer[tmp] == 0x01) Data->WAPSettings->Settings[0].IsContinuous = true;
@@ -1464,6 +1465,8 @@ static GSM_Error N6510_ReplyGetWAPMMSSettings(GSM_Protocol_Message msg, GSM_Stat
 
 		Data->WAPSettings->ActiveBearer = WAPSETTINGS_BEARER_DATA;
 		if (msg.Buffer[tmp+2] == 0x03) Data->WAPSettings->ActiveBearer = WAPSETTINGS_BEARER_GPRS;
+
+		if (msg.Buffer[tmp+3] == 0x01) Data->WAPSettings->ReadOnly = true;
 
 		tmp+=3;
 
@@ -1610,6 +1613,8 @@ static GSM_Error N6510_GetWAPMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettin
 	error = N6510_EnableWAPMMSSettings(s, MMS);
 	if (error!=ERR_NONE) return error;
 
+	settings->ReadOnly = false;
+
 	req[4] = settings->Location-1;
 	s->Phone.Data.WAPSettings = settings;
 	if (MMS) {
@@ -1656,6 +1661,10 @@ static GSM_Error N6510_ReplySetWAPMMSSettings(GSM_Protocol_Message msg, GSM_Stat
 			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 			return ERR_UNKNOWNRESPONSE;
 		}
+	case 0x28:
+	case 0x2B:
+		smprintf(s, "Set OK\n");
+		return ERR_NONE;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
@@ -1666,6 +1675,10 @@ static GSM_Error N6510_SetWAPMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettin
 	int 		i, pad = 0, length, pos = 5, loc1=-1,loc2=-1;
 	unsigned char 	req[1000] = {N6110_FRAME_HEADER, 0x18,
 				     0x00};		/* Location */
+	unsigned char 	Lock[5] = {N6110_FRAME_HEADER, 0x27,
+				   0x00};		/* Location */
+	unsigned char 	UnLock[5] = {N6110_FRAME_HEADER, 0x2A,
+				   0x00};		/* Location */
 
 	error = N6510_EnableWAPMMSSettings(s, MMS);
 	if (error!=ERR_NONE) return error;
@@ -1813,6 +1826,17 @@ static GSM_Error N6510_SetWAPMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettin
 		error = GSM_WaitFor (s, req, pos, 0x3f, 4, ID_SetWAPSettings);
 	}
 	if (error != ERR_NONE) return error;
+	if (settings->ReadOnly) {
+		Lock[4] = settings->Location-1;		
+		smprintf(s, "Making WAP settings readonly\n");
+		error = GSM_WaitFor (s, Lock, 5, 0x3f, 4, ID_SetWAPSettings);
+		if (error != ERR_NONE) return error;
+	} else {
+		UnLock[4] = settings->Location-1;		
+		smprintf(s, "Making WAP settings read-write\n");
+		error = GSM_WaitFor (s, UnLock, 5, 0x3f, 4, ID_SetWAPSettings);
+		if (error != ERR_NONE) return error;
+	}
 	return DCT3DCT4_SetActiveWAPMMSSet(s, settings, MMS);
 }
 
@@ -2356,7 +2380,7 @@ static GSM_Error N6510_ReplyGetRingtonesInfo(GSM_Protocol_Message msg, GSM_State
 
 	smprintf(s, "Ringtones info received\n");
 	memset(Data->RingtonesInfo,0,sizeof(GSM_AllRingtonesInfo));
-	if (!(msg.Buffer[4] * 256 + msg.Buffer[5])) return ERR_EMPTY;
+	if (msg.Buffer[4] * 256 + msg.Buffer[5] == 0x00) return ERR_EMPTY;
 	Data->RingtonesInfo->Number = msg.Buffer[4] * 256 + msg.Buffer[5];
 	tmp = 6;
 	for (i=0;i<Data->RingtonesInfo->Number;i++) {			
@@ -2378,10 +2402,12 @@ static GSM_Error N6510_PrivGetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtone
 	smprintf(s, "Getting binary ringtones ID\n");
 	if (AllRingtones) {
 		error = GSM_WaitFor (s, All_Req, 9, 0x1f, 4, ID_GetRingtonesInfo);
-		if (error == ERR_NONE && Info->Number == 0) return ERR_NOTSUPPORTED;
+		if (error == ERR_EMPTY && Info->Number == 0) return ERR_NOTSUPPORTED;
 		return error;
 	} else {
-		return GSM_WaitFor (s, UserReq, 8, 0x1f, 4, ID_GetRingtonesInfo);
+		error = GSM_WaitFor (s, UserReq, 8, 0x1f, 4, ID_GetRingtonesInfo);
+		if (error == ERR_EMPTY && Info->Number == 0) return ERR_NOTSUPPORTED;
+		return error;
 	}
 }
 
@@ -2440,7 +2466,8 @@ static GSM_Error N6510_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		/* In the future get binary and convert */
 		return ERR_NOTSUPPORTED;
 	case RING_NOKIABINARY:
-		s->Phone.Data.Ringtone=Ringtone;
+		s->Phone.Data.Ringtone	= Ringtone;
+		Info.Number 		= 0;
 		error=N6510_PrivGetRingtonesInfo(s, &Info, PhoneRingtone);
 		if (error != ERR_NONE) return error;
 		if (Ringtone->Location > Info.Number) return ERR_INVALIDLOCATION;
@@ -3126,11 +3153,9 @@ static GSM_Error N6510_GetCalendarNotePos3(GSM_StateMachine *s)
 static GSM_Error N6510_ReplyGetCalendarNotePos(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Buffer[3]) {
-#ifdef DEBUG
 	case 0x32:
 		/* Old method 1 for accessing calendar */
 		return N71_65_ReplyGetCalendarNotePos1(msg, s,&s->Phone.Data.Priv.N6510.FirstCalendarPos);
-#endif
 	case 0x96:
 		return N6510_ReplyGetCalendarNotePos3(msg, s,&s->Phone.Data.Priv.N6510.FirstCalendarPos);
 	}
@@ -4093,10 +4118,11 @@ static GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos
 			case GSM_File_Image_PNG    : Header[231]=0x02; Header[233]=0x03; break;
 			case GSM_File_Image_GIF    : Header[231]=0x02; Header[233]=0x05; break;
 			case GSM_File_Image_WBMP   : Header[231]=0x02; Header[233]=0x09; break;
-            case GSM_File_Sound_AMR    : Header[231]=0x04; Header[233]=0x01; break;
-            case GSM_File_Sound_MIDI   : Header[231]=0x04; Header[233]=0x05; break; //Header[238]=0x01; 
-            case GSM_File_Video_3GP    : Header[231]=0x08; Header[233]=0x05; break;
-            case GSM_File_Java_JAR     : Header[231]=0x10; Header[233]=0x01; break;
+	            	case GSM_File_Sound_AMR    : Header[231]=0x04; Header[233]=0x01; break;
+	            	case GSM_File_Sound_MIDI   : Header[231]=0x04; Header[233]=0x05; break; //Header[238]=0x01; 
+	            	case GSM_File_Sound_NRT    : Header[231]=0x04; Header[233]=0x06; break;
+	            	case GSM_File_Video_3GP    : Header[231]=0x08; Header[233]=0x05; break;
+	            	case GSM_File_Java_JAR     : Header[231]=0x10; Header[233]=0x01; break;
 #ifdef DEVELOP
 			case GSM_File_MMS:
 				Header[214]=0x07;
@@ -4165,28 +4191,29 @@ static GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos
 			Header[226] = Priv->FileToken / 256;
 			Header[227] = Priv->FileToken % 256;
 			switch(File->Type) {
-			case GSM_File_Image_JPG    : Header[231]=0x02; Header[233]=0x01; break;
-			case GSM_File_Image_BMP    : Header[231]=0x02; Header[233]=0x02; break;
-			case GSM_File_Image_PNG    : Header[231]=0x02; Header[233]=0x03; break;
-			case GSM_File_Image_GIF    : Header[231]=0x02; Header[233]=0x05; break;
-			case GSM_File_Image_WBMP   : Header[231]=0x02; Header[233]=0x09; break;
-            case GSM_File_Sound_AMR    : Header[231]=0x04; Header[233]=0x01; break;
-            case GSM_File_Sound_MIDI   : Header[231]=0x04; Header[233]=0x05; break; //Header[238]=0x01; 
-            case GSM_File_Video_3GP    : Header[231]=0x08; Header[233]=0x05; break;
-            case GSM_File_Java_JAR     : Header[231]=0x10; Header[233]=0x01; break;
+				case GSM_File_Image_JPG    : Header[231]=0x02; Header[233]=0x01; break;
+				case GSM_File_Image_BMP    : Header[231]=0x02; Header[233]=0x02; break;
+				case GSM_File_Image_PNG    : Header[231]=0x02; Header[233]=0x03; break;
+				case GSM_File_Image_GIF    : Header[231]=0x02; Header[233]=0x05; break;
+				case GSM_File_Image_WBMP   : Header[231]=0x02; Header[233]=0x09; break;
+		           	case GSM_File_Sound_AMR    : Header[231]=0x04; Header[233]=0x01; break;
+            			case GSM_File_Sound_MIDI   : Header[231]=0x04; Header[233]=0x05; break; //Header[238]=0x01; 
+		            	case GSM_File_Sound_NRT    : Header[231]=0x04; Header[233]=0x06; break;
+            			case GSM_File_Video_3GP    : Header[231]=0x08; Header[233]=0x05; break;
+            			case GSM_File_Java_JAR     : Header[231]=0x10; Header[233]=0x01; break;
 #ifdef DEVELOP
-			case GSM_File_MMS:
-				Header[214]=0x07;
-				Header[215]=0xd3;
-				Header[216]=0x06;
-				Header[217]=0x01;
-				Header[218]=0x12;
-				Header[219]=0x13;
-				Header[220]=0x29;
-				Header[233]=0x01;
-				break;
+				case GSM_File_MMS:
+					Header[214]=0x07;
+					Header[215]=0xd3;
+					Header[216]=0x06;
+					Header[217]=0x01;
+					Header[218]=0x12;
+					Header[219]=0x13;
+					Header[220]=0x29;
+					Header[233]=0x01;
+					break;
 #endif
-			default                    : Header[231]=0x01; Header[233]=0x05;
+				default                    : Header[231]=0x01; Header[233]=0x05;
 			}
 			Header[235] = 0x01;
 			Header[236] = Priv->ParentID / 256;
@@ -5206,6 +5233,8 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplySetWAPMMSSettings,	  "\x3f",0x03,0x19,ID_SetMMSSettings	  },
 	{N6510_ReplySetWAPMMSSettings,	  "\x3f",0x03,0x1A,ID_SetWAPSettings	  },
 	{N6510_ReplySetWAPMMSSettings,    "\x3f",0x03,0x1A,ID_SetMMSSettings	  },
+	{N6510_ReplySetWAPMMSSettings,    "\x3f",0x03,0x28,ID_SetWAPSettings	  },
+	{N6510_ReplySetWAPMMSSettings,    "\x3f",0x03,0x2B,ID_SetWAPSettings	  },
 
 	{N6510_ReplyGetOriginalIMEI,	  "\x42",0x07,0x00,ID_GetOriginalIMEI	  },
 	{N6510_ReplyGetManufactureMonth,  "\x42",0x07,0x00,ID_GetManufactureMonth },

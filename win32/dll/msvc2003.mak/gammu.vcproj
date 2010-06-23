@@ -202,6 +202,9 @@
 				RelativePath="..\..\..\common\phone\nokia\dct3\n6110.c">
 			</File>
 			<File
+				RelativePath="..\..\..\common\phone\nokia\dct3\n3320.c">
+			</File>
+			<File
 				RelativePath="..\..\..\common\phone\nokia\dct4\n6510.c">
 			</File>
 			<File
@@ -366,6 +369,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct3\n6110.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\phone\nokia\dct3\n3320.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct4\n6510.h">

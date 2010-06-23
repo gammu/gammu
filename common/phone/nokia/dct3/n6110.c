@@ -2664,6 +2664,7 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
         {DCT3DCT4_ReplyCallDivert,        "\x06",0x03,0x02,ID_Divert             },
         {DCT3DCT4_ReplyCallDivert,        "\x06",0x03,0x03,ID_Divert             },
         {N6110_ReplyUSSDInfo,             "\x06",0x03,0x05,ID_IncomingFrame      },
+        {NoneReply,		          "\x06",0x03,0x06,ID_IncomingFrame      },//incoming call divert info
 
         {N6110_ReplyGetSecurityStatus,    "\x08",0x03,0x08,ID_GetSecurityStatus  },
         {N6110_ReplyEnterSecurityCode,    "\x08",0x03,0x0b,ID_EnterSecurityCode  },
