@@ -41,6 +41,7 @@ unsigned char *GetMsg (INI_Section *cfg, unsigned char *default_string)
 	INI_Entry		*e;
 	INI_Section 		*h;
 	int			num;
+	int			len;
 
 	if (cfg==NULL) return default_string;
 
@@ -63,16 +64,21 @@ unsigned char *GetMsg (INI_Section *cfg, unsigned char *default_string)
 			break;
 		}
 	}
-	while (1) {
-		if (e == NULL) break;
+	while (e != NULL) {
 		num = -1;
 		DecodeUnicode(e->EntryName,buffer);
 		if (strlen(buffer) == 5 && (buffer[0] == 'F' || buffer[0] == 'f')) {
 			num = atoi(buffer+2);
 		}
 		if (num!=-1) {
-			DecodeUnicode(e->EntryValue+2,buff);
-			if (strncmp(buff,def_str,strlen(def_str))==0) {
+			DecodeUnicode(e->EntryValue,buff);
+			/* Remove quotes */
+			if (buff[0] == '"') {
+				len = strlen(buff);
+				memmove(buff, buff + 1, len - 1);
+				if (buff[len - 2] == '"') buff[len - 2] = 0;
+			}
+			if (strcmp(buff, def_str) == 0) {
 				sprintf(buff,"T%04i",num);
 				EncodeUnicode (buffer, buff, 5);
 			        retval = INI_GetValue(cfg, buff2, buffer, true);

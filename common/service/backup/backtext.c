@@ -232,7 +232,7 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 {
 	bool	text;
 	char	buffer[1000];
-	int	j;
+	int	j, i;
 
 	sprintf(buffer,"Location = %03i%c%c",Pbk->Location,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
@@ -312,8 +312,6 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				SaveBackupText(file, "", buffer, UseUnicode);
 				text = false;
 				break;
-			case PBK_Date:
-				break;
 			case PBK_Category:
 				sprintf(buffer,"Entry%02iType = Category%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
@@ -380,6 +378,10 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				sprintf(buffer,"Entry%02iType = Custom4%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
+			case PBK_SMSListID:
+			case PBK_RingtoneFileSystemID:
+			case PBK_Date:
+				break;
         	}
 		if (text) {
 			sprintf(buffer,"Entry%02iText",j);
@@ -396,6 +398,12 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				if (Pbk->Entries[j].VoiceTag!=0) {
 					sprintf(buffer,"Entry%02iVoiceTag = %i%c%c",j,Pbk->Entries[j].VoiceTag,13,10);
 					SaveBackupText(file, "", buffer, UseUnicode);
+				}
+				i = 0;
+				while (Pbk->Entries[j].SMSList[i]!=0) {
+					sprintf(buffer,"Entry%02iSMSList%02i = %i%c%c",j,i,Pbk->Entries[j].SMSList[i],13,10);
+					SaveBackupText(file, "", buffer, UseUnicode);
+					i++;
 				}
 				break;
 			default:
@@ -1145,7 +1153,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 {
 	unsigned char		buffer[10000];
 	char			*readvalue;
-	int			num;
+	int			num,i;
 	INI_Entry		*e;
 
 	Pbk->EntriesNum = 0;
@@ -1279,6 +1287,15 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 			if (readvalue!=NULL) {
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = atoi(readvalue);
+			}
+			i = 0;
+			while (1) {
+				Pbk->Entries[Pbk->EntriesNum].SMSList[i] = 0;
+				sprintf(buffer,"Entry%02iSMSList%02i",num,i);
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+				if (readvalue==NULL) break;
+				Pbk->Entries[Pbk->EntriesNum].SMSList[i] = atoi(readvalue);
+				i++;
 			}
 			Pbk->EntriesNum ++;
 		}
@@ -1750,8 +1767,7 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 
 	settings->Number = 0;
 	e = INI_FindLastSectionEntry(file_info, section, UseUnicode);
-	while (1) {
-		if (e == NULL) break;
+	while (e != NULL) {
 		num = -1;
 		if (UseUnicode) {
 			sprintf(buffer,"%s",DecodeUnicodeString(e->EntryName));
@@ -1912,8 +1928,7 @@ static void ReadProfileEntry(INI_Section *file_info, char *section, GSM_Profile 
 
 	Profile->FeaturesNumber = 0;
 	e = INI_FindLastSectionEntry(file_info, section, UseUnicode);
-	while (1) {
-		if (e == NULL) break;
+	while (e != NULL) {
 		num = -1;
 		if (UseUnicode) {
 			sprintf(buffer,"%s",DecodeUnicodeString(e->EntryName));

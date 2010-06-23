@@ -790,6 +790,209 @@ GSM_Error WINAPI myrestoresimpbk(int phone, int *percent)
 	return myrestorepbkmemory(phone, percent, MEM_SM);
 }
 
+GSM_Error WINAPI myrestorecalendar(int phone, int *percent)
+{
+	GSM_Error 		error;
+	GSM_CalendarEntry 	Calendar;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+	if (*percent == 100) return ERR_EMPTY;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
+	if (*percent == 200) {
+		error = s[phone].s.Phone.Functions->DeleteAllCalendar(&s[phone].s);
+		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
+ 			while (1) {
+				error = s[phone].s.Phone.Functions->GetNextCalendar(&s[phone].s,&Calendar,true);
+				if (error != ERR_NONE) break;
+				error = s[phone].s.Phone.Functions->DeleteCalendar(&s[phone].s,&Calendar);
+				if (error != ERR_NONE) {
+				        ReleaseMutex(s[phone].Mutex);
+					return error;
+				}
+			}
+		} else {
+			if (error != ERR_NONE) {
+			        ReleaseMutex(s[phone].Mutex);
+				return error;
+			}
+		}
+		BackupPos  = 0;		
+		BackupUsed = 0;
+		while (Backup.Calendar[BackupUsed]!=NULL) BackupUsed++;
+	}
+	error=s[phone].s.Phone.Functions->AddCalendar(&s[phone].s,Backup.Calendar[BackupPos]);
+	BackupPos++;
+	*percent = BackupPos*100/BackupUsed;
+        ReleaseMutex(s[phone].Mutex);
+	return error;
+}
+
+GSM_Error WINAPI myrestoretodo(int phone, int *percent)
+{
+	GSM_Error 		error;
+	GSM_ToDoEntry	 	ToDo;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+	if (*percent == 100) return ERR_EMPTY;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
+	if (*percent == 200) {
+		error = s[phone].s.Phone.Functions->DeleteAllToDo(&s[phone].s);
+		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
+ 			while (1) {
+				error = s[phone].s.Phone.Functions->GetNextToDo(&s[phone].s,&ToDo,true);
+				if (error != ERR_NONE) break;
+				error = s[phone].s.Phone.Functions->DeleteToDo(&s[phone].s,&ToDo);
+				if (error != ERR_NONE) {
+				        ReleaseMutex(s[phone].Mutex);
+					return error;
+				}
+			}
+		} else {
+			if (error != ERR_NONE) {
+			        ReleaseMutex(s[phone].Mutex);
+				return error;
+			}
+		}
+		BackupPos  = 0;		
+		BackupUsed = 0;
+		while (Backup.ToDo[BackupUsed]!=NULL) BackupUsed++;
+	}
+	error=s[phone].s.Phone.Functions->AddToDo(&s[phone].s,Backup.ToDo[BackupPos]);
+	BackupPos++;
+	*percent = BackupPos*100/BackupUsed;
+        ReleaseMutex(s[phone].Mutex);
+	return error;
+}
+
+GSM_Error WINAPI myrestorewapbookmark(int phone, int *percent)
+{
+	GSM_Error 		error;
+	GSM_WAPBookmark		Bookmark;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+	if (*percent == 100) return ERR_EMPTY;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
+	if (*percent == 200) {
+		error = ERR_NONE;
+		while (error==ERR_NONE) {
+			error = s[phone].s.Phone.Functions->DeleteWAPBookmark(&s[phone].s,&Bookmark);
+			Bookmark.Location = 1;
+			error = s[phone].s.Phone.Functions->GetWAPBookmark(&s[phone].s,&Bookmark);
+		}
+		BackupPos  = 0;		
+		BackupUsed = 0;
+		while (Backup.WAPBookmark[BackupUsed]!=NULL) BackupUsed++;
+	}
+	Backup.WAPBookmark[BackupPos]->Location = 0;
+	error=s[phone].s.Phone.Functions->SetWAPBookmark(&s[phone].s,Backup.WAPBookmark[BackupPos]);
+	BackupPos++;
+	*percent = BackupPos*100/BackupUsed;
+        ReleaseMutex(s[phone].Mutex);
+	return error;
+}
+
+GSM_Error WINAPI myrestorewapsettings(int phone, int *percent)
+{
+	GSM_Error error;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+	if (*percent == 100) return ERR_EMPTY;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
+	if (*percent == 200) {
+		BackupPos  = 0;		
+		BackupUsed = 0;
+		while (Backup.WAPSettings[BackupUsed]!=NULL) BackupUsed++;
+	}
+	error=s[phone].s.Phone.Functions->SetWAPSettings(&s[phone].s,Backup.WAPSettings[BackupPos]);
+	BackupPos++;
+	*percent = BackupPos*100/BackupUsed;
+        ReleaseMutex(s[phone].Mutex);
+	return error;
+}
+
+GSM_Error WINAPI myrestoremmssettings(int phone, int *percent)
+{
+	GSM_Error error;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+	if (*percent == 100) return ERR_EMPTY;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
+	if (*percent == 200) {
+		BackupPos  = 0;		
+		BackupUsed = 0;
+		while (Backup.MMSSettings[BackupUsed]!=NULL) BackupUsed++;
+	}
+	error=s[phone].s.Phone.Functions->SetMMSSettings(&s[phone].s,Backup.MMSSettings[BackupPos]);
+	BackupPos++;
+	*percent = BackupPos*100/BackupUsed;
+        ReleaseMutex(s[phone].Mutex);
+	return error;
+}
+
+GSM_Error WINAPI myrestorefmradio(int phone, int *percent)
+{
+	GSM_Error error;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+	if (*percent == 100) return ERR_EMPTY;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
+	if (*percent == 200) {
+		BackupPos  = 0;		
+		BackupUsed = 0;
+		while (Backup.FMStation[BackupUsed]!=NULL) BackupUsed++;
+		error=s[phone].s.Phone.Functions->ClearFMStations(&s[phone].s);
+		if (error != ERR_NONE) {
+		        ReleaseMutex(s[phone].Mutex);
+			return error;
+		}
+	}
+	error=s[phone].s.Phone.Functions->SetFMStation(&s[phone].s,Backup.FMStation[BackupPos]);
+	BackupPos++;
+	*percent = BackupPos*100/BackupUsed;
+        ReleaseMutex(s[phone].Mutex);
+	return error;
+}
+
+GSM_Error WINAPI myrestoregprspoint(int phone, int *percent)
+{
+	GSM_Error error;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+	if (*percent == 100) return ERR_EMPTY;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
+	if (*percent == 200) {
+		BackupPos  = 0;		
+		BackupUsed = 0;
+		while (Backup.GPRSPoint[BackupUsed]!=NULL) BackupUsed++;
+	}
+	error=s[phone].s.Phone.Functions->SetGPRSAccessPoint(&s[phone].s,Backup.GPRSPoint[BackupPos]);
+	BackupPos++;
+	*percent = BackupPos*100/BackupUsed;
+        ReleaseMutex(s[phone].Mutex);
+	return error;
+}
+
 /* ------------------------------ backup ----------------------------------- */
 
 GSM_Error WINAPI mystartbackup(int phone, GSM_Backup_Info *BackupFeat)

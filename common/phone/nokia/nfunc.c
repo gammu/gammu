@@ -42,7 +42,7 @@ int N71_65_PackPBKBlock(GSM_StateMachine *s, int id, int size, int no, unsigned 
 
 int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry entry, int *block2, bool DCT4, bool VoiceTag)
 {
-	int		count=0, len, i, block=0;
+	int		count=0, len, i, block=0, j;
 	char		string[500];
 	unsigned char	type;
  		
@@ -80,6 +80,12 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 				req[count++] = i+1;
 				req[count++] = 0x00;
 				req[count++] = entry.Entries[i].VoiceTag;
+			}
+			if (DCT4) {
+				j = 0;
+				while (entry.Entries[i].SMSList[j] != 0) {
+					j++;
+				}
 			}
 			continue;
 		}
@@ -152,7 +158,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				 int 			MessageLength)
 {
 	unsigned char 				*Block;
-	int					length = 0;
+	int					length = 0, i;
 	GSM_71_65_Phonebook_Entries_Types	Type;           
 
 	entry->EntriesNum 	= 0;
@@ -279,6 +285,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 #ifdef DEBUG
 			if (entry->Entries[entry->EntriesNum].VoiceTag != 0) smprintf(s, "Voice tag %i assigned\n",Block[7]);
 #endif
+			entry->Entries[entry->EntriesNum].SMSList[0] = 0;
 			entry->EntriesNum ++;
 
 			length = length + Block[3];
@@ -410,6 +417,17 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
 			continue;						
+		}
+		if (Block[0] == N6510_PBK_SMSLIST_ID) {
+			smprintf(s, "Entry %i is assigned to SMS list %i\n",Block[5]-1,Block[9]);
+			i = 0;
+			while(entry->Entries[Block[5]-1].SMSList[i] != 0) i++;
+			entry->Entries[Block[5]-1].SMSList[i+1] = 0;
+			entry->Entries[Block[5]-1].SMSList[i]   = Block[9];
+
+			length = length + Block[3];
+			Block  = &Block[(int) Block[3]];
+			continue;
 		}
 		if (Block[0] == N7110_PBK_UNKNOWN1) {
 			smprintf(s,"Unknown entry\n");

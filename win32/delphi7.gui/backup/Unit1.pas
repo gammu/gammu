@@ -61,7 +61,6 @@ type
     Panel1: TPanel;
     CheckBox8: TCheckBox;
     CheckBox9: TCheckBox;
-    CheckBox10: TCheckBox;
     procedure Button1Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure NextButtonClick(Sender: TObject);
@@ -291,7 +290,6 @@ begin
     if CheckBox7.Enabled and CheckBox7.Checked then CheckSelected:=true;
     if CheckBox8.Enabled and CheckBox8.Checked then CheckSelected:=true;
     if CheckBox9.Enabled and CheckBox9.Checked then CheckSelected:=true;
-    if CheckBox10.Enabled and CheckBox10.Checked then CheckSelected:=true;
   end;
 end;
 
@@ -324,7 +322,6 @@ begin
         CheckBox7.Enabled:=false;
         CheckBox8.Enabled:=false;
         CheckBox9.Enabled:=false;
-        CheckBox10.Enabled:=false;
         NextButton.Enabled:=false;
       end;
       exit;
@@ -349,7 +346,6 @@ begin
       CheckBox7.Enabled:=false;
       CheckBox8.Enabled:=false;
       CheckBox9.Enabled:=false;
-      CheckBox10.Enabled:=false;
       NextButton.Enabled:=false;
     end;
     exit;
@@ -442,7 +438,6 @@ begin
   if CheckBox7.Enabled then CheckBox7.Checked:=true;
   if CheckBox8.Enabled then CheckBox8.Checked:=true;
   if CheckBox9.Enabled then CheckBox9.Checked:=true;
-  if CheckBox10.Enabled then CheckBox10.Checked:=true;
   NextButton.Enabled:=CheckSelected;
 end;
 
@@ -457,7 +452,6 @@ begin
   if CheckBox7.Enabled then CheckBox7.Checked:=false;
   if CheckBox8.Enabled then CheckBox8.Checked:=false;
   if CheckBox9.Enabled then CheckBox9.Checked:=false;
-  if CheckBox10.Enabled then CheckBox10.Checked:=false;
   NextButton.Enabled:=CheckSelected;
 end;
 
@@ -680,6 +674,97 @@ begin
         if error<>ERR_NONE then application.MessageBox(pchar('Backup SIM pbk: error '+inttostr(integer(error))),'',0);
       end;
     end;
+    if (BackupForm.CheckBox3.Enabled) and (BackupForm.CheckBox3.Checked) then
+    begin
+      percent:=200;
+      BackupForm.Memo1.Lines.Add('Restoring calendar notes');
+      while percent<>100 do
+      begin
+        if BackupForm.CancelThread then exit;
+        error:=GSM_RestoreCalendar(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Position:=percent;
+        if error = ERR_EMPTY then break;
+        if error<>ERR_NONE then application.MessageBox(pchar('Backup SIM pbk: error '+inttostr(integer(error))),'',0);
+      end;
+    end;
+    if (BackupForm.CheckBox4.Enabled) and (BackupForm.CheckBox4.Checked) then
+    begin
+      percent:=200;
+      BackupForm.Memo1.Lines.Add('Restoring ToDo');
+      while percent<>100 do
+      begin
+        if BackupForm.CancelThread then exit;
+        error:=GSM_RestoreToDo(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Position:=percent;
+        if error = ERR_EMPTY then break;
+        if error<>ERR_NONE then application.MessageBox(pchar('Backup SIM pbk: error '+inttostr(integer(error))),'',0);
+      end;
+    end;
+    if (BackupForm.CheckBox5.Enabled) and (BackupForm.CheckBox5.Checked) then
+    begin
+      percent:=200;
+      BackupForm.Memo1.Lines.Add('Restoring WAP bookmarks');
+      while percent<>100 do
+      begin
+        if BackupForm.CancelThread then exit;
+        error:=GSM_RestoreWAPBookmark(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Position:=percent;
+        if error = ERR_EMPTY then break;
+        if error<>ERR_NONE then application.MessageBox(pchar('Backup SIM pbk: error '+inttostr(integer(error))),'',0);
+      end;
+    end;
+    if (BackupForm.CheckBox6.Enabled) and (BackupForm.CheckBox6.Checked) then
+    begin
+      percent:=200;
+      BackupForm.Memo1.Lines.Add('Restoring WAP settings');
+      while percent<>100 do
+      begin
+        if BackupForm.CancelThread then exit;
+        error:=GSM_RestoreWAPSettings(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Position:=percent;
+        if error = ERR_EMPTY then break;
+        if error<>ERR_NONE then application.MessageBox(pchar('Backup SIM pbk: error '+inttostr(integer(error))),'',0);
+      end;
+    end;
+    if (BackupForm.CheckBox7.Enabled) and (BackupForm.CheckBox7.Checked) then
+    begin
+      percent:=200;
+      BackupForm.Memo1.Lines.Add('Restoring MMS settings');
+      while percent<>100 do
+      begin
+        if BackupForm.CancelThread then exit;
+        error:=GSM_RestoreMMSSettings(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Position:=percent;
+        if error = ERR_EMPTY then break;
+        if error<>ERR_NONE then application.MessageBox(pchar('Backup SIM pbk: error '+inttostr(integer(error))),'',0);
+      end;
+    end;
+    if (BackupForm.CheckBox8.Enabled) and (BackupForm.CheckBox8.Checked) then
+    begin
+      percent:=200;
+      BackupForm.Memo1.Lines.Add('Restoring FM radio');
+      while percent<>100 do
+      begin
+        if BackupForm.CancelThread then exit;
+        error:=GSM_RestoreFMRadio(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Position:=percent;
+        if error = ERR_EMPTY then break;
+        if error<>ERR_NONE then application.MessageBox(pchar('Backup SIM pbk: error '+inttostr(integer(error))),'',0);
+      end;
+    end;
+    if (BackupForm.CheckBox9.Enabled) and (BackupForm.CheckBox9.Checked) then
+    begin
+      percent:=200;
+      BackupForm.Memo1.Lines.Add('Restoring GPRS points');
+      while percent<>100 do
+      begin
+        if BackupForm.CancelThread then exit;
+        error:=GSM_RestoreGPRSPoint(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Position:=percent;
+        if error = ERR_EMPTY then break;
+        if error<>ERR_NONE then application.MessageBox(pchar('Backup SIM pbk: error '+inttostr(integer(error))),'',0);
+      end;
+    end;
   end;
   BackupForm.StatusBar1.Panels.Items[0].Text:='Click "Quit". Thank you for using this software';
   BackupForm.NextButton.Caption:='Quit';
@@ -731,7 +816,6 @@ begin
     CheckBox7.Enabled:=false;
     CheckBox8.Enabled:=false;
     CheckBox9.Enabled:=false;
-    CheckBox10.Enabled:=false;
     BackupInfo:=BackupInfo0;
     GSM_GetBackupFeaturesForBackup(PhoneID,PChar(FileNameEdit.Text),@BackupInfo);
     CheckBox1.Enabled:=BackupInfo.PhonePhonebook;
@@ -742,8 +826,7 @@ begin
     CheckBox6.Enabled:=BackupInfo.WAPSettings;
     CheckBox7.Enabled:=BackupInfo.MMSSettings;
     CheckBox8.Enabled:=BackupInfo.FMStation;
-    CheckBox9.Enabled:=BackupInfo.Profiles;
-    CheckBox10.Enabled:=BackupInfo.GPRSPoint;
+    CheckBox9.Enabled:=BackupInfo.GPRSPoint;
     Button2.Enabled:=true;
     Button5.Enabled:=true;
     Button7.Enabled:=true;

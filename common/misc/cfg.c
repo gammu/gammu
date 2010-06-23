@@ -319,15 +319,11 @@ INI_Entry *INI_FindLastSectionEntry(INI_Section *file_info, unsigned char *secti
 			}
 		}
 	}
+
+	if (e == NULL) return NULL;
+	
 	/* Goes into last value in section */
-	while (1) {
-		if (e == NULL) break;
-		if (e->Next != NULL) {
-			e = e->Next;
-		} else {
-			break;
-		}
-	}
+	while (e->Next != NULL) e = e->Next;
 	return e;
 }
 

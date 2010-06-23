@@ -847,8 +847,8 @@ static OnePhoneModel allmodels[] = {
 	{"2100" ,"NAM-2" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},//quess
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-	{"3100" ,"RH-19" ,"",           {F_PBKTONEGAL,0}},
-	{"3100b","RH-50" ,"",           {F_PBKTONEGAL,0}},
+	{"3100" ,"RH-19" ,"",           {F_PBKTONEGAL,F_PBKSMSLIST,0}},
+	{"3100b","RH-50" ,"",           {F_PBKTONEGAL,F_PBKSMSLIST,0}},
 	{"3108", "RH-6",  "Nokia 3108",	{0}}, //does it have irda ?
 	{"3200", "RH-30" ,"Nokia 3200",	{F_PBKTONEGAL,0}},
 	{"3200a","RH-31" ,"Nokia 3200",	{F_PBKTONEGAL,0}},
@@ -877,8 +877,11 @@ static OnePhoneModel allmodels[] = {
 #ifdef GSM_ENABLE_NOKIA6110
 	{"3610" ,"NAM-1" ,"",           {F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},//quess
 #endif
+#if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA3650)
+	{"3650" ,"NHL-8" ,"Nokia 3650", {0}},
+	{"NGAGE","NEM-4" ,"",           {F_RADIO,0}},
+#endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"3650" ,"NHL-8" ,"Nokia 3650", {F_RADIO,0}},
 	{"5100" ,"NPM-6" ,"Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 	{"5100" ,"NPM-6U","Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 	{"5100" ,"NPM-6X","Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
@@ -906,7 +909,7 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"6200" ,"NPL-3" ,"Nokia 6200", {F_PBKTONEGAL,0}},
-	{"6220" ,"RH-20" ,"Nokia 6220", {F_PBKTONEGAL,F_TODO66,0}},
+	{"6220" ,"RH-20" ,"Nokia 6220", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"6210" ,"NPE-3" ,"Nokia 6210", {F_VOICETAGS,F_CAL62,0}},
@@ -918,8 +921,8 @@ static OnePhoneModel allmodels[] = {
 	{"6385" ,"NHP-2AX","Nokia 6385",{F_TODO63,F_CAL65,F_NOMIDI,F_NOMMS,F_VOICETAGS,0}},
 	{"6510" ,"NPM-9" ,"Nokia 6510", {F_TODO63,F_CAL65,F_NOMIDI,F_RADIO,F_NOFILESYSTEM,F_NOMMS,F_VOICETAGS,0}},
 	{"6610" ,"NHL-4U","Nokia 6610", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
-	{"6800" ,"NSB-9" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
-	{"6800" ,"NHL-6" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
+	{"6800" ,"NSB-9" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},
+	{"6800" ,"NHL-6" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"7110" ,"NSE-5" ,"Nokia 7110", {F_CAL62,0}},
@@ -995,7 +998,7 @@ static OnePhoneModel allmodels[] = {
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)
 	{"BE5", 	  "ONE TOUCH 500","",				   {F_ALCATEL,F_SMSONLYSENT,F_BROKENCPBS,0}},
 	{"BH4",		  "ONE TOUCH 535","ALCATEL OT535",		   {F_ALCATEL,F_SMSONLYSENT,0}},
-	{"BF5", 	  "ONE TOUCH 715","ALCATEL OT715",		   {F_ALCATEL,F_SMSONLYSENT,0}},
+	{"BF5", 	  "ONE TOUCH 715","ALCATEL OT715",		   {F_ALCATEL,F_SMSONLYSENT,F_BROKENCPBS,0}},
 #endif
 	{"unknown",	  ""      ,"",           {0}}
 };

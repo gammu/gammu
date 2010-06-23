@@ -238,7 +238,9 @@ typedef enum {
 	GSM_File_Image_GIF,
 	GSM_File_Image_PNG,
 	GSM_File_Image_WBMP,
-	GSM_File_Ringtone_MIDI,
+        GSM_File_Video_3GP,
+        GSM_File_Sound_AMR,
+        GSM_File_Sound_MIDI,
 #ifdef DEVELOP
 	GSM_File_MMS,
 #endif

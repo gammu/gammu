@@ -156,7 +156,7 @@ void GSM_IdentifyFileFormat(GSM_File *File)
 		} else if (File->Buffer[0] == 0xFF && File->Buffer[1] == 0xD8) {
 			File->Type = GSM_File_Image_JPG;
 		} else if (memcmp(File->Buffer, "MThd",4)==0) {
-			File->Type = GSM_File_Ringtone_MIDI;
+			File->Type = GSM_File_Sound_MIDI;
 		}
 	}
 }

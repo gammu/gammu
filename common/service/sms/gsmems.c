@@ -385,9 +385,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			FreeBytes = 0;
 			while (FreeBytes != Width) {
 				Width2 = 8;
-				while(1) {
-					if (FreeBytes+Width2 == Width) break;
-
+				while (FreeBytes + Width2 != Width) {
 					if (PHONE_GetBitmapSize(BitmapType,Width2+8,Height) > Length) break;
 
 					Width2 = Width2 + 8;
@@ -426,9 +424,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			FreeBytes = 0;
 			while (FreeBytes != Width) {
 				Width2 = 8;
-				while(1) {
-					if (FreeBytes+Width2 == Width) break;
-
+				while (FreeBytes + Width2 != Width) {
 					if (PHONE_GetBitmapSize(BitmapType,Width2+8,Height) > Length) break;
 
 					Width2 = Width2 + 8;

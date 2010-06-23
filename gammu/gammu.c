@@ -28,14 +28,14 @@
 #  include "sniff.h"
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT3
-#  include "depend/dct3.h"
-#  include "depend/dct3trac/wmx.h"
+#  include "depend/nokia/dct3.h"
+#  include "depend/nokia/dct3trac/wmx.h"
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-#  include "depend/dct4.h"
+#  include "depend/nokia/dct4.h"
 #endif
 #ifdef GSM_ENABLE_ATGEN
-#  include "depend/dsiemens.h"
+#  include "depend/siemens/dsiemens.h"
 #endif
 
 #ifdef HAVE_PTHREAD
@@ -559,8 +559,7 @@ static void GetAllMemory(int argc, char *argv[])
 	
 	GSM_Init(true);
 
-	while (1) {
-		if (gshutdown) break;
+	while (!gshutdown) {
 		error = Phone->GetNextMemory(&s, &Entry, start);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
@@ -752,8 +751,7 @@ static void ListMemoryCategoryEntries(int Category)
 	/* Category can be only for ME stored entries */
 	Entry.MemoryType  = MEM_ME;
 
-	while (1) {
-		if (gshutdown) break;
+	while (!gshutdown) {
 		error = Phone->GetNextMemory(&s, &Entry, start);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
@@ -1346,6 +1344,7 @@ static void GetSMS(int argc, char *argv[])
 	GSM_MultiSMSMessage	sms;
 	GSM_SMSFolders		folders;
 	int			start, stop;
+	int			j;
 
 	GetStartStop(&start, &stop, 3, argc, argv);
 
@@ -1354,9 +1353,9 @@ static void GetSMS(int argc, char *argv[])
 	error=Phone->GetSMSFolders(&s, &folders);
 	Print_Error(error);
 
-	for (i=start;i<=stop;i++) {
+	for (j = start; j <= stop; j++) {
 		sms.SMS[0].Folder	= atoi(argv[2]);
-		sms.SMS[0].Location	= i;
+		sms.SMS[0].Location	= j;
 		error=Phone->GetSMS(&s, &sms);
 		switch (error) {
 		case ERR_EMPTY:
@@ -2021,9 +2020,12 @@ static void GetAllCalendar(int argc, char *argv[])
 	GSM_CalendarEntry	Note;
 	bool			refresh	= true;
 
+	signal(SIGINT, interrupt);
+	printmsgerr("Press Ctrl+C to break...\n");
+
 	GSM_Init(true);
 
-	while (1) {
+	while (!gshutdown) {
 		error=Phone->GetNextCalendar(&s,&Note,refresh);
 		if (error == ERR_EMPTY) break;
 		PrintCalendar(&Note);
@@ -4631,7 +4633,7 @@ static void Restore(int argc, char *argv[])
 
 	DoRestore = false;
 	if (Backup.ToDo[0] != NULL) {
-		error   = Phone->GetToDoStatus(&s,&ToDoStatus);
+		error = Phone->GetToDoStatus(&s,&ToDoStatus);
 		if (error == ERR_NONE) {
 			max = 0;
 			while (Backup.ToDo[max]!=NULL) max++;
@@ -5898,8 +5900,7 @@ static void ListToDoCategoryEntries(int Category)
 	bool			start = true;
 	int			j;
 
-	while (1) {
-		if (gshutdown) break;
+	while (!gshutdown) {
 		error = Phone->GetNextToDo(&s, &Entry, start);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
@@ -5993,9 +5994,12 @@ static void GetAllToDo(int argc, char *argv[])
 	GSM_ToDoEntry		ToDo;
 	bool			start = true;
 
+	signal(SIGINT, interrupt);
+	printmsgerr("Press Ctrl+C to break...\n");
+
 	GSM_Init(true);
 
-	while (1) {
+	while (!gshutdown) {
 		error = Phone->GetNextToDo(&s, &ToDo, start);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
@@ -6676,9 +6680,7 @@ static void GetFileFolder(int argc, char *argv[])
 		allnum++;		
 	}
 
-	while (1) {
-		if (allnum == num) break;
-
+	while (allnum != num) {
 		error = Phone->GetNextFileFolder(&s,&File,Start);
 		if (error == ERR_EMPTY) break;
 	    	Print_Error(error);
@@ -6788,8 +6790,12 @@ static void AddFile(int argc, char *argv[])
 					File.Type = GSM_File_Image_GIF;
 				} else if (mystrncasecmp(argv[i],"PNG",0)) {
 					File.Type = GSM_File_Image_PNG;
-				} else if (mystrncasecmp(argv[i],"MIDI",0)) {
-					File.Type = GSM_File_Ringtone_MIDI;
+                                } else if (mystrncasecmp(argv[i],"MIDI",0)) {
+                                        File.Type = GSM_File_Sound_MIDI;
+                                } else if (mystrncasecmp(argv[i],"AMR",0)) {
+                                        File.Type = GSM_File_Sound_AMR;
+                                } else if (mystrncasecmp(argv[i],"3GP",0)) {
+                                        File.Type = GSM_File_Video_3GP;
 				} else {
 					printmsg("What file type (\"%s\") ?\n",argv[i]);
 					exit(-1);
@@ -6885,7 +6891,6 @@ static void NokiaAddFile(int argc, char *argv[])
 	GSM_DateTime		DT,DT2;
 	time_t     		t_time1,t_time2;
 	unsigned char 		buffer[10000],JAR[500],Vendor[500],Name[500],Version[500],FileID[400];
-	unsigned char		*http;
 	bool 			Start = true, Found = false, wasclr;
 	bool			ModEmpty = false;
 	int			i = 0, Pos, Size, Size2, nextlong;
@@ -6984,17 +6989,6 @@ static void NokiaAddFile(int argc, char *argv[])
 		error = GSM_ReadFile(buffer, &File);
 		Print_Error(error);
 
-		/* Bostjan Muller 3200 RH-30 3.08 */
-		http = strstr(File.Buffer,"MIDlet-Jar-URL: http://");
-		if (http != NULL) {
-			i = 16;
-			while (http[i] != '\n') {
-				if (http[i] == ':') http[i] = '_';
-				if (http[i] == '/') http[i] = '_';
-				i++;
-			}
-		}
-
 		/* Getting values from JAD file */
 		error = GSM_JADFindData(File, Vendor, Name, JAR, Version, &Size);
 		if (error == ERR_FILENOTSUPPORTED) {
@@ -7027,6 +7021,15 @@ static void NokiaAddFile(int argc, char *argv[])
   		printmsgerr("Adding \"%s\"",Name);
 		if (Version[0] != 0x00) printmsgerr(" version %s",Version);
 		printmsgerr(" created by %s\n",Vendor);
+
+		/* Bostjan Muller 3200 RH-30 3.08 */
+		if (strstr(JAR,"http://") != NULL) {
+			i = strlen(JAR)-1;
+			while (JAR[i] != '/') i--;
+			strcpy(buffer,JAR+i+1);
+			strcpy(JAR,buffer);
+			dbgprintf("New file name is \"%s\"\n",JAR);
+		}
 
 		/* Changing all #13 or #10 to #13#10 in JAD */
 		Pos    = 0;
@@ -7551,9 +7554,9 @@ static void SearchPhone(int argc, char *argv[])
 #  endif
 #endif
 	for(i=0;i<dev;i++) MakeSearchThread(i);
-	while (1) {if (num == 0) break;my_sleep(5);}
+	while (num != 0) my_sleep(5);
 	for(i=dev;i<dev2;i++) MakeSearchThread(i);
-	while (1) {if (num == 0) break;my_sleep(5);}
+	while (num != 0) my_sleep(5);
 }
 #endif /*Support for threads */
 
@@ -7779,6 +7782,7 @@ static GSM_Parameters Parameters[] = {
 	{"--networkinfo",		0, 0, NetworkInfo,		{H_Network,0},			""},
 #ifdef GSM_ENABLE_AT	
 	{"--siemenssatnetmon",		0, 0, ATSIEMENSSATNetmon,	{H_Siemens,H_Network,0},	""},
+	{"--siemensnetmonact",		1, 1, ATSIEMENSActivateNetmon,	{H_Siemens,H_Network,0},	"netmon_type (1-full, 2-simple)"},	
 	{"--siemensnetmonitor",		1, 1, ATSIEMENSNetmonitor,	{H_Siemens,H_Network,0},	"test"},
 #endif	
 #ifdef GSM_ENABLE_NOKIA6110

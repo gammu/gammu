@@ -1472,6 +1472,7 @@ typedef enum {
 	F_PBK35,	/* Phonebook in 3510 style with ringtones ID			*/
 	F_PBKIMG,	/* Phonebook in 7250 style with picture ID			*/
 	F_PBKTONEGAL,	/* Phonebook with selecting ringtones from gallery              */
+	F_PBKSMSLIST,	/* Phonebook with SMS list					*/
 	F_RADIO,	/* Phone with FM radio						*/
 	F_TODO63,	/* ToDo in 6310 style - 0x55 msg type				*/
 	F_TODO66,	/* ToDo in 6610 style - like calendar, with date and other	*/

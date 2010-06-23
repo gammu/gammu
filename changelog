@@ -17,11 +17,68 @@ This software was sponsored (in time order) by:
    * software for Pocket Computers
 5. GriffinTeam (www.gsm-ms.com)
    * DCT3/DCT4 flasher
+6. MatrixTeam (www.matrixflasher.com)
+   * DCT3/DCT4 flasher
 
 and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20040304 - 0.95.0
+* new functionality:
+  * enabling new menu features for 6220
+  * NGAGE ID
+  * smsd deamon has support for receiving SMS and saving to MySQL database
+
+* fixes and improvements:
+
+20040304 - 0.94.0
+* new functionality:
+  * * Italian translation                                   (Andrea Spadaccini)
+    * some Slackware packaging support (for checking)
+      with make tgz
+  * backup/restore in Delphi has full functionality. See
+    www.matrixflasher.com/rev/revdown.htm for compiled versions
+  * DCT4:
+    * some support for SMS lists in phonebook
+    * support for AMR and 3GP formats
+  * * more supported formats for Siemens netmonitor                     (Walek)
+    * activator for netmonitor for Siemens using solutions from Ivan
+      Gorinov
+  * --getalltodo and --getallcalendar can be interrupted by      (Michal Cihar)
+    Ctrl+C 
+
+* fixes and improvements:
+  * DCT4:
+    * fixed available features for 6220
+    * deleting ToDo method 2
+    * fixed problem with uploading Java stuff with http:// in URL
+    * fixed getting/uploading very big (>64kB) files in filesystem
+  * fix for getting SMS for 6110 (SMS memory)                (Bakhtiar A Hamid)
+  * * FIX for Alcatel 715                                        (Michal Cihar)
+    * updated Czech translation
+    * optimalised and improved readibility of many while (1) loops
+    * fix GetMsg, to handle correcly messages, that start with same text
+    * fix GetSMS not to use global variable i which is also used in 
+      displaymultismsinfo
+    * ATGEN:
+      * handle correctly error when sending message
+      * return correct error from ATGEN_GetMemoryInfo
+
+NOTE: this time was very hard. Mainly many personal problems and others.
+      I think, majority of them will not repeat, because their sources
+      are removed.
+
+ToDo: 1.ending support for all features in new Series 40 models
+      2.receiving files over OBEX
+      3.more backup/restore and other functions with GUI for win32
+      4.checking for available Bluetooth services and selecting adequate
+        RF channels
+      5.SonyEricsson issues
+      6.looking into packaging - there should be again checked, if files
+        for deb or tgz must be in root dir in source tarball (there are
+	too many files there now)
+
 20040203 - 0.93.0
 * new functionality:
   * MSVC 2002 projects updated to MSVC 2003

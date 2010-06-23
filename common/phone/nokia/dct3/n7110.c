@@ -1093,10 +1093,10 @@ static GSM_Error N7110_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	req[11] = NOKIA_GetMemoryType(s, entry->MemoryType,N71_65_MEMORY_TYPES);
 	if (req[11]==0xff) return ERR_NOTSUPPORTED;
 
-	req[12] = (entry->Location >> 8);
+	req[12] = entry->Location >> 8;
 	req[13] = entry->Location & 0xff;
 
-	count = count + N71_65_EncodePhonebookFrame(s, req+18, *entry, &blocks, false, IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_VOICETAGS));
+	count   = count + N71_65_EncodePhonebookFrame(s, req+18, *entry, &blocks, false, IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_VOICETAGS));
 	req[17] = blocks;
 
 	smprintf(s, "Writing phonebook entry\n");

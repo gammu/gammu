@@ -297,6 +297,7 @@ int main(int argc, char *argv[])
 
 	ProcessLangFile("../../../../docs/docs/locale/gammu_pl.txt");
 	ProcessLangFile("../../../../docs/docs/locale/gammu_de.txt");
+	ProcessLangFile("../../../../docs/docs/locale/gammu_it.txt");
 	ProcessLangFile("../../../../docs/docs/locale/gammu_cs.txt");
 #else
 	RemoveDuplicatedStrings("../../docs/docs/locale/gammu_us.txt");
@@ -304,6 +305,7 @@ int main(int argc, char *argv[])
 
 	ProcessLangFile("../../docs/docs/locale/gammu_pl.txt");
 	ProcessLangFile("../../docs/docs/locale/gammu_de.txt");
+	ProcessLangFile("../../docs/docs/locale/gammu_it.txt");
 	ProcessLangFile("../../docs/docs/locale/gammu_cs.txt");
 #endif
 	printf("\n");

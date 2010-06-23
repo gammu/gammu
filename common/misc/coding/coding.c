@@ -22,10 +22,8 @@ unsigned int UnicodeLength(const unsigned char *str)
 
 	if (str == NULL) return 0;
 
-	while(1) {
-		if (str[len*2] == 0 && str[len*2+1] == 0) break;
-		len++;
-	}
+	while(str[len*2] != 0 || str[len*2+1] != 0) len++;
+
 	return len;
 }
 
@@ -744,11 +742,11 @@ void BufferAlign(unsigned char *Destination, int *CurrentBit)
 {
 	int i=0;
 
-	while(1) {
-		if (!(((*CurrentBit)+i)%8)) break;
+	while(((*CurrentBit) + i) % 8 != 0) {
 		ClearBit(Destination, (*CurrentBit)+i);
 		i++;
 	}
+
 	(*CurrentBit) = (*CurrentBit) + i;
 }
 
@@ -756,10 +754,10 @@ void BufferAlignNumber(int *CurrentBit)
 {
 	int i=0;
 
-	while(1) {
-		if (!(((*CurrentBit)+i)%8)) break;
+	while(((*CurrentBit) + i) % 8 != 0) {
 		i++;
 	}
+
 	(*CurrentBit) = (*CurrentBit) + i;
 }
 
@@ -1347,7 +1345,7 @@ void EncodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
 	unsigned char 	in[3], out[4];
 	int 		i, pos = 0, len, outpos = 0;
 
-	while(1) {
+	while (pos < Length) {
 		len = 0;
 		for (i = 0; i < 3; i++) {
 			in[i] = 0;
@@ -1361,8 +1359,8 @@ void EncodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
 			EncodeBASE64Block(in, out, len);
 			for (i = 0; i < 4; i++) Output[outpos++] = out[i];
 		}
-		if (pos == Length) break;
         }
+
 	Output[outpos++] = 0;
 }
 
@@ -1379,8 +1377,7 @@ int DecodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
 	unsigned char 	in[4], out[3], v;
 	int 		i, len, pos = 0, outpos = 0;
 
-	while(1) {
-		if (pos >= Length) break;
+	while (pos < Length) {
 		len = 0;
 	        for(i = 0; i < 4; i++) {
 	       		v = 0;

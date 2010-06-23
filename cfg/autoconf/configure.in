@@ -57,18 +57,20 @@ dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS(dirent.h)
 AC_CHECK_HEADERS(sys/ioctl.h)
+AC_CHECK_HEADERS(mysql/mysql.h,
+        [mysql="yes"
+         LDLIBS="$LDLIBS -Wl,--whole-archive /usr/lib/mysql/libmysqlclient.a -Wl,--no-whole-archive -lz"],
+        [mysql="no"])
 AC_CHECK_HEADER(linux/irda.h,
-	[AC_DEFINE(HAVE_IRDA)
-	irda="yes"],
-	[irda="no"],
-	[#include <sys/socket.h>
+        [AC_DEFINE(HAVE_IRDA)
+        irda="yes"],
+        [irda="no"],
+        [#include <sys/socket.h>
 #include <linux/types.h>
 #include <sys/ioctl.h>])
 dnl This checking is not used now
-dnl AC_CHECK_HEADERS(mysql/mysql.h)
 dnl AC_CHECK_HEADERS(fcntl.h sys/file.h sys/ioctl.h sys/time.h unistd.h)
 dnl AC_SUBST(HAVE_DIRENT_H)
-
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -79,9 +81,9 @@ AC_STRUCT_TM
 
 dnl Checks for libraries.
 CHECK_PTHREAD(
-	[AC_DEFINE(HAVE_PTHREAD)
+        [AC_DEFINE(HAVE_PTHREAD)
         pthread="yes"],
-	[echo "WARNING: pthread can not be used, searching disabled!"
+        [echo "WARNING: pthread can not be used, searching disabled!"
         pthread="no"])
 LDLIBS="$LDLIBS $PTHREAD_LIBS $PTHREAD_CFLAGS"
 CFLAGS="$CFLAGS $PTHREAD_CFLAGS"
@@ -96,295 +98,295 @@ AC_CACHE_CHECK([for the Bluez Bluetooth stack], ac_cv_have_sockaddr_rc,
 dnl doc directory
 DOC_DIR="$datadir/doc/gammu"
 AC_ARG_WITH(docdir,
-	[  --with-docdir=DIR       Specifies the documentation directory],
-	[ if test x$withval = xyes; then
-		AC_MSG_WARN(Usage is: --with-docdir=DIR)
-	  else
-		DOC_DIR="$withval"
-	  fi
-	]
+        [  --with-docdir=DIR       Specifies the documentation directory],
+        [ if test x$withval = xyes; then
+                AC_MSG_WARN(Usage is: --with-docdir=DIR)
+          else
+                DOC_DIR="$withval"
+          fi
+        ]
 )
 AC_SUBST(DOC_DIR)
 
 dnl locales directory
 LOCALE_DIR="$datadir/gammu"
 AC_ARG_WITH(localedir,
-	[  --with-localedir=DIR    Specifies the localisation directory],
-	[ if test x$withval = xyes; then
-		AC_MSG_WARN(Usage is: --with-localedir=DIR)
-	  else
-		LOCALE_DIR="$withval"
-	  fi
-	]
+        [  --with-localedir=DIR    Specifies the localisation directory],
+        [ if test x$withval = xyes; then
+                AC_MSG_WARN(Usage is: --with-localedir=DIR)
+          else
+                LOCALE_DIR="$withval"
+          fi
+        ]
 )
 AC_SUBST(LOCALE_DIR)
 
 dnl Path for making RPM
 RPM_DIR="/usr/src/RPM"
 AC_ARG_WITH(rpmdir,
-	[  --with-rpmdir=DIR       Specifies the directory for making RPM],
-	[ if test x$withval = xyes; then
-		AC_MSG_WARN(Usage is: --with-rpmdir=DIR)
-	  else
-		RPM_DIR="$withval"
-	  fi
-	],[
-		if test -r /usr/lib/rpm/macros  ; then
-			get_rpm_var() {
-			VALUE=$(grep -s "^%$1[[[:space:]]]" ~/.rpmmacros /usr/lib/rpm/macros | head -n 1 | awk '{print $2}')
-			if test -z "$VALUE"  ; then
-				exit 1
-			fi
+        [  --with-rpmdir=DIR       Specifies the directory for making RPM],
+        [ if test x$withval = xyes; then
+                AC_MSG_WARN(Usage is: --with-rpmdir=DIR)
+          else
+                RPM_DIR="$withval"
+          fi
+        ],[
+                if test -r /usr/lib/rpm/macros  ; then
+                        get_rpm_var() {
+                        VALUE=$(grep -s "^%$1[[[:space:]]]" ~/.rpmmacros /usr/lib/rpm/macros | head -n 1 | awk '{print $2}')
+                        if test -z "$VALUE"  ; then
+                                exit 1
+                        fi
 
-			while echo "$VALUE" | grep -q '%' ; do
-			VAR=$(echo "$VALUE" | sed 's/^[[^%]]*%{\([[^}]]*\)}.*$/\1/')
-			REPL=$(get_rpm_var "$VAR")
-			VALUE=$(echo "$VALUE" | sed "s@%{$VAR}@$REPL@")
-		done
-		echo $VALUE
-		}
+                        while echo "$VALUE" | grep -q '%' ; do
+                        VAR=$(echo "$VALUE" | sed 's/^[[^%]]*%{\([[^}]]*\)}.*$/\1/')
+                        REPL=$(get_rpm_var "$VAR")
+                        VALUE=$(echo "$VALUE" | sed "s@%{$VAR}@$REPL@")
+                done
+                echo $VALUE
+                }
 
-		VALUE=$(get_rpm_var _topdir)
-		if test ! -z "$VALUE"  ; then
-			RPM_DIR="$VALUE"
-		fi
-		fi
-	]
+                VALUE=$(get_rpm_var _topdir)
+                if test ! -z "$VALUE"  ; then
+                        RPM_DIR="$VALUE"
+                fi
+                fi
+        ]
 )
 AC_SUBST(RPM_DIR)
 
 dnl temp directory
 TEMP_DIR="/tmp"
 AC_ARG_WITH(tmpdir,
-	[  --with-tmpdir=DIR       Specifies the temporary directory],
-	[ if test x$withval = xyes; then
-		AC_MSG_WARN(Usage is: --with-tmpdir=DIR)
-	  else
-		TEMP_DIR="$withval"
-	  fi
-	]
+        [  --with-tmpdir=DIR       Specifies the temporary directory],
+        [ if test x$withval = xyes; then
+                AC_MSG_WARN(Usage is: --with-tmpdir=DIR)
+          else
+                TEMP_DIR="$withval"
+          fi
+        ]
 )
 AC_SUBST(TEMP_DIR)
 
 dnl Path for bluetooth library
 gsm_bt_dir=""
 AC_ARG_WITH(bluedir,
-	[  --with-bluedir=DIR      Specifies the base libbluetooth],
-	[ if test x$withval = xyes; then
-		AC_MSG_WARN(Usage is: --with-bluedir=DIR)
-	  else
-		LDLIBS="$LDLIBS -L$withval/lib/ -lbluetooth"
-		CFLAGS="$CFLAGS -I$withval/include/"
-		gsm_bt_dir="$withval"
-	  fi
-	]
+        [  --with-bluedir=DIR      Specifies the base libbluetooth],
+        [ if test x$withval = xyes; then
+                AC_MSG_WARN(Usage is: --with-bluedir=DIR)
+          else
+                LDLIBS="$LDLIBS -L$withval/lib/ -lbluetooth"
+                CFLAGS="$CFLAGS -I$withval/include/"
+                gsm_bt_dir="$withval"
+          fi
+        ]
 )
 
 dnl Enabling or not protocols
 AC_ARG_ENABLE(mbus,
-	[  --disable-mbus          Disable Nokia MBUS2 protocol],
-	[gsm_enable_mbus2="no"],
-	[AC_DEFINE(GSM_ENABLE_MBUS2) gsm_enable_mbus2="yes"])
+        [  --disable-mbus          Disable Nokia MBUS2 protocol],
+        [gsm_enable_mbus2="no"],
+        [AC_DEFINE(GSM_ENABLE_MBUS2) gsm_enable_mbus2="yes"])
 AC_ARG_ENABLE(fbus,
-	[  --disable-fbus          Disable Nokia FBUS2 protocol],
-	[gsm_enable_fbus2="no"],
-	[AC_DEFINE(GSM_ENABLE_FBUS2) gsm_enable_fbus2="yes"])
+        [  --disable-fbus          Disable Nokia FBUS2 protocol],
+        [gsm_enable_fbus2="no"],
+        [AC_DEFINE(GSM_ENABLE_FBUS2) gsm_enable_fbus2="yes"])
 AC_ARG_ENABLE(fbusdlr3,
-	[  --disable-fbusdlr3      Disable Nokia FBUS2 protocol
-	                  with DLR3(P) cable (Nokia 6210/63xx/71xx)],
-	[gsm_enable_fbus2dlr3="no"],
-	[AC_DEFINE(GSM_ENABLE_FBUS2DLR3) gsm_enable_fbus2dlr3="yes"])
+        [  --disable-fbusdlr3      Disable Nokia FBUS2 protocol
+                          with DLR3(P) cable (Nokia 6210/63xx/71xx)],
+        [gsm_enable_fbus2dlr3="no"],
+        [AC_DEFINE(GSM_ENABLE_FBUS2DLR3) gsm_enable_fbus2dlr3="yes"])
 AC_ARG_ENABLE(fbusdku5,
-	[  --disable-fbusdku5      Disable Nokia FBUS2 protocol
-	                  with DKU5 cable (Nokia with Pop-Port)],
-	[gsm_enable_fbus2dku5="no"],
-	[AC_DEFINE(GSM_ENABLE_FBUS2DKU5) gsm_enable_fbus2dku5="yes"])
+        [  --disable-fbusdku5      Disable Nokia FBUS2 protocol
+                          with DKU5 cable (Nokia with Pop-Port)],
+        [gsm_enable_fbus2dku5="no"],
+        [AC_DEFINE(GSM_ENABLE_FBUS2DKU5) gsm_enable_fbus2dku5="yes"])
 AC_ARG_ENABLE(fbuspl2303,
-	[  --disable-fbuspl2303    Disable Nokia FBUS2 protocol
-	                  with USB cable with PL2303 chip (Nokia with Pop-Port)],
-	[gsm_enable_fbus2pl2303="no"],
-	[AC_DEFINE(GSM_ENABLE_FBUS2PL2303) gsm_enable_fbus2pl2303="yes"])
+        [  --disable-fbuspl2303    Disable Nokia FBUS2 protocol
+                          with USB cable with PL2303 chip (Nokia with Pop-Port)],
+        [gsm_enable_fbus2pl2303="no"],
+        [AC_DEFINE(GSM_ENABLE_FBUS2PL2303) gsm_enable_fbus2pl2303="yes"])
 AC_ARG_ENABLE(fbusblue,
-	[  --disable-fbusblue      Disable Nokia FBUS2 protocol
-	                  over Bluetooth legacy device (Nokia 6210)],
-	[gsm_enable_fbus2blue="no"],
-	[AC_DEFINE(GSM_ENABLE_FBUS2BLUE) gsm_enable_fbus2blue="yes"])
+        [  --disable-fbusblue      Disable Nokia FBUS2 protocol
+                          over Bluetooth legacy device (Nokia 6210)],
+        [gsm_enable_fbus2blue="no"],
+        [AC_DEFINE(GSM_ENABLE_FBUS2BLUE) gsm_enable_fbus2blue="yes"])
 AC_ARG_ENABLE(fbusirda,
-	[  --disable-fbusirda      Disable FBUS2 over direct infrared device
-	                  (Nokia 5210/61xx/82xx)],
-	[gsm_enable_fbus2irda="no"],
-	[AC_DEFINE(GSM_ENABLE_FBUS2IRDA) gsm_enable_fbus2irda="yes"])
+        [  --disable-fbusirda      Disable FBUS2 over direct infrared device
+                          (Nokia 5210/61xx/82xx)],
+        [gsm_enable_fbus2irda="no"],
+        [AC_DEFINE(GSM_ENABLE_FBUS2IRDA) gsm_enable_fbus2irda="yes"])
 AC_ARG_ENABLE(phonetblue,
-	[  --disable-phonetblue    Disable Nokia PHONET FBUS over Bluetooth
+        [  --disable-phonetblue    Disable Nokia PHONET FBUS over Bluetooth
                           legacy device (all new Nokias)],
-	[gsm_enable_phonetblue="no"],
-	[AC_DEFINE(GSM_ENABLE_PHONETBLUE) gsm_enable_phonetblue="yes"])
+        [gsm_enable_phonetblue="no"],
+        [AC_DEFINE(GSM_ENABLE_PHONETBLUE) gsm_enable_phonetblue="yes"])
 AC_ARG_ENABLE(mrouterblue,
-	[  --disable-mrouterblue   Disable Symbian with m-router (TCPIP based)
+        [  --disable-mrouterblue   Disable Symbian with m-router (TCPIP based)
                           over Bluetooth legacy device],
-	[gsm_enable_mrouterblue="no"],
-	[AC_DEFINE(GSM_ENABLE_MROUTERBLUE) gsm_enable_mrouterblue="yes"])
+        [gsm_enable_mrouterblue="no"],
+        [AC_DEFINE(GSM_ENABLE_MROUTERBLUE) gsm_enable_mrouterblue="yes"])
 AC_ARG_ENABLE(at,
-	[  --disable-at            Disable AT protocol],
-	[gsm_enable_at="no"],
-	[AC_DEFINE(GSM_ENABLE_AT) gsm_enable_at="yes"])
+        [  --disable-at            Disable AT protocol],
+        [gsm_enable_at="no"],
+        [AC_DEFINE(GSM_ENABLE_AT) gsm_enable_at="yes"])
 AC_ARG_ENABLE(irdaphonet,
-	[  --disable-irdaphonet    Disable NOKIA PHONET FBUS over irda sockets
-	                  (all new Nokia)],
-	[gsm_enable_irdaphonet="no"],
-	[if test $irda = yes ; then
-		AC_DEFINE(GSM_ENABLE_IRDAPHONET)
-		gsm_enable_irdaphonet="yes"
-	 else
-		gsm_enable_irdaphonet="no"
-	 fi])
+        [  --disable-irdaphonet    Disable NOKIA PHONET FBUS over irda sockets
+                          (all new Nokia)],
+        [gsm_enable_irdaphonet="no"],
+        [if test $irda = yes ; then
+                AC_DEFINE(GSM_ENABLE_IRDAPHONET)
+                gsm_enable_irdaphonet="yes"
+         else
+                gsm_enable_irdaphonet="no"
+         fi])
 AC_ARG_ENABLE(irdaat,
-	[  --disable-irdaat        Disable AT commands over irda sockets],
-	[gsm_enable_irdaat="no"],
-	[if test $irda = yes ; then
-		AC_DEFINE(GSM_ENABLE_IRDAAT)
-		gsm_enable_irdaat="yes"
-	 else
-		gsm_enable_irdaat="no"
-	 fi])
+        [  --disable-irdaat        Disable AT commands over irda sockets],
+        [gsm_enable_irdaat="no"],
+        [if test $irda = yes ; then
+                AC_DEFINE(GSM_ENABLE_IRDAAT)
+                gsm_enable_irdaat="yes"
+         else
+                gsm_enable_irdaat="no"
+         fi])
 AC_ARG_ENABLE(irdaobex,
-	[  --disable-irdaobex      Disable OBEX over irda sockets],
-	[gsm_enable_irdaobex="no"],
-	[if test $irda = yes ; then
-		AC_DEFINE(GSM_ENABLE_IRDAOBEX)
-		gsm_enable_irdaobex="yes"
-	 else
-		gsm_enable_irdaobex="no"
-	 fi])
+        [  --disable-irdaobex      Disable OBEX over irda sockets],
+        [gsm_enable_irdaobex="no"],
+        [if test $irda = yes ; then
+                AC_DEFINE(GSM_ENABLE_IRDAOBEX)
+                gsm_enable_irdaobex="yes"
+         else
+                gsm_enable_irdaobex="no"
+         fi])
 AC_ARG_ENABLE(bluefbus,
-	[  --disable-bluefbus      Disable Nokia FBUS2 over Bluetooth stack
+        [  --disable-bluefbus      Disable Nokia FBUS2 over Bluetooth stack
                           (Nokia 6210)],
-	[gsm_enable_bluefbus2="no"],
-	[if test $ac_cv_have_sockaddr_rc = yes; then
-		AC_DEFINE(GSM_ENABLE_BLUEFBUS2)
-		gsm_enable_bluefbus2="yes"
-		if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
-			LDLIBS="$LDLIBS -lbluetooth"
-		fi
-	  else
-		gsm_enable_bluefbus2="no"
-	  fi])
+        [gsm_enable_bluefbus2="no"],
+        [if test $ac_cv_have_sockaddr_rc = yes; then
+                AC_DEFINE(GSM_ENABLE_BLUEFBUS2)
+                gsm_enable_bluefbus2="yes"
+                if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
+                        LDLIBS="$LDLIBS -lbluetooth"
+                fi
+          else
+                gsm_enable_bluefbus2="no"
+          fi])
 AC_ARG_ENABLE(bluephonet,
-	[  --disable-bluephonet    Disable Nokia PHONET FBUS over Bluetooth
+        [  --disable-bluephonet    Disable Nokia PHONET FBUS over Bluetooth
                           stack (all new Nokias)],
-	[gsm_enable_bluephonet="no"],
-	[if test $ac_cv_have_sockaddr_rc = yes; then
-		AC_DEFINE(GSM_ENABLE_BLUEPHONET)
-		gsm_enable_bluephonet="yes"
-		if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
-			LDLIBS="$LDLIBS -lbluetooth"
-		fi
-	  else
-		gsm_enable_bluephonet="no"
-	  fi])
+        [gsm_enable_bluephonet="no"],
+        [if test $ac_cv_have_sockaddr_rc = yes; then
+                AC_DEFINE(GSM_ENABLE_BLUEPHONET)
+                gsm_enable_bluephonet="yes"
+                if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
+                        LDLIBS="$LDLIBS -lbluetooth"
+                fi
+          else
+                gsm_enable_bluephonet="no"
+          fi])
 AC_ARG_ENABLE(blueat,
-	[  --disable-blueat        Disable AT commands over Bluetooth stack],
-	[gsm_enable_blueat="no"],
-	[if test $ac_cv_have_sockaddr_rc = yes; then
-		AC_DEFINE(GSM_ENABLE_BLUEAT)
-		gsm_enable_blueat="yes"
-		if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
-			LDLIBS="$LDLIBS -lbluetooth"
-		fi
-	  else
-		gsm_enable_blueat="no"
-	  fi])	
+        [  --disable-blueat        Disable AT commands over Bluetooth stack],
+        [gsm_enable_blueat="no"],
+        [if test $ac_cv_have_sockaddr_rc = yes; then
+                AC_DEFINE(GSM_ENABLE_BLUEAT)
+                gsm_enable_blueat="yes"
+                if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
+                        LDLIBS="$LDLIBS -lbluetooth"
+                fi
+          else
+                gsm_enable_blueat="no"
+          fi])  
 AC_ARG_ENABLE(blueobex,
-	[  --disable-blueobex      Disable OBEX over Bluetooth stack],
-	[gsm_enable_blueobex="no"],
-	[if test $ac_cv_have_sockaddr_rc = yes; then
-		AC_DEFINE(GSM_ENABLE_BLUEOBEX)
-		gsm_enable_blueobex="yes"
-		if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
-			LDLIBS="$LDLIBS -lbluetooth"
-		fi
-	  else
-		gsm_enable_blueobex="no"
-	  fi])	
+        [  --disable-blueobex      Disable OBEX over Bluetooth stack],
+        [gsm_enable_blueobex="no"],
+        [if test $ac_cv_have_sockaddr_rc = yes; then
+                AC_DEFINE(GSM_ENABLE_BLUEOBEX)
+                gsm_enable_blueobex="yes"
+                if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
+                        LDLIBS="$LDLIBS -lbluetooth"
+                fi
+          else
+                gsm_enable_blueobex="no"
+          fi])  
 
 dnl Some general options
 AC_ARG_ENABLE(lgpl,
-	[  --enable-lgpl           Disable source with GNU GPL only license],
-	[AC_DEFINE(ENABLE_LGPL) lgpl="yes"],
-	[lgpl="no"])
+        [  --enable-lgpl           Disable source with GNU GPL only license],
+        [AC_DEFINE(ENABLE_LGPL) lgpl="yes"],
+        [lgpl="no"])
 AC_ARG_ENABLE(debug,
-	[  --enable-debug          Compile with debug code],
-	[AC_DEFINE(DEBUG) debug="yes"],
-	[debug="no"])
+        [  --enable-debug          Compile with debug code],
+        [AC_DEFINE(DEBUG) debug="yes"],
+        [debug="no"])
 AC_ARG_ENABLE(cb,
-	[  --enable-cb             Enable Cell Broadcast messages support],
-	[AC_DEFINE(GSM_ENABLE_CELLBROADCAST) gsm_enable_cellbroadcast="yes"],
-	[gsm_enable_cellbroadcast="no"])
+        [  --enable-cb             Enable Cell Broadcast messages support],
+        [AC_DEFINE(GSM_ENABLE_CELLBROADCAST) gsm_enable_cellbroadcast="yes"],
+        [gsm_enable_cellbroadcast="no"])
 AC_ARG_ENABLE(7110incoming,
-	[  --enable-7110incoming   Enable Nokia 62xx/71xx/9xxx incoming call/SMS info],
-	[AC_DEFINE(GSM_ENABLE_N71_92INCOMINGINFO) gsm_enable_71_92incominginfo="yes"],
-	[gsm_enable_71_92incominginfo="no"])
+        [  --enable-7110incoming   Enable Nokia 62xx/71xx/9xxx incoming call/SMS info],
+        [AC_DEFINE(GSM_ENABLE_N71_92INCOMINGINFO) gsm_enable_71_92incominginfo="yes"],
+        [gsm_enable_71_92incominginfo="no"])
 AC_ARG_ENABLE(6210calendar,
-	[  --enable-6210calendar   Force using 6210 frames for calendar for DCT4 phones],
-	[AC_DEFINE(GSM_FORCE_DCT4_CALENDAR_6210) gsm_force_dct4_calendar_6210="yes"],
-	[gsm_force_dct4_calendar_6210="no"])
+        [  --enable-6210calendar   Force using 6210 frames for calendar for DCT4 phones],
+        [AC_DEFINE(GSM_FORCE_DCT4_CALENDAR_6210) gsm_force_dct4_calendar_6210="yes"],
+        [gsm_force_dct4_calendar_6210="no"])
 AC_ARG_ENABLE(backup,
-	[  --disable-backup        Disable backup/restore functions],
-	[gsm_enable_backup="no"],
-	[AC_DEFINE(GSM_ENABLE_BACKUP) gsm_enable_backup="yes"])
+        [  --disable-backup        Disable backup/restore functions],
+        [gsm_enable_backup="no"],
+        [AC_DEFINE(GSM_ENABLE_BACKUP) gsm_enable_backup="yes"])
 
 dnl Phone modules
 AC_ARG_ENABLE(alcatel,
-	[  --disable-alcatel       Disable Alcatel phone support],
-	[gsm_enable_alcatel="no"],
-	[AC_DEFINE(GSM_ENABLE_ALCABUS)
-	 AC_DEFINE(GSM_ENABLE_ALCATEL) gsm_enable_alcatel="yes"])
+        [  --disable-alcatel       Disable Alcatel phone support],
+        [gsm_enable_alcatel="no"],
+        [AC_DEFINE(GSM_ENABLE_ALCABUS)
+         AC_DEFINE(GSM_ENABLE_ALCATEL) gsm_enable_alcatel="yes"])
 AC_ARG_ENABLE(6110,
-	[  --disable-6110          Disable Nokia 61xx and compatible support],
-	[gsm_enable_nokia6110="no"],
-	[AC_DEFINE(GSM_ENABLE_NOKIA6110) gsm_enable_nokia6110="yes"])
+        [  --disable-6110          Disable Nokia 61xx and compatible support],
+        [gsm_enable_nokia6110="no"],
+        [AC_DEFINE(GSM_ENABLE_NOKIA6110) gsm_enable_nokia6110="yes"])
 AC_ARG_ENABLE(6510,
-	[  --disable-6510          Disable Nokia 6510 and compatible support],
-	[gsm_enable_nokia6510="no"],
-	[AC_DEFINE(GSM_ENABLE_NOKIA6510) gsm_enable_nokia6510="yes"])
+        [  --disable-6510          Disable Nokia 6510 and compatible support],
+        [gsm_enable_nokia6510="no"],
+        [AC_DEFINE(GSM_ENABLE_NOKIA6510) gsm_enable_nokia6510="yes"])
 AC_ARG_ENABLE(7110,
-	[  --disable-7110          Disable Nokia 7110 and compatible support],
-	[gsm_enable_nokia7110="no"],
-	[AC_DEFINE(GSM_ENABLE_NOKIA7110) gsm_enable_nokia7110="yes"])
+        [  --disable-7110          Disable Nokia 7110 and compatible support],
+        [gsm_enable_nokia7110="no"],
+        [AC_DEFINE(GSM_ENABLE_NOKIA7110) gsm_enable_nokia7110="yes"])
 AC_ARG_ENABLE(9210,
-	[  --disable-9210          Disable Nokia 9210 and compatible support],
-	[gsm_enable_nokia9210="no"],
-	[AC_DEFINE(GSM_ENABLE_NOKIA9210) gsm_enable_nokia9210="yes"])
+        [  --disable-9210          Disable Nokia 9210 and compatible support],
+        [gsm_enable_nokia9210="no"],
+        [AC_DEFINE(GSM_ENABLE_NOKIA9210) gsm_enable_nokia9210="yes"])
 AC_ARG_ENABLE(atgen,
-	[  --disable-atgen         Disable generic AT phones support],
-	[gsm_enable_atgen="no"],
-	[AC_DEFINE(GSM_ENABLE_ATGEN) gsm_enable_atgen="yes"])
+        [  --disable-atgen         Disable generic AT phones support],
+        [gsm_enable_atgen="no"],
+        [AC_DEFINE(GSM_ENABLE_ATGEN) gsm_enable_atgen="yes"])
 AC_ARG_ENABLE(obexgen,
-	[  --disable-obexgen       Disable generic OBEX phones support],
-	[gsm_enable_obexgen="no"],
-	[AC_DEFINE(GSM_ENABLE_OBEXGEN) gsm_enable_obexgen="yes"])
+        [  --disable-obexgen       Disable generic OBEX phones support],
+        [gsm_enable_obexgen="no"],
+        [AC_DEFINE(GSM_ENABLE_OBEXGEN) gsm_enable_obexgen="yes"])
 AC_ARG_ENABLE(mroutergen,
-	[  --disable-mroutergen    Disable Symbian m-router phones support],
-	[gsm_enable_mroutergen="no"],
-	[AC_DEFINE(GSM_ENABLE_MROUTERGEN) gsm_enable_mroutergen="yes"])
+        [  --disable-mroutergen    Disable Symbian m-router phones support],
+        [gsm_enable_mroutergen="no"],
+        [AC_DEFINE(GSM_ENABLE_MROUTERGEN) gsm_enable_mroutergen="yes"])
 AC_ARG_ENABLE(3650,
-	[  --disable-3650          Disable Nokia 3650 and compatible support],
-	[gsm_enable_nokia3650="no"],
-	[AC_DEFINE(GSM_ENABLE_NOKIA3650) gsm_enable_nokia3650="yes"])
+        [  --disable-3650          Disable Nokia 3650 and compatible support],
+        [gsm_enable_nokia3650="no"],
+        [AC_DEFINE(GSM_ENABLE_NOKIA3650) gsm_enable_nokia3650="yes"])
 
 AC_SUBST(LDLIBS)
 
 dnl Writing output files
 AC_CONFIG_HEADER(config.h)
 AC_OUTPUT(Makefile.cfg
-	  ../pkgconfig/gammu.pc
-	  ../doxygen/Doxyfile
-	  ../rpm/gammu.spec
+          ../pkgconfig/gammu.pc
+          ../doxygen/Doxyfile
+          ../rpm/gammu.spec
           ../../gammu/bcc06.mak/gammu.bpr
-	  ../../gammu/msvc06.mak/gammu.rc
-	  ../../gammu/msvc2003.mak/gammu.rc
-	  ../../win32/dll/msvc06.mak/gammu.rc
-	  ../../win32/dll/msvc2003.mak/gammu.rc)
+          ../../gammu/msvc06.mak/gammu.rc
+          ../../gammu/msvc2003.mak/gammu.rc
+          ../../win32/dll/msvc06.mak/gammu.rc
+          ../../win32/dll/msvc2003.mak/gammu.rc)
 
 mv ../rpm/gammu.spec ../../
 
@@ -411,11 +413,12 @@ cat <<EOT
   
   General options
   ---------------
-  LGPL license                                  - $lgpl
+dnl  LGPL license                                  - $lgpl
   Debug                                         - $debug
   CB messages                                   - $gsm_enable_cellbroadcast
   Backup functions                              - $gsm_enable_backup
   Searching phones (requires pthread)           - $pthread
+  MySQL SMS plugin (requires mysql)             - $mysql
 
   Phone protocols
   ---------------
@@ -467,5 +470,6 @@ dnl  Symbian with m-router (3650, other)           - $gsm_enable_mroutergen
   * "make installshared"    to install Gammu with library in your system (root)
   * "make rpm"              to make RPM package
   * "make deb"              to make Debian package
+  * "make tgz"              to make Slackware package (needs checkinstall >= 1.5.3)
 
 EOT
