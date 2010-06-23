@@ -5,7 +5,7 @@
 #include "../misc/coding.h"
 
 /* SNIFFS, specs somewhere in http://www.wapforum.org */
-void GSM_EncodeMMSIndicatorSMSText(char *Buffer, int *Length, GSM_MMSIndicator Indicator)
+void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, int *Length, GSM_MMSIndicator Indicator)
 {
 	unsigned char 	buffer[200];
 	int		i;
@@ -51,7 +51,7 @@ void GSM_EncodeMMSIndicatorSMSText(char *Buffer, int *Length, GSM_MMSIndicator I
 }
 
 /* http://forum.nokia.com: OTA MMS Settings 1.0, OTA Settings 7.0 */
-void AddWAPSMSParameterText(char *Buffer, int *Length, unsigned char ID, char *Text, int Len)
+static void AddWAPSMSParameterText(unsigned char *Buffer, int *Length, unsigned char ID, char *Text, int Len)
 {
 	int i;
 
@@ -67,7 +67,7 @@ void AddWAPSMSParameterText(char *Buffer, int *Length, unsigned char ID, char *T
 }
 
 /* http://forum.nokia.com: OTA MMS Settings 1.0, OTA Settings 7.0 */
-void AddWAPSMSParameterInt(char *Buffer, int *Length, unsigned char ID, unsigned char Value)
+static void AddWAPSMSParameterInt(unsigned char *Buffer, int *Length, unsigned char ID, unsigned char Value)
 {
 	Buffer[(*Length)++] = 0x87; 			//PARM with attributes
 	Buffer[(*Length)++] = ID;
@@ -78,7 +78,7 @@ void AddWAPSMSParameterInt(char *Buffer, int *Length, unsigned char ID, unsigned
 /* http://forum.nokia.com  : OTA MMS Settings 1.0, OTA Settings 7.0
  * http://www.wapforum.org : Wireless Datagram Protocol
  */
-void NOKIA_EncodeWAPMMSSettingsSMSText(char *Buffer, int *Length, GSM_WAPSettings *settings, bool MMS)
+void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, int *Length, GSM_WAPSettings *settings, bool MMS)
 {
 	int 		i;
 	unsigned char 	buffer[400];
@@ -245,7 +245,7 @@ void NOKIA_EncodeWAPMMSSettingsSMSText(char *Buffer, int *Length, GSM_WAPSetting
 }
 
 /* http://forum.nokia.com: OTA Settings 7.0 */
-void NOKIA_EncodeWAPBookmarkSMSText(char *Buffer, int *Length, GSM_WAPBookmark *bookmark)
+void NOKIA_EncodeWAPBookmarkSMSText(unsigned char *Buffer, int *Length, GSM_WAPBookmark *bookmark)
 {
 	unsigned char	buffer[100];
 	bool		UnicodeCoding = false;
@@ -292,6 +292,56 @@ void NOKIA_EncodeWAPBookmarkSMSText(char *Buffer, int *Length, GSM_WAPBookmark *
 			}
 		Buffer[(*Length)++] = 0x01;		//END PARMeter
 	Buffer[(*Length)++] = 0x01;			//END PARMeter
+}
+
+void GSM_EncodeMMSFile(GSM_EncodeMultiPartMMSInfo *Info, unsigned char *Buffer, int *Length)
+{
+	int i;
+
+	strcpy(Buffer+(*Length),"\x8C\x80\x98\x4F");
+	(*Length)=(*Length)+4;
+
+	/* Unique MMS ID ? */
+	strcpy(Buffer+(*Length),"123456789");
+	(*Length)=(*Length)+9;
+	Buffer[(*Length)++] = 0x00;
+
+	strcpy(Buffer+(*Length),"\x8D\x90\x89");
+	(*Length)=(*Length)+3;
+
+	strcpy(Buffer+(*Length),"\x01\x81\x86\x81\x96");
+	(*Length)=(*Length)+5;
+	
+	if (UnicodeLength(Info->Subject) != 0) {
+		sprintf(Buffer+(*Length),"%s",DecodeUnicodeString(Info->Subject));
+		(*Length)=(*Length)+UnicodeLength(Info->Subject);
+		Buffer[(*Length)++] = 0x00;
+	}
+	
+	for (i=0;i<Info->EntriesNum;i++) {
+	switch(Info->Entries[i].ID) {
+	case MMS_Text:
+		strcpy(Buffer+(*Length),"\x84\xA3\x01\x04\x04\x03\x83\x81\xEA");
+		(*Length)=(*Length)+9;
+
+		sprintf(Buffer+(*Length),"%s",DecodeUnicodeString(Info->Entries[i].Buffer));
+		(*Length)=(*Length)+UnicodeLength(Info->Entries[i].Buffer);		
+		break;
+	default:
+		break;
+	}
+	}	
+}
+
+void GSM_ClearMultiPartMMSInfo(GSM_EncodeMultiPartMMSInfo *Info)
+{
+	Info->EntriesNum		= 0;
+	Info->Subject[0]		= 0x00;
+	Info->Subject[1]		= 0x00;
+	Info->Source[0] 		= 0x00;
+	Info->Source[1]			= 0x00;
+	Info->Destination[0] 	= 0x00;
+	Info->Destination[1] 	= 0x00;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

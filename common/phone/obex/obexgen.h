@@ -5,6 +5,7 @@
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
 #include "../../service/gsmsms.h"
+#include "../../service/gsmmisc.h"
 
 #ifndef GSM_USED_IRDAOBEX
 #  define GSM_USED_IRDAOBEX
@@ -13,17 +14,20 @@
 #  define GSM_USED_BLUEOBEX
 #endif
 
+typedef enum {
+	OBEX_None = 1,
+	OBEX_BrowsingFolders
+} OBEX_Service;
+
 typedef struct {
 	int				FileLev;
-
-	int				FilesLocations[500];
-	int				FilesParents[500];
-	int				FilesLevels[500];
 	int				FilesLocationsUsed;
 	int				FilesLocationsCurrent;
-	char				FilesNames[500][200];
-	bool				FilesFolder[500];
-	int				FilesSizes[500];
+	GSM_File			Files[500];
+	bool				FileLastPart;
+
+	int				FrameSize;
+	OBEX_Service			Service;
 } GSM_Phone_OBEXGENData;
 
 #endif

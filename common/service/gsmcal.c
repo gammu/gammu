@@ -349,7 +349,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				ToDo->EntriesNum++;
 			}
 			if (ReadVCALText(Line, "SUMMARY", Buff)) {
-				ToDo->Entries[ToDo->EntriesNum].EntryType = CAL_TEXT;
+				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,Buff);
 				ToDo->EntriesNum++;
 			}
@@ -357,6 +357,9 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			if (strstr(Line,"PRIORITY:2")) ToDo->Priority = GSM_Priority_Medium;
 			if (strstr(Line,"PRIORITY:3")) ToDo->Priority = GSM_Priority_High;
 			if (strstr(Line,"STATUS:COMPLETED")) {
+				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_COMPLETED;
+				ToDo->Entries[ToDo->EntriesNum].Number	  = 1;
+				ToDo->EntriesNum++;
 			}
 			break;
 		}

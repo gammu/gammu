@@ -58,18 +58,29 @@ bool ReadVCALText(char *Buffer, char *Start, char *Value)
 	unsigned char buff[200];
 
 	Value[0] = 0x00;
-	if (!strncmp(Buffer,Start,strlen(Start))) {
-		buff[0] = 0x00;
-		strcat(buff,Start);
-		strcat(buff,";CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:");
-		if (!strncmp(Buffer,buff,strlen(buff))) {
-			DecodeUTF8(Value,Buffer+strlen(Start)+41,strlen(Buffer)-(strlen(Start)+41));
-		} else {
-			EncodeUnicode(Value,Buffer+strlen(Start)+1,strlen(Buffer)-(strlen(Start)+1));
-		}
+
+	strcpy(buff,Start);
+	strcat(buff,":");
+	if (!strncmp(Buffer,buff,strlen(buff))) {
+		EncodeUnicode(Value,Buffer+strlen(Start)+1,strlen(Buffer)-(strlen(Start)+1));
 		dprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
 		return true;
-	} else return false;
+	}
+	strcpy(buff,Start);
+	strcat(buff,";CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:");
+	if (!strncmp(Buffer,buff,strlen(buff))) {
+		DecodeUTF8(Value,Buffer+strlen(Start)+41,strlen(Buffer)-(strlen(Start)+41));
+		dprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
+		return true;
+	}
+	strcpy(buff,Start);
+	strcat(buff,";CHARSET=UTF-8:");
+	if (!strncmp(Buffer,buff,strlen(buff))) {
+//		DecodeUTF8(Value,Buffer+strlen(Start)+41,strlen(Buffer)-(strlen(Start)+41));
+//		dprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
+//		return true;
+	}
+	return false;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

@@ -18,6 +18,117 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20030726 - 0,80,0,0
+* new functionality:
+  * SMS Queue program for gammu smsd                              (Peter Nixon)
+  * OBEX module:
+    * can upload files to phone with --addfile (folderID is path to folder,
+      where file will be saved)
+      Example: gammu --addfile "predefgallery\predeftones" ala.mid
+    * can upload files to phone inbox with --addfile (folderID is empty string)
+    * can upload files to Gallery and Tones with --nokiaaddfile
+    * can get full info about filesystem (--getfilesystem)
+    * can get files using --getfiles (fileID is full file name)
+      Example: gammu --addfile "telecom\devinfo.txt"
+    * can delete files using --deletefiles (fileID is full name of file)
+    * can create folders using --addfolder (fileID is full name of parent
+      folder)
+  * SMS:
+    * full support for text formating in EMS
+    * new switch -unicode in --send/savesms EMS allows to use Unicode
+    * new switch -maxsms in --send/savesms allows to block sending or saving,
+      when number of sms is too high
+    NOTE: EMS support includes probably ALL possible features available in
+          phones for now (tested on SE phones like T300 and probably there are
+          no phones with more options now)
+    * long ringtones can be send in downloadable profiles (--send/savesms
+      PROFILE) and as normal long ringtones (--send/savesms RINGTONE xxx -long)
+      Earlier --send/savesms RINGTONE xxx -long used PROFILE style. Now with
+      PROFILE it's additionaly possible to specify only some profile elements.
+    * adding SMS folders (DCT4)
+  * --getdatetime display phone locale settings (for now with DCT4)
+  * new --getcalendarsettings for getting calendar settings (DCT4)
+  * filesystem in DCT4:
+    * can handle two attributes for each file and folder now:
+      1. readonly (can't delete item from phone menu)
+      2. protected (can't use item for example in MMS)
+      * new switches in --addfile and --nokiaaddfile (allow to use
+        attributes and protect file/Java application agains deleting/sending)
+      * getting attributes with --getfilesystem
+      * --deletefiles can delete readonly files
+    * --getfilesystem displays both free and total memory. For 6310i there
+      is horrible hack done, but now there is displayed correct free memory
+      size for this model
+  * calls:
+    * call API can cancel/answer single calls (DCT3/DCT4) and gives info
+      about it
+    * can make dialvoice with/without number presentation (6110/DCT4)
+    * full support for call diverts (getting/setting diverts with 6110/DCT4,
+      setting with 6210, because it doesn't give info to PC)
+      Totally rewritten, when compare to MyGnokii :-)
+  * n6110.c:
+    * "Calendar Busy" error
+    * when set animated startup logo without SIM/PIN, there is
+      security error returned
+    * there is (almost :-)) everything done to have full language support
+      for phones without Unicode. If You want to have support for Your
+      national chars, just help in filling coding tables
+  * getting memories with no PIN gives security error (6210)
+  * backup files:
+    * new subformat (old files are still read) with better
+      section names for WAP settings and WAP bookmarks
+    * can backup GPRS Access Points
+  * getting/setting active set for WAP settings (DCT3)
+  * --addnew can add pbk entries for Nokia too. PLEASE TEST IT VERY CAREFULLY
+  * phone profiles:
+    * can get, which is active (6110/DCT4)
+    * getting ringtone ID (new DCT4)
+  * EXPERIMENTAL:
+    * first VERY VERY VERY primitive coder for MMS files
+    * call API can hold/unhold/join_to_conference/split_from_conference/
+      transfer single calls (for now 6110)
+    * added option --searchphone for automatic searching for phone in known
+      devices (serial ports, infrared in win32 now). PLEASE HELP IN FILLING
+      CORRECT DEVICE NAMES FOR YOUR OS
+    * full reading and saving vcf and vcs files
+  * rewritten getting PPM for DCT4 to avoid buggy firmwares (like 5100 3.02)
+    PLEASE CHECK WITH YOUR PHONE (--identify) AND REPORT
+
+* fixes and improvements:
+  * readme.txt updated in many places
+  * OBEX module:
+    * uploading files to phone inbox check, if file type is supported
+    * splitting files is done according to target device possibilities  (Intra)
+  * fixes with DCT4 and FM radio
+  * SMS:
+    * rewritten EMS coding (works better with some concrete data, easier
+      and shorter source, etc.)
+    * packing "normal" SMS uses EMS functions. If there will be somewhere bug,
+      it will be faster visible
+    * when use --send/savesms EMS -text "something", no more Unicode coding
+      is used (by default)
+    * rechecked various versions of IMelody headers and made some fixes
+  * more unified names of some functions in phone modules API    (Michal Cihar)
+  * getting caller group number (n6110)
+  * deleting pbk entries (DCT4)
+  * setting CB without PIN (n6210)
+  * bug with saving ringtones/wap bookmarks to sms (in some situations there
+    were 2 sms used, not 1)
+  * can restore 20 chars long SMSC numbers (DCT4)                         (...)
+  * removed warnings in MS VC 6
+  * N6100 doesn't have Radio                                      (Shiv Sikand)
+
+NOTE: during about two weeks I tried to force company, where I bought
+      my graphic card, to replace it (it was defected and still with warranty)
+      For now I had to buy new card :-(((((( I didn't have access to almost
+      ready 0,80 version (and didn't want to make some actions with moving
+      HDD to another PC, etc., etc.) and I decided to work on next branch
+      on friend's PC. Now You see joined results from all this work.
+
+      Because of this some things are dropped to 0,81 (I don't want to make
+      more delays). Also all reported during last month things will be made
+      there (I didn't have access to emails and will process them now)
+
 20030628 - 0,79,0,0
 * new functionality:
   * full support for ToDo available in new Nokia (support for DueDate,

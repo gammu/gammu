@@ -76,28 +76,20 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 
 static void GSM_JADFindLine(GSM_File File, char *Name, char *Value)
 {
-	int 	i;
-	bool 	found;
+	unsigned char 	Line[2000];
+	int		Pos = 0;
 
 	Value[0] = 0;
 
-	found = false;
-	for (i=0;i<File.Used - (int)strlen(Name);i++) {
-		if (!strncmp(File.Buffer+i,Name,strlen(Name))) {
-			found = true;
-			break;
-		}
-	}
-	if (!found) return;
-	i = i + strlen(Name);
-	while (File.Buffer[i] != 13 && File.Buffer[i] != 10 && i < File.Used) {
-		if (strlen(Value) == 0 && File.Buffer[i] == 0x20) {
-			i++;
-			continue;
-		}
-		Value[strlen(Value)+1] = 0;
-		Value[strlen(Value)]   = File.Buffer[i];
-		i++;
+	while (1) {
+		MyGetLine(File.Buffer, &Pos, Line);
+		if (strlen(Line) == 0) break;
+		if (!strncmp(Line,Name,strlen(Name))) {
+			Pos = strlen(Name);
+			while (Line[Pos] == 0x20) Pos++;
+			strcpy(Value,Line+Pos);
+			return;
+		}		
 	}
 }
 

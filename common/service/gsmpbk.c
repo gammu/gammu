@@ -236,7 +236,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_PhonebookEntry *P
 	unsigned char 	Line[2000],Buff[2000];
 	int		Level = 0;
 
-	Buff[0] = 0;
+	Buff[0] 	= 0;
 	Pbk->EntriesNum = 0;
 
 	while (1) {
@@ -250,6 +250,56 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_PhonebookEntry *P
 			if (strstr(Line,"END:VCARD")) {
 				if (Pbk->EntriesNum == 0) return GE_EMPTY;
 				return GE_NONE;
+			}
+			if (ReadVCALText(Line, "N", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Name;
+				Pbk->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "TEL", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
+				Pbk->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "TEL;CELL", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile;
+				Pbk->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "TEL;WORK;VOICE", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Work;
+				Pbk->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "TEL;FAX", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Fax;
+				Pbk->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "TEL;HOME;VOICE", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Home;
+				Pbk->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "NOTE", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Note;
+				Pbk->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "ADR", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
+				Pbk->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "EMAIL", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
+				Pbk->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "URL", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_URL;
+				Pbk->EntriesNum++;
 			}
 			break;
 		}

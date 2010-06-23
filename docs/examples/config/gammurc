@@ -25,9 +25,9 @@
 #                  "bluefbus"   or "dlr3blue" (Nokia FBUS2 with Bluetooth
 #                                              stack)
 #                  "blueat"     or "atblue"   (AT commands with Bluetooth
+#                                              stack)
 #                  "blueobex"                 (OBEX with Bluetooth and
 #                                              model "obex")
-#                                              stack)
 # Port           : for Windows/DOS            : "com*:"
 #                  for Linux/Unix             :
 #                                "irdaphonet" : "/dev/ircomm*"

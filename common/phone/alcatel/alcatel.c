@@ -46,9 +46,9 @@ extern GSM_Error ATGEN_GetSignalQuality		(GSM_StateMachine *s, GSM_SignalQuality
 extern GSM_Error ATGEN_GetSMSFolders		(GSM_StateMachine *s, GSM_SMSFolders *folders);
 extern GSM_Error ATGEN_GetNextSMSMessage	(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start);
 extern GSM_Error ATGEN_GetSMSStatus		(GSM_StateMachine *s, GSM_SMSMemoryStatus *status);
-extern GSM_Error ATGEN_DialVoice		(GSM_StateMachine *s, char *number);
-extern GSM_Error ATGEN_AnswerCall		(GSM_StateMachine *s);
-extern GSM_Error ATGEN_CancelCall		(GSM_StateMachine *s);
+extern GSM_Error ATGEN_DialVoice		(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber);
+extern GSM_Error ATGEN_AnswerCall		(GSM_StateMachine *s, int ID, bool all);
+extern GSM_Error ATGEN_CancelCall		(GSM_StateMachine *s, int ID, bool all);
 extern GSM_Error ATGEN_SaveSMSMessage		(GSM_StateMachine *s, GSM_SMSMessage *sms);
 extern GSM_Error ATGEN_SendSMSMessage		(GSM_StateMachine *s, GSM_SMSMessage *sms);
 extern GSM_Error ATGEN_SetDateTime		(GSM_StateMachine *s, GSM_DateTime *date_time);
@@ -1723,28 +1723,28 @@ static GSM_Error ALCATEL_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *
 	return ATGEN_GetSMSStatus(s, status);
 }
 
-static GSM_Error ALCATEL_DialVoice(GSM_StateMachine *s, char *number)
+static GSM_Error ALCATEL_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber)
 {
 	GSM_Error error;
 
 	if ((error = ALCATEL_SetATMode(s))!= GE_NONE) return error;
-	return ATGEN_DialVoice(s, number);
+	return ATGEN_DialVoice(s, number, ShowNumber);
 }
 
-static GSM_Error ALCATEL_AnswerCall(GSM_StateMachine *s)
+static GSM_Error ALCATEL_AnswerCall(GSM_StateMachine *s, int ID, bool all)
 {
 	GSM_Error error;
 
 	if ((error = ALCATEL_SetATMode(s))!= GE_NONE) return error;
-	return ATGEN_AnswerCall(s);
+	return ATGEN_AnswerCall(s,ID,all);
 }
 
-static GSM_Error ALCATEL_CancelCall(GSM_StateMachine *s)
+static GSM_Error ALCATEL_CancelCall(GSM_StateMachine *s, int ID, bool all)
 {
 	GSM_Error error;
 
 	if ((error = ALCATEL_SetATMode(s))!= GE_NONE) return error;
-	return ATGEN_CancelCall(s);
+	return ATGEN_CancelCall(s,ID,all);
 }
 
 static GSM_Error ALCATEL_SaveSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
@@ -2753,53 +2753,53 @@ GSM_Phone_Functions ALCATELPhone = {
 	ALCATEL_GetManufacturer,
 	ALCATEL_GetNextSMSMessage,
 	ALCATEL_GetSMSStatus,
-	NOTIMPLEMENTED,			/* SetIncomingSMS	*/
-	NOTSUPPORTED,			/* GetNetworkInfo	*/
-	NOTSUPPORTED,			/* Reset		*/
+	NOTIMPLEMENTED,			/* 	SetIncomingSMS		*/
+	NOTSUPPORTED,			/* 	GetNetworkInfo		*/
+	NOTSUPPORTED,			/* 	Reset			*/
 	ALCATEL_DialVoice,
 	ALCATEL_AnswerCall,
 	ALCATEL_CancelCall,
-	NOTSUPPORTED,			/* GetRingtone		*/
-	NOTSUPPORTED,			/* GetWAPBookmark	*/
-	NOTSUPPORTED,			/* GetBitmap		*/
-	NOTSUPPORTED,			/* SetRingtone		*/
+	NOTSUPPORTED,			/* 	GetRingtone		*/
+	NOTSUPPORTED,			/* 	GetWAPBookmark		*/
+	NOTSUPPORTED,			/* 	GetBitmap		*/
+	NOTSUPPORTED,			/* 	SetRingtone		*/
 	ALCATEL_SaveSMSMessage,
 	ALCATEL_SendSMSMessage,
 	ALCATEL_SetDateTime,
 	ALCATEL_SetAlarm,
-	NOTSUPPORTED,			/* SetBitmap		*/
+	NOTSUPPORTED,			/* 	SetBitmap		*/
 	ALCATEL_SetMemory,
 	ALCATEL_DeleteSMSMessage,
-	NOTSUPPORTED,			/* SetWAPBookmark	*/
-	NOTSUPPORTED,			/* DeleteWAPBookmark	*/
-	NOTSUPPORTED,			/* GetWAPSettings	*/
-	NOTIMPLEMENTED,			/* SetIncomingCB	*/
+	NOTSUPPORTED,			/* 	SetWAPBookmark		*/
+	NOTSUPPORTED,			/* 	DeleteWAPBookmark	*/
+	NOTSUPPORTED,			/* 	GetWAPSettings		*/
+	NOTIMPLEMENTED,			/* 	SetIncomingCB		*/
 	ALCATEL_SetSMSC,
-	NOTSUPPORTED,			/* GetManufactureMonth	*/
-	NOTSUPPORTED,			/* GetProductCode	*/
-	NOTSUPPORTED,			/* GetOriginalIMEI	*/
-	NOTSUPPORTED,			/* GetHardware		*/
-	NOTSUPPORTED,			/* GetPPM		*/
-	NOTSUPPORTED,			/* PressKey		*/
+	NOTSUPPORTED,			/* 	GetManufactureMonth	*/
+	NOTSUPPORTED,			/* 	GetProductCode		*/
+	NOTSUPPORTED,			/* 	GetOriginalIMEI		*/
+	NOTSUPPORTED,			/* 	GetHardware		*/
+	NOTSUPPORTED,			/* 	GetPPM			*/
+	NOTSUPPORTED,			/* 	PressKey		*/
 	ALCATEL_GetToDo,
 	ALCATEL_DeleteAllToDo,
 	ALCATEL_SetToDo,
 	ALCATEL_GetToDoStatus,
-	NOTSUPPORTED,			/* PlayTone		*/
+	NOTSUPPORTED,			/* 	PlayTone		*/
 	ALCATEL_EnterSecurityCode,
 	ALCATEL_GetSecurityStatus,
-	NOTSUPPORTED,			/* GetProfile		*/
-	NOTSUPPORTED,			/* GetRingtonesInfo	*/
-	NOTSUPPORTED,			/* SetWAPSettings	*/
-	NOTSUPPORTED,			/* GetSpeedDial		*/
-	NOTSUPPORTED,			/* SetSpeedDial		*/
+	NOTSUPPORTED,			/* 	GetProfile		*/
+	NOTSUPPORTED,			/* 	GetRingtonesInfo	*/
+	NOTSUPPORTED,			/* 	SetWAPSettings		*/
+	NOTSUPPORTED,			/* 	GetSpeedDial		*/
+	NOTSUPPORTED,			/* 	SetSpeedDial		*/
 	ALCATEL_ResetPhoneSettings,
 	ALCATEL_SendDTMF,
-	NOTSUPPORTED,			/* GetDisplayStatus	*/
-	NOTSUPPORTED,			/* SetAutoNetworkLogin	*/
-	NOTSUPPORTED,			/* SetProfile		*/
+	NOTSUPPORTED,			/* 	GetDisplayStatus	*/
+	NOTSUPPORTED,			/* 	SetAutoNetworkLogin	*/
+	NOTSUPPORTED,			/* 	SetProfile		*/
 	ALCATEL_GetSIMIMSI,
-	NONEFUNCTION,			/* SetIncomingCall	*/
+	NONEFUNCTION,			/* 	SetIncomingCall		*/
 	ALCATEL_GetNextCalendarNote,
 	ALCATEL_DeleteCalendarNote,
 	ALCATEL_AddCalendarNote,
@@ -2807,22 +2807,37 @@ GSM_Phone_Functions ALCATELPhone = {
 	ALCATEL_GetSignalStrength,
 	ALCATEL_GetCategory,
 	ALCATEL_GetCategoryStatus,
-	NOTSUPPORTED,			/* GetFMStation		*/
-	NOTSUPPORTED,			/* SetFMStation		*/
-	NOTSUPPORTED,			/* ClearFMStations	*/
-	NOTSUPPORTED,			/* SetIncomingUSSD	*/
-	NOTSUPPORTED,			/* DeleteUserRingtones	*/
-	NOTSUPPORTED,			/* ShowStartInfo	*/
-	NOTSUPPORTED,			/* GetNextFileFolder	*/
-	NOTSUPPORTED,			/* GetFilePart		*/
-	NOTSUPPORTED,			/* AddFile		*/
-	NOTSUPPORTED, 			/* GetFreeFileMemory 	*/
-	NOTSUPPORTED,			/* DeleteFile		*/
-	NOTSUPPORTED,			/* AddFolder		*/
-	NOTSUPPORTED,			/* GetMMSSettings	*/
-	NOTSUPPORTED,			/* SetMMSSettings	*/
-	NOTSUPPORTED,			/* GetGPRSAccessPoint	*/
-	NOTSUPPORTED			/* SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	GetFMStation		*/
+	NOTSUPPORTED,			/* 	SetFMStation		*/
+	NOTSUPPORTED,			/* 	ClearFMStations		*/
+	NOTSUPPORTED,			/* 	SetIncomingUSSD		*/
+	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
+	NOTSUPPORTED,			/* 	ShowStartInfo		*/
+	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/* 	GetFilePart		*/
+	NOTSUPPORTED,			/* 	AddFile			*/
+	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
+	NOTSUPPORTED,			/* 	DeleteFile		*/
+	NOTSUPPORTED,			/* 	AddFolder		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+ 	NOTSUPPORTED,			/* 	HoldCall 		*/
+ 	NOTSUPPORTED,			/* 	UnholdCall 		*/
+ 	NOTSUPPORTED,			/* 	ConferenceCall 		*/
+ 	NOTSUPPORTED,			/* 	SplitCall		*/
+ 	NOTSUPPORTED,			/* 	TransferCall		*/
+ 	NOTSUPPORTED,			/* 	SwitchCall		*/
+ 	NOTSUPPORTED,			/* 	GetCallDivert		*/
+ 	NOTSUPPORTED,			/* 	SetCallDivert		*/
+ 	NOTSUPPORTED,			/* 	CancelAllDiverts	*/
+ 	NOTSUPPORTED,			/* 	AddSMSFolder		*/
+ 	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
+	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	GetLocale		*/
+	NOTSUPPORTED,			/* 	SetLocale		*/
+	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
+	NOTSUPPORTED			/* 	SetCalendarSettings	*/
 };
 
 #endif

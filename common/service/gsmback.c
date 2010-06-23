@@ -903,6 +903,18 @@ static void SaveFMStationEntry(FILE *file, GSM_FMStation *FMStation, bool UseUni
 	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
+static void SaveGPRSPointEntry(FILE *file, GSM_GPRSAccessPoint *GPRSPoint, bool UseUnicode)
+{
+	unsigned char buffer[1000];
+
+ 	sprintf(buffer,"Location = %i%c%c",GPRSPoint->Location,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+        SaveBackupText(file, "Name", GPRSPoint->Name, UseUnicode);
+        SaveBackupText(file, "URL", GPRSPoint->URL, UseUnicode);
+	sprintf(buffer,"%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+}
+
 void GSM_FreeBackup(GSM_Backup *backup)
 {
     int i;
@@ -988,6 +1000,12 @@ void GSM_FreeBackup(GSM_Backup *backup)
         free(backup->OperatorLogo);
         backup->OperatorLogo = NULL;
     }
+    i=0;
+    while (backup->GPRSPoint[i]!=NULL) {
+        free(backup->GPRSPoint[i]);
+        backup->GPRSPoint[i] = NULL;
+        i++;
+    }
 }
 
 static GSM_Error SaveBackup(FILE *file, GSM_Backup *backup, bool UseUnicode)
@@ -1012,7 +1030,7 @@ static GSM_Error SaveBackup(FILE *file, GSM_Backup *backup, bool UseUnicode)
 		SaveBackupText(file, "", "DateTime", UseUnicode);
 		SaveVCalDateTime(file, &backup->DateTime, UseUnicode);
 	}
-	sprintf(buffer,"Format = 1.01%c%c",13,10);
+	sprintf(buffer,"Format = 1.02%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
 	sprintf(buffer,"%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
@@ -1054,14 +1072,14 @@ static GSM_Error SaveBackup(FILE *file, GSM_Backup *backup, bool UseUnicode)
 	}
 	i=0;
 	while (backup->WAPBookmark[i]!=NULL) {
-		sprintf(buffer,"[Bookmark%03i]%c%c",i+1,13,10);
+		sprintf(buffer,"[WAPBookmark%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveWAPBookmarkEntry(file, backup->WAPBookmark[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->WAPSettings[i]!=NULL) {
-		sprintf(buffer,"[Settings%03i]%c%c",i+1,13,10);
+		sprintf(buffer,"[WAPSettings%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveWAPSettingsEntry(file, backup->WAPSettings[i], UseUnicode);
 		i++;
@@ -1099,6 +1117,13 @@ static GSM_Error SaveBackup(FILE *file, GSM_Backup *backup, bool UseUnicode)
  		sprintf(buffer,"[FMStation%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
  		SaveFMStationEntry(file, backup->FMStation[i], UseUnicode);
+ 		i++;
+ 	}
+ 	i=0;
+ 	while (backup->GPRSPoint[i]!=NULL) {
+ 		sprintf(buffer,"[GPRSPoint%03i]%c%c",i+1,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
+ 		SaveGPRSPointEntry(file, backup->GPRSPoint[i], UseUnicode);
  		i++;
  	}
 
@@ -1305,6 +1330,23 @@ static GSM_Error SaveVCalendar(FILE *file, GSM_Backup *backup)
 	return GE_NONE;
 }
 
+static GSM_Error SaveVCard(FILE *file, GSM_Backup *backup)
+{
+	int 		i, Length = 0;
+	unsigned char 	Buffer[1000];
+
+	i=0;
+	while (backup->PhonePhonebook[i]!=NULL) {
+		sprintf(Buffer, "%c%c",13,10);
+		fwrite(Buffer,1,2,file);
+		Length = 0;
+		GSM_EncodeVCARD(Buffer,&Length,backup->PhonePhonebook[i],true,Nokia_VCard21);
+		fwrite(Buffer,1,Length,file);
+		i++;
+	}
+	return GE_NONE;
+}
+
 void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
 {
 	backup->UseUnicode	= false;
@@ -1325,6 +1367,7 @@ void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
 	backup->OperatorLogo 	= false;
 	backup->Profiles 	= false;
 	backup->FMStation 	= false;
+	backup->GPRSPoint	= false;
 
 	if (strstr(FileName,".lmb")) {
 		backup->PhonePhonebook 	= true;
@@ -1334,6 +1377,8 @@ void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
 	} else if (strstr(FileName,".vcs")) {
 		backup->ToDo		= true;
 		backup->Calendar 	= true;
+	} else if (strstr(FileName,".vcf")) {
+		backup->PhonePhonebook	= true;
 	} else {
 		backup->UseUnicode	= true;
 		backup->IMEI 		= true;
@@ -1353,6 +1398,7 @@ void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
 		backup->OperatorLogo 	= true;
 		backup->Profiles 	= true;
  		backup->FMStation 	= true;
+		backup->GPRSPoint	= true;
 	}
 }
 
@@ -1367,6 +1413,8 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode
 		SaveLMB(file,backup);
 	} else if (strstr(FileName,".vcs")) {
 		SaveVCalendar(file,backup);
+	} else if (strstr(FileName,".vcf")) {
+		SaveVCard(file,backup);
 	} else {
 		SaveBackup(file,backup, UseUnicode);
 	}
@@ -2351,7 +2399,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	/* Did we read anything? */
 	if (readvalue == NULL) return GE_FILENOTSUPPORTED;
 	/* Is this format version supported ? */
-	if (strcmp(readvalue,"1.01")!=0) return GE_FILENOTSUPPORTED;
+	if (strcmp(readvalue,"1.01")!=0 && strcmp(readvalue,"1.02")!=0) return GE_FILENOTSUPPORTED;
 
 	GSM_ClearBackup(backup);
 
@@ -2549,10 +2597,17 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
         for (h = file_info; h != NULL; h = h->next) {
 		found = false;
 		if (UseUnicode) {
-			EncodeUnicode(buffer,"Bookmark",8);
-			if (mywstrncasecmp(buffer, h->section, 8)) found = true;
+			EncodeUnicode(buffer,"WAPBookmark",11);
+			if (mywstrncasecmp(buffer, h->section, 11)) found = true;
+			if (!found) {
+				EncodeUnicode(buffer,"Bookmark",8);
+				if (mywstrncasecmp(buffer, h->section, 8)) found = true;
+			}
 		} else {
-	                if (mystrncasecmp("Bookmark", h->section, 8)) found = true;
+	                if (mystrncasecmp("WAPBookmark", h->section, 11)) found = true;
+			if (!found) {
+				if (mystrncasecmp("Bookmark", h->section, 8)) found = true;
+			}
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->section, "URL", UseUnicode);
@@ -2574,10 +2629,17 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
         for (h = file_info; h != NULL; h = h->next) {
 		found = false;
 		if (UseUnicode) {
-			EncodeUnicode(buffer,"Settings",8);
-			if (mywstrncasecmp(buffer, h->section, 8)) found = true;
+			EncodeUnicode(buffer,"WAPSettings",11);
+			if (mywstrncasecmp(buffer, h->section, 11)) found = true;
+			if (!found) {
+				EncodeUnicode(buffer,"Settings",8);
+				if (mywstrncasecmp(buffer, h->section, 8)) found = true;
+			}
 		} else {
-	                if (mystrncasecmp("Settings", h->section, 8)) found = true;
+	                if (mystrncasecmp("WAPSettings", h->section, 11)) found = true;
+			if (!found) {
+		                if (mystrncasecmp("Settings", h->section, 8)) found = true;
+			}
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->section, "Title00", UseUnicode);
@@ -2995,6 +3057,38 @@ static GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 	return GE_UNKNOWN;
 }
 
+static GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
+{
+	GSM_File 		File;
+	GSM_Error		error;
+	GSM_PhonebookEntry	Pbk;
+	int			numPbk = 0, Pos;
+
+	File.Buffer = NULL;
+	error = GSM_ReadFile(FileName, &File);
+	if (error != GE_NONE) return error;
+
+	Pos = 0;
+	while (1) {
+		error = GSM_DecodeVCARD(File.Buffer, &Pos, &Pbk, Nokia_VCard21);
+		if (error == GE_EMPTY) break;
+		if (error != GE_NONE) return error;
+		if (numPbk < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
+			backup->PhonePhonebook[numPbk] = malloc(sizeof(GSM_PhonebookEntry));
+		        if (backup->PhonePhonebook[numPbk] == NULL) return GE_MOREMEMORY;
+			backup->PhonePhonebook[numPbk + 1] = NULL;
+		} else {
+			dprintf("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
+			return GE_MOREMEMORY;
+		}
+		backup->PhonePhonebook[numPbk]->Location = numPbk + 1;
+		memcpy(backup->PhonePhonebook[numPbk],&Pbk,sizeof(GSM_PhonebookEntry));
+		numPbk++;
+	}
+
+	return GE_UNKNOWN;
+}
+
 GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 {
 	FILE		*file;
@@ -3010,6 +3104,8 @@ GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 	/* Attempt to identify filetype */
 	if (strstr(FileName,".vcs")) {
 		error=LoadVCalendar(FileName,backup);
+	} else if (strstr(FileName,".vcf")) {
+		error=LoadVCard(FileName,backup);
 	} else if (memcmp(buffer, "LMB ",4)==0) {
 		error=loadlmb(FileName,backup);
 	} else if (buffer[0] == 0xFE && buffer[1] == 0xFF) {
@@ -3036,6 +3132,7 @@ void GSM_ClearBackup(GSM_Backup *backup)
 	backup->Ringtone	[0] = NULL;
 	backup->Profiles	[0] = NULL;
 	backup->ToDo		[0] = NULL;
+	backup->GPRSPoint	[0] = NULL;
 	backup->FMStation	[0] = NULL;
 	backup->StartupLogo	    = NULL;
 	backup->OperatorLogo	    = NULL;

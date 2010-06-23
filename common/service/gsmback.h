@@ -21,6 +21,7 @@
 #define GSM_BACKUP_MAX_RINGTONES	30
 #define GSM_BACKUP_MAX_PROFILES		10
 #define GSM_BACKUP_MAX_FMSTATIONS	20
+#define GSM_BACKUP_MAX_GPRSPOINT	10
 
 typedef struct {
 	char			IMEI		[MAX_IMEI_LENGTH];
@@ -39,6 +40,7 @@ typedef struct {
 	GSM_ToDoEntry		*ToDo		[GSM_MAXCALENDARTODONOTES + 1];
 	GSM_Profile		*Profiles	[GSM_BACKUP_MAX_PROFILES + 1];
  	GSM_FMStation		*FMStation	[GSM_BACKUP_MAX_FMSTATIONS +1];
+	GSM_GPRSAccessPoint	*GPRSPoint	[GSM_BACKUP_MAX_GPRSPOINT + 1];
 	GSM_Bitmap		*StartupLogo;
 	GSM_Bitmap		*OperatorLogo;
 } GSM_Backup;
@@ -69,6 +71,7 @@ typedef struct {
 	bool StartupLogo;
 	bool OperatorLogo;
  	bool FMStation;
+	bool GPRSPoint;
 } GSM_Backup_Info;
 
 void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup);

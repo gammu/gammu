@@ -22,7 +22,6 @@ typedef struct {
 	unsigned char			RingtoneID;	/* When set with preview */
 
 	int				FilesLocations[500];
-	int				FilesParents[500];
 	int				FilesLevels[500];
 	int				FilesLocationsUsed;
 	int				FilesLocationsCurrent;

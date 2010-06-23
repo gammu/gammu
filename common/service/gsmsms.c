@@ -45,7 +45,7 @@ static GSM_UDHHeader UDHHeaders[] = {
 	{ UDH_NokiaRingtone,        0x06, "\x05\x04\x15\x81\x00\x00",-1,-1,-1},
 	{ UDH_NokiaOperatorLogo,    0x06, "\x05\x04\x15\x82\x00\x00",-1,-1,-1},
 	{ UDH_NokiaCallerLogo,      0x06, "\x05\x04\x15\x83\x00\x00",-1,-1,-1},
-	{ UDH_NokiaWAPBookmark,     0x06, "\x05\x04\xc3\x4f\x00\x00",-1,-1,-1},
+	{ UDH_NokiaWAP,		    0x06, "\x05\x04\xc3\x4f\x00\x00",-1,-1,-1},
 
 	/* Nokia Smart Messaging (long version) UDH and other
 	 * General format:
@@ -60,6 +60,7 @@ static GSM_UDHHeader UDHHeaders[] = {
 	 * 1 byte            : number of current SMS */
 	{ UDH_NokiaCalendarLong,    0x0b, "\x05\x04\x00\xe4\x00\x00\x00\x03\xc7\x00\x00",8,10,9},
 	{ UDH_MMSIndicatorLong,	    0x0b, "\x05\x04\x0b\x84\x23\xf0\x00\x03\xe5\x00\x00",8,10,9},
+	{ UDH_NokiaRingtoneLong,    0x0b, "\x05\x04\x15\x81\x00\x00\x00\x03\x01\x00\x00",8,10,9},
 	{ UDH_NokiaOperatorLogoLong,0x0b, "\x05\x04\x15\x82\x00\x00\x00\x03\x02\x00\x00",8,10,9},
 	{ UDH_NokiaProfileLong,     0x0b, "\x05\x04\x15\x8a\x00\x00\x00\x03\xce\x00\x00",8,10,9},
 	{ UDH_NokiaPhonebookLong,   0x0b, "\x05\x04\x23\xf4\x00\x00\x00\x03\x01\x00\x00",8,10,9},
@@ -143,10 +144,11 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 	case UDH_DisableEmail:		dprintf("Disables email indicator");	 		break;
 	case UDH_EnableEmail:		dprintf("Enables email indicator");	 		break;
 	case UDH_VoidSMS:		dprintf("Void SMS");			 		break;
-	case UDH_NokiaWAPBookmark:	dprintf("Nokia WAP Bookmark");		 		break;
+	case UDH_NokiaWAP:		dprintf("Nokia WAP Bookmark");		 		break;
 	case UDH_NokiaOperatorLogoLong:	dprintf("Nokia operator logo");		 		break;
 	case UDH_NokiaWAPLong:		dprintf("Nokia WAP Bookmark or WAP/MMS Settings");	break;
 	case UDH_NokiaRingtone:		dprintf("Nokia ringtone");		 		break;
+	case UDH_NokiaRingtoneLong:	dprintf("Nokia ringtone");		 		break;
 	case UDH_NokiaOperatorLogo:	dprintf("Nokia GSM operator logo");	 		break;
 	case UDH_NokiaCallerLogo:	dprintf("Nokia caller logo");		 		break;  	
 	case UDH_NokiaProfileLong:	dprintf("Nokia profile");		 		break;
@@ -564,6 +566,7 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 	SMS->RejectDuplicates		= false;
 	SMS->MessageReference		= 0;
 	SMS->ReplaceMessage		= 0;
+	SMS->Length			= 0;
 
 	/* This part is required to save SMS */    
 	SMS->State			= GSM_UnSent;
@@ -674,12 +677,113 @@ static unsigned char GSM_MakeSMSIDFromTime()
 	GSM_GetCurrentDateTime (&Date);
 	retval = Date.Second;
 	switch (Date.Minute/10) {
-	case 2: case 7: 	retval = retval +  60; break;
-	case 4: case 8: 	retval = retval + 120; break;
-	case 9: case 5: case 0: retval = retval + 180; break;
+		case 2: case 7: 	retval = retval +  60; break;
+		case 4: case 8: 	retval = retval + 120; break;
+		case 9: case 5: case 0: retval = retval + 180; break;
 	}
 	retval += Date.Minute/10;
 	return retval;
+}
+
+static void GSM_Find_Free_Used_SMS2(GSM_Coding_Type Coding,GSM_SMSMessage SMS, int *UsedText, int *FreeText, int *FreeBytes)
+{
+	int UsedBytes;
+
+	switch (Coding) {
+	case GSM_Coding_Default:
+		FindDefaultAlphabetLen(SMS.Text,&UsedBytes,UsedText,500);
+		UsedBytes = *UsedText * 7 / 8;
+		if (UsedBytes * 8 / 7 != *UsedText) UsedBytes++;
+		*FreeBytes = GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length - UsedBytes;
+		*FreeText = (GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length) * 8 / 7 - *UsedText;
+		break;
+	case GSM_Coding_Unicode:
+		*UsedText = UnicodeLength(SMS.Text);
+		UsedBytes = *UsedText * 2;
+		*FreeBytes = GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length - UsedBytes;
+		*FreeText = *FreeBytes / 2;
+		break;
+	case GSM_Coding_8bit:
+		*UsedText = UsedBytes = SMS.Length;
+		*FreeBytes = GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length - UsedBytes;
+		*FreeText = *FreeBytes;
+		break;
+	}
+	dprintf("UDH len %i, UsedBytes %i, FreeText %i, UsedText %i, FreeBytes %i\n",SMS.UDH.Length,UsedBytes,*FreeText,*UsedText,*FreeBytes);
+}
+
+GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
+		      		GSM_Coding_Type		Coding,
+		      		char 			*Buffer,
+		      		int			BufferLen,
+		      		bool 			UDH,
+		      		int 			*UsedText,
+		      		int			*CopiedText,
+		      		int			*CopiedSMSText)
+{
+	int FreeText,FreeBytes,Copy,i,j;
+
+	dprintf("Checking used\n");
+	GSM_Find_Free_Used_SMS2(Coding,SMS->SMS[SMS->Number], UsedText, &FreeText, &FreeBytes);
+
+	if (UDH) {
+		dprintf("Adding UDH\n");
+		if (FreeBytes - BufferLen <= 0) {
+			dprintf("Going to the new SMS\n");
+			SMS->Number++;
+			GSM_Find_Free_Used_SMS2(Coding,SMS->SMS[SMS->Number], UsedText, &FreeText, &FreeBytes);
+		}
+		if (SMS->SMS[SMS->Number].UDH.Length == 0) {
+			SMS->SMS[SMS->Number].UDH.Length  = 1;
+			SMS->SMS[SMS->Number].UDH.Text[0] = 0x00;
+		}
+		memcpy(SMS->SMS[SMS->Number].UDH.Text+SMS->SMS[SMS->Number].UDH.Length,Buffer,BufferLen);
+		SMS->SMS[SMS->Number].UDH.Length  	+= BufferLen;
+		SMS->SMS[SMS->Number].UDH.Text[0] 	+= BufferLen;
+		SMS->SMS[SMS->Number].UDH.Type 		=  UDH_UserUDH;
+		dprintf("UDH added %i\n",BufferLen);
+	} else {
+		dprintf("Adding text\n");
+		if (FreeText == 0) {
+			dprintf("Going to the new SMS\n");
+			SMS->Number++;
+			GSM_Find_Free_Used_SMS2(Coding,SMS->SMS[SMS->Number], UsedText, &FreeText, &FreeBytes);
+		}
+
+		Copy = FreeText;
+		dprintf("copy %i\n",Copy);
+		if (BufferLen < Copy) Copy = BufferLen;
+		dprintf("copy %i\n",Copy);
+
+		switch (Coding) {
+		case GSM_Coding_Default:
+			FindDefaultAlphabetLen(Buffer,&i,&j,FreeText);
+			dprintf("def length %i %i\n",i,j);
+			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+i*2]   = 0;
+			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+i*2+1] = 0;
+			memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer,i*2);
+			*CopiedText 	= i;
+			*CopiedSMSText 	= j;
+			break;
+		case GSM_Coding_Unicode:
+			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2]   = 0;
+			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2+1] = 0;
+			memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer,Copy*2);
+			*CopiedText = *CopiedSMSText = Copy;
+			break;
+		case GSM_Coding_8bit:
+			memcpy(SMS->SMS[SMS->Number].Text+SMS->SMS[SMS->Number].Length,Buffer,Copy);
+			SMS->SMS[SMS->Number].Length += Copy;
+			*CopiedText = *CopiedSMSText = Copy;
+			break;
+		}
+		dprintf("Text added\n");
+	}
+
+	dprintf("Checking on the end\n");
+	GSM_Find_Free_Used_SMS2(Coding,SMS->SMS[SMS->Number], UsedText, &FreeText, &FreeBytes);
+
+	return GE_NONE;
 }
 
 void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
@@ -690,51 +794,33 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 			  int			Class,
 			  unsigned char		ReplaceMessage)
 {
-	int 		j;
-	int 		maxlen,pos=0,smslen;
-	GSM_SMSMessage  *MySMS;
+	int 		j,i,Len,UsedText,CopiedText,CopiedSMSText;
 	unsigned char 	UDHID;
 
-	while (true) {
-		MySMS = &SMS->SMS[SMS->Number];
-		GSM_SetDefaultSMSData(MySMS);
-		MySMS->UDH.Type = UDHType;
-		GSM_EncodeUDHHeader(&MySMS->UDH);
-		MySMS->Class    = Class;
-		MySMS->Coding   = Coding;
-		maxlen		= 0;
-		switch (Coding) {
-			case GSM_Coding_8bit:
-				/*max=140*/
-				maxlen=(GSM_MAX_8BIT_SMS_LENGTH-MySMS->UDH.Length);
-				break;
-			case GSM_Coding_Default:
-				/*max=160*/
-				FindDefaultAlphabetLen(MessageBuffer+pos*2,&maxlen,&smslen,(GSM_MAX_8BIT_SMS_LENGTH-MySMS->UDH.Length)*8/7);
-				break;
-			case GSM_Coding_Unicode:
-				/*max=70*/
-				maxlen=(GSM_MAX_8BIT_SMS_LENGTH-MySMS->UDH.Length)/2;
-				break;
-		}
-		if ((MessageLength-pos)<maxlen) maxlen=MessageLength-pos;
-		switch (Coding) {
-			case GSM_Coding_8bit:
-				memcpy(MySMS->Text,MessageBuffer+pos,maxlen);
-				break;
-			case GSM_Coding_Unicode:
-			case GSM_Coding_Default:
-				memcpy(MySMS->Text,MessageBuffer+pos*2,maxlen*2);
-				MySMS->Text[maxlen*2]  = 0;
-				MySMS->Text[maxlen*2+1]= 0;
-				break;
-		}
-		MySMS->Length 	= maxlen;
-		pos 		= pos+maxlen;
-		SMS->Number++;
-		if (SMS->Number==MAX_MULTI_SMS) break;
-		if (pos==MessageLength) break;
+	/* Cleaning on the start */
+	for (i=0;i<MAX_MULTI_SMS;i++)
+	{
+		GSM_SetDefaultSMSData(&SMS->SMS[i]);
+		SMS->SMS[i].Class    = Class;
+		SMS->SMS[i].Coding   = Coding;
+		SMS->SMS[i].UDH.Type = UDHType;
+		GSM_EncodeUDHHeader(&SMS->SMS[i].UDH);
 	}
+
+	Len = 0;
+	while(1) {
+		if (Coding == GSM_Coding_8bit) {
+			GSM_AddSMS_Text_UDH(SMS,Coding,MessageBuffer+Len,MessageLength - Len,false,&UsedText,&CopiedText,&CopiedSMSText);
+		} else {
+			GSM_AddSMS_Text_UDH(SMS,Coding,MessageBuffer+Len*2,MessageLength - Len,false,&UsedText,&CopiedText,&CopiedSMSText);
+		}
+		Len += CopiedText;
+		dprintf("%i %i\n",Len,MessageLength);
+		if (Len == MessageLength) break;
+	}
+
+	SMS->Number++;
+
 	UDHID = GSM_MakeSMSIDFromTime();
 	for (j=0;j<SMS->Number;j++)
 	{
@@ -749,6 +835,7 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 	if (SMS->Number == 1) SMS->SMS[0].ReplaceMessage = ReplaceMessage;
 }
 
+/* Nokia Smart Messaging 3.0 */
 static void GSM_EncodeSMS30MultiPartSMS(GSM_EncodeMultiPartSMSInfo *Info,
 					char *Buffer, int *Length)
 {
@@ -757,30 +844,32 @@ static void GSM_EncodeSMS30MultiPartSMS(GSM_EncodeMultiPartSMSInfo *Info,
 	/*SM version. Here 3.0*/
 	Buffer[(*Length)++] = 0x30;
 
-	if (Info->Entries[0].ID == SMS_NokiaProfileLong) {
-		if (Info->Entries[0].Buffer[0]!=0x00 || Info->Entries[0].Buffer[1]!=0x00) {
-			Buffer[(*Length)++] = SM30_PROFILENAME;
+	if (Info->Entries[0].ID == SMS_NokiaProfileLong) {	
+		if (Info->Entries[0].Buffer != NULL) {
+			if (Info->Entries[0].Buffer[0]!=0x00 || Info->Entries[0].Buffer[1]!=0x00) {
+				Buffer[(*Length)++] = SM30_PROFILENAME;
+				Buffer[(*Length)++] = 0x00;
+				Buffer[(*Length)++] = 2*UnicodeLength(Info->Entries[0].Buffer);
+				CopyUnicodeString(Buffer+(*Length),Info->Entries[0].Buffer);
+				*Length = *Length + 2*UnicodeLength(Info->Entries[0].Buffer);
+			}
+		}
+		if (Info->Entries[0].Ringtone != NULL) {
+			Buffer[(*Length)++] = SM30_RINGTONE;
+			/* Length for this part later will be changed */
+			Buffer[(*Length)++] = 0x01;
 			Buffer[(*Length)++] = 0x00;
-			Buffer[(*Length)++] = 2*UnicodeLength(Info->Entries[0].Buffer);
-			CopyUnicodeString(Buffer+(*Length),Info->Entries[0].Buffer);
-			*Length = *Length + 2*UnicodeLength(Info->Entries[0].Buffer);
+			/* Smart Messaging 3.0 says: 16*9=144 bytes,
+			 * but on 3310 4.02 it was possible to save about 196 chars
+			 * (without cutting) */
+			len = 196;
+			Info->Entries[0].RingtoneNotes=GSM_EncodeNokiaRTTLRingtone(*Info->Entries[0].Ringtone,Buffer+(*Length),&len);
+			Buffer[(*Length)-2] = len / 256;
+			Buffer[(*Length)-1] = len % 256;
+			*Length = *Length + len;
 		}
 	}
-	if (Info->Entries[0].ID == SMS_NokiaProfileLong || Info->Entries[0].ID == SMS_NokiaRingtoneLong) {
-		Buffer[(*Length)++] = SM30_RINGTONE;
-		/* Length for this part later will be changed */
-		Buffer[(*Length)++] = 0x01;
-		Buffer[(*Length)++] = 0x00;
-		/* Smart Messaging 3.0 says: 16*9=144 bytes,
-		 * but on 3310 4.02 it was possible to save about 196 chars
-		 * (without cutting) */
-		len = 196;
-		Info->Entries[0].RingtoneNotes=GSM_EncodeNokiaRTTLRingtone(*Info->Entries[0].Ringtone,Buffer+(*Length),&len);
-		Buffer[(*Length)-2] = len / 256;
-		Buffer[(*Length)-1] = len % 256;
-		*Length = *Length + len;
-	}
-	if (Info->Entries[0].ID != SMS_NokiaRingtoneLong) {
+	if (Info->Entries[0].Bitmap != NULL) {
 		if (Info->Entries[0].ID == SMS_NokiaPictureImageLong) {
 			Buffer[(*Length)++] = SM30_OTA;
 		} else {
@@ -808,129 +897,38 @@ static void GSM_EncodeSMS30MultiPartSMS(GSM_EncodeMultiPartSMSInfo *Info,
 		}
 	}
 }
-
-void GSM_Find_Free_Used_SMS(GSM_Coding_Type Coding,GSM_SMSMessage SMS, int *UsedText, int *Free)
-{
-	int Pos;
-
-	switch (Coding) {
-	case GSM_Coding_Default:
-		FindDefaultAlphabetLen(SMS.Text,&Pos,UsedText,500);
-		Pos = 0; 		/* to avoid compiler warning */
-		if (*UsedText % 7 != 0) *UsedText++;
-		*UsedText = *UsedText * 7 / 8;
-		break;
-	case GSM_Coding_Unicode:
-		*UsedText = UnicodeLength(SMS.Text)*2;
-		break;
-	case GSM_Coding_8bit:
-		*UsedText = SMS.Length;
-		break;
-	}
-	*Free = GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length - *UsedText;
-	dprintf("Free, Used %i %i\n",*Free,*UsedText);
-}
-
-GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
-			      GSM_Coding_Type		Coding,
-			      char 			*Buffer,
-			      int			BufferLen,
-			      bool 			UDH,
-			      int 			*UsedText)
-{
-	int Pos,Free,Copy,i,j;
-
-	GSM_Find_Free_Used_SMS(Coding,SMS->SMS[SMS->Number], UsedText, &Free);
-
-	if (UDH) {
-		dprintf("Adding UDH\n");
-		if (Free - BufferLen <= 0) {
-			dprintf("Going to the new SMS\n");
-			SMS->Number++;
-			*UsedText = 0;
-		}
-		if (SMS->SMS[SMS->Number].UDH.Length == 0) {
-			SMS->SMS[SMS->Number].UDH.Length  = 1;
-			SMS->SMS[SMS->Number].UDH.Text[0] = 0x00;
-		}
-		memcpy(SMS->SMS[SMS->Number].UDH.Text+SMS->SMS[SMS->Number].UDH.Length,Buffer,BufferLen);
-		SMS->SMS[SMS->Number].UDH.Length  	+= BufferLen;
-		SMS->SMS[SMS->Number].UDH.Text[0] 	+= BufferLen;
-		SMS->SMS[SMS->Number].UDH.Type 		=  UDH_UserUDH;
-		dprintf("UDH added\n");
-	} else {
-		dprintf("Adding text\n");
-		if (Free == 0) {
-			dprintf("Going to the new SMS\n");
-			SMS->Number++;
-			*UsedText = 0;
-			Free = GSM_MAX_8BIT_SMS_LENGTH - SMS->SMS[SMS->Number].UDH.Length;
-		}
-
-		Pos = 0;
-		while (Pos != BufferLen) {
-			Copy = Free;
-			if (BufferLen - Pos < Free) Copy = BufferLen - Pos;
-			dprintf("Copying %i bytes, free %i\n",Copy,Free);
-			switch (Coding) {
-			case GSM_Coding_Default:
-				FindDefaultAlphabetLen(Buffer+Pos*2,&i,&j,Free*8/7);
-				SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+i*2]   = 0;
-				SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+i*2+1] = 0;
-				memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer+Pos*2,i*2);
-				dprintf("def length %i %i\n",i,j);
-				Copy = i;
-				break;
-			case GSM_Coding_Unicode:
-				SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2]   = 0;
-				SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2+1] = 0;
-				memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer+Pos*2,Copy*2);
-				break;
-			case GSM_Coding_8bit:
-				memcpy(SMS->SMS[SMS->Number].Text+SMS->SMS[SMS->Number].Length,Buffer+Pos,Copy);
-				SMS->SMS[SMS->Number].Length += Copy;
-				break;
-			}
-			Pos += Copy;
-			if (Pos != BufferLen) {
-				dprintf("Going to the new SMS\n");
-				SMS->Number++;
-				*UsedText = 0;
-				Free = GSM_MAX_8BIT_SMS_LENGTH - SMS->SMS[SMS->Number].UDH.Length;
-			}
-		}
-		dprintf("Text added\n");
-	}
-	dprintf("Position %i\n",*UsedText);
-	return GE_NONE;
-}
 					
+/* EMS Developers' Guidelines from www.sonyericsson.com
+ * docs from Alcatel
+ */
 static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				           GSM_MultiSMSMessage 		*SMS,
 					   bool 			linked)
 {
 	unsigned char		Buffer[GSM_MAX_SMS_LENGTH*2*MAX_MULTI_SMS];
-	int 			i,UsedText,j,Length,Width,Height,z,x,y;
-	int 			Used,Free,Width2;
+	int 			i,UsedText,j,Length,Width,Height,z,x,y,Len;
+	int 			Used,FreeText,FreeBytes,Width2,CopiedText,CopiedSMSText;
 	unsigned char		UDHID;
 	GSM_Bitmap		Bitmap,Bitmap2;
 	GSM_Ringtone		Ring;
-
+	GSM_Coding_Type 	Coding 	= GSM_Coding_Default;
 	GSM_Phone_Bitmap_Types	BitmapType;
 	EncodeMultiPartSMSEntry *Entry;
+	bool			start;
 
 #ifdef DEBUG
 	if (linked) dprintf("linked EMS\n");
 #endif
 
-	/* Cleaning on the start */
-	for (i=0;i<MAX_MULTI_SMS;i++)
-	{
-		GSM_SetDefaultSMSData(&SMS->SMS[i]);
+	if (Info->UnicodeCoding) Coding = GSM_Coding_Unicode;
 
+	/* Cleaning on the start */
+	for (i=0;i<MAX_MULTI_SMS;i++) {
+		GSM_SetDefaultSMSData(&SMS->SMS[i]);
 		SMS->SMS[i].UDH.Type = UDH_NoUDH;
 		if (linked) SMS->SMS[i].UDH.Type = UDH_ConcatenatedMessages;
 		GSM_EncodeUDHHeader(&SMS->SMS[i].UDH);
+		SMS->SMS[i].Coding = Coding;
 	}
 
 	/* Packing */
@@ -939,7 +937,45 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 
 		switch (Entry->ID) {
 		case SMS_ConcatenatedTextLong:
-			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Entry->Buffer,UnicodeLength(Entry->Buffer),false,&UsedText);
+			Len = 0;
+			while(1) {
+				if (Entry->Left   || Entry->Right      ||
+				    Entry->Center || Entry->Large      ||
+				    Entry->Small  || Entry->Bold       ||
+				    Entry->Italic || Entry->Underlined ||
+				    Entry->Strikethrough) {
+					Buffer[0] = 0x0A;	/* ID for text format   */
+					Buffer[1] = 0x03;	/* length of rest	*/
+					Buffer[2] = 0x00; 	/* Position in EMS msg	*/
+					Buffer[3] = 0x00;	/* how many chars 	*/
+					Buffer[4] = 0x00;	/* formatting bits	*/
+					if (Entry->Left) {
+					} else if (Entry->Right) {	Buffer[4] |= 1;
+					} else if (Entry->Center) {	Buffer[4] |= 2;
+					} else 				Buffer[4] |= 3;
+					if (Entry->Large) {		Buffer[4] |= 4;
+					} else if (Entry->Small) {	Buffer[4] |= 8;}
+					if (Entry->Bold) 		Buffer[4] |= 16;
+				    	if (Entry->Italic) 		Buffer[4] |= 32;
+					if (Entry->Underlined) 		Buffer[4] |= 64;
+				    	if (Entry->Strikethrough) 	Buffer[4] |= 128;
+					GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,5,true,&UsedText,&CopiedText,&CopiedSMSText);
+					GSM_Find_Free_Used_SMS2(Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
+					if (FreeText == 0) continue;
+				}
+				GSM_AddSMS_Text_UDH(SMS,Coding,Entry->Buffer+Len*2,UnicodeLength(Entry->Buffer) - Len,false,&UsedText,&CopiedText,&CopiedSMSText);
+				if (Entry->Left   || Entry->Right      ||
+				    Entry->Center || Entry->Large      ||
+				    Entry->Small  || Entry->Bold       ||
+				    Entry->Italic || Entry->Underlined ||
+				    Entry->Strikethrough) {
+					SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-3] = UsedText;
+					SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-2] = CopiedSMSText;
+				}
+				Len += CopiedText;
+				if (Len == UnicodeLength(Entry->Buffer)) break;
+				dprintf("%i %i\n",Len,UnicodeLength(Entry->Buffer));
+			}
 			break;
 		case SMS_EMSPredefinedSound:
 		case SMS_EMSPredefinedAnimation:
@@ -951,7 +987,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 			Buffer[1] = 0x02; 		/* Length of rest 	*/
 			Buffer[2] = 0x00; 		/* Position in EMS msg	*/
 			Buffer[3] = Entry->Number; 	/* Number of anim.	*/
-			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,4,true,&UsedText);
+			GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
 			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-2] = UsedText;
 			break;
 		case SMS_EMSSonyEricssonSound:
@@ -962,19 +998,19 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				Buffer[1] = 2;	  /* Length of rest 		 */
 				Buffer[2] = 1;	  /* Number of protected objects */
 				Buffer[3] = 1;	  /* 1=Protected,0=Not protected */
-				GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,4,true,&UsedText);
+				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
 			Length = 128; /* 128 bytes is maximal length from specs */
 			switch (Entry->ID) {
 			case SMS_EMSSound10:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &Length, 1.0);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &Length, 1.0, true);
 				break;
 			case SMS_EMSSound12:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &Length, 1.2);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &Length, 1.2, true);
 				break;
 			case SMS_EMSSonyEricssonSound:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &Length, 0.1);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &Length, 0, true);
 				break;
 			default:
 				break;
@@ -983,7 +1019,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 			Buffer[0] = 0x0C;	/* ID for EMS sound 	*/
 			Buffer[1] = Length+1;	/* Length of rest 	*/
 			Buffer[2] = 0x00; 	/* Position in EMS msg 	*/
-			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,Length+3,true,&UsedText);
+			GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,Length+3,true,&UsedText,&CopiedText,&CopiedSMSText);
 			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-Length-1] = UsedText;
 			break;
 		case SMS_EMSSonyEricssonSoundLong:
@@ -995,13 +1031,13 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 			Length = 128; /* 128 bytes is maximal length from specs */
 			switch (Entry->ID) {
 			case SMS_EMSSound10Long:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.0);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.0, true);
 				break;
 			case SMS_EMSSound12Long:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.2);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.2, true);
 				break;
 			case SMS_EMSSonyEricssonSoundLong:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 0.1);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 0, true);
 				break;
 			default:
 				break;
@@ -1012,59 +1048,55 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 					Buffer[1] = 2;	  /* Length of rest 		 */
 					Buffer[2] = 1;	  /* Number of protected objects */
 					Buffer[3] = 1;	  /* 1=Protected,0=Not protected */
-					GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,4,true,&UsedText);
+					GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
 				}
 
 				Buffer[0] = 0x0C;	/* ID for EMS sound 	*/
 				Buffer[1] = Length+1;	/* Length of rest 	*/
 				Buffer[2] = 0x00; 	/* Position in EMS msg 	*/
-				GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,Length+3,true,&UsedText);
+				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,Length+3,true,&UsedText,&CopiedText,&CopiedSMSText);
 				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-Length-1] = UsedText;
 				break;
 			}
 
 			/* Find free place in first SMS */
-			GSM_Find_Free_Used_SMS(GSM_Coding_Default,SMS->SMS[SMS->Number], &Used, &Free);
-			Used 	= 1;
-			Length 	= Free - 3;
+			GSM_Find_Free_Used_SMS2(Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
+			Length = FreeBytes - 3;
 			if (Entry->Protected) 	Length = Length - 4;
 			if (Length < 0) 	Length = 128;
 			if (Length > 128) 	Length = 128;
-			switch (Entry->ID) {
-			case SMS_EMSSound10Long:
-				Free = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.0);
-				break;
-			case SMS_EMSSound12Long:
-				Free = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.2);
-				break;
-			case SMS_EMSSonyEricssonSoundLong:
-				Free = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 0.1);
-				break;
-			default:
-				break;
-			}
+
+			memcpy(&Ring,Entry->Ringtone,sizeof(GSM_Ringtone));
+
+			/* Checking number of SMS */
+			Used 		= 0;
+			FreeBytes 	= 0;
+			start		= true;
 			while (1) {
-				z = 0;
-				for (j=Free;j<Ring.NoteTone.NrCommands;j++) {
-					memcpy(&Ring.NoteTone.Commands[z],&Ring.NoteTone.Commands[j],sizeof(GSM_RingCommand));
-					z++;
+				if (FreeBytes != 0) {
+					z = 0;
+					for (j=FreeBytes;j<Ring.NoteTone.NrCommands;j++) {
+						memcpy(&Ring.NoteTone.Commands[z],&Ring.NoteTone.Commands[j],sizeof(GSM_RingCommand));
+						z++;
+					}
+					Ring.NoteTone.NrCommands -= FreeBytes;
+					if (Ring.NoteTone.NrCommands == 0) break;
+					Length = 128; /* 128 bytes is maximal length from specs */
 				}
-				Ring.NoteTone.NrCommands -= Free;
-				if (Ring.NoteTone.NrCommands == 0) break;
-				Length = 128; /* 128 bytes is maximal length from specs */
 				switch (Entry->ID) {
 				case SMS_EMSSound10Long:
-					Free = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.0);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.0, start);
 					break;
 				case SMS_EMSSound12Long:
-					Free = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.2);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.2, start);
 					break;
 				case SMS_EMSSonyEricssonSoundLong:
-					Free = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 0);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 0, start);
 					break;
 				default:
 					break;
 				}
+				start = false;
 				Used++;
 			}
 			dprintf("Used SMS: %i\n",Used);
@@ -1074,60 +1106,46 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				Buffer[1] = 2;	    /* Length of rest 		   */
 				Buffer[2] = Used+1; /* Number of protected objects */
 				Buffer[3] = 1;	    /* 1=Protected,0=Not protected */
-				GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,4,true,&UsedText);
+				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
 			/* Save UPI UDH */
 			Buffer[0] = 0x13;	/* ID for UPI		*/
 			Buffer[1] = 1;		/* Length of rest 	*/
 			Buffer[2] = Used; 	/* Number of used parts	*/
-			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,3,true,&UsedText);
-			GSM_Find_Free_Used_SMS(GSM_Coding_Default,SMS->SMS[SMS->Number], &Used, &Free);
+			GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,3,true,&UsedText,&CopiedText,&CopiedSMSText);
+
+			/* Find free place in first SMS */
+			GSM_Find_Free_Used_SMS2(Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
+			Length 	= FreeBytes - 3;
+			if (Length < 0) 	Length = 128;
+			if (Length > 128) 	Length = 128;
 
 			memcpy(&Ring,Entry->Ringtone,sizeof(GSM_Ringtone));
 
-			/* Save first part */
-			Length 	= Free - 3;
-			if (Length < 0) 	Length = 128;
-			if (Length > 128) 	Length = 128;
-			switch (Entry->ID) {
-			case SMS_EMSSound10Long:
-				Free = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.0);
-				break;
-			case SMS_EMSSound12Long:
-				Free = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.2);
-				break;
-			case SMS_EMSSonyEricssonSoundLong:
-				Free = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 0.1);
-				break;
-			default:
-				break;
-			}
-			Buffer[0] = 0x0C;	/* ID for EMS sound 	*/
-			Buffer[1] = Length+1;	/* Length of rest 	*/
-			Buffer[2] = 0x00; 	/* Position in EMS msg 	*/
-			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,Length+3,true,&UsedText);
-			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-Length-1] = UsedText;
-
-			/* Save next parts */
+			/* Saving */
+			FreeBytes = 0;
+			start	  = true;
 			while (1) {
-				z = 0;
-				for (j=Free;j<Ring.NoteTone.NrCommands;j++) {
-					memcpy(&Ring.NoteTone.Commands[z],&Ring.NoteTone.Commands[j],sizeof(GSM_RingCommand));
-					z++;
+				if (FreeBytes != 0) {
+					z = 0;
+					for (j=FreeBytes;j<Ring.NoteTone.NrCommands;j++) {
+						memcpy(&Ring.NoteTone.Commands[z],&Ring.NoteTone.Commands[j],sizeof(GSM_RingCommand));
+						z++;
+					}
+					Ring.NoteTone.NrCommands -= FreeBytes;
+					if (Ring.NoteTone.NrCommands == 0) break;
+					Length = 128; /* 128 bytes is maximal length from specs */
 				}
-				Ring.NoteTone.NrCommands -= Free;
-				if (Ring.NoteTone.NrCommands == 0) break;
-				Length = 128; /* 128 bytes is maximal length from specs */
 				switch (Entry->ID) {
 				case SMS_EMSSound10Long:
-					Free = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.0);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.0, start);
 					break;
 				case SMS_EMSSound12Long:
-					Free = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.2);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.2, start);
 					break;
 				case SMS_EMSSonyEricssonSoundLong:
-					Free = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 0);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 0, start);
 					break;
 				default:
 					break;
@@ -1135,8 +1153,9 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				Buffer[0] = 0x0C;	/* ID for EMS sound 	*/
 				Buffer[1] = Length+1;	/* Length of rest 	*/
 				Buffer[2] = 0x00; 	/* Position in EMS msg 	*/
-				GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,Length+3,true,&UsedText);
+				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,Length+3,true,&UsedText,&CopiedText,&CopiedSMSText);
 				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-Length-1] = UsedText;
+				start = false;
 			}
 
 			Entry->RingtoneNotes = Entry->Ringtone->NoteTone.NrCommands;
@@ -1148,7 +1167,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				Buffer[1] = 2;	  /* Length of rest 		 */
 				Buffer[2] = 1;	  /* Number of protected objects */
 				Buffer[3] = 1;	  /* 1=Protected,0=Not protected */
-				GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,4,true,&UsedText);
+				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
 			if (Entry->Bitmap->Bitmap[0].Width > 8 || Entry->Bitmap->Bitmap[0].Height > 8) {
@@ -1165,7 +1184,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 			for (j=0;j<Entry->Bitmap->Number;j++) {
 				PHONE_EncodeBitmap(BitmapType, Buffer+3+j*Length, &Entry->Bitmap->Bitmap[j]);
 			}
-			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,3+Length*Entry->Bitmap->Number,true,&UsedText);
+			GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,3+Length*Entry->Bitmap->Number,true,&UsedText,&CopiedText,&CopiedSMSText);
 			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-1-Length*Entry->Bitmap->Number] = UsedText;
 			break;
 		case SMS_EMSFixedBitmap:
@@ -1174,7 +1193,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				Buffer[1] = 2;	  /* Length of rest 		 */
 				Buffer[2] = 1;	  /* Number of protected objects */
 				Buffer[3] = 1;	  /* 1=Protected,0=Not protected */
-				GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,4,true,&UsedText);
+				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
 			if (Entry->Bitmap->Bitmap[0].Width > 16 || Entry->Bitmap->Bitmap[0].Height > 16) {
@@ -1190,7 +1209,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 			Buffer[1] = Length + 1;		/* Length of rest 	*/
 			Buffer[2] = 0x00; 		/* Position in EMS msg	*/
 			PHONE_EncodeBitmap(BitmapType,Buffer+3, &Entry->Bitmap->Bitmap[0]);
-			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,3+Length,true,&UsedText);
+			GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,3+Length,true,&UsedText,&CopiedText,&CopiedSMSText);
 			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-1-Length] = UsedText;
 			break;
 		case SMS_EMSVariableBitmapLong:
@@ -1216,7 +1235,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 					Buffer[1] = 2;	  /* Length of rest 		 */
 					Buffer[2] = 1;	  /* Number of protected objects */
 					Buffer[3] = 1;    /* 1=Protected,0=Not protected */
-					GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,4,true,&UsedText);
+					GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
 				}
 
 				Buffer[0] = 0x12;		/* ID for EMS bitmap	*/
@@ -1230,32 +1249,32 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Bitmap);
 #endif
 				PHONE_EncodeBitmap(BitmapType,Buffer+5, &Bitmap);
-				GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,5+Length,true,&UsedText);
+				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,5+Length,true,&UsedText,&CopiedText,&CopiedSMSText);
 				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-3-Length] = UsedText;
 				break;
 			}
 
 			/* Find free place in first SMS */
-			GSM_Find_Free_Used_SMS(GSM_Coding_Default,SMS->SMS[SMS->Number], &Used, &Free);
+			GSM_Find_Free_Used_SMS2(Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
 			Used 	= 0;
-			Length 	= Free - 3;
+			Length 	= FreeBytes - 3;
 			if (Entry->Protected)	Length = Length - 4;
 			if (Length < 0) 	Length = 128;
 			if (Length > 128) 	Length = 128;
 
 			/* Checking number of SMS */
-			Free = 0;
-			while (Free != Width) {
+			FreeBytes = 0;
+			while (FreeBytes != Width) {
 				Width2 = 8;
 				while(1) {
-					if (Free+Width2 == Width) break;
+					if (FreeBytes+Width2 == Width) break;
 
 					if (PHONE_GetBitmapSize(BitmapType,Width2+8,Height) > Length) break;
 
 					Width2 = Width2 + 8;
 				}
-				Free 	= Free + Width2;
-				Length 	= 128;
+				FreeBytes 	= FreeBytes + Width2;
+				Length 		= 128;
 				Used ++;
 			}
 			dprintf("Used SMS: %i\n",Used);
@@ -1265,7 +1284,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				Buffer[1] = 2;	    /* Length of rest 		   */
 				Buffer[2] = Used+1; /* Number of protected objects */
 				Buffer[3] = 1;	    /* 1=Protected,0=Not protected */
-				GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,4,true,&UsedText);
+				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
 			/* Save UPI UDH */
@@ -1274,9 +1293,9 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 			Buffer[2] = Used; 	/* Number of used parts	*/
 
 			/* Find free place in first SMS */
-			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,3,true,&UsedText);
-			GSM_Find_Free_Used_SMS(GSM_Coding_Default,SMS->SMS[SMS->Number], &Used, &Free);
-			Length 	= Free - 3;
+			GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,3,true,&UsedText,&CopiedText,&CopiedSMSText);
+			GSM_Find_Free_Used_SMS2(Coding,SMS->SMS[SMS->Number], &UsedText, &FreeText, &FreeBytes);
+			Length 	= FreeBytes - 3;
 			if (Length < 0) 	Length = 128;
 			if (Length > 128) 	Length = 128;
 
@@ -1285,11 +1304,11 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 #endif
 
 			/* Saving SMS */
-			Free = 0;
-			while (Free != Width) {
+			FreeBytes = 0;
+			while (FreeBytes != Width) {
 				Width2 = 8;
 				while(1) {
-					if (Free+Width2 == Width) break;
+					if (FreeBytes+Width2 == Width) break;
 
 					if (PHONE_GetBitmapSize(BitmapType,Width2+8,Height) > Length) break;
 
@@ -1302,7 +1321,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				GSM_ClearBitmap(&Bitmap2);
 				for (x=0;x<Width2;x++) {
 					for (y=0;y<Height;y++) {
-						if (GSM_IsPointBitmap(&Bitmap,x+Free,y)) {
+						if (GSM_IsPointBitmap(&Bitmap,x+FreeBytes,y)) {
 							GSM_SetPointBitmap(&Bitmap2, x, y);
 						}
 					}
@@ -1319,10 +1338,10 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				Buffer[3] = Width2/8;		/* Bitmap width/8 	*/
 				Buffer[4] = Height;		/* Bitmap height  	*/
 				PHONE_EncodeBitmap(BitmapType,Buffer+5, &Bitmap2);
-				GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,5+Length,true,&UsedText);
+				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,5+Length,true,&UsedText,&CopiedText,&CopiedSMSText);
 				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-3-Length] = UsedText;
 
-				Free 	= Free + Width2;
+				FreeBytes 	= FreeBytes + Width2;
 				Length 	= 128;
 			}
 			break;
@@ -1332,7 +1351,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				Buffer[1] = 2;	  /* Length of rest 		 */
 				Buffer[2] = 1;	  /* Number of protected objects */
 				Buffer[3] = 1;	  /* 1=Protected,0=Not protected */
-				GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,4,true,&UsedText);
+				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
 			BitmapType 	= GSM_EMSVariablePicture;
@@ -1362,7 +1381,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Bitmap);
 #endif
 			PHONE_EncodeBitmap(BitmapType,Buffer+5, &Bitmap);
-			GSM_AddSMS_Text_UDH(SMS,GSM_Coding_Default,Buffer,5+Length,true,&UsedText);
+			GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,5+Length,true,&UsedText,&CopiedText,&CopiedSMSText);
 			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-3-Length] = UsedText;
 			break;
 		default:
@@ -1374,8 +1393,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 
 	if (linked) {
 		UDHID = GSM_MakeSMSIDFromTime();
-		for (i=0;i<SMS->Number;i++)
-		{
+		for (i=0;i<SMS->Number;i++) {
 			SMS->SMS[i].UDH.Text[2+1] = UDHID;
 			SMS->SMS[i].UDH.Text[3+1] = SMS->Number;
 			SMS->SMS[i].UDH.Text[4+1] = i+1;
@@ -1423,6 +1441,15 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 			case SMS_EMSAnimation:
 			case SMS_EMSVariableBitmapLong:
 				EMS = true;
+				break;
+			case SMS_ConcatenatedTextLong:
+				if (Info->Entries[i].Left   || Info->Entries[i].Right      ||
+				    Info->Entries[i].Center || Info->Entries[i].Large      ||
+				    Info->Entries[i].Small  || Info->Entries[i].Bold       ||
+				    Info->Entries[i].Italic || Info->Entries[i].Underlined ||
+				    Info->Entries[i].Strikethrough) {
+					EMS = true;
+				}
 			default:
 				break;
 		}
@@ -1449,14 +1476,14 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 	case SMS_NokiaRingtone:
 		UDH	= UDH_NokiaRingtone;
 		Class	= 1;
-		/* 6 = length of UDH_NokiaRingtone UDH header */
-		Length = GSM_MAX_8BIT_SMS_LENGTH-6;
+		/* 7 = length of UDH_NokiaRingtone UDH header */
+		Length  = GSM_MAX_8BIT_SMS_LENGTH-7;
 		Info->Entries[0].RingtoneNotes = GSM_EncodeNokiaRTTLRingtone(*Info->Entries[0].Ringtone,Buffer,&Length);
 		if (Info->Entries[0].ID == SMS_NokiaRingtone) break;
 		if (Info->Entries[0].RingtoneNotes != Info->Entries[0].Ringtone->NoteTone.NrCommands) {
-			UDH = UDH_NokiaProfileLong;
-			Length = 0;
-			GSM_EncodeSMS30MultiPartSMS(Info,Buffer,&Length);
+			UDH    = UDH_NokiaRingtoneLong;
+			Length = (GSM_MAX_8BIT_SMS_LENGTH-12)*3;
+			Info->Entries[0].RingtoneNotes = GSM_EncodeNokiaRTTLRingtone(*Info->Entries[0].Ringtone,Buffer,&Length);
 		}
 		break;
 	case SMS_NokiaOperatorLogoLong:
@@ -1490,11 +1517,11 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 	case SMS_NokiaWAPBookmarkLong:
 		Class	= 1;
 		NOKIA_EncodeWAPBookmarkSMSText(Buffer,&Length,Info->Entries[0].Bookmark);
-		/* 6 = length of UDH_NokiaWAPBookmark UDH header */
-		if (Length>(GSM_MAX_8BIT_SMS_LENGTH-6)) {
+		/* 7 = length of UDH_NokiaWAP UDH header */
+		if (Length>(GSM_MAX_8BIT_SMS_LENGTH-7)) {
 			UDH=UDH_NokiaWAPLong;
 		} else {
-			UDH=UDH_NokiaWAPBookmark;
+			UDH=UDH_NokiaWAP;
 		}
 		break;
 	case SMS_NokiaWAPSettingsLong:
@@ -1583,11 +1610,11 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		}
 		UDHHeader.Type = UDH;
 		GSM_EncodeUDHHeader(&UDHHeader);
-		memcpy(Buffer,Info->Entries[0].Buffer,UnicodeLength(Info->Entries[0].Buffer)*2);
+		memcpy(Buffer,Info->Entries[0].Buffer,UnicodeLength(Info->Entries[0].Buffer)*2+2);
 		if (Info->UnicodeCoding) {
 			Coding = GSM_Coding_Unicode;
 			Length = UnicodeLength(Info->Entries[0].Buffer);
-			if (Length>70-UDHHeader.Length) Length = 70-UDHHeader.Length;
+			if (Length>(140-UDHHeader.Length)/2) Length = (140-UDHHeader.Length)/2;
 		} else {
 			Coding = GSM_Coding_Default;
 			FindDefaultAlphabetLen(Info->Entries[0].Buffer,&Length,&smslen,(GSM_MAX_8BIT_SMS_LENGTH-UDHHeader.Length)*8/7);
@@ -1617,7 +1644,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		/* No break here - we go to the SMS_ConcatenatedTextLong */
 	case SMS_ConcatenatedTextLong:
 		Class = Info->Class;
-		memcpy(Buffer,Info->Entries[0].Buffer,UnicodeLength(Info->Entries[0].Buffer)*2);
+		memcpy(Buffer,Info->Entries[0].Buffer,UnicodeLength(Info->Entries[0].Buffer)*2+2);
 		UDH = UDH_NoUDH;
 		if (Info->UnicodeCoding) {
 			Coding = GSM_Coding_Unicode;
@@ -1649,6 +1676,15 @@ void GSM_ClearMultiPartSMSInfo(GSM_EncodeMultiPartSMSInfo *Info)
 		Info->Entries[i].Calendar	= NULL;
 		Info->Entries[i].ToDo		= NULL;
 		Info->Entries[i].MMSIndicator	= NULL;
+		Info->Entries[i].Left		= false;
+		Info->Entries[i].Right		= false;
+		Info->Entries[i].Center		= false;
+		Info->Entries[i].Large		= false;
+		Info->Entries[i].Small		= false;
+		Info->Entries[i].Bold		= false;
+		Info->Entries[i].Italic		= false;
+		Info->Entries[i].Underlined	= false;
+		Info->Entries[i].Strikethrough	= false;
 
 		Info->Entries[i].Protected	= false;
 	}

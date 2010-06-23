@@ -624,7 +624,13 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 
 	if (error==GE_NONE) {
 		error=Reply[reply].Function(*msg, s);
-		if ((unsigned int)Reply[reply].requestID==Data->RequestID) Data->RequestID=ID_None;
+		if ((unsigned int)Reply[reply].requestID==Data->RequestID) {
+			if (error != GE_NEEDANOTHERANSWER) {
+				Data->RequestID=ID_None;
+			} else {
+				error = GE_NONE;
+			}
+		}
 	}
 
 	return error;
@@ -788,7 +794,7 @@ static OnePhoneModel allmodels[] = {
 	{"5510" ,"NPM-5" ,"",           {F_NOCALLER,F_PROFILES33,F_NOPICTUREUNI,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"6100" ,"NPL-2" ,"Nokia 6100", {F_RADIO,F_TODO66,0}},
+	{"6100" ,"NPL-2" ,"Nokia 6100", {F_TODO66,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"6110" ,"NSE-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
