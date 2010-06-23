@@ -264,6 +264,12 @@ void GSM_GetBackupFileFeatures(char *FileName, GSM_Backup_Info *info, GSM_Backup
 	if (info->SIMPhonebook   && backup->SIMPhonebook[0]   == NULL) info->SIMPhonebook   = false;
 	if (info->Calendar	 && backup->Calendar[0]       == NULL) info->Calendar       = false;
 	if (info->ToDo		 && backup->ToDo[0]  	      == NULL) info->ToDo	    = false;
+	if (info->WAPBookmark	 && backup->WAPBookmark[0]    == NULL) info->WAPBookmark    = false;
+	if (info->WAPSettings    && backup->WAPSettings[0]    == NULL) info->WAPSettings    = false;
+	if (info->MMSSettings    && backup->MMSSettings[0]    == NULL) info->MMSSettings    = false;
+	if (info->FMStation      && backup->FMStation[0]      == NULL) info->FMStation      = false;
+	if (info->GPRSPoint      && backup->GPRSPoint[0]      == NULL) info->GPRSPoint      = false;
+	if (info->Profiles       && backup->Profiles[0]       == NULL) info->Profiles       = false;
 	/* .... */
 }
 

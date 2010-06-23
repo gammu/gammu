@@ -90,6 +90,7 @@ typedef struct {
 	 * For caller group logo: ringtone ID. Phone model specific
 	 */
 	unsigned char 		RingtoneID;
+	bool 			FileSystemRingtone;
 	/**
 	 * For mono bitmaps: body of bitmap
 	 */ 

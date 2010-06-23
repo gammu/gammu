@@ -847,19 +847,19 @@ static OnePhoneModel allmodels[] = {
 	{"2100" ,"NAM-2" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},//quess
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-	{"3100" ,"RH-19" ,"",           {0}},
-	{"3100b","RH-50" ,"",           {0}},
+	{"3100" ,"RH-19" ,"",           {F_PBKTONEGAL,0}},
+	{"3100b","RH-50" ,"",           {F_PBKTONEGAL,0}},
 	{"3108", "RH-6",  "Nokia 3108",	{0}}, //does it have irda ?
-	{"3200", "RH-30" ,"Nokia 3200",	{0}},
-	{"3200a","RH-31" ,"Nokia 3200",	{0}},
+	{"3200", "RH-30" ,"Nokia 3200",	{F_PBKTONEGAL,0}},
+	{"3200a","RH-31" ,"Nokia 3200",	{F_PBKTONEGAL,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"3210" ,"NSE-8" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
 	{"3210" ,"NSE-9" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-	{"3300" ,"NEM-1" ,"Nokia 3300", {0}},
-	{"3300" ,"NEM-2" ,"Nokia 3300", {0}},
+	{"3300" ,"NEM-1" ,"Nokia 3300", {F_PBKTONEGAL,0}},
+	{"3300" ,"NEM-2" ,"Nokia 3300", {F_PBKTONEGAL,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"3310" ,"NHM-5" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},
@@ -879,9 +879,9 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"3650" ,"NHL-8" ,"Nokia 3650", {F_RADIO,0}},
-	{"5100" ,"NPM-6" ,"Nokia 5100", {F_TODO66,F_RADIO,0}},
-	{"5100" ,"NPM-6U","Nokia 5100", {F_TODO66,F_RADIO,0}},
-	{"5100" ,"NPM-6X","Nokia 5100", {F_TODO66,F_RADIO,0}},
+	{"5100" ,"NPM-6" ,"Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
+	{"5100" ,"NPM-6U","Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
+	{"5100" ,"NPM-6X","Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"5110" ,"NSE-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DISPSTATUS,0}},
@@ -896,7 +896,7 @@ static OnePhoneModel allmodels[] = {
 	{"5510" ,"NPM-5" ,"",           {F_NOCALLER,F_PROFILES33,F_NOPICTUREUNI,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"6100" ,"NPL-2" ,"Nokia 6100", {F_TODO66,0}},
+	{"6100" ,"NPL-2" ,"Nokia 6100", {F_PBKTONEGAL,F_TODO66,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"6110" ,"NSE-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
@@ -905,8 +905,8 @@ static OnePhoneModel allmodels[] = {
 	{"6190" ,"NSB-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"6200" ,"NPL-3" ,"Nokia 6200", {0}},
-	{"6220" ,"RH-20" ,"Nokia 6220", {F_TODO66,0}},
+	{"6200" ,"NPL-3" ,"Nokia 6200", {F_PBKTONEGAL,0}},
+	{"6220" ,"RH-20" ,"Nokia 6220", {F_PBKTONEGAL,F_TODO66,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"6210" ,"NPE-3" ,"Nokia 6210", {F_VOICETAGS,F_CAL62,0}},
@@ -915,20 +915,20 @@ static OnePhoneModel allmodels[] = {
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"6310" ,"NPE-4" ,"Nokia 6310", {F_TODO63,F_CAL65,F_NOMIDI,F_NOMMS,F_VOICETAGS,0}},
 	{"6310i","NPL-1" ,"Nokia 6310i",{F_TODO63,F_CAL65,F_NOMIDI,F_BLUETOOTH,F_NOMMS,F_VOICETAGS,0}},
-	{"6385" ,"NHP-2AX","Nokia 6385", {F_TODO63,F_CAL65,F_NOMIDI,F_NOMMS,F_VOICETAGS,0}},
+	{"6385" ,"NHP-2AX","Nokia 6385",{F_TODO63,F_CAL65,F_NOMIDI,F_NOMMS,F_VOICETAGS,0}},
 	{"6510" ,"NPM-9" ,"Nokia 6510", {F_TODO63,F_CAL65,F_NOMIDI,F_RADIO,F_NOFILESYSTEM,F_NOMMS,F_VOICETAGS,0}},
-	{"6610" ,"NHL-4U","Nokia 6610", {F_TODO66,F_RADIO,0}},
-	{"6800" ,"NSB-9" ,"Nokia 6800", {F_TODO66,F_RADIO,0}},
-	{"6800" ,"NHL-6" ,"Nokia 6800", {F_TODO66,F_RADIO,0}},
+	{"6610" ,"NHL-4U","Nokia 6610", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
+	{"6800" ,"NSB-9" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
+	{"6800" ,"NHL-6" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"7110" ,"NSE-5" ,"Nokia 7110", {F_CAL62,0}},
 	{"7190" ,"NSB-5" ,"Nokia 7190", {F_CAL62,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"7210" ,"NHL-4" ,"Nokia 7210", {F_TODO66,F_RADIO,0}},
-	{"7250" ,"NHL-4J","Nokia 7250", {F_TODO66,F_RADIO,F_PBKIMG,0}},
-	{"7250i","NHL-4JX","Nokia 7250i",{F_TODO66,F_RADIO,F_PBKIMG,0}},
+	{"7210" ,"NHL-4" ,"Nokia 7210", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
+	{"7250" ,"NHL-4J","Nokia 7250", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKIMG,0}},
+	{"7250i","NHL-4JX","Nokia 7250i",{F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKIMG,0}},
 	{"7600", "NMM-3", "Nokia 7600", {F_TODO66,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN)
@@ -1147,6 +1147,11 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
 	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoStatus		ToDoStatus;
 	GSM_CalendarEntry       Note;
+	GSM_WAPBookmark		Bookmark;
+	GSM_MultiWAPSettings	WAPSettings;
+ 	GSM_FMStation		FMStation;
+ 	GSM_GPRSAccessPoint	GPRSPoint;
+//	GSM_Profile		Profile;
 
 	if (info->PhonePhonebook) {
 		MemStatus.MemoryType = MEM_ME;
@@ -1173,6 +1178,46 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
 		if (error == ERR_NONE && ToDoStatus.Used != 0) {
 		} else {
 			info->ToDo = false;
+		}
+	}
+	if (info->WAPBookmark) {
+		Bookmark.Location = 1;
+		error=s->Phone.Functions->GetWAPBookmark(s,&Bookmark);
+		if (error == ERR_NONE) {
+		} else {
+			info->WAPBookmark = false;
+		}
+	}
+	if (info->WAPSettings) {
+		WAPSettings.Location = 1;
+		error=s->Phone.Functions->GetWAPSettings(s,&WAPSettings);
+		if (error == ERR_NONE) {
+		} else {
+			info->WAPSettings = false;
+		}
+	}
+	if (info->MMSSettings) {
+		WAPSettings.Location = 1;
+		error=s->Phone.Functions->GetMMSSettings(s,&WAPSettings);
+		if (error == ERR_NONE) {
+		} else {
+			info->WAPSettings = false;
+		}
+	}
+	if (info->FMStation) {
+ 		FMStation.Location = 1;
+ 		error = s->Phone.Functions->GetFMStation(s,&FMStation);
+ 	        if (error == ERR_NONE || error == ERR_EMPTY) {
+		} else {
+			info->FMStation = false;
+		}
+	}
+	if (info->GPRSPoint) {
+ 		GPRSPoint.Location = 1;
+ 		error = s->Phone.Functions->GetGPRSAccessPoint(s,&GPRSPoint);
+ 	        if (error == ERR_NONE || error == ERR_EMPTY) {
+		} else {
+			info->GPRSPoint = false;
 		}
 	}
 }

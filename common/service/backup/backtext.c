@@ -659,7 +659,11 @@ static void SaveCallerEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
 	SaveBackupText(file, "", buffer, UseUnicode);
 	if (!bitmap->DefaultName) SaveBackupText(file, "Name", bitmap->Text, UseUnicode);
 	if (!bitmap->DefaultRingtone) 	{
-		sprintf(buffer,"Ringtone = %02x%c%c",bitmap->RingtoneID,13,10);
+		if (bitmap->FileSystemRingtone) {
+			sprintf(buffer,"FileRingtone = %02x%c%c",bitmap->RingtoneID,13,10);
+		} else {
+			sprintf(buffer,"Ringtone = %02x%c%c",bitmap->RingtoneID,13,10);
+		}
 		SaveBackupText(file, "", buffer, UseUnicode);
 	}
 	if (bitmap->BitmapEnabled) {
@@ -1614,10 +1618,19 @@ static void ReadCallerEntry(INI_Section *file_info, char *section, GSM_Bitmap *b
 	sprintf(buffer,"Ringtone");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue==NULL) {
-		bitmap->DefaultRingtone = true;
+		sprintf(buffer,"FileRingtone");
+		readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+		if (readvalue==NULL) {
+			bitmap->DefaultRingtone = true;
+		} else {
+			DecodeHexBin (&bitmap->RingtoneID, readvalue, 2);
+			bitmap->DefaultRingtone 	= false;
+			bitmap->FileSystemRingtone 	= true;
+		}
 	} else {
 		DecodeHexBin (&bitmap->RingtoneID, readvalue, 2);
-		bitmap->DefaultRingtone = false;
+		bitmap->DefaultRingtone 	= false;
+		bitmap->FileSystemRingtone 	= false;
 	}
 	sprintf(buffer,"Enabled");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);

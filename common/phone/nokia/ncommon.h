@@ -32,7 +32,8 @@ typedef enum {
 	/* DCT4 only */
 	N6510_PBK_URL		 = 0x2c, /* Text: URL address 			*/
 	N6510_PBK_VOICETAG_ID	 = 0x2f, /* Voice tag assigment			*/
-	N6510_PBK_PICTURE_ID	 = 0x33  /* Picture ID assigment		*/
+	N6510_PBK_PICTURE_ID	 = 0x33, /* Picture ID assigment		*/
+	N6510_PBK_RINGTONEFILE_ID= 0x37  /* Ringtone ID from filesystem/internal*/
 } GSM_71_65_Phonebook_Entries_Types;
 
 typedef enum {

@@ -8,6 +8,7 @@ Standards-Version: 3.6.0
 Package: gammu
 Architecture: any
 Depends: ${shlibs:Depends}
+Suggests: wammu
 Description: Mobile phone management utility
  Gammu (GNU All Mobile Management Utility) is program to manage mobile phone.
  .
@@ -27,7 +28,7 @@ Description: Mobile phone management utility
 
 Package: libgammu0-dev
 Replaces: libgammu-dev
-Conflicts: libgammu-dev, libgammu
+Conflicts: libgammu-dev, libgammu, libgammu0 < 0.92.9-1
 Section: libdevel
 Architecture: any
 Depends: libgammu0 (= ${Source-Version})
@@ -51,6 +52,7 @@ Description: Header files for Gammu
 Package: libgammu0
 Replaces: libgammu
 Conflicts: libgammu
+Suggests: gammu
 Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}

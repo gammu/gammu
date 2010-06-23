@@ -211,7 +211,7 @@ begin
    PhoneCallBackPointer    := @ChangePhoneState1;
    SecurityCallBackPointer := @ChangeSecurityState;
    SMSCallBackPointer      := @HandleIncomingSMS;
-   error:=GSM_StartConnection(@PhoneID,Device,Connection,'','logfile','text',@PhoneCallBackPointer,@SecurityCallBackPointer,@SMSCallBackPointer);
+   error:=GSM_StartConnection(@PhoneID,Device,Connection,'','logfile','text',false,@PhoneCallBackPointer,@SecurityCallBackPointer,@SMSCallBackPointer);
    if (error=ERR_NONE) then
    begin
            ConnectionLabel.Caption:=Connection;

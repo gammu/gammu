@@ -4,13 +4,12 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Gammu, ExtCtrls, ComCtrls, StrUtils;
+  Dialogs, StdCtrls, Gammu, ExtCtrls, ComCtrls, StrUtils, About;
 
 type
-  TForm1 = class(TForm)
+  TBackupForm = class(TForm)
     Button1: TButton;
     PageControl1: TPageControl;
-    TabSheet1: TTabSheet;
     TabSheet2: TTabSheet;
     TabSheet3: TTabSheet;
     TabSheet4: TTabSheet;
@@ -21,16 +20,6 @@ type
     GroupBox3: TGroupBox;
     ConnectionComboBox: TComboBox;
     DeviceComboBox: TComboBox;
-    GroupBox4: TGroupBox;
-    Label1: TLabel;
-    FileNameEdit: TEdit;
-    Button6: TButton;
-    Label2: TLabel;
-    Edit1: TEdit;
-    Label3: TLabel;
-    Edit4: TEdit;
-    Label4: TLabel;
-    Edit7: TEdit;
     GroupBox5: TGroupBox;
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
@@ -47,21 +36,35 @@ type
     Label5: TLabel;
     Label6: TLabel;
     Label7: TLabel;
-    TabSheet0: TTabSheet;
+    TabSheet1: TTabSheet;
     GroupBox2: TGroupBox;
     BackupRadioButton: TRadioButton;
     RestoreRadioButton: TRadioButton;
     SaveBackupDialog: TSaveDialog;
     Label8: TLabel;
-    Label9: TLabel;
-    Edit10: TEdit;
     Label10: TLabel;
     Edit2: TEdit;
+    CheckBox5: TCheckBox;
+    CheckBox6: TCheckBox;
+    CheckBox7: TCheckBox;
+    Label11: TLabel;
+    FileNameEdit: TEdit;
+    Button2: TButton;
+    Label2: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    Label9: TLabel;
+    Edit1: TEdit;
+    Edit4: TEdit;
+    Edit7: TEdit;
+    Edit10: TEdit;
+    Panel1: TPanel;
+    CheckBox8: TCheckBox;
+    CheckBox9: TCheckBox;
+    CheckBox10: TCheckBox;
     procedure Button1Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure NextButtonClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure TabSheet3Show(Sender: TObject);
     procedure TabSheet2Show(Sender: TObject);
     procedure Button8Click(Sender: TObject);
     procedure PrevButtonClick(Sender: TObject);
@@ -72,6 +75,20 @@ type
     procedure RestoreRadioButtonClick(Sender: TObject);
     procedure ConnectionComboBoxSelect(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure Button2Click(Sender: TObject);
+    procedure CheckBox1Click(Sender: TObject);
+    procedure CheckBox2Click(Sender: TObject);
+    procedure CheckBox3Click(Sender: TObject);
+    procedure CheckBox4Click(Sender: TObject);
+    procedure CheckBox5Click(Sender: TObject);
+    procedure CheckBox6Click(Sender: TObject);
+    procedure CheckBox7Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure TabSheet1Show(Sender: TObject);
+    procedure TabSheet3Show(Sender: TObject);
+    procedure CheckBox8Click(Sender: TObject);
+    procedure CheckBox10Click(Sender: TObject);
+    procedure CheckBox9Click(Sender: TObject);
   private
     { Private declarations }
         PhoneID                        : integer;
@@ -81,8 +98,6 @@ type
         SMSCallBackPointer             : PSMSCallBackProc;
         BackupInfo,BackupInfo0         : GSM_Backup_Info;
         CancelThread                   : boolean;
-        StartupDevice                  : string;
-        StartupConnection              : string;
   public
     { Public declarations }
   end;
@@ -100,11 +115,20 @@ type
   protected
     procedure Execute; override;
   end;
+  TMyThread3 = class(TThread)
+  private
+    { Private declarations }
+  protected
+    procedure Execute; override;
+  end;
 
 var
-  Form1: TForm1;
+  BackupForm: TBackupForm;
   BackupThread:TMyThread;
   CheckThread:TMyThread2;
+  ConnectThread:TMyThread3;
+  StartupDevice                  : string;
+  StartupConnection              : string;
 
   implementation
 
@@ -120,71 +144,92 @@ var
 begin
 	if status then
 	begin
-    error:=GSM_GetModelName(Form1.PhoneID,@buffer);
+    error:=GSM_GetModelName(BackupForm.PhoneID,@buffer);
     if (error = ERR_NONE) then
     begin
-      error:=GSM_GetManufacturer(Form1.PhoneID,@buffer2);
+      error:=GSM_GetManufacturer(BackupForm.PhoneID,@buffer2);
       if (error = ERR_NONE) then
       begin
-        Form1.ModelEdit.Text:=String(buffer2);
-        Form1.ModelEdit.Text:=Form1.ModelEdit.Text+' '+buffer;
+        BackupForm.ModelEdit.Text:=String(buffer2);
+        BackupForm.ModelEdit.Text:=BackupForm.ModelEdit.Text+' '+buffer;
       end else
       begin
-        Form1.ModelEdit.Text:=buffer;
+        BackupForm.ModelEdit.Text:=buffer;
       end;
-      Form1.StatusBar1.Panels.Items[0].Text:=Form1.ModelEdit.Text;
+      BackupForm.StatusBar1.Panels.Items[1].Text:=BackupForm.ModelEdit.Text;
     end;
     if (error <> ERR_NONE) then application.MessageBox(pchar('Get model: error '+inttostr(integer(error))),'',0);
 
-		error:=GSM_GetIMEI(Form1.PhoneID,@buffer);
+		error:=GSM_GetIMEI(BackupForm.PhoneID,@buffer);
     if (error <> ERR_NONE) then application.MessageBox(pchar('Get IMEI: error '+inttostr(integer(error))),'',0);
-    if (error = ERR_NONE) then Form1.IMEIEdit.Text:=buffer;
+    if (error = ERR_NONE) then BackupForm.IMEIEdit.Text:=buffer;
 
-    error:=GSM_GetFirmwareVersion(Form1.PhoneID,@ver);
-    if (error = ERR_NONE) then Form1.Edit2.Text:=floattostr(ver);
+    error:=GSM_GetFirmwareVersion(BackupForm.PhoneID,@ver);
+    if (error = ERR_NONE) then BackupForm.Edit2.Text:=floattostr(ver);
 
-    if Form1.PageControl1.ActivePage=Form1.TabSheet2 then Form1.NextButton.Enabled:=true;
+    if BackupForm.PageControl1.ActivePage=BackupForm.TabSheet2 then BackupForm.NextButton.Enabled:=true;
 
-//    error:=GSM_EndConnection(Form1.PhoneID);
+//    error:=GSM_EndConnection(BackupForm.PhoneID);
 //    if (error <> ERR_NONE) then application.MessageBox(pchar('End connection: error '+inttostr(integer(error))),'',0);
   end else begin
-    Form1.StatusBar1.Panels.Items[0].Text:='Phone DISCONECTED';
+    BackupForm.StatusBar1.Panels.Items[1].Text:='DISCONECTED';
 	end;
-  Form1.connected:=status;
+  BackupForm.connected:=status;
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TMyThread3.Execute;
 var
    Device: PChar;
    Connection: PChar;
    error: GSM_Error;
-   buffer : array[1..100] of char;
    Con:string;
 begin
-   GetMem(Device,Length(DeviceComboBox.Text) + 1);
-   StrCopy(Device, PChar(DeviceComboBox.Text));
+   with BackupForm do
+   begin
+     GetMem(Device,Length(DeviceComboBox.Text) + 1);
+     StrCopy(Device, PChar(DeviceComboBox.Text));
 
-   case ConnectionComboBox.ItemIndex of
-     0: Con:='irdaphonet';
-     1: Con:='fbusdku5';
-     2: con:='fbus';
-     3: con:='dlr3';
+     case ConnectionComboBox.ItemIndex of
+       0: Con:='irdaphonet';
+       1: Con:='fbusdku5';
+       2: con:='fbus';
+       3: con:='fbusdlr3';
+     end;
+     GetMem(Connection,Length(Con) + 1);
+     StrCopy(Connection, PChar(Con));
+
+     PhoneCallBackPointer    := @ChangePhoneState1;
+     SecurityCallBackPointer := nil;
+     SMSCallBackPointer      := nil;
+
+     error:=GSM_StartConnection(@PhoneID,Device,Connection,'','','',false,@PhoneCallBackPointer,@SecurityCallBackPointer,@SMSCallBackPointer);
+     if (error<>ERR_NONE) then
+     begin
+        application.MessageBox(pchar('Start: error '+inttostr(integer(error))),'',0);
+        StatusBar1.Panels.Items[0].Text:='Select parameters and click "Try to connect"';
+     end else
+     begin
+        StatusBar1.Panels.Items[0].Text:='Click "Next"';
+     end;
+
+     FreeMem(Device);
+     FreeMem(Connection);
+
+     Button1.Enabled:=true;
    end;
-   GetMem(Connection,Length(Con) + 1);
-   StrCopy(Connection, PChar(Con));
-
-   PhoneCallBackPointer    := @ChangePhoneState1;
-   SecurityCallBackPointer := nil;
-   SMSCallBackPointer      := nil;
-
-   error:=GSM_StartConnection(@PhoneID,Device,Connection,'','','',@PhoneCallBackPointer,@SecurityCallBackPointer,@SMSCallBackPointer);
-   if (error<>ERR_NONE) then application.MessageBox(pchar('Start: error '+inttostr(integer(error))),'',0);
-
-   FreeMem(Device);
-   FreeMem(Connection);
 end;
 
-procedure TForm1.Button6Click(Sender: TObject);
+procedure TBackupForm.Button1Click(Sender: TObject);
+begin
+   Button1.Enabled:=false;
+   StatusBar1.Panels.Items[0].Text:='Checking connection. Please wait';
+   if Connected then GSM_EndConnection(PhoneID);
+   ConnectThread:=TMyThread3.Create(True);
+   ConnectThread.Priority:=tpTimeCritical;
+   ConnectThread.Resume;
+end;
+
+procedure TBackupForm.Button6Click(Sender: TObject);
 var
   error:GSM_Error;
   buff:array[1..200] of char;
@@ -232,16 +277,26 @@ begin
   NextButton.Enabled:=true;
 end;
 
-procedure TForm1.NextButtonClick(Sender: TObject);
+function CheckSelected:boolean;
 begin
-  if PageControl1.ActivePage=TabSheet0 then
+  with BackupForm do
   begin
-    PageControl1.ActivePage:=TabSheet1;
-    PrevButton.Enabled:=true;
-    NextButton.Enabled:=false;
-    if FileNameEdit.Text<>'' then NextButton.Enabled:=true;
-    exit;
+    CheckSelected:=false;
+    if CheckBox1.Enabled and CheckBox1.Checked then CheckSelected:=true;
+    if CheckBox2.Enabled and CheckBox2.Checked then CheckSelected:=true;
+    if CheckBox3.Enabled and CheckBox3.Checked then CheckSelected:=true;
+    if CheckBox4.Enabled and CheckBox4.Checked then CheckSelected:=true;
+    if CheckBox5.Enabled and CheckBox5.Checked then CheckSelected:=true;
+    if CheckBox6.Enabled and CheckBox6.Checked then CheckSelected:=true;
+    if CheckBox7.Enabled and CheckBox7.Checked then CheckSelected:=true;
+    if CheckBox8.Enabled and CheckBox8.Checked then CheckSelected:=true;
+    if CheckBox9.Enabled and CheckBox9.Checked then CheckSelected:=true;
+    if CheckBox10.Enabled and CheckBox10.Checked then CheckSelected:=true;
   end;
+end;
+
+procedure TBackupForm.NextButtonClick(Sender: TObject);
+begin
   if PageControl1.ActivePage=TabSheet1 then
   begin
     if StartupConnection = '' then
@@ -251,17 +306,52 @@ begin
       exit;
     end else
     begin
+      PrevButton.Enabled:=true;
       PageControl1.ActivePage:=TabSheet3;
-      NextButton.Enabled:=false;
-      PrevButton.Enabled:=false;
+      if FileNameEdit.Text<>'' then
+      begin
+        NextButton.Enabled:=CheckSelected;
+      end else
+      begin
+        Button5.Enabled:=false;
+        Button7.Enabled:=false;
+        CheckBox1.Enabled:=false;
+        CheckBox2.Enabled:=false;
+        CheckBox3.Enabled:=false;
+        CheckBox4.Enabled:=false;
+        CheckBox5.Enabled:=false;
+        CheckBox6.Enabled:=false;
+        CheckBox7.Enabled:=false;
+        CheckBox8.Enabled:=false;
+        CheckBox9.Enabled:=false;
+        CheckBox10.Enabled:=false;
+        NextButton.Enabled:=false;
+      end;
       exit;
     end;
   end;
   if PageControl1.ActivePage=TabSheet2 then
   begin
     PageControl1.ActivePage:=TabSheet3;
-    NextButton.Enabled:=false;
-    PrevButton.Enabled:=false;
+    if FileNameEdit.Text<>'' then
+    begin
+      NextButton.Enabled:=CheckSelected;
+    end else
+    begin
+      Button5.Enabled:=false;
+      Button7.Enabled:=false;
+      CheckBox1.Enabled:=false;
+      CheckBox2.Enabled:=false;
+      CheckBox3.Enabled:=false;
+      CheckBox4.Enabled:=false;
+      CheckBox5.Enabled:=false;
+      CheckBox6.Enabled:=false;
+      CheckBox7.Enabled:=false;
+      CheckBox8.Enabled:=false;
+      CheckBox9.Enabled:=false;
+      CheckBox10.Enabled:=false;
+      NextButton.Enabled:=false;
+    end;
     exit;
   end;
   if PageControl1.ActivePage=TabSheet3 then
@@ -280,101 +370,39 @@ begin
          mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
         CancelThread:=true;
-        Form1.NextButton.Caption:='Quit';
+        BackupForm.NextButton.Caption:='Quit';
       end;
       BackupThread.Resume;
     end else begin
+{$IFDEF DLL}
+      modalresult:=mrnone;
+      close;
+{$ELSE}
       halt;
+{$ENDIF}
     end;
   end;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
-var
-   i,level:integer;
-   Device: PChar;
-   Connection: PChar;
-   error: GSM_Error;
-   buffer : array[1..100] of char;
-   Con:string;
-   Style : Integer;
-begin
-  StartupDevice:='';
-  StartupConnection:='';
-  level:=0;
-  for i := 1 to ParamCount do
-  begin
-    case level of
-    0:
-      begin
-        if LeftBStr(ParamStr(i),11) = '-connection' then level:=1;
-        if LeftBStr(ParamStr(i),7) = '-device' then level:=2;
-      end;
-    1:
-      begin
-        StartupConnection:=ParamStr(i);
-        level:=0;
-      end;
-    2:
-      begin
-        StartupDevice:=ParamStr(i);
-        level:=0;
-      end;
-    end;
-  end;
-
-  Connected:=false;
-  for i:=1 to PageControl1.PageCount do
-  begin
-    PageControl1.Pages[i-1].TabVisible:=false;
-  end;
-  PageControl1.ActivePage:=TabSheet0;
-  BackupThread:=TMyThread.Create(True);
-  BackupThread.Priority:=tpIdle;
-
-  if StartupConnection<>'' then
-  begin
-    GetMem(Device,Length(StartupDevice) + 1);
-    StrCopy(Device, PChar(StartupDevice));
-
-    GetMem(Connection,Length(StartupConnection) + 1);
-    StrCopy(Connection, PChar(StartupConnection));
-
-    PhoneCallBackPointer    := @ChangePhoneState1;
-    SecurityCallBackPointer := nil;
-    SMSCallBackPointer      := nil;
-
-    error:=GSM_StartConnection(@PhoneID,Device,Connection,'','','',@PhoneCallBackPointer,@SecurityCallBackPointer,@SMSCallBackPointer);
-    if (error<>ERR_NONE) then application.MessageBox(pchar('Start: error '+inttostr(integer(error))),'',0);
-
-    FreeMem(Device);
-    FreeMem(Connection);
-
-//    Style := GetWindowLong(Application.Handle, GWL_EXSTYLE);
-//    SetWindowLong(Application.Handle, GWL_EXSTYLE, Style OR WS_EX_TOOLWINDOW AND NOT WS_EX_APPWINDOW);
-  end;
-//  Form1.Show();
-end;
-
-procedure TForm1.TabSheet3Show(Sender: TObject);
-begin
-  CheckThread:=TMyThread2.Create(True);
-  CheckThread.Priority:=tpIdle;
-  CheckThread.Resume;
-end;
-
-procedure TForm1.TabSheet2Show(Sender: TObject);
+procedure TBackupForm.TabSheet2Show(Sender: TObject);
 begin
   NextButton.Enabled:=connected;
+  if connected then
+  begin
+    StatusBar1.Panels.Items[0].Text:='Click "Next"';
+  end else
+  begin
+    StatusBar1.Panels.Items[0].Text:='Select parameters and click "Try to connect"';
+  end;
   ConnectionComboBox.onSelect(Sender);
 end;
 
-procedure TForm1.Button8Click(Sender: TObject);
+procedure TBackupForm.Button8Click(Sender: TObject);
 begin
-  Application.MessageBox('(c) 2004 by Marcin Wiacek. Created in cooperation with MatrixFlasher team','',0);
+  AboutForm.ShowModal();
 end;
 
-procedure TForm1.PrevButtonClick(Sender: TObject);
+procedure TBackupForm.PrevButtonClick(Sender: TObject);
 begin
   if PageControl1.ActivePage=TabSheet4 then
   begin
@@ -390,43 +418,52 @@ begin
     end else
     begin
       PageControl1.ActivePage:=TabSheet1;
-      if FileNameEdit.Text<>'' then NextButton.Enabled:=true;
+      NextButton.Enabled:=true;
+      PrevButton.Enabled:=false;
       exit;
     end;
   end;
   if PageControl1.ActivePage=TabSheet2 then
   begin
     PageControl1.ActivePage:=TabSheet1;
-    if FileNameEdit.Text<>'' then NextButton.Enabled:=true;
-    exit;
-  end;
-  if PageControl1.ActivePage=TabSheet1 then
-  begin
-    PageControl1.ActivePage:=TabSheet0;
     NextButton.Enabled:=true;
     PrevButton.Enabled:=false;
-    exit;
   end;
 end;
 
-procedure TForm1.Button5Click(Sender: TObject);
+procedure TBackupForm.Button5Click(Sender: TObject);
 begin
   if CheckBox1.Enabled then CheckBox1.Checked:=true;
   if CheckBox2.Enabled then CheckBox2.Checked:=true;
   if CheckBox3.Enabled then CheckBox3.Checked:=true;
   if CheckBox4.Enabled then CheckBox4.Checked:=true;
+  if CheckBox5.Enabled then CheckBox5.Checked:=true;
+  if CheckBox6.Enabled then CheckBox6.Checked:=true;
+  if CheckBox7.Enabled then CheckBox7.Checked:=true;
+  if CheckBox8.Enabled then CheckBox8.Checked:=true;
+  if CheckBox9.Enabled then CheckBox9.Checked:=true;
+  if CheckBox10.Enabled then CheckBox10.Checked:=true;
+  NextButton.Enabled:=CheckSelected;
 end;
 
-procedure TForm1.Button7Click(Sender: TObject);
+procedure TBackupForm.Button7Click(Sender: TObject);
 begin
   if CheckBox1.Enabled then CheckBox1.Checked:=false;
   if CheckBox2.Enabled then CheckBox2.Checked:=false;
   if CheckBox3.Enabled then CheckBox3.Checked:=false;
   if CheckBox4.Enabled then CheckBox4.Checked:=false;
+  if CheckBox5.Enabled then CheckBox5.Checked:=false;
+  if CheckBox6.Enabled then CheckBox6.Checked:=false;
+  if CheckBox7.Enabled then CheckBox7.Checked:=false;
+  if CheckBox8.Enabled then CheckBox8.Checked:=false;
+  if CheckBox9.Enabled then CheckBox9.Checked:=false;
+  if CheckBox10.Enabled then CheckBox10.Checked:=false;
+  NextButton.Enabled:=CheckSelected;
 end;
 
-procedure TForm1.TabSheet4Show(Sender: TObject);
+procedure TBackupForm.TabSheet4Show(Sender: TObject);
 begin
+  StatusBar1.Panels.Items[0].Text:='Wait or click "Cancel"';
   CancelThread:=false;
   BackupThread.Resume;
 end;
@@ -437,119 +474,220 @@ var
   percent:integer;
   num:integer;
 begin
-  if Form1.BackupRadioButton.Checked then
+  if BackupForm.BackupRadioButton.Checked then
   begin
-    GSM_StartBackup(Form1.PhoneID,@Form1.BackupInfo);
-    if (Form1.CheckBox1.Enabled) and (Form1.CheckBox1.Checked) then
+    GSM_StartBackup(BackupForm.PhoneID,@BackupForm.BackupInfo);
+    if (BackupForm.CheckBox1.Enabled) and (BackupForm.CheckBox1.Checked) then
     begin
       percent:=200;
       num:=0;
-      Form1.Memo1.Lines.Add('Making backup of phone phonebook');
+      BackupForm.Memo1.Lines.Add('Making backup of phone phonebook');
       while percent<>100 do
       begin
-        if FOrm1.CancelThread then exit;
-        error:=GSM_BackupPhonePBK(Form1.PhoneID,@percent);
-        Form1.ProgressBar1.Position:=percent;
+        if BackupForm.CancelThread then exit;
+        error:=GSM_BackupPhonePBK(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Position:=percent;
         if error = ERR_EMPTY then break;
         num:=num+1;
         if error<>ERR_NONE then application.MessageBox(pchar('Backup phone pbk: error '+inttostr(integer(error))),'',0);
       end;
-      Form1.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
+      BackupForm.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
     end;
-    if (Form1.CheckBox2.Enabled) and (Form1.CheckBox2.Checked) then
+    if (BackupForm.CheckBox2.Enabled) and (BackupForm.CheckBox2.Checked) then
     begin
       percent:=200;
       num:=0;
-      Form1.Memo1.Lines.Add('Making backup of SIM phonebook');
+      BackupForm.Memo1.Lines.Add('Making backup of SIM phonebook');
       while percent<>100 do
       begin
-        if FOrm1.CancelThread then exit;
-        error:=GSM_BackupSIMPBK(Form1.PhoneID,@percent);
-        Form1.ProgressBar1.Position:=percent;
+        if BackupForm.CancelThread then exit;
+        error:=GSM_BackupSIMPBK(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Position:=percent;
         if error = ERR_EMPTY then break;
         num:=num+1;
         if error<>ERR_NONE then application.MessageBox(pchar('Backup SIM pbk: error '+inttostr(integer(error))),'',0);
       end;
-      Form1.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
+      BackupForm.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
     end;
-    if (Form1.CheckBox3.Enabled) and (Form1.CheckBox3.Checked) then
+    if (BackupForm.CheckBox3.Enabled) and (BackupForm.CheckBox3.Checked) then
     begin
       percent:=200;
       num:=0;
-      Form1.Memo1.Lines.Add('Making backup of calendar');
-      Form1.ProgressBar1.Position:=0;
+      BackupForm.Memo1.Lines.Add('Making backup of calendar');
+      BackupForm.ProgressBar1.Position:=0;
       while percent<>100 do
       begin
-        if FOrm1.CancelThread then exit;
-        error:=GSM_BackupCalendar(Form1.PhoneID,@percent);
+        if BackupForm.CancelThread then exit;
+        error:=GSM_BackupCalendar(BackupForm.PhoneID,@percent);
         if percent = 0 then
         begin
-          Form1.ProgressBar1.Max:=500;
-          Form1.ProgressBar1.Position:=Form1.ProgressBar1.Position+1;
+          BackupForm.ProgressBar1.Max:=500;
+          BackupForm.ProgressBar1.Position:=BackupForm.ProgressBar1.Position+1;
         end else
         begin
-          Form1.ProgressBar1.Position:=percent;
+          BackupForm.ProgressBar1.Position:=percent;
         end;
         if error = ERR_EMPTY then break;
         num:=num+1;
         if error<>ERR_NONE then application.MessageBox(pchar('Backup sim pbk: error '+inttostr(integer(error))),'',0);
       end;
-      Form1.ProgressBar1.Max:=100;
-      Form1.ProgressBar1.Position:=100;
-      Form1.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
+      BackupForm.ProgressBar1.Max:=100;
+      BackupForm.ProgressBar1.Position:=100;
+      BackupForm.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
     end;
-    if (Form1.CheckBox4.Enabled) and (Form1.CheckBox4.Checked) then
+    if (BackupForm.CheckBox4.Enabled) and (BackupForm.CheckBox4.Checked) then
     begin
       percent:=200;
       num:=0;
-      Form1.Memo1.Lines.Add('Making backup of ToDo');
+      BackupForm.Memo1.Lines.Add('Making backup of ToDo');
       while percent<>100 do
       begin
-        if FOrm1.CancelThread then exit;
-        error:=GSM_BackupToDo(Form1.PhoneID,@percent);
-        Form1.ProgressBar1.Position:=percent;
+        if BackupForm.CancelThread then exit;
+        error:=GSM_BackupToDo(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Position:=percent;
         if error = ERR_EMPTY then break;
         num:=num+1;
         if error<>ERR_NONE then application.MessageBox(pchar('Backup ToDo: error '+inttostr(integer(error))),'',0);
       end;
-      Form1.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
+      BackupForm.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
     end;
-    Form1.Memo1.Lines.Add('Saving to file '+Form1.FileNameEdit.Text);
-    GSM_EndBackup(PChar(Form1.FileNameEdit.Text),true);
-  end else begin
-    if (Form1.CheckBox1.Enabled) and (Form1.CheckBox1.Checked) then
+    if (BackupForm.CheckBox5.Enabled) and (BackupForm.CheckBox5.Checked) then
     begin
       percent:=200;
-      Form1.Memo1.Lines.Add('Restoring phone phonebook');
+      num:=0;
+      BackupForm.Memo1.Lines.Add('Making backup of WAP bookmarks');
+      BackupForm.ProgressBar1.Position:=0;
       while percent<>100 do
       begin
-        if FOrm1.CancelThread then exit;
-        error:=GSM_RestorePhonePBK(Form1.PhoneID,@percent);
-        Form1.ProgressBar1.Position:=percent;
+        if BackupForm.CancelThread then exit;
+        error:=GSM_BackupWAPBookmark(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Max:=100;
+        BackupForm.ProgressBar1.Position:=BackupForm.ProgressBar1.Position+1;
+        if error = ERR_EMPTY then break;
+        num:=num+1;
+        if error<>ERR_NONE then application.MessageBox(pchar('Backup sim pbk: error '+inttostr(integer(error))),'',0);
+      end;
+      BackupForm.ProgressBar1.Max:=100;
+      BackupForm.ProgressBar1.Position:=100;
+      BackupForm.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
+    end;
+    if (BackupForm.CheckBox6.Enabled) and (BackupForm.CheckBox6.Checked) then
+    begin
+      percent:=200;
+      num:=0;
+      BackupForm.Memo1.Lines.Add('Making backup of WAP settings');
+      BackupForm.ProgressBar1.Position:=0;
+      while percent<>100 do
+      begin
+        if BackupForm.CancelThread then exit;
+        error:=GSM_BackupWAPSettings(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Max:=40;
+        BackupForm.ProgressBar1.Position:=BackupForm.ProgressBar1.Position+1;
+        if error = ERR_EMPTY then break;
+        num:=num+1;
+        if error<>ERR_NONE then application.MessageBox(pchar('Backup sim pbk: error '+inttostr(integer(error))),'',0);
+      end;
+      BackupForm.ProgressBar1.Max:=100;
+      BackupForm.ProgressBar1.Position:=100;
+      BackupForm.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
+    end;
+    if (BackupForm.CheckBox7.Enabled) and (BackupForm.CheckBox7.Checked) then
+    begin
+      percent:=200;
+      num:=0;
+      BackupForm.Memo1.Lines.Add('Making backup of MMS settings');
+      BackupForm.ProgressBar1.Position:=0;
+      while percent<>100 do
+      begin
+        if BackupForm.CancelThread then exit;
+        error:=GSM_BackupMMSSettings(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Max:=40;
+        BackupForm.ProgressBar1.Position:=BackupForm.ProgressBar1.Position+1;
+        if error = ERR_EMPTY then break;
+        num:=num+1;
+        if error<>ERR_NONE then application.MessageBox(pchar('Backup sim pbk: error '+inttostr(integer(error))),'',0);
+      end;
+      BackupForm.ProgressBar1.Max:=100;
+      BackupForm.ProgressBar1.Position:=100;
+      BackupForm.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
+    end;
+    if (BackupForm.CheckBox8.Enabled) and (BackupForm.CheckBox8.Checked) then
+    begin
+      percent:=200;
+      num:=0;
+      BackupForm.Memo1.Lines.Add('Making backup of FM radio stations');
+      BackupForm.ProgressBar1.Position:=0;
+      while percent<>100 do
+      begin
+        if BackupForm.CancelThread then exit;
+        error:=GSM_BackupFMRadio(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Max:=40;
+        BackupForm.ProgressBar1.Position:=BackupForm.ProgressBar1.Position+1;
+        if error = ERR_EMPTY then break;
+        num:=num+1;
+        if error<>ERR_NONE then application.MessageBox(pchar('Backup sim pbk: error '+inttostr(integer(error))),'',0);
+      end;
+      BackupForm.ProgressBar1.Max:=100;
+      BackupForm.ProgressBar1.Position:=100;
+      BackupForm.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
+    end;
+    if (BackupForm.CheckBox7.Enabled) and (BackupForm.CheckBox7.Checked) then
+    begin
+      percent:=200;
+      num:=0;
+      BackupForm.Memo1.Lines.Add('Making backup of GPRS access points');
+      BackupForm.ProgressBar1.Position:=0;
+      while percent<>100 do
+      begin
+        if BackupForm.CancelThread then exit;
+        error:=GSM_BackupGPRSPoint(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Max:=10;
+        BackupForm.ProgressBar1.Position:=BackupForm.ProgressBar1.Position+1;
+        if error = ERR_EMPTY then break;
+        num:=num+1;
+        if error<>ERR_NONE then application.MessageBox(pchar('Backup sim pbk: error '+inttostr(integer(error))),'',0);
+      end;
+      BackupForm.ProgressBar1.Max:=100;
+      BackupForm.ProgressBar1.Position:=100;
+      BackupForm.Memo1.Lines.Add('   Read with success '+inttostr(num)+' entries');
+    end;
+    BackupForm.Memo1.Lines.Add('Saving to file '+BackupForm.FileNameEdit.Text);
+    GSM_EndBackup(PChar(BackupForm.FileNameEdit.Text),true);
+  end else begin
+    if (BackupForm.CheckBox1.Enabled) and (BackupForm.CheckBox1.Checked) then
+    begin
+      percent:=200;
+      BackupForm.Memo1.Lines.Add('Restoring phone phonebook');
+      while percent<>100 do
+      begin
+        if BackupForm.CancelThread then exit;
+        error:=GSM_RestorePhonePBK(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Position:=percent;
         if error = ERR_EMPTY then break;
         if error<>ERR_NONE then application.MessageBox(pchar('Backup phone pbk: error '+inttostr(integer(error))),'',0);
       end;
     end;
-    if (Form1.CheckBox2.Enabled) and (Form1.CheckBox2.Checked) then
+    if (BackupForm.CheckBox2.Enabled) and (BackupForm.CheckBox2.Checked) then
     begin
       percent:=200;
-      Form1.Memo1.Lines.Add('Restoring SIM phonebook');
+      BackupForm.Memo1.Lines.Add('Restoring SIM phonebook');
       while percent<>100 do
       begin
-        if FOrm1.CancelThread then exit;
-        error:=GSM_RestoreSIMPBK(Form1.PhoneID,@percent);
-        Form1.ProgressBar1.Position:=percent;
+        if BackupForm.CancelThread then exit;
+        error:=GSM_RestoreSIMPBK(BackupForm.PhoneID,@percent);
+        BackupForm.ProgressBar1.Position:=percent;
         if error = ERR_EMPTY then break;
         if error<>ERR_NONE then application.MessageBox(pchar('Backup SIM pbk: error '+inttostr(integer(error))),'',0);
       end;
     end;
   end;
-  Form1.NextButton.Caption:='Quit';
+  BackupForm.StatusBar1.Panels.Items[0].Text:='Click "Quit". Thank you for using this software';
+  BackupForm.NextButton.Caption:='Quit';
 end;
 
-procedure TForm1.BackupRadioButtonClick(Sender: TObject);
+procedure TBackupForm.BackupRadioButtonClick(Sender: TObject);
 begin
-  Form1.Caption:='Backup from phone to file';
+  BackupForm.Caption:='Backup from phone to file';
   FileNameEdit.Text:='';
   Edit1.Text:='';
   Edit4.Text:='';
@@ -561,9 +699,9 @@ begin
   Label9.Enabled:=RestoreRadioButton.Checked;
 end;
 
-procedure TForm1.RestoreRadioButtonClick(Sender: TObject);
+procedure TBackupForm.RestoreRadioButtonClick(Sender: TObject);
 begin
-  Form1.Caption:='Restore from file to phone';
+  BackupForm.Caption:='Restore from file to phone';
   FileNameEdit.Text:='';
   Edit1.Text:='';
   Edit4.Text:='';
@@ -577,26 +715,45 @@ end;
 
 procedure TMyThread2.Execute;
 begin
-  with Form1 do
+  with BackupForm do
   begin
-//    Form1.Cursor:=crHourGlass;
+    Button2.Enabled:=false;
+    PrevButton.Enabled:=false;
+    NextButton.Enabled:=false;
+    Button5.Enabled:=false;
+    Button7.Enabled:=false;
     CheckBox1.Enabled:=false;
     CheckBox2.Enabled:=false;
     CheckBox3.Enabled:=false;
     CheckBox4.Enabled:=false;
+    CheckBox5.Enabled:=false;
+    CheckBox6.Enabled:=false;
+    CheckBox7.Enabled:=false;
+    CheckBox8.Enabled:=false;
+    CheckBox9.Enabled:=false;
+    CheckBox10.Enabled:=false;
     BackupInfo:=BackupInfo0;
     GSM_GetBackupFeaturesForBackup(PhoneID,PChar(FileNameEdit.Text),@BackupInfo);
     CheckBox1.Enabled:=BackupInfo.PhonePhonebook;
     CheckBox2.Enabled:=BackupInfo.SIMPhonebook;
     CheckBox3.Enabled:=BackupInfo.Calendar;
     CheckBox4.Enabled:=BackupInfo.ToDo;
-    NextButton.Enabled:=true;
+    CheckBox5.Enabled:=BackupInfo.WAPBookmark;
+    CheckBox6.Enabled:=BackupInfo.WAPSettings;
+    CheckBox7.Enabled:=BackupInfo.MMSSettings;
+    CheckBox8.Enabled:=BackupInfo.FMStation;
+    CheckBox9.Enabled:=BackupInfo.Profiles;
+    CheckBox10.Enabled:=BackupInfo.GPRSPoint;
+    Button2.Enabled:=true;
+    Button5.Enabled:=true;
+    Button7.Enabled:=true;
+    NextButton.Enabled:=CheckSelected;
     PrevButton.Enabled:=true;
-//    Form1.Cursor:=crDefault;
+    StatusBar1.Panels.Items[0].Text:='Select features and click "Next"';
   end;
 end;
 
-procedure TForm1.ConnectionComboBoxSelect(Sender: TObject);
+procedure TBackupForm.ConnectionComboBoxSelect(Sender: TObject);
 begin
   DeviceComboBox.Enabled:=true;
   Label8.Enabled:=true;
@@ -607,7 +764,7 @@ begin
   end;
 end;
 
-procedure TForm1.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+procedure TBackupForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
     if NextButton.Caption = 'Cancel' then
     begin
@@ -616,13 +773,192 @@ begin
          mtConfirmation, [mbYes, mbNo], 0) = mrYes then
       begin
         CancelThread:=true;
-        Form1.NextButton.Caption:='Quit';
+        BackupForm.StatusBar1.Panels.Items[0].Text:='Click "Quit". Thank you for using this software';
+        BackupForm.NextButton.Caption:='Quit';
       end;
       BackupThread.Resume;
       CanClose:=false;
     end else begin
+{$IFDEF DLL}
+      if Connected then GSM_EndConnection(PhoneID);
+      modalresult:=mrnone;
+      close;
+{$ELSE}
       halt;
+{$ENDIF}
     end;
+end;
+
+procedure TBackupForm.Button2Click(Sender: TObject);
+var
+  error:GSM_Error;
+  buff:array[1..200] of char;
+  DT:GSM_DateTime;
+begin
+  if BackupRadioButton.Checked then
+  begin
+    if SaveBackupDialog.Execute then
+    begin
+      if SaveBackupDialog.FileName<>'' then
+      begin
+        FileNameEdit.Text:=SaveBackupDialog.FileName;
+        GSM_GetBackupFormatFeatures(PAnsiString(FileNameEdit.Text),@BackupInfo0);
+      end;
+    end;
+    StatusBar1.Panels.Items[0].Text:='Checking phone features. Please wait';
+    CheckThread:=TMyThread2.Create(True);
+    CheckThread.Priority:=tpTimeCritical;
+    CheckThread.Resume;
+  end else
+  begin
+    if OpenRestoreDialog.Execute then
+    begin
+      if OpenRestoreDialog.FileName<>'' then
+      begin
+        FileNameEdit.Text:=OpenRestoreDialog.FileName;
+
+        error:=GSM_ReadBackupFile(PAnsiString(FileNameEdit.Text),@BackupInfo0);
+        if error <> ERR_NONE then exit;
+
+        error:=GSM_GetBackupFileIMEI(@buff);
+        if error <> ERR_NONE then exit;
+        Edit4.Text:=String(buff);
+
+        error:=GSM_GetBackupFileModel(@buff);
+        if error <> ERR_NONE then exit;
+        Edit1.Text:=String(buff);
+
+        error:=GSM_GetBackupFileDateTime(@DT);
+        if error <> ERR_NONE then exit;
+        Edit7.Text:=inttostr(DT.Day)+'-'+inttostr(DT.Month)+'-'+inttostr(DT.Year)+' '+inttostr(DT.Hour)+':'+inttostr(DT.Minute);
+
+        error:=GSM_GetBackupFileCreator(@buff);
+        if error <> ERR_NONE then exit;
+        Edit10.Text:=String(buff);
+      end;
+      StatusBar1.Panels.Items[0].Text:='Checking phone features. Please wait';
+      CheckThread:=TMyThread2.Create(True);
+      CheckThread.Priority:=tpTimeCritical;
+      CheckThread.Resume;
+    end;
+  end;
+end;
+
+procedure TBackupForm.CheckBox1Click(Sender: TObject);
+begin
+  NextButton.Enabled:=CheckSelected;
+end;
+
+procedure TBackupForm.CheckBox2Click(Sender: TObject);
+begin
+  NextButton.Enabled:=CheckSelected;
+end;
+
+procedure TBackupForm.CheckBox3Click(Sender: TObject);
+begin
+  NextButton.Enabled:=CheckSelected;
+end;
+
+procedure TBackupForm.CheckBox4Click(Sender: TObject);
+begin
+  NextButton.Enabled:=CheckSelected;
+end;
+
+procedure TBackupForm.CheckBox5Click(Sender: TObject);
+begin
+  NextButton.Enabled:=CheckSelected;
+end;
+
+procedure TBackupForm.CheckBox6Click(Sender: TObject);
+begin
+  NextButton.Enabled:=CheckSelected;
+end;
+
+procedure TBackupForm.CheckBox7Click(Sender: TObject);
+begin
+  NextButton.Enabled:=CheckSelected;
+end;
+
+procedure TBackupForm.FormCreate(Sender: TObject);
+var
+   i:integer;
+   Device: PChar;
+   Connection: PChar;
+   error: GSM_Error;
+begin
+  if Width - 100 > 0 then StatusBar1.Panels.Items[0].Width:=Width-100;
+  Connected:=false;
+  for i:=1 to PageControl1.PageCount do
+  begin
+    PageControl1.Pages[i-1].TabVisible:=false;
+  end;
+  PageControl1.ActivePage:=TabSheet1;
+  BackupThread:=TMyThread.Create(True);
+  BackupThread.Priority:=tpTimeCritical;
+{$IFDEF DLL}
+  BorderStyle:=bsDialog;
+  FormStyle:=fsstayontop;
+{$ENDIF}
+
+  if StartupConnection<>'' then
+  begin
+    GetMem(Device,Length(StartupDevice) + 1);
+    StrCopy(Device, PChar(StartupDevice));
+
+    GetMem(Connection,Length(StartupConnection) + 1);
+    StrCopy(Connection, PChar(StartupConnection));
+
+    PhoneCallBackPointer    := @ChangePhoneState1;
+    SecurityCallBackPointer := nil;
+    SMSCallBackPointer      := nil;
+
+    error:=GSM_StartConnection(@PhoneID,Device,Connection,'','','',false,@PhoneCallBackPointer,@SecurityCallBackPointer,@SMSCallBackPointer);
+
+    FreeMem(Device);
+    FreeMem(Connection);
+
+    if error<>ERR_NONE then
+    begin
+{$IFDEF DLL}
+      StartupCOnnection:='';
+      StartupDevice:='';
+//      BorderStyle:=bsDialog;
+{$ELSE}
+      halt;
+{$ENDIF}
+    end;
+  end;
+end;
+
+procedure TBackupForm.TabSheet1Show(Sender: TObject);
+begin
+  StatusBar1.Panels.Items[0].Text:='Select operation and click "Next"';
+end;
+
+procedure TBackupForm.TabSheet3Show(Sender: TObject);
+begin
+  if FileNameEdit.Text<>'' then
+  begin
+    StatusBar1.Panels.Items[0].Text:='Select features and click "Next"'; 
+  end else
+  begin
+    StatusBar1.Panels.Items[0].Text:='Select file for backup/restore';
+  end;
+end;
+
+procedure TBackupForm.CheckBox8Click(Sender: TObject);
+begin
+  NextButton.Enabled:=CheckSelected;
+end;
+
+procedure TBackupForm.CheckBox10Click(Sender: TObject);
+begin
+  NextButton.Enabled:=CheckSelected;
+end;
+
+procedure TBackupForm.CheckBox9Click(Sender: TObject);
+begin
+  NextButton.Enabled:=CheckSelected;
 end;
 
 end.

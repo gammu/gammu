@@ -491,7 +491,7 @@ static void PrintMemoryEntry(GSM_MemoryEntry *entry)
 			case PBK_Caller_Group       :
 				unknown = true;
 				if (!callerinit[entry->Entries[i].Number]) {
-					caller[entry->Entries[i].Number].Type	 = GSM_CallerGroupLogo;
+					caller[entry->Entries[i].Number].Type	  = GSM_CallerGroupLogo;
 					caller[entry->Entries[i].Number].Location = entry->Entries[i].Number;
 					error=Phone->GetBitmap(&s,&caller[entry->Entries[i].Number]);
 					Print_Error(error);
@@ -2128,6 +2128,7 @@ static void GetGPRSPoint(int argc, char *argv[])
 
 static void GetBitmap(int argc, char *argv[])
 {
+	GSM_File		File;
 	GSM_MultiBitmap 	MultiBitmap;
 	int			location=0;
 	GSM_AllRingtonesInfo 	Info;
@@ -2172,6 +2173,22 @@ static void GetBitmap(int argc, char *argv[])
 		printf("\n");
 		if (MultiBitmap.Bitmap[0].DefaultRingtone) {
 			printmsg("Ringtone    : default\n");
+		} else if (MultiBitmap.Bitmap[0].FileSystemRingtone) {
+			sprintf(File.ID_FullName,"%i",MultiBitmap.Bitmap[0].RingtoneID);
+
+			File.Buffer 	= NULL;
+			File.Used 	= 0;
+
+			error = ERR_NONE;
+//			while (error == ERR_NONE) {
+				error = Phone->GetFilePart(&s,&File);
+//			}
+		    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
+			error = ERR_NONE;
+						
+			printmsg("Ringtone    : \"%s\" (file with ID %i)\n",
+				DecodeUnicodeString(File.Name),
+				MultiBitmap.Bitmap[0].RingtoneID);
 		} else {
 			error = Phone->GetRingtonesInfo(&s,&Info);
 			if (error != ERR_NONE) Info.Number = 0;
@@ -2179,9 +2196,11 @@ static void GetBitmap(int argc, char *argv[])
 
 			printmsg("Ringtone    : ");
 			if (UnicodeLength(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].RingtoneID))!=0) {
-				printmsg("\"%s\"\n",DecodeUnicodeConsole(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].RingtoneID)));
+				printmsg("\"%s\" (ID %i)\n",
+					DecodeUnicodeConsole(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].RingtoneID)),
+					MultiBitmap.Bitmap[0].RingtoneID);
 			} else {
-				printmsg("%i\n",MultiBitmap.Bitmap[0].RingtoneID);
+				printmsg("ID %i\n",MultiBitmap.Bitmap[0].RingtoneID);
 			}
 		}
 		if (MultiBitmap.Bitmap[0].BitmapEnabled) {
@@ -2283,10 +2302,11 @@ static void SetBitmap(int argc, char *argv[])
 			NewBitmap.Location = i;
 			error=Phone->GetBitmap(&s,&NewBitmap);
 			Print_Error(error);
-			Bitmap.RingtoneID		= NewBitmap.RingtoneID;
-			Bitmap.DefaultRingtone 	= NewBitmap.DefaultRingtone;
+			Bitmap.RingtoneID	  = NewBitmap.RingtoneID;
+			Bitmap.DefaultRingtone 	  = NewBitmap.DefaultRingtone;
+			Bitmap.FileSystemRingtone = false;
 			CopyUnicodeString(Bitmap.Text, NewBitmap.Text);
-			Bitmap.DefaultName	= NewBitmap.DefaultName;
+			Bitmap.DefaultName	  = NewBitmap.DefaultName;
 		}
 	} else if (mystrncasecmp(argv[2],"PICTURE",0)) {
 		if (argc<5) {
@@ -7333,7 +7353,7 @@ static void CallDivert(int argc, char *argv[])
 	        case GSM_DIVERT_NoAnswer  : printmsg("when not answered");			break;
       	        case GSM_DIVERT_OutOfReach: printmsg("when phone off or no coverage");	break;
                 case GSM_DIVERT_AllTypes  : printmsg("all types of diverts");			break;
-                default		       : printmsg("unknown %i",cd.Request.DivertType);			break;
+                default		          : printmsg("unknown %i",cd.Request.DivertType);			break;
         }
         printmsg("\n   Calls type : ");
 	switch (cd.Request.CallType) {
@@ -7341,7 +7361,7 @@ static void CallDivert(int argc, char *argv[])
                 case GSM_DIVERT_FaxCalls  : printmsg("fax");				break;
                 case GSM_DIVERT_DataCalls : printmsg("data");		 		break;
 		case GSM_DIVERT_AllCalls  : printmsg("data & fax & voice");		break;
-                default                : printmsg("unknown %i",cd.Request.CallType);   		break;
+                default                   : printmsg("unknown %i",cd.Request.CallType);   		break;
         }
 	printmsg("\nResponse:");
 
@@ -7351,7 +7371,7 @@ static void CallDivert(int argc, char *argv[])
                 	case GSM_DIVERT_VoiceCalls: printmsg("voice");		 	break;
                 	case GSM_DIVERT_FaxCalls  : printmsg("fax");		 	break;
                 	case GSM_DIVERT_DataCalls : printmsg("data");		 	break;
-                	default                : printmsg("unknown %i",cd.Response.Entries[i].CallType);break;
+                	default                   : printmsg("unknown %i",cd.Response.Entries[i].CallType);break;
               	}
 		printf("\n");
                	printmsg("   Timeout    : %i seconds\n",cd.Response.Entries[i].Timeout);

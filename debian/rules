@@ -43,6 +43,7 @@ endif
 configure-stamp:
 	dh_testdir
 	./configure \
+		CFLAGS=$(CFLAGS) \
 		--prefix=/usr \
 		--includedir=\$${prefix}/include \
 		--mandir=\$${prefix}/share/man \
@@ -68,13 +69,7 @@ clean:
 	rm -f changelog-stamp 
 	rm -f configure-stamp 
 	rm -f debian/changelog
-
-	# Add here commands to clean up after the build process.
 	-$(MAKE) clean
-	#-test -r /usr/share/misc/config.sub && \
-	#  cp -f /usr/share/misc/config.sub config.sub
-	#-test -r /usr/share/misc/config.guess && \
-	#  cp -f /usr/share/misc/config.guess config.guess
 
 
 	dh_clean
@@ -83,9 +78,7 @@ install: build
 	dh_testdir
 	dh_testroot
 	dh_clean -k
-	dh_installdirs
-
-	# Add here commands to install the package into debian/tmp.
+	dh_installdirs -A
 	$(MAKE) installshared DESTDIR=$(CURDIR)/debian/tmp
 
 
