@@ -628,17 +628,17 @@ GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	/* Attempt to identify filetype */
-	if (strstr(FileName,".nlm")) {
+	if (mystrcasestr(FileName,".nlm")) {
 		error=savenlm(file,bitmap);
-	} else if (strstr(FileName,".ngg")) {
+	} else if (mystrcasestr(FileName,".ngg")) {
 		error=savengg(file,bitmap);
-	} else if (strstr(FileName,".nol")) {
+	} else if (mystrcasestr(FileName,".nol")) {
 		error=savenol(file,bitmap);
-	} else if (strstr(FileName,".xpm")) {
+	} else if (mystrcasestr(FileName,".xpm")) {
 		error=savexpm(file,bitmap);
-	} else if (strstr(FileName,".nsl")) {
+	} else if (mystrcasestr(FileName,".nsl")) {
 		error=savensl(file,bitmap);
-	} else if (strstr(FileName,".wbmp")) {
+	} else if (mystrcasestr(FileName,".wbmp")) {
 		error=savewbmp(file,bitmap);
 	} else {
 		error=savebmp(file,bitmap);
@@ -993,8 +993,7 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	bitmap->Bitmap[0].Name = malloc((strlen(FileName) + 1) * 2);
-	if (bitmap->Bitmap[0].Name == NULL)
-		return ERR_MOREMEMORY;
+	if (bitmap->Bitmap[0].Name == NULL) return ERR_MOREMEMORY;
 	EncodeUnicode(bitmap->Bitmap[0].Name, FileName, strlen(FileName));
 
 	fread(buffer, 1, 9, file); /* Read the header of the file. */

@@ -171,10 +171,10 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	File = fopen(FullName, "rb");
  	len  = fread(Buffer, 1, sizeof(Buffer)-2, File);
   	fclose(File);
-  	if (len<2) return ERR_EMPTY;
 
- 	if ((Buffer[0] != 0xFF || Buffer[1] != 0xFE) &&
-	    (Buffer[0] != 0xFE || Buffer[1] != 0xFF)) {
+ 	if ((len <  2) || 
+            (len >= 2  && ((Buffer[0] != 0xFF || Buffer[1] != 0xFE) &&
+	                   (Buffer[0] != 0xFE || Buffer[1] != 0xFF)))) {
  		if (len > GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS) len = GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS;
  		EncodeUnicode(Buffer2, Buffer, len);
  		len = len*2;
@@ -185,16 +185,16 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	Buffer[len+1] 	= 0;
   	ReadUnicodeFile(Buffer2,Buffer);
 
-    GSM_ClearMultiPartSMSInfo(&SMSInfo);
-    sms->Number = 0;
+    	GSM_ClearMultiPartSMSInfo(&SMSInfo);
+    	sms->Number = 0;
 
   	SMSInfo.ReplaceMessage  	= 0;
   	SMSInfo.Entries[0].Buffer	= Buffer2;
   	SMSInfo.Class			= -1;
 	SMSInfo.EntriesNum		= 1;
-	Config->currdeliveryreport	= 0;
+	Config->currdeliveryreport	= -1;
 	if (strchr(options, 'd')) Config->currdeliveryreport	= 1;
-	if (strchr(options, 'f')) SMSInfo.Class 			= 0; /* flash SMS */
+	if (strchr(options, 'f')) SMSInfo.Class 		= 0; /* flash SMS */
 
  	if (mystrncasecmp(Config->transmitformat, "unicode", 0)) {
  		SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
@@ -212,7 +212,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		SMSInfo.Entries[0].Bookmark		= &Bookmark;
 		SMSInfo.Entries[0].ID			= SMS_NokiaWAPBookmarkLong;
 		SMSInfo.Entries[0].Bookmark->Location	= 0;
-		pos2 = mystrstr(Buffer2, "\0,");
+		pos2 = mywstrstr(Buffer2, "\0,");
 		if (pos2 == NULL) {
 			pos2 = Buffer2;
 		} else {
@@ -345,11 +345,14 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 
 GSM_SMSDService SMSDFiles = {
 	NONEFUNCTION,			/* Init 		*/
+	NONEFUNCTION,			/* InitAfterConnect 	*/
 	SMSDFiles_SaveInboxSMS,
 	SMSDFiles_FindOutboxSMS,
 	SMSDFiles_MoveSMS,
 	NOTSUPPORTED,			/* CreateOutboxSMS	*/
-	SMSDFiles_AddSentSMSInfo
+	SMSDFiles_AddSentSMSInfo,
+	NOTSUPPORTED,			/* RefreshSendStatus	*/
+	NOTSUPPORTED			/* RefreshPhoneStatus	*/
 };
 
 /* How should editor handle tabs in this file? Add editor commands here.

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Aug 01, 2004 at 09:23 PM
+-- Generation Time: Sep 08, 2004 at 12:08 AM
 -- Server version: 4.0.18
 -- PHP Version: 4.3.8
 -- 
@@ -24,7 +24,7 @@ CREATE TABLE `gammu` (
 -- Dumping data for table `gammu`
 -- 
 
-INSERT INTO `gammu` VALUES (2);
+INSERT INTO `gammu` VALUES (3);
 
 -- --------------------------------------------------------
 
@@ -34,7 +34,7 @@ INSERT INTO `gammu` VALUES (2);
 
 CREATE TABLE `inbox` (
   `UpdatedInDB` timestamp(14) NOT NULL,
-  `DateTime` timestamp(14) NOT NULL default '00000000000000',
+  `ReceivingDateTime` timestamp(14) NOT NULL default '00000000000000',
   `Text` text NOT NULL,
   `SenderNumber` varchar(20) NOT NULL default '',
   `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
@@ -44,14 +44,8 @@ CREATE TABLE `inbox` (
   `TextDecoded` varchar(160) NOT NULL default '',
   `ID` int(11) unsigned NOT NULL auto_increment,
   `RecipientID` text NOT NULL,
-  `Read` enum('true','false') NOT NULL default 'false',
   UNIQUE KEY `ID` (`ID`)
-) TYPE=MyISAM AUTO_INCREMENT=5 ;
-
--- 
--- Dumping data for table `inbox`
--- 
-
+) TYPE=MyISAM AUTO_INCREMENT=18 ;
 
 -- --------------------------------------------------------
 
@@ -61,7 +55,7 @@ CREATE TABLE `inbox` (
 
 CREATE TABLE `outbox` (
   `UpdatedInDB` timestamp(14) NOT NULL,
-  `DateTime` timestamp(14) NOT NULL default '00000000000000',
+  `InsertIntoDB` timestamp(14) NOT NULL default '00000000000000',
   `SendingDateTime` timestamp(14) NOT NULL default '00000000000000',
   `Text` text NOT NULL,
   `DestinationNumber` varchar(20) NOT NULL default '',
@@ -72,13 +66,11 @@ CREATE TABLE `outbox` (
   `ID` int(11) unsigned NOT NULL auto_increment,
   `MultiPart` enum('false','true') NOT NULL default 'false',
   `RelativeValidity` int(11) NOT NULL default '-1',
+  `SenderID` text NOT NULL,
+  `SendingTimeOut` timestamp(14) NOT NULL default '00000000000000',
+  `DeliveryReport` enum('default','yes','no') NOT NULL default 'default',
   UNIQUE KEY `ID` (`ID`)
-) TYPE=MyISAM AUTO_INCREMENT=5 ;
-
--- 
--- Dumping data for table `outbox`
--- 
-
+) TYPE=MyISAM AUTO_INCREMENT=58 ;
 
 -- --------------------------------------------------------
 
@@ -96,10 +88,21 @@ CREATE TABLE `outbox_multipart` (
   `SequencePosition` int(11) NOT NULL default '1'
 ) TYPE=MyISAM;
 
+-- --------------------------------------------------------
+
 -- 
--- Dumping data for table `outbox_multipart`
+-- Table structure for table `phones`
 -- 
 
+CREATE TABLE `phones` (
+  `ID` text NOT NULL,
+  `UpdatedInDB` timestamp(14) NOT NULL,
+  `InsertIntoDB` timestamp(14) NOT NULL default '00000000000000',
+  `TimeOut` timestamp(14) NOT NULL default '00000000000000',
+  `Send` enum('yes','no') NOT NULL default 'no',
+  `Receive` enum('yes','no') NOT NULL default 'no',
+  `IMEI` text NOT NULL
+) TYPE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -109,7 +112,7 @@ CREATE TABLE `outbox_multipart` (
 
 CREATE TABLE `sentitems` (
   `UpdatedInDB` timestamp(14) NOT NULL,
-  `DateTime` timestamp(14) NOT NULL default '00000000000000',
+  `InsertIntoDB` timestamp(14) NOT NULL default '00000000000000',
   `SendingDateTime` timestamp(14) NOT NULL default '00000000000000',
   `DeliveryDateTime` timestamp(14) NOT NULL default '00000000000000',
   `Text` text NOT NULL,
@@ -122,13 +125,8 @@ CREATE TABLE `sentitems` (
   `ID` int(11) unsigned NOT NULL default '0',
   `SenderID` text NOT NULL,
   `SequencePosition` int(11) NOT NULL default '1',
-  `Status` enum('SendingOK','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending','DeliveryUnknown','Error') NOT NULL default 'SendingOK',
+  `Status` enum('SendingOK','SendingOKNoReport','SendingError','DeliveryOK','DeliveryFailed','DeliveryPending','DeliveryUnknown','Error') NOT NULL default 'SendingOK',
   `StatusError` int(11) NOT NULL default '-1',
   `TPMR` int(11) NOT NULL default '-1',
   `RelativeValidity` int(11) NOT NULL default '-1'
 ) TYPE=MyISAM;
-
--- 
--- Dumping data for table `sentitems`
--- 
-

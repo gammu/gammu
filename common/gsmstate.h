@@ -440,6 +440,7 @@ typedef enum {
 	ID_GetFMStation,
 	ID_SetFMStation,
 	ID_GetLanguage,
+	ID_SetFastSMSSending,
 	ID_Reset,
 	ID_GetToDo,
 	ID_PressKey,
@@ -1061,6 +1062,7 @@ typedef struct {
 	 * Sends SMS already saved in phone.
 	 */
 	GSM_Error (*SendSavedSMS)	(GSM_StateMachine *s, int Folder, int Location);
+	GSM_Error (*SetFastSMSSending)  (GSM_StateMachine *s, bool enable);
 	/**
 	 * Enable/disable notification on incoming SMS.
 	 */

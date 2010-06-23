@@ -778,9 +778,9 @@ static GSM_Error loadpuremidi(FILE *file, GSM_Ringtone *ringtone)
 
 static GSM_Error loadmmf(FILE *file, GSM_Ringtone *ringtone)
 {
-	struct stat st;
-	char *buffer;
-	int length;
+	struct 	stat st;
+	char 	*buffer;
+	int 	length;
 
 	dbgprintf("loading smaf file\n");
 	fstat(fileno(file), &st);

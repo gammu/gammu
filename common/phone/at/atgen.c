@@ -3443,6 +3443,17 @@ GSM_Error ATGEN_SetIncomingCB(GSM_StateMachine *s, bool enable)
 #endif
 }
 
+GSM_Error ATGEN_SetFastSMSSending(GSM_StateMachine *s, bool enable)
+{
+	if (enable) {
+		smprintf(s, "Enabling fast SMS sending\n");
+		return GSM_WaitFor(s, "AT+CMMS=2\r", 10, 0x00, 4, ID_SetFastSMSSending);
+	} else {
+		smprintf(s, "Disabling fast SMS sending\n");
+		return GSM_WaitFor(s, "AT+CNMI=0\r", 10, 0x00, 4, ID_SetFastSMSSending);
+	}
+}
+
 GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Incoming SMS\n");
@@ -3697,6 +3708,7 @@ GSM_Phone_Functions ATGENPhone = {
 	ATGEN_DeleteSMS,
 	ATGEN_SendSMS,
 	ATGEN_SendSavedSMS,
+	ATGEN_SetFastSMSSending,
 	ATGEN_SetIncomingSMS,
 	ATGEN_SetIncomingCB,
 	ATGEN_GetSMSFolders,

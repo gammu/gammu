@@ -319,6 +319,7 @@ GSM_Phone_Functions N9210Phone = {
 	NOTIMPLEMENTED,			/* 	DeleteSMS 		*/
 	DCT3_SendSMSMessage,
 	NOTSUPPORTED,			/*	SendSavedSMS		*/
+	NOTSUPPORTED,			/*	SetFastSMSSending	*/
 	N9210_SetIncomingSMS,
 	DCT3_SetIncomingCB,
 	NOTIMPLEMENTED,			/*	GetSMSFolders		*/

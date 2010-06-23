@@ -661,7 +661,7 @@ static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 			case PBK_Text_Custom3       :
 			case PBK_Text_Custom4       :
 			case PBK_Caller_Group       :
-				if (mystrstr(Entry->Entries[i].Text, Text) != NULL) {
+				if (mywstrstr(Entry->Entries[i].Text, Text) != NULL) {
 					fprintf(stderr,"\n");
 					printmsg("Memory %s, Location %i\n",MemoryLocationToString(Entry->MemoryType),Entry->Location);
 					PrintMemoryEntry(Entry);
@@ -811,7 +811,7 @@ static void ListMemoryCategory(int argc, char *argv[])
 			
 				if (error != ERR_EMPTY) {
 					count++;
-					if (mystrstr(Category.Name, Text) != NULL) {
+					if (mywstrstr(Category.Name, Text) != NULL) {
 						ListMemoryCategoryEntries(j);
 					}
 				}
@@ -1424,7 +1424,6 @@ static void GetAllSMS(int argc, char *argv[])
 	error=Phone->GetSMSFolders(&s, &folders);
 	Print_Error(error);
 
-	fprintf(stderr,"Reading: ");
 	while (error == ERR_NONE) {
 		sms.SMS[0].Folder=0x00;
 		error=Phone->GetNextSMS(&s, &sms, start);
@@ -1444,7 +1443,6 @@ static void GetAllSMS(int argc, char *argv[])
 			printf("\n");
 			displaymultismsinfo(sms,false,false);
 		}
-		fprintf(stderr,"*");
 		start=false;
 	}
 	fprintf(stderr,"\n");
@@ -2529,7 +2527,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	GSM_MultiSMSMessage		sms;
 	GSM_Ringtone			ringtone[MAX_MULTI_SMS];
 	GSM_MultiBitmap			bitmap[MAX_MULTI_SMS],bitmap2;
-	GSM_MultiPartSMSInfo	SMSInfo;
+	GSM_MultiPartSMSInfo		SMSInfo;
 	GSM_NetworkInfo			NetInfo;
 	GSM_MMSIndicator		MMSInfo;
 	FILE 				*ReplaceFile,*f;
@@ -5613,8 +5611,7 @@ static void RestoreSMS(int argc, char *argv[])
 		displaymultismsinfo(SMS,false,false);
 		sprintf(buffer,"Restore sms to folder \"%s\"",DecodeUnicodeConsole(folders.Folder[Backup.SMS[smsnum]->Folder-1].Name));
 		if (answer_yes(buffer)) {
-			Backup.SMS[smsnum]->Location = 0;
-			error=Phone->SetSMS(&s, Backup.SMS[smsnum]);
+			error=Phone->AddSMS(&s, Backup.SMS[smsnum]);
 			Print_Error(error);
 		}
 		smsnum++;
@@ -6093,7 +6090,7 @@ static void ListToDoCategory(int argc, char *argv[])
 			
 				if (error != ERR_EMPTY) {
 					count++;
-					if (mystrstr(Category.Name, Text) != NULL) {
+					if (mywstrstr(Category.Name, Text) != NULL) {
 						ListToDoCategoryEntries(j);
 					}
 				}
@@ -8243,7 +8240,9 @@ int main(int argc, char *argv[])
 		if (only_config >= 0) start++; else only_config = -1;
 	}
 
-	cfg=GSM_FindGammuRC();
+ 	cfg = GSM_FindGammuRC();
+ 	if (cfg == NULL) printmsg("Warning: No configuration file found!\n");
+
 	for (i = 0; i <= MAX_CONFIG_NUM; i++) {
 		if (cfg!=NULL) {
 		        cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
