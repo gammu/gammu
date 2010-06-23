@@ -325,7 +325,8 @@ GSM_Phone_Functions N9210Phone = {
 	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
 	NOTSUPPORTED, 		/*	SetProfile		*/
 	NOTSUPPORTED,		/*	GetSIMIMSI		*/
-	NONEFUNCTION		/*	SetIncomingCall		*/
+	NONEFUNCTION,		/*	SetIncomingCall		*/
+    	NOTSUPPORTED		/*  	GetNextCalendarNote	*/
 };
 
 #endif

@@ -2,7 +2,7 @@
 cp version cfg/autoconf/VERSION
 cd cfg/autoconf
 autoconf
-./configure $*
+./configure "$@"
 if [ "$1" = "--help" ]
 then
     echo > /dev/null

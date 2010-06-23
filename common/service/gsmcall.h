@@ -12,7 +12,7 @@ typedef enum {
 
 typedef struct {
         GSM_CallStatus 		Status;
-        char 			PhoneNumber [GSM_MAX_NUMBER_LENGTH*2];
+        char 			PhoneNumber [(GSM_MAX_NUMBER_LENGTH+1)*2];
 } GSM_Call;
 
 #endif /* _gsm_call_h */

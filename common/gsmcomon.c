@@ -112,6 +112,7 @@ typedef struct {
 static PrintErrorEntry PrintErrorEntries[] = {
 	{GE_NONE,			"No error."},
 	{GE_DEVICEOPENERROR,		"Error opening device. Unknown or busy device."},
+	{GE_DEVICELOCKED,		"Error opening device. Device locked."},
 	{GE_DEVICEDTRRTSERROR,		"Error setting device DTR or RTS."},
 	{GE_DEVICECHANGESPEEDERROR,	"Error setting device speed. Maybe speed not supported."},
 	{GE_DEVICEWRITEERROR,		"Error writing device."},
@@ -140,6 +141,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{GE_WORKINPROGRESS,		"Function is during writing. If want help, please contact with authors."},
 	{GE_PHONEOFF,			"Phone is disabled and connected to charger"},
 	{GE_FILENOTSUPPORTED,		"File format not supported by Gammu"},
+	{GE_BUG,			"Nobody is perfect, some bug appeared in protocol implementation. Please contact authors."},
 
 	{0,				""}
 };
@@ -230,7 +232,7 @@ GSM_Error lock_device(const char* port, char **lock_device)
 				}
 			} else {
 				dprintf("Device already locked.\n");
-				error = GE_DEVICEOPENERROR;
+				error = GE_DEVICELOCKED;
 				goto failed;
 			}
 		}
@@ -278,7 +280,7 @@ failed:
 }
 
 /* Removes lock and frees memory */
-bool unlock_device(char *lock_file)
+bool unlock_device(char **lock_file)
 {
 #ifndef WIN32
 	int err;
@@ -287,47 +289,63 @@ bool unlock_device(char *lock_file)
 		dprintf("Cannot unlock device\n");
 		return false;
 	}
-	err = unlink(lock_file);
-	free(lock_file);
+	err = unlink(*lock_file);
+	free(*lock_file);
+	*lock_file = NULL;
 	return (err + 1);
 #else
 	return true;
 #endif /* WIN32 */
 }
 
-GSM_Error GSM_SetDebugFile(char *info, Debug_Info *di)
+GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 {
-	FILE *file;
+	FILE *testfile;
 
-	file = di->df;
-	if (info[0]!=0 && di->dl != 0) {
-		if (di->df && di->df != stdout) fclose(di->df);
-		switch (di->dl) {
+	/* If we should use global file descriptor, use it */
+	if (privdi->use_global) {
+		/* Aren't we the changing the global di? */
+		if (privdi != &di) {
+			if (privdi->df == stdout) privdi->df = di.df;
+			return GE_NONE;
+        	}
+    	} else {
+        	/* If we should not use global file descriptor, don't even try use it */
+        	if (privdi->df == di.df) privdi->df = stdout;
+    	}
+
+	if (info[0]!=0 && privdi->dl != 0) {
+		switch (privdi->dl) {
 		case DL_BINARY:
-			di->df = fopen(info,"wcb");
+			testfile = fopen(info,"wcb");
 			break;
 		case DL_TEXTERROR:
 		case DL_TEXTERRORDATE:
-			di->df = fopen(info,"ac");
-			if (!di->df) {
-				di->df = file;
+			testfile = fopen(info,"ac");
+			if (!testfile) {
 				dprintf("Can't open debug file\n");
 				return GE_CANTOPENFILE;
 			}
-			fseek(di->df, 0, SEEK_END);
-			if (ftell(di->df) > 5000000) {
-				fclose(di->df);
-				di->df = fopen(info,"wc");
+			fseek(testfile, 0, SEEK_END);
+			if (ftell(testfile) > 5000000) {
+				fclose(testfile);
+				testfile = fopen(info,"wc");
 			}
 			break;
 		default:
-			di->df = fopen(info,"wc");
+			testfile = fopen(info,"wc");
 		}
-		if (!di->df) {
-			di->df = file;
+		if (!testfile) {
 			dprintf("Can't open debug file\n");
 			return GE_CANTOPENFILE;
+		} else {
+			if (privdi->df && privdi->df != stdout)
+			{
+				fclose(privdi->df);
+			}
+			privdi->df = testfile;
 		}
 	}
 	return GE_NONE;
 }
+

@@ -160,6 +160,7 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 	if (UDH->PartNumber != -1 && UDH->AllParts != -1) {
 		dprintf(", part %i of %i",UDH->PartNumber,UDH->AllParts);
 	}
+	dprintf("\n");
 	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, UDH->Text, UDH->Length);
 #endif
 }
@@ -195,14 +196,14 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 			SMS->Length=buffer[Layout.TPUDL] - (off*8 + w) / 7;
 			tmp=GSM_UnpackEightBitsToSeven(w, buffer[Layout.TPUDL]-off, SMS->Length, buffer+(Layout.Text+off), output);
 			dprintf("7 bit SMS, length %i\n",SMS->Length);
-			DecodeDefault (SMS->Text, output, SMS->Length);
+			DecodeDefault (SMS->Text, output, SMS->Length, true, NULL);
 			dprintf("%s\n",DecodeUnicodeString(SMS->Text));
 			break;
 		case GSM_Coding_8bit:
 			SMS->Length=buffer[Layout.TPUDL] - off;
 			memcpy(SMS->Text,buffer+(Layout.Text+off),SMS->Length);
 #ifdef DEBUG
-			dprintf("8 bit SMS, length %i",SMS->Length);
+			dprintf("8 bit SMS, length %i\n",SMS->Length);
 			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, SMS->Text, SMS->Length);
 #endif
 			break;
@@ -210,7 +211,7 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 			SMS->Length=(buffer[Layout.TPUDL] - off) / 2;
 			DecodeUnicodeSpecialNOKIAChars(SMS->Text,buffer+(Layout.Text+off), SMS->Length);
 #ifdef DEBUG
-			dprintf("Unicode SMS, length %i",SMS->Length);
+			dprintf("Unicode SMS, length %i\n",SMS->Length);
 			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df,buffer+(Layout.Text+off), SMS->Length*2);
 			dprintf("%s\n",DecodeUnicodeString(SMS->Text));
 #endif
@@ -400,7 +401,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 		off = 1 + SMS->UDH.Text[0];				/* off - length of the user data header */
 		memcpy(buffer+Layout.Text, SMS->UDH.Text, off);		/* we copy the udh */
 #ifdef DEBUG
-		dprintf("UDH, length %i",off);
+		dprintf("UDH, length %i\n",off);
 		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, SMS->UDH.Text, off);
 #endif
 	}
@@ -413,7 +414,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			memcpy(buffer+(Layout.Text+off), SMS->Text, SMS->Length);
 			size2 = size = SMS->Length+off;
 #ifdef DEBUG
-			dprintf("8 bit SMS, length %i",SMS->Length);
+			dprintf("8 bit SMS, length %i\n",SMS->Length);
 			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df,SMS->Text,SMS->Length);
 #endif
 			break;
@@ -421,7 +422,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			w=(7-off)%7;
 			if (w<0) w=(14-off)%14;
 			p = strlen(DecodeUnicodeString(SMS->Text));
-			EncodeDefault(buff, SMS->Text, &p);
+			EncodeDefault(buff, SMS->Text, &p, true, NULL);
 			size = GSM_PackSevenBitsToEight(w, buff, buffer+(Layout.Text+off), p);
 			size += off;
 			size2 = (off*8 + w) / 7 + p;
@@ -438,7 +439,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			EncodeUnicodeSpecialNOKIAChars(buffer+(Layout.Text+off), SMS->Text, strlen(DecodeUnicodeString(SMS->Text)));
 			size=size2=strlen(DecodeUnicodeString(buffer+(Layout.Text+off)))*2+off;
 #ifdef DEBUG
-			dprintf("Unicode SMS, length %i",(size2-off)/2);
+			dprintf("Unicode SMS, length %i\n",(size2-off)/2);
 			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df,buffer+(Layout.Text+off), size2-off);
 			dprintf("%s\n",DecodeUnicodeString(buffer+(Layout.Text+off)));
 #endif
@@ -600,6 +601,57 @@ void GSM_EncodeUDHHeader(GSM_UDHHeader *UDH)
 				i++;
 			}
 	}
+}
+
+/* Calculates number of SMS and number of left chars in SMS */
+void GSM_SMSCounter(int 		MessageLength,
+		    unsigned char 	*MessageBuffer,
+		    GSM_UDHHeader 	UDH,
+		    GSM_Coding_Type 	Coding,
+		    int 		*SMSNum,
+		    int 		*CharsLeft)
+{
+	int pos=0,maxlen,smslen;
+
+	*SMSNum = 0;
+	maxlen  = 0;
+	smslen  = 0;
+	if (MessageLength == 0) *SMSNum = 1;
+	while (true) {
+		if (pos==MessageLength) break;
+
+		switch (Coding) {
+			case GSM_Coding_8bit:
+				/*max=140*/
+				maxlen=(GSM_MAX_8BIT_SMS_LENGTH-UDH.Length);
+				break;
+			case GSM_Coding_Default:
+				/*max=160*/
+				FindDefaultAlphabetLen(MessageBuffer+pos*2,&maxlen,&smslen,(GSM_MAX_8BIT_SMS_LENGTH-UDH.Length)*8/7);
+				break;
+			case GSM_Coding_Unicode:
+				/*max=70*/
+				maxlen=(GSM_MAX_8BIT_SMS_LENGTH-UDH.Length)/2;
+				break;
+		}
+		if ((MessageLength-pos)<maxlen) maxlen=MessageLength-pos;
+		pos=pos+maxlen;
+		(*SMSNum)++;
+	}
+	switch (Coding) {
+		case GSM_Coding_8bit:
+			/*max=140*/
+			(*CharsLeft)=GSM_MAX_8BIT_SMS_LENGTH-UDH.Length-maxlen;
+			break;
+		case GSM_Coding_Default:
+			/*max=160*/
+			(*CharsLeft)=(GSM_MAX_8BIT_SMS_LENGTH-UDH.Length)*8/7-smslen;
+			break;
+		case GSM_Coding_Unicode:
+			/*max=70*/
+			(*CharsLeft)=(GSM_MAX_8BIT_SMS_LENGTH-UDH.Length)/2-maxlen;
+			break;
+	}	
 }
 
 /* ----------------- Splitting SMS into parts ------------------------------ */
@@ -902,8 +954,8 @@ void GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 	case SMS_ConcatenatedAutoTextLong:
 		smslen = strlen(DecodeUnicodeString(Info->Buffer));
 		memcpy(Buffer,Info->Buffer,smslen*2);
-		EncodeDefault(Buffer2, Buffer, &smslen);
-		DecodeDefault(Buffer,  Buffer2, smslen);
+		EncodeDefault(Buffer2, Buffer, &smslen, true, NULL);
+		DecodeDefault(Buffer,  Buffer2, smslen, true, NULL);
 #ifdef DEBUG
 		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) {
 			dprintf("Info->Buffer:\n");
@@ -937,35 +989,43 @@ void GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		break;
 	case SMS_EMSPredefinedAnimation:
 	case SMS_EMSPredefinedSound:
-		UDH = UDH_UserUDH;
-		SMS->SMS[0].UDH.Text[0]=0x04; 		/* UDH length - 1	*/
+		UDH 			= UDH_UserUDH;
+		SMS->SMS[0].UDH.Text[0] = 5-1; 		/* UDH length - 1	*/
 		if (Info->ID == SMS_EMSPredefinedAnimation) {
-			SMS->SMS[0].UDH.Text[1]=0x0D; 	/* ID for def.animation	*/
+			SMS->SMS[0].UDH.Text[1] = 0x0D; /* ID for def.animation	*/
 		} else {
-			SMS->SMS[0].UDH.Text[1]=0x0B; 	/* ID for def.sound	*/
+			SMS->SMS[0].UDH.Text[1] = 0x0B; /* ID for def.sound	*/
 		}                       
 		SMS->SMS[0].UDH.Text[2] = 0x02; 	/* Length of rest 	*/
-		SMS->SMS[0].UDH.Text[3] = 0x00; 	/* Position 		*/
+		SMS->SMS[0].UDH.Text[3] = 0x00; 	/* Position in EMS msg	*/
 		SMS->SMS[0].UDH.Text[4] = Info->Number; /* Number of sound/anim.*/
+		/* SMS text */
+		Coding 		= GSM_Coding_Default;
 		Length	  	= 1;
 		Buffer[0] 	= 0x00;
-		Buffer[1] 	= 0x00;
+		Buffer[1] 	= ' ';
+		Buffer[2] 	= 0x00;
+		Buffer[3] 	= 0x00;
 		break;
-	case SMS_EMSSound:
+	case SMS_EMSSound10:
+	case SMS_EMSSound12:
 		/* 128 bytes according to Alcatel specs */
 		Length = 128;
-		Info->RingtoneNotes = GSM_EncodeEMSSound(*Info->Ringtone, Buffer, &Length);
+		Info->RingtoneNotes = GSM_EncodeEMSSound(*Info->Ringtone, Buffer, &Length, 1.0);
 		/* UDH */
-		UDH = UDH_UserUDH;
-		SMS->SMS[0].UDH.Text[0] = Length+2;	/* UDH Length - 1	*/
+		UDH 			= UDH_UserUDH;
+		SMS->SMS[0].UDH.Text[0] = (Length+3)-1;	/* UDH Length - 1	*/
 		SMS->SMS[0].UDH.Text[1] = 0x0C;		/* ID for EMS sound 	*/
-		SMS->SMS[0].UDH.Text[2] = Length+1;	/* Length of rest 	*/
-		SMS->SMS[0].UDH.Text[3] = 0x00; 	/* Position 		*/
-		memcpy(SMS->SMS[0].UDH.Text+3,Buffer,Length);
+		SMS->SMS[0].UDH.Text[2] = Length;	/* Length of rest 	*/
+		SMS->SMS[0].UDH.Text[3] = 0x00; 	/* Position in EMS msg 	*/
+		memcpy(SMS->SMS[0].UDH.Text+4,Buffer,Length);
 		/* SMS text */
+		Coding 		= GSM_Coding_Default;
 		Length	  	= 1;
 		Buffer[0] 	= 0x00;
-		Buffer[1] 	= 0x00;
+		Buffer[1] 	= '@';
+		Buffer[2] 	= 0x00;
+		Buffer[3] 	= 0x00;
 		break;
 	case SMS_EMSBitmap:
 		UDH = UDH_UserUDH;		
@@ -979,23 +1039,30 @@ void GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		/* Bitmap 8x8 */
 			EMS_CopyBitmapUDH(GSM_EMSSmallPicture, &Info->Bitmap->Bitmap[0],SMS->SMS[0].UDH.Text);
 		}
+		/* SMS text */
+		Coding 		= GSM_Coding_Default;
 		Length	  	= 1;
 		Buffer[0] 	= 0x00;
-		Buffer[1] 	= 0x00;
+		Buffer[1] 	= '@';
+		Buffer[2] 	= 0x00;
+		Buffer[3] 	= 0x00;
 		break;
 	case SMS_EMSAnimation:
 		UDH = UDH_UserUDH;		
 		/* Bitmap 16x16 */
-		if (Info->Bitmap->Bitmap[0].Width > 8 || Info->Bitmap->Bitmap[0].Height > 8) {		
+		if (Info->Bitmap->Bitmap[0].Width > 8 || Info->Bitmap->Bitmap[0].Height > 8) {
 			EMS_CopyAnimationUDH(GSM_EMSMediumPicture, Info->Bitmap,SMS->SMS[0].UDH.Text);
 		} else {
 		/* Bitmap 8x8 */
 			EMS_CopyAnimationUDH(GSM_EMSSmallPicture, Info->Bitmap,SMS->SMS[0].UDH.Text);
 		}
 		/* SMS text */
+		Coding 		= GSM_Coding_Default;
 		Length	  	= 1;
 		Buffer[0] 	= 0x00;
-		Buffer[1] 	= 0x00;
+		Buffer[1] 	= '@';
+		Buffer[2] 	= 0x00;
+		Buffer[3] 	= 0x00;
 		break;
 	}
 	GSM_MakeMultiPartSMS(SMS,Buffer,Length,UDH,Coding,Class,Info->ReplaceMessage);

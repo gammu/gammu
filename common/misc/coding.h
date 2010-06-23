@@ -10,7 +10,7 @@
 bool 		mywstrncasecmp			(unsigned char *a, unsigned char *b, int num);
 bool 		mywstrncmp			(unsigned char *a, unsigned char *b, int num);
 bool 		myiswspace	  		(unsigned char *src);
-int 		mytowlower			(wint_t c);
+int 		mytowlower			(wchar_t c);
 
 unsigned int 	EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
 unsigned int 	DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);
@@ -45,8 +45,8 @@ void		DecodeHexBin			(unsigned char *dest, const unsigned char *src, int len);
 void		EncodeHexBin			(unsigned char *dest, const unsigned char *src, int len);
 
 /* ---------------------- DefaultAlphabet for SMS -------------------------- */
-void		DecodeDefault			(unsigned char *dest, const unsigned char *src, int len);
-void		EncodeDefault			(unsigned char *dest, const unsigned char *src, int *len);
+void 		EncodeDefault			(unsigned char *dest, const unsigned char *src, int *len, bool UseExtensions, unsigned char *ExtraAlphabet);
+void		DecodeDefault			(unsigned char *dest, const unsigned char *src, int len, bool UseExtensions,  unsigned char *ExtraAlphabet);
 void 		FindDefaultAlphabetLen		(const unsigned char *src, int *srclen, int *smslen, int maxlen);
 
 int GSM_PackSevenBitsToEight	(int offset, unsigned char *input, unsigned char *output, int length);

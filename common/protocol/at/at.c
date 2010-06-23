@@ -65,6 +65,17 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 			}
 		}
 		break;
+	case 'T':
+		/* When CONNECT string received, we know there will not follow
+		 * anything AT related, after CONNECT can follow ppp data, alcabus
+         	 * data and also other things.
+         	 */
+        	if (strncmp(d->linestart, "CONNECT", 7) == 0) {
+            		s->Phone.Data.RequestMsg   	= &d->Msg;
+           		s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
+            		d->linestart              	= NULL;
+            		break;
+       		}
 	default:
 		if (d->wascrlf) {
 			d->linestart = d->Msg.Buffer + (d->Msg.Length - 1);

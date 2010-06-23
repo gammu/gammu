@@ -188,7 +188,7 @@ typedef struct {
 #endif
 
 typedef struct {
-	union {
+	struct {
 		char fake;
 #ifdef GSM_ENABLE_MBUS2
 		GSM_Protocol_MBUS2Data		MBUS2;
@@ -288,7 +288,30 @@ typedef enum {
 	ID_SetAutoNetworkLogin,
 	ID_SetWAPSettings,
 	ID_GetSIMIMSI,
-
+#ifdef GSM_ENABLE_ALCATEL
+    	/* AT mode */
+    	ID_SetFlowControl,
+    	ID_AlcatelConnect,
+    
+    	/* Binary mode */
+    	ID_AlcatelAttach,
+    	ID_AlcatelDetach,
+    	ID_AlcatelCommit,
+    	ID_AlcatelCommit2,
+    	ID_AlcatelClose,
+   	ID_AlcatelStart,
+    	ID_AlcatelSelect1,
+    	ID_AlcatelSelect2,
+    	ID_AlcatelSelect3,
+    	ID_AlcatelBegin1,
+   	ID_AlcatelBegin2,
+    	ID_AlcatelGetIds1,
+    	ID_AlcatelGetIds2,
+    	ID_AlcatelGetFields1,
+    	ID_AlcatelGetFields2,
+    	ID_AlcatelGetFieldValue1,
+    	ID_AlcatelGetFieldValue2,    
+#endif
 	ID_IncomingFrame,
 
 	ID_User1,
@@ -354,7 +377,7 @@ typedef struct {
 	char			HardwareCache[50];	/* Hardware version		*/
 	char			ProductCodeCache[50];	/* Product code version		*/
 
-	union {
+	struct {
 		int			fake;
 #ifdef GSM_ENABLE_NOKIA6110
 		GSM_Phone_N6110Data	N6110;
@@ -452,6 +475,7 @@ typedef struct {
 	GSM_Error (*SetProfile)		(GSM_StateMachine *s, GSM_Profile	    *Profile	);
 	GSM_Error (*GetSIMIMSI)		(GSM_StateMachine *s, char		    *IMSI	);
 	GSM_Error (*SetIncomingCall)	(GSM_StateMachine *s, bool		    enable	);
+	GSM_Error (*GetNextCalendarNote)(GSM_StateMachine *s, GSM_CalendarNote	    *Note,	bool	start		);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;
@@ -515,6 +539,7 @@ typedef struct {
 	char			*LockDevice;	   /* Lock device ? (Unix)		*/
 	char			*DebugFile;        /* Name of debug file		*/
 	char 			*Localize;	   /* Name of localisation file		*/
+	bool			UseGlobalDebugFile;/* Should we use global debug file?	*/
 	bool			DefaultModel;
 	bool			DefaultDebugLevel;
 	bool			DefaultDevice;

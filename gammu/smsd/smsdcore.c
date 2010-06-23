@@ -34,7 +34,7 @@ void GSM_Terminate_SMSD(char *msg, int error, bool exitprogram, int rc)
 			if (s.opened) GSM_TerminateConnection(&s);
 		}
 	}
-	if (strcmp(msg, "") != 0) {
+	if (error != 0) {
 		WriteSMSDLog(msg, error, print_error(error,s.di.df,s.msg));
 		fprintf(stderr, msg, error, print_error(error,s.di.df,s.msg));
 		fprintf(stderr, "\n");
@@ -69,10 +69,10 @@ void WriteSMSDLog(unsigned char *format, ...)
 
 void SMSD_ReadConfig(int argc, char *argv[], GSM_SMSDConfig *Config)
 {
-	CFG_Header 	*smsdcfgfile = NULL;
-	GSM_Config 	smsdcfg;
-	unsigned char	*str;
-	unsigned char	emptyPath[1] = "";
+	CFG_Header 		*smsdcfgfile = NULL;
+	GSM_Config 		smsdcfg;
+	unsigned char		*str;
+	static unsigned char	emptyPath[1] = "\0";
 
 	smsdcfgfile=CFG_ReadFile(argv[3], false);
 	if (smsdcfgfile==NULL) {
@@ -139,7 +139,7 @@ void SMSD_ReadConfig(int argc, char *argv[], GSM_SMSDConfig *Config)
 	{
 		Config->transmitformat = "7bit";
 	}
-	WriteSMSDLog("Outbox is \"%s\" with transmitformat \"%s\"", Config->outboxpath, Config->transmitformat);
+	WriteSMSDLog("Outbox is \"%s\" with transmission format \"%s\"", Config->outboxpath, Config->transmitformat);
 
 	Config->sentsmspath=CFG_Get(smsdcfgfile, "smsd", "sentsmspath", false);
 	if (Config->sentsmspath == NULL) Config->sentsmspath = Config->outboxpath;
@@ -161,6 +161,9 @@ void SMSD_ReadConfig(int argc, char *argv[], GSM_SMSDConfig *Config)
 			WriteSMSDLog("Exclude numbers available, but IGNORED");
 		}
 	}
+
+	Config->retries = 0;
+	Config->prevSMSID[0] = 0;
 }
 
 bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
@@ -170,32 +173,34 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 
 	/* Need PIN ? */
 	error=Phone->GetSecurityStatus(&s,&SecurityCode.Type);
+	/* Unknown error */
 	if (error != GE_NOTSUPPORTED && error != GE_NONE) {
 		WriteSMSDLog("Error getting security status (%i)", error);
 		return false;
 	}
-	if (error != GE_NOTSUPPORTED) {
-		switch (SecurityCode.Type) {
-		case GSCT_Pin:
-			WriteSMSDLog("Trying to enter PIN");
-			strcpy(SecurityCode.Code,Config->PINCode);
-			error=Phone->EnterSecurityCode(&s,SecurityCode);
-			if (error == GE_SECURITYERROR) {
-				GSM_Terminate_SMSD("ERROR: incorrect PIN", error, true, -1);
-			}
-			if (error != GE_NONE) {
-				WriteSMSDLog("Error entering PIN (%i)", error);
-				return false;
-		  	}
-			break;
-		case GSCT_SecurityCode:
-		case GSCT_Pin2:
-		case GSCT_Puk:
-		case GSCT_Puk2:
-			GSM_Terminate_SMSD("ERROR: phone requires not supported code type", 0, true, -1);
-		case GSCT_None:
-			break;
+	/* No supported - do not check more */
+	if (error == GE_NOTSUPPORTED) return true;
+	/* If PIN, try to enter */
+	switch (SecurityCode.Type) {
+	case GSCT_Pin:
+		WriteSMSDLog("Trying to enter PIN");
+		strcpy(SecurityCode.Code,Config->PINCode);
+		error=Phone->EnterSecurityCode(&s,SecurityCode);
+		if (error == GE_SECURITYERROR) {
+			GSM_Terminate_SMSD("ERROR: incorrect PIN", error, true, -1);
 		}
+		if (error != GE_NONE) {
+			WriteSMSDLog("Error entering PIN (%i)", error);
+			return false;
+	  	}
+		break;
+	case GSCT_SecurityCode:
+	case GSCT_Pin2:
+	case GSCT_Puk:
+	case GSCT_Puk2:
+		GSM_Terminate_SMSD("ERROR: phone requires not supported code type", 0, true, -1);
+	case GSCT_None:
+		break;
 	}
 	return true;
 }
@@ -217,6 +222,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		case GE_EMPTY:
 			break;
 		case GE_NONE:
+			/* Not Inbox SMS - exit */
 			if (!sms.SMS[0].InboxFolder) break;
 			process=true;
 			DecodeUnicode(sms.SMS[0].Number,buffer);
@@ -253,7 +259,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	 		WriteSMSDLog("Error getting SMS (%i)", error);
 			return false;
 		}
-		if (error == GE_NONE) {
+		if (error == GE_NONE && sms.SMS[0].InboxFolder) {
 			for (i=0;i<sms.Number;i++) {
 				sms.SMS[i].Folder=0;
 				error=Phone->DeleteSMS(&s,&sms.SMS[i]);
@@ -293,13 +299,14 @@ bool SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 {
 	GSM_MultiSMSMessage  	sms;
-	static unsigned char 	SMSID[200],prevSMSID[200]="";
 	GSM_DateTime         	Date;
 	GSM_Error            	error;
 	unsigned int         	i, j, z;
-	static unsigned int 	retries=0;
 
-	if ((SendingSMSStatus = Service->FindOutboxSMS(&sms, Config, SMSID)) == GE_EMPTY) {
+	error = Service->FindOutboxSMS(&sms, Config, Config->SMSID);
+
+	if (error == GE_EMPTY) {
+		/* No outbox sms - wait few seconds and escape */
 		for (j=0;j<Config->commtimeout && !bshutdown;j++) {
 			GSM_GetCurrentDateTime (&Date);
 			i=Date.Second;
@@ -308,33 +315,37 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				GSM_GetCurrentDateTime(&Date);
 			}
 		}
-	} else if (SendingSMSStatus != GE_NONE) {
-		WriteSMSDLog("Error in outbox on %s", SMSID);
-		Service->MoveSMS(Config->outboxpath, Config->errorsmspath, SMSID, true);
-	} else if (!bshutdown) {
-		if (strcmp(prevSMSID, SMSID) == 0) {
-			if (++retries > MAX_RETRIES) {
-				retries = 0;
-				SendingSMSStatus = GE_NONE;
-				strcpy(prevSMSID, "");
-				WriteSMSDLog("Moved to errorbox: %s", SMSID);
-				Service->MoveSMS(Config->outboxpath, Config->errorsmspath, SMSID, true);
+		return true;
+	}
+	if (error != GE_NONE) {
+		/* Unknown error - escape */
+		WriteSMSDLog("Error in outbox on %s", Config->SMSID);
+		Service->MoveSMS(Config->outboxpath, Config->errorsmspath, Config->SMSID, true);
+		return false;
+	}
+	if (!bshutdown) {
+		if (strcmp(Config->prevSMSID, Config->SMSID) == 0) {
+			Config->retries++;
+			if (Config->retries > MAX_RETRIES) {
+				Config->retries = 0;
+				strcpy(Config->prevSMSID, "");
+				WriteSMSDLog("Moved to errorbox: %s", Config->SMSID);
+				Service->MoveSMS(Config->outboxpath, Config->errorsmspath, Config->SMSID, true);
 				return false;
 			}
 		} else {
-			retries = 0;
-			strcpy(prevSMSID, SMSID);
+			Config->retries = 0;
+			strcpy(Config->prevSMSID, Config->SMSID);
 		}
 		for (i=0;i<sms.Number;i++) {
 			if (strcmp(Config->deliveryreport, "no") != 0) sms.SMS[i].PDU = SMS_Status_Report;
-			SendingSMSStatus = GE_TIMEOUT;
 			error=Phone->SendSMSMessage(&s, &sms.SMS[i]);
 			if (error!=GE_NONE) {
-				WriteSMSDLog("Error sending SMS %s (%i): %s", SMSID, error,print_error(error,s.di.df,s.msg));
-				SendingSMSStatus = GE_UNKNOWN;
-				break;
+				WriteSMSDLog("Error sending SMS %s (%i): %s", Config->SMSID, error,print_error(error,s.di.df,s.msg));
+				return false;
 			}
 			j=0;
+			SendingSMSStatus = GE_TIMEOUT;
 			while (!bshutdown) {
 				GSM_GetCurrentDateTime (&Date);
 				z=Date.Second;
@@ -342,27 +353,21 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 					mili_sleep(10);
 					GSM_GetCurrentDateTime(&Date);
 					GSM_ReadDevice(&s);
-					if (SendingSMSStatus == GE_UNKNOWN) break;
-					if (SendingSMSStatus == GE_NONE) break;
+					if (SendingSMSStatus != GE_TIMEOUT) break;
 				}
-				if (SendingSMSStatus == GE_UNKNOWN) break;
-				if (SendingSMSStatus == GE_NONE) break;
-				if (++j>=Config->sendtimeout)
-				{
-					SendingSMSStatus = GE_UNKNOWN;
-					break;
-				}
+				if (SendingSMSStatus != GE_TIMEOUT) break;
+				j++;
+				if (j>Config->sendtimeout) break;
 			}
-			if (SendingSMSStatus == GE_UNKNOWN) {
-				WriteSMSDLog("Error getting send status of %s (%i): %s", SMSID, error,print_error(error,s.di.df,s.msg));
-				break;
+			if (SendingSMSStatus != GE_NONE) {
+				WriteSMSDLog("Error getting send status of %s (%i): %s", Config->SMSID, SendingSMSStatus,print_error(SendingSMSStatus,s.di.df,s.msg));
+				return false;
 			}
-			WriteSMSDLog("Transmitted %s (%s: %i) to %s", SMSID, (i+1 == sms.Number?"total":"part"),i+1,DecodeUnicodeString(sms.SMS[0].Number));
+			WriteSMSDLog("Transmitted %s (%s: %i) to %s", Config->SMSID, (i+1 == sms.Number?"total":"part"),i+1,DecodeUnicodeString(sms.SMS[0].Number));
 		}
-		if (SendingSMSStatus == GE_UNKNOWN) return false;
-		strcpy(prevSMSID, "");
-		if (Service->MoveSMS(Config->outboxpath, Config->sentsmspath, SMSID, false) != GE_NONE)
-			Service->MoveSMS(Config->outboxpath, Config->errorsmspath, SMSID, true);
+		strcpy(Config->prevSMSID, "");
+		if (Service->MoveSMS(Config->outboxpath, Config->sentsmspath, Config->SMSID, false) != GE_NONE)
+			Service->MoveSMS(Config->outboxpath, Config->errorsmspath, Config->SMSID, true);
 	}
 	return true;
 }
@@ -396,9 +401,8 @@ void SMSDaemon(int argc, char *argv[])
 	signal(SIGTERM, interrupted);
 	fprintf(stderr,"Press Ctrl+C to stop the program ...\n");
 
-	SendingSMSStatus 	= GE_UNKNOWN;
 	time1 			= time(NULL);
-	s.User.SendSMSStatus 	= SMSSendingSMSStatus;
+	SendingSMSStatus 	= GE_UNKNOWN;
 
 	/* Loop here indefinitely -
 	 * allows you to see messages from GSM code in
@@ -412,13 +416,16 @@ void SMSDaemon(int argc, char *argv[])
 				WriteSMSDLog("Terminating communication (%i,%i)", error, errors);
 				error=GSM_TerminateConnection(&s);
 			}
-			if (initerrors++ > 3) mili_sleep(30);
+			if (initerrors++ > 3) mili_sleep(30000);
 			WriteSMSDLog("Starting communication");
 			error=GSM_InitConnection(&s,2);
-			Phone=s.Phone.Functions;
 			switch (error) {
 			case GE_NONE:
-				errors = 0;
+				s.User.SendSMSStatus 	= SMSSendingSMSStatus;
+				Phone			= s.Phone.Functions;
+				errors 			= 0;
+				/* Marcin Wiacek: FIXME. To check */
+//				di 			= s.di;
 				break;
 			case GE_DEVICEOPENERROR:
 				GSM_Terminate_SMSD("Can't open device (%i)", error, true, -1);

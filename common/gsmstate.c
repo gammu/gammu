@@ -33,7 +33,6 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("at115200"	,connection,0)) s->connectiontype = GCT_AT115200;
 	if (mystrncasecmp("atblue"	,connection,0)) s->connectiontype = GCT_ATBLUE;
 	if (mystrncasecmp("dlr3blue"	,connection,0)) s->connectiontype = GCT_DLR3BLUE;
-	if (mystrncasecmp("alcabus"	,connection,0)) s->connectiontype = GCT_ALCABUS;
 	if (s->connectiontype==0) return GE_UNKNOWNCONNECTIONTYPESTRING;
 
 	/* We check now if user gave connection type compiled & available
@@ -61,9 +60,6 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #endif
 #ifdef GSM_ENABLE_ATBLUETOOTH
 	GSM_RegisterConnection(s, GCT_ATBLUE, 	&BlueToothDevice,&ATProtocol);
-#endif
-#ifdef GSM_ENABLE_ALCABUS
-	GSM_RegisterConnection(s, GCT_ALCABUS, 	&SerialDevice,   &ALCABUSProtocol);
 #endif
 #ifdef GSM_ENABLE_AT
 	GSM_RegisterConnection(s, GCT_AT19200, 	&SerialDevice, 	 &ATProtocol);
@@ -111,7 +107,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 	GSM_RegisterModule(s,&N9210Phone);
 #endif
 #ifdef GSM_ENABLE_ALCATEL
-	GSM_RegisterModule(s,&AlcatelPhone);
+	GSM_RegisterModule(s,&ALCATELPhone);
 #endif
 	if (s->Phone.Functions==NULL) return GE_UNKNOWNMODELSTRING;
 	return GE_NONE;
@@ -148,7 +144,8 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	s->User.SendSMSStatus		  = NULL;
 	s->lockfile			  = NULL;
 
-	s->di=di;
+	s->di 				  = di;
+	s->di.use_global 		  = s->Config.UseGlobalDebugFile;
 	GSM_SetDebugLevel(s->Config.DebugLevel, &s->di);
 	error=GSM_SetDebugFile(s->Config.DebugFile, &s->di);
 	if (error != GE_NONE) return error;
@@ -268,7 +265,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 #endif
 #ifdef ALCATEL
 				case ALCABUS:
-					s->Phone.Functions = &AlcatelPhone;
+					s->Phone.Functions = &ALCATELPhone;
 					break;
 #endif
 				default:
@@ -338,7 +335,7 @@ int GSM_ReadDevice (GSM_StateMachine *s)
 	while (i==Date.Second) {
 		res = s->Device.Functions->ReadDevice(s, buff, 255);
 		if (res > 0) break;
-		mili_sleep(10);
+		mili_sleep(5);
 		GSM_GetCurrentDateTime(&Date);
 	}
 
@@ -363,12 +360,12 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 	error=s->Protocol.Functions->Terminate(s);	
 	if (error!=GE_NONE) return error;
 
-	if (s->di.dl!=0 && s->di.df!=stdout) fclose(s->di.df);
-
 	error = s->Device.Functions->CloseDevice(s);
 	if (error!=GE_NONE) return error;
 	
-	if (s->lockfile!=NULL) unlock_device(s->lockfile);
+	if (s->lockfile!=NULL) unlock_device(&(s->lockfile));
+
+	if (!s->di.use_global && s->di.dl!=0 && s->di.df!=stdout) fclose(s->di.df);
 
 	return GE_NONE;
 }
@@ -443,7 +440,7 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned char *buffer,
 			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl == DL_TEXTERROR ||
 			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl == DL_TEXTERRORDATE)
 			{
-			    smprintf(s, "[Retrying %i type: 0x%02x]\n", reply, type);
+			    smprintf(s, "[Retrying %i type 0x%02x]\n", reply, type);
 			}
 		}
 		error = Protocol->Functions->WriteMessage(s, buffer, length, type);
@@ -592,6 +589,9 @@ void CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg)
 	char *DefaultLockDevice		= "no";
 	char *Temp;
 
+	/* By default all debug output will go to one filedescriptor */
+	bool DefaultUseGlobalDebugFile 	= true;
+
         cfg->Device		 = DefaultPort;
         cfg->Connection	 	 = DefaultConnection;
         cfg->SyncTime 	 	 = DefaultSynchronizeTime;
@@ -606,6 +606,8 @@ void CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg)
 	cfg->DefaultDebugFile	 = true;
 	cfg->DefaultDebugLevel	 = true;
 	cfg->DefaultLockDevice	 = true;
+
+	cfg->UseGlobalDebugFile	 = DefaultUseGlobalDebugFile;
 
 	if (cfg_info==NULL) return;
 	
@@ -714,8 +716,10 @@ static OnePhoneModel allmodels[] = {
 	{"MC35" ,	  "MC35",	  "",				   {0}},
 	{"iPAQ" ,	  "iPAQ"  ,	  "",				   {0}},
 	{"A2D" ,	  "A2D"  ,	  "",				   {0}},
-	{"A500", 	  "ONE TOUCH 500","",				   {0}},
 	{"9210",	  "RAE-3",	  "Nokia Communicator GSM900/1800",{0}},
+#endif
+#if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)
+	{"BE5", 	  "ONE TOUCH 500","",				   {0}},
 #endif
 	{""     ,""      ,"",           {0}}
 };

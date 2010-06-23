@@ -1217,6 +1217,10 @@ GSM_Error DCT3_ReplyDeleteSMSMessage(GSM_Protocol_Message msg, GSM_Phone_Data *D
 	case 0x0c:
 		dprintf("Error deleting SMS\n");
 		switch (msg.Buffer[4]) {
+			case 0x00:
+				/* Not tested on 6210 */
+				dprintf("Unknown meaning, SMS seems to be deleted\n");
+				return GE_NONE;				
 			case 0x02:
 				/* Not tested on 6210 */
 				dprintf("Invalid location\n");

@@ -853,12 +853,12 @@ void EMS_CopyBitmapUDH(GSM_Phone_Bitmap_Types Type, GSM_Bitmap *Bitmap, char *Bu
 	Length = PHONE_GetBitmapSize(Type);
 	PHONE_GetBitmapWidthHeight(Type, &Width, &Height);
 
-	Buffer[0] = Length + 5;	/* UDH Length - 1	*/
-	Buffer[1] = 0x12;	/* ID for EMS bitmap	*/
-	Buffer[2] = Length + 3;	/* Length of rest 	*/
-	Buffer[3] = 0x00; 	/* Position	  	*/
-	Buffer[4] = Width/8;	/* Bitmap width/8 	*/
-	Buffer[5] = Height;	/* Bitmap height  	*/
+	Buffer[0] = (Length+6)-1;	/* UDH Length - 1	*/
+	Buffer[1] = 0x12;		/* ID for EMS bitmap	*/
+	Buffer[2] = Length + 3;		/* Length of rest 	*/
+	Buffer[3] = 0x00; 		/* Position in EMS msg	*/
+	Buffer[4] = Width/8;		/* Bitmap width/8 	*/
+	Buffer[5] = Height;		/* Bitmap height  	*/
 	PHONE_EncodeBitmap(Type,Buffer+6, Bitmap);
 }
 
@@ -868,14 +868,14 @@ void EMS_CopyAnimationUDH(GSM_Phone_Bitmap_Types Type, GSM_MultiBitmap *Bitmap, 
 
 	Length = PHONE_GetBitmapSize(Type);
 
-	Buffer[current++] = Length*Bitmap->Number + 3;	/* UDH Length - 1	*/
+	Buffer[current++] = (Length*Bitmap->Number+4)-1; /* UDH Length - 1	 */
 	if (Type == GSM_EMSSmallPicture) {
-		Buffer[current++] = 0x0F;	 	/* ID for 8x8 animation */
+		Buffer[current++] = 0x0F;	 	 /* ID for 8x8 animation */
 	} else {
-		Buffer[current++] = 0x0E;	 	/* ID for 16x16 anim.   */
+		Buffer[current++] = 0x0E;	 	 /* ID for 16x16 anim.   */
 	}
-	Buffer[current++] = Length*Bitmap->Number + 1;	/* Length of rest 	*/
-	Buffer[current++] = 0x00; 	 		/* Position	  	*/
+	Buffer[current++] = Length*Bitmap->Number + 1;	 /* Length of rest 	 */
+	Buffer[current++] = 0x00; 	 		 /* Position in EMS msg	 */
 	for (i=0;i<Bitmap->Number;i++) {
 		PHONE_EncodeBitmap(Type, Buffer+current, &Bitmap->Bitmap[i]);
 		current+=Length;

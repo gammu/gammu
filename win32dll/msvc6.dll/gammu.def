@@ -25,3 +25,5 @@ EXPORTS
 	mygetfirmwareversion	@17
 	myreset			@18
 	mygetmodelname		@19
+	mysmscounter		@20
+	mymakemultipartsms	@21

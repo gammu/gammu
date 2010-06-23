@@ -1,0 +1,7 @@
+gammu for Debian
+----------------
+
+This package is currently built statically, ask me if there is need to build
+shared lib and devel packages.
+
+ -- Michal Cihar <cihar@email.cz>, Mon, 30 Dec 2002 23:29:42 +0100

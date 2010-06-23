@@ -19,14 +19,15 @@
 typedef enum {
 /* 1*/	GE_NONE=1,
 	GE_DEVICEOPENERROR,		/* Error during opening device */
+	GE_DEVICELOCKED,		/* Device locked */
 	GE_DEVICEDTRRTSERROR,		/* Error during setting DTR/RTS in device */
 	GE_DEVICECHANGESPEEDERROR,	/* Error during changing speed in device */
 	GE_DEVICEWRITEERROR,		/* Error during writing device */
 	GE_DEVICEREADERROR,		/* Error during reading device */
 	GE_DEVICEPARITYERROR,		/* Can't set parity on device */
 	GE_TIMEOUT,			/* Command timed out */
-	GE_FRAMENOTREQUESTED,		/* Frame handled, but not requested in this moment */
-/*10*/	GE_UNKNOWNRESPONSE,		/* Response not handled by gammu */
+/*10*/	GE_FRAMENOTREQUESTED,		/* Frame handled, but not requested in this moment */
+	GE_UNKNOWNRESPONSE,		/* Response not handled by gammu */
 	GE_UNKNOWNFRAME,		/* Frame not handled by gammu */
 	GE_UNKNOWNCONNECTIONTYPESTRING,	/* Unknown connection type given by user */
 	GE_UNKNOWNMODELSTRING,		/* Unknown model given by user */
@@ -35,18 +36,19 @@ typedef enum {
 	GE_EMPTY,			/* Empty phonebook entry, ... */
 	GE_SECURITYERROR,		/* Not allowed */
 	GE_INVALIDLOCATION,		/* Too high or too low location... */
-	GE_NOTIMPLEMENTED,		/* Function not implemented */
-/*20*/	GE_FULL,			/* Memory is full */
+/*20*/	GE_NOTIMPLEMENTED,		/* Function not implemented */
+	GE_FULL,			/* Memory is full */
 	GE_UNKNOWN,
 	GE_CANTOPENFILE, 		/* Error during opening file */
 	GE_MOREMEMORY,			/* More memory required */
 	GE_PERMISSION,			/* No permission */
-/*25*/	GE_EMPTYSMSC,			/* SMSC number is empty */
+	GE_EMPTYSMSC,			/* SMSC number is empty */
 	GE_INSIDEPHONEMENU,		/* Inside phone menu - can't make something */
 	GE_NOTCONNECTED,		/* Phone NOT connected - can't make something */
 	GE_WORKINPROGRESS,		/* Work in progress */
-	GE_PHONEOFF,			/* Phone is disabled and connected to charger */
-	GE_FILENOTSUPPORTED		/* File format not supported by Gammu */
+/*30*/	GE_PHONEOFF,			/* Phone is disabled and connected to charger */
+	GE_FILENOTSUPPORTED,		/* File format not supported by Gammu */
+	GE_BUG                  	/* Found bug in implementation or phone */
 } GSM_Error;
 
 extern GSM_Error NoneFunction		(void);
@@ -61,9 +63,9 @@ unsigned char *GetMsg 		(CFG_Header *cfg, unsigned char *default_string);
 unsigned char *print_error	(GSM_Error e, FILE *df, CFG_Header *cfg);
 
 GSM_Error 	lock_device	(const char* port, char **lock_device);
-bool 		unlock_device	(char *lock_file);
+bool 		unlock_device	(char **lock_file);
 
-GSM_Error GSM_SetDebugFile(char *info, Debug_Info *di);
+GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi);
 
 char *GetGammuVersion();
 

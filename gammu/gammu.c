@@ -41,7 +41,6 @@ GSM_Error			error 			= GE_NONE;
 static int			i;
 
 volatile bool 			bshutdown 		= false;
-static bool 			always_answer_yes 	= false;
 
 /* SIGINT signal handler. */
 void interrupted(int sig)
@@ -115,17 +114,31 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 
 static bool answer_yes(char *text)
 {
-	int	len;
-	char	ans[99];
+    	int         len;
+    	char        ans[99];
+    	static bool always_answer_yes   =   false;
+    	static bool always_answer_no    =   false;
 
 	while (1) {
-		printmsgerr("%s (yes/no/ALL) ? ",text);
+		printmsgerr("%s (yes/no/ALL/ONLY/NONE) ? ",text);
 		if (always_answer_yes) {
 			printmsgerr("YES (always)\n");
 			return true;
 		}
+		if (always_answer_no) {
+			printmsgerr("NO (always)\n");
+			return false;
+		}
 		len=GetLine(stdin, ans, 99);
 		if (len==-1) exit(-1);
+		if (!strcmp(ans, "NONE")) {
+			always_answer_no = true;
+			return false;
+		}
+		if (!strcmp(ans, "ONLY")) {
+			always_answer_no = true;
+			return true;
+		}
 		if (!strcmp(ans, "ALL")) {
 			always_answer_yes = true;
 			return true;
@@ -367,9 +380,9 @@ static void GetMemory(int argc, char *argv[])
 		entry.Location=j;
 
 		error=Phone->GetMemory(&s, &entry);
-		Print_Error(error);
+		if (error != GE_EMPTY) Print_Error(error);
 
-		if (entry.EntriesNum==0) {
+		if (error == GE_EMPTY) {
 			printmsg("Entry is empty\n");
 		} else {
 			for (i=0;i<entry.EntriesNum;i++) {
@@ -378,17 +391,38 @@ static void GetMemory(int argc, char *argv[])
 				case PBK_Date:
 					printmsg("Date and time   : %s\n",OSDateTime(entry.Entries[i].Date,false));
 					continue;
-				case PBK_Number_General: printmsg("General number "); break;
-				case PBK_Number_Mobile : printmsg("Mobile number  "); break;
-				case PBK_Number_Work   : printmsg("Work number    "); break;
-				case PBK_Number_Fax    : printmsg("Fax number     "); break;
-				case PBK_Number_Home   : printmsg("Home number    "); break;
-				case PBK_Text_Note     : printmsg("Text           "); break;
-				case PBK_Text_Postal   : printmsg("Snail address  "); break;
-				case PBK_Text_Email    : printmsg("Email address  "); break;
-				case PBK_Text_URL      : printmsg("URL address    "); break;
-				case PBK_Name          : printmsg("Name           "); break;
-				case PBK_Caller_Group  :
+				case PBK_Category:
+                    			printmsg("Category        : %i\n", entry.Entries[i].Number);
+                    			continue;
+                		case PBK_Private:
+                    			printmsg("Private         : %s\n", entry.Entries[i].Number == 1 ? "Yes" : "No");
+                    			continue;
+				case PBK_Number_General     : printmsg("General number "); break;
+				case PBK_Number_Mobile      : printmsg("Mobile number  "); break;
+				case PBK_Number_Work        : printmsg("Work number    "); break;
+				case PBK_Number_Fax         : printmsg("Fax number     "); break;
+				case PBK_Number_Home        : printmsg("Home number    "); break;
+				case PBK_Number_Pager       : printmsg("Pager number   "); break;
+                		case PBK_Number_Other       : printmsg("Other number   "); break;
+				case PBK_Text_Note          : printmsg("Text           "); break;
+				case PBK_Text_Postal        : printmsg("Snail address  "); break;
+				case PBK_Text_Email         : printmsg("Email address  "); break;
+				case PBK_Text_URL           : printmsg("URL address    "); break;
+				case PBK_Name               : printmsg("Name           "); break;
+                		case PBK_Text_LastName      : printmsg("Last name      "); break;
+				case PBK_Text_FirstName     : printmsg("First name     "); break;
+				case PBK_Text_Company       : printmsg("Company        "); break;
+				case PBK_Text_JobTitle      : printmsg("Job title      "); break;
+				case PBK_Text_StreetAddress : printmsg("Street address "); break;
+				case PBK_Text_City          : printmsg("City           "); break;
+				case PBK_Text_State         : printmsg("State          "); break;
+				case PBK_Text_Zip           : printmsg("Zip code       "); break;
+				case PBK_Text_Country       : printmsg("Country        "); break;
+				case PBK_Text_Custom1       : printmsg("Custom text 1  "); break;
+				case PBK_Text_Custom2       : printmsg("Custom text 2  "); break;
+				case PBK_Text_Custom3       : printmsg("Custom text 3  "); break;
+				case PBK_Text_Custom4       : printmsg("Custom text 4  "); break;
+				case PBK_Caller_Group       :
 					unknown = true;
 					if (!callerinit[entry.Entries[i].Number]) {
 						caller[entry.Entries[i].Number].Type	 = GSM_CallerLogo;
@@ -414,7 +448,6 @@ static void GetMemory(int argc, char *argv[])
 		printmsg("\n");
 	}
 	
-
 	GSM_Terminate();
 }
 
@@ -537,6 +570,7 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext)
 				printmsg(", part %i of %i",sms.UDH.PartNumber,sms.UDH.AllParts);
 			}
 		}
+		printmsg("\n");
 		if (displaytext) {
 			if (sms.Coding!=GSM_Coding_8bit) {
 				printmsg("%s\n",DecodeUnicodeString(sms.Text));
@@ -934,6 +968,7 @@ static void GetRingtone(int argc, char *argv[])
 	switch (ringtone.Format) {
 		case RING_NOTETONE	: printmsg("Smart Messaging");	break;
 		case RING_NOKIABINARY	: printmsg("Nokia binary");	break;
+		case RING_MIDI		: printmsg("Midi format");	break;
 	}
 	printmsg(" format, ringtone \"%s\"\n",DecodeUnicodeString(ringtone.Name));
 
@@ -1007,6 +1042,89 @@ static void Reset(int argc, char *argv[])
 	Print_Error(error);
 
 	GSM_Terminate();
+}
+
+static void GetCalendarNotes(int argc, char *argv[])
+{
+#ifdef DEBUG
+	GSM_CalendarNote	Note;
+	bool			refresh=true;
+	int			i_age;
+	GSM_DateTime		DateTime;
+
+	GSM_Init(true);
+
+	error = GE_NONE;
+	while (1) {
+		error=Phone->GetNextCalendarNote(&s,&Note,refresh);
+		if (error == GE_EMPTY) break;
+		Print_Error(error);
+		printmsg("Note type  : ");
+		switch (Note.Type) {
+			case GCN_REMINDER : printmsg("Reminder\n");		   break;
+			case GCN_CALL     : printmsg("Call\n");			   break;
+			case GCN_MEETING  : printmsg("Meeting\n");		   break;
+			case GCN_BIRTHDAY : printmsg("Birthday\n");		   break;
+			case GCN_T_ATHL   : printmsg("Training/Athletism\n"); 	   break;
+        		case GCN_T_BALL   : printmsg("Training/Ball Games\n"); 	   break;
+	                case GCN_T_CYCL   : printmsg("Training/Cycling\n"); 	   break;
+	                case GCN_T_BUDO   : printmsg("Training/Budo\n"); 	   break;
+	                case GCN_T_DANC   : printmsg("Training/Dance\n"); 	   break;
+	                case GCN_T_EXTR   : printmsg("Training/Extreme Sports\n"); break;
+	                case GCN_T_FOOT   : printmsg("Training/Football\n"); 	   break;
+	                case GCN_T_GOLF   : printmsg("Training/Golf\n"); 	   break;
+	                case GCN_T_GYM    : printmsg("Training/Gym\n"); 	   break;
+	                case GCN_T_HORS   : printmsg("Training/Horse Races\n");    break;
+	                case GCN_T_HOCK   : printmsg("Training/Hockey\n"); 	   break;
+	                case GCN_T_RACE   : printmsg("Training/Races\n"); 	   break;
+	                case GCN_T_RUGB   : printmsg("Training/Rugby\n"); 	   break;
+	                case GCN_T_SAIL   : printmsg("Training/Sailing\n"); 	   break;
+	                case GCN_T_STRE   : printmsg("Training/Street Games\n");   break;
+	                case GCN_T_SWIM   : printmsg("Training/Swimming\n"); 	   break;
+	                case GCN_T_TENN   : printmsg("Training/Tennis\n"); 	   break;
+	                case GCN_T_TRAV   : printmsg("Training/Travels\n");        break;
+	                case GCN_T_WINT   : printmsg("Training/Winter Games\n");   break;
+			default           : printmsg("UNKNOWN\n");
+		}
+		printmsg("Time       : %s\n",OSDateTime (Note.Time,false));
+		if (Note.Alarm.Year!=0) {
+			printmsg("Alarm time : %s\n",OSDateTime(Note.Alarm,false));
+			printmsg("Alarm type : ");
+			if (Note.SilentAlarm) printmsg("silent\n");
+					 else printmsg("with tone\n");
+		}
+		if (Note.Recurrance!=0) {
+			printmsg("Repeat     : %d day%s\n",Note.Recurrance/24,
+				((Note.Recurrance/24)>1) ? "s":"" );
+		}
+		if (Note.Type == GCN_BIRTHDAY) {
+			if (Note.Alarm.Year == 0x00) {
+				GSM_GetCurrentDateTime (&DateTime);
+				memcpy(&Note.Alarm,&DateTime,sizeof(GSM_DateTime));
+			}
+			i_age = Note.Alarm.Year - Note.Time.Year;
+			if (Note.Time.Month < Note.Alarm.Month) {
+				i_age++;
+			}
+			if (Note.Time.Month == Note.Alarm.Month &&
+			    Note.Time.Day < Note.Alarm.Day) {
+				i_age++;
+			}
+			printmsg("Text       : \"%s\"",DecodeUnicodeString(Note.Text));
+			printmsg(" (%d %s)\n",i_age, (i_age==1)?"year":"years");
+		} else {
+			printmsg("Text       : \"%s\"",DecodeUnicodeString(Note.Text));
+			printmsg("\n");
+		}
+		if (Note.Type == GCN_CALL) {
+			printmsg("Phone      : \"%s\"\n",DecodeUnicodeString(Note.Phone));
+		}
+		printmsg("\n");
+		refresh=false;
+	}
+
+	GSM_Terminate();
+#endif
 }
 
 static void GetCalendarNote(int argc, char *argv[])
@@ -1421,9 +1539,9 @@ static void SendSaveSMS(int argc, char *argv[])
 	int				chars_read		= 0;
 	char				InputBuffer	[SEND_SAVE_SMS_BUFFER_SIZE/2+1];
 	char				Buffer		[SEND_SAVE_SMS_BUFFER_SIZE];
-	char				Sender		[GSM_MAX_NUMBER_LENGTH*2];
-	char				Name		[GSM_MAX_NUMBER_LENGTH*2];
-	char				SMSC		[GSM_MAX_NUMBER_LENGTH*2];
+	char				Sender		[(GSM_MAX_NUMBER_LENGTH+1)*2];
+	char				Name		[(GSM_MAX_NUMBER_LENGTH+1)*2];
+	char				SMSC		[(GSM_MAX_NUMBER_LENGTH+1)*2];
 	bool 				nextlong		= 0;
 	int				i,j,z;
 	bool				ReplyViaSameSMSC 	= false;
@@ -1915,7 +2033,7 @@ static void SendSaveSMS(int argc, char *argv[])
 			ringtone.Format=RING_NOTETONE;
 			error=GSM_ReadRingtoneFile(argv[i],&ringtone);
 			Print_Error(error);
-			SMSInfo.ID 	 = SMS_EMSSound;
+			SMSInfo.ID 	 = SMS_EMSSound10;
 			SMSInfo.Ringtone = &ringtone;
 			nextlong = 0;
 			break;
@@ -2019,7 +2137,8 @@ static void SendSaveSMS(int argc, char *argv[])
 		case SMS_NokiaRingtone:
 		case SMS_NokiaRingtoneLong:
 		case SMS_NokiaProfileLong:
-		case SMS_EMSSound:
+		case SMS_EMSSound10:
+		case SMS_EMSSound12:
 			if (SMSInfo.RingtoneNotes!=ringtone.NoteTone.NrCommands) {
 				printmsg("Warning: ringtone too long. %i percent part cut\n",
 					(ringtone.NoteTone.NrCommands-SMSInfo.RingtoneNotes)*100/ringtone.NoteTone.NrCommands);
@@ -2143,8 +2262,8 @@ static void Backup(int argc, char *argv[])
 				while (used != MemStatus.Used) {
 					Pbk.Location = i;
 					error=Phone->GetMemory(&s, &Pbk);
-					Print_Error(error);
-					if (Pbk.EntriesNum!=0) {
+					if (error != GE_EMPTY) {
+						Print_Error(error);
 						if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
 							Backup.PhonePhonebook[used] = malloc(sizeof(GSM_PhonebookEntry));
 						        if (Backup.PhonePhonebook[used] == NULL) Print_Error(GE_MOREMEMORY);
@@ -2178,8 +2297,8 @@ static void Backup(int argc, char *argv[])
 				while (used != MemStatus.Used) {
 					Pbk.Location = i;
 					error=Phone->GetMemory(&s, &Pbk);
-					Print_Error(error);
-					if (Pbk.EntriesNum!=0) {
+					if (error != GE_EMPTY) {
+						Print_Error(error);
 						if (used < GSM_BACKUP_MAX_SIMPHONEBOOK) {
 							Backup.SIMPhonebook[used] = malloc(sizeof(GSM_PhonebookEntry));
 						        if (Backup.SIMPhonebook[used] == NULL) Print_Error(GE_MOREMEMORY);
@@ -2445,33 +2564,38 @@ static void Backup(int argc, char *argv[])
 		}
 	}
 	if (Info.Profiles) {
-		if (answer_yes("Backup phone profiles")) {
-			used = 0;
-			printmsgerr("Reading: ");
-			while (true)
-			{
-				Profile.Location = used + 1;
-				error = Phone->GetProfile(&s,&Profile);
-				if (error != GE_NONE) break;
-				if (used < GSM_BACKUP_MAX_PROFILES) {
-					Backup.Profiles[used] = malloc(sizeof(GSM_Profile));
-				        if (Backup.Profiles[used] == NULL) Print_Error(GE_MOREMEMORY);
-					Backup.Profiles[used + 1] = NULL;
-				} else {
-					printmsg("Increase GSM_BACKUP_MAX_PROFILES\n");
-					exit(-1);
+		Profile.Location = 1;
+		error = Phone->GetProfile(&s,&Profile);
+	        if (error == GE_NONE) {
+			if (answer_yes("Backup phone profiles")) {
+				used = 0;
+				printmsgerr("Reading: ");
+				while (true)
+				{
+					Profile.Location = used + 1;
+					error = Phone->GetProfile(&s,&Profile);
+					if (error != GE_NONE) break;
+					if (used < GSM_BACKUP_MAX_PROFILES) {
+						Backup.Profiles[used] = malloc(sizeof(GSM_Profile));
+							if (Backup.Profiles[used] == NULL) Print_Error(GE_MOREMEMORY);
+						Backup.Profiles[used + 1] = NULL;
+					} else {
+						printmsg("Increase GSM_BACKUP_MAX_PROFILES\n");
+						exit(-1);
+					}
+					*Backup.Profiles[used]=Profile;
+					used++;
+					printmsgerr("*");
 				}
-				*Backup.Profiles[used]=Profile;
-				used++;
-				printmsgerr("*");
+				printmsgerr("\n");
 			}
-			printmsgerr("\n");
 		}
 	}
 
 	GSM_Terminate();
 
 	GSM_SaveBackupFile(argv[2],&Backup);
+    	GSM_FreeBackup(&Backup);
 }
 
 static void Restore(int argc, char *argv[])
@@ -2598,7 +2722,7 @@ static void Restore(int argc, char *argv[])
 	if (Backup.Calendar[0] != NULL) {
 		Calendar.Location = 1;
 		error = Phone->GetCalendarNote(&s,&Calendar,true);
-		if (error == GE_NONE || error == GE_INVALIDLOCATION) {
+		if (error == GE_NONE || error == GE_INVALIDLOCATION || error == GE_EMPTY) {
 			if (answer_yes("Restore calendar notes")) {
 				printmsgerr("Deleting old notes: ");
 				while (error==GE_NONE) {
@@ -3697,6 +3821,16 @@ static void ListNetworks(int argc, char *argv[])
 static void Version(int argc, char *argv[])
 {
 	printmsg("[Gammu version %s built %s %s]\n\n",VERSION,__TIME__,__DATE__);
+
+#ifdef DEBUG
+	printf("GSM_SMSMessage - %i\n",sizeof(GSM_SMSMessage));
+	printf("GSM_SMSC       - %i\n",sizeof(GSM_SMSC));
+	printf("GSM_SMS_State  - %i\n",sizeof(GSM_SMS_State));
+	printf("GSM_UDHHeader  - %i\n",sizeof(GSM_UDHHeader));
+	printf("bool           - %i\n",sizeof(bool));
+	printf("GSM_DateTime   - %i\n",sizeof(GSM_DateTime));
+	printf("int            - %i\n",sizeof(int));
+#endif
 }
 
 static void usage(void)
@@ -3963,6 +4097,7 @@ static GSM_Parameters Parameters[] = {
 	{"--cancelcall",		0, 0, CancelCall		},
 	{"--answercall",		0, 0, AnswerCall		},
 	{"--getcalendarnote",		1, 2, GetCalendarNote		},
+	{"--getcalendarnotes",		0, 0, GetCalendarNotes		},
 	{"--gettodo",			1, 2, GetToDo			},
 	{"--deletecalendarnote",	1, 2, DeleteCalendarNote	},
 	{"--reset",			1, 1, Reset			},
@@ -4018,13 +4153,16 @@ int main(int argc, char *argv[])
 	}
 	CFG_ReadConfig(cfg, &s.Config);
 
+    	/* We want to use only one file descriptor for global and state machine debug output */
+    	s.Config.UseGlobalDebugFile = true;
+
 	/* When user gave debug level on command line */
 	if (argc > 1 && GSM_SetDebugLevel(argv[1], &di)) {
 		/* Debug level from command line will be used with phone too */
 		strcpy(s.Config.DebugLevel,argv[1]);
 		start = 1;
 	} else {
-		/* Try to set debug level from file */
+		/* Try to set debug level from config file */
 		GSM_SetDebugLevel(s.Config.DebugLevel, &di);
 	}
 
@@ -4064,6 +4202,9 @@ int main(int argc, char *argv[])
 		}
 		if (Parameters[z].Function==NULL) usage();
 	}
+
+    	/* Close debug output if opened */
+    	if (di.df!=stdout) fclose(di.df);
 
 	return 0;
 }

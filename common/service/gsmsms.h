@@ -70,12 +70,12 @@ typedef struct {
 
 /* Define datatype for SMS Message Center */
 typedef struct {
-	int		Location;				/* Number of the SMSC in the phone memory. */
-	unsigned char	Name[GSM_MAX_SMSC_NAME_LENGTH*2];	/* Name of the SMSC. */
-	GSM_SMSFormat	Format;					/* SMS is sent as text/fax/paging/email. */
-	GSM_SMSValidity	Validity;				/* Validity of SMS Message. */
-	unsigned char	Number[GSM_MAX_NUMBER_LENGTH*2];	/* Number of the SMSC. */
-	unsigned char	DefaultNumber[GSM_MAX_NUMBER_LENGTH*2];	/* Number of default recipient */
+	int		Location;					/* Number of the SMSC in the phone memory. */
+	unsigned char	Name[(GSM_MAX_SMSC_NAME_LENGTH+1)*2];		/* Name of the SMSC. */
+	GSM_SMSFormat	Format;						/* SMS is sent as text/fax/paging/email. */
+	GSM_SMSValidity	Validity;					/* Validity of SMS Message. */
+	unsigned char	Number[(GSM_MAX_NUMBER_LENGTH+1)*2];		/* Number of the SMSC. */
+	unsigned char	DefaultNumber[(GSM_MAX_NUMBER_LENGTH+1)*2];	/* Number of default recipient */
 } GSM_SMSC;
 
 /* --------------------- single SMS --------------------------------------- */
@@ -139,23 +139,23 @@ typedef enum {
 #define GSM_MAX_SMS_NAME_LENGTH		26
 
 typedef struct {
-	GSM_SMSC		SMSC;				/* Message center */
+	GSM_SMSC		SMSC;					/* Message center */
 	GSM_UDHHeader		UDH;
 	int			Folder;
-	bool			InboxFolder;			/* Is really Inbox ? */
+	bool			InboxFolder;				/* Is really Inbox ? */
 	int			Location;
-	int			Length;				/* Length of the SMS message. */
-	unsigned char		Name[GSM_MAX_SMS_NAME_LENGTH*2];/* Name in Nokia 6210/7110, etc. Ignored in other */
-	unsigned char		Number[GSM_MAX_NUMBER_LENGTH*2];/* Sender or recipient number */
-	unsigned char		Text[(GSM_MAX_SMS_LENGTH+1)*2];	/* Text for SMS */
-	GSM_SMSMessageType	PDU;				/* Type of message */
-	GSM_Coding_Type 	Coding;				/* Type of coding */
-	GSM_DateTime		DateTime;			/* Date of reception/response of messages. */
-	GSM_DateTime		SMSCTime;	               	/* Date of SMSC response if DeliveryReport messages. */
-	unsigned char		DeliveryStatus;			/* In delivery reports: status */
-	bool			ReplyViaSameSMSC;		/* Indicates whether "Reply via same center" is set */
-	GSM_SMS_State		State;				/* Read, UnRead, etc. */
-	char			Class;				/* SMS class */
+	int			Length;					/* Length of the SMS message. */
+	unsigned char		Name[(GSM_MAX_SMS_NAME_LENGTH+1)*2];	/* Name in Nokia 6210/7110, etc. Ignored in other */
+	unsigned char		Number[(GSM_MAX_NUMBER_LENGTH+1)*2];	/* Sender or recipient number */
+	unsigned char		Text[(GSM_MAX_SMS_LENGTH+1)*2];		/* Text for SMS */
+	GSM_SMSMessageType	PDU;					/* Type of message */
+	GSM_Coding_Type 	Coding;					/* Type of coding */
+	GSM_DateTime		DateTime;				/* Date of reception/response of messages. */
+	GSM_DateTime		SMSCTime;	               		/* Date of SMSC response if DeliveryReport messages. */
+	unsigned char		DeliveryStatus;				/* In delivery reports: status */
+	bool			ReplyViaSameSMSC;			/* Indicates whether "Reply via same center" is set */
+	GSM_SMS_State		State;					/* Read, UnRead, etc. */
+	char			Class;					/* SMS class */
 	unsigned char		MessageReference;
 	unsigned char		ReplaceMessage;
 	bool			RejectDuplicates;
@@ -225,13 +225,13 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS);
 #define GSM_MAX_SMS_FOLDER_NAME_LEN	16
 
 typedef struct {
-	char		Name[GSM_MAX_SMS_FOLDER_NAME_LEN*2];   	/* Name for SMS folder */
+	char		Name[(GSM_MAX_SMS_FOLDER_NAME_LEN+1)*2]; /* Name for SMS folder */
 } GSM_OneSMSFolder;
 
 /* Folders list */
 typedef struct {
 	GSM_OneSMSFolder	Folder[GSM_MAX_SMS_FOLDERS];
-	unsigned char		Number; 			/*number of SMS folders*/
+	unsigned char		Number; 			 /*number of SMS folders*/
 } GSM_SMSFolders;
 
 /* ---------------------- multi SMS --------------------------------------- */
@@ -244,6 +244,13 @@ typedef struct {
 #define SM30_RINGTONE     3			 
 #define SM30_PROFILENAME  4
 #define SM30_SCREENSAVER  6
+
+void GSM_SMSCounter(int 		MessageLength,
+		    unsigned char 	*MessageBuffer,
+		    GSM_UDHHeader 	UDH,
+		    GSM_Coding_Type 	Coding,
+		    int 		*SMSNum,
+		    int 		*CharsLeft);
 
 #define MAX_MULTI_SMS 6
 
@@ -285,7 +292,8 @@ typedef enum {
 	SMS_EnableFax,
 	SMS_EnableEmail,
 	SMS_VoidSMS,
-	SMS_EMSSound,			/* IMelody */
+	SMS_EMSSound10,			/* IMelody */
+	SMS_EMSSound12,			/* IMelody */
 	SMS_EMSPredefinedSound,
 	SMS_EMSPredefinedAnimation,
 	SMS_EMSAnimation,

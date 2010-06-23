@@ -84,6 +84,9 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 	timeptr.tm_min  	= dt.Minute;
 	timeptr.tm_sec  	= dt.Second;
 	timeptr.tm_wday 	= w;
+#ifdef _BSD_SOURCE
+	timeptr.tm_zone		= NULL;
+#endif
 
 #ifdef WIN32
 	strftime(retval2, 200, "%#c", &timeptr);
@@ -124,7 +127,7 @@ int GetLine(FILE *File, char *Line, int count)
 	}
 }
 
-void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsigned char *whitespaces, int spaceslen)
+void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsigned char *whitespaces, int spaceslen, bool eot)
 {
 	int 	i,number=0,j;
 	bool 	whitespace=true, nowwhite;
@@ -154,6 +157,7 @@ void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsig
 
 		}
 	}
+    	if (eot && !whitespace) lines->numbers[number]=messagesize;
 }
 
 char *GetLineString(unsigned char *message, GSM_Lines lines, int start)
@@ -172,7 +176,7 @@ void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, in
 	dest[strlen(GetLineString(src, lines, start))] = 0;
 }
 
-Debug_Info di = {0,NULL};
+Debug_Info di = {0,NULL,false};
 
 #ifdef DEBUG
 int dprintf(const char *format, ...)
@@ -199,6 +203,7 @@ int dprintf(const char *format, ...)
 			}
 			strcpy(nextline, "");
 		}
+		fflush(di.df);
 		va_end(argp);
 		return result;
 	}

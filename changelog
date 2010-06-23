@@ -4,6 +4,80 @@ ChangeLog for Gammu project (www.mwiacek.com)
 Few last versions (the highest) will be described more detailed, older less.
 In brackets names of people, who told about error/problem or helped in fixing.
 ----------------------
+20030105 - 0.66
+* new functionality:
+  * some (started) functions for Siemens like support for VCalendar     (Walek)
+    and MIDI ringtones
+  * new name for 204-12 GSM operator                           (Bertrik Sikken)
+  * added few new functions to win32 dll
+  * * added many functions for Alcatel BE5 binary mode           (Michal Cihar)
+    * added prelease version of script for configuring gammurc
+    * if empty location in phonebook, returned is GE_EMPTY
+    * unix.c
+      * try to open device exclusively (if supported on compile time)
+      * use cfsetispeed instead of system dependant code
+    * atgen.c
+      * +CME ERROR: is now recognized
+      * +CMS ERROR: now recognizes which error occured and reports this
+      * everything is not static
+      * IMSI number is parsed from "<IMSI>:number"
+      * CONNECT is accepted as end of AT response
+      * improved atgen initialisation to handle some phones that take
+        a very long time to react on first AT
+    * special error for locked device, it gives much more reasonable
+      error message
+    * dprintf flushes written texts
+    * added Debian packaging
+
+* fixes and improvements:
+  * removed some new FreeBSD incompatibilites. Will it work  (Kirill Bezzubets)
+    OK in all version now ? It should...
+  * SMS Daemon should be bug free now                    (me + Joergen Thomsen)
+  * extensions to GSM Default Alphabet are not Nokia specific,     (Timo Teras)
+    but from GSM 03.38
+  * EMS functions should be bug free now                         (Ondrej Rybin)
+  * removed few possibilites of memory problems from win32 dll
+  * * removed possible memory problems in many places            (Michal Cihar)
+    * removed some segfaults possibilities from debug system
+    * configuration scripts
+      * hide %c warning in newer gcc (at least for 3.0 and 3.2, but
+        surely not for 2.95)
+      * use "$@" instead of $* in configure, it works correctly for
+        args with spaces
+
+NOTE: Summary for 2002
+      -----------------
+      Current version works without bigger problems with Nokia DCT3/DCT4,
+      AT (with various Siemens extensions) and Alcatel phones. User can
+      exchange various formats of logos and ringtones (send them in EMS or
+      Nokia format over SMS), WAP settings and bookmarks (send over SMS in
+      Nokia format), etc. There is ready command line version with manual
+      and SMS daemon.
+
+      Things for 2003
+      ---------------
+      1.There are still few general topics TODO
+
+        * uploading some things over WAP
+        * MMS
+        * ending win32 dll
+        * writing really usefull GUI
+        * giving support for more formats (like Ericsson WAP settings over SMS)
+          Note: I have in my library specs for many models (example: Morotola,
+                Sagen, Siemens xx45) and it's only required to code few 
+                functions into current source to have support for them...
+        * AT modem emulator
+        * other :-)
+
+      2.Topics for the nearest future
+
+        * ending full access to calendar in N3510(i)
+        * adding (only) new calendar & pbk notes from file without deleting
+          existing
+        * adding only new sms to file
+        * API for call
+        * MySQL support for SMSD
+
 20021223 - 0.65
 
 * new functionality:
