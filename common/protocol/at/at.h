@@ -7,8 +7,8 @@
 typedef struct {
 	GSM_Protocol_Message 	Msg;
 	bool 			wascrlf;
-	char 			*linestart;
-	int			linestartnum;
+	int			LineStart,LineEnd;
+	int			SpecialAnswerLines,SpecialAnswerStart;
 
 	bool			EditMode;	/* wait for modem answer or not */
 	bool			FastWrite;

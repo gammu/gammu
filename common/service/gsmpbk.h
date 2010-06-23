@@ -7,20 +7,21 @@
 #include "../gsmcomon.h"
 #include "gsmmisc.h"
 
-/* This data type is used to report the number of used
- * and free positions in memory (sim or internal).
+/**
+ * This structure contains info about number of used/free entries in phonebook
+ * memory
  */
 typedef struct {
 	/**
-	 * Type of the memory
+	 * Memory type
 	 */
 	GSM_MemoryType  MemoryType;
 	/**
-	 * umber of used positions
+	 * Number of used entries
 	 */
 	int	     	Used;
 	/**
-	 * Number of free positions
+	 * Number of free entries
 	 */
 	int	     	Free;
 } GSM_MemoryStatus;
@@ -29,6 +30,7 @@ typedef struct {
  * Type of specific phonebook entry. In parenthesis is specified in which
  * member of @ref GSM_SubMemoryEntry value is stored.
  */
+/* Originally created for MyGnokii */
 typedef enum {
 	/**
 	 * General number. (Text)
@@ -160,10 +162,6 @@ typedef enum {
 	PBK_PictureID
 } GSM_EntryType;
 
-/* Limits for sizing of array in GSM_MemoryEntry.
- * Individual handsets may not support these lengths
- * so they have their own limits set.
- */
 #define GSM_PHONEBOOK_TEXT_LENGTH       (200)
 #define GSM_PHONEBOOK_ENTRIES	   	(26)
 
@@ -193,7 +191,7 @@ typedef struct {
 	int		     	VoiceTag;
 } GSM_SubMemoryEntry;
 
-/* Define datatype for phonebook entry,
+/* Define datatype for phonebook entry
  * used for getting/writing phonebook entries.
  */
 typedef struct {
@@ -235,28 +233,28 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 void DecodeVCARD21Text(char *VCard, GSM_MemoryEntry *pbk);
 
 /**
- * This define speed dialing entries.
+ * Define datatype for saving speed dials
  */
 typedef struct {
 	/**
-	 * Which number is used to dialing?
+	 * Specify number of speed dial
 	 */
 	int	     	Location;
 	/**
-	 * Memory type of the number.
+	 * Memory, where is saved used phonebook entry
 	 */
 	GSM_MemoryType  MemoryType;
 	/**
-	 * Location of the number in MemoryType.
+	 * Location in memory, where is saved used phonebook entry
 	 */
 	int	     	MemoryLocation;
 	/**
-	 * Which number in location is used
+	 * ID of phone number used in phonebook entry
 	 */
 	int	     	MemoryNumberID;
 } GSM_SpeedDial;
 
-#endif  /* __gsm_phonebook_h */
+#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

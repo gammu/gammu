@@ -159,7 +159,6 @@
 #endif
 
 #include "service/gsmpbk.h"
-#include "service/gsmsms.h"
 #include "service/gsmnet.h"
 #include "service/gsmring.h"
 #include "service/gsmcal.h"
@@ -168,6 +167,9 @@
 #include "service/gsmmisc.h"
 #include "service/gsmprof.h"
 #include "service/gsmcall.h"
+#include "service/sms/gsmsms.h"
+#include "service/sms/gsmems.h"
+#include "service/sms/gsmmulti.h"
 
 typedef struct _GSM_StateMachine GSM_StateMachine;
 typedef struct _GSM_User	 GSM_User;
@@ -1367,7 +1369,7 @@ struct _GSM_StateMachine {
 	GSM_Config		Config[5];
 	GSM_Config		*CurrentConfig;				/* Config file (or Registry or...) variables 	*/
 	int			ConfigNum;
-	CFG_Header 		*msg;					/* Localisation strings structure    		*/
+	INI_Section 		*msg;			/* Localisation strings structure    		*/
 	int			ReplyNum;				/* How many times make sth. 			*/
 	int			Speed;					/* For some protocols used speed		*/
 
@@ -1395,9 +1397,9 @@ GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned char *buffer,
 
 GSM_Error GSM_DispatchMessage		(GSM_StateMachine *s);
 
-CFG_Header 				*CFG_FindGammuRC(void);
+INI_Section 				*GSM_FindGammuRC(void);
 
-bool 	  CFG_ReadConfig		(CFG_Header *cfg_info, GSM_Config *cfg, int num);
+bool 	  GSM_ReadConfig		(INI_Section *cfg_info, GSM_Config *cfg, int num);
 
 void 	  GSM_DumpMessageLevel2		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);
 void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);

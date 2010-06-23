@@ -236,7 +236,7 @@ void EncodeHexBin (unsigned char *dest, const unsigned char *src, int len)
 	dest[current++] = 0;
 }
 
-/* ETSI GSM 03.38, version 6.0.1, section 6.2.1; Default alphabet */
+/* ETSI GSM 03.38, section 6.2.1: Default alphabet for SMS messages */
 static unsigned char GSM_DefaultAlphabetUnicode[128+1][2] =
 {
 	{0x00,0x40},{0x00,0xa3},{0x00,0x24},{0x00,0xA5},
@@ -490,6 +490,7 @@ void FindDefaultAlphabetLen(const unsigned char *src, int *srclen, int *smslen, 
 int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
                            unsigned char *input, unsigned char *output)
 {
+#ifndef ENABLE_LGPL
         unsigned char *OUTPUT 	= output; /* Current pointer to the output buffer */
         unsigned char *INPUT  	= input;  /* Current pointer to the input buffer */
         unsigned char Rest 	= 0x00;
@@ -523,10 +524,14 @@ int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
         }
 
         return OUTPUT - output;
+#else
+	return 0;
+#endif
 }
 
 int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *output, int length)
 {
+#ifndef ENABLE_LGPL
         unsigned char 	*OUTPUT = output; /* Current pointer to the output buffer */
         unsigned char 	*INPUT  = input;  /* Current pointer to the input buffer */
         int		Bits;             /* Number of bits directly copied to
@@ -556,6 +561,9 @@ int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *ou
                 INPUT++;
         }
         return (OUTPUT - output);
+#else
+	return 0;
+#endif
 }
 
 void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, bool semioctet)
@@ -593,8 +601,9 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 	EncodeUnicode(retval,Buffer,strlen(Buffer));
 }
 
-/* This function implements packing of numbers (SMS Center number and
-   destination number) for SMS sending function. */
+/* Packing of numbers (SMS Center number and destination number) for SMS
+ * sending function.
+ */
 /* See GSM 03.40 9.1.1:
    1 byte  - length of number given in semioctets or bytes (when given in bytes,
              includes one byte for byte with number format.
@@ -628,11 +637,10 @@ int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool s
 	}
 
 	/* The first byte in the Semi-octet representation of the address field is
-	 * the Type-of-Address. This field is described in the official GSM
-	 * specification 03.40 version 5.3.0, section 9.1.2.5, page 33.*/
+	 * the Type-of-Address. GSM 03.40 section 9.1.2.5 */
 	*OUTPUT++=format;
 
-	/* The next field is the number. See GSM 03.40 section 9.1.2 */
+	/* Now we will have number. GSM 03.40 section 9.1.2 */
 	switch (format) {
 		case GNT_ALPHANUMERIC:
 			length=GSM_PackSevenBitsToEight(0, buffer, OUTPUT, strlen(buffer))*2;

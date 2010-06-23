@@ -1,4 +1,11 @@
 
+Version 0.90.7 has canceled possibility of getting LGPL up to explaining
+all possible issues.
+
+Marcin Wiacek
+07.12.2003
+-------------------------------------------------------------------------------
+
 After long developing GSM source in Gammu I decided to change license of it.
 
 Starting from 0.89.1 version project has two licenses. The idea is simple:
@@ -53,6 +60,9 @@ be more difficult to track bugs inside and it will be worse for GNU community.
 In this place in the future will be put info about projects, which can use
 Gammu under LGPL after compiling it with enabled ENABLE_LGPL compiler
 directive (for example after "./configure --enable-lgpl").
+
+Please note, that this license is not given for 3 party tools available
+in source tarball in other directory
 
 Marcin Wiacek
 21.11.2003

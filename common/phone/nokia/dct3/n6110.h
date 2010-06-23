@@ -2,11 +2,14 @@
 #ifndef n6110_h
 #define n6110_h
 
-#include "../../../service/gsmsms.h"
+#include "../../../../cfg/config.h"
+#include "../../../service/sms/gsmsms.h"
 #include "dct3comm.h"
 
 typedef struct {
+#ifndef ENABLE_LGPL
 	unsigned char			MagicBytes[4];
+#endif
 	int				LastCalendarPos;
 	DCT3_WAPSettings_Locations	WAPLocations;
 

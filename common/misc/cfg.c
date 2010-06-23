@@ -14,327 +14,292 @@
 #include "cfg.h"
 #include "misc.h"
 
-/* Read configuration information from a ".INI" style file */
-CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
+/* 
+ * Read information from file in Windows INI format style
+ */
+INI_Section *INI_ReadFile(char *FileName, bool Unicode)
 {
-	FILE			*handle;
-        unsigned char		*line,*buf,ch;
-        CFG_Header 		*cfg_info = NULL, *cfg_head = NULL;
-	int			i,pos;
-	bool			process,FFEEUnicode=false,firstread=true;
+	FILE		*f;
+	bool		FFEEUnicode=false;
+	int		level = -1, buffer1used, buffer2used, bufferused, i, buffused=1000,buffread=1000;
+	unsigned char	ch[3], *buffer = NULL, *buffer1 = NULL, *buffer2 = NULL;
+	unsigned char	buff[1000];
+        INI_Section 	*INI_info = NULL, *INI_head = NULL, *heading;
+        INI_Entry 	*entry;
 
-        /* Error check */
-        if (filename == NULL) return NULL;
-
-        /* Initialisation */
-        if ((buf = (char *)malloc(1400)) == NULL) return NULL;
-    
-        /* Open file */
-        if ((handle = fopen(filename, "rb")) == NULL) {
-//                dbgprintf("CFG file - error opening \"%s\" file: %s\n", filename, strerror(errno));
-                free(buf);
-        	return NULL;
-        } else {
-//                dbgprintf("CFG file - opened file \"%s\"\n", filename );
-	}
-
-        /* Iterate over lines in the file */
-        while (1) {
-		if (Unicode) {
-			/* Here is my own version of fgetws */
-			pos = 0;
-			while (1) {
-				if (fread(buf+pos,1,2,handle) != 2) {
-					buf[pos]   = 0;
-					buf[pos+1] = 0;
-					break;
+	f = fopen(FileName,"rb");
+	if (f == NULL) return NULL;
+	
+	while(1) {
+		/* We read one line from file */
+		bufferused = 0;
+		while (1) {
+			if (buffused == buffread) {
+				buffused = fread(buff,1,1000,f);
+				buffread = 0;
+				if (buffused == 0) {
+					free(buffer); free(buffer1); free(buffer2);
+					fclose(f);
+					return INI_head;
 				}
-				if (firstread) {
-					FFEEUnicode = false;
-					firstread   = false;
-					if (buf[0] == 0xFF && buf[1] == 0xFE) {
-						FFEEUnicode = true;
-						continue;
-					}
-					if (buf[0] == 0xFE && buf[1] == 0xFF) {
-						continue;
-					}
+			}
+			if (Unicode) {
+				ch[0] = buff[buffread++];
+				if (buffused == buffread) continue;
+				ch[1] = buff[buffread++];
+				if (buffused == buffread) continue;
+				if (level == -1) {
+					if (ch[0] == 0xFF && ch[1] == 0xFE) FFEEUnicode = true;
+					level = 0;
+					continue;
 				}
 				if (FFEEUnicode) {
-					ch 	   = buf[pos];
-					buf[pos]   = buf[pos+1];
-					buf[pos+1] = ch;
+					ch[2] = ch[0]; ch[0] = ch[1]; ch[1] = ch[2];
 				}
-				pos+=2;
-				buf[pos]   = 0;
-				buf[pos+1] = 0;
-				if (buf[pos-2] == 0x00 && buf[pos-1] == 0x0a) break;
-				if (buf[pos-2] == 0x00 && buf[pos-1] == 0x0d) break;
-				if (pos == 1400) break;
+			} else {
+				ch[0] = 0;
+				ch[1] = buff[buffread++];
+				if (buffused == buffread) continue;
+				if (level == -1) level = 0;
 			}
-			if (pos == 0) break;
-		} else {
-			/* Here is my own version of fgets */
-			pos = 0;
-			while (1) {
-				if (fread(buf+pos,1,1,handle) != 1) {
-					buf[pos] = 0;
+			if ((ch[0] == 0 && ch[1] == 13) ||
+			    (ch[0] == 0 && ch[1] == 10)) {
+				break;
+			}
+			buffer 			= realloc(buffer,bufferused+2);
+			buffer[bufferused] 	= ch[0];
+			buffer[bufferused+1] 	= ch[1];
+			bufferused		= bufferused + 2;
+		}
+//		printf("line \"%s\"\n",DecodeUnicodeConsole(buffer));
+
+		buffer1used = 0;
+		buffer2used = 0;
+		if (level == 1) level = 0;
+		if (level == 3 || level == 4 || level == 5) level = 2;
+
+		/* We parse read line */
+		for (i=0;i<bufferused/2;i++) {
+			ch[0] = buffer[i*2];
+			ch[1] = buffer[i*2+1];
+			if (level == 0) { //search for name of section
+				if (ch[0] == 0 && ch[1] == '[') level = 1;
+				if (ch[0] == 0 && ch[1] == ';') break;
+				if (ch[0] == 0 && ch[1] == '#') break;
+				continue;
+			}
+			if (level == 1) { //section name
+				if (ch[0] == 0 && ch[1] == ']') {
+					if (buffer1used == 0) break;
+					if (Unicode) {
+						buffer1 		= realloc(buffer1,buffer1used+2);
+						buffer1[buffer1used] 	= 0;
+						buffer1[buffer1used+1] 	= 0;
+						buffer1used		= buffer1used + 2;
+					} else {
+						buffer1 		= realloc(buffer1,buffer1used+1);
+						buffer1[buffer1used] 	= 0x00;
+						buffer1used		= buffer1used + 1;
+					}
+					heading = (INI_Section *)malloc(sizeof(*heading));
+		                        if (heading == NULL) {
+						free(buffer); free(buffer1); free(buffer2);
+						fclose(f);
+		                                return NULL;
+		                        }
+					heading->SectionName = (char *)malloc(buffer1used);
+					memcpy(heading->SectionName,buffer1,buffer1used);
+		                        heading->Prev = INI_info;
+					heading->Next = NULL;
+		                        if (INI_info != NULL) {
+		                                INI_info->Next  = heading;
+		                        } else {
+		                                INI_head 	= heading;
+		                        }
+		                        INI_info 		= heading;
+					INI_info->SubEntries 	= NULL;
+					level 	 		= 2;
+//					printf("[%s]\n",DecodeUnicodeConsole(buffer1));
 					break;
 				}
-				pos++;
-				buf[pos] = 0;
-				if (buf[pos-1] == 0x0a) break;
-				if (buf[pos-1] == 0x0d) break;
-				if (pos == 1400) break;
+				if (Unicode) {
+					buffer1 		= realloc(buffer1,buffer1used+2);
+					buffer1[buffer1used] 	= ch[0];
+					buffer1[buffer1used+1] 	= ch[1];
+					buffer1used		= buffer1used + 2;
+				} else {
+					buffer1 		= realloc(buffer1,buffer1used+1);
+					buffer1[buffer1used] 	= ch[1];
+					buffer1used		= buffer1used + 1;
+				}
+				continue;
 			}
-			if (pos == 0) break;
-		}
-
-                line    = buf;
-		process = false;
-
-		if (Unicode) {
-	                /* Strip leading, trailing whitespace */
-	                while(myiswspace(line)) line+=2;
-
-			while(1) {
-				i = UnicodeLength(line)*2;
-				if (i>0 && myiswspace(line+i-2))
-				{
-					line[i - 2] = '\0';
-		                        line[i - 1] = '\0';
-				} else break;
+			if (level == 2) { //search for key name
+				if (ch[0] == 0 && ch[1] == ';') break;
+				if (ch[0] == 0 && ch[1] == '#') break;
+				if (ch[0] == 0 && ch[1] == '[') {
+					level = 1;
+					continue;
+				}
+				if (Unicode) {
+			                if (myiswspace(ch)) continue;
+				} else {
+			                if (isspace((int) ch[1])) continue;
+				}
+				level = 3;
 			}
-        
-	                /* Ignore blank lines and comments */
-	                if ((*line == 0 && *(line+1) == 0x0a) ||
-			    (*line == 0 && *(line+1) == 0x0d) ||
-			    (*line == 0 && *(line+1) == 0)    ||
-			    (*line == 0 && *(line+1) == '#'))
-	                        continue;
-
-	                /* Look for "headings" enclosed in square brackets */
-	                if ((line[0] == 0 && line[1] == '[') &&
-			    (line[UnicodeLength(line)*2 - 2] == 0 &&
-			     line[UnicodeLength(line)*2 - 1] == ']')) 
-				process = true;
-		} else {
-	                /* Strip leading, trailing whitespace */
-	                while(isspace((int) *line)) line++;
-
-        	        while((strlen(line) > 0) && isspace((int) line[strlen(line) - 1]))
-	                        line[strlen(line) - 1] = '\0';
-        
-	                /* Ignore blank lines and comments */
-	                if ((*line == '\n') || (*line == '\0') || (*line == '#'))
-	                        continue;
-
-	                /* Look for "headings" enclosed in square brackets */
-	                if ((line[0] == '[') && (line[strlen(line) - 1] == ']')) process = true;
+			if (level == 3) { //key name
+				if (ch[0] == 0 && ch[1] == '=') {
+					if (buffer1used == 0) break;
+					while(1) {
+						if (Unicode) {
+					                if (!myiswspace(buffer1+(buffer1used-2))) break;
+							buffer1used = buffer1used - 2;
+						} else {
+					                if (!isspace((int)buffer1[buffer1used-1])) break;
+							buffer1used = buffer1used - 1;	
+						}
+					}
+					level = 4;
+					continue;
+				}				
+				if (Unicode) {
+					buffer1 		= realloc(buffer1,buffer1used+2);
+					buffer1[buffer1used] 	= ch[0];
+					buffer1[buffer1used+1] 	= ch[1];
+					buffer1used		= buffer1used + 2;
+				} else {
+					buffer1 		= realloc(buffer1,buffer1used+1);
+					buffer1[buffer1used] 	= ch[1];
+					buffer1used		= buffer1used + 1;
+				}
+			}
+			if (level == 4) { //search for key value
+				if (Unicode) {
+			                if (myiswspace(ch)) continue;
+				} else {
+			                if (isspace((int) ch[1])) continue;
+				}
+				level = 5;
+			}
+			if (level == 5) { //key value
+				if (Unicode) {
+					buffer2 		= realloc(buffer2,buffer2used+2);
+					buffer2[buffer2used] 	= ch[0];
+					buffer2[buffer2used+1] 	= ch[1];
+					buffer2used		= buffer2used + 2;
+				} else {
+					buffer2 		= realloc(buffer2,buffer2used+1);
+					buffer2[buffer2used] 	= ch[1];
+					buffer2used		= buffer2used + 1;
+				}
+			}
 		}
-		if (process) {
-                        CFG_Header *heading;
+		if (level == 5) {
+			if (buffer2used == 0) continue;
 
-                        /* Allocate new heading entry */
-                        if ((heading = (CFG_Header *)malloc(sizeof(*heading))) == NULL) {
-                                free(buf);
+			entry = (INI_Entry *)malloc(sizeof(*entry));
+                        if (entry == NULL) {
+				free(buffer); free(buffer1); free(buffer2);
+				fclose(f);
                                 return NULL;
                         }
-
-                        /* Fill in fields */
-                        memset(heading, '\0', sizeof(*heading));
-
-			if (Unicode) {            
-	                        line+=2;
-				i = UnicodeLength(line)*2;
-	                        line[i - 2] = '\0';
-	                        line[i - 1] = '\0';
-
-				heading->section = (char *)malloc(UnicodeLength(line)*2+2);
-				memcpy(heading->section,line,UnicodeLength(line)*2+2);
-			} else {
-	                        line++;
-	                        line[strlen(line) - 1] = '\0';
-
-				heading->section = (char *)malloc(strlen(line)+1);
-				memcpy(heading->section,line,strlen(line)+1);
-			}
-
-                        /* Add to tail of list  */
-                        heading->prev = cfg_info;
-
-                        if (cfg_info != NULL) {
-                                cfg_info->next = heading;
-                        } else {
-                                /* Store copy of head of list for return value */
-                                cfg_head = heading;
-                        }
-
-                        cfg_info = heading;
-
-//			if (Unicode) dbgprintf( "CFG file - added new section \"%s\"\n", DecodeUnicodeString(heading->section));
-//			printf( "CFG file - added new section \"%s\"\n", heading->section);
-
-                        /* Go on to next line */
-                        continue;
-                }
-
-                /* Process key/value line */
-		process = false;
-		if (Unicode) {
-			if ((strchr(DecodeUnicodeString(line), '=') != NULL) && cfg_info != NULL) process = true;
-		} else {
-			if ((strchr(line, '=') != NULL) && cfg_info != NULL) process = true;
-		}
-                if (process) {
-                        CFG_Entry 	*entry;
-                        char 		*value;
-
-                        /* Allocate new entry */
-                        if ((entry = (CFG_Entry *)malloc(sizeof(*entry))) == NULL) {
-                                free(buf);
-                                return NULL;
-                        }
-
-                        /* Fill in fields */
-                        memset(entry, '\0', sizeof(*entry));
-
 			if (Unicode) {
-				value = line;
-				while(1) {
-					if (*(value) == 0 && *(value+1) == '=') break;
-					value += 2;
-				}
-	                        *(value) = 0;                /* Split string */
-				*(value+1) = 0;
-	                        value+=2;
-            
-				/* Remove leading white */
-	                        while(myiswspace(value)) value+=2;
-
-				entry->value = (char *)malloc(UnicodeLength(value)*2+2);
-				memcpy(entry->value,value,UnicodeLength(value)*2+2);
-
-				while(1) {
-					i = UnicodeLength(line)*2;
-					if (i>0 && myiswspace(line+i-2))
-					{
-						line[i - 2] = '\0';
-			                        line[i - 1] = '\0';
-					} else break;
-				}
-
-				entry->key = (char *)malloc(UnicodeLength(line)*2+2);
-				memcpy(entry->key,line,UnicodeLength(line)*2+2);
+				buffer1 		= realloc(buffer1,buffer1used+2);
+				buffer1[buffer1used] 	= 0;
+				buffer1[buffer1used+1] 	= 0;
+				buffer1used		= buffer1used + 2;
+				buffer2 		= realloc(buffer2,buffer2used+2);
+				buffer2[buffer2used] 	= 0;
+				buffer2[buffer2used+1] 	= 0;
+				buffer2used		= buffer2used + 2;
 			} else {
-	                        value = strchr(line, '=');
-	                        *value = '\0';                /* Split string */
-	                        value++;
-            
-	                        while(isspace((int) *value)) {      /* Remove leading white */
-	                                value++;
-	                        }
-
-				entry->value = (char *)malloc(strlen(value)+1);
-				memcpy(entry->value,value,strlen(value)+1);
-
-	                        while((strlen(line) > 0) && isspace((int) line[strlen(line) - 1])) {
-	                                line[strlen(line) - 1] = '\0';  /* Remove trailing white */
-	                        }
-
-				entry->key = (char *)malloc(strlen(line)+1);
-				memcpy(entry->key,line,strlen(line)+1);
+				buffer1 		= realloc(buffer1,buffer1used+1);
+				buffer1[buffer1used] 	= 0x00;
+				buffer1used		= buffer1used + 1;
+				buffer2 		= realloc(buffer2,buffer2used+1);
+				buffer2[buffer2used] 	= 0x00;
+				buffer2used		= buffer2used + 1;
 			}
+//			printf("\"%s\"=\"%s\"\n",buffer1,buffer2);
+//			printf("\"%s\"=",DecodeUnicodeConsole(buffer1));
+//			printf("\"%s\"\n",DecodeUnicodeConsole(buffer2));
 
-                        /* Add to head of list */
-                        entry->next = cfg_info->entries;
+			entry->EntryName = (char *)malloc(buffer1used);
+			memcpy(entry->EntryName,buffer1,buffer1used);
 
-                        if (cfg_info->entries != NULL) cfg_info->entries->prev = entry;
+			entry->EntryValue = (char *)malloc(buffer2used);
+			memcpy(entry->EntryValue,buffer2,buffer2used);
 
-                        cfg_info->entries = entry;
-
-//			if (Unicode) {
-//			    dbgprintf("CFG file - adding key/value \"%s/",DecodeUnicodeString(entry->key));
-//			    dbgprintf("%s\"\n", DecodeUnicodeString(entry->value));
-//			}
-
-                        /* Go on to next line */
-                        continue;
-                }
-
-                /* Line not part of any heading */
-//                dbgprintf("CFG file - orphaned line: \"%s\"\n", line);
-        }
-
-        free(buf);
-	
-        /* Return pointer to configuration information */
-        return cfg_head;
+			entry->Prev = NULL;
+                        entry->Next = INI_info->SubEntries;
+                        if (INI_info->SubEntries != NULL) INI_info->SubEntries->Prev = entry;
+                        INI_info->SubEntries = entry;
+		}
+	}
+	free(buffer); free(buffer1); free(buffer2);
+	fclose(f);
+	return INI_head;
 }
 
 /* 
- * Find the value of a key in a config file.  Return value associated
- * with key or NULL if no such key exists. 
+ * Search for key value in file in Windows INI format style
+ * Returns found value or NULL
  */
-unsigned char *CFG_Get(CFG_Header *cfg, unsigned char *section, unsigned char *key, bool Unicode)
+unsigned char *INI_GetValue(INI_Section *cfg, unsigned char *section, unsigned char *key, bool Unicode)
 {
-        CFG_Header *h;
-        CFG_Entry  *e;
+        INI_Section 	*h;
+        INI_Entry  	*e;
 
-        if ((cfg == NULL) || (section == NULL) || (key == NULL)) {
-                return NULL;
-        }
+        if (cfg == NULL || section == NULL || key == NULL) return NULL;
 
 	if (Unicode) {
-//		printf("searching for %s",DecodeUnicodeString(section));
-//		printf("/%s\n",DecodeUnicodeString(key));
-	        /* Search for section name */
-	        for (h = cfg; h != NULL; h = h->next) {
-	                if (mywstrncasecmp(section, h->section, 0)) {
-	                        /* Search for key within section */
-	                        for (e = h->entries; e != NULL; e = e->next) {
-	                                if (mywstrncasecmp(key,e->key,0)) {
-	                                        /* Found! */
-	                                        return e->value;
+	        /* Search for section */
+	        for (h = cfg; h != NULL; h = h->Next) {
+	                if (mywstrncasecmp(section, h->SectionName, 0)) {
+	                        /* Search for key inside section */
+	                        for (e = h->SubEntries; e != NULL; e = e->Next) {
+	                                if (mywstrncasecmp(key,e->EntryName,0)) {
+	                                        return e->EntryValue;
 	                                }
 	                        }
 	                }
 	        }
 	} else {
-	        /* Search for section name */
-	        for (h = cfg; h != NULL; h = h->next) {
-	                if (mystrncasecmp(section, h->section, 0)) {
-	                        /* Search for key within section */
-	                        for (e = h->entries; e != NULL; e = e->next) {
-	                                if (mystrncasecmp(key, e->key, 0)) {
-	                                        /* Found! */
-	                                        return e->value;
+	        /* Search for section */
+	        for (h = cfg; h != NULL; h = h->Next) {
+//			printf("[%s]\n",h->SectionName);
+	                if (mystrncasecmp(section, h->SectionName, 0)) {
+	                        /* Search for key inside section */
+	                        for (e = h->SubEntries; e != NULL; e = e->Next) {
+//					printf("\"%s\"=\"%s\"\n",e->EntryName,e->EntryValue);
+	                                if (mystrncasecmp(key, e->EntryName, 0)) {
+	                                        return e->EntryValue;
 	                                }
 	                        }
 	                }
 	        }
 	}
-        /* Key not found in section */
         return NULL;
 }
 
 /* Return last value in specified section */
-CFG_Entry *CFG_FindLastSectionEntry(CFG_Header *file_info, unsigned char *section, bool Unicode)
+INI_Entry *INI_FindLastSectionEntry(INI_Section *file_info, unsigned char *section, bool Unicode)
 {
-	CFG_Header 	*h;
-	CFG_Entry	*e;
+	INI_Section 	*h;
+	INI_Entry	*e;
 
 	e = NULL;
 	/* First find our section */
-        for (h = file_info; h != NULL; h = h->next) {
+        for (h = file_info; h != NULL; h = h->Next) {
 		if (Unicode) {
-			if (mywstrncasecmp(section, h->section, 0)) {
-				e = h->entries;
+			if (mywstrncasecmp(section, h->SectionName, 0)) {
+				e = h->SubEntries;
 				break;
 			}
 		} else {
-			if (mystrncasecmp(section, h->section, 0)) {
-				e = h->entries;
+			if (mystrncasecmp(section, h->SectionName, 0)) {
+				e = h->SubEntries;
 				break;
 			}
 		}
@@ -342,8 +307,8 @@ CFG_Entry *CFG_FindLastSectionEntry(CFG_Header *file_info, unsigned char *sectio
 	/* Goes into last value in section */
 	while (1) {
 		if (e == NULL) break;
-		if (e->next != NULL) {
-			e = e->next;
+		if (e->Next != NULL) {
+			e = e->Next;
 		} else break;
 	}
 	return e;

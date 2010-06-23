@@ -10,8 +10,8 @@
 #endif
 
 typedef struct {
-    int 			hPhone;
-    struct sockaddr_irda	peer;
+	int 			hPhone;
+	struct sockaddr_irda	peer;
 } GSM_Device_IrdaData;
 
 #endif

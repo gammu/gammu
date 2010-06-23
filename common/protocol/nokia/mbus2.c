@@ -20,47 +20,43 @@ static GSM_Error MBUS2_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 
 	out_buffer = (unsigned char *)malloc(length + 8);
 
-	/* Now construct the message header. */
-	out_buffer[current++] = MBUS2_FRAME_ID;     /* Start of the frame indicator */
-	out_buffer[current++] = MBUS2_DEVICE_PHONE; /* Destination */
-	out_buffer[current++] = MBUS2_DEVICE_PC;    /* Source */
-	out_buffer[current++] = type;               /* Type */
-	out_buffer[current++] = length/256;	    /* Length */
-	out_buffer[current++] = length%256;	    /* Length */
+	/* Preparing header of message */
+	out_buffer[current++] = MBUS2_FRAME_ID;
+	out_buffer[current++] = MBUS2_DEVICE_PHONE; /* Frame destination */
+	out_buffer[current++] = MBUS2_DEVICE_PC;    /* Frame source */
+	out_buffer[current++] = type;               /* Frame type */
+	out_buffer[current++] = length/256;	    /* Frame length */
+	out_buffer[current++] = length%256;	    /* Frame length */
 
-	/* Copy in data if any. */		
+	/* Copying frame */
 	if (length != 0) {
 		memcpy(out_buffer + current, buffer, length);
 		current+=length;
 	}
 
-	/* Checksum problem:
-	 * It seems that some phones have problems with a checksum of 1F.
-	 * The frame will be recognized but it will not respond with a ACK
-	 * frame.
-	 * Workaround:
-	 * If the checksum will be 1F, increment the sequence number so that
-	 * the checksum will be different., recalculate the checksum then and
-	 * send.
-	 * Source: http://www.flosys.com/tdma/n5160.html
-	 */
+	/* According to http://www.flosys.com/tdma/n5160.html some phones
+         * can have problems with checksum equal 0x1F. Phones can recognize
+         * received frame, but won't send ACK for it. When checksum is 0x1F,
+         * we increment the sequence number
+         */
 	do {
 		d->MsgSequenceNumber++;
 
 		out_buffer[current] = d->MsgSequenceNumber;  
 	
-		/* Now calculate checksum over entire message */
+		/* Calculating checksum */
 		checksum = 0;
 		for (count = 0; count < current + 1; count++) checksum ^= out_buffer[count];
 	} while (checksum == 0x1f);
 
-	/* Now append sequence and checksum to message. */
+	/* Adding sequence and checksum */
 	out_buffer[current++] = d->MsgSequenceNumber;  
 	out_buffer[current++] = checksum;
 
+	/* Writing debug output */
 	GSM_DumpMessageLevel2(s, out_buffer+6, length, type);
 
-	/* Send it out... */
+	/* Sending to phone */
 	my_sleep(10);
 	sent=s->Device.Functions->WriteDevice(s,out_buffer,current);
 
@@ -83,7 +79,7 @@ static GSM_Error MBUS2_SendAck(GSM_StateMachine *s, unsigned char type, unsigned
 	out_buffer[4] = sequence;
 	out_buffer[5] = 0;
 
-	/* Checksum */
+	/* Calculating checksum */
 	for (count = 0; count < 5; count++) out_buffer[5] ^= out_buffer[count];
 
 	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
@@ -91,7 +87,7 @@ static GSM_Error MBUS2_SendAck(GSM_StateMachine *s, unsigned char type, unsigned
 	    smprintf(s,"[Sending Ack of type %02x, seq: %x]\n",type,sequence);
 	}
 
-	/* Send it out... */
+	/* Sending to phone */
 	my_sleep(10);
 	if (Device->WriteDevice(s,out_buffer,6)!=6) return GE_DEVICEWRITEERROR;
 

@@ -208,7 +208,7 @@ static GSM_Error N6510_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	}
 	req[12]  = smsc->Validity.Relative;
 
-	/* Magic. Nokia new ideas: coding data in the sequent blocks */
+	/* coding data in the sequent blocks */
 	req[count++] 	 	 = 0x03; 		/* Number of blocks */
 
 	/* Block 2. SMSC Number */
@@ -993,8 +993,8 @@ static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	int 		count = 22, blocks;
 	unsigned char 	req[500] = {
 		N7110_FRAME_HEADER, 0x0b, 0x00, 0x01, 0x01, 0x00, 0x00, 0x10,
-		0x02, 0x00,  /* memory type */
-		0x00, 0x00,  /* location */
+		0x02, 0x00,  		/* memory type */
+		0x00, 0x00,  		/* location */
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 	if (entry->Location == 0) return GE_NOTSUPPORTED;
@@ -1346,8 +1346,8 @@ static GSM_Error N6510_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press
 #ifdef DEVELOP
 	unsigned char req[] = {
 		N6110_FRAME_HEADER, 0x11, 0x00, 0x01, 0x00, 0x00,
-		0x00,	/* Event */
-		0x01};	/* Number of presses */
+		0x00,		/* Event */
+		0x01};		/* Number of presses */
 
 //	req[7] = Key;
 	if (Press) {
@@ -1903,11 +1903,13 @@ static GSM_Error N6510_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *st
 	error = GSM_WaitFor (s, req, 6, 0x14, 2, ID_GetSMSStatus);
 	if (error != GE_NONE) return error;
 
+#ifndef ENABLE_LGPL
 	/* Nokia 6310 and family does not show not "fixed" messages from the
 	 * Templates folder, ie. when you save a message to the Templates folder,
 	 * SMSStatus does not change! Workaround: get Templates folder status, which
 	 * does show these messages.
 	 */
+#endif
 	error = N6510_GetSMSFolderStatus(s, 0x06);
 	if (error != GE_NONE) return error;
 	status->TemplatesUsed = Priv->LastSMSFolder.Number;
@@ -5301,7 +5303,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"3100|3300|3510|3510i|3530|3590|3595|5100|6100|6200|6220|6310|6310i|6510|6610|6800|7210|7250|7250i|8310|8390|8910|8910i",
+	"1100|1100a|1100b|3100|3100b|3200|3200a|3300|3510|3510i|3530|3590|3595|5100|6100|6200|6220|6310|6310i|6510|6610|6800|7210|7250|7250i|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/

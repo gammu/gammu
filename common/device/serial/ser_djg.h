@@ -4,7 +4,7 @@
 #define djgppserial_h
 
 typedef struct {
-    int hPhone;
+	int hPhone;
 } GSM_Device_SerialData;
 
 #endif

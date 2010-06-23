@@ -3,13 +3,11 @@
 
 #include "../gsmcomon.h"
 
-/* Define an enum for specifying memory types for retrieving phonebook
- * entries, SMS messages etc. This type is not mobile specific - the model
- * code should take care of translation to mobile specific numbers - see 6110
- * code.
+/* Define an enum for specifying memory types for getting phonebook entries,
+ * SMS messages etc. Phone modules can translate it to own values
  */
 typedef enum {
-	/* 01/07/99:    Two letter codes follow GSM 07.07 release 6.2.0 */
+	/* Two letter codes are from GSM 07.07 release 6.2.0 */
 	/**
 	 * Internal memory of the mobile equipment
 	 */
@@ -61,23 +59,49 @@ typedef enum {
 
 /* --------------------------- security codes ------------------------------ */
 
-/* Definition of security codes. */
+/**
+ * Definition of security codes.
+ */
 typedef enum {
-	GSCT_SecurityCode = 0x01, /* Security code. 	*/
-	GSCT_Pin,                 /* PIN. 		*/
-	GSCT_Pin2,                /* PIN 2. 		*/
-	GSCT_Puk,                 /* PUK. 		*/
-	GSCT_Puk2,                /* PUK 2. 		*/
-	GSCT_None                 /* Code not needed. 	*/
+	/**
+	 * Security code.
+	 */
+	GSCT_SecurityCode = 0x01,
+	/**
+	 * PIN.
+	 */
+	GSCT_Pin,
+	/**
+	 * PIN 2.
+	 */
+	GSCT_Pin2,
+	/**
+	 * PUK.
+	 */
+	GSCT_Puk,
+	/**
+	 * PUK 2.
+	 */
+	GSCT_Puk2,
+	/**
+	 * Code not needed.
+	 */
+	GSCT_None 
 } GSM_SecurityCodeType;
 
 #define GSM_SECURITY_CODE_LEN	15
 
-/* Security code definition. */
+/**
+ * Security code definition.
+ */
 typedef struct {
-	/* Type of the code. */
+	/**
+	 * Type of the code.
+	 */
 	GSM_SecurityCodeType 	Type;
-	/* Actual code. */
+	/**
+	 * Actual code.
+	 */
 	char 			Code[GSM_SECURITY_CODE_LEN+1];
 } GSM_SecurityCode;
 
@@ -95,17 +119,38 @@ typedef enum {
 	GSM_KEY_8,
 	GSM_KEY_9,
 	GSM_KEY_0,
-	GSM_KEY_HASH,		/* # */
-	GSM_KEY_ASTERISK,	/* * */
+	/**
+	 * #
+	 */
+	GSM_KEY_HASH,
+	/**
+	 * *
+	 */
+	GSM_KEY_ASTERISK,
 	GSM_KEY_POWER,
-	GSM_KEY_GREEN,		/* in some phone ie. N5110 sometimes works identical to POWER */
-	GSM_KEY_RED,		/* (c) key in some phone: ie. N5110 */
-	GSM_KEY_INCREASEVOLUME,	/* doesn't available in some phones as separate button: ie. N5110 */
-	GSM_KEY_DECREASEVOLUME,	/* doesn't available in some phones as separate button: ie. N5110 */
+	/**
+         * in some phone ie. N5110 sometimes works identical to POWER
+	 */
+	GSM_KEY_GREEN,
+	/**
+	 * (c) key in some phone: ie. N5110
+	 */
+	GSM_KEY_RED,
+	/**
+	 * doesn't available in some phones as separate button: ie. N5110
+	 */
+	GSM_KEY_INCREASEVOLUME,
+	/**
+	 * doesn't available in some phones as separate button: ie. N5110
+	 */
+	GSM_KEY_DECREASEVOLUME,
 	GSM_KEY_UP = 0x17,
 	GSM_KEY_DOWN,
 	GSM_KEY_MENU,
-	GSM_KEY_NAMES		/* doesn't available in some phone: ie. N5110 */
+	/**
+	 * doesn't available in some phone: ie. N5110
+	 */
+	GSM_KEY_NAMES
 } GSM_KeyCode;
 
 GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, int *Length);
@@ -130,15 +175,21 @@ typedef struct {
 /* ----------------------------- power source ------------------------------ */
 
 typedef enum {
-    GSM_BatteryPowered = 1,
-    GSM_BatteryConnected,
-    GSM_BatteryNotConnected,
-    GSM_PowerFault
+	GSM_BatteryPowered = 1,
+	GSM_BatteryConnected,
+	GSM_BatteryNotConnected,
+	GSM_PowerFault
 } GSM_ChargeState;
 
 typedef struct {
-    int 		BatteryPercent; /* Signal strength in percent, -1 = unknown */
-    GSM_ChargeState 	ChargeState;    /* Charge state */
+	/**
+	 * Signal strength in percent, -1 = unknown
+	 */
+	int BatteryPercent;
+	/**
+	 * Charge state
+	 */
+	GSM_ChargeState ChargeState;
 } GSM_BatteryCharge;
 
 /* ------------------------------ categories ------------------------------- */
@@ -146,19 +197,19 @@ typedef struct {
 #define GSM_MAX_CATEGORY_NAME_LENGTH 50
 
 typedef enum {
-    Category_ToDo,
-    Category_Phonebook
+	Category_ToDo,
+	Category_Phonebook
 } GSM_CategoryType;
 
 typedef struct {
-    GSM_CategoryType    Type;
-    int                 Location;
-    unsigned char       Name[(GSM_MAX_CATEGORY_NAME_LENGTH + 1)*2];
+	GSM_CategoryType    Type;
+	int                 Location;
+	unsigned char       Name[(GSM_MAX_CATEGORY_NAME_LENGTH + 1)*2];
 } GSM_Category;
 
 typedef struct {
-    GSM_CategoryType    Type;
-    int                 Used;
+	GSM_CategoryType    Type;
+	int                 Used;
 } GSM_CategoryStatus;
 
 /* ------------------- radio FM stations ---------------------------------- */

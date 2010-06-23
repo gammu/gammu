@@ -27,42 +27,42 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned char *data,
 	buffer[1] = type;
 	switch (type) {
 		case ALCATEL_CONNECT:
-				buffer[2] 	= 0x0A;
-				buffer[3] 	= 0x04;
-				buffer[4] 	= 0x00;
-				size 		= 5;
-				d->next_frame 	= ALCATEL_CONNECT_ACK;
-				d->busy 	= true;
-				break;
+			buffer[2] 	= 0x0A;
+			buffer[3] 	= 0x04;
+			buffer[4] 	= 0x00;
+			size 		= 5;
+			d->next_frame 	= ALCATEL_CONNECT_ACK;
+			d->busy 	= true;
+			break;
 		case ALCATEL_DISCONNECT:
-				size 		= 2;
-				d->next_frame 	= ALCATEL_DISCONNECT_ACK;
-				d->busy 	= true;
-				break;
+			size 		= 2;
+			d->next_frame 	= ALCATEL_DISCONNECT_ACK;
+			d->busy 	= true;
+			break;
 		case ALCATEL_DATA:
-				 buffer[2] = d->out_counter;
+			buffer[2] = d->out_counter;
 
-				/* Increase outgoing packet counter */
-				if (d->out_counter == ALCATEL_MAX_COUNTER) d->out_counter = 0;
-				else d->out_counter++;
+			/* Increase outgoing packet counter */
+			if (d->out_counter == ALCATEL_MAX_COUNTER) d->out_counter = 0;
+			else d->out_counter++;
 
-				buffer[3] 	= '\0';
-				buffer[4] 	= len;
-				memcpy(buffer+5, data, len);
-				size 		= 5 + len;
-				d->next_frame 	= ALCATEL_ACK;
-				d->busy 	= true;
-				break;
+			buffer[3] 	= '\0';
+			buffer[4] 	= len;
+			memcpy(buffer+5, data, len);
+			size 		= 5 + len;
+			d->next_frame 	= ALCATEL_ACK;
+			d->busy 	= true;
+			break;
 		case ALCATEL_ACK:
-				buffer[2] = d->in_counter;
-				if (d->in_counter == 0) d->in_counter = 1;
-				size 		= 3;
-				d->next_frame 	= ALCATEL_DATA;
-				break;
+			buffer[2] = d->in_counter;
+			if (d->in_counter == 0) d->in_counter = 1;
+			size 		= 3;
+			d->next_frame 	= ALCATEL_DATA;
+			break;
 		default:
-				/* In fact, other types probably can came just from mobile... */
-				smprintf(s,"WARNING: Wanted to send some unknown packet (%02X)\n", type);
-				return GE_NOTIMPLEMENTED;
+			/* In fact, other types probably can came just from mobile... */
+			smprintf(s,"WARNING: Wanted to send some unknown packet (%02X)\n", type);
+			return GE_NOTIMPLEMENTED;
 	}
 
 	/* Calculate packet checksum */
@@ -84,10 +84,10 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned char *data,
 		/* For connect and disconnect we need a bit larger delay */
 //		my_sleep(10);
 		while (d->busy) {
-				GSM_ReadDevice(s,true);
-				my_sleep(1);
-				i++;
-				if (i == 10) return GE_TIMEOUT;
+			GSM_ReadDevice(s,true);
+			my_sleep(1);
+			i++;
+			if (i == 10) return GE_TIMEOUT;
 		}
 	}
 	return GE_NONE;
@@ -208,7 +208,7 @@ static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_byte
 
 		/* Was it unexpected type? */
 		if ((d->Msg.Type != d->next_frame) && (d->Msg.Type != ALCATEL_CONTROL)) {
-				return GE_FRAMENOTREQUESTED;
+			return GE_FRAMENOTREQUESTED;
 		}
 	} /* Last byte of packet */
 
@@ -227,7 +227,6 @@ static GSM_Error ALCABUS_Initialise(GSM_StateMachine *s)
 	d->in_counter		= 1;
 	d->out_counter		= 0;
 	d->busy			= false;
-
 
 	/* Initialise protocol */
 	dbgprintf ("Initializing binary mode\n");

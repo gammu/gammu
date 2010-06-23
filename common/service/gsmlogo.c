@@ -72,16 +72,15 @@ static bool PHONE_IsPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x
 	case GSM_NokiaOperatorLogo:
 	case GSM_Nokia7110OperatorLogo:
 	case GSM_NokiaCallerLogo:
+	case GSM_EMSVariablePicture:
+	case GSM_EMSSmallPicture:
+	case GSM_EMSMediumPicture:
+	case GSM_EMSBigPicture:
 		pixel=width*y + x;
 		i=(buffer[pixel/8] & 1<<(7-(pixel%8)));
 		break;
 	case GSM_NokiaPictureImage:
 		i=(buffer[9*y + (x/8)] & 1<<(7-(x%8)));
-		break;
-	case GSM_EMSVariablePicture:
-	case GSM_EMSSmallPicture:
-	case GSM_EMSMediumPicture:
-	case GSM_EMSBigPicture:
 		break;
 	}
 	if (i) return true; else return false;
@@ -119,7 +118,7 @@ void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 	int width, height, x,y;
 
 	PHONE_GetBitmapWidthHeight(Type, &width, &height);
-	if (Type != GSM_Nokia6510OperatorLogo && Type != GSM_Nokia7110OperatorLogo) {
+	if (Type != GSM_Nokia6510OperatorLogo && Type != GSM_Nokia7110OperatorLogo && Type != GSM_EMSVariablePicture) {
 		Bitmap->Height	= height;
 		Bitmap->Width	= width;
 	}
@@ -131,12 +130,13 @@ void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 		case GSM_NokiaStartupLogo	:
 		case GSM_Nokia7110StartupLogo	:
 		case GSM_Nokia6210StartupLogo	: Bitmap->Type=GSM_StartupLogo;		break;
-		case GSM_NokiaPictureImage	: Bitmap->Type=GSM_PictureImage;	break;
+		case GSM_NokiaPictureImage	:
 		case GSM_EMSVariablePicture	:
     		case GSM_EMSSmallPicture	:
 		case GSM_EMSMediumPicture	:
-		case GSM_EMSBigPicture		:					break;
+		case GSM_EMSBigPicture		: Bitmap->Type=GSM_PictureImage;	break;
 	}
+
 	GSM_ClearBitmap(Bitmap);
 	for (x=0;x<Bitmap->Width;x++) {
 		for (y=0;y<Bitmap->Height;y++) {
@@ -311,8 +311,8 @@ GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 	header[22]=bitmap->Height;
 	header[18]=bitmap->Width;
      
-	pos=7;
-	sizeimage=0;
+	pos	  = 7;
+	sizeimage = 0;
 	/*lines are written from the last to the first*/
 	for (y=bitmap->Height-1;y>=0;y--) {
 		i=1;
@@ -333,8 +333,7 @@ GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 		sizeimage++;
 		if (i!=1) {
 			/*each line is written in multiply of 4 bytes*/
-			while (i!=5)
-			{
+			while (i!=5) {
 				sizeimage++;
 				i++;
 			}
@@ -389,8 +388,7 @@ GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 		}
 		if (i!=1) {
 			/*each line is written in multiply of 4 bytes*/
-			while (i!=5)
-			{
+			while (i!=5) {
 				buff[0]=0;
 				if (isfile) fwrite(buff, 1, sizeof(buff), file);
 				else {
@@ -631,8 +629,11 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 
 	if (bitmap->Type == GSM_None) bitmap->Type = GSM_StartupLogo;
 	if (file!=NULL) isfile=true;
-	if (isfile) fread(buff, 1, 34, file);
-	    else    memcpy(buff,buffer,34);
+	if (isfile) {
+		fread(buff, 1, 34, file);
+	} else {
+		memcpy(buff,buffer,34);
+	}
 
 	/* height and width of image in the file */
 	h=buff[22]+256*buff[21]; 
@@ -649,11 +650,11 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 #ifdef DEBUG
 	dbgprintf("Number of colors in BMP file: ");
 	switch (buff[28]) {
-		case 1	: dbgprintf("2 (supported)\n");		   break;
-		case 4	: dbgprintf("16 (NOT SUPPORTED)\n");	   break;
-		case 8	: dbgprintf("256 (NOT SUPPORTED)\n");	   break;
-		case 24	: dbgprintf("True Color (NOT SUPPORTED)\n"); break;
-		default	: dbgprintf("unknown\n");			   break;
+		case 1	: dbgprintf("2 (supported)\n");		   	break;
+		case 4	: dbgprintf("16 (NOT SUPPORTED)\n");	   	break;
+		case 8	: dbgprintf("256 (NOT SUPPORTED)\n");	   	break;
+		case 24	: dbgprintf("True Color (NOT SUPPORTED)\n"); 	break;
+		default	: dbgprintf("unknown\n");			break;
 	}
 #endif
 	if (buff[28]!=1) {
@@ -664,10 +665,10 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 #ifdef DEBUG
 	dbgprintf("Compression in BMP file: ");
 	switch (buff[30]) {
-		case 0	:dbgprintf("no compression (supported)\n"); break;
-		case 1	:dbgprintf("RLE8 (NOT SUPPORTED)\n");	  break;
-		case 2	:dbgprintf("RLE4 (NOT SUPPORTED)\n");	  break;
-		default	:dbgprintf("unknown\n");			  break;
+		case 0	:dbgprintf("no compression (supported)\n"); 	break;
+		case 1	:dbgprintf("RLE8 (NOT SUPPORTED)\n");	  	break;
+		case 2	:dbgprintf("RLE4 (NOT SUPPORTED)\n");	  	break;
+		default	:dbgprintf("unknown\n");			break;
 	}
 #endif  
 	if (buff[30]!=0) {
@@ -677,12 +678,12 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 
 	/* read rest of header (if exists) and color palette */
 	if (isfile) {
-	    pos=buff[10]-34;
-	    fread(buff, 1, pos, file);
-	} else	{
-	    pos=buff[10]-34;
-	    buffpos=buff[10];	
-	    memcpy (buff,buffer+34,pos);	    
+		pos=buff[10]-34;
+		fread(buff, 1, pos, file);
+	} else {
+		pos=buff[10]-34;
+		buffpos=buff[10];	
+		memcpy (buff,buffer+34,pos);	    
 	}
 
 #ifdef DEBUG  
@@ -701,16 +702,14 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
  
 	pos=7;
 	/* lines are written from the last to the first */
-	for (y=h-1;y>=0;y--) 	{
-		i=1;
-		for (x=0;x<w;x++) 		{
-			/* new byte ! */
-			if (pos==7)			{
-				if (isfile) fread(buff, 1, 1, file);
-				    else {
-					    memcpy (buff,buffer+buffpos,1);
-					    buffpos++;					    
-					 }
+	for (y=h-1;y>=0;y--) {		i=1;
+		for (x=0;x<w;x++) {			/* new byte ! */
+			if (pos==7) {				if (isfile) {
+					fread(buff, 1, 1, file);
+				} else {
+					memcpy (buff,buffer+buffpos,1);
+					buffpos++;					    
+				}
 #ifdef DEBUG
 				sizeimage++;
 #endif
@@ -719,8 +718,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 				if(i==5) i=1;
 			}
 			/* we have top left corner ! */
-			if (x<=bitmap->Width && y<=bitmap->Height) 			{
-				if (first_white) {
+			if (x<=bitmap->Width && y<=bitmap->Height) {				if (first_white) {
 					if ((buff[0]&(1<<pos))<=0) GSM_SetPointBitmap(bitmap,x,y);
 				} else {
 					if ((buff[0]&(1<<pos))>0) GSM_SetPointBitmap(bitmap,x,y);
@@ -734,13 +732,13 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 		pos=7;
 		if (i!=1) {
 			/* each line is written in multiply of 4 bytes */
-			while (i!=5) 			{
-
-				if (isfile) fread(buff, 1, 1, file);
-				    else {
-					    memcpy (buff,buffer+buffpos,1);				    
-					    buffpos++;
-					 }
+			while (i!=5) {
+				if (isfile) {
+					fread(buff, 1, 1, file);
+				} else {
+					memcpy (buff,buffer+buffpos,1);				    
+					buffpos++;
+				}
 #ifdef DEBUG
 				sizeimage++;
 #endif

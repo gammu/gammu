@@ -12,8 +12,7 @@
 static void GSM_RegisterConnection(GSM_StateMachine *s, unsigned int connection,
 		GSM_Device_Functions *device, GSM_Protocol_Functions *protocol)
 {
-	if ((unsigned int)s->ConnectionType == connection)
-	{
+	if ((unsigned int)s->ConnectionType == connection) {
 		s->Device.Functions	= device;	
 		s->Protocol.Functions	= protocol;
 	}
@@ -700,44 +699,59 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	return error;
 }
 
-CFG_Header *CFG_FindGammuRC(void)
+INI_Section *GSM_FindGammuRC(void)
 {
-	CFG_Header	*cfg_info;
-        char		*homedir;
-        char		rcfile[201];
+	INI_Section	*ini_file;
+        char		*HomeDrive,*HomePath,*FileName=malloc(1);
+	int		FileNameUsed=1;
 
+	FileName[0] = 0;
 #if defined(WIN32) || defined(DJGPP)
-        homedir = getenv("HOMEDRIVE");
-        strncpy(rcfile, homedir ? homedir : "", 200);
-        homedir = getenv("HOMEPATH");
-        strncat(rcfile, homedir ? homedir : "", 200);
-        strncat(rcfile, "\\gammurc", 200);
+        HomeDrive = getenv("HOMEDRIVE");
+	if (HomeDrive) {
+		FileName 	=  realloc(FileName,FileNameUsed+strlen(HomeDrive)+1);
+		FileName 	=  strcat(FileName, HomeDrive);
+		FileNameUsed	+= strlen(HomeDrive)+1;
+	}
+        HomePath = getenv("HOMEPATH");
+        if (HomePath) {
+		FileName 	=  realloc(FileName,FileNameUsed+strlen(HomePath)+1);
+		FileName 	=  strcat(FileName, HomePath);
+		FileNameUsed	+= strlen(HomePath)+1;
+	}
+	FileName = realloc(FileName,FileNameUsed+8+1);
+        strcat(FileName, "\\gammurc");
 #else
-        homedir = getenv("HOME");
-        if (homedir) strncpy(rcfile, homedir, 200);
-        strncat(rcfile, "/.gammurc", 200);
+	HomeDrive = NULL;
+        HomePath  = getenv("HOME");
+        if (HomePath) {
+		FileName 	=  realloc(FileName,FileNameUsed+strlen(HomePath)+1);
+		FileName 	=  strcat(FileName, HomePath);
+		FileNameUsed	+= strlen(HomePath)+1;
+	}
+	FileName = realloc(FileName,FileNameUsed+9+1);
+        strcat(FileName, "/.gammurc");
 #endif
+//	dbgprintf("\"%s\"\n",FileName);
 
-        if ((cfg_info = CFG_ReadFile(rcfile, false)) == NULL) {
+	ini_file = INI_ReadFile(FileName, false);
+	free(FileName);
+        if (ini_file == NULL) {
 #if defined(WIN32) || defined(DJGPP)
-                if ((cfg_info = CFG_ReadFile("gammurc", false)) == NULL) {
-//			dbgprintf("CFG file - No config files. Using defaults.\n");
-                        return NULL;
-                }
+		ini_file = INI_ReadFile("gammurc", false);
+                if (ini_file == NULL) return NULL;
 #else
-                if ((cfg_info = CFG_ReadFile("/etc/gammurc", false)) == NULL) {
-//			dbgprintf("CFG file - No config files. Using defaults.\n");
-                        return NULL;
-                }
+		ini_file = INI_ReadFile("/etc/gammurc", false);
+                if (ini_file == NULL) return NULL;
 #endif
         }
 
-	return cfg_info;
+	return ini_file;
 }
 
-bool CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg, int num)
+bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 {
-	CFG_Header 	*h;
+	INI_Section 	*h;
 	unsigned char 	section[50];
 	bool		found = false;
 
@@ -784,59 +798,59 @@ bool CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg, int num)
 	} else {
 		sprintf(section,"gammu%i",num);
 	}
-        for (h = cfg_info; h != NULL; h = h->next) {
-                if (mystrncasecmp(section, h->section, strlen(section))) {
+        for (h = cfg_info; h != NULL; h = h->Next) {
+                if (mystrncasecmp(section, h->SectionName, strlen(section))) {
 			found = true;
 			break;
 		}
         }
 	if (!found) return false;
 
-	cfg->Device 	 = CFG_Get(cfg_info, section, "port", 		false);
+	cfg->Device 	 = INI_GetValue(cfg_info, section, "port", 		false);
 	if (!cfg->Device) {
 		cfg->Device		 	 = DefaultPort;
 	} else {
 		cfg->DefaultDevice 		 = false;
 	}
-	cfg->Connection  = CFG_Get(cfg_info, section, "connection", 	false);
+	cfg->Connection  = INI_GetValue(cfg_info, section, "connection", 	false);
 	if (!cfg->Connection) {
 		cfg->Connection	 		 = DefaultConnection;
 	} else {
 		cfg->DefaultConnection		 = false;
 	}
-	cfg->SyncTime 	 = CFG_Get(cfg_info, section, "synchronizetime",false);
+	cfg->SyncTime 	 = INI_GetValue(cfg_info, section, "synchronizetime",	false);
 	if (!cfg->SyncTime) {
 		cfg->SyncTime		 	 = DefaultSynchronizeTime;
 	} else {
 		cfg->DefaultSyncTime		 = false;
 	}
-	cfg->DebugFile   = CFG_Get(cfg_info, section, "logfile", 	false);
+	cfg->DebugFile   = INI_GetValue(cfg_info, section, "logfile", 		false);
 	if (!cfg->DebugFile) {
 		cfg->DebugFile		 	 = DefaultDebugFile;
 	} else {
 		cfg->DefaultDebugFile 		 = false;
 	}
-	cfg->LockDevice  = CFG_Get(cfg_info, section, "use_locking", 	false);
+	cfg->LockDevice  = INI_GetValue(cfg_info, section, "use_locking", 	false);
 	if (!cfg->LockDevice) {
 		cfg->LockDevice	 		 = DefaultLockDevice;
 	} else {
 		cfg->DefaultLockDevice		 = false;
 	}
-	Temp		 = CFG_Get(cfg_info, section, "model", 		false);
+	Temp		 = INI_GetValue(cfg_info, section, "model", 		false);
 	if (!Temp) {
 		strcpy(cfg->Model,DefaultModel);
 	} else {
 		cfg->DefaultModel 		 = false;
 		strcpy(cfg->Model,Temp);
 	}
-	Temp		 = CFG_Get(cfg_info, section, "logformat", 	false);
+	Temp		 = INI_GetValue(cfg_info, section, "logformat", 	false);
 	if (!Temp) {
 		strcpy(cfg->DebugLevel,DefaultDebugLevel);
 	} else {
 		cfg->DefaultDebugLevel 		 = false;
 		strcpy(cfg->DebugLevel,Temp);
 	}
-	cfg->StartInfo   = CFG_Get(cfg_info, section, "startinfo", 	false);
+	cfg->StartInfo   = INI_GetValue(cfg_info, section, "startinfo", 	false);
 	if (!cfg->StartInfo) {
 		cfg->StartInfo	 		 = DefaultStartInfo;
 	} else {
@@ -847,7 +861,18 @@ bool CFG_ReadConfig(CFG_Header *cfg_info, GSM_Config *cfg, int num)
 
 static OnePhoneModel allmodels[] = {
 #ifdef GSM_ENABLE_NOKIA6510
+	{"1100", "RH-18" ,"",		{0}},
+	{"1100a","RH-38" ,"",		{0}},
+	{"1100b","RH-36" ,"",		{0}},
+#endif
+#ifdef GSM_ENABLE_NOKIA6110
+	{"2100" ,"NAM-2" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},//quess
+#endif
+#ifdef GSM_ENABLE_NOKIA6510
 	{"3100" ,"RH-19" ,"",           {0}},
+	{"3100b","RH-50" ,"",           {0}},
+	{"3200", "RH-30" ,"Nokia 3200",	{0}},
+	{"3200a","RH-31" ,"Nokia 3200",	{0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"3210" ,"NSE-8" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
@@ -869,6 +894,9 @@ static OnePhoneModel allmodels[] = {
 	{"3530" ,"RH-9"  ,"",           {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
 	{"3590" ,"NPM-8" ,"",		{0}},//irda?
 	{"3595" ,"NPM-10" ,"",		{0}},//irda?
+#endif
+#ifdef GSM_ENABLE_NOKIA6110
+	{"3610" ,"NAM-1" ,"",           {F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},//quess
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"3650" ,"NHL-8" ,"Nokia 3650", {F_RADIO,0}},

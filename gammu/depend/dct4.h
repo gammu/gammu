@@ -1,8 +1,13 @@
 
+#include "../../common/gsmstate.h"
+
 void DCT4SetPhoneMenus	   (int argc, char *argv[]);
 void DCT4SelfTests	   (int argc, char *argv[]);
 void DCT4SetVibraLevel	   (int argc, char *argv[]);
+void DCT4GetSecurityCode   (int argc, char *argv[]);
+#ifdef DEBUG
 void DCT4ResetSecurityCode (int argc, char *argv[]);
+#endif
 void DCT4GetVoiceRecord	   (int argc, char *argv[]);
 void DCT4Info		   (int argc, char *argv[]);
 void DCT4GetT9		   (int argc, char *argv[]);

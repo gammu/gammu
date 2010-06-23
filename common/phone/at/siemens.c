@@ -9,7 +9,7 @@
 
 #include "../../misc/coding/coding.h"
 #include "../../gsmcomon.h"
-#include "../../service/gsmsms.h"
+#include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
 
 extern GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s);

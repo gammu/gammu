@@ -1,12 +1,13 @@
 
-#include "../../common/service/gsmsms.h"
+#include "../../common/service/sms/gsmsms.h"
+#include "../../common/service/sms/gsmmulti.h"
 
 #define MAX_RETRIES 1
 
 void SMSDaemon(int argc, char *argv[]);
 
 typedef struct {
-	CFG_Entry       *IncludeNumbers, *ExcludeNumbers;
+	INI_Entry       *IncludeNumbers, *ExcludeNumbers;
 	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency;
 	unsigned char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
 	unsigned char   *errorsmspath, 	 *inboxformat,  *transmitformat;

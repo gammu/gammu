@@ -69,18 +69,18 @@ void WriteSMSDLog(unsigned char *format, ...)
 
 void SMSD_ReadConfig(int argc, char *argv[], GSM_SMSDConfig *Config)
 {
-	CFG_Header 		*smsdcfgfile = NULL;
+	INI_Section 		*smsdcfgfile = NULL;
 	GSM_Config 		smsdcfg;
 	unsigned char		*str;
 	static unsigned char	emptyPath[1] = "\0";
 
-	smsdcfgfile=CFG_ReadFile(argv[3], false);
+	smsdcfgfile=INI_ReadFile(argv[3], false);
 	if (smsdcfgfile==NULL) {
 		fprintf(stderr,"Can't find file \"%s\"\n",argv[3]);
 		exit(-1);
 	}
 
-	Config->logfilename=CFG_Get(smsdcfgfile, "smsd", "logfile", false);
+	Config->logfilename=INI_GetValue(smsdcfgfile, "smsd", "logfile", false);
 	if (Config->logfilename != NULL) {
 		smsd_log_file=fopen(Config->logfilename,"ab");
 		if (smsd_log_file == NULL) {
@@ -92,13 +92,13 @@ void SMSD_ReadConfig(int argc, char *argv[], GSM_SMSDConfig *Config)
 	WriteSMSDLog("Start GAMMU smsd");
 
 	/* Include Numbers used, because we don't want create new variable */
-	Config->IncludeNumbers=CFG_FindLastSectionEntry(smsdcfgfile, "gammu", false);
+	Config->IncludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "gammu", false);
 	if (Config->IncludeNumbers) {
-		CFG_ReadConfig(smsdcfgfile, &smsdcfg, 0);
+		GSM_ReadConfig(smsdcfgfile, &smsdcfg, 0);
 		memcpy(&s.Config,&smsdcfg,sizeof(GSM_Config));
 	}
 
-	Config->PINCode=CFG_Get(smsdcfgfile, "smsd", "PIN", false);
+	Config->PINCode=INI_GetValue(smsdcfgfile, "smsd", "PIN", false);
 	if (Config->PINCode == NULL) {
 		WriteSMSDLog("No PIN code in %s file",argv[3]);
 		fprintf(stderr,"No PIN code in %s file\n",argv[3]);
@@ -106,51 +106,48 @@ void SMSD_ReadConfig(int argc, char *argv[], GSM_SMSDConfig *Config)
 	}
 	WriteSMSDLog("PIN code is \"%s\"",Config->PINCode);
 
-	str = CFG_Get(smsdcfgfile, "smsd", "commtimeout", false);
+	str = INI_GetValue(smsdcfgfile, "smsd", "commtimeout", false);
 	if (str) Config->commtimeout=atoi(str); else Config->commtimeout = 1;
-	str = CFG_Get(smsdcfgfile, "smsd", "sendtimeout", false);
+	str = INI_GetValue(smsdcfgfile, "smsd", "sendtimeout", false);
 	if (str) Config->sendtimeout=atoi(str); else Config->sendtimeout = 10;
-	str = CFG_Get(smsdcfgfile, "smsd", "receivefrequency", false);
+	str = INI_GetValue(smsdcfgfile, "smsd", "receivefrequency", false);
 	if (str) Config->receivefrequency=atoi(str); else Config->receivefrequency = 0;
 	WriteSMSDLog("commtimeout=%i, sendtimeout=%i, receivefrequency=%i", Config->commtimeout, Config->sendtimeout, Config->receivefrequency);
 
-	Config->deliveryreport = CFG_Get(smsdcfgfile, "smsd", "deliveryreport", false);
-	if (Config->deliveryreport == NULL || (!mystrncasecmp(Config->deliveryreport, "log", 3) && !mystrncasecmp(Config->deliveryreport, "sms", 3)))
-	{
+	Config->deliveryreport = INI_GetValue(smsdcfgfile, "smsd", "deliveryreport", false);
+	if (Config->deliveryreport == NULL || (!mystrncasecmp(Config->deliveryreport, "log", 3) && !mystrncasecmp(Config->deliveryreport, "sms", 3))) {
 		Config->deliveryreport = "no";
 	}
 	WriteSMSDLog("deliveryreport = %s", Config->deliveryreport);
 
-	Config->inboxpath=CFG_Get(smsdcfgfile, "smsd", "inboxpath", false);
+	Config->inboxpath=INI_GetValue(smsdcfgfile, "smsd", "inboxpath", false);
 	if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
 
-	Config->inboxformat=CFG_Get(smsdcfgfile, "smsd", "inboxformat", false);
-	if (Config->inboxformat == NULL || (!mystrncasecmp(Config->inboxformat, "detail", 6) && !mystrncasecmp(Config->inboxformat, "unicode", 7)))
-	{
+	Config->inboxformat=INI_GetValue(smsdcfgfile, "smsd", "inboxformat", false);
+	if (Config->inboxformat == NULL || (!mystrncasecmp(Config->inboxformat, "detail", 6) && !mystrncasecmp(Config->inboxformat, "unicode", 7))) {
 		Config->inboxformat = "standard";
 	}
 	WriteSMSDLog("Inbox is \"%s\" with format \"%s\"", Config->inboxpath, Config->inboxformat);
 
-	Config->outboxpath=CFG_Get(smsdcfgfile, "smsd", "outboxpath", false);
+	Config->outboxpath=INI_GetValue(smsdcfgfile, "smsd", "outboxpath", false);
 	if (Config->outboxpath == NULL) Config->outboxpath = emptyPath;
 
-	Config->transmitformat=CFG_Get(smsdcfgfile, "smsd", "transmitformat", false);
-	if (Config->transmitformat == NULL || (!mystrncasecmp(Config->transmitformat, "auto", 4) && !mystrncasecmp(Config->transmitformat, "unicode", 7)))
-	{
+	Config->transmitformat=INI_GetValue(smsdcfgfile, "smsd", "transmitformat", false);
+	if (Config->transmitformat == NULL || (!mystrncasecmp(Config->transmitformat, "auto", 4) && !mystrncasecmp(Config->transmitformat, "unicode", 7))) {
 		Config->transmitformat = "7bit";
 	}
 	WriteSMSDLog("Outbox is \"%s\" with transmission format \"%s\"", Config->outboxpath, Config->transmitformat);
 
-	Config->sentsmspath=CFG_Get(smsdcfgfile, "smsd", "sentsmspath", false);
+	Config->sentsmspath=INI_GetValue(smsdcfgfile, "smsd", "sentsmspath", false);
 	if (Config->sentsmspath == NULL) Config->sentsmspath = Config->outboxpath;
 	WriteSMSDLog("Sent SMS moved to \"%s\"",Config->sentsmspath);
 
-	Config->errorsmspath=CFG_Get(smsdcfgfile, "smsd", "errorsmspath", false);
+	Config->errorsmspath=INI_GetValue(smsdcfgfile, "smsd", "errorsmspath", false);
 	if (Config->errorsmspath == NULL) Config->errorsmspath = Config->sentsmspath;
 	WriteSMSDLog("SMS with errors moved to \"%s\"",Config->errorsmspath);
 
-	Config->IncludeNumbers=CFG_FindLastSectionEntry(smsdcfgfile, "include_numbers", false);
-	Config->ExcludeNumbers=CFG_FindLastSectionEntry(smsdcfgfile, "exclude_numbers", false);
+	Config->IncludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "include_numbers", false);
+	Config->ExcludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "exclude_numbers", false);
 	if (Config->IncludeNumbers != NULL) {
 		WriteSMSDLog("Include numbers available");
 	}
@@ -211,7 +208,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	GSM_MultiSMSMessage 	sms;
 	unsigned char 		buffer[100];
 	GSM_Error		error=GE_NONE;
-	CFG_Entry		*e;
+	INI_Entry		*e;
 	int			i;
 
 	start=true;
@@ -231,22 +228,22 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				process=false;
 				while (1) {
 					if (e == NULL) break;
-					if (strcmp(buffer,e->value)==0) {
+					if (strcmp(buffer,e->EntryValue)==0) {
 						process=true;
 						break;
 					}
-					e = e->prev;
+					e = e->Prev;
 				}
 			} else if (Config->ExcludeNumbers != NULL) {
 				e=Config->ExcludeNumbers;
 				process=true;
 				while (1) {
 					if (e == NULL) break;
-					if (strcmp(buffer,e->value)==0) {
+					if (strcmp(buffer,e->EntryValue)==0) {
 						process=false;
 						break;
 					}
-					e = e->prev;
+					e = e->Prev;
 				}
 			}
 			if (process) {

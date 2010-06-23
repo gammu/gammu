@@ -17,7 +17,9 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
 	    $(TOPDIR)/common/misc/cfg.o \
 	    $(TOPDIR)/common/misc/coding/coding.o \
 	    $(TOPDIR)/common/misc/coding/md5.o \
-	    $(TOPDIR)/common/service/gsmsms.o \
+	    $(TOPDIR)/common/service/sms/gsmsms.o \
+	    $(TOPDIR)/common/service/sms/gsmems.o \
+	    $(TOPDIR)/common/service/sms/gsmmulti.o \
 	    $(TOPDIR)/common/service/gsmcal.o \
 	    $(TOPDIR)/common/service/gsmwap.o \
 	    $(TOPDIR)/common/service/gsmpbk.o \

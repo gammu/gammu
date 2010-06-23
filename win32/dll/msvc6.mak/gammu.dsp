@@ -174,7 +174,15 @@ SOURCE=..\..\..\common\service\gsmring.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\service\gsmsms.c
+SOURCE=..\..\..\common\service\sms\gsmsms.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\service\sms\gsmems.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\service\sms\gsmmulti.c
 # End Source File
 # Begin Source File
 
@@ -374,7 +382,15 @@ SOURCE=..\..\..\common\service\gsmmisc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\service\gsmsms.h
+SOURCE=..\..\..\common\service\sms\gsmsms.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\service\sms\gsmems.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\service\sms\gsmmulti.h
 # End Source File
 # Begin Source File
 

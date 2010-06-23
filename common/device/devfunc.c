@@ -14,17 +14,17 @@
 int socket_read(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
 {
 #ifndef WIN32
-    fd_set readfds;
+	fd_set readfds;
 
-    FD_ZERO(&readfds);
-    FD_SET(hPhone, &readfds);
-    if (select(hPhone+1, &readfds, NULL, NULL, 0)) {
-	return(read(hPhone, buf, nbytes));
-    } else {
-	return 0;
-    }
+	FD_ZERO(&readfds);
+	FD_SET(hPhone, &readfds);
+	if (select(hPhone+1, &readfds, NULL, NULL, 0)) {
+		return(read(hPhone, buf, nbytes));
+	} else {
+		return 0;
+	}
 #else
-    return(recv(hPhone, buf, nbytes, 0));
+	return(recv(hPhone, buf, nbytes, 0));
 #endif
 }
 
@@ -34,15 +34,15 @@ int socket_write(GSM_StateMachine *s, unsigned char *buf, size_t nbytes, int hPh
 int socket_write(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
 #endif
 {
-    int		ret;
-    size_t	actual = 0;
+	int		ret;
+	size_t		actual = 0;
 
-    do {
-	if ((ret = send(hPhone, buf, nbytes - actual, 0)) < 0) return(actual);
-	actual 	+= ret;
-	buf 	+= ret;
-    } while (actual < nbytes);
-    return (actual);
+	do {
+		if ((ret = send(hPhone, buf, nbytes - actual, 0)) < 0) return(actual);
+		actual 	+= ret;
+		buf 	+= ret;
+	} while (actual < nbytes);
+	return (actual);
 }
 
 GSM_Error socket_close(GSM_StateMachine *s, int hPhone)
@@ -57,6 +57,21 @@ GSM_Error socket_close(GSM_StateMachine *s, int hPhone)
 }
 
 #endif
+
+#ifdef ENABLE_LGPL
+
+GSM_Error lock_device(const char* port, char **lock_device)
+{
+	*lock_device = 0;
+	return GE_NONE;
+}
+
+bool unlock_device(char **lock_file)
+{
+	return true;
+}
+
+#else
 
 #define max_buf_len 	128
 #define lock_path 	"/var/lock/LCK.."
@@ -173,7 +188,7 @@ failed:
 #else
 	*lock_device = 0;
 	return GE_NONE;
-#endif /* WIN32 */
+#endif
 }
 
 /* Removes lock and frees memory */
@@ -192,8 +207,10 @@ bool unlock_device(char **lock_file)
 	return (err + 1);
 #else
 	return true;
-#endif /* WIN32 */
+#endif
 }
+
+#endif
 
 int FindSerialSpeed(char *buffer)
 {

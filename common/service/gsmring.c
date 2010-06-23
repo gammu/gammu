@@ -11,7 +11,7 @@
 #include "../misc/coding/coding.h"
 #include "../gsmstate.h"
 #include "gsmring.h"
-#include "gsmsms.h"
+#include "sms/gsmsms.h"
 
 int GSM_RingNoteGetFrequency(GSM_RingNote Note)
 {
@@ -1312,8 +1312,7 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 		} else break;		
 	}
 
-	for (accuracy=1; accuracy<5; accuracy++)
-	{
+	for (accuracy=1; accuracy<5; accuracy++) {
 		i = 1;
 		while (i < 1000)  {
 		    	Lengths[0] = 30000/i;
@@ -1345,8 +1344,7 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 			i++;
 		}
 
-		if (foundlen)
-		{
+		if (foundlen) {
 			Speed = i;
 			Duration[5] = Duration_1_32; Duration[4] = Duration_1_16;
 			Duration[3] = Duration_1_8;  Duration[2] = Duration_1_4;
@@ -1406,19 +1404,16 @@ GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_Rington
 {
 	dest->Format = Format;
 	CopyUnicodeString(dest->Name,src->Name);
-	if (src->Format==RING_NOTETONE && Format==RING_NOKIABINARY)
-	{
+	if (src->Format==RING_NOTETONE && Format==RING_NOKIABINARY) {
 		RTTL2Binary(dest, src);
 		return GE_NONE;
 	}
-	if (src->Format==RING_NOKIABINARY && Format==RING_NOTETONE)
-	{
+	if (src->Format==RING_NOKIABINARY && Format==RING_NOTETONE) {
 		Binary2RTTL(dest, src);
 		return GE_NONE;
 	}
 	/* The same source and target format */
-	if (src->Format==Format)
-	{
+	if (src->Format==Format) {
 		memcpy(dest,src,sizeof(GSM_Ringtone));
 		return GE_NONE;
 	}

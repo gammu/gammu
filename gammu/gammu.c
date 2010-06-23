@@ -47,14 +47,13 @@
                 			
 GSM_StateMachine		s;
 GSM_Phone_Functions		*Phone;
-static CFG_Header		*cfg 			= NULL;
+static INI_Section		*cfg 			= NULL;
 
 GSM_Error			error 			= GE_NONE;
 static int			i;
 
 volatile bool 			bshutdown 		= false;
 
-/* SIGINT signal handler. */
 void interrupted(int sig)
 {
 	signal(sig, SIG_IGN);
@@ -83,13 +82,47 @@ int printmsgerr(char *format, ...)
 	return result;
 }
 
+static void PrintSecurityStatus()
+{
+	GSM_SecurityCodeType Status;
+
+	error=Phone->GetSecurityStatus(&s,&Status);
+	Print_Error(error);
+	switch(Status) {
+		case GSCT_SecurityCode:
+			printmsg("Waiting for Security Code.\n");	
+			break;
+		case GSCT_Pin:
+			printmsg("Waiting for PIN.\n");			
+			break;
+		case GSCT_Pin2: 
+			printmsg("Waiting for PIN2.\n"); 		
+			break;
+		case GSCT_Puk: 
+			printmsg("Waiting for PUK.\n");			
+			break;
+		case GSCT_Puk2: 
+			printmsg("Waiting for PUK2.\n"); 		
+			break;
+		case GSCT_None: 
+			printmsg("Nothing to enter.\n"); 		
+			break;
+		default: 
+			printmsg("Unknown\n");
+	}
+}
+
 void Print_Error(GSM_Error error)
 {
-	if (error!=GE_NONE) {
-		printf("%s\n",print_error(error,s.di.df,s.msg));
+	if (error != GE_NONE) {
+ 		printf("%s\n",print_error(error,s.di.df,s.msg));
+		if (error == GE_SECURITYERROR) {
+			printmsg("Security status: ");
+			PrintSecurityStatus();
+		}
 		if (s.opened) GSM_TerminateConnection(&s);
-		exit (-1);
-	}
+ 		exit (-1);
+ 	}
 }
 
 void GSM_Init(bool checkerror)
@@ -514,6 +547,7 @@ static void GetAllMemory(int argc, char *argv[])
 	if (mystrncasecmp(argv[2],"ME",0)) Entry.MemoryType=GMT_ME;
 	if (mystrncasecmp(argv[2],"SM",0)) Entry.MemoryType=GMT_SM;
 	if (mystrncasecmp(argv[2],"VM",0)) Entry.MemoryType=GMT_VM;
+	if (mystrncasecmp(argv[2],"FD",0)) Entry.MemoryType=GMT_FD;
 	if (Entry.MemoryType==0) {
 		printmsg("ERROR: unknown memory type (\"%s\")\n",argv[2]);
 		exit (-1);
@@ -548,6 +582,7 @@ static void GetMemory(int argc, char *argv[])
 	if (mystrncasecmp(argv[2],"ME",0)) entry.MemoryType=GMT_ME;
 	if (mystrncasecmp(argv[2],"SM",0)) entry.MemoryType=GMT_SM;
 	if (mystrncasecmp(argv[2],"VM",0)) entry.MemoryType=GMT_VM;
+	if (mystrncasecmp(argv[2],"FD",0)) entry.MemoryType=GMT_FD;
 	if (entry.MemoryType==0) {
 		printmsg("ERROR: unknown memory type (\"%s\")\n",argv[2]);
 		exit (-1);
@@ -580,7 +615,14 @@ static void GetMemory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-#define MemoryLocationToString(x) ( x == GMT_ON ? "ON" : x == GMT_RC ? "RC" : x == GMT_MC ? "MC" : x == GMT_ME ? "ME" : x == GMT_SM ? "SM" : x == GMT_VM ? "MV" : "XX")
+#define MemoryLocationToString(x) ( \
+	x == GMT_ON ? "ON" :			\
+	x == GMT_RC ? "RC" :			\
+	x == GMT_MC ? "MC" :			\
+	x == GMT_ME ? "ME" :			\
+	x == GMT_SM ? "SM" :			\
+	x == GMT_VM ? "VM" :			\
+	x == GMT_FD ? "FD" : "XX")
 
 static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 {
@@ -639,20 +681,20 @@ static void SearchOneMemory(GSM_MemoryType MemoryType, char *Title, unsigned cha
 	Entry.MemoryType  = MemoryType;
 
 	if (Phone->GetMemoryStatus(&s, &Status) == GE_NONE) {
+		fprintf(stderr,"%c%s: %i%%", 13, Title, (i+1)*100/(Status.Used+1));
 		if (Phone->GetNextMemory != NOTSUPPORTED && Phone->GetNextMemory != NOTIMPLEMENTED) {
-			while (1) {
+			while (i < Status.Used) {
 				if (bshutdown) return;
-				fprintf(stderr,"\r%s: %i", Title, i*100/Status.Used);
+				i++;
+				fprintf(stderr,"\r%s: %i%%", Title, (i+1)*100/(Status.Used+1));
 				error = Phone->GetNextMemory(&s, &Entry, start);
 				if (error == GE_EMPTY) break;
-				i++;
 				Print_Error(error);
 				SearchOneEntry(&Entry, Text);
 				start = false;
 			}
 		} else {
 			while (i < Status.Used) {
-				fprintf(stderr,"%c%s: %i", 13, Title, i*100/Status.Used);
 				Entry.Location = l;
 				error = Phone->GetMemory(&s, &Entry);
 				if (error != GE_EMPTY) {
@@ -660,6 +702,7 @@ static void SearchOneMemory(GSM_MemoryType MemoryType, char *Title, unsigned cha
 					i++;
 					SearchOneEntry(&Entry, Text);
 				}
+				fprintf(stderr,"%c%s: %i%%", 13, Title, (i+1)*100/(Status.Used+1));
 				l++;
 			}
 		}
@@ -916,21 +959,28 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool disp
 	}
 }
 
-static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms)
+typedef struct {
+	GSM_MultiBitmap		Bitmap;
+	GSM_Ringtone		Ringtone;
+	char			Buffer[5000];
+} SMSValues;
+
+static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems)
 {
 	GSM_EncodeMultiPartSMSInfo	SMSInfo;
-	GSM_MultiBitmap			Bitmap;
-	GSM_Ringtone			Ringtone;
-	char				Buffer[5000];
+	SMSValues			Values[MAX_MULTI_SMS];
 	bool				RetVal,udhinfo=true;
 	int				j;
 
-	SMSInfo.Entries[0].Bitmap 	= &Bitmap;
-	SMSInfo.Entries[0].Ringtone 	= &Ringtone;
-	SMSInfo.Entries[0].Buffer	= Buffer;
+	for (i=0;i<MAX_MULTI_SMS;i++) {
+		SMSInfo.Entries[i].Bitmap 	= &Values[i].Bitmap;
+		SMSInfo.Entries[i].Ringtone 	= &Values[i].Ringtone;
+		SMSInfo.Entries[i].Buffer	= Values[i].Buffer;
+	}
+	SMSInfo.Unknown = false;
 
 	/* GSM_DecodeMultiPartSMS returns if decoded SMS contenst correctly */
-	RetVal = GSM_DecodeMultiPartSMS(&SMSInfo,&sms);
+	RetVal = GSM_DecodeMultiPartSMS(&SMSInfo,&sms,ems);
 
 	if (eachsms) {
 		if (sms.SMS[0].UDH.Type != UDH_NoUDH && sms.SMS[0].UDH.AllParts == sms.Number) udhinfo = false;
@@ -949,42 +999,71 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms)
 			printf("\n");
 		}
 	}
-	if (RetVal) {
-		if (SMSInfo.Entries[0].Bitmap != NULL) {
-			switch (SMSInfo.Entries[0].Bitmap->Bitmap[0].Type) {
-			case GSM_CallerLogo:
-				printmsg("Caller logo\n\n");
-				break;
-			case GSM_OperatorLogo:
-				printmsg("Operator logo for %s network (%s, %s)\n\n",
-					SMSInfo.Entries[0].Bitmap->Bitmap[0].NetworkCode,
-					DecodeUnicodeConsole(GSM_GetNetworkName(SMSInfo.Entries[0].Bitmap->Bitmap[0].NetworkCode)),
-					DecodeUnicodeConsole(GSM_GetCountryName(SMSInfo.Entries[0].Bitmap->Bitmap[0].NetworkCode)));
-				break;
-			case GSM_PictureImage:
-				printmsg("Picture Image\n");
-				printmsg("Text: \"%s\"\n\n",DecodeUnicodeConsole(SMSInfo.Entries[0].Bitmap->Bitmap[0].Text));
-				break;
-			default:
-				break;
-			}
-			GSM_PrintBitmap(stdout,&SMSInfo.Entries[0].Bitmap->Bitmap[0]);
-			printf("\n");
-		}
-		if (SMSInfo.Entries[0].Buffer != NULL) {
-			printmsg("%s\n",DecodeUnicodeConsole(Buffer));
-		}
-		if (SMSInfo.Entries[0].Ringtone != NULL) {
-			printmsg("Ringtone \"%s\"\n",DecodeUnicodeConsole(SMSInfo.Entries[0].Ringtone->Name));
-			saverttl(stdout,SMSInfo.Entries[0].Ringtone);
+	if (!RetVal) return;
+
+	if (SMSInfo.Unknown) printmsg("Some details were ignored (unknown or not implemented in decoding functions)\n\n");
+
+	for (i=0;i<SMSInfo.EntriesNum;i++) {
+		switch (SMSInfo.Entries[i].ID) {
+		case SMS_NokiaRingtone:
+			printmsg("Ringtone \"%s\"\n",DecodeUnicodeConsole(SMSInfo.Entries[i].Ringtone->Name));
+			saverttl(stdout,SMSInfo.Entries[i].Ringtone);
 			printf("\n");
 			if (s.Phone.Functions->PlayTone!=NOTSUPPORTED &&
 			    s.Phone.Functions->PlayTone!=NOTIMPLEMENTED) {
-				if (answer_yes("Do you want to play it")) GSM_PlayRingtone(*SMSInfo.Entries[0].Ringtone);
+				if (answer_yes("Do you want to play it")) GSM_PlayRingtone(*SMSInfo.Entries[i].Ringtone);
 			}
+			break;
+		case SMS_NokiaCallerLogo:
+			printmsg("Caller logo\n\n");
+			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
+			break;
+		case SMS_NokiaOperatorLogo:
+			printmsg("Operator logo for %s network (%s, %s)\n\n",
+				SMSInfo.Entries[i].Bitmap->Bitmap[0].NetworkCode,
+				DecodeUnicodeConsole(GSM_GetNetworkName(SMSInfo.Entries[i].Bitmap->Bitmap[0].NetworkCode)),
+				DecodeUnicodeConsole(GSM_GetCountryName(SMSInfo.Entries[i].Bitmap->Bitmap[0].NetworkCode)));
+			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
+			break;
+		case SMS_NokiaScreenSaverLong:
+			printmsg("Screen saver\n");
+			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
+			break;
+		case SMS_NokiaPictureImageLong:
+			printmsg("Picture Image\n");
+			if (UnicodeLength(SMSInfo.Entries[i].Bitmap->Bitmap[0].Text)!=0) printmsg("Text: \"%s\"\n\n",DecodeUnicodeConsole(SMSInfo.Entries[i].Bitmap->Bitmap[0].Text));
+			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
+			break;
+		case SMS_NokiaProfileLong:
+			printmsg("Profile\n");
+			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
+			break;
+		case SMS_ConcatenatedTextLong:
+		case SMS_ConcatenatedAutoTextLong:
+		case SMS_ConcatenatedTextLong16bit:
+		case SMS_ConcatenatedAutoTextLong16bit:
+			printmsg("%s\n",DecodeUnicodeConsole(SMSInfo.Entries[i].Buffer));
+			break;
+		case SMS_EMSFixedBitmap:
+		case SMS_EMSVariableBitmap:
+			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
+			break;
+		case SMS_EMSAnimation:
+			/* Can't show animation, we show first frame */
+			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
+			break;
+		case SMS_EMSPredefinedSound:
+			printmsg("\nEMS sound ID: %i\n",SMSInfo.Entries[i].Number);
+			break;			
+		case SMS_EMSPredefinedAnimation:
+			printmsg("\nEMS animation ID: %i\n",SMSInfo.Entries[i].Number);
+			break;			
+		default:
+			printf("Error\n");
+			break;
 		}
-		printf("\n");
 	}
+	printf("\n");
 }
 
 static void IncomingSMS(char *Device, GSM_SMSMessage sms)
@@ -994,7 +1073,7 @@ static void IncomingSMS(char *Device, GSM_SMSMessage sms)
 	printmsg("SMS message received\n");
 	SMS.Number = 1;
 	memcpy(&SMS.SMS[0],&sms,sizeof(GSM_SMSMessage));	
-	displaymultismsinfo(SMS,false);
+	displaymultismsinfo(SMS,false,false);
 }
 
 static void IncomingCB(char *Device, GSM_CBMessage CB)
@@ -1138,11 +1217,13 @@ static void Monitor(int argc, char *argv[])
 		}
 		if (Phone->GetNetworkInfo(&s,&NetInfo)==GE_NONE) {
 			printmsg("Network state     : ");
-                        switch (NetInfo.State) {
-				case GSM_HomeNetwork		: printmsg("home network\n"); 		 break;
-				case GSM_RoamingNetwork		: printmsg("roaming network\n"); 	 break;
-				case GSM_RequestingNetwork	: printmsg("requesting network\n"); 	 break;
-				case GSM_NoNetwork		: printmsg("not logged into network\n"); break;
+                        switch (NetInfo.State) {                                                         	
+				case GSM_HomeNetwork		: printmsg("home network\n"); 		 	break;
+				case GSM_RoamingNetwork		: printmsg("roaming network\n"); 	 	break;
+				case GSM_RequestingNetwork	: printmsg("requesting network\n"); 	 	break;
+				case GSM_NoNetwork		: printmsg("not logged into network\n"); 	break;
+				case GSM_RegistrationDenied	: printmsg("registration to network denied\n");	break;
+				case GSM_NetworkStatusUnknown	: printmsg("unknown\n");			break;
 				default				: printmsg("unknown\n");
 			}
 			if (NetInfo.State == GSM_HomeNetwork || NetInfo.State == GSM_RoamingNetwork) {
@@ -1243,7 +1324,7 @@ static void GetSMS(int argc, char *argv[])
 			}
 			if (sms.SMS[0].InboxFolder) printmsg(", Inbox folder");
 			printf("\n");
-			displaymultismsinfo(sms,false);
+			displaymultismsinfo(sms,false,false);
 		}
 	}
 
@@ -1302,7 +1383,7 @@ static void GetAllSMS(int argc, char *argv[])
 			}
 			if (sms.SMS[0].InboxFolder) printmsg(", Inbox folder");
 			printf("\n");
-			displaymultismsinfo(sms,false);
+			displaymultismsinfo(sms,false,false);
 		}
 		fprintf(stderr,"*");
 		start=false;
@@ -1320,7 +1401,7 @@ static void GetEachSMS(int argc, char *argv[])
 	GSM_MultiSMSMessage	*GetSMS[PHONE_MAXSMSINFOLDER],*SortedSMS[PHONE_MAXSMSINFOLDER],sms;
 	int			GetSMSNumber = 0,i,j;
 	GSM_SMSFolders		folders;
-	bool			start = true;
+	bool			start = true, ems = true;
 
 	GetSMS[0] = NULL;
 
@@ -1359,7 +1440,7 @@ static void GetEachSMS(int argc, char *argv[])
 
 	GSM_Terminate();
 
-	error = GSM_SortSMS(GetSMS, SortedSMS);
+	error = GSM_LinkSMS(GetSMS, SortedSMS, ems);
 	Print_Error(error);
 
 	i=0;
@@ -1378,7 +1459,7 @@ static void GetEachSMS(int argc, char *argv[])
 					printf("\n");
 				}
 			}
-			displaymultismsinfo(*SortedSMS[i],true);
+			displaymultismsinfo(*SortedSMS[i],true,ems);
 		}
 		i++;
 	}
@@ -4136,6 +4217,8 @@ static void Restore(int argc, char *argv[])
 	if (Backup.IMEI[0]!=0) 		printmsgerr("IMEI           : %s\n",Backup.IMEI);
 
 	if (Backup.MD5Calculated[0]!=0) {
+		dbgprintf("\"%s\"\n",Backup.MD5Original);
+		dbgprintf("\"%s\"\n",Backup.MD5Calculated);
 		if (strcmp(Backup.MD5Original,Backup.MD5Calculated)) {
 			if (!answer_yes("Checksum in backup file do not match. Continue")) return;			
 		}
@@ -5107,7 +5190,7 @@ static void RestoreSMS(int argc, char *argv[])
 	while (Backup.SMS[smsnum] != NULL) {
 		SMS.Number = 1;
 		memcpy(&SMS.SMS[0],Backup.SMS[smsnum],sizeof(GSM_SMSMessage));	
-		displaymultismsinfo(SMS,false);
+		displaymultismsinfo(SMS,false,false);
 		sprintf(buffer,"Restore sms to folder \"%s\"",DecodeUnicodeConsole(folders.Folder[Backup.SMS[smsnum]->Folder-1].Name));
 		if (answer_yes(buffer)) {
 			Backup.SMS[smsnum]->Location = 0;
@@ -5671,22 +5754,10 @@ static void GetNote(int argc, char *argv[])
 
 static void GetSecurityStatus(int argc, char *argv[])
 {
-	GSM_SecurityCodeType Status;
-
 	GSM_Init(true);
 
-	error=Phone->GetSecurityStatus(&s,&Status);
-	Print_Error(error);
-	switch(Status) {
-		case GSCT_SecurityCode: printmsg("Waiting for Security Code.\n"); break;
-		case GSCT_Pin         : printmsg("Waiting for PIN.\n"); 		break;
-		case GSCT_Pin2        : printmsg("Waiting for PIN2.\n"); 		break;
-		case GSCT_Puk         : printmsg("Waiting for PUK.\n");		break;
-		case GSCT_Puk2        : printmsg("Waiting for PUK2.\n"); 		break;
-		case GSCT_None        : printmsg("Nothing to enter.\n"); 		break;
-		default		      : printmsg("Unknown\n");
-	}      
-	
+	PrintSecurityStatus();
+
 	GSM_Terminate();
 }
 
@@ -5915,7 +5986,8 @@ static void NokiaSecurityCode(int argc, char *argv[])
 	DCT3GetSecurityCode(argc,argv);
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-	DCT4ResetSecurityCode(argc, argv);
+//	DCT4ResetSecurityCode(argc, argv);
+	DCT4GetSecurityCode(argc,argv);
 #endif
 
 	GSM_Terminate();
@@ -6071,13 +6143,15 @@ static void MakeConvertTable(int argc, char *argv[])
 
 static void ListNetworks(int argc, char *argv[])
 {
-	extern GSM_Network 	GSM_Networks[];
-	int 			i;
+	extern unsigned char *GSM_Networks[];
+	int 			i=0;
 
 	printmsg("Network  Name\n");
 	printmsg("-----------------------------------------\n");
-	for (i = 0; strcmp(GSM_Networks[i].Name, "unknown"); i++)
-		printmsg("%-7s  %s\n", GSM_Networks[i].Code, GSM_Networks[i].Name);
+	while (GSM_Networks[i*2]!=NULL) {
+		printmsg("%-7s  %s\n", GSM_Networks[i*2], GSM_Networks[i*2+1]);
+		i++;
+	}
 }
 
 static void Version(int argc, char *argv[])
@@ -7193,8 +7267,8 @@ static GSM_Parameters Parameters[] = {
 	{"--getalarm",			0, 0, GetAlarm,			{H_DateTime,0},			""},
 	{"--setalarm",			2, 2, SetAlarm,			{H_DateTime,0},			"hour minute"},
 	{"--resetphonesettings",	1, 1, ResetPhoneSettings,	{H_Settings,0},			"PHONE|DEV|UIF|ALL|FACTORY"},
-	{"--getmemory",			2, 3, GetMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME start [stop]"},
-	{"--getallmemory",		1, 1, GetAllMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME"},
+	{"--getmemory",			2, 3, GetMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD start [stop]"},
+	{"--getallmemory",		1, 1, GetAllMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD"},
 	{"--searchmemory",		1, 1, SearchMemory,		{H_Memory,0},			"text"},
 	{"--listmemorycategory",	1, 1, ListMemoryCategory,	{H_Memory, H_Category,0},	"text|number"},
 	{"--getfmstation",		1, 2, GetFMStation,		{H_FM,0},			"start [stop]"},
@@ -7598,8 +7672,8 @@ int main(int argc, char *argv[])
 	}
 
  	/* Help? */
-	if (strncmp(argv[1], "--help", 6) == 0) {
-		Help(argc, argv);
+	if (strncmp(argv[1 + start], "--help", 6) == 0) {
+		Help(argc - start, argv + start);
 		exit(1);
 	}
 
@@ -7610,15 +7684,15 @@ int main(int argc, char *argv[])
 		else only_config = -1;
 	}
 
-	cfg=CFG_FindGammuRC();
+	cfg=GSM_FindGammuRC();
 	for (i=0;i<5;i++) {
 		if (cfg!=NULL) {
-		        cp = CFG_Get(cfg, "gammu", "gammucoding", false);
+		        cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
         		if (cp) di.coding = cp;
 
-		        s.Config[i].Localize = CFG_Get(cfg, "gammu", "gammuloc", false);
+		        s.Config[i].Localize = INI_GetValue(cfg, "gammu", "gammuloc", false);
         		if (s.Config[i].Localize) {
-				s.msg=CFG_ReadFile(s.Config[i].Localize, true);
+				s.msg=INI_ReadFile(s.Config[i].Localize, true);
 			} else {
 #if !defined(WIN32) && defined(LOCALE_PATH)
  				locale = setlocale(LC_MESSAGES, NULL);
@@ -7627,7 +7701,7 @@ int main(int argc, char *argv[])
 							LOCALE_PATH,
 							tolower(locale[0]),
 							tolower(locale[1]));
-					s.msg = CFG_ReadFile(locale_file, true);
+					s.msg = INI_ReadFile(locale_file, true);
 				}
 #endif
 			}
@@ -7636,9 +7710,9 @@ int main(int argc, char *argv[])
 		/* Wanted user specific configuration? */
 		if (only_config != -1) {
 			/* Here we get only in first for loop */
-			if (!CFG_ReadConfig(cfg, &s.Config[0], only_config)) break;
+			if (!GSM_ReadConfig(cfg, &s.Config[0], only_config)) break;
 		} else {
-			if (!CFG_ReadConfig(cfg, &s.Config[i], i) && i != 0) break;
+			if (!GSM_ReadConfig(cfg, &s.Config[i], i) && i != 0) break;
 		}
 		s.ConfigNum++;
 

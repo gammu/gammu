@@ -294,24 +294,23 @@ static int serial_write(GSM_StateMachine *s, void *buf, size_t nbytes)
 	 */
 	if (!fWriteStat) {
 		if(GetLastError() == ERROR_IO_PENDING) {
-		    /* We should wait for the completion of the write operation
-		     * so we know if it worked or not
-		     *
-		     * This is only one way to do this. It might be beneficial to
-		     * place the write operation in a separate thread
-		     * so that blocking on completion will not negatively
-		     * affect the responsiveness of the UI
-		     *          	
-		     * If the write takes too long to complete, this
-		     * function will timeout according to the
-		     * CommTimeOuts.WriteTotalTimeoutMultiplier variable.
-		     * This code logs the timeout but does not retry
-		     * the write.
-		     */
+			/* We should wait for the completion of the write operation
+			 * so we know if it worked or not
+			 *
+			 * This is only one way to do this. It might be beneficial to
+			 * place the write operation in a separate thread
+			 * so that blocking on completion will not negatively
+			 * affect the responsiveness of the UI
+			 *
+			 * If the write takes too long to complete, this
+			 * function will timeout according to the
+			 * CommTimeOuts.WriteTotalTimeoutMultiplier variable.
+			 * This code logs the timeout but does not retry
+			 * the write.
+			 */
 			while(!GetOverlappedResult(d->hPhone, &d->osWrite, &dwBytesWritten, TRUE)) {
 				dwError = GetLastError();
-				if(dwError == ERROR_IO_INCOMPLETE)
-				{
+				if(dwError == ERROR_IO_INCOMPLETE) {
 					/* normal result if not finished */
 					dwBytesSent += dwBytesWritten;
 					continue;
@@ -324,10 +323,10 @@ static int serial_write(GSM_StateMachine *s, void *buf, size_t nbytes)
 			}
 			dwBytesSent += dwBytesWritten;
 		} else {
-		    GSM_OSErrorInfo(s, "serial_write");
-		    /* some other error occurred */
-		    ClearCommError(d->hPhone, &dwErrorFlags, &ComStat);
-		    return dwBytesSent;
+		    	GSM_OSErrorInfo(s, "serial_write");
+		    	/* some other error occurred */
+		    	ClearCommError(d->hPhone, &dwErrorFlags, &ComStat);
+		    	return dwBytesSent;
 		}
 	}
 

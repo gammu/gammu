@@ -1,0 +1,794 @@
+
+Last update 04.07.2002
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Assembled by
+	Balazs Nagy          <js@iksz.hu>
+        Harri Yli-Torkko     <hyt@surfeu.fi>
+	Alfred R. Nurnberger <arnu@flosys.com>
+	Hugh Blemings        <Hugh.Blemings@vsb.com.au>
+	Mike Bradley         <mike@trumpington.st>
+	Odinokov Serge       <serge@takas.lt>
+	Pavel Janik          <Pavel@Janik.cz>
+        BORBELY Zoltan       <bozo@andrews.hu>
+	Pawel Kot            <pkot@linuxnews.pl>
+	Marcin Wiacek        <Marcin@MWiacek.com>
+        Walek                <walek@pa98.opole.sdi.tpnet.pl>
+	... and other members of gnokii mailing list
+            and authors of some WWW pages.
+
+The data provided is for information purposes only. 
+Some of the frames might be hazardous to your phone. Be careful!!! 
+We do not take any responsibility or liability for damages, etc.
+
+NOTE: this information isn't (and can't be) complete.  If you know anything
+about features not listed here or you noticed a bug in this list, please
+notify us via e-mail.  Thank you.
+
+Document describing frames used in
+GSM/PCN Nokia 6110 and derivatives (Nokia 6130, 6150, 6190, 5110, 5130, 5150,
+5190, 3210, 3310)
+Correct format is FBUS version 2/Direct IRDA/MBUS version 2
+(see nokia.txt for protocol details):
+
+ List:
+
+0x00: Monitoring values
+    r monitoring value      {+0x01, 0x01, block... }
+      where block: 0x5e, 0x05, 0x7a(?), 0xd0(?), 0x85(?), 0x02, percentHI, percentLO
+                      Battery percent level
+                   0x5e, 0x0c, 0x52(?), 0x4b(?), 0x6f(?), 0x02, voltageHI, voltageLO
+                      Battery standby voltage
+                   ............
+0x01: Call Information
+    s Make call             { 0x0001, "number", type, block }
+                              where type:
+                                      0x01 - data call
+                                      0x05 - voice call
+			            block:
+				      data call (non digital lines):
+  				        0x02,0x01,0x05,0x81,0x01,0x00,0x00,0x01,0x02,0x0a,
+				        0x07,0xa2,0x88,0x81,0x21,0x15,0x63,0xa8,0x00,0x00
+				      data call (digital lines):
+				        0x02,0x01,0x05,0x81,0x01,0x00,0x00,0x01,0x02,0x0a,
+				        0x07,0xa1,0x88,0x89,0x21,0x15,0x63,0xa0,0x00,0x06,
+				        0x88,0x90,0x21,0x48,0x40,0xbb
+                                      voice call:
+				        0x01, 0x01, 0x05, 0x81/0x00, sendnum, 0x00, 0x00, 0x01
+                                        where:
+                                          sendnum (own number sending):
+                                              0x01: preset (depends on network)
+                                              0x03: on
+                                              0x02: off
+    r Call going msg        { 0x0002 }
+    r Call in progress      { 0x0003, seqnr }
+    r Remote end hang up    { 0x0004, seqnr, ?, error (like in netmon in 39) }
+    r incoming call alert   { 0x0005, seqnr, numlen, "number", namelen, "name" }
+    s Answer call part 2    { 0x0006, seqnr, 0x00 }
+    r answered call         { 0x0007, seqnr }
+    s Hang up               { 0x0008, seqnr, 0x85 }
+    r terminated call       { 0x0009, seqnr }
+    r call msg              { 0x000a, seqnr }
+    r call held             { 0x0023, seqnr, 0x01 }
+    r call resumed          { 0x0025, seqnr, 0x01 }
+    r Send DTMF/voice call  { 0x0040}
+    s Answer call part 1    { 0x0042,0x05,0x01,0x07,0xa2,0x88,0x81,0x21,0x15,0x63,0xa8,0x00,0x00,
+				     0x07,0xa3,0xb8,0x81,0x20,0x15,0x63,0x80 }
+    s Sent after issuing    { 0x0042,0x05,0x81,0x07,0xa1,0x88,0x89,0x21,0x15,0x63,0xa0,0x00,0x06,
+      data call		             0x88,0x90,0x21,0x48,0x40,0xbb,0x07,0xa3,
+      (digital lines)                0xb8,0x81,0x20,0x15,0x63,0x80 }
+    s Sent after issuing    { 0x0042,0x05,0x01,0x07,0xa2,0xc8,0x81,0x21,0x15,0x63,0xa8,0x00,0x00,
+      data call		             0x07,0xa3,0xb8,0x81,0x20,0x15,0x63,0x80,
+      (non digital lines)            0x01,0x60 }
+    s Send DTMF             { 0x0050, length, {ascii codes for DTMF}, 0x01 }
+    
+    Note:
+      to make data call (non digital lines):
+        1.send "Make call" for non digital lines
+	2.send "Sent after issuing data call (non digital lines)"
+      to make data call (digital lines):
+        1.send "Answer call part 1"
+	2.send "Sent after issuing data call (digital lines)"
+        3.send "Make call" for digital lines
+      to answer call:
+        1.send "Answer call part 1"
+        2.send "Answer call part 2"
+
+0x02: SMS handling
+    s Send SMS message      { 0x0001, 0x02, 0x00 (SEND REQUEST), ... }
+    r Message sent          { 0x0002 }
+    r Send failed           { 0x0003, ?, ?, error (like in netmon in 65)}    
+    s Get SMS message       { 0x0007, 0x02, location, 0x01, 0x64 }
+    s Initiate connection   { 0x000d, 0x00, 0x00, 0x02 }
+    r Initiate ACK          { 0x000e, 0x01 }
+    r SMS message received  { 0x0010, ...... } (whole message)
+    s Set CellBroadcast     { 0x0020, 0x01, 0x01, 0x00, 0x00, 0x01, 0x01 }
+                                      for enable cell broadcast ?
+                                      0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
+                                      for disable cell broadcast ?
+    r Set CellBroadcast OK  { 0x0021, 0x01 }
+    r Read CellBroadcast    { 0x0023, ?, ?, ?, channel, ?, message... } ?
+    s Set SMS center        { 0x0030, 0x64, priority, checksum? ,0?, format,
+                                      validity, {DefaultRecipient no.}[12], 
+                                      {SMScenter no.}[12], {SMSC name}, 0x00}
+                              where tel.no.[12]: {len, type, {number(BCD)}}
+                                    type: 0x81: normal
+                                          0x91: + (international)
+                                          0xd0: alphanumeric
+                                    format: 0x00: text
+                                            0x22: fax
+                                            0x24: voice
+                                            0x25: ERMES
+                                            0x26: paging
+                                            0x31: X.400
+                                            0x32: email
+                                    validity: 0x0b:  1 hour
+                                              0x47:  6 hours
+                                              0xa7: 24 hours
+                                              0xa9: 72 hours
+                                              0xad:  1 week
+                                              0xff: max.time
+    r Set SMS center OK     { 0x0031 }
+    r Set SMS center error  { 0x0032, reason }
+    s Get SMS center        { 0x0033, 0x64, priority }
+    r SMS center received   { 0x0034, priority, checksum?, format, 0x00?,
+                                      validity, {DefaultRecipient no.}[12],
+                                      {SMScenter no.}[12], {SMSC name}, 0x00}
+                                      tel.no[12]: {len, type, {number(BCD)}} 
+                              where priority, checksum, type, validity,
+                                    tel.no.[12]: see 0x02/0x0030
+    r SMS center error recv { 0x0035, reason }
+0x03: Phonebook functions
+    s Get mem location      { 0x0001, memtype, location, 0 }
+                            where memory:
+                                     0x01: telephone and SIM phonebook (in one)
+                                     0x02: telephone phonebook
+                                     0x03: SIM phonebook
+                                     0x04: SIM fixdialling-phonebook (?)
+                                     0x05: Own numbers
+                                     0x07: Dialled numbers
+                                     0x08: Missed calls
+                                     0x09: Received calls
+                                     0x0b: voice mailbox (location not important)
+    r mem location recvd    { 0x0002, 0x00,namelen,"name",numlen,"number",groupID, 0x01?, yearLO, yearHI, month, day, hour, minute, sec. }
+                            Note: in 3310 all entries have null name ("feature" of bug ?)
+    r mem loc error recvd   { 0x0003, errtype }
+                            where errtype:
+                                     0x7d: invalid memory type
+                                     0x74: empty location ?
+                                     0x8d: no PIN
+    s Set mem location      { 0x0004, memtype,location,namelen,"Name",numlen,"number",groupID }
+    r mem set OK            { 0x0005 }
+    r mem set error         { 0x0006, errtype }
+                            where errtype: 0x7d: name is too long
+    s Mem status request    { 0x0007, memtype }
+    r Mem status recvd      { 0x0008, memtype, free, used }
+    r Mem status error recv { 0x0009, errtype }
+                            where errtype: 0x6f: mem status error
+                                           0x7d: invalid memory type
+                                           0x8d: waiting for pin
+    s Get caller group data { 0x0010, groupID }
+    r Get caller group data { 0x0011, groupID, size, "Name", ringtoneID, graphic_on?1:0, lenHI, lenLO, OTABitmap (72x14 logo) }
+    r Get call.group error  { 0x0012, reason }
+                            where reason: 0x7d: invalid location
+    s Set caller group data { 0x0013, groupID, size, "Name", ringtoneID, graphic_on?1:0, lenHI, lenLO, OTABitmap (72x14 logo) }
+    r Set caller group OK   { 0x0014 }
+    r Set call.group error  { 0x0015, reason }
+                            where reason: 0x7d: invalid location
+    s Get speed dial        { 0x0016, index(1-9) }
+    r Get speed dial OK     { 0x0017, mem.type, location }
+                            where mem.type: 0x02: ME        (== 0 if not stored)
+                                            0x03: SIM
+                                  location: memory location (== 0 if not stored)
+    r Get speed dial error  { 0x0018 }
+    s Set speed dial        { 0x0019, index(1-9), mem.type, location }
+    r Set speed dial OK     { 0x001a }
+    r Set speed dial error  { 0x001b }
+0x04: Phone Status
+    s Phone status          { 0x0001 }
+    r Phone status          { 0x0002, mode, signal str, ???, pwr, batt.level }
+                            where mode: 1: registered within the network
+                                        2: call in progress
+                                        3: waiting for pin
+                                        4: powered off
+                                  pwr: 1: AC/DC
+                                       2: battery
+    s Request Phone ID      { 0x0003 }
+    r RequestPhone ID       { 0x0004, 0x01,"NOKIA""imei", 0, "model", 0, "prod.code", 0, "HW", 0, "firmware", 0x00, 0x01 }
+0x05: Profile settings
+    s Set profile feature   { 0x0010, 1, nr, feature, a, 1 }
+                            where nr: see 0x05/0x0013
+                                  feature: see 0x05/0x0014
+                                  a: see 0x05/0x0014
+    r Set profile feat. OK  { 0x0011, 1 }
+    s Get profile feature   { 0x0013, 1, nr, feature, 1 }
+                            where nr is profile number (general=0, silent, meeting, outdoor, pager, car, headset=6)
+                                  feature: see 0x05/0x0014
+    r Get profile feature   { 0x0014, 1, nr, feature, 4, a, b, c, d, 1 }
+
+                             Note: Settings num 0x00 .. 0x09 can be assigned
+                             separately to each profile (0x00 .. 0x05), but rest are common
+                             to all profiles.
+
+                             6110
+
+                             Feature  Description                    Value
+                             -------  -------------------            -----------------
+                             0x00     keypad notes                   0xff=off, 0x00=level 1, 0x01=level 2, 0x02=level 3
+                             0x01     lights (? only in car profile) 0x00=off, 0x??=on (maybe 0x01)
+                             0x02     incoming call alert            1=ringing, 2=beep once, 3=unknown, 4=off, 5=ring once,
+                                                                     6=ascending, 7=caller groups (see feature #0x08)
+                             0x03     ringing tone ID                for original 6110: 0x12=ring ring, 0x13=low, etc.
+                             0x04     ringing volume                 level 1 (0x06) - level 5 (0x0a)
+                             0x05     message alert tone             0=no tone, 1=standard, 2=special, 3=beep once, 4=ascending
+                             0x06     vibration                      0=off, 1=on
+                             0x07     warning and game tones         0xff=off, 0x04=on
+                             0x08     incoming caller groups         1=family, 2=VIP, 4=friends, 8=collegues, 16=other
+                             0x09     automatic answer               0x00=off, 0x01=on 
+                             -------------------------
+                             0x16     Anykey answer                  0x00=Off, 0x01=On
+                             0x17     ???                            0x00 | 0x01
+                             0x18     Memory in use                  0x00=Phone, 0x01=SIM card
+                             0x19     Network selection              0x00=Automatic, 0x01=Manual
+                             0x1a     Automatic redial               0x00=Off, 0x01=On
+                             0x1b     ???                            0x00 | 0x01
+                             0x1c     ???                            0x00...0x18
+                             0x1d     Speed dialling                 0x00=Off, 0x01=On
+                             0x1e     Own number sending             0x00=Preset, 0x01=On, 0x02=Off
+                             0x1f     Cell info display              0x00=Off, 0x01=On
+                             0x21     Language                       0x00=English
+                                                                     0x01=Deutsch
+                                                                     0x02=Francais
+                                                                     0x03=Italiano
+                                                                     0x06=Nederlands
+                                                                     0x07=Dansk
+                                                                     0x08=Svenska
+                                                                     0x09=Suomi
+                                                                     0x0e=Norsk
+                                                                     0x10=Automatic
+                             0x26     Reply via same centre          0x00=No, 0x01=Yes
+                             0x27     Delivery reports               0x00=No, 0x01=Yes
+                             0x28     Hide clock                     0x00=Show clock, 0x01=Hide clock
+                             0x29     Time format                    0x00=24-hour, 0x01=12-hour
+                             0x2a     Selected profile               0x00=General, 0x01.. the rest
+
+                             33x0
+
+                             Feature  Description                    Value
+                             -------  -------------------            -----------------
+                             0x00     keypad notes                   0xff=off, 0x00=level 1, 0x01=level 2, 0x02=level 3
+                             0x01     incoming call alert            1=ringing, 2=beep once, 3=unknown, 4=off, 5=ring once,
+                                                                     6=ascending
+                             0x02     ringing tone ID                
+                             0x03     ringing volume                 level 1 (0x06) - level 5 (0x0a)
+                             0x04     message alert tone             0=no tone, 1=standard, 2=special, 3=beep once, 4=ascending
+                             0x05     vibration                      0=off, 1=on, 2=vibrate first
+                             0x06     warning tones                  0xff=off, 0x04=on
+                             0x07     screen saver                   1=on, 0=off
+                             0x08     Screen saver -> Timeout        0x00=5 sec, 0x01=20 sec,....
+                             0x09     Screen saver -> Screen saver   0x00 ... 0x0d = Number of picture image
+                             -------------------------
+                             0x0a:    ???:
+                             ...:     ???:
+                             0x15:    ???: Read only?
+                             -------------------------
+                             0x16:    ???:                           0x00=??? 0x01=???
+                             0x17:    Memory in use (Nokia 3330):    0x00=Phone, 0x01=SIM card
+                             0x18:    Network selection:             0x00=Automatic, 0x01=Manual
+                             0x19:    Automatic redial:              0x00=Off, 0x01=On
+                             0x1a:    Speed dialling:                0x00=Off, 0x01=On
+                             0x1b:    Own number sending:            0x00=Set by network, 0x01=On, 0x02=Off
+                             0x1c:    Cell info display:             0x00=Off
+                             0x1d:    Type of view:                  0x00=Name list,0x01=Name, number,0x02=Large font
+                             0x1e:    Language:                      0x00=English
+                                                                     0x07=Dansk
+                                                                     0x08=Svenska
+                                                                     0x09=Suomi
+                                                                     0x0c=Turcke
+                                                                     0x0e=Norsk
+                                                                     0x10=Automatic
+                             0x32:    Reboots ME (3330)
+                             0x1f:    ???: Read only? (3330)
+                             0x20:    Reply via same centre:         0x00=No, 0x01=Yes
+                             0x21:    Delivery reports:              0x00=No, 0x01=Yes	
+                             0x22:    Show/Hide clock:               0x00=Show, 0x01=Hide
+                             0x23:    Time format:                   0x00=24-hour, 0x01=12-hour
+                             0x24:    Select profile:                0x00=General, 0x01 ... 0x05=rest of them
+                             0x25:    ???: Read only? (N3330)
+                             0x26:    Confirm SIM service actions:   0x00=Not asked, 0x01=Asked
+                             0x27:    T9 Dictionary:                 0x00=Off, 0x01=English, 0x0a=Suomi
+                             0x28:    Messages -> Character support: 0x00=Automatic, 0x01=GSM alphabet, 0x02=Unicode
+                             0x29:    Startup logo settings:         0x00=Your own uploaded logo,0x01=Nokia
+                                                                     0x02=Draft HUMAN technology(tm),0x03=Itineris
+                             0x2a:    ???:                           0x00=??? 0x01=???
+                             0x2b:    ???:                           0x00=??? 0x01=???
+                             0x2c:    ???: Read only? (N3330)
+                             0x2d:    Auto update of date and time:  0x00=Off,0x01=Confirm first,0x02=On
+
+    s Get welcome message   { 0x0016 }
+    r Get welcome message   { 0x0017, no.of blocks, { block } * }
+                            where block: { id, {blockspecific} }
+                                  id: 1: startup logo { y, x, picture (coding?) }
+                                      2: welcome note { len, "message" }
+                                      3: operator msg { len, "message" }
+    s Set welcome message   { 0x0018, no.of blocks, { block } * }
+                            where block: see 0x05/0x0017
+    r Set welcome OK        { 0x0019, 0x01 }
+    s Get profile name      { 0x001a, nr }
+                            where nr: see 0x05/0x0013
+    r Profile name          { 0x001b, 1, 1, 3, flen, nr, len, {text} }
+                            where nr: see 0x05/0x0013
+                                  len: text length 
+                                  flen len + len(nr, len) = len + 2
+                            Note: in Nokia 3310 name is in Unicode
+    s ???                   { 0x001c }
+    r ???                   { 0x001d, 0x93 }
+    s Set oplogo            { 0x0030, location, MCC1, MCC2, MNC, lenhi=0x00, lenlo=0x82, OTABitmap }
+    r Set oplogo OK         { 0x0031 }
+    r Set oplogo error      { 0x0032, reason }
+                            where reason: 0x7d invalid location
+    s Get oplogo            { 0x0033, location }
+                            where location: 1 (doesn't seem to matter)
+    r Get oplogo            { 0x0034, location, MCC1, MCC2, MNC, lenhi=0x00, lenlo=0x82, OTABitmap }
+    r Get oplogo error      { 0x0035, reason }
+                            where reason: 0x7d invalid location
+    s Set ringtone          { 0x0036, location,0x00,0x78, ringtone packed according to SM2.0}
+    r Set ringtone OK       { 0x0037 }
+    r Set ringtone error    { 0x0038, reason }
+                            where reason=0x7d, when not supported location
+    s Get services settings { 0x0080, setting (2 bytes) }
+                            where: setting: 0x02,0x00=Nokia access number 1
+                                            0x02,0x01=Operator access number 1
+                                            0x01,0x00=Personal bookmark 1 settings (name only ?)
+                                            0x01,0x01=?
+                                            0x02,0x02=?
+    r Get services sett.OK  { 0x0081, .... }
+    r Get services sett.err { 0x0082, 0x7b }
+0x06: Calling line restriction/Call forwarding etc
+    r Get call divert       { 0x0001, 0x02, x, 0x00, divtype, 0x02, calltype, y, z, 0x0b, number, 0x00...0x00, timeout (byte 45) }
+    s Set call divert       { 0x0001, 0x03, 0x00, divtype, calltype, 0x01, number(packed like in SMS), 0x00 ... 0x00,
+                                      length of number (byte 29), 0x00 ... 0x00, timeout (byte 52), 0x00, 0x00, 0x00}
+                            NOTE: msglen=0x37
+                            where timeout:
+                              0x00: not set ?
+                              0x05: 5 second
+                              0x0a: 10 second
+                              0x0f: 15 second
+                              0x14: 20 second
+                              0x19: 25 second
+                              0x1e: 30 second
+                            where divtype:
+                              0x02: all diverts for all call types ?
+                                    Found only, when deactivate all diverts for all call types (with call type 0x00)
+                              0x15: all calls
+                              0x43: when busy
+                              0x3d: when not answered
+                              0x3e: if not reached
+                            calltype:
+                              0x00: all calls (data, voice, fax)
+                              0x0b: voice calls
+                              0x0d: fax calla
+                              0x19: data calls
+    s Deactivate calldiverts{ 0x0001, 0x04, 0x00, divtype, calltype, 0x00 }
+                            where divtype, calltype: see above
+    r Deactivate calldiverts{ 0x0002, 0x04, 0x00, divtype, 0x02, calltype, data }
+    s Get call diverts      { 0x0001, 0x05, 0x00, divtype, calltype, 0x00 }
+                            where divtype, calltype: see above
+    r Get call diverts ok   { 0x0002, 0x05, 0x00, divtype, 0x02, calltype, data }
+                            where divtype, calltype: see above
+			          data: { 0x01, 0x00 } - isn't active
+				        { 0x02, 0x01, number(packed like in SMS), 0x00, 0x00..., timeout }
+    r Get prepaid(?) info   { 0x0005, ?,?,?,length,message(packed like in 7bit SMS)}
+    r Call diverts active   { 0x0006, ??? }
+0x07:
+    s ???                   { 0x0022, ? (1&2 sounds OK) }
+    r ??? OK                { 0x0023, ?,?,? }
+    r ??? error             { 0x0024, reason }
+    s ???                   { 0x0025, ??? }
+    r ??? OK                { 0x0026, ??? }
+    r ??? error             { 0x0027, reason }
+0x08: Security codes
+    s Change code           { 0x0004, code, "current", 0x00, "new", 0x00 }
+                            where code: 1: security code (5 chars)
+                                        2: PIN (4 chars)
+                                        3: PIN2 (4 chars)
+                                        4: PUK (8 chars)
+                                        5: PUK2 (8 chars)
+    s Status request        { 0x0007, 0x01 }
+    r pin recvd             { 0x0008, accepted }
+                            where accepted: 0x0c (or 0x06): OK
+                                            code: waiting for (0x08/0x0004) code
+    s entering code         { 0x000a, code, "code", 0x00 }
+                            where code: see 0x08/0x0004
+0x09: SIM login
+    r login                 { 0x0080 }
+    r logout                { 0x0081 }
+0x0a: Network status
+    s Key duplication on/off{ 0x0044, on? 0x01: 0x02 }
+    s get used network      { 0x0070 }
+    r network registration  { 0x0071, ?,?,?,length,netstatus,netsel,cellIDH,cellIDL,lacH,lacL,netcode,netcode,netcode }
+0x0c: Keys
+    s Get key assignments   { 0x0040, 0x01 }
+    r Get key assignments   { 0x0041, {key '1'}, 0x00, {key '2'} ... {key '0'}, 0,0,0, {symbols}, 0 }
+                            where {key '0'} => ' ', '0'
+    s Press key             { 0x0042, press: 0x01; release: 0x02, button, 0x01 }
+                            where button: 0x01 - 0x09: 1-9
+                                          0x0a: 0
+                                          0x0b: #
+                                          0x0c: *
+                                          0x0d: Power
+                                          0x0e: Pick up phone
+                                          0x0f: Hang
+                                          0x10: Volume +
+                                          0x11: Volume -
+                                          0x17: Up
+                                          0x18: Down
+                                          0x19: Menu
+                                          0x1a: Names
+                                          0x1B onwards: don't know but they do produce
+                                               a beep and light up the keypad as if
+                                               a key had been pressed. 
+    r Press key ack         { 0x0043, press/release/error(0x05) }
+    s ???                   { 0x0044 }
+    r ??? ack               { 0x0045, 0x01 }
+0x0d: Status
+    r Display               { 0x0050, 0x01, y, x, len, "string"(unicode) }
+    s Status request        { 0x0051 }
+    r Status                { 0x0052, no. of byte pairs, {byte pair} }
+                            where {byte pair}: {cmd, 1:off 2:on}
+                            cmd: 1: call in progress
+                                 2: ???
+                                 3: have unread sms
+                                 4: voice call active
+                                 5: fax call active
+                                 6: data call active
+                                 7: key lock active
+                                 8: is SMS storage full
+    s Display status        { 0x0053, 1:on 2:off }
+                            (will send displayed messages with x,y coordinates)
+    r Display status ack    { 0x0054, 1 }
+0x11: Phone clock & alarm
+    s set date and time     { 0x0060, 1,1,7,yearh,yearl,month,mday,hour,min,0x00 }
+    r date and time set     { 0x0061 }
+    s get date and time     { 0x0062 }
+    r date and time recvd   { 0x0063,date_set?,time_set?,?,?,yearh,yearl,month,mday,hour,min,second }
+                            where: date_set & time_set==0x01 - set
+			                                0x00 - not set, ?,?,yearh,yearl,month,mday,hour,min,second
+                                                               not available in frame
+    s set alarm             { 0x006b, 1,32,3,0x02(on-off),hour,min,0x00 }
+    r alarm set             { 0x006c }
+    s get alarm             { 0x006d }
+    r alarm received        { 0x006e,?,?,?,?,alrm(==2:on),hour,min }
+0x12: Connect to NBS port (61xx only ?)
+    s Send                  {+0x0c, 0x01, UDH header, data}
+                            (without 0,1 header  -- for oplogo, cli, ringtone etc upload)
+			    where: UDH header = 0x06, 0x05, 0x04,destporth,destportl,srcporth,srcportl
+0x13: Calendar notes
+    s Write calendar note   { 0x0064, 0x01, 0x10, length, type, yearH, yearL, month, day, hour, timezone,
+                              alarm?(alarm yearH, yearL, month, day, hour, timezone): (0,0,0,0,0,0),
+                              textlen, "text" }
+    r Write cal.note report { 0x0065, return }
+                            where return: 0x01: ok
+                                          0x73: failure
+					  0x81: calendar functions busy. Exit Calendar menu and try again
+    s Calendar notes set    { 0x0066... }
+    r Calendar note recvd   { 0x0067, 0x01, ?, length, type, yrH,yrL,mon,day,hr,tz,alrm yrH,yrL,mon,day,hr,tz,textlen, "text" }
+    r Cal.note recvd error  { 0x0067, err }
+                            where err: 0x93: not available
+                                      (0x01: OK)
+                                       other: error
+    s Delete cal.note       { 0x0068, location }
+    r Del. cal.note report  { 0x0069, err }
+                            where err: 0x01: OK
+                                       0x93: cannot delete
+0x14: SMS funcs
+    s Write SMS to SIM      { 0x0004, .... }
+    s Mark SMS as read      { 0x0007, 0x02, location, 0x00, 0x64 }
+    r SMS message frame rcv { 0x0008,subtype,?,num,?,BCD(smscenter)...} 20->type, 22->status
+                            where type: 0x06: delivery report 
+                                  status: 0x00: delivered
+                                          0x30: pending
+                                          0x46: failed
+                                          0x09: reading failed
+                                  subtype: 0x02: invalid mem type
+                                           0x07: empty SMS location
+					   0x0c: no access to memory (no PIN in card, etc.)
+    s Delete SMS message    { 0x000a, 0x02, location }
+    r Delete OK             { 0x000b }
+    s SMS status request    { 0x0036, 0x64 }
+    r SMS status            { 0x0037,?,?,?,?,?,?,msgnumber,unread }
+    r SMS status error      { 0x0038 }
+0x3f: WAP 
+    s Enable WAP frames     { 0x0000}
+    r Enable WAP frames     { 0x0002, 0x01}
+
+    s  ??                   { 0x0003}
+    r  ??                   { 0x0004}
+
+    s Get WAP bookmark      { 0x0006, 0x00, location}
+                              where location: 0 - 14
+    r Get WAP bookmark      { 0x0007, 0x00, name_len, name(unicode),
+                              url_len, url(unicode), 0x01,0x80,0x00[7]}
+    r Get WAP bookmark err  { 0x0008, error }
+                              where error:
+                                0x00(?)invalid position
+                                0x01   user inside "Bookmarks" menu. Must leave it
+                                0x02   invalid/too high/empty location
+
+    s Set WAP bookmark      { 0x0009, 0xff, 0xff, name_len, name(unicode),
+                              url_len, url(unicode), 0x01,0x80,0x00[7] }
+                              Note: bookmark is added to the first free location.
+    r Set WAP bookmark OK   {+0x01, 0x36, 0x0a, block }
+                              where block:
+                                0x0a, location_of_just_written_bookmark(?),
+                                0x00, next_free_location(?)
+    r Set WAP bookmark err  {+0x01, 0x36, 0x0b, error }
+                              where error:
+                               0x04 - memory is full
+                               0x01 - we are in the bookmark menu
+                               0x00 - unknown reason for now ;(
+
+?   s Delete WAP bookmark   { 0x000c, 0x00, location }
+                              where: location = 0-14
+?   r Delete WAR bookmark OK{ 0x000d }
+?   r Delete WAPbookmark err{ 0x000e, 0x02 }
+
+    s ??                    { 0x000F}
+    r ??                    { 0x0010, 0x00}
+
+    s Get WAP settings 1    { 0x0015, location}
+                            where location: 0x00 - 0x05
+    r Get WAP settings 1 OK { 0x0016, title length, title (Unicode), URL length, URL(Unicode),con_type, ???[6 bytes],location, ???[5 bytes],security,...}
+                            where:
+                              con_type: 0x00 - temporary
+                                        0x01 - continuous
+                              location: when use "Get WAP settings 2 frame", must give it
+                              security: 0x00 = no, 0x01 = yes
+    r Get WAP settings 1 err{ 0x0017, error }
+                              where error:
+                                0x01   user inside "Settings" menu. Must leave it
+                                0x02   invalid/too high/empty location
+
+    s Get WAP settings 2    { 0x001b, location}
+                            where location: 0x00 - 0x1d (you get it in "Get WAP settings 1" frame)
+    r Get WAP settings 2 OK { 0x001c, 0x01, type, frame...}
+                            where type : 0x00 - SMS bearer
+                                           frame:
+                                             service_num_len, service_num (Unicode), server_num_len, server_num(Unicode)
+                                         0x01 - data bearer
+                                           frame:
+                                             auth, call_type, call_speed, ?, IP len, IP (Unicode), dialup len, dialup (Unicode),
+                                             user len, user (Unicode), password len, password (Unicode)
+                                             where auth: 0x00 - normal, 0x01 - secure
+                                                   call_type: 0x00 - analogue, 0x01 - ISDN
+                                                   call_speed: 0x00 - 9600, 0x01 - 14400
+					 0x02 - USSD bearer
+					   frame: type, service number len/IP len,service num (Unicode)/IP (Unicode),service code len,
+					          service code (Unicode)
+					     where type: 0x01 - service number, 0x00 - IP
+    r Get WAP settings 2 err{ 0x001d,error}
+                            where: error=0x05    
+0x40: Security commands
+    s ???                   {+0x00, 0x00, 0x07, 0x11, 0x00, 0x10, 0x00, 0x00}
+                            This frame hangs phone (N3310 4.02). Meaning unknown !
+    s Open simlock 1        { 0x02, 0x03, 0x1f, 0x11, 0x01, 0x01, 0x10, 0x00}
+    r Open simlock 1        { 0x02 }
+    s ???(N6150)            { 0x08, 0x00 }
+    r ???(N6150)            { 0x08 }
+    s Enable extended cmds  { 0x64, cmd }
+                            where cmd: 0x00: off
+                                       0x01: on
+				       0x02: enter service mode ?
+                                       0x03: reset (doesn't ask for PIN again)
+                                       0x04: reset (PIN is requested)
+                                             In 5110 makes reset without PIN
+                                       0x06: CONTACT SERVICE!!! Don't try it!
+    s Reset phone settings  { 0x65, value, 0x00 }
+                            where value: 0x08 - reset UI (User Interface) settings
+			                 0x38 - reset UI, SCM and call counters
+                                         0x40 - reset test 36 in netmonitor
+    r Reset phone settings  { 0x65, 0x00 }
+    s Get IMEI              { 0x66 }
+    r Get IMEI              { 0x66, 0x01, IMEI, 0x00}
+    s (ACD Readings)?(N6150 { 0x68 }
+    r (ACD Readings)?(N6150 { 0x68, ... }
+    s Get Product Profile
+      Settings              { 0x6a}
+    r Get Product Profile
+      Settings              { 0x6a, 4bytes with Product Profile Settings }
+    s Set Product Profile
+      Settings              { 0x6b, 4bytes with Product Profile Settings }
+    r Set Product Profile
+      Settings OK ?         { 0x6b }
+    s Get code              { 0x6e, code }
+                            where code: see 0x08/0x0004 (only sec.code is allowed)
+    r Get code              { 0x6e, code, allowed, allowed? (sec code (text)) }
+                            where code: see 0x08/0x0004
+                                  allowed: 0: no
+                                           1: yes
+    s Set code              { 0x6f, code, sec code(text), 0x00 }
+                            where code: see 0x08/0x0004
+    s Start monitoring      { 0x70, block }
+                            where block(N6150):
+                              0x7f,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                              0xff,0xff,0xff,0xff,0xff,0xf9,0x76,0x65,0x20,0x00,
+                              0x00,0x00,0x00,0x00,0x18,0x26,0x15,0x7d,0x0a,0x00,
+                              0xf5,0x82,0x7f,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+                              0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xf0,0x77,0x80,
+                              0x77,0x80,0xf2,0x82,0x20,0x20,0x20,0x20,0x20,0x20,
+                              0x20,0x20,0x20,0x20
+                            This block enables probably all possible monitorred parameters.
+                            After it phone sends 0x00 message type values
+    s Break monitoring      { 0x71 }
+    r Break monitoring      { 0x71 }
+?   s ????                  { 0x74, 0x01, 0x01, 0x0e }
+?   r ????                  { 0x74 }
+    s Call commands         { 0x7c, block }
+                            where where: command, (values)
+			          command: 0x01
+				      values: number(ASCII), 0x00 - makes voice call
+				  command: 0x02 - answer call
+				  command: 0x03 - release call
+    r Call commands         { 0x7c, command }
+    s Netmonitor            { 0x7e, field }
+                            where: field: 00: next
+                                          F0: reset
+                                          F1: off
+                                          F2: field test menus
+                                          F3: developer menus
+    s Open simlock 2        { 0x81, 0x01, locknumber, 0x10, 0x10, 0x10, 0x10, 0x10 }
+                            Note: sets simlock type to factory?
+			    where locknumber: 1,2,4,8
+    s Open simlock 2        { 0x81, 0x01, locknumber }
+			    where locknumber: 1,2,4,8
+    s Close simlock         { 0x82, 0x01, locknumber, 0x00, 0x00, locksinfo(lock1,4,2,3), 0x00 }
+                            where locknumber: 1,2,4,8
+    r Close simlock         { 0x82, the rest like in 0x40/0x8a }
+    s Get simlock info      { 0x8a, 0x00}
+    r Get simlock info      { 0x8a, 0x00, 0x01, lockstype, locksclosed, 0x00, 0x00, locksinfo(lock1,4,2,3), counter1,counter2,counter4,counter4,0x00 }
+                            where: lockstype:   bit1,bit2,bit3,bit4 - if set, selected lock is user lock
+                                   locksclosed: bit1,bit2,bit3,bit4 - if set, selected lock is closed
+                                   counter1 - counter4: counters for locks
+    s Set downloaded OpName { 0x8b, 0x00, MCC1, MCC2, MNC, Name, 0x00 }
+    r SetdownloadedOpNameOK?{ 0x8b, 0x00, 0x01 }
+    s Get downloaded OpName { 0x8c, 0x00 }
+    r Get downloaded OpName { 0x8c, 0x00, 0x01, MCC1, MCC2, MNC, Name, 0x00,...}
+    s Buzzer pitch          { 0x8f, volume, hzLO, hzHI }
+                            if volume and hz is 0, it's off
+    r Buzzer pitch          { 0x8f}
+    s ACD Readings ?        { 0x91, parameter?(0x02,0x03,0x04,0x05,0x07) }
+    r ACD Readings ?        { 0x91, parameter?, value? }
+    s Sleep mode test       { 0x92, 0x00, 0x00, howlong(2 bytes), enable }
+                            where: enable == 0x01 - enable after test
+			                     0x00 - don't enable after test
+				   howlong (ms) = 0x07, 0xd0 = 2000
+    s ???(N6150)            { 0x98, 0x00 }
+    r ???(N6150)            { 0x98, 0x00, 0x04 }
+    s Get bin ringtone      { 0x9e, location }
+                            where: location=0,1,etc.
+    r Get bin ringtone      { 0x9e, location, error, contents... }
+                            where location=0,1,etc.
+                                  error=0x0a, ringtone NOT available
+                                        0x00, OK
+    s Set bin ringtone      { 0xa0, location, 0x00, contenst... }
+                            where: location=0,1,etc.
+    r Set bin ringtone      { 0xa0, location, error }
+                              where location=0,1,etc.
+                                    error=0x0a, ringtone NOT set
+                                          0x00, ringtone set OK
+    r Get MSid              { 0xb5, 0x01, 0x2f, msid, 0x25 }
+    s Get info about phone  { 0xc8, 0x01 }
+    r Get info about phone  { 0xc8, 0x01, 0x00, "V ", "firmware", 0x0a, "firmware date", 0x0a, "model", 0x0a, "(c) NMP.", 0x00 }
+    s Get MCU SW Checksum   { 0xc8, 0x02 }
+    r Get MCU SW Checksum   { 0xc8, 0x02, 0x00, checksum (4 bytes),0x00 }
+    s DPS External SW       { 0xc7, 0x03 }
+    r DSP External SW       { 0xc7, 0x03, 0x00, string,0x00 }
+    s Get HW                { 0xc8, 0x05 }
+    r Get HW                { 0xc8, 0x05, 0x00, HW version (4 bytes), 0x00 }
+    s Get "Made" Date       { 0xc8, 0x05 }
+    r Get "Made" Date       { 0xc8, 0x05, 0x00, date(4 bytes), 0x00 }
+    s Get DSP Internal SW   { 0xc8, 0x09 }
+    r Get DSP Internal SW   { 0xc8, 0x09, 0x00, version (1 bytes), 0x00 }
+    s Get PCI version       { 0xc8, 0x0b }
+    r Get PCI version       { 0xc8, 0x0b, 0x00, version, 0x00 }
+    s Get system ASIC       { 0xc8, 0x0c }
+    r Get system ASIC       { 0xc8, 0x0c, 0x00, string, 0x00 }
+    s Get COBBA             { 0xc8, 0x0d }
+    r Get COBBA             { 0xc8, 0x0d, 0x00, string, 0x00 }
+    s Get PLUSSA            { 0xc8, 0x0e }
+    r Get PLUSSA            { 0xc8, 0x0e, available, 0x00 }
+                            where available: 0x01: not available
+    s Get CCONT             { 0xc8, 0x0f }
+    r Get CCONT             { 0xc8, 0x0f, available, 0x00 }
+                            where available: 0x01: not available
+    s Get PPM version       { 0xc8, 0x10 }
+    r Get PPM version       { 0xc8, 0x10, 0x00, "V ", "firmware", 0x0a, "firmware date", 0x0a, "model", 0x0a, "(c) NMP.", 0x00 }
+    s Get PPM info          { 0xc8, 0x12 }
+    r Get PPM info          { 0xc8, 0x12, 0x00, PPM version ("B", "C", etc.), 0x00 }
+    s Set HW version        { 0xc9, 0x05, version, 0x00 }
+    s Get Product Code      { 0xca, 0x01 }
+    r Get Product Code      { 0xca, 0x01, 0x00, number, 0x00 }
+    s Get Order Number      { 0xca, 0x02 }
+    r Get Order Number      { 0xca, 0x02, 0x00, string, 0x00 }
+    s Get Prod.Ser.Number   { 0xca, 0x03 }
+    r Get Prod.Ser.Number   { 0xca, 0x03, 0x00, number, 0x00 }
+    s Get Basic Prod.Code   { 0xca, 0x04 }
+    r Get Basic Prod.Code   { 0xca, 0x04, 0x00, number, 0x00 }
+    s Set Product Code      { 0xcb, 0x01, product code, 0x00 }
+    s Set Order Number      { 0xcb, 0x02, number, 0x00 }
+    s Set Prod.Ser.Number   { 0xcb, 0x03, number, 0x00 }
+    s Get (original ?)IMEI  { 0xcc, 0x01 }
+    r Get (original ?)IMEI  { 0xcc, 0x01, IMEI, 0x00 }
+    s Get Manufacture Month { 0xcc, 0x02 }
+    r Get Manufacture Month { 0xcc, 0x02, 0x00, string, 0x00 }
+    s Get Purchare date     { 0xcc, 0x04 }
+    r Get Purchare date     { 0xcc, 0x04, 0x00, string, 0x00 }
+    s Set "Made" date       { 0xcd, 0x02, string, 0x00 }
+    s Make "all" phone tests{ 0xce,0x1d,0xfe,0x23,0x00,0x00}
+    s Make one phone test   { 0xce,0x1d,num1,num2,num3,num4}
+                            Where num1-num4: 0x02,0x00,0x00,0x00;
+                                             0x04,0x00,0x00,0x00;
+                                             0x08,0x00,0x00,0x00;
+                                             0x10,0x00,0x00,0x00;
+                                             0x20,0x00,0x00,0x00;
+                                             0x40,0x00,0x00,0x00;
+                                             0x80,0x00,0x00,0x00;
+                                             0x00,0x01,0x00,0x00;
+                                             0x00,0x02,0x00,0x00;
+                                             0x00,0x04,0x00,0x00; - "Power off"
+                                               No test for "Security data"
+                                             0x00,0x10,0x00,0x00;
+                                             0x00,0x20,0x00,0x00;
+                                             0x00,0x40,0x00,0x00;
+                                             0x00,0x80,0x00,0x00;
+                                             0x00,0x00,0x01,0x00;
+                                             ....
+                                             0x00,0x00,0x10,0x00;
+    s Result of phone tests { 0xcf }
+    r Result of phone tests { 0xcf, number of tests, results of next tests }
+    s ???                   { 0xd1 }
+    r ???(N5110)            { 0xd1, 0x00, 0x1d, 0x00, 0x01, 0x08, 0x00 }
+    s LCD Test              { 0xd3, value }
+                            where value: 0x03, 0x02 - 1'st test
+                                         0x03, 0x01 - 2'nd test
+                                         0x02, 0x03 - clears screen
+    s ACD Readings(N6150)?  { 0xd4, 0x02, 0x00, 0x02, 0x00, 0x0e, 0x01}
+    r ACD Readings(N6150)?  { 0xd4, 0x02, 0x00, 0x02, 0x00, 0x0e, 0x01, ?}
+    s Get EEPROM            { 0xd4, 0x02, 0x00, 0xa0, locationLo, locationHi, numofbytes }
+                            where: numofbytes - how many bytes to read
+			    Note: Works ONLY in MBUS
+    r Get EEPROM            { 0xd4, 0x02, 0x00, 0xa0, locationLo, locationHi, numofbytes, contest... }
+                            where numofbytes - how many bytes available
+			             contest - bytes with contests (if numofbytes != 0)
+0x41: Snake game ?
+0x47:
+    s Get Picture Image     { 0x0001, location }
+    r Get Picture Image     when contains sender number
+                            { 0x0002, location, number(like in SMS), 0x00, len, text, 0x00, width, height, 0x01, bitmap }
+			    NOTE:
+                              Supports only 0x81 and 0x91 coding (NOT alphanumeric numbers!)
+                              in sender without sender number
+                            { 0x0002, location, 0x00, 0x00, 0x00, len, text, 0x00, width, height, 0x01, bitmap }
+    s Set Picture Image     { 0x0003, frame...}
+                            where frame: see 0x47/0x0002
+    r Get/Set PictureImageOK{ 0x0004 }
+    r Set Picture Image err { 0x0005, error? }
+                            where error=0x74 - wrong location ?
+0x64:
+    s Phone ID request      { 0x0010 }
+    r Phone ID recvd        { 0x0011, "NOKIA", "imei", 0, "model", 0, "prod.code", 0, "HW", 0, "firmware", magic bytes x 4 ... }
+    s Accessory connection  { 0x0012, 16x0x00, 'NOKIA&NOKIA accessory', 3x0x00 } (45 bytes)
+0x7f: Acknowledge(FBUS/IRDA){+type, seq }
+      Acknowledge(MBUS)...
+0xd0: 
+    s Power on message seq1 {+04 }
+    r Power on message seq1 {+05 }
+0xd1:
+    s Get HW&SW version     { 0x0003, 0x00 }
+0xd2:
+    r Get HW&SW version     { 0x0003 "V " "firmware\n" "firmware date\n"
+                              "model\n" "(c) NMP." }
+0xda: ? (during playing 2 player snake)
+0xf0:
+    s Send RLP frame        {+0x00, 0xd9, ... }
+0xf4: Power on message seq 2

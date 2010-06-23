@@ -28,7 +28,7 @@
 #include "../../gsmcomon.h"
 #include "../../misc/coding/coding.h"
 #include "../../misc/misc.h"
-#include "../../service/gsmsms.h"
+#include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
 #include "alcatel.h"
 
@@ -98,6 +98,8 @@ extern GSM_Error ATGEN_SetAutoNetworkLogin	(GSM_StateMachine *s);
 extern GSM_Error ATGEN_DeleteAllMemory		(GSM_StateMachine *s, GSM_MemoryType type);
 
 extern GSM_Error ATGEN_DispatchMessage		(GSM_StateMachine *s);
+extern GSM_Error ATGEN_SetIncomingCB		(GSM_StateMachine *s, bool enable);
+extern GSM_Error ATGEN_SetIncomingSMS		(GSM_StateMachine *s, bool enable);
 
 /**
  * Alcatel uses some 8-bit characters in contacts, calendar etc.. This table
@@ -3719,6 +3721,21 @@ static GSM_Error ALCATEL_ReplyCommit(GSM_Protocol_Message msg, GSM_StateMachine 
 	return GE_NONE;
 }
 
+static GSM_Error ALCATEL_SetIncomingCB (GSM_StateMachine *s, bool enable)
+{
+	GSM_Error error;
+
+	if ((error = ALCATEL_SetATMode(s))!= GE_NONE) return error;
+	return ATGEN_SetIncomingCB(s, enable);
+}
+
+static GSM_Error ALCATEL_SetIncomingSMS (GSM_StateMachine *s, bool enable)
+{
+	GSM_Error error;
+
+	if ((error = ALCATEL_SetATMode(s))!= GE_NONE) return error;
+	return ATGEN_SetIncomingSMS(s, enable);
+}
 
 static GSM_Reply_Function ALCATELReplyFunctions[] = {
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelAttach		},
@@ -3807,8 +3824,8 @@ GSM_Phone_Functions ALCATELPhone = {
 	ALCATEL_AddSMS,
 	ALCATEL_DeleteSMS,
 	ALCATEL_SendSMS,
-	NOTIMPLEMENTED,			/* 	SetIncomingSMS		*/
-	NOTIMPLEMENTED,			/* 	SetIncomingCB		*/
+	ALCATEL_SetIncomingSMS,
+	ALCATEL_SetIncomingCB,
 	ALCATEL_GetSMSFolders,
  	NOTSUPPORTED,			/* 	AddSMSFolder		*/
  	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/

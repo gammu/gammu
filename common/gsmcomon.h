@@ -74,8 +74,8 @@ extern GSM_Error NotSupportedFunction	(void);
 #define NOTIMPLEMENTED 	(void *) NotImplementedFunction
 #define NOTSUPPORTED 	(void *) NotSupportedFunction
 
-unsigned char *GetMsg 		(CFG_Header *cfg, unsigned char *default_string);
-unsigned char *print_error	(GSM_Error e, FILE *df, CFG_Header *cfg);
+unsigned char *GetMsg 		(INI_Section *cfg, unsigned char *default_string);
+unsigned char *print_error	(GSM_Error e, FILE *df, INI_Section *cfg);
 
 GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi);
 

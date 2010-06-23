@@ -4,7 +4,7 @@
 
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
-#include "../../service/gsmsms.h"
+#include "../../service/sms/gsmsms.h"
 
 #ifndef GSM_USED_AT
 #  define GSM_USED_AT
@@ -61,26 +61,26 @@ typedef enum {
 #define AT_PBK_MAX_MEMORIES	200
 
 typedef struct {
-	GSM_AT_Manufacturer	Manufacturer;	  /* Who is manufacturer			*/
-	GSM_Lines		Lines;		  /* Allow to simply get each line in response 	*/
-	GSM_AT_Reply_State	ReplyState;	  /* What response type - error, OK, etc. 	*/
-	int			ErrorCode;	  /* Error codes from responses			*/
-    	char			*ErrorText;    	  /* Error description */
+	GSM_AT_Manufacturer	Manufacturer;	  	/* Who is manufacturer						*/
+	GSM_Lines		Lines;		  	/* Allow to simply get each line in response 			*/
+	GSM_AT_Reply_State	ReplyState;	  	/* What response type - error, OK, etc. 			*/
+	int			ErrorCode;	  	/* Error codes from responses					*/
+    	char			*ErrorText;    	  	/* Error description 						*/
 
-	GSM_MemoryType		PBKMemory;	  /* Last read PBK memory			*/
-	char			PBKMemories[AT_PBK_MAX_MEMORIES + 1]; /* Supported by phone PBK memories		*/
-	int			NextMemoryEntry;  /* Next empty memory entry			*/
-	GSM_AT_PBK_Charset	PBKCharset;	  /* Last read PBK charset			*/
-	bool			UCS2CharsetFailed;/* Whether setting of UCS2 charset has already failed */
-	bool			NonUCS2CharsetFailed;/* Whether setting of non-UCS2 charset has already failed */
+	GSM_MemoryType		PBKMemory;	  	/* Last read PBK memory				 		*/
+	char			PBKMemories[AT_PBK_MAX_MEMORIES + 1]; /* Supported by phone PBK memories 		*/
+	int			NextMemoryEntry;  	/* Next empty memory entry					*/
+	GSM_AT_PBK_Charset	PBKCharset;	  	/* Last read PBK charset					*/
+	bool			UCS2CharsetFailed;	/* Whether setting of UCS2 charset has already failed 		*/
+	bool			NonUCS2CharsetFailed;	/* Whether setting of non-UCS2 charset has already failed 	*/
 	GSM_AT_SBNR		PBKSBNR;
 
 	GSM_SMSMemoryStatus	LastSMSStatus;
 	int			LastSMSRead;
 	int			FirstCalendarPos;
-	GSM_AT_PHONE_SMSMemory	PhoneSMSMemory;	  /* Is phone SMS memory available ? 		*/
-	GSM_MemoryType		SMSMemory;	  /* Last read SMS memory 			*/
-	GSM_AT_SMS_Modes	SMSMode;	  /* PDU or TEXT mode for SMS ? 		*/
+	GSM_AT_PHONE_SMSMemory	PhoneSMSMemory;	  	/* Is phone SMS memory available ? 				*/
+	GSM_MemoryType		SMSMemory;	  	/* Last read SMS memory 					*/
+	GSM_AT_SMS_Modes	SMSMode;	  	/* PDU or TEXT mode for SMS ? 					*/
 
 	bool			OBEX;
 	GSM_File		file;

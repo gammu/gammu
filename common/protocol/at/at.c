@@ -37,54 +37,122 @@ static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 	return GE_NONE;
 }
 
+typedef struct {
+	char	*text;
+	int	lines;
+} SpecialAnswersStruct;
+
 static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 {
+	GSM_Protocol_Message 	Msg2;
 	GSM_Protocol_ATData 	*d = &s->Protocol.Data.AT;
 	int			i;
+
+	/* These are lines with end of "normal" answers */
 	static char 		*StartStrings[] = {
-		"OK"		  , "ERROR"	    , "+CME ERROR:"	,
-		"+CMS ERROR:"	  , "RING"	    , "NO CARRIER"	,
-		"NO ANSWER"	  , "AT+CREG=1"     , "\x0D\x0A+COLP"   ,
-		"+CPIN: "	  , "\x0D\x0A+CREG:",
-		"\x0D\x0A_OSIGQ:" , "_OSIGQ:"	    ,
-		"\x0D\x0A_OBS:"   , "_OBS:"	    ,
-		"\x0D\x0A+CGREG:" , "+CGREG:"	    ,
-		"\x0D\x0A+CMTI:"  , "CMIT:"	    ,
-		"\x0D\x0A^SCN:"   , "^SCN:"};
+		"OK"		, 	"ERROR"	 	,
+		"+CME ERROR:"	,	"+CMS ERROR:"	,
+
+		"+CPIN: "	,	/*A2D issue*/
+
+		NULL};
+
+	/* Some info from phone can be inside "normal" answers
+	 * It starts with strings written here
+	 */
+	static SpecialAnswersStruct	SpecialAnswers[] = {
+		{"_OSIGQ:"	,1},	{"_OBS:"	,1},
+		{"^SCN:"	,1},	{"+CGREG:"	,1},
+		{"+CBM:"	,1},	{"+CMT:"	,2},
+		{"+CMTI:"	,1},	{"+CDS:"	,2},
+		
+		{"RING"		,1},	{"NO CARRIER"	,1},
+		{"NO ANSWER"	,1},	{"+COLP"	,1},
+		{"+CLIP"	,1},
+
+		{NULL		,1}};
 
     	/* Ignore leading CR, LF and ESC */
-    	if (d->Msg.Length == 0 && (rx_byte == 10 || rx_byte == 13 || rx_byte == 27)) return GE_NONE;
+    	if (d->Msg.Length == 0) {
+		if (rx_byte == 10 || rx_byte == 13 || rx_byte == 27) return GE_NONE;
+		d->LineStart = d->Msg.Length;
+	}
 
 	if (d->Msg.BufferUsed < d->Msg.Length + 2) {
 		d->Msg.BufferUsed	= d->Msg.Length + 2;
 		d->Msg.Buffer 		= (unsigned char *)realloc(d->Msg.Buffer,d->Msg.BufferUsed);
-		if (d->linestart != NULL) {
-			d->linestart = d->Msg.Buffer+d->linestartnum;	
-		}
 	}
 	d->Msg.Buffer[d->Msg.Length++] = rx_byte;
 	d->Msg.Buffer[d->Msg.Length  ] = 0;
-	if (d->linestart == NULL) {
-	    d->linestart 	= d->Msg.Buffer;
-	    d->linestartnum 	= 0;
-	}
 
 	switch (rx_byte) {
 	case 0:
 		break;
 	case 10:
 	case 13:
+		if (!d->wascrlf) d->LineEnd = d->Msg.Length-1;
 		d->wascrlf = true;
 		if (d->Msg.Length > 0 && rx_byte == 10 && d->Msg.Buffer[d->Msg.Length-2]==13) {
-			for (i=0;i<21;i++) {
-			    if (strncmp(StartStrings[i],d->linestart,strlen(StartStrings[i])) == 0) {
-				s->Phone.Data.RequestMsg	= &d->Msg;
-				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
-				d->linestart			= NULL;
-				d->Msg.Length			= 0;
-				break;
-			    }
+			i = 0;
+			while (StartStrings[i] != NULL) {
+				if (strlen(StartStrings[i])==0) break;
+				if (strncmp(StartStrings[i],d->Msg.Buffer+d->LineStart,strlen(StartStrings[i])) == 0) {
+					s->Phone.Data.RequestMsg	= &d->Msg;
+					s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
+					d->Msg.Length			= 0;
+					break;
+				}
+				i++;
 			}
+			if (d->Msg.Length == 0) break;
+
+			i = 0;
+			while (SpecialAnswers[i].text != NULL) {
+				if (strlen(SpecialAnswers[i].text)==0) break;
+				if (strncmp(SpecialAnswers[i].text,d->Msg.Buffer+d->LineStart,strlen(SpecialAnswers[i].text)) == 0) {
+					d->SpecialAnswerStart 	= d->LineStart;
+					d->SpecialAnswerLines	= SpecialAnswers[i].lines;
+				}
+				i++;
+			}
+
+			if (d->SpecialAnswerLines == 1) {
+				/* This is end of special answer. We copy it and send to phone module */
+				Msg2.Buffer = malloc(d->LineEnd - d->SpecialAnswerStart + 3);
+				memcpy(Msg2.Buffer,d->Msg.Buffer+d->SpecialAnswerStart,d->LineEnd - d->SpecialAnswerStart + 2);
+				Msg2.Length = d->LineEnd - d->SpecialAnswerStart + 2;
+				Msg2.Buffer[Msg2.Length] = 0;
+
+				s->Phone.Data.RequestMsg	= &Msg2;
+				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
+				free(Msg2.Buffer);
+
+				/* We cut special answer from main buffer */
+				d->Msg.Length			= d->SpecialAnswerStart;
+				if (d->Msg.Length != 0) d->Msg.Length = d->Msg.Length - 2;
+
+				/* We need to find earlier values of all variables */
+				d->wascrlf 			= false;
+				d->LineStart			= 0;
+				for (i=0;i<d->Msg.Length;i++) {
+					switch(d->Msg.Buffer[i]) {
+					case 0:
+						break;
+					case 10:
+					case 13:
+						if (!d->wascrlf) d->LineEnd = d->Msg.Length-1;
+						d->wascrlf = true;
+						break;
+					default:
+						if (d->wascrlf) {
+							d->LineStart	= d->Msg.Length-1;
+							d->wascrlf 	= false;
+						}
+					}
+				}
+				d->Msg.Buffer[d->Msg.Length] = 0;
+			}
+			if (d->SpecialAnswerLines > 0) d->SpecialAnswerLines--;
 		}
 		break;
 	case 'T':
@@ -92,21 +160,20 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 		 * anything AT related, after CONNECT can follow ppp data, alcabus
          	 * data and also other things.
          	 */
-        	if (strncmp(d->linestart, "CONNECT", 7) == 0) {
+        	if (strncmp(d->Msg.Buffer+d->LineStart, "CONNECT", 7) == 0) {
             		s->Phone.Data.RequestMsg   	= &d->Msg;
            		s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
-            		d->linestart              	= NULL;
+            		d->LineStart              	= -1;
 			d->Msg.Length			= 0;
             		break;
        		}
 	default:
 		if (d->wascrlf) {
-			d->linestart 	= d->Msg.Buffer + (d->Msg.Length - 1);
-			d->linestartnum	= d->Msg.Length - 1;
+			d->LineStart	= d->Msg.Length-1;
 			d->wascrlf 	= false;
 		}
 		if (d->EditMode) {
-			if (strlen(d->linestart) == 2 && strncmp(d->linestart,"> ",2)==0) {
+			if (strlen(d->Msg.Buffer+d->LineStart) == 2 && strncmp(d->Msg.Buffer+d->LineStart,"> ",2)==0) {
 				s->Phone.Data.RequestMsg	= &d->Msg;
 				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
 			}
@@ -119,13 +186,16 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 {
 	GSM_Protocol_ATData *d = &s->Protocol.Data.AT;
 
-	d->Msg.BufferUsed	= 0;
 	d->Msg.Buffer 		= NULL;
+	d->Msg.BufferUsed	= 0;
 	d->Msg.Length		= 0;
-
-	d->linestart 		= NULL;
-	d->EditMode		= false;
 	d->Msg.Type		= 0;
+
+	d->SpecialAnswerLines	= 0;
+	d->LineStart		= -1;
+	d->LineEnd		= -1;
+	d->wascrlf 		= false;
+	d->EditMode		= false;
 	d->FastWrite		= false;
 
 	s->Device.Functions->DeviceSetDtrRts(s,true,true);

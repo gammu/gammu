@@ -1,36 +1,42 @@
 
-#ifndef _CFGREADER_H
-#define _CFGREADER_H
+#ifndef _INI_READER_H
+#define _INI_READER_H
 
 #include "misc.h"
 
-/* Structure definitions */
+/* -------------------------------- structures ----------------------------- */
 
-/* A linked list of key/value pairs */
+typedef struct _INI_Entry INI_Entry;
 
-typedef struct _CFG_Entry CFG_Entry;
+/* 
+ * Structure used to save value for single key in INI style file
+ */
+struct _INI_Entry {
+	INI_Entry 		*Next, *Prev;
 
-struct _CFG_Entry {
-	CFG_Entry 		*next, *prev;
-	unsigned char 		*key;
-        unsigned char 		*value;
+	unsigned char 		*EntryName;
+        unsigned char 		*EntryValue;
 };
 
-typedef struct _CFG_Header CFG_Header;
+typedef struct _INI_Section INI_Section;
 
-struct _CFG_Header {
-        CFG_Header 		*next, *prev;
-        CFG_Entry 		*entries;
-        unsigned char		*section;
+/* 
+ * Structure used to save section in INI style file
+ */
+struct _INI_Section {
+        INI_Section 		*Next, *Prev;
+        INI_Entry 		*SubEntries;
+
+        unsigned char		*SectionName;
 };
 
-/* Function prototypes */
+/* ------------------------- function prototypes --------------------------- */
 
-CFG_Header 	*CFG_ReadFile(char *filename, bool Unicode);
-unsigned char   *CFG_Get(CFG_Header *cfg, unsigned char *section, unsigned char *key, bool Unicode);
-CFG_Entry 	*CFG_FindLastSectionEntry(CFG_Header *file_info, unsigned char *section, bool Unicode);
+INI_Section 	*INI_ReadFile	 	  (char *FileName, bool Unicode);
+INI_Entry 	*INI_FindLastSectionEntry (INI_Section *file_info, unsigned char *section, bool Unicode);
+unsigned char   *INI_GetValue		  (INI_Section *cfg, unsigned char *section, unsigned char *key, bool Unicode);
 
-#endif /* _CFGREADER_H */
+#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

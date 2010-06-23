@@ -81,6 +81,28 @@ void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, 
                         }
                 }
         }
+        if ((*Name) == -1) {
+                for (i = 0; i < entry->EntriesNum; i++) {
+                        switch (entry->Entries[i].EntryType) {
+                                case PBK_Text_LastName:
+                                        if (*Name == -1) *Name = i;
+					break;
+                                default:
+                                        break;
+                        }
+                }
+        }
+        if ((*Name) == -1) {
+                for (i = 0; i < entry->EntriesNum; i++) {
+                        switch (entry->Entries[i].EntryType) {
+                                case PBK_Text_FirstName:
+                                        if (*Name == -1) *Name = i;
+					break;
+                                default:
+                                        break;
+                        }
+		}
+	}
 }
 
 void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool header, GSM_VCardVersion Version)
