@@ -18,7 +18,7 @@ $inbox="UpdatedInDB,ReceivingDateTime,Text,SenderNumber,Coding,UDH,SMSCNumber,Cl
 $outbox="UpdatedInDB,InsertIntoDB,Text,DestinationNumber,Coding,UDH,Class,TextDecoded,ID,MultiPart,RelativeValidity,SendingDateTime,SenderID,SendingTimeOut,DeliveryReport";
 $outbox_multipart="Text,Coding,UDH,Class,TextDecoded,ID,SequencePosition";
 $sentitems="UpdatedInDB,InsertIntoDB,SendingDateTime,DeliveryDateTime,Text,DestinationNumber,Coding,UDH,SMSCNumber,Class,TextDecoded,ID,SenderID,SequencePosition,Status,StatusError,TPMR,RelativeValidity";
-$phones="ID,InsertIntoDB,TimeOut,Send,Receive,IMEI";
+$phones="ID,InsertIntoDB,TimeOut,Send,Receive,IMEI,Client";
 
 function dispdatetime($dt)
 {
@@ -38,36 +38,20 @@ function dispsmsinfo($class,$udh,$text,$textdecoded,$coding)
 	}
 	if ($coding == "8bit") {
 		echo "BINARY<br>\n";
-	}
-	if ($coding == "Unicode") {
-		if ($text == "") {
-			if ($textdecoded == "") {
-				echo "Unicode text<br>\n";
-			} else {
-				echo "Unicode text: $textdecoded<br>\n";
-			}
+	} else {
+		if (!$text == "") echo "<b>";
+		if ($coding == "Unicode") {
+			echo "Unicode t";
 		} else {
-			if ($textdecoded == "") {
-				echo "<b>Unicode text</b><br>\n";
-			} else {
-				echo "<b>Unicode text</b>: $textdecoded<br>\n";
-			}
+			echo "T";
 		}
-	}
-	if ($coding == "Default") {
-		if ($text == "") {
-			if ($textdecoded == "") {
-				echo "Text<br>\n";
-			} else {
-				echo "Text: $textdecoded<br>\n";
-			}
+		if ($textdecoded == "") {
+			echo "ext</b><br>\n";
 		} else {
-			if ($textdecoded == "") {
-				echo "<b>Text</b><br>\n";
-			} else {
-				echo "<b>Text</b>: $textdecoded<br>\n";
-			}
+			echo "ext</b>: $textdecoded<br>\n";
 		}
+		if ($text == "") echo "</b>";
+		echo "<br>\n";
 	}
 }
 function dispvalidity($validity) {
@@ -281,7 +265,7 @@ while ($row0 = mysql_fetch_object($result0)) {
 	$rekord = @mysql_fetch_row($result);
 	if (!$rekord) continue;
 	mysql_free_result($result);
-	if ($rekord[0]!='3') continue;
+	if ($rekord[0]!='4') continue;
 
 	$result2 = @mysql_list_tables($row0->Database);
 	if (!$result2) continue;
@@ -599,7 +583,7 @@ if (isset($_GET['op'])) {
 				}
 
 				echo "<table width=100%><tr bgcolor=silver>\n";
-				echo "<td>POSITION</td>\n";
+				echo "<td>PART</td>\n";
 				echo "<td>ERROR CODE</td>\n";
 				echo "<td>STATUS</td>\n";
 				echo "<td>SENDING TIME</td>\n";
@@ -607,13 +591,17 @@ if (isset($_GET['op'])) {
 
 				$result2 = mysql_db_query("$db_name","select $sentitems from sentitems where ID='$id'");
 				while($rekord2 = mysql_fetch_row($result2)) {
-					echo "<tr><td>SMS $rekord2[13]</td>\n";
+					echo "<tr><td>$rekord2[13]</td>\n";
 					echo "<td>$rekord2[15]</td>\n";
 					echo "<td>$rekord2[14]</td>";
 					$d2 = dispdatetime($rekord2[2]);
 					echo "<td>$d2</td>\n";
-					$d2 = dispdatetime($rekord2[3]);
-					echo "<td>$d2</td></tr>\n";
+					if ($rekord2[3] != "00000000000000") {
+						$d2 = dispdatetime($rekord2[3]);
+						echo "<td>$d2</td></tr>\n";
+					} else {
+						echo "<td>not set</td></tr>\n";
+					}
 				}
 				mysql_free_result($result2);
 
@@ -706,7 +694,8 @@ if (isset($_GET['op'])) {
 		echo "<td>ID</td>\n";
 		echo "<td>SEND SMS</td>\n";
 		echo "<td>RECEIVE SMS</td>\n";
-		echo "<td>LOGGED</td></tr>\n";
+		echo "<td>LOGGED</td>\n";
+		echo "<td>CLIENT</td></tr>\n";
 		$result = mysql_db_query("$db_name","select $phones from phones where TimeOut>NOW()");
 		while($rekord = mysql_fetch_row($result)) {
 			$counter++;			
@@ -716,6 +705,7 @@ if (isset($_GET['op'])) {
 			echo "<td>$rekord[4]</td>\n";
 			$d2 = dispdatetime($rekord[1]);
 			echo "<td>$d2</td>\n";
+			echo "<td>$rekord[6]</td>\n";
 		}
 		mysql_free_result($result);
 		echo "</table>";

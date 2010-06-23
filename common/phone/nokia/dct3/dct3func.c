@@ -1,6 +1,6 @@
 /* (c) 2001-2004 by Marcin Wiacek */
 /* resetting DCT4 phones settings (c) by Walek */
-/* based on some Markus Plail, Pavel Janik & others work from Gnokii
+/* based on some Markus Plail, Pavel Janik & others work from Gnokii (www.gnokii.org)
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
  * GNU GPL version 2 or later
  */
@@ -446,7 +446,7 @@ GSM_Error DCT3_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 	char		name[100];
 
 	smprintf(s, "Network info received\n");
-	smprintf(s, "   Status                    : ");
+	smprintf(s, "Status                 : ");
 	switch (msg.Buffer[8]) {
 		case 0x01: smprintf(s, "home network");				break;
 		case 0x02: smprintf(s, "roaming network");			break;
@@ -455,7 +455,7 @@ GSM_Error DCT3_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 		default  : smprintf(s, "unknown");
 	}
 	smprintf(s, "\n");
-	smprintf(s, "Network selection         : %s\n", msg.Buffer[9]==1?"manual":"automatic");
+	smprintf(s, "Network selection      : %s\n", msg.Buffer[9]==1?"manual":"automatic");
 	if (msg.Buffer[8]<0x03) {
 		sprintf(NetInfo.CID, "%02x%02x", msg.Buffer[10], msg.Buffer[11]);
 		smprintf(s, "CID                    : %s\n", NetInfo.CID);
@@ -463,8 +463,8 @@ GSM_Error DCT3_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMachine *s
 		sprintf(NetInfo.LAC, "%02x%02x", msg.Buffer[12], msg.Buffer[13]);
 		smprintf(s, "LAC                    : %s\n", NetInfo.LAC);
 
-		smprintf(s, "Network code           : %s\n", NetInfo.NetworkCode);
 		NOKIA_DecodeNetworkCode(msg.Buffer+14,NetInfo.NetworkCode);
+		smprintf(s, "Network code           : %s\n", NetInfo.NetworkCode);
 		smprintf(s, "Network name for Gammu : %s ",
 				DecodeUnicodeString(GSM_GetNetworkName(NetInfo.NetworkCode)));
 		smprintf(s, "(%s)\n",DecodeUnicodeString(GSM_GetCountryName(NetInfo.NetworkCode)));

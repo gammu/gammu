@@ -29,6 +29,8 @@ typedef struct {
 	bool Profiles;
 	bool WAPSettings;
 	bool MMSSettings;
+	bool SyncMLSettings;
+	bool ChatSettings;
 	bool Ringtone;
 	bool StartupLogo;
 	bool OperatorLogo;

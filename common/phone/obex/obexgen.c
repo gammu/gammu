@@ -829,7 +829,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED,			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNextNote		*/
 	NOTIMPLEMENTED, 		/*	GetProfile		*/
 	NOTIMPLEMENTED, 		/*	SetProfile		*/
     	NOTIMPLEMENTED,			/*  	GetFMStation        	*/

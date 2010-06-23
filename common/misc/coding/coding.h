@@ -3,6 +3,10 @@
 #ifndef __coding_h
 #define __coding_h
 
+#if defined(_MSC_VER) && defined(__cplusplus)
+    extern "C" {
+#endif
+
 #include <stdlib.h>
 
 #include "../misc.h"
@@ -34,6 +38,9 @@ void 		ReadUnicodeFile			(unsigned char *Dest, unsigned char *Source);
 
 void 		DecodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, int len);
 void 		EncodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, int len);
+
+char 		*EncodeUnicodeSpecialChars	(unsigned char *buffer);
+char 		*DecodeUnicodeSpecialChars	(unsigned char *buffer);
 
 /* ------------------------------- BCD ------------------------------------- */
 unsigned char	EncodeWithBCDAlphabet		(int value);
@@ -122,10 +129,17 @@ int ClearBit (unsigned char *Buffer, int BitNum);
 
 void StringToDouble	(char *text, double *d);
 
-bool mystrncasecmp (unsigned const char *a, unsigned const char *b, int num);
-char *mystrcasestr (unsigned const char *a, unsigned const char *b);
+bool mystrncasecmp 	(unsigned const char *a, unsigned const char *b, int num);
+char *mystrcasestr 	(unsigned const char *a, unsigned const char *b);
 
-void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen);
+void MyGetLine		(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen);
+
+char *EncodeSpecialChars(unsigned char *buffer);
+char *DecodeSpecialChars(unsigned char *buffer);
+
+#if defined(_MSC_VER) && defined(__cplusplus)
+    }
+#endif
 
 #endif
 

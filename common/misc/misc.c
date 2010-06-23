@@ -233,11 +233,13 @@ char *OSDate (GSM_DateTime dt)
 }
 
 bool CheckDate(GSM_DateTime *date)
-{
-	/* FIXME: This could also check if day is correct for selected month */
+{	
+	const unsigned int days[]={31,29,31,30,31,30,31,31,30,31,30,31};
+
+	/* FIXME: This could also check for leap years */
 	return date->Year != 0 &&
-		date->Month >= 1 && date->Month <= 12 &&
-		date->Day >= 1 && date->Day <= 31;
+	       date->Month >= 1 && date->Month <= 12 &&
+	       date->Day >= 1 && date->Day <= days[date->Month];
 }
 
 bool CheckTime(GSM_DateTime *date)

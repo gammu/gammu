@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
 	WriteOutput("[common]");
 	WriteOutput("F0001=\"No error.\"");
 	WriteOutput("F0002=\"Error opening device. Unknown/busy or no permissions.\"");
-	WriteOutput("F0003=\"Error setting device DTR or RTS\"");
+	WriteOutput("F0003=\"Error setting device DTR or RTS.\"");
 	WriteOutput("F0004=\"Error setting device speed. Maybe speed not supported.\"");
 	WriteOutput("F0005=\"Error writing device.\"");
 	WriteOutput("F0006=\"No response in specified timeout. Probably phone not connected.\"");
@@ -264,7 +264,7 @@ int main(int argc, char *argv[])
 	WriteOutput("F0025=\"Other\"");
 	WriteOutput("F0026=\"Inbox\"");
 	WriteOutput("F0027=\"Outbox\"");
-	WriteOutput("F0028=\"Empty SMSC number. Set in phone or use -smscnumber\"");
+	WriteOutput("F0028=\"Empty SMSC number. Set in phone or use -smscnumber.\"");
 	WriteOutput("F0029=\"You're inside phone menu (during editing ?). Leave it and try again.\"");
 	WriteOutput("F0030=\"Personal\"");
 	WriteOutput("F0031=\"Car\"");
@@ -278,20 +278,26 @@ int main(int argc, char *argv[])
 	WriteOutput("F0039=\"Loud\"");
 	WriteOutput("F0040=\"My style\"");
 	WriteOutput("F0041=\"Function is during writing. If want help, please contact with authors.\"");
-	WriteOutput("F0042=\"Error during reading device\"");
-	WriteOutput("F0043=\"Can't set parity on device\"");
-	WriteOutput("F0044=\"Phone is disabled and connected to charger\"");
-	WriteOutput("F0045=\"File format not supported by Gammu\"");
+	WriteOutput("F0042=\"Error during reading device.\"");
+	WriteOutput("F0043=\"Can't set parity on device.\"");
+	WriteOutput("F0044=\"Phone is disabled and connected to charger.\"");
+	WriteOutput("F0045=\"File format not supported by Gammu.\"");
 	WriteOutput("F0046=\"Nobody is perfect, some bug appeared in protocol implementation. Please contact authors.\"");
-	WriteOutput("F0047=\"Transfer was canceled by phone (you pressed cancel on phone?).\"");
+	WriteOutput("F0047=\"Transfer was canceled by phone (you pressed cancel on phone?)\"");
 	WriteOutput("F0048=\"Current connection type doesn't support called function.\"");
 	WriteOutput("F0049=\"CRC error.\"");
 	WriteOutput("F0050=\"Invalid date or time specified.\"");
-	WriteOutput("F0051=\"Phone memory error, maybe it is read only\"");
-	WriteOutput("F0052=\"Invalid data\"");
-	WriteOutput("F0053=\"File with specified name already exist\"");
+	WriteOutput("F0051=\"Phone memory error, maybe it is read only.\"");
+	WriteOutput("F0052=\"Invalid data.\"");
+	WriteOutput("F0053=\"File with specified name already exist.\"");
+	WriteOutput("F0054=\"Error opening device. Device locked.\"");
+	WriteOutput("F0055=\"Error opening device. Doesn't exist.\"");
+	WriteOutput("F0056=\"Error opening device. Already opened by other application.\"");
+	WriteOutput("F0057=\"Error opening device. No permissions.\"");
+	WriteOutput("F0058=\"Error opening device. No required driver in operating system.\"");
+	WriteOutput("F0059=\"Error opening device. Some hardware not connected/wrong configured.\"");
 
-	outputnum=53+1;
+	outputnum=59+1;
 #ifdef WIN32
 	ProcessSourceFile("../../../../gammu/gammu.c");
 #else

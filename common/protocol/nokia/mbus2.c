@@ -1,5 +1,5 @@
 /* (c) 2001-2003 by Marcin Wiacek */
-/* based on some work from MyGnokii */
+/* based on some work from MyGnokii (www.mwiacek.com) */
 
 #include "../../gsmstate.h"
 

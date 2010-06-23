@@ -1393,6 +1393,11 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				      else smprintf(s, "Audio disabled\n");
 		call.CallIDAvailable = false;
 		break;
+	case 0x0f:
+	case 0x10:
+		smprintf(s, "Meaning not known\n");
+		call.CallIDAvailable = false;
+		break;
 	case 0x23:
 		smprintf(s, "Call held\n");
 		call.Status = GSM_CALL_CallHeld;
@@ -1416,11 +1421,20 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		tmp = 6;
 		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,false);
 		break;
+	case 0xA6:
+	case 0xD2:
+	case 0xD3:
+		smprintf(s, "Meaning not known\n");
+		call.CallIDAvailable = false;
+		break;
 	}
 	if (call.CallIDAvailable) smprintf(s, "Call ID    : %d\n",msg.Buffer[4]);
 	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL && call.Status != 0) {
 		if (call.CallIDAvailable) call.CallID = msg.Buffer[4];
 		s->User.IncomingCall(s->CurrentConfig->Device, call);
+	}
+	if (s->Phone.Data.RequestID == ID_DialVoice) {
+		if (msg.Buffer[3] == 0x10) return ERR_NOTSUPPORTED;
 	}
 	if (s->Phone.Data.RequestID == ID_CancelCall) {
 		if (msg.Buffer[3] == 0x09) {

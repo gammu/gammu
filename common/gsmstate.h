@@ -19,6 +19,9 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifdef GSM_ENABLE_NOKIA3650
 #  include "phone/nokia/dct4/n3650.h"
 #endif
+#ifdef GSM_ENABLE_NOKIA650
+#  include "phone/nokia/dct3/n0650.h"
+#endif
 #ifdef GSM_ENABLE_NOKIA6110
 #  include "phone/nokia/dct3/n6110.h"
 #endif
@@ -99,7 +102,7 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #  undef GSM_ENABLE_MROUTERBLUE
 #endif
 
-#if defined(GSM_ENABLE_NOKIA3320) || defined(GSM_ENABLE_NOKIA6110) || defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9210)
+#if defined(GSM_ENABLE_NOKIA3320) || defined(GSM_ENABLE_NOKIA650) || defined(GSM_ENABLE_NOKIA6110) || defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9210)
 #  define GSM_ENABLE_NOKIA_DCT3
 #endif
 #if defined(GSM_ENABLE_NOKIA3650) || defined(GSM_ENABLE_NOKIA6510)
@@ -373,6 +376,8 @@ typedef enum {
 	ID_EnableEcho,
 	ID_EnableErrorInfo,
 	ID_SetOBEX,
+	ID_SetUSSD,
+	ID_GetNote,
 	ID_GetSignalQuality,
 	ID_GetBatteryCharge,
 	ID_GetSMSFolders,
@@ -672,6 +677,7 @@ typedef struct {
 	 * Pointer to structure used internally by phone drivers.
 	 */
 	GSM_ToDoEntry		*ToDo;
+	GSM_NoteEntry		*Note;
 	/**
 	 * Used internally by phone drivers.
 	 */
@@ -772,6 +778,9 @@ typedef struct {
 #endif
 #ifdef GSM_ENABLE_NOKIA3650
 		GSM_Phone_N3650Data	 N3650;
+#endif
+#ifdef GSM_ENABLE_NOKIA650
+		GSM_Phone_N650Data	 N650;
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 		GSM_Phone_N6110Data	 N6110;
@@ -1283,7 +1292,7 @@ typedef struct {
 	/**
 	 * Gets note.
 	 */
-	GSM_Error (*GetNote)	    	(GSM_StateMachine *s, GSM_NoteEntry *Note, bool refresh);
+	GSM_Error (*GetNextNote)	(GSM_StateMachine *s, GSM_NoteEntry *Note, bool refresh);
 	/**
 	 * Reads profile.
 	 */
@@ -1347,6 +1356,9 @@ typedef struct {
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	extern GSM_Phone_Functions N6110Phone;
+#endif
+#ifdef GSM_ENABLE_NOKIA650
+	extern GSM_Phone_Functions N650Phone;
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
 	extern GSM_Phone_Functions N6510Phone;
@@ -1527,6 +1539,7 @@ typedef enum {
 	/* n6510.c && n7110.c */
 	F_VOICETAGS,	/* Voice tags available						*/
 	F_CAL62,	/* Calendar,6210 style - Call,Birthday,Memo,Meeting		*/
+	F_NOTES,
 
 	/* AT modules */
 	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/

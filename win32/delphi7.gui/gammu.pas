@@ -232,7 +232,7 @@ type	GSM_Error = (
                 SEC_None);			// Code not needed.
 
 	GSM_SecurityCode = record
-		Code	        : array[1..10] of char; //code (without unicode !)
+		Code	        : array[1..16] of char; //code (without unicode !)
 		CodeType	: GSM_SecurityCodeType; //type of code
 	end;
 	PGSM_SecurityCode = ^GSM_SecurityCode;
