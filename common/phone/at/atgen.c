@@ -683,6 +683,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->PBKMemory			= 0;
 	Priv->PBKSBNR			= 0;
 	Priv->Charset			= 0;
+	Priv->EncodedCommands		= false;
 	Priv->NormalCharset		= 0;
 	Priv->UnicodeCharset		= 0;
 	Priv->PBKMemories[0]		= 0;
@@ -777,6 +778,12 @@ GSM_Error ATGEN_ReplyGetCharset(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					Priv->Charset = AT_Charsets[i].charset;
 					break;
 				}
+				/* We detect encoded UCS2 reply here so that we can handle encoding of values later. */
+				if (strstr(line, "0055004300530032") != NULL) {
+					Priv->Charset = AT_CHARSET_UCS2;
+					Priv->EncodedCommands = true;
+					break;
+				}
 				i++;
 			}
 			if (Priv->Charset == 0) {
@@ -852,6 +859,8 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, bool PreferUnicode)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 	char			buffer[100];
+	char			buffer2[100];
+	char			buffer3[100];
 	int			i = 0;
 	GSM_AT_Charset		cset;
 
@@ -894,9 +903,20 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, bool PreferUnicode)
 	}
 
 	/* And finally set the charset */
-	sprintf(buffer, "AT+CSCS=\"%s\"\r", AT_Charsets[i].text);
+	if (Priv->EncodedCommands && Priv->Charset == AT_CHARSET_UCS2) {
+		EncodeUnicode(buffer2, AT_Charsets[i].text, strlen(AT_Charsets[i].text));
+		EncodeHexUnicode(buffer3, buffer2, strlen(AT_Charsets[i].text));
+		sprintf(buffer, "AT+CSCS=\"%s\"\r", buffer3);
+	} else {
+		sprintf(buffer, "AT+CSCS=\"%s\"\r", AT_Charsets[i].text);
+	}
 	error = GSM_WaitFor (s, buffer, strlen(buffer), 0x00, 3, ID_SetMemoryCharset);
 	if (error == ERR_NONE) Priv->Charset = cset;
+	else return error;
+
+	/* Verify we have charset we wanted (this is especially needed to detect whether phone encodes also control information and not only data) */
+	error = GSM_WaitFor (s, "AT+CSCS?\r", 9, 0x00, 3, ID_GetMemoryCharset);
+
 	return error;
 }
 
@@ -964,6 +984,12 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, bool SIM)
 	char 			req[] = "AT+CPMS=\"XX\",\"XX\"\r";
 	int			reqlen = 18;
 	GSM_Error		error;
+
+	/* If phone encodes also values in command, we need normal charset */
+	if (Priv->EncodedCommands) {
+		error = ATGEN_SetCharset(s, false);
+		if (error != ERR_NONE) return error;
+	}
 
 	if ((SIM && Priv->SIMSMSMemory == 0) || (!SIM && Priv->PhoneSMSMemory == 0)) {
 		/* We silently ignore error here, because when this fails, we can try to setmemory anyway */
@@ -2032,11 +2058,14 @@ GSM_Error ATGEN_ReplyGetDateTime_Alarm(GSM_Protocol_Message msg, GSM_StateMachin
 
 GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
-	GSM_Error 	error;
+	GSM_Error		error;
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
-	/* There is possibility that date will be encoded */
-	error = ATGEN_SetCharset(s, false);
-	if (error != ERR_NONE) return error;
+	/* If phone encodes also values in command, we need normal charset */
+	if (Priv->EncodedCommands) {
+		error = ATGEN_SetCharset(s, false);
+		if (error != ERR_NONE) return error;
+	}
 
 	s->Phone.Data.DateTime=date_time;
 	smprintf(s, "Getting date & time\n");
@@ -2045,7 +2074,15 @@ GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
-	char req[128];
+	char			req[128];
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error		error;
+
+	/* If phone encodes also values in command, we need normal charset */
+	if (Priv->EncodedCommands) {
+		error = ATGEN_SetCharset(s, false);
+		if (error != ERR_NONE) return error;
+	}
 
 	sprintf(req, "AT+CCLK=\"%02i/%02i/%02i,%02i:%02i:%02i+00\"\r",
 		     date_time->Year-2000,date_time->Month,date_time->Day,
@@ -2057,13 +2094,16 @@ GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
-	GSM_Error 	error;
+	GSM_Error		error;
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (alarm->Location != 1) return ERR_NOTSUPPORTED;
 
-	/* There is possibility that date will be encoded */
-	error = ATGEN_SetCharset(s, false);
-	if (error != ERR_NONE) return error;
+	/* If phone encodes also values in command, we need normal charset */
+	if (Priv->EncodedCommands) {
+		error = ATGEN_SetCharset(s, false);
+		if (error != ERR_NONE) return error;
+	}
 
 	alarm->Repeating = true;
 	alarm->Text[0] = 0; alarm->Text[1] = 0;
@@ -2076,9 +2116,17 @@ GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 /* R320 only takes HH:MM. Do other phones understand full date? */
 GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
-	char req[20];
+	char			req[20];
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error		error;
 
 	if (alarm->Location != 1) return ERR_INVALIDLOCATION;
+
+	/* If phone encodes also values in command, we need normal charset */
+	if (Priv->EncodedCommands) {
+		error = ATGEN_SetCharset(s, false);
+		if (error != ERR_NONE) return error;
+	}
 
 	sprintf(req, "AT+CALA=\"%02i:%02i\"\r",alarm->DateTime.Hour,alarm->DateTime.Minute);
 
@@ -2149,7 +2197,16 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error		error;
+
 	if (smsc->Location==0x00 || smsc->Location!=0x01) return ERR_INVALIDLOCATION;
+
+	/* If phone encodes also values in command, we need normal charset */
+	if (Priv->EncodedCommands) {
+		error = ATGEN_SetCharset(s, false);
+		if (error != ERR_NONE) return error;
+	}
 
 	s->Phone.Data.SMSC=smsc;
 	smprintf(s, "Getting SMSC\n");
@@ -2338,6 +2395,12 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 	Priv->TextLength		= 0;
 	Priv->NumberLength		= 0;
 
+	/* If phone encodes also values in command, we need normal charset */
+	if (Priv->EncodedCommands) {
+		error = ATGEN_SetCharset(s, false);
+		if (error != ERR_NONE) return error;
+	}
+
 	if (Priv->PBKMemories[0] == 0) {
 		error=GSM_WaitFor (s, "AT+CPBS=?\r", 10, 0x00, 3, ID_SetMemoryType);
 		if (error != ERR_NONE) return error;
@@ -2476,7 +2539,7 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 	GSM_MemoryStatus	*MemoryStatus = s->Phone.Data.MemoryStatus;
 	int			line=0;
 	char			*str;
-	int			cur;
+	int			cur, last = -1;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -2485,11 +2548,18 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 		while (Priv->Lines.numbers[line*2+1]!=0) {
 			str = GetLineString(msg.Buffer,Priv->Lines,line+1);
 			if (strncmp(str, "+CPBR: ", 7) == 0) {
-				MemoryStatus->MemoryUsed++;
 				if (sscanf(str, "+CPBR: %d,", &cur) == 1) {
+					/* Some phones wrongly return several lines with same location,
+					 * we need to catch it here to get correct count. */
+					if (cur != last) {
+						MemoryStatus->MemoryUsed++;
+					}
+					last = cur;
 					cur -= Priv->FirstMemoryEntry - 1;
 					if (cur == Priv->NextMemoryEntry || Priv->NextMemoryEntry == 0)
 						Priv->NextMemoryEntry = cur + 1;
+				} else {
+					MemoryStatus->MemoryUsed++;
 				}
 			}
 			line++;
@@ -4020,8 +4090,8 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
 {ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
 
-{ERICSSON_ReplyGetDateLocale,	"*ESDF:"		,0x00,0x00,ID_GetLocale		 },
-{ERICSSON_ReplyGetTimeLocale,	"*ESTF:"		,0x00,0x00,ID_GetLocale	 	 },
+{ERICSSON_ReplyGetDateLocale,	"AT*ESDF?"		,0x00,0x00,ID_GetLocale		 },
+{ERICSSON_ReplyGetTimeLocale,	"AT*ESTF?"		,0x00,0x00,ID_GetLocale	 	 },
 {ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
 {ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },
 
