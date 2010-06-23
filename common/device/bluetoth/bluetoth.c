@@ -1,5 +1,5 @@
 /* (c) 2003-2004 by Marcin Wiacek and Intra */
-/* Linux part based on work by Marcel Holtmann */
+/* Linux part based on work by Marcel Holtmann and other authors of Bluez */
 
 #include "../../gsmstate.h"
 
@@ -18,6 +18,8 @@
 #  include <unistd.h>
 #  include <bluetooth/bluetooth.h>
 #  include <bluetooth/rfcomm.h>
+#  include <bluetooth/sdp.h>
+#  include <bluetooth/sdp_lib.h>
 #else
 #  include <windows.h>
 #  include <io.h>
@@ -26,6 +28,14 @@
 #include "../../gsmcomon.h"
 #include "../devfunc.h"
 #include "bluetoth.h"
+
+static GSM_Error bluetooth_checkservicename(GSM_StateMachine *s, char *name)
+{
+        if (s->ConnectionType == GCT_BLUEPHONET && strstr(name,"Nokia PC Suite")!=NULL) return ERR_NONE;
+	if (s->ConnectionType == GCT_BLUEOBEX 	&& strstr(name,"OBEX")		!=NULL) return ERR_NONE;
+        if (s->ConnectionType == GCT_BLUEAT 	&& strstr(name,"COM 1")		!=NULL) return ERR_NONE;
+        return ERR_UNKNOWN;
+}
 
 #ifdef WIN32
 
@@ -130,13 +140,7 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, char *address, WSAPR
 			for (i=strlen(addressAsString)-1;i>0;i--) {
 				if (addressAsString[i] == ':') break;
 			}
-			if (s->ConnectionType == GCT_BLUEPHONET && strstr(_strupr(pResults->lpszServiceInstanceName),"NOKIA PC SUITE")!=NULL) {
-				return bluetooth_connect(s,atoi(addressAsString+i+1),address+1);
-			}
-			if (s->ConnectionType == GCT_BLUEOBEX && strstr(_strupr(pResults->lpszServiceInstanceName),"OBEX")!=NULL) {
-				return bluetooth_connect(s,atoi(addressAsString+i+1),address+1);
-			}
-			if (s->ConnectionType == GCT_BLUEAT && strstr(_strupr(pResults->lpszServiceInstanceName),"COM")!=NULL) {
+			if bluetooth_checkservicename(s, pResults->lpszServiceInstanceName) == ERR_NONE) {
 				return bluetooth_connect(s,atoi(addressAsString+i+1),address+1);
 			}
 		}
@@ -195,7 +199,7 @@ static GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 			result = WSALookupServiceNext(handle, flags, &bufferLength, pResults);
 			if (result != 0) break;
 
- 	                printf("%s", pResults->lpszServiceInstanceName);
+ 	                dbgprintf("\"%s\"", pResults->lpszServiceInstanceName);
 
 	 		addressSize 		= sizeof(addressAsString);
 			addressAsString[0] 	= 0;
@@ -214,11 +218,27 @@ static GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 		return bluetooth_checkdevice(s, s->CurrentConfig->Device,&protocolInfo);
 	}
 }
-#endif
 
 #else
 
-/* Linux */
+static GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
+{
+	switch (s->ConnectionType) {
+	case GCT_BLUEAT:
+		return bluetooth_connect(s,1,s->CurrentConfig->Device);
+	case GCT_BLUEOBEX:
+		return bluetooth_connect(s,9,s->CurrentConfig->Device);
+	case GCT_BLUEPHONET:
+//		return bluetooth_connect(s,14,s->CurrentConfig->Device); //older Series 40 - 8910, 6310
+		return bluetooth_connect(s,15,s->CurrentConfig->Device); //new Series 40 - 6310i, 6230
+	default:
+		return ERR_UNKNOWN;
+	}
+}
+
+#endif
+
+#else   /* Linux */
 
 static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 {
@@ -257,26 +277,142 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	d->hPhone = fd;
     	return ERR_NONE;
 }
-#endif
 
-static GSM_Error bluetooth_open (GSM_StateMachine *s)
+struct search_context {
+	char				*svc;
+	uuid_t				group;
+	int				tree;
+	uint32_t			handle;
+};
+
+static void print_service_desc(void *value, void *user) 
+{ 
+	sdp_data_t 	*p = (sdp_data_t *)value; 
+	int 		i = 0, proto = 0, *channel = (int *)user; 
+
+	(*channel) = -1;
+	
+	for (; p; p = p->next, i++) { 
+		switch (p->dtd) { 
+		case SDP_UUID16:
+		case SDP_UUID32:
+		case SDP_UUID128:
+			proto = sdp_uuid_to_proto(&p->val.uuid);
+			break;
+		case SDP_UINT8: 
+			if (proto == RFCOMM_UUID) {
+				dbgprintf("Channel %05d", p->val.uint8); 
+				(*channel) = p->val.uint8;
+				return;
+			}
+			break; 
+		} 
+	} 
+}
+
+void print_access_protos(value, user)
 {
-#ifdef MS_VC_BLUETOOTH_IRPROPS_LIB
-	return bluetooth_findchannel(s);
-#endif
+	sdp_list_t 	*protDescSeq = (sdp_list_t *)value;
+	int		*channel = (int *)user;
+	
+	sdp_list_foreach(protDescSeq,print_service_desc,channel);
+}
 
-	switch (s->ConnectionType) {
-	case GCT_BLUEAT:
-		return bluetooth_connect(s,1,s->CurrentConfig->Device);
-	case GCT_BLUEOBEX:
-		return bluetooth_connect(s,9,s->CurrentConfig->Device);
-	case GCT_BLUEPHONET:
-//		return bluetooth_connect(s,14,s->CurrentConfig->Device);
-		return bluetooth_connect(s,15,s->CurrentConfig->Device);
-	default:
+static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, struct search_context *context)
+{
+	sdp_session_t			*sess;
+	sdp_list_t			*attrid, *search, *seq, *next, *proto = 0;
+	uint32_t			range = 0x0000ffff;
+	char				str[20];
+	sdp_record_t 			*rec;
+	sdp_data_t			*d;
+	bdaddr_t			interface;
+	struct search_context 		subcontext;
+	int				channel,channel2;
+
+	bacpy(&interface,BDADDR_ANY);
+
+	ba2str(bdaddr, str);
+	dbgprintf("%s\n", str);
+
+	sess = sdp_connect(&interface, bdaddr, SDP_RETRY_IF_BUSY);
+	if (!sess) {
+		dbgprintf("Failed to connect to SDP server on %s: %s\n", str, strerror(errno));
 		return ERR_UNKNOWN;
 	}
+
+	attrid = sdp_list_append(0, &range);
+	search = sdp_list_append(0, &context->group);
+	if (sdp_service_search_attr_req(sess, search, SDP_ATTR_REQ_RANGE, attrid, &seq)) {
+		dbgprintf("Service Search failed: %s\n", strerror(errno));
+		sdp_close(sess);
+		return ERR_UNKNOWN;
+	}
+	sdp_list_free(attrid, 0);
+	sdp_list_free(search, 0);
+
+	channel2 = -1;
+	for (; seq; seq = next) {
+		rec 	= (sdp_record_t *) seq->data;
+		
+		if (channel2 == -1) {		
+			if (!context->tree) {
+				d = sdp_data_get(rec,SDP_ATTR_SVCNAME_PRIMARY);
+			
+				if (sdp_get_access_protos(rec,&proto) == 0) {
+					sdp_list_foreach(proto,print_access_protos,&channel);
+					sdp_list_free(proto,(sdp_free_func_t)sdp_data_free);
+				}
+				if (d) dbgprintf(" - \"%s\"\n",d->val.str);
+				if (channel2 == -1 && bluetooth_checkservicename(s, d->val.str) == ERR_NONE) {
+					channel2 = channel;			
+				}			
+			}
+    			if (sdp_get_group_id(rec,&subcontext.group) != -1) {
+				memcpy(&subcontext, context, sizeof(struct search_context));
+				if (subcontext.group.value.uuid16 != context->group.value.uuid16) bluetooth_checkdevice(s,bdaddr,&subcontext);
+			}
+		}
+
+		next = seq->next;
+		free(seq);
+		sdp_record_free(rec);
+	}
+	sdp_close(sess);
+	
+	if (channel2 != -1) return bluetooth_connect(s, channel2, str);
+	
+	return ERR_UNKNOWN;
 }
+
+static GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
+{
+	inquiry_info			ii[20];
+	uint8_t				count = 0;
+	int				i;
+	struct search_context 		context;
+	GSM_Error			error = ERR_NOTSUPPORTED;
+
+	memset(&context, '\0', sizeof(struct search_context));
+	sdp_uuid16_create(&(context.group),PUBLIC_BROWSE_GROUP);
+
+	if (!strcmp(s->CurrentConfig->Device,"/dev/ttyS1")) {
+		dbgprintf("Searching for devices\n");
+		if (sdp_general_inquiry(ii, 20, 8, &count) < 0) {
+			return ERR_UNKNOWN;
+		}
+	} else {
+		count = 1;
+		str2ba(s->CurrentConfig->Device,&ii[0].bdaddr);
+	}
+	for (i=0;i<count;i++) {
+		error = bluetooth_checkdevice(s,&ii[i].bdaddr,&context);
+		if (error == ERR_NONE) return error;
+	}
+	return error;
+}
+
+#endif
 
 static int bluetooth_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
@@ -298,7 +434,7 @@ static GSM_Error bluetooth_close(GSM_StateMachine *s)
 }
 
 GSM_Device_Functions BlueToothDevice = {
-	bluetooth_open,
+	bluetooth_findchannel,
 	bluetooth_close,
 	NONEFUNCTION,
 	NONEFUNCTION,

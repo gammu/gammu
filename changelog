@@ -26,8 +26,21 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20040620 - 0.96.1
+* new functionality:
+  * when you give device address with bluetooth connections and bluez,
+    Gammu checks for supported by device services and connects to correct.
+    Tested with 6310i 5.52. Unfortunately, source/connection isn't very stable
+    now. Work in progress
+
+* fixes and improvements:
+  * ID for 6230 now really included
+  * much better linking mysql libraries           (mlistus, Liviu Daia, others)
+  * max. number of WAP/MMS settings in backup files is 30     (Eduardo, others)
+
 20040615 - 0.96.0
 * new functionality:
+  * ID for 6230
   * ID & initial support for 3589i                                      (bgeer)
   * 3320: getting phonebook, datetime, calendar
   * new --playsavedringtones (sets dct4 to play many tones saved in phone -
