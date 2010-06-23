@@ -13,17 +13,16 @@
 #include "nfunc.h"
 
 unsigned char N71_65_MEMORY_TYPES[] = {
-	MEM_DC,		 0x01,
-	MEM_MC,		 0x02,
-	MEM_RC,		 0x03,
-	MEM_ME,		 0x05,
-	MEM_SM,		 0x06,
-	MEM_VM,		 0x09,
-	MEM7110_SP,	 0x0e,
-	MEM7110_CG,	 0x10,
-	MEM_ON,		 0x17,
-	MEM6510_CG2, 	 0x23,
-	  0x00,		 0x00
+	MEM_DC,		0x01,
+	MEM_MC,		0x02,
+	MEM_RC,		0x03,
+	MEM_ME,		0x05,
+	MEM_SM,		0x06,
+	MEM_VM,		0x09,
+	MEM7110_SP,	0x0e,
+	MEM7110_CG,	0x10,
+	MEM_ON,		0x17,
+	  0x00,		0x00
 };
 
 int N71_65_PackPBKBlock(GSM_StateMachine *s, int id, int size, int no, unsigned char *buf, unsigned char *block)
@@ -190,17 +189,10 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	entry->EntriesNum 	= 0;
 
 	if (entry->MemoryType==MEM7110_CG) {
-		bitmap->Text[0] 		= 0x00;
-		bitmap->Text[1] 		= 0x00;
-		bitmap->DefaultBitmap 		= true;
-		bitmap->DefaultRingtone 	= true;
-		bitmap->FileSystemPicture 	= false;
-	}
-	if (entry->MemoryType==MEM6510_CG2 && IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
-		bitmap->DefaultName 		= false;
-		bitmap->DefaultBitmap 		= true;
-		bitmap->DefaultRingtone 	= true;
-		bitmap->FileSystemPicture 	= false;
+		bitmap->Text[0] 	= 0x00;
+		bitmap->Text[1] 	= 0x00;
+		bitmap->DefaultBitmap 	= true;
+		bitmap->DefaultRingtone = true;
 	}
 
 	Block = &MessageBuffer[0];
@@ -245,9 +237,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				if (entry->MemoryType==MEM7110_CG) {
 					memcpy(bitmap->Text,Block+6,Block[5]);
 				}
-				if (entry->MemoryType==MEM6510_CG2) {
-					memcpy(bitmap->Text,Block+6,Block[5]);
-				}
 			}
 			entry->EntriesNum ++;
 
@@ -271,16 +260,10 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			continue;
 		}
 		if (Block[0] == N6510_PBK_PICTURE_ID) {
-			if (entry->MemoryType==MEM6510_CG2) {
-				bitmap->FileSystemPicture = true;
-				smprintf(s, "Picture ID \"%i\"\n",Block[10]*256+Block[11]);
-				bitmap->PictureID = Block[10]*256+Block[11];
-			} else {
-				entry->Entries[entry->EntriesNum].EntryType=PBK_PictureID;
-				smprintf(s, "Picture ID \"%i\"\n",Block[10]*256+Block[11]);
-				entry->Entries[entry->EntriesNum].Number=Block[10]*256+Block[11];
-				entry->EntriesNum ++;
-			}
+			entry->Entries[entry->EntriesNum].EntryType=PBK_PictureID;
+			smprintf(s, "Picture ID \"%i\"\n",Block[10]*256+Block[11]);
+			entry->Entries[entry->EntriesNum].Number=Block[10]*256+Block[11];
+			entry->EntriesNum ++;
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
@@ -460,12 +443,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				}
 				bitmap->RingtoneID	= Block[10]*256+Block[11];
 				bitmap->DefaultRingtone = false;
-			} else if (entry->MemoryType==MEM6510_CG2) {
-				/* FIXME */
-				smprintf(s, "Internal ringtone ID: %02x\n",Block[10]*256+Block[11]);
-				bitmap->FileSystemRingtone 	= false;
-				bitmap->RingtoneID		= Block[10]*256+Block[11];
-				bitmap->DefaultRingtone 	= false;
 			} else {
 				return ERR_UNKNOWNRESPONSE;
 			}
@@ -526,7 +503,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Caller_Group;
 			smprintf(s, "Caller group \"%i\"\n",Block[7]);
 			entry->Entries[entry->EntriesNum].Number=Block[7];
-			entry->EntriesNum ++;
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
@@ -1197,12 +1173,6 @@ GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine 
 	case 0x0f:
 		smprintf(s, " - error\n");
 		switch (msg.Buffer[10]) {
-		case 0x25:
-			smprintf(s, "when you try to save into entry with caller group assigment in phone with caller groups standard 2 (like in 6230i)\n");
-			return ERR_PERMISSION;
-		case 0x29:
-			smprintf(s, "no caller group with given number (6230i)\n");
-			return ERR_MEMORY;
 		case 0x36:
 			smprintf(s, "Too long name\n");
 			return ERR_NOTSUPPORTED;
