@@ -30,8 +30,6 @@ GSM_Phone_Functions NAUTOPhone = {
 	NOTIMPLEMENTED,		/*	GetMemoryStatus		*/
 	NOTIMPLEMENTED,		/*	GetSMSC			*/
 	NOTIMPLEMENTED,		/*	GetSMSMessage		*/
-	NOTIMPLEMENTED,		/*	GetBatteryLevel		*/
-	NOTIMPLEMENTED,		/*	GetNetworkLevel		*/
 	NOTIMPLEMENTED,		/*	GetSMSFolders		*/
 	NOKIA_GetManufacturer,
 	NOTIMPLEMENTED,		/*	GetNextSMSMessage	*/
@@ -42,9 +40,7 @@ GSM_Phone_Functions NAUTOPhone = {
 	NOTIMPLEMENTED,		/*	DialVoice		*/
 	NOTIMPLEMENTED,		/*	AnswerCall		*/
 	NOTIMPLEMENTED,		/*	CancelCall		*/
-	NOTIMPLEMENTED,		/*	GetSecurityCode		*/
 	NOTIMPLEMENTED,		/*	GetRingtone		*/
-	NOTIMPLEMENTED,		/*	GetCalendarNote		*/
 	NOTIMPLEMENTED,		/*	GetWAPBookmark		*/
 	NOTIMPLEMENTED,		/*	GetBitmap		*/
 	NOTIMPLEMENTED,		/*	SetRingtone		*/
@@ -55,14 +51,44 @@ GSM_Phone_Functions NAUTOPhone = {
 	NOTIMPLEMENTED,		/*	SetBitmap		*/
 	NOTIMPLEMENTED,		/* 	SetMemory 		*/
 	NOTIMPLEMENTED,		/* 	DeleteSMS 		*/
-	NOTIMPLEMENTED,		/* 	DeleteCalendarNote 	*/
-	NOTIMPLEMENTED, 	/* 	SetCalendarNote 	*/
 	NOTIMPLEMENTED,		/* 	SetWAPBookmark 		*/
 	NOTIMPLEMENTED, 	/* 	DeleteWAPBookmark 	*/
 	NOTIMPLEMENTED,		/* 	GetWAPSettings 		*/
-	NOTIMPLEMENTED, 	/* 	GetProfile 		*/
 	NOTIMPLEMENTED,		/* 	SetIncomingCB		*/
-	NOTIMPLEMENTED		/*	SetSMSC			*/
+	NOTIMPLEMENTED,		/*	SetSMSC			*/
+	NOTIMPLEMENTED,		/*	GetManufactureMonth	*/
+	NOTIMPLEMENTED,		/*	GetProductCode		*/
+	NOTIMPLEMENTED,		/*	GetOriginalIMEI		*/
+	NOTIMPLEMENTED,		/*	GetHardware		*/
+	NOTIMPLEMENTED,		/*	GetPPM			*/
+	NOTIMPLEMENTED,		/*	PressKey		*/
+	NOTIMPLEMENTED,		/*	GetToDo			*/
+	NOTIMPLEMENTED,		/*	DeleteAllToDo		*/
+	NOTIMPLEMENTED,		/*	SetToDo			*/
+	NOTIMPLEMENTED,		/*	PlayTone		*/
+	NOTIMPLEMENTED,		/*	EnterSecurityCode	*/
+	NOTIMPLEMENTED,		/*	GetSecurityStatus	*/
+	NOTIMPLEMENTED, 	/*	GetProfile		*/
+	NOTIMPLEMENTED,		/*	GetRingtonesInfo	*/
+	NOTIMPLEMENTED,		/* 	SetWAPSettings 		*/
+	NOTIMPLEMENTED,		/*	GetSpeedDial		*/
+	NOTIMPLEMENTED,		/*	SetSpeedDial		*/
+	NOTIMPLEMENTED,		/*	ResetPhoneSettings	*/
+	NOTIMPLEMENTED,		/*	SendDTMF		*/
+	NOTIMPLEMENTED,		/*	GetDisplayStatus	*/
+	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
+	NOTIMPLEMENTED, 	/*	SetProfile		*/
+	NOTIMPLEMENTED,		/*	GetSIMIMSI		*/
+	NOTIMPLEMENTED,		/*	SetIncomingCall		*/
+    	NOTIMPLEMENTED,		/*	GetNextCalendar		*/
+	NOTIMPLEMENTED,   	/*	DelCalendar		*/
+	NOTIMPLEMENTED,       	/*	AddCalendar		*/
+	NOTIMPLEMENTED,		/*	GetBatteryCharge	*/
+	NOTIMPLEMENTED,		/*	GetSignalQuality	*/
+	NOTIMPLEMENTED,     	/*  	GetCategory 		*/
+        NOTIMPLEMENTED,      	/*  	GetCategoryStatus 	*/	
+    	NOTIMPLEMENTED,		/*  	GetFMStation        	*/
+	NOTIMPLEMENTED		/*  	SetIncomingUSSD		*/
 };
 
 #endif

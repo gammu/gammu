@@ -41,8 +41,8 @@ extern GSM_Error ATGEN_SetMemory		(GSM_StateMachine *s, GSM_PhonebookEntry *entr
 extern GSM_Error ATGEN_GetMemoryStatus		(GSM_StateMachine *s, GSM_MemoryStatus *Status);
 extern GSM_Error ATGEN_GetSMSC			(GSM_StateMachine *s, GSM_SMSC *smsc);
 extern GSM_Error ATGEN_GetSMSMessage		(GSM_StateMachine *s, GSM_MultiSMSMessage *sms);
-extern GSM_Error ATGEN_GetBatteryLevel		(GSM_StateMachine *s, int *level);
-extern GSM_Error ATGEN_GetNetworkLevel		(GSM_StateMachine *s, int *level);
+extern GSM_Error ATGEN_GetBatteryCharge		(GSM_StateMachine *s, GSM_BatteryCharge *bat);
+extern GSM_Error ATGEN_GetSignalQuality		(GSM_StateMachine *s, GSM_SignalQuality *sig);
 extern GSM_Error ATGEN_GetSMSFolders		(GSM_StateMachine *s, GSM_SMSFolders *folders);
 extern GSM_Error ATGEN_GetNextSMSMessage	(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start);
 extern GSM_Error ATGEN_GetSMSStatus		(GSM_StateMachine *s, GSM_SMSMemoryStatus *status);
@@ -83,15 +83,21 @@ static GSM_Error ALCATEL_SetBinaryMode(GSM_StateMachine *s)
     GSM_Error               error;
 
     if (Priv->Mode == ModeBinary) return GE_NONE;
+    
+    if (s->Speed != 19200) { 
+        smprintf(s, "Error: Alcatel binary mode works only at 19200 bps\n");
+        return GE_NOTSUPPORTED;
+    }
 
     dprintf ("Changing to binary mode\n");
 
     error=GSM_WaitFor (s, "AT+IFC=2,2\r", 11, 0x02, 4, ID_SetFlowControl);
     if (error != GE_NONE) return error;
+    /* TODO: acquire by AT+CPROT=? available protocol version and handle that
+     * correctly, OT715 uses V1.1.
+     */
     error=GSM_WaitFor (s, "AT+CPROT=16,\"V1.0\",16\r", 22, 0x00, 4, ID_AlcatelConnect);
     if (error != GE_NONE) return error;
-	/* FIXME */
-    //tcdrain(s->Device.Data.Serial.hPhone);
 
     dprintf ("Changing protocol to Alcabus\n");
 
@@ -154,7 +160,7 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
             case TypeContacts:
                 commit_buffer[2] = ALCATEL_SYNC_TYPE_CONTACTS;
                 break;
-            case TypeTodo:
+            case TypeToDo:
                 commit_buffer[2] = ALCATEL_SYNC_TYPE_TODO;
                 break;
         }
@@ -192,7 +198,7 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
             case TypeContacts:
                 close_buffer[2] = ALCATEL_SYNC_TYPE_CONTACTS;
                 break;
-            case TypeTodo:
+            case TypeToDo:
                 close_buffer[2] = ALCATEL_SYNC_TYPE_TODO;
                 break;
         }
@@ -211,7 +217,7 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
     if (state == StateSession || state == StateEdit) {
         dprintf ("Starting session for %s\n",
                 (type == TypeCalendar ? "Calendar" : 
-                 (type == TypeTodo ? "Todo" :
+                 (type == TypeToDo ? "Todo" :
                   (type == TypeContacts ? "Contacts" :
                    "Unknown!"))));
         /* Fill up buffers */
@@ -226,7 +232,7 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
                 select2_buffer[2] 	= ALCATEL_SYNC_TYPE_CONTACTS;
                 begin_buffer[4] 	= ALCATEL_BEGIN_SYNC_CONTACTS;
                 break;
-            case TypeTodo:
+            case TypeToDo:
                 select1_buffer[2] 	= ALCATEL_SYNC_TYPE_TODO;
                 select2_buffer[2] 	= ALCATEL_SYNC_TYPE_TODO;
                 begin_buffer[4] 	= ALCATEL_BEGIN_SYNC_TODO;
@@ -279,20 +285,22 @@ static GSM_Error ALCATEL_SetATMode(GSM_StateMachine *s)
     if (error != GE_NONE) return error;
 
     error = s->Protocol.Functions->Terminate(s);
+    if (error != GE_NONE) return error;
 
     dprintf ("Changing protocol to AT\n");
     s->Protocol.Functions               = &ATProtocol;
     s->Phone.Functions->ReplyFunctions  = ATGENReplyFunctions;
     Priv->Mode                          = ModeAT;
-    mili_sleep(10);
-    /* In case we don't send AT command short after closing binary mode, phone 
-     * takes VERY long to react next time.
-     */
-	error = s->Protocol.Functions->WriteMessage(s, "AT\r", 3, 0x00);
-	if (error!=GE_NONE) return error;
-	mili_sleep(200);
+    
+    mili_sleep(100);
 
-    return error;
+    /* In case we don't send AT command short after closing binary mode,
+     * phone takes VERY long to react next time. The error code in
+     * intetionally ignored.
+     */
+    GSM_WaitFor (s, "AT\r", 3, 0x00, 0, ID_IncomingFrame);
+
+    return GE_NONE;
 }
 
 static GSM_Error ALCATEL_Initialise(GSM_StateMachine *s)
@@ -312,10 +320,18 @@ static GSM_Error ALCATEL_Initialise(GSM_StateMachine *s)
     Priv->CurrentFieldsCount            = 0;
     Priv->CurrentFieldsItem             = 0;
     Priv->CurrentFieldsType             = 0;
+    
+    Priv->CurrentCategories[0]          = 0;
+    Priv->CurrentCategoriesCount        = 0;
+    Priv->CurrentCategoriesType         = 0;
 
     s->Protocol.Functions               = &ATProtocol;
     s->Phone.Functions->ReplyFunctions  = ATGENReplyFunctions;
 
+//    if (s->Config.Speed != 19200) { 
+        //smprintf(s, "Warning: Alcatel binary mode works only at 19200 bps\n");
+    //}
+    
     if (ATGEN_Initialise(s) != GE_NONE) {
         smprintf(s,"AT initialisation failed, trying to stop binary mode...\n");
         s->Protocol.Functions           = &ALCABUSProtocol;
@@ -353,17 +369,50 @@ static GSM_Error ALCATEL_IsIdAvailable(GSM_StateMachine *s, int id) {
             Priv->CurrentList 	= &(Priv->ContactsItems);
             Priv->CurrentCount 	= &(Priv->ContactsItemsCount);
             break;
-        case TypeTodo:
+        case TypeToDo:
             Priv->CurrentList 	= &(Priv->ToDoItems);
             Priv->CurrentCount 	= &(Priv->ToDoItemsCount);
             break;
     }
 
-    while ((*Priv->CurrentList)[i] != 0) {
+    for (i=0; i<*Priv->CurrentCount; i++) {
         if ((*Priv->CurrentList)[i] == id) return GE_NONE;
-        i++;
     }
     return GE_EMPTY;
+}
+
+/* finds next id that is available in the phone */
+static GSM_Error ALCATEL_GetNextId(GSM_StateMachine *s, int *id) {
+    GSM_Phone_ALCATELData   	*Priv = &s->Phone.Data.Priv.ALCATEL;
+    int 			i = 0;
+    int next = ALCATEL_MAX_LOCATION;
+    
+    switch (Priv->BinaryType) {
+        case TypeCalendar:
+            Priv->CurrentList 	= &(Priv->CalendarItems);
+            Priv->CurrentCount 	= &(Priv->CalendarItemsCount);
+            break;
+        case TypeContacts:
+            Priv->CurrentList 	= &(Priv->ContactsItems);
+            Priv->CurrentCount 	= &(Priv->ContactsItemsCount);
+            break;
+        case TypeToDo:
+            Priv->CurrentList 	= &(Priv->ToDoItems);
+            Priv->CurrentCount 	= &(Priv->ToDoItemsCount);
+            break;
+    }
+
+    for (i=0; i<*Priv->CurrentCount; i++) {
+        if (((*Priv->CurrentList)[i] > *id) && ((*Priv->CurrentList)[i] < next )) {
+            next = (*Priv->CurrentList)[i];
+        }
+    }
+    if (next == ALCATEL_MAX_LOCATION) {
+        return GE_EMPTY;
+    } else  {
+        *id = next;
+        return GE_NONE;
+    }
 }
 
 static GSM_Error ALCATEL_ReplyGetIds(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
@@ -391,7 +440,7 @@ static GSM_Error ALCATEL_ReplyGetIds(GSM_Protocol_Message msg, GSM_Phone_Data *D
     return GE_NONE;
 }
 
-static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s)
+static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s, bool refresh)
 {
     GSM_Phone_ALCATELData   	*Priv = &s->Phone.Data.Priv.ALCATEL;
     GSM_Error               	error;
@@ -414,14 +463,18 @@ static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s)
             Priv->CurrentList  = &(Priv->ContactsItems);
             Priv->CurrentCount = &(Priv->ContactsItemsCount);
             break;
-        case TypeTodo:
+        case TypeToDo:
             buffer[2] = ALCATEL_SYNC_TYPE_TODO;
             Priv->CurrentList  = &(Priv->ToDoItems);
             Priv->CurrentCount = &(Priv->ToDoItemsCount);
             break;
     }
 
-    if (*Priv->CurrentList != NULL) return GE_NONE;
+    if (*Priv->CurrentList != NULL) {
+        if (!refresh) return GE_NONE;
+        free(*Priv->CurrentList);
+        *Priv->CurrentList = NULL;
+    }
     smprintf(s,"Reading items list\n");
 
     *Priv->CurrentCount = 0;
@@ -437,9 +490,8 @@ static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s)
 
     i = 0;
     smprintf(s,"Received %d ids: ", *Priv->CurrentCount);
-    while ((*Priv->CurrentList)[i] != 0) {
+    for (i=0; i < *Priv->CurrentCount; i++) {
         smprintf(s,"%i ", (*Priv->CurrentList)[i]);
-        i++;
     }
     smprintf(s,"\n");
     
@@ -494,7 +546,7 @@ static GSM_Error ALCATEL_GetFields(GSM_StateMachine *s, int id) {
         case TypeContacts:
             buffer[2] = ALCATEL_SYNC_TYPE_CONTACTS;
             break;
-        case TypeTodo:
+        case TypeToDo:
             buffer[2] = ALCATEL_SYNC_TYPE_TODO;
             break;
     }
@@ -509,9 +561,8 @@ static GSM_Error ALCATEL_GetFields(GSM_StateMachine *s, int id) {
     
     i = 0;
     smprintf(s,"Received %d fields: ", Priv->CurrentFieldsCount);
-    while (Priv->CurrentFields[i] != 0) {
+    for  (i=0; i < Priv->CurrentFieldsCount; i++) {
         smprintf(s,"%i ", Priv->CurrentFields[i]);
-        i++;
     }
     smprintf(s,"\n");
 
@@ -529,6 +580,7 @@ static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_Phone_
         Priv->ReturnDateTime.Day 	= buffer[4];
         Priv->ReturnDateTime.Month 	= buffer[5];
         Priv->ReturnDateTime.Year 	= buffer[7] + (buffer[6] << 8); 
+        Priv->ReturnDateTime.Timezone = 0; /* FIXME: how to acquire this? */
     } else if (buffer[1] == 0x06 && buffer[2] == 0x68) {
         /* time */
         Priv->ReturnType 		= Alcatel_time;
@@ -589,7 +641,7 @@ static GSM_Error ALCATEL_GetFieldValue(GSM_StateMachine *s, int id, int field)
         case TypeContacts:
             buffer[2] = ALCATEL_SYNC_TYPE_CONTACTS;
             break;
-        case TypeTodo:
+        case TypeToDo:
             buffer[2] = ALCATEL_SYNC_TYPE_TODO;
             break;
     }
@@ -607,6 +659,126 @@ static GSM_Error ALCATEL_GetFieldValue(GSM_StateMachine *s, int id, int field)
 
     return GE_NONE;
 }
+
+static GSM_Error ALCATEL_ReplyGetCategories(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+    GSM_Phone_ALCATELData 	*Priv = &Data->Priv.ALCATEL;
+    int 			i;
+
+    if (msg.Buffer[12] > ALCATEL_MAX_CATEGORIES) {
+        dprintf("WARNING: Field list truncated, you should increase ALCATEL_MAX_CATEGORIES to at least %d\n", msg.Buffer[12]);
+        Priv->CurrentCategoriesCount = ALCATEL_MAX_CATEGORIES;
+    } else {
+        Priv->CurrentCategoriesCount = msg.Buffer[12];
+    }
+    
+    Priv->CurrentCategories[Priv->CurrentCategoriesCount] = 0;
+        
+    for (i = 0; i < Priv->CurrentCategoriesCount; i++) {
+        Priv->CurrentCategories[i] = msg.Buffer[13 + i];
+    }
+
+    return GE_NONE;
+}
+
+static GSM_Error ALCATEL_GetAvailableCategoryIds(GSM_StateMachine *s) {
+    GSM_Phone_ALCATELData   	*Priv = &s->Phone.Data.Priv.ALCATEL;
+    GSM_Error               	error;
+    int                     	i;
+    unsigned char 		buffer[] =
+		{0x00, 0x04,
+		 0x00 /*type */,
+		 0x0b, 
+         0x00 /* list */};
+
+    if (Priv->BinaryState != StateSession) return GE_UNKNOWN;
+    switch (Priv->BinaryType) {
+        case TypeContacts:
+            buffer[2] = ALCATEL_SYNC_TYPE_CONTACTS;
+            buffer[4] = ALCATEL_LIST_CONTACTS_CAT;
+            break;
+        case TypeToDo:
+            buffer[2] = ALCATEL_SYNC_TYPE_TODO;
+            buffer[4] = ALCATEL_LIST_TODO_CAT;
+            break;
+        default:
+            return GE_NOTSUPPORTED;
+    }
+
+    if (Priv->CurrentCategoriesType == Priv->BinaryType) return GE_NONE;
+    Priv->CurrentCategoriesType = Priv->BinaryType;
+
+    smprintf(s,"Reading category list\n");
+
+    error=GSM_WaitFor (s, buffer, 5, 0x02, ALCATEL_TIMEOUT, ID_AlcatelGetCategories1);
+    if (error != GE_NONE) return error;
+    
+    error=GSM_WaitFor (s, 0, 0, 0x00, ALCATEL_TIMEOUT, ID_AlcatelGetCategories2);
+    if (error != GE_NONE) return error;
+
+    i = 0;
+    smprintf(s,"Received %d ids: ", Priv->CurrentCategoriesCount);
+    for (i=0; i < Priv->CurrentCategoriesCount; i++) {
+        smprintf(s,"%i ", Priv->CurrentCategories[i]);
+    }
+    smprintf(s,"\n");
+    
+    return GE_NONE;
+}
+
+static GSM_Error ALCATEL_IsCategoryIdAvailable(GSM_StateMachine *s, int id) {
+    GSM_Phone_ALCATELData   	*Priv = &s->Phone.Data.Priv.ALCATEL;
+    int 			i = 0;
+    
+    if (Priv->CurrentCategoriesType != Priv->BinaryType) return GE_UNKNOWN;
+
+    for (i = 0; i< Priv->CurrentCategoriesCount; i++) {
+        if (Priv->CurrentCategories[i] == id) return GE_NONE;
+    }
+    return GE_EMPTY;
+}
+
+static GSM_Error ALCATEL_ReplyGetCategoryText(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+    GSM_Phone_ALCATELData 	*Priv = &Data->Priv.ALCATEL;
+    int len;
+    
+    len = msg.Buffer[14];
+    if (len > GSM_MAX_CATEGORY_NAME_LENGTH) {
+        dprintf("WARNING: Category name truncated, you should increase GSM_MAX_CATEGORY_NAME_LENGTH to at least %d\n", len);
+    }
+    DecodeDefault( Priv->ReturnString, msg.Buffer + 15, MIN(GSM_MAX_CATEGORY_NAME_LENGTH, len), false, GSM_AlcatelAlphabet);
+    return GE_NONE;
+}
+
+static GSM_Error ALCATEL_GetCategoryText(GSM_StateMachine *s, int id) {
+    unsigned char buffer[] = {0x00, 0x04, 0x00 /*type*/, 0x0c, 0x00 /*list*/, 0x0A, 0x01, 0x00 /*item*/ };
+    GSM_Phone_ALCATELData   	*Priv = &s->Phone.Data.Priv.ALCATEL;
+    GSM_Error               	error;
+
+    switch (Priv->BinaryType) {
+        case TypeContacts:
+            buffer[2] = ALCATEL_SYNC_TYPE_CONTACTS;
+            buffer[4] = ALCATEL_LIST_CONTACTS_CAT;
+            break;
+        case TypeToDo:
+            buffer[2] = ALCATEL_SYNC_TYPE_TODO;
+            buffer[4] = ALCATEL_LIST_TODO_CAT;
+            break;
+        default:
+            return GE_NOTSUPPORTED;
+    }
+
+    buffer[7] = (id & 0xff);
+
+    error=GSM_WaitFor (s, buffer, 8, 0x02, ALCATEL_TIMEOUT, ID_AlcatelGetCategoryText1);
+    if (error != GE_NONE) return error;
+    error=GSM_WaitFor (s, 0, 0, 0x00, ALCATEL_TIMEOUT, ID_AlcatelGetCategoryText2);
+    if (error != GE_NONE) return error;
+
+    return GE_NONE;
+}
+
 
 static GSM_Error ALCATEL_GetManufacturer(GSM_StateMachine *s, char *manufacturer)
 {
@@ -667,7 +839,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entr
 
     if (entry->MemoryType == GMT_ME) {
         if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= GE_NONE) return error;
-        if ((error = ALCATEL_GetAvailableIds(s))!= GE_NONE) return error;
+        if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
         if ((error = ALCATEL_IsIdAvailable(s, entry->Location))!= GE_NONE) {
             entry->EntriesNum = 0;
             return error;
@@ -897,7 +1069,7 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entr
 
     if (entry->MemoryType == GMT_ME) {
         if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= GE_NONE) return error;
-        if ((error = ALCATEL_GetAvailableIds(s))!= GE_NONE) return error;
+        if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
         if ((error = ALCATEL_IsIdAvailable(s, entry->Location))!= GE_NONE) return error;
         if ((error = ALCATEL_GetFields(s, entry->Location))!= GE_NONE) return error;
         /* TODO: do the real setting */
@@ -916,7 +1088,7 @@ static GSM_Error ALCATEL_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *
 
     if (Status->MemoryType == GMT_ME) {
         if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= GE_NONE) return error;
-        if ((error = ALCATEL_GetAvailableIds(s))!= GE_NONE) return error;
+        if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
         Status->Used = Priv->ContactsItemsCount;
         Status->Free = ALCATEL_FREE_MEMORY;
         return GE_NONE;
@@ -942,20 +1114,20 @@ static GSM_Error ALCATEL_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage 
     return ATGEN_GetSMSMessage(s, sms);
 }
 
-static GSM_Error ALCATEL_GetBatteryLevel(GSM_StateMachine *s, int *level)
+static GSM_Error ALCATEL_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 {
     GSM_Error error;
 
     if ((error = ALCATEL_SetATMode(s))!= GE_NONE) return error;
-    return ATGEN_GetBatteryLevel(s, level);
+    return ATGEN_GetBatteryCharge(s, bat);
 }
 
-static GSM_Error ALCATEL_GetNetworkLevel(GSM_StateMachine *s, int *level)
+static GSM_Error ALCATEL_GetSignalStrength(GSM_StateMachine *s, GSM_SignalQuality *sig)
 {
     GSM_Error error;
 
     if ((error = ALCATEL_SetATMode(s))!= GE_NONE) return error;
-    return ATGEN_GetNetworkLevel(s, level);
+    return ATGEN_GetSignalQuality(s, sig);
 }
 
 static GSM_Error ALCATEL_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
@@ -1094,7 +1266,7 @@ static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_DateTime *alarm, int
     GSM_Error error;
 
     if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= GE_NONE) return error;
-    if ((error = ALCATEL_GetAvailableIds(s))!= GE_NONE) return error;
+    if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
     /* TODO: do the real setting */
     return GE_WORKINPROGRESS;
 }
@@ -1102,13 +1274,234 @@ static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_DateTime *alarm, int
 static GSM_Error ALCATEL_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
     GSM_Error error;
+    GSM_DateTime *dt = NULL, evdate;
+    GSM_Phone_ALCATELData   	*Priv = &s->Phone.Data.Priv.ALCATEL;
+    int i,j=0;
 
+    if (start) Note->Location = -1;
     if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= GE_NONE) return error;
-    if ((error = ALCATEL_GetAvailableIds(s))!= GE_NONE) return error;
-    if ((error = ALCATEL_IsIdAvailable(s, Note->Location))!= GE_NONE) return error;
+    if ((error = ALCATEL_GetAvailableIds(s, start))!= GE_NONE) return error;
+    if ((error = ALCATEL_GetNextId(s, &Note->Location))!= GE_NONE) {
+        Note->EntriesNum = 0;
+        return error;
+    }
     if ((error = ALCATEL_GetFields(s, Note->Location))!= GE_NONE) return error;
-    /* TODO: do the real getting */
-    return GE_WORKINPROGRESS;
+    
+    Note->EntriesNum = Priv->CurrentFieldsCount;
+    
+    for (i=0; i < Priv->CurrentFieldsCount; i++) {
+        if ((error = ALCATEL_GetFieldValue(s, Note->Location, Priv->CurrentFields[i]))!= GE_NONE) return error;
+        switch (Priv->CurrentFields[i]) {
+            case 0:
+                if (Priv->ReturnType != Alcatel_date) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                j++;
+                Note->EntriesNum--;
+                evdate = Priv->ReturnDateTime;
+                break;
+            case 1:
+                if (Priv->ReturnType != Alcatel_time) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_START_DATETIME;
+                Note->Entries[i-j].Date = Priv->ReturnDateTime;
+                Note->Entries[i-j].Date.Day = evdate.Day;
+                Note->Entries[i-j].Date.Month = evdate.Month;
+                Note->Entries[i-j].Date.Year = evdate.Year;
+                Note->Entries[i-j].Date.Timezone = evdate.Timezone;
+                break;
+            case 2:
+                if (Priv->ReturnType != Alcatel_time) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_STOP_DATETIME;
+                Note->Entries[i-j].Date = Priv->ReturnDateTime;
+                Note->Entries[i-j].Date.Day = evdate.Day;
+                Note->Entries[i-j].Date.Month = evdate.Month;
+                Note->Entries[i-j].Date.Year = evdate.Year;
+                Note->Entries[i-j].Date.Timezone = evdate.Timezone;
+                break;
+            case 3:
+                if (Priv->ReturnType != Alcatel_date) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                if (dt == NULL) {
+                    Note->Entries[i-j].EntryType = CAL_ALARM_DATETIME;
+                    Note->Entries[i-j].Date = Priv->ReturnDateTime;
+                    dt = &(Note->Entries[i-j].Date);
+                } else {
+                    j++;
+                    Note->EntriesNum--;
+                    dt->Day = Priv->ReturnDateTime.Day;
+                    dt->Month = Priv->ReturnDateTime.Month;
+                    dt->Year = Priv->ReturnDateTime.Year;
+                    dt->Timezone = Priv->ReturnDateTime.Timezone;
+                    dt = NULL;
+                }
+                break;
+            case 4:
+                if (Priv->ReturnType != Alcatel_time) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                if (dt == NULL) {
+                    Note->Entries[i-j].EntryType = CAL_ALARM_DATETIME;
+                    Note->Entries[i-j].Date = Priv->ReturnDateTime;
+                    dt = &(Note->Entries[i-j].Date);
+                } else {
+                    j++;
+                    Note->EntriesNum--;
+                    dt->Hour = Priv->ReturnDateTime.Hour;
+                    dt->Minute = Priv->ReturnDateTime.Minute;
+                    dt->Second = Priv->ReturnDateTime.Second;
+                    dt = NULL;
+                }
+                break;
+            case 5:
+                if (Priv->ReturnType != Alcatel_string) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_TEXT;
+                CopyUnicodeString(Note->Entries[i-j].Text, Priv->ReturnString);
+                break;
+            case 6:
+                if (Priv->ReturnType != Alcatel_bool) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_PRIVATE;
+                Note->Entries[i-j].Number = Priv->ReturnInt;
+                break;
+            case 7:
+                if (Priv->ReturnType != Alcatel_enum) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                switch (Priv->ReturnInt) {
+                    case 0:
+                        Note->Type = GCN_MEETING;
+                        break;
+                    case 2:
+                        Note->Type = GCN_BIRTHDAY;
+                        break;
+                    case 3:
+                        Note->Type = GCN_CALL;
+                        break;
+                    case 4:
+                        Note->Type = GCN_ALARM;
+                        break;
+                    case 5:
+                        Note->Type = GCN_DAILY_ALARM;
+                        break;
+                    case 9:
+                        /* I'd call this repeating event, but it makes no sense creating one more type ... */
+                        Note->Type = GCN_MEETING;
+                        break;
+                }
+                j++;
+                Note->EntriesNum--;
+                break;
+            case 8:
+                if (Priv->ReturnType != Alcatel_int) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_CONTACTID;
+                Note->Entries[i-j].Number = Priv->ReturnInt;
+                break;
+            case 9:
+                if (Priv->ReturnType != Alcatel_phone) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_PHONE;
+                CopyUnicodeString(Note->Entries[i-j].Text, Priv->ReturnString);
+                break;
+            case 10:
+                if (Priv->ReturnType != Alcatel_byte) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_REPEAT_DAYOFWEEK;
+                Note->Entries[i-j].Number = Priv->ReturnInt;
+                break;
+            case 11:
+                if (Priv->ReturnType != Alcatel_byte) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_REPEAT_DAY;
+                Note->Entries[i-j].Number = Priv->ReturnInt;
+                break;
+            case 12:
+                if (Priv->ReturnType != Alcatel_byte) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_REPEAT_WEEKOFMONTH;
+                Note->Entries[i-j].Number = Priv->ReturnInt;
+                break;
+            case 13:
+                if (Priv->ReturnType != Alcatel_byte) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_REPEAT_MONTH;
+                Note->Entries[i-j].Number = Priv->ReturnInt;
+                break;
+            case 17:
+                if (Priv->ReturnType != Alcatel_byte) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_REPEAT_FREQUENCY;
+                Note->Entries[i-j].Number = Priv->ReturnInt;
+                break;
+            case 18:
+                if (Priv->ReturnType != Alcatel_date) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_REPEAT_STARTDATE;
+                Note->Entries[i-j].Date = Priv->ReturnDateTime;
+                break;
+            case 19:
+                if (Priv->ReturnType != Alcatel_date) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                Note->Entries[i-j].EntryType = CAL_REPEAT_STOPDATE;
+                Note->Entries[i-j].Date = Priv->ReturnDateTime;
+                break;
+            case 20:
+                if (Priv->ReturnType != Alcatel_date) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                /* This entry had always same value as the 3rd (alarm date) */
+                j++;
+                Note->EntriesNum--;
+                break;
+            case 21:
+                if (Priv->ReturnType != Alcatel_time) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                /* This entry had always same value as the 4th (alarm time) */
+                j++;
+                Note->EntriesNum--;
+                break;
+            default:
+                smprintf(s,"WARNING: Received unknown field %02X, ignoring\n", Priv->CurrentFields[i]);
+        }
+    }
+    return GE_NONE;
 }
 
 static GSM_Error ALCATEL_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
@@ -1116,51 +1509,239 @@ static GSM_Error ALCATEL_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
     GSM_Error error;
 
     if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= GE_NONE) return error;
-    if ((error = ALCATEL_GetAvailableIds(s))!= GE_NONE) return error;
+    if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
     /* TODO: do the real deleting */
     return GE_WORKINPROGRESS;
 }
 
-static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
 {
     GSM_Error error;
 
     if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= GE_NONE) return error;
-    if ((error = ALCATEL_GetAvailableIds(s))!= GE_NONE) return error;
+    if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
     /* TODO: do the real setting */
     return GE_WORKINPROGRESS;
 }
 
-static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_TODO *ToDo, bool refresh)
+static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refresh)
 {
     GSM_Error error;
+    GSM_DateTime *dt = NULL;
+    GSM_Phone_ALCATELData   	*Priv = &s->Phone.Data.Priv.ALCATEL;
+    int i,j=0;
 
-    if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeTodo, 0))!= GE_NONE) return error;
-    if ((error = ALCATEL_GetAvailableIds(s))!= GE_NONE) return error;
-    if ((error = ALCATEL_IsIdAvailable(s, ToDo->Location))!= GE_NONE) return error;
+    if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= GE_NONE) return error;
+    if ((error = ALCATEL_GetAvailableIds(s, refresh))!= GE_NONE) return error;
+    if ((error = ALCATEL_IsIdAvailable(s, ToDo->Location))!= GE_NONE) {
+        ToDo->EntriesNum = 0;
+        return error;
+    }
     if ((error = ALCATEL_GetFields(s, ToDo->Location))!= GE_NONE) return error;
-    /* TODO: do the real reading */
-    return GE_WORKINPROGRESS;
+
+    ToDo->EntriesNum = Priv->CurrentFieldsCount;
+    
+    for (i=0; i < Priv->CurrentFieldsCount; i++) {
+        if ((error = ALCATEL_GetFieldValue(s, ToDo->Location, Priv->CurrentFields[i]))!= GE_NONE) return error;
+        switch (Priv->CurrentFields[i]) {
+            case 0:
+                if (Priv->ReturnType != Alcatel_date) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                ToDo->Entries[i-j].EntryType = TODO_DUEDATE;
+                ToDo->Entries[i-j].Date = Priv->ReturnDateTime;
+                break;
+            case 1:
+                if (Priv->ReturnType != Alcatel_bool) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                ToDo->Entries[i-j].EntryType = TODO_COMPLETED;
+                ToDo->Entries[i-j].Number = Priv->ReturnInt;
+                break;
+            case 2:
+                if (Priv->ReturnType != Alcatel_date) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                if (dt == NULL) {
+                    ToDo->Entries[i-j].EntryType = TODO_ALARM_DATETIME;
+                    ToDo->Entries[i-j].Date = Priv->ReturnDateTime;
+                    dt = &(ToDo->Entries[i-j].Date);
+                } else {
+                    j++;
+                    ToDo->EntriesNum--;
+                    dt->Day = Priv->ReturnDateTime.Day;
+                    dt->Month = Priv->ReturnDateTime.Month;
+                    dt->Year = Priv->ReturnDateTime.Year;
+                    dt->Timezone = Priv->ReturnDateTime.Timezone;
+                    dt = NULL;
+                }
+                break;
+            case 3:
+                if (Priv->ReturnType != Alcatel_time) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                if (dt == NULL) {
+                    ToDo->Entries[i-j].EntryType = TODO_ALARM_DATETIME;
+                    ToDo->Entries[i-j].Date = Priv->ReturnDateTime;
+                    dt = &(ToDo->Entries[i-j].Date);
+                } else {
+                    j++;
+                    ToDo->EntriesNum--;
+                    dt->Hour = Priv->ReturnDateTime.Hour;
+                    dt->Minute = Priv->ReturnDateTime.Minute;
+                    dt->Second = Priv->ReturnDateTime.Second;
+                    dt = NULL;
+                }
+                break;
+            case 4:
+                if (Priv->ReturnType != Alcatel_string) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                ToDo->Entries[i-j].EntryType = TODO_TEXT;
+                CopyUnicodeString(ToDo->Entries[i-j].Text, Priv->ReturnString);
+                break;
+            case 5:
+                if (Priv->ReturnType != Alcatel_bool) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                ToDo->Entries[i-j].EntryType = TODO_PRIVATE;
+                ToDo->Entries[i-j].Number = Priv->ReturnInt;
+                break;
+            case 6:
+                if (Priv->ReturnType != Alcatel_byte) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                ToDo->Entries[i-j].EntryType = TODO_CATEGORY;
+                ToDo->Entries[i-j].Number = Priv->ReturnInt;
+                break;
+            case 7:
+                if (Priv->ReturnType != Alcatel_enum) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                switch (Priv->ReturnInt) {
+                    case 0: 
+                        ToDo->Priority = GSM_Priority_High;
+                        break;
+                    case 1: 
+                        ToDo->Priority = GSM_Priority_Medium;
+                        break;
+                    case 2: 
+                        ToDo->Priority = GSM_Priority_Low;
+                        break;
+                    default:
+                        ToDo->Priority = GSM_Priority_Medium;
+                        smprintf(s,"WARNING: Received unexpected priority %02X, ignoring\n", Priv->ReturnInt);
+                }
+                j++;
+                ToDo->EntriesNum--;
+                break;
+            case 8:
+                if (Priv->ReturnType != Alcatel_int) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                ToDo->Entries[i-j].EntryType = TODO_CONTACTID;
+                ToDo->Entries[i-j].Number = Priv->ReturnInt;
+                break;
+            case 9:
+                if (Priv->ReturnType != Alcatel_phone) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                ToDo->Entries[i-j].EntryType = TODO_PHONE;
+                CopyUnicodeString(ToDo->Entries[i-j].Text, Priv->ReturnString);
+                break;
+            case 10:
+                if (Priv->ReturnType != Alcatel_date) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                /* This entry had always same value as the 2nd (alarm date) */
+                j++;
+                ToDo->EntriesNum--;
+                break;
+            case 11:
+                if (Priv->ReturnType != Alcatel_time) {
+                    smprintf(s,"WARNING: Received unexpected type %02X, ignoring\n", Priv->ReturnType);
+                    break;
+                }
+                /* This entry had always same value as the 3rd (alarm time) */
+                j++;
+                ToDo->EntriesNum--;
+                break;
+            default:
+                smprintf(s,"WARNING: Received unknown field %02X, ignoring\n", Priv->CurrentFields[i]);
+        }
+    }
+    return GE_NONE;
 }
 
 static GSM_Error ALCATEL_DeleteAllToDo (GSM_StateMachine *s)
 {
     GSM_Error error;
 
-    if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeTodo, 0))!= GE_NONE) return error;
-    if ((error = ALCATEL_GetAvailableIds(s))!= GE_NONE) return error;
+    if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= GE_NONE) return error;
+    if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
     /* TODO: do the real deleting */
     return GE_WORKINPROGRESS;
 }
 
-static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_TODO *ToDo)
+static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
     GSM_Error error;
 
-    if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeTodo, 0))!= GE_NONE) return error;
-    if ((error = ALCATEL_GetAvailableIds(s))!= GE_NONE) return error;
+    if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= GE_NONE) return error;
+    if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
     /* TODO: do the real setting */
     return GE_WORKINPROGRESS;
+}
+
+static GSM_Error ALCATEL_GetCategoryStatus(GSM_StateMachine *s, GSM_CategoryStatus *Status)
+{
+    GSM_Alcatel_BinaryType  type;
+    GSM_Error               error;
+    GSM_Phone_ALCATELData   *Priv = &s->Phone.Data.Priv.ALCATEL;
+
+    switch (Status->Type) {
+        case Category_ToDo: type = TypeToDo; break;
+        case Category_Phonebook: type = TypeContacts; break;
+        default: return GE_NOTSUPPORTED;
+    }
+    if ((error = ALCATEL_GoToBinaryState(s, StateSession, type, 0))!= GE_NONE) return error;
+    if ((error = ALCATEL_GetAvailableCategoryIds(s))!= GE_NONE) return error;
+    
+    Status->Used = Priv->CurrentCategoriesCount;
+
+    return GE_NONE;
+}
+
+static GSM_Error ALCATEL_GetCategory(GSM_StateMachine *s, GSM_Category *Category)
+{
+    GSM_Alcatel_BinaryType  type;
+    GSM_Error               error;
+    GSM_Phone_ALCATELData   *Priv = &s->Phone.Data.Priv.ALCATEL;
+
+    switch (Category->Type) {
+        case Category_ToDo: type = TypeToDo; break;
+        case Category_Phonebook: type = TypeContacts; break;
+        default: return GE_NOTSUPPORTED;
+    }
+    if ((error = ALCATEL_GoToBinaryState(s, StateSession, type, 0))!= GE_NONE) return error;
+    if ((error = ALCATEL_GetAvailableCategoryIds(s))!= GE_NONE) return error;
+    if ((error = ALCATEL_IsCategoryIdAvailable(s, Category->Location))!= GE_NONE) return error;
+    if ((error = ALCATEL_GetCategoryText(s, Category->Location))!= GE_NONE) return error;
+
+    CopyUnicodeString(Category->Name, Priv->ReturnString);
+
+    return GE_NONE;
 }
 
 static GSM_Error ALCATEL_DispatchMessage(GSM_StateMachine *s)
@@ -1184,8 +1765,9 @@ static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_Phone_Data *
         switch (c) {
             case 0x10: /* same thing opened in phone menus */
                 return GE_INSIDEPHONEMENU;
+            case 0x13:
+                return GE_SECURITYERROR;
             case 0x14: /* Bad data */
-            case 0x13: /* Closing bad session */
             case 0x2f: /* Closing session when not opened */
             case 0x1f: /* Bad in/out counter in packet/ack */
             case 0x0e: /* Openning session when not closed */
@@ -1197,6 +1779,8 @@ static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_Phone_Data *
             case 0x23: /* Session opened */
             case 0x80: /* Transfer started */
                 return GE_NONE;
+            case 0x82: /* Transfer canceled */
+                return GE_CANCELED;
             default:
                 dprintf("WARNING: Packet seems to indicate some status by %02X, ignoring!\n", c);
         }
@@ -1224,6 +1808,10 @@ static GSM_Reply_Function ALCATELReplyFunctions[] = {
 {ALCATEL_ReplyGeneric,      "\x02",0x00,0x00, ID_AlcatelBegin2		},
 {ALCATEL_ReplyGeneric,      "\x02",0x00,0x00, ID_AlcatelGetIds1		},
 {ALCATEL_ReplyGetIds,       "\x02",0x00,0x00, ID_AlcatelGetIds2		},
+{ALCATEL_ReplyGeneric,      "\x02",0x00,0x00, ID_AlcatelGetCategories1  },
+{ALCATEL_ReplyGetCategories,"\x02",0x00,0x00, ID_AlcatelGetCategories2  },
+{ALCATEL_ReplyGeneric,      "\x02",0x00,0x00, ID_AlcatelGetCategoryText1  },
+{ALCATEL_ReplyGetCategoryText,"\x02",0x00,0x00, ID_AlcatelGetCategoryText2  },
 {ALCATEL_ReplyGeneric,      "\x02",0x00,0x00, ID_AlcatelGetFields1	},
 {ALCATEL_ReplyGetFields,    "\x02",0x00,0x00, ID_AlcatelGetFields2	},
 {ALCATEL_ReplyGeneric,      "\x02",0x00,0x00, ID_AlcatelGetFieldValue1	},
@@ -1252,8 +1840,6 @@ GSM_Phone_Functions ALCATELPhone = {
     ALCATEL_GetMemoryStatus,
     ALCATEL_GetSMSC,
     ALCATEL_GetSMSMessage,
-    ALCATEL_GetBatteryLevel,
-    ALCATEL_GetNetworkLevel,
     ALCATEL_GetSMSFolders,
     ALCATEL_GetManufacturer,
     ALCATEL_GetNextSMSMessage,
@@ -1306,7 +1892,13 @@ GSM_Phone_Functions ALCATELPhone = {
     NONEFUNCTION,               /*  SetIncomingCall     */
     ALCATEL_GetNextCalendar,
     ALCATEL_DelCalendar,
-    ALCATEL_AddCalendar
+    ALCATEL_AddCalendar,
+    ALCATEL_GetBatteryCharge,
+    ALCATEL_GetSignalStrength,
+    ALCATEL_GetCategory,
+    ALCATEL_GetCategoryStatus,
+    NOTSUPPORTED,		/*  GetFMStation        */
+    NOTSUPPORTED		/*  SetIncomingUSSD	*/
 };
 
 #endif

@@ -108,3 +108,39 @@ GSM_Error NOKIA_EncodeVCALENDAR10SMSText(char *Buffer, int *Length, GSM_Calendar
 
 	return GE_NONE;
 }
+
+bool IsNoteFromThePast(GSM_CalendarEntry note)
+{
+	bool 		Past = true;
+	int		i;
+	GSM_DateTime	DT;
+
+	GSM_GetCurrentDateTime (&DT);
+	for (i = 0; i < note.EntriesNum; i++)
+	{
+		switch (note.Entries[i].EntryType) {
+		case CAL_RECURRANCE:
+			Past = false;
+			break;
+		case CAL_START_DATETIME :
+			if (note.Entries[i].Date.Year > DT.Year) Past = false;
+			if (note.Entries[i].Date.Year == DT.Year &&
+			    note.Entries[i].Date.Month > DT.Month) Past = false;
+			if (note.Entries[i].Date.Year == DT.Year &&
+			    note.Entries[i].Date.Month == DT.Month &&
+			    note.Entries[i].Date.Day > DT.Day) Past = false;
+			break;
+		default:
+			break;
+		}
+		if (!Past) break;
+	}
+	switch (note.Type) {
+		case GCN_BIRTHDAY:
+			Past = false;
+			break;
+		default:
+			break;
+	}
+	return Past;
+}

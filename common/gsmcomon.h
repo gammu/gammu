@@ -48,7 +48,8 @@ typedef enum {
 	GE_WORKINPROGRESS,		/* Work in progress */
 /*30*/	GE_PHONEOFF,			/* Phone is disabled and connected to charger */
 	GE_FILENOTSUPPORTED,		/* File format not supported by Gammu */
-	GE_BUG                  	/* Found bug in implementation or phone */
+	GE_BUG,                  	/* Found bug in implementation or phone */
+    GE_CANCELED                 /* Action was canceled by user */
 } GSM_Error;
 
 extern GSM_Error NoneFunction		(void);

@@ -915,10 +915,55 @@ GSM_Error NOKIA_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 	return GE_NONE;
 }
 
+GSM_Error N71_65_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+	unsigned char buffer[2000],buffer2[4000];
+
+	memcpy(buffer,msg.Buffer+8,msg.Buffer[7]);
+	buffer[msg.Buffer[7]] = 0x00;
+
+	dprintf("USSD reply: \"%s\"\n",buffer);
+
+	if (Data->EnableIncomingUSSD && User->IncomingUSSD!=NULL) {
+		EncodeUnicode(buffer2,buffer,strlen(buffer));
+		User->IncomingUSSD(Data->Device, buffer2);
+	}
+
+	return GE_NONE;
+}
+
+GSM_Error NOKIA_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
+{
+	s->Phone.Data.EnableIncomingUSSD = enable;
+#ifdef DEBUG
+	if (enable) {
+		dprintf("Enabling incoming USSD\n");
+	} else {
+		dprintf("Disabling incoming USSD\n");
+	}
+#endif
+	return GE_NONE;
+}
+
+GSM_Error NOKIA_SetIncomingCall(GSM_StateMachine *s, bool enable)
+{
+	if (IsPhoneFeatureAvailable(s->Model,F_NOCALLINFO)) return GE_NOTSUPPORTED;
+
+	s->Phone.Data.EnableIncomingCall = enable;
+#ifdef DEBUG
+	if (enable) {
+		dprintf("Enabling incoming Call\n");
+	} else {
+		dprintf("Disabling incoming Call\n");
+	}
+#endif
+	return GE_NONE;
+}
+
 GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	GSM_Call 	call;
-	int			tmp;
+	int		tmp;
 #ifdef DEBUG
 	unsigned char 	buffer[200];
 
@@ -957,7 +1002,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, G
 		break;
 	}
 #endif
-	if (User->IncomingCall) {
+	if (Data->EnableIncomingCall && User->IncomingCall!=NULL) {
 		switch (msg.Buffer[3]) {
 		case 0x02:
 			call.Status = GN_CALL_CallStart;
@@ -1265,7 +1310,7 @@ GSM_Error N71_65_ReplyAddCalendar2(GSM_Protocol_Message msg, GSM_Phone_Data *Dat
 }
 
 /* method 2 */
-GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
 {
 	time_t     		t_time1,t_time2;
 	GSM_DateTime		Date,date_time;
@@ -1284,6 +1329,8 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 		0x00,0x00,			/* recurrance */
 		0x00,0x00,0x00,0x00,
 		0x00,0x00,0x00,0x00};		/* rest depends on note type */
+
+	if (!Past && IsNoteFromThePast(*Note)) return GE_NONE;
 
 	switch(Note->Type) {
 		case GCN_REMINDER: req[18] = 0x08; length = 25; break;
@@ -1426,32 +1473,39 @@ GSM_Error N71_65_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 /* method 1 */
 GSM_Error N71_65_ReplyGetCalendarInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User, GSM_NOKIACalendarLocations *LastCalendar)
 {
-	int i;
+	int i,j=0;
 
 	dprintf("Info with calendar notes locations received\n");
-	LastCalendar->Number=msg.Buffer[4]*256+msg.Buffer[5];
-	dprintf("Number of Entries: %i\n",LastCalendar->Number);
-	dprintf("Locations: ");
-	for (i=0;i<LastCalendar->Number;i++) {
-		/* Some phones seems to return incorrect number
-		 * of calendar entries. Please don't ask why.
-		 * Here is workaround */
-		if (((8+(i*2))>=msg.Length) || ((9+(i*2))>=msg.Length)) {
-			LastCalendar->Number = i+1;
-			dprintf("\nCorrect number of Entries: %i",LastCalendar->Number);
-			break;
-		}
-		LastCalendar->Location[i]=msg.Buffer[8+(i*2)]*256+msg.Buffer[9+(i*2)];
-		dprintf("%i ",LastCalendar->Location[i]);
+	while (LastCalendar->Location[j] != 0x00) j++;
+	if (j >= NOKIA_MAXCALENDARNOTES) {
+		dprintf("Increase NOKIA_MAXCALENDARNOTES\n");
+		return GE_UNKNOWN;
 	}
+	if (j == 0) {
+		LastCalendar->Number=msg.Buffer[4]*256+msg.Buffer[5];
+		dprintf("Number of Entries: %i\n",LastCalendar->Number);
+	}
+	dprintf("Locations: ");
+	i = 0;
+	while (9+(i*2) <= msg.Length) {
+		LastCalendar->Location[j++]=msg.Buffer[8+(i*2)]*256+msg.Buffer[9+(i*2)];
+		dprintf("%i ",LastCalendar->Location[j-1]);
+		i++;
+	}
+	dprintf("\nNumber of Entries in frame: %i\n",i);
+	LastCalendar->Location[j] = 0;
 	dprintf("\n");
 	return GE_NONE;
 }
 
 /* method 1 */
-GSM_Error N71_65_GetCalendarInfo(GSM_StateMachine *s)
+static GSM_Error N71_65_GetCalendarInfo(GSM_StateMachine *s, int i)
 {
-	unsigned char req[] = {N6110_FRAME_HEADER, 0x3a, 0xFF, 0xFE};
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x3a,
+			       0xFF, 0xFE};		/* First location number */
+
+	req[4] = i / 256;
+	req[5] = i % 256;
 	dprintf("Getting locations for calendar\n");
 	return GSM_WaitFor (s, req, 6, 0x13, 4, ID_GetCalendarNotesInfo);
 }
@@ -1587,6 +1641,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_Phone_Data 
 /* method 1 */
 GSM_Error N71_65_GetNextCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, GSM_NOKIACalendarLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos)
 {
+	int			i;
 	GSM_Error		error;
 	GSM_DateTime		date_time;
 	unsigned char 		req[] = {
@@ -1594,8 +1649,18 @@ GSM_Error N71_65_GetNextCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 		0x00, 0x00};		/* Location */
 
 	if (start) {
-		error=N71_65_GetCalendarInfo(s);
+		LastCalendar->Location[0] = 0x00;
+		LastCalendar->Number	  = 0;
+		error=N71_65_GetCalendarInfo(s,0xFF*256+0xFE);
 		if (error!=GE_NONE) return error;
+		while (1) {
+			i=0;
+			while (LastCalendar->Location[i] != 0x00) i++;
+			if (i == LastCalendar->Number) break;
+			dprintf("i = %i %i\n",i,LastCalendar->Number);
+			error=N71_65_GetCalendarInfo(s,LastCalendar->Location[i-1]);
+			if (error!=GE_NONE) return error;			
+		}
 
 		/* We have to get current year. It's NOT written in frame for
 		 * Birthday
@@ -1665,7 +1730,7 @@ GSM_Error N71_65_ReplyAddCalendar1(GSM_Protocol_Message msg, GSM_Phone_Data *Dat
 }
 
 /* method 1 */
-GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *FirstCalendarPos)
+GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *FirstCalendarPos, bool Past)
 {
 	long			seconds;
  	GSM_Error		error;
@@ -1680,6 +1745,8 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		0x00, 0x00, 0x00, 0x00,		/* Year(2bytes), Month, Day */
 		/* here starts block ... depends on note type */
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00};                          
+
+	if (!Past && IsNoteFromThePast(*Note)) return GE_NONE;
 
 	error=N71_65_GetCalendarNotePos(s);
 	if (error!=GE_NONE) return error;

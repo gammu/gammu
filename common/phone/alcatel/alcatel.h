@@ -39,7 +39,7 @@ typedef enum {
 typedef enum {
     TypeCalendar = 1,
     TypeContacts,
-    TypeTodo
+    TypeToDo
 } GSM_Alcatel_BinaryType;
 
 /* Alcatel internal types */
@@ -61,6 +61,8 @@ typedef enum {
  * this from phone.
  */
 #define ALCATEL_FREE_MEMORY             100
+#define ALCATEL_MAX_LOCATION            0x0fffffff
+#define ALCATEL_MAX_CATEGORIES          255
 
 typedef struct {
     /***********************************/
@@ -98,6 +100,10 @@ typedef struct {
     int                     CurrentFieldsItem;
     GSM_Alcatel_BinaryType  CurrentFieldsType;
     
+    int                     CurrentCategories[ALCATEL_MAX_CATEGORIES+1];
+    int                     CurrentCategoriesCount;
+    GSM_Alcatel_BinaryType  CurrentCategoriesType;
+    
 } GSM_Phone_ALCATELData;
 
 /*****************************/
@@ -113,5 +119,9 @@ typedef struct {
 #define ALCATEL_BEGIN_SYNC_CALENDAR     0x00
 #define ALCATEL_BEGIN_SYNC_TODO         0x02
 #define ALCATEL_BEGIN_SYNC_CONTACTS     0x01
+
+/* category types */
+#define ALCATEL_LIST_TODO_CAT           0x9B
+#define ALCATEL_LIST_CONTACTS_CAT       0x96
 
 #endif

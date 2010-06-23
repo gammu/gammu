@@ -71,7 +71,5 @@ void PHONE_GetBitmapWidthHeight	(GSM_Phone_Bitmap_Types Type, int *width, int *h
 int  PHONE_GetBitmapSize	(GSM_Phone_Bitmap_Types Type);
 
 void NOKIA_CopyBitmap		(GSM_Phone_Bitmap_Types Type, GSM_Bitmap *Bitmap, char *Buffer, int *Length);
-void EMS_CopyBitmapUDH		(GSM_Phone_Bitmap_Types Type, GSM_Bitmap *Bitmap, char *Buffer);
-void EMS_CopyAnimationUDH	(GSM_Phone_Bitmap_Types Type, GSM_MultiBitmap *Bitmap, char *Buffer);
 
 #endif

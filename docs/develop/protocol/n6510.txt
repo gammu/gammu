@@ -728,6 +728,16 @@ Received frame 0x38 / 0x0006
                               length, 0xXX, type, 0xXX, value
                               where value: 0x00 = success
 
+0x3E: FM Radio
+    s Get FM Station	    { 0x00, 0x01, 0x00, 0x05, location, 0x00, 0x01}
+    r Get FM Station	    { 			0x06, 0x00, 0x01, 0x00, 0x1c,
+			     name_length, 0x14, 0x09, 0x00, location, 0x00, 0x00, 0x01,
+			     FreqHI , FreqLO,
+			     name_in_unicode,[0x55,0x55] - if name_length is odd}
+                             where frequency = (0xffff + FreqHi * 0x100 + FreqLo) kHz
+    
+    r Get FM Station	    { 			0x16, 0x05, 0x06 } - if entry is empty
+
 0x42:
     s ????                  {+00 |07 |00 |01 |00 |02}
     r ????                  {+07 |2d-|00 |02 |06 |02 |00 |02 |00 |01 |02 |08 |00 |0c |07 |d1 |00 |00}

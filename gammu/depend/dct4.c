@@ -301,10 +301,10 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_Phone_Da
 			dprintf("Empty\n");
 			return GE_EMPTY;
 		}
-		*Data->NetworkLevel = 0;
+		*Data->VoiceRecord = 0;
 		while (i<msg.Length) {
-			Data->PhoneString[(*Data->NetworkLevel)++] = msg.Buffer[i+1];
-			Data->PhoneString[(*Data->NetworkLevel)++] = msg.Buffer[i];
+			Data->PhoneString[(*Data->VoiceRecord)++] = msg.Buffer[i+1];
+			Data->PhoneString[(*Data->VoiceRecord)++] = msg.Buffer[i];
 			i += 2;
 		}
 		return GE_NONE;
@@ -324,7 +324,7 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_Phone_Da
 			Buffer[msg.Buffer[j]] 	= 0;
 			Buffer[msg.Buffer[j]+1] = 0;
 			dprintf("%i. \"%s\"\n",i+1,DecodeUnicodeString(Buffer));	
-			if (i==*Data->NetworkLevel) {
+			if (i==*Data->VoiceRecord) {
 				sprintf(Data->PhoneString,"%s.wav",DecodeUnicodeString(Buffer));
 				return GE_NONE;
 			}
@@ -394,7 +394,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
-	s.Phone.Data.NetworkLevel 	= &Location;
+	s.Phone.Data.VoiceRecord 	= &Location;
 	s.Phone.Data.PhoneString 	= FileName;
 	dprintf("Getting voice record name\n");
 	error=GSM_WaitFor (&s, ReqNames, 14, 0x4A, 4, ID_User4);
@@ -414,7 +414,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	fwrite(&FMT_Header,	1, sizeof(FMT_Header),	WAVFile);
 	fwrite(&DATA_Header,	1, sizeof(DATA_Header),	WAVFile);
 
-	s.Phone.Data.NetworkLevel 	= &size;
+	s.Phone.Data.VoiceRecord 	= &size;
 	s.Phone.Data.PhoneString 	= Buffer;
 	ReqGet[7]			= Location;
 	fprintf(stderr,"Getting voice record and saving to \"%s\": ",FileName);

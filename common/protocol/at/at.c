@@ -47,6 +47,9 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 		d->linestart  = d->Msg.Buffer;
 	}
 
+    /* Ignore leading CR, LF and ESC */
+    if (d->Msg.Length == 0 && (rx_byte == 10 || rx_byte == 13 || rx_byte == 27)) return GE_NONE;
+        
 	d->Msg.Buffer[d->Msg.Length++] = rx_byte;
 	d->Msg.Buffer[d->Msg.Length  ] = 0;
 
@@ -96,14 +99,7 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 	error=s->Device.Functions->DeviceSetDtrRts(s,true,true);
     	if (error!=GE_NONE) return error; 
 
-	if (s->ConnectionType==GCT_AT19200) {
-		error=s->Device.Functions->DeviceSetSpeed(s,19200);
-	}
-	if (s->ConnectionType==GCT_AT115200) {
-		error=s->Device.Functions->DeviceSetSpeed(s,115200);
-	}
-
-	return error;
+	return s->Device.Functions->DeviceSetSpeed(s,s->Speed);
 }
 
 GSM_Protocol_Functions ATProtocol = {

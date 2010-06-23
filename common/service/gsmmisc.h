@@ -65,4 +65,49 @@ typedef struct {
 	GSM_DisplayFeature 	Feature[7];
 } GSM_DisplayFeatures;
 
+typedef struct {
+    /* All these should be -1 when unknown */
+    int 	SignalStrength; /* Signal strength in dBm */
+    int 	SignalPercent;  /* Signal strength in percent */
+    int 	BitErrorRate;   /* Bit error rate in percent */
+} GSM_SignalQuality;
+
+typedef enum {
+    GSM_BatteryPowered = 1,
+    GSM_BatteryConnected,
+    GSM_BatteryNotConnected,
+    GSM_PowerFault
+} GSM_ChargeState;
+
+typedef struct {
+    int 		BatteryPercent; /* Signal strength in percent, -1 = unknown */
+    GSM_ChargeState 	ChargeState;    /* Charge state */
+} GSM_BatteryCharge;
+
+#define GSM_MAX_CATEGORY_NAME_LENGTH 50
+
+typedef enum {
+    Category_ToDo,
+    Category_Phonebook
+} GSM_CategoryType;
+
+typedef struct {
+    GSM_CategoryType    Type;
+    int                 Location;
+    unsigned char       Name[(GSM_MAX_CATEGORY_NAME_LENGTH + 1)*2];
+} GSM_Category;
+
+typedef struct {
+    GSM_CategoryType    Type;
+    int                 Used;
+} GSM_CategoryStatus;
+
+#define	GSM_MAX_FMSTATION_LENGTH 20
+
+typedef struct {
+	int			Location;
+        char 			StationName [(GSM_MAX_FMSTATION_LENGTH+1)*2];
+	int			Frequency;
+} GSM_FMStation;
+
 #endif

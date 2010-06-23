@@ -4,6 +4,46 @@ ChangeLog for Gammu project (www.mwiacek.com)
 Few last versions (the highest) will be described more detailed, older less.
 In brackets names of people, who told about error/problem or helped in fixing.
 ----------------------
+20030206 - 0.68
+
+* new functionality:
+  * added 8390 ID, new network name                             (Michael Smith)
+  * added new Indonesian network names                           (...)
+  * * AT connection works with each serial speed                 (Michal Cihar)
+    * support for Alcatel BE5 for ToDo and Calendar and getting categories
+    * more info about battery and network signal level
+  * started hard work on full support for EMS. Currently can send some EMS
+    sequences with text, ringtone/animation ID, ringtone, 8x8 or
+    16x16 or 32x32 bitmap, 8x8 or 16x16 animation. Source is still
+    experimental and THERE CAN BE SOME PROBLEMS WITH SOME SEQUENCES. PLEASE
+    REPORT IT. In the future there will be added support for formating
+    text, ODI, UPI and variable images (I will try to code it although I
+    don't have supporting it phone)
+  * added getting FM stations info. Someone should check it with N5510  (Walek)
+    - maybe will work.
+  * full info about USSD replies
+  * when restore calendar notes, Gammu ask, if notes from the past should
+    be restored too
+
+* fixes and improvements:
+  * win32 dll better works, when two phones use one serial port
+  * improved creating convert tables for SMS  (Karel Polak & Tomasz Motylewski)
+    and in result compiling for Borland tools again possible
+  * improved reading calendar notes from new Nokia          (Tomasz Motylewski)
+    (method 1), increased number of notes to 200, compilation
+    fixes
+  * improvements for Alcatel BE5 and AT mode                     (Michal Cihar)
+  * many small improvements in some functions and SMS
+  * docs synchronized with source
+  * call API more usefull, improved handling for all incoming things
+    (SMS, calls info, etc.)
+  * date in backup files is saved using VCalendar format
+  * ToDo disabled for phone, which don't support them
+
+  NOTE: todo for today is full call API, MySQL support, ending EMS and support
+        for such things like uploading Java things or MIDI tones to Nokia
+        phones.
+
 20030126 - 0.67
 * new functionality:
   * added --clearall (cleaning pbk, calendar, wap bookmarks
