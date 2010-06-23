@@ -6,8 +6,7 @@ A. This is package with different tools and drivers for Nokia and other mobile
    phones released under GNU GPL license (see /copying file).
 
    It's created by Marcin Wiacek and other people and based on some experiences
-   from Gnokii (www.gnokii.org) and MyGnokii (http://marcin-wiacek.topnet.pl)
-   projects.
+   from Gnokii (www.gnokii.org) and MyGnokii (www.mwiacek.com) projects.
 
    Gammu (GNU All Mobile Management Utilities) was earlier (up to version 0.58)
    called MyGnokii2.
@@ -48,13 +47,12 @@ A. HELP IS VERY REQUIRED. Methods are many:
 -------------------------------------------------------------------------------
 Q. Where to get latest versions and support ?
 
-A. Latest versions are on http://marcin-wiacek.topnet.pl. There are two
-   packages: stable and developer. Second can be updated even once a day.
+A. Latest versions are on www.mwiacek.com.
 
-   For support contact Marcin Wiacek (marcin-wiacek@topnet.pl). You can also
-   subscribe mailing list (see http://marcin-wiacek.topnet.pl and subpage
-   about Gammu) and get help there. List is used also for annoucements about
-   new versions.
+   For support contact Marcin Wiacek (currently marcin@mwiacek.com, DO NOT USE
+   marcin-wiacek@topnet.pl). You can also subscribe mailing list (see
+   www.mwiacek.com and subpage about Gammu) and get help there. List is used
+   also for annoucements about new versions.
 
    TIP: If you want to have only general info about new versions, you can
         subscibe http://freshmeat.net/projects/gammu/ annoucements.
@@ -71,7 +69,7 @@ A. Method 1:
      * change parameters in /cfg/config.h
      * compile it:
        * under MS Visual C++ 6.0 (7.0) for MS Windows
-           enter into /gammu/msvc6 directory and run gammu.dsw
+           enter into /gammu/msvc6.mak directory and run gammu.dsw
        * under Unix (Linux)
            change compiler in /cfg/makefile.cfg (if required) and use "make" or
            "make makelib"
@@ -91,7 +89,7 @@ A. Method 1:
            I didn't try. Probably should work
        * under Borland C++ Builder 5 Trial
        * under Borland C++ Builder 6 Personal
-           go into gammu/bcc and check if there is subdirectory "output"
+           go into gammu/bcc.mak and check if there is subdirectory "output"
            (if not, create it). Then run gammu.bpr
 	   
            TIP: gammu.bpr was created using "Tools/Visual C++ Project Conve.."
@@ -257,14 +255,14 @@ A  1. Nokia 3310 (3315):
        nothing.
    ---------
    TIP: if you want to know more about changes and bugs in firmware in Nokia
-        phones, visit http://marcin-wiacek.topnet.pl and check firmware subpage
+        phones, visit www.mwiacek.com and check firmware subpage
 -------------------------------------------------------------------------------
 Q. What models are supported ?
 
 A. Here are all supported models:
 
    1.3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|6130|6150|
-     8210|8250|8290|8850|8855|8890:
+     6190|8210|8250|8290|8850|8855|8890:
 
      6210|6250|7110:
 
@@ -304,7 +302,7 @@ A. There are few methods of reporting errors. I will describe, which is the
       for example from "gammu --identify".
 
    Created log files can be sent to mailing list or directly to
-   marcin-wiacek@topnet.pl (if you don't want to publish some data to
+   marcin@mwiacek.com (if you don't want to publish some data to
    more people). Please compress file(s), if they're big.
 
    To debug files you can (should) add:
@@ -431,3 +429,34 @@ Q. Can Gammu backup voice tags (in meaning: sound saved in phone as voice
    record) ?
 
 A. Sorry, but not. I don't have Nokia software able to do it.
+-------------------------------------------------------------------------------
+Q. I can't connect to Nokia 9210 using original cable provided with phone...
+
+A. Use or "at19200"/"at115200" connection (have to enable modem in phone then)
+   or "fbus" after enabling FBUS with phone netmonitor 31.
+
+   Note: to enable netmonitor in phone you need MBUS cable (not DLR2 provided
+         with phone)
+-------------------------------------------------------------------------------
+Q. What phone could be recommended by Gammu author(s) to make SMS gateway ?
+
+A. The best is always the most simple device. So, I think that using Nokia 3310
+   or 3410 can be very good choice. They have removed some SMS bugs (for
+   example, 3330 has buggy firmware - you have to flash it with 3310 firmware
+   to avoid any problems). Especially 3410 is interesting - has got LiIon
+   battery.
+
+   More expensive Nokia phones (with own SMS memory) are more complicated
+   and using them is not always good idea (of course, Gammu can do it).
+
+   Another way is is to use special cellular modem especially equiped to
+   continuous work. I recommend Siemens devices - for example Siemens MC35. It
+   has GPRS and can be used to many tasks.
+-------------------------------------------------------------------------------
+Q. How to make national version of Gammu ?
+
+A. 1. go into docs/docs/locale
+   2. rename gammu_us.txt to gammu_XX.txt (where XX is language ID)
+   3. open gammu_XX.txt in editor supporting Unicode (in win32 Notepad)
+   4. to each "Fxxxx = "text"" line add "Txxxx = "text"" line
+   5. send to me updated file

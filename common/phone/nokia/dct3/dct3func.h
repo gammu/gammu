@@ -22,9 +22,9 @@ GSM_Error DCT3_ReplyGetWAPSettings	(GSM_Protocol_Message msg, GSM_Phone_Data *Da
 GSM_Error DCT3_ReplySetWAPSettings	(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User);
 GSM_Error DCT3_ReplyNetmonitor		(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User);
 GSM_Error DCT3_ReplyDeleteSMSMessage	(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User);
-GSM_Error N71_91_ReplyGetNetworkLevel	(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User);
-GSM_Error N71_91_ReplyGetBatteryLevel	(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User);
-GSM_Error N71_91_ReplyPhoneSetting	(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User);
+GSM_Error N71_92_ReplyGetNetworkLevel	(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User);
+GSM_Error N71_92_ReplyGetBatteryLevel	(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User);
+GSM_Error N71_92_ReplyPhoneSetting	(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User);
 GSM_Error N61_71_ReplyResetPhoneSettings(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User);
 GSM_Error N61_91_ReplySetOpLogo		(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User);
 #ifdef GSM_ENABLE_CELLBROADCAST
@@ -60,11 +60,11 @@ GSM_Error DCT3_GetOriginalIMEI		(GSM_StateMachine *s, char *value);
 GSM_Error DCT3_GetHardware		(GSM_StateMachine *s, char *value);
 GSM_Error DCT3_GetPPM			(GSM_StateMachine *s, char *value);
 GSM_Error N61_71_ResetPhoneSettings	(GSM_StateMachine *s, GSM_ResetSettingsType Type);
-GSM_Error N71_91_GetBatteryLevel	(GSM_StateMachine *s, int *level);
-GSM_Error N71_91_GetNetworkLevel	(GSM_StateMachine *s, int *level);
-GSM_Error N71_91_GetPhoneSetting	(GSM_StateMachine *s, int Request, int Setting);
-GSM_Error N71_91_GetDateTime		(GSM_StateMachine *s, GSM_DateTime	  *date_time	);
-GSM_Error N71_91_SetDateTime		(GSM_StateMachine *s, GSM_DateTime	  *date_time	);
+GSM_Error N71_92_GetBatteryLevel	(GSM_StateMachine *s, int *level);
+GSM_Error N71_92_GetNetworkLevel	(GSM_StateMachine *s, int *level);
+GSM_Error N71_92_GetPhoneSetting	(GSM_StateMachine *s, int Request, int Setting);
+GSM_Error N71_92_GetDateTime		(GSM_StateMachine *s, GSM_DateTime	  *date_time	);
+GSM_Error N71_92_SetDateTime		(GSM_StateMachine *s, GSM_DateTime	  *date_time	);
 
 GSM_Error DCT3_DecodeSMSFrame		(GSM_SMSMessage *SMS, unsigned char *buffer);
 

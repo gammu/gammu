@@ -12,9 +12,9 @@ Version: 	 %ver
 Release: 	 %rel
 License: 	 GPL
 Group:		 Applications/Communications
-Packager:	 Marcin Wiacek <marcin-wiacek@topnet.pl>
+Packager:	 Marcin Wiacek <marcin@mwiacek.com>
 Source: 	 %name-%{version}.tar.gz
-URL:		 http://marcin-wiacek.topnet.pl/
+URL:		 http://www.mwiacek.com
 Buildroot: 	 %{_tmppath}/%{name}-%{version}-root
 
 %description
@@ -47,6 +47,9 @@ make clean
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Sun Nov 10 2002 Marcin Wiacek <marcin@mwiacek.com>
+- topnet.pl email no more available
+
 * Sun Sep 30 2002 Marcin Wiacek <marcin-wiacek@topnet.pl>
 - build system is now really working OK
 

@@ -898,6 +898,26 @@ void GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 			FindDefaultAlphabetLen(Info->Buffer,&Length,&smslen,(GSM_MAX_8BIT_SMS_LENGTH-UDHHeader.Length)*8/7);
 		}
 		break;
+	case SMS_ConcatenatedAutoTextLong:
+		smslen = strlen(DecodeUnicodeString(Info->Buffer));
+		memcpy(Buffer,Info->Buffer,smslen*2);
+		EncodeDefault(Buffer2, Buffer, &smslen);
+		DecodeDefault(Buffer,  Buffer2, smslen);
+#ifdef DEBUG
+		if (di.dl == DL_TEXTALL) {
+			DumpMessage(di.df, Info->Buffer, strlen(DecodeUnicodeString(Info->Buffer))*2);
+			DumpMessage(di.df, Buffer, 	 strlen(DecodeUnicodeString(Buffer))*2);
+		}
+#endif
+		Info->UnicodeCoding = false;
+		for (smslen=0;smslen<(int)(strlen(DecodeUnicodeString(Info->Buffer))*2);smslen++) {
+			if (Info->Buffer[smslen] != Buffer[smslen]) {
+				Info->UnicodeCoding = true;
+				dprintf("Setting to Unicode\n");
+				break;
+			}
+		}
+		/* No break here - we go to the SMS_ConcatenatedTextLong */
 	case SMS_ConcatenatedTextLong:
 		Class = Info->Class;
 		memcpy(Buffer,Info->Buffer,strlen(DecodeUnicodeString(Info->Buffer))*2);

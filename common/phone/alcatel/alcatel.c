@@ -71,7 +71,8 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTIMPLEMENTED,		/* 	GetWAPSettings 		*/
 	NOTIMPLEMENTED, 	/* 	GetProfile 		*/
 	NOTIMPLEMENTED,		/* 	SetIncomingCB		*/
-	NOTIMPLEMENTED		/*	SetSMSC			*/
+	NOTIMPLEMENTED,		/*	SetSMSC			*/
+	NOTIMPLEMENTED		/*	SetIncomingCall		*/
 };
 
 #endif

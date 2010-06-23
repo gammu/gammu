@@ -15,7 +15,7 @@ Assembled by
 	Odinokov Serge <serge@takas.lt>
 	Pavel Janik <Pavel@Janik.cz>
 	Pawe³ Kot <pkot@linuxnews.pl>
-	Marcin Wiacek (Marcin-Wiacek@TOPNET.PL)
+	Marcin Wiacek (Marcin@MWiacek.com)
         Jens Bennfors <jens.bennfors@ing.hj.se>
         Michael Hund <michael@drhund.de>
         Jay Bertrand <jay.bertrand@libertysurf.fr>

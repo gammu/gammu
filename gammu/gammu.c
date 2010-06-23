@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 #ifdef WIN32
 #  include <windows.h>
 #endif
@@ -21,14 +22,15 @@
 #include "../common/phone/pfunc.h"
 #include "../common/phone/nokia/nfunc.h"
 #include "gammu.h"
+#include "smsd/smsdcore.h"
 #ifdef DEBUG
 #  include "sniff.h"
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT3
-#  include "dct3.h"
+#  include "depend/dct3.h"
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-#  include "dct4.h"
+#  include "depend/dct4.h"
 #endif
                 			
 GSM_StateMachine		s;
@@ -38,19 +40,36 @@ static CFG_Header		*cfg 			= NULL;
 GSM_Error			error 			= GE_NONE;
 static int			i;
 
-static volatile bool 		bshutdown 		= false;
+volatile bool 			bshutdown 		= false;
 static bool 			always_answer_yes 	= false;
 
 /* SIGINT signal handler. */
-static void interrupted(int sig)
+void interrupted(int sig)
 {
 	signal(sig, SIG_IGN);
 	bshutdown = true;
 }
 
-char *Msg (int number, char *default_string)
+int printmsg(char *format, ...)
 {
-	return GetMsg(s.msg,number,default_string);
+	va_list	argp;
+	int 	result;
+
+	va_start(argp, format);
+	result = vfprintf(stdout,GetMsg(s.msg,format), argp);
+	va_end(argp);
+	return result;
+}
+
+int printmsgerr(char *format, ...)
+{
+	va_list	argp;
+	int 	result;
+
+	va_start(argp, format);
+	result = vfprintf(stderr,GetMsg(s.msg,format), argp);
+	va_end(argp);
+	return result;
 }
 
 void Print_Error(GSM_Error error)
@@ -80,7 +99,7 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 {
 	*start=atoi(argv[num]);
 	if (*start==0) {
-		printf("%s",Msg(1020,"ERROR: enumerate locations from 1"));
+		printmsg("ERROR: enumerate locations from 1");
 		exit (-1);
 	}
 
@@ -88,7 +107,7 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 		*stop=*start;
 		if (argc>=num+2) *stop=atoi(argv[num+1]);
 		if (*stop==0) {
-			printf("%s",Msg(1020,"ERROR: enumerate locations from 1"));
+			printmsg("ERROR: enumerate locations from 1");
 			exit (-1);
 		}
 	}
@@ -100,9 +119,9 @@ static bool answer_yes(char *text)
 	char	ans[99];
 
 	while (1) {
-		fprintf(stderr,"%s (yes/no/ALL) ? ",text);
+		printmsgerr("%s (yes/no/ALL) ? ",text);
 		if (always_answer_yes) {
-			fprintf(stderr,"YES (always)\n");
+			printmsgerr("YES (always)\n");
 			return true;
 		}
 		len=GetLine(stdin, ans, 99);
@@ -134,7 +153,7 @@ static GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone)
 	 * press Ctrl+C to stop the monitoring mode.
 	 */
 	signal(SIGINT, interrupted);
-	printf("If you want break, press Ctrl+C...\n");
+	printmsg("If you want break, press Ctrl+C...\n");
 
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (bshutdown) break;
@@ -176,48 +195,48 @@ static void Identify(int argc, char *argv[])
 
 	error=Phone->GetManufacturer(&s, buffer);
 	Print_Error(error);
-	printf("%s %s ", Msg(1000,"Model         :"), DecodeUnicodeString(buffer));	
-	printf("%s (%s)\n", GetModelData(NULL,s.Model,NULL)->model, s.Model);
-	printf("%s %s",Msg(1001,"Firmware      :"),s.Ver);
+	printmsg("Model         : %s %s (%s)\n",
+			DecodeUnicodeString(buffer),
+			GetModelData(NULL,s.Model,NULL)->model, s.Model);
 
+	printmsg("Firmware      : %s",s.Ver);
 	error=Phone->GetPPM(&s, buffer);
 	if (error != GE_NOTSUPPORTED) {
 		if (error != GE_NOTIMPLEMENTED) Print_Error(error);
-		if (error == GE_NONE) printf(" %s",buffer);
+		if (error == GE_NONE) printmsg(" %s",buffer);
 	}
+	printmsg("\n");
 
-	printf("\n");
-
-	if (s.VerDate[0]!=0) printf("Firmware date : %s\n",s.VerDate);
+	if (s.VerDate[0]!=0) printmsg("Firmware date : %s\n",s.VerDate);
 
 	error=Phone->GetHardware(&s, buffer);
 	if (error != GE_NOTSUPPORTED) {
 		if (error != GE_NOTIMPLEMENTED) Print_Error(error);
-		if (error == GE_NONE) printf("%s %s\n",Msg(1028,"Hardware      :"),buffer);
+		if (error == GE_NONE) printmsg("Hardware      : %s\n",buffer);
 	}
 
 	error=Phone->GetIMEI(&s, buffer);
 	if (error != GE_NOTSUPPORTED) {
 		if (error != GE_NOTIMPLEMENTED) Print_Error(error);
-		if (error == GE_NONE) printf("%s %s\n",Msg(1002,"IMEI          :"),buffer);
+		if (error == GE_NONE) printmsg("IMEI          : %s\n",buffer);
 
 		error=Phone->GetOriginalIMEI(&s, buffer);
 		if (error != GE_NOTSUPPORTED && error != GE_SECURITYERROR) {
 			if (error != GE_NOTIMPLEMENTED) Print_Error(error);
-			if (error == GE_NONE) printf("%s %s\n",Msg(1029,"Original IMEI :"),buffer);
+			if (error == GE_NONE) printmsg("Original IMEI : %s\n",buffer);
 		}
 	}
 
 	error=Phone->GetManufactureMonth(&s, buffer);
 	if (error != GE_NOTSUPPORTED && error != GE_SECURITYERROR) {
 		if (error != GE_NOTIMPLEMENTED) Print_Error(error);
-		if (error == GE_NONE) printf("%s %s\n",Msg(1030,"Manufactured  :"),buffer);
+		if (error == GE_NONE) printmsg("Manufactured  : %s\n",buffer);
 	}
 
 	error=Phone->GetProductCode(&s, buffer);
 	if (error != GE_NOTSUPPORTED) {
 		if (error != GE_NOTIMPLEMENTED) Print_Error(error);
-		if (error == GE_NONE) printf("%s %s\n",Msg(1031,"Product code  :"),buffer);
+		if (error == GE_NONE) printmsg("Product code  : %s\n",buffer);
 	}
 
 	error=Phone->GetSIMIMSI(&s, buffer);
@@ -227,7 +246,7 @@ static void Identify(int argc, char *argv[])
 		case GE_NOTIMPLEMENTED:
 			break;
 		case GE_NONE:
-			printf("SIM IMSI      : %s\n",buffer);
+			printmsg("SIM IMSI      : %s\n",buffer);
 			break;
 		default:
 			Print_Error(error);
@@ -249,14 +268,10 @@ static void GetDateTime(int argc, char *argv[])
 	error=Phone->GetDateTime(&s, &date_time);
 	switch (error) {
 	case GE_EMPTY:
-		printf("%s\n",Msg(1005,"Date and time not set in phone"));
+		printmsg("Date and time not set in phone\n");
 		break;
 	case GE_NONE:
-		printf("%s %s %4d/%02d/%02d\n", Msg(1003,"Date:"),
-			DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
-			date_time.Year, date_time.Month, date_time.Day);
-		printf("%s %02d:%02d:%02d\n", Msg(1004,"Time:"),
-			date_time.Hour, date_time.Minute, date_time.Second);
+		printf("Phone time is %s\n",OSDateTime(date_time,false));
 		break;
 	default:
 		Print_Error(error);
@@ -288,11 +303,10 @@ static void GetAlarm(int argc, char *argv[])
 	error=Phone->GetAlarm(&s, &alarm, 1);
 	switch (error) {
 	case GE_EMPTY:
-		printf("%s\n",Msg(1006,"Alarm not set in phone"));
+		printmsg("Alarm not set in phone\n");
 		break;
 	case GE_NONE:
-		printf("%s %02d:%02d\n",Msg(1004,"Time: "),
-					alarm.Hour, alarm.Minute);
+		printmsg("Time: %02d:%02d\n",alarm.Hour, alarm.Minute);
 		break;
 	default:
 		Print_Error(error);
@@ -333,7 +347,7 @@ static void GetMemory(int argc, char *argv[])
 	if (!strcmp(argv[2],"SM")) entry.MemoryType=GMT_SM;
 	if (!strcmp(argv[2],"VM")) entry.MemoryType=GMT_VM;
 	if (entry.MemoryType==0) {
-		printf("%s (\"%s\")\n",Msg(1019,"ERROR: unknown memory type"),argv[2]);
+		printmsg("ERROR: unknown memory type (\"%s\")\n",argv[2]);
 		exit (-1);
 	}
 
@@ -344,12 +358,12 @@ static void GetMemory(int argc, char *argv[])
 	GSM_Init(true);
 
 	if (!strcmp(GetModelData(NULL,s.Model,NULL)->model,"3310")) {
-		if (s.VerNum<=4.06) printf("%s\n",Msg(1032,"WARNING: you will have null names in entries. Upgrade firmware in phone to higher than 4.06"));
+		if (s.VerNum<=4.06) printmsg("WARNING: you will have null names in entries. Upgrade firmware in phone to higher than 4.06\n");
 	}
 
 	for (j=start;j<=stop;j++) {
 
-		printf("%s %s, %s %i\n",Msg(1033,"Memory"),argv[2],Msg(1034,"Location"),j);
+		printmsg("Memory %s, Location %i\n",argv[2],j);
 
 		entry.Location=j;
 
@@ -357,29 +371,24 @@ static void GetMemory(int argc, char *argv[])
 		Print_Error(error);
 
 		if (entry.EntriesNum==0) {
-			printf("%s\n",Msg(1007,"Entry is empty"));
+			printmsg("Entry is empty\n");
 		} else {
 			for (i=0;i<entry.EntriesNum;i++) {
 				unknown = false;
 				switch (entry.Entries[i].EntryType) {
 				case PBK_Date:
-					printf("%s",Msg(1008,"Date and time   : "));
-					printf("%s %4d/%02d/%02d", 
-						DayOfWeek(entry.Entries[i].Date.Year, entry.Entries[i].Date.Month, entry.Entries[i].Date.Day),
-						entry.Entries[i].Date.Year, entry.Entries[i].Date.Month, entry.Entries[i].Date.Day);
-					printf(" %02d:%02d:%02d\n",
-						entry.Entries[i].Date.Hour, entry.Entries[i].Date.Minute, entry.Entries[i].Date.Second);
+					printmsg("Date and time   : %s\n",OSDateTime(entry.Entries[i].Date,false));
 					continue;
-				case PBK_Number_General: printf("%s",Msg(1009,"General number ")); break;
-				case PBK_Number_Mobile : printf("%s",Msg(1010,"Mobile number  ")); break;
-				case PBK_Number_Work   : printf("%s",Msg(1011,"Work number    ")); break;
-				case PBK_Number_Fax    : printf("%s",Msg(1012,"Fax number     ")); break;
-				case PBK_Number_Home   : printf("%s",Msg(1013,"Home number    ")); break;
-				case PBK_Text_Note     : printf("%s",Msg(1014,"Text           ")); break;
-				case PBK_Text_Postal   : printf("%s",Msg(1015,"Snail address  ")); break;
-				case PBK_Text_Email    : printf("%s",Msg(1016,"Email address  ")); break;
-				case PBK_Text_URL      : printf("URL address    "); 		   break;
-				case PBK_Name          : printf("%s",Msg(1017,"Name           ")); break;
+				case PBK_Number_General: printmsg("General number "); break;
+				case PBK_Number_Mobile : printmsg("Mobile number  "); break;
+				case PBK_Number_Work   : printmsg("Work number    "); break;
+				case PBK_Number_Fax    : printmsg("Fax number     "); break;
+				case PBK_Number_Home   : printmsg("Home number    "); break;
+				case PBK_Text_Note     : printmsg("Text           "); break;
+				case PBK_Text_Postal   : printmsg("Snail address  "); break;
+				case PBK_Text_Email    : printmsg("Email address  "); break;
+				case PBK_Text_URL      : printmsg("URL address    "); break;
+				case PBK_Name          : printmsg("Name           "); break;
 				case PBK_Caller_Group  :
 					unknown = true;
 					if (!callerinit[entry.Entries[i].Number]) {
@@ -393,17 +402,17 @@ static void GetMemory(int argc, char *argv[])
 						}
 						callerinit[entry.Entries[i].Number]=true;
 					}
-					printf("%s\"%s\"\n",Msg(1035,"Caller group    : "),DecodeUnicodeString(caller[entry.Entries[i].Number].Text));
+					printmsg("Caller group    : \"%s\"\n",DecodeUnicodeString(caller[entry.Entries[i].Number].Text));
 					break;
 				default		       :
-					printf("%s\n",Msg(1018,"UNKNOWN"));
+					printmsg("UNKNOWN\n");
 					unknown = true;
 					break;
 				}
-				if (!unknown) printf(" : \"%s\"\n", DecodeUnicodeString(entry.Entries[i].Text));
+				if (!unknown) printmsg(" : \"%s\"\n", DecodeUnicodeString(entry.Entries[i].Text));
 			}
 		}
-		printf("\n");
+		printmsg("\n");
 	}
 	
 
@@ -414,136 +423,126 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext)
 {
 	switch (sms.PDU) {
 	case SMS_Status_Report:
-		printf("%s\n",Msg(1036,"SMS status report"));
-		printf("%s",Msg(1037,"Status          : "));
+		printmsg("SMS status report\n");
+		printmsg("Status          : ");
 		switch (sms.State) {
-			case GSM_Sent	:	printf("Sent");		break;
-			case GSM_Read	:	printf("Read");		break;
-			case GSM_UnRead	:	printf("UnRead");	break;
-			case GSM_UnSent	:	printf("UnSent");	break;
+			case GSM_Sent	: printmsg("Sent");	break;
+			case GSM_Read	: printmsg("Read");	break;
+			case GSM_UnRead	: printmsg("UnRead");	break;
+			case GSM_UnSent	: printmsg("UnSent");	break;
 		}
-		printf("\n%s\"%s\"\n",Msg(1040,"Remote number   : "),DecodeUnicodeString(sms.Number));
-		printf("%s%s %4d/%02d/%02d ",
-			Msg(1041,"Sent            : "),
-			DayOfWeek(sms.DateTime.Year, sms.DateTime.Month, sms.DateTime.Day),
-			sms.DateTime.Year, sms.DateTime.Month, sms.DateTime.Day);
-		printf("%02d:%02d:%02d %04d\n", sms.DateTime.Hour, sms.DateTime.Minute, sms.DateTime.Second, sms.DateTime.Timezone);
-		printf("SMSC number     : \"%s\"\n",DecodeUnicodeString(sms.SMSC.Number));
-		printf("SMSC response   : %s %4d/%02d/%02d ",
-			DayOfWeek(sms.SMSCTime.Year, sms.SMSCTime.Month, sms.SMSCTime.Day),
-			sms.SMSCTime.Year, sms.SMSCTime.Month, sms.SMSCTime.Day);
-		printf("%02d:%02d:%02d %04d\n", sms.SMSCTime.Hour, sms.SMSCTime.Minute, sms.SMSCTime.Second, sms.SMSCTime.Timezone);
-		printf("Delivery status : %s\n",DecodeUnicodeString(sms.Text));
-		printf("Details         : ");
+		printmsg("\nRemote number   : \"%s\"\n",DecodeUnicodeString(sms.Number));
+		printmsg("Sent            : %s\n",OSDateTime(sms.DateTime,true));
+		printmsg("SMSC number     : \"%s\"\n",DecodeUnicodeString(sms.SMSC.Number));
+		printmsg("SMSC response   : %s\n",OSDateTime(sms.SMSCTime,true));
+		printmsg("Delivery status : %s\n",DecodeUnicodeString(sms.Text));
+		printmsg("Details         : ");
 		if (sms.DeliveryStatus & 0x40) {
 			if (sms.DeliveryStatus & 0x20) {
-				printf("Temporary error, ");
+				printmsg("Temporary error, ");
 			} else {
-	     			printf("Permanent error, ");
+	     			printmsg("Permanent error, ");
 			}
 	    	} else if (sms.DeliveryStatus & 0x20) {
-			printf("Temporary error, ");
+			printmsg("Temporary error, ");
 		}
 		switch (sms.DeliveryStatus) {
-			case 0x00: printf("SM received by the SME");				break;
-			case 0x01: printf("SM forwarded by the SC to the SME but the SC is unable to confirm delivery");break;
-			case 0x02: printf("SM replaced by the SC");				break;
-			case 0x20: printf("Congestion");					break;
-			case 0x21: printf("SME busy");						break;
-			case 0x22: printf("No response from SME");				break;
-			case 0x23: printf("Service rejected");					break;
-			case 0x24: printf("Quality of service not aviable");			break;
-			case 0x25: printf("Error in SME");					break;
-		        case 0x40: printf("Remote procedure error");				break;
-		        case 0x41: printf("Incompatibile destination");				break;
-		        case 0x42: printf("Connection rejected by SME");			break;
-		        case 0x43: printf("Not obtainable");					break;
-		        case 0x44: printf("Quality of service not available");			break;
-		        case 0x45: printf("No internetworking available");			break;
-		        case 0x46: printf("SM Validity Period Expired");			break;
-		        case 0x47: printf("SM deleted by originating SME");			break;
-		        case 0x48: printf("SM Deleted by SC Administration");			break;
-		        case 0x49: printf("SM does not exist");					break;
-		        case 0x60: printf("Congestion");					break;
-		        case 0x61: printf("SME busy");						break;
-		        case 0x62: printf("No response from SME");				break;
-		        case 0x63: printf("Service rejected");					break;
-		        case 0x64: printf("Quality of service not available");			break;
-		        case 0x65: printf("Error in SME");					break;
-		        default  : printf("Reserved/Specific to SC: %x",sms.DeliveryStatus);	break;
+			case 0x00: printmsg("SM received by the SME");				break;
+			case 0x01: printmsg("SM forwarded by the SC to the SME but the SC is unable to confirm delivery");break;
+			case 0x02: printmsg("SM replaced by the SC");				break;
+			case 0x20: printmsg("Congestion");					break;
+			case 0x21: printmsg("SME busy");						break;
+			case 0x22: printmsg("No response from SME");				break;
+			case 0x23: printmsg("Service rejected");					break;
+			case 0x24: printmsg("Quality of service not aviable");			break;
+			case 0x25: printmsg("Error in SME");					break;
+		        case 0x40: printmsg("Remote procedure error");				break;
+		        case 0x41: printmsg("Incompatibile destination");				break;
+		        case 0x42: printmsg("Connection rejected by SME");			break;
+		        case 0x43: printmsg("Not obtainable");					break;
+		        case 0x44: printmsg("Quality of service not available");			break;
+		        case 0x45: printmsg("No internetworking available");			break;
+		        case 0x46: printmsg("SM Validity Period Expired");			break;
+		        case 0x47: printmsg("SM deleted by originating SME");			break;
+		        case 0x48: printmsg("SM Deleted by SC Administration");			break;
+		        case 0x49: printmsg("SM does not exist");					break;
+		        case 0x60: printmsg("Congestion");					break;
+		        case 0x61: printmsg("SME busy");						break;
+		        case 0x62: printmsg("No response from SME");				break;
+		        case 0x63: printmsg("Service rejected");					break;
+		        case 0x64: printmsg("Quality of service not available");			break;
+		        case 0x65: printmsg("Error in SME");					break;
+		        default  : printmsg("Reserved/Specific to SC: %x",sms.DeliveryStatus);	break;
 		}
-		printf("\n");
+		printmsg("\n");
 		break;
 	case SMS_Deliver:
-		printf("SMS message\n");
-		printf("SMSC number      : \"%s\"",DecodeUnicodeString(sms.SMSC.Number));
-		if (sms.ReplyViaSameSMSC) printf(" (set for reply)");
-		printf("\nSent             : %s %4d/%02d/%02d ",
-			DayOfWeek(sms.DateTime.Year, sms.DateTime.Month, sms.DateTime.Day),
-			sms.DateTime.Year, sms.DateTime.Month, sms.DateTime.Day);
-		printf("%02d:%02d:%02d %04d\n", sms.DateTime.Hour, sms.DateTime.Minute, sms.DateTime.Second, sms.DateTime.Timezone);
+		printmsg("SMS message\n");
+		printmsg("SMSC number      : \"%s\"",DecodeUnicodeString(sms.SMSC.Number));
+		if (sms.ReplyViaSameSMSC) printmsg(" (set for reply)");
+		printmsg("\nSent             : %s\n",OSDateTime(sms.DateTime,true));
 		/* No break. The only difference for SMS_Deliver and SMS_Submit is,
 		 * that SMS_Deliver contains additional data. We wrote them and then go
 		 * for data shared with SMS_Submit
 		 */
 	case SMS_Submit:
-		if (sms.ReplaceMessage != 0) printf("SMS replacing ID : %i\n",sms.ReplaceMessage);
+		if (sms.ReplaceMessage != 0) printmsg("SMS replacing ID : %i\n",sms.ReplaceMessage);
 		/* If we went here from "case SMS_Deliver", we don't write "SMS Message" */
-		if (sms.PDU==SMS_Submit) printf("SMS message\n");
+		if (sms.PDU==SMS_Submit) printmsg("SMS message\n");
 		if (sms.Name[0] != 0x00 || sms.Name[1] != 0x00) {
-			printf("Name             : \"%s\"\n",DecodeUnicodeString(sms.Name));
+			printmsg("Name             : \"%s\"\n",DecodeUnicodeString(sms.Name));
 		}
 		if (sms.Class != -1) {
-			printf("Class            : %i\n",sms.Class);
+			printmsg("Class            : %i\n",sms.Class);
 		}
-		printf("Coding           : ");
+		printmsg("Coding           : ");
 		switch (sms.Coding) {
-			case GSM_Coding_Unicode : printf("Unicode\n");			break;
-			case GSM_Coding_Default : printf("Default GSM alphabet\n");	break;
-			case GSM_Coding_8bit	: printf("8 bit\n");			break;
+			case GSM_Coding_Unicode : printmsg("Unicode\n");			break;
+			case GSM_Coding_Default : printmsg("Default GSM alphabet\n");	break;
+			case GSM_Coding_8bit	: printmsg("8 bit\n");			break;
 		}
-		printf("%s",Msg(1037,"Status           : "));
+		printmsg("Status           : ");
 		switch (sms.State) {
-			case GSM_Sent	:	printf("Sent");		break;
-			case GSM_Read	:	printf("Read");		break;
-			case GSM_UnRead	:	printf("UnRead");	break;
-			case GSM_UnSent	:	printf("UnSent");	break;
+			case GSM_Sent	:	printmsg("Sent");		break;
+			case GSM_Read	:	printmsg("Read");		break;
+			case GSM_UnRead	:	printmsg("UnRead");	break;
+			case GSM_UnSent	:	printmsg("UnSent");	break;
 		}
-		printf("\n%s\"%s\"\n",Msg(1040,"Remote number    : "),DecodeUnicodeString(sms.Number));
-		if (sms.UDH.Type != UDH_NoUDH) printf("User Data Header : ");
+		printmsg("\nRemote number    : \"%s\"\n",DecodeUnicodeString(sms.Number));
+		if (sms.UDH.Type != UDH_NoUDH) printmsg("User Data Header : ");
 		switch (sms.UDH.Type) {
-		case UDH_ConcatenatedMessages:	printf("Concatenated (linked) message"); break;
-		case UDH_DisableVoice:		printf("Disables voice indicator");	 break;
-		case UDH_EnableVoice:		printf("Enables voice indicator");	 break;
-		case UDH_DisableFax:		printf("Disables fax indicator");	 break;
-		case UDH_EnableFax:		printf("Enables fax indicator");	 break;
-		case UDH_DisableEmail:		printf("Disables email indicator");	 break;
-		case UDH_EnableEmail:		printf("Enables email indicator");	 break;
-		case UDH_VoidSMS:		printf("Void SMS");			 break;
-		case UDH_NokiaWAPBookmark:	printf("Nokia WAP Bookmark");		 break;
-		case UDH_NokiaOperatorLogoLong:	printf("Nokia operator logo");		 break;
-		case UDH_NokiaWAPBookmarkLong:	printf("Nokia WAP Bookmark");		 break;
-		case UDH_NokiaWAPSettingsLong:	printf("Nokia WAP Settings");		 break;
-		case UDH_NokiaRingtone:		printf("Nokia ringtone");		 break;
-		case UDH_NokiaOperatorLogo:	printf("Nokia GSM operator logo");	 break;
-		case UDH_NokiaCallerLogo:	printf("Nokia caller logo");		 break;  	
-		case UDH_NokiaProfileLong:	printf("Nokia profile");		 break;
-		case UDH_NokiaCalendarLong:	printf("Nokia calendar note");		 break;
-		case UDH_NokiaPhonebookLong:	printf("Nokia phonebook entry");	 break;
-		case UDH_UserUDH:		printf("User UDH");			 break;
+		case UDH_ConcatenatedMessages:	printmsg("Concatenated (linked) message"); break;
+		case UDH_DisableVoice:		printmsg("Disables voice indicator");	 break;
+		case UDH_EnableVoice:		printmsg("Enables voice indicator");	 break;
+		case UDH_DisableFax:		printmsg("Disables fax indicator");	 break;
+		case UDH_EnableFax:		printmsg("Enables fax indicator");	 break;
+		case UDH_DisableEmail:		printmsg("Disables email indicator");	 break;
+		case UDH_EnableEmail:		printmsg("Enables email indicator");	 break;
+		case UDH_VoidSMS:		printmsg("Void SMS");			 break;
+		case UDH_NokiaWAPBookmark:	printmsg("Nokia WAP Bookmark");		 break;
+		case UDH_NokiaOperatorLogoLong:	printmsg("Nokia operator logo");		 break;
+		case UDH_NokiaWAPBookmarkLong:	printmsg("Nokia WAP Bookmark");		 break;
+		case UDH_NokiaWAPSettingsLong:	printmsg("Nokia WAP Settings");		 break;
+		case UDH_NokiaRingtone:		printmsg("Nokia ringtone");		 break;
+		case UDH_NokiaOperatorLogo:	printmsg("Nokia GSM operator logo");	 break;
+		case UDH_NokiaCallerLogo:	printmsg("Nokia caller logo");		 break;  	
+		case UDH_NokiaProfileLong:	printmsg("Nokia profile");		 break;
+		case UDH_NokiaCalendarLong:	printmsg("Nokia calendar note");		 break;
+		case UDH_NokiaPhonebookLong:	printmsg("Nokia phonebook entry");	 break;
+		case UDH_UserUDH:		printmsg("User UDH");			 break;
 		case UDH_NoUDH:								 break;
 		}
 		if (sms.UDH.Type != UDH_NoUDH) {
-			if (sms.UDH.ID != -1) printf(", ID %i",sms.UDH.ID);
+			if (sms.UDH.ID != -1) printmsg(", ID %i",sms.UDH.ID);
 			if (sms.UDH.PartNumber != -1 && sms.UDH.AllParts != -1) {
-				printf(", part %i of %i",sms.UDH.PartNumber,sms.UDH.AllParts);
+				printmsg(", part %i of %i",sms.UDH.PartNumber,sms.UDH.AllParts);
 			}
 		}
 		if (displaytext) {
 			if (sms.Coding!=GSM_Coding_8bit) {
-				printf("%s\n",DecodeUnicodeString(sms.Text));
+				printmsg("%s\n",DecodeUnicodeString(sms.Text));
 			} else {
-				printf("8 bit SMS, cannot be displayed here\n");
+				printmsg("8 bit SMS, cannot be displayed here\n");
 			}
 		}
 		break;
@@ -568,39 +567,37 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms)
 
 	for (j=0;j<sms.Number;j++) {
 		displaysinglesmsinfo(sms.SMS[j],!RetVal);
-		printf("\n");
+		printmsg("\n");
 	}
 	if (RetVal) {
 		if (SMSInfo.Bitmap != NULL) {
 			switch (SMSInfo.Bitmap->Bitmap[0].Type) {
 			case GSM_CallerLogo:
-				printf("Caller logo\n");
+				printmsg("Caller logo\n");
 				break;
 			case GSM_OperatorLogo:
-				printf("Operator logo ");
-				printf("for %s network (%s",
+				printmsg("Operator logo for %s network (%s, %s)\n",
 					SMSInfo.Bitmap->Bitmap[0].NetworkCode,
-					DecodeUnicodeString(GSM_GetNetworkName(SMSInfo.Bitmap->Bitmap[0].NetworkCode)));
-				printf(", %s)\n",
+					DecodeUnicodeString(GSM_GetNetworkName(SMSInfo.Bitmap->Bitmap[0].NetworkCode)),
 					DecodeUnicodeString(GSM_GetCountryName(SMSInfo.Bitmap->Bitmap[0].NetworkCode)));
 				break;
 			case GSM_PictureImage:
-				printf("Picture Image\n");
-				printf("Text: \"%s\"\n",DecodeUnicodeString(SMSInfo.Bitmap->Bitmap[0].Text));
+				printmsg("Picture Image\n");
+				printmsg("Text: \"%s\"\n",DecodeUnicodeString(SMSInfo.Bitmap->Bitmap[0].Text));
 				break;
 			default:
 				break;
 			}
 			GSM_PrintBitmap(stdout,&SMSInfo.Bitmap->Bitmap[0]);
-			printf("\n");
+			printmsg("\n");
 		}
 		if (SMSInfo.Buffer != NULL) {
-			printf("Text\n%s\n",DecodeUnicodeString(Buffer));
+			printmsg("Text\n%s\n",DecodeUnicodeString(Buffer));
 		}
 		if (SMSInfo.Ringtone != NULL) {
-			printf("Ringtone \"%s\"\n",DecodeUnicodeString(SMSInfo.Ringtone->Name));
+			printmsg("Ringtone \"%s\"\n",DecodeUnicodeString(SMSInfo.Ringtone->Name));
 			saverttl(stdout,SMSInfo.Ringtone);
-			printf("\n");
+			printmsg("\n");
 			if (s.Phone.Functions->PlayTone!=NOTSUPPORTED &&
 			    s.Phone.Functions->PlayTone!=NOTIMPLEMENTED) {
 				if (answer_yes("Do you want to play it")) GSM_PlayRingtone(*SMSInfo.Ringtone);
@@ -613,7 +610,7 @@ static void IncomingSMS(char *Device, GSM_SMSMessage sms)
 {
 	GSM_MultiSMSMessage SMS;
 
-	printf("SMS message received\n");
+	printmsg("SMS message received\n");
 	SMS.Number = 1;
 	memcpy(&SMS.SMS[0],&sms,sizeof(GSM_SMSMessage));	
 	displaymultismsinfo(SMS);
@@ -621,14 +618,27 @@ static void IncomingSMS(char *Device, GSM_SMSMessage sms)
 
 static void IncomingCB(char *Device, GSM_CBMessage CB)
 {
-	printf("CB message received\n");
-	printf("Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
+	printmsg("CB message received\n");
+	printmsg("Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
 }
 
-#define CHECKMEMORYSTATUS(x, m, a, a1, b, b1) { 					\
-	x.MemoryType=m;									\
-	if (Phone->GetMemoryStatus(&s, &x) == GE_NONE)					\
-		printf("%s %03d, %s %03d\n", Msg(a,a1), x.Used, Msg(b,b1), x.Free);	\
+static void IncomingCall(char *Device, GSM_Call call)
+{
+	printmsg("Call info : ");
+	switch(call.Status) {
+		case GN_CALL_IncomingCall  : printmsg("incoming call from \"%s\"\n",DecodeUnicodeString(call.PhoneNumber)); break;
+		case GN_CALL_OutgoingCall  : printmsg("outgoing call to \"%s\"\n",DecodeUnicodeString(call.PhoneNumber));   break;
+		case GN_CALL_CallStart     : printmsg("outgoing call started\n"); 					  break;
+		case GN_CALL_CallEnd	   : printmsg("end of call (unknown side)\n"); 					  break;
+		case GN_CALL_CallLocalEnd  : printmsg("call end from our side\n");					  break;
+		case GN_CALL_CallRemoteEnd : printmsg("call end from remote side\n");					  break;
+	}
+}
+
+#define CHECKMEMORYSTATUS(x, m, a1, b1) { 				\
+	x.MemoryType=m;							\
+	if (Phone->GetMemoryStatus(&s, &x) == GE_NONE)			\
+		printmsg("%s %03d, %s %03d\n", a1, x.Used, b1, x.Free);	\
 }
 
 static void Monitor(int argc, char *argv[])
@@ -641,15 +651,17 @@ static void Monitor(int argc, char *argv[])
 	 * press Ctrl+C to stop the monitoring mode.
 	 */
 	signal(SIGINT, interrupted);
-	printf("If you want break, press Ctrl+C...\n");
-	printf("Entering monitor mode...\n");
+	printmsg("If you want break, press Ctrl+C...\n");
+	printmsg("Entering monitor mode...\n");
 
 	GSM_Init(true);
 
-	s.User.IncomingSMS = IncomingSMS;
-	Phone->SetIncomingSMS(&s,true);
-	s.User.IncomingCB = IncomingCB;
-	Phone->SetIncomingCB(&s,true);
+	s.User.IncomingSMS 	= IncomingSMS;
+	s.User.IncomingCB 	= IncomingCB;
+	s.User.IncomingCall 	= IncomingCall;
+	Phone->SetIncomingSMS  (&s,true);
+	Phone->SetIncomingCB   (&s,true);
+	Phone->SetIncomingCall (&s,true);
 
 	/* Loop here indefinitely -
 	 * allows you to see messages from GSM code in
@@ -657,47 +669,47 @@ static void Monitor(int argc, char *argv[])
 	 * The loops ends after pressing the Ctrl+C.
 	 */
 	while (!bshutdown) {
-		CHECKMEMORYSTATUS(MemStatus,GMT_SM,1021,"SIM phonebook     : Used",1022,"Free");
-		CHECKMEMORYSTATUS(MemStatus,GMT_ME,1023,"Phone phonebook   : Used",1022,"Free");
-		CHECKMEMORYSTATUS(MemStatus,GMT_DC,1024,"Dialled numbers   : Used",1022,"Free");
-		CHECKMEMORYSTATUS(MemStatus,GMT_RC,1025,"Received numbers  : Used",1022,"Free");
-		CHECKMEMORYSTATUS(MemStatus,GMT_MC,1026,"Missed numbers    : Used",1022,"Free");
-		CHECKMEMORYSTATUS(MemStatus,GMT_ON,1027,"Own numbers       : Used",1022,"Free");
-		if (Phone->GetBatteryLevel(&s,&i)==GE_NONE) printf("Battery level     : %i percent\n",i);
-		if (Phone->GetNetworkLevel(&s,&i)==GE_NONE) printf("Network level     : %i percent\n",i);
+		CHECKMEMORYSTATUS(MemStatus,GMT_SM,"SIM phonebook     : Used","Free");
+		CHECKMEMORYSTATUS(MemStatus,GMT_ME,"Phone phonebook   : Used","Free");
+		CHECKMEMORYSTATUS(MemStatus,GMT_DC,"Dialled numbers   : Used","Free");
+		CHECKMEMORYSTATUS(MemStatus,GMT_RC,"Received numbers  : Used","Free");
+		CHECKMEMORYSTATUS(MemStatus,GMT_MC,"Missed numbers    : Used","Free");
+		CHECKMEMORYSTATUS(MemStatus,GMT_ON,"Own numbers       : Used","Free");
+		if (Phone->GetBatteryLevel(&s,&i)==GE_NONE) printmsg("Battery level     : %i percent\n",i);
+		if (Phone->GetNetworkLevel(&s,&i)==GE_NONE) printmsg("Network level     : %i percent\n",i);
 		if (Phone->GetSMSStatus(&s,&SMSStatus)==GE_NONE) {
-			printf("SIM SMS status    : %i used, %i unread",
+			printmsg("SIM SMS status    : %i used, %i unread",
 				SMSStatus.SIMUsed,SMSStatus.SIMUnRead);
-			if (SMSStatus.SIMSize!=0) printf(", %i locations", SMSStatus.SIMSize);
-			printf("\n");
-			printf("Phone SMS status  : %i used, %i unread",
+			if (SMSStatus.SIMSize!=0) printmsg(", %i locations", SMSStatus.SIMSize);
+			printmsg("\n");
+			printmsg("Phone SMS status  : %i used, %i unread",
 				SMSStatus.PhoneUsed,SMSStatus.PhoneUnRead);
-			if (SMSStatus.PhoneSize!=0) printf(", %i locations", SMSStatus.PhoneSize);
-			if (SMSStatus.TemplatesUsed!=0) printf(", %i templates", SMSStatus.TemplatesUsed);
-			printf("\n");
+			if (SMSStatus.PhoneSize!=0) printmsg(", %i locations", SMSStatus.PhoneSize);
+			if (SMSStatus.TemplatesUsed!=0) printmsg(", %i templates", SMSStatus.TemplatesUsed);
+			printmsg("\n");
 		}
 		if (Phone->GetNetworkInfo(&s,&NetInfo)==GE_NONE) {
-			printf("Network state     : ");
+			printmsg("Network state     : ");
                         switch (NetInfo.State) {
-				case GSM_HomeNetwork		: printf("home network\n"); 		break;
-				case GSM_RoamingNetwork		: printf("roaming network\n"); 		break;
-				case GSM_RequestingNetwork	: printf("requesting network\n"); 	break;
-				case GSM_NoNetwork		: printf("not logged into network\n"); 	break;
-				default				: printf("unknown\n");
+				case GSM_HomeNetwork		: printmsg("home network\n"); 		break;
+				case GSM_RoamingNetwork		: printmsg("roaming network\n"); 		break;
+				case GSM_RequestingNetwork	: printmsg("requesting network\n"); 	break;
+				case GSM_NoNetwork		: printmsg("not logged into network\n"); 	break;
+				default				: printmsg("unknown\n");
 			}
 			if (NetInfo.State == GSM_HomeNetwork || NetInfo.State == GSM_RoamingNetwork) {
-				printf("Network           : %s (%s",	NetInfo.NetworkCode,DecodeUnicodeString(GSM_GetNetworkName(NetInfo.NetworkCode)));
-				printf(", %s)",				DecodeUnicodeString(GSM_GetCountryName(NetInfo.NetworkCode)));
-				printf(", LAC %s, CellID %s\n",		NetInfo.LAC,NetInfo.CellID);
+				printmsg("Network           : %s (%s",	NetInfo.NetworkCode,DecodeUnicodeString(GSM_GetNetworkName(NetInfo.NetworkCode)));
+				printmsg(", %s)",				DecodeUnicodeString(GSM_GetCountryName(NetInfo.NetworkCode)));
+				printmsg(", LAC %s, CellID %s\n",		NetInfo.LAC,NetInfo.CellID);
 				if (NetInfo.NetworkName[0] != 0x00 || NetInfo.NetworkName[1] != 0x00) {
-					printf("Name in phone     : \"%s\"\n",DecodeUnicodeString(NetInfo.NetworkName));
+					printmsg("Name in phone     : \"%s\"\n",DecodeUnicodeString(NetInfo.NetworkName));
 				}
 			}
 		}
-		printf("\n");
+		printmsg("\n");
 	}
 
-	printf("Leaving monitor mode...\n");
+	printmsg("Leaving monitor mode...\n");
 
 	GSM_Terminate();
 }
@@ -718,33 +730,33 @@ static void GetSMSC(int argc, char *argv[])
 		Print_Error(error);
 
 		if (!strcmp(DecodeUnicodeString(smsc.Name),"")) {
-			printf("%i. Set %i\n",smsc.Location, smsc.Location);
+			printmsg("%i. Set %i\n",smsc.Location, smsc.Location);
 		} else {
-			printf("%i. \"%s\"\n",smsc.Location, DecodeUnicodeString(smsc.Name));
+			printmsg("%i. \"%s\"\n",smsc.Location, DecodeUnicodeString(smsc.Name));
 		}
-		printf("Number         : \"%s\"\n",DecodeUnicodeString(smsc.Number));
-		printf("Default number : \"%s\"\n",DecodeUnicodeString(smsc.DefaultNumber));
+		printmsg("Number         : \"%s\"\n",DecodeUnicodeString(smsc.Number));
+		printmsg("Default number : \"%s\"\n",DecodeUnicodeString(smsc.DefaultNumber));
 	
-		printf("Format         : ");
+		printmsg("Format         : ");
 		switch (smsc.Format) {
-			case GSMF_Text	: printf("Text");	break;
-			case GSMF_Fax	: printf("Fax");	break;
-			case GSMF_Email	: printf("Email");	break;
-			case GSMF_Pager	: printf("Pager");	break;
+			case GSMF_Text	: printmsg("Text");	break;
+			case GSMF_Fax	: printmsg("Fax");	break;
+			case GSMF_Email	: printmsg("Email");	break;
+			case GSMF_Pager	: printmsg("Pager");	break;
 		}
-		printf("\n");
+		printmsg("\n");
 
-		printf("Validity       : ");
+		printmsg("Validity       : ");
 		switch (smsc.Validity.Relative) {
-			case GSMV_1_Hour	: printf("1 hour");	  break;
-			case GSMV_6_Hours 	: printf("6 hours");	  break;
-			case GSMV_24_Hours	: printf("24 hours");	  break;
-			case GSMV_72_Hours	: printf("72 hours");	  break;
-			case GSMV_1_Week  	: printf("1 week"); 	  break;
-			case GSMV_Max_Time	: printf("Maximum time"); break;
-			default           	: printf("Unknown");
+			case GSMV_1_Hour	: printmsg("1 hour");	  break;
+			case GSMV_6_Hours 	: printmsg("6 hours");	  break;
+			case GSMV_24_Hours	: printmsg("24 hours");	  break;
+			case GSMV_72_Hours	: printmsg("72 hours");	  break;
+			case GSMV_1_Week  	: printmsg("1 week"); 	  break;
+			case GSMV_Max_Time	: printmsg("Maximum time"); break;
+			default           	: printmsg("Unknown");
 		}
-		printf("\n");
+		printmsg("\n");
 	}
 
 	GSM_Terminate();
@@ -769,12 +781,12 @@ static void GetSMS(int argc, char *argv[])
 		error=Phone->GetSMSMessage(&s, &sms);
 		switch (error) {
 		case GE_EMPTY:
-			printf("Location %i\n",sms.SMS[0].Location);
-			printf("Empty\n");
+			printmsg("Location %i\n",sms.SMS[0].Location);
+			printmsg("Empty\n");
 			break;
 		default:
 			Print_Error(error);
-			printf("Location %i, folder \"%s\"\n",sms.SMS[0].Location,DecodeUnicodeString(folders.Folder[sms.SMS[0].Folder-1].Name));
+			printmsg("Location %i, folder \"%s\"\n",sms.SMS[0].Location,DecodeUnicodeString(folders.Folder[sms.SMS[0].Folder-1].Name));
 			displaymultismsinfo(sms);
 		}
 	}
@@ -823,7 +835,7 @@ static void GetAllSMS(int argc, char *argv[])
 			break;
 		default:
 			Print_Error(error);
-			printf("Location %i, folder \"%s\"\n",sms.SMS[0].Location,DecodeUnicodeString(folders.Folder[sms.SMS[0].Folder-1].Name));
+			printmsg("Location %i, folder \"%s\"\n",sms.SMS[0].Location,DecodeUnicodeString(folders.Folder[sms.SMS[0].Folder-1].Name));
 			displaymultismsinfo(sms);
 		}
 		start=false;
@@ -879,7 +891,7 @@ static void GetEachSMS(int argc, char *argv[])
 	while(SortedSMS[i] != NULL) {
 		if (SortedSMS[i] != NULL) {
 			for (j=0;j<SortedSMS[i]->Number;j++) {
-			    printf("Location %i, folder \"%s\"\n",SortedSMS[i]->SMS[j].Location,DecodeUnicodeString(folders.Folder[SortedSMS[i]->SMS[j].Folder-1].Name));
+			    printmsg("Location %i, folder \"%s\"\n",SortedSMS[i]->SMS[j].Location,DecodeUnicodeString(folders.Folder[SortedSMS[i]->SMS[j].Folder-1].Name));
 			}
 			displaymultismsinfo(*SortedSMS[i]);
 		}
@@ -897,7 +909,7 @@ static void GetSMSFolders(int argc, char *argv[])
 	Print_Error(error);
 
 	for (i=0;i<folders.Number;i++) {
-		printf("%i. %s\n",i+1,DecodeUnicodeString(folders.Folder[i].Name));
+		printmsg("%i. %s\n",i+1,DecodeUnicodeString(folders.Folder[i].Name));
 	}
 
 	GSM_Terminate();
@@ -920,10 +932,10 @@ static void GetRingtone(int argc, char *argv[])
 	Print_Error(error);
 
 	switch (ringtone.Format) {
-		case RING_NOTETONE	: printf("Smart Messaging");	break;
-		case RING_NOKIABINARY	: printf("Nokia binary");	break;
+		case RING_NOTETONE	: printmsg("Smart Messaging");	break;
+		case RING_NOKIABINARY	: printmsg("Nokia binary");	break;
 	}
-	printf(" format, ringtone \"%s\"\n",DecodeUnicodeString(ringtone.Name));
+	printmsg(" format, ringtone \"%s\"\n",DecodeUnicodeString(ringtone.Name));
 
 	if (argc==4) {
 		error=GSM_SaveRingtoneFile(argv[3], &ringtone);
@@ -945,7 +957,7 @@ static void GetRingtonesList(int argc, char *argv[])
 
 	GSM_Terminate();
 
-	for (i=0;i<Info.Number;i++) printf("%i. \"%s\"\n",i,DecodeUnicodeString(Info.Ringtone[i].Name));
+	for (i=0;i<Info.Number;i++) printmsg("%i. \"%s\"\n",i,DecodeUnicodeString(Info.Ringtone[i].Name));
 }
 
 static void DialVoice(int argc, char *argv[])
@@ -987,7 +999,7 @@ static void Reset(int argc, char *argv[])
 	} else if (!strcmp(argv[2],"HARD")) {
 		hard=true;
 	} else {
-		printf("What type of reset do you want (\"%s\") ?\n",argv[2]);
+		printmsg("What type of reset do you want (\"%s\") ?\n",argv[2]);
 		exit(-1);
 	}
 
@@ -1015,50 +1027,42 @@ static void GetCalendarNote(int argc, char *argv[])
 		Note.Location=i;
 		error=Phone->GetCalendarNote(&s,&Note,refresh);
 		Print_Error(error);
-		printf("Note type  : ");
+		printmsg("Note type  : ");
 		switch (Note.Type) {
-			case GCN_REMINDER : printf("Reminder\n");		break;
-			case GCN_CALL     : printf("Call\n"	);		break;
-			case GCN_MEETING  : printf("Meeting\n"	);		break;
-			case GCN_BIRTHDAY : printf("Birthday\n");		break;
-			case GCN_T_ATHL   : printf("Training/Athletism\n"); 	break;
-        		case GCN_T_BALL   : printf("Training/Ball Games\n"); 	break;
-	                case GCN_T_CYCL   : printf("Training/Cycling\n"); 	break;
-	                case GCN_T_BUDO   : printf("Training/Budo\n"); 		break;
-	                case GCN_T_DANC   : printf("Training/Dance\n"); 	break;
-	                case GCN_T_EXTR   : printf("Training/Extreme Sports\n");break;
-	                case GCN_T_FOOT   : printf("Training/Football\n"); 	break;
-	                case GCN_T_GOLF   : printf("Training/Golf\n"); 		break;
-	                case GCN_T_GYM    : printf("Training/Gym\n"); 		break;
-	                case GCN_T_HORS   : printf("Training/Horse Races\n"); 	break;
-	                case GCN_T_HOCK   : printf("Training/Hockey\n"); 	break;
-	                case GCN_T_RACE   : printf("Training/Races\n"); 	break;
-	                case GCN_T_RUGB   : printf("Training/Rugby\n"); 	break;
-	                case GCN_T_SAIL   : printf("Training/Sailing\n"); 	break;
-	                case GCN_T_STRE   : printf("Training/Street Games\n"); 	break;
-	                case GCN_T_SWIM   : printf("Training/Swimming\n"); 	break;
-	                case GCN_T_TENN   : printf("Training/Tennis\n"); 	break;
-	                case GCN_T_TRAV   : printf("Training/Travels\n"); 	break;
-	                case GCN_T_WINT   : printf("Training/Winter Games\n"); 	break;
-			default           : printf("UNKNOWN\n"	);
+			case GCN_REMINDER : printmsg("Reminder\n");		   break;
+			case GCN_CALL     : printmsg("Call\n");			   break;
+			case GCN_MEETING  : printmsg("Meeting\n");		   break;
+			case GCN_BIRTHDAY : printmsg("Birthday\n");		   break;
+			case GCN_T_ATHL   : printmsg("Training/Athletism\n"); 	   break;
+        		case GCN_T_BALL   : printmsg("Training/Ball Games\n"); 	   break;
+	                case GCN_T_CYCL   : printmsg("Training/Cycling\n"); 	   break;
+	                case GCN_T_BUDO   : printmsg("Training/Budo\n"); 	   break;
+	                case GCN_T_DANC   : printmsg("Training/Dance\n"); 	   break;
+	                case GCN_T_EXTR   : printmsg("Training/Extreme Sports\n"); break;
+	                case GCN_T_FOOT   : printmsg("Training/Football\n"); 	   break;
+	                case GCN_T_GOLF   : printmsg("Training/Golf\n"); 	   break;
+	                case GCN_T_GYM    : printmsg("Training/Gym\n"); 	   break;
+	                case GCN_T_HORS   : printmsg("Training/Horse Races\n");    break;
+	                case GCN_T_HOCK   : printmsg("Training/Hockey\n"); 	   break;
+	                case GCN_T_RACE   : printmsg("Training/Races\n"); 	   break;
+	                case GCN_T_RUGB   : printmsg("Training/Rugby\n"); 	   break;
+	                case GCN_T_SAIL   : printmsg("Training/Sailing\n"); 	   break;
+	                case GCN_T_STRE   : printmsg("Training/Street Games\n");   break;
+	                case GCN_T_SWIM   : printmsg("Training/Swimming\n"); 	   break;
+	                case GCN_T_TENN   : printmsg("Training/Tennis\n"); 	   break;
+	                case GCN_T_TRAV   : printmsg("Training/Travels\n");        break;
+	                case GCN_T_WINT   : printmsg("Training/Winter Games\n");   break;
+			default           : printmsg("UNKNOWN\n");
 		}
-		printf("Date       : %s %4d/%02d/%02d\n",
-			DayOfWeek(Note.Time.Year, Note.Time.Month, Note.Time.Day),
-			Note.Time.Year, Note.Time.Month, Note.Time.Day);
-		printf("Time       : %02d:%02d:%02d\n",
-			Note.Time.Hour, Note.Time.Minute, Note.Time.Second);
+		printmsg("Time       : %s\n",OSDateTime (Note.Time,false));
 		if (Note.Alarm.Year!=0) {
-			printf("Alarm date : %s %4d/%02d/%02d\n",
-				DayOfWeek(Note.Alarm.Year, Note.Alarm.Month, Note.Alarm.Day),
-				Note.Alarm.Year, Note.Alarm.Month, Note.Alarm.Day);
-			printf("Alarm time : %02d:%02d:%02d\n",
-				Note.Alarm.Hour, Note.Alarm.Minute, Note.Alarm.Second);
-			printf("Alarm type : ");
-			if (Note.SilentAlarm) printf("silent\n");
-					 else printf("with tone\n");
+			printmsg("Alarm time : %s\n",OSDateTime(Note.Alarm,false));
+			printmsg("Alarm type : ");
+			if (Note.SilentAlarm) printmsg("silent\n");
+					 else printmsg("with tone\n");
 		}
 		if (Note.Recurrance!=0) {
-			printf("Repeat     : %d day%s\n",Note.Recurrance/24,
+			printmsg("Repeat     : %d day%s\n",Note.Recurrance/24,
 				((Note.Recurrance/24)>1) ? "s":"" );
 		}
 		if (Note.Type == GCN_BIRTHDAY) {
@@ -1075,16 +1079,16 @@ static void GetCalendarNote(int argc, char *argv[])
 				i_age++;
 			}
 
-			printf("Text       : \"%s\" (%d %s)\n",
+			printmsg("Text       : \"%s\" (%d %s)\n",
 				DecodeUnicodeString(Note.Text),
 				i_age, (i_age==1)?"year":"years");
 		} else {
-			printf("Text       : \"%s\"\n",DecodeUnicodeString(Note.Text));
+			printmsg("Text       : \"%s\"\n",DecodeUnicodeString(Note.Text));
 		}
 		if (Note.Type == GCN_CALL) {
-			printf("Phone      : \"%s\"\n",DecodeUnicodeString(Note.Phone));
+			printmsg("Phone      : \"%s\"\n",DecodeUnicodeString(Note.Phone));
 		}
-		printf("\n");
+		printmsg("\n");
 		refresh=false;
 	}
 
@@ -1122,8 +1126,8 @@ static void GetWAPBookmark(int argc, char *argv[])
 		bookmark.Location=i;
 		error=Phone->GetWAPBookmark(&s,&bookmark);
 		Print_Error(error);
-		printf("Name    : \"%s\"\n",DecodeUnicodeString(bookmark.Title));
-		printf("Address : \"%s\"\n",DecodeUnicodeString(bookmark.Address));
+		printmsg("Name    : \"%s\"\n",DecodeUnicodeString(bookmark.Title));
+		printmsg("Address : \"%s\"\n",DecodeUnicodeString(bookmark.Address));
 	}
 
 	GSM_Terminate();
@@ -1159,7 +1163,7 @@ static void GetBitmap(int argc, char *argv[])
 		MultiBitmap.Bitmap[0].Type=GSM_CallerLogo;
 		GetStartStop(&location, NULL, 3, argc, argv);
 		if (location>5) {
-			printf("Maximal location for caller logo can be 5\n");
+			printmsg("Maximal location for caller logo can be 5\n");
 			exit (-1);
 		}
 	} else if (!strcmp(argv[2],"PICTURE")) {
@@ -1172,7 +1176,7 @@ static void GetBitmap(int argc, char *argv[])
 	} else if (!strcmp(argv[2],"OPERATOR")) {
 		MultiBitmap.Bitmap[0].Type=GSM_OperatorLogo;
 	} else {
-		printf("What type of logo do you want to get (\"%s\") ?\n",argv[2]);
+		printmsg("What type of logo do you want to get (\"%s\") ?\n",argv[2]);
 		exit(-1);
 	}
 	MultiBitmap.Bitmap[0].Location=location;
@@ -1188,26 +1192,26 @@ static void GetBitmap(int argc, char *argv[])
 	switch (MultiBitmap.Bitmap[0].Type) {
 	case GSM_CallerLogo:
 		GSM_PrintBitmap(stdout,&MultiBitmap.Bitmap[0]);
-		printf("Group name  : \"%s\"",DecodeUnicodeString(MultiBitmap.Bitmap[0].Text));
-		if (MultiBitmap.Bitmap[0].DefaultName) printf(" (default)");
-		printf("\n");
+		printmsg("Group name  : \"%s\"",DecodeUnicodeString(MultiBitmap.Bitmap[0].Text));
+		if (MultiBitmap.Bitmap[0].DefaultName) printmsg(" (default)");
+		printmsg("\n");
 		if (MultiBitmap.Bitmap[0].Ringtone == 0xff) {
-			printf("Ringtone    : default\n");
+			printmsg("Ringtone    : default\n");
 		} else {
 			error=Phone->GetRingtonesInfo(&s,&Info);
 			if (error != GE_NONE) Info.Number = 0;
 
-			printf("Ringtone    : ");
+			printmsg("Ringtone    : ");
 			if (strlen(DecodeUnicodeString(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].Ringtone)))!=0) {
-				printf("\"%s\"\n",DecodeUnicodeString(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].Ringtone)));
+				printmsg("\"%s\"\n",DecodeUnicodeString(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].Ringtone)));
 			} else {
-				printf("%i\n",MultiBitmap.Bitmap[0].Ringtone);
+				printmsg("%i\n",MultiBitmap.Bitmap[0].Ringtone);
 			}
 		}
 		if (MultiBitmap.Bitmap[0].Enabled) {
-			printf("Bitmap      : enabled\n");
+			printmsg("Bitmap      : enabled\n");
 		} else {
-			printf("Bitmap      : disabled\n");
+			printmsg("Bitmap      : disabled\n");
 		}
 		if (argc>4) error=GSM_SaveBitmapFile(argv[4],&MultiBitmap);
 		break;
@@ -1220,20 +1224,20 @@ static void GetBitmap(int argc, char *argv[])
 			GSM_PrintBitmap(stdout,&MultiBitmap.Bitmap[0]);
 			if (argc>3) error=GSM_SaveBitmapFile(argv[3],&MultiBitmap);
 		} else {
-			printf("No operator logo in phone\n");
+			printmsg("No operator logo in phone\n");
 		}
 		break;
 	case GSM_PictureImage:
 		GSM_PrintBitmap(stdout,&MultiBitmap.Bitmap[0]);
-		printf("Text   : \"%s\"\n",DecodeUnicodeString(MultiBitmap.Bitmap[0].Text));
-		printf("Sender : \"%s\"\n",DecodeUnicodeString(MultiBitmap.Bitmap[0].Sender));
+		printmsg("Text   : \"%s\"\n",DecodeUnicodeString(MultiBitmap.Bitmap[0].Text));
+		printmsg("Sender : \"%s\"\n",DecodeUnicodeString(MultiBitmap.Bitmap[0].Sender));
 		if (argc>4) error=GSM_SaveBitmapFile(argv[4],&MultiBitmap);
 		break;
 	case GSM_WelcomeNoteText:
-		printf("Welcome note text is \"%s\"\n",DecodeUnicodeString(MultiBitmap.Bitmap[0].Text));
+		printmsg("Welcome note text is \"%s\"\n",DecodeUnicodeString(MultiBitmap.Bitmap[0].Text));
 		break;
 	case GSM_DealerNoteText:
-		printf("Dealer note text is \"%s\"\n",DecodeUnicodeString(MultiBitmap.Bitmap[0].Text));
+		printmsg("Dealer note text is \"%s\"\n",DecodeUnicodeString(MultiBitmap.Bitmap[0].Text));
 		break;
 	default:
 		break;
@@ -1252,7 +1256,7 @@ static void SetBitmap(int argc, char *argv[])
 
 	if (!strcmp(argv[2],"STARTUP")) {
 		if (argc<4) {
-			printf("More arguments required\n");
+			printmsg("More arguments required\n");
 			exit(-1);
 		}
 		MultiBitmap.Bitmap[0].Type=GSM_StartupLogo;
@@ -1267,26 +1271,26 @@ static void SetBitmap(int argc, char *argv[])
 		memcpy(&Bitmap,&MultiBitmap.Bitmap[0],sizeof(GSM_Bitmap));
 	} else if (!strcmp(argv[2],"TEXT")) {
 		if (argc<4) {
-			printf("More arguments required\n");
+			printmsg("More arguments required\n");
 			exit(-1);
 		}
 		Bitmap.Type=GSM_WelcomeNoteText;
 		EncodeUnicode(Bitmap.Text,argv[3],strlen(argv[3]));
 	} else if (!strcmp(argv[2],"DEALER")) {
 		if (argc<4) {
-			printf("More arguments required\n");
+			printmsg("More arguments required\n");
 			exit(-1);
 		}
 		Bitmap.Type=GSM_DealerNoteText;
 		EncodeUnicode(Bitmap.Text,argv[3],strlen(argv[3]));
 	} else if (!strcmp(argv[2],"CALLER")) {
 		if (argc<4) {
-			printf("More arguments required\n");
+			printmsg("More arguments required\n");
 			exit(-1);
 		}
 		GetStartStop(&i, NULL, 3, argc, argv);
 		if (i>5 && i!=255) {
-			printf("Maximal location for caller logo can be 5\n");
+			printmsg("Maximal location for caller logo can be 5\n");
 			exit (-1);
 		}
 		MultiBitmap.Bitmap[0].Type 	= GSM_CallerLogo;
@@ -1308,7 +1312,7 @@ static void SetBitmap(int argc, char *argv[])
 		}
 	} else if (!strcmp(argv[2],"PICTURE")) {
 		if (argc<5) {
-			printf("More arguments required\n");
+			printmsg("More arguments required\n");
 			exit(-1);
 		}
 		MultiBitmap.Bitmap[0].Type		= GSM_PictureImage;
@@ -1339,7 +1343,7 @@ static void SetBitmap(int argc, char *argv[])
 		}
 		memcpy(&Bitmap,&MultiBitmap.Bitmap[0],sizeof(GSM_Bitmap));
 	} else {
-		printf("What type of logo do you want to set (\"%s\") ?\n",argv[2]);
+		printmsg("What type of logo do you want to set (\"%s\") ?\n",argv[2]);
 		exit(-1);
 	}
 
@@ -1368,12 +1372,12 @@ static void SetRingtone(int argc, char *argv[])
 		if (!strcmp(argv[4],"-scale")) {
 			ringtone.NoteTone.AllNotesScale = true;
 		} else {
-			printf("Unknown parameter \"%s\"",argv[4]);
+			printmsg("Unknown parameter \"%s\"",argv[4]);
 			exit(-1);
 		}
 	}
 	if (ringtone.Location==0) {
-		printf("%s",Msg(1020,"ERROR: enumerate locations from 1"));
+		printmsg("ERROR: enumerate locations from 1");
 		exit (-1);
 	}
 	GSM_Init(true);
@@ -1394,10 +1398,10 @@ static void SendSMSStatus (char *Device, int status)
 {
 	dprintf("Incoming SMS device: \"%s\"\n",Device);
 	if (status==0) {
-		printf("..OK\n");
+		printmsg("..OK\n");
 		SMSStatus = GE_NONE;
 	} else {
-		printf("..error %i\n",status);
+		printmsg("..error %i\n",status);
 		SMSStatus = GE_UNKNOWN;
 	}
 }
@@ -1450,7 +1454,7 @@ static void SendSaveSMS(int argc, char *argv[])
 	if (!strcmp(argv[2],"TEXT")) {
 		chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
 		if (chars_read == 0) {
-			printf("Couldn't read from stdin!\n");	
+			printmsg("Couldn't read from stdin!\n");	
 			exit (-1);
 		}  
 		InputBuffer[chars_read] 	= 0x00;	
@@ -1467,7 +1471,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		startarg += 3;
 	} else if (!strcmp(argv[2],"EMSBITMAP")) {
 		if (argc<4+startarg) {
-			printf("Where is logo filename ?\n");
+			printmsg("Where is logo filename ?\n");
 			exit(-1);
 		}
 		bitmap.Bitmap[0].Type=GSM_StartupLogo;
@@ -1483,7 +1487,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		startarg += 3;
 	} else if (!strcmp(argv[2],"RINGTONE")) {
 		if (argc<4+startarg) {
-			printf("Where is ringtone filename ?\n");
+			printmsg("Where is ringtone filename ?\n");
 			exit(-1);
 		}
 		ringtone.Format=RING_NOTETONE;
@@ -1499,7 +1503,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		startarg += 4;
 	} else if (!strcmp(argv[2],"OPERATOR")) {
 		if (argc<4+startarg) {
-			printf("Where is logo filename ?\n");
+			printmsg("Where is logo filename ?\n");
 			exit(-1);
 		}
 		bitmap.Bitmap[0].Type=GSM_OperatorLogo;
@@ -1515,7 +1519,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		startarg += 4;
 	} else if (!strcmp(argv[2],"CALLER")) {
 		if (argc<4+startarg) {
-			printf("Where is logo filename ?\n");
+			printmsg("Where is logo filename ?\n");
 			exit(-1);
 		}
 		bitmap.Bitmap[0].Type=GSM_CallerLogo;
@@ -1529,7 +1533,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		startarg += 4;
 	} else if (!strcmp(argv[2],"PICTURE")) {
 		if (argc<4+startarg) {
-			printf("Where is logo filename ?\n");
+			printmsg("Where is logo filename ?\n");
 			exit(-1);
 		}
 		bitmap.Bitmap[0].Type=GSM_PictureImage;
@@ -1548,7 +1552,7 @@ static void SendSaveSMS(int argc, char *argv[])
 #ifdef GSM_ENABLE_BACKUP
 	} else if (!strcmp(argv[2],"BOOKMARK")) {
 		if (argc<5+startarg) {
-			printf("Where is backup filename and location ?\n");
+			printmsg("Where is backup filename and location ?\n");
 			exit(-1);
 		}
 		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
@@ -1559,7 +1563,7 @@ static void SendSaveSMS(int argc, char *argv[])
 			i++;
 		}
 		if (i != atoi(argv[4+startarg])-1) {
-			printf("Bookmark not found in file\n");
+			printmsg("Bookmark not found in file\n");
 			exit(-1);
 		}
 		SMSInfo.ID 	 = SMS_NokiaWAPBookmarkLong;
@@ -1571,7 +1575,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		startarg += 5;
 	} else if (!strcmp(argv[2],"SETTINGS")) {
 		if (argc<5+startarg) {
-			printf("Where is backup filename and location ?\n");
+			printmsg("Where is backup filename and location ?\n");
 			exit(-1);
 		}
 		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
@@ -1582,12 +1586,12 @@ static void SendSaveSMS(int argc, char *argv[])
 			i++;
 		}
 		if (i != atoi(argv[4+startarg])-1) {
-			printf("WAP settings not found in file\n");
+			printmsg("WAP settings not found in file\n");
 			exit(-1);
 		}
 		if (Backup.WAPSettings[i]->Settings[0].Bearer != WAPSETTINGS_BEARER_DATA &&
 		    Backup.WAPSettings[i]->Settings[0].Bearer != WAPSETTINGS_BEARER_SMS) {
-			printf("Sorry. This bearer in WAP settings not supported now\n");
+			printmsg("Sorry. This bearer in WAP settings not supported now\n");
 			exit(-1);
 		}
 		SMSInfo.ID 	 = SMS_NokiaWAPSettingsLong;
@@ -1599,7 +1603,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		startarg += 5;
 	} else if (!strcmp(argv[2],"CALENDAR")) {
 		if (argc<5+startarg) {
-			printf("Where is backup filename and location ?\n");
+			printmsg("Where is backup filename and location ?\n");
 			exit(-1);
 		}
 		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
@@ -1610,7 +1614,7 @@ static void SendSaveSMS(int argc, char *argv[])
 			i++;
 		}
 		if (i != atoi(argv[4+startarg])-1) {
-			printf("Calendar note not found in file\n");
+			printmsg("Calendar note not found in file\n");
 			exit(-1);
 		}
 		SMSInfo.ID 	 = SMS_NokiaVCALENDAR10Long;
@@ -1621,7 +1625,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		startarg += 5;
 	} else if (!strcmp(argv[2],"VCARD10") || !strcmp(argv[2],"VCARD21")) {
 		if (argc<6+startarg) {
-			printf("Where is backup filename and location and memory type ?\n");
+			printmsg("Where is backup filename and location and memory type ?\n");
 			exit(-1);
 		}
 		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
@@ -1633,7 +1637,7 @@ static void SendSaveSMS(int argc, char *argv[])
 				i++;
 			}
 			if (i != atoi(argv[5+startarg])-1) {
-				printf("Phonebook entry not found in file\n");
+				printmsg("Phonebook entry not found in file\n");
 				exit(-1);
 			}
 			SMSInfo.Phonebook = Backup.SIMPhonebook[i];
@@ -1643,12 +1647,12 @@ static void SendSaveSMS(int argc, char *argv[])
 				i++;
 			}
 			if (i != atoi(argv[5+startarg])-1) {
-				printf("Phonebook entry not found in file\n");
+				printmsg("Phonebook entry not found in file\n");
 				exit(-1);
 			}
 			SMSInfo.Phonebook = Backup.PhonePhonebook[i];
 		} else {
-			printf("Unknown memory type: \"%s\"\n",argv[4+startarg]);
+			printmsg("Unknown memory type: \"%s\"\n",argv[4+startarg]);
 			exit(-1);
 		}
 		if (!strcmp(argv[2],"VCARD10")) {
@@ -1664,7 +1668,7 @@ static void SendSaveSMS(int argc, char *argv[])
 #endif
 	} else if (!strcmp(argv[2],"PROFILE")) {
 		if (argc<6+startarg) {
-			printf("Where is profile name, ringtone & bitmap file ?\n");
+			printmsg("Where is profile name, ringtone & bitmap file ?\n");
 			exit(-1);
 		}
 		/* profile name */
@@ -1688,7 +1692,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		}
 		startarg += 6;
 	} else {
-		printf("What format of sms (\"%s\") ?\n",argv[2]);
+		printmsg("What format of sms (\"%s\") ?\n",argv[2]);
 		exit(-1);
 	}
 
@@ -1777,6 +1781,10 @@ static void SendSaveSMS(int argc, char *argv[])
 					nextlong = 5;
 					break;
 				}
+				if (!strcmp(argv[i],"-autolen")) {
+					nextlong = 5;
+					break;
+				}
 				if (!strcmp(argv[i],"-unicode")) {
 					SMSInfo.UnicodeCoding = true;
 					break;
@@ -1841,7 +1849,7 @@ static void SendSaveSMS(int argc, char *argv[])
 				}
 				break;
 			}
-			printf("Unknown parameter (\"%s\")\n",argv[i]);
+			printmsg("Unknown parameter (\"%s\")\n",argv[i]);
 			exit(-1);
 			break;
 		case 1: /* SMS folder - only during saving SMS */
@@ -1868,6 +1876,7 @@ static void SendSaveSMS(int argc, char *argv[])
 				Buffer[atoi(argv[i])*2+1]	= 0x00;
 			}
 			SMSInfo.ID = SMS_ConcatenatedTextLong;
+			if (!strcmp(argv[i-1],"-autolen")) SMSInfo.ID = SMS_ConcatenatedAutoTextLong;
 			nextlong = 0;
 			break;
 		case 6:	/* Picture Images - text */
@@ -1877,7 +1886,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		case 7:	/* Operator Logo - network code */
 			strncpy(bitmap.Bitmap[0].NetworkCode,argv[i],7);
 			if (!strcmp(DecodeUnicodeString(GSM_GetNetworkName(bitmap.Bitmap[0].NetworkCode)),"unknown")) {
-				printf("Unknown GSM network code (\"%s\")\n",argv[i]);
+				printmsg("Unknown GSM network code (\"%s\")\n",argv[i]);
 				exit(-1);
 			}
 			if (!strcmp(argv[1],"--savesms")) {
@@ -1921,7 +1930,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		case 11:/* Reject duplicates ID */
 			SMSInfo.ReplaceMessage = atoi(argv[i]);
 			if (SMSInfo.ReplaceMessage < 1 || SMSInfo.ReplaceMessage > 7) {
-				printf("You have to give number between 1 and 7 (\"%s\")\n",argv[i]);
+				printmsg("You have to give number between 1 and 7 (\"%s\")\n",argv[i]);
 				exit(-1);
 			}
 			nextlong = 0;
@@ -1948,7 +1957,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		}
 	}
 	if (nextlong!=0) {
-		printf("Parameter missed...\n");
+		printmsg("Parameter missed...\n");
 		exit(-1);
 	}
 
@@ -1985,7 +1994,7 @@ static void SendSaveSMS(int argc, char *argv[])
 		case SMS_NokiaProfileLong:
 		case SMS_EMSSound:
 			if (SMSInfo.RingtoneNotes!=ringtone.NoteTone.NrCommands) {
-				printf("Warning: ringtone too long. %i percent part cut\n",
+				printmsg("Warning: ringtone too long. %i percent part cut\n",
 					(ringtone.NoteTone.NrCommands-SMSInfo.RingtoneNotes)*100/ringtone.NoteTone.NrCommands);
 			}
 		default:
@@ -1994,7 +2003,7 @@ static void SendSaveSMS(int argc, char *argv[])
 
 	if (!strcmp(argv[1],"--savesms")) {
 		for (i=0;i<sms.Number;i++) {
-			printf("Saving SMS %i/%i\n",i+1,sms.Number);
+			printmsg("Saving SMS %i/%i\n",i+1,sms.Number);
 			sms.SMS[i].Location		= 0;
 			sms.SMS[i].Folder		= Folder;
 			sms.SMS[i].State		= State;
@@ -2006,18 +2015,18 @@ static void SendSaveSMS(int argc, char *argv[])
 			if (SMSCSet==0) CopyUnicodeString(sms.SMS[i].SMSC.Number, SMSC);
 			error=Phone->SaveSMSMessage(&s, &sms.SMS[i]);
 			Print_Error(error);
-			printf("Saved in folder \"%s\", location %i\n",
+			printmsg("Saved in folder \"%s\", location %i\n",
 				DecodeUnicodeString(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
 		}
 	} else {
 		/* We do not want to make it forever - press Ctrl+C to stop */
 		signal(SIGINT, interrupted);
-		printf("If you want break, press Ctrl+C...\n");
+		printmsg("If you want break, press Ctrl+C...\n");
 
 		s.User.SendSMSStatus = SendSMSStatus;
 
 		for (i=0;i<sms.Number;i++) {
-			printf("Sending SMS %i/%i",i+1,sms.Number);
+			printmsg("Sending SMS %i/%i",i+1,sms.Number);
 			sms.SMS[i].Location			= 0;
 			sms.SMS[i].ReplyViaSameSMSC		= ReplyViaSameSMSC;
 			sms.SMS[i].SMSC.Location		= SMSCSet;
@@ -2028,7 +2037,7 @@ static void SendSaveSMS(int argc, char *argv[])
 			SMSStatus = GE_TIMEOUT;
 			error=Phone->SendSMSMessage(&s, &sms.SMS[i]);
 			Print_Error(error);
-			printf("....waiting for network answer");
+			printmsg("....waiting for network answer");
 			while (!bshutdown) {
 				GSM_ReadDevice(&s);
 				if (SMSStatus == GE_UNKNOWN) {
@@ -2067,7 +2076,7 @@ static void Backup(int argc, char *argv[])
 
 	/* We do not want to make it forever - press Ctrl+C to stop */
 	signal(SIGINT, interrupted);
-	fprintf(stderr,"If you want break, press Ctrl+C...\n");
+	printmsgerr("If you want break, press Ctrl+C...\n");
 
 	GSM_Init(true);
 
@@ -2085,10 +2094,7 @@ static void Backup(int argc, char *argv[])
 	}
 	if (Info.DateTime) {
 		GSM_GetCurrentDateTime (&DateTime);
-		sprintf(Backup.DateTime,"%s %4d/%02d/%02d %02d:%02d:%02d",
-			DayOfWeek(DateTime.Year, DateTime.Month, DateTime.Day),
-			DateTime.Year, DateTime.Month, DateTime.Day,
-			DateTime.Hour, DateTime.Minute, DateTime.Second);
+		sprintf(Backup.DateTime,"%s",OSDateTime(DateTime,false));
 	}
 	if (Info.IMEI) {
 		error=Phone->GetIMEI(&s, Backup.IMEI);
@@ -2112,20 +2118,20 @@ static void Backup(int argc, char *argv[])
 						        if (Backup.PhonePhonebook[used] == NULL) Print_Error(GE_MOREMEMORY);
 							Backup.PhonePhonebook[used+1] = NULL;
 						} else {
-							printf("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
+							printmsg("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
 							exit(-1);
 						}
 						*Backup.PhonePhonebook[used]=Pbk;
 						used++;
 					}
-					fprintf(stderr,"%cReading: %i percent",13,used*100/MemStatus.Used);
+					printmsgerr("%cReading: %i percent",13,used*100/MemStatus.Used);
 					i++;
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2147,20 +2153,20 @@ static void Backup(int argc, char *argv[])
 						        if (Backup.SIMPhonebook[used] == NULL) Print_Error(GE_MOREMEMORY);
 							Backup.SIMPhonebook[used + 1] = NULL;
 						} else {
-							printf("Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
+							printmsg("Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
 							exit(-1);
 						}
 						*Backup.SIMPhonebook[used]=Pbk;
 						used++;
 					}
-					fprintf(stderr,"%cReading: %i percent",13,used*100/MemStatus.Used);
+					printmsgerr("%cReading: %i percent",13,used*100/MemStatus.Used);
 					i++;
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2170,27 +2176,27 @@ static void Backup(int argc, char *argv[])
 		if (error==GE_NONE) {
 			if (answer_yes("Backup calendar notes")) {
 				used = 0;
-				fprintf(stderr,"Reading : ");
+				printmsgerr("Reading : ");
 				while (error == GE_NONE) {
 					if (used < GSM_BACKUP_MAX_CALENDAR) {
 						Backup.Calendar[used] = malloc(sizeof(GSM_CalendarNote));
 					        if (Backup.Calendar[used] == NULL) Print_Error(GE_MOREMEMORY);
 						Backup.Calendar[used+1] = NULL;
 					} else {
-						printf("Increase GSM_BACKUP_MAX_CALENDAR\n");
+						printmsg("Increase GSM_BACKUP_MAX_CALENDAR\n");
 						exit(-1);
 					}
 					*Backup.Calendar[used]=Note;
 					used ++;
 					Note.Location = used+1;
 					error=Phone->GetCalendarNote(&s,&Note,false);
-					fprintf(stderr,"*");
+					printmsgerr("*");
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2200,27 +2206,27 @@ static void Backup(int argc, char *argv[])
 		if (error==GE_NONE) {
 			if (answer_yes("Backup ToDo")) {
 				used = 0;
-				fprintf(stderr,"Reading : ");
+				printmsgerr("Reading : ");
 				while (error == GE_NONE) {
 					if (used < GSM_BACKUP_MAX_TODO) {
 						Backup.ToDo[used] = malloc(sizeof(GSM_TODO));
 					        if (Backup.ToDo[used] == NULL) Print_Error(GE_MOREMEMORY);
 						Backup.ToDo[used+1] = NULL;
 					} else {
-						printf("Increase GSM_BACKUP_MAX_TODO\n");
+						printmsg("Increase GSM_BACKUP_MAX_TODO\n");
 						exit(-1);
 					}
 					*Backup.ToDo[used]=ToDo;
 					used ++;
 					ToDo.Location = used+1;
 					error=Phone->GetToDo(&s,&ToDo,false);
-					fprintf(stderr,"*");
+					printmsgerr("*");
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2230,7 +2236,7 @@ static void Backup(int argc, char *argv[])
 		error=Phone->GetBitmap(&s,&Bitmap);
 		if (error == GE_NONE) {
 			if (answer_yes("Backup caller groups and logos")) {
-				fprintf(stderr,"Reading : ");
+				printmsgerr("Reading : ");
 				error = GE_NONE;
 				used  = 0;
 				while (error == GE_NONE) {
@@ -2239,27 +2245,27 @@ static void Backup(int argc, char *argv[])
 					        if (Backup.CallerLogos[used] == NULL) Print_Error(GE_MOREMEMORY);
 						Backup.CallerLogos[used+1] = NULL;
 					} else {
-						printf("Increase GSM_BACKUP_MAX_CALLER\n");
+						printmsg("Increase GSM_BACKUP_MAX_CALLER\n");
 						exit(-1);
 					}
 					*Backup.CallerLogos[used] = Bitmap;
 					used ++;
 					Bitmap.Location = used + 1;
 					error=Phone->GetBitmap(&s,&Bitmap);
-					fprintf(stderr,"*");
+					printmsgerr("*");
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
 	if (Info.SMSC) {
 		if (answer_yes("Backup SMS profiles")) {
 			used = 0;
-			fprintf(stderr,"Reading: ");
+			printmsgerr("Reading: ");
 			while (true)
 			{
 				SMSC.Location = used + 1;
@@ -2270,14 +2276,14 @@ static void Backup(int argc, char *argv[])
 				        if (Backup.SMSC[used] == NULL) Print_Error(GE_MOREMEMORY);
 					Backup.SMSC[used + 1] = NULL;
 				} else {
-					printf("Increase GSM_BACKUP_MAX_SMSC\n");
+					printmsg("Increase GSM_BACKUP_MAX_SMSC\n");
 					exit(-1);
 				}
 				*Backup.SMSC[used]=SMSC;
 				used++;
-				fprintf(stderr,"*");
+				printmsgerr("*");
 			}
-			fprintf(stderr,"\n");
+			printmsgerr("\n");
 		}
 	}
 	if (Info.StartupLogo) {
@@ -2315,27 +2321,27 @@ static void Backup(int argc, char *argv[])
 		if (error==GE_NONE) {
 			if (answer_yes("Backup WAP bookmarks")) {
 				used = 0;
-				fprintf(stderr,"Reading : ");
+				printmsgerr("Reading : ");
 				while (error == GE_NONE) {
 					if (used < GSM_BACKUP_MAX_WAPBOOKMARK) {
 						Backup.WAPBookmark[used] = malloc(sizeof(GSM_WAPBookmark));
 					        if (Backup.WAPBookmark[used] == NULL) Print_Error(GE_MOREMEMORY);
 						Backup.WAPBookmark[used+1] = NULL;
 					} else {
-						printf("Increase GSM_BACKUP_MAX_WAPBOOKMARK\n");
+						printmsg("Increase GSM_BACKUP_MAX_WAPBOOKMARK\n");
 						exit(-1);
 					}
 					*Backup.WAPBookmark[used]=Bookmark;
 					used ++;
 					Bookmark.Location = used+1;
 					error=Phone->GetWAPBookmark(&s,&Bookmark);
-					fprintf(stderr,"*");
+					printmsgerr("*");
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2345,27 +2351,27 @@ static void Backup(int argc, char *argv[])
 		if (error==GE_NONE) {
 			if (answer_yes("Backup WAP settings")) {
 				used = 0;
-				fprintf(stderr,"Reading : ");
+				printmsgerr("Reading : ");
 				while (error == GE_NONE) {
 					if (used < GSM_BACKUP_MAX_WAPSETTINGS) {
 						Backup.WAPSettings[used] = malloc(sizeof(GSM_MultiWAPSettings));
 					        if (Backup.WAPSettings[used] == NULL) Print_Error(GE_MOREMEMORY);
 						Backup.WAPSettings[used+1] = NULL;
 					} else {
-						printf("Increase GSM_BACKUP_MAX_WAPSETTINGS\n");
+						printmsg("Increase GSM_BACKUP_MAX_WAPSETTINGS\n");
 						exit(-1);
 					}
 					*Backup.WAPSettings[used]=Settings;
 					used ++;
 					Settings.Location = used+1;
 					error=Phone->GetWAPSettings(&s,&Settings);
-					fprintf(stderr,"*");
+					printmsgerr("*");
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2377,7 +2383,7 @@ static void Backup(int argc, char *argv[])
 			if (answer_yes("Backup user ringtones")) {
 				used 	= 0;
 				i	= 1;
-				fprintf(stderr,"Reading : ");
+				printmsgerr("Reading : ");
 				while (error == GE_NONE || error == GE_EMPTY) {
 					if (error == GE_NONE) {
 						if (used < GSM_BACKUP_MAX_RINGTONES) {
@@ -2385,7 +2391,7 @@ static void Backup(int argc, char *argv[])
 						        if (Backup.Ringtone[used] == NULL) Print_Error(GE_MOREMEMORY);
 							Backup.Ringtone[used+1] = NULL;
 						} else {
-							printf("Increase GSM_BACKUP_MAX_RINGTONES\n");
+							printmsg("Increase GSM_BACKUP_MAX_RINGTONES\n");
 							exit(-1);
 						}
 						*Backup.Ringtone[used]=Ringtone;
@@ -2395,13 +2401,13 @@ static void Backup(int argc, char *argv[])
 					Ringtone.Location = i;
 					Ringtone.Format	  = 0;
 					error=Phone->GetRingtone(&s,&Ringtone,false);
-					fprintf(stderr,"*");
+					printmsgerr("*");
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 
 		}
@@ -2409,7 +2415,7 @@ static void Backup(int argc, char *argv[])
 	if (Info.Profiles) {
 		if (answer_yes("Backup phone profiles")) {
 			used = 0;
-			fprintf(stderr,"Reading: ");
+			printmsgerr("Reading: ");
 			while (true)
 			{
 				Profile.Location = used + 1;
@@ -2420,14 +2426,14 @@ static void Backup(int argc, char *argv[])
 				        if (Backup.Profiles[used] == NULL) Print_Error(GE_MOREMEMORY);
 					Backup.Profiles[used + 1] = NULL;
 				} else {
-					printf("Increase GSM_BACKUP_MAX_PROFILES\n");
+					printmsg("Increase GSM_BACKUP_MAX_PROFILES\n");
 					exit(-1);
 				}
 				*Backup.Profiles[used]=Profile;
 				used++;
-				fprintf(stderr,"*");
+				printmsgerr("*");
 			}
-			fprintf(stderr,"\n");
+			printmsgerr("\n");
 		}
 	}
 
@@ -2447,7 +2453,7 @@ static void Restore(int argc, char *argv[])
 	GSM_MemoryStatus	MemStatus;
 	GSM_TODO		ToDo;
 	GSM_Profile		Profile;
-	GSM_MultiWAPSettings		Settings;
+	GSM_MultiWAPSettings	Settings;
 	GSM_WAPBookmark		Bookmark;
 	int			i, used, max;
 
@@ -2456,11 +2462,11 @@ static void Restore(int argc, char *argv[])
 
 	/* We do not want to make it forever - press Ctrl+C to stop */
 	signal(SIGINT, interrupted);
-	fprintf(stderr,"If you want break, press Ctrl+C...\n");
+	printmsgerr("If you want break, press Ctrl+C...\n");
 
-	if (Backup.DateTime[0]!=0) 	fprintf(stderr,"Time of backup : %s\n",Backup.DateTime);
-	if (Backup.Model[0]!=0) 	fprintf(stderr,"Phone          : %s\n",Backup.Model);
-	if (Backup.IMEI[0]!=0) 		fprintf(stderr,"IMEI           : %s\n",Backup.IMEI);
+	if (Backup.DateTime[0]!=0) 	printmsgerr("Time of backup : %s\n",Backup.DateTime);
+	if (Backup.Model[0]!=0) 	printmsgerr("Phone          : %s\n",Backup.Model);
+	if (Backup.IMEI[0]!=0) 		printmsgerr("IMEI           : %s\n",Backup.IMEI);
 
 	GSM_Init(true);
 
@@ -2468,9 +2474,10 @@ static void Restore(int argc, char *argv[])
 		MemStatus.MemoryType = GMT_ME;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
 		if (error==GE_NONE) {
+			max = 0;
+			while (Backup.PhonePhonebook[max]!=NULL) max++;
+			printmsgerr("%i entries in backup file\n",max);
 			if (answer_yes("Restore phone phonebook")) {
-				max = 0;
-				while (Backup.PhonePhonebook[max]!=NULL) max++;
 				used = 0;
 				for (i=0;i<MemStatus.Used+MemStatus.Free;i++)
 				{
@@ -2486,13 +2493,13 @@ static void Restore(int argc, char *argv[])
 					dprintf("Location %i\n",Pbk.Location);
 					error=Phone->SetMemory(&s, &Pbk);
 					Print_Error(error);
-					fprintf(stderr,"%cWriting: %i percent",13,(i+1)*100/(MemStatus.Used+MemStatus.Free));
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/(MemStatus.Used+MemStatus.Free));
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2500,9 +2507,10 @@ static void Restore(int argc, char *argv[])
 		MemStatus.MemoryType = GMT_SM;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
 		if (error==GE_NONE) {
+			max = 0;
+			while (Backup.SIMPhonebook[max]!=NULL) max++;
+			printmsgerr("%i entries in backup file\n",max);
 			if (answer_yes("Restore SIM phonebook")) {
-				max = 0;
-				while (Backup.SIMPhonebook[max]!=NULL) max++;
 				used = 0;
 				for (i=0;i<MemStatus.Used+MemStatus.Free;i++)
 				{
@@ -2518,13 +2526,13 @@ static void Restore(int argc, char *argv[])
 					dprintf("Location %i\n",Pbk.Location);
 					error=Phone->SetMemory(&s, &Pbk);
 					Print_Error(error);
-					fprintf(stderr,"%cWriting: %i percent",13,(i+1)*100/(MemStatus.Used+MemStatus.Free));
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/(MemStatus.Used+MemStatus.Free));
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2539,13 +2547,13 @@ static void Restore(int argc, char *argv[])
 				for (i=0;i<max;i++) {
 					error=Phone->SetBitmap(&s,Backup.CallerLogos[i]);
 					Print_Error(error);
-					fprintf(stderr,"%cWriting: %i percent",13,(i+1)*100/max);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2560,25 +2568,25 @@ static void Restore(int argc, char *argv[])
 		error = Phone->GetCalendarNote(&s,&Calendar,true);
 		if (error == GE_NONE || error == GE_INVALIDLOCATION) {
 			if (answer_yes("Restore calendar notes")) {
-				fprintf(stderr,"Deleting old notes: ");
+				printmsgerr("Deleting old notes: ");
 				while (error==GE_NONE) {
 					error = Phone->DeleteCalendarNote(&s,&Calendar);
-					fprintf(stderr,"*");
+					printmsgerr("*");
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 				max = 0;
 				while (Backup.Calendar[max]!=NULL) max++;
 				for (i=0;i<max;i++) {
 					Calendar = *Backup.Calendar[i];
 					error=Phone->SetCalendarNote(&s,&Calendar);
 					Print_Error(error);
-					fprintf(stderr,"%cWriting: %i percent",13,(i+1)*100/max);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2587,10 +2595,10 @@ static void Restore(int argc, char *argv[])
 		error = Phone->GetToDo(&s,&ToDo,true);
 		if (error == GE_NONE || error == GE_INVALIDLOCATION) {
 			if (answer_yes("Restore ToDo")) {
-				fprintf(stderr,"Deleting old ToDo: ");
+				printmsgerr("Deleting old ToDo: ");
 				error=Phone->DeleteAllToDo(&s);
 				Print_Error(error);
-				fprintf(stderr,"Done\n");
+				printmsgerr("Done\n");
 				max = 0;
 				while (Backup.ToDo[max]!=NULL) max++;
 				for (i=0;i<max;i++) {
@@ -2598,13 +2606,13 @@ static void Restore(int argc, char *argv[])
 					ToDo.Location 	= 0;
 					error=Phone->SetToDo(&s,&ToDo);
 					Print_Error(error);
-					fprintf(stderr,"%cWriting: %i percent",13,(i+1)*100/max);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2615,13 +2623,13 @@ static void Restore(int argc, char *argv[])
 			for (i=0;i<max;i++) {
 				error=Phone->SetSMSC(&s,Backup.SMSC[i]);
 				Print_Error(error);
-				fprintf(stderr,"%cWriting: %i percent",13,(i+1)*100/max);
+				printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 				if (bshutdown) {
 					GSM_Terminate();
 					exit(0);
 				}
 			}
-			fprintf(stderr,"\n");
+			printmsgerr("\n");
 		}
 	}
 	if (Backup.StartupLogo != NULL) {
@@ -2641,7 +2649,7 @@ static void Restore(int argc, char *argv[])
 		error = Phone->GetWAPBookmark(&s,&Bookmark);
 		if (error == GE_NONE || error == GE_INVALIDLOCATION) {
 			if (answer_yes("Restore WAP bookmarks")) {
-				fprintf(stderr,"Deleting old bookmarks: ");
+				printmsgerr("Deleting old bookmarks: ");
 				/* One thing to explain: DCT4 phones seems to have bug here.
 				 * When delete for example first bookmark, phone change
 				 * numeration for getting frame, not for deleting. So, we try to
@@ -2652,9 +2660,9 @@ static void Restore(int argc, char *argv[])
 					error = Phone->DeleteWAPBookmark(&s,&Bookmark);
 					Bookmark.Location = 1;
 					error = Phone->GetWAPBookmark(&s,&Bookmark);
-					fprintf(stderr,"*");
+					printmsgerr("*");
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 				max = 0;
 				while (Backup.WAPBookmark[max]!=NULL) max++;
 				for (i=0;i<max;i++) {
@@ -2662,13 +2670,13 @@ static void Restore(int argc, char *argv[])
 					Bookmark.Location = 0;
 					error=Phone->SetWAPBookmark(&s,&Bookmark);
 					Print_Error(error);
-					fprintf(stderr,"%cWriting: %i percent",13,(i+1)*100/max);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2682,13 +2690,13 @@ static void Restore(int argc, char *argv[])
 				for (i=0;i<max;i++) {
 					error=Phone->SetWAPSettings(&s,Backup.WAPSettings[i]);
 					Print_Error(error);
-					fprintf(stderr,"%cWriting: %i percent",13,(i+1)*100/max);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2705,13 +2713,13 @@ static void Restore(int argc, char *argv[])
 					Print_Error(error);
 					error=Phone->SetRingtone(&s,&Ringtone,&i);
 					Print_Error(error);
-					fprintf(stderr,"%cWriting: %i percent",13,(i+1)*100/max);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 					if (bshutdown) {
 						GSM_Terminate();
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2732,7 +2740,7 @@ static void Restore(int argc, char *argv[])
 						exit(0);
 					}
 				}
-				fprintf(stderr,"\n");
+				printmsgerr("\n");
 			}
 		}
 	}
@@ -2755,84 +2763,84 @@ static void GetWAPSettings(int argc, char *argv[])
 		error=Phone->GetWAPSettings(&s,&settings);
 		Print_Error(error);
 		for (j=0;j<settings.Number;j++) {
-			printf("%i. ",i);
+			printmsg("%i. ",i);
 			if (settings.Settings[j].Title[0]==0 && settings.Settings[j].Title[1]==0)
 			{
-				printf("Set %i\n",i);
+				printmsg("Set %i\n",i);
 			} else {
-				printf("%s\n",DecodeUnicodeString(settings.Settings[j].Title));
+				printmsg("%s\n",DecodeUnicodeString(settings.Settings[j].Title));
 			}
-			printf("Homepage            : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].HomePage));
+			printmsg("Homepage            : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].HomePage));
 			if (settings.Settings[j].IsContinuous) {
-				printf("Connection type     : Continuous\n");
+				printmsg("Connection type     : Continuous\n");
 			} else {
-				printf("Connection type     : Temporary\n");
+				printmsg("Connection type     : Temporary\n");
 			}
 			if (settings.Settings[j].IsSecurity) {
-				printf("Connection security : On\n");
+				printmsg("Connection security : On\n");
 			} else {
-				printf("Connection security : Off\n");
+				printmsg("Connection security : Off\n");
 			}
 			switch (settings.Settings[j].Bearer) {
 			case WAPSETTINGS_BEARER_SMS:
-				printf("Bearer              : SMS\n");
-				printf("Server number       : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Server));
-				printf("Service number      : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Service));
+				printmsg("Bearer              : SMS\n");
+				printmsg("Server number       : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Server));
+				printmsg("Service number      : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Service));
 				break;
 			case WAPSETTINGS_BEARER_DATA:
-				printf("Bearer              : Data (CSD)\n");
-				printf("Dial-up number      : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].DialUp));
-				printf("IP address          : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].IPAddress));
+				printmsg("Bearer              : Data (CSD)\n");
+				printmsg("Dial-up number      : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].DialUp));
+				printmsg("IP address          : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].IPAddress));
 				if (settings.Settings[j].ManualLogin) {
-					printf("Login Type          : Manual\n");
+					printmsg("Login Type          : Manual\n");
 				} else {
-					printf("Login Type          : Automatic\n");
+					printmsg("Login Type          : Automatic\n");
 				}
 				if (settings.Settings[j].IsNormalAuthentication) {
-					printf("Authentication type : Normal\n");
+					printmsg("Authentication type : Normal\n");
 				} else {
-					printf("Authentication type : Secure\n");
+					printmsg("Authentication type : Secure\n");
 				}
 				if (settings.Settings[j].IsISDNCall) {
-					printf("Data call type      : ISDN\n");
+					printmsg("Data call type      : ISDN\n");
 	                       	} else {
-					printf("Data call type      : Analogue\n");  
+					printmsg("Data call type      : Analogue\n");  
 				}
 				switch (settings.Settings[j].Speed) {
-					case WAPSETTINGS_SPEED_9600  : printf("Data call speed     : 9600\n");  break;
-					case WAPSETTINGS_SPEED_14400 : printf("Data call speed     : 14400\n"); break;
-					case WAPSETTINGS_SPEED_AUTO  : printf("Data call speed     : Auto\n");  break;
+					case WAPSETTINGS_SPEED_9600  : printmsg("Data call speed     : 9600\n");  break;
+					case WAPSETTINGS_SPEED_14400 : printmsg("Data call speed     : 14400\n"); break;
+					case WAPSETTINGS_SPEED_AUTO  : printmsg("Data call speed     : Auto\n");  break;
 				}
-				printf("User name           : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].User));
-				printf("Password            : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Password));
+				printmsg("User name           : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].User));
+				printmsg("Password            : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Password));
 				break;
 			case WAPSETTINGS_BEARER_USSD:
-				printf("Bearer              : USSD\n");
-				printf("Service code        : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Code));
+				printmsg("Bearer              : USSD\n");
+				printmsg("Service code        : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Code));
 				if (settings.Settings[j].IsIP) {
-					printf("Address type        : IP address\nIPaddress           : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Service));
+					printmsg("Address type        : IP address\nIPaddress           : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Service));
 				} else {
-					printf("Address type        : Service number\nService number      : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Service));	
+					printmsg("Address type        : Service number\nService number      : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Service));	
 				}
 				break;
 			case WAPSETTINGS_BEARER_GPRS:
-				printf("Bearer              : GPRS\n");
+				printmsg("Bearer              : GPRS\n");
 				if (settings.Settings[j].ManualLogin) {
-					printf("Login Type          : Manual\n");
+					printmsg("Login Type          : Manual\n");
 				} else {
-					printf("Login Type          : Automatic\n");
+					printmsg("Login Type          : Automatic\n");
 				}
 				if (settings.Settings[j].IsNormalAuthentication) {
-					printf("Authentication type : Normal\n");
+					printmsg("Authentication type : Normal\n");
 				} else {
-					printf("Authentication type : Secure\n");
+					printmsg("Authentication type : Secure\n");
 				}
-				printf("Access point        : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].DialUp));
-				printf("IP address          : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].IPAddress));
-				printf("User name           : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].User));
-				printf("Password            : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Password));
+				printmsg("Access point        : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].DialUp));
+				printmsg("IP address          : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].IPAddress));
+				printmsg("User name           : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].User));
+				printmsg("Password            : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Password));
 			}
-			printf("\n");
+			printmsg("\n");
 		}
 	}
 	GSM_Terminate();
@@ -2891,7 +2899,7 @@ static void BackupSMS(int argc, char *argv[])
 						        if (Backup.SMS[smsnum] == NULL) Print_Error(GE_MOREMEMORY);
 							Backup.SMS[smsnum+1] = NULL;
 						} else {
-							printf("Increase GSM_BACKUP_MAX_SMS\n");
+							printmsg("Increase GSM_BACKUP_MAX_SMS\n");
 							exit(-1);
 						}
 						*Backup.SMS[smsnum] = sms.SMS[j];
@@ -2912,7 +2920,7 @@ static void BackupSMS(int argc, char *argv[])
 			Backup.SMS[j]->Folder = 0;
 			error=Phone->DeleteSMS(&s, Backup.SMS[j]);
 			Print_Error(error);
-			fprintf(stderr,"%cDeleting: %i percent",13,(j+1)*100/smsnum);
+			printmsgerr("%cDeleting: %i percent",13,(j+1)*100/smsnum);
 		}
 	}
 
@@ -2965,13 +2973,13 @@ static void CopyBitmap(int argc, char *argv[])
 	if (argc==3) {
 		for (i=0;i<Bitmap.Number;i++) {
 			switch (Bitmap.Bitmap[i].Type) {
-				case GSM_StartupLogo :	printf("Startup logo");		break;
-				case GSM_OperatorLogo:	printf("Operator logo"); 	break;
-				case GSM_PictureImage:	printf("Picture Image"); 	break;
-				case GSM_CallerLogo  :	printf("Caller group logo"); 	break;
+				case GSM_StartupLogo :	printmsg("Startup logo");		break;
+				case GSM_OperatorLogo:	printmsg("Operator logo"); 	break;
+				case GSM_PictureImage:	printmsg("Picture Image"); 	break;
+				case GSM_CallerLogo  :	printmsg("Caller group logo"); 	break;
 				default		     : 					break;
 			}
-			printf(", width %i, height %i\n",Bitmap.Bitmap[i].Width,Bitmap.Bitmap[i].Height);
+			printmsg(", width %i, height %i\n",Bitmap.Bitmap[i].Width,Bitmap.Bitmap[i].Height);
 			GSM_PrintBitmap(stdout,&Bitmap.Bitmap[i]);
 		}
 	} else {
@@ -2986,7 +2994,7 @@ static void CopyBitmap(int argc, char *argv[])
 				} else if (!strcmp(argv[4],"OPERATOR")) {
 					Bitmap.Bitmap[i].Type = GSM_OperatorLogo;
 				} else {
-					printf("What format of output file logo (\"%s\") ?\n",argv[4]);
+					printmsg("What format of output file logo (\"%s\") ?\n",argv[4]);
 					exit(-1);
 				}
 			}
@@ -3010,7 +3018,7 @@ static void NokiaComposer(int argc, char *argv[])
 	error=GSM_ReadRingtoneFile(argv[2],&ringtone);
 
 	if (ringtone.Format != RING_NOTETONE) {
-		printf("It can be RTTL ringtone only used with this option\n");
+		printmsg("It can be RTTL ringtone only used with this option\n");
 		exit(-1);
 	}
  
@@ -3021,16 +3029,16 @@ static void NokiaComposer(int argc, char *argv[])
 			Note = &ringtone.NoteTone.Commands[i].Note;
 			if (!started) {
 				if (Note->Note != Note_Pause) {
-					printf("Ringtone \"%s\" (tempo = %i Beats Per Minute)\n\n",DecodeUnicodeString(ringtone.Name),GSM_RTTLGetTempo(Note->Tempo));
+					printmsg("Ringtone \"%s\" (tempo = %i Beats Per Minute)\n\n",DecodeUnicodeString(ringtone.Name),GSM_RTTLGetTempo(Note->Tempo));
 					started = true;
 				}
 			}
 			if (started) j++;
 		}
 	}
-    	if (j>50) printf("WARNING: LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES.",j);
+    	if (j>50) printmsg("WARNING: LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES.",j);
 
-	printf("\n\nThis ringtone in Nokia Composer in phone should look: ");  
+	printmsg("\n\nThis ringtone in Nokia Composer in phone should look: ");  
 	started = false;
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
@@ -3040,36 +3048,36 @@ static void NokiaComposer(int argc, char *argv[])
 			}
 			if (started) {
 				switch (Note->Duration) {
-					case Duration_Full: printf("1"); break;
-					case Duration_1_2 : printf("2"); break;
-					case Duration_1_4 : printf("4"); break;
-					case Duration_1_8 : printf("8"); break;
-					case Duration_1_16: printf("16");break;
-					case Duration_1_32: printf("32");break;
+					case Duration_Full: printmsg("1"); break;
+					case Duration_1_2 : printmsg("2"); break;
+					case Duration_1_4 : printmsg("4"); break;
+					case Duration_1_8 : printmsg("8"); break;
+					case Duration_1_16: printmsg("16");break;
+					case Duration_1_32: printmsg("32");break;
 				}
-				if (Note->DurationSpec == DottedNote) printf(".");
+				if (Note->DurationSpec == DottedNote) printmsg(".");
 				switch (Note->Note) {
-					case Note_C  	: printf("c");	break;
-					case Note_Cis	: printf("#c");	break;
-					case Note_D  	 :printf("d");	break;
-					case Note_Dis	: printf("#d");	break;
-					case Note_E  	: printf("e");	break;
-					case Note_F  	: printf("f");	break;
-					case Note_Fis	: printf("#f");	break;
-					case Note_G  	: printf("g");	break;
-					case Note_Gis	: printf("#g");	break;
-					case Note_A  	: printf("a");	break;
-					case Note_Ais	: printf("#a");	break;
-					case Note_H  	: printf("h");	break;
-					case Note_Pause : printf("-");	break;
+					case Note_C  	: printmsg("c");	break;
+					case Note_Cis	: printmsg("#c");	break;
+					case Note_D  	 :printmsg("d");	break;
+					case Note_Dis	: printmsg("#d");	break;
+					case Note_E  	: printmsg("e");	break;
+					case Note_F  	: printmsg("f");	break;
+					case Note_Fis	: printmsg("#f");	break;
+					case Note_G  	: printmsg("g");	break;
+					case Note_Gis	: printmsg("#g");	break;
+					case Note_A  	: printmsg("a");	break;
+					case Note_Ais	: printmsg("#a");	break;
+					case Note_H  	: printmsg("h");	break;
+					case Note_Pause : printmsg("-");	break;
 				}
-				if (Note->Note != Note_Pause) printf("%i",Note->Scale - 4);
-				printf(" ");
+				if (Note->Note != Note_Pause) printmsg("%i",Note->Scale - 4);
+				printmsg(" ");
 			}
 		}
 	}
 
-	printf("\n\nTo enter it please press: ");    
+	printmsg("\n\nTo enter it please press: ");    
 	started = false;
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
@@ -3079,21 +3087,21 @@ static void NokiaComposer(int argc, char *argv[])
 			}
 			if (started) {
 				switch (Note->Note) {
-	      				case Note_C  : case Note_Cis:	printf("1");break;
-	      				case Note_D  : case Note_Dis:	printf("2");break;
-	      				case Note_E  :			printf("3");break;
-	      				case Note_F  : case Note_Fis:	printf("4");break;
-	      				case Note_G  : case Note_Gis:	printf("5");break;
-	      				case Note_A  : case Note_Ais:	printf("6");break;
-	      				case Note_H  :			printf("7");break;
-	      				default      :			printf("0");break;
+	      				case Note_C  : case Note_Cis:	printmsg("1");break;
+	      				case Note_D  : case Note_Dis:	printmsg("2");break;
+	      				case Note_E  :			printmsg("3");break;
+	      				case Note_F  : case Note_Fis:	printmsg("4");break;
+	      				case Note_G  : case Note_Gis:	printmsg("5");break;
+	      				case Note_A  : case Note_Ais:	printmsg("6");break;
+	      				case Note_H  :			printmsg("7");break;
+	      				default      :			printmsg("0");break;
 				}
-				if (Note->DurationSpec == DottedNote) printf("(longer)");
+				if (Note->DurationSpec == DottedNote) printmsg("(longer)");
 	    			switch (Note->Note) {
       					case Note_Cis: case Note_Dis:
       					case Note_Fis: case Note_Gis:
       					case Note_Ais:
-						printf("#");
+						printmsg("#");
 						break;
       					default      :
 						break;
@@ -3101,7 +3109,7 @@ static void NokiaComposer(int argc, char *argv[])
 				if (Note->Note != Note_Pause) {
 					if (Note->Scale != DefNoteScale) {
 						while (DefNoteScale != Note->Scale) {
-							printf("*");
+							printmsg("*");
 							DefNoteScale++;
 							if (DefNoteScale==Scale_7040) DefNoteScale = Scale_880;
 						}
@@ -3119,22 +3127,22 @@ static void NokiaComposer(int argc, char *argv[])
 				}
 				if (Duration > DefNoteDuration) {
 		        		while (DefNoteDuration != Duration) {
-						printf("9");
+						printmsg("9");
 			  			DefNoteDuration = DefNoteDuration * 2;
 					}
 			      	}
 				if (Duration < DefNoteDuration) {
 		        		while (DefNoteDuration != Duration) {
-						printf("8");
+						printmsg("8");
 			  			DefNoteDuration = DefNoteDuration / 2;
 					}
 			      	}
-				printf(" ");
+				printmsg(" ");
 			}
 		}
 	}
 
-	printf("\n");
+	printmsg("\n");
 }
 
 static void CopyRingtone(int argc, char *argv[])
@@ -3151,7 +3159,7 @@ static void CopyRingtone(int argc, char *argv[])
 		if (!strcmp(argv[4],"RTTL")) {		Format = RING_NOTETONE;
 		} else if (!strcmp(argv[4],"BINARY")) {	Format = RING_NOKIABINARY;
 		} else {
-			printf("What format of output ringtone file (\"%s\") ?\n",argv[4]);
+			printmsg("What format of output ringtone file (\"%s\") ?\n",argv[4]);
 			exit(-1);
 		}
 	}
@@ -3206,7 +3214,7 @@ static void PressKeySequence(int argc, char *argv[])
 				j++;
 			}
 			if (KeyCode == GSM_KEY_NONE) {
-				printf("Unknown key/function name: \"%c\"\n",key);
+				printmsg("Unknown key/function name: \"%c\"\n",key);
 				GSM_Terminate();
 				exit(-1);
 			}
@@ -3234,15 +3242,15 @@ static void GetToDo(int argc, char *argv[])
 		ToDo.Location=i;
 		error=Phone->GetToDo(&s,&ToDo,refresh);
 		Print_Error(error);
-		printf("Location : %i\n",i);
-		printf("Priority : ");
+		printmsg("Location : %i\n",i);
+		printmsg("Priority : ");
 		switch (ToDo.Priority) {
-			case GSM_Priority_Low	 : printf("Low (1)\n");	 	break;
-			case GSM_Priority_Medium : printf("Medium (2)\n"); 	break;
-			case GSM_Priority_High	 : printf("High (3)\n");	break;
+			case GSM_Priority_Low	 : printmsg("Low (1)\n");	 	break;
+			case GSM_Priority_Medium : printmsg("Medium (2)\n"); 	break;
+			case GSM_Priority_High	 : printmsg("High (3)\n");	break;
 		}
-		printf("Text     : \"%s\"\n",DecodeUnicodeString(ToDo.Text));
-		printf("\n");
+		printmsg("Text     : \"%s\"\n",DecodeUnicodeString(ToDo.Text));
+		printmsg("\n");
 		refresh=false;
 	}
 
@@ -3258,13 +3266,13 @@ static void GetSecurityStatus(int argc, char *argv[])
 	error=Phone->GetSecurityStatus(&s,&Status);
 	Print_Error(error);
 	switch(Status) {
-		case GSCT_SecurityCode: printf("Waiting for Security Code.\n"); break;
-		case GSCT_Pin         : printf("Waiting for PIN.\n"); 		break;
-		case GSCT_Pin2        : printf("Waiting for PIN2.\n"); 		break;
-		case GSCT_Puk         : printf("Waiting for PUK.\n");		break;
-		case GSCT_Puk2        : printf("Waiting for PUK2.\n"); 		break;
-		case GSCT_None        : printf("Nothing to enter.\n"); 		break;
-		default		      : printf("Unknown\n");
+		case GSCT_SecurityCode: printmsg("Waiting for Security Code.\n"); break;
+		case GSCT_Pin         : printmsg("Waiting for PIN.\n"); 		break;
+		case GSCT_Pin2        : printmsg("Waiting for PIN2.\n"); 		break;
+		case GSCT_Puk         : printmsg("Waiting for PUK.\n");		break;
+		case GSCT_Puk2        : printmsg("Waiting for PUK2.\n"); 		break;
+		case GSCT_None        : printmsg("Nothing to enter.\n"); 		break;
+		default		      : printmsg("Unknown\n");
 	}      
 	
 	GSM_Terminate();
@@ -3279,7 +3287,7 @@ static void EnterSecurityCode(int argc, char *argv[])
 	} else if (!strcmp(argv[2],"PIN2")) {	Code.Type = GSCT_Pin2;
 	} else if (!strcmp(argv[2],"PUK2")) {	Code.Type = GSCT_Puk2;
 	} else {
-		printf("What security code (\"%s\") ?\n",argv[2]);
+		printmsg("What security code (\"%s\") ?\n",argv[2]);
 		exit(-1);
 	}
 
@@ -3315,11 +3323,11 @@ static void GetProfile(int argc, char *argv[])
 		error=Phone->GetProfile(&s,&Profile);
 		Print_Error(error);
 
-		printf("%i. \"%s\"",i,DecodeUnicodeString(Profile.Name));
-		if (Profile.DefaultName) 	printf(" (default name)");
-		if (Profile.HeadSetProfile) 	printf(" (HeadSet profile)");
-		if (Profile.CarKitProfile) 	printf(" (CarKit profile)");
-		printf("\n");
+		printmsg("%i. \"%s\"",i,DecodeUnicodeString(Profile.Name));
+		if (Profile.DefaultName) 	printmsg(" (default name)");
+		if (Profile.HeadSetProfile) 	printmsg(" (HeadSet profile)");
+		if (Profile.CarKitProfile) 	printmsg(" (CarKit profile)");
+		printmsg("\n");
 		for (j=0;j<Profile.FeaturesNumber;j++) {
 			special = false;
 			switch (Profile.FeatureID[j]) {
@@ -3327,19 +3335,19 @@ static void GetProfile(int argc, char *argv[])
 			case Profile_RingtoneID:
 				special = true;
 				if (Profile.FeatureID[j] == Profile_RingtoneID) {
-					printf("Ringtone ID           : ");
+					printmsg("Ringtone ID           : ");
 				} else {
-					printf("Message alert tone ID : ");
+					printmsg("Message alert tone ID : ");
 				}
 				if (strlen(DecodeUnicodeString(GSM_GetRingtoneName(&Info,Profile.FeatureValue[j])))!=0) {
-					printf("\"%s\"\n",DecodeUnicodeString(GSM_GetRingtoneName(&Info,Profile.FeatureValue[j])));
+					printmsg("\"%s\"\n",DecodeUnicodeString(GSM_GetRingtoneName(&Info,Profile.FeatureValue[j])));
 				} else {
-					printf("%i\n",Profile.FeatureValue[j]);
+					printmsg("%i\n",Profile.FeatureValue[j]);
 				}
 				break;	
 			case Profile_CallerGroups:
 				special = true;
-				printf("Call alert for        :");
+				printmsg("Call alert for        :");
 				for (k=0;k<5;k++) {
 					if (Profile.CallerGroups[k]) {
 						if (!callerinit[k]) {
@@ -3353,40 +3361,40 @@ static void GetProfile(int argc, char *argv[])
 							}
 							callerinit[k]	= true;
 						}
-						printf(" \"%s\"",DecodeUnicodeString(caller[k].Text));
+						printmsg(" \"%s\"",DecodeUnicodeString(caller[k].Text));
 					}
 				}
-				printf("\n");
+				printmsg("\n");
 				break;
 			case Profile_ScreenSaverNumber:
 				special = true;
-				printf("Screen saver number   : ");
-				printf("%i\n",Profile.FeatureValue[j]);
+				printmsg("Screen saver number   : ");
+				printmsg("%i\n",Profile.FeatureValue[j]);
 				break;
-			case Profile_CallAlert  	: printf("Incoming call alert   : "); break;
-			case Profile_RingtoneVolume 	: printf("Ringtone volume       : "); break;
-			case Profile_Vibration		: printf("Vibrating alert       : "); break;
-			case Profile_MessageTone	: printf("Message alert tone    : "); break;
-			case Profile_KeypadTone		: printf("Keypad tones          : "); break;
-			case Profile_WarningTone	: printf("Warning (games) tones : "); break;
-			case Profile_ScreenSaver	: printf("Screen saver          : "); break;
-			case Profile_ScreenSaverTime	: printf("Screen saver timeout  : "); break;
-			case Profile_AutoAnswer		: printf("Automatic answer      : "); break;
-			case Profile_Lights		: printf("Lights                : "); break;
+			case Profile_CallAlert  	: printmsg("Incoming call alert   : "); break;
+			case Profile_RingtoneVolume 	: printmsg("Ringtone volume       : "); break;
+			case Profile_Vibration		: printmsg("Vibrating alert       : "); break;
+			case Profile_MessageTone	: printmsg("Message alert tone    : "); break;
+			case Profile_KeypadTone		: printmsg("Keypad tones          : "); break;
+			case Profile_WarningTone	: printmsg("Warning (games) tones : "); break;
+			case Profile_ScreenSaver	: printmsg("Screen saver          : "); break;
+			case Profile_ScreenSaverTime	: printmsg("Screen saver timeout  : "); break;
+			case Profile_AutoAnswer		: printmsg("Automatic answer      : "); break;
+			case Profile_Lights		: printmsg("Lights                : "); break;
 			default:
-				printf("Unknown\n");
+				printmsg("Unknown\n");
 				special = true;
 			}
 			if (!special) {
 				switch (Profile.FeatureValue[j]) {
 				case PROFILE_VOLUME_LEVEL1 		:
-				case PROFILE_KEYPAD_LEVEL1 		: printf("Level 1\n"); 		break;
+				case PROFILE_KEYPAD_LEVEL1 		: printmsg("Level 1\n"); 		break;
 				case PROFILE_VOLUME_LEVEL2 		:
-				case PROFILE_KEYPAD_LEVEL2 		: printf("Level 2\n");		break;
+				case PROFILE_KEYPAD_LEVEL2 		: printmsg("Level 2\n");		break;
 				case PROFILE_VOLUME_LEVEL3 		:
-				case PROFILE_KEYPAD_LEVEL3 		: printf("Level 3\n"); 		break;
-				case PROFILE_VOLUME_LEVEL4 		: printf("Level 4\n"); 		break;
-				case PROFILE_VOLUME_LEVEL5 		: printf("Level 5\n"); 		break;
+				case PROFILE_KEYPAD_LEVEL3 		: printmsg("Level 3\n"); 		break;
+				case PROFILE_VOLUME_LEVEL4 		: printmsg("Level 4\n"); 		break;
+				case PROFILE_VOLUME_LEVEL5 		: printmsg("Level 5\n"); 		break;
 				case PROFILE_MESSAGE_NOTONE 		:
 				case PROFILE_AUTOANSWER_OFF		:
 				case PROFILE_LIGHTS_OFF  		:
@@ -3394,34 +3402,34 @@ static void GetProfile(int argc, char *argv[])
 				case PROFILE_WARNING_OFF		:
 				case PROFILE_CALLALERT_OFF	 	:
 				case PROFILE_VIBRATION_OFF 		:
-				case PROFILE_KEYPAD_OFF	   		: printf("Off\n");	  	break;
-				case PROFILE_CALLALERT_RINGING   	: printf("Ringing\n");		break;
+				case PROFILE_KEYPAD_OFF	   		: printmsg("Off\n");	  	break;
+				case PROFILE_CALLALERT_RINGING   	: printmsg("Ringing\n");		break;
 				case PROFILE_CALLALERT_BEEPONCE  	:
-				case PROFILE_MESSAGE_BEEPONCE 		: printf("Beep once\n"); 	break;
-				case PROFILE_CALLALERT_RINGONCE  	: printf("Ring once\n");	break;
-				case PROFILE_CALLALERT_ASCENDING 	: printf("Ascending\n");        break;
-				case PROFILE_CALLALERT_CALLERGROUPS	: printf("Caller groups\n");	break;
-				case PROFILE_MESSAGE_STANDARD 		: printf("Standard\n");  	break;
-				case PROFILE_MESSAGE_SPECIAL 		: printf("Special\n");	 	break;
-				case PROFILE_MESSAGE_ASCENDING		: printf("Ascending\n"); 	break;
-				case PROFILE_MESSAGE_PERSONAL		: printf("Personal\n");		break;
+				case PROFILE_MESSAGE_BEEPONCE 		: printmsg("Beep once\n"); 	break;
+				case PROFILE_CALLALERT_RINGONCE  	: printmsg("Ring once\n");	break;
+				case PROFILE_CALLALERT_ASCENDING 	: printmsg("Ascending\n");        break;
+				case PROFILE_CALLALERT_CALLERGROUPS	: printmsg("Caller groups\n");	break;
+				case PROFILE_MESSAGE_STANDARD 		: printmsg("Standard\n");  	break;
+				case PROFILE_MESSAGE_SPECIAL 		: printmsg("Special\n");	 	break;
+				case PROFILE_MESSAGE_ASCENDING		: printmsg("Ascending\n"); 	break;
+				case PROFILE_MESSAGE_PERSONAL		: printmsg("Personal\n");		break;
 				case PROFILE_AUTOANSWER_ON		:
 				case PROFILE_WARNING_ON			:
 				case PROFILE_SAVER_ON			:
-				case PROFILE_VIBRATION_ON 		: printf("On\n");  		break;
-				case PROFILE_VIBRATION_FIRST 		: printf("Vibrate first\n");	break;
-				case PROFILE_LIGHTS_AUTO 		: printf("Auto\n"); 		break;
-				case PROFILE_SAVER_TIMEOUT_5SEC	 	: printf("5 seconds\n"); 	break;
-				case PROFILE_SAVER_TIMEOUT_20SEC 	: printf("20 seconds\n"); 	break;
-				case PROFILE_SAVER_TIMEOUT_1MIN	 	: printf("1 minute\n");		break;
-				case PROFILE_SAVER_TIMEOUT_2MIN	 	: printf("2 minutes\n");	break;
-				case PROFILE_SAVER_TIMEOUT_5MIN	 	: printf("5 minutes\n");	break;
-				case PROFILE_SAVER_TIMEOUT_10MIN 	: printf("10 minutes\n");	break;
-				default					: printf("UNKNOWN\n");
+				case PROFILE_VIBRATION_ON 		: printmsg("On\n");  		break;
+				case PROFILE_VIBRATION_FIRST 		: printmsg("Vibrate first\n");	break;
+				case PROFILE_LIGHTS_AUTO 		: printmsg("Auto\n"); 		break;
+				case PROFILE_SAVER_TIMEOUT_5SEC	 	: printmsg("5 seconds\n"); 	break;
+				case PROFILE_SAVER_TIMEOUT_20SEC 	: printmsg("20 seconds\n"); 	break;
+				case PROFILE_SAVER_TIMEOUT_1MIN	 	: printmsg("1 minute\n");		break;
+				case PROFILE_SAVER_TIMEOUT_2MIN	 	: printmsg("2 minutes\n");	break;
+				case PROFILE_SAVER_TIMEOUT_5MIN	 	: printmsg("5 minutes\n");	break;
+				case PROFILE_SAVER_TIMEOUT_10MIN 	: printmsg("10 minutes\n");	break;
+				default					: printmsg("UNKNOWN\n");
 				}	
 			}
 		}
-		printf("\n");
+		printmsg("\n");
 	}
 
 	GSM_Terminate();
@@ -3440,10 +3448,10 @@ static void GetSpeedDial(int argc, char *argv[])
 	for (i=start;i<=stop;i++) {
 		SpeedDial.Location=i;
 		error=Phone->GetSpeedDial(&s,&SpeedDial);
-		printf("%i.",i);
+		printmsg("%i.",i);
 		switch (error) {
 		case GE_EMPTY:
-			printf(" speed dial not assigned\n");
+			printmsg(" speed dial not assigned\n");
 			break;
 		default:
 			Print_Error(error);
@@ -3454,10 +3462,10 @@ static void GetSpeedDial(int argc, char *argv[])
 
 			GSM_PhonebookFindDefaultNameNumberGroup(Phonebook, &Name, &Number, &Group);
 	
-			if (Name != -1) printf(" Name \"%s\",",DecodeUnicodeString(Phonebook.Entries[Name].Text));
-			printf(" Number \"%s\"",DecodeUnicodeString(Phonebook.Entries[SpeedDial.MemoryNumberID-1].Text));
+			if (Name != -1) printmsg(" Name \"%s\",",DecodeUnicodeString(Phonebook.Entries[Name].Text));
+			printmsg(" Number \"%s\"",DecodeUnicodeString(Phonebook.Entries[SpeedDial.MemoryNumberID-1].Text));
 		}
-		printf("\n");
+		printmsg("\n");
 	}
 
 	GSM_Terminate();
@@ -3473,7 +3481,7 @@ static void ResetPhoneSettings(int argc, char *argv[])
 	} else if (!strcmp(argv[2],"DEV")) {	 Type = GSM_RESET_DEVICE;
 	} else if (!strcmp(argv[2],"FACTORY")) { Type = GSM_RESET_FULLFACTORY;
 	} else {
-		printf("What type of reset phone settings (\"%s\") ?\n",argv[2]);
+		printmsg("What type of reset phone settings (\"%s\") ?\n",argv[2]);
 		exit(-1);
 	}
 
@@ -3543,12 +3551,12 @@ static void DeleteAllSMS(int argc, char *argv[])
 
 	GetStartStop(&foldernum, NULL, 2, argc, argv);
 	if (foldernum > folders.Number) {
-		printf("Too high folder number (max. %i)\n",folders.Number);
+		printmsg("Too high folder number (max. %i)\n",folders.Number);
 		GSM_Terminate();
 		exit(-1);
 	}
 
-	printf("Deleting SMS from \"%s\" folder: ",DecodeUnicodeString(folders.Folder[foldernum-1].Name));
+	printmsg("Deleting SMS from \"%s\" folder: ",DecodeUnicodeString(folders.Folder[foldernum-1].Name));
 
 	while (error == GE_NONE) {
 		sms.SMS[0].Folder=0x00;
@@ -3562,13 +3570,13 @@ static void DeleteAllSMS(int argc, char *argv[])
 				sms.SMS[0].Folder=0x00;
 				error=Phone->DeleteSMS(&s, &sms.SMS[0]);
 				Print_Error(error);
-				printf("*");
+				printmsg("*");
 			}
 		}
 		start=false;
 	}
 
-	printf("\n");
+	printmsg("\n");
 
 	GSM_Terminate();
 }
@@ -3593,17 +3601,17 @@ static void GetDisplayStatus(int argc, char *argv[])
 	error=Phone->GetDisplayStatus(&s,&Features);
 	Print_Error(error);
 
-	printf("Current display features :\n");
+	printmsg("Current display features :\n");
 
 	for (i=0;i<Features.Number;i++) {
 		switch(Features.Feature[i]) {
-		case GSM_CallActive	: printf("Call active\n");	break;
-		case GSM_UnreadSMS	: printf("Unread SMS\n");	break;
-		case GSM_VoiceCall	: printf("Voice call\n");	break;
-		case GSM_FaxCall	: printf("Fax call\n");		break;
-		case GSM_DataCall	: printf("Data call\n");	break;
-		case GSM_KeypadLocked	: printf("Keypad locked\n");	break;
-		case GSM_SMSMemoryFull	: printf("SMS memory full\n");
+		case GSM_CallActive	: printmsg("Call active\n");	break;
+		case GSM_UnreadSMS	: printmsg("Unread SMS\n");	break;
+		case GSM_VoiceCall	: printmsg("Voice call\n");	break;
+		case GSM_FaxCall	: printmsg("Fax call\n");		break;
+		case GSM_DataCall	: printmsg("Data call\n");	break;
+		case GSM_KeypadLocked	: printmsg("Keypad locked\n");	break;
+		case GSM_SMSMemoryFull	: printmsg("SMS memory full\n");
 		}
 	}
 	
@@ -3643,14 +3651,25 @@ static void MakeConvertTable(int argc, char *argv[])
 }
 #endif
 
+static void ListNetworks(int argc, char *argv[])
+{
+	extern GSM_Network 	GSM_Networks[];
+	int 			i;
+
+	printmsg("Network  Name\n");
+	printmsg("-----------------------------------------\n");
+	for (i = 0; strcmp(GSM_Networks[i].Name, "unknown"); i++)
+		printmsg("%-7s  %s\n", GSM_Networks[i].Code, GSM_Networks[i].Name);
+}
+
 static void Version(int argc, char *argv[])
 {
-	printf("[Gammu version %s built %s %s]\n\n",VERSION,__TIME__,__DATE__);
+	printmsg("[Gammu version %s built %s %s]\n\n",VERSION,__TIME__,__DATE__);
 }
 
 static void usage(void)
 {
-	printf("[Gammu version %s built %s %s]\n\n",VERSION,__TIME__,__DATE__);
+	printmsg("[Gammu version %s built %s %s]\n\n",VERSION,__TIME__,__DATE__);
 
 	printf("gammu --version\n");
 	printf("gammu --identify\n");
@@ -3662,7 +3681,8 @@ static void usage(void)
 	printf("gammu --getprofile start [stop]\n");
 	printf("gammu --setautonetworklogin\n");
 	printf("gammu --getsecuritystatus\n");
-	printf("gammu --entersecuritycode PIN|PUK|PIN2|PUK2 code\n\n");
+	printf("gammu --entersecuritycode PIN|PUK|PIN2|PUK2 code\n");
+	printf("gammu --listnetworks\n\n");
 
 	printf("gammu --getdatetime\n");
 	printf("gammu --setdatetime\n");
@@ -3679,7 +3699,8 @@ static void usage(void)
 	printf("gammu --getallsms\n");
 	printf("gammu --geteachsms\n");
 	printf("gammu --getsmsc start [stop]\n");
-	printf("gammu --getsmsfolders\n\n");
+	printf("gammu --getsmsfolders\n");
+	printf("gammu --smsd FILES configfile\n\n");
 
 	printf("gammu --getphoneringtone location [file]\n");
 	printf("gammu --getringtone location [file]\n");
@@ -3721,7 +3742,7 @@ static void usage(void)
 	printf("                     [-smscset number][-smscnumber number][-len len]\n");
 	printf("                     [-enablefax][-disablefax][-enablevoice][-unsent]\n");
 	printf("                     [-disablevoice][-enableemail][-disableemail][-read]\n");
-	printf("                     [-voidsms][-unicode][-inputunicode][-unread]\n");
+	printf("                     [-voidsms][-unicode][-inputunicode][-unread][-autolen len]\n");
 	printf("		     [-replacemessages ID][-replacefile file]\n");
 	printf("gammu --savesms RINGTONE file [-folder number][-sender number][-reply]\n");
 	printf("                              [-smscset number][-smscnumber number]\n");
@@ -3775,7 +3796,7 @@ static void usage(void)
 	printf("                                 [-disablevoice][-enableemail][-report]\n");
 	printf("                                 [-disableemail][-voidsms][-unicode]\n");
 	printf("                                 [-inputunicode][-replacemessages ID]\n");
-	printf("                                 [-replacefile file]\n");
+	printf("                                 [-replacefile file][-autolen len]\n");
 	printf("gammu --sendsms RINGTONE destination file [-reply][-smscset number]\n");
 	printf("                                          [-long][-smscnumber number]\n");
 	printf("                                          [-report][-scale]\n");
@@ -3850,6 +3871,7 @@ static GSM_Parameters Parameters[] = {
 	{"--identify",			0, 0, Identify			},
 	{"--version",			0, 0, Version			},
 	{"--monitor",			0, 0, Monitor			},
+	{"--listnetworks",		0, 0, ListNetworks		},
 #ifdef GSM_ENABLE_NOKIA6110
 	{"--nokiagetoperatorname", 	0, 0, DCT3GetOperatorName	},
 	{"--nokiasetoperatorname", 	0, 2, DCT3SetOperatorName	},
@@ -3908,6 +3930,7 @@ static GSM_Parameters Parameters[] = {
 	{"--setbitmap",			1, 3, SetBitmap			},
 	{"--savesms",			1,10, SendSaveSMS		},
 	{"--sendsms",			2,10, SendSaveSMS		},
+	{"--smsd",			2, 2, SMSDeaemon		},
 #ifdef GSM_ENABLE_BACKUP
 	{"--backup",			1, 1, Backup			},
 	{"--backupsms",			1, 1, BackupSMS			},
@@ -3945,8 +3968,8 @@ int main(int argc, char *argv[])
 
 	cfg=CFG_FindGammuRC();
 	if (cfg!=NULL) {
-	        s.CFGLocalize = CFG_Get(cfg, "gammu", "gammuloc");
-        	if (s.CFGLocalize) s.msg=CFG_ReadFile(s.CFGLocalize);
+	        s.CFGLocalize = CFG_Get(cfg, "gammu", "gammuloc", false);
+        	if (s.CFGLocalize) s.msg=CFG_ReadFile(s.CFGLocalize, true);
 	}
 	CFG_ReadConfig(cfg, &model, &s.CFGDevice, &s.CFGConnection,
 		&s.CFGSyncTime, &s.CFGDebugFile, &debuglevel, &s.CFGLockDevice);
@@ -3976,7 +3999,7 @@ int main(int argc, char *argv[])
 				argc-2-start<=Parameters[z].max_arg)
 			{
 				if (strcmp(GetGammuVersion(),VERSION)!=0) {
-					printf("ERROR: version of installed libGammu.so (%s) is different to version of Gammu (%s)\n",
+					printmsg("ERROR: version of installed libGammu.so (%s) is different to version of Gammu (%s)\n",
 								GetGammuVersion(),VERSION);
 					exit(-1);
 				}

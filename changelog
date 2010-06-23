@@ -1,9 +1,62 @@
 
-ChangeLog for Gammu project (http://marcin-wiacek.topnet.pl)
+ChangeLog for Gammu project (www.mwiacek.com)
 
 Few last versions (the highest) will be described more detailed, older less.
 In brackets names of people, who told about error/problem or helped in fixing.
 ----------------------
+20021012 - 0.62
+
+* new functionality:
+  * simple API for informing user application about calls. Is more required ?
+  * added -autolen to send/savesms TEXT. It allows Gammu to decide about
+    SMS coding (GSM Default Alphabet/Unicode) according to input text.
+  * SMS deaemon (--smsd option) with such features like:
+    * recovering phone connection (for example after phone restart)
+    * entering PIN code, when required
+    * possibility of writing plugins for various databases or purposes
+    * lists of include/exclude phone numbers
+  * added plugin for --smsd with similiar functionality to --receivesms
+    from MyGnokii1. It can handle receiving SMS and direct them to text/binary
+    files.
+  * full featureable localization system:
+    * each language file is recreated during making distribution and contains
+      only actual localisation strings
+    * all localisation strings are found automatically in source
+    * localisation files are in Unicode
+  * started work on localisation for Polish language
+  * cfg files module can handle Unicode
+  * all topnet.pl changed to mwiacek.com (mwiacek.com will work during few
+    days)
+  * all date/time info in user application is written in format set in OS
+  * SIM/Phone phonebook entries in text backup file can be not sorted now
+  * BCC main makefile converted to 6.x version (still can use command line 5.x)
+  * added --listnetworks for displaying codes/names as they're known for
+    Gammu
+
+* fixes and improvements:
+  * win32 dll is now finally tested and used to my normal work instead of
+    old MyGnokii1
+  * n9110.* renamed to n9210.*
+  * 6190 ID fix, updated list of GSM networks                   (Benjamin Judd)
+  * Alcatel ID fix                                                (Thomas Vill)
+  * Binary->RTTL converter for ringtones works better        (Christian Becker)
+
+NOTE: These days were very hard for me:
+
+      1. FKN.PL (also my homepage/Gammu homepage/Gammu list) was down
+         during few days. Reason: hardware faults. Sorry for it
+      2. my phone was in service
+      3. I had to reinstall my Linux
+      4. I had to reinstall majority of my win32 environment
+      5. Because of action of Netia company TopNet.PL domain sometimes work,
+         sometimes not, sometimes work partialy (www works, email not). Many
+         lost nerves for me and work connected with registering own domain
+         mwiacek.com and changing everywhere topnet.pl addresses to mwiacek.com
+      6. Family problems :-(
+
+      Because of it there was so long timeout after 0.61 and some things are
+      still not implemented. Sorry for it.
+
 20021020 - 0.61
 
 * new functionality:

@@ -11,22 +11,24 @@
 #include "misc.h"
 #include "coding.h"
 
-unsigned int EncodeWithUnicodeAlphabet(const unsigned char *value, wchar_t *dest)
+/* Convert Unicode char saved in src to dest */
+unsigned int EncodeWithUnicodeAlphabet(const unsigned char *src, wchar_t *dest)
 {
 	unsigned char retval;
 
-        switch (retval = mbtowc(dest, value, MB_CUR_MAX)) {
+        switch (retval = mbtowc(dest, src, MB_CUR_MAX)) {
                 case -1 :
 		case  0 : return 1;
                 default : return retval;
         }
 }
 
-unsigned int DecodeWithUnicodeAlphabet(wchar_t value, unsigned char *dest)
+/* Convert Unicode char saved in src to dest */
+unsigned int DecodeWithUnicodeAlphabet(wchar_t src, unsigned char *dest)
 {
         unsigned int retval;
         
-        switch (retval = wctomb(dest, value)) {
+        switch (retval = wctomb(dest, src)) {
                 case -1:
                         *dest = '?';
                         return 1;
@@ -35,6 +37,7 @@ unsigned int DecodeWithUnicodeAlphabet(wchar_t value, unsigned char *dest)
         }
 }
 
+/* Decode Unicode string and return as function result */
 unsigned char *DecodeUnicodeString (const unsigned char* src)
 {
  	int 		i=0,o=0;
@@ -51,6 +54,7 @@ unsigned char *DecodeUnicodeString (const unsigned char* src)
  	return dest;
 }
 
+/* Encode string to Unicode. Len is number of input chars */
 void EncodeUnicode (unsigned char* dest, const unsigned char* src, int len)
 {
 	int 		i_len = 0, o_len;
@@ -112,6 +116,7 @@ void EncodeBCD (unsigned char* dest, const unsigned char* src, int len, bool fil
         }
 }
 
+/* When char can be converted, convert it from Unicode to UTF8 */
 bool EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsigned char *ret1, unsigned char *ret2)
 {
 	unsigned char	mychar3,mychar4;
@@ -140,6 +145,7 @@ bool EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsign
 	return false;
 }
 
+/* Decode UTF8 char to Unicode char */
 wchar_t DecodeWithUTF8Alphabet(unsigned char mychar3, unsigned char mychar4)
 {
 	unsigned char	mychar1, mychar2;
@@ -159,6 +165,7 @@ wchar_t DecodeWithUTF8Alphabet(unsigned char mychar3, unsigned char mychar4)
 	return mychar2 | (mychar1 << 8);
 }
 
+/* Make UTF8 string from Unicode input string */
 void EncodeUTF8(unsigned char* dest, const unsigned char* src)
 {
 	int		i,j=0;
@@ -597,6 +604,7 @@ void CopyUnicodeString(unsigned char *Dest, unsigned char *Source)
 	Dest[j+1]	= 0;
 }
 
+/* Changes minor/major order in Unicode string */
 void ReverseUnicodeString(unsigned char *String)
 {
 	int 		j = 0;
@@ -613,6 +621,8 @@ void ReverseUnicodeString(unsigned char *String)
 	String[j+1]	= 0;
 }
 
+/* All input is in Unicode. First char can show Unicode minor/major order.
+   Output is Unicode string in Gammu minor/major order */
 void ReadUnicodeFile(unsigned char *Dest, unsigned char *Source)
 {
 	int j = 0, current = 0;

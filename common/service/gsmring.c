@@ -1121,7 +1121,7 @@ static void RTTL2Binary(GSM_Ringtone *dest, GSM_Ringtone *src)
 
 static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 {
-	int 			 i = 3, j, z, NrNotes = 0, repeat = 0;
+	int 			 i = 3, j, z, NrNotes = 0, repeat = 0, accuracy;
 	int			 StartRepeat = 0, EndRepeat, Speed;
 	unsigned char 		 command,length=0;
 	int			 NotesLen[500];
@@ -1134,21 +1134,23 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 	GSM_RingNote 		 *Note;
 
 	while (i<src->NokiaBinary.Length) {
-		command = src->NokiaBinary.Frame[i];		i++;
+		command = src->NokiaBinary.Frame[i];
+		i++;
 		if (command != 0x06 && command != 0x00 && command != 0x09) {
-			length = src->NokiaBinary.Frame[i]; 	i++;
+			length = src->NokiaBinary.Frame[i];
+			i++;
 			dprintf("Block %02x %02x - ",length,command);
 		} else dprintf("Block %02x - ",command);
 		if (command >= 114 && command <= 161) {
 			dprintf("note\n");
 			if (command >= 114 && command <= 124) {
-				NotesScale[NrNotes] = Scale_1760; command -= 114;
+				NotesScale[NrNotes] = Scale_440;   command -= 114;
 			} else if (command >= 125 && command <= 137) {
-				NotesScale[NrNotes] = Scale_440; command -= 126;
+				NotesScale[NrNotes] = Scale_880;   command -= 126;
 			} else if (command >= 138 && command <= 149) {
-				NotesScale[NrNotes] = Scale_880;  command -= 138;
+				NotesScale[NrNotes] = Scale_1760;  command -= 138;
 			} else if (command >= 150 && command <= 161) {
-				NotesScale[NrNotes] = Scale_3520; command -= 150;
+				NotesScale[NrNotes] = Scale_3520;  command -= 150;
 			}
 			switch (command) {
 				case   0 : Notes[NrNotes] = Note_C;	break;
@@ -1248,85 +1250,94 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 		} else break;		
 	}
 
-	i = 1;
-	while ( i < 1000) {
-		Lengths[0] = 45360/i;
-		for (j=0;j<5;j++) Lengths[j+1] 	= Lengths[j] / 2;
-		for (j=0;j<6;j++) Lengths[6+j] 	= Lengths[j] * 3/2;
-		for (j=0;j<6;j++) Lengths[12+j] = Lengths[j] * 9/4;
-		for (j=0;j<6;j++) Lengths[18+j] = Lengths[j] * 2/3;
+	for (accuracy=1; accuracy<5; accuracy++)
+	{
+		i = 1;
+		while (i < 1000)  {
+		    	Lengths[0] = 30000/i;
+			for (j=0;j<5;j++) Lengths[j+1] 	= Lengths[j] / 2;
+			for (j=0;j<6;j++) Lengths[6+j] 	= Lengths[j] * 3/2;
+			for (j=0;j<6;j++) Lengths[12+j] = Lengths[j] * 9/4;
+			for (j=0;j<6;j++) Lengths[18+j] = Lengths[j] * 2/3;
+
 #ifdef DEBUG
-		dprintf("Length matrix (%i) : ",i);
-		for (j=0;j<6*4;j++) dprintf("%i ",Lengths[j]);
-		dprintf("\n");
+			dprintf("Length matrix (%i) : ",i);
+			for (j=0;j<6*4;j++) dprintf("%i ",Lengths[j]);
+			dprintf("\n");
 #endif
-		foundlen = false;
-		for (j=0;j<NrNotes;j++) {
-			dprintf("Comparing to %i\n",NotesLen[j]);
 			foundlen = false;
-			for (z=0;z<6*4;z++) {
-				if (NotesLen[j] - Lengths[z] > -3 &&
-	  			    NotesLen[j] - Lengths[z] < 3) {
-					foundlen = true;
-					break;
-				}
-			}
-			if (!foundlen) break;
-		}		
-		if (foundlen) break;
-		i++;
-	}
 
-	if (!foundlen) {
-		dest->NoteTone.NrCommands = 0;
-	} else {
-		Speed = i;
-		Duration[5] = Duration_1_32; Duration[4] = Duration_1_16;
-		Duration[3] = Duration_1_8;  Duration[2] = Duration_1_4;
-		Duration[1] = Duration_1_2;  Duration[0] = Duration_Full;
-		for (i=0;i<6;i++) Duration[i] 		= Duration[i];
-		for (i=0;i<6;i++) Duration[i+6] 	= Duration[i];
-		for (i=0;i<6;i++) Duration[i+12] 	= Duration[i];
-		for (i=0;i<6;i++) Duration[i+18] 	= Duration[i];
-		for (i=0;i<6;i++) DurationSpec[i] 	= NoSpecialDuration;
-		for (i=0;i<6;i++) DurationSpec[i+6] 	= DottedNote;
-		for (i=0;i<6;i++) DurationSpec[i+12] 	= DoubleDottedNote;
-		for (i=0;i<6;i++) DurationSpec[i+18] 	= Length_2_3;
-
-		for (i=0;i<NrNotes;i++) {
-			dest->NoteTone.Commands[i].Type	= RING_Note;
-			Note = &dest->NoteTone.Commands[i].Note;
-			Note->Note		= Notes[i];
-			Note->Tempo 		= Speed;
-			Note->Style 		= ContinuousStyle;
-			if (Notes[i] != Note_Pause) Note->Scale = NotesScale[i];
-			for (z=0;z<6*4;z++) {
-				if (NotesLen[i] - Lengths[z] > -3 &&
-	  			    NotesLen[i] - Lengths[z] < 3) {
-					Note->Duration 		= Duration[z];
-					Note->DurationSpec 	= DurationSpec[z];
-					/* Trick from PPM Edit */
-					if (Note->DurationSpec == DoubleDottedNote) {
-						switch (Note->Duration) {
-						case Duration_Full:Note->Duration = Duration_Full;break;
-						case Duration_1_2 :Note->Duration = Duration_Full;break;
-						case Duration_1_4 :Note->Duration = Duration_1_2; break;
-						case Duration_1_8 :Note->Duration = Duration_1_4; break;
-						case Duration_1_16:Note->Duration = Duration_1_8; break;
-						case Duration_1_32:Note->Duration = Duration_1_16;break;
-						}
-						Note->DurationSpec = NoSpecialDuration;
-					}
-					/* Here happy creation */
-					if (Note->DurationSpec == Length_2_3) {
-						Note->DurationSpec = NoSpecialDuration;
+			for (j=0;j<NrNotes;j++) {
+				dprintf("Comparing to %i\n",NotesLen[j]);
+				foundlen = false;
+				for (z=0;z<6*4;z++) {
+					if (NotesLen[j] - Lengths[z] > -accuracy &&
+					    NotesLen[j] - Lengths[z] < accuracy) {
+						foundlen = true;
+						break;
 					}
 				}
-			}
+				if (!foundlen) break;
+			}		
+			if (foundlen) break;
+			i++;
 		}
-		dest->NoteTone.NrCommands = NrNotes;
-		dprintf("speed = %i\n",Speed);
+
+		if (foundlen)
+		{
+			Speed = i;
+			Duration[5] = Duration_1_32; Duration[4] = Duration_1_16;
+			Duration[3] = Duration_1_8;  Duration[2] = Duration_1_4;
+			Duration[1] = Duration_1_2;  Duration[0] = Duration_Full;
+			for (i=0;i<6;i++) Duration[i] 		= Duration[i];
+			for (i=0;i<6;i++) Duration[i+6] 	= Duration[i];
+			for (i=0;i<6;i++) Duration[i+12] 	= Duration[i];
+			for (i=0;i<6;i++) Duration[i+18] 	= Duration[i];
+			for (i=0;i<6;i++) DurationSpec[i] 	= NoSpecialDuration;
+			for (i=0;i<6;i++) DurationSpec[i+6] 	= DottedNote;
+			for (i=0;i<6;i++) DurationSpec[i+12] 	= DoubleDottedNote;
+			for (i=0;i<6;i++) DurationSpec[i+18] 	= Length_2_3;
+
+			for (i=0;i<NrNotes;i++) {
+				dest->NoteTone.Commands[i].Type	= RING_Note;
+				Note = &dest->NoteTone.Commands[i].Note;
+				Note->Note		= Notes[i];
+				Note->Tempo 		= Speed;
+				Note->Style 		= ContinuousStyle;
+				if (Notes[i] != Note_Pause) Note->Scale = NotesScale[i];
+				for (z=0;z<6*4;z++) {
+					if (NotesLen[i] - Lengths[z] > -accuracy &&
+					    NotesLen[i] - Lengths[z] < accuracy) {
+						Note->Duration 		= Duration[z];
+						Note->DurationSpec 	= DurationSpec[z];
+						/* Trick from PPM Edit */
+						if (Note->DurationSpec == DoubleDottedNote) {
+							switch (Note->Duration) {
+							case Duration_Full:Note->Duration = Duration_Full;break;
+							case Duration_1_2 :Note->Duration = Duration_Full;break;
+							case Duration_1_4 :Note->Duration = Duration_1_2; break;
+							case Duration_1_8 :Note->Duration = Duration_1_4; break;
+							case Duration_1_16:Note->Duration = Duration_1_8; break;
+							case Duration_1_32:Note->Duration = Duration_1_16;break;
+							}
+							Note->DurationSpec = NoSpecialDuration;
+						}
+						/* Here happy creation */
+						if (Note->DurationSpec == Length_2_3) {
+							Note->DurationSpec = NoSpecialDuration;
+						}
+
+						break;
+					}
+				}
+			}
+			dest->NoteTone.NrCommands = NrNotes;
+			dprintf("speed = %i\n",Speed);
+			break;
+		}
 	}
+	
+	if (!foundlen) dest->NoteTone.NrCommands = 0;
 }
 
 GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_RingtoneFormat	Format)
@@ -1351,6 +1362,7 @@ GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_Rington
 	}
 	return GE_NOTIMPLEMENTED;
 }
+
 
 unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, int *maxlength)
 {

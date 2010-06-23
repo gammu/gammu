@@ -35,17 +35,26 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
 	    $(TOPDIR)/common/phone/alcatel/alcatel.o \
 	    $(TOPDIR)/common/phone/nokia/dct3/n6110.o \
 	    $(TOPDIR)/common/phone/nokia/dct3/n7110.o \
-	    $(TOPDIR)/common/phone/nokia/dct3/n9110.o \
+	    $(TOPDIR)/common/phone/nokia/dct3/n9210.o \
 	    $(TOPDIR)/common/phone/nokia/dct3/dct3func.o \
 	    $(TOPDIR)/common/phone/nokia/dct4/n6510.o \
 	    $(TOPDIR)/common/phone/nokia/nauto.o \
 	    $(TOPDIR)/common/phone/nokia/nfunc.o
 
 # files for command line gammu
-GAMMU     = $(TOPDIR)/gammu/dct3.o \
-	    $(TOPDIR)/gammu/dct4.o \
+GAMMU     = $(TOPDIR)/gammu/depend/dct3.o \
+	    $(TOPDIR)/gammu/depend/dct4.o \
+	    $(TOPDIR)/gammu/smsd/smsdcore.o \
+	    $(TOPDIR)/gammu/smsd/s_files.o \
 	    $(TOPDIR)/gammu/sniff.o \
 	    $(TOPDIR)/gammu/gammu.o
+
+LOCALE    = $(TOPDIR)/common/misc/misc.o \
+	    $(TOPDIR)/common/misc/coding.o \
+	    $(TOPDIR)/common/misc/cfg.o \
+	    $(TOPDIR)/cfg/locale/locale.o
+	    
+LOCALE2   = $(TOPDIR)/cfg/locale
 
 include $(TOPDIR)/cfg/Makefile.cfg
 
@@ -58,7 +67,7 @@ gammu: $(COMMON) $(GAMMU)
 	
 makelib: $(COMMON) $(GAMMU)
 	$(CC) -shared -o $(TOPDIR)/common/libGammu.so $(COMMON)
-	@$(INSTALL) -C -m 0444 $(TOPDIR)/common/libGammu.so $(TOPDIR)/common
+	@$(INSTALL) -m 0444 $(TOPDIR)/common/libGammu.so $(TOPDIR)/common
 	$(CC) $(LDFLAGS) $(GAMMU) -lm -L$(TOPDIR)/common -lGammu -o $(TOPDIR)/gammu/gammulib
 
 clean:
@@ -66,9 +75,22 @@ clean:
 	@$(RM) $(COMMON) $(GAMMU) core $(TOPDIR)/common/libGammu.so
 	@$(RM) $(TOPDIR)/gammu/gammu $(TOPDIR)/gammu/gammulib
 	@$(RM) $(TOPDIR)/cfg/autoconf/rpm/spec tags
+	@$(RM) $(TOPDIR)/cfg/locale/locale.o $(TOPDIR)/cfg/locale/locale
+
+makelocale: $(LOCALE)
+	@echo Making locale files
+	$(CC) $(LOCALE) -lm -o $(TOPDIR)/cfg/locale/locale
+	@for xxx in $(LOCALE2); do \
+		( cd $$xxx; \
+		  ./locale \
+		) \
+	done
+	@$(RM) $(TOPDIR)/cfg/locale/locale.o $(TOPDIR)/cfg/locale/locale
+
+distclean: makelocale clean
 	@echo Setting default config
-	@$(INSTALL) -C -m 0666 $(TOPDIR)/cfg/default/config.h $(TOPDIR)/cfg/config.h
-	@$(INSTALL) -C -m 0666 $(TOPDIR)/cfg/default/Makefile.cfg $(TOPDIR)/cfg/Makefile.cfg
+	@$(INSTALL) -m 0666 $(TOPDIR)/cfg/default/config.h $(TOPDIR)/cfg/config.h
+	@$(INSTALL) -m 0666 $(TOPDIR)/cfg/default/Makefile.cfg $(TOPDIR)/cfg/Makefile.cfg
 	
 uninstall:
 	@echo Uninstalling Gammu

@@ -3,7 +3,7 @@
 
 /* This is config file. Change ONLY lines with comment */
 
-#define VERSION "0.61"			/* Version of package 		*/
+#define VERSION "0.62"			/* Version of package 		*/
 
 #ifndef _MSC_VER
 #  define DEBUG				/* Want DEBUG info or not ?	*/
@@ -51,12 +51,12 @@
  * earlier than sms in phone and phone restart (once and random) later after
  * connection. Seems phone firmware isn't too good here
  */
-//#define GSM_ENABLE_N71_91INCOMINGINFO	/* Show incoming Data for(7)9110*/
+//#define GSM_ENABLE_N71_92INCOMINGINFO	/* Show incoming Data for 7110/9210 */
 
 #define GSM_ENABLE_NOKIA6110		/* n6110.c models		*/
 #define GSM_ENABLE_NOKIA6510		/* n6510.c (DCT4) models	*/
 #define GSM_ENABLE_NOKIA7110		/* n7110.c models		*/
-#define GSM_ENABLE_NOKIA9110		/* n9110.c models		*/
+#define GSM_ENABLE_NOKIA9210		/* n9210.c models		*/
 #define GSM_ENABLE_ATGEN		/* AT generic models		*/
 //#define GSM_ENABLE_ALCATEL
 

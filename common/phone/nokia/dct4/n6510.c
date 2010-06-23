@@ -2705,7 +2705,8 @@ GSM_Phone_Functions N6510Phone = {
 	NOTSUPPORTED,		/*	GetDisplayStatus	*/
 	NOTIMPLEMENTED,		/*	SetAutoNetworkLogin	*/
 	N6510_SetProfile,
-	NOTSUPPORTED		/*	GetSIMIMSI		*/
+	NOTSUPPORTED,		/*	GetSIMIMSI		*/
+	NONEFUNCTION		/*	SetIncomingCall		*/
 };
 
 #endif

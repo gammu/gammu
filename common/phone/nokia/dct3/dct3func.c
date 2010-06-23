@@ -1214,14 +1214,14 @@ GSM_Error DCT3_ReplyDeleteSMSMessage(GSM_Protocol_Message msg, GSM_Phone_Data *D
 	return GE_NONE;
 }
 
-GSM_Error N71_91_ReplyGetNetworkLevel(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error N71_92_ReplyGetNetworkLevel(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	dprintf("Network level received: %i\n",msg.Buffer[4]);
 	*Data->NetworkLevel=((int)msg.Buffer[4]);
 	return GE_NONE;
 }
 
-GSM_Error N71_91_GetNetworkLevel(GSM_StateMachine *s, int *level)
+GSM_Error N71_92_GetNetworkLevel(GSM_StateMachine *s, int *level)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x81};
 
@@ -1230,14 +1230,14 @@ GSM_Error N71_91_GetNetworkLevel(GSM_StateMachine *s, int *level)
 	return GSM_WaitFor (s, req, 4, 0x0a, 4, ID_GetNetworkLevel);
 }
 
-GSM_Error N71_91_ReplyGetBatteryLevel(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error N71_92_ReplyGetBatteryLevel(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	dprintf("Battery level received: %i\n",msg.Buffer[5]);
 	*Data->BatteryLevel=((int)msg.Buffer[5]);
 	return GE_NONE;
 }
 
-GSM_Error N71_91_GetBatteryLevel(GSM_StateMachine *s, int *level)
+GSM_Error N71_92_GetBatteryLevel(GSM_StateMachine *s, int *level)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x02};
 
@@ -1246,7 +1246,7 @@ GSM_Error N71_91_GetBatteryLevel(GSM_StateMachine *s, int *level)
 	return GSM_WaitFor (s, req, 4, 0x17, 4, ID_GetBatteryLevel);
 }
 
-GSM_Error N71_91_ReplyPhoneSetting(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+GSM_Error N71_92_ReplyPhoneSetting(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	GSM_Phone_Bitmap_Types BmpType;
 
@@ -1279,7 +1279,7 @@ GSM_Error N71_91_ReplyPhoneSetting(GSM_Protocol_Message msg, GSM_Phone_Data *Dat
 	return GE_UNKNOWNRESPONSE;
 }
 
-GSM_Error N71_91_GetPhoneSetting(GSM_StateMachine *s, int Request, int Setting)
+GSM_Error N71_92_GetPhoneSetting(GSM_StateMachine *s, int Request, int Setting)
 {
 	unsigned char req[] = {
 		N7110_FRAME_HEADER, 0xee,
@@ -1289,12 +1289,12 @@ GSM_Error N71_91_GetPhoneSetting(GSM_StateMachine *s, int Request, int Setting)
 	return GSM_WaitFor (s, req, 5, 0x7a, 4, Request);
 }
 
-GSM_Error N71_91_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
+GSM_Error N71_92_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
 	return DCT3_GetDateTime(s, date_time, 0x19);
 }
 
-GSM_Error N71_91_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
+GSM_Error N71_92_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
 	return DCT3_SetDateTime(s, date_time, 0x19);
 }

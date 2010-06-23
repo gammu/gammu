@@ -42,4 +42,4 @@ where: location=0x00,0x01,etc.
 If phone doesn't find 0xc1,0x01,? bytes in 7,8,9 byte, don't display ringtone
 name and treat them (if there are next) as ringtone contenst
 
-Marcin-Wiacek@Topnet.PL
+Marcin@MWiacek.com

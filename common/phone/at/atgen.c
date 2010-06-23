@@ -1824,10 +1824,8 @@ static GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg, GSM_Phone_Data 
 	if (Priv->ReplyState == AT_Reply_OK) {
     	    dprintf("Calls canceled\n");
 
-	    call.Status 		= GN_CALL_Idle; /* todo */
-	    call.RemoteNumber[0] 	= 0;
-
-    	    if (User->IncomingCall) User->IncomingCall(Data->Device, call);
+	    call.Status = GN_CALL_CallLocalEnd;
+  	    if (User->IncomingCall) User->IncomingCall(Data->Device, call);
 
 	    return GE_NONE;
 	} else {
@@ -2048,22 +2046,21 @@ static GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_Phone
 	char 			num[128];
 	GSM_Call 		call;
 
+	num[0] = 0;
 	dprintf("Incoming call info\n");
 	if (strstr(msg.Buffer, "RING")) {
-		call.Status = GN_CALL_Ringing;
+		call.Status = GN_CALL_IncomingCall;
 		Extract_CLIP_number(num, msg.Buffer);
 	} else if (strstr(msg.Buffer, "NO CARRIER")) {
-		call.Status = GN_CALL_Idle;
-		call.RemoteNumber[0] = 0;
+		call.Status = GN_CALL_CallEnd;
 	} else if (strstr(msg.Buffer, "COLP:")) {
-		call.Status = GN_CALL_Established;
+		call.Status = GN_CALL_CallStart;
 		Extract_CLIP_number(num, msg.Buffer);
 	} else {
-		dprintf("CLIP: why?\n");
-		return GE_NONE; /* FIXME */
+		dprintf("CLIP: error\n");
+		return GE_NONE;
 	}
-
-	EncodeUnicode(call.RemoteNumber, num, strlen(num));
+	EncodeUnicode(call.PhoneNumber, num, strlen(num));
 
 	if (User->IncomingCall) User->IncomingCall(Data->Device, call);
 
@@ -2235,7 +2232,7 @@ static GSM_Reply_Function ATGENReplyFunctions[] = {
 };                                                                                      
 
 GSM_Phone_Functions ATGENPhone = {
-	"at|M20|MC35|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8850|8855|8890|8910|9110|9210",
+	"iPAQ|A500|at|M20|MC35|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8850|8855|8890|8910|9110|9210",
 	ATGENReplyFunctions,
 	ATGEN_Initialise,
 	NONEFUNCTION,		/*	Terminate		*/
@@ -2302,7 +2299,8 @@ GSM_Phone_Functions ATGENPhone = {
 	ATGEN_GetDisplayStatus,
 	ATGEN_SetAutoNetworkLogin,
 	NOTSUPPORTED, 		/*	SetProfile		*/
-	ATGEN_GetSIMIMSI
+	ATGEN_GetSIMIMSI,
+	NONEFUNCTION		/*	SetIncomingCall		*/
 };
 
 #endif

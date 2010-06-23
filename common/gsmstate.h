@@ -14,8 +14,8 @@
 #ifdef GSM_ENABLE_NOKIA7110
 #  include "phone/nokia/dct3/n7110.h"
 #endif
-#ifdef GSM_ENABLE_NOKIA9110
-#  include "phone/nokia/dct3/n9110.h"
+#ifdef GSM_ENABLE_NOKIA9210
+#  include "phone/nokia/dct3/n9210.h"
 #endif
 #ifdef GSM_ENABLE_ATGEN
 #  include "phone/at/atgen.h"
@@ -52,7 +52,7 @@
 #  undef GSM_ENABLE_ALCABUS
 #endif
 
-#if defined(GSM_ENABLE_NOKIA6110) || defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9110)
+#if defined(GSM_ENABLE_NOKIA6110) || defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9210)
 #  define GSM_ENABLE_NOKIA_DCT3
 #endif
 #if defined(GSM_ENABLE_NOKIA6510)
@@ -450,6 +450,7 @@ typedef struct {
 	GSM_Error (*SetAutoNetworkLogin)(GSM_StateMachine *s);
 	GSM_Error (*SetProfile)		(GSM_StateMachine *s, GSM_Profile	    *Profile	);
 	GSM_Error (*GetSIMIMSI)		(GSM_StateMachine *s, char		    *IMSI	);
+	GSM_Error (*SetIncomingCall)	(GSM_StateMachine *s, bool		    enable	);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;
@@ -462,8 +463,8 @@ typedef struct {
 #ifdef GSM_ENABLE_NOKIA7110
 	extern GSM_Phone_Functions N7110Phone;
 #endif
-#ifdef GSM_ENABLE_NOKIA9110
-	extern GSM_Phone_Functions N9110Phone;
+#ifdef GSM_ENABLE_NOKIA9210
+	extern GSM_Phone_Functions N9210Phone;
 #endif
 #ifdef GSM_ENABLE_ATGEN
 	extern GSM_Phone_Functions ATGENPhone;
