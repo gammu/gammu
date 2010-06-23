@@ -19,7 +19,7 @@ This software was sponsored (in time order) by:
     * DCT3/DCT4 flasher
  6. MatrixTeam (www.matrixflasher.com)
     * DCT3/DCT4 flasher
- 7. KompuNet (www.kompu.net)
+ 7. KompuNet (www.biuro24.pl)
     * SMS services, PC shop and other
  8. Lorenzo Ciani
  9. Adam Lange
@@ -29,12 +29,24 @@ This software was sponsored (in time order) by:
 14. A Leg
 15. Troy Engel
 16. Mattias Sjosvard
+17. Jackpot
+
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
-200503xx - 1.00.xx
+20050412 - 1.01.00
+* new functionality:
+  * new script helping with importing KAddressBook entries   (Frederick Emmott)
+    in other/bash/other
+  
+* fixes and improvements:
+  * workaround for some error for pbk for 6230                   (Tim Dreessen)
+  * gammu correctly removes readonly attrib
+  * DCT3 phones need more time for getting SMS status         (Joergen Thomsen)
+
+20050315 - 1.00.23
 * new functionality:
   * dku2phonet (earlier named fbusdku2) supported in win32        (Intra Darma)
   * new --getrootfolders                                     (Mattias Sjosvard)

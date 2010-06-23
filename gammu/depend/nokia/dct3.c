@@ -770,7 +770,7 @@ void DCT3DisplayOutput(int argc, char *argv[])
 }
 #endif
 
-static GSM_Reply_Function UserReplyFunctions3[] = {
+GSM_Reply_Function UserReplyFunctions3[] = {
 #ifdef GSM_ENABLE_NOKIA6110
 	{DCT3_ReplyDisplayOutput,	"\x0D",0x03,0x50,ID_IncomingFrame	},
 	{DCT3_ReplyDisplayOutput,	"\x0D",0x03,0x54,ID_User7	 	},

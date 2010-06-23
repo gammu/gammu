@@ -3831,7 +3831,7 @@ static GSM_Error ALCATEL_SetFastSMSSending(GSM_StateMachine *s, bool enable)
 	return ATGEN_SetFastSMSSending(s, enable);
 }
 
-static GSM_Reply_Function ALCATELReplyFunctions[] = {
+GSM_Reply_Function ALCATELReplyFunctions[] = {
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelAttach		},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelDetach		},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelCommit		},

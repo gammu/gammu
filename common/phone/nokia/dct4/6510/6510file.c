@@ -1340,7 +1340,11 @@ static GSM_Error N6510_DeleteFile2(GSM_StateMachine *s, unsigned char *ID)
 	GSM_Error	error;
 
 	//first remove readonly
-	file.ReadOnly = false;
+	file.ReadOnly  = false;
+	file.Hidden    = false;
+	file.System    = false;
+	file.Protected = false;
+
 	strcpy(file.ID_FullName,ID);
 	error = N6510_SetFileAttributes2(s,&file);
 	if (error != ERR_NONE) return error;
