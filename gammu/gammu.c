@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
+/* (c) 2002-2004 by Marcin Wiacek and Michal Cihar */
 /* FM stuff by Walek */
 
 #include <string.h>
@@ -4218,6 +4218,40 @@ static void Backup(int argc, char *argv[])
 		*Backup.OperatorLogo = Bitmap;
 	}
 	DoBackup = false;
+	if (Info.MMSSettings) {
+		printmsg("Checking MMS settings\n");
+		Settings.Location = 1;
+		error=Phone->GetMMSSettings(&s,&Settings);
+		if (error==ERR_NONE) {
+			if (answer_yes("   Backup MMS settings")) DoBackup = true;
+		}
+	}
+	if (DoBackup) {
+		used = 0;
+		printmsgerr("   Reading : ");
+		while (error == ERR_NONE) {
+			if (used < GSM_BACKUP_MAX_MMSSETTINGS) {
+				Backup.MMSSettings[used] = malloc(sizeof(GSM_MultiWAPSettings));
+			        if (Backup.MMSSettings[used] == NULL) Print_Error(ERR_MOREMEMORY);
+				Backup.MMSSettings[used+1] = NULL;
+			} else {
+				printmsg("   Increase %s\n" , "GSM_BACKUP_MAX_MMSSETTINGS");
+				GSM_Terminate();
+				exit(-1);
+			}
+			*Backup.MMSSettings[used]=Settings;
+			used ++;
+			Settings.Location = used+1;
+			error=Phone->GetMMSSettings(&s,&Settings);
+			printmsgerr("*");
+			if (gshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoBackup = false;
 	if (Info.WAPBookmark) {
 		printmsg("Checking WAP bookmarks\n");
 		Bookmark.Location = 1;
@@ -4277,40 +4311,6 @@ static void Backup(int argc, char *argv[])
 			used ++;
 			Settings.Location = used+1;
 			error=Phone->GetWAPSettings(&s,&Settings);
-			printmsgerr("*");
-			if (gshutdown) {
-				GSM_Terminate();
-				exit(0);
-			}
-		}
-		printmsgerr("\n");
-	}
-	DoBackup = false;
-	if (Info.MMSSettings) {
-		printmsg("Checking MMS settings\n");
-		Settings.Location = 1;
-		error=Phone->GetMMSSettings(&s,&Settings);
-		if (error==ERR_NONE) {
-			if (answer_yes("   Backup MMS settings")) DoBackup = true;
-		}
-	}
-	if (DoBackup) {
-		used = 0;
-		printmsgerr("   Reading : ");
-		while (error == ERR_NONE) {
-			if (used < GSM_BACKUP_MAX_MMSSETTINGS) {
-				Backup.MMSSettings[used] = malloc(sizeof(GSM_MultiWAPSettings));
-			        if (Backup.MMSSettings[used] == NULL) Print_Error(ERR_MOREMEMORY);
-				Backup.MMSSettings[used+1] = NULL;
-			} else {
-				printmsg("   Increase %s\n" , "GSM_BACKUP_MAX_MMSSETTINGS");
-				GSM_Terminate();
-				exit(-1);
-			}
-			*Backup.MMSSettings[used]=Settings;
-			used ++;
-			Settings.Location = used+1;
-			error=Phone->GetMMSSettings(&s,&Settings);
 			printmsgerr("*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -5273,6 +5273,8 @@ static void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
 	} else {
 		printmsg("Connection security : Off\n");
 	}
+	printmsg("Proxy               : address \"%s\", port %i\n",DecodeUnicodeConsole(settings->Proxy),settings->ProxyPort);
+	printmsg("2'nd proxy          : address \"%s\", port %i\n",DecodeUnicodeConsole(settings->Proxy2),settings->Proxy2Port);
 	switch (settings->Settings[j].Bearer) {
 	case WAPSETTINGS_BEARER_SMS:
 		printmsg("Bearer              : SMS");
@@ -5333,8 +5335,6 @@ static void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
 		}
 		printmsg("Access point        : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].DialUp));
 		printmsg("IP address          : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].IPAddress));
-		printmsg("Proxy               : address \"%s\", port %i\n",DecodeUnicodeConsole(settings->Settings[j].Proxy),settings->Settings[j].ProxyPort);
-		printmsg("2'nd proxy          : address \"%s\", port %i\n",DecodeUnicodeConsole(settings->Settings[j].Proxy2),settings->Settings[j].Proxy2Port);
 		printmsg("User name           : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].User));
 		printmsg("Password            : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].Password));
 	}
@@ -5353,8 +5353,33 @@ static void GetSyncMLSettings(int argc, char *argv[])
 		settings.Location=i;
 		error=Phone->GetSyncMLSettings(&s,&settings);
 		Print_Error(error);
+		printmsg("%i. ",i);
+		if (settings.Name[0]==0 && settings.Name[1]==0) {
+			printmsg("Set %i",i);
+		} else {
+			printmsg("%s",DecodeUnicodeConsole(settings.Name));
+		}
+		if (settings.Active) printmsg(" (active)");
+//		if (settings.ReadOnly) printmsg("\nRead only           : yes");
+		printmsg("\n");
+		printmsg("User                : \"%s\"\n",DecodeUnicodeConsole(settings.User));
+		printmsg("Password            : \"%s\"\n",DecodeUnicodeConsole(settings.Password));
+		printmsg("Phonebook database  : \"%s\"\n",DecodeUnicodeConsole(settings.PhonebookDataBase));
+		printmsg("Calendar database   : \"%s\"\n",DecodeUnicodeConsole(settings.CalendarDataBase));
+		printmsg("Server              : \"%s\"\n",DecodeUnicodeConsole(settings.Server));
+		printmsg("Sync. phonebook     : ");
+		if (settings.SyncPhonebook) printmsg("yes\n");
+		if (!settings.SyncPhonebook) printmsg("no\n");
+		printmsg("Sync. calendar      : ");
+		if (settings.SyncCalendar) printmsg("yes\n");
+		if (!settings.SyncCalendar) printmsg("no\n");
+		printmsg("\n");
 		for (j=0;j<settings.Connection.Number;j++) {
-			printmsg("\nHomepage            : \"%s\"\n",DecodeUnicodeConsole(settings.Connection.Settings[j].HomePage));
+			if (settings.Connection.Settings[j].Title[0]==0 && settings.Connection.Settings[j].Title[1]==0) {
+				printmsg("Connection set name : Set %i\n",i);
+			} else {
+				printmsg("Connection set name : %s\n",DecodeUnicodeConsole(settings.Connection.Settings[j].Title));
+			}
 			DisplayConnectionSettings(&settings.Connection,j);
 			printf("\n");
 		}
@@ -5375,6 +5400,19 @@ static void GetChatSettings(int argc, char *argv[])
 		settings.Location=i;
 		error=Phone->GetChatSettings(&s,&settings);
 		Print_Error(error);
+		printmsg("%i. ",i);
+		if (settings.Name[0]==0 && settings.Name[1]==0) {
+			printmsg("Set %i",i);
+		} else {
+			printmsg("%s",DecodeUnicodeConsole(settings.Name));
+		}
+		if (settings.Active) printmsg(" (active)");
+//		if (settings.ReadOnly) printmsg("\nRead only           : yes");
+		printmsg("\n");
+		printmsg("Homepage            : \"%s\"\n",DecodeUnicodeConsole(settings.HomePage));
+		printmsg("User                : \"%s\"\n",DecodeUnicodeConsole(settings.User));
+		printmsg("Password            : \"%s\"\n",DecodeUnicodeConsole(settings.Password));
+		printmsg("\n");
 		for (j=0;j<settings.Connection.Number;j++) {
 			if (settings.Connection.Settings[j].Title[0]==0 && settings.Connection.Settings[j].Title[1]==0) {
 				printmsg("Connection set name : Set %i\n",i);
@@ -7918,6 +7956,8 @@ static GSM_Parameters Parameters[] = {
 	{"--nokiagetvoicerecord",	1, 1, DCT4GetVoiceRecord,	{H_Nokia,H_Other,0},		"location"},
 	{"--nokiasetlights",		2, 2, DCT4SetLight,		{H_Nokia,H_Tests,0},		"keypad|display|torch on|off"},
 	{"--nokiatuneradio",		0, 0, DCT4TuneRadio,		{H_Nokia,H_FM,0},		""},
+	{"--nokiamakecamerashoot",	0, 0, DCT4MakeCameraShoot,	{H_Nokia,H_Other,0},		""},
+	{"--nokiagetscreendump",	0, 0, DCT4GetScreenDump,	{H_Nokia,H_Other,0},		""},
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 	{"--nokiavibratest",		0, 0, NokiaVibraTest,		{H_Nokia,H_Tests,0},		""},

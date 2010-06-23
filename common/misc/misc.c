@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
+/* (c) 2002-2004 by Marcin Wiacek and Michal Cihar */
 /* Checking used compiler (c) 2002 by Michal Cihar */
  
 #include <string.h>

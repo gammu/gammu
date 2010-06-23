@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek */
+/* (c) 2002-2004 by Marcin Wiacek */
 /* 5210 calendar IDs by Frederick Ros */
 
 #ifndef __gsm_cal_h

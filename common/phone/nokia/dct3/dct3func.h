@@ -33,6 +33,8 @@ GSM_Error DCT3_ReplySetIncomingCB	(GSM_Protocol_Message msg, GSM_StateMachine *s
 GSM_Error DCT3_ReplyIncomingCB		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 #endif
 
+GSM_Error DCT3_DeleteWAPBookmark	(GSM_StateMachine *s, GSM_WAPBookmark *bookmark);
+GSM_Error DCT3_GetWAPBookmark		(GSM_StateMachine *s, GSM_WAPBookmark *bookmark);
 GSM_Error DCT3_PressKey			(GSM_StateMachine *s, GSM_KeyCode Key, bool Press);
 GSM_Error DCT3_PlayTone			(GSM_StateMachine *s, int Herz, unsigned char Volume, bool start);
 GSM_Error DCT3_EnableSecurity		(GSM_StateMachine *s, unsigned char	  status	);

@@ -1,4 +1,4 @@
-/* (c) 2001-2003 by Marcin Wiacek */
+/* (c) 2001-2004 by Marcin Wiacek */
 /* based on some work from Pawel Kot, others and Gnokii */
 
 #include <ctype.h>

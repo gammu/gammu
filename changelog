@@ -26,10 +26,40 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20040714 - 0.96.9
+* new functionality:
+  * after each using some frames connected with wap/mms/syncml/chat settings
+    and bookmarks there is sent to phone frame disabling them. It will allow
+    to use some soft in some situations and will allow to enter settings menu
+    in some DCT4 phones after using Gammu. Please note, that Gammu is slower
+    because of it, but it allows to avoid some problems
+  * new --nokiamakecamerashoot
+  * New two command line options, which get syncml/chat settings for DCT4 
+    series 40 now. Name of syncml settings can't probably get from phone 
+    (at least in 6220 5.15)
+
+* fixes and improvements:
+  * we have year 2004. It should be earlier written for example in
+    configure script :-)
+  * some versions of Bluez requires linking with libsdp too.      (Ivo Panacek)
+    It's done now
+  * changed checking for Bluez in configure
+  * support for proxy blocks really complete
+  * started work on making docs/help much more usefull
+      
+NOTE: * sometimes discovering phone services is not done correctly with Bluez
+        and 6310i. It's during investigation. It maybe depends on phone
+	firmware. If it happens for you, please report and use configure option
+	--disable-bluerfsearch
+      * SyncML/chat settings for Series 40, MySQL, Symbian - these are main
+        topics for near future. I will process some patches from the past now
+      * I plan maximally one test release before 0.97.0
+      * I will add soon subpage with ability to making micropayments and
+        donates online. I hope, it will help in finding some money for
+	extending Gammu
+
 20040627 - 0.96.6
 * new functionality:
-  * when you give device address with bluetooth connections and bluez,
-    Gammu checks for supported by device services and connects to correct.
   * when you don't give anything in port in gammurc with bluez and bt
     connection, there are scanned all devices in range and Gammu connects
     to first with adequate service. Unfortunately, local device is checked
@@ -46,11 +76,6 @@ For additionals materials and links to them see readme.txt
   * started work on syncml/chat settings for DCT4 series 40. New two command
     line options, which get part of settings now.
 
-* fixes and improvements:
-  * ID for 6230 now really included
-  * much better linking mysql libraries           (mlistus, Liviu Daia, others)
-  * max. number of WAP/MMS settings in backup files is 30     (Eduardo, others)
-
 NOTE: * www moved to new server. if there are any problems with access,
         please let me know
       * I'm searching for some good service for micropayments now (which
@@ -60,6 +85,18 @@ NOTE: * www moved to new server. if there are any problems with access,
         and possible connections
       * I decided to remove BCC X makefile now. If anyone will be interested,
         I will put it again
+
+20040620 - 0.96.2
+* new functionality:
+  * when you give device address with bluetooth connections and bluez,
+    Gammu checks for supported by device services and connects to correct.
+    Tested with 6310i 5.52. Unfortunately, source/connection isn't very stable
+    now. Work in progress
+
+* fixes and improvements:
+  * ID for 6230 now really included
+  * much better linking mysql libraries           (mlistus, Liviu Daia, others)
+  * max. number of WAP/MMS settings in backup files is 30     (Eduardo, others)
 
 20040615 - 0.96.0
 * new functionality:

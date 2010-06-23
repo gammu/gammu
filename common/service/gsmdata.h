@@ -1,4 +1,4 @@
-/* (c) 2001-2003 by Marcin Wiacek */
+/* (c) 2001-2004 by Marcin Wiacek */
 
 #ifndef __gsm_wap_h
 #define __gsm_wap_h
@@ -49,12 +49,6 @@ typedef struct {
 	char			User		[(50+1)*2]; /*is length OK ?*/
 	char			Password	[(50+1)*2]; /*is length OK ?*/
 	WAPSettings_Speed	Speed;
-
-	/* for gprs */
-	char			Proxy		[(100+1)*2];
-	int			ProxyPort;
-	char			Proxy2		[(100+1)*2];
-	int			Proxy2Port;
 } GSM_WAPSettings;
 
 typedef struct {
@@ -63,6 +57,10 @@ typedef struct {
 	GSM_WAPSettings		Settings[4];
 	bool			Active;
 	bool			ReadOnly;
+	char			Proxy		[(100+1)*2];
+	int			ProxyPort;
+	char			Proxy2		[(100+1)*2];
+	int			Proxy2Port;
 
 	WAPSettings_Bearer	ActiveBearer;
 } GSM_MultiWAPSettings;
@@ -122,16 +120,28 @@ void GSM_ClearMultiPartMMSInfo	(GSM_EncodeMultiPartMMSInfo *Info);
 /* ------------------------------------------------------------------------ */
 
 typedef struct {
-	char			Name[(20+1)*2];
 	int			Location;
+	bool			Active;
+	bool			SyncPhonebook;
+	bool			SyncCalendar;
+	char			Name[(20+1)*2];
+	char			PhonebookDataBase[(50+1)*2];
+	char			CalendarDataBase[(50+1)*2];
+	char			User[(30+1)*2];
+	char			Password[(20+1)*2];
+	char			Server[(128+1)*2];
 	GSM_MultiWAPSettings	Connection;
 } GSM_SyncMLSettings;
 
 /* ------------------------------------------------------------------------ */
 
 typedef struct {
-	char			Name[(20+1)*2];
+	char			Name[(50+1)*2];
+	char			HomePage[(200+1)*2];
+	char			User[(50+1)*2];
+	char			Password[(50+1)*2];
 	int			Location;
+	bool			Active;
 	GSM_MultiWAPSettings	Connection;
 } GSM_ChatSettings;
 

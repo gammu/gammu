@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek */
+/* (c) 2002-2004 by Marcin Wiacek */
 /* Phones ID (c) partially by Walek */
 
 #include <stdarg.h>
@@ -600,7 +600,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
 	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 		smprintf(s, "RECEIVED frame ");
-		smprintf(s, "type 0x%02X/length %i", msg->Type, msg->Length);
+		smprintf(s, "type 0x%02X/length 0x%02X/%i", msg->Type, msg->Length, msg->Length);
 		DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, msg->Buffer, msg->Length);
 		if (msg->Length == 0) smprintf(s, "\n");
 		fflush(s->di.df);
@@ -666,7 +666,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 			DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, Phone->SentMsg->Buffer, Phone->SentMsg->Length);
 		}
 		smprintf(s, "RECEIVED frame ");
-		smprintf(s, "type 0x%02X/length %i", msg->Type, msg->Length);
+		smprintf(s, "type 0x%02X/length 0x%02X/%i", msg->Type, msg->Length, msg->Length);
 		DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, msg->Buffer, msg->Length);
 		smprintf(s, "\n");
 	}
@@ -1058,7 +1058,7 @@ void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned char *message, int mess
 	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
 	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 		smprintf(s,"SENDING frame ");
-		smprintf(s,"type 0x%02X/length %i", type, messagesize);
+		smprintf(s,"type 0x%02X/length 0x%02X/%i", type, messagesize, messagesize);
 		DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, message, messagesize);
 		if (messagesize == 0) smprintf(s,"\n");
 		if (s->di.df) fflush(s->di.df);

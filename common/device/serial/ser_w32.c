@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek */
+/* (c) 2002-2004 by Marcin Wiacek */
 /* based on some work from Gnokii, MSDN and others */
 
 #include "../../gsmstate.h"

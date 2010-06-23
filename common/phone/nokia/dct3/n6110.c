@@ -1,4 +1,4 @@
-/* (c) 2001-2003 by Marcin Wiacek */
+/* (c) 2001-2004 by Marcin Wiacek */
 /* based on some work from Markus Plail and Gnokii */
 /* Authentication function (c) 1999 or earlier by Pavel Janik */
 /* 5210 calendar IDs by Frederick Ros */
@@ -2699,23 +2699,25 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
         {N6110_ReplyGetSMSStatus,         "\x14",0x03,0x37,ID_GetSMSStatus       },
         {N6110_ReplyGetSMSStatus,         "\x14",0x03,0x38,ID_GetSMSStatus       },
 
-        {DCT3DCT4_ReplyEnableWAP,         "\x3f",0x03,0x01,ID_EnableWAP          },
-        {DCT3DCT4_ReplyEnableWAP,         "\x3f",0x03,0x02,ID_EnableWAP          },
+        {DCT3DCT4_ReplyEnableConnectFunc, "\x3f",0x03,0x01,ID_EnableConnectFunc  },
+        {DCT3DCT4_ReplyEnableConnectFunc, "\x3f",0x03,0x02,ID_EnableConnectFunc  },
+	{DCT3DCT4_ReplyDisableConnectFunc,"\x3f",0x03,0x04,ID_DisableConnectFunc },
+	{DCT3DCT4_ReplyDisableConnectFunc,"\x3f",0x03,0x05,ID_DisableConnectFunc },
         {DCT3_ReplyGetWAPBookmark,        "\x3f",0x03,0x07,ID_GetWAPBookmark     },
         {DCT3_ReplyGetWAPBookmark,        "\x3f",0x03,0x08,ID_GetWAPBookmark     },
         {DCT3DCT4_ReplySetWAPBookmark,    "\x3f",0x03,0x0A,ID_SetWAPBookmark     },
         {DCT3DCT4_ReplySetWAPBookmark,    "\x3f",0x03,0x0B,ID_SetWAPBookmark     },
         {DCT3DCT4_ReplyDelWAPBookmark,    "\x3f",0x03,0x0D,ID_DeleteWAPBookmark  },
         {DCT3DCT4_ReplyDelWAPBookmark,    "\x3f",0x03,0x0E,ID_DeleteWAPBookmark  },
-        {DCT3DCT4_ReplyGetActiveWAPMMSSet,"\x3f",0x03,0x10,ID_GetWAPSettings     },
-        {DCT3DCT4_ReplySetActiveWAPMMSSet,"\x3f",0x03,0x13,ID_SetWAPSettings     },
-        {DCT3_ReplyGetWAPSettings,        "\x3f",0x03,0x16,ID_GetWAPSettings     },
-        {DCT3_ReplyGetWAPSettings,        "\x3f",0x03,0x17,ID_GetWAPSettings     },
-        {DCT3_ReplySetWAPSettings,        "\x3f",0x03,0x19,ID_SetWAPSettings     },
-        {DCT3_ReplySetWAPSettings,        "\x3f",0x03,0x1A,ID_SetWAPSettings     },
-        {DCT3_ReplyGetWAPSettings,        "\x3f",0x03,0x1C,ID_GetWAPSettings     },
-        {DCT3_ReplyGetWAPSettings,        "\x3f",0x03,0x1D,ID_GetWAPSettings     },
-        {DCT3_ReplySetWAPSettings,        "\x3f",0x03,0x1F,ID_SetWAPSettings     },
+        {DCT3DCT4_ReplyGetActiveConnectSet,"\x3f",0x03,0x10,ID_GetConnectSet	 },
+        {DCT3DCT4_ReplySetActiveConnectSet,"\x3f",0x03,0x13,ID_SetConnectSet	 },
+        {DCT3_ReplyGetWAPSettings,        "\x3f",0x03,0x16,ID_GetConnectSet	 },
+        {DCT3_ReplyGetWAPSettings,        "\x3f",0x03,0x17,ID_GetConnectSet	 },
+        {DCT3_ReplySetWAPSettings,        "\x3f",0x03,0x19,ID_SetConnectSet	 },
+        {DCT3_ReplySetWAPSettings,        "\x3f",0x03,0x1A,ID_SetConnectSet	 },
+        {DCT3_ReplyGetWAPSettings,        "\x3f",0x03,0x1C,ID_GetConnectSet	 },
+        {DCT3_ReplyGetWAPSettings,        "\x3f",0x03,0x1D,ID_GetConnectSet	 },
+        {DCT3_ReplySetWAPSettings,        "\x3f",0x03,0x1F,ID_SetConnectSet	 },
 
         {DCT3_ReplyEnableSecurity,        "\x40",0x02,0x64,ID_EnableSecurity     },
         {N61_71_ReplyResetPhoneSettings,  "\x40",0x02,0x65,ID_ResetPhoneSettings },
@@ -2830,9 +2832,9 @@ GSM_Phone_Functions N6110Phone = {
         NOTSUPPORTED,                   /*      GetRingtonesInfo        */
         NOTSUPPORTED,                   /*      DeleteUserRingtones     */
         DCT3_PlayTone,
-        DCT3DCT4_GetWAPBookmark,
+        DCT3_GetWAPBookmark,
         DCT3_SetWAPBookmark,
-        DCT3DCT4_DeleteWAPBookmark,
+        DCT3_DeleteWAPBookmark,
         DCT3_GetWAPSettings,
         DCT3_SetWAPSettings,
         NOTSUPPORTED,                   /*      GetMMSSettings          */

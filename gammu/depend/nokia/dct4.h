@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek */
+/* (c) 2002-2004 by Marcin Wiacek */
 
 #include "../../../common/gsmstate.h"
 
@@ -18,6 +18,8 @@ void DCT4GetADC		   (int argc, char *argv[]);
 void DCT4VibraTest	   (int argc, char *argv[]);
 void DCT4TuneRadio	   (int argc, char *argv[]);
 void DCT4PlaySavedRingtone (int argc, char *argv[]);
+void DCT4MakeCameraShoot   (int argc, char *argv[]);
+void DCT4GetScreenDump	   (int argc, char *argv[]);
 
 /* ------------------- features matrix ------------------------------------- */
 

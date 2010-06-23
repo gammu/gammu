@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek & Michal Cihar */
+/* (c) 2002-2004 by Marcin Wiacek & Michal Cihar */
 
 #ifndef __gsm_state_h
 #define __gsm_state_h
@@ -383,13 +383,14 @@ typedef enum {
 	ID_GetCalendarNotesInfo,
 	ID_GetCalendarNote,
 	ID_GetSecurityCode,
-	ID_EnableWAP,
 	ID_GetWAPBookmark,
 	ID_GetBitmap,
 	ID_SaveSMSMessage,
 	ID_CancelCall,
 	ID_SetDateTime,
 	ID_SetAlarm,
+	ID_DisableConnectFunc,
+	ID_EnableConnectFunc,
 	ID_AnswerCall,
 	ID_SetBitmap,
 	ID_SetRingtone,
@@ -405,8 +406,7 @@ typedef enum {
 	ID_SetIncomingCB,
 	ID_GetCalendarNotePos,
 	ID_Initialise,
-	ID_GetWAPSettings,
-	ID_GetConnectionSettings,
+	ID_GetConnectSet,
 	ID_SetWAPBookmark,
 	ID_GetLocale,
 	ID_SetLocale,
@@ -446,6 +446,9 @@ typedef enum {
 	ID_Divert,
 	ID_SetToDo,
 	ID_PlayTone,
+	ID_GetChatSettings,
+	ID_GetSyncMLSettings,
+	ID_GetSyncMLName,
 	ID_GetSecurityStatus,
 	ID_EnterSecurityCode,
 	ID_GetProfile,
@@ -456,8 +459,7 @@ typedef enum {
 	ID_SendDTMF,
 	ID_GetDisplayStatus,
 	ID_SetAutoNetworkLogin,
-	ID_SetWAPSettings,
-	ID_SetConnectionSettings,
+	ID_SetConnectSet,
 	ID_SetMMSSettings,
 	ID_GetSIMIMSI,
 	ID_GetFileInfo,
@@ -719,6 +721,8 @@ typedef struct {
 	 * Pointer to structure used internally by phone drivers.
 	 */
 	GSM_FileSystemStatus	*FileSystemStatus;
+	GSM_ChatSettings	*ChatSettings;
+	GSM_SyncMLSettings	*SyncMLSettings;
 
 	/**
 	 * Should phone notify about incoming calls?
