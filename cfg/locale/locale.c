@@ -246,7 +246,7 @@ int main(int argc, char *argv[])
 	WriteOutput("F0007=\"Unknown response from phone. See readme.txt, how to report it.\"");
 	WriteOutput("F0008=\"Unknown connection type string. Check config file.\"");
 	WriteOutput("F0009=\"Unknown model type string. Check config file.\"");
-	WriteOutput("F0010=\"Some required functions not compiled for your OS. Please contact.\"");
+	WriteOutput("F0010=\"Some functions not available for your OS (disabled in config or not written).\"");
 	WriteOutput("F0011=\"Function not supported by phone.\"");
 	WriteOutput("F0012=\"Entry is empty.\"");
 	WriteOutput("F0013=\"Unknown error.\"");

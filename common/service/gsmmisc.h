@@ -1,4 +1,4 @@
-/* (c) 2001-2004 by Marcin Wiacek, Walek and Michal Cihar */
+/* (c) 2001-2005 by Marcin Wiacek, Walek and Michal Cihar */
 
 #ifndef __gsm_misc_h
 #define __gsm_misc_h
@@ -89,7 +89,7 @@ typedef enum {
 	/**
 	 * Code not needed.
 	 */
-	SEC_None 
+	SEC_None
 } GSM_SecurityCodeType;
 
 #define GSM_SECURITY_CODE_LEN	15
@@ -308,11 +308,13 @@ typedef struct {
 
 /* ------------------------------------------------------------------------ */
 
-void ReadVCALDateTime(char *Buffer, GSM_DateTime *dt);
+bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt);
 void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start);
 
 void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start);
 bool ReadVCALText(char *Buffer, char *Start, char *Value);
+
+unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos);
 
 #endif
 

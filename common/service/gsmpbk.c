@@ -1,4 +1,4 @@
-/* (c) 2001-2003 by Marcin Wiacek,... */
+/* (c) 2001-2005 by Marcin Wiacek, Michal Cihar... */
 
 #include <string.h>
 
@@ -187,6 +187,8 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 {
         unsigned char   Line[2000],Buff[2000];
         int             Level = 0;
+        unsigned char   *s;
+	int		pos;
 
         Buff[0]         = 0;
         Pbk->EntriesNum = 0;
@@ -199,14 +201,30 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                         if (strstr(Line,"BEGIN:VCARD")) Level = 1;
                         break;
                 case 1:
+			if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
                         if (strstr(Line,"END:VCARD")) {
                                 if (Pbk->EntriesNum == 0) return ERR_EMPTY;
                                 return ERR_NONE;
                         }
                         if (ReadVCALText(Line, "N", Buff)) {
-                                CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Name;
-                                Pbk->EntriesNum++;
+				pos = 0;
+				s = VCALGetTextPart(Buff, &pos);
+				if (s == NULL) {
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Name;
+					Pbk->EntriesNum++;
+				} else {
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LastName;
+					Pbk->EntriesNum++;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FirstName;
+					Pbk->EntriesNum++;
+				}
                         }
                         if (ReadVCALText(Line, "TEL",                   Buff) ||
                             ReadVCALText(Line, "TEL;VOICE",             Buff) ||
@@ -253,12 +271,54 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Note;
                                 Pbk->EntriesNum++;
                         }
-                        if (ReadVCALText(Line, "ADR", Buff)) {
-                                CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
-                                Pbk->EntriesNum++;
+                        if (ReadVCALText(Line, "ADR", Buff) ||
+                            ReadVCALText(Line, "ADR;HOME", Buff)) {
+				pos = 0;
+				s = VCALGetTextPart(Buff, &pos); /* PO box, ignore for now */
+				if (s == NULL) {
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
+					Pbk->EntriesNum++;
+				} else {
+					s = VCALGetTextPart(Buff, &pos); /* Don't know ... */
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_StreetAddress;
+					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_City;
+					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_State;
+					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Zip;
+					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Country;
+					Pbk->EntriesNum++;
+				}
                         }
-                        if (ReadVCALText(Line, "EMAIL", Buff)) {
+                        if (ReadVCALText(Line, "EMAIL", Buff) ||
+			    ReadVCALText(Line, "EMAIL;INTERNET", Buff)) {
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
                                 Pbk->EntriesNum++;
@@ -268,6 +328,21 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_URL;
                                 Pbk->EntriesNum++;
                         }
+                        if (ReadVCALText(Line, "ORG", Buff)) {
+                                CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Company;
+                                Pbk->EntriesNum++;
+                        }
+                        if (ReadVCALText(Line, "CATEGORIES", Buff)) {
+                                CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+                                Pbk->Entries[Pbk->EntriesNum].Number = -1;
+                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Category;
+                                Pbk->EntriesNum++;
+                        }
+                        if (ReadVCALText(Line, "BDAY", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Pbk->Entries[Pbk->EntriesNum].Date)) {
+                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Date;
+                                Pbk->EntriesNum++;
+                        }
                         break;
                 }
         }
@@ -275,95 +350,6 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
         if (Pbk->EntriesNum == 0) return ERR_EMPTY;
         return ERR_NONE;
 }
-
-/* -------------- OLD functions (c) by Timo Teras -------------------------- */
-
-#ifndef ENABLE_LGPL
-
-static void ParseVCardLine(char **pos, char *Name, char *Parameters, char *Value)
-{
-        int i;
-
-        Name[0] = Parameters[0] = Value[0] = 0;
-
-        if (**pos == 0) return;
-
-        for (i=0; **pos && **pos != ':' && **pos != ';'; i++, (*pos)++) Name[i] = **pos;
-        Name[i] = 0;
-
-        //dbgprintf("ParseVCardLine: name tag = '%s'\n", Name);
-        if (**pos == ';') {
-                (*pos)++;
-                for (i=0; **pos && **pos != ':'; i++, (*pos)++) Parameters[i] = **pos;
-                Parameters[i] = ';';
-                Parameters[i+1] = 0;
-                //dbgprintf("ParseVCardLine: parameter tag = '%s'\n", Parameters);
-        }
-
-        if (**pos != 0) (*pos)++;
-
-        i=0;
-        while (**pos) {
-                if ((*pos)[0] == '\x0d' && (*pos)[1] == '\x0a') {
-                        (*pos) += 2;
-                        if (**pos != '\t' && **pos != ' ') break;
-                        while (**pos == '\t' || **pos == ' ') (*pos)++;
-                        continue;
-                }
-                Value[i++] = **pos;
-                (*pos)++;
-        }
-        Value[i] = 0;
-
-        //dbgprintf("ParseVCardLine: value tag = '%s'\n", Value);
-}
-
-void DecodeVCARD21Text(char *VCard, GSM_MemoryEntry *pbk)
-{
-        char *pos = VCard;
-        char Name[32], Parameters[256], Value[1024];
-
-        dbgprintf("Parsing VCard:\n%s\n", VCard);
-
-        ParseVCardLine(&pos, Name, Parameters, Value);
-        if (!mystrncasecmp(Name, "BEGIN", 0) || !mystrncasecmp(Value, "VCARD", 0)) {
-                dbgprintf("No valid VCARD signature\n");
-                return;
-        }
-
-        while (1) {
-                GSM_SubMemoryEntry *pbe = &pbk->Entries[pbk->EntriesNum];
-
-                ParseVCardLine(&pos, Name, Parameters, Value);
-                if (Name[0] == 0x00 ||
-                    (mystrncasecmp(Name, "END", 0) && mystrncasecmp(Value, "VCARD", 0)))
-                        return;
-
-                if (mystrncasecmp(Name, "N", 0)) {
-                        //FIXME: Name is tagged field which should be parsed
-                        pbe->EntryType = PBK_Text_Name;
-                        EncodeUnicode(pbe->Text, Value, strlen(Value));
-                        pbk->EntriesNum++;
-                } else if (mystrncasecmp(Name, "EMAIL", 0)) {
-                        pbe->EntryType = PBK_Text_Email;
-                        EncodeUnicode(pbe->Text, Value, strlen(Value));
-                        pbk->EntriesNum++;
-                } else if (mystrncasecmp(Name, "TEL", 0)) {
-                        if (strstr(Parameters, "WORK;"))
-                                pbe->EntryType = PBK_Number_Work;
-                        else if (strstr(Name, "HOME;"))
-                                pbe->EntryType = PBK_Number_Home;
-                        else if (strstr(Name, "FAX;"))
-                                pbe->EntryType = PBK_Number_Fax;
-                        else    pbe->EntryType = PBK_Number_General;
-
-                        EncodeUnicode(pbe->Text, Value, strlen(Value));
-                        pbk->EntriesNum++;
-                }
-        }
-}
-
-#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

@@ -56,6 +56,7 @@ typedef enum {
 	DCT4_JAVA_GAMES_MENU,
 	DCT4_SAT_CONFIRM_MENU,
 	DCT4_INSTANT_MESS_MENU,
+	DCT4_INSTANT_MESS_MENU2,
 	DCT4_CONFIRM_ALS,
 	DCT4_BOOKMARK_GOTO_MENU,
 
@@ -78,7 +79,7 @@ typedef struct {
 	struct {
 		DCT4_Feature_Name	Name;
 		int			Number;
-	} Features[25];
+	} Features[31];
 } DCT4_Phone_Features;
 
 typedef struct {

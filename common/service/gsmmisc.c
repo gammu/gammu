@@ -1,4 +1,4 @@
-/* (c) 2002-2004 by Marcin Wiacek */
+/* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 
 #include <string.h>
 #include <stdlib.h>
@@ -109,7 +109,7 @@ static void GSM_JADFindLine(GSM_File File, char *Name, char *Value)
 			while (Line[Pos] == 0x20) Pos++;
 			strcpy(Value,Line+Pos);
 			return;
-		}		
+		}
 	}
 }
 
@@ -173,7 +173,7 @@ void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start
 			Date->Hour, Date->Minute, Date->Second,13,10);
 }
 
-void ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
+bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 {
 	char year[5]="", month[3]="", day[3]="", hour[3]="", minute[3]="", second[3]="";
 
@@ -182,19 +182,25 @@ void ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 	strncpy(year, 	Buffer, 	4);
 	strncpy(month, 	Buffer+4, 	2);
 	strncpy(day, 	Buffer+6, 	2);
-	strncpy(hour, 	Buffer+9,	2);
-	strncpy(minute, Buffer+11,	2);
-	strncpy(second, Buffer+13,	2);
-
-	/* FIXME: Should check ranges... */
 	dt->Year	= atoi(year);
 	dt->Month	= atoi(month);
 	dt->Day		= atoi(day);
-	dt->Hour	= atoi(hour);
-	dt->Minute	= atoi(minute);
-	dt->Second	= atoi(second);
+
+	if (Buffer[8] == 'T') {
+		strncpy(hour, 	Buffer+9,	2);
+		strncpy(minute, Buffer+11,	2);
+		strncpy(second, Buffer+13,	2);
+		dt->Hour	= atoi(hour);
+		dt->Minute	= atoi(minute);
+		dt->Second	= atoi(second);
+	}
+
 	/* FIXME */
 	dt->Timezone	= 0;
+
+	if (!CheckTime(dt)) return false;
+	if (dt->Year!=0) return CheckDate(dt);
+	return true;
 }
 
 void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)
@@ -208,7 +214,28 @@ void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)
 		} else {
 			*Length+=sprintf(Buffer+(*Length), "%s;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s%c%c",Start,buffer,13,10);
 		}
-	}	    
+	}
+}
+
+unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
+{
+	static unsigned char	tmp[1000];
+	unsigned char		*start;
+
+	start = Buff + *pos;
+	while (Buff[*pos] != 0 || Buff[*pos + 1] != 0) {
+		if (Buff[*pos] == 0 && Buff[*pos + 1] == ';') {
+			Buff[*pos + 1] = 0;
+			CopyUnicodeString(tmp, start);
+			Buff[*pos + 1] = ';';
+			*pos += 2;
+			return tmp;
+		}
+		*pos += 2;
+	}
+	if (start == Buff || (start[0] == 0 && start[1] == 0)) return NULL;
+	CopyUnicodeString(tmp, start);
+	return tmp;
 }
 
 bool ReadVCALText(char *Buffer, char *Start, char *Value)

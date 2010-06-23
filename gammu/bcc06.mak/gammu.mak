@@ -26,7 +26,7 @@ OBJFILES = Output\gammu.obj Output\sniff.obj Output\dct3.obj Output\wmx.obj \
     Output\gsmlogo.obj Output\gsmnet.obj Output\gsmpbk.obj Output\gsmring.obj \
     Output\gsmdata.obj Output\gsmmisc.obj Output\gsmsms.obj Output\gsmems.obj \
     Output\gsmmulti.obj Output\gsmcomon.obj Output\gsmstate.obj \
-    Output\n6110.obj Output\n6510.obj Output\n3320.obj Output\n3650.obj \
+    Output\n6110.obj Output\n6510.obj Output\6510cal.obj Output\6510file.obj Output\n3320.obj Output\n3650.obj \
     Output\dct4func.obj Output\n7110.obj Output\n9210.obj Output\dct3func.obj \
     Output\nauto.obj Output\nfunc.obj Output\nfuncold.obj Output\alcatel.obj \
     Output\obexgen.obj Output\mroutgen.obj Output\pfunc.obj Output\atgen.obj \

@@ -1,7 +1,4 @@
 <?
-
-//script for managing MySQL SMSD DB
-
 # CONFIGURATION
 //they can be defined or not. if not, interface will give login form
 //$db_serv="127.0.0.1";
@@ -9,7 +6,7 @@
 //$db_pass="";
 
 //these must be defined
-$dokument="index.php"; //name of current document
+$dokument="admin.php"; //name of current document
 $delall = true; //should be Delete All available for folders ?
 $max_limit=1; //maximal number of sms for outgoing sms editor
 
@@ -22,6 +19,7 @@ $outbox="UpdatedInDB,InsertIntoDB,Text,DestinationNumber,Coding,UDH,Class,TextDe
 $outbox_multipart="Text,Coding,UDH,Class,TextDecoded,ID,SequencePosition";
 $sentitems="UpdatedInDB,InsertIntoDB,SendingDateTime,DeliveryDateTime,Text,DestinationNumber,Coding,UDH,SMSCNumber,Class,TextDecoded,ID,SenderID,SequencePosition,Status,StatusError,TPMR,RelativeValidity";
 $phones="ID,InsertIntoDB,TimeOut,Send,Receive,IMEI,Client";
+$daemons="Start,Info";
 
 function dispdatetime($dt)
 {
@@ -186,6 +184,13 @@ echo "-->\n";
 echo "</STYLE>\n";
 echo "<TITLE>SMS SERVER based on GAMMU</TITLE>\n<body bgcolor=#ededed>\n";
 
+if (isset($dbpass) && isset($dbconnect) && isset($_GET['op']) && isset($_GET['action'])) {
+	if ($_GET['op']=="daemons") {
+		$action = urldecode($_GET['action']);
+		popen ($action, "r");
+	}
+}
+
 if (isset($dbpass) && isset($dbconnect) && isset($_GET['op']) && isset($_GET['year']) && isset($_GET['month']) && isset($_GET['day']) && isset($_GET['hour']) && isset($_GET['minute']) && isset($_GET['second']) && isset($_GET['number']) && isset($_GET['tresc']) && isset($_GET['validity'])) {
 	if ($_GET['op']=="addsms") {
 		echo "<script>";
@@ -260,8 +265,6 @@ if (isset($dbservorig) || isset($dbuserorig) || isset($dbpassorig)) {
 	echo "<a href=$dokument>OTHER USER</a><br>\n";
 }
 
-echo "<a href=$dokument$arg"."op=admin>ADMIN</a><p>\n";
-
 $result0 = mysql_list_dbs($dbpass);
 while ($row0 = mysql_fetch_object($result0)) {
 	$result = mysql_db_query("$row0->Database","select Version from gammu");
@@ -287,7 +290,8 @@ while ($row0 = mysql_fetch_object($result0)) {
 	}
 	echo "<a href=$dokument$arg"."x=x>[<<] $row0->Database</a><br>\n";
 
-	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=phones>PHONES</a><br><br>\n";
+	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=daemons>DAEMONS</a><br>\n";
+	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=phones>PHONES</a><p>\n";
 
 	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=newsms>NEW OUTBOX SMS</a><br><br>\n";
 
@@ -339,7 +343,7 @@ if (isset($_GET['op'])) {
 			echo " $d2";
 		}
 		echo "</b><br><br>\n";
-		echo "<table width=650 cellspacing=1 border=1>";
+		echo "<table width=620 cellspacing=1 border=1>";
 		echo "<tr bgcolor=gold><td>ID</td>\n";
 		echo "<td>FROM</td>\n";
 		echo "<td>SMSC</td>\n";
@@ -412,7 +416,7 @@ if (isset($_GET['op'])) {
 			echo " $d2";
 		}
 		echo "</b><br><br>\n";
-		echo "<table width=650 cellspacing=1 border=1>";
+		echo "<table width=620 cellspacing=1 border=1>";
 		echo "<tr bgcolor=gold><td>ID</td>\n";
 		echo "<td>TO</td>\n";
 		echo "<td>TIME 2BE SENT</td>\n";
@@ -524,7 +528,7 @@ if (isset($_GET['op'])) {
 			echo " $d2";
 		}		
 		echo "</b><br><br>\n";
-		echo "<table width=650 cellspacing=1 border=1>";
+		echo "<table width=620 cellspacing=1 border=1>";
 		echo "<tr bgcolor=gold><td>ID</td>\n";
 		echo "<td>TO</td>\n";
 		echo "<td>SMSC</td>\n";
@@ -681,18 +685,31 @@ if (isset($_GET['op'])) {
 		echo "<tr><td><b>SMS number</b></td><td><input name=smsnum maxlength=3 value=\"1\" size=3 readonly> / $max_limit</td></tr>\n";
 
 		echo "</table></form>\n";
-		echo "<table width=600 cellspacing=1 border=0>";
+		echo "<table width=620 cellspacing=1 border=0>";
 		echo "<tr><td>&nbsp;</td></tr></table>\n";
   	}
-  	if ($_GET['op']=="admin") {
-		echo "<b>ADMIN</b><p>Not filled yet\n";
-		echo "<table width=650 cellspacing=1 border=0>";
+  	if ($_GET['op']=="daemons") {
+		echo "<b>DATABASE $db_name, DAEMONS</b><p>\n";
+
+		echo "<table width=620 cellspacing=1 border=1>";
+		echo "<tr bgcolor=gold><td>INFO</td>\n";
+		echo "<td></td></tr>\n";
+		$result = mysql_db_query("$db_name","select $daemons from daemons");
+		while($rekord = mysql_fetch_row($result)) {
+			echo "<td>$rekord[1]</td>\n";
+			$x = urlencode($rekord[0]);
+			echo "<td><a href=$dokument$arg"."db=$db_name&action=$x&op=daemons Title='Click to start' OnClick=\"return Del('ala');\" >[X]</a></td></tr>";
+		}
+		mysql_free_result($result);
+		echo "</table>";
+
+		echo "<table width=620 cellspacing=1 border=0>";
 		echo "<tr><td>&nbsp;</td></tr></table>\n";
 	}
   	if ($_GET['op']=="phones") {
 		$counter = 0;
 		echo "<b>DATABASE $db_name, PHONES</b><p>\n";
-		echo "<table width=650 cellspacing=1 border=1>";
+		echo "<table width=620 cellspacing=1 border=1>";
 		echo "<tr bgcolor=gold><td>IMEI</td>\n";
 		echo "<td>ID</td>\n";
 		echo "<td>SEND SMS</td>\n";
@@ -713,11 +730,11 @@ if (isset($_GET['op'])) {
 		mysql_free_result($result);
 		echo "</table>";
 		echo "<br>$counter phones<p>";
-		echo "<table width=600 cellspacing=1 border=0>";
+		echo "<table width=620 cellspacing=1 border=0>";
 		echo "<tr><td>&nbsp;</td></tr></table>\n";
 	}
 } else {
-	echo "<table width=650 cellspacing=1 border=0>";
+	echo "<table width=620 cellspacing=1 border=0>";
 	echo "<tr><td>&nbsp;</td></tr></table>\n";
 }
 

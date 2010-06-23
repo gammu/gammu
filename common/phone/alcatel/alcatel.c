@@ -1,4 +1,4 @@
-/* (c) 2002-2004 by Michal Cihar */
+/* (c) 2002-2005 by Michal Cihar */
 
 /*
  * High level functions for communication with Alcatel One Touch 501 and
@@ -545,7 +545,7 @@ static GSM_Error ALCATEL_SetATMode(GSM_StateMachine *s)
 	s->Protocol.Functions			= &ATProtocol;
 	s->Phone.Functions->ReplyFunctions	= ATGENReplyFunctions;
 	Priv->Mode				= ModeAT;
-	s->Phone.Data.Priv.ATGEN.PBKCharset	= 0;
+	s->Phone.Data.Priv.ATGEN.Charset	= 0;
 	s->Phone.Data.Priv.ATGEN.PBKMemory	= 0;
 
 	my_sleep(100);
@@ -2839,7 +2839,6 @@ static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				repeating 		= true;
 				break;
 			case CAL_SILENT_ALARM_DATETIME:
-			case CAL_RECURRANCE:
 			case CAL_LOCATION:
 				smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", Note->Entries[i].EntryType);
 				break;
@@ -2993,7 +2992,6 @@ static GSM_Error ALCATEL_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				repeating 		= true;
 				break;
 			case CAL_SILENT_ALARM_DATETIME:
-			case CAL_RECURRANCE:
 			case CAL_LOCATION:
 				smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", Note->Entries[i].EntryType);
 				break;
