@@ -22,6 +22,49 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20031005 - 0.85.5.0
+* new functionality:
+  * DCT4:
+    * can upload 0 bytes long files
+    * new frame for reset works with each connection type
+  * detection for pthread libraries (if not available,    (Michal Cihar, Leigh)
+    searching phones not available)
+  * * new numerating versions                                    (Michal Cihar)
+    * autoconf stuff not cleaned each time
+    * Debian packaging update
+      * now separate lib, devel and binary packages
+      * reportbug will send bug reports to Michal
+    * ATGEN_ReplyGetModel doesn't return "ERROR" as model when talking with
+      device that doesn't support this (eg. normal modem)
+    * updated Michal's email address
+    * added support for generating API documentation with doxygen
+      (make apidoc)
+    * added documentation to part of gsmstate.h
+    * GSM_Phone_Data.RequestID is GSM_Phone_RequestID as it should be
+      and not unsigned int (needed little change in 6110 and 7110)
+  * Linux Gentoo makefile                                        (Lim Swee Tat)
+
+* fixes and improvements:
+  * Decoding BASE64 strings with some data cut last char. Fixed
+  * * overflow problem in gsmstate.c with some data. Fixed       (Michal Cihar)
+    * searching for irda support sometimes made problems with
+      configure. Fixed
+    * -lbluetooth added only once
+  * fix with CurrentConfig after enabling CB                     (Lim Swee Tat)
+
+NOTES: Adding new functionality to Nokia Series 40 phone modules will be
+       probably suspended for some time. I will make fixes and fill missed
+       things, but generally can't add really new things because of hardware
+       issues (no available phone with more functions). I added to readme.txt
+       info about all missed things and info about things, which probably never
+       will be implemented (they require SDK or more info from Nokia).
+
+       I'm thinking about changing Gammu license and probably (if there won't
+       be any other possibility) I will have to give LGPL for project sponsors,
+       who will request it (for other there will be GNU GPL like now).
+
+       If You have comments, please mail me or send email to mailing list.
+
 20031002 - 0,85,0,0
 * new functionality:
   * DCT4:
@@ -1227,7 +1270,8 @@ Summary: software is more and more stable, tested and working 100% OK
     For more info read mygnokii.txt and description for --send(save)sms
     option and --rejectduplicates parameter
 
-    !!! If works according to info in mygnokii.txt with your SMSC, !!!                       !!! please tell me !!!
+    !!! If works according to info in mygnokii.txt with your SMSC, !!!
+                       !!! please tell me !!!
 
   * more possibilities with sms_serv
   * it's IMPOSSIBLE, but HAPPEN. Nokia disables in many phones GPRS Always

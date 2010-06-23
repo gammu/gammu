@@ -1,20 +1,20 @@
 #! /bin/sh
-cp version cfg/autoconf/VERSION
+cp -f version cfg/autoconf/VERSION
 cd cfg/autoconf
-autoconf
+if [ ! -f ./configure -o "x$1" = "x--regenerate" -o ./configure.in -nt ./configure ] ; then
+    echo "Running autoconf..."
+    autoconf
+    test "x$1" = "x--regenerate" && shift
+fi
 ./configure "$@"
 if [ "$1" = "--help" ]
 then
-    echo > /dev/null
+    echo
+    echo "Use --regenerate as first parameter regenerate configure script"
 else
     cp Makefile.cfg ../Makefile.cfg
     chmod a+rw ../Makefile.cfg
     rm Makefile.cfg
-    cp config.h ../config.h
+    mv -f config.h ../config.h
     chmod a+rw ../config.h
-    rm config.h
-    rm config.log
-    rm config.status
 fi
-rm VERSION
-rm configure

@@ -597,8 +597,9 @@ static GSM_Error N6110_ReplyGetStatus(GSM_Protocol_Message msg, GSM_StateMachine
  	case ID_GetSignalQuality:
  		Data->SignalQuality->SignalPercent  = ((int)msg.Buffer[5])*25;
   		return GE_NONE;
+	default:
+		return GE_UNKNOWNRESPONSE;
 	}
-	return GE_UNKNOWNRESPONSE;
 }
 
 static GSM_Error N6110_GetStatus(GSM_StateMachine *s, int ID)

@@ -247,6 +247,7 @@ static GSM_Error N3650_Terminate(GSM_StateMachine *s)
 static GSM_Reply_Function N3650ReplyFunctions[] = {
 	{DCT4_ReplySetPhoneMode,	  "\x15",0x03,0x64,ID_Reset		  },
 	{DCT4_ReplyGetPhoneMode,	  "\x15",0x03,0x65,ID_Reset		  },
+	{NoneReply,		  	  "\x15",0x03,0x68,ID_Reset		  },
 
 	{DCT4_ReplyGetIMEI,		  "\x1B",0x03,0x01,ID_GetIMEI		  },
 	{NOKIA_ReplyGetPhoneString,	  "\x1B",0x03,0x08,ID_GetHardware	  },

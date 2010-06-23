@@ -17,7 +17,6 @@
 #  endif
 #else
 #  include <utime.h>
-#  include <pthread.h>
 #endif
 
 #include "../common/gsmcomon.h"
@@ -45,6 +44,10 @@
 #endif
 #ifdef GSM_ENABLE_ATGEN
 #  include "depend/dsiemens.h"
+#endif
+
+#ifdef HAVE_PTHREAD
+#  include <pthread.h>
 #endif
 
                 			
@@ -6299,7 +6302,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	while (error == GE_NONE) {
 		error = Phone->AddFilePart(&s,&File,&Pos);
 	    	if (error != GE_EMPTY) Print_Error(error);
-		printmsgerr("%cWriting file: %i percent",13,Pos*100/File.Used);
+		if (File.Used != 0) printmsgerr("%cWriting file: %i percent",13,Pos*100/File.Used);
 	}
 	printmsgerr("\n");
 
@@ -6546,22 +6549,22 @@ void SearchPhoneThread(OneDeviceInfo *Info)
 	num--;
 }
 
-#ifdef __linux__
+#if defined(WIN32) || defined(HAVE_PTHREAD)
+#ifdef HAVE_PTHREAD
 	pthread_t Thread[100];
 #endif
 
 void MakeSearchThread(int i)
 {
 	num++;
-#ifdef WIN32
+#ifdef HAVE_PTHREAD
+	if (pthread_create(&Thread[i],NULL,(void *)SearchPhoneThread,&SearchDevices[i])!=0) {
+		dprintf("Error creating thread\n");
+	}
+#else
 	if (CreateThread((LPSECURITY_ATTRIBUTES)NULL,0,
 		     (LPTHREAD_START_ROUTINE)SearchPhoneThread,&SearchDevices[i],
 		     0,NULL)==NULL) {
-		dprintf("Error creating thread\n");
-	}
-#endif
-#ifdef __linux__
-	if (pthread_create(&Thread[i],NULL,(void *)SearchPhoneThread,&SearchDevices[i])!=0) {
 		dprintf("Error creating thread\n");
 	}
 #endif
@@ -6570,7 +6573,6 @@ void MakeSearchThread(int i)
 static void SearchPhone(int argc, char *argv[])
 {
 	int 	i,dev = 0, dev2 = 0;
-	bool	supported = false;
 
 	SearchOutput = false;
 	if (argc == 3 && mystrncasecmp(argv[2], "-debug",0)) SearchOutput = true;
@@ -6595,7 +6597,6 @@ static void SearchPhone(int argc, char *argv[])
 		dev2++;
 	}
 #  endif
-	supported = true;
 #endif
 #ifdef __linux__
 #  ifdef GSM_ENABLE_IRDADEVICE
@@ -6627,17 +6628,13 @@ static void SearchPhone(int argc, char *argv[])
 		dev2++;
 	}
 #  endif
-	supported = true;
 #endif
-	if (!supported) {
-		printmsg("Your OS is not supported\n");
-		return;
-	}
 	for(i=0;i<dev;i++) MakeSearchThread(i);
 	while (1) {if (num == 0) break;my_sleep(5);}
 	for(i=dev;i<dev2;i++) MakeSearchThread(i);
 	while (1) {if (num == 0) break;my_sleep(5);}
 }
+#endif /*Support for threads */
 
 static void NokiaGetADC(int argc, char *argv[])
 {
@@ -6702,7 +6699,9 @@ static void usage(void)
 	printf("gammu --version\n");
 	printf("gammu --identify\n");
 	printf("gammu --monitor [times]\n");
+#if defined(WIN32) || defined(HAVE_PTHREAD)
  	printf("gammu --searchphone [-debug]\n");
+#endif
 	printf("gammu --reset SOFT|HARD\n");
 	printf("gammu --resetphonesettings PHONE|DEV|UIF|ALL|FACTORY\n");
 	printf("gammu --presskeysequence mMnNpPuUdD+-123456789*0#gGrRwW\n");
@@ -7068,7 +7067,9 @@ static GSM_Parameters Parameters[] = {
 	{"--setbitmap",			1, 4, SetBitmap			},
 	{"--copybitmap",		1, 3, CopyBitmap		},
 	{"--presskeysequence",		1, 1, PressKeySequence		},
+#if defined(WIN32) || defined(HAVE_PTHREAD)
 	{"--searchphone",		0, 1, SearchPhone		},
+#endif
 #ifdef GSM_ENABLE_BACKUP
 	{"--backup",			1, 1, Backup			},
 	{"--backupsms",			1, 1, BackupSMS			},

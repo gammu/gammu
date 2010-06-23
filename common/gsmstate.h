@@ -175,13 +175,37 @@ typedef struct _OnePhoneModel	 OnePhoneModel;
 
 /* ------------------------- Device layer ---------------------------------- */
 
+/**
+ * Device functions, each device has to provide these.
+ */
 typedef struct {
+	/**
+	 * Opens device.
+	 */
 	GSM_Error (*OpenDevice)        (GSM_StateMachine *s);
+	/**
+	 * Closes device.
+	 */
 	GSM_Error (*CloseDevice)       (GSM_StateMachine *s);
+	/**
+	 * Sets parity for device.
+	 */
 	GSM_Error (*DeviceSetParity)   (GSM_StateMachine *s, bool parity);
+	/**
+	 * Sets dtr (data to read) and rts (ready to send) flags.
+	 */
 	GSM_Error (*DeviceSetDtrRts)   (GSM_StateMachine *s, bool dtr, bool rts);
+	/**
+	 * Sets device speed.
+	 */
 	GSM_Error (*DeviceSetSpeed)    (GSM_StateMachine *s, int speed);
+	/**
+	 * Attempts to read nbytes from device.
+	 */
 	int       (*ReadDevice)        (GSM_StateMachine *s, void *buf, size_t nbytes);
+	/**
+	 * Attempts to read nbytes from device.
+	 */
 	int       (*WriteDevice)       (GSM_StateMachine *s, void *buf, size_t nbytes);
 } GSM_Device_Functions;
 
@@ -195,6 +219,11 @@ typedef struct {
 	extern GSM_Device_Functions BlueToothDevice;
 #endif
 
+/**
+ * Structure containing device specific data and pointer to device functions -
+ * @ref GSM_Device_Functions. The data are in a union, so you can use only 
+ * one device at one time.
+ */
 typedef struct {
 	union {
 		char fake;
@@ -213,11 +242,26 @@ typedef struct {
 
 /* ---------------------- Protocol layer ----------------------------------- */
 
+/**
+ * Protocol functions, each protocol has to implement these.
+ */
 typedef struct {
+	/**
+	 * Writes message to device.
+	 */
 	GSM_Error (*WriteMessage) (GSM_StateMachine *s, unsigned char *buffer,
 				   int length, unsigned char type);
+	/**
+	 * This one is called when character is received from device.
+	 */
 	GSM_Error (*StateMachine) (GSM_StateMachine *s, unsigned char rx_byte);
+	/**
+	 * Protocol initialisation.
+	 */
 	GSM_Error (*Initialise)   (GSM_StateMachine *s);
+	/**
+	 * Protocol termination.
+	 */
 	GSM_Error (*Terminate)    (GSM_StateMachine *s);
 } GSM_Protocol_Functions;
 
@@ -243,6 +287,11 @@ typedef struct {
 	extern GSM_Protocol_Functions MROUTERProtocol;
 #endif
 
+/**
+ * Structure containing protocol specific data and pointer to protocol
+ * functions - @ref GSM_Protocol_Functions. The data are in a structure, so
+ * you may use more protocols at once and switch between them.
+ */
 typedef struct {
 	struct {
 		char fake;
@@ -273,6 +322,10 @@ typedef struct {
 
 /* -------------------------- Phone layer ---------------------------------- */
 
+/**
+ * Phone requests identificators, these are used for internally identifying
+ * which operation is being performed.
+ */
 typedef enum {
 	ID_None=1,
 	ID_GetModel,
@@ -430,69 +483,245 @@ typedef enum {
 	ID_EachFrame
 } GSM_Phone_RequestID;
 
+/**
+ * Phone related data are stored here.
+ */
 typedef struct {
-	char			IMEI[MAX_IMEI_LENGTH];			/* IMEI 				*/
-	char			Manufacturer[MAX_MANUFACTURER_LENGTH];	/* Real connected phone manufacturer	*/
-	char			Model[MAX_MODEL_LENGTH];		/* Real connected phone model 		*/
-	OnePhoneModel		*ModelInfo;				/* Model information			*/
-	char			Version[MAX_VERSION_LENGTH];		/* Real connected phone version 	*/
-	char			VerDate[MAX_VERSION_DATE_LENGTH];	/* Version date				*/
-	double			VerNum;					/* Phone version as number 		*/
-	/* Some modules can cache these variables */
-	char			HardwareCache[50];			/* Hardware version			*/
-	char			ProductCodeCache[50];			/* Product code version			*/
-
+	/**
+	 * Phone IMEI (or serial number).
+	 */
+	char			IMEI[MAX_IMEI_LENGTH];
+	/**
+	 * Phone manufacturer as reported by phone.
+	 */
+	char			Manufacturer[MAX_MANUFACTURER_LENGTH];
+	/**
+	 * Phone model as reported by phone.
+	 */
+	char			Model[MAX_MODEL_LENGTH];
+	/**
+	 * Model information, pointer to static @ref allmodels array.
+	 */
+	OnePhoneModel		*ModelInfo;
+	/**
+	 * Phone version as reported by phone. It doesn't have to be numerical
+	 * at all.
+	 */
+	char			Version[MAX_VERSION_LENGTH];
+	/**
+	 * Phone version date, might be empty for some models.
+	 */
+	char			VerDate[MAX_VERSION_DATE_LENGTH];
+	/**
+	 * Phone version as number, if applicable.
+	 */
+	double			VerNum;
+	/**
+	 * Cache for hardware version used by some modules.
+	 */
+	char			HardwareCache[50];
+	/**
+	 * Cache for product code version used by some modules.
+	 */
+	char			ProductCodeCache[50];
+	
+	/**
+	 * Counter used for disabling startup info on phone, see
+	 * @ref ShowStartInfo.After this is 0, the startup info is hidden.
+	 */
 	int			StartInfoCounter;
 
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_GPRSAccessPoint	*GPRSPoint;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_SpeedDial		*SpeedDial;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_DateTime		*DateTime;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_DateTime		*Alarm;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_PhonebookEntry	*Memory;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_MemoryStatus	*MemoryStatus;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_SMSC		*SMSC;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_MultiSMSMessage	*GetSMSMessage;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_SMSMessage		*SaveSMSMessage;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_SMSMemoryStatus	*SMSStatus;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_SMSFolders		*SMSFolders;
+	/**
+	 * Used internally by phone drivers.
+	 */
 	int                 	*VoiceRecord;
+	/**
+	 * Used internally by phone drivers.
+	 */
 	int			CallID;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_SignalQuality	*SignalQuality;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_BatteryCharge	*BatteryCharge;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_NetworkInfo		*NetworkInfo;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_Ringtone		*Ringtone;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_CalendarEntry	*Cal;
+	/**
+	 * Used internally by phone drivers.
+	 */
 	unsigned char		*SecurityCode;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_WAPBookmark		*WAPBookmark;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_MultiWAPSettings	*WAPSettings;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_Bitmap		*Bitmap;
+	/**
+	 * Used internally by phone drivers.
+	 */
 	unsigned char		*Netmonitor;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_MultiCallDivert	*Divert;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_ToDoEntry		*ToDo;
+	/**
+	 * Used internally by phone drivers.
+	 */
 	bool			PressKey;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_SecurityCodeType	*SecurityStatus;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_Profile		*Profile;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_AllRingtonesInfo	*RingtonesInfo;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_DisplayFeatures	*DisplayFeatures;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_FMStation		*FMStation;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_Locale		*Locale;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_CalendarSettings	*CalendarSettings;
+	/**
+	 * Used internally by phone drivers.
+	 */
 	unsigned char		*PhoneString;
+	/**
+	 * Used internally by phone drivers.
+	 */
 	int			StartPhoneString;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_File		*FileInfo;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_File		*File;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_FileSystemStatus	*FileSystemStatus;
 
+	/**
+	 * Should phone notify about incoming calls?
+	 */
 	bool			EnableIncomingCall;
-	bool			EnableIncomingSMS;	/* notify about incoming sms ? 	*/
-	bool			EnableIncomingCB;	/* notify about incoming cb ?	*/
+	/**
+	 * Should phone notify about incoming SMSes?
+	 */
+	bool			EnableIncomingSMS;
+	/**
+	 * Should phone notify about incoming CBs?
+	 */
+	bool			EnableIncomingCB;
+	/**
+	 * Should phone notify about incoming USSDs?
+	 */
 	bool			EnableIncomingUSSD;
 
-	GSM_Protocol_Message	*RequestMsg;		/* last frame from phone	*/
-	GSM_Protocol_Message	*SentMsg;		/* last frame from Gammu	*/
-	unsigned int		RequestID;		/* what operation is done now	*/
-	GSM_Error		DispatchError;		/* error returned by function	*/
-							/* in phone module		*/
+	/**
+	 * Last message received from phone.
+	 */
+	GSM_Protocol_Message	*RequestMsg;
+	/**
+	 * Last message sent by Gammu.
+	 */
+	GSM_Protocol_Message	*SentMsg;
+	/**
+	 * What operation is being performed now, see @GSM_Phone_RequestID for
+	 * possible values.
+	 */
+	GSM_Phone_RequestID	RequestID;
+	/**
+	 * Error returned by function in phone module.
+	 */
+	GSM_Error		DispatchError;
+	
+	/**
+	 * Structure with private phone modules data.
+	 */
 	struct {
 		int			 fake;
 #ifdef GSM_ENABLE_NOKIA3650
@@ -522,40 +751,156 @@ typedef struct {
 	} Priv;
 } GSM_Phone_Data;
 
+/**
+ * Structure for defining reply functions.
+ *
+ * Function is called when requestID matches current operation or is 
+ * ID_IncomingFrame and msgtype matches start message and (if msgtype is just
+ * one character) subtypechar is zero or subtypechar-th character of message
+ * matches subtype.
+ *
+ * Should be used in array with last element containing ID_None as requestID.
+ */
 typedef struct {
+	/**
+	 * Pointer to function that should be executed.
+	 */
 	GSM_Error (*Function)	(GSM_Protocol_Message msg, GSM_StateMachine *s);
+	/**
+	 * Message type, if it is longer than 1 character, it disables subtype
+	 * checking.
+	 */
 	unsigned char		*msgtype;
+	/**
+	 * Which character of message should be checked as subtype. Zero to
+	 * disable subtype checking.
+	 */
 	int			subtypechar;
+	/**
+	 * Subtype to be checked.
+	 */
 	unsigned char		subtype;
+	/**
+	 * Phone request when this can be called, use ID_IncomingFrame when
+	 * you want to use this in any state.
+	 */
 	GSM_Phone_RequestID	requestID;
 } GSM_Reply_Function;
 
+/**
+ * Structure defining phone functions.
+ */
 typedef struct {
+	/**
+	 * Names of supported models separated by |. Must contain at least one
+	 * name.
+	 */
 	char				*models;
+	/**
+	 * Array of reply functions for the phone, see 
+	 * @ref GSM_Reply_Function for details about it.
+	 */
 	GSM_Reply_Function		*ReplyFunctions;
+	/**
+	 * Initializes phone.
+	 */
 	GSM_Error (*Initialise) 	(GSM_StateMachine *s);
+	/**
+	 * Terminates phone communication.
+	 */
 	GSM_Error (*Terminate)  	(GSM_StateMachine *s);
+	/**
+	 * Dispatches messages from phone, at the end it should call 
+	 * @ref GSM_DisplatchMessage.
+	 */
 	GSM_Error (*DispatchMessage)	(GSM_StateMachine *s);
+	/**
+	 * Reads model from phone.
+	 */
 	GSM_Error (*GetModel)		(GSM_StateMachine *s);
+	/**
+	 * Reads firmware information from phone./
+	 */
 	GSM_Error (*GetFirmware)	(GSM_StateMachine *s);
+	/**
+	 * Reads IMEI/serial number from phone.
+	 */
 	GSM_Error (*GetIMEI)            (GSM_StateMachine *s);
+	/**
+	 * Gets date and time from phone.
+	 */
 	GSM_Error (*GetDateTime)	(GSM_StateMachine *s, GSM_DateTime	    *date_time	);
+	/**
+	 * Reads alarm set in phone.
+	 */
 	GSM_Error (*GetAlarm)		(GSM_StateMachine *s, GSM_DateTime	    *alarm,	int	alarm_number    );
+	/**
+	 * Reads entry from memory (phonebooks or calls). Which entry should
+	 * be read is defined in entry.
+	 */
 	GSM_Error (*GetMemory)		(GSM_StateMachine *s, GSM_PhonebookEntry    *entry	);
+	/**
+	 * Gets memory (phonebooks or calls) status (eg. number of used and
+	 * free entries).
+	 */
 	GSM_Error (*GetMemoryStatus)	(GSM_StateMachine *s, GSM_MemoryStatus	    *status	);
+	/**
+	 * Gets SMS Service Center number and SMS settings.
+	 */
 	GSM_Error (*GetSMSC)		(GSM_StateMachine *s, GSM_SMSC		    *smsc	);
+	/**
+	 * Reads SMS message.
+	 */
 	GSM_Error (*GetSMS)		(GSM_StateMachine *s, GSM_MultiSMSMessage   *sms	);
+	/**
+	 * Returns SMS folders information.
+	 */
 	GSM_Error (*GetSMSFolders)	(GSM_StateMachine *s, GSM_SMSFolders	    *folders	);
+	/**
+	 * Reads manufacturer from phone.
+	 */
 	GSM_Error (*GetManufacturer)	(GSM_StateMachine *s);
+	/**
+	 * Reads next (or first if start set) SMS message. This might be
+	 * faster for some phones than using @ref GetSMS for each message.
+	 */
 	GSM_Error (*GetNextSMS)		(GSM_StateMachine *s, GSM_MultiSMSMessage   *sms,		bool	start		);
+	/**
+	 * Gets information about SMS memory (read/unread/size of memory for
+	 * both SIM and phone).
+	 */
 	GSM_Error (*GetSMSStatus)	(GSM_StateMachine *s, GSM_SMSMemoryStatus   *status	);
+	/**
+	 * Enable/disable notification on incoming SMS.
+	 */
 	GSM_Error (*SetIncomingSMS)	(GSM_StateMachine *s, bool		    enable	);
+	/**
+	 * Gets network information from phone.
+	 */
 	GSM_Error (*GetNetworkInfo)	(GSM_StateMachine *s, GSM_NetworkInfo	    *netinfo	);
+	/**
+	 * Performs phone reset.
+	 */
 	GSM_Error (*Reset)		(GSM_StateMachine *s, bool		    hard	);
+	/**
+	 * Dials number and starts voice call.
+	 */
 	GSM_Error (*DialVoice)		(GSM_StateMachine *s, char		    *Number,	GSM_CallShowNumber ShowNumber);
+	/**
+	 * Accept current incoming call.
+	 */
 	GSM_Error (*AnswerCall)		(GSM_StateMachine *s, int ID, bool all);                     
+	/**
+	 * Deny current incoming call.
+	 */
 	GSM_Error (*CancelCall)		(GSM_StateMachine *s, int ID, bool all);
+	/**
+	 * Gets ringtone from phone.
+	 */
 	GSM_Error (*GetRingtone)	(GSM_StateMachine *s, GSM_Ringtone 	    *Ringtone,	bool 	PhoneRingtone);
+	/**
+	 * Reads WAP bookmark.
+	 */
 	GSM_Error (*GetWAPBookmark)	(GSM_StateMachine *s, GSM_WAPBookmark	    *bookmark	);
 	GSM_Error (*GetBitmap)		(GSM_StateMachine *s, GSM_Bitmap	    *Bitmap	);
 	GSM_Error (*SetRingtone)	(GSM_StateMachine *s, GSM_Ringtone	    *Ringtone,	int 	*maxlength	);
@@ -604,7 +949,8 @@ typedef struct {
  	GSM_Error (*GetCategory)	(GSM_StateMachine *s, GSM_Category	    *Category	);
  	GSM_Error (*GetCategoryStatus)	(GSM_StateMachine *s, GSM_CategoryStatus    *Status	);
 	GSM_Error (*GetFMStation)	(GSM_StateMachine *s, GSM_FMStation	    *FMStation	);
-	GSM_Error (*SetFMStation)	(GSM_StateMachine *s, GSM_FMStation	    *FMStation	);	GSM_Error (*ClearFMStations)	(GSM_StateMachine *s);
+	GSM_Error (*SetFMStation)	(GSM_StateMachine *s, GSM_FMStation	    *FMStation	);
+	GSM_Error (*ClearFMStations)	(GSM_StateMachine *s);
 	GSM_Error (*SetIncomingUSSD)	(GSM_StateMachine *s, bool		    enable	);
 	GSM_Error (*DeleteUserRingtones)(GSM_StateMachine *s);
 	GSM_Error (*ShowStartInfo)	(GSM_StateMachine *s, bool 		    enable	);

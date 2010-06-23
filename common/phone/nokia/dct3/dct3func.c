@@ -100,7 +100,7 @@ GSM_Error DCT3_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	DecodeDefault(CB.Text, Buffer, i + 1, false, NULL);
 	smprintf(s, "Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
 	if (s->Phone.Data.EnableIncomingCB && s->User.IncomingCB!=NULL) {
-		s->User.IncomingCB(s->Config.Device,CB);
+		s->User.IncomingCB(s->CurrentConfig->Device,CB);
 	}
 	return GE_NONE;
 }
