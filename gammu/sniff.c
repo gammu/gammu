@@ -102,7 +102,7 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 		if (rx_byte == MBUS2_FRAME_ID) {
 			d->Msg.CheckSum[1] 	= MBUS2_FRAME_ID;
 			d->Msg.Count 		= 0;
-			d->MsgRXState 		= RX_GetDestination;	
+			d->MsgRXState 		= RX_GetDestination;
 		} else {
 			printf("[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, MBUS2_FRAME_ID);
 		}
@@ -173,7 +173,7 @@ static void DecodeInputIRDA(unsigned char rx_byte)
 	if (d->MsgRXState == RX_Sync) {
 		if (rx_byte == PHONET_FRAME_ID) {
 			d->Msg.Count = 0;
-			d->MsgRXState = RX_GetDestination;	
+			d->MsgRXState = RX_GetDestination;
 		}
 	}
 }
@@ -275,7 +275,7 @@ void decodesniff(int argc, char *argv[])
 	if (Protocol == GCT_IRDAPHONET) {
 		PHONETData.MsgRXState=RX_Sync;
 		len2=30000;
-		while (len2==30000) {	
+		while (len2==30000) {
 			len2=fread(Buffer, 1, 30000, file);
 			for (i=0;i<len2;i++) {
 				DecodeInputIRDA(Buffer[i]);
@@ -287,7 +287,7 @@ void decodesniff(int argc, char *argv[])
 		MBUS2Data.MsgRXState=RX_Sync;
 		len2=30000;
 		state=0;
-		while (len2==30000) {	
+		while (len2==30000) {
 			len2=fread(Buffer, 1, 30000, file);
 			pos=0;
 			len=0;
@@ -330,8 +330,8 @@ void decodesniff(int argc, char *argv[])
 					if (Buffer[pos]!=' ') state = 0;
 					break;
 				}
-				pos++;		
-			}	
+				pos++;
+			}
 			for (i=0;i<len;i++) {
 				DecodeInputMBUS2(Buffer2[i]);
 			}
@@ -367,7 +367,7 @@ void decodebinarydump(int argc, char *argv[])
 //	dbgprintf("[Gammu            - version %s]\n",Buffer);
 	len2=30000;
 	msg.Buffer = NULL;
-	while (len2==30000) {	
+	while (len2==30000) {
 		len2=fread(Buffer, 1, 30000, file);
 		i=0;
 		while (i!=len2) {

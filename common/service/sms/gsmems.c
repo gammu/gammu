@@ -14,7 +14,7 @@
 #include "../gsmnet.h"
 #include "gsmsms.h"
 #include "gsmmulti.h"
-					
+
 /* EMS Developers' Guidelines from www.sonyericsson.com
  * docs from Alcatel
  */
@@ -292,12 +292,12 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			if (Entry->Bitmap->Bitmap[0].BitmapWidth > 8 || Entry->Bitmap->Bitmap[0].BitmapHeight > 8) {
 				BitmapType = GSM_EMSMediumPicture;	/* Bitmap 16x16 */
 				Buffer[0]  = 0x0E;			/* ID for 16x16 animation */
-			} else {		
+			} else {
 				BitmapType = GSM_EMSSmallPicture;	/* Bitmap 8x8 */
 				Buffer[0]  = 0x0F;			/* ID for 8x8 animation */
 			}
 			Length = PHONE_GetBitmapSize(BitmapType,0,0);
-	
+
 			Buffer[1] = Length*Entry->Bitmap->Number + 1;	/* Length of rest 	 */
 			Buffer[2] = 0x00; 	 		 	/* Position in EMS msg	 */
 			for (j=0;j<Entry->Bitmap->Number;j++) {
@@ -324,7 +324,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			}
 			Length = PHONE_GetBitmapSize(BitmapType,0,0);
 			PHONE_GetBitmapWidthHeight(BitmapType, &Width, &Height);
-	
+
 			Buffer[1] = Length + 1;		/* Length of rest 	*/
 			Buffer[2] = 0x00; 		/* Position in EMS msg	*/
 			PHONE_EncodeBitmap(BitmapType,Buffer+3, &Entry->Bitmap->Bitmap[0]);
@@ -432,7 +432,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 
 				/* Copying part of bitmap to new structure */
 				Bitmap2.BitmapWidth  = Width2;
-				Bitmap2.BitmapHeight = Height;				
+				Bitmap2.BitmapHeight = Height;
 				GSM_ClearBitmap(&Bitmap2);
 				for (x=0;x<Width2;x++) {
 					for (y=0;y<Height;y++) {
@@ -516,7 +516,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 	}
 	if (UDHType == UDH_ConcatenatedMessages16bit) {
 		UDHID = GSM_MakeSMSIDFromTime();
-		GSM_GetCurrentDateTime (&Date);	
+		GSM_GetCurrentDateTime (&Date);
 		for (i=0;i<SMS->Number;i++) {
 			SMS->SMS[i].UDH.Text[2+1] = Date.Hour;
 			SMS->SMS[i].UDH.Text[3+1] = UDHID;
@@ -645,7 +645,7 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				Info->Entries[Info->EntriesNum].Bitmap->Number 	= 0;
 				for (z=0;z<((SMS->SMS[i].UDH.Text[w+1]-1)/PHONE_GetBitmapSize(BitmapType,0,0));z++) {
 					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[z].Type = GSM_PictureImage;
-					PHONE_DecodeBitmap(BitmapType, 
+					PHONE_DecodeBitmap(BitmapType,
 						SMS->SMS[i].UDH.Text + w + 3 + PHONE_GetBitmapSize(BitmapType,0,0) * z,
 						&Info->Entries[Info->EntriesNum].Bitmap->Bitmap[z]);
 					Info->Entries[Info->EntriesNum].Bitmap->Number++;
@@ -669,8 +669,8 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				if (Info->Entries[Info->EntriesNum].ID != 0) (Info->EntriesNum)++;
 				Info->Entries[Info->EntriesNum].Bitmap = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap));
 				if (Info->Entries[Info->EntriesNum].Bitmap == NULL) return false;
-				PHONE_DecodeBitmap(BitmapType, 
-					SMS->SMS[i].UDH.Text + w + 3, 
+				PHONE_DecodeBitmap(BitmapType,
+					SMS->SMS[i].UDH.Text + w + 3,
 					&Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0]);
 				Info->Entries[Info->EntriesNum].Bitmap->Number 		  = 1;
 				Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].Text[0] = 0;
@@ -697,12 +697,12 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				if (NewPicture) {
 					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].BitmapWidth  = Bitmap.BitmapWidth;
 					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].BitmapHeight = Bitmap.BitmapHeight;
-					PHONE_DecodeBitmap(GSM_EMSVariablePicture, 
-						SMS->SMS[i].UDH.Text + w + 5, 
+					PHONE_DecodeBitmap(GSM_EMSVariablePicture,
+						SMS->SMS[i].UDH.Text + w + 5,
 						&Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0]);
 				} else {
-					PHONE_DecodeBitmap(GSM_EMSVariablePicture, 
-						SMS->SMS[i].UDH.Text + w + 5, 
+					PHONE_DecodeBitmap(GSM_EMSVariablePicture,
+						SMS->SMS[i].UDH.Text + w + 5,
 						&Bitmap);
 					Bitmap2 = Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0];
 					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].BitmapWidth  = Bitmap.BitmapWidth+Bitmap2.BitmapWidth;

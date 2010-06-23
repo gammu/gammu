@@ -46,7 +46,7 @@
 #  include <sys/ioctl.h>
 #endif
 
-                			
+
 GSM_StateMachine		s;
 GSM_Phone_Functions		*Phone;
 static INI_Section		*cfg 			= NULL;
@@ -100,24 +100,24 @@ static void PrintSecurityStatus()
 	Print_Error(error);
 	switch(Status) {
 		case SEC_SecurityCode:
-			printmsg("Waiting for Security Code.\n");	
+			printmsg("Waiting for Security Code.\n");
 			break;
 		case SEC_Pin:
-			printmsg("Waiting for PIN.\n");			
+			printmsg("Waiting for PIN.\n");
 			break;
-		case SEC_Pin2: 
-			printmsg("Waiting for PIN2.\n"); 		
+		case SEC_Pin2:
+			printmsg("Waiting for PIN2.\n");
 			break;
-		case SEC_Puk: 
-			printmsg("Waiting for PUK.\n");			
+		case SEC_Puk:
+			printmsg("Waiting for PUK.\n");
 			break;
-		case SEC_Puk2: 
-			printmsg("Waiting for PUK2.\n"); 		
+		case SEC_Puk2:
+			printmsg("Waiting for PUK2.\n");
 			break;
-		case SEC_None: 
-			printmsg("Nothing to enter.\n"); 		
+		case SEC_None:
+			printmsg("Nothing to enter.\n");
 			break;
-		default: 
+		default:
 			printmsg("Unknown\n");
 	}
 }
@@ -228,7 +228,7 @@ static GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone)
 		if (error!=ERR_NONE) return error;
 		first = false;
 	}
-  
+
 	/* Disables buzzer */
 	return s.Phone.Functions->PlayTone(&s,255*255,0,false);
 }
@@ -349,7 +349,7 @@ static void GetDateTime(int argc, char *argv[])
 	default:
 		Print_Error(error);
 	}
-	
+
 	error=Phone->GetLocale(&s, &locale);
 	switch (error) {
 	case ERR_NOTSUPPORTED:
@@ -512,7 +512,7 @@ static void PrintMemoryEntry(GSM_MemoryEntry *entry)
 				break;
 			case PBK_RingtoneID	     :
 				unknown = true;
-				if (!ringinit) {					
+				if (!ringinit) {
 					error=Phone->GetRingtonesInfo(&s,&Info);
 					if (error != ERR_NOTSUPPORTED) Print_Error(error);
 					if (error == ERR_NONE) ringinit = true;
@@ -521,7 +521,7 @@ static void PrintMemoryEntry(GSM_MemoryEntry *entry)
 					for (z=0;z<Info.Number;z++) {
 						if (Info.Ringtone[z].ID == entry->Entries[i].Number) {
 							printmsg("Ringtone         : \"%s\"\n",DecodeUnicodeConsole(Info.Ringtone[z].Name));
-							break; 
+							break;
 						}
 					}
 				} else {
@@ -550,7 +550,7 @@ static void GetAllMemory(int argc, char *argv[])
 {
 	GSM_MemoryEntry		Entry;
 	bool			start = true;
-	
+
 	signal(SIGINT, interrupt);
 	printmsgerr("Press Ctrl+C to break...\n");
 
@@ -568,7 +568,7 @@ static void GetAllMemory(int argc, char *argv[])
 		printmsg("ERROR: unknown memory type (\"%s\")\n",argv[2]);
 		exit (-1);
 	}
-	
+
 	GSM_Init(true);
 
 	while (!gshutdown) {
@@ -583,7 +583,7 @@ static void GetAllMemory(int argc, char *argv[])
 
  	if (Info.Ringtone) free(Info.Ringtone);
 
-	GSM_Terminate();        	
+	GSM_Terminate();
 }
 
 static void GetMemory(int argc, char *argv[])
@@ -651,7 +651,7 @@ static void GetMemory(int argc, char *argv[])
 	printmsg("%i entries empty, %i entries filled\n",emptynum,fillednum);
 
  	if (Info.Ringtone) free(Info.Ringtone);
-	
+
 	GSM_Terminate();
 }
 
@@ -708,7 +708,7 @@ static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 				break;
 		}
 	}
-}	
+}
 
 static void SearchOneMemory(GSM_MemoryType MemoryType, char *Title, unsigned char *Text)
 {
@@ -811,7 +811,7 @@ static void ListMemoryCategory(int argc, char *argv[])
 	unsigned char		Text[(GSM_MAX_CATEGORY_NAME_LENGTH+1)*2];
 	int			Length;
 	bool			Number = true;;
-	
+
 	GSM_Init(true);
 
 	signal(SIGINT, interrupt);
@@ -826,7 +826,7 @@ static void ListMemoryCategory(int argc, char *argv[])
 	}
 
 	if (Number) {
-		j = atoi(argv[2]); 
+		j = atoi(argv[2]);
 		if (j > 0) {
 			ListMemoryCategoryEntries(j);
 		}
@@ -839,12 +839,12 @@ static void ListMemoryCategory(int argc, char *argv[])
 
 		Category.Type 	= Category_Phonebook;
 		Status.Type 	= Category_Phonebook;
-		
+
 		if (Phone->GetCategoryStatus(&s, &Status) == ERR_NONE) {
 			for (count=0,j=1;count<Status.Used;j++) {
 				Category.Location=j;
 				error=Phone->GetCategory(&s, &Category);
-			
+
 				if (error != ERR_EMPTY) {
 					count++;
 					if (mywstrstr(Category.Name, Text) != NULL) {
@@ -979,7 +979,7 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool disp
 			case UDH_NokiaRingtone		   : printmsg("Nokia ringtone");		 	 break;
 			case UDH_NokiaRingtoneLong	   : printmsg("Nokia ringtone");		 	 break;
 			case UDH_NokiaOperatorLogo	   : printmsg("Nokia GSM operator logo");	 	 break;
-			case UDH_NokiaCallerLogo	   : printmsg("Nokia caller logo");		 	 break;  	
+			case UDH_NokiaCallerLogo	   : printmsg("Nokia caller logo");		 	 break;
 			case UDH_NokiaProfileLong	   : printmsg("Nokia profile");		 		 break;
 			case UDH_NokiaCalendarLong	   : printmsg("Nokia calendar note");	 		 break;
 			case UDH_NokiaPhonebookLong	   : printmsg("Nokia phonebook entry");	 		 break;
@@ -1096,10 +1096,10 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems
 			break;
 		case SMS_EMSPredefinedSound:
 			printmsg("\nEMS sound ID: %i\n",SMSInfo.Entries[i].Number);
-			break;			
+			break;
 		case SMS_EMSPredefinedAnimation:
 			printmsg("\nEMS animation ID: %i\n",SMSInfo.Entries[i].Number);
-			break;			
+			break;
 		default:
 			printf("Error\n");
 			break;
@@ -1149,15 +1149,15 @@ static void IncomingSMS(char *Device, GSM_SMSMessage sms)
  	memcpy(&IncomingSMSData.SMS[0],&sms,sizeof(GSM_SMSMessage));
  	IncomingSMSData.Number = 1;
 }
- 
+
 static void DisplayIncomingSMS()
 {
  	GSM_SMSFolders folders;
-	
+
  	if (IncomingSMSData.SMS[0].State == 0) {
  		error=Phone->GetSMSFolders(&s, &folders);
  		Print_Error(error);
- 
+
  		error=Phone->GetSMS(&s, &IncomingSMSData);
  		switch (error) {
  		case ERR_EMPTY:
@@ -1325,7 +1325,7 @@ static void Monitor(int argc, char *argv[])
 		if (gshutdown) break;
 		if (Phone->GetNetworkInfo(&s,&NetInfo)==ERR_NONE) {
 			printmsg("Network state     : ");
-                        switch (NetInfo.State) {                                                         	
+                        switch (NetInfo.State) {
 				case GSM_HomeNetwork		: printmsg("home network\n"); 		 	break;
 				case GSM_RoamingNetwork		: printmsg("roaming network\n"); 	 	break;
 				case GSM_RequestingNetwork	: printmsg("requesting network\n"); 	 	break;
@@ -1401,7 +1401,7 @@ static void GetSMSC(int argc, char *argv[])
 		}
 		printmsg("Number         : \"%s\"\n",DecodeUnicodeConsole(smsc.Number));
 		printmsg("Default number : \"%s\"\n",DecodeUnicodeConsole(smsc.DefaultNumber));
-	
+
 		printmsg("Format         : ");
 		switch (smsc.Format) {
 			case SMS_FORMAT_Text	: printmsg("Text");	break;
@@ -1591,7 +1591,7 @@ static void GetEachSMS(int argc, char *argv[])
 		GetSMS[i] = NULL;
 		i++;
 	}
-	
+
 	i=0;
 	while(SortedSMS[i] != NULL) {
 		for (j=0;j<SortedSMS[i]->Number;j++) {
@@ -1686,7 +1686,7 @@ static void GetRingtonesList(int argc, char *argv[])
 
 	GSM_Terminate();
 
-	for (i=0;i<Info.Number;i++) printmsg("%i. \"%s\"\n",i,DecodeUnicodeConsole(Info.Ringtone[i].Name));
+	for (i=0;i<Info.Number;i++) printmsg("%i. \"%s\"\n",i+1,DecodeUnicodeConsole(Info.Ringtone[i].Name));
 
  	if (Info.Ringtone) free(Info.Ringtone);
 }
@@ -1698,7 +1698,7 @@ static void DialVoice(int argc, char *argv[])
 	if (argc > 3) {
 		if (mystrncasecmp(argv[3],"show",0)) {		ShowNumber = GSM_CALL_ShowNumber;
 		} else if (mystrncasecmp(argv[3],"hide",0)) {	ShowNumber = GSM_CALL_HideNumber;
-		} else {	
+		} else {
 			printmsg("Unknown parameter (\"%s\")\n",argv[3]);
 			exit(-1);
 		}
@@ -1926,7 +1926,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 			break;
 		case CAL_PHONE:
 			printmsg("Phone        : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
-			break;               
+			break;
 		case CAL_PRIVATE:
 			printmsg("Private      : %s\n",Note->Entries[i].Number == 1 ? "Yes" : "No");
 			break;
@@ -1944,7 +1944,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 			} else {
 				printmsg("Contact ID   : %d\n",Note->Entries[i].Number);
 			}
-			break;                
+			break;
 		case CAL_REPEAT_DAYOFWEEK:
 			repeat_dayofweek 	= Note->Entries[i].Number;
 			repeating 		= true;
@@ -2086,7 +2086,7 @@ static void GetCalendar(int argc, char *argv[])
 		PrintCalendar(&Note);
 	}
 
-	GSM_Terminate();        	
+	GSM_Terminate();
 }
 
 static void DeleteCalendar(int argc, char *argv[])
@@ -2106,7 +2106,7 @@ static void DeleteCalendar(int argc, char *argv[])
 		PrintCalendar(&Note);
 	}
 
-	GSM_Terminate();        	
+	GSM_Terminate();
 }
 
 
@@ -2282,7 +2282,7 @@ static void GetBitmap(int argc, char *argv[])
 //			}
 		    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
 			error = ERR_NONE;
-						
+
 			printmsg("Ringtone    : \"%s\" (file with ID %i)\n",
 				DecodeUnicodeString(File.Name),
 				MultiBitmap.Bitmap[0].RingtoneID);
@@ -2498,7 +2498,7 @@ static void SetRingtone(int argc, char *argv[])
 		switch (nextlong) {
 		case 0:
 			if (mystrncasecmp(argv[i],"-scale",0)) {
-				ringtone.NoteTone.AllNotesScale = true;	
+				ringtone.NoteTone.AllNotesScale = true;
 				break;
 			}
 			if (mystrncasecmp(argv[i],"-location",0)) {
@@ -2558,7 +2558,7 @@ static void DisplaySMSFrame(GSM_SMSMessage *SMS)
 		req[i-SMS->UDH.Length]=buffer[PHONE_SMSSubmit.Text+i];
 	}
         EncodeHexBin(hexmsg, req, length-SMS->UDH.Length);
- 
+
         for(i=0;i<SMS->UDH.Length;i++) {
 		req[i]=buffer[PHONE_SMSSubmit.Text+i];
 	}
@@ -2667,9 +2667,9 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 
 	if (mystrncasecmp(argv[2],"TEXT",0)) {
 		chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
-		if (chars_read == 0) printmsg("Warning: 0 chars read !\n");	
-		InputBuffer[chars_read] 		= 0x00;	
-		InputBuffer[chars_read+1] 		= 0x00;	
+		if (chars_read == 0) printmsg("Warning: 0 chars read !\n");
+		InputBuffer[chars_read] 		= 0x00;
+		InputBuffer[chars_read+1] 		= 0x00;
 		EncodeUnicode(Buffer[0],InputBuffer,strlen(InputBuffer));
 		SMSInfo.Entries[0].Buffer  		= Buffer[0];
 		SMSInfo.Entries[0].ID			= SMS_Text;
@@ -2823,7 +2823,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			exit(-1);
 		}
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaWAPBookmarkLong;
-		SMSInfo.Entries[0].Bookmark = Backup.WAPBookmark[i];		
+		SMSInfo.Entries[0].Bookmark = Backup.WAPBookmark[i];
 		if (mystrncasecmp(argv[1],"--savesms",0)) {
 			EncodeUnicode(Sender, "Bookmark",8);
 			EncodeUnicode(Name,"WAP Bookmark",12);
@@ -2925,7 +2925,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			exit(-1);
 		}
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaVCALENDAR10Long;
-		SMSInfo.Entries[0].Calendar = Backup.Calendar[i];		
+		SMSInfo.Entries[0].Calendar = Backup.Calendar[i];
 		if (mystrncasecmp(argv[1],"--savesms",0)) {
 			EncodeUnicode(Sender, "Calendar",8);
 		}
@@ -2947,7 +2947,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			exit(-1);
 		}
 		SMSInfo.Entries[0].ID 	 	= SMS_NokiaVTODOLong;
-		SMSInfo.Entries[0].ToDo 	= Backup.ToDo[i];		
+		SMSInfo.Entries[0].ToDo 	= Backup.ToDo[i];
 		if (mystrncasecmp(argv[1],"--savesms",0)) {
 			EncodeUnicode(Sender, "ToDo",8);
 		}
@@ -3163,14 +3163,14 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 				}
 				break;
 			}
-			if (mystrncasecmp(argv[2],"VCARD10",0)) {				
+			if (mystrncasecmp(argv[2],"VCARD10",0)) {
 				if (mystrncasecmp(argv[i],"-nokia",0)) {
 					SMSInfo.Entries[0].ID = SMS_NokiaVCARD10Long;
 					break;
 				}
 				break;
 			}
-			if (mystrncasecmp(argv[2],"VCARD21",0)) {				
+			if (mystrncasecmp(argv[2],"VCARD21",0)) {
 				if (mystrncasecmp(argv[i],"-nokia",0)) {
 					SMSInfo.Entries[0].ID = SMS_NokiaVCARD21Long;
 					break;
@@ -3437,15 +3437,15 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		case 1: /* SMS folder - only during saving SMS */
 			Folder	 = atoi(argv[i]);
 			nextlong = 0;
-			break;				
+			break;
 		case 2: /* Sender number - only during saving SMS */
 			EncodeUnicode(Sender,argv[i],strlen(argv[i]));
 			nextlong = 0;
-			break;	
+			break;
 		case 3: /* SMSC set number */
 			SMSCSet	 = atoi(argv[i]);
 			nextlong = 0;
-			break;				
+			break;
 		case 4: /* Number of SMSC */
 			EncodeUnicode(SMSC,argv[i],strlen(argv[i]));
 			SMSCSet		= 0;
@@ -3493,7 +3493,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			nextlong = 0;
 			break;
 		case 9:/* Replace file for text SMS */
-			ReplaceFile = fopen(argv[i], "rb");      
+			ReplaceFile = fopen(argv[i], "rb");
 			if (ReplaceFile == NULL) Print_Error(ERR_CANTOPENFILE);
 			memset(ReplaceBuffer,0,sizeof(ReplaceBuffer));
 			fread(ReplaceBuffer,1,sizeof(ReplaceBuffer),ReplaceFile);
@@ -3581,7 +3581,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			f = fopen(argv[i],"rb");
 			if (f == NULL) {
 				printmsg("Can't open file \"%s\"\n",argv[i]);
-				exit(-1);			    
+				exit(-1);
 			}
 			z=fread(InputBuffer,1,2000,f);
 			InputBuffer[z]   = 0;
@@ -3631,12 +3631,12 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					break;
 				default:
 					printmsg("Unknown parameter \"%c\"\n",argv[i][j]);
-					exit(-1);			    
+					exit(-1);
 				}
 				}
 			} else {
 				printmsg("Last parameter wasn't text\n");
-				exit(-1);			    
+				exit(-1);
 			}
 			nextlong = 0;
 			break;
@@ -3892,7 +3892,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			}
 		}
 	}
-	
+
 	GSM_Terminate();
 }
 
@@ -4107,7 +4107,7 @@ static void Backup(int argc, char *argv[])
 			if (answer_yes("   Backup phone phonebook")) DoBackup = true;
 		}
 	}
-	if (DoBackup) {		
+	if (DoBackup) {
 		Pbk.MemoryType  = MEM_ME;
 		i		= 1;
 		used 		= 0;
@@ -4622,7 +4622,7 @@ static void Backup(int argc, char *argv[])
 	}
 	if (DoBackup) {
 		used	= 0;
-		i	= 1;				
+		i	= 1;
 		printmsgerr("   Reading: ");
 		while (error == ERR_NONE || error == ERR_EMPTY) {
 			error = Phone->GetFMStation(&s,&FMStation);
@@ -4640,7 +4640,7 @@ static void Backup(int argc, char *argv[])
  				used++;
  			}
  			i++;
- 			FMStation.Location = i;					
+ 			FMStation.Location = i;
  			printmsgerr("*");
  		}
  		printmsgerr("\n");
@@ -4656,7 +4656,7 @@ static void Backup(int argc, char *argv[])
 	}
 	if (DoBackup) {
 		used	= 0;
-		i	= 1;				
+		i	= 1;
 		printmsgerr("   Reading: ");
 		while (error == ERR_NONE || error == ERR_EMPTY) {
 			error = Phone->GetGPRSAccessPoint(&s,&GPRSPoint);
@@ -4674,7 +4674,7 @@ static void Backup(int argc, char *argv[])
  				used++;
  			}
  			i++;
- 			GPRSPoint.Location = i;					
+ 			GPRSPoint.Location = i;
  			printmsgerr("*");
  		}
  		printmsgerr("\n");
@@ -4726,7 +4726,7 @@ static void Restore(int argc, char *argv[])
 		dbgprintf("\"%s\"\n",Backup.MD5Original);
 		dbgprintf("\"%s\"\n",Backup.MD5Calculated);
 		if (strcmp(Backup.MD5Original,Backup.MD5Calculated)) {
-			if (!answer_yes("Checksum in backup file do not match. Continue")) return;			
+			if (!answer_yes("Checksum in backup file do not match. Continue")) return;
 		}
 	}
 
@@ -4827,7 +4827,7 @@ static void Restore(int argc, char *argv[])
 		}
 		printmsgerr("\n");
 	}
-	
+
 	if (!mystrncasecmp(s.CurrentConfig->SyncTime,"yes",0)) {
 		if (answer_yes("Do you want to set date/time in phone (NOTE: in some phones it's required to correctly restore calendar notes and other items)")) {
 			GSM_GetCurrentDateTime(&date_time);
@@ -4858,7 +4858,7 @@ static void Restore(int argc, char *argv[])
 				error = Phone->GetNextCalendar(&s,&Calendar,true);
 				if (error != ERR_NONE) break;
 				error = Phone->DeleteCalendar(&s,&Calendar);
- 				Print_Error(error);				
+ 				Print_Error(error);
 				printmsgerr("*");
 			}
 			printmsgerr("\n");
@@ -4905,7 +4905,7 @@ static void Restore(int argc, char *argv[])
 				error = Phone->GetNextToDo(&s,&ToDo,true);
 				if (error != ERR_NONE) break;
 				error = Phone->DeleteToDo(&s,&ToDo);
- 				Print_Error(error);				
+ 				Print_Error(error);
 				printmsgerr("*");
 			}
 			printmsgerr("\n");
@@ -4951,7 +4951,7 @@ static void Restore(int argc, char *argv[])
 			}
 		}
 		printmsgerr("\n");
-			
+
 		/* Now write modified/new entries */
 		for (i=0;i<max;i++) {
 			ToDo  = *Backup.ToDo[i];
@@ -4983,7 +4983,7 @@ static void Restore(int argc, char *argv[])
 			error = Phone->GetNextNote(&s,&Note,true);
 			if (error != ERR_NONE) break;
 			error = Phone->DeleteNote(&s,&Note);
- 			Print_Error(error);				
+ 			Print_Error(error);
 			printmsgerr("*");
 		}
 		printmsgerr("\n");
@@ -5269,7 +5269,7 @@ static void AddNew(int argc, char *argv[])
 						}
 						Pbk 		= *Backup.PhonePhonebook[i];
 						Pbk.MemoryType 	= MEM_ME;
-						Pbk.Location 	= j;										
+						Pbk.Location 	= j;
 						error=Phone->SetMemory(&s, &Pbk);
 						Print_Error(error);
 						printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
@@ -5277,7 +5277,7 @@ static void AddNew(int argc, char *argv[])
 							GSM_Terminate();
 							exit(0);
 						}
-					}					
+					}
 				} else {
 					for (i=0;i<max;i++) {
 						Pbk 		= *Backup.PhonePhonebook[i];
@@ -5323,7 +5323,7 @@ static void AddNew(int argc, char *argv[])
 						}
 						Pbk 		= *Backup.SIMPhonebook[i];
 						Pbk.MemoryType 	= MEM_SM;
-						Pbk.Location 	= j;										
+						Pbk.Location 	= j;
 						error=Phone->SetMemory(&s, &Pbk);
 						Print_Error(error);
 						printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
@@ -5331,7 +5331,7 @@ static void AddNew(int argc, char *argv[])
 							GSM_Terminate();
 							exit(0);
 						}
-					}					
+					}
 				} else {
 					for (i=0;i<max;i++) {
 						Pbk 		= *Backup.SIMPhonebook[i];
@@ -5509,7 +5509,7 @@ static void ClearAll(int argc, char *argv[])
 				error = Phone->GetNextCalendar(&s,&Calendar,true);
 				if (error != ERR_NONE) break;
 				error = Phone->DeleteCalendar(&s,&Calendar);
- 				Print_Error(error);				
+ 				Print_Error(error);
 				printmsgerr("*");
 			}
 			printmsgerr("\n");
@@ -5532,7 +5532,7 @@ static void ClearAll(int argc, char *argv[])
 				error = Phone->GetNextToDo(&s,&ToDo,true);
 				if (error != ERR_NONE) break;
 				error = Phone->DeleteToDo(&s,&ToDo);
- 				Print_Error(error);				
+ 				Print_Error(error);
 				printmsgerr("*");
 			}
 			printmsgerr("\n");
@@ -5553,7 +5553,7 @@ static void ClearAll(int argc, char *argv[])
 			error = Phone->GetNextNote(&s,&Note,true);
 			if (error != ERR_NONE) break;
 			error = Phone->DeleteNote(&s,&Note);
-			Print_Error(error);				
+			Print_Error(error);
 			printmsgerr("*");
 		}
 		printmsgerr("\n");
@@ -5585,7 +5585,7 @@ static void ClearAll(int argc, char *argv[])
 			error=Phone->DeleteUserRingtones(&s);
 			Print_Error(error);
 			printmsgerr("Done\n");
-		}		
+		}
 	}
 	Station.Location=i;
 	error=Phone->GetFMStation(&s,&Station);
@@ -5638,7 +5638,7 @@ static void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
 		if (settings->Settings[j].IsISDNCall) {
 			printmsg("Data call type      : ISDN\n");
               	} else {
-			printmsg("Data call type      : Analogue\n");  
+			printmsg("Data call type      : Analogue\n");
 		}
 		switch (settings->Settings[j].Speed) {
 			case WAPSETTINGS_SPEED_9600  : printmsg("Data call speed     : 9600\n");  break;
@@ -5655,7 +5655,7 @@ static void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
 		if (settings->Settings[j].IsIP) {
 			printmsg("Address type        : IP address\nIPaddress           : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].Service));
 		} else {
-			printmsg("Address type        : Service number\nService number      : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].Service));	
+			printmsg("Address type        : Service number\nService number      : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].Service));
 		}
 		break;
 	case WAPSETTINGS_BEARER_GPRS:
@@ -5882,7 +5882,7 @@ static void AddSMS(int argc, char *argv[])
 	int			folder;
 
 	folder = atoi(argv[2]);
-	
+
 	error = GSM_ReadSMSBackupFile(argv[3], &Backup);
 	Print_Error(error);
 
@@ -5929,7 +5929,7 @@ static void RestoreSMS(int argc, char *argv[])
 		if (!restore8bit && Backup.SMS[smsnum]->Coding == SMS_Coding_8bit) doit = false;
 		if (doit) {
 			SMS.Number = 1;
-			memcpy(&SMS.SMS[0],Backup.SMS[smsnum],sizeof(GSM_SMSMessage));	
+			memcpy(&SMS.SMS[0],Backup.SMS[smsnum],sizeof(GSM_SMSMessage));
 			displaymultismsinfo(SMS,false,false);
 			sprintf(buffer,"Restore %03i sms to folder \"%s\"",smsnum+1,DecodeUnicodeConsole(folders.Folder[Backup.SMS[smsnum]->Folder-1].Name));
 			if (folders.Folder[Backup.SMS[smsnum]->Folder-1].Memory == MEM_SM) strcat(buffer," (SIM)");
@@ -5999,7 +5999,7 @@ static void NokiaComposer(int argc, char *argv[])
 	GSM_RingNoteDuration 	Duration;
 	GSM_RingNoteDuration 	DefNoteDuration = 32; /* 32 = Duration_1_4 */
 	unsigned int		DefNoteScale 	= Scale_880;
-  
+
 	ringtone.Format	= 0;
 	error=GSM_ReadRingtoneFile(argv[2],&ringtone);
 
@@ -6007,8 +6007,8 @@ static void NokiaComposer(int argc, char *argv[])
 		printmsg("It can be RTTL ringtone only used with this option\n");
 		exit(-1);
 	}
- 
-	started = false; 
+
+	started = false;
 	j	= 0;
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
@@ -6024,7 +6024,7 @@ static void NokiaComposer(int argc, char *argv[])
 	}
     	if (j>50) printmsg("WARNING: LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES.",j);
 
-	printmsg("\n\nThis ringtone in Nokia Composer in phone should look: ");  
+	printmsg("\n\nThis ringtone in Nokia Composer in phone should look: ");
 	started = false;
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
@@ -6063,7 +6063,7 @@ static void NokiaComposer(int argc, char *argv[])
 		}
 	}
 
-	printmsg("\n\nTo enter it please press: ");    
+	printmsg("\n\nTo enter it please press: ");
 	started = false;
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
@@ -6206,7 +6206,7 @@ static void GetAllCategories(int argc, char *argv[])
 	{
     		Category.Location=j;
 		error=Phone->GetCategory(&s, &Category);
-        
+
 		if (error != ERR_EMPTY) {
 			printmsg("Location: %i\n",j);
 
@@ -6281,7 +6281,7 @@ static void DeleteToDo(int argc, char *argv[])
 		printf("\n");
 	}
 
-	GSM_Terminate();        	
+	GSM_Terminate();
 }
 
 static void PrintToDo(GSM_ToDoEntry *ToDo)
@@ -6363,7 +6363,7 @@ static void ListToDoCategoryEntries(int Category)
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
 		for (j=0;j<Entry.EntriesNum;j++) {
-			if (Entry.Entries[j].EntryType == TODO_CATEGORY && Entry.Entries[j].Number == (unsigned int)Category) 
+			if (Entry.Entries[j].EntryType == TODO_CATEGORY && Entry.Entries[j].Number == (unsigned int)Category)
 				PrintToDo(&Entry);
 		}
  		start = false;
@@ -6379,7 +6379,7 @@ static void ListToDoCategory(int argc, char *argv[])
 	unsigned char		Text[(GSM_MAX_CATEGORY_NAME_LENGTH+1)*2];
 	int			Length;
 	bool			Number = true;;
-	
+
 	GSM_Init(true);
 
 	signal(SIGINT, interrupt);
@@ -6394,7 +6394,7 @@ static void ListToDoCategory(int argc, char *argv[])
 	}
 
 	if (Number) {
-		j = atoi(argv[2]); 
+		j = atoi(argv[2]);
 		if (j > 0) {
 			ListToDoCategoryEntries(j);
 		}
@@ -6407,12 +6407,12 @@ static void ListToDoCategory(int argc, char *argv[])
 
 		Category.Type 	= Category_ToDo;
 		Status.Type 	= Category_ToDo;
-		
+
 		if (Phone->GetCategoryStatus(&s, &Status) == ERR_NONE) {
 			for (count=0,j=1;count<Status.Used;j++) {
 				Category.Location=j;
 				error=Phone->GetCategory(&s, &Category);
-			
+
 				if (error != ERR_EMPTY) {
 					count++;
 					if (mywstrstr(Category.Name, Text) != NULL) {
@@ -6444,7 +6444,7 @@ static void GetToDo(int argc, char *argv[])
 		PrintToDo(&ToDo);
 	}
 
-	GSM_Terminate();        	
+	GSM_Terminate();
 }
 
 static void GetAllToDo(int argc, char *argv[])
@@ -6465,7 +6465,7 @@ static void GetAllToDo(int argc, char *argv[])
  		start = false;
 	}
 
-	GSM_Terminate();        	
+	GSM_Terminate();
 }
 
 static void GetAllNotes(int argc, char *argv[])
@@ -6486,7 +6486,7 @@ static void GetAllNotes(int argc, char *argv[])
        	    	printf("\n");
  		start = false;
 	}
-	GSM_Terminate();        	
+	GSM_Terminate();
 }
 
 static void GetSecurityStatus(int argc, char *argv[])
@@ -6517,7 +6517,7 @@ static void EnterSecurityCode(int argc, char *argv[])
 
 	error=Phone->EnterSecurityCode(&s,Code);
 	Print_Error(error);
-	
+
 	GSM_Terminate();
 }
 
@@ -6566,7 +6566,7 @@ static void GetProfile(int argc, char *argv[])
 				} else {
 					printmsg("%i\n",Profile.FeatureValue[j]);
 				}
-				break;	
+				break;
 			case Profile_CallerGroups:
 				special = true;
 				printmsg("Call alert for        :");
@@ -6648,7 +6648,7 @@ static void GetProfile(int argc, char *argv[])
 				case PROFILE_SAVER_TIMEOUT_5MIN	 	: printmsg("5 minutes\n");	break;
 				case PROFILE_SAVER_TIMEOUT_10MIN 	: printmsg("10 minutes\n");	break;
 				default					: printmsg("UNKNOWN\n");
-				}	
+				}
 			}
 		}
 		printf("\n");
@@ -6685,7 +6685,7 @@ static void GetSpeedDial(int argc, char *argv[])
 			error=Phone->GetMemory(&s,&Phonebook);
 
 			GSM_PhonebookFindDefaultNameNumberGroup(&Phonebook, &Name, &Number, &Group);
-	
+
 			if (Name != -1) printmsg(" Name \"%s\",",DecodeUnicodeConsole(Phonebook.Entries[Name].Text));
 			printmsg(" Number \"%s\"",DecodeUnicodeConsole(Phonebook.Entries[SpeedDial.MemoryNumberID-1].Text));
 		}
@@ -6713,7 +6713,7 @@ static void ResetPhoneSettings(int argc, char *argv[])
 
 	error=Phone->ResetPhoneSettings(&s,Type);
 	Print_Error(error);
-	
+
  	GSM_Terminate();
 }
 
@@ -6812,7 +6812,7 @@ static void SendDTMF(int argc, char *argv[])
 
 	error=Phone->SendDTMF(&s,argv[2]);
 	Print_Error(error);
-	
+
  	GSM_Terminate();
 }
 
@@ -6839,7 +6839,7 @@ static void GetDisplayStatus(int argc, char *argv[])
 		case GSM_SMSMemoryFull	: printmsg("SMS memory full\n");
 		}
 	}
-	
+
  	GSM_Terminate();
 }
 
@@ -6849,7 +6849,7 @@ static void SetAutoNetworkLogin(int argc, char *argv[])
 
 	error=Phone->SetAutoNetworkLogin(&s);
 	Print_Error(error);
-	
+
  	GSM_Terminate();
 }
 
@@ -6918,6 +6918,9 @@ static void ListNetworks(int argc, char *argv[])
 
 static void Version(int argc, char *argv[])
 {
+#ifdef DEBUG
+	GSM_DateTime	dt;
+#endif
 //	unsigned char 	buff[10];
 //	int		len;
 
@@ -6934,6 +6937,14 @@ static void Version(int argc, char *argv[])
 	printf("GSM_DateTime    - %i\n",sizeof(GSM_DateTime));
 	printf("int             - %i\n",sizeof(int));
 	printf("GSM_NetworkInfo - %i\n",sizeof(GSM_NetworkInfo));
+	dt.Year = 2005;
+	dt.Month = 2;
+	dt.Day=29;
+	if (CheckDate(&dt)) printf("ok1");
+	dt.Year = 2008;
+	dt.Month = 2;
+	dt.Day=29;
+	if (CheckDate(&dt)) printf("ok2");
 #endif
 
 //	len=DecodeBASE64("AXw", buff, 3);
@@ -6988,15 +6999,33 @@ static void GetFileSystem(int argc, char *argv[])
 	bool 			Start = true;
 	GSM_File	 	Files;
 	int			j;
+	long			usedphone=0,usedcard=0;
 	GSM_FileSystemStatus	Status;
 	char 			FolderName[256];
 
 	GSM_Init(true);
 
+	if (!strcmp(s.Phone.Data.ModelInfo->model,"6230") &&
+	    s.ConnectionType == GCT_IRDAPHONET) {
+		printmsg("WARNING: firmware in your phone has bug in infrared support and only part of files will be listed. Use BT (or cable) or upgrade firmware (if there is something higher than 5.24 available)\n\n");
+	}
+
 	while (1) {
 		error = Phone->GetNextFileFolder(&s,&Files,Start);
 		if (error == ERR_EMPTY) break;
 	    	Print_Error(error);
+
+		if (!Files.Folder) {
+			if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_FILES2)) {
+				if (Files.ID_FullName[0] == 'b') {
+					usedcard+=Files.Used;
+				} else {
+					usedphone+=Files.Used;
+				}
+			} else {
+				usedphone+=Files.Used;
+			}
+		}
 
 		if (argc <= 2 || !mystrncasecmp(argv[2],"-flatall",0)) {
 			if (strlen(Files.ID_FullName) < 5 && strlen(Files.ID_FullName) != 0 && Files.ID_FullName[0]>='0' && Files.ID_FullName[0]<='9') {
@@ -7041,8 +7070,8 @@ static void GetFileSystem(int argc, char *argv[])
 			}
 			printf("\"%s\"\n",DecodeUnicodeConsole(Files.Name));
 		} else if (argc > 2 && mystrncasecmp(argv[2],"-flatall",0)) {
-			/* format for a folder ID;Folder;FOLDER_NAME;[FOLDER_PARAMETERS] 
-			 * format for a file   ID;File;FOLDER_NAME;FILE_NAME;DATESTAMP;FILE_SIZE;[FILE_PARAMETERS]  */	
+			/* format for a folder ID;Folder;FOLDER_NAME;[FOLDER_PARAMETERS]
+			 * format for a file   ID;File;FOLDER_NAME;FILE_NAME;DATESTAMP;FILE_SIZE;[FILE_PARAMETERS]  */
 			if (!Files.Folder) {
 				printf("%s;File;",Files.ID_FullName);
 				printf("\"%s\";",FolderName);
@@ -7055,21 +7084,101 @@ static void GetFileSystem(int argc, char *argv[])
 				printf("%s;Folder;",Files.ID_FullName);
 				printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
 				strcpy(FolderName,DecodeUnicodeConsole(Files.Name));
-			}	
-			
-			if (Files.Protected)  	printf("P");  
-			if (Files.ReadOnly)  	printf("R");  
-			if (Files.Hidden)  	printf("H"); 
-			if (Files.System)  	printf("S"); 
+			}
+
+			if (Files.Protected)  	printf("P");
+			if (Files.ReadOnly)  	printf("R");
+			if (Files.Hidden)  	printf("H");
+			if (Files.System)  	printf("S");
 			printf("\n");
 		}
 		Start = false;
-	}	
+	}
+
+	printmsg("\nUsed in phone: %li, used in card: %li\n",usedphone,usedcard);
 
 	error = Phone->GetFileSystemStatus(&s,&Status);
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
 	    	Print_Error(error);
 		printmsg("\nFree memory: %i, total memory: %i\n",Status.Free,Status.Free+Status.Used);
+	}
+
+	GSM_Terminate();
+}
+
+static void SetFileAttrib(int argc, char *argv[])
+{
+	GSM_File	 	Files;
+	int			i;
+
+	Files.ReadOnly  = false;
+	Files.Protected = false;
+	Files.System    = false;
+	Files.Hidden    = false;
+
+	strcpy(Files.ID_FullName,argv[2]);
+	for (i=3;i<argc;i++) {
+		if (mystrncasecmp(argv[i],"-readonly",0)) {
+			Files.ReadOnly = true;
+		} else if (mystrncasecmp(argv[i],"-protected",0)) {
+			Files.Protected = true;
+		} else if (mystrncasecmp(argv[i],"-system",0)) {
+			Files.System = true;
+		} else if (mystrncasecmp(argv[i],"-hidden",0)) {
+			Files.Hidden = true;
+		} else {
+			printmsgerr("Unknown attribute (%s)\n",argv[i]);
+		}
+	}
+
+	GSM_Init(true);
+
+	error = Phone->SetFileAttributes(&s,&Files);
+    	Print_Error(error);
+
+	GSM_Terminate();
+}
+
+static void GetFolderListing(int argc, char *argv[])
+{
+	bool 			Start = true;
+	GSM_File	 	Files;
+
+	GSM_Init(true);
+
+	strcpy(Files.ID_FullName,argv[2]);
+
+	if (!strcmp(s.Phone.Data.ModelInfo->model,"6230") &&
+	    s.ConnectionType == GCT_IRDAPHONET) {
+		printmsg("WARNING: firmware in your phone has bug in infrared support and only part of files will be listed. Use BT (or cable) or upgrade firmware (if there is something higher than 5.24 available)\n\n");
+	}
+
+	while (1) {
+		error = Phone->GetFolderListing(&s,&Files,Start);
+		if (error == ERR_EMPTY) break;
+	    	Print_Error(error);
+
+		/* format for a folder ID;Folder;[FOLDER_PARAMETERS]
+		 * format for a file   ID;File;FILE_NAME;DATESTAMP;FILE_SIZE;[FILE_PARAMETERS]  */
+		if (!Files.Folder) {
+			printf("%s;File;",Files.ID_FullName);
+			printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
+			if (!Files.ModifiedEmpty) {
+				printf("\"%s\";",OSDateTime(Files.Modified,false));
+			} else  printf("\"%c\";",0x20);
+			printf("%i;",Files.Used);
+		} else {
+			printf("%s;Folder;",Files.ID_FullName);
+			printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
+		}
+
+		if (Files.Protected)  	printf("P");
+		if (Files.ReadOnly)  	printf("R");
+		if (Files.Hidden)  	printf("H");
+		if (Files.System)  	printf("S");
+		printf("\n");
+
+		Start = false;
 	}
 
 	GSM_Terminate();
@@ -7081,7 +7190,10 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 	bool			start;
 	unsigned char		buffer[5000];
 	struct utimbuf		filedate;
-	int			Handle,Size,j;
+	int			Handle,Size,p,q,j,old1;
+	time_t     		t_time1,t_time2;
+	GSM_DateTime		dt;
+	long			diff;
 
 	if (File->Buffer != NULL) {
 		free(File->Buffer);
@@ -7090,12 +7202,16 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 	File->Used 	= 0;
 	start		= true;
 
+	GSM_GetCurrentDateTime(&dt);
+	t_time1 	= Fill_Time_T(dt,0);
+	old1 		= 65536;
+
 	error = ERR_NONE;
 	while (error == ERR_NONE) {
 		error = Phone->GetFilePart(&s,File,&Handle,&Size);
 		if (error == ERR_NONE || error == ERR_EMPTY || error == ERR_WRONGCRC) {
 			if (start) {
-				printmsg("Getting \"%s\": ", DecodeUnicodeConsole(File->Name));
+				printmsg("Getting \"%s\"\n", DecodeUnicodeConsole(File->Name));
 				start = false;
 			}
 			if (File->Folder) {
@@ -7107,7 +7223,20 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 			if (Size==0) {
 				printmsg("*");
 			} else {
-				printmsg("%cGetting \"%s\": %i percent", 13, DecodeUnicodeConsole(File->Name),File->Used*100/Size);
+				printmsg("%c  %i percent", 13, File->Used*100/Size);
+				if (File->Used*100/Size >= 2) {
+					GSM_GetCurrentDateTime(&dt);
+					t_time2 = Fill_Time_T(dt,0);
+					diff 	= t_time2-t_time1;
+					p 	= diff*(Size-File->Used)/File->Used;
+					if (p != 0) {
+						if (p<old1) old1 = p;
+						q = old1/60;
+						printmsgerr(" (%02i:%02i minutes left)",q,old1-q*60);
+					} else {
+						printmsgerr("%30c",0x20);
+					}
+				}
 			}
 			if (error == ERR_EMPTY) break;
 			if (error == ERR_WRONGCRC) {
@@ -7126,7 +7255,7 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 			}
 			if (buffer[j] == '\\' || buffer[j] == '/') {
 				sprintf(buffer,"%s",DecodeUnicodeConsole(File->Name+j*2+2));
-			}			
+			}
 			file = fopen(buffer,"wb");
 			if (file == NULL) {
 				sprintf(buffer,"file%s",File->ID_FullName);
@@ -7157,14 +7286,14 @@ static void GetFiles(int argc, char *argv[])
 	GSM_File		File;
 	int			i;
 	bool			newtime = false;
-	
+
 	File.Buffer = NULL;
 
 	GSM_Init(true);
 
 	for (i=2;i<argc;i++) {
 		if (mystrncasecmp(argv[i],"-newtime",0)) {
-			newtime = true;		
+			newtime = true;
 			continue;
 		}
 
@@ -7189,10 +7318,10 @@ static void GetFileFolder(int argc, char *argv[])
 
 	for (i=2;i<argc;i++) {
 		if (mystrncasecmp(argv[i],"-newtime",0)) {
-			newtime = true;		
+			newtime = true;
 			continue;
 		}
-		allnum++;		
+		allnum++;
 	}
 
 	while (allnum != num) {
@@ -7207,7 +7336,9 @@ static void GetFileFolder(int argc, char *argv[])
 				if (mystrncasecmp(argv[i],"-newtime",0)) {
 					continue;
 				}
+				dbgprintf("comparing %s %s\n",File.ID_FullName,argv[i]);
 				if (!strcmp(File.ID_FullName,argv[i])) {
+					dbgprintf("found folder");
 					found = true;
 					if (File.Folder) {
 						level 	  = 1;
@@ -7236,7 +7367,7 @@ static void GetFileFolder(int argc, char *argv[])
 			level = 0;
 			num++;
 		}
-				
+
 		Start = false;
 	}
 
@@ -7244,10 +7375,50 @@ static void GetFileFolder(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void AddOneFile(GSM_File *File, char *text)
+{
+	int 		Pos,Handle,i,j,old1;
+	time_t     	t_time1,t_time2;
+	GSM_DateTime	dt;
+	long		diff;
+
+	GSM_GetCurrentDateTime(&dt);
+	t_time1 = Fill_Time_T(dt,0);
+	old1 = 65536;
+
+	dbgprintf("Adding file to filesystem now\n");
+	error 	= ERR_NONE;
+	Pos	= 0;
+	while (error == ERR_NONE) {
+		error = Phone->AddFilePart(&s,File,&Pos,&Handle);
+	    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
+		if (File->Used != 0) {
+			printmsgerr("%c%s%03i percent",13,text,Pos*100/File->Used);
+			if (Pos*100/File->Used >= 2) {
+				GSM_GetCurrentDateTime(&dt);
+				t_time2 = Fill_Time_T(dt,0);
+				diff = t_time2-t_time1;
+				i = diff*(File->Used-Pos)/Pos;
+				if (i != 0) {
+					if (i<old1) old1 = i;
+					j = old1/60;
+					printmsgerr(" (%02i:%02i minutes left)",j,old1-j*60);
+				} else {
+					printmsgerr("%30c",0x20);
+				}
+			}
+		}
+	}
+	printmsgerr("\n");
+	if (error == ERR_WRONGCRC) {
+		printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
+	}
+}
+
 static void AddFile(int argc, char *argv[])
 {
 	GSM_File		File;
-	int			Pos = 0,i,nextlong, Handle;
+	int			i,nextlong;
 
 	File.Buffer = NULL;
 	strcpy(File.ID_FullName,argv[2]);
@@ -7259,7 +7430,7 @@ static void AddFile(int argc, char *argv[])
 	}
 	if (argv[3][i] == '\\' || argv[3][i] == '/') {
 		EncodeUnicode(File.Name,argv[3]+i+1,strlen(argv[3])-i-1);
-	}			
+	}
 
 	GSM_IdentifyFileFormat(&File);
 
@@ -7278,23 +7449,23 @@ static void AddFile(int argc, char *argv[])
 					continue;
 				}
 				if (mystrncasecmp(argv[i],"-protected",0)) {
-					File.Protected = true;		
+					File.Protected = true;
 					continue;
 				}
 				if (mystrncasecmp(argv[i],"-readonly",0)) {
-					File.ReadOnly = true;		
+					File.ReadOnly = true;
 					continue;
 				}
 				if (mystrncasecmp(argv[i],"-hidden",0)) {
-					File.Hidden = true;		
+					File.Hidden = true;
 					continue;
 				}
 				if (mystrncasecmp(argv[i],"-system",0)) {
-					File.System = true;		
+					File.System = true;
 					continue;
 				}
 				if (mystrncasecmp(argv[i],"-newtime",0)) {
-					File.ModifiedEmpty = true;		
+					File.ModifiedEmpty = true;
 					continue;
 				}
 				printmsg("Parameter \"%s\" unknown\n",argv[i]);
@@ -7323,7 +7494,7 @@ static void AddFile(int argc, char *argv[])
 				} else {
 					printmsg("What file type (\"%s\") ?\n",argv[i]);
 					exit(-1);
-				}		
+				}
 				nextlong = 0;
 				break;
 			}
@@ -7336,16 +7507,7 @@ static void AddFile(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error = ERR_NONE;
-	while (error == ERR_NONE) {
-		error = Phone->AddFilePart(&s,&File,&Pos,&Handle);
-	    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
-		printmsgerr("%cWriting: %i percent",13,Pos*100/File.Used);
-	}
-	printmsgerr("\n");
-	if (error == ERR_WRONGCRC) {
-		printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
-	}
+	AddOneFile(&File, "Writing: ");
 
 	free(File.Buffer);
 	GSM_Terminate();
@@ -7362,6 +7524,16 @@ static void AddFolder(int argc, char *argv[])
 	GSM_Init(true);
 
 	error = Phone->AddFolder(&s,&File);
+    	Print_Error(error);
+
+	GSM_Terminate();
+}
+
+static void DeleteFolder(int argc, char *argv[])
+{
+	GSM_Init(true);
+
+	error = Phone->DeleteFolder(&s,argv[2]);
     	Print_Error(error);
 
 	GSM_Terminate();
@@ -7391,6 +7563,7 @@ static struct NokiaFolderInfo Folder[] = {
 	{"", 	 "Tones2",	   "a:/predefgallery/predefmusic",			""},
 	{"", 	 "Records",	   "a:/predefgallery/predefrecordings",			""},
 	{"", 	 "Video",	   "a:/predefgallery/predefvideos",			""},
+	{"", 	 "MemoryCard",	   "b:",						""},
 	/* Language depedent in DCT4 filesystem 1 */
 	{"",	 "Gallery",	   "Clip-arts",					"3"},
 	{"",	 "Gallery",	   "004F006200720061007A006B0069",		"3"},//obrazki PL 6220
@@ -7409,7 +7582,7 @@ static struct NokiaFolderInfo Folder[] = {
 	{"obex", "MMSUnreadInbox", "predefMessages\\predefINBOX", 		""},
 	{"obex", "MMSReadInbox",   "predefMessages\\predefINBOX", 		""},
 	{"obex", "MMSOutbox",	   "predefMessages\\predefOUTBOX", 		""},
-	{"obex", "MMSSent",	   "predefMessages\\predefSENT", 		""}, 	
+	{"obex", "MMSSent",	   "predefMessages\\predefSENT", 		""},
 	{"obex", "MMSDrafts",	   "predefMessages\\predefDRAFTS", 		""},
 //	{"obex", "Application,	   "predefjava\\predefapplications", 		""},
 //	{"obex", "Game",	   "predefjava\\predefgames", 			""},
@@ -7429,8 +7602,8 @@ static void NokiaAddFile(int argc, char *argv[])
 	unsigned char 		buffer[10000],JAR[500],Vendor[500],Name[500],Version[500],FileID[400];
 	bool 			Start = true, Found = false, wasclr;
 	bool			ModEmpty = false;
-	int			i = 0, Pos, Size, Size2, nextlong, Handle;
-	
+	int			i = 0, Pos, Size, Size2, nextlong;
+
 	while (Folder[i].parameter[0] != 0) {
 		if (mystrncasecmp(argv[2],Folder[i].parameter,0)) {
 			Found = true;
@@ -7443,11 +7616,26 @@ static void NokiaAddFile(int argc, char *argv[])
 		exit(-1);
 	}
 
+	if (mystrncasecmp(argv[2],"Application",0) || mystrncasecmp(argv[2],"Game",0)) {
+		sprintf(buffer,"%s.jad",argv[3]);
+		file = fopen(buffer,"rb");
+		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
+		fclose(file);
+		sprintf(buffer,"%s.jar",argv[3]);
+		file = fopen(buffer,"rb");
+		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
+		fclose(file);
+	} else {
+		file = fopen(argv[3],"rb");
+		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
+		fclose(file);
+	}
+
 	GSM_Init(true);
 
+	Found = false;
     	if (s.ConnectionType == GCT_IRDAOBEX || s.ConnectionType == GCT_BLUEOBEX) {
-		Found 	= false;
-		i 	= 0;
+		i = 0;
 		while (Folder[i].parameter[0] != 0) {
 			if (!strcmp("obex",Folder[i].model) &&
 			     mystrncasecmp(argv[2],Folder[i].parameter,0)) {
@@ -7457,13 +7645,33 @@ static void NokiaAddFile(int argc, char *argv[])
 			}
 			i++;
 		}
+		if (!Found) {
+			printmsg("Folder not found. Probably function not supported !\n");
+			GSM_Terminate();
+			exit(-1);
+		}
 	} else {
+		if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_FILES2)) {
+			i = 0;
+			while (Folder[i].parameter[0] != 0) {
+				if ((Folder[i].folder[0] == 'a' || Folder[i].folder[0] == 'b') &&
+				    Folder[i].level[0] == 0x00 &&
+				    mystrncasecmp(argv[2],Folder[i].parameter,0)) {
+					strcpy(Files.ID_FullName,Folder[i].folder);
+					Found = true;
+					break;
+				}
+				i++;
+			}
+		}
+	}
+	if (!Found) {
 		printmsgerr("Searching for phone folder: ");
 		while (1) {
 			error = Phone->GetNextFileFolder(&s,&Files,Start);
 			if (error == ERR_EMPTY) break;
 		    	Print_Error(error);
-	
+
 			if (Files.Folder) {
 				dbgprintf("folder %s level %i\n",DecodeUnicodeConsole(Files.Name),Files.Level);
 				Found 	= false;
@@ -7502,7 +7710,7 @@ static void NokiaAddFile(int argc, char *argv[])
 				if (Found) break;
 			}
 			printmsgerr("*");
-	
+
 			Start = false;
 		}
 		printmsgerr("\n");
@@ -7519,15 +7727,6 @@ static void NokiaAddFile(int argc, char *argv[])
 	File.System	= false;
 
 	if (mystrncasecmp(argv[2],"Application",0) || mystrncasecmp(argv[2],"Game",0)) {
-		sprintf(buffer,"%s.jad",argv[3]);
-		file = fopen(buffer,"rb");
-		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
-		fclose(file);
-		sprintf(buffer,"%s.jar",argv[3]);
-		file = fopen(buffer,"rb");
-		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
-		fclose(file);
-
 		/* reading jar file */
 		sprintf(buffer,"%s.jar",argv[3]);
 		error = GSM_ReadFile(buffer, &File);
@@ -7618,18 +7817,8 @@ static void NokiaAddFile(int argc, char *argv[])
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		File.Type 	   = GSM_File_Other;
 		File.ModifiedEmpty = true;
-		error 		   = ERR_NONE;
-		Pos		   = 0;
 		dbgprintf("file id is \"%s\"\n",File.ID_FullName);
-		while (error == ERR_NONE) {
-			error = Phone->AddFilePart(&s,&File,&Pos,&Handle);
-		    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
-			printmsgerr("%cWriting JAD file: %i percent",13,Pos*100/File.Used);
-		}
-		printmsgerr("\n");
-		if (error == ERR_WRONGCRC) {
-			printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
-		}
+		AddOneFile(&File, "Writing JAD file: ");
 
 		if (argc > 4) {
 			if (mystrncasecmp(argv[4],"-readonly",0)) File.ReadOnly = true;
@@ -7646,30 +7835,20 @@ static void NokiaAddFile(int argc, char *argv[])
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		File.Type 	   = GSM_File_Java_JAR;
 		File.ModifiedEmpty = true;
-		error 		   = ERR_NONE;
-		Pos		   = 0;
-		while (error == ERR_NONE) {
-			error = Phone->AddFilePart(&s,&File,&Pos,&Handle);
-		    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
-			printmsgerr("%cWriting JAR file: %i percent",13,Pos*100/File.Used);
-		}
-		printmsgerr("\n");
-		if (error == ERR_WRONGCRC) {
-			printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
-		}
-
+		AddOneFile(&File, "Writing JAR file: ");
 		free(File.Buffer);
 		GSM_Terminate();
 		return;
 	}
 
-	if (mystrncasecmp(argv[2],"Gallery" ,0) ||
-	    mystrncasecmp(argv[2],"Gallery2",0) ||
-	    mystrncasecmp(argv[2],"Camera"  ,0) || 
-	    mystrncasecmp(argv[2],"Tones"   ,0) ||
-	    mystrncasecmp(argv[2],"Tones2"  ,0) ||
-	    mystrncasecmp(argv[2],"Records" ,0) ||
-	    mystrncasecmp(argv[2],"Video"   ,0)) {
+	if (mystrncasecmp(argv[2],"Gallery" 	 ,0) ||
+	    mystrncasecmp(argv[2],"Gallery2"	 ,0) ||
+	    mystrncasecmp(argv[2],"Camera"  	 ,0) ||
+	    mystrncasecmp(argv[2],"Tones"   	 ,0) ||
+	    mystrncasecmp(argv[2],"Tones2"  	 ,0) ||
+	    mystrncasecmp(argv[2],"Records" 	 ,0) ||
+	    mystrncasecmp(argv[2],"Video"   	 ,0) ||
+	    mystrncasecmp(argv[2],"MemoryCard"   ,0)) {
 		strcpy(buffer,argv[3]);
 		if (argc > 4) {
 			nextlong = 0;
@@ -7681,23 +7860,23 @@ static void NokiaAddFile(int argc, char *argv[])
 						continue;
 					}
 					if (mystrncasecmp(argv[i],"-protected",0)) {
-						File.Protected = true;		
+						File.Protected = true;
 						continue;
 					}
 					if (mystrncasecmp(argv[i],"-readonly",0)) {
-						File.ReadOnly = true;		
+						File.ReadOnly = true;
 						continue;
 					}
 					if (mystrncasecmp(argv[i],"-hidden",0)) {
-						File.Hidden = true;		
+						File.Hidden = true;
 						continue;
 					}
 					if (mystrncasecmp(argv[i],"-system",0)) {
-						File.System = true;		
+						File.System = true;
 						continue;
 					}
 					if (mystrncasecmp(argv[i],"-newtime",0)) {
-						ModEmpty = true;		
+						ModEmpty = true;
 						continue;
 					}
 					printmsg("Parameter \"%s\" unknown\n",argv[i]);
@@ -7721,7 +7900,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		DT2.Minute = 00;
 		DT2.Second = 00;
 		t_time2    = Fill_Time_T(DT2,8);
-	
+
 		GSM_GetCurrentDateTime(&DT);
 		t_time1    = Fill_Time_T(DT,8);
 
@@ -7761,7 +7940,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	}
 	if (buffer[i] == '\\' || buffer[i] == '/') {
 		EncodeUnicode(File.Name,buffer+i+1,strlen(buffer)-i-1);
-	}			
+	}
 
 	GSM_IdentifyFileFormat(&File);
 #ifdef DEVELOP
@@ -7771,19 +7950,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	}
 #endif
 
-	dbgprintf("Adding file to filesystem now\n");
-	error 	= ERR_NONE;
-	Pos	= 0;
-	while (error == ERR_NONE) {
-		error = Phone->AddFilePart(&s,&File,&Pos,&Handle);
-	    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
-		if (File.Used != 0) printmsgerr("%cWriting file: %i percent",13,Pos*100/File.Used);
-	}
-	printmsgerr("\n");
-	if (error == ERR_WRONGCRC) {
-		printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
-	}
-
+	AddOneFile(&File, "Writing file: ");
 	free(File.Buffer);
 	GSM_Terminate();
 }
@@ -7836,22 +8003,22 @@ static void SaveMMSFile(int argc, char *argv[])
 		case 1: /* Subject */
 			EncodeUnicode(Info.Subject,argv[i],strlen(argv[i]));
 			nextlong = 0;
-			break;				
+			break;
 		case 2: /* Text */
 			EncodeUnicode(Buffer2[Info.EntriesNum],argv[i],strlen(argv[i]));
 			Info.Entries[Info.EntriesNum].ID 	= MMS_Text;
 			Info.Entries[Info.EntriesNum].Buffer 	= Buffer2[Info.EntriesNum];
-			Info.EntriesNum++;			
+			Info.EntriesNum++;
 			nextlong = 0;
-			break;				
+			break;
 		case 3: /* From */
 			EncodeUnicode(Info.Source,argv[i],strlen(argv[i]));
 			nextlong = 0;
-			break;				
+			break;
 		case 4: /* To */
 			EncodeUnicode(Info.Destination,argv[i],strlen(argv[i]));
 			nextlong = 0;
-			break;				
+			break;
 		}
 	}
 	if (nextlong!=0) {
@@ -7864,7 +8031,7 @@ static void SaveMMSFile(int argc, char *argv[])
 	file = fopen(argv[2],"wb");
 	if (file == NULL) Print_Error(ERR_CANTOPENFILE);
 	fwrite(Buffer,1,len,file);
-	fclose(file);	
+	fclose(file);
 }
 
 static void CallDivert(int argc, char *argv[])
@@ -7904,7 +8071,7 @@ static void CallDivert(int argc, char *argv[])
 		printmsg("Query:\n   Divert type: ");
 	} else {
 		cd.Request.Number[0] = 0;
-		cd.Request.Number[1] = 0;	
+		cd.Request.Number[1] = 0;
 		if (argc > 5) EncodeUnicode(cd.Request.Number,argv[5],strlen(argv[5]));
 
 		cd.Request.Timeout = 0;
@@ -8059,7 +8226,7 @@ static void SearchPhone(int argc, char *argv[])
 	num = 0;
 #ifdef WIN32
 #  ifdef GSM_ENABLE_IRDADEVICE
-	sprintf(SearchDevices[dev].Device,"");		
+	sprintf(SearchDevices[dev].Device,"");
 	sprintf(SearchDevices[dev].Connections[0].Connection,"irdaphonet");
 	sprintf(SearchDevices[dev].Connections[1].Connection,"irdaat");
 	SearchDevices[dev].Connections[2].Connection[0] = 0;
@@ -8068,7 +8235,7 @@ static void SearchPhone(int argc, char *argv[])
 #  ifdef GSM_ENABLE_SERIALDEVICE
 	dev2 = dev;
 	for(i=0;i<20;i++) {
-		sprintf(SearchDevices[dev2].Device,"com%i:",i+1);		
+		sprintf(SearchDevices[dev2].Device,"com%i:",i+1);
 		sprintf(SearchDevices[dev2].Connections[0].Connection,"fbusdlr3");
 		sprintf(SearchDevices[dev2].Connections[1].Connection,"fbus");
 		sprintf(SearchDevices[dev2].Connections[2].Connection,"at19200");
@@ -8185,21 +8352,24 @@ static void NokiaVibraTest(int argc, char *argv[])
 static GSM_Parameters Parameters[] = {
 	{"--identify",			0, 0, Identify,			{H_Info,0},			""},
 	{"--version",			0, 0, Version,			{H_Other,0},			""},
-	{"--getdisplaystatus",		0, 0, GetDisplayStatus,		{H_Info,0},			""},	
+	{"--getdisplaystatus",		0, 0, GetDisplayStatus,		{H_Info,0},			""},
 	{"--monitor",			0, 1, Monitor,			{H_Info,H_Network,H_Call,0},	"[times]"},
 	{"--setautonetworklogin",	0, 0, SetAutoNetworkLogin,	{H_Network,0},			""},
 	{"--listnetworks",		0, 1, ListNetworks,		{H_Network,0},			"[country]"},
 	{"--getgprspoint",		1, 2, GetGPRSPoint,		{H_Nokia,H_Network,0},		"start [stop]"},
-	{"--addfolder",			2, 2, AddFolder,		{H_Filesystem,0},		"parentfolderID name"},
-	{"--getfilesystem",		0, 1, GetFileSystem,		{H_Filesystem,0},		"[-flatall|-flat]"},
 	{"--getfilesystemstatus",	0, 0, GetFileSystemStatus,	{H_Filesystem,0},		""},
-	{"--getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
+	{"--getfilesystem",		0, 1, GetFileSystem,		{H_Filesystem,0},		"[-flatall|-flat]"},
 	{"--getfilefolder",		1,40, GetFileFolder,		{H_Filesystem,0},		"ID1, ID2, ..."},
+	{"--addfolder",			2, 2, AddFolder,		{H_Filesystem,0},		"parentfolderID name"},
+	{"--deletefolder",		1, 1, DeleteFolder,		{H_Filesystem,0},		"name"},
+	{"--getfolderlisting",		1, 1, GetFolderListing,		{H_Filesystem,0},		"folderID"},
+	{"--setfileattrib",		1, 5, SetFileAttrib,		{H_Filesystem,0},		"folderID [-system] [-readonly] [-hidden] [-protected]"},
+	{"--getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
 	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
+	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent file sender title"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly]"},
-	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
-	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
+	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
 	{"--playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
 	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			"number"},
 	{"--getdatetime",		0, 0, GetDateTime,		{H_DateTime,0},			""},
@@ -8355,11 +8525,11 @@ static GSM_Parameters Parameters[] = {
 #endif
 	{"--clearall",			0, 0, ClearAll,			{H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},	""},
 	{"--networkinfo",		0, 0, NetworkInfo,		{H_Network,0},			""},
-#ifdef GSM_ENABLE_AT	
+#ifdef GSM_ENABLE_AT
 	{"--siemenssatnetmon",		0, 0, ATSIEMENSSATNetmon,	{H_Siemens,H_Network,0},	""},
-	{"--siemensnetmonact",		1, 1, ATSIEMENSActivateNetmon,	{H_Siemens,H_Network,0},	"netmon_type (1-full, 2-simple)"},	
+	{"--siemensnetmonact",		1, 1, ATSIEMENSActivateNetmon,	{H_Siemens,H_Network,0},	"netmon_type (1-full, 2-simple)"},
 	{"--siemensnetmonitor",		1, 1, ATSIEMENSNetmonitor,	{H_Siemens,H_Network,0},	"test"},
-#endif	
+#endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"--nokiagetoperatorname", 	0, 0, DCT3GetOperatorName,	{H_Nokia,H_Network,0},		""},
 	{"--nokiasetoperatorname", 	0, 2, DCT3SetOperatorName,	{H_Nokia,H_Network,0},		"[networkcode name]"},
@@ -8431,7 +8601,7 @@ static HelpCategoryDescriptions HelpDescriptions[] = {
 	{H_Other,	"other",	"Functions that don't fit elsewhere"},
 	{0,		NULL,		NULL}
 };
-	
+
 
 void HelpHeader(void)
 {
@@ -8473,7 +8643,7 @@ static void HelpSplit(int cols, int len, unsigned char *buff)
 		if (len + len2 < cols) {
 			printf("%s\n", buff);
 		} else {
-			for(l = 0; l < len; l++) strcat(spaces, " "); 
+			for(l = 0; l < len; l++) strcat(spaces, " ");
 
 			remain = buff;
 
@@ -8563,7 +8733,7 @@ static void Help(int argc, char *argv[])
 				if (cols <= 0) cols = 0;
 			}
 		}
-		
+
 		if (cols == 0) {
 			/* Fallback */
 			cols = 80;
@@ -8639,7 +8809,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
- 	/* Is first parameter numeric? If so treat it as config that should be loaded. */	
+ 	/* Is first parameter numeric? If so treat it as config that should be loaded. */
 	if (isdigit(argv[1][0])) {
 		only_config = atoi(argv[1]);
 		if (only_config >= 0) start++; else only_config = -1;
@@ -8681,7 +8851,7 @@ int main(int argc, char *argv[])
 
      		/* We want to use only one file descriptor for global and state machine debug output */
  	    	s.Config[i].UseGlobalDebugFile = true;
-		
+
 		/* It makes no sense to open several debug logs... */
 		if (i != 0) {
 			strcpy(s.Config[i].DebugLevel, s.Config[0].DebugLevel);
@@ -8706,7 +8876,7 @@ int main(int argc, char *argv[])
  		/* We wanted to read just user specified configuration. */
  		if (only_config != -1) {break;}
  	}
- 
+
 	/* Do we have enough parameters? */
  	if (argc == 1 + start) {
  		HelpGeneral();

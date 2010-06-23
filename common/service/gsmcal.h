@@ -263,7 +263,7 @@ typedef struct {
 	/**
 	 * 0 = no delete, 1 = after day,...
 	 */
-	int		     AutoDelete; 
+	int		     AutoDelete;
 } GSM_CalendarSettings;
 
 /**

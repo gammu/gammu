@@ -125,11 +125,11 @@
       <FILE FILENAME="..\..\common\gsmstate.c" FORMNAME="" UNITNAME="gsmstate" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\n6110.c" FORMNAME="" UNITNAME="n6110" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\n0650.c" FORMNAME="" UNITNAME="n0650" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\phone\nokia\dct4\n6510.c" FORMNAME="" UNITNAME="n6510" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct4\6510\n6510.c" FORMNAME="" UNITNAME="n6510" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct4\n3320.c" FORMNAME="" UNITNAME="n3320" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct4\n3650.c" FORMNAME="" UNITNAME="n3650" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\phone\nokia\dct4\6510cal.c" FORMNAME="" UNITNAME="6510cal" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\phone\nokia\dct4\6510file.c" FORMNAME="" UNITNAME="6510file" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct4\6510\6510cal.c" FORMNAME="" UNITNAME="6510cal" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct4\6510\6510file.c" FORMNAME="" UNITNAME="6510file" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct4\dct4func.c" FORMNAME="" UNITNAME="dct4func" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\n7110.c" FORMNAME="" UNITNAME="n7110" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\n9210.c" FORMNAME="" UNITNAME="n9210" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>

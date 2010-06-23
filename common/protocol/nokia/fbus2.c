@@ -1,7 +1,7 @@
 /* (c) 2002-2003 by Marcin Wiacek */
 /* based on some work from MyGnokii (www.mwiacek.com) */
 /* Based on some work from Gnokii (www.gnokii.org)
- * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
 /* Due to a problem in the source code management, the names of some of
@@ -29,7 +29,7 @@ static GSM_Error FBUS2_WriteFrame(GSM_StateMachine 	*s,
 				  int 			MsgLength,
 				  unsigned char 	MsgType)
 {
-	unsigned char 		  buffer2[FBUS2_MAX_TRANSMIT_LENGTH + 10];  
+	unsigned char 		  buffer2[FBUS2_MAX_TRANSMIT_LENGTH + 10];
 	unsigned char 		  checksum=0;
 	int 			  i, len, sent;
 
@@ -137,7 +137,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		if (d->Msg.CheckSum[0] != d->Msg.CheckSum[1]) {
 			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
 			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-				smprintf(s,"[ERROR: checksum]\n");	
+				smprintf(s,"[ERROR: checksum]\n");
 			}
 			free(d->Msg.Buffer);
 			d->Msg.Length 		= 0;
@@ -193,7 +193,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			free(d->Msg.Buffer);
 			d->Msg.Length 		= 0;
 			d->Msg.Buffer 		= NULL;
-	
+
 			d->MsgRXState 		= RX_Sync;
 			return ERR_NONE;
 		}
@@ -204,7 +204,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		}
 		memcpy(d->MultiMsg.Buffer+d->MultiMsg.Length,d->Msg.Buffer,d->Msg.Length-2);
 		d->MultiMsg.Length = d->MultiMsg.Length+d->Msg.Length-2;
-	
+
 		free(d->Msg.Buffer);
 		d->Msg.Length 	= 0;
 		d->Msg.Buffer 	= NULL;
@@ -217,7 +217,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		if (d->Msg.Type != 0) {
 			FBUS2_SendAck(s,d->Msg.Type,((unsigned char)(seq_num & 0x0f)));
 		}
-					
+
 		if (d->FramesToGo == 0) {
 			s->Phone.Data.RequestMsg	= &d->MultiMsg;
 			s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
@@ -295,7 +295,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			    	} else {
 					smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_char, FBUS2_FRAME_ID);
 			    	}
-			}		
+			}
 			return ERR_NONE;
 		}
 
@@ -303,13 +303,13 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		d->Msg.CheckSum[1] = 0;
 		d->Msg.Count	   = 0;
 
-		d->MsgRXState	   = RX_GetDestination;	
+		d->MsgRXState	   = RX_GetDestination;
 		return ERR_NONE;
 	}
 	return ERR_NONE;
 }
 
-#if defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2PL2303) 
+#if defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2PL2303)
 static void FBUS2_WriteDLR3(GSM_StateMachine *s, char *command, int length, int timeout)
 {
 	unsigned char		buff[300];
@@ -318,7 +318,7 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, char *command, int length, int 
 
 	s->Device.Functions->WriteDevice(s,command,length);
 
-	for (w=0;w<timeout;w++) {    
+	for (w=0;w<timeout;w++) {
 		if (wassomething) {
 			if (s->Device.Functions->ReadDevice(s, buff, 255)==0) return;
 		} else {
@@ -368,11 +368,11 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	case GCT_FBUS2PL2303:
 	case GCT_FBUS2DLR3:
 		error=Device->DeviceSetDtrRts(s,false,false);
-	    	if (error!=ERR_NONE) return error; 
+	    	if (error!=ERR_NONE) return error;
 		my_sleep(1000);
 
 		error=Device->DeviceSetDtrRts(s,true,true);
-	    	if (error!=ERR_NONE) return error; 
+	    	if (error!=ERR_NONE) return error;
 		error=Device->DeviceSetSpeed(s,19200);
 		if (error!=ERR_NONE) return error;
 
@@ -389,10 +389,10 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		error=Device->DeviceSetParity(s,false);
 	    	if (error!=ERR_NONE) return error;
 		error=Device->DeviceSetSpeed(s,115200);
-	    	if (error!=ERR_NONE) return error; 
+	    	if (error!=ERR_NONE) return error;
 		error=Device->DeviceSetDtrRts(s,false,false);
-		if (error!=ERR_NONE) return error; 
-			
+		if (error!=ERR_NONE) return error;
+
 		for (count = 0; count < 55; count ++) {
 			if (Device->WriteDevice(s,&init_char,1)!=1) return ERR_DEVICEWRITEERROR;
 		}
@@ -400,10 +400,10 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 #endif
 	case GCT_FBUS2:
 		error=Device->DeviceSetSpeed(s,115200);
-		if (error!=ERR_NONE) return error; 
+		if (error!=ERR_NONE) return error;
 
 		error=Device->DeviceSetDtrRts(s,true,false); /*DTR high,RTS low*/
-		if (error!=ERR_NONE) return error; 
+		if (error!=ERR_NONE) return error;
 
 		for (count = 0; count < 55; count ++) {
 			if (Device->WriteDevice(s,&init_char,1)!=1) return ERR_DEVICEWRITEERROR;
@@ -426,7 +426,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		error=Device->DeviceSetSpeed(s,115200);
 		if (error!=ERR_NONE) return error;
 
-		break;			
+		break;
 #endif
 	default:
 		break;

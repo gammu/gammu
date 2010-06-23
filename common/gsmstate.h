@@ -26,7 +26,7 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #  include "phone/nokia/dct3/n6110.h"
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-#  include "phone/nokia/dct4/n6510.h"
+#  include "phone/nokia/dct4/6510/n6510.h"
 #endif
 #ifdef GSM_ENABLE_NOKIA7110
 #  include "phone/nokia/dct3/n7110.h"
@@ -55,6 +55,9 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #endif
 #ifndef GSM_USED_FBUS2DLR3
 #  undef GSM_ENABLE_FBUS2DLR3
+#endif
+#ifndef GSM_USED_FBUS2DKU2
+#  undef GSM_ENABLE_FBUS2DKU2
 #endif
 #ifndef GSM_USED_FBUS2DKU5
 #  undef GSM_ENABLE_FBUS2DKU5
@@ -116,7 +119,7 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifdef GSM_ENABLE_MBUS2
 #  include "protocol/nokia/mbus2.h"
 #endif
-#if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
+#if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET) || defined(GSM_ENABLE_FBUS2DKU2)
 #  include "protocol/nokia/phonet.h"
 #endif
 #if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT)
@@ -306,7 +309,7 @@ typedef struct {
 #if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2PL2303)
 	extern GSM_Protocol_Functions FBUS2Protocol;
 #endif
-#if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
+#if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET) || defined(GSM_ENABLE_FBUS2DKU2)
 	extern GSM_Protocol_Functions PHONETProtocol;
 #endif
 #if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT)
@@ -336,7 +339,7 @@ typedef struct {
 #if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2PL2303) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
 		GSM_Protocol_FBUS2Data		FBUS2;
 #endif
-#if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
+#if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET) || defined(GSM_ENABLE_FBUS2DKU2)
 		GSM_Protocol_PHONETData		PHONET;
 #endif
 #if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT)
@@ -395,6 +398,8 @@ typedef enum {
 	ID_GetSecurityCode,
 	ID_GetWAPBookmark,
 	ID_GetBitmap,
+	ID_GetCRC,
+	ID_SetAttrib,
 	ID_SaveSMSMessage,
 	ID_CancelCall,
 	ID_SetDateTime,
@@ -478,6 +483,7 @@ typedef enum {
 	ID_GetFile,
 	ID_AddFile,
 	ID_AddFolder,
+	ID_DeleteFolder,
 	ID_DeleteFile,
 #ifdef GSM_ENABLE_ALCATEL
     	/* AT mode */
@@ -1349,6 +1355,8 @@ typedef struct {
 	/**
 	 * Gets file part from filesystem.
 	 */
+	GSM_Error (*GetFolderListing)   (GSM_StateMachine *s, GSM_File *File, bool start);
+	GSM_Error (*SetFileAttributes)  (GSM_StateMachine *s, GSM_File *File);
 	GSM_Error (*GetFilePart)	(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size);
 	/**
 	 * Adds file part to filesystem.
@@ -1366,6 +1374,7 @@ typedef struct {
 	 * Adds folder to filesystem.
 	 */
 	GSM_Error (*AddFolder)	  	(GSM_StateMachine *s, GSM_File *File);
+	GSM_Error (*DeleteFolder)	(GSM_StateMachine *s, unsigned char *ID);
 	/**
 	 * Gets GPRS access point.
 	 */
@@ -1434,6 +1443,7 @@ typedef enum {
 	GCT_MBUS2=1,
 	GCT_FBUS2,
 	GCT_FBUS2DLR3,
+	GCT_FBUS2DKU2,
 	GCT_FBUS2DKU5,
 	GCT_FBUS2PL2303,
 	GCT_FBUS2BLUE,

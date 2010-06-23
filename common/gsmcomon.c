@@ -164,6 +164,8 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_INVALIDDATA,		"Invalid data."},
 	{ERR_FILEALREADYEXIST,		"File with specified name already exist."},
 	{ERR_FILENOTEXIST,		"File with specified name doesn't exist."},
+	{ERR_SHOULDBEFOLDER,		"You have to give folder (not file) name."},
+	{ERR_SHOULDBEFILE,		"You have to give file (not folder) name."},
 
 	{0,				""}
 };
@@ -210,9 +212,9 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 	if (privdi->use_global) {
 		/* Aren't we the changing the global di? */
 		if (privdi != &di) {
-			if (privdi->df != di.df && 
-					privdi->dl!=0 && 
-					fileno(privdi->df) != 1 && 
+			if (privdi->df != di.df &&
+					privdi->dl!=0 &&
+					fileno(privdi->df) != 1 &&
 					fileno(privdi->df) != 2)
 				fclose(privdi->df);
 			privdi->df = di.df;

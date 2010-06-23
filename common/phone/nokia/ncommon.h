@@ -56,7 +56,7 @@ typedef struct {
 
 typedef struct {
 	int		Location[GSM_MAXCALENDARTODONOTES];
-	int		Number;	
+	int		Number;
 } GSM_NOKIACalToDoLocations;
 
 #define NOKIA_PRESSPHONEKEY   0x01

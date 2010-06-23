@@ -1,7 +1,7 @@
 /* (c) 2002-2003 by Marcin Wiacek */
 /* based on some work from MyGnokii (www.mwiacek.com) */
 /* Based on some work from Gnokii (www.gnokii.org)
- * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
 /* Due to a problem in the source code management, the names of some of
@@ -19,8 +19,8 @@
 
 #include "../protocol.h"
 
-#define FBUS2_FRAME_ID       	0x1e
 #define FBUS2_IRDA_FRAME_ID    	0x1c
+#define FBUS2_FRAME_ID       	0x1e
 #define FBUS2_DEVICE_PHONE   	0x00 /* Nokia mobile phone */
 #define FBUS2_DEVICE_PC      	0x0c /* Our PC */
 #define FBUS2_ACK_BYTE	     	0x7f /* Acknowledge of the received frame */

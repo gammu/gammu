@@ -13,9 +13,9 @@
 static GSM_Error MROUTER_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 				    int length, unsigned char type)
 {
-	unsigned char	*out_buffer; 
+	unsigned char	*out_buffer;
 	int 		current=0,sent;
-	
+
 	out_buffer = (unsigned char *)malloc(length+1);
 
 	memcpy(out_buffer,buffer,length);
@@ -78,14 +78,14 @@ GSM_Error error;
 	d->MsgRXState 		= RX_Sync;
 
 //	error=s->Device.Functions->DeviceSetDtrRts(s,false,false);
-//    	if (error!=ERR_NONE) return error; 
+//    	if (error!=ERR_NONE) return error;
 
 	error=s->Device.Functions->DeviceSetSpeed(s,115200);
-    	if (error!=ERR_NONE) return error; 
+    	if (error!=ERR_NONE) return error;
 
 
 //	error=s->Device.Functions->DeviceSetSpeed(s,115200);
-//    	if (error!=ERR_NONE) return error; 
+//    	if (error!=ERR_NONE) return error;
 
 	return ERR_NONE;
 }

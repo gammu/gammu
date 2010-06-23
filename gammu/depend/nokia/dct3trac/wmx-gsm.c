@@ -111,7 +111,7 @@ void GSMDecoder_L3packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsigned cha
 	printf(" ");
 	if(length < 2) return;
 
-	/* Attempt at decoding first byte 
+	/* Attempt at decoding first byte
 	   -- protocol discriminator
 	 */
 	proto = buffer[0]&0xF;
@@ -222,7 +222,7 @@ void GSMDecoder_L2short_packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsign
 	}
 	ptr = 0;
 	//printf("L2 packet\n");
-	
+
 	/* dump Length Indicator field */
 	usedlength = buffer[ptr]>>2;
 	if((buffer[ptr]&3) != 1) {
@@ -231,7 +231,7 @@ void GSMDecoder_L2short_packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsign
 		GSMDecoder_l1xml_close(self);
 		return;
 	}
-	printf("Length : used=%i ID=%i\n",
+	printf("Length : used=%zi ID=%i\n",
 		usedlength,
 		(buffer[ptr]>>0)&3);
 	ptr++;
@@ -293,7 +293,7 @@ void GSMDecoder_L2packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsigned cha
 	while((buffer[ptr]&1)==0) ptr++;
 	ptr++;
 	/* dump Control field */
-	
+
 	type = TYPE_I;
 	// if(!(buffer[ptr]&1)) type = TYPE_I;
 	if((buffer[ptr]&1) && !(buffer[ptr]&2)) type = TYPE_S;
@@ -313,7 +313,7 @@ void GSMDecoder_L2packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsigned cha
 		case 1: /* 01 */ desc="RNR (Receive Not Ready)"; break;
 		case 2: /* 10 */ desc="REJ (Reject)"; break;
 		}
-		printf("Control: S TXSeq=%i P/F=%i S=%i %s\n",
+		printf("Control: S TXSeq=%i P/F=%i S=%zi %s\n",
 			(buffer[ptr]>>5)&7,
 			(buffer[ptr]>>4)&1,
 			x, desc);
@@ -323,11 +323,11 @@ void GSMDecoder_L2packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsigned cha
 		x = (((buffer[ptr]>>5)&7)<<2) | ((buffer[ptr]>>2)&3);
 		binstr(temp, x, 5);
 		switch(x) {
-		case 0: /* 00000 */ desc = "UI (Unnumbered information)"; break; 
-		case 3: /* 00011 */ desc = "DM (Disconnect mode)"; break; 
-		case 7: /* 00111 */ desc = "SABM (Set asynchronous balanced mode)"; break; 
-		case 8: /* 01000 */ desc = "DISC (Disconnect)"; break; 
-		case 12:/* 01100 */ desc = "UA (Unnumbered acknowledge)"; break; 
+		case 0: /* 00000 */ desc = "UI (Unnumbered information)"; break;
+		case 3: /* 00011 */ desc = "DM (Disconnect mode)"; break;
+		case 7: /* 00111 */ desc = "SABM (Set asynchronous balanced mode)"; break;
+		case 8: /* 01000 */ desc = "DISC (Disconnect)"; break;
+		case 12:/* 01100 */ desc = "UA (Unnumbered acknowledge)"; break;
 		}
 
 		printf("Control: U U=%s %s P/F=%i\n",
@@ -339,7 +339,7 @@ void GSMDecoder_L2packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsigned cha
 	/* dump Length Indicator field */
 	usedlength = buffer[ptr]>>2;
 	more = (buffer[ptr]>>1)&1; /* more to go */
-	printf("Length : used=%i M=%i EL=%i\n",
+	printf("Length : used=%zi M=%i EL=%i\n",
 		usedlength, more,
 		(buffer[ptr]>>0)&1);
 	while((buffer[ptr]&1)==0) ptr++;
@@ -385,11 +385,11 @@ void GSMDecoder_L2packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsigned cha
 			desc = "Unknown";
 			x = (((buffer[ptr]>>5)&7)<<2) | ((buffer[ptr]>>2)&3);
 			switch(x) {
-			case 0: /* 00000 */ desc = "UI"; break; 
-			case 3: /* 00011 */ desc = "DM"; break; 
-			case 7: /* 00111 */ desc = "SABM"; break; 
-			case 8: /* 01000 */ desc = "DISC"; break; 
-			case 12:/* 01100 */ desc = "UA"; break; 
+			case 0: /* 00000 */ desc = "UI"; break;
+			case 3: /* 00011 */ desc = "DM"; break;
+			case 7: /* 00111 */ desc = "SABM"; break;
+			case 8: /* 01000 */ desc = "DISC"; break;
+			case 12:/* 01100 */ desc = "UA"; break;
 			}
 
 			fprintf(self->xmlout, "subtype=\"%s\" p=\"%i\" ",

@@ -173,7 +173,7 @@ void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, int *Length, GSM_W
 				/* PPP_AUTHNAME (user) */
 				AddWAPSMSParameterText(Buffer, Length, 0x23, DecodeUnicodeString(settings->User), UnicodeLength(settings->User));
 				/* PPP_AUTHSECRET (password) */
-				AddWAPSMSParameterText(Buffer, Length, 0x24, DecodeUnicodeString(settings->Password), UnicodeLength(settings->Password));	
+				AddWAPSMSParameterText(Buffer, Length, 0x24, DecodeUnicodeString(settings->Password), UnicodeLength(settings->Password));
 				break;
 #ifdef DEVELOP
 			case WAPSETTINGS_BEARER_SMS:
@@ -196,7 +196,7 @@ void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, int *Length, GSM_W
 #else
 			case WAPSETTINGS_BEARER_SMS:
 			case WAPSETTINGS_BEARER_USSD:
-				break;			
+				break;
 #endif
 			}
 			/* PORT */
@@ -363,13 +363,13 @@ void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, int *Length, char *Tex
 			Buffer[(*Length)++] = 0x25;	// day
 #endif
 
-		Buffer[(*Length)++] = 0x01;		// END (indication)		
+		Buffer[(*Length)++] = 0x01;		// END (indication)
 		Buffer[(*Length)++] = 0x03; 		// Inline string
 		for (i=0;i<(int)strlen(Text);i++) {
 			Buffer[(*Length)++] = Text[i];	//Text
 		}
 		Buffer[(*Length)++] = 0x00; 		// END Inline string
-		Buffer[(*Length)++] = 0x01;		// END (indication)		
+		Buffer[(*Length)++] = 0x01;		// END (indication)
 	Buffer[(*Length)++] = 0x01;			// END (SI)
 }
 
@@ -390,13 +390,13 @@ void GSM_EncodeMMSFile(GSM_EncodeMultiPartMMSInfo *Info, unsigned char *Buffer, 
 
 	strcpy(Buffer+(*Length),"\x01\x81\x86\x81\x96");
 	(*Length)=(*Length)+5;
-	
+
 	if (UnicodeLength(Info->Subject) != 0) {
 		sprintf(Buffer+(*Length),"%s",DecodeUnicodeString(Info->Subject));
 		(*Length)=(*Length)+UnicodeLength(Info->Subject);
 		Buffer[(*Length)++] = 0x00;
 	}
-	
+
 	for (i=0;i<Info->EntriesNum;i++) {
 	switch(Info->Entries[i].ID) {
 	case MMS_Text:
@@ -404,12 +404,12 @@ void GSM_EncodeMMSFile(GSM_EncodeMultiPartMMSInfo *Info, unsigned char *Buffer, 
 		(*Length)=(*Length)+9;
 
 		sprintf(Buffer+(*Length),"%s",DecodeUnicodeString(Info->Entries[i].Buffer));
-		(*Length)=(*Length)+UnicodeLength(Info->Entries[i].Buffer);		
+		(*Length)=(*Length)+UnicodeLength(Info->Entries[i].Buffer);
 		break;
 	default:
 		break;
 	}
-	}	
+	}
 }
 
 void GSM_ClearMultiPartMMSInfo(GSM_EncodeMultiPartMMSInfo *Info)

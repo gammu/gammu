@@ -1,7 +1,7 @@
 /* (c) 2002-2004 by Marcin Wiacek, Michal Cihar and others */
 /* based on some work from MyGnokii (www.mwiacek.com) */
 /* based on some work from Gnokii (www.gnokii.org)
- * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
 /* Due to a problem in the source code management, the names of some of
@@ -81,7 +81,7 @@ char *EncodeSpecialChars(unsigned char *buffer)
 			Buf[Pos2++] = '\\';
 			Buf[Pos2++] = 'n';
 			break;
-		case 13: 
+		case 13:
 			Buf[Pos2++] = '\\';
 			Buf[Pos2++] = 'r';
 			break;
@@ -205,7 +205,7 @@ unsigned int EncodeWithUnicodeAlphabet(const unsigned char *src, wchar_t *dest)
 unsigned int DecodeWithUnicodeAlphabet(wchar_t src, unsigned char *dest)
 {
         int retval;
-        
+
         switch (retval = wctomb(dest, src)) {
                 case -1:
                         *dest = '?';
@@ -270,7 +270,7 @@ void EncodeUnicode (unsigned char *dest, const unsigned char *src, int len)
 {
 	int 		i_len = 0, o_len;
  	wchar_t 	wc;
- 
+
 	for (o_len = 0; i_len < len; o_len++) {
 		i_len += EncodeWithUnicodeAlphabet(&src[i_len], &wc);
 		dest[o_len*2]		= (wc >> 8) & 0xff;
@@ -478,7 +478,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, int len, bool
 		if ((i < (len-1)) && UseExtensions) {
 			j=0;
 			while (GSM_DefaultAlphabetCharsExtension[j][0]!=0x00) {
-				if (GSM_DefaultAlphabetCharsExtension[j][0]==src[i] && 
+				if (GSM_DefaultAlphabetCharsExtension[j][0]==src[i] &&
 				    GSM_DefaultAlphabetCharsExtension[j][1]==src[i+1]) {
 					FoundSpecial = true;
 					dest[current++] = GSM_DefaultAlphabetCharsExtension[j][2];
@@ -745,7 +745,7 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 		length=length / 2 + 1;
 	}
 
-	/*without leading byte with format of number*/  
+	/*without leading byte with format of number*/
 	length--;
 
 	switch ((Number[1] & 112)) {
@@ -797,7 +797,7 @@ int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool s
 	for (i=0;i<length;i++) {
 		/* first byte is '+'. Number can be international */
 		if (i==0 && buffer[i]=='+') {
-			format=NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN;  
+			format=NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN;
 		} else {
 			/*char is not number. It must be alphanumeric*/
 			if (!isdigit(buffer[i])) format=NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN;
@@ -983,7 +983,7 @@ void GetBufferInt(unsigned char *Source,
 		z=z/2;
 		i++;
 	}
-	*integer=l;  
+	*integer=l;
 	(*CurrentBit) = (*CurrentBit) + i;
 }
 
@@ -993,7 +993,7 @@ void GetBufferI(unsigned char 	*Source,
 		int 		BitsToProcess)
 {
 	int l=0,z,i=0;
-	
+
 	z = 1<<(BitsToProcess-1);
 
 	while (i!=BitsToProcess) {
@@ -1001,7 +1001,7 @@ void GetBufferI(unsigned char 	*Source,
 		z=z>>1;
 		i++;
 	}
-	*result=l;  
+	*result=l;
 	(*CurrentBit) = (*CurrentBit) + i;
 }
 
@@ -1021,7 +1021,7 @@ void EncodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 				dest[current++]	= '~';
 			} else {
 				dest[current++]	= 0x00;
-				dest[current++]	= 0x01;					
+				dest[current++]	= 0x01;
 				dest[current++]	= src[i*2];
 				dest[current++]	= src[i*2+1];
 			}
@@ -1082,7 +1082,7 @@ bool mystrncasecmp(unsigned const char *a, unsigned const char *b, int num)
 	if (a == NULL || b == NULL) return false;
 
 	if (num == 0) num = -1;
-   
+
 	for (i = 0; i != num; i++) {
 		if (a[i] == 0x00 && b[i] == 0x00) return true;
 		if (a[i] == 0x00 || b[i] == 0x00) return false;
@@ -1102,7 +1102,7 @@ bool mywstrncasecmp(unsigned const  char *a, unsigned const  char *b, int num)
         if (a == NULL || b == NULL) return false;
 
 	if (num == 0) num = -1;
-	
+
 	for (i = 0; i != num; i++) {
 		if ((a[i*2] == 0x00 && a[i*2+1] == 0x00) && (b[i*2] == 0x00 && b[i*2+1] == 0x00)) return true;
 		if ((a[i*2] == 0x00 && a[i*2+1] == 0x00) || (b[i*2] == 0x00 && b[i*2+1] == 0x00)) return false;
@@ -1117,7 +1117,7 @@ bool mywstrncasecmp(unsigned const  char *a, unsigned const  char *b, int num)
 bool mywstrncmp(unsigned const  char *a, unsigned const  char *b, int num)
 {
 	int i=0;
-  
+
 	while (1) {
 		if (a[i*2] != b[i*2] || a[i*2+1] != b[i*2+1]) return false;
 		if (a[i*2] == 0x00 && a[i*2+1] == 0x00) return true;
@@ -1298,7 +1298,7 @@ bool EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsign
 {
 	unsigned char	mychar3,mychar4;
 	int		j=0;
-      
+
 	if (mychar1>0x00 || mychar2>128) {
 		mychar3=0x00;
 		mychar4=128;
@@ -1328,7 +1328,7 @@ bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 	int		i,j=0;
 	unsigned char	mychar1, mychar2;
 	bool		retval = false;
-	
+
 	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
 		if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
 			sprintf(dest+j, "=%02X=%02X",mychar1,mychar2);
@@ -1347,7 +1347,7 @@ bool EncodeUTF8(unsigned char *dest, const unsigned char *src)
 	int		i,j=0;
 	unsigned char	mychar1, mychar2;
 	bool		retval = false;
-	
+
 	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
 		if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
 			sprintf(dest+j, "%c%c",mychar1,mychar2);
@@ -1366,7 +1366,7 @@ wchar_t DecodeWithUTF8Alphabet(unsigned char mychar3, unsigned char mychar4)
 {
 	unsigned char	mychar1, mychar2;
 	int		j;
-	
+
 	mychar1=0x00;
 	mychar2=128;
 	for(j=0;j<mychar3-0xc2;j++) {
@@ -1387,7 +1387,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, in
 	int 		i=0,j=0;
 	unsigned char	mychar1, mychar2;
 	wchar_t		ret;
-	
+
 	while (i<=len) {
 		if (len-6>=i) {
 			/* Need to have correct chars */
@@ -1401,7 +1401,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, in
 				i 	= i+6;
 			} else {
 				i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
-			}   
+			}
 		} else {
 			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
 		}
@@ -1416,7 +1416,7 @@ void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len)
 {
 	int 		i=0,j=0;
 	wchar_t		ret;
-	
+
 	while (i<=len) {
 		if (len-2>=i) {
 			if (src[i] >= 0xC2) {
@@ -1439,7 +1439,7 @@ void DecodeUTF7(unsigned char *dest, const unsigned char *src, int len)
 {
 	int 		i=0,j=0,z,p;
 	wchar_t		ret;
-	
+
 	while (i<=len) {
 		if (len-5>=i) {
 			if (src[i] == '+') {
@@ -1527,7 +1527,7 @@ void EncodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
 }
 
 static void DecodeBASE64Block(unsigned char in[4], unsigned char out[3])
-{   
+{
 	out[0] = (unsigned char) (in[0] << 2 | in[1] >> 4);
 	out[1] = (unsigned char) (in[1] << 4 | in[2] >> 2);
 	out[2] = (unsigned char) (((in[2] << 6) & 0xc0) | in[3]);

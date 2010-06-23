@@ -112,7 +112,7 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, char *address, WSAPR
  		addressSize 		= sizeof(addressAsString);
 		addressAsString[0] 	= 0;
 		if (WSAAddressToString(pResults->lpcsaBuffer->RemoteAddr.lpSockaddr,
-			pResults->lpcsaBuffer->RemoteAddr.iSockaddrLength, protocolInfo, 
+			pResults->lpcsaBuffer->RemoteAddr.iSockaddrLength, protocolInfo,
 			addressAsString,&addressSize)==0) {
                 	smprintf(s, "%s - ", addressAsString);
 		}
@@ -162,15 +162,15 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 		(char*)&protocolInfo, &protocolInfoSize) != 0)
 	{
 		close(d->hPhone);
-		return ERR_UNKNOWN;		
+		return ERR_UNKNOWN;
 	}
 	close(d->hPhone);
 
 	if (!strcmp(s->CurrentConfig->Device,"com2:")) {
 		bufferLength = sizeof(buffer);
 
-      		flags = LUP_RETURN_NAME | LUP_CONTAINERS | 
-			LUP_RETURN_ADDR | LUP_FLUSHCACHE | 
+      		flags = LUP_RETURN_NAME | LUP_CONTAINERS |
+			LUP_RETURN_ADDR | LUP_FLUSHCACHE |
 			LUP_RETURN_TYPE | LUP_RETURN_BLOB | LUP_RES_SERVICE;
 
       		memset(&querySet, 0, sizeof(querySet));
@@ -189,7 +189,7 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 	 		addressSize 		= sizeof(addressAsString);
 			addressAsString[0] 	= 0;
 			if (WSAAddressToString(pResults->lpcsaBuffer->RemoteAddr.lpSockaddr,
-				pResults->lpcsaBuffer->RemoteAddr.iSockaddrLength, &protocolInfo, 
+				pResults->lpcsaBuffer->RemoteAddr.iSockaddrLength, &protocolInfo,
 				addressAsString,&addressSize)==0) {
 	                	smprintf(s, " - %s\n", addressAsString);
 				error = bluetooth_checkdevice(s, addressAsString,&protocolInfo);

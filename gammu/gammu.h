@@ -37,18 +37,18 @@ typedef enum {
 #endif
  	H_Other
 } HelpCategory;
- 
+
 typedef struct {
  	HelpCategory	category;
  	char		*option;
  	char		*description;
 } HelpCategoryDescriptions;
-  
+
 typedef struct {
  	char		*parameter;
  	int		min_arg;
  	int		max_arg;
- 	void		(*Function) (int argc, char *argv[]);	
+ 	void		(*Function) (int argc, char *argv[]);
  	HelpCategory	help_cat[10];
  	char		*help;
 } GSM_Parameters;

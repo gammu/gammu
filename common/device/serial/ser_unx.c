@@ -1,7 +1,7 @@
 /* (c) 2002-2005 by Marcin Wiacek */
 /* locking device and settings all speeds by Michal Cihar */
 /* based on some work from Gnokii (www.gnokii.org)
- * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
 /* Due to a problem in the source code management, the names of some of
@@ -252,7 +252,7 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 		case 2500000:	speed2 = B2500000;	break;
 		case 3000000:	speed2 = B3000000;	break;
 		case 3500000:	speed2 = B3500000;	break;
-		case 4000000:	speed2 = B4000000;	break;	
+		case 4000000:	speed2 = B4000000;	break;
 #endif
 #endif
 #endif

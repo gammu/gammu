@@ -37,7 +37,7 @@ typedef struct {
 
 	/* for sms or ussd bearer */
 	char			Service		[(20+1)*2];
-	bool			IsIP;  
+	bool			IsIP;
 
 	/* for ussd bearer */
 	char			Code		[(10+1)*2];

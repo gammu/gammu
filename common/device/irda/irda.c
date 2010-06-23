@@ -2,7 +2,7 @@
 /* based on some work from Ralf Thelen and MyGnokii (www.mwiacek.com) */
 /* based on some work from MSDN */
 /* based on some work from Gnokii (www.gnokii.org)
- * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
 /* Due to a problem in the source code management, the names of some of
@@ -79,7 +79,7 @@ static bool irda_discover_device(GSM_StateMachine *state)
 						if (state->CurrentConfig->Model[0]==0) strcpy(state->Phone.Data.Model,GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number);
 						state->Phone.Data.ModelInfo = GetModelData(NULL,state->Phone.Data.Model,NULL);
 					}
-					if (founddevice) {				
+					if (founddevice) {
 			    			dbgprintf("correct\n");
 #ifdef WIN32
 			    			for(index=0; index <= 3; index++)
@@ -111,7 +111,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 #ifdef WIN32
     	int 			Enable9WireMode = 1;
     	WSADATA			wsaData;
-    
+
     	WSAStartup(MAKEWORD(1,1), &wsaData);
 #else
     	if (s->ConnectionType == GCT_IRDAAT) return ERR_SOURCENOTAVAILABLE;

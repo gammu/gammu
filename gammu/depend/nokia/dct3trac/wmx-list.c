@@ -78,9 +78,9 @@ struct wmx_tracestruct *wmx_tracestruct_load(char *listfile)
 	FILE 			*f;
 	struct wmx_tracestruct 	*tl;
 	int 			tpe;
-	
+
 	f = fopen(listfile, "r");
-	
+
 	if(f == NULL) return NULL;
 	printf("Loading\n");
 
