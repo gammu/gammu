@@ -78,7 +78,7 @@ typedef struct {
 	struct {
 		DCT4_Feature_Name	Name;
 		int			Number;
-	} Features[31];
+	} Features[25];
 } DCT4_Phone_Features;
 
 typedef struct {

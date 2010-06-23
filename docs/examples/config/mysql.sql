@@ -44,7 +44,6 @@ CREATE TABLE `inbox` (
   `TextDecoded` varchar(160) NOT NULL default '',
   `ID` int(11) unsigned NOT NULL auto_increment,
   `RecipientID` text NOT NULL,
-  `Processed` enum('false','true') NOT NULL default 'false',
   UNIQUE KEY `ID` (`ID`)
 ) TYPE=MyISAM AUTO_INCREMENT=19 ;
 
