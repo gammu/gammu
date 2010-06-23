@@ -1,0 +1,90 @@
+Index: common/newmodules/n6110.c
+===================================================================
+RCS file: /home/short/pserver/cvs/gnokii/common/newmodules/n6110.c,v
+retrieving revision 1.1.1.6
+retrieving revision 1.1.1.1.2.8
+diff -u -r1.1.1.6 -r1.1.1.1.2.8
+--- common/newmodules/n6110.c	17 Mar 2002 20:36:18 -0000	1.1.1.6
++++ common/newmodules/n6110.c	17 Mar 2002 21:51:18 -0000	1.1.1.1.2.8
+@@ -524,6 +596,14 @@
+   
+   0x00, 0x00, 0x00, 0x00};
+ 
++  unsigned char req3_55[]  = { N6110_FRAME_HEADER, 0x42,0x05,0x01,
++			       0x07,0xa2,0x88,0x81,0x21,0x55,0x63,0xa8,0x00,0x00,
++			       0x07,0xa3,0xb8,0x81,0x20,0x15,0x63,0x80 };
++  unsigned char req3[]     = { N6110_FRAME_HEADER, 0x42,0x05,0x01,
++			       0x07,0xa2,0x88,0x81,0x21,0x15,0x63,0xa8,0x00,0x00,
++			       0x07,0xa3,0xb8,0x81,0x20,0x15,0x63,0x80 };
++  unsigned char unknown_05[] = {N6110_FRAME_HEADER, 0x05};
++
+ #ifdef DEBUG
+   fprintf(stdout,_("Making authentication!\n"));
+ #endif
+@@ -532,15 +612,23 @@
+   usleep(100); Protocol->SendMessage(5, 0x02, connect2);
+   usleep(100); Protocol->SendMessage(7, 0x02, connect3);
+       
++  usleep(100); Protocol->SendMessage(sizeof(req3_55), 0x01, req3_55);
++
+   CurrentMagicError = GE_BUSY;
+ 
+   usleep(100); Protocol->SendMessage(4, 0x64, connect4);
++
++  usleep(100); Protocol->SendMessage(sizeof(req3_55), 0x01, req3_55);
++  usleep(100); Protocol->SendMessage(sizeof(req3), 0x01, req3);
++
+   if (NULL_WaitUntil(50,&CurrentMagicError)!=GE_NONE) return GE_TIMEOUT;
+ 
+   N6110_GetNokiaAuth(Current_IMEI, MagicBytes, magic_connect+4);
+ 
+   Protocol->SendMessage(45, 0x64, magic_connect);
+ 
++  usleep(100); Protocol->SendMessage(4, 0x04, unknown_05);
++
+ #ifdef DEBUG
+   fprintf(stdout,_("End of authentication!\n"));
+ #endif
+@@ -2446,9 +2581,11 @@
+ 				     0x02,0x01,0x05,0x81,0x01,0x00,0x00,0x01,0x02,0x0a,
+ 				     0x07,0xa1,0x88,0x89,0x21,0x15,0x63,0xa0,0x00,0x06,
+ 				     0x88,0x90,0x21,0x48,0x40,0xbb };
++#if 0
+ 	unsigned char req2[]     = { N6110_FRAME_HEADER, 0x42,0x05,0x01,
+ 				     0x07,0xa2,0xc8,0x81,0x21,0x15,0x63,0xa8,0x00,0x00,
+ 				     0x07,0xa3,0xb8,0x81,0x20,0x15,0x63,0x80,0x01,0x60 };
++#endif
+ 	unsigned char req3[]     = { N6110_FRAME_HEADER, 0x42,0x05,0x01,
+ 				     0x07,0xa2,0x88,0x81,0x21,0x15,0x63,0xa8,0x00,0x00,
+ 				     0x07,0xa3,0xb8,0x81,0x20,0x15,0x63,0x80 };
+@@ -2464,6 +2601,8 @@
+ 
+ 	switch (type) {
+ 	case 0:
++		usleep(100); Protocol->SendMessage(sizeof(req3), 0x01, req3);
++		usleep(100);
+ 		req_end = req_end0;
+ 		size = sizeof(req_end0);
+ 		break;
+@@ -2514,10 +2514,12 @@
+ 	Protocol->SendMessage(5 + size + strlen(Number), 0x01, req);
+         usleep(1000000);
+ 
++#if 0
+ 	if (type != 1) {
+           Protocol->SendMessage(26, 0x01, req2);
+ 	  usleep(1000000);
+         }
++#endif
+ 
+ 	return (GE_NONE);
+ }
+@@ -5313,7 +5510,7 @@
+   /* We do not need RLP frame parsing to be done when we do not have callback
+      specified. */
+   if (CurrentRLP_RXCallback == NULL)
+-    exit;
++    return;
+     
+   /* Anybody know the official meaning of the first two bytes?
+      Nokia 6150 sends junk frames starting D9 01, and real frames starting

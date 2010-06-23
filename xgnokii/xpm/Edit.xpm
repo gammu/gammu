@@ -1,0 +1,37 @@
+/* XPM */
+/*
+
+  G N O K I I
+
+  A Linux/Unix toolset and driver for Nokia mobile phones.
+
+  Copyright (C) 1999 Jan Derfinak <ja@mail.upjs.sk>
+
+  Released under the terms of the GNU GPL, see file COPYING for more details.
+
+*/
+
+static char * Edit_xpm[] = {
+"16 17 5 1",
+" 	c #84207BDE7BDE",
+".	c None",
+"X	c #FFFFFFFFFFFF",
+"o	c #000000000000",
+"O	c #52945294FFFF",
+"         .......",
+" XXXXXXX o......",
+" X     X Xo....O",
+" XXXXXXX ooo..OO",
+" X     XXXXo.OOo",
+" XXXXXXXXXXoOOo.",
+" X        XOOo..",
+" XXXXXXXXXOOo...",
+" X       oOo....",
+" XXXXXXXoooo....",
+" X     oooXo....",
+" XXXXXoXXXXo....",
+" XXXXXXXXXXo....",
+"oooooooooooo....",
+"................",
+"................",
+"................"};

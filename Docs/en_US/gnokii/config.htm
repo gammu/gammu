@@ -1,0 +1,632 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Marcin Wiacek">
+   <title>Configuration</title>
+   <link REL=stylesheet HREF="../styl.css" TYPE="text/css">
+</head>
+<body>
+
+<a NAME="Top"></a>
+<p align="RIGHT"><a class="autoremail" href="../index.htm">Main page</a></p>
+<center><font color="#1F409F" size=+2 class="tytul">Configuration</font></center>
+
+<p><hr size="2" noshade width="60%" align="center" style="color: #004080">
+
+<p><font color="#1F409F" size=+2 class="dzial">How to install it from the source ?</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>If you get the sources you need to create script 
+<i>configure</i>. You do it by typing:
+<PRE>tfuj:~/gnokii-0.3.3pre5$ autoconf</PRE>
+
+<P>If you get the sources from the tarball you don't need to do 
+this - <TT>configure</TT> is already made for you. For quick install do simply:
+<PRE>tfuj:~/gnokii-0.3.3pre5$ ./configure
+tfuj:~/gnokii-0.3.3pre5$ make
+tfuj:~/gnokii-0.3.3pre5$ make install
+</PRE>
+
+<P>But <i>configure</i> has some options. Except obvious 
+parameters as <i>--prefix</i> which specifies a path to install GNOKII, you 
+can specify one of the following: 
+
+<DL>
+  <dt><i>--help</i>
+  <dd>Shows you list of available options</dd></dl>
+<dl>
+  <DT><i>--enable-debug</i> 
+  <DD>Turns on debugging. It's usefull especially for developers. But if you 
+  find a bug in GNOKII, please compile the sources with debugging enabled and 
+  send this output to the GNOKII mailing list. This is used by <i>gnokii</i> 
+  program. </DD></DL>
+<DL>
+  <DT><i>--enable-xdebug</i> 
+  <DD>The same as above but used by <i>xgnokii</i>. </DD></DL>
+<DL>
+  <DT><i>--enable-rlpdebug</i> 
+  <DD>This option turns on debugging specific to the RLP stuff. Note, that it's 
+  very important at the moment as this part of GNOKII is under the hardest 
+  development. </DD></DL>
+<DL>
+  <DT><i>--without-x</i> 
+  <DD>Don't include X Window system support - <i>xgnokii</i>. </DD></DL>
+<DL>
+  <DT><i>--enable-security</i> 
+  <DD>Turns on some security functions:.... Use them with caution. </DD></DL>
+<DL>
+  <DT><i>--enable-win32</i> 
+  <DD>Include MS Windows support. Yes, it really exists. ;-) </DD></DL>
+<DL>
+  <DT><i>--with-model=MODEL</i>, <i>--with-port=PORT</i> 
+  <DD>Specify the model of the phone (eg. 6150) and the port it is connected to 
+  (eg. /dev/ttyS1). These values can be overwritten with ones from the config 
+  files.
+  </DD>
+</DL>
+
+<P>The sample usage:
+<PRE>tfuj:~/gnokii-0.3.3pre5$ ./configure --prefix=/usr2 --enable-debug --without-x \
+--enable-security --with-model=6130 --with-port=/dev/ttyS1
+</PRE>
+
+<P>When the <i>configure</i> succeed, it shows options GNOKII 
+will be compiled with:
+<PRE>    Host system:        linux-gnulibc1
+    Gnokii version:     0.3.3_pre5
+    Xgnokii version:    20000613
+    Phone model:        6130
+    Serial port:        /dev/ttyS1
+    X (GTK) support:    no
+    Debug:              yes
+    XDebug:             no
+    RLPDebug:           no
+    NLS:                yes
+    Security:           yes
+    Win32:               
+    Prefix:             /usr2
+</PRE>
+
+<P>Now, the only thing left to do is just ro run:
+<PRE>tfuj:~/gnokii-0.3.3pre5$ make
+tfuj:~/gnokii-0.3.3pre5$ make install
+</PRE>
+
+<P>Finally, you have GNOKII installed in your system. And now REAL 
+FUN begins. :-)
+
+<p><font color="#1F409F" size=+2 class="dzial">How to install it from binaries ?</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>If you downloaded gnokii as a pre-built binary you should install
+it in the conventional manner for the package type in question.
+For example if you downloaded a .rpm file you can install it by
+running the following as root.
+
+<p>rpm -i gnokii-0.3.2-i386.rpm
+
+<p>If you are using a Debian based system, you can use dpackage
+to do the installation (FIXME - is this correct ?)
+
+<p><font color="#1F409F" size=+2 class="dzial">How to make connection with phone ?</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>There are three ways to make it:
+
+<ul>
+<li>connecting phone with computer using cable. All phones allow to make it
+(even 3210 - connector is inside). If you want to know more
+about creating your own cable, read <a href=../gsm/cables/cables.htm>cables faq</a>.</li>
+<li>using IrDa port in phone and computer. Notice, that your computer
+and phone must have it (only some series of Nokia phones has it - for example,
+6110, 6150)</li>
+<li>connecting to phone special device called "dongle" (it has IrDa port)
+and making IrDa connection between it and phone. Current gnokii cas use
+Tekram IRmate 210 - see patches</li>
+</ul>
+
+<p><font color="#1F409F" size=+2 class="dzial">How to configure gnokii ?</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>First it to use <i>--with-model</i> and <i>--with-port</i> options for
+configure script. But I do not recommend this. In my opinion these should be
+removed from configure. Second disadvantage is that you can't use it when
+you are installing a binary package.
+
+<p>So, will use better method :-).
+You should copy the <a href=../examples/gnokiirc>gnokiirc</a>
+file from the Docs/examples directory to your
+home directory and name it gnokiirc or copy it into /etc directory
+and name gnokiirc.
+
+<p>Using your favorite
+editor ensure that the settings are correct for your system,
+the sample file has details of the various options available. The most
+difficult problem could be discovering model of your phone - go into
+our <a href=../gsm/firmware/firmware.htm>firmware page</a>
+and try to use codes written in column
+<b>Firmware version code</b>. If your phone will display something,
+see model number on the third line, look on the
+<a href=../gsm/firmware/firmware.htm>firmware page</a>
+again (for it) and read phone model then.
+
+<p>Note that you will need read/write permissions on whatever
+serial port you specify in gnokiirc.  You can now use gnokii
+and xgnokii.
+
+<P>Of course, you don't have to make any config, if you will use
+these config options. There are default:
+
+<p>
+<pre>
+[global]
+port = /dev/ttyS0
+model = 6110
+connection = serial
+initlength = default
+bindir=/usr/local/sbin
+</pre>
+
+<p><font color="#1F409F" size=+2 class="dzial">How to configure infrared connection ?</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>
+<ul>
+
+<li>Go into configuration of your IrDa port (the most often it's made in
+BIOS, sometimes using program provided by computer's producer):
+
+<p>
+<ul>
+<li>Enable it</li>
+<li>Setup the COM-Port on which it should work.
+Here are addresses:
+<br>ttyS0 (COM1): 3F8, IRQ: 4
+<br>ttyS1 (COM2): 2F8, IRQ: 3
+<br>ttyS2 (COM3): 3E8, IRQ: 4
+<br>ttyS3 (COM4): 2E8, IRQ: 3
+<br>&nbsp;
+</li>
+</ul>
+</li>
+
+<li>Configure gnokii (see previous question)
+setting type of connection to
+infrared.</li>
+
+<li>If you are using linux, put linux-irda off (you can't use gnokii over infrared and
+linux-irda at the same time - it means too, if you want use
+linux-irda you must close all gnokii-applications what
+use the infrared-port in moment).
+</li>
+</ul>
+
+<p><font color="#1F409F" size=+2 class="dzial">How to configure gnokii driver for data connection ?</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>After installing and configuring gnokii you should make another group
+and allow mgnokiidev (it our virtual modem driver)
+to use it. For example (if you have installed gnokii
+into /usr/local):
+
+<p>
+<i>groupadd gnokii<br>
+chown root:gnokii /usr/local/sbin/mgnokiidev<br>
+chmod 4750 /usr/local/sbin/mgnokiidev</i>
+
+<p><b>And now connect (FIRST EXAMPLE):</b>
+
+<p>Then connect your phone to your PC and then run gnokiid:
+
+<PRE>[ first console ]
+tfuj:/home/pawel/gnokii# ./gnokiid/gnokiid 
+</pre>
+
+<p>If successful, you should see a message saying that mgnokiidev has been
+run to create /dev/gnokii.  If you're using a 5110/6110 series phone
+you should hear a beep and see an "accessory connected" message on
+the phone.  If you're using a 3810 series phone you won't see anything
+on the phones LCD.
+
+<p>And now:
+
+<p>
+<pre>
+[ second console ]
+[- running minicom -]
+
+[ third console ]
+[- when connection is estabilished -]
+tfuj:/etc/ppp# /usr/sbin/pppd -d -detach /dev/gnokii 115200
+Using interface ppp0
+Connect: ppp0 &lt;--&gt; /dev/gnokii
+sent [LCP ConfReq id=0x1 <MRU 552> <ASYNCMAP 0x0> <MAGIC 0xc5c718fb> <PCOMP> <ACCOMP>]
+rcvd [LCP ConfReq id=0x8e <ASYNCMAP 0xa0000> <MAGIC 0x56292222> <PCOMP> <ACCOMP> &lt; 11 04 05 f4&gt; &lt; 13 0d 01 70 69 65 6b 6e 61 2d 61 73 34&gt;]
+sent [LCP ConfRej id=0x8e &lt; 11 04 05 f4&gt; &lt; 13 0d 01 70 69 65 6b 6e 61 2d 61 73 34&gt;]
+rcvd [LCP ConfNak id=0x1 <MRU 1500>]
+sent [LCP ConfReq id=0x2 <ASYNCMAP 0x0> <MAGIC 0xc5c718fb> <PCOMP> <ACCOMP>]
+rcvd [LCP ConfReq id=0x8f <ASYNCMAP 0xa0000> <MAGIC 0x56292222> <PCOMP> <ACCOMP>]
+sent [LCP ConfAck id=0x8f <ASYNCMAP 0xa0000> <MAGIC 0x56292222> <PCOMP> <ACCOMP>]
+rcvd [LCP ConfAck id=0x2 <ASYNCMAP 0x0> <MAGIC 0xc5c718fb> <PCOMP> <ACCOMP>]
+sent [IPCP ConfReq id=0x1 <ADDR 192.168.1.10> <COMPRESS 01 0f VJ>]
+sent [CCP ConfReq id=0x1 <DEFLATE 15> <DEFLATE(OLD#) 15> <BSD 15 v1>]
+rcvd [IPCP ConfReq id=0x16 <COMPRESS 0f VJ 00> <ADDR 157.25.75.129>]
+sent [IPCP ConfAck id=0x16 <COMPRESS 0f VJ 00> <ADDR 157.25.75.129>]
+rcvd [IPCP ConfNak id=0x1 <ADDR 157.25.94.141>]
+sent [IPCP ConfReq id=0x2 <ADDR 157.25.94.141> <COMPRESS 01 0f VJ>]
+rcvd [LCP ProtRej id=0x90 80 fd 01 01 00 0f 1a 04 78 00 18 04 78 00 15 03 2f]
+rcvd [IPCP ConfAck id=0x2 <ADDR 157.25.94.141> <COMPRESS 01 0f VJ>]
+local  IP address 157.25.94.141
+remote IP address 157.25.75.129
+Terminating on signal 2.
+sent [LCP TermReq id=0x3 "User request"]
+rcvd [LCP TermAck id=0x3]
+Connection terminated.
+Connect time 5.6 minutes.
+Sent 30568 bytes, received 197133 bytes.
+tfuj:/etc/ppp# 
+</PRE>
+
+<p><b>SECOND EXAMPLE (I used such scripts):</b>
+
+<PRE>/home/pawel/.gnokiirc
+---------------------
+global]
+port = /dev/ttyS1
+model = 6110
+connection = serial
+initlength = 1
+
+/usr/sbin/ppp-gnokii
+--------------------
+#!/bin/sh
+LOCAL_IP=0.0.0.0       
+REMOTE_IP=0.0.0.0     
+NETMASK=255.255.255.0   
+DIALER_SCRIPT=/etc/ppp/ppp-gnokii
+exec /usr/sbin/pppd debug /dev/gnokii 115200 \
+$LOCAL_IP:$REMOTE_IP \
+connect $DIALER_SCRIPT
+
+/etc/ppp/ppp-gnokii
+-------------------
+#!/bin/sh
+/usr/sbin/chat -v                                       \
+        TIMEOUT         30                              \
+        ABORT           '\nBUSY\r'                      \
+        ABORT           '\nNO ANSWER\r'                 \
+        ABORT           '\nRINGING\r\n\r\nRINGING\r'    \
+        ABORT           '\nNO CARRIER\r'                \
+        ''              ATDT501808080                   \
+        CONNECT         ''
+
+/etc/ppp/options
+----------------
+-detach
+modem
+crtscts
+defaultroute
+asyncmap 0
+mtu 552
+mru 552
+
+/etc/ppp/pap-secrets
+--------------------
+ppp * ppp
+</PRE>
+
+<P>Number 501808080 is an Internet access number for all Idea 
+Centertel (Polish GSM operator) abonents. With these files the only thing to do 
+is to run <i>gnokiid</i> and <i>/usr/sbin/ppp-gnokii</i>. Note that both: 
+<i>/usr/sbin/ppp-gnokii</i> and <i>/etc/ppp/ppp-gnokii</i> must be 
+executable files. At the moment you have to run <i>ppp-gnokii</i> as the 
+superuser unless the simple user has a permission to write to a <I>pty</I> 
+device. <i>gnokiid</i> must be run as the user belinging to <I>gnokii</I> 
+group.
+
+<PRE>
+[ first console ]
+tfuj:~S /usr/sbin/gnokiid
+Initialising GSM
+Slave pty is /dev/ttyp9, calling /usr/sbin/mgnokiidev to create /dev/gnokii.
+
+[ second console ]
+tfuj:~# /usr/sbin/ppp-gnokii
+Serial connection established.
+Using interface ppp0
+Connect: ppp0 &lt;--&gt; /dev/gnokii
+Warning - secret file /etc/ppp/pap-secrets has world and/or group access
+sent [LCP ConfReq id=0x1     ]
+rcvd [LCP ConfReq id=0xbb     ]
+sent [LCP ConfAck id=0xbb     ]
+rcvd [LCP ConfNak id=0x1 ]
+sent [LCP ConfReq id=0x2    ]
+rcvd [LCP ConfAck id=0x2    ]
+Warning - secret file /etc/ppp/pap-secrets has world and/or group access
+sent [PAP AuthReq id=0x1 user="ppp" password="ppp"]
+rcvd [PAP AuthAck id=0x1 ""]
+Remote message: ^F
+sent [IPCP ConfReq id=0x1  ]
+sent [CCP ConfReq id=0x1   ]
+rcvd [IPCP ConfReq id=0x49  ]
+sent [IPCP ConfAck id=0x49  ]
+rcvd [IPCP ConfNak id=0x1 ]
+sent [IPCP ConfReq id=0x2  ]
+rcvd [IPCP ConfAck id=0x2  ]
+local  IP address 192.168.23.55
+remote IP address 192.168.9.2
+</PRE>
+
+<p><b>THIRD EXAMPLE:</b>
+
+<p>Use /dev/gnokii as a modem:
+
+<p><i>e.g. ppp session<br>
+--------------- /etc/ppp/peers/demon-gnokii ---------------------<br>
+/dev/gnokii 115200<br>
+modem crtscts defaultroute<br>
+connect 'chat -v ABORT BUSY ABORT ERROR ABORT "NO CARRIER" "" AT OK-AT-OK ATD02083389666 CONNECT'<br>
+user XXXX.demon.co.uk<br>
+noauth<br>
+mtu 296<br>
+debug<br>
+----------------------------------------------------------------<br>
+--------------- /etc/ppp/pap-secrets ---------------------------<br>
+XXXX.demon.co.uk	demon-gnokii	<yourpassword><br>
+----------------------------------------------------------------<br>
+</i>
+
+<p>Then "pppd call demon-gnokii" should connect
+<br>('tail -f /var/log/messages' to see what is happening)
+
+<p>If a call terminates you should get 'NO CARRIER' and gnokiid should
+continue to work, but this is early code and you may find you have to
+Ctrl-C and restart gnokiid (especially if the phone says the terminal
+connection has been lost)
+
+<p><b>AND ANOTHER EXAMPLE PPP SCRIPT FROM <a href="mailto:wikne@lynx.uio.no">Jon Wikne</a>:</b>
+
+<p>
+<i>
+#!/bin/sh<br>
+#<br>
+# Script to launch PPP over a Nokia 5110 / 6110 mobile phone<br>
+# 20-06-2000 -- Jon Wikne<br>
+#<br>
+### NOTE: "01234567" and "username" below must be replaced<br>
+### with your actual ISP's phone number and your user name.<br>
+#<br>
+### NOTE 2: If you are calling an ISDN number or a digital<br>
+### line you may also need ATS35=0 in the chat sequence.<br>
+&nbsp;<br>
+# Launch gnokiid....<br>
+echo "Launching gnokiid... "<br>
+/usr/local/sbin/gnokiid &<br>
+&nbsp;<br>
+# Wait for gnokiid to find the phone.<br>
+sleep 7<br>
+&nbsp;<br>
+# Now, down to business!<br>
+echo "Calling and starting pppd... "<br>
+pppd /dev/gnokii 115200 debug connect \<br>
+'chat -v ECHO ON ABORT BUSY ABORT ERROR ABORT "NO CARRIER" \<br>
+"" AT OK ATDT01234567 CONNECT ""' \<br>
+noipdefault ipcp-accept-local ipcp-accept-remote \<br>
+user username<br>
+&nbsp;<br>
+# Some cleaning up to do....<br>
+<br>
+echo -n "Stopping gnokiid... "<br>
+ps ax | awk 'BEGIN { prog="/usr/local/sbin/gnokiid"; ARGC=1 } <br>
+{ if (prog == $5) { print $1 ; exit 0 } }' $1<br>
+kill "$1"<br>
+echo $1
+</i>
+
+<p><font color="#1F409F" size=+2 class="dzial">Permission problem...</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<pre>
+> Now xgnokii want  to connecting.....  and some minutes later it's say:
+>  Gnokii serial_open: open: Permission denied
+> Couldn't open FB61 device: Permission denied
+
+you should set your /dev/ttySx to:
+
+crw-rw----    1 root     dialout    4,  65 Jul  5  2000 /dev/ttyS1
+
+and add yourself to the group dialout. or make a new group gnokii 
+and do the same thing for this group. see the gnokii doc about 
+this, especialy if you want to use gnokiid.
+</pre>
+
+<p><font color="#1F409F" size=+2 class="dzial">Xgnokii files missed...</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<pre>
+> > I start to configure:
+> > 
+> > elwinx:/usr/src/gnokii# ./configure  --prefix=/usr/local/
+> > 
+> > checking for X... (cached) libraries /usr/X11R6/lib, headers
+> > /usr/X11R6/include
+> > checking for X11/xpm.h... (cached) no
+> > configure: warning: Cannot find include X11/xpm.h
+> > configure: warning: Disabling xgnokii.
+</pre>
+
+<p>For Debian GNU/Linux 2.2 potato:
+
+<p>
+<pre>
+> Do:
+> dpkg -S \*xpm.h
+> and show the result. You can't use xgnokii without libxpm.
+
+After I installed the xpm4g-dev_3.4k-5.deb xgnokii found my X
+
+My next Problem was the Program didn't find the gtk.h
+
+I installed this lib's
+libglib1.2-dev
+libgtk1.2-dev_1.2.7-1.deb
+
+and xgnokii are start up
+</pre>
+
+<p>For Redhat:
+
+<p>
+<pre>
+On Red Hat 6.2 (or derived?)
+
+sloth:danielm[12]% locate xpm.h
+/usr/X11R6/include/X11/xpm.h
+sloth:danielm[13]% rpm -qf /usr/X11R6/include/X11/xpm.h
+xpm-devel-3.4k-2
+
+On Red Hat 7 (or derived?)
+
+mouth:danielm[4]% locate xpm.h
+/usr/X11R6/include/X11/xpm.h
+mouth:danielm[5]% rpm -qf /usr/X11R6/include/X11/xpm.h
+XFree86-devel-4.0.1-1
+</pre>
+
+<p><font color="#1F409F" size=+2 class="dzial">Infrared problem</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<pre>
+> I'm having trouble getting Gnokii to work with my Nokia 6110 using the
+> infrared connection. It works perfectly with the cable. When I run gnokii
+> as non-root I get the following output:
+> 
+> Added new section global
+> Adding key/value port//dev/ttyS3
+> Adding key/value model/6110
+> Adding key/value initlength/default
+> Adding key/value connection/infrared
+> Adding key/value bindir//usr/local/sbin/
+> Entering monitor mode...
+> Initialising GSM interface...
+> Starting IR mode...!
+> Couldn't open FB61 infrared device: Device or resource busy
+> Hmmm... GSM_LinkOK never went true. Quitting.
+> 
+> And if I run it as root it looks like this:
+> 
+> Added new section global
+> Adding key/value port//dev/ttyS3
+> Adding key/value model/6110
+> Adding key/value initlength/default
+> Adding key/value connection/infrared
+> Adding key/value bindir//usr/local/sbin/
+> Entering monitor mode...
+> Initialising GSM interface...
+> Starting IR mode...!
+> PC: 1c:00:0c:02:00:09:00:01:00:0d:00:00:02:01:40:00:52:06:
+> Timeout in IR-mode
+> PC: 1c:00:0c:02:00:09:00:01:00:0d:00:00:02:01:41:00:53:06:
+> Timeout in IR-mode
+> PC: 1c:00:0c:02:00:09:00:01:00:0d:00:00:02:01:42:00:50:06:
+> Timeout in IR-mode
+> PC: 1c:00:0c:02:00:09:00:01:00:0d:00:00:02:01:43:00:51:06:
+> Timeout in IR-mode
+> PC: 1c:00:0c:02:00:09:00:01:00:0d:00:00:02:01:44:00:56:06:
+> Timeout in IR-mode
+> Hmmm... GSM_LinkOK never went true. Quitting.
+> 
+> It makes no difference if IR-reception is activated or not (well maybe the
+> numbers are different, I haven't checked)
+> 
+> I have followed the Alessandro's beta-HOWTO which was posted June 22 2000
+> with the subject "Re: IR setup".
+> 
+> In /var/log/messages I have found the following:
+> 
+> Feb 18 23:34:16 bmw kernel: ircomm_tty: virtual tty driver for IrCOMM (
+> revision:Wed May 26 00:49:11 1999 ) 
+> Feb 18 23:34:16 bmw kernel: ttyS00 at 0x03f8 (irq = 4) is a 16550A 
+> Feb 18 23:34:16 bmw kernel: ttyS03 at 0x02e8 (irq = 3) is a 16550A 
+> 
+> I have tried both with and without the irda-module loaded (insmod
+> irda) but without luck.
+> 
+> I'm using a Fujitsu C325 Lifebook (labtop) and my Nokia 6110 is version
+> 4.33. Has anyone experienced problems like these and hopefully has found a
+> solution, or maybe just have some ideas for what I should try next.
+
+"I also had removed the Ethernet PCcard.
+That thing got assigned the _interrupt_ (irq 3) that the serial interface
+for the IR port needs. Without it gnokii works."
+
+Now I've got contact to my Nokia 6110 using the infrared port.
+</pre>
+
+<p><font color="#1F409F" size=+2 class="dzial">Answering data calls problem...</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<pre>
+> It seems like it's some sort of PacBell or Verizon thing, because I
+> get a ring when I try to dial a voice call, but when I dial from
+> minicom/gnokiid I get "NO CARRIER" ("Check Operator Services" on the
+> phone), and dialing in from the Palm still gets no ring.
+
+First we should know how operators manage data call services,
+is there any international standard (it would be, to make international data
+calls possible). I described, how it works with my operator (Plusgsm/PL)
+and I'm interesting if it's a worldwide standard for these services?
+Did somebody tried to make a cellular-to-cellular international data transfer ?
+
+In Plusgsm there are three kinds of data calls :
+1. OUTGOING CALLS. Service activation is free with no additional monthly charge.
+   For default this service is disabled, you have to call operator's helpdesk
+   to enable. With this service is possible to call:
+      a) any internet gate
+      b) WAP gate
+      c) any "private" computer with own transfer protocol
+      d) ?? send a fax ?? (with special fax software for cellular modem
+         included in NCDS)
+   1 minute charge is similar to voice calls. It's not allowed by the operator
+   to answer incoming data call.
+2. INCOMING CALLS. You have to pay for service activation (5$) and additional
+   monthly charge (10$). Then you will get a new SIM card with 2 phone numbers:
+   one for voice/sms and second one - for incoming data calls only.
+   1 min charge depends on the network from the call was initiated,
+   generally 1...2 times x voice call.
+3. FAX CALLS. Another payable service, not covered by above mentioned.
+   There is a special trick for incoming fax: it's stored in "FAX mailbox",
+   you can call this mailbox with standard fax machine
+   (or cellular modem connected to PC) to receive it.
+
+I guess your operator have similar restrictions for incoming data calls and
+here is your problem. Incoming call is recognized as a data type and rejected.
+It would be nice to know if it's rejected on the operator's software level or
+by the phone software (acc. to informations stored in the SIM).
+In the second case it's easier to omit these restrictions. But be careful !
+You will be treated by the law in the same way as if you try to hack
+Bill Gates credit card number ;-)  .
+</pre>
+
+<p><font color="#1F409F" size=+2 class="dzial">Xgnokii works, gnokii not...</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<pre>
+> 1. Why is it that xgnokii communicates perfectly with my 3210, while the
+> only thing that the command line gnokii does is:
+> GSM/FBUS init failed! (Unknown model ?). Quitting.
+> [cvd@sirius gnokii]$ ./gnokii --monitor
+> Opened configuration file /home/cvd/.gnokiirc
+> Added new section global
+> Adding key/value port//dev/ttyS1
+> Adding key/value model/3210
+> Adding key/value initlength/default
+> Adding key/value connection/serial
+
+Look into latest gnokiirc from /docs/default. "serial" setting for connection
+is not used from long time. Change to other actual parameter ("fbus" ?)...
+</pre>
+
+</div>
+</body>
+</html>

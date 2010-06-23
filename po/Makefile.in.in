@@ -1,0 +1,216 @@
+#
+#
+#  Makefile for gnokii I18n, 
+#             based on the Makefile.in.in that comes with gettext
+#
+#  Erwin Dieterich, 20. 1. 1998 Erwin.Dieterich.ED@Bayer-AG.de
+#
+#
+#
+# Makefile for program source directory in GNU NLS utilities package.
+# Copyright (C) 1995, 1996 Free Software Foundation, Inc.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+PACKAGE = @PACKAGE@
+VERSION = @VERSION@
+
+SHELL = @SHELL@
+@SET_MAKE@
+
+srcdir = @srcdir@
+top_srcdir = @top_srcdir@
+VPATH = @srcdir@
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+datadir = $(prefix)/@DATADIRNAME@
+localedir = @LOCALEDIR@
+gnulocaledir = @LOCALEDIR@
+subdir = po
+
+INSTALL = @INSTALL@
+#INSTALL_DATA = @INSTALL_DATA@
+INSTALL_DATA = @INSTALL@ -m 644
+
+CC = @CC@
+GMSGFMT = @GMSGFMT@
+MSGFMT = @MSGFMT@
+XGETTEXT = @XGETTEXT@
+MSGMERGE = @MSGMERGE@
+
+DEFS = @DEFS@
+CFLAGS = @CFLAGS@
+CPPFLAGS = @CPPFLAGS@
+
+INCLUDES = -I.. 
+
+COMPILE = $(CC) -c $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $(XCFLAGS)
+
+DISTFILES = ChangeLog Makefile.in.in POTFILES.in $(PACKAGE).pot
+
+POTFILES = \
+
+CATALOGS = @CATALOGS@
+CATOBJEXT = @CATOBJEXT@
+INSTOBJEXT = @INSTOBJEXT@
+
+.SUFFIXES:
+.SUFFIXES: .c .o .po .pox .gmo .mo .msg 
+
+.c.o:
+	$(COMPILE) $<
+
+.po.pox:
+	$(MAKE) $(PACKAGE).pot
+	$(MSGMERGE) $< $(srcdir)/$(PACKAGE).pot -o $*.pox
+
+.po.mo:
+	$(MSGFMT) -o $@ $<
+
+.po.gmo:
+	file=`echo $* | sed 's,.*/,,'`.gmo \
+	  && rm -f $$file && $(GMSGFMT) -o $$file $<
+
+all: all-@USE_NLS@
+
+all-yes: $(PACKAGE).pot $(CATALOGS)
+all-no:
+	@echo "No support for NLS requested"
+
+$(PACKAGE).pot: $(POTFILES)
+	if test -n "$(XGETTEXT)"; then \
+		$(XGETTEXT) --default-domain=$(PACKAGE) --directory=$(srcdir)/.. \
+	               --keyword=_  --files-from=$(srcdir)/POTFILES.in; \
+		mv $(PACKAGE).po $(PACKAGE).pot; \
+	else \
+		echo "xgettext not available: $(PACKAGE).pot not updated" 1>&2; \
+	fi
+
+makelib: all-@USE_NLS@
+
+install: install-exec install-data
+install-exec:
+install-data: install-data-@USE_NLS@
+install-data-no: all
+install-data-yes: all
+	${SHELL} $(top_srcdir)/mkinstalldirs $(datadir); \
+	catalogs='$(CATALOGS)'; \
+	for cat in $$catalogs; do \
+	  case "$$cat" in \
+	    *.gmo) destdir=$(gnulocaledir);; \
+	    *)     destdir=$(localedir);; \
+	  esac; \
+	  lang=`echo $$cat | sed 's/$(CATOBJEXT)$$//'`; \
+	  dir=$$destdir/$$lang/LC_MESSAGES; \
+	  ${SHELL} $(top_srcdir)/mkinstalldirs $$dir; \
+	  if test -r $$cat; then \
+	    $(INSTALL_DATA) $$cat $$dir/$(PACKAGE)$(INSTOBJEXT); \
+	    echo "installing $$cat as $$dir/$(PACKAGE)$(INSTOBJEXT)"; \
+	  else \
+	    $(INSTALL_DATA) $(srcdir)/$$cat $$dir/$(PACKAGE)$(INSTOBJEXT); \
+	    echo "installing $(srcdir)/$$cat as" \
+		 "$$dir/$(PACKAGE)$(INSTOBJEXT)"; \
+	  fi; \
+	  if test -r $$cat.m; then \
+	    $(INSTALL_DATA) $$cat.m $$dir/$(PACKAGE)$(INSTOBJEXT).m; \
+	    echo "installing $$cat.m as $$dir/$(PACKAGE)$(INSTOBJEXT).m"; \
+	  else \
+	    if test -r $(srcdir)/$$cat.m ; then \
+	      $(INSTALL_DATA) $(srcdir)/$$cat.m \
+		$$dir/$(PACKAGE)$(INSTOBJEXT).m; \
+	      echo "installing $(srcdir)/$$cat as" \
+		   "$$dir/$(PACKAGE)$(INSTOBJEXT).m"; \
+	    else \
+	      true; \
+	    fi; \
+	  fi; \
+	done
+
+# Define this as empty until I found a useful application.
+installcheck:
+
+uninstall:
+	catalogs='$(CATALOGS)'; \
+	for cat in $$catalogs; do \
+	  lang=`echo $$cat | sed 's/$(CATOBJEXT)$$//'`; \
+	  rm -f $(localedir)/$$lang/LC_MESSAGES/$(PACKAGE)$(INSTOBJEXT); \
+	  rm -f $(localedir)/$$lang/LC_MESSAGES/$(PACKAGE)$(INSTOBJEXT).m; \
+	  rm -f $(gnulocaledir)/$$lang/LC_MESSAGES/$(PACKAGE)$(INSTOBJEXT); \
+	  rm -f $(gnulocaledir)/$$lang/LC_MESSAGES/$(PACKAGE)$(INSTOBJEXT).m; \
+	done
+	rm -f $(gettextsrcdir)/po-Makefile.in.in
+
+check: all
+
+dvi info tags TAGS ID:
+
+mostlyclean:
+	rm -f core core.* *.pox *.old.po *.gmo
+	rm -fr *.o *~
+
+clean: mostlyclean
+
+distclean: clean
+	rm -f Makefile Makefile.in POTFILES *.mo *.gmo *.msg *.cat.m $(PACKAGE).pot
+
+maintainer-clean: distclean
+	@echo "This command is intended for maintainers to use;"
+	@echo "it deletes files that may require special tools to rebuild."
+
+distdir = ../$(PACKAGE)-$(VERSION)/$(subdir)
+dist distdir: update-po $(DISTFILES)
+	dists="$(DISTFILES)"; \
+	for file in $$dists; do \
+	  ln $(srcdir)/$$file $(distdir) 2> /dev/null \
+	    || cp -p $(srcdir)/$$file $(distdir); \
+	done
+
+update-po: Makefile
+	$(MAKE) $(PACKAGE).pot
+	PATH=`pwd`/../src:$$PATH; \
+	cd $(srcdir); \
+	catalogs='$(CATALOGS)'; \
+	for cat in $$catalogs; do \
+	  lang=`echo $$cat | sed 's/$(CATOBJEXT)$$//'`; \
+	  mv $$lang.po $$lang.old.po; \
+	  echo "$$lang:"; \
+	  if $(MSGMERGE) $$lang.old.po $(PACKAGE).pot -o $$lang.po; then \
+	    rm -f $$lang.old.po; \
+	  else \
+	    echo "msgmerge for $$cat failed!"; \
+	    rm -f $$lang.po; \
+	    mv $$lang.old.po $$lang.po; \
+	  fi; \
+	done
+
+POTFILES: POTFILES.in
+	( if test 'x$(srcdir)' != 'x.'; then \
+	    posrcprefix='$(top_srcdir)/'; \
+	  else \
+	    posrcprefix="../"; \
+	  fi; \
+	  sed -e '/^#/d' -e '/^[ 	]*$$/d' \
+	      -e "s@.*@	$$posrcprefix& \\\\@" \
+	      -e '$$s/\(.*\) \\/\1/' < $(srcdir)/POTFILES.in > POTFILES )
+
+#Makefile: Makefile.in.in ../config.status POTFILES
+#	cd .. \
+#	  && CONFIG_FILES=$(subdir)/$@.in CONFIG_HEADERS= \
+#	       $(SHELL) ./config.status
+
+# Tell versions [3.59,3.63) of GNU make not to export all variables.
+# Otherwise a system limit (for SysV at least) may be exceeded.
+.NOEXPORT:

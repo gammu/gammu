@@ -1,0 +1,46 @@
+<HTML>
+<STYLE TYPE="text/css">
+<!-- styles from www.fkn.pl -->
+<!-- changed to page of Marcin Wiacek (www.marcin-wiacek.topnet.pl) -->
+<!--
+
+@media print {font.drukuj {display:none}}
+@media print {a.autoremail:hover,a.autoremail:active,a.shref:hover,a.shref:active,a.dzial:hover,a.dzial:active,a:hover,a:active {text-decoration:none; color:#525FF5}}
+@media print {a.autoremail:hover,a.autoremail:active,a.dzial:hover,a.dzial:active {font-weight:normal}}
+@media print {a.shref:hover,a.shref:active,a:hover,a:active {font-weight:bold}}
+
+B {font-weight:bold}
+TT {font-family:Courier}
+
+BODY {text-align: justify; margin-left: 10pt; margin-right: 10pt; margin-top: 0pt; margin-bottom: 0pt; background: #ffffff; font-family: Arial, Helvetica; font-weight: normal; text-decoration: none; color:#2B2B69}
+H1, H2, H3 {font-family: Arial, Helvetica; font-weight: bolder; text-decoration: none; color:#2B2B69}
+TABLE, TR, TD, UL, OL, LI, P, BLOCKQUOTE {font-family: Arial, Helvetica; font-weight: normal; text-decoration: none; color:#2B2B69}
+a {font-family: Arial, Helvetica; font-weight: bold; text-decoration: none; color:#525FF5}
+a:hover {font-weight: bolder; text-decoration: underline; color:#1F409F}
+a:active {font-weight: bolder; text-decoration: underline; color:#2FA030}
+
+font.tytul {font-family: Verdana, Tahoma, Arial, Helvetica; font-weight: bold; text-decoration: none; color:#004080}
+
+font.podtytul {font-family: Verdana, Tahoma, Arial, Helvetica; font-weight: bold; text-decoration: none; color:#FF0000}
+a.podtytul {font-family: Verdana, Tahoma, Arial, Helvetica; font-weight: bold; text-decoration: none; color:#FF0000}
+
+font.dzial {font-family: Verdana, Tahoma, Arial, Helvetica; font-weight: bold; text-decoration: none; color:#1F409F}
+a.dzial {font-family: Verdana, Tahoma, Arial, Helvetica; font-weight: bold; text-decoration: none; color:#525FF5}
+a.dzial:hover {font-weight: bolder; text-decoration: underline}
+a.dzial:active {font-weight: bolder; text-decoration: underline}
+
+a.shref {font-family: Arial, Helvetica; font-weight: bold; text-decoration: none; color:#525FF5}
+a.shref:hover {font-weight: bolder; text-decoration: underline}
+a.shref:active {font-weight: bolder; text-decoration: underline}
+
+font.autor {font-family: Arial, Helvetica; font-weight: normal; text-decoration: none; color:#2B2B69}
+a.autoremail {font-family: Arial, Helvetica; font-weight: normal; text-decoration: none; color:#525FF5}
+a.autoremail:hover {font-weight: bolder; text-decoration: underline; color:#1F409F}
+a.autoremail:active {font-weight: bolder; text-decoration: underline; color:#2FA030}
+
+font.glowna1 {font-family: Comic Sans MS; font-weight: normal; text-decoration: none; color:#004080}
+font.glowna2 {font-family: Tahoma; font-weight: bold; text-decoration: none; color:#FF6666}
+
+-->
+</STYLE>
+</HTML>

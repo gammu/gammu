@@ -1,0 +1,19 @@
+Od: owner-gnokii@net.lut.ac.uk w imieniu Bernhard Mähr [Bernhard.Maehr@GMX.at]
+Wys&#322;ano: 25 listopada 2000 17:06
+Do: gnokii@net.lut.ac.uk
+Temat: Telefonbucheditor 7110 
+
+For everyone who trys to decode the 7110 FBUS protocol a tip:
+If in the Windows-Registry HKEY_LOCAL_MACHINE\SOFTWARE\moosy.development\TBE7110 
+the String Data is replaced with a Binary with the name Data the program shows a 
+error message at the begin but it also enables a option debug. This option 
+displays a second window showing the trace of the FBUS. So it should be easier 
+to decode the protocol. So it is possible to see the communiction while loading 
+the phone numbers,  adresses,... and also syncronizing the calendar. 
+ 
+I know it is a little bit unfair, don't tell me that.
+ 
+I hope this is useful for someone
+ 
+Bernhard Mähr
+ 

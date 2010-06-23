@@ -1,0 +1,70 @@
+#!/bin/sh
+
+#
+# Script for building GNOKII package
+# Written by Pawe³ Kot <pkot@linuxnews.pl>
+#
+
+ARCH=@ARCH@
+PN=@PACKAGE@
+PV=@VERSION@
+
+DOCS="COPYING ChangeLog VERSION Docs/CREDITS Docs/DataCalls-QuickStart Docs/README*"
+CONF="Docs/sample/gnokiirc"
+
+CWD=`pwd`
+
+# There will be the sources placed
+if [ "$TMP" = "" ]; then
+	TMP=/tmp
+fi
+if [ ! -d $TMP ]; then
+	mkdir -p $TMP
+fi
+
+# The package will be built there
+PKG=$TMP/package-$PN-$PV
+if [ ! -d $PKG ]; then
+	mkdir -p $PKG
+fi
+
+# Untar the sources
+cd $TMP
+tar xzvf $CWD/$PN-$PV.tar.gz
+cd $PN-$PV
+
+# Configure and make package
+./configure --prefix=/usr --with-x --enable-nls $ARCH-slackware-linux || exit 1
+make || exit 1
+make prefix=$PKG/usr install || exit 1
+
+# Copy the docs
+mkdir -p $PKG/usr/doc/$PN-$PV
+cp -a $DOCS $PKG/usr/doc/$PN-$PV
+chmod 644 $PKG/usr/doc/$PN-$PV
+
+# and the configuration
+mkdir -p $PKG/etc
+sed "s|/usr/local/sbin|/usr/sbin|" < $CONF > $PKG/etc/gnokiirc
+
+# Now, add gnokii group, set the permissions
+GROUPADD=`which groupadd`
+cd $PKG
+mkdir install
+cat > install/doinst.sh <<EOF
+$GROUPADD gnokii >/dev/null 2>&1
+chown root.gnokii /usr/bin/gnokii
+chmod 750 /usr/bin/gnokii
+chown root.gnokii /usr/sbin/gnokiid
+chmod 750 /usr/sbin/gnokiid
+chown root.gnokii /usr/sbin/mgnokiidev
+chmod 4750 /usr/sbin/mgnokiidev
+EOF
+
+# and build the package answering "yes" twice
+echo "y
+y" | makepkg $TMP/$PN.tgz
+
+# Cleanup
+rm -rf $TMP/$PN-$PV
+rm -rf $PKG

@@ -1,0 +1,210 @@
+<HTML>
+<HEAD>
+   <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-2">
+   <meta name="Description" content="Comparing phones">
+   <meta name="language" content="pl">
+   <meta name="revisit-after" content="15 days">
+   <meta name="Robots" content="all">
+   <meta name="KeyWords" content="3210, GSM, DCS, NCDS, MBUS, M2BUS, FBUS, Nokia, 5110, 5130, 6110, 6130, 6150, 9110, 7110, FAQ, Marcin, Wiącek, Wiacek, Marcin Wiącek, Marcin Wiacek">
+   <meta name="Author" content="Marcin Wiącek">
+   <title>Compare your phone</title>
+   <link rel="stylesheet" href="../../styl.css" type="text/css">
+</head>
+
+<script language=javascript>
+
+var numer=0;
+var initialized=false; //if variables were correctly initialized
+
+//THESE CAN BE CHANGED
+var howmanyparameters=28;
+var howmanyphones=9;
+
+//init table
+function minitialize(ilosc)
+{
+  for (i=0;i<ilosc;++i) this[i]=0;
+  this.length=ilosc;
+  return this;
+}
+
+function f(mydata) {
+  this.data=mydata;
+  return this;
+}
+
+//adds phone info
+function nphone(mydata)
+{
+  if (numer<howmanyphones)
+  {
+    phonetable[numer]=new f(mydata);
+    numer++;
+  } else
+  {
+    alert("Too many nphone");
+  }
+}
+
+var phonetable=new minitialize(howmanyphones);
+var checkboxstate=new minitialize(howmanyparameters*howmanyphones);
+
+//THESE CAN BE CHANGED
+nphone("Model,Cellular system,Internal phonebook,SMS memory,WAP,Operator logo,Caller groups,Startup logo,Picture images,Ringtones,Calendar,Connection,Data calls,Voice tags,Display,Time&Date,SIM Application Toolkit,Games,DMCP/TTML,Profiles,SMS features,Battery,Vibra,EFR,Call registry,ALS,Calculator,size");
+nphone("Nokia 2110i (NHE-4),GSM 900,125+10 (notepad),5,-,-,-,-,-,8,-,MBUS,9600,-,5 lines,countdown counter,-,-,-,-,reports,Ni-Cd 400/standard NiMH 550/vibra NiMH 550/Ni-Cd 1100/Ni-MH 1500,Battery,-,10 dialled/10 received/10 missed,-,-,?");
+nphone("Nokia 3110 (NHE-8),GSM 900,-,-,-,-,-,-,-,25,-,FBUS/MBUS,9600,-,4 lines/13 chars,-,-,-,-,1+1,reports,Li-Ion 400 (146 g)/standard 550 NiMH (187 g)/vibra 550 NiMH (187 g)/Li-Ion 1500 (203 g),Battery,-,5 dialled/5 received/5 missed,-,-,?");
+nphone("Nokia 3210 (NSE-8/9),GSM 900/1800,-,-,-,1 (72x14),ringtone to each name,animated/static (84x48),4 (72x28),38+2(composer),-,FBUS/MBUS,-,-,84x48,time/date/alarm,yes,Snake/Logic/Memory/React/Rotation,-,1+5,reports+T9+sets,Ni-MH 1250 (151 g),Phone,yes,8 dialled(time/date)/8 received(time/date)/8 missed(time/date),yes,yes,?");
+nphone("Nokia 3310 (NHM-5),GSM 900/1800,-,8 templates(70 chars)/8 smileys(7 chars),-,1 (72x14),ringtone to each name,animated/static (84x48),8+6 screen savers (72x28),35+7(composer),10 reminders (36 chars),FBUS/MBUS,-,8,84x48,time/date/alarm/stopwatch/countdown counter,yes,Snake II/Space Impact/Bantumi/Pairs II,-,6,reports+unicode+linked+T9+sets+chat+multiple send,standard Ni-MH 900/Li-Ion 850,Phone,yes,?,yes,yes,113x48x22mm");
+nphone("Nokia 3330 (NHM-6),GSM 900/1800,100,8 templates(70 chars)/8 smileys(7 chars),1.1 (CSD/2.5kb deck),1 (72x14),ringtone to each name,animated/static (84x48),8+6 screen savers (72x28/animated),35+7(composer),10 reminders (36 chars),FBUS/MBUS,-,8,84x48,time/date/alarm/stopwatch/countdown counter,yes,Snake II/Space Impact/Bantumi/Pairs II/Bumper+downloaed via WAP,-,6,reports+unicode+linked+T9+sets+chat+multiple send,standard Ni-MH 900/Li-Ion 850,Phone,yes,?,yes,yes,113x48x22mm");
+nphone("Nokia 5110 (NSE-1),GSM 900,-,-,-,1 (72x14),-,-,-,30,-,FBUS/MBUS,9600,-,84x48,time/hidden date/alarm,-,Snake/Logic/Memory,-,1+5,reports+sets,Li-Ion 900 (154g)/Li-Ion 1000/standard NiMH 900 (170g)/vibra NiMH 900 (179 g)/Li-Ion 1500 (165 g),Battery,yes,8 dialled(time/date hidden)/5 received(time/date hidden)/5 missed(time/date hidden),yes,yes,?");
+nphone("Nokia 6150 (NSM-1),GSM 900/1800,150,-,-,1 (72x14),5,static (84x48),-,35+1,max. 1297 chars and 50 entries,FBUS/MBUS/Irda,14400,-,84x48,time/date/alarm,yes,Snake (2 players)/Logic/Memory,yes,6,reports+sets,standard Li-Ion 900/Li-Ion 1000/NiMH 900/vibra NiMH 900/Li-Ion 1500,Battery,yes,10 dialled(time/date) 10 received(time/date) 10 missed(time/date),yes,yes,?");
+nphone("Nokia 6210 (NPE-3),EGSM 900/1800,500 with 3 numbers and 1 text (max. under one name: 5 numbers and 2 texts),150 or 50 picture images/templates,1.1 (CDS/SMS/1.3kb deck/50kb cache),1 (72x28),5,static (96x60),50,35+5,220,FBUS/MBUS/Irda/Bluetooth,9.600/14.400 single slot or HSCSD (2+2/3+1/non transparent) via IrDA or cable,10,96x60,time/date/alarm,yes,Snake II (2 players)/Opposite/Pairs II,-,6,reports+sets+multiple send+T9,Li-Polymer 800 (100g)/Bluetooth Li-Ion 810 (120g)/standard Li-Ion 900 (144g)/Li-Ion 1050 (111g),Phone,yes,? dialled(time/date) ? received(time/date) ? missed(time/date),yes,yes,129.5x47.3x18.8mm(standard battery)");
+
+function ret_value(data,number) {
+
+  var ret_previous=0,ret_thisone=0;
+
+  for (var i=0;i<number+1;i++) {
+    var zx=data.indexOf(",",ret_thisone);
+    if (zx==-1) zx=data.length;
+    ret_previous=ret_thisone;
+    ret_thisone=zx+1;
+  }
+  
+  return data.substring(ret_previous,ret_thisone-1);
+}
+
+
+function new_state() {
+  this.checked=true;
+  this.tresc='';
+  this.num=0;
+  return this;
+}
+
+function change_state(i) {
+  if (checkboxstate[i].checked==true) 
+    checkboxstate[i].checked=false;
+  else
+    checkboxstate[i].checked=true;
+  return true;
+}
+
+//draws form
+function myform() {
+  var num=0;
+
+  if (top.initialized==false) {
+
+    for (i=0;i<top.checkboxstate.length;i++)
+      top.checkboxstate[i]=new top.new_state();
+
+    top.initialized=true;
+
+    for (j=0;j<top.howmanyparameters;j++) {
+      for (i=0;i<top.numer;i++) {
+        var mystring=top.ret_value(top.phonetable[i].data,j);
+
+        for (z=0;z<i;z++) {
+          if (mystring==top.ret_value(top.phonetable[z].data,j)) {
+            mystring='';
+            break;
+          }
+        }
+
+        if (mystring!='') {
+          top.checkboxstate[num].tresc=mystring;
+          top.checkboxstate[num].num=i;
+          num++;
+        }
+      }
+    }
+
+    top.checkboxstate.length=num;
+  }
+
+  num=0;
+
+  top.frames[1].document.open();
+  top.frames[1].document.write("<link rel=stylesheet href=../../styl.css type=text/css>");
+  top.frames[1].document.write("<a NAME=Top></a>");
+  top.frames[1].document.write("<center><font color=#1F409F size=+2 class=tytul>Compare your phone</font></center>");
+  top.frames[1].document.write("<p><hr size=2 noshade width=60% align=center style='color:#004080'>");
+  top.frames[1].document.write("<font class=font>PL: Ta strona pozwala porownywac rozne modele telefonow (jezeli bedzie nia zainteresowanie, dodam kolejne). Bedzie dostepna wylacznie po angielsku");
+  top.frames[1].document.write("<p>This is simple script for comparing info about phones");
+  top.frames[1].document.write("<p>If checkbox name is written in bold, it's category name. If it's ");
+  top.frames[1].document.write("not selected, this category will be not displayed.");
+  top.frames[1].document.write("<p>You can also mark, what parameters from each category MUST be available ");
+  top.frames[1].document.write("in phone description to see this description (the choice is valid even, if category will be not visible).");
+  top.frames[1].document.write("<p>Tested for Internet Explorer 5 (don't use Refresh or Back from menu here) and Netscape 4");
+  top.frames[1].document.write("<FORM NAME=one>");
+  for (j=0;j<top.checkboxstate.length;j++) {
+    top.frames[1].document.write("<INPUT TYPE=CHECKBOX NAME=",num," ");
+    if (top.checkboxstate[j].checked) top.frames[1].document.write("CHECKED ");
+    if (top.checkboxstate[j].num==0)
+      top.frames[1].document.write("OnClick=top.change_state(",j,")><b>",top.checkboxstate[j].tresc,"</b></INPUT>");
+    else
+      top.frames[1].document.write("OnClick=top.change_state(",j,")>",top.checkboxstate[j].tresc,"</INPUT>");
+    top.frames[1].document.write("<br>");
+  }
+  top.frames[1].document.write("<INPUT TYPE=BUTTON OnClick=top.mytable() VALUE='>> Display'></FORM></font>");
+  top.frames[1].document.write("<p><a class=shref href=#Top><small><em>Back to the top</em></small></a><br>");
+  top.frames[1].document.write("<hr size=2 noshade width=60% align=center style=color:#004080>");
+  top.frames[1].document.write("<br><p align=RIGHT><font class='autor' size='1'><a class=autoremail href='mailto:Marcin Wiącek<Marcin-Wiacek@topnet.pl>'>Marcin Wiącek</a> (<a class=autoremail href=http://marcin-wiacek.topnet.pl>WWW</a>)");
+  top.frames[1].document.close();
+}
+
+//draws table with info
+function mytable() {
+  top.frames[1].document.open();
+  top.frames[1].document.write("<link rel=stylesheet href=../../styl.css type=text/css>");
+  top.frames[1].document.write("<a NAME=Top></a>");
+  top.frames[1].document.write("<center><font color=#1F409F size=+2 class=tytul>Compare phones</font></center>");
+  top.frames[1].document.write("<p><hr size=2 noshade width=60% align=center style='color:#004080'><p>");
+  top.frames[1].document.write("<table border=1 cellspacing=0>");
+  for (var i=0;i<top.numer;i++) {
+    var mytext="<tr>";
+    var q=0;
+    for (j=0;j<top.howmanyparameters;j++) {
+      var zwr=top.ret_value(phonetable[i].data,j);
+      var w=q+1;
+      while (true) {
+        if (w>top.checkboxstate.length) break;
+        if (top.checkboxstate[w].num==0) break;
+        if (top.checkboxstate[w].tresc==zwr) {
+          if (top.checkboxstate[w].checked==false) mytext="";
+          break;
+        }
+        w++;
+      }
+      if (mytext=="") break;
+      if (top.checkboxstate[q].checked) {
+        mytext=mytext+"<td align=center>";
+        if(i==0) mytext=mytext+"<font class=font><b>";
+        mytext=mytext+zwr;
+        if(i==0) mytext=mytext+"</b></font>";
+        mytext=mytext+"</td>";
+      }
+      q++;
+      while (top.checkboxstate[q].num!=0 && q<top.checkboxstate.length) {
+        q++;
+      }
+    }
+    if (mytext!="") top.frames[1].document.write(mytext+"</tr>");  
+  }
+  top.frames[1].document.write("</table>");
+  top.frames[1].document.write("<FORM NAME=two>");
+  top.frames[1].document.write("<INPUT NAME=222 TYPE=BUTTON OnClick=top.myform() VALUE='<< Back to parameters'></FORM>");  
+  top.frames[1].document.write("<p><a class=shref href=#Top><small><em>Back to the top</em></small></a><br>");
+  top.frames[1].document.write("<hr size=2 noshade width=60% align=center style=color:#004080>");
+  top.frames[1].document.write("<br><p align=RIGHT><font class='autor' size='1'><a class=autoremail href='mailto:Marcin Wiącek<Marcin-Wiacek@topnet.pl>'>Marcin Wiącek</a> (<a class=autoremail href=http://marcin-wiacek.topnet.pl>WWW</a>)");
+  top.frames[1].document.close();
+}
+
+document.write("<frameset cols=0,* border=0 frameborder=no>");
+document.write("<frame noresize src=null.htm><frame src=1.htm></frameset>");
+</script>
+<noscript>
+Required WWW browser with Java Script !
+</noscript>
+</html>

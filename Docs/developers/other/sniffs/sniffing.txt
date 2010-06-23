@@ -1,0 +1,21 @@
+
+All this software was created from observating other programs - what they
+send to/from phone. There two methods to dump transmission:
+
+1.hardware
+
+  You have to connect RxD (or TxD) and GND pin from the COM port, you use with
+  phone, to the second COM port. Then you run soft, which will show, what is
+  received by second port (now in win32 with enabled debug it can be
+  "gnokii --sniff port")
+  
+  TIP: if you want to sniff MBUS, connect RxD (everything, what goes from
+  TxD is repeated on RxD)
+  
+2.software
+
+  You run emulator of OS, where program work. Then using emulator functions
+  see, what is send (emulator is between phone and program, isn't it ?).
+  
+When you have transmission, try to find some identical sequences. If you will
+have them, try to find each frame format...

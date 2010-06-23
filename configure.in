@@ -1,0 +1,528 @@
+dnl
+dnl  Makefile for the GNOKII tool suite.
+dnl 
+dnl  Copyright (C) 1999 Hugh Blemings & Pavel Janík ml.
+dnl                2000 Karel Zak, Pawe³ Kot
+dnl
+dnl  $Id: configure.in,v 1.54 2001/11/08 16:51:45 pkot Exp $
+dnl
+
+AC_INIT(gnokii/gnokii.c)
+
+AC_CONFIG_AUX_DIR(config)
+
+AC_CANONICAL_SYSTEM
+AC_PREFIX_DEFAULT("/usr/local")
+
+dnl ======================== Default setting
+CFLAGS="-O2 -Wall"
+ALL_LINGUAS="cs de et fi nl sk pl it"
+
+dnl ======================== Checks for programs.
+AC_PROG_CC
+AC_PROG_CPP
+AC_PROG_LEX
+AC_PATH_PROG(RM, rm, no)
+AC_PATH_PROG(FIND, find, no)
+AC_CHECK_PROGS(MAKE, gmake make)
+AC_PROG_INSTALL
+
+dnl Let us have $prefix variable aviable here
+test x"$prefix" = xNONE && prefix="$ac_default_prefix"
+
+AC_ARG_ENABLE(debug, 
+	[  --enable-debug          compile with debug code],
+	[ CFLAGS="-g -Wall"
+	  AC_DEFINE(DEBUG)
+	  debug="yes" ],
+	[ debug="no"  ]
+)
+
+AC_ARG_ENABLE(xdebug,
+	[  --enable-xdebug         compile with xdebug code],
+	[ AC_DEFINE(XDEBUG)
+	  xdebug="yes" ],
+	[ xdebug="no"  ]
+)
+
+AC_ARG_ENABLE(rlpdebug, 
+	[  --enable-rlpdebug       compile with RLP debug code],
+	[ AC_DEFINE(RLP_DEBUG)
+	  rlpdebug="yes" ],
+	[ rlpdebug="no"  ]
+)
+
+dnl ======================== NLS support
+
+LIBS=""
+NLS_LIBS=""
+NLS_CFLAGS=""
+
+AC_ARG_WITH(libintl,
+	[  --with-libintl=DIR      specifies the base NLS],
+	[ if test "x$withval" = "xyes"; then
+		AC_MSG_WARN(Usage is --with-libintl=DIR)
+	  else
+		NLS_LIBS="-L$withval/lib"
+		NLS_CFLAGS="-I$withval/include"
+	  fi
+	]
+)
+
+AC_ARG_ENABLE(nls,
+	[  --disable-nls           do not use NLS],
+	[ USE_NLS=$enableval ],
+	[ USE_NLS=yes ]
+)
+
+if test "$USE_NLS" = "yes"; then
+	AC_PROG_MAKE_SET
+	AC_CHECK_HEADERS(locale.h)
+	AC_CHECK_FUNCS(setlocale)
+	AC_SUBST(HAVE_LOCALE_H)  
+
+	CPPFLAGS="$CPPFLAGS $NLS_CFLAGS"
+	AC_TRY_CPP([#include <libintl.h>],
+		   [ AC_DEFINE(HAVE_LIBINTL_H)
+		     AC_MSG_RESULT([checking for libintl.h... yes]) ],
+		   [ AC_MSG_WARN(not found header file: libintl.h !!!)
+		     USE_NLS=no ]
+	)
+fi
+
+if test "$USE_NLS" = "yes"; then
+	AC_CHECK_FUNC(gettext,
+		      AC_DEFINE(HAVE_LIBINTL),
+		      AC_CHECK_LIB(intl, gettext,
+				   [ NLS_LIBS="$NLS_LIBS -lintl"
+				     AC_DEFINE(HAVE_LIBINTL) ],
+				   [ AC_MSG_WARN(not found library: intl !!!)
+				     USE_NLS=no ],
+				   $NLS_LIBS
+		      )
+	)
+fi
+
+if test "$USE_NLS" = "yes"; then
+
+	AC_SUBST(HAVE_LIBINTL_H)
+	AC_SUBST(HAVE_LIBINTL)
+
+	dnl Handle localedir
+	LOCALEDIR='${prefix}/share/locale'
+	AC_ARG_WITH(locale-dir,
+		    [  --with-locale-dir=DIR   Location of the locale file(s)
+			[PREFIX/share/locale]],
+		    [ if test x$withval = xyes; then
+			AC_MSG_WARN(Usage is: --with-locale-dir=basedir)
+		      else
+			if test x$withval = xno; then
+				AC_MSG_WARN(Usage is: --with-locale-dir=basedir)
+			else
+				LOCALEDIR=$withval
+			fi
+		      fi
+		    ]
+	)
+	AC_SUBST(LOCALEDIR)
+
+	AC_PATH_PROG(MSGFMT, msgfmt, $MSGFMT)
+	if test -n "$MSGFMT"; then
+		AC_CHECK_FUNCS(dcgettext)
+		AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
+		AC_PATH_PROG(XGETTEXT, xgettext, $XGETTEXT)
+		AC_PATH_PROG(MSGMERGE, msgmerge, $MSGMERGE)
+
+		dnl Test whether we really found GNU xgettext.
+		if test -n "$XGETTEXT"; then
+			if $XGETTEXT --omit-header /dev/null 2> /dev/null; then
+				: ;
+			else
+				AC_MSG_RESULT([found xgettext program is not GNU xgettext; ignore it])
+				XGETTEXT=""
+			fi
+		fi
+
+		dnl We add another test for comparing GNU xgettext with openwin xgettext
+		if test -n "$XGETTEXT"; then
+			if $XGETTEXT --help > /dev/null 2> /dev/null; then
+				: ;
+			else
+				AC_MSG_RESULT([found xgettext program is not GNU xgettext; ignore it])
+				XGETTEXT=""
+			fi
+		fi
+
+		dnl Test whether we really found GNU msgfmt.
+		if test -n "$MSGFMT"; then
+			if $MSGFMT < /dev/null 2> /dev/null; then
+				AC_MSG_RESULT([found msgfmt program is not GNU msgfmt; NLS will not be installed])
+				MSGFMT=""
+			fi
+		fi
+
+		AC_TRY_LINK(,
+			    [ extern int _nl_msg_cat_cntr;
+			      return _nl_msg_cat_cntr],
+			    [ CATOBJEXT=.gmo
+			      DATADIRNAME=share],  
+			    [ CATOBJEXT=.mo
+			      DATADIRNAME=lib]
+		)
+		INSTOBJEXT=.mo
+	fi
+
+	if test -n "$ALL_LINGUAS"; then
+		for lang in $ALL_LINGUAS; do
+			CATALOGS="$CATALOGS $lang$CATOBJEXT"
+		done
+	fi
+	AC_SUBST(CATALOGS)
+	AC_SUBST(CATOBJEXT)
+	AC_SUBST(INSTOBJEXT)
+	AC_SUBST(DATADIRNAME)
+fi
+
+dnl don't use NLS, when there is no gettext installed
+if test x"$MSGFMT" = x; then
+	USE_NLS=no
+fi
+
+if test x"$USE_NLS" = xyes; then
+	AC_DEFINE(USE_NLS)
+fi
+
+dnl ======================== Checks for libraries.
+
+AC_ARG_WITH(libpthread, 
+   [  --with-libpthread=DIR   specifies the base libpthread],
+   [ if test x$withval = xyes
+     then 
+      AC_MSG_WARN(Usage is: --with-libpthread=DIR)
+     else
+      PTHREAD_LIBS="-L$withval/lib/"
+      PTHREAD_CFLAGS="-I$withval/include/"
+     fi
+   ]
+)
+
+dnl Check for libpthread
+PTHREAD_LIBS_SAVE="$PTHREAD_LIBS"
+PTHREAD_LIBS=error
+AC_CHECK_LIB(pthread, pthread_attr_init, [
+                      PTHREAD_CFLAGS="$PTHREAD_CFLAGS -D_REENTRANT"
+                      PTHREAD_LIBS="$PTHREAD_LIBS_SAVE -lpthread" ])
+
+dnl FIXME: test this on *BSD and report results immediatelly to the ml please
+dnl If it is not found, try to check for c_r (on FreeBSD)
+if test "x$PTHREAD_LIBS" = xerror; then
+  AC_CHECK_LIB(c_r, pthread_attr_init, [
+                    PTHREAD_CFLAGS="$PTHREAD_CFLAGS -D_THREAD_SAFE"
+                    PTHREAD_LIBS="-pthread" ])
+fi
+
+dnl FIXME: do we really test here if libc contains this function?
+if test "x$PTHREAD_LIBS" = xerror; then
+   AC_CHECK_FUNC(pthread_attr_init, PTHREAD_LIBS="",
+      AC_MSG_ERROR(not found library: pthread !!!))
+fi
+
+dnl The following is taken from inn sources
+AC_MSG_CHECKING(for tm_gmtoff in struct tm)
+AC_TRY_LINK([#include <time.h>],
+        [struct tm t; t.tm_gmtoff = 0],
+        [AC_MSG_RESULT(yes)
+         AC_DEFINE(HAVE_TM_GMTON)],
+        [AC_MSG_RESULT(no)])
+
+dnl The following is taken from inn sources
+AC_MSG_CHECKING(for timersub)
+AC_TRY_LINK([#include <sys/time.h>],
+        [timersub(NULL, NULL, NULL)],
+        [AC_DEFINE(HAVE_TIMEOPS)
+         AC_DEFINE(HAVE_TIMEOPS)
+         AC_MSG_RESULT(yes)],
+        [AC_MSG_RESULT(no)])
+
+have_termios="no"
+dnl Checking for setspeed in termios.h
+AC_MSG_CHECKING(for cfsetspeed in termios.h)
+AC_TRY_LINK([#include <termios.h>],
+        [struct termios t; cfsetspeed(&t, B9600);],
+        [AC_DEFINE(HAVE_CFSETSPEED)
+         have_termios="yes"
+         AC_MSG_RESULT(yes)],
+        AC_MSG_RESULT(no))
+
+if test $have_termios = "no"; then
+   AC_MSG_CHECKING(for cfsetispeed and cfsetospeed in termios.h)
+   AC_TRY_LINK([#include <termios.h>],
+               [struct termios t; cfsetispeed(&t, B9600);  cfsetospeed(&t, B9600);],
+               [AC_DEFINE(HAVE_CFSETISPEED)
+                AC_DEFINE(HAVE_CFSETOSPEED)
+                have_termios="yes"
+                AC_MSG_RESULT(yes)],
+               [AC_MSG_RESULT(no)])
+
+   if test $have_termios = "no"; then
+      AC_MSG_CHECKING(for c_ispeed and c_ospeed in struct termios)
+      AC_TRY_LINK([#include <termios.h>],
+                  [struct termios t; t.c_iflag = B9600; t.c_oflag = B9600;],
+                  [AC_DEFINE(HAVE_TERMIOS_CSPEED)
+                   AC_MSG_RESULT(yes)],
+                  [AC_MSG_RESULT(no)])
+   fi
+fi
+
+dnl ======================== Checks for getopt_long support 
+
+AC_CHECK_HEADER(getopt.h, ,
+      [CFLAGS="$CFLAGS -I../getopt"])
+
+AC_ARG_WITH(gnugetopt,
+   [  --with-getopt=DIR       specifies the getopt library location directory],
+   [ if test x$withval=yes; then
+        AC_MSG_WARN(Usage is: --with-getopt=DIR) 
+     else
+        GETOPT_LIBS="-L$withval"
+     fi
+   ]
+)
+
+OWN_GETOPT=""
+AC_CHECK_FUNC(getopt_long, , [
+        LIBS="$LIBS $GETOPT_LIBS"
+           AC_CHECK_LIB(gnugetopt, getopt_long, LIBS="$LIBS -lgnugetopt",
+            OWN_GETOPT="1")])
+
+dnl ======================== Checks for X base support 
+
+if test "$no_x" = yes -o "$with_x" = "no"; then
+   x_support="no"
+   XPM_CFLAGS=""
+   XPM_LIBS=""
+   GTK_CFLAGS=""
+   GTK_LIBS=""
+else
+   AC_PATH_X
+   CPPFLAGS="$CPPFLAGS -I$x_includes"
+   AC_CHECK_HEADERS(X11/xpm.h,
+                    [ XPMINC="yes" ],
+                    [ XPMINC="no" ])
+
+   if test "x$XPMINC" = "xno"; then
+      x_support="no"
+      XPM_CFLAGS=""
+      XPM_LIBS=""
+      GTK_CFLAGS=""
+      GTK_LIBS=""
+      AC_MSG_WARN(Cannot find include X11/xpm.h)
+      AC_MSG_WARN(Disabling xgnokii.)
+   elif test "x$x_libraries" = "xNONE"; then
+      x_support="no"
+      XPM_CFLAGS=""
+      XPM_LIBS=""
+      GTK_CFLAGS=""
+      GTK_LIBS=""
+      AC_MSG_WARN(Cannot find library libX11.)
+      AC_MSG_WARN(Disabling xgnokii.)
+   else
+      AC_CHECK_LIB(Xpm, XpmWriteFileFromXpmImage,
+            [ XPM_CFLAGS="-I$x_includes" XPM_LIBS="-L$x_libraries -lXpm -lX11"
+              AC_DEFINE(XPM) ],
+            AC_MSG_WARN(Cannot found library libXpm - disabling XPM support.),
+            [ -L$x_libraries -lX11 ]
+      )
+
+      AC_PATH_PROGS(GTK_CONFIG, gtk-config gtk12-config, no)
+      if test "$GTK_CONFIG" = no; then
+         x_support="no"
+         GTK_CFLAGS=""
+         GTK_LIBS=""
+         AC_MSG_WARN(Cannot find gtk-config.)
+         AC_MSG_WARN(Disabling xgnokii.)
+      else
+         GTK_CFLAGS=`$GTK_CONFIG --cflags`
+         GTK_LIBS=`$GTK_CONFIG --libs`
+         x_support="yes"   
+
+         XGNOKIIDIR='${prefix}/share'
+         XGNOKIIPATH=${prefix}/share
+         AC_ARG_WITH(xgnokiidir,
+            [  --with-xgnokiidir=DIR   specifies the base for xgnokii],
+            [ if test x$withval = xyes; then 
+                 AC_MSG_WARN(Usage is: --with-xgnokiilib=DIR)
+              else
+                 XGNOKIIDIR="$withval"
+                 XGNOKIIPATH="$withval"
+              fi
+            ]
+         )
+      fi
+   fi
+fi
+
+dnl ======================== Check for libsocket
+AC_CHECK_LIB(socket, socket)
+
+dnl ======================== Additional switches
+
+AC_ARG_ENABLE(security, 
+   [  --enable-security       enable all security features ],
+   [ AC_DEFINE(SECURITY)
+     security="yes" ],
+   [ security="no"  ]
+)
+
+AC_ARG_ENABLE(win32, 
+   [  --enable-win32          if you want win32 suport ],
+   [ AC_DEFINE(WIN32)
+     win32="-DWIN32" ],
+   [ win32=""]
+)
+
+AC_CHECK_FUNC(grantpt,
+   [ AC_TRY_RUN([
+#define  _XOPEN_SOURCE 500
+
+#include <features.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+int main()
+{
+	char *name = NULL;
+        int master, err;
+
+        master = open("/dev/ptmx", O_RDWR | O_NOCTTY | O_NONBLOCK);
+        if (master >= 0) {
+                err = grantpt(master);
+                err = err || unlockpt(master);
+                if (!err) {
+                        name = ptsname(master);
+                } else {
+                        exit(-1);
+                }
+        } else {
+		exit(-1);
+	}
+	close(master);
+	exit(0);
+}
+                ],
+                AC_DEFINE(USE_UNIX98PTYS),
+                AC_MSG_WARN("No unix98ptys"),
+		AC_MSG_WARN("Ensure to disable unix98ptys when crosscompiling"))
+   ]
+)
+
+dnl ======================== Checks for header files.
+AC_HEADER_STDC
+AC_HEADER_SYS_WAIT
+AC_CHECK_HEADERS(fcntl.h sys/ioctl.h sys/time.h unistd.h)
+
+dnl ======================== Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_C_INLINE
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+AC_HEADER_TIME
+AC_STRUCT_TM
+
+dnl ======================== Checks for library functions.
+AC_PROG_GCC_TRADITIONAL
+AC_FUNC_MEMCMP
+AC_TYPE_SIGNAL
+AC_FUNC_STRFTIME
+AC_CHECK_FUNCS(mktime select strdup strstr strtol strtok strsep snprintf)
+
+CFLAGS="$CFLAGS $NLS_CFLAGS"
+LIBS="$LIBS $NLS_LIBS"
+
+PACKAGE=gnokii
+XPACKAGE=xgnokii
+VERSION=`cat VERSION`
+XVERSION=`cat xgnokii/VERSION`
+HAVE_XGNOKII=$x_support
+
+case "$INSTALL" in
+  'config/install-sh -c') INSTALL=`pwd`/$INSTALL
+   ;;
+esac
+
+SHELL=${CONFIG_SHELL-/bin/sh}
+
+AC_SUBST(SHELL)
+case "$build_os" in
+  solaris*) SHELL=/bin/ksh
+   ;;
+esac
+
+AC_CONFIG_HEADER(include/config.h)
+
+AC_SUBST(PACKAGE)
+AC_SUBST(VERSION)
+AC_SUBST(XVERSION)
+AC_SUBST(XPACKAGE)
+AC_SUBST(XGNOKIIDIR)
+AC_SUBST(XGNOKIIPATH)
+AC_SUBST(exec_prefix)
+AC_SUBST(USE_NLS)
+AC_SUBST(GTK_CFLAGS)
+AC_SUBST(GTK_LIBS)
+AC_SUBST(PTHREAD_CFLAGS)
+AC_SUBST(PTHREAD_LIBS)
+AC_SUBST(XPM_CFLAGS)
+AC_SUBST(XPM_LIBS)
+AC_SUBST(OWN_GETOPT)
+AC_SUBST(USE_UNIX98PTYS)
+AC_SUBST(HAVE_XGNOKII)
+
+AC_OUTPUT(
+   include/config.h.in
+   Makefile.global
+   po/Makefile.in
+   packaging/RedHat/gnokii.spec
+   packaging/Slackware/SlackBuild,
+   [sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile]
+   )
+
+
+dnl ======================== Final report
+
+echo "
+
+  G N O K I I
+
+  A Linux/Unix toolset and driver for Nokia mobile phones.
+
+  Copyright (C) 1999-2000  The Gnokii Development Team.
+
+  This program is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 2 of the License, or
+  (at your option) any later version.
+ 
+  See file COPYING for more details.
+
+    Host system:        $host_os
+    Gnokii version:     $VERSION
+    Xgnokii version:    $XVERSION
+    X (GTK) support:    $x_support
+    Debug:              $debug
+    XDebug:             $xdebug
+    RLPDebug:           $rlpdebug
+    NLS:                $USE_NLS
+    Security:           $security
+    Win32:              $win32 
+    Prefix:             $prefix
+
+  Type '${MAKE}' for compilation or '${MAKE} makelib' when want to compile
+  all binaries with one shared library
+  
+  After it '${MAKE} install', '${MAKE} install-suid', '${MAKE} install-strip'
+  or '${MAKE} install-ss' to install gnokii.
+"

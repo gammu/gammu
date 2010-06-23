@@ -1,0 +1,1654 @@
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="Author" content="Marcin Wiacek">
+   <title>Command line gnokii FAQ</title>
+   <link REL=stylesheet HREF="../styl.css" TYPE="text/css">
+</head>
+<body>
+
+<a NAME="Top"></a>
+<p align="RIGHT"><a class="autoremail" href="../index.htm">Main page</a></p>
+<center><font color="#1F409F" size=+2 class="tytul">Command line gnokii FAQ</font></center>
+
+<p><hr size="2" noshade width="60%" align="center" style="color: #004080">
+
+<p><font color="#1F409F" size=+2 class="dzial">What is command line gnokii ?</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>It was first our testing tool. Now it can be used for making almost all things
+possible with gnokii package (and this is the only available tool for win32).
+
+<p><font color="#1F409F" size=+2 class="dzial">Some general commands...</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<DL>
+<DT><I>gnokii --help</I> 
+<DD>Displays GNOKII list of parameters:
+<PRE>c:\> gnokii --help
+   usage: gnokii [--help|--monitor|--version]
+          gnokii --getmemory memory_type start [end] [-d]
+          gnokii --writephonebook [-i]
+          gnokii --getspeeddial number
+          gnokii --setspeeddial number memory_type location
+          gnokii --getsms memory_type start [end] [-f file]
+          gnokii --deletesms memory_type start [end]
+          gnokii --sendsms destination [--smsc message_center_number |
+                 --smscno message_center_index] [--long n] [-s] [-C n]
+                 [-8] [-v n] [-d]
+          ........
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><I>gnokii --version</I> 
+<DD>Displays GNOKII version and copyright information:
+<PRE>c:\> gnokii --version      
+GNOKII Version 0.3.3-pre8-gold
+Copyright (C) Hugh Blemings <hugh@linuxcare.com>, 1999, 2000
+Copyright (C) Pavel Janík ml. <Pavel.Janik@linux.cz>, 1999, 2000
+Built 10:36:05 Dec 10 2000 for 6110 on com2: 
+</PRE>
+</DD></DL>
+
+<p><font color="#1F409F" size=+2 class="dzial">Managing phonebook and other (dialed, misssed, answered, own, etc.) memories</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<DL>
+<DT><I>gnokii --getmemory memory_type start [end] [-d]</I> 
+<DD>Reads specificed memory location from phone..
+<p>You can specify such memories:
+
+<p>
+<ul>
+<li>ME - Phone phonebook memory</li>
+<li>SM - SIM card phonebook memory,</li>
+<li>FD - Fixed dial numbers,</li>
+<li>ON - Own numbers,</li>
+<li>EN - Emergency numbers,</li>
+<li>DC - Dialled numbers,</li>
+<li>RC - Received numbers,</li>
+<li>MC - Missed numbers,</li>
+<li>LD - Last dialed</li>
+</ul>
+
+<p>
+With memories DC, EC, MC you will see assigned date (yes, with all Dialled,
+Received, Missed numbers phone saves date and time too !). If you don't want
+it, use <i>-d</i> option
+
+<p>Note: Locations start from 0 !
+
+<p>Usage examples:
+
+<PRE>tfuj:~$ gnokii --getmemory SM 1 5
+Maja ERA;+48604xxxxxx;SM;1;1
+Dom;+4822xxxxxxx;SM;2;5
+Maja;+4822xxxxxxx;SM;3;1
+Iza;+48601xxxxxx;SM;4;5
+Ania;+48501xxxxxx;SM;5;0
+
+tfuj:~$ gnokii --getmemory ON 1 5
+DOM;+4822xxxxxxx;ON;1;5
+;;ON;2;5
+;;ON;3;5
+;;ON;4;5
+ON|5|Bad location or other error!(22)
+
+tfuj:~$ gnokii --getmemory EN 1 5
+Memory type EN not supported!
+
+tfuj:~$ gnokii --getmemory MC 1 5
+Maja IDEA;501xxxxxx;MC;1;5
+21.06.2000 21:32:52
+Maja IDEA;0501xxxxxx;MC;2;5
+21.06.2000 18:06:02
+;;MC;3;5
+11.06.2000 15:09:33
+;;MC;4;5
+11.06.2000 12:44:55
+;;MC;5;5
+10.06.2000 16:59:13
+</PRE>
+
+<p>The meaning of the fields in the output: 
+  <UL>
+    <LI>
+      <TT>ME/SM/ON/FD/EN/LD</TT>: 
+      <OL>
+        <LI>Name </LI>
+        <LI>Number </LI>
+        <LI>Memory type </LI>
+        <LI>Location in the memory</LI>
+        <LI>Group number</LI>
+      </OL>
+    <LI>
+      <TT>DN/RC/MC</TT>:
+      <OL>
+        <LI>Name </LI>
+        <LI>Number </LI>
+        <LI>Memory type </LI>
+        <LI>Location in the memory </LI>
+        <LI>Group number </LI>
+        <LI>Date and time of the call </LI>
+      </OL>
+    </LI>
+  </UL>
+
+<p>Possible errors: 
+  <OL>
+    <LI>Bad location or other error!(22) </li>
+    <LI>Memory type <TT>XX</TT> not supported! </LI>
+  </OL>
+
+</DD></DL>
+
+<DL>
+<DT><I>gnokii --writephonebook [-i]</I> 
+<DD>
+Reads the data from the standard input and saves it in the SIM Card/phone 
+memory. The input data is in the format as described above (in desciption
+for <i>--getmemory</i> parameter).
+
+<p>Usage examples:
+
+<PRE>
+tfuj:~$ gnokii --writephonebook
+
+Girlfriend;+48501000000;ME;1;1
+Write Succeeded: memory type: int, loc: 1, name: Girlfriend, number: +48501000000
+
+tfuj:~$ echo "Very_long_name_longer_then_the_phone_can_save;some_string;ME;2;1" | gnokii --writephonebook
+Write Succeeded: memory type: int, loc: 2, name: Very_long_name_longer_then_the_phone_can_some_string, number: some_string
+
+tfuj:~$ echo "Girlfriend;+48501000000;ME;200;1" | gnokii --writephonebook
+Write FAILED(22): memory type: int, loc: 200, name: Girlfriend, number: +48501000000
+
+tfuj:~$ echo "Girlfriend;+48501000000;ME;3;10" | gnokii --writephonebook
+Write Succeeded: memory type: int, loc: 3, name: Girlfriend, number: +48501000000
+
+tfuj:~$ gnokii --getmemory ME 1 5
+Girlfriend;+48501000000;ME;1;1
+Very_long_name_l;//3/////2#4;ME;2;1
+Girlfriend;+48501000000;ME;3;10
+;;ME;4;5
+;;ME;5;5
+
+tfuj:~$ echo "Girlfriend;+48501000000;PP;3;10" | gnokii --writephonebook
+Format problem on line 1 [Girlfriend;+48501000000;PP;3;10]
+
+tfuj:~$ echo "some_nonsense_string" | gnokii --writephonebook
+tfuj:~$ 
+</PRE>
+
+<p>Some notes: 
+  <OL>
+    <LI>Remember that any existent entries in the phonebook will be overwritten 
+        (must use [-i] option, if you don't want it - you will be asked then, if
+        you want overwrite or not)</LI>
+    <LI>Names and numbers are truncated by the phone when saving. </LI>
+  </OL>
+
+<p>Possible errors: 
+  <OL>
+    <LI>Wrong location: Write FAILED(22) </LI>
+    <LI>Wring memoty type: Format problem on line n </LI>
+    <LI>Other errors: [no output] - <I>this should be changed</I> </LI>
+  </OL>
+
+</DD></DL>
+
+<DL>
+<DT><I>gnokii --getvoicemailbox</I> 
+<DD>Get voice mailbox number
+
+<p>Example:
+<PRE>
+
+</PRE>
+</DD></DL>
+
+<p><font color="#1F409F" size=+2 class="dzial">Speed dials</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<DL>
+<DT><I>gnokii --getspeeddial number</I> 
+<DD>Reads from the phone a number assigned to a shotrcut key
+
+<p>Example:
+<PRE>
+tfuj:~$ gnokii --getspeeddial 1
+SpeedDial nr. 1: 3:0
+</PRE>
+The output format: <i>SpeedDial nr. key_number: memory_type:location</i>.
+
+<p>On error output is empty.
+</DD></DL>
+
+<DL>
+<DT><I>gnokii --setspeeddial number memory_type location</I> 
+<DD>Writes to the phone a number assigned to a shotrcut key.
+You can use memory SM or ME.
+
+<p>Example:
+
+<PRE>
+tfuj:~$ gnokii --setspeeddial 1 SM 1
+Succesfully written!
+
+tfuj:~$ gnokii --setspeeddial 1 PP 1    
+Unknown memory type PP!
+</PRE>
+
+<p>...but there are still some bugs:
+
+<PRE>
+tfuj:~$ gnokii --setspeeddial 1 SM 10000
+Succesfully written!
+
+tfuj:~$ gnokii --getspeeddial 1
+SpeedDial nr. 1: 3:16
+</PRE>
+</DD></DL>
+
+<p><font color="#1F409F" size=+2 class="dzial">SMS (Smart Messaging System)</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>If you don't know anything about SMS, please read our <a href=../gsm/sms/sms.htm>SMS FAQ</a>.
+
+<DL>
+<DT><I>gnokii --getsms memory_type start [end] [-f file]</I> 
+<DD>Reads SMS messages from the specified <i>memory_type</i> (it can
+be phone's internal memory - ME - or SIM card - SM memory) starting at 
+<i>start</i> and ending at <i>end</i>. If <i>end</i> argument is not 
+present only one location - <i>start</i> - is read.
+
+<p>Examples: 
+
+<PRE>tfuj:~$ gnokii --getsms SM 11
+11. Inbox Message (read)
+Date/time: 29/6/0 13:41:22 +0100
+Sender: 102 Msg Center: +48501200777
+Text:
+SMS OD: Mariusz, Wszystkiego najlepszego z okazji imienin! Mariusz
+
+tfuj:~$ gnokii --getsms SM 3
+3. Delivery Report (read)
+Sending date/time: 25/5/0 13:58:24 +0100
+Response date/time: 25/5/0 13:58:32 +0100
+Receiver: +48605000000 Msg Center: +48501200777
+Text: Delivered
+
+tfuj:~$ gnokii --getsms SM 5
+5. Outbox Message (not sent)
+Text: UU0i7eec
+
+tfuj:~$ gnokii --getsms SM 12
+GetSMS SM 12 failed!(4)
+
+tfuj:~$ gnokii --getsms SM 15
+15. Delivery Report (read)
+Sending date/time: 3/1/0 10:49:51 +0100
+Response date/time: 6/1/0 10:51:06 +0100
+Receiver: 1921681052342802 Msg Center: +48501200777
+Text: Failed
+
+tfuj:~$ gnokii --getsms SM 28
+SMS location SM 28 empty.
+
+tfuj:~$ gnokii --getsms SM 25 28
+25. Inbox Message (read)
+Date/time: 18/6/0 12:17:30 +0100
+Sender: 501 Msg Center: +48501200777
+Text:
+Liczba wiadomosci:1,nowych:1,faksow:0
+
+SMS location SM 26 empty.
+27. Inbox Message (read)
+Date/time: 21/6/0 19:45:11 +0100
+Sender: 123 Msg Center: +48501200777
+Text:
+Informujemy, ze wyslalismy do Panstwa fakture z terminem platnosci do 28.06.00. Dziekujemy za wybranie sieci Idea.
+
+SMS location SM 28 empty.
+
+tfuj:~$ gnokii --getsms SM 31
+Invalid location: SM 31
+
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><I>gnokii --deletesms memory_type start [end]</I> 
+<DD>
+Deletes SMS messages from specified memory type (SM or ME)
+starting at entry <i>start</i> and ending at <i>end</i>
+
+<p>Examples: 
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><I>
+gnokii --sendsms destination [--smsc message_center_number |
+--smscno message_center_index] [--long n] [-s] [-C n]
+[-8] [-v n] [-d]
+[--enablevoice|--disablevoice|--enablefax|--disablefax|
+--enableemail|--disableemail|--void] [--unicode] [--text SMS_text] </I>
+<DD>
+Sends an SMS message to <i>destination</i>
+via SMSC number given in <i>message_center_number</i> or SMSC number taken from
+phone memory from address <i>message_center_index</i>.
+If arguments <i>--smsc</i> and <i>--smscno</i> is ommited SMSC number is taken
+from phone memory from location 1. Message text
+is taken from standard input or from the SMS_text parameter following --text e.g. --text "this is an SMS"
+
+<p>Meaning of optional parameters:
+<ul>
+<li><i>--smsc</i> - specify SMSC set</li>
+<li><i>--smscno</i> - specify SMSC number</li>
+<li><i>--long</i> - reads <i>n</i> bytes and cut into Linked SMS
+(only when contenst is longer than size of 1 SMS)</li>
+<li><i>-s</i> - set replying via the same centre</li>
+<li><i>-C</i> - specify SMS class</li>
+<li><i>-8</i> - send as 8-bit SMS</li>
+<li><i>-v</i> - set validity</li>
+<li><i>-d</i> - you will receive delivery report</li>
+<li><i>--enablevoice, --disablevoice, --enablefax,
+--disablefax, --enableemail, --disableemail</i> - 
+These switches makes, that SMS has different meaning and in some phones
+will enable/disable voice/fax/email signs on phone's screen</li>
+<li><i>--voidsms</i> - 
+These switches makes, that SMS has different meaning and some phones
+after receiving it won't
+display anything on the screen, but it will make sound/enable vibra</li>
+<li><i>--unicode</i> - codes SMS as Unicode SMS. When put
+'~' (tilde) char inside, phone will start/end
+blinking text. When will put "{" char,
+contents of SMS will be invisible in some phones.</li>
+</ul>
+
+<p>Examples: 
+
+<PRE>
+gnokii --sendsms "+48601601601" < file
+</PRE>
+</DD></DL>
+Saves an SMS message in SIM. Message text is taken from stdin.
+
+<DL>
+<DT><I>
+gnokii --savesms destination|\"\" [--smsc
+message_center_number] [--smscno message_center_index]
+[--long n] [-r] [-i] [-s] [-C n] [-8] [-a] [-l]
+[--enablevoice|--disablevoice|--enablefax|--disablefax|
+--enableemail|--disableemail|--void|--hang|--bug] [--unicode]
+</i>
+<DD>
+
+<p>Meaning of optional parameters:
+<ul>
+<li><i>--smsc</i> - specify SMSC set</li>
+<li><i>--smscno</i> - specify SMSC number</li>
+<li><i>--long</i> - reads <i>n</i> bytes and cut into Linked SMS
+(only when contenst is longer than size of 1 SMS)</li>
+<li><i>-r</i> - mark SMS as read/sent</li>
+<li><i>-i</i> - saves SMS to inbox</li>
+<li><i>-s</i> - set replying via the same centre</li>
+<li><i>-C</i> - specify SMS class</li>
+<li><i>-8</i> - send as 8-bit SMS</li>
+<li><i>-a</i> - ask, when specify location and sms is already there</li>
+<li><i>-l</i> - specify location</li>
+<li><i>--enablevoice, --disablevoice, --enablefax,
+--disablefax, --enableemail, --disableemail</i> - 
+These switches makes, that SMS has different meaning and in some phones
+will enable/disable voice/fax/email signs on phone's screen</li>
+<li><i>--voidsms</i> - 
+These switches makes, that SMS has different meaning and some phones
+after receiving it won't
+display anything on the screen, but it will make sound/enable vibra</li>
+<li><i>--hangsms</i> - 
+This switch makes, that SMS has different meaning and in some phones
+(like Nokia 5110) it will hang phone, when saved to Outbox and
+you try to read it from phone's menu</li>
+<li><i>--bug</i> - 
+This switch makes, that SMS has different meaning and in some phones
+(like Nokia 5110, 6150) has problems with this SMS, when try to read it
+from phone's menu. It seems to be its firmware bug...
+</li>
+<li><i>--unicode</i> - codes SMS as Unicode SMS. When put
+'~' (tilde) char inside, phone will start/end
+blinking text. When will put "{" char,
+contents of SMS will be invisible in some phones.</li>
+</ul>
+
+<p>Examples: 
+
+<PRE>
+gnokii --savesms "SavedSMS" -i < file
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>gnokii --getsmsc message_center_number</i>
+<DD>show the SMSC number from location <i>message_center_number</i>.
+
+<p>Usage examples:
+
+<PRE>
+tfuj:~$ gnokii --getsmsc 1
+1. SMS center (CENTERTEL) number is +48501200777
+Messages sent as Text
+Message validity is 72 hours
+
+tfuj:~$ gnokii --getsmsc 2
+2. SMS center () number is 
+Messages sent as Text
+Message validity is Unknown
+</PRE>
+</DD></DL>
+
+<p><font color="#1F409F" size=+2 class="dzial">Date/time and alarm</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<DL>
+<DT><I>gnokii --getdatetime</I> 
+<DD>
+Shows current date and time in the phone.
+
+<p>Example:
+
+<PRE>
+tfuj:~$ gnokii --getdatetime
+Date: 2000/07/06
+Time: 23:50:43
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><I>gnokii --setdatetime [YYYY [MM [DD [HH [MM]]]]]</I> 
+<DD>
+Set the date and the time of the phone.
+
+<p>Example:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><I>gnokii --getalarm</I> 
+<DD>
+Shows current alarm set in phone.
+
+<p>Example:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><I>gnokii --setalarm HH MM</I> 
+<DD>
+Set the alarm of the phone.
+
+<p>Example:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<p><font color="#1F409F" size=+2 class="dzial">Calendar</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<DL>
+<DT><I>gnokii --getcalendarnote index [-v]</I> 
+<DD>
+Get the note with number index from calendar. It will be written in
+vCalendar 1.0 format, when use <i>-v</i> option.
+
+<p>Example:
+
+<PRE>
+tfuj:~$ gnokii --getcalendarnote 1
+   Type of the note: Reminder
+   Date: 2000-06-26
+   Time: 23:59:59
+   Text: GNOKII TEST
+
+tfuj:~$ gnokii --getcalendarnote 2
+The calendar note can not be read
+
+tfuj:~$ gnokii --getcalendarnote 1 -v
+BEGIN:VCALENDAR
+VERSION:1.0
+BEGIN:VEVENT
+CATEGORIES:MISCELLANEOUS
+SUMMARY:GNOKII TEST
+DTSTART:20000626T235959
+END:VEVENT
+END:VCALENDAR
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><I>gnokii --writecalendarnote vcardfile number</I> 
+<DD>
+Write the note to calendar.
+
+<p>Example:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><I>gnokii --deletecalendarnote index</I> 
+<DD>
+Delete the note with number <i>index</i> from calendar.
+
+<p>Example:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<p>
+<img src="../gsm/netmon/nm_5110.gif" align=right>
+<font color="#1F409F" size=+2 class="dzial">Netmonitor</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>If you don't know, what is this or how to use it, please read first
+our <a href=../gsm/netmon/faq_net0.htm>Netmonitor manual</a>.
+
+<DL>
+<DT><I>gnokii --netmonitor {reset|off|field|devel|next|nr}</I> 
+<DD>
+Setting/querying netmonitor mode.
+
+<p>Example:
+
+<PRE>
+tfuj:~$ gnokii --netmonitor 0
+TMSI46963A06
+T321:  2/ 20
+PRP:5   0  0
+     0   784
+
+tfuj:~$ gnokii --netmonitor 1    
+ 784 -72 xxx
+ 0  0 x xxxx
+  29      29
+    CBCH
+
+tfuj:~$ gnokii --netmonitor 2
+ NO 2    B35
+ 16   x
+
+tfuj:~$ gnokii --netmonitor 3
+784 28-73 28
+781 19-82 19
+809 19-82 19
+     N  N
+
+tfuj:~$ gnokii --netmonitor 4
+778 12-89 12
+794 11-90 11
+774  8-93  8
+   N  N  N
+
+tfuj:~$ gnokii --netmonitor 5
+800-99-99-99
+xxxxxxxxxxxx
+xxxxxxxxxxxx
+   N xx xx
+
+tfuj:~$ gnokii --netmonitor 6
+26003  26002
+20420  26001
+26207  20810
+26203  20416
+
+tfuj:~$ gnokii --netmonitor 7
+E A H C I BR
+1 1 0 0 0 10
+
+tfuj:~$ gnokii --netmonitor 1000
+
+  NO TEST
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><I>gnokii --nm_collect [screen x] [screen y] [screen z]</I> 
+<DD>
+This function is like <i>--netmonitor</i>, but:
+
+<p>
+<ul>
+<li>each screen is printed on one single line</li>
+<li>it loop until user press CTRL-C, (like <i>--monitor</i>)</li>
+<li>it output simultaneously 1, 2 or 3 netmonitor screen</li>
+</ul>
+
+<p>Was originally developed for:
+
+<p>
+<ul>
+<li>comparing of data from differents screen.</li>
+<li>log of netmonitor screen</li>
+</ul>
+
+<p>It's easier and has less options than <i>--netmonitordata</i>, but
+should work with every phone that has netmonitor enabled and
+don't need any parameter specifications (like <i>--netmonitordata</i>,
+which requires external file with info about parameters).
+
+<p>Author: <a href=mailto:a.scopece@tin.it>Andrea Scopece</a>
+
+<p>Example:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><I>
+gnokii --netmonitordata [-S file] [-I file] [-h] [-n n] [-ts n] [-tm n]
+[-fs str] [-ls str] FLD1:FLD2:FLDn:...</I> 
+<DD>
+
+<p>Meaning of parameters is:
+<p>
+<ul>
+<li><i>-fs string</i> - field separator, default "&nbsp;"</li>
+<li><i>-ls string</i> - line separator, default LF (CRLF for win32)</li>
+<li><i>-ts seconds</i> - seconds before of next output of data (min 1 s,
+max 3600 s)</li>
+<li><i>-tm milliseconds</i> - milliseconds before of next output of data
+(default 200 ms, min 200 ms, max 10000 ms)</li>
+<li><i>-n times</i> - stop data output after "times" cycle.
+                    <i>-ts</i> and <i>-tm</i> are mutually exclusive</li>
+<li><i>-h</i> - no header output, (default yes)</li>
+<li><i>DATE</i> - output date, may be as normal YY-MM-DD</li>
+<li><i>DATE-S</i> - output date, may be as short MM-DD</li>
+<li><i>DATE-L</i> - output date, may be as long yyyy-mm-dd</li>
+<li><i>TIME</i> - output time, may be as normal hh:mm:ss</li>
+<li><i>TIME-S</i> - output time, may be as short hh:mm</li>
+<li><i>TIME-L</i> - output time, may be as long hh:mm:ss:cc</li>
+<li>&nbsp;
+<table>
+<tr><td>PARAM1
+<br>PARAM2
+<br>PARAM3
+<br>....
+<br>PARAMn
+</td>
+<td>
+This is the name of a param as specified in file
+info-mon/model/version
+parameter names must be in this file, and are case sensitive.
+
+<p>You can specify max 512 params at once.
+</td></tr>
+</table>
+</li>
+
+<li><i>-S file</i> - parameters of netmonitor screen
+you can override the default specification
+of netmonitor parameters, suppling a file here.</li>
+<li><i>-I file</i> - sequence of command line's argument
+this is useful execute a series of different
+operation, like calling:
+<br><i>gnokii --netmonitordata args_set_1
+<br>gnokii --netmonitordata args_set_2
+<br>gnokii --netmonitordata args_set_3
+<br>gnokii --netmonitordata args_set_n
+</i>
+
+<p>file contains arguments as normally specified
+on command line, but:
+	
+<p>on every line you should specify <i>-n n</i> option
+so processing can stop without user intervent,
+and continue with next line args_set.
+	
+<p>May be useful to make some pre-made collection,
+as one made for battery check poupose, as
+anothor to monitor neighbor cells, and so on.
+
+<p>Inside this file options <i>-I</i> and option <i>-S</i>
+are silently ignored
+	
+<p>Line in this file may be max length 1024
+</li>
+</ul>
+
+<p>Here is also note from author:
+
+<p>Checks of all arguments, and eventually files contents, are made
+before start of data output.
+	
+<p>Because of complexity of command line, phone spec, and eventually
+command file, on error, you have datailed description of any error,
+
+<p>Also I attached here an examples of commands-file (see /Docs/examples)
+that can run with:
+<i>mygnokii --netmonitordata -S netmonitordata_6150_413 -I nmd_commands</i>
+
+<p>Users of same model but with other firmware version probably
+should do very little work for an exact parameters specifications
+of theirs phones.
+
+<p>Users of 5110 and 6110 probably should remove some parameters not
+available, like parameters related to dual band.
+
+<p>Users of other phone models should write a new parameters-file:
+some hints are available in file netmonitordata_6150_413.
+             
+<p>If help is needed, please dump the screen,
+(<i>mygnokii --netmonitor 20 > screen_20.txt</i>),
+and send an e-mail to <a href=email:a.scopece@tin.it>my address</a>.
+
+<p>If available, check help screen by pressing '*' on phone
+(during netmonitor session).
+
+<p>Scope of this work is monitoring some "user-interesting"
+parameters, coming from differents screen, like battery charging
+vs. time, cell ID and channel changes vs. signal strenght, ...
+
+<p>This is work in progress, so any input would be appreciated.
+
+<p>Author: <a href=mailto:a.scopece@tin.it>Andrea Scopece</a>
+
+<p>Example:
+
+<PRE>
+gnokii --netmonitordata -S file RxL:LAC:CID
+
+gnokii --netmonitordata -S file -fs ";" RxL:LAC:CID
+</PRE>
+</DD></DL>
+
+<p><font color="#1F409F" size=+2 class="dzial">Logos and startup texts</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>If you don't know, what is logo, please read first <a href=../gsm/logos/logos.htm>our logos FAQ</a>.
+
+<DL>
+<DT><i>
+gnokii --bitmapconvert source destination
+<br>gnokii --bitmapconvert source destination op [network code]
+<br>gnokii --bitmapconvert source destination caller [caller group number]
+<br>gnokii --bitmapconvert source destination startup
+</i>
+<DD>
+Converts logo files. Supported formats:
+NOL, NGG, NSL, NLM, BMP, OTA, XPM.
+3'rd parameter allow to specify, what type should be destination
+logo (when format allows for it).
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --sendlogo op destination logofile network_code
+[--smsc message_center_number] [--smscno message_center_index]
+[-s] [-v n] [-d]
+<br>gnokii --sendlogo caller destination logofile
+[--smsc message_center_number] [--smscno message_center_index]
+[-s] [-v n] [-d]
+</i>
+<DD>
+Send the logofile to destination as operator
+or CLI logo. Optional parameters:
+
+<p>
+<ul>
+<li><i>--smsc</i> - specify SMSC set</li>
+<li><i>--smscno</i> - specify SMSC number</li>
+<li><i>-s</i> - set replying via the same centre</li>
+<li><i>-v</i> - set validity</li>
+<li><i>-d</i> - you will receive delivery report</li>
+</ul>
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --savelogo op logofile network_code
+[--smsc message_center_number] [--smscno message_center_index]
+[-r] [-i] [-s] [-a] [-l] [--name name]
+<br>gnokii --savelogo caller logofile
+[--smsc message_center_number] [--smscno message_center_index]
+[-r] [-i] [-s] [-a] [-l] [--name name]
+</i>
+<DD>
+Saves the logofile on SIM as operator
+or CLI logo. Optional parameters:
+
+<p>
+<ul>
+<li><i>--smsc</i> - specify SMSC set</li>
+<li><i>--smscno</i> - specify SMSC number</li>
+<li><i>-r</i> - mark as read</li>
+<li><i>-i</i> - save to inbox</li>
+<li><i>-s</i> - set replying via the same centre</li>
+<li><i>-a</i> - ask, when specify location and sms is already there</li>
+<li><i>-l</i> - specify location</li>
+<li><i>--name</i> - specify recipient/sender name instead of default</li>
+</ul>
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --setlogo op [logofile] [network code]
+<br>gnokii --setlogo startup [logofile]
+<br>gnokii --setlogo caller [logofile] [caller group number] [group name]
+<br>gnokii --setlogo {dealer|text} [text]
+</i>
+<DD>
+Set caller, startup or operator logo or set (Dealer) welcome note.
+
+<p>In Nokia 6110/6130/6150 you will see menu in phone after using it...
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --getlogo op [logofile] [network code]
+<br>gnokii --getlogo startup [logofile] [network code]
+<br>gnokii --getlogo caller [logofile][caller group number][network code]
+<br>gnokii --getlogo {dealer|text}
+</i>
+<DD>
+Get caller, startup or operator logo or get (Dealer) welcome note.
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<p><font color="#1F409F" size=+2 class="dzial">Ringtones</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<DL>
+<DT><i>
+gnokii --sendringtone destination ringtonefile
+[--smsc message_center_number] [--smscno message_center_index]
+[-s] [-v n] [-d] [--scale]
+</i>
+<DD>
+Send the RTTL/OTT file to destination as ringtone.
+
+<p>
+<ul>
+<li><i>--smsc</i> - specify SMSC set</li>
+<li><i>--smscno</i> - specify SMSC number</li>
+<li><i>-s</i> - set replying via the same centre</li>
+<li><i>-v</i> - set validity</li>
+<li><i>-d</i> - allow to receive delivery report, when send</li>
+<li><i>--scale</i> - saves scale info with all tones. It allow
+to eliminate firmware bug in some Nokia phones.</li>
+</ul>
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --saveringtone ringtonefile
+[--smsc message_center_number] [--smscno message_center_index]
+[-r] [-i] [-s] [-a] [-l] [--name name] [--scale]
+</i>
+<DD>
+Saves ringtone on SIM.
+
+<p>
+<ul>
+<li><i>--smsc</i> - specify SMSC set</li>
+<li><i>--smscno</i> - specify SMSC number</li>
+<li><i>-r</i> - mark as read</li>
+<li><i>-i</i> - save to inbox</li>
+<li><i>-s</i> - set replying via the same centre</li>
+<li><i>-s</i> - set replying via the same centre</li>
+<li><i>-a</i> - ask, when specify location and sms is already there</li>
+<li><i>-l</i> - specify location</li>
+<li><i>--name</i> - specify recipient/sender name instead of default</li>
+<li><i>--scale</i> - saves scale info with all tones. It allow
+to eliminate firmware bug in some Nokia phones.</li>
+</ul>
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+			    
+<DL>
+<DT><i>
+gnokii --setringtone ringtonefile
+ [location]
+</i>
+<DD>
+Set the RTTL/OTT as ringtone
+
+<p>In Nokia 6110/6130/6150 you will see menu in phone after using it...
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --getbinringtone ringtonefile
+ [location]
+</i>
+<DD>
+Gets downloadable ringtone and writes it in the special binary format
+(it's not yes decoded - after making it this function can be unavailable).
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --setbinringtone ringtonefile
+ [location]
+</i>
+<DD>
+Sets downloadable ringtone. Ringtonefile is in format used by
+<i>--getbinringtone</i>. Mygnokii contains some default Nokia phones
+ringtones saved in this format.
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+       
+
+<DL>
+<DT><i>
+gnokii --ringtoneconvert source destination
+</i>
+<DD>
+Converts ringtone files (RTTL, OTT)
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --playringtone file
+</i>
+<DD>
+Plays ringtone in phone
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --composer ringtonefile
+</i>
+<DD>
+Shows, how ringtone will look in Composer in phone...and how to enter it there...
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --allringtones
+</i>
+<DD>
+Shows names of ringtones in your phone (to test, if they're put into source)
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<p><font color="#1F409F" size=+2 class="dzial">Backup/restore tool</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<DL>
+<DT><i>
+gnokii --backupsettings file [subformat]
+</i>
+<DD>
+Writes various settings into one file
+
+<p>Supported formats: LMB (Logo Manager Backup - full support for
+N61xx/51xx features; for N7110/6210 some things can be missed, when compare
+to files saved by LM),
+CSS (NCDS3 - only phonebook part),
+CSV (subformats: ncds2, lm, ncds3_pl - some things missed for N7110/6210),
+SCM (WinTesla)
+
+
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --restoresettings file
+</i>
+<DD>
+
+<p>
+<ol>
+<li>restores various settings from one file</li>
+<li>allow to write phonebooks and logos into separate files.</li>
+</ol>
+
+<p>Supported formats: LMB (Logo Manager Backup - full support for
+N61xx/51xx features; for N7110/6210 some things can be missed, when compare
+to files saved by LM),
+CSS (NCDS3 - only phonebook part),
+CSV (subformats: ncds2, lm, ncds3_pl - some things missed for N7110/6210),
+SCM (WinTesla)
+
+
+
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<p><font color="#1F409F" size=+2 class="dzial">Profiles</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<DL>
+<DT><i>
+gnokii --getprofile [number]
+</i>
+<DD>
+Show settings for selected(all) profile(s)
+
+<p>Usage examples:
+
+<PRE>
+tfuj:~$ gnokii --getprofile 1
+1. "General"
+Incoming call alert: Ringing
+Ringtone number: 19
+Ringing volume: Level 3
+Message alert tone: Standard
+Keypad tones: Off
+Warning and game tones: On
+Vibration: On
+Caller groups: 0x00
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --setprofile number feature value
+</i>
+<DD>
+Set profile feature
+
+<p>Possible features are:
+<ul>
+<li>callalert (Incoming call alert)
+  <br>possible values are:
+  <ul>
+    <li>ringing (Ringing)</li>
+    <li>ascending (Ascending)</li>
+    <li>ringonce (Ring once)</li>
+    <li>beeponce (Beep once)</li>
+    <li>ringing (Ringing)</li>
+    <li>groups (Caller groups - not in N5110)</li>
+    <li>off,0 (Off)</li>
+  </ul>
+</li>
+<li>volume (Ringing volume)
+  <br>possible values are: 1|2|3|4|5
+</li>
+<li>keypad,keypadtone (Keypad tones)
+  <br>possible values are:
+  <ul>
+    <li>0,off (Off)</li>
+    <li>1 (Level 1)</li>
+    <li>2 (Level 2)</li>
+    <li>3 (Level 3)</li>
+  </ul>
+</li>
+<li>smstone,messagetone,sms,message (Message alert tone)
+  <br>possible values are:
+  <ul>
+    <li>0,off (No tone)</li>
+    <li>standard (Standard)</li>
+    <li>special (Special)</li>
+    <li>beeponce,once (Beep once)</li>
+    <li>ascending (Ascending)</li>
+  </ul>
+</li>
+<li>warningtone,warning (Warning and game tones)
+  <br>possible values are: 0|off|1|on
+</li>
+<li>vibra,vibration (Vibration)
+  <br>possible values are: 0|off|1|on
+</li>
+<li>lights (Lights)
+  <br>possible values are:
+  <ul>
+    <li>0,off (Automatic)</li>
+    <li>1,on (On)</li>
+  </ul>
+</li>
+<li>answer (Automatic answer)
+  <br>possible values are: 0|off|1|on
+</li>
+<li>name - profile name (doesn't work in N5110)
+  <br>value is new profile name
+</li>
+<li>ringtone (Ringing tone)
+  <br>value is new ringing tone number
+</li>
+<li>groups - caller group name for profile
+  <br>value is new caller group number  
+</li>
+</ul>
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<p><font color="#1F409F" size=+2 class="dzial">Security features</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<P>This functions are available ONLY, if gnokii was compiled with them !
+
+<DL>
+<DT><i>
+gnokii --entersecuritycode PIN|PIN2|PUK|PUK2
+</i>
+<DD>
+Asks for the code and sends it to the phone
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --getsecuritycodestatus
+</i>
+<DD>
+Show if a security code is needed
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --getsecuritycode PIN|PIN2|PUK|PUK2|SecurityCode
+</i>
+<DD>
+Gets security code (only SecurityCode allowed !)
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<p><font color="#1F409F" size=+2 class="dzial">Other functions</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<DL>
+<DT><I>gnokii --monitor</I> 
+<DD>Runs <i>gnokii</i> in persistent communication state - displays all data 
+received from the phone to the <i>stderr</i>. Example session:
+
+<PRE>tfuj:~$ gnokii --monitor
+Entering monitor mode...
+Initialising GSM interface...
+RFLevel: 4
+Battery: 3
+Power Source: battery
+SIM: Used 42, Free 188
+Phone: Used 4, Free 46
+FD: Used 0, Free 20
+ON: Used 2, Free 3
+SMS Messages: UnRead 0, Number 26
+Network: IDEA Centertel (Poland), LAC: 00c8, CellID: 1024
+[...]
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --dialvoice number
+</i>
+<DD>
+Initiate voice call from first number on SIM card.
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --getdisplaystatus
+</i>
+<DD>
+Shows what icons are displayed in phone's screen.
+
+<p>Usage examples:
+
+<PRE>
+tfuj:~$ gnokii --getdisplaystatus    
+Call in progress: off
+Unknown: off
+Unread SMS: off
+Voice call: off
+Fax call active: off
+Data call active: off
+Keyboard lock: off
+SMS storage full: off
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --identify
+</i>
+<DD>
+Get IMEI, model and revision
+. In this moment doesn't work with MBUS connection
+and Unix...
+
+<p>Usage examples:
+
+<PRE>
+tfuj:~$ gnokii --identify    
+IMEI:     495502202470000
+Model:    NSK-3
+Revision: SW 4.11, HW2460
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --senddtmf string
+</i>
+<DD>
+Sends DTMF sequence
+. If you will start from "p" (Pause), phone will display
+menu before sending it...
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --presskeysequence sequence
+</i>
+<DD>
+presses some keys in phone keyboard
+
+<p>Available keys:
+<ul>
+<li>0..9</li>
+<li>#</li>
+<li>*</li>
+<li>m (Menu)</li>
+<li>n (Names)</li>
+<li>p (Power)</li>
+<li>g (Green)</li>
+<li>r (Red)</li>
+<li>+, - (Volume up or down)</li>
+<li>u (Up arrow)</li>
+<li>d (Down arrow)</li>
+<li>w - 2 sec. pause (useful, when you simulate writing SMS)</li>
+</ul>
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --reset [soft|hard]
+</i>
+<DD>
+Resets the phone.
+ You can use "soft" parameter (no question for PIN code - it's default)
+or "hard" (phone will ask for PIN - of course, if you have it enabled in your card;
+in some phones - for example N5110 - this type of reset will be like "soft")
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --getphoneprofile
+</i>
+<DD>
+Gets profile set normally with Product Profile Settings
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --setphoneprofile feature value
+</i>
+<DD>
+Set profile set normally with Product Profile Settings:
+
+<p>Features can be:
+
+<p>
+<ul>
+<li>"ALS" (Alternative Line Service) - values "0" or "1"</li>
+<li>"HRData" (data transmission using Half Rate channels) - values "0" or "1"</li>
+</ul>
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --displayoutput
+</i>
+<DD>
+Show texts displayed in phone's screen
+
+<p>Usage examples:
+
+<PRE>
+tfuj:~$ gnokii --displayoutput
+Entering display monitoring mode...
+Accessory
+connected
+Names
+Menu
+23:59
+Messages
+Exit
+Select
+_
+Messages
+Exit
+Select
+_
+Call register
+Exit
+Select
+2
+Missed
+calls
+Back
+Select
+2-1
+Received
+calls
+Back
+Select
+2-2
+Dialled
+numbers
+Back
+Select
+2-3
+Erase recent
+call lists
+Back
+Select
+2-4
+Show call
+duration
+Back
+Select
+2-5
+Last call
+duration
+00:01:33
+Back
+2-5-1
+All calls'
+duration
+06:45:02
+Back
+2-5-2
+Received calls'
+duration
+02:49:38
+Back
+2-5-3
+Names
+Menu
+23:59
+...WAW... 
+POCZTA ELE
+...WAW... 
+Leaving display monitor mode...
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --getphoneprofile
+</i>
+<DD>
+Gets Product Profile Settings from phone
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --getoperatorname
+</i>
+<DD>
+Get info about downloaded operator name
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<DL>
+<DT><i>
+gnokii --setoperatorname code name
+</i>
+<DD>
+Set downloaded operator name
+
+<p>Usage examples:
+
+<PRE>
+</PRE>
+</DD></DL>
+
+<p><font color="#1F409F" size=+2 class="dzial">How to send SMS to multiple recipients using gnokii ?</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>
+<i>
+#!/bin/tcsh<br>
+&nbsp;<br>
+if ( $# == 0 ) then<br>
+&nbsp; echo "You must specify at least one recipient's number!"<br>
+&nbsp; exit 1<br>
+endif<br>
+&nbsp;<br>
+echo -n "Enter SMS:"<br>
+set sms="$<"<br>
+&nbsp;<br>
+foreach i ( $* )<br>
+&nbsp; echo "$sms" | gnokii --sendsms "$i"<br>
+end
+</i>
+
+</div>
+
+
+<p><font color="#1F409F" size=+2 class="dzial">Sending script...</font><br>
+<hr align="LEFT" size="3" width="300" color="#60c0a0" noshade>
+
+<p>Author: oxana [rasqua@t-online.de]
+
+<p>
+I use a simple perlscript to send sms from a daily generated file. The file
+is generated by another script.
+
+<p>The script contains only one line like this "send following data :
++49179xxxxxxx Hallo Guillaume#Test#"
+
+<p>Where +49xxx the number, followed by text, # will be replaced with a
+carriage return (\n) the string "send sms:" is only to prevent errors
+
+<p>I've modified the comments for english language ... the programm is very
+simple (I'am perl-newbie too) but I hope you can read it.
+I use this to send a daily status-sms to my phone.
+
+<p><pre>
+#!/usr/bin/perl
+use strict;
+while (1)                                               #example endlessloop
+{
+my ($strtosend, $valid, $rxnnummer, $smslaenge, $pid, $filename, $timeout);
+# (nummer is german for number, laenge is german for length)
+$filename = "/xxx/xxx/xxx/data/smstosend_data";                 # file with
+data
+$valid ="send sms:";
+# to prevent errors
+$timeout = 100;
+# timeout
+open(INPUT, "< $filename");                                              #
+or die "error opening: $!\n";           # hope here are no errors
+while(<INPUT>)
+# if ok
+{
+$strtosend = $_;
+# copy input to strtosend
+if ($strtosend =~ /\A$valid/)
+# if $valid then
+{
+$strtosend = substr ($strtosend, index($strtosend,"+"));
+# cut all befor number (send sms:)
+if ($strtosend =~ /\+\d.*?\b/) {$rxnummer = $&} else {$rxnummer = 0};
+# all following numbers are phone-number and copy it to rxnummer (nummer is
+german for number)
+$strtosend =~ s/\+49179\d.*?\b\s//g;                                    #
+remove number
+$strtosend =~ s/\#/\n/g;
+# replace # by \n
+$smslaenge = length($strtosend);
+# check length
+$pid = open(FileHandle, "|gnokii --sendsms $rxnummer --long $smslaenge");#
+or die "Fehler bei fork: $!\n";     ### start gnokii and send sms
+print FileHandle "$strtosend\n";
+# send string to stdin
+select(undef,undef,undef,15);
+# i dont know
+close (FileHandle); # or die "Fehler bei close: $!\n";                #
+close gnokii
+close(INPUT);
+# close input-file
+unlink($filename);
+# remove input-file
+open(INPUT, ">> /xxx/xxx/xxx/smshistory_data") or die "error opening: $!\n";
+# open history for append
+print INPUT "\n",'-' x 80,"\n";
+# line with 80 "-"
+print INPUT ("send succeeded to : $rxnummer \nat :
+".localtime()."\n$strtosend \n");  # write text to file
+print INPUT "\n",'-' x 80,"\n";
+# line with 80 "-"
+close INPUT;
+# close file
+}
+else
+# if impossible (open file)
+{                                                                           
+  # do nothing
+}
+}
+select(undef,undef,undef,$timeout);
+# dont know
+}
+exit(0);
+# exit program
+</pre>
+
+</body>
+</html>
+

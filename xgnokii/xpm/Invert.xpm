@@ -1,0 +1,46 @@
+/* XPM */
+/*
+
+  G N O K I I
+
+  A Linux/Unix toolset and driver for Nokia mobile phones.
+
+  Copyright (C) 1999 Pavel Janík ml. & Hugh Blemings.
+
+  Released under the terms of the GNU GPL, see file COPYING for more details.
+
+  This is the logo of the GUI utility.
+
+  Last modification: Sat Jul 24 14:30:37 CEST 1999
+  Modified by Pavel Janík ml. <Pavel.Janik@linux.cz>
+
+*/
+
+static char *Invert_xpm[] = {
+
+"20 18 4 1",
+
+"* c #000000",
+"  c None",
+"b c #dfdfdf",
+". c #ffffff",
+
+"                    ",
+"     ********       ",
+"     *......**      ",
+"     *......*.*     ",
+"     *......****    ",
+"     *.........*    ",
+"     *.........*    ",
+"     ***********    ",
+"     ***********    ",
+"     ***********    ",
+"     ***********    ",
+"     ***********    ",
+"     ***********    ",
+"     ***********    ",
+"                    ",
+"                    ",
+"                    ",
+"                    "
+};

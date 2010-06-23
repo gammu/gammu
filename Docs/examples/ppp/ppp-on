@@ -1,0 +1,9 @@
+#!/bin/sh
+TELEPHONE=501808080
+LOCAL_IP=0.0.0.0       
+REMOTE_IP=0.0.0.0     
+NETMASK=255.255.255.0   
+DIALER_SCRIPT=/etc/ppp/ppp-gnokii
+export $TELEPHONE
+exec /usr/sbin/pppd debug /dev/gnokii 115200 $LOCAL_IP:$REMOTE_IP connect $DIALER_SCRIPT
+ 
