@@ -1,4 +1,7 @@
 
+GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device);
+GSM_Error bluetooth_findchannel(GSM_StateMachine *s);
+
 /* MS Platform SDK */
 
 #ifndef __blue_w32_h
@@ -29,6 +32,8 @@ typedef struct _SOCKADDR_BTH {
 } SOCKADDR_BTH, *PSOCKADDR_BTH;
 
 #define BTHPROTO_RFCOMM  	0x0003
+
+#ifdef BLUETOOTH_RF_SEARCHING
 
 typedef struct _SOCKET_ADDRESS {
     LPSOCKADDR 		lpSockaddr ;
@@ -175,6 +180,7 @@ WSAAddressToStringA(
 
 #define WSAAddressToString  WSAAddressToStringA
 
+#endif
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

@@ -10,7 +10,7 @@
 #include "../gsmpbk.h"
 #include "../gsmlogo.h"
 #include "../gsmring.h"
-#include "../gsmwap.h"
+#include "../gsmdata.h"
 #include "../gsmnet.h"
 #include "gsmsms.h"
 #include "gsmmulti.h"

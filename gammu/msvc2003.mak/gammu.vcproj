@@ -168,6 +168,15 @@
 				RelativePath="..\..\common\device\bluetoth\bluetoth.c">
 			</File>
 			<File
+				RelativePath="..\..\common\device\bluetoth\blue_w32.c">
+			</File>
+			<File
+				RelativePath="..\..\common\device\bluetoth\affix.c">
+			</File>
+			<File
+				RelativePath="..\..\common\device\bluetoth\bluez.c">
+			</File>
+			<File
 				RelativePath="..\..\common\misc\cfg.c">
 			</File>
 			<File
@@ -240,7 +249,7 @@
 				RelativePath="..\..\common\gsmstate.c">
 			</File>
 			<File
-				RelativePath="..\..\common\service\gsmwap.c">
+				RelativePath="..\..\common\service\gsmdata.c">
 			</File>
 			<File
 				RelativePath="..\..\common\device\irda\irda.c">
@@ -373,6 +382,13 @@
 				RelativePath="..\..\common\device\bluetoth\blue_w32.h">
 			</File>
 			<File
+				RelativePath="..\..\common\device\bluetoth\affix.h">
+			</File>
+			<File
+				RelativePath="..\..\common\device\bluetoth\bluez.h">
+			</File>
+
+			<File
 				RelativePath="..\..\common\device\bluetoth\bluetoth.h">
 			</File>
 			<File
@@ -448,7 +464,7 @@
 				RelativePath="..\..\common\gsmstate.h">
 			</File>
 			<File
-				RelativePath="..\..\common\service\gsmwap.h">
+				RelativePath="..\..\common\service\gsmdata.h">
 			</File>
 			<File
 				RelativePath="..\..\common\device\irda\irda.h">

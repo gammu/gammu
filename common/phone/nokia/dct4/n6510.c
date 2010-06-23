@@ -1390,39 +1390,57 @@ static GSM_Error N6510_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press
 #endif
 }
 
-static GSM_Error N6510_EnableWAPMMSSettings(GSM_StateMachine *s, bool MMS)
+static GSM_Error N6510_EnableConnectionSettings(GSM_StateMachine *s, N6510_Connection_Settings Type)
 {
 	GSM_Error	error;
 	unsigned char 	req1[] = {N6110_FRAME_HEADER, 0x03};
 	unsigned char 	req2[] = {N6110_FRAME_HEADER, 0x00, 0x01};
+	unsigned char 	req3[] = {N6110_FRAME_HEADER, 0x00, 0x03};
+	unsigned char 	req4[] = {N6110_FRAME_HEADER, 0x00, 0x04};
 
-	if (MMS && IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOMMS)) return ERR_NOTSUPPORTED;
+	if (Type == N6510_MMS_SETTINGS && IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOMMS)) return ERR_NOTSUPPORTED;
 
 	error=GSM_WaitFor (s, req1, 4, 0x3f, 4, ID_EnableWAP);
 	if (error != ERR_NONE) return error;
 
-	if (MMS) {
+	switch (Type) {
+	case N6510_WAP_SETTINGS:
+		dbgprintf("Enabling WAP\n");
+		return GSM_WaitFor (s, req1, 4, 0x3f, 4, ID_EnableWAP);
+	case N6510_MMS_SETTINGS:
 		dbgprintf("Enabling MMS\n");
 		return GSM_WaitFor (s, req2, 5, 0x3f, 4, ID_EnableWAP);
-	} else {
-		return GSM_WaitFor (s, req2, 4, 0x3f, 4, ID_EnableWAP);
+	case N6510_SYNCML_SETTINGS:
+		dbgprintf("Enabling SyncML\n");
+		return GSM_WaitFor (s, req3, 5, 0x3f, 5, ID_EnableWAP);
+	case N6510_CHAT_SETTINGS:
+		dbgprintf("Enabling Chat\n");
+		return GSM_WaitFor (s, req4, 5, 0x3f, 5, ID_EnableWAP);
+	default:
+		return ERR_UNKNOWN;
 	}
 }
 
-static GSM_Error N6510_ReplyGetWAPMMSSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N6510_ReplyGetConnectionSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int 			tmp,num=0;
+	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
+	int 			tmp,num=0,i;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
+	unsigned char		buff[2000];
 
 	switch(msg.Buffer[3]) {
 	case 0x16:
-		smprintf(s, "WAP settings received OK\n");
+		smprintf(s, "Connection settings received OK\n");
 
-		if (Data->RequestID == ID_GetMMSSettings) {
-			Data->WAPSettings->Number = 1;
-		} else {
-			Data->WAPSettings->Number = 2;
-		}
+		Data->WAPSettings->Settings[0].Proxy[0]   = 0x00;
+		Data->WAPSettings->Settings[0].Proxy[1]   = 0x00;
+		Data->WAPSettings->Settings[0].ProxyPort  = 8080;
+
+		Data->WAPSettings->Settings[0].Proxy2[0]  = 0x00;
+		Data->WAPSettings->Settings[0].Proxy2[1]  = 0x00;
+		Data->WAPSettings->Settings[0].Proxy2Port = 8080;
+
+		Data->WAPSettings->Number = Priv->BearerNumber;
 
 		tmp = 4;
 
@@ -1466,11 +1484,12 @@ static GSM_Error N6510_ReplyGetWAPMMSSettings(GSM_Protocol_Message msg, GSM_Stat
 		Data->WAPSettings->ActiveBearer = WAPSETTINGS_BEARER_DATA;
 		if (msg.Buffer[tmp+2] == 0x03) Data->WAPSettings->ActiveBearer = WAPSETTINGS_BEARER_GPRS;
 
+		Data->WAPSettings->ReadOnly = false;
 		if (msg.Buffer[tmp+3] == 0x01) Data->WAPSettings->ReadOnly = true;
 
 		tmp+=3;
 
-		if (Data->RequestID == ID_GetWAPSettings) {
+		if (Priv->BearerNumber == 2) {
 			/* Here starts settings for data bearer */
 			Data->WAPSettings->Settings[0].Bearer = WAPSETTINGS_BEARER_DATA;
 			while ((msg.Buffer[tmp] != 0x01) || (msg.Buffer[tmp + 1] != 0x00)) tmp++;
@@ -1585,12 +1604,48 @@ static GSM_Error N6510_ReplyGetWAPMMSSettings(GSM_Protocol_Message msg, GSM_Stat
 		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[num].Password,true);
 		smprintf(s, "Password: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[num].Password));
 
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_WAPMMSPROXY)) {
+			if (msg.Buffer[tmp] == 0x00 && msg.Buffer[tmp+1] == 0x00) tmp = tmp+2;
+
+			memcpy(buff,msg.Buffer+tmp+10,msg.Buffer[tmp+4]);
+			buff[msg.Buffer[tmp+4]] = 0x00;
+			smprintf(s, "Proxy 1: \"%s\", port %i\n",buff,msg.Buffer[tmp+6]*256+msg.Buffer[tmp+7]);
+			EncodeUnicode(Data->WAPSettings->Settings[num].Proxy,buff,strlen(buff));
+			Data->WAPSettings->Settings[num].ProxyPort = msg.Buffer[tmp+6]*256+msg.Buffer[tmp+7];
+
+			memcpy(buff,msg.Buffer+tmp+10+msg.Buffer[tmp+4],msg.Buffer[tmp+5]);
+			buff[msg.Buffer[tmp+5]] = 0x00;
+			smprintf(s, "Proxy 2: \"%s\", port %i\n",buff,msg.Buffer[tmp+8]*256+msg.Buffer[tmp+9]);
+			EncodeUnicode(Data->WAPSettings->Settings[num].Proxy2,buff,strlen(buff));
+			Data->WAPSettings->Settings[num].Proxy2Port = msg.Buffer[tmp+8]*256+msg.Buffer[tmp+9];
+
+			tmp = tmp + msg.Buffer[tmp+3] + 19;
+
+			for (i=0;i<4;i++) {
+#ifdef DEBUG
+				smprintf(s, "Proxy data %i\n",i+1);
+				if (msg.Buffer[tmp+2]!=0) memcpy(buff,msg.Buffer+tmp+9,msg.Buffer[tmp+2]*2);
+				buff[msg.Buffer[tmp+2]*2]  =0;
+				buff[msg.Buffer[tmp+2]*2+1]=0;
+				smprintf(s, "IP: \"%s\"",DecodeUnicodeString(buff));
+				smprintf(s, ", port %i\n",msg.Buffer[tmp+3]*256+msg.Buffer[tmp+4]);
+#endif
+				tmp = tmp + msg.Buffer[tmp];
+			}
+
+#ifdef DEBUG
+			smprintf(s, "%02x %02x\n",msg.Buffer[tmp],msg.Buffer[tmp+1]);
+			smprintf(s, "Port %i\n",msg.Buffer[tmp+3]*256+msg.Buffer[tmp+4]);
+			tmp = tmp + msg.Buffer[tmp];
+#endif
+		}
+
 		return ERR_NONE;
 	case 0x17:
-		smprintf(s, "WAP settings receiving error\n");
+		smprintf(s, "Connection settings receiving error\n");
 		switch (msg.Buffer[4]) {
 		case 0x01:
-			smprintf(s, "Security error. Inside WAP settings menu\n");
+			smprintf(s, "Security error. Inside phone settings menu\n");
 			return ERR_INSIDEPHONEMENU;
 		case 0x02:
 			smprintf(s, "Invalid or empty\n");
@@ -1604,26 +1659,39 @@ static GSM_Error N6510_ReplyGetWAPMMSSettings(GSM_Protocol_Message msg, GSM_Stat
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6510_GetWAPMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings, bool MMS)
+static GSM_Error N6510_GetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings, N6510_Connection_Settings Type)
 {
-	GSM_Error 	error;
-	unsigned char 	req[] = {N6110_FRAME_HEADER, 0x15,
-				 0x00};		/* Location */
-
-	error = N6510_EnableWAPMMSSettings(s, MMS);
+	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
+	GSM_Error 		error;
+	unsigned char 		req[] = {N6110_FRAME_HEADER, 0x15,
+				 	 0x00};		/* Location */
+	
+	error = N6510_EnableConnectionSettings(s, Type);
 	if (error!=ERR_NONE) return error;
 
-	settings->ReadOnly = false;
-
-	req[4] = settings->Location-1;
+	req[4] 			  = settings->Location-1;
 	s->Phone.Data.WAPSettings = settings;
-	if (MMS) {
+
+	switch (Type) {
+	case N6510_MMS_SETTINGS:
 		smprintf(s, "Getting MMS settings\n");
-		error=GSM_WaitFor (s, req, 5, 0x3f, 4, ID_GetMMSSettings);
-	} else {
+		Priv->BearerNumber = 1;
+		break;
+	case N6510_WAP_SETTINGS:
 		smprintf(s, "Getting WAP settings\n");
-		error=GSM_WaitFor (s, req, 5, 0x3f, 4, ID_GetWAPSettings);
+		Priv->BearerNumber = 2;
+		break;
+	case N6510_SYNCML_SETTINGS:
+		smprintf(s, "Getting SyncML settings\n");
+		Priv->BearerNumber = 2;
+		break;
+	case N6510_CHAT_SETTINGS:
+		smprintf(s, "Getting Chat settings\n");
+		Priv->BearerNumber = 1;
+		break;
 	}
+
+	error=GSM_WaitFor (s, req, 5, 0x3f, 4, ID_GetConnectionSettings);
 	if (error != ERR_NONE) return error;
 
 	return DCT3DCT4_GetActiveWAPMMSSet(s);
@@ -1631,25 +1699,37 @@ static GSM_Error N6510_GetWAPMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettin
 
 static GSM_Error N6510_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
-	return N6510_GetWAPMMSSettings(s, settings, false);
+	return N6510_GetConnectionSettings(s, settings, N6510_WAP_SETTINGS);
 }
 
 static GSM_Error N6510_GetMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
-	return N6510_GetWAPMMSSettings(s, settings, true);
+	return N6510_GetConnectionSettings(s, settings, N6510_MMS_SETTINGS);
 }
 
-static GSM_Error N6510_ReplySetWAPMMSSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N6510_GetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings *settings)
+{
+	settings->Connection.Location = settings->Location;
+	return N6510_GetConnectionSettings(s, &settings->Connection, N6510_SYNCML_SETTINGS);
+}
+
+static GSM_Error N6510_GetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *settings)
+{
+	settings->Connection.Location = settings->Location;
+	return N6510_GetConnectionSettings(s, &settings->Connection, N6510_CHAT_SETTINGS);
+}
+
+static GSM_Error N6510_ReplySetConnectionSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Buffer[3]) {
 	case 0x19:
-		smprintf(s, "WAP settings cleaned\n");
+		smprintf(s, "Connection settings cleaned\n");
 		return ERR_NONE;
 	case 0x1a:
-		smprintf(s, "WAP settings setting status\n");
+		smprintf(s, "Connection settings setting status\n");
 		switch (msg.Buffer[4]) {
 		case 0x01:
-			smprintf(s, "Security error. Inside WAP settings menu\n");
+			smprintf(s, "Security error. Inside phone settings menu\n");
 			return ERR_INSIDEPHONEMENU;
 		case 0x03:
 			smprintf(s, "Invalid location\n");
@@ -1669,18 +1749,19 @@ static GSM_Error N6510_ReplySetWAPMMSSettings(GSM_Protocol_Message msg, GSM_Stat
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6510_SetWAPMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings, bool MMS)
+static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings, N6510_Connection_Settings Type)
 {
 	GSM_Error 	error;
-	int 		i, pad = 0, length, pos = 5, loc1=-1,loc2=-1;
-	unsigned char 	req[1000] = {N6110_FRAME_HEADER, 0x18,
+	int 		i, pad = 0, length, pos = 5, loc1=-1,loc2=-1,port;
+	unsigned char	*Proxy;
+	unsigned char 	req[2000] = {N6110_FRAME_HEADER, 0x18,
 				     0x00};		/* Location */
 	unsigned char 	Lock[5] = {N6110_FRAME_HEADER, 0x27,
 				   0x00};		/* Location */
 	unsigned char 	UnLock[5] = {N6110_FRAME_HEADER, 0x2A,
 				   0x00};		/* Location */
 
-	error = N6510_EnableWAPMMSSettings(s, MMS);
+	error = N6510_EnableConnectionSettings(s, Type);
 	if (error!=ERR_NONE) return error;
 
 	memset(req + pos, 0, 1000 - pos);
@@ -1732,21 +1813,28 @@ static GSM_Error N6510_SetWAPMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettin
 		pos += 2;
 	}
 
-	if (MMS) {
-		req[pos++] = 0x03; //GPRS
-
-		/* Number of sent bearers */
-		req[pos++] = 0x01; 		pos += pad;
+	if (Type == N6510_MMS_SETTINGS || Type == N6510_CHAT_SETTINGS) {
+		req[pos++] = 0x03; //active bearer: GPRS
 	} else {
 		if (settings->ActiveBearer == WAPSETTINGS_BEARER_GPRS && loc2 != -1) {
-			req[pos++] = 0x03; //GPRS
+			req[pos++] = 0x03; //active bearer: GPRS
 		} else {
-			req[pos++] = 0x01; //data set
+			req[pos++] = 0x01; //active bearer: data set
 		}
-		/* Number of sent bearers */
-		req[pos++] = 0x02; 		pos += pad;
+	}
 
-		/* GSM data */
+	/* Number of sent bearers */
+	if (Type == N6510_MMS_SETTINGS || Type == N6510_CHAT_SETTINGS) {
+		req[pos] = 0x01;
+	} else {
+		req[pos] = 0x02;
+	}
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_WAPMMSPROXY)) req[pos] += 2;
+	pos++;
+ 	pos += pad;
+
+	if (Type != N6510_MMS_SETTINGS && Type != N6510_CHAT_SETTINGS) {
+		/* GSM data block */
 		memcpy(req + pos, "\x01\x00", 2);	pos += 2;
 
 		if (loc1 != -1) {
@@ -1798,6 +1886,7 @@ static GSM_Error N6510_SetWAPMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettin
 	} else {
 		length = 7;
 	}
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_WAPMMSPROXY)) length+=2;
 	length += 7;
 	req[pos++] = length / 256;
 	req[pos++] = length % 256;
@@ -1815,39 +1904,145 @@ static GSM_Error N6510_SetWAPMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettin
 		pos += 10;
 	}
 
-	/* end of blocks ? */
-	memcpy(req + pos, "\x80\x00\x00\x0c", 4);	pos += 4;
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_WAPMMSPROXY)) {
+		req[pos++] = 0x00;
+		req[pos++] = 0x00;
 
-	if (MMS) {
-		smprintf(s, "Setting MMS settings\n");
-		error = GSM_WaitFor (s, req, pos, 0x3f, 4, ID_SetMMSSettings);
+		/* Proxy block */
+		req[pos++] = 0x06;
+		req[pos++] = 0x01;
+		if (UnicodeLength(settings->Settings[loc2].Proxy)!=0 ||
+		    UnicodeLength(settings->Settings[loc2].Proxy2)!=0) {
+			req[pos++] = (UnicodeLength(settings->Settings[loc2].Proxy)+UnicodeLength(settings->Settings[loc2].Proxy2)+13)/256;
+			req[pos++] = (UnicodeLength(settings->Settings[loc2].Proxy)+UnicodeLength(settings->Settings[loc2].Proxy2)+13)%256;
+		} else {
+			req[pos++] = (UnicodeLength(settings->Settings[loc2].Proxy)+UnicodeLength(settings->Settings[loc2].Proxy2)+12)/256;
+			req[pos++] = (UnicodeLength(settings->Settings[loc2].Proxy)+UnicodeLength(settings->Settings[loc2].Proxy2)+12)%256;
+		}
+		req[pos++] = UnicodeLength(settings->Settings[loc2].Proxy);
+		req[pos++] = UnicodeLength(settings->Settings[loc2].Proxy2);
+		req[pos++] = settings->Settings[loc2].ProxyPort/256;
+		req[pos++] = settings->Settings[loc2].ProxyPort%256;
+		req[pos++] = settings->Settings[loc2].Proxy2Port/256;
+		req[pos++] = settings->Settings[loc2].Proxy2Port%256;
+		if (UnicodeLength(settings->Settings[loc2].Proxy)!=0) {
+			sprintf(req+pos,"%s",DecodeUnicodeString(settings->Settings[loc2].Proxy));
+			pos+=UnicodeLength(settings->Settings[loc2].Proxy);
+		}
+		if (UnicodeLength(settings->Settings[loc2].Proxy2)!=0) {
+			sprintf(req+pos,"%s",DecodeUnicodeString(settings->Settings[loc2].Proxy2));
+			pos+=UnicodeLength(settings->Settings[loc2].Proxy2);
+		}
+		if (UnicodeLength(settings->Settings[loc2].Proxy)!=0 ||
+		    UnicodeLength(settings->Settings[loc2].Proxy2)!=0) {
+			req[pos++] = 0x00; 
+		}
+		req[pos++] = 0x00; req[pos++] = 0x00;
+		req[pos++] = 0x07; //unknown
+		req[pos++] = 0x00; req[pos++] = 0x00;
+		req[pos++] = 0x80; //unknown
+		req[pos++] = 0x01; //unknown
+		req[pos++] = 0x05; //unknown
+		req[pos++] = 0x00; req[pos++] = 0x00;
+
+		/* Proxy data blocks */
+		for (i=0;i<4;i++) {
+			port  = 8080;
+			Proxy = NULL;
+			if (i==0) {
+				port  = settings->Settings[loc2].ProxyPort;
+				Proxy = settings->Settings[loc2].Proxy;
+			} else if (i==1) {
+				port  = settings->Settings[loc2].Proxy2Port;
+				Proxy = settings->Settings[loc2].Proxy2;
+			}
+			req[pos++] = 0x08; req[pos++] = 0x00;
+			if (Proxy != NULL && UnicodeLength(Proxy)!=0) {
+				if (UnicodeLength(Proxy)%2 != 0) {
+					req[pos++] = (12 + (UnicodeLength(Proxy)+1)*2)/256;
+					req[pos++] = (12 + (UnicodeLength(Proxy)+1)*2)%256;
+				} else {
+					req[pos++] = (12 + UnicodeLength(Proxy)*2)/256;
+					req[pos++] = (12 + UnicodeLength(Proxy)*2)%256;
+				}
+			} else {
+				req[pos++] = 12/256;
+				req[pos++] = 12%256;
+			}
+			req[pos++] = i+1;
+			if (Proxy != NULL) {
+				req[pos++] = UnicodeLength(Proxy);
+			} else {
+				req[pos++] = 0;
+			}			
+			req[pos++] = port/256;
+			req[pos++] = port%256;
+			req[pos++] = 0x00; 
+
+			req[pos++] = 0x00;
+			req[pos++] = 0x01;
+
+			req[pos++] = 0x00;
+			if (Proxy != NULL && UnicodeLength(Proxy)!=0) {
+				CopyUnicodeString(req+pos,Proxy);
+				pos+=UnicodeLength(Proxy)*2;
+				if (UnicodeLength(Proxy)%2 != 0) {
+					req[pos++] = 0x00;
+					req[pos++] = 0x00;
+				}
+			}
+		}
+
+		req[pos++] = 0x09; req[pos++] = 0x00; req[pos++] = 0x00;
+		req[pos++] = 0x0C; req[pos++] = 0x02; req[pos++] = 0x00;
+		req[pos++] = 0x00; req[pos++] = 0x02; req[pos++] = 0x00;
+		req[pos++] = 0x00; req[pos++] = 0x00; req[pos++] = 0x00;
 	} else {
-		smprintf(s, "Setting WAP settings\n");
-		error = GSM_WaitFor (s, req, pos, 0x3f, 4, ID_SetWAPSettings);
+		/* end of blocks ? */
+		memcpy(req + pos, "\x80\x00\x00\x0c", 4);	pos += 4;
 	}
+
+	UnLock[4] = settings->Location-1;		
+	smprintf(s, "Making Connection settings read-write\n");
+	error = GSM_WaitFor (s, UnLock, 5, 0x3f, 4, ID_SetConnectionSettings);
 	if (error != ERR_NONE) return error;
+
+	switch (Type) {
+	case N6510_MMS_SETTINGS:
+		smprintf(s, "Setting MMS settings\n");
+		break;
+	case N6510_CHAT_SETTINGS:
+		smprintf(s, "Setting Chat settings\n");
+		break;
+	case N6510_WAP_SETTINGS:
+		smprintf(s, "Setting WAP settings\n");
+		break;
+	case N6510_SYNCML_SETTINGS:
+		smprintf(s, "Setting SyncML settings\n");
+		break;
+	}
+
+	error = GSM_WaitFor (s, req, pos, 0x3f, 4, ID_SetConnectionSettings);
+	if (error != ERR_NONE) return error;
+
 	if (settings->ReadOnly) {
 		Lock[4] = settings->Location-1;		
-		smprintf(s, "Making WAP settings readonly\n");
-		error = GSM_WaitFor (s, Lock, 5, 0x3f, 4, ID_SetWAPSettings);
-		if (error != ERR_NONE) return error;
-	} else {
-		UnLock[4] = settings->Location-1;		
-		smprintf(s, "Making WAP settings read-write\n");
-		error = GSM_WaitFor (s, UnLock, 5, 0x3f, 4, ID_SetWAPSettings);
+		smprintf(s, "Making Connection settings readonly\n");
+		error = GSM_WaitFor (s, Lock, 5, 0x3f, 4, ID_SetConnectionSettings);
 		if (error != ERR_NONE) return error;
 	}
-	return DCT3DCT4_SetActiveWAPMMSSet(s, settings, MMS);
+
+	return DCT3DCT4_SetActiveWAPMMSSet(s, settings, true);
 }
 
 static GSM_Error N6510_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
-	return N6510_SetWAPMMSSettings(s, settings, false);
+	return N6510_SetConnectionSettings(s, settings, N6510_WAP_SETTINGS);
 }
 
 static GSM_Error N6510_SetMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
-	return N6510_SetWAPMMSSettings(s, settings, true);
+	return N6510_SetConnectionSettings(s, settings, N6510_MMS_SETTINGS);
 }
 
 static GSM_Error N6510_ReplyGetOriginalIMEI(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -5231,16 +5426,12 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{DCT3DCT4_ReplyGetActiveWAPMMSSet,"\x3f",0x03,0x10,ID_GetWAPSettings	  },
 	{DCT3DCT4_ReplySetActiveWAPMMSSet,"\x3f",0x03,0x13,ID_SetWAPSettings	  },
 	{DCT3DCT4_ReplySetActiveWAPMMSSet,"\x3f",0x03,0x13,ID_SetMMSSettings	  },
-	{N6510_ReplyGetWAPMMSSettings,	  "\x3f",0x03,0x16,ID_GetWAPSettings	  },
-	{N6510_ReplyGetWAPMMSSettings,	  "\x3f",0x03,0x16,ID_GetMMSSettings	  },
-	{N6510_ReplyGetWAPMMSSettings,	  "\x3f",0x03,0x17,ID_GetWAPSettings	  },
-	{N6510_ReplyGetWAPMMSSettings,	  "\x3f",0x03,0x17,ID_GetMMSSettings	  },
-	{N6510_ReplySetWAPMMSSettings,	  "\x3f",0x03,0x19,ID_SetWAPSettings	  },
-	{N6510_ReplySetWAPMMSSettings,	  "\x3f",0x03,0x19,ID_SetMMSSettings	  },
-	{N6510_ReplySetWAPMMSSettings,	  "\x3f",0x03,0x1A,ID_SetWAPSettings	  },
-	{N6510_ReplySetWAPMMSSettings,    "\x3f",0x03,0x1A,ID_SetMMSSettings	  },
-	{N6510_ReplySetWAPMMSSettings,    "\x3f",0x03,0x28,ID_SetWAPSettings	  },
-	{N6510_ReplySetWAPMMSSettings,    "\x3f",0x03,0x2B,ID_SetWAPSettings	  },
+	{N6510_ReplyGetConnectionSettings,"\x3f",0x03,0x16,ID_GetConnectionSettings},
+	{N6510_ReplyGetConnectionSettings,"\x3f",0x03,0x17,ID_GetConnectionSettings},
+	{N6510_ReplySetConnectionSettings,"\x3f",0x03,0x19,ID_SetConnectionSettings},
+	{N6510_ReplySetConnectionSettings,"\x3f",0x03,0x1A,ID_SetConnectionSettings},
+	{N6510_ReplySetConnectionSettings,"\x3f",0x03,0x28,ID_SetConnectionSettings},
+	{N6510_ReplySetConnectionSettings,"\x3f",0x03,0x2B,ID_SetConnectionSettings},
 
 	{N6510_ReplyGetOriginalIMEI,	  "\x42",0x07,0x00,ID_GetOriginalIMEI	  },
 	{N6510_ReplyGetManufactureMonth,  "\x42",0x07,0x00,ID_GetManufactureMonth },
@@ -5390,6 +5581,10 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_SetWAPSettings,
 	N6510_GetMMSSettings,
 	N6510_SetMMSSettings,
+	N6510_GetSyncMLSettings,
+	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
+	N6510_GetChatSettings,
+	NOTSUPPORTED,			/*	SetChatSettings		*/
 	N6510_GetBitmap,
 	N6510_SetBitmap,
 	N6510_GetToDoStatus,

@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.96.2"
-#define VERSION_WIN "0,96,2,0"
+#define VERSION "0.96.6"
+#define VERSION_WIN "0,96,6,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -141,22 +141,32 @@
 
 #ifndef WIN32
 /* are the scandir functions available */
-#define HAVE_DIRENT_H 1
-#define HAVE_SCANDIR 1
-#define HAVE_ALPHASORT 1
-
-#define HAVE_PTHREAD 1
-#define HAVE_SYS_IOCTL_H 1
-#define HAVE_MYSQL_MYSQL_H 1
+#  define HAVE_DIRENT_H 1
+#  define HAVE_SCANDIR 1
+#  define HAVE_ALPHASORT 1
+ 
+#  define HAVE_PTHREAD 1
+#  define HAVE_SYS_IOCTL_H 1
+#  define HAVE_MYSQL_MYSQL_H 1
 #endif
 
 #define HAVE_ISWSPACE 1
 #define HAVE_TOWLOWER 1
 
-#ifdef _MSC_VER
-/* Uncomment to build full support for Bluetooth stack by Microsoft */
-/* Required irprops.lib from Platform SDK */
-//#define MS_VC_BLUETOOTH_IRPROPS_LIB 1
+#ifndef WIN32
+/* Will be used Bluez BT stack ? */
+#  define GSM_ENABLE_BLUEZ 1
+/* Will be used Affix BT stack ? */
+/* #  undef GSM_ENABLE_AFFIX */
+#endif
+
+/* Uncomment, if you want searching RF channel during each BT connection */
+/* It can make connecting longer or connection less stable */
+/* With MS VC and MS BT stack required irprops.lib from MS Platform SDK to compile */
+#ifndef WIN32
+#  define BLUETOOTH_RF_SEARCHING 1
+#else
+//#  define BLUETOOTH_RF_SEARCHING 1
 #endif
 
 #endif

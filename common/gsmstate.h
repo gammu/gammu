@@ -189,7 +189,7 @@
 #include "service/gsmnet.h"
 #include "service/gsmring.h"
 #include "service/gsmcal.h"
-#include "service/gsmwap.h"
+#include "service/gsmdata.h"
 #include "service/gsmlogo.h"
 #include "service/gsmmisc.h"
 #include "service/gsmprof.h"
@@ -406,6 +406,7 @@ typedef enum {
 	ID_GetCalendarNotePos,
 	ID_Initialise,
 	ID_GetWAPSettings,
+	ID_GetConnectionSettings,
 	ID_SetWAPBookmark,
 	ID_GetLocale,
 	ID_SetLocale,
@@ -456,6 +457,7 @@ typedef enum {
 	ID_GetDisplayStatus,
 	ID_SetAutoNetworkLogin,
 	ID_SetWAPSettings,
+	ID_SetConnectionSettings,
 	ID_SetMMSSettings,
 	ID_GetSIMIMSI,
 	ID_GetFileInfo,
@@ -1182,6 +1184,22 @@ typedef struct {
 	 */
 	GSM_Error (*SetMMSSettings)     (GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
 	/**
+	 * Acquires SyncML settings.
+	 */
+	GSM_Error (*GetSyncMLSettings)  (GSM_StateMachine *s, GSM_SyncMLSettings *settings);
+	/**
+	 * Changes SyncML settings.
+	 */
+	GSM_Error (*SetSyncMLSettings)  (GSM_StateMachine *s, GSM_SyncMLSettings *settings);
+	/**
+	 * Acquires chat/presence settings.
+	 */
+	GSM_Error (*GetChatSettings)    (GSM_StateMachine *s, GSM_ChatSettings *settings);
+	/**
+	 * Changes chat/presence settings.
+	 */
+	GSM_Error (*SetChatSettings)    (GSM_StateMachine *s, GSM_ChatSettings *settings);
+	/**
 	 * Gets bitmap.
 	 */
 	GSM_Error (*GetBitmap)	  	(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
@@ -1496,6 +1514,7 @@ typedef enum {
 	F_NOGPRSPOINT,	/* GPRS point are not useable					*/
 	F_CAL35,	/* Calendar,3510 style - Reminder,Call,Birthday			*/
 	F_CAL65,	/* Calendar,6510 style - CBMM, method 3				*/
+	F_WAPMMSPROXY,	/* WAP & MMS settings contains first & second proxy		*/
 
 	/* n6510.c && n7110.c */
 	F_VOICETAGS,	/* Voice tags available						*/

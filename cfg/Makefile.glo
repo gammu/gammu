@@ -21,7 +21,7 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
             $(TOPDIR)/common/service/sms/gsmems.o \
             $(TOPDIR)/common/service/sms/gsmmulti.o \
             $(TOPDIR)/common/service/gsmcal.o \
-            $(TOPDIR)/common/service/gsmwap.o \
+            $(TOPDIR)/common/service/gsmdata.o \
             $(TOPDIR)/common/service/gsmpbk.o \
             $(TOPDIR)/common/service/gsmring.o \
             $(TOPDIR)/common/service/gsmlogo.o \
@@ -34,6 +34,9 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
             $(TOPDIR)/common/service/backup/backvcs.o \
             $(TOPDIR)/common/service/backup/backvcf.o \
             $(TOPDIR)/common/service/backup/backics.o \
+            $(TOPDIR)/common/device/bluetoth/affix.o \
+            $(TOPDIR)/common/device/bluetoth/bluez.o \
+            $(TOPDIR)/common/device/bluetoth/blue_w32.o \
             $(TOPDIR)/common/device/bluetoth/bluetoth.o \
             $(TOPDIR)/common/device/serial/ser_unx.o \
             $(TOPDIR)/common/device/serial/ser_djg.o \

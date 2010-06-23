@@ -3624,6 +3624,10 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
 	NOTSUPPORTED,			/* 	GetMMSSettings		*/
 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetSyncMLSettings	*/
+	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
+	NOTSUPPORTED,			/*	GetChatSettings		*/
+	NOTSUPPORTED,			/*	SetChatSettings		*/
 	ATGEN_GetBitmap,		/* 	GetBitmap		*/
 	ATGEN_SetBitmap,		/*	SetBitmap		*/
 	SONYERIC_GetToDoStatus,

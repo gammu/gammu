@@ -140,22 +140,32 @@
 
 #ifndef WIN32
 /* are the scandir functions available */
-#undef HAVE_DIRENT_H
-#undef HAVE_SCANDIR
-#undef HAVE_ALPHASORT
-
-#undef HAVE_PTHREAD
-#undef HAVE_SYS_IOCTL_H
-#undef HAVE_MYSQL_MYSQL_H
+#  undef HAVE_DIRENT_H
+#  undef HAVE_SCANDIR
+#  undef HAVE_ALPHASORT
+ 
+#  undef HAVE_PTHREAD
+#  undef HAVE_SYS_IOCTL_H
+#  undef HAVE_MYSQL_MYSQL_H
 #endif
 
 #undef HAVE_ISWSPACE
 #undef HAVE_TOWLOWER
 
-#ifdef _MSC_VER
-/* Uncomment to build full support for Bluetooth stack by Microsoft */
-/* Required irprops.lib from Platform SDK */
-//#define MS_VC_BLUETOOTH_IRPROPS_LIB 1
+#ifndef WIN32
+/* Will be used Bluez BT stack ? */
+#  undef GSM_ENABLE_BLUEZ
+/* Will be used Affix BT stack ? */
+#  undef GSM_ENABLE_AFFIX
+#endif
+
+/* Uncomment, if you want searching RF channel during each BT connection */
+/* It can make connecting longer or connection less stable */
+/* With MS VC and MS BT stack required irprops.lib from MS Platform SDK to compile */
+#ifndef WIN32
+#  undef BLUETOOTH_RF_SEARCHING
+#else
+//#  define BLUETOOTH_RF_SEARCHING 1
 #endif
 
 #endif

@@ -5261,6 +5261,133 @@ static void ClearAll(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
+{
+	if (settings->Settings[j].IsContinuous) {
+		printmsg("Connection type     : Continuous\n");
+	} else {
+		printmsg("Connection type     : Temporary\n");
+	}
+	if (settings->Settings[j].IsSecurity) {
+		printmsg("Connection security : On\n");
+	} else {
+		printmsg("Connection security : Off\n");
+	}
+	switch (settings->Settings[j].Bearer) {
+	case WAPSETTINGS_BEARER_SMS:
+		printmsg("Bearer              : SMS");
+		if (settings->ActiveBearer == WAPSETTINGS_BEARER_SMS) printf(" (active)");
+		printmsg("\nServer number       : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].Server));
+		printmsg("Service number      : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].Service));
+		break;
+	case WAPSETTINGS_BEARER_DATA:
+		printmsg("Bearer              : Data (CSD)");
+		if (settings->ActiveBearer == WAPSETTINGS_BEARER_DATA) printf(" (active)");
+		printmsg("\nDial-up number      : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].DialUp));
+		printmsg("IP address          : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].IPAddress));
+		if (settings->Settings[j].ManualLogin) {
+			printmsg("Login Type          : Manual\n");
+		} else {
+			printmsg("Login Type          : Automatic\n");
+		}
+		if (settings->Settings[j].IsNormalAuthentication) {
+			printmsg("Authentication type : Normal\n");
+		} else {
+			printmsg("Authentication type : Secure\n");
+		}
+		if (settings->Settings[j].IsISDNCall) {
+			printmsg("Data call type      : ISDN\n");
+              	} else {
+			printmsg("Data call type      : Analogue\n");  
+		}
+		switch (settings->Settings[j].Speed) {
+			case WAPSETTINGS_SPEED_9600  : printmsg("Data call speed     : 9600\n");  break;
+			case WAPSETTINGS_SPEED_14400 : printmsg("Data call speed     : 14400\n"); break;
+			case WAPSETTINGS_SPEED_AUTO  : printmsg("Data call speed     : Auto\n");  break;
+		}
+		printmsg("User name           : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].User));
+		printmsg("Password            : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].Password));
+		break;
+	case WAPSETTINGS_BEARER_USSD:
+		printmsg("Bearer              : USSD");
+		if (settings->ActiveBearer == WAPSETTINGS_BEARER_USSD) printf(" (active)");
+		printmsg("\nService code        : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].Code));
+		if (settings->Settings[j].IsIP) {
+			printmsg("Address type        : IP address\nIPaddress           : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].Service));
+		} else {
+			printmsg("Address type        : Service number\nService number      : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].Service));	
+		}
+		break;
+	case WAPSETTINGS_BEARER_GPRS:
+		printmsg("Bearer              : GPRS");
+		if (settings->ActiveBearer == WAPSETTINGS_BEARER_GPRS) printf(" (active)");
+		if (settings->Settings[j].ManualLogin) {
+			printmsg("\nLogin Type          : Manual\n");
+		} else {
+			printmsg("\nLogin Type          : Automatic\n");
+		}
+		if (settings->Settings[j].IsNormalAuthentication) {
+			printmsg("Authentication type : Normal\n");
+		} else {
+			printmsg("Authentication type : Secure\n");
+		}
+		printmsg("Access point        : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].DialUp));
+		printmsg("IP address          : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].IPAddress));
+		printmsg("Proxy               : address \"%s\", port %i\n",DecodeUnicodeConsole(settings->Settings[j].Proxy),settings->Settings[j].ProxyPort);
+		printmsg("2'nd proxy          : address \"%s\", port %i\n",DecodeUnicodeConsole(settings->Settings[j].Proxy2),settings->Settings[j].Proxy2Port);
+		printmsg("User name           : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].User));
+		printmsg("Password            : \"%s\"\n",DecodeUnicodeConsole(settings->Settings[j].Password));
+	}
+}
+
+static void GetSyncMLSettings(int argc, char *argv[])
+{
+	GSM_SyncMLSettings	settings;
+	int			start,stop,j;
+
+	GetStartStop(&start, &stop, 2, argc, argv);
+
+	GSM_Init(true);
+
+	for (i=start;i<=stop;i++) {
+		settings.Location=i;
+		error=Phone->GetSyncMLSettings(&s,&settings);
+		Print_Error(error);
+		for (j=0;j<settings.Connection.Number;j++) {
+			printmsg("\nHomepage            : \"%s\"\n",DecodeUnicodeConsole(settings.Connection.Settings[j].HomePage));
+			DisplayConnectionSettings(&settings.Connection,j);
+			printf("\n");
+		}
+	}
+	GSM_Terminate();
+}
+
+static void GetChatSettings(int argc, char *argv[])
+{
+	GSM_ChatSettings	settings;
+	int			start,stop,j;
+
+	GetStartStop(&start, &stop, 2, argc, argv);
+
+	GSM_Init(true);
+
+	for (i=start;i<=stop;i++) {
+		settings.Location=i;
+		error=Phone->GetChatSettings(&s,&settings);
+		Print_Error(error);
+		for (j=0;j<settings.Connection.Number;j++) {
+			if (settings.Connection.Settings[j].Title[0]==0 && settings.Connection.Settings[j].Title[1]==0) {
+				printmsg("Connection set name : Set %i\n",i);
+			} else {
+				printmsg("Connection set name : %s\n",DecodeUnicodeConsole(settings.Connection.Settings[j].Title));
+			}
+			DisplayConnectionSettings(&settings.Connection,j);
+			printf("\n");
+		}
+	}
+	GSM_Terminate();
+}
+
 static void GetWAPMMSSettings(int argc, char *argv[])
 {
 	GSM_MultiWAPSettings	settings;
@@ -5288,79 +5415,7 @@ static void GetWAPMMSSettings(int argc, char *argv[])
 			if (settings.Active) printmsg(" (active)");
 			if (settings.ReadOnly) printmsg("\nRead only           : yes");
 			printmsg("\nHomepage            : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].HomePage));
-			if (settings.Settings[j].IsContinuous) {
-				printmsg("Connection type     : Continuous\n");
-			} else {
-				printmsg("Connection type     : Temporary\n");
-			}
-			if (settings.Settings[j].IsSecurity) {
-				printmsg("Connection security : On\n");
-			} else {
-				printmsg("Connection security : Off\n");
-			}
-			switch (settings.Settings[j].Bearer) {
-			case WAPSETTINGS_BEARER_SMS:
-				printmsg("Bearer              : SMS");
-				if (settings.ActiveBearer == WAPSETTINGS_BEARER_SMS) printf(" (active)");
-				printmsg("\nServer number       : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].Server));
-				printmsg("Service number      : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].Service));
-				break;
-			case WAPSETTINGS_BEARER_DATA:
-				printmsg("Bearer              : Data (CSD)");
-				if (settings.ActiveBearer == WAPSETTINGS_BEARER_DATA) printf(" (active)");
-				printmsg("\nDial-up number      : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].DialUp));
-				printmsg("IP address          : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].IPAddress));
-				if (settings.Settings[j].ManualLogin) {
-					printmsg("Login Type          : Manual\n");
-				} else {
-					printmsg("Login Type          : Automatic\n");
-				}
-				if (settings.Settings[j].IsNormalAuthentication) {
-					printmsg("Authentication type : Normal\n");
-				} else {
-					printmsg("Authentication type : Secure\n");
-				}
-				if (settings.Settings[j].IsISDNCall) {
-					printmsg("Data call type      : ISDN\n");
-	                       	} else {
-					printmsg("Data call type      : Analogue\n");  
-				}
-				switch (settings.Settings[j].Speed) {
-					case WAPSETTINGS_SPEED_9600  : printmsg("Data call speed     : 9600\n");  break;
-					case WAPSETTINGS_SPEED_14400 : printmsg("Data call speed     : 14400\n"); break;
-					case WAPSETTINGS_SPEED_AUTO  : printmsg("Data call speed     : Auto\n");  break;
-				}
-				printmsg("User name           : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].User));
-				printmsg("Password            : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].Password));
-				break;
-			case WAPSETTINGS_BEARER_USSD:
-				printmsg("Bearer              : USSD");
-				if (settings.ActiveBearer == WAPSETTINGS_BEARER_USSD) printf(" (active)");
-				printmsg("\nService code        : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].Code));
-				if (settings.Settings[j].IsIP) {
-					printmsg("Address type        : IP address\nIPaddress           : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].Service));
-				} else {
-					printmsg("Address type        : Service number\nService number      : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].Service));	
-				}
-				break;
-			case WAPSETTINGS_BEARER_GPRS:
-				printmsg("Bearer              : GPRS");
-				if (settings.ActiveBearer == WAPSETTINGS_BEARER_GPRS) printf(" (active)");
-				if (settings.Settings[j].ManualLogin) {
-					printmsg("\nLogin Type          : Manual\n");
-				} else {
-					printmsg("\nLogin Type          : Automatic\n");
-				}
-				if (settings.Settings[j].IsNormalAuthentication) {
-					printmsg("Authentication type : Normal\n");
-				} else {
-					printmsg("Authentication type : Secure\n");
-				}
-				printmsg("Access point        : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].DialUp));
-				printmsg("IP address          : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].IPAddress));
-				printmsg("User name           : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].User));
-				printmsg("Password            : \"%s\"\n",DecodeUnicodeConsole(settings.Settings[j].Password));
-			}
+			DisplayConnectionSettings(&settings,j);
 			printf("\n");
 		}
 	}
@@ -7806,6 +7861,8 @@ static GSM_Parameters Parameters[] = {
 	{"--getwapbookmark",		1, 2, GetWAPBookmark,		{H_WAP,0},			"start [stop]"},
 	{"--getwapsettings",		1, 2, GetWAPMMSSettings,	{H_WAP,0},			"start [stop]"},
 	{"--getmmssettings",		1, 2, GetWAPMMSSettings,	{H_MMS,0},			"start [stop]"},
+	{"--getsyncmlsettings",		1, 2, GetSyncMLSettings,	{H_WAP,0},			"start [stop]"},
+	{"--getchatsettings",		1, 2, GetChatSettings,		{H_WAP,0},			"start [stop]"},
 	{"--savemmsfile",		3, 15,SaveMMSFile,		{H_MMS,0},			"file [-subject text][-text text]"},
 	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"STARTUP [file]"},
 	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"CALLER location [file]"},
