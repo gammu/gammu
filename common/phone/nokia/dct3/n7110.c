@@ -1486,9 +1486,9 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 
 	{N7110_ReplyGetMemoryStatus,	  "\x03",0x03,0x04,ID_GetMemoryStatus	  },
 	{N7110_ReplyGetMemory,		  "\x03",0x03,0x08,ID_GetMemory		  },
-	{N7110_ReplyDeleteMemory,	  "\x03",0x03,0x10,ID_SetMemory		  },
 	{N71_65_ReplyWritePhonebook,	  "\x03",0x03,0x0C,ID_SetBitmap		  },
 	{N71_65_ReplyWritePhonebook,	  "\x03",0x03,0x0C,ID_SetMemory		  },
+	{N7110_ReplyDeleteMemory,	  "\x03",0x03,0x10,ID_SetMemory		  },
 
 	{N71_65_ReplyUSSDInfo,		  "\x06",0x03,0x03,ID_IncomingFrame	  },
 	{NoneReply,			  "\x06",0x03,0x06,ID_IncomingFrame	  },
@@ -1697,6 +1697,7 @@ GSM_Phone_Functions N7110Phone = {
 	NOTSUPPORTED,			/* 	GetMMSSettings		*/
 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetMMSFolders		*/
+	NOTSUPPORTED,			/*	GetNextMMSFile		*/
 	N7110_GetBitmap,
 	N7110_SetBitmap,
 	NOTSUPPORTED,			/*	GetToDoStatus		*/

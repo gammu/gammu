@@ -4215,6 +4215,7 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/* 	GetMMSSettings		*/
 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetMMSFolders		*/
+	NOTSUPPORTED,			/*	GetNextMMSFile		*/
 	ATGEN_GetBitmap,		/* 	GetBitmap		*/
 	ATGEN_SetBitmap,		/*	SetBitmap		*/
 	SONYERIC_GetToDoStatus,

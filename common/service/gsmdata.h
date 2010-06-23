@@ -119,6 +119,12 @@ typedef struct {
 void GSM_EncodeMMSFile		(GSM_EncodeMultiPartMMSInfo *Info, unsigned char *Buffer, int *Length);
 void GSM_ClearMultiPartMMSInfo	(GSM_EncodeMultiPartMMSInfo *Info);
 
+typedef struct {
+	GSM_File		File;
+	int			Status;
+	int			Folder;
+} GSM_MMSFile;
+
 /* ---------------------- MMS folders ------------------------------------- */
 
 /**

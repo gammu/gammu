@@ -56,6 +56,11 @@ typedef struct {
 	int				BearerNumber;
 
 	unsigned char			PhoneMode;
+
+	int				MMSFoldersID[20];
+	GSM_File			MMSFile;
+	int				MMSFolderNum;
+	GSM_Error			MMSFolderError;	
 } GSM_Phone_N6510Data;
 
 void N6510_EncodeFMFrequency(double freq, unsigned char *buff);

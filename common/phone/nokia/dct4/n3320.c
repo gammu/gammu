@@ -232,6 +232,7 @@ GSM_Phone_Functions N3320Phone = {
 	NOTSUPPORTED,			/* 	GetMMSSettings		*/
 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetMMSFolders		*/
+	NOTSUPPORTED,			/*	GetNextMMSFile		*/
 	NOTSUPPORTED,			/*	GetBitmap		*/
 	NOTSUPPORTED,			/*	SetBitmap		*/
 	NOTSUPPORTED,			/*	GetToDoStatus		*/
