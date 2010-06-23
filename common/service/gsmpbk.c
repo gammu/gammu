@@ -240,7 +240,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_PhonebookEntry *P
 	Pbk->EntriesNum = 0;
 
 	while (1) {
-		MyGetLine(Buffer, Pos, Line);
+		MyGetLine(Buffer, Pos, Line, strlen(Buffer));
 		if (strlen(Line) == 0) break;
 		switch (Level) {
 		case 0:

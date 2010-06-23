@@ -4,7 +4,7 @@
 
 #include <time.h>
 
-#include "../cfg/config.h"
+#include "config.h"
 #include "misc/cfg.h"
 
 #ifdef GSM_ENABLE_NOKIA3650

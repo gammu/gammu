@@ -169,6 +169,10 @@ SOURCE=..\..\common\service\backup\backvcs.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\service\backup\backics.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\service\backup\backvcf.c
 # End Source File
 # Begin Source File
@@ -398,6 +402,10 @@ SOURCE=..\..\common\service\backup\backlmb.h
 # Begin Source File
 
 SOURCE=..\..\common\service\backup\backvcs.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\backup\backics.h
 # End Source File
 # Begin Source File
 

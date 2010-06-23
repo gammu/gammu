@@ -3,6 +3,8 @@
 
 #include "backgen.h"
 
+#ifdef GSM_ENABLE_BACKUP
+
 GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode);
 GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup);
 
@@ -35,6 +37,7 @@ typedef struct {
 
 void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup);
 
+#endif
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

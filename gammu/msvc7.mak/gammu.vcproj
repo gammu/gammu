@@ -133,6 +133,9 @@
 				RelativePath="..\..\common\phone\at\atgen.c">
 			</File>
 			<File
+				RelativePath="..\..\common\service\backup\backics.c">
+			</File>
+			<File
 				RelativePath="..\..\common\service\backup\backldif.c">
 			</File>
 			<File
@@ -318,6 +321,9 @@
 			</File>
 			<File
 				RelativePath="..\..\common\service\backup\backgen.h">
+			</File>
+			<File
+				RelativePath="..\..\common\service\backup\backics.h">
 			</File>
 			<File
 				RelativePath="..\..\common\service\backup\backldif.h">

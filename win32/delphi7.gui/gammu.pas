@@ -74,7 +74,8 @@ type	GSM_Error = (
 		GE_BUG,                  	// Found bug in implementation or phone //32
 		GE_CANCELED,
 		GE_NEEDANOTHERANSWER,
-		GE_OTHERCONNECTIONREQUIRED);
+		GE_OTHERCONNECTIONREQUIRED,
+		GE_WRONGCRC);
 
 	GSM_DateTime = record
 		Year	 : integer; //full year (for example,2002)

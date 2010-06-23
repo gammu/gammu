@@ -509,8 +509,9 @@ static void N6510_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsig
 
 static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *buffer)
 {
-	int 			i, current, blocks=0;
+	int 			i, current, blocks=0, SMSTemplateDateTime = 0;
 	GSM_SMSMessageLayout 	Layout;
+	GSM_Error		error;
 
 	memset(&Layout,255,sizeof(GSM_SMSMessageLayout));
 	Layout.firstbyte = 2;
@@ -567,12 +568,22 @@ static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 						break;
 				}
 				break;
+			case 0x84:
+				smprintf(s, "Date and time of saving for SMS template\n");
+				SMSTemplateDateTime = current + 2;
+				break;
 			default:
 				smprintf(s, "Unknown block %02x\n",buffer[current]);
 		}
 		current = current + buffer[current + 1];
 	}
-	return GSM_DecodeSMSFrame(sms,buffer,Layout);
+	error=GSM_DecodeSMSFrame(sms,buffer,Layout);
+	if (SMSTemplateDateTime != 0) {
+		sms->PDU = SMS_Deliver;
+		NOKIA_DecodeDateTime(s, buffer+SMSTemplateDateTime, &sms->DateTime);
+		sms->DateTime.Timezone = 0;
+	}
+	return error;
 }
 
 static GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -3607,6 +3618,26 @@ static GSM_Error N6510_ShowStartInfo(GSM_StateMachine *s, bool enable)
 	}
 }
 
+static int N6510_FindFileCheckSum(unsigned char *ptr, int len)
+{
+	int acc, i, accx;
+ 
+	accx = 0;
+	acc  = 0xffff; 
+	while (len--) {
+		accx = (accx & 0xffff00ff) | (acc & 0xff00);
+		acc  = (acc  & 0xffff00ff) | *ptr++ << 8;
+		for (i = 0; i < 8; i++) {
+			acc <<= 1;
+			if (acc & 0x10000)     acc ^= 0x1021; 
+			if (accx & 0x80000000) acc ^= 0x1021; 
+			accx <<= 1;
+		}
+	}
+	dprintf("Checksum from Gammu is %04X\n",(acc & 0xffff));
+	return (acc & 0xffff);
+}
+
 static GSM_Error N6510_ReplyGetFileFolderInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_File	 	*File = s->Phone.Data.FileInfo;
@@ -3702,8 +3733,8 @@ static GSM_Error N6510_ReplyGetFileFolderInfo(GSM_Protocol_Message msg, GSM_Stat
 		if (msg.Buffer[9] != 0x00) File->Folder = true;
 		return GE_NONE;		
 	case 0x43:
-		File->CRC16 = msg.Buffer[6] * 256 + msg.Buffer[7];
-		smprintf(s,"CRC16 from phone is %i\n",File->CRC16);
+		Priv->FileCheckSum = msg.Buffer[6] * 256 + msg.Buffer[7];
+		smprintf(s,"File checksum from phone is %i\n",Priv->FileCheckSum);
 		return GE_NONE;
 	}
 	return GE_UNKNOWNRESPONSE;
@@ -3911,6 +3942,7 @@ static GSM_Error N6510_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachi
 
 static GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File)
 {
+	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	int 			old;
 	GSM_Error		error;
 	unsigned char 		req[] = {
@@ -3939,7 +3971,13 @@ static GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File)
 	smprintf(s, "Getting file part from filesystem\n");
 	error=GSM_WaitFor (s, req, 18, 0x6D, 4, ID_GetFile);
 	if (error != GE_NONE) return error;
-	if (File->Used - old != (0x03 * 256 + 0xE8)) return GE_EMPTY;
+	if (File->Used - old != (0x03 * 256 + 0xE8)) {
+		if (N6510_FindFileCheckSum(File->Buffer, File->Used) != Priv->FileCheckSum) {
+			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum(File->Buffer, File->Used),Priv->FileCheckSum);
+			return GE_WRONGCRC;
+		}
+		return GE_EMPTY;
+	}
 	return GE_NONE;
 }
 
@@ -4121,9 +4159,9 @@ static GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos
 			if (error != GE_NONE) return error;
 		}
 
-		if (File2.CRC16 != File->CRC16) {
-			smprintf(s,"File2 CRC is %i, File CRC is %i\n",File2.CRC16,File->CRC16);
-//			return GE_UNKNOWN;
+		if (N6510_FindFileCheckSum(File->Buffer, File->Used) != Priv->FileCheckSum) {
+			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum(File->Buffer, File->Used),Priv->FileCheckSum);
+			return GE_WRONGCRC;
 		}
 
 		return GE_EMPTY;
@@ -4665,7 +4703,7 @@ static GSM_Error N6510_ReplySetToDo1(GSM_Protocol_Message msg, GSM_StateMachine 
 /* ToDo support - 6310 style */
 static GSM_Error N6510_SetToDo1(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
- 	int 			Text, Alarm, EndTime, Completed, ulen;
+ 	int 			Text, Alarm, EndTime, Completed, ulen, Phone;
 	GSM_Error		error;
 	unsigned char 		reqLoc[] 	= {N6110_FRAME_HEADER, 0x0F};
 	unsigned char 		reqSet[500] 	= {
@@ -4692,7 +4730,7 @@ static GSM_Error N6510_SetToDo1(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 		case GSM_Priority_High	: reqSet[4] = 1; break;
 	}
 
-	GSM_ToDoFindDefaultTextTimeAlarmCompleted(ToDo, &Text, &Alarm, &Completed, &EndTime);
+	GSM_ToDoFindDefaultTextTimeAlarmCompleted(ToDo, &Text, &Alarm, &Completed, &EndTime, &Phone);
 
     	if (Text == -1) return GE_NOTSUPPORTED; /* XXX: shouldn't this be handled different way? */
     	ulen = UnicodeLength(ToDo->Entries[Text].Text);
@@ -4724,7 +4762,7 @@ static GSM_Error N6510_SetToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	long			diff;
  	GSM_Error		error;
 	GSM_DateTime		DT;
- 	int 			Text, Alarm, EndTime, Completed, count=54;
+ 	int 			Text, Alarm, EndTime, Completed, count=54, Phone;
 	unsigned char 		reqLoc[] = {N6110_FRAME_HEADER, 0x95, 0x01};
 	unsigned char 		req[5000] = {
 		N6110_FRAME_HEADER, 0x65,
@@ -4780,7 +4818,7 @@ static GSM_Error N6510_SetToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 		case GSM_Priority_High	: req[44] = 0x30; break;
 	}
 
-	GSM_ToDoFindDefaultTextTimeAlarmCompleted(ToDo, &Text, &Alarm, &Completed, &EndTime);
+	GSM_ToDoFindDefaultTextTimeAlarmCompleted(ToDo, &Text, &Alarm, &Completed, &EndTime, &Phone);
 
 	if (Completed != -1) req[45] = 0x01;
 

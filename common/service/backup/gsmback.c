@@ -2,7 +2,6 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "../../../cfg/config.h"
 #include "../../phone/nokia/nfunc.h"
 #include "../../phone/nokia/dct3/n7110.h"
 #include "../../misc/coding/coding.h"
@@ -15,6 +14,7 @@
 #include "backlmb.h"
 #include "backvcs.h"
 #include "backvcf.h"
+#include "backics.h"
 
 #ifdef GSM_ENABLE_BACKUP
 
@@ -149,6 +149,9 @@ void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
 		backup->Calendar 	= true;
 	} else if (strstr(FileName,".vcf")) {
 		backup->PhonePhonebook	= true;
+	} else if (strstr(FileName,".ics")) {
+		backup->ToDo		= true;
+		backup->Calendar 	= true;
 	} else if (strstr(FileName,".ldif")) {
 		backup->PhonePhonebook	= true;
 	} else {
@@ -185,6 +188,8 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode
 		return SaveVCard(FileName,backup);
 	} else if (strstr(FileName,".ldif")) {
 		return SaveLDIF(FileName,backup);
+	} else if (strstr(FileName,".ics")) {
+		return SaveICS(FileName,backup);
 	} else {
 		return SaveBackup(FileName,backup, UseUnicode);
 	}
@@ -209,6 +214,8 @@ GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 		return LoadVCard(FileName,backup);
 	} else if (strstr(FileName,".ldif")) {
 		return LoadLDIF(FileName,backup);
+	} else if (strstr(FileName,".ics")) {
+		return LoadICS(FileName,backup);
 	} else if (memcmp(buffer, "LMB ",4)==0) {
 		return LoadLMB(FileName,backup);
 	} else if (buffer[0] == 0xFE && buffer[1] == 0xFF) {

@@ -5,6 +5,6 @@ includedir=${prefix}/include
 
 Name: gammu
 Description: Gammu library
-Version: 0.86.0.0
-Libs: -L${libdir} -lGammu   -pthread -lbluetooth
+Version: 0.87.0.0
+Libs: -L${libdir} -lGammu   -pthread
 Cflags: -I${includedir} -O2 -Wall -Wno-format-y2k -pthread

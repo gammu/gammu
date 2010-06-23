@@ -33,6 +33,7 @@ typedef struct {
 	int				FilesLocationsCurrent;
 	int				FileToken;
 	int				ParentID;
+	int				FileCheckSum;
 
 	unsigned char			FMStatus[4000];
 	int				FMStatusLength;

@@ -40,6 +40,9 @@ int		DecodeWithBCDAlphabet		(unsigned char value);
 void		DecodeBCD			(unsigned char *dest, const unsigned char *src, int len);
 void		EncodeBCD			(unsigned char *dest, const unsigned char *src, int len, bool fill);
 
+/* ------------------------------ UTF7 ------------------------------------- */
+void 		DecodeUTF7			(unsigned char *dest, const unsigned char *src, int len);
+
 /* ------------------------------ UTF8 ------------------------------------- */
 wchar_t		DecodeWithUTF8Alphabet		(unsigned char mychar3, unsigned char mychar4);
 bool 		EncodeWithUTF8Alphabet		(unsigned char mychar1, unsigned char mychar2, unsigned char *ret1, unsigned char *ret2);
@@ -51,8 +54,8 @@ bool 		EncodeUTF8			(unsigned char *dest, const unsigned char *src);
 void 		DecodeUTF8			(unsigned char *dest, const unsigned char *src, int len);
 
 /* ------------------------------- BASE64 ---------------------------------- */
-void 		EncodeBASE64			(unsigned char *Input, unsigned char *Output, int Length);
-int 		DecodeBASE64			(unsigned char *Input, unsigned char *Output, int Length);
+void 		EncodeBASE64			(const unsigned char *Input, unsigned char *Output, int Length);
+int 		DecodeBASE64			(const unsigned char *Input, unsigned char *Output, int Length);
 
 /* ----------------------------- HexBin ------------------------------------ */
 void		DecodeHexBin			(unsigned char *dest, const unsigned char *src, int len);
@@ -104,7 +107,7 @@ int OctetUnAlign	(int CurrentBit);
 
 bool mystrncasecmp (unsigned char *a, unsigned char *b, int num);
 
-void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer);
+void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen);
 
 #endif
 

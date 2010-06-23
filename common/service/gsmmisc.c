@@ -8,7 +8,6 @@
 #endif
 
 #include "../misc/coding/coding.h"
-#include "../misc/coding/md5.h"
 #include "../gsmcomon.h"
 #include "gsmmisc.h"
 
@@ -63,7 +62,6 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 	int 		i = 1000;
 	FILE		*file;
 	struct stat	fileinfo;
-//	unsigned char	checksum[200];
 
 	if (FileName[0] == 0x00) return GE_UNKNOWN;
 	file = fopen(FileName,"rb");
@@ -92,10 +90,6 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 			File->Modified.Hour,File->Modified.Minute,File->Modified.Second);
 	}
 
-	File->CRC16 = 0;
-//	CalculateMD5(File->Buffer, File->Used, checksum);
-//	dprintf("MD5 is %s\n",checksum);
-
 	return GE_NONE;
 }
 
@@ -107,7 +101,7 @@ static void GSM_JADFindLine(GSM_File File, char *Name, char *Value)
 	Value[0] = 0;
 
 	while (1) {
-		MyGetLine(File.Buffer, &Pos, Line);
+		MyGetLine(File.Buffer, &Pos, Line, File.Used);
 		if (strlen(Line) == 0) break;
 		if (!strncmp(Line,Name,strlen(Name))) {
 			Pos = strlen(Name);
@@ -238,6 +232,13 @@ bool ReadVCALText(char *Buffer, char *Start, char *Value)
 	strcat(buff,";CHARSET=UTF-8:");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		DecodeUTF8(Value,Buffer+strlen(Start)+15,strlen(Buffer)-(strlen(Start)+15));
+		dprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
+		return true;
+	}
+	strcpy(buff,Start);
+	strcat(buff,";CHARSET=UTF-7:");
+	if (!strncmp(Buffer,buff,strlen(buff))) {
+		DecodeUTF7(Value,Buffer+strlen(Start)+15,strlen(Buffer)-(strlen(Start)+15));
 		dprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
 		return true;
 	}

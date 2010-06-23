@@ -1,6 +1,7 @@
 #ifndef __gsm_backup_h
 #define __gsm_backup_h
 
+#include "../../config.h"
 #include "../../misc/misc.h"
 #include "../gsmpbk.h"
 #include "../gsmcal.h"

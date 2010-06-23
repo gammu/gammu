@@ -3,8 +3,10 @@
 
 #include "backgen.h"
 
+#ifdef GSM_ENABLE_BACKUP
 GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup);
 GSM_Error LoadLDIF(char *FileName, GSM_Backup *backup);
+#endif
 
 #endif
 

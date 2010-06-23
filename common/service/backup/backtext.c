@@ -2,7 +2,6 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "../../../cfg/config.h"
 #include "../../phone/nokia/nfunc.h"
 #include "../../phone/nokia/dct3/n7110.h"
 #include "../../misc/cfg.h"
@@ -414,6 +413,8 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 		case GCN_CALL     	: sprintf(buffer,"Call%c%c", 			13,10); break;
 		case GCN_MEETING  	: sprintf(buffer,"Meeting%c%c", 		13,10); break;
 		case GCN_BIRTHDAY 	: sprintf(buffer,"Birthday%c%c", 		13,10); break;
+		case GCN_TRAVEL  	: sprintf(buffer,"Travel%c%c", 			13,10); break;
+		case GCN_VACATION 	: sprintf(buffer,"Vacation%c%c", 		13,10); break;
 		case GCN_MEMO	 	: sprintf(buffer,"Memo%c%c", 			13,10); break;
 		case GCN_ALARM    	: sprintf(buffer,"Alarm%c%c", 			13,10); break;
 		case GCN_DAILY_ALARM 	: sprintf(buffer,"DailyAlarm%c%c", 		13,10); break;
@@ -771,7 +772,17 @@ static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
     	
 	sprintf(buffer,"Location = %i%c%c",ToDo->Location,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
-	sprintf(buffer,"Priority = %i%c%c",ToDo->Priority,13,10);
+	switch (ToDo->Priority) {
+	case GSM_Priority_High:
+		sprintf(buffer,"Priority = High%c%c",13,10);
+		break;
+	case GSM_Priority_Medium:
+		sprintf(buffer,"Priority = Medium%c%c",13,10);
+		break;
+	case GSM_Priority_Low:
+		sprintf(buffer,"Priority = Low%c%c",13,10);
+		break;
+	}
 	SaveBackupText(file, "", buffer, UseUnicode);
 	
 	for (j=0;j<ToDo->EntriesNum;j++) {
@@ -997,7 +1008,7 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 		SaveBackupText(file, "", "DateTime", UseUnicode);
 		SaveVCalDateTime(file, &backup->DateTime, UseUnicode);
 	}
-	sprintf(buffer,"Format = 1.02%c%c",13,10);
+	sprintf(buffer,"Format = 1.03%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
 	sprintf(buffer,"%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
@@ -1290,6 +1301,10 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 			note->Type = GCN_BIRTHDAY;
 		} else if (mystrncasecmp(readvalue,"Memo",0)) {
 			note->Type = GCN_MEMO;
+		} else if (mystrncasecmp(readvalue,"Travel",0)) {
+			note->Type = GCN_TRAVEL;
+		} else if (mystrncasecmp(readvalue,"Vacation",0)) {
+			note->Type = GCN_VACATION;
 		} else if (mystrncasecmp(readvalue,"DailyAlarm",0)) {
 			note->Type = GCN_DAILY_ALARM;
 		} else if (mystrncasecmp(readvalue,"Alarm",0)) {
@@ -1463,10 +1478,17 @@ static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_ToDoEntry *T
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) ToDo->Location = atoi(readvalue);
 
-	ToDo->Priority = 1;
+	ToDo->Priority = GSM_Priority_High;
 	sprintf(buffer,"Priority");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL) ToDo->Priority = atoi(readvalue);
+	if (readvalue!=NULL) {
+		if (!strcmp(readvalue,"3") || !strcmp(readvalue,"Low")) {
+			ToDo->Priority = GSM_Priority_Low;
+		}
+		if (!strcmp(readvalue,"2") || !strcmp(readvalue,"Medium")) {
+			ToDo->Priority = GSM_Priority_Medium;
+		}
+	}
 
 	sprintf(buffer,"Text");
 	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
@@ -2131,7 +2153,8 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	/* Did we read anything? */
 	if (readvalue == NULL) return GE_FILENOTSUPPORTED;
 	/* Is this format version supported ? */
-	if (strcmp(readvalue,"1.01")!=0 && strcmp(readvalue,"1.02")!=0) return GE_FILENOTSUPPORTED;
+	if (strcmp(readvalue,"1.01")!=0 && strcmp(readvalue,"1.02")!=0 &&
+            strcmp(readvalue,"1.03")!=0) return GE_FILENOTSUPPORTED;
 
 	readvalue = ReadCFGText(file_info, buffer, "IMEI", UseUnicode);
 	if (readvalue!=NULL) strcpy(backup->IMEI,readvalue);

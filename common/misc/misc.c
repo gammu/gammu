@@ -4,12 +4,12 @@
 #include <time.h>
 #include <stdarg.h>
 #include <stdio.h>
+#include <locale.h>
 #include <sys/timeb.h>
 #ifdef WIN32
 #  include "windows.h"
 #endif
 
-#include "../../cfg/config.h"
 #include "../gsmstate.h"
 #include "misc.h"
 
@@ -116,6 +116,10 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 	static char 	retval[200],retval2[200];
 	int 		p,q,r,w;
 
+#ifdef WIN32
+	setlocale(LC_ALL, ".OCP");
+#endif
+
 	/* Based on article in Polish PC-Kurier 8/1998 page 104
 	 * Archive on http://www.pckurier.pl
 	 */
@@ -162,6 +166,10 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 		}
 	}
 
+#ifdef WIN32
+	setlocale(LC_ALL, ".ACP");
+#endif
+
 	return retval2;
 }
 
@@ -170,6 +178,10 @@ char *OSDate (GSM_DateTime dt)
 	struct tm 	timeptr;
 	static char 	retval[200],retval2[200];
 	int 		p,q,r,w;
+
+#ifdef WIN32
+	setlocale(LC_ALL, ".OCP");
+#endif
 
 	/* Based on article in Polish PC-Kurier 8/1998 page 104
 	 * Archive on http://www.pckurier.pl
@@ -208,6 +220,10 @@ char *OSDate (GSM_DateTime dt)
             	strcat(retval2,")");
             }
 	}
+
+#ifdef WIN32
+	setlocale(LC_ALL, ".ACP");
+#endif
 
 	return retval2;
 }

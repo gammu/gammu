@@ -931,7 +931,7 @@ int mytowlower(wchar_t c)
 #endif
 }
 
-void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer)
+void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen)
 {
 	OutBuffer[0] = 0;
 	if (Buffer == NULL) return;
@@ -949,7 +949,8 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer)
 			OutBuffer[strlen(OutBuffer) + 1] = 0;
 			OutBuffer[strlen(OutBuffer)]     = Buffer[*Pos];
 		}
-		(*Pos)++;		
+		(*Pos)++;
+		if ((*Pos) >= MaxLen) return;
 	}
 }
 
@@ -1115,6 +1116,35 @@ void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len)
 	dest[j++] = 0;
 }
 
+void DecodeUTF7(unsigned char *dest, const unsigned char *src, int len)
+{
+	int 		i=0,j=0,z,p;
+	wchar_t		ret;
+	
+	while (i<=len) {
+		if (len-5>=i) {
+			if (src[i] == '+') {
+				z=0;
+				while (src[z+i+1] != '-' && z+i+1<len) z++;
+				p=DecodeBASE64(src+i+1, dest+j, z);
+				if (p%2 != 0) p--;
+				j+=p;
+				i+=z+2;
+			} else {
+				i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+				dest[j++] = (ret >> 8) & 0xff;
+				dest[j++] = ret & 0xff;
+			}
+		} else {
+			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+			dest[j++] = (ret >> 8) & 0xff;
+			dest[j++] = ret & 0xff;
+		}
+	}
+	dest[j++] = 0;
+	dest[j++] = 0;
+}
+
 /*
 Bob Trower 08/04/01
 Copyright (c) Trantor Standard Systems Inc., 2001
@@ -1153,7 +1183,7 @@ static void EncodeBASE64Block(unsigned char in[3], unsigned char out[4], int len
 	out[3] = (unsigned char) (len > 2 ? cb64[ in[2] & 0x3f ] : '=');
 }
 
-void EncodeBASE64(unsigned char *Input, unsigned char *Output, int Length)
+void EncodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
 {
 	unsigned char 	in[3], out[4];
 	int 		i, pos = 0, len, outpos = 0;
@@ -1184,7 +1214,7 @@ static void DecodeBASE64Block(unsigned char in[4], unsigned char out[3])
 	out[2] = (unsigned char) (((in[2] << 6) & 0xc0) | in[3]);
 }
 
-int DecodeBASE64(unsigned char *Input, unsigned char *Output, int Length)
+int DecodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
 {
 	unsigned char 	cd64[]="|$$$}rstuvwxyz{$$$$$$$>?@ABCDEFGHIJKLMNOPQRSTUVW$$$$$$XYZ[\\]^_`abcdefghijklmnopq";
 	unsigned char 	in[4], out[3], v;

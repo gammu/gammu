@@ -1904,7 +1904,19 @@ GSM_Error GSM_SortSMS(GSM_MultiSMSMessage *INPUT[150], GSM_MultiSMSMessage *OUTP
 							if (INPUT[z]->SMS[0].PDU == SMS_Deliver) {
 								if (!strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].SMSC.Number),DecodeUnicodeString(INPUT[i]->SMS[0].SMSC.Number)) &&
 								    !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].Number),DecodeUnicodeString(INPUT[i]->SMS[0].Number))) {
-									copyit=true;
+									if (UnicodeLength(INPUT[z]->SMS[0].SMSC.Number)!=0 || UnicodeLength(INPUT[z]->SMS[0].Number)!=0) {
+										copyit=true;
+									} else {
+										if (INPUT[z]->SMS[0].DateTime.Day    == INPUT[i]->SMS[0].DateTime.Day &&
+											INPUT[z]->SMS[0].DateTime.Month  == INPUT[i]->SMS[0].DateTime.Month &&
+											INPUT[z]->SMS[0].DateTime.Year   == INPUT[i]->SMS[0].DateTime.Year &&
+											INPUT[z]->SMS[0].DateTime.Hour   == INPUT[i]->SMS[0].DateTime.Hour &&
+											INPUT[z]->SMS[0].DateTime.Minute == INPUT[i]->SMS[0].DateTime.Minute &&
+											INPUT[z]->SMS[0].DateTime.Second == INPUT[i]->SMS[0].DateTime.Second) {
+													copyit=true;
+										}
+
+									}
 								}
 							} else copyit=true;
 						}

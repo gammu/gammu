@@ -59,10 +59,10 @@ void WriteSMSDLog(unsigned char *format, ...)
 
 		GSM_GetCurrentDateTime(&date_time);
 
-		fprintf(smsd_log_file,"%s %4d/%02d/%02d %02d:%02d:%02d [%s]: %s\n",
+		fprintf(smsd_log_file,"%s %4d/%02d/%02d %02d:%02d:%02d : %s\n",
 			DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
 			date_time.Year, date_time.Month, date_time.Day,
-			date_time.Hour, date_time.Minute, date_time.Second,s.CurrentConfig->Device,Buffer);
+			date_time.Hour, date_time.Minute, date_time.Second,Buffer);
 		fflush(smsd_log_file);
 	}
 }

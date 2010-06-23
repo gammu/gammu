@@ -30,6 +30,7 @@ USEUNIT("..\..\common\service\backup\backldif.c");
 USEUNIT("..\..\common\service\backup\backlmb.c");
 USEUNIT("..\..\common\service\backup\backvcs.c");
 USEUNIT("..\..\common\service\backup\backvcf.c");
+USEUNIT("..\..\common\service\backup\backics.c");
 USEUNIT("..\..\common\gsmcomon.c");
 USEUNIT("..\..\common\gsmstate.c");
 USEUNIT("..\..\common\phone\nokia\dct3\n6110.c");
