@@ -48,8 +48,11 @@ int socket_write(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
 GSM_Error socket_close(GSM_StateMachine *s, int hPhone)
 {
 	shutdown(hPhone, 0);
+#ifdef WIN32
+	closesocket(hPhone); /*FIXME: error checking */
+#else
 	close(hPhone); /*FIXME: error checking */
-
+#endif
 	return GE_NONE;
 }
 

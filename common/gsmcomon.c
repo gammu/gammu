@@ -126,7 +126,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{GE_DEVICEPARITYERROR,		"Can't set parity on device"},
 	{GE_TIMEOUT,			"No response in specified timeout. Probably phone not connected."},
 	/* Some missed */
-	{GE_UNKNOWNRESPONSE,		"Unknown response from phone. See /readme.txt, how to report it."},
+	{GE_UNKNOWNRESPONSE,		"Unknown response from phone. See readme.txt, how to report it."},
 	/* Some missed */
 	{GE_UNKNOWNCONNECTIONTYPESTRING,"Unknown connection type string. Check config file."},
 	{GE_UNKNOWNMODELSTRING,		"Unknown model type string. Check config file."},
@@ -170,7 +170,7 @@ unsigned char *print_error(GSM_Error e, FILE *df, CFG_Header *cfg)
 		i++;
 	}
 	if (def == NULL) def = "Unknown error.";
-	if (df!=NULL) fprintf(df,"[ERROR %i: %s]\n",e,def);
+	if (df!=NULL && di.dl!=0) fprintf(df,"[ERROR %i: %s]\n",e,def);
 
 	return GetMsg(cfg,def);
 }

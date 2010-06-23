@@ -83,6 +83,24 @@
 				RelativePath="..\..\..\common\phone\at\atgen.c">
 			</File>
 			<File
+				RelativePath="..\..\..\common\service\backup\backics.c">
+			</File>
+			<File
+				RelativePath="..\..\..\common\service\backup\backldif.c">
+			</File>
+			<File
+				RelativePath="..\..\..\common\service\backup\backlmb.c">
+			</File>
+			<File
+				RelativePath="..\..\..\common\service\backup\backtext.c">
+			</File>
+			<File
+				RelativePath="..\..\..\common\service\backup\backvcf.c">
+			</File>
+			<File
+				RelativePath="..\..\..\common\service\backup\backvcs.c">
+			</File>
+			<File
 				RelativePath="..\..\..\common\device\bluetoth\bluetoth.c">
 			</File>
 			<File
@@ -92,10 +110,10 @@
 				RelativePath="..\..\..\common\misc\coding\coding.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\misc\coding\md5.c">
+				RelativePath="..\..\..\common\phone\nokia\dct3\dct3func.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct3\dct3func.c">
+				RelativePath="..\..\..\common\phone\nokia\dct4\dct4func.c">
 			</File>
 			<File
 				RelativePath="..\..\..\common\device\devfunc.c">
@@ -114,24 +132,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\common\service\backup\gsmback.c">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\backup\backlmb.c">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\backup\backldif.c">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\backup\backvcs.c">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\backup\backics.c">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\backup\backvcf.c">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\backup\backtext.c">
 			</File>
 			<File
 				RelativePath="..\..\..\common\service\gsmcal.c">
@@ -170,6 +170,9 @@
 				RelativePath="..\..\..\common\protocol\nokia\mbus2.c">
 			</File>
 			<File
+				RelativePath="..\..\..\common\misc\coding\md5.c">
+			</File>
+			<File
 				RelativePath="..\..\..\common\misc\misc.c">
 			</File>
 			<File
@@ -180,9 +183,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct4\n3650.c">
-			</File>
-			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\dct4func.c">
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct3\n6110.c">
@@ -243,6 +243,24 @@
 				RelativePath="..\..\..\common\phone\at\atgen.h">
 			</File>
 			<File
+				RelativePath="..\..\..\common\service\backup\backics.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\service\backup\backldif.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\service\backup\backlmb.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\service\backup\backtext.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\service\backup\backvcf.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\service\backup\backvcs.h">
+			</File>
+			<File
 				RelativePath="..\..\..\common\device\bluetoth\blue_w32.h">
 			</File>
 			<File
@@ -261,6 +279,9 @@
 				RelativePath="..\..\..\common\phone\nokia\dct3\dct3func.h">
 			</File>
 			<File
+				RelativePath="..\..\..\common\phone\nokia\dct4\dct4func.h">
+			</File>
+			<File
 				RelativePath="..\..\..\common\device\devfunc.h">
 			</File>
 			<File
@@ -268,24 +289,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\common\service\backup\gsmback.h">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\backup\backlmb.h">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\backup\backldif.h">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\backup\backvcs.h">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\backup\backics.h">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\backup\backvcf.h">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\backup\backtext.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\service\gsmcal.h">
@@ -340,9 +343,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct4\n3650.h">
-			</File>
-			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\dct4func.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct3\n6110.h">

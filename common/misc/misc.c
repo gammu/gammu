@@ -148,9 +148,9 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 #endif
 	if (TimeZone) {
 		if (dt.Timezone >= 0) {
-			sprintf(retval," +%02i",dt.Timezone);
+			sprintf(retval," +%02i00",dt.Timezone);
 		} else {
-			sprintf(retval," -%02i",dt.Timezone);
+			sprintf(retval," -%02i00",dt.Timezone);
 		}
 		strcat(retval2,retval);
 	}

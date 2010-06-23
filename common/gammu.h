@@ -2,6 +2,7 @@
  * This file includes some core Gammu headers, that you will probably need.
  */
 
+#include "config.h"
 #include "gsmcomon.h"
 #include "gsmstate.h"
 #include "misc/cfg.h"

@@ -1,6 +1,5 @@
 /*
- * Low level functions for communication with Alcatel One Touch 501 and
- * compatible mobile phone.
+ * Low level functions for communication with Alcatel One Touch phones.
  *
  * This code implements the protocol used for synchronisation with PC.
  */

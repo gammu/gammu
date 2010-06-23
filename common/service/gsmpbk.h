@@ -97,7 +97,9 @@ typedef struct {
 
 typedef enum {
 	Nokia_VCard10 = 1,
-	Nokia_VCard21
+	Nokia_VCard21,
+	SonyEricsson_VCard10,
+	SonyEricsson_VCard21
 } GSM_VCardVersion;
 
 void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, int *Number, int *Group);

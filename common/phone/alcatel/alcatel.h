@@ -2,12 +2,15 @@
  * High level functions for communication with Alcatel One Touch 501 and
  * compatible mobile phone.
  *
- * This code implements functions to communicate with Alcatel BE5 (One Touch
- * 500, 501, 701 and maybe others) phone. For some functions it uses normal AT
- * mode (not implemented here, look at ../at/atgen.[ch]) for others it
- * switches into binary mode and initialises underlaying protocol (see
- * ../../protocol/alcatel/alcabus.[ch]) and communicates over it. Don't ask
- * me why Alcatel uses such silly thing...
+ * This code implements functions to communicate with Alcatel phones,
+ * currently seem to work:
+ *  - BE5 series (501/701)
+ *  - BF5 series (715)
+ *  - BH4 series (535/735)
+ * For some functions it uses normal AT  mode (not implemented here, look at 
+ * ../at/atgen.[ch]) for others it  switches into binary mode and initialises 
+ * underlaying protocol (see ../../protocol/alcatel/alcabus.[ch]) and 
+ * communicates over it. Don't ask me why Alcatel uses such silly thing...
  */
 
 #ifndef alcatel_h
@@ -45,7 +48,7 @@ typedef enum {
 	 */
 	V_1_0 = 1,
 	/**
-	 * Version 1.1 used in BF5 phones (715).
+	 * Version 1.1 used in BF5 phones (715, 535, 735).
 	 */
 	V_1_1
 } GSM_Alcatel_ProtocolVersion;

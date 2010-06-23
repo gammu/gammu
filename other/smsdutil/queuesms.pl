@@ -3,7 +3,6 @@
 # Author:       Peter Nixon <codemonkey@peternixon.net>
 # Date:         July 2003
 # Summary:      Command Line SMS queuer for Gammu SMSD
-#		compare/insert/update a Postgresql database.
 # Copy Policy:  GNU Public Licence Version 2 or later
 # URL:          http://www.peternixon.net/code/
 # Supported:    Gammu
@@ -19,7 +18,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
-# $Id: queuesms.pl,v 1.1 2003/07/24 13:32:35 peter Exp $
+# $Id: queuesms.pl,v 1.3 2003/11/04 15:04:40 peter Exp $
 #
 
 
@@ -33,7 +32,7 @@ $SMSSPOOLDIR = "/var/spool/sms/outbox/";
 
 #### You should not have to modify anything below here
 $progname = "Command Line SMS queuer";
-$version = 1;
+$version = "1.2";
 
 # Set up some basic variables
 $message; $verbose = 0; $priority = "C";
@@ -69,7 +68,7 @@ sub print_usage_info {
 	$underbar =~ s/./-/g;
 	print "$leader\n$underbar\n";
 	print "\n";
-	print "  Syntax:   queuesms.pl [ options ] file\n";
+	print "  Syntax:   queuesms.pl [ options ] numbers(s)\n";
 	print "\n";
 	print "    -h --help                        Show this usage information\n";
 	print "    -v --verbose                     Turn on verbose\n";
@@ -95,7 +94,7 @@ sub main {
 	select STDOUT; $| = 1;
 	if ($opt_V) {
 		# Do not edit this variable.  It is updated automatically by CVS when you commit
-		my $rcs_info = 'CVS Revision $Revision: 1.1 $ created on $Date: 2003/07/24 13:32:35 $ by $Author: peter $ ';
+		my $rcs_info = 'CVS Revision $Revision: 1.3 $ created on $Date: 2003/11/04 15:04:40 $ by $Author: peter $ ';
 
 		$rcs_info =~ s/\$\s*Revision: (\S+) \$/$1/;
 		$rcs_info =~ s/\$\s*Date: (\S+) (\S+) \$/$1 at $2/;
@@ -131,7 +130,7 @@ sub main {
 	        }
 
 	} else {
-		print "ERROR: Please specify one or more detail file(s) to import.\n";
+		print "ERROR: Please specify one or more mobile numbers to send the message to.\n";
 		exit(FAILURE);
 	}
 

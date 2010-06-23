@@ -65,10 +65,14 @@ A. * these things can be done without anything (it will be done everything
      * Nokia:
        * N3410 Java support
        * N5510 radio/MP3 support
-       * N3300 MP3 support
-       * for Series 40 SyncML & camera settings, OMA provisioning, full media
-         rights support, SMS distribution lists, assigning pictures to pbk,
-         Notes
+       * for Series 40 getting/setting/sending syncml settings,
+         local/remote syncml synchronisation, oma provisioning, sms
+         distribution lists, assigning pictures (and probably some other in new
+         models) to phonebook entries, edge settings (?), notes, support for
+         some types of files and MMC (3300, 6230, etc.), probably some other
+         things connected with OMA, camera settings and probably making photos
+         from PC side, probably support for new FM radio (I saw somewhere,
+         that new phones probably have new features in FM radio), notes
      * Other:
        * more EMS features: polyphonic ringtones, more text features, etc.
      * .... (other)
@@ -79,7 +83,14 @@ A. * Latest versions are on www.mwiacek.com (win32 binaries, gzip sources,
      ChangeLog)
    * Michal Cihar prepared mirror (win32 binaries, gzip sources, bzip2 sources,
      md5 checksums, ChangeLog) under www.cihar.com/gammu/zips/
-   * CVS is under https://sourceforge.net/cvs/?group_id=78290
+   * CVS (thanks to Michal Cihar) is under
+     https://sourceforge.net/cvs/?group_id=78290
+   * ready Debian packages (thanks to Michal Cihar): http://cihar.com/debian/
+   * ready RPM packages (thanks to Troy Engel):
+     ftp://ftp.falsehope.com/home/tengel/gammu/
+     and mirrors updated during 24 hours:
+     ftp://rpmfind.net/linux/falsehope/home/tengel/gammu/
+     ftp://ftp.pbone.net/mirror/ftp.falsehope.net/home/tengel/gammu/
 
    * For support contact Marcin Wiacek (currently marcin@mwiacek.com,
      DO NOT USE marcin-wiacek@topnet.pl).
@@ -347,7 +358,7 @@ A. 1.Nokia DCT3 (3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|
 
      Support for AT mode and many extensions (calendar, logos, netmonitor...)
 
-   4.Alcatel OT 500, 501, 701, 715
+   4.Alcatel OT 500, 501, 701, 715, 535, 735
      
    5.Falcom A2D-1
 

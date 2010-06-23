@@ -2,16 +2,19 @@
  * High level functions for communication with Alcatel One Touch 501 and
  * compatible mobile phone.
  *
- * This code implements functions to communicate with Alcatel BE5 (One Touch
- * 500, 501, 701 and maybe others) phone. For some functions it uses normal AT
- * mode (not implemented here, look at ../at/atgen.[ch]) for others it
- * switches into binary mode and initialises underlaying protocol (see
- * ../../protocol/alcatel/alcabus.[ch]) and communicates over it. Don't ask
- * me why Alcatel uses such silly thing...
+ * This code implements functions to communicate with Alcatel phones,
+ * currently seem to work:
+ *  - BE5 series (501/701)
+ *  - BF5 series (715)
+ *  - BH4 series (535/735)
+ * For some functions it uses normal AT  mode (not implemented here, look at 
+ * ../at/atgen.[ch]) for others it  switches into binary mode and initialises 
+ * underlaying protocol (see ../../protocol/alcatel/alcabus.[ch]) and 
+ * communicates over it. Don't ask me why Alcatel uses such silly thing...
  *
  * Notes for future features:
- * - max phone number length is 61
- * - max name length is 50
+ * - max phone number length is 61 (BE5)
+ * - max name length is 50 (BE5)
  */
 
 #include "../../gsmstate.h"
@@ -3736,7 +3739,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	/* AFAIK, any 50[0123] phone should work, but I'm not sure whether all
 	 * they were ever really released, if yes add them here also.
 	 */
-	"alcatel|OT501|OT701|OT715|BE5|BF5",
+	"alcatel|OT501|OT701|OT715|OT535|OT735|BE5|BF5|BH4",
 	ALCATELReplyFunctions,
 	ALCATEL_Initialise,
 	ALCATEL_Terminate,

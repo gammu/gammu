@@ -491,9 +491,9 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 
 	if (s->LockFile!=NULL) unlock_device(&(s->LockFile));
 
-	s->opened = false;
-
 	if (!s->di.use_global && s->di.dl!=0 && s->di.df!=stdout) fclose(s->di.df);
+
+	s->opened = false;
 
 	return GE_NONE;
 }
@@ -980,7 +980,7 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)
 	{"BE5", 	  "ONE TOUCH 500","",				   {F_SMSONLYSENT,F_BROKENCPBS,0}},
-	{"BF4",		  "ONE TOUCH 535","ALCATEL OT535",		   {0}},
+	{"BH4",		  "ONE TOUCH 535","ALCATEL OT535",		   {0}},
 	{"BF5", 	  "ONE TOUCH 715","ALCATEL OT715",		   {0}},
 #endif
 	{"unknown",	  ""      ,"",           {0}}

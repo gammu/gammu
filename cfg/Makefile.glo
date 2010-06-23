@@ -259,7 +259,6 @@ fixcrlf:
 		rm -f "$${fname}" ; \
 		unset tempfile
 
-
 makecleantree:
 	@echo Making Gammu tree snapshot
 	@$(INSTALL) -d $(TEMP_DIR)/gammu-$(VERSION)/

@@ -14,8 +14,7 @@ unsigned char *GSM_PhonebookGetEntryName (GSM_MemoryEntry *entry)
 	int 		first = -1, last = -1, name = -1;
 	int 		len = 0;
 
-	for (i = 0; i < entry->EntriesNum; i++)
-	{
+	for (i = 0; i < entry->EntriesNum; i++) {
 		switch (entry->Entries[i].EntryType) {
 			case PBK_Text_LastName:
 				last = i;
@@ -58,8 +57,7 @@ void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, 
 	*Name	= -1;
 	*Number = -1;
 	*Group	= -1;
-	for (i = 0; i < entry->EntriesNum; i++)
-	{
+	for (i = 0; i < entry->EntriesNum; i++) {
 		switch (entry->Entries[i].EntryType) {
 		case PBK_Number_General : if (*Number	== -1) *Number	= i; break;
 		case PBK_Name		: if (*Name	== -1) *Name	= i; break;
@@ -67,88 +65,20 @@ void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, 
 		default			:				     break;
 		}
 	}
-}
-
-static void ParseVCardLine(char **pos, char *Name, char *Parameters, char *Value)
-{
-	int i;
-
-	Name[0] = Parameters[0] = Value[0] = 0;
-
-	if (**pos == 0) return;
-
-	for (i=0; **pos && **pos != ':' && **pos != ';'; i++, (*pos)++) Name[i] = **pos;
-	Name[i] = 0;
-
-	//dbgprintf("ParseVCardLine: name tag = '%s'\n", Name);
-	if (**pos == ';') {
-                (*pos)++;
-		for (i=0; **pos && **pos != ':'; i++, (*pos)++) Parameters[i] = **pos;
-                Parameters[i] = ';';
-		Parameters[i+1] = 0;
-		//dbgprintf("ParseVCardLine: parameter tag = '%s'\n", Parameters);
-	}
-
-	if (**pos != 0) (*pos)++;
-
-	i=0;
-	while (**pos) {
-		if ((*pos)[0] == '\x0d' && (*pos)[1] == '\x0a') {
-			(*pos) += 2;
-			if (**pos != '\t' && **pos != ' ') break;
-			while (**pos == '\t' || **pos == ' ') (*pos)++;
-                        continue;
-		}
-		Value[i++] = **pos;
-                (*pos)++;
-	}
-        Value[i] = 0;
-
-	//dbgprintf("ParseVCardLine: value tag = '%s'\n", Value);
-}
-
-void DecodeVCARD21Text(char *VCard, GSM_MemoryEntry *pbk)
-{
-	char *pos = VCard;
-	char Name[32], Parameters[256], Value[1024];
-
-	dbgprintf("Parsing VCard:\n%s\n", VCard);
-
-	ParseVCardLine(&pos, Name, Parameters, Value);
-	if (!mystrncasecmp(Name, "BEGIN", 0) || !mystrncasecmp(Value, "VCARD", 0))
-	{
-                dbgprintf("No valid VCARD signature\n");
-		return;
-	}
-
-	while (1) {
-                GSM_SubMemoryEntry *pbe = &pbk->Entries[pbk->EntriesNum];
-
-		ParseVCardLine(&pos, Name, Parameters, Value);
-		if (Name[0] == 0x00 ||
-		    (mystrncasecmp(Name, "END", 0) && mystrncasecmp(Value, "VCARD", 0)))
-                        return;
-
-		if (mystrncasecmp(Name, "N", 0)) {
-			//FIXME: Name is tagged field which should be parsed
-			pbe->EntryType = PBK_Name;
-			EncodeUnicode(pbe->Text, Value, strlen(Value));
-                        pbk->EntriesNum++;
-		} else if (mystrncasecmp(Name, "EMAIL", 0)) {
-			pbe->EntryType = PBK_Text_Email;
-			EncodeUnicode(pbe->Text, Value, strlen(Value));
-                        pbk->EntriesNum++;
-		} else if (mystrncasecmp(Name, "TEL", 0)) {
-			if (strstr(Parameters, "WORK;"))
-				pbe->EntryType = PBK_Number_Work;
-			else if (strstr(Name, "HOME;"))
-				pbe->EntryType = PBK_Number_Home;
-			else if (strstr(Name, "FAX;"))
-				pbe->EntryType = PBK_Number_Fax;
-			else	pbe->EntryType = PBK_Number_General;
-
-			EncodeUnicode(pbe->Text, Value, strlen(Value));
-			pbk->EntriesNum++;
+	if ((*Number) == -1) {
+		for (i = 0; i < entry->EntriesNum; i++) {
+			switch (entry->Entries[i].EntryType) {
+				case PBK_Number_Mobile:
+				case PBK_Number_Work:
+				case PBK_Number_Fax:
+				case PBK_Number_Home:
+				case PBK_Number_Pager:
+				case PBK_Number_Other:
+					if (*Number == -1) *Number = i;
+					break;
+				default:
+					break;
+			}
 		}
 	}
 }
@@ -174,11 +104,8 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 		if (Name != -1) {
 			SaveVCALText(Buffer, Length, pbk->Entries[Name].Text, "N");
 		}
-		if (Number != -1) {
-			(*Length)+=sprintf(Buffer+(*Length),"TEL;PREF:%s%c%c",DecodeUnicodeString(pbk->Entries[Number].Text),13,10);
-		}
 		for (i=0; i < pbk->EntriesNum; i++) {
-			if (i != Name && i != Number) {
+			if (i != Name) {
 				ignore = false;
 				switch(pbk->Entries[i].EntryType) {
 				case PBK_Name		:
@@ -188,18 +115,27 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 					break;
 				case PBK_Number_General	:
 					*Length+=sprintf(Buffer+(*Length),"TEL");
+					if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					break;
 				case PBK_Number_Mobile	:
-					*Length+=sprintf(Buffer+(*Length),"TEL;CELL");
+					*Length+=sprintf(Buffer+(*Length),"TEL");
+					if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+					*Length+=sprintf(Buffer+(*Length),";CELL");
 					break;
 				case PBK_Number_Work	:
-					*Length+=sprintf(Buffer+(*Length),"TEL;WORK;VOICE");
+					*Length+=sprintf(Buffer+(*Length),"TEL");
+					if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+					*Length+=sprintf(Buffer+(*Length),";WORK;VOICE");
 					break;
 				case PBK_Number_Fax	:
-					*Length+=sprintf(Buffer+(*Length),"TEL;FAX");
+					*Length+=sprintf(Buffer+(*Length),"TEL");
+					if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+					*Length+=sprintf(Buffer+(*Length),";FAX");
 					break;
 				case PBK_Number_Home	:
-					*Length+=sprintf(Buffer+(*Length),"TEL;HOME;VOICE");
+					*Length+=sprintf(Buffer+(*Length),"TEL");
+					if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+					*Length+=sprintf(Buffer+(*Length),";HOME;VOICE");
 					break;
 				case PBK_Text_Note	:
 					*Length+=sprintf(Buffer+(*Length),"NOTE");
@@ -322,6 +258,91 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 
 	if (Pbk->EntriesNum == 0) return GE_EMPTY;
 	return GE_NONE;
+}
+
+/* -------------------------------- OLD ------------------------------------ */
+
+static void ParseVCardLine(char **pos, char *Name, char *Parameters, char *Value)
+{
+	int i;
+
+	Name[0] = Parameters[0] = Value[0] = 0;
+
+	if (**pos == 0) return;
+
+	for (i=0; **pos && **pos != ':' && **pos != ';'; i++, (*pos)++) Name[i] = **pos;
+	Name[i] = 0;
+
+	//dbgprintf("ParseVCardLine: name tag = '%s'\n", Name);
+	if (**pos == ';') {
+                (*pos)++;
+		for (i=0; **pos && **pos != ':'; i++, (*pos)++) Parameters[i] = **pos;
+                Parameters[i] = ';';
+		Parameters[i+1] = 0;
+		//dbgprintf("ParseVCardLine: parameter tag = '%s'\n", Parameters);
+	}
+
+	if (**pos != 0) (*pos)++;
+
+	i=0;
+	while (**pos) {
+		if ((*pos)[0] == '\x0d' && (*pos)[1] == '\x0a') {
+			(*pos) += 2;
+			if (**pos != '\t' && **pos != ' ') break;
+			while (**pos == '\t' || **pos == ' ') (*pos)++;
+                        continue;
+		}
+		Value[i++] = **pos;
+                (*pos)++;
+	}
+        Value[i] = 0;
+
+	//dbgprintf("ParseVCardLine: value tag = '%s'\n", Value);
+}
+
+void DecodeVCARD21Text(char *VCard, GSM_MemoryEntry *pbk)
+{
+	char *pos = VCard;
+	char Name[32], Parameters[256], Value[1024];
+
+	dbgprintf("Parsing VCard:\n%s\n", VCard);
+
+	ParseVCardLine(&pos, Name, Parameters, Value);
+	if (!mystrncasecmp(Name, "BEGIN", 0) || !mystrncasecmp(Value, "VCARD", 0)) {
+                dbgprintf("No valid VCARD signature\n");
+		return;
+	}
+
+	while (1) {
+                GSM_SubMemoryEntry *pbe = &pbk->Entries[pbk->EntriesNum];
+
+		ParseVCardLine(&pos, Name, Parameters, Value);
+		if (Name[0] == 0x00 ||
+		    (mystrncasecmp(Name, "END", 0) && mystrncasecmp(Value, "VCARD", 0)))
+                        return;
+
+		if (mystrncasecmp(Name, "N", 0)) {
+			//FIXME: Name is tagged field which should be parsed
+			pbe->EntryType = PBK_Name;
+			EncodeUnicode(pbe->Text, Value, strlen(Value));
+                        pbk->EntriesNum++;
+		} else if (mystrncasecmp(Name, "EMAIL", 0)) {
+			pbe->EntryType = PBK_Text_Email;
+			EncodeUnicode(pbe->Text, Value, strlen(Value));
+                        pbk->EntriesNum++;
+		} else if (mystrncasecmp(Name, "TEL", 0)) {
+			if (strstr(Parameters, "WORK;"))
+				pbe->EntryType = PBK_Number_Work;
+			else if (strstr(Name, "HOME;"))
+				pbe->EntryType = PBK_Number_Home;
+			else if (strstr(Name, "FAX;"))
+				pbe->EntryType = PBK_Number_Fax;
+			else	pbe->EntryType = PBK_Number_General;
+
+			EncodeUnicode(pbe->Text, Value, strlen(Value));
+			pbk->EntriesNum++;
+		}
+	}
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

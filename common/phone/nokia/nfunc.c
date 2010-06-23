@@ -1711,8 +1711,9 @@ GSM_Error N71_65_ReplyGetCalendarInfo1(GSM_Protocol_Message msg, GSM_StateMachin
 		i++;
 	}
 	smprintf(s, "\nNumber of Entries in frame: %i\n",i);
-	LastCalendar->Location[j] = 0;
 	smprintf(s, "\n");
+	LastCalendar->Location[j] = 0;
+	if (i == 1 && msg.Buffer[8+(0*2)]*256+msg.Buffer[9+(0*2)] == 0) return GE_EMPTY;
 	if (i == 0) return GE_EMPTY;
 	return GE_NONE;
 }

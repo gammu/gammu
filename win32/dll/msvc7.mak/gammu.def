@@ -27,3 +27,4 @@ EXPORTS
 	mysmscounter		@20
 	mymakemultipartsms	@21
 	mygetstructuresize	@22
+	mygetdct4simlocknetwork @23

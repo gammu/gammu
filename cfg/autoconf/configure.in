@@ -11,9 +11,12 @@ dnl Default prefix for package
 AC_PREFIX_DEFAULT("/usr/local")
 
 dnl Version
-VERSION=`cat VERSION`
+VERSION=`sed s@,@.@g VERSION | sed 's/\,0\,0$//'`
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
 AC_SUBST(VERSION)
+VERSION_WIN=`cat VERSION`
+AC_DEFINE_UNQUOTED(VERSION_WIN, "$VERSION_WIN")
+AC_SUBST(VERSION_WIN)
 
 dnl Compiler flags
 dnl -Wno-format-y2k is against "%c" format warning. The only problem is that
@@ -426,7 +429,7 @@ echo "
 
   Phone modules
   -------------
-  Alcatel BE5 (OT 500, 501, 701, other)         - $gsm_enable_alcatel
+  Alcatel (OT 501, 701, 715, 535, 735, other)   - $gsm_enable_alcatel
   AT (Siemens, Alcatel, Nokia, WaveCom, other)  - $gsm_enable_atgen
   Nokia 3210/33xx/3410/51xx/5210/5510/61xx/82xx - $gsm_enable_nokia6110
   Nokia 35xx/5100/6100/63xx/65xx/6610/72x0/83xx - $gsm_enable_nokia6510
