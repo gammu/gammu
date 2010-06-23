@@ -5,6 +5,7 @@
 
 #include <string.h>
 
+#include "dct4.h"
 #include "../gammu.h"
 #include "../../common/misc/coding.h"
 
@@ -466,22 +467,22 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	fprintf(stderr,"\n");
 
 	wavfilesize 	+= sizeof(WAV_Header) + sizeof(FMT_Header) + sizeof(DATA_Header);
-	WAV_Header[4] 	= wavfilesize % 256;
-	WAV_Header[5] 	= wavfilesize / 256;
-	WAV_Header[6] 	= wavfilesize / (256*256);
-	WAV_Header[7] 	= wavfilesize / (256*256*256);
+	WAV_Header[4] 	= ((unsigned char)wavfilesize % 256);
+	WAV_Header[5] 	= ((unsigned char)wavfilesize / 256);
+	WAV_Header[6] 	= ((unsigned char)wavfilesize / (256*256));
+	WAV_Header[7] 	= ((unsigned char)wavfilesize / (256*256*256));
 
 	/* FIXME */
-	FMT_Header[36]	= ((wavfilesize - 238) * 5 ) % 256;
-	FMT_Header[37]	= ((wavfilesize - 238) * 5 ) / 256;
-	FMT_Header[38]	= ((wavfilesize - 238) * 5 ) / (256*256);
-	FMT_Header[39]	= ((wavfilesize - 238) * 5 ) / (256*256*256);
+	FMT_Header[36]	= ((unsigned char)((wavfilesize - 238) * 5 ) % 256);
+	FMT_Header[37]	= ((unsigned char)((wavfilesize - 238) * 5 ) / 256);
+	FMT_Header[38]	= ((unsigned char)((wavfilesize - 238) * 5 ) / (256*256));
+	FMT_Header[39]	= ((unsigned char)((wavfilesize - 238) * 5 ) / (256*256*256));
 
-	wavfilesize 	= wavfilesize - 54 - 6;
-	DATA_Header[4] 	= wavfilesize % 256;
-	DATA_Header[5] 	= wavfilesize / 256;
-	DATA_Header[6] 	= wavfilesize / (256*256);
-	DATA_Header[7] 	= wavfilesize / (256*256*256);
+	wavfilesize 	= ((unsigned char)wavfilesize - 54 - 6);
+	DATA_Header[4] 	= ((unsigned char)wavfilesize % 256);
+	DATA_Header[5] 	= ((unsigned char)wavfilesize / 256);
+	DATA_Header[6] 	= ((unsigned char)wavfilesize / (256*256));
+	DATA_Header[7] 	= ((unsigned char)wavfilesize / (256*256*256));
 
 	fseek( WAVFile, 0, SEEK_SET);
 	fwrite(&WAV_Header,	1, sizeof(WAV_Header),	WAVFile);
@@ -493,27 +494,6 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Error DCT4_ReplyGetJavaInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{
-	switch (msg.Buffer[3]) {
-	case 0x23:
-		printf("%i bytes free",
-			msg.Buffer[6]*256*256*256+
-			msg.Buffer[7]*256*256+
-			msg.Buffer[8]*256+
-			msg.Buffer[9]);
-		return GE_NONE;
-	case 0x2F:
-		printf(", %i bytes used\n",
-			msg.Buffer[6]*256*256*256+
-			msg.Buffer[7]*256*256+
-			msg.Buffer[8]*256+
-			msg.Buffer[9]);
-		return GE_NONE;
-	}
-	return GE_UNKNOWNRESPONSE;
-}
-
 static GSM_Error DCT4_ReplyGetBTInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	printf("device address %02x%02x%02x%02x%02x%02x\n",
@@ -522,31 +502,52 @@ static GSM_Error DCT4_ReplyGetBTInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 	return GE_NONE;
 }
 
+static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	int i;
+
+	switch (msg.Buffer[3]) {
+	case 0x0D:
+		dprintf("Simlock info received\n");
+		dprintf("Config_Data: ");
+		for (i=14;i<22;i++) {
+			dprintf("%02x",msg.Buffer[i]);
+		}
+		dprintf("\n");
+		dprintf("Profile_Bits: ");
+		for (i=22;i<30;i++) {
+			dprintf("%02x",msg.Buffer[i]);
+		}
+		dprintf("\n");		
+		return GE_NONE;
+	case 0x13:
+		dprintf("Simlock info received\n");
+		if (msg.Buffer[58] == 0x05 && msg.Buffer[59] == 0x02) {
+			dprintf("SIM_PATH: ");
+			for (i=44;i<52;i++) {
+				dprintf("%02x",msg.Buffer[i]);
+			}
+			dprintf("\n");
+			printf("Simlock data  : ");
+			for (i=60;i<63;i++) {
+				printf("%02x",msg.Buffer[i]);
+			}
+			printf("\n");
+		}
+		return GE_NONE;
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
 void DCT4Info(int argc, char *argv[])
 {
-	unsigned char GetJavaMemory[10] = {
-		N6110_FRAME_HEADER,
-		0x22,		/* 0x22 - free, 0x2E - used */
-		0x01, 0x00, 0x00, 0x01, 0x00, 0x05};
-	unsigned char GetBTAddress[8] = {
-		N6110_FRAME_HEADER,
-		0x09, 0x19, 0x01, 0x03, 0x06};
+	unsigned char GetBTAddress[8] = {N6110_FRAME_HEADER, 0x09, 0x19, 0x01, 0x03, 0x06};
+	unsigned char GetSimlock[5] = {N6110_FRAME_HEADER, 0x12, 0x0D};
 
         if (CheckDCT4Only()!=GE_NONE) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
-	if (!IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_NOJAVA))
-	{
-		printf("Java          : ");
-
-		error=GSM_WaitFor (&s, GetJavaMemory, 10, 0x6D, 4, ID_User5);
-		Print_Error(error);
-
-		GetJavaMemory[3] = 0x2E;
-		error=GSM_WaitFor (&s, GetJavaMemory, 10, 0x6D, 4, ID_User5);
-		Print_Error(error);
-	}
 	if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_BLUETOOTH))
 	{
 		printf("Bluetooth     : ");
@@ -554,6 +555,204 @@ void DCT4Info(int argc, char *argv[])
 		error=GSM_WaitFor (&s, GetBTAddress, 8, 0xD7, 4, ID_User6);
 		Print_Error(error);
 	}
+
+	error=GSM_WaitFor (&s, GetSimlock, 5, 0x53, 4, ID_User6);
+	Print_Error(error);
+	GetSimlock[4] = 0x0E;
+	error=GSM_WaitFor (&s, GetSimlock, 5, 0x53, 4, ID_User6);
+	Print_Error(error);
+	GetSimlock[3] = 0x0C;
+	error=GSM_WaitFor (&s, GetSimlock, 4, 0x53, 4, ID_User6);
+	Print_Error(error);
+}
+
+DCT4_FileFolderInfo *CurrentFile;
+
+GSM_Error DCT4_ReplyGetFileInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	unsigned int i;
+
+	switch (msg.Buffer[3]) {
+	case 0x15:
+		smprintf(s,"File or folder details received\n");
+		CopyUnicodeString(CurrentFile->Name,msg.Buffer+10);
+		if (!strncmp(DecodeUnicodeString(CurrentFile->Name),"GMSTemp",7)) return GE_EMPTY;
+		CurrentFile->Folder = false;
+		i = msg.Buffer[8]*256+msg.Buffer[9];
+		dprintf("%02x %02x %02x %02x\n",msg.Buffer[i],msg.Buffer[i+1],msg.Buffer[i+2],msg.Buffer[i+3]);
+		if (msg.Buffer[i+3] == 0x01 || CurrentFile->Locations[0] != 0x00)
+		{
+			CurrentFile->Folder = true;
+		}
+		return GE_NONE;	
+	case 0x23:
+		smprintf(s,"File or folder free bytes received: ");
+		CurrentFile->Free = msg.Buffer[6]*256*256*256+
+				    msg.Buffer[7]*256*256+
+				    msg.Buffer[8]*256+
+				    msg.Buffer[9];
+		smprintf(s,"%i\n",CurrentFile->Free);
+		return GE_NONE;
+	case 0x2F:
+		smprintf(s,"File or folder used bytes received\n");
+		CurrentFile->Used = msg.Buffer[6]*256*256*256+
+				    msg.Buffer[7]*256*256+
+				    msg.Buffer[8]*256+
+				    msg.Buffer[9];
+		return GE_NONE;
+	case 0x33:
+		for (i=0;i<msg.Buffer[9];i++) {
+			CurrentFile->Locations[i] = msg.Buffer[13+i*4];
+			dprintf("%i ",CurrentFile->Locations[i]);
+		}
+		dprintf("\n");
+		CurrentFile->Locations[i] = 0x00;
+		return GE_NONE;		
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+GSM_Error DCT4_GetFileInfo(DCT4_FileFolderInfo Files[100], int *FilesNum, DCT4_FileFolderInfo Parent)
+{
+	int 		i;
+	GSM_Error	error;
+	unsigned char 	req[10] = {
+		N7110_FRAME_HEADER,
+		0x14,           /* 0x14 - info, 0x22 - free, 0x2E - used, 0x32 - sublocations */
+		0x01,		/* 0x00 for sublocations reverse sorting, 0x01 for free */
+		0x00, 0x00, 0x01, 0x00,
+		0x01};		/* Folder or file number */
+
+	i=0;
+	while (Parent.Locations[i] != 0x00) {
+		CurrentFile 		= &Files[*FilesNum];
+		CurrentFile->Level 	= Parent.Level+1;
+		fprintf(stderr,"*");
+		req[9] 			= Parent.Locations[i];
+
+		req[3] = 0x32;
+		req[4] = 0x00;
+		dprintf("Getting subfolders for filesystem\n");
+		error=GSM_WaitFor (&s, req, 10, 0x6D, 4, ID_User5);
+		if (error != GE_NONE) return error;
+
+		req[3] = 0x14;
+		req[4] = 0x01;
+		dprintf("Getting info for file in filesystem\n");
+		error=GSM_WaitFor (&s, req, 10, 0x6D, 4, ID_User5);
+		i++;
+		if (error == GE_EMPTY) continue;
+		if (error != GE_NONE) return error;
+
+		req[3] = 0x2E;
+		dprintf("Getting used memory for file in filesystem\n");
+		error=GSM_WaitFor (&s, req, 10, 0x6D, 4, ID_User5);
+		if (error != GE_NONE) return error;
+
+		if (Parent.Level == 1) {
+			req[3] = 0x22;
+			dprintf("Getting free memory for file in filesystem\n");
+			error=GSM_WaitFor (&s, req, 10, 0x6D, 4, ID_User5);
+			if (error != GE_NONE) return error;
+		}
+
+		(*FilesNum)++;
+
+		if (CurrentFile->Locations[0] != 0x00) {
+			dprintf("Getting subfolders\n");
+			error=DCT4_GetFileInfo(Files, FilesNum, Files[(*FilesNum)-1]);
+			if (error != GE_NONE) return error;
+		}
+	}
+	return GE_NONE;
+}
+
+GSM_Error DCT4_GetAllFilesInfo(DCT4_FileFolderInfo *Files, int *FilesNum)
+{
+	DCT4_FileFolderInfo 	StartFile;
+	GSM_Error		error;
+
+	*FilesNum		= 0x00;
+	StartFile.Locations[0]  = 0x01;
+	StartFile.Locations[1]  = 0x00;
+	StartFile.Level		= 0x01;
+
+	if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_NOFILESYSTEM)) return GE_NOTSUPPORTED;
+
+	fprintf(stderr,"Reading : ");
+	error=DCT4_GetFileInfo(Files, FilesNum, StartFile);
+	fprintf(stderr,"\n");
+	return error;
+}
+
+void DCT4GetFileSystem(int argc, char *argv[])
+{
+	DCT4_FileFolderInfo 	Files[500];
+	int			FilesNum,i,j;
+
+	GSM_Init(true);
+
+        CheckDCT4();
+
+	s.User.UserReplyFunctions=UserReplyFunctions4;
+
+	error=DCT4_GetAllFilesInfo(Files,&FilesNum);
+	Print_Error(error);
+	printf("\n");
+
+	for (i=0;i<FilesNum;i++) {
+		printf("%03i.",i);
+		if (Files[i].Level != 1) {
+			j = 1;
+			while (j!=Files[i].Level-1) {
+				printf(" |   ");
+				j++;
+			};
+			printf(" |-- ");
+		}
+		if (Files[i].Folder) printf("Folder ");
+		printf("\"%s\"",DecodeUnicodeString(Files[i].Name));
+		if (i==0) {
+			printf(" (free %i, used %i)",Files[i].Free,Files[i].Used);
+		} else {
+			if (Files[i].Folder) {
+				printf(" (used %i)",Files[i].Used);
+			} else {
+				printf(" (size %i)",Files[i].Used);
+			}
+		}
+		printf("\n");
+	}
+
+	GSM_Terminate();
+}
+
+void DCT4GetFiles(int argc, char *argv[])
+{
+//	DCT4_FileFolderInfo 	Files[500];
+	//int			FilesNum;
+	unsigned char 	req[18] = {
+		N7110_FRAME_HEADER, 0x0E, 0x00, 0x00, 0x00, 0x01, 0x00,
+		0x12,		/* Folder or file number */
+		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
+	unsigned char 	req1[10] = {
+		N7110_FRAME_HEADER, 0x06, 0x00, 0x00, 0x00, 0x01, 0x00,
+		0x12};		/* Folder or file number */
+	GSM_Init(true);
+
+        CheckDCT4();
+
+	s.User.UserReplyFunctions=UserReplyFunctions4;
+
+//	error=DCT4_GetAllFilesInfo(Files,&FilesNum);
+//	Print_Error(error);
+//	printf("\n");
+
+	error=GSM_WaitFor (&s, req1, 10, 0x6D, 4, ID_User5);
+
+	error=GSM_WaitFor (&s, req, 10, 0x6D, 4, ID_User5);
+
+	GSM_Terminate();
 }
 
 static GSM_Reply_Function UserReplyFunctions4[] = {
@@ -571,8 +770,14 @@ static GSM_Reply_Function UserReplyFunctions4[] = {
 
 	{DCT4_ReplyGetVoiceRecord,	"\x4A",0x03,0x31,ID_User4	},
 
-	{DCT4_ReplyGetJavaInfo,		"\x6D",0x03,0x23,ID_User5	},
-	{DCT4_ReplyGetJavaInfo,		"\x6D",0x03,0x2F,ID_User5	},
+	{DCT4_ReplyGetSimlock,		"\x53",0x03,0x0D,ID_User6	},
+	{DCT4_ReplyGetSimlock,		"\x53",0x03,0x13,ID_User6	},
+
+	{DCT4_ReplyGetFileInfo,		"\x6D",0x03,0x15,ID_User5	},
+	{DCT4_ReplyGetFileInfo,		"\x6D",0x03,0x23,ID_User5	},
+	{DCT4_ReplyGetFileInfo,		"\x6D",0x03,0x2F,ID_User5	},
+	{DCT4_ReplyGetFileInfo,		"\x6D",0x03,0x33,ID_User5	},
+	{NONEFUNCTION,			"\x6D",0x00,0x00,ID_User5	},
 
 	{DCT4_ReplyGetBTInfo,		"\xD7",0x03,0x0A,ID_User6	},
 

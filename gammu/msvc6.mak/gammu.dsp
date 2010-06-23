@@ -117,6 +117,10 @@ SOURCE=..\depend\dct3.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\depend\dsiemens.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\phone\nokia\dct3\dct3func.c
 # End Source File
 # Begin Source File
@@ -217,6 +221,10 @@ SOURCE=..\..\common\phone\nokia\nfunc.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\phone\nokia\nfuncold.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\phone\pfunc.c
 # End Source File
 # Begin Source File
@@ -274,6 +282,10 @@ SOURCE=..\..\common\misc\coding.h
 # Begin Source File
 
 SOURCE=..\depend\dct3.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dsiemens.h
 # End Source File
 # Begin Source File
 
@@ -378,6 +390,10 @@ SOURCE=..\..\common\phone\nokia\ncommon.h
 # Begin Source File
 
 SOURCE=..\..\common\phone\nokia\nfunc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\phone\nokia\nfuncold.h
 # End Source File
 # Begin Source File
 

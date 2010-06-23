@@ -303,7 +303,6 @@ int smfprintf(FILE *f, const char *format, ...)
 	int 			result=0;
 	static unsigned char 	prevline[2000] = "", nextline[2000]="";
 	static unsigned int 	linecount=0;
-	static time_t		time1=0;
 	unsigned char		buffer[2000];
 	GSM_DateTime 		date_time;
 
@@ -313,10 +312,7 @@ int smfprintf(FILE *f, const char *format, ...)
 	strcat(nextline, buffer);
 	if (strstr(buffer, "\n"))
 	{
-		if ((strcmp(nextline, prevline) == 0) && (difftime(time(NULL), time1) < SMPRINTF_MAX_TIME))
-		{
-			linecount++;
-		} else if (ftell(f) < 5000000) {
+		if (ftell(f) < 5000000) {
 			GSM_GetCurrentDateTime(&date_time);
 			if (linecount > 0) {
 				if (di.dl == DL_TEXTALLDATE || di.dl == DL_TEXTERRORDATE || di.dl == DL_TEXTDATE) {
@@ -338,7 +334,6 @@ int smfprintf(FILE *f, const char *format, ...)
 		                fprintf(f,"%s",nextline);
 			}
 			strcpy(prevline, nextline);
-			time1 = time(NULL);
 		}
 		strcpy(nextline, "");
 		fflush(f);

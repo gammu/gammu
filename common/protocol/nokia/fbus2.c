@@ -184,7 +184,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 
 	case RX_GetType:
 
-	d->Msg.Type = rx_byte;
+	d->Msg.Type   = rx_byte;
 	d->MsgRXState = RX_GetLength1;
 	break;
 

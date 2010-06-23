@@ -352,7 +352,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				while (z==Date.Second) {
 					my_sleep(10);
 					GSM_GetCurrentDateTime(&Date);
-					GSM_ReadDevice(&s);
+					GSM_ReadDevice(&s,true);
 					if (SendingSMSStatus != GE_TIMEOUT) break;
 				}
 				if (SendingSMSStatus != GE_TIMEOUT) break;

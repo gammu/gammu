@@ -64,7 +64,8 @@ typedef enum {
     	PBK_Text_Custom2,
     	PBK_Text_Custom3,
     	PBK_Text_Custom4,
-	PBK_RingtoneID
+	PBK_RingtoneID,
+	PBK_PictureID
 } GSM_EntryType;
 
 /* Limits for sizing of array in GSM_PhonebookEntry.
@@ -89,6 +90,7 @@ typedef struct {
 	GSM_MemoryType		MemoryType;			/* Type of memory */
 	int			Location;			/* Location */
 	int			EntriesNum;			/* Number of entries */
+	bool			PreferUnicode;			/* Whether to prefer unicode for storing this entry */
 	GSM_SubPhonebookEntry	Entries[GSM_PHONEBOOK_ENTRIES];
 } GSM_PhonebookEntry;
 

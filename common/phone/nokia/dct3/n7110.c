@@ -11,6 +11,7 @@
 #include "../../../service/gsmlogo.h"
 #include "../../pfunc.h"
 #include "../nfunc.h"
+#include "../nfuncold.h"
 #include "n7110.h"
 #include "dct3func.h"
 
@@ -1285,17 +1286,19 @@ static GSM_Error N7110_Initialise (GSM_StateMachine *s)
 	return GE_NONE;
 }
 
-/* Old method 1 for accessing calendar */
 static GSM_Error N7110_ReplyGetCalendarInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return N71_65_ReplyGetCalendarInfo(msg, s, &s->Phone.Data.Priv.N7110.LastCalendar);
+	/* Old method 1 for accessing calendar */
+	return N71_65_ReplyGetCalendarInfo1(msg, s, &s->Phone.Data.Priv.N7110.LastCalendar);
 }
 
-/* Old method 1 for accessing calendar */
+#ifdef DEBUG
 static GSM_Error N7110_ReplyGetCalendarNotePos(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return N71_65_ReplyGetCalendarNotePos(msg, s, &s->Phone.Data.Priv.N7110.FirstCalendarPos);
+	/* Old method 1 for accessing calendar */
+	return N71_65_ReplyGetCalendarNotePos1(msg, s, &s->Phone.Data.Priv.N7110.FirstCalendarPos);
 }
+#endif
 
 static GSM_Error N7110_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, bool start)
 {
@@ -1387,15 +1390,21 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{N7110_ReplySetOperatorLogo,	"\x0A",0x03,0xA4,ID_SetBitmap		},
 	{N7110_ReplyClearOperatorLogo,	"\x0A",0x03,0xB0,ID_SetBitmap		},
 
+#ifdef DEBUG
 	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x02,ID_SetCalendarNote	},/*method 1*/
 	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x04,ID_SetCalendarNote	},/*method 1*/
 	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x06,ID_SetCalendarNote	},/*method 1*/
 	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x08,ID_SetCalendarNote	},/*method 1*/
+#endif
 	{N71_65_ReplyDelCalendar,	"\x13",0x03,0x0C,ID_DeleteCalendarNote	},
 	{N71_65_ReplyGetNextCalendar1,	"\x13",0x03,0x1A,ID_GetCalendarNote	},/*method 1*/
+#ifdef DEBUG
 	{N7110_ReplyGetCalendarNotePos,	"\x13",0x03,0x32,ID_GetCalendarNotePos	},/*method 1*/
+#endif
 	{N7110_ReplyGetCalendarInfo,	"\x13",0x03,0x3B,ID_GetCalendarNotesInfo},/*method 1*/
+#ifdef DEBUG
 	{N71_65_ReplyGetNextCalendar2,	"\x13",0x03,0x3F,ID_GetCalendarNote	},/*method 2*/
+#endif
 	{N71_65_ReplyAddCalendar2,	"\x13",0x03,0x41,ID_SetCalendarNote	},/*method 2*/
 
 	{N7110_ReplySaveSMSMessage,	"\x14",0x03,0x05,ID_SaveSMSMessage	},

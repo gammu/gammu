@@ -66,6 +66,8 @@ int  GSM_GetBitmapSize		(GSM_Bitmap 		*bmp);
 
 GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap);
 GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap);
+GSM_Error BMP2Bitmap		(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
+GSM_Error Bitmap2BMP		(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
 
 void PHONE_GetBitmapWidthHeight	(GSM_Phone_Bitmap_Types Type, int *width, int *height);
 int  PHONE_GetBitmapSize	(GSM_Phone_Bitmap_Types Type, int width, int height);

@@ -189,6 +189,8 @@ GSM_Error lock_device(const char* port, char **lock_device)
 	int 		fd, len;
 	GSM_Error	error = GE_NONE;
 
+	dprintf("Locking device\n");
+
 	aux = strrchr(port, '/');
 	/* Remove leading '/' */
 	if (aux) {
@@ -267,7 +269,10 @@ GSM_Error lock_device(const char* port, char **lock_device)
 			dprintf("Please check permission on lock directory\n");
 			error = GE_PERMISSION;
 		} else if (errno == ENOENT) {
-			dprintf("Cannot create lockfile %s. Please check for existence of path", lock_file);
+			dprintf("Cannot create lockfile %s. Please check for existence of path\n", lock_file);
+			error = GE_UNKNOWN;
+		} else {
+			dprintf("Unknown error with creating lockfile %s\n", lock_file);
 			error = GE_UNKNOWN;
 		}
 		goto failed;

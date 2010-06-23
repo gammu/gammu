@@ -71,7 +71,7 @@ typedef struct {
 	GSM_SubCalendarEntry   	Entries[GSM_CALENDAR_ENTRIES];
 } GSM_CalendarEntry;
 
-void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance);
+void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime);
 
 GSM_Error NOKIA_EncodeVCALENDAR10SMSText(char *Buffer, int *Length, GSM_CalendarEntry note);
 

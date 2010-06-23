@@ -10,6 +10,7 @@
 #include "../../../misc/coding.h"
 #include "../../../service/gsmlogo.h"
 #include "../nfunc.h"
+#include "../nfuncold.h"
 #include "../../pfunc.h"
 #include "n6510.h"
 
@@ -1610,11 +1611,6 @@ static GSM_Error N6510_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings 
 		N6110_FRAME_HEADER, 0x18,
 		0x00};		/* Location */
 
-	/* For now !!! */
-	if (!strcmp(s->Phone.Data.ModelInfo->model,"3510")) {
-		if (s->Phone.Data.VerNum>3.37) return GE_NOTSUPPORTED;
-	}
-
 	/* We have to enable WAP frames in phone */
 	error=DCT3DCT4_EnableWAP(s);
 	if (error!=GE_NONE) return error;
@@ -1749,7 +1745,7 @@ static GSM_Error N6510_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings 
 	/* end of blocks ? */
 	memcpy(req + pos, "\x80\x00\x00\x0c", 4);	pos += 4;
 
-	pos += 8;
+//	pos += 8;
 
 	smprintf(s, "Setting WAP settins\n");
 	return GSM_WaitFor (s, req, pos, 0x3f, 4, ID_SetWAPSettings);
@@ -1848,11 +1844,6 @@ static GSM_Error N6510_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *book
 	int		location;
 	unsigned char 	req[600] = { N6110_FRAME_HEADER, 0x09 };
 
-	/* For now !!! */
-	if (!strcmp(s->Phone.Data.ModelInfo->model,"3510")) {
-		if (s->Phone.Data.VerNum>3.37) return GE_NOTSUPPORTED;
-	}
-
 	/* We have to enable WAP frames in phone */
 	error=DCT3DCT4_EnableWAP(s);
 	if (error!=GE_NONE) return error;
@@ -1876,6 +1867,8 @@ static GSM_Error N6510_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *book
 	CopyUnicodeString(req+count,bookmark->Address);
 	count = count + 2*strlen(DecodeUnicodeString(bookmark->Address));
 
+	req[count++] = 0x00;
+	req[count++] = 0x00;
 	req[count++] = 0x00;
 	req[count++] = 0x00;
 
@@ -2786,32 +2779,442 @@ static GSM_Error N6510_DialVoice(GSM_StateMachine *s, char *number)
 	return GSM_WaitFor (s, req, pos, 0x01, 4, ID_DialVoice);
 }
 
-/* Old method 1 for accessing calendar */
-static GSM_Error N6510_ReplyGetCalendarInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+/* method 3 */
+static GSM_Error N6510_ReplyGetCalendarInfo3(GSM_Protocol_Message msg, GSM_StateMachine *s, GSM_NOKIACalendarLocations *LastCalendar)
 {
-	return N71_65_ReplyGetCalendarInfo(msg, s, &s->Phone.Data.Priv.N6510.LastCalendar);
+	int i=0,j=0;
+
+	smprintf(s, "Info with calendar notes locations received\n");
+	while (LastCalendar->Location[j] != 0x00) j++;
+	if (j >= NOKIA_MAXCALENDARNOTES) {
+		smprintf(s, "Increase NOKIA_MAXCALENDARNOTES\n");
+		return GE_UNKNOWN;
+	}
+	if (j == 0) {
+		LastCalendar->Number=msg.Buffer[8]*256+msg.Buffer[9];
+		smprintf(s, "Number of Entries: %i\n",LastCalendar->Number);
+	}
+	smprintf(s, "Locations: ");
+	while (14+(i*4) <= msg.Length) {
+		LastCalendar->Location[j++]=msg.Buffer[12+i*4]*256+msg.Buffer[13+i*4];
+		smprintf(s, "%i ",LastCalendar->Location[j-1]);
+		i++;
+	}
+	smprintf(s, "\nNumber of Entries in frame: %i\n",i);
+	LastCalendar->Location[j] = 0;
+	smprintf(s, "\n");
+	return GE_NONE;
 }
 
-/* Old method 1 for accessing calendar */
+/* method 3 */
+static GSM_Error N6510_GetCalendarInfo3(GSM_StateMachine *s, GSM_NOKIACalendarLocations *LastCalendar)
+{
+	GSM_Error 	error;
+	int		i;
+	unsigned char   req[] = {N6110_FRAME_HEADER, 0x9E, 0xFF, 0xFF, 0x00, 0x00,
+			         0x00, 0x00,	/* First location */
+			         0x00};
+
+	LastCalendar->Location[0] = 0x00;
+	LastCalendar->Number	  = 0;
+
+	smprintf(s, "Getting locations for calendar\n");
+	error = GSM_WaitFor (s, req, 11, 0x13, 4, ID_GetCalendarNotesInfo);
+	if (error != GE_NONE) return error;
+
+	while (1) {
+		i=0;
+		while (LastCalendar->Location[i] != 0x00) i++;
+		if (i == LastCalendar->Number) break;
+		smprintf(s, "i = %i %i\n",i,LastCalendar->Number);
+		req[8] = LastCalendar->Location[i-1] / 256;
+		req[9] = LastCalendar->Location[i-1] % 256;
+		smprintf(s, "Getting locations for calendar\n");
+		error = GSM_WaitFor (s, req, 11, 0x13, 4, ID_GetCalendarNotesInfo);
+		if (error != GE_NONE) return error;
+	}
+	return GE_NONE;
+}
+
+/* method 3 */
+GSM_Error N6510_ReplyGetNextCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_CalendarEntry 	*entry = s->Phone.Data.Cal;
+	GSM_DateTime		Date;
+	unsigned long		diff;
+
+	smprintf(s, "Calendar note received\n");
+
+	switch(msg.Buffer[27]) {
+	case 0x00: smprintf(s,"Meeting\n");  entry->Type = GCN_MEETING;  break;
+	case 0x02: smprintf(s,"Call\n");     entry->Type = GCN_CALL;     break;
+	case 0x04: smprintf(s,"Birthday\n"); entry->Type = GCN_BIRTHDAY; break;
+	case 0x08: smprintf(s,"Memo\n");     entry->Type = GCN_REMINDER; break;
+	default:
+		smprintf(s,"Note type: %02i\n",msg.Buffer[27]);
+	}
+
+	smprintf(s,"StartTime: %04i-%02i-%02i %02i:%02i\n",
+		msg.Buffer[28]*256+msg.Buffer[29],
+		msg.Buffer[30],msg.Buffer[31],msg.Buffer[32],
+		msg.Buffer[33]);
+	Date.Year 	= msg.Buffer[28]*256+msg.Buffer[29];	
+	if (entry->Type == GCN_BIRTHDAY) {
+		Date.Year = entry->Entries[0].Date.Year;
+	}
+	Date.Month 	= msg.Buffer[30];
+	Date.Day 	= msg.Buffer[31];
+	Date.Hour 	= msg.Buffer[32];
+	Date.Minute 	= msg.Buffer[33];
+	/* Garbage seen with 3510i 3.51 */
+	if (Date.Month == 0 && Date.Day == 0 && Date.Hour == 0 && Date.Minute == 0) return GE_EMPTY;
+	Date.Second	= 0;
+	entry->Entries[0].EntryType = CAL_START_DATETIME;
+	memcpy(&entry->Entries[0].Date,&Date,sizeof(GSM_DateTime));
+	entry->EntriesNum++;
+
+	if (entry->Type != GCN_BIRTHDAY) {
+		smprintf(s,"EndTime: %04i-%02i-%02i %02i:%02i\n",
+			msg.Buffer[34]*256+msg.Buffer[35],
+			msg.Buffer[36],msg.Buffer[37],msg.Buffer[38],
+			msg.Buffer[39]);
+		Date.Year 	= msg.Buffer[34]*256+msg.Buffer[35];
+		Date.Month 	= msg.Buffer[36];
+		Date.Day 	= msg.Buffer[37];
+		Date.Hour 	= msg.Buffer[38];
+		Date.Minute 	= msg.Buffer[39];
+		Date.Second	= 0;
+		entry->Entries[1].EntryType = CAL_STOP_DATETIME;
+		memcpy(&entry->Entries[1].Date,&Date,sizeof(GSM_DateTime));
+		entry->EntriesNum++;
+	}
+
+	if (msg.Buffer[14] == 0xFF && msg.Buffer[15] == 0xFF && msg.Buffer[16] == 0xff && msg.Buffer[17] == 0xff)
+	{
+		smprintf(s, "No alarm\n");
+	} else {
+		diff  = ((unsigned int)msg.Buffer[14]) << 24;
+		diff += ((unsigned int)msg.Buffer[15]) << 16;
+		diff += ((unsigned int)msg.Buffer[16]) << 8;
+		diff += msg.Buffer[17];
+
+		memcpy(&entry->Entries[entry->EntriesNum].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
+		N71_65_GetTimeDiffence(s, diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
+		smprintf(s, "Alarm date   : %02i-%02i-%04i %02i:%02i:%02i\n",
+			entry->Entries[entry->EntriesNum].Date.Day,   entry->Entries[entry->EntriesNum].Date.Month,
+			entry->Entries[entry->EntriesNum].Date.Year,  entry->Entries[entry->EntriesNum].Date.Hour,
+			entry->Entries[entry->EntriesNum].Date.Minute,entry->Entries[entry->EntriesNum].Date.Second);
+
+		entry->Entries[entry->EntriesNum].EntryType = CAL_ALARM_DATETIME;
+		if (msg.Buffer[22]==0x00 && msg.Buffer[23]==0x00 &&
+		    msg.Buffer[24]==0x00 && msg.Buffer[25]==0x00)
+		{
+			entry->Entries[entry->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
+			smprintf(s, "Alarm type   : Silent\n");
+		}
+		entry->EntriesNum++;
+	}
+
+	N71_65_GetCalendarRecurrance(s, msg.Buffer+40, entry);
+
+	if (entry->Type == GCN_BIRTHDAY) {
+		entry->Entries[0].Date.Year = msg.Buffer[42]*256+msg.Buffer[43];
+	}
+
+	memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+54, msg.Buffer[51]*2);
+	entry->Entries[entry->EntriesNum].Text[msg.Buffer[51]*2]   = 0;
+	entry->Entries[entry->EntriesNum].Text[msg.Buffer[51]*2+1] = 0;
+	entry->Entries[entry->EntriesNum].EntryType		   = CAL_TEXT;
+	entry->EntriesNum++;
+
+	if (entry->Type == GCN_CALL) {
+		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+(54+msg.Buffer[51]*2), msg.Buffer[52]*2);
+		entry->Entries[entry->EntriesNum].Text[msg.Buffer[52]*2]   = 0;
+		entry->Entries[entry->EntriesNum].Text[msg.Buffer[52]*2+1] = 0;
+		entry->Entries[entry->EntriesNum].EntryType		   = CAL_PHONE;
+		entry->EntriesNum++;
+	}
+
+	return GE_NONE;
+}
+
+/* method 3 */
+GSM_Error N6510_GetNextCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, GSM_NOKIACalendarLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos)
+{
+	GSM_Error		error;
+	GSM_DateTime		date_time;
+	unsigned char 		req[] = {
+		N6110_FRAME_HEADER,0x7D,0x00,0x00,0x00,0x00,
+		0x00,0x99,			/* Location */
+		0xff,0xff,0xff,0xff,0x01};	
+
+	if (start) {
+		error=N6510_GetCalendarInfo3(s,LastCalendar);
+		if (error!=GE_NONE) return error;
+		if (LastCalendar->Number == 0) return GE_EMPTY;
+
+		/* We have to get current year. It's NOT written in frame for
+		 * Birthday
+		 */
+		error=s->Phone.Functions->GetDateTime(s,&date_time);
+		switch (error) {
+			case GE_EMPTY:
+			case GE_NOTIMPLEMENTED:
+				GSM_GetCurrentDateTime(&date_time);
+				break;
+			case GE_NONE:
+				break;
+			default:
+				return error;
+		}
+		*LastCalendarYear 	= date_time.Year;
+		*LastCalendarPos 	= 0;
+	} else {
+		(*LastCalendarPos)++;
+	}
+
+	error = GE_EMPTY;
+	while (error == GE_EMPTY) {
+		if (*LastCalendarPos >= LastCalendar->Number) return GE_EMPTY;
+
+		req[8] = LastCalendar->Location[*LastCalendarPos] >> 8;
+		req[9] = LastCalendar->Location[*LastCalendarPos] & 0xff;
+	
+		Note->EntriesNum		= 0;
+		Note->Entries[0].Date.Year 	= *LastCalendarYear;
+		Note->Location			= LastCalendar->Location[*LastCalendarPos];
+
+		s->Phone.Data.Cal=Note;
+		smprintf(s, "Getting calendar note\n");
+		error=GSM_WaitFor (s, req, 15, 0x13, 4, ID_GetCalendarNote);
+
+		if (error == GE_EMPTY) (*LastCalendarPos)++;
+	}
+	return error;
+}
+
+static GSM_Error N6510_ReplyGetCalendarInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	switch (msg.Buffer[3]) {
+#ifdef DEBUG
+	case 0x3B:
+		/* Old method 1 for accessing calendar */
+		return N71_65_ReplyGetCalendarInfo1(msg, s, &s->Phone.Data.Priv.N6510.LastCalendar);
+#endif
+	case 0x9F:
+		return N6510_ReplyGetCalendarInfo3(msg, s, &s->Phone.Data.Priv.N6510.LastCalendar);
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+/* method 3 */
+GSM_Error N6510_ReplyGetCalendarNotePos3(GSM_Protocol_Message msg, GSM_StateMachine *s,int *FirstCalendarPos)
+{
+	smprintf(s, "First calendar location: %i\n",msg.Buffer[8]*256+msg.Buffer[9]);
+	*FirstCalendarPos = msg.Buffer[8]*256+msg.Buffer[9];
+	return GE_NONE;
+}
+
+/* method 3 */
+static GSM_Error N6510_GetCalendarNotePos3(GSM_StateMachine *s)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x95, 0x00};
+
+	smprintf(s, "Getting first free calendar note location\n");
+	return GSM_WaitFor (s, req, 5, 0x13, 4, ID_GetCalendarNotePos);
+}
+
 static GSM_Error N6510_ReplyGetCalendarNotePos(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return N71_65_ReplyGetCalendarNotePos(msg, s,&s->Phone.Data.Priv.N6510.FirstCalendarPos);
+	switch (msg.Buffer[3]) {
+#ifdef DEBUG
+	case 0x32:
+		/* Old method 1 for accessing calendar */
+		return N71_65_ReplyGetCalendarNotePos1(msg, s,&s->Phone.Data.Priv.N6510.FirstCalendarPos);
+#endif
+	case 0x96:
+		return N6510_ReplyGetCalendarNotePos3(msg, s,&s->Phone.Data.Priv.N6510.FirstCalendarPos);
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+/* method 3 */
+static GSM_Error N6510_ReplyAddCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "Calendar note added\n");
+	return GE_NONE;
+}
+
+/* method 3 */
+GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *FirstCalendarPos, bool Past)
+{
+	time_t     		t_time1,t_time2;
+	long			diff;
+ 	GSM_Error		error;
+	GSM_DateTime		DT,date_time;
+ 	int 			Text, Time, Alarm, Phone, Recurrance, EndTime, count=54;
+	unsigned char 		req[5000] = {
+		N6110_FRAME_HEADER,
+		0x65, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00,				/* location 	    */
+		0x00, 0x00, 0x00, 0x00,                                    
+		0xFF, 0xFF, 0xFF, 0xFF,			/* alarm 	    */
+		0x80, 0x00, 0x00,
+		0x01,					/* note icon	    */
+		0xFF, 0xFF, 0xFF, 0xFF,			/* alarm type       */
+		0x00,					/* 0x02 or 0x00     */
+		0x02, 					/* note type	    */
+		0x07, 0xD0, 0x01, 0x12, 0x0C, 0x00, 	/* start date/time  */
+		0x07, 0xD0, 0x01, 0x12, 0x0C, 0x00, 	/* end date/time    */
+		0x00, 0x00,				/* recurrance	    */
+		0x00, 0x00,				/* birth year	    */
+		0x20, 0x00, 0x00, 0x00, 0x00,
+		0x00,					/* note text length */
+		0x00,					/* phone length	    */
+		0x00, 0x00, 0x00};
+
+	if (!Past && IsNoteFromThePast(*Note)) return GE_NONE;
+
+	error=N6510_GetCalendarNotePos3(s);
+	if (error!=GE_NONE) return error;
+	req[8] = *FirstCalendarPos/256;
+	req[9] = *FirstCalendarPos%256;
+
+	switch(Note->Type) {
+		case GCN_CALL    : req[27]=0x02; break;
+		case GCN_BIRTHDAY: req[27]=0x04; break;
+		case GCN_REMINDER: req[27]=0x08; break;
+		case GCN_MEETING :
+		default		 : req[27]=0x00; req[26]=0x02; break;
+	}
+
+	/* icon */
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL35)) {
+		switch(Note->Type) {
+			case GCN_CALL    : req[21] = 0x55; break;
+			case GCN_BIRTHDAY: req[21] = 0x54; break;
+			case GCN_REMINDER:
+			case GCN_MEETING :
+			default		 : req[21] = 0x7B; break;
+		}
+	} else {
+		switch(Note->Type) {
+			case GCN_CALL    : req[21] = 0x51; break;
+			case GCN_BIRTHDAY: req[21] = 0x50; break;
+			case GCN_REMINDER: req[21] = 0x53; break;
+			case GCN_MEETING :
+			default		 : req[21] = 0x52; break;
+		}
+	}
+
+	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(*Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime);
+
+	if (Time == -1) return GE_UNKNOWN;
+	memcpy(&DT,&Note->Entries[Time].Date,sizeof(GSM_DateTime));
+	req[28]	= DT.Year >> 8;
+	req[29]	= DT.Year & 0xff;
+	req[30]	= DT.Month;
+	req[31]	= DT.Day;
+	req[32]	= DT.Hour;
+	req[33]	= DT.Minute;
+
+	if (Note->Type == GCN_BIRTHDAY) {
+		error=s->Phone.Functions->GetDateTime(s,&date_time);
+		switch (error) {
+			case GE_EMPTY:
+			case GE_NOTIMPLEMENTED:
+				GSM_GetCurrentDateTime(&date_time);
+				break;
+			case GE_NONE:
+				break;
+			default:
+				return error;
+		}
+	}
+	if (Note->Type == GCN_BIRTHDAY) {
+		req[28]	= date_time.Year >> 8;
+		req[29]	= date_time.Year & 0xff;		
+		req[42]	= DT.Year >> 8;
+		req[43]	= DT.Year & 0xff;
+	}
+
+	if (EndTime != -1) memcpy(&DT,&Note->Entries[EndTime].Date,sizeof(GSM_DateTime));
+	req[34]	= DT.Year >> 8;
+	req[35]	= DT.Year & 0xff;
+	req[36]	= DT.Month;
+	req[37]	= DT.Day;
+	req[38]	= DT.Hour;
+	req[39]	= DT.Minute;
+	if (Note->Type == GCN_BIRTHDAY) {
+		req[34]	= date_time.Year >> 8;
+		req[35]	= date_time.Year & 0xff;		
+	}
+
+	if (Recurrance != -1) {
+		/* 0xffff -> 1 Year (8760 hours) */
+		if (Note->Entries[Recurrance].Number >= 8760) {
+			req[40] = 0xff;
+			req[41] = 0xff;
+		} else {
+			req[40] = Note->Entries[Recurrance].Number / 256;
+			req[41] = Note->Entries[Recurrance].Number % 256;
+		}
+	}
+
+	if (Alarm != -1) {
+		memcpy(&DT,&Note->Entries[Time].Date,sizeof(GSM_DateTime));
+		if (Note->Entries[Alarm].EntryType == CAL_SILENT_ALARM_DATETIME)
+		{
+			req[22] = 0x00; req[23] = 0x00; req[24] = 0x00; req[25] = 0x00;
+		}
+		if (Note->Type == GCN_BIRTHDAY) DT.Year	= date_time.Year;
+		t_time2   = Fill_Time_T(DT,8);
+		t_time1   = Fill_Time_T(Note->Entries[Alarm].Date,8);
+		diff	  = (t_time1-t_time2)/60;
+
+		smprintf(s, "  Difference : %i seconds or minutes\n", -diff);
+		req[14] = (unsigned char)(-diff >> 24);
+		req[15] = (unsigned char)(-diff >> 16);
+		req[16] = (unsigned char)(-diff >> 8);
+		req[17] = (unsigned char)(-diff);
+	}
+
+	if (Text != -1) {
+		req[49] = strlen(DecodeUnicodeString(Note->Entries[Text].Text));
+		CopyUnicodeString(req+54,Note->Entries[Text].Text);
+		count+= req[49]*2;
+	}
+
+	if (Phone != -1) {
+		req[50] = strlen(DecodeUnicodeString(Note->Entries[Phone].Text));
+		CopyUnicodeString(req+54+req[49]*2,Note->Entries[Phone].Text);
+		count+= req[50]*2;
+	}
+
+	req[count++] = 0x00;
+
+	smprintf(s, "Writing calendar note\n");
+	return GSM_WaitFor (s, req, count, 0x13, 4, ID_SetCalendarNote);
 }
 
 static GSM_Error N6510_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, bool start)
 {
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CALENDAR35)) {
-		/* Note: in known phones texts of notes cut to 50 chars */
-		return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
-	} else {
-		return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
-	}
+	/* Method 3. All DCT4 features supported */
+	return N6510_GetNextCalendar3(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
+
+	/* Method 2. In known phones texts of notes cut to 50 chars. Some features missed */
+//	return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
+	/* Method 1. Some features missed. Not working with some notes in 3510 */
+//	return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
 }
 
 static GSM_Error N6510_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
 {
+	/* Method 3. All DCT4 features supported */
+	return N6510_AddCalendar3(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos, Past);
+
+//	return N71_65_AddCalendar2(s,Note,Past);
 //	return N71_65_AddCalendar1(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos, Past);
-	return N71_65_AddCalendar2(s,Note,Past);
 }
 
 static GSM_Error N6510_ReplyLogIntoNetwork(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -3025,16 +3428,26 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{NONEFUNCTION,			"\x0B",0x03,0x15,ID_PlayTone		},
 	{NONEFUNCTION,			"\x0B",0x03,0x16,ID_PlayTone		},
 
-	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x02,ID_SetCalendarNote	},/*method 1*/
-	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x04,ID_SetCalendarNote	},/*method 1*/
-	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x06,ID_SetCalendarNote	},/*method 1*/
-	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x08,ID_SetCalendarNote	},/*method 1*/
+#ifdef DEBUG
+	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x02,ID_SetCalendarNote	},
+	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x04,ID_SetCalendarNote	},
+	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x06,ID_SetCalendarNote	},
+	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x08,ID_SetCalendarNote	},
+#endif
 	{N71_65_ReplyDelCalendar,	"\x13",0x03,0x0C,ID_DeleteCalendarNote	},
+#ifdef DEBUG
 	{N71_65_ReplyGetNextCalendar1,	"\x13",0x03,0x1A,ID_GetCalendarNote	},/*method 1*/
+#endif
 	{N6510_ReplyGetCalendarNotePos,	"\x13",0x03,0x32,ID_GetCalendarNotePos	},/*method 1*/
+#ifdef DEBUG
 	{N6510_ReplyGetCalendarInfo,	"\x13",0x03,0x3B,ID_GetCalendarNotesInfo},/*method 1*/
-	{N71_65_ReplyGetNextCalendar2,	"\x13",0x03,0x3F,ID_GetCalendarNote	},/*method 2*/
+	{N71_65_ReplyGetNextCalendar2,	"\x13",0x03,0x3F,ID_GetCalendarNote	},
+#endif
 	{N71_65_ReplyAddCalendar2,	"\x13",0x03,0x41,ID_SetCalendarNote	},/*method 2*/
+	{N6510_ReplyAddCalendar3,	"\x13",0x03,0x66,ID_SetCalendarNote	},/*method 3*/
+	{N6510_ReplyGetNextCalendar3,	"\x13",0x03,0x7E,ID_GetCalendarNote	},/*method 3*/
+	{N6510_ReplyGetCalendarNotePos,	"\x13",0x03,0x96,ID_GetCalendarNotePos	},/*method 3*/
+	{N6510_ReplyGetCalendarInfo,	"\x13",0x03,0x9F,ID_GetCalendarNotesInfo},/*method 3*/
 
 	{N6510_ReplySaveSMSMessage,	"\x14",0x03,0x01,ID_SaveSMSMessage	},
 	{N6510_ReplyGetSMSMessage,	"\x14",0x03,0x03,ID_GetSMSMessage	},
@@ -3099,13 +3512,15 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	/* 0x4A - voice records */
 
+	/* 0x53 - simlock */
+
 	{N6510_ReplySetToDo,		"\x55",0x03,0x02,ID_SetToDo		},
 	{N6510_ReplyGetToDo,		"\x55",0x03,0x04,ID_GetToDo		},
 	{N6510_ReplyGetToDoFirstLoc,	"\x55",0x03,0x10,ID_SetToDo		},
 	{N6510_ReplyDeleteAllToDo,	"\x55",0x03,0x12,ID_DeleteAllToDo	},
 	{N6510_ReplyGetToDoLocations,	"\x55",0x03,0x16,ID_GetToDo		},
 
-	/* 0x6D - Java */
+	/* 0x6D - File System */
 
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x01,ID_GetBitmap		},
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x01,ID_SetBitmap		},
@@ -3125,7 +3540,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"3510|3510i|3530|5100|6100|6310|6310i|6510|6610|7210|8310|8910",
+	"3510|3510i|3530|5100|6100|6310|6310i|6510|6610|7210|8310|8390|8910",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,		/*	Terminate 		*/

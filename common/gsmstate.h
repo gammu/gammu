@@ -296,12 +296,14 @@ typedef enum {
     	/* AT mode */
     	ID_SetFlowControl,
     	ID_AlcatelConnect,
+	ID_AlcatelProtocol,
     
     	/* Binary mode */
     	ID_AlcatelAttach,
     	ID_AlcatelDetach,
     	ID_AlcatelCommit,
     	ID_AlcatelCommit2,
+	ID_AlcatelEnd,
     	ID_AlcatelClose,
    	ID_AlcatelStart,
     	ID_AlcatelSelect1,
@@ -593,7 +595,7 @@ GSM_Error GSM_RegisterAllPhoneModules	(GSM_StateMachine *s);
 GSM_Error GSM_InitConnection		(GSM_StateMachine *s, int ReplyNum);
 GSM_Error GSM_TerminateConnection	(GSM_StateMachine *s);
 
-int 	  GSM_ReadDevice		(GSM_StateMachine *s);
+int 	  GSM_ReadDevice		(GSM_StateMachine *s, bool wait);
 
 GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, unsigned char *buffer,
 			  		 int length, unsigned char type, int time);
@@ -637,14 +639,13 @@ typedef enum {
 	F_NOCALLINFO,
 
 	/* n6510.c */
-	F_CALENDAR35,	/* We have to get calendar using 3510 style			*/
 	F_PBK35,	/* Phonebook in 3510 style with ringtones ID			*/
 	F_CAL35,	/* Reminders in calendar saved in 3510 style			*/
 	F_RADIO,	/* Phone with FM radio						*/
 	F_NOTODO,	/* No ToDo in phone						*/
 	F_NOMIDI,	/* No ringtones in MIDI						*/
-	F_NOJAVA,	/* No Java support						*/
 	F_BLUETOOTH,	/* Bluetooth support						*/
+	F_NOFILESYSTEM,	/* No images, ringtones, java saved in special filesystem	*/
 
 	/* AT modules */
 	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/

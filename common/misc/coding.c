@@ -204,6 +204,33 @@ unsigned char EncodeWithHexBinAlphabet (int digit)
 	return 0;
 }
 
+void DecodeHexUnicode (unsigned char *dest, const unsigned char *src, int len)
+{
+	int i,current=0;
+
+	for (i = 0; i < len/4 ; i++) {
+		dest[current++] = DecodeWithHexBinAlphabet(src[i*4+2])*16+
+				  DecodeWithHexBinAlphabet(src[i*4+3]);
+		dest[current++] = DecodeWithHexBinAlphabet(src[i*4+0])*16+
+				  DecodeWithHexBinAlphabet(src[i*4+1]);
+	}
+	dest[current++] = 0;
+	dest[current++] = 0;
+}
+
+void EncodeHexUnicode (unsigned char *dest, const unsigned char *src, int len)
+{
+	int i,current=0;
+
+	for (i = 0; i < len; i++) {
+		dest[current++] = EncodeWithHexBinAlphabet(src[2*i] >> 0x04);
+		dest[current++] = EncodeWithHexBinAlphabet(src[2*i] & 0x0f);
+		dest[current++] = EncodeWithHexBinAlphabet(src[2*i+1] >> 0x04);
+		dest[current++] = EncodeWithHexBinAlphabet(src[2*i+1] & 0x0f);
+	}
+	dest[current++] = 0;
+}
+
 void DecodeHexBin (unsigned char *dest, const unsigned char *src, int len)
 {
 	int i,current=0;
@@ -753,6 +780,19 @@ int BitUnPackInt(unsigned char *Src, int CurrentBit, int *integer, int Bits)
 		z=z/2;
 	}
 	*integer=l;  
+	return CurrentBit+i;
+}
+
+int BitUnPackI (unsigned char *Src, int CurrentBit, int *result, int Bits)
+{
+	int l=0,z,i;
+	
+	z = 1<<(Bits-1);
+	for (i=0; i<Bits; i++) {
+		if (GetBit(Src, CurrentBit+i)) l=l+z;
+		z=z>>1;
+	}
+	*result=l;  
 	return CurrentBit+i;
 }
 

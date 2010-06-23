@@ -21,9 +21,9 @@ OBJFILES = Output\gammu.obj Output\sniff.obj Output\dct3.obj Output\dct4.obj \
     Output\gsmlogo.obj Output\gsmnet.obj Output\gsmpbk.obj Output\gsmring.obj \
     Output\gsmsms.obj Output\gsmwap.obj Output\gsmcomon.obj \
     Output\gsmstate.obj Output\n6110.obj Output\n6510.obj Output\n7110.obj \
-    Output\n9210.obj Output\dct3func.obj Output\nauto.obj Output\nfunc.obj \
+    Output\n9210.obj Output\dct3func.obj Output\nauto.obj Output\nfunc.obj Output\nfuncold.obj \
     Output\alcatel.obj Output\pfunc.obj Output\atgen.obj Output\siemens.obj \
-    Output\irda.obj Output\unixblue.obj Output\win32.obj
+    Output\irda.obj Output\unixblue.obj Output\win32.obj Output\dsiemens.obj
 RESFILES = 
 MAINSOURCE = gammu.bpf
 RESDEPEN = $(RESFILES)

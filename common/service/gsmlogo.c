@@ -177,7 +177,8 @@ void GSM_GetMaxBitmapWidthHeight(GSM_Bitmap_Types Type, unsigned char *width, un
 {
 	switch (Type) {
 		case GSM_CallerLogo	: *width=72; *height=14; break;
-		case GSM_OperatorLogo	: *width=78; *height=21; break;
+		
+		case GSM_OperatorLogo	: *width=101; *height=21; break;
 		case GSM_StartupLogo	: *width=96; *height=65; break;
 		case GSM_PictureImage	: *width=72; *height=28; break;
 		default			:			 break;
@@ -255,11 +256,12 @@ void GSM_ResizeBitmap(GSM_Bitmap *dest, GSM_Bitmap *src, int width, int height)
 	}
 }
 
-static GSM_Error savebmp(FILE *file, GSM_MultiBitmap *bitmap)
+GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 {
-	int		x,y,pos,i,sizeimage;
-	unsigned char	buffer[1];
+	int		x,y,pos,i,sizeimage,buffpos=0;
+	unsigned char	buff[1];
 	div_t		division;
+	bool		isfile=false;
   
 	unsigned char header[]={
 /*1'st header*/   'B','M',             /* BMP file ID */
@@ -285,15 +287,17 @@ static GSM_Error savebmp(FILE *file, GSM_MultiBitmap *bitmap)
                    102, 204, 102,      /* Second color in palette in Blue, Green, Red. Here green */
 		  0x00};               /* Each color in palette is end by 4'th byte */
 
-	header[22]=bitmap->Bitmap[0].Height;
-	header[18]=bitmap->Bitmap[0].Width;
+	if (file!=NULL) isfile=true;
+	
+	header[22]=bitmap->Height;
+	header[18]=bitmap->Width;
      
 	pos=7;
 	sizeimage=0;
 	/*lines are written from the last to the first*/
-	for (y=bitmap->Bitmap[0].Height-1;y>=0;y--) {
+	for (y=bitmap->Height-1;y>=0;y--) {
 		i=1;
-		for (x=0;x<bitmap->Bitmap[0].Width;x++) {
+		for (x=0;x<bitmap->Width;x++) {
 			/*new byte !*/
 			if (pos==7) {
 				if (x!=0) sizeimage++;
@@ -326,41 +330,67 @@ static GSM_Error savebmp(FILE *file, GSM_MultiBitmap *bitmap)
 	division=div(sizeimage,256);
 	header[3]=division.quot;
 	header[2]=sizeimage-(division.quot*256);
-       
-	fwrite(header,1,sizeof(header),file);
+
+	if (isfile) fwrite(header,1,sizeof(header),file);
+	else {
+		memcpy(buffer,header,sizeof(header));
+		buffpos += sizeof(header);
+	}
 
 	pos=7;
 	/*lines are written from the last to the first*/
-	for (y=bitmap->Bitmap[0].Height-1;y>=0;y--) {
+	for (y=bitmap->Height-1;y>=0;y--) {
 		i=1;
-		for (x=0;x<bitmap->Bitmap[0].Width;x++) {
+		for (x=0;x<bitmap->Width;x++) {
 			/*new byte !*/
 			if (pos==7) {
-				if (x!=0) fwrite(buffer, 1, sizeof(buffer), file);
+				if (x!=0) {
+					if (isfile) fwrite(buff, 1, sizeof(buff), file);
+					    else {
+						memcpy (buffer+buffpos,buff,1);
+						buffpos++;
+					}
+				}
 				i++;
 				/*each line is written in multiply of 4 bytes*/
 				if(i==5) i=1;
-				buffer[0]=0;
+				buff[0]=0;
 			}
-			if (!GSM_IsPointBitmap(&bitmap->Bitmap[0],x,y)) buffer[0]|=(1<<pos);
+			if (!GSM_IsPointBitmap(bitmap,x,y)) buff[0]|=(1<<pos);
 			pos--;
 			/*going to new byte*/
 			if (pos<0) pos=7;
 		}
 		/*going to new byte*/
 		pos=7; 
-		fwrite(buffer, 1, sizeof(buffer), file);
+		if (isfile) fwrite(buff, 1, sizeof(buff), file);
+		else {
+			memcpy (buffer+buffpos,buff,1);
+			buffpos++;
+		}
 		if (i!=1) {
 			/*each line is written in multiply of 4 bytes*/
 			while (i!=5)
 			{
-				buffer[0]=0;
-				fwrite(buffer, 1, sizeof(buffer), file);
+				buff[0]=0;
+				if (isfile) fwrite(buff, 1, sizeof(buff), file);
+				else {
+					memcpy (buffer+buffpos,buff,1);
+					buffpos++;
+				}
 				i++;
 			}
 		}
 	}
 	return GE_NONE;
+}
+
+static GSM_Error savebmp(FILE *file, GSM_MultiBitmap *bitmap)
+{
+	GSM_Error	error;
+
+	error=Bitmap2BMP(NULL,file,&bitmap->Bitmap[0]);
+	return error;
 }
 
 static GSM_Error savenlm(FILE *file, GSM_MultiBitmap *bitmap)
@@ -547,35 +577,35 @@ GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	return error;
 }
 
-static GSM_Error loadbmp(FILE *file, GSM_MultiBitmap *bitmap)
+GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 {
-	unsigned char	buffer[34];
-	bool		first_white;
-	int		w,h,pos,y,x,i;
+	bool		first_white,isfile=false;
+	unsigned char 	buff[34];
+	int		w,h,pos,y,x,i,buffpos=0;
 #ifdef DEBUG
 	int		sizeimage=0;
 #endif
 
-	if (bitmap->Bitmap[0].Type == GSM_None) bitmap->Bitmap[0].Type = GSM_StartupLogo;
-
-	/* required part of header */
-	fread(buffer, 1, 34, file);
+	if (bitmap->Type == GSM_None) bitmap->Type = GSM_StartupLogo;
+	if (file!=NULL) isfile=true;
+	if (isfile) fread(buff, 1, 34, file);
+	    else    memcpy(buff,buffer,34);
 
 	/* height and width of image in the file */
-	h=buffer[22]+256*buffer[21]; 
-	w=buffer[18]+256*buffer[17];
+	h=buff[22]+256*buff[21]; 
+	w=buff[18]+256*buff[17];
 	dprintf("Image Size in BMP file: %dx%d\n",w,h);
 
-	GSM_GetMaxBitmapWidthHeight(bitmap->Bitmap[0].Type, &bitmap->Bitmap[0].Width, &bitmap->Bitmap[0].Height);
-	if (h<bitmap->Bitmap[0].Height)	bitmap->Bitmap[0].Height=h;
-	if (w<bitmap->Bitmap[0].Width)	bitmap->Bitmap[0].Width=w;
-	dprintf("Height %i %i, width %i %i\n",h,bitmap->Bitmap[0].Height,w,bitmap->Bitmap[0].Width);
+	GSM_GetMaxBitmapWidthHeight(bitmap->Type, &bitmap->Width, &bitmap->Height);
+	if (h<bitmap->Height)	bitmap->Height=h;
+	if (w<bitmap->Width)	bitmap->Width=w;
+	dprintf("Height %i %i, width %i %i\n",h,bitmap->Height,w,bitmap->Width);
 
-	GSM_ClearBitmap(&bitmap->Bitmap[0]);  
+	GSM_ClearBitmap(bitmap);  
 
 #ifdef DEBUG
 	dprintf("Number of colors in BMP file: ");
-	switch (buffer[28]) {
+	switch (buff[28]) {
 		case 1	: dprintf("2 (supported)\n");		   break;
 		case 4	: dprintf("16 (NOT SUPPORTED)\n");	   break;
 		case 8	: dprintf("256 (NOT SUPPORTED)\n");	   break;
@@ -583,54 +613,62 @@ static GSM_Error loadbmp(FILE *file, GSM_MultiBitmap *bitmap)
 		default	: dprintf("unknown\n");			   break;
 	}
 #endif
-	if (buffer[28]!=1) {
+	if (buff[28]!=1) {
 		dprintf("Wrong number of colors\n");
 		return GE_FILENOTSUPPORTED;
 	}
 
 #ifdef DEBUG
 	dprintf("Compression in BMP file: ");
-	switch (buffer[30]) {
+	switch (buff[30]) {
 		case 0	:dprintf("no compression (supported)\n"); break;
 		case 1	:dprintf("RLE8 (NOT SUPPORTED)\n");	  break;
 		case 2	:dprintf("RLE4 (NOT SUPPORTED)\n");	  break;
 		default	:dprintf("unknown\n");			  break;
 	}
 #endif  
-	if (buffer[30]!=0) {
+	if (buff[30]!=0) {
 		dprintf("Compression type not supported\n");
 		return GE_FILENOTSUPPORTED;
 	}
 
 	/* read rest of header (if exists) and color palette */
-	pos=buffer[10]-34;
-	fread(buffer, 1, pos, file);
+	if (isfile) {
+	    pos=buff[10]-34;
+	    fread(buff, 1, pos, file);
+	} else	{
+	    pos=buff[10]-34;
+	    buffpos=buff[10];	
+	    memcpy (buff,buffer+34,pos);	    
+	}
 
 #ifdef DEBUG  
-	dprintf("First color in BMP file: %i %i %i ",buffer[pos-8], buffer[pos-7], buffer[pos-6]);
-	if (buffer[pos-8]==0    && buffer[pos-7]==0    && buffer[pos-6]==0)    dprintf("(white)");
-	if (buffer[pos-8]==0xFF && buffer[pos-7]==0xFF && buffer[pos-6]==0xFF) dprintf("(black)");
-	if (buffer[pos-8]==102  && buffer[pos-7]==204  && buffer[pos-6]==102)  dprintf("(green)");
+	dprintf("First color in BMP file: %i %i %i ",buff[pos-8], buff[pos-7], buff[pos-6]);
+	if (buff[pos-8]==0    && buff[pos-7]==0    && buff[pos-6]==0)    dprintf("(white)");
+	if (buff[pos-8]==0xFF && buff[pos-7]==0xFF && buff[pos-6]==0xFF) dprintf("(black)");
+	if (buff[pos-8]==102  && buff[pos-7]==204  && buff[pos-6]==102)  dprintf("(green)");
 	dprintf("\n");
-	dprintf("Second color in BMP file: %i %i %i ",buffer[pos-4], buffer[pos-3], buffer[pos-2]);
-	if (buffer[pos-4]==0    && buffer[pos-3]==0    && buffer[pos-2]==0)    dprintf("(white)");
-	if (buffer[pos-4]==0xFF && buffer[pos-3]==0xFF && buffer[pos-2]==0xFF) dprintf("(black)");
+	dprintf("Second color in BMP file: %i %i %i ",buff[pos-38], buff[pos-37], buff[pos-36]);
+	if (buff[pos-4]==0    && buff[pos-3]==0    && buff[pos-2]==0)    dprintf("(white)");
+	if (buff[pos-4]==0xFF && buff[pos-3]==0xFF && buff[pos-2]==0xFF) dprintf("(black)");
 	dprintf("\n");  
 #endif
 	first_white=true;
-	if (buffer[pos-8]!=0 || buffer[pos-7]!=0 || buffer[pos-6]!=0) first_white=false;
+	if (buff[pos-8]!=0 || buff[pos-7]!=0 || buff[pos-6]!=0) first_white=false;
  
 	pos=7;
 	/* lines are written from the last to the first */
-	for (y=h-1;y>=0;y--)
-	{
+	for (y=h-1;y>=0;y--) {
 		i=1;
-		for (x=0;x<w;x++)
-		{
+		for (x=0;x<w;x++) {
 			/* new byte ! */
-			if (pos==7)
-			{
-				fread(buffer, 1, 1, file);
+			if (pos==7){
+
+				if (isfile) fread(buff, 1, 1, file);
+				    else {
+					    memcpy (buff,buffer+buffpos,1);
+					    buffpos++;					    
+					 }
 #ifdef DEBUG
 				sizeimage++;
 #endif
@@ -639,12 +677,11 @@ static GSM_Error loadbmp(FILE *file, GSM_MultiBitmap *bitmap)
 				if(i==5) i=1;
 			}
 			/* we have top left corner ! */
-			if (x<=bitmap->Bitmap[0].Width && y<=bitmap->Bitmap[0].Height)
-			{
+			if (x<=bitmap->Width && y<=bitmap->Height) {
 				if (first_white) {
-					if ((buffer[0]&(1<<pos))<=0) GSM_SetPointBitmap(&bitmap->Bitmap[0],x,y);
+					if ((buff[0]&(1<<pos))<=0) GSM_SetPointBitmap(bitmap,x,y);
 				} else {
-					if ((buffer[0]&(1<<pos))>0) GSM_SetPointBitmap(&bitmap->Bitmap[0],x,y);
+					if ((buff[0]&(1<<pos))>0) GSM_SetPointBitmap(bitmap,x,y);
 				}
 			}
 			pos--;
@@ -655,9 +692,13 @@ static GSM_Error loadbmp(FILE *file, GSM_MultiBitmap *bitmap)
 		pos=7;
 		if (i!=1) {
 			/* each line is written in multiply of 4 bytes */
-			while (i!=5)
-			{
-				fread(buffer, 1, 1, file);
+			while (i!=5) {
+
+				if (isfile) fread(buff, 1, 1, file);
+				    else {
+					    memcpy (buff,buffer+buffpos,1);				    
+					    buffpos++;
+					 }
 #ifdef DEBUG
 				sizeimage++;
 #endif
@@ -668,8 +709,16 @@ static GSM_Error loadbmp(FILE *file, GSM_MultiBitmap *bitmap)
 #ifdef DEBUG
 	dprintf("Data size in BMP file: %i\n",sizeimage);
 #endif
-	bitmap->Number = 1;
 	return(GE_NONE);
+}
+
+static GSM_Error loadbmp(FILE *file, GSM_MultiBitmap *bitmap)
+{
+	GSM_Error	error;
+
+	error=BMP2Bitmap(NULL,file,&bitmap->Bitmap[0]);
+	bitmap->Number = 1;
+	return error;
 }
 
 static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)

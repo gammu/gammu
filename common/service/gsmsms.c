@@ -809,18 +809,20 @@ static void GSM_EncodeSMS30MultiPartSMS(GSM_EncodeMultiPartSMSInfo *Info,
 	}
 }
 
-static GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
-				     GSM_Coding_Type		Coding,
-				     char 			*Buffer,
-				     int			BufferLen,
-				     bool 			UDH,
-				     int 			*UsedText)
+GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
+			      GSM_Coding_Type		Coding,
+			      char 			*Buffer,
+			      int			BufferLen,
+			      bool 			UDH,
+			      int 			*UsedText)
 {
-	int Pos,Free,Copy;
+	int Pos,Free,Copy,i,j;
 
 	switch (Coding) {
 	case GSM_Coding_Default:
 		FindDefaultAlphabetLen(SMS->SMS[SMS->Number].Text,&Pos,UsedText,500);
+		if (*UsedText % 7 != 0) *UsedText++;
+		*UsedText = *UsedText * 7 / 8;
 		break;
 	case GSM_Coding_Unicode:
 		*UsedText = strlen(DecodeUnicodeString(SMS->SMS[SMS->Number].Text))*2;
@@ -829,7 +831,7 @@ static GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
 		*UsedText = SMS->SMS[SMS->Number].Length;
 		break;
 	}
-	Free = GSM_MAX_8BIT_SMS_LENGTH - SMS->SMS[SMS->Number].UDH.Length - 1 - *UsedText;
+	Free = GSM_MAX_8BIT_SMS_LENGTH - SMS->SMS[SMS->Number].UDH.Length - *UsedText;
 	dprintf("Free, Used %i %i\n",Free,*UsedText);
 	if (UDH) {
 		dprintf("Adding UDH\n");
@@ -859,17 +861,25 @@ static GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
 		Pos = 0;
 		while (Pos != BufferLen) {
 			Copy = Free;
-			dprintf("Copying %i bytes\n",Copy);
 			if (BufferLen - Pos < Free) Copy = BufferLen - Pos;
-			dprintf("Copying %i bytes\n",Copy);
+			dprintf("Copying %i bytes, free %i\n",Copy,Free);
 			switch (Coding) {
 			case GSM_Coding_Default:
+				FindDefaultAlphabetLen(Buffer+Pos*2,&i,&j,Free*8/7);
+				SMS->SMS[SMS->Number].Text[strlen(DecodeUnicodeString(SMS->SMS[SMS->Number].Text))*2+i*2]   = 0;
+				SMS->SMS[SMS->Number].Text[strlen(DecodeUnicodeString(SMS->SMS[SMS->Number].Text))*2+i*2+1] = 0;
+				memcpy(SMS->SMS[SMS->Number].Text+strlen(DecodeUnicodeString(SMS->SMS[SMS->Number].Text))*2,Buffer+Pos*2,i*2);
+				dprintf("def length %i %i\n",i,j);
+				Copy = i;
+				break;
 			case GSM_Coding_Unicode:
 				SMS->SMS[SMS->Number].Text[strlen(DecodeUnicodeString(SMS->SMS[SMS->Number].Text))*2+Copy*2]   = 0;
 				SMS->SMS[SMS->Number].Text[strlen(DecodeUnicodeString(SMS->SMS[SMS->Number].Text))*2+Copy*2+1] = 0;
-				memcpy(SMS->SMS[SMS->Number].Text+strlen(DecodeUnicodeString(SMS->SMS[SMS->Number].Text))*2,Buffer+Pos*2,Copy*2);				
+				memcpy(SMS->SMS[SMS->Number].Text+strlen(DecodeUnicodeString(SMS->SMS[SMS->Number].Text))*2,Buffer+Pos*2,Copy*2);
 				break;
 			case GSM_Coding_8bit:
+				memcpy(SMS->SMS[SMS->Number].Text+SMS->SMS[SMS->Number].Length,Buffer+Pos,Copy);
+				SMS->SMS[SMS->Number].Length += Copy;
 				break;
 			}
 			Pos += Copy;
@@ -897,6 +907,10 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 
 	GSM_Phone_Bitmap_Types	BitmapType;
 	EncodeMultiPartSMSEntry *Entry;
+
+#ifdef DEBUG
+	if (linked) dprintf("linked EMS\n");
+#endif
 
 	/* Cleaning on the start */
 	for (i=0;i<MAX_MULTI_SMS;i++)

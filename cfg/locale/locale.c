@@ -295,11 +295,13 @@ int main(int argc, char *argv[])
 	cfg_info = CFG_ReadFile("../../../../docs/docs/locale/gammu_us.txt",true);
 
 	ProcessLangFile("../../../../docs/docs/locale/gammu_pl.txt");
+	ProcessLangFile("../../../../docs/docs/locale/gammu_de.txt");
 #else
 	RemoveDuplicatedStrings("../../docs/docs/locale/gammu_us.txt");
 	cfg_info = CFG_ReadFile("../../docs/docs/locale/gammu_us.txt",true);
 
 	ProcessLangFile("../../docs/docs/locale/gammu_pl.txt");
+	ProcessLangFile("../../docs/docs/locale/gammu_de.txt");
 #endif
 	printf("\n");
 	
