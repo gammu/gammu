@@ -121,7 +121,13 @@ GSM_Phone_Functions N650Phone = {
 	NOTSUPPORTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED,			/*	GetNoteStatus		*/
+	NOTSUPPORTED,			/*	GetNote			*/
 	NOTSUPPORTED,			/*	GetNextNote		*/
+	NOTSUPPORTED,			/*	SetNote			*/
+	NOTSUPPORTED,			/*	AddNote			*/
+	NOTSUPPORTED,			/* 	DeleteNote		*/
+	NOTSUPPORTED,			/*	DeleteAllNotes		*/
 	NOTSUPPORTED, 			/*	GetProfile		*/
 	NOTSUPPORTED, 			/*	SetProfile		*/
     	NOTSUPPORTED,			/*  	GetFMStation        	*/

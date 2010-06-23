@@ -4,6 +4,15 @@
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
  * GNU GPL version 2 or later
  */
+/* Due to a problem in the source code management, the names of some of
+ * the authors have unfortunately been lost. We do not mean to belittle
+ * their efforts and hope they will contact us to see their names
+ * properly added to the Copyright notice above.
+ * Having published their contributions under the terms of the GNU
+ * General Public License (GPL) [version 2], the Copyright of these
+ * authors will remain respected by adhering to the license they chose
+ * to publish their code under.
+ */
 
 #include "../../../gsmstate.h"
 
@@ -2082,6 +2091,9 @@ static GSM_Error N6110_ReplyAddCalendar(GSM_Protocol_Message msg, GSM_StateMachi
                 case 0x01:
                         smprintf(s, "OK\n");
                         return ERR_NONE;
+		case 0x02:
+                        smprintf(s, "OK, but text was shortened\n");
+                        return ERR_NONE;
                 case 0x73:
                 case 0x7d:
                         smprintf(s, "error\n");
@@ -2098,7 +2110,7 @@ static GSM_Error N6110_ReplyAddCalendar(GSM_Protocol_Message msg, GSM_StateMachi
 static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
         bool            Reminder3310 = false;
-        int             Text, Time, Alarm, Phone, Recurrance, EndTime, Location, i, current;
+        int             Text, Time, Alarm, Phone, EndTime, Location, i, current;
         unsigned char   mychar1,mychar2;
         unsigned char   req[200] = {N6110_FRAME_HEADER, 0x64, 0x01, 0x10,
                                     0x00,       /* Length of the rest of the frame */
@@ -2108,7 +2120,7 @@ static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *N
 
         if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOCALENDAR)) return ERR_NOTSUPPORTED;
 
-        GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime, &Location);
+        GSM_CalendarFindDefaultTextTimeAlarmPhone(Note, &Text, &Time, &Alarm, &Phone, &EndTime, &Location);
 
         if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_CAL52)) {
                 switch(Note->Type) {
@@ -2413,7 +2425,7 @@ static GSM_Error N6110_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateM
 
 static GSM_Error N6110_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
-        int                             Text, Time, Alarm, Phone, Recurrance, EndTime, Location;
+        int                             Text, Time, Alarm, Phone, EndTime, Location;
         GSM_Error                       error;
         GSM_DateTime                    date_time;
         GSM_Phone_N6110Data             *Priv = &s->Phone.Data.Priv.N6110;
@@ -2435,12 +2447,13 @@ static GSM_Error N6110_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarEntr
         smprintf(s, "Getting calendar note\n");
         error=GSM_WaitFor (s, req, 5, 0x13, 4, ID_GetCalendarNote);
 
-        GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime, &Location);
+        GSM_CalendarFindDefaultTextTimeAlarmPhone(Note, &Text, &Time, &Alarm, &Phone, &EndTime, &Location);
         /* 2090 year is set for example in 3310 */
         if (error == ERR_NONE && Note->Entries[Time].Date.Year == 2090) {
                 error=N6110_GetDateTime(s, &date_time);
                 if (error == ERR_NONE) Note->Entries[Time].Date.Year = date_time.Year;
         }
+        if (error == ERR_INVALIDLOCATION) error = ERR_EMPTY;
         return error;
 }
 
@@ -2868,7 +2881,13 @@ GSM_Phone_Functions N6110Phone = {
         NOTIMPLEMENTED,                 /*      DeleteAllCalendar       */
         NOTSUPPORTED,                   /*      GetCalendarSettings     */
         NOTSUPPORTED,                   /*      SetCalendarSettings     */
-        NOTSUPPORTED,                   /*      GetNextNote             */
+	NOTSUPPORTED,			/*	GetNoteStatus		*/
+	NOTSUPPORTED,			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNextNote		*/
+	NOTSUPPORTED,			/*	SetNote			*/
+	NOTSUPPORTED,			/*	AddNote			*/
+	NOTSUPPORTED,			/* 	DeleteNote		*/
+	NOTSUPPORTED,			/*	DeleteAllNotes		*/
         N6110_GetProfile,
         N6110_SetProfile,
         NOTSUPPORTED,                   /*      GetFMStation            */

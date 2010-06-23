@@ -11,9 +11,6 @@ ECHO             = @ECHO@
 CC               = @CC@
 CFLAGS           = @CFLAGS@
 LDLIBS           = @LDLIBS@
-# use these 2 in DJGPP:
-# CFLAGS           = -Wall -Wno-format-y2k
-# LDLIBS           = 
 INSTALL          = @INSTALL@
 FIND             = @FIND@
 RPMBUILD         = @RPMBUILD@
@@ -36,3 +33,7 @@ TEMP_DIR        = @TEMP_DIR@
 
 LDFLAGS         += -Wl,--rpath -Wl,"${INSTALL_LIB_DIR}"
 CFLAGS          += -DLOCALE_PATH="\"${INSTALL_LOC_DIR}\""
+
+# use these 2 in DJGPP:
+# CFLAGS           = -Wall -Wno-format-y2k
+# LDLIBS           = 

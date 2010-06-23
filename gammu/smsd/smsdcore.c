@@ -110,11 +110,11 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 
 	Config->PINCode=INI_GetValue(smsdcfgfile, "smsd", "PIN", false);
 	if (Config->PINCode == NULL) {
-		if (log) WriteSMSDLog("No PIN code in %s file",filename);
-		fprintf(stderr,"No PIN code in %s file\n",filename);
-		exit(-1);
+ 		if (log) WriteSMSDLog("Warning: No PIN code in %s file",filename);
+ 		fprintf(stderr,"Warning: No PIN code in %s file\n",filename);
+	} else {
+		if (log) WriteSMSDLog("PIN code is \"%s\"",Config->PINCode);
 	}
-	if (log) WriteSMSDLog("PIN code is \"%s\"",Config->PINCode);
 
 	str = INI_GetValue(smsdcfgfile, "smsd", "commtimeout", false);
 	if (str) Config->commtimeout=atoi(str); else Config->commtimeout = 1;
@@ -217,16 +217,21 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	/* If PIN, try to enter */
 	switch (SecurityCode.Type) {
 	case SEC_Pin:
-		WriteSMSDLog("Trying to enter PIN");
-		strcpy(SecurityCode.Code,Config->PINCode);
-		error=Phone->EnterSecurityCode(&s,SecurityCode);
-		if (error == ERR_SECURITYERROR) {
-			GSM_Terminate_SMSD("ERROR: incorrect PIN", error, true, -1);
-		}
-		if (error != ERR_NONE) {
-			WriteSMSDLog("Error entering PIN (%i)", error);
+		if (Config->PINCode==NULL) {
+			WriteSMSDLog("Warning: no PIN in config");
 			return false;
-	  	}
+		} else {
+			WriteSMSDLog("Trying to enter PIN");
+			strcpy(SecurityCode.Code,Config->PINCode);
+			error=Phone->EnterSecurityCode(&s,SecurityCode);
+			if (error == ERR_SECURITYERROR) {
+				GSM_Terminate_SMSD("ERROR: incorrect PIN", error, true, -1);
+			}
+			if (error != ERR_NONE) {
+				WriteSMSDLog("Error entering PIN (%i)", error);
+				return false;
+		  	}
+		}
 		break;
 	case SEC_SecurityCode:
 	case SEC_Pin2:

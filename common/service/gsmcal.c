@@ -6,18 +6,233 @@
 #include "gsmmisc.h"
 #include "../misc/coding/coding.h"
 
+void GSM_SetCalendarRecurrance(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)
+{
+	int		i,start=-1,frequency=-1,dow=-1,day=-1,month=-1,end=-1,Recurrance = 0, Repeat=0;
+	char 		Buf[20];
+	GSM_DateTime	DT;
+	time_t		t_time1,t_time2;
+
+	rec[0] = 0;
+	rec[1] = 0;
+
+	for (i=0;i<entry->EntriesNum;i++) {
+		if (entry->Entries[i].EntryType == CAL_START_DATETIME)   start 		= i;
+		if (entry->Entries[i].EntryType == CAL_REPEAT_FREQUENCY) frequency 	= i;
+		if (entry->Entries[i].EntryType == CAL_REPEAT_DAYOFWEEK) dow 		= i;
+		if (entry->Entries[i].EntryType == CAL_REPEAT_DAY)       day 		= i;
+		if (entry->Entries[i].EntryType == CAL_REPEAT_MONTH)     month 		= i;
+		if (entry->Entries[i].EntryType == CAL_REPEAT_STOPDATE)  end 		= i;
+	}
+	if (start == -1) return;
+
+	if (frequency != -1 && dow == -1 && day == -1 && month == -1) {
+		if (entry->Entries[frequency].Number == 1) {
+			//each day
+			Recurrance = 24;
+		}
+	}
+
+	sprintf(Buf,"%s",DayOfWeek(entry->Entries[start].Date.Year,
+			entry->Entries[start].Date.Month,
+			entry->Entries[start].Date.Day));
+	if (!strcmp(Buf,"Mon")) i = 1;
+	if (!strcmp(Buf,"Tue")) i = 2;
+	if (!strcmp(Buf,"Wed")) i = 3;
+	if (!strcmp(Buf,"Thu")) i = 4;
+	if (!strcmp(Buf,"Fri")) i = 5;
+	if (!strcmp(Buf,"Sat")) i = 6;
+	if (!strcmp(Buf,"Sun")) i = 7;
+
+	if (frequency != -1 && dow != -1 && day == -1 && month == -1) {
+		if (entry->Entries[frequency].Number == 1 && 
+		    entry->Entries[dow].Number == i) {
+			//one week
+			Recurrance = 24*7;
+		}
+	}
+	if (frequency != -1 && dow != -1 && day == -1 && month == -1) {
+		if (entry->Entries[frequency].Number == 2 && 
+		    entry->Entries[dow].Number == i) {
+			//two weeks
+			Recurrance = 24*14;
+		}
+	}
+	if (frequency != -1 && dow == -1 && day != -1 && month == -1) {
+		if (entry->Entries[frequency].Number == 1 && 
+		    entry->Entries[day].Number == entry->Entries[start].Date.Day) {
+			//month
+			Recurrance = 0xffff-1;
+		}
+	}
+	if (frequency != -1 && dow == -1 && day != -1 && month != -1) {
+		if (entry->Entries[frequency].Number == 1 && 
+		    entry->Entries[day].Number == entry->Entries[start].Date.Day &&
+		    entry->Entries[month].Number == entry->Entries[start].Date.Month) {
+			//year
+			Recurrance = 0xffff;
+		}
+	}
+
+	rec[0] = Recurrance / 256;
+	rec[1] = Recurrance % 256;
+
+	if (endday != NULL) {
+		endday[0] = 0;
+		endday[1] = 0;
+	}
+	if (end == -1) return;
+
+	switch (Recurrance) {
+		case 24:
+		case 24*7:
+		case 24*14:
+			t_time1 = Fill_Time_T(entry->Entries[start].Date,8);
+			t_time2 = Fill_Time_T(entry->Entries[end].Date,8);
+			if (t_time2 - t_time1 <= 0) return;
+			Repeat = (t_time2 - t_time1) / (60*60*Recurrance) + 1;
+			break;
+		case 0xffff-1:
+			memcpy(&DT,&entry->Entries[start].Date,sizeof(GSM_DateTime));
+			while (1) {
+				if ((DT.Year == entry->Entries[end].Date.Year && DT.Month > entry->Entries[end].Date.Month) ||
+				    (DT.Year >  entry->Entries[end].Date.Year)) break;
+				if (DT.Month == 12) {
+					DT.Month = 1;
+					DT.Year++;
+				} else {
+					DT.Month++;
+				}
+				Repeat++;
+			}
+			break;
+		case 0xffff:
+			Repeat = entry->Entries[end].Date.Year-entry->Entries[start].Date.Year+1;
+			break;
+	}
+
+	endday[0] = Repeat/256;
+	endday[1] = Repeat%256;
+
+	dbgprintf("Repeat number: %i\n",Repeat);
+}
+
+void GSM_GetCalendarRecurrance(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)
+{
+	int 	Recurrance,num=-1,i;
+	char 	Buf[20];
+
+	Recurrance = rec[0]*256 + rec[1];
+	if (Recurrance == 0) return;
+
+	for (i=0;i<entry->EntriesNum;i++) {
+		if (entry->Entries[i].EntryType == CAL_START_DATETIME) {
+			num = i;
+			break;
+		}
+	}
+	if (num == -1) return;
+	sprintf(Buf,"%s",DayOfWeek(entry->Entries[num].Date.Year,
+			entry->Entries[num].Date.Month,
+			entry->Entries[num].Date.Day));
+
+	/* 8760 hours = 1 year */
+	if (Recurrance == 0xffff) Recurrance=8760;
+
+	/* dct4: 30 days is 65534, in dct3 unavailable */
+	if (Recurrance == 0xffff-1) Recurrance=24*30;
+
+	dbgprintf("Recurrance   : %i hours\n",Recurrance);
+
+	if (Recurrance == 24    || Recurrance == 24*7 || 
+	    Recurrance == 24*30 || Recurrance == 24*365) {
+		entry->Entries[entry->EntriesNum].EntryType	= CAL_REPEAT_FREQUENCY;
+		entry->Entries[entry->EntriesNum].Number	= 1;
+		entry->EntriesNum++;
+	}
+	if (Recurrance == 24*14) {
+		entry->Entries[entry->EntriesNum].EntryType	= CAL_REPEAT_FREQUENCY;
+		entry->Entries[entry->EntriesNum].Number	= 2;
+		entry->EntriesNum++;
+	}
+	if (Recurrance == 24*7 || Recurrance == 24*14) {
+		entry->Entries[entry->EntriesNum].EntryType	 = CAL_REPEAT_DAYOFWEEK;
+		if (!strcmp(Buf,"Mon")) {
+			entry->Entries[entry->EntriesNum].Number = 1;
+		} else if (!strcmp(Buf,"Tue")) {
+			entry->Entries[entry->EntriesNum].Number = 2;
+		} else if (!strcmp(Buf,"Wed")) {
+			entry->Entries[entry->EntriesNum].Number = 3;
+		} else if (!strcmp(Buf,"Thu")) {
+			entry->Entries[entry->EntriesNum].Number = 4;
+		} else if (!strcmp(Buf,"Fri")) {
+			entry->Entries[entry->EntriesNum].Number = 5;
+		} else if (!strcmp(Buf,"Sat")) {
+			entry->Entries[entry->EntriesNum].Number = 6;
+		} else if (!strcmp(Buf,"Sun")) {
+			entry->Entries[entry->EntriesNum].Number = 7;
+		}
+		entry->EntriesNum++;
+	}
+	if (Recurrance == 24*30) {
+		entry->Entries[entry->EntriesNum].EntryType	= CAL_REPEAT_DAY;
+		entry->Entries[entry->EntriesNum].Number	= entry->Entries[num].Date.Day;
+		entry->EntriesNum++;
+	}
+	if (Recurrance == 24*365) {
+		entry->Entries[entry->EntriesNum].EntryType	= CAL_REPEAT_DAY;
+		entry->Entries[entry->EntriesNum].Number	= entry->Entries[num].Date.Day;
+		entry->EntriesNum++;
+		entry->Entries[entry->EntriesNum].EntryType	= CAL_REPEAT_MONTH;
+		entry->Entries[entry->EntriesNum].Number	= entry->Entries[num].Date.Month;
+		entry->EntriesNum++;
+	}
+	if (endday == NULL || endday[0]*256+endday[1] == 0) return;
+	dbgprintf("Repeat   : %i times\n",endday[0]*256+endday[1]);
+	memcpy(&entry->Entries[entry->EntriesNum].Date,&entry->Entries[num].Date,sizeof(GSM_DateTime));
+	entry->Entries[entry->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
+	switch (Recurrance) {
+		case 24:
+		case 24*7:
+		case 24*14:
+			GetTimeDifference(60*60*Recurrance*(endday[0]*256+endday[1]-1), &entry->Entries[entry->EntriesNum].Date, true, 1);
+			entry->EntriesNum++;
+			break;
+		case 24*30:
+			for (i=0;i<endday[0]*256+endday[1]-1;i++) {
+				if (entry->Entries[entry->EntriesNum].Date.Month == 12) {
+					entry->Entries[entry->EntriesNum].Date.Month = 1;
+					entry->Entries[entry->EntriesNum].Date.Year++;
+				} else {
+					entry->Entries[entry->EntriesNum].Date.Month++;
+				}
+			}
+			entry->EntriesNum++;
+			break;
+		case 24*365:
+			entry->Entries[entry->EntriesNum].Date.Year += (endday[0]*256+endday[1] - 1);
+			entry->EntriesNum++;
+			break;
+	}
+	dbgprintf("End Repeat Time: %04i-%02i-%02i %02i:%02i\n",
+		entry->Entries[entry->EntriesNum-1].Date.Year,
+		entry->Entries[entry->EntriesNum-1].Date.Month,
+		entry->Entries[entry->EntriesNum-1].Date.Day,
+		entry->Entries[entry->EntriesNum-1].Date.Hour,
+		entry->Entries[entry->EntriesNum-1].Date.Minute,
+		entry->Entries[entry->EntriesNum-1].Date.Second);
+}
+
 bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 {
 	bool 		Past = true;
-	int		i;
+	int		i,End=-1;
 	GSM_DateTime	DT;
+	char		rec[20],endday[20];
 
 	GSM_GetCurrentDateTime (&DT);
 	for (i = 0; i < note->EntriesNum; i++) {
 		switch (note->Entries[i].EntryType) {
-		case CAL_RECURRANCE:
-			Past = false;
-			break;
 		case CAL_START_DATETIME :
 			if (note->Entries[i].Date.Year > DT.Year) Past = false;
 			if (note->Entries[i].Date.Year == DT.Year &&
@@ -26,22 +241,31 @@ bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 			    note->Entries[i].Date.Month == DT.Month &&
 			    note->Entries[i].Date.Day > DT.Day) Past = false;
 			break;
+		case CAL_REPEAT_STOPDATE:
+			if (End == -1) End = i;
 		default:
 			break;
 		}
 		if (!Past) break;
 	}
-	switch (note->Type) {
-		case GSM_CAL_BIRTHDAY:
+	if (note->Type == GSM_CAL_BIRTHDAY) Past = false;
+	GSM_SetCalendarRecurrance(rec, endday, note);
+	if (rec[0] != 0 || rec[1] != 0) {
+		if (End == -1) {
 			Past = false;
-			break;
-		default:
-			break;
+		} else {
+			if (note->Entries[End].Date.Year > DT.Year) Past = false;
+			if (note->Entries[End].Date.Year == DT.Year &&
+			    note->Entries[End].Date.Month > DT.Month) Past = false;
+			if (note->Entries[End].Date.Year == DT.Year &&
+			    note->Entries[End].Date.Month == DT.Month &&
+			    note->Entries[End].Date.Day > DT.Day) Past = false;
+		}
 	}
 	return Past;
 }
 
-void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime, int *Location)
+void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *EndTime, int *Location)
 {
 	int i;
 
@@ -49,7 +273,6 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entr
 	*Time		= -1;
 	*Alarm		= -1;
 	*Phone		= -1;
-	*Recurrance	= -1;
 	*EndTime	= -1;
 	*Location	= -1;
 	for (i = 0; i < entry->EntriesNum; i++) {
@@ -63,9 +286,6 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entr
 		case CAL_ALARM_DATETIME :
 		case CAL_SILENT_ALARM_DATETIME:
 			if (*Alarm == -1) *Alarm = i;
-			break;
-		case CAL_RECURRANCE:
-			if (*Recurrance == -1) *Recurrance = i;
 			break;
 		case CAL_TEXT:
 			if (*Text == -1) *Text = i;
@@ -84,10 +304,10 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entr
 
 GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version)
 {
- 	int 	Text, Time, Alarm, Phone, Recurrance, EndTime, Location;
-	char 	buffer[2000];
+ 	int 	Text, Time, Alarm, Phone, EndTime, Location;
+	char 	buffer[2000],rec[20],endday[20];
 
-	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime, &Location);
+	GSM_CalendarFindDefaultTextTimeAlarmPhone(note, &Text, &Time, &Alarm, &Phone, &EndTime, &Location);
 
 	if (header) {
 		*Length+=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
@@ -147,12 +367,17 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 		}
 
 		/* Birthday is known to be recurranced */
-		if (Recurrance != -1 && note->Type != GSM_CAL_BIRTHDAY) {
-			switch(note->Entries[Recurrance].Number/24) {
-				case 1	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D1 #0%c%c",13,10);	 break;
-				case 7	 : *Length+=sprintf(Buffer+(*Length), "RRULE:W1 #0%c%c",13,10);	 break;
-				case 14	 : *Length+=sprintf(Buffer+(*Length), "RRULE:W2 #0%c%c",13,10);	 break;
-				case 365 : *Length+=sprintf(Buffer+(*Length), "RRULE:YD1 #0%c%c",13,10); break;
+		if (note->Type != GSM_CAL_BIRTHDAY) {
+			GSM_SetCalendarRecurrance(rec, endday, note);
+			if (endday[0]*256+endday[1] == 0) {
+				switch(rec[0]*256+rec[1]) {
+					case 1*24	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D1 #0%c%c",13,10);	 break;
+					case 7*24	 : *Length+=sprintf(Buffer+(*Length), "RRULE:W1 #0%c%c",13,10);	 break;
+					case 14*24	 : *Length+=sprintf(Buffer+(*Length), "RRULE:W2 #0%c%c",13,10);	 break;
+					case 0xffff-1    : break;
+					case 0xffff 	 : *Length+=sprintf(Buffer+(*Length), "RRULE:YD1 #0%c%c",13,10); break;
+				}
+			} else {
 			}
 		}
 	} else if (Version == Siemens_VCalendar) {
@@ -180,13 +405,15 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 			SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "DALARM");
 		}
 
-		if (Recurrance != -1) {
-			switch(note->Entries[Recurrance].Number/24) {
-				case 1	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D1%c%c",13,10);	break;
-				case 7	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D7%c%c",13,10);	break;
-				case 30	 : *Length+=sprintf(Buffer+(*Length), "RRULE:MD1%c%c",13,10);	break;
-				case 365 : *Length+=sprintf(Buffer+(*Length), "RRULE:YD1%c%c",13,10);	break;
+		GSM_SetCalendarRecurrance(rec, endday, note);
+		if (endday[0]*256+endday[1] == 0) {
+			switch(rec[0]*256+rec[1]) {
+				case 1*24	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D1%c%c",13,10);  break;
+				case 7*24	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D7%c%c",13,10);  break;
+				case 0xffff-1    : *Length+=sprintf(Buffer+(*Length), "RRULE:MD1%c%c",13,10); break;
+				case 0xffff 	 : *Length+=sprintf(Buffer+(*Length), "RRULE:YD1%c%c",13,10); break;
 			}
+		} else {
 		}
 	
 		if (note->Type == GSM_CAL_CALL) {
@@ -353,7 +580,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 
 GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer)
 {
-	unsigned char 	Line[2000],Buff[2000];
+	unsigned char 	Line[2000],Buff[2000],bu[20];
 	int		Level = 0;
 
 	Calendar->EntriesNum 	= 0;
@@ -389,29 +616,29 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			if (strstr(Line,"CATEGORIES:MEETING")) 		Calendar->Type = GSM_CAL_MEETING;
 			if (strstr(Line,"CATEGORIES:APPOINTMENT")) 	Calendar->Type = GSM_CAL_MEETING;
 			if (strstr(Line,"RRULE:D1")) {
-				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
-				Calendar->Entries[Calendar->EntriesNum].Number    = 1*24;
-				Calendar->EntriesNum++;
+				bu[0] = 0;
+				bu[1] = 24;
+				GSM_GetCalendarRecurrance(bu, NULL, Calendar);
 			}
 			if ((strstr(Line,"RRULE:W1")) || (strstr(Line,"RRULE:D7"))) {
-				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
-				Calendar->Entries[Calendar->EntriesNum].Number    = 7*24;
-				Calendar->EntriesNum++;
+				bu[0] = 0;
+				bu[1] = 24*7;
+				GSM_GetCalendarRecurrance(bu, NULL, Calendar);
 			}
 			if (strstr(Line,"RRULE:W2")) {
-				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
-				Calendar->Entries[Calendar->EntriesNum].Number    = 14*24;
-				Calendar->EntriesNum++;
+				bu[0] = (24*14)/256;
+				bu[1] = (24*14)/256;
+				GSM_GetCalendarRecurrance(bu, NULL, Calendar);
 			}
 			if (strstr(Line,"RRULE:MD1")) {
-				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
-				Calendar->Entries[Calendar->EntriesNum].Number    = 30*24;
-				Calendar->EntriesNum++;
+				bu[0] = (0xffff-1)/256;
+				bu[1] = (0xffff-1)/256;
+				GSM_GetCalendarRecurrance(bu, NULL, Calendar);
 			}
 			if (strstr(Line,"RRULE:YD1")) {
-				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
-				Calendar->Entries[Calendar->EntriesNum].Number    = 365*24;
-				Calendar->EntriesNum++;
+				bu[0] = (0xffff)/256;
+				bu[1] = (0xffff)/256;
+				GSM_GetCalendarRecurrance(bu, NULL, Calendar);
 			}
 			if ((ReadVCALText(Line, "SUMMARY", Buff)) || (ReadVCALText(Line, "DESCRIPTION", Buff))) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TEXT;

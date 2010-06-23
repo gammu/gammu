@@ -378,6 +378,7 @@ typedef enum {
 	ID_SetOBEX,
 	ID_SetUSSD,
 	ID_GetNote,
+	ID_SetNote,
 	ID_GetSignalQuality,
 	ID_GetBatteryCharge,
 	ID_GetSMSFolders,
@@ -1290,9 +1291,34 @@ typedef struct {
 	 */
 	GSM_Error (*SetCalendarSettings)(GSM_StateMachine *s, GSM_CalendarSettings *settings);
 	/**
-	 * Gets note.
+	 * Retrieves notes status (number of used entries).
 	 */
-	GSM_Error (*GetNextNote)	(GSM_StateMachine *s, GSM_NoteEntry *Note, bool refresh);
+	GSM_Error (*GetNotesStatus)  	(GSM_StateMachine *s, GSM_ToDoStatus *status);
+	/**
+	 * Retrieves notes entry.
+	 */
+	GSM_Error (*GetNote)		(GSM_StateMachine *s, GSM_NoteEntry *Note);
+	/**
+	 * Retrieves note entry. This is useful for continuous reading of all
+	 * notes entries.
+	 */
+	GSM_Error (*GetNextNote)    	(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start);
+	/**
+	 * Sets note entry
+	 */
+	GSM_Error (*SetNote)		(GSM_StateMachine *s, GSM_NoteEntry *Note);
+	/**
+	 * Adds note entry.
+	 */
+	GSM_Error (*AddNote)		(GSM_StateMachine *s, GSM_NoteEntry *Note);
+	/**
+	 * Deletes note entry.
+	 */
+	GSM_Error (*DeleteNote)     	(GSM_StateMachine *s, GSM_NoteEntry *Note);
+	/**
+	 * Deletes all notes entries.
+	 */
+	GSM_Error (*DeleteAllNotes)  	(GSM_StateMachine *s);
 	/**
 	 * Reads profile.
 	 */
@@ -1535,6 +1561,7 @@ typedef enum {
 	F_CAL35,	/* Calendar,3510 style - Reminder,Call,Birthday			*/
 	F_CAL65,	/* Calendar,6510 style - CBMM, method 3				*/
 	F_WAPMMSPROXY,	/* WAP & MMS settings contains first & second proxy		*/
+	F_CHATSYNCML,	/* Phone with Chat/SyncML settings 				*/
 
 	/* n6510.c && n7110.c */
 	F_VOICETAGS,	/* Voice tags available						*/

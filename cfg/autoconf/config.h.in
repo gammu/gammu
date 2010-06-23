@@ -153,8 +153,10 @@
 //#  define HAVE_MYSQL_MYSQL_H 1
 #endif
 
-#undef HAVE_ISWSPACE
-#undef HAVE_TOWLOWER
+#ifndef DJGPP
+#  undef HAVE_ISWSPACE
+#  undef HAVE_TOWLOWER
+#endif
 
 #if !defined(WIN32) && !defined(DJGPP)
 /* Will be used Bluez BT stack ? */

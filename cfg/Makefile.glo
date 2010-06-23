@@ -63,12 +63,17 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
             $(TOPDIR)/common/phone/nokia/dct4/n3320.o \
             $(TOPDIR)/common/phone/nokia/dct4/n3650.o \
             $(TOPDIR)/common/phone/nokia/dct4/n6510.o \
+            $(TOPDIR)/common/phone/nokia/dct4/6510cal.o \
+            $(TOPDIR)/common/phone/nokia/dct4/6510file.o \
             $(TOPDIR)/common/phone/nokia/dct4/dct4func.o \
             $(TOPDIR)/common/phone/nokia/nauto.o \
             $(TOPDIR)/common/phone/nokia/nfunc.o \
             $(TOPDIR)/common/phone/nokia/nfuncold.o \
             $(TOPDIR)/common/phone/obex/obexgen.o \
             $(TOPDIR)/common/phone/symbian/mroutgen.o
+
+# files for DJGPP only
+DJGPP	  = $(TOPDIR)/common/device/serial/ser_djg.s
 
 # files for command line gammu
 GAMMU     = $(TOPDIR)/gammu/depend/nokia/dct3.o \
@@ -99,18 +104,36 @@ DESTDIR =
 
 # --------------------------- internal source ---------------------------------
 
+# uncomment if you want to have prerequisites files created
+# note: it works correctly only if you're making buildings from one directory
+# only
+#-include $(COMMON:.o=.d)
+#-include $(GAMMU:.o=.d)
+
+%.d:
+	@echo Making prerequisites $*.d
+	@echo $*.d \ > $*.d
+	@echo $*.o \ >> $*.d
+	@$(CC) -MM $(CPPFLAGS) $*.c >> $*.d
+	@echo Making $*.c
+	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $*.c -o $*.o
+
 %.o: %.c
 	@echo Making $<
-	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $(<) -o $(@)
-    
+	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $*.c -o $*.o
+
 all: gammu
 
 $(TOPDIR)/gammu/gammu: $(COMMON) $(GAMMU)
 	@echo Linking gammu
 	@$(CC) $(COMMON) $(GAMMU) -lm $(LDLIBS) -o $(TOPDIR)/gammu/gammu
-  
+
 gammu: $(TOPDIR)/gammu/gammu
-	
+
+djgpp: $(COMMON) $(DJGPP) $(GAMMU)
+	@echo Linking gammu
+	@$(CC) $(COMMON) $(DJGPP) $(GAMMU) -lm $(LDLIBS) -o $(TOPDIR)/gammu/gammu
+
 $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR): $(COMMON)
 	@echo Linking libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
 	@$(CC) $(LDLIBS) -shared -Wl,-soname -Wl,libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) -o $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(COMMON)

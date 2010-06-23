@@ -15,7 +15,7 @@ VERSION = BCB.06.00
 # ---------------------------------------------------------------------------
 PROJECT = Output\gammu.exe
 OBJFILES = Output\gammu.obj Output\sniff.obj Output\dct3.obj Output\wmx.obj \
-    Output\wmx-sim.obj Output\wmx-util.obj Output\wmx-list.obj \
+    Output\wmx-sim.obj Output\wmx-util.obj Output\wmx-list.obj Output\n0650.obj \
     Output\wmx-gsm.obj Output\dct4.obj Output\dsiemens.obj Output\chiffre.obj \
     Output\s_files.obj Output\s_mysql.obj Output\smsdcore.obj Output\cfg.obj \
     Output\coding.obj Output\md5.obj Output\misc.obj Output\at.obj \
@@ -26,14 +26,13 @@ OBJFILES = Output\gammu.obj Output\sniff.obj Output\dct3.obj Output\wmx.obj \
     Output\gsmlogo.obj Output\gsmnet.obj Output\gsmpbk.obj Output\gsmring.obj \
     Output\gsmdata.obj Output\gsmmisc.obj Output\gsmsms.obj Output\gsmems.obj \
     Output\gsmmulti.obj Output\gsmcomon.obj Output\gsmstate.obj \
-    Output\n6110.obj Output\n6510.obj Output\n3320.obj Output\n3650.obj \
+    Output\n6110.obj Output\n6510.obj Output\6510cal.obj Output\6510file.obj Output\n3320.obj Output\n3650.obj \
     Output\dct4func.obj Output\n7110.obj Output\n9210.obj Output\dct3func.obj \
     Output\nauto.obj Output\nfunc.obj Output\nfuncold.obj Output\alcatel.obj \
     Output\obexgen.obj Output\mroutgen.obj Output\pfunc.obj Output\atgen.obj \
     Output\siemens.obj Output\samsung.obj Output\sonyeric.obj Output\irda.obj \
     Output\bluetoth.obj Output\bluez.obj Output\blue_w32.obj Output\affix.obj \
     Output\ser_w32.obj Output\devfunc.obj
-RESFILES = gammu.res
 MAINSOURCE = gammu.bpf
 RESDEPEN = $(RESFILES)
 LIBFILES = 
