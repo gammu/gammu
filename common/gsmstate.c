@@ -42,6 +42,10 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("bluefbus"	,connection,0)) s->ConnectionType = GCT_BLUEFBUS2;
 	if (mystrncasecmp("bluephonet"	,connection,0)) s->ConnectionType = GCT_BLUEPHONET;
 	if (mystrncasecmp("blueat"	,connection,0)) s->ConnectionType = GCT_BLUEAT;
+	if (mystrncasecmp("bluerfobex"	,connection,0)) s->ConnectionType = GCT_BLUEOBEX;
+	if (mystrncasecmp("bluerffbus"	,connection,0)) s->ConnectionType = GCT_BLUEFBUS2;
+	if (mystrncasecmp("bluerfphonet",connection,0)) s->ConnectionType = GCT_BLUEPHONET;
+	if (mystrncasecmp("bluerfat"	,connection,0)) s->ConnectionType = GCT_BLUEAT;
 
 	/* These are for compatibility only */
 	if (mystrncasecmp("atblue"	,connection,0)) s->ConnectionType = GCT_BLUEAT;

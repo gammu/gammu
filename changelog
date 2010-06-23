@@ -26,6 +26,55 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20040719 - 0.97.0
+* new functionality:
+  * new family of connections: bluerf + something (for example bluerfphonet)
+    It works like blue + something in older Gammu versions (with connecting
+    to hardcoded RF channels)
+  * switch -yes for --backup                                 (martin f krafft)
+  * MySQL and SMSD: 
+    * * full support for TextDecoded in outgoing sms
+      * full support for adding outgoing SMS from various PC
+      * source compilable for win32 and MSVC
+      * in DB you have info, when SMS was added to DB, when was sent
+        (times are get from PC with MySQL database, not from
+        each client making operations on DB - it allows to have synchronized
+        time for all SMS), when sms data were updated in DB
+      * DB is ready for full Delivery Reports support
+  * DCT4 phones return TPMR for sent sms
+
+* fixes and improvements:
+  * more info about BT actions in debug
+  * proxies enabled, getting profiles disabled for 6230      (martin f krafft)
+  * in some specific EMS combinations there was set SMS class 0
+    instead of 2
+  * when use MS BT stack, there are some resources made free, when not
+    required
+  * RF channels were assigned sometimes wrong with Bluez. Fixed
+
+NOTE: waiting in queue:
+       * SYMBIAN patches
+       * Samsung S300 patches
+       * SMSD patches from Joergen Thomsen
+      and some others
+
+      Current MySQL SMSD is really powerfull:
+      * you can set MySQL database on win32 or Linux and connect to it 
+        from Gammu working in win32 or Linux or own software (in the same time 
+        even from many PC connected with PC with MySQL over network), 
+        additionaly you can easy manage MySQL database from free 
+        Apache + PHPMyAdmin
+      * sms can be sent and received
+      * all formats of sms are supported in database
+      * there is own command line option in Gammu for sending sms over it
+      * you can use many phones for receiving sms to the same detabase
+      * you can have logs from Gammu working as sms daemon
+      * phone can enter PIN after rebotting (with some models)
+      * there are black and white phone number lists for incoming sms
+      There are planned notifications over email (when something works wrong),
+      own PHP www pages for adding outgoing sms to database and assigning 
+      Delivery Reports to sent SMS
+
 20040714 - 0.96.9
 * new functionality:
   * after each using some frames connected with wap/mms/syncml/chat settings

@@ -21,11 +21,33 @@
 # SendTimeout - shows how many seconds smsd should wait for network answer
 #               during sending sms. If nothing happen during this time,
 #               sms will be resent. Default: 10
+# receivefrequency - the number of seconds between testing for received SMSes, when the phone
+#                    is busy sending SMSes. Normally a test for received SMSes is done every commtimeout
+#                    seconds and after each sent SMS. Default: 0 (not used)
+# deliveryreport   - should delivery reports be used no/log/sms. 
+#                    log: one line log entry, 
+#                    sms: store in inbox as a received SMS
+#                    Default: no
 [smsd]
 PIN = 1234
 logfile = smsdlog
 commtimeout = 1
 sendtimeout = 10
+#receivefrequency = 0
+#deliveryreport = no
+
+# When uncomment this section and insert numbers here, smsd will process
+# incoming sms only from numbers written here (incoming sms from all other
+# numbers will be deleted)
+#[include_numbers]
+#number1 = 1234
+
+# When uncomment this section and insert numbers here, smsd will process
+# incoming sms from all numbers not written here (incoming sms from numbers
+# written here will be deleted). This is "black" list.
+# Note: after using "include_numbers" section this one will be ignored
+#[exclude_numbers]
+#number1 = 1234
 
 # ------------------------- SETTINGS FOR --smsd MYSQL ---------------------------
 user = root
@@ -48,35 +70,13 @@ database = sms
 #                'standard' is in the standard character set.
 #                Default: unicode.
 # transmitformat - the format for transmitting the SMS: 'auto', 'unicode', '7bit'. Default: auto
-# receivefrequency - the number of seconds between testing for received SMSes, when the phone
-#                    is busy sending SMSes. Normally a test for received SMSes is done every commtimeout
-#                    seconds and after each sent SMS. Default: 0 (not used)
-# deliveryreport   - should delivery reports be used no/log/sms. 
-#                    log: one line log entry, 
-#                    sms: store in inbox as a received SMS
-#                    Default: no
 #inboxpath = /var/spool/sms/inbox/
 #outboxpath = /var/spool/sms/outbox/
 #sentsmspath = /var/spool/sms/sent/
 #errorsmspath = /var/spool/sms/error/
 #inboxformat = unicode
 #transmitformat = auto
-#receivefrequency = 0
-#deliveryreport = no
 # -------------------------------------------------------------------------------
-
-# When uncomment this section and insert numbers here, smsd will process
-# incoming sms only from numbers written here (incoming sms from all other
-# numbers will be deleted)
-#[include_numbers]
-#number1 = 1234
-
-# When uncomment this section and insert numbers here, smsd will process
-# incoming sms from all numbers not written here (incoming sms from numbers
-# written here will be deleted). This is "black" list.
-# Note: after using "include_numbers" section this one will be ignored
-#[exclude_numbers]
-#number1 = 1234
 
 # ------------------------- INFO ABOUT --smsd FILES ---------------------------
 #

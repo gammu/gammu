@@ -29,6 +29,8 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	bdaddr_t			bdaddr;
 	int 				fd;
 
+	smprintf(s, "Connecting to RF channel %i\n",port);
+
 	fd = socket(PF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
 	if (fd < 0) {
 		dbgprintf("Can't create socket\n");
@@ -74,8 +76,6 @@ static void print_service_desc(void *value, void *user)
 	sdp_data_t 	*p = (sdp_data_t *)value; 
 	int 		i = 0, proto = 0, *channel = (int *)user; 
 
-	(*channel) = -1;
-	
 	for (; p; p = p->next, i++) { 
 		switch (p->dtd) { 
 		case SDP_UUID16:
@@ -85,7 +85,6 @@ static void print_service_desc(void *value, void *user)
 			break;
 		case SDP_UINT8: 
 			if (proto == RFCOMM_UUID) {
-				dbgprintf("Channel %05d", p->val.uint8); 
 				(*channel) = p->val.uint8;
 				return;
 			}
@@ -117,7 +116,7 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, st
 	bacpy(&interface,BDADDR_ANY);
 
 	ba2str(bdaddr, str);
-	dbgprintf("%s\n", str);
+	smprintf(s,"%s\n", str);
 
 	sess = sdp_connect(&interface, bdaddr, SDP_RETRY_IF_BUSY);
 	if (!sess) {
@@ -144,10 +143,13 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, st
 				d = sdp_data_get(rec,SDP_ATTR_SVCNAME_PRIMARY);
 			
 				if (sdp_get_access_protos(rec,&proto) == 0) {
+					channel = -1;
 					sdp_list_foreach(proto,print_access_protos,&channel);
 					sdp_list_free(proto,(sdp_free_func_t)sdp_data_free);
 				}
-				if (d) dbgprintf(" - \"%s\"\n",d->val.str);
+				smprintf(s,"Channel %i",channel);
+				if (d) smprintf(s," - \"%s\"",d->val.str);
+				smprintf(s,"\n");
 				if (channel2 == -1 && bluetooth_checkservicename(s, d->val.str) == ERR_NONE) {
 					channel2 = channel;			
 				}			

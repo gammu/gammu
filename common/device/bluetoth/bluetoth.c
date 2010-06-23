@@ -11,6 +11,7 @@
 #include <errno.h>
 #include <string.h>
 
+#include "../../misc/coding/coding.h"
 #include "../../gsmcomon.h"
 #include "../devfunc.h"
 #include "bluetoth.h"
@@ -25,11 +26,13 @@
 #  include "blue_w32.h"
 #endif
 
-#ifndef BLUETOOTH_RF_SEARCHING
-
-GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
+GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 {
 	GSM_Error error;
+
+#ifdef BLUETOOTH_RF_SEARCHING
+	if (!mystrncasecmp(s->CurrentConfig->Connection, "bluerf", 6)) return bluetooth_findchannel(s);
+#endif
 	
 	switch (s->ConnectionType) {
 	case GCT_BLUEAT:
@@ -44,8 +47,6 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 		return ERR_UNKNOWN;
 	}
 }
-
-#endif
 
 static int bluetooth_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
@@ -67,7 +68,7 @@ static GSM_Error bluetooth_close(GSM_StateMachine *s)
 }
 
 GSM_Device_Functions BlueToothDevice = {
-	bluetooth_findchannel,
+	bluetooth_findrfchannel,
 	bluetooth_close,
 	NONEFUNCTION,
 	NONEFUNCTION,

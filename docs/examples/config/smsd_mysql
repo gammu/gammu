@@ -1,59 +1,92 @@
-# phpMyAdmin SQL Dump
-# version 2.5.6
-# http://www.phpmyadmin.net
-#
-# Host: localhost
-# Generation Time: Apr 27, 2004 at 01:09 AM
-# Server version: 4.0.18
-# PHP Version: 4.3.4
-# 
-# Database : `sms`
-# 
+-- phpMyAdmin SQL Dump
+-- version 2.6.0-beta2
+-- http://www.phpmyadmin.net
+-- 
+-- Host: localhost
+-- Generation Time: Jul 18, 2004 at 10:58 PM
+-- Server version: 4.0.18
+-- PHP Version: 4.3.8
+-- 
+-- Database: `sms`
+-- 
 
-#
-# Table structure for table `Inbox`
-#
+-- --------------------------------------------------------
 
-CREATE TABLE `Inbox` (
-  `Date_Time` datetime NOT NULL default '0000-00-00 00:00:00',
+-- 
+-- Table structure for table `inbox`
+-- 
+
+CREATE TABLE `inbox` (
+  `UpdatedInDB` timestamp(14) NOT NULL,
+  `DateTime` timestamp(14) NOT NULL default '00000000000000',
   `Text` text NOT NULL,
-  `Sender_Number` text NOT NULL,
+  `SenderNumber` text NOT NULL,
   `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
   `UDH` text,
-  `SMSC_Number` text,
+  `SMSCNumber` text,
   `Class` int(11) NOT NULL default '-1',
   `TextDecoded` text
 ) TYPE=MyISAM;
 
-#
-# Table structure for table `Outbox`
-#
+-- --------------------------------------------------------
 
-CREATE TABLE `Outbox` (
+-- 
+-- Table structure for table `outbox`
+-- 
+
+CREATE TABLE `outbox` (
+  `UpdatedInDB` timestamp(14) NOT NULL,
+  `DateTime` timestamp(14) NOT NULL default '00000000000000',
   `Text` text NOT NULL,
-  `Sender_Number` text NOT NULL,
+  `DestinationNumber` text NOT NULL,
   `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
   `UDH` text,
-  `SMSC_Number` text,
+  `SMSCNumber` text,
   `Class` int(11) NOT NULL default '-1',
   `TextDecoded` text,
-  `ID` text NOT NULL,
+  `ID` int(11) NOT NULL default '0',
+  `MultiPart` enum('false','true') NOT NULL default 'false',
+  UNIQUE KEY `ID` (`ID`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `outbox_multipart`
+-- 
+
+CREATE TABLE `outbox_multipart` (
+  `Text` text NOT NULL,
+  `DestinationNumber` text NOT NULL,
+  `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
+  `UDH` text,
+  `SMSCNumber` text,
+  `Class` int(11) NOT NULL default '-1',
+  `TextDecoded` text,
+  `ID` int(11) NOT NULL default '0',
   `SequencePosition` int(11) NOT NULL default '1'
 ) TYPE=MyISAM;
 
-#
-# Table structure for table `SentItems`
-#
+-- --------------------------------------------------------
 
-CREATE TABLE `SentItems` (
+-- 
+-- Table structure for table `sentitems`
+-- 
+
+CREATE TABLE `sentitems` (
+  `UpdatedInDB` timestamp(14) NOT NULL,
+  `SendingDateTime` timestamp(14) NOT NULL default '00000000000000',
+  `DateTime` timestamp(14) NOT NULL default '00000000000000',
+  `DeliveryDateTime` timestamp(14) NOT NULL default '00000000000000',
   `Text` text NOT NULL,
-  `Sender_Number` text NOT NULL,
+  `DestinationNumber` text NOT NULL,
   `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
   `UDH` text,
-  `SMSC_Number` text,
+  `SMSCNumber` text,
   `Class` int(11) NOT NULL default '-1',
   `TextDecoded` text,
-  `ID` text NOT NULL,
+  `ID` int(11) NOT NULL default '0',
   `SequencePosition` int(11) NOT NULL default '1',
-  `Status` enum('OK','Error') NOT NULL default 'OK'
+  `Status` enum('OK','Error','Delivered OK','Delivery error','Sending') NOT NULL default 'OK',
+  `StatusError` smallint(6) NOT NULL default '0'
 ) TYPE=MyISAM;

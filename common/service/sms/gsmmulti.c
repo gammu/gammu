@@ -734,7 +734,7 @@ void GSM_ClearMultiPartSMSInfo(GSM_MultiPartSMSInfo *Info)
 	}
 	Info->Unknown		= false;
 	Info->EntriesNum	= 0;
-	Info->Class		= 0;
+	Info->Class		= -1;
 	Info->ReplaceMessage	= 0;
 	Info->UnicodeCoding	= false;
 }
