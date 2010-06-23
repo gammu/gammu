@@ -33,7 +33,7 @@ static GSM_Error N6510_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 	case 0x0f:
 		return N71_65_ReplyGetMemoryError(msg.Buffer[10], s);
 	default:
-		return N71_65_DecodePhonebook(s, s->Phone.Data.Memory, s->Phone.Data.Bitmap, s->Phone.Data.SpeedDial, msg.Buffer+22, msg.Length-22);
+		return N71_65_DecodePhonebook(s, s->Phone.Data.Memory, s->Phone.Data.Bitmap, s->Phone.Data.SpeedDial, msg.Buffer+22, msg.Length-22,false);
 	}
 	return ERR_UNKNOWN;
 }
@@ -2384,9 +2384,13 @@ static GSM_Error N6510_ReplyGetRingtonesInfo(GSM_Protocol_Message msg, GSM_State
 	Data->RingtonesInfo->Number = msg.Buffer[4] * 256 + msg.Buffer[5];
 	tmp = 6;
 	for (i=0;i<Data->RingtonesInfo->Number;i++) {			
-		Data->RingtonesInfo->Ringtone[i].ID = msg.Buffer[tmp+2] * 256 + msg.Buffer[tmp+3];
+		Data->RingtonesInfo->Ringtone[i].Group = msg.Buffer[tmp+4];
+		Data->RingtonesInfo->Ringtone[i].ID    = msg.Buffer[tmp+2] * 256 + msg.Buffer[tmp+3];
 		memcpy(Data->RingtonesInfo->Ringtone[i].Name,msg.Buffer+tmp+8,(msg.Buffer[tmp+6]*256+msg.Buffer[tmp+7])*2);
-		smprintf(s, "%i. \"%s\"\n",Data->RingtonesInfo->Ringtone[i].ID,DecodeUnicodeString(Data->RingtonesInfo->Ringtone[i].Name));
+		smprintf(s, "%5i (%5i). \"%s\"\n",
+			Data->RingtonesInfo->Ringtone[i].ID,
+			Data->RingtonesInfo->Ringtone[i].Group,
+			DecodeUnicodeString(Data->RingtonesInfo->Ringtone[i].Name));
 		tmp = tmp + (msg.Buffer[tmp]*256+msg.Buffer[tmp+1]);
 	}
 	return ERR_NONE;
@@ -2396,12 +2400,14 @@ static GSM_Error N6510_PrivGetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtone
 {
 	GSM_Error	error;
 	unsigned char 	UserReq[8] = {N7110_FRAME_HEADER, 0x07, 0x00, 0x00, 0x00, 0x02};
-	unsigned char 	All_Req[9] = {N7110_FRAME_HEADER, 0x07, 0x00, 0x00, 0xFE, 0x00, 0x7D};
+//	unsigned char 	All_Req[9] = {N7110_FRAME_HEADER, 0x07, 0x00, 0x00, 0xFE, 0x00, 0x7D};
+	unsigned char 	All_Req[8] = {N7110_FRAME_HEADER, 0x07, 0x00, 0x00, 0x00, 0x00};
 
 	s->Phone.Data.RingtonesInfo=Info;
 	smprintf(s, "Getting binary ringtones ID\n");
 	if (AllRingtones) {
-		error = GSM_WaitFor (s, All_Req, 9, 0x1f, 4, ID_GetRingtonesInfo);
+//		error = GSM_WaitFor (s, All_Req, 9, 0x1f, 4, ID_GetRingtonesInfo);
+		error = GSM_WaitFor (s, All_Req, 8, 0x1f, 4, ID_GetRingtonesInfo);
 		if (error == ERR_EMPTY && Info->Number == 0) return ERR_NOTSUPPORTED;
 		return error;
 	} else {
@@ -3425,7 +3431,7 @@ static GSM_Error N6510_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus
         /* Method 1 */
 	error=N71_65_GetCalendarInfo1(s, &s->Phone.Data.Priv.N6510.LastCalendar);
 	if (error!=ERR_NONE) return error;
-	Status->Used = LastCalendar->Number;
+	Status->Used = s->Phone.Data.Priv.N6510.LastCalendar.Number;
 	return ERR_NONE;
 #endif              
 
@@ -5298,7 +5304,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|3100|3100b|3108|3200|3200a|3300|3510|3510i|3530|3590|3595|5100|6100|6200|6220|6310|6310i|6385|6510|6610|6800|7210|7250|7250i|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|3100|3100b|3108|3200|3200a|3300|3510|3510i|3530|3589i|3590|3595|5100|6100|6200|6220|6310|6310i|6385|6510|6610|6800|7210|7250|7250i|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/

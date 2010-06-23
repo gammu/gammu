@@ -11,17 +11,17 @@
 
 #include "../config.h"
 
+#ifndef __cplusplus
 #ifndef false
 #  define false 0
 #endif
-
 #ifndef true
 #  define true 	!0
 #endif
-
 #ifndef bool    
 #  define bool	char
 #endif
+#endif /* __cplusplus */
 
 #ifdef WIN32
 #  define my_sleep(x) ((x)<1000 ? Sleep(1) : Sleep((x)/1000))

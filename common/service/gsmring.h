@@ -73,7 +73,7 @@ typedef enum {
 	NoSpecialDuration 			= 0x00<<6,
 	DottedNote        			= 0x01<<6,
 	DoubleDottedNote  			= 0x02<<6,
-	Length_2_3        			= 0x03<<6,
+	Length_2_3        			= 0x03<<6
 } GSM_RingNoteDurationSpec;
 
 typedef enum {
@@ -162,6 +162,7 @@ typedef struct {
 } GSM_Ringtone;
 
 typedef struct {
+	int					Group;	//Nokia specific
 	int					ID;
 	char					Name[30*2];
 } GSM_RingtoneInfo;

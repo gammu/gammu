@@ -9,7 +9,7 @@
 #include "misc/cfg.h"
 
 #ifdef GSM_ENABLE_NOKIA3320
-#  include "phone/nokia/dct3/n3320.h"
+#  include "phone/nokia/dct4/n3320.h"
 #endif
 #ifdef GSM_ENABLE_NOKIA3650
 #  include "phone/nokia/dct4/n3650.h"
@@ -1477,6 +1477,9 @@ typedef enum {
 	F_DISPSTATUS,	/* Phone return display status					*/
 	F_NOCALLINFO,
 
+	/* n3320.c */
+	F_DAYMONTH,	/* Day and month reversed in pbk, when compare to GSM models	*/
+
 	/* n6510.c */
 	F_PBK35,	/* Phonebook in 3510 style with ringtones ID			*/
 	F_PBKIMG,	/* Phonebook in 7250 style with picture ID			*/
@@ -1504,7 +1507,7 @@ typedef enum {
 	F_M20SMS,	/* Siemens M20 like SMS handling				*/
 	F_SLOWWRITE,	/* Use slower writing which some phone need			*/
 	F_SMSME900,	/* SMS in ME start from location 900 - case of Sagem		*/
-	F_ALCATEL,	/* Phone supports Alcatel protocol				*/
+	F_ALCATEL	/* Phone supports Alcatel protocol				*/
 } Feature;
 
 /* For models table */

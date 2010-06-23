@@ -3968,8 +3968,12 @@ static void Backup(int argc, char *argv[])
 	}
 	if (Info.IMEI) {
 		error=Phone->GetIMEI(&s);
-		strcpy(Backup.IMEI, s.Phone.Data.IMEI);
-		Print_Error(error);
+		if (error != ERR_NOTSUPPORTED) {
+			strcpy(Backup.IMEI, s.Phone.Data.IMEI);
+			Print_Error(error);
+		} else {
+			Backup.IMEI[0] = 0;
+		}
 	}
 	printf("\n");
 
@@ -6530,6 +6534,7 @@ static void GetFileSystem(int argc, char *argv[])
 	GSM_File	 	Files;
 	int			j;
 	GSM_FileSystemStatus	Status;
+	char 			FolderName[256];
 
 	GSM_Init(true);
 
@@ -6538,51 +6543,78 @@ static void GetFileSystem(int argc, char *argv[])
 		if (error == ERR_EMPTY) break;
 	    	Print_Error(error);
 
-		if (strlen(Files.ID_FullName) < 5 && strlen(Files.ID_FullName) != 0) {
-			printf("%5s.",Files.ID_FullName);
-		}
-		if (Files.Protected) {
-			printf("P");
-		} else {
-			printf(" ");
-		}
-		if (Files.ReadOnly) {
-			printf("R");
-		} else {
-			printf(" ");
-		}
-		if (Files.Hidden) {
-			printf("H");
-		} else {
-			printf(" ");
-		}
-		if (Files.System) {
-			printf("S");
-		} else {
-			printf(" ");
-		}
-		if (argc > 2 && (mystrncasecmp(argv[2],"-flatall",0) || mystrncasecmp(argv[2],"-flat",0))) {
-			if (!Files.Folder) {
-				if (mystrncasecmp(argv[2],"-flatall",0)) {
-					if (!Files.ModifiedEmpty) {
-						printf(" %30s",OSDateTime(Files.Modified,false));
-					} else printf(" %30c",0x20);
-					printf(" %9i",Files.Used);
-					printf(" ");
-				} else printf("|-- ");
-			} else printf("Folder ");
-		} else {
-			if (Files.Level != 1) {
-				for (j=0;j<Files.Level-2;j++) printf(" |   ");
-				printf(" |-- ");
+		if (argc <= 2 || !mystrncasecmp(argv[2],"-flatall",0)) {
+			if (strlen(Files.ID_FullName) < 5 && strlen(Files.ID_FullName) != 0) {
+				printf("%5s.",Files.ID_FullName);
 			}
-			if (Files.Folder) printf("Folder ");
+			if (Files.Protected) {
+				printf("P");
+			} else {
+				printf(" ");
+			}
+			if (Files.ReadOnly) {
+				printf("R");
+			} else {
+				printf(" ");
+			}
+			if (Files.Hidden) {
+				printf("H");
+			} else {
+				printf(" ");
+			}
+			if (Files.System) {
+				printf("S");
+			} else {
+				printf(" ");
+			}
+			if (argc > 2 &&  mystrncasecmp(argv[2],"-flat",0)) {
+				if (!Files.Folder) {
+					if (mystrncasecmp(argv[2],"-flatall",0)) {
+						if (!Files.ModifiedEmpty) {
+							printf(" %30s",OSDateTime(Files.Modified,false));
+						} else printf(" %30c",0x20);
+						printf(" %9i",Files.Used);
+						printf(" ");
+					} else printf("|-- ");
+				} else printf("Folder ");
+			} else {
+				if (Files.Level != 1) {
+					for (j=0;j<Files.Level-2;j++) printf(" |   ");
+					printf(" |-- ");
+				}
+				if (Files.Folder) printf("Folder ");
+			}
+			printf("\"%s\"",DecodeUnicodeConsole(Files.Name));
+			printf("\n");
+	
+			Start = false;
+		} else if (argc > 2 && mystrncasecmp(argv[2],"-flatall",0)) {
+			/* format for a folder ID;Folder;FOLDER_NAME;[FOLDER_PARAMETERS] 
+			 * format for a file   ID;File;FOLDER_NAME;FILE_NAME;DATESTAMP;FILE_SIZE;[FILE_PARAMETERS]  */	
+			if (!Files.Folder) {
+				printf("%s;File;",Files.ID_FullName);
+				printf("\"%s\";",FolderName);
+				printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
+				if (!Files.ModifiedEmpty) {
+					printf("\"%s\";",OSDateTime(Files.Modified,false));
+				} else  printf("\"%c\";",0x20);
+				printf("%i;",Files.Used);
+			} else {
+				printf("%s;Folder;",Files.ID_FullName);
+				printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
+				strcpy(FolderName,DecodeUnicodeConsole(Files.Name));
+			}	
+			
+			if (Files.Protected)  	printf("P");  
+			if (Files.ReadOnly)  	printf("R");  
+			if (Files.Hidden)  	printf("H"); 
+			if (Files.System)  	printf("S"); 
+		
+			printf("\n");
+	
+			Start = false;
 		}
-		printf("\"%s\"",DecodeUnicodeConsole(Files.Name));
-		printf("\n");
-
-		Start = false;
-	}
+	}	
 
 	error = Phone->GetFileSystemStatus(&s,&Status);
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
@@ -7659,6 +7691,7 @@ static GSM_Parameters Parameters[] = {
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Tones file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
 	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 	{"--playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
+	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			""},
 	{"--getdatetime",		0, 0, GetDateTime,		{H_DateTime,0},			""},
 	{"--setdatetime",		0, 0, SetDateTime,		{H_DateTime,0},			""},
 	{"--getalarm",			0, 0, GetAlarm,			{H_DateTime,0},			""},

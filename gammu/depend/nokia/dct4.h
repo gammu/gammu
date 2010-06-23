@@ -17,6 +17,7 @@ void DCT4DisplayTest	   (int argc, char *argv[]);
 void DCT4GetADC		   (int argc, char *argv[]);
 void DCT4VibraTest	   (int argc, char *argv[]);
 void DCT4TuneRadio	   (int argc, char *argv[]);
+void DCT4PlaySavedRingtone (int argc, char *argv[]);
 
 /* ------------------- features matrix ------------------------------------- */
 

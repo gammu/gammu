@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.95.0"
-#define VERSION_WIN "0,95,0,0"
+#define VERSION "0.96.0"
+#define VERSION_WIN "0,96,0,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -53,14 +53,21 @@
 /* Infrared. OBEX */
 #define GSM_ENABLE_IRDAOBEX 1
 
+#ifdef WIN32
+#  define GSM_ENABLE_BLUEFBUS2 1
+#  define GSM_ENABLE_BLUEPHONET 1
+#  define GSM_ENABLE_BLUEAT 1
+#  define GSM_ENABLE_BLUEOBEX 1
+#else
 /* Bluetooth stack (like Bluez). FBUS2 (init done using AT commands) */
-/* #undef GSM_ENABLE_BLUEFBUS2 */
+/* #  undef GSM_ENABLE_BLUEFBUS2 */
 /* Bluetooth stack (like Bluez). PHONET FBUS */
-/* #undef GSM_ENABLE_BLUEPHONET */
+/* #  undef GSM_ENABLE_BLUEPHONET */
 /* Blueooth stack (like Bluez). AT commands */
-/* #undef GSM_ENABLE_BLUEAT */
+/* #  undef GSM_ENABLE_BLUEAT */
 /* Blueooth stack (like Bluez). OBEX */
-/* #undef GSM_ENABLE_BLUEOBEX */
+/* #  undef GSM_ENABLE_BLUEOBEX */
+#endif
 
 /* --------------------------- Phone modules (specific) ----------------- */
 
@@ -145,5 +152,11 @@
 
 #define HAVE_ISWSPACE 1
 #define HAVE_TOWLOWER 1
+
+#ifdef _MSC_VER
+/* Uncomment to build full support for Bluetooth stack by Microsoft */
+/* Required irprops.lib from Platform SDK */
+//#define MS_VC_BLUETOOTH_IRPROPS_LIB 1
+#endif
 
 #endif

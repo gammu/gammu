@@ -66,7 +66,7 @@ typedef enum {
 	ERR_WRONGCRC,
 	ERR_INVALIDDATETIME,		/* Invalid date/time */
 	ERR_MEMORY,			/* Phone memory error, maybe it is read only */
-	ERR_INVALIDDATA,		/* Invalid data */
+	ERR_INVALIDDATA			/* Invalid data */
 } GSM_Error;
 
 extern GSM_Error NoneFunction		(void);
