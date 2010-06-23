@@ -80,13 +80,13 @@ static void ParseVCardLine(char **pos, char *Name, char *Parameters, char *Value
 	for (i=0; **pos && **pos != ':' && **pos != ';'; i++, (*pos)++) Name[i] = **pos;
 	Name[i] = 0;
 
-	//dprintf("ParseVCardLine: name tag = '%s'\n", Name);
+	//dbgprintf("ParseVCardLine: name tag = '%s'\n", Name);
 	if (**pos == ';') {
                 (*pos)++;
 		for (i=0; **pos && **pos != ':'; i++, (*pos)++) Parameters[i] = **pos;
                 Parameters[i] = ';';
 		Parameters[i+1] = 0;
-		//dprintf("ParseVCardLine: parameter tag = '%s'\n", Parameters);
+		//dbgprintf("ParseVCardLine: parameter tag = '%s'\n", Parameters);
 	}
 
 	if (**pos != 0) (*pos)++;
@@ -104,7 +104,7 @@ static void ParseVCardLine(char **pos, char *Name, char *Parameters, char *Value
 	}
         Value[i] = 0;
 
-	//dprintf("ParseVCardLine: value tag = '%s'\n", Value);
+	//dbgprintf("ParseVCardLine: value tag = '%s'\n", Value);
 }
 
 void DecodeVCARD21Text(char *VCard, GSM_MemoryEntry *pbk)
@@ -112,12 +112,12 @@ void DecodeVCARD21Text(char *VCard, GSM_MemoryEntry *pbk)
 	char *pos = VCard;
 	char Name[32], Parameters[256], Value[1024];
 
-	dprintf("Parsing VCard:\n%s\n", VCard);
+	dbgprintf("Parsing VCard:\n%s\n", VCard);
 
 	ParseVCardLine(&pos, Name, Parameters, Value);
 	if (!mystrncasecmp(Name, "BEGIN", 0) || !mystrncasecmp(Value, "VCARD", 0))
 	{
-                dprintf("No valid VCARD signature\n");
+                dbgprintf("No valid VCARD signature\n");
 		return;
 	}
 

@@ -29,7 +29,7 @@ static GSM_Error SONYERIC_SetOBEXMode(GSM_StateMachine *s)
 
 	if (Priv->OBEX) return GE_NONE;
 
-	dprintf ("Changing to OBEX\n");
+	dbgprintf ("Changing to OBEX\n");
 
 	error=GSM_WaitFor (s, "AT*EOBEX\r", 9, 0x00, 4, ID_SetOBEX);
 	if (error != GE_NONE) return error;
@@ -58,7 +58,7 @@ static GSM_Error SONYERIC_SetATMode(GSM_StateMachine *s)
 
 	if (!Priv->OBEX) return GE_NONE;
 
-	dprintf ("Changing to AT\n");
+	dbgprintf ("Changing to AT\n");
 
 	error = OBEXGEN_Disconnect(s);
 	if (error != GE_NONE) return error;
@@ -286,7 +286,7 @@ GSM_Error SONYERIC_DeleteAllToDo(GSM_StateMachine *s)
 	while (1) {
 		MyGetLine(Priv->file.Buffer, &Pos, Line, Priv->file.Used);
 		if (strlen(Line) == 0) break;
-		dprintf("Line is %s,%i,%i\n",Line,Priv->file.Used,Pos);
+		dbgprintf("Line is %s,%i,%i\n",Line,Priv->file.Used,Pos);
 		switch (Level) {
 		case 0:
 			if (strstr(Line,"BEGIN:VTODO")) {
@@ -336,7 +336,7 @@ GSM_Error SONYERIC_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	while (1) {
 		MyGetLine(Priv->file.Buffer, &Pos, Line, Priv->file.Used);
 		if (strlen(Line) == 0) break;
-		dprintf("Line is %s,%i,%i\n",Line,Priv->file.Used,Pos);
+		dbgprintf("Line is %s,%i,%i\n",Line,Priv->file.Used,Pos);
 		switch (Level) {
 		case 0:
 			if (strstr(Line,"BEGIN:VEVENT")) {

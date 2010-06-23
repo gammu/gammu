@@ -14,7 +14,7 @@ static GSM_Error SendingSMSStatus;
 
 static void SMSSendingSMSStatus (char *Device, int status)
 {
-	dprintf("Incoming SMS device: \"%s\" status=%d\n",Device, status);
+	dbgprintf("Incoming SMS device: \"%s\" status=%d\n",Device, status);
 	if (status==0) {
 		SendingSMSStatus = GE_NONE;
 	} else {

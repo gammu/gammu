@@ -103,7 +103,7 @@ static GSM_Error N3650_ReplyGetFolderInfo(GSM_Protocol_Message msg, GSM_StateMac
 	i = Priv->FilesLocationsUsed-1;
 	while (1) {
 		if (i==Priv->FilesLocationsCurrent-1) break;
-		dprintf("Copying %i to %i, max %i, current %i\n",
+		dbgprintf("Copying %i to %i, max %i, current %i\n",
 			i,i+msg.Buffer[5],
 			Priv->FilesLocationsUsed,Priv->FilesLocationsCurrent);
 		memcpy(Priv->Files[i+msg.Buffer[5]],Priv->Files[i],sizeof(GSM_File));
@@ -123,7 +123,7 @@ static GSM_Error N3650_ReplyGetFolderInfo(GSM_Protocol_Message msg, GSM_StateMac
 		sprintf(Priv->Files[Priv->FilesLocationsCurrent+i]->ID_FullName,"%s\\%s",File->ID_FullName,msg.Buffer+pos+9);
 		pos+=msg.Buffer[pos+1];
 	}
-	dprintf("\n");
+	dbgprintf("\n");
 	return GE_NONE;
 }
 

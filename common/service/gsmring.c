@@ -188,7 +188,7 @@ GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone)
 	}
 	/* Finally convert the default duration */
 	DefNoteDuration = k * 32;
-	dprintf("DefNoteDuration=%d\n", DefNoteDuration);
+	dbgprintf("DefNoteDuration=%d\n", DefNoteDuration);
 	switch (DefNoteDuration) {
 		case Duration_Full:fprintf(file,"d=1"); break;
 		case Duration_1_2 :fprintf(file,"d=2"); break;
@@ -219,7 +219,7 @@ GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone)
 	DefNoteScale = k + 1;
 	/* Save the default scale */
 	fprintf(file,",o=%i,",DefNoteScale);
-	dprintf("DefNoteScale=%d\n", DefNoteScale);
+	dbgprintf("DefNoteScale=%d\n", DefNoteScale);
 
 	for (i=0;i<ringtone->NoteTone.NrCommands;i++) {
 		if (ringtone->NoteTone.Commands[i].Type == RING_Note) {
@@ -248,7 +248,7 @@ GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone)
 				}
 				/* Save the default tempo */
 				fprintf(file,"b=%i:",DefNoteTempo);
-				dprintf("DefNoteTempo=%d\n", DefNoteTempo);
+				dbgprintf("DefNoteTempo=%d\n", DefNoteTempo);
 				started 	= true;
 				firstcomma 	= true;
 			}
@@ -530,7 +530,7 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 				break;
  			case 'b': case 'B':
 				DefNoteTempo=atoi(ptr+2);
-				dprintf("Tempo = %i\n",DefNoteTempo);
+				dbgprintf("Tempo = %i\n",DefNoteTempo);
 				break;
 			case 's': case 'S':
 				switch (*(ptr+1)) {
@@ -547,8 +547,8 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 		}
 		ptr=strtok(NULL,", ");
 	}
-	dprintf("DefNoteDuration=%d\n", DefNoteDuration);
-	dprintf("DefNoteScale=%d\n", DefNoteScale);
+	dbgprintf("DefNoteDuration=%d\n", DefNoteDuration);
+	dbgprintf("DefNoteScale=%d\n", DefNoteScale);
 	ptr=strtok(notes, ", ");
 	/* Parsing the <note-command>+ section. */
 	while (ptr && ringtone->NoteTone.NrCommands<MAX_RINGTONE_NOTES) {
@@ -717,7 +717,7 @@ static GSM_Error loadbin(FILE *file, GSM_Ringtone *ringtone)
 	int		i;
 	unsigned char	buffer[2000];
 
-	dprintf("loading binary\n");
+	dbgprintf("loading binary\n");
 	ringtone->NokiaBinary.Length=fread(buffer, 1, 500, file);
 	i=5;
 	while (buffer[i]!=0x00) i++;
@@ -727,7 +727,7 @@ static GSM_Error loadbin(FILE *file, GSM_Ringtone *ringtone)
 	}
 	ringtone->NokiaBinary.Length=ringtone->NokiaBinary.Length-i;
 	memcpy(ringtone->NokiaBinary.Frame,buffer+i,ringtone->NokiaBinary.Length);
-	dprintf("Length %i name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
+	dbgprintf("Length %i name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
 	return GE_NONE;
 }
 
@@ -735,11 +735,11 @@ static GSM_Error loadpuremidi(FILE *file, GSM_Ringtone *ringtone)
 {
 	unsigned char buffer[30000];
 
-	dprintf("loading midi\n");
+	dbgprintf("loading midi\n");
 	EncodeUnicode(ringtone->Name,"MIDI",4);
 	ringtone->NokiaBinary.Length=fread(buffer, 1, 30000, file);
 	memcpy(ringtone->NokiaBinary.Frame,buffer,ringtone->NokiaBinary.Length);
-	dprintf("Length %i name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
+	dbgprintf("Length %i name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
 	return GE_NONE;
 }
 
@@ -760,7 +760,7 @@ static GSM_Error loadre(FILE *file, GSM_Ringtone *ringtone)
 		ringtone->NokiaBinary.Length = ringtone->NokiaBinary.Length - (19+UnicodeLength(ringtone->Name));
 		memcpy(ringtone->NokiaBinary.Frame,buffer+19+UnicodeLength(ringtone->Name),ringtone->NokiaBinary.Length);
 	}
-	dprintf("Name \"%s\"\n",DecodeUnicodeString(ringtone->Name));
+	dbgprintf("Name \"%s\"\n",DecodeUnicodeString(ringtone->Name));
 	return GE_NONE;
 }
 
@@ -770,7 +770,7 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 	unsigned char	buffer[300];
 	GSM_Error	error = GE_UNKNOWN;
 
-	dprintf("Loading ringtone %s\n",FileName);
+	dbgprintf("Loading ringtone %s\n",FileName);
 	file = fopen(FileName, "rb");
 	if (file == NULL) return(GE_CANTOPENFILE);
 
@@ -992,13 +992,13 @@ GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *pac
       
 	StartBit=BitUnPackInt(package,StartBit,&l,8);
 	if (l!=0x02) {
-		dprintf("Not header\n");
+		dbgprintf("Not header\n");
 		return GE_NOTSUPPORTED;
 	}
 
 	StartBit=BitUnPackInt(package,StartBit,&l,7);    
 	if (l!=RingingToneProgramming) {
-		dprintf("Not RingingToneProgramming\n");
+		dbgprintf("Not RingingToneProgramming\n");
 		return GE_NOTSUPPORTED;
 	}
     
@@ -1007,13 +1007,13 @@ GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *pac
 
 	StartBit=BitUnPackInt(package,StartBit,&l,7);    
 	if (l!=Sound) {
-		dprintf("Not Sound\n");
+		dbgprintf("Not Sound\n");
 		return GE_NOTSUPPORTED;
 	}
 
 	StartBit=BitUnPackInt(package,StartBit,&l,3);    
 	if (l!=BasicSongType) {
-		dprintf("Not BasicSongType\n");  
+		dbgprintf("Not BasicSongType\n");  
 		return GE_NOTSUPPORTED;
 	}
 
@@ -1029,13 +1029,13 @@ GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *pac
 	CopyUnicodeString(ringtone->Name,Buffer);
 
 	StartBit=BitUnPackInt(package,StartBit,&l,8);    
-	dprintf("Number of song patterns: %i\n",l);
+	dbgprintf("Number of song patterns: %i\n",l);
 	/* we support only one song pattern */
 	if (l!=1) return GE_NOTSUPPORTED;
 
 	StartBit=BitUnPackInt(package,StartBit,&l,3);          
 	if (l!=PatternHeaderId) {
-		dprintf("Not PatternHeaderId\n");
+		dbgprintf("Not PatternHeaderId\n");
 		return GE_NOTSUPPORTED;
 	}
 
@@ -1044,7 +1044,7 @@ GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *pac
 
 	StartBit=BitUnPackInt(package,StartBit,&l,4);          
 	l=l>>4;
-	dprintf("Loop value: %i\n",l);
+	dbgprintf("Loop value: %i\n",l);
 
 	HowMany=0;
 	StartBit=BitUnPackInt(package, StartBit, &HowMany, 8);
@@ -1090,7 +1090,7 @@ GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *pac
 			ringtone->NoteTone.NrCommands++;
 			break;
 		default:
-			dprintf("Unsupported block %i %i\n",q,i);  
+			dbgprintf("Unsupported block %i %i\n",q,i);  
 			return GE_NOTSUPPORTED;
 		} 
 	}
@@ -1201,10 +1201,10 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 		if (command != 0x06 && command != 0x00 && command != 0x09) {
 			length = src->NokiaBinary.Frame[i];
 			i++;
-			dprintf("Block %02x %02x - ",length,command);
-		} else dprintf("Block %02x - ",command);
+			dbgprintf("Block %02x %02x - ",length,command);
+		} else dbgprintf("Block %02x - ",command);
 		if (command >= 114 && command <= 161) {
-			dprintf("note\n");
+			dbgprintf("note\n");
 			if (command >= 114 && command <= 124) {
 				NotesScale[NrNotes] = Scale_440;   command -= 114;
 			} else if (command >= 125 && command <= 137) {
@@ -1242,15 +1242,15 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 			}
 		} else switch (command) {
 			case 0x00:
-				dprintf("Unknown\n");
+				dbgprintf("Unknown\n");
 				break;
 			case 0x05:
-				dprintf("repeat %i times\n",length);
+				dbgprintf("repeat %i times\n",length);
 				repeat 		= length;
 				StartRepeat 	= NrNotes;
 				break;
 			case 0x06:
-				dprintf("end repeat\n");
+				dbgprintf("end repeat\n");
 				EndRepeat = NrNotes;
 				for (z=0;z<repeat-1;z++) {
 					for (j=StartRepeat;j<EndRepeat;j++) {
@@ -1258,35 +1258,35 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 						NotesScale[NrNotes] 	= NotesScale[j];
 						NotesLen[NrNotes] 	= NotesLen[j];
 						NrNotes++;
-						dprintf("Adding repeat note %i %i\n",Notes[j],NotesLen[j]);
+						dbgprintf("Adding repeat note %i %i\n",Notes[j],NotesLen[j]);
 					}
 				}
 				break;
 			case 0x07:
 				if (length == 0x0B) {
-					dprintf("Ringtone end\n");
+					dbgprintf("Ringtone end\n");
 					i = src->NokiaBinary.Length + 1;
 				}
 				break;
 			case 0x09:
-				dprintf("Unknown\n");
+				dbgprintf("Unknown\n");
 				break;
 			case 0x0A:
 				if (length == 0x01) {
-					dprintf("Let's start our song\n");
+					dbgprintf("Let's start our song\n");
 					break;
 				}
 				if (length == 0x0A) {
-					dprintf("Ending joining note\n");
+					dbgprintf("Ending joining note\n");
 					break;
 				}
 				if (length == 0xFE) {
-					dprintf("Starting joining note\n");
+					dbgprintf("Starting joining note\n");
 					break;
 				}
 				break;
 			case 0x40:
-				dprintf("Pause\n");
+				dbgprintf("Pause\n");
 				Notes[NrNotes] = Note_Pause;
 				if (NrNotes > 0) {
 					if (Notes[NrNotes-1] == Notes[NrNotes] &&
@@ -1302,7 +1302,7 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 				}
 				break;
 			default:
-				dprintf("Unknown\n");
+				dbgprintf("Unknown\n");
 			}
 	}
 
@@ -1323,14 +1323,14 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 			for (j=0;j<6;j++) Lengths[18+j] = Lengths[j] * 2/3;
 
 #ifdef DEBUG
-			dprintf("Length matrix (%i) : ",i);
-			for (j=0;j<6*4;j++) dprintf("%i ",Lengths[j]);
-			dprintf("\n");
+			dbgprintf("Length matrix (%i) : ",i);
+			for (j=0;j<6*4;j++) dbgprintf("%i ",Lengths[j]);
+			dbgprintf("\n");
 #endif
 			foundlen = false;
 
 			for (j=0;j<NrNotes;j++) {
-				dprintf("Comparing to %i\n",NotesLen[j]);
+				dbgprintf("Comparing to %i\n",NotesLen[j]);
 				foundlen = false;
 				for (z=0;z<6*4;z++) {
 					if (NotesLen[j] - Lengths[z] > -accuracy &&
@@ -1394,7 +1394,7 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 				}
 			}
 			dest->NoteTone.NrCommands = NrNotes;
-			dprintf("speed = %i\n",Speed);
+			dbgprintf("speed = %i\n",Speed);
 			break;
 		}
 	}
@@ -1460,7 +1460,7 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 					/* Save the default tempo */
 					DefNoteTempo = Note->Tempo;
 					Len+=sprintf(package+Len,"BEAT:%i%c%c",DefNoteTempo,13,10);
-					dprintf("DefNoteTempo=%d\n",DefNoteTempo);
+					dbgprintf("DefNoteTempo=%d\n",DefNoteTempo);
 
 					/* Save default style */
 					DefNoteStyle = Note->Style;

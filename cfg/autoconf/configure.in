@@ -19,7 +19,7 @@ dnl Compiler flags
 dnl -Wno-format-y2k is against "%c" format warning. The only problem is that
 dnl this doesn't remove warning with gcc 2.95, but for 3.0 and 3.2 it works as
 dnl expected.
-if test x$CFLAGS = x ; then
+if test x"$CFLAGS" = x ; then
     CFLAGS="-O2 -Wall -Wno-format-y2k"
 else
     CFLAGS="$CFLAGS -Wno-format-y2k"
@@ -49,6 +49,7 @@ dnl AC_SUBST(HAVE_ALPHASORT)
 dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS(dirent.h)
+AC_CHECK_HEADERS(sys/ioctl.h)
 AC_CHECK_HEADER(linux/irda.h,
 	[AC_DEFINE(HAVE_IRDA)
 	irda="yes"],

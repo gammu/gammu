@@ -36,6 +36,7 @@ make clean
 /usr/share/gammu
 %doc %_mandir/man1/*
 %doc %_defaultdocdir/gammu
+/usr/include/gammu
 
 %clean
 rm -rf $RPM_BUILD_ROOT

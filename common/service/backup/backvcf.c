@@ -55,7 +55,7 @@ GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
 		        if (backup->PhonePhonebook[numPbk] == NULL) return GE_MOREMEMORY;
 			backup->PhonePhonebook[numPbk + 1] = NULL;
 		} else {
-			dprintf("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
+			dbgprintf("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
 			return GE_MOREMEMORY;
 		}
 		memcpy(backup->PhonePhonebook[numPbk],&Pbk,sizeof(GSM_MemoryEntry));

@@ -62,7 +62,7 @@ static bool irda_discover_device(GSM_StateMachine *state)
 
 		if (getsockopt(fd, SOL_IRLMP, IRLMP_ENUMDEVICES, buf, &s) == 0) {
 		    for (i = 0; i < (int)list->numDevice; i++) {
-			dprintf("Irda: found device \"%s\" (address %x) - ",list->Device[i].irdaDeviceName,list->Device[i].irdaDeviceID);
+			dbgprintf("Irda: found device \"%s\" (address %x) - ",list->Device[i].irdaDeviceName,list->Device[i].irdaDeviceID);
 			if (strcmp(GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number,"") != 0) {
 				founddevice = true;
 				/* Model AUTO */
@@ -70,7 +70,7 @@ static bool irda_discover_device(GSM_StateMachine *state)
 				state->Phone.Data.ModelInfo = GetModelData(NULL,state->Phone.Data.Model,NULL);
 			}
 			if (founddevice) {				
-			    dprintf("correct\n");
+			    dbgprintf("correct\n");
 #ifdef WIN32
 			    for(index=0; index <= 3; index++)
 				d->peer.irdaDeviceID[index] = list->Device[i].irdaDeviceID[index];
@@ -79,7 +79,7 @@ static bool irda_discover_device(GSM_StateMachine *state)
 #endif
 			    break;
 			}
-			dprintf("\n");
+			dbgprintf("\n");
 		    }
 		}
 		if (founddevice) break;
@@ -142,7 +142,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 
     /* Connect to service "Nokia:PhoNet" or other */
     if (connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
-	dprintf("Can't connect to service %s\n",d->peer.irdaServiceName);
+	dbgprintf("Can't connect to service %s\n",d->peer.irdaServiceName);
 	close(fd);
 	return GE_NOTSUPPORTED;
     }

@@ -41,12 +41,12 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *s)
 #ifdef DEBUG
     printf ("SAT command: Provide Local Information\nFunction: ");
     switch (buf[4]) {
-        case 00: dprintf ("Loc Info\n");		break;
-	case 01: dprintf ("IMEI\n");			break;
-	case 02: dprintf ("Network Measure\n");		break;
-	case 03: dprintf ("Date time and timezone\n");	break;
-	case 04: dprintf ("Language setting\n");	break;
-	case 05: dprintf ("Timing advance\n");		break;
+        case 00: dbgprintf ("Loc Info\n");		break;
+	case 01: dbgprintf ("IMEI\n");			break;
+	case 02: dbgprintf ("Network Measure\n");		break;
+	case 03: dbgprintf ("Date time and timezone\n");	break;
+	case 04: dbgprintf ("Language setting\n");	break;
+	case 05: dbgprintf ("Timing advance\n");		break;
     }
 #endif
 
@@ -79,7 +79,7 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	origARFCN = 0;
 	j	  = BitUnPackI(buf+32,j,&origARFCN,10);
 	/* 10 bit origin ARFCN */
-    	dprintf("Origin BCCH = %i\n",origARFCN);
+    	dbgprintf("Origin BCCH = %i\n",origARFCN);
 	
 	for (i=0;i<rep;i++){
 	    result = 0; 
@@ -124,11 +124,11 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	j	= BitUnPackI(buf+14,j,&result,3);
 	MeasureResult.RXQUAL_SubServicingCell=result;
 	
-	dprintf ("RX Level FULL Servicing Cell = %i\n",MeasureResult.RXLEV_FullServicingCell);
-	dprintf ("RX Level Sub Servicing Cell = %i\n",MeasureResult.RXLEV_FullServicingCell);
+	dbgprintf ("RX Level FULL Servicing Cell = %i\n",MeasureResult.RXLEV_FullServicingCell);
+	dbgprintf ("RX Level Sub Servicing Cell = %i\n",MeasureResult.RXLEV_FullServicingCell);
 
-	dprintf ("RX Quality Full Servicing Cell = %i\n",MeasureResult.RXQUAL_FullServicingCell);
-	dprintf ("RX Quality Sub Servicing Cell = %i\n",MeasureResult.RXQUAL_SubServicingCell);
+	dbgprintf ("RX Quality Full Servicing Cell = %i\n",MeasureResult.RXQUAL_FullServicingCell);
+	dbgprintf ("RX Quality Sub Servicing Cell = %i\n",MeasureResult.RXQUAL_SubServicingCell);
 
 	result	= 0;
 	j	= BitUnPackI(buf+14,j,&result,3);
@@ -153,18 +153,18 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	    MeasureResult.NeighbourCell[i].NB +=  result;
 #ifdef DEBUG
 	    if (MeasureResult.NeighbourCell[i].ChFreq)
-		dprintf("CH = %i,\t",MeasureResult.NeighbourCell[i].ChFreq);
+		dbgprintf("CH = %i,\t",MeasureResult.NeighbourCell[i].ChFreq);
 	    else
-		dprintf("CH = Unknown\t",MeasureResult.NeighbourCell[i].ChFreq);
-	    dprintf("RX Lev = %i dBm\t",MeasureResult.NeighbourCell[i].RxLev);
-	    dprintf("BSIC CELL = %i\n",MeasureResult.NeighbourCell[i].NB);
+		dbgprintf("CH = Unknown\t",MeasureResult.NeighbourCell[i].ChFreq);
+	    dbgprintf("RX Lev = %i dBm\t",MeasureResult.NeighbourCell[i].RxLev);
+	    dbgprintf("BSIC CELL = %i\n",MeasureResult.NeighbourCell[i].NB);
 #endif
 	}
     }
 #ifdef DEBUG
     if  (buf[4]==05) {					//Timing Advance
-	if (buf[11]) dprintf ("Unknown Timing Advance\n");
-	else dprintf ("Timing Advance = %i\n",buf[14] & 0x3f);
+	if (buf[11]) dbgprintf ("Unknown Timing Advance\n");
+	else dbgprintf ("Timing Advance = %i\n",buf[14] & 0x3f);
     }
 #endif
     return GE_NONE;

@@ -42,7 +42,7 @@ GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 void GSM_CreateFirmwareNumber(GSM_StateMachine *s)
 {
 	StringToDouble(s->Phone.Data.Version, &s->Phone.Data.VerNum);
-	dprintf("Number version is \"%f\"\n", s->Phone.Data.VerNum);
+	dbgprintf("Number version is \"%f\"\n", s->Phone.Data.VerNum);
 }
 
 GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear)

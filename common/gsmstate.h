@@ -1195,7 +1195,7 @@ GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned char *buffer,
 
 GSM_Error GSM_DispatchMessage		(GSM_StateMachine *s);
 
-CFG_Header 				*CFG_FindGammuRC();
+CFG_Header 				*CFG_FindGammuRC(void);
 
 bool 	  CFG_ReadConfig		(CFG_Header *cfg_info, GSM_Config *cfg, int num);
 
@@ -1255,7 +1255,7 @@ struct _OnePhoneModel {
 	char		*model;
 	char		*number;
 	char		*irdamodel;
-	int		features[12];
+	Feature		features[12];
 };
 
 bool 		IsPhoneFeatureAvailable	(OnePhoneModel *model, int feature);

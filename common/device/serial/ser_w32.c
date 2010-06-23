@@ -178,21 +178,21 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
 	dcb.DCBlength = sizeof(DCB);
 	GetCommState(d->hPhone, &dcb);
 
-	dprintf("Serial device:");
-	dprintf(" DTR is ");
+	dbgprintf("Serial device:");
+	dbgprintf(" DTR is ");
 	switch (dcb.fDtrControl) {
-		case DTR_CONTROL_ENABLE    : dprintf("up");        break;
-		case DTR_CONTROL_DISABLE   : dprintf("down");      break;
-		case DTR_CONTROL_HANDSHAKE : dprintf("handshake"); break;
+		case DTR_CONTROL_ENABLE    : dbgprintf("up");        break;
+		case DTR_CONTROL_DISABLE   : dbgprintf("down");      break;
+		case DTR_CONTROL_HANDSHAKE : dbgprintf("handshake"); break;
 	}
-	dprintf(", RTS is ");
+	dbgprintf(", RTS is ");
 	switch (dcb.fRtsControl) {
-		case RTS_CONTROL_ENABLE    : dprintf("up");        break;
-		case RTS_CONTROL_DISABLE   : dprintf("down");      break;
-		case RTS_CONTROL_HANDSHAKE : dprintf("handshake"); break;
-		case RTS_CONTROL_TOGGLE    : dprintf("toggle");    break;
+		case RTS_CONTROL_ENABLE    : dbgprintf("up");        break;
+		case RTS_CONTROL_DISABLE   : dbgprintf("down");      break;
+		case RTS_CONTROL_HANDSHAKE : dbgprintf("handshake"); break;
+		case RTS_CONTROL_TOGGLE    : dbgprintf("toggle");    break;
 	}
-	dprintf("\n");
+	dbgprintf("\n");
 	if ( dtr && dcb.fDtrControl != DTR_CONTROL_ENABLE ) return GE_DEVICEDTRRTSERROR;
 	if (!dtr && dcb.fDtrControl != DTR_CONTROL_DISABLE) return GE_DEVICEDTRRTSERROR;
 	if ( rts && dcb.fRtsControl != RTS_CONTROL_ENABLE ) return GE_DEVICEDTRRTSERROR;
@@ -242,7 +242,7 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 		fReadStat = ReadFile(d->hPhone, buf, dwLength, &dwLength, &d->osRead);
 		if (!fReadStat) {
 			if (GetLastError() == ERROR_IO_PENDING) {
-//				dprintf("IO Pending\n");
+//				dbgprintf("IO Pending\n");
 				/* We have to wait for read to complete.
 				 * This function will timeout according to the
 				 * CommTimeOuts.ReadTotalTimeoutConstant variable

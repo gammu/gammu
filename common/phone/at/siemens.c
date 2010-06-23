@@ -20,12 +20,12 @@ GSM_Error ATGEN_CMS35ReplySetFunction (GSM_Protocol_Message msg, GSM_StateMachin
 	    s->Protocol.Data.AT.EditMode = false;
 	    return GE_NONE;
 	}
-	dprintf ("Written %s",function);
+	dbgprintf ("Written %s",function);
   	if (s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_OK){
-  		dprintf (" - OK\n");
+  		dbgprintf (" - OK\n");
   		return GE_NONE;
 	} else {
-  		dprintf (" - error\n");
+  		dbgprintf (" - error\n");
   		return GE_UNKNOWN;
 	}
 }
@@ -98,7 +98,7 @@ GSM_Error ATGEN_CMS35ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *
 	
 	error = GetSiemensFrame(msg,s,"bmp",buffer,&length);
 	if (error!=GE_NONE) return error;
-	dprintf ("Operator logo received lenght=%i\n",length);
+	dbgprintf ("Operator logo received lenght=%i\n",length);
 	error = BMP2Bitmap (buffer,NULL,s->Phone.Data.Bitmap);
 	if (error==GE_NONE) return error;
 	else return GE_UNKNOWN;
@@ -150,7 +150,7 @@ GSM_Error ATGEN_CMS35ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine
 
         error = GetSiemensFrame(msg,s,"mid",s->Phone.Data.Ringtone->NokiaBinary.Frame,&length);
 	if (error!=GE_NONE) return error;
-	dprintf ("Midi ringtone received\n");
+	dbgprintf ("Midi ringtone received\n");
 	
 	s->Phone.Data.Ringtone->Format			= RING_MIDI;
 	s->Phone.Data.Ringtone->NokiaBinary.Length	= length;

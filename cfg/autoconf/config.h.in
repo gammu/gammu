@@ -131,6 +131,7 @@
 #undef HAVE_ALPHASORT
 
 #undef HAVE_PTHREAD
+#undef HAVE_SYS_IOCTL_H
 #undef HAVE_MYSQL_MYSQL_H
 #endif
 

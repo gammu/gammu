@@ -73,7 +73,7 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 			        if (backup->Calendar[numCal] == NULL) return GE_MOREMEMORY;
 				backup->Calendar[numCal + 1] = NULL;
 			} else {
-				dprintf("Increase GSM_MAXCALENDARTODONOTES\n");
+				dbgprintf("Increase GSM_MAXCALENDARTODONOTES\n");
 				return GE_MOREMEMORY;
 			}
 			memcpy(backup->Calendar[numCal],&Calendar,sizeof(GSM_CalendarEntry));
@@ -86,7 +86,7 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 			        if (backup->ToDo[numToDo] == NULL) return GE_MOREMEMORY;
 				backup->ToDo[numToDo + 1] = NULL;
 			} else {
-				dprintf("Increase GSM_MAXCALENDARTODONOTES\n");
+				dbgprintf("Increase GSM_MAXCALENDARTODONOTES\n");
 				return GE_MOREMEMORY;
 			}
 			memcpy(backup->ToDo[numToDo],&ToDo,sizeof(GSM_ToDoEntry));

@@ -22,7 +22,48 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
-20031026 - 0.88.4.0
+20031102 - 0.88.0.0
+* new functionality:
+  * * added error for invalid date/time + functions to check it  (Michal Cihar)
+    * added some commandline options for calendar/todo work
+    * new function mystrstr for case insensitive unicode substring
+      searching
+    * implemented simple (but not effective) ATGEN_GetNextMemory
+    * in gammu/gammu.c:
+      * new --getallmemory
+      * new --listtodocategory
+      * added -sent to sms (this was default, but it should be there)
+      * new --getfilesystemstatus
+      * --searchphone searches for at devices on IrDA on linux
+      * complete rewrite of help system - now help always mathes what program 
+        really handles, help splitted to smaller pages, help is wrapped to
+        real terminal size, gammu --help doesn't overwrite logfile
+      * can specify user config from gammurc
+  * quick hack for making RPMs alive
+
+* fixes and improvements:
+  * * changed order of monitor mode to speed up things for       (Michal Cihar)
+      Alcatel
+    * missing \n in AddNew
+    * fixed compilation of gammu under some conditions:
+      name colision        #define _GNU_SOURCE         #include <stdio.h>
+      defines dprintf functions and it colides with same function in gammu,
+      renamed to dbgprintf
+    * missing void in some functions definitions
+    * fixed passing CFLAGS to configure script
+    * default speed in serial port for unix same as on other places (19200)
+    * in _OnePhoneModel use Feature type instead of int
+    * fixed ALCATEL_GetNext functions for case when location was deleted
+    * in gammu/gammu.c:
+      * fixed --searchmemory and --listmemorycategory - comparsion didn't work,
+        didn't show location of found entry
+      * --listmemorycategory, --searchmemory and --getmemory now correctly
+        terminate connection on SIGINT
+
+NOTE: because of many internal changes (in this and 0.87.4 release) please
+      test all things very deeply and inform about problems.
+
+20031026 - 0.87.4.0
 * new functionality:
   * * Changes in internal API for phone modules:                 (Michal Cihar)
       * GSM_CalendarStatus

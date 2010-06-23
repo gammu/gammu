@@ -31,11 +31,11 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
     
         /* Open file */
         if ((handle = fopen(filename, "rb")) == NULL) {
-//                dprintf("CFG file - error opening \"%s\" file: %s\n", filename, strerror(errno));
+//                dbgprintf("CFG file - error opening \"%s\" file: %s\n", filename, strerror(errno));
                 free(buf);
         	return NULL;
         } else {
-//                dprintf("CFG file - opened file \"%s\"\n", filename );
+//                dbgprintf("CFG file - opened file \"%s\"\n", filename );
 	}
 
         /* Iterate over lines in the file */
@@ -172,7 +172,7 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 
                         cfg_info = heading;
 
-//			if (Unicode) dprintf( "CFG file - added new section \"%s\"\n", DecodeUnicodeString(heading->section));
+//			if (Unicode) dbgprintf( "CFG file - added new section \"%s\"\n", DecodeUnicodeString(heading->section));
 //			printf( "CFG file - added new section \"%s\"\n", heading->section);
 
                         /* Go on to next line */
@@ -254,8 +254,8 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
                         cfg_info->entries = entry;
 
 //			if (Unicode) {
-//			    dprintf("CFG file - adding key/value \"%s/",DecodeUnicodeString(entry->key));
-//			    dprintf("%s\"\n", DecodeUnicodeString(entry->value));
+//			    dbgprintf("CFG file - adding key/value \"%s/",DecodeUnicodeString(entry->key));
+//			    dbgprintf("%s\"\n", DecodeUnicodeString(entry->value));
 //			}
 
                         /* Go on to next line */
@@ -263,7 +263,7 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
                 }
 
                 /* Line not part of any heading */
-//                dprintf("CFG file - orphaned line: \"%s\"\n", line);
+//                dbgprintf("CFG file - orphaned line: \"%s\"\n", line);
         }
 
         free(buf);

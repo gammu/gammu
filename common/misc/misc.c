@@ -66,7 +66,7 @@ time_t Fill_Time_T(GSM_DateTime DT, int TZ)
 	struct tm 	tm_starttime;
 	unsigned char 	buffer[30];
 
-	dprintf("  StartTime  : %02i-%02i-%04i %02i:%02i:%02i\n",
+	dbgprintf("  StartTime  : %02i-%02i-%04i %02i:%02i:%02i\n",
 		DT.Day,DT.Month,DT.Year,DT.Hour,DT.Minute,DT.Second);
 
 	if (TZ != 0) {
@@ -106,7 +106,7 @@ void GetTimeDifference(unsigned long diff, GSM_DateTime *DT, bool Plus, int mult
 
 	Fill_GSM_DateTime(DT, t_time);
 	DT->Year = DT->Year + 1900;
-	dprintf("  EndTime    : %02i-%02i-%04i %02i:%02i:%02i\n",
+	dbgprintf("  EndTime    : %02i-%02i-%04i %02i:%02i:%02i\n",
 		DT->Day,DT->Month,DT->Year,DT->Hour,DT->Minute,DT->Second);
 }
 
@@ -228,6 +228,19 @@ char *OSDate (GSM_DateTime dt)
 	return retval2;
 }
 
+bool CheckDate(GSM_DateTime *date) {
+	/* FIXME: This could also check if day is correct for selected month */
+	return date->Year != 0 &&
+		date->Month >= 1 && date->Month <= 12 &&
+		date->Day >= 1 && date->Day <= 31;
+}
+
+bool CheckTime(GSM_DateTime *date) {
+	return date->Hour <= 23 && date->Hour >= 0 &&
+		date->Minute <= 59 && date->Minute >= 0 &&
+		date->Second <= 59 && date->Second >= 0;
+}
+
 int GetLine(FILE *File, char *Line, int count)
 {
 	char *ptr;
@@ -295,7 +308,7 @@ void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, in
 Debug_Info di = {0,NULL,false};
 
 #ifdef DEBUG
-int dprintf(const char *format, ...)
+int dbgprintf(const char *format, ...)
 {
 	va_list			argp;
 	int 			result;

@@ -391,7 +391,7 @@ void decodebinarydump(int argc, char *argv[])
 //	len2=Buffer[0];
 //	len =fread(Buffer, 1, len2, file);
 //	Buffer[len2]=0;
-//	dprintf("[Gammu            - version %s]\n",Buffer);
+//	dbgprintf("[Gammu            - version %s]\n",Buffer);
 	len2=30000;
 	msg.Buffer = NULL;
 	while (len2==30000) {	
@@ -399,16 +399,16 @@ void decodebinarydump(int argc, char *argv[])
 		i=0;
 		while (i!=len2) {
 			if (Buffer[i++]==0x01) {
-				dprintf("Sending frame ");
+				dbgprintf("Sending frame ");
 				sent = true;
 			} else {
-				dprintf("Receiving frame ");
+				dbgprintf("Receiving frame ");
 				sent = false;
 			}
 			type 	= Buffer[i++];
 			len 	= Buffer[i++] * 256;
 			len 	= len + Buffer[i++];
-			dprintf("0x%02x / 0x%04x", type, len);
+			dbgprintf("0x%02x / 0x%04x", type, len);
 			DumpMessage(stdout, Buffer+i, len);
 			fflush(stdout);
 			if (s.Phone.Functions != NULL && !sent) {
