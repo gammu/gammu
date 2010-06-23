@@ -14,6 +14,8 @@ GSM_Error N71_65_ReplyGetMemoryError		(unsigned char error     , GSM_StateMachin
 GSM_Error N71_65_ReplyWritePhonebook		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N71_65_ReplyGetCalendarInfo1		(GSM_Protocol_Message msg, GSM_StateMachine *s, GSM_NOKIACalendarLocations *LastCalendar);
 GSM_Error N71_65_ReplyGetNextCalendar1		(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error N71_65_ReplyGetCalendarNotePos1	(GSM_Protocol_Message msg, GSM_StateMachine *s,int *FirstCalendarPos);
+GSM_Error N71_65_ReplyAddCalendar1		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N71_65_ReplyAddCalendar2		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N71_65_ReplyDelCalendar		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N71_65_ReplyDeleteMemory		(GSM_Protocol_Message msg, GSM_StateMachine *s);
@@ -34,6 +36,7 @@ GSM_Error NOKIA_SetIncomingUSSD			(GSM_StateMachine *s, bool enable);
 GSM_Error N71_65_EnableFunctions		(GSM_StateMachine *s, char *buff,int len);
 GSM_Error N71_65_GetNextCalendar1		(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, GSM_NOKIACalendarLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos);
 GSM_Error N71_65_AddCalendar2			(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past);
+GSM_Error N71_65_AddCalendar1			(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *FirstCalendarPos, bool Past);
 GSM_Error N71_65_DelCalendar			(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 GSM_Error N71_65_DeleteMemory			(GSM_StateMachine *s, GSM_PhonebookEntry *entry, unsigned char *memory);
 GSM_Error DCT3DCT4_SendDTMF			(GSM_StateMachine *s, char *sequence);
@@ -43,6 +46,7 @@ GSM_Error DCT3DCT4_GetModel			(GSM_StateMachine *s);
 GSM_Error DCT3DCT4_GetFirmware			(GSM_StateMachine *s);
 GSM_Error DCT3DCT4_GetWAPBookmark		(GSM_StateMachine *s, GSM_WAPBookmark	  *bookmark	);
 
+GSM_CalendarNoteType N71_65_FindCalendarType(GSM_CalendarNoteType Type, OnePhoneModel *model);
 void 		N71_65_GetCalendarRecurrance	(GSM_StateMachine *s, unsigned char *buffer, GSM_CalendarEntry *entry);
 void 		N71_65_GetTimeDiffence		(GSM_StateMachine *s, unsigned long diff, GSM_DateTime *DT, bool Plus, int multi);
 int 		NOKIA_SetUnicodeString		(GSM_StateMachine *s, unsigned char *dest, unsigned char *string, bool FullLength);
@@ -73,7 +77,7 @@ GSM_Error N71_65_DecodePhonebook		(GSM_StateMachine	*s,
   				 		 GSM_SpeedDial 		*speed,
   				 		 unsigned char 		*MessageBuffer,
   				 		 int 			MessageLength);
-int 		N71_65_EncodePhonebookFrame	(GSM_StateMachine *s, unsigned char *req, GSM_PhonebookEntry entry, int *block2, bool DCT4);
+int 		N71_65_EncodePhonebookFrame	(GSM_StateMachine *s, unsigned char *req, GSM_PhonebookEntry entry, int *block2, bool DCT4, bool VoiceTag);
 int 		N71_65_PackPBKBlock		(GSM_StateMachine *s, int id, int size, int no, unsigned char *buf, unsigned char *block);
 
 #endif

@@ -12,6 +12,9 @@
 #ifndef GSM_USED_BLUEAT
 #  define GSM_USED_BLUEAT
 #endif
+#ifndef GSM_USED_IRDAAT
+#  define GSM_USED_IRDAAT
+#endif
 
 #define MAX_VCALENDAR_LOCATION 50
 
@@ -35,6 +38,7 @@ typedef enum {
 	AT_Siemens,
 	AT_HP,
 	AT_Falcom,
+	AT_Ericsson,
 	AT_Unknown
 } GSM_AT_Manufacturer;
 

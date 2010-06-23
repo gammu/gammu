@@ -624,7 +624,8 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 	case 0x16:
 		smprintf(s, "WAP settings part 1 received OK\n");
 
-		tmp = 4;
+		Data->WAPSettings->Active = false;
+		tmp 			  = 4;
 
 		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[0].Title,false);
 		smprintf(s, "Title: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[0].Title));

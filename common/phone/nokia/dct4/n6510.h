@@ -10,6 +10,9 @@ typedef struct {
 	int				LastCalendarPos;
 	GSM_NOKIACalendarLocations	LastCalendar;
 	int				FirstCalendarPos;
+	unsigned char			CalendarIcons[10];
+	GSM_CalendarNoteType		CalendarIconsTypes[10];
+	int				CalendarIconsNum;
 
 	GSM_NOKIASMSFolder		LastSMSFolder;
 	GSM_SMSFolders			LastSMSFolders;

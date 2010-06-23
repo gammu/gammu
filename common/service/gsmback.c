@@ -404,6 +404,7 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 		case GCN_CALL     	: sprintf(buffer,"Call%c%c", 			13,10); break;
 		case GCN_MEETING  	: sprintf(buffer,"Meeting%c%c", 		13,10); break;
 		case GCN_BIRTHDAY 	: sprintf(buffer,"Birthday%c%c", 		13,10); break;
+		case GCN_MEMO	 	: sprintf(buffer,"Memo%c%c", 			13,10); break;
 		case GCN_ALARM    	: sprintf(buffer,"Alarm%c%c", 			13,10); break;
 		case GCN_DAILY_ALARM 	: sprintf(buffer,"DailyAlarm%c%c", 		13,10); break;
 		case GCN_T_ATHL   	: sprintf(buffer,"Training/Athletism%c%c", 	13,10); break;
@@ -452,6 +453,9 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 		case CAL_PRIVATE:
 			sprintf(buffer, "Private = %d%c%c",Note->Entries[i].Number,13,10);
 			SaveBackupText(file, "", buffer, UseUnicode);
+			break;
+		case CAL_LOCATION:
+			SaveBackupText(file, "Location", Note->Entries[i].Text, UseUnicode);
 			break;
 		case CAL_CONTACTID:
 			sprintf(buffer, "ContactID = %d%c%c",Note->Entries[i].Number,13,10);
@@ -1049,84 +1053,84 @@ static GSM_Error SaveBackup(FILE *file, GSM_Backup *backup, bool UseUnicode)
 
 	i=0;
 	while (backup->PhonePhonebook[i]!=NULL) {
-		sprintf(buffer,"[PhonePBK%03i]%c%c",i,13,10);
+		sprintf(buffer,"[PhonePBK%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SavePbkEntry(file, backup->PhonePhonebook[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->SIMPhonebook[i]!=NULL) {
-		sprintf(buffer,"[SIMPBK%03i]%c%c",i,13,10);
+		sprintf(buffer,"[SIMPBK%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SavePbkEntry(file, backup->SIMPhonebook[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->Calendar[i]!=NULL) {
-		sprintf(buffer,"[Calendar%03i]%c%c",i,13,10);
+		sprintf(buffer,"[Calendar%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveCalendarEntry(file, backup->Calendar[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->CallerLogos[i]!=NULL) {
-		sprintf(buffer,"[Caller%03i]%c%c",i,13,10);
+		sprintf(buffer,"[Caller%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveCallerEntry(file, backup->CallerLogos[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->SMSC[i]!=NULL) {
-		sprintf(buffer,"[SMSC%03i]%c%c",i,13,10);
+		sprintf(buffer,"[SMSC%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveSMSCEntry(file, backup->SMSC[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->WAPBookmark[i]!=NULL) {
-		sprintf(buffer,"[Bookmark%03i]%c%c",i,13,10);
+		sprintf(buffer,"[Bookmark%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveWAPBookmarkEntry(file, backup->WAPBookmark[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->WAPSettings[i]!=NULL) {
-		sprintf(buffer,"[Settings%03i]%c%c",i,13,10);
+		sprintf(buffer,"[Settings%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveWAPSettingsEntry(file, backup->WAPSettings[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->MMSSettings[i]!=NULL) {
-		sprintf(buffer,"[MMSSettings%03i]%c%c",i,13,10);
+		sprintf(buffer,"[MMSSettings%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveWAPSettingsEntry(file, backup->MMSSettings[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->Ringtone[i]!=NULL) {
-		sprintf(buffer,"[Ringtone%03i]%c%c",i,13,10);
+		sprintf(buffer,"[Ringtone%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveRingtoneEntry(file, backup->Ringtone[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->ToDo[i]!=NULL) {
-		sprintf(buffer,"[TODO%03i]%c%c",i,13,10);
+		sprintf(buffer,"[TODO%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveToDoEntry(file, backup->ToDo[i], UseUnicode);
 		i++;
 	}
 	i=0;
 	while (backup->Profiles[i]!=NULL) {
-		sprintf(buffer,"[Profile%03i]%c%c",i,13,10);
+		sprintf(buffer,"[Profile%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveProfileEntry(file, backup->Profiles[i], UseUnicode);
 		i++;
 	}
  	i=0;
  	while (backup->FMStation[i]!=NULL) {
- 		sprintf(buffer,"[FMStation%03i]%c%c",i,13,10);
+ 		sprintf(buffer,"[FMStation%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
  		SaveFMStationEntry(file, backup->FMStation[i], UseUnicode);
  		i++;
@@ -1238,7 +1242,7 @@ void SaveLMBPBKEntry(FILE *file, GSM_PhonebookEntry *entry)
 		03,              /*memory type. ME=02;SM=03*/
 		00};
 
-	count=count+N71_65_EncodePhonebookFrame(NULL, req+16, *entry, &blocks, true);
+	count=count+N71_65_EncodePhonebookFrame(NULL, req+16, *entry, &blocks, true, true);
 
 	req[4]=(count-12)%256;
 	req[5]=(count-12)/256;
@@ -1534,6 +1538,8 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 			note->Type = GCN_MEETING;
 		} else if (mystrncasecmp(readvalue,"Birthday",0)) {
 			note->Type = GCN_BIRTHDAY;
+		} else if (mystrncasecmp(readvalue,"Memo",0)) {
+			note->Type = GCN_MEMO;
 		} else if (mystrncasecmp(readvalue,"DailyAlarm",0)) {
 			note->Type = GCN_DAILY_ALARM;
 		} else if (mystrncasecmp(readvalue,"Alarm",0)) {
@@ -1594,6 +1600,11 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_PRIVATE;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"Location");
+	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
+		note->Entries[note->EntriesNum].EntryType = CAL_LOCATION;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"ContactID");

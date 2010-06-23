@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <locale.h>
 #ifndef __OpenBSD__
 #  include <wctype.h>
 #endif
@@ -69,6 +70,22 @@ unsigned char *DecodeUnicodeString (const unsigned char *src)
  	static char dest[500];
 
 	DecodeUnicode(src,dest);
+	return dest;
+}
+
+/* Decode Unicode string and return as function result */
+unsigned char *DecodeUnicodeString2(const unsigned char *src)
+{
+ 	static char dest[500];
+
+#ifdef WIN32
+	setlocale(LC_ALL, ".OCP");
+#endif
+	DecodeUnicode(src,dest);
+#ifdef WIN32
+	setlocale(LC_ALL, ".ACP");
+#endif
+
 	return dest;
 }
 

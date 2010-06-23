@@ -96,8 +96,15 @@ static bool irda_discover_device(GSM_StateMachine *state)
 
 static GSM_Error irda_open (GSM_StateMachine *s)
 {
+#ifdef WIN32
+    int 		Enable9WireMode = 1;
+#endif
     GSM_Device_IrdaData *d = &s->Device.Data.Irda;
     int			fd = -1;
+
+#ifndef WIN32
+    if (s->ConnectionType == GCT_IRDAAT) return GE_SOURCENOTAVAILABLE;
+#endif
 
     /* discover the devices */
     if (irda_discover_device(s)==false) return GE_TIMEOUT;
@@ -109,9 +116,18 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 #ifndef WIN32
     d->peer.sir_lsap_sel 	= LSAP_ANY;
 #endif
-    strcpy(d->peer.irdaServiceName, "Nokia:PhoNet");
+    if (s->ConnectionType == GCT_IRDAAT) {
+    	strcpy(d->peer.irdaServiceName, "IrDA:IrCOMM");
 
-    /* Connect to service "Nokia:PhoNet" */
+#ifdef WIN32
+	if (setsockopt(fd, SOL_IRLMP, IRLMP_9WIRE_MODE, (const char *) &Enable9WireMode,
+               sizeof(int))==SOCKET_ERROR) return GE_UNKNOWN;
+#endif
+    } else {
+    	strcpy(d->peer.irdaServiceName, "Nokia:PhoNet");
+    }
+
+    /* Connect to service "Nokia:PhoNet" or other */
     if (connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
 	close(fd);
 	return GE_DEVICEOPENERROR;

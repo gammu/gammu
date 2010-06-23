@@ -1,7 +1,7 @@
 
 #include "../../gsmstate.h"
 
-#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT)
+#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT)
 
 #include <stdio.h>
 #include <string.h>
@@ -109,8 +109,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 
 static GSM_Error AT_Initialise(GSM_StateMachine *s)
 {
-	GSM_Protocol_ATData 	*d = &s->Protocol.Data.AT;
-	GSM_Error 		error;
+	GSM_Protocol_ATData *d = &s->Protocol.Data.AT;
 
 	d->Msg.BufferUsed	= 0;
 	d->Msg.Buffer 		= NULL;
@@ -120,8 +119,7 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 	d->EditMode		= false;
 	d->Msg.Type		= 0;
 
-	error=s->Device.Functions->DeviceSetDtrRts(s,true,true);
-    	if (error!=GE_NONE) return error; 
+	s->Device.Functions->DeviceSetDtrRts(s,true,true);
 
 	return s->Device.Functions->DeviceSetSpeed(s,s->Speed);
 }

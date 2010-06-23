@@ -146,6 +146,7 @@ typedef struct {
 	bool 		Folder;		/* true, when folder 	*/
 	int		Level;
 	GSM_FileType	Type;
+	bool		Protected;
 
 	GSM_DateTime	Modified;
 	bool		ModifiedEmpty;
@@ -155,7 +156,7 @@ typedef struct {
 
 GSM_Error GSM_ReadFile(char *FileName, GSM_File *File);
 
-GSM_Error GSM_JavaFindData(GSM_File File, char *Vendor, char *Name, char *JAR, char *Version);
+GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR, char *Version, int *Size);
 
 void GSM_IdentifyFileFormat(GSM_File *File);
 

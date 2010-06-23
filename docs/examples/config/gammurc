@@ -11,7 +11,12 @@
 #                                              serial device)
 #                  "phonetblue"               (Nokia PHONET FBUS over Bluetooth
 #                                              serial device)
+#                  "mbus"                     (Nokia MBUS2)
+#                  "at19200","at115200",...   (AT commands.8 bits, None parity,
+#                                              1 stop bit, no flow control)
 #                  "irdaphonet" or "irda"     (Nokia PHONET FBUS over socket
+#                                              infrared)
+#                  "irdaat"                   (AT commands with socket
 #                                              infrared)
 #                  "bluephonet"               (Nokia PHONET FBUS with Bluetooth
 #                                              stack)
@@ -19,9 +24,6 @@
 #                                              stack)
 #                  "blueat"     or "atblue"   (AT commands with Bluetooth
 #                                              stack)
-#                  "mbus"                     (Nokia MBUS2)
-#                  "at19200","at115200",...   (AT commands.8 bits, None parity,
-#                                              1 stop bit, no flow control)
 # Port           : for Windows/DOS            : "com*:"
 #                  for Linux/Unix             :
 #                                "irdaphonet" : "/dev/ircomm*"
