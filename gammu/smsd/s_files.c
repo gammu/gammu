@@ -74,9 +74,8 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 				file = fopen(FullName, "wb");
 				if (file) {
 					switch (sms.SMS[i].Coding) {
-					case SMS_Coding_Unicode:
-	    				case SMS_Coding_Default:
-
+					case SMS_Coding_Unicode_No_Compression:
+	    				case SMS_Coding_Default_No_Compression:
 					    DecodeUnicode(sms.SMS[i].Text,buffer2);
 					    if (mystrncasecmp(Config->inboxformat, "unicode", 0)) {
 						buffer[0] = 0xFE;
@@ -89,6 +88,8 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 					    break;
 					case SMS_Coding_8bit:
 					    fwrite(sms.SMS[i].Text,1,sms.SMS[i].Length,file);
+					default:
+					    break;
 					}
 					fclose(file);
 				} else error = ERR_CANTOPENFILE;

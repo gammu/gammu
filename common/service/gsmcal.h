@@ -144,7 +144,7 @@ typedef enum {
 	/**
 	 * Alarm date and time.
 	 */
-	CAL_ALARM_DATETIME,
+	CAL_TONE_ALARM_DATETIME,
 	/**
 	 * Date and time of silent alarm.
 	 */

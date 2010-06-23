@@ -1,14 +1,25 @@
 -- phpMyAdmin SQL Dump
--- version 2.6.0-beta2
+-- version 2.6.0-pl3
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Oct 03, 2004 at 04:40 PM
--- Server version: 4.0.18
--- PHP Version: 4.3.8
+-- Generation Time: Oct 12, 2005 at 11:19 AM
+-- Server version: 4.1.8
+-- PHP Version: 5.0.3
 -- 
--- Database: `sms`
+-- Database: `extis`
 -- 
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `daemons`
+-- 
+
+CREATE TABLE `daemons` (
+  `Start` text NOT NULL,
+  `Info` text NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -18,13 +29,13 @@
 
 CREATE TABLE `gammu` (
   `Version` tinyint(4) NOT NULL default '0'
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `gammu`
 -- 
 
-INSERT INTO `gammu` VALUES (4);
+INSERT INTO `gammu` VALUES (5);
 
 -- --------------------------------------------------------
 
@@ -33,11 +44,11 @@ INSERT INTO `gammu` VALUES (4);
 -- 
 
 CREATE TABLE `inbox` (
-  `UpdatedInDB` timestamp(14) NOT NULL,
-  `ReceivingDateTime` timestamp(14) NOT NULL default '00000000000000',
+  `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `ReceivingDateTime` timestamp NOT NULL default '0000-00-00 00:00:00',
   `Text` text NOT NULL,
   `SenderNumber` varchar(20) NOT NULL default '',
-  `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
+  `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default '8bit',
   `UDH` text NOT NULL,
   `SMSCNumber` varchar(20) NOT NULL default '',
   `Class` int(11) NOT NULL default '-1',
@@ -46,11 +57,12 @@ CREATE TABLE `inbox` (
   `RecipientID` text NOT NULL,
   `Processed` enum('false','true') NOT NULL default 'false',
   UNIQUE KEY `ID` (`ID`)
-) TYPE=MyISAM AUTO_INCREMENT=19 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
 
 -- 
 -- Dumping data for table `inbox`
 -- 
+
 
 -- --------------------------------------------------------
 
@@ -59,12 +71,12 @@ CREATE TABLE `inbox` (
 -- 
 
 CREATE TABLE `outbox` (
-  `UpdatedInDB` timestamp(14) NOT NULL,
-  `InsertIntoDB` timestamp(14) NOT NULL default '00000000000000',
-  `SendingDateTime` timestamp(14) NOT NULL default '00000000000000',
+  `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `InsertIntoDB` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `SendingDateTime` timestamp NOT NULL default '0000-00-00 00:00:00',
   `Text` text NOT NULL,
   `DestinationNumber` varchar(20) NOT NULL default '',
-  `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
+  `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default '8bit',
   `UDH` text NOT NULL,
   `Class` int(11) NOT NULL default '-1',
   `TextDecoded` varchar(160) NOT NULL default '',
@@ -72,10 +84,10 @@ CREATE TABLE `outbox` (
   `MultiPart` enum('false','true') NOT NULL default 'false',
   `RelativeValidity` int(11) NOT NULL default '-1',
   `SenderID` text NOT NULL,
-  `SendingTimeOut` timestamp(14) NOT NULL default '00000000000000',
+  `SendingTimeOut` timestamp NOT NULL default '0000-00-00 00:00:00',
   `DeliveryReport` enum('default','yes','no') NOT NULL default 'default',
   UNIQUE KEY `ID` (`ID`)
-) TYPE=MyISAM AUTO_INCREMENT=61 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
 
 -- 
 -- Dumping data for table `outbox`
@@ -90,13 +102,13 @@ CREATE TABLE `outbox` (
 
 CREATE TABLE `outbox_multipart` (
   `Text` text NOT NULL,
-  `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
+  `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default '8bit',
   `UDH` text NOT NULL,
   `Class` int(11) NOT NULL default '-1',
   `TextDecoded` varchar(160) NOT NULL default '',
   `ID` int(11) unsigned NOT NULL default '0',
   `SequencePosition` int(11) NOT NULL default '1'
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `outbox_multipart`
@@ -113,7 +125,7 @@ CREATE TABLE `pbk` (
   `GroupID` int(11) NOT NULL default '-1',
   `Name` text NOT NULL,
   `Number` text NOT NULL
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `pbk`
@@ -130,7 +142,7 @@ CREATE TABLE `pbk_groups` (
   `Name` text NOT NULL,
   `ID` int(11) NOT NULL auto_increment,
   UNIQUE KEY `ID` (`ID`)
-) TYPE=MyISAM AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- 
 -- Dumping data for table `pbk_groups`
@@ -145,18 +157,19 @@ CREATE TABLE `pbk_groups` (
 
 CREATE TABLE `phones` (
   `ID` text NOT NULL,
-  `UpdatedInDB` timestamp(14) NOT NULL,
-  `InsertIntoDB` timestamp(14) NOT NULL default '00000000000000',
-  `TimeOut` timestamp(14) NOT NULL default '00000000000000',
+  `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `InsertIntoDB` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `TimeOut` timestamp NOT NULL default '0000-00-00 00:00:00',
   `Send` enum('yes','no') NOT NULL default 'no',
   `Receive` enum('yes','no') NOT NULL default 'no',
   `IMEI` text NOT NULL,
   `Client` text NOT NULL
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `phones`
 -- 
+
 
 -- --------------------------------------------------------
 
@@ -165,13 +178,13 @@ CREATE TABLE `phones` (
 -- 
 
 CREATE TABLE `sentitems` (
-  `UpdatedInDB` timestamp(14) NOT NULL,
-  `InsertIntoDB` timestamp(14) NOT NULL default '00000000000000',
-  `SendingDateTime` timestamp(14) NOT NULL default '00000000000000',
-  `DeliveryDateTime` timestamp(14) NOT NULL default '00000000000000',
+  `UpdatedInDB` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `InsertIntoDB` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `SendingDateTime` timestamp NOT NULL default '0000-00-00 00:00:00',
+  `DeliveryDateTime` timestamp NOT NULL default '0000-00-00 00:00:00',
   `Text` text NOT NULL,
   `DestinationNumber` varchar(20) NOT NULL default '',
-  `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
+  `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default '8bit',
   `UDH` text NOT NULL,
   `SMSCNumber` varchar(20) NOT NULL default '',
   `Class` int(11) NOT NULL default '-1',
@@ -183,8 +196,9 @@ CREATE TABLE `sentitems` (
   `StatusError` int(11) NOT NULL default '-1',
   `TPMR` int(11) NOT NULL default '-1',
   `RelativeValidity` int(11) NOT NULL default '-1'
-) TYPE=MyISAM;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- 
 -- Dumping data for table `sentitems`
 -- 
+
