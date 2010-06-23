@@ -1345,8 +1345,8 @@ static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMac
 		case N6510_PBK_UNKNOWN2	        : printf(" (conversation list ID)");			break;
 		case N6510_PBK_UNKNOWN3	 	: printf(" (Instant Messaging service list ID ?)");	break;
 		case N6510_PBK_UNKNOWN4	 	: printf(" (presence list ID ?)");			break;
-		case N6510_PBK_PUSHTOTALKID	: printf(" (SIP Address (Push to Talk address))");	break;
-		case N6510_PBK_GROUPID	 	: printf(" (Group ID (6230i or later))");		break;
+		case N6510_PBK_PUSHTOTALK_ID	: printf(" (SIP Address (Push to Talk address))");	break;
+		case N6510_PBK_GROUP2_ID	: printf(" (Group ID (6230i or later))");		break;
 		}
 		printf(", type ");
 		switch (msg.Buffer[pos+5]) {

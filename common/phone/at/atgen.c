@@ -725,6 +725,14 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	smprintf(s, "Enabling echo\n");
 	error = GSM_WaitFor (s, "ATE1\r", 5, 0x00, 3, ID_EnableEcho);
+	/* Some modems (Sony Ericsson GC 79, GC 85) need to enable functionality
+	 * (with reset), otherwise they return ERROR on anything!
+	 */
+	if (error == ERR_UNKNOWN) {
+		error = GSM_WaitFor (s, "AT+CFUN=1,1\r", 12, 0x00, 3, ID_Reset);
+		if (error != ERR_NONE) return error;
+		error = GSM_WaitFor (s, "ATE1\r", 5, 0x00, 3, ID_EnableEcho);
+	}
 	if (error != ERR_NONE) return error;
 
 	smprintf(s, "Enabling CME errors\n");
