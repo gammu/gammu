@@ -254,6 +254,7 @@ static int serial_write(GSM_StateMachine *s, void *buf, size_t nbytes)
         	}
         	actual  += ret;
         	buf     += ret;
+    		if (s->ConnectionType == GCT_FBUS2PL2303) my_sleep(1);
     	} while (actual < nbytes);
     	return actual;
 }

@@ -22,6 +22,35 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20031223 - 0.91.0
+* new functionality:
+  * new connection fbuspl2302 in Linux for USB cables             (Gary Reuter)
+    (clones of DKU5) based on pl2303 chip. The main difference is,
+    that it needs small waiting after each write. It's probably
+    issue of Linux kernel driver
+
+* fixes and improvements:
+  * startppp script handles correctly various APN
+  * * Alcatel:                                                   (Michal Cihar)
+      * fixed reading of item just after modifying it
+        (could lead to ERR_BUG)
+    * AT:
+      * improved error situation detection, when sending/writing SMS
+      * checking for available SMS memories before actually using them
+      * do not segfault when AT+CMGW replies something unexpected
+    * compilation of bluetooth
+    * GSM_ReadConfig doesn't set pointers in config to local variables
+    * mystrncasecmp/mywstrncasecmp now correctly handle NULL
+      pointers and situation when second string is shorter
+  * Bostjan Muller and 3200 RH-30 3.08: uploading apps with URL
+    starting from http failed. Now http changed to wttp before sending files
+    to phone
+
+NOTE: I decided, that Gammu at least for now will be GPL.
+
+      There is officialy started also Gammu+ with own license. First version
+      of Gammu+ should be available after Christmas.
+  
 20031214 - 0.90.9
 * new functionality:
   * config matrix added for 3100, 3200 (3200 both European

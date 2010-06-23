@@ -2395,58 +2395,31 @@ static void DisplaySMSFrame(GSM_SMSMessage *SMS)
 	GSM_Error 		error;
 	int			i, length, current = 0;
 	unsigned char		req[1000], buffer[1000], hexreq[1000];
-
+#ifdef OSCAR
+        unsigned char           hexmsg[1000], hexudh[1000];
+#endif
 	error=PHONE_EncodeSMSFrame(&s,SMS,buffer,PHONE_SMSSubmit,&length,true);
 	if (error != ERR_NONE) {
 		printmsg("Error\n");
 		exit(-1);
 	}
+        length = length - PHONE_SMSSubmit.Text;
 #ifdef OSCAR
-	length = length - PHONE_SMSSubmit.Text;
+        for(i=SMS->UDH.Length;i<length;i++) {
+		req[i-SMS->UDH.Length]=buffer[PHONE_SMSSubmit.Text+i];
+	}
+        EncodeHexBin(hexmsg, req, length-SMS->UDH.Length);
+ 
+        for(i=0;i<SMS->UDH.Length;i++) {
+		req[i]=buffer[PHONE_SMSSubmit.Text+i];
+	}
+        EncodeHexBin(hexudh, req, SMS->UDH.Length);
 
-	printf("<?xml version=\"1.0\"?>\n");
-	printf("<msgbatch batchid=\"10014\">\n");
-/*?*/  	printf("<message id=\"235\" commit=\"ACK\" ");
-/*?*/	printf("prio=\"0\" rn=\"NO\" "); 		
-/*?*/	printf("type=\"MT\" ver=\"1.0\" ttl=\"100\">\n");
-
-	/* Sender */
-    	printf("<from>\n");
-	printf("<shortCodeAddress sc=\"%s\"/>\n",DecodeUnicodeString(SMS->SMSC.Number));
-	printf("</from>\n");
-
-	/* Destination */
-	printf("<to>\n");
-	printf("<msisdnAddress msisdn=\"%s\" />\n",DecodeUnicodeString(SMS->Number));
-	printf("</to>\n");
-
-	printf("<content type=\"SMS\">\n");
-/*?*/	printf("<ucp51 trn=\"10\">\n");
-
-	/* SMS Text (without UDH) */
-	for(i=SMS->UDH.Length;i<length;i++) req[i-SMS->UDH.Length]=buffer[PHONE_SMSSubmit.Text+i];
-	EncodeHexBin(hexreq, req, length-SMS->UDH.Length);
-	printf("<msg mt=\"TD\">%s</msg>\n",hexreq);
-
-/*?*/	printf("<mcls>1</mcls>\n");
-
-	/* Length of SMS Text (without UDH) in bits */
-	printf("<nb>%i</nb>\n",(buffer[PHONE_SMSSubmit.TPUDL]-SMS->UDH.Length)*8);
-	printf("<xser>\n");
-
-	/* UDH */
-	printf("<dcs>1</dcs>\n");
-	for(i=0;i<SMS->UDH.Length;i++) req[i]=buffer[PHONE_SMSSubmit.Text+i];
-	EncodeHexBin(hexreq, req, SMS->UDH.Length);
-	printf("<udh>%s</udh>\n",hexreq);
-
-	printf("</xser>\n");
-	printf("</ucp51>\n");
-	printf("</content>\n");
-	printf("</message>\n");
-	printf("</msgbatch>\n");
+        printf("msg:%s nb:%i udh:%s\n",
+                hexmsg,
+                (buffer[PHONE_SMSSubmit.TPUDL]-SMS->UDH.Length)*8,
+                hexudh);
 #else
-	length = length - PHONE_SMSSubmit.Text;
 	for (i=0;i<buffer[PHONE_SMSSubmit.SMSCNumber]+1;i++) {
 		req[current++]=buffer[PHONE_SMSSubmit.SMSCNumber+i];
 	}
@@ -6628,6 +6601,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	GSM_DateTime		DT,DT2;
 	time_t     		t_time1,t_time2;
 	unsigned char 		buffer[10000],JAR[500],Vendor[500],Name[500],Version[500],FileID[400];
+	unsigned char		*http;
 	bool 			Start = true, Found = false, wasclr;
 	bool			ModEmpty = false;
 	int			i = 0, Pos, Size, Size2, nextlong;
@@ -6725,6 +6699,10 @@ static void NokiaAddFile(int argc, char *argv[])
 		sprintf(buffer,"%s.jad",argv[3]);
 		error = GSM_ReadFile(buffer, &File);
 		Print_Error(error);
+
+		/* Bostjan Muller 3200 RH-30 3.08 */
+		http = strstr(File.Buffer,"MIDlet-Jar-URL: http://");
+		if (http != NULL) http[16] = 'w';
 
 		/* Getting values from JAD file */
 		error = GSM_JADFindData(File, Vendor, Name, JAR, Version, &Size);

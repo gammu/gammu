@@ -269,7 +269,6 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 	return Length;
 }
 
-/* Write to serial device. */
 static int serial_write(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
 	DWORD			BytesWritten,ErrorFlags,BytesSent=0;
