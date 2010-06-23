@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.05.03"/>
+    <PROJECT value="Output\gammu.exe"/>
+    <OBJFILES value="Output\gammu.obj Output\at.obj Output\atgen.obj Output\cfg.obj 
+      Output\coding.obj Output\dct3.obj Output\dct4.obj Output\fbus2.obj 
+      Output\alcabus.obj Output\fbusirda.obj Output\gsmback.obj 
+      Output\gsmcal.obj Output\gsmcomon.obj Output\gsmlogo.obj Output\gsmnet.obj 
+      Output\gsmpbk.obj Output\gsmring.obj Output\gsmsms.obj Output\gsmstate.obj 
+      Output\gsmwap.obj Output\irda.obj Output\unixblue.obj Output\mbus2.obj 
+      Output\misc.obj Output\n6110.obj Output\n6510.obj Output\n7110.obj 
+      Output\n9110.obj Output\nauto.obj Output\alcatel.obj Output\dct3func.obj 
+      Output\nfunc.obj Output\pfunc.obj Output\sniff.obj Output\win32.obj"/>
+    <RESFILES value=""/>
+    <IDLFILES value=""/>
+    <IDLGENFILES value=""/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES)"/>
+    <LIBFILES value=""/>
+    <LIBRARIES value=""/>
+    <SPARELIBS value=""/>
+    <PACKAGES value="Vcl50.bpi Vclx50.bpi bcbsmp50.bpi Vcldb50.bpi vclado50.bpi ibsmp50.bpi 
+      VCLBDE50.bpi vcldbx50.bpi Qrpt50.bpi TeeUI50.bpi TeeDB50.bpi Tee50.bpi 
+      Dss50.bpi TeeQR50.bpi VCLIB50.bpi Vclmid50.bpi vclie50.bpi Inetdb50.bpi 
+      Inet50.bpi NMFast50.bpi webmid50.bpi bcbie50.bpi dclocx50.bpi 
+      bcb2kaxserver50.bpi"/>
+    <PATHCPP value=".;..;..\..\common\protocol\at;..\..\common\phone\at;..\..\common\misc;..\..\common\protocol\nokia;..\..\common\protocol\alcatel;..\..\common\service;..\..\common;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone;..\..\common\device\serial"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value="WIN32;NDEBUG;_CONSOLE"/>
+    <SYSDEFINES value="_NO_VCL;_ASSERTE;NO_STRICT"/>
+    <MAINSOURCE value="gammu.bpf"/>
+    <INCLUDEPATH value="..\;..;..\..\common\device\serial;..\..\common\protocol\alcatel;..\..\common\phone\alcatel;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl"/>
+    <LIBPATH value="..\..\common\phone\alcatel;..\..\common\protocol\alcatel;..\;..;..\..\common\device\serial;..\..\common\device\bluetoth;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\lib;$(RELEASELIBPATH);$(BCB)\lib\psdk"/>
+    <WARNINGS value="-w-par -w-8027 -w-8026 -w-csu"/>
+  </MACROS>
+  <OPTIONS>
+    <IDLCFLAGS value="-src_suffix cpp -DWIN32 -DNDEBUG -D_CONSOLE -I..\. -I.. 
+      -I..\..\common\device\serial -I..\..\common\phone 
+      -I..\..\common\protocol\alcatel -I..\..\common\device\bluetoth 
+      -I..\..\common\phone\nokia -I..\..\common\phone\alcatel 
+      -I..\..\common\phone\nokia\dct4 -I..\..\common\phone\nokia\dct3 
+      -I..\..\common\device\irda -I..\..\common -I..\..\common\service 
+      -I..\..\common\protocol\nokia -I..\..\common\misc -I..\..\common\phone\at 
+      -I..\..\common\protocol\at -I$(BCB)\include -I$(BCB)\include\mfc 
+      -I$(BCB)\include\atl"/>
+    <CFLAG1 value="-O2 -w- -VF -X- -a8 -b -k -vi -q -c"/>
+    <PFLAGS value="-N2Output -N0Output -$YD"/>
+    <RFLAGS value="/l 0x415 /d &quot;NDEBUG&quot; /i$(BCB)\include;$(BCB)\include\mfc"/>
+    <AFLAGS value="/mx /w2 /zd"/>
+    <LFLAGS value="-IOutput -D&quot;&quot; -ap -Tpe -x -Gn -v -q"/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0x32.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cw32.lib"/>
+  </LINKER>
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=0
+AutoIncBuild=0
+MajorVer=1
+MinorVer=0
+Release=0
+Build=0
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=1033
+CodePage=1252
+
+[Version Info Keys]
+CompanyName=
+FileDescription=
+FileVersion=1.0.0.0
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
+Comments=
+
+[HistoryLists\hlIncludePath]
+Count=3
+Item0=..\;..;..\..\common\device\serial;..\..\common\protocol\alcatel;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;..\..\common\device\bluetoth;$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl
+Item1=..\;..\..\common\device\serial;..\..\common\phone;..\..\common\phone\alcatel;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;..;$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl
+Item2=..\..\common\device\serial;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;..\;$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl;
+
+[HistoryLists\hlLibraryPath]
+Count=3
+Item0=..\;..;..\..\common\device\serial;..\..\common\device\bluetoth;..\..\common\protocol\alcatel;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\lib;$(RELEASELIBPATH);$(BCB)\lib\psdk
+Item1=..\;..\..\common\device\serial;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;..;$(BCB)\lib;$(RELEASELIBPATH);$(BCB)\lib\psdk
+Item2=..\..\common\device\serial;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;..\;$(BCB)\lib;$(RELEASELIBPATH);;$(BCB)\lib\psdk;
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=2
+Item0=WIN32;NDEBUG;_CONSOLE
+Item1=WIN32;NDEBUG;_CONSOLE;_MBCS
+
+[HistoryLists\hlIntOutputDir]
+Count=2
+Item0=Output
+Item1=Release
+
+[HistoryLists\hlFinalOutputDir]
+Count=1
+Item0=Output\
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=--identify
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=0
+LinkDebugVcl=0
+LinkCGLIB=0
+
+[CORBA]
+AddServerUnit=1
+AddClientUnit=1
+PrecompiledHeaders=1
+
+[Language]
+ActiveLang=
+ProjectLang=
+RootDir=
+  </IDEOPTIONS>
+</PROJECT>

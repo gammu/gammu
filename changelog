@@ -1,0 +1,474 @@
+
+ChangeLog for Gammu project (http://marcin-wiacek.topnet.pl)
+
+Few last versions (the highest) will be described more detailed, older less.
+In brackets names of people, who told about error/problem or helped in fixing.
+----------------------
+20021020 - 0.61
+
+* new functionality:
+  * getting voice records from such DCT4 like 6310 or 6310i (new
+    --nokiagetvoicerecord) (EXPERIMENTAL)
+    NOTE: created WAV files requires GSM 6.10 codec. In the future
+          codec will be probably added to Gammu.
+  * full compatiblity with EMS IMelody 1.2 (earlier          (Christian Becker)
+    was 1.0), saving ime/imy files
+  * docs contains examples for editing backup text files       (Kolesar Andras)
+    in TextPad, backup files are now more user friendly
+    for editing - for example, when delete one pbk entry,
+    all after it are interpreted
+  * added possibility of using standard Unix configure
+    script for automatic configuring all options    
+    NOTE: this is first version of Autoconf build system.
+          Probably many things inside will be changed to better.
+	  All ideas very welcome.
+  * dialvoice for DCT4
+    NOTE: it should be possible to make data calls using FBUS with DCT4,
+          probably also with 62xx/7110
+	  
+* fixes and improvements:
+  * atblue works OK                                           (Marcel Holtmann)
+  * some MyGnokii2 names changed to Gammu, display status can   (Krishna Dagli)
+    be incoming frame for n6110.c
+  * compatibility fixes for 9210 and AT mode
+  * many small fixes for win32 dll
+  * setting WAP settings for DCT4 works better for some data
+
+20021012 - 0.60
+
+* new functionality:
+  * FBUS works 100% over BlueTooth with 6210                  (Marcel Holtmann)
+  * hardware drivers return OS error codes and error info
+
+* fixes and improvements:
+  * with win32 dll and some StateMachine strings             (Ing.Jiri Jurecek)
+  * setting PBK memory in AT module,                             (Michal Cihar)
+    fix for Alcatel and getting memory status
+  * changes in Unix serial driver - earlier wasn't compatible      (few people)
+    with all Linux kernel versions and some distributions
+  * improvements in compiling after enabling CB                   (Karel Polak)
+  * improvements in debug system
+  * --identify works OK for DCT4 without SIM card
+
+20021005 - 0.59
+
+CHANGED PROJECT NAME FROM MYGNOKII2 TO GAMMU
+(GNU All Mobile Management Utilities).
+
+(Too) many people wrote to me, that MyGnokii2 name shows, that project
+is connected with Gnokii and supports Nokia phones only. Currently it's
+not truth - there were tested Alcatel, Nokia, Siemens and WaveCom devices
+and I hope to test more :-). Also Gammu doesn't have too much shared with
+Gnokii source and developing methods
+
+PLEASE NOTE, THAT ALSO gnokiirc CONFIG FILE IS NOW NAMED gammurc !!!!!
+
+If you installed older version into your OS, please uninstall it first
+(for example using "make uninstall").
+
+* new functionality:
+  * AT module:
+    * Alcatel OT 5xx, 7xx: added full identify, changed last     (Michal Cihar)
+      dialled memory ID, better cancel call compatibility
+  * added "make tags" for makefile, full compiler info,          (Michal Cihar)
+    gcc 3.2 warning removed, rewritten debug system...
+  * key pressing works for all DCT3                                (Asif Hamza)
+  * big progress in coding functions (full Japanese/Chinese           (Hu Gang)
+    support)
+  * cleanups in coding.c                                       (Kolesar Andras)
+  * rewritten RPM build system
+  * added man file, Gammu is in PLD (Polish Linux           (Krzysztof Drewicz)
+    Distribution)
+  * Borland C++ makefile works OK with given for free
+    Borland C++ Builder 6 Personal
+* fixes and improvements:
+  * AT module:
+    * Alcatel OT 5xx, 7xx: setting ME memory for SMS             (Michal Cihar)
+    * setting pbk memory with GSM alphabet                       (Michal Cihar)
+    * getting pbk memory doesn't return GE_EMPTY                (Cvetan Ivanov)
+  * fix for locking device file                                  (Michal Cihar)
+  * improvements in user interface (backupsms), restore for     (Cvetan Ivanov)
+    SMS templates and 7110
+
+20020926 - 0.58
+* new functionality:
+  * Siemens M20 has problems with alphanumeric numbers in SMS. Added at least
+    partialy workaround for it (during reading).
+  * getting SIM card IMSI number
+  * saving ringtones into WAV files (EXPERIMENTAL)
+  * synchronized win32 and Unix serial port driver - now port settings
+    should be the same and all differences gone. Many parts of unnecessary
+    source removed. More errors checking.
+  * added tables for converting chars in GSM Default Alphabet in SMS similiary
+    to these in phones - all (?) national chars not available in GSM Default
+    Alphabet are converted to "plain" Latin chars. Added additionaly
+    -replacefile option to make private conversions.           (Kolesar Andras)
+  * dll for win32 and sms_serv finally end according to my current needs.
+    They're written using 100% win32 standards. No hacks.
+  * AT module
+    * with "auto" model first send commands to escape editing
+      functions and enabling phone echo
+    * saving SMS works to ME memory too
+    * full compatilibity with Siemens MC35
+    * confirmed compatibility with WAVECOM modems
+  * backup/restore for sms contains support for all features included few
+    releases ago.
+  * docs synchronized with source                                (Allan Ortega)
+* fixes and improvements:
+  * can correctly restore SMS_Submit sms
+  * AT module:
+    * SMS locations in ME memory are numerated from 1 in GetNextSMSMessage
+    * fix for SMS folder info and getting SMS
+  * bigger buffer in GetLineString
+  * compilation improvements, better support for "unknown" model (Ganesh Lohia)
+  * fix for 7110 and operator logos                             (Cvetan Ivanov)
+  * improvements for DCT4 SMS locations
+  * rechecked GSM Default Alphabet in SMS. Few fixes.
+
+Summary: software is more and more stable, tested and working 100% OK
+         in each situation. All problems connected with baby age start
+         to be after it.
+
+20020921 - 0.57
+* new functionality:
+  * new --geteachsms (get all sms from phone and connect them, when possible)
+  * 7110 family: getting sms names, better sms status, support for call info,
+    setting profiles (excluding names and caller groups), getting speed dials
+  * 7110/9110: full incoming sms support (with Delivery Reports)
+  * DCT3: full support for WAP settings. Can of course exchange them
+    (over backups) with DCT4 WAP settings
+  * getting/setting op logos for 9110 family (tested on 9210)
+  * improvements in user interface functions, some info about     (Ivo Panacek)
+    voice tags in DCT4 - now 100% works
+  * readme.txt described how to avoid voice tag problems available
+    in DCT3 and DCT4 and sms problems available in DCT4 (6310i 4.80)
+  * added IPAQ model and many functions supported by it, some other   (Hu Gang)
+    improvements in AT module, started full call info functionality,
+    compilation improvements
+  * added spec file for making RPM. First experimental version    (R.P.Herrold)
+  * added new makefile option --makerpm for making RPM binary/src file.
+    First experimental version
+  * Bluetooth changes (NOT YET FULL FUNCTIONAL !)             (Marcel Holtmann)
+  * added ID for 7650 (will probably work with 6510 module)
+* fixes and improvements:
+  * many small improvements for getting/setting SMS (UDH headers)
+  * 7110 family: getting profiles
+  * many cleanups and improvements in source
+
+20020913(Friday!) - 0.56
+* new functionality:
+  * getting alarm state, phone tests (only making - now without
+    getting results), setting binary ringtones, deleting all user
+    ringtones for DCT4
+  * new --nokiasetvibralevel. Can set vibra "power" for DCT4
+  * converter Nokia Binary Format (DCT3) -> RTTL. First version, which can
+    handle only part of ringtones. Do note expect miracles here :-(
+  * resetting security code for part of DCT4 phones
+  * support for TPPID in SMS (full for AT, DCT3 and DCT4).
+    --rejectduplicates changed to --replacemessages (now can replace
+    SMS saved on recipients' SIM)
+  * more beeps                                                          (Walek)
+  * source prepared for Bluetooth support (it's during testing
+    and writing)
+  * writing phonebook for AT phones
+  * better restoring WAP settings for DCT4
+* fixes and improvements:
+  * GPRS Always Online can be activated for 6510 & 3510 too
+  * rewritten playing tones for DCT4 - sometimes it's better, but still
+    need investigation. In last versions of original Nokia software removed
+    at all.
+  * improvements during converting among various ringtones types
+  * no more compilation problems after disabling 6110 module
+  * changed TPMR and RejectDuplicates support in SMS
+  * Delivery Reports again alive for DCT4
+  * setting pbk for 6110
+  * no more asking about restoring wap settings in phones without WAP
+  * SMS folders in AT module renumerated -> now should be able to
+    save SMS to SIM/phone memory
+  * can get Dialled Calls with AT module and Nokia phone
+  * better user friendly interface during asking user for something
+
+20020904 - 0.55
+* new functionality:
+  * CallInfo, incoming SMS and Delivery Reports, setting operator logo
+    for DCT4
+  * support for TPMR in SMS Submit (sending/saving/getting for DCT3 & AT,
+    getting for DCT4)
+    For more info read mygnokii.txt and description for --send(save)sms
+    option and --rejectduplicates parameter
+
+    !!! If works according to info in mygnokii.txt with your SMSC, !!!
+                       !!! please tell me !!!
+
+  * more possibilities with sms_serv
+  * it's IMPOSSIBLE, but HAPPEN. Nokia disables in many phones GPRS Always
+    Online. This and many other things are enabled using --nokiasetphonemenus
+* fixes and improvements:
+  * some things moved inside "common" files and structures
+  * getting operator logo, deleting sms for DCT4
+  * incoming sms are parsed only, when DEBUG or enabled using API
+    (source is more safe because of it)
+
+20020830 - 0.54
+* new functionality:
+  * Default Alphabet extension in SMS can handle new chars (now 9 sequences)
+  * Euro Char and subset 2 for 33xx reminders
+  * protection during saving sms/setting smsc for DCT4 (saving SMS
+    again alive)
+  * restoring WAP settings for DCT4
+  * setting profiles for 6110 module                               (Walek & me)
+  * in config.h new option, which enables beeping after making some
+    things (like in Logo Manager)
+  * reset for DCT4 disabled for DLR3 cable - no way to make it (?)
+* fixes and improvements:
+  * some unnecessary Unicode <-> normal char conversions removed   (Walek & me)
+  * improvements for (especially) linked SMS with Default Alphabet
+    and special sequences
+  * improved playing tones for DCT4
+  * setting ringtone for DCT4 (with preview) works with authentication
+
+Summary: in progress restoring WAP settings for DCT3, ending restoring
+         all profiles features and full support for speed dials
+
+20020826 - 0.53
+* new functionality:
+  * getting DSP ROM for DCT3
+  * AT module filled in many places and tested with Siemens cell modems:
+       * network info               * sms info
+       * security state/codes       * phone info
+       * deleting sms
+       * SMS memory in phone (phone Inbox/Outbox in 6210, 63xx, etc.)
+       * SMS status reports in Siemens style
+       etc. 
+  * backup to phone profiles, restore for DCT4 (EXPERIMENTAL)
+  * sms_serv working with AT devices
+  * --nokiasetphonemenus enables netmon for DCT3
+  * support for big (78x21) operator logos over SMS
+* fixes and improvements:
+  * small changes in MBUS module
+  * DCT3 phone tests are more usable for more damaged phones
+  * rewritten phone profiles stuff - smaller, easier,...
+  * better support for linked (contacenated and SM 3.0) SMS             (zx zx)
+  * fix for -len in --send/savesms                                      (zx zx)
+  * in 6110 module for sms (bug was available in 0.51 and 0.52)         (zx zx)
+  * better handling for default DCT4 caller logos
+  * source cleanups
+
+20020817 - 0.52
+* new functionality:
+  * support for more special Nokia sequences used with GSM Default
+    Alphabet in SMS
+* fixes & improvements:
+  * workaround for some incoming unicode SMS for 6310i 4.80
+
+NOTE: this is security update. In some situations saving SMS for DCT4
+      can make big problems with phone. Now commented.
+
+20020816 - 0.51
+* new functionality:
+  * rewritten makefile. New "make makelib", "make uninstall",
+    "make installlib"
+  * improved getting profiles (both for DCT3 and DCT4)
+  * --nokiasetphonemenus can enable WellMate menu for 6150
+    and ALS for DCT4
+  * new --deleteallsms (deleting all sms from specified folder),
+    --senddtmf, --getdisplaystatus
+  * resetting phone settings for DCT3, support for animated logo        (Walek)
+    for 3210
+  * --getcalendarnote displays better output
+  * improved callbacks
+  * updates for sms_serv
+  * added getting firmware date
+  * getting speed dials works for DCT4 too
+  * improvements in getting caller logos, profiles from DCT4
+* fixes:
+  * sending SMS, getting WAP settings for DCT4.
+  * better checking errors with --copyringtone                 (Kresimir Hodak)
+  * 6110 module in some situations reported "Inbox" SMS as "Outbox"
+    and incorrectly showed SMS state
+  * more situations handled by --getsms                           (Markus Bela)
+  * updated config for 8250, improvements for calendar       (Georg Hofstetter)
+    (second will improve 5210 calendar too)
+  * changed format number of backup files to 1.01                       (Walek)
+* other:
+  * security code reading moved to dct3.c (it's specific for DCT3)
+  * source cleanups
+
+20020809 - 0.50
+* sms_serv can much more things...
+* updated operator list                                           (Karel Polak)
+* getting profiles works for DCT3 too
+* workaround for some 6210 and locations for calendar notes (Kai-Holger Seidel)
+  and some other problems fixed
+* cleanups, small extensions (like in SMS/network status)
+* can make authentication for 51xx/61xx (displays "Accessory connected").
+  Special option in config.h for it.
+* started work for speed dial support
+* reset phone settings for DTC3 (experimental, works after uncommenting (Walek)
+  in ndct3.c)
+* added setting operator logo for 9110 module (for testing)
+* updated docs (Italian translation)                            (Luca Cassioli)
+* added "make install"
+
+Summary: in this moment only full support for wap settings, speed dials
+         and profiles in progress. Other things more and more tested
+         and stable.
+
+20020806 - 0.49
+* increased size for calendar notes
+* updated config for 8290 & network info more concrete
+* MSID again OK, other things for --identify                            (Walek)
+* after enabling all options in config.h some things were         (Karel Polak)
+  not OK. Fixed
+* added missed makefile for command line BCC                      (Karel Polak)
+* DefaultNumber for SMSC and DCT3 improved                      (Cvetan Ivanov)
+
+Summary: test version. Many fixes. WAP settings not work for DCT4
+         (my phone went to service and didn't stand up after flashing)
+         & can not work with DCT3 - source is changed, not good tested.
+
+20020802 - 0.48
+* changed some general behaviour. Now all CFGxxx from StateMachine are not
+  modified. Additional when use Irda connection with specified model, each
+  known phone can be switched to module connected with this model.
+* deleted "fresh" "dlr3clasic" ;-). Generally, DLR3 problems should gone
+  away now with "dlr3"...
+* added security status and entering security codes
+* Italian translation file                                      (Luca Cassioli)
+* started writing support for phone profiles
+* sms_serv 100% usefull now
+* source cleanups (DCT3/DCT4 has one function for getting WAP
+  bookmarks, etc...)
+* DCT3: * MSID now commented (need investigation)
+        * 7110/62xx operator logo has variable size, improved   (Cvetan Ivanov)
+          getting WAP bookmarks
+        * fixes for --nokiasetoperatorname                              (Walek)
+        * 6210 family: saving sms name should be OK now (TODO: test it)
+* DCT4: getting alarm (without checking enabling !), saving sms, started
+  work on full ringtones support (binary format a little different than in
+  DCT3) - can get all (user + default) ringtones, setting alarm/datetime,
+  setting smsc, playing ringtones over phone buzzer, more info with
+  --identify
+* option for getting ringtones names
+* --getsms displays "Empty" for empty SMS location
+
+20020726 - 0.47
+* DCT4 - can press Up key, getting original IMEI, date/time, sms status,
+         full support for todo, full support for wap bookmarks, sending
+         sms, (can contains errors !) getting WAP settings almost functional
+* better error codes
+* improvements in setting WAP bookmarks
+* source cleanups
+* added ID for 7190 (for 7110 module)
+* extended SMS status
+* new connection type "dlr3clasic" (no AT commands). When use "dlr3", "old"
+  init is used (after some improvements).
+* number of replies moved to StateMachine
+* started NEW project in mygnokii2: sms_serv. The main task for it is to
+  create very easy to use API for getting incoming sms (saved on SIM/phone
+  memory) and sending sms. Project shows, how to easy use threads and
+  many phones in one time from one application. Very early test version.
+
+20020719 - 0.46
+* DCT4 - * full support for phonebook, network/battery/phone info, startup  (I)
+           logo, ringtones (as Nokia provides - only preview mode now),
+           reset
+         * getting WAP bookmarks, startup note, getting/clearing operator
+           logo, getting todo
+         * BIG improvements in getting SMS, SMSC
+* 8210 - default Picture Images                             (Krzysztof Drewicz)
+* 6110 family - key pressing/releasing                                      (I)
+* DCT3 - displaying MSID                                            (Walek & I)
+* no more displaying SMS name for received sms                              (I)
+
+20020710 - 0.45
+* fixes for 6110.c and Pict.Images/binary ringtones (getting)    (I and Franco)
+* binary dumps contains mygnokii2 version                                   (I)
+* improved sniffing functions                                               (I)
+* 6110.c and setting binary ringtones (tested with 3210)                    (I)
+* fix for note ringtones and tempo                                          (I)
+* --composer finally moved                                                  (I)
+* new -scale for send/savesms RINGTONE ... and --setringtone                (I)
+* updated docs                                                              (I)
+* support for blinking Unicode SMS texts, ringtone names                    (I)
+  in older Nokia DCT3 phones (use single ~ char to encode blinking)
+* when phone contains default name for caller group, it's NOT saved to      (I)
+  backup file and not replaced by default English name (from mygnokii2)
+  during restore
+* DCT4: getting sms and some other (initial && experimental)                (I)
+* default picture images from 6310i                                         (I)
+
+20020704 - 0.44
+* at module: cleanups, fixes (SMS and N9000)             (I and Jan Kratochvil)
+* ringtones: RTTL rewritten, cleaned, extended to EMS and improved
+  (example: there are much shorter saved RTTL files)                        (I)
+* coded EMS bitmaps and ringtones, not tested with "real" EMS phone         (I)
+* reseting test 36 in DCT3                                        (I and Walek)
+* full support for multiframe NLM files                                     (I)
+* updated (protocol) docs                                                   (I)
+
+20020627 - 0.43
+* at module: full support for sms in PDU and text mode (in text mode with
+  additional Nokia extensions to delivery reports and 8 bit/Unicode sms),
+  date/alarm things, smsc things, battery/network level things, getting pbk...
+* fix for SMS and validity
+* question for playing ringtone is asked only, when has sence
+* can read input Unicode files with 0xff 0xfe/0xfe 0xff on start for sms
+* Euro char is coded in SMS saved using Default Alphabet in Nokia standard
+* fix for --send/savesms for input buffer and Unicode SMS
+
+20020623 - 0.42
+* changed numeration of releases
+* cleanups in source - misc.c and gsmcomon.c
+* fix in source for Borland C++ Builder in gsmstate.c
+* full sms state support: read/unread (6210 uses SIM then), sent/unsent
+* dlr3 doesn't show problems on debug during 1'st init
+* at module: getting sms in PDU mode, identify (+req.updates in "main" source)
+* fixes for alphanumeric SMS numbers
+* no problems, when disabled AT module in config.h
+
+20020619 - 0.0.41
+* more options for send/savesms
+* getting Picture Image from 62xx cleaned and fixed(+fix in PHONE_DecodeBitmap)
+* 6210 family: SMS status shows Templates folder too
+* binary ringtones: fix for backup/restore
+* RTTL ringtones: tested getting from 3310
+* started AT development
+* --nokiaget(set)operatorname & --nokiasetphonemenus 100% usefull
+
+20020616 - 0.0.40
+* fixed backup/restore bitmaps moving bug
+* updated docs
+* lmb files support
+* more ringtones files formats supported
+* can compile with Borland C++ Builder GUI and command line compiler
+  (second is given by Borland for free)
+* backup/restore for binary ringtones
+* fix for debug in mbus2
+* 9210 module can set startup logo/text, show incoming cb/sms
+* new --copyringtone
+
+20020610 - 0.0.39
+DCT3 support seems to be close to be ready.
+
+........
+
+20020512 - 0.0.19
+Milestone. all important things in 6210 family done. Started DCT4.
+
+........
+
+20020428 - 0.0.14
+Simply "real" functionality provided.
+
+........
+
+20020414 - 0.0.1 officialy released
+Works identification and phone tests, MBUS2, FBUS2 and serial port stuff
+for win32/Linux.
+
+20020404
+I finally end supporting gnokii. Started creating structures.
+
+----------------------
+YYYYMMDD - description

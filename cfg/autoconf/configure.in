@@ -1,0 +1,211 @@
+dnl Process this file with autoconf to produce a configure script.
+
+dnl Disabling cache file
+define([AC_CACHE_LOAD], )dnl
+define([AC_CACHE_SAVE], )dnl
+
+dnl Default C source file
+AC_INIT(../../gammu/gammu.c)
+dnl Default prefix for package
+AC_PREFIX_DEFAULT("/usr/local")
+dnl Version
+VERSION='0.61'
+AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
+AC_SUBST(VERSION)
+dnl Compiler flags
+CFLAGS="-O2 -Wall"
+
+dnl Checks for programs.
+AC_PATH_PROG(RM, rm, no)
+AC_PATH_PROG(INSTALL, install, no)
+AC_PATH_PROG(FIND, find, no)
+
+dnl Checks for libraries.
+
+dnl Checks for library functions.
+AC_PROG_GCC_TRADITIONAL
+AC_FUNC_MEMCMP
+AC_TYPE_SIGNAL
+AC_FUNC_VPRINTF
+AC_CHECK_FUNCS(mktime select socket strdup strerror strstr)
+
+dnl Checks for header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS(fcntl.h sys/file.h sys/ioctl.h sys/time.h unistd.h)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+AC_HEADER_TIME
+AC_STRUCT_TM
+
+dnl Path for bluetooth library
+AC_ARG_WITH(bluetooth,
+	[  --with-bluetooth=DIR     Specifies the base libbluetooth],
+	[ if test x$withval = xyes; then
+		AC_MSG_WARN(Usage is: --with-bluetooth=DIR)
+	  else
+		LDLIBS="-L$withval/lib/"
+		CFLAGS="-I$withval/include/"
+	  fi
+	]
+)
+
+dnl Enabling or not some parts of source
+AC_ARG_ENABLE(atblue,
+	[  --disable-atblue        Disable support for AT commands over Bluetooth],
+	[gsm_enable_atblue="no"],
+	[AC_MSG_CHECKING([for the bluetooth support])
+	 echo
+	 AC_CACHE_CHECK(for the struct sockaddr_rc in <bluetooth/rfcomm.h>, ac_cv_have_sockaddr_rc,
+	 [AC_TRY_COMPILE([#include <sys/socket.h>
+		 	  #include <bluetooth/bluetooth.h>
+			  #include <bluetooth/rfcomm.h>],
+			  [struct sockaddr_rc rc;],
+			   ac_cv_have_sockaddr_rc=yes,
+		           ac_cv_have_sockaddr_rc=no)])
+	  if test $ac_cv_have_sockaddr_rc = yes; then
+		AC_DEFINE(GSM_ENABLE_ATBLUETOOTH)
+		gsm_enable_atblue="yes"
+	  else
+		gsm_enable_atblue="no"
+	  fi])	
+AC_ARG_ENABLE(dlr3blue,
+	[  --disable-dlr3blue      Disable support for Nokia FBUS2 over Bluetooth
+                          (only Nokia 6210 now)],
+	[gsm_enable_dlr3blue="no"],
+	[AC_MSG_CHECKING([for the bluetooth support])
+	 echo
+	 AC_CACHE_CHECK(for the struct sockaddr_rc in <bluetooth/rfcomm.h>, ac_cv_have_sockaddr_rc,
+	 [AC_TRY_COMPILE([#include <sys/socket.h>
+		 	  #include <bluetooth/bluetooth.h>
+			  #include <bluetooth/rfcomm.h>],
+			  [struct sockaddr_rc rc;],
+			   ac_cv_have_sockaddr_rc=yes,
+		           ac_cv_have_sockaddr_rc=no)])
+	  if test $ac_cv_have_sockaddr_rc = yes; then
+		AC_DEFINE(GSM_ENABLE_DLR3BLUETOOTH)
+		gsm_enable_dlr3blue="yes"
+	  else
+		gsm_enable_dlr3blue="no"
+	  fi])
+AC_ARG_ENABLE(irda,
+	[  --disable-irda          Disable direct irda support (Nokia 5210/61xx/82xx)],
+	[gsm_enable_irda="no"],
+	[AC_CHECK_HEADER(linux/irda.h,
+		[AC_DEFINE(GSM_ENABLE_IRDA) gsm_enable_irda="yes"],
+		[gsm_enable_irda="no"])])
+AC_ARG_ENABLE(infrared,
+	[  --disable-infrared      Disable irda support over sockets (all new Nokia)],
+	[gsm_enable_infrared="no"],
+	[AC_CHECK_HEADER(linux/irda.h,
+		[AC_DEFINE(GSM_ENABLE_INFRARED) gsm_enable_infrared="yes"],
+		[gsm_enable_infrared="no"])])
+AC_ARG_ENABLE(debug,
+	[  --enable-debug          Compile with debug code],
+	[AC_DEFINE(DEBUG) debug="yes"],
+	[debug="no"])
+AC_ARG_ENABLE(cb,
+	[  --enable-cb             Enable Cell Broadcast messages support],
+	[AC_DEFINE(GSM_ENABLE_CELLBROADCAST) gsm_enable_cellbroadcast="yes"],
+	[gsm_enable_cellbroadcast="no"])
+AC_ARG_ENABLE(7110incoming,
+	[  --enable-7110incoming   Enable Nokia 62xx/71xx/9xxx incoming call/SMS info],
+	[AC_DEFINE(GSM_ENABLE_N71_91INCOMINGINFO) gsm_enable_71_91incominginfo="yes"],
+	[gsm_enable_71_91incominginfo="no"])
+AC_ARG_ENABLE(mbus2,
+	[  --disable-mbus2         Disable support for Nokia MBUS2 protocol],
+	[gsm_enable_mbus2="no"],
+	[AC_DEFINE(GSM_ENABLE_MBUS2) gsm_enable_mbus2="yes"])
+AC_ARG_ENABLE(fbus2,
+	[  --disable-fbus2         Disable support for Nokia FBUS2 protocol],
+	[gsm_enable_fbus2="no"],
+	[AC_DEFINE(GSM_ENABLE_FBUS2) gsm_enable_fbus2="yes"])
+AC_ARG_ENABLE(dlr3,
+	[  --disable-dlr3          Disable support for Nokia FBUS2 protocol
+	                  with DLR3(P) cable],
+	[gsm_enable_dlr3="no"],
+	[AC_DEFINE(GSM_ENABLE_DLR3AT) gsm_enable_dlr3="yes"])
+AC_ARG_ENABLE(at,
+	[  --disable-at            Disable support for AT protocol],
+	[gsm_enable_at="no"],
+	[AC_DEFINE(GSM_ENABLE_AT) gsm_enable_at="yes"])
+AC_ARG_ENABLE(backup,
+	[  --disable-backup        Disable backup/restore functions],
+	[gsm_enable_backup="no"],
+	[AC_DEFINE(GSM_ENABLE_BACKUP) gsm_enable_backup="yes"])
+AC_ARG_ENABLE(6110auth,
+	[  --disable-6110auth      Disable Nokia 51xx/61xx authentication],
+	[gsm_enable_6110_authentication="no"],
+	[AC_DEFINE(GSM_ENABLE_6110_AUTHENTICATION) gsm_enable_6110_authentication="yes"])
+AC_ARG_ENABLE(6110,
+	[  --disable-6110          Disable Nokia 61xx and compatible support],
+	[gsm_enable_nokia6110="no"],
+	[AC_DEFINE(GSM_ENABLE_NOKIA6110) gsm_enable_nokia6110="yes"])
+AC_ARG_ENABLE(6510,
+	[  --disable-6510          Disable Nokia 6510 and compatible support],
+	[gsm_enable_nokia6510="no"],
+	[AC_DEFINE(GSM_ENABLE_NOKIA6510) gsm_enable_nokia6510="yes"])
+AC_ARG_ENABLE(7110,
+	[  --disable-7110          Disable Nokia 7110 and compatible support],
+	[gsm_enable_nokia7110="no"],
+	[AC_DEFINE(GSM_ENABLE_NOKIA7110) gsm_enable_nokia7110="yes"])
+AC_ARG_ENABLE(9110,
+	[  --disable-9110          Disable Nokia 9110 and compatible support],
+	[gsm_enable_nokia9110="no"],
+	[AC_DEFINE(GSM_ENABLE_NOKIA9110) gsm_enable_nokia9110="yes"])
+AC_ARG_ENABLE(atgen,
+	[  --disable-atgen         Disable generic AT phones support],
+	[gsm_enable_atgen="no"],
+	[AC_DEFINE(GSM_ENABLE_ATGEN) gsm_enable_atgen="yes"])
+
+dnl Writing output files
+AC_CONFIG_HEADER(config.h)
+AC_OUTPUT(Makefile.cfg
+	  rpm/spec)
+
+dnl Writing info
+echo "
+  G A M M U (GNU All Mobiles Management Utilities)
+  (c) 2002 by Marcin Wiacek http://marcin-wiacek.topnet.pl
+  Version $VERSION
+  
+  General options
+  ---------------
+  Debug                                         - $debug
+  CB messages                                   - $gsm_enable_cellbroadcast
+  Backup functions                              - $gsm_enable_backup
+  Install path                                  - $prefix
+
+  Phone specific functions
+  ------------------------
+  Nokia 51xx/61xx authentication                - $gsm_enable_6110_authentication
+  Nokia 62xx/71xx/9xxx incoming call/SMS info   - $gsm_enable_71_91incominginfo
+
+  Phone protocols
+  ---------------
+  Nokia MBUS2                                   - $gsm_enable_mbus2
+  Nokia FBUS2                                   - $gsm_enable_fbus2
+  Nokia (FBUS2 over) DLR3 cable                 - $gsm_enable_dlr3
+  Nokia (FBUS2 over) Bluetooth                  - $gsm_enable_dlr3blue
+  Nokia direct infrared                         - $gsm_enable_irda
+  Nokia infrared over sockets                   - $gsm_enable_infrared
+  AT                                            - $gsm_enable_at
+  AT commands over Bluetooth                    - $gsm_enable_atblue
+
+  Phone modules
+  -------------
+  Nokia 3210/33xx/3410/51xx/5210/5510/61xx/82xx - $gsm_enable_nokia6110
+  Nokia 3510/6310(i)/6510/8310                  - $gsm_enable_nokia6510
+  Nokia 62xx/71xx                               - $gsm_enable_nokia7110
+  Nokia 91xx/92xx                               - $gsm_enable_nokia9110
+  (Siemens, Alcatel, Nokia, WaveCom, other) AT  - $gsm_enable_atgen
+
+  Please use now:
+  
+  * "make"            to make static version of Gammu
+  * "make install"    to install Gammu in your system (root account)
+  * "make installlib" to install Gammu with library in your system (root account)
+  * "make makerpm"    to make RPM file (root account)
+"

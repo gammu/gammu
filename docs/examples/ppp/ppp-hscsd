@@ -1,0 +1,13 @@
+#!/bin/sh
+chat -v                                                 \
+        TIMEOUT         60                              \
+        ABORT           '\nBUSY\r'                      \
+        ABORT           '\nNO ANSWER\r'                 \
+        ABORT           '\nRINGING\r\n\r\nRINGING\r'    \
+        ABORT           '\nNO CARRIER\r'                \
+	''		"\r\dATZ"			\
+	OK		"AT+CBST=51,0,1"		\
+	OK		"AT+CHSN=6,0,0,0"		\
+        TIMEOUT         60                              \
+        OK              ATD$TELEPHONE                   \
+	CONNECT		''

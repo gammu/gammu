@@ -1,0 +1,139 @@
+
+# --------------- Makefile options, which doesn't depend on OS ----------------
+
+# these subdirectories from /docs are copied to docs dir
+# ("\" CHAR IS AFTER NAME WITHOUT SPACE)
+DOCS      = default\
+	    docs\
+	    examples
+
+# common files
+COMMON    = $(TOPDIR)/common/gsmcomon.o \
+	    $(TOPDIR)/common/gsmstate.o \
+	    $(TOPDIR)/common/misc/misc.o \
+	    $(TOPDIR)/common/misc/coding.o \
+	    $(TOPDIR)/common/misc/cfg.o \
+	    $(TOPDIR)/common/service/gsmsms.o \
+	    $(TOPDIR)/common/service/gsmcal.o \
+	    $(TOPDIR)/common/service/gsmwap.o \
+	    $(TOPDIR)/common/service/gsmpbk.o \
+	    $(TOPDIR)/common/service/gsmback.o \
+	    $(TOPDIR)/common/service/gsmring.o \
+	    $(TOPDIR)/common/service/gsmlogo.o \
+	    $(TOPDIR)/common/service/gsmnet.o \
+	    $(TOPDIR)/common/device/bluetoth/unixblue.o \
+	    $(TOPDIR)/common/device/serial/unix.o \
+	    $(TOPDIR)/common/device/serial/djgpp.o \
+	    $(TOPDIR)/common/device/irda/irda.o \
+	    $(TOPDIR)/common/protocol/at/at.o \
+	    $(TOPDIR)/common/protocol/alcatel/alcabus.o \
+	    $(TOPDIR)/common/protocol/nokia/mbus2.o \
+	    $(TOPDIR)/common/protocol/nokia/fbus2.o \
+	    $(TOPDIR)/common/protocol/nokia/fbusirda.o \
+	    $(TOPDIR)/common/phone/pfunc.o \
+	    $(TOPDIR)/common/phone/at/atgen.o \
+	    $(TOPDIR)/common/phone/alcatel/alcatel.o \
+	    $(TOPDIR)/common/phone/nokia/dct3/n6110.o \
+	    $(TOPDIR)/common/phone/nokia/dct3/n7110.o \
+	    $(TOPDIR)/common/phone/nokia/dct3/n9110.o \
+	    $(TOPDIR)/common/phone/nokia/dct3/dct3func.o \
+	    $(TOPDIR)/common/phone/nokia/dct4/n6510.o \
+	    $(TOPDIR)/common/phone/nokia/nauto.o \
+	    $(TOPDIR)/common/phone/nokia/nfunc.o
+
+# files for command line gammu
+GAMMU     = $(TOPDIR)/gammu/dct3.o \
+	    $(TOPDIR)/gammu/dct4.o \
+	    $(TOPDIR)/gammu/sniff.o \
+	    $(TOPDIR)/gammu/gammu.o
+
+include $(TOPDIR)/cfg/Makefile.cfg
+
+# --------------------------- internal source ---------------------------------
+
+all: gammu
+
+gammu: $(COMMON) $(GAMMU)
+	$(CC) $(COMMON) $(GAMMU) -lm -o $(TOPDIR)/gammu/gammu
+	
+makelib: $(COMMON) $(GAMMU)
+	$(CC) -shared -o $(TOPDIR)/common/libGammu.so $(COMMON)
+	@$(INSTALL) -C -m 0444 $(TOPDIR)/common/libGammu.so $(TOPDIR)/common
+	$(CC) $(LDFLAGS) $(GAMMU) -lm -L$(TOPDIR)/common -lGammu -o $(TOPDIR)/gammu/gammulib
+
+clean:
+	@echo Cleaning binaries and object files
+	@$(RM) $(COMMON) $(GAMMU) core $(TOPDIR)/common/libGammu.so
+	@$(RM) $(TOPDIR)/gammu/gammu $(TOPDIR)/gammu/gammulib
+	@$(RM) $(TOPDIR)/cfg/autoconf/rpm/spec tags
+	@echo Setting default config
+	@$(INSTALL) -C -m 0666 $(TOPDIR)/cfg/default/config.h $(TOPDIR)/cfg/config.h
+	@$(INSTALL) -C -m 0666 $(TOPDIR)/cfg/default/Makefile.cfg $(TOPDIR)/cfg/Makefile.cfg
+	
+uninstall:
+	@echo Uninstalling Gammu
+	@$(RM) $(INSTALL_BIN_DIR)/gammu $(INSTALL_LIB_DIR)/libGammu.so
+	@$(RM) $(INSTALL_MAN_DIR)/gammu.1
+	@$(RM) -r $(INSTALL_DOC_DIR)/
+
+installdocs:
+	@echo Installing docs to $(INSTALL_DOC_DIR)
+	@$(INSTALL) -d $(INSTALL_DOC_DIR)
+	@for xxx in $(DOCS); do \
+		( cd $(TOPDIR)/docs/$$xxx; \
+		  $(FIND) . -type d \! -path "*CVS*" \
+		       -exec $(INSTALL) -d ${INSTALL_DOC_DIR}/$$xxx/{} \; ; \
+		  $(FIND) . -type f \! -path "*CVS*" \
+		       -exec $(INSTALL) -m 0666 {} $(INSTALL_DOC_DIR)/$$xxx/{} \; \
+		) \
+	done
+	@$(INSTALL) -m 0666 $(TOPDIR)/changelog $(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0666 $(TOPDIR)/readme.txt $(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0666 $(TOPDIR)/copying $(INSTALL_DOC_DIR)
+	@echo Installing man to $(INSTALL_MAN_DIR)
+	@$(INSTALL) -d $(INSTALL_MAN_DIR)
+	@$(INSTALL) -m 0666 $(TOPDIR)/docs/docs/english/gammu.1 $(INSTALL_MAN_DIR)
+	@$(RM) $(INSTALL_DOC_DIR)/docs/english/gammu.1
+	
+install: uninstall all installdocs
+	@echo Installing binaries to $(INSTALL_BIN_DIR)
+	@$(INSTALL) -d $(INSTALL_BIN_DIR)
+	@$(INSTALL) $(TOPDIR)/gammu/gammu $(INSTALL_BIN_DIR)
+
+installlib: uninstall makelib installdocs
+	@echo Installing binaries to $(INSTALL_BIN_DIR)
+	@$(INSTALL) -d $(INSTALL_BIN_DIR)
+	@$(INSTALL) $(TOPDIR)/gammu/gammulib $(INSTALL_BIN_DIR)/gammu
+
+	@echo Installing shared library to $(INSTALL_LIB_DIR)
+	@$(INSTALL) -d $(INSTALL_LIB_DIR)
+	@$(INSTALL) -m 0444 $(TOPDIR)/common/libGammu.so $(INSTALL_LIB_DIR)
+
+tags: $(shell find . -name '*.[ch]' -o -name '*.cpp')
+	@echo Generating tags file
+	@ctags `find . -name '*.[ch]' -o -name '*.cpp'`
+
+makerpm:
+	@echo Creating $(RPM_DIR)/SOURCES/gammu-$(RPM_VER).tar.gz file
+	@$(INSTALL) -d $(RPM_DIR)/SOURCES/gammu-$(RPM_VER)/
+	@for xxx in '.'; do \
+		( cd $(TOPDIR)/$$xxx; \
+		  $(FIND) . -type d \! -path "*CVS*" \
+		       -exec $(INSTALL) -d $(RPM_DIR)/SOURCES/gammu-$(RPM_VER)/{} \; ; \
+		  $(FIND) . -type f \! -path "*CVS*" \
+		       -exec $(INSTALL) -m 0444 {} $(RPM_DIR)/SOURCES/gammu-$(RPM_VER)/{} \; \
+		) \
+	done
+	@$(INSTALL) -d gammu-$(RPM_VER)
+	@cp $(RPM_DIR)/SOURCES/gammu-$(RPM_VER)/* --target-directory=gammu-$(RPM_VER) -r
+	@$(RM) $(RPM_DIR)/SOURCES/gammu-$(RPM_VER) -r 
+	@chmod a+rwx gammu-$(RPM_VER)/configure
+	make -C gammu-$(RPM_VER) clean
+	@tar cvfz $(RPM_DIR)/SOURCES/gammu-$(RPM_VER).tar.gz gammu-$(RPM_VER) > /dev/null
+	@$(RM) -r gammu-$(RPM_VER)/
+	@echo Installing $(RPM_DIR)/SPECS/gammu.specs
+	@$(INSTALL) -m 0444 $(TOPDIR)/cfg/autoconf/rpm/spec $(RPM_DIR)/SPECS/gammu.specs
+	@echo Making packages
+	@rpm -ba -v $(RPM_DIR)/SPECS/gammu.specs -rmsource -rmspec -clean
+	@echo Source tarball is in $(RPM_DIR)/SRPMS, binary in $(RPM_DIR)/RPMS
+

@@ -1,0 +1,7 @@
+modem
+crtscts
+defaultroute
+asyncmap 0
+mtu 1500
+mru 1500
+user ppp
