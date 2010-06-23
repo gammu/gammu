@@ -1895,7 +1895,7 @@ static GSM_Error ALCATEL_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarEn
 					j++;
 					break;
 				}
-				Note->Entries[i-j].EntryType = CAL_STOP_DATETIME;
+				Note->Entries[i-j].EntryType = CAL_END_DATETIME;
 				Note->Entries[i-j].Date = Priv->ReturnDateTime;
 				Note->Entries[i-j].Date.Day = evdate.Day;
 				Note->Entries[i-j].Date.Month = evdate.Month;
@@ -2216,7 +2216,7 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool
 					j++;
 					break;
 				}
-				ToDo->Entries[i-j].EntryType = TODO_DUEDATE;
+				ToDo->Entries[i-j].EntryType = TODO_END_DATETIME;
 				ToDo->Entries[i-j].Date = Priv->ReturnDateTime;
 				break;
 			case 1:
@@ -2462,7 +2462,7 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 		}
 		for (i = 0; i < ToDo->EntriesNum; i++) {
 			switch (ToDo->Entries[i].EntryType) {
-				case TODO_DUEDATE:
+				case TODO_END_DATETIME:
 					ALCATEL_CreateField(s, Alcatel_date, 0, &(ToDo->Entries[i].Date));
 					break;
     				case TODO_COMPLETED:
@@ -2490,6 +2490,8 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 				case TODO_PHONE:
 					ALCATEL_CreateField(s, Alcatel_phone, 9, ToDo->Entries[i].Text);
 					phone_set = true;
+					break;
+				default:
 					break;
 			}
 		}
@@ -2540,7 +2542,7 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 		}
 		for (i = 0; i < ToDo->EntriesNum; i++) {
 			switch (ToDo->Entries[i].EntryType) {
-				case TODO_DUEDATE:
+				case TODO_END_DATETIME:
 					ALCATEL_UpdateField(s, Alcatel_date, ToDo->Location, 0, &(ToDo->Entries[i].Date));
 					UpdatedFields[0] = true; 
 					break;
@@ -2579,6 +2581,8 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 					ALCATEL_UpdateField(s, Alcatel_phone, ToDo->Location, 9, ToDo->Entries[i].Text);
 					UpdatedFields[9] = true; 
 					phone_set = true;
+					break;
+				default:
 					break;
 			}
 		}

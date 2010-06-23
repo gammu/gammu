@@ -45,6 +45,7 @@ wchar_t		DecodeWithUTF8Alphabet		(unsigned char mychar3, unsigned char mychar4);
 bool 		EncodeWithUTF8Alphabet		(unsigned char mychar1, unsigned char mychar2, unsigned char *ret1, unsigned char *ret2);
 
 void		EncodeUTF8			(unsigned char *dest, const unsigned char *src);
+void 		DecodeUTF8			(unsigned char* dest, const unsigned char* src, int len);
 
 /* ----------------------------- HexBin ------------------------------------ */
 void		DecodeHexBin			(unsigned char *dest, const unsigned char *src, int len);
@@ -78,6 +79,8 @@ void		GSM_UnpackSemiOctetNumber	(unsigned char *retval, unsigned char *Number, b
 int		GSM_PackSemiOctetNumber		(unsigned char *Number, unsigned char *Output, bool semioctet);
 
 /* ---------------------------- Other -------------------------------------- */
+void StringToDouble	(char *text, double *d);
+
 int OctetAlign		(unsigned char *Dest, int CurrentBit);
 int OctetAlignNumber	(int CurrentBit);
 int BitPack		(unsigned char *Dest, int CurrentBit, unsigned char *Source, int Bits);
@@ -93,6 +96,8 @@ int OctetUnAlign	(int CurrentBit);
 #define ClearBit(Stream,BitNr)	Stream[(BitNr)/8] &= 255 - (1 << (7-((BitNr)%8)))
 
 bool mystrncasecmp (unsigned char *a, unsigned char *b, int num);
+
+void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer);
 
 #endif
 

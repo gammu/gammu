@@ -6,7 +6,7 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.78"
+#define VERSION "0,79,0,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -40,6 +40,8 @@
 #define GSM_ENABLE_IRDAPHONET 1
 /* Infrared. AT commands */
 #define GSM_ENABLE_IRDAAT 1
+/* Infrared. OBEX */
+#define GSM_ENABLE_IRDAOBEX 1
 
 /* Bluetooth stack (like Bluez). FBUS2 (init done using AT commands) */
 #define GSM_ENABLE_BLUEFBUS2 1
@@ -47,6 +49,8 @@
 #define GSM_ENABLE_BLUEPHONET 1
 /* Blueooth stack (like Bluez). AT commands */
 #define GSM_ENABLE_BLUEAT 1
+/* Blueooth stack (like Bluez). OBEX */
+#define GSM_ENABLE_BLUEOBEX 1
 
 /* --------------------------- Phone modules (specific) ----------------- */
 
@@ -76,6 +80,9 @@
 
 /* Alcatel BE5 */
 #define GSM_ENABLE_ALCATEL 1
+
+/* OBEX generic models */
+#define GSM_ENABLE_OBEXGEN 1
 
 /* ---------------------- General settings -------------------------------- */
 

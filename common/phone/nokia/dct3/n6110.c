@@ -1894,7 +1894,7 @@ static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *N
 		0x00, 0x00, 0x00, 0x01, 0x00, 0x66, 0x01};
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOCALENDAR)) return GE_NOTSUPPORTED;
-	if (!Past && IsNoteFromThePast(Note)) return GE_NONE;
+	if (!Past && IsCalendarNoteFromThePast(Note)) return GE_NONE;
 
 	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime, &Location);
 

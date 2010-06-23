@@ -94,6 +94,10 @@ SOURCE=..\..\..\common\protocol\nokia\phonet.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\protocol\obex\obex.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\gammu.c
 # End Source File
 # Begin Source File
@@ -115,6 +119,10 @@ SOURCE=..\..\..\common\service\gsmmisc.c
 # Begin Source File
 
 SOURCE=..\..\..\common\service\gsmcal.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\service\gsmvcal.c
 # End Source File
 # Begin Source File
 
@@ -143,6 +151,10 @@ SOURCE=..\..\..\common\service\gsmsms.c
 # Begin Source File
 
 SOURCE=..\..\..\common\phone\at\sonyeric.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\obex\obexgen.c
 # End Source File
 # Begin Source File
 
@@ -210,7 +222,7 @@ SOURCE=..\..\..\common\device\devfunc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\device\serial\win32.c
+SOURCE=..\..\..\common\device\serial\ser_w32.c
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -266,6 +278,10 @@ SOURCE=..\..\..\common\service\gsmcal.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\service\gsmvcal.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\common\gsmcomon.h
 # End Source File
 # Begin Source File
@@ -314,6 +330,10 @@ SOURCE=..\..\..\common\protocol\nokia\mbus2.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\protocol\obex\obex.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\common\misc\misc.h
 # End Source File
 # Begin Source File
@@ -338,6 +358,10 @@ SOURCE=..\..\..\common\phone\nokia\ncommon.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\phone\obex\obexgen.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\common\phone\nokia\nfunc.h
 # End Source File
 # Begin Source File
@@ -358,7 +382,7 @@ SOURCE=..\..\..\common\protocol\protocol.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\device\irda\win32.h
+SOURCE=..\..\..\common\device\irda\irda_w32.h
 # End Source File
 # Begin Source File
 
@@ -366,19 +390,11 @@ SOURCE=..\..\..\common\device\bluetoth\bluetoth.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\device\bluetoth\win32\bthdef.h
+SOURCE=..\..\..\common\device\bluetoth\blue_w32.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\device\bluetoth\win32\bthsdpdef.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\common\device\bluetoth\win32\ws2bth.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\common\device\serial\win32.h
+SOURCE=..\..\..\common\device\serial\ser_w32.h
 # End Source File
 # End Group
 # End Target

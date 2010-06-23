@@ -2,8 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "gsmmisc.h"
+#include "../misc/coding.h"
 #include "../gsmcomon.h"
+#include "gsmmisc.h"
 
 struct keys_table_position {
 	char 	whatchar;

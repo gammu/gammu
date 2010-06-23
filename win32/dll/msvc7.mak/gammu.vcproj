@@ -40,6 +40,7 @@
 				OutputFile=".\Release/gammu.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
+				ModuleDefinitionFile=".\gammu.def"
 				ProgramDatabaseFile=".\Release/gammu.pdb"
 				ImportLibrary=".\Release/gammu.lib"/>
 			<Tool
@@ -124,9 +125,6 @@
 				RelativePath="..\..\..\common\service\gsmmisc.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\at\sonyeric.c">
-			</File>
-			<File
 				RelativePath="..\..\..\common\service\gsmnet.c">
 			</File>
 			<File
@@ -140,6 +138,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\common\gsmstate.c">
+			</File>
+			<File
+				RelativePath="..\..\..\common\service\gsmvcal.c">
 			</File>
 			<File
 				RelativePath="..\..\..\common\service\gsmwap.c">
@@ -175,16 +176,25 @@
 				RelativePath="..\..\..\common\phone\nokia\nfuncold.c">
 			</File>
 			<File
+				RelativePath="..\..\..\common\protocol\obex\obex.c">
+			</File>
+			<File
+				RelativePath="..\..\..\common\phone\obex\obexgen.c">
+			</File>
+			<File
 				RelativePath="..\..\..\common\phone\pfunc.c">
 			</File>
 			<File
 				RelativePath="..\..\..\common\protocol\nokia\phonet.c">
 			</File>
 			<File
+				RelativePath="..\..\..\common\device\serial\ser_w32.c">
+			</File>
+			<File
 				RelativePath="..\..\..\common\phone\at\siemens.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\device\serial\win32.c">
+				RelativePath="..\..\..\common\phone\at\sonyeric.c">
 			</File>
 		</Filter>
 		<Filter
@@ -203,13 +213,10 @@
 				RelativePath="..\..\..\common\phone\at\atgen.h">
 			</File>
 			<File
+				RelativePath="..\..\..\common\device\bluetoth\blue_w32.h">
+			</File>
+			<File
 				RelativePath="..\..\..\common\device\bluetoth\bluetoth.h">
-			</File>
-			<File
-				RelativePath="..\..\..\common\device\bluetoth\win32\bthdef.h">
-			</File>
-			<File
-				RelativePath="..\..\..\common\device\bluetoth\win32\bthsdpdef.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\misc\cfg.h">
@@ -260,10 +267,16 @@
 				RelativePath="..\..\..\common\gsmstate.h">
 			</File>
 			<File
+				RelativePath="..\..\..\common\service\gsmvcal.h">
+			</File>
+			<File
 				RelativePath="..\..\..\common\service\gsmwap.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\device\irda\irda.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\device\irda\irda_w32.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\protocol\nokia\mbus2.h">
@@ -293,6 +306,12 @@
 				RelativePath="..\..\..\common\phone\nokia\nfuncold.h">
 			</File>
 			<File
+				RelativePath="..\..\..\common\protocol\obex\obex.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\phone\obex\obexgen.h">
+			</File>
+			<File
 				RelativePath="..\..\..\common\phone\pcommon.h">
 			</File>
 			<File
@@ -305,13 +324,7 @@
 				RelativePath="..\..\..\common\protocol\protocol.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\device\irda\win32.h">
-			</File>
-			<File
-				RelativePath="..\..\..\common\device\serial\win32.h">
-			</File>
-			<File
-				RelativePath="..\..\..\common\device\bluetoth\win32\ws2bth.h">
+				RelativePath="..\..\..\common\device\serial\ser_w32.h">
 			</File>
 		</Filter>
 	</Files>

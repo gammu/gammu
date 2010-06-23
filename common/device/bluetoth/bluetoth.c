@@ -19,7 +19,6 @@
 #else
 #  include <windows.h>
 #  include <io.h>
-#  include "win32/ws2bth.h"
 #endif
 
 #include "../../gsmcomon.h"
@@ -115,10 +114,15 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 
 static GSM_Error bluetooth_open (GSM_StateMachine *s)
 {
-	if (s->ConnectionType == GCT_BLUEPHONET) {
-		return bluetooth_connect(s,14);
-	} else {
+	switch (s->ConnectionType) {
+	case GCT_BLUEAT:
 		return bluetooth_connect(s,1);
+	case GCT_BLUEOBEX:
+		return bluetooth_connect(s,9);
+	case GCT_BLUEPHONET:
+		return bluetooth_connect(s,14);
+	default:
+		return GE_UNKNOWN;
 	}
 }
 

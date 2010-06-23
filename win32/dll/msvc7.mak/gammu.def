@@ -1,0 +1,28 @@
+; Gammu.def : Declares the module parameters for the DLL.
+
+LIBRARY      "Gammu"
+
+EXPORTS
+    ; Explicit exports can go here        
+
+	mystartconnection	@1
+	mygetnetworkinfo	@2
+	mygetnextsmsmessage	@3
+	myentersecuritycode	@4
+	myendconnection		@5
+	DllMain			@6
+	mydeletesmsmessage	@7
+	mysendsmsmessage	@8
+	mygetsmsstatus		@9
+	mysavesmsmessage	@10
+	mygetnetworkname	@11
+	mygetgammuversion	@12
+
+	mygetimei		@14
+	mygetmanufacturer	@15
+	mygetmodel		@16
+	mygetfirmwareversion	@17
+	myreset			@18
+	mygetmodelname		@19
+	mysmscounter		@20
+	mymakemultipartsms	@21

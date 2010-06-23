@@ -151,72 +151,6 @@ void EncodeBCD (unsigned char *dest, const unsigned char *src, int len, bool fil
         }
 }
 
-/* When char can be converted, convert it from Unicode to UTF8 */
-bool EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsigned char *ret1, unsigned char *ret2)
-{
-	unsigned char	mychar3,mychar4;
-	int		j=0;
-      
-	if (mychar1>0x00 || mychar2>128) {
-		mychar3=0x00;
-		mychar4=128;
-		while (true) {
-			if (mychar3==mychar1) {
-				if (mychar4+64>=mychar2) {
-					*ret1=j+0xc2;
-					*ret2=0x80+(mychar2-mychar4);
-					return true;
-				}
-			}
-			if (mychar4==192) {
-				mychar3++;
-				mychar4=0;
-			} else {
-				mychar4=mychar4+64;
-			}
-			j++;
-		}
-	}
-	return false;
-}
-
-/* Decode UTF8 char to Unicode char */
-wchar_t DecodeWithUTF8Alphabet(unsigned char mychar3, unsigned char mychar4)
-{
-	unsigned char	mychar1, mychar2;
-	int		j;
-	
-	mychar1=0x00;
-	mychar2=128;
-	for(j=0;j<mychar3-0xc2;j++) {
-		if (mychar2==192) {
-			mychar1++;
-			mychar2 = 0;
-		} else {
-			mychar2 = mychar2+64;
-		}
-	}
-	mychar2 = mychar2+(mychar4-0x80);
-	return mychar2 | (mychar1 << 8);
-}
-
-/* Make UTF8 string from Unicode input string */
-void EncodeUTF8(unsigned char *dest, const unsigned char *src)
-{
-	int		i,j=0;
-	unsigned char	mychar1, mychar2;
-	
-	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
-	    if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
-			sprintf(dest+j, "=%02X=%02X",mychar1,mychar2);
-			j=j+6;
-	    } else {
-			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
-	    }
-	}
-	dest[j++]=0;
-}
-
 int DecodeWithHexBinAlphabet (unsigned char mychar)
 {
 	if (mychar>='A' && mychar<='F') return mychar-'A'+10;
@@ -995,6 +929,145 @@ int mytowlower(wchar_t c)
 #else
 	return towlower(c);
 #endif
+}
+
+void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer)
+{
+	OutBuffer[0] = 0;
+	if (Buffer == NULL) return;
+	while (1) {
+		switch (Buffer[*Pos]) {
+		case 0x00:
+			return;
+		case 0x0A:
+			if (strlen(OutBuffer) != 0) return;
+			break;
+		case 0x0D:
+			if (strlen(OutBuffer) != 0) return;
+			break;
+		default  :
+			OutBuffer[strlen(OutBuffer) + 1] = 0;
+			OutBuffer[strlen(OutBuffer)]     = Buffer[*Pos];
+		}
+		(*Pos)++;		
+	}
+}
+
+void StringToDouble(char *text, double *d)
+{
+	bool 		before=true;
+	double		multiply = 1;
+	unsigned int 	i;
+
+	*d = 0;
+	for (i=0;i<strlen(text);i++) {
+		if (isdigit(text[i])) {
+			if (before) {
+				(*d)=(*d)*10+(text[i]-'0');
+			} else {
+				multiply=multiply*0.1;
+				(*d)=(*d)+(text[i]-'0')*multiply;
+			}
+		}
+		if (text[i]=='.' || text[i]==',') before=false;
+	}
+}
+
+/* When char can be converted, convert it from Unicode to UTF8 */
+bool EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsigned char *ret1, unsigned char *ret2)
+{
+	unsigned char	mychar3,mychar4;
+	int		j=0;
+      
+	if (mychar1>0x00 || mychar2>128) {
+		mychar3=0x00;
+		mychar4=128;
+		while (true) {
+			if (mychar3==mychar1) {
+				if (mychar4+64>=mychar2) {
+					*ret1=j+0xc2;
+					*ret2=0x80+(mychar2-mychar4);
+					return true;
+				}
+			}
+			if (mychar4==192) {
+				mychar3++;
+				mychar4=0;
+			} else {
+				mychar4=mychar4+64;
+			}
+			j++;
+		}
+	}
+	return false;
+}
+
+/* Make UTF8 string from Unicode input string */
+void EncodeUTF8(unsigned char *dest, const unsigned char *src)
+{
+	int		i,j=0;
+	unsigned char	mychar1, mychar2;
+	
+	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
+	    if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
+			sprintf(dest+j, "=%02X=%02X",mychar1,mychar2);
+			j=j+6;
+	    } else {
+			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
+	    }
+	}
+	dest[j++]=0;
+}
+
+/* Decode UTF8 char to Unicode char */
+wchar_t DecodeWithUTF8Alphabet(unsigned char mychar3, unsigned char mychar4)
+{
+	unsigned char	mychar1, mychar2;
+	int		j;
+	
+	mychar1=0x00;
+	mychar2=128;
+	for(j=0;j<mychar3-0xc2;j++) {
+		if (mychar2==192) {
+			mychar1++;
+			mychar2 = 0;
+		} else {
+			mychar2 = mychar2+64;
+		}
+	}
+	mychar2 = mychar2+(mychar4-0x80);
+	return mychar2 | (mychar1 << 8);
+}
+
+/* Make Unicode string from UTF8 string */
+void DecodeUTF8(unsigned char* dest, const unsigned char* src, int len)
+{
+	int 		i=0,j=0;
+	unsigned char	mychar1, mychar2;
+	wchar_t		ret;
+	
+	while (i<=len) {
+	    if (len-6>=i) {
+		/* Need to have correct chars */
+		if (src[i]  =='=' && DecodeWithHexBinAlphabet(src[i+1])!=-1
+                                  && DecodeWithHexBinAlphabet(src[i+2])!=-1 &&
+		    src[i+3]=='=' && DecodeWithHexBinAlphabet(src[i+4])!=-1 &&
+                                     DecodeWithHexBinAlphabet(src[i+5])!=-1) {
+		    mychar1	= 16*DecodeWithHexBinAlphabet(src[i+1])+DecodeWithHexBinAlphabet(src[i+2]);
+		    mychar2	= 16*DecodeWithHexBinAlphabet(src[i+4])+DecodeWithHexBinAlphabet(src[i+5]);
+		    ret 	= DecodeWithUTF8Alphabet(mychar1,mychar2);
+		    i 		= i+6;
+		} else {
+		    i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+		}   
+	    } else {
+		i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+	    }
+	    dest[j++] = (ret >> 8) & 0xff;
+	    dest[j++] = ret & 0xff;
+	}
+	dest[j++] = 0;
+	dest[j++] = 0;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

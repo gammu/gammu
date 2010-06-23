@@ -5,24 +5,24 @@ The data provided is for information purposes only.
 Some of the frames might be hazardous to your phone. Be careful!!! 
 We do not take any responsibility or liability for damages, etc.
 
-Last update 01.03.2001
+Last update 23.06.2003
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Assembled by
-	Balazs Nagy (js@iksz.hu)
+	Balazs Nagy          <js@iksz.hu>
 	Alfred R. Nurnberger <arnu@flosys.com>
-	Hugh Blemings <Hugh.Blemings@vsb.com.au>
-	Mike Bradley <mike@trumpington.st>
-	Odinokov Serge <serge@takas.lt>
-	Pavel Janik <Pavel@Janik.cz>
-	Pawe³ Kot <pkot@linuxnews.pl>
-	Marcin Wiacek (Marcin@MWiacek.com)
-        Jens Bennfors <jens.bennfors@ing.hj.se>
-        Michael Hund <michael@drhund.de>
-        Jay Bertrand <jay.bertrand@libertysurf.fr>
-                     <arnu@venia.net>
+	Hugh Blemings        <Hugh.Blemings@vsb.com.au>
+	Mike Bradley         <mike@trumpington.st>
+	Odinokov Serge       <serge@takas.lt>
+	Pavel Janik          <Pavel@Janik.cz>
+	Pawel Kot            <pkot@linuxnews.pl>
+	Marcin Wiacek        <Marcin@MWiacek.com>
+        Jens Bennfors        <jens.bennfors@ing.hj.se>
+        Michael Hund         <michael@drhund.de>
+        Jay Bertrand         <jay.bertrand@libertysurf.fr>
+                             <arnu@venia.net>
         Andrew Kozin
-        Pavel Machek <pavel@ucw.cz>
-        Diego Betancor <dbetancor@duocom.net>
+        Pavel Machek         <pavel@ucw.cz>
+        Diego Betancor       <dbetancor@duocom.net>
 	... and other members of gnokii mailing list
             and authors of some WWW pages.
 
@@ -184,6 +184,16 @@ notify us via e-mail.  Thank you.
          where FrameID:         0x14
                DestDev, SrcDev: 0x00: mobile phone
                                 0x0c: TE [eg. PC]
+               MsgType:         see List
+               FrameLength:     {block}
+
+ Frame format for Bluetooth:
+
+    { FrameID, DestDEV, SrcDEV, MsgType, FrameLengthLo, FrameLengthHi, {block} }
+
+         where FrameID:         0x19
+               DestDev, SrcDev: 0x00: mobile phone
+                                0x10: TE [eg. PC]
                MsgType:         see List
                FrameLength:     {block}
 

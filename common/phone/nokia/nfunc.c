@@ -1147,7 +1147,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 		0x00,0x00,0x00,0x00,
 		0x00,0x00,0x00,0x00};		/* rest depends on note type */
 
-	if (!Past && IsNoteFromThePast(Note)) return GE_NONE;
+	if (!Past && IsCalendarNoteFromThePast(Note)) return GE_NONE;
 
  	NoteType = N71_65_FindCalendarType(Note->Type, s->Phone.Data.ModelInfo);
 
@@ -1332,7 +1332,7 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		/* here starts block ... depends on note type */
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00};                          
 
-	if (!Past && IsNoteFromThePast(Note)) return GE_NONE;
+	if (!Past && IsCalendarNoteFromThePast(Note)) return GE_NONE;
 
 	error=N71_65_GetCalendarNotePos1(s);
 	if (error!=GE_NONE) return error;
@@ -1501,14 +1501,14 @@ GSM_Error N71_65_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 }
 
 /* method 1 */
-GSM_Error N71_65_ReplyGetCalendarInfo1(GSM_Protocol_Message msg, GSM_StateMachine *s, GSM_NOKIACalendarLocations *LastCalendar)
+GSM_Error N71_65_ReplyGetCalendarInfo1(GSM_Protocol_Message msg, GSM_StateMachine *s, GSM_NOKIACalToDoLocations *LastCalendar)
 {
 	int i,j=0;
 
 	smprintf(s, "Info with calendar notes locations received method 1\n");
 	while (LastCalendar->Location[j] != 0x00) j++;
-	if (j >= NOKIA_MAXCALENDARNOTES) {
-		smprintf(s, "Increase NOKIA_MAXCALENDARNOTES\n");
+	if (j >= GSM_MAXCALENDARTODONOTES) {
+		smprintf(s, "Increase GSM_MAXCALENDARNOTES\n");
 		return GE_UNKNOWN;
 	}
 	if (j == 0) {
@@ -1530,7 +1530,7 @@ GSM_Error N71_65_ReplyGetCalendarInfo1(GSM_Protocol_Message msg, GSM_StateMachin
 }
 
 /* method 1 */
-static GSM_Error N71_65_GetCalendarInfo1(GSM_StateMachine *s, GSM_NOKIACalendarLocations *LastCalendar)
+static GSM_Error N71_65_GetCalendarInfo1(GSM_StateMachine *s, GSM_NOKIACalToDoLocations *LastCalendar)
 {
 	GSM_Error	error;
 	int		i;
@@ -1694,7 +1694,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 }
 
 /* method 1 */
-GSM_Error N71_65_GetNextCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, GSM_NOKIACalendarLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos)
+GSM_Error N71_65_GetNextCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, GSM_NOKIACalToDoLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos)
 {
 	GSM_Error		error;
 	GSM_DateTime		date_time;

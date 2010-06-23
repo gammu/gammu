@@ -18,7 +18,7 @@ static GSM_Error MBUS2_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 
 	GSM_DumpMessageLevel3(s, buffer, length, type);
 
-	out_buffer = (unsigned char *)malloc(length + 6);
+	out_buffer = (unsigned char *)malloc(length + 8);
 
 	/* Now construct the message header. */
 	out_buffer[current++] = MBUS2_FRAME_ID;     /* Start of the frame indicator */

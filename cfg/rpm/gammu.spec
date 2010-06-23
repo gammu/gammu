@@ -1,4 +1,4 @@
-%define ver      0.78
+%define ver      0,79,0,0
 %define rel      1
 
 Summary: 	 Mobile phones tools for Unix (Linux) and Win32
@@ -32,8 +32,10 @@ make clean
 %defattr(-,root,root)
 %_bindir/*
 %_libdir/*
+#localisations:
+/usr/share/gammu
 %doc %_mandir/man1/*
-%doc %_defaultdocdir/gammu/*
+%doc %_defaultdocdir/gammu
 
 %clean
 rm -rf $RPM_BUILD_ROOT

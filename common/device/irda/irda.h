@@ -4,10 +4,9 @@
 #define unixirda_h
 
 #ifndef WIN32
-#  include "unix.h"
+#  include "irda_unx.h"
 #else
-#  define _WIN32_WINNT
-#  include "win32.h"
+#  include "irda_w32.h"
 #endif
 
 typedef struct {

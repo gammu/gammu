@@ -2,122 +2,11 @@
 #include <string.h>
 
 #include "gsmcal.h"
+#include "gsmmisc.h"
+#include "gsmvcal.h"
 #include "../misc/coding.h"
 
-void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime, int *Location)
-{
-	int i;
-
-	*Text		= -1;
-	*Time		= -1;
-	*Alarm		= -1;
-	*Phone		= -1;
-	*Recurrance	= -1;
-	*EndTime	= -1;
-	*Location	= -1;
-	for (i = 0; i < entry->EntriesNum; i++)
-	{
-		switch (entry->Entries[i].EntryType) {
-		case CAL_START_DATETIME :
-			if (*Time == -1) *Time = i;
-			break;
-		case CAL_STOP_DATETIME :
-			if (*EndTime == -1) *EndTime = i;
-			break;
-		case CAL_ALARM_DATETIME :
-		case CAL_SILENT_ALARM_DATETIME:
-			if (*Alarm == -1) *Alarm = i;
-			break;
-		case CAL_RECURRANCE:
-			if (*Recurrance == -1) *Recurrance = i;
-			break;
-		case CAL_TEXT:
-			if (*Text == -1) *Text = i;
-			break;
-		case CAL_PHONE:
-			if (*Phone == -1) *Phone = i;
-			break;
-		case CAL_LOCATION:
-			if (*Location == -1) *Location = i;
-			break;
-		default:
-			break;
-		}
-	}
-}
-
-GSM_Error NOKIA_EncodeVCALENDAR10SMSText(char *Buffer, int *Length, GSM_CalendarEntry *note)
-{
-	char 	buffer[1000];
- 	int 	Text, Time, Alarm, Phone, Recurrance, EndTime, Location;
-
-	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime, &Location);
-
-	*Length+=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
-	*Length+=sprintf(Buffer+(*Length), "VERSION:1.0%c%c",13,10);
-	*Length+=sprintf(Buffer+(*Length), "BEGIN:VEVENT%c%c",13,10);
-	*Length+=sprintf(Buffer+(*Length), "CATEGORIES:");
-	switch (note->Type) {
-		case GCN_REMINDER:
-			*Length+=sprintf(Buffer+(*Length), "MISCELLANEOUS%c%c",13,10);
-			break;
-		case GCN_CALL:
-			*Length+=sprintf(Buffer+(*Length), "PHONE CALL%c%c",13,10);
-			break;
-		case GCN_BIRTHDAY:
-			*Length+=sprintf(Buffer+(*Length), "SPECIAL OCCASION%c%c",13,10);
-			break;
-		case GCN_MEETING:
-		default		:
-			*Length+=sprintf(Buffer+(*Length), "MEETING%c%c",13,10);
-			break;
-	}
-	if (note->Type == GCN_CALL && Phone != -1)
-	{
-		EncodeUTF8(buffer,note->Entries[Phone].Text);
-		if (UnicodeLength(note->Entries[Phone].Text)==strlen(buffer)) {
-			*Length+=sprintf(Buffer+(*Length), "SUMMARY:%s%c%c",DecodeUnicodeString(note->Entries[Phone].Text),13,10);
-		} else {
-			*Length+=sprintf(Buffer+(*Length), "SUMMARY;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s%c%c",buffer,13,10);
-		}	    
-	} else {
-		if (Text == -1) return GE_UNKNOWN;
-		EncodeUTF8(buffer,note->Entries[Text].Text);
-		if (UnicodeLength(note->Entries[Text].Text)==strlen(buffer)) {
-			*Length+=sprintf(Buffer+(*Length), "SUMMARY:%s%c%c",DecodeUnicodeString(note->Entries[Text].Text),13,10);
-		} else {
-			*Length+=sprintf(Buffer+(*Length), "SUMMARY;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s%c%c",buffer,13,10);
-		}	    
-	}
-
-	if (Time == -1) return GE_UNKNOWN;
-	*Length+=sprintf(Buffer+(*Length), "DTSTART:%04d%02d%02dT%02d%02d%02d%c%c",
-			note->Entries[Time].Date.Year, note->Entries[Time].Date.Month, note->Entries[Time].Date.Day,
-			note->Entries[Time].Date.Hour, note->Entries[Time].Date.Minute, note->Entries[Time].Date.Second,13,10);
-
-	if (Alarm != -1) {
-		*Length+=sprintf(Buffer+(*Length), "DALARM:%04d%02d%02dT%02d%02d%02d%c%c",
-				note->Entries[Alarm].Date.Year, note->Entries[Alarm].Date.Month, note->Entries[Alarm].Date.Day,
-				note->Entries[Alarm].Date.Hour, note->Entries[Alarm].Date.Minute, note->Entries[Alarm].Date.Second,13,10);
-	}
-
-	/* Birthday is known to be recurranced */
-	if (Recurrance != -1 && note->Type != GCN_BIRTHDAY) {
-		switch(note->Entries[Recurrance].Number/24) {
-			case 1	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D1 #0%c%c",13,10);	 break;
-			case 7	 : *Length+=sprintf(Buffer+(*Length), "RRULE:W1 #0%c%c",13,10);	 break;
-			case 14	 : *Length+=sprintf(Buffer+(*Length), "RRULE:W2 #0%c%c",13,10);	 break;
-			case 365 : *Length+=sprintf(Buffer+(*Length), "RRULE:YD1 #0%c%c",13,10); break;
-		}
-	}
-
-	*Length+=sprintf(Buffer+(*Length), "END:VEVENT%c%c",13,10);
-	*Length+=sprintf(Buffer+(*Length), "END:VCALENDAR%c%c",13,10);
-
-	return GE_NONE;
-}
-
-bool IsNoteFromThePast(GSM_CalendarEntry *note)
+bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 {
 	bool 		Past = true;
 	int		i;
@@ -151,6 +40,330 @@ bool IsNoteFromThePast(GSM_CalendarEntry *note)
 			break;
 	}
 	return Past;
+}
+
+void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime, int *Location)
+{
+	int i;
+
+	*Text		= -1;
+	*Time		= -1;
+	*Alarm		= -1;
+	*Phone		= -1;
+	*Recurrance	= -1;
+	*EndTime	= -1;
+	*Location	= -1;
+	for (i = 0; i < entry->EntriesNum; i++)
+	{
+		switch (entry->Entries[i].EntryType) {
+		case CAL_START_DATETIME :
+			if (*Time == -1) *Time = i;
+			break;
+		case CAL_END_DATETIME :
+			if (*EndTime == -1) *EndTime = i;
+			break;
+		case CAL_ALARM_DATETIME :
+		case CAL_SILENT_ALARM_DATETIME:
+			if (*Alarm == -1) *Alarm = i;
+			break;
+		case CAL_RECURRANCE:
+			if (*Recurrance == -1) *Recurrance = i;
+			break;
+		case CAL_TEXT:
+			if (*Text == -1) *Text = i;
+			break;
+		case CAL_PHONE:
+			if (*Phone == -1) *Phone = i;
+			break;
+		case CAL_LOCATION:
+			if (*Location == -1) *Location = i;
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version)
+{
+ 	int 	Text, Time, Alarm, Phone, Recurrance, EndTime, Location;
+	char 	buffer[2000];
+
+	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime, &Location);
+
+	if (header) {
+		*Length+=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
+		*Length+=sprintf(Buffer+(*Length), "VERSION:1.0%c%c",13,10);
+	}
+	*Length+=sprintf(Buffer+(*Length), "BEGIN:VEVENT%c%c",13,10);
+
+	if (Version == Nokia_VCalendar) {
+		*Length+=sprintf(Buffer+(*Length), "CATEGORIES:");
+		switch (note->Type) {
+		case GCN_REMINDER:
+			*Length+=sprintf(Buffer+(*Length), "REMINDER%c%c",13,10);
+			break;
+		case GCN_MEMO:
+			*Length+=sprintf(Buffer+(*Length), "MISCELLANEOUS%c%c",13,10);
+			break;
+		case GCN_CALL:
+			*Length+=sprintf(Buffer+(*Length), "PHONE CALL%c%c",13,10);
+			break;
+		case GCN_BIRTHDAY:
+			*Length+=sprintf(Buffer+(*Length), "SPECIAL OCCASION%c%c",13,10);
+			break;
+		case GCN_MEETING:
+		default:
+			*Length+=sprintf(Buffer+(*Length), "MEETING%c%c",13,10);
+			break;
+		}
+		if (note->Type == GCN_CALL) {
+			buffer[0] = 0;
+			buffer[1] = 0;
+		 	if (Phone != -1) CopyUnicodeString(buffer,note->Entries[Phone].Text);
+			if (Text != -1)  {
+				if (Phone != -1) EncodeUnicode(buffer+UnicodeLength(buffer)*2," ",1);
+				CopyUnicodeString(buffer+UnicodeLength(buffer)*2,note->Entries[Text].Text);
+			}
+			SaveVCALText(Buffer, Length, buffer, "SUMMARY");
+		} else {
+			SaveVCALText(Buffer, Length, note->Entries[Text].Text, "SUMMARY");
+		}
+		if (note->Type == GCN_MEETING && Location != -1) {
+			SaveVCALText(Buffer, Length, note->Entries[Location].Text, "LOCATION");
+		}
+	
+		if (Time == -1) return GE_UNKNOWN;
+		SaveVCALDateTime(Buffer, Length, &note->Entries[Time].Date, "DTSTART");
+
+		if (EndTime != -1) {
+			SaveVCALDateTime(Buffer, Length, &note->Entries[EndTime].Date, "DTEND");
+		}
+
+		if (Alarm != -1) {
+			if (note->Entries[Alarm].EntryType == CAL_SILENT_ALARM_DATETIME) {
+				SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "DALARM");
+			} else {
+				SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "AALARM");
+			}
+		}
+
+		/* Birthday is known to be recurranced */
+		if (Recurrance != -1 && note->Type != GCN_BIRTHDAY) {
+			switch(note->Entries[Recurrance].Number/24) {
+				case 1	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D1 #0%c%c",13,10);	 break;
+				case 7	 : *Length+=sprintf(Buffer+(*Length), "RRULE:W1 #0%c%c",13,10);	 break;
+				case 14	 : *Length+=sprintf(Buffer+(*Length), "RRULE:W2 #0%c%c",13,10);	 break;
+				case 365 : *Length+=sprintf(Buffer+(*Length), "RRULE:YD1 #0%c%c",13,10); break;
+			}
+		}
+	} else if (Version == Siemens_VCalendar) {
+	}
+
+	*Length+=sprintf(Buffer+(*Length), "END:VEVENT%c%c",13,10);
+	if (header) *Length+=sprintf(Buffer+(*Length), "END:VCALENDAR%c%c",13,10);
+
+	return GE_NONE;
+}
+
+void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, int *Alarm, int *Completed, int *EndTime)
+{
+	int i;
+
+	*Text		= -1;
+	*EndTime	= -1;
+	*Alarm		= -1;
+	*Completed	= -1;
+	for (i = 0; i < entry->EntriesNum; i++)
+	{
+		switch (entry->Entries[i].EntryType) {
+		case TODO_END_DATETIME :
+			if (*EndTime == -1) *EndTime = i;
+			break;
+		case TODO_ALARM_DATETIME :
+		case TODO_SILENT_ALARM_DATETIME:
+			if (*Alarm == -1) *Alarm = i;
+			break;
+		case TODO_TEXT:
+			if (*Text == -1) *Text = i;
+			break;
+		case TODO_COMPLETED:
+			if (*Completed == -1) *Completed = i;
+			break;
+		default:
+			break;
+		}
+	}
+}
+
+GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version)
+{
+ 	int Text, Alarm, Completed, EndTime;
+
+	GSM_ToDoFindDefaultTextTimeAlarmCompleted(note, &Text, &Alarm, &Completed, &EndTime);
+
+	if (header) {
+		*Length+=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
+		*Length+=sprintf(Buffer+(*Length), "VERSION:1.0%c%c",13,10);
+	}
+
+	*Length+=sprintf(Buffer+(*Length), "BEGIN:VTODO%c%c",13,10);
+
+	if (Text == -1) return GE_UNKNOWN;
+	SaveVCALText(Buffer, Length, note->Entries[Text].Text, "SUMMARY");
+
+	if (Completed == -1) {
+		*Length+=sprintf(Buffer+(*Length), "STATUS:NEEDS ACTION%c%c",13,10);
+	} else {
+		*Length+=sprintf(Buffer+(*Length), "STATUS:COMPLETED%c%c",13,10);
+	}
+
+	switch (note->Priority) {
+		case GSM_Priority_Low	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:1%c%c",13,10); break;
+		case GSM_Priority_Medium: *Length+=sprintf(Buffer+(*Length), "PRIORITY:2%c%c",13,10); break;
+		case GSM_Priority_High	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:3%c%c",13,10); break;
+	}
+
+	if (EndTime != -1) {
+		SaveVCALDateTime(Buffer, Length, &note->Entries[EndTime].Date, "DUE");
+	}
+
+	if (Alarm != -1) {
+		if (note->Entries[Alarm].EntryType == CAL_SILENT_ALARM_DATETIME) {
+			SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "DALARM");
+		} else {
+			SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "AALARM");
+		}
+	}
+
+	*Length+=sprintf(Buffer+(*Length), "END:VTODO%c%c",13,10);
+
+	if (header) {
+		*Length+=sprintf(Buffer+(*Length), "END:VCALENDAR%c%c",13,10);
+	}
+
+	return GE_NONE;
+}
+
+GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer)
+{
+	unsigned char 	Line[2000],Buff[2000];
+	int		Level = 0;
+
+	Calendar->EntriesNum 	= 0;
+	ToDo->EntriesNum 	= 0;
+
+	while (1) {
+		MyGetLine(Buffer, Pos, Line);
+		if (strlen(Line) == 0) break;
+		switch (Level) {
+		case 0:
+			if (strstr(Line,"BEGIN:VEVENT")) {
+				Calendar->Type 	= GCN_MEMO;
+				Level 		= 1;
+			}
+			if (strstr(Line,"BEGIN:VTODO")) {
+				ToDo->Priority 	= GSM_Priority_Low;
+				Level 		= 2;
+			}
+			break;
+		case 1: /* Calendar note */
+			if (strstr(Line,"END:VEVENT")) {
+				if (Calendar->EntriesNum == 0) return GE_EMPTY;
+				return GE_NONE;
+			}
+			if (strstr(Line,"CATEGORIES:REMINDER")) 	Calendar->Type = GCN_REMINDER;
+			if (strstr(Line,"CATEGORIES:MISCELLANEOUS")) 	Calendar->Type = GCN_MEMO;
+			if (strstr(Line,"CATEGORIES:PHONE CALL")) 	Calendar->Type = GCN_CALL;
+			if (strstr(Line,"CATEGORIES:SPECIAL OCCASION")) Calendar->Type = GCN_BIRTHDAY;
+			if (strstr(Line,"CATEGORIES:MEETING")) 		Calendar->Type = GCN_MEETING;
+			if (strstr(Line,"RRULE:D1")) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
+				Calendar->Entries[Calendar->EntriesNum].Number    = 1*24;
+				Calendar->EntriesNum++;
+			}
+			if (strstr(Line,"RRULE:W1")) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
+				Calendar->Entries[Calendar->EntriesNum].Number    = 7*24;
+				Calendar->EntriesNum++;
+			}
+			if (strstr(Line,"RRULE:W2")) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
+				Calendar->Entries[Calendar->EntriesNum].Number    = 14*24;
+				Calendar->EntriesNum++;
+			}
+			if (strstr(Line,"RRULE:YD1")) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
+				Calendar->Entries[Calendar->EntriesNum].Number    = 365*24;
+				Calendar->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "SUMMARY", Buff)) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TEXT;
+				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
+				Calendar->EntriesNum++;
+			}
+			if (Calendar->Type == GCN_MEETING && ReadVCALText(Line, "LOCATION", Buff)) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_LOCATION;
+				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
+				Calendar->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "DTSTART", Buff)) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_START_DATETIME;
+				ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date);
+				Calendar->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "DTEND", Buff)) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_END_DATETIME;
+				ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date);
+				Calendar->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "DALARM", Buff)) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
+				ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date);
+				Calendar->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "AALARM", Buff)) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_ALARM_DATETIME;
+				ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date);
+				Calendar->EntriesNum++;
+			}
+			break;
+		case 2: /* ToDo note */
+			if (strstr(Line,"END:VTODO")) {
+				if (ToDo->EntriesNum == 0) return GE_EMPTY;
+				return GE_NONE;
+			}
+			if (ReadVCALText(Line, "DUE", Buff)) {
+				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_END_DATETIME;
+				ReadVCALDateTime(DecodeUnicodeString(Buff), &ToDo->Entries[ToDo->EntriesNum].Date);
+				ToDo->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "DALARM", Buff)) {
+				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_SILENT_ALARM_DATETIME;
+				ReadVCALDateTime(DecodeUnicodeString(Buff), &ToDo->Entries[ToDo->EntriesNum].Date);
+				ToDo->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "AALARM", Buff)) {
+				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_ALARM_DATETIME;
+				ReadVCALDateTime(DecodeUnicodeString(Buff), &ToDo->Entries[ToDo->EntriesNum].Date);
+				ToDo->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "SUMMARY", Buff)) {
+				ToDo->Entries[ToDo->EntriesNum].EntryType = CAL_TEXT;
+				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,Buff);
+				ToDo->EntriesNum++;
+			}
+			if (strstr(Line,"PRIORITY:1")) ToDo->Priority = GSM_Priority_Low;
+			if (strstr(Line,"PRIORITY:2")) ToDo->Priority = GSM_Priority_Medium;
+			if (strstr(Line,"PRIORITY:3")) ToDo->Priority = GSM_Priority_High;
+			if (strstr(Line,"STATUS:COMPLETED")) {
+			}
+			break;
+		}
+	}
+
+	if (Calendar->EntriesNum == 0 && ToDo->EntriesNum == 0) return GE_EMPTY;
+	return GE_NONE;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

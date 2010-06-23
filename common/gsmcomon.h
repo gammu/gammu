@@ -18,6 +18,7 @@
 #define	MAX_IMEI_LENGTH			20
 #define PHONE_MAXSMSINFOLDER		200
 #define GSM_MAX_NUMBER_LENGTH		50
+#define GSM_MAXCALENDARTODONOTES	300
 
 /* GSM_Error is used to notify about errors */
 typedef enum {

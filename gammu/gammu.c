@@ -1426,7 +1426,7 @@ static void GetCalendarNotes(int argc, char *argv[])
 				printmsg("Start        : %s\n",OSDateTime(Note.Entries[i].Date,false));
 				memcpy(&DateTime,&Note.Entries[i].Date,sizeof(GSM_DateTime));
 				break;
-			case CAL_STOP_DATETIME:
+			case CAL_END_DATETIME:
 				printmsg("Stop         : %s\n",OSDateTime(Note.Entries[i].Date,false));
 				memcpy(&DateTime,&Note.Entries[i].Date,sizeof(GSM_DateTime));
 				break;
@@ -2018,10 +2018,7 @@ static void SendSaveSMS(int argc, char *argv[])
 
 	if (mystrncasecmp(argv[2],"TEXT",0)) {
 		chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
-		if (chars_read == 0) {
-			printmsg("Couldn't read from stdin!\n");	
-			exit (-1);
-		}                               	
+		if (chars_read == 0) printmsg("Warning: 0 chars read !\n");	
 		InputBuffer[chars_read] 		= 0x00;	
 		InputBuffer[chars_read+1] 		= 0x00;	
 		EncodeUnicode(Buffer[0],InputBuffer,strlen(InputBuffer));
@@ -2234,6 +2231,28 @@ static void SendSaveSMS(int argc, char *argv[])
 		SMSInfo.Entries[0].Calendar = Backup.Calendar[i];		
 		if (mystrncasecmp(argv[1],"--savesms",0)) {
 			EncodeUnicode(Sender, "Calendar",8);
+		}
+		startarg += 5;
+	} else if (mystrncasecmp(argv[2],"TODO",0)) {
+		if (argc<5+startarg) {
+			printmsg("Where is backup filename and location ?\n");
+			exit(-1);
+		}
+		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
+		Print_Error(error);
+		i = 0;
+		while (Backup.ToDo[i]!=NULL) {
+			if (i == atoi(argv[4+startarg])-1) break;
+			i++;
+		}
+		if (i != atoi(argv[4+startarg])-1) {
+			printmsg("ToDo note not found in file\n");
+			exit(-1);
+		}
+		SMSInfo.Entries[0].ID 	 	= SMS_NokiaVTODOLong;
+		SMSInfo.Entries[0].ToDo 	= Backup.ToDo[i];		
+		if (mystrncasecmp(argv[1],"--savesms",0)) {
+			EncodeUnicode(Sender, "ToDo",8);
 		}
 		startarg += 5;
 	} else if (mystrncasecmp(argv[2],"VCARD10",0) || mystrncasecmp(argv[2],"VCARD21",0)) {
@@ -2584,8 +2603,8 @@ static void SendSaveSMS(int argc, char *argv[])
 		case 5: /* Length of text SMS */
 			if (atoi(argv[i])<chars_read)
 			{
-				Buffer[atoi(argv[i])*2][0]	= 0x00;
-				Buffer[atoi(argv[i])*2+1][0]	= 0x00;
+				Buffer[0][atoi(argv[i])*2]	= 0x00;
+				Buffer[0][atoi(argv[i])*2+1]	= 0x00;
 			}
 			SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
 			if (mystrncasecmp(argv[i-1],"-autolen",0)) SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
@@ -2856,7 +2875,7 @@ static void SendSaveSMS(int argc, char *argv[])
 static void SaveFile(int argc, char *argv[])
 {
 	GSM_Backup		Backup;
-	int			i;
+	int			i,j;
 	FILE			*file;
 	unsigned char		Buffer[10000];
 	GSM_PhonebookEntry	*pbk;
@@ -2877,8 +2896,26 @@ static void SaveFile(int argc, char *argv[])
 			printmsg("Calendar note not found in file\n");
 			exit(-1);
 		}
+		j = 0;
+		GSM_EncodeVCALENDAR(Buffer, &j, Backup.Calendar[i],true,Nokia_VCalendar);
+	} else if (mystrncasecmp(argv[2],"TODO",0)) {
+		if (argc<5) {
+			printmsg("Where is backup filename and location ?\n");
+			exit(-1);
+		}
+		error=GSM_ReadBackupFile(argv[4],&Backup);
+		Print_Error(error);
 		i = 0;
-		NOKIA_EncodeVCALENDAR10SMSText(Buffer, &i, Backup.Calendar[i]);
+		while (Backup.ToDo[i]!=NULL) {
+			if (i == atoi(argv[5])-1) break;
+			i++;
+		}
+		if (i != atoi(argv[5])-1) {
+			printmsg("ToDo note not found in file\n");
+			exit(-1);
+		}
+		j = 0;
+		GSM_EncodeVTODO(Buffer, &j, Backup.ToDo[i], true, Nokia_VToDo);
 	} else if (mystrncasecmp(argv[2],"VCARD10",0) || mystrncasecmp(argv[2],"VCARD21",0)) {
 		if (argc<6) {
 			printmsg("Where is backup filename and location and memory type ?\n");
@@ -2911,11 +2948,11 @@ static void SaveFile(int argc, char *argv[])
 			printmsg("Unknown memory type: \"%s\"\n",argv[5]);
 			exit(-1);
 		}
-		i = 0;
+		j = 0;
 		if (mystrncasecmp(argv[2],"VCARD10",0)) {
-			NOKIA_EncodeVCARD10SMSText(Buffer,&i,pbk);
+			GSM_EncodeVCARD(Buffer,&j,pbk,true,Nokia_VCard10);
 		} else {
-			NOKIA_EncodeVCARD21SMSText(Buffer,&i,pbk);
+			GSM_EncodeVCARD(Buffer,&j,pbk,true,Nokia_VCard21);
 		}
 	} else {
 		printmsg("What format of file (\"%s\") ?\n",argv[2]);
@@ -2923,7 +2960,7 @@ static void SaveFile(int argc, char *argv[])
 	}
 
 	file = fopen(argv[3],"wb");
-	fwrite(Buffer,1,i,file);
+	fwrite(Buffer,1,j,file);
 	fclose(file);
 }
 
@@ -3059,12 +3096,12 @@ static void Backup(int argc, char *argv[])
 				used 		= 0;
 				printmsgerr("   Reading : ");
 				while (error == GE_NONE) {
-					if (used < GSM_BACKUP_MAX_CALENDAR) {
+					if (used < GSM_MAXCALENDARTODONOTES) {
 						Backup.Calendar[used] = malloc(sizeof(GSM_CalendarEntry));
 					        if (Backup.Calendar[used] == NULL) Print_Error(GE_MOREMEMORY);
 						Backup.Calendar[used+1] = NULL;
 					} else {
-						printmsg("   Increase GSM_BACKUP_MAX_CALENDAR\n");
+						printmsg("   Increase GSM_MAXCALENDARTODONOTES\n");
 						exit(-1);
 					}
 					*Backup.Calendar[used]=Note;
@@ -3092,12 +3129,12 @@ static void Backup(int argc, char *argv[])
 					ToDo.Location = i;
 					error=Phone->GetToDo(&s, &ToDo, false);
 					if (error != GE_EMPTY) {
-						if (used < GSM_BACKUP_MAX_TODO) {
+						if (used < GSM_MAXCALENDARTODONOTES) {
 							Backup.ToDo[used] = malloc(sizeof(GSM_ToDoEntry));
 							if (Backup.ToDo[used] == NULL) Print_Error(GE_MOREMEMORY);
 							Backup.ToDo[used+1] = NULL;
 						} else {
-							printmsg("   Increase GSM_BACKUP_MAX_TODO\n");
+							printmsg("   Increase GSM_MAXCALENDARTODONOTES\n");
 							exit(-1);
 						}
 						*Backup.ToDo[used]=ToDo;
@@ -4612,7 +4649,7 @@ static void GetToDo(int argc, char *argv[])
 		if (error == GE_EMPTY) {
 			printmsg("Entry is empty\n\n");
 		} else {
-            		printmsg("Priority  : ");
+            		printmsg("Priority     : ");
             		switch (ToDo.Priority) {
                 		case GSM_Priority_Low	 : printmsg("Low\n");	 	break;
                 		case GSM_Priority_Medium : printmsg("Medium\n"); 	break;
@@ -4621,29 +4658,32 @@ static void GetToDo(int argc, char *argv[])
 	            	}
 	            	for (j=0;j<ToDo.EntriesNum;j++) {
 	                	switch (ToDo.Entries[j].EntryType) {
-	                    	case TODO_DUEDATE:
-	                        	printmsg("DueDate   : %s\n",OSDate(ToDo.Entries[j].Date));
+	                    	case TODO_END_DATETIME:
+	                        	printmsg("DueTime      : %s\n",OSDateTime(ToDo.Entries[j].Date,false));
 	                        	break;
 	                    	case TODO_COMPLETED:
-	                        	printmsg("Completed : %s\n",ToDo.Entries[j].Number == 1 ? "Yes" : "No");
+	                        	printmsg("Completed    : %s\n",ToDo.Entries[j].Number == 1 ? "Yes" : "No");
 	                        	break;
 	                    	case TODO_ALARM_DATETIME:
-	                        	printmsg("Alarm     : %s\n",OSDateTime(ToDo.Entries[j].Date,false));
+	                        	printmsg("Alarm        : %s\n",OSDateTime(ToDo.Entries[j].Date,false));
+	                        	break;
+	                    	case TODO_SILENT_ALARM_DATETIME:
+	                        	printmsg("Silent alarm : %s\n",OSDateTime(ToDo.Entries[j].Date,false));
 	                        	break;
 	                    	case TODO_TEXT:
-	                        	printmsg("Text      : \"%s\"\n",DecodeUnicodeString2(ToDo.Entries[j].Text));
+	                        	printmsg("Text         : \"%s\"\n",DecodeUnicodeString2(ToDo.Entries[j].Text));
 	                        	break;
 	                    	case TODO_PRIVATE:
-	                        	printmsg("Private   : %s\n",ToDo.Entries[j].Number == 1 ? "Yes" : "No");
+	                        	printmsg("Private      : %s\n",ToDo.Entries[j].Number == 1 ? "Yes" : "No");
 	                        	break;
 	                    	case TODO_CATEGORY:
 					Category.Location = ToDo.Entries[j].Number;
 					Category.Type = Category_ToDo;
 					error=Phone->GetCategory(&s, &Category);
 					if (error == GE_NONE) {
-						printmsg("Category  : \"%s\" (%i)\n", DecodeUnicodeString2(Category.Name), ToDo.Entries[j].Number);
+						printmsg("Category     : \"%s\" (%i)\n", DecodeUnicodeString2(Category.Name), ToDo.Entries[j].Number);
 					} else {
-						printmsg("Category  : %i\n", ToDo.Entries[j].Number);
+						printmsg("Category     : %i\n", ToDo.Entries[j].Number);
 					}
 	                        	break;
 	                    	case TODO_CONTACTID:
@@ -4653,16 +4693,16 @@ static void GetToDo(int argc, char *argv[])
 					if (error == GE_NONE) {
 						name = GSM_PhonebookGetEntryName(&entry);
 						if (name != NULL) {
-							printmsg("Contact ID: \"%s\" (%d)\n", DecodeUnicodeString2(name), ToDo.Entries[j].Number);
+							printmsg("Contact ID   : \"%s\" (%d)\n", DecodeUnicodeString2(name), ToDo.Entries[j].Number);
 						} else {
-							printmsg("Contact ID: %d\n",ToDo.Entries[j].Number);
+							printmsg("Contact ID   : %d\n",ToDo.Entries[j].Number);
 						}
 					} else {
-						printmsg("Contact: %d\n",ToDo.Entries[j].Number);
+						printmsg("Contact   : %d\n",ToDo.Entries[j].Number);
 					}
         	                	break;
 	                    	case TODO_PHONE:
-	                        	printmsg("Phone     : \"%s\"\n",DecodeUnicodeString2(ToDo.Entries[j].Text));
+	                        	printmsg("Phone        : \"%s\"\n",DecodeUnicodeString2(ToDo.Entries[j].Text));
 	                        	break;
 	                	}
 	       	    	}
@@ -5116,9 +5156,9 @@ static void GetFMStation(int argc, char *argv[])
  			    printmsg("Entry number %i is empty\n",i);
 			    break;
 		    case GE_NONE:
- 			    printmsg("Entry number %i\nStation name: %s\nFrequency: %d.%d MHz\n",
+ 			    printmsg("Entry number %i\nStation name : \"%s\"\nFrequency    : %.1f MHz\n",
  				    i,DecodeUnicodeString2(Station.StationName),
-				    Station.Frequency/1000,Station.Frequency%1000);
+				    Station.Frequency);
 			    break;
 		    default:
 			    Print_Error(error);
@@ -5302,24 +5342,34 @@ static void AddFolder(int argc, char *argv[])
 }
 
 struct NokiaFolderInfo {
+	char	*model;
 	char 	*parameter;
 	char	*folder;
 	int 	level;
 };
 
 static struct NokiaFolderInfo Folder[] = {
-	{"MMSUnreadInbox",	"INBOX",	3},
-	{"MMSReadInbox",	"INBOX",	3},
-	{"MMSOutbox",		"OUTBOX",	3},
-	{"MMSSent",		"SENT",		3},
-	{"MMSDrafts",		"DRAFTS",	3},
-	{"Gallery",		"Graphics",	3}, /* 3510i */
-	{"Gallery",		"Images",	3}, /* 6610  */
-	{"Gallery",		"Pictures",	2}, /* 3510  */
-	{"Tones",		"Tones",	3},
-	{"Application",		"applications",	3},
-	{"Game",		"games",	3},
-	{"",			"",		0}
+	/* Language indepedent */
+	{"",	 "MMSUnreadInbox",	"INBOX",	3},
+	{"",	 "MMSReadInbox",	"INBOX",	3},
+	{"",	 "MMSOutbox",		"OUTBOX",	3},
+	{"",	 "MMSSent",		"SENT",		3},
+	{"",	 "MMSDrafts",		"DRAFTS",	3},
+	{"",	 "Application",		"applications",	3},
+	{"",	 "Game",		"games",	3},
+	/* Language depedent */
+	{"",	 "Gallery",		"Pictures",	2}, /* 3510  */
+	{"",	 "Gallery",		"Graphics",	3}, /* 3510i */
+	{"",	 "Gallery",		"Images",	3}, /* 6610  */
+	{"3510", "Gallery",		"",		8},
+	{"3510i","Gallery",		"",		3},
+	{"5100", "Gallery",		"",		3},
+	/* Language depedent */
+	{"",	 "Tones",		"Tones",	3},
+	{"3510i","Tones",		"",		4},
+	{"5100", "Tones",		"",		4},
+	/* End of list */
+	{"",	 "",			"",		0}
 };
 
 static void NokiaAddFile(int argc, char *argv[])
@@ -5364,6 +5414,13 @@ static void NokiaAddFile(int argc, char *argv[])
 					Found = true;
 					break;
 				}
+				if (!strcmp(s.Phone.Data.ModelInfo->model,Folder[i].model) &&
+				     mystrncasecmp(argv[2],Folder[i].parameter,0)  	   &&
+				     Files[FilesNum].ID == Folder[i].level) {
+					Found = true;
+					break;
+				}
+
 				i++;
 			}
 			if (Found) break;
@@ -5678,6 +5735,7 @@ static void usage(void)
 
 #ifdef GSM_ENABLE_BACKUP
 	printf("gammu --savefile CALENDAR target.vcs file location\n");
+	printf("gammu --savefile TODO target.vcs file location\n");
 	printf("gammu --savefile VCARD10|VCARD21 target.vcf file SM|ME location\n\n");
 #endif
 
@@ -5720,6 +5778,10 @@ static void usage(void)
 	printf("                                       [-smscset number][-unsent][-reply]\n");
 	printf("                                       [-smscnumber number][-unread]\n");
 	printf("                                       [-read]\n");
+	printf("gammu --savesms TODO file location [-folder number][-sender number]\n");
+	printf("                                   [-smscset number][-unsent][-reply]\n");
+	printf("                                   [-smscnumber number][-unread]\n");
+	printf("                                   [-read]\n");
 	printf("gammu --savesms VCARD10|VCARD21 file SM|ME location [-folder number]\n");
 	printf("                                                    [-smscset number]\n");
 	printf("                                                    [-reply][-unread]\n");
@@ -5786,6 +5848,10 @@ static void usage(void)
 	printf("gammu --sendsms CALENDAR destination file location [-smscset number]\n");
 	printf("                                                   [-smscnumber number]\n");
 	printf("                                                   [-report][-reply]\n");
+	printf("                                [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\n");
+	printf("gammu --sendsms TODO destination file location [-smscset number]\n");
+	printf("                                               [-smscnumber number]\n");
+	printf("                                               [-report][-reply]\n");
 	printf("                                [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\n");
 	printf("gammu --sendsms VCARD10|VCARD21 destination file SM|ME location\n");
 	printf("                     [-reply][-smscset number][-smscnumber number][-report]\n");
@@ -6004,7 +6070,7 @@ int main(int argc, char *argv[])
 	error=GSM_SetDebugFile(s.Config.DebugFile, &di);
 	Print_Error(error);
 
-	if (argc==1) {
+	if (argc == 1 + start) {
 		usage();
 	} else {
 		while (Parameters[z].Function!=NULL) {

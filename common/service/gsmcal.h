@@ -41,7 +41,7 @@ typedef enum {
 
 typedef enum {
 	CAL_START_DATETIME = 1,
-	CAL_STOP_DATETIME,
+	CAL_END_DATETIME,
 	CAL_ALARM_DATETIME,
 	CAL_SILENT_ALARM_DATETIME,
 	CAL_RECURRANCE,
@@ -75,9 +75,14 @@ typedef struct {
 
 void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime, int *Location);
 
-GSM_Error NOKIA_EncodeVCALENDAR10SMSText(char *Buffer, int *Length, GSM_CalendarEntry *note);
+typedef enum {
+	Nokia_VCalendar = 1,
+	Siemens_VCalendar
+} GSM_VCalendarVersion;
 
-bool IsNoteFromThePast(GSM_CalendarEntry *note);
+GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version);
+
+bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note);
 
 /* ------------------------------ to-do ------------------------------------ */
 
@@ -85,9 +90,10 @@ bool IsNoteFromThePast(GSM_CalendarEntry *note);
 #define MAX_TODO_TEXT_LENGTH    	50 /* Alcatel BE5 50 chars */
 
 typedef enum {
-	TODO_DUEDATE = 1,
+	TODO_END_DATETIME = 1,
     	TODO_COMPLETED,
 	TODO_ALARM_DATETIME,
+	TODO_SILENT_ALARM_DATETIME,
 	TODO_TEXT,
     	TODO_PRIVATE,
     	TODO_CATEGORY,
@@ -115,9 +121,21 @@ typedef struct {
 	GSM_SubToDoEntry   	Entries[GSM_TODO_ENTRIES];
 } GSM_ToDoEntry;
 
+void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, int *Alarm, int *Completed, int *EndTime);
+
+typedef enum {
+	Nokia_VToDo = 1
+} GSM_VToDoVersion;
+
+GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version);
+
 typedef struct {
 	int		Used;		/* Number of used positions */
 } GSM_ToDoStatus;
+
+/* ------------------------------ both ------------------------------------- */
+
+GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer);
 
 #endif	/* __gsm_calendar_h */
 

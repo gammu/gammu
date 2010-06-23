@@ -208,6 +208,9 @@
 				RelativePath="..\..\common\gsmstate.c">
 			</File>
 			<File
+				RelativePath="..\..\common\service\gsmvcal.c">
+			</File>
+			<File
 				RelativePath="..\..\common\service\gsmwap.c">
 			</File>
 			<File
@@ -241,6 +244,12 @@
 				RelativePath="..\..\common\phone\nokia\nfuncold.c">
 			</File>
 			<File
+				RelativePath="..\..\common\protocol\obex\obex.c">
+			</File>
+			<File
+				RelativePath="..\..\common\phone\obex\obexgen.c">
+			</File>
+			<File
 				RelativePath="..\..\common\phone\pfunc.c">
 			</File>
 			<File
@@ -248,6 +257,9 @@
 			</File>
 			<File
 				RelativePath="..\smsd\s_files.c">
+			</File>
+			<File
+				RelativePath="..\..\common\device\serial\ser_w32.c">
 			</File>
 			<File
 				RelativePath="..\..\common\phone\at\siemens.c">
@@ -260,9 +272,6 @@
 			</File>
 			<File
 				RelativePath="..\..\common\phone\at\sonyeric.c">
-			</File>
-			<File
-				RelativePath="..\..\common\device\serial\win32.c">
 			</File>
 		</Filter>
 		<Filter
@@ -281,13 +290,10 @@
 				RelativePath="..\..\common\phone\at\atgen.h">
 			</File>
 			<File
+				RelativePath="..\..\common\device\bluetoth\blue_w32.h">
+			</File>
+			<File
 				RelativePath="..\..\common\device\bluetoth\bluetoth.h">
-			</File>
-			<File
-				RelativePath="..\..\common\device\bluetoth\win32\bthdef.h">
-			</File>
-			<File
-				RelativePath="..\..\common\device\bluetoth\win32\bthsdpdef.h">
 			</File>
 			<File
 				RelativePath="..\..\common\misc\cfg.h">
@@ -350,10 +356,16 @@
 				RelativePath="..\..\common\gsmstate.h">
 			</File>
 			<File
+				RelativePath="..\..\common\service\gsmvcal.h">
+			</File>
+			<File
 				RelativePath="..\..\common\service\gsmwap.h">
 			</File>
 			<File
 				RelativePath="..\..\common\device\irda\irda.h">
+			</File>
+			<File
+				RelativePath="..\..\common\device\irda\irda_w32.h">
 			</File>
 			<File
 				RelativePath="..\..\common\protocol\nokia\mbus2.h">
@@ -383,6 +395,12 @@
 				RelativePath="..\..\common\phone\nokia\nfuncold.h">
 			</File>
 			<File
+				RelativePath="..\..\common\protocol\obex\obex.h">
+			</File>
+			<File
+				RelativePath="..\..\common\phone\obex\obexgen.h">
+			</File>
+			<File
 				RelativePath="..\..\common\phone\pfunc.h">
 			</File>
 			<File
@@ -395,19 +413,13 @@
 				RelativePath="..\smsd\s_files.h">
 			</File>
 			<File
+				RelativePath="..\..\common\device\serial\ser_w32.h">
+			</File>
+			<File
 				RelativePath="..\smsd\smsdcore.h">
 			</File>
 			<File
 				RelativePath="..\sniff.h">
-			</File>
-			<File
-				RelativePath="..\..\common\device\serial\win32.h">
-			</File>
-			<File
-				RelativePath="..\..\common\device\irda\win32.h">
-			</File>
-			<File
-				RelativePath="..\..\common\device\bluetoth\win32\ws2bth.h">
 			</File>
 		</Filter>
 	</Files>

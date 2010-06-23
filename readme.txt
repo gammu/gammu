@@ -1,4 +1,4 @@
-Gammu README version 16.06.2003
+Gammu README version 28.06.2003
 -------------------------------
 Q. What is this ?
 
@@ -68,6 +68,9 @@ A. Latest versions are on www.mwiacek.com.
 
    TIP: If you want to have only general info about new versions, you can
         subscibe http://freshmeat.net/projects/gammu/ annoucements.
+
+   NOTE: Michal Cihar prepared mirror available under
+         http://cihar.liten.cz/gammu/zips/
 -------------------------------------------------------------------------------
 Q. How to compile it ?
 
@@ -78,6 +81,10 @@ A. Method 1:
          After it can use "make install" or "make installlib" to install it
          in your OS.
    Method 2:
+     * under Linux based on RPM
+         first do "./configure" and then ""make makerpm"
+         resulting rpm package could be installed via rpm --install <package>
+   Method 3:
      * change parameters in /cfg/config.h
      * compile it:
        * under MS Visual C++ 6.0 for MS Windows
@@ -119,7 +126,6 @@ A. Method 1:
 Q. Where to get compilers to make Gammu ?
 
 A. * MS Visual C++ 6.0
-         go to the shop ;-). It's commercional software.
    * MS Visual C++ 7.0 (.NET)
          go to the shop ;-). It's commercional software.
    * compilers for Unix (Linux) like gcc or kgcc (for free)
@@ -268,9 +274,9 @@ A  Nokia section
       When make ./configure, use --newcalendar. If this works for Your
       phone, please report model and firmware version.
 
-   15.5100, 6100, 6610, 7210, 7250
-      * I don't have ToDo, FM support, restoring pbk, SyncMl settings, Notes
-      You need to provide sniffs
+   15.7250i, 6800
+      * I don't have phone with SyncMl settings & Notes. You need to provide
+        sniffs
 
    AT section
 
@@ -297,7 +303,7 @@ A. 1.Nokia DCT3 (3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|
      and compatible
 
      There is supported MBUS, FBUS, DLR3, Infrared, at19200, BlueTooth.
-     No support for DKU5. No support for locking WAP settings, locking
+     No full support for DKU-5. No support for locking WAP settings, locking
      WAP bookmarks, enabling netmonitor and few others.
 
    3.Siemens M20, MC35, SL45 and compatible
@@ -314,6 +320,10 @@ A. 1.Nokia DCT3 (3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|
 
      If device is compatible with ETSI specs, SMS (both in text and PDU),
      phonebook and some other will work with AT module
+
+   8.OBEX devices
+
+     Work in progress
 -------------------------------------------------------------------------------
 Q. How to report bugs ?
 
@@ -382,7 +392,7 @@ A. for logos              : xpm (only saving), bmp, nlm, nsl, ngg, nol, wbmp
                             mid (saving), re (reading), ott, communicator,
                             ringtones format found in fkn.pl, wav (saving),
                             ime/imy (saving)
-   for backup/restore     : text format created for Gammu,
+   for backup/restore     : text format created for Gammu, vcs, vcf,
                             lmb (startup, phonebook, caller groups)
    for sms backup/restore : text format created for Gammu
 -------------------------------------------------------------------------------

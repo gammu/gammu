@@ -1,8 +1,9 @@
 
 #include <string.h>
 
-#include "gsmpbk.h"
 #include "../misc/coding.h"
+#include "gsmpbk.h"
+#include "gsmmisc.h"
 
 unsigned char *GSM_PhonebookGetEntryName (GSM_PhonebookEntry *entry)
 {
@@ -152,104 +153,110 @@ void DecodeVCARD21Text(char *VCard, GSM_PhonebookEntry *pbk)
 	}
 }
 
-void NOKIA_EncodeVCARD10SMSText(char *Buffer, int *Length, GSM_PhonebookEntry *pbk)
+void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_PhonebookEntry *pbk, bool header, GSM_VCardVersion Version)
 {
-	int Name, Number, Group;
+	int 	Name, Number, Group, i;
+	bool	ignore;
 
 	GSM_PhonebookFindDefaultNameNumberGroup(pbk, &Name, &Number, &Group);
 
-	*Length+=sprintf(Buffer+(*Length),"BEGIN:VCARD%c%c",13,10);
-	if (Name != -1) {
-		*Length+=sprintf(Buffer+(*Length),"N:%s%c%c",DecodeUnicodeString(pbk->Entries[Name].Text),13,10);
+	if (Version == Nokia_VCard10) {
+		if (header) *Length+=sprintf(Buffer+(*Length),"BEGIN:VCARD%c%c",13,10);
+		if (Name != -1) {
+			*Length+=sprintf(Buffer+(*Length),"N:%s%c%c",DecodeUnicodeString(pbk->Entries[Name].Text),13,10);
+		}
+		if (Number != -1) {
+			*Length +=sprintf(Buffer+(*Length),"TEL:%s%c%c",DecodeUnicodeString(pbk->Entries[Number].Text),13,10);
+		}
+		if (header) *Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
+	} else if (Version == Nokia_VCard21) {
+		if (header) *Length+=sprintf(Buffer+(*Length),"BEGIN:VCARD%c%cVERSION:2.1%c%c",13,10,13,10);
+		if (Name != -1) {
+			SaveVCALText(Buffer, Length, pbk->Entries[Name].Text, "N");
+		}
+		if (Number != -1) {
+			(*Length)+=sprintf(Buffer+(*Length),"TEL;PREF:%s%c%c",DecodeUnicodeString(pbk->Entries[Number].Text),13,10);
+		}
+		for (i=0; i < pbk->EntriesNum; i++) {
+			if (i != Name && i != Number) {
+				ignore = false;
+				switch(pbk->Entries[i].EntryType) {
+				case PBK_Name		:
+				case PBK_Date		:
+				case PBK_Caller_Group	:
+					ignore = true;
+					break;
+				case PBK_Number_General	:
+					*Length+=sprintf(Buffer+(*Length),"TEL");
+					break;
+				case PBK_Number_Mobile	:
+					*Length+=sprintf(Buffer+(*Length),"TEL;CELL");
+					break;
+				case PBK_Number_Work	:
+					*Length+=sprintf(Buffer+(*Length),"TEL;WORK;VOICE");
+					break;
+				case PBK_Number_Fax	:
+					*Length+=sprintf(Buffer+(*Length),"TEL;FAX");
+					break;
+				case PBK_Number_Home	:
+					*Length+=sprintf(Buffer+(*Length),"TEL;HOME;VOICE");
+					break;
+				case PBK_Text_Note	:
+					*Length+=sprintf(Buffer+(*Length),"NOTE");
+					break;
+				case PBK_Text_Postal	:
+					/* Don't ask why. Nokia phones save postal address
+					 * double - once like LABEL, second like ADR
+					 */
+					SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "LABEL");
+					*Length+=sprintf(Buffer+(*Length),"ADR");
+					break;
+				case PBK_Text_Email	:
+				case PBK_Text_Email2	:
+					*Length+=sprintf(Buffer+(*Length),"EMAIL");
+					break;
+				case PBK_Text_URL	:
+					*Length+=sprintf(Buffer+(*Length),"URL");
+					break;
+				default	:
+					ignore = true;
+					break;
+				}
+				if (!ignore) {
+					SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "");
+				}
+			}
+		}
+		if (header) *Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
 	}
-	if (Number != -1) {
-		*Length +=sprintf(Buffer+(*Length),"TEL:%s%c%c",DecodeUnicodeString(pbk->Entries[Number].Text),13,10);
-	}
-	*Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
 }
 
-void NOKIA_EncodeVCARD21SMSText(char *Buffer, int *Length, GSM_PhonebookEntry *pbk)
+GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_PhonebookEntry *Pbk, GSM_VCardVersion Version)
 {
-	char	buffer[1000];
-	int	Name, Number, i;
-	bool	ignore;
+	unsigned char 	Line[2000],Buff[2000];
+	int		Level = 0;
 
-	GSM_PhonebookFindDefaultNameNumberGroup(pbk, &Name, &Number, &i);
+	Buff[0] = 0;
+	Pbk->EntriesNum = 0;
 
-	*Length+=sprintf(Buffer+(*Length),"BEGIN:VCARD%c%cVERSION:2.1%c%c",13,10,13,10);
-	if (Name != -1) {
-		EncodeUTF8(buffer,pbk->Entries[Name].Text);
-		if (UnicodeLength(pbk->Entries[Name].Text)==strlen(buffer)) {
-			(*Length)+=sprintf(Buffer+(*Length),"N:%s%c%c",DecodeUnicodeString(pbk->Entries[Name].Text),13,10);
-		} else {
-			(*Length)+=sprintf(Buffer+(*Length),"N;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s%c%c",buffer,13,10);
+	while (1) {
+		MyGetLine(Buffer, Pos, Line);
+		if (strlen(Line) == 0) break;
+		switch (Level) {
+		case 0:
+			if (strstr(Line,"BEGIN:VCARD")) Level = 1;
+			break;
+		case 1:
+			if (strstr(Line,"END:VCARD")) {
+				if (Pbk->EntriesNum == 0) return GE_EMPTY;
+				return GE_NONE;
+			}
+			break;
 		}
 	}
-	if (Number != -1) {
-		(*Length)+=sprintf(Buffer+(*Length),"TEL;PREF:%s%c%c",DecodeUnicodeString(pbk->Entries[Number].Text),13,10);
-	}
-	for (i=0; i < pbk->EntriesNum; i++) {
-		if (i != Name && i != Number) {
-			ignore = false;
-			switch(pbk->Entries[i].EntryType) {
-			case PBK_Name		:
-			case PBK_Date		:
-			case PBK_Caller_Group	:
-				ignore = true;
-				break;
-			case PBK_Number_General	:
-				*Length+=sprintf(Buffer+(*Length),"TEL");
-				break;
-			case PBK_Number_Mobile	:
-				*Length+=sprintf(Buffer+(*Length),"TEL;CELL");
-				break;
-			case PBK_Number_Work	:
-				*Length+=sprintf(Buffer+(*Length),"TEL;WORK;VOICE");
-				break;
-			case PBK_Number_Fax	:
-				*Length+=sprintf(Buffer+(*Length),"TEL;FAX");
-				break;
-			case PBK_Number_Home	:
-				*Length+=sprintf(Buffer+(*Length),"TEL;HOME;VOICE");
-				break;
-			case PBK_Text_Note	:
-				*Length+=sprintf(Buffer+(*Length),"NOTE");
-				break;
-			case PBK_Text_Postal	:
-				/* Don't ask why. Nokia phones save postal address
-				 * double - once like LABEL, second like ADR
-				 */
-				*Length+=sprintf(Buffer+(*Length),"LABEL");
-				EncodeUTF8(buffer,pbk->Entries[i].Text);
-				if (UnicodeLength(pbk->Entries[i].Text)==strlen(buffer)) {
-					(*Length)+=sprintf(Buffer+(*Length),":%s%c%c",DecodeUnicodeString(pbk->Entries[i].Text),13,10);
-				} else {
-					(*Length)+=sprintf(Buffer+(*Length),";CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s%c%c",buffer,13,10);
-				}
-				*Length+=sprintf(Buffer+(*Length),"ADR");
-				break;
-			case PBK_Text_Email	:
-			case PBK_Text_Email2	:
-				*Length+=sprintf(Buffer+(*Length),"EMAIL");
-				break;
-			case PBK_Text_URL	:
-				*Length+=sprintf(Buffer+(*Length),"URL");
-				break;
-			default	:
-				ignore = true;
-				break;
-			}
-			if (!ignore) {
-				EncodeUTF8(buffer,pbk->Entries[i].Text);
-				if (UnicodeLength(pbk->Entries[i].Text)==strlen(buffer)) {
-					(*Length)+=sprintf(Buffer+(*Length),":%s%c%c",DecodeUnicodeString(pbk->Entries[i].Text),13,10);
-				} else {
-					(*Length)+=sprintf(Buffer+(*Length),";CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s%c%c",buffer,13,10);
-				}
-			}
-		}
-	}
-	*Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
+
+	if (Pbk->EntriesNum == 0) return GE_EMPTY;
+	return GE_NONE;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.
