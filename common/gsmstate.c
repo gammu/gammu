@@ -6,8 +6,8 @@
 #include "gsmcomon.h"
 #include "gsmstate.h"
 #include "misc/cfg.h"
-
 #include "misc/coding.h"
+#include "device/devfunc.h"
 
 static void GSM_RegisterConnection(GSM_StateMachine *s, unsigned int connection,
 		GSM_Device_Functions *device, GSM_Protocol_Functions *protocol)
@@ -24,14 +24,25 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	/* We check here is used connection string type is correct for ANY
 	 * OS. If not, we return with error, that string is incorrect at all
 	 */
-	s->ConnectionType=0;
-	if (mystrncasecmp("fbus"	,connection,0)) s->ConnectionType = GCT_FBUS2;
+	s->ConnectionType = 0;
 	if (mystrncasecmp("mbus"	,connection,0)) s->ConnectionType = GCT_MBUS2;
-	if (mystrncasecmp("dlr3"	,connection,0)) s->ConnectionType = GCT_DLR3AT;
-	if (mystrncasecmp("irda"	,connection,0)) s->ConnectionType = GCT_IRDA;
-	if (mystrncasecmp("infrared"	,connection,0)) s->ConnectionType = GCT_INFRARED;
-	if (mystrncasecmp("atblue"	,connection,0)) s->ConnectionType = GCT_ATBLUE;
-	if (mystrncasecmp("dlr3blue"	,connection,0)) s->ConnectionType = GCT_DLR3BLUE;
+	if (mystrncasecmp("fbus"	,connection,0)) s->ConnectionType = GCT_FBUS2;
+	if (mystrncasecmp("fbusdlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
+	if (mystrncasecmp("fbusblue"	,connection,0)) s->ConnectionType = GCT_FBUS2BLUE;
+	if (mystrncasecmp("fbusirda"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
+	if (mystrncasecmp("phonetblue"	,connection,0)) s->ConnectionType = GCT_PHONETBLUE;
+	if (mystrncasecmp("irdaphonet"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
+	if (mystrncasecmp("bluefbus"	,connection,0)) s->ConnectionType = GCT_BLUEFBUS2;
+	if (mystrncasecmp("bluephonet"	,connection,0)) s->ConnectionType = GCT_BLUEPHONET;
+	if (mystrncasecmp("blueat"	,connection,0)) s->ConnectionType = GCT_BLUEAT;
+
+	/* These are for compatibility only */
+	if (mystrncasecmp("atblue"	,connection,0)) s->ConnectionType = GCT_BLUEAT;
+	if (mystrncasecmp("dlr3blue"	,connection,0)) s->ConnectionType = GCT_BLUEFBUS2;
+	if (mystrncasecmp("irda"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
+	if (mystrncasecmp("dlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
+	if (mystrncasecmp("infrared"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
+
 	if (mystrncasecmp("at"		,connection,2)) {
 		/* Use some resonable default, when no speed defined */
 		if (strlen(connection) == 2) {
@@ -49,28 +60,37 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	s->Device.Functions	= NULL;	
 	s->Protocol.Functions	= NULL;
 #ifdef GSM_ENABLE_MBUS2
-	GSM_RegisterConnection(s, GCT_MBUS2, 	&SerialDevice, 	 &MBUS2Protocol);
-#endif
-#ifdef GSM_ENABLE_DLR3AT
-	GSM_RegisterConnection(s, GCT_DLR3AT, 	&SerialDevice, 	 &FBUS2Protocol);
-#endif
-#ifdef GSM_ENABLE_INFRARED
-	GSM_RegisterConnection(s, GCT_INFRARED, &SerialDevice, 	 &FBUS2Protocol);
-#endif
-#ifdef GSM_ENABLE_IRDA
-	GSM_RegisterConnection(s, GCT_IRDA, 	&IrdaDevice, 	 &FBUS2IRDAProtocol);
+	GSM_RegisterConnection(s, GCT_MBUS2, 	 &SerialDevice,   &MBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2
-	GSM_RegisterConnection(s, GCT_FBUS2,	&SerialDevice, 	 &FBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_FBUS2,	 &SerialDevice,   &FBUS2Protocol);
 #endif
-#ifdef GSM_ENABLE_DLR3BLUETOOTH
-	GSM_RegisterConnection(s, GCT_DLR3BLUE,	&BlueToothDevice,&FBUS2Protocol);
+#ifdef GSM_ENABLE_FBUS2DLR3
+	GSM_RegisterConnection(s, GCT_FBUS2DLR3, &SerialDevice,   &FBUS2Protocol);
 #endif
-#ifdef GSM_ENABLE_ATBLUETOOTH
-	GSM_RegisterConnection(s, GCT_ATBLUE, 	&BlueToothDevice,&ATProtocol);
+#ifdef GSM_ENABLE_FBUS2BLUE
+	GSM_RegisterConnection(s, GCT_FBUS2BLUE, &SerialDevice,   &FBUS2Protocol);
+#endif
+#ifdef GSM_ENABLE_FBUS2IRDA
+	GSM_RegisterConnection(s, GCT_FBUS2IRDA, &SerialDevice,   &FBUS2Protocol);
+#endif
+#ifdef GSM_ENABLE_PHONETBLUE
+	GSM_RegisterConnection(s, GCT_PHONETBLUE,&SerialDevice,	  &PHONETProtocol);
+#endif
+#ifdef GSM_ENABLE_IRDAPHONET
+	GSM_RegisterConnection(s, GCT_IRDAPHONET,&IrdaDevice, 	  &PHONETProtocol);
+#endif
+#ifdef GSM_ENABLE_BLUEFBUS2
+	GSM_RegisterConnection(s, GCT_BLUEFBUS2, &BlueToothDevice,&FBUS2Protocol);
+#endif
+#ifdef GSM_ENABLE_BLUEPHONET
+	GSM_RegisterConnection(s, GCT_BLUEPHONET,&BlueToothDevice,&PHONETProtocol);
+#endif
+#ifdef GSM_ENABLE_BLUEAT
+	GSM_RegisterConnection(s, GCT_BLUEAT, 	 &BlueToothDevice,&ATProtocol);
 #endif
 #ifdef GSM_ENABLE_AT
-	GSM_RegisterConnection(s, GCT_AT, 	&SerialDevice, 	 &ATProtocol);
+	GSM_RegisterConnection(s, GCT_AT, 	 &SerialDevice,   &ATProtocol);
 #endif
 	if (s->Device.Functions==NULL || s->Protocol.Functions==NULL)
 			return GE_SOURCENOTAVAILABLE;
@@ -99,7 +119,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 	if (s->Config.Model[0] == 0) {
 #ifdef GSM_ENABLE_ATGEN
 		/* With ATgen and auto model we can work with unknown models too */
-		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_ATBLUE) {
+		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT) {
 			smprintf(s,"[Module           - \"%s\"]\n",ATGENPhone.models);
 			s->Phone.Functions = &ATGENPhone;
 			return GE_NONE;
@@ -110,7 +130,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 	s->Phone.Functions=NULL;
 #ifdef GSM_ENABLE_ATGEN
 	/* AT module can have the same models ID to "normal" Nokia modules */
-	if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_ATBLUE) {
+	if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT) {
 		GSM_RegisterModule(s,&ATGENPhone);
 		if (s->Phone.Functions!=NULL) return GE_NONE;
 	}
@@ -269,23 +289,21 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 			switch (s->ConnectionType) {
 #ifdef GSM_ENABLE_ATGEN
 				case GCT_AT:
-				case GCT_ATBLUE:
+				case GCT_BLUEAT:
 					s->Phone.Functions = &ATGENPhone;
 					break;
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
-				case GCT_FBUS2:
 				case GCT_MBUS2:
-				case GCT_INFRARED:
-				case GCT_DLR3AT:
-				case GCT_IRDA:
-				case GCT_DLR3BLUE:
+				case GCT_FBUS2:
+				case GCT_FBUS2DLR3:
+				case GCT_FBUS2BLUE:
+				case GCT_FBUS2IRDA:
+				case GCT_PHONETBLUE:
+				case GCT_IRDAPHONET:
+				case GCT_BLUEFBUS2:
+				case GCT_BLUEPHONET:
 					s->Phone.Functions = &NAUTOPhone;
-					break;
-#endif
-#ifdef ALCATEL
-				case ALCABUS:
-					s->Phone.Functions = &ALCATELPhone;
 					break;
 #endif
 				default:
@@ -729,7 +747,8 @@ static OnePhoneModel allmodels[] = {
 	{"3530" ,"RH-9"   ,"",          {F_CAL35,F_NOTODO,F_PBK35,F_NEWCALENDAR,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"5100" ,"NPM-6" ,"Nokia 5100", {F_RADIO,0}},
+	{"3650" ,"NHL-8" ,"Nokia 3650", {F_RADIO,0}},
+	{"5100" ,"NPM-6" ,"Nokia 5100", {F_RADIO,F_NOTODO,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"5110" ,"NSE-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DISPSTATUS,0}},
@@ -744,7 +763,7 @@ static OnePhoneModel allmodels[] = {
 	{"5510" ,"NPM-5" ,"",           {F_NOCALLER,F_PROFILES33,F_NOPICTUREUNI,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"6100" ,"NPL-2" ,"Nokia 6100", {F_RADIO,0}},
+	{"6100" ,"NPL-2" ,"Nokia 6100", {F_RADIO,F_NOTODO,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"6110" ,"NSE-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
@@ -760,12 +779,15 @@ static OnePhoneModel allmodels[] = {
 	{"6310" ,"NPE-4" ,"Nokia 6310", {F_NOMIDI,0}},
 	{"6310i","NPL-1" ,"Nokia 6310i",{F_NOMIDI,F_NEWCALENDAR,F_BLUETOOTH,0}},
 	{"6510" ,"NPM-9" ,"Nokia 6510", {F_NOMIDI,F_RADIO,F_NOFILESYSTEM,0}},
-	{"6610" ,"NHL-4" ,"Nokia 6610", {F_RADIO,0}},
-	{"7210" ,"NHL-4" ,"Nokia 7210", {F_RADIO,0}},
+	{"6610" ,"NHL-4U","Nokia 6610", {F_RADIO,F_NOTODO,F_NEWCALENDAR,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"7110" ,"NSE-5" ,"Nokia 7110", {0}},
 	{"7190" ,"NSB-5" ,"Nokia 7190", {0}},
+#endif
+#if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
+	{"7210" ,"NHL-4" ,"Nokia 7210", {F_RADIO,F_NOTODO,F_NEWCALENDAR,0}},
+	{"7250" ,"NHL-4J","Nokia 7250", {F_RADIO,F_NOTODO,F_NEWCALENDAR,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN)
 	{"7650" ,"NHL-2" ,"Nokia 7650", {0}},
@@ -785,7 +807,7 @@ static OnePhoneModel allmodels[] = {
 	{"8890" ,"NSB-6" ,"Nokia 8890", {0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"8910" ,"NHM-4" ,"Nokia 8910", {F_NOMIDI,0}},
+	{"8910" ,"NHM-4" ,"Nokia 8910", {F_NOMIDI,F_NOFILESYSTEM,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA9210
 	{"9210" ,"RAE-3" ,"",           {0}},

@@ -2539,7 +2539,7 @@ static void Backup(int argc, char *argv[])
 	GSM_Init(true);
 
 	if (Info.UseUnicode) {
-		Info.UseUnicode=answer_yes("Do you want to write Unicode info to backup file");
+		Info.UseUnicode=answer_yes("Use Unicode subformat of backup file");
 	}
 	if (Info.DateTime) {
 		GSM_GetCurrentDateTime (&Backup.DateTime);
@@ -4602,7 +4602,7 @@ static void GetFMStation(int argc, char *argv[])
 static void GetFileSystem(int argc, char *argv[])
 {
 	bool 			Start = true;
-	GSM_FileFolderInfo 	Files[500];
+	GSM_File	 	Files[500];
 	int			FilesNum = 0, Level = 1, j, Free;
 
 	GSM_Init(true);
@@ -4612,7 +4612,7 @@ static void GetFileSystem(int argc, char *argv[])
 		if (error == GE_EMPTY) break;
 	    	Print_Error(error);
 
-		printf("%03i.",FilesNum);
+		printf("%05i.",Files[FilesNum].ID);
 //		printf(" %03i %03i ",Files[FilesNum].ID,Files[FilesNum].ParentID);
 		if (FilesNum != 0) {
 			if (Files[FilesNum].ParentID != Files[FilesNum-1].ParentID) {
@@ -4651,6 +4651,59 @@ static void GetFileSystem(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void GetFiles(int argc, char *argv[])
+{
+	GSM_File		File;
+	int			i;
+	FILE			*file;
+	bool			start;
+
+	File.Buffer = NULL;
+
+	GSM_Init(true);
+
+	for (i=2;i<argc;i++) {
+		if (File.Buffer != NULL) {
+			free(File.Buffer);
+			File.Buffer = NULL;
+		}
+		File.Used 	= 0;
+		File.ID 	= atoi(argv[i]);
+		start		= true;
+
+		error = GE_NONE;
+		while (error == GE_NONE) {
+			error = Phone->GetFilePart(&s,&File);
+			if (error == GE_NONE || error == GE_EMPTY) {
+				if (start) {
+					printmsg("Getting \"%s\": ", DecodeUnicodeString(File.Name));
+					start = false;
+				}
+				if (File.Folder) {
+					free(File.Buffer);
+					GSM_Terminate();
+					printmsg("it's folder. Please give only file names\n");
+					exit(-1);
+				}
+				printmsg("*");
+				if (error == GE_EMPTY) break;
+			}
+		    	Print_Error(error);
+		}
+		printmsg("\n");
+
+		if (File.Used != 0) {
+			file = fopen(DecodeUnicodeString(File.Name),"wb");
+			if (!file) Print_Error(GE_CANTOPENFILE);
+			fwrite(File.Buffer,1,File.Used,file);
+			fclose(file);
+		}
+	}
+
+	free(File.Buffer);
+	GSM_Terminate();
+}
+
 static void usage(void)
 {
 	printmsg("[Gammu version %s built %s %s]\n\n",VERSION,__TIME__,__DATE__);
@@ -4667,8 +4720,10 @@ static void usage(void)
 	printf("gammu --getsecuritystatus\n");
 	printf("gammu --entersecuritycode PIN|PUK|PIN2|PUK2 code\n");
 	printf("gammu --listnetworks\n");
-	printf("gammu --getfilesystem\n");
  	printf("gammu --getfmstation start [stop]\n\n");
+
+	printf("gammu --getfiles file1 file2 ...\n");
+	printf("gammu --getfilesystem\n\n");
 
 	printf("gammu --getdatetime\n");
 	printf("gammu --setdatetime\n");
@@ -4904,6 +4959,7 @@ static GSM_Parameters Parameters[] = {
 	{"--nokiasetphonemenus",	0, 0, NokiaSetPhoneMenus	},
 #endif
 	{"--getfilesystem",		0, 0, GetFileSystem		},
+	{"--getfiles",			1,20, GetFiles			},
 	{"--playringtone",		1, 1, PlayRingtone 		},
 	{"--setautonetworklogin",	0, 0, SetAutoNetworkLogin	},
 	{"--getdisplaystatus",		0, 0, GetDisplayStatus		},

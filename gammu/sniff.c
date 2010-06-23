@@ -7,14 +7,14 @@
 #include <stdio.h>
 
 #include "../common/protocol/nokia/mbus2.h"
-#include "../common/protocol/nokia/fbusirda.h"
+#include "../common/protocol/nokia/phonet.h"
 #include "../common/phone/nokia/nfunc.h"
 #include "../common/misc/misc.h"
 #include "../common/gsmcomon.h"
 #include "gammu.h"
 
-static GSM_Protocol_MBUS2Data		MBUS2Data;
-static GSM_Protocol_FBUS2IRDAData	IRDAData;
+static GSM_Protocol_MBUS2Data	MBUS2Data;
+static GSM_Protocol_PHONETData	PHONETData;
 
 #define MBUS2_DEVICE_PC1     0x1D
 
@@ -119,17 +119,17 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 	}
 }
 
-#define FBUS2IRDA_DEVICE_PC1     0x10
+#define PHONETIRDA_DEVICE_PC1     0x10
 
 static void DecodeInputIRDA(unsigned char rx_byte)
 {
-	GSM_Protocol_FBUS2IRDAData *d = &IRDAData;
+	GSM_Protocol_PHONETData *d = &PHONETData;
 
 	switch (d->MsgRXState) {
 
 	case RX_Sync:
 
-	if (rx_byte == FBUS2IRDA_FRAME_ID) {
+	if (rx_byte == PHONET_FRAME_ID) {
 		d->Msg.Count = 0;
 		d->MsgRXState = RX_GetDestination;	
 	}
@@ -140,7 +140,7 @@ static void DecodeInputIRDA(unsigned char rx_byte)
 
 	case RX_GetDestination:
 
-	if (rx_byte != FBUS2IRDA_DEVICE_PC1 && rx_byte != FBUS2IRDA_DEVICE_PHONE) {
+	if (rx_byte != PHONETIRDA_DEVICE_PC1 && rx_byte != PHONET_DEVICE_PHONE) {
 		d->MsgRXState = RX_Sync;
 //	    	printf("[ERROR: incorrect char - %02x, not %02x and %02x]\n", rx_byte, FBUS2IRDA_DEVICE_PC1, FBUS2IRDA_DEVICE_PHONE);
 	} else {
@@ -151,7 +151,7 @@ static void DecodeInputIRDA(unsigned char rx_byte)
 
 	case RX_GetSource:
 
-	if (rx_byte != FBUS2IRDA_DEVICE_PHONE && rx_byte != FBUS2IRDA_DEVICE_PC1) {
+	if (rx_byte != PHONET_DEVICE_PHONE && rx_byte != PHONETIRDA_DEVICE_PC1) {
 		d->MsgRXState = RX_Sync;
 //		printf("[ERROR: incorrect char - %02x, not %02x and %02x]\n", rx_byte, FBUS2IRDA_DEVICE_PHONE, FBUS2IRDA_DEVICE_PC1);
 	} else {
@@ -184,14 +184,14 @@ static void DecodeInputIRDA(unsigned char rx_byte)
 	d->Msg.Count++;
 
 	if (d->Msg.Count == d->Msg.Length) {
-		if (d->Msg.Destination != FBUS2IRDA_DEVICE_PHONE) {
+		if (d->Msg.Destination != PHONET_DEVICE_PHONE) {
 			printf("Received frame");
 		} else {
 			printf("Sending frame");
 		}
 		printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
 		DumpMessage(stdout, d->Msg.Buffer, d->Msg.Length);
-		if (d->Msg.Destination != FBUS2IRDA_DEVICE_PHONE) {
+		if (d->Msg.Destination != PHONET_DEVICE_PHONE) {
 			if (s.Phone.Functions != NULL) {
 				s.Phone.Data.RequestMsg = &d->Msg;
 				s.Phone.Functions->DispatchMessage(&s);
@@ -271,7 +271,7 @@ static void prepareStateMachine()
 
 void decodesniff(int argc, char *argv[])
 {
-	GSM_ConnectionType	Protocol	= GCT_MBUS2;
+	GSM_ConnectionType	Protocol = GCT_MBUS2;
 	unsigned char 		Buffer[50000];
 	unsigned char 		Buffer2[50000];
 	FILE			*file;
@@ -281,7 +281,7 @@ void decodesniff(int argc, char *argv[])
 	if (!strcmp(argv[2],"MBUS2")) {
 		Protocol = GCT_MBUS2;
     	} else if (!strcmp(argv[2],"IRDA")) {
-		Protocol = GCT_IRDA;
+		Protocol = GCT_IRDAPHONET;
 	} else {
 		printf("What protocol (\"%s\") ?\n",argv[2]);
 		exit(-1);
@@ -298,8 +298,8 @@ void decodesniff(int argc, char *argv[])
 		if (error!=GE_NONE) Print_Error(error);
 	}
 	/* Irda uses simple "raw" format */
-	if (Protocol == GCT_IRDA) {
-		IRDAData.MsgRXState=RX_Sync;
+	if (Protocol == GCT_IRDAPHONET) {
+		PHONETData.MsgRXState=RX_Sync;
 		len2=30000;
 		while (len2==30000) {	
 			len2=fread(Buffer, 1, 30000, file);
@@ -392,6 +392,7 @@ void decodebinarydump(int argc, char *argv[])
 //	Buffer[len2]=0;
 //	dprintf("[Gammu            - version %s]\n",Buffer);
 	len2=30000;
+	msg.Buffer = NULL;
 	while (len2==30000) {	
 		len2=fread(Buffer, 1, 30000, file);
 		i=0;
@@ -410,6 +411,7 @@ void decodebinarydump(int argc, char *argv[])
 			DumpMessage(stdout, Buffer+i, len);
 			fflush(stdout);
 			if (s.Phone.Functions != NULL && !sent) {
+				msg.Buffer = (unsigned char *)realloc(msg.Buffer,len);
 				memcpy(msg.Buffer,Buffer+i,len);
 				msg.Type		= type;
 				msg.Length		= len;

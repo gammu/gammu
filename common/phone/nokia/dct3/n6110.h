@@ -14,17 +14,17 @@ typedef struct {
 	int				LastSMSRead;
 } GSM_Phone_N6110Data;
 
-#ifndef GSM_USED_FBUS2
-#  define GSM_USED_FBUS2
-#endif
 #ifndef GSM_USED_MBUS2
 #  define GSM_USED_MBUS2
 #endif
-#ifndef GSM_USED_IRDA
-#  define GSM_USED_IRDA
+#ifndef GSM_USED_FBUS2
+#  define GSM_USED_FBUS2
 #endif
-#ifndef GSM_USED_INFRARED
-#  define GSM_USED_INFRARED
+#ifndef GSM_USED_FBUS2IRDA
+#  define GSM_USED_FBUS2IRDA
+#endif
+#ifndef GSM_USED_IRDAPHONET
+#  define GSM_USED_IRDAPHONET
 #endif
 
 #endif

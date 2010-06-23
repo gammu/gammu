@@ -15,7 +15,7 @@ typedef struct {
 #ifndef GSM_USED_SERIALDEVICE
 #  define GSM_USED_SERIALDEVICE
 #endif
-#if defined(GSM_ENABLE_ATBLUETOOTH) || defined(GSM_ENABLE_DLR3BLUETOOTH)
+#if defined(GSM_ENABLE_BLUEAT)
 #  ifndef GSM_USED_BLUETOOTHDEVICE
 #    define GSM_USED_BLUETOOTHDEVICE
 #  endif

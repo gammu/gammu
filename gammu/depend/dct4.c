@@ -23,9 +23,9 @@ GSM_Error CheckDCT4Only()
 #endif
 	if (!found) return GE_NOTSUPPORTED;
 
-	if (s.ConnectionType!=GCT_FBUS2	   && s.ConnectionType!=GCT_MBUS2  &&
-	    s.ConnectionType!=GCT_INFRARED && s.ConnectionType!=GCT_DLR3AT &&
-	    s.ConnectionType!=GCT_IRDA)
+	if (s.ConnectionType!=GCT_MBUS2	     && s.ConnectionType!=GCT_FBUS2      &&
+	    s.ConnectionType!=GCT_FBUS2DLR3  && s.ConnectionType!=GCT_PHONETBLUE &&
+	    s.ConnectionType!=GCT_IRDAPHONET && s.ConnectionType!=GCT_BLUEPHONET)
 	{
 		return GE_UNKNOWNCONNECTIONTYPESTRING;
 	}
@@ -108,7 +108,6 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
 			 {DCT4_GPRS_PCCH,13},{DCT4_GEA1,15},{DCT4_EOTD,16},
 			 {DCT4_ALWAYS_ONLINE,17},{DCT4_JAVA_GAMES_MENU,18},
       			 {DCT4_WAP_BOOKMARKS_MENU,20},{DCT4_WAP_SETTINGS_MENU,21},
-			 //Services menu visible ???? = 23
 			 {DCT4_WAP_PUSH,28},{DCT4_WAP_GOTO_MENU,29},{0,0}}},
 	{"6510",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
 			 {DCT4_GAMES_SCORE_SEND,8},{DCT4_GAMES_URL_CHECK,9},

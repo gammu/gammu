@@ -9,8 +9,6 @@
 #define MBUS2_DEVICE_PC      0x10 /* Our PC (MBUS) */
 #define MBUS2_ACK_BYTE	     0x7f /* Acknowledge of the received frame */
 
-#define MBUS2_MAX_TRANSMIT_LENGTH 1000
-
 typedef struct {
 	int			MsgSequenceNumber;
 	int			MsgRXState;

@@ -143,7 +143,7 @@ static GSM_Error N6110_ShowStartInfo(GSM_StateMachine *s, bool enable)
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_MAGICBYTES)) {
 		if (s->ConnectionType == GCT_FBUS2 ||
-		    s->ConnectionType == GCT_INFRARED) {
+		    s->ConnectionType == GCT_FBUS2IRDA) {
 			error=N6110_MakeAuthentication(s);
 		}
 	}
@@ -2472,7 +2472,7 @@ GSM_Phone_Functions N6110Phone = {
 	NOTSUPPORTED,		/* 	DeleteUserRingtones	*/
 	N6110_ShowStartInfo,
 	NOTSUPPORTED,		/* 	GetNextFileFolder	*/
-	NOTSUPPORTED,		/*	GetFile			*/
+	NOTSUPPORTED,		/*	GetFilePart		*/
 	NOTSUPPORTED,		/* 	AddFile			*/
 	NOTSUPPORTED 		/* 	GetFreeFileMemory 	*/
 };

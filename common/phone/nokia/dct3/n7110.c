@@ -1562,7 +1562,7 @@ GSM_Phone_Functions N7110Phone = {
 	NOTSUPPORTED,		/* 	DeleteUserRingtones	*/
 	NOTSUPPORTED,		/* 	ShowStartInfo		*/
 	NOTSUPPORTED,		/* 	GetNextFileFolder	*/
-	NOTSUPPORTED,		/*	GetFile			*/
+	NOTSUPPORTED,		/*	GetFilePart		*/
 	NOTSUPPORTED,		/* 	AddFile			*/
 	NOTSUPPORTED 		/* 	GetFreeFileMemory 	*/
 };

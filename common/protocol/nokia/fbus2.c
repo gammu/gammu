@@ -1,7 +1,7 @@
 
 #include "../../gsmstate.h"
 
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_IRDA) || defined(GSM_ENABLE_DLR3AT) || defined(GSM_ENABLE_DLR3BLUETOOTH)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
 
 #include <stdio.h>
 #include <string.h>
@@ -18,8 +18,8 @@ static GSM_Error FBUS2_WriteFrame(GSM_StateMachine *s, unsigned char *buffer,
 	int 		sent;
 
 	/* Now construct the message header. */
-	if (s->ConnectionType==GCT_INFRARED) {
-    	    out_buffer[current++] = FBUS2_IR_FRAME_ID;	/* Start of the frame indicator */
+	if (s->ConnectionType==GCT_FBUS2IRDA) {
+    	    out_buffer[current++] = FBUS2_IRDA_FRAME_ID;	/* Start of the frame indicator */
 	} else {
     	    out_buffer[current++] = FBUS2_FRAME_ID;	/* Start of the frame indicator */
 	}
@@ -125,12 +125,13 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 	correct = false;
 	switch (s->ConnectionType) {
 		case GCT_FBUS2:
-		case GCT_DLR3AT:
-		case GCT_DLR3BLUE:
+		case GCT_FBUS2DLR3:
+		case GCT_FBUS2BLUE:
+		case GCT_BLUEFBUS2:
 			if (rx_byte == FBUS2_FRAME_ID) correct = true;
 			break;
-		case GCT_INFRARED:
-			if (rx_byte == FBUS2_IR_FRAME_ID) correct = true;
+		case GCT_FBUS2IRDA:
+			if (rx_byte == FBUS2_IRDA_FRAME_ID) correct = true;
 			break;
 		default:
 			break;
@@ -145,8 +146,8 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 	} else {
 		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
 		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-		    if (s->ConnectionType==GCT_INFRARED) {
-			smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, FBUS2_IR_FRAME_ID);
+		    if (s->ConnectionType==GCT_FBUS2IRDA) {
+			smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, FBUS2_IRDA_FRAME_ID);
 		    } else {
 			smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, FBUS2_FRAME_ID);
 		    }
@@ -196,8 +197,9 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
     
 	case RX_GetLength2:
 
-	d->Msg.Length = d->Msg.Length + rx_byte;
-	d->MsgRXState = RX_GetMessage;
+	d->Msg.Length 	= d->Msg.Length + rx_byte;
+	d->Msg.Buffer 	= (unsigned char *)malloc(d->Msg.Length+3);
+	d->MsgRXState 	= RX_GetMessage;
 	break;
     
 	case RX_GetMessage:
@@ -231,37 +233,60 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 						    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 						    smprintf(s, "[ERROR: Missed part of multiframe msg]\n");
 						}
-						d->MsgRXState = RX_Sync;
+
+						free(d->Msg.Buffer);
+						d->Msg.Length 		= 0;
+						d->Msg.Buffer 		= NULL;
+
+						d->MsgRXState 		= RX_Sync;
+						return GE_NONE;
 					}
 					if (d->Msg.Type != d->MultiMsg.Type) {
 						if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
 						    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 						    smprintf(s, "[ERROR: Multiframe msg in multiframe msg]\n");
 						}
-						d->MsgRXState = RX_Sync;
+
+						free(d->Msg.Buffer);
+						d->Msg.Length 		= 0;
+						d->Msg.Buffer 		= NULL;
+
+						d->MsgRXState 		= RX_Sync;
+						return GE_NONE;
 					}
 				}
 
 				/* No errors */
-				if (d->MsgRXState != RX_Sync) {
-					memcpy(d->MultiMsg.Buffer+d->MultiMsg.Length,d->Msg.Buffer,d->Msg.Length-2);
-					d->MultiMsg.Length=d->MultiMsg.Length+d->Msg.Length-2;
 
-					d->FramesToGo--;
+				if (d->MultiMsg.BufferUsed < d->MultiMsg.Length+d->Msg.Length-2) {
+					d->MultiMsg.BufferUsed 	= d->MultiMsg.Length+d->Msg.Length-2;
+					d->MultiMsg.Buffer 	= (unsigned char *)realloc(d->MultiMsg.Buffer,d->MultiMsg.BufferUsed);
+				}
+				memcpy(d->MultiMsg.Buffer+d->MultiMsg.Length,d->Msg.Buffer,d->Msg.Length-2);
+				d->MultiMsg.Length = d->MultiMsg.Length+d->Msg.Length-2;
 
-					FBUS2_SendAck(s, d->Msg.Type, ((unsigned char)(seq_num & 0x0f)));
+				free(d->Msg.Buffer);
+				d->Msg.Length 	= 0;
+				d->Msg.Buffer 	= NULL;
+
+				d->FramesToGo--;
+
+				FBUS2_SendAck(s, d->Msg.Type, ((unsigned char)(seq_num & 0x0f)));
 					
-					/* Finally dispatch if ready */
-					if (d->FramesToGo == 0) {
-						s->Phone.Data.RequestMsg	= &d->MultiMsg;
-						s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
-					}
+				/* Finally dispatch if ready */
+				if (d->FramesToGo == 0) {
+					s->Phone.Data.RequestMsg	= &d->MultiMsg;
+					s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
 				}
 			}
 		} else {
 			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
 			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-			    smprintf(s,"[ERROR: checksum]\n");
+				smprintf(s,"[ERROR: checksum]\n");
+
+				free(d->Msg.Buffer);
+				d->Msg.Length 		= 0;
+				d->Msg.Buffer 		= NULL;
 			}
 		}
 		d->MsgRXState = RX_Sync;
@@ -273,7 +298,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 	return GE_NONE;
 }
 
-#if defined(GSM_ENABLE_DLR3AT) || defined(GSM_ENABLE_DLR3BLUETOOTH)
+#if defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
 static void FBUS2_WriteDLR3(GSM_StateMachine *s, char *command, int length, int timeout)
 {
 	unsigned char		buff[300];
@@ -296,7 +321,7 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, char *command, int length, int 
 static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 {
 	unsigned char		init_char	= 0x55;
-#ifdef GSM_ENABLE_INFRARED
+#ifdef GSM_ENABLE_FBUS2IRDA
 	unsigned char		end_init_char	= 0xc1;
 #endif
 
@@ -304,6 +329,12 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	GSM_Device_Functions	*Device 	= s->Device.Functions;
 	GSM_Error		error;
 	int			count;
+
+	d->Msg.Length		= 0;
+	d->Msg.Buffer		= NULL;
+	d->MultiMsg.BufferUsed	= 0;
+	d->MultiMsg.Length	= 0;
+	d->MultiMsg.Buffer	= NULL;
 
 	d->MsgSequenceNumber	= 0;
 	d->FramesToGo		= 0;
@@ -313,15 +344,16 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	if (error!=GE_NONE) return error;
 
 	switch (s->ConnectionType) {
-#ifdef GSM_ENABLE_DLR3BLUETOOTH
-	case GCT_DLR3BLUE:
+#if defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2BLUE)
+	case GCT_FBUS2BLUE:
+	case GCT_BLUEFBUS2:
 		FBUS2_WriteDLR3(s,"AT\r\n",		 4,10);
 		FBUS2_WriteDLR3(s,"AT&F\r\n",		 6,10);
 		FBUS2_WriteDLR3(s,"AT*NOKIAFBUS\r\n",	14,10);
 		break;
 #endif
-#ifdef GSM_ENABLE_DLR3AT
-	case GCT_DLR3AT:
+#ifdef GSM_ENABLE_FBUS2DLR3
+	case GCT_FBUS2DLR3:
 		error=Device->DeviceSetDtrRts(s,false,false);
 	    	if (error!=GE_NONE) return error; 
 		my_sleep(1000);
@@ -365,8 +397,8 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 			my_sleep(10);
 		}
 		break;
-#ifdef GSM_ENABLE_INFRARED
-	case GCT_INFRARED:
+#ifdef GSM_ENABLE_FBUS2IRDA
+	case GCT_FBUS2IRDA:
 		error=Device->DeviceSetSpeed(s,9600);
 		if (error!=GE_NONE) return error;
 
@@ -392,6 +424,9 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 
 static GSM_Error FBUS2_Terminate(GSM_StateMachine *s)
 {
+	free(s->Protocol.Data.FBUS2.Msg.Buffer);
+	free(s->Protocol.Data.FBUS2.MultiMsg.Buffer);
+
 	my_sleep(200);
 	return GE_NONE;
 }

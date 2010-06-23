@@ -82,6 +82,9 @@
 				RelativePath="..\..\..\common\phone\at\atgen.c">
 			</File>
 			<File
+				RelativePath="..\..\..\common\device\bluetoth\bluetoth.c">
+			</File>
+			<File
 				RelativePath="..\..\..\common\misc\cfg.c">
 			</File>
 			<File
@@ -91,10 +94,10 @@
 				RelativePath="..\..\..\common\phone\nokia\dct3\dct3func.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\protocol\nokia\fbus2.c">
+				RelativePath="..\..\..\common\device\devfunc.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\protocol\nokia\fbusirda.c">
+				RelativePath="..\..\..\common\protocol\nokia\fbus2.c">
 			</File>
 			<File
 				RelativePath="..\gammu.c">
@@ -172,6 +175,9 @@
 				RelativePath="..\..\..\common\phone\pfunc.c">
 			</File>
 			<File
+				RelativePath="..\..\..\common\protocol\nokia\phonet.c">
+			</File>
+			<File
 				RelativePath="..\..\..\common\phone\at\siemens.c">
 			</File>
 			<File
@@ -194,6 +200,15 @@
 				RelativePath="..\..\..\common\phone\at\atgen.h">
 			</File>
 			<File
+				RelativePath="..\..\..\common\device\bluetoth\bluetoth.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\device\bluetoth\win32\bthdef.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\device\bluetoth\win32\bthsdpdef.h">
+			</File>
+			<File
 				RelativePath="..\..\..\common\misc\cfg.h">
 			</File>
 			<File
@@ -203,10 +218,10 @@
 				RelativePath="..\..\..\common\phone\nokia\dct3\dct3func.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\protocol\nokia\fbus2.h">
+				RelativePath="..\..\..\common\device\devfunc.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\protocol\nokia\fbusirda.h">
+				RelativePath="..\..\..\common\protocol\nokia\fbus2.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\service\gsmback.h">
@@ -281,6 +296,9 @@
 				RelativePath="..\..\..\common\phone\pfunc.h">
 			</File>
 			<File
+				RelativePath="..\..\..\common\protocol\nokia\phonet.h">
+			</File>
+			<File
 				RelativePath="..\..\..\common\protocol\protocol.h">
 			</File>
 			<File
@@ -288,6 +306,9 @@
 			</File>
 			<File
 				RelativePath="..\..\..\common\device\irda\win32.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\device\bluetoth\win32\ws2bth.h">
 			</File>
 		</Filter>
 	</Files>

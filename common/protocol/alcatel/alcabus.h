@@ -11,9 +11,9 @@
 #include "../protocol.h"
 
 /* Just in case that somebody would have such silly idea... */
-#if (PROTOCOL_MAX_RECEIVE_LENGTH < (255 + 6))
-# error "Can't compile with this buffer length"
-#endif
+//#if (PROTOCOL_MAX_RECEIVE_LENGTH < (255 + 6))
+//# error "Can't compile with this buffer length"
+//#endif
 
 #define ALCATEL_HEADER			0x7E
 

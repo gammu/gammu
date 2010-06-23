@@ -2222,7 +2222,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/* DeleteUserRingtones	*/
 	NOTSUPPORTED,			/* ShowStartInfo	*/
 	NOTSUPPORTED,			/* GetNextFileFolder	*/
-	NOTSUPPORTED,			/* GetFile		*/
+	NOTSUPPORTED,			/* GetFilePart		*/
 	NOTSUPPORTED,			/* AddFile		*/
 	NOTSUPPORTED 			/* GetFreeFileMemory 	*/
 };

@@ -267,6 +267,10 @@ A  Nokia section
       When make ./configure, use --newcalendar. If this works for Your
       phone, please report model and firmware version.
 
+   15.5100, 6100, 6610, 7210, 7250
+      * I don't have ToDo and FM support
+      You need to provide sniffs
+
    AT section
 
     1.Siemens M20

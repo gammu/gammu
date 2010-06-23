@@ -40,14 +40,14 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned char *data,
 				d->busy 	= true;
 				break;
 		case ALCATEL_DATA:
-			 buffer[2] = d->out_counter;
+				 buffer[2] = d->out_counter;
 
 				/* Increase outgoing packet counter */
 				if (d->out_counter == ALCATEL_MAX_COUNTER) d->out_counter = 0;
 				else d->out_counter++;
 
 				buffer[3] 	= '\0';
-			buffer[4] 	= len;
+				buffer[4] 	= len;
 				memcpy(buffer+5, data, len);
 				size 		= 5 + len;
 				d->next_frame 	= ALCATEL_ACK;
@@ -95,6 +95,11 @@ static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_byte
 	GSM_Protocol_ALCABUSData 	*d = &s->Protocol.Data.ALCABUS;
 	int				i;
 	int				checksum = 0;
+
+	if (d->Msg.BufferUsed < d->Msg.Length + 1) {
+		d->Msg.BufferUsed	= d->Msg.Length + 1;
+		d->Msg.Buffer 	= (unsigned char *)realloc(d->Msg.Buffer,d->Msg.BufferUsed);
+	}
 
 	/* Check for header */
 	if ((d->Msg.Length == 0) && (rx_byte != ALCATEL_HEADER)) {
@@ -212,11 +217,14 @@ static GSM_Error ALCABUS_Initialise(GSM_StateMachine *s)
 	GSM_Protocol_ALCABUSData *d = &s->Protocol.Data.ALCABUS;
 
 	/* Initialise some variables */
-	d->Msg.Length 	= 0;
-	d->Msg.Type 	= 0;
-	d->in_counter 	= 1;
-	d->out_counter 	= 0;
-	d->busy		= false;
+	d->Msg.BufferUsed	= 0;
+	d->Msg.Buffer		= NULL;
+	d->Msg.Length		= 0;
+	d->Msg.Type		= 0;
+	d->in_counter		= 1;
+	d->out_counter		= 0;
+	d->busy			= false;
+
 
 	/* Initialise protocol */
 	dprintf ("Initializing binary mode\n");

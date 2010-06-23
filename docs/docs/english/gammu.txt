@@ -526,6 +526,8 @@ A. First of all, here are described all possible parameters for this software.
 
    gammu --nokiasetoperatorname networkcode name
 
+   gammu --nokiadisplayoutput
+
    gammu --nokiasetvibralevel level
        Set vibra power to "level" (given in percent)
 

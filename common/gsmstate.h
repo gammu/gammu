@@ -26,32 +26,41 @@
 #  include "phone/alcatel/alcatel.h"
 #endif
 
-#ifndef GSM_USED_FBUS2
-#  undef GSM_ENABLE_FBUS2
-#endif
 #ifndef GSM_USED_MBUS2
 #  undef GSM_ENABLE_MBUS2
 #endif
-#ifndef GSM_USED_DLR3AT
-#  undef GSM_ENABLE_DLR3AT
+#ifndef GSM_USED_FBUS2
+#  undef GSM_ENABLE_FBUS2
 #endif
-#ifndef GSM_USED_IRDA
-#  undef GSM_ENABLE_IRDA
+#ifndef GSM_USED_FBUS2DLR3
+#  undef GSM_ENABLE_FBUS2DLR3
 #endif
-#ifndef GSM_USED_INFRARED
-#  undef GSM_ENABLE_INFRARED
+#ifndef GSM_USED_FBUS2BLUE
+#  undef GSM_ENABLE_FBUS2BLUE
+#endif
+#ifndef GSM_USED_FBUS2IRDA
+#  undef GSM_ENABLE_FBUS2IRDA
+#endif
+#ifndef GSM_USED_PHONETBLUE
+#  undef GSM_ENABLE_PHONETBLUE
 #endif
 #ifndef GSM_USED_AT
 #  undef GSM_ENABLE_AT
 #endif
-#ifndef GSM_USED_ATBLUETOOTH
-#  undef GSM_ENABLE_ATBLUETOOTH
-#endif
-#ifndef GSM_USED_DLR3BLUETOOTH
-#  undef GSM_ENABLE_DLR3BLUETOOTH
-#endif
 #ifndef GSM_USED_ALCABUS
 #  undef GSM_ENABLE_ALCABUS
+#endif
+#ifndef GSM_USED_IRDAPHONET
+#  undef GSM_ENABLE_IRDAPHONET
+#endif
+#ifndef GSM_USED_BLUEFBUS2
+#  undef GSM_ENABLE_BLUEFBUS2
+#endif
+#ifndef GSM_USED_BLUEPHONET
+#  undef GSM_ENABLE_BLUEPHONET
+#endif
+#ifndef GSM_USED_BLUEAT
+#  undef GSM_ENABLE_BLUEAT
 #endif
 
 #if defined(GSM_ENABLE_NOKIA6110) || defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9210)
@@ -62,16 +71,16 @@
 #endif
 
 #include "protocol/protocol.h"
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_INFRARED) || defined(GSM_ENABLE_DLR3AT) || defined(GSM_ENABLE_DLR3BLUETOOTH)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
 #  include "protocol/nokia/fbus2.h"
 #endif
 #ifdef GSM_ENABLE_MBUS2
 #  include "protocol/nokia/mbus2.h"
 #endif
-#ifdef GSM_ENABLE_IRDA
-#  include "protocol/nokia/fbusirda.h"
+#if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
+#  include "protocol/nokia/phonet.h"
 #endif
-#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_ATBLUETOOTH)
+#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT)
 #  include "protocol/at/at.h"
 #endif
 #ifdef GSM_ENABLE_ALCABUS
@@ -93,22 +102,21 @@
 
 #ifdef DJGPP
 #  undef GSM_ENABLE_IRDADEVICE
-#  undef GSM_ENABLE_IRDA
+#  undef GSM_ENABLE_FBUS2IRDA
+#  undef GSM_ENABLE_IRDAPHONET
 #  undef GSM_ENABLE_BLUETOOTHDEVICE
-#  undef GSM_ENABLE_ATBLUETOOTH
-#  undef GSM_ENABLE_DLR3BLUETOOTH
-#endif
-#ifdef WIN32
-#  undef GSM_ENABLE_BLUETOOTHDEVICE
-#  undef GSM_ENABLE_ATBLUETOOTH
-#  undef GSM_ENABLE_DLR3BLUETOOTH
+#  undef GSM_ENABLE_BLUEFBUS2
+#  undef GSM_ENABLE_BLUEPHONET
+#  undef GSM_ENABLE_BLUEAT
+#  undef GSM_ENABLE_PHONETBLUE
+#  undef GSM_ENABLE_FBUS2BLUE
 #endif
 
 #include "device/serial/win32.h"
 #include "device/serial/unix.h"
 #include "device/serial/djgpp.h"
 #include "device/irda/irda.h"
-#include "device/bluetoth/unixblue.h"
+#include "device/bluetoth/bluetoth.h"
 
 #include "service/gsmpbk.h"
 #include "service/gsmsms.h"
@@ -173,16 +181,16 @@ typedef struct {
 	GSM_Error (*Terminate)    (GSM_StateMachine *s);
 } GSM_Protocol_Functions;
 
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_INFRARED) || defined(GSM_ENABLE_DLR3AT) || defined(GSM_ENABLE_DLR3BLUETOOTH)
-	extern GSM_Protocol_Functions FBUS2Protocol;
-#endif
 #ifdef GSM_ENABLE_MBUS2
 	extern GSM_Protocol_Functions MBUS2Protocol;
 #endif
-#ifdef GSM_ENABLE_IRDA
-	extern GSM_Protocol_Functions FBUS2IRDAProtocol;
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
+	extern GSM_Protocol_Functions FBUS2Protocol;
 #endif
-#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_ATBLUETOOTH)
+#if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
+	extern GSM_Protocol_Functions PHONETProtocol;
+#endif
+#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT)
 	extern GSM_Protocol_Functions ATProtocol;
 #endif
 #ifdef GSM_ENABLE_ALCABUS
@@ -195,13 +203,13 @@ typedef struct {
 #ifdef GSM_ENABLE_MBUS2
 		GSM_Protocol_MBUS2Data		MBUS2;
 #endif
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_INFRARED) || defined(GSM_ENABLE_DLR3AT) || defined(GSM_ENABLE_DLR3BLUETOOTH)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
 		GSM_Protocol_FBUS2Data		FBUS2;
 #endif
-#ifdef GSM_ENABLE_IRDA
-		GSM_Protocol_FBUS2IRDAData	FBUS2IRDA;
+#if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
+		GSM_Protocol_PHONETData		PHONET;
 #endif
-#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_ATBLUETOOTH)
+#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT)
 		GSM_Protocol_ATData		AT;
 #endif
 #ifdef GSM_ENABLE_ALCABUS
@@ -256,6 +264,7 @@ typedef enum {
 	ID_SetIncomingSMS,
 	ID_SetIncomingCB,
 	ID_GetCalendarNotePos,
+	ID_Initialise,
 	ID_GetWAPSettings,
 	ID_SetWAPBookmark,
 	ID_DeleteWAPBookmark,
@@ -294,6 +303,7 @@ typedef enum {
 	ID_GetSIMIMSI,
 	ID_GetFileInfo,
 	ID_GetFileFree,
+	ID_GetFile,
 #ifdef GSM_ENABLE_ALCATEL
     	/* AT mode */
     	ID_SetFlowControl,
@@ -384,7 +394,8 @@ typedef struct {
 	GSM_FMStation		*FMStation;
 	unsigned char		*PhoneString;
 	int			StartPhoneString;
-	GSM_FileFolderInfo	*File;
+	GSM_File		*FileInfo;
+	GSM_File		*File;
 	int			*FileFree;
 
 	bool			EnableIncomingCall;
@@ -501,9 +512,9 @@ typedef struct {
 	GSM_Error (*SetIncomingUSSD)	(GSM_StateMachine *s, bool		    enable	);
 	GSM_Error (*DeleteUserRingtones)(GSM_StateMachine *s);
 	GSM_Error (*ShowStartInfo)	(GSM_StateMachine *s, bool 		    enable	);
-	GSM_Error (*GetNextFileFolder)	(GSM_StateMachine *s, GSM_FileFolderInfo    *File, 	bool start);
-	GSM_Error (*GetFile)		(GSM_StateMachine *s, GSM_FileFolderInfo    *File	);
-	GSM_Error (*AddFile)		(GSM_StateMachine *s, GSM_FileFolderInfo    *File	);
+	GSM_Error (*GetNextFileFolder)	(GSM_StateMachine *s, GSM_File		    *File, 	bool start);
+	GSM_Error (*GetFilePart)	(GSM_StateMachine *s, GSM_File		    *File	);
+	GSM_Error (*AddFile)		(GSM_StateMachine *s, GSM_File		    *File	);
 	GSM_Error (*GetFreeFileMemory)	(GSM_StateMachine *s, int *Free);
 } GSM_Phone_Functions;
 
@@ -547,14 +558,18 @@ struct _GSM_User {
 /* --------------------------- Statemachine layer -------------------------- */
 
 typedef enum {
-	GCT_FBUS2=1,
-	GCT_MBUS2,
-	GCT_INFRARED,
-	GCT_DLR3AT,
-	GCT_IRDA,
+	GCT_MBUS2=1,
+	GCT_FBUS2,
+	GCT_FBUS2DLR3,
+	GCT_FBUS2BLUE,
+	GCT_FBUS2IRDA,
+	GCT_PHONETBLUE,
 	GCT_AT,
-	GCT_ATBLUE,
-	GCT_DLR3BLUE
+
+	GCT_IRDAPHONET,
+	GCT_BLUEFBUS2,
+	GCT_BLUEAT,
+	GCT_BLUEPHONET
 } GSM_ConnectionType;
 
 typedef struct {

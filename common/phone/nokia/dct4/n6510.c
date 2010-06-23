@@ -1261,8 +1261,7 @@ static GSM_Error N6510_Reset(GSM_StateMachine *s, bool hard)
 	unsigned int	i,j;
 	unsigned char 	req[] = {0x00, 0x06, 0x00, 0x01, 0x04, 0x00};
 
-	if (s->ConnectionType == GCT_DLR3AT) return GE_NOTSUPPORTED;
-	if (hard) return GE_NOTSUPPORTED;
+	if (s->ConnectionType != GCT_FBUS2 || hard) return GE_NOTSUPPORTED;
 
 	/* Going to test mode */
 	error=GSM_WaitFor (s, req, 6, 0x15, 4, ID_Reset);
@@ -2354,13 +2353,16 @@ static GSM_Error N6510_ReplyGetRingtonesInfo(GSM_Protocol_Message msg, GSM_State
 
 static GSM_Error N6510_PrivGetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtonesInfo *Info, bool AllRingtones)
 {
-	unsigned char UserReq[8] = {N7110_FRAME_HEADER, 0x07, 0x00, 0x00, 0x00, 0x02};
-	unsigned char All_Req[9] = {N7110_FRAME_HEADER, 0x07, 0x00, 0x00, 0xFE, 0x00, 0x7D};
+	GSM_Error	error;
+	unsigned char 	UserReq[8] = {N7110_FRAME_HEADER, 0x07, 0x00, 0x00, 0x00, 0x02};
+	unsigned char 	All_Req[9] = {N7110_FRAME_HEADER, 0x07, 0x00, 0x00, 0xFE, 0x00, 0x7D};
 
 	s->Phone.Data.RingtonesInfo=Info;
 	smprintf(s, "Getting binary ringtones ID\n");
 	if (AllRingtones) {
-		return GSM_WaitFor (s, All_Req, 9, 0x1f, 4, ID_GetRingtonesInfo);
+		error = GSM_WaitFor (s, All_Req, 9, 0x1f, 4, ID_GetRingtonesInfo);
+		if (error == GE_NONE && Info->Number == 0) return GE_NOTSUPPORTED;
+		return error;
 	} else {
 		return GSM_WaitFor (s, UserReq, 8, 0x1f, 4, ID_GetRingtonesInfo);
 	}
@@ -2493,12 +2495,26 @@ static GSM_Error N6510_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Vol
 
 static GSM_Error N6510_ReplyGetPPM(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data *Data = &s->Phone.Data;
+	GSM_Phone_Data 	*Data = &s->Phone.Data;
+	int		i,pos = 6;
 
-	Data->PhoneString[0] = msg.Buffer[50];
-	Data->PhoneString[1] = 0x00;	
-	smprintf(s, "Received PPM %s\n",Data->PhoneString);
-	return GE_NONE;
+	smprintf(s, "Received phone info\n");
+
+	for (i=0;i<msg.Buffer[5];i++) {
+		switch (msg.Buffer[pos]) {
+		case 0x58:
+			pos += 3;
+			while (msg.Buffer[pos] != 0x00) pos++;
+			Data->PhoneString[0] = msg.Buffer[pos - 1];
+			Data->PhoneString[1] = 0x00;
+			smprintf(s, "PPM %s\n",Data->PhoneString);
+			return GE_NONE;
+		default:
+			break;
+		}
+		pos += msg.Buffer[pos+1];
+	}
+	return GE_NOTSUPPORTED;
 }
 
 static GSM_Error N6510_GetPPM(GSM_StateMachine *s,char *value)
@@ -3225,8 +3241,8 @@ static GSM_Error N6510_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note,
 #else
 		return N71_65_AddCalendar2(s,Note,Past);
 //		return N71_65_AddCalendar1(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos, Past);
-	}
 #endif
+	}
 }
 
 static GSM_Error N6510_ReplyLogIntoNetwork(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -3394,9 +3410,9 @@ static GSM_Error N6510_ShowStartInfo(GSM_StateMachine *s, bool enable)
 	}
 }
 
-static GSM_Error N6510_ReplyGetNextFileFolder(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N6510_ReplyGetFileFolderInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_FileFolderInfo 	*File = s->Phone.Data.File;
+	GSM_File	 	*File = s->Phone.Data.FileInfo;
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	int			i;
 
@@ -3405,6 +3421,7 @@ static GSM_Error N6510_ReplyGetNextFileFolder(GSM_Protocol_Message msg, GSM_Stat
 		smprintf(s,"File or folder details received\n");
 		CopyUnicodeString(File->Name,msg.Buffer+10);
 		if (!strncmp(DecodeUnicodeString(File->Name),"GMSTemp",7)) return GE_EMPTY;
+		if (File->Name[0] == 0x00 && File->Name[1] == 0x00) return GE_UNKNOWN;
 		File->Folder = false;
 		i = msg.Buffer[8]*256+msg.Buffer[9];
 		dprintf("%02x %02x %02x %02x\n",msg.Buffer[i],msg.Buffer[i+1],msg.Buffer[i+2],msg.Buffer[i+3]);
@@ -3418,32 +3435,33 @@ static GSM_Error N6510_ReplyGetNextFileFolder(GSM_Protocol_Message msg, GSM_Stat
 			     msg.Buffer[9];
 		return GE_NONE;
 	case 0x33:
-		i = Priv->FilesLocationsUsed-1;
-		while (1) {
-			if (i==Priv->FilesLocationsCurrent-1) break;
-			dprintf("Copying %i to %i, max %i, current %i\n",
-				i,i+msg.Buffer[9],
-				Priv->FilesLocationsUsed,Priv->FilesLocationsCurrent);
-			Priv->FilesLocations[i+msg.Buffer[9]] 	= Priv->FilesLocations[i];
-			Priv->FilesParents[i+msg.Buffer[9]]	= Priv->FilesParents[i];
-			i--;
-		}
-		Priv->FilesLocationsUsed += msg.Buffer[9];
-		for (i=0;i<msg.Buffer[9];i++) {
-			Priv->FilesLocations[Priv->FilesLocationsCurrent+i] 	= msg.Buffer[13+i*4];
-			Priv->FilesParents[Priv->FilesLocationsCurrent+i] 	= File->ID;
-			dprintf("%i ",Priv->FilesLocations[Priv->FilesLocationsCurrent+i]);
+		if (s->Phone.Data.RequestID == ID_GetFileInfo) {
+			i = Priv->FilesLocationsUsed-1;
+			while (1) {
+				if (i==Priv->FilesLocationsCurrent-1) break;
+				dprintf("Copying %i to %i, max %i, current %i\n",
+					i,i+msg.Buffer[9],
+					Priv->FilesLocationsUsed,Priv->FilesLocationsCurrent);
+				Priv->FilesLocations[i+msg.Buffer[9]] 	= Priv->FilesLocations[i];
+				Priv->FilesParents[i+msg.Buffer[9]]	= Priv->FilesParents[i];
+				i--;
+			}
+			Priv->FilesLocationsUsed += msg.Buffer[9];
+			for (i=0;i<msg.Buffer[9];i++) {
+				Priv->FilesLocations[Priv->FilesLocationsCurrent+i] 	= msg.Buffer[13+i*4];
+				Priv->FilesParents[Priv->FilesLocationsCurrent+i] 	= File->ID;
+				dprintf("%i ",Priv->FilesLocations[Priv->FilesLocationsCurrent+i]);
+			}
+			dprintf("\n");
 		}
 		if (msg.Buffer[9] != 0x00) File->Folder = true;
-		dprintf("\n");
 		return GE_NONE;		
 	}
 	return GE_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_FileFolderInfo *File, bool start)
+static GSM_Error N6510_GetFileFolderInfo(GSM_StateMachine *s, GSM_File *File, GSM_Phone_RequestID Request)
 {
-	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	GSM_Error		error;
 	unsigned char 		req[10] = {
 		N7110_FRAME_HEADER,
@@ -3454,6 +3472,37 @@ static GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_FileFolderInfo
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return GE_NOTSUPPORTED;
 
+ 	s->Phone.Data.FileInfo 	= File;
+	req[9] 			= File->ID;
+
+	req[3] = 0x14;
+	req[4] = 0x01;
+	smprintf(s,"Getting info for file in filesystem\n");
+	error=GSM_WaitFor (s, req, 10, 0x6D, 4, Request);
+	if (error != GE_NONE) return error;
+	
+	req[3] = 0x32;
+	req[4] = 0x00;
+	smprintf(s,"Getting subfolders for filesystem\n");
+	error=GSM_WaitFor (s, req, 10, 0x6D, 4, Request);
+	if (error != GE_NONE) return error;
+
+	if (!File->Folder) {
+		req[3] = 0x2E;
+		req[4] = 0x01;
+		smprintf(s,"Getting used memory for file in filesystem\n");
+		error=GSM_WaitFor (s, req, 10, 0x6D, 4, Request);
+	}
+	return error;
+}
+
+static GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
+{
+	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
+	GSM_Error		error;
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return GE_NOTSUPPORTED;
+
 	if (start) {
 		Priv->FilesLocationsUsed 	= 1;
 		Priv->FilesLocationsCurrent 	= 0;
@@ -3461,38 +3510,17 @@ static GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_FileFolderInfo
 		Priv->FilesLocations[0]		= 0x01;
 	}
 
- 	s->Phone.Data.File = File;
-
 	while (1) {
 		if (Priv->FilesLocationsCurrent == Priv->FilesLocationsUsed) return GE_EMPTY;
 
-		req[9] 		= Priv->FilesLocations[Priv->FilesLocationsCurrent];
-		File->ID	= Priv->FilesLocations[Priv->FilesLocationsCurrent];
+		File->ID 	= Priv->FilesLocations[Priv->FilesLocationsCurrent];
 		File->ParentID 	= Priv->FilesParents[Priv->FilesLocationsCurrent];
 		Priv->FilesLocationsCurrent++;
 
-		req[3] = 0x14;
-		req[4] = 0x01;
-		smprintf(s,"Getting info for file in filesystem\n");
-		error=GSM_WaitFor (s, req, 10, 0x6D, 4, ID_GetFileInfo);
+		error = N6510_GetFileFolderInfo(s, File, ID_GetFileInfo);
 		if (error == GE_EMPTY) continue;
-		if (error != GE_NONE) return error;
-		break;
+		return error;
 	}
-	
-	req[3] = 0x32;
-	req[4] = 0x00;
-	smprintf(s,"Getting subfolders for filesystem\n");
-	error=GSM_WaitFor (s, req, 10, 0x6D, 4, ID_GetFileInfo);
-	if (error != GE_NONE) return error;
-
-	if (!File->Folder) {
-		req[3] = 0x2E;
-		req[4] = 0x01;
-		smprintf(s,"Getting used memory for file in filesystem\n");
-		error=GSM_WaitFor (s, req, 10, 0x6D, 4, ID_GetFileInfo);
-	}
-	return error;
 }
 
 static GSM_Error N6510_ReplyGetFreeFileMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -3520,6 +3548,59 @@ static GSM_Error N6510_GetFreeFileMemory(GSM_StateMachine *s, int *Free)
 	s->Phone.Data.FileFree = Free;
 	smprintf(s, "Getting free memory in filesystem\n");
 	return GSM_WaitFor (s, req, 10, 0x6D, 4, ID_GetFileFree);
+}
+
+static GSM_Error N6510_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	int old;
+
+	smprintf(s,"File part received\n");
+	old = s->Phone.Data.File->Used;
+	s->Phone.Data.File->Used += msg.Buffer[6]*256*256*256+
+			    	    msg.Buffer[7]*256*256+
+			    	    msg.Buffer[8]*256+
+			    	    msg.Buffer[9];
+	smprintf(s,"Length of file part: %i\n",
+			msg.Buffer[6]*256*256*256+
+			msg.Buffer[7]*256*256+
+			msg.Buffer[8]*256+
+			msg.Buffer[9]);
+	s->Phone.Data.File->Buffer = (unsigned char *)realloc(s->Phone.Data.File->Buffer,s->Phone.Data.File->Used);
+	memcpy(s->Phone.Data.File->Buffer+old,msg.Buffer+10,s->Phone.Data.File->Used-old);
+	return GE_NONE;
+}
+
+static GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File)
+{
+	int 			old;
+	GSM_Error		error;
+	unsigned char 		req[] = {
+		N7110_FRAME_HEADER, 0x0E, 0x00, 0x00, 0x00, 0x01, 0x00,
+		0x01,		/* Folder or file number */
+		0x00, 0x00,
+		0x00, 0x00,	/* Start from xxx byte */
+		0x00, 0x00,
+		0x27, 0x10};	/* Read xxx bytes */
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return GE_NOTSUPPORTED;
+
+	if (File->Used == 0x00) {
+		error = N6510_GetFileFolderInfo(s, File, ID_GetFile);
+		if (error != GE_NONE) return error;
+		File->Used = 0;
+	}
+
+	req[9] 			= File->ID;
+	old			= File->Used;
+	req[12] 		= old / 256;
+	req[13] 		= old % 256;
+
+	s->Phone.Data.File 	= File;
+	smprintf(s, "Getting file part from filesystem\n");
+	error=GSM_WaitFor (s, req, 18, 0x6D, 4, ID_GetFile);
+	if (error != GE_NONE) return error;
+	if (File->Used - old != (0x27 * 256 + 0x10)) return GE_EMPTY;
+	return GE_NONE;
 }
 
 static GSM_Reply_Function N6510ReplyFunctions[] = {
@@ -3660,10 +3741,14 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyDeleteAllToDo,	"\x55",0x03,0x12,ID_DeleteAllToDo	},
 	{N6510_ReplyGetToDoLocations,	"\x55",0x03,0x16,ID_GetToDo		},
 
-	{N6510_ReplyGetNextFileFolder,	"\x6D",0x03,0x15,ID_GetFileInfo		},
+	{N6510_ReplyGetFilePart,	"\x6D",0x03,0x0F,ID_GetFile		},
+	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x15,ID_GetFileInfo		},
+	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x15,ID_GetFile		},
 	{N6510_ReplyGetFreeFileMemory,	"\x6D",0x03,0x23,ID_GetFileFree		},
-	{N6510_ReplyGetNextFileFolder,	"\x6D",0x03,0x2F,ID_GetFileInfo		},
-	{N6510_ReplyGetNextFileFolder,	"\x6D",0x03,0x33,ID_GetFileInfo		},
+	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x2F,ID_GetFileInfo		},
+	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x2F,ID_GetFile		},
+	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x33,ID_GetFileInfo		},
+	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x33,ID_GetFile		},
 
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x01,ID_GetBitmap		},
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x01,ID_SetBitmap		},
@@ -3683,7 +3768,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"3510|3510i|3530|5100|6100|6310|6310i|6510|6610|7210|8310|8390|8910",
+	"3510|3510i|3530|5100|6100|6310|6310i|6510|6610|6800|7210|7250|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,		/*	Terminate 		*/
@@ -3761,7 +3846,7 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_DeleteUserRingtones,
 	N6510_ShowStartInfo,
 	N6510_GetNextFileFolder,
-	NOTIMPLEMENTED,		/*	GetFile			*/
+	N6510_GetFilePart,
 	NOTIMPLEMENTED,		/* 	AddFile			*/
 	N6510_GetFreeFileMemory
 };

@@ -32,9 +32,10 @@ GSM_Error CheckDCT3Only()
 #endif
 	if (!found) return GE_NOTSUPPORTED;
 
-	if (s.ConnectionType!=GCT_FBUS2	   && s.ConnectionType!=GCT_MBUS2  &&
-	    s.ConnectionType!=GCT_INFRARED && s.ConnectionType!=GCT_DLR3AT &&
-	    s.ConnectionType!=GCT_IRDA)
+	if (s.ConnectionType!=GCT_MBUS2	    && s.ConnectionType!=GCT_FBUS2      &&
+	    s.ConnectionType!=GCT_FBUS2DLR3 && s.ConnectionType!=GCT_FBUS2BLUE  &&
+	    s.ConnectionType!=GCT_FBUS2IRDA && s.ConnectionType!=GCT_IRDAPHONET &&
+	    s.ConnectionType!=GCT_BLUEFBUS2)
 	{
 		return GE_UNKNOWNCONNECTIONTYPESTRING;
 	}
