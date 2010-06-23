@@ -86,7 +86,7 @@ For Bluetooth connection use one of following:
 \fBbluerfgnapbus\fR  - GNapplet based connection for Symbian phones
 
 .TP
-.BI Port
+.BI Device
 
 Device node or address of phone. It depends on used connection. 
 
@@ -111,6 +111,11 @@ enable discovery (you need to run these commands as root):
 
     ip l s dev irda0 up
     sysctl net.irda.discovery=1
+
+.TP
+.BI Port
+
+Alias for Device, kept for backward compatibility.
 
 .TP
 .BI Model
@@ -214,7 +219,7 @@ Gammu configuration for Nokia phone using DLR-3 cable:
 .nf
 .ne 7
 [gammu]
-port = /dev/ttyACM0
+device = /dev/ttyACM0
 connection = dlr3
 .fi
 .sp
@@ -229,7 +234,7 @@ phone) connected using USB cable:
 .nf
 .ne 7
 [gammu]
-port = /dev/ttyACM0
+device = /dev/ttyACM0
 connection = at
 .fi
 .sp
@@ -244,7 +249,7 @@ phone) connected using bluetooth:
 .nf
 .ne 7
 [gammu]
-port = B0:0B:00:00:FA:CE
+device = B0:0B:00:00:FA:CE
 connection = blueat
 .fi
 .sp
@@ -258,7 +263,7 @@ Gammu configuration for phone which needs to manually adjust Bluetooth channel t
 .nf
 .ne 7
 [gammu]
-port = B0:0B:00:00:FA:CE/42
+device = B0:0B:00:00:FA:CE/42
 connection = blueat
 .fi
 .sp
@@ -277,15 +282,15 @@ like following:
 .nf
 .ne 7
 [gammu]
-port = /dev/ttyS0
+device = /dev/ttyS0
 connection = at
 
 [gammmu1]
-port = /dev/ttyS1
+device = /dev/ttyS1
 connection = at
 
 [gammmu2]
-port = /dev/ttyS2
+device = /dev/ttyS2
 connection = at
 .fi
 .sp

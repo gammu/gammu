@@ -8,7 +8,7 @@
 
 [gammu]
 
-port = com8:
+device = com8:
 connection = irdaphonet
 ; Do not use model configuration unless you really need it
 ;model = 6110
@@ -23,7 +23,7 @@ connection = irdaphonet
 
 [gammu1]
 
-port = com8:
+device = com8:
 ;model = 6110
 connection = fbusblue
 ;synchronizetime = yes
@@ -35,25 +35,25 @@ connection = fbusblue
 ;gammucoding = utf8
 
 ; Step 1. Please find required Connection parameter and look into assigned 
-; with it port type. With some Connection you must set concrete model
+; with it device type. With some Connection you must set concrete model
 
 ; ================================================================ cables =====
 ; New Nokia protocol for FBUS/DAU9P
-;    Connection "fbus", port type serial
+;    Connection "fbus", device type serial
 ; New Nokia protocol for DLR3/DLR3P
-;    Connection "fbusdlr3"/"dlr3", port type serial 
+;    Connection "fbusdlr3"/"dlr3", device type serial 
 ; New Nokia protocol for DKU2 (and phone with USB converter on phone mainboard
 ;                              like 6230)
-;    Connection "dku2phonet"/"dku2", port type dku2 on Windows
+;    Connection "dku2phonet"/"dku2", device type dku2 on Windows
 ;    Connection "fbususb" on Linux
 ; New Nokia protocol for DKU5 (and phone without USB converter on phone
 ;                              mainboard like 5100)
-;    Connection "dku5fbus"/"dku5", port type dku5
+;    Connection "dku5fbus"/"dku5", device type dku5
 ; New Nokia protocol for PL2303 USB cable (and phone without USB converter
 ;                                          on phone mainboard like 5100)
-;    Connection "fbuspl2303", port type usb
+;    Connection "fbuspl2303", device type usb
 ; Old Nokia protocol for MBUS/DAU9P
-;    Connection "mbus", port type serial
+;    Connection "mbus", device type serial
 ; Variants: 
 ; You can modify a bit behaviour of connection using additional flags
 ; specified just after connection name like connection-variant.
@@ -64,53 +64,53 @@ connection = fbusblue
 ; -----------------------------------------------------------------------------
 ; AT commands for DLR3, DKU5 or other AT compatible cable (8 bits, None
 ; parity, no flow control, 1 stop bit). Used with Nokia, Alcatel, Siemens, etc.
-;    Connection "at19200"/"at115200"/.., port type serial
+;    Connection "at19200"/"at115200"/.., device type serial
 ; AT commands for DKU2 cable
-;    Connection "dku2at", port type dku2
+;    Connection "dku2at", device type dku2
 ; ============================================================== infrared =====
 ; Nokia protocol for infrared with Nokia 6110/6130/6150
-;    Connection "fbusirda"/"infrared", port type serial
+;    Connection "fbusirda"/"infrared", device type serial
 ; Nokia protocol for infrared with other Nokia models
-;    Connection "irdaphonet"/"irda", port type irda
+;    Connection "irdaphonet"/"irda", device type irda
 ; -----------------------------------------------------------------------------
 ; AT commands for infrared. Used with Nokia, Alcatel, Siemens, etc.
-;    Connection "irdaat", port type irda
+;    Connection "irdaat", device type irda
 ; -----------------------------------------------------------------------------
 ; OBEX for infrared
-;    Connection "irdaobex", port type irda.
+;    Connection "irdaobex", device type irda.
 ; ============================================================= Bluetooth =====
-; Nokia protocol with serial port set in BT stack (WidComm, other) from
+; Nokia protocol with serial device set in BT stack (WidComm, other) from
 ; adequate service and Nokia 6210
-;    Connection "fbusblue", port type serial
-; Nokia protocol with serial port set in BT stack (WidComm, other) from
+;    Connection "fbusblue", device type serial
+; Nokia protocol with serial device set in BT stack (WidComm, other) from
 ; adequate service and other Nokia models
-;    Connection "phonetblue", port type serial
+;    Connection "phonetblue", device type serial
 ; -----------------------------------------------------------------------------
 ; Nokia protocol for Bluetooth stack with Nokia 6210
-;    Connection "bluerffbus", port type BT
+;    Connection "bluerffbus", device type BT
 ; Nokia protocol for Bluetooth stack with DCT4 Nokia models, which don't inform
 ; about services correctly (6310, 6310i with firmware lower than 5.50, 8910,..)
-;    Connection "bluerfphonet", port type BT
+;    Connection "bluerfphonet", device type BT
 ; Nokia protocol for Bluetooth stack with other DCT4 Nokia models
-;    Connection "bluephonet", port type BT
+;    Connection "bluephonet", device type BT
 ; -----------------------------------------------------------------------------
 ; AT commands for Bluetooth stack and 6210 / DCT4 Nokia models, which don't
 ; inform about BT services correctly (6310, 6310i with firmware lower 
 ; than 5.50, 8910,..)
-;    Connection "bluerfat", port type BT
+;    Connection "bluerfat", device type BT
 ; AT commands for Bluetooth stack with other phones (Siemens, other Nokia,etc.)
-;    Connection "blueat", port type BT
+;    Connection "blueat", device type BT
 ; -----------------------------------------------------------------------------
 ; OBEX for Bluetooth stack with DCT4 Nokia models, which don't inform about
 ; BT services correctly (6310, 6310i with firmware lower than 5.50, 8910,...)
-;    Connection "bluerfobex", port type BT
+;    Connection "bluerfobex", device type BT
 ; OBEX for Bluetooth stack with other phones (Siemens, other Nokia, etc.)
-;    Connection "blueobex", port type BT.
+;    Connection "blueobex", device type BT.
 ; -----------------------------------------------------------------------------
-;    Connection "bluerfgnapbus", port type BT, model "gnap"
-;    Connection "irdagnapbus", port type irda, model "gnap"
+;    Connection "bluerfgnapbus", device type BT, model "gnap"
+;    Connection "irdagnapbus", device type irda, model "gnap"
 
-; Step2. According to port type from Step1 and used OS set Port parameter
+; Step2. According to device type from Step1 and used OS set Port parameter
 
 ; -----------------------------------------------------------------------------
 ; Port type | "Port" parameter in Windows/DOS | "Port" parameter in Linux/Unix

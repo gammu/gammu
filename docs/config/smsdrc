@@ -4,7 +4,7 @@
 # Gammu configuration, this section is like section "gammu" in "gammurc" file,
 # see gammurc(5) for documentation.
 [gammu]
-#port = /dev/ttyS1
+#device = /dev/ttyS1
 #model = 6110
 #connection = dlr3
 #synchronizetime = yes

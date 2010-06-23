@@ -1249,9 +1249,14 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* Set device name */
 	free(cfg->Device);
-	cfg->Device 	 = INI_GetValue(cfg_info, section, "port", 		FALSE);
+	cfg->Device 	 = INI_GetValue(cfg_info, section, "device", 		FALSE);
 	if (!cfg->Device) {
-		cfg->Device		 	 = strdup(DefaultPort);
+		cfg->Device 	 = INI_GetValue(cfg_info, section, "port", 		FALSE);
+		if (!cfg->Device) {
+			cfg->Device		 	 = strdup(DefaultPort);
+		} else {
+			cfg->Device			 = strdup(cfg->Device);
+		}
 	} else {
 		cfg->Device			 = strdup(cfg->Device);
 	}
