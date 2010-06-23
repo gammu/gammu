@@ -25,6 +25,8 @@ typedef struct {
 	INI_Entry       *IncludeNumbers, *ExcludeNumbers;
 	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency;
 	unsigned char   *deliveryreport, *logfilename,  *PINCode;
+	unsigned char	*PhoneID;
+	int		relativevalidity;
 
 	/* options for FILES */
 	unsigned char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
@@ -37,10 +39,21 @@ typedef struct {
 	/* private variables required for work */
 	unsigned int 	retries;
 	unsigned char 	SMSID[200],	 prevSMSID[200];
+	GSM_SMSC	SMSC;
 #ifdef HAVE_MYSQL_MYSQL_H
 	MYSQL 		DB;		 char 		DT[20];
 #endif
 } GSM_SMSDConfig;
+
+typedef enum {
+	SMSD_SEND_OK = 1,
+	SMSD_SEND_SENDING_ERROR,
+	SMSD_SEND_DELIVERY_PENDING,
+	SMSD_SEND_DELIVERY_FAILED,
+	SMSD_SEND_DELIVERY_OK,
+	SMSD_SEND_DELIVERY_UNKNOWN,
+	SMSD_SEND_ERROR
+} GSM_SMSDSendingError;
 
 typedef struct {
 	GSM_Error	(*Init) 	   (GSM_SMSDConfig *Config);
@@ -48,7 +61,7 @@ typedef struct {
 	GSM_Error	(*FindOutboxSMS)   (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID);
 	GSM_Error	(*MoveSMS)  	   (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, bool alwaysDelete, bool sent);
 	GSM_Error	(*CreateOutboxSMS) (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config);
-	GSM_Error	(*AddSentSMSInfo)  (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, int Part, bool OK);
+	GSM_Error	(*AddSentSMSInfo)  (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, int Part, GSM_SMSDSendingError err, int TPMR);
 } GSM_SMSDService;
 
 #ifdef __GNUC__

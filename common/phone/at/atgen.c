@@ -858,8 +858,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 			if (strstr(msg.Buffer,"+CMGR: 0,,0")!=NULL) return ERR_EMPTY;
 			/* Siemens M20 */
 			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
-				if (buffer[1]!=NUMBER_UNKNOWN && buffer[1]!=NUMBER_INTERNATIONAL &&
-				    buffer[1]!=NUMBER_ALPHANUMERIC) {
+				/* we check for the most often visible */
+				if (buffer[1]!=NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN && buffer[1]!=NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN &&
+				    buffer[1]!=NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN) {
 					/* Seems to be Delivery Report */
 					smprintf(s, "SMS type - status report (M20 style)\n");
 					sms->PDU 	 = SMS_Status_Report;
@@ -894,7 +895,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				sms->InboxFolder = true;
 				current2=((buffer[current])+1)/2+1;
 				if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
-					if (buffer[current+1]==NUMBER_ALPHANUMERIC) {
+					if (buffer[current+1]==NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN) {
 						smprintf(s, "Trying to read alphanumeric number\n");
 						for(i=0;i<4;i++) smsframe[PHONE_SMSDeliver.Number+i]=buffer[current++];
 						current+=6;
@@ -925,7 +926,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				smsframe[PHONE_SMSSubmit.TPMR] = buffer[current++];
 				current2=((buffer[current])+1)/2+1;
 				if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
-					if (buffer[current+1]==NUMBER_ALPHANUMERIC) {
+					if (buffer[current+1]==NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN) {
 						smprintf(s, "Trying to read alphanumeric number\n");
 						for(i=0;i<4;i++) smsframe[PHONE_SMSSubmit.Number+i]=buffer[current++];
 						current+=6;
@@ -1644,13 +1645,13 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			if (start != NULL) {
 				s->User.SendSMSStatus(s->CurrentConfig->Device,0,atoi(start+7));
 			} else {
-				s->User.SendSMSStatus(s->CurrentConfig->Device,0,0);
+				s->User.SendSMSStatus(s->CurrentConfig->Device,0,-1);
 			}
 		}
 		return ERR_NONE;
 	case AT_Reply_CMSError:
  		smprintf(s, "Error %i\n",Priv->ErrorCode);
- 		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,Priv->ErrorCode,0);
+ 		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,Priv->ErrorCode,-1);
  		return ATGEN_HandleCMSError(s);
 	case AT_Reply_Error:
 		return ERR_UNKNOWN;

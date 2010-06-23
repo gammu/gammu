@@ -104,13 +104,13 @@ void print_access_protos(value, user)
 static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, struct search_context *context)
 {
 	sdp_session_t			*sess;
-	sdp_list_t			*attrid, *search, *seq, *next, *proto = 0;
-	uint32_t			range = 0x0000ffff;
-	char				str[20];
 	sdp_record_t 			*rec;
+	sdp_list_t			*attrid, *search, *seq, *next, *proto = 0;
 	sdp_data_t			*d;
 	bdaddr_t			interface;
+	uint32_t			range = 0x0000ffff;
 	struct search_context 		subcontext;
+	char				str[20];
 	int				channel,channel2;
 
 	bacpy(&interface,BDADDR_ANY);
@@ -168,7 +168,7 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, st
 	
 	if (channel2 != -1) return bluetooth_connect(s, channel2, str);
 	
-	return ERR_UNKNOWN;
+	return ERR_NOTSUPPORTED;
 }
 
 GSM_Error bluetooth_findchannel(GSM_StateMachine *s)

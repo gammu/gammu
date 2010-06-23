@@ -119,6 +119,8 @@ static GSM_Error N6510_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *
 	}
 	Data->SMSC->Validity.Format	= SMS_Validity_RelativeFormat;
 	Data->SMSC->Validity.Relative	= msg.Buffer[12];
+	if (msg.Buffer[12] == 0x00) Data->SMSC->Validity.Relative = SMS_VALID_Max_Time;
+
 	current = 14;
 	for (i=0;i<msg.Buffer[13];i++) {
 		switch (msg.Buffer[current]) {

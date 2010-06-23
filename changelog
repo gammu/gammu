@@ -26,6 +26,26 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+200407xx - 0.97.1
+* new functionality:
+  * SMSD
+    * --sendsmsdsms doesn't require SMSC number
+    * SMSC number is get from phone only once
+    * MYSQL:
+      * ability to sending SMS on specified time
+      * assigning delivery reports to sent sms
+      * support for giving SMS validity by user
+      * in DB there is info about version of DB structures. SMSD checks it
+        and informs user, if updating DB/Gammu is required
+  * support for various types on numbers in SMS is much      (Joergen Thomsen)
+    more complete
+
+* fixes and improvements:
+  * --smsd MYSQL works correctly in Unix. Problem was in case sensitive
+    names of tables (were exported only small chars to file with DB dump) ;-)
+  * SMSC validity correctly handled in situation, when was never  (Jozef Uhler)
+    set in SMSC set from PC/phone menu (Nokia phones)
+
 20040719 - 0.97.0
 * new functionality:
   * new family of connections: bluerf + something (for example bluerfphonet)
