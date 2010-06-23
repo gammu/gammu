@@ -72,20 +72,21 @@ static bool answer_yes2(char *text)
 /* ------------------- functions ------------------------------------------- */
 
 static DCT4_Feature DCT4Features[] = {
+	{DCT4_ALWAYS_ONLINE,     	 "GPRS Always Online",		 {{0,"on (Context)"},{1,"off (Attach)"},{0,""}}},///??
+	{DCT4_GPRS_PCCH,	 	 "PCCH support for GPRS",	 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_GEA1,			 "GEA1 support indication",	 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_EOTD,			 "EOTD support",		 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_WAP_PUSH,			 "WAP push",			 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_USE_PREF_SIM_NET,		 "Use SIM preffered network list",{{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_JAVA_TCK,	                 "Java TCK support",             {{1,"on"},{0,"off"},{0,""}}},
+
 	{DCT4_ALS,		 	 "Alternate Line Service (ALS)", {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_A52,		 	 "Ciphering alghoritm A52", 	 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_CSP,		 	 "Customer Service Profile",	 {{0,"off"},{1,"on"},{0,""}}},
-	{DCT4_DISPLAY_PHONE_NAME,	 "Display both number and name for incoming calls",{{1,"on"},{0,"off"},{0,""}}},
-	{DCT4_DISPLAY_WAP_PROFILE,	 "Display selected WAP profile name instead of Home option menu in Services",{{1,"on"},{0,"off"},{0,""}}},
-	{DCT4_USE_PREF_SIM_NET,		 "Use SIM preffered network list",{{1,"on"},{0,"off"},{0,""}}},
-	{DCT4_WAP_PUSH,			 "WAP push",			 {{1,"on"},{0,"off"},{0,""}}},
-
-	{DCT4_GPRS_PCCH,	 	 "PCCH support for GPRS",	 {{1,"on"},{0,"off"},{0,""}}},
-	{DCT4_ALWAYS_ONLINE,     	 "GPRS Always Online",		 {{0,"on (Context)"},{1,"off (Attach)"},{0,""}}},///??
-	{DCT4_GEA1,			 "GEA1 support indication",	 {{1,"on"},{0,"off"},{0,""}}},
-	{DCT4_EOTD,			 "EOTD support",		 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_EONS,			 "EONS support",		 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_3GINDICATOR,		 "3G indicator",		 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_DISPLAY_PHONE_NAME,	 "Display both number and name for incoming calls",{{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_DISPLAY_WAP_PROFILE,	 "Display selected WAP profile name instead of Home option menu in Services",{{1,"on"},{0,"off"},{0,""}}},
 
 	{DCT4_GAMES_WAP_DOWNLOAD,	 "Games WAP download",		 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_GAMES_SCORE_SEND,		 "Games WAP score send",	 {{1,"on"},{0,"off"},{0,""}}},
@@ -93,6 +94,7 @@ static DCT4_Feature DCT4Features[] = {
 
 	{DCT4_BLUETOOTH_MENU,	 	 "Bluetooth menu",		 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_WAP_BOOKMARKS_MENU,	 "Bookmarks menu in Services", 	 {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_WAP_BOOKMARKS_MENU2,	 "Bookmarks menu in Services", 	 {{3,"bookmarks & download"},{0,"off"},{0,""}}},
 	{DCT4_WAP_GOTO_MENU,	 	 "GoTo menu in Services",	 {{0,"on"},{1,"off"},{0,""}}},
 	{DCT4_WAP_SETTINGS_MENU,	 "Profiles menu in Services",	 {{0,"on"},{1,"off"},{0,""}}},
 	{DCT4_SERVICES_GAMES_APP_GALLERY,"Services menu in Games/Apps/Gallery",{{1,"on"},{0,"off"},{0,""}}},
@@ -100,6 +102,7 @@ static DCT4_Feature DCT4Features[] = {
 	{DCT4_SAT_CONFIRM_MENU,		 "Can use confirming SIM service actions", {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_INSTANT_MESS_MENU,	 "Instant Messaging in Messages",{{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_CONFIRM_ALS,		 "Confirm using ALS",            {{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_BOOKMARK_GOTO_MENU,	 "Bookmarks in GoTo menu",       {{1,"on"},{0,"off"},{0,""}}},
 
 	{DCT4_5100_IDENTIFY,		 "Phone identification",         {{1,"NPM-6U"},{0,"NPM-6"},{0,""}}},
 
@@ -170,12 +173,12 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
 			 {DCT4_WAP_SETTINGS_MENU,19},{DCT4_SERVICES_GAMES_APP_GALLERY,22},
 			 {DCT4_DISPLAY_WAP_PROFILE,26},{DCT4_SAT_CONFIRM_MENU,27},
 			 {0,0}}},
-/*6220*/ {"RH-20",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,4},{DCT4_GPRS_PCCH,13},
+/*6220*/ {"RH-20",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,4},
 			 {DCT4_GEA1,14},{DCT4_EOTD,17},{DCT4_WAP_SETTINGS_MENU,19},
 			 {DCT4_DISPLAY_PHONE_NAME,20},{DCT4_WAP_GOTO_MENU,22},
-			 {DCT4_SERVICES_GAMES_APP_GALLERY,25},{DCT4_3GINDICATOR,27},
-			 {DCT4_DISPLAY_WAP_PROFILE,30},{DCT4_SAT_CONFIRM_MENU,32},
-			 {DCT4_CONFIRM_ALS,33},
+			 {DCT4_WAP_BOOKMARKS_MENU2,24},{DCT4_SERVICES_GAMES_APP_GALLERY,25},
+			 {DCT4_3GINDICATOR,27},{DCT4_DISPLAY_WAP_PROFILE,30},{DCT4_SAT_CONFIRM_MENU,32},
+			 {DCT4_CONFIRM_ALS,33},{DCT4_JAVA_TCK,36},{DCT4_BOOKMARK_GOTO_MENU,37},
 			 {0,0}}},
 /*6310*/ {"NPE-4",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
 			 {DCT4_GAMES_SCORE_SEND,8},{DCT4_GAMES_URL_CHECK,9},{DCT4_BLUETOOTH_MENU,10},

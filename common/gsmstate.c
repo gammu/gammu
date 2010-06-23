@@ -176,6 +176,9 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #ifdef GSM_ENABLE_MROUTERGEN
 	GSM_RegisterModule(s,&MROUTERGENPhone);
 #endif
+#ifdef GSM_ENABLE_NOKIA3320
+	GSM_RegisterModule(s,&N3320Phone);
+#endif
 #ifdef GSM_ENABLE_NOKIA3650
 	GSM_RegisterModule(s,&N3650Phone);
 #endif
@@ -877,8 +880,11 @@ static OnePhoneModel allmodels[] = {
 #ifdef GSM_ENABLE_NOKIA6110
 	{"3610" ,"NAM-1" ,"",           {F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},//quess
 #endif
+#if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA3650)
+	{"3650" ,"NHL-8" ,"Nokia 3650", {0}},
+	{"NGAGE","NEM-4" ,"",           {F_RADIO,0}},
+#endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"3650" ,"NHL-8" ,"Nokia 3650", {F_RADIO,0}},
 	{"5100" ,"NPM-6" ,"Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 	{"5100" ,"NPM-6U","Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 	{"5100" ,"NPM-6X","Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
@@ -906,7 +912,7 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"6200" ,"NPL-3" ,"Nokia 6200", {F_PBKTONEGAL,0}},
-	{"6220" ,"RH-20" ,"Nokia 6220", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},
+	{"6220" ,"RH-20" ,"Nokia 6220", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"6210" ,"NPE-3" ,"Nokia 6210", {F_VOICETAGS,F_CAL62,0}},

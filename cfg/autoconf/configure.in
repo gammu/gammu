@@ -57,6 +57,10 @@ dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS(dirent.h)
 AC_CHECK_HEADERS(sys/ioctl.h)
+AC_CHECK_HEADERS(mysql/mysql.h,
+        [mysql="yes"
+         LDLIBS="$LDLIBS -Wl,--whole-archive /usr/lib/mysql/libmysqlclient.a -Wl,--no-whole-archive -lz"],
+        [mysql="no"])
 AC_CHECK_HEADER(linux/irda.h,
         [AC_DEFINE(HAVE_IRDA)
         irda="yes"],
@@ -65,10 +69,8 @@ AC_CHECK_HEADER(linux/irda.h,
 #include <linux/types.h>
 #include <sys/ioctl.h>])
 dnl This checking is not used now
-dnl AC_CHECK_HEADERS(mysql/mysql.h)
 dnl AC_CHECK_HEADERS(fcntl.h sys/file.h sys/ioctl.h sys/time.h unistd.h)
 dnl AC_SUBST(HAVE_DIRENT_H)
-
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -339,6 +341,10 @@ AC_ARG_ENABLE(alcatel,
         [gsm_enable_alcatel="no"],
         [AC_DEFINE(GSM_ENABLE_ALCABUS)
          AC_DEFINE(GSM_ENABLE_ALCATEL) gsm_enable_alcatel="yes"])
+AC_ARG_ENABLE(3320,
+        [  --disable-3320          Disable Nokia 3320 and compatible support],
+        [gsm_enable_nokia3320="no"],
+        [AC_DEFINE(GSM_ENABLE_NOKIA3320) gsm_enable_nokia3320="yes"])
 AC_ARG_ENABLE(6110,
         [  --disable-6110          Disable Nokia 61xx and compatible support],
         [gsm_enable_nokia6110="no"],
@@ -380,6 +386,7 @@ AC_OUTPUT(Makefile.cfg
           ../pkgconfig/gammu.pc
           ../doxygen/Doxyfile
           ../rpm/gammu.spec
+          ../../description.pak
           ../../gammu/bcc06.mak/gammu.bpr
           ../../gammu/msvc06.mak/gammu.rc
           ../../gammu/msvc2003.mak/gammu.rc
@@ -411,11 +418,12 @@ cat <<EOT
   
   General options
   ---------------
-  LGPL license                                  - $lgpl
+dnl  LGPL license                                  - $lgpl
   Debug                                         - $debug
   CB messages                                   - $gsm_enable_cellbroadcast
   Backup functions                              - $gsm_enable_backup
   Searching phones (requires pthread)           - $pthread
+  MySQL SMS plugin (requires mysql)             - $mysql
 
   Phone protocols
   ---------------
@@ -448,6 +456,7 @@ dnl SYMBIAN with m-router for Bluetooth legacy    - $gsm_enable_mrouterblue
   -------------
   Alcatel (OT 501, 701, 715, 535, 735, other)   - $gsm_enable_alcatel
   AT (Siemens, Alcatel, Nokia, WaveCom, other)  - $gsm_enable_atgen
+  Nokia 3320                                    - $gsm_enable_nokia3320
   Nokia 3210/33xx/3410/51xx/5210/5510/61xx/82xx - $gsm_enable_nokia6110
   Nokia 35xx/5100/6100/63xx/65xx/6610/72x0/83xx - $gsm_enable_nokia6510
            Use always 6210 frames for calendar  - $gsm_force_dct4_calendar_6210

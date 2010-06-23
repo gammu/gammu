@@ -51,6 +51,7 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
             $(TOPDIR)/common/phone/at/siemens.o \
             $(TOPDIR)/common/phone/at/sonyeric.o \
             $(TOPDIR)/common/phone/alcatel/alcatel.o \
+            $(TOPDIR)/common/phone/nokia/dct3/n3320.o \
             $(TOPDIR)/common/phone/nokia/dct3/n6110.o \
             $(TOPDIR)/common/phone/nokia/dct3/n7110.o \
             $(TOPDIR)/common/phone/nokia/dct3/n9210.o \
@@ -76,6 +77,7 @@ GAMMU     = $(TOPDIR)/gammu/depend/nokia/dct3.o \
             $(TOPDIR)/gammu/depend/siemens/chiffre.o \
             $(TOPDIR)/gammu/smsd/smsdcore.o \
             $(TOPDIR)/gammu/smsd/s_files.o \
+            $(TOPDIR)/gammu/smsd/s_mysql.o \
             $(TOPDIR)/gammu/sniff.o \
             $(TOPDIR)/gammu/gammu.o
 

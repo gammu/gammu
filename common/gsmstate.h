@@ -8,6 +8,9 @@
 #include "config.h"
 #include "misc/cfg.h"
 
+#ifdef GSM_ENABLE_NOKIA3320
+#  include "phone/nokia/dct3/n3320.h"
+#endif
 #ifdef GSM_ENABLE_NOKIA3650
 #  include "phone/nokia/dct4/n3650.h"
 #endif
@@ -91,7 +94,7 @@
 #  undef GSM_ENABLE_MROUTERBLUE
 #endif
 
-#if defined(GSM_ENABLE_NOKIA6110) || defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9210)
+#if defined(GSM_ENABLE_NOKIA3320) || defined(GSM_ENABLE_NOKIA6110) || defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9210)
 #  define GSM_ENABLE_NOKIA_DCT3
 #endif
 #if defined(GSM_ENABLE_NOKIA3650) || defined(GSM_ENABLE_NOKIA6510)
@@ -755,6 +758,9 @@ typedef struct {
 	 */
 	struct {
 		int			 fake;
+#ifdef GSM_ENABLE_NOKIA3320
+		GSM_Phone_N3320Data	 N3320;
+#endif
 #ifdef GSM_ENABLE_NOKIA3650
 		GSM_Phone_N3650Data	 N3650;
 #endif
@@ -1307,6 +1313,9 @@ typedef struct {
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;
+#ifdef GSM_ENABLE_NOKIA3320
+	extern GSM_Phone_Functions N3320Phone;
+#endif
 #ifdef GSM_ENABLE_NOKIA3650
 	extern GSM_Phone_Functions N3650Phone;
 #endif
@@ -1473,6 +1482,7 @@ typedef enum {
 	F_PBKIMG,	/* Phonebook in 7250 style with picture ID			*/
 	F_PBKTONEGAL,	/* Phonebook with selecting ringtones from gallery              */
 	F_PBKSMSLIST,	/* Phonebook with SMS list					*/
+	F_PBKUSER,	/* Phonebook with user ID					*/
 	F_RADIO,	/* Phone with FM radio						*/
 	F_TODO63,	/* ToDo in 6310 style - 0x55 msg type				*/
 	F_TODO66,	/* ToDo in 6610 style - like calendar, with date and other	*/

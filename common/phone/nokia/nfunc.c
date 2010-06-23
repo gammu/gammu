@@ -84,6 +84,14 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 			if (DCT4) {
 				j = 0;
 				while (entry.Entries[i].SMSList[j] != 0) {
+					string[0] = i+1;
+					string[1] = 0x00;
+					string[2] = 0x02;
+					string[3] = 0x00;
+					string[4] = entry.Entries[i].SMSList[j];
+					string[5] = 0x00;
+					count += N71_65_PackPBKBlock(s, N6510_PBK_SMSLIST_ID, 6, block++, string, req+count);
+
 					j++;
 				}
 			}
@@ -140,6 +148,15 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 				string[9] = 0x00;
 				count += N71_65_PackPBKBlock(s, N6510_PBK_PICTURE_ID, 10, block++, string, req + count);
 				req[count-1] = 0x01;
+			}
+			continue;
+		}
+		if (entry.Entries[i].EntryType == PBK_Text_UserID) {
+			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKUSER)) {
+				string[0] = UnicodeLength(entry.Entries[i].Text)*2;
+				CopyUnicodeString(string+1,entry.Entries[i].Text);
+				count += N71_65_PackPBKBlock(s, N6510_PBK_USER_ID, string[0]+2, block++, string, req+count);
+				req[count-1]--;
 			}
 			continue;
 		}
@@ -428,6 +445,21 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
 			continue;
+		}
+		if (Block[0] == N6510_PBK_USER_ID) {
+			smprintf(s, "User ID:");
+			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_UserID;
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
+
+			length = length + Block[3];
+			Block  = &Block[(int) Block[3]];
+			continue;			
 		}
 		if (Block[0] == N7110_PBK_UNKNOWN1) {
 			smprintf(s,"Unknown entry\n");

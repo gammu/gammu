@@ -63,6 +63,8 @@
 
 /* --------------------------- Phone modules (specific) ----------------- */
 
+/* n3320.c models */
+#undef GSM_ENABLE_NOKIA3320
 /* n6110.c models */
 #undef GSM_ENABLE_NOKIA6110
 

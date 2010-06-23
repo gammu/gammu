@@ -312,6 +312,10 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				SaveBackupText(file, "", buffer, UseUnicode);
 				text = false;
 				break;
+			case PBK_Text_UserID:
+				sprintf(buffer,"Entry%02iType = UserID%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				break;
 			case PBK_Category:
 				sprintf(buffer,"Entry%02iType = Category%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
@@ -1278,6 +1282,8 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				}
 				Pbk->EntriesNum ++;
 				continue;
+			} else if (mystrncasecmp(readvalue,"UserID",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_UserID;
 			}
 			sprintf(buffer,"Entry%02iText",num);
 			ReadBackupText(file_info, section, buffer, Pbk->Entries[Pbk->EntriesNum].Text,UseUnicode);

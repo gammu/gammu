@@ -3,14 +3,12 @@
 # http://www.phpmyadmin.net
 #
 # Host: localhost
-# Generation Time: Apr 08, 2004 at 10:31 PM
+# Generation Time: Apr 27, 2004 at 01:09 AM
 # Server version: 4.0.18
 # PHP Version: 4.3.4
 # 
 # Database : `sms`
 # 
-
-# --------------------------------------------------------
 
 #
 # Table structure for table `Inbox`
@@ -26,4 +24,36 @@ CREATE TABLE `Inbox` (
   `Class` int(11) NOT NULL default '-1',
   `TextDecoded` text
 ) TYPE=MyISAM;
-    
+
+#
+# Table structure for table `Outbox`
+#
+
+CREATE TABLE `Outbox` (
+  `Text` text NOT NULL,
+  `Sender_Number` text NOT NULL,
+  `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
+  `UDH` text,
+  `SMSC_Number` text,
+  `Class` int(11) NOT NULL default '-1',
+  `TextDecoded` text,
+  `ID` text NOT NULL,
+  `SequencePosition` int(11) NOT NULL default '1'
+) TYPE=MyISAM;
+
+#
+# Table structure for table `SentItems`
+#
+
+CREATE TABLE `SentItems` (
+  `Text` text NOT NULL,
+  `Sender_Number` text NOT NULL,
+  `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
+  `UDH` text,
+  `SMSC_Number` text,
+  `Class` int(11) NOT NULL default '-1',
+  `TextDecoded` text,
+  `ID` text NOT NULL,
+  `SequencePosition` int(11) NOT NULL default '1',
+  `Status` enum('OK','Error') NOT NULL default 'OK'
+) TYPE=MyISAM;

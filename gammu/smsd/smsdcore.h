@@ -5,25 +5,29 @@
 
 #define MAX_RETRIES 1
 
-void SMSDaemon(int argc, char *argv[]);
+void      SMSDaemon		(int argc, char *argv[]);
+GSM_Error SMSDaemonSendSMS	(char *service, char *filename, GSM_MultiSMSMessage *sms);
 
 typedef struct {
 	INI_Entry       *IncludeNumbers, *ExcludeNumbers;
 	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency;
+	unsigned int 	retries;
+	unsigned char 	SMSID[200],	 prevSMSID[200];
+
 	unsigned char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
 	unsigned char   *errorsmspath, 	 *inboxformat,  *transmitformat;
 	unsigned char   *deliveryreport, *logfilename,  *PINCode;
 
-	unsigned char 	SMSID[200],prevSMSID[200];
-	unsigned int 	retries;
+	unsigned char	*database,	 *user,		*password;
+	unsigned char	*PC;
 } GSM_SMSDConfig;
 
 typedef struct {
-	GSM_Error	(*Init) (void);
-	GSM_Error	(*SaveInboxSMS)  (GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config);
-	GSM_Error	(*FindOutboxSMS) (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID);
-	GSM_Error	(*MoveSMS)  	 (unsigned char *sourcepath, unsigned char *destpath, unsigned char *ID,
-                             		  bool alwaysDelete);
+	GSM_Error	(*Init) 	   (GSM_SMSDConfig *Config);
+	GSM_Error	(*SaveInboxSMS)    (GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config);
+	GSM_Error	(*FindOutboxSMS)   (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID);
+	GSM_Error	(*MoveSMS)  	   (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, bool alwaysDelete, bool sent);
+	GSM_Error	(*CreateOutboxSMS) (GSM_MultiSMSMessage *sms);
 } GSM_SMSDService;
 
 #ifdef __GNUC__
