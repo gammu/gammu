@@ -95,7 +95,7 @@ použitelné pro většinu telefonů.
 \fBbluerfgnapbus\fP \- připojení k GNappletu běžícím na telefonech se Symbianem.
 
 .TP 
-\fBPort\fP
+\fBDevice\fP
 
 Zařízení kde je přístupný telefon nebo adresa telefonu, záleží na typu
 připojení.
@@ -121,6 +121,11 @@ zapnout objevování zařízení (tyto příkazy musíte spouštět jako root):
 
     ip l s dev irda0 up
     sysctl net.irda.discovery=1
+
+.TP 
+\fBPort\fP
+
+Alias for Device, kept for backward compatibility.
 
 .TP 
 \fBModel\fP
@@ -224,7 +229,7 @@ Konfigurace Gammu pro telefon Nokia připojený kabelem DLR\-3:
 .nf
 .ne 7
 [gammu]
-port = /dev/ttyACM0
+device = /dev/ttyACM0
 connection = dlr3
 .fi
 .sp
@@ -239,7 +244,7 @@ příkazy) připojený pomocí USB kabelu:
 .nf
 .ne 7
 [gammu]
-port = /dev/ttyACM0
+device = /dev/ttyACM0
 connection = at
 .fi
 .sp
@@ -254,7 +259,7 @@ příkazy) připojený pomocí Bluetooth:
 .nf
 .ne 7
 [gammu]
-port = B0:0B:00:00:FA:CE
+device = B0:0B:00:00:FA:CE
 connection = blueat
 .fi
 .sp
@@ -269,7 +274,7 @@ kanálu 42:
 .nf
 .ne 7
 [gammu]
-port = B0:0B:00:00:FA:CE/42
+device = B0:0B:00:00:FA:CE/42
 connection = blueat
 .fi
 .sp
@@ -288,15 +293,15 @@ following:
 .nf
 .ne 7
 [gammu]
-port = /dev/ttyS0
+device = /dev/ttyS0
 connection = at
 
 [gammmu1]
-port = /dev/ttyS1
+device = /dev/ttyS1
 connection = at
 
 [gammmu2]
-port = /dev/ttyS2
+device = /dev/ttyS2
 connection = at
 .fi
 .sp
