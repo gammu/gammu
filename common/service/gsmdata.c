@@ -373,56 +373,6 @@ void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, int *Length, char *Tex
 	Buffer[(*Length)++] = 0x01;			// END (SI)
 }
 
-void GSM_EncodeMMSFile(GSM_EncodeMultiPartMMSInfo *Info, unsigned char *Buffer, int *Length)
-{
-	int i;
-
-	strcpy(Buffer+(*Length),"\x8C\x80\x98\x4F");
-	(*Length)=(*Length)+4;
-
-	/* Unique MMS ID ? */
-	strcpy(Buffer+(*Length),"123456789");
-	(*Length)=(*Length)+9;
-	Buffer[(*Length)++] = 0x00;
-
-	strcpy(Buffer+(*Length),"\x8D\x90\x89");
-	(*Length)=(*Length)+3;
-
-	strcpy(Buffer+(*Length),"\x01\x81\x86\x81\x96");
-	(*Length)=(*Length)+5;
-
-	if (UnicodeLength(Info->Subject) != 0) {
-		sprintf(Buffer+(*Length),"%s",DecodeUnicodeString(Info->Subject));
-		(*Length)=(*Length)+UnicodeLength(Info->Subject);
-		Buffer[(*Length)++] = 0x00;
-	}
-
-	for (i=0;i<Info->EntriesNum;i++) {
-	switch(Info->Entries[i].ID) {
-	case MMS_Text:
-		strcpy(Buffer+(*Length),"\x84\xA3\x01\x04\x04\x03\x83\x81\xEA");
-		(*Length)=(*Length)+9;
-
-		sprintf(Buffer+(*Length),"%s",DecodeUnicodeString(Info->Entries[i].Buffer));
-		(*Length)=(*Length)+UnicodeLength(Info->Entries[i].Buffer);
-		break;
-	default:
-		break;
-	}
-	}
-}
-
-void GSM_ClearMultiPartMMSInfo(GSM_EncodeMultiPartMMSInfo *Info)
-{
-	Info->EntriesNum	= 0;
-	Info->Subject[0]	= 0x00;
-	Info->Subject[1]	= 0x00;
-	Info->Source[0] 	= 0x00;
-	Info->Source[1]		= 0x00;
-	Info->Destination[0] 	= 0x00;
-	Info->Destination[1] 	= 0x00;
-}
-
 GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, int *Length, GSM_WAPBookmark *bookmark)
 {
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VBKM%c%c",13,10);
@@ -436,6 +386,487 @@ GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, int *Length, GSM_WAPBookmark 
 	*Length+=sprintf(Buffer+(*Length), "END:ENV%c%c",13,10);
 	*Length+=sprintf(Buffer+(*Length), "END:VBKM%c%c",13,10);
 
+	return ERR_NONE;
+}
+
+GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo2 *info)
+{
+	int i;
+
+	for (i=0;i<MAX_MULTI_MMS;i++) {
+		if (info->Entries[i].File.Buffer != NULL) free(info->Entries[i].File.Buffer);
+	}
+
+	memset(info,0,sizeof(GSM_EncodedMultiPartMMSInfo2));
+
+	for (i=0;i<MAX_MULTI_MMS;i++) info->Entries[i].File.Buffer = NULL;
+	info->DateTimeAvailable = false;
+
+	return ERR_NONE;
+}
+
+void GSM_AddWAPMIMEType(int type, unsigned char *buffer) 
+{
+	switch (type) {
+	case  3:sprintf(buffer,"%stext/plain",buffer);					break;
+	case  6:sprintf(buffer,"%stext/x-vCalendar",buffer);				break;
+	case  7:sprintf(buffer,"%stext/x-vCard",buffer);				break;
+	case 29:sprintf(buffer,"%simage/gif",buffer);					break;
+	case 30:sprintf(buffer,"%simage/jpeg",buffer);					break;
+	case 35:sprintf(buffer,"%sapplication/vnd.wap.multipart.mixed",buffer);		break;
+	case 51:sprintf(buffer,"%sapplication/vnd.wap.multipart.related",buffer); 	break;
+	default:sprintf(buffer,"%sMIME %i",buffer,type);				break;
+	}
+}
+
+GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSInfo2 *info)
+{
+	int 		pos=0,type=0,parts,j;
+	int		i,len2,len3,len4,value2;
+	long 		value;
+	time_t 		timet;
+	GSM_DateTime 	Date;
+	char		buff[200],buff2[200];
+
+	//header
+	while(1) {
+		if (pos > file->Used) break;
+		if (!(file->Buffer[pos] & 0x80)) break;
+		switch (file->Buffer[pos++] & 0x7F) {
+		case 0x01:
+			dbgprintf("  BCC               : not done yet\n");
+			return ERR_FILENOTSUPPORTED;
+		case 0x02:
+			dbgprintf("  CC                : ");
+			i = 0;
+			while (file->Buffer[pos]!=0x00) {
+				buff[i++] = file->Buffer[pos++];
+			}
+			buff[i] = 0;
+			pos++;
+			if (strstr(buff,"/TYPE=PLMN")!=NULL) {
+				buff[strlen(buff)-10] = 0;
+				info->CCType = MMSADDRESS_PHONE;
+				dbgprintf("phone %s\n",buff);
+			} else {
+				info->CCType = MMSADDRESS_UNKNOWN;
+				dbgprintf("%s\n",buff);
+			}
+			EncodeUnicode(info->CC,buff,strlen(buff));
+			break;
+		case 0x03:
+			dbgprintf("  Content location  : not done yet\n");
+			return ERR_FILENOTSUPPORTED;
+		case 0x04:
+			dbgprintf("  Content type      : ");
+			buff[0] = 0;
+			if (file->Buffer[pos] <= 0x1E) {
+				len2 = file->Buffer[pos++];
+				type = file->Buffer[pos++] & 0x7f;
+				GSM_AddWAPMIMEType(type, buff);
+				i=0;
+				while (i<len2) {
+					switch (file->Buffer[pos+i]) {
+					case 0x89:
+						sprintf(buff,"%s; type=",buff);
+						i++;
+						while (file->Buffer[pos+i]!=0x00) {
+							buff[strlen(buff)+1] = 0;
+							buff[strlen(buff)]   = file->Buffer[pos+i];
+							i++;
+						}
+						i++;
+						break;
+					case 0x8A:
+						sprintf(buff,"%s; start=",buff);
+						i++;
+						while (file->Buffer[pos+i]!=0x00) {
+							buff[strlen(buff)+1] = 0;
+							buff[strlen(buff)]   = file->Buffer[pos+i];
+							i++;
+						}
+						i++;
+						break;
+					default:
+						i++;
+						break;
+					}
+				}
+				pos+=len2-1;
+			} else if (file->Buffer[pos] == 0x1F) {
+				dbgprintf("not done yet\n");
+				return ERR_FILENOTSUPPORTED;
+			} else if (file->Buffer[pos] >= 0x20 && file->Buffer[pos] <= 0x7F) {
+				dbgprintf("not done yet\n");
+				return ERR_FILENOTSUPPORTED;
+			} else if (file->Buffer[pos] >= 0x80 && file->Buffer[pos] < 0xFF) {
+				type = file->Buffer[pos++] & 0x7f;
+				GSM_AddWAPMIMEType(type, buff);
+			}
+			dbgprintf("%s\n",buff);
+			EncodeUnicode(info->ContentType,buff,strlen(buff));
+			break;
+		case 0x05:
+			dbgprintf("  Date              : ");
+			value=0;
+			len2 = file->Buffer[pos++];
+			for (i=0;i<len2;i++) {
+				value=value<<8;
+				value |= file->Buffer[pos++];
+			}
+			timet = value;
+			Fill_GSM_DateTime(&Date, timet);
+			Date.Year = Date.Year + 1900;
+			dbgprintf("%s\n",OSDateTime(Date,0));
+			info->DateTimeAvailable = true;
+			memcpy(&info->DateTime,&Date,sizeof(GSM_DateTime));
+			break;
+		case 0x06:
+			dbgprintf("  Delivery report   : ");
+			info->MMSReportAvailable = true;			
+			switch(file->Buffer[pos++]) {
+				case 0x80: 
+					dbgprintf("yes\n");
+					info->MMSReport = true;
+					break;
+				case 0x81:
+					dbgprintf("no\n");
+					info->MMSReport = false;
+					break;
+				default:
+					dbgprintf("unknown\n");
+					return ERR_FILENOTSUPPORTED;
+			}
+			break;
+		case 0x08:
+			dbgprintf("  Expiry            : not done yet\n");
+			return ERR_FILENOTSUPPORTED;
+		case 0x09:
+			pos++;
+			pos++;
+			if (file->Buffer[pos-1] == 128) {
+				dbgprintf("  From              : ");
+				len2=file->Buffer[pos-2]-1;
+				for (i=0;i<len2;i++) {
+					buff[i] = file->Buffer[pos++];
+				}
+				buff[i] = 0;
+				if (strstr(buff,"/TYPE=PLMN")!=NULL) {
+					buff[strlen(buff)-10] = 0;
+					info->SourceType = MMSADDRESS_PHONE;
+					dbgprintf("phone %s\n",buff);
+				} else {
+					info->SourceType = MMSADDRESS_UNKNOWN;
+					dbgprintf("%s\n",buff);
+				}
+				EncodeUnicode(info->Source,buff,strlen(buff));
+			}
+			break;
+		case 0x0A:
+			dbgprintf("  Message class     : ");
+			switch (file->Buffer[pos++]) {
+				case 0x80: dbgprintf("personal\n");	 break;
+				case 0x81: dbgprintf("advertisment\n");	 break;
+				case 0x82: dbgprintf("informational\n"); break;
+				case 0x83: dbgprintf("auto\n");		 break;
+				default  : dbgprintf("unknown\n");	 break;
+			}
+			break;
+		case 0x0B:
+			dbgprintf("  Message ID        : ");
+			while (file->Buffer[pos]!=0x00) {
+				dbgprintf("%c",file->Buffer[pos]);
+				pos++;
+			}
+			dbgprintf("\n");
+			pos++;
+			break;
+		case 0x0C:
+			dbgprintf("  Message type      : ");
+			switch (file->Buffer[pos++]) {
+				case 0x80: sprintf(info->MSGType,"m-send-req");  	   	break;
+				case 0x81: sprintf(info->MSGType,"m-send-conf"); 	   	break;
+				case 0x82: sprintf(info->MSGType,"m-notification-ind"); 	break;
+				case 0x83: sprintf(info->MSGType,"m-notifyresp-ind");   	break;
+				case 0x84: sprintf(info->MSGType,"m-retrieve-conf");		break;
+				case 0x85: sprintf(info->MSGType,"m-acknowledge-ind");  	break;
+				case 0x86: sprintf(info->MSGType,"m-delivery-ind");		break;
+				default  : dbgprintf("unknown\n"); 	   			return ERR_FILENOTSUPPORTED;
+			}
+			dbgprintf("%s\n",info->MSGType);
+			break;
+		case 0x0D:
+			value2 = file->Buffer[pos] & 0x7F;
+			dbgprintf("  MMS version       : %i.%i\n", (value2 & 0x70) >> 4, value2 & 0x0f);
+			pos++;
+			break;
+		case 0x0E:
+			dbgprintf("  Message size      : not done yet\n");
+			return ERR_FILENOTSUPPORTED;
+		case 0x0F:
+			dbgprintf("  Priority          : ");
+			switch (file->Buffer[pos++]) {
+				case 0x80: dbgprintf("low\n");		break;
+				case 0x81: dbgprintf("normal\n");	break;
+				case 0x82: dbgprintf("high\n");		break;
+				default  : dbgprintf("unknown\n");	break;
+			}
+			break;
+		case 0x10:
+			dbgprintf("  Read reply        : ");
+			switch(file->Buffer[pos++]) {
+				case 0x80: dbgprintf("yes\n"); 		break;
+				case 0x81: dbgprintf("no\n");  		break;
+				default  : dbgprintf("unknown\n");
+			}
+			break;
+		case 0x11:
+			dbgprintf("  Report allowed    : not done yet\n");
+			return ERR_FILENOTSUPPORTED;
+		case 0x12:
+			dbgprintf("  Response status   : not done yet\n");
+			return ERR_FILENOTSUPPORTED;
+		case 0x13:
+			dbgprintf("  Response text     : not done yet\n");
+			return ERR_FILENOTSUPPORTED;
+		case 0x14:
+			dbgprintf("  Sender visibility : not done yet\n");
+			return ERR_FILENOTSUPPORTED;
+		case 0x15:
+			dbgprintf("  Status            : ");
+			switch (file->Buffer[pos++]) {
+				case 0x80: dbgprintf("expired\n");	break;
+				case 0x81: dbgprintf("retrieved\n");	break;
+				case 0x82: dbgprintf("rejected\n");	break;
+				case 0x83: dbgprintf("deferred\n");	break;
+				case 0x84: dbgprintf("unrecognized\n");	break;
+				default  : dbgprintf("unknown\n");
+			}
+			pos++;
+			pos++;
+			break;
+		case 0x16:
+			dbgprintf("  Subject           : ");
+			if (file->Buffer[pos+1]==0xEA) {
+				pos+=2;
+			}
+			i = 0;
+			while (file->Buffer[pos]!=0x00) {
+				buff[i++] = file->Buffer[pos++];
+			}
+			buff[i] = 0;
+			dbgprintf("%s\n",buff);
+			EncodeUnicode(info->Subject,buff,strlen(buff));
+			pos++;
+			break;
+		case 0x17:
+			dbgprintf("  To                : ");
+			i = 0;
+			while (file->Buffer[pos]!=0x00) {
+				buff[i++] = file->Buffer[pos++];
+			}
+			buff[i] = 0;
+			if (strstr(buff,"/TYPE=PLMN")!=NULL) {
+				buff[strlen(buff)-10] = 0;
+				info->DestinationType = MMSADDRESS_PHONE;
+				dbgprintf("phone %s\n",buff);					
+			} else {
+				info->DestinationType = MMSADDRESS_UNKNOWN;
+				dbgprintf("%s\n",buff);
+			}
+			EncodeUnicode(info->Destination,buff,strlen(buff));
+			pos++;
+			break;
+		case 0x18:
+			dbgprintf("  Transaction ID    : ");
+			while (file->Buffer[pos]!=0x00) {
+				dbgprintf("%c",file->Buffer[pos]);
+				pos++;
+			}
+			dbgprintf("\n");
+			pos++;
+			break;
+		default:
+			dbgprintf("  unknown1\n");
+			break;
+		}
+	}
+
+	//if we don't have any parts, we exit
+	if (type != 35 && type != 51) return ERR_NONE;
+
+	value = 0;
+	while (true) {
+		value = value << 7;
+		value |= file->Buffer[pos] & 0x7F;
+		pos++;
+		if (!(file->Buffer[pos-1] & 0x80)) break;
+	}
+	value2 = value;
+//	dbgprintf("  Parts             : %i\n",value2);
+	parts = value;
+
+	for (j=0;j<parts;j++) {
+		value = 0;
+		while (true) {
+			value = value << 7;
+			value |= file->Buffer[pos] & 0x7F;
+			pos++;
+			if (!(file->Buffer[pos-1] & 0x80)) break;
+		}
+		dbgprintf("    Header len: %i",value);
+		len2 = value;
+
+		value = 0;
+		while (true) {
+			value = value << 7;
+			value |= file->Buffer[pos] & 0x7F;
+			pos++;
+			if (!(file->Buffer[pos-1] & 0x80)) break;
+		}
+		dbgprintf(", data len: %i\n",value);
+		len3 = value;
+
+		//content type
+		i 	= 0;
+		buff[0] = 0;
+		dbgprintf("    Content type    : ");
+		if (file->Buffer[pos] >= 0x80) {
+			type = file->Buffer[pos] & 0x7f;
+			GSM_AddWAPMIMEType(type, buff);
+		} else if (file->Buffer[pos+i] == 0x1F) {
+			i++;
+			buff[0] = 0;
+			len4 	= file->Buffer[pos+i];
+			i++;
+			if (!(file->Buffer[pos+i] & 0x80)) {
+				while (file->Buffer[pos+i]!=0x00) {
+					buff[strlen(buff)+1] = 0;
+					buff[strlen(buff)]   = file->Buffer[pos+i];
+					i++;
+				}
+				i++;
+			} else {
+				value = file->Buffer[pos+i] & 0x7F;
+				GSM_AddWAPMIMEType(value, buff);
+				i++;
+			}
+		} else if (file->Buffer[pos+i] < 0x1F) {
+			i++;
+			if (file->Buffer[pos+i] & 0x80) {
+				type = file->Buffer[pos+i] & 0x7f;
+				GSM_AddWAPMIMEType(type, buff);
+				i++;
+			} else {
+				while (file->Buffer[pos+i]!=0x00) {
+					buff[strlen(buff)+1] = 0;
+					buff[strlen(buff)]   = file->Buffer[pos+i];
+					i++;
+				}
+				i++;
+			}
+		} else {
+			while (file->Buffer[pos+i]!=0x00) {
+				buff[strlen(buff)+1] = 0;
+				buff[strlen(buff)]   = file->Buffer[pos+i];
+				i++;
+			}
+		}
+		dbgprintf("%s\n",buff);
+		EncodeUnicode(info->Entries[info->EntriesNum].ContentType,buff,strlen(buff));
+
+		pos+=i;
+		len2-=i;
+
+		i=0;
+		while (i<len2) {
+//			dbgprintf("%02x\n",file->Buffer[pos+i]);
+			switch (file->Buffer[pos+i]) {
+			case 0x81:
+				i++;
+				break;
+			case 0x83:
+				break;
+			case 0x85:
+				//mms 1.0 file from GSM operator
+				buff2[0] = 0;
+				i++;
+				while (file->Buffer[pos+i]!=0x00) {
+					buff2[strlen(buff2)+1] = 0;
+					buff2[strlen(buff2)]   = file->Buffer[pos+i];
+					i++;
+				}
+				EncodeUnicode(info->Entries[info->EntriesNum].File.Name,buff2,strlen(buff2));
+//				i++;
+				break;
+			case 0x86:
+				while (file->Buffer[pos+i]!=0x00) i++;
+				break;
+			case 0x89:
+				buff[0] = 0;
+				sprintf(buff,"%s; type=",buff);
+				i++;
+				while (file->Buffer[pos+i]!=0x00) {
+					buff[strlen(buff)+1] = 0;
+					buff[strlen(buff)]   = file->Buffer[pos+i];
+					i++;
+				}
+				i++;
+				break;
+			case 0x8A:
+				buff[0] = 0;
+				sprintf(buff,"%s; start=",buff);
+				i++;
+				while (file->Buffer[pos+i]!=0x00) {
+					buff[strlen(buff)+1] = 0;
+					buff[strlen(buff)]   = file->Buffer[pos+i];
+					i++;
+				}
+				i++;
+				break;
+			case 0x8E:
+				i++;
+				buff[0] = 0;
+				dbgprintf("      Name          : ");
+				while (file->Buffer[pos+i]!=0x00) {
+					buff[strlen(buff)+1] = 0;
+					buff[strlen(buff)]   = file->Buffer[pos+i];
+					i++;
+				}
+				dbgprintf("%s\n",buff);
+				EncodeUnicode(info->Entries[info->EntriesNum].File.Name,buff,strlen(buff));
+				break;					
+			case 0xAE:
+				while (file->Buffer[pos+i]!=0x00) i++;
+				break;					
+			case 0xC0:
+				i++;
+				i++;
+				buff[0] = 0;
+				dbgprintf("      SMIL CID      : ");
+				while (file->Buffer[pos+i]!=0x00) {
+					buff[strlen(buff)+1] = 0;
+					buff[strlen(buff)]   = file->Buffer[pos+i];
+					i++;
+				}
+				dbgprintf("%s\n",buff);
+				EncodeUnicode(info->Entries[info->EntriesNum].SMIL,buff,strlen(buff));
+				break;					
+			default:
+				dbgprintf("unknown3 %02x\n",file->Buffer[pos+i]);
+			}
+			i++;
+		}
+		pos+=i;
+
+		//data
+		info->Entries[info->EntriesNum].File.Buffer = realloc(info->Entries[info->EntriesNum].File.Buffer,len3);
+		info->Entries[info->EntriesNum].File.Used   = len3;
+		memcpy(info->Entries[info->EntriesNum].File.Buffer,file->Buffer+pos,len3);
+
+		info->EntriesNum++;
+		pos+=len3;
+	}
 	return ERR_NONE;
 }
 
