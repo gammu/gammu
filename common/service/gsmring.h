@@ -174,6 +174,11 @@ typedef struct {
 GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone);
 GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone);
 
+void saveott(FILE *file, GSM_Ringtone *ringtone);
+void savemid(FILE *file, GSM_Ringtone *ringtone);
+void saverng(FILE *file, GSM_Ringtone *ringtone);
+void saveimelody(FILE *file, GSM_Ringtone *ringtone);
+GSM_Error savewav(FILE *file, GSM_Ringtone *ringtone);
 GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone);
 
 unsigned char	GSM_EncodeNokiaRTTLRingtone	(GSM_Ringtone ringtone, unsigned char *package, int *maxlength);

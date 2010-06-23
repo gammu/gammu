@@ -22,6 +22,47 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20040120 - 0.92.7
+* new functionality:
+  * * Debian:                                                    (Michal Cihar)
+      * added devel docs into devel package
+    * Alcatel:
+      * automatic detection, when model not specified in config    
+      * adding categories
+  * backup file contains full info about creator
+  * first version of backup/restore application for win32
+  * ID for 7600                                                         (Intra)
+  * ID for 3108                                                         (Peter)
+  * MAKEFILE FOR BORLAND C++ X
+
+* fixes and improvements:
+  * * Debian:                                                    (Michal Cihar)
+      * libGammu.a moved to devel package, where it should belong.
+      * Fixed warnings about substvars during package build.
+      * libgammu* packages renamed to libgammu0* (as gammu now uses soname).
+      * utf-8 changelog according to policy.
+    * fixed bug with restoring addresses from backup
+    * devices are always unlocked, when opening failed
+    * ATGEN:
+      * fixed finding of empty location for atgen, could
+        lead to overwriting  existing entry
+      * improved unicode byte order detection in case that
+        string is not using just lower bytes
+      * corrected decoding phonebook numbers for Sagem
+      * fix for phones that do not start locations from 1 such as sagem
+  * * when you will upload file to DCT4, all "/" and ":"       (Bostjan Muller)
+      in filename are replaced CORRECTLY with "_"
+    * longer SMS folder name for DCT4
+  * much better debug info for OS and compiler
+
+NOTE: Many exams (happily passed), a lot of work and no time for anything.
+
+      Also many speeches with various people about sponsoring Gammu work (happily
+      probably it will end with success - backup/restore for win32 will be
+      probably first sponsored Gammu app).
+      
+      Please test this version. It should fix probably all found problems.
+      
 20040103 - 0.92.0
 * new functionality:
   * support for TPMR in SMS is complete

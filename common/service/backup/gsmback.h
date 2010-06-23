@@ -37,7 +37,8 @@ typedef struct {
 	bool Note;
 } GSM_Backup_Info;
 
-void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup);
+void GSM_GetBackupFormatFeatures(char *FileName, GSM_Backup_Info *info);
+void GSM_GetBackupFileFeatures  (char *FileName, GSM_Backup_Info *info, GSM_Backup *backup);
 
 #endif
 #endif

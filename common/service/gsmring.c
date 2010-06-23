@@ -77,7 +77,7 @@ int GSM_RingNoteGetFullDuration(GSM_RingNote Note)
 
 #define WAV_SAMPLE_RATE 44100
 
-static GSM_Error savewav(FILE *file, GSM_Ringtone *ringtone)
+GSM_Error savewav(FILE *file, GSM_Ringtone *ringtone)
 {
 	unsigned char 	WAV_Header[] = {
 			'R','I','F','F',
@@ -323,7 +323,7 @@ GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone)
 	return ERR_NONE;
 }
 
-static void saveimelody(FILE *file, GSM_Ringtone *ringtone)
+void saveimelody(FILE *file, GSM_Ringtone *ringtone)
 {
 	char 	Buffer[2000];
   	int 	i=2000;
@@ -360,7 +360,7 @@ static void WriteVarLen(unsigned char* midifile, int* current, long value)
 #define singlepauses
 
 /* FIXME: need adding tempo before each note and scale too ? */
-static void savemid(FILE* file, GSM_Ringtone *ringtone)
+void savemid(FILE* file, GSM_Ringtone *ringtone)
 {
 	int 		pause 	= 0, current = 26, duration, i, note=0, length = 20;
 	bool		started = false;
@@ -437,7 +437,7 @@ static void savemid(FILE* file, GSM_Ringtone *ringtone)
 
 #endif
 
-static void saveott(FILE *file, GSM_Ringtone *ringtone)
+void saveott(FILE *file, GSM_Ringtone *ringtone)
 {
 	char 	Buffer[2000];
   	int 	i=2000;

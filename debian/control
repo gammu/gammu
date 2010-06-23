@@ -2,12 +2,12 @@ Source: gammu
 Section: comm
 Priority: optional
 Maintainer: Michal Cihar <michal@cihar.com>
-Build-Depends: debhelper (>> 3.0.0), libc6-dev, libbluetooth1, libbluetooth1-dev
-Standards-Version: 3.5.2
+Build-Depends: debhelper (>= 4.0.0), libc6-dev, libbluetooth1, libbluetooth1-dev, autoconf
+Standards-Version: 3.6.0
 
 Package: gammu
 Architecture: any
-Depends: ${shlibs:Depends}, libgammu (= ${Source-Version})
+Depends: ${shlibs:Depends}
 Description: Mobile phone management utility
  Gammu (GNU All Mobile Management Utility) is program to manage mobile phone.
  .
@@ -25,10 +25,12 @@ Description: Mobile phone management utility
  .
  This package contains gammu binary.
 
-Package: libgammu-dev
+Package: libgammu0-dev
+Replaces: libgammu-dev
+Conflicts: libgammu-dev, libgammu
 Section: libdevel
 Architecture: any
-Depends: libgammu (= ${Source-Version})
+Depends: libgammu0 (= ${Source-Version})
 Description: Header files for Gammu
  Gammu (GNU All Mobile Management Utility) is program to manage mobile phone.
  .
@@ -46,10 +48,12 @@ Description: Header files for Gammu
  .
  This package contains header files needed for compiling programs with Gammu.
 
-Package: libgammu
+Package: libgammu0
+Replaces: libgammu
+Conflicts: libgammu
 Section: libs
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}
 Description:  Mobile phone management library
  Gammu (GNU All Mobile Management Utility) is program to manage mobile phone.
  .

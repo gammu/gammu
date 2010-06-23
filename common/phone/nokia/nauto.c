@@ -50,6 +50,7 @@ GSM_Phone_Functions NAUTOPhone = {
 	NOTSUPPORTED,			/*	GetSignalQuality	*/
 	NOTSUPPORTED,			/*	GetNetworkInfo		*/
 	NOTSUPPORTED,     		/*  	GetCategory 		*/
+ 	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/	
 	NOTSUPPORTED,			/*	GetMemoryStatus		*/
 	NOTSUPPORTED,			/*	GetMemory		*/

@@ -339,6 +339,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 	GSM_UDH		UDH	= UDH_NoUDH;
 	GSM_UDHHeader 	UDHHeader;
 	bool		EMS	= false;
+	int		textnum = 0;
 
 	SMS->Number = 0;
 
@@ -407,6 +408,18 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 			break;
 		case SMS_ConcatenatedTextLong:
 		case SMS_ConcatenatedTextLong16bit:
+		
+			/* This covers situation, when somebody will call function
+			 * with two or more SMS_Concatenated.... entries only.
+			 * It will be still only linked sms, but functions below
+			 * will pack only first entry according to own limits.
+			 * We redirect to EMS functions, because they are more generic
+			 * here and will handle it correctly and produce linked sms
+			 * from all entries
+			 */
+			textnum ++;
+			if (textnum > 1) EMS = true;
+			
 			if (Info->Entries[i].Left   || Info->Entries[i].Right      ||
 			    Info->Entries[i].Center || Info->Entries[i].Large      ||
 			    Info->Entries[i].Small  || Info->Entries[i].Bold       ||
@@ -791,6 +804,7 @@ bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo	*Info,
 	if (SMS->SMS[0].UDH.Type == UDH_NokiaCallerLogo && SMS->Number == 1) {
 		Info->Entries[0].Bitmap = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap));
 		if (Info->Entries[0].Bitmap == NULL) return false;
+		Info->Entries[0].Bitmap->Number = 1;
 		PHONE_DecodeBitmap(GSM_NokiaCallerLogo, SMS->SMS[0].Text+4, &Info->Entries[0].Bitmap->Bitmap[0]);
 #ifdef DEBUG
 		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Info->Entries[0].Bitmap->Bitmap[0]);
@@ -802,6 +816,7 @@ bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo	*Info,
 	if (SMS->SMS[0].UDH.Type == UDH_NokiaOperatorLogo && SMS->Number == 1) {
 		Info->Entries[0].Bitmap = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap));
 		if (Info->Entries[0].Bitmap == NULL) return false;
+		Info->Entries[0].Bitmap->Number = 1;
 		PHONE_DecodeBitmap(GSM_NokiaOperatorLogo, SMS->SMS[0].Text+7, &Info->Entries[0].Bitmap->Bitmap[0]);
 		NOKIA_DecodeNetworkCode(SMS->SMS[0].Text, Info->Entries[0].Bitmap->Bitmap[0].NetworkCode);
 #ifdef DEBUG
@@ -825,6 +840,7 @@ bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo	*Info,
 		Info->Entries[0].ID = SMS_NokiaPictureImageLong;
 		Info->Entries[0].Bitmap = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap));
 		if (Info->Entries[0].Bitmap == NULL) return false;
+		Info->Entries[0].Bitmap->Number = 1;
 		Info->Entries[0].Bitmap->Bitmap[0].Text[0] = 0;
 		Info->Entries[0].Bitmap->Bitmap[0].Text[1] = 0;
 		i=1;

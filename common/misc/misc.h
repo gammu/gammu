@@ -127,6 +127,9 @@ void Fill_GSM_DateTime		(GSM_DateTime *Date, time_t timet);
 bool CheckDate			(GSM_DateTime *date);
 bool CheckTime			(GSM_DateTime *date);
 
+char 				*GetCompiler(void);
+char 				*GetOS(void);
+
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

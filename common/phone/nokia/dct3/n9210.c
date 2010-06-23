@@ -298,6 +298,7 @@ GSM_Phone_Functions N9210Phone = {
 	N71_92_GetSignalQuality,
 	DCT3_GetNetworkInfo,
 	NOTSUPPORTED,       		/*  	GetCategory 		*/
+ 	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
 	NOTIMPLEMENTED,			/*	GetMemoryStatus		*/
 	NOTIMPLEMENTED,			/*	GetMemory		*/

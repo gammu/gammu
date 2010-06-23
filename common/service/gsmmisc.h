@@ -203,7 +203,7 @@ typedef struct {
 #define GSM_MAX_CATEGORY_NAME_LENGTH 50
 
 typedef enum {
-	Category_ToDo,
+	Category_ToDo = 1,
 	Category_Phonebook
 } GSM_CategoryType;
 

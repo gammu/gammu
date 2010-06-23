@@ -1002,7 +1002,7 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 		SaveBackupText(file, "", buffer, false);
 	}
 
-	sprintf(buffer,"# Backup file created by Gammu (www.mwiacek.com) version %s%c%c%c%c",VERSION,13,10,13,10);
+	sprintf(buffer,"# Format of this file was designed for Gammu (see www.mwiacek.com)%c%c%c%c",13,10,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
 	sprintf(buffer,"[Backup]%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
@@ -1010,6 +1010,10 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	SaveBackupText(file, "", buffer, UseUnicode);
 	sprintf(buffer,"Phone = \"%s\"%c%c",backup->Model,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
+	if (backup->Creator[0] != 0) {
+		sprintf(buffer,"Creator = \"%s\"%c%c",backup->Creator,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
+	}
 	if (backup->DateTimeAvailable) {
 		SaveBackupText(file, "", "DateTime", UseUnicode);
 		SaveVCalDateTime(file, &backup->DateTime, UseUnicode);
@@ -1192,7 +1196,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Company;
 			} else if (mystrncasecmp(readvalue,"JobTitle",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_JobTitle;
-			} else if (mystrncasecmp(readvalue,"StreetAddress",0)) {
+			} else if (mystrncasecmp(readvalue,"Address",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_StreetAddress;
 			} else if (mystrncasecmp(readvalue,"City",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_City;
@@ -2157,6 +2161,8 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	if (readvalue!=NULL) strcpy(backup->IMEI,readvalue);
 	readvalue = ReadCFGText(file_info, buffer, "Phone", UseUnicode);
 	if (readvalue!=NULL) strcpy(backup->Model,readvalue);
+	readvalue = ReadCFGText(file_info, buffer, "Creator", UseUnicode);
+	if (readvalue!=NULL) strcpy(backup->Creator,readvalue);
 	readvalue = ReadCFGText(file_info, buffer, "DateTime", UseUnicode);
 	if (readvalue!=NULL) {
 		ReadVCALDateTime(readvalue, &backup->DateTime);
