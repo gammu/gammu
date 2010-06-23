@@ -120,10 +120,6 @@ Show names/codes of GSM networks known for Gammu
 .TP
 \fB\-\-getfmstation start [stop]\fR
 Show info about FM stations in phone
-.TP
-\fB\-\-setfmstation location frequency StationName\fR
-.TP
-\fB\-\-clearfmstations\fR
 .TP 
 \fB\-\-getdatetime\fR
 Get date and time from phone
@@ -209,7 +205,7 @@ SMS Deaemon. See smsdrc config file for more options
 \fB\-\-getringtone location [file]\fR
 Get ringtone from phone in RTTL or BINARY format. Locations are numerated from 1.
 .TP 
-\fB\-\-setringtone file [location] [\-scale]\fR
+\fB\-\-setringtone file [-location location] [\-scale] [-name name]\fR
 Set ringtone in phone. When don't give location, it will be written
 "with preview" (in phones supporting this feature like 61xx or 6210).
 When use RTTL ringtones, give location and use \fB\-scale\fR, there will be written

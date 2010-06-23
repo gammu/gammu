@@ -1909,7 +1909,9 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/* GetFMStation		*/
 	NOTSUPPORTED,			/* SetFMStation		*/
 	NOTSUPPORTED,			/* ClearFMStations	*/
-	NOTSUPPORTED			/* SetIncomingUSSD	*/
+	NOTSUPPORTED,			/* SetIncomingUSSD	*/
+	NOTSUPPORTED,			/* DeleteUserRingtones	*/
+	NOTSUPPORTED			/* ShowStartInfo	*/
 };
 
 #endif

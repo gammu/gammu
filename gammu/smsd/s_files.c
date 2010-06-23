@@ -176,9 +176,10 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	Buffer[len+1] 	= 0;
   	ReadUnicodeFile(Buffer2,Buffer);
 
-  	SMSInfo.ReplaceMessage  = 0;
-  	SMSInfo.Entries[0].Buffer		= Buffer2;
-  	SMSInfo.Class		= -1;
+  	SMSInfo.ReplaceMessage  	= 0;
+  	SMSInfo.Entries[0].Buffer	= Buffer2;
+  	SMSInfo.Class			= -1;
+	SMSInfo.EntriesNum		= 1;
  	if (mystrncasecmp(Config->transmitformat, "unicode", 0)) {
  		SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
  		SMSInfo.UnicodeCoding = true;
@@ -189,7 +190,6 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		/* auto */
  		SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
 	}
-
   	GSM_EncodeMultiPartSMS(&SMSInfo,sms);
 
  	pos1 = FileName;
@@ -228,16 +228,19 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  	}
 
 #ifdef DEBUG
-	DecodeUnicode(sms->SMS[0].Number,Buffer);
- 	dprintf("Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i\n",
-		sms->Number,
-		Buffer,
- 		DecodeUnicodeString(sms->SMS[0].Text),
-		sms->SMS[0].Coding,
-		sms->SMS[0].Length,
-		sms->SMS[0].UDH.Type,
-		sms->SMS[0].UDH.Length);
+	if (sms->Number != 0) {
+		DecodeUnicode(sms->SMS[0].Number,Buffer);
+	 	dprintf("Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i\n",
+			sms->Number,
+			Buffer,
+	 		DecodeUnicodeString(sms->SMS[0].Text),
+			sms->SMS[0].Coding,
+			sms->SMS[0].Length,
+			sms->SMS[0].UDH.Type,
+			sms->SMS[0].UDH.Length);
+	} else dprintf("error\n");
 #endif
+
   	return GE_NONE;
 }
 

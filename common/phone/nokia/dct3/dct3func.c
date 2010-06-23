@@ -1289,7 +1289,7 @@ GSM_Error N71_92_ReplyPhoneSetting(GSM_Protocol_Message msg, GSM_StateMachine *s
 	case 0x02:
 		if (Data->RequestID == ID_GetBitmap || Data->RequestID == ID_EachFrame) {
 			smprintf(s, "Welcome note text received\n");
-			CopyUnicodeString(Data->Bitmap->Text,msg.Buffer+5);
+			CopyUnicodeString(Data->Bitmap->Text,msg.Buffer+6);
 			smprintf(s, "Text is \"%s\"\n",DecodeUnicodeString(Data->Bitmap->Text));
 			return GE_NONE;
 		}
@@ -1308,6 +1308,17 @@ GSM_Error N71_92_ReplyPhoneSetting(GSM_Protocol_Message msg, GSM_StateMachine *s
 		}
 		if (Data->RequestID == ID_SetBitmap || Data->RequestID == ID_EachFrame) {
 			smprintf(s, "Startup logo set\n");
+			return GE_NONE;
+		}
+	case 0x17:
+		if (Data->RequestID == ID_GetBitmap || Data->RequestID == ID_EachFrame) {
+			smprintf(s, "Dealer note text received\n");
+			CopyUnicodeString(Data->Bitmap->Text,msg.Buffer+6);
+			smprintf(s, "Text is \"%s\"\n",DecodeUnicodeString(Data->Bitmap->Text));
+			return GE_NONE;
+		}
+		if (Data->RequestID == ID_SetBitmap || Data->RequestID == ID_EachFrame) {
+			smprintf(s, "Dealer text set\n");
 			return GE_NONE;
 		}
 	}

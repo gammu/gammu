@@ -155,7 +155,48 @@ installlibonly: all
 
 tags: $(shell find . -name '*.[ch]' -o -name '*.cpp')
 	@echo Generating tags file
-	@ctags `find . -name '*.[ch]' -o -name '*.cpp'`
+	@ctags $(shell find . -name '*.[ch]' -o -name '*.cpp')
+
+# This will convert all *.[ch] files to CRLF (DOS/Windoze), it expects all
+# files are LF only or CRLF only
+todos:
+	@echo "Converting to CRLF:"
+	@find . -name '*.[ch]' -o -name '*.cpp' | \
+		while read fname ; do \
+			echo "$${fname}"; \
+			todos "$${fname}"; \
+		done
+
+# This will convert all *.[ch] files to LF (Unix/Linux), it expects all
+# files are LF only or CRLF only
+fromdos:
+	@echo "Converting to LF:"
+	@find . -name '*.[ch]' -o -name '*.cpp' | \
+		while read fname ; do \
+			echo "$${fname}"; \
+			fromdos "$${fname}"; \
+		done
+
+# This will convert all *.[ch] files to LF (Unix/Linux), it will convert any
+# possible single remaining CR to LF
+fixcrlf:
+	@echo "Converting to LF with fixup:"
+	@tmpfile=`mktemp /tmp/gammu-fixcrlf.XXXXXX` export tmpfile ; \
+		find . -name '*.[ch]' -o -name '*.cpp' | \
+		while read fname ; do \
+			echo -n "$${fname}" ; \
+			fromdos "$${fname}" ; \
+			if ( file "$${fname}" | grep -q 'CR' ) ; then \
+				cat "$${fname}" > "$${tmpfile}" ; \
+				tr '\r' '\n' < "$${tmpfile}" > "$${fname}" ; \
+				echo " fixed" ; \
+			else \
+				echo " OK" ; \
+			fi \
+		done ; \
+		rm -f "$${fname}" ; \
+		unset tempfile
+
 
 makecleantree:
 	@echo Making Gammu tree snapshot

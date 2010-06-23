@@ -24,8 +24,6 @@ static unsigned char N6110_MEMORY_TYPES[] = {
 	  0x00, 0x00
 };
 
-#ifdef GSM_ENABLE_6110_AUTHENTICATION
-
 /* This function provides Nokia authentication protocol.
  * This code is written specially for Gnokii project by Odinokov Serge.
  * If you have some special requests for Serge just write him to
@@ -139,21 +137,21 @@ static GSM_Error N6110_MakeAuthentication(GSM_StateMachine *s)
 	return s->Protocol.Functions->WriteMessage(s, magic_connect, 45, 0x64);
 }
 
-#endif
-
-static GSM_Error N6110_Initialise (GSM_StateMachine *s)
+static GSM_Error N6110_ShowStartInfo(GSM_StateMachine *s, bool enable)
 {
 	GSM_Error error=GE_NONE;
 
-#ifdef GSM_ENABLE_6110_AUTHENTICATION
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_MAGICBYTES)) {
 		if (s->ConnectionType == GCT_FBUS2 ||
 		    s->ConnectionType == GCT_INFRARED) {
 			error=N6110_MakeAuthentication(s);
-			if (error!=GE_NONE) return error;
 		}
 	}
-#endif
+	return error;
+}
+
+static GSM_Error N6110_Initialise (GSM_StateMachine *s)
+{
 #ifdef DEBUG
 	DCT3_SetIncomingCB(s,true);
 #endif
@@ -183,7 +181,7 @@ static GSM_Error N6110_SetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int al
 
 static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int count;
+	int 			count;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	smprintf(s, "Phonebook entry received\n");
@@ -372,7 +370,7 @@ static GSM_Error N6110_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMach
 
 static GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
 
 	smprintf(s, "SMS Message received\n");
 	switch(msg.Buffer[3]) {
@@ -461,7 +459,8 @@ static GSM_Error N6110_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 
 static GSM_Error N6110_ReplyGetStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
 #ifdef DEBUG
 	smprintf(s, "Phone status received :\n");
 	smprintf(s, "Mode                  : ");
@@ -482,7 +481,6 @@ static GSM_Error N6110_ReplyGetStatus(GSM_Protocol_Message msg, GSM_StateMachine
 	smprintf(s, "Signal strength       : %d\n", msg.Buffer[5]);
 #endif
 
-
   	switch (Data->RequestID) {
  	case ID_GetBatteryCharge:
 		Data->BatteryCharge->BatteryPercent = ((int)msg.Buffer[8])*25;
@@ -502,6 +500,7 @@ static GSM_Error N6110_ReplyGetStatus(GSM_Protocol_Message msg, GSM_StateMachine
 static GSM_Error N6110_GetStatus(GSM_StateMachine *s, int ID)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x01};
+
 	return GSM_WaitFor (s, req, 4, 0x04, 4, ID);
 }
 
@@ -553,7 +552,8 @@ static GSM_Error N6110_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *
 
 static GSM_Error N6110_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
 	smprintf(s, "SMS message saving status\n");
 	switch (msg.Buffer[3]) {
 	case 0x05:
@@ -706,7 +706,7 @@ static GSM_Error N6110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 
 static GSM_Error N6110_ReplyGetOpLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int count=5;
+	int 			count=5;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	smprintf(s, "Operator logo received\n");
@@ -726,7 +726,7 @@ static GSM_Error N6110_ReplyGetOpLogo(GSM_Protocol_Message msg, GSM_StateMachine
 
 static GSM_Error N6110_ReplyGetStartup(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int i, count = 5;
+	int 			i, count = 5;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	smprintf(s, "Startup logo & notes received\n");
@@ -770,7 +770,7 @@ static GSM_Error N6110_ReplyGetStartup(GSM_Protocol_Message msg, GSM_StateMachin
 
 static GSM_Error N6110_ReplyGetCallerLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int count;
+	int 			count;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	switch (msg.Buffer[3]) {
@@ -778,8 +778,12 @@ static GSM_Error N6110_ReplyGetCallerLogo(GSM_Protocol_Message msg, GSM_StateMac
 		smprintf(s, "Caller group info received\n");
 	        EncodeUnicode(Data->Bitmap->Text,msg.Buffer+6,msg.Buffer[5]);
 		smprintf(s, "Name : \"%s\"\n",DecodeUnicodeString(Data->Bitmap->Text));
+		Data->Bitmap->DefaultName = false;
+		if (msg.Buffer[5] == 0x00) Data->Bitmap->DefaultName = true;
 		count = msg.Buffer[5] + 6;
-		Data->Bitmap->Ringtone = msg.Buffer[count++];
+		Data->Bitmap->Ringtone 		= msg.Buffer[count++];
+		Data->Bitmap->DefaultRingtone 	= false;
+		if (Data->Bitmap->Ringtone == 16) Data->Bitmap->DefaultRingtone = true;
 		smprintf(s, "Ringtone ID: %02x\n",Data->Bitmap->Ringtone);
 		Data->Bitmap->Enabled=(msg.Buffer[count++]==1);
 #ifdef DEBUG	
@@ -794,6 +798,7 @@ static GSM_Error N6110_ReplyGetCallerLogo(GSM_Protocol_Message msg, GSM_StateMac
 		Data->Bitmap->Height	= msg.Buffer[count++];
 		count++;
 		PHONE_DecodeBitmap(GSM_NokiaCallerLogo,msg.Buffer+count,Data->Bitmap);
+		Data->Bitmap->DefaultBitmap = false;
 		return GE_NONE;
 	case 0x12:
 		smprintf(s, "Error getting caller group info\n");
@@ -804,7 +809,7 @@ static GSM_Error N6110_ReplyGetCallerLogo(GSM_Protocol_Message msg, GSM_StateMac
 
 static GSM_Error N6110_ReplyGetSetPicture(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int count = 5, i;
+	int 			count = 5, i;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	switch (msg.Buffer[3]) {
@@ -867,8 +872,8 @@ static GSM_Error N6110_ReplyGetSetPicture(GSM_Protocol_Message msg, GSM_StateMac
 
 static GSM_Error N6110_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
-	GSM_Error error;
-	unsigned char req[10] = { N6110_FRAME_HEADER };
+	GSM_Error 		error;
+	unsigned char 		req[10] = { N6110_FRAME_HEADER };
 
 	s->Phone.Data.Bitmap=Bitmap;	
 	switch (Bitmap->Type) {
@@ -976,6 +981,12 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 				if (Bitmap->Type == GSM_OperatorLogo) {
 					NOKIA_EncodeNetworkCode(reqPreview+count,Bitmap->NetworkCode);
 					count = count + 3;
+				} else {
+					if (Bitmap->DefaultBitmap) {
+						Bitmap->Width  = 72;
+						Bitmap->Height = 14;
+						GSM_ClearBitmap(Bitmap);
+					}
 				}
 				NOKIA_CopyBitmap(GSM_NokiaOperatorLogo,Bitmap,reqPreview, &count);
 				reqPreview[count]=0x00;
@@ -1039,11 +1050,19 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_NOCALLER)) return GE_NOTSUPPORTED;
 		req[count++] = 0x13;
 		req[count++] = Bitmap->Location - 1;
-		textlen = strlen(DecodeUnicodeString(Bitmap->Text));
-		req[count++] = textlen;
-		memcpy(req+count,DecodeUnicodeString(Bitmap->Text),textlen);
-		count += textlen;
-		req[count++] = Bitmap->Ringtone;
+		if (Bitmap->DefaultName) {
+			req[count++] = 0;
+		} else {
+			textlen = strlen(DecodeUnicodeString(Bitmap->Text));
+			req[count++] = textlen;
+			memcpy(req+count,DecodeUnicodeString(Bitmap->Text),textlen);
+			count += textlen;
+		}
+		if (Bitmap->DefaultRingtone) {
+			req[count++] = 16;
+		} else {
+			req[count++] = Bitmap->Ringtone;
+		}
 		/* Setting for graphic:
 		 * 0x00 - Off
 		 * 0x01 - On
@@ -1054,7 +1073,14 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		 * 6110 at least) will not show you the name of this
 		 * item in menu ;-)) Nokia is really joking here.
 		 */
-		if (Bitmap->Enabled) req[count++] = 0x01; else req[count++] = 0x00;
+		if (Bitmap->DefaultBitmap) {
+			Bitmap->Width  = 72;
+			Bitmap->Height = 14;
+			GSM_ClearBitmap(Bitmap);
+			req[count++] = 0;
+		} else {
+			if (Bitmap->Enabled) req[count++] = 0x01; else req[count++] = 0x00;
+		}
 		req[count++] = (PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0) + 4) >> 8;
 		req[count++] = (PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0) + 4) % 0xff;
 		NOKIA_CopyBitmap(GSM_NokiaCallerLogo, Bitmap, req, &count);
@@ -1132,7 +1158,8 @@ static GSM_Error N6110_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 		break;
 	case 0x04:
 		smprintf(s, "Remote end hang up, sequence %d, cause type %i, CC %i\n",msg.Buffer[4],msg.Buffer[5],msg.Buffer[6]);
-		call.Status = GN_CALL_CallRemoteEnd;
+		call.Status 	= GN_CALL_CallRemoteEnd;
+		call.Code	= msg.Buffer[6];
 		break;	
 	case 0x05:
 #ifdef DEBUG
@@ -1324,7 +1351,7 @@ static GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachi
 static GSM_Error N6110_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
 {
 	GSM_Error	error;
-	unsigned char req[] = {
+	unsigned char 	req[] = {
 		0x00, 0x01, 0x9e,
 		0x00 };		/* location */
 
@@ -1430,7 +1457,8 @@ static GSM_Error N6110_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode C
 
 static GSM_Error N6110_ReplyGetSpeedDial(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
 	switch (msg.Buffer[3]) {
 	case 0x17:
 		smprintf(s, "Speed dial received\n");
@@ -1615,7 +1643,8 @@ static GSM_Profile_PhoneTableValue Profile3310[] = {
 
 static GSM_Error N6110_ReplyGetProfileFeature(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
 	switch (msg.Buffer[3]) {
 	case 0x14:
 		smprintf(s, "Profile feature %02x with value %02x\n",msg.Buffer[6],msg.Buffer[8]);
@@ -1816,7 +1845,7 @@ static GSM_Error N6110_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 static GSM_Error N6110_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data		*Data = &s->Phone.Data;
-	GSM_SMSMessage sms;
+	GSM_SMSMessage 		sms;
 
 #ifdef DEBUG
 	smprintf(s, "SMS message received\n");
@@ -2210,8 +2239,8 @@ static GSM_Error N6110_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarEntr
 
 GSM_Error N6110_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	unsigned char buffer[2000],buffer2[4000];
-	int tmp;
+	unsigned char 	buffer[2000],buffer2[4000];
+	int 		tmp;
 
 	tmp=GSM_UnpackEightBitsToSeven(0, 82, 82, msg.Buffer+8, buffer);
 	msg.Buffer[tmp] = 0;
@@ -2353,9 +2382,7 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{N6110_ReplyGetSetPicture,	"\x47",0x03,0x05,ID_SetBitmap		},
 	{N6110_ReplyGetSetPicture,	"\x47",0x03,0x06,ID_GetBitmap		},
 
-#ifdef GSM_ENABLE_6110_AUTHENTICATION
 	{N6110_ReplyGetMagicBytes,	"\x64",0x00,0x00,ID_MakeAuthentication	},
-#endif
 
 	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetModel		},
 	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetFirmware		},
@@ -2440,7 +2467,9 @@ GSM_Phone_Functions N6110Phone = {
     	NOTSUPPORTED,		/*  	GetFMStation        	*/
     	NOTSUPPORTED,		/*  	SetFMStation        	*/
     	NOTSUPPORTED,		/*  	ClearFMStations       	*/	
-	NOKIA_SetIncomingUSSD
+	NOKIA_SetIncomingUSSD,
+	NOTSUPPORTED,		/* 	DeleteUserRingtones	*/
+	N6110_ShowStartInfo
 };
 
 #endif

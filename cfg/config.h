@@ -6,7 +6,7 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.70"
+#define VERSION "0.71"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -53,11 +53,6 @@
  */
 #define GSM_ENABLE_BACKUP 1
 
-/* Nokia 51xx/61xx phones can make authentication. It allows only to
- * display "Nokia accessory" during start, nothing more.
- */
-#define GSM_ENABLE_6110_AUTHENTICATION 1
-
 /* It allows to show incoming call and SMS info for 7110 family phones.
  * By default commented: you can have some problems, when using it.
  * Example: with my 6210 after using it info about incoming sms is shown much
@@ -97,6 +92,8 @@
 #define HAVE_DIRENT_H 1
 #define HAVE_SCANDIR 1
 #define HAVE_ALPHASORT 1
+
+#define HAVE_MYSQL_MYSQL_H 1
 #endif
 
 #define HAVE_ISWSPACE 1

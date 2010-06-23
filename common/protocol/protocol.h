@@ -1,7 +1,7 @@
 #ifndef protocol_common_h
 #define protocol_common_h
 
-#define PROTOCOL_MAX_RECEIVE_LENGTH	2000
+#define PROTOCOL_MAX_RECEIVE_LENGTH	20000
 
 typedef enum {
 	RX_Sync,

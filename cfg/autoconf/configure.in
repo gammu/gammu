@@ -42,9 +42,8 @@ dnl AC_SUBST(HAVE_ALPHASORT)
 
 dnl Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS(dirent.h)
-
-dnl Now this is checking is not used
+AC_CHECK_HEADERS(dirent.h mysql/mysql.h)
+dnl This checking is not used now
 dnl AC_CHECK_HEADERS(fcntl.h sys/file.h sys/ioctl.h sys/time.h unistd.h)
 dnl AC_SUBST(HAVE_DIRENT_H)
 
@@ -204,10 +203,6 @@ AC_ARG_ENABLE(backup,
 	[  --disable-backup        Disable backup/restore functions],
 	[gsm_enable_backup="no"],
 	[AC_DEFINE(GSM_ENABLE_BACKUP) gsm_enable_backup="yes"])
-AC_ARG_ENABLE(6110auth,
-	[  --disable-6110auth      Disable Nokia 51xx/61xx authentication],
-	[gsm_enable_6110_authentication="no"],
-	[AC_DEFINE(GSM_ENABLE_6110_AUTHENTICATION) gsm_enable_6110_authentication="yes"])
 AC_ARG_ENABLE(alcatel,
 	[  --disable-alcatel       Disable Alcatel phone support],
 	[gsm_enable_alcatel="no"],
@@ -283,7 +278,6 @@ echo "
   Alcatel                                       - $gsm_enable_alcatel
   AT (Siemens, Alcatel, Nokia, WaveCom, other)  - $gsm_enable_atgen
   Nokia 3210/33xx/3410/51xx/5210/5510/61xx/82xx - $gsm_enable_nokia6110
-           Nokia 51xx/61xx authentication       - $gsm_enable_6110_authentication
   Nokia 3510/6310(i)/6510/8310                  - $gsm_enable_nokia6510
   Nokia 62xx/71xx                               - $gsm_enable_nokia7110
            Incoming call/SMS info               - $gsm_enable_71_92incominginfo

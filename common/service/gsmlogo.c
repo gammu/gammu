@@ -833,6 +833,8 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	fread(buffer, 1, 9, file); /* Read the header of the file. */
 	rewind(file);
 
+	bitmap->Bitmap[0].DefaultBitmap = false;
+
 	/* Attempt to identify filetype */
 	if (memcmp(buffer, "BM",2)==0) { 
 		return loadbmp(file,bitmap);

@@ -49,12 +49,11 @@ static GSM_Error N6510_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 static GSM_Error N6510_GetMemory (GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 {
 	unsigned char req[] = {
-		N7110_FRAME_HEADER, 0x07, 0x04, 0x01, 0x00, 0x01,
-		0x02, 		/* memory type */
-		0x05,
+		N6110_FRAME_HEADER, 0x07, 0x01, 0x01, 0x00, 0x01,
+		0xfe, 0x10, 	/* memory type */
 		0x00, 0x00, 0x00, 0x00, 
-		0x00, 0x01,	/*location */
-		0x00, 0x00};
+		0x00, 0x01, 	/* location */
+		0x00, 0x00, 0x01};
 
 	req[9] = NOKIA_GetMemoryType(s, entry->MemoryType,N71_65_MEMORY_TYPES);
 	if (req[9]==0xff) return GE_NOTSUPPORTED;
@@ -66,70 +65,13 @@ static GSM_Error N6510_GetMemory (GSM_StateMachine *s, GSM_PhonebookEntry *entry
 
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
-	return GSM_WaitFor (s, req, 20, 0x03, 4, ID_GetMemory);
-}
-
-static GSM_Error N6510_ReplyStartupNoteLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{
-	GSM_Phone_Data		*Data = &s->Phone.Data;
-	switch (msg.Buffer[4]) {
-	case 0x01:
-		smprintf(s, "Welcome note text received\n");
-		CopyUnicodeString(Data->Bitmap->Text,msg.Buffer+6);
-		smprintf(s, "Text is \"%s\"\n",DecodeUnicodeString(Data->Bitmap->Text));
-		return GE_NONE;
-	case 0x0f:
-		if (Data->RequestID == ID_GetBitmap) {
-			smprintf(s, "Startup logo received\n");
-			PHONE_DecodeBitmap(GSM_Nokia7110StartupLogo, msg.Buffer + 22, Data->Bitmap);
-		}
-		if (Data->RequestID == ID_SetBitmap) {
-			smprintf(s, "Startup logo set\n");
-		}
-		return GE_NONE;
-	}
-	return GE_UNKNOWN;
-}
-
-static GSM_Error N6510_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
-{
-	unsigned char reqOp	[] = {N6110_FRAME_HEADER, 0x23, 0x00, 0x00, 0x55, 0x55, 0x55};
-	unsigned char reqStartup[] = {N6110_FRAME_HEADER, 0x02, 0x0f};
-	unsigned char reqNote	[] = {N6110_FRAME_HEADER, 0x02, 0x01, 0x00};
-	GSM_PhonebookEntry	pbk;
-	GSM_Error		error;
-
-	s->Phone.Data.Bitmap=Bitmap;	
-	switch (Bitmap->Type) {
-	case GSM_StartupLogo:
-		smprintf(s, "Getting startup logo\n");
-		return GSM_WaitFor (s, reqStartup, 5, 0x7A, 4, ID_GetBitmap);
-	case GSM_WelcomeNoteText:
-		smprintf(s, "Getting welcome note\n");
-		return GSM_WaitFor (s, reqNote, 6, 0x7A, 4, ID_GetBitmap);
-	case GSM_CallerLogo:
-		/* You can only get logos which have been altered, the standard */
-		/* logos can't be read!! */
-		pbk.MemoryType	= GMT7110_CG;
-		pbk.Location	= Bitmap->Location;
-		smprintf(s, "Getting caller group logo\n");
-		error=N6510_GetMemory(s,&pbk);
-		if (error==GE_NONE) NOKIA_GetDefaultCallerGroupName(s, Bitmap);
-		return error;
-	case GSM_OperatorLogo:
-		smprintf(s, "Getting operator logo\n");
-		return GSM_WaitFor (s, reqOp, 9, 0x0A, 4, ID_GetBitmap);
-	case GSM_PictureImage:
-		break;
-	default:
-		break;
-	}
-	return GE_NOTSUPPORTED;
+	return GSM_WaitFor (s, req, 21, 0x03, 4, ID_GetMemory);
 }
 
 static GSM_Error N6510_ReplyGetMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
 	smprintf(s, "Memory status received\n");
 	/* Quess ;-)) */
 	if (msg.Buffer[14]==0x10) {
@@ -162,7 +104,7 @@ static GSM_Error N6510_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *St
 
 static GSM_Error N6510_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int i, current, j;
+	int 			i, current, j;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	switch (msg.Buffer[4]) {
@@ -259,8 +201,8 @@ static GSM_Error N6510_ReplySetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *
 
 static GSM_Error N6510_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
-	int count = 13,i;
-	unsigned char req[64] = {
+	int 		count = 13,i;
+	unsigned char 	req[64] = {
 		N6110_FRAME_HEADER,
 		0x12, 0x55, 0x01, 0x0B, 0x34,
 		0x05,		/* Location 	*/
@@ -473,7 +415,7 @@ static GSM_Error N6510_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 
 static GSM_Error N6510_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int j, num = 0, pos;
+	int 			j, num = 0, pos;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	switch (msg.Buffer[3]) {
@@ -691,6 +633,17 @@ static GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
                 		Data->GetSMSMessage->SMS[i].Number[0]=0;
                 		Data->GetSMSMessage->SMS[i].Number[1]=0;
 			}
+			if (Data->Bitmap != NULL) {
+				Data->Bitmap->Location	= 0;
+				PHONE_GetBitmapWidthHeight(GSM_NokiaPictureImage, &Width, &Height);
+				Data->Bitmap->Width	= Width;
+				Data->Bitmap->Height	= Height;
+				PHONE_DecodeBitmap(GSM_NokiaPictureImage, msg.Buffer + 30, Data->Bitmap);
+				Data->Bitmap->Sender[0] = 0x00;
+				Data->Bitmap->Sender[1] = 0x00;
+				Data->Bitmap->Text[0] = 0;
+				Data->Bitmap->Text[1] = 0;
+			}
 			return GE_NONE;
 		default:
 			smprintf(s, "Unknown SMS type: %i\n",msg.Buffer[8]);
@@ -705,7 +658,7 @@ static GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 	return GE_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6510_PrivGetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
+static GSM_Error N6510_PrivGetSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_Bitmap *bitmap)
 {
 	GSM_Error		error;
 	unsigned char		folderid,namebuffer[200];
@@ -729,7 +682,8 @@ static GSM_Error N6510_PrivGetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 	req[6]=location / 256;
 	req[7]=location;
 
-	s->Phone.Data.GetSMSMessage=sms;
+	s->Phone.Data.GetSMSMessage 	= sms;
+	s->Phone.Data.Bitmap 		= bitmap;
 	smprintf(s, "Getting sms message info\n");
 	req[3] = 0x0e; req[8] = 0x55; req[9] = 0x55;
 	error=GSM_WaitFor (s, req, 10, 0x14, 4, ID_GetSMSMessage);
@@ -770,10 +724,10 @@ static GSM_Error N6510_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		}
 	}
 	if (!found) return GE_EMPTY;
-	return N6510_PrivGetSMSMessage(s,sms);
+	return N6510_PrivGetSMSMessageBitmap(s,sms,NULL);
 }
 
-static GSM_Error N6510_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
+static GSM_Error N6510_GetNextSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start, GSM_Bitmap *bitmap)
 {
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	unsigned char		folderid;
@@ -783,8 +737,8 @@ static GSM_Error N6510_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 	bool			findnextfolder = false;
 
 	if (start) {
-		folderid=0x00;
-		findnextfolder=true;
+		folderid	= 0x00;
+		findnextfolder	= true;
 		error=N6510_GetSMSFolders(s,&Priv->LastSMSFolders);
 		if (error!=GE_NONE) return error;
 	} else {
@@ -814,7 +768,117 @@ static GSM_Error N6510_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 	}
 	N6510_SetSMSLocation(s, &sms->SMS[0], folderid, location);
 
-	return N6510_PrivGetSMSMessage(s, sms);
+	return N6510_PrivGetSMSMessageBitmap(s, sms, bitmap);
+}
+
+static GSM_Error N6510_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
+{
+	return N6510_GetNextSMSMessageBitmap(s, sms, start, NULL);
+}
+
+static GSM_Error N6510_ReplyStartupNoteLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
+	if (Data->RequestID == ID_GetBitmap) {
+		switch (msg.Buffer[4]) {
+		case 0x01:
+			smprintf(s, "Welcome note text received\n");
+			CopyUnicodeString(Data->Bitmap->Text,msg.Buffer+6);
+			smprintf(s, "Text is \"%s\"\n",DecodeUnicodeString(Data->Bitmap->Text));
+			return GE_NONE;
+		case 0x10:
+			smprintf(s, "Dealer note text received\n");
+			CopyUnicodeString(Data->Bitmap->Text,msg.Buffer+6);
+			smprintf(s, "Text is \"%s\"\n",DecodeUnicodeString(Data->Bitmap->Text));
+			return GE_NONE;		
+		case 0x0f:
+			smprintf(s, "Startup logo received\n");
+			PHONE_DecodeBitmap(GSM_Nokia7110StartupLogo, msg.Buffer + 22, Data->Bitmap);
+			return GE_NONE;
+		}
+	}
+	if (Data->RequestID == ID_SetBitmap) {
+		switch (msg.Buffer[4]) {
+			case 0x01:
+			case 0x10:
+			case 0x0f:
+				return GE_NONE;
+		}
+	}
+	return GE_UNKNOWN;
+}
+
+static GSM_Error N6510_GetPictureImage(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
+{
+	GSM_MultiSMSMessage 	sms;
+	int			Number;
+	GSM_Bitmap		bitmap;
+	GSM_Error		error;
+
+	sms.SMS[0].Folder	= 0;
+	Number			= 0;
+	bitmap.Location		= 255;
+	error=N6510_GetNextSMSMessageBitmap(s, &sms, true, &bitmap);
+	while (error == GE_NONE) {
+		if (bitmap.Location != 255) {
+			Number++;
+			if (Number == Bitmap->Location) {
+				bitmap.Location = Bitmap->Location;
+				memcpy(Bitmap,&bitmap,sizeof(GSM_Bitmap));
+				return GE_NONE;
+			}
+		}
+		bitmap.Location		= 255;
+		sms.SMS[0].Folder 	= 0;
+		error=N6510_GetNextSMSMessageBitmap(s, &sms, false, &bitmap);
+	}
+	return GE_INVALIDLOCATION;
+}
+
+static GSM_Error N6510_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
+{
+	unsigned char reqOp	[] = {N6110_FRAME_HEADER, 0x23, 0x00, 0x00, 0x55, 0x55, 0x55};
+	unsigned char reqStartup[] = {N6110_FRAME_HEADER, 0x02, 0x0f};
+	unsigned char reqNote	[] = {N6110_FRAME_HEADER, 0x02, 0x01, 0x00};
+	GSM_PhonebookEntry	pbk;
+	GSM_Error		error;
+
+	s->Phone.Data.Bitmap=Bitmap;	
+	switch (Bitmap->Type) {
+	case GSM_StartupLogo:
+		Bitmap->Width  = 96;
+		Bitmap->Height = 65;
+		GSM_ClearBitmap(Bitmap);
+		smprintf(s, "Getting startup logo\n");
+		return GSM_WaitFor (s, reqStartup, 5, 0x7A, 4, ID_GetBitmap);
+	case GSM_DealerNoteText:
+		reqNote[4] = 0x10;
+		smprintf(s, "Getting dealer note\n");
+		return GSM_WaitFor (s, reqNote, 6, 0x7A, 4, ID_GetBitmap);
+	case GSM_WelcomeNoteText:
+		smprintf(s, "Getting welcome note\n");
+		return GSM_WaitFor (s, reqNote, 6, 0x7A, 4, ID_GetBitmap);
+	case GSM_CallerLogo:
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) return GE_NOTSUPPORTED;
+		Bitmap->Width  	 = 72;
+		Bitmap->Height 	 = 14;
+		GSM_ClearBitmap(Bitmap);
+		pbk.MemoryType	= GMT7110_CG;
+		pbk.Location	= Bitmap->Location;
+		smprintf(s, "Getting caller group logo\n");
+		error=N6510_GetMemory(s,&pbk);
+		if (error==GE_NONE) NOKIA_GetDefaultCallerGroupName(s, Bitmap);
+		return error;
+	case GSM_OperatorLogo:
+		smprintf(s, "Getting operator logo\n");
+		return GSM_WaitFor (s, reqOp, 9, 0x0A, 4, ID_GetBitmap);
+	case GSM_PictureImage:
+		return N6510_GetPictureImage(s, Bitmap);
+	default:
+		break;
+	}
+	return GE_NOTSUPPORTED;
 }
 
 static GSM_Error N6510_ReplyGetIncSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -825,7 +889,8 @@ static GSM_Error N6510_ReplyGetIncSignalQuality(GSM_Protocol_Message msg, GSM_St
 
 static GSM_Error N6510_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
 	smprintf(s, "Network level received: %i\n",msg.Buffer[8]);
     	Data->SignalQuality->SignalStrength 	= -1;
     	Data->SignalQuality->SignalPercent 	= ((int)msg.Buffer[8]);
@@ -844,7 +909,8 @@ static GSM_Error N6510_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *
 
 static GSM_Error N6510_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
 	smprintf(s, "Battery level received: %i\n",msg.Buffer[9]*100/7);
     	Data->BatteryCharge->BatteryPercent 	= ((int)(msg.Buffer[9]*100/7));
     	Data->BatteryCharge->ChargeState 	= 0;
@@ -867,7 +933,8 @@ static GSM_Error N6510_ReplyGetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMa
 
 static GSM_Error N6510_ReplyGetOperatorLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
 	smprintf(s, "Operator logo received\n");
 	NOKIA_DecodeNetworkCode(msg.Buffer+12,Data->Bitmap->NetworkCode);
 	smprintf(s, "Network code %s\n",Data->Bitmap->NetworkCode);
@@ -880,8 +947,8 @@ static GSM_Error N6510_ReplyGetOperatorLogo(GSM_Protocol_Message msg, GSM_StateM
 
 static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 {
-	int count = 22, blocks;
-	unsigned char req[500] = {
+	int 		count = 22, blocks;
+	unsigned char 	req[500] = {
 		N7110_FRAME_HEADER, 0x0b, 0x00, 0x01, 0x01, 0x00, 0x00, 0x10,
 		0x02, 0x00,  /* memory type */
 		0x00, 0x00,  /* location */
@@ -910,10 +977,70 @@ static GSM_Error N6510_ReplySetOperatorLogo(GSM_Protocol_Message msg, GSM_StateM
 	return GE_NONE;
 }
 
+static GSM_Error N6510_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
+{
+	unsigned char req[500] = {
+		N6110_FRAME_HEADER, 0x0b, 0x00, 0x01, 0x01, 0x00, 0x00, 0x10,
+		0xfe, 0x10,		/* memory type */
+		0x00, 0x00,		/* location */
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+	char		string[500];
+	int		block=0, i;
+	unsigned int 	count = 22;
+	int		Width, Height;
+
+	req[13] = bitmap->Location;
+
+	/* Logo on/off */
+	string[0] = bitmap->Enabled?1:0;
+	string[1] = 0;
+	count += N71_65_PackPBKBlock(s, N7110_ENTRYTYPE_LOGOON, 2, block++, string, req + count);
+
+	/* Ringtone */
+	if (!bitmap->DefaultRingtone) {
+		string[0] = 0x00; 
+		string[1] = 0x00;
+		string[2] = bitmap->Ringtone;
+		count += N71_65_PackPBKBlock(s, N7110_ENTRYTYPE_RINGTONE, 3, block++, string, req + count);
+		count --;
+		req[count-5] = 8;
+	}
+
+	/* Number of group */
+	string[0] = bitmap->Location;
+	string[1] = 0;
+	count += N71_65_PackPBKBlock(s, N7110_ENTRYTYPE_GROUP, 2, block++, string, req + count);
+
+	/* Name */
+	if (!bitmap->DefaultName) {
+		i = strlen(DecodeUnicodeString(bitmap->Text)) * 2;
+		string[0] = i + 2;
+		memcpy(string + 1, bitmap->Text, i);
+		string[i + 1] = 0;
+		count += N71_65_PackPBKBlock(s, N7110_ENTRYTYPE_NAME, i + 2, block++, string, req + count);
+	}
+
+	/* Logo */
+	if (!bitmap->DefaultBitmap) {
+		PHONE_GetBitmapWidthHeight(GSM_NokiaCallerLogo, &Width, &Height);
+		string[0] = Width;
+		string[1] = Height;
+		string[2] = 0;
+		string[3] = 0;
+		string[4] = PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0);
+		PHONE_EncodeBitmap(GSM_NokiaCallerLogo, string + 5, bitmap);
+		count += N71_65_PackPBKBlock(s, N7110_ENTRYTYPE_GROUPLOGO, PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0) + 5, block++, string, req + count);
+	}
+
+	req[21] = block;
+
+	return GSM_WaitFor (s, req, count, 0x03, 4, ID_SetBitmap);
+}
+
 static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	GSM_Phone_Bitmap_Types	Type;
-	int			Width, Height;
+	int			Width, Height, i, count;
 	GSM_NetworkInfo 	NetInfo;
 	GSM_Error		error;
 	unsigned char reqStartup[1000] = {
@@ -929,6 +1056,18 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		0x0C, 0x08,
 		0x62, 0xF0, 0x10,	/* Network code */
 		0x03, 0x55, 0x55};
+	unsigned char reqNote[200] = {N6110_FRAME_HEADER, 0x04, 0x01};
+	unsigned char reqPicture[2000] = {
+		N6110_FRAME_HEADER, 0x00, 0x02, 0x04, 0x00, 0x00,
+		0x01, 0x01, 0xa0, 0x02, 0x01, 0x40, 0x00, 0x34,
+		0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x55, 0x55, 0x55, 0x03, 0x82, 0x10,
+		0x01, 0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x82, 0x10,
+		0x02, 0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x04,
+		0x00, 0x00, 0xa1, 0x55, 0x01, 0x08, 0x00, 0x00,
+		0x00, 0x01, 0x48, 0x1c};
 
 	switch (Bitmap->Type) {
 	case GSM_StartupLogo:
@@ -946,8 +1085,19 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		}
 		smprintf(s, "Setting startup logo\n");
 		return GSM_WaitFor (s, reqStartup, 22+PHONE_GetBitmapSize(Type,0,0), 0x7A, 4, ID_SetBitmap);
-	case GSM_WelcomeNoteText:	
-		break;
+	case GSM_DealerNoteText:
+		reqNote[4] = 0x10;
+		CopyUnicodeString(reqNote + 5, Bitmap->Text);
+		i = 6 + strlen(DecodeUnicodeString(Bitmap->Text)) * 2;
+		reqNote[i++] 	= 0;
+		reqNote[i] 	= 0;
+		return GSM_WaitFor (s, reqNote, i, 0x7A, 4, ID_SetBitmap);	
+	case GSM_WelcomeNoteText:
+		CopyUnicodeString(reqNote + 5, Bitmap->Text);
+		i = 6 + strlen(DecodeUnicodeString(Bitmap->Text)) * 2;
+		reqNote[i++] 	= 0;
+		reqNote[i] 	= 0;
+		return GSM_WaitFor (s, reqNote, i, 0x7A, 4, ID_SetBitmap);	
 	case GSM_OperatorLogo:
 		/* We want to set operator logo, not clear */
 		if (strcmp(Bitmap->NetworkCode,"000 00")) {
@@ -975,8 +1125,25 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 			return GSM_WaitFor (s, reqOp, 18, 0x0A, 4, ID_SetBitmap);
 		}
 	case GSM_CallerLogo:
-		break;
+		return N6510_SetCallerLogo(s,Bitmap);
 	case GSM_PictureImage:
+		Type = GSM_NokiaPictureImage;
+		count = 79;
+		PHONE_EncodeBitmap(Type, reqPicture + count, Bitmap);
+		count += PHONE_GetBitmapSize(Type,0,0);
+//		reqPicture[count++] = 0x55; reqPicture[count++] = 0x55; reqPicture[count++] = 0x55;
+//		reqPicture[count++] = 0x00; reqPicture[count++] = 0x00; reqPicture[count++] = 0x00;
+//		reqPicture[count++] = 0x00; reqPicture[count++] = 0x00; reqPicture[count++] = 0x02;
+//		reqPicture[count++] = 0xaa; reqPicture[count++] = 0xaa; reqPicture[count++] = 0xa8;
+//		reqPicture[count++] = 0x00; reqPicture[count++] = 0x00; reqPicture[count++] = 0x00;
+//		reqPicture[count++] = 0x00; 
+		reqPicture[count++] = 0x00; reqPicture[count++] = 0x00;
+		reqPicture[count++] = 0x05; reqPicture[count++] = 0x51; reqPicture[count++] = 0x50;
+		reqPicture[count++] = 0x00; reqPicture[count++] = 0x00; reqPicture[count++] = 0x00;
+		reqPicture[count++] = 0x00; reqPicture[count++] = 0x00; reqPicture[count++] = 0x00;
+		reqPicture[count++] = 0x00; reqPicture[count++] = 0x00; reqPicture[count++] = 0x00;
+		printf("%02x\n",count);
+		DumpMessage(stdout, reqPicture, count);
 		break;
 	default:
 		break;
@@ -1014,10 +1181,8 @@ static GSM_Error N6510_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		0x01, 0x00, 0x0D, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00};  	/*Length*/                               
-	unsigned char		SetBinaryReq[1000] = {
+	unsigned char		AddBinaryReq[33000] = {
 		N7110_FRAME_HEADER, 0x0E, 0x7F, 0xFF, 0xFE};
-//	unsigned char		DelAllRingtoneReq[] = {
-//		N7110_FRAME_HEADER, 0x10, 0x7F, 0xFE};
 
 	if (Ringtone->Format == RING_NOTETONE && Ringtone->Location==255)
 	{
@@ -1036,21 +1201,46 @@ static GSM_Error N6510_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		return s->Phone.Functions->GetNetworkInfo(s,&NetInfo);
 	}
 	if (Ringtone->Format == RING_NOKIABINARY) {
-//		smprintf(s, "Deleting all user ringtones\n");
-//		GSM_WaitFor (s, DelAllRingtoneReq, 6, 0x1F, 4, ID_SetRingtone);
-
-		SetBinaryReq[7] = strlen(DecodeUnicodeString(Ringtone->Name));
-		CopyUnicodeString(SetBinaryReq+8,Ringtone->Name);
+		AddBinaryReq[7] = strlen(DecodeUnicodeString(Ringtone->Name));
+		CopyUnicodeString(AddBinaryReq+8,Ringtone->Name);
 		current = 8 + strlen(DecodeUnicodeString(Ringtone->Name))*2;
-		SetBinaryReq[current++] = Ringtone->NokiaBinary.Length/256 + 1;
-		SetBinaryReq[current++] = Ringtone->NokiaBinary.Length%256 + 1;
-		SetBinaryReq[current++] = 0x00;
-		memcpy(SetBinaryReq+current,Ringtone->NokiaBinary.Frame,Ringtone->NokiaBinary.Length);
+		AddBinaryReq[current++] = Ringtone->NokiaBinary.Length/256 + 1;
+		AddBinaryReq[current++] = Ringtone->NokiaBinary.Length%256 + 1;
+		AddBinaryReq[current++] = 0x00;
+		memcpy(AddBinaryReq+current,Ringtone->NokiaBinary.Frame,Ringtone->NokiaBinary.Length);
 		current += Ringtone->NokiaBinary.Length;
-		smprintf(s, "Setting binary ringtone\n");
-		return GSM_WaitFor (s, SetBinaryReq, current, 0x1F, 4, ID_SetRingtone);
+		smprintf(s, "Adding binary ringtone\n");
+		return GSM_WaitFor (s, AddBinaryReq, current, 0x1F, 4, ID_SetRingtone);
+	}
+	if (Ringtone->Format == RING_MIDI) {
+		AddBinaryReq[7] = strlen(DecodeUnicodeString(Ringtone->Name));
+		CopyUnicodeString(AddBinaryReq+8,Ringtone->Name);
+		current = 8 + strlen(DecodeUnicodeString(Ringtone->Name))*2;
+		AddBinaryReq[current++] = Ringtone->NokiaBinary.Length/256;
+		AddBinaryReq[current++] = Ringtone->NokiaBinary.Length%256;
+		memcpy(AddBinaryReq+current,Ringtone->NokiaBinary.Frame,Ringtone->NokiaBinary.Length);
+		current += Ringtone->NokiaBinary.Length;
+		AddBinaryReq[current++] = 0x00;
+		AddBinaryReq[current++] = 0x00;
+		smprintf(s, "Adding binary or MIDI ringtone\n");
+		return GSM_WaitFor (s, AddBinaryReq, current, 0x1F, 4, ID_SetRingtone);
 	}
 	return GE_NOTSUPPORTED;
+}
+
+static GSM_Error N6510_ReplyDeleteRingtones(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "Ringtones deleted\n");
+	return GE_NONE;
+}
+
+static GSM_Error N6510_DeleteUserRingtones(GSM_StateMachine *s)
+{
+	unsigned char DelAllRingtoneReq[] = {
+		N7110_FRAME_HEADER, 0x10, 0x7F, 0xFE};
+
+	smprintf(s, "Deleting all user ringtones\n");
+	return GSM_WaitFor (s, DelAllRingtoneReq, 6, 0x1F, 4, ID_SetRingtone);
 }
 
 static GSM_Error N6510_GetProductCode(GSM_StateMachine *s, char *value)
@@ -1656,7 +1846,7 @@ static GSM_Error N6510_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *book
 	GSM_Error 	error;
 	int 		count;
 	int		location;
-	unsigned char req[600] = { N6110_FRAME_HEADER, 0x09 };
+	unsigned char 	req[600] = { N6110_FRAME_HEADER, 0x09 };
 
 	/* For now !!! */
 	if (!strcmp(s->Phone.Data.ModelInfo->model,"3510")) {
@@ -1695,7 +1885,8 @@ static GSM_Error N6510_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *book
 
 static GSM_Error N6510_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
 	switch (msg.Buffer[3]) {
 	case 0x09:
 		switch (msg.Buffer[4]) {
@@ -1827,7 +2018,7 @@ static GSM_Error N6510_SendSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 static GSM_Error N6510_ReplyGetSecurityStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data	*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
 
 	smprintf(s, "Security Code status received: ");
 	switch (msg.Buffer[4]) {
@@ -1897,7 +2088,7 @@ static GSM_Error N6510_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode C
 
 static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	unsigned char folder;
+	unsigned char 		folder;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	switch (msg.Buffer[3]) {
@@ -2088,7 +2279,8 @@ static GSM_Error N6510_GetManufactureMonth(GSM_StateMachine *s, char *value)
 
 static GSM_Error N6510_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
 	switch(msg.Buffer[3]) {
 	case 0x1A:
 		smprintf(s, "   Alarm: %02d:%02d\n", msg.Buffer[14], msg.Buffer[15]);
@@ -2151,7 +2343,7 @@ static GSM_Error N6510_SetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int al
 
 static GSM_Error N6510_ReplyGetRingtonesInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int tmp,i;
+	int 			tmp,i;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	smprintf(s, "Ringtones info received\n");
@@ -2188,7 +2380,7 @@ static GSM_Error N6510_GetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtonesInf
 
 static GSM_Error N6510_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int tmp,i;
+	int 			tmp,i;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	smprintf(s, "Ringtone received\n");
@@ -2196,16 +2388,27 @@ static GSM_Error N6510_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachi
 	Data->Ringtone->Name[msg.Buffer[7]*2]=0;
 	Data->Ringtone->Name[msg.Buffer[7]*2+1]=0;
 	smprintf(s, "Name \"%s\"\n",DecodeUnicodeString(Data->Ringtone->Name));
-	/* Looking for end */
-	i=8+msg.Buffer[7]*2+3;
-	tmp = i;
-	while (true) {
-		if (msg.Buffer[i]==0x07 && msg.Buffer[i+1]==0x0b) {
-			i=i+2; break;
-		}
-		i++;
-		if (i==msg.Length) return GE_EMPTY;
-	}	  
+ 	if (msg.Buffer[msg.Buffer[7]*2+10] == 'M' &&
+ 	    msg.Buffer[msg.Buffer[7]*2+11] == 'T' &&
+ 	    msg.Buffer[msg.Buffer[7]*2+12] == 'h' &&
+ 	    msg.Buffer[msg.Buffer[7]*2+13] == 'd')
+ 	{
+ 		smprintf(s,"MIDI\n");
+ 		tmp 	= msg.Buffer[7]*2+10;
+ 		i 	= msg.Length - 2; /* ?????? */
+ 		Data->Ringtone->Format = RING_MIDI;
+ 	} else {
+ 		/* Looking for end */
+ 		i=8+msg.Buffer[7]*2+3;
+ 		tmp = i;
+ 		while (true) {
+ 			if (msg.Buffer[i]==0x07 && msg.Buffer[i+1]==0x0b) {
+ 				i=i+2; break;
+ 			}
+ 			i++;
+ 			if (i==msg.Length) return GE_EMPTY;
+ 		}	  
+	}
 	/* Copying frame */
 	memcpy(Data->Ringtone->NokiaBinary.Frame,msg.Buffer+tmp,i-tmp);
 	Data->Ringtone->NokiaBinary.Length=i-tmp;
@@ -2297,7 +2500,8 @@ static GSM_Error N6510_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Vol
 
 static GSM_Error N6510_ReplyGetPPM(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
+
 	Data->PhoneString[0] = msg.Buffer[50];
 	Data->PhoneString[1] = 0x00;	
 	smprintf(s, "Received PPM %s\n",Data->PhoneString);
@@ -2738,6 +2942,43 @@ static GSM_Error N6510_SetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
  	return GSM_WaitFor (s, req, 0x13+len*2, 0x3E, 2, ID_GetFMStation);
 }
 
+static GSM_Error N6510_ReplySetLight(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "Light set\n");
+	return GE_NONE;
+}
+
+static GSM_Error N6510_ShowStartInfo(GSM_StateMachine *s, bool enable)
+{
+	GSM_Error	error;
+	unsigned char 	req[14] = {
+		N6110_FRAME_HEADER, 0x05,
+		0x01,		/* 0x01 = Display, 0x03 = keypad */
+		0x01,		/* 0x01 = Enable, 0x02 = disable */
+		0x00, 0x00, 0x00, 0x01,
+		0x05, 0x04, 0x02, 0x00};
+
+	if (enable) {
+	 	smprintf(s, "Enabling display light\n");
+		error=s->Protocol.Functions->WriteMessage(s, req, 14, 0x3A);
+		if (error != GE_NONE) return error;
+
+	 	smprintf(s, "Enabling keypad light\n");
+		req[4] = 0x03;
+		return s->Protocol.Functions->WriteMessage(s, req, 14, 0x3A);
+	} else {
+		req[5] = 0x02;
+
+	 	smprintf(s, "Disabling display light\n");
+		error=s->Protocol.Functions->WriteMessage(s, req, 14, 0x3A);
+		if (error != GE_NONE) return error;
+	
+	 	smprintf(s, "Disabling keypad light\n");
+		req[4] = 0x03;
+		return s->Protocol.Functions->WriteMessage(s, req, 14, 0x3A);
+	}
+}
+
 static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x02,ID_IncomingFrame	},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x03,ID_IncomingFrame	},
@@ -2821,12 +3062,19 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetPPM,		"\x1B",0x03,0x08,ID_GetPPM		},
 	{NOKIA_ReplyGetPhoneString,	"\x1B",0x03,0x0C,ID_GetProductCode	},
 
+	/* 0x1C - vibra */
+
 	{N6510_ReplyGetRingtonesInfo,	"\x1f",0x03,0x08,ID_GetRingtonesInfo	},
+	{N6510_ReplyDeleteRingtones,	"\x1f",0x03,0x11,ID_SetRingtone		},
 	{N6510_ReplyGetRingtone,	"\x1f",0x03,0x13,ID_GetRingtone		},
 	{N6510_ReplySetBinRingtone,	"\x1f",0x03,0x0F,ID_SetRingtone		},
 
+	/* 0x23 - voice records */
+
 	{N6510_ReplyGetProfile,		"\x39",0x03,0x02,ID_GetProfile		},
 	{N6510_ReplySetProfile,		"\x39",0x03,0x04,ID_SetProfile		},
+
+	{N6510_ReplySetLight,		"\x3A",0x03,0x06,ID_IncomingFrame	},
 
  	{N6510_SetFM_Reply,		"\x3E",0x03,0x15,ID_GetFMStation	},
  	{N6510_GetFM_Reply,		"\x3E",0x02,0x00,ID_GetFMStation	},
@@ -2849,18 +3097,27 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetOriginalIMEI,	"\x42",0x07,0x01,ID_GetOriginalIMEI	},
 	{N6510_ReplyGetManufactureMonth,"\x42",0x07,0x02,ID_GetManufactureMonth	},
 
+	/* 0x4A - voice records */
+
 	{N6510_ReplySetToDo,		"\x55",0x03,0x02,ID_SetToDo		},
 	{N6510_ReplyGetToDo,		"\x55",0x03,0x04,ID_GetToDo		},
 	{N6510_ReplyGetToDoFirstLoc,	"\x55",0x03,0x10,ID_SetToDo		},
 	{N6510_ReplyDeleteAllToDo,	"\x55",0x03,0x12,ID_DeleteAllToDo	},
 	{N6510_ReplyGetToDoLocations,	"\x55",0x03,0x16,ID_GetToDo		},
 
+	/* 0x6D - Java */
+
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x01,ID_GetBitmap		},
+	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x01,ID_SetBitmap		},
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x0F,ID_GetBitmap		},
 	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x0F,ID_SetBitmap		},
+	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x10,ID_GetBitmap		},
+	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x10,ID_SetBitmap		},
 
 	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetModel		},
 	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetFirmware		},
+
+	/* 0xD7 - Bluetooth */
 
 	{N6510_ReplyGetRingtoneID,	"\xDB",0x03,0x02,ID_SetRingtone		},
 
@@ -2942,7 +3199,9 @@ GSM_Phone_Functions N6510Phone = {
     	N6510_GetFMStation,
      	N6510_SetFMStation,
  	N6510_ClearFMStations,
-	NOKIA_SetIncomingUSSD
+	NOKIA_SetIncomingUSSD,
+	N6510_DeleteUserRingtones,
+	N6510_ShowStartInfo
 };
 
 #endif

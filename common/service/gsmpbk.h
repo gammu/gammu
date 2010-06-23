@@ -63,7 +63,8 @@ typedef enum {
     	PBK_Text_Custom1,
     	PBK_Text_Custom2,
     	PBK_Text_Custom3,
-    	PBK_Text_Custom4
+    	PBK_Text_Custom4,
+	PBK_RingtoneID
 } GSM_EntryType;
 
 /* Limits for sizing of array in GSM_PhonebookEntry.

@@ -75,10 +75,6 @@ A. First of all, here are described all possible parameters for this software.
    gammu --getfmstation start [stop]
        Show info about FM stations in phone
 
-   gammu --setfmstation location frequency StationName
-
-   gammu --clearfmstations
-
    gammu --getdatetime
        Get date and time from phone
 
@@ -155,7 +151,7 @@ A. First of all, here are described all possible parameters for this software.
        Get user ringtone from phone in RTTL or BINARY format. Locations are
        numerated from 1.
 
-   gammu --setringtone file [location] [-scale]
+   gammu --setringtone file [-location location] [-scale] [-name name]
        Set ringtone in phone. When don't give location, it will be written
        "with preview" (in phones supporting this feature like 61xx or 6210).
        When use RTTL ringtones, give location and use -scale, there will be

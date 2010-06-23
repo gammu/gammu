@@ -60,18 +60,23 @@ void GSM_GetCurrentDateTime (GSM_DateTime *Date)
 	}
 }
 
-time_t Fill_Time_T(FILE *df, GSM_DateTime DT)
+time_t Fill_Time_T(GSM_DateTime DT, int TZ)
 {
-	struct tm tm_starttime;
+	struct tm 	tm_starttime;
+	unsigned char 	buffer[30];
 
-	smfprintf(df, "  StartTime  : %02i-%02i-%04i %02i:%02i:%02i\n",
+	dprintf("  StartTime  : %02i-%02i-%04i %02i:%02i:%02i\n",
 		DT.Day,DT.Month,DT.Year,DT.Hour,DT.Minute,DT.Second);
 
+	if (TZ != 0) {
 #ifdef WIN32
-	putenv("TZ=PST+8");
+	    sprintf(buffer,"TZ=PST+%i",TZ);
+	    putenv(buffer);
 #else
-	setenv("TZ","PST+8",1);
+	    sprintf(buffer,"PST+%i",TZ);
+	    setenv("TZ",buffer,1);
 #endif
+	}
 	tzset();
 
 	memset(&tm_starttime, 0, sizeof(tm_starttime));
