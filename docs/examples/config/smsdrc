@@ -1,7 +1,7 @@
 # This is a sample smsdrc file. It's required for --smsd option in Gammu
 
 # This section is like section "gammu" in "gammurc" file. See info there
-# for more details. If it's not used here, there are get values from gammurc
+# for more details. If it's not used here, values are read from gammurc
 #[gammu]
 #port = /dev/ttyS1
 #model = 6110
@@ -16,10 +16,10 @@
 # PIN         - PIN for SIM card
 # logfile     - logfile for info about smsd actions
 # CommTimeout - (time in seconds) after each read/write loop smsd waits so
-#               many seconds to make it again
+#               many seconds to make it again. Default: 1
 # SendTimeout - shows how many seconds smsd should wait for network answer
 #               during sending sms. If nothing happen during this time,
-#               sms will be resent
+#               sms will be resent. Default: 10
 [smsd]
 PIN = 1234
 logfile = smsdlog
@@ -27,8 +27,6 @@ commtimeout = 1
 sendtimeout = 10
 
 # The following paths must be written with trailing '/' or '\' depending on OS.
-# If paths are the same, they must be written exactly equal (incl. case, also
-# in WIN32)
 # inboxpath    - where the received SMSes are stored, default current directory
 # outboxpath   - where SMSes to be sent should be placed, default current
 #                directory
@@ -41,6 +39,13 @@ sendtimeout = 10
 #                'standard' is in the standard character set.
 #                Default: unicode.
 # transmitformat - the format for transmitting the SMS: 'auto', 'unicode', '7bit'. Default: auto
+# receivefrequency - the number of seconds between testing for received SMSes, when the phone
+#                    is busy sending SMSes. Normally a test for received SMSes is done every commtimeout
+#                    seconds and after each sent SMS. Default: 0 (not used)
+# deliveryreport   - should delivery reports be used no/log/sms. 
+#                    log: one line log entry, 
+#                    sms: store in inbox as a received SMS
+#                    Default: no
 
 #inboxpath = /var/spool/sms/inbox/
 #outboxpath = /var/spool/sms/outbox/
@@ -48,6 +53,8 @@ sendtimeout = 10
 #errorsmspath = /var/spool/sms/error/
 #inboxformat = unicode
 #transmitformat = auto
+#receivefrequency = 0
+#deliveryreport = no
 
 # When uncomment this section and insert numbers here, smsd will process
 # incoming sms only from numbers written here (incoming sms from all other
@@ -117,4 +124,21 @@ sendtimeout = 10
 # RejectDuplicates = True
 # ReplaceMessage = 0
 # MessageReference = 0
+#
+# Locale
+# -----------------------------------------------------------------------------
+# In Linux there can be a problem about getting the proper locale defined
+# when gammu --smsd is run as a daemon from the /etc/inittab script. National characters
+# may appear as question marks in received SMSes. A solution is provided
+# along the following lines (replace 'da_DK' by your own locale):
+#
+# Define /usr/local/bin/gammu.sh as
+#
+#  #!/bin/sh
+#  export LANG=da_DK
+#  /usr/local/bin/gammu --smsd FILES /etc/smsdrc
+#
+# and call it from /etc/inittab by
+#
+# GA:345:respawn:/usr/local/bin/gammu.sh
 

@@ -160,7 +160,7 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 	if (UDH->PartNumber != -1 && UDH->AllParts != -1) {
 		dprintf(", part %i of %i",UDH->PartNumber,UDH->AllParts);
 	}
-	if (di.dl == DL_TEXTALL) DumpMessage(di.df, UDH->Text, UDH->Length);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, UDH->Text, UDH->Length);
 #endif
 }
 
@@ -203,7 +203,7 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 			memcpy(SMS->Text,buffer+(Layout.Text+off),SMS->Length);
 #ifdef DEBUG
 			dprintf("8 bit SMS, length %i",SMS->Length);
-			if (di.dl == DL_TEXTALL) DumpMessage(di.df, SMS->Text, SMS->Length);
+			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, SMS->Text, SMS->Length);
 #endif
 			break;
 		case GSM_Coding_Unicode:
@@ -211,7 +211,7 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 			DecodeUnicodeSpecialNOKIAChars(SMS->Text,buffer+(Layout.Text+off), SMS->Length);
 #ifdef DEBUG
 			dprintf("Unicode SMS, length %i",SMS->Length);
-			if (di.dl == DL_TEXTALL) DumpMessage(di.df,buffer+(Layout.Text+off), SMS->Length*2);
+			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df,buffer+(Layout.Text+off), SMS->Length*2);
 			dprintf("%s\n",DecodeUnicodeString(SMS->Text));
 #endif
 			break;
@@ -401,7 +401,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 		memcpy(buffer+Layout.Text, SMS->UDH.Text, off);		/* we copy the udh */
 #ifdef DEBUG
 		dprintf("UDH, length %i",off);
-		if (di.dl == DL_TEXTALL) DumpMessage(di.df, SMS->UDH.Text, off);
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, SMS->UDH.Text, off);
 #endif
 	}
 	switch (SMS->Coding) {
@@ -414,7 +414,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			size2 = size = SMS->Length+off;
 #ifdef DEBUG
 			dprintf("8 bit SMS, length %i",SMS->Length);
-			if (di.dl == DL_TEXTALL) DumpMessage(di.df,SMS->Text,SMS->Length);
+			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df,SMS->Text,SMS->Length);
 #endif
 			break;
 		case GSM_Coding_Default:
@@ -439,7 +439,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			size=size2=strlen(DecodeUnicodeString(buffer+(Layout.Text+off)))*2+off;
 #ifdef DEBUG
 			dprintf("Unicode SMS, length %i",(size2-off)/2);
-			if (di.dl == DL_TEXTALL) DumpMessage(di.df,buffer+(Layout.Text+off), size2-off);
+			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df,buffer+(Layout.Text+off), size2-off);
 			dprintf("%s\n",DecodeUnicodeString(buffer+(Layout.Text+off)));
 #endif
 			break;
@@ -905,7 +905,7 @@ void GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		EncodeDefault(Buffer2, Buffer, &smslen);
 		DecodeDefault(Buffer,  Buffer2, smslen);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL) {
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) {
 			dprintf("Info->Buffer:\n");
 			DumpMessage(di.df, Info->Buffer, strlen(DecodeUnicodeString(Info->Buffer))*2);
 			dprintf("Buffer:\n");
@@ -1032,7 +1032,7 @@ bool GSM_DecodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 	if (SMS->SMS[0].UDH.Type == UDH_NokiaCallerLogo && SMS->Number == 1) {
 		PHONE_DecodeBitmap(GSM_NokiaCallerLogo, SMS->SMS[0].Text+4, &Info->Bitmap->Bitmap[0]);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL) GSM_PrintBitmap(di.df,&Info->Bitmap->Bitmap[0]);
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Info->Bitmap->Bitmap[0]);
 #endif
 		Bitmap = true;
 		RetVal = true;
@@ -1041,7 +1041,7 @@ bool GSM_DecodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		PHONE_DecodeBitmap(GSM_NokiaOperatorLogo, SMS->SMS[0].Text+7, &Info->Bitmap->Bitmap[0]);
 		NOKIA_DecodeNetworkCode(SMS->SMS[0].Text, Info->Bitmap->Bitmap[0].NetworkCode);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL) GSM_PrintBitmap(di.df,&Info->Bitmap->Bitmap[0]);
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Info->Bitmap->Bitmap[0]);
 #endif
 		Bitmap = true;
 		RetVal = true;
@@ -1099,7 +1099,7 @@ bool GSM_DecodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 					dprintf("OTA bitmap as Picture Image\n");
 					PHONE_DecodeBitmap(GSM_NokiaPictureImage, Buffer + i + 7, &Info->Bitmap->Bitmap[0]);
 #ifdef DEBUG
-					if (di.dl == DL_TEXTALL) GSM_PrintBitmap(di.df,&Info->Bitmap->Bitmap[0]);
+					if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Info->Bitmap->Bitmap[0]);
 #endif
 					Bitmap = true;
 					break;
@@ -1113,7 +1113,7 @@ bool GSM_DecodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 					dprintf("OTA bitmap as Screen Saver\n");
 					PHONE_DecodeBitmap(GSM_NokiaPictureImage, Buffer + i + 7, &Info->Bitmap->Bitmap[0]);
 #ifdef DEBUG
-					if (di.dl == DL_TEXTALL) GSM_PrintBitmap(di.df,&Info->Bitmap->Bitmap[0]);
+					if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Info->Bitmap->Bitmap[0]);
 #endif
 					Bitmap = true;
 					break;

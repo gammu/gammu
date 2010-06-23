@@ -570,7 +570,7 @@ static GSM_Error loadbmp(FILE *file, GSM_MultiBitmap *bitmap)
 #endif
 	if (buffer[28]!=1) {
 		dprintf("Wrong number of colors\n");
-		return GE_NOTSUPPORTED;
+		return GE_FILENOTSUPPORTED;
 	}
 
 #ifdef DEBUG
@@ -584,7 +584,7 @@ static GSM_Error loadbmp(FILE *file, GSM_MultiBitmap *bitmap)
 #endif  
 	if (buffer[30]!=0) {
 		dprintf("Compression type not supported\n");
-		return GE_NOTSUPPORTED;
+		return GE_FILENOTSUPPORTED;
 	}
 
 	/* read rest of header (if exists) and color palette */

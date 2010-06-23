@@ -331,7 +331,8 @@ GSM_Error DCT3DCT4_GetModel (GSM_StateMachine *s)
 	dprintf("Getting model\n");
 	error=GSM_WaitFor (s, req, 5, 0xd1, 3, ID_GetModel);
 	if (error==GE_NONE) {
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 			smprintf(s, "[Connected model  - \"%s\"]\n",s->Phone.Data.Model);
 			smprintf(s, "[Firmware version - \"%s\"]\n",s->Phone.Data.Version);
 			smprintf(s, "[Firmware date    - \"%s\"]\n",s->Phone.Data.VersionDate);
@@ -350,7 +351,8 @@ GSM_Error DCT3DCT4_GetFirmware (GSM_StateMachine *s)
 	dprintf("Getting firmware version\n");
 	error=GSM_WaitFor (s, req, 5, 0xd1, 3, ID_GetFirmware);
 	if (error==GE_NONE) {
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 			smprintf(s, "[Connected model  - \"%s\"]\n",s->Phone.Data.Model);
 			smprintf(s, "[Firmware version - \"%s\"]\n",s->Phone.Data.Version);
 			smprintf(s, "[Firmware date    - \"%s\"]\n",s->Phone.Data.VersionDate);
@@ -1202,7 +1204,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_PhonebookEntry 	*entry,
 	while (length != MessageLength) {
 #ifdef DEBUG
 		dprintf("Phonebook entry block - length %i", Block[3]-6);
-		if (di.dl == DL_TEXTALL) DumpMessage(di.df, Block+5, Block[3]-6);
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, Block+5, Block[3]-6);
 #endif
 		if (entry->EntriesNum==GSM_PHONEBOOK_ENTRIES) {
 			dprintf("Too many entries\n");

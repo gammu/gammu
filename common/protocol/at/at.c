@@ -39,7 +39,8 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 		"NO ANSWER"	  , "AT+CREG=1"     , "\x0D\x0A_OSIGQ:" ,
 		"_OSIGQ:"	  , "\x0D\x0A_OBS:" , "_OBS:"		,
 		"\x0D\x0A+CGREG:" , "+CGREG:"	    , "\x0D\x0A+CMTI:"	,
-		"CMIT:"		  , "\x0D\x0A+COLP" , "\x0D\x0A+CREG"};
+		"CMIT:"		  , "\x0D\x0A+COLP" , "\x0D\x0A+CREG"	,
+		"\x0D\x0A^SCN:"	  , "^SCN:"};
 
 	if (d->linestart == NULL) {
 		d->Msg.Length = 0;
@@ -54,7 +55,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 	case 13:
 		d->wascrlf = true;
 		if (d->Msg.Length > 0 && rx_byte == 10 && d->Msg.Buffer[d->Msg.Length-2]==13) {
-			for (i=0;i<18;i++) {
+			for (i=0;i<20;i++) {
 			    if (strncmp(StartStrings[i],d->linestart,strlen(StartStrings[i])) == 0) {
 				s->Phone.Data.RequestMsg	= &d->Msg;
 				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);

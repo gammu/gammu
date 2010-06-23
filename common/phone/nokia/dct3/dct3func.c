@@ -1210,8 +1210,27 @@ GSM_Error DCT3_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 
 GSM_Error DCT3_ReplyDeleteSMSMessage(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
-	dprintf("Deleted SMS\n");
-	return GE_NONE;
+	switch(msg.Buffer[3]) {
+	case 0x0b:
+		dprintf("SMS deleted\n");
+		return GE_NONE;
+	case 0x0c:
+		dprintf("Error deleting SMS\n");
+		switch (msg.Buffer[4]) {
+			case 0x02:
+				/* Not tested on 6210 */
+				dprintf("Invalid location\n");
+				return GE_INVALIDLOCATION;
+			case 0x06:
+				/* Not tested on 6210 */
+				dprintf("Phone is OFF\n");
+				return GE_PHONEOFF;
+			default:
+				dprintf("Unknown error: %02x\n",msg.Buffer[4]);
+				return GE_UNKNOWNRESPONSE;
+		}
+	}
+	return GE_UNKNOWNRESPONSE;
 }
 
 GSM_Error N71_92_ReplyGetNetworkLevel(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)

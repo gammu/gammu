@@ -40,7 +40,8 @@ static bool irda_discover_device(GSM_StateMachine *state)
     GSM_Device_IrdaData 	*d = &state->Device.Data.Irda;
     struct irda_device_list	*list;
     unsigned char		*buf;
-    int				sec, s, z, len, fd, i;
+    unsigned int		sec;
+    int				s, z, len, fd, i;
     GSM_DateTime		Date;
     bool			founddevice = false;
 

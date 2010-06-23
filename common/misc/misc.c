@@ -12,6 +12,7 @@
 
 #include "../../cfg/config.h"
 #include "misc.h"
+#include "../gsmstate.h"
 
 /* Based on article in Polish PC-Kurier 8/1998 page 104
  * Archive on http://www.pckurier.pl
@@ -38,39 +39,74 @@ char *DayOfWeek (int year, int month, int day)
 	return &DayOfWeekChar;
 }
 
-/* Dumps a message */
-void DumpMessage(FILE *df, const unsigned char *message, int messagesize)
+void GSM_GetCurrentDateTime (GSM_DateTime *Date)
 {
-	int 	i;
-	char 	buf[17];
+	struct tm		*now;
+	time_t			nowh;
 
-	if (df==NULL) return;
+	nowh = time(NULL);
+	now  = localtime(&nowh);
 
-	buf[16] = 0;
+	Date->Year	= now->tm_year;
+	Date->Month	= now->tm_mon+1;
+	Date->Day	= now->tm_mday;
+	Date->Hour	= now->tm_hour;
+	Date->Minute	= now->tm_min;
+	Date->Second	= now->tm_sec;
 
-	for (i = 0; i < messagesize; i++) {
-		if (i % 16 == 0) {
-			if (i != 0) fprintf(df, " %s", buf);
-			fprintf(df, "\n");
-			memset(buf, ' ', 16);
-		} else {
-			fprintf(df, "|");
-		}
-		fprintf(df, "%02x", message[i]);
-		if (isprint(message[i]) && message[i]!=0x09) {
-			if ((i+1) % 16 != 0) fprintf(df, "%c", message[i]);
-			buf[i % 16] = message[i];
-		} else {
-			if ((i+1) % 16 != 0) fprintf(df, " ");
-			buf[i % 16] = '.';
-		}
+	if (Date->Year<1900)
+	{
+		if (Date->Year>90) Date->Year = Date->Year+1900;
+			      else Date->Year = Date->Year+2000;
 	}
-	if (i % 16 == 0) {
-		fprintf(df, " %s", buf);
-	} else {
-		fprintf(df, "%*s %s", 4 * (16 - i % 16) - 1, "", buf);
+}
+
+char *OSDateTime (GSM_DateTime dt, bool TimeZone)
+{
+	struct tm 	timeptr;
+	static char 	retval[200],retval2[200];
+	int 		p,q,r,w;
+
+	/* Based on article in Polish PC-Kurier 8/1998 page 104
+	 * Archive on http://www.pckurier.pl
+	 */
+	p=(14-dt.Month) / 12;
+	q=dt.Month+12*p-2;
+	r=dt.Year-p;
+	w=(dt.Day+(31*q) / 12 + r + r / 4 - r / 100 + r / 400) % 7;
+
+	timeptr.tm_yday 	= 0; 			/* FIXME */
+	timeptr.tm_isdst 	= -1; 			/* FIXME */
+	timeptr.tm_year 	= dt.Year - 1900;
+	timeptr.tm_mon  	= dt.Month - 1;
+	timeptr.tm_mday 	= dt.Day;
+	timeptr.tm_hour 	= dt.Hour;
+	timeptr.tm_min  	= dt.Minute;
+	timeptr.tm_sec  	= dt.Second;
+	timeptr.tm_wday 	= w;
+
+#ifdef WIN32
+	strftime(retval2, 200, "%#c", &timeptr);
+#else
+	strftime(retval2, 200, "%c", &timeptr);
+#endif
+	if (TimeZone) {
+		if (dt.Timezone >= 0) {
+			sprintf(retval," +%02i",dt.Timezone);
+		} else {
+			sprintf(retval," -%02i",dt.Timezone);
+		}
+		strcat(retval2,retval);
 	}
-	fprintf(df, "\n");
+	/* If don't have weekday name, include it */
+	strftime(retval, 200, "%A", &timeptr);
+	if (strstr(retval2,retval)==NULL) {
+		strcat(retval2," (");
+		strcat(retval2,retval);
+		strcat(retval2,")");
+	}
+
+	return retval2;
 }
 
 int GetLine(FILE *File, char *Line, int count)
@@ -141,12 +177,28 @@ Debug_Info di = {0,NULL};
 #ifdef DEBUG
 int dprintf(const char *format, ...)
 {
-	va_list	argp;
-	int 	result;
+	va_list			argp;
+	int 			result;
+	static unsigned char 	nextline[2000]="";
+	unsigned char		buffer[2000];
+	GSM_DateTime 		date_time;
 
-	if (di.dl == DL_TEXTALL) {
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) {
 		va_start(argp, format);
-		result = vfprintf(di.df, format, argp);
+		result = vsprintf(buffer, format, argp);
+		strcat(nextline, buffer);
+		if (strstr(buffer, "\n")) {
+			if (di.dl == DL_TEXTALLDATE) {
+				GSM_GetCurrentDateTime(&date_time);
+				fprintf(di.df,"%s %4d/%02d/%02d %02d:%02d:%02d: %s",
+		                	DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
+		                	date_time.Year, date_time.Month, date_time.Day,
+		                	date_time.Hour, date_time.Minute, date_time.Second,nextline);
+			} else {
+				fprintf(di.df,"%s",nextline);
+			}
+			strcpy(nextline, "");
+		}
 		va_end(argp);
 		return result;
 	}
@@ -154,13 +206,105 @@ int dprintf(const char *format, ...)
 }
 #endif
 
+#define SMPRINTF_MAX_TIME 30
+
+/* assumption: if \n is present it is always the last char,
+ * string never of the form "......\n..."
+ */
+int smfprintf(FILE *f, const char *format, ...)
+{
+        va_list 		argp;
+	int 			result=0;
+	static unsigned char 	prevline[2000] = "", nextline[2000]="";
+	static unsigned int 	linecount=0;
+	static time_t		time1=0;
+	unsigned char		buffer[2000];
+	GSM_DateTime 		date_time;
+
+	if (f == NULL) return 0;
+	va_start(argp, format);
+	result = vsprintf(buffer, format, argp);
+	strcat(nextline, buffer);
+	if (strstr(buffer, "\n"))
+	{
+		if ((strcmp(nextline, prevline) == 0) && (difftime(time(NULL), time1) < SMPRINTF_MAX_TIME))
+		{
+			linecount++;
+		} else if (ftell(f) < 5000000) {
+			GSM_GetCurrentDateTime(&date_time);
+			if (linecount > 0) {
+				if (di.dl == DL_TEXTALLDATE || di.dl == DL_TEXTERRORDATE || di.dl == DL_TEXTDATE) {
+			                fprintf(f,"%s %4d/%02d/%02d %02d:%02d:%02d: <%i> %s",
+			                        DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
+			                        date_time.Year, date_time.Month, date_time.Day,
+			                        date_time.Hour, date_time.Minute, date_time.Second,linecount,prevline);
+				} else {
+			                fprintf(f,"%s",prevline);
+				}
+			}
+			linecount=0;
+			if (di.dl == DL_TEXTALLDATE || di.dl == DL_TEXTERRORDATE || di.dl == DL_TEXTDATE) {
+		                fprintf(f,"%s %4d/%02d/%02d %02d:%02d:%02d: %s",
+		                        DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
+		                        date_time.Year, date_time.Month, date_time.Day,
+		                        date_time.Hour, date_time.Minute, date_time.Second,nextline);
+			} else {
+		                fprintf(f,"%s",nextline);
+			}
+			strcpy(prevline, nextline);
+			time1 = time(NULL);
+		}
+		strcpy(nextline, "");
+		fflush(f);
+	}
+	va_end(argp);
+	return result;
+}
+
 bool GSM_SetDebugLevel(char *info, Debug_Info *di)
 {
-//	printf("Setting debug level to \"%s\"\n",info);
-	if (!strcmp(info,"nothing")) 	{di->dl = 0;		 return true;}
-	if (!strcmp(info,"text")) 	{di->dl = DL_TEXT;	 return true;}
-	if (!strcmp(info,"textall")) 	{di->dl = DL_TEXTALL;    return true;}
-	if (!strcmp(info,"binary"))  	{di->dl = DL_BINARY;     return true;}
-	if (!strcmp(info,"errors"))  	{di->dl = DL_TEXTERROR;  return true;}
+	if (!strcmp(info,"nothing")) 		{di->dl = 0;		 	return true;}
+	if (!strcmp(info,"text")) 		{di->dl = DL_TEXT;	 	return true;}
+	if (!strcmp(info,"textall")) 		{di->dl = DL_TEXTALL;    	return true;}
+	if (!strcmp(info,"binary"))  		{di->dl = DL_BINARY;     	return true;}
+	if (!strcmp(info,"errors"))  		{di->dl = DL_TEXTERROR;  	return true;}
+	if (!strcmp(info,"textdate")) 		{di->dl = DL_TEXTDATE;	 	return true;}
+	if (!strcmp(info,"textalldate")) 	{di->dl = DL_TEXTALLDATE;    	return true;}
+	if (!strcmp(info,"errorsdate"))  	{di->dl = DL_TEXTERRORDATE;  	return true;}
 	return false;
+}
+
+/* Dumps a message */
+void DumpMessage(FILE *df, const unsigned char *message, int messagesize)
+{
+	int 	i;
+	char 	buf[17];
+
+	if (df==NULL) return;
+
+	buf[16] = 0;
+
+	for (i = 0; i < messagesize; i++) {
+		if (i % 16 == 0) {
+			if (i != 0) smfprintf(df, " %s", buf);
+			smfprintf(df, "\n");
+			memset(buf, ' ', 16);
+		} else {
+			smfprintf(df, "|");
+		}
+		smfprintf(df, "%02x", message[i]);
+		if (isprint(message[i]) && message[i]!=0x09) {
+			if ((i+1) % 16 != 0) smfprintf(df, "%c", message[i]);
+			buf[i % 16] = message[i];
+		} else {
+			if ((i+1) % 16 != 0) smfprintf(df, " ");
+			buf[i % 16] = '.';
+		}
+	}
+	if (i % 16 == 0) {
+		smfprintf(df, " %s", buf);
+	} else {
+		smfprintf(df, "%*s %s", 4 * (16 - i % 16) - 1, "", buf);
+	}
+	smfprintf(df, "\n");
 }

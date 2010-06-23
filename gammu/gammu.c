@@ -1388,7 +1388,7 @@ static void SetRingtone(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-#define SEND_SAVE_SMS_BUFFER_SIZE 500
+#define SEND_SAVE_SMS_BUFFER_SIZE 10000
 
 static GSM_Error SMSStatus;
 

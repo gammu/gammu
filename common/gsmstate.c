@@ -153,7 +153,9 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	error=GSM_SetDebugFile(s->Config.DebugFile, &s->di);
 	if (error != GE_NONE) return error;
 
-	if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTERROR) {
+	if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTERROR ||
+	    s->di.dl == DL_TEXTALLDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTERRORDATE)
+	{
 		smprintf(s,"[Gammu            - version %s built %s %s]\n",VERSION,__TIME__,__DATE__);
 		smprintf(s,"[Connection       - \"%s\"]\n",s->Config.Connection);
 		smprintf(s,"[Model type       - \"%s\"]\n",s->Config.Model);
@@ -327,7 +329,8 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 int GSM_ReadDevice (GSM_StateMachine *s)
 {
 	unsigned char	buff[255];
-	int		res = 0, count, i;
+	int		res = 0, count;
+	unsigned int	i;
 	GSM_DateTime	Date;
 
 	GSM_GetCurrentDateTime (&Date);
@@ -387,11 +390,13 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned char *buffer,
 		switch (Phone->DispatchError) {		
 		case GE_UNKNOWNRESPONSE:
 		case GE_UNKNOWNFRAME:
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE)
+			{
 				if (Phone->DispatchError == GE_UNKNOWNFRAME) {
-					smprintf(s, "\nUNKNOWN frame. If you want, PLEASE report it (see /readme). Thank you\n");
+					smprintf(s, "UNKNOWN frame. If you want, PLEASE report it (see /readme.txt). Thank you\n");
 				} else {
-					smprintf(s, "\nUNKNOWN response. If you want, PLEASE report it (see /readme). Thank you\n");
+					smprintf(s, "UNKNOWN response. If you want, PLEASE report it (see /readme.txt). Thank you\n");
 				}
 				if (length != 0) {
 					smprintf(s,"Last sent message ");
@@ -435,8 +440,10 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned char *buffer,
 
 	for (reply=0;reply<s->ReplyNum;reply++) {
 		if (reply!=0) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
-			    smprintf(s, "[Retrying %i]\n", reply+1);
+			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl == DL_TEXTERROR ||
+			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl == DL_TEXTERRORDATE)
+			{
+			    smprintf(s, "[Retrying %i type: 0x%02x]\n", reply, type);
 			}
 		}
 		error = Protocol->Functions->WriteMessage(s, buffer, length, type);
@@ -502,7 +509,8 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	GSM_Phone_Data 		*Data	= &s->Phone.Data;
 	int			reply, i;
 
-	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL) {
+	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
+	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 		smprintf(s, "Received frame ");
 		smprintf(s, "0x%02x / 0x%04x", msg->Type, msg->Length);
 		DumpMessage(s->di.df, msg->Buffer, msg->Length);
@@ -705,6 +713,7 @@ static OnePhoneModel allmodels[] = {
 	{"M20"  ,	  "M20",	  "",				   {0}},
 	{"MC35" ,	  "MC35",	  "",				   {0}},
 	{"iPAQ" ,	  "iPAQ"  ,	  "",				   {0}},
+	{"A2D" ,	  "A2D"  ,	  "",				   {0}},
 	{"A500", 	  "ONE TOUCH 500","",				   {0}},
 	{"9210",	  "RAE-3",	  "Nokia Communicator GSM900/1800",{0}},
 #endif
@@ -753,7 +762,8 @@ bool IsPhoneFeatureAvailable(char *model, int feature)
 
 void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned char *message, int messagesize, int type)
 {
-	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL) {
+	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
+	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 		smprintf(s,"Sending frame ");
 		smprintf(s,"0x%02x / 0x%04x", type, messagesize);
 		DumpMessage(s->di.df, message, messagesize);
@@ -776,13 +786,14 @@ void GSM_DumpMessageLevel3(GSM_StateMachine *s, unsigned char *message, int mess
 
 int smprintf(GSM_StateMachine *s, const char *format, ...)
 {
-	va_list	argp;
-	int 	result=0;
+	va_list		argp;
+	int 		result=0;
+	unsigned char	buffer[2000];
 
 	if (s->di.dl != 0 && s->di.df) {
 		va_start(argp, format);
-		result = vfprintf(s->di.df, format, argp);
-		fflush(s->di.df);
+		result = vsprintf(buffer, format, argp);
+		result = smfprintf(s->di.df, buffer);
 		va_end(argp);
 	}
 	return result;
@@ -795,7 +806,8 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 
 	/* We don't use errno in win32 - GetLastError gives better info */	
 	if (GetLastError()!=-1) {
-		if (s->di.dl == DL_TEXTERROR || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTALL) {
+		if (s->di.dl == DL_TEXTERROR || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTALL ||
+		    s->di.dl == DL_TEXTERRORDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTALLDATE) {
 			FormatMessage( 
 				FORMAT_MESSAGE_ALLOCATE_BUFFER | 
 				FORMAT_MESSAGE_FROM_SYSTEM | 
@@ -815,7 +827,8 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 #endif
 
 	if (errno!=-1) {
-		if (s->di.dl == DL_TEXTERROR || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTALL) {
+		if (s->di.dl == DL_TEXTERROR || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTALL ||
+		    s->di.dl == DL_TEXTERRORDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTALLDATE) {
 			smprintf(s,"[System error     - %s, %i, \"%s\"]\n",description,errno,strerror(errno));
 		}
 	}

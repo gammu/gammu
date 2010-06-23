@@ -30,6 +30,7 @@ typedef struct {
 	DWORD         		dwThreadID;
     	HANDLE 		 	Mutex;
 	bool			ThreadTerminate;
+	bool			Used;
 	int 		 	number;
 	int			errors;
 	GSM_SecurityCodeType 	SecurityStatus;
@@ -60,12 +61,14 @@ BOOL LoopProc(int *i)
 		if (s[*i].errors > 1) {
 		        WaitForSingleObject(s[*i].Mutex, INFINITE );
 			if (s[*i].ThreadTerminate) break;
-			PhoneCall = *s[*i].PhoneCallBack;
-			if (s[*i].errors != 255) {
+			if (s[*i].errors < 250) {
+				PhoneCall = *s[*i].PhoneCallBack;
 				PhoneCall(1,*i,false);
-				s[*i].errors = 255;
 			}
-			GSM_TerminateConnection(&s[*i].s);
+			if (s[*i].errors != 250) {
+				GSM_TerminateConnection(&s[*i].s);
+			}
+			s[*i].errors = 251;
 			if (s[*i].ThreadTerminate) break;
 			error=GSM_InitConnection(&s[*i].s,2);
 			if (s[*i].ThreadTerminate) break;
@@ -91,19 +94,19 @@ BOOL LoopProc(int *i)
 					SecurityCall = *s[*i].SecurityCallBack;
 					SecurityCall(1,*i,SecurityStatus);
 				}
-			        WaitForSingleObject(s[*i].Mutex, INFINITE );
-				if (s[*i].ThreadTerminate) break;
-				error=s[*i].s.Phone.Functions->GetSMSStatus(&s[*i].s,&SMSStatus);
-			        ReleaseMutex(s[*i].Mutex);
-				SetErrorCounter(*i, error);
-				if (error == GE_NONE) {
+			}
+			WaitForSingleObject(s[*i].Mutex, INFINITE );
+			if (s[*i].ThreadTerminate) break;
+			error=s[*i].s.Phone.Functions->GetSMSStatus(&s[*i].s,&SMSStatus);
+			ReleaseMutex(s[*i].Mutex);
+			SetErrorCounter(*i, error);
+			if (error == GE_NONE) {
+				if (SMSStatus.SIMUsed+SMSStatus.PhoneUsed != 0) {
 					if (s[*i].ThreadTerminate) break;
-					if (SMSStatus.SIMUsed+SMSStatus.PhoneUsed != 0) {
-						SMSCall = *s[*i].SMSCallBack;
-						SMSCall(1,*i);
-					}
+					SMSCall = *s[*i].SMSCallBack;
+					SMSCall(1,*i);
 				}
-			};
+			}
 			if (s[*i].ThreadTerminate) break;
 			mili_sleep(500);
 			if (s[*i].ThreadTerminate) break;
@@ -121,10 +124,7 @@ static void CreatePhoneThread(int *phone,
 			      void (**SecurityCallBack) (int x, int s, GSM_SecurityCodeType State),
 			      void (**SMSCallBack)      (int x, int s))
 {
-	void (*PhoneCall) (int x, int s, boolean connected);
-
 	s[*phone].Mutex = CreateMutex( NULL, FALSE, NULL );
-	s[*phone].errors 		= 0;
 	s[*phone].SecurityStatus	= GSCT_None;
 	s[*phone].number 		= *phone;
 	
@@ -137,9 +137,6 @@ static void CreatePhoneThread(int *phone,
 				  (LPTHREAD_START_ROUTINE) LoopProc,
 				  (LPVOID) &s[*phone].number,
 				  0, &s[*phone].dwThreadID);
-
-	PhoneCall = *s[*phone].PhoneCallBack;
-	PhoneCall(1,*phone,true);
 }
 
 static void CheckConnectionType(int  *phone,
@@ -151,17 +148,22 @@ static void CheckConnectionType(int  *phone,
 			        void (**SecurityCallBack) (int x, int s, GSM_SecurityCodeType State),
 			        void (**SMSCallBack)      (int x, int s))
 {
-		s[*phone].s.Config.Connection = connection_to_check;
-		*error=GSM_InitConnection(&s[*phone].s,2);
-		switch (*error) {
-		case GE_NONE:
-			strcpy(connection,connection_to_check);
-			CreatePhoneThread(phone,PhoneCallBack,SecurityCallBack,SMSCallBack);
-		case GE_DEVICEOPENERROR:
-			break;
-		default:
-			*error2 = GSM_TerminateConnection(&s[*phone].s);
-		}
+	void (*PhoneCall) (int x, int s, boolean connected);
+
+	s[*phone].s.Config.Connection = connection_to_check;
+	*error=GSM_InitConnection(&s[*phone].s,2);
+	switch (*error) {
+	case GE_NONE:
+		strcpy(connection,connection_to_check);
+		s[*phone].errors = 0;
+		CreatePhoneThread(phone,PhoneCallBack,SecurityCallBack,SMSCallBack);
+		PhoneCall = *s[*phone].PhoneCallBack;
+		PhoneCall(1,*phone,true);
+	case GE_DEVICEOPENERROR:
+		break;
+	default:
+		*error2 = GSM_TerminateConnection(&s[*phone].s);
+	}
 }
 
 GSM_Error WINAPI mystartconnection(int *phone,
@@ -185,8 +187,8 @@ GSM_Error WINAPI mystartconnection(int *phone,
 
 	*phone = 0;
 	for (i=1;i<10;i++) {
-		if (!s[i].s.opened) {
-			s[i].s.opened 	= true;
+		if (!s[i].Used) {
+			s[i].Used 	= true;
 			*phone		= i;
 			break;
 		}
@@ -237,6 +239,7 @@ GSM_Error WINAPI mystartconnection(int *phone,
 		s[*phone].s.Config.Connection = malloc( strlen(connection)+1 );
 		if (s[*phone].s.Config.Connection == NULL) return GE_MOREMEMORY;
 		strcpy(s[*phone].s.Config.Connection,connection);
+		s[*phone].errors = 250;
 		CreatePhoneThread(phone,PhoneCallBack,SecurityCallBack,SMSCallBack);
 		return GE_NONE;
 	}
@@ -244,16 +247,15 @@ GSM_Error WINAPI mystartconnection(int *phone,
 
 GSM_Error WINAPI myendconnection(int phone)
 {
+	GSM_Error error=GE_NONE;
+
 	s[phone].ThreadTerminate = true;
 	while (1) {
 		if (s[phone].dwThreadID == 0) break;
 	}
-	if (s[phone].s.opened) {
-		s[phone].s.opened = false;
-		return GSM_TerminateConnection(&s[phone].s);
-	} else {
-		return GE_NONE;
-	}
+	if (s[phone].s.opened) error=GSM_TerminateConnection(&s[phone].s);
+	s[phone].Used=false;
+	return error;
 }
 
 GSM_Error WINAPI mygetnetworkinfo (int phone, GSM_NetworkInfo *NetworkInfo)
@@ -340,11 +342,11 @@ void SendSMSStatus (char *Device, int status)
 	}
 }
 
-GSM_Error WINAPI mysendsmsmessage (int phone, GSM_SMSMessage *sms, int timeout)
+GSM_Error WINAPI mysendsmsmessage (int phone, GSM_SMSMessage *sms, unsigned int timeout)
 {
 	GSM_Error 	error;
 	GSM_DateTime	Date;
-	int		i,j;
+	unsigned int	i,j;
 	GSM_SMSMessage	sms2;
 
 	if (!s[phone].s.opened) return GE_NOTCONNECTED;
@@ -463,6 +465,13 @@ GSM_Error WINAPI mygetmodel(int phone, char *model)
 	return GE_NONE;
 }
 
+GSM_Error WINAPI mygetmodelname(int phone, char *model)
+{
+	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+	sprintf(model, "%s",GetModelData(NULL,s[phone].s.Model,NULL)->model, s[phone].s.Model);
+	return GE_NONE;
+}
+
 GSM_Error WINAPI mygetfirmwareversion(int phone, double *version)
 {
 	if (!s[phone].s.opened) return GE_NOTCONNECTED;
@@ -494,6 +503,7 @@ BOOL WINAPI DllMain  ( HANDLE hModule,
 		case DLL_PROCESS_ATTACH:
 			for (i=0;i<10;i++) {
 				s[i].s.opened 	= false;
+				s[i].Used	= false;
 				s[i].dwThreadID = 0;
 			}
 			break;
@@ -502,7 +512,7 @@ BOOL WINAPI DllMain  ( HANDLE hModule,
 			break;
 		case DLL_PROCESS_DETACH:
 			for (i=0;i<10;i++) {
-				if (s[i].s.opened) GSM_TerminateConnection(&s[i].s);
+				if (s[i].Used && s[i].s.opened) GSM_TerminateConnection(&s[i].s);
 			}
 			break;
     	}

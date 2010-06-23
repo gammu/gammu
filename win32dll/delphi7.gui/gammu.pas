@@ -250,6 +250,7 @@ function GSM_EnterSecurityCode	        (Phone : integer; Code : PGSM_SecurityCod
 function GSM_GetIMEI	                (Phone : integer; IMEI:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetimei';
 function GSM_GetManufacturer	        (Phone : integer; IMEI:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmanufacturer';
 function GSM_GetModel	                (Phone : integer; Model:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmodel';
+function GSM_GetModelName	        (Phone : integer; Model:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmodelname';
 function GSM_GetFirmwareVersion         (Phone : integer; Version: PDouble): GSM_Error; stdcall; external 'gammu.dll' name 'mygetfirmwareversion';
 function GSM_Reset                      (Phone : integer; Hard: Boolean): GSM_Error; stdcall; external 'gammu.dll' name 'myreset';
 procedure GSM_GetNetworkName	        (NetworkCode: PAnsiString; NetworkName: PAnsiString); stdcall; external 'gammu.dll' name 'mygetnetworkname';

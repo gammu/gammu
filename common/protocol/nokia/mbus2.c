@@ -84,7 +84,8 @@ static GSM_Error MBUS2_SendAck(GSM_StateMachine *s, unsigned char type, unsigned
 	/* Checksum */
 	for (count = 0; count < 5; count++) out_buffer[5] ^= out_buffer[count];
 
-	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL) {
+	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
+	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 	    smprintf(s,"[Sending Ack of type %02x, seq: %x]\n",type,sequence);
 	}
 
@@ -112,7 +113,8 @@ static GSM_Error MBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 		d->Msg.Count 		= 0;
 		d->MsgRXState 		= RX_GetDestination;	
 	} else {
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 		    smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, MBUS2_FRAME_ID);
 		}
 	}
@@ -122,7 +124,8 @@ static GSM_Error MBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 
 	if (rx_byte != MBUS2_DEVICE_PC && rx_byte != MBUS2_DEVICE_PHONE) {
 		d->MsgRXState = RX_Sync;
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 		    smprintf(s,"[ERROR: incorrect char - %02x, not %02x and %02x]\n", rx_byte, MBUS2_DEVICE_PHONE, MBUS2_DEVICE_PC);
 		}
 	} else {
@@ -135,7 +138,8 @@ static GSM_Error MBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 
 	if (rx_byte != MBUS2_DEVICE_PHONE && rx_byte != MBUS2_DEVICE_PC) {
 		d->MsgRXState = RX_Sync;
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 		    smprintf(s,"[ERROR: incorrect char - %02x, not %02x and %02x]\n", rx_byte, MBUS2_DEVICE_PHONE, MBUS2_DEVICE_PC);
 		}
 	} else {
@@ -160,7 +164,8 @@ static GSM_Error MBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 
 	if (d->Msg.Type == MBUS2_ACK_BYTE)
 	{
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 		    smprintf(s,"[Received Ack]\n");
 		}
 		d->MsgRXState = RX_Sync;
@@ -185,7 +190,8 @@ static GSM_Error MBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 				s->Phone.Data.DispatchError=Phone->DispatchMessage(s);
 			}
 		} else {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 			    smprintf(s,"[ERROR: checksum]\n");
 			}
 		}

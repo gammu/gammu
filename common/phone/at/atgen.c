@@ -178,7 +178,8 @@ static GSM_Error ATGEN_GetModel(GSM_StateMachine *s)
 	dprintf("Getting model\n");
 	error=GSM_WaitFor (s, "AT+CGMM\r", 8, 0x00, 3, ID_GetModel);
 	if (error==GE_NONE) {
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 			smprintf(s, "[Connected model  - \"%s\"]\n",s->Phone.Data.Model);
 		}
 	}
@@ -234,7 +235,8 @@ static GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 		error=GSM_WaitFor (s, "AT+CGMR\r", 8, 0x00, 3, ID_GetFirmware);
 //	}
 	if (error==GE_NONE) {
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 			smprintf(s, "[Firmware version - \"%s\"]\n",s->Phone.Data.Version);
 		}
 	}
@@ -249,6 +251,14 @@ static GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_Phone_
 	case AT_Reply_OK:
 		dprintf("Manufacturer info received\n");
 		Priv->Manufacturer = AT_Unknown;
+		if (strstr(msg.Buffer,"Falcom")) {
+			dprintf("Falcom\n");
+			Priv->Manufacturer = AT_Falcom;
+			if (strstr(msg.Buffer,"A2D")) {
+				strcpy(Data->Model,"A2D");
+				dprintf("Model A2D\n");
+			}
+		}
 		if (strstr(msg.Buffer,"Nokia")) {
 			dprintf("Nokia\n");
 			Priv->Manufacturer = AT_Nokia;
@@ -286,6 +296,7 @@ static GSM_Error ATGEN_GetManufacturer(GSM_StateMachine *s, char *manufacturer)
 		case AT_Siemens	: EncodeUnicode(manufacturer,"Siemens"	,7); break;
 		case AT_Alcatel	: EncodeUnicode(manufacturer,"Alcatel"	,7); break;
 		case AT_HP      : EncodeUnicode(manufacturer,"HP"       ,2); break;
+		case AT_Falcom	: EncodeUnicode(manufacturer,"Falcom"   ,6); break;
 		case AT_Unknown	: EncodeUnicode(manufacturer,"unknown"	,7); break;
 	}
 	return GE_NONE;
@@ -1097,7 +1108,8 @@ static GSM_Error ATGEN_SaveSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	
 	for (reply=0;reply<s->ReplyNum;reply++) {
 		if (reply!=0) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 			    smprintf(s, "[Retrying %i]\n", reply+1);
 			}
 		}
@@ -1363,12 +1375,21 @@ static GSM_Error ATGEN_ReplyGetNetworkCode(GSM_Protocol_Message msg, GSM_Phone_D
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		dprintf("Network code received\n");
-		Data->NetworkInfo->NetworkCode[0] = msg.Buffer[23];
-		Data->NetworkInfo->NetworkCode[1] = msg.Buffer[24];
-		Data->NetworkInfo->NetworkCode[2] = msg.Buffer[25];
-		Data->NetworkInfo->NetworkCode[3] = ' ';
-		Data->NetworkInfo->NetworkCode[4] = msg.Buffer[26];
-		Data->NetworkInfo->NetworkCode[5] = msg.Buffer[27];
+		if (Priv->Manufacturer == AT_Falcom) {
+			Data->NetworkInfo->NetworkCode[0] = msg.Buffer[22];
+			Data->NetworkInfo->NetworkCode[1] = msg.Buffer[23];
+			Data->NetworkInfo->NetworkCode[2] = msg.Buffer[24];
+			Data->NetworkInfo->NetworkCode[3] = ' ';
+			Data->NetworkInfo->NetworkCode[4] = msg.Buffer[25];
+			Data->NetworkInfo->NetworkCode[5] = msg.Buffer[26];
+		} else {
+			Data->NetworkInfo->NetworkCode[0] = msg.Buffer[23];
+			Data->NetworkInfo->NetworkCode[1] = msg.Buffer[24];
+			Data->NetworkInfo->NetworkCode[2] = msg.Buffer[25];
+			Data->NetworkInfo->NetworkCode[3] = ' ';
+			Data->NetworkInfo->NetworkCode[4] = msg.Buffer[26];
+			Data->NetworkInfo->NetworkCode[5] = msg.Buffer[27];
+		}
 		Data->NetworkInfo->NetworkCode[6] = 0;
 		dprintf("   Network code              : %s\n", Data->NetworkInfo->NetworkCode);
 		dprintf("   Network name for Gammu    : %s ",
@@ -1383,7 +1404,8 @@ static GSM_Error ATGEN_ReplyGetNetworkCode(GSM_Protocol_Message msg, GSM_Phone_D
 
 static GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 {
-	GSM_Error error;
+	GSM_Error	error;
+	unsigned char 	buffer[200];
 
 	s->Phone.Data.NetworkInfo=netinfo;
 
@@ -1402,6 +1424,9 @@ static GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *neti
 	if (netinfo->State == GSM_HomeNetwork || netinfo->State == GSM_RoamingNetwork) {
 		dprintf("Setting short network name format\n");
 		error=GSM_WaitFor(s, "AT+COPS=3,2\r", 12, 0x00, 4, ID_GetNetworkInfo);
+
+		error=ATGEN_GetManufacturer(s, buffer);
+		if (error != GE_NONE) return error;
 
 		dprintf("Getting network code\n");
 		error=GSM_WaitFor(s, "AT+COPS?\r", 9, 0x00, 4, ID_GetNetworkInfo);
@@ -1560,12 +1585,18 @@ static GSM_Error ATGEN_SetPBKCharset(GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
+	unsigned char		buffer[200];
 
 	if (Priv->PBKCharset!=0) return GE_NONE;
 
+	error=ATGEN_GetManufacturer(s, buffer);
+	if (error != GE_NONE) return error;
+
 	dprintf("Setting charset to HEX\n");
 	error=GSM_WaitFor (s, "AT+CSCS=\"HEX\"\r", 14, 0x00, 3, ID_SetMemoryCharset);
-	if (error == GE_NONE) {
+	/* Falcom replies OK for HEX mode and send everything
+	 * in normal format */
+	if (error == GE_NONE && Priv->Manufacturer != AT_Falcom) {
 		Priv->PBKCharset = AT_PBK_HEX;
 		return error;
 	}
@@ -1682,7 +1713,7 @@ static GSM_Error ATGEN_GetMemory (GSM_StateMachine *s, GSM_PhonebookEntry *entry
 			}
 		}
 		if (Priv->PBKSBNR == AT_SBNR_AVAILABLE) {
-			sprintf(req, "AT^SBNR=vcr,%i\r",entry->Location-1);
+			sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location-1);
 			s->Phone.Data.Memory=entry;
 			dprintf("Getting phonebook entry\n");
 			return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
@@ -2161,6 +2192,11 @@ static GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press
 	return GSM_WaitFor (s, "AT+CKPD=\"1\"\r", 12, 0x00, 4, ID_PressKey);
 }
 
+static GSM_Error ATGEN_IncomingSMSCInfo(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
+{
+	return GE_NONE;
+}
+
 static GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetModel,		"AT+CGMM"		,0x00,0x00,ID_GetModel           },
 {ATGEN_GenericReply,		"AT+CMGF"		,0x00,0x00,ID_GetSMSMode	 },
@@ -2230,11 +2266,14 @@ static GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_IncomingSMS,		"\x0D\x0A+CMTI:" 	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_IncomingSMS,		"+CMTI:" 	 	,0x00,0x00,ID_IncomingFrame	 },
 
+{ATGEN_IncomingSMSCInfo,	"\x0D\x0A^SCN:"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_IncomingSMSCInfo,	"^SCN:"			,0x00,0x00,ID_IncomingFrame	 },
+
 {NULL,				"\x00"			,0x00,0x00,ID_None		 }
 };                                                                                      
 
 GSM_Phone_Functions ATGENPhone = {
-	"iPAQ|A500|at|M20|MC35|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8850|8855|8890|8910|9110|9210",
+	"A2D|iPAQ|A500|at|M20|MC35|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8850|8855|8890|8910|9110|9210",
 	ATGENReplyFunctions,
 	ATGEN_Initialise,
 	NONEFUNCTION,		/*	Terminate		*/

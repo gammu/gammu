@@ -10,6 +10,7 @@
 bool 		mywstrncasecmp			(unsigned char *a, unsigned char *b, int num);
 bool 		mywstrncmp			(unsigned char *a, unsigned char *b, int num);
 bool 		myiswspace	  		(unsigned char *src);
+int 		mytowlower			(wint_t c);
 
 unsigned int 	EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
 unsigned int 	DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);

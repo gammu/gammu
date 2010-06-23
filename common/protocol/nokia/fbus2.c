@@ -100,7 +100,8 @@ static GSM_Error FBUS2_SendAck(GSM_StateMachine *s, unsigned char type, unsigned
 	out_buffer[0] = type;
 	out_buffer[1] = sequence;
 
-	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL) {
+	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
+	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 	    smprintf(s,"[Sending Ack of type %02x, seq: %x]\n",type,sequence);
 	}
 
@@ -142,7 +143,8 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 		d->Msg.Count	   = 0;
 		d->MsgRXState	   = RX_GetDestination;	
 	} else {
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 		    if (s->connectiontype==GCT_INFRARED) {
 			smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, FBUS2_IR_FRAME_ID);
 		    } else {
@@ -156,7 +158,8 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 
 	if (rx_byte != FBUS2_DEVICE_PC) {
 		d->MsgRXState = RX_Sync;
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 		    smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, FBUS2_DEVICE_PC);
 		}
 	} else {
@@ -169,7 +172,8 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 
 	if (rx_byte != FBUS2_DEVICE_PHONE) {
 		d->MsgRXState = RX_Sync;
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 		    smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_byte, FBUS2_DEVICE_PHONE);
 		}
 	} else {
@@ -208,7 +212,8 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 			seq_num = d->Msg.Buffer[d->Msg.Length-1];
 
 			if (d->Msg.Type == FBUS2_ACK_BYTE) {
-				if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL) {
+				if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
+				    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 				    smprintf(s, "[Received Ack of type %02x, seq: %02x]\n",d->Msg.Buffer[0],seq_num);
 				}
 			} else {
@@ -222,13 +227,15 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 					d->MultiMsg.Source	= d->Msg.Source;
 				} else {
 					if (d->FramesToGo != frm_num) {
-						if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+						if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+						    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 						    smprintf(s, "[ERROR: Missed part of multiframe msg]\n");
 						}
 						d->MsgRXState = RX_Sync;
 					}
 					if (d->Msg.Type != d->MultiMsg.Type) {
-						if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+						if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+						    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 						    smprintf(s, "[ERROR: Multiframe msg in multiframe msg]\n");
 						}
 						d->MsgRXState = RX_Sync;
@@ -252,7 +259,8 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 				}
 			}
 		} else {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR) {
+			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 			    smprintf(s,"[ERROR: checksum]\n");
 			}
 		}

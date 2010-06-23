@@ -4,20 +4,56 @@ ChangeLog for Gammu project (www.mwiacek.com)
 Few last versions (the highest) will be described more detailed, older less.
 In brackets names of people, who told about error/problem or helped in fixing.
 ----------------------
+20021223 - 0.65
+
+* new functionality:
+  * added first version of developer documentation made by   (Christian Becker)
+    somebody not connected with Gammu developer(s). It allows
+    to show the best weak sides and describe the most important
+    things
+  * added ringtones (polyphonic too) + Picture Images from 3510
+  * SMSD has support for delivery reports, ability to display (Joergen Thomsen)
+    full date/time in debug (3 new debug levels), added handling
+    errors during deleting SMS for DCT3, added handling for errors
+    in some situations existing when phone is off and connected
+    to the charger
+  * checking for iswspace and towlower in ./configure
+  * more compatibility with Panasonic GD 96                 (Pawel Golaszewski)
+  * full compatibility with Falcom A2D
+
+* fixes and improvements:
+  * SL45 phonebook                                                 (Timo Teras)
+  * fixed setting SMSC and Todo for DCT4 for some data,                 (Vadim)
+    rewritten getting voice records from 6310(i)
+  * fix for init in win32 dll in some situations                (Vishal Grover)
+  * changes in internal structures in win32 dll - it's more stable
+    and works better with phones not supporting Security Codes functions
+  * SMSD works for phones not supporting Security Codes functions,
+    few fixes connected with decoding unicode strings
+  * few compilation improvements                                      (Hu Gang)
+  * bigger buffer in --send/savesms                            (Mariusz Gorski)
+  * new separate error code for unknown file formats
+
+  NOTE: Althoug this is temporary release, some important things
+        are changed. Because of it it's always possible, that some
+        small problems can happen. Please report such situations.
+        Real changes in functionality (new functions, etc.) will be
+        visible soon (fast, when my flu will end). 
+
 20021202 - 0.64
 
 * new functionality:
-  * SMSD and FILES finally end                                 (Jýrgen Thomsen)
-  * decoding Siemens xx45 entended phonebook                       (Timo Ter„s)
+  * SMSD and FILES finally end                                (Joergen Thomsen)
+  * decoding Siemens xx45 entended phonebook                       (Timo Teras)
   * many improvemnts in configure build system
 
 * fixes and improvements:
   * autoconf build system is now really working for older Linuxes
   * comparing Unicode and normal strings with and without regard to case
     much improved
-  * fixes, info about bug in encoding and decoding GSM Default (Jýrgen Thomsen)
-    alphabet in SMS
-  * FreeBSD compatibility                                    (Kirill Bezzubets)
+  * fixes, info about bug in encoding and decoding GSM        (Joergen Thomsen)
+    Default alphabet in SMS
+  * better FreeBSD compatibility                             (Kirill Bezzubets)
   * default style for read RTTL files is Natural, not Continuous
   * improved alghoritm of reading RTTL files
   * no garbage chars in datetime in backup files in Linux

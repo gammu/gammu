@@ -257,6 +257,9 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_Phone_Data *
 		return GE_NONE;
 	default:
 		switch (msg.Buffer[4]) {
+			case 0x6f:
+				dprintf("Phone is OFF\n");
+				return GE_PHONEOFF;
 			case 0x74:
 				/* TODO: check if not too high */
 				dprintf("ERROR: Empty ????\n");
@@ -389,6 +392,9 @@ static GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_Phone_Da
 		case 0x02:
 			dprintf("Too high location ?\n");
 			return GE_INVALIDLOCATION;
+		case 0x06:
+			dprintf("Phone is OFF\n");
+			return GE_PHONEOFF;
 		case 0x07:
 			dprintf("Empty\n");
 			return GE_EMPTY;
@@ -811,7 +817,7 @@ static GSM_Error N6110_ReplyGetSetPicture(GSM_Protocol_Message msg, GSM_Phone_Da
 		Data->Bitmap->Height	= msg.Buffer[count++];
 		PHONE_DecodeBitmap(GSM_NokiaPictureImage, msg.Buffer + count + 2, Data->Bitmap);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL) GSM_PrintBitmap(di.df,Data->Bitmap);
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,Data->Bitmap);
 #endif
 		return GE_NONE;
 		break;
@@ -1601,7 +1607,7 @@ static GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_Phone_Data
 			memcpy(Data->Ringtone->NokiaBinary.Frame,msg.Buffer+start,end-start);
 			Data->Ringtone->NokiaBinary.Length=end-start;
 #ifdef DEBUG
-			if (di.dl == DL_TEXTALL) DumpMessage(di.df, Data->Ringtone->NokiaBinary.Frame, Data->Ringtone->NokiaBinary.Length);
+			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, Data->Ringtone->NokiaBinary.Frame, Data->Ringtone->NokiaBinary.Length);
 #endif
 			return GE_NONE;
 		}
@@ -2223,6 +2229,7 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{N6110_ReplyGetSMSMessage,	"\x14",0x03,0x08,ID_GetSMSMessage	},
 	{N6110_ReplyGetSMSMessage,	"\x14",0x03,0x09,ID_GetSMSMessage	},
 	{DCT3_ReplyDeleteSMSMessage,	"\x14",0x03,0x0B,ID_DeleteSMSMessage	},
+	{DCT3_ReplyDeleteSMSMessage,	"\x14",0x03,0x0C,ID_DeleteSMSMessage	},
 	{N6110_ReplyGetSMSStatus,	"\x14",0x03,0x37,ID_GetSMSStatus	},
 	{N6110_ReplyGetSMSStatus,	"\x14",0x03,0x38,ID_GetSMSStatus	},
 

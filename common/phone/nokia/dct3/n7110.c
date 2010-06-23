@@ -1326,6 +1326,7 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{N7110_ReplyGetSMSMessage,	"\x14",0x03,0x08,ID_GetBitmap		},
 	{N7110_ReplyGetSMSMessage,	"\x14",0x03,0x09,ID_GetSMSMessage	},
 	{DCT3_ReplyDeleteSMSMessage,	"\x14",0x03,0x0B,ID_DeleteSMSMessage	},
+	{DCT3_ReplyDeleteSMSMessage,	"\x14",0x03,0x0C,ID_DeleteSMSMessage	},
 	{N7110_ReplyGetSMSStatus,	"\x14",0x03,0x37,ID_GetSMSStatus	},
 	{N7110_ReplyGetSMSStatus,	"\x14",0x03,0x38,ID_GetSMSStatus	},
 	{N7110_ReplySetPicture,		"\x14",0x03,0x51,ID_SetBitmap		},
