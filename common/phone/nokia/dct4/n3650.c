@@ -386,6 +386,7 @@ GSM_Phone_Functions N3650Phone = {
     	NOTSUPPORTED,			/*  	ClearFMStations       	*/
 	N3650_GetNextFileFolder,
 	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	GetNextRootFolder	*/
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	N3650_GetFilePart,
 	NOTIMPLEMENTED,			/*	AddFilePart		*/

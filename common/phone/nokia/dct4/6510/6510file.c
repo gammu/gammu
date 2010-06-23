@@ -192,7 +192,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6510_GetFileFolderInfo1(GSM_StateMachine *s, GSM_File *File, GSM_Phone_RequestID Request)
+static GSM_Error N6510_GetFileFolderInfo1(GSM_StateMachine *s, GSM_File *File, bool full)
 {
 	GSM_Error	       	error;
 	unsigned char	   	req[10] = {
@@ -209,23 +209,24 @@ static GSM_Error N6510_GetFileFolderInfo1(GSM_StateMachine *s, GSM_File *File, G
 	req[3] = 0x14;
 	req[4] = 0x01;
 	smprintf(s,"Getting info for file in filesystem\n");
-	error=GSM_WaitFor (s, req, 10, 0x6D, 4, Request);
+	error=GSM_WaitFor (s, req, 10, 0x6D, 4, ID_GetFileInfo);
 	if (error != ERR_NONE) return error;
 
-	if (Request != ID_AddFile) {
+	if (full) {
 		req[3] = 0x32;
 		req[4] = 0x00;
 		smprintf(s,"Getting subfolders for filesystem\n");
-		error=GSM_WaitFor (s, req, 10, 0x6D, 4, Request);
+		error=GSM_WaitFor (s, req, 10, 0x6D, 4, ID_GetFileInfo);
 		if (error != ERR_NONE) return error;
-
-		if (!File->Folder) {
-			req[3] = 0x2E;
-			req[4] = 0x01;
-			smprintf(s,"Getting used memory for file in filesystem\n");
-			return GSM_WaitFor (s, req, 10, 0x6D, 4, Request);
-		}
 	}
+
+	if (!File->Folder) {
+		req[3] = 0x2E;
+		req[4] = 0x01;
+		smprintf(s,"Getting used memory for file in filesystem\n");
+		return GSM_WaitFor (s, req, 10, 0x6D, 4, ID_GetFileInfo);
+	}
+
 	return error;
 }
 
@@ -253,7 +254,7 @@ static GSM_Error N6510_GetNextFileFolder1(GSM_StateMachine *s, GSM_File *File, b
 		}
 		Priv->FilesLocationsUsed--;
 
-		error = N6510_GetFileFolderInfo1(s, File, ID_GetFileInfo);
+		error = N6510_GetFileFolderInfo1(s, File, true);
 		if (error == ERR_EMPTY) continue;
 		return error;
 	}
@@ -327,7 +328,7 @@ static GSM_Error N6510_GetFilePart1(GSM_StateMachine *s, GSM_File *File, int *Ha
 		0x03, 0xE8};	    	/* Read xxx bytes */
 
 	if (File->Used == 0x00) {
-		error = N6510_GetFileFolderInfo1(s, File, ID_GetFile);
+		error = N6510_GetFileFolderInfo1(s, File, false);
 		if (error != ERR_NONE) return error;
 
 		if (File->Folder) return ERR_SHOULDBEFILE;
@@ -383,7 +384,7 @@ static GSM_Error N6510_SetFileAttributes1(GSM_StateMachine *s, GSM_File *File)
 	GSM_File  file2;
 
 	strcpy(file2.ID_FullName,File->ID_FullName);
-	error = N6510_GetFileFolderInfo1(s, &file2, ID_AddFile);
+	error = N6510_GetFileFolderInfo1(s, &file2, false);
 	if (error != ERR_NONE) return error;
 
 	// setting folder attrib works, but we block it
@@ -420,7 +421,7 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 	Priv->Files[0].Level    	= 1;
 
 	//checking
-	error = N6510_GetFileFolderInfo1(s, &Priv->Files[0], ID_GetFileInfo);
+	error = N6510_GetFileFolderInfo1(s, &Priv->Files[0], true);
 
 	//backuping new data
 	if (Priv->FilesLocationsUsed > 500) return ERR_MOREMEMORY;
@@ -435,7 +436,7 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 
 	for (i=0;i<FilesLocationsUsed2-1;i++) {
 		dbgprintf("ID is %s\n",Files2[i].ID_FullName);
-		error = N6510_GetFileFolderInfo1(s, &Files2[i], ID_AddFile);
+		error = N6510_GetFileFolderInfo1(s, &Files2[i], false);
 		if (error == ERR_EMPTY) continue;
 		if (error != ERR_NONE) return error;
 		dbgprintf("%s",DecodeUnicodeString(File->Name));
@@ -558,7 +559,7 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 		if (error != ERR_NONE) return error;
 
 		strcpy(File2.ID_FullName,File->ID_FullName);
-		error = N6510_GetFileFolderInfo1(s, &File2, ID_GetFileInfo);
+		error = N6510_GetFileFolderInfo1(s, &File2, false);
 		if (error != ERR_NONE) return error;
 
 		if (!File->ModifiedEmpty) {
@@ -654,7 +655,7 @@ static GSM_Error N6510_PrivDeleteFileFolder1(GSM_StateMachine *s, unsigned char 
 
 	Priv->FilesLocationsUsed = 0;
 	strcpy(File.ID_FullName,ID);
-	error = N6510_GetFileFolderInfo1(s, &File, ID_GetFileInfo);
+	error = N6510_GetFileFolderInfo1(s, &File, true);
 	if (error != ERR_NONE) return error;
 	if (file) {
 		if (File.Folder) return ERR_SHOULDBEFILE;
@@ -698,7 +699,7 @@ static GSM_Error N6510_AddFolder1(GSM_StateMachine *s, GSM_File *File)
 		0x00, 0x00, 0x00, 0xE8};
 
 	strcpy(File2.ID_FullName,File->ID_FullName);
-	error = N6510_GetFileFolderInfo1(s, &File2, ID_GetFile);
+	error = N6510_GetFileFolderInfo1(s, &File2, false);
 	if (error != ERR_NONE) return error;
 	if (!File2.Folder) return ERR_SHOULDBEFOLDER;
 
@@ -736,7 +737,7 @@ static GSM_Error N6510_GetFolderListing1(GSM_StateMachine *s, GSM_File *File, bo
 	if (start) {
 		Priv->FilesLocationsUsed = 0;
 
-		error = N6510_GetFileFolderInfo1(s, File, ID_GetFileInfo);
+		error = N6510_GetFileFolderInfo1(s, File, true);
 		if (error != ERR_NONE) return error;
 
 		if (!File->Folder) return ERR_SHOULDBEFOLDER;
@@ -745,7 +746,7 @@ static GSM_Error N6510_GetFolderListing1(GSM_StateMachine *s, GSM_File *File, bo
 	if (Priv->FilesLocationsUsed == 0) return ERR_EMPTY;
 
 	memcpy(File,&Priv->Files[0],sizeof(GSM_File));
-	error = N6510_GetFileFolderInfo1(s, File, ID_AddFile);
+	error = N6510_GetFileFolderInfo1(s, File, false);
 
 	for(i=1;i<Priv->FilesLocationsUsed;i++) {
 		memcpy(&Priv->Files[i-1],&Priv->Files[i],sizeof(GSM_File));
@@ -1158,7 +1159,7 @@ static GSM_Error N6510_SetFileAttributes2(GSM_StateMachine *s, GSM_File *File)
 	P+=strlen(File2.ID_FullName)*2;
 	Header2[P++] = 0;
 	Header2[P++] = 0;
-	error = GSM_WaitFor (s, Header2, P, 0x6D, 4, ID_AddFile);
+	error = GSM_WaitFor (s, Header2, P, 0x6D, 4, ID_SetAttrib);
 	if (error != ERR_NONE) return error;
 
 	error = N6510_GetFileFolderInfo2(s, File);
@@ -1655,6 +1656,50 @@ GSM_Error N6510_SetFileAttributes(GSM_StateMachine *s, GSM_File *File)
 	} else {
 		return N6510_SetFileAttributes1(s,File);
 	}
+}
+
+GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
+{
+	GSM_Error error;
+	GSM_File  File2;
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
+
+	if (File->ID_FullName[0] == 0) {
+		sprintf(File2.ID_FullName,"%i",0x01);
+		File2.Level = 1;
+
+		error = N6510_GetFileFolderInfo1(s, &File2, false);
+		if (error != ERR_NONE) return error;
+	}
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FILES2)) {
+		if (File->ID_FullName[0] == 0) {
+			memcpy(File,&File2,sizeof(GSM_File));
+			EncodeUnicode(File->Name,"C (",3);
+			CopyUnicodeString(File->Name+6,File2.Name);
+			EncodeUnicode(File->Name+UnicodeLength(File->Name)*2,")",1);
+			sprintf(File->ID_FullName,"c:\\%i",0x01);
+		} else if (!strcmp(File->ID_FullName,"c:\\1")) {
+			sprintf(File->ID_FullName,"a:");
+			EncodeUnicode(File->Name,"A (Permanent_memory 2)",22);
+		} else if (!strcmp(File->ID_FullName,"a:")) {
+			sprintf(File->ID_FullName,"b:");
+			error = N6510_GetFolderListing2(s, File, true);
+			if (error != ERR_NONE) return ERR_EMPTY;
+			EncodeUnicode(File->Name,"B (Memory card)",15);
+			sprintf(File->ID_FullName,"b:");
+		} else {
+			return ERR_EMPTY;
+		}
+		return ERR_NONE;
+	}
+	if (File->ID_FullName[0] == 0) {
+		memcpy(File,&File2,sizeof(GSM_File));
+	} else if (!strcmp(File->ID_FullName,"1")) {
+		return ERR_EMPTY;
+	}
+	return ERR_NONE;	
 }
 
 #endif

@@ -7139,6 +7139,22 @@ static void SetFileAttrib(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void GetRootFolders(int argc, char *argv[])
+{
+	GSM_File File;
+
+	GSM_Init(true);
+
+	File.ID_FullName[0] = 0;
+
+	while (1) {
+		if (Phone->GetNextRootFolder(&s,&File)!=ERR_NONE) break;
+		printf("%s - %s\n",File.ID_FullName,DecodeUnicodeString(File.Name));
+	}
+
+	GSM_Terminate();
+}
+
 static void GetFolderListing(int argc, char *argv[])
 {
 	bool 			Start = true;
@@ -7563,6 +7579,7 @@ static struct NokiaFolderInfo Folder[] = {
 	{"", 	 "Tones2",	   "a:/predefgallery/predefmusic",			""},
 	{"", 	 "Records",	   "a:/predefgallery/predefrecordings",			""},
 	{"", 	 "Video",	   "a:/predefgallery/predefvideos",			""},
+	{"", 	 "Playlist",	   "a:/predefplaylist",					""},
 	{"", 	 "MemoryCard",	   "b:",						""},
 	/* Language depedent in DCT4 filesystem 1 */
 	{"",	 "Gallery",	   "Clip-arts",					"3"},
@@ -7848,6 +7865,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	    mystrncasecmp(argv[2],"Tones2"  	 ,0) ||
 	    mystrncasecmp(argv[2],"Records" 	 ,0) ||
 	    mystrncasecmp(argv[2],"Video"   	 ,0) ||
+	    mystrncasecmp(argv[2],"Playlist"	 ,0) ||
 	    mystrncasecmp(argv[2],"MemoryCard"   ,0)) {
 		strcpy(buffer,argv[3]);
 		if (argc > 4) {
@@ -8363,13 +8381,14 @@ static GSM_Parameters Parameters[] = {
 	{"--addfolder",			2, 2, AddFolder,		{H_Filesystem,0},		"parentfolderID name"},
 	{"--deletefolder",		1, 1, DeleteFolder,		{H_Filesystem,0},		"name"},
 	{"--getfolderlisting",		1, 1, GetFolderListing,		{H_Filesystem,0},		"folderID"},
+	{"--getrootfolders",		0, 0, GetRootFolders,		{H_Filesystem,0},		""},
 	{"--setfileattrib",		1, 5, SetFileAttrib,		{H_Filesystem,0},		"folderID [-system] [-readonly] [-hidden] [-protected]"},
 	{"--getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
 	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
 	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent file sender title"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly]"},
-	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
+	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
 	{"--playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
 	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			"number"},
 	{"--getdatetime",		0, 0, GetDateTime,		{H_DateTime,0},			""},

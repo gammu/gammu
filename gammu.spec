@@ -1,4 +1,4 @@
-%define ver         1.00.10
+%define ver         1.00.23
 %define name        gammu
 %define bluetooth   1
 %define relnum      1
@@ -15,6 +15,12 @@
 %define rel         %{relnum}
 %endif
 %endif
+%endif
+
+%if %_vendor == "redhat"
+%define gammu_docdir %_docdir/%name-%ver
+%else
+%define gammu_docdir %_docdir/%name
 %endif
 
 %if %bluetooth
@@ -77,22 +83,20 @@ settings and bookmarks and much more. Functions depend on the phone model.
 %setup -q
 
 %build
-%if %_vendor == "redhat"
-%configure --with-docdir=%_docdir/%name-%ver/ %configureparams
-%else
-%configure --with-docdir=%_docdir/%name/ %configureparams
-%endif
+%configure --with-docdir=%gammu_docdir/ %configureparams
 make shared
 
 %install
 rm -rf %buildroot
 make installshared DESTDIR=%buildroot
-install -m 755 -d %buildroot%_docdir/gammu/other/config
-install -m 755 -d %buildroot%_docdir/gammu/other/basic
-install -m 755 -d %buildroot%_docdir/gammu/other/smsdutil
-install -m 755 other/config/gammu-config %buildroot%_docdir/gammu/other/config
-install -m 644 other/basic/* %buildroot%_docdir/gammu/other/basic
-install -m 644 other/smsdutil/* %buildroot%_docdir/gammu/other/smsdutil
+install -m 755 -d %buildroot%gammu_docdir/other/config
+#install -m 755 -d %buildroot%gammu_docdir/other/basic
+install -m 755 -d %buildroot%gammu_docdir/other/smsdutil
+install -m 755 -d %buildroot%gammu_docdir/other/files
+install -m 755 other/bash/config/gammu-config %buildroot%gammu_docdir/other/config
+#install -m 644 other/bash/basic/* %buildroot%gammu_docdir/other/basic
+install -m 644 other/bash/smsdutil/* %buildroot%gammu_docdir/other/smsdutil
+install -m 644 other/bash/files/* %buildroot%gammu_docdir/other/files
 
 %post
 if test -f /etc/ld.so.conf ; then
@@ -111,11 +115,7 @@ fi
 #localisations:
 /usr/share/gammu
 %doc %_mandir/man1/*
-%if %_vendor == "redhat"
-%doc %_docdir/%name-%ver
-%else
-%doc %_docdir/%name
-%endif
+%doc %gammu_docdir
 
 %files devel
 %defattr(-,root,root)

@@ -26,21 +26,23 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	 * OS. If not, we return with error, that string is incorrect at all
 	 */
 	s->ConnectionType = 0;
+	// cables
 	if (mystrncasecmp("mbus"	,connection,0)) s->ConnectionType = GCT_MBUS2;
 	if (mystrncasecmp("fbus"	,connection,0)) s->ConnectionType = GCT_FBUS2;
-	if (mystrncasecmp("fbusdlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
-	if (mystrncasecmp("fbusdku5"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU5;
-	if (mystrncasecmp("fbusdku2"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU2;
 	if (mystrncasecmp("fbuspl2303"	,connection,0)) s->ConnectionType = GCT_FBUS2PL2303;
+	if (mystrncasecmp("dlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
+	if (mystrncasecmp("fbusdlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
+	if (mystrncasecmp("dku5"	,connection,0)) s->ConnectionType = GCT_DKU5FBUS2;
+	if (mystrncasecmp("dku5fbus"	,connection,0)) s->ConnectionType = GCT_DKU5FBUS2;
+	if (mystrncasecmp("dku2"	,connection,0)) s->ConnectionType = GCT_DKU2PHONET;
+	if (mystrncasecmp("dku2phonet"	,connection,0)) s->ConnectionType = GCT_DKU2PHONET;
+
+        // for serial ports assigned by bt stack
 	if (mystrncasecmp("fbusblue"	,connection,0)) s->ConnectionType = GCT_FBUS2BLUE;
-	if (mystrncasecmp("fbusirda"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
 	if (mystrncasecmp("phonetblue"	,connection,0)) s->ConnectionType = GCT_PHONETBLUE;
 	if (mystrncasecmp("mrouterblue"	,connection,0)) s->ConnectionType = GCT_MROUTERBLUE;
-	if (mystrncasecmp("irdaphonet"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
-	if (mystrncasecmp("irdaat"	,connection,0)) s->ConnectionType = GCT_IRDAAT;
-	if (mystrncasecmp("irdaobex"	,connection,0)) s->ConnectionType = GCT_IRDAOBEX;
+	// bt
 	if (mystrncasecmp("blueobex"	,connection,0)) s->ConnectionType = GCT_BLUEOBEX;
-	if (mystrncasecmp("bluefbus"	,connection,0)) s->ConnectionType = GCT_BLUEFBUS2;
 	if (mystrncasecmp("bluephonet"	,connection,0)) s->ConnectionType = GCT_BLUEPHONET;
 	if (mystrncasecmp("blueat"	,connection,0)) s->ConnectionType = GCT_BLUEAT;
 	if (mystrncasecmp("bluerfobex"	,connection,0)) s->ConnectionType = GCT_BLUEOBEX;
@@ -48,14 +50,14 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("bluerfphonet",connection,0)) s->ConnectionType = GCT_BLUEPHONET;
 	if (mystrncasecmp("bluerfat"	,connection,0)) s->ConnectionType = GCT_BLUEAT;
 
-	/* These are for compatibility only */
-	if (mystrncasecmp("atblue"	,connection,0)) s->ConnectionType = GCT_BLUEAT;
-	if (mystrncasecmp("dlr3blue"	,connection,0)) s->ConnectionType = GCT_BLUEFBUS2;
-	if (mystrncasecmp("irda"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
-	if (mystrncasecmp("dlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
-	if (mystrncasecmp("dku2"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU2;
-	if (mystrncasecmp("dku5"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU5;
+	// old "serial" irda
 	if (mystrncasecmp("infrared"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
+	if (mystrncasecmp("fbusirda"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
+	// socket irda
+	if (mystrncasecmp("irda"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
+	if (mystrncasecmp("irdaphonet"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
+	if (mystrncasecmp("irdaat"	,connection,0)) s->ConnectionType = GCT_IRDAAT;
+	if (mystrncasecmp("irdaobex"	,connection,0)) s->ConnectionType = GCT_IRDAOBEX;
 
 	if (mystrncasecmp("at"		,connection,2)) {
 		/* Use some resonable default, when no speed defined */
@@ -82,8 +84,8 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #ifdef GSM_ENABLE_FBUS2DLR3
 	GSM_RegisterConnection(s, GCT_FBUS2DLR3, &SerialDevice,   &FBUS2Protocol);
 #endif
-#ifdef GSM_ENABLE_FBUS2DKU5
-	GSM_RegisterConnection(s, GCT_FBUS2DKU5, &SerialDevice,   &FBUS2Protocol);
+#ifdef GSM_ENABLE_DKU5FBUS2
+	GSM_RegisterConnection(s, GCT_DKU5FBUS2, &SerialDevice,   &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2PL2303
 	GSM_RegisterConnection(s, GCT_FBUS2PL2303,&SerialDevice,  &FBUS2Protocol);
@@ -94,8 +96,8 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #ifdef GSM_ENABLE_FBUS2IRDA
 	GSM_RegisterConnection(s, GCT_FBUS2IRDA, &SerialDevice,   &FBUS2Protocol);
 #endif
-#ifdef GSM_ENABLE_FBUS2DKU2
-	GSM_RegisterConnection(s, GCT_FBUS2DKU2, &SerialDevice,   &PHONETProtocol);
+#ifdef GSM_ENABLE_DKU2PHONET
+	GSM_RegisterConnection(s, GCT_DKU2PHONET, &SerialDevice,   &PHONETProtocol);
 #endif
 #ifdef GSM_ENABLE_PHONETBLUE
 	GSM_RegisterConnection(s, GCT_PHONETBLUE,&SerialDevice,	  &PHONETProtocol);
@@ -332,11 +334,11 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 					case GCT_MBUS2:
 					case GCT_FBUS2:
 					case GCT_FBUS2DLR3:
-					case GCT_FBUS2DKU5:
-					case GCT_FBUS2DKU2:
 					case GCT_FBUS2PL2303:
 					case GCT_FBUS2BLUE:
 					case GCT_FBUS2IRDA:
+					case GCT_DKU5FBUS2:
+					case GCT_DKU2PHONET:
 					case GCT_PHONETBLUE:
 					case GCT_IRDAPHONET:
 					case GCT_BLUEFBUS2:
@@ -963,7 +965,7 @@ static OnePhoneModel allmodels[] = {
 	{"6385" ,"NHP-2AX","Nokia 6385",{F_TODO63,F_CAL65,F_NOMIDI,F_NOMMS,F_VOICETAGS,0}},
 	{"6510" ,"NPM-9" ,"Nokia 6510", {F_TODO63,F_CAL65,F_NOMIDI,F_RADIO,F_NOFILESYSTEM,F_NOMMS,F_VOICETAGS,0}},
 	{"6610" ,"NHL-4U","Nokia 6610", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
-	{"6610i","RM-37" ,"Nokia 6610i",{F_PBKTONEGAL,F_TODO66,F_RADIO,F_CHAT,F_SYNCML,0}},
+	{"6610i","RM-37" ,"Nokia 6610i",{F_PBKTONEGAL,F_TODO66,F_RADIO,F_SYNCML,0}},
 	{"6800" ,"NSB-9" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},
 	{"6800" ,"NHL-6" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},
 	{"6810" ,"RM-2"  ,"Nokia 6810", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_NOTES,F_CHAT,F_SYNCML,0}},//quess

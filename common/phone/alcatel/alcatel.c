@@ -3991,6 +3991,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/* 	ClearFMStations		*/
 	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
 	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	GetNextRootFolder	*/
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/* 	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFilePart		*/
