@@ -55,9 +55,8 @@ static GSM_Error N7110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 
 static GSM_Error N7110_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-	unsigned char req[] = {N7110_FRAME_HEADER, 0x07, 0x01, 0x01, 0x00, 0x01,
-			       0x02,		/* memory type */
-			       0x05,
+	unsigned char req[] = {N7110_FRAME_HEADER, 0x07, 0x01, 0x01, 0x00, 0x01, 0x02,
+			       0x05,		/* memory type */
 			       0x00, 0x00,	/* location */
 			       0x00, 0x00};
 
@@ -1691,12 +1690,13 @@ GSM_Phone_Functions N7110Phone = {
 	DCT3_DeleteWAPBookmark,
 	DCT3_GetWAPSettings,
 	DCT3_SetWAPSettings,
-	NOTSUPPORTED,			/* 	GetMMSSettings		*/
-	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetSyncMLSettings	*/
 	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
 	NOTSUPPORTED,			/*	GetChatSettings		*/
 	NOTSUPPORTED,			/*	SetChatSettings		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetMMSFolders		*/
 	N7110_GetBitmap,
 	N7110_SetBitmap,
 	NOTSUPPORTED,			/*	GetToDoStatus		*/

@@ -282,7 +282,8 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
     	FD_SET(d->hPhone, &readfds);
 
     	timeout2.tv_sec     = 0;
-    	timeout2.tv_usec    = 1;
+//    	timeout2.tv_usec    = 1;
+    	timeout2.tv_usec    = 50000;
 
     	if (select(d->hPhone+1, &readfds, NULL, NULL, &timeout2)) {
 		actual = read(d->hPhone, buf, nbytes);

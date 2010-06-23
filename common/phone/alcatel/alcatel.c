@@ -113,7 +113,7 @@ extern GSM_Error ATGEN_SetIncomingSMS		(GSM_StateMachine *s, bool enable);
 unsigned char GSM_AlcatelAlphabet[] =
 {
 /*	in phone	unicode		description	*/
-	0x80,		0x00,0x20,	/* empty	 */
+	0x80,		0x00,0x20,	/* empty	- probably control char */
 	0x81,		0x00,0x20,	/* empty	*/
 	0x82,		0x00,0x20,	/* empty	*/
 	0x83,		0x00,0x20,	/* empty	*/
@@ -827,6 +827,31 @@ static GSM_Error ALCATEL_GetFields(GSM_StateMachine *s, int id) {
 	return ERR_NONE;
 }
 
+static void ALCATEL_DecodeString(GSM_StateMachine *s, unsigned char *buffer, unsigned char *target, int maxlen)
+{
+	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
+	int			len;
+
+	len = buffer[0];
+	if(Priv->ProtocolVersion == V_1_1 && (buffer[1] == 0x80)) {
+		/* UCS-2-BE string */
+		if (GSM_PHONEBOOK_TEXT_LENGTH < len/2) {
+			smprintf(s, "WARNING: Text truncated, to %d from %d\n", maxlen, len/2 + 1);
+			len = GSM_PHONEBOOK_TEXT_LENGTH * 2;
+		}
+		memcpy(target, buffer + 2, len);
+		Priv->ReturnString[len + 1] = 0;
+		Priv->ReturnString[len + 2] = 0;
+	} else {
+		/* Alcatel alphabet string */
+		if (GSM_PHONEBOOK_TEXT_LENGTH < len) {
+			smprintf(s, "WARNING: Text truncated, to %d from %d\n", maxlen, len + 1);
+			len = GSM_PHONEBOOK_TEXT_LENGTH;
+		}
+		DecodeDefault(target, buffer + 1, len, false, GSM_AlcatelAlphabet);
+	}
+}
+
 static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
@@ -857,33 +882,11 @@ static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_StateM
 	} else if (buffer[1] == 0x08 && buffer[2] == 0x3C) {
 		/* string */
 		Priv->ReturnType = Alcatel_string;
-		if (GSM_PHONEBOOK_TEXT_LENGTH < buffer[3])
-			smprintf(s, "WARNING: Text truncated, you should increase GSM_PHONEBOOK_TEXT_LENGTH to at least %d\n", buffer[3] + 1);
-		if (Priv->ProtocolVersion == V_1_0) {
-			DecodeDefault( Priv->ReturnString, buffer + 4, MIN(GSM_PHONEBOOK_TEXT_LENGTH, buffer[3]), false, GSM_AlcatelAlphabet);
-		} else if(Priv->ProtocolVersion == V_1_1 && (buffer[4] & 0x80)) {
-			memcpy(Priv->ReturnString, buffer + 5, buffer[3]);
-			Priv->ReturnString[buffer[3] + 1] = 0;
-			Priv->ReturnString[buffer[3] + 2] = 0;
-			ReverseUnicodeString(Priv->ReturnString);
-		} else {
-			DecodeDefault( Priv->ReturnString, buffer + 4, MIN(GSM_PHONEBOOK_TEXT_LENGTH, buffer[3]), false, GSM_AlcatelAlphabet);
-		}
+		ALCATEL_DecodeString(s, buffer + 3, Priv->ReturnString, GSM_PHONEBOOK_TEXT_LENGTH);
 	} else if (buffer[1] == 0x07 && buffer[2] == 0x3C) {
 		/* phone */
 		Priv->ReturnType = Alcatel_phone;
-		if (GSM_PHONEBOOK_TEXT_LENGTH < buffer[3])
-			smprintf(s, "WARNING: Text truncated, you should increase GSM_PHONEBOOK_TEXT_LENGTH to at least %d\n", buffer[3] + 1);
-		if (Priv->ProtocolVersion == V_1_0) {
-			DecodeDefault( Priv->ReturnString, buffer + 4, MIN(GSM_PHONEBOOK_TEXT_LENGTH, buffer[3]), false, GSM_AlcatelAlphabet);
-		} else if(Priv->ProtocolVersion == V_1_1 && (buffer[4] & 0x80)) {
-			memcpy(Priv->ReturnString, buffer + 5, buffer[3]);
-			Priv->ReturnString[buffer[3] + 1] = 0;
-			Priv->ReturnString[buffer[3] + 2] = 0;
-			ReverseUnicodeString(Priv->ReturnString);
-		} else {
-			DecodeDefault( Priv->ReturnString, buffer + 4, MIN(GSM_PHONEBOOK_TEXT_LENGTH, buffer[3]), false, GSM_AlcatelAlphabet);
-		}
+		ALCATEL_DecodeString(s, buffer + 3, Priv->ReturnString, GSM_PHONEBOOK_TEXT_LENGTH);
 	} else if (buffer[1] == 0x03 && buffer[2] == 0x3B) {
 		/* boolean */
 		Priv->ReturnType = Alcatel_bool;
@@ -1076,22 +1079,9 @@ static GSM_Error ALCATEL_AddCategoryText(GSM_StateMachine *s, const unsigned cha
 static GSM_Error ALCATEL_ReplyGetCategoryText(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
-	int len;
 
-	len = msg.Buffer[14];
-	if (len > GSM_MAX_CATEGORY_NAME_LENGTH) {
-		smprintf(s, "WARNING: Category name truncated, you should increase GSM_MAX_CATEGORY_NAME_LENGTH to at least %d\n", len);
-	}
-	if (Priv->ProtocolVersion == V_1_0) {
-		DecodeDefault( Priv->ReturnString, msg.Buffer + 15, MIN(GSM_MAX_CATEGORY_NAME_LENGTH, len), false, GSM_AlcatelAlphabet);
-	} else if(Priv->ProtocolVersion == V_1_1 && (msg.Buffer[15] & 0x80)) {
-		memcpy(Priv->ReturnString, msg.Buffer + 16, len);
-		Priv->ReturnString[len + 1] = 0;
-		Priv->ReturnString[len + 2] = 0;
-		ReverseUnicodeString(Priv->ReturnString);
-	} else {
-		DecodeDefault( Priv->ReturnString, msg.Buffer + 15, MIN(GSM_MAX_CATEGORY_NAME_LENGTH, len), false, GSM_AlcatelAlphabet);
-	}
+	ALCATEL_DecodeString(s,msg.Buffer + 14, Priv->ReturnString, GSM_MAX_CATEGORY_NAME_LENGTH);
+
 	return ERR_NONE;
 }
 
@@ -2354,8 +2344,12 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 {
 	GSM_Error		error;
 	GSM_DateTime		*dt = NULL;
-	GSM_DateTime		evdate;
-	bool			evdateused = true;
+	GSM_DateTime		EventDate = {0,0,0,0,0,0,0};
+	GSM_DateTime		EventStart = {0,0,0,0,0,0,0};
+	GSM_DateTime		EventEnd = {0,0,0,0,0,0,0};
+	bool			EventDateSet = false;
+	bool			EventStartSet = false;
+	bool			EventEndSet = false;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int			i;
 	int			j=0;
@@ -2386,10 +2380,11 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 					j++;
 					break;
 				}
+				/* Date and time is composed at the end, when we have all needed data */
 				j++;
 				Note->EntriesNum--;
-				evdate = Priv->ReturnDateTime;
-				evdateused = false;
+				EventDate = Priv->ReturnDateTime;
+				EventDateSet = true;
 				break;
 			case 1:
 				if (Priv->ReturnType != Alcatel_time) {
@@ -2404,13 +2399,11 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 					j++;
 					break;
 				}
-				Note->Entries[i-j].EntryType = CAL_START_DATETIME;
-				Note->Entries[i-j].Date = Priv->ReturnDateTime;
-				Note->Entries[i-j].Date.Day = evdate.Day;
-				Note->Entries[i-j].Date.Month = evdate.Month;
-				Note->Entries[i-j].Date.Year = evdate.Year;
-				Note->Entries[i-j].Date.Timezone = evdate.Timezone;
-				evdateused = true;
+				/* Date and time is composed at the end, when we have all needed data */
+				j++;
+				Note->EntriesNum--;
+				EventStart = Priv->ReturnDateTime;
+				EventStartSet = true;
 				break;
 			case 2:
 				if (Priv->ReturnType != Alcatel_time) {
@@ -2425,13 +2418,11 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 					j++;
 					break;
 				}
-				Note->Entries[i-j].EntryType = CAL_END_DATETIME;
-				Note->Entries[i-j].Date = Priv->ReturnDateTime;
-				Note->Entries[i-j].Date.Day = evdate.Day;
-				Note->Entries[i-j].Date.Month = evdate.Month;
-				Note->Entries[i-j].Date.Year = evdate.Year;
-				Note->Entries[i-j].Date.Timezone = evdate.Timezone;
-				evdateused = true;
+				/* Date and time is composed at the end, when we have all needed data */
+				j++;
+				Note->EntriesNum--;
+				EventEnd = Priv->ReturnDateTime;
+				EventEndSet = true;
 				break;
 			case 3:
 				if (Priv->ReturnType != Alcatel_date) {
@@ -2713,11 +2704,34 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				smprintf(s,"\n");
 		}
 	}
-	/* The event didn't have start/stop time -> we need only date */
-	if (!evdateused) {
-		Note->EntriesNum++;
-		Note->Entries[i-j].EntryType = CAL_START_DATETIME;
-		Note->Entries[i-j].Date = evdate;
+	/* Fill start/stop datetime */
+	if (EventDateSet) {
+		if (EventStartSet) {
+			Note->Entries[i-j].EntryType = CAL_START_DATETIME;
+			Note->Entries[i-j].Date = EventDate;
+			Note->Entries[i-j].Date.Timezone = EventStart.Timezone;
+			Note->Entries[i-j].Date.Hour = EventStart.Hour;
+			Note->Entries[i-j].Date.Minute = EventStart.Minute;
+			Note->Entries[i-j].Date.Second = EventStart.Second;
+			Note->EntriesNum++;
+			i++;
+		}
+		if (EventEndSet) {
+			Note->Entries[i-j].EntryType = CAL_END_DATETIME;
+			Note->Entries[i-j].Date = EventDate;
+			Note->Entries[i-j].Date.Timezone = EventEnd.Timezone;
+			Note->Entries[i-j].Date.Hour = EventEnd.Hour;
+			Note->Entries[i-j].Date.Minute = EventEnd.Minute;
+			Note->Entries[i-j].Date.Second = EventEnd.Second;
+			Note->EntriesNum++;
+			i++;
+		}
+		if (!EventStartSet && !EventEndSet) {
+			Note->Entries[i-j].EntryType = CAL_START_DATETIME;
+			Note->Entries[i-j].Date = EventDate;
+			Note->EntriesNum++;
+			i++;
+		}
 	}
 	return ERR_NONE;
 }
@@ -3953,12 +3967,13 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/* 	DeleteWAPBookmark	*/
 	NOTSUPPORTED,			/* 	GetWAPSettings		*/
 	NOTSUPPORTED,			/* 	SetWAPSettings		*/
-	NOTSUPPORTED,			/* 	GetMMSSettings		*/
-	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetSyncMLSettings	*/
 	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
 	NOTSUPPORTED,			/*	GetChatSettings		*/
 	NOTSUPPORTED,			/*	SetChatSettings		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetMMSFolders		*/
 	NOTSUPPORTED,			/* 	GetBitmap		*/
 	NOTSUPPORTED,			/* 	SetBitmap		*/
 	ALCATEL_GetToDoStatus,

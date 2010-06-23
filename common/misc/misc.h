@@ -30,7 +30,8 @@
 #ifdef WIN32
 #  define my_sleep(x) ((x)<1000 ? Sleep(1) : Sleep((x)/1000))
 #else
-#  define my_sleep(x) usleep(x)
+//#  define my_sleep(x) usleep(x)
+#  define my_sleep(x) usleep(x*1000)
 #endif
 
 #undef MAX

@@ -1192,16 +1192,16 @@ static void IncomingCall(char *Device, GSM_Call call)
 	printmsg("Call info : ");
 	if (call.CallIDAvailable) printmsg("ID %i, ",call.CallID);
 	switch(call.Status) {
-		case GSM_CALL_IncomingCall  	: printmsg("incoming call from \"%s\"\n",DecodeUnicodeConsole(call.PhoneNumber));  break;
-		case GSM_CALL_OutgoingCall  	: printmsg("outgoing call to \"%s\"\n",DecodeUnicodeConsole(call.PhoneNumber));    break;
-		case GSM_CALL_CallStart     	: printmsg("call started\n"); 					  	  break;
-		case GSM_CALL_CallEnd	   	: printmsg("end of call (unknown side)\n"); 					  break;
-		case GSM_CALL_CallLocalEnd  	: printmsg("call end from our side\n");						  break;
-		case GSM_CALL_CallRemoteEnd 	: printmsg("call end from remote side (code %i)\n",call.StatusCode);			  break;
-		case GSM_CALL_CallEstablished   	: printmsg("call established. Waiting for answer\n");				  break;
-		case GSM_CALL_CallHeld		: printmsg("call held\n");							break;
-		case GSM_CALL_CallResumed	: printmsg("call resumed\n");							break;
-		case GSM_CALL_CallSwitched	: printmsg("call switched\n");							break;
+		case GSM_CALL_IncomingCall  	: printmsg("incoming call from \"%s\"\n",DecodeUnicodeConsole(call.PhoneNumber));  	break;
+		case GSM_CALL_OutgoingCall  	: printmsg("outgoing call to \"%s\"\n",DecodeUnicodeConsole(call.PhoneNumber));    	break;
+		case GSM_CALL_CallStart     	: printmsg("call started\n"); 					  	  		break;
+		case GSM_CALL_CallEnd	   	: printmsg("end of call (unknown side)\n"); 					  	break;
+		case GSM_CALL_CallLocalEnd  	: printmsg("call end from our side\n");						  	break;
+		case GSM_CALL_CallRemoteEnd 	: printmsg("call end from remote side (code %i)\n",call.StatusCode);			break;
+		case GSM_CALL_CallEstablished   : printmsg("call established. Waiting for answer\n");				  	break;
+		case GSM_CALL_CallHeld		: printmsg("call held\n");								break;
+		case GSM_CALL_CallResumed	: printmsg("call resumed\n");								break;
+		case GSM_CALL_CallSwitched	: printmsg("call switched\n");								break;
 	}
 }
 
@@ -1634,6 +1634,24 @@ static void GetSMSFolders(int argc, char *argv[])
 			case MEM_MT: printmsg(", phone or SIM memory"); break;
 			default    : break;
 		}
+		if (folders.Folder[i].InboxFolder) printmsg(", Inbox folder");
+		printf("\n");
+	}
+
+	GSM_Terminate();
+}
+
+static void GetMMSFolders(int argc, char *argv[])
+{
+	GSM_MMSFolders folders;
+
+	GSM_Init(true);
+
+	error=Phone->GetMMSFolders(&s,&folders);
+	Print_Error(error);
+
+	for (i=0;i<folders.Number;i++) {
+		printmsg("%i. \"%30s\"",i+1,DecodeUnicodeConsole(folders.Folder[i].Name));
 		if (folders.Folder[i].InboxFolder) printmsg(", Inbox folder");
 		printf("\n");
 	}
@@ -8468,6 +8486,7 @@ static GSM_Parameters Parameters[] = {
 #endif
 	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"FILES configfile"},
 	{"--sendsmsdsms",		2,30, SendSaveDisplaySMS,	{H_SMS,H_Other,0},		"TEXT|WAPSETTINGS|... destination FILES|MYSQL configfile ... (options like in sendsms)"},
+	{"--getmmsfolders",		0, 0, GetMMSFolders,		{H_MMS,0},			""},
 	{"--getringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
 	{"--getphoneringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
 	{"--getringtoneslist",		0, 0, GetRingtonesList,		{H_Ringtone,0},			""},
