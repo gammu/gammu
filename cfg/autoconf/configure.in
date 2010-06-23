@@ -147,9 +147,7 @@ AC_ARG_ENABLE(fbusirda,
 	[  --disable-fbusirda      Disable FBUS2 over direct infrared device
 	                  (Nokia 5210/61xx/82xx)],
 	[gsm_enable_fbus2irda="no"],
-	[AC_CHECK_HEADER(linux/irda.h,
-		[AC_DEFINE(GSM_ENABLE_FBUS2IRDA) gsm_enable_fbus2irda="yes"],
-		[gsm_enable_fbus2irda="no"])])
+	[AC_DEFINE(GSM_ENABLE_FBUS2IRDA) gsm_enable_fbus2irda="yes"])
 AC_ARG_ENABLE(phonetblue,
 	[  --disable-phonetblue    Disable Nokia PHONET FBUS over Bluetooth
                           legacy device (all new Nokias)],
@@ -166,6 +164,7 @@ AC_ARG_ENABLE(irdaphonet,
 	[AC_CHECK_HEADER(linux/irda.h,
 		[AC_DEFINE(GSM_ENABLE_IRDAPHONET) gsm_enable_irdaphonet="yes"],
 		[gsm_enable_irdaphonet="no"])])
+
 AC_CACHE_CHECK([for the Bluez Bluetooth stack], ac_cv_have_sockaddr_rc,
      [AC_TRY_COMPILE([#include <sys/socket.h>
           #include <bluetooth/bluetooth.h>

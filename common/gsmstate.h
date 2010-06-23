@@ -304,6 +304,9 @@ typedef enum {
 	ID_GetFileInfo,
 	ID_GetFileFree,
 	ID_GetFile,
+	ID_AddFile,
+	ID_AddFolder,
+	ID_DeleteFile,
 #ifdef GSM_ENABLE_ALCATEL
     	/* AT mode */
     	ID_SetFlowControl,
@@ -333,6 +336,10 @@ typedef enum {
     	ID_AlcatelGetFields2,
     	ID_AlcatelGetFieldValue1,
     	ID_AlcatelGetFieldValue2,    
+   	ID_AlcatelDeleteItem,
+   	ID_AlcatelDeleteField,
+	ID_AlcatelCreateField,
+	ID_AlcatelUpdateField,
 #endif
 	ID_IncomingFrame,
 
@@ -516,6 +523,8 @@ typedef struct {
 	GSM_Error (*GetFilePart)	(GSM_StateMachine *s, GSM_File		    *File	);
 	GSM_Error (*AddFile)		(GSM_StateMachine *s, GSM_File		    *File	);
 	GSM_Error (*GetFreeFileMemory)	(GSM_StateMachine *s, int *Free);
+	GSM_Error (*DeleteFile)		(GSM_StateMachine *s, int ID);
+	GSM_Error (*AddFolder)		(GSM_StateMachine *s, GSM_File		    *File	);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;

@@ -45,6 +45,7 @@ typedef enum {
 	PBK_Text_Note,
 	PBK_Text_Postal, /* Complete postal address */
 	PBK_Text_Email,
+	PBK_Text_Email2,
 	PBK_Text_URL,
 	PBK_Name,
 	PBK_Date,

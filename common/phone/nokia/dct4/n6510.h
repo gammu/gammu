@@ -22,6 +22,9 @@ typedef struct {
 	int				FilesParents[500];
 	int				FilesLocationsUsed;
 	int				FilesLocationsCurrent;
+
+	unsigned char			FMStatus[4000];
+	int				FMStatusLength;
 } GSM_Phone_N6510Data;
 
 #ifndef GSM_USED_MBUS2

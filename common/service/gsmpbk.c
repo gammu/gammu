@@ -183,6 +183,7 @@ void NOKIA_EncodeVCARD21SMSText(char *Buffer, int *Length, GSM_PhonebookEntry pb
 				*Length+=sprintf(Buffer+(*Length),"ADR");
 				break;
 			case PBK_Text_Email	:
+			case PBK_Text_Email2	:
 				*Length+=sprintf(Buffer+(*Length),"EMAIL");
 				break;
 			case PBK_Text_URL	:

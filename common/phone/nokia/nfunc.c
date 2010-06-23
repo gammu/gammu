@@ -91,6 +91,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Pho
 		case PBK_Text_Note:
 		case PBK_Text_Postal:
 		case PBK_Text_Email:
+		case PBK_Text_Email2:
 		case PBK_Text_URL:
 			len = strlen(DecodeUnicodeString(entry.Entries[i].Text));
 			string[0] = len * 2 + 2;	/* length (with Termination) */
@@ -102,6 +103,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Pho
 				case PBK_Text_Postal:
 					type = N7110_ENTRYTYPE_POSTAL;	break;
 				case PBK_Text_Email:
+				case PBK_Text_Email2:
 					type = N7110_ENTRYTYPE_EMAIL;	break;
 				case PBK_Text_URL:
 					type = N7110_ENTRYTYPE_NOTE;

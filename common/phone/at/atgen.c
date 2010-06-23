@@ -2850,7 +2850,9 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,		/* 	GetNextFileFolder	*/
 	NOTSUPPORTED,		/* 	GetFilePart		*/
 	NOTSUPPORTED,		/* 	AddFile			*/
-	NOTSUPPORTED 		/* 	GetFreeFileMemory 	*/
+	NOTSUPPORTED, 		/* 	GetFreeFileMemory 	*/
+	NOTSUPPORTED,		/*	DeleteFile		*/
+	NOTSUPPORTED		/* 	AddFolder		*/
 };
 
 #endif

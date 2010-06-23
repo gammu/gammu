@@ -17,6 +17,39 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20030518 - 0.75
+* new functionality:
+  * setting files in DCT4 (adding to Gallery, Tones, MMS folders
+    and other), adding folders, deleting files
+
+    Note1: if You saved incorrectly file and phone reboots after enabling,
+           use --getfilesystem to get file ID and use --deletefile BEFORE
+           entering PIN to delete this file
+    Note2: support for file formats depends on phone firmware. For example
+           3510 supports GIF in 16 colors and 96x65 size. Some other can
+           be not shown in this phone in menu, although stay in memory
+           (use --getfilesystem to find such files & --deletefiles to delete).
+           New phones happily generally show incorrect files in menus and allow
+           to delete them from phone menu.
+    Note3: tested on 3510, 3510i and 6310i. With other will need sniffs
+           (because of different bytes in header or folder names) for making
+           support
+
+  * setting colour operator logo and colour startup logo
+  * Gammu GUI 0.0.30                                            (Luca Cassioli)
+
+* fixes and improvements:
+  * * workaround for 6610 and calendar                             (Tom Nelson)
+    * improved FM stations support for DCT4
+  * irda compilation fix                                       (Roar Pettersen)
+  * * write support for Alcatel (currently phonebook)            (Michal Cihar)
+    * added Email2 phonebook field
+    * added getting of category name to --getmemory  
+  * 6210/7110 identify in some situations improved               (Bharat Varma)
+
+NOTE: for 5100, 6100, 6610, 7210, 7250 I need testing FM & ToDo (and probably
+      sniffs). Please additionaly check calendar support and report all other
+      incompatibilities. Without reports I CAN'T DO ANYTHING.
 
 20030511 - 0.74
 * new functionality:

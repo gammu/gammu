@@ -1564,7 +1564,9 @@ GSM_Phone_Functions N7110Phone = {
 	NOTSUPPORTED,		/* 	GetNextFileFolder	*/
 	NOTSUPPORTED,		/*	GetFilePart		*/
 	NOTSUPPORTED,		/* 	AddFile			*/
-	NOTSUPPORTED 		/* 	GetFreeFileMemory 	*/
+	NOTSUPPORTED, 		/* 	GetFreeFileMemory 	*/
+	NOTSUPPORTED,		/*	DeleteFile		*/
+	NOTSUPPORTED		/*	AddFolder		*/
 };
 
 #endif

@@ -263,6 +263,10 @@ static void SavePbkEntry(FILE *file, GSM_PhonebookEntry *Pbk, bool UseUnicode)
 				sprintf(buffer,"Entry%02iType = Email%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
+			case PBK_Text_Email2:
+				sprintf(buffer,"Entry%02iType = Email2%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				break;
 			case PBK_Text_URL:
 				sprintf(buffer,"Entry%02iType = URL%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
@@ -1388,6 +1392,8 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
 			} else if (mystrncasecmp(readvalue,"Email",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
+			} else if (mystrncasecmp(readvalue,"Email2",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email2;
 			} else if (mystrncasecmp(readvalue,"URL",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_URL;
 			} else if (mystrncasecmp(readvalue,"FirstName",0)) {

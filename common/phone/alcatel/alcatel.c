@@ -185,10 +185,11 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
 					 0x00,			 /*type */
 					 0x00, 0x85, 0x00};
 	unsigned char		commit_buffer[] =
-					{0x00, 0x04,
+					{0x00, 0x04, 
 					 0x00, 			/*type */
 					 0x20, 0x01};
 
+	smprintf(s, "Alcatel state switcher: %d -> %d, %d -> %d, %d -> %d\n", Priv->BinaryState, state, Priv->BinaryType, type, Priv->BinaryItem, item);
 	error = ALCATEL_SetBinaryMode(s);
 	if (error != GE_NONE) return error;
 
@@ -881,6 +882,236 @@ static GSM_Error ALCATEL_GetCategoryText(GSM_StateMachine *s, int id) {
 	return GE_NONE;
 }
 
+static GSM_Error ALCATEL_DeleteField(GSM_StateMachine *s, int id, int field) {
+	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
+	GSM_Error		error;
+	unsigned char 		buffer[] =
+					{0x00, 0x04,
+					 0x00, 				/* type */
+					 0x26, 0x01,
+					 0x00, 0x00, 0x00, 0x00,	/* here follows 4byte id */
+					 0x65, 0x01,
+					 0x00,				/* field */
+					 0x01};
+
+	smprintf(s,"Deleting field (%08x.%02x)\n", id, field);
+
+	switch (Priv->BinaryType) {
+		case TypeCalendar:
+			buffer[2] = ALCATEL_SYNC_TYPE_CALENDAR;
+			break;
+		case TypeContacts:
+			buffer[2] = ALCATEL_SYNC_TYPE_CONTACTS;
+			break;
+		case TypeToDo:
+			buffer[2] = ALCATEL_SYNC_TYPE_TODO;
+			break;
+	}
+
+	buffer[5] = (id >> 24);
+	buffer[6] = ((id >> 16) & 0xff);
+	buffer[7] = ((id >> 8) & 0xff);
+	buffer[8] = (id & 0xff);
+	buffer[11] = (field & 0xff);
+
+	error=GSM_WaitFor (s, buffer, 13, 0x02, ALCATEL_TIMEOUT, ID_AlcatelDeleteField);
+	if (error != GE_NONE) return error;
+
+	return GE_NONE;
+}
+
+static GSM_Error ALCATEL_DeleteItem(GSM_StateMachine *s, int id) {
+	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
+	GSM_Error		error;
+	unsigned char 		buffer[] =
+					{0x00, 0x04,
+					 0x00, 				/* type */
+					 0x27, 0x01,
+					 0x00, 0x00, 0x00, 0x00,	/* here follows 4byte id */
+					 0x42};
+
+	smprintf(s,"Deleting item (%08x)\n", id);
+
+	switch (Priv->BinaryType) {
+		case TypeCalendar:
+			buffer[2] = ALCATEL_SYNC_TYPE_CALENDAR;
+			break;
+		case TypeContacts:
+			buffer[2] = ALCATEL_SYNC_TYPE_CONTACTS;
+			break;
+		case TypeToDo:
+			buffer[2] = ALCATEL_SYNC_TYPE_TODO;
+			break;
+	}
+
+	buffer[5] = (id >> 24);
+	buffer[6] = ((id >> 16) & 0xff);
+	buffer[7] = ((id >> 8) & 0xff);
+	buffer[8] = (id & 0xff);
+
+	error=GSM_WaitFor (s, buffer, 10, 0x02, ALCATEL_TIMEOUT, ID_AlcatelDeleteItem);
+	if (error != GE_NONE) return error;
+
+	return GE_NONE;
+}
+
+static void ALCATEL_BuildWriteBuffer(unsigned char * buffer, GSM_Alcatel_FieldType type, int field, void *data) {
+	int			len;
+	
+	buffer[1] = field & 0xff;
+	
+	switch(type) {
+		case Alcatel_date:
+			buffer[3] = 0x05;
+			buffer[4] = 0x67;
+
+			buffer[0] = 0x09;
+			buffer[5] = 0x04;
+			buffer[6] = ((GSM_DateTime *)data)->Month;
+			buffer[7] = ((GSM_DateTime *)data)->Day;
+			buffer[8] = ((GSM_DateTime *)data)->Year >> 8;
+			buffer[9] = ((GSM_DateTime *)data)->Year & 0xff;
+			buffer[10] = 0x00;
+			break;
+		case Alcatel_time:
+			buffer[3] = 0x06;
+			buffer[4] = 0x68;
+
+			buffer[0] = 0x08;
+			buffer[5] = 0x03;
+			buffer[6] = ((GSM_DateTime *)data)->Hour;
+			buffer[7] = ((GSM_DateTime *)data)->Minute;
+			buffer[8] = ((GSM_DateTime *)data)->Second;
+			buffer[9] = 0x00;
+			break;
+		case Alcatel_string:
+			buffer[3] = 0x08;
+			buffer[4] = 0x3c;
+
+			len = MIN(strlen(DecodeUnicodeString((char *)data)),62);
+			EncodeDefault(buffer + 6, (char *)data, &len, false, GSM_AlcatelAlphabet);
+			buffer[5] = len;
+			buffer[0] = 5 + len;
+			buffer[6 + len] = 0x00;
+			break;
+		case Alcatel_phone:
+			buffer[3] = 0x07;
+			buffer[4] = 0x3c;
+
+			len = MIN(strlen(DecodeUnicodeString((char *)data)),50);
+			EncodeDefault(buffer + 6, (char *)data, &len, false, GSM_AlcatelAlphabet);
+			buffer[5] = len;
+			buffer[0] = 5 + len;
+			buffer[6 + len] = 0x00;
+			break;
+		case Alcatel_enum:
+			buffer[3] = 0x04;
+			buffer[4] = 0x38;
+
+			buffer[0] = 0x05;
+			buffer[5] = *(int *)data & 0xff;
+			buffer[6] = 0x00;
+			break;
+		case Alcatel_bool:
+			buffer[3] = 0x03;
+			buffer[4] = 0x3b;
+
+			buffer[0] = 0x05;
+			buffer[5] = *(int *)data & 0xff;
+			buffer[6] = 0x00;
+			break;
+		case Alcatel_int:
+			buffer[3] = 0x02;
+			buffer[4] = 0x3a;
+
+			buffer[0] = 0x08;
+			buffer[5] = *(int *)data >> 24;
+			buffer[6] = (*(int *)data >> 16) & 0xff;
+			buffer[7] = (*(int *)data >> 8) & 0xff;
+			buffer[8] = *(int *)data & 0xff;
+			buffer[9] = 0x00;
+			break;
+		case Alcatel_byte:
+			buffer[3] = 0x00;
+			buffer[4] = 0x38;
+
+			buffer[0] = 0x05;
+			buffer[5] = *(int *)data & 0xff;
+			buffer[6] = 0x00;
+			break;
+	}
+}
+
+static GSM_Error ALCATEL_CreateField(GSM_StateMachine *s, GSM_Alcatel_FieldType type, int field, void *data) {
+	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
+	GSM_Error		error;
+	unsigned char 		buffer[200] =
+					{0x00, 0x04,
+					 0x00, 				/* type */
+					 0x25, 0x01, 0x65,
+					 0x00,				/* length of remaining part */
+					 0x00,				/* field */
+					 0x37};				/* data follows here */
+
+	smprintf(s,"Creating field (%02x)\n", field);
+
+	switch (Priv->BinaryType) {
+		case TypeCalendar:
+			buffer[2] = ALCATEL_SYNC_TYPE_CALENDAR;
+			break;
+		case TypeContacts:
+			buffer[2] = ALCATEL_SYNC_TYPE_CONTACTS;
+			break;
+		case TypeToDo:
+			buffer[2] = ALCATEL_SYNC_TYPE_TODO;
+			break;
+	}
+	ALCATEL_BuildWriteBuffer(buffer + 6, type, field, data);
+	
+	error=GSM_WaitFor (s, buffer, 8 + buffer[6], 0x02, ALCATEL_TIMEOUT, ID_AlcatelCreateField);
+	if (error != GE_NONE) return error;
+	
+	return GE_NONE;
+}
+
+static GSM_Error ALCATEL_UpdateField(GSM_StateMachine *s, GSM_Alcatel_FieldType type, int id, int field, void *data) {
+	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
+	GSM_Error		error;
+	unsigned char 		buffer[200] =
+					{0x00, 0x04,
+					 0x00, 				/* type */
+					 0x26, 0x01, 
+					 0x00, 0x00, 0x00, 0x00,	/* id */
+					 0x65,
+					 0x00,				/* length of remaining part */
+					 0x00,				/* field */
+					 0x37};				/* data follows here */
+
+	smprintf(s,"Updating field (%08x.%02x)\n", id, field);
+	
+	buffer[5] = (id >> 24);
+	buffer[6] = ((id >> 16) & 0xff);
+	buffer[7] = ((id >> 8) & 0xff);
+	buffer[8] = (id & 0xff);
+
+	switch (Priv->BinaryType) {
+		case TypeCalendar:
+			buffer[2] = ALCATEL_SYNC_TYPE_CALENDAR;
+			break;
+		case TypeContacts:
+			buffer[2] = ALCATEL_SYNC_TYPE_CONTACTS;
+			break;
+		case TypeToDo:
+			buffer[2] = ALCATEL_SYNC_TYPE_TODO;
+			break;
+	}
+	ALCATEL_BuildWriteBuffer(buffer + 10, type, field, data);
+	
+	error=GSM_WaitFor (s, buffer, 12 + buffer[10], 0x02, ALCATEL_TIMEOUT, ID_AlcatelUpdateField);
+	if (error != GE_NONE) return error;
+	
+	return GE_NONE;
+}
 
 static GSM_Error ALCATEL_GetManufacturer(GSM_StateMachine *s)
 {
@@ -958,7 +1189,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entr
 			switch (Priv->CurrentFields[i]) {
 				case 0:
 					if (Priv->ReturnType != Alcatel_string) {
-						smprintf(s,"WARNING: Received unexpected type %02X for field 0, ignoring\n", Priv->ReturnType);
+					smprintf(s,"WARNING: Received unexpected type %02X for field 0, ignoring\n", Priv->ReturnType);
 						entry->EntriesNum--;
 						j++;
 						break;
@@ -1113,7 +1344,7 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entr
 						j++;
 						break;
 					}
-					entry->Entries[i - j].EntryType = PBK_Text_Email;
+					entry->Entries[i - j].EntryType = PBK_Text_Email2;
 					CopyUnicodeString(entry->Entries[i - j].Text, Priv->ReturnString);
 					break;
 				case 16:
@@ -1250,14 +1481,163 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entr
 
 static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 {
-	GSM_Error error;
+	GSM_Error		error;
+	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
+	int			NamePosition = -1;
+	bool			NameSet = false;
+	int			i;
+	bool			UpdatedFields[26];
+
 
 	if (entry->MemoryType == GMT_ME) {
 		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= GE_NONE) return error;
-		if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
-		if ((error = ALCATEL_IsIdAvailable(s, entry->Location))!= GE_NONE) return error;
-		if ((error = ALCATEL_GetFields(s, entry->Location))!= GE_NONE) return error;
-		/* TODO: do the real setting */
+		if (entry->EntriesNum == 0) {
+			/* Delete entry */
+			if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
+			if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeContacts, entry->Location))!= GE_NONE) return error;
+			if ((error = ALCATEL_IsIdAvailable(s, entry->Location))!= GE_NONE) {
+				/* FIXME: What should we return, when attempted to delete non existant location? */
+				if (error == GE_EMPTY) return GE_INVALIDLOCATION;
+				return error;
+			}
+			error = ALCATEL_DeleteItem(s, entry->Location);
+			if (error != GE_NONE) return error;
+			if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= GE_NONE) return error;
+			return GE_NONE;
+		} else if (entry->Location == 0) {
+			/* Add new entry */
+			if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeContacts, entry->Location))!= GE_NONE) return error;
+			for (i = 0; i < entry->EntriesNum; i++) {
+				switch (entry->Entries[i].EntryType) {
+					case PBK_Number_General: ALCATEL_CreateField(s, Alcatel_phone, 8, entry->Entries[i].Text); break;
+					case PBK_Number_Mobile: ALCATEL_CreateField(s, Alcatel_phone, 12, entry->Entries[i].Text); break;
+					case PBK_Number_Work: ALCATEL_CreateField(s, Alcatel_phone, 7, entry->Entries[i].Text); break;
+					case PBK_Number_Fax: ALCATEL_CreateField(s, Alcatel_phone, 9, entry->Entries[i].Text); break;
+					case PBK_Number_Home: ALCATEL_CreateField(s, Alcatel_phone, 13, entry->Entries[i].Text); break;
+					case PBK_Number_Pager: ALCATEL_CreateField(s, Alcatel_phone, 11, entry->Entries[i].Text); break;
+					case PBK_Number_Other: ALCATEL_CreateField(s, Alcatel_phone, 10, entry->Entries[i].Text); break;
+					case PBK_Text_Note: ALCATEL_CreateField(s, Alcatel_string, 4, entry->Entries[i].Text); break;
+					case PBK_Text_Email: ALCATEL_CreateField(s, Alcatel_string, 14, entry->Entries[i].Text); break;
+					case PBK_Text_Email2: ALCATEL_CreateField(s, Alcatel_string, 15, entry->Entries[i].Text); break;
+					case PBK_Text_LastName: ALCATEL_CreateField(s, Alcatel_string, 0, entry->Entries[i].Text); NameSet = true; break;
+					case PBK_Text_FirstName: ALCATEL_CreateField(s, Alcatel_string, 1, entry->Entries[i].Text); NameSet = true; break;
+					case PBK_Text_Company: ALCATEL_CreateField(s, Alcatel_string, 2, entry->Entries[i].Text); break;
+					case PBK_Text_JobTitle: ALCATEL_CreateField(s, Alcatel_string, 3, entry->Entries[i].Text); break;
+					case PBK_Category: ALCATEL_CreateField(s, Alcatel_byte, 5, &(entry->Entries[i].Number)); break;
+					case PBK_Private: ALCATEL_CreateField(s, Alcatel_bool, 6, &(entry->Entries[i].Number)); break;
+					case PBK_Text_StreetAddress: ALCATEL_CreateField(s, Alcatel_string, 16, entry->Entries[i].Text); break;
+					case PBK_Text_City: ALCATEL_CreateField(s, Alcatel_string, 17, entry->Entries[i].Text); break;
+					case PBK_Text_State: ALCATEL_CreateField(s, Alcatel_string, 18, entry->Entries[i].Text); break;
+					case PBK_Text_Zip: ALCATEL_CreateField(s, Alcatel_string, 19, entry->Entries[i].Text); break;
+					case PBK_Text_Country: ALCATEL_CreateField(s, Alcatel_string, 20, entry->Entries[i].Text); break;
+					case PBK_Text_Custom1: ALCATEL_CreateField(s, Alcatel_string, 21, entry->Entries[i].Text); break;
+					case PBK_Text_Custom2: ALCATEL_CreateField(s, Alcatel_string, 22, entry->Entries[i].Text); break;
+					case PBK_Text_Custom3: ALCATEL_CreateField(s, Alcatel_string, 23, entry->Entries[i].Text); break;
+					case PBK_Text_Custom4: ALCATEL_CreateField(s, Alcatel_string, 24, entry->Entries[i].Text); break;
+					case PBK_PictureID: 
+						if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
+						       ALCATEL_CreateField(s, Alcatel_int, 25, &(entry->Entries[i].Number));
+						} else {
+							smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
+						}
+						break;
+
+					case PBK_Name: NamePosition = i; break;
+					/* Following fields are not supported: */
+					case PBK_Date:
+					case PBK_Caller_Group:
+					case PBK_RingtoneID:
+					case PBK_Text_Postal:
+					case PBK_Text_URL:
+						smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
+						break;
+				}
+			}
+			if (NamePosition != -1) {
+				if (NameSet) {
+					smprintf(s,"WARNING: Ignoring name, not supported by phone\n");
+				} else {
+					ALCATEL_CreateField(s, Alcatel_string, 1, entry->Entries[i].Text);
+				}
+			}
+			if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= GE_NONE) return error;
+			entry->Location = Priv->CommitedRecord;
+			return GE_NONE;
+		} else {
+			/* Save modified entry */
+			if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
+			if ((error = ALCATEL_IsIdAvailable(s, entry->Location))!= GE_NONE) {
+				/* FIXME: What should we return, when we can not write to non existant location? */
+				if (error == GE_EMPTY) return GE_INVALIDLOCATION;
+				return error;
+			}
+			/* Get fields for current item */
+			if ((error = ALCATEL_GetFields(s, entry->Location))!= GE_NONE) return error;
+			
+			for (i = 0; i < 26; i++) { UpdatedFields[i] = false; }
+			
+			if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeContacts, entry->Location))!= GE_NONE) return error;
+			for (i = 0; i < entry->EntriesNum; i++) {
+				switch (entry->Entries[i].EntryType) {
+					case PBK_Number_General: UpdatedFields[8] = true; ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 8, entry->Entries[i].Text); break;
+					case PBK_Number_Mobile: UpdatedFields[12] = true; ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 12, entry->Entries[i].Text); break;
+					case PBK_Number_Work: UpdatedFields[7] = true; ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 7, entry->Entries[i].Text); break;
+					case PBK_Number_Fax: UpdatedFields[9] = true; ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 9, entry->Entries[i].Text); break;
+					case PBK_Number_Home: UpdatedFields[13] = true; ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 13, entry->Entries[i].Text); break;
+					case PBK_Number_Pager: UpdatedFields[11] = true; ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 11, entry->Entries[i].Text); break;
+					case PBK_Number_Other: UpdatedFields[10] = true; ALCATEL_UpdateField(s, Alcatel_phone, entry->Location, 10, entry->Entries[i].Text); break;
+					case PBK_Text_Note: UpdatedFields[4] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 4, entry->Entries[i].Text); break;
+					case PBK_Text_Email: UpdatedFields[14] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 14, entry->Entries[i].Text); break;
+					case PBK_Text_Email2: UpdatedFields[15] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 15, entry->Entries[i].Text); break;
+					case PBK_Text_LastName: UpdatedFields[0] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 0, entry->Entries[i].Text); NameSet = true; break;
+					case PBK_Text_FirstName: UpdatedFields[1] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 1, entry->Entries[i].Text); NameSet = true; break;
+					case PBK_Text_Company: UpdatedFields[2] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 2, entry->Entries[i].Text); break;
+					case PBK_Text_JobTitle: UpdatedFields[3] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 3, entry->Entries[i].Text); break;
+					case PBK_Category: UpdatedFields[5] = true; ALCATEL_UpdateField(s, Alcatel_byte, entry->Location, 5, &(entry->Entries[i].Number)); break;
+					case PBK_Private: UpdatedFields[6] = true; ALCATEL_UpdateField(s, Alcatel_bool, entry->Location, 6, &(entry->Entries[i].Number)); break;
+					case PBK_Text_StreetAddress: UpdatedFields[16] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 16, entry->Entries[i].Text); break;
+					case PBK_Text_City: UpdatedFields[17] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 17, entry->Entries[i].Text); break;
+					case PBK_Text_State: UpdatedFields[18] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 18, entry->Entries[i].Text); break;
+					case PBK_Text_Zip: UpdatedFields[19] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 19, entry->Entries[i].Text); break;
+					case PBK_Text_Country: UpdatedFields[20] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 20, entry->Entries[i].Text); break;
+					case PBK_Text_Custom1: UpdatedFields[21] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 21, entry->Entries[i].Text); break;
+					case PBK_Text_Custom2: UpdatedFields[22] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 22, entry->Entries[i].Text); break;
+					case PBK_Text_Custom3: UpdatedFields[23] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 23, entry->Entries[i].Text); break;
+					case PBK_Text_Custom4: UpdatedFields[24] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 24, entry->Entries[i].Text); break;
+					case PBK_PictureID: 
+						if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
+						       UpdatedFields[25] = true; ALCATEL_UpdateField(s, Alcatel_int, entry->Location, 25, &(entry->Entries[i].Number));
+						} else {
+							smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
+						}
+						break;
+
+					case PBK_Name: NamePosition = i; break;
+					/* Following fields are not supported: */
+					case PBK_Date:
+					case PBK_Caller_Group:
+					case PBK_RingtoneID:
+					case PBK_Text_Postal:
+					case PBK_Text_URL:
+						smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
+						break;
+				}
+			}
+			if (NamePosition != -1) {
+				if (NameSet) {
+					smprintf(s,"WARNING: Ignoring name, not supported by phone\n");
+				} else {
+					UpdatedFields[1] = true; ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 1, entry->Entries[i].Text);
+				}
+			}
+			/* If we didn't update some field, we have to delete it... */
+			for (i=0; i<Priv->CurrentFieldsCount; i++) {
+				if (!UpdatedFields[Priv->CurrentFields[i]]) ALCATEL_DeleteField(s, entry->Location, Priv->CurrentFields[i]);
+			}
+			if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= GE_NONE) return error;
+			entry->Location = Priv->CommitedRecord;
+			return GE_NONE;
+		}
 		return GE_WORKINPROGRESS;
 	} else {
 		if ((error = ALCATEL_SetATMode(s))!= GE_NONE) return error;
@@ -1770,7 +2150,7 @@ static GSM_Error ALCATEL_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarEn
 	return GE_NONE;
 }
 
-static GSM_Error ALCATEL_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+static GSM_Error ALCATEL_DeleteCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error error;
 
@@ -2096,6 +2476,7 @@ static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_StateMachine
 		case 0x0C: /* Bad id (item/database) */
 		case 0x11: /* Bad list id */
 		case 0x2A: /* Nonexistant field/item id */
+		case 0x35: /* Too long text */
 			return GE_BUG;
 		case 0x23: /* Session opened */
 		case 0x80: /* Transfer started */
@@ -2110,7 +2491,8 @@ static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_StateMachine
 
 static GSM_Error ALCATEL_ReplyCommit(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	/* TODO: read received id */
+	s->Phone.Data.Priv.ALCATEL.CommitedRecord = msg.Buffer[12] + (msg.Buffer[11] << 8) + (msg.Buffer[10] << 16) + (msg.Buffer[9] << 24);
+	smprintf(s, "Created record %08x\n", s->Phone.Data.Priv.ALCATEL.CommitedRecord);
 	return GE_NONE;
 }
 
@@ -2137,6 +2519,10 @@ static GSM_Reply_Function ALCATELReplyFunctions[] = {
 {ALCATEL_ReplyGetFields,	"\x02",0x00,0x00, ID_AlcatelGetFields2		},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelGetFieldValue1	},
 {ALCATEL_ReplyGetFieldValue,	"\x02",0x00,0x00, ID_AlcatelGetFieldValue2	},
+{ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelDeleteField		},
+{ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelDeleteItem		},
+{ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelCreateField		},
+{ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelUpdateField		},
 {NULL,				"\x00",0x00,0x00, ID_None			}
 };
 
@@ -2209,7 +2595,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	ALCATEL_GetSIMIMSI,
 	NONEFUNCTION,			/* SetIncomingCall	*/
 	ALCATEL_GetNextCalendarNote,
-	ALCATEL_DelCalendarNote,
+	ALCATEL_DeleteCalendarNote,
 	ALCATEL_AddCalendarNote,
 	ALCATEL_GetBatteryCharge,
 	ALCATEL_GetSignalStrength,
@@ -2224,7 +2610,9 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/* GetNextFileFolder	*/
 	NOTSUPPORTED,			/* GetFilePart		*/
 	NOTSUPPORTED,			/* AddFile		*/
-	NOTSUPPORTED 			/* GetFreeFileMemory 	*/
+	NOTSUPPORTED, 			/* GetFreeFileMemory 	*/
+	NOTSUPPORTED,			/* DeleteFile		*/
+	NOTSUPPORTED			/* AddFolder		*/
 };
 
 #endif
