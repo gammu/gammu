@@ -206,8 +206,8 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 	int tmp;
 
 	if (argc <= num) {
-		printmsg("ERROR: more parameters required\n");
-		exit (-1);
+			printmsg("ERROR: more parameters required\n");
+			exit (-1);
 	}
 
 	*start=atoi(argv[num]);
@@ -6649,38 +6649,6 @@ static void GetCategory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void AddCategory(int argc, char *argv[])
-{
-	GSM_Category	Category;
-	int		Length;
-
-	if (mystrncasecmp(argv[2],"TODO",0)) {
-    		Category.Type = Category_ToDo;
-	} else if (mystrncasecmp(argv[2],"PHONEBOOK",0)) {
-    		Category.Type = Category_Phonebook;
-	} else {
-		printmsg("What type of category do you want to add (\"%s\") ?\n",argv[2]);
-		exit(-1);
-	}
-
-	GSM_Init(true);
-
-	Length = strlen(argv[3]);
-	if (Length > GSM_MAX_CATEGORY_NAME_LENGTH) {
-		printmsg("Text too long, truncating to %d chars!\n", GSM_MAX_CATEGORY_NAME_LENGTH);
-		Length = GSM_MAX_CATEGORY_NAME_LENGTH;
-	}
-	EncodeUnicode(Category.Name, argv[3], Length);
-
-	Category.Location = 0;
-
-	error = Phone->AddCategory(&s, &Category);
-
-	Print_Error(error);
-
-	GSM_Terminate();
-}
-
 static void DeleteToDo(int argc, char *argv[])
 {
 	GSM_ToDoEntry	ToDo;
@@ -8230,7 +8198,7 @@ static void NokiaAddFile(int argc, char *argv[])
 			while (i != File.Used) {
 				File.Buffer[Pos] = File.Buffer[i];
 				i++;
-				Pos++;
+				Pos++;				
 			}
 			File.Used = File.Used - (i - Pos);
 			File.Buffer = realloc(File.Buffer,File.Used);
@@ -8316,7 +8284,7 @@ static void NokiaAddFile(int argc, char *argv[])
 				Print_Error(error);
 
 				printmsgerr("  Deleting %s\n",DecodeUnicodeString(File2.Name));
-
+				
 				error = Phone->DeleteFile(&s,File2.ID_FullName);
 				Print_Error(error);
 			}
@@ -8833,13 +8801,12 @@ static GSM_Parameters Parameters[] = {
 #define SMS_SMSTEMPLATE_OPTIONS	"[-unicode][-text text][-unicodefiletext file][-defsound ID][-defanimation ID][-tone10 file][-tone10long file][-tone12 file][-tone12long file][-toneSE file][-toneSElong file][-variablebitmap file][-variablebitmaplong file][-animation frames file1 ...]"
 #define SMS_ANIMATION_OPTIONS	""
 #define SMS_OPERATOR_OPTIONS	"[-netcode netcode][-biglogo]"
-#define SMS_RINGTONE_OPTIONS	"[-long][-scale]"
 #define SMS_SAVE_OPTIONS	"[-folder id][-unread][-read][-unsent][-sent][-sender number]"
 #define SMS_SEND_OPTIONS	"[-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]]"
 #define SMS_COMMON_OPTIONS	"[-smscset number][-smscnumber number][-reply][-maxsms num]"
 
 	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,0},			"TEXT " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_TEXT_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Ringtone,0},		"RINGTONE file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_RINGTONE_OPTIONS},
+	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Ringtone,0},		"RINGTONE file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
 	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"OPERATOR file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_OPERATOR_OPTIONS},
 	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"CALLER file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
 	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"PICTURE file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_PICTURE_OPTIONS},
@@ -8859,7 +8826,7 @@ static GSM_Parameters Parameters[] = {
 	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,0},			"SMSTEMPLATE " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_SMSTEMPLATE_OPTIONS},
 
 	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,0},			"TEXT destination " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_TEXT_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Ringtone,0},		"RINGTONE destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_RINGTONE_OPTIONS},
+	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Ringtone,0},		"RINGTONE destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
 	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"OPERATOR destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_OPERATOR_OPTIONS},
 	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"CALLER destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
 	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"PICTURE destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_PICTURE_OPTIONS},
@@ -8921,7 +8888,6 @@ static GSM_Parameters Parameters[] = {
 	{"--deletecalendar",		1, 2, DeleteCalendar,		{H_Calendar,0},			"start [stop]"},
 	{"--getallcalendar",		0, 0, GetAllCalendar,		{H_Calendar,0},			""},
 	{"--getcalendar",		1, 2, GetCalendar,		{H_Calendar,0},			"start [stop]"},
-	{"--addcategory",       	2, 2, AddCategory,       	{H_Category,H_ToDo,H_Memory,0},	"TODO|PHONEBOOK text"},
 	{"--getcategory",       	2, 3, GetCategory,       	{H_Category,H_ToDo,H_Memory,0},	"TODO|PHONEBOOK start [stop]"},
 	{"--getallcategory",	  	1, 1, GetAllCategories,  	{H_Category,H_ToDo,H_Memory,0},	"TODO|PHONEBOOK"},
 	{"--reset",			1, 1, Reset,			{H_Other,0},			"SOFT|HARD"},
@@ -9221,7 +9187,7 @@ static void Help(int argc, char *argv[])
 	}
 }
 
-int FoundVersion(unsigned char *Buffer)
+int FoundVersion(unsigned char *Buffer) 
 {
 	int retval = 0, pos = 0;
 
@@ -9339,7 +9305,7 @@ int main(int argc, char *argv[])
 			error=GSM_SetDebugFile(s.Config[i].DebugFile, &di);
 			Print_Error(error);
  		}
-
+		
 		if (i==0) {
 		        rss = INI_GetValue(cfg, "gammu", "rsslevel", false);
         		if (rss) {
@@ -9363,7 +9329,7 @@ int main(int argc, char *argv[])
  		printmsg("Too few parameters!\n");
 		exit(-2);
 	}
-
+	
 	/* Check used version vs. compiled */
 	if (!mystrncasecmp(GetGammuVersion(),VERSION,0)) {
 		printmsg("ERROR: version of installed libGammu.so (%s) is different to version of Gammu (%s)\n",
@@ -9412,7 +9378,7 @@ int main(int argc, char *argv[])
 						printmsg("INFO: there is later test Gammu (%s instead of %s) available !\n",buff,VERSION);
 						break;
 					}
-				}
+				}					
 				pos++;
 				oldpos = pos;
 			}

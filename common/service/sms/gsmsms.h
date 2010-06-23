@@ -483,7 +483,7 @@ typedef struct {
         /**
   	 * Name for SMS folder.
 	 */
-        unsigned char		Name[(GSM_MAX_SMS_FOLDER_NAME_LEN+1)*2];
+        char	    Name[(GSM_MAX_SMS_FOLDER_NAME_LEN+1)*2];
 } GSM_OneSMSFolder;
 
 /**

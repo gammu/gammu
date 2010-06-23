@@ -777,6 +777,23 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	/* By default all debug output will go to one filedescriptor */
 	bool DefaultUseGlobalDebugFile 	= true;
 
+        cfg->Device		 = DefaultPort;
+        cfg->Connection	 	 = DefaultConnection;
+        cfg->SyncTime 	 	 = DefaultSynchronizeTime;
+	cfg->DebugFile	 	 = DefaultDebugFile;
+        strcpy(cfg->Model,DefaultModel);
+	strcpy(cfg->DebugLevel,DefaultDebugLevel);
+	cfg->LockDevice	 	 = DefaultLockDevice;
+	cfg->StartInfo		 = DefaultStartInfo;
+	cfg->DefaultDevice	 = true;
+	cfg->DefaultModel	 = true;
+	cfg->DefaultConnection	 = true;
+	cfg->DefaultSyncTime	 = true;
+	cfg->DefaultDebugFile	 = true;
+	cfg->DefaultDebugLevel	 = true;
+	cfg->DefaultLockDevice	 = true;
+	cfg->DefaultStartInfo	 = true;
+
 	cfg->UseGlobalDebugFile	 = DefaultUseGlobalDebugFile;
 
 	if (cfg_info==NULL) return false;
@@ -794,81 +811,60 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
         }
 	if (!found) return false;
 
-	free(cfg->Device);
 	cfg->Device 	 = INI_GetValue(cfg_info, section, "port", 		false);
 	if (!cfg->Device) {
+		free(cfg->Device);
 		cfg->Device		 	 = strdup(DefaultPort);
-		cfg->DefaultDevice		 = true;
 	} else {
-		cfg->Device			 = strdup(cfg->Device);
 		cfg->DefaultDevice 		 = false;
 	}
-
-	free(cfg->Connection);
 	cfg->Connection  = INI_GetValue(cfg_info, section, "connection", 	false);
 	if (!cfg->Connection) {
-		cfg->DefaultConnection		 = true;
+		free(cfg->Connection);
 		cfg->Connection	 		 = strdup(DefaultConnection);
 	} else {
-		cfg->Connection			 = strdup(cfg->Connection);
 		cfg->DefaultConnection		 = false;
 	}
-
-	free(cfg->SyncTime);
 	cfg->SyncTime 	 = INI_GetValue(cfg_info, section, "synchronizetime",	false);
 	if (!cfg->SyncTime) {
-		cfg->DefaultSyncTime		 = true;
+		free(cfg->SyncTime);
 		cfg->SyncTime		 	 = strdup(DefaultSynchronizeTime);
 	} else {
-		cfg->SyncTime			 = strdup(cfg->SyncTime);
 		cfg->DefaultSyncTime		 = false;
 	}
-
-	free(cfg->DebugFile);
 	cfg->DebugFile   = INI_GetValue(cfg_info, section, "logfile", 		false);
 	if (!cfg->DebugFile) {
-		cfg->DefaultDebugFile		 = true;
+		free(cfg->DebugFile);
 		cfg->DebugFile		 	 = strdup(DefaultDebugFile);
 	} else {
-		cfg->DebugFile			 = strdup(cfg->DebugFile);
 		cfg->DefaultDebugFile 		 = false;
 	}
-
-	free(cfg->LockDevice);
 	cfg->LockDevice  = INI_GetValue(cfg_info, section, "use_locking", 	false);
 	if (!cfg->LockDevice) {
-		cfg->DefaultLockDevice		 = true;
+		free(cfg->LockDevice);
 		cfg->LockDevice	 		 = strdup(DefaultLockDevice);
 	} else {
-		cfg->LockDevice			 = strdup(cfg->LockDevice);
 		cfg->DefaultLockDevice		 = false;
 	}
-
 	Temp		 = INI_GetValue(cfg_info, section, "model", 		false);
 	if (!Temp) {
-		cfg->DefaultModel		 = true;
 		strcpy(cfg->Model,DefaultModel);
 	} else {
 		cfg->DefaultModel 		 = false;
 		strcpy(cfg->Model,Temp);
 	}
-
 	Temp		 = INI_GetValue(cfg_info, section, "logformat", 	false);
 	if (!Temp) {
-		cfg->DefaultDebugLevel		 = true;
 		strcpy(cfg->DebugLevel,DefaultDebugLevel);
 	} else {
 		cfg->DefaultDebugLevel 		 = false;
 		strcpy(cfg->DebugLevel,Temp);
 	}
-
-	free(cfg->StartInfo);
 	cfg->StartInfo   = INI_GetValue(cfg_info, section, "startinfo", 	false);
 	if (!cfg->StartInfo) {
-		cfg->DefaultStartInfo		 = true;
+		free(cfg->StartInfo);
 		cfg->StartInfo	 		 = strdup(DefaultStartInfo);
 	} else {
-		cfg->StartInfo			 = strdup(cfg->StartInfo);
 		cfg->DefaultStartInfo 		 = false;
 	}
 	return true;
@@ -958,11 +954,6 @@ static OnePhoneModel allmodels[] = {
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"6110" ,"NSE-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
-#endif
-#ifdef GSM_ENABLE_NOKIA6510
-	{"6111" ,"RM-82" ,"Nokia 6111", {F_SERIES40_30,0}},
-#endif
-#ifdef GSM_ENABLE_NOKIA6110
 	{"6130" ,"NSK-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
 	{"6150" ,"NSM-1" ,"",           {F_NOWAP,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,F_NOPICTUREUNI,0}},
 	{"6190" ,"NSB-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
