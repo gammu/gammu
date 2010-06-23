@@ -92,6 +92,17 @@ typedef struct {
 	int			AutoDelete; // 0 = no delete, 1 = after day,...
 } GSM_CalendarSettings;
 
+/**
+ * Structure used for returning calendar status.
+ */
+typedef struct {
+	/**
+	 * Number of used positions.
+	 */
+	int			Used;
+} GSM_CalendarStatus;
+
+
 /* ------------------------------ to-do ------------------------------------ */
 
 #define GSM_TODO_ENTRIES		7
@@ -150,6 +161,15 @@ typedef struct {
 } GSM_NoteEntry;
 
 GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *Note);
+
+/* --------------------------- alarm --------------------------------------- */
+
+typedef struct {
+	int		Location;
+	GSM_DateTime	DateTime;
+	bool		Repeating;
+	char		Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
+} GSM_Alarm;
 
 /* --------------------------- calendar & todo ----------------------------- */
 

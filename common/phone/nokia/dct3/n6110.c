@@ -257,9 +257,9 @@ static GSM_Error N6110_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 	return DCT3_GetDateTime(s, date_time, 0x11);
 }
 
-static GSM_Error N6110_GetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int alarm_number)
+static GSM_Error N6110_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
-	return DCT3_GetAlarm(s, alarm, alarm_number, 0x11);
+	return DCT3_GetAlarm(s, alarm, 0x11);
 }
 
 static GSM_Error N6110_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
@@ -267,9 +267,9 @@ static GSM_Error N6110_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 	return DCT3_SetDateTime(s, date_time, 0x11);
 }
 
-static GSM_Error N6110_SetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int alarm_number)
+static GSM_Error N6110_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
-	return DCT3_SetAlarm(s, alarm, alarm_number, 0x11);
+	return DCT3_SetAlarm(s, alarm, 0x11);
 }
 
 static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -367,7 +367,7 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 				/* TODO: check if not too high */
 				smprintf(s, "ERROR: Empty ????\n");
 				Data->Memory->EntriesNum = 0;
-				return GE_NONE;
+				return GE_EMPTY;
 			case 0x7d:
 				smprintf(s, "ERROR: Invalid memory type\n");
 				return GE_NOTSUPPORTED;
@@ -381,7 +381,7 @@ static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 	return GE_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6110_GetMemory (GSM_StateMachine *s, GSM_PhonebookEntry *entry)
+static GSM_Error N6110_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	unsigned char req[] = {
 		N6110_FRAME_HEADER, 0x01,
@@ -680,7 +680,7 @@ static GSM_Error N6110_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 	return GE_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6110_SaveSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
+static GSM_Error N6110_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	int			length;
 	GSM_Error		error;
@@ -711,6 +711,18 @@ static GSM_Error N6110_SaveSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	s->Phone.Data.SaveSMSMessage=sms;
 	smprintf(s, "Saving sms\n");
 	return GSM_WaitFor (s, req, 8+length, 0x14, 4, ID_SaveSMSMessage);
+}
+
+static GSM_Error N6110_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
+{
+	if (sms->Location == 0) return GE_INVALIDLOCATION;
+	return N6110_PrivSetSMSMessage(s, sms);
+}
+
+static GSM_Error N6110_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
+{
+	sms->Location = 0;
+	return N6110_PrivSetSMSMessage(s, sms);
 }
 
 static GSM_Error N6110_ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1397,7 +1409,7 @@ static GSM_Error N6110_ReplySetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 	return GE_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
+static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	int		current, Group, Name, Number;
 	unsigned char 	req[128] = {
@@ -1406,6 +1418,7 @@ static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 		0x00};			/* location	*/
 
 	if (entry->Location == 0) return GE_NOTSUPPORTED;
+
 	GSM_PhonebookFindDefaultNameNumberGroup(entry, &Name, &Number, &Group);
 
 	req[4] = NOKIA_GetMemoryType(s, entry->MemoryType,N6110_MEMORY_TYPES);
@@ -1445,6 +1458,17 @@ static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 
 	smprintf(s, "Writing phonebook entry\n");
 	return GSM_WaitFor (s, req, current, 0x03, 4, ID_SetMemory);
+}
+
+static GSM_Error N6110_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	GSM_MemoryEntry	dwa;
+
+	dwa.Location   = entry->Location;
+	dwa.MemoryType = entry->MemoryType;
+	dwa.EntriesNum = 0;
+
+	return N6110_SetMemory(s, &dwa);
 }
 
 static GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2069,7 +2093,7 @@ static GSM_Error N6110_ReplyAddCalendar(GSM_Protocol_Message msg, GSM_StateMachi
 	return GE_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
+static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	bool		Reminder3310 = false;
  	int 		Text, Time, Alarm, Phone, Recurrance, EndTime, Location, i, current;
@@ -2082,7 +2106,6 @@ static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *N
 		0x00, 0x00, 0x00, 0x01, 0x00, 0x66, 0x01};
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOCALENDAR)) return GE_NOTSUPPORTED;
-	if (!Past && IsCalendarNoteFromThePast(Note)) return GE_NONE;
 
 	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime, &Location);
 
@@ -2744,87 +2767,61 @@ GSM_Phone_Functions N6110Phone = {
 	N6110_Initialise,
 	PHONE_Terminate,
 	GSM_DispatchMessage,
+	N6110_ShowStartInfo,
+	NOKIA_GetManufacturer,
 	DCT3DCT4_GetModel,
 	DCT3DCT4_GetFirmware,
 	DCT3_GetIMEI,
+	DCT3_GetOriginalIMEI,
+	DCT3_GetManufactureMonth,
+	DCT3_GetProductCode,
+	DCT3_GetHardware,
+	DCT3_GetPPM,
+	NOTSUPPORTED,			/*	GetSIMIMSI		*/
 	N6110_GetDateTime,
+	N6110_SetDateTime,
 	N6110_GetAlarm,
-	N6110_GetMemory,
-	N6110_GetMemoryStatus,
-	DCT3_GetSMSC,
-	N6110_GetSMSMessage,
-	PHONE_GetSMSFolders,
-	NOKIA_GetManufacturer,
-	N6110_GetNextSMSMessage,
-	DCT3_GetSMSStatus,
-	NOKIA_SetIncomingSMS,
-	DCT3_GetNetworkInfo,
+	N6110_SetAlarm,
+	NOTSUPPORTED,			/* 	GetLocale		*/
+	NOTSUPPORTED,			/* 	SetLocale		*/
+	DCT3_PressKey,
 	DCT3_Reset,
+	N61_71_ResetPhoneSettings,
+	N6110_EnterSecurityCode,
+	N6110_GetSecurityStatus,
+	N6110_GetDisplayStatus,
+	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
+	N6110_GetBatteryCharge,
+	N6110_GetSignalQuality,
+	DCT3_GetNetworkInfo,
+	NOTSUPPORTED,       		/*  	GetCategory 		*/
+        NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
+	N6110_GetMemoryStatus,
+	N6110_GetMemory,
+	NOTIMPLEMENTED,			/*	GetNextMemory		*/
+	N6110_SetMemory,
+	NOTIMPLEMENTED,			/*	AddMemory		*/
+	N6110_DeleteMemory,
+	NOTIMPLEMENTED,			/*	DeleteAllMemory		*/
+	N6110_GetSpeedDial,
+	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
+	DCT3_GetSMSC,
+	DCT3_SetSMSC,
+	DCT3_GetSMSStatus,
+	N6110_GetSMSMessage,
+	N6110_GetNextSMSMessage,
+	N6110_SetSMS,
+	N6110_AddSMS,
+	N6110_DeleteSMSMessage,
+	DCT3_SendSMSMessage,
+	NOKIA_SetIncomingSMS,
+	DCT3_SetIncomingCB,
+	PHONE_GetSMSFolders,
+ 	NOTSUPPORTED,			/* 	AddSMSFolder		*/
+ 	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
 	N6110_DialVoice,
 	N6110_AnswerCall,
 	DCT3_CancelCall,
-	N6110_GetRingtone,
-	DCT3DCT4_GetWAPBookmark,
-	N6110_GetBitmap,
-	N6110_SetRingtone,
-	N6110_SaveSMSMessage,
-	DCT3_SendSMSMessage,
-	N6110_SetDateTime,
-	N6110_SetAlarm,
-	N6110_SetBitmap,
-	N6110_SetMemory,
-	N6110_DeleteSMSMessage,
-	DCT3_SetWAPBookmark,
-	DCT3DCT4_DeleteWAPBookmark,
-	DCT3_GetWAPSettings,
-	DCT3_SetIncomingCB,
-	DCT3_SetSMSC,
-	DCT3_GetManufactureMonth,
-	DCT3_GetProductCode,
-	DCT3_GetOriginalIMEI,
-	DCT3_GetHardware,
-	DCT3_GetPPM,
-	DCT3_PressKey,
-	NOTSUPPORTED,			/*	GetToDo			*/
-	NOTSUPPORTED,			/*	DeleteAllToDo		*/
-	NOTSUPPORTED,			/*	SetToDo			*/
-	NOTSUPPORTED,			/*	GetToDoStatus		*/
-	DCT3_PlayTone,
-	N6110_EnterSecurityCode,
-	N6110_GetSecurityStatus,
-	N6110_GetProfile,
-	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
-	DCT3_SetWAPSettings,
-	N6110_GetSpeedDial,
-	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
-	N61_71_ResetPhoneSettings,
-	DCT3DCT4_SendDTMF,
-	N6110_GetDisplayStatus,
-	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
-	N6110_SetProfile,
-	NOTSUPPORTED,			/*	GetSIMIMSI		*/
-	NOKIA_SetIncomingCall,
-    	N6110_GetNextCalendarNote,
-	N6110_DeleteCalendarNote,
-	N6110_AddCalendarNote,
-	N6110_GetBatteryCharge,
-	N6110_GetSignalQuality,
-	NOTSUPPORTED,       		/*  	GetCategory 		*/
-        NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
-    	NOTSUPPORTED,			/*  	GetFMStation        	*/
-    	NOTSUPPORTED,			/*  	SetFMStation        	*/
-    	NOTSUPPORTED,			/*  	ClearFMStations       	*/	
-	NOKIA_SetIncomingUSSD,
-	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
-	N6110_ShowStartInfo,
-	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
-	NOTSUPPORTED,			/*	GetFilePart		*/
-	NOTSUPPORTED,			/* 	AddFile			*/
-	NOTSUPPORTED, 			/* 	GetFileSystemStatus 	*/
-	NOTSUPPORTED,			/*	DeleteFile		*/
-	NOTSUPPORTED,			/*	AddFolder		*/
-	NOTSUPPORTED,			/* 	GetMMSSettings		*/
-	NOTSUPPORTED,			/* 	SetMMSSettings		*/
  	N6110_HoldCall,
  	N6110_UnholdCall,
  	N6110_ConferenceCall,
@@ -2834,15 +2831,53 @@ GSM_Phone_Functions N6110Phone = {
  	DCT3DCT4_GetCallDivert,
  	DCT3DCT4_SetCallDivert,
  	DCT3DCT4_CancelAllDiverts,
- 	NOTSUPPORTED,			/* 	AddSMSFolder		*/
- 	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
-	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	NOTSUPPORTED,			/* 	GetLocale		*/
-	NOTSUPPORTED,			/* 	SetLocale		*/
+	NOKIA_SetIncomingCall,
+	NOKIA_SetIncomingUSSD,
+	DCT3DCT4_SendDTMF,
+	N6110_GetRingtone,
+	N6110_SetRingtone,
+	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
+	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
+	DCT3_PlayTone,
+	DCT3DCT4_GetWAPBookmark,
+	DCT3_SetWAPBookmark,
+	DCT3DCT4_DeleteWAPBookmark,
+	DCT3_GetWAPSettings,
+	DCT3_SetWAPSettings,
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	N6110_GetBitmap,
+	N6110_SetBitmap,
+	NOTSUPPORTED,			/*	GetToDoStatus		*/
+	NOTSUPPORTED,			/*	GetToDo			*/
+	NOTSUPPORTED,			/*	GetNextToDo		*/
+	NOTSUPPORTED,			/*	SetToDo			*/
+	NOTSUPPORTED,			/*	AddToDo			*/
+	NOTSUPPORTED,			/*	DeleteToDo		*/
+	NOTSUPPORTED,			/*	DeleteAllToDo		*/
+	NOTIMPLEMENTED,			/*	GetCalendarStatus	*/
+	NOTIMPLEMENTED,			/*	GetCalendar		*/
+    	N6110_GetNextCalendarNote,
+	NOTIMPLEMENTED,			/*	SetCalendar		*/
+	N6110_AddCalendarNote,
+	N6110_DeleteCalendarNote,
+	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNote			*/
+	N6110_GetProfile,
+	N6110_SetProfile,
+    	NOTSUPPORTED,			/*  	GetFMStation        	*/
+    	NOTSUPPORTED,			/*  	SetFMStation        	*/
+    	NOTSUPPORTED,			/*  	ClearFMStations       	*/	
+	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/*	GetFilePart		*/
+	NOTSUPPORTED,			/* 	AddFile			*/
+	NOTSUPPORTED, 			/* 	GetFileSystemStatus 	*/
+	NOTSUPPORTED,			/*	DeleteFile		*/
+	NOTSUPPORTED,			/*	AddFolder		*/
+	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };
 
 #endif

@@ -342,17 +342,26 @@ static void SetDateTime(int argc, char *argv[])
 
 static void GetAlarm(int argc, char *argv[])
 {
-	GSM_DateTime alarm;
+	GSM_Alarm alarm;
 
 	GSM_Init(true);
 
-	error=Phone->GetAlarm(&s, &alarm, 1);
+	alarm.Location = 1;
+	error=Phone->GetAlarm(&s, &alarm);
 	switch (error) {
 	case GE_EMPTY:
 		printmsg("Alarm not set in phone\n");
 		break;
 	case GE_NONE:
-		printmsg("Time: %02d:%02d\n",alarm.Hour, alarm.Minute);
+		if (alarm.Repeating) {
+			printmsg("Date: %s\n","Every day");
+		} else {
+			printmsg("Date: %s\n",OSDate(alarm.DateTime));
+		}
+		printmsg("Time: %02d:%02d\n",alarm.DateTime.Hour, alarm.DateTime.Minute);
+		if (alarm.Text[0] != 0 || alarm.Text[1] != 0) {
+			printmsg("Text: \"%s\"\n", DecodeUnicodeString2(alarm.Text));
+		}
 		break;
 	default:
 		Print_Error(error);
@@ -363,14 +372,19 @@ static void GetAlarm(int argc, char *argv[])
 
 static void SetAlarm(int argc, char *argv[])
 {
-	GSM_DateTime alarm;
+	GSM_Alarm alarm;
 
-	alarm.Hour 	= atoi(argv[2]);
-	alarm.Minute 	= atoi(argv[3]);
+	alarm.DateTime.Hour 	= atoi(argv[2]);
+	alarm.DateTime.Minute 	= atoi(argv[3]);
+	alarm.DateTime.Second 	= 0;
+	alarm.Location		= 1;
+	alarm.Repeating		= true;
+	alarm.Text[0]		= 0;
+	alarm.Text[1]		= 0;
 
 	GSM_Init(true);
 
-	error=Phone->SetAlarm(&s, &alarm, 1);
+	error=Phone->SetAlarm(&s, &alarm);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -381,7 +395,7 @@ GSM_AllRingtonesInfo 	Info;
 bool			callerinit[5] = {false, false, false, false, false};
 bool			ringinit = false;
 
-static void PrintMemoryEntry(GSM_PhonebookEntry *entry)
+static void PrintMemoryEntry(GSM_MemoryEntry *entry)
 {
 	GSM_Category		Category;
 	bool			unknown;
@@ -480,7 +494,7 @@ static void PrintMemoryEntry(GSM_PhonebookEntry *entry)
 static void GetMemory(int argc, char *argv[])
 {
 	int			j, start, stop;
-	GSM_PhonebookEntry	entry;
+	GSM_MemoryEntry		entry;
 
 	entry.MemoryType=0;
 	if (mystrncasecmp(argv[2],"DC",0)) entry.MemoryType=GMT_DC;
@@ -503,8 +517,7 @@ static void GetMemory(int argc, char *argv[])
 		if (s.Phone.Data.VerNum<=4.06) printmsg("WARNING: you will have null names in entries. Upgrade firmware in phone to higher than 4.06\n");
 	}
 
-	for (j=start;j<=stop;j++)
-	{
+	for (j=start;j<=stop;j++) {
 		printmsg("Memory %s, Location %i\n",argv[2],j);
 
 		entry.Location=j;
@@ -523,7 +536,7 @@ static void GetMemory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void SearchOneEntry(GSM_PhonebookEntry *Entry, unsigned char *Text)
+static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 {
 	int i;
 
@@ -575,7 +588,7 @@ static void SearchOneEntry(GSM_PhonebookEntry *Entry, unsigned char *Text)
 
 static void SearchOneMemory(GSM_MemoryType MemoryType, char *Title, unsigned char *Text)
 {
-	GSM_PhonebookEntry	Entry;
+	GSM_MemoryEntry		Entry;
 	GSM_MemoryStatus	Status;
 	int			i = 0;
 	int			l = 1;
@@ -629,7 +642,7 @@ static void SearchMemory(int argc, char *argv[])
 
 static void ListMemoryCategoryEntries(int Category)
 {
-	GSM_PhonebookEntry	Entry;
+	GSM_MemoryEntry		Entry;
 	GSM_MemoryStatus	Status;
 	int			i = 0;
 	int			l = 1;
@@ -976,6 +989,7 @@ static void Monitor(int argc, char *argv[])
 	GSM_MemoryStatus	MemStatus;
 	GSM_SMSMemoryStatus	SMSStatus;
 	GSM_ToDoStatus		ToDoStatus;
+	GSM_CalendarStatus	CalendarStatus;
 	GSM_NetworkInfo		NetInfo;
     	GSM_BatteryCharge   	BatteryCharge;
     	GSM_SignalQuality   	SignalQuality;
@@ -1024,6 +1038,9 @@ static void Monitor(int argc, char *argv[])
 		CHECKMEMORYSTATUS(MemStatus,GMT_ON,"Own numbers       : Used","Free");
 		if (Phone->GetToDoStatus(&s, &ToDoStatus) == GE_NONE) {
 			printmsg("ToDos             : Used %d\n", ToDoStatus.Used);
+		}
+		if (Phone->GetCalendarStatus(&s, &CalendarStatus) == GE_NONE) {
+			printmsg("Calendar          : Used %d\n", CalendarStatus.Used);
 		}
 		if (Phone->GetBatteryCharge(&s,&BatteryCharge)==GE_NONE) {
             		if (BatteryCharge.BatteryPercent != -1) printmsg("Battery level     : %i percent\n", BatteryCharge.BatteryPercent);
@@ -1512,7 +1529,7 @@ static void GetCalendarNotes(int argc, char *argv[])
 	bool			refresh			= true;
 	int			i_age			= 0,i;
 	GSM_DateTime		Alarm,DateTime;
-	GSM_PhonebookEntry	entry;
+	GSM_MemoryEntry		entry;
 	unsigned char		*name;
 
     	bool 			repeating 		= false;
@@ -3165,7 +3182,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 
 		for (i=0;i<sms.Number;i++) {
 			printmsg("Saving SMS %i/%i\n",i+1,sms.Number);
-			sms.SMS[i].Location		= 0;
+//			sms.SMS[i].Location		= 0;
 			sms.SMS[i].Folder		= Folder;
 			sms.SMS[i].State		= State;
 			sms.SMS[i].ReplyViaSameSMSC	= ReplyViaSameSMSC;
@@ -3174,7 +3191,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			CopyUnicodeString(sms.SMS[i].Number, Sender);
 			CopyUnicodeString(sms.SMS[i].Name, Name);
 			if (SMSCSet==0) CopyUnicodeString(sms.SMS[i].SMSC.Number, SMSC);
-			error=Phone->SetSMS(&s, &sms.SMS[i]);
+			error=Phone->AddSMS(&s, &sms.SMS[i]);
 			Print_Error(error);
 			printmsg("Saved in folder \"%s\", location %i\n",
 				DecodeUnicodeString2(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
@@ -3229,7 +3246,7 @@ static void SaveFile(int argc, char *argv[])
 	int			i,j;
 	FILE			*file;
 	unsigned char		Buffer[10000];
-	GSM_PhonebookEntry	*pbk;
+	GSM_MemoryEntry		*pbk;
 
 	if (mystrncasecmp(argv[2],"CALENDAR",0)) {
 		if (argc<5) {
@@ -3357,7 +3374,7 @@ static void Backup(int argc, char *argv[])
 	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoEntry		ToDo;
 	GSM_ToDoStatus		ToDoStatus;
-	GSM_PhonebookEntry	Pbk;
+	GSM_MemoryEntry		Pbk;
 	GSM_CalendarEntry	Note;
 	GSM_Bitmap		Bitmap;
 	GSM_WAPBookmark		Bookmark;
@@ -3369,6 +3386,7 @@ static void Backup(int argc, char *argv[])
 	GSM_Backup_Info		Info;
  	GSM_FMStation		FMStation;
  	GSM_GPRSAccessPoint	GPRSPoint;
+	bool			DoBackup;
 
 	GSM_ClearBackup(&Backup);
 	GSM_GetBackupFeatures(argv[2],&Info);
@@ -3391,7 +3409,7 @@ static void Backup(int argc, char *argv[])
 		Print_Error(error);
 		sprintf(Backup.Model,"%s ",s.Phone.Data.Manufacturer);
 		if (s.Phone.Data.ModelInfo->model[0]!=0) {
-		strcat(Backup.Model,s.Phone.Data.ModelInfo->model);
+			strcat(Backup.Model,s.Phone.Data.ModelInfo->model);
 		} else {
 			strcat(Backup.Model,s.Phone.Data.Model);
 		}
@@ -3404,453 +3422,487 @@ static void Backup(int argc, char *argv[])
 		Print_Error(error);
 	}
 	printmsg("\n");
+
+	DoBackup = false;
 	if (Info.PhonePhonebook) {
 		printmsg("Checking phone phonebook\n");
 		MemStatus.MemoryType = GMT_ME;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
 		if (error==GE_NONE && MemStatus.Used != 0) {
-			if (answer_yes("   Backup phone phonebook")) {
-				Pbk.MemoryType  = GMT_ME;
-				i		= 1;
-				used 		= 0;
-				while (used != MemStatus.Used) {
-					Pbk.Location = i;
-					error=Phone->GetMemory(&s, &Pbk);
-					if (error != GE_EMPTY) {
-						Print_Error(error);
-						if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
-							Backup.PhonePhonebook[used] = malloc(sizeof(GSM_PhonebookEntry));
-						        if (Backup.PhonePhonebook[used] == NULL) Print_Error(GE_MOREMEMORY);
-							Backup.PhonePhonebook[used+1] = NULL;
-						} else {
-							printmsg("   Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
-							exit(-1);
-						}
-						*Backup.PhonePhonebook[used]=Pbk;
-						used++;
-					}
-					printmsgerr("%c   Reading: %i percent",13,used*100/MemStatus.Used);
-					i++;
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("   Backup phone phonebook")) DoBackup = true;
 		}
 	}
+	if (DoBackup) {		
+		Pbk.MemoryType  = GMT_ME;
+		i		= 1;
+		used 		= 0;
+		while (used != MemStatus.Used) {
+			Pbk.Location = i;
+			error=Phone->GetMemory(&s, &Pbk);
+			if (error != GE_EMPTY) {
+				Print_Error(error);
+				if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
+					Backup.PhonePhonebook[used] = malloc(sizeof(GSM_MemoryEntry));
+				        if (Backup.PhonePhonebook[used] == NULL) Print_Error(GE_MOREMEMORY);
+					Backup.PhonePhonebook[used+1] = NULL;
+				} else {
+					printmsg("   Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
+					GSM_Terminate();
+					exit(-1);
+				}
+				*Backup.PhonePhonebook[used]=Pbk;
+				used++;
+			}
+			printmsgerr("%c   Reading: %i percent",13,used*100/MemStatus.Used);
+			i++;
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoBackup = false;
 	if (Info.SIMPhonebook) {
 		printmsg("Checking SIM phonebook\n");
 		MemStatus.MemoryType = GMT_SM;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
 		if (error==GE_NONE && MemStatus.Used != 0) {
-			if (answer_yes("   Backup SIM phonebook")) {
-				Pbk.MemoryType 	= GMT_SM;
-				i		= 1;
-				used 		= 0;
-				while (used != MemStatus.Used) {
-					Pbk.Location = i;
-					error=Phone->GetMemory(&s, &Pbk);
-					if (error != GE_EMPTY) {
-						Print_Error(error);
-						if (used < GSM_BACKUP_MAX_SIMPHONEBOOK) {
-							Backup.SIMPhonebook[used] = malloc(sizeof(GSM_PhonebookEntry));
-						        if (Backup.SIMPhonebook[used] == NULL) Print_Error(GE_MOREMEMORY);
-							Backup.SIMPhonebook[used + 1] = NULL;
-						} else {
-							printmsg("   Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
-							exit(-1);
-						}
-						*Backup.SIMPhonebook[used]=Pbk;
-						used++;
-					}
-					printmsgerr("%c   Reading: %i percent",13,used*100/MemStatus.Used);
-					i++;
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("   Backup SIM phonebook")) DoBackup=true;
 		}
 	}
+	if (DoBackup) {
+		Pbk.MemoryType 	= GMT_SM;
+		i		= 1;
+		used 		= 0;
+		while (used != MemStatus.Used) {
+			Pbk.Location = i;
+			error=Phone->GetMemory(&s, &Pbk);
+			if (error != GE_EMPTY) {
+				Print_Error(error);
+				if (used < GSM_BACKUP_MAX_SIMPHONEBOOK) {
+					Backup.SIMPhonebook[used] = malloc(sizeof(GSM_MemoryEntry));
+				        if (Backup.SIMPhonebook[used] == NULL) Print_Error(GE_MOREMEMORY);
+					Backup.SIMPhonebook[used + 1] = NULL;
+				} else {
+					printmsg("   Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
+					GSM_Terminate();
+					exit(-1);
+				}
+				*Backup.SIMPhonebook[used]=Pbk;
+				used++;
+			}
+			printmsgerr("%c   Reading: %i percent",13,used*100/MemStatus.Used);
+			i++;
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoBackup = false;
 	if (Info.Calendar) {
 		printmsg("Checking calendar\n");
 		error=Phone->GetNextCalendar(&s,&Note,true);
 		if (error==GE_NONE) {
-			if (answer_yes("   Backup calendar notes")) {
-				used 		= 0;
-				printmsgerr("   Reading : ");
-				while (error == GE_NONE) {
-					if (used < GSM_MAXCALENDARTODONOTES) {
-						Backup.Calendar[used] = malloc(sizeof(GSM_CalendarEntry));
-					        if (Backup.Calendar[used] == NULL) Print_Error(GE_MOREMEMORY);
-						Backup.Calendar[used+1] = NULL;
-					} else {
-						printmsg("   Increase GSM_MAXCALENDARTODONOTES\n");
-						exit(-1);
-					}
-					*Backup.Calendar[used]=Note;
-					used ++;
-					error=Phone->GetNextCalendar(&s,&Note,false);
-					printmsgerr("*");
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("   Backup calendar notes")) DoBackup = true;
 		}
 	}
+	if (DoBackup) {
+		used 		= 0;
+		printmsgerr("   Reading : ");
+		while (error == GE_NONE) {
+			if (used < GSM_MAXCALENDARTODONOTES) {
+				Backup.Calendar[used] = malloc(sizeof(GSM_CalendarEntry));
+			        if (Backup.Calendar[used] == NULL) Print_Error(GE_MOREMEMORY);
+				Backup.Calendar[used+1] = NULL;
+			} else {
+				printmsg("   Increase GSM_MAXCALENDARTODONOTES\n");
+				GSM_Terminate();
+				exit(-1);
+			}
+			*Backup.Calendar[used]=Note;
+			used ++;
+			error=Phone->GetNextCalendar(&s,&Note,false);
+			printmsgerr("*");
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoBackup = false;
 	if (Info.ToDo) {
 		printmsg("Checking ToDo\n");
-		ToDo.Location = 1;
 		error=Phone->GetToDoStatus(&s,&ToDoStatus);
 		if (error == GE_NONE && ToDoStatus.Used != 0) {
-			if (answer_yes("   Backup ToDo")) {
-				used = 0;
-				i = 1;
-				while (used != ToDoStatus.Used) {
-					ToDo.Location = i;
-					error=Phone->GetToDo(&s, &ToDo, false);
-					if (error != GE_EMPTY) {
-						if (used < GSM_MAXCALENDARTODONOTES) {
-							Backup.ToDo[used] = malloc(sizeof(GSM_ToDoEntry));
-							if (Backup.ToDo[used] == NULL) Print_Error(GE_MOREMEMORY);
-							Backup.ToDo[used+1] = NULL;
-						} else {
-							printmsg("   Increase GSM_MAXCALENDARTODONOTES\n");
-							exit(-1);
-						}
-						*Backup.ToDo[used]=ToDo;
-						used ++;
-					}
-					printmsgerr("%c   Reading: %i percent",13,used*100/ToDoStatus.Used);
-					i++;
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("   Backup ToDo")) DoBackup = true;
 		}
 	}
+	if (DoBackup) {
+		used = 0;
+		error=Phone->GetNextToDo(&s,&ToDo,true);
+		while (error == GE_NONE) {
+			if (used < GSM_MAXCALENDARTODONOTES) {
+				Backup.ToDo[used] = malloc(sizeof(GSM_ToDoEntry));
+				if (Backup.ToDo[used] == NULL) Print_Error(GE_MOREMEMORY);
+				Backup.ToDo[used+1] = NULL;
+			} else {
+				printmsg("   Increase GSM_MAXCALENDARTODONOTES\n");
+				GSM_Terminate();
+				exit(-1);
+			}
+			*Backup.ToDo[used]=ToDo;
+			used ++;
+			error=Phone->GetNextToDo(&s,&ToDo,false);
+			printmsgerr("%c   Reading: %i percent",13,used*100/ToDoStatus.Used);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoBackup = false;
 	if (Info.CallerLogos) {
 		printmsg("Checking caller logos\n");
 		Bitmap.Type 	= GSM_CallerLogo;
 		Bitmap.Location = 1;
 		error=Phone->GetBitmap(&s,&Bitmap);
 		if (error == GE_NONE) {
-			if (answer_yes("   Backup caller groups and logos")) {
-				printmsgerr("   Reading : ");
-				error = GE_NONE;
-				used  = 0;
-				while (error == GE_NONE) {
-					if (used < GSM_BACKUP_MAX_CALLER) {
-						Backup.CallerLogos[used] = malloc(sizeof(GSM_Bitmap));
-					        if (Backup.CallerLogos[used] == NULL) Print_Error(GE_MOREMEMORY);
-						Backup.CallerLogos[used+1] = NULL;
-					} else {
-						printmsg("   Increase GSM_BACKUP_MAX_CALLER\n");
-						exit(-1);
-					}
-					*Backup.CallerLogos[used] = Bitmap;
-					used ++;
-					Bitmap.Location = used + 1;
-					error=Phone->GetBitmap(&s,&Bitmap);
-					printmsgerr("*");
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("   Backup caller groups and logos")) DoBackup = true;
 		}
 	}
+	if (DoBackup) {
+		printmsgerr("   Reading : ");
+		error = GE_NONE;
+		used  = 0;
+		while (error == GE_NONE) {
+			if (used < GSM_BACKUP_MAX_CALLER) {
+				Backup.CallerLogos[used] = malloc(sizeof(GSM_Bitmap));
+			        if (Backup.CallerLogos[used] == NULL) Print_Error(GE_MOREMEMORY);
+				Backup.CallerLogos[used+1] = NULL;
+			} else {
+				printmsg("   Increase GSM_BACKUP_MAX_CALLER\n");
+				GSM_Terminate();
+				exit(-1);
+			}
+			*Backup.CallerLogos[used] = Bitmap;
+			used ++;
+			Bitmap.Location = used + 1;
+			error=Phone->GetBitmap(&s,&Bitmap);
+			printmsgerr("*");
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoBackup = false;
 	if (Info.SMSC) {
 		printmsg("Checking SMS profiles\n");
-		if (answer_yes("   Backup SMS profiles")) {
-			used = 0;
-			printmsgerr("   Reading: ");
-			while (true)
-			{
-				SMSC.Location = used + 1;
-				error = Phone->GetSMSC(&s,&SMSC);
-				if (error != GE_NONE) break;
-				if (used < GSM_BACKUP_MAX_SMSC) {
-					Backup.SMSC[used] = malloc(sizeof(GSM_SMSC));
-				        if (Backup.SMSC[used] == NULL) Print_Error(GE_MOREMEMORY);
-					Backup.SMSC[used + 1] = NULL;
-				} else {
-					printmsg("   Increase GSM_BACKUP_MAX_SMSC\n");
-					exit(-1);
-				}
-				*Backup.SMSC[used]=SMSC;
-				used++;
-				printmsgerr("*");
-			}
-			printmsgerr("\n");
-		}
+		if (answer_yes("   Backup SMS profiles")) DoBackup = true;
 	}
+	if (DoBackup) {
+		used = 0;
+		printmsgerr("   Reading: ");
+		while (true) {
+			SMSC.Location = used + 1;
+			error = Phone->GetSMSC(&s,&SMSC);
+			if (error != GE_NONE) break;
+			if (used < GSM_BACKUP_MAX_SMSC) {
+				Backup.SMSC[used] = malloc(sizeof(GSM_SMSC));
+			        if (Backup.SMSC[used] == NULL) Print_Error(GE_MOREMEMORY);
+				Backup.SMSC[used + 1] = NULL;
+			} else {
+				printmsg("   Increase GSM_BACKUP_MAX_SMSC\n");
+				GSM_Terminate();
+				exit(-1);
+			}
+			*Backup.SMSC[used]=SMSC;
+			used++;
+			printmsgerr("*");
+		}
+		printmsgerr("\n");
+	}
+	DoBackup = false;
 	if (Info.StartupLogo) {
 		printmsg("Checking startup text\n");
 		Bitmap.Type = GSM_WelcomeNoteText;
 		error = Phone->GetBitmap(&s,&Bitmap);
 		if (error == GE_NONE) {
-			if (answer_yes("   Backup startup logo/text")) {
-				Backup.StartupLogo = malloc(sizeof(GSM_Bitmap));
-			        if (Backup.StartupLogo == NULL) Print_Error(GE_MOREMEMORY);
-				*Backup.StartupLogo = Bitmap;
-				if (Bitmap.Text[0]==0 && Bitmap.Text[1]==0) {
-					Bitmap.Type = GSM_StartupLogo;
-					error = Phone->GetBitmap(&s,&Bitmap);
-					if (error == GE_NONE) *Backup.StartupLogo = Bitmap;
-				}
-			}
+			if (answer_yes("   Backup startup logo/text")) DoBackup = true;
 		}
 	}
+	if (DoBackup) {
+		Backup.StartupLogo = malloc(sizeof(GSM_Bitmap));
+	        if (Backup.StartupLogo == NULL) Print_Error(GE_MOREMEMORY);
+		*Backup.StartupLogo = Bitmap;
+		if (Bitmap.Text[0]==0 && Bitmap.Text[1]==0) {
+			Bitmap.Type = GSM_StartupLogo;
+			error = Phone->GetBitmap(&s,&Bitmap);
+			if (error == GE_NONE) *Backup.StartupLogo = Bitmap;
+		}
+	}
+	DoBackup = false;
 	if (Info.OperatorLogo) {
 		printmsg("Checking operator logo\n");
 		Bitmap.Type = GSM_OperatorLogo;
 		error=Phone->GetBitmap(&s,&Bitmap);
 		if (error == GE_NONE) {
 			if (strcmp(Bitmap.NetworkCode,"000 00")!=0) {
-				if (answer_yes("   Backup operator logo")) {
-					Backup.OperatorLogo = malloc(sizeof(GSM_Bitmap));
-				        if (Backup.OperatorLogo == NULL) Print_Error(GE_MOREMEMORY);
-					*Backup.OperatorLogo = Bitmap;
-				}
+				if (answer_yes("   Backup operator logo")) DoBackup = true;
 			}
 		}
 	}
+	if (DoBackup) {
+		Backup.OperatorLogo = malloc(sizeof(GSM_Bitmap));
+	        if (Backup.OperatorLogo == NULL) Print_Error(GE_MOREMEMORY);
+		*Backup.OperatorLogo = Bitmap;
+	}
+	DoBackup = false;
 	if (Info.WAPBookmark) {
 		printmsg("Checking WAP bookmarks\n");
 		Bookmark.Location = 1;
 		error=Phone->GetWAPBookmark(&s,&Bookmark);
 		if (error==GE_NONE) {
-			if (answer_yes("   Backup WAP bookmarks")) {
-				used = 0;
-				printmsgerr("   Reading : ");
-				while (error == GE_NONE) {
-					if (used < GSM_BACKUP_MAX_WAPBOOKMARK) {
-						Backup.WAPBookmark[used] = malloc(sizeof(GSM_WAPBookmark));
-					        if (Backup.WAPBookmark[used] == NULL) Print_Error(GE_MOREMEMORY);
-						Backup.WAPBookmark[used+1] = NULL;
-					} else {
-						printmsg("   Increase GSM_BACKUP_MAX_WAPBOOKMARK\n");
-						exit(-1);
-					}
-					*Backup.WAPBookmark[used]=Bookmark;
-					used ++;
-					Bookmark.Location = used+1;
-					error=Phone->GetWAPBookmark(&s,&Bookmark);
-					printmsgerr("*");
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("   Backup WAP bookmarks")) DoBackup = true;
 		}
 	}
+	if (DoBackup) {
+		used = 0;
+		printmsgerr("   Reading : ");
+		while (error == GE_NONE) {
+			if (used < GSM_BACKUP_MAX_WAPBOOKMARK) {
+				Backup.WAPBookmark[used] = malloc(sizeof(GSM_WAPBookmark));
+			        if (Backup.WAPBookmark[used] == NULL) Print_Error(GE_MOREMEMORY);
+				Backup.WAPBookmark[used+1] = NULL;
+			} else {
+				printmsg("   Increase GSM_BACKUP_MAX_WAPBOOKMARK\n");
+				GSM_Terminate();
+				exit(-1);
+			}
+			*Backup.WAPBookmark[used]=Bookmark;
+			used ++;
+			Bookmark.Location = used+1;
+			error=Phone->GetWAPBookmark(&s,&Bookmark);
+			printmsgerr("*");
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoBackup = false;
 	if (Info.WAPSettings) {
 		printmsg("Checking WAP settings\n");
 		Settings.Location = 1;
 		error=Phone->GetWAPSettings(&s,&Settings);
 		if (error==GE_NONE) {
-			if (answer_yes("   Backup WAP settings")) {
-				used = 0;
-				printmsgerr("   Reading : ");
-				while (error == GE_NONE) {
-					if (used < GSM_BACKUP_MAX_WAPSETTINGS) {
-						Backup.WAPSettings[used] = malloc(sizeof(GSM_MultiWAPSettings));
-					        if (Backup.WAPSettings[used] == NULL) Print_Error(GE_MOREMEMORY);
-						Backup.WAPSettings[used+1] = NULL;
-					} else {
-						printmsg("   Increase GSM_BACKUP_MAX_WAPSETTINGS\n");
-						exit(-1);
-					}
-					*Backup.WAPSettings[used]=Settings;
-					used ++;
-					Settings.Location = used+1;
-					error=Phone->GetWAPSettings(&s,&Settings);
-					printmsgerr("*");
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("   Backup WAP settings")) DoBackup = true;
 		}
 	}
+	if (DoBackup) {
+		used = 0;
+		printmsgerr("   Reading : ");
+		while (error == GE_NONE) {
+			if (used < GSM_BACKUP_MAX_WAPSETTINGS) {
+				Backup.WAPSettings[used] = malloc(sizeof(GSM_MultiWAPSettings));
+			        if (Backup.WAPSettings[used] == NULL) Print_Error(GE_MOREMEMORY);
+				Backup.WAPSettings[used+1] = NULL;
+			} else {
+				printmsg("   Increase GSM_BACKUP_MAX_WAPSETTINGS\n");
+				GSM_Terminate();
+				exit(-1);
+			}
+			*Backup.WAPSettings[used]=Settings;
+			used ++;
+			Settings.Location = used+1;
+			error=Phone->GetWAPSettings(&s,&Settings);
+			printmsgerr("*");
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoBackup = false;
 	if (Info.MMSSettings) {
 		printmsg("Checking MMS settings\n");
 		Settings.Location = 1;
 		error=Phone->GetMMSSettings(&s,&Settings);
 		if (error==GE_NONE) {
-			if (answer_yes("   Backup MMS settings")) {
-				used = 0;
-				printmsgerr("   Reading : ");
-				while (error == GE_NONE) {
-					if (used < GSM_BACKUP_MAX_MMSSETTINGS) {
-						Backup.MMSSettings[used] = malloc(sizeof(GSM_MultiWAPSettings));
-					        if (Backup.MMSSettings[used] == NULL) Print_Error(GE_MOREMEMORY);
-						Backup.MMSSettings[used+1] = NULL;
-					} else {
-						printmsg("   Increase GSM_BACKUP_MAX_MMSSETTINGS\n");
-						exit(-1);
-					}
-					*Backup.MMSSettings[used]=Settings;
-					used ++;
-					Settings.Location = used+1;
-					error=Phone->GetMMSSettings(&s,&Settings);
-					printmsgerr("*");
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("   Backup MMS settings")) DoBackup = true;
 		}
 	}
+	if (DoBackup) {
+		used = 0;
+		printmsgerr("   Reading : ");
+		while (error == GE_NONE) {
+			if (used < GSM_BACKUP_MAX_MMSSETTINGS) {
+				Backup.MMSSettings[used] = malloc(sizeof(GSM_MultiWAPSettings));
+			        if (Backup.MMSSettings[used] == NULL) Print_Error(GE_MOREMEMORY);
+				Backup.MMSSettings[used+1] = NULL;
+			} else {
+				printmsg("   Increase GSM_BACKUP_MAX_MMSSETTINGS\n");
+				GSM_Terminate();
+				exit(-1);
+			}
+			*Backup.MMSSettings[used]=Settings;
+			used ++;
+			Settings.Location = used+1;
+			error=Phone->GetMMSSettings(&s,&Settings);
+			printmsgerr("*");
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoBackup = false;
 	if (Info.Ringtone) {
 		printmsg("Checking user ringtones\n");
 		Ringtone.Location 	= 1;
 		Ringtone.Format		= 0;
 		error=Phone->GetRingtone(&s,&Ringtone,false);
 		if (error==GE_EMPTY || error == GE_NONE) {
-			if (answer_yes("   Backup user ringtones")) {
-				used 	= 0;
-				i	= 1;
-				printmsgerr("   Reading : ");
-				while (error == GE_NONE || error == GE_EMPTY) {
-					if (error == GE_NONE) {
-						if (used < GSM_BACKUP_MAX_RINGTONES) {
-							Backup.Ringtone[used] = malloc(sizeof(GSM_Ringtone));
-						        if (Backup.Ringtone[used] == NULL) Print_Error(GE_MOREMEMORY);
-							Backup.Ringtone[used+1] = NULL;
-						} else {
-							printmsg("   Increase GSM_BACKUP_MAX_RINGTONES\n");
-							exit(-1);
-						}
-						*Backup.Ringtone[used]=Ringtone;
-						used ++;
-					}
-					i++;
-					Ringtone.Location = i;
-					Ringtone.Format	  = 0;
-					error=Phone->GetRingtone(&s,&Ringtone,false);
-					printmsgerr("*");
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
-
+			if (answer_yes("   Backup user ringtones")) DoBackup = true;
 		}
 	}
+	if (DoBackup) {
+		used 	= 0;
+		i	= 1;
+		printmsgerr("   Reading : ");
+		while (error == GE_NONE || error == GE_EMPTY) {
+			if (error == GE_NONE) {
+				if (used < GSM_BACKUP_MAX_RINGTONES) {
+					Backup.Ringtone[used] = malloc(sizeof(GSM_Ringtone));
+				        if (Backup.Ringtone[used] == NULL) Print_Error(GE_MOREMEMORY);
+					Backup.Ringtone[used+1] = NULL;
+				} else {
+					printmsg("   Increase GSM_BACKUP_MAX_RINGTONES\n");
+					GSM_Terminate();
+					exit(-1);
+				}
+				*Backup.Ringtone[used]=Ringtone;
+				used ++;
+			}
+			i++;
+			Ringtone.Location = i;
+			Ringtone.Format	  = 0;
+			error=Phone->GetRingtone(&s,&Ringtone,false);
+			printmsgerr("*");
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoBackup = false;
 	if (Info.Profiles) {
 		printmsg("Checking phone profiles\n");
 		Profile.Location = 1;
 		error = Phone->GetProfile(&s,&Profile);
 	        if (error == GE_NONE) {
-			if (answer_yes("   Backup phone profiles")) {
-				used = 0;
-				printmsgerr("   Reading: ");
-				while (true)
-				{
-					Profile.Location = used + 1;
-					error = Phone->GetProfile(&s,&Profile);
-					if (error != GE_NONE) break;
-					if (used < GSM_BACKUP_MAX_PROFILES) {
-						Backup.Profiles[used] = malloc(sizeof(GSM_Profile));
-						if (Backup.Profiles[used] == NULL) Print_Error(GE_MOREMEMORY);
-						Backup.Profiles[used + 1] = NULL;
-					} else {
-						printmsg("   Increase GSM_BACKUP_MAX_PROFILES\n");
-						exit(-1);
-					}
-					*Backup.Profiles[used]=Profile;
-					used++;
-					printmsgerr("*");
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("   Backup phone profiles")) DoBackup = true;
 		}
 	}
+	if (DoBackup) {
+		used = 0;
+		printmsgerr("   Reading: ");
+		while (true) {
+			Profile.Location = used + 1;
+			error = Phone->GetProfile(&s,&Profile);
+			if (error != GE_NONE) break;
+			if (used < GSM_BACKUP_MAX_PROFILES) {
+				Backup.Profiles[used] = malloc(sizeof(GSM_Profile));
+				if (Backup.Profiles[used] == NULL) Print_Error(GE_MOREMEMORY);
+				Backup.Profiles[used + 1] = NULL;
+			} else {
+				printmsg("   Increase GSM_BACKUP_MAX_PROFILES\n");
+				GSM_Terminate();
+				exit(-1);
+			}
+			*Backup.Profiles[used]=Profile;
+			used++;
+			printmsgerr("*");
+		}
+		printmsgerr("\n");
+	}
+	DoBackup = false;
  	if (Info.FMStation) {
 		printmsg("Checking FM stations\n");
  		FMStation.Location = 1;
  		error = Phone->GetFMStation(&s,&FMStation);
  	        if (error == GE_NONE || error == GE_EMPTY) {
- 			if (answer_yes("   Backup phone FM stations")) {
- 				used	= 0;
- 				i	= 1;				
- 				printmsgerr("Reading: ");
- 				while (error == GE_NONE || error == GE_EMPTY)
- 				{
- 				    error = Phone->GetFMStation(&s,&FMStation);
- 				    if (error == GE_NONE) {
- 					if (used < GSM_BACKUP_MAX_FMSTATIONS) {
- 						Backup.FMStation[used] = malloc(sizeof(GSM_FMStation));
-						if (Backup.FMStation[used] == NULL) Print_Error(GE_MOREMEMORY);
- 						Backup.FMStation[used + 1] = NULL;
- 					} else {
- 						printmsg("   Increase GSM_BACKUP_MAX_FMSTATIONS\n");
- 						exit(-1);
- 					}
- 					*Backup.FMStation[used]=FMStation;
- 					used++;
- 				    }
- 				    i++;
- 				    FMStation.Location = i;					
- 				    printmsgerr("*");
+ 			if (answer_yes("   Backup phone FM stations")) DoBackup=true;
+		}
+	}
+	if (DoBackup) {
+		used	= 0;
+		i	= 1;				
+		printmsgerr("   Reading: ");
+		while (error == GE_NONE || error == GE_EMPTY) {
+			error = Phone->GetFMStation(&s,&FMStation);
+			if (error == GE_NONE) {
+ 				if (used < GSM_BACKUP_MAX_FMSTATIONS) {
+ 					Backup.FMStation[used] = malloc(sizeof(GSM_FMStation));
+					if (Backup.FMStation[used] == NULL) Print_Error(GE_MOREMEMORY);
+ 					Backup.FMStation[used + 1] = NULL;
+ 				} else {
+ 					printmsg("   Increase GSM_BACKUP_MAX_FMSTATIONS\n");
+					GSM_Terminate();
+ 					exit(-1);
  				}
- 				printmsgerr("\n");
+ 				*Backup.FMStation[used]=FMStation;
+ 				used++;
  			}
+ 			i++;
+ 			FMStation.Location = i;					
+ 			printmsgerr("*");
  		}
+ 		printmsgerr("\n");
  	}
+	DoBackup = false;
  	if (Info.GPRSPoint) {
 		printmsg("Checking GPRS access points\n");
  		GPRSPoint.Location = 1;
  		error = Phone->GetGPRSAccessPoint(&s,&GPRSPoint);
  	        if (error == GE_NONE || error == GE_EMPTY) {
- 			if (answer_yes("   Backup GPRS access points")) {
- 				used	= 0;
- 				i	= 1;				
- 				printmsgerr("Reading: ");
- 				while (error == GE_NONE || error == GE_EMPTY)
- 				{
- 				    error = Phone->GetGPRSAccessPoint(&s,&GPRSPoint);
- 				    if (error == GE_NONE) {
- 					if (used < GSM_BACKUP_MAX_GPRSPOINT) {
- 						Backup.GPRSPoint[used] = malloc(sizeof(GSM_GPRSAccessPoint));
-						if (Backup.GPRSPoint[used] == NULL) Print_Error(GE_MOREMEMORY);
- 						Backup.GPRSPoint[used + 1] = NULL;
- 					} else {
- 						printmsg("   Increase GSM_BACKUP_MAX_GPRSPOINT\n");
- 						exit(-1);
- 					}
- 					*Backup.GPRSPoint[used]=GPRSPoint;
- 					used++;
- 				    }
- 				    i++;
- 				    GPRSPoint.Location = i;					
- 				    printmsgerr("*");
+ 			if (answer_yes("   Backup GPRS access points")) DoBackup = true;
+		}
+	}
+	if (DoBackup) {
+		used	= 0;
+		i	= 1;				
+		printmsgerr("   Reading: ");
+		while (error == GE_NONE || error == GE_EMPTY) {
+			error = Phone->GetGPRSAccessPoint(&s,&GPRSPoint);
+ 			if (error == GE_NONE) {
+ 				if (used < GSM_BACKUP_MAX_GPRSPOINT) {
+ 					Backup.GPRSPoint[used] = malloc(sizeof(GSM_GPRSAccessPoint));
+					if (Backup.GPRSPoint[used] == NULL) Print_Error(GE_MOREMEMORY);
+ 					Backup.GPRSPoint[used + 1] = NULL;
+ 				} else {
+ 					printmsg("   Increase GSM_BACKUP_MAX_GPRSPOINT\n");
+					GSM_Terminate();
+ 					exit(-1);
  				}
- 				printmsgerr("\n");
+ 				*Backup.GPRSPoint[used]=GPRSPoint;
+ 				used++;
  			}
+ 			i++;
+ 			GPRSPoint.Location = i;					
+ 			printmsgerr("*");
  		}
+ 		printmsgerr("\n");
  	}
 
 	GSM_Terminate();
@@ -3867,7 +3919,7 @@ static void Restore(int argc, char *argv[])
 	GSM_CalendarEntry	Calendar;
 	GSM_Bitmap		Bitmap;
 	GSM_Ringtone		Ringtone;
-	GSM_PhonebookEntry	Pbk;
+	GSM_MemoryEntry		Pbk;
 	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoEntry		ToDo;
 	GSM_ToDoStatus		ToDoStatus;
@@ -3875,9 +3927,9 @@ static void Restore(int argc, char *argv[])
 	GSM_MultiWAPSettings	Settings;
 	GSM_GPRSAccessPoint	GPRSPoint;
 	GSM_WAPBookmark		Bookmark;
-	int			i, j, used, max;
+	int			i, used, max = 0;
 	bool			Past = true;
-	bool			Found;
+	bool			Found, DoRestore;
 
 	error=GSM_ReadBackupFile(argv[2],&Backup);
 	Print_Error(error);
@@ -3898,6 +3950,7 @@ static void Restore(int argc, char *argv[])
 
 	GSM_Init(true);
 
+	DoRestore = false;
 	if (Backup.PhonePhonebook[0] != NULL) {
 		MemStatus.MemoryType = GMT_ME;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
@@ -3905,32 +3958,35 @@ static void Restore(int argc, char *argv[])
 			max = 0;
 			while (Backup.PhonePhonebook[max]!=NULL) max++;
 			printmsgerr("%i entries in backup file\n",max);
-			if (answer_yes("Restore phone phonebook")) {
-				used = 0;
-				for (i=0;i<MemStatus.Used+MemStatus.Free;i++)
-				{
-					Pbk.MemoryType 	= GMT_ME;
-					Pbk.Location	= i + 1;
-					Pbk.EntriesNum	= 0;
-					if (used<max) {
-						if (Backup.PhonePhonebook[used]->Location == Pbk.Location) {
-							Pbk = *Backup.PhonePhonebook[used];
-							used++;
-						}
-					}
-					dprintf("Location %i\n",Pbk.Location);
-					error=Phone->SetMemory(&s, &Pbk);
-					Print_Error(error);
-					printmsgerr("%cWriting: %i percent",13,(i+1)*100/(MemStatus.Used+MemStatus.Free));
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("Restore phone phonebook")) DoRestore = true;
 		}
 	}
+	if (DoRestore) {
+		used = 0;
+		for (i=0;i<MemStatus.Used+MemStatus.Free;i++) {
+			Pbk.MemoryType 	= GMT_ME;
+			Pbk.Location	= i + 1;
+			Pbk.EntriesNum	= 0;
+			if (used<max) {
+				if (Backup.PhonePhonebook[used]->Location == Pbk.Location) {
+					Pbk = *Backup.PhonePhonebook[used];
+					used++;
+					dprintf("Location %i\n",Pbk.Location);
+					if (Pbk.EntriesNum != 0) error=Phone->SetMemory(&s, &Pbk);
+				}
+			}
+			if (Pbk.EntriesNum == 0) error=Phone->DeleteMemory(&s, &Pbk);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/(MemStatus.Used+MemStatus.Free));
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+
+	DoRestore = false;
 	if (Backup.SIMPhonebook[0] != NULL) {
 		MemStatus.MemoryType = GMT_SM;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
@@ -3938,52 +3994,56 @@ static void Restore(int argc, char *argv[])
 			max = 0;
 			while (Backup.SIMPhonebook[max]!=NULL) max++;
 			printmsgerr("%i entries in backup file\n",max);
-			if (answer_yes("Restore SIM phonebook")) {
-				used = 0;
-				for (i=0;i<MemStatus.Used+MemStatus.Free;i++)
-				{
-					Pbk.MemoryType 	= GMT_SM;
-					Pbk.Location	= i + 1;
-					Pbk.EntriesNum	= 0;
-					if (used<max) {
-						if (Backup.SIMPhonebook[used]->Location == Pbk.Location) {
-							Pbk = *Backup.SIMPhonebook[used];
-							used++;
-						}
-					}
-					dprintf("Location %i\n",Pbk.Location);
-					error=Phone->SetMemory(&s, &Pbk);
-					Print_Error(error);
-					printmsgerr("%cWriting: %i percent",13,(i+1)*100/(MemStatus.Used+MemStatus.Free));
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("Restore SIM phonebook")) DoRestore = true;
 		}
 	}
+	if (DoRestore) {
+		used = 0;
+		for (i=0;i<MemStatus.Used+MemStatus.Free;i++) {
+			Pbk.MemoryType 	= GMT_SM;
+			Pbk.Location	= i + 1;
+			Pbk.EntriesNum	= 0;
+			if (used<max) {
+				if (Backup.SIMPhonebook[used]->Location == Pbk.Location) {
+					Pbk = *Backup.SIMPhonebook[used];
+					used++;
+					dprintf("Location %i\n",Pbk.Location);
+					if (Pbk.EntriesNum != 0) error=Phone->SetMemory(&s, &Pbk);
+				}
+			}
+			if (Pbk.EntriesNum == 0) error=Phone->DeleteMemory(&s, &Pbk);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/(MemStatus.Used+MemStatus.Free));
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+
+	DoRestore = false;
 	if (Backup.CallerLogos[0] != NULL) {
 		Bitmap.Type 	= GSM_CallerLogo;
 		Bitmap.Location = 1;
 		error=Phone->GetBitmap(&s,&Bitmap);
 		if (error == GE_NONE) {
-			if (answer_yes("Restore caller groups and logos")) {
-				max = 0;
-				while (Backup.CallerLogos[max]!=NULL) max++;
-				for (i=0;i<max;i++) {
-					error=Phone->SetBitmap(&s,Backup.CallerLogos[i]);
-					Print_Error(error);
-					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
+			if (answer_yes("Restore caller groups and logos")) DoRestore = true;
+		}
+	}
+	if (DoRestore) {
+		max = 0;
+		while (Backup.CallerLogos[max]!=NULL) max++;
+		for (i=0;i<max;i++) {
+			error=Phone->SetBitmap(&s,Backup.CallerLogos[i]);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
 			}
 		}
+		printmsgerr("\n");
 	}
 	
 	if (!mystrncasecmp(s.CurrentConfig->SyncTime,"yes",0)) {
@@ -3994,319 +4054,344 @@ static void Restore(int argc, char *argv[])
 			Print_Error(error);
 		}
 	}
-
+	DoRestore = false;
 	if (Backup.Calendar[0] != NULL) {
+		/* N6110 doesn't support getting calendar status */
 		error = Phone->GetNextCalendar(&s,&Calendar,true);
 		if (error == GE_NONE || error == GE_INVALIDLOCATION || error == GE_EMPTY) {
-			if (answer_yes("Restore calendar notes")) {
-				Past = answer_yes("Restore notes from the past");
-				printmsgerr("Deleting old notes: ");
-				while (error==GE_NONE) {
-					error = Phone->GetNextCalendar(&s,&Calendar,true);
-					if (error != GE_NONE) break;
-					error = Phone->DeleteCalendar(&s,&Calendar);
-					printmsgerr("*");
-				}
-				printmsgerr("\n");
-				max = 0;
-				while (Backup.Calendar[max]!=NULL) max++;
-				for (i=0;i<max;i++) {
-					Calendar = *Backup.Calendar[i];
-					error=Phone->AddCalendar(&s,&Calendar, Past);
-					Print_Error(error);
-					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
-		}
-	}
-	if (Backup.ToDo[0] != NULL) {
-		ToDo.Location = 1;
-		error=Phone->GetToDoStatus(&s,&ToDoStatus);
-		if (error == GE_NONE) {
-			if (answer_yes("Restore ToDo")) {
-				ToDo  = *Backup.ToDo[0];
-				error = Phone->SetToDo(&s,&ToDo);
-				/* Can we save to exact location? */
-				if (error == GE_NOTSUPPORTED) {
-					printmsgerr("Deleting old ToDo: ");
-					error=Phone->DeleteAllToDo(&s);
-					Print_Error(error);
-					printmsgerr("Done\n");
-					max = 0;
-					while (Backup.ToDo[max]!=NULL) max++;
-					for (i=0;i<max;i++) {
-						ToDo 		= *Backup.ToDo[i];
-						ToDo.Location 	= 0;
-						error=Phone->SetToDo(&s,&ToDo);
-						Print_Error(error);
-						printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-						if (bshutdown) {
-							GSM_Terminate();
-							exit(0);
-						}
-					}
-					printmsgerr("\n");
-				} else if (error == GE_NONE) {
-					/* In previous step was created new entry - we don't like this... */
-					if (ToDo.Location != Backup.ToDo[0]->Location) {
-						ToDo.EntriesNum = 0;
-						error=Phone->SetToDo(&s,&ToDo);
-						Print_Error(error);
-					}
-					max = 0;
-					while (Backup.ToDo[max]!=NULL) max++;
-				
-					/* At first delete entries, that were deleted */
-					used = 0; j = 1;
-					while (used<ToDoStatus.Used) {
-						ToDo.Location  = j;
-						error=Phone->GetToDo(&s,&ToDo,false);
-						if (error == GE_NONE) {
-							used++;
-							Found = false;
-							for (i=0;i<max;i++) {
-								if (Backup.ToDo[i]->Location == j) {
-									Found = true;
-									break;
-								}
-							}
-							if (!Found) {
-								ToDo.Location = j;
-								ToDo.EntriesNum = 0;
-								error=Phone->SetToDo(&s,&ToDo);
-								Print_Error(error);
-							}
-						} else if (error != GE_EMPTY) {
-							Print_Error(error);
-						}
-						printmsgerr("%cCleaning: %i percent",13,used*100/ToDoStatus.Used);
-						j++;
-					}
-					printmsgerr("\n");
-					
-					/* Now write modified/new entries */
-					for (i=0;i<max;i++) {
-						ToDo 		= *Backup.ToDo[i];
-						error=Phone->SetToDo(&s,&ToDo);
-						Print_Error(error);
-						printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-						if (bshutdown) {
-							GSM_Terminate();
-							exit(0);
-						}
-					}
-					printmsgerr("\n");
-				} else {
-					Print_Error(error);
-				}
-			}
-		}
-	}
-	if (Backup.SMSC[0] != NULL) {
-		if (answer_yes("Restore SMSC profiles")) {
 			max = 0;
-			while (Backup.SMSC[max]!=NULL) max++;
-			for (i=0;i<max;i++) {
-				error=Phone->SetSMSC(&s,Backup.SMSC[i]);
-				Print_Error(error);
-				printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-				if (bshutdown) {
-					GSM_Terminate();
-					exit(0);
-				}
+			while (Backup.Calendar[max] != NULL) max++;
+			printmsgerr("%i entries in backup file\n",max);
+			if (answer_yes("Restore calendar notes")) {
+				Past    = answer_yes("Restore notes from the past");
+				DoRestore = true;
+			}
+		}
+	}
+	if (DoRestore) {
+		printmsgerr("Deleting old notes: ");
+		error = Phone->DeleteAllCalendar(&s);
+		if (error == GE_NOTSUPPORTED || error == GE_NOTIMPLEMENTED) {
+			while (error==GE_NONE) {
+				error = Phone->GetNextCalendar(&s,&Calendar,true);
+				if (error != GE_NONE) break;
+				error = Phone->DeleteCalendar(&s,&Calendar);
+				printmsgerr("*");
 			}
 			printmsgerr("\n");
-		}
-	}
-	if (Backup.StartupLogo != NULL) {
-		if (answer_yes("Restore startup logo/text")) {
-			error=Phone->SetBitmap(&s,Backup.StartupLogo);
+		} else {
+			printmsgerr("Done\n");
 			Print_Error(error);
 		}
-	}
-	if (Backup.OperatorLogo != NULL) {
-		if (answer_yes("Restore operator logo")) {
-			error=Phone->SetBitmap(&s,Backup.OperatorLogo);
+
+		for (i=0;i<max;i++) {
+			if (!Past && IsCalendarNoteFromThePast(Backup.Calendar[i])) continue;
+
+			Calendar = *Backup.Calendar[i];
+			error=Phone->AddCalendar(&s,&Calendar);
 			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+
+	DoRestore = false;
+	if (Backup.ToDo[0] != NULL) {
+		error   = Phone->GetToDoStatus(&s,&ToDoStatus);
+		if (error == GE_NONE) {
+			max = 0;
+			while (Backup.ToDo[max]!=NULL) max++;
+			printmsgerr("%i entries in backup file\n",max);
+
+			if (answer_yes("Restore ToDo")) DoRestore = true;
 		}
 	}
+	if (DoRestore) {
+		ToDo  = *Backup.ToDo[0];
+		error = Phone->SetToDo(&s,&ToDo);
+	}
+	if (DoRestore && (error == GE_NOTSUPPORTED || error == GE_NOTIMPLEMENTED)) {
+		printmsgerr("Deleting old ToDo: ");
+		error=Phone->DeleteAllToDo(&s);
+		if (error == GE_NOTSUPPORTED || error == GE_NOTIMPLEMENTED) {
+			while (error==GE_NONE) {
+				error = Phone->GetNextToDo(&s,&ToDo,true);
+				if (error != GE_NONE) break;
+				error = Phone->DeleteToDo(&s,&ToDo);
+				printmsgerr("*");
+			}
+			printmsgerr("\n");
+		} else {
+			printmsgerr("Done\n");
+			Print_Error(error);
+		}
+
+		for (i=0;i<max;i++) {
+			ToDo 		= *Backup.ToDo[i];
+			ToDo.Location 	= 0;
+			error=Phone->AddToDo(&s,&ToDo);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	} else if (DoRestore) {
+		/* At first delete entries, that were deleted */
+		used  = 0;
+		error = Phone->GetNextToDo(&s,&ToDo,true);
+		while (error == GE_NONE) {
+			used++;
+			Found = false;
+			for (i=0;i<max;i++) {
+				if (Backup.ToDo[i]->Location == ToDo.Location) {
+					Found = true;
+					break;
+				}
+			}
+			if (!Found) {
+				error=Phone->DeleteToDo(&s,&ToDo);
+				Print_Error(error);
+			}
+			error = Phone->GetNextToDo(&s,&ToDo,false);
+			printmsgerr("%cCleaning: %i percent",13,used*100/ToDoStatus.Used);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+			
+		/* Now write modified/new entries */
+		for (i=0;i<max;i++) {
+			ToDo  = *Backup.ToDo[i];
+			error = Phone->SetToDo(&s,&ToDo);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+ 	}
+
+	if (Backup.SMSC[0] != NULL && answer_yes("Restore SMSC profiles")) {
+		max = 0;
+		while (Backup.SMSC[max]!=NULL) max++;
+		for (i=0;i<max;i++) {
+			error=Phone->SetSMSC(&s,Backup.SMSC[i]);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	if (Backup.StartupLogo != NULL && answer_yes("Restore startup logo/text")) {
+		error=Phone->SetBitmap(&s,Backup.StartupLogo);
+		Print_Error(error);
+	}
+	if (Backup.OperatorLogo != NULL && answer_yes("Restore operator logo")) {
+		error=Phone->SetBitmap(&s,Backup.OperatorLogo);
+		Print_Error(error);
+	}
+	DoRestore = false;
 	if (Backup.WAPBookmark[0] != NULL) {
 		Bookmark.Location = 1;
 		error = Phone->GetWAPBookmark(&s,&Bookmark);
 		if (error == GE_NONE || error == GE_INVALIDLOCATION) {
-			if (answer_yes("Restore WAP bookmarks")) {
-				printmsgerr("Deleting old bookmarks: ");
-				/* One thing to explain: DCT4 phones seems to have bug here.
-				 * When delete for example first bookmark, phone change
-				 * numeration for getting frame, not for deleting. So, we try to
-				 * get 1'st bookmark. Inside frame is "correct" location. We use
-				 * it later
-				 */
-				while (error==GE_NONE) {
-					error = Phone->DeleteWAPBookmark(&s,&Bookmark);
-					Bookmark.Location = 1;
-					error = Phone->GetWAPBookmark(&s,&Bookmark);
-					printmsgerr("*");
-				}
-				printmsgerr("\n");
-				max = 0;
-				while (Backup.WAPBookmark[max]!=NULL) max++;
-				for (i=0;i<max;i++) {
-					Bookmark 	  = *Backup.WAPBookmark[i];
-					Bookmark.Location = 0;
-					error=Phone->SetWAPBookmark(&s,&Bookmark);
-					Print_Error(error);
-					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("Restore WAP bookmarks")) DoRestore = true;
 		}
 	}
+	if (DoRestore) {
+		printmsgerr("Deleting old bookmarks: ");
+		/* One thing to explain: DCT4 phones seems to have bug here.
+		 * When delete for example first bookmark, phone change
+		 * numeration for getting frame, not for deleting. So, we try to
+		 * get 1'st bookmark. Inside frame is "correct" location. We use
+		 * it later
+		 */
+		while (error==GE_NONE) {
+			error = Phone->DeleteWAPBookmark(&s,&Bookmark);
+			Bookmark.Location = 1;
+			error = Phone->GetWAPBookmark(&s,&Bookmark);
+			printmsgerr("*");
+		}
+		printmsgerr("\n");
+		max = 0;
+		while (Backup.WAPBookmark[max]!=NULL) max++;
+		for (i=0;i<max;i++) {
+			Bookmark 	  = *Backup.WAPBookmark[i];
+			Bookmark.Location = 0;
+			error=Phone->SetWAPBookmark(&s,&Bookmark);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoRestore = false;
 	if (Backup.WAPSettings[0] != NULL) {
 		Settings.Location = 1;
 		error = Phone->GetWAPSettings(&s,&Settings);
 		if (error == GE_NONE) {
-			if (answer_yes("Restore WAP settings")) {
-				max = 0;
-				while (Backup.WAPSettings[max]!=NULL) max++;
-				for (i=0;i<max;i++) {
-					error=Phone->SetWAPSettings(&s,Backup.WAPSettings[i]);
-					Print_Error(error);
-					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("Restore WAP settings")) DoRestore = true;
 		}
 	}
+	if (DoRestore) {
+		max = 0;
+		while (Backup.WAPSettings[max]!=NULL) max++;
+		for (i=0;i<max;i++) {
+			error=Phone->SetWAPSettings(&s,Backup.WAPSettings[i]);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoRestore = false;
 	if (Backup.MMSSettings[0] != NULL) {
 		Settings.Location = 1;
 		error = Phone->GetMMSSettings(&s,&Settings);
 		if (error == GE_NONE) {
-			if (answer_yes("Restore MMS settings")) {
-				max = 0;
-				while (Backup.MMSSettings[max]!=NULL) max++;
-				for (i=0;i<max;i++) {
-					error=Phone->SetMMSSettings(&s,Backup.MMSSettings[i]);
-					Print_Error(error);
-					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("Restore MMS settings")) DoRestore = true;
 		}
 	}
+	if (DoRestore) {
+		max = 0;
+		while (Backup.MMSSettings[max]!=NULL) max++;
+		for (i=0;i<max;i++) {
+			error=Phone->SetMMSSettings(&s,Backup.MMSSettings[i]);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoRestore = false;
 	if (Backup.Ringtone[0] != NULL) {
 		Ringtone.Location 	= 1;
 		Ringtone.Format		= 0;
 		error = Phone->GetRingtone(&s,&Ringtone,false);
 		if (error == GE_NONE || error ==GE_EMPTY) {
 			if (Phone->DeleteUserRingtones != NOTSUPPORTED) {
-				if (answer_yes("Delete all user ringtones")) {
-					printmsgerr("Deleting: ");
-					error=Phone->DeleteUserRingtones(&s);
-					Print_Error(error);
-					printmsgerr("Done\n");
-				}		
-			}
-			if (answer_yes("Restore user ringtones")) {
-				max = 0;
-				while (Backup.Ringtone[max]!=NULL) max++;
-				for (i=0;i<max;i++) {
-					error=GSM_RingtoneConvert(&Ringtone, Backup.Ringtone[i], Ringtone.Format);
-					Print_Error(error);
-					error=Phone->SetRingtone(&s,&Ringtone,&i);
-					Print_Error(error);
-					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
+				if (answer_yes("Delete all user ringtones")) DoRestore = true;
 			}
 		}
 	}
+	if (DoRestore) {
+		printmsgerr("Deleting: ");
+		error=Phone->DeleteUserRingtones(&s);
+		Print_Error(error);
+		printmsgerr("Done\n");
+		DoRestore = false;
+		if (answer_yes("Restore user ringtones")) DoRestore = true;
+	}
+	if (DoRestore) {
+		max = 0;
+		while (Backup.Ringtone[max]!=NULL) max++;
+		for (i=0;i<max;i++) {
+			error=GSM_RingtoneConvert(&Ringtone, Backup.Ringtone[i], Ringtone.Format);
+			Print_Error(error);
+			error=Phone->SetRingtone(&s,&Ringtone,&i);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoRestore = false;
 	if (Backup.Profiles[0] != NULL) {
 		Profile.Location = 1;
 		error = Phone->GetProfile(&s,&Profile);
 		if (error == GE_NONE) {
-			if (answer_yes("Restore profiles")) {
-				Profile.Location= 0;
-				max = 0;
-				while (Backup.Profiles[max]!=NULL) max++;
-				for (i=0;i<max;i++) {
-					Profile	= *Backup.Profiles[i];
-					error=Phone->SetProfile(&s,&Profile);
-					Print_Error(error);
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("Restore profiles")) DoRestore = true;
 		}
 	}
+	if (DoRestore) {
+		Profile.Location= 0;
+		max = 0;
+		while (Backup.Profiles[max]!=NULL) max++;
+		for (i=0;i<max;i++) {
+			Profile	= *Backup.Profiles[i];
+			error=Phone->SetProfile(&s,&Profile);
+			Print_Error(error);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoRestore = false;
 	if (Backup.FMStation[0] != NULL) {
 		FMStation.Location = 1;
 		error = Phone->GetFMStation(&s,&FMStation);
 		if (error == GE_NONE || error == GE_EMPTY) {
-			if (answer_yes("Restore FM stations")) {
-				printmsgerr("Deleting old FM stations: ");
-				error=Phone->ClearFMStations(&s);
-				Print_Error(error);
-				printmsgerr("Done\n");
-				max = 0;
-				while (Backup.FMStation[max]!=NULL) max++;
-				for (i=0;i<max;i++) {
-					FMStation = *Backup.FMStation[i];
-					error=Phone->SetFMStation(&s,&FMStation);
-					Print_Error(error);
-					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
-			}
+			if (answer_yes("Restore FM stations")) DoRestore = true;
 		}
 	}
+	if (DoRestore) {
+		printmsgerr("Deleting old FM stations: ");
+		error=Phone->ClearFMStations(&s);
+		Print_Error(error);
+		printmsgerr("Done\n");
+		max = 0;
+		while (Backup.FMStation[max]!=NULL) max++;
+		for (i=0;i<max;i++) {
+			FMStation = *Backup.FMStation[i];
+			error=Phone->SetFMStation(&s,&FMStation);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+	DoRestore = false;
 	if (Backup.GPRSPoint[0] != NULL) {
 		GPRSPoint.Location = 1;
 		error = Phone->GetGPRSAccessPoint(&s,&GPRSPoint);
 		if (error == GE_NONE || error == GE_EMPTY) {
-			if (answer_yes("Restore GPRS Points")) {
-				max = 0;
-				while (Backup.GPRSPoint[max]!=NULL) max++;
-				for (i=0;i<max;i++) {
-					error=Phone->SetGPRSAccessPoint(&s,Backup.GPRSPoint[i]);
-					Print_Error(error);
-					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
-					if (bshutdown) {
-						GSM_Terminate();
-						exit(0);
-					}
-				}
-				printmsgerr("\n");
+			if (answer_yes("Restore GPRS Points")) DoRestore = true;
+		}
+	}
+	if (DoRestore) {
+		max = 0;
+		while (Backup.GPRSPoint[max]!=NULL) max++;
+		for (i=0;i<max;i++) {
+			error=Phone->SetGPRSAccessPoint(&s,Backup.GPRSPoint[i]);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (bshutdown) {
+				GSM_Terminate();
+				exit(0);
 			}
 		}
+		printmsgerr("\n");
 	}
 
 	GSM_Terminate();
@@ -4316,11 +4401,11 @@ static void AddNew(int argc, char *argv[])
 {
 	GSM_Backup		Backup;
 	GSM_DateTime 		date_time;
-	GSM_CalendarEntry	Calendar;
-	GSM_PhonebookEntry	Pbk;
+	GSM_MemoryEntry		Pbk;
 	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoEntry		ToDo;
 	GSM_ToDoStatus		ToDoStatus;
+	GSM_CalendarEntry	Calendar;
 	GSM_WAPBookmark		Bookmark;
 	int			i, max, j;
 
@@ -4347,51 +4432,15 @@ static void AddNew(int argc, char *argv[])
 			if (MemStatus.Free < max) {
 				printmsgerr("Memory has only %i free locations.Exiting\n",MemStatus.Free);
 			} else if (answer_yes("Add phone phonebook entries")) {
- 				/* At first we try whether phone supports adding */
- 				Pbk 		= *Backup.PhonePhonebook[0];
- 				Pbk.MemoryType 	= GMT_ME;
- 				Pbk.Location	= 0;
- 				printmsgerr("%cWriting: %i percent",13,100/max);
- 				error=Phone->SetMemory(&s, &Pbk);
- 				if (error == GE_NOTSUPPORTED) {
- 					/* If not, we will try to find empty locations and write to them */
- 					j = 1;
- 					for (i=0;i<max;i++) {
- 						while(1) {
- 							Pbk.MemoryType	= GMT_ME;
- 							Pbk.Location	= j;
- 							error=Phone->GetMemory(&s, &Pbk);
- 							if (error != GE_NONE) {
- 								if (error == GE_EMPTY) break;
- 								Print_Error(error);
- 							}
- 							if (Pbk.EntriesNum == 0) break;
- 							j++;
- 						}
- 						Pbk 		= *Backup.PhonePhonebook[i];
- 						Pbk.MemoryType 	= GMT_ME;
- 						Pbk.Location	= j;
- 						j++;
-						error=Phone->SetMemory(&s, &Pbk);
- 						Print_Error(error);
- 						printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
- 						if (bshutdown) {
- 							GSM_Terminate();
- 							exit(0);
- 						}
- 					}
- 				} else {
- 					for (i=1;i<max;i++) {
- 						Pbk 		= *Backup.PhonePhonebook[i];
- 						Pbk.MemoryType 	= GMT_ME;
- 						Pbk.Location	= 0;
- 						error=Phone->SetMemory(&s, &Pbk);
- 						Print_Error(error);
- 						printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
- 						if (bshutdown) {
- 							GSM_Terminate();
- 							exit(0);
- 						}
+				for (i=0;i<max;i++) {
+					Pbk 		= *Backup.PhonePhonebook[i];
+					Pbk.MemoryType 	= GMT_ME;
+					error=Phone->AddMemory(&s, &Pbk);
+					Print_Error(error);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+					if (bshutdown) {
+						GSM_Terminate();
+						exit(0);
 					}
 				}
 			}
@@ -4409,22 +4458,9 @@ static void AddNew(int argc, char *argv[])
 			} else if (answer_yes("Add SIM phonebook entries")) {
 				j = 1;
 				for (i=0;i<max;i++) {
-					while(1) {
-						Pbk.MemoryType	= GMT_SM;
-						Pbk.Location	= j;
-						error=Phone->GetMemory(&s, &Pbk);
-						if (error != GE_NONE) {
-							if (error == GE_EMPTY) break;
-							Print_Error(error);
-						}
-						if (Pbk.EntriesNum == 0) break;
-						j++;
-					}
 					Pbk 		= *Backup.SIMPhonebook[i];
 					Pbk.MemoryType 	= GMT_SM;
-					Pbk.Location	= j;
-					j++;
-					error=Phone->SetMemory(&s, &Pbk);
+					error=Phone->AddMemory(&s, &Pbk);
 					Print_Error(error);
 					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 					if (bshutdown) {
@@ -4445,7 +4481,6 @@ static void AddNew(int argc, char *argv[])
 			Print_Error(error);
 		}
 	}
-
 	if (Backup.Calendar[0] != NULL) {
 		error = Phone->GetNextCalendar(&s,&Calendar,true);
 		if (error == GE_NONE || error == GE_INVALIDLOCATION || error == GE_EMPTY) {
@@ -4454,7 +4489,7 @@ static void AddNew(int argc, char *argv[])
 				while (Backup.Calendar[max]!=NULL) max++;
 				for (i=0;i<max;i++) {
 					Calendar = *Backup.Calendar[i];
-					error=Phone->AddCalendar(&s,&Calendar, true);
+					error=Phone->AddCalendar(&s,&Calendar);
 					Print_Error(error);
 					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 					if (bshutdown) {
@@ -4469,14 +4504,13 @@ static void AddNew(int argc, char *argv[])
 	if (Backup.ToDo[0] != NULL) {
 		ToDo.Location = 1;
 		error=Phone->GetToDoStatus(&s,&ToDoStatus);
-		if (error == GE_NONE || error == GE_INVALIDLOCATION) {
+		if (error == GE_NONE) {
 			if (answer_yes("Add ToDo")) {
 				max = 0;
 				while (Backup.ToDo[max]!=NULL) max++;
 				for (i=0;i<max;i++) {
-					ToDo 		= *Backup.ToDo[i];
-					ToDo.Location 	= 0;
-					error=Phone->SetToDo(&s,&ToDo);
+					ToDo  = *Backup.ToDo[i];
+					error = Phone->AddToDo(&s,&ToDo);
 					Print_Error(error);
 					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 					if (bshutdown) {
@@ -4517,25 +4551,31 @@ static void AddNew(int argc, char *argv[])
 
 static void ClearAll(int argc, char *argv[])
 {
-	GSM_CalendarEntry	Calendar;
-	GSM_PhonebookEntry	Pbk;
 	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoStatus		ToDoStatus;
+	GSM_CalendarEntry	Calendar;
+	GSM_ToDoEntry		ToDo;
 	GSM_WAPBookmark		Bookmark;
 	GSM_FMStation 		Station;
+	GSM_MemoryEntry		Pbk;
+	bool			DoClear;
 
 	GSM_Init(true);
 
-	MemStatus.MemoryType = GMT_ME;
+	DoClear 		= false;
+	MemStatus.MemoryType 	= GMT_ME;
 	error=Phone->GetMemoryStatus(&s, &MemStatus);
 	if (error==GE_NONE && MemStatus.Used !=0) {
-		if (answer_yes("Delete phone phonebook")) {
-			for (i=0;i<MemStatus.Used+MemStatus.Free;i++)
-			{
+		if (answer_yes("Delete phone phonebook")) DoClear = true;
+	}
+	if (DoClear) {
+		error = Phone->DeleteAllMemory(&s,GMT_ME);
+		if (error == GE_NOTSUPPORTED || error == GE_NOTIMPLEMENTED) {
+			for (i=0;i<MemStatus.Used+MemStatus.Free;i++) {
 				Pbk.MemoryType 	= GMT_ME;
 				Pbk.Location	= i + 1;
 				Pbk.EntriesNum	= 0;
-				error=Phone->SetMemory(&s, &Pbk);
+				error=Phone->DeleteMemory(&s, &Pbk);
 				Print_Error(error);
 				printmsgerr("%cWriting: %i percent",13,(i+1)*100/(MemStatus.Used+MemStatus.Free));
 				if (bshutdown) {
@@ -4544,18 +4584,26 @@ static void ClearAll(int argc, char *argv[])
 				}
 			}
 			printmsgerr("\n");
+		} else {
+			printmsgerr("Done\n");
+			Print_Error(error);
 		}
 	}
-	MemStatus.MemoryType = GMT_SM;
+
+	DoClear 		= false;
+	MemStatus.MemoryType 	= GMT_SM;
 	error=Phone->GetMemoryStatus(&s, &MemStatus);
 	if (error==GE_NONE && MemStatus.Used !=0) {
-		if (answer_yes("Delete SIM phonebook")) {
-			for (i=0;i<MemStatus.Used+MemStatus.Free;i++)
-			{
+		if (answer_yes("Delete SIM phonebook")) DoClear = true;
+	}
+	if (DoClear) {
+		error = Phone->DeleteAllMemory(&s,GMT_SM);
+		if (error == GE_NOTSUPPORTED || error == GE_NOTIMPLEMENTED) {
+			for (i=0;i<MemStatus.Used+MemStatus.Free;i++) {
 				Pbk.MemoryType 	= GMT_SM;
 				Pbk.Location	= i + 1;
 				Pbk.EntriesNum	= 0;
-				error=Phone->SetMemory(&s, &Pbk);
+				error=Phone->DeleteMemory(&s, &Pbk);
 				Print_Error(error);
 				printmsgerr("%cWriting: %i percent",13,(i+1)*100/(MemStatus.Used+MemStatus.Free));
 				if (bshutdown) {
@@ -4564,12 +4612,21 @@ static void ClearAll(int argc, char *argv[])
 				}
 			}
 			printmsgerr("\n");
+		} else {
+			printmsgerr("Done\n");
+			Print_Error(error);
 		}
 	}
+
+	DoClear = false;
 	error = Phone->GetNextCalendar(&s,&Calendar,true);
-	if (error == GE_NONE || error == GE_INVALIDLOCATION || error == GE_EMPTY) {
-		if (answer_yes("Delete calendar notes")) {
-			printmsgerr("Deleting : ");
+	if (error == GE_NONE) {
+ 		if (answer_yes("Delete calendar notes")) DoClear = true;
+	}
+	if (DoClear) {
+		printmsgerr("Deleting: ");
+		error=Phone->DeleteAllCalendar(&s);
+		if (error == GE_NOTSUPPORTED || error == GE_NOTIMPLEMENTED) {
  			while (1) {
 				error = Phone->GetNextCalendar(&s,&Calendar,true);
 				if (error != GE_NONE) break;
@@ -4578,17 +4635,35 @@ static void ClearAll(int argc, char *argv[])
 				printmsgerr("*");
 			}
 			printmsgerr("\n");
-		}
-	}
-	error = Phone->GetToDoStatus(&s,&ToDoStatus);
-	if (error == GE_NONE) {
-		if (answer_yes("Delete ToDo")) {
-			printmsgerr("Deleting: ");
-			error=Phone->DeleteAllToDo(&s);
-			Print_Error(error);
+		} else {
 			printmsgerr("Done\n");
+			Print_Error(error);
 		}
 	}
+
+	DoClear = false;
+	error = Phone->GetToDoStatus(&s,&ToDoStatus);
+	if (error == GE_NONE && ToDoStatus.Used != 0) {
+		if (answer_yes("Delete ToDo")) DoClear = true;
+	}
+	if (DoClear) {
+		printmsgerr("Deleting: ");
+		error=Phone->DeleteAllToDo(&s);
+		if (error == GE_NOTSUPPORTED || error == GE_NOTIMPLEMENTED) {
+ 			while (1) {
+				error = Phone->GetNextToDo(&s,&ToDo,true);
+				if (error != GE_NONE) break;
+				error = Phone->DeleteToDo(&s,&ToDo);
+ 				Print_Error(error);				
+				printmsgerr("*");
+			}
+			printmsgerr("\n");
+		} else {
+			printmsgerr("Done\n");
+			Print_Error(error);
+		}
+	}
+
 	Bookmark.Location = 1;
 	error = Phone->GetWAPBookmark(&s,&Bookmark);
 	if (error == GE_NONE || error == GE_INVALIDLOCATION) {
@@ -4789,6 +4864,7 @@ static void BackupSMS(int argc, char *argv[])
 							Backup.SMS[smsnum+1] = NULL;
 						} else {
 							printmsg("Increase GSM_BACKUP_MAX_SMS\n");
+							GSM_Terminate();
 							exit(-1);
 						}
 						*Backup.SMS[smsnum] = sms.SMS[j];
@@ -5188,88 +5264,82 @@ static void DeleteToDo(int argc, char *argv[])
 	GSM_Terminate();        	
 }
 
-static void GetToDo(int argc, char *argv[])
+static void GetAllToDo(int argc, char *argv[])
 {
 	GSM_ToDoEntry		ToDo;
-	int			start,stop,j;
-	bool			refresh=true;
-	GSM_PhonebookEntry	entry;
+	int			j;
+	GSM_MemoryEntry		entry;
 	unsigned char		*name;
 	GSM_Category		Category;
-
-	GetStartStop(&start, &stop, 2, argc, argv);
+	bool			refresh = true;
 
 	GSM_Init(true);
 
-	for (i=start;i<=stop;i++) {
-		ToDo.Location=i;
-		printmsg("Location  : %i\n",i);
-		error=Phone->GetToDo(&s,&ToDo,refresh);
-		if (error != GE_EMPTY) Print_Error(error);
+	while (1) {
+		error=Phone->GetNextToDo(&s,&ToDo,refresh);
+		if (error == GE_EMPTY) break;
+		Print_Error(error);
 
-		if (error == GE_EMPTY) {
-			printmsg("Entry is empty\n\n");
-		} else {
-            		printmsg("Priority     : ");
-            		switch (ToDo.Priority) {
-                		case GSM_Priority_Low	 : printmsg("Low\n");	 	break;
-                		case GSM_Priority_Medium : printmsg("Medium\n"); 	break;
-                		case GSM_Priority_High	 : printmsg("High\n");		break;
-                		default			 : printmsg("Unknown\n");	break;
-	            	}
-	            	for (j=0;j<ToDo.EntriesNum;j++) {
-	                	switch (ToDo.Entries[j].EntryType) {
-	                    	case TODO_END_DATETIME:
-	                        	printmsg("DueTime      : %s\n",OSDateTime(ToDo.Entries[j].Date,false));
-	                        	break;
-	                    	case TODO_COMPLETED:
-	                        	printmsg("Completed    : %s\n",ToDo.Entries[j].Number == 1 ? "Yes" : "No");
-	                        	break;
-	                    	case TODO_ALARM_DATETIME:
-	                        	printmsg("Alarm        : %s\n",OSDateTime(ToDo.Entries[j].Date,false));
-	                        	break;
-	                    	case TODO_SILENT_ALARM_DATETIME:
-	                        	printmsg("Silent alarm : %s\n",OSDateTime(ToDo.Entries[j].Date,false));
-	                        	break;
-	                    	case TODO_TEXT:
-	                        	printmsg("Text         : \"%s\"\n",DecodeUnicodeString2(ToDo.Entries[j].Text));
-	                        	break;
-	                    	case TODO_PRIVATE:
-	                        	printmsg("Private      : %s\n",ToDo.Entries[j].Number == 1 ? "Yes" : "No");
-	                        	break;
-	                    	case TODO_CATEGORY:
-					Category.Location = ToDo.Entries[j].Number;
-					Category.Type = Category_ToDo;
-					error=Phone->GetCategory(&s, &Category);
-					if (error == GE_NONE) {
-						printmsg("Category     : \"%s\" (%i)\n", DecodeUnicodeString2(Category.Name), ToDo.Entries[j].Number);
+		printmsg("Location  : %i\n",i);
+		printmsg("Priority     : ");
+		switch (ToDo.Priority) {
+                	case GSM_Priority_Low	 : printmsg("Low\n");	 	break;
+                	case GSM_Priority_Medium : printmsg("Medium\n"); 	break;
+                	case GSM_Priority_High	 : printmsg("High\n");		break;
+                	default			 : printmsg("Unknown\n");	break;
+	        }
+	        for (j=0;j<ToDo.EntriesNum;j++) {
+	        	switch (ToDo.Entries[j].EntryType) {
+	                case TODO_END_DATETIME:
+	                	printmsg("DueTime      : %s\n",OSDateTime(ToDo.Entries[j].Date,false));
+	                        break;
+	                case TODO_COMPLETED:
+	                        printmsg("Completed    : %s\n",ToDo.Entries[j].Number == 1 ? "Yes" : "No");
+	                        break;
+	                case TODO_ALARM_DATETIME:
+	                        printmsg("Alarm        : %s\n",OSDateTime(ToDo.Entries[j].Date,false));
+	                        break;
+	                case TODO_SILENT_ALARM_DATETIME:
+	                	printmsg("Silent alarm : %s\n",OSDateTime(ToDo.Entries[j].Date,false));
+	                	break;
+	                case TODO_TEXT:
+	                        printmsg("Text         : \"%s\"\n",DecodeUnicodeString2(ToDo.Entries[j].Text));
+	                        break;
+	                case TODO_PRIVATE:
+	                	printmsg("Private      : %s\n",ToDo.Entries[j].Number == 1 ? "Yes" : "No");
+	                	break;
+	                case TODO_CATEGORY:
+				Category.Location = ToDo.Entries[j].Number;
+				Category.Type = Category_ToDo;
+				error=Phone->GetCategory(&s, &Category);
+				if (error == GE_NONE) {
+					printmsg("Category     : \"%s\" (%i)\n", DecodeUnicodeString2(Category.Name), ToDo.Entries[j].Number);
+				} else {
+					printmsg("Category     : %i\n", ToDo.Entries[j].Number);
+				}
+	                        break;
+	                case TODO_CONTACTID:
+				entry.Location = ToDo.Entries[j].Number;
+				entry.MemoryType = GMT_ME;
+				error=Phone->GetMemory(&s, &entry);
+				if (error == GE_NONE) {
+					name = GSM_PhonebookGetEntryName(&entry);
+					if (name != NULL) {
+						printmsg("Contact ID   : \"%s\" (%d)\n", DecodeUnicodeString2(name), ToDo.Entries[j].Number);
 					} else {
-						printmsg("Category     : %i\n", ToDo.Entries[j].Number);
+						printmsg("Contact ID   : %d\n",ToDo.Entries[j].Number);
 					}
-	                        	break;
-	                    	case TODO_CONTACTID:
-					entry.Location = ToDo.Entries[j].Number;
-					entry.MemoryType = GMT_ME;
-					error=Phone->GetMemory(&s, &entry);
-					if (error == GE_NONE) {
-						name = GSM_PhonebookGetEntryName(&entry);
-						if (name != NULL) {
-							printmsg("Contact ID   : \"%s\" (%d)\n", DecodeUnicodeString2(name), ToDo.Entries[j].Number);
-						} else {
-							printmsg("Contact ID   : %d\n",ToDo.Entries[j].Number);
-						}
-					} else {
-						printmsg("Contact   : %d\n",ToDo.Entries[j].Number);
-					}
-        	                	break;
-	                    	case TODO_PHONE:
-	                        	printmsg("Phone        : \"%s\"\n",DecodeUnicodeString2(ToDo.Entries[j].Text));
-	                        	break;
-	                	}
-	       	    	}
-        	    	printmsg("\n");
-	            	refresh=false;
-	       	 }
+				} else {
+					printmsg("Contact   : %d\n",ToDo.Entries[j].Number);
+				}
+        	                break;
+	                case TODO_PHONE:
+	                	printmsg("Phone        : \"%s\"\n",DecodeUnicodeString2(ToDo.Entries[j].Text));
+	                	break;
+	                }
+	       	}
+        	printmsg("\n");
+ 		refresh = false;
 	}
 
 	GSM_Terminate();        	
@@ -5485,7 +5555,7 @@ static void GetProfile(int argc, char *argv[])
 static void GetSpeedDial(int argc, char *argv[])
 {
 	GSM_SpeedDial		SpeedDial;
-	GSM_PhonebookEntry	Phonebook;
+	GSM_MemoryEntry		Phonebook;
 	int			start,stop,Name,Number,Group;
 
 	GetStartStop(&start, &stop, 2, argc, argv);
@@ -6854,7 +6924,7 @@ static void usage(void)
 	printf("gammu --divert get|set all|busy|noans|outofreach all|voice|fax|data\n");
 	printf("               [number timeout]\n\n");
 
-	printf("gammu --gettodo start [stop]\n");
+	printf("gammu --gettodo\n");
 	printf("gammu --deletetodo start [stop]\n");
 	printf("gammu --getcalendarnotes\n");
 	printf("gammu --getcalendarsettings\n");
@@ -7146,7 +7216,7 @@ static GSM_Parameters Parameters[] = {
 	{"--transfercall",		0, 1, TransferCall		},
 	{"--getcalendarnotes",		0, 0, GetCalendarNotes		},
 	{"--getcalendarsettings",	0, 0, GetCalendarSettings	},
-	{"--gettodo",			1, 2, GetToDo			},
+	{"--gettodo",			0, 0, GetAllToDo			},
 	{"--deletetodo",		1, 2, DeleteToDo		},
 	{"--getnote",			1, 2, GetNote			},
 	{"--getcategory",       	2, 3, GetCategory       	},

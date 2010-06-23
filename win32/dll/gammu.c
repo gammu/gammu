@@ -416,7 +416,7 @@ GSM_Error WINAPI mygetsmsstatus (int phone, GSM_SMSMemoryStatus *status)
 	return error;
 }
 
-GSM_Error WINAPI mysavesmsmessage (int phone, GSM_SMSMessage *sms)
+GSM_Error WINAPI myaddsmsmessage (int phone, GSM_SMSMessage *sms)
 {
 	GSM_Error 	error;
 	GSM_SMSMessage	sms2;
@@ -432,7 +432,7 @@ GSM_Error WINAPI mysavesmsmessage (int phone, GSM_SMSMessage *sms)
 	}
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
-	error=s[phone].s.Phone.Functions->SetSMS(&s[phone].s,&sms2);
+	error=s[phone].s.Phone.Functions->AddSMS(&s[phone].s,&sms2);
 	SetErrorCounter(phone, error);
         ReleaseMutex(s[phone].Mutex);
 	return error;

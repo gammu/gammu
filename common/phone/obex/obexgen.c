@@ -725,87 +725,61 @@ GSM_Phone_Functions OBEXGENPhone = {
 	OBEXGEN_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/
 	GSM_DispatchMessage,
-	NONEFUNCTION,
-	NONEFUNCTION,
+	NOTIMPLEMENTED,			/* 	ShowStartInfo		*/
+	NONEFUNCTION,			/*	GetManufacturer		*/
+	NONEFUNCTION,			/*	GetModel		*/
+	NONEFUNCTION,			/*	GetFirmware		*/
 	NOTIMPLEMENTED,			/*	GetIMEI			*/
+	NOTIMPLEMENTED,			/*	GetOriginalIMEI		*/
+	NOTIMPLEMENTED,			/*	GetManufactureMonth	*/
+	NOTIMPLEMENTED,			/*	GetProductCode		*/
+	NOTIMPLEMENTED,			/*	GetHardware		*/
+	NOTIMPLEMENTED,			/*	GetPPM			*/
+	NOTIMPLEMENTED,			/*	GetSIMIMSI		*/
 	NOTIMPLEMENTED,			/*	GetDateTime		*/
+	NOTIMPLEMENTED,			/*	SetDateTime		*/
 	NOTIMPLEMENTED,			/*	GetAlarm		*/
-	NOTIMPLEMENTED,			/*	GetMemory		*/
-	NOTIMPLEMENTED,			/*	GetMemoryStatus		*/
-	NOTIMPLEMENTED,			/*	GetSMSC			*/
-	NOTIMPLEMENTED,			/*	GetSMSMessage		*/
-	NOTIMPLEMENTED,			/*	GetSMSFolders		*/
-	NONEFUNCTION,
-	NOTIMPLEMENTED,			/*	GetNextSMSMessage	*/
-	NOTIMPLEMENTED,			/*	GetSMSStatus		*/
-	NOTIMPLEMENTED,			/*	SetIncomingSMS		*/
-	NOTIMPLEMENTED,			/*	GetNetworkInfo		*/
+	NOTIMPLEMENTED,			/*	SetAlarm		*/
+	NOTSUPPORTED,			/* 	GetLocale		*/
+	NOTSUPPORTED,			/* 	SetLocale		*/
+	NOTIMPLEMENTED,			/*	PressKey		*/
 	NOTIMPLEMENTED,			/*	Reset			*/
+	NOTIMPLEMENTED,			/*	ResetPhoneSettings	*/
+	NOTIMPLEMENTED,			/*	EnterSecurityCode	*/
+	NOTIMPLEMENTED,			/*	GetSecurityStatus	*/
+	NOTIMPLEMENTED,			/*	GetDisplayStatus	*/
+	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
+	NOTIMPLEMENTED,			/*	GetBatteryCharge	*/
+	NOTIMPLEMENTED,			/*	GetSignalQuality	*/
+	NOTIMPLEMENTED,			/*	GetNetworkInfo		*/
+	NOTIMPLEMENTED,     		/*  	GetCategory 		*/
+        NOTIMPLEMENTED,      		/*  	GetCategoryStatus 	*/	
+	NOTIMPLEMENTED,			/*	GetMemoryStatus		*/
+	NOTIMPLEMENTED,			/*	GetMemory		*/
+	NOTIMPLEMENTED,			/*	GetNextMemory		*/
+	NOTIMPLEMENTED,			/*	SetMemory		*/
+	NOTIMPLEMENTED,			/*	AddMemory		*/
+	NOTIMPLEMENTED,			/*	DeleteMemory		*/
+	NOTIMPLEMENTED,			/*	DeleteAllMemory		*/
+	NOTIMPLEMENTED,			/*	GetSpeedDial		*/
+	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
+	NOTIMPLEMENTED,			/*	GetSMSC			*/
+	NOTIMPLEMENTED,			/*	SetSMSC			*/
+	NOTIMPLEMENTED,			/*	GetSMSStatus		*/
+	NOTIMPLEMENTED,			/*	GetSMS			*/
+	NOTIMPLEMENTED,			/*	GetNextSMS		*/
+	NOTIMPLEMENTED,			/*	SetSMS			*/
+	NOTIMPLEMENTED,			/*	AddSMS			*/
+	NOTIMPLEMENTED,			/* 	DeleteSMS 		*/
+	NOTIMPLEMENTED,			/*	SendSMSMessage		*/
+	NOTIMPLEMENTED,			/*	SetIncomingSMS		*/
+	NOTIMPLEMENTED,			/* 	SetIncomingCB		*/
+	NOTIMPLEMENTED,			/*	GetSMSFolders		*/
+ 	NOTIMPLEMENTED,			/* 	AddSMSFolder		*/
+ 	NOTIMPLEMENTED,			/* 	DeleteSMSFolder		*/
 	NOTIMPLEMENTED,			/*	DialVoice		*/
 	NOTIMPLEMENTED,			/*	AnswerCall		*/
 	NOTIMPLEMENTED,			/*	CancelCall		*/
-	NOTIMPLEMENTED,			/*	GetRingtone		*/
-	NOTIMPLEMENTED,			/*	GetWAPBookmark		*/
-	NOTIMPLEMENTED,			/*	GetBitmap		*/
-	NOTIMPLEMENTED,			/*	SetRingtone		*/
-	NOTIMPLEMENTED,			/*	SaveSMSMessage		*/
-	NOTIMPLEMENTED,			/*	SendSMSMessage		*/
-	NOTIMPLEMENTED,			/*	SetDateTime		*/
-	NOTIMPLEMENTED,			/*	SetAlarm		*/
-	NOTIMPLEMENTED,			/*	SetBitmap		*/
-	NOTIMPLEMENTED,			/* 	SetMemory 		*/
-	NOTIMPLEMENTED,			/* 	DeleteSMS 		*/
-	NOTIMPLEMENTED,			/* 	SetWAPBookmark 		*/
-	NOTIMPLEMENTED, 		/* 	DeleteWAPBookmark 	*/
-	NOTIMPLEMENTED,			/* 	GetWAPSettings 		*/
-	NOTIMPLEMENTED,			/* 	SetIncomingCB		*/
-	NOTIMPLEMENTED,			/*	SetSMSC			*/
-	NOTIMPLEMENTED,			/*	GetManufactureMonth	*/
-	NOTIMPLEMENTED,			/*	GetProductCode		*/
-	NOTIMPLEMENTED,			/*	GetOriginalIMEI		*/
-	NOTIMPLEMENTED,			/*	GetHardware		*/
-	NOTIMPLEMENTED,			/*	GetPPM			*/
-	NOTIMPLEMENTED,			/*	PressKey		*/
-	NOTIMPLEMENTED,			/*	GetToDo			*/
-	NOTIMPLEMENTED,			/*	DeleteAllToDo		*/
-	NOTIMPLEMENTED,			/*	SetToDo			*/
-	NOTIMPLEMENTED,			/*	GetToDoStatus		*/
-	NOTIMPLEMENTED,			/*	PlayTone		*/
-	NOTIMPLEMENTED,			/*	EnterSecurityCode	*/
-	NOTIMPLEMENTED,			/*	GetSecurityStatus	*/
-	NOTIMPLEMENTED, 		/*	GetProfile		*/
-	NOTIMPLEMENTED,			/*	GetRingtonesInfo	*/
-	NOTIMPLEMENTED,			/* 	SetWAPSettings 		*/
-	NOTIMPLEMENTED,			/*	GetSpeedDial		*/
-	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
-	NOTIMPLEMENTED,			/*	ResetPhoneSettings	*/
-	NOTIMPLEMENTED,			/*	SendDTMF		*/
-	NOTIMPLEMENTED,			/*	GetDisplayStatus	*/
-	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
-	NOTIMPLEMENTED, 		/*	SetProfile		*/
-	NOTIMPLEMENTED,			/*	GetSIMIMSI		*/
-	NOTIMPLEMENTED,			/*	SetIncomingCall		*/
-    	NOTIMPLEMENTED,			/*	GetNextCalendar		*/
-	NOTIMPLEMENTED,   		/*	DelCalendar		*/
-	NOTIMPLEMENTED,       		/*	AddCalendar		*/
-	NOTIMPLEMENTED,			/*	GetBatteryCharge	*/
-	NOTIMPLEMENTED,			/*	GetSignalQuality	*/
-	NOTIMPLEMENTED,     		/*  	GetCategory 		*/
-        NOTIMPLEMENTED,      		/*  	GetCategoryStatus 	*/	
-    	NOTIMPLEMENTED,			/*  	GetFMStation        	*/
-    	NOTIMPLEMENTED,			/*  	SetFMStation        	*/
-    	NOTIMPLEMENTED,			/*  	ClearFMStations       	*/
-	NOTIMPLEMENTED,			/*  	SetIncomingUSSD		*/
-	NOTIMPLEMENTED,			/* 	DeleteUserRingtones	*/
-	NOTIMPLEMENTED,			/* 	ShowStartInfo		*/
-	OBEXGEN_GetNextFileFolder,
-	OBEXGEN_GetFilePart,
-	OBEXGEN_AddFilePart,
-	NOTIMPLEMENTED, 		/* 	GetFileSystemStatus	*/
-	OBEXGEN_DeleteFile,
-	OBEXGEN_AddFolder,
-	NOTIMPLEMENTED,			/* 	GetMMSSettings		*/
- 	NOTIMPLEMENTED,			/* 	SetMMSSettings		*/
  	NOTIMPLEMENTED,			/* 	HoldCall 		*/
  	NOTIMPLEMENTED,			/* 	UnholdCall 		*/
  	NOTIMPLEMENTED,			/* 	ConferenceCall 		*/
@@ -815,15 +789,53 @@ GSM_Phone_Functions OBEXGENPhone = {
  	NOTIMPLEMENTED,			/* 	GetCallDivert		*/
  	NOTIMPLEMENTED,			/* 	SetCallDivert		*/
  	NOTIMPLEMENTED,			/* 	CancelAllDiverts	*/
- 	NOTIMPLEMENTED,			/* 	AddSMSFolder		*/
- 	NOTIMPLEMENTED,			/* 	DeleteSMSFolder		*/
-	NOTIMPLEMENTED,			/* 	GetGPRSAccessPoint	*/
-	NOTIMPLEMENTED,			/* 	SetGPRSAccessPoint	*/
-	NOTSUPPORTED,			/* 	GetLocale		*/
-	NOTSUPPORTED,			/* 	SetLocale		*/
+	NOTIMPLEMENTED,			/*	SetIncomingCall		*/
+	NOTIMPLEMENTED,			/*  	SetIncomingUSSD		*/
+	NOTIMPLEMENTED,			/*	SendDTMF		*/
+	NOTIMPLEMENTED,			/*	GetRingtone		*/
+	NOTIMPLEMENTED,			/*	SetRingtone		*/
+	NOTIMPLEMENTED,			/*	GetRingtonesInfo	*/
+	NOTIMPLEMENTED,			/* 	DeleteUserRingtones	*/
+	NOTIMPLEMENTED,			/*	PlayTone		*/
+	NOTIMPLEMENTED,			/*	GetWAPBookmark		*/
+	NOTIMPLEMENTED,			/* 	SetWAPBookmark 		*/
+	NOTIMPLEMENTED, 		/* 	DeleteWAPBookmark 	*/
+	NOTIMPLEMENTED,			/* 	GetWAPSettings 		*/
+	NOTIMPLEMENTED,			/* 	SetWAPSettings 		*/
+	NOTIMPLEMENTED,			/* 	GetMMSSettings		*/
+ 	NOTIMPLEMENTED,			/* 	SetMMSSettings		*/
+	NOTIMPLEMENTED,			/*	GetBitmap		*/
+	NOTIMPLEMENTED,			/*	SetBitmap		*/
+	NOTIMPLEMENTED,			/*	GetToDoStatus		*/
+	NOTIMPLEMENTED,			/*	GetToDo			*/
+	NOTIMPLEMENTED,			/*	GetNextToDo		*/
+	NOTIMPLEMENTED,			/*	SetToDo			*/
+	NOTIMPLEMENTED,			/*	AddToDo			*/
+	NOTIMPLEMENTED,			/*	DeleteToDo		*/
+	NOTIMPLEMENTED,			/*	DeleteAllToDo		*/
+	NOTIMPLEMENTED,			/*	GetCalendarStatus	*/
+	NOTIMPLEMENTED,			/*	GetCalendar		*/
+    	NOTIMPLEMENTED,			/*  	GetNextCalendar		*/
+	NOTIMPLEMENTED,			/*	SetCalendar		*/
+	NOTIMPLEMENTED,			/*	AddCalendar		*/
+	NOTIMPLEMENTED,			/*	DeleteCalendar		*/
+	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNote			*/
+	NOTIMPLEMENTED, 		/*	GetProfile		*/
+	NOTIMPLEMENTED, 		/*	SetProfile		*/
+    	NOTIMPLEMENTED,			/*  	GetFMStation        	*/
+    	NOTIMPLEMENTED,			/*  	SetFMStation        	*/
+    	NOTIMPLEMENTED,			/*  	ClearFMStations       	*/
+	OBEXGEN_GetNextFileFolder,
+	OBEXGEN_GetFilePart,
+	OBEXGEN_AddFilePart,
+	NOTIMPLEMENTED, 		/* 	GetFileSystemStatus	*/
+	OBEXGEN_DeleteFile,
+	OBEXGEN_AddFolder,
+	NOTIMPLEMENTED,			/* 	GetGPRSAccessPoint	*/
+	NOTIMPLEMENTED			/* 	SetGPRSAccessPoint	*/
 };
 
 #endif

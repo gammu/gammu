@@ -15,14 +15,14 @@
 #include "n7110.h"
 #include "dct3func.h"
 
-static GSM_Error N7110_GetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int alarm_number)
+static GSM_Error N7110_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
-	return DCT3_GetAlarm(s, alarm, alarm_number, 0x19);
+	return DCT3_GetAlarm(s, alarm, 0x19);
 }
 
-static GSM_Error N7110_SetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int alarm_number)
+static GSM_Error N7110_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
-	return DCT3_SetAlarm(s, alarm, alarm_number, 0x19);
+	return DCT3_SetAlarm(s, alarm, 0x19);
 }
 
 static GSM_Error N7110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -39,7 +39,7 @@ static GSM_Error N7110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 	return GE_UNKNOWN;
 }
 
-static GSM_Error N7110_GetMemory (GSM_StateMachine *s, GSM_PhonebookEntry *entry)
+static GSM_Error N7110_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	unsigned char req[] = {
 		N7110_FRAME_HEADER, 0x07, 0x01, 0x01, 0x00, 0x01,
@@ -239,8 +239,7 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 		case 0x00:
 		case 0x01:
 			smprintf(s, "SMS message\n");
-			if (Data->RequestID == ID_GetSMSMessage) 
-			{
+			if (Data->RequestID == ID_GetSMSMessage) {
 				Data->GetSMSMessage->Number=1;
 				NOKIA_DecodeSMSState(s, msg.Buffer[4], &Data->GetSMSMessage->SMS[0]);
 				DCT3_DecodeSMSFrame(s, &Data->GetSMSMessage->SMS[0],msg.Buffer+9);
@@ -248,8 +247,7 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 			}
 		case 0x02:
 			smprintf(s, "SMS template\n");
-			if (Data->RequestID == ID_GetSMSMessage) 
-			{
+			if (Data->RequestID == ID_GetSMSMessage) {
 				Data->GetSMSMessage->Number=1;
 				NOKIA_DecodeSMSState(s, msg.Buffer[4], &Data->GetSMSMessage->SMS[0]);
 				Data->GetSMSMessage->SMS[0].PDU=SMS_Submit;
@@ -588,7 +586,7 @@ static GSM_Error N7110_GetPictureImage(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 
 static GSM_Error N7110_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
-	GSM_PhonebookEntry	pbk;
+	GSM_MemoryEntry	pbk;
 	GSM_Error		error;
 	unsigned char		OpReq[] = {N6110_FRAME_HEADER, 0x70};
 
@@ -708,7 +706,7 @@ static GSM_Error N7110_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 	return GE_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N7110_SaveSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
+static GSM_Error N7110_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	int			length, location;
 	unsigned char		folderid, folder;
@@ -733,18 +731,20 @@ static GSM_Error N7110_SaveSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	req[6] = location / 256;
 	req[7] = location;
 
+	/* Outbox */
+	if (folderid == 0x10 && (sms->State == GSM_Sent || sms->State == GSM_UnSent)) {
+		/* We will use SIM Outbox */
+		sms->PDU = SMS_Submit;
+	}
+	/* Inbox */
+	if (folderid == 0x08 && sms->State == GSM_UnRead) {
+		/* We will use SIM Inbox */
+		req[5] = 0xf8;
+	}
+
 	switch (sms->PDU) {
 	case SMS_Deliver:
 		error = PHONE_EncodeSMSFrame(s,sms,req+9,PHONE_SMSDeliver,&length,true);
-		/* Outbox */
-		if (folderid == 0x10) {
-			switch (sms->State) {
-				case GSM_Sent	: /* Have to use Read */
-				case GSM_Read	: req[4] = 0x01; break;
-				case GSM_UnSent	: /* Have to use UnRead */
-				case GSM_UnRead	: req[4] = 0x03; break;
-			}
-		}
 		break;
 	case SMS_Submit:
 		smprintf(s, "Saving SMS template\n");
@@ -775,6 +775,27 @@ static GSM_Error N7110_SaveSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		sms->Folder = folder;
 	}
 	return error;
+}
+
+static GSM_Error N7110_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
+{
+	int			location;
+	unsigned char		folderid;
+
+	N7110_GetSMSLocation(s, sms, &folderid, &location);
+	if (location == 0) return GE_INVALIDLOCATION;
+	return N7110_PrivSetSMSMessage(s, sms);
+}
+
+static GSM_Error N7110_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
+{
+	int			location;
+	unsigned char		folderid;
+
+	N7110_GetSMSLocation(s, sms, &folderid, &location);
+	location = 0;
+	N7110_SetSMSLocation(s, sms, folderid, location);
+	return N7110_PrivSetSMSMessage(s, sms);
 }
 
 static GSM_Error N7110_ReplyClearOperatorLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1029,7 +1050,7 @@ static GSM_Error N7110_ReplyDeleteMemory(GSM_Protocol_Message msg, GSM_StateMach
 	return GE_NONE;
 }
 
-static GSM_Error N7110_DeleteMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry, unsigned char *memory)
+static GSM_Error N7110_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	unsigned char req[] = {
 		N7110_FRAME_HEADER, 0x0f, 0x00, 0x01,
@@ -1041,14 +1062,14 @@ static GSM_Error N7110_DeleteMemory(GSM_StateMachine *s, GSM_PhonebookEntry *ent
 	req[12] = (entry->Location >> 8);
 	req[13] = entry->Location & 0xff;
 
-	req[14] = NOKIA_GetMemoryType(s, entry->MemoryType,memory);
+	req[14] = NOKIA_GetMemoryType(s, entry->MemoryType,N71_65_MEMORY_TYPES);
 	if (req[14]==0xff) return GE_NOTSUPPORTED;
 
 	smprintf(s, "Deleting phonebook entry\n");
 	return GSM_WaitFor (s, req, 18, 0x03, 4, ID_SetMemory);
 }
 
-static GSM_Error N7110_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
+static GSM_Error N7110_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	int 		count = 18, blocks;
 	unsigned char 	req[500] = {
@@ -1058,21 +1079,18 @@ static GSM_Error N7110_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 		0x00, 0x00, 0x00};
 
 	if (entry->Location == 0) return GE_NOTSUPPORTED;
-	if (entry->EntriesNum!=0) {
-		req[11] = NOKIA_GetMemoryType(s, entry->MemoryType,N71_65_MEMORY_TYPES);
-		if (req[11]==0xff) return GE_NOTSUPPORTED;
 
-		req[12] = (entry->Location >> 8);
-		req[13] = entry->Location & 0xff;
+	req[11] = NOKIA_GetMemoryType(s, entry->MemoryType,N71_65_MEMORY_TYPES);
+	if (req[11]==0xff) return GE_NOTSUPPORTED;
 
-		count = count + N71_65_EncodePhonebookFrame(s, req+18, *entry, &blocks, false, IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_VOICETAGS));
-		req[17] = blocks;
+	req[12] = (entry->Location >> 8);
+	req[13] = entry->Location & 0xff;
 
-		smprintf(s, "Writing phonebook entry\n");
-		return GSM_WaitFor (s, req, count, 0x03, 4, ID_SetMemory);
-	} else {
-		return N7110_DeleteMemory(s, entry, N71_65_MEMORY_TYPES);
-	}  
+	count = count + N71_65_EncodePhonebookFrame(s, req+18, *entry, &blocks, false, IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_VOICETAGS));
+	req[17] = blocks;
+
+	smprintf(s, "Writing phonebook entry\n");
+	return GSM_WaitFor (s, req, count, 0x03, 4, ID_SetMemory);
 }
 
 static GSM_Error N7110_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
@@ -1258,7 +1276,7 @@ static GSM_Error N7110_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 
 static GSM_Error N7110_GetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *SpeedDial)
 {
-	GSM_PhonebookEntry 	pbk;
+	GSM_MemoryEntry 	pbk;
 	GSM_Error		error;
 
 	pbk.MemoryType			= GMT7110_SP;
@@ -1336,10 +1354,24 @@ static GSM_Error N7110_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *
 //	return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N7110.LastCalendarYear,&s->Phone.Data.Priv.N7110.LastCalendarPos);
 }
 
-static GSM_Error N7110_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
+static GSM_Error N7110_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
 {
-//	return N71_65_AddCalendar1(s, Note, NULL, Past);
-	return N71_65_AddCalendar2(s,Note,Past);
+	GSM_Error error;
+
+        /* Method 1 */
+	error=N71_65_GetCalendarInfo1(s, &s->Phone.Data.Priv.N7110.LastCalendar);
+	if (error!=GE_NONE) return error;
+	Status->Used = s->Phone.Data.Priv.N6510.LastCalendar.Number;
+	return GE_NONE;
+
+    	/* Method 2 */
+//	return GE_NOTSUPPORTED;		
+}
+
+static GSM_Error N7110_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+{
+//	return N71_65_AddCalendar1(s, Note, NULL);
+	return N71_65_AddCalendar2(s,Note);
 }
 
 static GSM_Error N7110_ReplyGetNetworkInfoError(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1560,87 +1592,61 @@ GSM_Phone_Functions N7110Phone = {
 	N7110_Initialise,
 	PHONE_Terminate,
 	GSM_DispatchMessage,
+	NOTSUPPORTED,			/* 	ShowStartInfo		*/
+	NOKIA_GetManufacturer,
 	DCT3DCT4_GetModel,
 	DCT3DCT4_GetFirmware,
 	DCT3_GetIMEI,
+	DCT3_GetOriginalIMEI,
+	DCT3_GetManufactureMonth,
+	DCT3_GetProductCode,
+	DCT3_GetHardware,
+	DCT3_GetPPM,
+	NOTSUPPORTED,			/*	GetSIMIMSI		*/
 	N71_92_GetDateTime,
+	N71_92_SetDateTime,
 	N7110_GetAlarm,
-	N7110_GetMemory,
-	N7110_GetMemoryStatus,
-	DCT3_GetSMSC,
-	N7110_GetSMSMessage,
-	N7110_GetSMSFolders,
-	NOKIA_GetManufacturer,
-	N7110_GetNextSMSMessage,
-	N7110_GetSMSStatus,
-	N7110_SetIncomingSMS,
-	DCT3_GetNetworkInfo,
+	N7110_SetAlarm,
+	NOTSUPPORTED,			/* 	GetLocale		*/
+	NOTSUPPORTED,			/* 	SetLocale		*/
+	DCT3_PressKey,
 	DCT3_Reset,
+	N61_71_ResetPhoneSettings,
+	NOTSUPPORTED,			/*	EnterSecurityCode	*/
+	NOTSUPPORTED,			/*	GetSecurityStatus	*/
+	NOTSUPPORTED,			/*	GetDisplayStatus	*/
+	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
+	N71_92_GetBatteryCharge,
+	N71_92_GetSignalQuality,
+	DCT3_GetNetworkInfo,
+	NOTSUPPORTED,       		/*  	GetCategory 		*/
+        NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
+	N7110_GetMemoryStatus,
+	N7110_GetMemory,
+	NOTIMPLEMENTED,			/*	GetNextMemory		*/
+	N7110_SetMemory,
+	NOTIMPLEMENTED,			/*	AddMemory		*/
+	N7110_DeleteMemory,
+	NOTIMPLEMENTED,			/*	DeleteAllMemory		*/
+	N7110_GetSpeedDial,
+	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
+	DCT3_GetSMSC,
+	DCT3_SetSMSC,
+	N7110_GetSMSStatus,
+	N7110_GetSMSMessage,
+	N7110_GetNextSMSMessage,
+	N7110_SetSMS,
+	N7110_AddSMS,
+	N7110_DeleteSMS,
+	DCT3_SendSMSMessage,
+	N7110_SetIncomingSMS,
+	DCT3_SetIncomingCB,
+	N7110_GetSMSFolders,
+ 	NOTIMPLEMENTED,			/* 	AddSMSFolder		*/
+ 	NOTIMPLEMENTED,			/* 	DeleteSMSFolder		*/
 	DCT3_DialVoice,
 	N7110_AnswerCall,
 	DCT3_CancelCall,
-	N7110_GetRingtone,
-	DCT3DCT4_GetWAPBookmark,
-	N7110_GetBitmap,
-	N7110_SetRingtone,
-	N7110_SaveSMSMessage,
-	DCT3_SendSMSMessage,
-	N71_92_SetDateTime,
-	N7110_SetAlarm,
-	N7110_SetBitmap,
-	N7110_SetMemory,
-	N7110_DeleteSMS,
-	DCT3_SetWAPBookmark,
-	DCT3DCT4_DeleteWAPBookmark,
-	DCT3_GetWAPSettings,
-	DCT3_SetIncomingCB,
-	DCT3_SetSMSC,
-	DCT3_GetManufactureMonth,
-	DCT3_GetProductCode,
-	DCT3_GetOriginalIMEI,
-	DCT3_GetHardware,
-	DCT3_GetPPM,
-	DCT3_PressKey,
-	NOTSUPPORTED,			/*	GetToDo			*/
-	NOTSUPPORTED,			/*	DeleteAllToDo		*/
-	NOTSUPPORTED,			/*	SetToDo			*/
-	NOTSUPPORTED,			/*	GetToDoStatus		*/
-	DCT3_PlayTone,
-	NOTSUPPORTED,			/*	EnterSecurityCode	*/
-	NOTSUPPORTED,			/*	GetSecurityStatus	*/
-	N7110_GetProfile,
-	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
-	DCT3_SetWAPSettings,
-	N7110_GetSpeedDial,
-	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
-	N61_71_ResetPhoneSettings,
-	DCT3DCT4_SendDTMF,
-	NOTSUPPORTED,			/*	GetDisplayStatus	*/
-	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
-	N7110_SetProfile,
-	NOTSUPPORTED,			/*	GetSIMIMSI		*/
-	N7110_SetIncomingCall,
-    	N7110_GetNextCalendar,
-	N71_65_DelCalendar,
-	N7110_AddCalendar,
-	N71_92_GetBatteryCharge,
-	N71_92_GetSignalQuality,
-	NOTSUPPORTED,       		/*  	GetCategory 		*/
-        NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
-    	NOTSUPPORTED,			/*  	GetFMStation        	*/
-    	NOTSUPPORTED,			/*  	SetFMStation        	*/
-	NOTSUPPORTED,			/*  	ClearFMStations       	*/
-	N7110_SetIncomingUSSD,  	
-	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
-	NOTSUPPORTED,			/* 	ShowStartInfo		*/
-	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
-	NOTSUPPORTED,			/*	GetFilePart		*/
-	NOTSUPPORTED,			/* 	AddFile			*/
-	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
-	NOTSUPPORTED,			/*	DeleteFile		*/
-	NOTSUPPORTED,			/*	AddFolder		*/
-	NOTSUPPORTED,			/* 	GetMMSSettings		*/
-	NOTSUPPORTED,			/* 	SetMMSSettings		*/
  	NOTIMPLEMENTED,			/* 	HoldCall 		*/
  	NOTIMPLEMENTED,			/* 	UnholdCall 		*/
  	NOTIMPLEMENTED,			/* 	ConferenceCall 		*/
@@ -1650,15 +1656,53 @@ GSM_Phone_Functions N7110Phone = {
  	NOTSUPPORTED,			/*	GetCallDivert		*/
  	N7110_SetCallDivert,
  	N7110_CancelAllDiverts,
- 	NOTIMPLEMENTED,			/* 	AddSMSFolder		*/
- 	NOTIMPLEMENTED,			/* 	DeleteSMSFolder		*/
-	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	NOTSUPPORTED,			/* 	GetLocale		*/
-	NOTSUPPORTED,			/* 	SetLocale		*/
+	N7110_SetIncomingCall,
+	N7110_SetIncomingUSSD,  	
+	DCT3DCT4_SendDTMF,
+	N7110_GetRingtone,
+	N7110_SetRingtone,
+	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
+	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
+	DCT3_PlayTone,
+	DCT3DCT4_GetWAPBookmark,
+	DCT3_SetWAPBookmark,
+	DCT3DCT4_DeleteWAPBookmark,
+	DCT3_GetWAPSettings,
+	DCT3_SetWAPSettings,
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	N7110_GetBitmap,
+	N7110_SetBitmap,
+	NOTSUPPORTED,			/*	GetToDoStatus		*/
+	NOTSUPPORTED,			/*	GetToDo			*/
+	NOTSUPPORTED,			/*	GetNextToDo		*/
+	NOTSUPPORTED,			/*	SetToDo			*/
+	NOTSUPPORTED,			/*	AddToDo			*/
+	NOTSUPPORTED,			/*	DeleteToDo		*/
+	NOTSUPPORTED,			/*	DeleteAllToDo		*/
+	N7110_GetCalendarStatus,
+	NOTIMPLEMENTED,			/*	GetCalendar		*/
+    	N7110_GetNextCalendar,
+	NOTIMPLEMENTED,			/*	SetCalendar		*/
+	N7110_AddCalendar,
+	N71_65_DelCalendar,
+	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNote			*/
+	N7110_GetProfile,
+	N7110_SetProfile,
+    	NOTSUPPORTED,			/*  	GetFMStation        	*/
+    	NOTSUPPORTED,			/*  	SetFMStation        	*/
+	NOTSUPPORTED,			/*  	ClearFMStations       	*/
+	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/*	GetFilePart		*/
+	NOTSUPPORTED,			/* 	AddFile			*/
+	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
+	NOTSUPPORTED,			/*	DeleteFile		*/
+	NOTSUPPORTED,			/*	AddFolder		*/
+	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };
 
 #endif

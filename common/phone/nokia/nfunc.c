@@ -39,7 +39,7 @@ int N71_65_PackPBKBlock(GSM_StateMachine *s, int id, int size, int no, unsigned 
 	return (size + 6);
 }
 
-int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_PhonebookEntry entry, int *block2, bool DCT4, bool VoiceTag)
+int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry entry, int *block2, bool DCT4, bool VoiceTag)
 {
 	int		count=0, len, i, block=0;
 	char		string[500];
@@ -146,7 +146,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Pho
 }
 
 GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
-				 GSM_PhonebookEntry 	*entry,
+				 GSM_MemoryEntry 	*entry,
 				 GSM_Bitmap 		*bitmap,
 				 GSM_SpeedDial 		*speed,
 				 unsigned char 		*MessageBuffer,
@@ -974,7 +974,7 @@ GSM_Error N71_65_ReplyGetMemoryError(unsigned char error, GSM_StateMachine *s)
 	case 0x33:
 		smprintf(s, "Empty location\n");
 		s->Phone.Data.Memory->EntriesNum = 0;
-		return GE_NONE;
+		return GE_EMPTY;
 	case 0x34:
 		smprintf(s, "Too high location ?\n");
 		return GE_INVALIDLOCATION;
@@ -994,6 +994,9 @@ GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine 
 		case 0x36:
 			smprintf(s, "Too long name\n");
 			return GE_NOTSUPPORTED;
+		case 0x3c:
+			smprintf(s, "Can not add entry with 0 subentries\n");
+			return GE_NOTSUPPORTED;			
 		case 0x3d:
 			smprintf(s, "Wrong entry type\n");
 			return GE_NOTSUPPORTED;
@@ -1315,7 +1318,7 @@ GSM_Error N71_65_ReplyAddCalendar2(GSM_Protocol_Message msg, GSM_StateMachine *s
 }
 
 /* method 2 */
-GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
+GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_CalendarNoteType	NoteType;
 	time_t     		t_time1,t_time2;
@@ -1335,8 +1338,6 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 		0x00,0x00,			/* recurrance */
 		0x00,0x00,0x00,0x00,
 		0x00,0x00,0x00,0x00};		/* rest depends on note type */
-
-	if (!Past && IsCalendarNoteFromThePast(Note)) return GE_NONE;
 
  	NoteType = N71_65_FindCalendarType(Note->Type, s->Phone.Data.ModelInfo);
 
@@ -1505,7 +1506,7 @@ GSM_Error N71_65_ReplyAddCalendar1(GSM_Protocol_Message msg, GSM_StateMachine *s
 }
 
 /* method 1 */
-GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *FirstCalendarPos, bool Past)
+GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *FirstCalendarPos)
 {
 	long			seconds;
  	GSM_Error		error;
@@ -1520,8 +1521,6 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		0x00, 0x00, 0x00, 0x00,		/* Year(2bytes), Month, Day */
 		/* here starts block ... depends on note type */
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00};                          
-
-	if (!Past && IsCalendarNoteFromThePast(Note)) return GE_NONE;
 
 	error=N71_65_GetCalendarNotePos1(s);
 	if (error!=GE_NONE) return error;
@@ -1719,7 +1718,7 @@ GSM_Error N71_65_ReplyGetCalendarInfo1(GSM_Protocol_Message msg, GSM_StateMachin
 }
 
 /* method 1 */
-static GSM_Error N71_65_GetCalendarInfo1(GSM_StateMachine *s, GSM_NOKIACalToDoLocations *LastCalendar)
+GSM_Error N71_65_GetCalendarInfo1(GSM_StateMachine *s, GSM_NOKIACalToDoLocations *LastCalendar)
 {
 	GSM_Error	error;
 	int		i;

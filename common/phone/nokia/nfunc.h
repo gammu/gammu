@@ -37,9 +37,10 @@ GSM_Error NOKIA_SetIncomingCall			(GSM_StateMachine *s, bool enable);
 GSM_Error NOKIA_SetIncomingUSSD			(GSM_StateMachine *s, bool enable);
 GSM_Error N71_65_EnableFunctions		(GSM_StateMachine *s, char *buff,int len);
 GSM_Error N71_65_GetNextCalendar1		(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, GSM_NOKIACalToDoLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos);
-GSM_Error N71_65_AddCalendar2			(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past);
-GSM_Error N71_65_AddCalendar1			(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *FirstCalendarPos, bool Past);
+GSM_Error N71_65_AddCalendar2			(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+GSM_Error N71_65_AddCalendar1			(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *FirstCalendarPos);
 GSM_Error N71_65_DelCalendar			(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+GSM_Error N71_65_GetCalendarInfo1		(GSM_StateMachine *s, GSM_NOKIACalToDoLocations *LastCalendar);
 GSM_Error DCT3DCT4_SendDTMF			(GSM_StateMachine *s, char *sequence);
 GSM_Error DCT3DCT4_DeleteWAPBookmark		(GSM_StateMachine *s, GSM_WAPBookmark 	  *bookmark);
 GSM_Error DCT3DCT4_EnableWAP			(GSM_StateMachine *s);
@@ -79,12 +80,12 @@ bool NOKIA_FindPhoneFeatureValue(GSM_StateMachine		*s,
   			    	 unsigned char 			*PhoneValue);
   
 GSM_Error N71_65_DecodePhonebook		(GSM_StateMachine	*s,
-						 GSM_PhonebookEntry 	*entry,
+						 GSM_MemoryEntry 	*entry,
   				 		 GSM_Bitmap 		*bitmap,
   				 		 GSM_SpeedDial 		*speed,
   				 		 unsigned char 		*MessageBuffer,
   				 		 int 			MessageLength);
-int 		N71_65_EncodePhonebookFrame	(GSM_StateMachine *s, unsigned char *req, GSM_PhonebookEntry entry, int *block2, bool DCT4, bool VoiceTag);
+int 		N71_65_EncodePhonebookFrame	(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry entry, int *block2, bool DCT4, bool VoiceTag);
 int 		N71_65_PackPBKBlock		(GSM_StateMachine *s, int id, int size, int no, unsigned char *buf, unsigned char *block);
 
 #endif

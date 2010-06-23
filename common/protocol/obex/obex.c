@@ -3,10 +3,10 @@
 
 #include "../../gsmstate.h"
 
-#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
-
 #include <stdio.h>
 #include <string.h>
+
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 
 #include "../../gsmcomon.h"
 #include "obex.h"

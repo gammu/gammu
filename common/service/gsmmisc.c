@@ -213,6 +213,7 @@ bool ReadVCALText(char *Buffer, char *Start, char *Value)
 	unsigned char buff[200];
 
 	Value[0] = 0x00;
+	Value[1] = 0x00;
 
 	strcpy(buff,Start);
 	strcat(buff,":");

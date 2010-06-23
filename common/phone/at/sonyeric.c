@@ -13,10 +13,14 @@
 extern GSM_Reply_Function 		ATGENReplyFunctions[];
 extern GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *s);
 
+#ifdef GSM_ENABLE_OBEXGEN
+
 extern GSM_Reply_Function 		OBEXGENReplyFunctions[];
 extern GSM_Error OBEXGEN_GetFilePart	(GSM_StateMachine *s, GSM_File *File);
 extern GSM_Error OBEXGEN_AddFilePart	(GSM_StateMachine *s, GSM_File *File, int *Pos);
 extern GSM_Error OBEXGEN_Disconnect	(GSM_StateMachine *s);
+
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 
 static GSM_Error SONYERIC_SetOBEXMode(GSM_StateMachine *s)
 {
@@ -28,6 +32,9 @@ static GSM_Error SONYERIC_SetOBEXMode(GSM_StateMachine *s)
 	dprintf ("Changing to OBEX\n");
 
 	error=GSM_WaitFor (s, "AT*EOBEX\r", 9, 0x00, 4, ID_SetOBEX);
+	if (error != GE_NONE) return error;
+
+	error = s->Protocol.Functions->Terminate(s);
 	if (error != GE_NONE) return error;
 
 	s->Protocol.Functions = &OBEXProtocol;
@@ -56,6 +63,9 @@ static GSM_Error SONYERIC_SetATMode(GSM_StateMachine *s)
 	error = OBEXGEN_Disconnect(s);
 	if (error != GE_NONE) return error;
 
+	error = s->Protocol.Functions->Terminate(s);
+	if (error != GE_NONE) return error;
+
 	s->Protocol.Functions = &ATProtocol;
 	error = s->Protocol.Functions->Initialise(s);
 	if (error != GE_NONE) {
@@ -69,55 +79,89 @@ static GSM_Error SONYERIC_SetATMode(GSM_StateMachine *s)
 	return GE_NONE;
 }
 
+static GSM_Error SONYERIC_GetFile(GSM_StateMachine *s, GSM_File *File, unsigned char *FileName)
+{
+	GSM_Error error;
+
+	strcpy(File->ID_FullName,FileName);
+	File->Used 	= 0;
+	if (File->Buffer != NULL) free(File->Buffer);
+	File->Buffer 	= NULL;
+
+	error = SONYERIC_SetOBEXMode(s);
+	if (error != GE_NONE) return error;
+
+	error = GE_NONE;
+	while (error == GE_NONE) error = OBEXGEN_GetFilePart(s,File);
+	if (error != GE_EMPTY) return error;
+
+	return SONYERIC_SetATMode(s);
+}
+
+static GSM_Error SONYERIC_SetFile(GSM_StateMachine *s, unsigned char *FileName, unsigned char *Buffer, int Length)
+{
+	GSM_Error	error;
+	GSM_File 	File;
+	int		Pos = 0;
+
+	error = SONYERIC_SetOBEXMode(s);
+	if (error != GE_NONE) return error;
+
+	strcpy(File.ID_FullName,FileName);
+	EncodeUnicode(File.Name,FileName,strlen(FileName));
+	File.Used 	= Length;
+	File.Buffer 	= malloc(Length);
+	memcpy(File.Buffer,Buffer,Length);
+
+	error = GE_NONE;
+	while (error == GE_NONE) error = OBEXGEN_AddFilePart(s,&File,&Pos);
+	free(File.Buffer);
+	if (error != GE_EMPTY) return error;
+
+	return SONYERIC_SetATMode(s);
+}
+
+#endif
+
 GSM_Error SONYERIC_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Error		error;
 	GSM_ToDoEntry		ToDo;
 	int			Pos, num, Loc;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (start) {
-		error = SONYERIC_SetOBEXMode(s);
+		error = SONYERIC_GetFile(s, &Priv->file, "telecom/cal.vcs");
 		if (error != GE_NONE) return error;
 
-		strcpy(Priv->file.ID_FullName,"telecom/cal.vcs");
-		free(Priv->file.Buffer);
-		Priv->file.Used 	= 0;
-		Priv->file.Buffer 	= NULL;
-
-		error = GE_NONE;
-		while (error == GE_NONE) error = OBEXGEN_GetFilePart(s,&Priv->file);
-		if (error != GE_EMPTY) return error;
-
-		error = SONYERIC_SetATMode(s);
-		if (error != GE_NONE) return error;
-
-		Loc = 1;
+		Note->Location = 1;
 	} else {
-		Loc = Note->Location+1;
+		Note->Location++;
 	}
+	smprintf(s, "Getting calendar note %i\n",Note->Location);
 
+	Loc = Note->Location;
 	Pos = 0;
 	num = 0;
 	while (1) {
-		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, Note, &ToDo, Nokia_VCalendar, Nokia_VToDo);
+		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, Note, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 		if (error == GE_EMPTY) break;
 		if (error != GE_NONE) return error;
 		if (Note->EntriesNum != 0) {			
 			num++;
-			if (num == Loc) {
-				Note->Location = Loc;
-				return GE_NONE;
-			}
+			if (num == Loc) return GE_NONE;
 		}
 	}
-	
-	Note->Location = Loc;
 	return GE_EMPTY;
+#else
+	return GE_SOURCENOTAVAILABLE;
+#endif
 }
 
-GSM_Error SONYERIC_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refresh)
+GSM_Error SONYERIC_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
 {
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Error		error;
 	GSM_CalendarEntry	Calendar;
 	int			Pos, num, Loc;
@@ -125,28 +169,21 @@ GSM_Error SONYERIC_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refres
 
 	if (Priv->Manufacturer!=AT_Ericsson) return GE_NOTSUPPORTED;
 
-	if (refresh) {
-		error = SONYERIC_SetOBEXMode(s);
+	if (start) {
+		error = SONYERIC_GetFile(s, &Priv->file, "telecom/cal.vcs");
 		if (error != GE_NONE) return error;
 
-		strcpy(Priv->file.ID_FullName,"telecom/cal.vcs");
-		free(Priv->file.Buffer);
-		Priv->file.Used 	= 0;
-		Priv->file.Buffer 	= NULL;
-
-		error = GE_NONE;
-		while (error == GE_NONE) error = OBEXGEN_GetFilePart(s,&Priv->file);
-		if (error != GE_EMPTY) return error;
-
-		error = SONYERIC_SetATMode(s);
-		if (error != GE_NONE) return error;
+		ToDo->Location = 1;
+	} else {
+		ToDo->Location++;
 	}
+	smprintf(s,"Getting ToDo %i\n",ToDo->Location);
 
-	Loc = ToDo->Location;
+	Loc = ToDo->Location;	
 	Pos = 0;
 	num = 0;
 	while (1) {
-		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, &Calendar, ToDo, Nokia_VCalendar, SonyEricsson_VToDo);
+		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, &Calendar, ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 		if (error == GE_EMPTY) break;
 		if (error != GE_NONE) return error;
 		if (ToDo->EntriesNum != 0) {			
@@ -154,11 +191,16 @@ GSM_Error SONYERIC_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refres
 			if (num == Loc) return GE_NONE;
 		}
 	}
-	return GE_INVALIDLOCATION;
+
+	return GE_EMPTY;
+#else
+	return GE_SOURCENOTAVAILABLE;
+#endif
 }
 
 GSM_Error SONYERIC_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Error		error;
 	GSM_ToDoEntry		ToDo;
 	GSM_CalendarEntry 	Calendar;
@@ -167,119 +209,80 @@ GSM_Error SONYERIC_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 
 	if (Priv->Manufacturer!=AT_Ericsson) return GE_NOTSUPPORTED;
 
-	error = SONYERIC_SetOBEXMode(s);
-	if (error != GE_NONE) return error;
+	smprintf(s,"Getting ToDo status\n");
 
-	strcpy(Priv->file.ID_FullName,"telecom/cal.vcs");
-	free(Priv->file.Buffer);
-	Priv->file.Used 	= 0;
-	Priv->file.Buffer 	= NULL;
-
-	error = GE_NONE;
-	while (error == GE_NONE) error = OBEXGEN_GetFilePart(s,&Priv->file);
-	if (error != GE_EMPTY) return error;
-
-	error = SONYERIC_SetATMode(s);
+	error = SONYERIC_GetFile(s, &Priv->file, "telecom/cal.vcs");
 	if (error != GE_NONE) return error;
 
 	status->Used 	= 0;
 	Pos 		= 0;
 	while (1) {
-		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
+		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, &Calendar, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 		if (error == GE_EMPTY) break;
 		if (error != GE_NONE) return error;
 		if (ToDo.EntriesNum != 0) status->Used++;
 	}
 	
 	return GE_NONE;
+#else
+	return GE_SOURCENOTAVAILABLE;
+#endif
 }
 
-GSM_Error SONYERIC_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
+GSM_Error SONYERIC_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	GSM_Error		error;
-	unsigned char 		req[500];
-	int			size=0,Pos=0;
-	GSM_File		File;
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
+	unsigned char 		req[5000];
+	int			size=0;
 
-//	if (Note->Location==0x00) return GE_INVALIDLOCATION;	
+	smprintf(s,"Adding calendar note\n");
 
-	if (!Past && IsCalendarNoteFromThePast(Note)) return GE_NONE;
+	GSM_EncodeVCALENDAR(req,&size,Note,true,SonyEricsson_VCalendar);
 
-	error=GSM_EncodeVCALENDAR(req,&size,Note,true,SonyEricsson_VCalendar);
-
-	error = SONYERIC_SetOBEXMode(s);
-	if (error != GE_NONE) return error;
-
-	strcpy(File.ID_FullName,"telecom/cal/luid/.vcs");
-	EncodeUnicode(File.Name,"telecom/cal/luid/.vcs",21);
-	File.Used 	= size;
-	File.Buffer 	= malloc(size);
-	memcpy(File.Buffer,req,size);
-	dprintf("adding file %i\n",size);
-
-	error = GE_NONE;
-	while (error == GE_NONE) error = OBEXGEN_AddFilePart(s,&File,&Pos);
-	if (error != GE_EMPTY) return error;
-
-	return SONYERIC_SetATMode(s);
+	return SONYERIC_SetFile(s, "telecom/cal/luid/.vcs", req, size);
+#else
+	return GE_SOURCENOTAVAILABLE;
+#endif
 }
 
-GSM_Error SONYERIC_SetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
+GSM_Error SONYERIC_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
-	GSM_Error		error;
-	unsigned char 		req[500];
-	int			size=0,Pos=0;
-	GSM_File		File;
+	unsigned char 		req[5000];
+	int			size=0;
 
-	if (ToDo->Location!=0x00) return GE_NOTSUPPORTED;	
 	if (Priv->Manufacturer!=AT_Ericsson) return GE_NOTSUPPORTED;
 
-	error=GSM_EncodeVTODO(req,&size,ToDo,true,SonyEricsson_VToDo);
+	smprintf(s,"Adding ToDo\n");
 
-	error = SONYERIC_SetOBEXMode(s);
-	if (error != GE_NONE) return error;
+	GSM_EncodeVTODO(req,&size,ToDo,true,SonyEricsson_VToDo);
 
-	strcpy(File.ID_FullName,"telecom/cal/luid/.vcs");
-	EncodeUnicode(File.Name,"telecom/cal/luid/.vcs",21);
-	File.Used 	= size;
-	File.Buffer 	= malloc(size);
-	memcpy(File.Buffer,req,size);
-	dprintf("adding file %i\n",size);
-
-	error = GE_NONE;
-	while (error == GE_NONE) error = OBEXGEN_AddFilePart(s,&File,&Pos);
-	if (error != GE_EMPTY) return error;
-
-	return SONYERIC_SetATMode(s);
+	return SONYERIC_SetFile(s, "telecom/cal/luid/.vcs", req, size);
+#else
+	return GE_SOURCENOTAVAILABLE;
+#endif
 }
 
 GSM_Error SONYERIC_DeleteAllToDo(GSM_StateMachine *s)
 {
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Error		error;
-	int			Pos,Level = 0;
+	int			Pos,Level = 0,Used;
+	unsigned char		*Buf;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char 		Line[2000];
-	GSM_File		File2;
 
 	if (Priv->Manufacturer!=AT_Ericsson) return GE_NOTSUPPORTED;
 
-	error = SONYERIC_SetOBEXMode(s);
+	smprintf(s,"Deleting all ToDo\n");
+
+	error = SONYERIC_GetFile(s, &Priv->file, "telecom/cal.vcs");
 	if (error != GE_NONE) return error;
 
-	strcpy(Priv->file.ID_FullName,"telecom/cal.vcs");
-	free(Priv->file.Buffer);
-	Priv->file.Used 	= 0;
-	Priv->file.Buffer 	= NULL;
-
-	error = GE_NONE;
-	while (error == GE_NONE) error = OBEXGEN_GetFilePart(s,&Priv->file);
-	if (error != GE_EMPTY) return error;
-
-	File2.Used 	= 0;
-	File2.Buffer 	= NULL;
-
-	Pos = 0;
+	Pos  = 0;
+	Buf  = NULL;
+	Used = 0;
 	while (1) {
 		MyGetLine(Priv->file.Buffer, &Pos, Line, Priv->file.Used);
 		if (strlen(Line) == 0) break;
@@ -290,12 +293,12 @@ GSM_Error SONYERIC_DeleteAllToDo(GSM_StateMachine *s)
 				Level = 2;
 				break;
 			}
-			File2.Buffer=(unsigned char *)realloc(File2.Buffer,File2.Used+strlen(Line)+2);
-			strcpy(File2.Buffer+File2.Used,Line);
-			File2.Used=File2.Used+strlen(Line)+2;
-			File2.Buffer[File2.Used] = 0x00;
-			File2.Buffer[File2.Used-2] = 13;
-			File2.Buffer[File2.Used-1] = 10;
+			Buf=(unsigned char *)realloc(Buf,Used+strlen(Line)+3);
+			strcpy(Buf+Used,Line);
+			Used=Used+strlen(Line)+3;
+			Buf[Used-3] = 13;
+			Buf[Used-2] = 10;
+			Buf[Used-1] = 0x00;
 			break;
 		case 2: /* ToDo note */
 			if (strstr(Line,"END:VTODO")) {
@@ -305,45 +308,31 @@ GSM_Error SONYERIC_DeleteAllToDo(GSM_StateMachine *s)
 		}
 	}
 
-//	DumpMessage(stdout, File2.Buffer, File2.Used);
-
-	strcpy(File2.ID_FullName,"telecom/cal.vcs");
-	EncodeUnicode(File2.Name,"telecom/cal.vcs",15);
-	Pos   = 0;
-	error = GE_NONE;
-	while (error == GE_NONE) error = OBEXGEN_AddFilePart(s,&File2,&Pos);
-	if (error != GE_EMPTY) return error;
-
-	error = SONYERIC_SetATMode(s);
-	if (error != GE_NONE) return error;
-
-	return GE_NONE;
+	error = SONYERIC_SetFile(s, "telecom/cal.vcs", Buf, Used);
+//	if (Buf != NULL) free(Buf);
+	return error;
+#else
+	return GE_SOURCENOTAVAILABLE;
+#endif
 }
 
 GSM_Error SONYERIC_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Error		error;
-	int			Pos,Level = 0,Loc=0;
+	int			Pos,Level = 0,Loc=0,Used;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char 		Line[2000];
-	GSM_File		File2;
+	unsigned char		*Buf;
 
-	error = SONYERIC_SetOBEXMode(s);
+	smprintf(s, "Deleting calendar note %i\n",Note->Location);
+
+	error = SONYERIC_GetFile(s, &Priv->file, "telecom/cal.vcs");
 	if (error != GE_NONE) return error;
 
-	strcpy(Priv->file.ID_FullName,"telecom/cal.vcs");
-	free(Priv->file.Buffer);
-	Priv->file.Used 	= 0;
-	Priv->file.Buffer 	= NULL;
-
-	error = GE_NONE;
-	while (error == GE_NONE) error = OBEXGEN_GetFilePart(s,&Priv->file);
-	if (error != GE_EMPTY) return error;
-
-	File2.Used 	= 0;
-	File2.Buffer 	= NULL;
-
-	Pos = 0;
+	Pos  = 0;
+	Buf  = NULL;
+	Used = 0;
 	while (1) {
 		MyGetLine(Priv->file.Buffer, &Pos, Line, Priv->file.Used);
 		if (strlen(Line) == 0) break;
@@ -357,12 +346,12 @@ GSM_Error SONYERIC_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 					break;
 				}
 			}
-			File2.Buffer=(unsigned char *)realloc(File2.Buffer,File2.Used+strlen(Line)+2);
-			strcpy(File2.Buffer+File2.Used,Line);
-			File2.Used=File2.Used+strlen(Line)+2;
-			File2.Buffer[File2.Used] = 0x00;
-			File2.Buffer[File2.Used-2] = 13;
-			File2.Buffer[File2.Used-1] = 10;
+			Buf=(unsigned char *)realloc(Buf,Used+strlen(Line)+3);
+			strcpy(Buf+Used,Line);
+			Used=Used+strlen(Line)+3;
+			Buf[Used-3] = 13;
+			Buf[Used-2] = 10;
+			Buf[Used-1] = 0x00;
 			break;
 		case 1: /* Calendar note */
 			if (strstr(Line,"END:VEVENT")) {
@@ -372,21 +361,49 @@ GSM_Error SONYERIC_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 		}
 	}
 
-//	DumpMessage(stdout, File2.Buffer, File2.Used);
+	DumpMessage(stderr,Buf,Used);
+	fflush(stderr);
 
-	strcpy(File2.ID_FullName,"telecom/cal.vcs");
-	EncodeUnicode(File2.Name,"telecom/cal.vcs",15);
-	Pos   = 0;
-	error = GE_NONE;
-	while (error == GE_NONE) error = OBEXGEN_AddFilePart(s,&File2,&Pos);
-	if (error != GE_EMPTY) return error;
-
-	error = SONYERIC_SetATMode(s);
-	if (error != GE_NONE) return error;
-
-	return GE_NONE;
+	error = SONYERIC_SetFile(s, "telecom/cal.vcs", Buf, Used);
+	if (Buf != NULL) free(Buf);
+	return error;
+#else
+	return GE_SOURCENOTAVAILABLE;
+#endif
 }
 
+GSM_Error SONYERIC_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
+{
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
+	GSM_Error		error;
+	GSM_ToDoEntry		ToDo;
+	GSM_CalendarEntry 	Calendar;
+	int			Pos;
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (Priv->Manufacturer!=AT_Ericsson) return GE_NOTSUPPORTED;
+
+	smprintf(s, "Getting calendar status\n");
+
+	error = SONYERIC_GetFile(s, &Priv->file, "telecom/cal.vcs");
+	if (error != GE_NONE) return error;
+
+	Status->Used 	= 0;
+	Pos  		= 0;
+	while (1) {
+		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, &Calendar, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+		if (error == GE_EMPTY) break;
+		if (error != GE_NONE) return error;
+		if (Calendar.EntriesNum != 0) Status->Used++;
+	}
+	
+	return GE_NONE;
+#else
+	return GE_SOURCENOTAVAILABLE;
+#endif
+}
+
+#endif
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

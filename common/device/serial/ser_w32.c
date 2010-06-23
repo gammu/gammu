@@ -60,6 +60,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		RegQueryValueEx(hKey, "\\Device\\AtmelVirtualPort000", NULL, NULL, (LPBYTE) DeviceName, &DeviceNameLen);
 		RegCloseKey(hKey);
 		if (strlen(DeviceName) == 0) return GE_DEVICENOTWORK;
+		smprintf(s,"DKU5 device is \"%s\"\n",DeviceName);
 		//nodriver
 	}
 #endif

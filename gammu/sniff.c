@@ -11,6 +11,7 @@
 #include "../common/phone/nokia/nfunc.h"
 #include "../common/misc/misc.h"
 #include "../common/gsmcomon.h"
+#include "../common/service/gsmcal.h"
 #include "gammu.h"
 
 static GSM_Protocol_MBUS2Data	MBUS2Data;
@@ -206,8 +207,8 @@ static void DecodeInputIRDA(unsigned char rx_byte)
 
 static char				IMEI[50];
 static GSM_DateTime			DateTime;
-static GSM_DateTime			Alarm;
-static GSM_PhonebookEntry		Memory;
+static GSM_Alarm			Alarm;
+static GSM_MemoryEntry			Memory;
 static GSM_MemoryStatus			MemoryStatus;
 static GSM_SMSC				SMSC;
 static GSM_MultiSMSMessage		GetSMSMessage;

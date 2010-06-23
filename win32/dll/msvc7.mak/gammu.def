@@ -14,7 +14,7 @@ EXPORTS
 	mydeletesmsmessage	@7
 	mysendsmsmessage	@8
 	mygetsmsstatus		@9
-	mysavesmsmessage	@10
+	myaddsmsmessage		@10
 	mygetnetworkname	@11
 	mygetgammuversion	@12
 

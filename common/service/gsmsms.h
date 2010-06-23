@@ -332,7 +332,7 @@ typedef struct {
 	GSM_WAPBookmark		*Bookmark;
 	GSM_WAPSettings		*Settings;
 	GSM_MMSIndicator	*MMSIndicator;
-	GSM_PhonebookEntry	*Phonebook;
+	GSM_MemoryEntry	*Phonebook;
 	GSM_CalendarEntry	*Calendar;
 	GSM_ToDoEntry		*ToDo;
 	bool			Protected;

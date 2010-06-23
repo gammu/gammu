@@ -547,11 +547,11 @@ typedef struct {
 	/**
 	 * Pointer to structure used internally by phone drivers.
 	 */
-	GSM_DateTime		*Alarm;
+	GSM_Alarm		*Alarm;
 	/**
 	 * Pointer to structure used internally by phone drivers.
 	 */
-	GSM_PhonebookEntry	*Memory;
+	GSM_MemoryEntry		*Memory;
 	/**
 	 * Pointer to structure used internally by phone drivers.
 	 */
@@ -816,6 +816,11 @@ typedef struct {
 	 */
 	GSM_Error (*DispatchMessage)	(GSM_StateMachine *s);
 	/**
+	 * Reads manufacturer from phone.
+	 */
+	GSM_Error (*ShowStartInfo)	(GSM_StateMachine *s, bool 		    enable	);
+	GSM_Error (*GetManufacturer)	(GSM_StateMachine *s);
+	/**
 	 * Reads model from phone.
 	 */
 	GSM_Error (*GetModel)		(GSM_StateMachine *s);
@@ -830,47 +835,106 @@ typedef struct {
 	/**
 	 * Gets date and time from phone.
 	 */
+	GSM_Error (*GetOriginalIMEI)	(GSM_StateMachine *s, char		    *value	);
+	GSM_Error (*GetManufactureMonth)(GSM_StateMachine *s, char		    *value	);
+	GSM_Error (*GetProductCode)	(GSM_StateMachine *s, char		    *value	);
+	GSM_Error (*GetHardware)	(GSM_StateMachine *s, char		    *value	);
+	GSM_Error (*GetPPM)		(GSM_StateMachine *s, char		    *value	);
+	GSM_Error (*GetSIMIMSI)		(GSM_StateMachine *s, char		    *IMSI	);
 	GSM_Error (*GetDateTime)	(GSM_StateMachine *s, GSM_DateTime	    *date_time	);
 	/**
 	 * Reads alarm set in phone.
 	 */
-	GSM_Error (*GetAlarm)		(GSM_StateMachine *s, GSM_DateTime	    *alarm,	int	alarm_number    );
-	/**
-	 * Reads entry from memory (phonebooks or calls). Which entry should
-	 * be read is defined in entry.
-	 */
-	GSM_Error (*GetMemory)		(GSM_StateMachine *s, GSM_PhonebookEntry    *entry	);
+	GSM_Error (*SetDateTime)	(GSM_StateMachine *s, GSM_DateTime	    *date_time	);
+	GSM_Error (*GetAlarm)		(GSM_StateMachine *s, GSM_Alarm		    *alarm	);
 	/**
 	 * Gets memory (phonebooks or calls) status (eg. number of used and
 	 * free entries).
 	 */
+	GSM_Error (*SetAlarm)		(GSM_StateMachine *s, GSM_Alarm		    *alarm	);
+	GSM_Error (*GetLocale)		(GSM_StateMachine *s, GSM_Locale	    *locale	);
+	GSM_Error (*SetLocale)		(GSM_StateMachine *s, GSM_Locale	    *locale	);
+	GSM_Error (*PressKey)		(GSM_StateMachine *s, GSM_KeyCode	    Key,	bool 	Press);	/**
+	 * Performs phone reset.
+	 */
+	GSM_Error (*Reset)		(GSM_StateMachine *s, bool		    hard	);
+	GSM_Error (*ResetPhoneSettings)	(GSM_StateMachine *s, GSM_ResetSettingsType Type	);
+	GSM_Error (*EnterSecurityCode)	(GSM_StateMachine *s, GSM_SecurityCode 	    Code	);
+	GSM_Error (*GetSecurityStatus)	(GSM_StateMachine *s, GSM_SecurityCodeType  *Status	);
+	GSM_Error (*GetDisplayStatus)	(GSM_StateMachine *s, GSM_DisplayFeatures   *features	);
+	GSM_Error (*SetAutoNetworkLogin)(GSM_StateMachine *s);
+	GSM_Error (*GetBatteryCharge)	(GSM_StateMachine *s, GSM_BatteryCharge     *bat	);
+	GSM_Error (*GetSignalQuality)	(GSM_StateMachine *s, GSM_SignalQuality     *sig	);
+	GSM_Error (*GetNetworkInfo)	(GSM_StateMachine *s, GSM_NetworkInfo	    *netinfo	);
+ 	GSM_Error (*GetCategory)	(GSM_StateMachine *s, GSM_Category	    *Category	);
+ 	GSM_Error (*GetCategoryStatus)	(GSM_StateMachine *s, GSM_CategoryStatus    *Status	);
 	GSM_Error (*GetMemoryStatus)	(GSM_StateMachine *s, GSM_MemoryStatus	    *status	);
+	/**
+	 * Reads entry from memory (phonebooks or calls). Which entry should
+	 * be read is defined in entry.
+	 */
+	GSM_Error (*GetMemory)		(GSM_StateMachine *s, GSM_MemoryEntry    *entry	);
+	/**
+	 * Reads entry from memory (phonebooks or calls). Which entry should
+	 * be read is defined in entry.
+	 */
+	GSM_Error (*GetNextMemory)	(GSM_StateMachine *s, GSM_MemoryEntry    *entry,	bool start);
+	/**
+	 * Sets memory (phonebooks or calls) entry.
+	 */
+	GSM_Error (*SetMemory)		(GSM_StateMachine *s, GSM_MemoryEntry    *entry	);
+	/**
+	 * Deletes memory (phonebooks or calls) entry.
+	 */
+	GSM_Error (*AddMemory)		(GSM_StateMachine *s, GSM_MemoryEntry    *entry	);
+	/**
+	 * Deletes memory (phonebooks or calls) entry.
+	 */
+	GSM_Error (*DeleteMemory)	(GSM_StateMachine *s, GSM_MemoryEntry    *entry	);
+	/**
+	 * Deletes all memory (phonebooks or calls) entries of specified type.
+	 */
+	GSM_Error (*DeleteAllMemory)	(GSM_StateMachine *s, GSM_MemoryType	    MemoryType	);
+	GSM_Error (*GetSpeedDial)	(GSM_StateMachine *s, GSM_SpeedDial 	    *Speed	);
+	GSM_Error (*SetSpeedDial)	(GSM_StateMachine *s, GSM_SpeedDial 	    *Speed	);
 	/**
 	 * Gets SMS Service Center number and SMS settings.
 	 */
 	GSM_Error (*GetSMSC)		(GSM_StateMachine *s, GSM_SMSC		    *smsc	);
 	/**
+	 * Sets SMS Service Center number and SMS settings.
+	 */
+	GSM_Error (*SetSMSC)		(GSM_StateMachine *s, GSM_SMSC		    *smsc	);
+	/**
+	 * Gets information about SMS memory (read/unread/size of memory for
+	 * both SIM and phone).
+	 */
+	GSM_Error (*GetSMSStatus)	(GSM_StateMachine *s, GSM_SMSMemoryStatus   *status	);
+	/**
 	 * Reads SMS message.
 	 */
 	GSM_Error (*GetSMS)		(GSM_StateMachine *s, GSM_MultiSMSMessage   *sms	);
-	/**
-	 * Returns SMS folders information.
-	 */
-	GSM_Error (*GetSMSFolders)	(GSM_StateMachine *s, GSM_SMSFolders	    *folders	);
-	/**
-	 * Reads manufacturer from phone.
-	 */
-	GSM_Error (*GetManufacturer)	(GSM_StateMachine *s);
 	/**
 	 * Reads next (or first if start set) SMS message. This might be
 	 * faster for some phones than using @ref GetSMS for each message.
 	 */
 	GSM_Error (*GetNextSMS)		(GSM_StateMachine *s, GSM_MultiSMSMessage   *sms,		bool	start		);
 	/**
-	 * Gets information about SMS memory (read/unread/size of memory for
-	 * both SIM and phone).
+	 * Sets SMS.
 	 */
-	GSM_Error (*GetSMSStatus)	(GSM_StateMachine *s, GSM_SMSMemoryStatus   *status	);
+	GSM_Error (*SetSMS)		(GSM_StateMachine *s, GSM_SMSMessage	    *sms	);
+	/**
+	 * Adds SMS to specified folder.
+	 */
+	GSM_Error (*AddSMS)		(GSM_StateMachine *s, GSM_SMSMessage	    *sms	);
+	/**
+	 * Deletes SMS.
+	 */
+	GSM_Error (*DeleteSMS)		(GSM_StateMachine *s, GSM_SMSMessage	    *sms	);
+	/**
+	 * Sends SMS.
+	 */
+	GSM_Error (*SendSMS)		(GSM_StateMachine *s, GSM_SMSMessage	    *sms	);
 	/**
 	 * Enable/disable notification on incoming SMS.
 	 */
@@ -878,11 +942,13 @@ typedef struct {
 	/**
 	 * Gets network information from phone.
 	 */
-	GSM_Error (*GetNetworkInfo)	(GSM_StateMachine *s, GSM_NetworkInfo	    *netinfo	);
+	GSM_Error (*SetIncomingCB)	(GSM_StateMachine *s, bool		    enable	);
 	/**
-	 * Performs phone reset.
+	 * Returns SMS folders information.
 	 */
-	GSM_Error (*Reset)		(GSM_StateMachine *s, bool		    hard	);
+	GSM_Error (*GetSMSFolders)	(GSM_StateMachine *s, GSM_SMSFolders	    *folders	);
+	GSM_Error (*AddSMSFolder)	(GSM_StateMachine *s, unsigned char *name);
+	GSM_Error (*DeleteSMSFolder)	(GSM_StateMachine *s, int ID);
 	/**
 	 * Dials number and starts voice call.
 	 */
@@ -898,71 +964,6 @@ typedef struct {
 	/**
 	 * Gets ringtone from phone.
 	 */
-	GSM_Error (*GetRingtone)	(GSM_StateMachine *s, GSM_Ringtone 	    *Ringtone,	bool 	PhoneRingtone);
-	/**
-	 * Reads WAP bookmark.
-	 */
-	GSM_Error (*GetWAPBookmark)	(GSM_StateMachine *s, GSM_WAPBookmark	    *bookmark	);
-	GSM_Error (*GetBitmap)		(GSM_StateMachine *s, GSM_Bitmap	    *Bitmap	);
-	GSM_Error (*SetRingtone)	(GSM_StateMachine *s, GSM_Ringtone	    *Ringtone,	int 	*maxlength	);
-	GSM_Error (*SetSMS)		(GSM_StateMachine *s, GSM_SMSMessage	    *sms	);
-	GSM_Error (*SendSMS)		(GSM_StateMachine *s, GSM_SMSMessage	    *sms	);
-	GSM_Error (*SetDateTime)	(GSM_StateMachine *s, GSM_DateTime	    *date_time	);
-	GSM_Error (*SetAlarm)		(GSM_StateMachine *s, GSM_DateTime	    *alarm,	int	alarm_number	);
-	GSM_Error (*SetBitmap)		(GSM_StateMachine *s, GSM_Bitmap	    *Bitmap	);
-	GSM_Error (*SetMemory)		(GSM_StateMachine *s, GSM_PhonebookEntry    *entry	);
-	GSM_Error (*DeleteSMS)		(GSM_StateMachine *s, GSM_SMSMessage	    *sms	);
-	GSM_Error (*SetWAPBookmark)	(GSM_StateMachine *s, GSM_WAPBookmark	    *bookmark	);
-	GSM_Error (*DeleteWAPBookmark)	(GSM_StateMachine *s, GSM_WAPBookmark	    *bookmark	);
-	GSM_Error (*GetWAPSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
-	GSM_Error (*SetIncomingCB)	(GSM_StateMachine *s, bool		    enable	);
-	GSM_Error (*SetSMSC)		(GSM_StateMachine *s, GSM_SMSC		    *smsc	);
-	GSM_Error (*GetManufactureMonth)(GSM_StateMachine *s, char		    *value	);
-	GSM_Error (*GetProductCode)	(GSM_StateMachine *s, char		    *value	);
-	GSM_Error (*GetOriginalIMEI)	(GSM_StateMachine *s, char		    *value	);
-	GSM_Error (*GetHardware)	(GSM_StateMachine *s, char		    *value	);
-	GSM_Error (*GetPPM)		(GSM_StateMachine *s, char		    *value	);
-	GSM_Error (*PressKey)		(GSM_StateMachine *s, GSM_KeyCode	    Key,	bool 	Press);
-	GSM_Error (*GetToDo)		(GSM_StateMachine *s, GSM_ToDoEntry	    *ToDo,	bool	refresh);
-	GSM_Error (*DeleteAllToDo)	(GSM_StateMachine *s);
-	GSM_Error (*SetToDo)		(GSM_StateMachine *s, GSM_ToDoEntry	    *ToDo	);
-	GSM_Error (*GetToDoStatus)	(GSM_StateMachine *s, GSM_ToDoStatus	    *status	);
-	GSM_Error (*PlayTone)		(GSM_StateMachine *s, int 		    Herz, 	unsigned char Volume, bool start);
-	GSM_Error (*EnterSecurityCode)	(GSM_StateMachine *s, GSM_SecurityCode 	    Code	);
-	GSM_Error (*GetSecurityStatus)	(GSM_StateMachine *s, GSM_SecurityCodeType  *Status	);
-	GSM_Error (*GetProfile)		(GSM_StateMachine *s, GSM_Profile	    *Profile	);
-	GSM_Error (*GetRingtonesInfo)	(GSM_StateMachine *s, GSM_AllRingtonesInfo  *Info	);
-	GSM_Error (*SetWAPSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
-	GSM_Error (*GetSpeedDial)	(GSM_StateMachine *s, GSM_SpeedDial 	    *Speed	);
-	GSM_Error (*SetSpeedDial)	(GSM_StateMachine *s, GSM_SpeedDial 	    *Speed	);
-	GSM_Error (*ResetPhoneSettings)	(GSM_StateMachine *s, GSM_ResetSettingsType Type	);
-	GSM_Error (*SendDTMF)		(GSM_StateMachine *s, char		    *sequence	);
-	GSM_Error (*GetDisplayStatus)	(GSM_StateMachine *s, GSM_DisplayFeatures   *features	);
-	GSM_Error (*SetAutoNetworkLogin)(GSM_StateMachine *s);
-	GSM_Error (*SetProfile)		(GSM_StateMachine *s, GSM_Profile	    *Profile	);
-	GSM_Error (*GetSIMIMSI)		(GSM_StateMachine *s, char		    *IMSI	);
-	GSM_Error (*SetIncomingCall)	(GSM_StateMachine *s, bool		    enable	);
-	GSM_Error (*GetNextCalendar)	(GSM_StateMachine *s, GSM_CalendarEntry	    *Note,	bool	start		);
-	GSM_Error (*DeleteCalendar)	(GSM_StateMachine *s, GSM_CalendarEntry     *Note	);
-	GSM_Error (*AddCalendar)	(GSM_StateMachine *s, GSM_CalendarEntry	    *Note, 	bool Past);
-	GSM_Error (*GetBatteryCharge)	(GSM_StateMachine *s, GSM_BatteryCharge     *bat	);
-	GSM_Error (*GetSignalQuality)	(GSM_StateMachine *s, GSM_SignalQuality     *sig	);
- 	GSM_Error (*GetCategory)	(GSM_StateMachine *s, GSM_Category	    *Category	);
- 	GSM_Error (*GetCategoryStatus)	(GSM_StateMachine *s, GSM_CategoryStatus    *Status	);
-	GSM_Error (*GetFMStation)	(GSM_StateMachine *s, GSM_FMStation	    *FMStation	);
-	GSM_Error (*SetFMStation)	(GSM_StateMachine *s, GSM_FMStation	    *FMStation	);
-	GSM_Error (*ClearFMStations)	(GSM_StateMachine *s);
-	GSM_Error (*SetIncomingUSSD)	(GSM_StateMachine *s, bool		    enable	);
-	GSM_Error (*DeleteUserRingtones)(GSM_StateMachine *s);
-	GSM_Error (*ShowStartInfo)	(GSM_StateMachine *s, bool 		    enable	);
-	GSM_Error (*GetNextFileFolder)	(GSM_StateMachine *s, GSM_File		    *File, 	bool start);
-	GSM_Error (*GetFilePart)	(GSM_StateMachine *s, GSM_File		    *File	);
-	GSM_Error (*AddFilePart)	(GSM_StateMachine *s, GSM_File		    *File, 	int *Pos);
-	GSM_Error (*GetFileSystemStatus)(GSM_StateMachine *s, GSM_FileSystemStatus  *Status	);
-	GSM_Error (*DeleteFile)		(GSM_StateMachine *s, unsigned char *ID);
-	GSM_Error (*AddFolder)		(GSM_StateMachine *s, GSM_File		    *File	);
-	GSM_Error (*GetMMSSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
-	GSM_Error (*SetMMSSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
 	GSM_Error (*HoldCall)		(GSM_StateMachine *s, int ID);
 	GSM_Error (*UnholdCall)		(GSM_StateMachine *s, int ID);
 	GSM_Error (*ConferenceCall)	(GSM_StateMachine *s, int ID);
@@ -972,15 +973,99 @@ typedef struct {
 	GSM_Error (*GetCallDivert)	(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
 	GSM_Error (*SetCallDivert)	(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
 	GSM_Error (*CancelAllDiverts)	(GSM_StateMachine *s);
-	GSM_Error (*AddSMSFolder)	(GSM_StateMachine *s, unsigned char *name);
-	GSM_Error (*DeleteSMSFolder)	(GSM_StateMachine *s, int ID);
-	GSM_Error (*GetGPRSAccessPoint)	(GSM_StateMachine *s, GSM_GPRSAccessPoint   *point	);
-	GSM_Error (*SetGPRSAccessPoint)	(GSM_StateMachine *s, GSM_GPRSAccessPoint   *point	);
-	GSM_Error (*GetLocale)		(GSM_StateMachine *s, GSM_Locale	    *locale	);
-	GSM_Error (*SetLocale)		(GSM_StateMachine *s, GSM_Locale	    *locale	);
+	GSM_Error (*SetIncomingCall)	(GSM_StateMachine *s, bool		    enable	);
+	GSM_Error (*SetIncomingUSSD)	(GSM_StateMachine *s, bool		    enable	);
+	GSM_Error (*SendDTMF)		(GSM_StateMachine *s, char		    *sequence	);
+	GSM_Error (*GetRingtone)	(GSM_StateMachine *s, GSM_Ringtone 	    *Ringtone,	bool 	PhoneRingtone);
+	GSM_Error (*SetRingtone)	(GSM_StateMachine *s, GSM_Ringtone	    *Ringtone,	int 	*maxlength	);
+	GSM_Error (*GetRingtonesInfo)	(GSM_StateMachine *s, GSM_AllRingtonesInfo  *Info	);
+	GSM_Error (*DeleteUserRingtones)(GSM_StateMachine *s);
+	GSM_Error (*PlayTone)		(GSM_StateMachine *s, int 		    Herz, 	unsigned char Volume, bool start);
+	/**
+	 * Reads WAP bookmark.
+	 */
+	GSM_Error (*GetWAPBookmark)	(GSM_StateMachine *s, GSM_WAPBookmark	    *bookmark	);
+	GSM_Error (*SetWAPBookmark)	(GSM_StateMachine *s, GSM_WAPBookmark	    *bookmark	);
+	GSM_Error (*DeleteWAPBookmark)	(GSM_StateMachine *s, GSM_WAPBookmark	    *bookmark	);
+	GSM_Error (*GetWAPSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
+	GSM_Error (*SetWAPSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
+	GSM_Error (*GetMMSSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
+	GSM_Error (*SetMMSSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
+	GSM_Error (*GetBitmap)		(GSM_StateMachine *s, GSM_Bitmap	    *Bitmap	);
+	GSM_Error (*SetBitmap)		(GSM_StateMachine *s, GSM_Bitmap	    *Bitmap	);
+	/**
+	 * Gets status of ToDos (count of used entries).
+	 */
+	GSM_Error (*GetToDoStatus)	(GSM_StateMachine *s, GSM_ToDoStatus	    *status	);
+	/**
+	 * Reads ToDo from phone.
+	 */
+	GSM_Error (*GetToDo)		(GSM_StateMachine *s, GSM_ToDoEntry	    *ToDo);
+	/**
+	 * Reads ToDo from phone.
+	 */
+	GSM_Error (*GetNextToDo)	(GSM_StateMachine *s, GSM_ToDoEntry	    *ToDo,	bool	start);
+	/**
+	 * Sets ToDo in phone.
+	 */
+	GSM_Error (*SetToDo)		(GSM_StateMachine *s, GSM_ToDoEntry	    *ToDo	);
+	/**
+	 * Adds ToDo in phone.
+	 */
+	GSM_Error (*AddToDo)		(GSM_StateMachine *s, GSM_ToDoEntry	    *ToDo	);
+	/**
+	 * Deletes ToDo entry in phone.
+	 */
+	GSM_Error (*DeleteToDo)		(GSM_StateMachine *s, GSM_ToDoEntry	    *ToDo	);
+	/**
+	 * Deletes all todo entries in phone.
+	 */
+	GSM_Error (*DeleteAllToDo)	(GSM_StateMachine *s);
+	/**
+	 * Retrieves calendar status (number of used entries).
+	 */
+	GSM_Error (*GetCalendarStatus)	(GSM_StateMachine *s, GSM_CalendarStatus    *Status	);
+	/**
+	 * Retrieves calendar entry.
+	 */
+	GSM_Error (*GetCalendar)	(GSM_StateMachine *s, GSM_CalendarEntry	    *Note	);
+	/**
+	 * Retrieves calendar entry. This is useful for continuous reading of all
+	 * calendar entries.
+	 */
+	GSM_Error (*GetNextCalendar)	(GSM_StateMachine *s, GSM_CalendarEntry	    *Note,	bool	start		);
+	/**
+	 * Sets calendar entry
+	 */
+	GSM_Error (*SetCalendar)	(GSM_StateMachine *s, GSM_CalendarEntry	    *Note);
+	/**
+	 * Adds calendar entry.
+	 */
+	GSM_Error (*AddCalendar)	(GSM_StateMachine *s, GSM_CalendarEntry	    *Note);
+	/**
+	 * Deletes calendar entry.
+	 */
+	GSM_Error (*DeleteCalendar)	(GSM_StateMachine *s, GSM_CalendarEntry     *Note	);
+	/**
+	 * Deletes all calendar entries.
+	 */
+	GSM_Error (*DeleteAllCalendar)	(GSM_StateMachine *s);
 	GSM_Error (*GetCalendarSettings)(GSM_StateMachine *s, GSM_CalendarSettings  *settings	);
 	GSM_Error (*SetCalendarSettings)(GSM_StateMachine *s, GSM_CalendarSettings  *settings	);
 	GSM_Error (*GetNote)		(GSM_StateMachine *s, GSM_NoteEntry	    *Note,	bool	refresh);
+	GSM_Error (*GetProfile)		(GSM_StateMachine *s, GSM_Profile	    *Profile	);
+	GSM_Error (*SetProfile)		(GSM_StateMachine *s, GSM_Profile	    *Profile	);
+	GSM_Error (*GetFMStation)	(GSM_StateMachine *s, GSM_FMStation	    *FMStation	);
+	GSM_Error (*SetFMStation)	(GSM_StateMachine *s, GSM_FMStation	    *FMStation	);
+	GSM_Error (*ClearFMStations)	(GSM_StateMachine *s);
+	GSM_Error (*GetNextFileFolder)	(GSM_StateMachine *s, GSM_File		    *File, 	bool start);
+	GSM_Error (*GetFilePart)	(GSM_StateMachine *s, GSM_File		    *File	);
+	GSM_Error (*AddFilePart)	(GSM_StateMachine *s, GSM_File		    *File, 	int *Pos);
+	GSM_Error (*GetFileSystemStatus)(GSM_StateMachine *s, GSM_FileSystemStatus  *Status	);
+	GSM_Error (*DeleteFile)		(GSM_StateMachine *s, unsigned char *ID);
+	GSM_Error (*AddFolder)		(GSM_StateMachine *s, GSM_File		    *File	);
+	GSM_Error (*GetGPRSAccessPoint)	(GSM_StateMachine *s, GSM_GPRSAccessPoint   *point	);
+	GSM_Error (*SetGPRSAccessPoint)	(GSM_StateMachine *s, GSM_GPRSAccessPoint   *point	);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;

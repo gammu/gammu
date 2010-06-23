@@ -936,6 +936,7 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 	OutBuffer[0] = 0;
 	if (Buffer == NULL) return;
 	while (1) {
+		if ((*Pos) >= MaxLen) return;
 		switch (Buffer[*Pos]) {
 		case 0x00:
 			return;
@@ -950,7 +951,6 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 			OutBuffer[strlen(OutBuffer)]     = Buffer[*Pos];
 		}
 		(*Pos)++;
-		if ((*Pos) >= MaxLen) return;
 	}
 }
 
