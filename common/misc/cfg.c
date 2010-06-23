@@ -98,7 +98,7 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 	                while(myiswspace(line)) line+=2;
 
 			while(1) {
-				i = strlen(DecodeUnicodeString(line))*2;
+				i = UnicodeLength(line)*2;
 				if (i>0 && myiswspace(line+i-2))
 				{
 					line[i - 2] = '\0';
@@ -115,8 +115,8 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 
 	                /* Look for "headings" enclosed in square brackets */
 	                if ((line[0] == 0 && line[1] == '[') &&
-			    (line[strlen(DecodeUnicodeString(line))*2 - 2] == 0 &&
-			     line[strlen(DecodeUnicodeString(line))*2 - 1] == ']')) 
+			    (line[UnicodeLength(line)*2 - 2] == 0 &&
+			     line[UnicodeLength(line)*2 - 1] == ']')) 
 				process = true;
 		} else {
 	                /* Strip leading, trailing whitespace */
@@ -146,12 +146,12 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 
 			if (Unicode) {            
 	                        line+=2;
-				i = strlen(DecodeUnicodeString(line))*2;
+				i = UnicodeLength(line)*2;
 	                        line[i - 2] = '\0';
 	                        line[i - 1] = '\0';
 
-				heading->section = (char *)malloc(strlen(DecodeUnicodeString(line))*2+2);
-				memcpy(heading->section,line,strlen(DecodeUnicodeString(line))*2+2);
+				heading->section = (char *)malloc(UnicodeLength(line)*2+2);
+				memcpy(heading->section,line,UnicodeLength(line)*2+2);
 			} else {
 	                        line++;
 	                        line[strlen(line) - 1] = '\0';
@@ -212,11 +212,11 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 				/* Remove leading white */
 	                        while(myiswspace(value)) value+=2;
 
-				entry->value = (char *)malloc(strlen(DecodeUnicodeString(value))*2+2);
-				memcpy(entry->value,value,strlen(DecodeUnicodeString(value))*2+2);
+				entry->value = (char *)malloc(UnicodeLength(value)*2+2);
+				memcpy(entry->value,value,UnicodeLength(value)*2+2);
 
 				while(1) {
-					i = strlen(DecodeUnicodeString(line))*2;
+					i = UnicodeLength(line)*2;
 					if (i>0 && myiswspace(line+i-2))
 					{
 						line[i - 2] = '\0';
@@ -224,8 +224,8 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 					} else break;
 				}
 
-				entry->key = (char *)malloc(strlen(DecodeUnicodeString(line))*2+2);
-				memcpy(entry->key,line,strlen(DecodeUnicodeString(line))*2+2);
+				entry->key = (char *)malloc(UnicodeLength(line)*2+2);
+				memcpy(entry->key,line,UnicodeLength(line)*2+2);
 			} else {
 	                        value = strchr(line, '=');
 	                        *value = '\0';                /* Split string */

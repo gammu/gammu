@@ -436,7 +436,7 @@ GSM_Error WINAPI mysavesmsmessage (int phone, GSM_SMSMessage *sms)
 
 void WINAPI mygetnetworkname(char *NetworkCode, char *NetworkName)
 {
-	memcpy(NetworkName,GSM_GetNetworkName(NetworkCode),strlen(DecodeUnicodeString(GSM_GetNetworkName(NetworkCode)))*2+2);
+	memcpy(NetworkName,GSM_GetNetworkName(NetworkCode),UnicodeLength(GSM_GetNetworkName(NetworkCode))*2+2);
 	ReverseUnicodeString(NetworkName);
 }
 

@@ -13,6 +13,17 @@
 #include "misc.h"
 #include "coding.h"
 
+unsigned int UnicodeLength(const unsigned char *str)
+{
+	unsigned int len = 0;
+
+	while(1) {
+		if (str[len*2] == 0 && str[len*2+1] == 0) break;
+		len++;
+	}
+	return len;
+}
+
 /* Convert Unicode char saved in src to dest */
 unsigned int EncodeWithUnicodeAlphabet(const unsigned char *src, wchar_t *dest)
 {
@@ -178,12 +189,12 @@ void EncodeUTF8(unsigned char *dest, const unsigned char *src)
 	int		i,j=0;
 	unsigned char	mychar1, mychar2;
 	
-	for (i = 0; i < ((int)strlen(DecodeUnicodeString(src))); i++) {
+	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
 	    if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
-		sprintf(dest+j, "=%02X=%02X",mychar1,mychar2);
-		j=j+6;
+			sprintf(dest+j, "=%02X=%02X",mychar1,mychar2);
+			j=j+6;
 	    } else {
-		j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
+			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
 	    }
 	}
 	dest[j++]=0;
@@ -367,7 +378,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, int len, bool
 	dest[current++]=0;
 	dest[current++]=0;
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, dest, strlen(DecodeUnicodeString(dest))*2);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, dest, UnicodeLength(dest)*2);
 #endif
 }
 
@@ -640,7 +651,7 @@ int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool s
 	int		length=0,j;
 	unsigned char	format=GNT_UNKNOWN;	/* format of number used by us */
 
-	length=strlen(DecodeUnicodeString(Number));
+	length=UnicodeLength(Number);
 	memcpy(buffer,DecodeUnicodeString(Number),length+1);
 
 	/* Checking for format number */
@@ -972,3 +983,4 @@ int mytowlower(wchar_t c)
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
+

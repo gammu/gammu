@@ -62,17 +62,18 @@ typedef enum {
 
 bool GSM_IsPointBitmap		(GSM_Bitmap 		*bmp, int x, int y);
 void GSM_SetPointBitmap		(GSM_Bitmap 		*bmp, int x, int y);
+void GSM_ClearPointBitmap	(GSM_Bitmap 		*bmp, int x, int y);
 void GSM_PrintBitmap		(FILE *file, 		GSM_Bitmap *bitmap);
 void GSM_ClearBitmap		(GSM_Bitmap 		*bmp);
 void GSM_ResizeBitmap		(GSM_Bitmap 		*dest, GSM_Bitmap *src, int width, int height);
 void GSM_GetMaxBitmapWidthHeight(GSM_Bitmap_Types 	Type, unsigned char *width, unsigned char *height);
+void GSM_ReverseBitmap		(GSM_Bitmap *Bitmap);
 int  GSM_GetBitmapSize		(GSM_Bitmap 		*bmp);
 
 GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap);
 GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap);
-GSM_Error BMP2Bitmap		(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
-GSM_Error Bitmap2BMP		(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
-
+GSM_Error BMP2Bitmap           (unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
+GSM_Error Bitmap2BMP            (unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
 void PHONE_GetBitmapWidthHeight	(GSM_Phone_Bitmap_Types Type, int *width, int *height);
 int  PHONE_GetBitmapSize	(GSM_Phone_Bitmap_Types Type, int width, int height);
 void PHONE_ClearBitmap		(GSM_Phone_Bitmap_Types Type, char *buffer, int width, int height);

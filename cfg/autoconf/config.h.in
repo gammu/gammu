@@ -65,10 +65,8 @@
 
 /* n6510.c (DCT4) models */
 #undef GSM_ENABLE_NOKIA6510
-/* Force using new frames for calendar. Can be not compatible with all phones,
- * but gives full calendar info
- */
-#undef GSM_FORCE_DCT4_NEW_CALENDAR
+/* Force using old frames for calendar. Required by some older DCT4 */
+#undef GSM_FORCE_DCT4_OLD_CALENDAR
 
 /* AT generic models */
 #undef GSM_ENABLE_ATGEN

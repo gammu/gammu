@@ -124,7 +124,7 @@
 				RelativePath="..\..\..\common\service\gsmmisc.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\service\gsmmms.c">
+				RelativePath="..\..\..\common\phone\at\sonyeric.c">
 			</File>
 			<File
 				RelativePath="..\..\..\common\service\gsmnet.c">
@@ -240,9 +240,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\common\service\gsmmisc.h">
-			</File>
-			<File
-				RelativePath="..\..\..\common\service\gsmmms.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\service\gsmnet.h">

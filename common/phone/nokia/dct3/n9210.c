@@ -73,7 +73,7 @@ static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		/* Nokia bug: Unicode text is moved one char to left */
 		CopyUnicodeString(reqStartupText + 4, Bitmap->Text);
 		reqStartupText[4] = 0x02;
-		i = 5 + strlen(DecodeUnicodeString(Bitmap->Text)) * 2;
+		i = 5 + UnicodeLength(Bitmap->Text) * 2;
 		reqStartupText[i++] = 0;
 		reqStartupText[i++] = 0;
 		return GSM_WaitFor (s, reqStartupText, i, 0x7A, 4, ID_SetBitmap);
@@ -307,6 +307,7 @@ GSM_Phone_Functions N9210Phone = {
 	NOTSUPPORTED,		/*	GetToDo			*/
 	NOTSUPPORTED,		/*	DeleteAllToDo		*/
 	NOTSUPPORTED,		/*	SetToDo			*/
+	NOTSUPPORTED,		/*	GetToDoStatus		*/
 	NOTSUPPORTED,		/*	PlayTone		*/
 	NOTSUPPORTED,		/*	EnterSecurityCode	*/
 	NOTSUPPORTED,		/*	GetSecurityStatus	*/
@@ -342,7 +343,9 @@ GSM_Phone_Functions N9210Phone = {
 	NOTSUPPORTED,		/*	DeleteFile		*/
 	NOTSUPPORTED,		/*	AddFolder		*/
 	NOTSUPPORTED,		/* 	GetMMSSettings		*/
-	NOTSUPPORTED		/* 	SetMMSSettings		*/
+	NOTSUPPORTED,		/* 	SetMMSSettings		*/
+	NOTSUPPORTED,		/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED		/* 	SetGPRSAccessPoint	*/
 };
 
 #endif

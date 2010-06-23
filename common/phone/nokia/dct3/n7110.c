@@ -134,13 +134,13 @@ static GSM_Error N7110_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMac
 	    		current++;
 			smprintf(s, ", folder name: \"");
 			CopyUnicodeString(buffer,msg.Buffer+current);
-			if ((strlen(DecodeUnicodeString(buffer)))>GSM_MAX_SMS_FOLDER_NAME_LEN) {
+			if ((UnicodeLength(buffer))>GSM_MAX_SMS_FOLDER_NAME_LEN) {
 				smprintf(s, "Too long text\n");
 				return GE_UNKNOWNRESPONSE;
 			}
 			CopyUnicodeString(Data->SMSFolders->Folder[j].Name,buffer);
 			smprintf(s, "%s\"\n",DecodeUnicodeString(buffer));
-			current=current+2+strlen(DecodeUnicodeString(buffer))*2;
+			current=current+2+UnicodeLength(buffer)*2;
 		}
 		return GE_NONE;
 	case 0x7C:
@@ -296,7 +296,7 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 					output[i++] = 0; /* Length - later changed */
 					GSM_UnpackEightBitsToSeven(0, msg.Length-304, msg.Length-304, msg.Buffer+52+PHONE_GetBitmapSize(GSM_NokiaPictureImage,0,0),output2);
 					DecodeDefault(output+i, output2, msg.Length - 304, true, NULL);
-					output[i - 1] = strlen(DecodeUnicodeString(output+i)) * 2;
+					output[i - 1] = UnicodeLength(output+i) * 2;
 					i = i + output[i-1];
 				}
 				GSM_MakeMultiPartSMS(Data->GetSMSMessage,output,i,UDH_NokiaProfileLong,GSM_Coding_8bit,1,0);
@@ -756,7 +756,7 @@ static GSM_Error N7110_SaveSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	s->Phone.Data.SaveSMSMessage=sms;
 	smprintf(s, "Saving sms\n");
 	error=GSM_WaitFor (s, req, 9+length, 0x14, 4, ID_SaveSMSMessage);
-	if (error == GE_NONE && strlen(DecodeUnicodeString(sms->Name))!=0) {
+	if (error == GE_NONE && UnicodeLength(sms->Name)!=0) {
 		folder = sms->Folder;
 		sms->Folder = 0;
 		N7110_GetSMSLocation(s, sms, &folderid, &location);
@@ -765,7 +765,7 @@ static GSM_Error N7110_SaveSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		NameReq[length++] = location / 256;
 		NameReq[length++] = location;
 		CopyUnicodeString(NameReq+length, sms->Name);
-		length = length+strlen(DecodeUnicodeString(sms->Name))*2;
+		length = length+UnicodeLength(sms->Name)*2;
 		NameReq[length++] = 0;
 		NameReq[length++] = 0;
 		error=GSM_WaitFor (s, NameReq, length, 0x14, 4, ID_SaveSMSMessage);
@@ -824,7 +824,7 @@ static GSM_Error N7110_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 
 	/* Name */
 	if (!bitmap->DefaultName) {
-		i = strlen(DecodeUnicodeString(bitmap->Text)) * 2;
+		i = UnicodeLength(bitmap->Text) * 2;
 		string[0] = i + 2;
 		memcpy(string + 1, bitmap->Text, i);
 		string[i + 1] = 0;
@@ -892,7 +892,7 @@ static GSM_Error N7110_SetPictureImage(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	for (i=0;i<36;i++) req[i+9]=0;
 
 	count=8;
-	if (strlen(DecodeUnicodeString(Bitmap->Text))==0) {
+	if (UnicodeLength(Bitmap->Text)==0) {
 		count+=2 ;req[count]=0x0c;
 		count+=2 ;req[count]=0x0d;
 		count+=2 ;req[count]=0x0e;
@@ -922,9 +922,9 @@ static GSM_Error N7110_SetPictureImage(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	req[count++] = PHONE_GetBitmapSize(Type,0,0) % 256;
 	PHONE_EncodeBitmap(Type, req + count, Bitmap);
 	count += PHONE_GetBitmapSize(Type,0,0);
-	if (strlen(DecodeUnicodeString(Bitmap->Text))!=0)
+	if (UnicodeLength(Bitmap->Text)!=0)
 	{
-		req[count] = strlen(DecodeUnicodeString(Bitmap->Text));
+		req[count] = UnicodeLength(Bitmap->Text);
 		GSM_PackSevenBitsToEight(0, Bitmap->Text, req+count+1,strlen(Bitmap->Text));
 		count = count + req[count];
 	} else {
@@ -976,14 +976,14 @@ static GSM_Error N7110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		return GSM_WaitFor (s, reqStartup, 21+PHONE_GetBitmapSize(Type,0,0), 0x7A, 4, ID_SetBitmap);
 	case GSM_WelcomeNoteText:	
 		CopyUnicodeString(reqStartupText + 5, Bitmap->Text);
-		i = 6 + strlen(DecodeUnicodeString(Bitmap->Text)) * 2;
+		i = 6 + UnicodeLength(Bitmap->Text) * 2;
 		reqStartupText[i++] = 0;
 		reqStartupText[i++] = 0;
 		return GSM_WaitFor (s, reqStartupText, i, 0x7A, 4, ID_SetBitmap);	
 	case GSM_DealerNoteText:	
 		reqStartupText[4] = 0x17;
 		CopyUnicodeString(reqStartupText + 5, Bitmap->Text);
-		i = 6 + strlen(DecodeUnicodeString(Bitmap->Text)) * 2;
+		i = 6 + UnicodeLength(Bitmap->Text) * 2;
 		reqStartupText[i++] = 0;
 		reqStartupText[i++] = 0;
 		return GSM_WaitFor (s, reqStartupText, i, 0x7A, 4, ID_SetBitmap);	
@@ -1533,6 +1533,7 @@ GSM_Phone_Functions N7110Phone = {
 	NOTSUPPORTED,		/*	GetToDo			*/
 	NOTSUPPORTED,		/*	DeleteAllToDo		*/
 	NOTSUPPORTED,		/*	SetToDo			*/
+	NOTSUPPORTED,		/*	GetToDoStatus		*/
 	DCT3_PlayTone,
 	NOTSUPPORTED,		/*	EnterSecurityCode	*/
 	NOTSUPPORTED,		/*	GetSecurityStatus	*/
@@ -1568,7 +1569,9 @@ GSM_Phone_Functions N7110Phone = {
 	NOTSUPPORTED,		/*	DeleteFile		*/
 	NOTSUPPORTED,		/*	AddFolder		*/
 	NOTSUPPORTED,		/* 	GetMMSSettings		*/
-	NOTSUPPORTED		/* 	SetMMSSettings		*/
+	NOTSUPPORTED,		/* 	SetMMSSettings		*/
+	NOTSUPPORTED,		/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED		/* 	SetGPRSAccessPoint	*/
 };
 
 #endif

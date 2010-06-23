@@ -551,6 +551,33 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 	/* Parsing the <note-command>+ section. */
 	while (ptr && ringtone->NoteTone.NrCommands<MAX_RINGTONE_NOTES) {
 		switch(*ptr) {
+			case 'z': case 'Z':
+				switch (*(ptr+1)) {
+					case 'd':
+						ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_DisableLED;
+						ringtone->NoteTone.NrCommands++;
+						break;
+					case 'D':
+						ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_EnableLED;
+						ringtone->NoteTone.NrCommands++;
+						break;
+					case 'v':
+						ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_DisableVibra;
+						ringtone->NoteTone.NrCommands++;
+						break;
+					case 'V':
+						ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_EnableVibra;
+						ringtone->NoteTone.NrCommands++;
+						break;
+					case 'l':
+						ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_DisableLight;
+						ringtone->NoteTone.NrCommands++;
+						break;
+					case 'L':
+						ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_EnableLight;
+						ringtone->NoteTone.NrCommands++;
+				}
+				break;
 			case 'o': case 'O':
 				switch (atoi(ptr+2)) {
 					case  4: DefNoteScale = Scale_440 ; break;
@@ -723,13 +750,13 @@ static GSM_Error loadre(FILE *file, GSM_Ringtone *ringtone)
 	if (buffer[18]==0x00 && buffer[21]!=0x02) {
 		/* DCT3, Unicode subformat, 62xx & 7110 */
 		CopyUnicodeString(ringtone->Name,buffer+18);
-		ringtone->NokiaBinary.Length = ringtone->NokiaBinary.Length - (21+strlen(DecodeUnicodeString(ringtone->Name))*2);
-		memcpy(ringtone->NokiaBinary.Frame,buffer+21+strlen(DecodeUnicodeString(ringtone->Name))*2,ringtone->NokiaBinary.Length);
+		ringtone->NokiaBinary.Length = ringtone->NokiaBinary.Length - (21+UnicodeLength(ringtone->Name)*2);
+		memcpy(ringtone->NokiaBinary.Frame,buffer+21+UnicodeLength(ringtone->Name)*2,ringtone->NokiaBinary.Length);
 	} else {
 		/* DCT3, normal subformat, 32xx/33xx/51xx/5210/5510/61xx/8xxx */      
 		EncodeUnicode(ringtone->Name,buffer+17,buffer[16]);
-		ringtone->NokiaBinary.Length = ringtone->NokiaBinary.Length - (19+strlen(DecodeUnicodeString(ringtone->Name)));
-		memcpy(ringtone->NokiaBinary.Frame,buffer+19+strlen(DecodeUnicodeString(ringtone->Name)),ringtone->NokiaBinary.Length);
+		ringtone->NokiaBinary.Length = ringtone->NokiaBinary.Length - (19+UnicodeLength(ringtone->Name));
+		memcpy(ringtone->NokiaBinary.Frame,buffer+19+UnicodeLength(ringtone->Name),ringtone->NokiaBinary.Length);
 	}
 	dprintf("Name \"%s\"\n",DecodeUnicodeString(ringtone->Name));
 	return GE_NONE;
@@ -852,9 +879,9 @@ unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone ringtone, unsigned char *
 	StartBit=BitPackByte(package, StartBit, BasicSongType, 3);
 
 	/* Packing the name of the tune. */
-	EncodeUnicodeSpecialNOKIAChars(Buffer, ringtone.Name, strlen(DecodeUnicodeString(ringtone.Name)));
-	StartBit=BitPackByte(package, StartBit, ((unsigned char)(strlen(DecodeUnicodeString(Buffer))<<4)), 4);
-	StartBit=BitPack(package, StartBit, DecodeUnicodeString(Buffer), 8*strlen(DecodeUnicodeString(Buffer)));
+	EncodeUnicodeSpecialNOKIAChars(Buffer, ringtone.Name, UnicodeLength(ringtone.Name));
+	StartBit=BitPackByte(package, StartBit, ((unsigned char)(UnicodeLength(Buffer)<<4)), 4);
+	StartBit=BitPack(package, StartBit, DecodeUnicodeString(Buffer), 8*UnicodeLength(Buffer));
 
 	/* Info about song pattern */
 	StartBit=BitPackByte(package, StartBit, 0x01, 8); /* One song pattern */
@@ -996,7 +1023,7 @@ GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *pac
 	StartBit=BitUnPack(package, StartBit, Buffer, 8*l);
 	Buffer[l]=0;
 	EncodeUnicode(ringtone->Name,Buffer,strlen(Buffer));
-	DecodeUnicodeSpecialNOKIAChars(Buffer, ringtone->Name, strlen(DecodeUnicodeString(ringtone->Name)));
+	DecodeUnicodeSpecialNOKIAChars(Buffer, ringtone->Name, UnicodeLength(ringtone->Name));
 	CopyUnicodeString(ringtone->Name,Buffer);
 
 	StartBit=BitUnPackInt(package,StartBit,&l,8);    
@@ -1408,7 +1435,7 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 	GSM_RingNoteStyle	DefNoteStyle=0;
 	int			DefNoteTempo=0;
 
-	bool 			started = false;
+	bool 			started = false, end;
 
 	*maxlength = 0;
 
@@ -1428,11 +1455,10 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 	DefNoteScale = Scale_880; /* by iMelody definition */
 
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
+		Len = *maxlength;
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
 			Note = &ringtone.NoteTone.Commands[i].Note;
-			Len  = *maxlength;
-
-			if (!started && Note->Note != Note_Pause) {
+			if (Note->Note != Note_Pause) {
 				if (version == 1.2 || version == 0.1) {
 					/* Save the default tempo */
 					DefNoteTempo = Note->Tempo;
@@ -1448,8 +1474,25 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 					}
 				}
 				Len+=sprintf(package+Len,"MELODY:");
-				started = true;
+				if (version >= 0) {
+					/* 15 = Len of END:IMELODY... */
+					if ((Len+15) > Max) { end = true; break; }
+				} else {
+					if (Len > Max) { end = true; break; }
+				}
+				*maxlength = Len;
+				break;
 			}
+		}
+	}
+
+	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
+		end = false;
+		Len = *maxlength;
+		switch (ringtone.NoteTone.Commands[i].Type) {
+		case RING_Note:
+			Note = &ringtone.NoteTone.Commands[i].Note;
+			if (!started && Note->Note != Note_Pause) started = true;
 			if (started) {
 				if (Note->Note!=Note_Pause && Note->Scale != DefNoteScale)
 				{
@@ -1487,13 +1530,41 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 				}
 				if (version >= 0) {
 					/* 15 = Len of END:IMELODY... */
-					if ((Len+15) > Max) break;
+					if ((Len+15) > Max) { end = true; break; }
 				} else {
-					if (Len > Max) break;
+					if (Len > Max) { end = true; break; }
 				}
 				*maxlength = Len;
 			}
+			break;
+		case RING_DisableLED:
+			if ((Len + 6) > Max) { end = true; break; }
+			(*maxlength)+=sprintf(package+Len,"ledoff");
+			break;
+		case RING_EnableLED:
+			if ((Len + 5) > Max) { end = true; break; }
+			(*maxlength)+=sprintf(package+Len,"ledon");
+			break;
+		case RING_DisableVibra:
+			if ((Len + 7) > Max) { end = true; break; }
+			(*maxlength)+=sprintf(package+Len,"vibeoff");
+			break;
+		case RING_EnableVibra:
+			if ((Len + 6) > Max) { end = true; break; }
+			(*maxlength)+=sprintf(package+Len,"vibeon");
+			break;
+		case RING_DisableLight:
+			if ((Len + 7) > Max) { end = true; break; }
+			(*maxlength)+=sprintf(package+Len,"backoff");
+			break;
+		case RING_EnableLight:
+			if ((Len + 6) > Max) { end = true; break; }
+			(*maxlength)+=sprintf(package+Len,"backon");
+			break;
+		default:
+			break;
 		}
+		if (end) break;
 		NrNotes ++;
 	}
 

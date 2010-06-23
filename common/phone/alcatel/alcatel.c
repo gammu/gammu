@@ -392,7 +392,7 @@ static GSM_Error ALCATEL_Initialise(GSM_StateMachine *s)
 		smprintf(s, "Warning: Alcatel binary mode works only at 19200 bps\n");
 	}
 
-	if (ATGEN_Initialise(s) != GE_NONE) {
+	if (ATGEN_Initialise(s) != GE_NONE || GSM_WaitFor (s, "AT\r", 3, 0x00, 2, ID_IncomingFrame) != GE_NONE) {
 		smprintf(s,"AT initialisation failed, trying to stop binary mode...\n");
 		s->Protocol.Functions		= &ALCABUSProtocol;
 		error = s->Protocol.Functions->Terminate(s);
@@ -949,9 +949,18 @@ static GSM_Error ALCATEL_DeleteItem(GSM_StateMachine *s, int id) {
 	buffer[7] = ((id >> 8) & 0xff);
 	buffer[8] = (id & 0xff);
 
-	error=GSM_WaitFor (s, buffer, 10, 0x02, ALCATEL_TIMEOUT, ID_AlcatelDeleteItem);
+	error=GSM_WaitFor (s, buffer, 10, 0x02, ALCATEL_TIMEOUT, ID_AlcatelDeleteItem1);
 	if (error != GE_NONE) return error;
 
+	error=GSM_WaitFor (s, 0, 0, 0x0, ALCATEL_TIMEOUT, ID_AlcatelDeleteItem2);
+	if (error != GE_NONE) return error;
+
+	return GE_NONE;
+}
+
+static GSM_Error ALCATEL_ReplyDeleteItem(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	if (msg.Buffer[8] != 0x25) return GE_UNKNOWNRESPONSE;
 	return GE_NONE;
 }
 
@@ -967,8 +976,8 @@ static void ALCATEL_BuildWriteBuffer(unsigned char * buffer, GSM_Alcatel_FieldTy
 
 			buffer[0] = 0x09;
 			buffer[5] = 0x04;
-			buffer[6] = ((GSM_DateTime *)data)->Month;
-			buffer[7] = ((GSM_DateTime *)data)->Day;
+			buffer[6] = ((GSM_DateTime *)data)->Day & 0xff;
+			buffer[7] = ((GSM_DateTime *)data)->Month & 0xff;
 			buffer[8] = ((GSM_DateTime *)data)->Year >> 8;
 			buffer[9] = ((GSM_DateTime *)data)->Year & 0xff;
 			buffer[10] = 0x00;
@@ -979,16 +988,16 @@ static void ALCATEL_BuildWriteBuffer(unsigned char * buffer, GSM_Alcatel_FieldTy
 
 			buffer[0] = 0x08;
 			buffer[5] = 0x03;
-			buffer[6] = ((GSM_DateTime *)data)->Hour;
-			buffer[7] = ((GSM_DateTime *)data)->Minute;
-			buffer[8] = ((GSM_DateTime *)data)->Second;
+			buffer[6] = ((GSM_DateTime *)data)->Hour & 0xff;
+			buffer[7] = ((GSM_DateTime *)data)->Minute & 0xff;
+			buffer[8] = ((GSM_DateTime *)data)->Second & 0xff;
 			buffer[9] = 0x00;
 			break;
 		case Alcatel_string:
 			buffer[3] = 0x08;
 			buffer[4] = 0x3c;
 
-			len = MIN(strlen(DecodeUnicodeString((char *)data)),62);
+			len = MIN(UnicodeLength((char *)data),62);
 			EncodeDefault(buffer + 6, (char *)data, &len, false, GSM_AlcatelAlphabet);
 			buffer[5] = len;
 			buffer[0] = 5 + len;
@@ -998,7 +1007,7 @@ static void ALCATEL_BuildWriteBuffer(unsigned char * buffer, GSM_Alcatel_FieldTy
 			buffer[3] = 0x07;
 			buffer[4] = 0x3c;
 
-			len = MIN(strlen(DecodeUnicodeString((char *)data)),50);
+			len = MIN(UnicodeLength((char *)data),50);
 			EncodeDefault(buffer + 6, (char *)data, &len, false, GSM_AlcatelAlphabet);
 			buffer[5] = len;
 			buffer[0] = 5 + len;
@@ -1025,10 +1034,10 @@ static void ALCATEL_BuildWriteBuffer(unsigned char * buffer, GSM_Alcatel_FieldTy
 			buffer[4] = 0x3a;
 
 			buffer[0] = 0x08;
-			buffer[5] = *(int *)data >> 24;
-			buffer[6] = (*(int *)data >> 16) & 0xff;
-			buffer[7] = (*(int *)data >> 8) & 0xff;
-			buffer[8] = *(int *)data & 0xff;
+			buffer[5] = *(unsigned int *)data >> 24;
+			buffer[6] = (*(unsigned int *)data >> 16) & 0xff;
+			buffer[7] = (*(unsigned int *)data >> 8) & 0xff;
+			buffer[8] = *(unsigned int *)data & 0xff;
 			buffer[9] = 0x00;
 			break;
 		case Alcatel_byte:
@@ -1494,15 +1503,12 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entr
 		if (entry->EntriesNum == 0) {
 			/* Delete entry */
 			if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
-			if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeContacts, entry->Location))!= GE_NONE) return error;
 			if ((error = ALCATEL_IsIdAvailable(s, entry->Location))!= GE_NONE) {
 				/* FIXME: What should we return, when attempted to delete non existant location? */
-				if (error == GE_EMPTY) return GE_INVALIDLOCATION;
 				return error;
 			}
 			error = ALCATEL_DeleteItem(s, entry->Location);
 			if (error != GE_NONE) return error;
-			if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= GE_NONE) return error;
 			return GE_NONE;
 		} else if (entry->Location == 0) {
 			/* Add new entry */
@@ -1568,7 +1574,6 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entr
 			if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
 			if ((error = ALCATEL_IsIdAvailable(s, entry->Location))!= GE_NONE) {
 				/* FIXME: What should we return, when we can not write to non existant location? */
-				if (error == GE_EMPTY) return GE_INVALIDLOCATION;
 				return error;
 			}
 			/* Get fields for current item */
@@ -1638,7 +1643,6 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entr
 			entry->Location = Priv->CommitedRecord;
 			return GE_NONE;
 		}
-		return GE_WORKINPROGRESS;
 	} else {
 		if ((error = ALCATEL_SetATMode(s))!= GE_NONE) return error;
 		return ATGEN_SetMemory(s, entry);
@@ -2170,6 +2174,20 @@ static GSM_Error ALCATEL_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry 
 	return GE_WORKINPROGRESS;
 }
 
+static GSM_Error ALCATEL_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
+{
+	GSM_Error		error;
+	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
+	
+	status->Used = 0;
+	
+	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= GE_NONE) return error;
+	if ((error = ALCATEL_GetAvailableIds(s, true))!= GE_NONE) return error;
+
+	status->Used = Priv->ToDoItemsCount;
+	return GE_NONE;
+}
+
 static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refresh)
 {
 	GSM_Error		error;
@@ -2279,8 +2297,14 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool
 					j++;
 					break;
 				}
-				ToDo->Entries[i-j].EntryType = TODO_CATEGORY;
-				ToDo->Entries[i-j].Number = Priv->ReturnInt;
+				if (Priv->ReturnInt == 255) {
+					/* 255 means no category */
+					j++;
+					ToDo->EntriesNum--;
+				} else {
+					ToDo->Entries[i-j].EntryType = TODO_CATEGORY;
+					ToDo->Entries[i-j].Number = Priv->ReturnInt;
+				}
 				break;
 			case 7:
 				/* This one seems to be byte for BF5 and enum for BE5 */
@@ -2301,7 +2325,7 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool
 						ToDo->Priority = GSM_Priority_Low;
 						break;
 					default:
-						ToDo->Priority = GSM_Priority_Medium;
+						ToDo->Priority = 0;
 						smprintf(s,"WARNING: Received unexpected priority %02X, ignoring\n", Priv->ReturnInt);
 				}
 				j++;
@@ -2395,12 +2419,188 @@ static GSM_Error ALCATEL_DeleteAllToDo (GSM_StateMachine *s)
 
 static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
-	GSM_Error error;
+	GSM_Error		error;
+	unsigned int		val;
+	bool			contact_set = false;
+	bool			phone_set = false;
+	bool			UpdatedFields[12];
+	int			i;
+	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= GE_NONE) return error;
-	if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
-	/* TODO: do the real setting */
-	return GE_WORKINPROGRESS;
+	if (ToDo->EntriesNum == 0) {
+		/* Delete ToDo */
+		if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
+		if ((error = ALCATEL_IsIdAvailable(s, ToDo->Location))!= GE_NONE) {
+			/* FIXME: What should we return, when attempted to delete non existant location? */
+			return error;
+		}
+		error = ALCATEL_DeleteItem(s, ToDo->Location);
+		if (error != GE_NONE) return error;
+		return GE_NONE;
+	} else if (ToDo->Location == 0) {
+		/* Add new ToDo */
+		if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeToDo, ToDo->Location))!= GE_NONE) return error;
+		if (ToDo->Priority != 0) {
+			switch (ToDo->Priority) {
+				case GSM_Priority_High:
+					val = 0;
+					break;
+				case GSM_Priority_Medium:
+					val = 1;
+					break;
+				case GSM_Priority_Low:
+					val = 2;
+					break;
+			}
+			/* This one seems to be byte for BF5 and enum for BE5 */
+			if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
+			       ALCATEL_CreateField(s, Alcatel_byte, 7, &val);
+			} else {
+			       ALCATEL_CreateField(s, Alcatel_enum, 7, &val);
+			}
+		}
+		for (i = 0; i < ToDo->EntriesNum; i++) {
+			switch (ToDo->Entries[i].EntryType) {
+				case TODO_DUEDATE:
+					ALCATEL_CreateField(s, Alcatel_date, 0, &(ToDo->Entries[i].Date));
+					break;
+    				case TODO_COMPLETED:
+					ALCATEL_CreateField(s, Alcatel_bool, 1, &(ToDo->Entries[i].Number));
+					break;
+				case TODO_ALARM_DATETIME: 
+					ALCATEL_CreateField(s, Alcatel_date, 2, &(ToDo->Entries[i].Date));
+					ALCATEL_CreateField(s, Alcatel_time, 3, &(ToDo->Entries[i].Date));
+					ALCATEL_CreateField(s, Alcatel_date, 10, &(ToDo->Entries[i].Date));
+					ALCATEL_CreateField(s, Alcatel_time, 11, &(ToDo->Entries[i].Date));
+					break;
+				case TODO_TEXT:
+					ALCATEL_CreateField(s, Alcatel_string, 4, ToDo->Entries[i].Text);
+					break;
+    				case TODO_PRIVATE:
+					ALCATEL_CreateField(s, Alcatel_bool, 5, &(ToDo->Entries[i].Number));
+					break;
+    				case TODO_CATEGORY:
+					ALCATEL_CreateField(s, Alcatel_byte, 6, &(ToDo->Entries[i].Number));
+					break;
+    				case TODO_CONTACTID:
+					ALCATEL_CreateField(s, Alcatel_int, 8, &(ToDo->Entries[i].Number));
+					contact_set = true;
+					break;
+				case TODO_PHONE:
+					ALCATEL_CreateField(s, Alcatel_phone, 9, ToDo->Entries[i].Text);
+					phone_set = true;
+					break;
+			}
+		}
+		if (!contact_set) {
+			if (phone_set) {
+				val = 0xffffffff;
+			} else {
+				val = 0;
+			}
+			ALCATEL_CreateField(s, Alcatel_int, 8, &val);
+		}
+		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= GE_NONE) return error;
+		ToDo->Location = Priv->CommitedRecord;
+		return GE_NONE;
+	} else {
+		/* Save modified ToDo */
+		if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
+		if ((error = ALCATEL_IsIdAvailable(s, ToDo->Location))!= GE_NONE) {
+			/* FIXME: What should we return, when we can not write to non existant location? */
+			return error;
+		}
+		/* Get fields for current item */
+		if ((error = ALCATEL_GetFields(s, ToDo->Location))!= GE_NONE) return error;
+		
+		for (i = 0; i < 26; i++) { UpdatedFields[i] = false; }
+		
+		if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeToDo, ToDo->Location))!= GE_NONE) return error;
+
+		if (ToDo->Priority != 0) {
+			switch (ToDo->Priority) {
+				case GSM_Priority_High:
+					val = 0;
+					break;
+				case GSM_Priority_Medium:
+					val = 1;
+					break;
+				case GSM_Priority_Low:
+					val = 2;
+					break;
+			}
+			/* This one seems to be byte for BF5 and enum for BE5 */
+			if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
+			       ALCATEL_UpdateField(s, Alcatel_byte, ToDo->Location, 7, &(ToDo->Priority));
+			} else {
+			       ALCATEL_UpdateField(s, Alcatel_enum, ToDo->Location, 7, &(ToDo->Priority));
+			}
+			UpdatedFields[7] = true;
+		}
+		for (i = 0; i < ToDo->EntriesNum; i++) {
+			switch (ToDo->Entries[i].EntryType) {
+				case TODO_DUEDATE:
+					ALCATEL_UpdateField(s, Alcatel_date, ToDo->Location, 0, &(ToDo->Entries[i].Date));
+					UpdatedFields[0] = true; 
+					break;
+    				case TODO_COMPLETED:
+					ALCATEL_UpdateField(s, Alcatel_bool, ToDo->Location, 1, &(ToDo->Entries[i].Number));
+					UpdatedFields[1] = true; 
+					break;
+				case TODO_ALARM_DATETIME: 
+					ALCATEL_UpdateField(s, Alcatel_date, ToDo->Location, 2, &(ToDo->Entries[i].Date));
+					UpdatedFields[2] = true; 
+					ALCATEL_UpdateField(s, Alcatel_time, ToDo->Location, 3, &(ToDo->Entries[i].Date));
+					UpdatedFields[3] = true; 
+					ALCATEL_UpdateField(s, Alcatel_date, ToDo->Location, 10, &(ToDo->Entries[i].Date));
+					UpdatedFields[10] = true; 
+					ALCATEL_UpdateField(s, Alcatel_time, ToDo->Location, 11, &(ToDo->Entries[i].Date));
+					UpdatedFields[11] = true; 
+					break;
+				case TODO_TEXT:
+					ALCATEL_UpdateField(s, Alcatel_string, ToDo->Location, 4, ToDo->Entries[i].Text);
+					UpdatedFields[4] = true; 
+					break;
+    				case TODO_PRIVATE:
+					ALCATEL_UpdateField(s, Alcatel_bool, ToDo->Location, 5, &(ToDo->Entries[i].Number));
+					UpdatedFields[5] = true; 
+					break;
+    				case TODO_CATEGORY:
+					ALCATEL_UpdateField(s, Alcatel_byte, ToDo->Location, 6, &(ToDo->Entries[i].Number));
+					UpdatedFields[6] = true; 
+					break;
+    				case TODO_CONTACTID:
+					ALCATEL_UpdateField(s, Alcatel_int, ToDo->Location, 8, &(ToDo->Entries[i].Number));
+					UpdatedFields[8] = true; 
+					contact_set = true;
+					break;
+				case TODO_PHONE:
+					ALCATEL_UpdateField(s, Alcatel_phone, ToDo->Location, 9, ToDo->Entries[i].Text);
+					UpdatedFields[9] = true; 
+					phone_set = true;
+					break;
+			}
+		}
+		if (!contact_set) {
+			if (phone_set) {
+				val = 0xffffffff;
+			} else {
+				val = 0;
+			}
+			ALCATEL_UpdateField(s, Alcatel_int, ToDo->Location, 8, &val);
+			UpdatedFields[8] = true;
+		}
+
+
+		/* If we didn't update some field, we have to delete it... */
+		for (i=0; i<Priv->CurrentFieldsCount; i++) {
+			if (!UpdatedFields[Priv->CurrentFields[i]]) ALCATEL_DeleteField(s, ToDo->Location, Priv->CurrentFields[i]);
+		}
+		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= GE_NONE) return error;
+		ToDo->Location = Priv->CommitedRecord;
+		return GE_NONE;
+	}
 }
 
 static GSM_Error ALCATEL_GetCategoryStatus(GSM_StateMachine *s, GSM_CategoryStatus *Status)
@@ -2520,7 +2720,8 @@ static GSM_Reply_Function ALCATELReplyFunctions[] = {
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelGetFieldValue1	},
 {ALCATEL_ReplyGetFieldValue,	"\x02",0x00,0x00, ID_AlcatelGetFieldValue2	},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelDeleteField		},
-{ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelDeleteItem		},
+{ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelDeleteItem1		},
+{ALCATEL_ReplyDeleteItem,	"\x02",0x00,0x00, ID_AlcatelDeleteItem2		},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelCreateField		},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelUpdateField		},
 {NULL,				"\x00",0x00,0x00, ID_None			}
@@ -2579,6 +2780,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	ALCATEL_GetToDo,
 	ALCATEL_DeleteAllToDo,
 	ALCATEL_SetToDo,
+	ALCATEL_GetToDoStatus,
 	NOTSUPPORTED,			/* PlayTone		*/
 	ALCATEL_EnterSecurityCode,
 	ALCATEL_GetSecurityStatus,
@@ -2614,7 +2816,9 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/* DeleteFile		*/
 	NOTSUPPORTED,			/* AddFolder		*/
 	NOTSUPPORTED,			/* GetMMSSettings	*/
-	NOTSUPPORTED			/* SetMMSSettings	*/
+	NOTSUPPORTED,			/* SetMMSSettings	*/
+	NOTSUPPORTED,			/* GetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* SetGPRSAccessPoint	*/
 };
 
 #endif

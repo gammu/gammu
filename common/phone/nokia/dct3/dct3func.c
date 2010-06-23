@@ -167,9 +167,9 @@ GSM_Error DCT3_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	req[9]  = smsc->Validity.Relative;
 	req[10] = GSM_PackSemiOctetNumber(smsc->DefaultNumber, req+11, true);
 	req[22] = GSM_PackSemiOctetNumber(smsc->Number, req+23, false);
-	memcpy (req + 34, DecodeUnicodeString(smsc->Name),strlen(DecodeUnicodeString(smsc->Name)));
+	memcpy (req + 34, DecodeUnicodeString(smsc->Name),UnicodeLength(smsc->Name));
 	smprintf(s, "Setting SMSC\n");
-	return GSM_WaitFor (s, req, 35+strlen(DecodeUnicodeString(smsc->Name)), 0x02, 4, ID_SetSMSC);
+	return GSM_WaitFor (s, req, 35+UnicodeLength(smsc->Name), 0x02, 4, ID_SetSMSC);
 }
 
 GSM_Error DCT3_ReplyEnableSecurity(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -591,13 +591,13 @@ GSM_Error DCT3_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 	req[count++] = (location & 0xff00) >> 8;
 	req[count++] = (location & 0x00ff);
 
-	req[count++] = strlen(DecodeUnicodeString(bookmark->Title));
+	req[count++] = UnicodeLength(bookmark->Title);
 	CopyUnicodeString(req+count,bookmark->Title);
-	count = count + 2*strlen(DecodeUnicodeString(bookmark->Title));
+	count = count + 2*UnicodeLength(bookmark->Title);
 
-	req[count++] = strlen(DecodeUnicodeString(bookmark->Address));
+	req[count++] = UnicodeLength(bookmark->Address);
 	CopyUnicodeString(req+count,bookmark->Address);
-	count = count + 2*strlen(DecodeUnicodeString(bookmark->Address));
+	count = count + 2*UnicodeLength(bookmark->Address);
 
 	/* ??? */
 	req[count++] = 0x01; req[count++] = 0x80; req[count++] = 0x00;
@@ -651,11 +651,11 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 		if (msg.Buffer[tmp+13] == 0x01) Data->WAPSettings->Settings[0].IsSecurity = true;
 
 		/* I'm not sure here. Experimental values from 6210 5.56 */
-//		tmp2 = strlen(DecodeUnicodeString(Data->WAPSettings->Settings[0].Title));
+//		tmp2 = DecodeUnicodeLength(Data->WAPSettings->Settings[0].Title);
 //		if (tmp2 != 0) tmp2 --;
 //		tmp2 += tmp;
-		if (!(strlen(DecodeUnicodeString(Data->WAPSettings->Settings[0].Title))) % 2) tmp++;
-		if (strlen(DecodeUnicodeString(Data->WAPSettings->Settings[0].HomePage))!=0) tmp++;
+		if (!(UnicodeLength(Data->WAPSettings->Settings[0].Title)) % 2) tmp++;
+		if (UnicodeLength(Data->WAPSettings->Settings[0].HomePage)!=0) tmp++;
 
 		smprintf(s, "ID for writing %i\n",msg.Buffer[tmp+5]);
 

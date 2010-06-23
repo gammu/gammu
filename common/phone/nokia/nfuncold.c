@@ -269,7 +269,7 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		/* here starts block ... depends on note type */
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00};                          
 
-	if (!Past && IsNoteFromThePast(*Note)) return GE_NONE;
+	if (!Past && IsNoteFromThePast(Note)) return GE_NONE;
 
 	error=N71_65_GetCalendarNotePos1(s);
 	if (error!=GE_NONE) return error;
@@ -286,7 +286,7 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		default		 : req[3]=0x01; req[6]=0x01; break;
 	}
 
-	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(*Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime);
+	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime);
 
 	if (Time == -1) return GE_UNKNOWN;
 	memcpy(&DT,&Note->Entries[Time].Date,sizeof(GSM_DateTime));
@@ -328,9 +328,9 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		}
 
 		if (Text != -1) {
-			req[count++] = strlen(DecodeUnicodeString(Note->Entries[Text].Text));	/* 19 */
+			req[count++] = UnicodeLength(Note->Entries[Text].Text);	/* 19 */
 			CopyUnicodeString(req+count,Note->Entries[Text].Text);
-			count=count+2*strlen(DecodeUnicodeString(Note->Entries[Text].Text));	/* 22->N */
+			count=count+2*UnicodeLength(Note->Entries[Text].Text);	/* 22->N */
 		} else {
 			req[count++] = 0x00;
 		}
@@ -351,10 +351,10 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		}
 
 		if (Text != -1) {
-			req[count++] = strlen(DecodeUnicodeString(Note->Entries[Text].Text));	/* 14 */
+			req[count++] = UnicodeLength(Note->Entries[Text].Text);	/* 14 */
 			req[count++] = 0x00;							/* 15 */
 			CopyUnicodeString(req+count,Note->Entries[Text].Text);
-			count=count+2*strlen(DecodeUnicodeString(Note->Entries[Text].Text));	/* 16->N */
+			count=count+2*UnicodeLength(Note->Entries[Text].Text);	/* 16->N */
 		} else {
 			req[count++] = 0x00;
 			req[count++] = 0x00;
@@ -394,22 +394,22 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		}
 
 		if (Text != -1) {
-			req[count++] = strlen(DecodeUnicodeString(Note->Entries[Text].Text));
+			req[count++] = UnicodeLength(Note->Entries[Text].Text);
 		} else {
 			req[count++] = 0x00; /* 18 */
 		}
 		if (Note->Type == GCN_CALL && Phone != -1) {
-			req[count++] = strlen(DecodeUnicodeString(Note->Entries[Phone].Text));
+			req[count++] = UnicodeLength(Note->Entries[Phone].Text);
 		} else {
 			req[count++] = 0x00; /* 19 */
 		}
 		if (Text != -1) {
 			CopyUnicodeString(req+count,Note->Entries[Text].Text);
-			count=count+2*strlen(DecodeUnicodeString(Note->Entries[Text].Text));/* 20->N */
+			count=count+2*UnicodeLength(Note->Entries[Text].Text);/* 20->N */
 		}
 		if (Note->Type == GCN_CALL && Phone != -1) {
 			CopyUnicodeString(req+count,Note->Entries[Phone].Text);
-			count=count+2*strlen(DecodeUnicodeString(Note->Entries[Phone].Text));/* (N+1)->n */
+			count=count+2*UnicodeLength(Note->Entries[Phone].Text);/* (N+1)->n */
 		}
 		break;
 	}

@@ -688,8 +688,8 @@ static GSM_Error N6110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 	case RING_NOKIABINARY:
                	error=DCT3_EnableSecurity (s, 0x01);
 		if (error!=GE_NONE) return error;
-		memcpy(reqBin+current,DecodeUnicodeString(Ringtone->Name),strlen(DecodeUnicodeString(Ringtone->Name)));
-		current += strlen(DecodeUnicodeString(Ringtone->Name));
+		memcpy(reqBin+current,DecodeUnicodeString(Ringtone->Name),UnicodeLength(Ringtone->Name));
+		current += UnicodeLength(Ringtone->Name);
 		reqBin[current++] = 0x00;
 		reqBin[current++] = 0x00;
 		reqBin[current++] = 0x00;/*xxx*/
@@ -833,7 +833,7 @@ static GSM_Error N6110_ReplyGetSetPicture(GSM_Protocol_Message msg, GSM_StateMac
 		    (!strcmp(Data->Model,"NHM-5") && Data->VerNum < 5.79)) {
 			count++;
 			EncodeUnicode(Data->Bitmap->Text,msg.Buffer+count+1,msg.Buffer[count]);
-			count += strlen(DecodeUnicodeString(Data->Bitmap->Text)) + 1;
+			count += UnicodeLength(Data->Bitmap->Text) + 1;
 		} else {
 		    	if (!strcmp(Data->Model,"NHM-5")) {
 				i = msg.Buffer[count] * 256 + msg.Buffer[count+1];
@@ -1042,7 +1042,7 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		} else {
 			req[count++] = 0x03;
 		}
-		textlen	= strlen(DecodeUnicodeString(Bitmap->Text));
+		textlen	= UnicodeLength(Bitmap->Text);
 		req[count++] = textlen;
 		memcpy(req + count,DecodeUnicodeString(Bitmap->Text),textlen);
 		count += textlen;
@@ -1054,7 +1054,7 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		if (Bitmap->DefaultName) {
 			req[count++] = 0;
 		} else {
-			textlen = strlen(DecodeUnicodeString(Bitmap->Text));
+			textlen = UnicodeLength(Bitmap->Text);
 			req[count++] = textlen;
 			memcpy(req+count,DecodeUnicodeString(Bitmap->Text),textlen);
 			count += textlen;
@@ -1114,12 +1114,12 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		req[count++] = 0x00;
 	        if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOPICTUREUNI) ||
 		    (!strcmp(s->Phone.Data.Model,"NHM-5") && s->Phone.Data.VerNum < 5.79)) {
-			textlen = strlen(DecodeUnicodeString(Bitmap->Text));
+			textlen = UnicodeLength(Bitmap->Text);
 			req[count++] = textlen;
 			memcpy(req+count,DecodeUnicodeString(Bitmap->Text),textlen);
 			count += textlen;
 		} else {
-			textlen = strlen(DecodeUnicodeString(Bitmap->Text))*2;
+			textlen = UnicodeLength(Bitmap->Text)*2;
 		    	if (!strcmp(s->Phone.Data.Model,"NHM-5")) {
 				req[count++] = textlen;
 			} else {
@@ -1244,7 +1244,7 @@ static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 		0x00,			/* memory type	*/
 		0x00};			/* location	*/
 
-	GSM_PhonebookFindDefaultNameNumberGroup(*entry, &Name, &Number, &Group);
+	GSM_PhonebookFindDefaultNameNumberGroup(entry, &Name, &Number, &Group);
 
 	req[4] = NOKIA_GetMemoryType(s, entry->MemoryType,N6110_MEMORY_TYPES);
 	req[5] = entry->Location;
@@ -1253,24 +1253,24 @@ static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOPBKUNICODE)) {
 		if (Name != -1) {
-			req[6] = strlen(DecodeUnicodeString(entry->Entries[Name].Text));
-			memcpy(req+current,DecodeUnicodeString(entry->Entries[Name].Text),strlen(DecodeUnicodeString(entry->Entries[Name].Text)));
-			current += strlen(DecodeUnicodeString(entry->Entries[Name].Text));
+			req[6] = UnicodeLength(entry->Entries[Name].Text);
+			memcpy(req+current,DecodeUnicodeString(entry->Entries[Name].Text),UnicodeLength(entry->Entries[Name].Text));
+			current += UnicodeLength(entry->Entries[Name].Text);
 		} else req[6] = 0;
 	} else {
 		if (Name != -1) {
-			req[6] = strlen(DecodeUnicodeString(entry->Entries[Name].Text))*2+2;
-			memcpy(req+current,entry->Entries[Name].Text,strlen(DecodeUnicodeString(entry->Entries[Name].Text))*2);
-			current += strlen(DecodeUnicodeString(entry->Entries[Name].Text))*2;
+			req[6] = UnicodeLength(entry->Entries[Name].Text)*2+2;
+			memcpy(req+current,entry->Entries[Name].Text,UnicodeLength(entry->Entries[Name].Text)*2);
+			current += UnicodeLength(entry->Entries[Name].Text)*2;
 		} else req[6] = 0;
 		req[current++]=0x00;
 		req[current++]=0x00;
 	}
 
 	if (Number != -1) {
-		req[current++]=strlen(DecodeUnicodeString(entry->Entries[Number].Text));
-		memcpy(req+current,DecodeUnicodeString(entry->Entries[Number].Text),strlen(DecodeUnicodeString(entry->Entries[Number].Text)));
-		current += strlen(DecodeUnicodeString(entry->Entries[Number].Text));
+		req[current++]=UnicodeLength(entry->Entries[Number].Text);
+		memcpy(req+current,DecodeUnicodeString(entry->Entries[Number].Text),UnicodeLength(entry->Entries[Number].Text));
+		current += UnicodeLength(entry->Entries[Number].Text);
 	} else req[current++] = 0;
 
 	/* This allow to save 14 characters name into SIM memory, when
@@ -1894,9 +1894,9 @@ static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *N
 		0x00, 0x00, 0x00, 0x01, 0x00, 0x66, 0x01};
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOCALENDAR)) return GE_NOTSUPPORTED;
-	if (!Past && IsNoteFromThePast(*Note)) return GE_NONE;
+	if (!Past && IsNoteFromThePast(Note)) return GE_NONE;
 
-	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(*Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime);
+	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime);
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_CAL52)) {
 		switch(Note->Type) {
@@ -1949,11 +1949,11 @@ static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *N
 	if (Text != -1) {
 		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_CAL52) ||
 		    IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_CAL82)) {
-			req[22] = strlen(DecodeUnicodeString(Note->Entries[Text].Text))*2;
-			memcpy(req+current,Note->Entries[Text].Text,strlen(DecodeUnicodeString(Note->Entries[Text].Text))*2);
-			current += strlen(DecodeUnicodeString(Note->Entries[Text].Text))*2;
+			req[22] = UnicodeLength(Note->Entries[Text].Text)*2;
+			memcpy(req+current,Note->Entries[Text].Text,UnicodeLength(Note->Entries[Text].Text)*2);
+			current += UnicodeLength(Note->Entries[Text].Text)*2;
 		} else {
-			req[22] = strlen(DecodeUnicodeString(Note->Entries[Text].Text));
+			req[22] = UnicodeLength(Note->Entries[Text].Text);
 			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_CAL33))
 			{
 				Reminder3310 = true;
@@ -1968,7 +1968,7 @@ static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *N
 				if (Reminder3310) {
 					req[22]++;		/* one additional char */
 					req[current++] = 0x01;	/* we use now subset 1 */
-					for (i=0;i<((int)strlen(DecodeUnicodeString(Note->Entries[Text].Text)));i++)
+					for (i=0;i<((int)UnicodeLength(Note->Entries[Text].Text));i++)
 					{
 						/* Euro char */
 						if (Note->Entries[Text].Text[i*2]==0x20 && Note->Entries[Text].Text[i*2+1]==0xAC) {
@@ -1990,17 +1990,17 @@ static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *N
 				}
 			}
 			if (!Reminder3310) {
-				memcpy(req+current,DecodeUnicodeString(Note->Entries[Text].Text),strlen(DecodeUnicodeString(Note->Entries[Text].Text)));
-				current += strlen(DecodeUnicodeString(Note->Entries[Text].Text));
+				memcpy(req+current,DecodeUnicodeString(Note->Entries[Text].Text),UnicodeLength(Note->Entries[Text].Text));
+				current += UnicodeLength(Note->Entries[Text].Text);
 			}
 		}
 	} else req[22] = 0x00;
 
 	if (Note->Type == GCN_CALL) {
 		if (Phone != -1) {
-			req[current++] = strlen(DecodeUnicodeString(Note->Entries[Phone].Text));
-			memcpy(req+current,DecodeUnicodeString(Note->Entries[Phone].Text),strlen(DecodeUnicodeString(Note->Entries[Phone].Text)));
-			current += strlen(DecodeUnicodeString(Note->Entries[Phone].Text));
+			req[current++] = UnicodeLength(Note->Entries[Phone].Text);
+			memcpy(req+current,DecodeUnicodeString(Note->Entries[Phone].Text),UnicodeLength(Note->Entries[Phone].Text));
+			current += UnicodeLength(Note->Entries[Phone].Text);
 		} else req[current++] = 0x00;
 	}
 
@@ -2229,7 +2229,7 @@ static GSM_Error N6110_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarEntr
 	smprintf(s, "Getting calendar note\n");
 	error=GSM_WaitFor (s, req, 5, 0x13, 4, ID_GetCalendarNote);
 
-	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(*Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime);
+	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime);
 	/* 2090 year is set for example in 3310 */
 	if (error == GE_NONE && Note->Entries[Time].Date.Year == 2090) {
 		error=N6110_GetDateTime(s, &date_time);
@@ -2443,6 +2443,7 @@ GSM_Phone_Functions N6110Phone = {
 	NOTSUPPORTED,		/*	GetToDo			*/
 	NOTSUPPORTED,		/*	DeleteAllToDo		*/
 	NOTSUPPORTED,		/*	SetToDo			*/
+	NOTSUPPORTED,		/*	GetToDoStatus		*/
 	DCT3_PlayTone,
 	N6110_EnterSecurityCode,
 	N6110_GetSecurityStatus,
@@ -2478,7 +2479,9 @@ GSM_Phone_Functions N6110Phone = {
 	NOTSUPPORTED,		/*	DeleteFile		*/
 	NOTSUPPORTED,		/*	AddFolder		*/
 	NOTSUPPORTED,		/* 	GetMMSSettings		*/
-	NOTSUPPORTED		/* 	SetMMSSettings		*/
+	NOTSUPPORTED,		/* 	SetMMSSettings		*/
+	NOTSUPPORTED,		/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED		/* 	SetGPRSAccessPoint	*/
 };
 
 #endif

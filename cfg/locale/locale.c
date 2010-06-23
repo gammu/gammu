@@ -23,7 +23,7 @@ void WriteOutput(char *mystring)
 	buffer[1] = 0x0d;
 	buffer[2] = 0x00;
 	buffer[3] = 0x0a;
-	fwrite(buffer,1,4,output);	
+	fwrite(buffer,1,4,output);
 }
 
 void ProcessSourceFile(char *filename)
@@ -72,8 +72,8 @@ void ProcessSourceFile(char *filename)
 				case 13:
 					break;
 				default:
-					line[strlen(line)+1]=0;
-					line[strlen(line)]=buffer[i];
+					line[strlen(line)+1]	= 0;
+					line[strlen(line)]	= buffer[i];
 			}
 		}
 	} while (num==10000);
@@ -138,7 +138,7 @@ void RemoveDuplicatedStrings(char *filename)
 				sprintf(buffer2,"F%04i=",outputnum);
 				EncodeUnicode(buffer,buffer2,6);
 				fwrite(buffer,1,12,output);
-				fwrite(e->value,1,strlen(DecodeUnicodeString(e->value))*2,output);
+				fwrite(e->value,1,UnicodeLength(e->value)*2,output);
 				WriteOutput("");
 				outputnum++;
 			}
@@ -187,7 +187,7 @@ void ProcessLangFile(char *filename)
 			sprintf(buffer2,"F%04i=",num);
 			EncodeUnicode(buffer,buffer2,6);
 			fwrite(buffer,1,12,output);
-			fwrite(e->value,1,strlen(DecodeUnicodeString(e->value))*2,output);
+			fwrite(e->value,1,UnicodeLength(e->value)*2,output);
 			WriteOutput("");
 			e_lang = e2;
 			while (1) {
@@ -206,7 +206,7 @@ void ProcessLangFile(char *filename)
 							sprintf(buffer2,"T%04i=",num);
 							EncodeUnicode(buffer,buffer2,6);
 							fwrite(buffer,1,12,output);
-							fwrite(retval_lang,1,strlen(DecodeUnicodeString(retval_lang))*2,output);
+							fwrite(retval_lang,1,UnicodeLength(retval_lang)*2,output);
 							WriteOutput("");
 						}
 						break;
@@ -218,6 +218,7 @@ void ProcessLangFile(char *filename)
 		e = e->prev;
 	}
 	fclose(output);
+	printf("\n");
 }
 
 int main(int argc, char *argv[])
@@ -278,7 +279,7 @@ int main(int argc, char *argv[])
 	WriteOutput("F0040=\"Loud\"");
 	WriteOutput("F0041=\"My style\"");
 	WriteOutput("F0042=\"Function is during writing. If want help, please contact with authors.\"");
-	WriteOutput("F0043=\"Error during reading device\"");                               
+	WriteOutput("F0043=\"Error during reading device\"");
 	WriteOutput("F0044=\"Can't set parity on device\"");
 	WriteOutput("F0045=\"Phone is disabled and connected to charger\"");
 	WriteOutput("F0046=\"File format not supported by Gammu\"");
@@ -308,7 +309,6 @@ int main(int argc, char *argv[])
 	return (0);
 }
 
-/* How should editor hadle tabs in this file? Add editor commands here.
+/* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
-

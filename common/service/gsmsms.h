@@ -8,7 +8,6 @@
 #include "gsmpbk.h"
 #include "gsmwap.h"
 #include "gsmring.h"
-#include "gsmmms.h"
 
 /* --------------------- Some general definitions ------------------------- */
 
@@ -112,8 +111,7 @@ typedef enum {
 	UDH_NokiaCalendarLong,
 	UDH_NokiaOperatorLogoLong,
 	UDH_NokiaProfileLong,
-	UDH_NokiaWAPBookmarkLong,
-	UDH_NokiaWAPSettingsLong,
+	UDH_NokiaWAPLong,
 	UDH_NokiaPhonebookLong,
 	UDH_UserUDH,			/* Other user UDH */
 	UDH_MMSIndicatorLong
@@ -291,6 +289,7 @@ typedef enum {
 	SMS_NokiaCallerLogo,		/* Nokia 72x14 caller logo, 1 SMS 		 */
 	SMS_NokiaWAPBookmarkLong,	/* Nokia WAP bookmark in 1 or 2 SMS 		 */
 	SMS_NokiaWAPSettingsLong,	/* Nokia WAP settings in 2 SMS			 */
+	SMS_NokiaMMSSettingsLong,	/* Nokia MMS settings in 2 SMS			 */
 	SMS_NokiaVCARD10Long,		/* Nokia VCARD 1.0 - only name and default number*/
 	SMS_NokiaVCARD21Long,		/* Nokia VCARD 2.1 - all numbers + text		 */
 	SMS_NokiaVCALENDAR10Long,	/* Nokia VCALENDAR 1.0 - can be in few sms	 */

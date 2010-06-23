@@ -58,10 +58,10 @@ typedef enum {
 } GSM_CalendarType;
 
 typedef struct {
-	GSM_CalendarType       	EntryType;
-	unsigned char       	Text[(MAX_CALENDAR_TEXT_LENGTH + 1)*2];
-	GSM_DateTime        	Date;
-	int         		Number;
+	GSM_CalendarType	EntryType;
+	unsigned char		Text[(MAX_CALENDAR_TEXT_LENGTH + 1)*2];
+	GSM_DateTime		Date;
+	unsigned int		Number;
 } GSM_SubCalendarEntry;
 
 typedef struct {
@@ -71,11 +71,11 @@ typedef struct {
 	GSM_SubCalendarEntry   	Entries[GSM_CALENDAR_ENTRIES];
 } GSM_CalendarEntry;
 
-void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime);
+void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime);
 
-GSM_Error NOKIA_EncodeVCALENDAR10SMSText(char *Buffer, int *Length, GSM_CalendarEntry note);
+GSM_Error NOKIA_EncodeVCALENDAR10SMSText(char *Buffer, int *Length, GSM_CalendarEntry *note);
 
-bool IsNoteFromThePast(GSM_CalendarEntry note);
+bool IsNoteFromThePast(GSM_CalendarEntry *note);
 
 /* ------------------------------ to-do ------------------------------------ */
 
@@ -100,10 +100,10 @@ typedef enum {
 } GSM_ToDo_Priority;
 
 typedef struct {
-	GSM_ToDoType        EntryType;
-	unsigned char       Text[(MAX_TODO_TEXT_LENGTH + 1)*2];
-	GSM_DateTime        Date;
-	int                 Number;
+	GSM_ToDoType	EntryType;
+	unsigned char	Text[(MAX_TODO_TEXT_LENGTH + 1)*2];
+	GSM_DateTime	Date;
+	unsigned int	Number;
 } GSM_SubToDoEntry;
 
 typedef struct {
@@ -112,6 +112,10 @@ typedef struct {
 	int 			EntriesNum;         /* Number of entries */
 	GSM_SubToDoEntry   	Entries[GSM_TODO_ENTRIES];
 } GSM_ToDoEntry;
+
+typedef struct {
+	int		Used;		/* Number of used positions */
+} GSM_ToDoStatus;
 
 #endif	/* __gsm_calendar_h */
 

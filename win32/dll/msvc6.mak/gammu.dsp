@@ -142,7 +142,7 @@ SOURCE=..\..\..\common\service\gsmsms.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\service\gsmmms.c
+SOURCE=..\..\..\common\phone\at\sonyeric.c
 # End Source File
 # Begin Source File
 
@@ -295,10 +295,6 @@ SOURCE=..\..\..\common\service\gsmmisc.h
 # Begin Source File
 
 SOURCE=..\..\..\common\service\gsmsms.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\..\common\service\gsmmms.h
 # End Source File
 # Begin Source File
 

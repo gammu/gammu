@@ -130,7 +130,11 @@ typedef enum {
 	GSM_File_Image_BMP,
 	GSM_File_Image_GIF,
 	GSM_File_Image_PNG,
+	GSM_File_Image_WBMP,
 	GSM_File_Ringtone_MIDI,
+#ifdef DEVELOP
+	GSM_File_MMS,
+#endif
 	GSM_File_Other
 } GSM_FileType;
 
@@ -151,9 +155,17 @@ typedef struct {
 
 GSM_Error GSM_ReadFile(char *FileName, GSM_File *File);
 
-GSM_Error GSM_JavaFindData(GSM_File File, char *Vendor, char *Name, char *JAR);
+GSM_Error GSM_JavaFindData(GSM_File File, char *Vendor, char *Name, char *JAR, char *Version);
 
 void GSM_IdentifyFileFormat(GSM_File *File);
+
+/* ----------------------------- GPRS access points ----------------------- */
+
+typedef struct {
+	int		Location;
+	unsigned char 	Name[300];
+	unsigned char 	URL[500];
+} GSM_GPRSAccessPoint;
 
 /* ------------------------------------------------------------------------ */
 

@@ -65,7 +65,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Pho
 				string[0] = N7110_NUMBER_HOME;		break;
 			default:					break;
 			}
-			len = strlen(DecodeUnicodeString(entry.Entries[i].Text));
+			len = UnicodeLength(entry.Entries[i].Text);
 			string[1] = 0;
 			/* DCT 3 */			
 			if (!DCT4) string[2] = entry.Entries[i].VoiceTag;
@@ -93,7 +93,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Pho
 		case PBK_Text_Email:
 		case PBK_Text_Email2:
 		case PBK_Text_URL:
-			len = strlen(DecodeUnicodeString(entry.Entries[i].Text));
+			len = UnicodeLength(entry.Entries[i].Text);
 			string[0] = len * 2 + 2;	/* length (with Termination) */
 			CopyUnicodeString(string+1,entry.Entries[i].Text);
 			string[len * 2 + 1] = 0; 	/* Terminating 0		 */
@@ -453,7 +453,7 @@ int NOKIA_SetUnicodeString(GSM_StateMachine *s, unsigned char *dest, unsigned ch
 {
 	int length;
 	
-	length = strlen(DecodeUnicodeString(string));
+	length = UnicodeLength(string);
 	if (FullLength) {
 		dest[0] = length / 256;
 		dest[1] = length % 256;
@@ -1146,7 +1146,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 		0x00,0x00,0x00,0x00,
 		0x00,0x00,0x00,0x00};		/* rest depends on note type */
 
-	if (!Past && IsNoteFromThePast(*Note)) return GE_NONE;
+	if (!Past && IsNoteFromThePast(Note)) return GE_NONE;
 
 	switch(Note->Type) {
 		case GCN_REMINDER: req[18] = 0x08; length = 25; break;
@@ -1156,7 +1156,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 		default		 : req[18] = 0x01; length = 25; break;
 	}
 
-	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(*Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime);
+	GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(Note, &Text, &Time, &Alarm, &Phone, &Recurrance, &EndTime);
 
 	if (Time == -1) return GE_UNKNOWN;
 	if (Note->Type != GCN_BIRTHDAY) {
@@ -1190,9 +1190,9 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 	}
 
 	if (Note->Type == GCN_CALL && Phone != -1) {
-		req[25] = strlen(DecodeUnicodeString(Note->Entries[Phone].Text));
+		req[25] = UnicodeLength(Note->Entries[Phone].Text);
 		CopyUnicodeString(req+length,Note->Entries[Phone].Text);
-		length += strlen(DecodeUnicodeString(Note->Entries[Phone].Text))*2;
+		length += UnicodeLength(Note->Entries[Phone].Text)*2;
 	}
  
 	if (Alarm != -1) {
@@ -1248,14 +1248,14 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 	if (Text != -1) {
 		switch (Note->Type) {
 		case GCN_CALL:
-			req[26] = strlen(DecodeUnicodeString(Note->Entries[Text].Text));
+			req[26] = UnicodeLength(Note->Entries[Text].Text);
 			break;
 		default:
-			req[length++] = strlen(DecodeUnicodeString(Note->Entries[Text].Text));
+			req[length++] = UnicodeLength(Note->Entries[Text].Text);
 			if (Note->Type == GCN_REMINDER || Note->Type == GCN_MEETING) req[length++] = 0x00;
 		}
 		CopyUnicodeString(req+length,Note->Entries[Text].Text);
-		length += strlen(DecodeUnicodeString(Note->Entries[Text].Text))*2;
+		length += UnicodeLength(Note->Entries[Text].Text)*2;
 	}
 
 	req[length++] = 0x00;

@@ -267,6 +267,7 @@ typedef enum {
 	ID_Initialise,
 	ID_GetWAPSettings,
 	ID_SetWAPBookmark,
+	ID_GetGPRSPoint,
 	ID_DeleteWAPBookmark,
 	ID_Netmonitor,
 	ID_GetManufactureMonth,
@@ -338,7 +339,8 @@ typedef enum {
     	ID_AlcatelGetFields2,
     	ID_AlcatelGetFieldValue1,
     	ID_AlcatelGetFieldValue2,    
-   	ID_AlcatelDeleteItem,
+   	ID_AlcatelDeleteItem1,
+   	ID_AlcatelDeleteItem2,
    	ID_AlcatelDeleteField,
 	ID_AlcatelCreateField,
 	ID_AlcatelUpdateField,
@@ -373,6 +375,7 @@ typedef struct {
 
 	int			StartInfoCounter;
 
+	GSM_GPRSAccessPoint	*GPRSPoint;
 	GSM_SpeedDial		*SpeedDial;
 	GSM_DateTime		*DateTime;
 	GSM_DateTime		*Alarm;
@@ -494,6 +497,7 @@ typedef struct {
 	GSM_Error (*GetToDo)		(GSM_StateMachine *s, GSM_ToDoEntry	    *ToDo,	bool	refresh);
 	GSM_Error (*DeleteAllToDo)	(GSM_StateMachine *s);
 	GSM_Error (*SetToDo)		(GSM_StateMachine *s, GSM_ToDoEntry	    *ToDo	);
+	GSM_Error (*GetToDoStatus)	(GSM_StateMachine *s, GSM_ToDoStatus	    *status	);
 	GSM_Error (*PlayTone)		(GSM_StateMachine *s, int 		    Herz, 	unsigned char Volume, bool start);
 	GSM_Error (*EnterSecurityCode)	(GSM_StateMachine *s, GSM_SecurityCode 	    Code	);
 	GSM_Error (*GetSecurityStatus)	(GSM_StateMachine *s, GSM_SecurityCodeType  *Status	);
@@ -529,6 +533,8 @@ typedef struct {
 	GSM_Error (*AddFolder)		(GSM_StateMachine *s, GSM_File		    *File	);
 	GSM_Error (*GetMMSSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
 	GSM_Error (*SetMMSSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
+	GSM_Error (*GetGPRSAccessPoint)	(GSM_StateMachine *s, GSM_GPRSAccessPoint   *point	);
+	GSM_Error (*SetGPRSAccessPoint)	(GSM_StateMachine *s, GSM_GPRSAccessPoint   *point	);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;
@@ -682,8 +688,9 @@ typedef enum {
 	F_NOMIDI,	/* No ringtones in MIDI						*/
 	F_BLUETOOTH,	/* Bluetooth support						*/
 	F_NOFILESYSTEM,	/* No images, ringtones, java saved in special filesystem	*/
-	F_NEWCALENDAR,	/* Use new frames for calendar 					*/
+	F_NONEWCALENDAR,/* Use old frames for calendar 					*/
 	F_NOMMS,	/* No MMS sets in phone						*/
+	F_NOGPRSPOINT,	/* GPRS point are not useable					*/
 
 	/* AT modules */
 	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/

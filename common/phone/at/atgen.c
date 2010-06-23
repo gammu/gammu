@@ -1241,7 +1241,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 			/* If not SMS with UDH, it's as normal text */
 			if (message->UDH.Type==UDH_NoUDH) {
 				strcpy(hexreq,DecodeUnicodeString(message->Text));
-				*length2 = strlen(DecodeUnicodeString(message->Text));
+				*length2 = UnicodeLength(message->Text);
 				break;
 			}
 	        case GSM_Coding_Unicode:        
@@ -2362,22 +2362,22 @@ GSM_Error ATGEN_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 	}
 
 
-	GSM_PhonebookFindDefaultNameNumberGroup(*entry, &Name, &Number, &Group);
+	GSM_PhonebookFindDefaultNameNumberGroup(entry, &Name, &Number, &Group);
 
 	name[0] = 0;
 	if (Name != -1) {
 		switch (Priv->PBKCharset) {
 		case AT_PBK_HEX:
-			EncodeHexBin(name, DecodeUnicodeString(entry->Entries[Name].Text), strlen(DecodeUnicodeString(entry->Entries[Name].Text)));
+			EncodeHexBin(name, DecodeUnicodeString(entry->Entries[Name].Text), UnicodeLength(entry->Entries[Name].Text));
 			len = strlen(name);
 			break;
 		case AT_PBK_GSM:
 			smprintf(s, "str: %s\n", DecodeUnicodeString(entry->Entries[Name].Text));
-			len = strlen(DecodeUnicodeString(entry->Entries[Name].Text));
+			len = UnicodeLength(entry->Entries[Name].Text);
 			EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
 			break;
 		case AT_PBK_UCS2:
-			EncodeHexUnicode(name, entry->Entries[Name].Text, strlen(DecodeUnicodeString(entry->Entries[Name].Text)));
+			EncodeHexUnicode(name, entry->Entries[Name].Text, UnicodeLength(entry->Entries[Name].Text));
 			len = strlen(name);
 			break;
 		}
@@ -2819,6 +2819,7 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,		/*	GetToDo			*/
 	NOTSUPPORTED,		/*	DeleteAllToDo		*/
 	NOTSUPPORTED,		/*	SetToDo			*/
+	NOTSUPPORTED,		/*	GetToDoStatus		*/
 	NOTSUPPORTED,		/*	PlayTone		*/
 	ATGEN_EnterSecurityCode,
 	ATGEN_GetSecurityStatus,
@@ -2854,7 +2855,9 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,		/*	DeleteFile		*/
 	NOTSUPPORTED,		/* 	AddFolder		*/
 	NOTSUPPORTED,		/* 	GetMMSSettings		*/
-	NOTSUPPORTED		/* 	SetMMSSettings		*/
+	NOTSUPPORTED,		/* 	SetMMSSettings		*/
+	NOTSUPPORTED,		/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED		/* 	SetGPRSAccessPoint	*/
 };
 
 #endif
