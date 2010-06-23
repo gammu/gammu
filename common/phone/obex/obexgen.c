@@ -12,6 +12,7 @@
 #include "../../gsmstate.h"
 #include "../../misc/coding.h"
 #include "../../service/gsmvcal.h"
+#include "../../protocol/obex/obex.h"
 
 #ifdef GSM_ENABLE_OBEXGEN
 

@@ -42,7 +42,6 @@ type
     procedure About2Click(Sender: TObject);
     procedure SendSMS1Click(Sender: TObject);
     procedure Getinfoaboutdevices1Click(Sender: TObject);
-    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure IncomingSMSListViewColumnClick(Sender: TObject;
       Column: TListColumn);
     procedure IncomingSMSListViewCompare(Sender: TObject; Item1,
@@ -58,9 +57,13 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure Readme1Click(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
   private
+    procedure WndProc(var Msg : TMessage); override;
     { Private declarations }
   public
+    TrayIconData : TNotifyIconData;
   end;
 
   TGSMModem = class(TGammuGSMDevice)
@@ -107,12 +110,16 @@ var
   ReceivedNum       : integer;
   SentOKNum         : integer;
   SentWrongNum      : integer;
+  SMSPrice          : extended;
+  IconVisible       : boolean;
 
 procedure ChangeSecurityState(x:integer;ID:integer;SecurityState:GSM_SecurityCodeType);stdcall;
 procedure ChangePhoneState(x:integer;ID:integer;Connected:WordBool);stdcall;
 procedure HandleIncomingSMS(x:integer;ID:integer);stdcall;
 procedure RestartAllConnections(PhoneCallBack:PPhoneCallBackProcClass;SecurityCallBack:PSecurityCallBackProcClass;SMSCallBack:PSMSCallBackProcClass);
 function  SearchPBKEntry(s:string):string;
+function FindPrice(number:string):Extended;
+function ExecuteFile(const FileName, Params, DefaultDir: string; ShowCmd: Integer): THandle;
 
 implementation
 
@@ -135,12 +142,37 @@ begin
   Result:= S;
 end;
 
+function FindPrice(number:string):Extended;
+var i:integer;
+    P:Extended;
+begin
+  if not TryStrToFloat(GatewayINIFile.ReadString('general', 'OtherSMSCost',''),P) then P:=0;
+  FindPrice:=P;
+
+  i:=1;
+  while true do
+  begin
+    if GatewayINIFile.ReadString('general', 'SpecialSMSNumber'+inttostr(i),'') = '' then break;
+    if GatewayINIFile.ReadString('general', 'SpecialSMSCost'+inttostr(i),'') = '' then break;
+    if strpos(PChar(number),PChar(GatewayINIFile.ReadString('general', 'SpecialSMSNumber'+inttostr(i),''))) = number then
+    begin
+      if not TryStrToFloat(GatewayINIFile.ReadString('general', 'SpecialSMSCost'+inttostr(i),''),P) then P:=0;
+      FindPrice:=P;
+      break;
+    end;
+    i:=i+1;
+  end;
+end;
+
 procedure ShowStatistics();
 var
   i,Receiving,Sending:integer;
 begin
   MainForm.GroupBox1.Caption:='Incoming messages ('+inttostr(ReceivedNum)+' received';
-  MainForm.GroupBox2.Caption:='Outgoing messages ('+inttostr(SentOKNum)+' sent OK, '+inttostr(SentWrongNum)+' sent incorrectly';
+  MainForm.GroupBox2.Caption:=
+      'Outgoing messages ('+inttostr(SentOKNum)+' sent OK with price '+
+      FloatToStr(SMSPrice)+' '+
+      GatewayINIFile.ReadString('general', 'SMSCurrency','')+', '+inttostr(SentWrongNum)+' sent incorrectly';
   Receiving:=0;
   Sending:=0;
   for i:=1 to MODEMNUM do
@@ -186,6 +218,23 @@ begin
     z:=z+1;
   end;
   if not FoundNumber then SearchPBKEntry:=S;
+end;
+
+procedure TMainForm.WndProc(var Msg : TMessage);
+var
+  p : TPoint;
+begin
+  case Msg.Msg of
+  WM_USER + 1:
+    case Msg.LParam of
+    WM_RBUTTONDOWN:
+      begin
+        MainForm.Show;
+        Application.BringToFront;
+      end;
+    end;
+  end;
+  inherited;
 end;
 
 procedure AddTextToGatewayLog(num:integer;s:string);
@@ -336,6 +385,7 @@ begin
   end;
   ShowStatistics()
 end;
+
 
 procedure TSendSMSThread.Execute;
 var
@@ -548,6 +598,7 @@ begin
           end else
           begin
             SentOKNum:=SentOKNum+1;
+            SMSPrice:=SMSPrice+FindPrice(S);
             ShowStatistics();
           end;
         end;
@@ -701,12 +752,17 @@ end;
 //called, when there is ANY SMS on SIM
 procedure HandleIncomingSMS(x:integer;ID:integer);stdcall;
 var
-  num,i       : integer;
+  num,i,j     : integer;
   error       : GSM_Error;
   sms         : GSM_MultiSMSMessage;
   start       : Boolean;
   F           : TextFile;
-  S4          : string;
+  S4,S3       : string;
+  wasnumber   : boolean;
+  KeyPhones   : array[1..200] of string;
+  KeyText     : array[1..200] of string;
+  KeyNum      : integer;
+  FoundKey    : boolean;
 begin
   num := FindGammuDevice(ID);
   if not GatewayIniFile.ReadBool('modem'+inttostr(num), 'Receive', false) then exit;
@@ -767,7 +823,7 @@ begin
             Write(F,';'+inttostr2(sms.SMS[1].DateTime.Hour,2)+':'+inttostr2(sms.SMS[1].DateTime.Minute,2)+':'+inttostr2(sms.SMS[1].DateTime.Second,2));
             Write(F,';'+GatewayINIFile.ReadString('modem'+inttostr(num), 'Port', 'com1:'));
             Write(F,';'+GetGammuUnicodeString(sms.SMS[1].Number));
-            WriteLn(F,';'+s4);
+            WriteLn(F,';'+S4);
             Flush(F);
             CloseFile(F);
           end;
@@ -789,14 +845,30 @@ begin
   if ConfigForm.ShowModal = mrOK then
   begin
     RestartAllConnections(@ChangePhoneState,@ChangeSecurityState,@HandleIncomingSMS);
+
+    if GatewayIniFile.ReadBool('general', 'UseTray', false) <> IconVisible then
+    begin
+      Application.MessageBox('Please restart application to make System Tray change working','',0);
+    end;
   end;
 end;
 
 procedure TMainForm.Exit1Click(Sender: TObject);
-var x:Boolean;
+var i:integer;
 begin
-  MainForm.FormCloseQuery(Sender,x);
-  if x then halt;
+  if MessageDlg('Do you really want to close Gateway ?',
+    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
+  begin
+    for i:=1 to MODEMNUM do
+    begin
+      if GSMDevice[i].Used then
+      begin
+        AddTextToGatewayLog(i,'Closing gateway');
+        GSMDevice[i].EndConnection;
+      end;
+    end;
+    halt;
+  end;
 end;
 
 procedure TMainForm.About1Click(Sender: TObject);
@@ -805,27 +877,52 @@ begin
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
-var i:integer;
+var
+  i      : integer;
+  buffer : array[1..100] of char;
 begin
+  if (CreateMutex(nil, false, 'GammuGatewayMutex') = 0) or (GetLastError = ERROR_ALREADY_EXISTS) then
+  begin
+    if MessageDlg('Another instance of Gammu Gateway active. Do you want to continue ?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then halt;
+  end;
+
   ReceivedNum    := 0;
   SentOKNum      := 0;
   SentWrongNum   := 0;
-  for i:=1 to MODEMNUM do GSMDevice[i]:=TGSMModem.Create;
+  SMSPrice       := 0;
   GatewayIniFile := TIniFile.Create(ExtractFilePath(Application.ExeName)+'smsd.ini');
+
+  if GatewayIniFile.ReadBool('general', 'UseTray', false) then
+  begin
+    with TrayIconData do
+    begin
+      cbSize := SizeOf(TrayIconData);
+      Wnd := Handle;
+      uID := 0;
+      uFlags := NIF_MESSAGE or NIF_ICON or NIF_TIP;
+      uCallbackMessage := WM_USER + 1;
+      hIcon := Application.Icon.Handle;
+      StrPCopy(szTip, Application.Title);
+    end;
+    Shell_NotifyIcon(NIM_ADD, @TrayIconData);
+    Application.ProcessMessages;
+
+    IconVisible:=true;
+  end else
+  begin
+    IconVisible:=false;
+    MainForm.BorderIcons := [biSystemMenu, biMinimize, biMaximize];
+  end;
+  MainForm.Show;
+
+  GSM_GetGammuVersion(@buffer);
+  AddTextToGatewayLog(i,'Starting gateway, DLL version '+buffer);
+  for i:=1 to MODEMNUM do GSMDevice[i]:=TGSMModem.Create;
   RestartAllConnections(@ChangePhoneState,@ChangeSecurityState,@HandleIncomingSMS);
   SendSMSThread:=TSendSMSThread.Create(True);
   SendSMSThread.Priority:=tpIdle;
   SendSMSThread.Resume;
   SendSMSTimer.Enabled:=True;
-
-//  application.MessageBox(
-//    pchar('GSM_SMSMessage - '+inttostr(sizeof(gsm_smsmessage))+
-//          ' GSM_SMSC - '+inttostr(sizeof(gsm_smsc))+
-//          ' GSM_SMS_State - '+inttostr(sizeof(gsm_sms_state))+
-//          ' GSM_UDHHeader - '+inttostr(sizeof(gsm_udhheader))+
-//          ' boolean(LongBool) - '+inttostr(sizeof(LongBool))+
-//          ' GSM_DateTime - '+inttostr(sizeof(gsm_datetime))),
-//          '',0);
 end;
 
 procedure TMainForm.FormResize(Sender: TObject);
@@ -1003,33 +1100,14 @@ begin
               Item[Count-1].SubItems.Add('Requesting network');
             GSM_NoNetwork:
               Item[Count-1].SubItems.Add('No network');
+          else
+              Item[Count-1].SubItems.Add('unknown '+inttostr(shortint(NetInfo.State)));
           end;
         end;
       end;
     end;
   end;
   DeviceInfoForm.ShowModal;
-end;
-
-procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-var i:integer;
-begin
-  if MessageDlg('Do you really want to close Gateway ?',
-    mtConfirmation, [mbYes, mbNo], 0) = mrYes then
-  begin
-    for i:=1 to MODEMNUM do
-    begin
-      if GSMDevice[i].Used then
-      begin
-        AddTextToGatewayLog(i,'Closing gateway');
-        GSMDevice[i].EndConnection;
-      end;
-    end;
-    CanClose:=True;
-  end else
-  begin
-    CanClose:=False;
-  end;
 end;
 
 procedure TMainForm.IncomingSMSListViewColumnClick(Sender: TObject;
@@ -1173,6 +1251,25 @@ end;
 procedure TMainForm.Readme1Click(Sender: TObject);
 begin
   ExecuteFile('readme.htm','',ExtractFilePath(Application.ExeName), SW_SHOW);
+end;
+
+procedure TMainForm.FormDestroy(Sender: TObject);
+begin
+  Shell_NotifyIcon(NIM_DELETE, @TrayIconData);
+  Application.ProcessMessages;
+  Application.Terminate;
+end;
+
+procedure TMainForm.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+begin
+  CanClose:=false;
+  if IconVisible then
+  begin
+    MainForm.Hide;
+  end else
+  begin
+    Exit1Click(Sender);
+  end;
 end;
 
 end.

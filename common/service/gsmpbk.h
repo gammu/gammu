@@ -73,7 +73,7 @@ typedef enum {
  * Individual handsets may not support these lengths
  * so they have their own limits set.
  */
-#define GSM_PHONEBOOK_TEXT_LENGTH	(62)
+#define GSM_PHONEBOOK_TEXT_LENGTH	(80)
 #define GSM_PHONEBOOK_ENTRIES		(26)
 
 typedef struct {

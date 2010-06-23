@@ -14,10 +14,68 @@ This software was sponsored (in time order) by:
    * FREE FLASHES, LOGO'S, RINGTONES
    * FREE INSTRUCTIONS, SCHEMES
 4. Tom Nelson (www.pocketderelict.com)
+   * software for Pocket Computers
+5. GriffinTeam (www.gsm-ms.com)
+   * DCT3/DCT4 flasher
+
 and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20030815 - 0,82,0,0
+* new functionality:
+  * getting/setting file date/time with DCT4 filesystem done also in Linux
+  * searching for phones works in Linux too
+  * full support for linked SMS with 16 bit            (Carl-Daniel Hailfinger)
+    reference number (recognizing in read sms and adding after -16bit
+    switch with --send/savesms), much better output with --geteachsms
+  * Siemens S25 ID                                                   (sKewlBoy)
+  * --searchphone by default display info about found devices only
+  * export file for Delphi checks size of structures and compare it to
+    structures from DLL
+  * support for GPRS access points is now complete (getting/setting active
+    point + restore)
+  * updated win32 gateway (fixes and extensions)
+  * started work on T9 backup/restore for DCT4 (see --nokiagett9)
+  * Gammu can read CRC16 from files in DCT4 filesystem. I HAVEN'T FOUND
+    METHOD OF CALCULATING IT YET. DOES ANYONE HAVE ANY IDEA ?
+  * * Alcatel:                                                   (Michal Cihar)
+      * completed charset conversion table
+      * Alcatel_SetToDo/Alcatel_SetMemory now on write to nonexistent entry
+        create new one and adjust Location accorting to newly created entry
+    * Nokias SetMemory return GE_NOTSUPPORTED when Location=0
+    * ToDos are read from backup including location
+    * Restore in gammu.c now either deletes all todo and then creates new ones
+      (as it worked till now) or (if supported saving to exact location)
+      only deletes unused entries and saves new ones
+    * AddNew in gammu.c first tries whether saving to Location=0, if yes, it
+      will do the job using Location=0, otherwise it will use loop over
+      locations to find empty one
+  * added scripts for easy sending/receiving faxes
+  * added ID for N3100|3300|3590|3595|6200. People with these phones required
+    for checking, which features should be enabled, what disabled.
+  * can reset security code in DCT4 using brutal force method
+  * getting UEM from DCT4
+  
+* fixes and improvements:
+  * --geteachsms without overflow possibility          (Carl-Daniel Hailfinger)
+  * removed segfault in some specific situations
+  * few fixes for DCT4                                            (GriffinTeam)
+  * Gammu with MSVC6 and Release configuration is compiled without
+    compiler optimization (no more internal compiler errors)
+  * ID for 7250i is now really completed                        (Limpar Andras)
+  * different frame used for getting PPM in DCT4
+  * * Alcatel:                                                   (Michal Cihar)
+      * fixes reading of phonebook entries on 715
+      * fixes reading of birthday entries on 715
+      * fixed bug leading to segfault in Alcatel_SetToDo
+      * fixed bad setting of priority in Alcatel_SetToDo
+    * fixed small issue with size_t and printf on some 64-bit arches
+      (at least AMD64)
+    * increased GSM_PHONEBOOK_TEXT_LENGTH
+    * NULL doesn't have to be 0
+  * OBEX compilation issue on FreeBSD                          (Roar Pettersen)
+
 20030805 - 0,81,0,0
 * new functionality:
   * filesystem in DCT4:

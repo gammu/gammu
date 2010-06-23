@@ -14,7 +14,7 @@ const	GSM_MAX_SMSC_NAME_LENGTH	= 30;
 
 	MAX_MULTI_SMS			= 10;
 
-{$MINENUMSIZE 4}
+{$MINENUMSIZE 2}
 
 type    GSM_NetworkInfo_State = (
         	GSM_HomeNetwork = 1,    //phone logged into home network
@@ -25,13 +25,16 @@ type    GSM_NetworkInfo_State = (
 	GSM_NetworkInfo = record
 		NetworkName	: array[1..30] of char;  // network name showed in some phones on display
 		State		: GSM_NetworkInfo_State; // network state
+		xxx		: array[1..2] of byte;
       		NetworkCode 	: array[1..10] of char;  // GSM network code
 		CellID	  	: array[1..10] of char;  // CellID
 		LAC	  	: array[1..10] of char;  // LAC
 	end;
 	PGSM_NetworkInfo = ^GSM_NetworkInfo;
 
-	GSM_Error = (
+{$MINENUMSIZE 4}
+
+type	GSM_Error = (
 	        GE_NONE = 1,
        	 	GE_DEVICEOPENERROR,		// Error during opening device
 		GE_DEVICELOCKED,
@@ -59,7 +62,7 @@ type    GSM_NetworkInfo_State = (
 		GE_PERMISSION,			// No permission
 		GE_EMPTYSMSC,			// SMSC number is empty
 		GE_INSIDEPHONEMENU,		// Inside phone menu - can't make something
-		GE_NOTCONNECTED,		// Phone NOT connected - can't make something 
+		GE_NOTCONNECTED,		// Phone NOT connected - can't make something
 		GE_WORKINPROGRESS,		// Work in progress
       		GE_PHONEOFF,			// Phone is disabled and connected to charger //30
 		GE_FILENOTSUPPORTED,		// File format not supported by Gammu
@@ -117,6 +120,7 @@ type    GSM_NetworkInfo_State = (
 	GSM_UDH = (
 		UDH_NoUDH = 1, //no user header. SMS has only "normal" text
 		UDH_ConcatenatedMessages,
+		UDH_ConcatenatedMessages16Bit,
 		UDH_DisableVoice,
 		UDH_DisableFax,
 		UDH_DisableEmail,
@@ -142,7 +146,8 @@ type    GSM_NetworkInfo_State = (
                 UDHType         : GSM_UDH;                              //Type
                 Length          : integer;                              //Length
                 Text            : array[1..GSM_MAX_UDH_LENGTH] of char; // Text
- 		ID		: integer;
+ 		ID8Bit		: integer;
+ 		ID16Bit		: integer;
 		PartNumber	: integer;
 		AllParts	: integer;
         end;
@@ -260,6 +265,7 @@ function GSM_GetFirmwareVersion         (Phone : integer; Version: PDouble): GSM
 function GSM_Reset                      (Phone : integer; Hard: LongBool): GSM_Error; stdcall; external 'gammu.dll' name 'myreset';
 function GSM_SMSCounter			(MessageLength:Integer;MessageBuffer:PAnsiString;UDH:GSM_UDH;Coding:GSM_Coding_Type;SMSNum:PInteger;CharsLeft:PInteger): GSM_Error; stdcall; external 'gammu.dll' name 'mysmscounter';
 function GSM_MakeMultiPartSMS           (MessageBuffer:PAnsiString;MessageLength:Integer;UDHType:GSM_UDH;Coding:GSM_Coding_Type;MyClass:Integer;ReplaceMessage:ShortInt;SMS:PGSM_MultiSMSMessage): GSM_Error; stdcall; external 'gammu.dll' name 'mymakemultipartsms';
+function GSM_GetStructureSize		(i: integer): integer; stdcall; external 'gammu.dll' name 'mygetstructuresize';
 procedure GSM_GetNetworkName	        (NetworkCode: PAnsiString; NetworkName: PAnsiString); stdcall; external 'gammu.dll' name 'mygetnetworkname';
 procedure GSM_GetGammuVersion		(Version: PAnsiString); stdcall; external 'gammu.dll' name 'mygetgammuversion';
 
@@ -331,4 +337,13 @@ begin
         GetGammuUnicodeString := WideCharLenToString(@Dest,i-1);
 end;
 
+begin
+  if (GSM_GetStructureSize(0) <> sizeof(gsm_smsmessage))  then application.MessageBox('gsm_smsmessage','',0);
+  if (GSM_GetStructureSize(1) <> sizeof(gsm_smsc))        then application.MessageBox('gsm_smsc','',0);
+  if (GSM_GetStructureSize(2) <> sizeof(gsm_sms_state))   then application.MessageBox('gsm_sms_state','',0);
+  if (GSM_GetStructureSize(3) <> sizeof(gsm_UDHHeader))   then application.MessageBox('gsm_udhheader','',0);
+  if (GSM_GetStructureSize(4) <> sizeof(LongBool))        then application.MessageBox('bool','',0);
+  if (GSM_GetStructureSize(5) <> sizeof(gsm_datetime))    then application.MessageBox('gsm_datetime','',0);
+  if (GSM_GetStructureSize(6) <> sizeof(integer))         then application.MessageBox('int','',0);
+  if (GSM_GetStructureSize(7) <> sizeof(gsm_networkinfo)) then application.MessageBox('gsm_networinfo','',0);
 end.

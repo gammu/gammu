@@ -1,0 +1,8 @@
+#! /bin/sh
+if [ -z "$2" ] 
+then
+    echo faxreceive device file
+    echo example: faxreceive /dev/ttyS1 /home/marcin/faxes
+    exit 0
+fi
+efax -d $1 -or -r "$2%b%d-%H.%I.%S" reply

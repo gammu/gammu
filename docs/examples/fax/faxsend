@@ -1,0 +1,8 @@
+#! /bin/sh
+if [ -z "$3" ] 
+then
+    echo faxsend device number file
+    echo example: faxsend /dev/ttyS1 123456789 /home/marcin/fax
+    exit 0
+fi
+efax -d $1 -t T$2 $3

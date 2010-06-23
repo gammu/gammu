@@ -70,12 +70,161 @@ extern GSM_Error ATGEN_DispatchMessage		(GSM_StateMachine *s);
 unsigned char GSM_AlcatelAlphabet[] =
 {
 /*	in phone	unicode		description	*/
-	0x89,		0x00,0xc1,	/* A acute	*/
-	0xcf,		0x00,0x5c,	/* \		*/
-	0xce,		0x00,0x7e,	/* ~		*/
-	0xfc,		0x20,0xac,	/* Euro		*/
+	0x80,		0x00,0x20,	/* empty	 */
+	0x81,		0x00,0x20,	/* empty	*/
+	0x82,		0x00,0x20,	/* empty	*/
+	0x83,		0x00,0x20,	/* empty	*/
+	
 	0x84,		0x00,0xe7,	/* c cedilla	*/
+	0x85,		0x20,0x26,	/* ...		*/
+	0x86,		0x03,0xc0,	/* pi		*/
+	0x87,		0x01,0x3e,	/* l caron	*/
+	0x88,		0x00,0xc0,	/* A grave	*/
+	0x89,		0x00,0xc1,	/* A acute	*/
+	0x8a,		0x00,0xc2,	/* A circumflex	*/
+	0x8b,		0x00,0xc3,	/* A tilde	*/
+	0x8c,		0x00,0xc8,	/* E grave	*/
+	0x8d,		0x00,0xca,	/* E circumflex	*/
+	0x8e,		0x00,0xcb,	/* E diaresis	*/
+	0x8f,		0x00,0xcc,	/* I grave	*/
+	0x90,		0x00,0xcd,	/* I acute	*/
+	0x91,		0x00,0xd0,	/* ETH		*/
+	0x92,		0x00,0xd2,	/* O grave	*/
+	0x93,		0x00,0xd3,	/* O acute	*/
+	0x94,		0x00,0xd4,	/* O circumflex	*/
+	0x95,		0x00,0xd5,	/* O tilde	*/
+	0x96,		0x00,0xd9,	/* U grave	*/
+	0x97,		0x00,0xda,	/* U acute	*/
 	0x98,		0x00,0xe1,	/* a acute	*/
+	0x99,		0x00,0xe2,	/* a circumflex	*/
+	0x9a,		0x00,0xe3,	/* a tilde	*/
+	0x9b,		0x00,0xea,	/* e circumflex	*/
+	0x9c,		0x00,0xeb,	/* e diaresis	*/
+	0x9d,		0x00,0xed,	/* i acute	*/
+	0x9e,		0x00,0xee,	/* i circumflex	*/
+	0x9f,		0x00,0xef,	/* i diaresis	*/
+	0xa0,		0x00,0xf3,	/* o acute	*/
+	0xa1,		0x00,0xf4,	/* o circumflex	*/
+	0xa2,		0x00,0xf5,	/* o tilde	*/
+	0xa3,		0x00,0xfa,	/* u acute	*/
+	0xa4,		0x00,0xa2,	/* cent		*/
+	0xa5,		0x00,0x5b,	/* [		*/
+	0xa6,		0x01,0x59,	/* r caron	*/
+	0xa7,		0x01,0x0d,	/* c caron	*/
+	0xa8,		0x01,0x61,	/* s caron	*/
+	0xa9,		0x01,0x1b,	/* e caron	*/
+	0xaa,		0x01,0x6f,	/* u ring	*/
+	0xab,		0x00,0xfd,	/* y acute	*/
+	0xac,		0x00,0xf0,	/* eth		*/
+	0xad,		0x01,0x07,	/* c acute	*/
+	0xae,		0x01,0x19,	/* e ogonek	*/
+	0xaf,		0x01,0x05,	/* a ogonek	*/
+	0xb0,		0x01,0x7c,	/* z dot	*/
+	0xb1,		0x01,0x7a,	/* z acute	*/
+	0xb2,		0x01,0x5b,	/* s acute	*/
+	0xb3,		0x01,0x44,	/* n acute	*/
+	0xb4,		0x01,0x42,	/* l stroke	*/
+
+	0xb5,		0x00,0x20,	/* empty	*/
+	
+	0xb6,		0x01,0x48,	/* n caron	*/
+	0xb7,		0x01,0x65,	/* t caron	*/
+	
+	0xb8,		0x00,0x20,	/* empty	*/
+	
+	0xb9,		0x01,0x7e,	/* z caron	*/
+	0xba,		0x01,0xe7,	/* g caron	*/
+	
+	0xbb,		0x00,0x20,	/* empty	*/
+	0xbc,		0x00,0x20,	/* empty	*/
+	
+	0xbd,		0x1e,0x20,	/* G macron	*/
+	0xbe,		0x1e,0x21,	/* g macron	*/
+	0xbf,		0x01,0x5e,	/* S cedilla	*/
+	0xc0,		0x01,0x5f,	/* s cedilla	*/
+	0xc1,		0x01,0x2f,	/* i ogonek	*/ /* FIXME: not sure with this, it look like normal i */
+	0xc2,		0x01,0x31,	/* i dotless	*/
+	0xc3,		0x01,0x68,	/* U tilde	*/
+	0xc4,		0x01,0x50,	/* O dbl acute	*/
+	0xc5,		0x01,0x69,	/* u tilde	*/
+	0xc6,		0x01,0x51,	/* o dbl acute	*/
+	0xc7,		0x27,0xa9,	/* =>		*/
+	0xc8,		0x27,0xa8,	/* filled =>	*/
+	0xc9,		0x00,0xd7,	/* x		*/
+	0xca,		0x00,0x5d,	/* ]		*/
+	0xcb,		0x26,0x0f,	/* phone	*/
+	0xcc,		0x01,0x0f,	/* d caron	*/
+	
+	0xcd,		0x00,0x20,	/* empty	*/
+
+	0xce,		0x00,0x7e,	/* ~		*/
+	0xcf,		0x00,0x5c,	/* \		*/
+	0xd0,		0x00,0x5e,	/* ^		*/
+	
+	0xd1,		0x00,0x20,	/* empty	*/
+	
+	0xd2,		0x00,0x7b,	/* {		*/
+	0xd3,		0x00,0x7c,	/* | 		*/
+	0xd4,		0x00,0x7d,	/* }		*/
+	
+	0xd5,		0x00,0x20,	/* empty	*/
+	
+	0xd6,		0x01,0x63,	/* t cedilla	*/
+	
+	0xd7,		0x00,0x20,	/* empty	*/
+	0xd8,		0x00,0x20,	/* empty	*/
+	0xd9,		0x00,0x20,	/* empty	*/
+	0xda,		0x00,0x20,	/* empty	*/
+	0xdb,		0x00,0x20,	/* empty	*/
+	0xdc,		0x00,0x20,	/* empty	*/
+	0xdd,		0x00,0x20,	/* empty	*/
+	0xde,		0x00,0x20,	/* empty	*/
+	0xdf,		0x00,0x20,	/* empty	*/
+	0xe0,		0x00,0x20,	/* empty	*/
+	
+	0xe1,		0x00,0x20,	/* two candles	*/ /* FIXME */
+	
+	0xe2,		0x00,0x20,	/* empty	*/
+	0xe3,		0x00,0x20,	/* empty	*/
+	0xe4,		0x00,0x20,	/* empty	*/
+	
+	0xe5,		0x01,0xce,	/* a caron	*/
+	0xe6,		0x01,0x01,	/* a macron	*/
+	0xe7,		0x01,0x13,	/* e macron	*/
+	0xe8,		0x01,0x2b,	/* i macron	*/
+	0xe9,		0x01,0x4d,	/* o macron	*/
+	0xea,		0x01,0x6b,	/* u macron	*/
+	0xeb,		0x00,0x41,	/* A		*/
+	0xec,		0x00,0x40,	/* @		*/
+	0xed,		0x00,0x20,	/* some strange char :-) */ /* FIXME */
+	
+	0xee,		0x00,0x20,	/* big key stroken	*/ /* FIXME */
+	0xef,		0x00,0x20,	/* big key	*/ /* FIXME */
+	
+	0xf0,		0x00,0x20,	/* empty	*/
+	
+	0xf1,		0x00,0x31,	/* 1		*/
+	0xf2,		0x00,0x21,	/* bold !	*/
+	0xf3,		0x26,0x0e,	/* black phone	*/
+	0xf4,		0x00,0x26,	/* &		*/
+	0xf5,		0x23,0x7e,	/* bell		*/
+	0xf6,		0x26,0x6a,	/* note		*/
+	
+	0xf7,		0x27,0x13,	/* okay inv	*/ /* FIXME */
+	0xf8,		0x27,0x13,	/* okay		*/
+	
+	0xf9,		0x00,0x20,	/* empty	*/
+	
+	0xfa,		0x00,0x20,	/* key		*/ /* FIXME */
+	
+	0xfb,		0x00,0x20,	/* empty	*/
+	
+	0xfc,		0x20,0xac,	/* Euro		*/
+	0xfd,		0x21,0x97,	/* NE arrow	*/
+	0xfe,		0x21,0x98,	/* SE arrow	*/
+
+	0xff,		0x00,0x20,	/* empty	*/
+	
 	0x00,		0x00,0x00
 };
 
@@ -554,7 +703,7 @@ static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s, bool refresh)
 	i = 0;
 	smprintf(s,"Received %d ids: ", *Priv->CurrentCount);
 	for (i=0; i < *Priv->CurrentCount; i++) {
-		smprintf(s,"%i ", (*Priv->CurrentList)[i]);
+		smprintf(s,"%x ", (*Priv->CurrentList)[i]);
 	}
 	smprintf(s,"\n");
 
@@ -625,7 +774,7 @@ static GSM_Error ALCATEL_GetFields(GSM_StateMachine *s, int id) {
 	i = 0;
 	smprintf(s,"Received %d fields: ", Priv->CurrentFieldsCount);
 	for (i=0; i < Priv->CurrentFieldsCount; i++) {
-		smprintf(s,"%i ", Priv->CurrentFields[i]);
+		smprintf(s,"%x ", Priv->CurrentFields[i]);
 	}
 	smprintf(s,"\n");
 
@@ -1453,8 +1602,13 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entr
 						j++;
 						break;
 					}
-					entry->Entries[i - j].EntryType = PBK_PictureID;
-					entry->Entries[i - j].Number = Priv->ReturnInt;
+					if (Priv->ReturnInt != 0) {
+						entry->Entries[i - j].EntryType = PBK_PictureID;
+						entry->Entries[i - j].Number = Priv->ReturnInt;
+					} else {
+						entry->EntriesNum--;
+						j++;
+					}
 					break;
 				default:
 					entry->EntriesNum--;
@@ -1504,8 +1658,8 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entr
 			/* Delete entry */
 			if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
 			if ((error = ALCATEL_IsIdAvailable(s, entry->Location))!= GE_NONE) {
-				/* FIXME: What should we return, when attempted to delete non existant location? */
-				return error;
+				/* Entry was empty => no error */
+				return GE_NONE;
 			}
 			error = ALCATEL_DeleteItem(s, entry->Location);
 			if (error != GE_NONE) return error;
@@ -1573,8 +1727,9 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entr
 			/* Save modified entry */
 			if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
 			if ((error = ALCATEL_IsIdAvailable(s, entry->Location))!= GE_NONE) {
-				/* FIXME: What should we return, when we can not write to non existant location? */
-				return error;
+				/* Entry doesn't exist, we will create new one */
+				entry->Location = 0;
+				return ALCATEL_SetMemory(s, entry);
 			}
 			/* Get fields for current item */
 			if ((error = ALCATEL_GetFields(s, entry->Location))!= GE_NONE) return error;
@@ -1991,6 +2146,9 @@ static GSM_Error ALCATEL_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarEn
 						/* I'd call this repeating event, but it makes no sense creating one more type ... */
 						Note->Type = GCN_MEETING;
 						break;
+					default:
+						smprintf(s,"WARNING: Received unknown event type %02X!\n", Priv->ReturnInt);
+						break;
 				}
 				j++;
 				Note->EntriesNum--;
@@ -2146,7 +2304,6 @@ static GSM_Error ALCATEL_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarEn
 	}
 	/* The event didn't have start/stop time -> we need only date */
 	if (!evdateused) {
-		j--;
 		Note->EntriesNum++;
 		Note->Entries[i-j].EntryType = CAL_START_DATETIME;
 		Note->Entries[i-j].Date = evdate;
@@ -2432,8 +2589,8 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 		/* Delete ToDo */
 		if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
 		if ((error = ALCATEL_IsIdAvailable(s, ToDo->Location))!= GE_NONE) {
-			/* FIXME: What should we return, when attempted to delete non existant location? */
-			return error;
+			/* Entry was empty => no error */
+			return GE_NONE;
 		}
 		error = ALCATEL_DeleteItem(s, ToDo->Location);
 		if (error != GE_NONE) return error;
@@ -2510,13 +2667,14 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 		/* Save modified ToDo */
 		if ((error = ALCATEL_GetAvailableIds(s, false))!= GE_NONE) return error;
 		if ((error = ALCATEL_IsIdAvailable(s, ToDo->Location))!= GE_NONE) {
-			/* FIXME: What should we return, when we can not write to non existant location? */
-			return error;
+			/* Entry doesn't exist, we will create new one */
+			ToDo->Location = 0;
+			return ALCATEL_SetToDo(s, ToDo);
 		}
 		/* Get fields for current item */
 		if ((error = ALCATEL_GetFields(s, ToDo->Location))!= GE_NONE) return error;
 		
-		for (i = 0; i < 26; i++) { UpdatedFields[i] = false; }
+		for (i = 0; i < 12; i++) { UpdatedFields[i] = false; }
 		
 		if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeToDo, ToDo->Location))!= GE_NONE) return error;
 
@@ -2534,9 +2692,9 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 			}
 			/* This one seems to be byte for BF5 and enum for BE5 */
 			if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
-			       ALCATEL_UpdateField(s, Alcatel_byte, ToDo->Location, 7, &(ToDo->Priority));
+			       ALCATEL_UpdateField(s, Alcatel_byte, ToDo->Location, 7, &val);
 			} else {
-			       ALCATEL_UpdateField(s, Alcatel_enum, ToDo->Location, 7, &(ToDo->Priority));
+			       ALCATEL_UpdateField(s, Alcatel_enum, ToDo->Location, 7, &val);
 			}
 			UpdatedFields[7] = true;
 		}

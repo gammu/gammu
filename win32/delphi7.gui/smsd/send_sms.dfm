@@ -4,7 +4,7 @@ object SendSMSForm: TSendSMSForm
   BorderIcons = [biSystemMenu]
   BorderStyle = bsDialog
   Caption = 'Send SMS'
-  ClientHeight = 318
+  ClientHeight = 333
   ClientWidth = 289
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -13,9 +13,16 @@ object SendSMSForm: TSendSMSForm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
+  object PriceLabel: TLabel
+    Left = 8
+    Top = 288
+    Width = 3
+    Height = 13
+  end
   object GroupBox1: TGroupBox
     Left = 0
     Top = 160
@@ -75,7 +82,7 @@ object SendSMSForm: TSendSMSForm
   end
   object OKButton: TButton
     Left = 112
-    Top = 288
+    Top = 304
     Width = 81
     Height = 25
     Caption = '&OK'
@@ -84,7 +91,7 @@ object SendSMSForm: TSendSMSForm
   end
   object Button2: TButton
     Left = 200
-    Top = 288
+    Top = 304
     Width = 81
     Height = 25
     Caption = '&Cancel'

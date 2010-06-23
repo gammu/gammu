@@ -21,20 +21,20 @@ static GSM_UDHHeader UDHHeaders[] = {
 	 * 1 byte 0x01: unique ID for message series
 	 * 1 byte 0x00: how many SMS in sequence
 	 * 1 byte 0x00: number of current SMS in sequence 		*/
-	{ UDH_ConcatenatedMessages, 0x05, "\x00\x03\x01\x00\x00",2,4,3},
+	{ UDH_ConcatenatedMessages,     0x05, "\x00\x03\x01\x00\x00",2,-1,4,3},
 
 	/* See GSM 03.40 section 9.2.3.24.2 for voice, fax and email messages */
-	{ UDH_DisableVoice,         0x04, "\x01\x02\x00\x00",-1,-1,-1},
-	{ UDH_DisableFax,           0x04, "\x01\x02\x01\x00",-1,-1,-1},
-	{ UDH_DisableEmail,         0x04, "\x01\x02\x02\x00",-1,-1,-1},
-	{ UDH_EnableVoice,          0x04, "\x01\x02\x00\x01",-1,-1,-1},
-	{ UDH_EnableFax,            0x04, "\x01\x02\x01\x01",-1,-1,-1},
-	{ UDH_EnableEmail,          0x04, "\x01\x02\x02\x01",-1,-1,-1},
+	{ UDH_DisableVoice,             0x04, "\x01\x02\x00\x00",-1,-1,-1,-1},
+	{ UDH_DisableFax,               0x04, "\x01\x02\x01\x00",-1,-1,-1,-1},
+	{ UDH_DisableEmail,             0x04, "\x01\x02\x02\x00",-1,-1,-1,-1},
+	{ UDH_EnableVoice,              0x04, "\x01\x02\x00\x01",-1,-1,-1,-1},
+	{ UDH_EnableFax,                0x04, "\x01\x02\x01\x01",-1,-1,-1,-1},
+	{ UDH_EnableEmail,              0x04, "\x01\x02\x02\x01",-1,-1,-1,-1},
 
 	/* When send such SMS to some phones, they don't display anything,
 	 * only beep and enable vibra/light
 	 */
-	{ UDH_VoidSMS,              0x08, "\x01\x02\x02\x01\x01\x02\x02\x00",-1,-1,-1},
+	{ UDH_VoidSMS,                  0x08, "\x01\x02\x02\x01\x01\x02\x02\x00",-1,-1,-1,-1},
 
 	/* Nokia Smart Messaging (short version) UDH
 	 * General format :
@@ -42,10 +42,10 @@ static GSM_UDHHeader UDHHeaders[] = {
 	 * 1 byte  0x04      : IEI length
 	 * 2 bytes           : destination address : high & low byte
 	 * 2 bytes 0x00 0x00 : originator address  : high & low byte */
-	{ UDH_NokiaRingtone,        0x06, "\x05\x04\x15\x81\x00\x00",-1,-1,-1},
-	{ UDH_NokiaOperatorLogo,    0x06, "\x05\x04\x15\x82\x00\x00",-1,-1,-1},
-	{ UDH_NokiaCallerLogo,      0x06, "\x05\x04\x15\x83\x00\x00",-1,-1,-1},
-	{ UDH_NokiaWAP,		    0x06, "\x05\x04\xc3\x4f\x00\x00",-1,-1,-1},
+	{ UDH_NokiaRingtone,            0x06, "\x05\x04\x15\x81\x00\x00",-1,-1,-1,-1},
+	{ UDH_NokiaOperatorLogo,        0x06, "\x05\x04\x15\x82\x00\x00",-1,-1,-1,-1},
+	{ UDH_NokiaCallerLogo,          0x06, "\x05\x04\x15\x83\x00\x00",-1,-1,-1,-1},
+	{ UDH_NokiaWAP,		        0x06, "\x05\x04\xc3\x4f\x00\x00",-1,-1,-1,-1},
 
 	/* Nokia Smart Messaging (long version) UDH and other
 	 * General format:
@@ -58,15 +58,17 @@ static GSM_UDHHeader UDHHeaders[] = {
 	 * 1 byte            : diagram reference number (unique ID for message series)
 	 * 1 byte            : number of all SMS
 	 * 1 byte            : number of current SMS */
-	{ UDH_NokiaCalendarLong,    0x0b, "\x05\x04\x00\xe4\x00\x00\x00\x03\xc7\x00\x00",8,10,9},
-	{ UDH_MMSIndicatorLong,	    0x0b, "\x05\x04\x0b\x84\x23\xf0\x00\x03\xe5\x00\x00",8,10,9},
-	{ UDH_NokiaRingtoneLong,    0x0b, "\x05\x04\x15\x81\x00\x00\x00\x03\x01\x00\x00",8,10,9},
-	{ UDH_NokiaOperatorLogoLong,0x0b, "\x05\x04\x15\x82\x00\x00\x00\x03\x02\x00\x00",8,10,9},
-	{ UDH_NokiaProfileLong,     0x0b, "\x05\x04\x15\x8a\x00\x00\x00\x03\xce\x00\x00",8,10,9},
-	{ UDH_NokiaPhonebookLong,   0x0b, "\x05\x04\x23\xf4\x00\x00\x00\x03\x01\x00\x00",8,10,9},
-	{ UDH_NokiaWAPLong,	    0x0b, "\x05\x04\xc3\x4f\x00\x00\x00\x03\x7f\x00\x00",8,10,9},
+	{ UDH_NokiaCalendarLong,        0x0b, "\x05\x04\x00\xe4\x00\x00\x00\x03\xc7\x00\x00",8,-1,10,9},
+	{ UDH_MMSIndicatorLong,	        0x0b, "\x05\x04\x0b\x84\x23\xf0\x00\x03\xe5\x00\x00",8,-1,10,9},
+	{ UDH_NokiaRingtoneLong,        0x0b, "\x05\x04\x15\x81\x00\x00\x00\x03\x01\x00\x00",8,-1,10,9},
+	{ UDH_NokiaOperatorLogoLong,    0x0b, "\x05\x04\x15\x82\x00\x00\x00\x03\x02\x00\x00",8,-1,10,9},
+	{ UDH_NokiaProfileLong,         0x0b, "\x05\x04\x15\x8a\x00\x00\x00\x03\xce\x00\x00",8,-1,10,9},
+	{ UDH_NokiaPhonebookLong,       0x0b, "\x05\x04\x23\xf4\x00\x00\x00\x03\x01\x00\x00",8,-1,10,9},
+	{ UDH_NokiaWAPLong,	        0x0b, "\x05\x04\xc3\x4f\x00\x00\x00\x03\x7f\x00\x00",8,-1,10,9},
 
-	{ UDH_NoUDH,                0x00, "",-1,-1,-1}
+	{ UDH_ConcatenatedMessages16bit,0x06, "\x08\x04\x00\x00\x00\x00",-1,2,5,4},
+
+	{ UDH_NoUDH,                    0x00, "",-1,-1,-1,-1}
 };
 
 /* --------------------------- Unpacking SMS ------------------------------- */
@@ -99,7 +101,8 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 	bool	UDHOK;
 
 	UDH->Type 	= UDH_UserUDH;
-	UDH->ID	  	= -1;
+	UDH->ID8bit	= -1;
+	UDH->ID16bit	= -1;
 	UDH->PartNumber	= -1;
 	UDH->AllParts	= -1;
 
@@ -114,6 +117,7 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 
 			if (tmp==0x05) tmp=tmp-3;/*three last bytes can be different for such UDH*/
 			if (tmp==0x0b) tmp=tmp-3;/*three last bytes can be different for such UDH*/
+			if (tmp==0x06 && UDH->Text[1] == 0x08) tmp=tmp-4;
 
 			UDHOK=true;
 			for (w=0;w<tmp;w++) {
@@ -125,7 +129,8 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 			if (UDHOK) {
 				UDH->Type=UDHHeaders[i].Type;
 
-				if (UDHHeaders[i].ID		!=-1) UDH->ID 		= UDH->Text[UDHHeaders[i].ID+1];
+				if (UDHHeaders[i].ID8bit	!=-1) UDH->ID8bit 	= UDH->Text[UDHHeaders[i].ID8bit+1];
+				if (UDHHeaders[i].ID16bit	!=-1) UDH->ID16bit 	= UDH->Text[UDHHeaders[i].ID16bit+1]*256+UDH->Text[UDHHeaders[i].ID16bit+2];
 				if (UDHHeaders[i].PartNumber	!=-1) UDH->PartNumber 	= UDH->Text[UDHHeaders[i].PartNumber+1];
 				if (UDHHeaders[i].AllParts	!=-1) UDH->AllParts 	= UDH->Text[UDHHeaders[i].AllParts+1];
 				break;
@@ -136,29 +141,31 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 #ifdef DEBUG
 	dprintf("Type of UDH: ");
 	switch (UDH->Type) {
-	case UDH_ConcatenatedMessages:	dprintf("Concatenated (linked) message"); 		break;
-	case UDH_DisableVoice:		dprintf("Disables voice indicator");	 		break;
-	case UDH_EnableVoice:		dprintf("Enables voice indicator");	 		break;
-	case UDH_DisableFax:		dprintf("Disables fax indicator");	 		break;
-	case UDH_EnableFax:		dprintf("Enables fax indicator");	 		break;
-	case UDH_DisableEmail:		dprintf("Disables email indicator");	 		break;
-	case UDH_EnableEmail:		dprintf("Enables email indicator");	 		break;
-	case UDH_VoidSMS:		dprintf("Void SMS");			 		break;
-	case UDH_NokiaWAP:		dprintf("Nokia WAP Bookmark");		 		break;
-	case UDH_NokiaOperatorLogoLong:	dprintf("Nokia operator logo");		 		break;
-	case UDH_NokiaWAPLong:		dprintf("Nokia WAP Bookmark or WAP/MMS Settings");	break;
-	case UDH_NokiaRingtone:		dprintf("Nokia ringtone");		 		break;
-	case UDH_NokiaRingtoneLong:	dprintf("Nokia ringtone");		 		break;
-	case UDH_NokiaOperatorLogo:	dprintf("Nokia GSM operator logo");	 		break;
-	case UDH_NokiaCallerLogo:	dprintf("Nokia caller logo");		 		break;  	
-	case UDH_NokiaProfileLong:	dprintf("Nokia profile");		 		break;
-	case UDH_NokiaCalendarLong:	dprintf("Nokia calendar note");		 		break;
-	case UDH_NokiaPhonebookLong:	dprintf("Nokia phonebook entry");	 		break;
-	case UDH_UserUDH:		dprintf("User UDH");			 		break;
-	case UDH_MMSIndicatorLong:						 		break;
+	case UDH_ConcatenatedMessages      : dprintf("Concatenated (linked) message"); 		break;
+	case UDH_ConcatenatedMessages16bit : dprintf("Concatenated (linked) message"); 		break;
+	case UDH_DisableVoice		   : dprintf("Disables voice indicator");	 	break;
+	case UDH_EnableVoice		   : dprintf("Enables voice indicator");	 	break;
+	case UDH_DisableFax		   : dprintf("Disables fax indicator");	 		break;
+	case UDH_EnableFax		   : dprintf("Enables fax indicator");	 		break;
+	case UDH_DisableEmail		   : dprintf("Disables email indicator");	 	break;
+	case UDH_EnableEmail		   : dprintf("Enables email indicator");	 	break;
+	case UDH_VoidSMS		   : dprintf("Void SMS");			 	break;
+	case UDH_NokiaWAP		   : dprintf("Nokia WAP Bookmark");		 	break;
+	case UDH_NokiaOperatorLogoLong	   : dprintf("Nokia operator logo");		 	break;
+	case UDH_NokiaWAPLong		   : dprintf("Nokia WAP Bookmark or WAP/MMS Settings");	break;
+	case UDH_NokiaRingtone		   : dprintf("Nokia ringtone");		 		break;
+	case UDH_NokiaRingtoneLong	   : dprintf("Nokia ringtone");		 		break;
+	case UDH_NokiaOperatorLogo	   : dprintf("Nokia GSM operator logo");	 	break;
+	case UDH_NokiaCallerLogo	   : dprintf("Nokia caller logo");		 	break;  	
+	case UDH_NokiaProfileLong	   : dprintf("Nokia profile");		 		break;
+	case UDH_NokiaCalendarLong	   : dprintf("Nokia calendar note");		 	break;
+	case UDH_NokiaPhonebookLong	   : dprintf("Nokia phonebook entry");	 		break;
+	case UDH_UserUDH		   : dprintf("User UDH");			 	break;
+	case UDH_MMSIndicatorLong	   : dprintf("MMS indicator");		 		break;
 	case UDH_NoUDH:								 		break;
 	}
-	if (UDH->ID != -1) dprintf(", ID %i",UDH->ID);
+	if (UDH->ID8bit != -1) dprintf(", ID 8 bit %i",UDH->ID8bit);
+	if (UDH->ID16bit != -1) dprintf(", ID 16 bit %i",UDH->ID16bit);
 	if (UDH->PartNumber != -1 && UDH->AllParts != -1) {
 		dprintf(", part %i of %i",UDH->PartNumber,UDH->AllParts);
 	}
@@ -556,7 +563,8 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 	SMS->UDH.Type			= UDH_NoUDH;
 	SMS->UDH.Length			= 0;
 	SMS->UDH.Text[0] 		= 0;
-	SMS->UDH.ID			= 0;
+	SMS->UDH.ID8bit			= 0;
+	SMS->UDH.ID16bit		= 0;
 	SMS->UDH.PartNumber		= 0;
 	SMS->UDH.AllParts		= 0;
 	SMS->Coding			= GSM_Coding_Default;
@@ -606,9 +614,27 @@ void GSM_EncodeUDHHeader(GSM_UDHHeader *UDH)
 					memcpy(UDH->Text+1, UDHHeaders[i].Text, UDHHeaders[i].Length);
 					UDH->Length 	= UDH->Text[0] + 1;
 
-					if (UDHHeaders[i].ID 		!= -1) UDH->Text[UDHHeaders[i].ID+1]		= UDH->ID;
-					if (UDHHeaders[i].PartNumber 	!= -1) UDH->Text[UDHHeaders[i].PartNumber+1]	= UDH->PartNumber;
-					if (UDHHeaders[i].AllParts 	!= -1) UDH->Text[UDHHeaders[i].AllParts+1]	= UDH->AllParts;
+					if (UDHHeaders[i].ID8bit != -1) {
+						UDH->Text[UDHHeaders[i].ID8bit+1] = UDH->ID8bit % 256;
+					} else {
+						UDH->ID8bit = -1;
+					}
+					if (UDHHeaders[i].ID16bit != -1) {
+						UDH->Text[UDHHeaders[i].ID16bit+1] = UDH->ID16bit / 256;
+						UDH->Text[UDHHeaders[i].ID16bit+2] = UDH->ID16bit % 256;
+					} else {
+						UDH->ID16bit = -1;
+					}
+					if (UDHHeaders[i].PartNumber != -1) {
+						UDH->Text[UDHHeaders[i].PartNumber+1] = UDH->PartNumber;
+					} else {
+						UDH->PartNumber = -1;
+					}
+					if (UDHHeaders[i].AllParts != -1) {
+						UDH->Text[UDHHeaders[i].AllParts+1] = UDH->AllParts;
+					} else {
+						UDH->AllParts = -1;
+					}
 					break;
 				}
 				i++;
@@ -745,6 +771,7 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 {
 	int 		j,i,Len,UsedText,CopiedText,CopiedSMSText;
 	unsigned char 	UDHID;
+	GSM_DateTime 	Date;
 
 	/* Cleaning on the start */
 	for (i=0;i<MAX_MULTI_SMS;i++)
@@ -771,12 +798,14 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 	SMS->Number++;
 
 	UDHID = GSM_MakeSMSIDFromTime();
+	GSM_GetCurrentDateTime (&Date);	
 	for (j=0;j<SMS->Number;j++)
 	{
 		SMS->SMS[j].MessageReference 	= 0;
 		SMS->SMS[j].RejectDuplicates 	= false;
 		SMS->SMS[j].ReplaceMessage 	= 0;
-		SMS->SMS[j].UDH.ID 		= UDHID;
+		SMS->SMS[j].UDH.ID8bit 		= UDHID;
+		SMS->SMS[j].UDH.ID16bit		= UDHID + 256 * Date.Hour;
 		SMS->SMS[j].UDH.PartNumber 	= j+1;
 		SMS->SMS[j].UDH.AllParts 	= SMS->Number;
 		GSM_EncodeUDHHeader(&SMS->SMS[j].UDH);
@@ -869,11 +898,11 @@ static void GSM_EncodeSMS30MultiPartSMS(GSM_EncodeMultiPartSMSInfo *Info,
  */
 static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 				           GSM_MultiSMSMessage 		*SMS,
-					   bool 			linked)
+					   GSM_UDH			UDHType)
 {
 	unsigned char		Buffer[GSM_MAX_SMS_LENGTH*2*MAX_MULTI_SMS];
 	int 			i,UsedText,j,Length,Width,Height,z,x,y;
-	unsigned int	Len;
+	unsigned int		Len;
 	int 			Used,FreeText,FreeBytes,Width2,CopiedText,CopiedSMSText;
 	unsigned char		UDHID;
 	GSM_Bitmap		Bitmap,Bitmap2;
@@ -882,9 +911,10 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 	GSM_Phone_Bitmap_Types	BitmapType;
 	EncodeMultiPartSMSEntry *Entry;
 	bool			start;
+	GSM_DateTime		Date;
 
 #ifdef DEBUG
-	if (linked) dprintf("linked EMS\n");
+	if (UDHType != UDH_NoUDH) dprintf("linked EMS\n");
 #endif
 
 	if (Info->UnicodeCoding) Coding = GSM_Coding_Unicode;
@@ -892,8 +922,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 	/* Cleaning on the start */
 	for (i=0;i<MAX_MULTI_SMS;i++) {
 		GSM_SetDefaultSMSData(&SMS->SMS[i]);
-		SMS->SMS[i].UDH.Type = UDH_NoUDH;
-		if (linked) SMS->SMS[i].UDH.Type = UDH_ConcatenatedMessages;
+		SMS->SMS[i].UDH.Type = UDHType;
 		GSM_EncodeUDHHeader(&SMS->SMS[i].UDH);
 		SMS->SMS[i].Coding = Coding;
 	}
@@ -904,6 +933,7 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 
 		switch (Entry->ID) {
 		case SMS_ConcatenatedTextLong:
+		case SMS_ConcatenatedTextLong16bit:
 			Len = 0;
 			while(1) {
 				if (Entry->Left   || Entry->Right      ||
@@ -1358,12 +1388,22 @@ static GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_EncodeMultiPartSMSInfo 	*Info,
 
 	SMS->Number++;
 
-	if (linked) {
+	if (UDHType == UDH_ConcatenatedMessages) {
 		UDHID = GSM_MakeSMSIDFromTime();
 		for (i=0;i<SMS->Number;i++) {
 			SMS->SMS[i].UDH.Text[2+1] = UDHID;
 			SMS->SMS[i].UDH.Text[3+1] = SMS->Number;
 			SMS->SMS[i].UDH.Text[4+1] = i+1;
+		}
+	}
+	if (UDHType == UDH_ConcatenatedMessages16bit) {
+		UDHID = GSM_MakeSMSIDFromTime();
+		GSM_GetCurrentDateTime (&Date);	
+		for (i=0;i<SMS->Number;i++) {
+			SMS->SMS[i].UDH.Text[2+1] = Date.Hour;
+			SMS->SMS[i].UDH.Text[3+1] = UDHID;
+			SMS->SMS[i].UDH.Text[4+1] = SMS->Number;
+			SMS->SMS[i].UDH.Text[5+1] = i+1;
 		}
 	}
 
@@ -1410,6 +1450,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 				EMS = true;
 				break;
 			case SMS_ConcatenatedTextLong:
+			case SMS_ConcatenatedTextLong16bit:
 				if (Info->Entries[i].Left   || Info->Entries[i].Right      ||
 				    Info->Entries[i].Center || Info->Entries[i].Large      ||
 				    Info->Entries[i].Small  || Info->Entries[i].Bold       ||
@@ -1423,11 +1464,16 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		if (EMS) break;
 	}
 	if (EMS) {
-		error=GSM_EncodeEMSMultiPartSMS(Info,SMS,false);
+		error=GSM_EncodeEMSMultiPartSMS(Info,SMS,UDH_NoUDH);
 		if (error != GE_NONE) return error;
 		if (SMS->Number != 1) {
 			SMS->Number = 0;
-			error=GSM_EncodeEMSMultiPartSMS(Info,SMS,true);
+			for (i=0;i<Info->EntriesNum;i++) {
+				if (Info->Entries[i].ID == SMS_ConcatenatedTextLong16bit) {
+					return GSM_EncodeEMSMultiPartSMS(Info,SMS,UDH_ConcatenatedMessages);
+				}
+			}
+			return GSM_EncodeEMSMultiPartSMS(Info,SMS,UDH_ConcatenatedMessages16bit);
 		}
 		return error;
 	}
@@ -1588,6 +1634,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		}
 		break;
 	case SMS_ConcatenatedAutoTextLong:
+	case SMS_ConcatenatedAutoTextLong16bit:
 		smslen = UnicodeLength(Info->Entries[0].Buffer);
 		memcpy(Buffer,Info->Entries[0].Buffer,smslen*2);
 		EncodeDefault(Buffer2, Buffer, &smslen, true, NULL);
@@ -1610,17 +1657,28 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		}
 		/* No break here - we go to the SMS_ConcatenatedTextLong */
 	case SMS_ConcatenatedTextLong:
+	case SMS_ConcatenatedTextLong16bit:
 		Class = Info->Class;
 		memcpy(Buffer,Info->Entries[0].Buffer,UnicodeLength(Info->Entries[0].Buffer)*2+2);
 		UDH = UDH_NoUDH;
 		if (Info->UnicodeCoding) {
 			Coding = GSM_Coding_Unicode;
 			Length = UnicodeLength(Info->Entries[0].Buffer);
-			if (Length>70) UDH=UDH_ConcatenatedMessages;
+			if (Info->Entries[0].ID == SMS_ConcatenatedTextLong16bit ||
+			    Info->Entries[0].ID == SMS_ConcatenatedAutoTextLong16bit) {
+				if (Length>70) UDH=UDH_ConcatenatedMessages16bit;
+			} else {
+				if (Length>70) UDH=UDH_ConcatenatedMessages;
+			}
 		} else {
 			Coding = GSM_Coding_Default;
 			FindDefaultAlphabetLen(Info->Entries[0].Buffer,&Length,&smslen,5000);
-			if (smslen>GSM_MAX_SMS_LENGTH) UDH=UDH_ConcatenatedMessages;
+			if (Info->Entries[0].ID == SMS_ConcatenatedTextLong16bit ||
+			    Info->Entries[0].ID == SMS_ConcatenatedAutoTextLong16bit) {
+				if (smslen>GSM_MAX_SMS_LENGTH) UDH=UDH_ConcatenatedMessages16bit;
+			} else {
+				if (smslen>GSM_MAX_SMS_LENGTH) UDH=UDH_ConcatenatedMessages;
+			}
 		}
 	default:
 		break;
@@ -1692,7 +1750,8 @@ bool GSM_DecodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 		RetVal = true;
 	}
 
-	if (SMS->SMS[0].UDH.Type == UDH_ConcatenatedMessages) {
+	if (SMS->SMS[0].UDH.Type == UDH_ConcatenatedMessages ||
+	    SMS->SMS[0].UDH.Type == UDH_ConcatenatedMessages16bit) {
 		for (i=0;i<SMS->Number;i++) {
 			switch (SMS->SMS[i].Coding) {
 			case GSM_Coding_8bit:
@@ -1836,11 +1895,12 @@ GSM_Error GSM_SortSMS(GSM_MultiSMSMessage *INPUT[150], GSM_MultiSMSMessage *OUTP
 						 * - with the same UDH (with the same ID, etc.) to the first sms
 						 */
 						if (!INPUTSorted[z] 						   	&&
-						    INPUT[z]->Number 		    == 1 			   	&&
-						    INPUT[z]->SMS[0].UDH.Type 	    == INPUT[i]->SMS[0].UDH.Type 	&&
-						    INPUT[z]->SMS[0].UDH.ID 	    == INPUT[i]->SMS[0].UDH.ID		&&
-						    INPUT[z]->SMS[0].UDH.AllParts   == INPUT[i]->SMS[0].UDH.AllParts 	&&
-						    INPUT[z]->SMS[0].UDH.PartNumber == j+1) {
+						    INPUT[z]->Number 		     == 1 			   	&&
+						    INPUT[z]->SMS[0].UDH.Type 	     == INPUT[i]->SMS[0].UDH.Type 	&&
+						    INPUT[z]->SMS[0].UDH.ID8bit      == INPUT[i]->SMS[0].UDH.ID8bit	&&
+						    INPUT[z]->SMS[0].UDH.ID16bit     == INPUT[i]->SMS[0].UDH.ID16bit	&&
+						    INPUT[z]->SMS[0].UDH.AllParts    == INPUT[i]->SMS[0].UDH.AllParts 	&&
+						    INPUT[z]->SMS[0].UDH.PartNumber  == j+1) {
 							/* For SMS_Deliver compare also SMSC and Sender number */
 							if (INPUT[z]->SMS[0].PDU == SMS_Deliver) {
 								if (!strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].SMSC.Number),DecodeUnicodeString(INPUT[i]->SMS[0].SMSC.Number)) &&

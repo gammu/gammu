@@ -42,7 +42,7 @@ RSC=rc.exe
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
-# ADD CPP /nologo /W3 /GX /O1 /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
+# ADD CPP /nologo /W3 /GX /Od /D "WIN32" /D "NDEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /c
 # ADD BASE RSC /l 0x415 /d "NDEBUG"
 # ADD RSC /l 0x415 /d "NDEBUG"
 BSC32=bscmake.exe
@@ -97,19 +97,15 @@ SOURCE=..\..\common\phone\alcatel\alcatel.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\obex\obexgen.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\common\protocol\at\at.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\obex\obex.c
+SOURCE=..\..\common\phone\at\atgen.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\at\atgen.c
+SOURCE=..\..\common\device\bluetoth\bluetoth.c
 # End Source File
 # Begin Source File
 
@@ -125,10 +121,6 @@ SOURCE=..\depend\dct3.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dsiemens.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\common\phone\nokia\dct3\dct3func.c
 # End Source File
 # Begin Source File
@@ -137,11 +129,15 @@ SOURCE=..\depend\dct4.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\nokia\fbus2.c
+SOURCE=..\..\common\device\devfunc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\protocol\nokia\phonet.c
+SOURCE=..\depend\dsiemens.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\protocol\nokia\fbus2.c
 # End Source File
 # Begin Source File
 
@@ -157,15 +153,7 @@ SOURCE=..\..\common\service\gsmback.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmmisc.c
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\common\service\gsmcal.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\common\service\gsmvcal.c
 # End Source File
 # Begin Source File
 
@@ -177,7 +165,7 @@ SOURCE=..\..\common\service\gsmlogo.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\at\sonyeric.c
+SOURCE=..\..\common\service\gsmmisc.c
 # End Source File
 # Begin Source File
 
@@ -198,6 +186,10 @@ SOURCE=..\..\common\service\gsmsms.c
 # Begin Source File
 
 SOURCE=..\..\common\gsmstate.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\gsmvcal.c
 # End Source File
 # Begin Source File
 
@@ -241,11 +233,15 @@ SOURCE=..\..\common\phone\nokia\nfunc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\devfunc.c
+SOURCE=..\..\common\phone\nokia\nfuncold.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\phone\nokia\nfuncold.c
+SOURCE=..\..\common\protocol\obex\obex.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\phone\obex\obexgen.c
 # End Source File
 # Begin Source File
 
@@ -253,7 +249,15 @@ SOURCE=..\..\common\phone\pfunc.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\protocol\nokia\phonet.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\smsd\s_files.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\device\serial\ser_w32.c
 # End Source File
 # Begin Source File
 
@@ -269,11 +273,7 @@ SOURCE=..\sniff.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\bluetoth\bluetoth.c
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\common\device\serial\ser_w32.c
+SOURCE=..\..\common\phone\at\sonyeric.c
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -297,6 +297,14 @@ SOURCE=..\..\common\phone\at\atgen.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\device\bluetoth\blue_w32.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\device\bluetoth\bluetoth.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\misc\cfg.h
 # End Source File
 # Begin Source File
@@ -309,15 +317,7 @@ SOURCE=..\depend\dct3.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\depend\dsiemens.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\common\phone\nokia\dct3\dct3comm.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\common\phone\obex\obexgen.h
 # End Source File
 # Begin Source File
 
@@ -329,15 +329,15 @@ SOURCE=..\depend\dct4.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\device\devfunc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\depend\dsiemens.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\protocol\nokia\fbus2.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\common\protocol\obex\obex.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\common\protocol\nokia\phonet.h
 # End Source File
 # Begin Source File
 
@@ -358,6 +358,10 @@ SOURCE=..\..\common\gsmcomon.h
 # Begin Source File
 
 SOURCE=..\..\common\service\gsmlogo.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\gsmmisc.h
 # End Source File
 # Begin Source File
 
@@ -385,19 +389,19 @@ SOURCE=..\..\common\gsmstate.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmwap.h
-# End Source File
-# Begin Source File
-
 SOURCE=..\..\common\service\gsmvcal.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmmisc.h
+SOURCE=..\..\common\service\gsmwap.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\common\device\irda\irda.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\device\irda\irda_w32.h
 # End Source File
 # Begin Source File
 
@@ -437,7 +441,19 @@ SOURCE=..\..\common\phone\nokia\nfuncold.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\protocol\obex\obex.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\phone\obex\obexgen.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\phone\pfunc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\protocol\nokia\phonet.h
 # End Source File
 # Begin Source File
 
@@ -449,31 +465,15 @@ SOURCE=..\smsd\s_files.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\device\serial\ser_w32.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\smsd\smsdcore.h
 # End Source File
 # Begin Source File
 
 SOURCE=..\sniff.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\common\device\bluetoth\bluetoth.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\common\device\bluetoth\blue_w32.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\common\device\irda\irda_w32.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\common\device\devfunc.h
-# End Source File
-# Begin Source File
-
-SOURCE=..\..\common\device\serial\ser_w32.h
 # End Source File
 # End Group
 # Begin Group "Resource Files"

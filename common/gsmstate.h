@@ -299,6 +299,8 @@ typedef enum {
 	ID_GetCalendarSettings,
 	ID_SetCalendarSettings,
 	ID_GetGPRSPoint,
+	ID_SetGPRSPoint,
+	ID_EnableGPRSPoint,
 	ID_DeleteWAPBookmark,
 	ID_Netmonitor,
 	ID_HoldCall,

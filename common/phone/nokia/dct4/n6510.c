@@ -204,7 +204,7 @@ static GSM_Error N6510_ReplySetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *
 static GSM_Error N6510_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
 	int 		count = 13,i;
-	unsigned char 	req[64] = {
+	unsigned char 	req[256] = {
 		N6110_FRAME_HEADER,
 		0x12, 0x55, 0x01, 0x0B, 0x34,
 		0x05,		/* Location 	*/
@@ -985,6 +985,7 @@ static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 		0x00, 0x00,  /* location */
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
+	if (entry->Location == 0) return GE_NOTSUPPORTED;
 	if (entry->EntriesNum!=0) {
 		req[11] = NOKIA_GetMemoryType(s, entry->MemoryType,N71_65_MEMORY_TYPES);
 		if (req[11]==0xff) return GE_NOTSUPPORTED;
@@ -2285,10 +2286,12 @@ static GSM_Error N6510_ReplyGetManufactureMonth(GSM_Protocol_Message msg, GSM_St
 static GSM_Error N6510_GetManufactureMonth(GSM_StateMachine *s, char *value)
 {
 	unsigned char req[6] = {0x00, 0x05, 0x02, 0x01, 0x00, 0x02};
+//	unsigned char req[6] = {0x00, 0x03, 0x04, 0x0B, 0x01, 0x00};
 
 	s->Phone.Data.PhoneString=value;
 	smprintf(s, "Getting manufacture month\n");
 	return GSM_WaitFor (s, req, 6, 0x42, 2, ID_GetManufactureMonth);
+//	return GSM_WaitFor (s, req, 6, 0x1B, 2, ID_GetManufactureMonth);
 }                                       
 
 static GSM_Error N6510_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2564,7 +2567,8 @@ static GSM_Error N6510_ReplyGetPPM(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 static GSM_Error N6510_GetPPM(GSM_StateMachine *s,char *value)
 {
-	unsigned char req[6] = {N6110_FRAME_HEADER, 0x07, 0x01, 0xff};
+//	unsigned char req[6] = {N6110_FRAME_HEADER, 0x07, 0x01, 0xff};
+	unsigned char req[6] = {N6110_FRAME_HEADER, 0x07, 0x01, 0x00};
 
 	s->Phone.Data.PhoneString=value;
 	smprintf(s, "Getting PPM\n");
@@ -2757,6 +2761,12 @@ static GSM_Error N6510_ReplySetProfile(GSM_Protocol_Message msg, GSM_StateMachin
 			else
 				smprintf(s, "failed to set caller groups! error: %i\n", msg.Buffer[4]);
 			break;
+		case 0x09:
+			if (msg.Buffer[4] == 0x00) 
+				smprintf(s, "automatic answer successfully set!\n");
+			else
+				smprintf(s, "failed to set automatic answer! error: %i\n", msg.Buffer[4]);
+			break;
 		case 0x0c:
 			if (msg.Buffer[4] == 0x00) 
 				smprintf(s, "name successfully set!\n");
@@ -2764,7 +2774,7 @@ static GSM_Error N6510_ReplySetProfile(GSM_Protocol_Message msg, GSM_StateMachin
 				smprintf(s, "failed to set name! error: %i\n", msg.Buffer[4]);
 			break;
 		default:
-			smprintf(s, "Unknown profile subblock type %02x!\n", blockstart[1]);
+			smprintf(s, "Unknown profile subblock type %02x!\n", blockstart[2]);
 			break;
 		}
 		blockstart = blockstart + blockstart[1];
@@ -2786,7 +2796,7 @@ static GSM_Error N6510_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 
 	for (i=0;i<Profile->FeaturesNumber;i++) {
 		found = false;
-		switch (Profile->FeatureValue[i]) {
+		switch (Profile->FeatureID[i]) {
 			case Profile_RingtoneID:
 				ID 	= 0x03;
 				Value 	= Profile->FeatureValue[i];
@@ -3734,6 +3744,10 @@ static GSM_Error N6510_ReplyGetFileFolderInfo(GSM_Protocol_Message msg, GSM_Stat
 		}
 		if (msg.Buffer[9] != 0x00) File->Folder = true;
 		return GE_NONE;		
+	case 0x43:
+		File->CRC16 = msg.Buffer[6] * 256 + msg.Buffer[7];
+		smprintf(s,"CRC16 from phone is %i\n",File->CRC16);
+		return GE_NONE;
 	}
 	return GE_UNKNOWNRESPONSE;
 }
@@ -3747,6 +3761,9 @@ static GSM_Error N6510_GetFileFolderInfo(GSM_StateMachine *s, GSM_File *File, GS
 		0x01,		/* 0x00 for sublocations reverse sorting, 0x01 for free */
 		0x00, 0x00, 0x01,
 		0x00, 0x01};	/* Folder or file number */
+	unsigned char 		GetCRC[] = {
+		N7110_FRAME_HEADER, 0x42, 0x00, 0x00, 0x00, 0x01,
+		0x00, 0x1E}; 	/* file ID */
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return GE_NOTSUPPORTED;
 
@@ -3772,6 +3789,12 @@ static GSM_Error N6510_GetFileFolderInfo(GSM_StateMachine *s, GSM_File *File, GS
 			req[4] = 0x01;
 			smprintf(s,"Getting used memory for file in filesystem\n");
 			error=GSM_WaitFor (s, req, 10, 0x6D, 4, Request);
+			if (error != GE_NONE) return error;
+
+			GetCRC[8] = atoi(File->ID_FullName) / 256;
+			GetCRC[9] = atoi(File->ID_FullName) % 256;
+			smprintf(s,"Getting CRC for file in filesystem\n");
+			error=GSM_WaitFor (s, GetCRC, 10, 0x6D, 4, Request);
 		}
 	}
 	return error;
@@ -4082,11 +4105,11 @@ static GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos
 		error = GSM_WaitFor (s, end, 14, 0x6D, 4, ID_AddFile);
 		if (error != GE_NONE) return error;
 
-		if (!File->ModifiedEmpty) {
-			strcpy(File2.ID_FullName,File->ID_FullName);
-			error = N6510_GetFileFolderInfo(s, &File2, ID_GetFileInfo);
-			if (error != GE_NONE) return error;
+		strcpy(File2.ID_FullName,File->ID_FullName);
+		error = N6510_GetFileFolderInfo(s, &File2, ID_GetFileInfo);
+		if (error != GE_NONE) return error;
 
+		if (!File->ModifiedEmpty) {
 			Header[3]   = 0x12;
 			Header[4]   = 0x01;
 			Header[12]  = 0x00;
@@ -4139,6 +4162,11 @@ static GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos
 		if (File->ReadOnly) {
 			error = N6510_SetReadOnly(s, File->ID_FullName, true);
 			if (error != GE_NONE) return error;
+		}
+
+		if (File2.CRC16 != File->CRC16) {
+			smprintf(s,"File2 CRC is %i, File CRC is %i\n",File2.CRC16,File->CRC16);
+//			return GE_UNKNOWN;
 		}
 
 		return GE_EMPTY;
@@ -4212,18 +4240,53 @@ static GSM_Error N6510_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	return error;
 }
 
+#ifdef DEVELOP
+
+static GSM_Error N6510_ReplyEnableGPRSAccessPoint(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	if (msg.Buffer[13] == 0x02) return GE_NONE;
+	return GE_UNKNOWNRESPONSE;
+}
+
+static GSM_Error N6510_EnableGPRSAccessPoint(GSM_StateMachine *s)
+{
+	GSM_Error	error;
+	int	 	i;
+	unsigned char 	req[] = {
+		N7110_FRAME_HEADER, 0x05, 0x00, 0x00, 0x00, 0x2C, 0x00,
+		0x04, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00};
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOGPRSPOINT)) return GE_NOTSUPPORTED;
+
+	for (i=0;i<3;i++) {
+		smprintf(s, "Activating full GPRS access point support\n");
+		error = GSM_WaitFor (s, req, 16, 0x43, 4, ID_EnableGPRSPoint);
+		if (error != GE_NONE) return error;
+	}
+	return error;
+}
+
+#endif
+
 static GSM_Error N6510_ReplyGetGPRSAccessPoint(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	GSM_GPRSAccessPoint *point = s->Phone.Data.GPRSPoint;
+
 	switch (msg.Buffer[13]) {
+	case 0x01:
+		smprintf(s,"Active GPRS point received\n");
+		point->Active = false;
+		if (point->Location == msg.Buffer[18]) point->Active = true;
+		return GE_NONE;
 	case 0xD2:
 		smprintf(s,"Names for GPRS points received\n");
-		CopyUnicodeString(s->Phone.Data.GPRSPoint->Name,msg.Buffer+18+(s->Phone.Data.GPRSPoint->Location-1)*42);
-		smprintf(s,"\"%s\"\n",DecodeUnicodeString(s->Phone.Data.GPRSPoint->Name));
+		CopyUnicodeString(point->Name,msg.Buffer+18+(point->Location-1)*42);
+		smprintf(s,"\"%s\"\n",DecodeUnicodeString(point->Name));
 		return GE_NONE;
 	case 0xF2:
 		smprintf(s,"URL for GPRS points received\n");
-		CopyUnicodeString(s->Phone.Data.GPRSPoint->URL,msg.Buffer+18+(s->Phone.Data.GPRSPoint->Location-1)*202);
-		smprintf(s,"\"%s\"\n",DecodeUnicodeString(s->Phone.Data.GPRSPoint->URL));
+		CopyUnicodeString(point->URL,msg.Buffer+18+(point->Location-1)*202);
+		smprintf(s,"\"%s\"\n",DecodeUnicodeString(point->URL));
 		return GE_NONE;
 	}
 	return GE_UNKNOWNRESPONSE;
@@ -4238,12 +4301,20 @@ static GSM_Error N6510_GetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoi
 	unsigned char 	Name[] = {
 		N7110_FRAME_HEADER, 0x05, 0x00, 0x00, 0x00, 0x2C, 0x00,
 		0x01, 0x00, 0x00, 0x00, 0xD2, 0x00, 0x00};
+	unsigned char 	Active[] = {
+		N7110_FRAME_HEADER, 0x05, 0x00, 0x00, 0x00, 0x2C, 0x00,
+		0x02, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00};
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOGPRSPOINT)) return GE_NOTSUPPORTED;
 	if (point->Location < 1) return GE_UNKNOWN;
 	if (point->Location > 5) return GE_INVALIDLOCATION;
 
 	s->Phone.Data.GPRSPoint = point;
+
+#ifdef DEVELOP
+	error = N6510_EnableGPRSAccessPoint(s);
+	if (error != GE_NONE) return error;
+#endif
 
 	smprintf(s, "Getting GPRS access point name\n");
 	error=GSM_WaitFor (s, Name, 16, 0x43, 4, ID_GetGPRSPoint);
@@ -4253,7 +4324,90 @@ static GSM_Error N6510_GetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoi
 	error=GSM_WaitFor (s, URL, 16, 0x43, 4, ID_GetGPRSPoint);
 	if (error != GE_NONE) return error;
 
+	smprintf(s, "Getting number of active GPRS access point\n");
+	error=GSM_WaitFor (s, Active, 16, 0x43, 4, ID_GetGPRSPoint);
+	if (error != GE_NONE) return error;
+
 	if (UnicodeLength(point->URL)==0 && UnicodeLength(point->Name)==0) return GE_EMPTY;
+	return error;
+}
+
+static GSM_Error N6510_ReplySetGPRSAccessPoint1(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	switch (msg.Buffer[13]) {
+	case 0x01:
+	case 0xD2:
+	case 0xF2:
+		memcpy(s->Phone.Data.Priv.N6510.GPRSPoints,msg.Buffer,msg.Length);
+		s->Phone.Data.Priv.N6510.GPRSPointsLength = msg.Length;
+		return GE_NONE;
+	}
+	return GE_UNKNOWNRESPONSE;
+}
+
+static GSM_Error N6510_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoint *point)
+{
+	unsigned char	*buff = s->Phone.Data.Priv.N6510.GPRSPoints;
+	GSM_Error	error;
+	unsigned char 	URL[] = {
+		N7110_FRAME_HEADER, 0x05, 0x00, 0x00, 0x00, 0x2C, 0x00,
+		0x00, 0x00, 0x00, 0x03, 0xF2, 0x00, 0x00};
+	unsigned char 	Name[] = {
+		N7110_FRAME_HEADER, 0x05, 0x00, 0x00, 0x00, 0x2C, 0x00,
+		0x01, 0x00, 0x00, 0x00, 0xD2, 0x00, 0x00};
+	unsigned char 	Active[] = {
+		N7110_FRAME_HEADER, 0x05, 0x00, 0x00, 0x00, 0x2C, 0x00,
+		0x02, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00};
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOGPRSPOINT)) return GE_NOTSUPPORTED;
+	if (point->Location < 1) return GE_UNKNOWN;
+	if (point->Location > 5) return GE_INVALIDLOCATION;
+
+	s->Phone.Data.GPRSPoint = point;
+
+#ifdef DEVELOP
+	error = N6510_EnableGPRSAccessPoint(s);
+	if (error != GE_NONE) return error;
+#endif
+
+	smprintf(s, "Getting GPRS access point name\n");
+	error=GSM_WaitFor (s, Name, 16, 0x43, 4, ID_SetGPRSPoint);
+	if (error != GE_NONE) return error;
+	CopyUnicodeString(buff+18+(point->Location-1)*42,point->Name);
+	buff[0] = 0x00;
+	buff[1] = 0x01;
+	buff[2] = 0x01;
+	buff[3] = 0x07;
+	smprintf(s, "Setting GPRS access point name\n");
+	error=GSM_WaitFor (s, buff, s->Phone.Data.Priv.N6510.GPRSPointsLength, 0x43, 4, ID_SetGPRSPoint);
+	if (error != GE_NONE) return error;
+
+	smprintf(s, "Getting GPRS access point URL\n");
+	error=GSM_WaitFor (s, URL, 16, 0x43, 4, ID_SetGPRSPoint);
+	if (error != GE_NONE) return error;
+	CopyUnicodeString(buff+18+(point->Location-1)*42,point->URL);
+	buff[0] = 0x00;
+	buff[1] = 0x01;
+	buff[2] = 0x01;
+	buff[3] = 0x07;
+	smprintf(s, "Setting GPRS access point URL\n");
+	error=GSM_WaitFor (s, buff, s->Phone.Data.Priv.N6510.GPRSPointsLength, 0x43, 4, ID_SetGPRSPoint);
+	if (error != GE_NONE) return error;
+
+	if (point->Active) {
+		smprintf(s, "Getting number of active GPRS access point\n");
+		error=GSM_WaitFor (s, Active, 16, 0x43, 4, ID_SetGPRSPoint);
+		if (error != GE_NONE) return error;
+		buff[0] = 0x00;
+		buff[1] = 0x01;
+		buff[2] = 0x01;
+		buff[3] = 0x07;
+		buff[18]= point->Location;
+		smprintf(s, "Setting number of active GPRS access point\n");
+		error=GSM_WaitFor (s, buff, s->Phone.Data.Priv.N6510.GPRSPointsLength, 0x43, 4, ID_SetGPRSPoint);
+		if (error != GE_NONE) return error;
+	}
+
 	return error;
 }
 
@@ -4872,208 +5026,214 @@ GSM_Error N6510_AddSMSFolder(GSM_StateMachine *s, unsigned char *name)
 }
 
 static GSM_Reply_Function N6510ReplyFunctions[] = {
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x02,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x03,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x04,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x05,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x07,ID_AnswerCall		},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x07,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x09,ID_CancelCall		},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x09,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0A,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0B,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0C,ID_DialVoice		},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0C,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x23,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x25,ID_IncomingFrame	},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x27,ID_IncomingFrame	},
-	{N71_65_ReplySendDTMF,		"\x01",0x03,0x51,ID_SendDTMF		},
-	{N71_65_ReplyCallInfo,		"\x01",0x03,0x53,ID_IncomingFrame	},
-	{N71_65_ReplySendDTMF,		"\x01",0x03,0x59,ID_SendDTMF		},
-	{N71_65_ReplySendDTMF,		"\x01",0x03,0x5E,ID_SendDTMF		},
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x02,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x03,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x04,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x05,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x07,ID_AnswerCall	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x07,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x09,ID_CancelCall	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x09,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x0A,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x0B,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x0C,ID_DialVoice		  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x0C,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x23,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x25,ID_IncomingFrame	  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x27,ID_IncomingFrame	  },
+	{N71_65_ReplySendDTMF,		  "\x01",0x03,0x51,ID_SendDTMF		  },
+	{N71_65_ReplyCallInfo,		  "\x01",0x03,0x53,ID_IncomingFrame	  },
+	{N71_65_ReplySendDTMF,		  "\x01",0x03,0x59,ID_SendDTMF		  },
+	{N71_65_ReplySendDTMF,		  "\x01",0x03,0x5E,ID_SendDTMF		  },
 
-	{N6510_ReplySendSMSMessage,	"\x02",0x03,0x03,ID_IncomingFrame	},
-	{N6510_ReplyIncomingSMS,	"\x02",0x03,0x04,ID_IncomingFrame	},
-	{N6510_ReplySetSMSC,		"\x02",0x03,0x13,ID_SetSMSC		},
-	{N6510_ReplyGetSMSC,		"\x02",0x03,0x15,ID_GetSMSC		},
+	{N6510_ReplySendSMSMessage,	  "\x02",0x03,0x03,ID_IncomingFrame	  },
+	{N6510_ReplyIncomingSMS,	  "\x02",0x03,0x04,ID_IncomingFrame	  },
+	{N6510_ReplySetSMSC,		  "\x02",0x03,0x13,ID_SetSMSC		  },
+	{N6510_ReplyGetSMSC,		  "\x02",0x03,0x15,ID_GetSMSC		  },
 
-	{N6510_ReplyGetMemoryStatus,	"\x03",0x03,0x04,ID_GetMemoryStatus	},
-	{N6510_ReplyGetMemory,		"\x03",0x03,0x08,ID_GetMemory		},
-	{N6510_ReplyDeleteMemory,	"\x03",0x03,0x10,ID_SetMemory		},
-	{N71_65_ReplyWritePhonebook,	"\x03",0x03,0x0C,ID_SetBitmap		},
-	{N71_65_ReplyWritePhonebook,	"\x03",0x03,0x0C,ID_SetMemory		},
+	{N6510_ReplyGetMemoryStatus,	  "\x03",0x03,0x04,ID_GetMemoryStatus	  },
+	{N6510_ReplyGetMemory,		  "\x03",0x03,0x08,ID_GetMemory		  },
+	{N6510_ReplyDeleteMemory,	  "\x03",0x03,0x10,ID_SetMemory		  },
+	{N71_65_ReplyWritePhonebook,	  "\x03",0x03,0x0C,ID_SetBitmap		  },
+	{N71_65_ReplyWritePhonebook,	  "\x03",0x03,0x0C,ID_SetMemory		  },
 
-	{DCT3DCT4_ReplyCallDivert,	"\x06",0x03,0x02,ID_Divert		},
-	{N71_65_ReplyUSSDInfo,		"\x06",0x03,0x03,ID_IncomingFrame	},
-	{NONEFUNCTION,			"\x06",0x03,0x06,ID_IncomingFrame	},
-	{NONEFUNCTION,			"\x06",0x03,0x09,ID_IncomingFrame	},
+	{DCT3DCT4_ReplyCallDivert,	  "\x06",0x03,0x02,ID_Divert		  },
+	{N71_65_ReplyUSSDInfo,		  "\x06",0x03,0x03,ID_IncomingFrame	  },
+	{NONEFUNCTION,			  "\x06",0x03,0x06,ID_IncomingFrame	  },
+	{NONEFUNCTION,			  "\x06",0x03,0x09,ID_IncomingFrame	  },
 
-	{N6510_ReplyEnterSecurityCode,	"\x08",0x03,0x08,ID_EnterSecurityCode	},
-	{N6510_ReplyEnterSecurityCode,	"\x08",0x03,0x09,ID_EnterSecurityCode	},
-	{N6510_ReplyGetSecurityStatus,	"\x08",0x03,0x12,ID_GetSecurityStatus	},
+	{N6510_ReplyEnterSecurityCode,	  "\x08",0x03,0x08,ID_EnterSecurityCode	  },
+	{N6510_ReplyEnterSecurityCode,	  "\x08",0x03,0x09,ID_EnterSecurityCode	  },
+	{N6510_ReplyGetSecurityStatus,	  "\x08",0x03,0x12,ID_GetSecurityStatus	  },
 
-	{N6510_ReplyGetNetworkInfo,	"\x0A",0x03,0x01,ID_GetNetworkInfo	},
-	{N6510_ReplyGetNetworkInfo,	"\x0A",0x03,0x01,ID_IncomingFrame	},
-	{N6510_ReplyLogIntoNetwork,	"\x0A",0x03,0x02,ID_IncomingFrame	},
-	{N6510_ReplyGetSignalQuality,	"\x0A",0x03,0x0C,ID_GetSignalQuality	},
-	{N6510_ReplyGetIncSignalQuality,"\x0A",0x03,0x1E,ID_IncomingFrame	},
-	{NONEFUNCTION,			"\x0A",0x03,0x20,ID_IncomingFrame	},
-	{N6510_ReplyGetOperatorLogo,	"\x0A",0x03,0x24,ID_GetBitmap		},
-	{N6510_ReplySetOperatorLogo,	"\x0A",0x03,0x26,ID_SetBitmap		},
+	{N6510_ReplyGetNetworkInfo,	  "\x0A",0x03,0x01,ID_GetNetworkInfo	  },
+	{N6510_ReplyGetNetworkInfo,	  "\x0A",0x03,0x01,ID_IncomingFrame	  },
+	{N6510_ReplyLogIntoNetwork,	  "\x0A",0x03,0x02,ID_IncomingFrame	  },
+	{N6510_ReplyGetSignalQuality,	  "\x0A",0x03,0x0C,ID_GetSignalQuality	  },
+	{N6510_ReplyGetIncSignalQuality,  "\x0A",0x03,0x1E,ID_IncomingFrame	  },
+	{NONEFUNCTION,			  "\x0A",0x03,0x20,ID_IncomingFrame	  },
+	{N6510_ReplyGetOperatorLogo,	  "\x0A",0x03,0x24,ID_GetBitmap		  },
+	{N6510_ReplySetOperatorLogo,	  "\x0A",0x03,0x26,ID_SetBitmap		  },
 
-	{NONEFUNCTION,			"\x0B",0x03,0x01,ID_PlayTone		},
-	{NONEFUNCTION,			"\x0B",0x03,0x15,ID_PlayTone		},
-	{NONEFUNCTION,			"\x0B",0x03,0x16,ID_PlayTone		},
+	{NONEFUNCTION,			  "\x0B",0x03,0x01,ID_PlayTone		  },
+	{NONEFUNCTION,			  "\x0B",0x03,0x15,ID_PlayTone		  },
+	{NONEFUNCTION,			  "\x0B",0x03,0x16,ID_PlayTone		  },
 
-	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x02,ID_SetCalendarNote	},
-	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x04,ID_SetCalendarNote	},
-	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x06,ID_SetCalendarNote	},
-	{N71_65_ReplyAddCalendar1,	"\x13",0x03,0x08,ID_SetCalendarNote	},
-	{N71_65_ReplyDelCalendar,	"\x13",0x03,0x0C,ID_DeleteCalendarNote	},
-	{N71_65_ReplyGetNextCalendar1,	"\x13",0x03,0x1A,ID_GetCalendarNote	},/*method 1*/
-	{N6510_ReplyGetCalendarNotePos,	"\x13",0x03,0x32,ID_GetCalendarNotePos	},/*method 1*/
-	{N6510_ReplyGetCalendarInfo,	"\x13",0x03,0x3B,ID_GetCalendarNotesInfo},/*method 1*/
+	{N71_65_ReplyAddCalendar1,	  "\x13",0x03,0x02,ID_SetCalendarNote	  },
+	{N71_65_ReplyAddCalendar1,	  "\x13",0x03,0x04,ID_SetCalendarNote	  },
+	{N71_65_ReplyAddCalendar1,	  "\x13",0x03,0x06,ID_SetCalendarNote	  },
+	{N71_65_ReplyAddCalendar1,	  "\x13",0x03,0x08,ID_SetCalendarNote	  },
+	{N71_65_ReplyDelCalendar,	  "\x13",0x03,0x0C,ID_DeleteCalendarNote  },
+	{N71_65_ReplyGetNextCalendar1,	  "\x13",0x03,0x1A,ID_GetCalendarNote	  },/*method 1*/
+	{N6510_ReplyGetCalendarNotePos,	  "\x13",0x03,0x32,ID_GetCalendarNotePos  },/*method 1*/
+	{N6510_ReplyGetCalendarInfo,	  "\x13",0x03,0x3B,ID_GetCalendarNotesInfo},/*method 1*/
 #ifdef DEBUG
-	{N71_65_ReplyGetNextCalendar2,	"\x13",0x03,0x3F,ID_GetCalendarNote	},
+	{N71_65_ReplyGetNextCalendar2,	  "\x13",0x03,0x3F,ID_GetCalendarNote	  },
 #endif
-	{N71_65_ReplyAddCalendar2,	"\x13",0x03,0x41,ID_SetCalendarNote	},/*method 2*/
-	{N6510_ReplyAddCalendar3,	"\x13",0x03,0x66,ID_SetCalendarNote	},/*method 3*/
-	{N6510_ReplyAddToDo2,		"\x13",0x03,0x66,ID_SetToDo		},
-	{N6510_ReplyGetCalendar3,	"\x13",0x03,0x7E,ID_GetCalendarNote	},/*method 3*/
-	{N6510_ReplyGetToDo2,		"\x13",0x03,0x7E,ID_GetToDo		},
-	{N6510_ReplyGetCalendarSettings,"\x13",0x03,0x86,ID_GetCalendarSettings	},
-	{N6510_ReplyGetLocale,		"\x13",0x03,0x8A,ID_GetLocale		},
-	{N6510_ReplyGetCalendarSettings,"\x13",0x03,0x8E,ID_GetCalendarSettings	},
-	{N6510_ReplyGetCalendarNotePos,	"\x13",0x03,0x96,ID_GetCalendarNotePos	},/*method 3*/
-	{N6510_ReplyGetToDoFirstLoc2,	"\x13",0x03,0x96,ID_SetToDo		},
-	{N6510_ReplyGetCalendarInfo,	"\x13",0x03,0x9F,ID_GetCalendarNotesInfo},/*method 3*/
-	{N6510_ReplyGetToDoStatus2,	"\x13",0x03,0x9F,ID_GetToDo		},
+	{N71_65_ReplyAddCalendar2,	  "\x13",0x03,0x41,ID_SetCalendarNote	  },/*method 2*/
+	{N6510_ReplyAddCalendar3,	  "\x13",0x03,0x66,ID_SetCalendarNote	  },/*method 3*/
+	{N6510_ReplyAddToDo2,		  "\x13",0x03,0x66,ID_SetToDo		  },
+	{N6510_ReplyGetCalendar3,	  "\x13",0x03,0x7E,ID_GetCalendarNote	  },/*method 3*/
+	{N6510_ReplyGetToDo2,		  "\x13",0x03,0x7E,ID_GetToDo		  },
+	{N6510_ReplyGetCalendarSettings,  "\x13",0x03,0x86,ID_GetCalendarSettings },
+	{N6510_ReplyGetLocale,		  "\x13",0x03,0x8A,ID_GetLocale		  },
+	{N6510_ReplyGetCalendarSettings,  "\x13",0x03,0x8E,ID_GetCalendarSettings },
+	{N6510_ReplyGetCalendarNotePos,	  "\x13",0x03,0x96,ID_GetCalendarNotePos  },/*method 3*/
+	{N6510_ReplyGetToDoFirstLoc2,	  "\x13",0x03,0x96,ID_SetToDo		  },
+	{N6510_ReplyGetCalendarInfo,	  "\x13",0x03,0x9F,ID_GetCalendarNotesInfo},/*method 3*/
+	{N6510_ReplyGetToDoStatus2,	  "\x13",0x03,0x9F,ID_GetToDo		  },
 
-	{N6510_ReplySaveSMSMessage,	"\x14",0x03,0x01,ID_SaveSMSMessage	},
-	{N6510_ReplySetPicture,		"\x14",0x03,0x01,ID_SetBitmap		},
-	{N6510_ReplyGetSMSMessage,	"\x14",0x03,0x03,ID_GetSMSMessage	},
-	{N6510_ReplyDeleteSMSMessage,	"\x14",0x03,0x05,ID_DeleteSMSMessage	},
-	{N6510_ReplyDeleteSMSMessage,	"\x14",0x03,0x06,ID_DeleteSMSMessage	},
-	{N6510_ReplyGetSMSStatus,	"\x14",0x03,0x09,ID_GetSMSStatus	},
-	{N6510_ReplyGetSMSFolderStatus,	"\x14",0x03,0x0d,ID_GetSMSFolderStatus	},
-	{N6510_ReplyGetSMSMessage,	"\x14",0x03,0x0f,ID_GetSMSMessage	},
-	{N6510_ReplyAddSMSFolder,	"\x14",0x03,0x11,ID_AddSMSFolder	},
-	{N6510_ReplyGetSMSFolders,	"\x14",0x03,0x13,ID_GetSMSFolders	},
-	{N6510_ReplySaveSMSMessage,	"\x14",0x03,0x17,ID_SaveSMSMessage	},
-	{N6510_ReplyGetSMSStatus,	"\x14",0x03,0x1a,ID_GetSMSStatus	},
+	{N6510_ReplySaveSMSMessage,	  "\x14",0x03,0x01,ID_SaveSMSMessage	  },
+	{N6510_ReplySetPicture,		  "\x14",0x03,0x01,ID_SetBitmap		  },
+	{N6510_ReplyGetSMSMessage,	  "\x14",0x03,0x03,ID_GetSMSMessage	  },
+	{N6510_ReplyDeleteSMSMessage,	  "\x14",0x03,0x05,ID_DeleteSMSMessage	  },
+	{N6510_ReplyDeleteSMSMessage,	  "\x14",0x03,0x06,ID_DeleteSMSMessage	  },
+	{N6510_ReplyGetSMSStatus,	  "\x14",0x03,0x09,ID_GetSMSStatus	  },
+	{N6510_ReplyGetSMSFolderStatus,	  "\x14",0x03,0x0d,ID_GetSMSFolderStatus  },
+	{N6510_ReplyGetSMSMessage,	  "\x14",0x03,0x0f,ID_GetSMSMessage	  },
+	{N6510_ReplyAddSMSFolder,	  "\x14",0x03,0x11,ID_AddSMSFolder	  },
+	{N6510_ReplyGetSMSFolders,	  "\x14",0x03,0x13,ID_GetSMSFolders	  },
+	{N6510_ReplySaveSMSMessage,	  "\x14",0x03,0x17,ID_SaveSMSMessage	  },
+	{N6510_ReplyGetSMSStatus,	  "\x14",0x03,0x1a,ID_GetSMSStatus	  },
 
-	{NONEFUNCTION,			"\x15",0x01,0x31,ID_Reset		},
+	{NONEFUNCTION,			  "\x15",0x01,0x31,ID_Reset		  },
 
-	{N6510_ReplyGetBatteryCharge,	"\x17",0x03,0x0B,ID_GetBatteryCharge	},
+	{N6510_ReplyGetBatteryCharge,	  "\x17",0x03,0x0B,ID_GetBatteryCharge	  },
 
-	{N6510_ReplySetDateTime,	"\x19",0x03,0x02,ID_SetDateTime		},
-	{N6510_ReplyGetDateTime,	"\x19",0x03,0x0B,ID_GetDateTime		},
-	{N6510_ReplySetAlarm,		"\x19",0x03,0x12,ID_SetAlarm		},
-	{N6510_ReplyGetAlarm,		"\x19",0x03,0x1A,ID_GetAlarm		},
-	{N6510_ReplyGetAlarm,		"\x19",0x03,0x20,ID_GetAlarm		},
+	{N6510_ReplySetDateTime,	  "\x19",0x03,0x02,ID_SetDateTime	  },
+	{N6510_ReplyGetDateTime,	  "\x19",0x03,0x0B,ID_GetDateTime	  },
+	{N6510_ReplySetAlarm,		  "\x19",0x03,0x12,ID_SetAlarm		  },
+	{N6510_ReplyGetAlarm,		  "\x19",0x03,0x1A,ID_GetAlarm		  },
+	{N6510_ReplyGetAlarm,		  "\x19",0x03,0x20,ID_GetAlarm		  },
 
-	{N6510_ReplyGetIMEI,		"\x1B",0x03,0x01,ID_GetIMEI		},
-	{NOKIA_ReplyGetPhoneString,	"\x1B",0x03,0x08,ID_GetHardware		},
-	{N6510_ReplyGetPPM,		"\x1B",0x03,0x08,ID_GetPPM		},
-	{NOKIA_ReplyGetPhoneString,	"\x1B",0x03,0x0C,ID_GetProductCode	},
+	{N6510_ReplyGetIMEI,		  "\x1B",0x03,0x01,ID_GetIMEI		  },
+	{NOKIA_ReplyGetPhoneString,	  "\x1B",0x03,0x08,ID_GetHardware	  },
+	{N6510_ReplyGetPPM,		  "\x1B",0x03,0x08,ID_GetPPM		  },
+	{NOKIA_ReplyGetPhoneString,	  "\x1B",0x03,0x0C,ID_GetProductCode	  },
 
 	/* 0x1C - vibra */
 
-	{N6510_ReplyGetRingtonesInfo,	"\x1f",0x03,0x08,ID_GetRingtonesInfo	},
-	{N6510_ReplyDeleteRingtones,	"\x1f",0x03,0x11,ID_SetRingtone		},
-	{N6510_ReplyGetRingtone,	"\x1f",0x03,0x13,ID_GetRingtone		},
-	{N6510_ReplySetBinRingtone,	"\x1f",0x03,0x0F,ID_SetRingtone		},
+	{N6510_ReplyGetRingtonesInfo,	  "\x1f",0x03,0x08,ID_GetRingtonesInfo	  },
+	{N6510_ReplyDeleteRingtones,	  "\x1f",0x03,0x11,ID_SetRingtone	  },
+	{N6510_ReplyGetRingtone,	  "\x1f",0x03,0x13,ID_GetRingtone	  },
+	{N6510_ReplySetBinRingtone,	  "\x1f",0x03,0x0F,ID_SetRingtone	  },
 
 	/* 0x23 - voice records */
 
-	{N6510_ReplyGetProfile,		"\x39",0x03,0x02,ID_GetProfile		},
-	{N6510_ReplySetProfile,		"\x39",0x03,0x04,ID_SetProfile		},
-	{N6510_ReplyGetProfile,		"\x39",0x03,0x06,ID_GetProfile		},
+	{N6510_ReplyGetProfile,		  "\x39",0x03,0x02,ID_GetProfile	  },
+	{N6510_ReplySetProfile,		  "\x39",0x03,0x04,ID_SetProfile	  },
+	{N6510_ReplyGetProfile,		  "\x39",0x03,0x06,ID_GetProfile	  },
 
-	{N6510_ReplySetLight,		"\x3A",0x03,0x06,ID_IncomingFrame	},
+	{N6510_ReplySetLight,		  "\x3A",0x03,0x06,ID_IncomingFrame	  },
 
- 	{N6510_ReplyGetFMStation,	"\x3E",0x03,0x06,ID_GetFMStation	},
- 	{N6510_ReplyGetFMStatus,	"\x3E",0x03,0x0E,ID_GetFMStation	},
- 	{N6510_ReplySetFMStation,	"\x3E",0x03,0x15,ID_SetFMStation	},
- 	{N6510_ReplyGetFMStation,	"\x3E",0x03,0x16,ID_GetFMStation	},
+ 	{N6510_ReplyGetFMStation,	  "\x3E",0x03,0x06,ID_GetFMStation	  },
+ 	{N6510_ReplyGetFMStatus,	  "\x3E",0x03,0x0E,ID_GetFMStation	  },
+ 	{N6510_ReplySetFMStation,	  "\x3E",0x03,0x15,ID_SetFMStation	  },
+ 	{N6510_ReplyGetFMStation,	  "\x3E",0x03,0x16,ID_GetFMStation	  },
 
-	{DCT3DCT4_ReplyEnableWAP,	"\x3f",0x03,0x01,ID_EnableWAP		},
-	{DCT3DCT4_ReplyEnableWAP,	"\x3f",0x03,0x02,ID_EnableWAP		},
-	{NONEFUNCTION,			"\x3f",0x03,0x04,ID_EnableWAP		},
-	{NONEFUNCTION,			"\x3f",0x03,0x05,ID_EnableWAP		},
-	{N6510_ReplyGetWAPBookmark,	"\x3f",0x03,0x07,ID_GetWAPBookmark	},
-	{N6510_ReplyGetWAPBookmark,	"\x3f",0x03,0x08,ID_GetWAPBookmark	},
-	{DCT3DCT4_ReplySetWAPBookmark,	"\x3f",0x03,0x0A,ID_SetWAPBookmark	},
-	{DCT3DCT4_ReplySetWAPBookmark,	"\x3f",0x03,0x0B,ID_SetWAPBookmark	},
-	{DCT3DCT4_ReplyDelWAPBookmark,	"\x3f",0x03,0x0D,ID_DeleteWAPBookmark	},
-	{DCT3DCT4_ReplyDelWAPBookmark,	"\x3f",0x03,0x0E,ID_DeleteWAPBookmark	},
-	{DCT3DCT4_ReplyGetActiveWAPMMSSet,"\x3f",0x03,0x10,ID_GetWAPSettings	},
-	{DCT3DCT4_ReplySetActiveWAPMMSSet,"\x3f",0x03,0x13,ID_SetWAPSettings	},
-	{DCT3DCT4_ReplySetActiveWAPMMSSet,"\x3f",0x03,0x13,ID_SetMMSSettings	},
-	{N6510_ReplyGetWAPMMSSettings,	"\x3f",0x03,0x16,ID_GetWAPSettings	},
-	{N6510_ReplyGetWAPMMSSettings,	"\x3f",0x03,0x16,ID_GetMMSSettings	},
-	{N6510_ReplyGetWAPMMSSettings,	"\x3f",0x03,0x17,ID_GetWAPSettings	},
-	{N6510_ReplyGetWAPMMSSettings,	"\x3f",0x03,0x17,ID_GetMMSSettings	},
-	{N6510_ReplySetWAPMMSSettings,	"\x3f",0x03,0x19,ID_SetWAPSettings	},
-	{N6510_ReplySetWAPMMSSettings,	"\x3f",0x03,0x19,ID_SetMMSSettings	},
-	{N6510_ReplySetWAPMMSSettings,	"\x3f",0x03,0x1A,ID_SetWAPSettings	},
-	{N6510_ReplySetWAPMMSSettings,	"\x3f",0x03,0x1A,ID_SetMMSSettings	},
+	{DCT3DCT4_ReplyEnableWAP,	  "\x3f",0x03,0x01,ID_EnableWAP		  },
+	{DCT3DCT4_ReplyEnableWAP,	  "\x3f",0x03,0x02,ID_EnableWAP		  },
+	{NONEFUNCTION,			  "\x3f",0x03,0x04,ID_EnableWAP		  },
+	{NONEFUNCTION,			  "\x3f",0x03,0x05,ID_EnableWAP		  },
+	{N6510_ReplyGetWAPBookmark,	  "\x3f",0x03,0x07,ID_GetWAPBookmark	  },
+	{N6510_ReplyGetWAPBookmark,	  "\x3f",0x03,0x08,ID_GetWAPBookmark	  },
+	{DCT3DCT4_ReplySetWAPBookmark,	  "\x3f",0x03,0x0A,ID_SetWAPBookmark	  },
+	{DCT3DCT4_ReplySetWAPBookmark,	  "\x3f",0x03,0x0B,ID_SetWAPBookmark	  },
+	{DCT3DCT4_ReplyDelWAPBookmark,	  "\x3f",0x03,0x0D,ID_DeleteWAPBookmark	  },
+	{DCT3DCT4_ReplyDelWAPBookmark,	  "\x3f",0x03,0x0E,ID_DeleteWAPBookmark	  },
+	{DCT3DCT4_ReplyGetActiveWAPMMSSet,"\x3f",0x03,0x10,ID_GetWAPSettings	  },
+	{DCT3DCT4_ReplySetActiveWAPMMSSet,"\x3f",0x03,0x13,ID_SetWAPSettings	  },
+	{DCT3DCT4_ReplySetActiveWAPMMSSet,"\x3f",0x03,0x13,ID_SetMMSSettings	  },
+	{N6510_ReplyGetWAPMMSSettings,	  "\x3f",0x03,0x16,ID_GetWAPSettings	  },
+	{N6510_ReplyGetWAPMMSSettings,	  "\x3f",0x03,0x16,ID_GetMMSSettings	  },
+	{N6510_ReplyGetWAPMMSSettings,	  "\x3f",0x03,0x17,ID_GetWAPSettings	  },
+	{N6510_ReplyGetWAPMMSSettings,	  "\x3f",0x03,0x17,ID_GetMMSSettings	  },
+	{N6510_ReplySetWAPMMSSettings,	  "\x3f",0x03,0x19,ID_SetWAPSettings	  },
+	{N6510_ReplySetWAPMMSSettings,	  "\x3f",0x03,0x19,ID_SetMMSSettings	  },
+	{N6510_ReplySetWAPMMSSettings,	  "\x3f",0x03,0x1A,ID_SetWAPSettings	  },
+	{N6510_ReplySetWAPMMSSettings,    "\x3f",0x03,0x1A,ID_SetMMSSettings	  },
 
-	{N6510_ReplyGetOriginalIMEI,	"\x42",0x07,0x00,ID_GetOriginalIMEI	},
-	{N6510_ReplyGetManufactureMonth,"\x42",0x07,0x00,ID_GetManufactureMonth	},
-	{N6510_ReplyGetOriginalIMEI,	"\x42",0x07,0x01,ID_GetOriginalIMEI	},
-	{N6510_ReplyGetManufactureMonth,"\x42",0x07,0x02,ID_GetManufactureMonth	},
+	{N6510_ReplyGetOriginalIMEI,	  "\x42",0x07,0x00,ID_GetOriginalIMEI	  },
+	{N6510_ReplyGetManufactureMonth,  "\x42",0x07,0x00,ID_GetManufactureMonth },
+	{N6510_ReplyGetOriginalIMEI,	  "\x42",0x07,0x01,ID_GetOriginalIMEI	  },
+	{N6510_ReplyGetManufactureMonth,  "\x42",0x07,0x02,ID_GetManufactureMonth },
 
-	{N6510_ReplySetOperatorLogo,	"\x43",0x03,0x08,ID_SetBitmap		},
-	{N6510_ReplyGetGPRSAccessPoint,	"\x43",0x03,0x06,ID_GetGPRSPoint	},
+	{N6510_ReplySetOperatorLogo,	  "\x43",0x03,0x08,ID_SetBitmap		  },
+	{N6510_ReplyGetGPRSAccessPoint,	  "\x43",0x03,0x06,ID_GetGPRSPoint	  },
+	{N6510_ReplySetGPRSAccessPoint1,  "\x43",0x03,0x06,ID_SetGPRSPoint	  },
+#ifdef DEVELOP
+	{N6510_ReplyEnableGPRSAccessPoint,"\x43",0x03,0x06,ID_EnableGPRSPoint	  },
+#endif
+	{NONEFUNCTION,			  "\x43",0x03,0x08,ID_SetGPRSPoint	  },
 
 	/* 0x4A - voice records */
 
 	/* 0x53 - simlock */
 
-	{N6510_ReplySetToDo1,		"\x55",0x03,0x02,ID_SetToDo		},
-	{N6510_ReplyGetToDo1,		"\x55",0x03,0x04,ID_GetToDo		},
-	{N6510_ReplyGetToDoFirstLoc1,	"\x55",0x03,0x10,ID_SetToDo		},
-	{N6510_ReplyDeleteAllToDo1,	"\x55",0x03,0x12,ID_DeleteAllToDo	},
-	{N6510_ReplyGetToDoStatus1,	"\x55",0x03,0x16,ID_GetToDo		},
+	{N6510_ReplySetToDo1,		  "\x55",0x03,0x02,ID_SetToDo		  },
+	{N6510_ReplyGetToDo1,		  "\x55",0x03,0x04,ID_GetToDo		  },
+	{N6510_ReplyGetToDoFirstLoc1,	  "\x55",0x03,0x10,ID_SetToDo		  },
+	{N6510_ReplyDeleteAllToDo1,	  "\x55",0x03,0x12,ID_DeleteAllToDo	  },
+	{N6510_ReplyGetToDoStatus1,	  "\x55",0x03,0x16,ID_GetToDo		  },
 
-	{N6510_ReplyAddFileHeader,	"\x6D",0x03,0x03,ID_AddFile		},
-	{N6510_ReplyAddFolder,		"\x6D",0x03,0x05,ID_AddFolder		},
-	{N6510_ReplyGetFilePart,	"\x6D",0x03,0x0F,ID_GetFile		},
-	{N6510_ReplyAddFileHeader,	"\x6D",0x03,0x13,ID_AddFile		},
-	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x15,ID_GetFileInfo		},
-	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x15,ID_GetFile		},
-	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x15,ID_AddFile		},
-	{N6510_ReplyDeleteFile,		"\x6D",0x03,0x19,ID_DeleteFile		},
-	{N6510_ReplyDeleteFile,		"\x6D",0x03,0x1F,ID_DeleteFile		},
-	{N6510_ReplyGetFileSystemStatus,"\x6D",0x03,0x23,ID_FileSystemStatus	},
-	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x2F,ID_GetFileInfo		},
-	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x2F,ID_GetFile		},
-	{N6510_ReplyGetFileSystemStatus,"\x6D",0x03,0x2F,ID_FileSystemStatus	},
-	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x33,ID_GetFileInfo		},
-	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x33,ID_GetFile		},
-	{N6510_ReplyAddFilePart,	"\x6D",0x03,0x41,ID_AddFile		},
+	{N6510_ReplyAddFileHeader,	  "\x6D",0x03,0x03,ID_AddFile		  },
+	{N6510_ReplyAddFolder,		  "\x6D",0x03,0x05,ID_AddFolder		  },
+	{N6510_ReplyGetFilePart,	  "\x6D",0x03,0x0F,ID_GetFile		  },
+	{N6510_ReplyAddFileHeader,	  "\x6D",0x03,0x13,ID_AddFile		  },
+	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x15,ID_GetFileInfo	  },
+	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x15,ID_GetFile		  },
+	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x15,ID_AddFile		  },
+	{N6510_ReplyDeleteFile,		  "\x6D",0x03,0x19,ID_DeleteFile	  },
+	{N6510_ReplyDeleteFile,		  "\x6D",0x03,0x1F,ID_DeleteFile	  },
+	{N6510_ReplyGetFileSystemStatus,  "\x6D",0x03,0x23,ID_FileSystemStatus	  },
+	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x2F,ID_GetFileInfo	  },
+	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x2F,ID_GetFile		  },
+	{N6510_ReplyGetFileSystemStatus,  "\x6D",0x03,0x2F,ID_FileSystemStatus	  },
+	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x33,ID_GetFileInfo	  },
+	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x33,ID_GetFile		  },
+	{N6510_ReplyAddFilePart,	  "\x6D",0x03,0x41,ID_AddFile		  },
+	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x43,ID_GetFileInfo	  },
 
-	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x01,ID_GetBitmap		},
-	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x01,ID_SetBitmap		},
-	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x0F,ID_GetBitmap		},
-	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x0F,ID_SetBitmap		},
-	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x10,ID_GetBitmap		},
-	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x10,ID_SetBitmap		},
-	{N6510_ReplyStartupNoteLogo,	"\x7A",0x04,0x25,ID_SetBitmap		},
+	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x01,ID_GetBitmap		  },
+	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x01,ID_SetBitmap		  },
+	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x0F,ID_GetBitmap		  },
+	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x0F,ID_SetBitmap		  },
+	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x10,ID_GetBitmap		  },
+	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x10,ID_SetBitmap		  },
+	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x25,ID_SetBitmap		  },
 
-	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetModel		},
-	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetFirmware		},
+	{DCT3DCT4_ReplyGetModelFirmware,  "\xD2",0x02,0x00,ID_GetModel		  },
+	{DCT3DCT4_ReplyGetModelFirmware,  "\xD2",0x02,0x00,ID_GetFirmware	  },
 
 	/* 0xD7 - Bluetooth */
 
-	{N6510_ReplyGetRingtoneID,	"\xDB",0x03,0x02,ID_SetRingtone		},
+	{N6510_ReplyGetRingtoneID,	  "\xDB",0x03,0x02,ID_SetRingtone	  },
 
-	{NULL,				"\x00",0x00,0x00,ID_None		}
+	{NULL,				  "\x00",0x00,0x00,ID_None		  }
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"3510|3510i|3530|5100|6100|6310|6310i|6510|6610|6800|7210|7250|8310|8390|8910|8910i",
+	"3100|3300|3510|3510i|3530|3590|3595|5100|6100|6200|6310|6310i|6510|6610|6800|7210|7250|7250i|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/
@@ -5171,7 +5331,7 @@ GSM_Phone_Functions N6510Phone = {
  	N6510_AddSMSFolder,
  	NOTIMPLEMENTED,			/* 	DeleteSMSFolder		*/
 	N6510_GetGPRSAccessPoint,
-	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
+	N6510_SetGPRSAccessPoint,
 	N6510_GetLocale,
 	NOTSUPPORTED,			/* 	SetLocale		*/
 	N6510_GetCalendarSettings,

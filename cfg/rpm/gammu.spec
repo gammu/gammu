@@ -1,4 +1,4 @@
-%define ver      0,81,0,0
+%define ver      0,82,0,0
 %define rel      1
 
 Summary: 	 Mobile phones tools for Unix (Linux) and Win32

@@ -1,7 +1,7 @@
 [FileVersion]
 Version=7.0
 [Compiler]
-A=8
+A=4
 B=0
 C=1
 D=1
@@ -106,10 +106,10 @@ Launcher=
 UseLauncher=0
 DebugCWD=
 [Version Info]
-IncludeVerInfo=1
+IncludeVerInfo=0
 AutoIncBuild=1
 MajorVer=1
-MinorVer=0
+MinorVer=1
 Release=0
 Build=0
 Debug=1
@@ -119,21 +119,6 @@ Private=1
 DLL=0
 Locale=1033
 CodePage=1252
-[Version Info Keys]
-CompanyName=
-FileDescription=SMS daemon
-FileVersion=1.0.0.0
-InternalName=SMS daemon
-LegalCopyright=Copyright © 2003 by Marcin Wi¹cek
-LegalTrademarks=
-OriginalFilename=smsd.exe
-ProductName=SMS daemon
-ProductVersion=1.0.0.0
-Comments=
-SpecialBuild=
-PrivateBuild=
-[Excluded Packages]
-d:\program files2\delphi\Bin\dcl31w70.bpl=Delphi 1.0 Compatibility Components
 [HistoryLists\hlUnitAliases]
 Count=1
 Item0=WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;

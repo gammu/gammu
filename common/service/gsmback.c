@@ -911,6 +911,10 @@ static void SaveGPRSPointEntry(FILE *file, GSM_GPRSAccessPoint *GPRSPoint, bool 
 	SaveBackupText(file, "", buffer, UseUnicode);
         SaveBackupText(file, "Name", GPRSPoint->Name, UseUnicode);
         SaveBackupText(file, "URL", GPRSPoint->URL, UseUnicode);
+	if (GPRSPoint->Active) {
+		sprintf(buffer,"Active = Yes%c%c",13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
+	}
 	sprintf(buffer,"%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
 }
@@ -1407,7 +1411,7 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode
 	FILE *file;
  
 	file = fopen(FileName, "wb");      
-	if (!file) return(GE_CANTOPENFILE);
+	if (file == NULL) return GE_CANTOPENFILE;
 
 	if (strstr(FileName,".lmb")) {
 		SaveLMB(file,backup);
@@ -1766,6 +1770,10 @@ static void ReadToDoEntry(CFG_Header *file_info, char *section, GSM_ToDoEntry *T
 	char			*readvalue;
 
     	ToDo->EntriesNum = 0;
+	
+	sprintf(buffer,"Location");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue!=NULL) ToDo->Location = atoi(readvalue);
 
 	ToDo->Priority = 1;
 	sprintf(buffer,"Priority");
@@ -2382,6 +2390,34 @@ static void ReadFMStationEntry(CFG_Header *file_info, char *section, GSM_FMStati
 	if (readvalue!=NULL) StringToDouble(readvalue, &FMStation->Frequency);
 }
 
+static void ReadGPRSPointEntry(CFG_Header *file_info, char *section, GSM_GPRSAccessPoint *GPRSPoint, bool UseUnicode)
+{
+	unsigned char buffer[10000], *readvalue;
+
+	GPRSPoint->Name[0]  = 0;
+	GPRSPoint->Name[1]  = 0;
+	GPRSPoint->URL[0]   = 0;
+	GPRSPoint->URL[1]   = 0;
+	GPRSPoint->Location = 0;
+
+	GPRSPoint->Active = false;
+	sprintf(buffer,"Active");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue!=NULL) {
+		if (mystrncasecmp(readvalue,"Yes",0)) GPRSPoint->Active = true;
+	}
+
+	sprintf(buffer,"Location");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue!=NULL) GPRSPoint->Location = atoi(readvalue);
+
+	sprintf(buffer,"Name");
+	ReadBackupText(file_info, section, buffer, GPRSPoint->Name,UseUnicode);
+
+	sprintf(buffer,"URL");
+	ReadBackupText(file_info, section, buffer, GPRSPoint->URL,UseUnicode);
+}
+
 static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 {
 	CFG_Header		*file_info, *h;
@@ -2775,6 +2811,31 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			num++;
                 }
         }
+	num = 0;
+        for (h = file_info; h != NULL; h = h->next) {
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"GPRSPoint",9);
+			if (mywstrncasecmp(buffer, h->section, 9)) found = true;
+		} else {
+	                if (mystrncasecmp("GPRSPoint", h->section, 9)) found = true;
+		}
+                if (found) {
+			readvalue = ReadCFGText(file_info, h->section, "Location", UseUnicode);
+			if (readvalue==NULL) break;
+			if (num < GSM_BACKUP_MAX_GPRSPOINT) {
+				backup->GPRSPoint[num] = malloc(sizeof(GSM_GPRSAccessPoint));
+			        if (backup->GPRSPoint[num] == NULL) return GE_MOREMEMORY;
+				backup->GPRSPoint[num + 1] = NULL;
+			} else {
+				dprintf("Increase GSM_BACKUP_MAX_GPRSPOINT\n");
+				return GE_MOREMEMORY;
+			}
+			backup->GPRSPoint[num]->Location = num + 1;
+			ReadGPRSPointEntry(file_info, h->section, backup->GPRSPoint[num],UseUnicode);
+			num++;
+                }
+        }
 	return GE_NONE;
 }
 
@@ -2945,7 +3006,7 @@ static GSM_Error loadlmb(char *FileName, GSM_Backup *backup)
 	GSM_ClearBackup(backup);
 
 	file = fopen(FileName, "rb");
-	if (!file) return(GE_CANTOPENFILE);
+	if (file == NULL) return(GE_CANTOPENFILE);
 
 	/* Read the header of the file. */
 	fread(buffer, 1, 4, file);
@@ -3096,7 +3157,7 @@ GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 	GSM_Error	error;
 
 	file = fopen(FileName, "rb");
-	if (!file) return(GE_CANTOPENFILE);
+	if (file == NULL) return(GE_CANTOPENFILE);
 
 	fread(buffer, 1, 9, file); /* Read the header of the file. */
 	fclose(file);
@@ -3219,7 +3280,8 @@ static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMess
 	if (readvalue!=NULL) SMS->Folder = atoi(readvalue);
 	SMS->UDH.Type		= UDH_NoUDH;
 	SMS->UDH.Length 	= 0;
-	SMS->UDH.ID	  	= -1;
+	SMS->UDH.ID8bit	  	= -1;
+	SMS->UDH.ID16bit	= -1;
 	SMS->UDH.PartNumber	= -1;
 	SMS->UDH.AllParts	= -1;
 	sprintf(buffer,"UDH");
@@ -3269,7 +3331,7 @@ GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 	backup->SMS[0] = NULL;
 
 	file = fopen(FileName, "rb");
-	if (!file) return(GE_CANTOPENFILE);
+	if (file ==  NULL) return(GE_CANTOPENFILE);
 
 	fclose(file);
 
@@ -3373,7 +3435,7 @@ GSM_Error GSM_SaveSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 	FILE *file;
   
 	file = fopen(FileName, "wb");      
-	if (!file) return(GE_CANTOPENFILE);
+	if (file == NULL) return(GE_CANTOPENFILE);
 
 	SaveSMSBackupTextFile(file,backup);
 

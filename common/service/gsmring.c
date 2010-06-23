@@ -443,7 +443,7 @@ GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 	FILE *file;
   
 	file = fopen(FileName, "wb");      
-	if (!file) return(GE_CANTOPENFILE);
+	if (file == NULL) return(GE_CANTOPENFILE);
 
 	switch (ringtone->Format) {
 	case RING_NOTETONE:
@@ -770,7 +770,7 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 
 	dprintf("Loading ringtone %s\n",FileName);
 	file = fopen(FileName, "rb");
-	if (!file) return(GE_CANTOPENFILE);
+	if (file == NULL) return(GE_CANTOPENFILE);
 
 	/* Read the header of the file. */
 	fread(buffer, 1, 4, file);
