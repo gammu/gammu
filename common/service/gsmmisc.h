@@ -249,12 +249,12 @@ typedef enum {
 } GSM_FileType;
 
 typedef struct {
-	int		Used;		/* how many bytes used 	*/
-	unsigned char 	Name[300];	/* Name			*/
-	bool 		Folder;		/* true, when folder 	*/
+	int		Used;		  /* how many bytes used */
+	unsigned char 	Name[300];	  /* Name in Unicode	 */
+	bool 		Folder;		  /* true, when folder 	 */
 	int		Level;
 	GSM_FileType	Type;
-	unsigned char	ID_FullName[400];
+	unsigned char	ID_FullName[800]; /* ID in Unicode 	 */
 	unsigned char	*Buffer;
 
 	GSM_DateTime	Modified;

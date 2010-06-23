@@ -40,6 +40,31 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20050927 - 1.02.16
+* new functionality:
+  * geteachmms and getmmsfolders work for 6230i and phones with filesystem1 
+    only (still doesn't decode files)
+
+* fixes and improvements:
+  * improved php and docs for sql reply daemon (other/sqlreply)
+  * filesystem
+    * fixed AddFolder & AddFilePart & GetFileFolder for some models 
+      (available in 1.02.12)
+    * ID_FullName is written in GSM_File in Unicode (SNOFS and other
+      projects have to be modified to handle it)
+  * * Ericsson T39 UTF8 pbk                                      (Michal Cihar)
+    * correct building on Fedora Core 4 x64_86
+    * some Debian fixes
+
+NOTE: Some people reported cutting last bytes during getting files over BT.
+      I have fixed it by accident in 1.02.12, later tried to find reason
+      and even wrote email about it. THX for Stefan Flothkoetter this situation
+      is explained now :-)
+
+NOTE2: work in progress:
+       * new dku2at connection for win32 for at commands with dku2
+       * mms files decoder
+
 20050914 - 1.02.12
 * new functionality:
   * setting caller group id for 6230i pbk

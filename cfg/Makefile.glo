@@ -342,6 +342,10 @@ cleantree:
 	make -C gammu-$(VERSION) clean
 
 rpm: cleantree
+	@if test -z "$(RPM_DIR)" ; then \
+		echo "No RPM directory defined, rerun configure with --with-rpmdir" ; \
+		exit 1; \
+	fi
 	@find gammu-$(VERSION)/ -exec chmod u+w {} \;
 	@echo Creating $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz file
 	@tar cvfz $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz gammu-$(VERSION) > /dev/null
