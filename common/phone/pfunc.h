@@ -20,6 +20,8 @@ GSM_Error PHONE_RTTLPlayOneNote		(GSM_StateMachine *s, GSM_RingNote note, bool f
 
 GSM_Error PHONE_Beep			(GSM_StateMachine *s);
 
+GSM_Error NoneReply(GSM_Protocol_Message msg, GSM_StateMachine *s);
+
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

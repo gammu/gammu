@@ -129,7 +129,12 @@ static GSM_Error irda_open (GSM_StateMachine *s)
     	strcpy(d->peer.irdaServiceName, "Nokia:PhoNet");
 	break;
     case GCT_IRDAOBEX:
-    	strcpy(d->peer.irdaServiceName, "IrDA:OBEX");
+	/* IrDA:OBEX not supported by N3650 */
+//    	strcpy(d->peer.irdaServiceName, "IrDA:OBEX");
+
+    	strcpy(d->peer.irdaServiceName, "OBEX");
+
+	/* Alternative server is "OBEX:IrXfer" */
 	break;
     default:
 	return GE_UNKNOWN;

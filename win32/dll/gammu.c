@@ -367,16 +367,18 @@ GSM_Error WINAPI mysendsmsmessage (int phone, GSM_SMSMessage *sms, unsigned int 
 	if (!s[phone].s.opened) return GE_NOTCONNECTED;
 
 	memcpy(&sms2,sms,sizeof(GSM_SMSMessage));
+
 	if (sms2.SMSC.Location == 0) ReverseUnicodeString(sms2.SMSC.Number);
 	ReverseUnicodeString(sms2.Number);
-	ReverseUnicodeString(sms2.Name);
+//	ReverseUnicodeString(sms2.Name);
 	if (sms2.Coding == GSM_Coding_Unicode || sms2.Coding == GSM_Coding_Default) {
 		ReverseUnicodeString(sms2.Text);
 	}
 
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
 	s[phone].s.User.SendSMSStatus 	= SendSMSStatus;
 	s[phone].SendSMSStatus 		= GE_TIMEOUT;
-        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
 	error=s[phone].s.Phone.Functions->SendSMS(&s[phone].s,&sms2);
 	SetErrorCounter(phone, error);
 	if (error != GE_NONE) {
@@ -388,7 +390,7 @@ GSM_Error WINAPI mysendsmsmessage (int phone, GSM_SMSMessage *sms, unsigned int 
 		GSM_GetCurrentDateTime(&Date);
 		i=Date.Second;
 		while (i==Date.Second) {
-			GSM_ReadDevice(&s[phone].s,true);
+			GSM_ReadDevice(&s[phone].s,false);
 			if (s[phone].SendSMSStatus != GE_TIMEOUT) break;
 			GSM_GetCurrentDateTime(&Date);
 			my_sleep(20);
@@ -553,6 +555,7 @@ int WINAPI mygetstructuresize(int i)
 		case 5: return sizeof(GSM_DateTime);
 		case 6: return sizeof(int);
 		case 7: return sizeof(GSM_NetworkInfo);
+		case 8: return sizeof(GSM_UDH);
 	}
 	return 0;
 }

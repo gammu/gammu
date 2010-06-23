@@ -461,6 +461,7 @@ typedef struct {
 	bool			EnableIncomingUSSD;
 
 	GSM_Protocol_Message	*RequestMsg;		/* last frame from phone	*/
+	GSM_Protocol_Message	*SentMsg;		/* last frame from Gammu	*/
 	unsigned int		RequestID;		/* what operation is done now	*/
 	GSM_Error		DispatchError;		/* error returned by function	*/
 							/* in phone module		*/

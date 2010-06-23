@@ -22,6 +22,7 @@ INSTALL_DOC_DIR = @DOC_DIR@
 INSTALL_LOC_DIR = @LOCALE_DIR@
 INSTALL_MAN_DIR = @mandir@/man1
 INSTALL_LIB_DIR = @libdir@
+INSTALL_H_DIR	= @includedir@/gammu
 RPM_DIR         = @RPM_DIR@
 TEMP_DIR	= @TEMP_DIR@
 

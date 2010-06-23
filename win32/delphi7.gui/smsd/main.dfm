@@ -79,8 +79,7 @@ object MainForm: TMainForm
       Columns = <
         item
           Caption = 'Text'
-          MaxWidth = 100
-          Width = 100
+          MaxWidth = 50
         end
         item
           Caption = 'Device'
@@ -121,8 +120,7 @@ object MainForm: TMainForm
       Columns = <
         item
           Caption = 'Text'
-          MaxWidth = 100
-          Width = 100
+          MaxWidth = 50
         end
         item
           Caption = 'Device'

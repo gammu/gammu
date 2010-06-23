@@ -187,6 +187,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		s->Phone.Data.VerDate[0]	  = 0;
 		s->Phone.Data.VerNum		  = 0;
 		s->Phone.Data.StartInfoCounter	  = 0;
+		s->Phone.Data.SentMsg		  = NULL;
 
 		s->Phone.Data.HardwareCache[0]	  = 0;
 		s->Phone.Data.ProductCodeCache[0] = 0;
@@ -464,49 +465,28 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned char *buffer,
 			  int length, unsigned char type, int time)
 {
-	GSM_Phone_Data			*Phone		= &s->Phone.Data;
-	GSM_Protocol_Message 		*msg;
+	GSM_Phone_Data			*Phone = &s->Phone.Data;
+	GSM_Protocol_Message 		sentmsg;
 	int				i;
 
 	i=0;
 	do {
+		if (length != 0) {
+			sentmsg.Length 	= length;
+			sentmsg.Type	= type;
+			sentmsg.Buffer 	= (unsigned char *)malloc(length);
+			memcpy(sentmsg.Buffer,buffer,length);
+			Phone->SentMsg  = &sentmsg;
+		}
+
 		/* Some data received. Reset timer */
 		if (GSM_ReadDevice(s,true)!=0) i=0;
 
-		msg = s->Phone.Data.RequestMsg;
-
-		if (strcmp(s->Phone.Functions->models,"NAUTO")) {
-			switch (Phone->DispatchError) {		
-			case GE_UNKNOWNRESPONSE:
-			case GE_UNKNOWNFRAME:
-				if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-				    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE)
-				{
-					if (Phone->DispatchError == GE_UNKNOWNFRAME) {
-						smprintf(s, "UNKNOWN frame. If you want, PLEASE report it (see /readme.txt). Thank you\n");
-					} else {
-						smprintf(s, "UNKNOWN response. If you want, PLEASE report it (see /readme.txt). Thank you\n");
-					}
-					if (length != 0) {
-						smprintf(s,"Last sent message ");
-						smprintf(s, "0x%02x / 0x%04x", type, length);
-						DumpMessage(s->di.df, buffer, length);
-					}
-					smprintf(s, "Received frame ");
-					smprintf(s, "0x%02x / 0x%04x", msg->Type, msg->Length);
-					DumpMessage(s->di.df, msg->Buffer, msg->Length);
-					smprintf(s, "\n");
-				}
-				if (Phone->DispatchError == GE_UNKNOWNFRAME) Phone->DispatchError=GE_TIMEOUT;
-				break;
-			case GE_FRAMENOTREQUESTED:
-				dprintf("[Frame not requested in this moment]\n");
-				Phone->DispatchError=GE_TIMEOUT;
-				break;
-			default:
-				break;
-			}
+		if (length != 0) {
+			free (sentmsg.Buffer);
+			Phone->SentMsg  = NULL;
 		}
+
 		/* Request completed */
 		if (Phone->RequestID==ID_None) return Phone->DispatchError;
 
@@ -520,15 +500,14 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned char *buffer,
 		       int length, unsigned char type, int time,
 		       GSM_Phone_RequestID request)
 {
-	GSM_Protocol		*Protocol	= &s->Protocol;
-	GSM_Phone_Data		*Phone		= &s->Phone.Data;
+	GSM_Phone_Data		*Phone = &s->Phone.Data;
 	GSM_Error		error;
 	int			reply;
 
 	if (mystrncasecmp(s->CurrentConfig->StartInfo,"yes",0)) {
-		if (s->Phone.Data.StartInfoCounter > 0) {
-			s->Phone.Data.StartInfoCounter--;
-			if (s->Phone.Data.StartInfoCounter == 0) s->Phone.Functions->ShowStartInfo(s,false);
+		if (Phone->StartInfoCounter > 0) {
+			Phone->StartInfoCounter--;
+			if (Phone->StartInfoCounter == 0) s->Phone.Functions->ShowStartInfo(s,false);
 		}
 	}
 
@@ -543,7 +522,7 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned char *buffer,
 			    smprintf(s, "[Retrying %i type 0x%02x]\n", reply, type);
 			}
 		}
-		error = Protocol->Functions->WriteMessage(s, buffer, length, type);
+		error = s->Protocol.Functions->WriteMessage(s, buffer, length, type);
 		if (error!=GE_NONE) return error;
 
 		error = GSM_WaitForOnce(s, buffer, length, type, time);
@@ -601,9 +580,10 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 {
 	GSM_Error		error	= GE_UNKNOWNFRAME;
-	GSM_Reply_Function	*Reply;
 	GSM_Protocol_Message	*msg 	= s->Phone.Data.RequestMsg;
-	GSM_Phone_Data 		*Data	= &s->Phone.Data;
+	GSM_Phone_Data 		*Phone	= &s->Phone.Data;
+	bool			disp    = false;
+	GSM_Reply_Function	*Reply;
 	int			reply, i;
 
 	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
@@ -634,13 +614,51 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 
 	if (error==GE_NONE) {
 		error=Reply[reply].Function(*msg, s);
-		if ((unsigned int)Reply[reply].requestID==Data->RequestID) {
-			if (error != GE_NEEDANOTHERANSWER) {
-				Data->RequestID=ID_None;
-			} else {
+		if ((unsigned int)Reply[reply].requestID==Phone->RequestID) {
+			if (error == GE_NEEDANOTHERANSWER) {
 				error = GE_NONE;
+			} else {
+				Phone->RequestID=ID_None;
 			}
 		}
+	}
+
+	if (strcmp(s->Phone.Functions->models,"NAUTO")) {
+		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE)
+		{
+			disp = true;
+			switch (error) {		
+			case GE_UNKNOWNRESPONSE:
+				smprintf(s, "\nUNKNOWN response");
+				break;
+			case GE_UNKNOWNFRAME:
+				smprintf(s, "\nUNKNOWN frame");
+				break;
+			case GE_FRAMENOTREQUESTED:
+				smprintf(s, "\nFrame not request now");
+				break;
+			default:
+				disp = false;
+			}
+		}
+
+		if (error == GE_UNKNOWNFRAME || error == GE_FRAMENOTREQUESTED) {
+			error = GE_TIMEOUT;
+		}
+	}
+
+	if (disp) {
+		smprintf(s,". If you can, PLEASE report it (see readme.txt). THANK YOU\n");
+		if (Phone->SentMsg != NULL) {
+			smprintf(s,"Last sent message ");
+			smprintf(s, "0x%02x / 0x%04x", Phone->SentMsg->Type, Phone->SentMsg->Length);
+			DumpMessage(s->di.df, Phone->SentMsg->Buffer, Phone->SentMsg->Length);
+		}
+		smprintf(s, "Received frame ");
+		smprintf(s, "0x%02x / 0x%04x", msg->Type, msg->Length);
+		DumpMessage(s->di.df, msg->Buffer, msg->Length);
+		smprintf(s, "\n");
 	}
 
 	return error;
@@ -843,6 +861,7 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"6200" ,"NPL-3" ,"Nokia 6200", {0}},
+	{"6220" ,"RH-20" ,"Nokia 6220", {F_TODO66,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"6210" ,"NPE-3" ,"Nokia 6210", {F_VOICETAGS,F_CAL62,0}},
@@ -884,6 +903,7 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"8910" ,"NHM-4" ,"Nokia 8910", {F_CAL62,F_NOMIDI,F_NOFILESYSTEM,F_NOMMS,0}},
+	{"8910i","NHM-4" ,"Nokia 8910i",{F_CAL62,F_NOMIDI,F_NOFILESYSTEM,F_NOMMS,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA9210
 	{"9210" ,"RAE-3" ,"",           {0}},
