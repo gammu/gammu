@@ -279,6 +279,7 @@ typedef enum {
 	ID_GetManufacturer,
 	ID_SetMemoryType,
 	ID_SetMemoryCharset,
+	ID_GetMMSSettings,
 	ID_SetSMSParameters,
 	ID_GetFMStation,
 	ID_SetFMStation,
@@ -300,6 +301,7 @@ typedef enum {
 	ID_GetDisplayStatus,
 	ID_SetAutoNetworkLogin,
 	ID_SetWAPSettings,
+	ID_SetMMSSettings,
 	ID_GetSIMIMSI,
 	ID_GetFileInfo,
 	ID_GetFileFree,
@@ -521,10 +523,12 @@ typedef struct {
 	GSM_Error (*ShowStartInfo)	(GSM_StateMachine *s, bool 		    enable	);
 	GSM_Error (*GetNextFileFolder)	(GSM_StateMachine *s, GSM_File		    *File, 	bool start);
 	GSM_Error (*GetFilePart)	(GSM_StateMachine *s, GSM_File		    *File	);
-	GSM_Error (*AddFile)		(GSM_StateMachine *s, GSM_File		    *File	);
+	GSM_Error (*AddFilePart)	(GSM_StateMachine *s, GSM_File		    *File, 	int *Pos);
 	GSM_Error (*GetFreeFileMemory)	(GSM_StateMachine *s, int *Free);
 	GSM_Error (*DeleteFile)		(GSM_StateMachine *s, int ID);
 	GSM_Error (*AddFolder)		(GSM_StateMachine *s, GSM_File		    *File	);
+	GSM_Error (*GetMMSSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
+	GSM_Error (*SetMMSSettings)	(GSM_StateMachine *s, GSM_MultiWAPSettings  *settings	);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;
@@ -679,6 +683,7 @@ typedef enum {
 	F_BLUETOOTH,	/* Bluetooth support						*/
 	F_NOFILESYSTEM,	/* No images, ringtones, java saved in special filesystem	*/
 	F_NEWCALENDAR,	/* Use new frames for calendar 					*/
+	F_NOMMS,	/* No MMS sets in phone						*/
 
 	/* AT modules */
 	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/

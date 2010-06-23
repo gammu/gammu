@@ -611,6 +611,7 @@ GSM_Error DCT3_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int 			tmp,Number;
+//	int			tmp2;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 #ifdef GSM_ENABLE_NOKIA6110
 	GSM_Phone_N6110Data 	*Priv6110 = &s->Phone.Data.Priv.N6110;
@@ -650,6 +651,9 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 		if (msg.Buffer[tmp+13] == 0x01) Data->WAPSettings->Settings[0].IsSecurity = true;
 
 		/* I'm not sure here. Experimental values from 6210 5.56 */
+//		tmp2 = strlen(DecodeUnicodeString(Data->WAPSettings->Settings[0].Title));
+//		if (tmp2 != 0) tmp2 --;
+//		tmp2 += tmp;
 		if (!(strlen(DecodeUnicodeString(Data->WAPSettings->Settings[0].Title))) % 2) tmp++;
 		if (strlen(DecodeUnicodeString(Data->WAPSettings->Settings[0].HomePage))!=0) tmp++;
 
@@ -669,6 +673,12 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 			Priv7110->WAPLocations.Locations[1] 	= msg.Buffer[tmp+9];
 			Priv7110->WAPLocations.Locations[2] 	= msg.Buffer[tmp+10];
 			Priv7110->WAPLocations.Locations[3] 	= msg.Buffer[tmp+11];
+
+//			Priv7110->WAPLocations.CurrentLocation	= msg.Buffer[tmp2+1];
+//			Priv7110->WAPLocations.Locations[0] 	= msg.Buffer[tmp2+3];
+//			Priv7110->WAPLocations.Locations[1] 	= msg.Buffer[tmp2+4];
+//			Priv7110->WAPLocations.Locations[2] 	= msg.Buffer[tmp2+5];
+//			Priv7110->WAPLocations.Locations[3] 	= msg.Buffer[tmp2+6];
 		}
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
@@ -805,7 +815,7 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 	settings->Number = 0;
 
 	req[4] = settings->Location-1;
-	smprintf(s, "Getting WAP settins part 1\n");
+	smprintf(s, "Getting WAP settings part 1\n");
 	error = GSM_WaitFor (s, req, 6, 0x3f, 4, ID_GetWAPSettings);
 	if (error != GE_NONE) return error;
 
@@ -813,9 +823,12 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 	if (strstr(N7110Phone.models, s->Phone.Data.ModelInfo->model) != NULL) {
 		for (i=0;i<4;i++) {
 			req2[4] = Priv7110->WAPLocations.Locations[i];
-			smprintf(s, "Getting WAP settins part 2\n");
+			smprintf(s, "Getting WAP settings part 2\n");
 			error=GSM_WaitFor (s, req2, 6, 0x3f, 4, ID_GetWAPSettings);
 			if (error != GE_NONE) return error;
+			if (Priv7110->WAPLocations.Locations[i] == Priv7110->WAPLocations.CurrentLocation) {
+				settings->ActiveBearer = settings->Settings[settings->Number-1].Bearer;
+			}
 		}
 	}
 #endif
@@ -823,9 +836,12 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 	if (strstr(N6110Phone.models, s->Phone.Data.ModelInfo->model) != NULL) {
 		for (i=0;i<4;i++) {
 			req2[4] = Priv6110->WAPLocations.Locations[i];
-			smprintf(s, "Getting WAP settins part 2\n");
+			smprintf(s, "Getting WAP settings part 2\n");
 			error=GSM_WaitFor (s, req2, 6, 0x3f, 4, ID_GetWAPSettings);
 			if (error != GE_NONE) return error;
+			if (Priv6110->WAPLocations.Locations[i] == Priv6110->WAPLocations.CurrentLocation) {
+				settings->ActiveBearer = settings->Settings[settings->Number-1].Bearer;
+			}
 		}
 	}
 #endif
@@ -921,7 +937,7 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		settings2.Number = 0;
 		settings2.Settings[0].Bearer = 0;
 		req2[4] = locations[i];
-		smprintf(s, "Getting WAP settins part 2\n");
+		smprintf(s, "Getting WAP settings part 2\n");
 		error=GSM_WaitFor (s, req2, 6, 0x3f, 4, ID_GetWAPSettings);
 		if (error != GE_NONE) return error;
 		switch (settings2.Settings[0].Bearer) {
@@ -959,7 +975,22 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		if (settings->Settings[loc1].IsContinuous) SetReq[pos] = 0x01;
 		pos++;
 		SetReq[pos++] = ID;
-		SetReq[pos++] = phone1; /* bearer */
+
+		SetReq[pos]   = phone1; /* bearer */
+		switch (settings->ActiveBearer) {
+			case WAPSETTINGS_BEARER_DATA:
+				if (loc1 != -1) SetReq[pos] = phone1;
+				break;
+			case WAPSETTINGS_BEARER_SMS:
+				if (loc2 != -1) SetReq[pos] = phone2;
+				break;
+			case WAPSETTINGS_BEARER_USSD:
+				if (loc3 != -1) SetReq[pos] = phone3;
+				break;
+			default: break;
+		}
+		pos++;
+
 		if (settings->Settings[loc1].IsSecurity) SetReq[pos] = 0x01;
 		pos++;
 	} else if (loc2 != -1) {
@@ -970,7 +1001,22 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		if (settings->Settings[loc2].IsContinuous) SetReq[pos] = 0x01;
 		pos++;
 		SetReq[pos++] = ID;
-		SetReq[pos++] = phone2; /* bearer */
+
+		SetReq[pos]   = phone2; /* bearer */
+		switch (settings->ActiveBearer) {
+			case WAPSETTINGS_BEARER_DATA:
+				if (loc1 != -1) SetReq[pos] = phone1;
+				break;
+			case WAPSETTINGS_BEARER_SMS:
+				if (loc2 != -1) SetReq[pos] = phone2;
+				break;
+			case WAPSETTINGS_BEARER_USSD:
+				if (loc3 != -1) SetReq[pos] = phone3;
+				break;
+			default: break;
+		}
+		pos++;
+
 		if (settings->Settings[loc2].IsSecurity) SetReq[pos] = 0x01;
 		pos++;
 	} else if (loc3 != -1) {
@@ -981,7 +1027,22 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		if (settings->Settings[loc3].IsContinuous) SetReq[pos] = 0x01;
 		pos++;
 		SetReq[pos++] = ID;
-		SetReq[pos++] = phone3; /* bearer */
+
+		SetReq[pos]   = phone3; /* bearer */
+		switch (settings->ActiveBearer) {
+			case WAPSETTINGS_BEARER_DATA:
+				if (loc1 != -1) SetReq[pos] = phone1;
+				break;
+			case WAPSETTINGS_BEARER_SMS:
+				if (loc2 != -1) SetReq[pos] = phone2;
+				break;
+			case WAPSETTINGS_BEARER_USSD:
+				if (loc3 != -1) SetReq[pos] = phone3;
+				break;
+			default: break;
+		}
+		pos++;
+
 		if (settings->Settings[loc3].IsSecurity) SetReq[pos] = 0x01;
 		pos++;
 	} else {

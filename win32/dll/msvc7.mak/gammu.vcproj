@@ -124,6 +124,9 @@
 				RelativePath="..\..\..\common\service\gsmmisc.c">
 			</File>
 			<File
+				RelativePath="..\..\..\common\service\gsmmms.c">
+			</File>
+			<File
 				RelativePath="..\..\..\common\service\gsmnet.c">
 			</File>
 			<File
@@ -239,6 +242,9 @@
 				RelativePath="..\..\..\common\service\gsmmisc.h">
 			</File>
 			<File
+				RelativePath="..\..\..\common\service\gsmmms.h">
+			</File>
+			<File
 				RelativePath="..\..\..\common\service\gsmnet.h">
 			</File>
 			<File
@@ -302,10 +308,10 @@
 				RelativePath="..\..\..\common\protocol\protocol.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\device\serial\win32.h">
+				RelativePath="..\..\..\common\device\irda\win32.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\device\irda\win32.h">
+				RelativePath="..\..\..\common\device\serial\win32.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\device\bluetoth\win32\ws2bth.h">

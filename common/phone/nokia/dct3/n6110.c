@@ -2476,7 +2476,9 @@ GSM_Phone_Functions N6110Phone = {
 	NOTSUPPORTED,		/* 	AddFile			*/
 	NOTSUPPORTED, 		/* 	GetFreeFileMemory 	*/
 	NOTSUPPORTED,		/*	DeleteFile		*/
-	NOTSUPPORTED		/*	AddFolder		*/
+	NOTSUPPORTED,		/*	AddFolder		*/
+	NOTSUPPORTED,		/* 	GetMMSSettings		*/
+	NOTSUPPORTED		/* 	SetMMSSettings		*/
 };
 
 #endif

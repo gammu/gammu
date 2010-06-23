@@ -165,6 +165,10 @@ SOURCE=..\..\common\service\gsmlogo.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\service\gsmmms.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\service\gsmnet.c
 # End Source File
 # Begin Source File
@@ -338,6 +342,10 @@ SOURCE=..\..\common\service\gsmlogo.h
 # Begin Source File
 
 SOURCE=..\..\common\service\gsmnet.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\service\gsmmms.h
 # End Source File
 # Begin Source File
 

@@ -1,13 +1,13 @@
 .TH "Gammu" "1" "27.04.2003" "Marcin Wiacek and others" "Cellurar phones utilities"
 .SH "NAME"
-.LP 
+.LP
 Gammu \- Does some neat things with your cellular phone or modem
 .SH "SYNTAX"
-.LP 
+.LP
 gammu [\fInothing|text|textall|binary|errors\fP] [\fIoptions\fP]
-.br 
+.br
 .SH "DESCRIPTION"
-.LP 
+.LP
 This program is a tool for Nokia and other mobile phones.
 
 Parameters, which allow to control debug level:
@@ -55,7 +55,7 @@ Reset phone settings. \fIBE CAREFULL !!!!\fR
 \fBDEV:\fR
 .br
 
-.br			
+.br
 \fBALL:\fR Clear user settings
 .br
 * removes or set logos to default
@@ -113,15 +113,31 @@ Press specified key sequence on phone keyboard
 Show, if phone wait for security code (like PIN, PUK, etc.) or not
 .TP
 \fB\-\-entersecuritycode PIN|PUK|PIN2|PUK2 code\fR
-Allow to enter security code from PC			     
+Allow to enter security code from PC
 .TP
 \fB\-\-listnetworks\fR
 Show names/codes of GSM networks known for Gammu
 .TP
-\fB\-\-getfilesystem\fR
-.TP
 \fB\-\-getfmstation start [stop]\fR
 Show info about FM stations in phone
+.TP
+\fB\-\-getfiles file1ID file2ID ...\fR
+.TP
+\fB\-\-getfilesystem [\-flatall|\-flat]\fR
+.TP
+\fB\-\-deletefile fileID\fR
+.TP
+\fB\-\-addfolder parentfolderID name\fR
+.TP
+\fB\-\-addfile folderID name [JAR|BMP|PNG|GIF|JPG|MIDI]\fR
+.TP
+\fB\-\-nokiaaddfile MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent file sender title\fR
+.TP
+\fB\-\-nokiaaddfile Application|Game file\fR
+\fIExample:\fR gammu \-\-nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
+.TP
+\fB\-\-nokiaaddfile Gallery|Tones file [name]\fR
+\fIExample:\fR gammu \-\-nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 .TP 
 \fB\-\-getdatetime\fR
 Get date and time from phone
@@ -242,26 +258,25 @@ Cancel incoming call
 \fB\-\-getcalendarnotes\fR
 Get calendar notes from phone. In Nokia 3310 and 3330 they're named
 "Reminders" and have some limitations (they depends on phone firmware version).
-
 .TP
 \fB\-\-getcategory TODO|PHONEBOOK start [stop]\fR
-
 .TP
 \fB\-\-getallcategies TODO|PHONEBOOK\fR
-
-.TP 
+.TP
 \fB\-\-getwapbookmark start [stop]\fR
 Get WAP bookmark(s) from phone. Locations are numerated from 1.
-.TP 
+.TP
 \fB\-\-deletewapbookmark start [stop]\fR
 Delete WAP bookmark(s) from phone. Locations are numerated from 1.
-.TP 
+.TP
 \fB\-\-getwapsettings start [stop]\fR
 Get WAP settings from phone. Locations are numerated from 1.
-.TP 
+.TP
+\fB\-\-getmmssettings start [stop]\fR
+.TP
 \fB\-\-getbitmap STARTUP [file]\fR
 Get static startup logo from phone. Allow to save it in file.
-.TP 
+.TP
 \fB\-\-getbitmap CALLER location [file]\fR
 Get caller group logo from phone. Locations 1\-5.
 .TP 
@@ -270,19 +285,23 @@ Get operator logo (picture displayed instead of operator name) from phone.
 .TP 
 \fB\-\-getbitmap PICTURE location [file]\fR
 Get Picture Image from phone.
-.TP 
+.TP
 \fB\-\-getbitmap TEXT\fR
 Get startup text from phone.
-.TP 
+.TP
 \fB\-\-getbitmap DEALER\fR
 In some models it's possible to save dealer welcome note \- text displayed
 during enabling phone, which can't be edited from phone menu.  Here you can
 get it.
-.TP 
+.TP
 \fB\-\-setbitmap STARTUP file|1|2|3\fR
 Set startup logo in phone. It can be static (then you will have to give file
 name) or one of predefined animated (only some phones like Nokia 3310 or 3330
 supports it)
+.TP 
+\fB\-\-setbitmap COLOURSTARTUP [fileID]\fR
+.TP
+\fB\-\-setbitmap WALLPAPER fileID\fR
 .TP 
 \fB\-\-setbitmap CALLER location [file]\fR
 Set caller logo.
@@ -292,6 +311,8 @@ Set operator logo in phone. When won't give file and netcode, operator logo
 will be removed from phone. When will give only filename, operator logo will
 be displayed for your current GSM operator. When give additionaly network
 code, it will be displayed for this operator: \fBgammu \-\-setbitmap OPERATOR file "260 02"\fR
+.TP
+\fB\-\-setbitmap COLOUROPERATOR [fileID [netcode]]\fR
 .TP 
 \fB\-\-setbitmap PICTURE file location [text]\fR
 .TP 
@@ -407,14 +428,16 @@ using \fB\-biglogo\fR).
 .TP
 \fB\-\-savesms CALLER file [\-folder number] [\-sender number] [\-unread] [\-reply] [\-smscset number] [\-smscnumber number] [\-unsent] [\-read]\fR
 Save caller logo as sms (Nokia format \- size 72x14).
-.TP 
+.TP
 \fB\-\-savesms PICTURE file [\-folder number] [\-sender number] [\-unicode] [\-smscset number] [\-smscnumber number] [\-read] [\-text text] [\-reply] [\-unread] [\-unsent]\fR
 Save Picture Image as sms (Nokia format \- size 72x28).
-.TP 
+.TP
+\fB\-\-savesms MMSINDICATOR URL Title Sender [\-folder number] [\-sender number] [\-smscnumber number] [\-unread] [\-smscset number] [\-unsent] [\-read] [\-unread] [\-reply]
+.TP
 \fB\-\-savesms BOOKMARK file location [\-folder number] [\-reply] [\-unsent] [\-sender number] [\-smscset number] [\-smscnumber number] [\-unread] [\-read]\fR
 Read WAP bookmark from file created by \fB\-\-backup\fR option and saves in
 Nokia format as SMS
-.TP 
+.TP
 \fB\-\-savesms SETTINGS file location [\-folder number] [\-reply] [\-unsent] [\-sender number] [\-smscset number] [\-smscnumber number] [\-unread] [\-read]\fR
 Read WAP settings from file created by \fB\-\-backup\fR option and saves in
 Nokia format as SMS
@@ -483,7 +506,9 @@ ala.bmp and axelf.txt will be "protected"
 \fB\-\-sendsms CALLER destination file [\-reply] [\-smscset number] [\-report] [\-smscnumber number] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
 \fB\-\-sendsms PICTURE destination file [\-reply] [\-smscset number] [\-report] [\-smscnumber number] [\-unicode] [\-text text] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
-.TP 
+.TP
+\fB\-\-sendsms MMSINDICATOR destination URL Title Sender [\-reply] [\-report] [\-smscnumber number] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-smscset number]
+.TP
 \fB\-\-sendsms BOOKMARK destination file location [\-smscset number] [\-reply] [\-report] [\-smscnumber number] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR
 .TP 
 \fB\-\-sendsms SETTINGS destination file location [\-smscset number] [\-smscnumber number] [\-report] [\-reply] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\fR

@@ -44,20 +44,22 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 		"\x0D\x0A+CMTI:"  , "CMIT:"	    ,
 		"\x0D\x0A^SCN:"   , "^SCN:"};
 
-	if (d->linestart == NULL) {
-		d->Msg.Length = 0;
-		d->linestart  = d->Msg.Buffer;
-	}
-
     	/* Ignore leading CR, LF and ESC */
     	if (d->Msg.Length == 0 && (rx_byte == 10 || rx_byte == 13 || rx_byte == 27)) return GE_NONE;
 
 	if (d->Msg.BufferUsed < d->Msg.Length + 2) {
 		d->Msg.BufferUsed	= d->Msg.Length + 2;
-		d->Msg.Buffer 	= (unsigned char *)realloc(d->Msg.Buffer,d->Msg.BufferUsed);
+		d->Msg.Buffer 		= (unsigned char *)realloc(d->Msg.Buffer,d->Msg.BufferUsed);
+		if (d->linestart != NULL) {
+			d->linestart = d->Msg.Buffer+d->linestartnum;	
+		}
 	}
 	d->Msg.Buffer[d->Msg.Length++] = rx_byte;
 	d->Msg.Buffer[d->Msg.Length  ] = 0;
+	if (d->linestart == NULL) {
+	    d->linestart 	= d->Msg.Buffer;
+	    d->linestartnum 	= 0;
+	}
 
 	switch (rx_byte) {
 	case 0:
@@ -71,6 +73,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 				s->Phone.Data.RequestMsg	= &d->Msg;
 				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
 				d->linestart			= NULL;
+				d->Msg.Length			= 0;
 				break;
 			    }
 			}
@@ -85,12 +88,14 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
             		s->Phone.Data.RequestMsg   	= &d->Msg;
            		s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
             		d->linestart              	= NULL;
+			d->Msg.Length			= 0;
             		break;
        		}
 	default:
 		if (d->wascrlf) {
-			d->linestart = d->Msg.Buffer + (d->Msg.Length - 1);
-			d->wascrlf = false;
+			d->linestart 	= d->Msg.Buffer + (d->Msg.Length - 1);
+			d->linestartnum	= d->Msg.Length - 1;
+			d->wascrlf 	= false;
 		}
 		if (d->EditMode) {
 			if (strlen(d->linestart) == 2 && strncmp(d->linestart,"> ",2)==0) {
@@ -109,6 +114,7 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 
 	d->Msg.BufferUsed	= 0;
 	d->Msg.Buffer 		= NULL;
+	d->Msg.Length		= 0;
 
 	d->linestart 		= NULL;
 	d->EditMode		= false;

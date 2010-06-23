@@ -77,21 +77,22 @@ A. First of all, here are described all possible parameters for this software.
 
    gammu --getfiles file1ID file2ID ...
 
-   gammu --getfilesystem
+   gammu --getfilesystem [-flatall|-flat]
 
    gammu --deletefile fileID
 
    gammu --addfolder parentfolderID name
 
-   gammu --addfile folderID name
+   gammu --addfile folderID name [JAR|BMP|PNG|GIF|JPG|MIDI]
 
    gammu --nokiaaddfile MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent
-                        file sender title
+                     file sender title
 
-   gammu --nokiaaddfile Application|Game|Gallery|Tones file
+   gammu --nokiaaddfile Application|Game file
        Example: gammu --nokiaaddfile Application Alien
                 will read Alien.JAD and Alien.JAR and add to Applications
 
+   gammu --nokiaaddfile Gallery|Tones file [name]
        Example: gammu --nokiaaddfile Tones file.mid
                 will read file.mid and add to Tones folder
 
@@ -171,7 +172,8 @@ A. First of all, here are described all possible parameters for this software.
        Get user ringtone from phone in RTTL or BINARY format. Locations are
        numerated from 1.
 
-   gammu --setringtone file [-location location] [-scale] [-name name]       Set ringtone in phone. When don't give location, it will be written
+   gammu --setringtone file [-location location] [-scale] [-name name]
+       Set ringtone in phone. When don't give location, it will be written
        "with preview" (in phones supporting this feature like 61xx or 6210).
        When use RTTL ringtones, give location and use -scale, there will be
        written scale info with each note. It will avoid scale problems
@@ -222,6 +224,8 @@ A. First of all, here are described all possible parameters for this software.
    gammu --getwapsettings start [stop]
        Get WAP settings from phone. Locations are numerated from 1.
 
+   gammu --getmmssettings start [stop]
+
    gammu --getbitmap STARTUP [file]
        Get static startup logo from phone. Allow to save it in file.
 
@@ -250,6 +254,8 @@ A. First of all, here are described all possible parameters for this software.
 
    gammu --setbitmap COLOURSTARTUP [fileID]
 
+   gammu --setbitmap WALLPAPER fileID
+
    gammu --setbitmap CALLER location [file]
        Set caller logo.
 
@@ -260,7 +266,7 @@ A. First of all, here are described all possible parameters for this software.
        additionaly network code, it will be displayed for this operator:
        gammu --setbitmap OPERATOR file "260 02"
 
-   gammu --setbitmap OPERATOR [file [netcode]]
+   gammu --setbitmap COLOUROPERATOR [fileID [netcode]]
 
    gammu --setbitmap PICTURE file location [text]
 
@@ -389,6 +395,12 @@ A. First of all, here are described all possible parameters for this software.
 
        Save Picture Image as sms (Nokia format - size 72x28).
 
+   gammu --savesms MMSINDICATOR URL Title Sender [-folder number]
+                                              [-sender number]
+                                              [-smscnumber number][-unread]
+                                              [-smscset number][-unsent][-read]
+                                              [-unread][-reply]
+
    gammu --savesms BOOKMARK file location [-folder number][-reply][-unsent]
                                           [-sender number][-smscset number]
                                           [-smscnumber number][-unread]
@@ -511,6 +523,10 @@ A. First of all, here are described all possible parameters for this software.
                                             [-report][-smscnumber number]
                                             [-unicode][-text text]
                                     [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
+   gammu --sendsms MMSINDICATOR destination URL Title Sender [-reply]
+                                        [-report][-smscnumber number][-validity 
+                                        HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
+                                        [-smscset number]
    gammu --sendsms BOOKMARK destination file location [-smscset number]
                                                       [-reply][-report]
                                                       [-smscnumber number]

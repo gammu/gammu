@@ -47,23 +47,24 @@ static GSM_UDHHeader UDHHeaders[] = {
 	{ UDH_NokiaCallerLogo,      0x06, "\x05\x04\x15\x83\x00\x00",-1,-1,-1},
 	{ UDH_NokiaWAPBookmark,     0x06, "\x05\x04\xc3\x4f\x00\x00",-1,-1,-1},
 
-	/* Nokia Smart Messaging (long version) UDH
+	/* Nokia Smart Messaging (long version) UDH and other
 	 * General format:
 	 * 1 byte 0x05       : IEI application port addressing scheme, 16 bit address
 	 * 1 byte 0x04       : IEI length
 	 * 2 bytes 0x00 0x00 : destination address : high & low byte
 	 * 2 bytes 0x00 0x00 : originator address  : high & low byte
-	 * 1 byte 0x00       : null byte for end first part ?
-	 * 1 byte 0x03       : length for rest 
-	 * 1 byte            : unique ID for message series
+	 * 1 byte 0x00       : SAR
+	 * 1 byte 0x03       : SAR length
+	 * 1 byte            : diagram reference number (unique ID for message series)
 	 * 1 byte            : number of all SMS
 	 * 1 byte            : number of current SMS */
 	{ UDH_NokiaCalendarLong,    0x0b, "\x05\x04\x00\xe4\x00\x00\x00\x03\xc7\x00\x00",8,10,9},
+	{ UDH_MMSIndicatorLong,	    0x0b, "\x05\x04\x0b\x84\x23\xf0\x00\x03\xe5\x00\x00",8,10,9},
+	{ UDH_NokiaOperatorLogoLong,0x0b, "\x05\x04\x15\x82\x00\x00\x00\x03\x02\x00\x00",8,10,9},
 	{ UDH_NokiaProfileLong,     0x0b, "\x05\x04\x15\x8a\x00\x00\x00\x03\xce\x00\x00",8,10,9},
+	{ UDH_NokiaPhonebookLong,   0x0b, "\x05\x04\x23\xf4\x00\x00\x00\x03\x01\x00\x00",8,10,9},
 	{ UDH_NokiaWAPBookmarkLong, 0x0b, "\x05\x04\xc3\x4f\x00\x00\x00\x03\x01\x00\x00",8,10,9},
 	{ UDH_NokiaWAPSettingsLong, 0x0b, "\x05\x04\xc3\x4f\x00\x00\x00\x03\x7f\x00\x00",8,10,9},
-	{ UDH_NokiaPhonebookLong,   0x0b, "\x05\x04\x23\xf4\x00\x00\x00\x03\x01\x00\x00",8,10,9},
-	{ UDH_NokiaOperatorLogoLong,0x0b, "\x05\x04\x15\x82\x00\x00\x00\x03\x02\x00\x00",8,10,9},
 
 	{ UDH_NoUDH,                0x00, "",-1,-1,-1}
 };
@@ -154,6 +155,7 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 	case UDH_NokiaCalendarLong:	dprintf("Nokia calendar note");		 break;
 	case UDH_NokiaPhonebookLong:	dprintf("Nokia phonebook entry");	 break;
 	case UDH_UserUDH:		dprintf("User UDH");			 break;
+	case UDH_MMSIndicatorLong:						 break;
 	case UDH_NoUDH:								 break;
 	}
 	if (UDH->ID != -1) dprintf(", ID %i",UDH->ID);
@@ -816,6 +818,7 @@ void GSM_Find_Free_Used_SMS(GSM_Coding_Type Coding,GSM_SMSMessage SMS, int *Used
 	switch (Coding) {
 	case GSM_Coding_Default:
 		FindDefaultAlphabetLen(SMS.Text,&Pos,UsedText,500);
+		Pos = 0; 		/* to avoid compiler warning */
 		if (*UsedText % 7 != 0) *UsedText++;
 		*UsedText = *UsedText * 7 / 8;
 		break;
@@ -1398,10 +1401,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 {
 	unsigned char	Buffer[GSM_MAX_SMS_LENGTH*2*MAX_MULTI_SMS];
 	unsigned char	Buffer2[GSM_MAX_SMS_LENGTH*2*MAX_MULTI_SMS];
-	int		Length = 0,smslen,i;
+	int		Length = 0,smslen,i, Class = -1;
 	GSM_Error	error;
 	GSM_Coding_Type Coding 	= GSM_Coding_8bit;
-	int		Class	= -1;
 	GSM_UDH		UDH	= UDH_NoUDH;
 	GSM_UDHHeader 	UDHHeader;
 	bool		EMS	= false;
@@ -1440,6 +1442,11 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_EncodeMultiPartSMSInfo	*Info,
 	if (Info->EntriesNum != 1) return GE_UNKNOWN;
 
 	switch (Info->Entries[0].ID) {
+	case SMS_MMSIndicatorLong:
+		Class	= 1;
+		UDH	= UDH_MMSIndicatorLong;
+		GSM_EncodeMMSIndicatorSMSText(Buffer,&Length,*Info->Entries[0].MMSIndicator);
+		break;
 	case SMS_NokiaRingtoneLong:
 	case SMS_NokiaRingtone:
 		UDH	= UDH_NokiaRingtone;
@@ -1629,6 +1636,7 @@ void GSM_ClearMultiPartSMSInfo(GSM_EncodeMultiPartSMSInfo *Info)
 		Info->Entries[i].Bookmark	= NULL;
 		Info->Entries[i].Settings	= NULL;
 		Info->Entries[i].Calendar	= NULL;
+		Info->Entries[i].MMSIndicator	= NULL;
 
 		Info->Entries[i].Protected	= false;
 	}

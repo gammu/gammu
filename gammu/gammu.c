@@ -527,26 +527,26 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext)
 			case 0x01: printmsg("SM forwarded by the SC to the SME but the SC is unable to confirm delivery");break;
 			case 0x02: printmsg("SM replaced by the SC");				break;
 			case 0x20: printmsg("Congestion");					break;
-			case 0x21: printmsg("SME busy");						break;
+			case 0x21: printmsg("SME busy");					break;
 			case 0x22: printmsg("No response from SME");				break;
-			case 0x23: printmsg("Service rejected");					break;
+			case 0x23: printmsg("Service rejected");				break;
 			case 0x24: printmsg("Quality of service not aviable");			break;
 			case 0x25: printmsg("Error in SME");					break;
 		        case 0x40: printmsg("Remote procedure error");				break;
-		        case 0x41: printmsg("Incompatibile destination");				break;
+		        case 0x41: printmsg("Incompatibile destination");			break;
 		        case 0x42: printmsg("Connection rejected by SME");			break;
 		        case 0x43: printmsg("Not obtainable");					break;
-		        case 0x44: printmsg("Quality of service not available");			break;
+		        case 0x44: printmsg("Quality of service not available");		break;
 		        case 0x45: printmsg("No internetworking available");			break;
 		        case 0x46: printmsg("SM Validity Period Expired");			break;
 		        case 0x47: printmsg("SM deleted by originating SME");			break;
 		        case 0x48: printmsg("SM Deleted by SC Administration");			break;
-		        case 0x49: printmsg("SM does not exist");					break;
+		        case 0x49: printmsg("SM does not exist");				break;
 		        case 0x60: printmsg("Congestion");					break;
-		        case 0x61: printmsg("SME busy");						break;
+		        case 0x61: printmsg("SME busy");					break;
 		        case 0x62: printmsg("No response from SME");				break;
-		        case 0x63: printmsg("Service rejected");					break;
-		        case 0x64: printmsg("Quality of service not available");			break;
+		        case 0x63: printmsg("Service rejected");				break;
+		        case 0x64: printmsg("Quality of service not available");		break;
 		        case 0x65: printmsg("Error in SME");					break;
 		        default  : printmsg("Reserved/Specific to SC: %x",sms.DeliveryStatus);	break;
 		}
@@ -573,14 +573,14 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext)
 		}
 		printmsg("Coding           : ");
 		switch (sms.Coding) {
-			case GSM_Coding_Unicode : printmsg("Unicode\n");			break;
+			case GSM_Coding_Unicode : printmsg("Unicode\n");		break;
 			case GSM_Coding_Default : printmsg("Default GSM alphabet\n");	break;
 			case GSM_Coding_8bit	: printmsg("8 bit\n");			break;
 		}
 		printmsg("Status           : ");
 		switch (sms.State) {
-			case GSM_Sent	:	printmsg("Sent");		break;
-			case GSM_Read	:	printmsg("Read");		break;
+			case GSM_Sent	:	printmsg("Sent");	break;
+			case GSM_Read	:	printmsg("Read");	break;
 			case GSM_UnRead	:	printmsg("UnRead");	break;
 			case GSM_UnSent	:	printmsg("UnSent");	break;
 		}
@@ -597,16 +597,17 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext)
 			case UDH_EnableEmail:		printmsg("Enables email indicator");	 break;
 			case UDH_VoidSMS:		printmsg("Void SMS");			 break;
 			case UDH_NokiaWAPBookmark:	printmsg("Nokia WAP Bookmark");		 break;
-			case UDH_NokiaOperatorLogoLong:	printmsg("Nokia operator logo");		 break;
+			case UDH_NokiaOperatorLogoLong:	printmsg("Nokia operator logo");	 break;
 			case UDH_NokiaWAPBookmarkLong:	printmsg("Nokia WAP Bookmark");		 break;
 			case UDH_NokiaWAPSettingsLong:	printmsg("Nokia WAP Settings");		 break;
 			case UDH_NokiaRingtone:		printmsg("Nokia ringtone");		 break;
 			case UDH_NokiaOperatorLogo:	printmsg("Nokia GSM operator logo");	 break;
 			case UDH_NokiaCallerLogo:	printmsg("Nokia caller logo");		 break;  	
 			case UDH_NokiaProfileLong:	printmsg("Nokia profile");		 break;
-			case UDH_NokiaCalendarLong:	printmsg("Nokia calendar note");		 break;
+			case UDH_NokiaCalendarLong:	printmsg("Nokia calendar note");	 break;
 			case UDH_NokiaPhonebookLong:	printmsg("Nokia phonebook entry");	 break;
 			case UDH_UserUDH:		printmsg("User UDH");			 break;
+			case UDH_MMSIndicatorLong:						 break;
 			case UDH_NoUDH:								 break;
 			}
 			if (sms.UDH.Type != UDH_NoUDH) {
@@ -1614,6 +1615,10 @@ static void SetBitmap(int argc, char *argv[])
 			Bitmap.Location = 1;
 			Bitmap.ID 	= atoi(argv[3]);
 		}
+	} else if (mystrncasecmp(argv[2],"WALLPAPER",0)) {
+		Bitmap.Type 		= GSM_ColourWallPaper;
+		Bitmap.ID		= 0;
+		if (argc > 3) Bitmap.ID = atoi(argv[3]);
 	} else if (mystrncasecmp(argv[2],"OPERATOR",0)) {
 		MultiBitmap.Bitmap[0].Type	= GSM_OperatorLogo;
 		MultiBitmap.Bitmap[0].Location 	= 1;
@@ -1732,6 +1737,7 @@ static void SendSaveSMS(int argc, char *argv[])
 	GSM_MultiBitmap			bitmap[MAX_MULTI_SMS],bitmap2;
 	GSM_EncodeMultiPartSMSInfo	SMSInfo;
 	GSM_NetworkInfo			NetInfo;
+	GSM_MMSIndicator		MMSInfo;
 	FILE 				*ReplaceFile,*f;
 	char				ReplaceBuffer2	[200],ReplaceBuffer[200];
 	char				InputBuffer	[SEND_SAVE_SMS_BUFFER_SIZE/2+1];
@@ -1788,6 +1794,20 @@ static void SendSaveSMS(int argc, char *argv[])
 	} else if (mystrncasecmp(argv[2],"EMS",0)) {
 		SMSInfo.EntriesNum = 0;
 		startarg += 3;
+	} else if (mystrncasecmp(argv[2],"MMSINDICATOR",0)) {
+		if (argc<6+startarg) {
+			printmsg("Where is ringtone filename ?\n");
+			exit(-1);
+		}
+		SMSInfo.Entries[0].ID 	 	= SMS_MMSIndicatorLong;
+		SMSInfo.Entries[0].MMSIndicator = &MMSInfo;
+		if (mystrncasecmp(argv[1],"--savesms",0)) {
+			EncodeUnicode(Sender,"MMS Info",8);
+		}
+		strcpy(MMSInfo.Address,	argv[3+startarg]);
+		strcpy(MMSInfo.Title,	argv[4+startarg]);
+		strcpy(MMSInfo.Sender,	argv[5+startarg]);
+		startarg += 6;
 	} else if (mystrncasecmp(argv[2],"RINGTONE",0)) {
 		if (argc<4+startarg) {
 			printmsg("Where is ringtone filename ?\n");
@@ -2879,6 +2899,37 @@ static void Backup(int argc, char *argv[])
 			}
 		}
 	}
+	if (Info.MMSSettings) {
+		printmsg("Checking MMS settings\n");
+		Settings.Location = 1;
+		error=Phone->GetMMSSettings(&s,&Settings);
+		if (error==GE_NONE) {
+			if (answer_yes("   Backup MMS settings")) {
+				used = 0;
+				printmsgerr("   Reading : ");
+				while (error == GE_NONE) {
+					if (used < GSM_BACKUP_MAX_MMSSETTINGS) {
+						Backup.MMSSettings[used] = malloc(sizeof(GSM_MultiWAPSettings));
+					        if (Backup.MMSSettings[used] == NULL) Print_Error(GE_MOREMEMORY);
+						Backup.MMSSettings[used+1] = NULL;
+					} else {
+						printmsg("   Increase GSM_BACKUP_MAX_MMSSETTINGS\n");
+						exit(-1);
+					}
+					*Backup.MMSSettings[used]=Settings;
+					used ++;
+					Settings.Location = used+1;
+					error=Phone->GetMMSSettings(&s,&Settings);
+					printmsgerr("*");
+					if (bshutdown) {
+						GSM_Terminate();
+						exit(0);
+					}
+				}
+				printmsgerr("\n");
+			}
+		}
+	}
 	if (Info.Ringtone) {
 		printmsg("Checking user ringtones\n");
 		Ringtone.Location 	= 1;
@@ -3251,6 +3302,26 @@ static void Restore(int argc, char *argv[])
 			}
 		}
 	}
+	if (Backup.MMSSettings[0] != NULL) {
+		Settings.Location = 1;
+		error = Phone->GetMMSSettings(&s,&Settings);
+		if (error == GE_NONE) {
+			if (answer_yes("Restore MMS settings")) {
+				max = 0;
+				while (Backup.MMSSettings[max]!=NULL) max++;
+				for (i=0;i<max;i++) {
+					error=Phone->SetMMSSettings(&s,Backup.MMSSettings[i]);
+					Print_Error(error);
+					printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+					if (bshutdown) {
+						GSM_Terminate();
+						exit(0);
+					}
+				}
+				printmsgerr("\n");
+			}
+		}
+	}
 	if (Backup.Ringtone[0] != NULL) {
 		Ringtone.Location 	= 1;
 		Ringtone.Format		= 0;
@@ -3593,7 +3664,7 @@ static void ClearAll(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetWAPSettings(int argc, char *argv[])
+static void GetWAPMMSSettings(int argc, char *argv[])
 {
 	GSM_MultiWAPSettings	settings;
 	int			start,stop,j;
@@ -3604,7 +3675,11 @@ static void GetWAPSettings(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		settings.Location=i;
-		error=Phone->GetWAPSettings(&s,&settings);
+		if (mystrncasecmp(argv[1],"--getwapsettings",0)) {
+			error=Phone->GetWAPSettings(&s,&settings);
+		} else {
+			error=Phone->GetMMSSettings(&s,&settings);
+		}
 		Print_Error(error);
 		for (j=0;j<settings.Number;j++) {
 			printmsg("%i. ",i);
@@ -3627,13 +3702,15 @@ static void GetWAPSettings(int argc, char *argv[])
 			}
 			switch (settings.Settings[j].Bearer) {
 			case WAPSETTINGS_BEARER_SMS:
-				printmsg("Bearer              : SMS\n");
-				printmsg("Server number       : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Server));
+				printmsg("Bearer              : SMS");
+				if (settings.ActiveBearer == WAPSETTINGS_BEARER_SMS) printf(" (active)");
+				printmsg("\nServer number       : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Server));
 				printmsg("Service number      : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Service));
 				break;
 			case WAPSETTINGS_BEARER_DATA:
-				printmsg("Bearer              : Data (CSD)\n");
-				printmsg("Dial-up number      : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].DialUp));
+				printmsg("Bearer              : Data (CSD)");
+				if (settings.ActiveBearer == WAPSETTINGS_BEARER_DATA) printf(" (active)");
+				printmsg("\nDial-up number      : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].DialUp));
 				printmsg("IP address          : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].IPAddress));
 				if (settings.Settings[j].ManualLogin) {
 					printmsg("Login Type          : Manual\n");
@@ -3659,8 +3736,9 @@ static void GetWAPSettings(int argc, char *argv[])
 				printmsg("Password            : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Password));
 				break;
 			case WAPSETTINGS_BEARER_USSD:
-				printmsg("Bearer              : USSD\n");
-				printmsg("Service code        : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Code));
+				printmsg("Bearer              : USSD");
+				if (settings.ActiveBearer == WAPSETTINGS_BEARER_USSD) printf(" (active)");
+				printmsg("\nService code        : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Code));
 				if (settings.Settings[j].IsIP) {
 					printmsg("Address type        : IP address\nIPaddress           : \"%s\"\n",DecodeUnicodeString(settings.Settings[j].Service));
 				} else {
@@ -3668,11 +3746,12 @@ static void GetWAPSettings(int argc, char *argv[])
 				}
 				break;
 			case WAPSETTINGS_BEARER_GPRS:
-				printmsg("Bearer              : GPRS\n");
+				printmsg("Bearer              : GPRS");
+				if (settings.ActiveBearer == WAPSETTINGS_BEARER_GPRS) printf(" (active)");
 				if (settings.Settings[j].ManualLogin) {
-					printmsg("Login Type          : Manual\n");
+					printmsg("\nLogin Type          : Manual\n");
 				} else {
-					printmsg("Login Type          : Automatic\n");
+					printmsg("\nLogin Type          : Automatic\n");
 				}
 				if (settings.Settings[j].IsNormalAuthentication) {
 					printmsg("Authentication type : Normal\n");
@@ -4634,7 +4713,7 @@ static void GetFileSystem(int argc, char *argv[])
 {
 	bool 			Start = true;
 	GSM_File	 	Files[500];
-	int			FilesNum = 0, Level = 1, j, Free;
+	int			FilesNum = 0, j, Free;
 
 	GSM_Init(true);
 
@@ -4644,29 +4723,24 @@ static void GetFileSystem(int argc, char *argv[])
 	    	Print_Error(error);
 
 		printf("%05i.",Files[FilesNum].ID);
-//		printf(" %03i %03i ",Files[FilesNum].ID,Files[FilesNum].ParentID);
-		if (FilesNum != 0) {
-			if (Files[FilesNum].ParentID != Files[FilesNum-1].ParentID) {
-				if (Files[FilesNum].ParentID == Files[FilesNum-1].ID) {
-					Level++;
-				} else {	
-					Level--;
-				}
+		if (argc > 2 && (mystrncasecmp(argv[2],"-flatall",0) || mystrncasecmp(argv[2],"-flat",0))) {
+			if (!Files[FilesNum].Folder) {
+				if (mystrncasecmp(argv[2],"-flatall",0)) {
+					if (!Files[FilesNum].ModifiedEmpty) {
+						printf(" %30s",OSDateTime(Files[FilesNum].Modified,false));
+					} else printf(" %30c",0x20);
+					printf(" %9i",Files[FilesNum].Used);
+					printf(" ");
+				} else printf("|-- ");
+			} else printf("Folder ");
+		} else {
+			if (Files[FilesNum].Level != 1) {
+				for (j=0;j<Files[FilesNum].Level-2;j++) printf(" |   ");
+				printf(" |-- ");
 			}
+			if (Files[FilesNum].Folder) printf("Folder ");
 		}
-		if (Level != 1) {
-			j = 1;
-			while (j != Level-1) {
-				printf(" |   ");
-				j++;
-			};
-			printf(" |-- ");
-		}
-		if (Files[FilesNum].Folder) printf("Folder ");
 		printf("\"%s\"",DecodeUnicodeString(Files[FilesNum].Name));
-		if (!Files[FilesNum].Folder) {
-			printf(" (size %i)",Files[FilesNum].Used);
-		}
 		printf("\n");
 
 		Start = false;
@@ -4746,26 +4820,45 @@ static void GetFiles(int argc, char *argv[])
 static void AddFile(int argc, char *argv[])
 {
 	GSM_File		File;
-	int			i;
-	FILE			*file;
+	int			Pos = 0;
 
-	File.Buffer = malloc(100000);
-	File.Used   = 100000;
-	File.ID	    = atoi(argv[2]);
-
-	file = fopen(argv[3],"rb");
-	if (!file) Print_Error(GE_CANTOPENFILE);
-	i = fread(File.Buffer,1,100000,file);
-	fclose(file);
-	File.Buffer = realloc(File.Buffer,i);
-	File.Used   = i;
-
+	File.Buffer 	= NULL;
+	File.ID		= atoi(argv[2]);
+	error = GSM_ReadFile(argv[3], &File);
+	Print_Error(error);
 	EncodeUnicode(File.Name,argv[3],strlen(argv[3]));
+
+	if (argc > 4) {
+		File.Type = GSM_File_Other;
+		if (mystrncasecmp(argv[4],"JAR",0)) {
+			File.Type = GSM_File_Java_JAR;
+		} else if (mystrncasecmp(argv[4],"JPG",0)) {
+			File.Type = GSM_File_Image_JPG;
+		} else if (mystrncasecmp(argv[4],"BMP",0)) {
+			File.Type = GSM_File_Image_BMP;
+		} else if (mystrncasecmp(argv[4],"GIF",0)) {
+			File.Type = GSM_File_Image_GIF;
+		} else if (mystrncasecmp(argv[4],"PNG",0)) {
+			File.Type = GSM_File_Image_PNG;
+		} else if (mystrncasecmp(argv[4],"MIDI",0)) {
+			File.Type = GSM_File_Ringtone_MIDI;
+		} else {
+			printmsg("What file type (\"%s\") ?\n",argv[4]);
+			exit(-1);
+		}		
+	} else {
+		GSM_IdentifyFileFormat(&File);
+	}
 
 	GSM_Init(true);
 
-	error = Phone->AddFile(&s,&File);
-    	Print_Error(error);
+	error = GE_NONE;
+	while (error == GE_NONE) {
+		error = Phone->AddFilePart(&s,&File,&Pos);
+	    	if (error != GE_EMPTY) Print_Error(error);
+		printmsgerr("%cWriting: %i percent",13,Pos*100/File.Used);
+	}
+	printmsgerr("\n");
 
 	free(File.Buffer);
 	GSM_Terminate();
@@ -4786,6 +4879,27 @@ static void AddFolder(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+struct NokiaFolderInfo {
+	char 	*parameter;
+	char	*folder;
+	int 	level;
+};
+
+static struct NokiaFolderInfo Folder[] = {
+	{"MMSUnreadInbox",	"INBOX",	3},
+	{"MMSReadInbox",	"INBOX",	3},
+	{"MMSOutbox",		"OUTBOX",	3},
+	{"MMSSent",		"SENT",		3},
+	{"MMSDrafts",		"DRAFTS",	3},
+	{"Gallery",		"Graphics",	3}, /* 3510i */
+	{"Gallery",		"Images",	3}, /* 6610  */
+	{"Gallery",		"Pictures",	2}, /* 3510  */
+	{"Tones",		"Tones",	3},
+	{"Application",		"applications",	3},
+	{"Game",		"games",	3},
+	{"",			"",		0}
+};
+
 static void NokiaAddFile(int argc, char *argv[])
 {
 	GSM_File		File, Files[500];
@@ -4794,66 +4908,52 @@ static void NokiaAddFile(int argc, char *argv[])
 	time_t     		t_time1,t_time2;
 	unsigned char 		buffer[2000],JAR[500],Vendor[500],Name[500];
 	bool 			Start = true, Found = false;
-	int			FilesNum = 0, Level = 1;
+	int			FilesNum = 0, i = 0, FileID, Pos;
 
-	if (mystrncasecmp(argv[2],"MMSUnreadInbox",0)) {
-		EncodeUnicode(buffer,"INBOX",5);
-	} else if (mystrncasecmp(argv[2],"MMSReadInbox",0)) {
-		EncodeUnicode(buffer,"INBOX",5);
-	} else if (mystrncasecmp(argv[2],"MMSOutbox",0)) {
-		EncodeUnicode(buffer,"OUTBOX",6);
-	} else if (mystrncasecmp(argv[2],"MMSSent",0)) {
-		EncodeUnicode(buffer,"SENT",4);
-	} else if (mystrncasecmp(argv[2],"MMSDrafts",0)) {
-		EncodeUnicode(buffer,"DRAFTS",6);
-	} else if (mystrncasecmp(argv[2],"Gallery",0)) {
-		EncodeUnicode(buffer,"Graphics",8);
-		EncodeUnicode(Name,"Pictures", 8); /* 3510 */
-	} else if (mystrncasecmp(argv[2],"Tones",0)) {
-		EncodeUnicode(buffer,"Tones", 5);
-	} else if (mystrncasecmp(argv[2],"Application",0)) {
-		EncodeUnicode(buffer,"applications", 12);
-	} else if (mystrncasecmp(argv[2],"Game",0)) {
-		EncodeUnicode(buffer,"games", 5);
-	} else {
+	while (Folder[i].level != 0) {
+		if (mystrncasecmp(argv[2],Folder[i].parameter,0)) {
+			Found = true;
+			break;
+		}
+		i++;
+	}
+	if (!Found) {
 		printmsg("What folder type (\"%s\") ?\n",argv[2]);
 		exit(-1);
 	}
 
 	GSM_Init(true);
 
+	printmsgerr("Searching for phone folder: ");
 	while (1) {
 		error = Phone->GetNextFileFolder(&s,&Files[FilesNum],Start);
 		if (error == GE_EMPTY) break;
 	    	Print_Error(error);
 
-		if (FilesNum != 0) {
-			if (Files[FilesNum].ParentID != Files[FilesNum-1].ParentID) {
-				if (Files[FilesNum].ParentID == Files[FilesNum-1].ID) {
-					Level++;
-				} else {	
-					Level--;
-				}
-			}
-		}
 		if (Files[FilesNum].Folder) {
-			if (Level == 3 && mywstrncasecmp(Files[FilesNum].Name,buffer,0)) {
-				Found = true;
-				break;
-			}
-			if (mystrncasecmp(argv[2],"Gallery",0)) {
-				if (Level == 2 && mywstrncasecmp(Files[FilesNum].Name,Name,0)) {
+			dprintf("folder %s level %i\n",DecodeUnicodeString(Files[FilesNum].Name),Files[FilesNum].Level);
+			Found 	= false;
+			i 	= 0;
+			while (Folder[i].level != 0) {
+				EncodeUnicode(buffer,Folder[i].folder,strlen(Folder[i].folder));
+				if (mystrncasecmp(argv[2],Folder[i].parameter,0)  &&
+				    mywstrncasecmp(Files[FilesNum].Name,buffer,0) &&
+				    Files[FilesNum].Level == Folder[i].level) {
 					Found = true;
 					break;
 				}
+				i++;
 			}
+			if (Found) break;
 		}
+		printmsgerr("*");
 
 		Start = false;
 		FilesNum++;
 	}
+	printmsgerr("\n");
 	if (!Found) {
-		printmsg("Folder \"%s\" not found !\n",DecodeUnicodeString(buffer));
+		printmsg("Folder not found. Probably function not supported !\n");
 		GSM_Terminate();
 		exit(-1);
 	}
@@ -4885,14 +4985,21 @@ static void NokiaAddFile(int argc, char *argv[])
 		File.ID	= Files[FilesNum].ID;
 		error 	= Phone->AddFolder(&s,&File);
 	    	Print_Error(error);
-		Level = File.ID;
+		FileID = File.ID;
 
 		/* adding jad file */
 		strcpy(buffer,JAR);
 		buffer[strlen(buffer) - 1] = 'd';
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
-		error = Phone->AddFile(&s,&File);
-	    	Print_Error(error);	
+		File.Type = GSM_File_Other;
+		error 	= GE_NONE;
+		Pos	= 0;
+		while (error == GE_NONE) {
+			error = Phone->AddFilePart(&s,&File,&Pos);
+		    	if (error != GE_EMPTY) Print_Error(error);
+			printmsgerr("%cWriting JAD file: %i percent",13,Pos*100/File.Used);
+		}
+		printmsgerr("\n");
 
 		/* reading jar file */
 		sprintf(buffer,"%s.jar",argv[3]);
@@ -4900,11 +5007,18 @@ static void NokiaAddFile(int argc, char *argv[])
 		Print_Error(error);
 
 		/* adding jar file */
-		File.ID = Level;
+		File.ID = FileID;
 		strcpy(buffer,JAR);
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
-		error = Phone->AddFile(&s,&File);
-	    	Print_Error(error);	
+		File.Type = GSM_File_Java_JAR;
+		error 	= GE_NONE;
+		Pos	= 0;
+		while (error == GE_NONE) {
+			error = Phone->AddFilePart(&s,&File,&Pos);
+		    	if (error != GE_EMPTY) Print_Error(error);
+			printmsgerr("%cWriting JAR file: %i percent",13,Pos*100/File.Used);
+		}
+		printmsgerr("\n");
 
 		free(File.Buffer);
 		GSM_Terminate();
@@ -4913,6 +5027,7 @@ static void NokiaAddFile(int argc, char *argv[])
 
 	if (mystrncasecmp(argv[2],"Gallery",0) || mystrncasecmp(argv[2],"Tones",0)) {
 		strcpy(buffer,argv[3]);
+		if (argc>4) strcpy(buffer,argv[4]);
 	} else { /* MMS things */
 		DT2.Year   = 2001;
 		DT2.Month  = 12;
@@ -4951,9 +5066,16 @@ static void NokiaAddFile(int argc, char *argv[])
 
 	File.ID	= Files[FilesNum].ID;
 	EncodeUnicode(File.Name,buffer,strlen(buffer));
+	GSM_IdentifyFileFormat(&File);
 
-	error = Phone->AddFile(&s,&File);
-    	Print_Error(error);
+	error 	= GE_NONE;
+	Pos	= 0;
+	while (error == GE_NONE) {
+		error = Phone->AddFilePart(&s,&File,&Pos);
+	    	if (error != GE_EMPTY) Print_Error(error);
+		printmsgerr("%cWriting file: %i percent",13,Pos*100/File.Used);
+	}
+	printmsgerr("\n");
 
 	free(File.Buffer);
 	GSM_Terminate();
@@ -4992,13 +5114,14 @@ static void usage(void)
  	printf("gammu --getfmstation start [stop]\n\n");
 
 	printf("gammu --getfiles file1ID file2ID ...\n");
-	printf("gammu --getfilesystem\n");
+	printf("gammu --getfilesystem [-flatall|-flat]\n");
 	printf("gammu --deletefile fileID\n");
 	printf("gammu --addfolder parentfolderID name\n");
-	printf("gammu --addfile folderID name\n");
+	printf("gammu --addfile folderID name [JAR|BMP|PNG|GIF|JPG|MIDI]\n");
 	printf("gammu --nokiaaddfile MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent\n");
 	printf("                     file sender title\n");
-	printf("gammu --nokiaaddfile Application|Game|Gallery|Tones file\n\n");
+	printf("gammu --nokiaaddfile Application|Game file\n");
+	printf("gammu --nokiaaddfile Gallery|Tones file [name]\n\n");
 
 	printf("gammu --getdatetime\n");
 	printf("gammu --setdatetime\n");
@@ -5038,7 +5161,8 @@ static void usage(void)
 
 	printf("gammu --getwapbookmark start [stop]\n");
 	printf("gammu --deletewapbookmark start [stop]\n");
-	printf("gammu --getwapsettings start [stop]\n\n");
+	printf("gammu --getwapsettings start [stop]\n");
+	printf("gammu --getmmssettings start [stop]\n\n");
 
 	printf("gammu --getbitmap STARTUP [file]\n");
 	printf("gammu --getbitmap CALLER location [file]\n");
@@ -5049,6 +5173,7 @@ static void usage(void)
 
 	printf("gammu --setbitmap STARTUP file|1|2|3\n");
 	printf("gammu --setbitmap COLOURSTARTUP [fileID]\n");
+	printf("gammu --setbitmap WALLPAPER fileID\n");
 	printf("gammu --setbitmap CALLER location [file]\n");
 	printf("gammu --setbitmap OPERATOR [file [netcode]]\n");
 	printf("gammu --setbitmap COLOUROPERATOR [fileID [netcode]]\n");
@@ -5072,10 +5197,14 @@ static void usage(void)
 	printf("                              [-smscnumber number][-unread][-unsent][-read]\n");
 	printf("gammu --savesms CALLER file [-folder number][-sender number][-unread]\n");
 	printf("                            [-reply][-smscset number][-smscnumber number]\n");
-	printf("                            [-unsent][-read]\n");
+	printf("                            [-unsent][-unread][-read]\n");
 	printf("gammu --savesms PICTURE file [-folder number][-sender number][-unicode]\n");
 	printf("                             [-smscset number][-smscnumber number][-read]\n");
 	printf("                             [-text text][-reply][-unread][-unsent]\n");
+	printf("gammu --savesms MMSINDICATOR URL Title Sender [-folder number][-sender number]\n");
+	printf("                                              [-smscnumber number][-unread]\n");
+	printf("                                              [-smscset number][-unsent][-read]\n");
+	printf("                                              [-unread][-reply]\n");
 #ifdef GSM_ENABLE_BACKUP
 	printf("gammu --savesms BOOKMARK file location [-folder number][-reply][-unsent]\n");
 	printf("                                       [-sender number][-smscset number]\n");
@@ -5107,7 +5236,7 @@ static void usage(void)
 	printf("                    [-tone10long file][-tone12long file][-toneSElong file]\n");
 	printf("                    [-tone10 file][-tone12 file][-toneSE file]\n");
 	printf("                    [-protected number][-variablebitmaplong file]\n");
-	printf("                    [-variablebitmap file][-fixedbitmap file]\n");
+	printf("                    [-variablebitmap file][-fixedbitmap file]\n\n");
 
 	printf("gammu --sendsms TEXT destination [-reply][-flash][-smscset number]\n");
 	printf("                                 [-smscnumber number][-len len]\n");
@@ -5132,6 +5261,10 @@ static void usage(void)
 	printf("                                         [-report][-smscnumber number]\n");
 	printf("                                         [-unicode][-text text][-validity \n");
 	printf("                                         HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\n");
+	printf("gammu --sendsms MMSINDICATOR destination URL Title Sender [-reply]\n");
+	printf("                                        [-report][-smscnumber number][-validity \n");
+	printf("                                        HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]\n");
+	printf("                                        [-smscset number]\n");
 
 #ifdef GSM_ENABLE_BACKUP
 	printf("gammu --sendsms BOOKMARK destination file location [-smscset number]\n");
@@ -5236,9 +5369,9 @@ static GSM_Parameters Parameters[] = {
 	{"--nokiasetphonemenus",	0, 0, NokiaSetPhoneMenus	},
 #endif
 	{"--addfolder",			2, 2, AddFolder			},
-	{"--getfilesystem",		0, 0, GetFileSystem		},
+	{"--getfilesystem",		0, 1, GetFileSystem		},
 	{"--getfiles",			1,20, GetFiles			},
-	{"--addfile",			2, 2, AddFile			},
+	{"--addfile",			2, 3, AddFile			},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile		},
 	{"--deletefiles",		1,20, DeleteFiles		},
 	{"--playringtone",		1, 1, PlayRingtone 		},
@@ -5280,7 +5413,8 @@ static GSM_Parameters Parameters[] = {
 	{"--entersecuritycode",		2, 2, EnterSecurityCode		},
 	{"--deletewapbookmark", 	1, 2, DeleteWAPBookmark 	},
 	{"--getwapbookmark",		1, 2, GetWAPBookmark		},
-	{"--getwapsettings",		1, 2, GetWAPSettings		},
+	{"--getwapsettings",		1, 2, GetWAPMMSSettings		},
+	{"--getmmssettings",		1, 2, GetWAPMMSSettings		},
 	{"--getbitmap",			1, 3, GetBitmap			},
 	{"--setbitmap",			1, 4, SetBitmap			},
 	{"--savesms",			1,30, SendSaveSMS		},

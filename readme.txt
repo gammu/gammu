@@ -251,9 +251,8 @@ A  Nokia section
       didn't have such problems. If want, test it. If works, be happy :-)
 
    11.DCT3 phones (3330, 3410, 5210, 5510, 62xx, ...) with WAP settings
-      Getting/setting was done with 6210 5.56. It's very messy in these phones
-      and probably in other models and some concrete firmware can be different.
-      Please inform about incompatibilities.
+      It's very messy (random) in these phones and in some situations it can
+      give incorrect results (like mixing sets from different sets).
 
    12.can't transfer ringtones in binary format from DCT3 to DCT4 phone
       * You can only try to convert binary DCT3 ringtone to RTTL (using
@@ -268,7 +267,7 @@ A  Nokia section
       phone, please report model and firmware version.
 
    15.5100, 6100, 6610, 7210, 7250
-      * I don't have ToDo and FM support
+      * I don't have ToDo, FM support, restoring pbk, SyncMl settings, Notes
       You need to provide sniffs
 
    AT section
@@ -295,9 +294,9 @@ A. 1.Nokia DCT3 (3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|
    2.Nokia DCT4 (3510|3510i|3530|5100|6100|6310|6310i|6510|6610|7210|8310|8910)
      and compatible
 
-     There is supported MBUS, FBUS, DLR3, Infrared, at19200. No support for
-     DKU5 and Bluetooth. No support for colour things, locking WAP settings,
-     WAP bookmarks, enabling netmonitor.
+     There is supported MBUS, FBUS, DLR3, Infrared, at19200, BlueTooth.
+     No support for DKU5. No support for locking WAP settings, locking
+     WAP bookmarks, enabling netmonitor and few others.
 
    3.Siemens M20, MC35, SL45 and compatible
 
@@ -425,8 +424,8 @@ A. Using cable. Each phone has connector on bottom (like in 5110) or under
                    systems, in Linux requires enabling infrared in kernel.
                    Used in all new phones. "irda" in gammurc.
 
-   Using bluetooth. Under Linux works 100% with Nokia 6210 (dlr3blue), works
-   also with each AT phone (atblue).
+   Using bluetooth. Works OK in all situations exluding one (Microsoft stack
+   and AT commands)
 
    I will also write few words about flasher cable. It's different and
    connected to paraller (LPT) port and allows to read/write flash (internal

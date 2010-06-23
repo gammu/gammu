@@ -20,6 +20,7 @@ typedef struct {
 
 	int				FilesLocations[500];
 	int				FilesParents[500];
+	int				FilesLevels[500];
 	int				FilesLocationsUsed;
 	int				FilesLocationsCurrent;
 

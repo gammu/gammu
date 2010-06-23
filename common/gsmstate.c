@@ -443,36 +443,38 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned char *buffer,
 
 		msg = s->Phone.Data.RequestMsg;
 
-		switch (Phone->DispatchError) {		
-		case GE_UNKNOWNRESPONSE:
-		case GE_UNKNOWNFRAME:
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE)
-			{
-				if (Phone->DispatchError == GE_UNKNOWNFRAME) {
-					smprintf(s, "UNKNOWN frame. If you want, PLEASE report it (see /readme.txt). Thank you\n");
-				} else {
-					smprintf(s, "UNKNOWN response. If you want, PLEASE report it (see /readme.txt). Thank you\n");
+		if (strcmp(s->Phone.Functions->models,"NAUTO")) {
+			switch (Phone->DispatchError) {		
+			case GE_UNKNOWNRESPONSE:
+			case GE_UNKNOWNFRAME:
+				if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
+				    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE)
+				{
+					if (Phone->DispatchError == GE_UNKNOWNFRAME) {
+						smprintf(s, "UNKNOWN frame. If you want, PLEASE report it (see /readme.txt). Thank you\n");
+					} else {
+						smprintf(s, "UNKNOWN response. If you want, PLEASE report it (see /readme.txt). Thank you\n");
+					}
+					if (length != 0) {
+						smprintf(s,"Last sent message ");
+						smprintf(s, "0x%02x / 0x%04x", type, length);
+						DumpMessage(s->di.df, buffer, length);
+					}
+					smprintf(s, "Received frame ");
+					smprintf(s, "0x%02x / 0x%04x", msg->Type, msg->Length);
+					DumpMessage(s->di.df, msg->Buffer, msg->Length);
+					smprintf(s, "\n");
 				}
-				if (length != 0) {
-					smprintf(s,"Last sent message ");
-					smprintf(s, "0x%02x / 0x%04x", type, length);
-					DumpMessage(s->di.df, buffer, length);
-				}
-				smprintf(s, "Received frame ");
-				smprintf(s, "0x%02x / 0x%04x", msg->Type, msg->Length);
-				DumpMessage(s->di.df, msg->Buffer, msg->Length);
-				smprintf(s, "\n");
+				if (Phone->DispatchError == GE_UNKNOWNFRAME) Phone->DispatchError=GE_TIMEOUT;
+				break;
+			case GE_FRAMENOTREQUESTED:
+				dprintf("[Frame not requested in this moment]\n");
+				Phone->DispatchError=GE_TIMEOUT;
+				break;
+			default:
+				break;
 			}
-			if (Phone->DispatchError == GE_UNKNOWNFRAME) Phone->DispatchError=GE_TIMEOUT;
-			break;
-		case GE_FRAMENOTREQUESTED:
-			dprintf("[Frame not requested in this moment]\n");
-			Phone->DispatchError=GE_TIMEOUT;
-			break;
-		default:
-			break;
-		}	
+		}
 		/* Request completed */
 		if (Phone->RequestID==ID_None) return Phone->DispatchError;
 
@@ -742,7 +744,7 @@ static OnePhoneModel allmodels[] = {
 	{"3410" ,"NHM-2" ,"",           {F_RING_SM,F_CAL33,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
-	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_NOTODO,F_PBK35,F_NEWCALENDAR,0}},
+	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_NOTODO,F_PBK35,F_NEWCALENDAR,F_NOMMS,0}},
 	{"3510i","RH-9"   ,"",          {F_CAL35,F_NOTODO,F_PBK35,F_NEWCALENDAR,0}},
 	{"3530" ,"RH-9"   ,"",          {F_CAL35,F_NOTODO,F_PBK35,F_NEWCALENDAR,0}},
 #endif
@@ -776,10 +778,12 @@ static OnePhoneModel allmodels[] = {
 	{"6250" ,"NHM-3" ,"Nokia 6250", {0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"6310" ,"NPE-4" ,"Nokia 6310", {F_NOMIDI,0}},
-	{"6310i","NPL-1" ,"Nokia 6310i",{F_NOMIDI,F_NEWCALENDAR,F_BLUETOOTH,0}},
-	{"6510" ,"NPM-9" ,"Nokia 6510", {F_NOMIDI,F_RADIO,F_NOFILESYSTEM,0}},
+	{"6310" ,"NPE-4" ,"Nokia 6310", {F_NOMIDI,F_NOMMS,0}},
+	{"6310i","NPL-1" ,"Nokia 6310i",{F_NOMIDI,F_NEWCALENDAR,F_BLUETOOTH,F_NOMMS,0}},
+	{"6510" ,"NPM-9" ,"Nokia 6510", {F_NOMIDI,F_RADIO,F_NOFILESYSTEM,F_NOMMS,0}},
 	{"6610" ,"NHL-4U","Nokia 6610", {F_RADIO,F_NOTODO,F_NEWCALENDAR,0}},
+	{"6800" ,"NSB-9" ,"Nokia 6800", {F_RADIO,F_NOTODO,F_NEWCALENDAR,0}},
+	{"6800" ,"NHL-6" ,"Nokia 6800", {F_RADIO,F_NOTODO,F_NEWCALENDAR,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"7110" ,"NSE-5" ,"Nokia 7110", {0}},
@@ -798,8 +802,8 @@ static OnePhoneModel allmodels[] = {
 	{"8290" ,"NSB-7" ,"Nokia 8290", {F_NOWAP,F_NOSTARTANI,F_NOPBKUNICODE,F_NOPICTUREUNI,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"8310" ,"NHM-7" ,"Nokia 8310", {F_NOMIDI,F_RADIO,F_NOTODO,F_NOFILESYSTEM,0}},
-	{"8390" ,"NSB-8" ,"Nokia 8390", {F_NOMIDI,F_NOTODO,0}},
+	{"8310" ,"NHM-7" ,"Nokia 8310", {F_NOMIDI,F_RADIO,F_NOTODO,F_NOFILESYSTEM,F_NOMMS,0}},
+	{"8390" ,"NSB-8" ,"Nokia 8390", {F_NOMIDI,F_NOTODO,F_NOMMS,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6110)
 	{"8850" ,"NSM-2" ,"Nokia 8850", {0}},
@@ -807,7 +811,7 @@ static OnePhoneModel allmodels[] = {
 	{"8890" ,"NSB-6" ,"Nokia 8890", {0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"8910" ,"NHM-4" ,"Nokia 8910", {F_NOMIDI,F_NOFILESYSTEM,0}},
+	{"8910" ,"NHM-4" ,"Nokia 8910", {F_NOMIDI,F_NOFILESYSTEM,F_NOMMS,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA9210
 	{"9210" ,"RAE-3" ,"",           {0}},

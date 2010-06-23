@@ -17,6 +17,30 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20030525 - 0.76
+* new functionality:
+  * auto model for Nokia doesn't report unknown frames
+  * sms backup files have info about Gammu
+  * full support for SMS with MMS indicator
+  * file system in DCT4:
+    * new formats for --getfilesystem (one flat, one flat with file size and
+      file date and one tree)
+    * adding file to DCT4 can be done in parts
+    * full support for JPG, PNG, BMP, GIF, MIDI, JAD files ID   (Ray Molenkamp)
+    * added setting colour wallpaper for DCT4                   (Ray Molenkamp)
+    * during adding something to phone Gammu checks, if file/folder
+      with specified name already exist. If yes, there is error returned
+  * added getting and setting activated bearer for WAP settings
+  * ID for N6800                                                   (Tom Nelson)
+  * full support for MMS settings in DCT4
+
+* fixes and improvements:
+  * file system in DCT4 & different folder             (Lim Swee Tat and other)
+    names for new models
+  * sms backup files are NOT saved in Unicode                    (Bharat Varma)
+  * improved infrared error codes
+  * improved allocation memory in AT protocol module             (Michal Cihar)
+
 20030518 - 0.75
 * new functionality:
   * setting files in DCT4 (adding to Gallery, Tones, MMS folders
