@@ -65,24 +65,12 @@ void GSM_GetCurrentDateTime (GSM_DateTime *Date)
 	}
 }
 
-time_t Fill_Time_T(GSM_DateTime DT, int TZ)
+time_t Fill_Time_T(GSM_DateTime DT)
 {
-	struct tm 	tm_starttime;
-	unsigned char 	buffer[30];
+	struct tm tm_starttime;
 
 	dbgprintf("  StartTime  : %02i-%02i-%04i %02i:%02i:%02i\n",
 		DT.Day,DT.Month,DT.Year,DT.Hour,DT.Minute,DT.Second);
-
-	if (TZ != 0) {
-#if defined(WIN32) || defined(__SVR4)
-	    sprintf(buffer,"TZ=PST+%i",TZ);
-	    putenv(buffer);
-#else
-	    sprintf(buffer,"PST+%i",TZ);
-	    setenv("TZ",buffer,1);
-#endif
-	}
-	tzset();
 
 	memset(&tm_starttime, 0, sizeof(tm_starttime));
 	tm_starttime.tm_year 	= DT.Year - 1900;
@@ -91,7 +79,7 @@ time_t Fill_Time_T(GSM_DateTime DT, int TZ)
 	tm_starttime.tm_hour 	= DT.Hour;
 	tm_starttime.tm_min  	= DT.Minute;
 	tm_starttime.tm_sec  	= DT.Second;
-	tm_starttime.tm_isdst	= 0;
+	tm_starttime.tm_isdst	= -1;
 
 	return mktime(&tm_starttime);
 }
@@ -100,7 +88,7 @@ void GetTimeDifference(unsigned long diff, GSM_DateTime *DT, bool Plus, int mult
 {
 	time_t t_time;
 
-	t_time = Fill_Time_T(*DT,8);
+	t_time = Fill_Time_T(*DT);
 
 	if (Plus) {
 		t_time 		+= diff*multi;

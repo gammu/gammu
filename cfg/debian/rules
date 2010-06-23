@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
-# Gammu rules file by Michal Cihar <michal@cihar.com>
+# Gammu rules file by Michal Čihař <michal@cihar.com>
 #
 # Based on
 # Sample debian/rules that uses debhelper.
@@ -29,46 +29,46 @@ endif
 DEBVER=$(shell head -1 debian/changelog.main | tr -d \n | cut -d\( -f2|cut -d \) -f1)
 OLDVER=$(shell echo $(DEBVER) | cut -d- -f1)
 OLDREL=$(shell echo $(DEBVER) | cut -d- -f2)
-VER=$(shell cat version)
-ifeq ($(OLDVER),$(VER))
-		REL=$(OLDREL).0
+VER=$(shell sed -e 's!,!.!g' version)
+ifeq (mainstream,$(findstring mainstream,$(DEB_BUILD_OPTIONS)))
+	REL=$(OLDREL)
 else
+	ifeq ($(OLDVER),$(VER))
+		REL=$(OLDREL).0
+	else
 		REL=0.0
+	endif
 endif
 
-config.status: configure
+configure-stamp:
 	dh_testdir
-	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
+	./configure \
+		CFLAGS=$(CFLAGS) \
 		--prefix=/usr \
 		--includedir=\$${prefix}/include \
 		--mandir=\$${prefix}/share/man \
 		--infodir=\$${prefix}/share/info \
 		--with-docdir=\$${prefix}/share/doc/gammu \
 		--with-localedir=\$${prefix}/share/gammu
+	touch configure-stamp
 
 
 build: build-stamp
 
-build-stamp:  changelog-stamp config.status
+build-stamp:  debian/changelog configure-stamp
 	dh_testdir
 
-	$(MAKE) makelib
+	$(MAKE) shared
 
 	touch build-stamp
 
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp 
-	rm -f changelog-stamp 
+	rm -f build-stamp
 	rm -f debian/changelog
-
-	# Add here commands to clean up after the build process.
-	-$(MAKE) distclean
-	#-test -r /usr/share/misc/config.sub && \
-	#  cp -f /usr/share/misc/config.sub config.sub
-	#-test -r /usr/share/misc/config.guess && \
-	#  cp -f /usr/share/misc/config.guess config.guess
+	rm -f configure-stamp
+	-$(MAKE) clean
 
 
 	dh_clean
@@ -77,10 +77,8 @@ install: build
 	dh_testdir
 	dh_testroot
 	dh_clean -k
-	dh_installdirs
-
-	# Add here commands to install the package into debian/tmp.
-	$(MAKE) installlib DESTDIR=$(CURDIR)/debian/tmp
+	dh_installdirs -A
+	$(MAKE) installshared DESTDIR=$(CURDIR)/debian/tmp
 
 
 # Build architecture-independent files here.
@@ -91,39 +89,29 @@ binary-indep: build install
 binary-arch: build install
 	dh_testdir
 	dh_testroot
-#	dh_installdebconf	
-#	dh_installdocs
 	dh_installexamples
 	dh_installmenu
-#	dh_installlogrotate
-#	dh_installemacsen
-#	dh_installpam
-#	dh_installmime
-#	dh_installinit
-#	dh_installcron
 	dh_installman
 	dh_installinfo
 	dh_installdocs
-#	dh_undocumented
 	dh_installchangelogs changelog
 	dh_link
 	dh_strip
 	dh_compress
 	dh_fixperms
 	dh_movefiles
-	for name in gammu libgammu libgammu-dev ; do install -m644 debian/bug.control debian/$$name/usr/share/bug/$$name/control ; done
-#	dh_makeshlibs
+	for name in gammu libgammu0 libgammu0-dev ; do install -m644 debian/bug.control debian/$$name/usr/share/bug/$$name/control ; done
+	dh_makeshlibs -V 'libgammu0 (= $(VER)-$(REL))'
+	dh_shlibdeps -L libgammu0 -l debian/libgammu0/usr/lib
 	dh_installdeb
-#	dh_perl
-	dh_shlibdeps
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb
 
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install 
+.PHONY: build clean binary-indep binary-arch binary install
 
-changelog-stamp:
+debian/changelog:
 ifeq (mainstream,$(findstring mainstream,$(DEB_BUILD_OPTIONS)))
 	cp debian/changelog.main debian/changelog
 else
@@ -135,4 +123,3 @@ else
 	echo >> debian/changelog
 	cat debian/changelog.main >> debian/changelog
 endif
-	touch changelog-stamp

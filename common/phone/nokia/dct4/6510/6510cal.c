@@ -138,7 +138,7 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	memcpy(&entry->Entries[0].Date,&Date,sizeof(GSM_DateTime));
 	entry->EntriesNum++;
 
-	GSM_GetCalendarRecurrance(msg.Buffer+40, msg.Buffer+46, entry);
+	GSM_GetCalendarRecurranceRepeat(msg.Buffer+40, msg.Buffer+46, entry);
 
 	if (entry->Type != GSM_CAL_BIRTHDAY) {
 		smprintf(s,"EndTime: %04i-%02i-%02i %02i:%02i\n",
@@ -521,6 +521,7 @@ static GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note
 	}
 
 	if (EndTime != -1) memcpy(&DT,&Note->Entries[EndTime].Date,sizeof(GSM_DateTime));
+
 	req[34]	= DT.Year / 256;
 	req[35]	= DT.Year % 256;
 	req[36]	= DT.Month;
@@ -532,7 +533,7 @@ static GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note
 		req[35]	= date_time.Year % 256;
 	}
 
-	GSM_SetCalendarRecurrance(req+40, req+52, Note);
+	GSM_SetCalendarRecurranceRepeat(req+40, req+52, Note);
 
 	if (Alarm != -1) {
 		memcpy(&DT,&Note->Entries[Time].Date,sizeof(GSM_DateTime));
@@ -540,8 +541,8 @@ static GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note
 			req[22] = 0x00; req[23] = 0x00; req[24] = 0x00; req[25] = 0x00;
 		}
 		if (NoteType == GSM_CAL_BIRTHDAY) DT.Year = date_time.Year;
-		t_time2   = Fill_Time_T(DT,8);
-		t_time1   = Fill_Time_T(Note->Entries[Alarm].Date,8);
+		t_time2   = Fill_Time_T(DT);
+		t_time1   = Fill_Time_T(Note->Entries[Alarm].Date);
 		diff	  = (t_time1-t_time2)/60;
 
 		smprintf(s, "  Difference : %li seconds or minutes\n", -diff);
@@ -1199,8 +1200,8 @@ static GSM_Error N6510_AddToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 		{
 			req[22] = 0x00; req[23] = 0x00; req[24] = 0x00; req[25] = 0x00;
 		}
-		t_time2   = Fill_Time_T(DT,8);
-		t_time1   = Fill_Time_T(ToDo->Entries[Alarm].Date,8);
+		t_time2   = Fill_Time_T(DT);
+		t_time1   = Fill_Time_T(ToDo->Entries[Alarm].Date);
 		diff	  = (t_time1-t_time2)/60;
 
 		smprintf(s, "  Difference : %li seconds or minutes\n", -diff);

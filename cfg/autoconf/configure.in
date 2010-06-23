@@ -31,6 +31,7 @@ fi
 dnl Checks for programs.
 AC_PATH_PROG(RM, rm, no)
 AC_PATH_PROG(MV, mv, no)
+AC_PATH_PROG(CP, cp, no)
 AC_PATH_PROG(LN, ln, no)
 AC_PATH_PROG(ECHO, echo, no)
 AC_PATH_PROG(INSTALL, install, no)
@@ -40,6 +41,8 @@ AC_PATH_PROG(RPMBUILD, rpm, no)
 AC_PATH_PROG(DOXYGEN, doxygen)
 AC_PATH_PROG(AR, ar)
 AC_PATH_PROG(RANLIB, ranlib)
+AC_PATH_PROG(FAKEROOT, fakeroot)
+AC_PATH_PROG(CHECKINSTALL, checkinstall)
 
 dnl Checks for library functions.
 AC_PROG_GCC_TRADITIONAL
@@ -56,10 +59,19 @@ dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS(dirent.h)
 AC_CHECK_HEADERS(sys/ioctl.h)
-AC_CHECK_HEADERS(mysql/mysql.h,
-        [mysql="yes"
-         LDLIBS="$LDLIBS $(mysql_config --libs)"],
-        [mysql="no"])
+
+AC_ARG_ENABLE(mysql,
+        [  --disable-mysql         Disable MySQL support in SMSD],
+        [mysql="no"
+         SMSD_LIBS=],
+        [AC_CHECK_HEADERS(mysql/mysql.h,
+            [mysql="yes"
+             SMSD_LIBS="$(mysql_config --libs)"],
+            [mysql="no"
+             SMSD_LIBS=])
+        ])
+AC_SUBST(SMSD_LIBS)
+
 AC_ARG_ENABLE(irda,
         [  --disable-irda          Disable all IrDA protocols],
         [irda="no"],
