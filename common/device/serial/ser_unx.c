@@ -37,7 +37,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
     /* O_NONBLOCK MUST be used here as the CLOCAL may be currently off
      * and if DCD is down the "open" syscall would be stuck wating for DCD.
      */
-    d->hPhone = open(s->Config.Device, O_RDWR | O_NOCTTY | O_NONBLOCK);
+    d->hPhone = open(s->CurrentConfig->Device, O_RDWR | O_NOCTTY | O_NONBLOCK);
     if (d->hPhone < 0) {
         GSM_OSErrorInfo(s,"open in serial_open");
         return GE_DEVICEOPENERROR;

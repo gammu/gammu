@@ -1398,11 +1398,11 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
  		smprintf(s, "SMS sent OK\n");
- 		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->Config.Device,0);
+ 		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,0);
 		return GE_NONE;
 	case AT_Reply_CMSError:
  		smprintf(s, "Error %i\n",Priv->ErrorCode);
- 		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->Config.Device,Priv->ErrorCode);
+ 		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,Priv->ErrorCode);
  		return ATGEN_HandleCMSError(s);
 	default:
 		break;
@@ -2201,7 +2201,7 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg, GSM_StateMachine *s)
      	    smprintf(s, "Calls canceled\n");
             call.CallIDAvailable = false;
             call.Status 	 = GN_CALL_CallLocalEnd;
-            if (s->User.IncomingCall) s->User.IncomingCall(s->Config.Device, call);
+            if (s->User.IncomingCall) s->User.IncomingCall(s->CurrentConfig->Device, call);
  
             return GE_NONE;
     	case AT_Reply_CMSError:
@@ -2472,7 +2472,7 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 	}
 	EncodeUnicode(call.PhoneNumber, num, strlen(num));
 
-	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL) s->User.IncomingCall(s->Config.Device, call);
+	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL) s->User.IncomingCall(s->CurrentConfig->Device, call);
 
 	return GE_NONE;
 }

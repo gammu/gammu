@@ -1,6 +1,11 @@
 
 #include <string.h>
 #include <stdlib.h>
+#ifdef WIN32
+#  include <io.h>
+#  include <sys/stat.h>
+#  include <fcntl.h>
+#endif
 
 #include "../misc/coding.h"
 #include "../gsmcomon.h"
@@ -56,6 +61,10 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 {
 	int 		i = 1000;
 	FILE		*file;
+#ifdef WIN32
+	struct _stat	fileinfo;
+	int		fh;
+#endif
 
 	file = fopen(FileName,"rb");
 	if (!file) return(GE_CANTOPENFILE);
@@ -69,8 +78,26 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 		File->Used = File->Used + i;
 	}
 	File->Buffer = realloc(File->Buffer,File->Used);
-
 	fclose(file);
+
+	File->ModifiedEmpty = true;
+#ifdef WIN32
+	fh = _open(FileName,_O_RDONLY);
+	if (fh != -1) {
+		if (_fstat(fh,&fileinfo) == 0) {
+			File->ModifiedEmpty = false;
+			dprintf("File info read correctly\n");
+			//st_mtime is time of last modification of file
+			Fill_GSM_DateTime(&File->Modified, fileinfo.st_mtime);
+			File->Modified.Year = File->Modified.Year + 1900;
+			dprintf("FileTime: %02i-%02i-%04i %02i:%02i:%02i\n",
+				File->Modified.Day,File->Modified.Month,File->Modified.Year,
+				File->Modified.Hour,File->Modified.Minute,File->Modified.Second);
+		}
+		_close(fh);
+	}
+#endif
+
 	return GE_NONE;
 }
 

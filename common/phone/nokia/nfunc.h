@@ -56,7 +56,6 @@ GSM_Error DCT3DCT4_GetCallDivert		(GSM_StateMachine *s, GSM_MultiCallDivert *div
 
 GSM_CalendarNoteType N71_65_FindCalendarType(GSM_CalendarNoteType Type, OnePhoneModel *model);
 void 		N71_65_GetCalendarRecurrance	(GSM_StateMachine *s, unsigned char *buffer, GSM_CalendarEntry *entry);
-void 		N71_65_GetTimeDiffence		(GSM_StateMachine *s, unsigned long diff, GSM_DateTime *DT, bool Plus, int multi);
 int 		NOKIA_SetUnicodeString		(GSM_StateMachine *s, unsigned char *dest, unsigned char *string, bool FullLength);
 void 		NOKIA_GetUnicodeString		(GSM_StateMachine *s, int *current, unsigned char *input, unsigned char *output, bool FullLength);
 GSM_MemoryType 	NOKIA_GetMemoryType 		(GSM_StateMachine *s, GSM_MemoryType memory_type, unsigned char *ID);

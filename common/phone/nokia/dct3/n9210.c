@@ -143,7 +143,7 @@ static GSM_Error N9210_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachi
 		sms.InboxFolder = true;
 		DCT3_DecodeSMSFrame(s, &sms,msg.Buffer+5);
 
-		s->User.IncomingSMS(s->Config.Device,sms);
+		s->User.IncomingSMS(s->CurrentConfig->Device,sms);
 	}
 	return GE_NONE;
 }

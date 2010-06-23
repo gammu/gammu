@@ -19,6 +19,8 @@ GSM_Error socket_close(GSM_StateMachine *s, int hPhone);
 GSM_Error 	lock_device	(const char* port, char **lock_device);
 bool 		unlock_device	(char **lock_file);
 
+int FindSerialSpeed(char *buffer);
+
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

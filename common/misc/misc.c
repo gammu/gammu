@@ -19,40 +19,41 @@
 char *DayOfWeek (int year, int month, int day)
 {
 	int 		p,q,r,w;
-	static char 	DayOfWeekChar;
+	static char 	DayOfWeekChar[10];
 
 	p=(14-month) / 12;
 	q=month+12*p-2;
 	r=year-p;
 	w=(day+(31*q) / 12 + r + r / 4 - r / 100 + r / 400) % 7;
-	strcpy(&DayOfWeekChar,"");
+	strcpy(DayOfWeekChar,"");
 	switch (w) {
-		case 0: strcpy(&DayOfWeekChar,"Sun"); break;
-		case 1: strcpy(&DayOfWeekChar,"Mon"); break;
-		case 2: strcpy(&DayOfWeekChar,"Tue"); break;
-		case 3: strcpy(&DayOfWeekChar,"Wed"); break;
-		case 4: strcpy(&DayOfWeekChar,"Thu"); break;
-		case 5: strcpy(&DayOfWeekChar,"Fri"); break;
-		case 6: strcpy(&DayOfWeekChar,"Sat"); break;
+		case 0: strcpy(DayOfWeekChar,"Sun"); break;
+		case 1: strcpy(DayOfWeekChar,"Mon"); break;
+		case 2: strcpy(DayOfWeekChar,"Tue"); break;
+		case 3: strcpy(DayOfWeekChar,"Wed"); break;
+		case 4: strcpy(DayOfWeekChar,"Thu"); break;
+		case 5: strcpy(DayOfWeekChar,"Fri"); break;
+		case 6: strcpy(DayOfWeekChar,"Sat"); break;
 	}
-	return &DayOfWeekChar;
+	return DayOfWeekChar;
 }
 
-void GSM_GetCurrentDateTime (GSM_DateTime *Date)
+void Fill_GSM_DateTime(GSM_DateTime *Date, time_t timet)
 {
-	struct tm		*now;
-	time_t			nowh;
+	struct tm *now;
 
-	nowh = time(NULL);
-	now  = localtime(&nowh);
-
+	now  		= localtime(&timet);
 	Date->Year	= now->tm_year;
 	Date->Month	= now->tm_mon+1;
 	Date->Day	= now->tm_mday;
 	Date->Hour	= now->tm_hour;
 	Date->Minute	= now->tm_min;
-	Date->Second	= now->tm_sec;
+	Date->Second	= now->tm_sec;	
+}
 
+void GSM_GetCurrentDateTime (GSM_DateTime *Date)
+{
+	Fill_GSM_DateTime(Date, time(NULL));
 	if (Date->Year<1900)
 	{
 		if (Date->Year>90) Date->Year = Date->Year+1900;
@@ -89,6 +90,24 @@ time_t Fill_Time_T(GSM_DateTime DT, int TZ)
 	tm_starttime.tm_isdst	= 0;
 	
 	return mktime(&tm_starttime);
+}
+
+void GetTimeDifference(unsigned long diff, GSM_DateTime *DT, bool Plus, int multi)
+{
+	time_t t_time;
+
+	t_time = Fill_Time_T(*DT,8);
+
+	if (Plus) {
+		t_time 		+= diff*multi;
+	} else {
+		t_time 		-= diff*multi;
+	}
+
+	Fill_GSM_DateTime(DT, t_time);
+	DT->Year = DT->Year + 1900;
+	dprintf("  EndTime    : %02i-%02i-%04i %02i:%02i:%02i\n",
+		DT->Day,DT->Month,DT->Year,DT->Hour,DT->Minute,DT->Second);
 }
 
 char *OSDateTime (GSM_DateTime dt, bool TimeZone)
@@ -388,31 +407,6 @@ void DumpMessage(FILE *df, const unsigned char *message, int messagesize)
 		smfprintf(df, "%*s %s", 4 * (16 - i % 16) - 1, "", buf);
 	}
 	smfprintf(df, "\n");
-}
-
-int FindSerialSpeed(char *buffer)
-{
-	switch (atoi(buffer)) {
-		case 50		: return 50;
-		case 75		: return 75;
-		case 110	: return 110;
-		case 134	: return 134;
-		case 150	: return 150;
-		case 200	: return 200;
-		case 300	: return 300;
-		case 600	: return 600;
-		case 1200	: return 1200;
-		case 1800	: return 1800;
-		case 2400	: return 2400;
-		case 4800	: return 4800;
-		case 9600	: return 9600;
-		case 19200	: return 19200;
-		case 38400	: return 38400;
-		case 57600	: return 57600;
-		case 115200	: return 115200;
-		case 230400	: return 230400;
-		default		: return 0;	
-	}
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

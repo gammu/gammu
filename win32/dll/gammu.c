@@ -160,7 +160,7 @@ static void CheckConnectionType(int  *phone,
 {
 	void (*PhoneCall) (int x, int s, boolean connected);
 
-	s[*phone].s.Config.Connection = connection_to_check;
+	s[*phone].s.CurrentConfig->Connection = connection_to_check;
 	*error=GSM_InitConnection(&s[*phone].s,2);
 	switch (*error) {
 	case GE_NONE:
@@ -205,19 +205,21 @@ GSM_Error WINAPI mystartconnection(int *phone,
 	}
 	if (*phone == 0) return GE_MOREMEMORY;
 
-	s[*phone].s.msg	 		= NULL;
-    	s[*phone].s.Config.Localize 	= "";
-	s[*phone].s.Config.SyncTime	= "";
-	s[*phone].s.Config.DebugFile 	= malloc( strlen(logfile)+1 );
-	if (s[*phone].s.Config.DebugFile == NULL) return GE_MOREMEMORY;
-	strcpy(s[*phone].s.Config.DebugFile,logfile);
-	strcpy(s[*phone].s.Config.DebugLevel,logfiletype);
-	s[*phone].s.Config.LockDevice	= "";
-	s[*phone].s.Config.StartInfo	= "yes";
-	s[*phone].s.Config.Device 	= malloc( strlen(device)+1 );
-	if (s[*phone].s.Config.Device == NULL) return GE_MOREMEMORY;
-	strcpy(s[*phone].s.Config.Device,device);
-	strcpy(s[*phone].s.Config.Model,model);
+	s[*phone].s.ConfigNum			= 1;
+	s[*phone].s.msg	 			= NULL;
+	s[*phone].s.CurrentConfig		= &s[*phone].s.Config[0];
+    	s[*phone].s.CurrentConfig->Localize 	= "";
+	s[*phone].s.CurrentConfig->SyncTime	= "";
+	s[*phone].s.CurrentConfig->DebugFile 	= malloc( strlen(logfile)+1 );
+	if (s[*phone].s.CurrentConfig->DebugFile == NULL) return GE_MOREMEMORY;
+	strcpy(s[*phone].s.CurrentConfig->DebugFile,logfile);
+	strcpy(s[*phone].s.CurrentConfig->DebugLevel,logfiletype);
+	s[*phone].s.CurrentConfig->LockDevice	= "";
+	s[*phone].s.CurrentConfig->StartInfo	= "yes";
+	s[*phone].s.CurrentConfig->Device 	= malloc( strlen(device)+1 );
+	if (s[*phone].s.CurrentConfig->Device == NULL) return GE_MOREMEMORY;
+	strcpy(s[*phone].s.CurrentConfig->Device,device);
+	strcpy(s[*phone].s.CurrentConfig->Model,model);
 
 	if (connection[0] == 0) {
 		CheckConnectionType(phone,connection,"at115200",&error,&error2,PhoneCallBack,SecurityCallBack,SMSCallBack);
@@ -247,9 +249,9 @@ GSM_Error WINAPI mystartconnection(int *phone,
 		strcpy(connection,"");
 		return GE_NOTCONNECTED;
 	} else {
-		s[*phone].s.Config.Connection = malloc( strlen(connection)+1 );
-		if (s[*phone].s.Config.Connection == NULL) return GE_MOREMEMORY;
-		strcpy(s[*phone].s.Config.Connection,connection);
+		s[*phone].s.CurrentConfig->Connection = malloc( strlen(connection)+1 );
+		if (s[*phone].s.CurrentConfig->Connection == NULL) return GE_MOREMEMORY;
+		strcpy(s[*phone].s.CurrentConfig->Connection,connection);
 		s[*phone].errors = 250;
 		CreatePhoneThread(phone,PhoneCallBack,SecurityCallBack,SMSCallBack);
 		return GE_NONE;
@@ -292,7 +294,7 @@ GSM_Error WINAPI mygetnextsmsmessage (int phone, GSM_MultiSMSMessage *sms, bool 
 	if (!s[phone].s.opened) return GE_NOTCONNECTED;
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
-	error=s[phone].s.Phone.Functions->GetNextSMSMessage(&s[phone].s,sms,start);
+	error=s[phone].s.Phone.Functions->GetNextSMS(&s[phone].s,sms,start);
 	SetErrorCounter(phone, error);
         ReleaseMutex(s[phone].Mutex);
 	if (error == GE_NONE) {
@@ -344,7 +346,7 @@ void SendSMSStatus (char *Device, int status)
 
 	for (i=0;i<10;i++) {
 		if (s[i].s.opened && s[i].Used) {
-			if (strcmp(s[i].s.Config.Device,Device)==0) {
+			if (strcmp(s[i].s.CurrentConfig->Device,Device)==0) {
 				if (status == 0) {
 					s[i].SendSMSStatus = GE_NONE;
 				} else {
@@ -375,7 +377,7 @@ GSM_Error WINAPI mysendsmsmessage (int phone, GSM_SMSMessage *sms, unsigned int 
 	s[phone].s.User.SendSMSStatus 	= SendSMSStatus;
 	s[phone].SendSMSStatus 		= GE_TIMEOUT;
         WaitForSingleObject(s[phone].Mutex, INFINITE );
-	error=s[phone].s.Phone.Functions->SendSMSMessage(&s[phone].s,&sms2);
+	error=s[phone].s.Phone.Functions->SendSMS(&s[phone].s,&sms2);
 	SetErrorCounter(phone, error);
 	if (error != GE_NONE) {
 	        ReleaseMutex(s[phone].Mutex);
@@ -428,7 +430,7 @@ GSM_Error WINAPI mysavesmsmessage (int phone, GSM_SMSMessage *sms)
 	}
 
         WaitForSingleObject(s[phone].Mutex, INFINITE );
-	error=s[phone].s.Phone.Functions->SaveSMSMessage(&s[phone].s,&sms2);
+	error=s[phone].s.Phone.Functions->SetSMS(&s[phone].s,&sms2);
 	SetErrorCounter(phone, error);
         ReleaseMutex(s[phone].Mutex);
 	return error;
@@ -510,7 +512,7 @@ GSM_Error WINAPI myreset(int phone, bool hard)
 
 GSM_Error WINAPI mysmscounter(int 		MessageLength,
 			      unsigned char 	*MessageBuffer,
-		    	      GSM_UDHHeader 	UDH,
+		    	      GSM_UDH	 	UDH,
 		    	      GSM_Coding_Type 	Coding,
 		    	      int 		*SMSNum,
 		    	      int 		*CharsLeft)

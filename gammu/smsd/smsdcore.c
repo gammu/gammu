@@ -62,7 +62,7 @@ void WriteSMSDLog(unsigned char *format, ...)
 		fprintf(smsd_log_file,"%s %4d/%02d/%02d %02d:%02d:%02d [%s]: %s\n",
 			DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
 			date_time.Year, date_time.Month, date_time.Day,
-			date_time.Hour, date_time.Minute, date_time.Second,s.Config.Device,Buffer);
+			date_time.Hour, date_time.Minute, date_time.Second,s.CurrentConfig->Device,Buffer);
 		fflush(smsd_log_file);
 	}
 }
@@ -94,7 +94,7 @@ void SMSD_ReadConfig(int argc, char *argv[], GSM_SMSDConfig *Config)
 	/* Include Numbers used, because we don't want create new variable */
 	Config->IncludeNumbers=CFG_FindLastSectionEntry(smsdcfgfile, "gammu", false);
 	if (Config->IncludeNumbers) {
-		CFG_ReadConfig(smsdcfgfile, &smsdcfg);
+		CFG_ReadConfig(smsdcfgfile, &smsdcfg, 0);
 		memcpy(&s.Config,&smsdcfg,sizeof(GSM_Config));
 	}
 

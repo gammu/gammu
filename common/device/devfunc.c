@@ -192,6 +192,31 @@ bool unlock_device(char **lock_file)
 #endif /* WIN32 */
 }
 
+int FindSerialSpeed(char *buffer)
+{
+	switch (atoi(buffer)) {
+		case 50		: return 50;
+		case 75		: return 75;
+		case 110	: return 110;
+		case 134	: return 134;
+		case 150	: return 150;
+		case 200	: return 200;
+		case 300	: return 300;
+		case 600	: return 600;
+		case 1200	: return 1200;
+		case 1800	: return 1800;
+		case 2400	: return 2400;
+		case 4800	: return 4800;
+		case 9600	: return 9600;
+		case 19200	: return 19200;
+		case 38400	: return 38400;
+		case 57600	: return 57600;
+		case 115200	: return 115200;
+		case 230400	: return 230400;
+		default		: return 0;	
+	}
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

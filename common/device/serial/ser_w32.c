@@ -45,7 +45,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
 	DCB 			dcb;
 
-	d->hPhone = CreateFile(	s->Config.Device,
+	d->hPhone = CreateFile(	s->CurrentConfig->Device,
 				GENERIC_READ | GENERIC_WRITE,
 				0,                    /* exclusive access */
 				NULL,                 /* no security attrs */

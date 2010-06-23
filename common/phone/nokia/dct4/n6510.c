@@ -67,7 +67,7 @@ static GSM_Error N6510_GetMemory (GSM_StateMachine *s, GSM_PhonebookEntry *entry
 
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
-	return GSM_WaitFor (s, req, 21, 0x03, 4, ID_GetMemory);
+	return GSM_WaitFor (s, req, 19, 0x03, 4, ID_GetMemory);
 }
 
 static GSM_Error N6510_ReplyGetMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2004,11 +2004,11 @@ static GSM_Error N6510_ReplySendSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 	switch (msg.Buffer[8]) {
 		case 0x00:
 			smprintf(s, "SMS sent OK\n");
-			if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->Config.Device,0);
+			if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,0);
 			return GE_NONE;
 		default:
 			smprintf(s, "SMS not sent OK, error code probably %i\n",msg.Buffer[8]);
-			if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->Config.Device,msg.Buffer[8]);
+			if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,msg.Buffer[8]);
 			return GE_NONE;
 	}
 }
@@ -2544,6 +2544,9 @@ static GSM_Error N6510_ReplyGetPPM(GSM_Protocol_Message msg, GSM_StateMachine *s
 		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, msg.Buffer+pos, len);
 #endif
 		switch (msg.Buffer[pos]) {
+		case 0x49:
+			smprintf(s, "hardware version\n");
+			break;
 		case 0x58:
 			pos += 3;
 			while (msg.Buffer[pos] != 0x00) pos++;
@@ -2827,7 +2830,7 @@ static GSM_Error N6510_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachi
 
 		N6510_DecodeSMSFrame(s, &sms, msg.Buffer+10);
 
-		s->User.IncomingSMS(s->Config.Device,sms);
+		s->User.IncomingSMS(s->CurrentConfig->Device,sms);
 	}
 	return GE_NONE;
 }
@@ -3016,7 +3019,7 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		diff += msg.Buffer[17];
 
 		memcpy(&entry->Entries[entry->EntriesNum].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
-		N71_65_GetTimeDiffence(s, diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
+		GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
 		smprintf(s, "Alarm date   : %02i-%02i-%04i %02i:%02i:%02i\n",
 			entry->Entries[entry->EntriesNum].Date.Day,   entry->Entries[entry->EntriesNum].Date.Month,
 			entry->Entries[entry->EntriesNum].Date.Year,  entry->Entries[entry->EntriesNum].Date.Hour,
@@ -3650,20 +3653,57 @@ static GSM_Error N6510_ReplyGetFileFolderInfo(GSM_Protocol_Message msg, GSM_Stat
 		if (!strncmp(DecodeUnicodeString(File->Name),"GMSTemp",7)) return GE_EMPTY;
 		if (File->Name[0] == 0x00 && File->Name[1] == 0x00) return GE_UNKNOWN;
 
+		i = msg.Buffer[8]*256+msg.Buffer[9];
+		dprintf("%02x %02x %02x %02x %02x %02x %02x %02x %02x\n",
+			msg.Buffer[i-5],msg.Buffer[i-4],msg.Buffer[i-3],
+			msg.Buffer[i-2],msg.Buffer[i-1],msg.Buffer[i],
+			msg.Buffer[i+1],msg.Buffer[i+2],msg.Buffer[i+3]);
+
+		File->Folder 	= false;
+		if (msg.Buffer[i-5] == 0x00) File->Folder 	= true;
+
 		File->ReadOnly 	= false;
 		File->Protected = false;
-		File->Folder 	= false;
-		i = msg.Buffer[8]*256+msg.Buffer[9];
-		dprintf("%02x %02x %02x %02x\n",msg.Buffer[i],msg.Buffer[i+1],msg.Buffer[i+2],msg.Buffer[i+3]);
+		File->System	= false;
+		File->Hidden	= false;
 		if (msg.Buffer[i+2] == 0x01) File->Protected 	= true;
-		if (msg.Buffer[i+3] == 0x01) File->Folder 	= true;
 		if (msg.Buffer[i+4] == 0x01) File->ReadOnly 	= true;
+		if (msg.Buffer[i+5] == 0x01) File->Hidden	= true;
+		if (msg.Buffer[i+6] == 0x01) File->System	= true;//fixme
 
 		File->ModifiedEmpty = false;
 		NOKIA_DecodeDateTime(s, msg.Buffer+i-22, &File->Modified);
 		if (File->Modified.Year == 0x00) File->ModifiedEmpty = true;
 		dprintf("%02x %02x %02x %02x\n",msg.Buffer[i-22],msg.Buffer[i-21],msg.Buffer[i-20],msg.Buffer[i-19]);
 
+		Priv->FileToken = msg.Buffer[i-10]*256+msg.Buffer[i-9];
+		Priv->ParentID  = msg.Buffer[i]*256+msg.Buffer[i+1];
+		smprintf(s,"ParentID is %i\n",Priv->ParentID);
+
+		File->Type = GSM_File_Other;
+		if (msg.Length > 240){
+			i = 227;
+			if (msg.Buffer[i]==0x02 && msg.Buffer[i+2]==0x01)
+				File->Type = GSM_File_Image_JPG;
+			else if (msg.Buffer[i]==0x02 && msg.Buffer[i+2]==0x02)
+				File->Type = GSM_File_Image_BMP;
+			else if (msg.Buffer[i]==0x02 && msg.Buffer[i+2]==0x07)
+				File->Type = GSM_File_Image_BMP;
+			else if (msg.Buffer[i]==0x02 && msg.Buffer[i+2]==0x03)
+				File->Type = GSM_File_Image_PNG;
+			else if (msg.Buffer[i]==0x02 && msg.Buffer[i+2]==0x05)
+				File->Type = GSM_File_Image_GIF;
+			else if (msg.Buffer[i]==0x02 && msg.Buffer[i+2]==0x09)
+				File->Type = GSM_File_Image_WBMP;
+			else if (msg.Buffer[i]==0x10 && msg.Buffer[i+2]==0x01)
+				File->Type = GSM_File_Java_JAR;
+			else if (msg.Buffer[i]==0x04 && msg.Buffer[i+2]==0x02)
+				File->Type = GSM_File_Ringtone_MIDI;
+#if DEVELOP
+			else if (msg.Buffer[i]==0x00 && msg.Buffer[i+2]==0x01)
+				File->Type = GSM_File_MMS;
+#endif
+		}
 		return GE_NONE;	
 	case 0x2F:
 		smprintf(s,"File or folder used bytes received\n");
@@ -3939,9 +3979,15 @@ static GSM_Error N6510_SetReadOnly(GSM_StateMachine *s, unsigned char *ID, bool 
 
 static GSM_Error N6510_ReplyAddFileHeader(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	smprintf(s,"File header added\n");
-	sprintf(s->Phone.Data.File->ID_FullName,"%i",msg.Buffer[9]);
-	return GE_NONE;
+	switch (msg.Buffer[3]) {
+	case 0x03:
+		smprintf(s,"File header added\n");
+		sprintf(s->Phone.Data.File->ID_FullName,"%i",msg.Buffer[9]);
+		return GE_NONE;
+	case 0x13:
+		return GE_NONE;
+	}
+	return GE_UNKNOWNRESPONSE;
 }
 
 static GSM_Error N6510_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -3951,6 +3997,8 @@ static GSM_Error N6510_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMachi
 
 static GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos)
 {
+	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
+	GSM_File		File2;
 	GSM_Error		error;
 	int			j;
 	unsigned char 		Header[400] = {
@@ -3982,48 +4030,34 @@ static GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos
 		CopyUnicodeString(Header+14,File->Name);
 		Header[224] = File->Used / 256;
 		Header[225] = File->Used % 256;
+		switch(File->Type) {
+			case GSM_File_Image_JPG    : Header[231]=0x02; Header[233]=0x01; break;
+			case GSM_File_Image_BMP    : Header[231]=0x02; Header[233]=0x02; break;
+			case GSM_File_Image_PNG    : Header[231]=0x02; Header[233]=0x03; break;
+			case GSM_File_Image_GIF    : Header[231]=0x02; Header[233]=0x05; break;
+			case GSM_File_Image_WBMP   : Header[231]=0x02; Header[233]=0x09; break;
+			case GSM_File_Ringtone_MIDI: Header[231]=0x04; Header[233]=0x05; break; //Header[238]=0x01; 
+			case GSM_File_Java_JAR     : Header[231]=0x10; Header[233]=0x01; break;
+#ifdef DEVELOP
+			case GSM_File_MMS:
+				Header[214]=0x07;
+				Header[215]=0xd3;
+				Header[216]=0x06;
+				Header[217]=0x01;
+				Header[218]=0x12;
+				Header[219]=0x13;
+				Header[220]=0x29;
+				Header[233]=0x01;
+				break;
+#endif
+			default                    : Header[231]=0x01; Header[233]=0x05;
+		}
 		Header[235] = 0x01;
 		Header[236] = atoi(File->ID_FullName) / 256;
 		Header[237] = atoi(File->ID_FullName) % 256;
 		if (File->Protected) Header[238] = 0x01; //Nokia forward lock
-
-		switch(File->Type) {
-		case GSM_File_Image_JPG:
-			Header[231]=0x02; Header[233]=0x01;
-			break;
-		case GSM_File_Image_BMP:
-			Header[231]=0x02; Header[233]=0x02;
-			break;
-		case GSM_File_Image_PNG:
-			Header[231]=0x02; Header[233]=0x03;
-			break;
-		case GSM_File_Image_GIF:
-			Header[231]=0x02; Header[233]=0x05;
-			break;
-		case GSM_File_Image_WBMP:
-			Header[231]=0x02; Header[233]=0x09;
-			break;
-		case GSM_File_Ringtone_MIDI:
-			Header[231]=0x04; Header[233]=0x05; //Header[238]=0x01;
-			break;
-		case GSM_File_Java_JAR:
-			Header[231]=0x10; Header[233]=0x01;
-			break;
-#ifdef DEVELOP
-		case GSM_File_MMS:
-			Header[214]=0x07;
-			Header[215]=0xd3;
-			Header[216]=0x06;
-			Header[217]=0x01;
-			Header[218]=0x12;
-			Header[219]=0x13;
-			Header[220]=0x29;
-			Header[233]=0x01;
-			break;
-#endif
-		default:
-			Header[231]=0x01; Header[233]=0x05;
-		}
+		if (File->Hidden)    Header[241] = 0x01;
+		if (File->System)    Header[242] = 0x01; //fixme
 		smprintf(s, "Adding file header\n");
 		error=GSM_WaitFor (s, Header, 246, 0x6D, 4, ID_AddFile);
 		if (error != GE_NONE) return error;
@@ -4047,6 +4081,59 @@ static GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos
 		smprintf(s, "Frame for ending adding file\n");
 		error = GSM_WaitFor (s, end, 14, 0x6D, 4, ID_AddFile);
 		if (error != GE_NONE) return error;
+
+		if (!File->ModifiedEmpty) {
+			strcpy(File2.ID_FullName,File->ID_FullName);
+			error = N6510_GetFileFolderInfo(s, &File2, ID_GetFileInfo);
+			if (error != GE_NONE) return error;
+
+			Header[3]   = 0x12;
+			Header[4]   = 0x01;
+			Header[12]  = 0x00;
+			Header[13]  = 0xE8;
+			Header[8]   = atoi(File->ID_FullName) / 256;
+			Header[9]   = atoi(File->ID_FullName) % 256;
+			memset(Header+14, 0x00, 300);
+			CopyUnicodeString(Header+14,File->Name);
+			NOKIA_EncodeDateTime(s,Header+214,&File->Modified);
+			/* When you save too big file for phone and it changes
+                         * size (some part is cut by firmware), you HAVE to write
+                         * here correct file size. In other case filesystem
+                         * will be damaged
+                         */
+			Header[224] = File2.Used / 256;
+			Header[225] = File2.Used % 256;
+			Header[226] = Priv->FileToken / 256;
+			Header[227] = Priv->FileToken % 256;
+			switch(File->Type) {
+			case GSM_File_Image_JPG    : Header[231]=0x02; Header[233]=0x01; break;
+			case GSM_File_Image_BMP    : Header[231]=0x02; Header[233]=0x02; break;
+			case GSM_File_Image_PNG    : Header[231]=0x02; Header[233]=0x03; break;
+			case GSM_File_Image_GIF    : Header[231]=0x02; Header[233]=0x05; break;
+			case GSM_File_Image_WBMP   : Header[231]=0x02; Header[233]=0x09; break;
+			case GSM_File_Ringtone_MIDI: Header[231]=0x04; Header[233]=0x05; break; //Header[238]=0x01; 
+			case GSM_File_Java_JAR     : Header[231]=0x10; Header[233]=0x01; break;
+#ifdef DEVELOP
+			case GSM_File_MMS:
+				Header[214]=0x07;
+				Header[215]=0xd3;
+				Header[216]=0x06;
+				Header[217]=0x01;
+				Header[218]=0x12;
+				Header[219]=0x13;
+				Header[220]=0x29;
+				Header[233]=0x01;
+				break;
+#endif
+			default                    : Header[231]=0x01; Header[233]=0x05;
+			}
+			Header[235] = 0x01;
+			Header[236] = Priv->ParentID / 256;
+			Header[237] = Priv->ParentID % 256;
+			smprintf(s, "Adding file header\n");
+			error=GSM_WaitFor (s, Header, 246, 0x6D, 4, ID_AddFile);
+			if (error != GE_NONE) return error;
+		}
 
 		/* Can't delete from phone menu */
 		if (File->ReadOnly) {
@@ -4347,7 +4434,7 @@ static GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message msg, GSM_StateMachine 
 		diff += msg.Buffer[17];
 
 		memcpy(&Last->Entries[Last->EntriesNum].Date,&Date,sizeof(GSM_DateTime));
-		N71_65_GetTimeDiffence(s, diff, &Last->Entries[Last->EntriesNum].Date, false, 60);
+		GetTimeDifference(diff, &Last->Entries[Last->EntriesNum].Date, false, 60);
 		smprintf(s, "Alarm date   : %02i-%02i-%04i %02i:%02i:%02i\n",
 			Last->Entries[Last->EntriesNum].Date.Day,   Last->Entries[Last->EntriesNum].Date.Month,
 			Last->Entries[Last->EntriesNum].Date.Year,  Last->Entries[Last->EntriesNum].Date.Hour,
@@ -4689,8 +4776,10 @@ static GSM_Error N6510_ReplyGetLocale(GSM_Protocol_Message msg, GSM_StateMachine
 			locale->DateFormat 	= GSM_Date_YYYYMMDD;
 			locale->DateSeparator 	= '-';
 			break;
-		default:
-			return GE_UNKNOWNRESPONSE;
+		default:/* FIXME */
+			locale->DateFormat 	= GSM_Date_DDMMYYYY;
+			locale->DateSeparator 	= '/';
+			break;
 		}
 		return GE_NONE;
 	}
@@ -4951,6 +5040,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyAddFileHeader,	"\x6D",0x03,0x03,ID_AddFile		},
 	{N6510_ReplyAddFolder,		"\x6D",0x03,0x05,ID_AddFolder		},
 	{N6510_ReplyGetFilePart,	"\x6D",0x03,0x0F,ID_GetFile		},
+	{N6510_ReplyAddFileHeader,	"\x6D",0x03,0x13,ID_AddFile		},
 	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x15,ID_GetFileInfo		},
 	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x15,ID_GetFile		},
 	{N6510_ReplyGetFileFolderInfo,	"\x6D",0x03,0x15,ID_AddFile		},

@@ -153,6 +153,8 @@ typedef struct {
 	/* File attributes */
 	bool		Protected;
 	bool		ReadOnly;
+	bool		Hidden;
+	bool		System;
 } GSM_File;
 
 GSM_Error GSM_ReadFile(char *FileName, GSM_File *File);

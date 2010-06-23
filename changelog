@@ -13,11 +13,37 @@ This software was sponsored (in time order) by:
    * GSM EQUIPMENT & HARDWARE
    * FREE FLASHES, LOGO'S, RINGTONES
    * FREE INSTRUCTIONS, SCHEMES
-4. Tom Nelson (www.kaseysdoghouse.com)
+4. Tom Nelson (www.pocketderelict.com)
 and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20030805 - 0,81,0,0
+* new functionality:
+  * filesystem in DCT4:
+    * full support for Hidden/System file attributes
+    * by default, when set files using --addfile or --nokiaaddfile GALLERY,
+      file saved in phone has got date/time like date/time of last modification
+      of file in PC (for now works for win32)
+    * by default, when use --getfiles, created files has modification time
+      like time of last modification of file in phone (for now works in win32)
+    * getting file type from phone                                        (...)
+  * ID for "own numbers" for 6210/DCT4                    (Andrzej Szombierski)
+  * can have few config sections in gammurc. Gammu will check connection
+    after connection. It's usefull for example, when you connect to your PC
+    using infrared USB dongle or cable. If infrared won't be found, Gammu will
+    search automatically phone in device assigned with cable. Simple.
+  * ID for 7250i                                                (Limpar Andras)
+  * Siemens stuff moved to main VCALENDAR parser                        (Walek)
+
+* fixes and improvements:
+  * removed new warnings for MSVC6
+  * * removed segfault possibility in DayOfWeek           (Andrzej Szombierski)
+    * filesystem in DCT4: after creating new folder and before saving there
+      any file, folder was reported like file
+  * --geteachsms can handle more sms                   (Carl-Daniel Hailfinger)
+  * win32 files updated according to changes in last few releases
+
 20030726 - 0,80,0,0
 * new functionality:
   * SMS Queue program for gammu smsd                              (Peter Nixon)

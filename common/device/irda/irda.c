@@ -66,7 +66,7 @@ static bool irda_discover_device(GSM_StateMachine *state)
 			if (strcmp(GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number,"") != 0) {
 				founddevice = true;
 				/* Model AUTO */
-				if (state->Config.Model[0]==0) strcpy(state->Phone.Data.Model,GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number);
+				if (state->CurrentConfig->Model[0]==0) strcpy(state->Phone.Data.Model,GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number);
 				state->Phone.Data.ModelInfo = GetModelData(NULL,state->Phone.Data.Model,NULL);
 			}
 			if (founddevice) {				

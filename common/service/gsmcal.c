@@ -158,8 +158,53 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 			}
 		}
 	} else if (Version == Siemens_VCalendar) {
-	}
+		*Length+=sprintf(Buffer+(*Length), "CATEGORIES:");
+		switch (note->Type) {
+		case GCN_MEETING:
+			*Length+=sprintf(Buffer+(*Length), "MEETING%c%c",13,10);
+			break;
+		case GCN_CALL:
+			*Length+=sprintf(Buffer+(*Length), "PHONE CALL%c%c",13,10);
+			break;
+		case GCN_BIRTHDAY:
+			*Length+=sprintf(Buffer+(*Length), "ANNIVERSARY%c%c",13,10);
+			break;
+		case GCN_MEMO:
+		default:
+			*Length+=sprintf(Buffer+(*Length), "MISCELLANEOUS%c%c",13,10);
+			break;
+		}
+		
+		if (Time == -1) return GE_UNKNOWN;
+		SaveVCALDateTime(Buffer, Length, &note->Entries[Time].Date, "DTSTART");
 
+		if (Alarm != -1) {
+			SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "DALARM");
+		}
+
+		if (Recurrance != -1) {
+			switch(note->Entries[Recurrance].Number/24) {
+				case 1	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D1%c%c",13,10);	break;
+				case 7	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D7%c%c",13,10);	break;
+				case 30	 : *Length+=sprintf(Buffer+(*Length), "RRULE:MD1%c%c",13,10);	break;
+				case 365 : *Length+=sprintf(Buffer+(*Length), "RRULE:YD1%c%c",13,10);	break;
+			}
+		}
+	
+		if (note->Type == GCN_CALL) {
+			buffer[0] = 0;
+			buffer[1] = 0;
+		 	if (Phone != -1) CopyUnicodeString(buffer,note->Entries[Phone].Text);
+			if (Text != -1)  {
+				if (Phone != -1) EncodeUnicode(buffer+UnicodeLength(buffer)*2," ",1);
+				CopyUnicodeString(buffer+UnicodeLength(buffer)*2,note->Entries[Text].Text);
+			}
+			SaveVCALText(Buffer, Length, buffer, "DESCRIPTION");
+		} else {
+			SaveVCALText(Buffer, Length, note->Entries[Text].Text, "DESCRIPTION");
+		}
+	}
+	
 	*Length+=sprintf(Buffer+(*Length), "END:VEVENT%c%c",13,10);
 	if (header) *Length+=sprintf(Buffer+(*Length), "END:VCALENDAR%c%c",13,10);
 
@@ -241,7 +286,6 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 	if (header) {
 		*Length+=sprintf(Buffer+(*Length), "END:VCALENDAR%c%c",13,10);
 	}
-
 	return GE_NONE;
 }
 
@@ -276,13 +320,14 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			if (strstr(Line,"CATEGORIES:MISCELLANEOUS")) 	Calendar->Type = GCN_MEMO;
 			if (strstr(Line,"CATEGORIES:PHONE CALL")) 	Calendar->Type = GCN_CALL;
 			if (strstr(Line,"CATEGORIES:SPECIAL OCCASION")) Calendar->Type = GCN_BIRTHDAY;
+			if (strstr(Line,"CATEGORIES:ANNIVERSARY")) 	Calendar->Type = GCN_BIRTHDAY;
 			if (strstr(Line,"CATEGORIES:MEETING")) 		Calendar->Type = GCN_MEETING;
 			if (strstr(Line,"RRULE:D1")) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
 				Calendar->Entries[Calendar->EntriesNum].Number    = 1*24;
 				Calendar->EntriesNum++;
 			}
-			if (strstr(Line,"RRULE:W1")) {
+			if ((strstr(Line,"RRULE:W1")) || (strstr(Line,"RRULE:D7"))) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
 				Calendar->Entries[Calendar->EntriesNum].Number    = 7*24;
 				Calendar->EntriesNum++;
@@ -292,12 +337,17 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				Calendar->Entries[Calendar->EntriesNum].Number    = 14*24;
 				Calendar->EntriesNum++;
 			}
+			if (strstr(Line,"RRULE:MD1")) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
+				Calendar->Entries[Calendar->EntriesNum].Number    = 30*24;
+				Calendar->EntriesNum++;
+			}
 			if (strstr(Line,"RRULE:YD1")) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
 				Calendar->Entries[Calendar->EntriesNum].Number    = 365*24;
 				Calendar->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "SUMMARY", Buff)) {
+			if ((ReadVCALText(Line, "SUMMARY", Buff)) || (ReadVCALText(Line, "DESCRIPTION", Buff))) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TEXT;
 				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
 				Calendar->EntriesNum++;

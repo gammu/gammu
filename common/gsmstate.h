@@ -686,7 +686,9 @@ struct _GSM_StateMachine {
 	char			*LockFile;				/* Lock file name for Unix 			*/
 	Debug_Info		di;					/* Debug information				*/
 	bool			opened;					/* Is connection opened ?			*/
-	GSM_Config		Config;					/* Config file (or Registry or...) variables 	*/
+	GSM_Config		Config[5];
+	GSM_Config		*CurrentConfig;				/* Config file (or Registry or...) variables 	*/
+	int			ConfigNum;
 	CFG_Header 		*msg;					/* Localisation strings structure    		*/
 	int			ReplyNum;				/* How many times make sth. 			*/
 	int			Speed;					/* For some protocols used speed		*/
@@ -717,7 +719,7 @@ GSM_Error GSM_DispatchMessage		(GSM_StateMachine *s);
 
 CFG_Header 				*CFG_FindGammuRC();
 
-void 	  CFG_ReadConfig		(CFG_Header *cfg_info, GSM_Config *cfg);
+bool 	  CFG_ReadConfig		(CFG_Header *cfg_info, GSM_Config *cfg, int num);
 
 void 	  GSM_DumpMessageLevel2		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);
 void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);
