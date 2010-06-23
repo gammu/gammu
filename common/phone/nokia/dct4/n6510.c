@@ -343,7 +343,6 @@ static GSM_Error N6510_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 	/* firstbyte set in SMS Layout */
 	Layout->firstbyte 	 = count; count++;
 	if (sms->PDU != SMS_Deliver) {
-		/* unknown */
 		Layout->TPMR 	 = count; count++;
 
 		Layout->TPPID	 = count; count++;
@@ -460,18 +459,21 @@ static GSM_Error N6510_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMac
 			smprintf(s, ", folder name: \"%s\"\n",DecodeUnicodeString(Data->SMSFolders->Folder[num].Name));
 			Data->SMSFolders->Folder[num].InboxFolder = false;
 			Data->SMSFolders->Folder[num].Memory 	  = MEM_ME;
-			if (num == 0x00 || num == 0x02) {
-				if (num == 0x00) {
-					Data->SMSFolders->Folder[num].InboxFolder=true;
-				}
-				Data->SMSFolders->Folder[num].Memory = MEM_SM;
-				num++;
-				CopyUnicodeString(Data->SMSFolders->Folder[num].Name,msg.Buffer + pos);
-				Data->SMSFolders->Folder[num].Memory 	  = MEM_ME;
-				Data->SMSFolders->Folder[num].InboxFolder = false;
-				if (num == 0x01) {
-					Data->SMSFolders->Folder[num].InboxFolder=true;
-				}
+			if (num == 0x01) { /* OUTBOX SIM */
+				Data->SMSFolders->Folder[0].Memory 	= MEM_SM;
+				Data->SMSFolders->Folder[0].InboxFolder = true;
+
+				Data->SMSFolders->Folder[1].Memory 	= MEM_SM;
+
+				CopyUnicodeString(Data->SMSFolders->Folder[2].Name,Data->SMSFolders->Folder[0].Name);
+				Data->SMSFolders->Folder[2].Memory 	= MEM_ME;
+				Data->SMSFolders->Folder[2].InboxFolder = true;
+
+				CopyUnicodeString(Data->SMSFolders->Folder[3].Name,Data->SMSFolders->Folder[1].Name);
+				Data->SMSFolders->Folder[3].Memory 	= MEM_ME;	
+				Data->SMSFolders->Folder[3].InboxFolder = false;
+
+				num+=2;
 			}
 			num++;
 		}
@@ -560,7 +562,7 @@ static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 	switch (buffer[0]) {
 	case 0x00:
 		smprintf(s, "SMS deliver\n");
-		sms->PDU = SMS_Deliver;
+		sms->PDU 	= SMS_Deliver;
 		Layout.TPPID 	= 3;
 		Layout.TPDCS 	= 4;
 		Layout.DateTime = 5;
@@ -569,6 +571,7 @@ static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 	case 0x01:
 		smprintf(s, "Delivery report\n");
 		sms->PDU = SMS_Status_Report;
+		Layout.TPMR	= 3;
 		Layout.TPStatus	= 4;
 		Layout.DateTime = 5;
 		Layout.SMSCTime = 12;
@@ -576,7 +579,7 @@ static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 		break;
 	case 0x02:
 		smprintf(s, "SMS template\n");
-		sms->PDU = SMS_Submit;
+		sms->PDU 	= SMS_Submit;
 		Layout.TPMR	= 3;
 		Layout.TPPID 	= 4;
 		Layout.TPDCS 	= 5;
@@ -739,9 +742,9 @@ static GSM_Error N6510_PrivGetSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 			N6510_SetSMSLocation(s, &sms->SMS[i], folderid, location);
 			sms->SMS[i].Folder 	= folderid;
 			sms->SMS[i].InboxFolder = true;
-			if (folderid != 0x01 && folderid != 0x02) sms->SMS[i].InboxFolder = false;
+			if (folderid != 0x01 && folderid != 0x03) sms->SMS[i].InboxFolder = false;
 			sms->SMS[i].Memory	= MEM_ME;
-			if (folderid == 0x01 || folderid == 0x03) sms->SMS[i].Memory = MEM_SM;
+			if (folderid == 0x01 || folderid == 0x02) sms->SMS[i].Memory = MEM_SM;
 			CopyUnicodeString(sms->SMS[i].Name,namebuffer);
 		}
 	}
@@ -1966,11 +1969,11 @@ static GSM_Error N6510_ReplySendSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 	switch (msg.Buffer[8]) {
 	case 0x00:
 		smprintf(s, "SMS sent OK\n");
-		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,0);
+		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,0,0);
 		return ERR_NONE;
 	default:
 		smprintf(s, "SMS not sent OK, error code probably %i\n",msg.Buffer[8]);
-		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,msg.Buffer[8]);
+		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,msg.Buffer[8],0);
 		return ERR_NONE;
 	}
 }
@@ -2072,10 +2075,10 @@ static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 		switch (msg.Buffer[4]) {
 		case 0x00:
 			smprintf(s, "Done OK\n");
-			smprintf(s, "Folder info: %i %i\n",msg.Buffer[8],msg.Buffer[5]);
+			smprintf(s, "Folder info: %i %i\n",msg.Buffer[5],msg.Buffer[8]);
 			switch (msg.Buffer[8]) {
 			case 0x02 : if (msg.Buffer[5] == 0x02) {
-					 folder = 0x02; /* INBOX ME */
+					 folder = 0x03; /* INBOX ME */
 				    } else {
 					 folder = 0x01; /* INBOX SIM */
 				    }
@@ -2083,7 +2086,7 @@ static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 			case 0x03 : if (msg.Buffer[5] == 0x02) {
 					 folder = 0x04; /* OUTBOX ME */
 				    } else {
-					 folder = 0x03; /* OUTBOX SIM */
+					 folder = 0x02; /* OUTBOX SIM */
 				    }
 				    break;
 			default	  : folder = msg.Buffer[8] + 1;
@@ -2350,6 +2353,7 @@ static GSM_Error N6510_ReplyGetRingtonesInfo(GSM_Protocol_Message msg, GSM_State
 
 	smprintf(s, "Ringtones info received\n");
 	memset(Data->RingtonesInfo,0,sizeof(GSM_AllRingtonesInfo));
+	if (!(msg.Buffer[4] * 256 + msg.Buffer[5])) return ERR_EMPTY;
 	Data->RingtonesInfo->Number = msg.Buffer[4] * 256 + msg.Buffer[5];
 	tmp = 6;
 	for (i=0;i<Data->RingtonesInfo->Number;i++) {			
@@ -2527,7 +2531,7 @@ static GSM_Error N6510_ReplyGetPPM(GSM_Protocol_Message msg, GSM_StateMachine *s
 		len = len-pos;
 		smprintf(s, "Block with ID %02x",msg.Buffer[pos]);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, msg.Buffer+pos, len);
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, msg.Buffer+pos, len);
 #endif
 		switch (msg.Buffer[pos]) {
 		case 0x49:
@@ -2597,7 +2601,7 @@ static GSM_Error N6510_ReplyGetProfile(GSM_Protocol_Message msg, GSM_StateMachin
 	for (i = 0; i < 11; i++) {
 		smprintf(s, "Profile feature %02x ",blockstart[1]);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, blockstart, blockstart[0]);
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, blockstart, blockstart[0]);
 #endif
 
 		switch (blockstart[1]) {
@@ -3330,7 +3334,7 @@ GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *
 		t_time1   = Fill_Time_T(Note->Entries[Alarm].Date,8);
 		diff	  = (t_time1-t_time2)/60;
 
-		smprintf(s, "  Difference : %i seconds or minutes\n", -diff);
+		smprintf(s, "  Difference : %li seconds or minutes\n", -diff);
 		req[14] = (unsigned char)(-diff >> 24);
 		req[15] = (unsigned char)(-diff >> 16);
 		req[16] = (unsigned char)(-diff >> 8);
@@ -4870,7 +4874,7 @@ static GSM_Error N6510_AddToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 		t_time1   = Fill_Time_T(ToDo->Entries[Alarm].Date,8);
 		diff	  = (t_time1-t_time2)/60;
 
-		smprintf(s, "  Difference : %i seconds or minutes\n", -diff);
+		smprintf(s, "  Difference : %li seconds or minutes\n", -diff);
 		req[14] = (unsigned char)(-diff >> 24);
 		req[15] = (unsigned char)(-diff >> 16);
 		req[16] = (unsigned char)(-diff >> 8);
@@ -5251,7 +5255,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|3100|3100b|3200|3200a|3300|3510|3510i|3530|3590|3595|5100|6100|6200|6220|6310|6310i|6510|6610|6800|7210|7250|7250i|8310|8390|8910|8910i",
+	"1100|1100a|1100b|3100|3100b|3200|3200a|3300|3510|3510i|3530|3590|3595|5100|6100|6200|6220|6310|6310i|6385|6510|6610|6800|7210|7250|7250i|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/
@@ -5303,6 +5307,7 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_AddSMS,
 	N6510_DeleteSMSMessage,
 	N6510_SendSMSMessage,
+	NOTSUPPORTED,			/*	SendSavedSMS		*/
 	NOKIA_SetIncomingSMS,
 	NOTIMPLEMENTED,			/* 	SetIncomingCB		*/
 	N6510_GetSMSFolders,

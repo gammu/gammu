@@ -70,6 +70,9 @@ typedef struct {
 extern Debug_Info	di;
 
 #ifdef DEBUG
+#ifdef __GNUC__
+__attribute__((format(printf, 1, 2))) 
+#endif
 int dbgprintf(const char *format, ...);
 #else
 #  ifndef WIN32
@@ -79,9 +82,12 @@ int dbgprintf(const char *format, ...);
 #  endif
 #endif
 
-int smfprintf(FILE *f, const char *format, ...);
+#ifdef __GNUC__
+__attribute__((format(printf, 3, 4)))
+#endif
+int smfprintf(FILE *f, Debug_Level dl, const char *format, ...);
 
-void DumpMessage(FILE *df, const unsigned char *message, int messagesize);
+void DumpMessage(FILE *df, Debug_Level dl, const unsigned char *message, int messagesize);
 
 bool GSM_SetDebugLevel(char *info, Debug_Info *di);
 

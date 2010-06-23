@@ -64,7 +64,9 @@ typedef enum {
 	ERR_NEEDANOTHERANSWER,   	/* Inside Gammu: phone module need to send another answer frame */
 /*40*/	ERR_OTHERCONNECTIONREQUIRED,
 	ERR_WRONGCRC,
-	ERR_INVALIDDATETIME		/* Invalid date/time */
+	ERR_INVALIDDATETIME,		/* Invalid date/time */
+	ERR_MEMORY,			/* Phone memory error, maybe it is read only */
+	ERR_INVALIDDATA,		/* Invalid data */
 } GSM_Error;
 
 extern GSM_Error NoneFunction		(void);
@@ -80,7 +82,8 @@ unsigned char *print_error	(GSM_Error e, FILE *df, INI_Section *cfg);
 
 GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi);
 
-char *GetGammuVersion(void);
+const char *GetGammuLocalePath(void);
+const char *GetGammuVersion(void);
 
 #endif
 

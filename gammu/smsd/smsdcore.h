@@ -26,7 +26,10 @@ typedef struct {
                              		  bool alwaysDelete);
 } GSM_SMSDService;
 
-void WriteSMSDLog(unsigned char *format, ...);
+#ifdef __GNUC__
+__attribute__((format(printf, 1, 2)))
+#endif
+void WriteSMSDLog(char *format, ...);
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

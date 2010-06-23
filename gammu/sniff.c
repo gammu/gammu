@@ -36,7 +36,7 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 		if (d->Msg.CheckSum[0] != rx_byte) {
 			printf("[ERROR: checksum]\n");
 			printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
-			DumpMessage(stdout, d->Msg.Buffer, d->Msg.Length);
+			DumpMessage(stdout, DL_TEXTALL, d->Msg.Buffer, d->Msg.Length);
 			d->MsgRXState = RX_Sync;
 			return;
 		}
@@ -47,7 +47,7 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 			printf("Sending frame");
 		}
 		printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
-		DumpMessage(stdout, d->Msg.Buffer, d->Msg.Length);
+		DumpMessage(stdout, DL_TEXTALL, d->Msg.Buffer, d->Msg.Length);
 		if (d->Msg.Destination != MBUS2_DEVICE_PHONE) {
 			if (s.Phone.Functions != NULL) {
 				s.Phone.Data.RequestMsg = &d->Msg;
@@ -127,7 +127,7 @@ static void DecodeInputIRDA(unsigned char rx_byte)
 			printf("Sending frame");
 		}
 		printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
-		DumpMessage(stdout, d->Msg.Buffer, d->Msg.Length);
+		DumpMessage(stdout, DL_TEXTALL, d->Msg.Buffer, d->Msg.Length);
 		if (d->Msg.Destination != PHONET_DEVICE_PHONE) {
 			if (s.Phone.Functions != NULL) {
 				s.Phone.Data.RequestMsg = &d->Msg;
@@ -187,9 +187,9 @@ static GSM_SMSC				SMSC;
 static GSM_MultiSMSMessage		GetSMSMessage;
 static GSM_SMSMessage			SaveSMSMessage;
 static GSM_SMSMemoryStatus		SMSStatus;
-static GSM_SMSFolders			SMSFolders;
-static GSM_SignalQuality		SignalQuality;
-static GSM_BatteryCharge		BatteryCharge;
+static GSM_SMSFolders			SMSFolders;
+static GSM_SignalQuality		SignalQuality;
+static GSM_BatteryCharge		BatteryCharge;
 static GSM_NetworkInfo			NetworkInfo;
 static GSM_Ringtone			Ringtone;
 static GSM_CalendarEntry		Calendar;
@@ -382,7 +382,7 @@ void decodebinarydump(int argc, char *argv[])
 			len 	= Buffer[i++] * 256;
 			len 	= len + Buffer[i++];
 			dbgprintf("0x%02x / 0x%04x", type, len);
-			DumpMessage(stdout, Buffer+i, len);
+			DumpMessage(stdout, DL_TEXTALL, Buffer+i, len);
 			fflush(stdout);
 			if (s.Phone.Functions != NULL && !sent) {
 				msg.Buffer = (unsigned char *)realloc(msg.Buffer,len);

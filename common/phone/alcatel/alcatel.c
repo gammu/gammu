@@ -77,6 +77,7 @@ extern GSM_Error ATGEN_GetSMSFolders		(GSM_StateMachine *s, GSM_SMSFolders *fold
 extern GSM_Error ATGEN_GetSMSStatus		(GSM_StateMachine *s, GSM_SMSMemoryStatus *status);
 extern GSM_Error ATGEN_GetSMS			(GSM_StateMachine *s, GSM_MultiSMSMessage *sms);
 extern GSM_Error ATGEN_GetNextSMS		(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start);
+extern GSM_Error ATGEN_SendSavedSMS		(GSM_StateMachine *s, int Folder, int Location);
 extern GSM_Error ATGEN_SendSMS			(GSM_StateMachine *s, GSM_SMSMessage *sms);
 extern GSM_Error ATGEN_DeleteSMS		(GSM_StateMachine *s, GSM_SMSMessage *sms);
 extern GSM_Error ATGEN_AddSMS			(GSM_StateMachine *s, GSM_SMSMessage *sms);
@@ -1384,7 +1385,6 @@ static GSM_Error ALCATEL_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		if ((error = ALCATEL_GetFields(s, entry->Location))!= ERR_NONE) return error;
 
 		entry->EntriesNum = Priv->CurrentFieldsCount;
-		entry->PreferUnicode = false;
 
 		for (i=0; i<Priv->CurrentFieldsCount; i++) {
 			if ((error = ALCATEL_GetFieldValue(s, entry->Location, Priv->CurrentFields[i]))!= ERR_NONE) return error;
@@ -1697,8 +1697,8 @@ static GSM_Error ALCATEL_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *ent
 		if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
 		if (Priv->ContactsItemsCount == 0) return ERR_EMPTY;
 		
-		if (start) entry->Location = Priv->ContactsItems[0];
-		else if ((error = ALCATEL_GetNextId(s, &(entry->Location))) != ERR_NONE) return error;
+		if (start) entry->Location = 0;
+		if ((error = ALCATEL_GetNextId(s, &(entry->Location))) != ERR_NONE) return error;
 
 		return ALCATEL_GetMemory(s, entry);
 	} else {
@@ -2208,6 +2208,14 @@ static GSM_Error ALCATEL_CancelCall(GSM_StateMachine *s, int ID, bool all)
 	return ATGEN_CancelCall(s,ID,all);
 }
 
+static GSM_Error ALCATEL_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
+{
+	GSM_Error error;
+
+	if ((error = ALCATEL_SetATMode(s))!= ERR_NONE) return error;
+	return ATGEN_SendSavedSMS(s, Folder, Location);
+}
+
 static GSM_Error ALCATEL_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	GSM_Error error;
@@ -2667,8 +2675,8 @@ static GSM_Error ALCATEL_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry 
 	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
 	if (Priv->CalendarItemsCount == 0) return ERR_EMPTY;
 	
-	if (start) Note->Location = Priv->CalendarItems[0];
-	else if ((error = ALCATEL_GetNextId(s, &(Note->Location))) != ERR_NONE) return error;
+	if (start) Note->Location = 0;
+	if ((error = ALCATEL_GetNextId(s, &(Note->Location))) != ERR_NONE) return error;
 
 	return ALCATEL_GetCalendar(s, Note);
 }
@@ -3391,8 +3399,8 @@ static GSM_Error ALCATEL_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, b
 	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
 	if (Priv->ToDoItemsCount == 0) return ERR_EMPTY;
 	
-	if (start) ToDo->Location = Priv->ToDoItems[0];
-	else if ((error = ALCATEL_GetNextId(s, &(ToDo->Location))) != ERR_NONE) return error;
+	if (start) ToDo->Location = 0;
+	if ((error = ALCATEL_GetNextId(s, &(ToDo->Location))) != ERR_NONE) return error;
 
 	return ALCATEL_GetToDo(s, ToDo);
 }
@@ -3829,6 +3837,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	ALCATEL_AddSMS,
 	ALCATEL_DeleteSMS,
 	ALCATEL_SendSMS,
+	ALCATEL_SendSavedSMS,
 	ALCATEL_SetIncomingSMS,
 	ALCATEL_SetIncomingCB,
 	ALCATEL_GetSMSFolders,

@@ -156,7 +156,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	GSM_71_65_Phonebook_Entries_Types	Type;           
 
 	entry->EntriesNum 	= 0;
-	entry->PreferUnicode 	= false;
 
 	if (entry->MemoryType==MEM7110_CG) {
 		bitmap->Text[0] 	= 0x00;
@@ -169,7 +168,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	while (length != MessageLength) {
 #ifdef DEBUG
 		smprintf(s, "Phonebook entry block - length %i", Block[3]-6);
-		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, Block+5, Block[3]-6);
+		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, Block+5, Block[3]-6);
 #endif
 		if (entry->EntriesNum==GSM_PHONEBOOK_ENTRIES) {
 			smprintf(s, "Too many entries\n");
@@ -1431,7 +1430,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	}
 	t_time2 = Fill_Time_T(Date,8);
 	diff	= t_time1-t_time2;
-	smprintf(s, "  Difference : %i seconds\n", -diff);
+	smprintf(s, "  Difference : %li seconds\n", -diff);
 	req[9]  = (unsigned char)(-diff >> 24);
 	req[10] = (unsigned char)(-diff >> 16);
 	req[11] = (unsigned char)(-diff >> 8);
@@ -1482,7 +1481,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 			}
 		}
 
-		smprintf(s, "  Difference : %i seconds or minutes\n", -diff);
+		smprintf(s, "  Difference : %li seconds or minutes\n", -diff);
 		req[13] = (unsigned char)(-diff >> 24);
 		req[14] = (unsigned char)(-diff >> 16);
 		req[15] = (unsigned char)(-diff >> 8);

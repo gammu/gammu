@@ -22,6 +22,128 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20040103 - 0.92.0
+* new functionality:
+  * support for TPMR in SMS is complete
+  * support for some Alcatel TDD formats over SMS:
+    * send/savesms PICTURE -alcatelbmmi for BMMI pictures
+    * NEW send/savesms ANIMATION frames file1 file2... for BMMI animations
+    * NEW send/savesms SMSTEMPLATE for SMS templates (only part of features
+      supported now)
+  * 6385 ID                                                      (David Uzzell)
+  * * AT:                                                        (Michal Cihar)
+      * decoding CME errors and enabling them on initialisation
+    * added __attribute__((format(printf,...))) to functions that accepts
+      printf-like params to fire warnings when it is wrong
+    * new option for sending saved sms
+
+* fixes and improvements:
+  * when you will upload file to DCT4, all "/" and ":"         (Bostjan Muller)
+    in filename are replaced with "_"
+  * fixed bug made with 0.91 with setting SMS memories in AT module
+  * fixed bug with SMS folders in DCT4 (few last releases)
+  * fixed incorrect behaviour during ringtones restore                  (Walek)
+    with some DCT4
+  * fix for fbuspl2302 in Linux for USB cables                    (Gary Reuter)
+  * better debug info for Borland C++, MSVC, Windows version
+  * * fix compile time warning                                   (Michal Cihar)
+    * set no validity before decoding SMS, otherwise
+      it is often undefined
+    * do not print extra \n to log, when length is multiply of 16
+    * fix GetNext* for Alcatel, when first location returned
+      by phone isn't the lowest
+    * a bit cleaned up building system
+    * GetGammuVersion has smaller buffer
+    * drop PreferUnicode, phone modules that have choice whether to save 
+      in unicode or not (currently only AT) should decide this automatically
+    * better handling of use_global (it is now not needed to be copied)
+    * smfprintf and DumpMessage now requires debug level,
+      as it uses it (used only global till now)
+    * fixed some format strings and parameters found thanks to new warnings
+    * memcpy(str1, str2, sizeof(structure)) replaced with str1 = str2,
+      is is much easier to understand
+    * free things that are not needed anymore
+    * UnicodeLength returns 0 when string is NULL
+    * SMS:
+      * in EMS decoding checking if we will fit in SMSInfo (caused segfault)
+      * GSM_DecodeMultiPartSMS doesn't expect anything inside structure to be
+        allocated, it will allocate it dynamically
+      * in GSM_ClearMultiPartSMSInfo items are sorted same way as
+        in structure, just to easy checking , that nothing is missing
+      * GSM_ClearMultiPartSMSInfo is called from GSM_DecodeMultiPartSMS
+        to have defined initial state
+      * removed useless if (SortedSMS[i] != NULL) from GetEachSMS
+      * new GSM_FreeMultiPartSMSInfo to free anything allocated inside
+        MultiPartSMSInfo
+      * renamed GSM_EncodeMultiPartSMSInfo to GSM_MultiPartSMSInfo and
+        EncodeMultiPartSMSEntry to MultiPartSMSEntry as both are for
+        decoding/encoding
+    * AT:
+      * recognizing errors when writing memory entry
+      * huge speedup of ATGEN_GetNextMemory by dynamically
+        increasing number of read entries, this skips much faster
+        gaps between entries
+      * first call of ATGEN_GetSMSStatus doesn't fail
+        when no phone sms memory
+      * ATGEN_GetMemoryInfo have parameter that identifies what kind of info
+        is needed, this speeds up things in many cases (like finding
+        next empty location)
+      * ATGEN_ReplyGetSecurityStatus - first check for PIN2/PUK2 and then for
+        normal PIN/PUK, otherwise PIN2/PUK2 are never found 
+      * ATGEN_PrivSetMemory:
+        * REQUEST_SIZE is large enough to fit any possible text
+        * detects whether saving in unicode is possible and needed and saves
+          entry according to this
+
+NOTE: many things happened in 2003 year.
+
+      Many good (much more things and phones supported, I have started using
+      colour phone, writing class version of Gammu and other. Many people
+      helped very differently me in this - I will only remind Ondrej Rybin,
+      Tom Nelson, Michal Cihar, Walek and many, many other. It was
+      unbelievable, but happened)
+
+      ...and...
+
+      many wrong (each man has other meaning for "Free Software world";
+      I don't know, which one is correct, which was first and "correct",
+      but the truth is, that there are no ideas there. There is only
+      one rule: if you give/make thousands of good things and give your
+      source/work, it's OK. When you see, that this work is used everywhere
+      and want also use original work for finding some money for extending it,
+      immediately you will start to see many people, who will have thousands
+      things to say about licenses/patents/copyrights. The magic and
+      forbidden word for them is money. These people will speak, speak and
+      speak. Nothing more (they won't give real help in coding or something).
+
+      Conclusion: when you will laught from various licensing issues in
+      "Closed Software World", I will say, that "Free Software world"
+      is worse. This is like nest of vipers (sometimes). And shame, that
+      because of it many initiatives made from hearth end or have delays.
+      Be carefull.
+
+      Second wrong thing in this year was suspending support for Nokias and
+      writing some other things for some time - no access to these devices)
+
+      What will happen in 2004 year ?
+
+      I quess many good things only :-).
+
+      Gammu in current form will be somehow extended. This is first good info.
+
+      You will see Gammu written using C++. This is good, because many possible
+      source problems will go away. Nobody will be able to say something about
+      it. I don't have illusions, that everyone will use Gammu+ according to
+      license inside, but even when some of commercional users will still want
+      to use it and will pay for it, it will be very helpfull and should really
+      help in accelerating progress of this software.
+
+      I hope, that current Gammu users understand, that current GPL license
+      rather prevents in making some things than help. I hope, they will
+      still help somehow in my work and efforts of making good GSM software.
+      I hope, that people, who helped somehow Gammu in past, won't think,
+      that I started to think about earning money only.
+
 20031223 - 0.91.0
 * new functionality:
   * new connection fbuspl2302 in Linux for USB cables             (Gary Reuter)

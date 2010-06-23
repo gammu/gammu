@@ -296,7 +296,6 @@ GSM_Error ATGEN_SL45ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s
 		CopyLineString(buffer, msg.Buffer, Priv->Lines, 3);
 		DecodeHexBin(buffer2,buffer,strlen(buffer));
  		Memory->EntriesNum = 0;
-		Memory->PreferUnicode = false;
                 DecodeVCARD21Text(buffer2, Memory);
 		if (Memory->EntriesNum == 0) return ERR_EMPTY;
 		return ERR_NONE;

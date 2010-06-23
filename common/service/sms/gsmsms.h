@@ -90,8 +90,8 @@ typedef enum {
 typedef enum {
 	SMS_VALID_1_Hour   = 0x0b,
 	SMS_VALID_6_Hours  = 0x47,
-	SMS_VALID_24_Hours = 0xa7,
-	SMS_VALID_72_Hours = 0xa9,
+	SMS_VALID_1_Day    = 0xa7,
+	SMS_VALID_3_Days   = 0xa9,
 	SMS_VALID_1_Week   = 0xad,
 	SMS_VALID_Max_Time = 0xff
 } GSM_ValidityPeriod;

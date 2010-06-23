@@ -362,8 +362,7 @@ GSM_Error SONYERIC_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 		}
 	}
 
-	DumpMessage(stderr,Buf,Used);
-	fflush(stderr);
+	DumpMessage(s->di.df, s->di.dl, Buf, Used);
 
 	error = SONYERIC_SetFile(s, "telecom/cal.vcs", Buf, Used);
 	if (Buf != NULL) free(Buf);

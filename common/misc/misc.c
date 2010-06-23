@@ -311,6 +311,9 @@ void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, in
 Debug_Info di = {0,NULL,false,""};
 
 #ifdef DEBUG
+#ifdef __GNUC__
+__attribute__((format(printf, 1, 2)))
+#endif
 int dbgprintf(const char *format, ...)
 {
 	va_list			argp;
@@ -319,7 +322,7 @@ int dbgprintf(const char *format, ...)
 	unsigned char		buffer[2000];
 	GSM_DateTime 		date_time;
 
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) {
+	if (di.df != NULL && (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE)) {
 		va_start(argp, format);
 		result = vsprintf(buffer, format, argp);
 		strcat(nextline, buffer);
@@ -343,12 +346,13 @@ int dbgprintf(const char *format, ...)
 }
 #endif
 
-#define SMPRINTF_MAX_TIME 30
-
 /* assumption: if \n is present it is always the last char,
  * string never of the form "......\n..."
  */
-int smfprintf(FILE *f, const char *format, ...)
+#ifdef __GNUC__
+__attribute__((format(printf, 3, 4)))
+#endif
+int smfprintf(FILE *f, Debug_Level dl, const char *format, ...)
 {
         va_list 		argp;
 	int 			result=0;
@@ -365,7 +369,7 @@ int smfprintf(FILE *f, const char *format, ...)
 		if (ftell(f) < 5000000) {
 			GSM_GetCurrentDateTime(&date_time);
 			if (linecount > 0) {
-				if (di.dl == DL_TEXTALLDATE || di.dl == DL_TEXTERRORDATE || di.dl == DL_TEXTDATE) {
+				if (dl == DL_TEXTALLDATE || dl == DL_TEXTERRORDATE || dl == DL_TEXTDATE) {
 			                fprintf(f,"%s %4d/%02d/%02d %02d:%02d:%02d: <%i> %s",
 			                        DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
 			                        date_time.Year, date_time.Month, date_time.Day,
@@ -375,7 +379,7 @@ int smfprintf(FILE *f, const char *format, ...)
 				}
 			}
 			linecount=0;
-			if (di.dl == DL_TEXTALLDATE || di.dl == DL_TEXTERRORDATE || di.dl == DL_TEXTDATE) {
+			if (dl == DL_TEXTALLDATE || dl == DL_TEXTERRORDATE || dl == DL_TEXTDATE) {
 		                fprintf(f,"%s %4d/%02d/%02d %02d:%02d:%02d: %s",
 		                        DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
 		                        date_time.Year, date_time.Month, date_time.Day,
@@ -406,14 +410,14 @@ bool GSM_SetDebugLevel(char *info, Debug_Info *di)
 }
 
 /* Dumps a message */
-void DumpMessage(FILE *df, const unsigned char *message, int messagesize)
+void DumpMessage(FILE *df, Debug_Level dl, const unsigned char *message, int messagesize)
 {
 	int 		i,j=0,len=16;
 	unsigned char	buffer[200];
 
 	if (df==NULL || messagesize == 0) return;
 
-	smfprintf(df, "\n");
+	smfprintf(df, dl, "\n");
 
 	memset(buffer,0x20,sizeof(buffer));
 	buffer[len*5-1]=0;
@@ -429,7 +433,7 @@ void DumpMessage(FILE *df, const unsigned char *message, int messagesize)
 		}
 		if (j != len-1 && i != messagesize-1) buffer[j*4+3] = '|';
 		if (j == len-1) {
-			smfprintf(df,"%s\n",buffer);
+			smfprintf(df, dl, "%s\n", buffer);
 			memset(buffer,0x20,sizeof(buffer));
 			buffer[len*5-1]=0;
 			j = 0;
@@ -437,8 +441,7 @@ void DumpMessage(FILE *df, const unsigned char *message, int messagesize)
 			j++;
 		}
 	}
-	if (j != 0) smfprintf(df,"%s",buffer);
-	smfprintf(df, "\n");
+	if (j != 0) smfprintf(df, dl, "%s\n", buffer);
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.
