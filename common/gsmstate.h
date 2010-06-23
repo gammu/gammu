@@ -56,6 +56,9 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifndef GSM_USED_FBUS2DLR3
 #  undef GSM_ENABLE_FBUS2DLR3
 #endif
+#ifndef GSM_USED_FBUS2DKU2
+#  undef GSM_ENABLE_FBUS2DKU2
+#endif
 #ifndef GSM_USED_FBUS2DKU5
 #  undef GSM_ENABLE_FBUS2DKU5
 #endif
@@ -110,7 +113,7 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #endif
 
 #include "protocol/protocol.h"
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2PL2303)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2DKU2) || defined(GSM_ENABLE_FBUS2PL2303)
 #  include "protocol/nokia/fbus2.h"
 #endif
 #ifdef GSM_ENABLE_MBUS2
@@ -256,7 +259,7 @@ typedef struct {
 
 /**
  * Structure containing device specific data and pointer to device functions -
- * @ref GSM_Device_Functions. The data are in a union, so you can use only 
+ * @ref GSM_Device_Functions. The data are in a union, so you can use only
  * one device at one time.
  */
 typedef struct {
@@ -303,7 +306,7 @@ typedef struct {
 #ifdef GSM_ENABLE_MBUS2
 	extern GSM_Protocol_Functions MBUS2Protocol;
 #endif
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2PL2303)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2DKU2) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2PL2303)
 	extern GSM_Protocol_Functions FBUS2Protocol;
 #endif
 #if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
@@ -333,7 +336,7 @@ typedef struct {
 #ifdef GSM_ENABLE_MBUS2
 		GSM_Protocol_MBUS2Data		MBUS2;
 #endif
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2PL2303) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2DKU2) || defined(GSM_ENABLE_FBUS2PL2303) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
 		GSM_Protocol_FBUS2Data		FBUS2;
 #endif
 #if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
@@ -395,6 +398,7 @@ typedef enum {
 	ID_GetSecurityCode,
 	ID_GetWAPBookmark,
 	ID_GetBitmap,
+	ID_GetCRC,
 	ID_SaveSMSMessage,
 	ID_CancelCall,
 	ID_SetDateTime,
@@ -414,6 +418,7 @@ typedef enum {
 	ID_SetCalendarNote,
 	ID_SetIncomingSMS,
 	ID_SetIncomingCB,
+	ID_GetCNMIMode,
 	ID_GetCalendarNotePos,
 	ID_Initialise,
 	ID_GetConnectSet,
@@ -442,6 +447,7 @@ typedef enum {
 	ID_GetSMSMemories,
 	ID_GetManufacturer,
 	ID_SetMemoryType,
+	ID_GetMemoryCharset,
 	ID_SetMemoryCharset,
 	ID_SetSMSParameters,
 	ID_GetFMStation,
@@ -482,7 +488,7 @@ typedef enum {
     	ID_SetFlowControl,
     	ID_AlcatelConnect,
 	ID_AlcatelProtocol,
-    
+
     	/* Binary mode */
     	ID_AlcatelAttach,
     	ID_AlcatelDetach,
@@ -507,7 +513,7 @@ typedef enum {
     	ID_AlcatelGetFields1,
     	ID_AlcatelGetFields2,
     	ID_AlcatelGetFieldValue1,
-    	ID_AlcatelGetFieldValue2,    
+    	ID_AlcatelGetFieldValue2,
    	ID_AlcatelDeleteItem1,
    	ID_AlcatelDeleteItem2,
    	ID_AlcatelDeleteField,
@@ -571,7 +577,7 @@ typedef struct {
 	 * Cache for product code version used by some modules.
 	 */
 	char			ProductCodeCache[50];
-	
+
 	/**
 	 * Counter used for disabling startup info on phone, see
 	 * @ref GSM_Phone_Functions::ShowStartInfo . After this is 0, the startup info is hidden.
@@ -769,7 +775,7 @@ typedef struct {
 	 * Error returned by function in phone module.
 	 */
 	GSM_Error		DispatchError;
-	
+
 	/**
 	 * Structure with private phone modules data.
 	 */
@@ -811,7 +817,7 @@ typedef struct {
 /**
  * Structure for defining reply functions.
  *
- * Function is called when requestID matches current operation or is 
+ * Function is called when requestID matches current operation or is
  * ID_IncomingFrame and msgtype matches start message and (if msgtype is just
  * one character) subtypechar is zero or subtypechar-th character of message
  * matches subtype.
@@ -854,7 +860,7 @@ typedef struct {
 	 */
 	char			    	*models;
 	/**
-	 * Array of reply functions for the phone, see 
+	 * Array of reply functions for the phone, see
 	 * @ref GSM_Reply_Function for details about it.
 	 */
 	GSM_Reply_Function	      	*ReplyFunctions;
@@ -867,7 +873,7 @@ typedef struct {
 	 */
 	GSM_Error (*Terminate)	  	(GSM_StateMachine *s);
 	/**
-	 * Dispatches messages from phone, at the end it should call 
+	 * Dispatches messages from phone, at the end it should call
 	 * @ref GSM_DispatchMessage.
 	 */
 	GSM_Error (*DispatchMessage)    (GSM_StateMachine *s);
@@ -1101,7 +1107,7 @@ typedef struct {
 	/**
 	 * Accept current incoming call.
 	 */
-	GSM_Error (*AnswerCall)	 	(GSM_StateMachine *s, int ID, bool all);		     
+	GSM_Error (*AnswerCall)	 	(GSM_StateMachine *s, int ID, bool all);
 	/**
 	 * Deny current incoming call.
 	 */
@@ -1432,6 +1438,7 @@ typedef enum {
 	GCT_MBUS2=1,
 	GCT_FBUS2,
 	GCT_FBUS2DLR3,
+	GCT_FBUS2DKU2,
 	GCT_FBUS2DKU5,
 	GCT_FBUS2PL2303,
 	GCT_FBUS2BLUE,
@@ -1562,7 +1569,8 @@ typedef enum {
 	F_CAL35,	/* Calendar,3510 style - Reminder,Call,Birthday			*/
 	F_CAL65,	/* Calendar,6510 style - CBMM, method 3				*/
 	F_WAPMMSPROXY,	/* WAP & MMS settings contains first & second proxy		*/
-	F_CHATSYNCML,	/* Phone with Chat/SyncML settings 				*/
+	F_CHAT,		/* Phone with Chat settings 					*/
+	F_SYNCML,	/* Phone with SyncML settings 					*/
 	F_FILES2,	/* filesystem version 2 					*/
 
 	/* n6510.c && n7110.c */

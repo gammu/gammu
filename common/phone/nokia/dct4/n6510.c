@@ -1407,8 +1407,8 @@ static GSM_Error N6510_EnableConnectionFunctions(GSM_StateMachine *s, N6510_Conn
 	unsigned char 	req4[] = {N6110_FRAME_HEADER, 0x00, 0x04};
 
 	if (Type == N6510_MMS_SETTINGS    && IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOMMS)) return ERR_NOTSUPPORTED;
-	if (Type == N6510_CHAT_SETTINGS   && !IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CHATSYNCML)) return ERR_NOTSUPPORTED;
-	if (Type == N6510_SYNCML_SETTINGS && !IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CHATSYNCML)) return ERR_NOTSUPPORTED;
+	if (Type == N6510_CHAT_SETTINGS   && !IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CHAT)) return ERR_NOTSUPPORTED;
+	if (Type == N6510_SYNCML_SETTINGS && !IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SYNCML)) return ERR_NOTSUPPORTED;
 
 	error=DCT3DCT4_DisableConnectionFunctions(s);
 	if (error!=ERR_NONE) return error;
@@ -3006,6 +3006,9 @@ static GSM_Error N6510_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230")) {
 		return ERR_NOTSUPPORTED;
 	}
+	if (!strcmp(s->Phone.Data.ModelInfo->model,"6220")) {
+		return ERR_NOTSUPPORTED;
+	}
 	if (!strcmp(s->Phone.Data.ModelInfo->model,"5140")) {
 		return ERR_NOTSUPPORTED;
 	}
@@ -3915,7 +3918,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	{N6510_ReplyAddFileHeader1,	  "\x6D",0x03,0x03,ID_AddFile		  },
 	{N6510_ReplyAddFolder1,		  "\x6D",0x03,0x05,ID_AddFolder		  },
-	{N6510_ReplyGetFilePart12,	  "\x6D",0x03,0x0F,ID_GetFile		  },//filesystem1
+	{N6510_ReplyGetFilePart12,	  "\x6D",0x03,0x0F,ID_GetFile		  },//filesystem1&2
 	{N6510_ReplyAddFileHeader1,	  "\x6D",0x03,0x13,ID_AddFile		  },
 	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x15,ID_GetFileInfo	  },
 	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x15,ID_GetFile		  },
@@ -3929,15 +3932,17 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x33,ID_GetFileInfo	  },
 	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x33,ID_GetFile		  },
 	{N6510_ReplyAddFilePart1,	  "\x6D",0x03,0x41,ID_AddFile		  },
-	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x43,ID_AddFile		  },
-	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x43,ID_GetFile		  },
-	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x43,ID_GetFileInfo	  },
-	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x69,ID_IncomingFrame	  },
-	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x6D,ID_GetFileInfo	  },
-	{N6510_ReplyOpenFile2,		  "\x6D",0x03,0x73,ID_OpenFile		  },
-	{NoneReply,			  "\x6D",0x03,0x75,ID_CloseFile		  },//filesystem2
+	{N6510_ReplyGetFileCRC12,	  "\x6D",0x03,0x43,ID_GetCRC		  },
 	{NoneReply,			  "\x6D",0x03,0x59,ID_AddFile		  },//filesystem2
 	{N6510_ReplyGetFilePart12,	  "\x6D",0x03,0x5F,ID_GetFile		  },//filesystem2
+	{N6510_ReplyDeleteFile2,	  "\x6D",0x03,0x63,ID_DeleteFile	  },//filesystem2
+	{N6510_ReplyGetFileCRC12,   	  "\x6D",0x03,0x67,ID_GetCRC		  },//filesystem2
+	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x69,ID_IncomingFrame	  },//filesystem2
+	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x6D,ID_GetFileInfo	  },//filesystem2
+	{N6510_ReplySetAttrib2,		  "\x6D",0x03,0x6F,ID_AddFile		  },//filesystem2
+	{N6510_ReplyOpenFile2,		  "\x6D",0x03,0x73,ID_OpenFile		  },//filesystem2
+	{NoneReply,			  "\x6D",0x03,0x75,ID_CloseFile		  },//filesystem2
+	{N6510_ReplySetFileDate2,	  "\x6D",0x03,0x87,ID_AddFile		  },//filesystem2
 
 	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x01,ID_GetBitmap		  },
 	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x01,ID_SetBitmap		  },
@@ -3958,7 +3963,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|3100|3100b|3105|3108|3200|3200a|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6100|6200|6220|6230|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6100|6200|6220|6230|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/

@@ -84,9 +84,9 @@ typedef struct {
 	char			PBKMemories[AT_PBK_MAX_MEMORIES + 1]; /* Supported by phone PBK memories 		*/
 	int			NextMemoryEntry;  	/* Next empty memory entry					*/
 	int			FirstMemoryEntry;	/* First memory entry to be read				*/
-	GSM_AT_Charset		Charset;	  	/* Last read PBK charset					*/
-	bool			UCS2CharsetFailed;	/* Whether setting of UCS2 charset has already failed 		*/
-	bool			NonUCS2CharsetFailed;	/* Whether setting of non-UCS2 charset has already failed 	*/
+	GSM_AT_Charset		Charset;	  	/* Charset set in phone						*/
+	GSM_AT_Charset		UnicodeCharset;	  	/* Charset to use for unicode mode				*/
+	GSM_AT_Charset		NormalCharset;	  	/* Charset to use for non unicode mode				*/
 	GSM_AT_SBNR		PBKSBNR;
 	int			NumberLength;
 	int			TextLength;
@@ -100,6 +100,25 @@ typedef struct {
 	GSM_AT_SMSMemory	SIMSMSMemory;	  	/* Is SIM SMS memory available ? 				*/
 	GSM_MemoryType		SMSMemory;	  	/* Last read SMS memory 					*/
 	GSM_AT_SMS_Modes	SMSMode;	  	/* PDU or TEXT mode for SMS ? 					*/
+
+	/**
+	 * Mode used for incoming message notification.
+	 */
+	int			CNMIMode;
+	/**
+	 * Procedure used for incoming message notification.
+	 */
+	int			CNMIProcedure;
+	/**
+	 * Procedure used for incoming delivery report message notification.
+	 */
+	int			CNMIDeliverProcedure;
+#ifdef GSM_ENABLE_CELLBROADCAST
+	/**
+	 * Mode used for incoming broadcast message notification.
+	 */
+	int			CNMIBroadcastProcedure;
+#endif
 
 	bool			OBEX;
 	GSM_File		file;

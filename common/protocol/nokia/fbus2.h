@@ -19,8 +19,9 @@
 
 #include "../protocol.h"
 
-#define FBUS2_FRAME_ID       	0x1e
+#define FBUS2_DKU2_FRAME_ID     0x1b
 #define FBUS2_IRDA_FRAME_ID    	0x1c
+#define FBUS2_FRAME_ID       	0x1e
 #define FBUS2_DEVICE_PHONE   	0x00 /* Nokia mobile phone */
 #define FBUS2_DEVICE_PC      	0x0c /* Our PC */
 #define FBUS2_ACK_BYTE	     	0x7f /* Acknowledge of the received frame */

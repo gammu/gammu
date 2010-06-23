@@ -30,6 +30,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("fbus"	,connection,0)) s->ConnectionType = GCT_FBUS2;
 	if (mystrncasecmp("fbusdlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
 	if (mystrncasecmp("fbusdku5"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU5;
+	if (mystrncasecmp("fbusdku2"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU2;
 	if (mystrncasecmp("fbuspl2303"	,connection,0)) s->ConnectionType = GCT_FBUS2PL2303;
 	if (mystrncasecmp("fbusblue"	,connection,0)) s->ConnectionType = GCT_FBUS2BLUE;
 	if (mystrncasecmp("fbusirda"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
@@ -52,6 +53,8 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("dlr3blue"	,connection,0)) s->ConnectionType = GCT_BLUEFBUS2;
 	if (mystrncasecmp("irda"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
 	if (mystrncasecmp("dlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
+	if (mystrncasecmp("dku2"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU2;
+	if (mystrncasecmp("dku5"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU5;
 	if (mystrncasecmp("infrared"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
 
 	if (mystrncasecmp("at"		,connection,2)) {
@@ -82,8 +85,11 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #ifdef GSM_ENABLE_FBUS2DKU5
 	GSM_RegisterConnection(s, GCT_FBUS2DKU5, &SerialDevice,   &FBUS2Protocol);
 #endif
+#ifdef GSM_ENABLE_FBUS2DKU2
+	GSM_RegisterConnection(s, GCT_FBUS2DKU2, &SerialDevice,   &FBUS2Protocol);
+#endif
 #ifdef GSM_ENABLE_FBUS2PL2303
-	GSM_RegisterConnection(s, GCT_FBUS2PL2303,&SerialDevice,   &FBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_FBUS2PL2303,&SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2BLUE
 	GSM_RegisterConnection(s, GCT_FBUS2BLUE, &SerialDevice,   &FBUS2Protocol);
@@ -327,6 +333,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 					case GCT_FBUS2:
 					case GCT_FBUS2DLR3:
 					case GCT_FBUS2DKU5:
+					case GCT_FBUS2DKU2:
 					case GCT_FBUS2PL2303:
 					case GCT_FBUS2BLUE:
 					case GCT_FBUS2IRDA:
@@ -879,6 +886,9 @@ static OnePhoneModel allmodels[] = {
 	{"3210" ,"NSE-8" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
 	{"3210" ,"NSE-9" ,"",           {F_NOWAP,F_NOCALLER,F_NOCALENDAR,F_NOPBKUNICODE,F_POWER_BATT,F_PROFILES51,F_NOPICTUREUNI,F_NOCALLINFO,F_NODTMF,0}},
 #endif
+#if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
+	{"3220" ,"RH-37" ,"",           {F_PBKTONEGAL,F_TODO66,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,F_NOTES,F_SYNCML,F_FILES2,0}},
+#endif
 #ifdef GSM_ENABLE_NOKIA6510
 	{"3300" ,"NEM-1" ,"Nokia 3300", {F_PBKTONEGAL,0}},//fixme
 	{"3300" ,"NEM-2" ,"Nokia 3300", {F_PBKTONEGAL,0}},//fixme
@@ -913,8 +923,8 @@ static OnePhoneModel allmodels[] = {
 	{"5100" ,"NPM-6" ,"Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 	{"5100" ,"NPM-6U","Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 	{"5100" ,"NPM-6X","Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
-	{"5140" ,"NPL-4" ,"Nokia 5140", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKUSER,F_WAPMMSPROXY,F_CHATSYNCML,0}},
-	{"5140" ,"NPL-5" ,"Nokia 5140", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKUSER,F_WAPMMSPROXY,F_CHATSYNCML,0}},
+	{"5140" ,"NPL-4" ,"Nokia 5140", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKUSER,F_WAPMMSPROXY,F_CHAT, F_SYNCML,0}},
+	{"5140" ,"NPL-5" ,"Nokia 5140", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKUSER,F_WAPMMSPROXY,F_CHAT, F_SYNCML,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"5110" ,"NSE-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DISPSTATUS,0}},
@@ -939,24 +949,25 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"6200" ,"NPL-3" ,"Nokia 6200", {F_PBKTONEGAL,0}},
-	{"6220" ,"RH-20" ,"Nokia 6220", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,F_NOTES,F_CHATSYNCML,0}},
+	{"6220" ,"RH-20" ,"Nokia 6220", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,F_NOTES,F_CHAT,F_SYNCML,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"6210" ,"NPE-3" ,"Nokia 6210", {F_VOICETAGS,F_CAL62,0}},
 	{"6250" ,"NHM-3" ,"Nokia 6250", {F_VOICETAGS,F_CAL62,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"6230" ,"RH-12" ,"Nokia 6230", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,F_NOTES,F_CHATSYNCML,F_FILES2,0}},
+	{"6230" ,"RH-12" ,"Nokia 6230", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,F_NOTES,F_CHAT,F_SYNCML,F_FILES2,0}},
+	{"6230" ,"RH-28" ,"Nokia 6230", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,F_NOTES,F_CHAT,F_SYNCML,F_FILES2,0}},
 	{"6310" ,"NPE-4" ,"Nokia 6310", {F_TODO63,F_CAL65,F_NOMIDI,F_NOMMS,F_VOICETAGS,0}},
 	{"6310i","NPL-1" ,"Nokia 6310i",{F_TODO63,F_CAL65,F_NOMIDI,F_BLUETOOTH,F_NOMMS,F_VOICETAGS,0}},
 	{"6385" ,"NHP-2AX","Nokia 6385",{F_TODO63,F_CAL65,F_NOMIDI,F_NOMMS,F_VOICETAGS,0}},
 	{"6510" ,"NPM-9" ,"Nokia 6510", {F_TODO63,F_CAL65,F_NOMIDI,F_RADIO,F_NOFILESYSTEM,F_NOMMS,F_VOICETAGS,0}},
 	{"6610" ,"NHL-4U","Nokia 6610", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
-	{"6610i","RM-37" ,"Nokia 6610i",{F_PBKTONEGAL,F_TODO66,F_RADIO,F_CHATSYNCML,0}},
+	{"6610i","RM-37" ,"Nokia 6610i",{F_PBKTONEGAL,F_TODO66,F_RADIO,F_CHAT,F_SYNCML,0}},
 	{"6800" ,"NSB-9" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},
 	{"6800" ,"NHL-6" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},
-	{"6810" ,"RM-2"  ,"Nokia 6810", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_NOTES,F_CHATSYNCML,0}},//quess
-	{"6820" ,"NHL-9" ,"Nokia 6820", {F_PBKTONEGAL,F_TODO66,F_PBKSMSLIST,F_NOTES,F_CHATSYNCML,0}},//quess
+	{"6810" ,"RM-2"  ,"Nokia 6810", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_NOTES,F_CHAT,F_SYNCML,0}},//quess
+	{"6820" ,"NHL-9" ,"Nokia 6820", {F_PBKTONEGAL,F_TODO66,F_PBKSMSLIST,F_NOTES,F_CHAT,F_SYNCML,0}},//quess
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"7110" ,"NSE-5" ,"Nokia 7110", {F_CAL62,0}},
@@ -965,8 +976,8 @@ static OnePhoneModel allmodels[] = {
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"7200" ,"RH-23" ,"Nokia 7200", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,0}},//quess
 	{"7210" ,"NHL-4" ,"Nokia 7210", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
-	{"7250" ,"NHL-4J","Nokia 7250", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKIMG,F_CHATSYNCML,0}},
-	{"7250i","NHL-4JX","Nokia 7250i",{F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKIMG,F_CHATSYNCML,0}},
+	{"7250" ,"NHL-4J","Nokia 7250", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKIMG,F_SYNCML,0}},
+	{"7250i","NHL-4JX","Nokia 7250i",{F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKIMG,F_SYNCML,0}},
 	{"7600", "NMM-3", "Nokia 7600", {F_TODO66,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN)

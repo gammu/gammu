@@ -221,9 +221,14 @@ AC_ARG_ENABLE(fbusdlr3,
                           with DLR3(P) cable (Nokia 6210/63xx/71xx)],
         [gsm_enable_fbus2dlr3="no"],
         [AC_DEFINE(GSM_ENABLE_FBUS2DLR3) gsm_enable_fbus2dlr3="yes"])
+AC_ARG_ENABLE(fbusdku2,
+        [  --disable-fbusdku2      Disable Nokia FBUS2 protocol with DKU2
+                          cable (Nokia with Pop-Port and USB chip)],
+        [gsm_enable_fbus2dku2="no"],
+        [AC_DEFINE(GSM_ENABLE_FBUS2DKU2) gsm_enable_fbus2dku2="yes"])
 AC_ARG_ENABLE(fbusdku5,
-        [  --disable-fbusdku5      Disable Nokia FBUS2 protocol
-                          with DKU5 cable (Nokia with Pop-Port)],
+        [  --disable-fbusdku5      Disable Nokia FBUS2 protocol with DKU5
+                          cable (Nokia with Pop-Port without USB chip)],
         [gsm_enable_fbus2dku5="no"],
         [AC_DEFINE(GSM_ENABLE_FBUS2DKU5) gsm_enable_fbus2dku5="yes"])
 AC_ARG_ENABLE(fbuspl2303,
@@ -458,8 +463,9 @@ dnl  LGPL license                                  - $lgpl
   Nokia MBUS2                                   - $gsm_enable_mbus2
   Nokia FBUS2                                   - $gsm_enable_fbus2
   Nokia FBUS2 for DLR3 cable                    - $gsm_enable_fbus2dlr3
-  Nokia FBUS2 for PL2303 based USB cable        - $gsm_enable_fbus2pl2303
+  Nokia FBUS2 for DKU2 cable                    - $gsm_enable_fbus2dku2
 dnl Add info about DKU5
+  Nokia FBUS2 for PL2303 based USB cable        - $gsm_enable_fbus2pl2303
   Nokia FBUS2 for Bluetooth legacy device       - $gsm_enable_fbus2blue
   Nokia FBUS2 for direct infrared device        - $gsm_enable_fbus2irda
   Nokia PHONET FBUS for Bluetooth legacy device - $gsm_enable_phonetblue
