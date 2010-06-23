@@ -4,7 +4,7 @@
 # General configuration options
 #---------------------------------------------------------------------------
 PROJECT_NAME           = Gammu
-PROJECT_NUMBER         = 0.94.2
+PROJECT_NUMBER         = 0.94.4
 OUTPUT_DIRECTORY       = gammu-doc
 OUTPUT_LANGUAGE        = English
 USE_WINDOWS_ENCODING   = NO

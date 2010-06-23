@@ -30,8 +30,8 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
 static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config)
 {
-	unsigned char	buffer[10000];
-	int 		i;
+	unsigned char	buffer[10000],buffer2[200],buffer3[2];
+	int 		i,j,z;
 
 	for (i=0;i<sms.Number;i++) {
 		if ((sms.SMS[i].PDU == SMS_Status_Report) && mystrncasecmp(Config->deliveryreport, "log", 3)) {
@@ -43,7 +43,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 		buffer[0]=0;
 		sprintf(buffer+strlen(buffer),"INSERT INTO `Inbox` \
 			(`Date_Time`,`Text`,`Sender_Number`,`Coding`,`SMSC_Number`,`UDH`, \
-			`Class`) VALUES ('%04d-%02d-%02d %02d:%02d:%02d','",
+			`Class`,`TextDecoded`) VALUES ('%04d-%02d-%02d %02d:%02d:%02d','",
 			sms.SMS[i].DateTime.Year,sms.SMS[i].DateTime.Month,sms.SMS[i].DateTime.Day,
 			sms.SMS[i].DateTime.Hour,sms.SMS[i].DateTime.Minute,sms.SMS[i].DateTime.Second);
 		switch (sms.SMS[i].Coding) {
@@ -74,7 +74,28 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 			EncodeHexBin(buffer+strlen(buffer),sms.SMS[i].UDH.Text,sms.SMS[i].UDH.Length);
 			sprintf(buffer+strlen(buffer),"'");
 		}
-		sprintf(buffer+strlen(buffer),",'%i')",sms.SMS[i].Class);
+		sprintf(buffer+strlen(buffer),",'%i','",sms.SMS[i].Class);
+		switch (sms.SMS[i].Coding) {
+		case SMS_Coding_Unicode:
+	    	case SMS_Coding_Default:
+			sprintf(buffer2,"%s",DecodeUnicodeString(sms.SMS[i].Text));
+			for (j=0;j<strlen(buffer2);j++) {
+				sprintf(buffer3,"'");
+				z = strlen(buffer);
+				if (buffer2[j]==buffer3[0]) {				    
+				    buffer[z+2]=0;
+				    buffer[z+1]=buffer2[j];
+				    buffer[z]  ='\\';
+				} else {
+				    buffer[z+1]=0;
+				    buffer[z]  =buffer2[j];
+				}
+			}
+			break;
+		case SMS_Coding_8bit:
+			break;
+		}
+		sprintf(buffer+strlen(buffer),"')");
 		if (mysql_real_query(&DB,buffer,strlen(buffer))) {
 			WriteSMSDLog("Error writing to database: %s\n", mysql_error(&DB));
 			return ERR_UNKNOWN;

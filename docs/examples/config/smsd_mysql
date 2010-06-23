@@ -3,7 +3,7 @@
 # http://www.phpmyadmin.net
 #
 # Host: localhost
-# Generation Time: Apr 06, 2004 at 09:56 PM
+# Generation Time: Apr 08, 2004 at 10:31 PM
 # Server version: 4.0.18
 # PHP Version: 4.3.4
 # 
@@ -23,5 +23,7 @@ CREATE TABLE `Inbox` (
   `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
   `UDH` text,
   `SMSC_Number` text,
-  `Class` int(11) NOT NULL default '-1'
+  `Class` int(11) NOT NULL default '-1',
+  `TextDecoded` text
 ) TYPE=MyISAM;
+    
