@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "gsmwap.h"
-#include "../misc/coding.h"
+#include "../misc/coding/coding.h"
 
 /* SNIFFS, specs somewhere in http://www.wapforum.org */
 void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, int *Length, GSM_MMSIndicator Indicator)
@@ -335,13 +335,29 @@ void GSM_EncodeMMSFile(GSM_EncodeMultiPartMMSInfo *Info, unsigned char *Buffer, 
 
 void GSM_ClearMultiPartMMSInfo(GSM_EncodeMultiPartMMSInfo *Info)
 {
-	Info->EntriesNum		= 0;
-	Info->Subject[0]		= 0x00;
-	Info->Subject[1]		= 0x00;
-	Info->Source[0] 		= 0x00;
-	Info->Source[1]			= 0x00;
+	Info->EntriesNum	= 0;
+	Info->Subject[0]	= 0x00;
+	Info->Subject[1]	= 0x00;
+	Info->Source[0] 	= 0x00;
+	Info->Source[1]		= 0x00;
 	Info->Destination[0] 	= 0x00;
 	Info->Destination[1] 	= 0x00;
+}
+
+GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, int *Length, GSM_WAPBookmark *bookmark)
+{
+	*Length+=sprintf(Buffer+(*Length), "BEGIN:VBKM%c%c",13,10);
+	*Length+=sprintf(Buffer+(*Length), "VERSION:1.0%c%c",13,10);
+	*Length+=sprintf(Buffer+(*Length), "TITLE:%s%c%c",DecodeUnicodeString(bookmark->Title),13,10);
+	*Length+=sprintf(Buffer+(*Length), "URL:%s%c%c",DecodeUnicodeString(bookmark->Address),13,10);
+	*Length+=sprintf(Buffer+(*Length), "BEGIN:ENV%c%c",13,10);
+	*Length+=sprintf(Buffer+(*Length), "X-IRMC-URL;QUOTED-PRINTABLE:=%c%c",13,10);
+	*Length+=sprintf(Buffer+(*Length), "[InternetShortcut] =%c%c",13,10);
+	*Length+=sprintf(Buffer+(*Length), "URL=%s%c%c",DecodeUnicodeString(bookmark->Address),13,10);
+	*Length+=sprintf(Buffer+(*Length), "END:ENV%c%c",13,10);
+	*Length+=sprintf(Buffer+(*Length), "END:VBKM%c%c",13,10);
+
+	return GE_NONE;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

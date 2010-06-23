@@ -22,6 +22,24 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20031010 - 0.86.0.0
+* new functionality:
+  * Alcatel:
+    * added caching of category names (speeds up --getmemory)    (Michal Cihar)
+    * added docs
+  * text backup files are protected with MD5 checksum. When it doesn't
+    match, Gammu during restore ask, if restore should be REALLY done.
+  * searching phones in Linux looks also for cables          (Frank Zschockelt)
+    connected to USB converters
+  * SonyEricsson:
+    * can create url files with WAP bookmarks and vnt files with notes
+      (new options for --savefile), which can be later transfered to phone
+    * CAN GET CALENDAR AND TODO. It's not possible to synchronize notes
+      with T300/T310 (R1, R3) and T68i (up to R8) and other (phones limit)
+  * my official info about GPRS Online in Nokia phones in readme.txt
+  * source modified to have support for notes (they're in Nokia and
+    SE): new --getnote and other    
+
 20031005 - 0.85.5.0
 * new functionality:
   * DCT4:

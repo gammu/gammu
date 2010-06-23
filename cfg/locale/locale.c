@@ -4,8 +4,8 @@
 #include <wchar.h>
 
 #include "../../cfg/config.h"
+#include "../../common/misc/coding/coding.h"
 #include "../../common/misc/cfg.h"
-#include "../../common/misc/coding.h"
 #include "../../common/misc/misc.h"
 
 unsigned char 	line[1000];

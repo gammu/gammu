@@ -3,7 +3,7 @@
 
 #include "backgen.h"
 
-GSM_Error SaveLDIF(FILE *file, GSM_Backup *backup);
+GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup);
 GSM_Error LoadLDIF(char *FileName, GSM_Backup *backup);
 
 #endif

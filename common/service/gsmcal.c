@@ -3,7 +3,7 @@
 
 #include "gsmcal.h"
 #include "gsmmisc.h"
-#include "../misc/coding.h"
+#include "../misc/coding/coding.h"
 
 bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 {
@@ -321,6 +321,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			if (strstr(Line,"CATEGORIES:SPECIAL OCCASION")) Calendar->Type = GCN_BIRTHDAY;
 			if (strstr(Line,"CATEGORIES:ANNIVERSARY")) 	Calendar->Type = GCN_BIRTHDAY;
 			if (strstr(Line,"CATEGORIES:MEETING")) 		Calendar->Type = GCN_MEETING;
+			if (strstr(Line,"CATEGORIES:APPOINTMENT")) 	Calendar->Type = GCN_MEETING;
 			if (strstr(Line,"RRULE:D1")) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
 				Calendar->Entries[Calendar->EntriesNum].Number    = 1*24;
@@ -415,6 +416,16 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 	}
 
 	if (Calendar->EntriesNum == 0 && ToDo->EntriesNum == 0) return GE_EMPTY;
+	return GE_NONE;
+}
+
+GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *Note)
+{
+	*Length+=sprintf(Buffer+(*Length), "BEGIN:VNOTE%c%c",13,10);
+	*Length+=sprintf(Buffer+(*Length), "VERSION:1.1%c%c",13,10);
+	SaveVCALText(Buffer, Length, Note->Text, "BODY");
+	*Length+=sprintf(Buffer+(*Length), "END:VNOTE%c%c",13,10);
+
 	return GE_NONE;
 }
 

@@ -118,7 +118,8 @@ GSM_Phone_Functions NAUTOPhone = {
 	NOTSUPPORTED,			/* 	GetLocale		*/
 	NOTSUPPORTED,			/* 	SetLocale		*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
-	NOTSUPPORTED			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED			/*	GetNote			*/
 };
 
 #endif

@@ -3,7 +3,7 @@
 
 #include "backgen.h"
 
-GSM_Error SaveVCard(FILE *file, GSM_Backup *backup);
+GSM_Error SaveVCard(char *FileName, GSM_Backup *backup);
 GSM_Error LoadVCard(char *FileName, GSM_Backup *backup);
 
 #endif

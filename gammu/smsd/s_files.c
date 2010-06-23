@@ -12,8 +12,8 @@
 #  include <dirent.h>
 #endif
 
+#include "../../common/misc/coding/coding.h"
 #include "../../common/service/backup/gsmback.h"
-#include "../../common/misc/coding.h"
 #include "smsdcore.h"
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */

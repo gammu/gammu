@@ -69,7 +69,8 @@ typedef struct {
 	int	Location;
 } GSM_WAPBookmark;
 
-void NOKIA_EncodeWAPBookmarkSMSText(unsigned char *Buffer, int *Length, GSM_WAPBookmark *bookmark);
+void 		NOKIA_EncodeWAPBookmarkSMSText	(unsigned char *Buffer, int *Length, GSM_WAPBookmark *bookmark);
+GSM_Error 	GSM_EncodeURLFile		(unsigned char *Buffer, int *Length, GSM_WAPBookmark *bookmark);
 
 /* ------------------------------ MMS Indicator ---------------------------- */
 

@@ -5,17 +5,21 @@
 #include "../../../cfg/config.h"
 #include "../../phone/nokia/nfunc.h"
 #include "../../phone/nokia/dct3/n7110.h"
-#include "../../misc/coding.h"
+#include "../../misc/coding/coding.h"
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
 #include "backvcf.h"
 
 #ifdef GSM_ENABLE_BACKUP
 
-GSM_Error SaveVCard(FILE *file, GSM_Backup *backup)
+GSM_Error SaveVCard(char *FileName, GSM_Backup *backup)
 {
 	int 		i, Length = 0;
 	unsigned char 	Buffer[1000];
+	FILE 		*file;
+ 
+	file = fopen(FileName, "wb");      
+	if (file == NULL) return GE_CANTOPENFILE;
 
 	i=0;
 	while (backup->PhonePhonebook[i]!=NULL) {
@@ -26,6 +30,8 @@ GSM_Error SaveVCard(FILE *file, GSM_Backup *backup)
 		fwrite(Buffer,1,Length,file);
 		i++;
 	}
+
+	fclose(file);
 	return GE_NONE;
 }
 

@@ -3,7 +3,7 @@
 
 #include "backgen.h"
 
-GSM_Error SaveVCalendar(FILE *file, GSM_Backup *backup);
+GSM_Error SaveVCalendar(char *FileName, GSM_Backup *backup);
 GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup);
 
 #endif

@@ -6,7 +6,7 @@
 
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
-#include "../../misc/coding.h"
+#include "../../misc/coding/coding.h"
 #include "../../service/gsmmisc.h"
 
 #ifdef GSM_ENABLE_MROUTERGEN
@@ -192,7 +192,8 @@ GSM_Phone_Functions MROUTERGENPhone = {
 	NOTSUPPORTED,			/* 	GetLocale		*/
 	NOTSUPPORTED,			/* 	SetLocale		*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
-	NOTSUPPORTED			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED			/*	GetNote			*/
 };
 
 #endif

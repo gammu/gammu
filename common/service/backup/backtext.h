@@ -4,7 +4,7 @@
 #include "backgen.h"
 
 GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode);
-GSM_Error SaveBackup(FILE *file, GSM_Backup *backup, bool UseUnicode);
+GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode);
 
 #endif
 

@@ -4,8 +4,8 @@
 #include <ctype.h>
 #include <time.h>
 
+#include "../../misc/coding/coding.h"
 #include "../../gsmstate.h"
-#include "../../misc/coding.h"
 #include "../../service/gsmsms.h"
 #include "../pfunc.h"
 #include "nfunc.h"

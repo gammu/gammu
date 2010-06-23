@@ -8,7 +8,7 @@
 #include <ctype.h>
 
 #include "../../gsmcomon.h"
-#include "../../misc/coding.h"
+#include "../../misc/coding/coding.h"
 #include "../../service/gsmsms.h"
 #include "../pfunc.h"
 #include "atgen.h"
@@ -26,13 +26,17 @@ extern GSM_Error ATGEN_CMS35ReplySetCalendar	(GSM_Protocol_Message msg, GSM_Stat
 extern GSM_Error ATGEN_CMS35ReplyDeleteCalendar	(GSM_Protocol_Message msg, GSM_StateMachine *s);
 extern GSM_Error ATGEN_SL45ReplyGetMemory	(GSM_Protocol_Message msg, GSM_StateMachine *s);
 
-extern GSM_Error ATGEN_GetRingtone	(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone);
-extern GSM_Error ATGEN_SetRingtone	(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength);
-extern GSM_Error ATGEN_GetBitmap	(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
-extern GSM_Error ATGEN_SetBitmap	(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
-extern GSM_Error ATGEN_GetNextCalendar	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start);
-extern GSM_Error ATGEN_DelCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note);
-extern GSM_Error ATGEN_AddCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past);
+extern GSM_Error ATGEN_GetRingtone		(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone);
+extern GSM_Error ATGEN_SetRingtone		(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength);
+extern GSM_Error ATGEN_GetBitmap		(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
+extern GSM_Error ATGEN_SetBitmap		(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
+extern GSM_Error SIEMENS_GetNextCalendar	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start);
+extern GSM_Error ATGEN_DelCalendarNote		(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+extern GSM_Error ATGEN_AddCalendarNote		(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past);
+
+extern GSM_Error SONYERIC_GetNextCalendar	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start);
+extern GSM_Error SONYERIC_GetToDo		(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refresh);
+extern GSM_Error SONYERIC_GetToDoStatus		(GSM_StateMachine *s, GSM_ToDoStatus *status);
 
 typedef struct {
     int     Number;
@@ -222,6 +226,9 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->PBKMemories[0]		= 0;
 	Priv->FirstCalendarPos		= 0;
 	Priv->NextMemoryEntry		= 0;
+	Priv->file.Used 		= 0;
+	Priv->file.Buffer 		= NULL;
+	Priv->OBEX			= false;
 
 	Priv->ErrorText			= NULL;
 
@@ -2712,6 +2719,23 @@ GSM_Error ATGEN_ReplyOK(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return GE_NONE;
 }
 
+static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	
+	if (Priv->Manufacturer==AT_Siemens ) return SIEMENS_GetNextCalendar(s,Note,start);
+	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_GetNextCalendar(s,Note,start);
+	return GE_NOTSUPPORTED;
+}
+
+static GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	free(Priv->file.Buffer);
+	return GE_NONE;
+}
+
 GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyOK,			"OK"			,0x00,0x00,ID_IncomingFrame	 },
 
@@ -2811,6 +2835,8 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_IncomingSMSCInfo,	"\x0D\x0A^SCN:"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_IncomingSMSCInfo,	"^SCN:"			,0x00,0x00,ID_IncomingFrame	 },
 
+{ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
+
 {NULL,				"\x00"			,0x00,0x00,ID_None		 }
 };                                                                                      
 
@@ -2818,7 +2844,7 @@ GSM_Phone_Functions ATGENPhone = {
 	"A2D|iPAQ|at|M20|S25|MC35|C35i|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8390|8850|8855|8890|8910|9110|9210",
 	ATGENReplyFunctions,
 	ATGEN_Initialise,
-	NONEFUNCTION,			/*	Terminate		*/
+	ATGEN_Terminate,
 	ATGEN_DispatchMessage,
 	ATGEN_GetModel,
 	ATGEN_GetFirmware,
@@ -2861,10 +2887,10 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/*	GetHardware		*/
 	NOTSUPPORTED,			/*	GetPPM			*/
 	ATGEN_PressKey,
-	NOTSUPPORTED,			/*	GetToDo			*/
+	SONYERIC_GetToDo,
 	NOTSUPPORTED,			/*	DeleteAllToDo		*/
 	NOTSUPPORTED,			/*	SetToDo			*/
-	NOTSUPPORTED,			/*	GetToDoStatus		*/
+	SONYERIC_GetToDoStatus,
 	NOTSUPPORTED,			/*	PlayTone		*/
 	ATGEN_EnterSecurityCode,
 	ATGEN_GetSecurityStatus,
@@ -2917,7 +2943,8 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/* 	GetLocale		*/
 	NOTSUPPORTED,			/* 	SetLocale		*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
-	NOTSUPPORTED			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED			/*	GetNote			*/
 };
 
 #endif

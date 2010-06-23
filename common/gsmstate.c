@@ -6,7 +6,7 @@
 #include "gsmcomon.h"
 #include "gsmstate.h"
 #include "misc/cfg.h"
-#include "misc/coding.h"
+#include "misc/coding/coding.h"
 #include "device/devfunc.h"
 
 static void GSM_RegisterConnection(GSM_StateMachine *s, unsigned int connection,

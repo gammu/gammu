@@ -4,7 +4,7 @@
 
 #include "../gsmstate.h"
 #include "../service/gsmsms.h"
-#include "../misc/coding.h"
+#include "../misc/coding/coding.h"
 
 /* These SMS layouts are used exactly as written in Nokia DCT3 phones.
  * In AT module(s) we have to use some layouts to convert AT frame to format

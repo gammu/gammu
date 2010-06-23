@@ -1,7 +1,7 @@
 #include <string.h>
 
 #include "gsmnet.h"
-#include "../misc/coding.h"
+#include "../misc/coding/coding.h"
 
 GSM_Country GSM_Countries[] = {
 	{ "202", "Greece" },

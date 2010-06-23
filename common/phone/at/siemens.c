@@ -7,8 +7,8 @@
 #include <time.h>
 #include <ctype.h>
 
+#include "../../misc/coding/coding.h"
 #include "../../gsmcomon.h"
-#include "../../misc/coding.h"
 #include "../../service/gsmsms.h"
 #include "../pfunc.h"
 
@@ -210,7 +210,7 @@ GSM_Error ATGEN_CMS35ReplyGetNextCal(GSM_Protocol_Message msg, GSM_StateMachine 
  	return error;
 }
 
-GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;

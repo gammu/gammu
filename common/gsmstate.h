@@ -339,6 +339,7 @@ typedef enum {
 	ID_GetSMSC,
 	ID_GetSMSMessage,
 	ID_EnableEcho,
+	ID_SetOBEX,
 	ID_GetSignalQuality,
 	ID_GetBatteryCharge,
 	ID_GetSMSFolders,
@@ -527,7 +528,7 @@ typedef struct {
 	
 	/**
 	 * Counter used for disabling startup info on phone, see
-	 * @ref ShowStartInfo.After this is 0, the startup info is hidden.
+	 * @ref GSM_Phone_Functions::ShowStartInfo . After this is 0, the startup info is hidden.
 	 */
 	int			StartInfoCounter;
 
@@ -710,8 +711,8 @@ typedef struct {
 	 */
 	GSM_Protocol_Message	*SentMsg;
 	/**
-	 * What operation is being performed now, see @GSM_Phone_RequestID for
-	 * possible values.
+	 * What operation is being performed now, see @ref GSM_Phone_RequestID
+	 * for possible values.
 	 */
 	GSM_Phone_RequestID	RequestID;
 	/**
@@ -811,7 +812,7 @@ typedef struct {
 	GSM_Error (*Terminate)  	(GSM_StateMachine *s);
 	/**
 	 * Dispatches messages from phone, at the end it should call 
-	 * @ref GSM_DisplatchMessage.
+	 * @ref GSM_DispatchMessage.
 	 */
 	GSM_Error (*DispatchMessage)	(GSM_StateMachine *s);
 	/**
@@ -819,7 +820,7 @@ typedef struct {
 	 */
 	GSM_Error (*GetModel)		(GSM_StateMachine *s);
 	/**
-	 * Reads firmware information from phone./
+	 * Reads firmware information from phone.
 	 */
 	GSM_Error (*GetFirmware)	(GSM_StateMachine *s);
 	/**
@@ -979,6 +980,7 @@ typedef struct {
 	GSM_Error (*SetLocale)		(GSM_StateMachine *s, GSM_Locale	    *locale	);
 	GSM_Error (*GetCalendarSettings)(GSM_StateMachine *s, GSM_CalendarSettings  *settings	);
 	GSM_Error (*SetCalendarSettings)(GSM_StateMachine *s, GSM_CalendarSettings  *settings	);
+	GSM_Error (*GetNote)		(GSM_StateMachine *s, GSM_NoteEntry	    *Note,	bool	refresh);
 } GSM_Phone_Functions;
 
 	extern GSM_Phone_Functions NAUTOPhone;

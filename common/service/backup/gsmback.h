@@ -30,6 +30,7 @@ typedef struct {
 	bool OperatorLogo;
  	bool FMStation;
 	bool GPRSPoint;
+	bool Note;
 } GSM_Backup_Info;
 
 void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup);

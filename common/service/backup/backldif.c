@@ -5,7 +5,7 @@
 #include "../../../cfg/config.h"
 #include "../../phone/nokia/nfunc.h"
 #include "../../phone/nokia/dct3/n7110.h"
-#include "../../misc/coding.h"
+#include "../../misc/coding/coding.h"
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
 #include "backldif.h"
@@ -25,9 +25,13 @@ static void SaveLDIFText(FILE *file, unsigned char *Name, unsigned char *Value)
 	}
 }
 
-GSM_Error SaveLDIF(FILE *file, GSM_Backup *backup)
+GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 {
-	int i, j;
+	int 		i, j;
+	FILE 		*file;
+ 
+	file = fopen(FileName, "wb");      
+	if (file == NULL) return GE_CANTOPENFILE;
 
 	i=0;
 	while (backup->PhonePhonebook[i]!=NULL) {
@@ -133,6 +137,7 @@ GSM_Error SaveLDIF(FILE *file, GSM_Backup *backup)
 		fprintf(file, "%c%c",13,10);
 		i++;
 	}
+	fclose(file);
 	return GE_NONE;
 }
 

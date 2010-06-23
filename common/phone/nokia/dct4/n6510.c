@@ -5,8 +5,8 @@
 #include <string.h>
 #include <time.h>
 
+#include "../../../misc/coding/coding.h"
 #include "../../../gsmcomon.h"
-#include "../../../misc/coding.h"
 #include "../../../service/gsmlogo.h"
 #include "../nfunc.h"
 #include "../nfuncold.h"
@@ -5296,7 +5296,8 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_GetLocale,
 	NOTSUPPORTED,			/* 	SetLocale		*/
 	N6510_GetCalendarSettings,
-	NOTSUPPORTED			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
+	NOTIMPLEMENTED			/*	GetNote			*/
 };
 
 #endif

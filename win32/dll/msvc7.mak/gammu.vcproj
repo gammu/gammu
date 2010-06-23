@@ -89,7 +89,10 @@
 				RelativePath="..\..\..\common\misc\cfg.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\misc\coding.c">
+				RelativePath="..\..\..\common\misc\coding\coding.c">
+			</File>
+			<File
+				RelativePath="..\..\..\common\misc\coding\md5.c">
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct3\dct3func.c">
@@ -246,7 +249,10 @@
 				RelativePath="..\..\..\common\misc\cfg.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\misc\coding.h">
+				RelativePath="..\..\..\common\misc\coding\coding.h">
+			</File>
+			<File
+				RelativePath="..\..\..\common\misc\coding\coding.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct3\dct3func.h">

@@ -11,7 +11,7 @@
 
 #include "../../common/gsmstate.h"
 #include "../../common/gsmcomon.h"
-#include "../../common/misc/coding.h"
+#include "../../common/misc/coding/coding.h"
 
 typedef struct {
 	GSM_StateMachine 	s;
