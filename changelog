@@ -24,14 +24,6 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
-20040304 - 0.95.0
-* new functionality:
-  * enabling new menu features for 6220
-  * NGAGE ID
-  * smsd deamon has support for receiving SMS and saving to MySQL database
-
-* fixes and improvements:
-
 20040304 - 0.94.0
 * new functionality:
   * * Italian translation                                   (Andrea Spadaccini)

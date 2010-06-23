@@ -5,13 +5,10 @@
 #include <stdarg.h>
 #include <time.h>
 
-#include "../../common/misc/coding/coding.h"
-#include "../gammu.h"
 #include "smsdcore.h"
+#include "../gammu.h"
 #include "s_files.h"
-#ifdef HAVE_MYSQL_MYSQL_H
-#  include "s_mysql.h"
-#endif
+#include "../../common/misc/coding/coding.h"
 
 FILE 		 *smsd_log_file = NULL;
 static GSM_Error SendingSMSStatus;
@@ -112,15 +109,6 @@ void SMSD_ReadConfig(int argc, char *argv[], GSM_SMSDConfig *Config)
 		exit(-1);
 	}
 	WriteSMSDLog("PIN code is \"%s\"",Config->PINCode);
-
-	Config->user = INI_GetValue(smsdcfgfile, "smsd", "user", false);
-	if (Config->user == NULL) Config->user="root";
-	Config->password = INI_GetValue(smsdcfgfile, "smsd", "password", false);
-	if (Config->password == NULL) Config->password="";
-	Config->PC = INI_GetValue(smsdcfgfile, "smsd", "pc", false);
-	if (Config->PC == NULL) Config->PC="localhost";
-	Config->database = INI_GetValue(smsdcfgfile, "smsd", "database", false);
-	if (Config->database == NULL) Config->database="sms";
 
 	str = INI_GetValue(smsdcfgfile, "smsd", "commtimeout", false);
 	if (str) Config->commtimeout=atoi(str); else Config->commtimeout = 1;
@@ -318,7 +306,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 
 	error = Service->FindOutboxSMS(&sms, Config, Config->SMSID);
 
-	if (error == ERR_EMPTY || error == ERR_NOTSUPPORTED) {
+	if (error == ERR_EMPTY) {
 		/* No outbox sms - wait few seconds and escape */
 		for (j=0;j<Config->commtimeout && !gshutdown;j++) {
 			GSM_GetCurrentDateTime (&Date);
@@ -395,10 +383,6 @@ void SMSDaemon(int argc, char *argv[])
 
 	if (!strcmp(argv[2],"FILES")) {
 		Service = &SMSDFiles;
-#ifdef HAVE_MYSQL_MYSQL_H
-	} else if (!strcmp(argv[2],"MYSQL")) {
-		Service = &SMSDMySQL;
-#endif
 	} else {
 		fprintf(stderr,"Unknown service type (\"%s\")\n",argv[2]);
 		exit(-1);
@@ -406,7 +390,7 @@ void SMSDaemon(int argc, char *argv[])
 
 	SMSD_ReadConfig(argc, argv, &Config);
 
-	error = Service->Init(&Config);
+	error = Service->Init();
 	if (error!=ERR_NONE) {
 		GSM_Terminate_SMSD("Stop GAMMU smsd (%i)", error, true, -1);
 	}
@@ -447,7 +431,8 @@ void SMSDaemon(int argc, char *argv[])
 		if ((difftime(time(NULL), time1) >= Config.receivefrequency) || (SendingSMSStatus != ERR_NONE)) {
 	 		time1 = time(NULL);
 
-			if (!SMSD_CheckSecurity(&Config)) {
+			if (!SMSD_CheckSecurity(&Config))
+			{
 				errors++;
 				initerrors++;
 				continue;
@@ -455,7 +440,8 @@ void SMSDaemon(int argc, char *argv[])
 
 			initerrors = 0;
 
-			if (!SMSD_CheckSMSStatus(&Config,Service)) {
+			if (!SMSD_CheckSMSStatus(&Config,Service))
+			{
 				errors++;
 				continue;
 			} else errors=0;

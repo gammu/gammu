@@ -877,11 +877,8 @@ static OnePhoneModel allmodels[] = {
 #ifdef GSM_ENABLE_NOKIA6110
 	{"3610" ,"NAM-1" ,"",           {F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},//quess
 #endif
-#if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA3650)
-	{"3650" ,"NHL-8" ,"Nokia 3650", {0}},
-	{"NGAGE","NEM-4" ,"",           {F_RADIO,0}},
-#endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
+	{"3650" ,"NHL-8" ,"Nokia 3650", {F_RADIO,0}},
 	{"5100" ,"NPM-6" ,"Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 	{"5100" ,"NPM-6U","Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 	{"5100" ,"NPM-6X","Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
