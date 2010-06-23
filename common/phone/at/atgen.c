@@ -74,6 +74,7 @@ static GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->PhoneSMSMemory	 = 0;
 	Priv->SMSMemory	  	 = 0;
 	Priv->PBKMemory	  	 = 0;
+	Priv->PBKSBNR		 = 0;
 	Priv->PBKCharset   	 = 0;
 	Priv->PBKMemories[0]	 = 0;
 
@@ -1634,57 +1635,59 @@ static GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_Phone_Data *
 	return GE_UNKNOWNRESPONSE;
 }
 
-#ifdef DEVELOP
 static GSM_Error ATGEN_SL45ReplyGetMemory(GSM_Protocol_Message msg, GSM_Phone_Data *Data, GSM_User *User)
 {
 	GSM_Phone_ATGENData 	*Priv = &Data->Priv.ATGEN;
 	unsigned char		buffer[500],buffer2[500];
-	char			*start;
-	int			current;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		dprintf("Phonebook entry received\n");
-		CopyLineString(buffer, msg.Buffer, Priv->Lines, 2);
+		CopyLineString(buffer, msg.Buffer, Priv->Lines, 3);
 		DecodeHexBin(buffer2,buffer,strlen(buffer));
 		Data->Memory->EntriesNum = 0;
-		start = strstr(buffer2,"TEL;HOME:");
-		if (start) {
-			current=ATGEN_ExtractOneParameter(buffer2, buffer);
-			dprintf("Number: \"%s\"\n",buffer);
-			Data->Memory->Entries[Data->Memory->EntriesNum].EntryType=PBK_Number_General;
-			EncodeUnicode(Data->Memory->Entries[Data->Memory->EntriesNum].Text,buffer,strlen(buffer));
-			Data->Memory->EntriesNum++;
-		}
-		start = strstr(buffer2,"TEL;CELL:");
-		if (start) {
-			current=ATGEN_ExtractOneParameter(buffer2, buffer);
-			dprintf("GSM Number: \"%s\"\n",buffer);
-			Data->Memory->Entries[Data->Memory->EntriesNum].EntryType=PBK_Number_Mobile;
-			EncodeUnicode(Data->Memory->Entries[Data->Memory->EntriesNum].Text,buffer,strlen(buffer));
-			Data->Memory->EntriesNum++;
-		}
+                DecodeVCARD21Text(buffer2, Data->Memory);
 		return GE_NONE;
+	case AT_Reply_Error:
+                dprintf("Error - too high location ?\n");
+                return GE_INVALIDLOCATION;
 	default:
 		break;
 	}
 	return GE_UNKNOWNRESPONSE;
 }
-#endif
 
 static GSM_Error ATGEN_GetMemory (GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 {
-	GSM_Error 	error;
-	unsigned char	req[20];
+	GSM_Error 		error;
+	unsigned char		req[20];
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (entry->Location==0x00) return GE_INVALIDLOCATION;
 
-#ifdef DEVELOP
-//	sprintf(req, "AT^SBNR=vcr,%i\r",entry->Location);
-//	s->Phone.Data.Memory=entry;
-//	dprintf("Getting phonebook entry\n");
-//	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
-#endif
+	if (entry->MemoryType == GMT_ME) {
+		if (Priv->PBKSBNR == 0) {
+			sprintf(req, "AT^SBNR=?\r");
+			dprintf("Checking availablity of SBNR\n");
+			error=GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
+			switch (error) {
+			case GE_NONE:
+				Priv->PBKSBNR = AT_SBNR_AVAILABLE;
+				break;
+			case GE_NOTSUPPORTED:
+				Priv->PBKSBNR = AT_SBNR_NOTAVAILABLE;
+				break;
+			default:
+				return error;
+			}
+		}
+		if (Priv->PBKSBNR == AT_SBNR_AVAILABLE) {
+			sprintf(req, "AT^SBNR=vcr,%i\r",entry->Location-1);
+			s->Phone.Data.Memory=entry;
+			dprintf("Getting phonebook entry\n");
+			return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
+		}
+	}
 
 	error=ATGEN_SetPBKMemory(s, entry->MemoryType);
 	if (error != GE_NONE) return error;
@@ -2193,9 +2196,8 @@ static GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"ATE1"			,0x00,0x00,ID_SetSMSParameters	 },
 {ATGEN_GenericReply,		"\x1b\x0D"		,0x00,0x00,ID_SetSMSParameters	 },
 {ATGEN_ReplyGetMemory,		"AT+CPBR="		,0x00,0x00,ID_GetMemory		 },
-#ifdef DEVELOP
+{ATGEN_GenericReply,		"AT^SBNR=?"		,0x00,0x00,ID_GetMemory		 },
 {ATGEN_SL45ReplyGetMemory,	"AT^SBNR"		,0x00,0x00,ID_GetMemory		 },
-#endif
 {ATGEN_ReplyEnterSecurityCode,	"AT+CPIN="		,0x00,0x00,ID_EnterSecurityCode	 },
 {ATGEN_ReplyEnterSecurityCode,	"AT+CPIN2="		,0x00,0x00,ID_EnterSecurityCode	 },
 {ATGEN_ReplyGetSecurityStatus,	"AT+CPIN?"		,0x00,0x00,ID_GetSecurityStatus	 },

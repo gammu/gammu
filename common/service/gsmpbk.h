@@ -78,6 +78,7 @@ void GSM_PhonebookFindDefaultNameNumberGroup(GSM_PhonebookEntry entry, int *Name
 
 void NOKIA_EncodeVCARD10SMSText(char *Buffer, int *Length, GSM_PhonebookEntry pbk);
 void NOKIA_EncodeVCARD21SMSText(char *Buffer, int *Length, GSM_PhonebookEntry pbk);
+void DecodeVCARD21Text(char *VCard, GSM_PhonebookEntry *pbk);
 
 /* This define speed dialing entries. */
 typedef struct {

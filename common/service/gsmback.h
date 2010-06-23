@@ -8,6 +8,7 @@
 #include "gsmring.h"
 #include "gsmsms.h"
 #include "gsmwap.h"
+#include "gsmprof.h"
 
 #define GSM_BACKUP_MAX_PHONEPHONEBOOK 	501
 #define GSM_BACKUP_MAX_SIMPHONEBOOK 	251

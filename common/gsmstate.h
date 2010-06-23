@@ -504,29 +504,38 @@ typedef enum {
 	GCT_ALCABUS
 } GSM_ConnectionType;
 
-struct _GSM_StateMachine {
-	GSM_ConnectionType 	connectiontype;    /* Type of connection as int		*/
-	char			*lockfile; 	   /* Lock file name for Unix 		*/
-	Debug_Info		di;
-	bool			opened;		   /* Is connection opened ?		*/
-	char			Model[50];	   /* Real connected phone model 	*/
-	char			Ver[50];	   /* Real connected phone version 	*/
-	char			VerDate[50];	   /* Version date			*/
-	double			VerNum;		   /* Phone version as number 		*/
-
+typedef struct {
 	/* Config file (or Registry or...) variables */
-	char			CFGModel[50];	   /* Model from config file 		*/
-	char 			*CFGDevice;	   /* Device name from config file 	*/
-	char			*CFGConnection;	   /* Connection type as string		*/
-	char			*CFGSyncTime;	   /* Synchronize time on startup? 	*/
-	char			*CFGLockDevice;	   /* Lock device ? (Unix)		*/
-	char			*CFGDebugFile;     /* Name of debug file		*/
-	char			CFGDebugLevel[50]; /* Debug level			*/
-	char 			*CFGLocalize;	   /* Name of localisation file		*/
+	char			Model[50];	   /* Model from config file 		*/
+	char			DebugLevel[50];    /* Debug level			*/
+	char 			*Device;	   /* Device name from config file 	*/
+	char			*Connection;	   /* Connection type as string		*/
+	char			*SyncTime;	   /* Synchronize time on startup? 	*/
+	char			*LockDevice;	   /* Lock device ? (Unix)		*/
+	char			*DebugFile;        /* Name of debug file		*/
+	char 			*Localize;	   /* Name of localisation file		*/
+	bool			DefaultModel;
+	bool			DefaultDebugLevel;
+	bool			DefaultDevice;
+	bool			DefaultConnection;
+	bool			DefaultSyncTime;
+	bool			DefaultLockDevice;
+	bool			DefaultDebugFile;
+	bool			DefaultLocalize;
+} GSM_Config;
 
-	CFG_Header 		*msg;		   /* Localisation strings structure    */
-
-	int			ReplyNum;	   /* How many times make sth. 		*/
+struct _GSM_StateMachine {
+	GSM_ConnectionType 	connectiontype;    /* Type of connection as int			*/
+	char			*lockfile; 	   /* Lock file name for Unix 			*/
+	Debug_Info		di;
+	bool			opened;		   /* Is connection opened ?			*/
+	char			Model[50];	   /* Real connected phone model 		*/
+	char			Ver[50];	   /* Real connected phone version 		*/
+	char			VerDate[50];	   /* Version date				*/
+	double			VerNum;		   /* Phone version as number 			*/
+	GSM_Config		Config;		   /* Config file (or Registry or...) variables */
+	CFG_Header 		*msg;		   /* Localisation strings structure    	*/
+	int			ReplyNum;	   /* How many times make sth. 			*/
 
 	GSM_Device		Device;
 	GSM_Protocol		Protocol;
@@ -554,9 +563,7 @@ GSM_Error GSM_DispatchMessage		(GSM_StateMachine *s);
 
 CFG_Header 				*CFG_FindGammuRC();
 
-void      CFG_ReadConfig		(CFG_Header *cfg_info, char **model, char **port,
-					 char **connection, char **synchronizetime, char **debugfile,
-					 char **debuglevel, char **lockdevice);
+void 	  CFG_ReadConfig		(CFG_Header *cfg_info, GSM_Config *cfg);
 
 void 	  GSM_DumpMessageLevel2		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);
 void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);
@@ -573,6 +580,7 @@ typedef enum {
 	F_NOWAP,      	/* No WAP							*/
 	F_NOCALLER,	/* No caller groups						*/
 	F_NOPICTURE,	/* No Picture Images						*/
+	F_NOPICTUREUNI,	/* No Picture Images text in Unicode				*/
 	F_NOSTARTUP,	/* No startup logo						*/
 	F_NOCALENDAR,	/* No calendar							*/
 	F_NOSTARTANI,	/* Startup logo is not animated 				*/

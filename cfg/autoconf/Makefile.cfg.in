@@ -1,30 +1,23 @@
 
 # ------------- Makefile options, which depens on OS --------------------------
 
-# what is used to delete files
+VERSION		= @VERSION@
+
+# what is used to delete files, compile, install and find
 RM               = @RM@ -f
-# what is used to compile
 CC               = @CC@ @CFLAGS@
-# what is used to install
 INSTALL          = @INSTALL@
-# what is used to find
 FIND             = @FIND@
 
-# uncomment next line if want bluetooth
-# CC += -lbluetooth
-
 # where to install binary, documentation, man and shared library files
-# (NO SPACE AFTER DIR)
+# where is temporary directory and directory for making RPM
 prefix          = @prefix@
 exec_prefix     = @exec_prefix@
 INSTALL_BIN_DIR	= @bindir@
 INSTALL_DOC_DIR = @prefix@/doc/gammu
 INSTALL_MAN_DIR = @mandir@/man1
 INSTALL_LIB_DIR = @libdir@
-
-# version must be the same to version in spec file
-# RPM_DIR contains path for directory used by RPM to build packages
-RPM_VER		= @VERSION@
-RPM_DIR         = /usr/src/RPM
+RPM_DIR         = @RPM_DIR@
+TEMP_DIR	= @TEMP_DIR@
 
 LDFLAGS += -Wl,--rpath -Wl,@libdir@

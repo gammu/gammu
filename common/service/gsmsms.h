@@ -302,7 +302,7 @@ typedef struct {
 	GSM_WAPSettings		*Settings;
 	GSM_PhonebookEntry	*Phonebook;
 	GSM_CalendarNote	*Calendar;
-	char			*Buffer;
+	unsigned char		*Buffer;
 	bool			UnicodeCoding;
 	int			Class;
 	unsigned char		ReplaceMessage;

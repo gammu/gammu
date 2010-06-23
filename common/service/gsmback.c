@@ -831,8 +831,8 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 		if (e == NULL) break;
 		num = -1;
 		if (strlen(e->key) == 11) {
-			if (strncmp("Entry", e->key,   5) == 0 &&
-			    strncmp("Type",  e->key+7, 4) == 0) {
+			if (mystrncasecmp("Entry", e->key,   5) &&
+			    mystrncasecmp("Type",  e->key+7, 4)) {
 				num = atoi(e->key+5);
 			}
 		}
@@ -840,27 +840,27 @@ static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntr
 		if (num != -1) {
 			sprintf(buffer,"Entry%02iType",num);
 			readvalue = CFG_Get(file_info, section, buffer, false);
-			if (!strcmp(readvalue,"NumberGeneral")) {
+			if (mystrncasecmp(readvalue,"NumberGeneral",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
-			} else if (!strcmp(readvalue,"NumberMobile")) {
+			} else if (mystrncasecmp(readvalue,"NumberMobile",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile;
-			} else if (!strcmp(readvalue,"NumberWork")) {
+			} else if (mystrncasecmp(readvalue,"NumberWork",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Work;
-			} else if (!strcmp(readvalue,"NumberFax")) {
+			} else if (mystrncasecmp(readvalue,"NumberFax",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Fax;
-			} else if (!strcmp(readvalue,"NumberHome")) {
+			} else if (mystrncasecmp(readvalue,"NumberHome",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Home;
-			} else if (!strcmp(readvalue,"Note")) {
+			} else if (mystrncasecmp(readvalue,"Note",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Note;
-			} else if (!strcmp(readvalue,"Postal")) {
+			} else if (mystrncasecmp(readvalue,"Postal",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
-			} else if (!strcmp(readvalue,"Email")) {
+			} else if (mystrncasecmp(readvalue,"Email",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
-			} else if (!strcmp(readvalue,"URL")) {
+			} else if (mystrncasecmp(readvalue,"URL",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_URL;
-			} else if (!strcmp(readvalue,"Name")) {
+			} else if (mystrncasecmp(readvalue,"Name",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Name;
-			} else if (!strcmp(readvalue,"CallerGroup")) {
+			} else if (mystrncasecmp(readvalue,"CallerGroup",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Caller_Group;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
@@ -895,49 +895,49 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 	note->Type = GCN_REMINDER;
 	if (readvalue!=NULL)
 	{
-		if (!strcmp(readvalue,"Call")) {
+		if (mystrncasecmp(readvalue,"Call",0)) {
 			note->Type = GCN_CALL;
-		} else if (!strcmp(readvalue,"Meeting")) {
+		} else if (mystrncasecmp(readvalue,"Meeting",0)) {
 			note->Type = GCN_MEETING;
-		} else if (!strcmp(readvalue,"Birthday")) {
+		} else if (mystrncasecmp(readvalue,"Birthday",0)) {
 			note->Type = GCN_BIRTHDAY;
-		} else if (!strcmp(readvalue,"Training/Athletism")) {
+		} else if (mystrncasecmp(readvalue,"Training/Athletism",0)) {
 			note->Type = GCN_T_ATHL;
-		} else if (!strcmp(readvalue,"Training/BallGames")) {
+		} else if (mystrncasecmp(readvalue,"Training/BallGames",0)) {
 			note->Type = GCN_T_BALL;
-		} else if (!strcmp(readvalue,"Training/Cycling")) {
+		} else if (mystrncasecmp(readvalue,"Training/Cycling",0)) {
 			note->Type = GCN_T_CYCL;
-		} else if (!strcmp(readvalue,"Training/Budo")) {
+		} else if (mystrncasecmp(readvalue,"Training/Budo",0)) {
 			note->Type = GCN_T_BUDO;
-		} else if (!strcmp(readvalue,"Training/Dance")) {
+		} else if (mystrncasecmp(readvalue,"Training/Dance",0)) {
 			note->Type = GCN_T_DANC;
-		} else if (!strcmp(readvalue,"Training/ExtremeSports")) {
+		} else if (mystrncasecmp(readvalue,"Training/ExtremeSports",0)) {
 			note->Type = GCN_T_EXTR;
-		} else if (!strcmp(readvalue,"Training/Football")) {
+		} else if (mystrncasecmp(readvalue,"Training/Football",0)) {
 			note->Type = GCN_T_FOOT;
-		} else if (!strcmp(readvalue,"Training/Golf")) {
+		} else if (mystrncasecmp(readvalue,"Training/Golf",0)) {
 			note->Type = GCN_T_GOLF;
-		} else if (!strcmp(readvalue,"Training/Gym")) {
+		} else if (mystrncasecmp(readvalue,"Training/Gym",0)) {
 			note->Type = GCN_T_GYM;
-		} else if (!strcmp(readvalue,"Training/HorseRaces")) {
+		} else if (mystrncasecmp(readvalue,"Training/HorseRaces",0)) {
 			note->Type = GCN_T_HORS;
-		} else if (!strcmp(readvalue,"Training/Hockey")) {
+		} else if (mystrncasecmp(readvalue,"Training/Hockey",0)) {
 			note->Type = GCN_T_HOCK;
-		} else if (!strcmp(readvalue,"Training/Races")) {
+		} else if (mystrncasecmp(readvalue,"Training/Races",0)) {
 			note->Type = GCN_T_RACE;
-		} else if (!strcmp(readvalue,"Training/Rugby")) {
+		} else if (mystrncasecmp(readvalue,"Training/Rugby",0)) {
 			note->Type = GCN_T_RUGB;
-		} else if (!strcmp(readvalue,"Training/Sailing")) {
+		} else if (mystrncasecmp(readvalue,"Training/Sailing",0)) {
 			note->Type = GCN_T_SAIL;
-		} else if (!strcmp(readvalue,"Training/StreetGames")) {
+		} else if (mystrncasecmp(readvalue,"Training/StreetGames",0)) {
 			note->Type = GCN_T_STRE;
-		} else if (!strcmp(readvalue,"Training/Swimming")) {
+		} else if (mystrncasecmp(readvalue,"Training/Swimming",0)) {
 			note->Type = GCN_T_SWIM;
-		} else if (!strcmp(readvalue,"Training/Tennis")) {
+		} else if (mystrncasecmp(readvalue,"Training/Tennis",0)) {
 			note->Type = GCN_T_TENN;
-		} else if (!strcmp(readvalue,"Training/Travels")) {
+		} else if (mystrncasecmp(readvalue,"Training/Travels",0)) {
 			note->Type = GCN_T_TRAV;
-		} else if (!strcmp(readvalue,"Training/WinterGames")) {
+		} else if (mystrncasecmp(readvalue,"Training/WinterGames",0)) {
 			note->Type = GCN_T_WINT;
 		}
 	}
@@ -963,7 +963,7 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 		readvalue = CFG_Get(file_info, section, buffer, false);
 		if (readvalue!=NULL)
 		{
-			if (!strcmp(readvalue,"Silent")) note->SilentAlarm = true;
+			if (mystrncasecmp(readvalue,"Silent",0)) note->SilentAlarm = true;
 		}
 	}
 }
@@ -1028,7 +1028,7 @@ static void ReadCallerEntry(CFG_Header *file_info, char *section, GSM_Bitmap *bi
 	readvalue = CFG_Get(file_info, section, buffer, false);
         bitmap->Enabled = true;
 	if (readvalue!=NULL) {
-		if (!strcmp(readvalue,"False")) bitmap->Enabled = false;
+		if (mystrncasecmp(readvalue,"False",0)) bitmap->Enabled = false;
 	}
 }
 
@@ -1088,11 +1088,11 @@ static void ReadSMSCEntry(CFG_Header *file_info, char *section, GSM_SMSC *SMSC)
 	SMSC->Format = GSMF_Text;
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
-		if (!strcmp(readvalue,"Fax")) {
+		if (mystrncasecmp(readvalue,"Fax",0)) {
 			SMSC->Format = GSMF_Fax;
-		} else if (!strcmp(readvalue,"Email")) {
+		} else if (mystrncasecmp(readvalue,"Email",0)) {
 			SMSC->Format = GSMF_Email;
-		} else if (!strcmp(readvalue,"Pager")) {
+		} else if (mystrncasecmp(readvalue,"Pager",0)) {
 			SMSC->Format = GSMF_Pager;
 		}
 	}
@@ -1101,15 +1101,15 @@ static void ReadSMSCEntry(CFG_Header *file_info, char *section, GSM_SMSC *SMSC)
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) 
 	{
-		if (!strcmp(readvalue,"1hour")) {
+		if (mystrncasecmp(readvalue,"1hour",0)) {
 			SMSC->Validity.Relative = GSMV_1_Hour;
-		} else if (!strcmp(readvalue,"6hours")) {
+		} else if (mystrncasecmp(readvalue,"6hours",0)) {
 			SMSC->Validity.Relative = GSMV_6_Hours;
-		} else if (!strcmp(readvalue,"24hours")) {
+		} else if (mystrncasecmp(readvalue,"24hours",0)) {
 			SMSC->Validity.Relative = GSMV_24_Hours;
-		} else if (!strcmp(readvalue,"72hours")) {
+		} else if (mystrncasecmp(readvalue,"72hours",0)) {
 			SMSC->Validity.Relative = GSMV_72_Hours;
-		} else if (!strcmp(readvalue,"1week")) {
+		} else if (mystrncasecmp(readvalue,"1week",0)) {
 			SMSC->Validity.Relative = GSMV_1_Week;
 		}
 	}
@@ -1128,7 +1128,7 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 		if (e == NULL) break;
 		num = -1;
 		if (strlen(e->key) == 7) {
-			if (strncmp("Title", e->key, 5) == 0) num = atoi(e->key+5);
+			if (mystrncasecmp("Title", e->key,5)) num = atoi(e->key+5);
 		}
 		e = e->prev;
 		if (num != -1) {
@@ -1141,28 +1141,28 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 			readvalue = CFG_Get(file_info, section, buffer, false);
 			if (readvalue!=NULL) 
 			{
-				if (!strcmp(readvalue,"Temporary")) settings->Settings[settings->Number].IsContinuous = false;
+				if (mystrncasecmp(readvalue,"Temporary",0)) settings->Settings[settings->Number].IsContinuous = false;
 			}
 			sprintf(buffer,"Security%02i",num);
 			settings->Settings[settings->Number].IsSecurity = true;
 			readvalue = CFG_Get(file_info, section, buffer, false);
 			if (readvalue!=NULL) 
 			{
-				if (!strcmp(readvalue,"Off")) settings->Settings[settings->Number].IsSecurity = false;
+				if (mystrncasecmp(readvalue,"Off",0)) settings->Settings[settings->Number].IsSecurity = false;
 			}
 			sprintf(buffer,"Bearer%02i",num);
 			readvalue = CFG_Get(file_info, section, buffer, false);
 			if (readvalue!=NULL) 
 			{
-				if (!strcmp(readvalue,"SMS")) {
+				if (mystrncasecmp(readvalue,"SMS",0)) {
 					settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_SMS;
 					sprintf(buffer,"Server%02i",num);
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Server);
 					sprintf(buffer,"Service%02i",num);
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Service);
-				} else if ((!strcmp(readvalue,"Data") || !strcmp(readvalue,"GPRS"))) {
+				} else if ((mystrncasecmp(readvalue,"Data",0) || mystrncasecmp(readvalue,"GPRS",0))) {
 					settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_DATA;
-					if (!strcmp(readvalue,"GPRS")) settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_GPRS;
+					if (mystrncasecmp(readvalue,"GPRS",0)) settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_GPRS;
 					sprintf(buffer,"Number%02i",num);
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].DialUp);
 					sprintf(buffer,"IP%02i",num);
@@ -1176,31 +1176,31 @@ static void ReadWAPSettingsEntry(CFG_Header *file_info, char *section, GSM_Multi
 					readvalue = CFG_Get(file_info, section, buffer, false);
 					if (readvalue!=NULL) 
 					{
-						if (!strcmp(readvalue,"Secure")) settings->Settings[settings->Number].IsNormalAuthentication = false;
+						if (mystrncasecmp(readvalue,"Secure",0)) settings->Settings[settings->Number].IsNormalAuthentication = false;
 					}
 					sprintf(buffer,"CallSpeed%02i",num);
 					settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_14400;
 					readvalue = CFG_Get(file_info, section, buffer, false);
 					if (readvalue!=NULL) 
 					{
-						if (!strcmp(readvalue,"9600")) settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_9600;
-						if (!strcmp(readvalue,"auto")) settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_AUTO;
+						if (mystrncasecmp(readvalue,"9600",0)) settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_9600;
+						if (mystrncasecmp(readvalue,"auto",0)) settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_AUTO;
 					}
 					sprintf(buffer,"Login%02i",num);
 					settings->Settings[settings->Number].ManualLogin = false;
 					readvalue = CFG_Get(file_info, section, buffer, false);
 					if (readvalue!=NULL) 
 					{
-						if (!strcmp(readvalue,"Manual")) settings->Settings[settings->Number].ManualLogin = true;
+						if (mystrncasecmp(readvalue,"Manual",0)) settings->Settings[settings->Number].ManualLogin = true;
 					}	
 					sprintf(buffer,"CallType%02i",num);
 					settings->Settings[settings->Number].IsISDNCall = true;
 					readvalue = CFG_Get(file_info, section, buffer, false);
 					if (readvalue!=NULL) 
 					{
-						if (!strcmp(readvalue,"Analogue")) settings->Settings[settings->Number].IsISDNCall = false;
+						if (mystrncasecmp(readvalue,"Analogue",0)) settings->Settings[settings->Number].IsISDNCall = false;
 					}
-				} else if (!strcmp(readvalue,"USSD")) {
+				} else if (mystrncasecmp(readvalue,"USSD",0)) {
 					settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_USSD;
 					sprintf(buffer,"ServiceCode%02i",num);
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Code);
@@ -1260,17 +1260,17 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 	Profile->DefaultName = false;
 	sprintf(buffer,"DefaultName");
 	readvalue = CFG_Get(file_info, section, buffer, false);
-	if (readvalue!=NULL && !strcmp(buffer,"true")) Profile->DefaultName = true;
+	if (readvalue!=NULL && mystrncasecmp(buffer,"true",0)) Profile->DefaultName = true;
 
 	Profile->HeadSetProfile = false;
 	sprintf(buffer,"HeadSetProfile");
 	readvalue = CFG_Get(file_info, section, buffer, false);
-	if (readvalue!=NULL && !strcmp(buffer,"true")) Profile->HeadSetProfile = true;
+	if (readvalue!=NULL && mystrncasecmp(buffer,"true",0)) Profile->HeadSetProfile = true;
 
 	Profile->CarKitProfile = false;
 	sprintf(buffer,"CarKitProfile");
 	readvalue = CFG_Get(file_info, section, buffer, false);
-	if (readvalue!=NULL && !strcmp(buffer,"true")) Profile->CarKitProfile = true;
+	if (readvalue!=NULL && mystrncasecmp(buffer,"true",0)) Profile->CarKitProfile = true;
 
 	Profile->FeaturesNumber = 0;
 	e = CFG_FindLastSectionEntry(file_info, section, false);
@@ -1278,7 +1278,7 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 		if (e == NULL) break;
 		num = -1;
 		if (strlen(e->key) == 9) {
-			if (strncmp("Feature", e->key, 7) == 0) num = atoi(e->key+7);
+			if (mystrncasecmp("Feature", e->key, 7)) num = atoi(e->key+7);
 		}
 		e = e->prev;
 		if (num != -1) {
@@ -1286,25 +1286,25 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 			readvalue = CFG_Get(file_info, section, buffer, false);
 			if (readvalue==NULL) break;
 			unknown = true;
-			if (!strcmp(readvalue,"RingtoneID")) {
+			if (mystrncasecmp(readvalue,"RingtoneID",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_RingtoneID;
 				sprintf(buffer,"Value%02i",num);
 				readvalue = CFG_Get(file_info, section, buffer, false);
 				Profile->FeatureValue[Profile->FeaturesNumber]=atoi(readvalue);
 				Profile->FeaturesNumber++;
-			} else if (!strcmp(readvalue,"MessageToneID")) {
+			} else if (mystrncasecmp(readvalue,"MessageToneID",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_MessageToneID;
 				sprintf(buffer,"Value%02i",num);
 				readvalue = CFG_Get(file_info, section, buffer, false);
 				Profile->FeatureValue[Profile->FeaturesNumber]=atoi(readvalue);
 				Profile->FeaturesNumber++;
-			} else if (!strcmp(readvalue,"ScreenSaverNumber")) {
+			} else if (mystrncasecmp(readvalue,"ScreenSaverNumber",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_ScreenSaverNumber;
 				sprintf(buffer,"Value%02i",num);
 				readvalue = CFG_Get(file_info, section, buffer, false);
 				Profile->FeatureValue[Profile->FeaturesNumber]=atoi(readvalue);
 				Profile->FeaturesNumber++;
-			} else if (!strcmp(readvalue,"CallerGroups")) {
+			} else if (mystrncasecmp(readvalue,"CallerGroups",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_CallerGroups;
 				sprintf(buffer,"Value%02i",num);
 				readvalue = CFG_Get(file_info, section, buffer, false);
@@ -1313,60 +1313,60 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 					if (strstr(readvalue,"1"+j)!=NULL) Profile->CallerGroups[j]=true;
 				}
 				Profile->FeaturesNumber++;
-			} else if (!strcmp(readvalue,"IncomingCallAlert")) {
+			} else if (mystrncasecmp(readvalue,"IncomingCallAlert",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_CallAlert;
 				unknown = false;
-			} else if (!strcmp(readvalue,"RingtoneVolume")) {
+			} else if (mystrncasecmp(readvalue,"RingtoneVolume",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_RingtoneVolume;
 				unknown = false;
-			} else if (!strcmp(readvalue,"Vibrating")) {
+			} else if (mystrncasecmp(readvalue,"Vibrating",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_Vibration;
 				unknown = false;
-			} else if (!strcmp(readvalue,"MessageTone")) {
+			} else if (mystrncasecmp(readvalue,"MessageTone",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_MessageTone;
 				unknown = false;
-			} else if (!strcmp(readvalue,"KeypadTones")) {
+			} else if (mystrncasecmp(readvalue,"KeypadTones",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_KeypadTone;
 				unknown = false;
-			} else if (!strcmp(readvalue,"WarningTones")) {
+			} else if (mystrncasecmp(readvalue,"WarningTones",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_WarningTone;
 				unknown = false;
-			} else if (!strcmp(readvalue,"ScreenSaver")) {
+			} else if (mystrncasecmp(readvalue,"ScreenSaver",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_ScreenSaver;
 				unknown = false;
-			} else if (!strcmp(readvalue,"ScreenSaverTimeout")) {
+			} else if (mystrncasecmp(readvalue,"ScreenSaverTimeout",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_ScreenSaverTime;
 				unknown = false;
-			} else if (!strcmp(readvalue,"AutomaticAnswer")) {
+			} else if (mystrncasecmp(readvalue,"AutomaticAnswer",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_AutoAnswer;
 				unknown = false;
-			} else if (!strcmp(readvalue,"Lights")) {
+			} else if (mystrncasecmp(readvalue,"Lights",0)) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_Lights;
 				unknown = false;
 			}
 			if (!unknown) {
 				sprintf(buffer,"Value%02i",num);
 				readvalue = CFG_Get(file_info, section, buffer, false);
-				if (!strcmp(readvalue,"Level1")) {
+				if (mystrncasecmp(readvalue,"Level1",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL1;
 					if (Profile->FeatureID[Profile->FeaturesNumber]==Profile_KeypadTone) {
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_KEYPAD_LEVEL1;
 					}
-				} else if (!strcmp(readvalue,"Level2")) {
+				} else if (mystrncasecmp(readvalue,"Level2",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL2;
 					if (Profile->FeatureID[Profile->FeaturesNumber]==Profile_KeypadTone) {
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_KEYPAD_LEVEL2;
 					}
-				} else if (!strcmp(readvalue,"Level3")) {
+				} else if (mystrncasecmp(readvalue,"Level3",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL3;
 					if (Profile->FeatureID[Profile->FeaturesNumber]==Profile_KeypadTone) {
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_KEYPAD_LEVEL3;
 					}
-				} else if (!strcmp(readvalue,"Level4")) {
+				} else if (mystrncasecmp(readvalue,"Level4",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL4;
-				} else if (!strcmp(readvalue,"Level5")) {
+				} else if (mystrncasecmp(readvalue,"Level5",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL5;
-				} else if (!strcmp(readvalue,"Off")) {
+				} else if (mystrncasecmp(readvalue,"Off",0)) {
 					switch (Profile->FeatureID[Profile->FeaturesNumber]) {
 					case Profile_MessageTone:
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_MESSAGE_NOTONE;
@@ -1393,44 +1393,44 @@ static void ReadProfileEntry(CFG_Header *file_info, char *section, GSM_Profile *
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_KEYPAD_OFF;
 						break;
 					}
-				} else if (!strcmp(readvalue,"Ringing")) {
+				} else if (mystrncasecmp(readvalue,"Ringing",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_CALLALERT_RINGING;
-				} else if (!strcmp(readvalue,"BeepOnce")) {
+				} else if (mystrncasecmp(readvalue,"BeepOnce",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_CALLALERT_BEEPONCE;
 					if (Profile->FeatureID[Profile->FeaturesNumber]==Profile_MessageTone) {
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_MESSAGE_BEEPONCE;
 					}
-				} else if (!strcmp(readvalue,"RingOnce")) {
+				} else if (mystrncasecmp(readvalue,"RingOnce",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_CALLALERT_RINGONCE;
-				} else if (!strcmp(readvalue,"Ascending")) {
+				} else if (mystrncasecmp(readvalue,"Ascending",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_CALLALERT_ASCENDING;
-				} else if (!strcmp(readvalue,"CallerGroups")) {
+				} else if (mystrncasecmp(readvalue,"CallerGroups",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_CALLALERT_CALLERGROUPS;
-				} else if (!strcmp(readvalue,"Standard")) {
+				} else if (mystrncasecmp(readvalue,"Standard",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_MESSAGE_STANDARD;
-				} else if (!strcmp(readvalue,"Special")) {
+				} else if (mystrncasecmp(readvalue,"Special",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_MESSAGE_SPECIAL;
-				} else if (!strcmp(readvalue,"Ascending")) {
+				} else if (mystrncasecmp(readvalue,"Ascending",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_MESSAGE_ASCENDING;
-				} else if (!strcmp(readvalue,"Personal")) {
+				} else if (mystrncasecmp(readvalue,"Personal",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_MESSAGE_PERSONAL;
-				} else if (!strcmp(readvalue,"VibrateFirst")) {
+				} else if (mystrncasecmp(readvalue,"VibrateFirst",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VIBRATION_FIRST;
-				} else if (!strcmp(readvalue,"Auto")) {
+				} else if (mystrncasecmp(readvalue,"Auto",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_LIGHTS_AUTO;
-				} else if (!strcmp(readvalue,"5Seconds")) {
+				} else if (mystrncasecmp(readvalue,"5Seconds",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_SAVER_TIMEOUT_5SEC;
-				} else if (!strcmp(readvalue,"20Seconds")) {
+				} else if (mystrncasecmp(readvalue,"20Seconds",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_SAVER_TIMEOUT_20SEC;
-				} else if (!strcmp(readvalue,"1Minute")) {
+				} else if (mystrncasecmp(readvalue,"1Minute",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_SAVER_TIMEOUT_1MIN;
-				} else if (!strcmp(readvalue,"2Minutes")) {
+				} else if (mystrncasecmp(readvalue,"2Minutes",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_SAVER_TIMEOUT_2MIN;
-				} else if (!strcmp(readvalue,"5Minutes")) {
+				} else if (mystrncasecmp(readvalue,"5Minutes",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_SAVER_TIMEOUT_5MIN;
-				} else if (!strcmp(readvalue,"10Minutes")) {
+				} else if (mystrncasecmp(readvalue,"10Minutes",0)) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_SAVER_TIMEOUT_10MIN;
-				} else if (!strcmp(readvalue,"On")) {
+				} else if (mystrncasecmp(readvalue,"On",0)) {
 					switch (Profile->FeatureID[Profile->FeaturesNumber]) {
 					case Profile_AutoAnswer:
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_AUTOANSWER_ON;
@@ -1468,21 +1468,18 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	/* Is this format version supported ? */
 	if (strcmp(readvalue,"1.01")!=0) return GE_NOTSUPPORTED;
 
+	GSM_ClearBackup(backup);
+
 	readvalue = CFG_Get(file_info, buffer, "IMEI", false);
-	backup->IMEI[0] = 0;
 	if (readvalue!=NULL) strcpy(backup->IMEI,readvalue);
 	readvalue = CFG_Get(file_info, buffer, "Phone", false);
-	backup->Model[0] = 0;
 	if (readvalue!=NULL) strcpy(backup->Model,readvalue);
 	readvalue = CFG_Get(file_info, buffer, "Time", false);
-	backup->DateTime[0] = 0;
 	if (readvalue!=NULL) strcpy(backup->DateTime,readvalue);
-
-	GSM_ClearBackup(backup);
 
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (strncmp("Profile", h->section, 7) == 0) {
+                if (mystrncasecmp("Profile", h->section, 7)) {
 			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_PROFILES) {
@@ -1499,7 +1496,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (strncmp("PhonePBK", h->section, 8) == 0) {
+                if (mystrncasecmp("PhonePBK", h->section, 8)) {
 			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
@@ -1533,7 +1530,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	}
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (strncmp("SIMPBK", h->section, 6) == 0) {
+                if (mystrncasecmp("SIMPBK", h->section, 6)) {
 			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SIMPHONEBOOK) {
@@ -1566,7 +1563,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	}
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (strncmp("Calendar", h->section, 8) == 0) {
+                if (mystrncasecmp("Calendar", h->section, 8)) {
 			readvalue = CFG_Get(file_info, h->section, "Type", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_CALENDAR) {
@@ -1585,7 +1582,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (strncmp("Caller", h->section, 6) == 0) {
+                if (mystrncasecmp("Caller", h->section, 6)) {
 			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_CALLER) {
@@ -1603,7 +1600,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (strncmp("SMSC", h->section, 4) == 0) {
+                if (mystrncasecmp("SMSC", h->section, 4)) {
 			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SMSC) {
@@ -1621,7 +1618,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (strncmp("Bookmark", h->section, 8) == 0) {
+                if (mystrncasecmp("Bookmark", h->section, 8)) {
 			readvalue = CFG_Get(file_info, h->section, "URL", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_WAPBOOKMARK) {
@@ -1639,7 +1636,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (strncmp("Settings", h->section, 8) == 0) {
+                if (mystrncasecmp("Settings", h->section, 8)) {
 			readvalue = CFG_Get(file_info, h->section, "Title00", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_WAPSETTINGS) {
@@ -1657,7 +1654,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (strncmp("Ringtone", h->section, 8) == 0) {
+                if (mystrncasecmp("Ringtone", h->section, 8)) {
 			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_RINGTONES) {
@@ -1674,7 +1671,7 @@ static GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
         }
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (strncmp("TODO", h->section, 4) == 0) {
+                if (mystrncasecmp("TODO", h->section, 4)) {
 			readvalue = CFG_Get(file_info, h->section, "Location", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_TODO) {
@@ -1999,7 +1996,7 @@ static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMess
 	SMS->ReplyViaSameSMSC = false;
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
-		if (!strcmp(readvalue,"True")) SMS->ReplyViaSameSMSC = true;
+		if (mystrncasecmp(readvalue,"True",0)) SMS->ReplyViaSameSMSC = true;
 	}
 	sprintf(buffer,"Class");
 	SMS->Class = -1;
@@ -2015,7 +2012,7 @@ static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMess
 	SMS->RejectDuplicates = false;
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
-		if (!strcmp(readvalue,"True")) SMS->RejectDuplicates = true;
+		if (mystrncasecmp(readvalue,"True",0)) SMS->RejectDuplicates = true;
 	}
 	sprintf(buffer,"ReplaceMessage");
 	SMS->ReplaceMessage = 0;
@@ -2029,9 +2026,9 @@ static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMess
 	SMS->State = GSM_UnRead;
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
-		if (!strcmp(readvalue,"Read"))		SMS->State = GSM_Read;
-		else if (!strcmp(readvalue,"Sent"))	SMS->State = GSM_Sent;
-		else if (!strcmp(readvalue,"UnSent"))	SMS->State = GSM_UnSent;
+		if (mystrncasecmp(readvalue,"Read",0))		SMS->State = GSM_Read;
+		else if (mystrncasecmp(readvalue,"Sent",0))	SMS->State = GSM_Sent;
+		else if (mystrncasecmp(readvalue,"UnSent",0))	SMS->State = GSM_UnSent;
 	}
 	sprintf(buffer,"Number");
 	ReadBackupText(file_info, section, buffer, SMS->Number);
@@ -2045,9 +2042,9 @@ static void ReadSMSBackupEntry(CFG_Header *file_info, char *section, GSM_SMSMess
 	SMS->Coding = GSM_Coding_Default;
 	readvalue = CFG_Get(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
-		if (!strcmp(readvalue,"Unicode")) {
+		if (mystrncasecmp(readvalue,"Unicode",0)) {
 			SMS->Coding = GSM_Coding_Unicode;
-		} else if (!strcmp(readvalue,"8bit")) {
+		} else if (mystrncasecmp(readvalue,"8bit",0)) {
 			SMS->Coding = GSM_Coding_8bit;
 		}
 	}
@@ -2084,7 +2081,7 @@ static GSM_Error GSM_ReadSMSBackupTextFile(char *FileName, GSM_SMS_Backup *backu
 
 	num = 0;
         for (h = file_info; h != NULL; h = h->next) {
-                if (strncmp("SMSBackup", h->section, 9) == 0) {
+                if (mystrncasecmp("SMSBackup", h->section, 9)) {
 			readvalue = CFG_Get(file_info, h->section, "Number", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SMS) {
@@ -2117,7 +2114,7 @@ GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 	return GSM_ReadSMSBackupTextFile(FileName, backup);
 }
 
-static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
+GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 {
 	int 		i,w,current;
 	unsigned char 	buffer[10000];
@@ -2133,11 +2130,11 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 				current = 0;
 				for (w=0;w<(int)(strlen(buffer));w++) {
 					switch (buffer[w]) {
-						case 13:
+						case 10:
 							fprintf(file,"\n#");
 							current = 0;
 							break;
-						case 10:
+						case 13:
 							break;
 						default:
 							if (isprint(buffer[w])) {

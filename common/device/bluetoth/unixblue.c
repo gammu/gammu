@@ -51,7 +51,7 @@ static GSM_Error bluetooth_open (GSM_StateMachine *s)
 		return GE_DEVICEOPENERROR;
 	}
 
-	str2ba(s->CFGDevice, &bdaddr);
+	str2ba(s->Config.Device, &bdaddr);
 	raddr.rc_family = AF_BLUETOOTH;
 	bacpy(&raddr.rc_bdaddr, &bdaddr);
 	raddr.rc_channel = htobs(1);

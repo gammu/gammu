@@ -4,7 +4,59 @@ ChangeLog for Gammu project (www.mwiacek.com)
 Few last versions (the highest) will be described more detailed, older less.
 In brackets names of people, who told about error/problem or helped in fixing.
 ----------------------
-20021012 - 0.62
+20021202 - 0.64
+
+* new functionality:
+  * SMSD and FILES finally end                                 (Jýrgen Thomsen)
+  * decoding Siemens xx45 entended phonebook                       (Timo Ter„s)
+  * many improvemnts in configure build system
+
+* fixes and improvements:
+  * autoconf build system is now really working for older Linuxes
+  * comparing Unicode and normal strings with and without regard to case
+    much improved
+  * fixes, info about bug in encoding and decoding GSM Default (Jýrgen Thomsen)
+    alphabet in SMS
+  * FreeBSD compatibility                                    (Kirill Bezzubets)
+  * default style for read RTTL files is Natural, not Continuous
+  * improved alghoritm of reading RTTL files
+  * no garbage chars in datetime in backup files in Linux
+  * fixed offsets for setting SMSC for DCT4
+  * all CFGDevice removed from source                             (Chris Drake)
+  * localisation strings can contains \n
+  * when make restore, backup info (IMEI, date, etc.) is showed again
+  * fixed "make makelib" and "make makerpm" on some OS
+  
+20021124 - 0.63
+
+* new functionality:
+  * Delphi project updated to version 7
+  * when start connection with win32dll function, have to give pointers with 
+    addresses to callback functions, not addresses to functions. Later can
+    change value of pointers and DLL will use new values.
+  * added very easy example, which show, how to use win32 dll in classes
+    (call backs from C DLL can't forget about 4 bytes pointer before
+    arguments). Classes things resolved in 50%
+  * added possibility of entering text into --setbitmap PICTURE
+  * command line parameters and not Unicode config files are not case sensitive
+  * full compatibility with DCT3 from "old" series with Picture Images
+    with text saved in Unicode. Example: 3315 5.79. Had also 3410 for a moment
+    and now it's also compatible with getting/setting Picture Images.
+  * improved internal structures connected with config files
+  * changed makefile. Now there is better control on making process
+    and changing paths
+  * can specify SMS validity from command line                 (Niels Andersen)
+  * FILES module for smsd can send sms (now in win32)
+
+* fixes and improvements:
+  * written own implementation for wcscmp. Seems, that Mandrake 9.0 has
+    it broken. Now unicode ini files features and localisation system work OK
+    also in Linux
+  * improved getting voice tags (names) from DCT4
+  * removed some problems with FILES module for smsd
+  * fix for EMS ringtones                                    (Christian Becker)
+
+20021112 - 0.62
 
 * new functionality:
   * simple API for informing user application about calls. Is more required ?

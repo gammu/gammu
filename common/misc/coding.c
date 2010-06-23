@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <wctype.h>
 
 #ifdef WIN32
 #  include "windows.h"
@@ -37,25 +38,30 @@ unsigned int DecodeWithUnicodeAlphabet(wchar_t src, unsigned char *dest)
         }
 }
 
-/* Decode Unicode string and return as function result */
-unsigned char *DecodeUnicodeString (const unsigned char* src)
+void DecodeUnicode (const unsigned char *src, unsigned char *dest)
 {
  	int 		i=0,o=0;
  	wchar_t 	wc;
- 	static char 	dest[500];
- 
+
  	while (src[(2*i)+1]!=0x00 || src[2*i]!=0x00) {
  		wc = src[(2*i)+1] | (src[2*i] << 8);
 		o += DecodeWithUnicodeAlphabet(wc, dest + o);
  		i++;
  	}
 	dest[o]=0;
- 
- 	return dest;
+}
+
+/* Decode Unicode string and return as function result */
+unsigned char *DecodeUnicodeString (const unsigned char *src)
+{
+ 	static char dest[500];
+
+	DecodeUnicode(src,dest);
+	return dest;
 }
 
 /* Encode string to Unicode. Len is number of input chars */
-void EncodeUnicode (unsigned char* dest, const unsigned char* src, int len)
+void EncodeUnicode (unsigned char *dest, const unsigned char *src, int len)
 {
 	int 		i_len = 0, o_len;
  	wchar_t 	wc;
@@ -82,7 +88,7 @@ int DecodeWithBCDAlphabet(unsigned char value)
 	return 10*(value & 0x0f)+(value >> 4);
 }
 
-void DecodeBCD (unsigned char* dest, const unsigned char* src, int len)
+void DecodeBCD (unsigned char *dest, const unsigned char *src, int len)
 {
 	int i,current=0,digit;
 
@@ -95,7 +101,7 @@ void DecodeBCD (unsigned char* dest, const unsigned char* src, int len)
 	dest[current++]=0;
 }
 
-void EncodeBCD (unsigned char* dest, const unsigned char* src, int len, bool fill)
+void EncodeBCD (unsigned char *dest, const unsigned char *src, int len, bool fill)
 {
 	int i,current=0;
 
@@ -166,7 +172,7 @@ wchar_t DecodeWithUTF8Alphabet(unsigned char mychar3, unsigned char mychar4)
 }
 
 /* Make UTF8 string from Unicode input string */
-void EncodeUTF8(unsigned char* dest, const unsigned char* src)
+void EncodeUTF8(unsigned char *dest, const unsigned char *src)
 {
 	int		i,j=0;
 	unsigned char	mychar1, mychar2;
@@ -197,7 +203,7 @@ unsigned char EncodeWithHexBinAlphabet (int digit)
 	return 0;
 }
 
-void DecodeHexBin (unsigned char* dest, const unsigned char* src, int len)
+void DecodeHexBin (unsigned char *dest, const unsigned char *src, int len)
 {
 	int i,current=0;
 
@@ -208,7 +214,7 @@ void DecodeHexBin (unsigned char* dest, const unsigned char* src, int len)
 	dest[current++] = 0;
 }
 
-void EncodeHexBin (unsigned char* dest, const unsigned char* src, int len)
+void EncodeHexBin (unsigned char *dest, const unsigned char *src, int len)
 {
 	int i,current=0;
 
@@ -279,10 +285,14 @@ static unsigned char GSM_NokiaDefaultAlphabetChars[][4] =
 	{0x00,0x00,0x00,0x00}
 };
 
-void DecodeDefault (unsigned char* dest, const unsigned char* src, int len)
+void DecodeDefault (unsigned char *dest, const unsigned char *src, int len)
 {
 	int 	i,current=0,j;
 	bool	FoundSpecial = false;
+
+#ifdef DEBUG
+	if (di.dl == DL_TEXTALL) DumpMessage(di.df, src, len);
+#endif
 
 	for (i = 0; i < len; i++) {
 		FoundSpecial = false;
@@ -301,12 +311,15 @@ void DecodeDefault (unsigned char* dest, const unsigned char* src, int len)
 			}
 		}
 		if (!FoundSpecial) {
-			dest[current++] = GSM_DefaultAlphabetUnicode[src[i]][2];
+			dest[current++] = GSM_DefaultAlphabetUnicode[src[i]][0];
 			dest[current++] = GSM_DefaultAlphabetUnicode[src[i]][1];
 		}
 	}
 	dest[current++]=0;
 	dest[current++]=0;
+#ifdef DEBUG
+	if (di.dl == DL_TEXTALL) DumpMessage(di.df, dest, strlen(DecodeUnicodeString(dest))*2);
+#endif
 }
 
 /* There are many national chars with "adds". In phone they're normally
@@ -318,11 +331,15 @@ void DecodeDefault (unsigned char* dest, const unsigned char* src, int len)
  */
 static unsigned char ConvertTable[] = "\x00\xc0\x00\x41\x00\xe0\x00\x61\x00\xc1\x00\x41\x00\xe1\x00\x61\x00\xc2\x00\x41\x00\xe2\x00\x61\x00\xc3\x00\x41\x00\xe3\x00\x61\x1e\xa0\x00\x41\x1e\xa1\x00\x61\x1e\xa2\x00\x41\x1e\xa3\x00\x61\x1e\xa4\x00\x41\x1e\xa5\x00\x61\x1e\xa6\x00\x41\x1e\xa7\x00\x61\x1e\xa8\x00\x41\x1e\xa9\x00\x61\x1e\xaa\x00\x41\x1e\xab\x00\x61\x1e\xac\x00\x41\x1e\xad\x00\x61\x1e\xae\x00\x41\x1e\xaf\x00\x61\x1e\xb0\x00\x41\x1e\xb1\x00\x61\x1e\xb2\x00\x41\x1e\xb3\x00\x61\x1e\xb4\x00\x41\x1e\xb5\x00\x61\x1e\xb6\x00\x41\x1e\xb7\x00\x61\x01\xcd\x00\x41\x01\xce\x00\x61\x01\x00\x00\x41\x01\x01\x00\x61\x01\x02\x00\x41\x01\x03\x00\x61\x01\x04\x00\x41\x01\x05\x00\x61\x01\xfb\x00\x61\x01\x06\x00\x43\x01\x07\x00\x63\x01\x08\x00\x43\x01\x09\x00\x63\x01\x0a\x00\x43\x01\x0b\x00\x63\x01\x0c\x00\x43\x01\x0d\x00\x63\x00\xe7\x00\x63\x01\x0e\x00\x44\x01\x0f\x00\x64\x01\x10\x00\x44\x01\x11\x00\x64\x00\xc8\x00\x45\x00\xca\x00\x45\x00\xea\x00\x65\x00\xcb\x00\x45\x00\xeb\x00\x65\x1e\xb8\x00\x45\x1e\xb9\x00\x65\x1e\xba\x00\x45\x1e\xbb\x00\x65\x1e\xbc\x00\x45\x1e\xbd\x00\x65\x1e\xbe\x00\x45\x1e\xbf\x00\x65\x1e\xc0\x00\x45\x1e\xc1\x00\x65\x1e\xc2\x00\x45\x1e\xc3\x00\x65\x1e\xc4\x00\x45\x1e\xc5\x00\x65\x1e\xc6\x00\x45\x1e\xc7\x00\x65\x01\x12\x00\x45\x01\x13\x00\x65\x01\x14\x00\x45\x01\x15\x00\x65\x01\x16\x00\x45\x01\x17\x00\x65\x01\x18\x00\x45\x01\x19\x00\x65\x01\x1a\x00\x45\x01\x1b\x00\x65\x01\x1c\x00\x47\x01\x1d\x00\x67\x01\x1e\x00\x47\x01\x1f\x00\x67\x01\x20\x00\x47\x01\x21\x00\x67\x01\x22\x00\x47\x01\x23\x00\x67\x01\x24\x00\x48\x01\x25\x00\x68\x01\x26\x00\x48\x01\x27\x00\x68\x00\xcc\x00\x49\x00\xcd\x00\x49\x00\xed\x00\x69\x00\xce\x00\x49\x00\xee\x00\x69\x00\xcf\x00\x49\x00\xef\x00\x69\x01\x28\x00\x49\x01\x29\x00\x69\x01\x2a\x00\x49\x01\x2b\x00\x69\x01\x2c\x00\x49\x01\x2d\x00\x69\x01\x2e\x00\x49\x01\x2f\x00\x69\x01\x30\x00\x49\x01\x31\x00\x69\x01\xcf\x00\x49\x01\xd0\x00\x69\x1e\xc8\x00\x49\x1e\xc9\x00\x69\x1e\xca\x00\x49\x1e\xcb\x00\x69\x01\x34\x00\x4a\x01\x35\x00\x6a\x01\x36\x00\x4b\x01\x37\x00\x6b\x01\x39\x00\x4c\x01\x3a\x00\x6c\x01\x3b\x00\x4c\x01\x3c\x00\x6c\x01\x3d\x00\x4c\x01\x3e\x00\x6c\x01\x3f\x00\x4c\x01\x40\x00\x6c\x01\x41\x00\x4c\x01\x42\x00\x6c\x01\x43\x00\x4e\x01\x44\x00\x6e\x01\x45\x00\x4e\x01\x46\x00\x6e\x01\x47\x00\x4e\x01\x48\x00\x6e\x01\x49\x00\x6e\x00\xd2\x00\x4f\x00\xd3\x00\x4f\x00\xf3\x00\x6f\x00\xd4\x00\x4f\x00\xf4\x00\x6f\x00\xd5\x00\x4f\x00\xf5\x00\x6f\x01\x4c\x00\x4f\x01\x4d\x00\x6f\x01\x4e\x00\x4f\x01\x4f\x00\x6f\x01\x50\x00\x4f\x01\x51\x00\x6f\x01\xa0\x00\x4f\x01\xa1\x00\x6f\x01\xd1\x00\x4f\x01\xd2\x00\x6f\x1e\xcc\x00\x4f\x1e\xcd\x00\x6f\x1e\xce\x00\x4f\x1e\xcf\x00\x6f\x1e\xd0\x00\x4f\x1e\xd1\x00\x6f\x1e\xd2\x00\x4f\x1e\xd3\x00\x6f\x1e\xd4\x00\x4f\x1e\xd5\x00\x6f\x1e\xd6\x00\x4f\x1e\xd7\x00\x6f\x1e\xd8\x00\x4f\x1e\xd9\x00\x6f\x1e\xda\x00\x4f\x1e\xdb\x00\x6f\x1e\xdc\x00\x4f\x1e\xdd\x00\x6f\x1e\xde\x00\x4f\x1e\xdf\x00\x6f\x1e\xe0\x00\x4f\x1e\xe1\x00\x6f\x1e\xe2\x00\x4f\x1e\xe3\x00\x6f\x01\x54\x00\x52\x01\x55\x00\x72\x01\x56\x00\x52\x01\x57\x00\x72\x01\x58\x00\x52\x01\x59\x00\x72\x01\x5a\x00\x53\x01\x5b\x00\x73\x01\x5c\x00\x53\x01\x5d\x00\x73\x01\x5e\x00\x53\x01\x5f\x00\x73\x01\x60\x00\x53\x01\x61\x00\x73\x01\x62\x00\x54\x01\x63\x00\x74\x01\x64\x00\x54\x01\x65\x00\x74\x01\x66\x00\x54\x01\x67\x00\x74\x00\xd9\x00\x55\x00\xda\x00\x55\x00\xfa\x00\x75\x00\xdb\x00\x55\x00\xfb\x00\x75\x01\x68\x00\x55\x01\x69\x00\x75\x01\x6a\x00\x55\x01\x6b\x00\x75\x01\x6c\x00\x55\x01\x6d\x00\x75\x01\x6e\x00\x55\x01\x6f\x00\x75\x01\x70\x00\x55\x01\x71\x00\x75\x01\x72\x00\x55\x01\x73\x00\x75\x01\xaf\x00\x55\x01\xb0\x00\x75\x01\xd3\x00\x55\x01\xd4\x00\x75\x01\xd5\x00\x55\x01\xd6\x00\x75\x01\xd7\x00\x55\x01\xd8\x00\x75\x01\xd9\x00\x55\x01\xda\x00\x75\x01\xdb\x00\x55\x01\xdc\x00\x75\x1e\xe4\x00\x55\x1e\xe5\x00\x75\x1e\xe6\x00\x55\x1e\xe7\x00\x75\x1e\xe8\x00\x55\x1e\xe9\x00\x75\x1e\xea\x00\x55\x1e\xeb\x00\x75\x1e\xec\x00\x55\x1e\xed\x00\x75\x1e\xee\x00\x55\x1e\xef\x00\x75\x1e\xf0\x00\x55\x1e\xf1\x00\x75\x01\x74\x00\x57\x01\x75\x00\x77\x1e\x80\x00\x57\x1e\x81\x00\x77\x1e\x82\x00\x57\x1e\x83\x00\x77\x1e\x84\x00\x57\x1e\x85\x00\x77\x00\xdd\x00\x59\x00\xfd\x00\x79\x00\xff\x00\x79\x01\x76\x00\x59\x01\x77\x00\x79\x01\x78\x00\x59\x1e\xf2\x00\x59\x1e\xf3\x00\x75\x1e\xf4\x00\x59\x1e\xf5\x00\x79\x1e\xf6\x00\x59\x1e\xf7\x00\x79\x1e\xf8\x00\x59\x1e\xf9\x00\x79\x01\x79\x00\x5a\x01\x7a\x00\x7a\x01\x7b\x00\x5a\x01\x7c\x00\x7a\x01\x7d\x00\x5a\x01\x7e\x00\x7a\x01\xfc\x00\xc6\x01\xfd\x00\xe6\x01\xfe\x00\xd8\x01\xff\x00\xf8\x00\x00";
 
-void EncodeDefault(unsigned char* dest, const unsigned char* src, int *len)
+void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len)
 {
 	int 	i,current=0,j,z;
 	char 	ret;
 	bool	FoundSpecial,FoundNormal;
+
+#ifdef DEBUG
+	if (di.dl == DL_TEXTALL) DumpMessage(di.df, src, (*len)*2);
+#endif
 
 	for (i = 0; i < *len; i++) {
 		FoundSpecial = false;
@@ -341,10 +358,9 @@ void EncodeDefault(unsigned char* dest, const unsigned char* src, int *len)
 			ret = '?';
 			FoundNormal = false;
 			j = 0;
-			while (GSM_DefaultAlphabetUnicode[j][2]!=0x00 ||
-			       GSM_DefaultAlphabetUnicode[j][1]!=0x00)
+			while (GSM_DefaultAlphabetUnicode[j][1]!=0x00)
 			{
-				if (src[i*2]	== GSM_DefaultAlphabetUnicode[j][2] &&
+				if (src[i*2]	== GSM_DefaultAlphabetUnicode[j][0] &&
 				    src[i*2+1]	== GSM_DefaultAlphabetUnicode[j][1])
 				{
 					ret = j;
@@ -361,10 +377,9 @@ void EncodeDefault(unsigned char* dest, const unsigned char* src, int *len)
 					if (src[i*2]   == ConvertTable[j*4] &&
 					    src[i*2+1] == ConvertTable[j*4+1]) {
 						z = 0;
-						while (GSM_DefaultAlphabetUnicode[z][2]!=0x00 ||
-						       GSM_DefaultAlphabetUnicode[z][1]!=0x00)
+						while (GSM_DefaultAlphabetUnicode[z][1]!=0x00)
 						{
-							if (ConvertTable[j*4+2]	== GSM_DefaultAlphabetUnicode[z][2] &&
+							if (ConvertTable[j*4+2]	== GSM_DefaultAlphabetUnicode[z][0] &&
 							    ConvertTable[j*4+3]	== GSM_DefaultAlphabetUnicode[z][1])
 							{
 								ret = z;
@@ -382,11 +397,15 @@ void EncodeDefault(unsigned char* dest, const unsigned char* src, int *len)
 		}
 	}
 	dest[current]=0;
+#ifdef DEBUG
+	if (di.dl == DL_TEXTALL) DumpMessage(di.df, dest, current);
+#endif
+
 	*len = current;
 }
 
 /* You don't have to use ConvertTable here - 1 char is replaced there by 1 char */
-void FindDefaultAlphabetLen(const unsigned char* src, int *srclen, int *smslen, int maxlen)
+void FindDefaultAlphabetLen(const unsigned char *src, int *srclen, int *smslen, int maxlen)
 {
 	int 	current=0,j,i;
 	bool	FoundSpecial;
@@ -717,7 +736,7 @@ int OctetUnAlign(int CurrentBit)
  * We replace single ~ chars into it. When user give double ~, it's replaced
  * to single ~
  */
-void EncodeUnicodeSpecialNOKIAChars(unsigned char* dest, const unsigned char* src, int len)
+void EncodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *src, int len)
 {
 	int 	i,current = 0;
 	bool 	special=false;
@@ -751,7 +770,7 @@ void EncodeUnicodeSpecialNOKIAChars(unsigned char* dest, const unsigned char* sr
 	dest[current++] = 0x00;
 }
 
-void DecodeUnicodeSpecialNOKIAChars(unsigned char* dest, const unsigned char* src, int len)
+void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *src, int len)
 {
 	int i=0,current=0;
 
@@ -781,4 +800,70 @@ void DecodeUnicodeSpecialNOKIAChars(unsigned char* dest, const unsigned char* sr
 	}
 	dest[current++] = 0x00;
 	dest[current++] = 0x00;
+}
+
+bool mystrncasecmp(unsigned char *a, unsigned char *b, int num)
+{
+	int i=0;
+  
+//	printf("comparing \"%s\" and \"%s\"\n",a,b);
+	while (1) {
+		if (a[i] == 0x00) {
+			if (b[i] == 0x00) return true;
+			return false;
+		}
+		if (tolower(a[i]) != tolower(b[i])) return false;
+		i++;
+		if (num == i) return true;
+	}
+}
+
+/* Compares two Unicode strings without regarding to case.
+ * Return true, when they're equal
+ */
+bool mywstrncasecmp(unsigned char *a, unsigned char *b, int num)
+{
+	int 		i=0;
+ 	wchar_t 	wc,wc2;
+  
+	while (1) {
+		if (a[i*2] == 0x00 && a[i*2+1] == 0x00) {
+			if (b[i*2] == 0x00 && b[i*2+1] == 0x00) return true;
+			return false;
+		}
+		wc  = a[i*2+1] | (a[i*2] << 8);
+		wc2 = b[i*2+1] | (b[i*2] << 8);
+		if (towlower(((wint_t)wc)) != towlower(((wint_t)wc2))) return false;
+		i++;
+		if (num == i) return true;
+	}
+}
+
+/* wcscmp in Mandrake 9.0 is wrong */
+bool mywstrncmp(unsigned char *a, unsigned char *b, int num)
+{
+	int i=0;
+  
+	while (1) {
+		if (a[i*2] != b[i*2] || a[i*2+1] != b[i*2+1]) return false;
+		if (a[i*2] == 0x00 && a[i*2+1] == 0x00) return true;
+		i++;
+		if (num == i) return true;
+	}
+}
+
+/* FreeBSD boxes 4.7-STABLE does't have it, although it's ANSI standard */
+bool myiswspace(unsigned char *src)
+{
+ 	wchar_t 	wc;
+ 	int 		o;
+	unsigned char	dest[10];
+ 
+	wc = src[1] | (src[0] << 8);
+	o = DecodeWithUnicodeAlphabet(wc, dest);
+	if (o == 1) {
+		if (isspace(((int)dest[0]))!=0) return true;
+		return false;
+	}
+	return false;
 }

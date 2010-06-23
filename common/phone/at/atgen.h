@@ -43,6 +43,11 @@ typedef enum {
 	AT_PHONE_SMS_NOTAVAILABLE
 } GSM_AT_PHONE_SMSMemory;
 
+typedef enum {
+	AT_SBNR_AVAILABLE = 1,
+	AT_SBNR_NOTAVAILABLE
+} GSM_AT_SBNR;
+
 typedef struct {
 	GSM_AT_Manufacturer	Manufacturer;	  /* Who is manufacturer			*/
 	GSM_Lines		Lines;		  /* Allow to simply get each line in response 	*/
@@ -52,6 +57,7 @@ typedef struct {
 	GSM_MemoryType		PBKMemory;	  /* Last read PBK memory			*/
 	char			PBKMemories[200]; /* Supported by phone PBK memories		*/
 	GSM_AT_PBK_Charset	PBKCharset;	  /* Last read PBK charset			*/
+	GSM_AT_SBNR		PBKSBNR;
 
 	GSM_SMSMemoryStatus	LastSMSStatus;
 	int			LastSMSRead;

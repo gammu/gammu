@@ -32,21 +32,31 @@ GSM_Error NotSupportedFunction(void)
 	return GE_NOTSUPPORTED;
 }
 
-char *GetMsg (CFG_Header *cfg, char *default_string)
+unsigned char *GetMsg (CFG_Header *cfg, unsigned char *default_string)
 {
-	char 		*retval, buffer[40], buff[200],buff2[40];
-	CFG_Entry	*e;
-	CFG_Header 	*h;
-	int		num;
+	unsigned char 		*retval, buffer[40], buff2[40], buff[2000];
+	static unsigned char	def_str[2000];
+	CFG_Entry		*e;
+	CFG_Header 		*h;
+	unsigned int		num;
 
 	if (cfg==NULL) return default_string;
 
 	EncodeUnicode (buff2, "common", 6);
 
+	/* Set all 0x0a to \n */
+	memset(def_str,0,sizeof(def_str));
+	for (num=0;num<((int)strlen(default_string));num++) {
+		if (default_string[num] == 0x0a) {
+			def_str[strlen(def_str)] = '\\';
+			def_str[strlen(def_str)] = 'n';
+		} else def_str[strlen(def_str)] = default_string[num];
+	}
+
 	e = NULL;
 	/* First find our section */
         for (h = cfg; h != NULL; h = h->next) {
-		if (wcscmp(((const wchar_t *)buff2), ((const wchar_t *)h->section)) == 0) {
+		if (mywstrncasecmp(buff2, h->section, 0)) {
 			e = h->entries;
 			break;
 		}
@@ -54,21 +64,35 @@ char *GetMsg (CFG_Header *cfg, char *default_string)
 	while (1) {
 		if (e == NULL) break;
 		num = -1;
-		sprintf(buffer,"%s",DecodeUnicodeString(e->key));
-		if (strlen(buffer) == 5 && strncmp("F", buffer, 1) == 0) {
+		DecodeUnicode(e->key,buffer);
+		if (strlen(buffer) == 5 && (buffer[0] == 'F' || buffer[0] == 'f')) {
 			num = atoi(buffer+2);
 		}
 		if (num!=-1) {
-			sprintf(buff,"F%04i",num);
-			EncodeUnicode (buffer, buff, 5);
-		        retval = CFG_Get(cfg, buff2, buffer, true);
-			if (retval && !strncmp(DecodeUnicodeString(retval)+1,default_string,strlen(default_string)-1)) {
+			DecodeUnicode(e->value+2,buff);
+			if (strncmp(buff,def_str,strlen(def_str))==0) {
 				sprintf(buff,"T%04i",num);
 				EncodeUnicode (buffer, buff, 5);
 			        retval = CFG_Get(cfg, buff2, buffer, true);
 			        if (retval) {
-					retval=DecodeUnicodeString(retval)+1;
-					retval[strlen(retval)-1]=0;
+					DecodeUnicode(retval+2,buff);
+					buff[strlen(buff)-1] = 0;
+					/* Set all \n to 0x0a */
+					memset(def_str,0,sizeof(def_str));
+					num = 0;
+					while (num != strlen(buff)) {
+						if (num < strlen(buff) - 1) {
+							if (buff[num] == '\\' && buff[num+1] == 'n') {
+								def_str[strlen(def_str)] = 0x0a;
+								num+=2;
+							} else {
+								def_str[strlen(def_str)] = buff[num++];
+							}
+						} else {
+							def_str[strlen(def_str)] = buff[num++];
+						}
+					}
+					retval = def_str;
 				} else {
 					retval = default_string;
 				}
@@ -81,8 +105,8 @@ char *GetMsg (CFG_Header *cfg, char *default_string)
 }
 
 typedef struct {
-	GSM_Error	ErrorNum;
-	char		*ErrorText;
+	GSM_Error		ErrorNum;
+	unsigned char		*ErrorText;
 } PrintErrorEntry;
 
 static PrintErrorEntry PrintErrorEntries[] = {
@@ -118,10 +142,10 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{0,				""}
 };
 
-char *print_error(GSM_Error e, FILE *df, CFG_Header *cfg)
+unsigned char *print_error(GSM_Error e, FILE *df, CFG_Header *cfg)
 {
-	char 	*def 	= NULL;
-	int 	i	= 0;
+	unsigned char 	*def 	= NULL;
+	int 		i	= 0;
 
 	while (PrintErrorEntries[i].ErrorNum != 0) {
 		if (PrintErrorEntries[i].ErrorNum == e) {
@@ -351,7 +375,11 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 	timeptr.tm_sec  	= dt.Second;
 	timeptr.tm_wday 	= w;
 
+#ifdef WIN32
 	strftime(retval2, 200, "%#c", &timeptr);
+#else
+	strftime(retval2, 200, "%c", &timeptr);
+#endif
 	if (TimeZone) {
 		if (dt.Timezone >= 0) {
 			sprintf(retval," +%02i",dt.Timezone);

@@ -60,26 +60,33 @@ include $(TOPDIR)/cfg/Makefile.cfg
 
 # --------------------------- internal source ---------------------------------
 
+%.o: %.c
+	@( echo Making $<; \
+	  cd $(@D); \
+	  $(CC) -c $(CFLAGS) $(CPPFLAGS) $(<F) -o $(@F) \
+	)
+    
 all: gammu
 
 gammu: $(COMMON) $(GAMMU)
-	$(CC) $(COMMON) $(GAMMU) -lm -o $(TOPDIR)/gammu/gammu
+	@echo Linking
+	@$(CC) $(COMMON) $(GAMMU) -lm -o $(TOPDIR)/gammu/gammu
 	
 makelib: $(COMMON) $(GAMMU)
-	$(CC) -shared -o $(TOPDIR)/common/libGammu.so $(COMMON)
-	@$(INSTALL) -m 0444 $(TOPDIR)/common/libGammu.so $(TOPDIR)/common
-	$(CC) $(LDFLAGS) $(GAMMU) -lm -L$(TOPDIR)/common -lGammu -o $(TOPDIR)/gammu/gammulib
+	@echo Linking libGammu.so
+	@$(CC) -shared -o $(TOPDIR)/common/libGammu.so $(COMMON)
+	@echo Linking
+	@$(CC) $(LDFLAGS) $(GAMMU) -lm -L$(TOPDIR)/common -lGammu -o $(TOPDIR)/gammu/gammulib
 
 clean:
 	@echo Cleaning binaries and object files
 	@$(RM) $(COMMON) $(GAMMU) core $(TOPDIR)/common/libGammu.so
-	@$(RM) $(TOPDIR)/gammu/gammu $(TOPDIR)/gammu/gammulib
-	@$(RM) $(TOPDIR)/cfg/autoconf/rpm/spec tags
+	@$(RM) $(TOPDIR)/gammu/gammu $(TOPDIR)/gammu/gammulib tags
 	@$(RM) $(TOPDIR)/cfg/locale/locale.o $(TOPDIR)/cfg/locale/locale
 
 makelocale: $(LOCALE)
-	@echo Making locale files
-	$(CC) $(LOCALE) -lm -o $(TOPDIR)/cfg/locale/locale
+	@echo Linking locale application
+	@$(CC) $(LOCALE) -lm -o $(TOPDIR)/cfg/locale/locale
 	@for xxx in $(LOCALE2); do \
 		( cd $$xxx; \
 		  ./locale \
@@ -89,8 +96,9 @@ makelocale: $(LOCALE)
 
 distclean: makelocale clean
 	@echo Setting default config
-	@$(INSTALL) -m 0666 $(TOPDIR)/cfg/default/config.h $(TOPDIR)/cfg/config.h
-	@$(INSTALL) -m 0666 $(TOPDIR)/cfg/default/Makefile.cfg $(TOPDIR)/cfg/Makefile.cfg
+	@chmod a+x $(TOPDIR)/configure
+	@$(TOPDIR)/configure
+	@$(RM) $(TOPDIR)/cfg/autoconf/config.cache
 	
 uninstall:
 	@echo Uninstalling Gammu
@@ -135,24 +143,28 @@ tags: $(shell find . -name '*.[ch]' -o -name '*.cpp')
 	@echo Generating tags file
 	@ctags `find . -name '*.[ch]' -o -name '*.cpp'`
 
-makerpm:
-	@echo Creating $(RPM_DIR)/SOURCES/gammu-$(RPM_VER).tar.gz file
-	@$(INSTALL) -d $(RPM_DIR)/SOURCES/gammu-$(RPM_VER)/
+makecleantree:
+	@echo Making Gammu tree snapshot
+	@$(INSTALL) -d $(TEMP_DIR)/gammu-$(VERSION)/
 	@for xxx in '.'; do \
 		( cd $(TOPDIR)/$$xxx; \
 		  $(FIND) . -type d \! -path "*CVS*" \
-		       -exec $(INSTALL) -d $(RPM_DIR)/SOURCES/gammu-$(RPM_VER)/{} \; ; \
+		       -exec $(INSTALL) -d $(TEMP_DIR)/gammu-$(VERSION)/{} \; ; \
 		  $(FIND) . -type f \! -path "*CVS*" \
-		       -exec $(INSTALL) -m 0444 {} $(RPM_DIR)/SOURCES/gammu-$(RPM_VER)/{} \; \
+		       -exec $(INSTALL) -m 0444 {} $(TEMP_DIR)/gammu-$(VERSION)/{} \; \
 		) \
 	done
-	@$(INSTALL) -d gammu-$(RPM_VER)
-	@cp $(RPM_DIR)/SOURCES/gammu-$(RPM_VER)/* --target-directory=gammu-$(RPM_VER) -r
-	@$(RM) $(RPM_DIR)/SOURCES/gammu-$(RPM_VER) -r 
-	@chmod a+rwx gammu-$(RPM_VER)/configure
-	make -C gammu-$(RPM_VER) clean
-	@tar cvfz $(RPM_DIR)/SOURCES/gammu-$(RPM_VER).tar.gz gammu-$(RPM_VER) > /dev/null
-	@$(RM) -r gammu-$(RPM_VER)/
+	@$(INSTALL) -d gammu-$(VERSION)
+	@cp $(TEMP_DIR)/gammu-$(VERSION)/* --target-directory=gammu-$(VERSION) -r
+	@$(RM) $(TEMP_DIR)/gammu-$(VERSION) -r 
+	@chmod a+rwx gammu-$(VERSION)/configure
+	make -C gammu-$(VERSION) clean
+
+makerpm: makecleantree
+	@echo Creating $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz file
+	@tar cvfz $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz gammu-$(VERSION) > /dev/null
+	@echo Removing Gammu tree snapshot
+	@$(RM) -r gammu-$(VERSION)/
 	@echo Installing $(RPM_DIR)/SPECS/gammu.specs
 	@$(INSTALL) -m 0444 $(TOPDIR)/cfg/autoconf/rpm/spec $(RPM_DIR)/SPECS/gammu.specs
 	@echo Making packages

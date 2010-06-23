@@ -1,35 +1,34 @@
-/* config.h.  Generated automatically by configure.  */
 
 #ifndef _config_h_
 #define _config_h_
 
 /* Version of package */
-#define VERSION "0.64"
+#undef VERSION
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
-/* #undef DEBUG */
+#undef DEBUG
 #endif
 
 #ifndef WIN32
 /* are the scandir functions available */
-#define HAVE_DIRENT_H 1
-#define HAVE_SCANDIR 1
-#define HAVE_ALPHASORT 1
+#undef HAVE_DIRENT_H
+#undef HAVE_SCANDIR
+#undef HAVE_ALPHASORT
 #endif
 
 /* MBUS2 over cable */
-#define GSM_ENABLE_MBUS2 1
+#undef GSM_ENABLE_MBUS2
 /* FBUS2 over cable */
-#define GSM_ENABLE_FBUS2 1
+#undef GSM_ENABLE_FBUS2
 /* FBUS2 in DLR3 cable. AT init */
-#define GSM_ENABLE_DLR3AT 1
+#undef GSM_ENABLE_DLR3AT
 /* Direct infrared */
-#define GSM_ENABLE_IRDA 1
+#undef GSM_ENABLE_IRDA
 /* Infrared over irda sockets */
-#define GSM_ENABLE_INFRARED 1
+#undef GSM_ENABLE_INFRARED
 /* AT protocol */
-#define GSM_ENABLE_AT 1
+#undef GSM_ENABLE_AT
 //#define GSM_ENABLE_ALCABUS
 /* Works only in Linux.
  * you need bluez-kernel-2.3-pre2 or greater, bluez-libs-2.1 
@@ -37,9 +36,9 @@
  * The kernel 2.4.20 will may include the RFCOMM implementation. 
  */
 /* AT over bluetooth */
-/* #undef GSM_ENABLE_ATBLUETOOTH */
+#undef GSM_ENABLE_ATBLUETOOTH
 /* FBUS2 over bluetooth	*/
-/* #undef GSM_ENABLE_DLR3BLUETOOTH */
+#undef GSM_ENABLE_DLR3BLUETOOTH
 
 /* By default commented: some people reported me (for example, with 6210
  * and 3210), that their phones doesn't answer at all sometimes or answer
@@ -49,18 +48,18 @@
  * too.
  */
 /* Enables cell broadcast */
-/* #undef GSM_ENABLE_CELLBROADCAST */
+#undef GSM_ENABLE_CELLBROADCAST
 
 /* If you want backup/restore stuff. Some people wanted it - they required
  * smalled library made from Gammu and didn't require it. Please note,
  * that backup/restore stuff can be easy separated from other things.
  */
-#define GSM_ENABLE_BACKUP 1
+#undef GSM_ENABLE_BACKUP
 
 /* Nokia 51xx/61xx phones can make authentication. It allows only to
  * display "Nokia accessory" during start, nothing more.
  */
-#define GSM_ENABLE_6110_AUTHENTICATION 1
+#undef GSM_ENABLE_6110_AUTHENTICATION
 
 /* It allows to show incoming call and SMS info for 7110 family phones.
  * By default commented: you can have some problems, when using it.
@@ -69,18 +68,18 @@
  * connection. Seems phone firmware isn't too good here
  */
 /* Show incoming Data for 7110/9210 */
-/* #undef GSM_ENABLE_N71_92INCOMINGINFO */
+#undef GSM_ENABLE_N71_92INCOMINGINFO
 
 /* n6110.c models */
-#define GSM_ENABLE_NOKIA6110 1
+#undef GSM_ENABLE_NOKIA6110
 /* n6510.c (DCT4) models */
-#define GSM_ENABLE_NOKIA6510 1
+#undef GSM_ENABLE_NOKIA6510
 /* n7110.c models */
-#define GSM_ENABLE_NOKIA7110 1
+#undef GSM_ENABLE_NOKIA7110
 /* n9210.c models */
-#define GSM_ENABLE_NOKIA9210 1
+#undef GSM_ENABLE_NOKIA9210
 /* AT generic models */
-#define GSM_ENABLE_ATGEN 1
+#undef GSM_ENABLE_ATGEN
 //#define GSM_ENABLE_ALCATEL
 
 /* Bu default commented: some parts of source are not ready or not tested

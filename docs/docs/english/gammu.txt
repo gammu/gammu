@@ -1,4 +1,4 @@
-Gammu README version 12.11.2002
+Gammu README version 24.11.2002
 -------------------------------
 Q. How to use it ?
 
@@ -236,7 +236,7 @@ A. First of all, here are described all possible parameters for this software.
        additionaly network code, it will be displayed for this operator:
        gammu --setbitmap OPERATOR file "260 02"
 
-   gammu --setbitmap PICTURE file location
+   gammu --setbitmap PICTURE file location [text]
 
    gammu --setbitmap TEXT text
 
@@ -433,38 +433,51 @@ A. First of all, here are described all possible parameters for this software.
                                     [-disableemail][-voidsms][-unicode]
                                     [-inputunicode][-replacemessages ID]
                                     [-replacefile file][-autolen len]
+                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms RINGTONE destination file [-reply][-smscset number]
                                              [-long][-smscnumber number]
                                              [-report][-scale]
+                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms OPERATOR destination file [-reply][-smscset number]
                                              [-netcode netcode][-report]
                                              [-smscnumber number][-biglogo]
+                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms CALLER destination file [-reply][-smscset number]
                                            [-report][-smscnumber number]
+                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms PICTURE destination file [-reply][-smscset number]
                                             [-report][-smscnumber number]
                                             [-unicode][-text text]
+                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms BOOKMARK destination file location [-smscset number]
                                                       [-reply][-report]
                                                       [-smscnumber number]
+                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms SETTINGS destination file location [-smscset number]
                                                       [-smscnumber number]
                                                       [-report][-reply]
+                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms CALENDAR destination file location [-smscset number]
                                                       [-smscnumber number]
                                                       [-report][-reply]
+                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms VCARD10|VCARD21 destination file SM|ME location
                         [-reply][-smscset number][-smscnumber number][-report]
+                        [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms PROFILE destination name bitmap ringtone
                         [-reply][-smscset number][-smscnumber number][-report]
+                        [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms EMSSOUND destination [-number number][-file file][-reply]
                                         [-smscset number][-smscnumber number]
                                         [-report]
+                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms EMSANIMATION destination [-number number][-file file]
                                             [-smscset number][-reply]
                                             [-smscnumber number][-report]
+                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
    gammu --sendsms EMSBITMAP destination file [-reply][-smscset number]
                                               [-smscnumber number][-report]
+                                    [-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX]
 
    gammu --nokiagetoperatorname
        6110.c phones have place for name for one GSM network (of course,

@@ -473,12 +473,10 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 {
 	GSM_RingNoteScale	DefNoteScale	= Scale_880;
 	GSM_RingNoteDuration	DefNoteDuration	= Duration_1_4;
-	GSM_RingNoteStyle	DefNoteStyle	= ContinuousStyle;
+	GSM_RingNoteStyle	DefNoteStyle	= NaturalStyle;
 	int			DefNoteTempo	= 63;
 
-	int			NrNote		= 0;
-	unsigned char		buffer[2000];
-	unsigned char		Name[100];
+	unsigned char		buffer[2000],Name[100];
 	unsigned char		*def, *notes, *ptr;
 	GSM_RingNote		*Note;
 
@@ -541,7 +539,7 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 	dprintf("DefNoteScale=%d\n", DefNoteScale);
 	ptr=strtok(notes, ", ");
 	/* Parsing the <note-command>+ section. */
-	while (ptr && NrNote<MAX_RINGTONE_NOTES) {
+	while (ptr && ringtone->NoteTone.NrCommands<MAX_RINGTONE_NOTES) {
 		switch(*ptr) {
 			case 'o': case 'O':
 				switch (atoi(ptr+2)) {
@@ -563,8 +561,8 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 				}
 				break;
 			default:
-				ringtone->NoteTone.Commands[NrNote].Type = RING_Note;
-				Note = &ringtone->NoteTone.Commands[NrNote].Note;
+				ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Type = RING_Note;
+				Note = &ringtone->NoteTone.Commands[ringtone->NoteTone.NrCommands].Note;
 
 				/* [<duration>] */
 				Note->Duration = DefNoteDuration;
@@ -633,12 +631,12 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 				Note->Style=DefNoteStyle;
 				/* Tempo */
 				Note->Tempo=DefNoteTempo;
-				NrNote++;
+
+				ringtone->NoteTone.NrCommands++;
 				break;
 		}
 		ptr=strtok(NULL, ", ");
 	}
-	ringtone->NoteTone.NrCommands=NrNote;
 	return GE_NONE;
 }
 
@@ -1442,6 +1440,7 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 				case Note_Pause	:Len+=sprintf(package+Len,"r");	break;
 			}
 			switch (Note->Duration) {
+				case Duration_Full : package[Len++]='0';	break;
 				case Duration_1_2  : package[Len++]='1';	break;
 				case Duration_1_4  : package[Len++]='2';	break;
 				case Duration_1_8  : package[Len++]='3';	break;

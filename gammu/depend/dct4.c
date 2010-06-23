@@ -316,17 +316,18 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_Phone_Da
 		break;
 	case 0x31:
 		dprintf("Names of voice records received\n");
+		j = 33;
 		for (i=0;i<msg.Buffer[9];i++) {
-			j = 33+i*44;
 			memcpy(Buffer,msg.Buffer+(j+1),msg.Buffer[j]);
 			Buffer[msg.Buffer[j]] 	= 0;
 			Buffer[msg.Buffer[j]+1] = 0;
-			dprintf("%i. \"%s\"\n",i+1,DecodeUnicodeString(Buffer));
+			dprintf("%i. \"%s\"\n",i+1,DecodeUnicodeString(Buffer));	
 			if (i==*Data->NetworkLevel) {
 				*Data->NetworkLevel=msg.Buffer[9];
 				sprintf(Data->PhoneString,"%s.wav",DecodeUnicodeString(Buffer));
 				return GE_NONE;
 			}
+			j+=msg.Buffer[j]+24;
 		}
 		return GE_EMPTY;
 	}

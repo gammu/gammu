@@ -785,13 +785,28 @@ static GSM_Error N6110_ReplyGetSetPicture(GSM_Protocol_Message msg, GSM_Phone_Da
 		} else {
 			Data->Bitmap->Sender[0] = 0x00;
 			Data->Bitmap->Sender[1] = 0x00;
-			count+=3;
+			count+=2;
 		}
 		dprintf("Sender : \"%s\"\n",DecodeUnicodeString(Data->Bitmap->Sender));
-		count++;
-		EncodeUnicode(Data->Bitmap->Text,msg.Buffer+count+1,msg.Buffer[count]);
+	        if (IsPhoneFeatureAvailable(Data->Model, F_NOPICTUREUNI) ||
+		    (!strcmp(Data->Model,"NHM-5") && *Data->VersionNum < 5.79)) {
+			count++;
+			EncodeUnicode(Data->Bitmap->Text,msg.Buffer+count+1,msg.Buffer[count]);
+			count += strlen(DecodeUnicodeString(Data->Bitmap->Text)) + 1;
+		} else {
+		    	if (!strcmp(Data->Model,"NHM-5")) {
+				i = msg.Buffer[count] * 256 + msg.Buffer[count+1];
+			} else {
+				/* 3410 4.26 */
+				i = msg.Buffer[count] * 256 + msg.Buffer[count+1] - 2;
+				count += 2;
+			}
+			memcpy(Data->Bitmap->Text,msg.Buffer+count+2,i);
+			Data->Bitmap->Text[i]   = 0;
+			Data->Bitmap->Text[i+1] = 0;
+			count += i + 2;
+		}
 		dprintf("Text   : \"%s\"\n",DecodeUnicodeString(Data->Bitmap->Text));
-		count += strlen(DecodeUnicodeString(Data->Bitmap->Text)) + 1;
 		Data->Bitmap->Width	= msg.Buffer[count++];
 		Data->Bitmap->Height	= msg.Buffer[count++];
 		PHONE_DecodeBitmap(GSM_NokiaPictureImage, msg.Buffer + count + 2, Data->Bitmap);
@@ -1035,10 +1050,25 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 			req[count++] = 0x00;
 		}
 		req[count++] = 0x00;
-		textlen = strlen(DecodeUnicodeString(Bitmap->Text));
-		req[count++] = textlen;
-		memcpy(req+count,DecodeUnicodeString(Bitmap->Text),textlen);
-		count += textlen;
+	        if (IsPhoneFeatureAvailable(s->Phone.Data.Model, F_NOPICTUREUNI) ||
+		    (!strcmp(s->Phone.Data.Model,"NHM-5") && *s->Phone.Data.VersionNum < 5.79)) {
+			textlen = strlen(DecodeUnicodeString(Bitmap->Text));
+			req[count++] = textlen;
+			memcpy(req+count,DecodeUnicodeString(Bitmap->Text),textlen);
+			count += textlen;
+		} else {
+			textlen = strlen(DecodeUnicodeString(Bitmap->Text))*2;
+		    	if (!strcmp(s->Phone.Data.Model,"NHM-5")) {
+				req[count++] = textlen;
+			} else {
+				/* 3410 4.26 */
+				req[count++] = textlen+2;
+				req[count++] = 0x00;
+				req[count++] = 0x1e;
+			}
+			memcpy(req+count,Bitmap->Text,textlen);
+			count += textlen;
+		}
 		NOKIA_CopyBitmap(GSM_NokiaPictureImage, Bitmap, req, &count);
 		return GSM_WaitFor (s, req, count, 0x47, 4, ID_SetBitmap);
 	default:

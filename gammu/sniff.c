@@ -293,7 +293,7 @@ void decodesniff(int argc, char *argv[])
 	}
 	prepareStateMachine();
 	if (argc > 4) {
-		strcpy(s.CFGModel,argv[4]);
+		strcpy(s.Config.Model,argv[4]);
 		error=GSM_RegisterAllPhoneModules(&s);
 		if (error!=GE_NONE) Print_Error(error);
 	}
@@ -377,7 +377,7 @@ void decodebinarydump(int argc, char *argv[])
 
 	prepareStateMachine();
 	if (argc > 3) {
-		strcpy(s.CFGModel,argv[3]);
+		strcpy(s.Config.Model,argv[3]);
 		error=GSM_RegisterAllPhoneModules(&s);
 		if (error!=GE_NONE) Print_Error(error);
 	}
@@ -386,11 +386,11 @@ void decodebinarydump(int argc, char *argv[])
 		printf("Can not open file \"%s\"\n",argv[2]);
 		exit(-1);
 	}
-	len2=fread(Buffer, 1, 1, file);
-	len2=Buffer[0];
-	len =fread(Buffer, 1, len2, file);
-	Buffer[len2]=0;
-	dprintf("[Gammu            - version %s]\n",Buffer);
+//	len2=fread(Buffer, 1, 1, file);
+//	len2=Buffer[0];
+//	len =fread(Buffer, 1, len2, file);
+//	Buffer[len2]=0;
+//	dprintf("[Gammu            - version %s]\n",Buffer);
 	len2=30000;
 	while (len2==30000) {	
 		len2=fread(Buffer, 1, 30000, file);

@@ -1,6 +1,6 @@
 #! /bin/sh
+cp version cfg/autoconf/VERSION
 cd cfg/autoconf
-autoheader
 autoconf
 ./configure $1 $2 $3 $4 $5 $6 $7 $8 $9
 if [ "$1" = "--help" ]
@@ -16,5 +16,5 @@ else
     rm config.log
     rm config.status
 fi
-rm config.h.in
+rm VERSION
 rm configure
