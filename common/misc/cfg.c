@@ -4,8 +4,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
-#include <wchar.h>
-#include <wctype.h>
+#ifndef __OpenBSD__
+#  include <wchar.h>
+#  include <wctype.h>
+#endif
 
 #include "../../cfg/config.h"
 #include "cfg.h"
@@ -18,14 +20,14 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 	FILE			*handle;
         unsigned char		*line,*buf,ch;
         CFG_Header 		*cfg_info = NULL, *cfg_head = NULL;
-	int			i,pos,read;
+	int			i,pos;
 	bool			process,FFEEUnicode=false,firstread=true;
 
         /* Error check */
         if (filename == NULL) return NULL;
 
         /* Initialisation */
-        if ((buf = (char *)malloc(255)) == NULL) return NULL;
+        if ((buf = (char *)malloc(1400)) == NULL) return NULL;
     
         /* Open file */
         if ((handle = fopen(filename, "rb")) == NULL) {
@@ -42,8 +44,7 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 			/* Here is my own version of fgetws */
 			pos = 0;
 			while (1) {
-				read = fread(buf+pos,1,2,handle);
-				if (read != 2) {
+				if (fread(buf+pos,1,2,handle) != 2) {
 					buf[pos]   = 0;
 					buf[pos+1] = 0;
 					break;
@@ -69,11 +70,24 @@ CFG_Header *CFG_ReadFile(char *filename, bool Unicode)
 				buf[pos+1] = 0;
 				if (buf[pos-2] == 0x00 && buf[pos-1] == 0x0a) break;
 				if (buf[pos-2] == 0x00 && buf[pos-1] == 0x0d) break;
-				if (pos == 255) break;
+				if (pos == 1400) break;
 			}
 			if (pos == 0) break;
 		} else {
-			if (fgets(buf, 255, handle) == NULL) break;
+			/* Here is my own version of fgets */
+			pos = 0;
+			while (1) {
+				if (fread(buf+pos,1,1,handle) != 1) {
+					buf[pos] = 0;
+					break;
+				}
+				pos++;
+				buf[pos] = 0;
+				if (buf[pos-1] == 0x0a) break;
+				if (buf[pos-1] == 0x0d) break;
+				if (pos == 1400) break;
+			}
+			if (pos == 0) break;
 		}
 
                 line    = buf;

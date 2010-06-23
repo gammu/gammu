@@ -291,6 +291,7 @@ static GSM_Error N6110_GetMemory (GSM_StateMachine *s, GSM_PhonebookEntry *entry
 	if (req[4]==0xff) return GE_NOTSUPPORTED;
 
 	req[5] = entry->Location;
+	if (entry->MemoryType==GMT_DC || entry->MemoryType==GMT_RC || entry->MemoryType==GMT_MC) req[5]--;
 
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
@@ -299,7 +300,7 @@ static GSM_Error N6110_GetMemory (GSM_StateMachine *s, GSM_PhonebookEntry *entry
 
 static GSM_Error N6110_ReplyGetMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
 
 	smprintf(s, "Memory status received\n");
 	switch (msg.Buffer[3]) {
@@ -346,7 +347,7 @@ static GSM_Error N6110_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *St
 
 static GSM_Error N6110_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_Data *Data = &s->Phone.Data;
 
 	smprintf(s, "SMS status received\n");
 	switch (msg.Buffer[3]) {
@@ -466,8 +467,8 @@ static GSM_Error N6110_ReplyGetStatus(GSM_Protocol_Message msg, GSM_StateMachine
 	smprintf(s, "Mode                  : ");
 	switch (msg.Buffer[4]) {
 		case 0x01: smprintf(s, "registered within the network\n");	break;
-		case 0x02: smprintf(s, "call in progress\n");		break; /* ringing or already answered call */
-		case 0x03: smprintf(s, "waiting for security code\n");	break;
+		case 0x02: smprintf(s, "call in progress\n");			break; /* ringing or already answered call */
+		case 0x03: smprintf(s, "waiting for security code\n");		break;
 		case 0x04: smprintf(s, "powered off\n");			break;
 		default  : smprintf(s, "unknown\n");
 	}
@@ -1115,20 +1116,22 @@ static GSM_Error N6110_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 {
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 #ifdef DEBUG
-	int 		tmp, count;
+	int 			tmp, count;
 #endif
-	GSM_Call 	call;
+	GSM_Call 		call;
 
+	call.Status = 0;
 	switch (msg.Buffer[3]) {
 	case 0x02:
 		smprintf(s, "Call going, sequence %d\n",msg.Buffer[4]);
+		call.Status = GN_CALL_CallEstablished;
 		break;
 	case 0x03:
 		smprintf(s, "Call in progress, sequence %d\n",msg.Buffer[4]);
 		call.Status = GN_CALL_CallStart;
 		break;
 	case 0x04:
-		smprintf(s, "Remote end hang up, sequence %d, error %i\n",msg.Buffer[4],msg.Buffer[6]);
+		smprintf(s, "Remote end hang up, sequence %d, cause type %i, CC %i\n",msg.Buffer[4],msg.Buffer[5],msg.Buffer[6]);
 		call.Status = GN_CALL_CallRemoteEnd;
 		break;	
 	case 0x05:
@@ -1162,7 +1165,7 @@ static GSM_Error N6110_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 		smprintf(s, "Call resumed, meaning not known, sequence %d\n",msg.Buffer[4]);
 		break;
 	}
-	if (Data->EnableIncomingCall && s->User.IncomingCall!=NULL) {
+	if (Data->EnableIncomingCall && s->User.IncomingCall!=NULL && call.Status != 0) {
 		s->User.IncomingCall(s->Config.Device, call);
 	}
 	return GE_NONE;
@@ -1484,7 +1487,7 @@ static GSM_Error N6110_ReplySendDTMF(GSM_Protocol_Message msg, GSM_StateMachine 
 
 static GSM_Error N6110_ReplyGetDisplayStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int i;
+	int 			i;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	smprintf(s, "Display status received\n");

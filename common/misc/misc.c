@@ -2,17 +2,16 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
-#include <sys/timeb.h>
 #include <stdarg.h>
 #include <stdio.h>
-
+#include <sys/timeb.h>
 #ifdef WIN32
 #  include "windows.h"
 #endif
 
 #include "../../cfg/config.h"
-#include "misc.h"
 #include "../gsmstate.h"
+#include "misc.h"
 
 /* Based on article in Polish PC-Kurier 8/1998 page 104
  * Archive on http://www.pckurier.pl
@@ -59,6 +58,32 @@ void GSM_GetCurrentDateTime (GSM_DateTime *Date)
 		if (Date->Year>90) Date->Year = Date->Year+1900;
 			      else Date->Year = Date->Year+2000;
 	}
+}
+
+time_t Fill_Time_T(FILE *df, GSM_DateTime DT)
+{
+	struct tm tm_starttime;
+
+	smfprintf(df, "  StartTime  : %02i-%02i-%04i %02i:%02i:%02i\n",
+		DT.Day,DT.Month,DT.Year,DT.Hour,DT.Minute,DT.Second);
+
+#ifdef WIN32
+	putenv("TZ=PST+8");
+#else
+	setenv("TZ","PST+8",1);
+#endif
+	tzset();
+
+	memset(&tm_starttime, 0, sizeof(tm_starttime));
+	tm_starttime.tm_year 	= DT.Year - 1900;
+	tm_starttime.tm_mon  	= DT.Month - 1;
+	tm_starttime.tm_mday 	= DT.Day;
+	tm_starttime.tm_hour 	= DT.Hour;
+	tm_starttime.tm_min  	= DT.Minute;
+	tm_starttime.tm_sec  	= DT.Second;
+	tm_starttime.tm_isdst	= 0;
+	
+	return mktime(&tm_starttime);
 }
 
 char *OSDateTime (GSM_DateTime dt, bool TimeZone)

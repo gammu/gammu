@@ -1,7 +1,7 @@
 
 #ifndef _CFGREADER_H
 #define _CFGREADER_H
-
+
 #include "misc.h"
 
 /* Structure definitions */

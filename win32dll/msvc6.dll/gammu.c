@@ -117,14 +117,12 @@ BOOL LoopProc(int *i)
 				}
 			}
 			if (s[*i].ThreadTerminate) break;
-			mili_sleep(500);
+			my_sleep(500);
 			if (s[*i].ThreadTerminate) break;
 		}
 	}
 
-	if (s[*i].s.opened) error=GSM_TerminateConnection(&s[*i].s);
-	s[*i].Used=false;
-
+	s[*i].Used		= false;
 	s[*i].hCommWatchThread 	= NULL;
 	s[*i].dwThreadID 	= 0;
 
@@ -261,10 +259,13 @@ GSM_Error WINAPI myendconnection(int phone)
 {
 	GSM_Error error=GE_NONE;
 
-	s[phone].ThreadTerminate = true;
-	while (1) {
-		if (s[phone].dwThreadID == 0) break;
-		mili_sleep(20);
+	if (s[phone].Used) {
+		s[phone].ThreadTerminate = true;
+		if (s[phone].s.opened) {
+		        WaitForSingleObject(s[phone].Mutex, INFINITE );
+			error = GSM_TerminateConnection(&s[phone].s);
+		        ReleaseMutex(s[phone].Mutex);
+		}
 	}
 	return error;
 }
@@ -387,7 +388,7 @@ GSM_Error WINAPI mysendsmsmessage (int phone, GSM_SMSMessage *sms, unsigned int 
 			GSM_ReadDevice(&s[phone].s);
 			if (s[phone].SendSMSStatus != GE_TIMEOUT) break;
 			GSM_GetCurrentDateTime(&Date);
-			mili_sleep(20);
+			my_sleep(20);
 		}
 		if (s[phone].SendSMSStatus != GE_TIMEOUT) break;
 	}
@@ -557,7 +558,7 @@ BOOL WINAPI DllMain  ( HANDLE hModule,
 			break;
 		case DLL_PROCESS_DETACH:
 			for (i=0;i<10;i++) {
-				if (s[i].Used) myendconnection(i);
+				myendconnection(i);
 			}
 			break;
     	}

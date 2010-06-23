@@ -27,6 +27,7 @@ static GSM_Error N7110_SetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int al
 static GSM_Error N7110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data		*Data = &s->Phone.Data;
+
 	smprintf(s, "Phonebook entry received\n");
 	switch (msg.Buffer[6]) {
 	case 0x0f:
@@ -1320,6 +1321,7 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x07,ID_IncomingFrame	},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x09,ID_IncomingFrame	},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0A,ID_IncomingFrame	},
+	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0B,ID_IncomingFrame	},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0C,ID_IncomingFrame	},
 	{N71_65_ReplySendDTMF,		"\x01",0x03,0x51,ID_SendDTMF		},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x53,ID_IncomingFrame	},
@@ -1354,6 +1356,7 @@ static GSM_Reply_Function N7110ReplyFunctions[] = {
 	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_GetBitmap		},
 	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x71,ID_IncomingFrame	},
 	{N7110_ReplyGetNetworkInfoError,"\x0A",0x03,0x72,ID_GetNetworkInfo	},
+	{DCT3_ReplyGetNetworkInfo,	"\x0A",0x03,0x73,ID_IncomingFrame	},
 	{N71_92_ReplyGetSignalQuality,	"\x0A",0x03,0x82,ID_GetSignalQuality	},
 	{N7110_ReplySetOperatorLogo,	"\x0A",0x03,0xA4,ID_SetBitmap		},
 	{N7110_ReplyClearOperatorLogo,	"\x0A",0x03,0xB0,ID_SetBitmap		},

@@ -4,6 +4,31 @@ In brackets names of people, who told about error/problem or helped in fixing
 or inspired me to make it.
 
 --------------------
+20030223 - 0.70
+* new functionality:
+  * full OpenBSD compatibility                                  (Ian McWilliam)
+  * support for FM stations is complete (added restoring from backup)   (Walek)
+  * call API gives more info about calls
+
+* fixes and improvements:
+  * some compilers don't allow to break line with "\" in strings, when
+    file contains Windows line breaks. Because of it gammu.c
+    and coding.c return to Unix line breaks.
+  * "rpmbuild -ba" replaced with old "rpm -ba". Searching for universal
+    command in progress
+  * entries in DC, MC and RC memory are enumerated in n6110.c    (Martin Horak)
+    from 0
+  * missed calls can be get correctly for 6210 and DCT4       (Marek Wagrodzki)
+  * getting calendar notes using method 2 doesn't return more than 50   (Walek)
+    first chars in note texts. Now this method is used only for N35xx.
+    No workaround known.
+  * reading long lines from cfg files is OK now. It doesn't use fgets, which
+    cuts lines. Now works OK such things like setting calendar notes
+    with long texts.
+  * improved getting bithdays with Birthday year equal 0
+  * win32 dll uses my_sleep                                    (Alexander Arlt)
+  * win32 dll uses now finally correct method of terminating
+    phone thread
 
 20030216 - 0.69
 * new functionality:
@@ -97,7 +122,7 @@ or inspired me to make it.
   * added --addnew (adding new calendar, wap bookmarks      (Tomasz Motylewski)
     and todo from backup file without deleting existing)
   * added support for Siemens MIDI ringtones                            (Walek)
-  * added support for empty SMS names for 6210
+  * added support for empty SMS names for 6210
 * fixes and improvements:
   * fixed reading SMS for AT mode and Nokia phones
   * removed incorrect reference to man dir (it made problems during

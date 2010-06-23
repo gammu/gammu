@@ -6,6 +6,10 @@
 
 #include "misc.h"
 
+#ifdef __OpenBSD__
+typedef		int wint_t;
+#endif
+
 /* ---------------------------- Unicode ------------------------------------ */
 bool 		mywstrncasecmp			(unsigned char *a, unsigned char *b, int num);
 bool 		mywstrncmp			(unsigned char *a, unsigned char *b, int num);

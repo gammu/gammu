@@ -2,11 +2,11 @@
 #ifndef __misc_h
 #define __misc_h
 
+#include <stdio.h>
+#include <time.h>
 #ifdef WIN32
 #  include <windows.h>
 #endif
-
-#include <stdio.h>
 
 #include "../../cfg/config.h"
 
@@ -90,6 +90,7 @@ void GSM_GetCurrentDateTime 	(GSM_DateTime *Date);
 char *OSDateTime 		(GSM_DateTime dt, bool TimeZone);
 char *OSDate 			(GSM_DateTime dt);
 char *DayOfWeek 		(int year, int month, int day);
+time_t Fill_Time_T		(FILE *df, GSM_DateTime DT);
 
 #undef MAX
 #define MAX(a,b) ((a)>(b)?(a):(b))

@@ -635,16 +635,16 @@ typedef enum {
 	F_MAGICBYTES,	/* Phone can make authentication with magic bytes		*/
 	F_NODTMF,	/* Phone can't send DTMF					*/
 	F_DISPSTATUS,	/* Phone return display status					*/
+	F_NOCALLINFO,
 
+	F_CALENDAR35,	/* We have to get calendar using 3510 style			*/
 	F_CAL35,	/* Reminders in calendar saved in 3510 style			*/
 	F_RADIO,	/* Phone with FM radio						*/
-	F_NOTODO,
+	F_NOTODO,	/* No ToDo in phone						*/
 
 	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/
 	F_BROKENCPBS, 	/* CPBS on some memories can hang phone				*/
-	F_M20SMS,	/* Siemens M20 like SMS handling				*/
-
-	F_NOCALLINFO
+	F_M20SMS	/* Siemens M20 like SMS handling				*/
 } Feature;
 
 /* For models table */

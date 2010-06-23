@@ -2596,8 +2596,12 @@ static GSM_Error N6510_ReplyGetCalendarNotePos(GSM_Protocol_Message msg, GSM_Sta
 
 static GSM_Error N6510_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, bool start)
 {
-//	return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
-	return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CALENDAR35)) {
+		/* Note: in known phones texts of notes cut to 50 chars */
+		return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
+	} else {
+		return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
+	}
 }
 
 static GSM_Error N6510_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
@@ -2662,7 +2666,7 @@ static GSM_Error N6510_GetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
   				0x00,0x01};
  
   	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return GE_NOTSUPPORTED;
-   	if (FMStation->Location > GSM_MAX_FM_STATION) return GE_UNKNOWN;
+   	if (FMStation->Location > GSM_MAX_FM_STATION) return GE_INVALIDLOCATION;
 
   	s->Phone.Data.FMStation=FMStation;
  	error = N6510_GetFMStatus(s);
@@ -2742,6 +2746,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x07,ID_IncomingFrame	},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x09,ID_IncomingFrame	},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0A,ID_IncomingFrame	},
+	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0B,ID_IncomingFrame	},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0C,ID_DialVoice		},
 	{N71_65_ReplyCallInfo,		"\x01",0x03,0x0C,ID_IncomingFrame	},
 	{N71_65_ReplySendDTMF,		"\x01",0x03,0x51,ID_SendDTMF		},
