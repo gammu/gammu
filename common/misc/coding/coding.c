@@ -73,19 +73,31 @@ unsigned char *DecodeUnicodeString (const unsigned char *src)
 	return dest;
 }
 
-/* Decode Unicode string and return as function result */
-unsigned char *DecodeUnicodeString2(const unsigned char *src)
+/* Decode Unicode string to UTF8 or other console charset
+ * and return as function result
+ */
+unsigned char *DecodeUnicodeConsole(const unsigned char *src)
 {
  	static char dest[500];
 
+	if (di.coding[0] != 0) {
+		if (!strcmp(di.coding,"utf8")) {
+			EncodeUTF8(dest, src);
+		} else {
 #ifdef WIN32
-	setlocale(LC_ALL, ".OCP");
+			setlocale(LC_ALL, di.coding);
 #endif
-	DecodeUnicode(src,dest);
+			DecodeUnicode(src,dest);
+		}
+	} else {
 #ifdef WIN32
-	setlocale(LC_ALL, ".ACP");
+		setlocale(LC_ALL, ".OCP");
 #endif
-
+		DecodeUnicode(src,dest);
+#ifdef WIN32
+		setlocale(LC_ALL, ".ACP");
+#endif
+	}
 	return dest;
 }
 
@@ -1309,20 +1321,21 @@ int DecodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
 	int 		i, len, pos = 0, outpos = 0;
 
 	while(1) {
-		if (pos == Length) break;
+		if (pos >= Length) break;
 		len = 0;
 	        for(i = 0; i < 4; i++) {
-        		v = 0;
+	       		v = 0;
 			while(v == 0) {
-				if (pos == Length) break;
+				if (pos >= Length) break;
 		                v = (unsigned char) Input[pos++];
                 		v = (unsigned char) ((v < 43 || v > 122) ? 0 : cd64[ v - 43 ]);
 				if (v) v = (unsigned char) ((v == '$') ? 0 : v - 61);
 			}
-			in[i] = 0;
 			if(pos<=Length) {
-				len++;
-				if (v) in[i] = (unsigned char) (v - 1);
+				if (v) {
+					len++;
+					in[i] = (unsigned char) (v - 1);
+				}
 			}
 		}
 		if (len) {

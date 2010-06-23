@@ -36,7 +36,7 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 	while (backup->PhonePhonebook[i]!=NULL) {
 		for (j=0;j<backup->PhonePhonebook[i]->EntriesNum;j++) {
 			switch (backup->PhonePhonebook[i]->Entries[j].EntryType) {
-			case PBK_Name:
+			case PBK_Text_Name:
 				SaveLDIFText(file, "dn", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			default:
@@ -56,7 +56,7 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 			case PBK_Text_URL:
 				SaveLDIFText(file, "homeurl", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
-			case PBK_Name:
+			case PBK_Text_Name:
 				SaveLDIFText(file, "givenName", backup->PhonePhonebook[i]->Entries[j].Text);
 				SaveLDIFText(file, "cn", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
@@ -195,7 +195,7 @@ static GSM_Error GSM_DecodeLDIFEntry(unsigned char *Buffer, int *Pos, GSM_Memory
 			}
 			if (ReadLDIFText(Line, "givenName", Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Name;
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Name;
 				Pbk->EntriesNum++;
 			}
 			if (ReadLDIFText(Line, "telephoneNumber", Buff)) {

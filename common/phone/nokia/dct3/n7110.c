@@ -141,6 +141,10 @@ static GSM_Error N7110_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMac
 			CopyUnicodeString(Data->SMSFolders->Folder[j].Name,buffer);
 			smprintf(s, "%s\"\n",DecodeUnicodeString(buffer));
 			current=current+2+UnicodeLength(buffer)*2;
+			Data->SMSFolders->Folder[j].InboxFolder = false;
+			if (j==0) Data->SMSFolders->Folder[j].InboxFolder = true;
+			Data->SMSFolders->Folder[j].Memory = GMT_ME;
+			if (j==0 || j==1) Data->SMSFolders->Folder[j].InboxFolder = GMT_MT;
 		}
 		return GE_NONE;
 	case 0x7C:
@@ -374,6 +378,22 @@ static GSM_Error N7110_PrivGetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 			sms->SMS[i].InboxFolder = true;
 			if (folderid/0x08 != 0x01) sms->SMS[i].InboxFolder = false;
 			CopyUnicodeString(sms->SMS[i].Name,sms->SMS[0].Name);
+			sms->SMS[i].Memory = GMT_ME;
+			if (folderid/0x08 == 0x01 || folderid/0x08 == 0x02) {
+				sms->SMS[i].Memory = GMT_MT;
+				if (folderid/0x08 == 0x01) { /* Inbox */
+					if (sms->SMS[i].State == GSM_Sent)   sms->SMS[i].Memory = GMT_ME;
+					if (sms->SMS[i].State == GSM_UnSent) sms->SMS[i].Memory = GMT_ME;
+					if (sms->SMS[i].State == GSM_Read)   sms->SMS[i].Memory = GMT_SM;
+					if (sms->SMS[i].State == GSM_UnRead) sms->SMS[i].Memory = GMT_SM;
+				}
+				if (folderid/0x08 == 0x02) { /* Outbox */
+					if (sms->SMS[i].State == GSM_Sent)   sms->SMS[i].Memory = GMT_SM;
+					if (sms->SMS[i].State == GSM_UnSent) sms->SMS[i].Memory = GMT_SM;
+					if (sms->SMS[i].State == GSM_Read)   sms->SMS[i].Memory = GMT_ME;
+					if (sms->SMS[i].State == GSM_UnRead) sms->SMS[i].Memory = GMT_ME;
+				}
+			}
 		}
 	}
 	return error;
@@ -683,8 +703,13 @@ static GSM_Error N7110_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 	case 0x05:
 		smprintf(s, "SMS message saving status\n");
 		smprintf(s, "Saved in folder %i at location %i\n",msg.Buffer[4], msg.Buffer[5]*256+msg.Buffer[6]);
-		N7110_SetSMSLocation(s, Data->SaveSMSMessage,msg.Buffer[4],msg.Buffer[5]*256+msg.Buffer[6]);
-		Data->SaveSMSMessage->Folder	= msg.Buffer[4] / 0x08;
+		if (msg.Buffer[4] == 0xf8) {
+			N7110_SetSMSLocation(s, Data->SaveSMSMessage,0x08,msg.Buffer[5]*256+msg.Buffer[6]);
+			Data->SaveSMSMessage->Folder = 0x01;
+		} else {
+			N7110_SetSMSLocation(s, Data->SaveSMSMessage,msg.Buffer[4],msg.Buffer[5]*256+msg.Buffer[6]);
+			Data->SaveSMSMessage->Folder = msg.Buffer[4] / 0x08;
+		}
 		return GE_NONE;
 	case 0x06:
 		smprintf(s, "SMS message saving status\n");
@@ -699,8 +724,13 @@ static GSM_Error N7110_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 	case 0x84:
 		smprintf(s, "Name for SMS changed OK to \"%s\"\n",DecodeUnicodeString(msg.Buffer+7));
 		smprintf(s, "Saved in folder %i at location %i\n",msg.Buffer[4], msg.Buffer[5]*256+msg.Buffer[6]);
-		N7110_SetSMSLocation(s, Data->SaveSMSMessage,msg.Buffer[4],msg.Buffer[5]*256+msg.Buffer[6]);
-		Data->SaveSMSMessage->Folder	= msg.Buffer[4] / 0x08;
+		if (msg.Buffer[4] == 0xf8) {
+			N7110_SetSMSLocation(s, Data->SaveSMSMessage,0x08,msg.Buffer[5]*256+msg.Buffer[6]);
+			Data->SaveSMSMessage->Folder = 0x01;
+		} else {
+			N7110_SetSMSLocation(s, Data->SaveSMSMessage,msg.Buffer[4],msg.Buffer[5]*256+msg.Buffer[6]);
+			Data->SaveSMSMessage->Folder = msg.Buffer[4] / 0x08;
+		}
 		return GE_NONE;
 	}
 	return GE_UNKNOWNRESPONSE;

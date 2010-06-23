@@ -4,7 +4,7 @@ program Project1;
 uses
   Forms,
   Unit1 in 'Unit1.pas' {Form1},
-  Gammu in '../gammu.pas';
+  Gammu in '..\gammu.pas';
 
 {$R *.res}
 

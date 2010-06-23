@@ -6,6 +6,8 @@ VERSION		= @VERSION@
 # what is used to delete files, compile, install and find
 RM               = @RM@ -f
 MV               = @MV@ -f
+LN               = @LN@ -f
+ECHO             = @ECHO@
 CC               = @CC@
 CFLAGS           = @CFLAGS@
 LDLIBS           = @LDLIBS@
@@ -13,6 +15,8 @@ INSTALL          = @INSTALL@
 FIND             = @FIND@
 RPMBUILD         = @RPMBUILD@
 DOXYGEN          = @DOXYGEN@
+AR               = @AR@
+RANLIB           = @RANLIB@
 
 # where to install binary, documentation, man and shared library files
 # where is temporary directory and directory for making RPM

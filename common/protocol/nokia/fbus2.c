@@ -272,7 +272,12 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 
 				d->FramesToGo--;
 
-				FBUS2_SendAck(s, d->Msg.Type, ((unsigned char)(seq_num & 0x0f)));
+				if (d->Msg.Type != 0) {
+					/* do not ack debug trace, as this could generate a
+					 * (feedback loop) flood of which even Noah would be scared.
+					 */
+					FBUS2_SendAck(s, d->Msg.Type, ((unsigned char)(seq_num & 0x0f)));
+				}
 					
 				/* Finally dispatch if ready */
 				if (d->FramesToGo == 0) {

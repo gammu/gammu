@@ -303,6 +303,21 @@
 			<File
 				RelativePath="..\..\common\phone\at\sonyeric.c">
 			</File>
+			<File
+				RelativePath="..\depend\dct3trac\wmx-gsm.c">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\wmx-list.c">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\wmx-sim.c">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\wmx-util.c">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\wmx.c">
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -483,6 +498,36 @@
 			</File>
 			<File
 				RelativePath="..\sniff.h">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\type-cc.h">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\type-mm.h">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\type-rr.h">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\type-sms.h">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\type-ss.h">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\wmx-gsm.h">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\wmx-list.h">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\wmx-sim.h">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\wmx-util.h">
+			</File>
+			<File
+				RelativePath="..\depend\dct3trac\wmx.h">
 			</File>
 		</Filter>
 	</Files>

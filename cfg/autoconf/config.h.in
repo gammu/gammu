@@ -13,6 +13,8 @@
 #undef DEBUG
 #endif
 
+#undef ENABLE_LGPL
+
 /* ---------------------- Connections ---------------------------------- */
 
 /* MBUS2 over cable */

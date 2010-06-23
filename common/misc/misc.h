@@ -63,6 +63,7 @@ typedef struct {
 	Debug_Level	dl;
 	FILE		*df;
 	bool        	use_global;
+	char		*coding;
 } Debug_Info;
 
 extern Debug_Info	di;

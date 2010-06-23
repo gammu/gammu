@@ -16,6 +16,7 @@ connection = fbusblue
 #use_locking = yes
 #gammuloc = locfile
 #startinfo = yes
+#gammucoding = utf8
 
 [gammu1]
 
@@ -28,6 +29,7 @@ connection = fbusblue
 #use_locking = yes
 #gammuloc = locfile
 #startinfo = yes
+#gammucoding = utf8
 
 # -----------------------------------------------------------------------------
 # Now info about "Connection" parameter and connected with it port type
@@ -86,6 +88,8 @@ connection = fbusblue
 #                 | to see message on the phone screen or phone should enable
 #                 | light for a moment during starting connection. Phone
 #                 | WON'T beep during starting connection with this option.
+# GammuCoding     | forces using specified codepage (in win32 - for example
+#                 | "1250" will force CP1250) or UTF8 (in Linux - "utf8")
 # ----------------|------------------------------------------------------------
 # Logfile         | Use, when want to have logfile from communication.
 # Logformat       | What debug info and format should be used:

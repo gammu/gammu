@@ -14,7 +14,7 @@ dnl Version
 VERSION=`sed s@,@.@g VERSION | sed 's/\,0\,0$//'`
 AC_DEFINE_UNQUOTED(VERSION, "$VERSION")
 AC_SUBST(VERSION)
-VERSION_WIN=`cat VERSION`
+VERSION_WIN=`cat VERSION`,0
 AC_DEFINE_UNQUOTED(VERSION_WIN, "$VERSION_WIN")
 AC_SUBST(VERSION_WIN)
 
@@ -31,11 +31,15 @@ fi
 dnl Checks for programs.
 AC_PATH_PROG(RM, rm, no)
 AC_PATH_PROG(MV, mv, no)
+AC_PATH_PROG(LN, ln, no)
+AC_PATH_PROG(ECHO, echo, no)
 AC_PATH_PROG(INSTALL, install, no)
 AC_PATH_PROG(FIND, find, no)
 AC_PATH_PROG(RPMBUILD, rpmbuild)
 AC_PATH_PROG(RPMBUILD, rpm, no)
 AC_PATH_PROG(DOXYGEN, doxygen)
+AC_PATH_PROG(AR, ar)
+AC_PATH_PROG(RANLIB, ranlib)
 
 
 dnl Checks for library functions.
@@ -105,7 +109,7 @@ AC_SUBST(DOC_DIR)
 dnl locales directory
 LOCALE_DIR="$datadir/gammu"
 AC_ARG_WITH(localedir,
-	[  --with-localedir=DIR       Specifies the localisation directory],
+	[  --with-localedir=DIR    Specifies the localisation directory],
 	[ if test x$withval = xyes; then
 		AC_MSG_WARN(Usage is: --with-localedir=DIR)
 	  else
@@ -299,6 +303,10 @@ AC_ARG_ENABLE(blueobex,
 	  fi])	
 
 dnl Some general options
+AC_ARG_ENABLE(lgpl,
+	[  --enable-lgpl           Disable source with GNU GPL only license],
+	[AC_DEFINE(ENABLE_LGPL) lgpl="yes"],
+	[lgpl="no"])
 AC_ARG_ENABLE(debug,
 	[  --enable-debug          Compile with debug code],
 	[AC_DEFINE(DEBUG) debug="yes"],
@@ -373,8 +381,10 @@ AC_OUTPUT(Makefile.cfg
 	  ../../win32/dll/msvc6.mak/gammu.rc
 	  ../../win32/dll/msvc7.mak/gammu.rc)
 
+mv ../rpm/gammu.spec ../../
+
 dnl Writing info
-echo "
+cat <<EOT
   G A M M U (GNU All Mobiles Management Utilities)
   (c) 2002 - 2003 by Marcin Wiacek (www.mwiacek.com)
   Version $VERSION
@@ -396,6 +406,7 @@ echo "
   
   General options
   ---------------
+  LGPL license                                  - $lgpl
   Debug                                         - $debug
   CB messages                                   - $gsm_enable_cellbroadcast
   Backup functions                              - $gsm_enable_backup
@@ -407,13 +418,13 @@ echo "
   Alcatel                                       - $gsm_enable_alcatel
   Nokia MBUS2                                   - $gsm_enable_mbus2
   Nokia FBUS2                                   - $gsm_enable_fbus2
-  Nokia FBUS2 for DLR3 cable                    - $gsm_enable_fbus2dlr3 "
+  Nokia FBUS2 for DLR3 cable                    - $gsm_enable_fbus2dlr3
 dnl Add info about DKU5
-echo "  Nokia FBUS2 for Bluetooth legacy device       - $gsm_enable_fbus2blue
+  Nokia FBUS2 for Bluetooth legacy device       - $gsm_enable_fbus2blue
   Nokia FBUS2 for direct infrared device        - $gsm_enable_fbus2irda
-  Nokia PHONET FBUS for Bluetooth legacy device - $gsm_enable_phonetblue "
+  Nokia PHONET FBUS for Bluetooth legacy device - $gsm_enable_phonetblue
 dnl SYMBIAN with m-router for Bluetooth legacy    - $gsm_enable_mrouterblue
-echo "
+
   Phone protocols with infrared stack
   -----------------------------------
   AT commands                                   - $gsm_enable_irdaat
@@ -439,14 +450,16 @@ echo "
   Nokia 92xx                                    - $gsm_enable_nokia9210
            Incoming call/SMS info               - $gsm_enable_71_92incominginfo
   Nokia 3650                                    - $gsm_enable_nokia3650
-  OBEX (Nokia, SonyEricsson, other)             - $gsm_enable_obexgen "
+  OBEX (Nokia, SonyEricsson, other)             - $gsm_enable_obexgen
 dnl  Symbian with m-router (3650, other)           - $gsm_enable_mroutergen
-echo "
+
   Please use now:
   
-  * "make"            to make static version of Gammu
-  * "make install"    to install Gammu in your system (root)
-  * "make installlib" to install Gammu with library in your system (root)
-  * "make makerpm"    to make RPM package
-  * "make makedeb"    to make Debian package
-"
+  * "make"                  to make static version of Gammu
+  * "make shared"           to make shared version of Gammu
+  * "make install"          to install Gammu in your system (root)
+  * "make installshared"    to install Gammu with library in your system (root)
+  * "make rpm"              to make RPM package
+  * "make deb"              to make Debian package
+
+EOT

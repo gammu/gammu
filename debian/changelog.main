@@ -1,0 +1,27 @@
+gammu (0.89-1) unstable; urgency=low
+
+  * Fixed version parsing.
+
+ -- Michal Cihar <michal@cihar.com>  Mon, 10 Nov 2003 21:10:11 +0100
+
+gammu (0.88-1) unstable; urgency=low
+
+  * Fixed docs installation.
+
+ -- Michal Cihar <michal@cihar.com>  Mon,  3 Nov 2003 12:08:45 +0100
+
+gammu (0.85-1) unstable; urgency=low
+
+  * Split to binary, library and devel packages.
+  * Corrected version reading for local builds.
+  * utf-8 changelog.
+  * Bug reports are sent to me now.
+
+ -- Michal Cihar <michal@cihar.com>  Sun,  5 Oct 2003 12:26:42 +0200
+ 
+gammu (0.65-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Michal Cihar <michal@cihar.com>  Mon, 30 Dec 2002 23:29:42 +0100
+

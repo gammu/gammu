@@ -76,7 +76,7 @@ unsigned char *GetMsg (CFG_Header *cfg, unsigned char *default_string)
 				EncodeUnicode (buffer, buff, 5);
 			        retval = CFG_Get(cfg, buff2, buffer, true);
 			        if (retval) {
-					DecodeUnicode(retval+2,buff);
+					sprintf(buff,"%s",DecodeUnicodeConsole(retval+2));
 					buff[strlen(buff)-1] = 0;
 					/* Set all \n to 0x0a */
 					memset(def_str,0,sizeof(def_str));

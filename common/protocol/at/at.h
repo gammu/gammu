@@ -11,6 +11,7 @@ typedef struct {
 	int			linestartnum;
 
 	bool			EditMode;	/* wait for modem answer or not */
+	bool			FastWrite;
 } GSM_Protocol_ATData;
 
 #ifndef GSM_USED_SERIALDEVICE

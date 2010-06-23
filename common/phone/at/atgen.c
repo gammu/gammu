@@ -213,54 +213,6 @@ void ATGEN_DecodeDateTime(GSM_DateTime *dt, unsigned char *input)
 	}
 }
 
-GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
-{
-	GSM_Phone_ATGENData     *Priv = &s->Phone.Data.Priv.ATGEN;
-	GSM_Error               error;
-    	char                    buff[2];
-
-	Priv->SMSMode			= 0;
-	Priv->Manufacturer		= 0;
-	Priv->PhoneSMSMemory		= 0;
-	Priv->SMSMemory			= 0;
-	Priv->PBKMemory			= 0;
-	Priv->PBKSBNR			= 0;
-	Priv->PBKCharset		= 0;
- 	Priv->UCS2CharsetFailed		= false;
- 	Priv->NonUCS2CharsetFailed	= false;
-	Priv->PBKMemories[0]		= 0;
-	Priv->FirstCalendarPos		= 0;
-	Priv->NextMemoryEntry		= 0;
-	Priv->file.Used 		= 0;
-	Priv->file.Buffer 		= NULL;
-	Priv->OBEX			= false;
-
-	Priv->ErrorText			= NULL;
-
-	if (s->ConnectionType != GCT_IRDAAT && s->ConnectionType != GCT_BLUEAT) {
-		/* We try to escape AT+CMGS mode, at least Siemens M20
-		 * then needs to get some rest
-		 */
-		smprintf(s, "Escaping SMS mode\n");
-		error = s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
-		if (error!=GE_NONE) return error;
-
-	    	/* Grab any possible garbage */
-	    	while (s->Device.Functions->ReadDevice(s, buff, 2) > 0) my_sleep(10);
-	}
-
-    	/* When some phones (Alcatel BE5) is first time connected, it needs extra
-     	 * time to react, sending just AT wakes up the phone and it then can react
-     	 * to ATE1. We don't need to check whether this fails as it is just to
-     	 * wake up the phone and does nothing.
-     	 */
-    	smprintf(s, "Sending simple AT command to wake up some devices\n");
-	GSM_WaitFor (s, "AT\r", 3, 0x00, 2, ID_IncomingFrame);
-
-	smprintf(s, "Enabling echo\n");
-	return GSM_WaitFor (s, "ATE1\r", 5, 0x00, 3, ID_EnableEcho);
-}
-
 GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
@@ -520,6 +472,64 @@ GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 			smprintf(s, "[Firmware version - \"%s\"]\n",s->Phone.Data.Version);
 		}
 	}
+	return error;
+}
+
+GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData     *Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error               error;
+    	char                    buff[2];
+
+	Priv->SMSMode			= 0;
+	Priv->Manufacturer		= 0;
+	Priv->PhoneSMSMemory		= 0;
+	Priv->SMSMemory			= 0;
+	Priv->PBKMemory			= 0;
+	Priv->PBKSBNR			= 0;
+	Priv->PBKCharset		= 0;
+ 	Priv->UCS2CharsetFailed		= false;
+ 	Priv->NonUCS2CharsetFailed	= false;
+	Priv->PBKMemories[0]		= 0;
+	Priv->FirstCalendarPos		= 0;
+	Priv->NextMemoryEntry		= 0;
+	Priv->file.Used 		= 0;
+	Priv->file.Buffer 		= NULL;
+	Priv->OBEX			= false;
+
+	Priv->ErrorText			= NULL;
+
+	if (s->ConnectionType != GCT_IRDAAT && s->ConnectionType != GCT_BLUEAT) {
+		/* We try to escape AT+CMGS mode, at least Siemens M20
+		 * then needs to get some rest
+		 */
+		smprintf(s, "Escaping SMS mode\n");
+		error = s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
+		if (error!=GE_NONE) return error;
+
+	    	/* Grab any possible garbage */
+	    	while (s->Device.Functions->ReadDevice(s, buff, 2) > 0) my_sleep(10);
+	}
+
+    	/* When some phones (Alcatel BE5) is first time connected, it needs extra
+     	 * time to react, sending just AT wakes up the phone and it then can react
+     	 * to ATE1. We don't need to check whether this fails as it is just to
+     	 * wake up the phone and does nothing.
+     	 */
+    	smprintf(s, "Sending simple AT command to wake up some devices\n");
+	GSM_WaitFor (s, "AT\r", 3, 0x00, 2, ID_IncomingFrame);
+
+	smprintf(s, "Enabling echo\n");
+	error = GSM_WaitFor (s, "ATE1\r", 5, 0x00, 3, ID_EnableEcho);
+	if (error != GE_NONE) return error;
+
+	error = ATGEN_GetModel(s);
+	if (error != GE_NONE) return error;
+
+	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
+		s->Protocol.Data.AT.FastWrite = true;
+	}
+
 	return error;
 }
 
@@ -1014,6 +1024,8 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 		smsfolder = sms->SMS[0].Folder;
 		ATGEN_SetSMSLocation(s, &sms->SMS[0], folderid, location);
 		sms->SMS[0].Folder = smsfolder;
+		sms->SMS[0].Memory = GMT_SM;
+		if (smsfolder > 2) sms->SMS[0].Memory = GMT_ME;
 	}
 	return error;
 }
@@ -2034,7 +2046,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
  		smprintf(s, "Name text: %s\n",buffer);
  		Memory->EntriesNum++;
- 		Memory->Entries[1].EntryType=PBK_Name;
+ 		Memory->Entries[1].EntryType=PBK_Text_Name;
 		switch (Priv->PBKCharset) {
 		case AT_PBK_HEX:
 			DecodeHexBin(buffer2,buffer+1,strlen(buffer)-2);
@@ -2417,6 +2429,10 @@ GSM_Error ATGEN_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 		folders->Number=4;
 		CopyUnicodeString(folders->Folder[2].Name,folders->Folder[0].Name);
 		CopyUnicodeString(folders->Folder[3].Name,folders->Folder[1].Name);
+		folders->Folder[2].Memory 	= GMT_ME;
+		folders->Folder[3].Memory 	= GMT_ME;
+		folders->Folder[2].InboxFolder 	= true;
+		folders->Folder[3].InboxFolder 	= false;
 	}
 	return GE_NONE;
 }
@@ -2684,16 +2700,6 @@ GSM_Error ATGEN_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *featu
 	return GSM_WaitFor (s, "AT+CIND?\r",9, 0x00, 4, ID_GetDisplayStatus);
 }
 
-GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
-{
-	return GE_NOTSUPPORTED;
-
-	s->Phone.Data.PressKey = true;
-	smprintf(s, "Pressing key\n");
-	/* FIXME: Is this okay? */
-	return GSM_WaitFor (s, "AT+CKPD=\"1\"\r", 12, 0x00, 4, ID_PressKey);
-}
-
 GSM_Error ATGEN_IncomingSMSCInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	return GE_NONE;
@@ -2807,7 +2813,7 @@ static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *N
 	return GE_NOTSUPPORTED;
 }
 
-static GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
+GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
@@ -2833,6 +2839,44 @@ GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return GE_NOTSUPPORTED;
 }
 
+GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
+{
+	unsigned char Frame[] = "AT+CKPD=\"?\"\r";
+
+	return GE_NOTIMPLEMENTED;
+
+	if (Press) {
+		switch (Key) {
+			case GSM_KEY_1 			: Frame[9] = '1'; break;
+			case GSM_KEY_2			: Frame[9] = '2'; break;
+			case GSM_KEY_3			: Frame[9] = '3'; break;
+			case GSM_KEY_4			: Frame[9] = '4'; break;
+			case GSM_KEY_5			: Frame[9] = '5'; break;
+			case GSM_KEY_6			: Frame[9] = '6'; break;
+			case GSM_KEY_7			: Frame[9] = '7'; break;
+			case GSM_KEY_8			: Frame[9] = '8'; break;
+			case GSM_KEY_9			: Frame[9] = '9'; break;
+			case GSM_KEY_0			: Frame[9] = '0'; break;
+			case GSM_KEY_HASH		: Frame[9] = '#'; break;
+			case GSM_KEY_ASTERISK		: Frame[9] = '*'; break;
+			case GSM_KEY_POWER		: return GE_NOTSUPPORTED;
+			case GSM_KEY_GREEN		: Frame[9] = 'S'; break;
+			case GSM_KEY_RED		: Frame[9] = 'E'; break;
+			case GSM_KEY_INCREASEVOLUME	: Frame[9] = 'U'; break;
+			case GSM_KEY_DECREASEVOLUME	: Frame[9] = 'D'; break;
+			case GSM_KEY_UP			: Frame[9] = '^'; break;
+			case GSM_KEY_DOWN		: Frame[9] = 'V'; break;
+			case GSM_KEY_MENU		: Frame[9] = 'F'; break;
+			case GSM_KEY_NAMES		: Frame[9] = 'C'; break;
+			default				: return GE_NOTSUPPORTED;
+		}
+		smprintf(s, "Pressing key\n");
+		return GSM_WaitFor (s, Frame, 12, 0x00, 4, ID_PressKey);
+	} else {
+		return GE_NONE;
+	}
+}
+
 GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyOK,			"OK"			,0x00,0x00,ID_IncomingFrame	 },
 
@@ -2856,6 +2900,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetDateTime_Alarm,	"AT+CCLK?"		,0x00,0x00,ID_GetDateTime	 },
 {ATGEN_ReplyGetDateTime_Alarm,	"AT+CALA?"		,0x00,0x00,ID_GetAlarm		 },
 {ATGEN_GenericReply,		"AT+CCLK="		,0x00,0x00,ID_SetDateTime	 },
+{ATGEN_GenericReply,		"AT+CKPD="		,0x00,0x00,ID_PressKey		 },
 {ATGEN_ReplyGetSMSC,		"AT+CSCA?"		,0x00,0x00,ID_GetSMSC		 },
 {ATGEN_GenericReply,		"AT+CREG=2"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_ReplyIncomingLAC_CID,	"\x0D\x0A+CREG?"	,0x00,0x00,ID_IncomingFrame	 },

@@ -36,6 +36,10 @@ GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 	folders->Number=2;
 	EncodeUnicode(folders->Folder[0].Name,GetMsg(s->msg,"Inbox"),strlen(GetMsg(s->msg,"Inbox")));
 	EncodeUnicode(folders->Folder[1].Name,GetMsg(s->msg,"Outbox"),strlen(GetMsg(s->msg,"Outbox")));
+	folders->Folder[0].InboxFolder = true;
+	folders->Folder[1].InboxFolder = false;
+	folders->Folder[0].Memory      = GMT_SM;
+	folders->Folder[1].Memory      = GMT_SM;
 	return GE_NONE;
 }
 

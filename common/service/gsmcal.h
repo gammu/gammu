@@ -5,74 +5,243 @@
 
 /* ---------------------------- calendar ----------------------------------- */
 
-#define GSM_CALENDAR_ENTRIES		16
+#define GSM_CALENDAR_ENTRIES	    	16
 #define MAX_CALENDAR_TEXT_LENGTH	256 /* In 6310 max. 256 chars */
 
-/* Define enums for Calendar Note types */
+/**
+ * Define enums for Calendar Note types.
+ */
 typedef enum {
-	GCN_REMINDER=1, /* Reminder or Date 	     */
-	GCN_CALL,       /* Call 		     */
-	GCN_MEETING,    /* Meeting 		     */
-	GCN_BIRTHDAY,   /* Birthday or Anniversary or Special Occasion */
-	GCN_MEMO,       /* Memo or Miscellaneous     */
+	/**
+	 * Reminder or Date
+	 */
+	GCN_REMINDER=1,
+	/**
+	 * Call
+	 */
+	GCN_CALL,
+	/**
+	 * Meeting
+	 */
+	GCN_MEETING,
+	/**
+	 * Birthday or Anniversary or Special Occasion
+	 */
+	GCN_BIRTHDAY,
+	/**
+	 * Memo or Miscellaneous
+	 */
+	GCN_MEMO,
+	/**
+	 * Travel
+	 */
 	GCN_TRAVEL,
+	/**
+	 * Vacation
+	 */
 	GCN_VACATION,
-	GCN_T_ATHL,     /* Training - Athletism      */
-        GCN_T_BALL,     /* Training - Ball Games     */
-        GCN_T_CYCL,     /* Training - Cycling        */
-        GCN_T_BUDO,     /* Training - Budo           */
-        GCN_T_DANC,     /* Training - Dance          */
-        GCN_T_EXTR,     /* Training - Extreme Sports */
-        GCN_T_FOOT,     /* Training - Fotball        */
-        GCN_T_GOLF,     /* Training - Golf           */
-        GCN_T_GYM,      /* Training - Gym            */
-        GCN_T_HORS,     /* Training - Horse Race     */
-        GCN_T_HOCK,     /* Training - Hockey         */
-        GCN_T_RACE,     /* Training - Races          */
-        GCN_T_RUGB,     /* Training - Rugby          */
-        GCN_T_SAIL,     /* Training - Sailing        */
-        GCN_T_STRE,     /* Training - Street Games   */
-        GCN_T_SWIM,     /* Training - Swimming       */
-        GCN_T_TENN,     /* Training - Tennis         */
-        GCN_T_TRAV,     /* Training - Travels        */
-        GCN_T_WINT,     /* Training - Winter Games   */
-
+	/**
+	 * Training - Athletism
+	 */
+	GCN_T_ATHL,
+	/**
+	 * Training - Ball Games
+	 */
+	GCN_T_BALL,
+	/**
+	 * Training - Cycling
+	 */
+	GCN_T_CYCL,
+	/**
+	 * Training - Budo
+	 */
+	GCN_T_BUDO,
+	/**
+	 * Training - Dance
+	 */
+	GCN_T_DANC,
+	/**
+	 * Training - Extreme Sports
+	 */
+	GCN_T_EXTR,
+	/**
+	 * Training - Football
+	 */
+	GCN_T_FOOT,
+	/**
+	 * Training - Golf
+	 */
+	GCN_T_GOLF,
+	/**
+	 * Training - Gym
+	 */
+	GCN_T_GYM,
+	/**
+	 * Training - Horse Race
+	 */
+	GCN_T_HORS,
+	/**
+	 * Training - Hockey
+	 */
+	GCN_T_HOCK,
+	/**
+	 * Training - Races
+	 */
+	GCN_T_RACE,
+	/**
+	 * Training - Rugby
+	 */
+	GCN_T_RUGB,
+	/**
+	 * Training - Sailing
+	 */
+	GCN_T_SAIL,
+	/**
+	 * Training - Street Games
+	 */
+	GCN_T_STRE,
+	/**
+	 * Training - Swimming
+	 */
+	GCN_T_SWIM,
+	/**
+	 * Training - Tennis
+	 */
+	GCN_T_TENN,
+	/**
+	 * Training - Travels
+	 */
+	GCN_T_TRAV,
+	/**
+	 * Training - Winter Games
+	 */
+	GCN_T_WINT,
+	/**
+	 * Alarm
+	 */
 	GCN_ALARM,
+	/**
+	 * Alarm repeating each day.
+	 */
 	GCN_DAILY_ALARM
 } GSM_CalendarNoteType;
 
+/**
+ * One value of calendar event.
+ */
 typedef enum {
+	/**
+	 * Date and time of event start.
+	 */
 	CAL_START_DATETIME = 1,
+	/**
+	 * Date and time of event end.
+	 */
 	CAL_END_DATETIME,
+	/**
+	 * Alarm date and time.
+	 */
 	CAL_ALARM_DATETIME,
+	/**
+	 * Date and time of silent alarm.
+	 */
 	CAL_SILENT_ALARM_DATETIME,
+	/**
+	 * Recurrance.
+	 */
 	CAL_RECURRANCE,
+	/**
+	 * Text.
+	 */
 	CAL_TEXT,
+	/**
+	 * Location.
+	 */
 	CAL_LOCATION,
+	/**
+	 * Phone number.
+	 */
 	CAL_PHONE,
-	CAL_PRIVATE,
+	/**
+	 * Whether this entry is private.
+	 */
+	 CAL_PRIVATE,
+	/**
+	 * Related contact id.
+	 */
 	CAL_CONTACTID,
+	/**
+	 * Repeat each x'th day of week.
+	 */
 	CAL_REPEAT_DAYOFWEEK,
+	/**
+	 * Repeat each x'th day of month.
+	 */
 	CAL_REPEAT_DAY,
+	/**
+	 * Repeat x'th week of month.
+	 */
 	CAL_REPEAT_WEEKOFMONTH,
+	/**
+	 * Repeat x'th month.
+	 */
 	CAL_REPEAT_MONTH,
+	/**
+	 * Repeating frequency.
+	 */
 	CAL_REPEAT_FREQUENCY,
+	/**
+	 * Repeating start.
+	 */
 	CAL_REPEAT_STARTDATE,
+	/**
+	 * Repeating end.
+	 */
 	CAL_REPEAT_STOPDATE,
 } GSM_CalendarType;
 
+/**
+ * One value of calendar event.
+ */
 typedef struct {
-	GSM_CalendarType	EntryType;
-	unsigned char		Text[(MAX_CALENDAR_TEXT_LENGTH + 1)*2];
-	GSM_DateTime		Date;
-	unsigned int		Number;
+	/**
+	 * Type of value.
+	 */
+	 GSM_CalendarType	EntryType;
+	/**
+	 * Text of value, if applicable.
+	 */
+	 unsigned char	   	Text[(MAX_CALENDAR_TEXT_LENGTH + 1)*2];
+	/**
+	 * Date and time of value, if applicable.
+	 */
+	 GSM_DateTime	    	Date;
+	/**
+	 * Number of value, if applicable.
+	 */
+	 unsigned int	    	Number;
 } GSM_SubCalendarEntry;
 
+/**
+ * Calendar note values.
+ */
 typedef struct {
-	GSM_CalendarNoteType	Type;
-	int 			Location;           /* Location */
-	int 			EntriesNum;         /* Number of entries */
-	GSM_SubCalendarEntry   	Entries[GSM_CALENDAR_ENTRIES];
+	/**
+	 * Type of calendar note.
+	 */
+	GSM_CalendarNoteType    Type;
+	/**
+	 * Location in memory.
+	 */
+	int		     	Location;
+	/**
+	 * Number of entries.
+	 */
+	int		     	EntriesNum;
+	/**
+	 * Values of entries.
+	 */
+	GSM_SubCalendarEntry    Entries[GSM_CALENDAR_ENTRIES];
 } GSM_CalendarEntry;
 
 void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime, int *Location);
@@ -88,8 +257,8 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note);
 
 typedef struct {
-	int			StartDay;   // Monday = 1, Tuesday = 2,...
-	int			AutoDelete; // 0 = no delete, 1 = after day,...
+	int		     StartDay;   // Monday = 1, Tuesday = 2,...
+	int		     AutoDelete; // 0 = no delete, 1 = after day,...
 } GSM_CalendarSettings;
 
 /**
@@ -99,45 +268,109 @@ typedef struct {
 	/**
 	 * Number of used positions.
 	 */
-	int			Used;
+	int		     Used;
 } GSM_CalendarStatus;
 
 
 /* ------------------------------ to-do ------------------------------------ */
 
 #define GSM_TODO_ENTRIES		7
-#define MAX_TODO_TEXT_LENGTH    	50 /* Alcatel BE5 50 chars */
+#define MAX_TODO_TEXT_LENGTH	    	50 /* Alcatel BE5 50 chars */
 
+/**
+ * Types of to do values. In parenthesis is member of @ref GSM_SubToDoEntry,
+ * where value is stored.
+ */
 typedef enum {
+	/**
+	 * Due date. (Date)
+	 */
 	TODO_END_DATETIME = 1,
-    	TODO_COMPLETED,
+	/**
+	 * Whether is completed. (Number)
+	 */
+	TODO_COMPLETED,
+	/**
+	 * When should alarm be fired (Date).
+	 */
 	TODO_ALARM_DATETIME,
+	/**
+	 * When should silent alarm be fired (Date).
+	 */
 	TODO_SILENT_ALARM_DATETIME,
+	/**
+	 * Text of to do (Text).
+	 */
 	TODO_TEXT,
-    	TODO_PRIVATE,
-    	TODO_CATEGORY,
-    	TODO_CONTACTID,
+	/**
+	 * Whether entry is private (Number).
+	 */
+	TODO_PRIVATE,
+	/**
+	 * Category of entry (Number).
+	 */
+	TODO_CATEGORY,
+	/**
+	 * Related contact ID (Number).
+	 */
+	TODO_CONTACTID,
+	/**
+	 * Number to call (Text).
+	 */
 	TODO_PHONE
 } GSM_ToDoType;
 
+/**
+ * Priority of to do.
+ */
 typedef enum {
 	GSM_Priority_High = 1,
 	GSM_Priority_Medium,
 	GSM_Priority_Low
 } GSM_ToDo_Priority;
 
+/**
+ * Value of to do entry.
+ */
 typedef struct {
-	GSM_ToDoType	EntryType;
-	unsigned char	Text[(MAX_TODO_TEXT_LENGTH + 1)*2];
-	GSM_DateTime	Date;
-	unsigned int	Number;
+	/**
+	 * Type of entry.
+	 */
+	GSM_ToDoType    EntryType;
+	/**
+	 * Text of value, if appropriate, see @ref GSM_ToDoType.
+	 */
+	unsigned char   Text[(MAX_TODO_TEXT_LENGTH + 1)*2];
+	/**
+	 * Date of value, if appropriate, see @ref GSM_ToDoType.
+	 */
+	GSM_DateTime    Date;
+	/**
+	 * Number of value, if appropriate, see @ref GSM_ToDoType.
+	 */
+	unsigned int    Number;
 } GSM_SubToDoEntry;
 
+/**
+ * To do entry.
+ */
 typedef struct {
-	GSM_ToDo_Priority	Priority;
-	int 			Location;           /* Location */
-	int 			EntriesNum;         /* Number of entries */
-	GSM_SubToDoEntry   	Entries[GSM_TODO_ENTRIES];
+	/**
+	 * Priority of entry.
+	 */
+	GSM_ToDo_Priority       Priority;
+	/**
+	 * Location in memory.
+	 */
+	int		     	Location;
+	/**
+	 * Number of entries.
+	 */
+	int		     	EntriesNum;
+	/**
+	 * Values of current entry.
+	 */
+	GSM_SubToDoEntry	Entries[GSM_TODO_ENTRIES];
 } GSM_ToDoEntry;
 
 void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, int *Alarm, int *Completed, int *EndTime, int *Phone);
@@ -149,26 +382,47 @@ typedef enum {
 
 GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version);
 
+/**
+ * Status of to do entries.
+ */
 typedef struct {
-	int		Used;		/* Number of used positions */
+	/**
+	 * Number of used positions.
+	 */
+	int	     Used;
 } GSM_ToDoStatus;
 
 /* --------------------------- note ---------------------------------------- */
 
 typedef struct {
-	int		Location;
-	char 		Text[100];
+	int	     Location;
+	char	     Text[100];
 } GSM_NoteEntry;
 
 GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *Note);
 
 /* --------------------------- alarm --------------------------------------- */
 
+/**
+ * Alarm values.
+ */
 typedef struct {
-	int		Location;
-	GSM_DateTime	DateTime;
-	bool		Repeating;
-	char		Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
+	/**
+	 * Location where it is stored.
+	 */
+	int	     	Location;
+	/**
+	 * Date and time of alarm.
+	 */
+	GSM_DateTime    DateTime;
+	/**
+	 * Whether it repeats each day.
+	 */
+	bool	    	Repeating;
+	/**
+	 * Text that is shown on display.
+	 */
+	char	    	Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
 } GSM_Alarm;
 
 /* --------------------------- calendar & todo ----------------------------- */

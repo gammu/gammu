@@ -186,6 +186,8 @@ GSM_Network GSM_Networks[] = {
 	{ "244 03", "Telia City (Finland)" },
 	{ "244 05", "Radiolinja" },
 	{ "244 09", "Finnet" },
+        { "244 12", "DNA (FI2G)" },
+        { "244 14", "Alands Mobiltelefon" },
 	{ "244 91", "Sonera" },
 	{ "246 01", "OMNITEL" },
 	{ "246 02", "Bite GSM" },

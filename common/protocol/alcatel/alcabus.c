@@ -16,8 +16,9 @@
 static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned char *data, int len, unsigned char type)
 {
 	GSM_Protocol_ALCABUSData 	*d = &s->Protocol.Data.ALCABUS;
-	static unsigned char 		buffer[1024];
-	static int 			size = 0;
+	unsigned char	 		buffer[1024];
+	int				size = 0;
+	int				sent = 0;
 	int 				i = 0, checksum = 0;
 
 	if ((type == 0) && (len == 0)) return GE_NONE;
@@ -72,13 +73,16 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned char *data,
 
 	GSM_DumpMessageLevel2(s, buffer, size, type);
 	GSM_DumpMessageLevel3(s, buffer, size, type);
-	for (i=0;i<size;i++) {
-		if (s->Device.Functions->WriteDevice(s,buffer+i,1)!=1) return GE_DEVICEWRITEERROR;
+	while (sent != size ) {
+		if ((i = s->Device.Functions->WriteDevice(s,buffer + sent, size - sent)) == 0) {
+			return GE_DEVICEWRITEERROR;
+		}
+		sent += i;
 	}
 
 	if (type == ALCATEL_CONNECT || type == ALCATEL_DISCONNECT) {
 		/* For connect and disconnect we need a bit larger delay */
-		my_sleep(10);
+//		my_sleep(10);
 		while (d->busy) {
 				GSM_ReadDevice(s,true);
 				my_sleep(1);

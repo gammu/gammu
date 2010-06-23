@@ -7,4 +7,4 @@ Name: gammu
 Description: Gammu library
 Version: @VERSION@
 Libs: -L${libdir} -lGammu
-Cflags: -I${includedir}
+Cflags: -I${includedir}/gammu

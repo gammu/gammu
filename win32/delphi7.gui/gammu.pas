@@ -177,6 +177,7 @@ type	GSM_Error = (
 		UDH		 : GSM_UDHHeader;       // User Data Header
 		Folder		 : integer;             // Inbox or Outbox message
 		InboxFolder	 : LongBool;		// true, when sms is from inbox
+		Memory		 : integer;
 		Location	 : integer;             // location of sms in sim memory (for example)
 		Length		 : integer;		// Length of the SMS message.
                                                         // for 8 bit sms number of 8 bit chars

@@ -219,28 +219,36 @@ bool ReadVCALText(char *Buffer, char *Start, char *Value)
 	strcat(buff,":");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		EncodeUnicode(Value,Buffer+strlen(Start)+1,strlen(Buffer)-(strlen(Start)+1));
-		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
+		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
+		return true;
+	}
+	/* SE T68i */
+	strcpy(buff,Start);
+	strcat(buff,";ENCODING=QUOTED-PRINTABLE:");
+	if (!strncmp(Buffer,buff,strlen(buff))) {
+		DecodeUTF8QuotedPrintable(Value,Buffer+strlen(Start)+27,strlen(Buffer)-(strlen(Start)+27));
+		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
 		return true;
 	}
 	strcpy(buff,Start);
 	strcat(buff,";CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		DecodeUTF8QuotedPrintable(Value,Buffer+strlen(Start)+41,strlen(Buffer)-(strlen(Start)+41));
-		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
+		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
 		return true;
 	}
 	strcpy(buff,Start);
 	strcat(buff,";CHARSET=UTF-8:");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		DecodeUTF8(Value,Buffer+strlen(Start)+15,strlen(Buffer)-(strlen(Start)+15));
-		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
+		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
 		return true;
 	}
 	strcpy(buff,Start);
 	strcat(buff,";CHARSET=UTF-7:");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		DecodeUTF7(Value,Buffer+strlen(Start)+15,strlen(Buffer)-(strlen(Start)+15));
-		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeString2(Value));
+		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
 		return true;
 	}
 	return false;
