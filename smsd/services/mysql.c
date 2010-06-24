@@ -138,30 +138,47 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 	return ERR_NONE;
 }
 
-static GSM_Error SMSDMySQL_Query_Real(GSM_SMSDConfig *Config, const char *query, int retry)
+static GSM_Error SMSDMySQL_Check_Reconnect(GSM_SMSDConfig *Config, int retry)
 {
 	int mysql_err;
+	GSM_Error error;
+
+	mysql_err = SMSDMySQL_LogError(Config);
+
+	/* MySQL server has gone away / Lost connection to MySQL */
+	if (mysql_err == 2006 || mysql_err == 2013) {
+		while (retry > 0) {
+			SMSD_Log(DEBUG_INFO, Config, "Trying to reconnect to the database...");
+			SMSDMySQL_Free(Config);
+			sleep(30);
+			error = SMSDMySQL_Init(Config);
+			if (error == ERR_NONE) {
+				return ERR_NONE;
+			}
+			retry--;
+		}
+		return ERR_TIMEOUT;
+	}
+
+	/* No retries for unknown errors */
+	return ERR_UNKNOWN;
+}
+
+
+static GSM_Error SMSDMySQL_Query_Real(GSM_SMSDConfig *Config, const char *query, int retry)
+{
+	GSM_Error error;
 
 	SMSD_Log(DEBUG_SQL, Config, "Execute SQL: %s", query);
 
 	if (mysql_query(&Config->DBConnMySQL, query) != 0) {
 		SMSD_Log(DEBUG_INFO, Config, "SQL failed: %s", query);
-		mysql_err = SMSDMySQL_LogError(Config);
-		/* MySQL server has gone away / Lost connection to MySQL */
-		if (mysql_err == 2006 || mysql_err == 2013) {
-			if (retry > 0) {
-				SMSD_Log(DEBUG_INFO, Config, "Trying to reconnect to the Database...");
-				SMSDMySQL_Free(Config);
-				sleep(30);
-				SMSDMySQL_Init(Config);
-				SMSD_Log(DEBUG_INFO, Config, "Retrying query...");
-				return SMSDMySQL_Query_Real(Config, query, retry - 1);
-			} else {
-				return ERR_TIMEOUT;
-			}
-		} else {
-			return ERR_UNKNOWN;
+		error = SMSDMySQL_Check_Reconnect(Config, retry);
+		if (error != ERR_NONE) {
+			return error;
 		}
+		SMSD_Log(DEBUG_INFO, Config, "Retrying query...");
+		return SMSDMySQL_Query_Real(Config, query, retry - 1);
 	}
 	return ERR_NONE;
 }
@@ -174,9 +191,8 @@ static GSM_Error SMSDMySQL_Query(GSM_SMSDConfig *Config, const char *query)
 static GSM_Error SMSDMySQL_Store_Real(GSM_SMSDConfig *Config, const char *query, MYSQL_RES **result, int retry)
 {
 	GSM_Error error;
-	int mysql_err;
 
-	error = SMSDMySQL_Query_Real(Config, query, Config->backend_retries);
+	error = SMSDMySQL_Query_Real(Config, query, retry);
 
 	if (error != ERR_NONE) {
 		return error;
@@ -186,16 +202,12 @@ static GSM_Error SMSDMySQL_Store_Real(GSM_SMSDConfig *Config, const char *query,
 
 	if (*result == NULL) {
 		SMSD_Log(DEBUG_INFO, Config, "Store result failed: %s", query);
-		mysql_err = SMSDMySQL_LogError(Config);
-		/* MySQL server has gone away / Lost connection to MySQL */
-		if (retry > 0 && (mysql_err == 2006 || mysql_err == 2013)) {
-			SMSD_Log(DEBUG_INFO, Config, "Trying to reconnect to the Database...");
-			SMSDMySQL_Free(Config);
-			sleep(30);
-			SMSDMySQL_Init(Config);
-			SMSD_Log(DEBUG_INFO, Config, "Retrying query...");
-			return SMSDMySQL_Store_Real(Config, query, result, retry - 1);
+		error = SMSDMySQL_Check_Reconnect(Config, retry);
+		if (error != ERR_NONE) {
+			return error;
 		}
+		SMSD_Log(DEBUG_INFO, Config, "Retrying query...");
+		return SMSDMySQL_Store_Real(Config, query, result, retry - 1);
 	}
 
 	return ERR_NONE;
@@ -203,7 +215,7 @@ static GSM_Error SMSDMySQL_Store_Real(GSM_SMSDConfig *Config, const char *query,
 
 static GSM_Error SMSDMySQL_Store(GSM_SMSDConfig *Config, const char *query, MYSQL_RES **result)
 {
-	return SMSDMySQL_Store_Real(Config, query, result, TRUE);
+	return SMSDMySQL_Store_Real(Config, query, result, Config->backend_retries);
 }
 
 static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
