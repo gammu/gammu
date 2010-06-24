@@ -142,6 +142,7 @@ CalendarTypes = [
     'T_WINT',
     'ALARM',
     'DAILY_ALARM',
+    'SHOPPING',
     ]
 
 CalendarValueTypes = [

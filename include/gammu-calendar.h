@@ -191,7 +191,11 @@ typedef enum {
 	/**
 	 * Alarm repeating each day.
 	 */
-	GSM_CAL_DAILY_ALARM
+	GSM_CAL_DAILY_ALARM,
+	/**
+	 * Shopping
+	 */
+	GSM_CAL_SHOPPING,
 } GSM_CalendarNoteType;
 
 /**

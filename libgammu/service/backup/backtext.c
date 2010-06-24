@@ -675,6 +675,7 @@ static GSM_Error SaveCalendarType(FILE *file, GSM_CalendarNoteType Type, gboolea
 		case GSM_CAL_TRAVEL  	: sprintf(buffer,"Travel%c%c", 			13,10); break;
 		case GSM_CAL_VACATION 	: sprintf(buffer,"Vacation%c%c", 		13,10); break;
 		case GSM_CAL_MEMO	: sprintf(buffer,"Memo%c%c", 			13,10); break;
+		case GSM_CAL_SHOPPING	: sprintf(buffer,"Shopping%c%c",		13,10); break;
 		case GSM_CAL_ALARM    	: sprintf(buffer,"Alarm%c%c", 			13,10); break;
 		case GSM_CAL_DAILY_ALARM: sprintf(buffer,"DailyAlarm%c%c", 		13,10); break;
 		case GSM_CAL_T_ATHL   	: sprintf(buffer,"Training/Athletism%c%c", 	13,10); break;
@@ -2065,6 +2066,8 @@ static void ReadCalendarType(INI_Section *file_info, char *section, GSM_Calendar
 			*type = GSM_CAL_DAILY_ALARM;
 		} else if (strcasecmp(readvalue,"Alarm") == 0) {
 			*type = GSM_CAL_ALARM;
+		} else if (strcasecmp(readvalue,"Shopping") == 0) {
+			*type = GSM_CAL_SHOPPING;
 		} else if (strcasecmp(readvalue,"Training/Athletism") == 0) {
 			*type = GSM_CAL_T_ATHL;
 		} else if (strcasecmp(readvalue,"Training/BallGames") == 0) {

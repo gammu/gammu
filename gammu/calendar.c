@@ -59,6 +59,9 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 		case GSM_CAL_ALARM:
 			printf("%s\n", _("Alarm"));
 			break;
+		case GSM_CAL_SHOPPING:
+			printf("%s\n", _("Shopping"));
+			break;
 		case GSM_CAL_DAILY_ALARM:
 			printf("%s\n", _("Daily alarm"));
 			break;
@@ -725,6 +728,9 @@ void PrintToDo(GSM_ToDoEntry * ToDo)
 			break;
 		case GSM_CAL_ALARM:
 			printf("%s\n", _("Alarm"));
+			break;
+		case GSM_CAL_SHOPPING:
+			printf("%s\n", _("Shopping"));
 			break;
 		case GSM_CAL_DAILY_ALARM:
 			printf("%s\n", _("Daily alarm"));

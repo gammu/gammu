@@ -384,6 +384,7 @@ GSM_Error GSM_Translate_Category (GSM_CatTranslation direction, char *string, GS
 		else if (strstr(string,"SPECIAL OCCASION")) 	*Type = GSM_CAL_BIRTHDAY;
 		else if (strstr(string,"ANNIVERSARY")) 		*Type = GSM_CAL_BIRTHDAY;
 		else if (strstr(string,"APPOINTMENT")) 		*Type = GSM_CAL_MEETING;
+		else if (strstr(string,"SHOPPING LIST")) 	*Type = GSM_CAL_SHOPPING;
 		/* These are the Nokia 6230i categories in german. */
 		else if (strstr(string,"Erinnerung"))	 	*Type = GSM_CAL_REMINDER;
 		else if (strstr(string,"Besprechung"))	 	*Type = GSM_CAL_MEETING;
@@ -413,6 +414,9 @@ GSM_Error GSM_Translate_Category (GSM_CatTranslation direction, char *string, GS
 				break;
 			case GSM_CAL_BIRTHDAY:
 				strcpy(string, "ANNIVERSARY");
+				break;
+			case GSM_CAL_SHOPPING:
+				strcpy(string, "SHOPPING LIST");
 				break;
 			case GSM_CAL_MEMO:
 			default:

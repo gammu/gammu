@@ -43,6 +43,9 @@ char *CalendarTypeToString(GSM_CalendarNoteType p)
 		case GSM_CAL_MEMO:
 			s = strdup("MEMO");
 			break;
+		case GSM_CAL_SHOPPING:
+			s = strdup("SHOPPING");
+			break;
 		case GSM_CAL_TRAVEL:
 			s = strdup("TRAVEL");
 			break;
@@ -133,6 +136,8 @@ GSM_CalendarNoteType StringToCalendarType(const char *s)
 		return GSM_CAL_MEETING;
 	else if (strcmp("BIRTHDAY", s) == 0)
 		return GSM_CAL_BIRTHDAY;
+	else if (strcmp("SHOPPING", s) == 0)
+		return GSM_CAL_SHOPPING;
 	else if (strcmp("MEMO", s) == 0)
 		return GSM_CAL_MEMO;
 	else if (strcmp("TRAVEL", s) == 0)
