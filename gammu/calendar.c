@@ -14,27 +14,10 @@
 #include "../helper/formats.h"
 #include "../helper/cmdline.h"
 
-void PrintCalendar(GSM_CalendarEntry * Note)
+void PrintNoteType(GSM_CalendarNoteType Type)
 {
-	GSM_Error error;
-	int i_age = 0, i;
-	GSM_DateTime Alarm, DateTime;
-	GSM_MemoryEntry entry;
-	unsigned char *name;
-
-	gboolean repeating = FALSE;
-	int repeat_dayofweek = -1;
-	int repeat_day = -1;
-	int repeat_dayofyear = -1;
-	int repeat_weekofmonth = -1;
-	int repeat_month = -1;
-	int repeat_count = -1;
-	int repeat_frequency = -1;
-	GSM_DateTime repeat_startdate = { 0, 0, 0, 0, 0, 0, 0 };
-	GSM_DateTime repeat_stopdate = { 0, 0, 0, 0, 0, 0, 0 };
-
 	printf(LISTFORMAT, _("Note type"));
-	switch (Note->Type) {
+	switch (Type) {
 		case GSM_CAL_REMINDER:
 			printf("%s\n", _("Reminder (Date)"));
 			break;
@@ -127,6 +110,29 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 			printf("%s\n", _("unknown type!"));
 #endif
 	}
+}
+
+void PrintCalendar(GSM_CalendarEntry * Note)
+{
+	GSM_Error error;
+	int i_age = 0, i;
+	GSM_DateTime Alarm, DateTime;
+	GSM_MemoryEntry entry;
+	unsigned char *name;
+
+	gboolean repeating = FALSE;
+	int repeat_dayofweek = -1;
+	int repeat_day = -1;
+	int repeat_dayofyear = -1;
+	int repeat_weekofmonth = -1;
+	int repeat_month = -1;
+	int repeat_count = -1;
+	int repeat_frequency = -1;
+	GSM_DateTime repeat_startdate = { 0, 0, 0, 0, 0, 0, 0 };
+	GSM_DateTime repeat_stopdate = { 0, 0, 0, 0, 0, 0, 0 };
+
+	PrintNoteType(Note->Type);
+
 	Alarm.Year = 0;
 	Alarm.Month = 0;
 	Alarm.Day = 0;
@@ -703,100 +709,7 @@ void PrintToDo(GSM_ToDoEntry * ToDo)
 	GSM_Category Category;
 
 	printf(LISTFORMAT "%i\n", _("Location"), ToDo->Location);
-	printf(LISTFORMAT, _("Note type"));
-	switch (ToDo->Type) {
-		case GSM_CAL_REMINDER:
-			printf("%s\n", _("Reminder (Date)"));
-			break;
-		case GSM_CAL_CALL:
-			printf("%s\n", _("Call"));
-			break;
-		case GSM_CAL_MEETING:
-			printf("%s\n", _("Meeting"));
-			break;
-		case GSM_CAL_BIRTHDAY:
-			printf("%s\n", _("Birthday (Anniversary)"));
-			break;
-		case GSM_CAL_MEMO:
-			printf("%s\n", _("Memo (Miscellaneous)"));
-			break;
-		case GSM_CAL_TRAVEL:
-			printf("%s\n", _("Travel"));
-			break;
-		case GSM_CAL_VACATION:
-			printf("%s\n", _("Vacation"));
-			break;
-		case GSM_CAL_ALARM:
-			printf("%s\n", _("Alarm"));
-			break;
-		case GSM_CAL_SHOPPING:
-			printf("%s\n", _("Shopping"));
-			break;
-		case GSM_CAL_DAILY_ALARM:
-			printf("%s\n", _("Daily alarm"));
-			break;
-		case GSM_CAL_T_ATHL:
-			printf("%s\n", _("Training/Athletism"));
-			break;
-		case GSM_CAL_T_BALL:
-			printf("%s\n", _("Training/Ball Games"));
-			break;
-		case GSM_CAL_T_CYCL:
-			printf("%s\n", _("Training/Cycling"));
-			break;
-		case GSM_CAL_T_BUDO:
-			printf("%s\n", _("Training/Budo"));
-			break;
-		case GSM_CAL_T_DANC:
-			printf("%s\n", _("Training/Dance"));
-			break;
-		case GSM_CAL_T_EXTR:
-			printf("%s\n", _("Training/Extreme Sports"));
-			break;
-		case GSM_CAL_T_FOOT:
-			printf("%s\n", _("Training/Football"));
-			break;
-		case GSM_CAL_T_GOLF:
-			printf("%s\n", _("Training/Golf"));
-			break;
-		case GSM_CAL_T_GYM:
-			printf("%s\n", _("Training/Gym"));
-			break;
-		case GSM_CAL_T_HORS:
-			printf("%s\n", _("Training/Horse Races"));
-			break;
-		case GSM_CAL_T_HOCK:
-			printf("%s\n", _("Training/Hockey"));
-			break;
-		case GSM_CAL_T_RACE:
-			printf("%s\n", _("Training/Races"));
-			break;
-		case GSM_CAL_T_RUGB:
-			printf("%s\n", _("Training/Rugby"));
-			break;
-		case GSM_CAL_T_SAIL:
-			printf("%s\n", _("Training/Sailing"));
-			break;
-		case GSM_CAL_T_STRE:
-			printf("%s\n", _("Training/Street Games"));
-			break;
-		case GSM_CAL_T_SWIM:
-			printf("%s\n", _("Training/Swimming"));
-			break;
-		case GSM_CAL_T_TENN:
-			printf("%s\n", _("Training/Tennis"));
-			break;
-		case GSM_CAL_T_TRAV:
-			printf("%s\n", _("Training/Travels"));
-			break;
-		case GSM_CAL_T_WINT:
-			printf("%s\n", _("Training/Winter Games"));
-			break;
-#ifndef CHECK_CASES
-		default:
-			printf("%s\n", _("Unknown"));
-#endif
-	}
+	PrintNoteType(ToDo->Type);
 	printf(LISTFORMAT, _("Priority"));
 	switch (ToDo->Priority) {
 		case GSM_Priority_Low:
