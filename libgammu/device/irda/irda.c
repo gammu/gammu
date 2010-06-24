@@ -60,6 +60,16 @@ static gboolean irda_discover_device(GSM_StateMachine *state, int *fd)
 
    	(*fd) = socket(AF_IRDA, SOCK_STREAM, 0);
 
+#ifdef WIN32
+	if (*fd == INVALID_SOCKET) {
+		return ERR_DEVICEOPENERROR;
+	}
+#else
+	if (*fd == -1) {
+		return ERR_DEVICEOPENERROR;
+	}
+#endif
+
     	/* can handle maximally 10 devices during discovering */
     	len  = sizeof(struct irda_device_list) + sizeof(struct irda_device_info) * 10;
     	buf  = (unsigned char *)malloc(len);
