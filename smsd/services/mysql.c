@@ -177,7 +177,10 @@ static GSM_Error SMSDMySQL_Store_Real(GSM_SMSDConfig *Config, const char *query,
 	int mysql_err;
 
 	error = SMSDMySQL_Query_Real(Config, query, Config->backend_retries);
-	if (error != ERR_NONE) return error;
+
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	*result = mysql_store_result(&Config->DBConnMySQL);
 
