@@ -223,7 +223,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		}
 
 		/* When char will be received, we will receive notifications */
-		SetCommMask(d->hPhone, EV_RXCHAR);
+		SetCommMask(d->hPhone, EV_RXCHAR | EV_BREAK | EV_ERR);
 
 		/* Sets size for input/output buffer */
 		SetupComm(d->hPhone, 4096, 4096);
