@@ -25,6 +25,7 @@ ChangeLog
 [-] * Fix parsing of AT replies from Nokia 2730 (bug #1224).
 [-] * Nokia E61 needs encoded USSD requests (bug #1228).
 [!] * Rename Port configuration directive to Device.
+[-] * Try to reconnect after lost connection to MySQL error.
     
 20100603 - 1.27.94
 

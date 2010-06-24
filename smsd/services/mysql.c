@@ -28,9 +28,15 @@ static GSM_Error SMSDMySQL_Free(GSM_SMSDConfig *Config)
 	return ERR_NONE;
 }
 
-static void SMSDMySQL_LogError(GSM_SMSDConfig *Config)
+static int SMSDMySQL_LogError(GSM_SMSDConfig *Config)
 {
-	SMSD_Log(DEBUG_ERROR, Config, "Error code: %d, Error: %s", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
+	int mysql_err;
+
+	mysql_err = mysql_errno(&Config->DBConnMySQL);
+
+	SMSD_Log(DEBUG_ERROR, Config, "Error code: %d, Error: %s", mysql_err, mysql_error(&Config->DBConnMySQL));
+
+	return mysql_err;
 }
 
 
@@ -161,6 +167,7 @@ static GSM_Error SMSDMySQL_Query(GSM_SMSDConfig *Config, const char *query)
 static GSM_Error SMSDMySQL_Store_Real(GSM_SMSDConfig *Config, const char *query, MYSQL_RES **result, gboolean retry)
 {
 	GSM_Error error;
+	int mysql_err;
 
 	error = SMSDMySQL_Query_Real(Config, query, TRUE);
 	if (error != ERR_NONE) return error;
@@ -169,9 +176,9 @@ static GSM_Error SMSDMySQL_Store_Real(GSM_SMSDConfig *Config, const char *query,
 
 	if (*result == NULL) {
 		SMSD_Log(DEBUG_INFO, Config, "Store result failed: %s", query);
-		SMSDMySQL_LogError(Config);
-		/* MySQL server has gone away */
-		if (retry && mysql_errno(&Config->DBConnMySQL) == 2006) {
+		mysql_err = SMSDMySQL_LogError(Config);
+		/* MySQL server has gone away / Lost connection to MySQL */
+		if (retry && (mysql_err == 2006 || mysql_err == 2013)) {
 			SMSD_Log(DEBUG_INFO, Config, "Trying to reconnect to the Database...");
 			SMSDMySQL_Free(Config);
 			sleep(30);
