@@ -223,7 +223,7 @@ void GSM_GetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, uns
 
 gboolean GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 {
-	gboolean 		Past = TRUE;
+	gboolean 		Past = TRUE, Repeating = FALSE, RepeatingEnd = FALSE;
 	int		i,End=-1;
 	GSM_DateTime	DT;
 	char		rec[20],endday[20];
@@ -240,7 +240,17 @@ gboolean GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 			    note->Entries[i].Date.Day >= DT.Day) Past = FALSE;
 			break;
 		case CAL_REPEAT_STOPDATE:
-			if (End == -1) End = i;
+			End = i;
+			RepeatingEnd = TRUE;
+			break;
+		case CAL_REPEAT_DAYOFWEEK:
+		case CAL_REPEAT_DAY:
+		case CAL_REPEAT_DAYOFYEAR:
+		case CAL_REPEAT_WEEKOFMONTH:
+		case CAL_REPEAT_MONTH:
+		case CAL_REPEAT_FREQUENCY:
+			Repeating = TRUE;
+			break;
 		default:
 			break;
 		}
@@ -259,6 +269,9 @@ gboolean GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 			    note->Entries[End].Date.Month == DT.Month &&
 			    note->Entries[End].Date.Day >= DT.Day) Past = FALSE;
 		}
+	}
+	if (Repeating && ! RepeatingEnd) {
+		return FALSE;
 	}
 	return Past;
 }
