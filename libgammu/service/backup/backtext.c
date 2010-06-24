@@ -1303,6 +1303,12 @@ static GSM_Error SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, gboolean UseUnic
                 error = SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
 		if (error != ERR_NONE) return error;
                 break;
+	    case TODO_COMPLETED_DATETIME:
+		error = SaveBackupText(file, "", "CompletedTime", UseUnicode);
+		if (error != ERR_NONE) return error;
+                error = SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
+		if (error != ERR_NONE) return error;
+                break;
             case TODO_COMPLETED:
 	        sprintf(buffer,"Completed = %s%c%c",ToDo->Entries[j].Number == 1 ? "yes" : "no" ,13,10);
 		error = SaveBackupText(file, "", buffer, UseUnicode);
@@ -2377,6 +2383,14 @@ static GSM_Error ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEn
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_START_DATETIME;
+        	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
+   	}
+
+	sprintf(buffer,"CompletedTime");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
+        	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_COMPLETED_DATETIME;
         	ToDo->EntriesNum++;
 		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
    	}

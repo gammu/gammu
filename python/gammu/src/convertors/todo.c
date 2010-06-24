@@ -108,6 +108,18 @@ PyObject *TodoToPython(const GSM_ToDoEntry * entry)
 						  "START_DATETIME", "Value", d);
 				Py_DECREF(d);
 				break;
+			case TODO_COMPLETED_DATETIME:
+				d = BuildPythonDateTime(&
+							(entry->Entries[i].
+							 Date));
+				if (d == NULL) {
+					Py_DECREF(v);
+					return NULL;
+				}
+				f = Py_BuildValue("{s:s,s:O}", "Type",
+						  "COMPLETED_DATETIME", "Value", d);
+				Py_DECREF(d);
+				break;
 			case TODO_ALARM_DATETIME:
 				d = BuildPythonDateTime(&
 							(entry->Entries[i].
@@ -340,6 +352,9 @@ int TodoFromPython(PyObject * dict, GSM_ToDoEntry * entry, int needs_location)
 		} else if (strcmp("START_DATETIME", type) == 0) {
 			valuetype = 'd';
 			entry->Entries[i].EntryType = TODO_START_DATETIME;
+		} else if (strcmp("COMPLETED_DATETIME", type) == 0) {
+			valuetype = 'd';
+			entry->Entries[i].EntryType = TODO_COMPLETED_DATETIME;
 		} else if (strcmp("COMPLETED", type) == 0) {
 			valuetype = 'n';
 			entry->Entries[i].EntryType = TODO_COMPLETED;

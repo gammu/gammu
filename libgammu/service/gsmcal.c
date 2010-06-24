@@ -814,6 +814,7 @@ void GSM_ToDo_AdjustDate(GSM_ToDoEntry *note, GSM_DeltaTime *delta)
 			case TODO_SILENT_ALARM_DATETIME:
 			case TODO_LAST_MODIFIED:
 			case TODO_START_DATETIME:
+			case TODO_COMPLETED_DATETIME:
 				note->Entries[i].Date = GSM_AddTime(note->Entries[i].Date, *delta);
 				break;
 			case TODO_TEXT:
@@ -1152,6 +1153,10 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, G
 				break;
 			case TODO_START_DATETIME:
 				error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "DTSTART");
+				if (error != ERR_NONE) return error;
+				break;
+			case TODO_COMPLETED_DATETIME:
+				error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "COMPLETED");
 				if (error != ERR_NONE) return error;
 				break;
 			case TODO_LAST_MODIFIED:
@@ -1989,6 +1994,11 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 					ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_END_DATETIME;
 					ToDo->EntriesNum++;
 				}
+			}
+			if (ReadVCALDate(Line, "COMLETED", &Date, &is_date_only)) {
+				ToDo->Entries[ToDo->EntriesNum].Date = Date;
+				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_COMPLETED_DATETIME;
+				ToDo->EntriesNum++;
 			}
 			if (ReadVCALDate(Line, "DTSTART", &Date, &is_date_only)) {
 				ToDo->Entries[ToDo->EntriesNum].Date = Date;

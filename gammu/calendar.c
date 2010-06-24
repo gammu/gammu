@@ -742,6 +742,11 @@ void PrintToDo(GSM_ToDoEntry * ToDo)
 				       OSDateTime(ToDo->Entries[j].Date,
 						  FALSE));
 				break;
+			case TODO_COMPLETED_DATETIME:
+				printf(LISTFORMAT "%s\n", _("Completed time"),
+				       OSDateTime(ToDo->Entries[j].Date,
+						  FALSE));
+				break;
 			case TODO_COMPLETED:
 				printf(LISTFORMAT "%s\n", _("Completed"),
 				       ToDo->Entries[j].Number ==

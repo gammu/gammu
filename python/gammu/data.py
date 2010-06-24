@@ -177,6 +177,8 @@ TodoPriorities = [
 
 TodoValueTypes = [
     'END_DATETIME',
+    'START_DATETIME',
+    'COMPLETED_DATETIME',
     'COMPLETED',
     'ALARM_DATETIME',
     'SILENT_ALARM_DATETIME',
