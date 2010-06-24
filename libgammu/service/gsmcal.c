@@ -2036,6 +2036,11 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				ToDo->Entries[ToDo->EntriesNum].Number	  = 1;
 				ToDo->EntriesNum++;
 			}
+			if (strstr(Line,"STATUS:NEEDS ACTION")) {
+				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_COMPLETED;
+				ToDo->Entries[ToDo->EntriesNum].Number	  = 0;
+				ToDo->EntriesNum++;
+			}
 			if ((ReadVCALText(Line, "X-IRMC-LUID", Buff, ToDoVer == Mozilla_VToDo))) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LUID;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
