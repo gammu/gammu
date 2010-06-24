@@ -307,13 +307,13 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 
 	*res = NULL;
 
-	for (attempts = 1; attempts < SMSD_SQL_RETRIES; attempts++) {
+	for (attempts = 1; attempts < Config->backend_retries; attempts++) {
 		SMSD_Log(DEBUG_SQL, Config, "Execute SQL: %s", query);
 		*res = dbi_conn_query(Config->DBConnDBI, query);
 		if (*res != NULL) return ERR_NONE;
 
 		SMSD_Log(DEBUG_INFO, Config, "SQL failed: %s", query);
-		if (attempts >= SMSD_SQL_RETRIES) {
+		if (attempts >= Config->backend_retries) {
 			return ERR_TIMEOUT;
 		}
 		/* Black magic to decide whether we should bail out or attempt to retry */
@@ -359,7 +359,7 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 				break;
 			}
 			attempts++;
-			if (attempts >= SMSD_SQL_RETRIES) {
+			if (attempts >= Config->backend_retries) {
 				return ERR_TIMEOUT;
 			}
 		}

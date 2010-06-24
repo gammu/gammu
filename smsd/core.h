@@ -26,7 +26,6 @@
 #define SMSD_SHM_KEY (0xface)
 #define SMSD_SHM_VERSION (1)
 #define SMSD_DB_VERSION (11)
-#define SMSD_SQL_RETRIES (10)
 
 #include "log.h"
 
@@ -65,6 +64,7 @@ struct _GSM_SMSDConfig {
 	gboolean checkbattery;
 	gboolean checksignal;
 	unsigned int maxretries;
+	int backend_retries;
 
 	/* options for FILES */
 	const char   *inboxpath, 	 *outboxpath, 	*sentsmspath;

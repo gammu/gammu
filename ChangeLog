@@ -27,6 +27,7 @@ ChangeLog
 [!] * Rename Port configuration directive to Device.
 [-] * Try to reconnect after lost connection to MySQL error.
 [-] * Actually enable -f processing in SMSD.
+[+] * Configurable number of backend retries.
     
 20100603 - 1.27.94
 

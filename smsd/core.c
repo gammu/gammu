@@ -677,6 +677,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, gboolean
 	Config->resetfrequency = INI_GetInt(Config->smsdcfgfile, "smsd", "resetfrequency", 0);
 	Config->multiparttimeout = INI_GetInt(Config->smsdcfgfile, "smsd", "multiparttimeout", 600);
 	Config->maxretries = INI_GetInt(Config->smsdcfgfile, "smsd", "maxretries", 1);
+	Config->backend_retries = INI_GetInt(Config->smsdcfgfile, "smsd", "backendretries", 10);
 
 	SMSD_Log(DEBUG_NOTICE, Config, "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i",
 			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency);

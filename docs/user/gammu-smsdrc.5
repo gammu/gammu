@@ -274,6 +274,17 @@ contains one number per line, blank lines are ignored. The file is read at
 startup and is reread only when configuration is being reread. See Message
 filtering for details.
 
+.TP
+.BI BackendRetries
+
+How many times will SMSD backend retry operation.
+
+The implementation on different backends is different, for database backends
+it generally means how many times it will try to reconnect to the server.
+
+Default is 10.
+
+
 .SS Database backends options
 
 All DBI, MYSQL and PGSQL backends (see  gammu\-smsd\-mysql(7),
