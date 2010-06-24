@@ -137,6 +137,7 @@ void help(void)
 	print_option_param("U", "user", "USER", "run daemon as a user");
 	print_option_param("G", "group", "GROUP", "run daemon as a group");
 #endif
+	print_option_param("f", "max-failures", "NUM", "number of failures before terminating");
 #ifdef HAVE_ALARM
 	print_option_param("X", "suicide", "SECONDS", "kills itself after number of seconds");
 #endif
