@@ -339,6 +339,9 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, gboolean dtr, gboolean rt
 	if ( rts && dcb.fRtsControl != RTS_CONTROL_ENABLE ) return ERR_DEVICEDTRRTSERROR;
 	if (!rts && dcb.fRtsControl != RTS_CONTROL_DISABLE) return ERR_DEVICEDTRRTSERROR;
 
+	PurgeComm(d->hPhone, PURGE_TXABORT | PURGE_RXABORT |
+			     PURGE_TXCLEAR | PURGE_RXCLEAR);
+
 	return ERR_NONE;
 }
 
