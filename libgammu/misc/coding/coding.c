@@ -827,10 +827,18 @@ out:
  */
 int GSM_PackSemiOctetNumber(const unsigned char *Number, unsigned char *Output, gboolean semioctet)
 {
-	unsigned char	format, buffer[GSM_MAX_NUMBER_LENGTH + 1];
+	unsigned char	format;
 	int		length, i;
+	unsigned char    *buffer;
 
 	length = UnicodeLength(Number);
+	buffer = (unsigned char*)malloc(length + 2);
+
+	if (buffer == NULL) {
+		return 0;
+	}
+
+	memset(buffer, 0, length + 2);
 	memcpy(buffer, DecodeUnicodeString(Number), length + 1);
 
 	/* Checking for format number */
@@ -867,6 +875,8 @@ int GSM_PackSemiOctetNumber(const unsigned char *Number, unsigned char *Output, 
 		EncodeBCD (Output+1, buffer, length, TRUE);
 		break;
 	}
+
+	free(buffer);
 
 	if (semioctet) return length;
 
