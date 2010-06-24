@@ -28,6 +28,7 @@ ChangeLog
 [-] * Try to reconnect after lost connection to MySQL error.
 [-] * Actually enable -f processing in SMSD.
 [+] * Configurable number of backend retries.
+[-] * Prefer GSM charset for USSD requests (bug #1228).
     
 20100603 - 1.27.94
 

@@ -54,6 +54,7 @@ typedef struct {
 	const char		*text;
 	const gboolean		unicode;
 	const gboolean		ira;
+	const gboolean		GSM;
 } GSM_AT_Charset_Info;
 
 /**
@@ -61,24 +62,24 @@ typedef struct {
  * defines their preferences, so if first is found it is used.
  */
 static GSM_AT_Charset_Info AT_Charsets[] = {
-	{AT_CHARSET_HEX,	"HEX",		FALSE,	FALSE},
-	{AT_CHARSET_GSM,	"GSM",		FALSE,	FALSE},
-	{AT_CHARSET_PCCP437,	"PCCP437",	FALSE,	FALSE},
-	{AT_CHARSET_UTF_8,	"UTF-8",	TRUE,	FALSE},
-	{AT_CHARSET_UTF8,	"UTF8",		TRUE,	FALSE},
-	{AT_CHARSET_UCS_2,	"UCS-2",	TRUE,	FALSE},
-	{AT_CHARSET_UCS2,	"UCS2",		TRUE,	FALSE},
-	{AT_CHARSET_IRA,	"IRA",		FALSE,	TRUE},
-	{AT_CHARSET_ASCII,	"ASCII",	FALSE,	TRUE},
+	{AT_CHARSET_HEX,	"HEX",		FALSE,	FALSE,	FALSE},
+	{AT_CHARSET_GSM,	"GSM",		FALSE,	FALSE,	TRUE},
+	{AT_CHARSET_PCCP437,	"PCCP437",	FALSE,	FALSE,	FALSE},
+	{AT_CHARSET_UTF_8,	"UTF-8",	TRUE,	FALSE,	FALSE},
+	{AT_CHARSET_UTF8,	"UTF8",		TRUE,	FALSE,	FALSE},
+	{AT_CHARSET_UCS_2,	"UCS-2",	TRUE,	FALSE,	FALSE},
+	{AT_CHARSET_UCS2,	"UCS2",		TRUE,	FALSE,	FALSE},
+	{AT_CHARSET_IRA,	"IRA",		FALSE,	TRUE,	TRUE},
+	{AT_CHARSET_ASCII,	"ASCII",	FALSE,	TRUE,	TRUE},
 #ifdef ICONV_FOUND
-	{AT_CHARSET_ISO88591,	"8859-1",	FALSE,	FALSE},
-	{AT_CHARSET_ISO88592,	"8859-2",	FALSE,	FALSE},
-	{AT_CHARSET_ISO88593,	"8859-3",	FALSE,	FALSE},
-	{AT_CHARSET_ISO88594,	"8859-4",	FALSE,	FALSE},
-	{AT_CHARSET_ISO88595,	"8859-5",	FALSE,	FALSE},
-	{AT_CHARSET_ISO88596,	"8859-6",	FALSE,	FALSE},
+	{AT_CHARSET_ISO88591,	"8859-1",	FALSE,	FALSE,	FALSE},
+	{AT_CHARSET_ISO88592,	"8859-2",	FALSE,	FALSE,	FALSE},
+	{AT_CHARSET_ISO88593,	"8859-3",	FALSE,	FALSE,	FALSE},
+	{AT_CHARSET_ISO88594,	"8859-4",	FALSE,	FALSE,	FALSE},
+	{AT_CHARSET_ISO88595,	"8859-5",	FALSE,	FALSE,	FALSE},
+	{AT_CHARSET_ISO88596,	"8859-6",	FALSE,	FALSE,	FALSE},
 #endif
-	{0,			NULL,		FALSE,	FALSE}
+	{0,			NULL,		FALSE,	FALSE,	FALSE}
 };
 
 typedef struct {
@@ -1840,6 +1841,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->EncodedCommands		= FALSE;
 	Priv->NormalCharset		= 0;
 	Priv->IRACharset		= 0;
+	Priv->GSMCharset		= 0;
 	Priv->UnicodeCharset		= 0;
 	Priv->PBKMemories[0]		= 0;
 	Priv->FirstCalendarPos		= 0;
@@ -2104,6 +2106,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				smprintf(s, "WARNING: Charsets support broken! Assuming that only GSM is supported!\n");
 				Priv->NormalCharset = AT_CHARSET_GSM;
 				Priv->IRACharset = AT_CHARSET_GSM;
+				Priv->GSMCharset = AT_CHARSET_GSM;
 				Priv->UnicodeCharset = AT_CHARSET_GSM;
 				return ERR_NONE;
 			}
@@ -2112,6 +2115,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				if (strstr(line, AT_Charsets[i].text) != NULL) {
 					Priv->NormalCharset = AT_Charsets[i].charset;
 					Priv->IRACharset = AT_Charsets[i].charset;
+					Priv->GSMCharset = AT_Charsets[i].charset;
 					smprintf(s, "Chosen %s as normal charset\n", AT_Charsets[i].text);
 					break;
 				}
@@ -2142,6 +2146,9 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				if (AT_Charsets[i].ira && (strstr(line, AT_Charsets[i].text) != NULL)) {
 					Priv->IRACharset = AT_Charsets[i].charset;
 				}
+				if (AT_Charsets[i].GSM && (strstr(line, AT_Charsets[i].text) != NULL)) {
+					Priv->GSMCharset = AT_Charsets[i].charset;
+				}
 				i++;
 			}
 			/* Fallback for unicode charset */
@@ -2163,6 +2170,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			 * be in GSM. */
 			smprintf(s, "INFO: assuming GSM charset\n");
 			Priv->IRACharset = AT_CHARSET_GSM;
+			Priv->GSMCharset = AT_CHARSET_GSM;
 			Priv->UnicodeCharset = AT_CHARSET_GSM;
 			Priv->NormalCharset = AT_CHARSET_GSM;
 			Priv->Charset = AT_CHARSET_GSM;
@@ -2224,6 +2232,8 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 		cset = Priv->UnicodeCharset;
 	} else if (Prefer == AT_PREF_CHARSET_NORMAL) {
 		cset = Priv->NormalCharset;
+	} else if (Prefer == AT_PREF_CHARSET_GSM) {
+		cset = Priv->GSMCharset;
 	} else if (Prefer == AT_PREF_CHARSET_IRA) {
 		if (Priv->IRACharset == Priv->UnicodeCharset &&
 				GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CKPD_NO_UNICODE)) {
@@ -3959,7 +3969,7 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 	if (req == NULL) {
 		return ERR_MOREMEMORY;
 	}
-	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
+	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_GSM);
 
 	if (error != ERR_NONE) {
 		free(req);

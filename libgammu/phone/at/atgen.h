@@ -166,6 +166,12 @@ typedef enum {
 	 */
 	AT_PREF_CHARSET_IRA,
 	/**
+	 * For some operations, using standard GSM charset is best as it
+	 * avoids problems with various broken phones and we don't need
+	 * full charset anyway.
+	 */
+	AT_PREF_CHARSET_GSM,
+	/**
 	 * This option just sets again charset in phone. Useful after
 	 * something what resets this information in phone.
 	 */
@@ -283,6 +289,10 @@ typedef struct {
 	 * Charset to use for IRA mode
 	 */
 	GSM_AT_Charset		IRACharset;
+	/**
+	 * Charset to use for GSM mode
+	 */
+	GSM_AT_Charset		GSMCharset;
 	GSM_AT_Feature		PBKSBNR;
 	GSM_AT_Feature		PBK_SPBR;
 	GSM_AT_Feature		PBK_MPBR;
