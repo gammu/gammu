@@ -128,11 +128,7 @@ static gboolean irda_discover_device(GSM_StateMachine *state, int *fd)
 	buf=NULL;
 
 	if (!founddevice) {
-#ifdef WIN32
-	    	closesocket(*fd);
-#else
-	    	close(*fd);
-#endif
+		socket_close(state, *fd);
 	}
     	return founddevice;
 }
@@ -207,7 +203,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 			}
 		}
 		if (failed) {
-			close(fd);
+			socket_close(s, fd);
 			return ERR_NOTSUPPORTED;
 		}
     	}
