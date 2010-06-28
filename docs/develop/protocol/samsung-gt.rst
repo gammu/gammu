@@ -35,6 +35,12 @@ Or just read a single item::
     +SSHR:1,"9,Event 123","0,","0,",2010,6,7,2010,6,7,7,0,8,59,0,0,0,0,2010,5,30,,
     OK
 
+Getting status (the last number appears to be number of notes)::
+
+    AT+SSHR=?
+    +SSHR:100,15,100,15,"1000000",2008,2024,5
+    OK
+
 You can also add or modify an item::
 
     AT+SSHW="7,event01","16,details of event","5,where",2010,06,03,2010,06,04,12,31,13,42,0,0,0,0,2010,05,31,,,0
