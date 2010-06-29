@@ -6519,14 +6519,14 @@ msgstr "Konfigurace Gammu pro telefon Nokia připojený kabelem DLR-3:"
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:224
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "[gammu]\n"
 "device = /dev/ttyACM0\n"
 "connection = dlr3\n"
 msgstr ""
 "[gammu]\n"
-"port = /dev/ttyACM0\n"
+"device = /dev/ttyACM0\n"
 "connection = dlr3\n"
 
 # type: Plain text
