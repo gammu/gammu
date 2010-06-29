@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-23 17:56+0300\n"
-"PO-Revision-Date: 2010-06-29 15:43+0200\n"
+"PO-Revision-Date: 2010-06-29 15:44+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -6155,9 +6155,9 @@ msgstr ""
 # type: TP
 #. type: TP
 #: docs/user/gammurc.5:88
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<Device>"
-msgstr "B<Service>"
+msgstr "B<Device>"
 
 # type: Plain text
 #. type: Plain text
