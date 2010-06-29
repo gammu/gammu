@@ -8421,6 +8421,9 @@ msgid ""
 "message headers. The only way to achieve this is to add some token to the "
 "message and let the user include it in the message on reply."
 msgstr ""
+"Neexistuje žádný způsob jak poznat, že SMS zpráva je odpovědí na jinou podle "
+"jejích hlaviček. Jediná spolehlivá metoda je přidat do zprávy nějaký text a "
+"nechat ho uživatele opsat do odpovědi."
 
 # type: Plain text
 #. type: Plain text
