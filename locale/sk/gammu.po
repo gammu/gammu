@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-23 17:56+0200\n"
-"PO-Revision-Date: 2010-06-29 15:57+0200\n"
+"PO-Revision-Date: 2010-06-29 15:59+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -1679,7 +1679,7 @@ msgstr "Nie je poskytovaná ŽIADNA ZÁRUKA, a to v miere povolenej zákonom."
 #: gammu/gammu.c:384
 msgid "Check <http://wammu.eu/gammu/> for updates."
 msgstr ""
-"Pozrite sa na <http://wammu.eu/gammu/> pre infromácie o aktuálnej verzii."
+"Pozrite sa na <http://sk.wammu.eu/gammu/> pre infromácie o aktuálnej verzii."
 
 #: gammu/gammu.c:410
 msgid "standard input"
