@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-23 17:56+0300\n"
-"PO-Revision-Date: 2010-06-29 15:46+0200\n"
+"PO-Revision-Date: 2010-06-29 15:48+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -8410,6 +8410,9 @@ msgid ""
 "communication with phone from more programs. In this case neither of the "
 "programs will probably work."
 msgstr ""
+"Nemůžete použít telefon z více programů najednou. Nicméně pokud nezapnete "
+"zamykání v sekci [gammu], může se stát, že se více programů pokusí s "
+"telefonem komunikovat a žádný z nich nebude fungovat správně."
 
 #. type: Plain text
 #: docs/user/gammu-smsd.1:195
