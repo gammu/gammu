@@ -922,9 +922,8 @@ msgid "Start time"
 msgstr "Začátek"
 
 #: gammu/calendar.c:746
-#, fuzzy
 msgid "Completed time"
-msgstr "Dokončený"
+msgstr "Čas dokončení"
 
 #: gammu/calendar.c:751
 msgid "Completed"
