@@ -6631,14 +6631,14 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:291
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "[gammmu1]\n"
 "device = /dev/ttyS1\n"
 "connection = at\n"
 msgstr ""
 "[gammmu1]\n"
-"port = /dev/ttyS1\n"
+"device = /dev/ttyS1\n"
 "connection = at\n"
 
 # type: Plain text
