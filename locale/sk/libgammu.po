@@ -100,7 +100,7 @@ msgid ""
 "Unknown frame. See <http://wammu.eu/support/bugs/> for information how to "
 "report it."
 msgstr ""
-"Neznámy rámec. Pozrite sa na stránku <http://wammu.eu/support/bugs/> pre "
+"Neznámy rámec. Pozrite sa na stránku <http://sk.wammu.eu/support/bugs/> pre "
 "informácie ako túto udalosť nahlásiť."
 
 #: libgammu/gsmcomon.c:101
