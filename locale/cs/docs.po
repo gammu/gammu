@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-23 17:56+0300\n"
-"PO-Revision-Date: 2010-06-29 15:42+0200\n"
+"PO-Revision-Date: 2010-06-29 15:43+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -3549,6 +3549,9 @@ msgid ""
 "included by Microsoft. If you deleted it by accident in this operating "
 "system, make such steps:"
 msgstr ""
+"Pro přehrání vytvořeného souboru WAV potřebujete kodek GSM 6.10. Ve Windows "
+"XP je již obsažen, pokud jste ho omylem odstranili, použijte následující "
+"postup::"
 
 #. type: Plain text
 #: docs/user/gammu.1:1923 docs/user/gammu.1:2557
