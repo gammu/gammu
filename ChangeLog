@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2010???? - 1.27.95
+20100629 - 1.27.95
 
 [+] * Support for getting packet network state (bug #1220).
 [-] * Fix parsing of AT replies from Nokia 2730 (bug #1224).
