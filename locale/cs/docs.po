@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-23 17:56+0300\n"
-"PO-Revision-Date: 2010-06-29 15:45+0200\n"
+"PO-Revision-Date: 2010-06-29 15:46+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -6611,6 +6611,9 @@ msgid ""
 "used at one time, you can choose which one to use with --section parameter). "
 "Configuration for phones on three serial ports would look like following:"
 msgstr ""
+"Gammu může být nastaveno pro práci s více telefony najedou (ale jen jedno "
+"připojení v jeden okamžik, to zvolíte parametrem --section). Nastavení "
+"telefonů na třech sériových portech by vypadalo následovně:"
 
 # type: Plain text
 #. type: Plain text
