@@ -6244,7 +6244,7 @@ msgstr "B<Port>"
 #. type: Plain text
 #: docs/user/gammurc.5:119
 msgid "Alias for Device, kept for backward compatibility."
-msgstr ""
+msgstr "Stejné jako Device, zachováno kvůli zpětné kompatibilitě."
 
 # type: TP
 #. type: TP
