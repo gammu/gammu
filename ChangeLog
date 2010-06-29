@@ -19,6 +19,8 @@ the issue.
 ChangeLog
 =========
     
+2010???? - 1.27.96
+    
 20100629 - 1.27.95
 
 [+] * Support for getting packet network state (bug #1220).
