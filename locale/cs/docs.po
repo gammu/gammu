@@ -6588,14 +6588,14 @@ msgstr ""
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammurc.5:268
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "[gammu]\n"
 "device = B0:0B:00:00:FA:CE/42\n"
 "connection = blueat\n"
 msgstr ""
 "[gammu]\n"
-"port = B0:0B:00:00:FA:CE/42\n"
+"device = B0:0B:00:00:FA:CE/42\n"
 "connection = blueat\n"
 
 #. type: SS
