@@ -92,7 +92,7 @@ msgid ""
 "Unknown response from phone. See <http://wammu.eu/support/bugs/> for "
 "information how to report it."
 msgstr ""
-"Neznáma odpoveď z telefónu. Pozrite sa na <http://wammu.eu/support/bugs/> "
+"Neznáma odpoveď z telefónu. Pozrite sa na <http://sk.wammu.eu/support/bugs/> "
 "pre informácie ako túto udalosť nahlásiť."
 
 #: libgammu/gsmcomon.c:100
