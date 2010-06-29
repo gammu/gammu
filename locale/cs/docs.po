@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.95\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-06-23 17:56+0300\n"
-"PO-Revision-Date: 2010-06-29 15:48+0200\n"
+"PO-Revision-Date: 2010-06-29 15:49+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -8442,6 +8442,9 @@ msgid ""
 "For web based frontend to SMSD database (currently only MySQL is being "
 "supported), please check Kalkun - E<lt>http://kalkun.sourceforge.net/E<gt>."
 msgstr ""
+"Pokud chcete spravovat databázi SMSD přes web (v současné době je "
+"podporováno jen MySQL), mohl by vás zajímat projekt Kalkun - "
+"E<lt>http://kalkun.sourceforge.net/E<gt>."
 
 # type: TH
 #. type: TH
