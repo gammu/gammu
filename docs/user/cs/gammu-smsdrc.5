@@ -278,6 +278,17 @@ na každém řádku jedno číslo, prázdné řádky jsou ignorovány. Soubor je
 při startu a znovu načten je jen při znovunačtení konfigurace. Více
 podrobností v sekci Filtrování zpráv.
 
+.TP 
+\fBBackendRetries\fP
+
+How many times will SMSD backend retry operation.
+
+The implementation on different backends is different, for database backends
+it generally means how many times it will try to reconnect to the server.
+
+Default is 10.
+
+
 .SS "Parametry pro služby používající databázi"
 
 Všechny ze služeb DBI, MYSQL a PGSQL (viz gammu\-smsd\-mysql(7),

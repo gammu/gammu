@@ -417,8 +417,8 @@ jedné nebo více zpráv
 za tímto parametrem budou "chráběna" (v telefonech podporující standard ODI
 jako například SonyEricsson je nebude možné přeposlat)
 
-\fB\-16bit\fP \- Gammu uses SMS headers with 16\-bit numbers for saving linking
-info in SMS (it means less chars available for user in each SMS)
+\fB\-16bit\fP \- Gammu použije 16\-bitová čísla pro identifikaci zpráv, což
+znamená méně místa pro vlastní text ve zprávě
 
 \fB\-format\fP lcrasbiut \- poslední část textu bude naformátována. Můžete použít následující znaky:
     l \- zarovnané vlevo
@@ -566,8 +566,8 @@ oznámí přijetí nové zprávy. Text bude zkrácen na 1 sms.
 \fB\-textutf8\fP \- načte text v UTF\-8 z příkazové řádky místo standardního
 vstupu.
 
-\fB\-16bit\fP \- Gammu uses SMS headers with 16\-bit numbers for saving linking
-info in SMS (it means less chars available for user in each SMS)
+\fB\-16bit\fP \- Gammu použije 16\-bitová čísla pro identifikaci zpráv, což
+znamená méně místa pro vlastní text ve zprávě
 
 \fITIP:\fP Soubor v Unicode můžete na Windows vytvořit například pomocí
 WordPadu (zvolte volbu "Uložit jako unicode text"). Na Linuxu můžete použít
@@ -2004,9 +2004,9 @@ Získá ze zadané pozice v telefonu zvukovou nahrávku a uloží ji do souboru
 WAV. Soubor je komprimován pomocí kodeku GSM 6.10. Jeho jméno je stejné jako
 je v telefonu.
 
-Created WAV files require GSM 6.10 codec to be played. In Win XP it's
-included by Microsoft. If you deleted it by accident in this operating
-system, make such steps:
+Pro přehrání vytvořeného souboru WAV potřebujete kodek GSM 6.10. Ve Windows
+XP je již obsažen, pokud jste ho omylem odstranili, použijte následující
+postup::
 
 1. Ovládací panel
 .br
@@ -2646,9 +2646,9 @@ Získá ze zadané pozice v telefonu zvukovou nahrávku a uloží ji do souboru
 WAV. Soubor je komprimován pomocí kodeku GSM 6.10. Jeho jméno je stejné jako
 je v telefonu.
 
-Created WAV files require GSM 6.10 codec to be played. In Win XP it's
-included by Microsoft. If you deleted it by accident in this operating
-system, make such steps:
+Pro přehrání vytvořeného souboru WAV potřebujete kodek GSM 6.10. Ve Windows
+XP je již obsažen, pokud jste ho omylem odstranili, použijte následující
+postup::
 
 1. Ovládací panel
 .br

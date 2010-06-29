@@ -190,14 +190,13 @@ služba.
 
 .SH "ZNÁMÁ OMEZENÍ"
 
-You can not use same phone by more programs in same time. However in case
-you did not enable locking in [gammu] section, it might be able to start the
-communication with phone from more programs. In this case neither of the
-programs will probably work.
+Nemůžete použít telefon z více programů najednou. Nicméně pokud nezapnete
+zamykání v sekci [gammu], může se stát, že se více programů pokusí s
+telefonem komunikovat a žádný z nich nebude fungovat správně.
 
-There is no way to detect that SMS message is reply to another by looking at
-message headers. The only way to achieve this is to add some token to the
-message and let the user include it in the message on reply.
+Neexistuje žádný způsob jak poznat, že SMS zpráva je odpovědí na jinou podle
+jejích hlaviček. Jediná spolehlivá metoda je přidat do zprávy nějaký text a
+nechat ho uživatele opsat do odpovědi.
 
 .SH "DALŠÍ INFORMACE"
 gammu\-smsdrc(5), gammu(1), gammu\-smsd\-inject(1), gammu\-smsd\-monitor(1)
@@ -208,8 +207,9 @@ gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7),
 gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7), gammu\-smsd\-null(7),
 gammu\-smsd\-run(7)
 
-For web based frontend to SMSD database (currently only MySQL is being
-supported), please check Kalkun \- <http://kalkun.sourceforge.net/>.
+Pokud chcete spravovat databázi SMSD přes web (v současné době je
+podporováno jen MySQL), mohl by vás zajímat projekt Kalkun \-
+<http://kalkun.sourceforge.net/>.
 .SH AUTOR
 gammu\-smsd a tuto manuálovou stránku napsal Michal Čihař
 <michal@cihar.com>.
