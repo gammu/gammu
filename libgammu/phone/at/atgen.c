@@ -800,6 +800,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	char separator = '\0', *separator_pos, *comma_pos, *date_start, *time_start;
 	int year;
 	GSM_Error error;
+	size_t len;
 
 	strncpy(input, _input, 100);
 	input[99] = '\0';
@@ -827,8 +828,12 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	if (*pos == '"') {
 		pos++;
 	}
-	if (buffer[strlen(pos) - 1] == '"') {
-		buffer[strlen(pos) - 1] = 0;
+	len = strlen(pos);
+	if (len == 0) {
+		return ERR_EMPTY;
+	}
+	if (buffer[len - 1] == '"') {
+		buffer[len - 1] = 0;
 	}
 
 	/* Check whether date is separated by / or - */
