@@ -234,8 +234,6 @@ gammu_test(getcalendar "" 42)
 gammu_test(deletecalendar "Entry is empty" 42)
 gammu_test(getcalendarsettings "Week starts on Monday")
 
-gammu_test(getallnotes "")
-
 gammu_test_fail(getalarm "Alarm .* not set in phone" 42)
 gammu_test(setalarm "" 12 22)
 gammu_test(getalarm "Alarm in location 1:" 1)
@@ -256,6 +254,10 @@ gammu_test(addnew "" ${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf -yes)
 gammu_test(addnew "Add SIM phonebook entries?" ${Gammu_SOURCE_DIR}/tests/vcards/gammu.vcf -yes)
 gammu_test(addnew "" ${Gammu_SOURCE_DIR}/tests/vcards/photo-2.vcf -memory SM -yes)
 gammu_test(addnew "" ${Gammu_SOURCE_DIR}/tests/vcal/UK32Holidays.ics -yes)
+
+gammu_test(addnew "Add notes to phone?" ${Gammu_SOURCE_DIR}/tests/vnote/symbian.vnt -yes)
+
+gammu_test(getallnotes "Teolog")
 
 gammu_test(restore "" ${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf -yes)
 gammu_test(restore "" ${Gammu_SOURCE_DIR}/tests/vcal/UK32Holidays.ics -yes)

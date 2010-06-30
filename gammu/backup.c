@@ -1544,6 +1544,7 @@ void AddNew(int argc, char *argv[])
 	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoEntry		ToDo;
 	GSM_ToDoStatus		ToDoStatus;
+	GSM_NoteEntry		Note;
 	GSM_CalendarEntry	Calendar;
 	GSM_WAPBookmark		Bookmark;
 	GSM_MemoryType		MemoryType = 0;
@@ -1704,6 +1705,27 @@ void AddNew(int argc, char *argv[])
 				}
 				fprintf(stderr, "\n");
 			}
+		}
+	}
+	if (Backup.Note[0] != NULL) {
+		Note.Location = 1;
+		if (answer_yes("%s", _("Add notes to phone?"))) {
+			max = 0;
+			while (Backup.Note[max]!=NULL) max++;
+			for (i=0;i<max;i++) {
+				Note  = *Backup.Note[i];
+				error = GSM_AddNote(gsm,&Note);
+				Print_Error(error);
+				fprintf(stderr, "\r");
+				fprintf(stderr, "%s ", _("Writing:"));
+				fprintf(stderr, _("%i percent"),
+					(i + 1) * 100 / max);
+				if (gshutdown) {
+					GSM_Terminate();
+					Terminate(4);
+				}
+			}
+			fprintf(stderr, "\n");
 		}
 	}
 	if (Backup.WAPBookmark[0] != NULL) {
