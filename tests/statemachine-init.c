@@ -63,6 +63,18 @@ int main(int argc UNUSED, char **argv UNUSED)
 	single_check("/dev/null ", "at", "", ERR_DEVICEREADERROR);
 #endif
 #endif
+#ifdef GSM_ENABLE_FBUS2DLR3
+	single_check("/NONEXISTING/DEVICE/NODE", "dlr3", "", ERR_DEVICENOTEXIST);
+#ifndef WIN32
+	single_check("/dev/null ", "dlr3", "", ERR_DEVICEREADERROR);
+#endif
+#endif
+#ifdef GSM_ENABLE_DKU5FBUS2
+	single_check("/NONEXISTING/DEVICE/NODE", "dku5", "", ERR_DEVICENOTEXIST);
+#ifndef WIN32
+	single_check("/dev/null ", "dku5", "", ERR_DEVICEREADERROR);
+#endif
+#endif
 
 	return 0;
 }
