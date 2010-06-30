@@ -824,8 +824,12 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	pos = buffer;
 
 	/* Strip possible quotes again */
-	if (*pos == '"') pos++;
-	if (buffer[strlen(pos) - 1] == '"') buffer[strlen(pos) - 1] = 0;
+	if (*pos == '"') {
+		pos++;
+	}
+	if (buffer[strlen(pos) - 1] == '"') {
+		buffer[strlen(pos) - 1] = 0;
+	}
 
 	/* Check whether date is separated by / or - */
 	if ((separator_pos = strchr(pos, '/')) != NULL) {
