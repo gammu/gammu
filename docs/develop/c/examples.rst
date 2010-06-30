@@ -22,6 +22,12 @@ Sending SMS message
 .. literalinclude:: ../examples/sms-send.c
    :language: c
 
+Sending Long SMS message
+------------------------
+
+.. literalinclude:: ../examples/long-sms.c
+   :language: c
+
 SMSD example
 ------------
 
