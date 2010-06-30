@@ -639,6 +639,17 @@
    fun:initposix
 }
 {
+   992 bytes in 1 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:PyString_FromString
+   fun:PyString_InternFromString
+   fun:PyDescr_NewMember
+   fun:PyType_Ready
+   fun:initdatetime
+}
+{
    1,344 bytes in 19 blocks are still reachable
    Memcheck:Leak
    fun:malloc
