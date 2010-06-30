@@ -253,7 +253,8 @@ gammu_test(backup "" test.ldif -yes)
 gammu_test(addnew "" ${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf -yes)
 gammu_test(addnew "Add SIM phonebook entries?" ${Gammu_SOURCE_DIR}/tests/vcards/gammu.vcf -yes)
 gammu_test(addnew "" ${Gammu_SOURCE_DIR}/tests/vcards/photo-2.vcf -memory SM -yes)
-gammu_test(addnew "" ${Gammu_SOURCE_DIR}/tests/vcal/UK32Holidays.ics -yes)
+gammu_test(addnew "Add phone calendar notes?" ${Gammu_SOURCE_DIR}/tests/vcal/UK32Holidays.ics -yes)
+gammu_test(addnew "Add phone ToDo?" ${Gammu_SOURCE_DIR}/tests/vcal/02.vcs -yes)
 
 gammu_test(addnew "Add notes to phone?" ${Gammu_SOURCE_DIR}/tests/vnote/symbian.vnt -yes)
 
