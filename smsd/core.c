@@ -1561,7 +1561,9 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		}
 	}
 	strcpy(Config->prevSMSID, "");
-	if (Service->MoveSMS(&sms,Config, Config->SMSID, FALSE, TRUE) != ERR_NONE) {
+	error = Service->MoveSMS(&sms,Config, Config->SMSID, FALSE, TRUE);
+	if (error != ERR_NONE) {
+		SMSD_LogError(DEBUG_ERROR, Config, "Error moving message", error);
 		Service->MoveSMS(&sms,Config, Config->SMSID, TRUE, FALSE);
 	}
 	return ERR_NONE;
