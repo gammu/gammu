@@ -57,35 +57,6 @@
 #define RSS_STABLE_STRING "Gammu stable version "
 #define RSS_TESTING_STRING "Gammu test version "
 
-#ifdef DEBUG
-static void MakeConvertTable(int argc UNUSED, char *argv[])
-{
-	unsigned char InputBuffer[10000], Buffer[10000];
-	FILE *file;
-	int size, i, j = 0;
-
-	file = fopen(argv[2], "rb");
-	if (file == NULL)
-		Print_Error(ERR_CANTOPENFILE);
-	size = fread(InputBuffer, 1, 10000 - 1, file);
-	fclose(file);
-	InputBuffer[size] = 0;
-	InputBuffer[size + 1] = 0;
-
-	ReadUnicodeFile(Buffer, InputBuffer);
-
-	for (i = 0; i < ((int)UnicodeLength(Buffer)); i++) {
-		j++;
-		if (j == 100) {
-			printf("\"\\\n\"");
-			j = 0;
-		}
-		printf("\\x%02x\\x%02x", Buffer[i * 2], Buffer[i * 2 + 1]);
-	}
-	printf("\\x00\\x00");
-}
-#endif
-
 static void ListNetworks(int argc, char *argv[])
 {
 	extern unsigned char *GSM_Networks[];
@@ -736,7 +707,6 @@ static GSM_Parameters Parameters[] = {
 #ifdef DEBUG
 	{"decodesniff",		2, 3, decodesniff,		{H_Decode,0},			"MBUS2|IRDA file [phonemodel]"},
 	{"decodebinarydump",		1, 2, decodebinarydump,		{H_Decode,0},			"file [phonemodel]"},
-	{"makeconverttable",		1, 1, MakeConvertTable,		{H_Decode,0},			"file"},
 #endif
 	{"batch",			0, 1, RunBatch,			{H_Other,0},			"[file]"},
 	{"",				0, 0, NULL,			{0}, ""}
