@@ -1202,10 +1202,6 @@ int main(int argc, char *argv[])
 			if (rss) {
 				printf_warn("Configuration option rsslevel is ignored, use '%s' instead\n", "gammu checkversion");
 			}
-			rss = INI_GetValue(cfg, "gammu", "usephonedb", FALSE);
-			if (rss) {
-				printf_warn("Configuration option usephonedb is ignored, use '%s' instead\n", "gammu checkfirmware");
-			}
 		}
 
 		/* We wanted to read just user specified configuration. */
