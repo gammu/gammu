@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "May 12 2010" "Gammu 1.27.94" "Gammu Documentation"
+.TH "GAMMU" "1" "Jul  1 2010" "Gammu 1.27.96" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -2402,15 +2402,6 @@ be done, when phone doesn't have set clock inside.
 
 .SS "Phone information"
 .TP
-.BI "checkfirmware"
-
-Gammu connects to www.gammu.org and checks for latest firmware versions
-available for the device. The file
-<http://www.gammu.org/support/phones/phonedbxml.php?model=x> will be
-downloaded and all phone details will be read from it. No private data are
-sent to server. Internet connection to www.gammu.org on port 80 required.
-
-.TP
 .BI "getdisplaystatus"
 
 .TP
@@ -2519,9 +2510,6 @@ This option is available only if Gammu was compiled with debuging options.
 .BI "decodesniff MBUS2|IRDA" " file [phonemodel]"
 Option available only, if Gammu was compiled with debug. Allows to decode
 sniffs. See \fI/docs/develop/develop.txt\fR for more details.
-
-.TP
-.BI "makeconverttable" " file"
 
 
 .SS "Functions that don't fit elsewhere"

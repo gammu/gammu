@@ -277,7 +277,6 @@ gammu_test(deletefolder "" "foobar")
 gammu_test(getfolderlisting "dir2/dir2-5" "dir2")
 
 if (ONLINE_TESTING AND CURL_FOUND)
-    gammu_test(checkfirmware "")
     gammu_test(checkversion "")
     gammu_test(getlocation "Number of samples;Could not connect to the server;Could not resolve the host name")
 endif (ONLINE_TESTING AND CURL_FOUND)

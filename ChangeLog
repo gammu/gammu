@@ -23,6 +23,7 @@ ChangeLog
 
 [+] * Support for adding notes using addnew command.
 [-] * Better log errors when moving message in SMSD.
+[!] * Removed checkfirmware command as the server is not existing anymore.
     
 20100629 - 1.27.95
 
