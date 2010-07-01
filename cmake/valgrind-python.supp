@@ -650,6 +650,17 @@
    fun:initdatetime
 }
 {
+   992 bytes in 1 blocks are still reachable
+   Memcheck:Leak
+   fun:malloc
+   fun:PyObject_Malloc
+   fun:_PyObject_GC_Malloc
+   fun:PyType_GenericAlloc
+   fun:PyDescr_NewMethod
+   fun:PyType_Ready
+   fun:initdatetime
+}
+{
    1,344 bytes in 19 blocks are still reachable
    Memcheck:Leak
    fun:malloc
