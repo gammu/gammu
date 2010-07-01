@@ -869,7 +869,12 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 				i++;
 				if (Buffer[i] == 0) continue;
 				if (Buffer[i + 1] == 0x80) {
-					strcpy(Info->Entries[0].MMSIndicator->Sender, Buffer + i + 2);
+					if (Buffer[i + 2] < 32) {
+						/* String with length + encoding, we just ignore it for now */
+						strcpy(Info->Entries[0].MMSIndicator->Sender, Buffer + i + 4);
+					} else {
+						strcpy(Info->Entries[0].MMSIndicator->Sender, Buffer + i + 2);
+					}
 				}
 				i += Buffer[i];
 				break;
