@@ -59,9 +59,6 @@ int main(int argc UNUSED, char **argv UNUSED)
 	single_check("/NONEXISTING/DEVICE/NODE", "at", "atobex", ERR_DEVICENOTEXIST);
 	single_check(NUL, "at", "", ERR_DEVICEREADERROR);
 	single_check(NUL, "at ", "", ERR_DEVICEREADERROR);
-#ifndef WIN32
-	single_check("/dev/null ", "at", "", ERR_DEVICEREADERROR);
-#endif
 #endif
 #ifdef GSM_ENABLE_FBUS2DLR3
 	single_check("/NONEXISTING/DEVICE/NODE", "dlr3", "", ERR_DEVICENOTEXIST);
