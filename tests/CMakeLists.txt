@@ -648,20 +648,22 @@ add_test(sms-cmdline-WAP "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
 set_tests_properties(sms-cmdline-WAP PROPERTIES
     PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
 
-add_test(sms-cmdline-TODO "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    TODO 132132  ${Gammu_SOURCE_DIR}/tests/vcal/02.vcs  1)
-set_tests_properties(sms-cmdline-TODO PROPERTIES
-    PASS_REGULAR_EXPRESSION "User Data Header     : Nokia calendar note, ID \\(8 bit\\) [0-9]*, part 2 of 2")
+if (WITH_BACKUP)
+    add_test(sms-cmdline-TODO "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+        TODO 132132  ${Gammu_SOURCE_DIR}/tests/vcal/02.vcs  1)
+    set_tests_properties(sms-cmdline-TODO PROPERTIES
+        PASS_REGULAR_EXPRESSION "User Data Header     : Nokia calendar note, ID \\(8 bit\\) [0-9]*, part 2 of 2")
 
-add_test(sms-cmdline-CALENDAR "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    CALENDAR 132132  ${Gammu_SOURCE_DIR}/tests/vcal/UK32Holidays.ics  30)
-set_tests_properties(sms-cmdline-CALENDAR PROPERTIES
-    PASS_REGULAR_EXPRESSION "SUMMARY:Bank Holiday")
+    add_test(sms-cmdline-CALENDAR "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+        CALENDAR 132132  ${Gammu_SOURCE_DIR}/tests/vcal/UK32Holidays.ics  30)
+    set_tests_properties(sms-cmdline-CALENDAR PROPERTIES
+        PASS_REGULAR_EXPRESSION "SUMMARY:Bank Holiday")
 
-add_test(sms-cmdline-VCARD "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    VCARD21 132132  ${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf ME 1)
-set_tests_properties(sms-cmdline-VCARD PROPERTIES
-    PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(8 bit\\) [0-9]*, 2 parts")
+    add_test(sms-cmdline-VCARD "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+        VCARD21 132132  ${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf ME 1)
+    set_tests_properties(sms-cmdline-VCARD PROPERTIES
+        PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(8 bit\\) [0-9]*, 2 parts")
+endif (WITH_BACKUP)
 
 add_test(sms-cmdline-SMSTEMPLATE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     SMSTEMPLATE 213 -text aaafdsfdfasd)
@@ -702,20 +704,22 @@ add_test(sms-cmdline-PROFILE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}
 set_tests_properties(sms-cmdline-PROFILE PROPERTIES
     PASS_REGULAR_EXPRESSION "User Data Header     : Nokia profile, ID \\(8 bit\\) [0-9]*, 3 parts")
 
-add_test(sms-cmdline-BOOKMARK "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    BOOKMARK 213 ${Gammu_SOURCE_DIR}/tests/misc/wap-bookmark.backup 1)
-set_tests_properties(sms-cmdline-BOOKMARK PROPERTIES
-    PASS_REGULAR_EXPRESSION "User Data Header     : Nokia WAP bookmark")
+if (WITH_BACKUP)
+    add_test(sms-cmdline-BOOKMARK "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+        BOOKMARK 213 ${Gammu_SOURCE_DIR}/tests/misc/wap-bookmark.backup 1)
+    set_tests_properties(sms-cmdline-BOOKMARK PROPERTIES
+        PASS_REGULAR_EXPRESSION "User Data Header     : Nokia WAP bookmark")
 
-add_test(sms-cmdline-WAPSETTINGS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    WAPSETTINGS 213 ${Gammu_SOURCE_DIR}/tests/misc/wap-settings.backup 1 GPRS)
-set_tests_properties(sms-cmdline-WAPSETTINGS PROPERTIES
-    PASS_REGULAR_EXPRESSION "User Data Header     : Nokia WAP bookmark or WAP/MMS settings, ID \\(8 bit\\) [0-9]*, 2 parts")
+    add_test(sms-cmdline-WAPSETTINGS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+        WAPSETTINGS 213 ${Gammu_SOURCE_DIR}/tests/misc/wap-settings.backup 1 GPRS)
+    set_tests_properties(sms-cmdline-WAPSETTINGS PROPERTIES
+        PASS_REGULAR_EXPRESSION "User Data Header     : Nokia WAP bookmark or WAP/MMS settings, ID \\(8 bit\\) [0-9]*, 2 parts")
 
-add_test(sms-cmdline-MMSSETTINGS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    MMSSETTINGS 213 ${Gammu_SOURCE_DIR}/tests/misc/mms-settings.backup 1)
-set_tests_properties(sms-cmdline-MMSSETTINGS PROPERTIES
-    PASS_REGULAR_EXPRESSION "User Data Header     : Nokia WAP bookmark or WAP/MMS settings, ID \\(8 bit\\) [0-9]*, 2 parts")
+    add_test(sms-cmdline-MMSSETTINGS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+        MMSSETTINGS 213 ${Gammu_SOURCE_DIR}/tests/misc/mms-settings.backup 1)
+    set_tests_properties(sms-cmdline-MMSSETTINGS PROPERTIES
+        PASS_REGULAR_EXPRESSION "User Data Header     : Nokia WAP bookmark or WAP/MMS settings, ID \\(8 bit\\) [0-9]*, 2 parts")
+endif (WITH_BACKUP)
 
 if (WITH_ATGEN)
     # Samsung parser tests
