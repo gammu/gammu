@@ -100,9 +100,10 @@ For USB connections (currently only fbususb and dku2 on Linux), you can
 specify to which USB device Gammu should connect. You can either provide
 vendor/product IDs or device address on USB:
 
-    Device = 0x1234:0x5678 # This matches device by vendor and product id
-    Device = 0x1234:-1 # This matches device by vendor id
-    Device = 1.10 # This matches device by usb bus and device address
+    Device = 0x1234:0x5678  # Match device by vendor and product id
+    Device = 0x1234:-1      # Match device by vendor id
+    Device = 1.10           # Match device by usb bus and device address
+    Device = 10             # Match device by usb device address
 
 For Bluetooth connection you have to enter Bluetooth address of your phone
 (you can list Bluetooth devices in range on Linux using "hcitool scan"
