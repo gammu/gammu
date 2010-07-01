@@ -809,9 +809,12 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 
 	/* Concatenate data */
 	for (i = 0; i < SMS->Number; i++) {
-		if (SMS->SMS[i].UDH.Type != UDH_MMSIndicatorLong ||
-		    SMS->SMS[i].UDH.Text[11] != i+1		 ||
-		    SMS->SMS[i].UDH.Text[10] != SMS->Number) {
+		if (SMS->SMS[i].UDH.Type == UDH_MMSIndicatorLong) {
+			if (SMS->SMS[i].UDH.Text[11] != i+1		 ||
+			    SMS->SMS[i].UDH.Text[10] != SMS->Number) {
+				return FALSE;
+			}
+		} else if (SMS->SMS[i].UDH.Type != UDH_UserUDH) {
 			return FALSE;
 		}
 		memcpy(Buffer + Length, SMS->SMS[i].Text, SMS->SMS[i].Length);
@@ -835,6 +838,7 @@ gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
 	/* First byte is transaction ID */
 	/* PUSH */
 	if (Buffer[1] != 0x06) {
+		dbgprintf(di, "Unsupported transaction id: 0x%02x\n", Buffer[1]);
 		return FALSE;
 	}
 	/* Process payload */

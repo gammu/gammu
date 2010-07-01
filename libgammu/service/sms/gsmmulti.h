@@ -54,6 +54,9 @@ void GSM_Find_Free_Used_SMS2(GSM_Debug_Info *di, GSM_Coding_Type Coding,GSM_SMSM
 
 unsigned char GSM_MakeSMSIDFromTime(void);
 
+gboolean GSM_DecodeMMSIndication(GSM_Debug_Info *di,
+			    GSM_MultiPartSMSInfo	*Info,
+			    GSM_MultiSMSMessage		*SMS);
 
 #if defined(_MSC_VER) && defined(__cplusplus)
     }
