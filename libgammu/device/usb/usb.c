@@ -10,6 +10,8 @@
 
 #include <gammu-config.h>
 
+#include <ctype.h>
+
 #ifdef LIBUSB_FOUND
 #include <libusb.h>
 #endif
@@ -126,6 +128,62 @@ GSM_Error GSM_USB_Error(GSM_StateMachine *s, enum libusb_error code)
 	}
 }
 
+GSM_Error GSM_USB_ParseDevice(GSM_StateMachine *s, int *vendor, int *product, int *bus, int *deviceid)
+{
+	char *endptr, *next;
+	int num;
+
+	*vendor = -1;
+	*product = -1;
+	*bus = -1;
+	*deviceid = -1;
+
+	if (s->CurrentConfig->Device[0] == 0 || !isdigit(s->CurrentConfig->Device[0])) {
+		return ERR_NONE;
+	}
+
+	num = strtol(s->CurrentConfig->Device, &endptr, 10);
+	if (*endptr == 'x') {
+		num = strtol(s->CurrentConfig->Device, &endptr, 16);
+	}
+	if (*endptr == 0) {
+		*deviceid = num;
+		smprintf(s, "Will search for deviceid = %d\n", *deviceid);
+		return ERR_NONE;
+	}
+	if (*endptr == ':') {
+		*vendor = num;
+		next = endptr + 1;
+		num = strtol(next, &endptr, 10);
+		if (*endptr == 'x') {
+			num = strtol(next, &endptr, 16);
+		}
+		*product = num;
+		smprintf(s, "Will search for vendor = 0x%04x, deviceid = 0x%04x\n", *vendor, *product);
+		if (*endptr == 0) {
+			return ERR_NONE;
+		} else {
+			return ERR_UNKNOWN;
+		}
+	}
+	if (*endptr == '.') {
+		*bus = num;
+		next = endptr + 1;
+		num = strtol(next, &endptr, 10);
+		if (*endptr == 'x') {
+			num = strtol(next, &endptr, 16);
+		}
+		*deviceid = num;
+		smprintf(s, "Will search for bus = %d, deviceid = %d\n", *bus, *deviceid);
+		if (*endptr == 0) {
+			return ERR_NONE;
+		} else {
+			return ERR_UNKNOWN;
+		}
+	}
+	return ERR_UNKNOWN;
+}
+
 GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 {
 	libusb_device **devs;
@@ -137,6 +195,12 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 	struct libusb_device_descriptor desc;
 	struct libusb_config_descriptor *config;
 	GSM_Error error;
+	int vendor = -1, product = -1, bus = -1, deviceid = -1;
+	gboolean do_match;
+
+	/* Device selection */
+	GSM_USB_ParseDevice(s, &vendor, &product, &bus, &deviceid);
+	do_match = (vendor != -1 || product != -1 || bus != -1 || deviceid != -1);
 
 	cnt = libusb_get_device_list(d->context, &devs);
 	if (cnt < 0) {
@@ -144,6 +208,8 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		return GSM_USB_Error(s, cnt);
 	}
 
+	/* Check all devices */
+	i = 0;
 	while ((dev = devs[i++]) != NULL) {
 		rc = libusb_get_device_descriptor(dev, &desc);
 		if (rc < 0) {
@@ -156,7 +222,20 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 			desc.idVendor, desc.idProduct,
 			libusb_get_bus_number(dev), libusb_get_device_address(dev));
 
-		/* @todo: TODO: add optional matching by ids based on device name from configuration */
+		if (do_match) {
+			if (vendor != -1 && vendor != desc.idVendor) {
+				smprintf(s, "Vendor does not match requested 0x%04x, ignoring\n", vendor);
+			}
+			if (product != -1 && product != desc.idProduct) {
+				smprintf(s, "Product does not match requested 0x%04x, ignoring\n", product);
+			}
+			if (bus != -1 && bus != libusb_get_bus_number(dev)) {
+				smprintf(s, "Bus does not match requested %d, ignoring\n", bus);
+			}
+			if (deviceid != -1 && deviceid != libusb_get_device_address(dev)) {
+				smprintf(s, "Device address does not match requested %d, ignoring\n", deviceid);
+			}
+		}
 
 		if (matcher(s, dev, &desc)) {
 			break;

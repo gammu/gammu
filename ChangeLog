@@ -26,6 +26,7 @@ ChangeLog
 [!] * Removed checkfirmware command as the server is not existing anymore.
 [-] * Proper closing of Bluetooth sockets on Windows (bug #1239).
 [-] * Properly decode another way of MMS notification SMS.
+[+] * Support for selecting USB device to use on Linux.
     
 20100629 - 1.27.95
 
