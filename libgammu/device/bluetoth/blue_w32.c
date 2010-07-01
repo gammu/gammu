@@ -82,7 +82,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 		GSM_OSErrorInfo(s, "Connect in bluetooth_open");
 
 		/* Close the handle */
-		close(d->hPhone);
+		closesocket(d->hPhone);
 
 		switch (err) {
 			case WSAETIMEDOUT:
@@ -216,11 +216,11 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 		(char*)&protocolInfo, &protocolInfoSize) != 0)
 	{
 		GSM_OSErrorInfo(s, "getsockopt in bluetooth_open");
-		close(d->hPhone);
+		closesocket(d->hPhone);
 		smprintf(s, "Failed to getsockopt in bluetooth_open\n");
 		return ERR_UNKNOWN;
 	}
-	close(d->hPhone);
+	closesocket(d->hPhone);
 
 	if (!strcmp(s->CurrentConfig->Device,"com2:")) {
 		bufferLength = sizeof(buffer);
