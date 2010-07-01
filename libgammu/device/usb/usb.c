@@ -532,7 +532,7 @@ next_el:
 	if (d->data_altsetting == -1 || d->data_idlesetting == -1) {
 		smprintf(s, "Failed to find data interface (%d)\n", d->data_iface);
 		libusb_free_config_descriptor(config);
-		return TRUE;
+		return FALSE;
 	}
 
 	/* Free config descriptor */
