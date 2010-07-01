@@ -1623,7 +1623,10 @@ void GSM_SetSendSMSStatusCallback(GSM_StateMachine *s, SendSMSStatusCallback cal
 
 GSM_StateMachine *GSM_AllocStateMachine(void)
 {
-	return (GSM_StateMachine *)calloc(1, sizeof(GSM_StateMachine));
+	GSM_StateMachine *ret;
+	ret = (GSM_StateMachine *)calloc(1, sizeof(GSM_StateMachine));
+	ret->CurrentConfig = &(ret->Config[0]);
+	return ret;
 }
 
 void GSM_FreeStateMachine(GSM_StateMachine *s)
