@@ -40,11 +40,11 @@ target_link_libraries(statemachine-init libGammu ${GETTEXT_LIBRARIES})
 add_test(statemachine-init "${GAMMU_TEST_PATH}/statemachine-init${GAMMU_TEST_SUFFIX}")
 
 # USB device parsing
-if (WITH_USB and WITH_NOKIA_SUPPORT)
+if (WITH_USB AND WITH_NOKIA_SUPPORT)
     add_executable(usb-device-parse usb-device-parse.c)
     target_link_libraries(usb-device-parse libGammu ${GETTEXT_LIBRARIES})
     add_test(usb-device-parse "${GAMMU_TEST_PATH}/usb-device-parse${GAMMU_TEST_SUFFIX}")
-endif (WITH_USB and WITH_NOKIA_SUPPORT)
+endif (WITH_USB AND WITH_NOKIA_SUPPORT)
 
 # Debug testing
 add_executable(debug debug.c)
