@@ -225,15 +225,19 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		if (do_match) {
 			if (vendor != -1 && vendor != desc.idVendor) {
 				smprintf(s, "Vendor does not match requested 0x%04x, ignoring\n", vendor);
+				continue;
 			}
 			if (product != -1 && product != desc.idProduct) {
 				smprintf(s, "Product does not match requested 0x%04x, ignoring\n", product);
+				continue;
 			}
 			if (bus != -1 && bus != libusb_get_bus_number(dev)) {
 				smprintf(s, "Bus does not match requested %d, ignoring\n", bus);
+				continue;
 			}
 			if (deviceid != -1 && deviceid != libusb_get_device_address(dev)) {
 				smprintf(s, "Device address does not match requested %d, ignoring\n", deviceid);
+				continue;
 			}
 		}
 
