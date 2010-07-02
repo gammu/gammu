@@ -3897,6 +3897,7 @@ static GSM_Error SaveTextComment(FILE *file, unsigned char *comment)
 				pos = 0;
 			}
 			fprintf(file, "%c", buffer[i]);
+			newline = FALSE;
 			pos++;
 		}
 	}

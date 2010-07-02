@@ -27,6 +27,7 @@ ChangeLog
 [-] * Proper closing of Bluetooth sockets on Windows (bug #1239).
 [-] * Properly decode another way of MMS notification SMS.
 [+] * Support for selecting USB device to use on Linux.
+[-] * Fix storing text in SMS backup comment for multiline SMS.
     
 20100629 - 1.27.95
 
