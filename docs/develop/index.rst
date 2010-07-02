@@ -19,6 +19,7 @@ Contents
     python/index
     c/index
     internal/index
+    formats/index
     smsd/index
     testing/index
     protocol/index
