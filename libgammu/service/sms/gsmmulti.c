@@ -706,11 +706,16 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 	case SMS_ConcatenatedTextLong:
 	case SMS_ConcatenatedTextLong16bit:
 		Class = Info->Class;
-		memcpy(Buffer,Info->Entries[0].Buffer,UnicodeLength(Info->Entries[0].Buffer)*2+2);
+		if (Info->Entries[0].Buffer == NULL) {
+			Buffer[0] = 0;
+			Buffer[1] = 0;
+		} else {
+			memcpy(Buffer,Info->Entries[0].Buffer,UnicodeLength(Info->Entries[0].Buffer)*2+2);
+		}
 		UDH = UDH_NoUDH;
 		if (Info->UnicodeCoding) {
 			Coding = SMS_Coding_Unicode_No_Compression;
-			Length = UnicodeLength(Info->Entries[0].Buffer);
+			Length = UnicodeLength(Buffer);
 			if (Info->Entries[0].ID == SMS_ConcatenatedTextLong16bit ||
 			    Info->Entries[0].ID == SMS_ConcatenatedAutoTextLong16bit) {
 				if (Length>70) UDH=UDH_ConcatenatedMessages16bit;
@@ -719,7 +724,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 			}
 		} else {
 			Coding = SMS_Coding_Default_No_Compression;
-			FindDefaultAlphabetLen(Info->Entries[0].Buffer,&Length,&smslen,5000);
+			FindDefaultAlphabetLen(Buffer,&Length,&smslen,5000);
 			if (Info->Entries[0].ID == SMS_ConcatenatedTextLong16bit ||
 			    Info->Entries[0].ID == SMS_ConcatenatedAutoTextLong16bit) {
 				if (smslen>GSM_MAX_SMS_CHARS_LENGTH) UDH=UDH_ConcatenatedMessages16bit;
