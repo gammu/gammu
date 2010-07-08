@@ -28,6 +28,7 @@ ChangeLog
 [-] * Properly decode another way of MMS notification SMS.
 [+] * Support for selecting USB device to use on Linux.
 [-] * Fix storing text in SMS backup comment for multiline SMS.
+[-] * Fixed crash when passing invalid parameters to SMS encoder.
     
 20100629 - 1.27.95
 
