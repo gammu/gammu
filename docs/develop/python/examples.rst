@@ -10,6 +10,12 @@ Sending a message
 .. literalinclude:: ../../../python/examples/sendsms.py
    :language: python
 
+Sending a long message
+----------------------
+
+.. literalinclude:: ../../../python/examples/sendlongsms.py
+   :language: python
+
 Initiating a voice call
 -----------------------
 
