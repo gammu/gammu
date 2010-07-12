@@ -19,7 +19,7 @@ the issue.
 ChangeLog
 =========
     
-2010???? - 1.27.96
+20100712 - 1.28.0
 
 [+] * Support for adding notes using addnew command.
 [-] * Better log errors when moving message in SMSD.
