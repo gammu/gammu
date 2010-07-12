@@ -277,7 +277,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
                                     are messages manually moved from the other folders.
                                     Picture messages are saved here.
                                   c - Number of unread messages in phone memory. Probably
-                                    only smart messsages.
+                                    only smart messages.
                                   d - max. number of messages on SIM
                                   e - Number of used messages in SIM memory. These are
                                     either received messages or saved into Outbox/Inbox.

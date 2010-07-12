@@ -288,7 +288,7 @@ List::
                                     are messages manually moved from the other folders.
                                     Picture messages are saved here.
                                   c - Number of unread messages in phone memory. Probably
-                                    only smart messsages.
+                                    only smart msssages.
                                   d - Number of used messages in SIM memory. These are
                                     either received messages or saved into Outbox/Inbox.
                                     Note that you *can't* save message into this memory

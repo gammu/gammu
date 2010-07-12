@@ -1488,7 +1488,7 @@ GSM_Error SMSD_SendSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 			return ERR_UNKNOWN;
 		}
 	} else {
-		SMSD_Log(DEBUG_NOTICE, Config, "New messsage to send: %s", Config->SMSID);
+		SMSD_Log(DEBUG_NOTICE, Config, "New message to send: %s", Config->SMSID);
 		Config->retries = 0;
 		strcpy(Config->prevSMSID, Config->SMSID);
 	}
