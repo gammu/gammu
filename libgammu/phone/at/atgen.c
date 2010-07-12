@@ -2566,6 +2566,13 @@ GSM_Error ATGEN_ReplyGetPacketNetworkLAC_CID(GSM_Protocol_Message msg, GSM_State
 		return ERR_UNKNOWNRESPONSE;
 	}
 
+	if (strcmp("OK", GetLineString(msg.Buffer, &Priv->Lines, 2)) == 0) {
+		NetworkInfo->PacketState = GSM_NoNetwork;
+		NetworkInfo->PacketLAC[0] = 0;
+		NetworkInfo->PacketCID[0] = 0;
+		return ERR_NONE;
+	}
+
 	smprintf(s, "Network LAC & CID & state received\n");
 
 	NetworkInfo->PacketLAC[0] = 0;
@@ -2649,6 +2656,13 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 		return ATGEN_HandleCMEError(s);
 	default:
 		return ERR_UNKNOWNRESPONSE;
+	}
+
+	if (strcmp("OK", GetLineString(msg.Buffer, &Priv->Lines, 2)) == 0) {
+		NetworkInfo->State = GSM_NoNetwork;
+		NetworkInfo->LAC[0] = 0;
+		NetworkInfo->CID[0] = 0;
+		return ERR_NONE;
 	}
 
 	smprintf(s, "Network LAC & CID & state received\n");
