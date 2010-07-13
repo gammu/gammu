@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0300\n"
-"PO-Revision-Date: 2010-07-13 23:45+0200\n"
+"PO-Revision-Date: 2010-07-13 23:47+0200\n"
 "Last-Translator: William  Bachion <william@bachiondesign.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -10411,10 +10411,14 @@ msgstr ""
 
 #. type: Plain text
 #: INSTALL:237
+#, fuzzy
 msgid ""
 "You can download PostgreSQL binaries from <http://www.postgresql.org/>, but "
 "then you need to add wldap32.dll library to bin."
 msgstr ""
+"Você pode fazer o download dos arquivos binários do PostgreSQL "
+"em:<http://www.postgresql.org/>, você precisará adicionar a biblioteca "
+"wldap32.dll no diretório bin"
 
 #. type: Title -
 #: INSTALL:240
