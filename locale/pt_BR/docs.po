@@ -156,12 +156,12 @@ msgid ""
 "-f / --debug-file E<lt>filenameE<gt> ... file for logging debug messages"
 msgstr ""
 
-# type: SS
+# Tipo: SS
 #. type: SS
 #: docs/user/gammu.1:34
 #, no-wrap
 msgid "Commands"
-msgstr ""
+msgstr "Comandos"
 
 # type: Plain text
 #. type: Plain text
