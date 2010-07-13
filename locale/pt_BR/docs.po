@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.27.96\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0300\n"
-"PO-Revision-Date: 2010-07-13 23:40+0200\n"
+"PO-Revision-Date: 2010-07-13 23:43+0200\n"
 "Last-Translator: William  Bachion <william@bachiondesign.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -137,7 +137,9 @@ msgstr ""
 #: docs/user/gammu.1:28
 msgid ""
 "-s / --section E<lt>confignE<gt> ... section of config file to use, eg. 42"
-msgstr "-c / --section E<lt>nome_da_secaoE<gt> ... nome do arquivo da Seção"
+msgstr ""
+"-c / --section E<lt>configurarE<gt> ... seção de arquivo de configuração, "
+"ex. 42."
 
 # type: Plain text
 #. type: Plain text
