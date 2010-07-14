@@ -223,7 +223,7 @@ endif (PYTHON_EXECUTABLE)
 macro_optional_find_package (MySQL)
 macro_optional_find_package (Postgres)
 macro_optional_find_package (LibDBI)
-macro_optional_find_package (GettextLibs)
+macro_optional_find_package (Libintl)
 macro_optional_find_package (Iconv)
 macro_optional_find_package (CURL)
 
@@ -394,15 +394,9 @@ if (ICONV_FOUND)
     endif (NOT "${ICONV_LIBRARIES}" STREQUAL "")
 endif (ICONV_FOUND)
 
-if (GETTEXTLIBS_FOUND)
-    if (NOT "${GETTEXT_LIBRARIES}" STREQUAL ""
-            AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib/libc.so"
-            AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib64/libc.so")
-        set (GAMMU_LIBS "${GAMMU_LIBS} -l${GETTEXT_LIBRARIES}")
-    endif (NOT "${GETTEXT_LIBRARIES}" STREQUAL ""
-            AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib/libc.so"
-            AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib64/libc.so")
-endif (GETTEXTLIBS_FOUND)
+if (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
+    set (GAMMU_LIBS "${GAMMU_LIBS} -l${LIBINTL_LIBRARIES}")
+endif (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
 
 if (LIBUSB_FOUND)
     if (NOT "${LIBUSB_LIBRARIES}" STREQUAL "")
@@ -730,11 +724,11 @@ if (WIN32 AND NOT CYGWIN)
     endif (ICONV_FOUND)
 
     # Gettext and dependencies
-    if (GETTEXTLIBS_FOUND)
+    if (LIBINTL_LIB_FOUND)
         ADD_DLL("libintl-8.dll" "${LIBINTL_LIBRARY}")
-    endif (GETTEXTLIBS_FOUND)
+    endif (LIBINTL_LIB_FOUND)
 
-    # Gettext and dependencies
+    # Curl and dependencies
     if (CURL_FOUND)
         ADD_DLL("libcurl-4.dll" "${CURL_LIBRARIES}")
         ADD_DLL("mgwz.dll" "${CURL_LIBRARIES}")
