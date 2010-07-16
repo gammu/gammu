@@ -65,6 +65,14 @@
 
 #include "../helper/string.h"
 
+#ifndef PATH_MAX
+#ifdef MAX_PATH
+#define PATH_MAX (MAX_PATH)
+#else
+#define PATH_MAX (4069)
+#endif
+#endif
+
 const char smsd_name[] = "gammu-smsd";
 
 /**
