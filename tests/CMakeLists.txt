@@ -20,7 +20,7 @@ include_directories("${Gammu_BINARY_DIR}/include")
 
 # Basic check for statemachine allocation
 add_executable(statemachine-alloc statemachine-alloc.c)
-target_link_libraries(statemachine-alloc libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(statemachine-alloc libGammu ${LIBINTL_LIBRARIES})
 add_test(statemachine-alloc "${GAMMU_TEST_PATH}/statemachine-alloc${GAMMU_TEST_SUFFIX}")
 
 # Basic check for sizes
@@ -36,46 +36,46 @@ add_test(array "${GAMMU_TEST_PATH}/array-test${GAMMU_TEST_SUFFIX}")
 
 # Basic check for statemachine functionality
 add_executable(statemachine-init statemachine-init.c)
-target_link_libraries(statemachine-init libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(statemachine-init libGammu ${LIBINTL_LIBRARIES})
 add_test(statemachine-init "${GAMMU_TEST_PATH}/statemachine-init${GAMMU_TEST_SUFFIX}")
 
 # USB device parsing
 if (LIBUSB_FOUND AND WITH_NOKIA_SUPPORT)
     add_executable(usb-device-parse usb-device-parse.c)
-    target_link_libraries(usb-device-parse libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(usb-device-parse libGammu ${LIBINTL_LIBRARIES})
     add_test(usb-device-parse "${GAMMU_TEST_PATH}/usb-device-parse${GAMMU_TEST_SUFFIX}")
 endif (LIBUSB_FOUND AND WITH_NOKIA_SUPPORT)
 
 # Debug testing
 add_executable(debug debug.c)
-target_link_libraries(debug libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(debug libGammu ${LIBINTL_LIBRARIES})
 add_test(debug "${GAMMU_TEST_PATH}/debug${GAMMU_TEST_SUFFIX}")
 
 # Check error code  descriptions
 add_executable(dump-error-codes dump-error-codes.c)
-target_link_libraries(dump-error-codes libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(dump-error-codes libGammu ${LIBINTL_LIBRARIES})
 add_test(dump-error-codes "${GAMMU_TEST_PATH}/dump-error-codes${GAMMU_TEST_SUFFIX}" "-n")
 
 # Check feature code names
 add_executable(dump-features dump-features.c)
-target_link_libraries(dump-features libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(dump-features libGammu ${LIBINTL_LIBRARIES})
 add_test(dump-features "${GAMMU_TEST_PATH}/dump-features${GAMMU_TEST_SUFFIX}" "-n")
 
 # Check feature parsing
 add_executable(features-parsing features-parsing.c)
-target_link_libraries(features-parsing libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(features-parsing libGammu ${LIBINTL_LIBRARIES})
 add_test(features-parsing "${GAMMU_TEST_PATH}/features-parsing${GAMMU_TEST_SUFFIX}" "-n")
 
 # Check network codes decoding
 add_executable(network-codes network-codes.c)
-target_link_libraries(network-codes libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(network-codes libGammu ${LIBINTL_LIBRARIES})
 add_test(network-codes "${GAMMU_TEST_PATH}/network-codes${GAMMU_TEST_SUFFIX}" "-n")
 
 if (WITH_BACKUP)
     # smsbackup parsing
     add_executable(smsbackup smsbackup.c)
     target_link_libraries(smsbackup messagedisplay)
-    target_link_libraries(smsbackup libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(smsbackup libGammu ${LIBINTL_LIBRARIES})
 
     # List test cases
     file(GLOB VCARDS
@@ -95,7 +95,7 @@ if (WITH_BACKUP)
     # vCard parsing
     add_executable(vcard-read vcard-read.c)
     target_link_libraries(vcard-read memorydisplay)
-    target_link_libraries(vcard-read libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(vcard-read libGammu ${LIBINTL_LIBRARIES})
 
     # List test cases
     file(GLOB VCARDS
@@ -133,7 +133,7 @@ endif (WITH_BACKUP)
 # [iv]Calendar parsing
 if (WITH_BACKUP)
     add_executable(cal-read cal-read.c)
-    target_link_libraries(cal-read libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(cal-read libGammu ${LIBINTL_LIBRARIES})
 
     # List test cases
     file(GLOB VCALS
@@ -169,97 +169,97 @@ endif (WITH_BACKUP)
 # SMS parsing
 if (WITH_NOKIA6110)
     add_executable(sms-nokia-01 sms-nokia-01.c)
-    target_link_libraries(sms-nokia-01 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-01 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-01 messagedisplay)
     add_test(sms-nokia-01 "${GAMMU_TEST_PATH}/sms-nokia-01${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6110)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-02 sms-nokia-02.c)
-    target_link_libraries(sms-nokia-02 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-02 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-02 messagedisplay)
     add_test(sms-nokia-02 "${GAMMU_TEST_PATH}/sms-nokia-02${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-03 sms-nokia-03.c)
-    target_link_libraries(sms-nokia-03 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-03 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-03 messagedisplay)
     add_test(sms-nokia-03 "${GAMMU_TEST_PATH}/sms-nokia-03${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-04 sms-nokia-04.c)
-    target_link_libraries(sms-nokia-04 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-04 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-04 messagedisplay)
     add_test(sms-nokia-04 "${GAMMU_TEST_PATH}/sms-nokia-04${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-05 sms-nokia-05.c)
-    target_link_libraries(sms-nokia-05 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-05 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-05 messagedisplay)
     add_test(sms-nokia-05 "${GAMMU_TEST_PATH}/sms-nokia-05${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-06 sms-nokia-06.c)
-    target_link_libraries(sms-nokia-06 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-06 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-06 messagedisplay)
     add_test(sms-nokia-06 "${GAMMU_TEST_PATH}/sms-nokia-06${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-07 sms-nokia-07.c)
-    target_link_libraries(sms-nokia-07 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-07 libGammu ${LIBINTL_LIBRARIES})
     add_test(sms-nokia-07 "${GAMMU_TEST_PATH}/sms-nokia-07${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-08 sms-nokia-08.c)
-    target_link_libraries(sms-nokia-08 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-08 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-08 messagedisplay)
     add_test(sms-nokia-08 "${GAMMU_TEST_PATH}/sms-nokia-08${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-09 sms-nokia-09.c)
-    target_link_libraries(sms-nokia-09 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-09 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-09 messagedisplay)
     add_test(sms-nokia-09 "${GAMMU_TEST_PATH}/sms-nokia-09${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-10 sms-nokia-10.c)
-    target_link_libraries(sms-nokia-10 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-10 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-10 messagedisplay)
     add_test(sms-nokia-10 "${GAMMU_TEST_PATH}/sms-nokia-10${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-11 sms-nokia-11.c)
-    target_link_libraries(sms-nokia-11 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-11 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-11 messagedisplay)
     add_test(sms-nokia-11 "${GAMMU_TEST_PATH}/sms-nokia-11${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-12 sms-nokia-12.c)
-    target_link_libraries(sms-nokia-12 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-12 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-12 messagedisplay)
     add_test(sms-nokia-12 "${GAMMU_TEST_PATH}/sms-nokia-12${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-13 sms-nokia-13.c)
-    target_link_libraries(sms-nokia-13 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-13 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-13 messagedisplay)
     add_test(sms-nokia-13 "${GAMMU_TEST_PATH}/sms-nokia-13${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
 
 if (WITH_NOKIA6510)
     add_executable(sms-nokia-14 sms-nokia-14.c)
-    target_link_libraries(sms-nokia-14 libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-nokia-14 libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-nokia-14 messagedisplay)
     add_test(sms-nokia-14 "${GAMMU_TEST_PATH}/sms-nokia-14${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6510)
@@ -267,14 +267,14 @@ endif (WITH_NOKIA6510)
 if (WITH_NOKIA6110)
 # Nokia ringtone
     add_executable(nokia-6110-ringtone nokia-6110-ringtone.c)
-    target_link_libraries(nokia-6110-ringtone libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(nokia-6110-ringtone libGammu ${LIBINTL_LIBRARIES})
     add_test(nokia-6110-ringtone "${GAMMU_TEST_PATH}/nokia-6110-ringtone${GAMMU_TEST_SUFFIX}")
 endif (WITH_NOKIA6110)
 
 if (WITH_ATGEN)
     # AT SMS parsing
     add_executable(sms-at-parse sms-at-parse.c)
-    target_link_libraries(sms-at-parse libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(sms-at-parse libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(sms-at-parse messagedisplay)
 
     # AT SMS parsing - simple PDU decoder
@@ -342,7 +342,7 @@ if (WITH_ATGEN)
 
     # AT model parsing
     add_executable(get-model-at get-model-at.c)
-    target_link_libraries(get-model-at libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(get-model-at libGammu ${LIBINTL_LIBRARIES})
 
     # List test cases
     file(GLOB MESSAGES
@@ -359,7 +359,7 @@ if (WITH_ATGEN)
 
     # Samsung memory parsing
     add_executable(samsung-get-memory samsung-get-memory.c)
-    target_link_libraries(samsung-get-memory libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(samsung-get-memory libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(samsung-get-memory memorydisplay)
 
     # List test cases
@@ -377,7 +377,7 @@ if (WITH_ATGEN)
 
     # AT getting of available phone memories
     add_executable(at-get-smsmemories at-get-smsmemories.c)
-    target_link_libraries(at-get-smsmemories libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(at-get-smsmemories libGammu ${LIBINTL_LIBRARIES})
 
     # List test cases for all memories
     file(GLOB MESSAGES
@@ -411,7 +411,7 @@ if (WITH_ATGEN)
 
     # AT CNMI parsing
     add_executable(at-cnmi-reply at-cnmi-reply.c)
-    target_link_libraries(at-cnmi-reply libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(at-cnmi-reply libGammu ${LIBINTL_LIBRARIES})
 
     # List test cases
     file(GLOB MESSAGES
@@ -428,7 +428,7 @@ if (WITH_ATGEN)
 
     # AT CREG parsing
     add_executable(at-creg-reply at-creg-reply.c)
-    target_link_libraries(at-creg-reply libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(at-creg-reply libGammu ${LIBINTL_LIBRARIES})
 
     # List test cases
     file(GLOB MESSAGES
@@ -445,7 +445,7 @@ if (WITH_ATGEN)
 
     # AT memory parsing
     add_executable(at-getmemory-reply at-getmemory-reply.c)
-    target_link_libraries(at-getmemory-reply libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(at-getmemory-reply libGammu ${LIBINTL_LIBRARIES})
     target_link_libraries(at-getmemory-reply memorydisplay)
 
     macro(at_getmemory_reply_test _file _charset _test)
@@ -469,7 +469,7 @@ if (WITH_ATGEN)
 
     # AT USSD replies parsing
     add_executable(at-ussd-reply at-ussd-reply.c)
-    target_link_libraries(at-ussd-reply libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(at-ussd-reply libGammu ${LIBINTL_LIBRARIES})
 
     # List test cases
     file(GLOB MESSAGES
@@ -487,7 +487,7 @@ if (WITH_ATGEN)
 
     # AT SMSC parsing
     add_executable(get-smsc-at get-smsc-at.c)
-    target_link_libraries(get-smsc-at libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(get-smsc-at libGammu ${LIBINTL_LIBRARIES})
 
     # List test cases
     file(GLOB MESSAGES
@@ -520,7 +520,7 @@ if (WITH_ATGEN)
     if (WITH_BACKUP)
         # AT SMS encoding
         add_executable(sms-at-encode sms-at-encode.c)
-        target_link_libraries(sms-at-encode libGammu ${GETTEXT_LIBRARIES})
+        target_link_libraries(sms-at-encode libGammu ${LIBINTL_LIBRARIES})
 
         # List test cases
         file(GLOB MESSAGES
@@ -541,13 +541,13 @@ endif (WITH_ATGEN)
 
 # SMS encoding
 add_executable(sms-encode-decode sms-encode-decode.c)
-target_link_libraries(sms-encode-decode libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(sms-encode-decode libGammu ${LIBINTL_LIBRARIES})
 target_link_libraries(sms-encode-decode messagedisplay)
 add_test(sms-encode-decode "${GAMMU_TEST_PATH}/sms-encode-decode${GAMMU_TEST_SUFFIX}")
 
 # SMS encoding from commandline
 add_executable(sms-cmdline sms-cmdline.c)
-target_link_libraries(sms-cmdline libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(sms-cmdline libGammu ${LIBINTL_LIBRARIES})
 target_link_libraries(sms-cmdline messagedisplay)
 target_link_libraries(sms-cmdline messagecmdline)
 
@@ -731,33 +731,33 @@ endif (WITH_BACKUP)
 if (WITH_ATGEN)
     # Samsung parser tests
     add_executable(at-samsung at-samsung.c)
-    target_link_libraries(at-samsung libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(at-samsung libGammu ${LIBINTL_LIBRARIES})
     add_test(at-samsung "${GAMMU_TEST_PATH}/at-samsung${GAMMU_TEST_SUFFIX}")
 
     # Motorola parser tests
     add_executable(at-motorola at-motorola.c)
-    target_link_libraries(at-motorola libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(at-motorola libGammu ${LIBINTL_LIBRARIES})
     add_test(at-motorola "${GAMMU_TEST_PATH}/at-motorola${GAMMU_TEST_SUFFIX}")
 
     # AT parser tests
     add_executable(at-parser at-parser.c)
-    target_link_libraries(at-parser libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(at-parser libGammu ${LIBINTL_LIBRARIES})
     add_test(at-parser "${GAMMU_TEST_PATH}/at-parser${GAMMU_TEST_SUFFIX}")
 
     # AT text encoding/decoding
     add_executable(at-charset at-charset.c)
-    target_link_libraries(at-charset libGammu ${GETTEXT_LIBRARIES})
+    target_link_libraries(at-charset libGammu ${LIBINTL_LIBRARIES})
     add_test(at-charset "${GAMMU_TEST_PATH}/at-charset${GAMMU_TEST_SUFFIX}")
 endif (WITH_ATGEN)
 
 # Line parser tests
 add_executable(line-splitting line-splitting.c)
-target_link_libraries(line-splitting libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(line-splitting libGammu ${LIBINTL_LIBRARIES})
 add_test(line-splitting "${GAMMU_TEST_PATH}/line-splitting${GAMMU_TEST_SUFFIX}")
 
 # Config file parsing
 add_executable(config config.c)
-target_link_libraries(config libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(config libGammu ${LIBINTL_LIBRARIES})
 file(GLOB CONFIGS
     RELATIVE "${Gammu_SOURCE_DIR}/tests/configs"
     "${Gammu_SOURCE_DIR}/tests/configs/tabs-*")
@@ -772,7 +772,7 @@ endforeach(TESTCONFIG $CONFIGS)
 
 # INI file parsing
 add_executable(inifile inifile.c)
-target_link_libraries(inifile libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(inifile libGammu ${LIBINTL_LIBRARIES})
 file(GLOB INIFILES
     RELATIVE "${Gammu_SOURCE_DIR}/tests/inifiles"
     "${Gammu_SOURCE_DIR}/tests/inifiles/*.ini")
@@ -784,17 +784,17 @@ endforeach(TESTINIFILE $INIFILES)
 
 # Examples
 add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.c")
-target_link_libraries(phone-info libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(phone-info libGammu ${LIBINTL_LIBRARIES})
 add_executable(custom-config "${Gammu_SOURCE_DIR}/docs/develop/examples/custom-config.c")
-target_link_libraries(custom-config libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(custom-config libGammu ${LIBINTL_LIBRARIES})
 add_executable(sms-send "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-send.c")
-target_link_libraries(sms-send libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(sms-send libGammu ${LIBINTL_LIBRARIES})
 add_executable(long-sms "${Gammu_SOURCE_DIR}/docs/develop/examples/long-sms.c")
-target_link_libraries(long-sms libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(long-sms libGammu ${LIBINTL_LIBRARIES})
 add_executable(sms-read "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-read.c")
-target_link_libraries(sms-read libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(sms-read libGammu ${LIBINTL_LIBRARIES})
 add_executable(smsd "${Gammu_SOURCE_DIR}/docs/develop/examples/smsd.c")
-target_link_libraries(smsd libGammu ${GETTEXT_LIBRARIES} gsmsd)
+target_link_libraries(smsd libGammu ${LIBINTL_LIBRARIES} gsmsd)
 
 # Examples tests, works with dummy phone
 if (WITH_BACKUP)
@@ -811,132 +811,132 @@ endif (WITH_BACKUP)
 
 # Test for header gammu-backup.h
 add_executable(include-backup include-backup.c)
-target_link_libraries(include-backup libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-backup libGammu ${LIBINTL_LIBRARIES})
 add_test(include-backup "${GAMMU_TEST_PATH}/include-backup${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-bitmap.h
 add_executable(include-bitmap include-bitmap.c)
-target_link_libraries(include-bitmap libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-bitmap libGammu ${LIBINTL_LIBRARIES})
 add_test(include-bitmap "${GAMMU_TEST_PATH}/include-bitmap${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-calendar.h
 add_executable(include-calendar include-calendar.c)
-target_link_libraries(include-calendar libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-calendar libGammu ${LIBINTL_LIBRARIES})
 add_test(include-calendar "${GAMMU_TEST_PATH}/include-calendar${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-callback.h
 add_executable(include-callback include-callback.c)
-target_link_libraries(include-callback libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-callback libGammu ${LIBINTL_LIBRARIES})
 add_test(include-callback "${GAMMU_TEST_PATH}/include-callback${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-call.h
 add_executable(include-call include-call.c)
-target_link_libraries(include-call libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-call libGammu ${LIBINTL_LIBRARIES})
 add_test(include-call "${GAMMU_TEST_PATH}/include-call${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-category.h
 add_executable(include-category include-category.c)
-target_link_libraries(include-category libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-category libGammu ${LIBINTL_LIBRARIES})
 add_test(include-category "${GAMMU_TEST_PATH}/include-category${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-datetime.h
 add_executable(include-datetime include-datetime.c)
-target_link_libraries(include-datetime libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-datetime libGammu ${LIBINTL_LIBRARIES})
 add_test(include-datetime "${GAMMU_TEST_PATH}/include-datetime${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-debug.h
 add_executable(include-debug include-debug.c)
-target_link_libraries(include-debug libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-debug libGammu ${LIBINTL_LIBRARIES})
 add_test(include-debug "${GAMMU_TEST_PATH}/include-debug${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-error.h
 add_executable(include-error include-error.c)
-target_link_libraries(include-error libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-error libGammu ${LIBINTL_LIBRARIES})
 add_test(include-error "${GAMMU_TEST_PATH}/include-error${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-file.h
 add_executable(include-file include-file.c)
-target_link_libraries(include-file libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-file libGammu ${LIBINTL_LIBRARIES})
 add_test(include-file "${GAMMU_TEST_PATH}/include-file${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-info.h
 add_executable(include-info include-info.c)
-target_link_libraries(include-info libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-info libGammu ${LIBINTL_LIBRARIES})
 add_test(include-info "${GAMMU_TEST_PATH}/include-info${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-inifile.h
 add_executable(include-inifile include-inifile.c)
-target_link_libraries(include-inifile libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-inifile libGammu ${LIBINTL_LIBRARIES})
 add_test(include-inifile "${GAMMU_TEST_PATH}/include-inifile${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-keys.h
 add_executable(include-keys include-keys.c)
-target_link_libraries(include-keys libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-keys libGammu ${LIBINTL_LIBRARIES})
 add_test(include-keys "${GAMMU_TEST_PATH}/include-keys${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-limits.h
 add_executable(include-limits include-limits.c)
-target_link_libraries(include-limits libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-limits libGammu ${LIBINTL_LIBRARIES})
 add_test(include-limits "${GAMMU_TEST_PATH}/include-limits${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-memory.h
 add_executable(include-memory include-memory.c)
-target_link_libraries(include-memory libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-memory libGammu ${LIBINTL_LIBRARIES})
 add_test(include-memory "${GAMMU_TEST_PATH}/include-memory${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-message.h
 add_executable(include-message include-message.c)
-target_link_libraries(include-message libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-message libGammu ${LIBINTL_LIBRARIES})
 add_test(include-message "${GAMMU_TEST_PATH}/include-message${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-misc.h
 add_executable(include-misc include-misc.c)
-target_link_libraries(include-misc libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-misc libGammu ${LIBINTL_LIBRARIES})
 add_test(include-misc "${GAMMU_TEST_PATH}/include-misc${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-nokia.h
 add_executable(include-nokia include-nokia.c)
-target_link_libraries(include-nokia libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-nokia libGammu ${LIBINTL_LIBRARIES})
 add_test(include-nokia "${GAMMU_TEST_PATH}/include-nokia${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-ringtone.h
 add_executable(include-ringtone include-ringtone.c)
-target_link_libraries(include-ringtone libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-ringtone libGammu ${LIBINTL_LIBRARIES})
 add_test(include-ringtone "${GAMMU_TEST_PATH}/include-ringtone${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-security.h
 add_executable(include-security include-security.c)
-target_link_libraries(include-security libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-security libGammu ${LIBINTL_LIBRARIES})
 add_test(include-security "${GAMMU_TEST_PATH}/include-security${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-settings.h
 add_executable(include-settings include-settings.c)
-target_link_libraries(include-settings libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-settings libGammu ${LIBINTL_LIBRARIES})
 add_test(include-settings "${GAMMU_TEST_PATH}/include-settings${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-smsd.h
 add_executable(include-smsd include-smsd.c)
-target_link_libraries(include-smsd libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-smsd libGammu ${LIBINTL_LIBRARIES})
 add_test(include-smsd "${GAMMU_TEST_PATH}/include-smsd${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-statemachine.h
 add_executable(include-statemachine include-statemachine.c)
-target_link_libraries(include-statemachine libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-statemachine libGammu ${LIBINTL_LIBRARIES})
 add_test(include-statemachine "${GAMMU_TEST_PATH}/include-statemachine${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-types.h
 add_executable(include-types include-types.c)
-target_link_libraries(include-types libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-types libGammu ${LIBINTL_LIBRARIES})
 add_test(include-types "${GAMMU_TEST_PATH}/include-types${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-unicode.h
 add_executable(include-unicode include-unicode.c)
-target_link_libraries(include-unicode libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-unicode libGammu ${LIBINTL_LIBRARIES})
 add_test(include-unicode "${GAMMU_TEST_PATH}/include-unicode${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-wap.h
 add_executable(include-wap include-wap.c)
-target_link_libraries(include-wap libGammu ${GETTEXT_LIBRARIES})
+target_link_libraries(include-wap libGammu ${LIBINTL_LIBRARIES})
 add_test(include-wap "${GAMMU_TEST_PATH}/include-wap${GAMMU_TEST_SUFFIX}")
 
 # Auto generated include tests end
@@ -965,7 +965,7 @@ if (NOT WIN32)
     execute_process(COMMAND test -w /var/lock/ RESULT_VARIABLE VAR_LOCK_WRITABLE)
     if (VAR_LOCK_WRITABLE EQUAL 0)
         add_executable(locking locking.c)
-        target_link_libraries(locking libGammu ${GETTEXT_LIBRARIES})
+        target_link_libraries(locking libGammu ${LIBINTL_LIBRARIES})
         add_test(locking "${GAMMU_TEST_PATH}/locking${GAMMU_TEST_SUFFIX}")
     else (VAR_LOCK_WRITABLE EQUAL 0)
         message("/var/lock is not writable, skipping locking tests!")

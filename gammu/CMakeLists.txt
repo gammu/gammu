@@ -58,10 +58,10 @@ include_directories (
     "${Gammu_BINARY_DIR}/include"
     )
 # Tune options for found libraries
-if (GETTEXTLIBS_FOUND)
-    target_link_libraries (gammu ${GETTEXT_LIBRARIES})
+if (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
+    target_link_libraries (gammu ${LIBINTL_LIBRARIES})
     include_directories (${GETTEXT_INCLUDE_DIR})
-endif (GETTEXTLIBS_FOUND)
+endif (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
 
 if (CURL_FOUND)
     target_link_libraries (gammu ${CURL_LIBRARIES})

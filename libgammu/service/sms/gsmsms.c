@@ -454,7 +454,7 @@ GSM_Error GSM_DecodePDUFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, const unsi
 		/* Protocol identifier */
 		smfprintf(di, "SMS PID: 0x%02X\n", buffer[pos]);
 		if (buffer[pos] > 0x40 && buffer[pos] < 0x48) {
-			SMS->ReplaceMessage = buffer[pos];
+			SMS->ReplaceMessage = buffer[pos] - 0x40;
 		}
 		pos++;
 		if (pos >= length) {

@@ -41,11 +41,11 @@ target_link_libraries (messagedisplay libGammu)
 target_link_libraries (messagedisplay memorydisplay)
 
 # Tune options for found libraries
-if (GETTEXTLIBS_FOUND)
+if (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
     target_link_libraries (messagedisplay ${GETTEXT_LIBRARIES})
     target_link_libraries (printing ${GETTEXT_LIBRARIES})
     include_directories (${GETTEXT_INCLUDE_DIR})
-endif (GETTEXTLIBS_FOUND)
+endif (LIBINTL_LIB_FOUND AND LIBINTL_LIBRARIES)
 
 if(WIN32 AND NOT CMAKE_COMPILER_IS_MINGW AND NOT CMAKE_COMPILER_IS_CYGWIN)
     add_library(win32dirent STATIC win32-dirent.c)
