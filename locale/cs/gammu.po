@@ -4,7 +4,7 @@
 # Michal <michal@cihar.com>, 20, 2010.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.27.96\n"
+"Project-Id-Version: Gammu 1.28.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0200\n"
 "PO-Revision-Date: 2010-06-29 16:12+0200\n"
