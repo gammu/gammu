@@ -765,9 +765,7 @@ int SMSFromPython(PyObject * dict, GSM_SMSMessage * sms, int needslocation,
 		}
 	}
 
-	if (sms->UDH.Type == UDH_NoUDH || sms->UDH.Type == UDH_UserUDH ||
-	    sms->UDH.Type == UDH_ConcatenatedMessages
-	    || sms->UDH.Type == UDH_ConcatenatedMessages16bit) {
+	if (sms->Coding != SMS_Coding_8bit) {
 		/* No UDH/UserUDH => copy as text */
 		if (!CopyStringFromDict
 		    (dict, "Text", GSM_MAX_SMS_LENGTH, sms->Text))
@@ -955,9 +953,7 @@ PyObject *SMSToPython(GSM_SMSMessage * sms)
 		return NULL;
 	}
 
-	if (sms->UDH.Type == UDH_NoUDH || sms->UDH.Type == UDH_UserUDH ||
-	    sms->UDH.Type == UDH_ConcatenatedMessages
-	    || sms->UDH.Type == UDH_ConcatenatedMessages16bit) {
+	if (sms->Coding != SMS_Coding_8bit) {
 		/* No UDH/User UDH => copy as text */
 		text = UnicodeStringToPythonL(sms->Text, sms->Length);
 	} else {
