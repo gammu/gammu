@@ -39,7 +39,7 @@ ovládají filtrování zpráv (viz dále).
 .TP 
 \fBService\fP
 
-Jakou službu SMSM použít, jedna z FILES, NULL, MYSQL, PGSQL, DBI (záleží na
+Jakou službu SMSD použít, jedna z FILES, NULL, MYSQL, PGSQL, DBI (záleží na
 zakompilovaných knihovnách).
 
 \fBFILES\fP \- ukládá zprávy v souborech, pro podrobnosti viz
@@ -281,10 +281,10 @@ podrobností v sekci Filtrování zpráv.
 .TP 
 \fBBackendRetries\fP
 
-How many times will SMSD backend retry operation.
+Kolikrát se bude SMSD služba pokoušet znovu připojit k úložišti.
 
-The implementation on different backends is different, for database backends
-it generally means how many times it will try to reconnect to the server.
+Implementace je pro každou službu jiná, například pro databáze toto obvykle
+znamená kolikrát se pokusí připojit k serveru po ztrátě spojení.
 
 Výchozí je 10.
 
