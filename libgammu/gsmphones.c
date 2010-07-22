@@ -390,7 +390,7 @@ GSM_PhoneModel allmodels[] = {
 	{"7650", "NHL-2", "Nokia 7650", {0}},
 	{"9300", "Nokia 9300", "Nokia 9300", {0}},
 	{"N70", "Nokia E70", "Nokia E70", {0}},
-	{"E61", "Nokia E61", "Nokia E61", {F_ENCODED_USSD, 0}},
+	{"E61", "Nokia E61", "Nokia E61", {0}},
 
 	/* Siemens */
 	{"M20"  ,	  "M20",	  "",				   {F_M20SMS,F_SLOWWRITE,0}},
