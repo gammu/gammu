@@ -168,10 +168,13 @@ compilation fails).
 From Sources - Mac OS X
 =======================
 
-Gammu should be compilable on Mac OS X, see wiki for up to date
-instructions:
+Gammu should be compilable on Mac OS X, you need to have installed
+Developer Tols (version 2.4.1 was tested) and CMake (there is a Mac OS X
+"Darwin" DMG download). For database support in SMSD, install wanted
+database, eg. MySQL.
 
-http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/installing_on_Mac_OS_X
+The rest of the compilation should be pretty same as on Linux, see Linux
+section for more details about compile time options.
 
 
 Cross compilation for Windows on Linux
