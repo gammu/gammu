@@ -1,0 +1,523 @@
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH GAMMU\-SMSD\-TABLES 7 "August 17, 2009" "Gammu 1.26.0" "Gammu Documentation"
+.SH NAME
+
+.P
+gammu\-smsd\-tables \- description of tables for database backends of
+gammu\-smsd(1)
+
+.SH DESCRIPTION
+gammu\-smsd(1) supports several backends. Actual backend is chosen in a
+config file gammu\-smsdrc(5).
+
+Separate backends are described in their appropriate man pages. This manual
+page describes general database structure and required tables.
+
+More SMS daemons can share single database. If you do not specify PhoneID in
+their configuration, all are treated equally and you have no guarantee which
+one sends outgoing message. If you configure PhoneID and use it when
+inserting message to the outbox table (gammu\-smsd\-inject(1) does this), each
+SMS daemon will have separate outbox queue.
+
+.SS "Receiving of messages"
+
+Received messages are stored in inbox table.
+
+.SS "Transmitting of messages"
+
+Transmitted messages are read from table outbox and possible subsequent
+parts of the same message from outbox_multipart.
+
+.SS "Description of tables"
+
+.TP 
+\fBdaemons\fP
+
+Information about running daemons.
+
+.TP 
+\fBgammu\fP
+
+Table holding single value \- version of a database schema. See HISTORY for
+details what has changed.
+
+.TP 
+\fBinbox\fP
+
+Table where received messages will be stored.
+
+Fields description:
+
+\fBUpdatedInDB\fP (timestamp)
+.br
+when somebody (daemon, user, etc.) updated it
+
+\fBReceivingDateTime\fP (timestamp)
+.br
+when SMS was received
+
+\fBText\fP (text)
+.br
+encoded SMS text (for all SMS)
+
+\fBSenderNumber\fP (varchar(20))
+.br
+decoded SMS sender number
+
+\fBCoding\fP (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit',
+\&'Default_Compression', 'Unicode_Compression'))
+.br
+SMS text coding
+
+\fBUDH\fP (text)
+.br
+encoded User Data Header text
+
+\fBSMSCNumber\fP (varchar(20))
+.br
+decoded SMSC number
+
+\fBClass\fP (integer)
+.br
+SMS class or \-1 (0 is flash SMS, 1 is normal one)
+
+\fBTextDecoded\fP (varchar(160))
+.br
+decoded SMS text (for Default Alphabet/Unicode SMS)
+
+\fBID\fP (integer unsigned)
+.br
+SMS identificator (for using with external applications)
+
+\fBRecipientID\fP (text)
+.br
+which Gammu daemon has added it
+
+\fBProcessed\fP (enum('false', 'true'))
+.br
+you can use for marking, whether SMS was processed or not
+
+
+.TP 
+\fBoutbox\fP
+
+Messages enqueued for sending should be placed in this table. If message is
+multipart, subsequent parts are stored in table outbox_multipart.
+
+Fields description:
+
+\fBUpdatedInDB\fP (timestamp)
+.br
+when somebody (daemon, user, etc.) updated it
+
+\fBInsertIntoDB\fP (timestamp)
+.br
+when message was inserted into database
+
+\fBSendingDateTime\fP (timestamp)
+.br
+set it to some value, when want to force sending after some planned time
+
+\fBText\fP (text)
+.br
+SMS text encoded using hex values in proper coding. If you want to use
+TextDecoded field, keep this NULL (or empty).
+
+\fBDestinationNumber\fP (varchar(20))
+.br
+recipient number
+
+\fBCoding\fP (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit',
+\&'Default_Compression', 'Unicode_Compression'))
+.br
+SMS text coding
+
+\fBUDH\fP (text)
+.br
+User Data Header encoded using hex values which will be used for
+constructing the message. Without this, message will be sent as plain text.
+
+\fBClass\fP (integer)
+.br
+SMS class or \-1 (0 is normal SMS, 1 is flash one)
+
+\fBTextDecoded\fP (varchar(160))
+.br
+SMS text in "human readable" form
+
+\fBID\fP (integer unsigned)
+.br
+SMS/SMS sequence ID
+
+Please note that this number has to be unique also for sentitems table, so
+reusing message IDs might not be a good idea.
+
+\fBMultiPart\fP (enum('false','true'))
+.br
+info, whether there are more SMS from this sequence in outbox_multipart
+
+\fBRelativeValidity\fP (integer)
+.br
+SMS relative validity like encoded using GSM specs
+
+\fBSenderID\fP (text)
+.br
+which SMSD instance should send this one sequence
+
+\fBSendingTimeOut\fP (timestamp)
+.br
+used by SMSD instance for own targets
+
+\fBDeliveryReport\fP (enum('default','yes','no'))
+.br
+when default is used, Delivery Report is used or not according to SMSD
+instance settings; yes forces Delivery Report.
+
+\fBCreatorID\fP (text)
+.br
+sender identification, it has to match PhoneID in SMSD configuration to make
+SMSD process this message
+
+
+
+
+.TP 
+\fBoutbox_multipart\fP
+
+Data for outgoing multipart messages.
+
+Fields description:
+
+\fBID\fP (integer unsigned)
+.br
+\fBText\fP (text)
+.br
+\fBCoding\fP (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit',
+\&'Default_Compression', 'Unicode_Compression'))
+.br
+\fBUDH\fP (text)
+.br
+\fBClass\fP (integer)
+.br
+\fBTextDecoded\fP (varchar(160))
+.br
+\fBID\fP (integer unsigned)
+.br
+the same meaning as values in outbox table
+
+\fBSequencePosition\fP (integer)
+.br
+info, what is SMS number in SMS sequence (start at 2, first part is in
+outbox table).
+
+
+.TP 
+\fBphones\fP
+
+Information about connected phones. This table is periodically refreshed and
+you can get information such as battery or signal level from here.
+
+Fields description:
+
+\fBID\fP (text)
+.br
+PhoneID value
+
+\fBUpdatedInDB\fP (timestamp)
+.br
+when this record has been updated
+
+\fBInsertIntoDB\fP (timestamp)
+.br
+when this record has been created (when phone has been connected)
+
+\fBTimeOut\fP (timestamp)
+.br
+when this record expires
+
+\fBSend\fP (boolean)
+.br
+currently always true
+
+\fBReceive\fP (boolean)
+.br
+currently always true
+
+\fBIMEI\fP (text)
+.br
+IMEI of phone
+
+\fBClient\fP (text)
+.br
+client name, usually string Gammu with version
+
+\fBBattery\fP (integer)
+.br
+battery level in percent (or \-1 if unknown)
+
+\fBSignal\fP (integer)
+.br
+signal level in percent (or \-1 if unknown)
+
+\fBSent\fP (integer)
+.br
+Number of sent SMS messages (SMSD does not reset this counter, so it might
+overflow).
+
+\fBReceived\fP (integer)
+.br
+Number of received SMS messages (SMSD does not reset this counter, so it
+might overflow).
+
+.TP 
+\fBsentitems\fP
+
+Log of sent messages (and unsent ones with error code). Also if delivery
+reports are enabled, message state is updated after receiving delivery
+report.
+
+Fields description:
+
+\fBUpdatedInDB\fP (timestamp)
+.br
+when somebody (daemon, user, etc.) updated it
+
+\fBInsertIntoDB\fP (timestamp)
+.br
+when message was inserted into database
+
+\fBSendingDateTime\fP (timestamp)
+.br
+when message has been sent
+
+\fBDeliveryDateTime\fP (timestamp)
+.br
+Time of receiving delivery report (if it has been enabled).
+
+\fBStatus\fP (enum('SendingOK', 'SendingOKNoReport', 'SendingError',
+\&'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown',
+\&'Error'))
+.br
+Status of message sending. SendingError mens that phone failed to send the
+message, Error indicates some other error while processing message.
+
+\- \fBSendingOK\fP \- Message has been sent, waiting for delivery report.
+.br
+\- \fBSendingOKNoReport\fP \- Message has been sent without asking for delivery
+report.
+.br
+\- \fBSendingError\fP \- Sending has failed.
+.br
+\- \fBDeliveryOK\fP \- Delivery report arrived and reported success.
+.br
+\- \fBDeliveryFailed\fP \- Delivery report arrived and reports failure.
+.br
+\- \fBDeliveryPending\fP \- Delivery report announced pending deliver.
+.br
+\- \fBDeliveryUnknown\fP \- Delivery report reported unknown status.
+.br
+\- \fBError\fP \- Some other error happened during sending (usually bug in SMSD).
+
+\fBStatusError\fP (integer)
+.br
+Status of delivery from delivery report message, codes are defined in GSM
+specification 03.40 section 9.2.3.15 (TP\-Status).
+
+\fBText\fP (text)
+.br
+SMS text encoded using hex values
+
+\fBDestinationNumber\fP (varchar(20))
+.br
+decoded destination number for SMS
+
+\fBCoding\fP (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit',
+\&'Default_Compression', 'Unicode_Compression'))
+.br
+SMS text coding
+
+\fBUDH\fP (text)
+.br
+User Data Header encoded using hex values
+
+\fBSMSCNumber\fP (varchar(20))
+.br
+decoded number of SMSC, which sent SMS
+
+\fBClass\fP (integer)
+.br
+SMS class or \-1 (0 is normal SMS, 1 is flash one)
+
+\fBTextDecoded\fP (varchar(160))
+.br
+SMS text in "human readable" form
+
+\fBID\fP (integer unsigned)
+.br
+SMS ID
+
+\fBSenderID\fP (text)
+.br
+which SMSD instance sent this one sequence
+
+\fBSequencePosition\fP (integer)
+.br
+SMS number in SMS sequence
+
+\fBTPMR\fP (integer)
+.br
+Message Reference like in GSM specs
+
+\fBRelativeValidity\fP (integer)
+.br
+SMS relative validity like encoded using GSM specs
+
+\fBCreatorID\fP (text)
+.br
+copied from CreatorID from outbox table, matches PhoneID
+
+
+.TP 
+\fBpbk\fP
+
+Not used by SMSD currently, included only for application usage.
+
+.TP 
+\fBpbk_groups\fP
+
+Not used by SMSD currently, included only for application usage.
+
+.SH HISTORY
+
+History of schema versions:
+
+11 \- all fields for storing message text are no longer limited to 160 chars,
+but are arbitrary length text fields (1.25.92)
+
+10 \- DeliveryDateTime is now NULL when message is not delivered, added
+several indexes
+
+9 \- added sent/received counters to phones table
+
+8 \- introduced phones table
+
+7 \- added CreatorID to tables (it holds PhoneID if set)
+
+.SH EXAMPLE
+
+.SS "Creating tables"
+
+SQL scripts to create all needed tables for most databases are included in
+Gammu documentation (docs/sql). As well as some PHP scripts interacting with
+the database.
+
+For example to create SQLite tables, issue following command:
+    
+.RS
+.sp
+.nf
+.ne 7
+sqlite3 smsd.db < docs/sql/sqlite.sql
+.fi
+.sp
+.RE
+.PP
+
+.SS "Injecting a message using SQL"
+
+To send a message, you can either use gammu\-smsd\-inject(1), which does all
+the magic for you, or you can insert the message manually. The simplest
+example is short text message:
+
+.RS
+.sp
+.nf
+.ne 7
+INSERT INTO outbox (
+    DestinationNumber,
+    TextDecoded,
+    CreatorID,
+    Coding
+) VALUES (
+    '800123465',
+    'This is a SQL test message',
+    'Program',
+    'Default_No_Compression'
+);
+.fi
+.sp
+.RE
+.PP
+
+.SS "Injecting long message using SQL"
+
+Inserting multipart messages is a bit more tricky, you need to construct
+also UDH header and store it hexadecimally written into UDH field.
+
+For long text message, the UDH starts with 050003 followed by byte as a
+message reference (you can put anything there, but it should be different
+for each message, D3 in following example), byte for number of messages (02
+in example)  and byte for number of current message (01 for first message,
+02 for second, etc.).
+
+For example long text message of two parts could look like following:
+
+.RS
+.sp
+.nf
+.ne 7
+INSERT INTO outbox (
+    CreatorID,
+    MultiPart,
+    DestinationNumber,
+    UDH,
+    TextDecoded,
+    Coding
+) VALUES (
+    'Gammu 1.23.91',
+    'true',
+    '123465',
+    '050003D30201',
+    'Mqukqirip ya konej eqniu rejropocejor hugiygydewl tfej nrupxujob xuemymiyliralj. Te tvyjuh qaxumur ibewfoiws zuucoz tdygu gelum L ejqigqesykl kya jdytbez',
+    'Default_No_Compression'
+)
+
+INSERT INTO outbox_multipart (
+    SequencePosition,
+    UDH,
+    Class,
+    TextDecoded,
+    ID,
+    Coding
+) VALUES (
+    2,
+    '050003D30202',
+    'u xewz qisubevumxyzk ufuylehyzc. Nse xobq dfolizygqysj t bvowsyhyhyemim ovutpapeaempye giuuwbib.',
+    <ID_OF_INSERTED_RECORD_IN_OUBOX_TABLE>,
+    'Default_No_Compression'
+)
+.fi
+.sp
+.RE
+.PP
+
+.SH "SEE ALSO"
+Database backends: gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7),
+gammu\-smsd\-dbi(7)
+
+gammu\-smsd(1), gammu\-smsdrc(5), gammu(1), gammurc(5)
+.SH AUTHOR
+gammu\-smsd and this manual page were written by Michal Cihar
+<michal@cihar.com>.
+.SH COPYRIGHT
+Copyright \(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL
+version 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
+.br
+This is free software: you are free to change and redistribute it.  There is
+NO WARRANTY, to the extent permitted by law.
+.SH "REPORTING BUGS"
+Please report bugs to <http://bugs.cihar.com>.

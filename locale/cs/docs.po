@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2010-07-01 14:12+0300\n"
+"POT-Creation-Date: 2010-07-22 13:55+0300\n"
 "PO-Revision-Date: 2010-06-29 15:49+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -10999,694 +10999,458 @@ msgstr ""
 "listu <gammu-users@lists.sourceforge.net>."
 
 #. type: Plain text
-#: README:127 INSTALL:255
+#: README:127
 msgid "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 msgstr "# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us"
 
-#. type: Title =
-#: INSTALL:2
-#, no-wrap
-msgid "Gammu All Mobile Management Utilities - Installation\n"
-msgstr "Gammu All Mobile Management Utilities - Instalace\n"
-
-#. type: Title =
-#: INSTALL:6
-#, no-wrap
-msgid "Binaries - Linux\n"
-msgstr "Binárky - Linux\n"
-
-#. type: Plain text
-#: INSTALL:12
-msgid ""
-"Many distributions come with prebuilt Gammu binaries, if you can use them, "
-"it is definitely the easiest thing. There are also binary packages of latest "
-"release built for many distributions available on Gammu home page <http://"
-"wammu.eu/gammu/>."
-msgstr ""
-"Mnoho distribucí již obsahuje Gammu, takže pokud můžete použít tuto verzi, "
-"bude to pro vás nejjednodušší. Binární balíčky posledních verzí pro mnoho "
-"distribucí naleznete také na stránkách Gammu - <http://cs.wammu.eu/gammu/>."
-
-#. type: Title =
-#: INSTALL:15
-#, no-wrap
-msgid "Binaries - Windows\n"
-msgstr "Binárky - Windows\n"
-
-#. type: Plain text
-#: INSTALL:20
-msgid ""
-"You can download Windows binaries from <http://wammu.eu/gammu/>. For Windows "
-"95, 98 and NT 4.0 you will also need ShFolder DLL, which can be downloaded "
-"from Microsoft:"
-msgstr ""
-"Binárky pro Windows si můžete stáhnout z <http://cs.wammu.eu/gammu/>. Pro "
-"Windows 95, 98 a NT 4.0 budete také potřebovat ShFolder DLL, která může být "
-"stažena od Microsoftu:"
-
-#. type: Plain text
-#: INSTALL:22
-msgid ""
-"http://www.microsoft.com/downloads/details.aspx?"
-"displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F"
-msgstr ""
-"http://www.microsoft.com/downloads/details.aspx?"
-"displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F"
-
-#. type: Title =
-#: INSTALL:25
-#, no-wrap
-msgid "From Sources - Requirements\n"
-msgstr "Ze zdrojového kódu - požadavky\n"
-
-#. type: Plain text
-#: INSTALL:29
-msgid ""
-"Gammu does not require anything at all to build, but you might miss some "
-"features. Optional dependencies include:"
-msgstr ""
-"Gammu je možné zkompilovat bez jakýchkoliv dalších knihoven, ale můžete "
-"postrádat některé funkce. Volitelné závislosti jsou:"
-
-#. type: Plain text
-#: INSTALL:31
-msgid "Bluez-libs"
-msgstr "Bluez-libs"
-
-#. type: Plain text
-#: INSTALL:32
-msgid "http://www.bluez.org/"
-msgstr "http://www.bluez.org/"
-
-#. type: Plain text
-#: INSTALL:33
-msgid "Bluetooth support on Linux."
-msgstr "Podpora Bluetooth na Linuxu."
-
-#. type: Plain text
-#: INSTALL:35
-msgid "libusb-1.0"
-msgstr "libusb-1.0"
-
-#. type: Plain text
-#: INSTALL:36
-msgid "http://libusb.sourceforge.net/"
-msgstr "http://libusb.sourceforge.net/"
-
-#. type: Plain text
-#: INSTALL:37
-msgid "fbususb connection support"
-msgstr "připojení fbususb"
-
-#. type: Plain text
-#: INSTALL:39
-msgid "libCURL"
-msgstr "libCURL"
-
-#. type: Plain text
-#: INSTALL:40
-msgid "http://curl.haxx.se/libcurl/"
-msgstr "http://curl.haxx.se/libcurl/"
-
-#. type: Plain text
-#: INSTALL:41
-msgid "New versions notification and phonedb access."
-msgstr "Notifikace o nových verzích a přístup do databáze telefonů."
-
-#. type: Plain text
-#: INSTALL:43
-msgid "libiconv"
-msgstr "libiconv"
-
-#. type: Plain text
-#: INSTALL:44
-msgid "http://www.gnu.org/software/libiconv/"
-msgstr "http://www.gnu.org/software/libiconv/"
-
-#. type: Plain text
-#: INSTALL:45
-msgid "Support for more charsets in AT engine."
-msgstr "Podpora pro více znakových sad pro AT telefony."
-
-#. type: Plain text
-#: INSTALL:47
-msgid "Gettext"
-msgstr "Gettext"
-
-#. type: Plain text
-#: INSTALL:48
-msgid "http://www.gnu.org/software/gettext/"
-msgstr "http://www.gnu.org/software/gettext/"
-
-#. type: Plain text
-#: INSTALL:49
-msgid "Localization of strings."
-msgstr "Překlad uživatelského rozhraní."
-
-#. type: Plain text
-#: INSTALL:51
-msgid "MySQL"
-msgstr "MySQL"
-
-#. type: Plain text
-#: INSTALL:52
-msgid "http://mysql.com/"
-msgstr "http://mysql.com/"
-
-#. type: Plain text
-#: INSTALL:53
-msgid "MySQL support in SMSD."
-msgstr "Podpora pro MySQL v SMSD."
-
-#. type: Plain text
-#: INSTALL:55
-msgid "PostgreSQL"
-msgstr "PostgreSQL"
-
-#. type: Plain text
-#: INSTALL:56
-msgid "http://www.postgresql.org/"
-msgstr "http://www.postgresql.org/"
-
-#. type: Plain text
-#: INSTALL:57
-msgid "PostgreSQL support in SMSD."
-msgstr "Podpora pro PostgreSQL v SMSD."
-
-#. type: Plain text
-#: INSTALL:59
-msgid "libdbi"
-msgstr "libdbi"
-
-#. type: Plain text
-#: INSTALL:60
-msgid "http://libdbi.sourceforge.net/"
-msgstr "http://libdbi.sourceforge.net/"
-
-#. type: Plain text
-#: INSTALL:61
-msgid "required at least version 0.8.2"
-msgstr "je potřeba alespoň verze 0.8.2"
-
-#. type: Plain text
-#: INSTALL:62
-msgid "DBI support in SMSD."
-msgstr "Podpora pro DBI v SMSD."
-
-#. type: Plain text
-#: INSTALL:63
-msgid "For testing, please install libdbd-sqlite3"
-msgstr "Pro testování si prosím nainstalujte libdbd-sqlite3"
-
-#. type: Plain text
-#: INSTALL:65
-msgid "Python"
-msgstr "Python"
-
-#. type: Plain text
-#: INSTALL:66
-msgid "http://www.python.org/"
-msgstr "http://www.python.org/"
-
-#. type: Plain text
-#: INSTALL:67
-msgid "Gammu has a Python bindings"
-msgstr "Gammu má rozhraní pro Python"
-
-#. type: Plain text
-#: INSTALL:69
-msgid "SQLite + libdbi-drivers with SQLite"
-msgstr "SQLite + libdbi-drivers se SQLite"
-
-#. type: Plain text
-#: INSTALL:70
-msgid "http://www.sqlite.org/"
-msgstr "http://www.sqlite.org/"
-
-#. type: Plain text
-#: INSTALL:71
-msgid "needed for testing of SMSD using libdbi driver"
-msgstr "potřebné pro testování SMSD za použití ovladače libdbi"
-
-#. type: Title =
-#: INSTALL:74
-#, no-wrap
-msgid "From Sources - Linux\n"
-msgstr "Ze zdrojového kódu - Linux\n"
-
-#. type: Plain text
-#: INSTALL:77
-msgid "You need CMake from <http://www.cmake.org> for configuring Gammu."
-msgstr ""
-"Pro kompilaci Gammu potřebujete CMake ze stránek <http://www.cmake.org>."
-
-#. type: Plain text
-#: INSTALL:84
-msgid ""
-"For compatibility reasons, configure like wrapper is provided, if you don't "
-"need much specific tuning, you can use general \"./configure; make; sudo "
-"make install\" set of commands. The configure wrapper will create directory "
-"build-configure and build all binaries there (nothing is changed in source "
-"tree), for example gammu binary is in build-configure/gammu directory."
-msgstr ""
-"Kvůli kompatibilitě Gammu obsahuje jednoduchý wrapper který se chová jako "
-"configure skript, takže můžete použít obvyklou sadu příkazů \"./configure; "
-"make; sudo make install\". Kompilace probíhá v adresáži build-configure (ve "
-"stromu se zdrojovými kódy se nic nemění), například program gammu je "
-"kompilován v adresáři build-configure/gammu."
-
-#. type: Plain text
-#: INSTALL:88
-msgid ""
-"If you need/want to tweak build a bit more than configure wrapper provides, "
-"you have to use CMake directly. For now, only out of source build is "
-"supported, so you have to create separate directory for build:"
-msgstr ""
-"Pokud chcete nebo potřebujete nastavit kompilaci víc než umožňuje wrapper "
-"pro configure, musíte použít přímo CMake. V současné době je podporována jen "
-"kompilace mimo zdrojový strom, takže musíte vytvořit samostatný adresář pro "
-"kompilaci:"
-
-#. type: Plain text
-#: INSTALL:90
-msgid "mkdir build"
-msgstr "mkdir build"
-
-#. type: Plain text
-#: INSTALL:91
-msgid "cd build"
-msgstr "cd build"
-
-#. type: Plain text
-#: INSTALL:93
-msgid "Then just configure project:"
-msgstr "Poté zkonfigurujte projekt:"
-
-#. type: Plain text
-#: INSTALL:95
-msgid "cmake .."
-msgstr "cmake .."
-
-#. type: Plain text
-#: INSTALL:97
-msgid "Build it:"
-msgstr "Zkompilujte ho:"
-
-#. type: Plain text
-#: INSTALL:99
-msgid "make"
-msgstr "make"
-
-#. type: Plain text
-#: INSTALL:101
-msgid "Test that everything is okay:"
-msgstr "Otestujte jestli je všechno v pořádku:"
-
-#. type: Plain text
-#: INSTALL:103
-msgid "make test"
-msgstr "make test"
-
-#. type: Plain text
-#: INSTALL:105
-msgid "And finally install it:"
-msgstr "A nakonec ho nainstalujte:"
-
-#. type: Plain text
-#: INSTALL:107
-msgid "sudo make install"
-msgstr "sudo make install"
-
-#. type: Plain text
-#: INSTALL:110
-msgid ""
-"You can configure build parameters either by command line (see parameters "
-"bellow), or using TUI - ccmake."
-msgstr ""
-"Parametry můžete měnit na příkazové řádce (jak je popsáno níže), nebo pomocí "
-"textového rozhraní ccmake."
-
-#. type: Plain text
-#: INSTALL:112
-msgid "Useful cmake parameters:"
-msgstr "Užitečné parametry cmake:"
-
-#. type: Plain text
-#: INSTALL:114
-msgid "-DBUILD_SHARED_LIBS=ON enables shared library"
-msgstr "-DBUILD_SHARED_LIBS=ON povolí sdílenou knihovnu"
-
-#. type: Plain text
-#: INSTALL:115
-msgid "-DCMAKE_BUILD_TYPE=\"Debug\" enables debug build"
-msgstr "-DCMAKE_BUILD_TYPE=\"Debug\" zapne ladicí build"
-
-#. type: Plain text
-#: INSTALL:116
-msgid "-DCMAKE_INSTALL_PREFIX=\"/usr\" change installation prefix"
-msgstr "-DCMAKE_INSTALL_PREFIX=\"/usr\" změní prefix pro instalaci"
-
-#. type: Plain text
-#: INSTALL:118
-msgid ""
-"-DENABLE_PROTECTION=OFF disables various compile time protections against "
-"buffer overflows and similar attacks"
-msgstr ""
-"-DENABLE_PROTECTION=OFF vypne různé ochrany proti přetečení bufferu a "
-"podobným útokům"
-
-#. type: Plain text
-#: INSTALL:120
-msgid ""
-"-DBUILD_PYTHON=/usr/bin/python2.6 changes Python used for build Python module"
-msgstr ""
-"-DBUILD_PYTHON=/usr/bin/python2.6 změní Python, který bude použit pro "
-"kompilaci modulu pro Python"
-
-#. type: Plain text
-#: INSTALL:121
-msgid "-DWITH_PYTHON=OFF disables build of python-gammu"
-msgstr "-DWITH_PYTHON=OFF vypne kompilaci python-gammu"
-
-#. type: Plain text
-#: INSTALL:123
-msgid "You can also disable support for whole set of phones, e.g.:"
-msgstr "Můžete také vypnout podporu pro různé druhy telefonů, např.:"
-
-#. type: Plain text
-#: INSTALL:125
-msgid "-DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support"
-msgstr "-DWITH_NOKIA_SUPPORT=OFF vypne podporu pro Nokie"
-
-#. type: Plain text
-#: INSTALL:126
-msgid "-DWITH_BLUETOOTH=OFF disables Bluetooth support"
-msgstr "-DWITH_BLUETOOTH=OFF vypne podporu pro Bluetooth"
-
-#. type: Plain text
-#: INSTALL:127
-msgid "-DWITH_IRDA=OFF disables IrDA support"
-msgstr "-DWITH_IRDA=OFF vypne podporu pro IrDA"
-
-#. type: Title =
-#: INSTALL:129
-#, no-wrap
-msgid "Limiting set of installed data\n"
-msgstr "Omezení nainstalovaných věcí\n"
-
-#. type: Plain text
-#: INSTALL:133
-msgid ""
-"By setting following flags you can control which additional parts will be "
-"installed:"
-msgstr ""
-"Nastavením následujících parametrů můžete ovlivnit které volitelné části "
-"budou nainstalovány:"
-
-#. type: Plain text
-#: INSTALL:135
-msgid "INSTALL_GNAPPLET - Install Gnapplet binaries"
-msgstr "INSTALL_GNAPPLET - instalovat binárky Gnappletu"
-
-#. type: Plain text
-#: INSTALL:136
-msgid "INSTALL_MEDIA - Install sample media files"
-msgstr "INSTALL_MEDIA - instalovat ukázkové soubory s logy a vyzváněními"
-
-#. type: Plain text
-#: INSTALL:137
-msgid "INSTALL_PHP_EXAMPLES - Install PHP example scripts"
-msgstr "INSTALL_PHP_EXAMPLES - instalovat ukázkové skripty v PHP"
-
-#. type: Plain text
-#: INSTALL:138
-msgid "INSTALL_BASH_COMPLETION - Install bash completion script for Gammu"
-msgstr ""
-"INSTALL_BASH_COMPLETION - instalovat skript na doplňování parametrů Gammu v "
-"bashi"
-
-#. type: Plain text
-#: INSTALL:139
-msgid "INSTALL_LSB_INIT - Install LSB compatible init script for Gammu"
-msgstr "INSTALL_LSB_INIT - instalovat LSB kompatibilní init skript pro Gammu"
-
-#. type: Plain text
-#: INSTALL:140
-msgid "INSTALL_DOC - Install documentation"
-msgstr "INSTALL_DOC - instalovat dokumentaci"
-
-#. type: Plain text
-#: INSTALL:141
-msgid "INSTALL_LOC - Install locales data"
-msgstr "INSTALL_LOC - instalovat data překladu aplikace"
-
-#. type: Plain text
-#: INSTALL:143
-msgid "For example:"
-msgstr "Například:"
-
-#. type: Plain text
-#: INSTALL:145
-msgid "-DINSTALL_DOC=OFF"
-msgstr "-DINSTALL_DOC=OFF"
-
-#. type: Title =
-#: INSTALL:148
-#, no-wrap
-msgid "From Sources - Windows\n"
-msgstr "Ze zdrojového kódu - Windows\n"
-
-#. type: Plain text
-#: INSTALL:157
-msgid ""
-"You need CMake from <http://www.cmake.org> for configuring Gammu. CMake is "
-"able to generate projects for various tools including Microsoft Visual "
-"Studio, Borland toolchains, Cygwin or Mingw32. Just click on CMakeLists.txt "
-"in project sources and configure CMake to be able to find optional libraries "
-"(see cross compilation section for more information about getting those). "
-"The result should be project for your compiler where you should be able to "
-"work with it as with any other project."
-msgstr ""
-"Pro vytvoření projektu pro kompilaci Gammu bude potřebovat CMake z <http://"
-"www.cmake.org>. CMake umí vytvořit projekty pro většinu běžně používaných "
-"IDE včetně Microsoft Visual Studio, nástroje Borland, Cygwin nebo Mingw32. "
-"Stačí kliknout na CMakeLists.txt ve zdrojových kódech a nastavit CMake tak, "
-"aby byl schopen nalézt volitelné knihovny (v sekci o křížové kompilaci "
-"naleznete informace jak je získat). Výsledkem by měl být projekt, se kterým "
-"budete moci pracovat stejně jako s jakýmkoliv jiným ve vašem IDE."
-
-#. type: Plain text
-#: INSTALL:160
-msgid ""
-"More detailed and up to date information is maintained on the wiki: http://"
-"www.gammu.org/wiki/index.php?title=Gammu:Compiling/installing_in_Windows"
-msgstr ""
-"Podrobnější informace naleznete na wiki: http://www.gammu.org/wiki/index.php?"
-"title=Gammu:Compiling/installing_in_Windows"
-
-#. type: Plain text
-#: INSTALL:167
-msgid ""
-"Borland toolchain - you can download compiler at <http://www.codegear.com/"
-"downloads/free/cppbuilder>. You need to add c:/Borland/BCC55/Bin to system "
-"path (or manually set it when running CMake) and add -Lc:/Borland/BCC55/Lib -"
-"Ic:/Borland/BCC55/Include -Lc:/Borland/BCC55/Lib/PSDK to CMAKE_C_FLAGS in "
-"CMake (otherwise compilation fails)."
-msgstr ""
-
-#. type: Title =
-#: INSTALL:169
-#, no-wrap
-msgid "From Sources - Mac OS X\n"
-msgstr "Ze zdrojového kódu - Mac OS X\n"
-
-#. type: Plain text
-#: INSTALL:173
-msgid ""
-"Gammu should be compilable on Mac OS X, see wiki for up to date instructions:"
-msgstr ""
-"Gammu by mělo jít zkompilovat na Mac OS X, aktuální informace by měly být na "
-"wiki:"
-
-#. type: Plain text
-#: INSTALL:175
-msgid ""
-"http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/"
-"installing_on_Mac_OS_X"
-msgstr ""
-"http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/"
-"installing_on_Mac_OS_X"
-
-#. type: Title =
-#: INSTALL:178
-#, no-wrap
-msgid "Cross compilation for Windows on Linux\n"
-msgstr "Křížová kompilace pro Windows na Linuxu\n"
-
-#. type: Plain text
-#: INSTALL:183
-msgid ""
-"Only cross compilation using CMake has been tested. You need to install "
-"MinGW cross tool chain and run time. On Debian you can do it by apt-get "
-"install mingw32. Build is then quite simple:"
-msgstr ""
-
-#. type: Plain text
-#: INSTALL:188
-msgid ""
-"mkdir build-win32 cd build-win32 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/"
-"Toolchain-mingw32.cmake make"
-msgstr ""
-"mkdir build-win32 cd build-win32 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/"
-"Toolchain-mingw32.cmake make"
-
-#. type: Plain text
-#: INSTALL:191
-msgid ""
-"If your MinGW cross compiler binaries are not found automatically, you can "
-"specify their different names in cmake/Toolchain-mingw32.cmake."
-msgstr ""
-"Pokud nebyl váš kompilátor pro MinGW nalezen automaticky, můžete zadat jeho "
-"jméno v cmake/Toolchain-mingw32.cmake."
-
-#. type: Plain text
-#: INSTALL:193
-msgid "To build just bare static library without any dependencies, use:"
-msgstr ""
-"Pro kompilaci statické knihovny bez jakýhkoliv externích závislostí spusťte:"
-
-#. type: Plain text
-#: INSTALL:201
-#, no-wrap
-msgid ""
-"cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \\\n"
-"    -DBUILD_SHARED_LIBS=OFF \\\n"
-"    -DWITH_MySQL=OFF \\\n"
-"    -DWITH_Postgres=OFF \\\n"
-"    -DWITH_GettextLibs=OFF \\\n"
-"    -DWITH_Iconv=OFF \\\n"
-"    -DWITH_CURL=OFF \\\n"
-msgstr ""
-"cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \\\n"
-"    -DBUILD_SHARED_LIBS=OFF \\\n"
-"    -DWITH_MySQL=OFF \\\n"
-"    -DWITH_Postgres=OFF \\\n"
-"    -DWITH_GettextLibs=OFF \\\n"
-"    -DWITH_Iconv=OFF \\\n"
-"    -DWITH_CURL=OFF \\\n"
-
-#. type: Plain text
-#: INSTALL:208
-msgid ""
-"To be compatible with current Python on Windows, we need to build against "
-"matching Microsoft C Runtime library. For Python 2.4 and 2.5 MSVCR71 was "
-"used, for Python 2.6 the right one is MSVCR90. To achieve building against "
-"different MSVCRT, you need to adjust compiler specifications, example is "
-"shown in cmake/mingw.spec, which is used by CMakeLists.txt. You might need "
-"to tune it for your environment."
-msgstr ""
-
-#. type: Title -
-#: INSTALL:210
-#, no-wrap
-msgid "Third party libraries\n"
-msgstr "Externí knihovny\n"
-
-#. type: Plain text
-#: INSTALL:215
-msgid ""
-"The easies way to link with third party libraries is to add path to their "
-"installation to cmake/Toolchain-mingw32.cmake or to list these paths in "
-"CMAKE_FIND_ROOT_PATH when invoking cmake."
-msgstr ""
-"Nejsnazší způsob zadání cest k používaným knihovnám je v souboru cmake/"
-"Toolchain-mingw32.cmake nebo jejich zadáním v parametru CMAKE_FIND_ROOT_PATH "
-"při spuštění cmake."
-
-#. type: Title -
-#: INSTALL:218
-#, no-wrap
-msgid "MySQL\n"
-msgstr "MySQL\n"
-
-#. type: Plain text
-#: INSTALL:222
-msgid ""
-"You can download MySQL binaries from <http://dev.mysql.com/>, but then need "
-"some tweaks:"
-msgstr ""
-"Binární balíčky MySQL můžete stáhnout z <http://dev.mysql.com/>, po "
-"rozbalení je potřeba provést pár úprav:"
-
-#. type: Plain text
-#: INSTALL:227
-#, no-wrap
-msgid ""
-"cd mysql/lib/opt\n"
-"reimp.exe -d libmysql.lib\n"
-"i586-mingw32msvc-dlltool --kill-at --input-def libmysql.def \\\n"
-"    --dllname libmysql.dll --output-lib libmysql.a\n"
-msgstr ""
-"cd mysql/lib/opt\n"
-"reimp.exe -d libmysql.lib\n"
-"i586-mingw32msvc-dlltool --kill-at --input-def libmysql.def \\\n"
-"    --dllname libmysql.dll --output-lib libmysql.a\n"
-
-#. type: Plain text
-#: INSTALL:230
-msgid ""
-"reimp.exe is part of mingw-utils and can be run through wine, I didn't try "
-"to compile native binary from it."
-msgstr ""
-"reimp.exe is part of mingw-utils and can be run through wine, I didn't try "
-"to compile native binary from it."
-
-#. type: Title -
-#: INSTALL:233
-#, no-wrap
-msgid "PostgreSQL\n"
-msgstr "PostgreSQL\n"
-
-#. type: Plain text
-#: INSTALL:237
-msgid ""
-"You can download PostgreSQL binaries from <http://www.postgresql.org/>, but "
-"then you need to add wldap32.dll library to bin."
-msgstr ""
-"Můžete si stáhnout binární balíčky PostgreSQL z <http://www.postgresql.org/"
-">, ale budete muset odjinud přidat knihovnu wldap32.dll do adresáře bin."
-
-#. type: Title -
-#: INSTALL:240
-#, no-wrap
-msgid "Gettext\n"
-msgstr "Gettext\n"
-
-#. type: Plain text
-#: INSTALL:245
-msgid ""
-"For Gettext (internationalization support), you need gettext-0.14.4-bin.zip, "
-"gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from <http://gnuwin32."
-"sourceforge.net/>. Unpack these to same directory."
-msgstr ""
-"Pro podporu překladu programu potřebujete gettext-0.14.4-bin.zip, "
-"gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip z <http://gnuwin32."
-"sourceforge.net/>. Rozbalte je všechny do jednoho adresáře."
-
-#. type: Title -
-#: INSTALL:248
-#, no-wrap
-msgid "CURL\n"
-msgstr "CURL\n"
-
-#. type: Plain text
-#: INSTALL:252
-msgid ""
-"For CURL support, you need curl-7.19.0-devel-mingw32.zip from <http://curl."
-"haxx.se/>."
-msgstr ""
-"Pro podporu CURL potřebujete curl-7.19.0-devel-mingw32.zip z <http://curl."
-"haxx.se/>."
+#~ msgid "Gammu All Mobile Management Utilities - Installation\n"
+#~ msgstr "Gammu All Mobile Management Utilities - Instalace\n"
+
+#~ msgid "Binaries - Linux\n"
+#~ msgstr "Binárky - Linux\n"
+
+#~ msgid ""
+#~ "Many distributions come with prebuilt Gammu binaries, if you can use "
+#~ "them, it is definitely the easiest thing. There are also binary packages "
+#~ "of latest release built for many distributions available on Gammu home "
+#~ "page <http://wammu.eu/gammu/>."
+#~ msgstr ""
+#~ "Mnoho distribucí již obsahuje Gammu, takže pokud můžete použít tuto "
+#~ "verzi, bude to pro vás nejjednodušší. Binární balíčky posledních verzí "
+#~ "pro mnoho distribucí naleznete také na stránkách Gammu - <http://cs.wammu."
+#~ "eu/gammu/>."
+
+#~ msgid "Binaries - Windows\n"
+#~ msgstr "Binárky - Windows\n"
+
+#~ msgid ""
+#~ "You can download Windows binaries from <http://wammu.eu/gammu/>. For "
+#~ "Windows 95, 98 and NT 4.0 you will also need ShFolder DLL, which can be "
+#~ "downloaded from Microsoft:"
+#~ msgstr ""
+#~ "Binárky pro Windows si můžete stáhnout z <http://cs.wammu.eu/gammu/>. Pro "
+#~ "Windows 95, 98 a NT 4.0 budete také potřebovat ShFolder DLL, která může "
+#~ "být stažena od Microsoftu:"
+
+#~ msgid ""
+#~ "http://www.microsoft.com/downloads/details.aspx?"
+#~ "displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F"
+#~ msgstr ""
+#~ "http://www.microsoft.com/downloads/details.aspx?"
+#~ "displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F"
+
+#~ msgid "From Sources - Requirements\n"
+#~ msgstr "Ze zdrojového kódu - požadavky\n"
+
+#~ msgid ""
+#~ "Gammu does not require anything at all to build, but you might miss some "
+#~ "features. Optional dependencies include:"
+#~ msgstr ""
+#~ "Gammu je možné zkompilovat bez jakýchkoliv dalších knihoven, ale můžete "
+#~ "postrádat některé funkce. Volitelné závislosti jsou:"
+
+#~ msgid "Bluez-libs"
+#~ msgstr "Bluez-libs"
+
+#~ msgid "http://www.bluez.org/"
+#~ msgstr "http://www.bluez.org/"
+
+#~ msgid "Bluetooth support on Linux."
+#~ msgstr "Podpora Bluetooth na Linuxu."
+
+#~ msgid "libusb-1.0"
+#~ msgstr "libusb-1.0"
+
+#~ msgid "http://libusb.sourceforge.net/"
+#~ msgstr "http://libusb.sourceforge.net/"
+
+#~ msgid "fbususb connection support"
+#~ msgstr "připojení fbususb"
+
+#~ msgid "libCURL"
+#~ msgstr "libCURL"
+
+#~ msgid "http://curl.haxx.se/libcurl/"
+#~ msgstr "http://curl.haxx.se/libcurl/"
+
+#~ msgid "New versions notification and phonedb access."
+#~ msgstr "Notifikace o nových verzích a přístup do databáze telefonů."
+
+#~ msgid "libiconv"
+#~ msgstr "libiconv"
+
+#~ msgid "http://www.gnu.org/software/libiconv/"
+#~ msgstr "http://www.gnu.org/software/libiconv/"
+
+#~ msgid "Support for more charsets in AT engine."
+#~ msgstr "Podpora pro více znakových sad pro AT telefony."
+
+#~ msgid "Gettext"
+#~ msgstr "Gettext"
+
+#~ msgid "http://www.gnu.org/software/gettext/"
+#~ msgstr "http://www.gnu.org/software/gettext/"
+
+#~ msgid "Localization of strings."
+#~ msgstr "Překlad uživatelského rozhraní."
+
+#~ msgid "MySQL"
+#~ msgstr "MySQL"
+
+#~ msgid "http://mysql.com/"
+#~ msgstr "http://mysql.com/"
+
+#~ msgid "MySQL support in SMSD."
+#~ msgstr "Podpora pro MySQL v SMSD."
+
+#~ msgid "PostgreSQL"
+#~ msgstr "PostgreSQL"
+
+#~ msgid "http://www.postgresql.org/"
+#~ msgstr "http://www.postgresql.org/"
+
+#~ msgid "PostgreSQL support in SMSD."
+#~ msgstr "Podpora pro PostgreSQL v SMSD."
+
+#~ msgid "libdbi"
+#~ msgstr "libdbi"
+
+#~ msgid "http://libdbi.sourceforge.net/"
+#~ msgstr "http://libdbi.sourceforge.net/"
+
+#~ msgid "required at least version 0.8.2"
+#~ msgstr "je potřeba alespoň verze 0.8.2"
+
+#~ msgid "DBI support in SMSD."
+#~ msgstr "Podpora pro DBI v SMSD."
+
+#~ msgid "For testing, please install libdbd-sqlite3"
+#~ msgstr "Pro testování si prosím nainstalujte libdbd-sqlite3"
+
+#~ msgid "Python"
+#~ msgstr "Python"
+
+#~ msgid "http://www.python.org/"
+#~ msgstr "http://www.python.org/"
+
+#~ msgid "Gammu has a Python bindings"
+#~ msgstr "Gammu má rozhraní pro Python"
+
+#~ msgid "SQLite + libdbi-drivers with SQLite"
+#~ msgstr "SQLite + libdbi-drivers se SQLite"
+
+#~ msgid "http://www.sqlite.org/"
+#~ msgstr "http://www.sqlite.org/"
+
+#~ msgid "needed for testing of SMSD using libdbi driver"
+#~ msgstr "potřebné pro testování SMSD za použití ovladače libdbi"
+
+#~ msgid "From Sources - Linux\n"
+#~ msgstr "Ze zdrojového kódu - Linux\n"
+
+#~ msgid "You need CMake from <http://www.cmake.org> for configuring Gammu."
+#~ msgstr ""
+#~ "Pro kompilaci Gammu potřebujete CMake ze stránek <http://www.cmake.org>."
+
+#~ msgid ""
+#~ "For compatibility reasons, configure like wrapper is provided, if you "
+#~ "don't need much specific tuning, you can use general \"./configure; make; "
+#~ "sudo make install\" set of commands. The configure wrapper will create "
+#~ "directory build-configure and build all binaries there (nothing is "
+#~ "changed in source tree), for example gammu binary is in build-configure/"
+#~ "gammu directory."
+#~ msgstr ""
+#~ "Kvůli kompatibilitě Gammu obsahuje jednoduchý wrapper který se chová jako "
+#~ "configure skript, takže můžete použít obvyklou sadu příkazů \"./"
+#~ "configure; make; sudo make install\". Kompilace probíhá v adresáži build-"
+#~ "configure (ve stromu se zdrojovými kódy se nic nemění), například program "
+#~ "gammu je kompilován v adresáři build-configure/gammu."
+
+#~ msgid ""
+#~ "If you need/want to tweak build a bit more than configure wrapper "
+#~ "provides, you have to use CMake directly. For now, only out of source "
+#~ "build is supported, so you have to create separate directory for build:"
+#~ msgstr ""
+#~ "Pokud chcete nebo potřebujete nastavit kompilaci víc než umožňuje wrapper "
+#~ "pro configure, musíte použít přímo CMake. V současné době je podporována "
+#~ "jen kompilace mimo zdrojový strom, takže musíte vytvořit samostatný "
+#~ "adresář pro kompilaci:"
+
+#~ msgid "mkdir build"
+#~ msgstr "mkdir build"
+
+#~ msgid "cd build"
+#~ msgstr "cd build"
+
+#~ msgid "Then just configure project:"
+#~ msgstr "Poté zkonfigurujte projekt:"
+
+#~ msgid "cmake .."
+#~ msgstr "cmake .."
+
+#~ msgid "Build it:"
+#~ msgstr "Zkompilujte ho:"
+
+#~ msgid "make"
+#~ msgstr "make"
+
+#~ msgid "Test that everything is okay:"
+#~ msgstr "Otestujte jestli je všechno v pořádku:"
+
+#~ msgid "make test"
+#~ msgstr "make test"
+
+#~ msgid "And finally install it:"
+#~ msgstr "A nakonec ho nainstalujte:"
+
+#~ msgid "sudo make install"
+#~ msgstr "sudo make install"
+
+#~ msgid ""
+#~ "You can configure build parameters either by command line (see parameters "
+#~ "bellow), or using TUI - ccmake."
+#~ msgstr ""
+#~ "Parametry můžete měnit na příkazové řádce (jak je popsáno níže), nebo "
+#~ "pomocí textového rozhraní ccmake."
+
+#~ msgid "Useful cmake parameters:"
+#~ msgstr "Užitečné parametry cmake:"
+
+#~ msgid "-DBUILD_SHARED_LIBS=ON enables shared library"
+#~ msgstr "-DBUILD_SHARED_LIBS=ON povolí sdílenou knihovnu"
+
+#~ msgid "-DCMAKE_BUILD_TYPE=\"Debug\" enables debug build"
+#~ msgstr "-DCMAKE_BUILD_TYPE=\"Debug\" zapne ladicí build"
+
+#~ msgid "-DCMAKE_INSTALL_PREFIX=\"/usr\" change installation prefix"
+#~ msgstr "-DCMAKE_INSTALL_PREFIX=\"/usr\" změní prefix pro instalaci"
+
+#~ msgid ""
+#~ "-DENABLE_PROTECTION=OFF disables various compile time protections against "
+#~ "buffer overflows and similar attacks"
+#~ msgstr ""
+#~ "-DENABLE_PROTECTION=OFF vypne různé ochrany proti přetečení bufferu a "
+#~ "podobným útokům"
+
+#~ msgid ""
+#~ "-DBUILD_PYTHON=/usr/bin/python2.6 changes Python used for build Python "
+#~ "module"
+#~ msgstr ""
+#~ "-DBUILD_PYTHON=/usr/bin/python2.6 změní Python, který bude použit pro "
+#~ "kompilaci modulu pro Python"
+
+#~ msgid "-DWITH_PYTHON=OFF disables build of python-gammu"
+#~ msgstr "-DWITH_PYTHON=OFF vypne kompilaci python-gammu"
+
+#~ msgid "You can also disable support for whole set of phones, e.g.:"
+#~ msgstr "Můžete také vypnout podporu pro různé druhy telefonů, např.:"
+
+#~ msgid "-DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support"
+#~ msgstr "-DWITH_NOKIA_SUPPORT=OFF vypne podporu pro Nokie"
+
+#~ msgid "-DWITH_BLUETOOTH=OFF disables Bluetooth support"
+#~ msgstr "-DWITH_BLUETOOTH=OFF vypne podporu pro Bluetooth"
+
+#~ msgid "-DWITH_IRDA=OFF disables IrDA support"
+#~ msgstr "-DWITH_IRDA=OFF vypne podporu pro IrDA"
+
+#~ msgid "Limiting set of installed data\n"
+#~ msgstr "Omezení nainstalovaných věcí\n"
+
+#~ msgid ""
+#~ "By setting following flags you can control which additional parts will be "
+#~ "installed:"
+#~ msgstr ""
+#~ "Nastavením následujících parametrů můžete ovlivnit které volitelné části "
+#~ "budou nainstalovány:"
+
+#~ msgid "INSTALL_GNAPPLET - Install Gnapplet binaries"
+#~ msgstr "INSTALL_GNAPPLET - instalovat binárky Gnappletu"
+
+#~ msgid "INSTALL_MEDIA - Install sample media files"
+#~ msgstr "INSTALL_MEDIA - instalovat ukázkové soubory s logy a vyzváněními"
+
+#~ msgid "INSTALL_PHP_EXAMPLES - Install PHP example scripts"
+#~ msgstr "INSTALL_PHP_EXAMPLES - instalovat ukázkové skripty v PHP"
+
+#~ msgid "INSTALL_BASH_COMPLETION - Install bash completion script for Gammu"
+#~ msgstr ""
+#~ "INSTALL_BASH_COMPLETION - instalovat skript na doplňování parametrů Gammu "
+#~ "v bashi"
+
+#~ msgid "INSTALL_LSB_INIT - Install LSB compatible init script for Gammu"
+#~ msgstr ""
+#~ "INSTALL_LSB_INIT - instalovat LSB kompatibilní init skript pro Gammu"
+
+#~ msgid "INSTALL_DOC - Install documentation"
+#~ msgstr "INSTALL_DOC - instalovat dokumentaci"
+
+#~ msgid "INSTALL_LOC - Install locales data"
+#~ msgstr "INSTALL_LOC - instalovat data překladu aplikace"
+
+#~ msgid "For example:"
+#~ msgstr "Například:"
+
+#~ msgid "-DINSTALL_DOC=OFF"
+#~ msgstr "-DINSTALL_DOC=OFF"
+
+#~ msgid "From Sources - Windows\n"
+#~ msgstr "Ze zdrojového kódu - Windows\n"
+
+#~ msgid ""
+#~ "You need CMake from <http://www.cmake.org> for configuring Gammu. CMake "
+#~ "is able to generate projects for various tools including Microsoft Visual "
+#~ "Studio, Borland toolchains, Cygwin or Mingw32. Just click on CMakeLists."
+#~ "txt in project sources and configure CMake to be able to find optional "
+#~ "libraries (see cross compilation section for more information about "
+#~ "getting those). The result should be project for your compiler where you "
+#~ "should be able to work with it as with any other project."
+#~ msgstr ""
+#~ "Pro vytvoření projektu pro kompilaci Gammu bude potřebovat CMake z "
+#~ "<http://www.cmake.org>. CMake umí vytvořit projekty pro většinu běžně "
+#~ "používaných IDE včetně Microsoft Visual Studio, nástroje Borland, Cygwin "
+#~ "nebo Mingw32. Stačí kliknout na CMakeLists.txt ve zdrojových kódech a "
+#~ "nastavit CMake tak, aby byl schopen nalézt volitelné knihovny (v sekci o "
+#~ "křížové kompilaci naleznete informace jak je získat). Výsledkem by měl "
+#~ "být projekt, se kterým budete moci pracovat stejně jako s jakýmkoliv "
+#~ "jiným ve vašem IDE."
+
+#~ msgid "From Sources - Mac OS X\n"
+#~ msgstr "Ze zdrojového kódu - Mac OS X\n"
+
+#~ msgid "Cross compilation for Windows on Linux\n"
+#~ msgstr "Křížová kompilace pro Windows na Linuxu\n"
+
+#~ msgid ""
+#~ "mkdir build-win32 cd build-win32 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/"
+#~ "Toolchain-mingw32.cmake make"
+#~ msgstr ""
+#~ "mkdir build-win32 cd build-win32 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/"
+#~ "Toolchain-mingw32.cmake make"
+
+#~ msgid ""
+#~ "If your MinGW cross compiler binaries are not found automatically, you "
+#~ "can specify their different names in cmake/Toolchain-mingw32.cmake."
+#~ msgstr ""
+#~ "Pokud nebyl váš kompilátor pro MinGW nalezen automaticky, můžete zadat "
+#~ "jeho jméno v cmake/Toolchain-mingw32.cmake."
+
+#~ msgid "To build just bare static library without any dependencies, use:"
+#~ msgstr ""
+#~ "Pro kompilaci statické knihovny bez jakýhkoliv externích závislostí "
+#~ "spusťte:"
+
+#~ msgid ""
+#~ "cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \\\n"
+#~ "    -DBUILD_SHARED_LIBS=OFF \\\n"
+#~ "    -DWITH_MySQL=OFF \\\n"
+#~ "    -DWITH_Postgres=OFF \\\n"
+#~ "    -DWITH_GettextLibs=OFF \\\n"
+#~ "    -DWITH_Iconv=OFF \\\n"
+#~ "    -DWITH_CURL=OFF \\\n"
+#~ msgstr ""
+#~ "cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \\\n"
+#~ "    -DBUILD_SHARED_LIBS=OFF \\\n"
+#~ "    -DWITH_MySQL=OFF \\\n"
+#~ "    -DWITH_Postgres=OFF \\\n"
+#~ "    -DWITH_GettextLibs=OFF \\\n"
+#~ "    -DWITH_Iconv=OFF \\\n"
+#~ "    -DWITH_CURL=OFF \\\n"
+
+#~ msgid "Third party libraries\n"
+#~ msgstr "Externí knihovny\n"
+
+#~ msgid ""
+#~ "The easies way to link with third party libraries is to add path to their "
+#~ "installation to cmake/Toolchain-mingw32.cmake or to list these paths in "
+#~ "CMAKE_FIND_ROOT_PATH when invoking cmake."
+#~ msgstr ""
+#~ "Nejsnazší způsob zadání cest k používaným knihovnám je v souboru cmake/"
+#~ "Toolchain-mingw32.cmake nebo jejich zadáním v parametru "
+#~ "CMAKE_FIND_ROOT_PATH při spuštění cmake."
+
+#~ msgid "MySQL\n"
+#~ msgstr "MySQL\n"
+
+#~ msgid ""
+#~ "You can download MySQL binaries from <http://dev.mysql.com/>, but then "
+#~ "need some tweaks:"
+#~ msgstr ""
+#~ "Binární balíčky MySQL můžete stáhnout z <http://dev.mysql.com/>, po "
+#~ "rozbalení je potřeba provést pár úprav:"
+
+#~ msgid ""
+#~ "cd mysql/lib/opt\n"
+#~ "reimp.exe -d libmysql.lib\n"
+#~ "i586-mingw32msvc-dlltool --kill-at --input-def libmysql.def \\\n"
+#~ "    --dllname libmysql.dll --output-lib libmysql.a\n"
+#~ msgstr ""
+#~ "cd mysql/lib/opt\n"
+#~ "reimp.exe -d libmysql.lib\n"
+#~ "i586-mingw32msvc-dlltool --kill-at --input-def libmysql.def \\\n"
+#~ "    --dllname libmysql.dll --output-lib libmysql.a\n"
+
+#~ msgid ""
+#~ "reimp.exe is part of mingw-utils and can be run through wine, I didn't "
+#~ "try to compile native binary from it."
+#~ msgstr ""
+#~ "reimp.exe is part of mingw-utils and can be run through wine, I didn't "
+#~ "try to compile native binary from it."
+
+#~ msgid "PostgreSQL\n"
+#~ msgstr "PostgreSQL\n"
+
+#~ msgid ""
+#~ "You can download PostgreSQL binaries from <http://www.postgresql.org/>, "
+#~ "but then you need to add wldap32.dll library to bin."
+#~ msgstr ""
+#~ "Můžete si stáhnout binární balíčky PostgreSQL z <http://www.postgresql."
+#~ "org/>, ale budete muset odjinud přidat knihovnu wldap32.dll do adresáře "
+#~ "bin."
+
+#~ msgid "Gettext\n"
+#~ msgstr "Gettext\n"
+
+#~ msgid ""
+#~ "For Gettext (internationalization support), you need gettext-0.14.4-bin."
+#~ "zip, gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from <http://gnuwin32."
+#~ "sourceforge.net/>. Unpack these to same directory."
+#~ msgstr ""
+#~ "Pro podporu překladu programu potřebujete gettext-0.14.4-bin.zip, "
+#~ "gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip z <http://gnuwin32."
+#~ "sourceforge.net/>. Rozbalte je všechny do jednoho adresáře."
+
+#~ msgid "CURL\n"
+#~ msgstr "CURL\n"
+
+#~ msgid ""
+#~ "For CURL support, you need curl-7.19.0-devel-mingw32.zip from <http://"
+#~ "curl.haxx.se/>."
+#~ msgstr ""
+#~ "Pro podporu CURL potřebujete curl-7.19.0-devel-mingw32.zip z <http://curl."
+#~ "haxx.se/>."
+
+#~ msgid ""
+#~ "More detailed and up to date information is maintained on the wiki: "
+#~ "http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/"
+#~ "installing_in_Windows"
+#~ msgstr ""
+#~ "Podrobnější informace naleznete na wiki: http://www.gammu.org/wiki/index."
+#~ "php?title=Gammu:Compiling/installing_in_Windows"
+
+#~ msgid ""
+#~ "Gammu should be compilable on Mac OS X, see wiki for up to date "
+#~ "instructions:"
+#~ msgstr ""
+#~ "Gammu by mělo jít zkompilovat na Mac OS X, aktuální informace by měly být "
+#~ "na wiki:"
+
+#~ msgid ""
+#~ "http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/"
+#~ "installing_on_Mac_OS_X"
+#~ msgstr ""
+#~ "http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/"
+#~ "installing_on_Mac_OS_X"
 
 # type: TH
 #~ msgid "May 12 2010"
