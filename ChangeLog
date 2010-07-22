@@ -22,6 +22,7 @@ ChangeLog
 2010???? - 1.28.90
 
 [-] * Fixed handling of empty reply on CREG/CGREG (bug #1245).
+[-] * Prefer storing delivery reports over forwarding them.
     
 20100712 - 1.28.0
 

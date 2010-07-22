@@ -2446,11 +2446,11 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (range == NULL) {
 		return  ERR_UNKNOWNRESPONSE;
 	}
-	if (InRange(range, 1)) {
-		Priv->CNMIDeliverProcedure = 1; /* 1 = route message to TE */
+	if (InRange(range, 2)) {
+		Priv->CNMIDeliverProcedure = 2; /* 2 = store message and send where it is stored */
 	}
-	else if (InRange(range, 2)) {
-		Priv->CNMIDeliverProcedure = 2; /* 1 = store message and send where it is stored */
+	else if (InRange(range, 1)) {
+		Priv->CNMIDeliverProcedure = 1; /* 1 = route message to TE */
 	}
 	/* we don't want: 0 = no routing */
 	free(range);
