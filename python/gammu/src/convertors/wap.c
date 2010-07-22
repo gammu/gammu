@@ -71,17 +71,20 @@ GSM_MMS_Class MMSClassFromString(const char *s)
 PyObject *MMSIndicatorToPython(GSM_MMSIndicator * mms)
 {
 	char *class;
+	PyObject *ret;
 
 	class = MMSClassToString(mms->Class);
 	if (class == NULL) {
 		return NULL;
 	}
-	return Py_BuildValue("{s:s,s:s,s:s,s:s}",
+	ret = Py_BuildValue("{s:s,s:s,s:s,s:i,s:s}",
 			     "Address", mms->Address,
 			     "Title", mms->Title,
 			     "Sender", mms->Sender,
 			     "MessageSize", (int)mms->MessageSize,
 			     "Class", class);
+	free(class);
+	return ret;
 }
 
 int MMSIndicatorFromPython(PyObject * dict, GSM_MMSIndicator * mms)
