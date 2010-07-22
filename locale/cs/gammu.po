@@ -2,12 +2,14 @@
 # Copyright (C) 2003 - 2009 Michal Čihař
 # This file is distributed under the same license as the Gammu package.
 # Michal <michal@cihar.com>, 20, 2010.
+# Michal Čihař <michal@cihar.com>, 2010.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.28.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0200\n"
-"PO-Revision-Date: 2010-06-29 16:12+0200\n"
+"PO-Revision-Date: 2010-07-22 13:57+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -471,9 +473,8 @@ msgid "Add phone ToDo?"
 msgstr "Přidat úkoly?"
 
 #: gammu/backup.c:1712
-#, fuzzy
 msgid "Add notes to phone?"
-msgstr "Odeslat soubor do telefenu"
+msgstr "Přidat do telefonu poznámky?"
 
 #: gammu/backup.c:1735
 msgid "Add phone WAP bookmarks?"
