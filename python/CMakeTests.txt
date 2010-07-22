@@ -82,6 +82,9 @@ endif (WITH_BACKUP)
 configure_file("examples/setconfig.py" "${CMAKE_CURRENT_BINARY_DIR}/setconfig.py" COPY_ONLY)
 add_test("py-setconfig" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/setconfig.py")
 
+configure_file("examples/decodesms.py" "${CMAKE_CURRENT_BINARY_DIR}/decodesms.py" COPY_ONLY)
+add_test("py-decodesms" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/decodesms.py")
+
 if (LIBDBI_FOUND AND SQLITE_BIN AND WITH_BACKUP)
     configure_file("examples/smsd-testing.py" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd-testing.py" @ONLY)
     add_test("py-smsd-testing" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-smsd-testing.py")
