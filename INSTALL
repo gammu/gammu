@@ -155,8 +155,54 @@ optional libraries (see cross compilation section for more information
 about getting those). The result should be project for your compiler
 where you should be able to work with it as with any other project.
 
-More detailed and up to date information is maintained on the wiki:
-http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/installing_in_Windows
+Compiling using MS Visual C++
+-----------------------------
+
+You will probably need additional SDKs:
+
+* Microsoft Windows Platform SDK (required especially for Bluetooth).
+  It's given for free. Below are links to different releases (if you
+  have problems with latest one, use older). They work for various
+  Windows versions, even though Microsoft named them Windows Server 2003
+  Platform SDK.
+* For free Visual C++ Express 2005 you need to set compiler to work with
+  Platform SDK (see description).
+* MySQL include/library files from MySQL install package (for MySQL
+  support in SMSD).
+* PostgreSQL include/library files from PostgreSQL install package (for
+  PostgreSQL support in SMSD).
+* For gettext (internationalization) support, you will need gettext
+  packages from GnuWin32 project.
+* As build is now based on CMake, you will need to get it from
+  http://cmake.org/.
+
+After downloading and installing them into your system:
+
+* Now you should be able to execute cmake by clicking on CMakeLists.txt
+  file in Gammu sources, this should pop up dialog with configuration
+  options.
+    * You can also start CMakeSetup from start menu and select source
+      directory (just point to it to Gammu sources).
+    * Select directory where binaries will be stored, I suggest this is
+      different than source one, eg. append subdirectory build.
+    * Select compiler you want to use in Build for select. 
+* In list bellow, you can tweak paths to some optional libraries and
+  project configuration.
+* Then just press Configure button, which will do the hard job. After
+  this, just click OK button to generate Visual Studio project.
+* Project files for Visual Studio should be now generated in directory
+  you selected, just open it in Visual Studio and compile :-).
+    * Project file should be named Gammu.dsw or Gammu.sln depending on
+      what MSVC version you choose.
+    * You should see ALL_BUILD target, which builds everything needed,
+      simmilar to make all on Linux.
+* I know this guide is incomplete, I don't have environment to test,
+  you're welcome to improve it!. Some more information can be found in
+  howtos for other projects using CMake, eg. Blender, SIM, KDE, VTK,
+  ISGTK. ITK, [wxWidgets http://www.wxwidgets.org/wiki/index.php/CMake].
+
+Compiling using Borland C++
+---------------------------
 
 Borland toolchain - you can download compiler at
 <http://www.codegear.com/downloads/free/cppbuilder>. You need to add
@@ -164,6 +210,11 @@ c:/Borland/BCC55/Bin to system path (or manually set it when running
 CMake) and add -Lc:/Borland/BCC55/Lib -Ic:/Borland/BCC55/Include
 -Lc:/Borland/BCC55/Lib/PSDK to CMAKE_C_FLAGS in CMake (otherwise
 compilation fails).
+
+Compiling using Cygwin
+----------------------
+
+This should work pretty much same as on Linux.
 
 From Sources - Mac OS X
 =======================
