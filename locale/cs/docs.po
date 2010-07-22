@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.28.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-22 13:55+0300\n"
-"PO-Revision-Date: 2010-06-29 15:49+0200\n"
+"PO-Revision-Date: 2010-07-22 14:01+0200\n"
 "Last-Translator: Michal <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "Language: cs\n"
@@ -31,16 +31,16 @@ msgstr "GAMMU"
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Jul  1 2010"
-msgstr "Leden  19, 2010"
+msgstr "1. červenec, 2010"
 
 # type: TH
 #. type: TH
 #: docs/user/gammu.1:1
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Gammu 1.27.96"
-msgstr "Gammu 1.27.94"
+msgstr "Gammu 1.27.96"
 
 # type: TH
 #. type: TH
@@ -6170,6 +6170,10 @@ msgid ""
 "    Device = 1.10           # Match device by usb bus and device address\n"
 "    Device = 10             # Match device by usb device address\n"
 msgstr ""
+"    Device = 0x1234:0x5678  # Vyhledávání podle výrobce a produktu\n"
+"    Device = 0x1234:-1      # Vyhledávání podle výrobce\n"
+"    Device = 1.10           # Vyhledávání podle čísla sběrnice a adresy zařízení\n"
+"    Device = 10             # Vyhledávání podle adresy zařízení\n"
 
 # type: Plain text
 #. type: Plain text
@@ -6780,7 +6784,7 @@ msgid ""
 "SMSD service to use, one of FILES, NULL, MYSQL, PGSQL, DBI (depends on "
 "compiled in support for backends)."
 msgstr ""
-"Jakou službu SMSM použít, jedna z FILES, NULL, MYSQL, PGSQL, DBI (záleží na "
+"Jakou službu SMSD použít, jedna z FILES, NULL, MYSQL, PGSQL, DBI (záleží na "
 "zakompilovaných knihovnách)."
 
 #. type: Plain text
@@ -7387,18 +7391,15 @@ msgstr ""
 # type: TP
 #. type: TP
 #: docs/user/gammu-smsdrc.5:277
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<BackendRetries>"
-msgstr "B<MaxRetries>"
+msgstr "B<BackendRetries>"
 
 # type: Plain text
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:281
-#, fuzzy
 msgid "How many times will SMSD backend retry operation."
-msgstr ""
-"Kolikrát se bude SMSD pokoušet znovu odeslat zprávu pokud se to na první "
-"pokus nepodaří."
+msgstr "Kolikrát se bude SMSD služba pokoušet znovu připojit k úložišti."
 
 #. type: Plain text
 #: docs/user/gammu-smsdrc.5:284
@@ -7406,6 +7407,8 @@ msgid ""
 "The implementation on different backends is different, for database backends "
 "it generally means how many times it will try to reconnect to the server."
 msgstr ""
+"Implementace je pro každou službu jiná, například pro databáze toto obvykle "
+"znamená kolikrát se pokusí připojit k serveru po ztrátě spojení."
 
 # type: Plain text
 #. type: Plain text
