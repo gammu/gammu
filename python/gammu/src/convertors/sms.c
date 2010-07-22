@@ -982,7 +982,7 @@ PyObject *SMSToPython(GSM_SMSMessage * sms)
 	}
 
 	coding = SMSCodingToString(sms->Coding);
-	if (type == NULL) {
+	if (coding == NULL) {
 		Py_DECREF(smsc);
 		Py_DECREF(udh);
 		free(mt);
