@@ -765,6 +765,16 @@ int SMSFromPython(PyObject * dict, GSM_SMSMessage * sms, int needslocation,
 		}
 	}
 
+	s = GetCharFromDict(dict, "Coding");
+	if (s == NULL) {
+		sms->Coding = SMS_Coding_Default_No_Compression;
+		PyErr_Clear();
+	} else {
+		sms->Coding = StringToSMSCoding(s);
+		if (sms->Coding == 0)
+			return 0;
+	}
+
 	if (sms->Coding != SMS_Coding_8bit) {
 		/* No UDH/UserUDH => copy as text */
 		if (!CopyStringFromDict
@@ -861,16 +871,6 @@ int SMSFromPython(PyObject * dict, GSM_SMSMessage * sms, int needslocation,
 	} else {
 		sms->PDU = StringToSMSType(s);
 		if (sms->PDU == 0)
-			return 0;
-	}
-
-	s = GetCharFromDict(dict, "Coding");
-	if (s == NULL) {
-		sms->Coding = SMS_Coding_Default_No_Compression;
-		PyErr_Clear();
-	} else {
-		sms->Coding = StringToSMSCoding(s);
-		if (sms->Coding == 0)
 			return 0;
 	}
 
