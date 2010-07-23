@@ -34,6 +34,11 @@ add_executable(array-test array-test.c)
 target_link_libraries (array-test array)
 add_test(array "${GAMMU_TEST_PATH}/array-test${GAMMU_TEST_SUFFIX}")
 
+# Backup comments
+add_executable(backup-comment backup-comment.c)
+target_link_libraries (backup-comment libGammu ${LIBINTL_LIBRARIES})
+add_test(backup-comment "${GAMMU_TEST_PATH}/backup-comment${GAMMU_TEST_SUFFIX}")
+
 # Basic check for statemachine functionality
 add_executable(statemachine-init statemachine-init.c)
 target_link_libraries(statemachine-init libGammu ${LIBINTL_LIBRARIES})
