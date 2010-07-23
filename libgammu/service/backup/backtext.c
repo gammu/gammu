@@ -3873,11 +3873,11 @@ GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 /**
  * Saves text as a comment split to text lines (max 78 chars long).
  */
-static GSM_Error SaveTextComment(FILE *file, unsigned char *comment)
+GSM_Error SaveTextComment(FILE *file, unsigned char *comment)
 {
 	char buffer[10000]={0};
 	size_t i=0, len=0, pos = 0;
-	gboolean newline = FALSE;
+
 	sprintf(buffer, "%s", DecodeUnicodeString(comment));
 
 	fprintf(file, "; ");
@@ -3885,11 +3885,8 @@ static GSM_Error SaveTextComment(FILE *file, unsigned char *comment)
 	len = strlen(buffer);
 
 	for (i = 0; i < len; i++) {
-		if (buffer[i] == 13 || buffer[i] == 10) {
-			if (!newline) {
-				fprintf(file,"\n; ");
-			}
-			newline = TRUE;
+		if (buffer[i] == 10 || buffer[i] == 13) {
+			fprintf(file,"\n; ");
 			pos = 0;
 		} else {
 			if (pos > 75) {
@@ -3897,7 +3894,6 @@ static GSM_Error SaveTextComment(FILE *file, unsigned char *comment)
 				pos = 0;
 			}
 			fprintf(file, "%c", buffer[i]);
-			newline = FALSE;
 			pos++;
 		}
 	}
