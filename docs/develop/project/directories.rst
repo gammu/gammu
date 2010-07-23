@@ -9,23 +9,23 @@ communication and data encoding functionality here.
 
 There are following subdirectories:
 
-device
+``device``
   drivers for devices such serial ports or irda
-device/serial
+``device/serial``
   drivers for serial ports
-device/irda
+``device/irda``
   drivers for infrared over sockets
-protocol
+``protocol``
   protocol drivers
-protocol/nokia
+``protocol/nokia``
   Nokia specific protocols
-phone
+``phone``
   phone modules
-phone/nokia
+``phone/nokia``
   modules for different Nokia phones
-misc
+``misc``
   different services. They can be used for any project
-service
+``service``
   different gsm services for logos, ringtones, etc.
 
 gammu directory
@@ -38,6 +38,8 @@ smsd directory
 --------------
 
 Sources of SMS Daemon as well as all it's service backends.
+
+The ``services`` subdirectory contains source code for :ref:`smsd_services`.
 
 python directory
 ----------------

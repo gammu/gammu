@@ -11,6 +11,8 @@ this storage.
 
    Interaction of SMSD programs
 
+.. _smsd_services:
+
 Backend services
 ----------------
 
