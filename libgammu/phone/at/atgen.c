@@ -848,8 +848,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 
 	/* Skip comma and possible whitespace */
 	if (comma_pos != NULL) {
-		comma_pos++;
-		while (isspace(*comma_pos) && *comma_pos != '\0') {
+		while (isspace(*(comma_pos + 1)) && *(comma_pos + 1) != '\0') {
 			comma_pos++;
 		}
 	}

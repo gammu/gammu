@@ -24,6 +24,7 @@ ChangeLog
 [-] * Fixed handling of empty reply on CREG/CGREG (bug #1245).
 [-] * Prefer storing delivery reports over forwarding them.
 [-] * Fix leak and crash when handling MMS notifications in Python.
+[-] * Fixed parsing of date from AT phones (bug #1256).
     
 20100712 - 1.28.0
 
