@@ -108,6 +108,34 @@ When you're finished, you need to disconnect and free allocated memory:
 
 There are also other :doc:`examples`.
 
+Compling the code
+-----------------
+
+To compile program using Gammu library, you need to pass include path to the
+compiler and library name and search path to the linker. This can be easiest
+achieved by using :program:`pkg-config`. See following ``Makefile`` for
+example:
+
+.. code-block:: make
+
+    # Sample Makefile which can be used to build examples shipped with Gammu
+
+    CFLAGS=$(shell pkg-config --cflags --libs gammu-smsd) -Wall
+    LDFLAGS=$(shell pkg-config --cflags --libs gammu)
+
+    ALL=phone-info sms-send smsd
+
+    .PHONY: all clean
+
+    all: $(ALL)
+
+    clean: 
+        rm -f $(ALL)
+
+    %:%.c
+        $(CC) $< $(CFLAGS) $(LDFLAGS) -o $@
+
+
 Unicode
 -------
 
