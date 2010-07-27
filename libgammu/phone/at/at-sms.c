@@ -1829,6 +1829,12 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	if (error != ERR_NONE) {
 		return error;
 	}
+
+	if (sms->SMSC.Number[0] == 0x00 && sms->SMSC.Number[1] == 0x00) {
+		smprintf(s,"No SMSC in SMS to send\n");
+		return ERR_EMPTYSMSC;
+	}
+
 	switch (Phone->Priv.ATGEN.SMSMode) {
 	case SMS_AT_PDU:
 		len = sprintf(buffer, "AT+CMGS=%i\r",current);

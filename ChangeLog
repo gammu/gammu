@@ -27,6 +27,7 @@ ChangeLog
 [-] * Fixed parsing of date from AT phones (bug #1256).
 [-] * Simplify handling text comment in SMS backup to keep new lines.
 [+] * New command gammu battery.
+[-] * Fail to send SMS without set SMSC.
     
 20100712 - 1.28.0
 
