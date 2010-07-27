@@ -504,7 +504,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 }
 
 
-void DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *sm)
+GSM_Error DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *sm)
 {
 	GSM_Error 		error;
 	int			i, length, current = 0;
@@ -513,8 +513,7 @@ void DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *sm)
 
 	error=PHONE_EncodeSMSFrame(sm,SMS,buffer,PHONE_SMSSubmit,&length,TRUE);
 	if (error != ERR_NONE) {
-		printf("%s\n", _("Error"));
-		exit(-1);
+		return error;
 	}
         length = length - PHONE_SMSSubmit.Text;
 
@@ -550,6 +549,7 @@ void DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *sm)
         printf(LISTFORMAT "%s\n", _("Whole PDU"), hexreq);
 	printf("\n");
 	fflush(stdout);
+	return ERR_NONE;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

@@ -28,5 +28,5 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean e
 void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, gboolean eachsms, gboolean ems, const void *Info, GSM_StateMachine *sm);
 #endif
 
-void DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *sm);
+GSM_Error DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *sm);
 #endif

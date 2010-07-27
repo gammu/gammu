@@ -29,7 +29,8 @@ int main(int argc, char **argv)
 	for (i = 0; i < sms.Number; i++) {
 		printf("Message number: %i\n", i);
 		sms.SMS[i].SMSC.Location = 0;
-		DisplaySMSFrame(&sms.SMS[i], NULL);
+		error = DisplaySMSFrame(&sms.SMS[i], NULL);
+		gammu_test_result(error, "DisplaySMSFrame");
 	}
 
 	printf("\n");

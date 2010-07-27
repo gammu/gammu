@@ -566,7 +566,8 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 		case SMS_Display:
 			for (i = 0; i < sms.Number; i++) {
 				printf(LISTFORMAT "%i\n", _("Message number"), i);
-				DisplaySMSFrame(&sms.SMS[i], gsm);
+				error = DisplaySMSFrame(&sms.SMS[i], gsm);
+				Print_Error(error);
 			}
 
 			printf(LISTFORMAT "%i\n", _("Number of messages"), sms.Number);
