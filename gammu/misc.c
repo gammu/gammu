@@ -100,6 +100,101 @@ void PrintNetworkInfo(GSM_NetworkInfo NetInfo)
 	}
 }
 
+void PrintBatteryCharge(GSM_BatteryCharge *BatteryCharge)
+{
+	if (BatteryCharge->BatteryPercent != -1) {
+		printf(LISTFORMAT, _("Battery level"));
+		printf(_("%i percent"), BatteryCharge->BatteryPercent);
+		printf("\n");
+	}
+	if (BatteryCharge->BatteryCapacity != -1) {
+		printf(LISTFORMAT, _("Battery capacity"));
+		printf(_("%i mAh"), BatteryCharge->BatteryCapacity);
+		printf("\n");
+	}
+	if (BatteryCharge->BatteryTemperature != -1) {
+		printf(LISTFORMAT, _("Battery temperature"));
+		/* l10n: This means degrees Celsius */
+		printf(_("%i C"), BatteryCharge->BatteryTemperature);
+		printf("\n");
+	}
+	if (BatteryCharge->PhoneTemperature != -1) {
+		printf(LISTFORMAT, _("Phone temperature"));
+		printf(_("%i C"), BatteryCharge->PhoneTemperature);
+		printf("\n");
+	}
+	if (BatteryCharge->BatteryVoltage != -1) {
+		printf(LISTFORMAT, _("Battery voltage"));
+		printf(_("%i mV"), BatteryCharge->BatteryVoltage);
+		printf("\n");
+	}
+	if (BatteryCharge->ChargeVoltage != -1) {
+		printf(LISTFORMAT, _("Charge voltage"));
+		printf(_("%i mV"), BatteryCharge->ChargeVoltage);
+		printf("\n");
+	}
+	if (BatteryCharge->ChargeCurrent != -1) {
+		printf(LISTFORMAT, _("Charge current"));
+		printf(_("%i mA"), BatteryCharge->ChargeCurrent);
+		printf("\n");
+	}
+	if (BatteryCharge->PhoneCurrent != -1) {
+		printf(LISTFORMAT, _("Phone current"));
+		printf(_("%i mA"), BatteryCharge->PhoneCurrent);
+		printf("\n");
+	}
+	if (BatteryCharge->ChargeState != 0) {
+		printf(LISTFORMAT, _("Charge state"));
+		switch (BatteryCharge->ChargeState) {
+			case GSM_BatteryPowered:
+				printf("%s", _("powered from battery"));
+				break;
+			case GSM_BatteryConnected:
+				printf("%s", _("battery connected, but not powered from battery"));
+				break;
+			case GSM_BatteryCharging:
+				printf("%s", _("battery connected and is being charged"));
+				break;
+			case GSM_BatteryFull:
+				printf("%s", _("battery connected and is fully charged"));
+				break;
+			case GSM_BatteryNotConnected:
+				printf("%s", _("battery not connected"));
+				break;
+			case GSM_PowerFault:
+				printf("%s", _("detected power failure"));
+				break;
+#ifndef CHECK_CASES
+			default:
+				printf("%s", _("unknown"));
+				break;
+#endif
+		}
+		printf("\n");
+	}
+	if (BatteryCharge->BatteryType != 0) {
+		printf(LISTFORMAT, _("Battery type"));
+		switch (BatteryCharge->BatteryType) {
+			case GSM_BatteryLiIon:
+				printf("%s", _("Lithium Ion"));
+				break;
+			case GSM_BatteryLiPol:
+				printf("%s", _("Lithium Polymer"));
+				break;
+			case GSM_BatteryNiMH:
+				printf("%s", _("NiMH"));
+				break;
+			case GSM_BatteryUnknown:
+#ifndef CHECK_CASES
+			default:
+#endif
+				printf("%s", _("unknown"));
+				break;
+		}
+		printf("\n");
+	}
+}
+
 GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone)
 {
 	int 		i;
@@ -371,6 +466,21 @@ void NetworkInfo(int argc UNUSED, char *argv[] UNUSED)
 	GSM_Terminate();
 }
 
+void Battery(int argc UNUSED, char *argv[] UNUSED)
+{
+	GSM_BatteryCharge BatteryCharge;
+	GSM_Error error;
+
+	GSM_Init(TRUE);
+
+	error = GSM_GetBatteryCharge(gsm, &BatteryCharge);
+	Print_Error(error);
+
+	PrintBatteryCharge(&BatteryCharge);
+
+	GSM_Terminate();
+}
+
 void IncomingCall(GSM_StateMachine *sm UNUSED, GSM_Call call, void *user_data)
 {
 	printf(LISTFORMAT, _("Call info"));
@@ -474,97 +584,7 @@ void Monitor(int argc, char *argv[])
 		}
 		CHECK_EXIT;
 		if ( (error = GSM_GetBatteryCharge(gsm,&BatteryCharge)) == ERR_NONE) {
-            		if (BatteryCharge.BatteryPercent != -1) {
-				printf(LISTFORMAT, _("Battery level"));
-				printf(_("%i percent"), BatteryCharge.BatteryPercent);
-				printf("\n");
-			}
-            		if (BatteryCharge.BatteryCapacity != -1) {
-				printf(LISTFORMAT, _("Battery capacity"));
-				printf(_("%i mAh"), BatteryCharge.BatteryCapacity);
-				printf("\n");
-			}
-            		if (BatteryCharge.BatteryTemperature != -1) {
-				printf(LISTFORMAT, _("Battery temperature"));
-				/* l10n: This means degrees Celsius */
-				printf(_("%i C"), BatteryCharge.BatteryTemperature);
-				printf("\n");
-			}
-            		if (BatteryCharge.PhoneTemperature != -1) {
-				printf(LISTFORMAT, _("Phone temperature"));
-				printf(_("%i C"), BatteryCharge.PhoneTemperature);
-				printf("\n");
-			}
-            		if (BatteryCharge.BatteryVoltage != -1) {
-				printf(LISTFORMAT, _("Battery voltage"));
-				printf(_("%i mV"), BatteryCharge.BatteryVoltage);
-				printf("\n");
-			}
-            		if (BatteryCharge.ChargeVoltage != -1) {
-				printf(LISTFORMAT, _("Charge voltage"));
-				printf(_("%i mV"), BatteryCharge.ChargeVoltage);
-				printf("\n");
-			}
-            		if (BatteryCharge.ChargeCurrent != -1) {
-				printf(LISTFORMAT, _("Charge current"));
-				printf(_("%i mA"), BatteryCharge.ChargeCurrent);
-				printf("\n");
-			}
-            		if (BatteryCharge.PhoneCurrent != -1) {
-				printf(LISTFORMAT, _("Phone current"));
-				printf(_("%i mA"), BatteryCharge.PhoneCurrent);
-				printf("\n");
-			}
-            		if (BatteryCharge.ChargeState != 0) {
-                		printf(LISTFORMAT, _("Charge state"));
-                		switch (BatteryCharge.ChargeState) {
-                    			case GSM_BatteryPowered:
-						printf("%s", _("powered from battery"));
-						break;
-                    			case GSM_BatteryConnected:
-						printf("%s", _("battery connected, but not powered from battery"));
-                        			break;
-                    			case GSM_BatteryCharging:
-						printf("%s", _("battery connected and is being charged"));
-                        			break;
-                    			case GSM_BatteryFull:
-						printf("%s", _("battery connected and is fully charged"));
-                        			break;
-                    			case GSM_BatteryNotConnected:
-                        			printf("%s", _("battery not connected"));
-                        			break;
-                    			case GSM_PowerFault:
-                        			printf("%s", _("detected power failure"));
-                        			break;
-#ifndef CHECK_CASES
-                    			default:
-                        			printf("%s", _("unknown"));
-                       				break;
-#endif
-                		}
-                		printf("\n");
-            		}
-            		if (BatteryCharge.BatteryType != 0) {
-                		printf(LISTFORMAT, _("Battery type"));
-                		switch (BatteryCharge.BatteryType) {
-                    			case GSM_BatteryLiIon:
-						printf("%s", _("Lithium Ion"));
-						break;
-                    			case GSM_BatteryLiPol:
-						printf("%s", _("Lithium Polymer"));
-						break;
-                    			case GSM_BatteryNiMH:
-						printf("%s", _("NiMH"));
-						break;
-					case GSM_BatteryUnknown:
-#ifndef CHECK_CASES
-                    			default:
-#endif
-                        			printf("%s", _("unknown"));
-                       				break;
-                		}
-                		printf("\n");
-            		}
+			PrintBatteryCharge(&BatteryCharge);
         	}
 		CHECK_EXIT;
 		if ( (error = GSM_GetSignalQuality(gsm,&SignalQuality)) == ERR_NONE) {

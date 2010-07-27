@@ -485,6 +485,7 @@ static GSM_Parameters Parameters[] = {
 	{"getdisplaystatus",		0, 0, GetDisplayStatus,		{H_Info,0},			""},
 	{"getlocation",			0, 0, GetLocation,		{H_Info,0},			""},
 	{"monitor",			0, 1, Monitor,			{H_Info,H_Network,H_Call,0},	"[times]"},
+	{"battery",			0, 0, Battery,			{H_Info,0},			""},
 	{"setautonetworklogin",	0, 0, SetAutoNetworkLogin,	{H_Network,0},			""},
 	{"listnetworks",		0, 1, ListNetworks,		{H_Network,0},			"[country]"},
 	{"getgprspoint",		1, 2, GetGPRSPoint,		{H_Network,0},			"start [stop]"},

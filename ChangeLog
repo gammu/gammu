@@ -26,6 +26,7 @@ ChangeLog
 [-] * Fix leak and crash when handling MMS notifications in Python.
 [-] * Fixed parsing of date from AT phones (bug #1256).
 [-] * Simplify handling text comment in SMS backup to keep new lines.
+[+] * New command gammu battery.
     
 20100712 - 1.28.0
 
