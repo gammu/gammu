@@ -691,11 +691,14 @@ macro_gammu_option (OBEXGEN "Generic OBEX phones support" ON WITH_OBEX_SUPPORT O
 macro_gammu_option (ATOBEX "AT with OBEX phones support" ON WITH_OBEX_SUPPORT WITH_AT_SUPPORT)
 macro_gammu_option (ATOBEX_AUTO_MODE "Automatic switching to OBEX for AT+MODE capable phones" OFF WITH_ATOBEX_SUPPORT ON)
 
+macro_gammu_option (S60_SUPPORT "Symbian phones support (S60)" ON ON ON)
 macro_gammu_option (GNAPPLET_SUPPORT "Symbian phones support (gnapplet)" ON WITH_NOKIA_SUPPORT ON)
 macro_gammu_option (BLUEGNAPBUS "GNAPBUS protocol over Bluetooth" ON WITH_GNAPPLET_SUPPORT BLUETOOTH_FOUND)
 macro_gammu_option (IRDAGNAPBUS "GNAPBUS protocol over IrDA" ON WITH_GNAPPLET_SUPPORT IRDA_FOUND)
 
 macro_gammu_option (GNAPGEN "Gnapplet phones support" ON WITH_GNAPPLET_SUPPORT ON)
+
+macro_gammu_option (S60 "S60 phones support" ON WITH_S60_SUPPORT ON)
 
 # Some generic configurations
 macro_gammu_option (CELLBROADCAST "Cell Broadcast messages support" ON ON ON)

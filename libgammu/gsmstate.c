@@ -135,6 +135,7 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 	{"bluerfphonet", GCT_BLUEPHONET, FALSE},
 	{"bluerfat", GCT_BLUEAT, FALSE},
 	{"bluerfgnapbus", GCT_BLUEGNAPBUS, FALSE},
+	{"blues60", GCT_BLUES60, FALSE},
 
 	/* old "serial" irda */
 	{"infrared", GCT_FBUS2IRDA, FALSE},
@@ -286,6 +287,9 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 	GSM_RegisterConnection(s, GCT_IRDAOBEX,   &IrdaDevice,    &OBEXProtocol);
 #endif
 #ifdef GSM_ENABLE_BLUEGNAPBUS
+	GSM_RegisterConnection(s, GCT_BLUES60,	  &BlueToothDevice,&S60Protocol);
+#endif
+#ifdef GSM_ENABLE_BLUEGNAPBUS
 	GSM_RegisterConnection(s, GCT_BLUEGNAPBUS,&BlueToothDevice,&GNAPBUSProtocol);
 #endif
 #ifdef GSM_ENABLE_BLUEFBUS2
@@ -387,6 +391,13 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 			return ERR_NONE;
 		}
 #endif
+#ifdef GSM_ENABLE_S60
+		if (s->ConnectionType == GCT_BLUES60) {
+			smprintf(s,"[Module           - \"%s\"]\n",S60Phone.models);
+			s->Phone.Functions = &S60Phone;
+			return ERR_NONE;
+		}
+#endif
 
 #ifdef GSM_ENABLE_NOKIA6510
 		if ( s->ConnectionType ==  GCT_MBUS2 ||
@@ -457,6 +468,9 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #endif
 #ifdef GSM_ENABLE_GNAPGEN
 	GSM_RegisterModule(s,&GNAPGENPhone);
+#endif
+#ifdef GSM_ENABLE_S60
+	GSM_RegisterModule(s,&S60Phone);
 #endif
 #ifdef GSM_ENABLE_NOKIA3320
 	GSM_RegisterModule(s,&N3320Phone);
@@ -592,6 +606,11 @@ GSM_Error GSM_TryGetModel(GSM_StateMachine *s)
 			case GCT_BLUEGNAPBUS:
 			case GCT_IRDAGNAPBUS:
 				s->Phone.Functions = &GNAPGENPhone;
+				break;
+#endif
+#ifdef GSM_ENABLE_S60
+			case GCT_BLUES60:
+				s->Phone.Functions = &S60Phone;
 				break;
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
