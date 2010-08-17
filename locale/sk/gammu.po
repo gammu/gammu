@@ -3006,7 +3006,7 @@ msgstr "Tón upozornenia na správu"
 
 #: gammu/misc.c:2005
 msgid "Keypad tones"
-msgstr ""
+msgstr "Tóny klávesnice"
 
 #: gammu/misc.c:2006
 msgid "Warning (games) tones"
