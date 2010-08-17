@@ -2910,7 +2910,7 @@ msgstr "Obrázok"
 
 #: gammu/misc.c:1677
 msgid "Caller group logo"
-msgstr ""
+msgstr "Logo skupiny"
 
 #: gammu/misc.c:1680
 #, c-format
