@@ -302,8 +302,9 @@ msgid "Gammu is not configured."
 msgstr "Gammu nie zostało skonfigurowane."
 
 #: libgammu/gsmcomon.c:138
+#, fuzzy
 msgid "Wrong folder used."
-msgstr ""
+msgstr "Zły katalog."
 
 #: libgammu/gsmcomon.c:139
 #, fuzzy
