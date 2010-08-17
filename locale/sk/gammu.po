@@ -2836,7 +2836,7 @@ msgstr "Heslo"
 
 #: gammu/misc.c:1497
 msgid "USSD"
-msgstr ""
+msgstr "USSD"
 
 #: gammu/misc.c:1500
 msgid "Service code"
