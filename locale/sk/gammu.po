@@ -3263,7 +3263,7 @@ msgstr "Chcete túto prílohu uložiť?"
 #: gammu/mms.c:170
 #, c-format
 msgid "Folder %s\n"
-msgstr ""
+msgstr "Priečinok %s\n"
 
 #: gammu/mms.c:171
 msgid "  File filesystem ID"
