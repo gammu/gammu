@@ -2930,7 +2930,7 @@ msgstr "V akom formáte sa má uložiť zvonenie (\"%s\") ?\n"
 #: gammu/misc.c:1742
 #, c-format
 msgid "Unknown key/function name: \"%c\"\n"
-msgstr ""
+msgstr "Neznámy názov klávesy/funkcie: \"%c\"\n"
 
 #: gammu/misc.c:1772 gammu/misc.c:1810
 #, c-format
