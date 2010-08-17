@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0200\n"
-"PO-Revision-Date: 2010-08-17 20:23+0200\n"
+"PO-Revision-Date: 2010-08-17 20:24+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2828,7 +2828,7 @@ msgstr "Automatický"
 
 #: gammu/misc.c:1493 gammu/misc.c:1525
 msgid "User name"
-msgstr ""
+msgstr "Užívateľské meno"
 
 #: gammu/misc.c:1494 gammu/misc.c:1526 gammu/misc.c:1553 gammu/misc.c:1603
 msgid "Password"
