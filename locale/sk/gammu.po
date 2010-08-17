@@ -3191,7 +3191,7 @@ msgstr "hlas"
 
 #: gammu/misc.c:2271 gammu/misc.c:2285 helper/message-display.c:120
 msgid "fax"
-msgstr ""
+msgstr "fax"
 
 #: gammu/misc.c:2272 gammu/misc.c:2286
 msgid "data"
