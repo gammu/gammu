@@ -3154,7 +3154,7 @@ msgstr "Otázka:"
 
 #: gammu/misc.c:2244 gammu/misc.c:2257
 msgid "Divert type"
-msgstr ""
+msgstr "Typ presmerovania"
 
 #: gammu/misc.c:2255
 msgid "Changed:"
