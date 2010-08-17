@@ -2780,7 +2780,7 @@ msgstr "Číslo na vytočenie"
 
 #: gammu/misc.c:1466 gammu/misc.c:1502 gammu/misc.c:1503 gammu/misc.c:1524
 msgid "IP address"
-msgstr ""
+msgstr "IP adresa"
 
 #: gammu/misc.c:1468 gammu/misc.c:1470 gammu/misc.c:1514 gammu/misc.c:1516
 msgid "Login type"
