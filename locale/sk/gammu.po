@@ -3229,7 +3229,7 @@ msgstr "telefón"
 
 #: gammu/mms.c:79
 msgid "Recipient"
-msgstr ""
+msgstr "Príjemca"
 
 #: gammu/mms.c:87
 msgid "CC"
