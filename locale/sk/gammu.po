@@ -2970,7 +2970,7 @@ msgstr " (profil pre head set)"
 
 #: gammu/misc.c:1956
 msgid " (Car kit profile)"
-msgstr ""
+msgstr " (profil do auta)"
 
 #: gammu/misc.c:1965 helper/memory-display.c:105
 msgid "Ringtone ID"
