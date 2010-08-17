@@ -2954,7 +2954,7 @@ msgstr "Chybný typ bezpečnostného kódu"
 #: gammu/misc.c:1900
 #, c-format
 msgid "Enter %s code: "
-msgstr ""
+msgstr "Zadajte %s kód: "
 
 #: gammu/misc.c:1912
 msgid "No PIN code entered!"
