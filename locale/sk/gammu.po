@@ -3249,7 +3249,7 @@ msgstr "Potvrdenie o doručení"
 
 #: gammu/mms.c:107 gammu/mms.c:110
 msgid "Content type"
-msgstr ""
+msgstr "Typ obsahu"
 
 #: gammu/mms.c:114
 #, c-format
