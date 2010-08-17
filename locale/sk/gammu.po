@@ -2816,7 +2816,7 @@ msgstr "ISDN"
 
 #: gammu/misc.c:1480
 msgid "Analogue"
-msgstr ""
+msgstr "Analógový"
 
 #: gammu/misc.c:1484 gammu/misc.c:1487 gammu/misc.c:1490
 msgid "Data call speed"
