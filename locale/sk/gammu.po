@@ -2848,7 +2848,7 @@ msgstr "Typ adresy"
 
 #: gammu/misc.c:1523
 msgid "Access point"
-msgstr ""
+msgstr "Prístupový bod"
 
 #: gammu/misc.c:1546 gammu/misc.c:1567 gammu/misc.c:1595 gammu/misc.c:1608
 #: gammu/misc.c:1640
