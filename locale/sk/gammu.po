@@ -2714,7 +2714,7 @@ msgstr "Odstrániť WAP záložky?"
 
 #: gammu/misc.c:1426
 msgid "Delete all phone FM radio stations?"
-msgstr ""
+msgstr "Vymazať všetky FM stanice?"
 
 #: gammu/misc.c:1438 gammu/misc.c:1440
 #, fuzzy
