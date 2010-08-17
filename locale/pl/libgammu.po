@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.28.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0200\n"
-"PO-Revision-Date: 2010-08-17 13:57+0200\n"
+"PO-Revision-Date: 2010-08-17 13:58+0200\n"
 "Last-Translator: Maciej Szeptuch <matthiaspriv@gmail.com>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
@@ -356,8 +356,9 @@ msgid "Service configuration is missing."
 msgstr "Wybierz sekcję konfiguracji"
 
 #: libgammu/gsmcomon.c:149
+#, fuzzy
 msgid "Command rejected because device was busy. Wait and restart."
-msgstr ""
+msgstr "Polecenie odrzucone - urządzenie zajęte. Spróbuj jeszcze raz za chwilę."
 
 #: libgammu/gsmcomon.c:150
 #, fuzzy
