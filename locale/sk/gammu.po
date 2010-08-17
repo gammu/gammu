@@ -3127,7 +3127,7 @@ msgstr "Pamäť pre SMS je plná"
 
 #: gammu/misc.c:2196
 msgid "Station name"
-msgstr ""
+msgstr "Názov stanice"
 
 #: gammu/misc.c:2197
 msgid "Frequency"
