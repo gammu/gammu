@@ -2738,7 +2738,7 @@ msgstr "Zapnuté"
 
 #: gammu/misc.c:1445 gammu/misc.c:2032
 msgid "Off"
-msgstr ""
+msgstr "Vypnuté"
 
 #: gammu/misc.c:1447
 msgid "Proxy"
