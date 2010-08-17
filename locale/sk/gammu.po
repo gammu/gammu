@@ -3046,7 +3046,7 @@ msgstr "Úroveň 4"
 
 #: gammu/misc.c:2024
 msgid "Level 5"
-msgstr ""
+msgstr "Úroveň 5"
 
 #: gammu/misc.c:2033
 msgid "Ringing"
