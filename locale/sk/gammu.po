@@ -3074,7 +3074,7 @@ msgstr "Štandardné"
 
 #: gammu/misc.c:2040
 msgid "Special"
-msgstr ""
+msgstr "Špeciálne"
 
 #: gammu/misc.c:2042
 msgid "Personal"
