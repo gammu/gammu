@@ -3107,7 +3107,7 @@ msgstr "Neprečítaná SMS"
 
 #: gammu/misc.c:2155
 msgid "Voice call"
-msgstr ""
+msgstr "Hlasový hovor"
 
 #: gammu/misc.c:2156
 msgid "Fax call"
