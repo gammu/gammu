@@ -346,8 +346,9 @@ msgid "Bluetooth configuration requires channel option."
 msgstr "Konfiguracja bluetootha wymaga podania kanału."
 
 #: libgammu/gsmcomon.c:147
+#, fuzzy
 msgid "Service is not runnig."
-msgstr ""
+msgstr "Usługa nie jest uruchomiona."
 
 #: libgammu/gsmcomon.c:148
 #, fuzzy
