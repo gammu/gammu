@@ -2717,9 +2717,8 @@ msgid "Delete all phone FM radio stations?"
 msgstr "Vymazať všetky FM stanice?"
 
 #: gammu/misc.c:1438 gammu/misc.c:1440
-#, fuzzy
 msgid "Connection type"
-msgstr "&Pripojiť"
+msgstr "Typ pripojenia"
 
 #: gammu/misc.c:1438
 msgid "Continuous"
