@@ -3095,7 +3095,7 @@ msgstr "Aký typ resetu nastavení telefónu previesť (\"%s\") ?\n"
 
 #: gammu/misc.c:2149
 msgid "Currently shown on the display"
-msgstr ""
+msgstr "Zobrazené na displeji"
 
 #: gammu/misc.c:2153
 msgid "Call active"
