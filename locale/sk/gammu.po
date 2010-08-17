@@ -3030,7 +3030,7 @@ msgstr "Svetlá"
 
 #: gammu/misc.c:2018
 msgid "Level 1"
-msgstr ""
+msgstr "Úroveň 1"
 
 #: gammu/misc.c:2020
 msgid "Level 2"
