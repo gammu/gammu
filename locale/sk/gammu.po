@@ -3267,7 +3267,7 @@ msgstr "Priečinok %s\n"
 
 #: gammu/mms.c:171
 msgid "  File filesystem ID"
-msgstr ""
+msgstr " ID súboru"
 
 #: gammu/nokia.c:43
 msgid "It can be RTTL ringtone only used with this option"
