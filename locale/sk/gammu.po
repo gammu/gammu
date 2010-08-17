@@ -2760,7 +2760,7 @@ msgstr "Doručiteľ"
 
 #: gammu/misc.c:1455
 msgid "SMS"
-msgstr ""
+msgstr "SMS"
 
 #: gammu/misc.c:1458
 msgid "Server number"
