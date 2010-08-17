@@ -443,7 +443,7 @@ msgstr "Czy przywrócić Punkty GPRS w telefonie?"
 #: gammu/memory.c:172
 #, fuzzy, c-format
 msgid "Unknown memory type (\"%s\")\n"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+msgstr "BŁĄD: nieznany typ pamięci (\"%s\")\n"
 
 #: gammu/backup.c:1577 gammu/memory.c:74 gammu/misc.c:692 gammu/misc.c:721
 #: helper/message-cmdline.c:1031
