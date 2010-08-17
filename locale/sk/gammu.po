@@ -2722,7 +2722,7 @@ msgstr "Typ pripojenia"
 
 #: gammu/misc.c:1438
 msgid "Continuous"
-msgstr ""
+msgstr "Nepretržité"
 
 #: gammu/misc.c:1440
 msgid "Temporary"
