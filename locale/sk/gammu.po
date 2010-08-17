@@ -2742,7 +2742,7 @@ msgstr "Vypnuté"
 
 #: gammu/misc.c:1447
 msgid "Proxy"
-msgstr ""
+msgstr "Proxy"
 
 #: gammu/misc.c:1448 gammu/misc.c:1451
 #, c-format
