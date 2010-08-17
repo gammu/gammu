@@ -2784,7 +2784,7 @@ msgstr "IP adresa"
 
 #: gammu/misc.c:1468 gammu/misc.c:1470 gammu/misc.c:1514 gammu/misc.c:1516
 msgid "Login type"
-msgstr ""
+msgstr "Typ prihlásenia"
 
 #: gammu/misc.c:1468 gammu/misc.c:1514
 msgid "Manual"
