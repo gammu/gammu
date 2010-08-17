@@ -317,8 +317,9 @@ msgid "Error writing file to disk."
 msgstr "Błąd zapisu do urządzenia."
 
 #: libgammu/gsmcomon.c:141
+#, fuzzy
 msgid "No such section exists."
-msgstr ""
+msgstr "Taka sekcja nie istnieje."
 
 #: libgammu/gsmcomon.c:142
 msgid "Using default values."
