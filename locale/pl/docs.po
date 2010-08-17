@@ -50,7 +50,6 @@ msgstr ""
 msgid "Gammu Documentation"
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:3 docs/user/gammurc.5:2 docs/user/gammu-smsdrc.5:2
 #: docs/user/gammu-smsd.1:2 docs/user/gammu-smsd-inject.1:2
@@ -59,9 +58,9 @@ msgstr ""
 #: docs/user/gammu-smsd-mysql.7:2 docs/user/gammu-smsd-pgsql.7:2
 #: docs/user/gammu-smsd-dbi.7:2 docs/user/gammu-smsd-tables.7:2
 #: docs/user/gammu-smsd-null.7:2 docs/user/gammu-smsd-run.7:2
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "NAME"
-msgstr ""
+msgstr "NAZWA"
 
 # type: Plain text
 #. type: Plain text
@@ -69,15 +68,14 @@ msgstr ""
 msgid "Gammu - Does some neat things with your cellular phone or modem."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:8 docs/user/gammurc.5:7 docs/user/gammu-smsdrc.5:7
 #: docs/user/gammu-smsd.1:4 docs/user/gammu-smsd-inject.1:4
 #: docs/user/gammu-smsd-monitor.1:4 docs/user/jadmaker.1:4
 #: docs/user/gammu-config.1:4
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "SYNOPSIS"
-msgstr ""
+msgstr "SKŁADNIA"
 
 # type: Plain text
 #. type: Plain text
@@ -85,7 +83,6 @@ msgstr ""
 msgid "Usage: gammu [I<parameters>] E<lt>commandE<gt> [I<options>]"
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:13 docs/user/gammurc.5:20 docs/user/gammu-smsdrc.5:9
 #: docs/user/gammu-smsd.1:7 docs/user/gammu-smsd-inject.1:9
@@ -94,9 +91,9 @@ msgstr ""
 #: docs/user/gammu-smsd-mysql.7:7 docs/user/gammu-smsd-pgsql.7:7
 #: docs/user/gammu-smsd-dbi.7:7 docs/user/gammu-smsd-tables.7:7
 #: docs/user/gammu-smsd-null.7:6 docs/user/gammu-smsd-run.7:6
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "OPIS"
 
 #. type: Plain text
 #: docs/user/gammu.1:19
@@ -105,12 +102,11 @@ msgid ""
 "supported, for actual listing see E<lt>http://wammu.eu/phones/E<gt>."
 msgstr ""
 
-# type: SH
 #. type: SH
 #: docs/user/gammu.1:21
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "OPTIONS"
-msgstr ""
+msgstr "OPCJE"
 
 # type: Plain text
 #. type: Plain text
@@ -7923,18 +7919,17 @@ msgid ""
 "starting with two dashes (`-'). A summary of options is included below."
 msgstr ""
 
-# type: TP
 #. type: TP
 #: docs/user/jadmaker.1:14 docs/user/gammu-config.1:13
 #, no-wrap
 msgid "B<-h, --help>"
-msgstr ""
+msgstr "B<-h, --help>"
 
-# type: Plain text
 #. type: Plain text
 #: docs/user/jadmaker.1:17 docs/user/gammu-config.1:16
+#, fuzzy
 msgid "Show summary of options."
-msgstr ""
+msgstr "Pokaż podsumowanie opcji."
 
 # type: TP
 #. type: TP
