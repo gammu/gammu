@@ -2796,7 +2796,7 @@ msgstr "Automatický"
 
 #: gammu/misc.c:1473 gammu/misc.c:1475 gammu/misc.c:1519 gammu/misc.c:1521
 msgid "Authentication type"
-msgstr ""
+msgstr "Typ autentifikácie"
 
 #: gammu/misc.c:1473 gammu/misc.c:1519
 msgid "Normal"
