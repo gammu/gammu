@@ -3123,7 +3123,7 @@ msgstr "Klávesnica uzamknutá"
 
 #: gammu/misc.c:2159
 msgid "SMS memory full"
-msgstr ""
+msgstr "Pamäť pre SMS je plná"
 
 #: gammu/misc.c:2196
 msgid "Station name"
