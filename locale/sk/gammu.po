@@ -3082,7 +3082,7 @@ msgstr "Osobné"
 
 #: gammu/misc.c:2047
 msgid "Vibrate first"
-msgstr ""
+msgstr "Najprv vibrovať"
 
 #: gammu/misc.c:2084
 msgid " speed dial not assigned"
