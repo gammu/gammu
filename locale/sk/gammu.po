@@ -1289,9 +1289,8 @@ msgid "Headset interconnection:"
 msgstr "Pripojenie headsetu:"
 
 #: gammu/depend/nokia/dct4.c:1044
-#, fuzzy
 msgid "Hook interconnection:"
-msgstr "Pripojenie k telefónu"
+msgstr "Pripojenie zavesenia:"
 
 #: gammu/depend/nokia/dct4.c:1045
 msgid "Light sensor:"
