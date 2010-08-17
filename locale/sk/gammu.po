@@ -3115,7 +3115,7 @@ msgstr "Faxový hovor"
 
 #: gammu/misc.c:2157
 msgid "Data call"
-msgstr ""
+msgstr "Datový hovor"
 
 #: gammu/misc.c:2158
 msgid "Keypad locked"
