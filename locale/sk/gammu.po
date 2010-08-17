@@ -3146,7 +3146,7 @@ msgstr "Neznámy typ presmerovania (\"%s\")\n"
 #: gammu/misc.c:2233
 #, c-format
 msgid "Unknown call type (\"%s\")\n"
-msgstr ""
+msgstr "Neznámy typ hovoru (\"%s\")\n"
 
 #: gammu/misc.c:2242
 msgid "Query:"
