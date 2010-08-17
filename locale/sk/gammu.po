@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0200\n"
-"PO-Revision-Date: 2010-08-17 20:28+0200\n"
+"PO-Revision-Date: 2010-08-17 20:29+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2925,7 +2925,7 @@ msgstr "Aký formát výstupného loga (\"%s\") ?\n"
 #: gammu/misc.c:1722
 #, c-format
 msgid "What format of output ringtone file (\"%s\") ?\n"
-msgstr ""
+msgstr "V akom formáte sa má uložiť zvonenie (\"%s\") ?\n"
 
 #: gammu/misc.c:1742
 #, c-format
