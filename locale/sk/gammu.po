@@ -2978,7 +2978,7 @@ msgstr "ID zvonenia"
 
 #: gammu/misc.c:1967
 msgid "Message alert tone ID"
-msgstr ""
+msgstr "ID tónu oznámenia správy"
 
 #: gammu/misc.c:1977
 msgid "Call alert for"
