@@ -3293,7 +3293,7 @@ msgstr "Na zadanie prosím stlačte:"
 
 #: gammu/nokia.c:124
 msgid "(longer)"
-msgstr ""
+msgstr "(dlhší)"
 
 #: gammu/nokia.c:252
 #, c-format
