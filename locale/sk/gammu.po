@@ -3026,7 +3026,7 @@ msgstr "Automatická odpoveď"
 
 #: gammu/misc.c:2010
 msgid "Lights"
-msgstr ""
+msgstr "Svetlá"
 
 #: gammu/misc.c:2018
 msgid "Level 1"
