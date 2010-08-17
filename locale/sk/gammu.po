@@ -3207,7 +3207,7 @@ msgstr "Odpoveď:"
 
 #: gammu/mms.c:49
 msgid "Do you want to save this MMS file?"
-msgstr ""
+msgstr "Chcete uložiť tento MMS súbor?"
 
 #: gammu/mms.c:53 gammu/mms.c:134
 #, c-format
