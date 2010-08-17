@@ -2894,7 +2894,7 @@ msgstr "aktívne"
 
 #: gammu/misc.c:1649
 msgid "Read only"
-msgstr ""
+msgstr "Iba na čítanie"
 
 #: gammu/misc.c:1674
 msgid "Startup logo"
