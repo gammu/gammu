@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0200\n"
-"PO-Revision-Date: 2010-08-17 20:25+0200\n"
+"PO-Revision-Date: 2010-08-17 20:26+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2882,7 +2882,7 @@ msgstr "Synchronizácia kalendára"
 
 #: gammu/misc.c:1565 gammu/misc.c:1606
 msgid "Connection set name"
-msgstr ""
+msgstr "Názov pripojenia"
 
 #: gammu/misc.c:1601 gammu/misc.c:1651
 msgid "Homepage"
