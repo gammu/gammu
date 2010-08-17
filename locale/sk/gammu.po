@@ -2945,7 +2945,7 @@ msgstr "Aký typ kategórie chcete pridať (\"%s\") ?\n"
 #: gammu/misc.c:1856
 #, c-format
 msgid "Text too long, truncating to %d chars!\n"
-msgstr ""
+msgstr "Text je príliš dlhý, skracujem na %d znakov!\n"
 
 #: gammu/misc.c:1895
 msgid "Invalid security code type"
