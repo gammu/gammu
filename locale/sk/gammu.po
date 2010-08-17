@@ -2986,7 +2986,7 @@ msgstr "Upozornenie na hovor pre"
 
 #: gammu/misc.c:1998
 msgid "Screen saver number"
-msgstr ""
+msgstr "Číslo šetriča obrazovky"
 
 #: gammu/misc.c:2001
 msgid "Incoming call alert"
