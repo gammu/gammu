@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.28.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0200\n"
-"PO-Revision-Date: 2010-08-17 13:54+0200\n"
+"PO-Revision-Date: 2010-08-17 13:56+0200\n"
 "Last-Translator: Maciej Szeptuch <matthiaspriv@gmail.com>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
@@ -327,8 +327,9 @@ msgid "Using default values."
 msgstr "Używanie domyślnych wartości."
 
 #: libgammu/gsmcomon.c:143
+#, fuzzy
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "Telefon zwrócił uszkodzone dane."
 
 #: libgammu/gsmcomon.c:144
 msgid "Bad feature string in configuration."
