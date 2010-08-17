@@ -3002,7 +3002,7 @@ msgstr "Vibračné upozornenie"
 
 #: gammu/misc.c:2004
 msgid "Message alert tone"
-msgstr ""
+msgstr "Tón upozornenia na správu"
 
 #: gammu/misc.c:2005
 msgid "Keypad tones"
