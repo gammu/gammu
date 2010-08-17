@@ -2820,7 +2820,7 @@ msgstr "Analógový"
 
 #: gammu/misc.c:1484 gammu/misc.c:1487 gammu/misc.c:1490
 msgid "Data call speed"
-msgstr ""
+msgstr "Rychlosť dátového volania"
 
 #: gammu/misc.c:1490 gammu/misc.c:2048
 msgid "Auto"
