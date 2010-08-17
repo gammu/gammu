@@ -378,7 +378,7 @@ msgstr "Pobranie numeru SMSC z telefonu nie powiodło się."
 #: libgammu/gsmcomon.c:185
 #, fuzzy
 msgid "Unknown error description."
-msgstr "Nieznany błąd."
+msgstr "Nieznany opis błędu."
 
 #: libgammu/phone/dummy/dummy.c:583
 msgid "Templates"
