@@ -2958,7 +2958,7 @@ msgstr "Zadajte %s kód: "
 
 #: gammu/misc.c:1912
 msgid "No PIN code entered!"
-msgstr ""
+msgstr "Nebol zadaný žiadny PIN kód!"
 
 #: gammu/misc.c:1954
 msgid " (default name)"
