@@ -2906,7 +2906,7 @@ msgstr "Logo operátora"
 
 #: gammu/misc.c:1676 helper/message-display.c:428
 msgid "Picture"
-msgstr ""
+msgstr "Obrázok"
 
 #: gammu/misc.c:1677
 msgid "Caller group logo"
