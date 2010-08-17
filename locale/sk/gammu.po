@@ -3203,7 +3203,7 @@ msgstr "data & fax & hlas"
 
 #: gammu/misc.c:2277
 msgid "Response:"
-msgstr ""
+msgstr "Odpoveď:"
 
 #: gammu/mms.c:49
 msgid "Do you want to save this MMS file?"
