@@ -368,7 +368,7 @@ msgstr "Nie można połączyć się z serwerem."
 #: libgammu/gsmcomon.c:151
 #, fuzzy
 msgid "Could not resolve the host name."
-msgstr "Problem z odczytem zapisanej wiadomości!"
+msgstr "Nie można rozpoznać nazwy hosta."
 
 #: libgammu/gsmcomon.c:152
 msgid "Failed to get SMSC number from phone."
