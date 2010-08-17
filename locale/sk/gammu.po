@@ -3058,7 +3058,7 @@ msgstr "Pípnuť raz"
 
 #: gammu/misc.c:2036
 msgid "Ring once"
-msgstr ""
+msgstr "Zazvoniť raz"
 
 #: gammu/misc.c:2037 gammu/misc.c:2041
 msgid "Ascending"
