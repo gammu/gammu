@@ -2808,7 +2808,7 @@ msgstr "Zabezpečené"
 
 #: gammu/misc.c:1478 gammu/misc.c:1480
 msgid "Data call type"
-msgstr ""
+msgstr "Typ dátového hovoru"
 
 #: gammu/misc.c:1478
 msgid "ISDN"
