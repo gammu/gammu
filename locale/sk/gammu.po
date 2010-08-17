@@ -3054,7 +3054,7 @@ msgstr "Zvonenie"
 
 #: gammu/misc.c:2035
 msgid "Beep once"
-msgstr ""
+msgstr "Pípnuť raz"
 
 #: gammu/misc.c:2036
 msgid "Ring once"
