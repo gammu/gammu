@@ -3225,7 +3225,7 @@ msgstr "Niektoré vlastnosti MMS súboru nie sú známe dekóderu Gammu "
 
 #: gammu/mms.c:73 gammu/mms.c:81 gammu/mms.c:89
 msgid "phone "
-msgstr ""
+msgstr "telefón"
 
 #: gammu/mms.c:79
 msgid "Recipient"
