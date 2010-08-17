@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0200\n"
-"PO-Revision-Date: 2010-08-17 20:33+0200\n"
+"PO-Revision-Date: 2010-08-17 20:34+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2982,7 +2982,7 @@ msgstr "ID tónu oznámenia správy"
 
 #: gammu/misc.c:1977
 msgid "Call alert for"
-msgstr ""
+msgstr "Upozornenie na hovor pre"
 
 #: gammu/misc.c:1998
 msgid "Screen saver number"
