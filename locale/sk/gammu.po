@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0200\n"
-"PO-Revision-Date: 2010-08-17 20:30+0200\n"
+"PO-Revision-Date: 2010-08-17 20:31+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2935,7 +2935,7 @@ msgstr "Neznámy názov klávesy/funkcie: \"%c\"\n"
 #: gammu/misc.c:1772 gammu/misc.c:1810
 #, c-format
 msgid "What type of categories do you want to get (\"%s\") ?\n"
-msgstr ""
+msgstr "Aký typ kategórie chcete načítať (\"%s\") ?\n"
 
 #: gammu/misc.c:1848
 #, c-format
