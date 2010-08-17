@@ -2706,7 +2706,7 @@ msgstr "Odstrániť úlohy?"
 
 #: gammu/misc.c:1381
 msgid "Delete phone notes?"
-msgstr ""
+msgstr "Odstrániť poznámky?"
 
 #: gammu/misc.c:1399
 msgid "Delete phone WAP bookmarks?"
