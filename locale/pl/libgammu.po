@@ -381,8 +381,9 @@ msgid "Unknown error description."
 msgstr "Nieznany opis błędu."
 
 #: libgammu/phone/dummy/dummy.c:583
+#, fuzzy
 msgid "Templates"
-msgstr ""
+msgstr "Szablony"
 
 #: libgammu/phone/nokia/dct3/n6110.c:1959
 msgid "Personal"
