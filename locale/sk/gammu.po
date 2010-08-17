@@ -3241,7 +3241,7 @@ msgstr "Typ správy"
 
 #: gammu/mms.c:97 helper/message-display.c:462
 msgid "Subject"
-msgstr ""
+msgstr "Predmet"
 
 #: gammu/mms.c:100
 msgid "Delivery report"
