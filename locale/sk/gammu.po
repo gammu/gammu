@@ -3066,7 +3066,7 @@ msgstr "vzostupné"
 
 #: gammu/misc.c:2038
 msgid "Caller groups"
-msgstr ""
+msgstr "Skupiny"
 
 #: gammu/misc.c:2039
 msgid "Standard"
