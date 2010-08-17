@@ -3289,7 +3289,7 @@ msgstr "Toto zvonenie by v Noka Composere v telefóne malo vyzerať:"
 
 #: gammu/nokia.c:105
 msgid "To enter it please press:"
-msgstr ""
+msgstr "Na zadanie prosím stlačte:"
 
 #: gammu/nokia.c:124
 msgid "(longer)"
