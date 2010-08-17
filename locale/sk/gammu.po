@@ -3103,7 +3103,7 @@ msgstr "Hovor je aktívny"
 
 #: gammu/misc.c:2154
 msgid "Unread SMS"
-msgstr ""
+msgstr "Neprečítaná SMS"
 
 #: gammu/misc.c:2155
 msgid "Voice call"
