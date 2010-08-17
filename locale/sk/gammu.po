@@ -2866,7 +2866,7 @@ msgstr "Databáza kontaktov"
 
 #: gammu/misc.c:1555
 msgid "Calendar database"
-msgstr ""
+msgstr "Databáza kalendára"
 
 #: gammu/misc.c:1556
 msgid "Server"
