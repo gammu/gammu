@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: libGammu 1.28.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0200\n"
-"PO-Revision-Date: 2010-08-17 14:00+0200\n"
+"PO-Revision-Date: 2010-08-17 14:02+0200\n"
 "Last-Translator: Maciej Szeptuch <matthiaspriv@gmail.com>\n"
 "Language-Team: Language =pl\n"
 "Language: pl\n"
@@ -184,10 +184,13 @@ msgstr "Potrzeba więcej pamięci..."
 msgid "Operation not allowed by phone."
 msgstr "Funkcja nie obsługiwana przez telefon."
 
+# SMSC - numer centrali SMS?
 #: libgammu/gsmcomon.c:114
+#, fuzzy
 msgid ""
 "No SMSC number given. Provide it manually or use the one configured in phone."
 msgstr ""
+"Nie podano numeru SMSC. Wpisz go ręcznie lub skorzystaj z tego w telefonie."
 
 #: libgammu/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
