@@ -322,8 +322,9 @@ msgid "No such section exists."
 msgstr "Taka sekcja nie istnieje."
 
 #: libgammu/gsmcomon.c:142
+#, fuzzy
 msgid "Using default values."
-msgstr ""
+msgstr "Używanie domyślnych wartości."
 
 #: libgammu/gsmcomon.c:143
 msgid "Corrupted data returned by phone."
