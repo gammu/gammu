@@ -3034,7 +3034,7 @@ msgstr "Úroveň 1"
 
 #: gammu/misc.c:2020
 msgid "Level 2"
-msgstr "Úroveň ľ"
+msgstr "Úroveň 2"
 
 #: gammu/misc.c:2022
 msgid "Level 3"
