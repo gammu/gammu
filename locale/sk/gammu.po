@@ -3233,7 +3233,7 @@ msgstr "Príjemca"
 
 #: gammu/mms.c:87
 msgid "CC"
-msgstr ""
+msgstr "CC"
 
 #: gammu/mms.c:94
 msgid "Message type"
