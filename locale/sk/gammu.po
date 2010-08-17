@@ -1621,7 +1621,7 @@ msgstr "Siete pre %s:"
 #: gammu/gammu.c:83
 #, c-format
 msgid "Unknown country name: %s."
-msgstr ""
+msgstr "Unknown country name: %s."
 
 #: gammu/gammu.c:88 gammu/gammu.c:735 gammu/misc.c:48
 msgid "Network"
