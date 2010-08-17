@@ -2734,7 +2734,7 @@ msgstr "Zabezpečenie pripojenia"
 
 #: gammu/misc.c:1443 gammu/misc.c:2046
 msgid "On"
-msgstr ""
+msgstr "Zapnuté"
 
 #: gammu/misc.c:1445 gammu/misc.c:2032
 msgid "Off"
