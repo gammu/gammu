@@ -2974,7 +2974,7 @@ msgstr " (profil do auta)"
 
 #: gammu/misc.c:1965 helper/memory-display.c:105
 msgid "Ringtone ID"
-msgstr ""
+msgstr "ID zvonenia"
 
 #: gammu/misc.c:1967
 msgid "Message alert tone ID"
