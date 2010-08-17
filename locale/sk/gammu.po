@@ -2730,7 +2730,7 @@ msgstr "Dočasné"
 
 #: gammu/misc.c:1443 gammu/misc.c:1445
 msgid "Connection security"
-msgstr ""
+msgstr "Zabezpečenie pripojenia"
 
 #: gammu/misc.c:1443 gammu/misc.c:2046
 msgid "On"
