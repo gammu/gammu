@@ -2890,7 +2890,7 @@ msgstr "Domovská stránka"
 
 #: gammu/misc.c:1645
 msgid "active"
-msgstr ""
+msgstr "aktívne"
 
 #: gammu/misc.c:1649
 msgid "Read only"
