@@ -3042,7 +3042,7 @@ msgstr "Úroveň 3"
 
 #: gammu/misc.c:2023
 msgid "Level 4"
-msgstr ""
+msgstr "Úroveň 4"
 
 #: gammu/misc.c:2024
 msgid "Level 5"
