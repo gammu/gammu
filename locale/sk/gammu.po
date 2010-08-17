@@ -3183,7 +3183,7 @@ msgstr "neznámy %i"
 
 #: gammu/misc.c:2268 gammu/misc.c:2282
 msgid "Call type"
-msgstr ""
+msgstr "Typ hovoru"
 
 #: gammu/misc.c:2270 gammu/misc.c:2284
 msgid "voice"
