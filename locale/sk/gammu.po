@@ -2886,7 +2886,7 @@ msgstr "Názov pripojenia"
 
 #: gammu/misc.c:1601 gammu/misc.c:1651
 msgid "Homepage"
-msgstr ""
+msgstr "Domovská stránka"
 
 #: gammu/misc.c:1645
 msgid "active"
