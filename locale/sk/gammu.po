@@ -2902,7 +2902,7 @@ msgstr "Úvodné logo"
 
 #: gammu/misc.c:1675
 msgid "Operator logo"
-msgstr ""
+msgstr "Logo operátora"
 
 #: gammu/misc.c:1676 helper/message-display.c:428
 msgid "Picture"
