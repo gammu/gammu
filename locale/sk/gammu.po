@@ -3174,7 +3174,7 @@ msgstr "ak je telefón vypnutý alebo mimo dosah"
 
 #: gammu/misc.c:2264
 msgid "all types of diverts"
-msgstr ""
+msgstr "všetky typy presmerovaní"
 
 #: gammu/misc.c:2265 gammu/misc.c:2274 gammu/misc.c:2287
 #, c-format
