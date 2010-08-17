@@ -2862,7 +2862,7 @@ msgstr "Užívateľ"
 
 #: gammu/misc.c:1554
 msgid "Phonebook database"
-msgstr ""
+msgstr "Databáza kontaktov"
 
 #: gammu/misc.c:1555
 msgid "Calendar database"
