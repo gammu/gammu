@@ -2898,7 +2898,7 @@ msgstr "Iba na čítanie"
 
 #: gammu/misc.c:1674
 msgid "Startup logo"
-msgstr ""
+msgstr "Úvodné logo"
 
 #: gammu/misc.c:1675
 msgid "Operator logo"
