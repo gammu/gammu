@@ -2990,7 +2990,7 @@ msgstr "Číslo šetriča obrazovky"
 
 #: gammu/misc.c:2001
 msgid "Incoming call alert"
-msgstr ""
+msgstr "Upozernenie na prichádzajúci hovor"
 
 #: gammu/misc.c:2002
 msgid "Ringtone volume"
