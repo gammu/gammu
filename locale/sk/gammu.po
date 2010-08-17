@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0200\n"
-"PO-Revision-Date: 2010-08-17 20:51+0200\n"
+"PO-Revision-Date: 2010-08-17 20:53+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -3285,7 +3285,7 @@ msgstr "dĺžka=%i záznamov, ale vy zadáte len prvých 50 tónov."
 
 #: gammu/nokia.c:66
 msgid "This ringtone in Nokia Composer in phone should look:"
-msgstr ""
+msgstr "Toto zvonenie by v Noka Composere v telefóne malo vyzerať:"
 
 #: gammu/nokia.c:105
 msgid "To enter it please press:"
