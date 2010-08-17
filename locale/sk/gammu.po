@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2010-07-01 14:12+0200\n"
-"PO-Revision-Date: 2010-08-17 20:16+0200\n"
+"PO-Revision-Date: 2010-08-17 20:17+0200\n"
 "Last-Translator: Marek Papco <marek_papco@centrum.sk>\n"
 "Language-Team: none\n"
 "Language: sk\n"
@@ -2222,9 +2222,8 @@ msgid "detached"
 msgstr "odpojené"
 
 #: gammu/misc.c:166
-#, fuzzy
 msgid "Not logged to network!\n"
-msgstr "neprihlásený do siete"
+msgstr "Nie je prihlásený do siete!/n"
 
 #: gammu/misc.c:177
 msgid "Wrong network code from phone!\n"
