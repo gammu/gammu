@@ -3158,7 +3158,7 @@ msgstr "Typ presmerovania"
 
 #: gammu/misc.c:2255
 msgid "Changed:"
-msgstr ""
+msgstr "Zmenené:"
 
 #: gammu/misc.c:2261
 msgid "when busy"
