@@ -3086,7 +3086,7 @@ msgstr "Najprv vibrovať"
 
 #: gammu/misc.c:2084
 msgid " speed dial not assigned"
-msgstr ""
+msgstr " rychlé vytáčanie nie je priradené"
 
 #: gammu/misc.c:2115
 #, c-format
