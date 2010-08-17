@@ -3166,7 +3166,7 @@ msgstr "ak je obsadené"
 
 #: gammu/misc.c:2262
 msgid "when not answered"
-msgstr ""
+msgstr "ak neodpovedá"
 
 #: gammu/misc.c:2263
 msgid "when phone off or no coverage"
