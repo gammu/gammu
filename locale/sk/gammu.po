@@ -2878,7 +2878,7 @@ msgstr "Synchronizácia kontaktov"
 
 #: gammu/misc.c:1560
 msgid "Sync. calendar"
-msgstr ""
+msgstr "Synchronizácia kalendára"
 
 #: gammu/misc.c:1565 gammu/misc.c:1606
 msgid "Connection set name"
