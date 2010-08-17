@@ -3254,7 +3254,7 @@ msgstr "Typ obsahu"
 #: gammu/mms.c:114
 #, c-format
 msgid " (%s in SMIL)"
-msgstr ""
+msgstr " (%s in SMIL)"
 
 #: gammu/mms.c:130
 msgid "Do you want to save this attachment?"
