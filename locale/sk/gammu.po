@@ -3062,7 +3062,7 @@ msgstr "Zazvoniť raz"
 
 #: gammu/misc.c:2037 gammu/misc.c:2041
 msgid "Ascending"
-msgstr ""
+msgstr "vzostupné"
 
 #: gammu/misc.c:2038
 msgid "Caller groups"
