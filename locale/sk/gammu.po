@@ -2874,7 +2874,7 @@ msgstr "Server"
 
 #: gammu/misc.c:1557
 msgid "Sync. phonebook"
-msgstr ""
+msgstr "Synchronizácia kontaktov"
 
 #: gammu/misc.c:1560
 msgid "Sync. calendar"
