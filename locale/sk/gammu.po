@@ -2812,7 +2812,7 @@ msgstr "Typ dátového hovoru"
 
 #: gammu/misc.c:1478
 msgid "ISDN"
-msgstr ""
+msgstr "ISDN"
 
 #: gammu/misc.c:1480
 msgid "Analogue"
