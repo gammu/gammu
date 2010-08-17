@@ -2966,7 +2966,7 @@ msgstr " (predvolený názov)"
 
 #: gammu/misc.c:1955
 msgid " (Head set profile)"
-msgstr ""
+msgstr " (profil pre head set)"
 
 #: gammu/misc.c:1956
 msgid " (Car kit profile)"
