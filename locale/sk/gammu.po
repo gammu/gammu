@@ -3187,7 +3187,7 @@ msgstr "Typ hovoru"
 
 #: gammu/misc.c:2270 gammu/misc.c:2284
 msgid "voice"
-msgstr ""
+msgstr "hlas"
 
 #: gammu/misc.c:2271 gammu/misc.c:2285 helper/message-display.c:120
 msgid "fax"
