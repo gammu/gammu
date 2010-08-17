@@ -3131,7 +3131,7 @@ msgstr "Názov stanice"
 
 #: gammu/misc.c:2197
 msgid "Frequency"
-msgstr ""
+msgstr "Frakvencia"
 
 #: gammu/misc.c:2215
 #, c-format
