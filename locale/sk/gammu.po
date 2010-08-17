@@ -2920,7 +2920,7 @@ msgstr ", šírka %i, výška %i\n"
 #: gammu/misc.c:1697
 #, c-format
 msgid "What format of output file logo (\"%s\") ?\n"
-msgstr "Aký formát výstupného loga (\"%s\") ?\n"
+msgstr "V akom formáte sa má uložiť výstupné logo (\"%s\") ?\n"
 
 #: gammu/misc.c:1722
 #, c-format
