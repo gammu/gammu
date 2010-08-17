@@ -3212,7 +3212,7 @@ msgstr "Chcete uložiť tento MMS súbor?"
 #: gammu/mms.c:53 gammu/mms.c:134
 #, c-format
 msgid "Error while saving to file %s!\n"
-msgstr ""
+msgstr "Chyba pii ukladaní do súboru %s!\n"
 
 #: gammu/mms.c:55 gammu/mms.c:136
 #, c-format
