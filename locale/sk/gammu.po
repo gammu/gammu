@@ -2840,7 +2840,7 @@ msgstr "USSD"
 
 #: gammu/misc.c:1500
 msgid "Service code"
-msgstr ""
+msgstr "Servisný kód"
 
 #: gammu/misc.c:1502 gammu/misc.c:1505
 msgid "Address type"
