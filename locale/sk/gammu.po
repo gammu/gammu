@@ -3022,7 +3022,7 @@ msgstr "Doba aktivácie šetriča obrazovky"
 
 #: gammu/misc.c:2009
 msgid "Automatic answer"
-msgstr ""
+msgstr "Automatická odpoveď"
 
 #: gammu/misc.c:2010
 msgid "Lights"
