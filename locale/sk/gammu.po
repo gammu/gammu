@@ -2776,7 +2776,7 @@ msgstr "Data (CSD)"
 
 #: gammu/misc.c:1465
 msgid "Dial-up number"
-msgstr ""
+msgstr "Číslo na vytočenie"
 
 #: gammu/misc.c:1466 gammu/misc.c:1502 gammu/misc.c:1503 gammu/misc.c:1524
 msgid "IP address"
