@@ -2772,7 +2772,7 @@ msgstr "Číslo služby"
 
 #: gammu/misc.c:1462
 msgid "Data (CSD)"
-msgstr ""
+msgstr "Data (CSD)"
 
 #: gammu/misc.c:1465
 msgid "Dial-up number"
