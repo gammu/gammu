@@ -3014,7 +3014,7 @@ msgstr "Tóny upozornenia (hry)"
 
 #: gammu/misc.c:2007 helper/message-display.c:424
 msgid "Screen saver"
-msgstr ""
+msgstr "Šetrič obrazovky"
 
 #: gammu/misc.c:2008
 msgid "Screen saver timeout"
