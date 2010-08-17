@@ -2940,7 +2940,7 @@ msgstr "Aký typ kategórie chcete načítať (\"%s\") ?\n"
 #: gammu/misc.c:1848
 #, c-format
 msgid "What type of category do you want to add (\"%s\") ?\n"
-msgstr ""
+msgstr "Aký typ kategórie chcete pridať (\"%s\") ?\n"
 
 #: gammu/misc.c:1856
 #, c-format
