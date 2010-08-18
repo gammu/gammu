@@ -2221,7 +2221,6 @@ msgstr "pripojené"
 msgid "detached"
 msgstr "odpojené"
 
-<<<<<<< HEAD
 #: gammu/misc.c:106
 msgid "Battery level"
 msgstr "Stav batérie"
